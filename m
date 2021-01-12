@@ -2,88 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5861B2F3C80
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 00:02:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F4432F3C91
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 00:35:19 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DFmLC06PhzDrQl
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 10:02:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DFn4F2jrtzDqpf
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 10:35:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22a;
+ helo=mail-oi1-x22a.google.com; envelope-from=proclivis@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=avENJsOj; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=mQdj0Mf+; 
- dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Lu6lN/nN; dkim-atps=neutral
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com
+ [IPv6:2607:f8b0:4864:20::22a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DFmJy0gcqzDqsN
- for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 10:01:04 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 1F3281C12;
- Tue, 12 Jan 2021 16:07:47 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Tue, 12 Jan 2021 16:07:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=OP1bvpNj/vcFAYx5rY6DVqWZJwN
- TSdyAlzDvGoxl7dU=; b=avENJsOjLN/EDLOd6UbqdH5vYzVDAmIg/I1yWN2rMQn
- 0z0nY/3RfpUVQCFU7BC4A7y0nZ5xCb6A4Fz0FEptmiDdQKEVB2cfG7HIzSX6QjOi
- 09Uzigtoo76q0OD3U+bfhX0L4O+tNR9ePewmFl143j6SX0JF3D2FzSr4RbCBjn2c
- 3Rzy5SATQbxmksFMnMo3UemGGxOR7S6G8SCFgLE82G+6O1ckQMw0YToUp3xICLul
- K8wYz2f/73sDheQDPHkT7MmEEYBy/5iPcUS8mSKCCSoT9B5GSOwt8w3K/fBkqsaw
- v1qNgX6I3SbgvBTewUy98Kc2VdYdR2YqHQNUMM57cSA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=OP1bvp
- Nj/vcFAYx5rY6DVqWZJwNTSdyAlzDvGoxl7dU=; b=mQdj0Mf+/Yyw0c5UMTpzwg
- 9hYSPyJHL07184hZme53+hb40ZqFbCr4EXw9H82skfRzJjgY27oPhdxJz/JAsrC8
- y3oe0NPymSTYiXHQotxU3aDYz1K6U88oS0FRXHgcw9gKOgOiRheL4xw4VRCl0yRv
- noV4wRsg60d03okZnfSGoYCxxVx9TOuZU9CqP97Z7p9Dw/1XfgaAn7SImkYe0BiS
- xURSRRuLS3hqEyPGOtHQTo7AN5wSswV9JIKu6/oerYdEHr21PhPmcErXxECe6W14
- wahucborblfgJhqA1LWkASYj+dSE2Ajdo064q+lf4iBr71e8YSWt7infOhIF1aZA
- ==
-X-ME-Sender: <xms:og_-X_yQgVHvVGJ0JwwDblTsW37OfjH_HLu-LtdZ3pLBLwkvD3IoYw>
- <xme:og_-X3Q_s5TkgC22Egqipufdes2cgEW12y09Hd0eudg_PfvSG-56tW0xhtkNh9CZv
- -4Pc6B8DpFUFo4Si20>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedukedrtddtgdduudefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpeffhf
- fvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
- ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
- epgeehheefffegkeevhedthffgudfhgeefgfdthefhkedtleffveekgfeuffehtdeinecu
- kfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
- hrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:og_-X5WUpGnhrWDo-eCgJtp7wzwrx3E3_9Pec21_IqqUtHy4XpoiCg>
- <xmx:og_-X5iN0Ex2Nt38b1Uosv5MESJkYECL3pg7FOLRi4_jlZ67felv7A>
- <xmx:og_-XxCeZqh4R5KjLDROW3SNIdfVBe1rFzoU08znhPMfUDpREoemTw>
- <xmx:og_-X89sDCd-am8Rd9OrojmaNx6vrxydfaHv5aFKRqgIA2Xxldp_Ww>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id D04C3240057;
- Tue, 12 Jan 2021 16:07:45 -0500 (EST)
-Date: Tue, 12 Jan 2021 15:07:44 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Subject: Re: Call for volunteers
-Message-ID: <X/4PoDzXRroPPANc@heinlein>
-References: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="M4dcHmfP5kDaIS/7"
-Content-Disposition: inline
-In-Reply-To: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DFn3Q5HgDzDqnW
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 10:34:25 +1100 (AEDT)
+Received: by mail-oi1-x22a.google.com with SMTP id d203so225642oia.0
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 15:34:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=content-transfer-encoding:from:mime-version:subject:date:message-id
+ :references:cc:in-reply-to:to;
+ bh=2HQKrnYMAey/SeIiWLmE3MePGofhZn8utfUoyX3UJ0U=;
+ b=Lu6lN/nNKe5ZZ+/AAZ3j/xPgHqd92HW5Q16qlwjztZRyQJDwJqRGI1GkFb2j3CeTaL
+ WRQ3fBfkOAoO0mWvmBqk57RV+6agoxIlfoqe4L7jgh5o2cyRiwRobYWycoNj8LC1Zu5W
+ UWXDrQJ4BafJcZSz10IqlRmzCmw4bWVZFZpyRAfRP1252HbuvN/ux4mmVtIVQqPqKxQk
+ bgELflmnmcxZqnsHSgeGgBi+d04tCNhnrwmAPhpng73eW9gp3BQByYrn6UDgNfv5uZDs
+ xtA04qcf1LWo0vcsbfE67XDh+K+6xxHMbX07eTQzKlO2ee49uSNDCYDM+XS2iIVZAe+R
+ nlLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:content-transfer-encoding:from:mime-version
+ :subject:date:message-id:references:cc:in-reply-to:to;
+ bh=2HQKrnYMAey/SeIiWLmE3MePGofhZn8utfUoyX3UJ0U=;
+ b=bYdfrFJMhxoRA2U0yUFD4IDNfzmgHVE8u7uUV4QDrTXW4tqisa0u6SZc3DnC8g+ud9
+ 9BKuLIvam+NHID69fY62EWmlq2nDPVr8uWfdoEg/yjwb0pQAHGOPeLvSIXJZLGQxoUSE
+ BH7TJHCBDHX266W8K82puyxeIMW7sM0SH5v0xBTU41BY12afQg6gT3L1fwSVPVloA5Ub
+ BnSasFOEgFEG11oQ+pHq+/CWR0YlZdEyLz3CKkTFSWcxPH2c1m6/EclKC3kt/7DD3yZj
+ 1bKibnObCohyR8UiNqfFHHH4YZsy5R3UcI4CqiXNkXkT+qHDUOL6ENFLLJq4xHSXtV5z
+ F+xg==
+X-Gm-Message-State: AOAM530ifYVJ115z9+j+R9rHPOhZVAvIZLlRpXGkR+5d2IEx8n4vos7I
+ WuzhJtEASLK+IheNGZxpj2UP1512QNc=
+X-Google-Smtp-Source: ABdhPJykdvi4pl1oHgg/Fl1yVjsMa4xMw6VAjF4bMnJYI730ZzRQozLOJy6FTpglvhEitMuzdC55EQ==
+X-Received: by 2002:a05:6808:8c7:: with SMTP id k7mr32479oij.31.1610494461511; 
+ Tue, 12 Jan 2021 15:34:21 -0800 (PST)
+Received: from ?IPv6:2600:100e:b036:3976:28cf:1a42:1072:4111?
+ ([2600:100e:b036:3976:28cf:1a42:1072:4111])
+ by smtp.gmail.com with ESMTPSA id j9sm37998ooq.1.2021.01.12.15.34.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Jan 2021 15:34:20 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Mike <proclivis@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: READ_EIN/READ_EOUT
+Date: Tue, 12 Jan 2021 16:34:19 -0700
+Message-Id: <3C0268AE-8BAE-44DB-BE4D-C91FD8968D72@gmail.com>
+References: <810c6160-b75f-4b89-b482-28664ac775f0@www.fastmail.com>
+In-Reply-To: <810c6160-b75f-4b89-b482-28664ac775f0@www.fastmail.com>
+To: Andrew Jeffery <andrew@aj.id.au>
+X-Mailer: iPhone Mail (18B92)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,46 +80,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+I did not fine use of the commands there, so unless the command comes throug=
+h an interface outside this code, it is not used.
 
---M4dcHmfP5kDaIS/7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+But I am curious why sidestepping hwmon? Is thus a replacement or addition?
 
-On Mon, Jan 11, 2021 at 04:09:19PM -0600, Brad Bishop wrote:
-> If you are interested in serving the project in this manner, please reply=
- to
-> submit yourself as a candidate.
+Sent from my iPhone
+
+> On Jan 12, 2021, at 3:54 PM, Andrew Jeffery <andrew@aj.id.au> wrote:
 >=20
-> -brad, on the behalf of the OpenBMC TSC
+> =EF=BB=BF
+>=20
+>> On Tue, 12 Jan 2021, at 08:18, Mike Jones wrote:
+>> Within the PMBus standard are two commands for energy: READ_EIN, READ_EOU=
+T.
+>>=20
+>> These commands exist on both regulators and hot swap devices.
+>>=20
+>> - Are these functions getting used?
+>> -And if so, to what purpose, examples of where to look in the layers=20
+>> for the usage, and any other helpful pointers
+>=20
+> In theory you should only need to look in the kernel, but we also have a=20=
 
-I'll volunteer to help on this.
-
---=20
-Patrick Williams
-
---M4dcHmfP5kDaIS/7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl/+D54ACgkQqwNHzC0A
-wRkh0hAAgt61DUwjcHtRCmMtKkIXLK28Jey/KKJ+h/JELaUUly1uMWZWycUCaJ1+
-cxhcTNp+HxI40b0WtD8BVl5/goiDJTMD8vIeZQ4KNje0R+nyi3rNwTjl9rPvv5A5
-qee7d8XZe1ENnx82g2l84YAKT+45Ktd84oimwcNVpt1Pu1oUgwBOa3uJRT0oQeeH
-OIaoW3wbPoVEuWcoxg68QapHewbawiNgbEUSR4TbinmYHalh/xJevmqRksbaL8Wi
-WipH4dr/Dye9zCryWoGX8CaT56yR0zxF19aBXXsAQL9IrdYXw51pUQuz2LpVWeHY
-gJmUgMgnjLhzI45aQUwkdvtCDEXgqbmPyQzkQjWdllxl49Ce+Hp1xMqGNG5AJ5rz
-UjKuN0UrlGKrO94qi5wL/9Z4zpDpl8N7lIICrCB2zAzvU3S+NrskJ6lYUvHbPnQS
-FGaduSi5yH1N5cQcQ+E8j76RLdSJHxKBY4GPn8SqcoXDpfL4X+8ns1CiCjQCN1FX
-p46cSr5ixmQIoTncqkN0iC5RhZUxpgvCs4+aUEurpW2Lr8CuhUkUgjwENTf+oPTk
-6nzhImKTBgMjERuZmJsKRuPY1uGTbjT2AQobPCaCEBdY/Nv0J52iHK4b4/azesSb
-xod9Z/jW3b8rQZmtm4swGuOcMmO0/qc9h/P5WJl97ASicdUT1T8=
-=cSJw
------END PGP SIGNATURE-----
-
---M4dcHmfP5kDaIS/7--
+> userspace project that is implementing a pmbus subsystem in userspace (whi=
+ch is=20
+> unfortunate):
+>=20
+> https://github.com/openbmc/phosphor-power
+>=20
+> Andrew
