@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E37B2F53C3
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 21:01:39 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B9F52F53DD
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 21:09:08 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DGJHN07GyzDrcH
-	for <lists+openbmc@lfdr.de>; Thu, 14 Jan 2021 07:01:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DGJS15GbQzDrVM
+	for <lists+openbmc@lfdr.de>; Thu, 14 Jan 2021 07:09:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,19 +19,19 @@ Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
  [212.199.177.27])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DGJGG4h8SzDrSq
- for <openbmc@lists.ozlabs.org>; Thu, 14 Jan 2021 07:00:34 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DGJGH5LpvzDrSg
+ for <openbmc@lists.ozlabs.org>; Thu, 14 Jan 2021 07:00:39 +1100 (AEDT)
 Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 10DK0FCw007560;
- Wed, 13 Jan 2021 22:00:15 +0200
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 10DK0GrI007565;
+ Wed, 13 Jan 2021 22:00:16 +0200
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id BF35E63A19; Wed, 13 Jan 2021 22:00:15 +0200 (IST)
+ id B941263A17; Wed, 13 Jan 2021 22:00:16 +0200 (IST)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.8 v3 01/12] clk: npcm7xx: add read only flag to
- divider clocks
-Date: Wed, 13 Jan 2021 21:59:59 +0200
-Message-Id: <20210113200010.71845-2-tmaimon77@gmail.com>
+Subject: [PATCH linux dev-5.8 v3 02/12] dt-binding: iio: add syscon property
+ to NPCM ADC
+Date: Wed, 13 Jan 2021 22:00:00 +0200
+Message-Id: <20210113200010.71845-3-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20210113200010.71845-1-tmaimon77@gmail.com>
 References: <20210113200010.71845-1-tmaimon77@gmail.com>
@@ -53,123 +53,31 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, Tomer Maimon <tmaimon77@gmail.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add read only flag to all divider clocks except
-SPI3 clock.
+Add syscon property to NPCM ADC to handle FUSE
+registers.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 ---
- drivers/clk/clk-npcm7xx.c | 70 +++++++++++++++++++++------------------
- 1 file changed, 38 insertions(+), 32 deletions(-)
+ Documentation/devicetree/bindings/iio/adc/nuvoton,npcm-adc.txt | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/clk-npcm7xx.c b/drivers/clk/clk-npcm7xx.c
-index 27a86b7a34db..bf721ec2bbc6 100644
---- a/drivers/clk/clk-npcm7xx.c
-+++ b/drivers/clk/clk-npcm7xx.c
-@@ -370,67 +370,73 @@ static const struct npcm7xx_clk_div_fixed_data npcm7xx_divs_fx[] __initconst = {
+diff --git a/Documentation/devicetree/bindings/iio/adc/nuvoton,npcm-adc.txt b/Documentation/devicetree/bindings/iio/adc/nuvoton,npcm-adc.txt
+index ef8eeec1a997..faf9f9b54f5b 100644
+--- a/Documentation/devicetree/bindings/iio/adc/nuvoton,npcm-adc.txt
++++ b/Documentation/devicetree/bindings/iio/adc/nuvoton,npcm-adc.txt
+@@ -14,6 +14,7 @@ Optional properties:
+ - vref-supply: The regulator supply ADC reference voltage, in case the
+ 			   vref-supply is not added the ADC will use internal voltage
+ 			   reference.
++- syscon: a phandle to access FUSE registers
  
- /* configurable dividers: */
- static const struct npcm7xx_clk_div_data npcm7xx_divs[] __initconst = {
--	{NPCM7XX_CLKDIV1, 28, 3, NPCM7XX_CLK_S_ADC,
--	NPCM7XX_CLK_S_TIMER, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_ADC},
-+	{NPCM7XX_CLKDIV1, 28, 3, NPCM7XX_CLK_S_ADC, NPCM7XX_CLK_S_TIMER,
-+		CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_ADC},
- 	/*30-28 ADCCKDIV*/
--	{NPCM7XX_CLKDIV1, 26, 2, NPCM7XX_CLK_S_AHB,
--	NPCM7XX_CLK_S_AXI, 0, CLK_IS_CRITICAL, NPCM7XX_CLK_AHB},
-+	{NPCM7XX_CLKDIV1, 26, 2, NPCM7XX_CLK_S_AHB, NPCM7XX_CLK_S_AXI,
-+		CLK_DIVIDER_READ_ONLY, CLK_IS_CRITICAL, NPCM7XX_CLK_AHB},
- 	/*27-26 CLK4DIV*/
- 	{NPCM7XX_CLKDIV1, 21, 5, NPCM7XX_CLK_S_TIMER,
--	NPCM7XX_CLK_S_TIM_MUX, 0, 0, NPCM7XX_CLK_TIMER},
-+	NPCM7XX_CLK_S_TIM_MUX, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_TIMER},
- 	/*25-21 TIMCKDIV*/
- 	{NPCM7XX_CLKDIV1, 16, 5, NPCM7XX_CLK_S_UART,
--	NPCM7XX_CLK_S_UART_MUX, 0, 0, NPCM7XX_CLK_UART},
-+	NPCM7XX_CLK_S_UART_MUX, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_UART},
- 	/*20-16 UARTDIV*/
- 	{NPCM7XX_CLKDIV1, 11, 5, NPCM7XX_CLK_S_MMC,
--	NPCM7XX_CLK_S_SD_MUX, 0, 0, NPCM7XX_CLK_MMC},
-+	NPCM7XX_CLK_S_SD_MUX, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_MMC},
- 	/*15-11 MMCCKDIV*/
- 	{NPCM7XX_CLKDIV1, 6, 5, NPCM7XX_CLK_S_SPI3,
- 	NPCM7XX_CLK_S_AHB, 0, 0, NPCM7XX_CLK_SPI3},
- 	/*10-6 AHB3CKDIV*/
- 	{NPCM7XX_CLKDIV1, 2, 4, NPCM7XX_CLK_S_PCI,
--	NPCM7XX_CLK_S_GFX_MUX, 0, 0, NPCM7XX_CLK_PCI},
-+	NPCM7XX_CLK_S_GFX_MUX, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_PCI},
- 	/*5-2 PCICKDIV*/
--	{NPCM7XX_CLKDIV1, 0, 1, NPCM7XX_CLK_S_AXI,
--	NPCM7XX_CLK_S_CPU_MUX, CLK_DIVIDER_POWER_OF_TWO, CLK_IS_CRITICAL,
--	NPCM7XX_CLK_AXI},/*0 CLK2DIV*/
-+	{NPCM7XX_CLKDIV1, 0, 1, NPCM7XX_CLK_S_AXI, NPCM7XX_CLK_S_CPU_MUX,
-+		CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO,
-+		CLK_IS_CRITICAL, NPCM7XX_CLK_AXI},/*0 CLK2DIV*/
+ Example:
  
--	{NPCM7XX_CLKDIV2, 30, 2, NPCM7XX_CLK_S_APB4,
--	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_APB4},
-+	{NPCM7XX_CLKDIV2, 30, 2, NPCM7XX_CLK_S_APB4, NPCM7XX_CLK_S_AHB,
-+		CLK_DIVIDER_READ_ONLY| CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_APB4},
- 	/*31-30 APB4CKDIV*/
--	{NPCM7XX_CLKDIV2, 28, 2, NPCM7XX_CLK_S_APB3,
--	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_APB3},
-+	{NPCM7XX_CLKDIV2, 28, 2, NPCM7XX_CLK_S_APB3, NPCM7XX_CLK_S_AHB,
-+		CLK_DIVIDER_READ_ONLY| CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_APB3},
- 	/*29-28 APB3CKDIV*/
--	{NPCM7XX_CLKDIV2, 26, 2, NPCM7XX_CLK_S_APB2,
--	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_APB2},
-+	{NPCM7XX_CLKDIV2, 26, 2, NPCM7XX_CLK_S_APB2, NPCM7XX_CLK_S_AHB,
-+		CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_APB2},
- 	/*27-26 APB2CKDIV*/
--	{NPCM7XX_CLKDIV2, 24, 2, NPCM7XX_CLK_S_APB1,
--	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_APB1},
-+	{NPCM7XX_CLKDIV2, 24, 2, NPCM7XX_CLK_S_APB1, NPCM7XX_CLK_S_AHB,
-+		CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_APB1},
- 	/*25-24 APB1CKDIV*/
--	{NPCM7XX_CLKDIV2, 22, 2, NPCM7XX_CLK_S_APB5,
--	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_APB5},
-+	{NPCM7XX_CLKDIV2, 22, 2, NPCM7XX_CLK_S_APB5, NPCM7XX_CLK_S_AHB,
-+		CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_APB5},
- 	/*23-22 APB5CKDIV*/
--	{NPCM7XX_CLKDIV2, 16, 5, NPCM7XX_CLK_S_CLKOUT,
--	NPCM7XX_CLK_S_CLKOUT_MUX, 0, 0, NPCM7XX_CLK_CLKOUT},
-+	{NPCM7XX_CLKDIV2, 16, 5, NPCM7XX_CLK_S_CLKOUT, NPCM7XX_CLK_S_CLKOUT_MUX,
-+		 CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_CLKOUT},
- 	/*20-16 CLKOUTDIV*/
--	{NPCM7XX_CLKDIV2, 13, 3, NPCM7XX_CLK_S_GFX,
--	NPCM7XX_CLK_S_GFX_MUX, 0, 0, NPCM7XX_CLK_GFX},
-+	{NPCM7XX_CLKDIV2, 13, 3, NPCM7XX_CLK_S_GFX, NPCM7XX_CLK_S_GFX_MUX,
-+		CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_GFX},
- 	/*15-13 GFXCKDIV*/
--	{NPCM7XX_CLKDIV2, 8, 5, NPCM7XX_CLK_S_USB_BRIDGE,
--	NPCM7XX_CLK_S_SU_MUX, 0, 0, NPCM7XX_CLK_SU},
-+	{NPCM7XX_CLKDIV2, 8, 5, NPCM7XX_CLK_S_USB_BRIDGE, NPCM7XX_CLK_S_SU_MUX,
-+		CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_SU},
- 	/*12-8 SUCKDIV*/
--	{NPCM7XX_CLKDIV2, 4, 4, NPCM7XX_CLK_S_USB_HOST,
--	NPCM7XX_CLK_S_SU_MUX, 0, 0, NPCM7XX_CLK_SU48},
-+	{NPCM7XX_CLKDIV2, 4, 4, NPCM7XX_CLK_S_USB_HOST, NPCM7XX_CLK_S_SU_MUX,
-+		CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_SU48},
- 	/*7-4 SU48CKDIV*/
- 	{NPCM7XX_CLKDIV2, 0, 4, NPCM7XX_CLK_S_SDHC,
--	NPCM7XX_CLK_S_SD_MUX, 0, 0, NPCM7XX_CLK_SDHC}
-+	NPCM7XX_CLK_S_SD_MUX, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_SDHC}
- 	,/*3-0 SD1CKDIV*/
- 
- 	{NPCM7XX_CLKDIV3, 6, 5, NPCM7XX_CLK_S_SPI0,
--	NPCM7XX_CLK_S_AHB, 0, 0, NPCM7XX_CLK_SPI0},
-+	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_SPI0},
- 	/*10-6 SPI0CKDV*/
- 	{NPCM7XX_CLKDIV3, 1, 5, NPCM7XX_CLK_S_SPIX,
--	NPCM7XX_CLK_S_AHB, 0, 0, NPCM7XX_CLK_SPIX},
-+	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_SPIX},
- 	/*5-1 SPIXCKDV*/
- 
+@@ -23,4 +24,5 @@ adc: adc@f000c000 {
+ 	interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
+ 	clocks = <&clk NPCM7XX_CLK_ADC>;
+ 	resets = <&rstc NPCM7XX_RESET_IPSRST1 NPCM7XX_RESET_ADC>;
++	syscon = <&fuse>;
  };
 -- 
 2.22.0
