@@ -2,62 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B68E42F43DD
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 06:32:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E45752F4400
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 06:39:48 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DFx050CTmzDqv8
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 16:32:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DFx8v2hdYzDqlD
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 16:39:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e30;
- helo=mail-vs1-xe30.google.com; envelope-from=deepak.kodihalli.83@gmail.com;
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::232;
+ helo=mail-oi1-x232.google.com; envelope-from=yulei.sh@bytedance.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=none dis=none) header.from=bytedance.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=qBKfIcf4; dkim-atps=neutral
-Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com
- [IPv6:2607:f8b0:4864:20::e30])
+ unprotected) header.d=bytedance-com.20150623.gappssmtp.com
+ header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=s/3TCRJp; dkim-atps=neutral
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com
+ [IPv6:2607:f8b0:4864:20::232])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DFwys5sNfzDqgs
- for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 16:30:58 +1100 (AEDT)
-Received: by mail-vs1-xe30.google.com with SMTP id x4so487271vsp.7
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 21:30:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DFx833YlXzDqXG
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 16:38:57 +1100 (AEDT)
+Received: by mail-oi1-x232.google.com with SMTP id s75so967701oih.1
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 21:38:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=dBrFbhKwdkDwNgjcFgGEkdLwWYeKkntekZMEd9omHfQ=;
- b=qBKfIcf4+mZGItbVFeQBGZeyGJL5MjEPnh8/7nsFAUVY0U9wZCx8BpGZa2Dm9gdkzP
- q1htZcZW2Pkn+ZEs6YWbLbe4XXkDb2crFeW2L4LQEycs7OwtYwioH1Ro1xtSFxAE7mrd
- MuOYBiozccxBJZf9yRFH4aa1+hRqJrYq3D4LUYek9gJQQmfIJ4pQ97iF9Y+L0rLQAMSe
- nFDeFgeFh6xyvIgLpi+pmTIbUTReWiiLN2Vc4smrUgbTx/aL3hkOtMlsJSiAHWHR4J/W
- yhzOkAULYCZLz/dnSKWlhbTm4TnQKUz4tg62rs6Bkm/mzAq02Zsz59CxKPLOtusiKBXn
- oD7A==
+ :cc; bh=vdfC9HpGth5RR3F+FWIzS2SLcS9ctaQkpItZW0wHbYA=;
+ b=s/3TCRJpiAY02COykX5jlyjPvQsadbEhXDgiy0qRqp1H+gwpFl8O7LmTAd462gHECW
+ LdeJb+W+PwWAKJqPoSCKWklVNSPNnDQB9i2oieM40gD8zKKCjW2dn6qiYx1ES5Goq2Uh
+ VTTkIST/B+Z79albXizisLO99a83xjnkiFrz4P6bfGM6M/hrOFruwTWrh9YjK1peeNrG
+ hUUKX/n/4NZ3Mo4Jhnd+E0LSYYzazzbGP0vDkMUJ7lY60I8Pw5C1lCz1vzBM6yuw8Fh0
+ 0dWp8NJo/4mihKXRonVv7zTa5iAjgzz0DoyA0YsSSvNvTwJrNvh1frxxnp8ynlRolpDC
+ /tGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=dBrFbhKwdkDwNgjcFgGEkdLwWYeKkntekZMEd9omHfQ=;
- b=hsJ1FmZjfI7zM16BwBx0eAwDLArB4EIWZ5BRZ+BWb+zWy93ZqkbMC/TMIJt+6f409N
- vObUYsrrSddZEvSGoZqYGnVRDNDAHNTzp5yDD6IUdfC9mFsjtBjNYoYQAeW4RNbrv2Rx
- +l5R/OmcEiybtt47P1yP84nyJTjHG4POQu9XhYHUpw0mKv204zUsytd9UDvAztUWEdkp
- kxwi01bN5PtxzuJC1RPbR1V2DMCzX0Jqo36ZOl/lEG8CIBt02/vkX6rwXJSoL+rkGQAY
- NGrsCLHfjJQuK/IriioTgVc9l9S6ZRM+9JI/Og3y9AwQkYQ6o7JvV3TGZYuJxeaQv2J5
- tM6g==
-X-Gm-Message-State: AOAM531GY9AtsJ/CHNrFVShZe4tCtkPGRqltYiTZYqJmjq0CsdqxLcNM
- DjSRa6xG4VfEhgqGKgVecUx4xy+t1g2WEwwlDws=
-X-Google-Smtp-Source: ABdhPJzgC6ibGe5BW0+VrlpkjclrfQRw4UGEvT0tUTZEKbQSni2kdSmLxEutfK9tCZvPzox30rMiPoFf9Pi+JOn4pGU=
-X-Received: by 2002:a67:87cd:: with SMTP id j196mr507643vsd.43.1610515854632; 
- Tue, 12 Jan 2021 21:30:54 -0800 (PST)
+ bh=vdfC9HpGth5RR3F+FWIzS2SLcS9ctaQkpItZW0wHbYA=;
+ b=bfUO79jUPL7DsOP8+L2MN5Bbh1DWZnoSXE+N0+Ms/eDdCfn6WFE+nU1fO11VtNK3s6
+ Uf+Ob/eOx7GzhmpyYZwJp27Njg/DiCIt+MV+walgmbhF/IaUvEY+3i9r3adImqrK1qz0
+ BZL1x48wtDsmjkQkJG3b9OI22mvnc9utSqvt8MVgit96aFxJcehXLCwsjhyvKohu16pX
+ c0hsvGz6qvvZd4UEgjG3xq9jkQ+DOlr7JfIIbY36G0x46g+KKpREp5fc/sZmEYQfTySN
+ r0CEoZ7PnGUaFyA4skP7nmxi6hmFZ0PHhdHvYoBT4NV0x8VXE5rXLDCjmUxH5BUfVGLp
+ U+jA==
+X-Gm-Message-State: AOAM5309saxExVg7qBvcoc9Xr8NO2X/hh+RaLvveyj9P72nPny6b18Sb
+ Ry+b3QtgpzffsaCcBZ8IidD1eXip21RrS+NqkdEQethSrhn4iAvE
+X-Google-Smtp-Source: ABdhPJwhDkH5bU54mf9x6Edia+zHaJKFBE5g5RnHXtoMAghlBBZAp3fk3CNUtl4Bu+/5SnAqxIJUM7dfpJ24w3giPG4=
+X-Received: by 2002:aca:44d:: with SMTP id 74mr336106oie.4.1610516333511; Tue,
+ 12 Jan 2021 21:38:53 -0800 (PST)
 MIME-Version: 1.0
 References: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
 In-Reply-To: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
-From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
-Date: Wed, 13 Jan 2021 11:00:43 +0530
-Message-ID: <CAM=TmwWvTFe2WB8f+yHJsa9jrEznnB-KtcfFnBadRAriLWhJig@mail.gmail.com>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Wed, 13 Jan 2021 13:38:42 +0800
+Message-ID: <CAGm54UE6WMuZcDCWbGFDzVMwBCpjhtB0TsTVq0bVAah9h_KHVA@mail.gmail.com>
 Subject: Re: Call for volunteers
 To: Brad Bishop <bradleyb@fuzziesquirrel.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -72,16 +74,14 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I would like to volunteer.
+I would like to volunteer, though I am in a different time zone and
+may miss some of the meetings.
 
-Thanks,
-Deepak
-
-On Tue, Jan 12, 2021 at 3:39 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
+On Tue, Jan 12, 2021 at 6:10 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
 >
 > Hello OpenBMC-ers!
 >
@@ -125,3 +125,9 @@ On Tue, Jan 12, 2021 at 3:39 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
 > submit yourself as a candidate.
 >
 > -brad, on the behalf of the OpenBMC TSC
+
+
+
+-- 
+BRs,
+Lei YU
