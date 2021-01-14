@@ -2,49 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DD1C2F6AC8
-	for <lists+openbmc@lfdr.de>; Thu, 14 Jan 2021 20:22:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BAF2A2F6A98
+	for <lists+openbmc@lfdr.de>; Thu, 14 Jan 2021 20:12:14 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DGvMW04hHzDrhc
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 06:22:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DGv7h3t4jzDsM4
+	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 06:12:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.120; helo=mga04.intel.com;
- envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm1 header.b=N21GHTeB; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=dxfdf/iU; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DGvLT70ndzDrg8
- for <openbmc@lists.ozlabs.org>; Fri, 15 Jan 2021 06:21:18 +1100 (AEDT)
-IronPort-SDR: BuCiHzjdmCjlsS9Yuc3NxDaK7++OnViy+ymHoyX7qQWBBrCQ5ex74O/Ig1Qmc8yEMa6JVDTK2L
- gd6+Z6ubf4kg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9864"; a="175830990"
-X-IronPort-AV: E=Sophos;i="5.79,347,1602572400"; d="scan'208";a="175830990"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2021 09:39:03 -0800
-IronPort-SDR: P1cnScJjSSfvphmcCHExB5/Yt63wJOXHEqPAjBo506ErRdWqGXjZMPNXL6r0NDkN/DQBwdsrz0
- zb5CXEJ4SeWA==
-X-IronPort-AV: E=Sophos;i="5.79,347,1602572400"; d="scan'208";a="400982412"
-Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
- ([10.7.150.62])
- by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2021 09:39:03 -0800
-Date: Thu, 14 Jan 2021 09:39:01 -0800
-From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Subject: Re: Call for volunteers
-Message-ID: <20210114173901.GC45289@mauery.jf.intel.com>
-References: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DGv6g07kQzDrhd
+ for <openbmc@lists.ozlabs.org>; Fri, 15 Jan 2021 06:11:05 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 441235C010B;
+ Thu, 14 Jan 2021 13:53:19 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Thu, 14 Jan 2021 13:53:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
+ :references:mime-version:content-type:in-reply-to; s=fm1; bh=OOl
+ jZUKEoyd4FA24oLdToaPb36ahG0F5WBrfb+1wep8=; b=N21GHTeBC5RwEFTixVY
+ rswkUWv5JNCVQ6TJ5lxUm2aBcI4ZkkyxliuYrsnYLNf7A/t54HsIv5Qq3zL+gpZD
+ m91vbvsV1yJcyjBgp3KZbEnr72LNSZcoju4016N4eQoTYqVInEGHqGGD6qhAZFRc
+ sJyCvAdfiqsZSf4+1XScd0U5IPCdF7Vn7I3bqYr8C5N/R9NzgEZ6bKlQ27k5OAeI
+ NciXCa1zZoBDxgIeuIYLxkXVPwJHsXxWtKvDEaCk6xh5IVnG3NCMAE7bpyFsn+O9
+ 3nUFJyvFceLMEdXmj/tkIPAP9e27p2RBrymNQ4XYpplABW2zC3NxkNl/HxoB3G6f
+ c0Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=OOljZU
+ KEoyd4FA24oLdToaPb36ahG0F5WBrfb+1wep8=; b=dxfdf/iUJ/VQclBrhqQui6
+ GmUGC/myeWHEWW9STVXHQDJJ69C/tc62SwORA5zUTqhaaL7G9rOiZ4tNhqJY2Vhh
+ 1TEUTpjalYU9rNhtB4FpXaLdz+bBW/S+YsfSDTMBTTVpQKrQ16Dk7GZvDEKzsVMR
+ 5BfophK4R+kmI8YSuGhJoaC5sQuZWaNN//wYRA0vX+lQi/YQKB3Huh+mHaYpOQZ5
+ CrvBns3phddytluB5OhkxFnJdlxwcDa9a+iKlBnzmX48engYty37AGnltSXdCnVr
+ fY0yahxmcD9w2ySu2icdXwlrOAL/EkPMTW3GrcIgtOkxkerRUBB1Sjl0+wXClmWQ
+ ==
+X-ME-Sender: <xms:HpMAYDbowQz3Kg5qBoKtmvhYNFPHyu6pk-q3Tt-uUBSkGy04vowJtw>
+ <xme:HpMAYCZ_7tJ0LZ3pkMtSq8u1mBa_9G2OotdxEkBuB95Gx3vV-IihZSWPTtbtBlDaN
+ i4HbQHPcF8zFPQp61g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrtddtgdelfecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehrrgguuceu
+ ihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhmqe
+ enucggtffrrghtthgvrhhnpeeffffhfeehgedutddvtdeuiefhudeifeekfeeifeekfedu
+ feeuvedulefgkefffeenucfkphepudejfedrudeijedrfedurdduleejnecuvehluhhsth
+ gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghrrggulhgvhigssehf
+ uhiiiihivghsqhhuihhrrhgvlhdrtghomh
+X-ME-Proxy: <xmx:HpMAYF-fMDjrLL727rS8H2Zn_3YdPEOVWOhfLne1-uWVPTb7FYlDtw>
+ <xmx:HpMAYJqhWi7i4_2VEX3KO4GjHeKJMJ20Zbk-rAoZO_EFaZXXL8RngQ>
+ <xmx:HpMAYOruAuy4m2DZGYCbPT5tVMbW21zIgpTKDfif9mmmXOdcoqFDyw>
+ <xmx:H5MAYHkglr8CAWnrGPU_Z9QS-6K95db9AyzjKd_ET9tMaQA36q3XtA>
+Received: from thinkpad.fuzziesquirrel.com (unknown [173.167.31.197])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 426441080057;
+ Thu, 14 Jan 2021 13:53:18 -0500 (EST)
+Date: Thu, 14 Jan 2021 13:53:16 -0500
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Ed Tanous <edtanous@google.com>
+Subject: Re: Intel-ipmi-oem repo
+Message-ID: <20210114185316.vmlaa7nn7vlxq2wh@thinkpad.fuzziesquirrel.com>
+References: <CAHwn2XkNiz7rZzn9RbpZCaUM8HD0HO+mJTD9D2ENc_p+SsmXHg@mail.gmail.com>
+ <20210114143909.jf3vbk7zhxp3iguv@thinkpad.fuzziesquirrel.com>
+ <CAH2-KxBgmEmfeQxsbTa1RPVO_nm5=G+ayZ9aDM+1hf7oRtoDGA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <CAH2-KxBgmEmfeQxsbTa1RPVO_nm5=G+ayZ9aDM+1hf7oRtoDGA@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,52 +96,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: Willy Tu <wltu@google.com>, vernon.mauery@linux.intel.com,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, chunhui.jia@linux.intel.com,
+ apparao.puli@linux.intel.com, Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 11-Jan-2021 04:09 PM, Brad Bishop wrote:
->Hello OpenBMC-ers!
->
->Your TSC has been aware of the problem of fragmentation in our project for some
->time.  Fragmentation is a loose term - for the purposes of this note consider
->it to be any time contributor efforts in the community are duplicated without
->thought given to maintenance and/or compatibility.
->
->To begin to address this issue the TSC is looking for volunteers to serve on a
->"repository review forum" to which the TSC will initially delegate its
->authority in the areas of:
->- new repository creation
->- placement of contributed new function into existing repositories
->
->The TSC fully expects the scope of this forum to quickly grow into the role of
->a traditional TSC providing frequent, technical oversight to project
->contributors.  The current TSC will continue to serve the project in terms of
->governance, advocacy and industry exposure - and likely get a rename (OpenBMC
->Board? or OpenBMC Steering Committee?) in the process.
->
->The new forum would meet periodically or at the demand of other forum members
->to:
->- raise the forums combined awareness of new function under development
->  (information exchange)
->- build a consensus within the forum on where the function should exist
->- inform the function contributor and the rest of the community of the decision
->
->A successful forum would be a forum that can simultaneously encourage the
->contribution of new and innovative solutions to existing problems without
->introducing complexity to the project as a whole.
->
->A successful forum member will have previously demonstrated a breadth of
->understanding of the upstream OpenBMC codebase through:
->- frequent participation in peer review, the mailing list, IRC, and Discord.
->- submission of high quality designs and code to upstream OpenBMC
->  (github.com/openbmc)
->- a history of working with and guiding less experienced OpenBMC developers
->  in a timely manner, enabling them to come up to speed quickly.
->
->If you are interested in serving the project in this manner, please reply to
->submit yourself as a candidate.
+On Thu, Jan 14, 2021 at 08:38:41AM -0800, Ed Tanous wrote:
 
-I will volunteer as well.
+>I only suggested a new repo originally because today it's a separate repo,
+>and the long ago patch to add it directly to ipmid got the feedback that
+>was too different than the existing to go there.  
 
---Vernon
+Hrm...this is not at all how I remember it.  I thought the feedback IBM 
+tried to give back then was "please don't break the code that is already 
+there."  I apologize if what came through was "your code is too 
+different, no thanks" ...that was definitely never the intent.
+
+-brad
