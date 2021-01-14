@@ -2,62 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E03A2F62D8
-	for <lists+openbmc@lfdr.de>; Thu, 14 Jan 2021 15:16:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F3C0A2F6350
+	for <lists+openbmc@lfdr.de>; Thu, 14 Jan 2021 15:40:19 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DGmZP2yyvzDsfD
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 01:16:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DGn691cbDzDsdh
+	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 01:40:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.167.169;
- helo=mail-oi1-f169.google.com; envelope-from=robherring2@gmail.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=kernel.org
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com
- [209.85.167.169])
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm1 header.b=WNAsDDKN; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=l/twZ8/3; 
+ dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DGmW70c81zDsdl;
- Fri, 15 Jan 2021 01:13:22 +1100 (AEDT)
-Received: by mail-oi1-f169.google.com with SMTP id d203so6032975oia.0;
- Thu, 14 Jan 2021 06:13:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=6h5oUPZ53wfO7f92HycjGe1n6yQ3GPM+QRp+J+bOXQU=;
- b=A+MLywBmxdlUV9m0NnXqFxrvKpXnTbmPbd5nGcgv1xpxI9JeaeNiWNy12KU0K4wnax
- uNMQy7PkRuVvasT5a2mrJRC6H5j4KqnxlqE7njjdzFK6lxGD7w5n4Ue1f5EkNhDKx9HI
- K5HOH/OWsnXx5cwqCtqo5KaTBaO74Sm9IApCOD06c9FdyygaA+QlzZS4+bhU3WF766h5
- dWZjw0hw/JpQEzoA/SUkO2mSabEkpiGPNI0RfzS7Pxo7vBGx+SQsFRJl8xhRXuXWzXJI
- b8EKviWbQ/OqNNRPVs/rl6NQc96xkP9R8ZbSRUrqht3gC+PMHNc6dJ/QwIyzOkcW5v4I
- pZTg==
-X-Gm-Message-State: AOAM533zr8ILFKUilGeVbP3oQiZ12TVAFCPsyOXIsgc71oXuksyf04zl
- OEMU7ox239LsqhZBpy3qTA==
-X-Google-Smtp-Source: ABdhPJxRzKOok/V/nC7yvIoQFv1kr5D7gm8HVf45a+LU/nY5SxSFQOxwkwYlL+jMqNwCCy9n20BtQw==
-X-Received: by 2002:aca:c592:: with SMTP id v140mr2687412oif.10.1610633599393; 
- Thu, 14 Jan 2021 06:13:19 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
- [24.155.109.49])
- by smtp.gmail.com with ESMTPSA id n13sm1064351otk.58.2021.01.14.06.13.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Jan 2021 06:13:18 -0800 (PST)
-Received: (nullmailer pid 2833114 invoked by uid 1000);
- Thu, 14 Jan 2021 14:13:17 -0000
-Date: Thu, 14 Jan 2021 08:13:17 -0600
-From: Rob Herring <robh@kernel.org>
-To: Troy Lee <troy_lee@aspeedtech.com>
-Subject: Re: [PATCH v2 1/4] dt-bindings: hwmon: Add Aspeed AST2600 PWM/Fan
-Message-ID: <20210114141317.GA2823834@robh.at.kernel.org>
-References: <20210113070850.1184506-1-troy_lee@aspeedtech.com>
- <20210113070850.1184506-2-troy_lee@aspeedtech.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DGn533xZrzDsdh
+ for <openbmc@lists.ozlabs.org>; Fri, 15 Jan 2021 01:39:18 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 057DA1692;
+ Thu, 14 Jan 2021 09:39:11 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Thu, 14 Jan 2021 09:39:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
+ :references:mime-version:content-type:content-transfer-encoding
+ :in-reply-to; s=fm1; bh=l1bGBWv5XUl7THqf16lJAX58mpE3bd4LKEZGBXYa
+ 8DE=; b=WNAsDDKNqWDe4VVZdengwNKFez7SE4nTMfJvCwzk3B8JSvPJH4Lrm/f4
+ ink0yQiyEP4D3Ms+4/yXwKGA9rPhHN6/VRwYdP5pbthijjzZRyfFobC9BRx1HXSi
+ 08NL5mnDLrLC6zt5T4GznU0ZKrdVYyLtrUCMVMFETNdn25dinrEIOM8KOQEn0ZLo
+ isdw8yrBDsaGWDND/8jxRX1GnjL3GY6hHEpl0nXb2OQH09pLZ1ctuKpiUyZnq9mY
+ fd9zWzvBLRRxPR5Fqx8avjKZfwfqqa7gHUGhSItFEg0sv5qhaUE0qlFN4yTVhFBj
+ zYHLm53pZFm3AhIXD4TvZLqzJmADVQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; bh=l1bGBWv5XUl7THqf16lJAX58mpE3bd4LKEZGBXYa8
+ DE=; b=l/twZ8/319NuPpyFvSLSC4hhpHs3I3l+amrwsyAMgpp9Z4i7Qpq8r6non
+ 4fyMm/m1jslwBbWlJQbzDJs6IjVSbXofJC+SmFOnPMHJ1yW8p9UuM3cm2Y1K6y6b
+ 1W5sb+KrQm/hlhnP8Iz12o3TzoFpu7XW5LkjiwI/kIY75d22ympDqR1W/Rx6sw7Q
+ s3elH0yc4KrvFT1tY8uEz2XYcyW+whca4oNZVE3mWAREttsTKgWw1IXs3OuryrT2
+ lqifFPRvn0IeF4fLd/v7zN+ZQetRmXcO0EOibpG4ITUo85tndJpUGPL+g/vbHxvo
+ rt5a+IPRWjY5Dm78tfJ/2bt4JQfyQ==
+X-ME-Sender: <xms:j1cAYDyP_v3PCqo4DDjJwRCSfldswFNolXBYYfQevNxioDTeqoK9OA>
+ <xme:j1cAYLQAWTVi5N-bTiXJsn4fB4Asxa1ebKoAj77DZ0ujZMdzOSea90neL0CJ_YxG_
+ gcpN9cSxwmGHSx7mts>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrtddtgdegvdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtugfgjgesthekre
+ dttddtjeenucfhrhhomhepuehrrgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhu
+ iiiiihgvshhquhhirhhrvghlrdgtohhmqeenucggtffrrghtthgvrhhnpefgteevtedvge
+ dujeekieehudeiuedvveffledtffefuddvgfekjedtueejveffffenucfkphepudejfedr
+ udeijedrfedurdduleejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+ hilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
+X-ME-Proxy: <xmx:j1cAYNVc12JYm9EB-wPN4mdG9QMmkq0-pm9IOgatPqewTMJlCzkN_g>
+ <xmx:j1cAYNhQWSIPoFFndSzCHq_HjPyNgmDZQ7_97ruB9g2Z7aqMizUoqw>
+ <xmx:j1cAYFBADfJaRGlbK7lfxzpGHJRnbIvkGV-U497jcDAkauHRw669Tw>
+ <xmx:j1cAYEPuXwQARUF_J5XOgt8spO7VQJzg6uPU720HJwN60lbp5VoQ5g>
+Received: from thinkpad.fuzziesquirrel.com (unknown [173.167.31.197])
+ by mail.messagingengine.com (Postfix) with ESMTPA id DA1981080057;
+ Thu, 14 Jan 2021 09:39:10 -0500 (EST)
+Date: Thu, 14 Jan 2021 08:39:09 -0600
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Willy Tu <wltu@google.com>
+Subject: Re: Intel-ipmi-oem repo
+Message-ID: <20210114143909.jf3vbk7zhxp3iguv@thinkpad.fuzziesquirrel.com>
+References: <CAHwn2XkNiz7rZzn9RbpZCaUM8HD0HO+mJTD9D2ENc_p+SsmXHg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20210113070850.1184506-2-troy_lee@aspeedtech.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHwn2XkNiz7rZzn9RbpZCaUM8HD0HO+mJTD9D2ENc_p+SsmXHg@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,200 +95,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "open list:HARDWARE MONITORING" <linux-hwmon@vger.kernel.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, Jean Delvare <jdelvare@suse.com>,
- Ryan Chen <ryan_chen@aspeedtech.com>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
- Jonathan Corbet <corbet@lwn.net>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org,
- "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>, leetroy@gmail.com,
- Philipp Zabel <p.zabel@pengutronix.de>, chiawei_wang@aspeedtech.com,
- Guenter Roeck <linux@roeck-us.net>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-arm-kernel@lists.infradead.org>
+Cc: vernon.mauery@linux.intel.com, openbmc@lists.ozlabs.org,
+ apparao.puli@linux.intel.com, vijaykhemka@fb.com, chunhui.jia@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jan 13, 2021 at 07:08:45AM +0000, Troy Lee wrote:
-> We add binding for supporting a new AST2600 PWM/Fan hwmon driver.
-> 
-> Changes since v1:
-> - dt binding with DT schema format
-> 
-> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-> ---
->  .../hwmon/aspeed,ast2600-pwm-tachometer.yaml  | 137 ++++++++++++++++++
->  1 file changed, 137 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/hwmon/aspeed,ast2600-pwm-tachometer.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/hwmon/aspeed,ast2600-pwm-tachometer.yaml b/Documentation/devicetree/bindings/hwmon/aspeed,ast2600-pwm-tachometer.yaml
-> new file mode 100644
-> index 000000000000..b84076a4a338
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/hwmon/aspeed,ast2600-pwm-tachometer.yaml
-> @@ -0,0 +1,137 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +
-> +$id: http://devicetree.org/schemas/hwmon/aspeed,ast2600-pwm-tachometer.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: ASPEED AST2600 PWM and Fan Tacho controller device driver
-> +
-> +maintainers:
-> +  - Ryan Chen <ryan_chen@aspeedtech.com>
-> +
-> +description: |
-> +  The ASPEED PWM controller can support upto 16 PWM outputs. The ASPEED Fan Tacho
-> +  controller can support upto 16 Fan tachometer inputs.
-> +  There can be upto 16 fans supported. Each fan can have one PWM output and
-> +  one Fan tach inputs.
-> +
-> +properties:
-> +  compatible:
-> +    const: aspeed,ast2600-pwm-tachometer
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +  "#cooling-cells":
-> +    const: 2
-> +
-> +  reg:
-> +    description:
-> +      Address and length of the register set for the device.
+On Tue, Jan 12, 2021 at 06:54:14PM -0800, Willy Tu wrote:
+>> Team,
+>> Intel-ipmi-oem should be broken and 2 parts, genric and oem specific. I
+>see several functionality in this repo like sensors and storage commands
+>are generic enough to be used by other platform who is using entity
+>manager. So I feel that we should have these functionalities to be moved to
+>a separate common repo which can be used by everyone and this repo can only
+>contain Intel OEM specific IPMI command support.
+>>
+>> My 2 cents 😊
+>
+>Hi All,
+>
+>I guess I'll start working on this if no one has any objection to it.
 
-No need for generic descriptions. That's every 'reg'.
+Awesome!
 
-What you need is how many entries and what each one is if more than 1. 
-If only 1, then just 'maxItems: 1'
+>As mentioned in the beginning of the thread. The plan is to break down the
+>intel-ipmi-oem repo into two parts.
+>- True OEM at Intel
+>- Dynamic Sensor stacks (new repo)
 
-> +
-> +  clocks:
-> +    description:
-> +      phandle to clock provider with the clock number in the second cell
+Why is dynamic sensor stacks a new repo?  I would like to see this done 
+in the existing ipmid repo.  If the default implementations there today 
+are undesired, I'd be fine with seeing those moved to the 
+openpower-ipmi-oem repository.
 
-Same here.
+FWIW I would like to make use of dynamic SDR on my new systems (I work 
+for IBM) but I still have to maintain support for Witherspoon, which 
+relies on the old fixed & hardcoded sensor identifiers.
 
-> +
-> +  resets:
-> +    description:
-> +      phandle to reset controller with the reset number in the second cell
-
-And here.
-
-> +
-> +patternProperties:
-> +  "@[0-9]+$":
-
-If every node is a fan and there are up to 16:
-
-^fan@[0-9a-f]$
-
-> +    type: object
-> +    description:
-> +      Under fan subnode there can upto 16 child nodes, with each child node
-> +      representing a fan. There are 16 fans each fan can have one PWM port and one
-> +      Fan tach inputs.
-> +      For PWM port can be configured cooling-levels to create cooling device.
-> +      Cooling device could be bound to a thermal zone for the thermal control.
-> +
-> +    properties:
-> +      reg:
-> +        minimum: 0
-> +        maximum: 15
-> +        description:
-> +          This property identify the PWM control channel of this fan.
-> +
-> +      fan-tach-ch:
-> +        $ref: /schemas/types.yaml#/definitions/uint8
-> +        minimum: 0
-> +        maximum: 15
-> +        description:
-> +          This property identify the fan tach input channel.
-> +
-> +      pulses-per-revolution:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        default: 2
-> +        minimum: 1
-> +        description:
-> +          Specify tacho pulse per revolution of the fan.
-> +
-> +      cooling-levels:
-> +        description:
-> +          PWM duty cycle values in a range from 0 to 255
-> +          which correspond to thermal cooling states.
-> +
-> +      aspeed,pwm-freq:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        default: 25000
-> +        minimum: 24
-> +        maximum: 780000
-> +        description:
-> +          Specify the frequency of PWM.
-
-Units? Use a unit suffix and then drop the $ref.
-
-> +
-> +      aspeed,inverse-pin:
-> +        type: boolean
-> +        description:
-> +          Inverse PWM output signal.
-> +
-> +      aspeed,falling-point:
-> +        $ref: /schemas/types.yaml#/definitions/uint8
-> +        default: 10
-> +        minimum: 0
-> +        maximum: 255
-
-0-255 is already the range of uint8, so drop.
-
-> +        description:
-> +          Initialize the pulse width.
-> +
-> +    required:
-> +      - fan-tach-ch
-> +      - reg
-> +
-> +    additionalProperties: true
-> +
-> +required:
-> + - compatible
-> + - reg
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    pwm_tacho: pwm-tacho-controller@1e610000 {
-> +        compatible = "aspeed,ast2600-pwm-tachometer";
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +        reg = <0x1e610000 0x100>;
-> +
-> +        fan@1 {
-> +            reg = <0x00>;
-> +            aspeed,pwm-freq = <25000>;
-> +            cooling-levels = /bits/ 8 <125 151 177 203 229 255>;
-> +            fan-tach-ch = /bits/ 8 <0x00>;
-> +            pulses-per-revolution = <2>;
-> +        };
-> +
-> +        fan@2 {
-> +            reg = <0x01>;
-> +            aspeed,pwm-freq = <25000>;
-> +            cooling-levels = /bits/ 8 <125 151 177 203 229 255>;
-> +            fan-tach-ch = /bits/ 8 <0x01>;
-> +            pulses-per-revolution = <2>;
-> +        };
-> +    };
-> +...
-> -- 
-> 2.25.1
-> 
+-brad
