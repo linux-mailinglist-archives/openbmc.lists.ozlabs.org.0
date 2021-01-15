@@ -1,69 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02A062F7748
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 12:13:53 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20E482F77B4
+	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 12:33:56 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DHJTV1zz4zDsfs
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 22:13:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DHJwc4kdSzDsfJ
+	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 22:33:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yandex-team.ru (client-ip=95.108.205.193;
- helo=forwardcorp1o.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62b;
+ helo=mail-ej1-x62b.google.com; envelope-from=shakeebbk@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=yandex-team.ru
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
- header.a=rsa-sha256 header.s=default header.b=lrRTZPIK; 
- dkim-atps=neutral
-X-Greylist: delayed 95 seconds by postgrey-1.36 at bilbo;
- Fri, 15 Jan 2021 22:10:28 AEDT
-Received: from forwardcorp1o.mail.yandex.net (forwardcorp1o.mail.yandex.net
- [95.108.205.193])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=FQmgWgzd; dkim-atps=neutral
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com
+ [IPv6:2a00:1450:4864:20::62b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DHJPg2LkPzDscS
- for <openbmc@lists.ozlabs.org>; Fri, 15 Jan 2021 22:10:27 +1100 (AEDT)
-Received: from vla1-fdfb804fb3f3.qloud-c.yandex.net
- (vla1-fdfb804fb3f3.qloud-c.yandex.net
- [IPv6:2a02:6b8:c0d:3199:0:640:fdfb:804f])
- by forwardcorp1o.mail.yandex.net (Yandex) with ESMTP id 85A1C2E14A6;
- Fri, 15 Jan 2021 14:08:35 +0300 (MSK)
-Received: from localhost (localhost [::1])
- by vla1-fdfb804fb3f3.qloud-c.yandex.net (mxbackcorp/Yandex) with ESMTP id
- memcj4htCN-8ZxSwnN9; Fri, 15 Jan 2021 14:08:35 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; 
- t=1610708915; bh=uigaEEU4n2xulIQYNr9YDu54pJY8cS3n4Jxwdz6Qwew=;
- h=Subject:In-Reply-To:Date:References:To:From:Message-Id;
- b=lrRTZPIK/+Q1WQ6LKD7naf67bycaAhEL25J6mqfDm7qYAWurionBeYW1jF1g/zAsu
- MwHXle7Zfnld+TdVJvpa+EEHkTGtrscESnSGWPlpBbb4t6B7Na0i1lrGuxvg7v2MJu
- 5FbGUpxCS3qR2DzyHqJFOk/YGi6m8HBkeuGIKh1g=
-Authentication-Results: vla1-fdfb804fb3f3.qloud-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-X-Yandex-Sender-Uid: 1120000000049860
-X-Yandex-Avir: 1
-Received: from sas1-ec30c78b6c5b.qloud-c.yandex.net
- (sas1-ec30c78b6c5b.qloud-c.yandex.net [2a02:6b8:c14:2704:0:640:ec30:c78b])
- by sas1-c3eab8bf7b15.qloud-c.yandex.net with LMTP id Wj4GDDeLvC-MzgIgcr0
- for <kitsok@yandex-team.ru>; Fri, 15 Jan 2021 14:08:25 +0300
-Received: by sas1-1199a7868807.qloud-c.yandex.net with HTTP;
- Fri, 15 Jan 2021 14:08:24 +0300
-From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-To: Shakeeb B K <shakeebbk@gmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-In-Reply-To: <CABYu0WhdNyNpJ7n1_LAW2eDv5J9uSmSKDQbMHhjLb6N_moB=ig@mail.gmail.com>
-References: <CABYu0WhdNyNpJ7n1_LAW2eDv5J9uSmSKDQbMHhjLb6N_moB=ig@mail.gmail.com>
-Subject: Re: Hot plug support for aspeed-smc driver
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DHJt42phZzDscV
+ for <openbmc@lists.ozlabs.org>; Fri, 15 Jan 2021 22:31:36 +1100 (AEDT)
+Received: by mail-ej1-x62b.google.com with SMTP id l9so7085933ejx.3
+ for <openbmc@lists.ozlabs.org>; Fri, 15 Jan 2021 03:31:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=QYI68WNNtVItUDgNe3C/KJTRrHLpT2W0s6ksS2U92k4=;
+ b=FQmgWgzdkuz+FyA+GjoiXnLeTMR8Ogn0nRB4fgB0XydIqKoH2k6UwqdMgi000s3/Mq
+ 9THs1Gjqtj+ZE998b3YWoYSoPgJO46HxnwFbvQOHhm33xLgYbZB4MjyeUnbHbMa9QYxQ
+ TKKiZpGNU9numLyX3QtgEDNMrrhIOTtbnxzU9HyYbzVw+lJ28V/BaCZB/ZFSEJ65GxQ0
+ hGNGSDsFdqjnxIP4/T28Cg/xTdlceGIfffpAT8H0uMUpL5hEruVt32SVxg5qiaAgvibo
+ ynnLr20NTbDKTpZP58zLv7uH5V3dEDY8L4WXo22HZptStYPAE5Xb35B18ketpQVISN2X
+ /npQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=QYI68WNNtVItUDgNe3C/KJTRrHLpT2W0s6ksS2U92k4=;
+ b=RYveoD1F8OlrcOTYXTtouVlkZQpCUeABuM+CoFMSay6LSw8fVW9HfZeYZNITQsZXPO
+ tWwEk/Hopyos/tUHJLzPD1b1dhPL9qyYLUj/Ad8ov1o5Sh2P2a00/YtUQBRJeF1HoJ6W
+ K+s/ON7BQvmkef+z21W/Cpa/BbGIBYe/HnAVNe3Cn2mcUrdK/nm8yo/CDry5tJ6g8Bct
+ oXa/uc4NoMhkmReR7oUNRatWkZxldwKzYRUwrhxyrIb/fz61YrsL3z709ueUTrSZnDlH
+ tV5ONEsxEg2YheEun/W0fcaUE5eX/YrFtuqlenERBsrX2ghwesSUv7IM6/+y5gYRk64o
+ YXyA==
+X-Gm-Message-State: AOAM533gQgSsgSSFzp5SDvsEbNjhpvCgvIjf7lfDDah9yccGe2G+mQXy
+ L3/4To/JSCNmQ3MxK+rlNBOlNGQwZG+oQyrei1kCxMu2ndc=
+X-Google-Smtp-Source: ABdhPJz7ZfLanaqFGuU5zIrkjOGUhholLSjKKYqqVNGtihZIysLFChtECRxg4WQ/sZknbIB2iMYXe/Df97NU4x+Ve5o=
+X-Received: by 2002:a17:906:7cc:: with SMTP id
+ m12mr7657861ejc.386.1610710291919; 
+ Fri, 15 Jan 2021 03:31:31 -0800 (PST)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Fri, 15 Jan 2021 14:08:34 +0300
-Message-Id: <4851610708480@mail.yandex-team.ru>
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
+References: <CABYu0WhdNyNpJ7n1_LAW2eDv5J9uSmSKDQbMHhjLb6N_moB=ig@mail.gmail.com>
+ <4851610708480@mail.yandex-team.ru>
+In-Reply-To: <4851610708480@mail.yandex-team.ru>
+From: Shakeeb B K <shakeebbk@gmail.com>
+Date: Fri, 15 Jan 2021 17:01:20 +0530
+Message-ID: <CABYu0WhuqZF37=R4QK-f7TY0dpGRgrzHPnPjYju7r43GaXsDpQ@mail.gmail.com>
+Subject: Re: Hot plug support for aspeed-smc driver
+To: Konstantin Klubnichkin <kitsok@yandex-team.ru>
+Content-Type: multipart/alternative; boundary="000000000000c938de05b8eeb6b7"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,52 +74,147 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGRpdj5IZWxsbyE8L2Rpdj48ZGl2Plllcy48L2Rpdj48ZGl2PkkndmUgcGF0Y2hlZCBTTUMgZHJp
-dmVyIHRvIG5vdCBkZS1pbnN0YW50aWF0ZSB3aGF0IGl0IGNyZWF0ZWQgaWYgZmF1bHR5IGZsYXNo
-IGlzIGRldGVjdGVkLjwvZGl2PjxkaXY+V2l0aCB0aGlzIHBhdGNoIHRoZSBkcml2ZXIgbG9hZHMg
-d2l0aCBlcnJvciBhbmQgdGhlbiwgd2hlbiBJIG5lZWQgdG8gYWNjZXNzIFNQSSBmbGFzaCwgSSBq
-dXN0IGRlLWluc3RhbnRpYXRlL2luc3RhbnRpYXRlIGZsYXNoIGRldmljZSB2aWEgc3lzZnMgbGlr
-ZSB0aGlzOjwvZGl2PjxkaXY+PGRpdj48ZGl2PsKgPC9kaXY+PGRpdj5TUElfREVWPSIxZTYzMDAw
-MC5zcGkiPC9kaXY+PGRpdj5TUElfUEFUSD0iL3N5cy9idXMvcGxhdGZvcm0vZHJpdmVycy9hc3Bl
-ZWQtc21jIjwvZGl2PjwvZGl2PjxkaXY+ZWNobyAkU1BJX0RFViAmZ3Q7ICRTUElfUEFUSC91bmJp
-bmQgIyBVbmJpbmQgZGV2aWNlPC9kaXY+PGRpdj48ZGl2PmVjaG8gJFNQSV9ERVYgJmd0OyAkU1BJ
-X1BBVEgvYmluZCAjIEJpbmQgZGV2aWNlPC9kaXY+PC9kaXY+PC9kaXY+PGRpdj7CoDwvZGl2Pjxk
-aXY+SGVyZSBpcyB0aGUgcGF0Y2g8L2Rpdj48ZGl2Pj09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PC9kaXY+PGRpdj48ZGl2PmRpZmYgLS1naXQgYS9kcml2ZXJzL210ZC9zcGktbm9yL2NvbnRy
-b2xsZXJzL2FzcGVlZC1zbWMuYyBiL2RyaXZlcnMvbXRkL3NwaS1ub3IvY29udHJvbGxlcnMvYXNw
-ZWVkLXNtYy5jPC9kaXY+PGRpdj5pbmRleCAwODA1ZGNhLi40MGE5YzVjIDEwMDY0NDwvZGl2Pjxk
-aXY+LS0tIGEvZHJpdmVycy9tdGQvc3BpLW5vci9jb250cm9sbGVycy9hc3BlZWQtc21jLmM8L2Rp
-dj48ZGl2PisrKyBiL2RyaXZlcnMvbXRkL3NwaS1ub3IvY29udHJvbGxlcnMvYXNwZWVkLXNtYy5j
-PC9kaXY+PGRpdj5AQCAtMTMyMSw4ICsxMzIxLDExIEBAIHN0YXRpYyBpbnQgYXNwZWVkX3NtY19z
-ZXR1cF9mbGFzaChzdHJ1Y3QgYXNwZWVkX3NtY19jb250cm9sbGVyICpjb250cm9sbGVyLDwvZGl2
-PjxkaXY+fTwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PmlmIChyZXQpIHs8IS0tIC0tPjwvZGl2Pjxk
-aXY+LSBvZl9ub2RlX3B1dChjaGlsZCk7PC9kaXY+PGRpdj4tIGFzcGVlZF9zbWNfdW5yZWdpc3Rl
-cihjb250cm9sbGVyKTs8L2Rpdj48ZGl2PisgLyogQXMgaXQncyB0aGUgY29udHJvbGxlciB3ZSdy
-ZSBmbHlpbmcgb24sIGl0IGRvZXNuJ3QgbWFrZSBzZW5zZSB0byB1bnJlZ2lzdGVyIGluIGNhc2Ug
-b2YgZXJyb3JzOjwvZGl2PjxkaXY+KyBJZiB3ZSBkb24ndCBoYXZlIGZsYXNoIHdpdGggcm9vdGZz
-IC0gd2UnbGwgZGllIGluIGtlcm5lbCBwYW5pYyBkdWUgdG8gbWlzc2luZyByb290ZnMuPC9kaXY+
-PGRpdj4rIElmIEJNQyBjaGlwIGlzIE9LIGFuZCBvdGhlcnMgYXJlIG1pc3NpbmcgLSBpdCdzIGZp
-bmUsIHdlIGNhbiBjb250aW51ZS48L2Rpdj48ZGl2PisgKi88L2Rpdj48ZGl2PisgcmV0dXJuIDA7
-PC9kaXY+PGRpdj59PC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+cmV0dXJuIHJldDs8L2Rpdj48ZGl2
-Pi0tPC9kaXY+PGRpdj4yLjcuNDwvZGl2PjxkaXY+PGRpdj49PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PTwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PsKgPC9kaXY+PC9kaXY+PGRpdj7CoDwvZGl2
-PjwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PjE1LjAxLjIwMjEsIDEzOjQzLCAiU2hha2VlYiBCIEsi
-ICZsdDtzaGFrZWViYmtAZ21haWwuY29tJmd0Ozo8L2Rpdj48YmxvY2txdW90ZT48ZGl2PkhpIEFs
-bCw8ZGl2PsKgPC9kaXY+PGRpdj5XZSBoYXZlIGEgdXNlIGNhc2UgZm9yIGR5bmFtaWMgZW5hYmxp
-bmcvZGlzYWJsaW5nIGFjY2VzcyB0byBzcGkgbm9yIGZsYXNoIHVzaW5nIGFuIGV4dGVybmFsIG11
-eC48L2Rpdj48ZGl2PlRoaXMgaXMgbWFpbmx5IGZvciBkYXRhIGZsYXNoIGFjY2Vzc8Kgb3ZlciBz
-cGkgY29udHJvbGxlci7CoDwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PlNpbmNlIHdlIHVzZSBhc3Bl
-ZWQtc21jIGRyaXZlciBmb3IgYm90aCBmbWMgYW5kIHNtYywgd2UgY2Fubm90IG1ha2UgaXQgbG9h
-ZGFibGUgYXMgb2Ygbm93LjwvZGl2PjxkaXY+SXMgdGhlcmUgYW55IHdheSB0byBoYW5kbGUgdGhp
-cyBvdGhlciB0aGFuIHdyaXRpbmcgYSBuZXcgaW1wbGVtZW50YXRpb24gZm9yIHNwaSBjb250cm9s
-bGVyPzwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PlRoYW5rcyw8L2Rpdj48ZGl2PlNoYWtlZWI8L2Rp
-dj48L2Rpdj48L2Jsb2NrcXVvdGU+PGRpdj7CoDwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2Pi0twqA8
-L2Rpdj48ZGl2PkJlc3QgcmVnYXJkcyw8L2Rpdj48ZGl2PktvbnN0YW50aW4gS2x1Ym5pY2hraW4s
-PC9kaXY+PGRpdj5sZWFkIGZpcm13YXJlIGVuZ2luZWVyLDwvZGl2PjxkaXY+c2VydmVyIGhhcmR3
-YXJlIFImYW1wO0QgZ3JvdXAsPC9kaXY+PGRpdj5ZYW5kZXggTW9zY293IG9mZmljZS48L2Rpdj48
-ZGl2PnRlbDogKzctOTAzLTUxMC0zMy0zMzwvZGl2PjxkaXY+wqA8L2Rpdj4=
+--000000000000c938de05b8eeb6b7
+Content-Type: text/plain; charset="UTF-8"
+
+Thanks for this patch, this seems workable for us. Will test it out.
+
+Regards,
+Shakeeb
+
+On Fri, Jan 15, 2021 at 4:38 PM Konstantin Klubnichkin <
+kitsok@yandex-team.ru> wrote:
+
+> Hello!
+> Yes.
+> I've patched SMC driver to not de-instantiate what it created if faulty
+> flash is detected.
+> With this patch the driver loads with error and then, when I need to
+> access SPI flash, I just de-instantiate/instantiate flash device via sysfs
+> like this:
+>
+> SPI_DEV="1e630000.spi"
+> SPI_PATH="/sys/bus/platform/drivers/aspeed-smc"
+> echo $SPI_DEV > $SPI_PATH/unbind # Unbind device
+> echo $SPI_DEV > $SPI_PATH/bind # Bind device
+>
+> Here is the patch
+>
+> ======================================================================================
+> diff --git a/drivers/mtd/spi-nor/controllers/aspeed-smc.c
+> b/drivers/mtd/spi-nor/controllers/aspeed-smc.c
+> index 0805dca..40a9c5c 100644
+> --- a/drivers/mtd/spi-nor/controllers/aspeed-smc.c
+> +++ b/drivers/mtd/spi-nor/controllers/aspeed-smc.c
+> @@ -1321,8 +1321,11 @@ static int aspeed_smc_setup_flash(struct
+> aspeed_smc_controller *controller,
+> }
+>
+> if (ret) {
+> - of_node_put(child);
+> - aspeed_smc_unregister(controller);
+> + /* As it's the controller we're flying on, it doesn't make sense to
+> unregister in case of errors:
+> + If we don't have flash with rootfs - we'll die in kernel panic due to
+> missing rootfs.
+> + If BMC chip is OK and others are missing - it's fine, we can continue.
+> + */
+> + return 0;
+> }
+>
+> return ret;
+> --
+> 2.7.4
+>
+> ======================================================================================
+>
+>
+>
+>
+> 15.01.2021, 13:43, "Shakeeb B K" <shakeebbk@gmail.com>:
+>
+> Hi All,
+>
+> We have a use case for dynamic enabling/disabling access to spi nor flash
+> using an external mux.
+> This is mainly for data flash access over spi controller.
+>
+> Since we use aspeed-smc driver for both fmc and smc, we cannot make it
+> loadable as of now.
+> Is there any way to handle this other than writing a new implementation
+> for spi controller?
+>
+> Thanks,
+> Shakeeb
+>
+>
+>
+> --
+> Best regards,
+> Konstantin Klubnichkin,
+> lead firmware engineer,
+> server hardware R&D group,
+> Yandex Moscow office.
+> tel: +7-903-510-33-33
+>
+>
+
+--000000000000c938de05b8eeb6b7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Thanks for this patch, this seems workable for us. Will te=
+st it out.<div><br></div><div>Regards,</div><div>Shakeeb</div></div><br><di=
+v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jan 1=
+5, 2021 at 4:38 PM Konstantin Klubnichkin &lt;<a href=3D"mailto:kitsok@yand=
+ex-team.ru">kitsok@yandex-team.ru</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex"><div>Hello!</div><div>Yes.</div><div>I&#39=
+;ve patched SMC driver to not de-instantiate what it created if faulty flas=
+h is detected.</div><div>With this patch the driver loads with error and th=
+en, when I need to access SPI flash, I just de-instantiate/instantiate flas=
+h device via sysfs like this:</div><div><div><div>=C2=A0</div><div>SPI_DEV=
+=3D&quot;1e630000.spi&quot;</div><div>SPI_PATH=3D&quot;/sys/bus/platform/dr=
+ivers/aspeed-smc&quot;</div></div><div>echo $SPI_DEV &gt; $SPI_PATH/unbind =
+# Unbind device</div><div><div>echo $SPI_DEV &gt; $SPI_PATH/bind # Bind dev=
+ice</div></div></div><div>=C2=A0</div><div>Here is the patch</div><div>=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div><div>diff --git a/drivers/mtd/spi-=
+nor/controllers/aspeed-smc.c b/drivers/mtd/spi-nor/controllers/aspeed-smc.c=
+</div><div>index 0805dca..40a9c5c 100644</div><div>--- a/drivers/mtd/spi-no=
+r/controllers/aspeed-smc.c</div><div>+++ b/drivers/mtd/spi-nor/controllers/=
+aspeed-smc.c</div><div>@@ -1321,8 +1321,11 @@ static int aspeed_smc_setup_f=
+lash(struct aspeed_smc_controller *controller,</div><div>}</div><div>=C2=A0=
+</div><div>if (ret) {</div><div>- of_node_put(child);</div><div>- aspeed_sm=
+c_unregister(controller);</div><div>+ /* As it&#39;s the controller we&#39;=
+re flying on, it doesn&#39;t make sense to unregister in case of errors:</d=
+iv><div>+ If we don&#39;t have flash with rootfs - we&#39;ll die in kernel =
+panic due to missing rootfs.</div><div>+ If BMC chip is OK and others are m=
+issing - it&#39;s fine, we can continue.</div><div>+ */</div><div>+ return =
+0;</div><div>}</div><div>=C2=A0</div><div>return ret;</div><div>--</div><di=
+v>2.7.4</div><div><div>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</div><div>=C2=A0<=
+/div><div>=C2=A0</div></div><div>=C2=A0</div></div><div>=C2=A0</div><div>15=
+.01.2021, 13:43, &quot;Shakeeb B K&quot; &lt;<a href=3D"mailto:shakeebbk@gm=
+ail.com" target=3D"_blank">shakeebbk@gmail.com</a>&gt;:</div><blockquote><d=
+iv>Hi All,<div>=C2=A0</div><div>We have a use case for dynamic enabling/dis=
+abling access to spi nor flash using an external mux.</div><div>This is mai=
+nly for data flash access=C2=A0over spi controller.=C2=A0</div><div>=C2=A0<=
+/div><div>Since we use aspeed-smc driver for both fmc and smc, we cannot ma=
+ke it loadable as of now.</div><div>Is there any way to handle this other t=
+han writing a new implementation for spi controller?</div><div>=C2=A0</div>=
+<div>Thanks,</div><div>Shakeeb</div></div></blockquote><div>=C2=A0</div><di=
+v>=C2=A0</div><div>--=C2=A0</div><div>Best regards,</div><div>Konstantin Kl=
+ubnichkin,</div><div>lead firmware engineer,</div><div>server hardware R&am=
+p;D group,</div><div>Yandex Moscow office.</div><div>tel: +7-903-510-33-33<=
+/div><div>=C2=A0</div></blockquote></div>
+
+--000000000000c938de05b8eeb6b7--
