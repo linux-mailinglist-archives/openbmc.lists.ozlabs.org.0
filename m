@@ -1,77 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D1C22F7DE8
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 15:16:05 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E8C32F7F21
+	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 16:13:08 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DHNWh3mgnzDsgr
-	for <lists+openbmc@lfdr.de>; Sat, 16 Jan 2021 01:16:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DHPnX553QzDsh4
+	for <lists+openbmc@lfdr.de>; Sat, 16 Jan 2021 02:13:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::233;
- helo=mail-oi1-x233.google.com; envelope-from=geissonator@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=VvpURxcy; dkim-atps=neutral
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
- [IPv6:2607:f8b0:4864:20::233])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=q5R7uL+6; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DHNRf6jH6zDsgX
- for <openbmc@lists.ozlabs.org>; Sat, 16 Jan 2021 01:12:29 +1100 (AEDT)
-Received: by mail-oi1-x233.google.com with SMTP id n186so1763097oia.5
- for <openbmc@lists.ozlabs.org>; Fri, 15 Jan 2021 06:12:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=WnN40OJlwyD423KDpfZQ6UEvCB+BOdUEDiIkq2GfFOU=;
- b=VvpURxcyxUynXdFxJQKEvXt9zt1KIpZHjzyRA6KKDI6kBzzNEOZ6N5tk9UypQciNZJ
- /jrE77YSbx63PKHPA/7I2aBTIFIXEvb4ynu6X/a1Wy1BhmhWfdziG0uWA31tdWn8U+Ml
- VH/gGI3q6kKaip/olvOPWRYqIME3OUteBV5Z4oHZnB5fiVGIwur6gCbA9XQxkEQMxyf4
- oWIyTg/3Jc8OFDaMisbEL4WPt8/FgAxA/Dc/PQRqJWIiBZ9YLT5C77f1FV6Kvpcj8gas
- GGvIcDKvYueBRPV/7Uq8KYaWOXN+3umK6FCOOba75e6PxLM2mW2zV2NzZHfGmQpwGTUo
- bmSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=WnN40OJlwyD423KDpfZQ6UEvCB+BOdUEDiIkq2GfFOU=;
- b=IBA0KRt4pVtEa0MxTEtbFxz6cCBAp2YKBgsKdgBa1Rb8E0eh17DwG6m1RndTUk2eYH
- hZFIHbpsZrIqIm3p5NyJPWtIDU4z94Qw2Ec75ko7ot7NjCejRTP9scJ+qiacPfH08cQA
- X90FhtJwxSrfK3wvkxQNrDeDs9QdYEgphzhsl5FFtYfLdY4zlubIz7pTH61WYntSTumw
- i0iEfTHWoBgZcfKOG9q4e+kA7IM1PVqVMp4AZUgyTfloOZ5YhUmQ7dzHbp925Q5ZWt5W
- X2uElhGkwKKlrYl1WKwcrTEKSOGqbRnDxhrisDDUk9DUORBRFicUGh6Pr/XG1/FYjD0t
- 3P0A==
-X-Gm-Message-State: AOAM531Sn3uv7mzFBV8BIv+7lapPv9oHE0dnpu267AKVaJCGKpLReMWt
- idLP73wA/D0dXpCmVtxRy28=
-X-Google-Smtp-Source: ABdhPJz4o2vqiAm9UHauo2cKDpT81QpDSC6XvLJsluU46Y+DRSssPiENAKx8PyYYYbDKtRBs6icJ8A==
-X-Received: by 2002:aca:4813:: with SMTP id v19mr5728578oia.119.1610719945312; 
- Fri, 15 Jan 2021 06:12:25 -0800 (PST)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:6856:6d5b:4835:5613])
- by smtp.gmail.com with ESMTPSA id o64sm1656792oif.43.2021.01.15.06.12.24
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 15 Jan 2021 06:12:24 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.40.0.2.32\))
-Subject: Re: CI build for yosemitev2
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <20210115132613.GA47865@patrickw3-mbp.dhcp.thefacebook.com>
-Date: Fri, 15 Jan 2021 08:12:23 -0600
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0B81C083-4FD8-46EC-AA8B-F472EF8CB9BE@gmail.com>
-References: <PU1PR04MB224835088E75178D9AB64B85A7C00@PU1PR04MB2248.apcprd04.prod.outlook.com>
- <4C410766-951F-4543-AE09-BC3F31197F5E@gmail.com>
- <20210115132613.GA47865@patrickw3-mbp.dhcp.thefacebook.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-X-Mailer: Apple Mail (2.3654.40.0.2.32)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DHPlj698FzDsgJ
+ for <openbmc@lists.ozlabs.org>; Sat, 16 Jan 2021 02:11:28 +1100 (AEDT)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 10FF40eB069817; Fri, 15 Jan 2021 10:11:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : subject :
+ date : message-id; s=pp1; bh=bfneg1uuX7eZSIxc7Ag14xm9Leopa3qyjekmMtWDuPA=;
+ b=q5R7uL+6lLpz1GzRhauBsSaBy5x8o8gkwZf8FPcs+C2hKkWM7tY5A+2YxspHaEvAFXn1
+ e16YSyusHFMvQ8yzWnMfI04jjRAAe26hvnYJGpAQlAVv3XVLl4I26QBZIJEb6nMapH//
+ MjUJGssQgMBZ3HXJ8jgv5MtWNdM2AnXXeDhWEGOqzF2ifafe7u0jnXFxhRDTcIn14fuo
+ pO9sYZOkbo96C656OMZMT8KmNRD9jYhaRDxDgEbKOU9LIOz/0OYixfQhsmfgvFIiMKsW
+ A1RerA/CkC/Dvzp0SLd+XqDXAWQwpRLp3aEju+MUOkSokguffiYQEnIUcLweWdt10mx4 KA== 
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 363cqv1emb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Jan 2021 10:11:24 -0500
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 10FF7PNt005187;
+ Fri, 15 Jan 2021 15:11:23 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma04wdc.us.ibm.com with ESMTP id 35y449ngf8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Jan 2021 15:11:23 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 10FFBMfN35389878
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 15 Jan 2021 15:11:22 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B7466BE054;
+ Fri, 15 Jan 2021 15:11:21 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C8F4DBE056;
+ Fri, 15 Jan 2021 15:11:20 +0000 (GMT)
+Received: from klaus-virtual-ubuntu.aus.stglabs.ibm.com (unknown [9.80.230.10])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Fri, 15 Jan 2021 15:11:20 +0000 (GMT)
+From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+To: openbmc@lists.ozlabs.org, joel@jms.id.au
+Subject: [PATCH linux dev-5.8 0/9] Add TPM i2C TIS device
+Date: Fri, 15 Jan 2021 12:10:39 -0300
+Message-Id: <20210115151048.15965-1-klaus@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.17.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
+ definitions=2021-01-15_08:2021-01-15,
+ 2021-01-15 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1011
+ mlxlogscore=956 bulkscore=0 mlxscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2101150095
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,45 +90,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "bradleyb@fuzziesquirrel.com" <bradleyb@fuzziesquirrel.com>, "Velumani T-ERS,
- HCLTech" <velumanit@hcl.com>, Patrick Williams <patrickw3@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Add the tpm_tis_i2c driver, which was submitted / discussed here[1] but
+not yet accepted. I decided to not include '[v12,7/9] tpm: tpm_tis:
+verify TPM_STS register is valid after locality request' since I don't
+think it's correct or necessary (and it breaks compilation).
 
+Additionally, add the Nuvoton NPCT750A device (which uses the
+aforementioned driver) to IBM's Rainier's Device-Tree (opted to not send
+this upstream yet until we have the actual driver merged)
 
-> On Jan 15, 2021, at 7:26 AM, Patrick Williams <patrick@stwcx.xyz> =
-wrote:
->=20
-> On Sun, Jan 03, 2021 at 07:27:06PM -0600, Andrew Geissler wrote:
->>=20
->>=20
->>> On Dec 21, 2020, at 9:32 AM, Velumani T-ERS,HCLTech =
-<velumanit@hcl.com> wrote:
->>>=20
->>> Could you please help us to add the Yosemitev2 machine in the CI =
-build verification.=20
->>=20
->> Hi Velumani, glad to see a new system added to openbmc!
->>=20
->> Getting a new system into CI doesn=E2=80=99t have the most defined =
-process but
->> I think in general it has to fall under one of these due to our =
-constraints
->> in compute power for CI[1]:
->>=20
->> 2) Donate a jenkins compute node to openbmc CI
->=20
-> Facebook will allocate a few compute nodes to the Jenkins pool.  =
-Andrew,
-> I'll work with you to get them online and integrated with Jenkins.  =
-Once
-> that is done, we can enable Yv2?
+Tested on an Rainier (probes ok) + ibm tpm2 tss packages (used for
+sanity test only).
 
-Nice! Sounds good to me.
+ -Klaus
 
->=20
-> --=20
-> Patrick Williams
+[1] - https://patchwork.kernel.org/project/linux-integrity/cover/20200625144650.269719-1-amirmizi6@gmail.com/
+
 
