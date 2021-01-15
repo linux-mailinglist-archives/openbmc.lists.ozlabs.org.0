@@ -2,88 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41C9D2F7C97
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 14:28:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D1C22F7DE8
+	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 15:16:05 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DHMTF6ytvzDsg3
-	for <lists+openbmc@lfdr.de>; Sat, 16 Jan 2021 00:28:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DHNWh3mgnzDsgr
+	for <lists+openbmc@lfdr.de>; Sat, 16 Jan 2021 01:16:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
- helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::233;
+ helo=mail-oi1-x233.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=r30Ou9DM; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=F9TLeTdg; 
- dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=VvpURxcy; dkim-atps=neutral
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
+ [IPv6:2607:f8b0:4864:20::233])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DHMQQ1BNKzDsPt
- for <openbmc@lists.ozlabs.org>; Sat, 16 Jan 2021 00:26:20 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 6B0CF5C00CD;
- Fri, 15 Jan 2021 08:26:17 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Fri, 15 Jan 2021 08:26:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=+pR8KOs+pEOkNSraxYEEoh34oVb
- rvtEeM1YIbE4pMFA=; b=r30Ou9DMfIok49aGI9UAk8oYbr1OeoKr2jnlKiIhvCF
- d4KfPkeJnbvTgR8huwr7TCBFJBp8tOfQPwCyQYEUvvnlX2knmJlCLQlK/1fI8uS3
- eLEFKDkeuZpDsVTAjlHdjsBP4l6qVk2ahLlwA60IWHgZRol8PDtFhHzFS6Cq+qXc
- sPGFVtPdMiXxovV65Ogfr7uay+7hY6ShlKA2Utin7bvR/p0grefTmpalEtzikxi/
- ogJuWnXZj+HVpvbPH7PwRehPpv10BAP1c53Fj3IhhqHETIrAfiLovF5CnEfGv801
- b2XBbEUaAmqEWnR6/KK4DYOzcTO5EbWZfTtfwM32nyA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+pR8KO
- s+pEOkNSraxYEEoh34oVbrvtEeM1YIbE4pMFA=; b=F9TLeTdg4aahUsOO69fNJ2
- nTCgf+zmJYkV282QvXGNFjSyXSBECJRbB1oXcovtiCxEwvCagrrkx2CHzCY2puIS
- RnxmHQyGZuRkkwKcEOQ96p3gE6nTbmMKdOtc0gqeKP7VLMlHv8dikZ4mrtctFPX6
- M/F1Qn9i+naJmm3Ea4UiVDMxLHhtQwaKyzJaY5MIsuPiQpjRHAIGODZLgY2c5OKV
- nibo2luQRCgMAzVkstJIaurBaiBDLWFsTZr0NqsDPOKGit5yBKSF/jEWNBtHP5X3
- 063r8D+A7zNITHSiSBaj3NlE8nLz/ANP0WmmlIdbHr8U7hotUDE3XnM3eK1aq8MQ
- ==
-X-ME-Sender: <xms:95cBYEsWF7n943KfnZ5awhCRXa82PaOHHIAJiCekM08pNJ5tBfzHFA>
- <xme:95cBYBf89WsGaggVdtU7akt0Tve5POSrBa2BeImJYG8de5rNU52vAVO548sTqqDGE
- WkunVr35isywjL_yPs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrtddvgddvjecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttdej
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeekudeutdefiefhheefheefvdejueej
- ieektdetheelvdfhleehkeegvdeiveekhfenucfkphepudeifedruddugedrudefvddrfe
- enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
- rhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:95cBYPxXzUYm3CJovcArHVD-ou_nSRc--U1AOj7IOuWkMJwWDoj7LQ>
- <xmx:95cBYHNKroucei1ZGQ5kh6sKDmFh1TY-xlZ6vU1j2sguAeZ1QPJMKQ>
- <xmx:95cBYE_JYKgTXK7tOWAhQFbb9gFDtP2XUyqzmLlJf5h2ABltA7JbGA>
- <xmx:-ZcBYGIRuLesmQO-okI_M5I8YdQvSoJRpfodOuePYP-dG6l-jlRcag>
-Received: from localhost (unknown [163.114.132.3])
- by mail.messagingengine.com (Postfix) with ESMTPA id 74630108005F;
- Fri, 15 Jan 2021 08:26:15 -0500 (EST)
-Date: Fri, 15 Jan 2021 07:26:13 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Andrew Geissler <geissonator@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DHNRf6jH6zDsgX
+ for <openbmc@lists.ozlabs.org>; Sat, 16 Jan 2021 01:12:29 +1100 (AEDT)
+Received: by mail-oi1-x233.google.com with SMTP id n186so1763097oia.5
+ for <openbmc@lists.ozlabs.org>; Fri, 15 Jan 2021 06:12:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=WnN40OJlwyD423KDpfZQ6UEvCB+BOdUEDiIkq2GfFOU=;
+ b=VvpURxcyxUynXdFxJQKEvXt9zt1KIpZHjzyRA6KKDI6kBzzNEOZ6N5tk9UypQciNZJ
+ /jrE77YSbx63PKHPA/7I2aBTIFIXEvb4ynu6X/a1Wy1BhmhWfdziG0uWA31tdWn8U+Ml
+ VH/gGI3q6kKaip/olvOPWRYqIME3OUteBV5Z4oHZnB5fiVGIwur6gCbA9XQxkEQMxyf4
+ oWIyTg/3Jc8OFDaMisbEL4WPt8/FgAxA/Dc/PQRqJWIiBZ9YLT5C77f1FV6Kvpcj8gas
+ GGvIcDKvYueBRPV/7Uq8KYaWOXN+3umK6FCOOba75e6PxLM2mW2zV2NzZHfGmQpwGTUo
+ bmSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=WnN40OJlwyD423KDpfZQ6UEvCB+BOdUEDiIkq2GfFOU=;
+ b=IBA0KRt4pVtEa0MxTEtbFxz6cCBAp2YKBgsKdgBa1Rb8E0eh17DwG6m1RndTUk2eYH
+ hZFIHbpsZrIqIm3p5NyJPWtIDU4z94Qw2Ec75ko7ot7NjCejRTP9scJ+qiacPfH08cQA
+ X90FhtJwxSrfK3wvkxQNrDeDs9QdYEgphzhsl5FFtYfLdY4zlubIz7pTH61WYntSTumw
+ i0iEfTHWoBgZcfKOG9q4e+kA7IM1PVqVMp4AZUgyTfloOZ5YhUmQ7dzHbp925Q5ZWt5W
+ X2uElhGkwKKlrYl1WKwcrTEKSOGqbRnDxhrisDDUk9DUORBRFicUGh6Pr/XG1/FYjD0t
+ 3P0A==
+X-Gm-Message-State: AOAM531Sn3uv7mzFBV8BIv+7lapPv9oHE0dnpu267AKVaJCGKpLReMWt
+ idLP73wA/D0dXpCmVtxRy28=
+X-Google-Smtp-Source: ABdhPJz4o2vqiAm9UHauo2cKDpT81QpDSC6XvLJsluU46Y+DRSssPiENAKx8PyYYYbDKtRBs6icJ8A==
+X-Received: by 2002:aca:4813:: with SMTP id v19mr5728578oia.119.1610719945312; 
+ Fri, 15 Jan 2021 06:12:25 -0800 (PST)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:6856:6d5b:4835:5613])
+ by smtp.gmail.com with ESMTPSA id o64sm1656792oif.43.2021.01.15.06.12.24
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 15 Jan 2021 06:12:24 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.40.0.2.32\))
 Subject: Re: CI build for yosemitev2
-Message-ID: <20210115132613.GA47865@patrickw3-mbp.dhcp.thefacebook.com>
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <20210115132613.GA47865@patrickw3-mbp.dhcp.thefacebook.com>
+Date: Fri, 15 Jan 2021 08:12:23 -0600
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <0B81C083-4FD8-46EC-AA8B-F472EF8CB9BE@gmail.com>
 References: <PU1PR04MB224835088E75178D9AB64B85A7C00@PU1PR04MB2248.apcprd04.prod.outlook.com>
  <4C410766-951F-4543-AE09-BC3F31197F5E@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="Q68bSM7Ycu6FN28Q"
-Content-Disposition: inline
-In-Reply-To: <4C410766-951F-4543-AE09-BC3F31197F5E@gmail.com>
+ <20210115132613.GA47865@patrickw3-mbp.dhcp.thefacebook.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+X-Mailer: Apple Mail (2.3654.40.0.2.32)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,55 +90,38 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---Q68bSM7Ycu6FN28Q
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jan 03, 2021 at 07:27:06PM -0600, Andrew Geissler wrote:
+> On Jan 15, 2021, at 7:26 AM, Patrick Williams <patrick@stwcx.xyz> =
+wrote:
 >=20
+> On Sun, Jan 03, 2021 at 07:27:06PM -0600, Andrew Geissler wrote:
+>>=20
+>>=20
+>>> On Dec 21, 2020, at 9:32 AM, Velumani T-ERS,HCLTech =
+<velumanit@hcl.com> wrote:
+>>>=20
+>>> Could you please help us to add the Yosemitev2 machine in the CI =
+build verification.=20
+>>=20
+>> Hi Velumani, glad to see a new system added to openbmc!
+>>=20
+>> Getting a new system into CI doesn=E2=80=99t have the most defined =
+process but
+>> I think in general it has to fall under one of these due to our =
+constraints
+>> in compute power for CI[1]:
+>>=20
+>> 2) Donate a jenkins compute node to openbmc CI
 >=20
-> > On Dec 21, 2020, at 9:32 AM, Velumani T-ERS,HCLTech <velumanit@hcl.com>=
- wrote:
-> >=20
-> > Could you please help us to add the Yosemitev2 machine in the CI build =
-verification.=20
+> Facebook will allocate a few compute nodes to the Jenkins pool.  =
+Andrew,
+> I'll work with you to get them online and integrated with Jenkins.  =
+Once
+> that is done, we can enable Yv2?
+
+Nice! Sounds good to me.
+
 >=20
-> Hi Velumani, glad to see a new system added to openbmc!
->=20
-> Getting a new system into CI doesn=E2=80=99t have the most defined proces=
-s but
-> I think in general it has to fall under one of these due to our constrain=
-ts
-> in compute power for CI[1]:
->=20
-> 2) Donate a jenkins compute node to openbmc CI
+> --=20
+> Patrick Williams
 
-Facebook will allocate a few compute nodes to the Jenkins pool.  Andrew,
-I'll work with you to get them online and integrated with Jenkins.  Once
-that is done, we can enable Yv2?
-
---=20
-Patrick Williams
-
---Q68bSM7Ycu6FN28Q
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmABl/MACgkQqwNHzC0A
-wRnQsA/+LniU0D0WMF6Mgwd3ULQi0EAZ8Ug1bhk+fCsWSvdC3uZBLj5PhYlRbaIi
-W4fJLH41K5hlEBiySJisSWMYd5M7esBxlVQUBi7hQG91mtyOsINhaGTvUHKMUoYL
-O7/QVTBtOqSWQvY8wMI6rBuqyllPiXj5uvYcW2IuPLRLwfT0osJctabhNH2v+Scw
-Lj6UoF+VhKGNoXUMPltGjqTXgOzrTvt3KM3NnH7LcarAep+rWQmyVkzs0r0h9KfA
-aQWsv4VuQUMB05LnObRn45YoC9ifOHwyozFUCOzHXqv1EX0RgHFivLV5+CS373kF
-A05KvjLE+xJkyPnNf9YmerEov3ylE1KuE8PUtu8CqkUO6BM+uQpZzZZqP/q7ZrZ9
-qzQy/QnFmsoKsFp+IPdCX+Y881b30oUzpzLwPyqHkJTKmGm0WbatxZGKgCCi1AxF
-PVhqWbOdnar/FntgI6OBmmFUaBVYPOx7fE5QrNPsGZ2lj6YAUtslYZG+E91dfdH4
-b8btD5Z4dKKO0AZCDksh2oOzmbZJ6JaK/I+WoQK7Ug57HndwkhH152BaXyVdFsuP
-czvExGCNvCX9eCJC7Som6hc5/aQxZbc2obZzR4aKTNW5DcUsQw3hQMH/yQgOBoJy
-02O7ttV8STKlpBVhdf8wmGnXyfuQnpPvjejqsLv0l5kXFA6KvUk=
-=+Rnw
------END PGP SIGNATURE-----
-
---Q68bSM7Ycu6FN28Q--
