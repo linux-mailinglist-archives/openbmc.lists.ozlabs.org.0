@@ -2,81 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D8052F7F6A
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 16:23:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B03CF2F7F71
+	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 16:24:31 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DHQ105MXwzDsZN
-	for <lists+openbmc@lfdr.de>; Sat, 16 Jan 2021 02:23:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DHQ2j1FwszDrQZ
+	for <lists+openbmc@lfdr.de>; Sat, 16 Jan 2021 02:24:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
  helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
  header.from=linux.vnet.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=kC8R8nDR; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ header.s=pp1 header.b=b3k0ayQD; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DHPlw3c5pzDsgM
- for <openbmc@lists.ozlabs.org>; Sat, 16 Jan 2021 02:11:40 +1100 (AEDT)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 10FF3DcS034859; Fri, 15 Jan 2021 10:11:37 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DHPlx4xkyzDsgJ
+ for <openbmc@lists.ozlabs.org>; Sat, 16 Jan 2021 02:11:41 +1100 (AEDT)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 10FF2sI7034742; Fri, 15 Jan 2021 10:11:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references; s=pp1;
- bh=O+VxBNIt7TWoC14tgXiyhljh67i6yFfNob/kWE/Q9BM=;
- b=kC8R8nDRLk3fgtdpbaN58WzeUV6Dj+plRpVAqIqyakqN1OdpoIhYUPdaL249Kq37NBIk
- MK1IS5vOMKN4nTDHxqYuu3Y8MI6LZcDf6y+zBIsyLyyQtwD2W5zhS/JoizhYHInmTPF4
- GALm+IPlBHwLlTducVcz2KOxtd08FfmAymmyq+v6cA0r05ZSuK+phAG3myiPEgainBze
- DEhmfx1D1VzkbA417wEGdEoICYZTwSXiCASbN3a8Nz338NZhpKcZLbism0ZMSM4uoRzq
- isyBTPXssv8nR5hJrlYy9V5jcxVZRNgjao8j4b2l0KY1ftm0p82wpg8nSz5pckKCknFM UQ== 
+ bh=Wy5suWM6wpU3A+oO77OkHX51ZIKaQ2HHWSU/ifEhewU=;
+ b=b3k0ayQDkMmk2GGczlHADXpEsifb/gVRSoL9K1/daFsnUiUibKibZXyQHfKIvVl74X4b
+ Jh5lW6BkTF4VQXSgR+hJmVzRTFCo8NFGbroDyzSERKeSClrKUPAhLaasWggTDnnjPmaH
+ UEA7IpN6QtNUAv7MimZfe0izRXlm+ym9u3vRnMQ4UhtaOW8+tjGUpQqELjtBehZN1eef
+ 5ss5Cfatf3U48vDlyJbzTWZDE/o0q4+DXxUbRH9RbLtCak2uzLfq0SLkO/KKdlh75jxS
+ HQNBbUen1llWYVrBXeFWNWqiq+qMXLxazuIy2U9mZxi+/eu1D6sCNbxDAApDmiHm66+e jg== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 363d6urkm5-1
+ by mx0b-001b2d01.pphosted.com with ESMTP id 363caxae5q-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Jan 2021 10:11:37 -0500
-Received: from m0098399.ppops.net (m0098399.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 10FF3MEN036168;
- Fri, 15 Jan 2021 10:11:37 -0500
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
- [169.55.91.170])
- by mx0a-001b2d01.pphosted.com with ESMTP id 363d6urkkd-1
+ Fri, 15 Jan 2021 10:11:38 -0500
+Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 10FF5i0v050592;
+ Fri, 15 Jan 2021 10:11:38 -0500
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 363caxae5g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Jan 2021 10:11:37 -0500
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
- by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 10FFBG7m005379;
- Fri, 15 Jan 2021 15:11:36 GMT
-Received: from b03cxnp08026.gho.boulder.ibm.com
- (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
- by ppma02wdc.us.ibm.com with ESMTP id 35y449nfu3-1
+ Fri, 15 Jan 2021 10:11:38 -0500
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 10FF8AC7029213;
+ Fri, 15 Jan 2021 15:11:37 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma02dal.us.ibm.com with ESMTP id 35y44a8u80-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Jan 2021 15:11:36 +0000
+ Fri, 15 Jan 2021 15:11:37 +0000
 Received: from b03ledav005.gho.boulder.ibm.com
  (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 10FFBZP722741502
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 10FFBaSj27722216
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Jan 2021 15:11:35 GMT
+ Fri, 15 Jan 2021 15:11:36 GMT
 Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DD7EFBE059;
- Fri, 15 Jan 2021 15:11:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 838BCBE053;
+ Fri, 15 Jan 2021 15:11:36 +0000 (GMT)
 Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BFFE7BE05F;
- Fri, 15 Jan 2021 15:11:33 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5EA30BE05B;
+ Fri, 15 Jan 2021 15:11:35 +0000 (GMT)
 Received: from klaus-virtual-ubuntu.aus.stglabs.ibm.com (unknown [9.80.230.10])
  by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Fri, 15 Jan 2021 15:11:33 +0000 (GMT)
+ Fri, 15 Jan 2021 15:11:35 +0000 (GMT)
 From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
 To: openbmc@lists.ozlabs.org, joel@jms.id.au
-Subject: [PATCH linux dev-5.8 6/9] tpm: Handle an exception for TPM Firmware
- Update mode.
-Date: Fri, 15 Jan 2021 12:10:45 -0300
-Message-Id: <20210115151048.15965-7-klaus@linux.vnet.ibm.com>
+Subject: [PATCH linux dev-5.8 7/9] tpm: Add YAML schema for TPM TIS I2C options
+Date: Fri, 15 Jan 2021 12:10:46 -0300
+Message-Id: <20210115151048.15965-8-klaus@linux.vnet.ibm.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210115151048.15965-1-klaus@linux.vnet.ibm.com>
 References: <20210115151048.15965-1-klaus@linux.vnet.ibm.com>
@@ -85,11 +84,11 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
  definitions=2021-01-15_08:2021-01-15,
  2021-01-15 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 mlxlogscore=999
- mlxscore=0 bulkscore=0 adultscore=0 phishscore=0 suspectscore=0
- clxscore=1015 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2101150095
+ mlxlogscore=999
+ impostorscore=0 mlxscore=0 adultscore=0 bulkscore=0 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 suspectscore=0
+ malwarescore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2009150000 definitions=main-2101150091
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,44 +106,78 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Amir Mizinski <amirmizi6@gmail.com>
 
-An extra precaution for TPM Firmware Update Mode.
-For example if TPM power was cut while in Firmware update, platform
-should ignore "selftest" failure and skip TPM initialization sequence.
+Added a YAML schema to support tpm tis i2c related dt-bindings for the I2c
+PTP based physical layer.
 
-Suggested-by: Benoit Houyere <benoit.houyere@st.com>
+This patch adds the documentation for corresponding device tree bindings of
+I2C based Physical TPM.
+Refer to the 'I2C Interface Definition' section in
+'TCG PC Client PlatformTPMProfile(PTP) Specification' publication
+for specification.
+
 Signed-off-by: Amir Mizinski <amirmizi6@gmail.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
 ---
- drivers/char/tpm/tpm2-cmd.c | 4 ++++
- include/linux/tpm.h         | 1 +
- 2 files changed, 5 insertions(+)
+ .../bindings/security/tpm/tpm-tis-i2c.yaml    | 50 +++++++++++++++++++
+ 1 file changed, 50 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/security/tpm/tpm-tis-i2c.yaml
 
-diff --git a/drivers/char/tpm/tpm2-cmd.c b/drivers/char/tpm/tpm2-cmd.c
-index eff1f12d981a..8ab86fd49258 100644
---- a/drivers/char/tpm/tpm2-cmd.c
-+++ b/drivers/char/tpm/tpm2-cmd.c
-@@ -728,6 +728,10 @@ int tpm2_auto_startup(struct tpm_chip *chip)
- 		goto out;
- 
- 	rc = tpm2_do_selftest(chip);
+diff --git a/Documentation/devicetree/bindings/security/tpm/tpm-tis-i2c.yaml b/Documentation/devicetree/bindings/security/tpm/tpm-tis-i2c.yaml
+new file mode 100644
+index 000000000000..68b13d59b87e
+--- /dev/null
++++ b/Documentation/devicetree/bindings/security/tpm/tpm-tis-i2c.yaml
+@@ -0,0 +1,50 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/security/tpm/tpm-tis-i2c.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+	if (rc == TPM2_RC_UPGRADE || rc == TPM2_RC_COMMAND_CODE)
-+		return 0;
++title: I2C PTP based TPM Device Tree Bindings
 +
- 	if (rc && rc != TPM2_RC_INITIALIZE)
- 		goto out;
- 
-diff --git a/include/linux/tpm.h b/include/linux/tpm.h
-index 8f4ff39f51e7..392d10d3b59a 100644
---- a/include/linux/tpm.h
-+++ b/include/linux/tpm.h
-@@ -200,6 +200,7 @@ enum tpm2_return_codes {
- 	TPM2_RC_INITIALIZE	= 0x0100, /* RC_VER1 */
- 	TPM2_RC_FAILURE		= 0x0101,
- 	TPM2_RC_DISABLED	= 0x0120,
-+	TPM2_RC_UPGRADE         = 0x012D,
- 	TPM2_RC_COMMAND_CODE    = 0x0143,
- 	TPM2_RC_TESTING		= 0x090A, /* RC_WARN */
- 	TPM2_RC_REFERENCE_H0	= 0x0910,
++maintainers:
++  - Amir Mizinski <amirmizi6@gmail.com>
++
++description:
++  Device Tree Bindings for I2C based Trusted Platform Module(TPM).
++
++properties:
++  compatible:
++    items:
++      - enum:
++          # Nuvoton's Trusted Platform Module (TPM) (NPCT75x)
++          - nuvoton,npct75x
++      - const: tcg,tpm-tis-i2c
++
++  reg:
++    maxItems: 1
++
++  interrupt:
++    maxItems: 1
++
++  crc-checksum:
++    $ref: /schemas/types.yaml#/definitions/flag
++    description:
++      Set this flag to enable CRC checksum.
++
++required:
++  - compatible
++  - reg
++
++examples:
++  - |
++    i2c {
++      #address-cells = <1>;
++      #size-cells = <0>;
++
++      tpm@2e {
++        compatible = "nuvoton,npct75x", "tcg,tpm-tis-i2c";
++        reg = <0x2e>;
++        crc-checksum;
++      };
++    };
++...
 -- 
 2.20.1
 
