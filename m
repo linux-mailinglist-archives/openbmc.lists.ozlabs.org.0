@@ -1,62 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 846A92F7191
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 05:21:43 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4430E2F72AA
+	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 07:00:48 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DH7Kw6rZnzDsZ2
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 15:21:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DH9XF2dHBzDsb7
+	for <lists+openbmc@lfdr.de>; Fri, 15 Jan 2021 17:00:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::329;
+ helo=mail-ot1-x329.google.com; envelope-from=yulei.sh@bytedance.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=bytedance.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=bytedance-com.20150623.gappssmtp.com
+ header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=jUbQdeP7; dkim-atps=neutral
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com
+ [IPv6:2607:f8b0:4864:20::329])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DH7K23M1VzDsXX
- for <openbmc@lists.ozlabs.org>; Fri, 15 Jan 2021 15:20:50 +1100 (AEDT)
-IronPort-SDR: 7Gy74gTu4lh8MH8aobjDTcVqUTuSh3AubMELJ2Yn6Zss6hQzmH6+I++KId4xMEKIV0tcuJq88K
- FW5506ube5sQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9864"; a="174988261"
-X-IronPort-AV: E=Sophos;i="5.79,348,1602572400"; 
- d="scan'208,217";a="174988261"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2021 20:20:48 -0800
-IronPort-SDR: qLEg2uPVztVP3AudYmtHh2gRHzRkvm7tJJ7wFA0Rnk3OrkUeuMH7xMUt0N/oAKYDTTo99KtfHs
- gXlEgRG2XWtA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,348,1602572400"; 
- d="scan'208,217";a="572514917"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga005.fm.intel.com with ESMTP; 14 Jan 2021 20:20:47 -0800
-Received: from shwdeopenbmc (shwdeopenbmc.ccr.corp.intel.com [10.239.164.28])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id DE76B58053A;
- Thu, 14 Jan 2021 20:20:45 -0800 (PST)
-Date: Fri, 15 Jan 2021 12:20:47 +0800
-From: "chunhui.jia" <chunhui.jia@linux.intel.com>
-To: "Lei Yu" <yulei.sh@bytedance.com>,
- "Vernon Mauery" <vernon.mauery@linux.intel.com>
-Subject: Re:  Re: Intel-ipmi-oem repo
-In-Reply-To: <CAGm54UGtnHK+MsNCbaWSOCxUtoTzOJddn+1h5DKUZy5sPEmm=w@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DH9W84vKDzDqvR
+ for <openbmc@lists.ozlabs.org>; Fri, 15 Jan 2021 16:59:46 +1100 (AEDT)
+Received: by mail-ot1-x329.google.com with SMTP id q25so7550700otn.10
+ for <openbmc@lists.ozlabs.org>; Thu, 14 Jan 2021 21:59:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=ZQ8qDXGuoTuhGB326hLy+YCuIOJen/RXku/DQkytrQI=;
+ b=jUbQdeP76RWUsjuVyE1a2K8he2+Q9TNX2xHYsw3nw+hmg72Dr0yO7fPQEcm1tMg0zK
+ QV6uYx3EMmbT7pTbLop1NKIldltBRoUhQfQ1kcmheJwNci7tyyNjhiOL8SHmpLVoaKZG
+ iNb9PCmlq/yhJtPLc1JUSsmLVg6Tnd/QWyYXQa/fj89d4T/SabV3Y88BcZ9VBBvKp8br
+ 1MxosIPp9lhnsp+HqlsglGRkNTkDkPDqUBtNLu6oj5XapzHNw386RZ42GJ10IQ4aF1KN
+ tU83xT6bdSy92luR9kwBFrO0s0gk52Dy2DmpgizekvQkq9SskOJFfCNiYY4mq+Koy2gx
+ LkWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=ZQ8qDXGuoTuhGB326hLy+YCuIOJen/RXku/DQkytrQI=;
+ b=gFU77nbVmVTm2lEmCt14E7LSZOCYp43+vICyKoy20YJFGL6bSRObs5M+3o96wTO+rI
+ /Phuc3Oi7VdbmsPXcJFzvhlBRIusfZJK3pw+yNiBAbOEw7MgN2q8a2qeruOFVuHYPXzL
+ y2MqgVLcIpv2KnCX1wzmszmKSr1X60JtVkvO31u+GM1w0VKfFDf4aSZZQ3vF5aAQFqY0
+ zkmDyMngxecB50euszyIM722KgxfGEUC3a7p6Ygc1/NEf4LQioc2mnVBKf5FRUQgUsmo
+ boNJmbGAd6UM/W0Q5Xm/E+ig9d+Wz+Z3fqfyMiAeBYvtXzNphONQClYQNRgbUvw+03jf
+ l1HA==
+X-Gm-Message-State: AOAM530VviJNtvv4HhZEzUquReuXE7nL4bh6WFU+etX0EUPQ+yJ7dOzA
+ 9qCQSvQOUCbJr4v8P80vuJ8kUq5kq5U7HoQRf+b+Tw==
+X-Google-Smtp-Source: ABdhPJzc5g6QFXpsWOww6itJL+EEmZM26aAWPzps9+aBQLyzIKWEfmX/oKdlLfzMVbI6LNH4ZO9LlP6IbHeIrEGiSsc=
+X-Received: by 2002:a05:6830:1be9:: with SMTP id
+ k9mr7196525otb.226.1610690382933; 
+ Thu, 14 Jan 2021 21:59:42 -0800 (PST)
+MIME-Version: 1.0
 References: <CAHwn2XkNiz7rZzn9RbpZCaUM8HD0HO+mJTD9D2ENc_p+SsmXHg@mail.gmail.com>
  <20210114143909.jf3vbk7zhxp3iguv@thinkpad.fuzziesquirrel.com>
  <CAH2-KxBgmEmfeQxsbTa1RPVO_nm5=G+ayZ9aDM+1hf7oRtoDGA@mail.gmail.com>
  <20210114173805.GB45289@mauery.jf.intel.com>
  <CAGm54UGtnHK+MsNCbaWSOCxUtoTzOJddn+1h5DKUZy5sPEmm=w@mail.gmail.com>
-X-Mailer: NetEase FlashMail 2.4.1.32
-X-Priority: 3 (Normal)
-MIME-Version: 1.0
-Message-ID: <6001181A.3090500@linux.intel.com>
-Content-Type: multipart/alternative;
- boundary="NetEase-FlashMail-003-57dab9dd-5b44-452e-9dba-3a78872b49b3"
+ <6001181A.3090500@linux.intel.com>
+In-Reply-To: <6001181A.3090500@linux.intel.com>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Fri, 15 Jan 2021 13:59:31 +0800
+Message-ID: <CAGm54UGNi+mRjBA6EvFZHEgnRink7LGue96cYq5SvPwc+U=SXQ@mail.gmail.com>
+Subject: Re: Intel-ipmi-oem repo
+To: "chunhui.jia" <chunhui.jia@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,113 +82,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Willy Tu <wltu@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ed Tanous <edtanous@google.com>, Brad Bishop <bradleyb@fuzziesquirrel.com>,
+Cc: Willy Tu <wltu@google.com>, Vernon Mauery <vernon.mauery@linux.intel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <edtanous@google.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
  "apparao.puli" <apparao.puli@linux.intel.com>,
  Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---NetEase-FlashMail-003-57dab9dd-5b44-452e-9dba-3a78872b49b3
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+On Fri, Jan 15, 2021 at 12:20 PM chunhui.jia
+<chunhui.jia@linux.intel.com> wrote:
+>
+> You use both fixed sensor and dynamic sensors?
 
-WW91IHVzZSBib3RoIGZpeGVkIHNlbnNvciBhbmQgZHluYW1pYyBzZW5zb3JzPw0KDQoyMDIxLTAx
-LTE1IA0KDQpjaHVuaHVpLmppYSANCg0KDQoNCuWPkeS7tuS6uu+8mkxlaSBZdSA8eXVsZWkuc2hA
-Ynl0ZWRhbmNlLmNvbT4NCuWPkemAgeaXtumXtO+8mjIwMjEtMDEtMTUgMTA6MjMNCuS4u+mimO+8
-mlJlOiBJbnRlbC1pcG1pLW9lbSByZXBvDQrmlLbku7bkurrvvJoiVmVybm9uIE1hdWVyeSI8dmVy
-bm9uLm1hdWVyeUBsaW51eC5pbnRlbC5jb20+DQrmioTpgIHvvJoiV2lsbHkgVHUiPHdsdHVAZ29v
-Z2xlLmNvbT4sIk9wZW5CTUMgTWFpbGxpc3QiPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4sImNo
-dW5odWkuamlhIjxjaHVuaHVpLmppYUBsaW51eC5pbnRlbC5jb20+LCJFZCBUYW5vdXMiPGVkdGFu
-b3VzQGdvb2dsZS5jb20+LCJCcmFkIEJpc2hvcCI8YnJhZGxleWJAZnV6emllc3F1aXJyZWwuY29t
-PiwiYXBwYXJhby5wdWxpIjxhcHBhcmFvLnB1bGlAbGludXguaW50ZWwuY29tPiwiVmlqYXkgS2hl
-bWthIjx2aWpheWtoZW1rYUBmYi5jb20+DQoNCk9uIEZyaSwgSmFuIDE1LCAyMDIxIGF0IDM6MjMg
-QU0gVmVybm9uIE1hdWVyeSANCjx2ZXJub24ubWF1ZXJ5QGxpbnV4LmludGVsLmNvbT4gd3JvdGU6
-IA0KPiBJIHdvdWxkIHNheSB0aGF0IGlmIElCTSBpcyB0aGUgb25seSBjb21wYW55IHVzaW5nIHRo
-ZSBzZW5zb3IgDQo+IGltcGxlbWVudGF0aW9uIHRoYXQgaXMgY3VycmVudGx5IGluIGlwbWlkLCBp
-dCB3b3VsZCBiZSBiZXN0IHRvIG1vdmUgaXQgDQo+IHRvIHRoZSBJQk0gT0VNIGxheWVyLiBCdXQg
-aXQgaXMgZGlmZmljdWx0IGluIGEgcHJvamVjdCB0aGlzIHNpemUgd2hvIGlzIA0KPiB1c2luZyB3
-aGF0LiBTbyBsZWF2aW5nIGl0IGluIGlwbWlkIGZvciBub3cgaXMgZmluZS4gDQo+IA0KDQpUaGlz
-IGlzIG5vdCB0aGUgY2FzZS4gQnl0ZWRhbmNlIHVzZXMgaXBtaWQgd2l0aCBmaXhlZCB5YW1sIGFz
-IHdlbGwuIA0KSW4gb3VyIGNhc2UsIHdlIGhhdmUgYWxsIHRoZSBzZW5zb3JzIG9uIERCdXMgY3Jl
-YXRlZCBieSANCmVudGl0eS1tYW5hZ2VyL2RidXMtc2Vuc29ycywgYW5kIG9ubHkgcGFydCBvZiB0
-aGVtIGFyZSBuZWNlc3NhcnkgZm9yIA0KaXBtaS4gDQpTbyB3ZSBzcGVjaWZpY2FsbHkgZGVmaW5l
-IHRoZSBuZWNlc3Nhcnkgc2Vuc29ycyAoYW5kIA0KaW52ZW50b3J5LXNlbnNvcnMpIGluIHlhbWwg
-YW5kIHVzZSB0aGUgY3VycmVudCBpcG1pZCB0byBpbXBsZW1lbnQgDQp0aGVtLiANCg0KQUZBSUsg
-WWFkcm8gYW5kIEFtcGVyZSB1c2VzIGlwbWlkIHdpdGggZml4ZWQgeWFtbCB0b28uIA0KDQotLSAg
-DQpCUnMsIA0KTGVpIFlVIA==
+Not exactly.
+We use "dynamic sensors" created by entity-manager/dbus-sensors on DBus;
+We use "fixed sensors" with phosphor-host-ipmid defined in yaml.
 
---NetEase-FlashMail-003-57dab9dd-5b44-452e-9dba-3a78872b49b3
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+>
+> =E5=8F=91=E4=BB=B6=E4=BA=BA=EF=BC=9ALei Yu <yulei.sh@bytedance.com>
+> =E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4=EF=BC=9A2021-01-15 10:23
+> =E4=B8=BB=E9=A2=98=EF=BC=9ARe: Intel-ipmi-oem repo
+> =E6=94=B6=E4=BB=B6=E4=BA=BA=EF=BC=9A"Vernon Mauery"<vernon.mauery@linux.i=
+ntel.com>
+> =E6=8A=84=E9=80=81=EF=BC=9A"Willy Tu"<wltu@google.com>,"OpenBMC Maillist"=
+<openbmc@lists.ozlabs.org>,"chunhui.jia"<chunhui.jia@linux.intel.com>,"Ed T=
+anous"<edtanous@google.com>,"Brad Bishop"<bradleyb@fuzziesquirrel.com>,"app=
+arao.puli"<apparao.puli@linux.intel.com>,"Vijay Khemka"<vijaykhemka@fb.com>
+>
+> On Fri, Jan 15, 2021 at 3:23 AM Vernon Mauery
+> <vernon.mauery@linux.intel.com> wrote:
+> > I would say that if IBM is the only company using the sensor
+> > implementation that is currently in ipmid, it would be best to move it
+> > to the IBM OEM layer. But it is difficult in a project this size who is
+> > using what. So leaving it in ipmid for now is fine.
+> >
+>
+> This is not the case. Bytedance uses ipmid with fixed yaml as well.
+> In our case, we have all the sensors on DBus created by
+> entity-manager/dbus-sensors, and only part of them are necessary for
+> ipmi.
+> So we specifically define the necessary sensors (and
+> inventory-sensors) in yaml and use the current ipmid to implement
+> them.
+>
+> AFAIK Yadro and Ampere uses ipmid with fixed yaml too.
+>
+> --
+> BRs,
+> Lei YU
 
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
-L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
-Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT48IS0tIGZsYXNobWFpbCBzdHlsZSBiZWdpbiAt
-LT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46MH0K
-aW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9CjwvU1RZTEU+DQo8QkFTRSB0YXJnZXQ9
-X2JsYW5rPjwhLS0gZmxhc2htYWlsIHN0eWxlIGVuZCAtLT4NCjxNRVRBIG5hbWU9R0VORVJBVE9S
-IGNvbnRlbnQ9Ik1TSFRNTCAxMS4wMC4xMDU3MC4xMDAxIj48L0hFQUQ+DQo8Qk9EWSANCnN0eWxl
-PSJCT1JERVItTEVGVC1XSURUSDogMHB4OyBGT05ULVNJWkU6IDEwLjVwdDsgRk9OVC1GQU1JTFk6
-IGFyaWFsOyBCT1JERVItUklHSFQtV0lEVEg6IDBweDsgQk9SREVSLUJPVFRPTS1XSURUSDogMHB4
-OyBDT0xPUjogIzAwMDAwMDsgTUFSR0lOOiAxMnB4OyBMSU5FLUhFSUdIVDogMS41OyBCT1JERVIt
-VE9QLVdJRFRIOiAwcHgiIA0KbWFyZ2luaGVpZ2h0PSIwIiBtYXJnaW53aWR0aD0iMCI+DQo8RElW
-PllvdSB1c2UgYm90aCBmaXhlZCBzZW5zb3IgYW5kIGR5bmFtaWMgc2Vuc29ycz88L0RJVj4NCjxE
-SVY+Jm5ic3A7PC9ESVY+DQo8RElWIHN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQtRkFNSUxZ
-OiBWZXJkYW5hOyBDT0xPUjogI2MwYzBjMCIgDQphbGlnbj1sZWZ0PjIwMjEtMDEtMTUgDQo8SFIg
-aWQ9U2lnbk5hbWVIUiANCnN0eWxlPSJCT1JERVItVE9QOiAjYzBjMGMwIDFweCBzb2xpZDsgSEVJ
-R0hUOiAxcHg7IEJPUkRFUi1SSUdIVDogMHB4OyBXSURUSDogMTIycHg7IEJPUkRFUi1CT1RUT006
-IDBweDsgQk9SREVSLUxFRlQ6IDBweCIgDQphbGlnbj1sZWZ0Pg0KPFNQQU4gaWQ9X0ZsYXNoU2ln
-bk5hbWU+Y2h1bmh1aS5qaWE8L1NQQU4+IDwvRElWPg0KPEhSIA0Kc3R5bGU9IkJPUkRFUi1UT1A6
-ICNjMGMwYzAgMXB4IHNvbGlkOyBIRUlHSFQ6IDFweDsgQk9SREVSLVJJR0hUOiAwcHg7IEJPUkRF
-Ui1CT1RUT006IDBweDsgQk9SREVSLUxFRlQ6IDBweCI+DQoNCjxCTE9DS1FVT1RFIGlkPW50ZXMt
-Zmxhc2htYWlsLXF1b3RlIA0Kc3R5bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1GQU1JTFk6IFZl
-cmRhbmE7IFBBRERJTkctTEVGVDogMHB4OyBNQVJHSU4tTEVGVDogMHB4Ij4NCiAgPERJVj48U1RS
-T05HPuWPkeS7tuS6uu+8mjwvU1RST05HPkxlaSBZdSAmbHQ7eXVsZWkuc2hAYnl0ZWRhbmNlLmNv
-bSZndDs8L0RJVj4NCiAgPERJVj48U1RST05HPuWPkemAgeaXtumXtO+8mjwvU1RST05HPjIwMjEt
-MDEtMTUmbmJzcDsxMDoyMzwvRElWPg0KICA8RElWPjxTVFJPTkc+5Li76aKY77yaPC9TVFJPTkc+
-UmU6IEludGVsLWlwbWktb2VtIHJlcG88L0RJVj4NCiAgPERJVj48U1RST05HPuaUtuS7tuS6uu+8
-mjwvU1RST05HPiJWZXJub24gDQogIE1hdWVyeSImbHQ7dmVybm9uLm1hdWVyeUBsaW51eC5pbnRl
-bC5jb20mZ3Q7PC9ESVY+DQogIDxESVY+PFNUUk9ORz7mioTpgIHvvJo8L1NUUk9ORz4iV2lsbHkg
-VHUiJmx0O3dsdHVAZ29vZ2xlLmNvbSZndDssIk9wZW5CTUMgDQogIE1haWxsaXN0IiZsdDtvcGVu
-Ym1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7LCJjaHVuaHVpLmppYSImbHQ7Y2h1bmh1aS5qaWFAbGlu
-dXguaW50ZWwuY29tJmd0OywiRWQgDQogIFRhbm91cyImbHQ7ZWR0YW5vdXNAZ29vZ2xlLmNvbSZn
-dDssIkJyYWQgDQogIEJpc2hvcCImbHQ7YnJhZGxleWJAZnV6emllc3F1aXJyZWwuY29tJmd0Oywi
-YXBwYXJhby5wdWxpIiZsdDthcHBhcmFvLnB1bGlAbGludXguaW50ZWwuY29tJmd0OywiVmlqYXkg
-DQogIEtoZW1rYSImbHQ7dmlqYXlraGVta2FAZmIuY29tJmd0OzwvRElWPg0KICA8RElWPiZuYnNw
-OzwvRElWPg0KICA8RElWPg0KICA8RElWPk9uJm5ic3A7RnJpLCZuYnNwO0phbiZuYnNwOzE1LCZu
-YnNwOzIwMjEmbmJzcDthdCZuYnNwOzM6MjMmbmJzcDtBTSZuYnNwO1Zlcm5vbiZuYnNwO01hdWVy
-eSZuYnNwOzwvRElWPg0KICA8RElWPiZsdDt2ZXJub24ubWF1ZXJ5QGxpbnV4LmludGVsLmNvbSZn
-dDsmbmJzcDt3cm90ZTombmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7SSZuYnNwO3dvdWxk
-Jm5ic3A7c2F5Jm5ic3A7dGhhdCZuYnNwO2lmJm5ic3A7SUJNJm5ic3A7aXMmbmJzcDt0aGUmbmJz
-cDtvbmx5Jm5ic3A7Y29tcGFueSZuYnNwO3VzaW5nJm5ic3A7dGhlJm5ic3A7c2Vuc29yJm5ic3A7
-PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwO2ltcGxlbWVudGF0aW9uJm5ic3A7dGhhdCZuYnNwO2lz
-Jm5ic3A7Y3VycmVudGx5Jm5ic3A7aW4mbmJzcDtpcG1pZCwmbmJzcDtpdCZuYnNwO3dvdWxkJm5i
-c3A7YmUmbmJzcDtiZXN0Jm5ic3A7dG8mbmJzcDttb3ZlJm5ic3A7aXQmbmJzcDs8L0RJVj4NCiAg
-PERJVj4mZ3Q7Jm5ic3A7dG8mbmJzcDt0aGUmbmJzcDtJQk0mbmJzcDtPRU0mbmJzcDtsYXllci4m
-bmJzcDtCdXQmbmJzcDtpdCZuYnNwO2lzJm5ic3A7ZGlmZmljdWx0Jm5ic3A7aW4mbmJzcDthJm5i
-c3A7cHJvamVjdCZuYnNwO3RoaXMmbmJzcDtzaXplJm5ic3A7d2hvJm5ic3A7aXMmbmJzcDs8L0RJ
-Vj4NCiAgPERJVj4mZ3Q7Jm5ic3A7dXNpbmcmbmJzcDt3aGF0LiZuYnNwO1NvJm5ic3A7bGVhdmlu
-ZyZuYnNwO2l0Jm5ic3A7aW4mbmJzcDtpcG1pZCZuYnNwO2ZvciZuYnNwO25vdyZuYnNwO2lzJm5i
-c3A7ZmluZS4mbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jm5i
-c3A7PC9ESVY+DQogIDxESVY+VGhpcyZuYnNwO2lzJm5ic3A7bm90Jm5ic3A7dGhlJm5ic3A7Y2Fz
-ZS4mbmJzcDtCeXRlZGFuY2UmbmJzcDt1c2VzJm5ic3A7aXBtaWQmbmJzcDt3aXRoJm5ic3A7Zml4
-ZWQmbmJzcDt5YW1sJm5ic3A7YXMmbmJzcDt3ZWxsLiZuYnNwOzwvRElWPg0KICA8RElWPkluJm5i
-c3A7b3VyJm5ic3A7Y2FzZSwmbmJzcDt3ZSZuYnNwO2hhdmUmbmJzcDthbGwmbmJzcDt0aGUmbmJz
-cDtzZW5zb3JzJm5ic3A7b24mbmJzcDtEQnVzJm5ic3A7Y3JlYXRlZCZuYnNwO2J5Jm5ic3A7PC9E
-SVY+DQogIDxESVY+ZW50aXR5LW1hbmFnZXIvZGJ1cy1zZW5zb3JzLCZuYnNwO2FuZCZuYnNwO29u
-bHkmbmJzcDtwYXJ0Jm5ic3A7b2YmbmJzcDt0aGVtJm5ic3A7YXJlJm5ic3A7bmVjZXNzYXJ5Jm5i
-c3A7Zm9yJm5ic3A7PC9ESVY+DQogIDxESVY+aXBtaS4mbmJzcDs8L0RJVj4NCiAgPERJVj5TbyZu
-YnNwO3dlJm5ic3A7c3BlY2lmaWNhbGx5Jm5ic3A7ZGVmaW5lJm5ic3A7dGhlJm5ic3A7bmVjZXNz
-YXJ5Jm5ic3A7c2Vuc29ycyZuYnNwOyhhbmQmbmJzcDs8L0RJVj4NCiAgPERJVj5pbnZlbnRvcnkt
-c2Vuc29ycykmbmJzcDtpbiZuYnNwO3lhbWwmbmJzcDthbmQmbmJzcDt1c2UmbmJzcDt0aGUmbmJz
-cDtjdXJyZW50Jm5ic3A7aXBtaWQmbmJzcDt0byZuYnNwO2ltcGxlbWVudCZuYnNwOzwvRElWPg0K
-ICA8RElWPnRoZW0uJm5ic3A7PC9ESVY+DQogIDxESVY+Jm5ic3A7PC9ESVY+DQogIDxESVY+QUZB
-SUsmbmJzcDtZYWRybyZuYnNwO2FuZCZuYnNwO0FtcGVyZSZuYnNwO3VzZXMmbmJzcDtpcG1pZCZu
-YnNwO3dpdGgmbmJzcDtmaXhlZCZuYnNwO3lhbWwmbmJzcDt0b28uJm5ic3A7PC9ESVY+DQogIDxE
-SVY+Jm5ic3A7PC9ESVY+DQogIDxESVY+LS0mbmJzcDsmbmJzcDs8L0RJVj4NCiAgPERJVj5CUnMs
-Jm5ic3A7PC9ESVY+DQogIDxESVY+TGVpJm5ic3A7WVUmbmJzcDs8L0RJVj48L0RJVj48L0JMT0NL
-UVVPVEU+PC9CT0RZPjwvSFRNTD4=
 
---NetEase-FlashMail-003-57dab9dd-5b44-452e-9dba-3a78872b49b3--
 
+--=20
+BRs,
+Lei YU
