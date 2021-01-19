@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFEFB2FC39B
-	for <lists+openbmc@lfdr.de>; Tue, 19 Jan 2021 23:38:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 626402FC38D
+	for <lists+openbmc@lfdr.de>; Tue, 19 Jan 2021 23:35:27 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DL3Ts1h4TzDqvY
-	for <lists+openbmc@lfdr.de>; Wed, 20 Jan 2021 09:38:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DL3Q30dj6zDqTj
+	for <lists+openbmc@lfdr.de>; Wed, 20 Jan 2021 09:35:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -17,18 +17,18 @@ Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
  [212.199.177.27])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DL3PC5s9pzDqTY
- for <openbmc@lists.ozlabs.org>; Wed, 20 Jan 2021 09:34:35 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DL3PC61sLzDqTh
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Jan 2021 09:34:39 +1100 (AEDT)
 Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 10JMYGIG008270;
- Wed, 20 Jan 2021 00:34:16 +0200
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 10JMYHL3008273;
+ Wed, 20 Jan 2021 00:34:17 +0200
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id 4F47263A17; Wed, 20 Jan 2021 00:34:17 +0200 (IST)
+ id 5D8C163A17; Wed, 20 Jan 2021 00:34:18 +0200 (IST)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.8 v1 1/4] arm: dts: npcm7xx: Add syscon property
-Date: Wed, 20 Jan 2021 00:34:09 +0200
-Message-Id: <20210119223412.223492-2-tmaimon77@gmail.com>
+Subject: [PATCH linux dev-5.8 v1 2/4] arm: dts: npcm7xx: modify PECI node.
+Date: Wed, 20 Jan 2021 00:34:10 +0200
+Message-Id: <20210119223412.223492-3-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20210119223412.223492-1-tmaimon77@gmail.com>
 References: <20210119223412.223492-1-tmaimon77@gmail.com>
@@ -50,58 +50,27 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, Tomer Maimon <tmaimon77@gmail.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add syscon property to ADC and watchdog nodes.
+Modify PECI compatible property and remove reg property.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 ---
- arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-index 455a96b23b85..448cfc9d4ae1 100644
+index 448cfc9d4ae1..f4794b59fa55 100644
 --- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
 +++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-@@ -82,7 +82,7 @@
- 			"simple-mfd";
- 			reg = <0x801000 0x6C>;
- 		};
--		
-+
- 		fuse:fuse@18a000 {
- 			compatible = "nuvoton,npcm750-fuse", "syscon",
- 				"simple-mfd";
-@@ -425,6 +425,7 @@
- 				reg = <0x801C 0x4>;
- 				status = "disabled";
- 				clocks = <&clk NPCM7XX_CLK_TIMER>;
-+				syscon = <&gcr>;
+@@ -367,8 +367,7 @@
  			};
  
- 			watchdog1: watchdog@901C {
-@@ -433,6 +434,7 @@
- 				reg = <0x901C 0x4>;
- 				status = "disabled";
- 				clocks = <&clk NPCM7XX_CLK_TIMER>;
-+				syscon = <&gcr>;
- 			};
- 
- 			watchdog2: watchdog@a01C {
-@@ -441,6 +443,7 @@
- 				reg = <0xa01C 0x4>;
- 				status = "disabled";
- 				clocks = <&clk NPCM7XX_CLK_TIMER>;
-+				syscon = <&gcr>;
- 			};
- 
- 			serial0: serial@1000 {
-@@ -493,6 +496,7 @@
- 				interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clk NPCM7XX_CLK_ADC>;
- 				resets = <&rstc NPCM7XX_RESET_IPSRST1 NPCM7XX_RESET_ADC>;
-+				syscon = <&fuse>;
- 				status = "disabled";
- 			};
- 
+ 			peci: peci-bus@100000 {
+-				compatible = "nuvoton,npcm750-peci";
+-				reg = <0x100000 0x200>;
++				compatible = "simple-bus";
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
+ 				ranges = <0x0 0x100000 0x200>;
 -- 
 2.22.0
 
