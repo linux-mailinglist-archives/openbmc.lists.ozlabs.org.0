@@ -2,39 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63A6C2FC39D
-	for <lists+openbmc@lfdr.de>; Tue, 19 Jan 2021 23:40:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B56C2FC3F6
+	for <lists+openbmc@lfdr.de>; Tue, 19 Jan 2021 23:48:12 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DL3WM4T4zzDqNk
-	for <lists+openbmc@lfdr.de>; Wed, 20 Jan 2021 09:39:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DL3hn2PlnzDqw4
+	for <lists+openbmc@lfdr.de>; Wed, 20 Jan 2021 09:48:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=nuvoton.com
- (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
- envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
-Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
- [212.199.177.27])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72a;
+ helo=mail-qk1-x72a.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=FbV21+eE; dkim-atps=neutral
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com
+ [IPv6:2607:f8b0:4864:20::72a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DL3PC5lFwzDqQS
- for <openbmc@lists.ozlabs.org>; Wed, 20 Jan 2021 09:34:35 +1100 (AEDT)
-Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 10JMYJKJ008280;
- Wed, 20 Jan 2021 00:34:19 +0200
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id 7692263A17; Wed, 20 Jan 2021 00:34:20 +0200 (IST)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.8 v1 4/4] watchdog: npcm: Modify get reset status
- function
-Date: Wed, 20 Jan 2021 00:34:12 +0200
-Message-Id: <20210119223412.223492-5-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20210119223412.223492-1-tmaimon77@gmail.com>
-References: <20210119223412.223492-1-tmaimon77@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DL3gr048yzDqtW
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Jan 2021 09:47:15 +1100 (AEDT)
+Received: by mail-qk1-x72a.google.com with SMTP id b64so23615623qkc.12
+ for <openbmc@lists.ozlabs.org>; Tue, 19 Jan 2021 14:47:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=t1z728CwUXUwBbalzcJUQFQoojFtqyiOytGhRqAvO38=;
+ b=FbV21+eEaiOQwb0B3oUASbNT9xZD2VYmc5qD9xDL8bRK7UnMlgguYXa3zCBD4KwmVf
+ 9cTxAInKSCfnmzLNqsrA4DB7ZIcjUlRKxiOYOaj6yUKF/g5p3dK/6p3LPeomBZEkXbOz
+ 6QbFCuzsCZHOH6Z5zvvtpLwvNe4VhJORJ758A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=t1z728CwUXUwBbalzcJUQFQoojFtqyiOytGhRqAvO38=;
+ b=T2Ayyce+IwISI3y6jPECYVamx5+er9NjqGFQyWvWbaE4JtxTA3VwtMULcy580+0EYL
+ p9oRUXN7TKSkGOg/tCtAh9uRCwHi090qNJg+5bRNFwW66eiKIoSpQqmVkF+hbLrKZaxq
+ kcXf4yRLYQkfAHvoZyA4abw73Xzv4kdM5Fn94Eysd0m/2l4e42Odmz0HDZVIl3VU8SPV
+ t3wMivHII/iI8ATWuAO9gJT40SQW/9BdYaKFcJOJc7Mt94k6zXVoybJcpac+Ywlo7X9C
+ kg4d26huAR17dfFDGBhZggIyR3ThD8il1kz5KhyEVrt6GBpMLhyAERD1P4twI46Ksyc+
+ pNMw==
+X-Gm-Message-State: AOAM53099CCbGZxRVS9fpUaa4wVOhcfIv5sa6ngAwbmRjIsdB/yW349t
+ GCQr7xWFNc0POhSyx2VS2J9k+IghZmugYrQUiag=
+X-Google-Smtp-Source: ABdhPJyQxHLgF4rRdfDo4Srnhf2+354iX4Nre+z6WXZNupNYRh2TYS21Tx1kvXeWuUh3KRrzdxv4aneK6zexN68QO2Q=
+X-Received: by 2002:a37:57c7:: with SMTP id l190mr6724935qkb.487.1611096431859; 
+ Tue, 19 Jan 2021 14:47:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210119223412.223492-1-tmaimon77@gmail.com>
+ <20210119223412.223492-4-tmaimon77@gmail.com>
+In-Reply-To: <20210119223412.223492-4-tmaimon77@gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 19 Jan 2021 22:46:59 +0000
+Message-ID: <CACPK8XeXRNWeWwv8bWr-k8aHH_fqf1kpG5EN4kXMJbbOsp7iAA@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.8 v1 3/4] arm: dts: Olympus: Enable PECI dimm
+ temperature
+To: Tomer Maimon <tmaimon77@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -46,36 +69,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, Tomer Maimon <tmaimon77@gmail.com>,
- benjaminfair@google.com
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Once the syscon phandle not found the WD reset
-status will not supported and return to the
-function caller.
+On Tue, 19 Jan 2021 at 22:34, Tomer Maimon <tmaimon77@gmail.com> wrote:
+>
+> Enable PECI dimm temperature nodes in Olympus
+> Quanta machine.
+>
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> ---
+>  arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
+> index 1692bb7314c5..de34c9b2ff2c 100644
+> --- a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
+> +++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
+> @@ -910,10 +910,12 @@
+>         intel-peci-dimmtemp@30 {
+>                 compatible = "intel,peci-client";
+>                 reg = <0x30>;
+> +               status = "okay";
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----
- drivers/watchdog/npcm_wdt.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Nodes are enabled by default, you shouldn't need to add "okay" for it
+to work. Can you confirm it works without adding this?
 
-diff --git a/drivers/watchdog/npcm_wdt.c b/drivers/watchdog/npcm_wdt.c
-index a93180d0a6f4..f87cfadd8d9b 100644
---- a/drivers/watchdog/npcm_wdt.c
-+++ b/drivers/watchdog/npcm_wdt.c
-@@ -202,8 +202,10 @@ static void npcm_get_reset_status(struct npcm_wdt *wdt, struct device *dev)
- 	u32 rstval;
- 
- 	gcr_regmap = syscon_regmap_lookup_by_phandle(dev->of_node, "syscon");
--	if (IS_ERR(gcr_regmap))
-+	if (IS_ERR(gcr_regmap)) {
- 		dev_warn(dev, "Failed to find gcr syscon, WD reset status not supported\n");
-+		return;
-+	}
- 
- 	regmap_read(gcr_regmap, NPCM7XX_RESSR_OFFSET, &rstval);
- 	if (!rstval) {
--- 
-2.22.0
 
+>         };
+>         intel-peci-dimmtemp@31 {
+>                 compatible = "intel,peci-client";
+>                 reg = <0x31>;
+> +               status = "okay";
+>         };
+>  };
+>
+> --
+> 2.22.0
+>
