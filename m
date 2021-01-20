@@ -2,61 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B56C2FC3F6
-	for <lists+openbmc@lfdr.de>; Tue, 19 Jan 2021 23:48:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EDE942FCA21
+	for <lists+openbmc@lfdr.de>; Wed, 20 Jan 2021 05:54:39 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DL3hn2PlnzDqw4
-	for <lists+openbmc@lfdr.de>; Wed, 20 Jan 2021 09:48:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DLCqc3T9QzDqfK
+	for <lists+openbmc@lfdr.de>; Wed, 20 Jan 2021 15:54:36 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72a;
- helo=mail-qk1-x72a.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::930;
+ helo=mail-ua1-x930.google.com; envelope-from=deepak.kodihalli.83@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=FbV21+eE; dkim-atps=neutral
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com
- [IPv6:2607:f8b0:4864:20::72a])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=jIOCcF54; dkim-atps=neutral
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com
+ [IPv6:2607:f8b0:4864:20::930])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DL3gr048yzDqtW
- for <openbmc@lists.ozlabs.org>; Wed, 20 Jan 2021 09:47:15 +1100 (AEDT)
-Received: by mail-qk1-x72a.google.com with SMTP id b64so23615623qkc.12
- for <openbmc@lists.ozlabs.org>; Tue, 19 Jan 2021 14:47:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DLCpk3YJwzDqG0
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Jan 2021 15:53:49 +1100 (AEDT)
+Received: by mail-ua1-x930.google.com with SMTP id 43so4951256uag.12
+ for <openbmc@lists.ozlabs.org>; Tue, 19 Jan 2021 20:53:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=t1z728CwUXUwBbalzcJUQFQoojFtqyiOytGhRqAvO38=;
- b=FbV21+eEaiOQwb0B3oUASbNT9xZD2VYmc5qD9xDL8bRK7UnMlgguYXa3zCBD4KwmVf
- 9cTxAInKSCfnmzLNqsrA4DB7ZIcjUlRKxiOYOaj6yUKF/g5p3dK/6p3LPeomBZEkXbOz
- 6QbFCuzsCZHOH6Z5zvvtpLwvNe4VhJORJ758A=
+ :cc; bh=odJFmowESTbUTpNChYS0XYON1ANjXketGDL0XcgX44Q=;
+ b=jIOCcF54uOs37UM+aKFThfutxF91J3mpvqP3HXeA4t5z1V2AAXeVIWf5cq637NP1vJ
+ gk9nWFjGmzT7HaPpqxElUfh0d011vpBadhe1LUHHKNwcVdUdg3Wzhq0Ys9DgdWvP0YHl
+ nz3uFBXOmS8zZXFTAlvhpogKnksc4ly2/rSfxOYDIC31uWzkTnTJVK9bvjA7fwnyuUWK
+ lF2J69YoaLuwel2dD7kMF8Di0aeUr8wwDKZtFQsFdJIGV/bZqPNDMTm0wtJz4K3cVmGZ
+ qurf9Hl+DDDhPh7Ue2Yg6OKcaAywPw21lsdLE+SCpgJhWJa3A3X6Qd3VAFK3KatyzSLC
+ rzKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=t1z728CwUXUwBbalzcJUQFQoojFtqyiOytGhRqAvO38=;
- b=T2Ayyce+IwISI3y6jPECYVamx5+er9NjqGFQyWvWbaE4JtxTA3VwtMULcy580+0EYL
- p9oRUXN7TKSkGOg/tCtAh9uRCwHi090qNJg+5bRNFwW66eiKIoSpQqmVkF+hbLrKZaxq
- kcXf4yRLYQkfAHvoZyA4abw73Xzv4kdM5Fn94Eysd0m/2l4e42Odmz0HDZVIl3VU8SPV
- t3wMivHII/iI8ATWuAO9gJT40SQW/9BdYaKFcJOJc7Mt94k6zXVoybJcpac+Ywlo7X9C
- kg4d26huAR17dfFDGBhZggIyR3ThD8il1kz5KhyEVrt6GBpMLhyAERD1P4twI46Ksyc+
- pNMw==
-X-Gm-Message-State: AOAM53099CCbGZxRVS9fpUaa4wVOhcfIv5sa6ngAwbmRjIsdB/yW349t
- GCQr7xWFNc0POhSyx2VS2J9k+IghZmugYrQUiag=
-X-Google-Smtp-Source: ABdhPJyQxHLgF4rRdfDo4Srnhf2+354iX4Nre+z6WXZNupNYRh2TYS21Tx1kvXeWuUh3KRrzdxv4aneK6zexN68QO2Q=
-X-Received: by 2002:a37:57c7:: with SMTP id l190mr6724935qkb.487.1611096431859; 
- Tue, 19 Jan 2021 14:47:11 -0800 (PST)
+ bh=odJFmowESTbUTpNChYS0XYON1ANjXketGDL0XcgX44Q=;
+ b=dcVAMrhZ3OPbBmKFV6prU6iLVGTdUbJpwg87xxQOIkJv/H//EEV2xZwzRQYfAz5HCo
+ 5Pi9J8FxCqUnaMfSY2FA7sldI55Pg5rbLjN+JsHdPHsSKo+4OrQIHcwnkv+DGNmDhdwx
+ BtykpSFV6NUcSkhYCWJN7Tb48CGAs0/bUuP329qf/cf31AdtoYbY4XAf+vV9Ns8mISeM
+ deveUeHGk8BJjbEsl4gXrBhxFbOTLgXL1SmLrDy5Vp4NQvaO7aXd+/9WKGf3qDxSjhnC
+ yZvlsZvzuTJda7BNSCqQrmlFCbP69VgJqFA+9y6b2kosSF1lYN+IILEpWisQ+k9jQQvM
+ rUBQ==
+X-Gm-Message-State: AOAM5320+WG9zyRO8QjUEb2HqgtMY++kk0Y/RKCEwEwH32prfZanezQI
+ sT6hTJLpO1wdfkrrfxahhRJrMM3szYtibLYTPXg=
+X-Google-Smtp-Source: ABdhPJzH7LTnlavbmvtpYyk0MKlGY63i1knzx2gtqUAuT8ipzvHJaOhkjSXpfQ9q5pM09eBjGSnFSOV4d9SUEMxXEDI=
+X-Received: by 2002:ab0:4ac3:: with SMTP id t3mr5076945uae.34.1611118426375;
+ Tue, 19 Jan 2021 20:53:46 -0800 (PST)
 MIME-Version: 1.0
-References: <20210119223412.223492-1-tmaimon77@gmail.com>
- <20210119223412.223492-4-tmaimon77@gmail.com>
-In-Reply-To: <20210119223412.223492-4-tmaimon77@gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 19 Jan 2021 22:46:59 +0000
-Message-ID: <CACPK8XeXRNWeWwv8bWr-k8aHH_fqf1kpG5EN4kXMJbbOsp7iAA@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.8 v1 3/4] arm: dts: Olympus: Enable PECI dimm
- temperature
-To: Tomer Maimon <tmaimon77@gmail.com>
+References: <3475dcc0-5630-b18d-5cbe-e36ba1454fc4@linux.vnet.ibm.com>
+ <d1511a78-6a2d-4709-9839-fc7413c64a92@linux.vnet.ibm.com>
+In-Reply-To: <d1511a78-6a2d-4709-9839-fc7413c64a92@linux.vnet.ibm.com>
+From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
+Date: Wed, 20 Jan 2021 10:23:35 +0530
+Message-ID: <CAM=TmwWkokfJMdT-Vd88SSui4ee7jYPudMmRXPo0uPO=6bCY4Q@mail.gmail.com>
+Subject: Re: Switch SensorCollection to show all sensors as new power/thermal
+ schemas implemented
+To: Gunnar Mills <gmills@linux.vnet.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -69,44 +72,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Benjamin Fair <benjaminfair@google.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Ed Tanous <ed@tanous.net>, Lei Yu <yulei.sh@bytedance.com>, "Li,
+ Yong B" <yong.b.li@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 19 Jan 2021 at 22:34, Tomer Maimon <tmaimon77@gmail.com> wrote:
->
-> Enable PECI dimm temperature nodes in Olympus
-> Quanta machine.
->
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> ---
->  arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-> index 1692bb7314c5..de34c9b2ff2c 100644
-> --- a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-> +++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-> @@ -910,10 +910,12 @@
->         intel-peci-dimmtemp@30 {
->                 compatible = "intel,peci-client";
->                 reg = <0x30>;
-> +               status = "okay";
+Hi Gunnar,
 
-Nodes are enabled by default, you shouldn't need to add "okay" for it
-to work. Can you confirm it works without adding this?
-
-
->         };
->         intel-peci-dimmtemp@31 {
->                 compatible = "intel,peci-client";
->                 reg = <0x31>;
-> +               status = "okay";
->         };
->  };
+On Tue, Jan 19, 2021 at 11:51 PM Gunnar Mills <gmills@linux.vnet.ibm.com> wrote:
 >
-> --
-> 2.22.0
->
+> On 1/11/2021 11:19 AM, Gunnar Mills wrote:
+> Based on that reply, I propose we move Redfish SensorCollection to show
+> all sensors. Let me know if anyone objects.
+
+Where would the sensor collection be rooted at?
+/redfish/v1/chassis/{ID}/sensors? If so, would this also contain
+sensors accessible to the system software (some CPU/DIMM sensors for
+eg)?
+
+Thanks,
+Deepak
