@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C8772FEA7E
-	for <lists+openbmc@lfdr.de>; Thu, 21 Jan 2021 13:45:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B9522FEAB0
+	for <lists+openbmc@lfdr.de>; Thu, 21 Jan 2021 13:53:08 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DM2DL5cdbzDr5D
-	for <lists+openbmc@lfdr.de>; Thu, 21 Jan 2021 23:45:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DM2PF5JHrzDqWn
+	for <lists+openbmc@lfdr.de>; Thu, 21 Jan 2021 23:53:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -15,75 +15,74 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=OBXFPLlP; 
+ header.s=fm1 header.b=qNIngkuS; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=kuseNo6r; 
+ header.a=rsa-sha256 header.s=fm1 header.b=OuPj5CU9; 
  dkim-atps=neutral
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
  [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DM27r3brwzDqnv
- for <openbmc@lists.ozlabs.org>; Thu, 21 Jan 2021 23:41:25 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DM2Gh4kvzzDqD0
+ for <openbmc@lists.ozlabs.org>; Thu, 21 Jan 2021 23:47:24 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 4F5AD5C0037;
- Thu, 21 Jan 2021 07:41:21 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Thu, 21 Jan 2021 07:41:21 -0500
+ by mailout.nyi.internal (Postfix) with ESMTP id 85CB85C0186;
+ Thu, 21 Jan 2021 07:47:22 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Thu, 21 Jan 2021 07:47:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=fK5RhdIvNbaEVeKHHKYPYwCOPKX
- FUGSqN2ws1oAPI5E=; b=OBXFPLlPoa5v4vTJVm2WrsxRrxX5ndE0VomIeTwX1iR
- c1xnryhXDkbQLFIkPRCjzdoW8iGJhr8s4oJKKH2DbF7x65BTaPWyO2epfoBy7BmN
- SI5CT0HIRfwKjJdbpC9Ot2l2ThqMzsJL2Ow314u4wAVLUyWpV48ivzr84XNZbarv
- hL1JGUxBLwVS0uR0Hnly5ipPUhV97bWbryyvvkqp8T3wHdtdOJHQ3ZiLyFsz6Z7O
- TICgWqo0YFaCEhoUUFm6SO/B1qCCJVxn3sHr/TlHG15iCVO9eoQtRivTjpDTuQ5f
- B0tR+tLYdk5LVz9WWJhMkYzV6Pv9w7DtTP8zWODWwPw==
+ :content-type:in-reply-to; s=fm1; bh=6GkBvjnOwnekxuNW6X1EOgsmERI
+ VYx7kAkoFEIc9l+s=; b=qNIngkuSwLfkYqlfZ90mLuppQFLVtb/naqPwl6mCmBs
+ KWlKv8e1QpJjDP/iGc4uRExbP8Qy4ylin+DjrBp8dzJvbo1/jiZ95IePpXgAYuqf
+ 5iydYxKwSNS4bTZhLHDP8hggpEg2D69mpiNDdiQgZdDhYrUZxnGuO4Nmq7WJ6qgk
+ T7k+WmQ8PyPcAfNv0dyHluWC7rKdQGe6l7suHGFWkdaYVbCWb9Y9AG2akkvKW4F6
+ i84+SlSjCVY7l2t0UBntO57Ea28F7oRgSLfRPKZG9UkaGcja/RFyrMCW++Ef5xKA
+ x4zhSN8fJf/hdJpKVW62C1MoAiEXr9ss31YtTpflo4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=fK5Rhd
- IvNbaEVeKHHKYPYwCOPKXFUGSqN2ws1oAPI5E=; b=kuseNo6r7xIl4kKIb6LyJo
- XEnJnbi0GTJINJ5c9I/I5QPdyhuo1TwNuBOkno5ZRYo1t34jsQaSccD/ALr7jycD
- n3A9CMhvAERfyM9FS+/vW04SGp/QcC/qfaZJnAOZdapc/E4oZ4wAjfzzvM+S9i6p
- RCsp8Mh0qJTZ1t64HVtkOu8dnAMY+zc0DSVRaKPP1Y6LaVvSgLDw5pyQd9DQPUj0
- ql93nFDxKDmZIBtXsjlqfgzE5bNsjKRlgwCt3S+8HcmjFvbzp3jQKhnHC30W6hM7
- Flh79UGDJFZvMxLJdcVrQWwAHLodER442thuYQgz5JCLh+QFbGfEkE/yxLz2gxJw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=6GkBvj
+ nOwnekxuNW6X1EOgsmERIVYx7kAkoFEIc9l+s=; b=OuPj5CU9lfnRyEXkDuEHff
+ uijtMqK06gNMi0tKWtErXZnPfYoYEjQTOgcwTjAvdCXlVoM+THQPLAoWgkE79gpg
+ ayn3oUnq5WMexTMxBzdFGpWTZ0pP7jbqxRaOOuWdUyJ73KTlfoUkzAGvNjfgD21U
+ hdTFXEdUfQXfrs2TG4EEnQfgi+jzsvmdBf5ka2kYMM3f+vG5BZF16C6uWicuBF9e
+ X6HEkgIX7onH9BHt5DvbaG97euP3AIFlwEmIS0sJUgphFj7dl5qmwkNeD9pW+DOw
+ +wracQsY6K7IlN208Akq1VIj4uQojvUnv+F1GJbeKGxxkQsTg3EpmO8FSthjOHCQ
  ==
-X-ME-Sender: <xms:cHYJYP6ZXJZi9xZTfkC8vyFp69RvZONLxCdBSf0ZFUyPF_Aa0Uq0nA>
- <xme:cHYJYE7h5blCLQBGNbRPw7hRrNe-2D6QbzRBvFdmLapViP4F54PMeV5eKXzOOvp_l
- N6RySdki_t90Ha3MWE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudeggdeggecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:2ncJYAhbpGBZgm4hJI6ofFvXHj3okTKls4kcAlKL2mVpp0wKk0qyyQ>
+ <xme:2ncJYJAOGvOUu94oqZhDECjzoejpFr1IuPZunnPiJleoJyMAgR12CjFwOlBI4H8f0
+ Ut_OuqlU22PyO-VpeA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudeggdegiecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdejtddmnecujfgurhepfffhvf
- fukfhfgggtuggjsehgtderredttddunecuhfhrohhmpefrrghtrhhitghkucghihhllhhi
- rghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpe
- ffgeejffeuueetuddtlefgjeeihffgtdejfeeutefhfeehhffgvdfhfeeivdfhtdenucff
- ohhmrghinhepohhpvghnsghmtgdqphhrohhjvggtthdrgiihiienucfkphepjeeirddvhe
- dtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
- fhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:cHYJYGdalf7hH900mvm1I6iKwnH3P13iyNZq5NUBHxdSL7by06VHBQ>
- <xmx:cHYJYAJ0p4Iv88omiJvVLd3qwM461PY82c2s052JlKtd49c_avbZdg>
- <xmx:cHYJYDL1of3ihnCmrEIFUfzcKU1VcqufheSGhHKlHzzoZXisXXgDug>
- <xmx:cXYJYFy9lsau8peU50T7qP9FZqnDc6xxA1NibGtcLMcJPq_UElAMog>
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculddvfedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegfeffueduueehudfhkedtgfefvdef
+ kefftdeliedvffeiuedufffgtdevffevheenucffohhmrghinhepughmthhfrdhorhhgpd
+ hgihhthhhusgdrtghomhenucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushht
+ vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsth
+ iftgigrdighiii
+X-ME-Proxy: <xmx:2ncJYIHrTS9VxeGBXytq32T5q4ugN5bVBvOaYp7JTOU2CeAgvpVutw>
+ <xmx:2ncJYBSYkmOQUCiLxhBw-IsETCngOFiqgMJLqBk6od9dsgzPH_60cQ>
+ <xmx:2ncJYNx8wOCjm7Lvp8UXXxLW4tzyZvuPcM7gOqChlYuCaC-2SPhvww>
+ <xmx:2ncJYGuD-3_QSZP8bqJgq_iawQlDg483A6hJq9CMNZaEyq5E4Bdrkw>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 94956108006C;
- Thu, 21 Jan 2021 07:41:20 -0500 (EST)
-Date: Thu, 21 Jan 2021 06:41:19 -0600
+ by mail.messagingengine.com (Postfix) with ESMTPA id E1FCC24005E;
+ Thu, 21 Jan 2021 07:47:21 -0500 (EST)
+Date: Thu, 21 Jan 2021 06:47:20 -0600
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Jinu Thomas <jinujoy@linux.vnet.ibm.com>
-Subject: Re: Control / Operator panel support in systems
-Message-ID: <YAl2b2xaXDV+GQwG@heinlein>
-References: <8402e577-410a-cf27-9b3e-f2774f086d00@linux.vnet.ibm.com>
- <0745cd96-76d3-2075-4f04-afa4ae560689@linux.vnet.ibm.com>
- <76d7d22c-43a6-f144-9e1d-3b499d3a2309@linux.vnet.ibm.com>
+To: "Wludzik, Jozef" <jozef.wludzik@linux.intel.com>
+Subject: Re: Discrete Sensors in OpenBMC
+Message-ID: <YAl32I0oGFi5i7Cl@heinlein>
+References: <9d53ed62-7d4f-6c0a-a52d-34ae690d84e8@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="lJsffy4T8dvqOpuw"
+ protocol="application/pgp-signature"; boundary="316FYYkeWbInux8E"
 Content-Disposition: inline
-In-Reply-To: <76d7d22c-43a6-f144-9e1d-3b499d3a2309@linux.vnet.ibm.com>
+In-Reply-To: <9d53ed62-7d4f-6c0a-a52d-34ae690d84e8@linux.intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,102 +94,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- bradleyb@fuzziesquirrel.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---lJsffy4T8dvqOpuw
-Content-Type: text/plain; charset=iso-8859-1
+--316FYYkeWbInux8E
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 18, 2021 at 06:58:25PM +0530, Jinu Thomas wrote:
-
-Jinu, it seems like we still have a lot of discussion to work through on
-the design[1].  Can we get that resolved before we determine what are
-the appropriate repositories for this?
-
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/38904
-
->=20
-> Hi Brad,
->=20
->   Can we get the repo created for the below?
->=20
-> Regards,
-> Jinu Joy
->=20
-> On 12/01/21 8:17 pm, Jinu Thomas wrote:
-> > Hi All,
-> >=20
-> >   I have been working on the design and this is what i have zeroed at.
-> >=20
-> >  The design aims to accommodate a panel that provides buttons used for =
-navigation and selection of functionality and a display used for visual int=
-eraction to the user.
-> >=20
-> >  The design is divided into two parts.
-> >=20
-> >   - First part is to have a navigational user select-able section. This=
- would mean the navigation coming from the hardware in terms of buttons. th=
-ese will be used to perform the required functionality selected by the user.
-> >=20
-> >   - Second part is to have a display section. The display side will be =
-common for all BMC apps, it will be done via Dbus API hosted by this app.=
+On Tue, Jan 19, 2021 at 03:22:41PM +0100, Wludzik, Jozef wrote:
+> Does anyone use or implement discrete sensor in OpenBMC? Redfish defines=
 =20
-> >=20
-> > @brad
-> >  Need a Repository created.
-> >  =20
-> >    I don't think there is any hardware like this out there, so do not s=
-ee or expect any overlap with the rest of the community, i will be thinking=
- of using ibm_misc or ibm_oem as the repository.=20
-> >=20
-> > Thoughts and suggestions are welcome.
-> >=20
-> > Regards,
-> > Jinu Joy
-> >=20
-> >=20
-> > On 27/08/19 11:06 pm, Jinu Thomas wrote:
-> >> Hi All,
-> >>
-> >> =A0I was starting to explore on the design for the operator panel seen=
- on IBM systems, it is also called a control panel , which basically is a c=
-ard unit which has an LCD and some buttons to navigate the display on the L=
-CD. I wanted to check if there is any design or code out there, for such=A0=
- kind of usage. The design/code can be checked to see if it can be made gen=
-eric for use, even though the hardware is only used by IBM.
-> >>
-> >>
-> >> Thanks a lot
-> >>
-> >> Jinu Joy
-> >>
+> discrete triggers that use discrete values to detect that threshold is=20
+> crossed and trigger action should be commited. Redfish does not mention=
+=20
+> about discrete sensor/values in other topics/schemes than Telemetry=20
+> (e.g. MetricDefinition, MetricReportDefinition and MetricReport). I am=20
+> asking about it because we are trying to find an example of discrete=20
+> sensor to proceed with DiscreteTriggers implementation (aka Discrete=20
+> thresholds) from Triggers scheme.
+>=20
+> Ref.:
+>=20
+> Redfish Telemetry White Paper -=20
+> https://www.dmtf.org/sites/default/files/standards/documents/DSP2051_1.0.=
+0.pdf
+>=20
+> Thanks,
+> Jozef
+>=20
+
+My impression is that IPMI called a lot of things "sensors" which were
+not really hardware sensors and they often became a discrete sensor.  So
+far we haven't had any real hardware sensors that are discrete.  All of
+the Sensor definitions are in phosphor-dbus-interfaces[1].
+
+There seems to be a bit of a throwback to IPMI terminology here though
+with Redfish Telemetry.  For telemetry it could be very useful to keep
+track of things which are indeed discrete (but not really a "sensor").
+For example, log-in attempts might be something useful to insert into
+telemetry but have a discrete component ("successful", "failed").  For
+cases like this, we wouldn't have them under the Sensors namespace in
+dbus but whereever is relevant to their domain.  I think you could find
+a lot of data out in various namespaces which might be interesting to
+place into telemetry but are not "sensors".
+
+1. https://github.com/openbmc/phosphor-dbus-interfaces/tree/master/xyz/open=
+bmc_project/Sensor
 
 --=20
 Patrick Williams
 
---lJsffy4T8dvqOpuw
+--316FYYkeWbInux8E
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmAJdm0ACgkQqwNHzC0A
-wRngEQ/+IVyvG2QDTHEDtKp+Ug6QSh+dLcnc+bq+qii2tZcC8GLTMKi3UHbW2DL1
-SdNrMjdDe/ksxqjdwSVMIE9kUubXv5j/kp3DsH+SydbUPB10ItP2UNa7lBdO7zQE
-oeyRUM8ynASrOlP68OWWgOBobAb5dXNMl8ivg2R8TlOOBDQ/+nZO2NlttPZ95haC
-LSBckEXpDiIQpcTiZnd8wHDE89d4pXtgijFOZd7oCf4bLYuKMoLzVlz8hPfwgf18
-LnDa1XQpBatR+SbZowb/WjM/j2ie7zsB8qT/ns6x3K49T4wfox2ei3+8YlibRJsX
-syMJnjRXaWbt57Xv5V/RQoOJzfWzM9nrNEeDowCy0A598EpFDTqP9Tzrw7HDwE0s
-sdw04E8Bux056I+HK+0vcms7GZKLEYajvGbA1E27xqGAZ05G9hHgMZHWIeRTFq9o
-uUasw4aL14SzuA5BfrC4pYPM9vq9iurZy1TTjcQno/rHIf7OIkAWp/WMniY/bKNT
-iu+ZN91U/rQDZFtwF2h7XwabTPa067717051O2iChYy3eCiIHnuNvfjwt/Ynh1k9
-5+4yH8QjBFBWDRcHFCblXa5texDPalQ5obIEW7EaQMz8wbJ8Nsktabf+4XHn2fiR
-qy9UD6T3dIbeH00FdKX4mHgzEwRBdGcFtmOKjGI4q8bd57nuows=
-=cFYS
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmAJd9gACgkQqwNHzC0A
+wRluQg/8DM0mxMcVmIJUW92vwTtWbWvRzJGkrqjcrEmNnwKJnZBKW/8+nZYU8iUW
+2jdEfweMAx5nYFIqmXEr6ZQOHpJE4B4coQ9NvgzsWLPnVUFhEWoJ2vRRSjPULSmd
+XlJ/2LMjhYDSmduipOgvoGjxgEb/F2KJDP+i3XFgRcQtIV4h6ZW+pAWrh7FVFO63
+W9GD92ppL4iX35UXFn50LNIrDhQLuswYc5m5JBEjEQ2zGz1S7diihytAbVzoaQIt
+UMZ5F4hU30RERF3G8EsNtreGDL+v5J+K3rFzkkFoS2RcotP2MB5gsOqrhjXNMy+V
+grFgXq7fnOXiNTC2SeUJi1CDaFgCUYfoiU5w3oPbVKxneNO/VhKP7GYrh0OL8emn
+NoQ+O6Fy090ntocmVrf1qfJaqdz+5/uY1L1fTwhOmMrqcYqxs0YjTK93fq90I5fi
+IaayaPd3ASRvKREJZfNdck+HTBPA3sY98H02WLM7sW3l0gW1kLeniYBRM/IOZGhG
+/Sgpp6TRCTA3/Kfqrq8P6mL/qsjjs585BjU3XyQrmnzFhYIA3TutMinrlf0CVpZL
+nKPX4ka+sulQ//259Is33byMFlRpa8f8F0JohcgeufQpIF19lAs/dGr1DL4MFhLf
++/cf1XMbq4y+H6DkaeMU691G/vcI6ndIg7ojTfMbqDLcO/KpP1M=
+=1Zp/
 -----END PGP SIGNATURE-----
 
---lJsffy4T8dvqOpuw--
+--316FYYkeWbInux8E--
