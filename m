@@ -1,61 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4A83302D8F
-	for <lists+openbmc@lfdr.de>; Mon, 25 Jan 2021 22:26:58 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE931302D9F
+	for <lists+openbmc@lfdr.de>; Mon, 25 Jan 2021 22:28:22 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DPjcJ1VSKzDqxZ
-	for <lists+openbmc@lfdr.de>; Tue, 26 Jan 2021 08:26:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DPjdv2ZbczDqwW
+	for <lists+openbmc@lfdr.de>; Tue, 26 Jan 2021 08:28:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.167.171;
- helo=mail-oi1-f171.google.com; envelope-from=robherring2@gmail.com;
- receiver=<UNKNOWN>)
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com
- [209.85.167.171])
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b31; helo=mail-yb1-xb31.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=BJ9hMNRA; dkim-atps=neutral
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com
+ [IPv6:2607:f8b0:4864:20::b31])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DPjbL5L9LzDqkS;
- Tue, 26 Jan 2021 08:26:05 +1100 (AEDT)
-Received: by mail-oi1-f171.google.com with SMTP id g69so15559084oib.12;
- Mon, 25 Jan 2021 13:26:05 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DPjbs4Jr0zDqwY
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Jan 2021 08:26:32 +1100 (AEDT)
+Received: by mail-yb1-xb31.google.com with SMTP id e67so14718797ybc.12
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Jan 2021 13:26:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=52869IvWmk4k9Vr3QLXfhiF94xe/z4eR+405Vk5eYd8=;
+ b=BJ9hMNRAwq+CcdKGIn8TVk0IcGiGIGgSldgCkoX009VCWRYjQhnS+XWkmu0hMMlb7O
+ 0TQaWfmLvXl08Mkf88fWJx+ksVibGh6hX80DkpESQgGRyO8063IDUsJiAEmo2tZ5b1rv
+ bpo9/NYx3wTOWagKncxA9sSIYrhjgoYA565ajHQsgw4dLZ/81KJsHw0vWctO7/1Cvy2L
+ MYeETQc3l6NJuM0LB6EGQNPPCNYa6D2jDKbhFhtyH/wX8la2WAFcZv1nsdJUF0ADuZ1v
+ 0i+iivmlq+OhSd+HOr3GXT1BNqdsz3ACMnvaT5IjdW3LDj4pb4cIHW1gSpj4+GkbCu8A
+ fPTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=YUiddN9H8b8y6QBHSCLwa/EqcYU5tNvYnDBCmzamMFQ=;
- b=kBSrYhspXeA+EVeRKEz7Y7QneCxMaRM9EhTIs1kohq1Ow2t5+O+zPEiYjE0PREHNev
- Ue4TO0EahIn67iM2PKlsGjdKYCCz2WSSTQCFz7oDt9946IbHaR6F9TzQj2Tgcq4Fgvf0
- SrYxSyWFWfBnvYVabcEy2drJCJvFOy31DT5dmE9qndA2qEumKaqa9YzTuAPBTmT5rEli
- VppKBcJHOMyh1RRyzKrmYzczCxSuZPMd4Ok49jbaFaGe4TCC0W7mMayQil83eGWgpcZB
- pzIwLI003CUP7l7KBh5DjCck6BfoiFI0b1KO2ky9bPh5oIRH/kQhGOpQsRMtDwY7Y3CQ
- gWOg==
-X-Gm-Message-State: AOAM531R5VSapMahra8IXNybQk16FtfnISv8HvTR3dKBzgPW9x3xHZG/
- 3uSCbvtlDh5NoYD+N1C1fA==
-X-Google-Smtp-Source: ABdhPJxwYHpKhVFzlzKhS0ECsooki+4JoAGsd9bY9XwF9LZDthCC6SG5F6fEbWf2EfD7hB1j3tfpaQ==
-X-Received: by 2002:aca:75d3:: with SMTP id q202mr1295168oic.36.1611609961888; 
- Mon, 25 Jan 2021 13:26:01 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
- [24.155.109.49])
- by smtp.gmail.com with ESMTPSA id 69sm3704322otc.76.2021.01.25.13.26.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Jan 2021 13:26:01 -0800 (PST)
-Received: (nullmailer pid 1026791 invoked by uid 1000);
- Mon, 25 Jan 2021 21:25:59 -0000
-Date: Mon, 25 Jan 2021 15:25:59 -0600
-From: Rob Herring <robh@kernel.org>
-To: "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>
-Subject: Re: [PATCH v5 1/5] dt-bindings: aspeed-lpc: Remove LPC partitioning
-Message-ID: <20210125212559.GA1026734@robh.at.kernel.org>
-References: <20210114131622.8951-1-chiawei_wang@aspeedtech.com>
- <20210114131622.8951-2-chiawei_wang@aspeedtech.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=52869IvWmk4k9Vr3QLXfhiF94xe/z4eR+405Vk5eYd8=;
+ b=nEIs2PCBGMQxUdQfyXc2cGVzjgbO44Msx6m63z/FjKG/SKFE9qeojqyaHml4Obslgz
+ DWNSPut+EWMYNYWMBggN6mpLRBVpqHpEREP/bR9SANG6QjA0WQCxoH7/neizfULcXHI4
+ SJxhn9b5Ni4hAeFPx5W1chxCw6LwWJYX+HW4yX0nQTkQymkxIy4dg1k3ih5Rnp1as//9
+ FCbV3T5w+OGYEag/hX4AdFINA9gToMiYGNSZqaeoFjlnC3z9Z/AjcX14sJmA7mtRD/Dn
+ fmJ7LRBKnt0RWHV9Hk3VQhcr7pfcVqxU+ozaOHBghUE+vmxLIrirEIDHwb4Dd74cAtQ7
+ 9IDw==
+X-Gm-Message-State: AOAM530Rw7VGoov+1EKJ1gBzgN1Uo/lYv3mp7SsEQg5/wsmBA1TeauL6
+ rym6+tHqIg9EBg7bhOlCKMct+a1vnMl3s9ZjyJzz0qCUqkjgjw==
+X-Google-Smtp-Source: ABdhPJyFXRwMjfLuwDZzlvXio7gDg9b+p40Bn2HWm+Feq5GT4IvIy3sJkXQEs945zYTKGhXukc/kMJbIqwGaIp2BoTk=
+X-Received: by 2002:a25:c407:: with SMTP id u7mr3650151ybf.449.1611609988084; 
+ Mon, 25 Jan 2021 13:26:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210114131622.8951-2-chiawei_wang@aspeedtech.com>
+References: <CACWQX821ADQCrekLj_bGAu=1SSLCv5pTee7jaoVo2Zs6havgnA@mail.gmail.com>
+In-Reply-To: <CACWQX821ADQCrekLj_bGAu=1SSLCv5pTee7jaoVo2Zs6havgnA@mail.gmail.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Mon, 25 Jan 2021 13:26:17 -0800
+Message-ID: <CACWQX8236dghCCdnDAdnij0Di_GF7DsmAO_xEtWmk6ckKDocYg@mail.gmail.com>
+Subject: Re: Gerrit owners plugin coming
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,24 +72,70 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW@aspeedtech.com, haiyue.wang@linux.intel.com, minyard@acm.org,
- linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org, andrew@aj.id.au,
- linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
- openbmc@lists.ozlabs.org, robh+dt@kernel.org, lee.jones@linaro.org,
- cyrilbur@gmail.com, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 14 Jan 2021 21:16:18 +0800, Chia-Wei, Wang wrote:
-> The LPC controller has no concept of the BMC and the Host partitions.
-> This patch fixes the documentation by removing the description on LPC
-> partitions. The register offsets illustrated in the DTS node examples
-> are also fixed to adapt to the LPC DTS change.
-> 
-> Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
-> ---
->  .../devicetree/bindings/mfd/aspeed-lpc.txt    | 100 +++++-------------
->  1 file changed, 25 insertions(+), 75 deletions(-)
-> 
+On Wed, Jan 20, 2021 at 11:23 AM Ed Tanous <ed@tanous.net> wrote:
+>
+> Over the last few weeks, we've been slowly getting the gerrit owners
+> plugin deployed and tested, and got the OWNERS files merged into their
+> respective meta layers.
 
-Acked-by: Rob Herring <robh@kernel.org>
+These changes are live.  Any commits to the individual meta layers can
+now be submitted directly to openbmc/openbmc now.  If there's anything
+broken about the new workflow, or anything unexpected happens in your
+workflow, please let me know on discord and we'll try to get it
+resolved.
+
+I forgot to mention one important improvement:  Listed owners will now
+get added to code reviews automatically if any files are changed in
+their owned directories, without having to take any action, via the
+gerrit-owners-autoassign plugin that we added.  This is also a very
+nice quality of life improvement when opening reviews, and something
+that tends to trip up developers new to the project when they are
+looking for code reviewers.
+
+
+>
+> This has been leading up to a process change that has been on the
+> roadmap for some time now.  Once the plugin is enabled (and some other
+> housekeeping is done) meta-layer changes will be able to be submitted
+> to the normal openbmc/openbmc repository, simplifying one portion of
+> our review/merge process.  Submitting to openbmc/openbmc is something
+> most newcomers to the project expect, and we've had numerous gerrit
+> reviews submitted to the wrong repo in error.  Hopefully, this change
+> makes meta-layer changes much more normalized.
+>
+> Once this goes in, this means that functionally:
+> 1. We no longer have a bottleneck on creating new meta-layers,
+> renaming meta layers, or moving files between meta layers.  New meta
+> layers can be submitted through gerrit similar to any other patchset,
+> and will be reviewed with the same process we already have for any
+> other type of code, and don't require requesting a new repo in
+> advance.
+> 2. Changes that require mods to all meta layers (yocto compat fields
+> for example) can be done in a single commit, across all systems at
+> once, reducing the possibility of breaking builds for meta-layer
+> combinations that aren't covered by CI.
+> 3. No more waiting for your meta-X changes to get merged into
+> mainline, which should reduce the amount of time between recipe bumps
+> and the main build reflecting the changes.
+
+
+>
+> Ownership of the various meta-layer folders is still enforced by
+> gerrit through the owners plugin using the OWNERS files.  Today, they
+> contain the same mapping as the content in the MAINTAINERS files, so
+> no files in the repo actually change ownership.
+>
+> The final review to add the OWNERS file to the root of the repo is here:
+> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/39379
+> And has already had some discussion and looks to be good to go.
+> Assuming there's no other objections, I'd like to get this change made
+> on this coming Sunday.
+>
+> Overall, I hope that this will be a great improvement in the overall
+> structure and usability of openbmc, and remove at least one stumbling
+> block people new to the project tend to hit.
+>
+> -Ed
