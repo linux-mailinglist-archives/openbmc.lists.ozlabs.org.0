@@ -1,90 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03BDC302108
-	for <lists+openbmc@lfdr.de>; Mon, 25 Jan 2021 05:17:25 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 461AC302185
+	for <lists+openbmc@lfdr.de>; Mon, 25 Jan 2021 05:59:51 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DPGmK50RGzDqr5
-	for <lists+openbmc@lfdr.de>; Mon, 25 Jan 2021 15:17:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DPHjJ3m1RzDqs3
+	for <lists+openbmc@lfdr.de>; Mon, 25 Jan 2021 15:59:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.224;
- helo=new2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::529;
+ helo=mail-pg1-x529.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=m9bcb0GH; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=EXa6EsDC; 
- dkim-atps=neutral
-Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
- [66.111.4.224])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=BiHjk3xI; dkim-atps=neutral
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com
+ [IPv6:2607:f8b0:4864:20::529])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DPGkk4jGSzDqr6;
- Mon, 25 Jan 2021 15:15:58 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 5A0595807D1;
- Sun, 24 Jan 2021 23:15:55 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 24 Jan 2021 23:15:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=Y5snhxS8mW1RuSQI45POs81UwwdOf3y
- NQAfUu8eLaUE=; b=m9bcb0GHHgsSbwl7lL55N45p01DOOg9ndlB3FmCPgJ3xXUo
- JLiDPtSnYg5YZ5MwIdOglzub2eGncYZBS/d3G+tbfYrGFWjOt/12//mCtcO5Kcns
- DFdXqa4LT2m7CO6akoTRiFA3YBhszjPrHH6SUFCIgwvM0RBtM7rRLCGQuIWPDLJ4
- 3nKMN1+BiAvatNN8U5eD2yqTLubH80YwjNCSlMOr8LhxIs/FEapWGeYx0fiA2iNI
- Ve2CI4i0cnCF4FidlTY0Wc0hzJqnEYMEnx5RwZ5H7tQplhPqETHf1+AGWgriPGe4
- p3phnhNNkkSil/B3Za738uQT8a51AdB8zYuycWw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=Y5snhx
- S8mW1RuSQI45POs81UwwdOf3yNQAfUu8eLaUE=; b=EXa6EsDCXBYEJ0Z7UzZlgg
- a54aVP6unAa5wgcDozLCQiFSCI7aFY+L8W1vjYo1O86NPdOcn6ZT7bVlPgke8BIS
- vsOEMljfl7W19pxuRvkYjJAlZzV6oXVtZMzkUpVoT7uylHhAmSl87O08m21hGGdL
- 1qiZMEFX2CfmF1rVSENbHP35Aa1Ks547nyqSQrbd3pcRXMVJA91jgFnaYuvihfFH
- z5rYUUV7hXCxS6VAMhGpAqd4S0bzM6uXJ9g+dIz8TGOqXq5lAMQ9Xv5tecUDL1+Q
- lyRO1IGP2YxVe3brNcC8vD8eGxT2zPdWsWUl21z/s0yGTab2RR9cR2xJHAg8LwBA
- ==
-X-ME-Sender: <xms:-0UOYFKSCZ0WiMgNHtVp_sAUfwHv0MnGYIdK3v1xk87wxMdniTV3rA>
- <xme:-0UOYBIVF75za-d1gdUkeo7N3zKc157PPnFGmsGGbb0eSgwSYxOFV7-Vx_DUR7uaY
- -z4xkL2AOhlsredvA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddvgdeilecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
- veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:-0UOYNt8uqyEwDh4-2BVQJCQU_DccsE0IiTAYrSMjpRIDb1BY6tbTQ>
- <xmx:-0UOYGZXW2ADtpBwVI5e44eTcwxzRmSx1WrlJfU08CazK-sN6jfWsQ>
- <xmx:-0UOYMaetVmDD4wcDismNO9ltQdFAgdPuQ0h2tg4jucHX4o64AhzqQ>
- <xmx:-0UOYITdZoaB0Spq5mACc-0xNzWxWW8eibFea0K9l8_QB80G-Z6CmQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 330BAA0005D; Sun, 24 Jan 2021 23:15:55 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-78-g36b56e88ef-fm-20210120.001-g36b56e88
-Mime-Version: 1.0
-Message-Id: <a40f7391-e468-4155-b19c-240fb65ce22c@www.fastmail.com>
-In-Reply-To: <20210114131622.8951-6-chiawei_wang@aspeedtech.com>
-References: <20210114131622.8951-1-chiawei_wang@aspeedtech.com>
- <20210114131622.8951-6-chiawei_wang@aspeedtech.com>
-Date: Mon, 25 Jan 2021 14:45:34 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>,
- "Rob Herring" <robh+dt@kernel.org>, "Lee Jones" <lee.jones@linaro.org>,
- "Joel Stanley" <joel@jms.id.au>, "Linus Walleij" <linus.walleij@linaro.org>,
- "Corey Minyard" <minyard@acm.org>, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH v5 5/5] soc: aspeed: Adapt to new LPC device tree layout
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DPHhQ5p06zDqk7
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Jan 2021 15:59:00 +1100 (AEDT)
+Received: by mail-pg1-x529.google.com with SMTP id t25so179618pga.2
+ for <openbmc@lists.ozlabs.org>; Sun, 24 Jan 2021 20:59:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=sqHvJqu5LnqcHuPsGtlguTFPjuoyG+LRJktX9kCOZc4=;
+ b=BiHjk3xIPmkTzngnf5VgNYRDy6qCbs8R7HtHM0OK17CChFEvngKdJPEZHEp0h/gdRy
+ PA4DohN9FFDMLAGSgrRORAkgh3HqcJBzAVkE2E7KSrDcoQLFYdnP/t0JsKPMy7AgsnQ5
+ uhFupy1/N9CIiL9fH/6OoBNJOD8vv1LQQDarkgLruamhVT7YPSEZ8vbpVsBRBKX2lQqy
+ Zaa1r5Cxx85DGVOAR07C6hudMuGyAjyC9NTfuZTcLFiW+CquNx5NSZi2RYsXeYAhPfRs
+ bcpwpP8Y9vejsuPreyGBe2s8q48vSPB2iG+rYn2p74b0Q/v8CKs3mX/+hdfVs3W3RP8m
+ FNkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:from:to:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=sqHvJqu5LnqcHuPsGtlguTFPjuoyG+LRJktX9kCOZc4=;
+ b=mBvmTQaemYnW89ib8/JLn0W/qQQahPY399QbcQxTZr1H0Z1gN6CZemzs2EuhecCQHv
+ Bn6Fel6C1rTqrTgbs1qP9NmWfGPL3sC2fRPKQBBYWXqI8AjY/xZZPSG+XsBXxxoHyrFC
+ wqgF3vB5uCNdC0wDwZzvbiltA4g1cm/Z2c4hRp59yDu5ZhBbSPMsI1iN9thrLMAmPBuq
+ 3TZicgsZLMDRalZQRMz+Exg0vIh14sfekmAW2i5pYzy0fQyAxzLL7hEchWImCdkiDeum
+ imRg2U5YzD3KbFm88+B9OMb6BcQygVbrqDrEFivq/RKv6Q7cEAKJW3mDXL6x47r7ek6A
+ k4jg==
+X-Gm-Message-State: AOAM530Bl93HvO/etOQRJjCZWOyM1Mz27wIk0dRJuaNlCjTQk+YTvGdA
+ tyYL8I13pRJ/RUlOp1CvOixoH9X03gY=
+X-Google-Smtp-Source: ABdhPJzBO5YTVEBv5e6aDyc+X38bv3/XfRYVTu4z2t3tX6AaoE1mMPnXZx4/HT5jVO2rQ8UNijhFiw==
+X-Received: by 2002:a63:5fcf:: with SMTP id t198mr2058726pgb.226.1611550736344; 
+ Sun, 24 Jan 2021 20:58:56 -0800 (PST)
+Received: from localhost.localdomain ([45.124.203.14])
+ by smtp.gmail.com with ESMTPSA id gx21sm17525048pjb.31.2021.01.24.20.58.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 24 Jan 2021 20:58:55 -0800 (PST)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
+ Ryan Chen <ryan_chen@aspeedtech.com>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 0/2] FIT verification
+Date: Mon, 25 Jan 2021 15:28:44 +1030
+Message-Id: <20210125045846.448399-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.29.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,23 +75,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW@aspeedtech.com, Cyril Bur <cyrilbur@gmail.com>,
- Haiyue Wang <haiyue.wang@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+As part of our effort to enable secure boot in openbmc, this turns on
+FIT verification in the SPL and u-boot.
 
+It adjusts the SRAM layout to accommodate the extra code size, moving
+the heap to the non-parity checked 24KB of SRAM.
 
-On Thu, 14 Jan 2021, at 23:46, Chia-Wei, Wang wrote:
-> Add check against LPC device v2 compatible string to
-> ensure that the fixed device tree layout is adopted.
-> The LPC register offsets are also fixed accordingly.
-> 
-> Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
-> ---
->  drivers/soc/aspeed/aspeed-lpc-ctrl.c  | 20 ++++++++++++++------
->  drivers/soc/aspeed/aspeed-lpc-snoop.c | 23 +++++++++++++++--------
+Joel Stanley (2):
+  ast2600: Modify SPL SRAM layout
+  config: ast2600: Enable FIT signature verification
 
-Using a Witherspoon (AST2500) I've tested the aspeed-lpc-ctrl driver:
+ configs/ast2600_openbmc_spl_emmc_defconfig | 3 +++
+ include/configs/evb_ast2600a1_spl.h        | 4 ++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-Tested-by: Andrew Jeffery <andrew@aj.id.au>
+-- 
+2.29.2
+
