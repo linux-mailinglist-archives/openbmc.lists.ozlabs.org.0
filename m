@@ -1,72 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B4213016AA
-	for <lists+openbmc@lfdr.de>; Sat, 23 Jan 2021 17:15:07 +0100 (CET)
-Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DNLnN0hXMzDrgb
-	for <lists+openbmc@lfdr.de>; Sun, 24 Jan 2021 03:15:04 +1100 (AEDT)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2DDF301FC0
+	for <lists+openbmc@lfdr.de>; Mon, 25 Jan 2021 01:38:36 +0100 (CET)
+Received: from bilbo.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DP9vt1HM9zDqqK
+	for <lists+openbmc@lfdr.de>; Mon, 25 Jan 2021 11:38:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22a;
- helo=mail-oi1-x22a.google.com; envelope-from=groeck7@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=vBfeVFCO; dkim-atps=neutral
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com
- [IPv6:2607:f8b0:4864:20::22a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm1 header.b=MuLABF2l; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=QIWADdpm; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DNLmQ1PjmzDrgD;
- Sun, 24 Jan 2021 03:14:10 +1100 (AEDT)
-Received: by mail-oi1-x22a.google.com with SMTP id m13so1787122oig.8;
- Sat, 23 Jan 2021 08:14:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=aGOwdo7IiEjB/o8PzIQ44cs8SlfL93ZRbT69u9ZgBSA=;
- b=vBfeVFCOy6eV/pI2NrmOSdW6HDuYebvlWjjpg3Zc3Bl+xLB0PPQUw2FXULxuLp03mX
- z9Wj9DWEi8zTyhwvjdA3feOpjdwaWcSuCHtRKlENDryeqOG2zCGWMB3/8ykTyZ0r5HV7
- sAgv5E/OfpqrR0+kUmAg6kh1N3I+wwpuwiagAP+C4sqnD+N9ihP7HlfSc7540kce76Qp
- wkhWgyQKihteORYFEDPUBy/pC/9SCfggequ9pfvktOk0iUUWwUoFbzrWJcxzVUymoPZN
- iQUQ3nYFj9f3cxJwKwg13Vnbj/cuucvoQAqK7v3QJvBYDBJJah2F3FP1QWudGTAMKnqm
- iDzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition:in-reply-to:user-agent;
- bh=aGOwdo7IiEjB/o8PzIQ44cs8SlfL93ZRbT69u9ZgBSA=;
- b=IEels+sl3FzYIYZRydZLPjRlFn/B+CL0091Bdi/uboZtixA+sXOfoeIfqDEdhfJ70f
- ukvQBchdp/jvXZlGY9QRdyc9QBX6Jum2HF0jlWIhXNAh/VOm2cL4xaXJksxKue87EEKG
- EhzCYsxeJF4+j5+cj5ACUNlw4ajOKHSA1EgAmwn3AroARfeSfJ1tMv6Q8PpplUY25RTF
- 19mEFwPCXWn8Teh+eohCFGRzvWChLxjdTOK1Y4d1LZtA4Qtj4xz5dQlJU0W++wYA5vr8
- emj2ueLMd+/k43XUhZM69IYp2vH+gz6d942RV5wVJKikVpnsBUX42JmgsSPT1PeSV+Ge
- FvwA==
-X-Gm-Message-State: AOAM532z/UkvrHCNxAAWN7Tu7I92arsV+ex0M6irkePK2LTzz5zwXKqw
- RV0rsgsK4SzIBKwgCb5AQAc=
-X-Google-Smtp-Source: ABdhPJwUX1wZ0HjqJqPPmC6y8f3rdsNa8J0yV/pB7b5Xzuxhi7oi8U92QTpcFe8nyjssXaaj3SuVKQ==
-X-Received: by 2002:aca:b5d6:: with SMTP id e205mr6465360oif.15.1611418447275; 
- Sat, 23 Jan 2021 08:14:07 -0800 (PST)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id r8sm2406529oth.20.2021.01.23.08.14.05
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Sat, 23 Jan 2021 08:14:06 -0800 (PST)
-Date: Sat, 23 Jan 2021 08:14:05 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Troy Lee <troy_lee@aspeedtech.com>
-Subject: Re: [PATCH v2 4/4] hwmon: Support Aspeed AST2600 PWM/Fan tachometer
-Message-ID: <20210123161405.GA50622@roeck-us.net>
-References: <20210113070850.1184506-1-troy_lee@aspeedtech.com>
- <20210113070850.1184506-5-troy_lee@aspeedtech.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210113070850.1184506-5-troy_lee@aspeedtech.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DP9tp5rClzDqnR
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Jan 2021 11:37:37 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 4B0515C00EF;
+ Sun, 24 Jan 2021 19:37:34 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Sun, 24 Jan 2021 19:37:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=fkLyi97l5+zUuRrUsy4kxcy0zSjumPC
+ qRs6foXKJuhA=; b=MuLABF2lADxvsHmxS8sCQ7QzLj3UY1pswxxuheUo1/Bpegk
+ 1VmuiFJ2G5xiRgAJ8+BJma4e3pOrq4bjuUzzviwRXAcmCqihMF6XKZaaZu6RKxRH
+ GvMRHCqqfaWVSoyZ4Sg/SjELWWbeZBZK7+AT6CYYxjIqcJbcS3mKyYwzuQ9sKrDN
+ CwMeVyD0KIX8tjG+18JiiWEitq+Sq5Of5xDSpoAA5NGPjCU7gocrXhUoHc+7s71M
+ oihBycPfFtSacIgIUjPaUyRt/JZvuRv4Lu60XHZ++0i8lXW4+m4vfe0sVqyE8dHi
+ vv5DaDxBoEoBrzhQ4ASfOlJq5EqxV7PZ/AALACw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=fkLyi9
+ 7l5+zUuRrUsy4kxcy0zSjumPCqRs6foXKJuhA=; b=QIWADdpmDyEwrSJ85qEkjb
+ 2W4jitiKEkyH48HU3HlxCm+hfVqzOE2VNH5vgWFxqEi1LjA+0dIEUJ8W5MTJcTEQ
+ PuYrD5eC1ts4G4Lz4WpQWmRemhkg6z0h2Q+HiMHgzRbH5qFrDnW0fbqrRWIpZCaA
+ S+XK7SOIICRQR+nXpz+VmkZO+0pyxE3AgIDctTRrtNVI1zzmpJF/1prGHjfJUrd3
+ 0HZ3kjP4/nkboXi/3lZJ98BuIDAdRhhVHHn/v9eghxq7umT9ycwfOxLrPMZmLwIC
+ 1SvSaoGzD1tG6g3R7LIY5arNevoPdbTq41cClA9zlIYbTTOgrfLHuj3k3OK39VbA
+ ==
+X-ME-Sender: <xms:zRIOYEFm9T_P_rovcXuU47HqWpDahlxhHtnflQCuKOECKDnnNmDiFA>
+ <xme:zRIOYNULPZ9p0TsSD4oa_qlU_7n5rSIzi-N3g4BgRQA5w6czM-fw2VJBYMqRxqSOC
+ 5zLY58igjdEFapqgw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddvgddvfecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesthdtre
+ dtreertdenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgif
+ segrjhdrihgurdgruheqnecuggftrfgrthhtvghrnhephefhfeekgfekudevheffheeihe
+ dujeefjeevjeefudfgfeeutdeuvdehhfevueffnecuvehluhhsthgvrhfuihiivgeptden
+ ucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:zRIOYOK_WzvMSlrHCNGvebzgSsCyvTCSkwLEwc1N33_iBU3DG4mzjw>
+ <xmx:zRIOYGErsdmuoYLYwYP3kC9GSWgbuTxzJSOszGr_n5yyLYi8IG0ZAQ>
+ <xmx:zRIOYKViGDWSJYrslMGDmErtxrtMTlad4cYP1YySr1CP0HzsyiZeBA>
+ <xmx:zhIOYDc3-OQhY416UJGEqpNF1jsvzq2FO-DXQC2l5ix01_8mab3VBQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id D7854A0005E; Sun, 24 Jan 2021 19:37:33 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-78-g36b56e88ef-fm-20210120.001-g36b56e88
+Mime-Version: 1.0
+Message-Id: <55dafd98-bf28-4e5e-a8cf-649eaea61323@www.fastmail.com>
+In-Reply-To: <CADfYTpENhwh+o9fYhNbtDP7RZFP=C5A5gi100TZuO5NpXdK1Uw@mail.gmail.com>
+References: <CADfYTpENhwh+o9fYhNbtDP7RZFP=C5A5gi100TZuO5NpXdK1Uw@mail.gmail.com>
+Date: Mon, 25 Jan 2021 11:07:01 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: openbmc@lists.ozlabs.org
+Subject: Re: request repo meta-tyan
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,40 +89,18 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "open list:HARDWARE MONITORING" <linux-hwmon@vger.kernel.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, Jean Delvare <jdelvare@suse.com>,
- Ryan Chen <ryan_chen@aspeedtech.com>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
- Jonathan Corbet <corbet@lwn.net>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org,
- "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>, leetroy@gmail.com,
- Rob Herring <robh+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- chiawei_wang@aspeedtech.com, "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-arm-kernel@lists.infradead.org>
+Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>, Ed Tanous <ed@tanous.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jan 13, 2021 at 07:08:48AM +0000, Troy Lee wrote:
-> Add Aspeed AST2600 PWM/Fan tacho driver. AST2600 has 16 PWM channel and
-> 16 FAN tacho channel.
-> 
-> Changes since v1:
-> - fixed review comments
-> - fixed double-looped calculation of div_h and div_l
-> - moving configuration to device tree
-> - register hwmon driver with devm_hwmon_device_register_with_info()
-> 
-> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 
-checkpatch says:
 
-total: 0 errors, 9 warnings, 26 checks, 779 lines checked
+On Sat, 23 Jan 2021, at 10:32, Nancy Yuen wrote:
+> We are bringing up some Tyan machines using OpenBMC request the 
+> creation of a meta-tyan repo.
 
-This is a bit much. Please run checkpatch --strict and fix the issues
-it reports. Please also fix the issues reported by 0-day as well as
-the issues reported by the bindings robot, and resubmit.
+Bit of a tangent and a drive-by comment given that I haven't been involved in 
+the effort, but is it worth using this request to test-drive the new gerrit 
+owners plugin?
 
-Thanks,
-Guenter
+Andrew
