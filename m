@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CCDC306798
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 00:16:42 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C90E306822
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 00:41:52 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DQzxz5P2wzDr1N
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 10:16:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DR0W132xlzDr0T
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 10:41:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -15,72 +15,75 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=Gqzd90qi; 
+ header.s=fm1 header.b=V2jVze4H; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=XOC11u8u; 
+ header.a=rsa-sha256 header.s=fm1 header.b=pkmyvFmq; 
  dkim-atps=neutral
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
  [66.111.4.28])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DQzwC4s5szDr41
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 10:15:07 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DR0V65b4GzDqX1
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 10:41:02 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 015D05C017F;
- Wed, 27 Jan 2021 18:15:03 -0500 (EST)
+ by mailout.nyi.internal (Postfix) with ESMTP id 34E9F5C0222;
+ Wed, 27 Jan 2021 18:41:00 -0500 (EST)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Wed, 27 Jan 2021 18:15:03 -0500
+ by compute3.internal (MEProxy); Wed, 27 Jan 2021 18:41:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm1; bh=JaDYhfAge65jJsxf5p8WlwXuZlMlD66
- VyA8qHcenU2E=; b=Gqzd90qikza1rFL9yiKMZNLHgAlXC2DD3McI9nNMZLLRtj6
- TrrQa0VEzCOyw+oT3wwkWlAZt979PyJLWXkF6olhSKKPb4AJjYK5JoItQRlbnpJc
- hCCaPmHUTqAMpvfuQJdsq49F6NhJj9/iWSbLWkDYffIVwrW2TNrffdlUhksiURgx
- hpWjgSTO/scgFqBuGgVqGYYPgn5FmLK32jNhZyz/U6G0V42YScWpYbkx8U9rN/p8
- CcZ9aJ7KjeSeztnXgJbR9XdrHgw2adZAjS4qK1kH3II48BTmT1iJWNt75YCwAX1p
- +/61dbQIokFmv/ZUY0Fw7v7sWZCO2nm1BKXxZ6A==
+ :subject:content-type:content-transfer-encoding; s=fm1; bh=09e4d
+ 0fj/eTlRXitQlerFLdhLUtrByRmOwIeFer/71U=; b=V2jVze4HTNhL+ZfQJKMh9
+ xxkauigv3ul+Wv32ohcBX4T+4vhw6aXFc9LWxK5nw9M2sQjTgG0a2ZNs0kFhR9PP
+ kUC4xOnl3mcuRA6dsZWcRj6I0i9kuQWA3VbdZuwReCitS7RZr350tpl29SYGOr7V
+ cSNANrLHZWyehgaH/hEsms4vz+45wIyG7tYKbB10ml0UeEjyRxAqM1HTs8k9BQjp
+ mH2CCdaPg7+a+mKGUKF0DhTFbd/f9HG16iDnV/r+NHMlMPkagji9S6IBtnj3yyI7
+ kN88wv0GzZOk4NTGoSHQHnjZN/SW2Y1YziED881fzkGQOGA6nCJx+gEN2VNeS6Ke
+ w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=JaDYhf
- Age65jJsxf5p8WlwXuZlMlD66VyA8qHcenU2E=; b=XOC11u8uPlCBK39tHxv2QG
- 5I2yGu4XQ4/tPfDrN0XTQdZH1890ywM/N4q2Up5pWGSYlxbmunmPgYebeiIrxZcm
- /v6MahcJC4bPsKa+HoBzaorHIEoIlpUx2SunKb8rA96ZJi0v1ngP4vDSSOvFpfzn
- bCevlA7klpmudmwIMQjw8jGZ/MPJHLPUkLy+6CzcL0NKgCGoqfUsIgKDicQrXuQx
- punbXoAbVTjKk57VLBZKKEbee78IGPuqAhIp7jJTi4QRqls6s9TJbhTk4uEElOgm
- L/ZvutV8RgD9SRl0MJEKYazssyfsyJ3TMLY4q8TCvWzpja2g10EXlf0W0JP7mMeQ
- ==
-X-ME-Sender: <xms:9vMRYL9BIxvTz7PKy0OW_W1W5GmAHTTd8-lya5TLRr1BRbP0nLsY1Q>
- <xme:9vMRYHu0HsGIEFqDvphzZhudYy_akzD1O7O0HyhyY5RHmVaGydMdrIinDnRjQxsFe
- GdvwtCDit7MeWaPEA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdelgddtjecutefuodetggdotefrodftvf
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; bh=09e4d0fj/eTlRXitQlerFLdhLUtrByRmOwIeFer/7
+ 1U=; b=pkmyvFmqj9HjEwMhqEbLEYveLwjHjQYGSSvnYBnhBuXn8twyjb9XewEFy
+ ohxJu0XL3OmHJRVZz+9+ujCjpryc0ANVZtZMwzCrBd1vwM9h5APz1Knkhde4Tskj
+ PScVCdRkzBITyp/L8+OTGvH4/6lvcAls3tKhHh9KCrCwt2UjkrnsFKhgn/3piNMW
+ 2rEPgWVxdGuD9//RbmK4RW6r1vatCLEtNLNIDarD/hMAVAb8U/8h8CzvBlWFqTs2
+ x7TdU1oT25k1pYgXy18rSl3vc+odS9s6C34//+prmwg6km2NqjmyUk2wTLPrJ5x+
+ J6Sov80EMYIKLsymUKjQHAB/rS/ag==
+X-ME-Sender: <xms:CvoRYFIWVRhn9uY_2gRmTpdy4cEFd09toaJBI99pyF97NC8QsnNqOA>
+ <xme:CvoRYBJJ1sXmz38NJ2AYQRRZa3unQ-kcCoMMXTlek1QhvOKxsFnthKb7h_0ApxUuU
+ U1cEVuies7M_HS_AA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdelgdduvdcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
- veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:9vMRYJCy_dKate4vepew3E24i6UfGdv2m7JwTRR1pJ1ozKLPFg9t-g>
- <xmx:9vMRYHfTFYZg6RiTr8MDmDgIDjKmZkCpexGT1ev7kgOsp0vDKxXMmw>
- <xmx:9vMRYAO4PxOBSxLbro7Y2ES7l539SuWmyR4LfJfLl7kzzehwLZrxoA>
- <xmx:9vMRYLbbmOGXbSXMDT3UqXDERMspnMPcSxkADg83U2nzNVI3eWyffg>
+ fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhepvdegkeehgeefvdfhteehhfduteetgeeugefgieeigeeuheekudegtdek
+ gfelgfehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:CvoRYNug27EKxfLWxctan-aF2HQgtNzhg4TFoAfQZijWrRrdvAvlgg>
+ <xmx:CvoRYGarz4XNiNot1T4cSJnYD6jHPhZDDgLlD1yobSMQL_b0nnYzsA>
+ <xmx:CvoRYMZitT9auC4V8d82u4BZ-mMeb000_J8aRIN7V_UIRF08_D6HWA>
+ <xmx:DPoRYHx9TnbnMP9Mlr0AzTgBF-Zg_OIPg-5mkuQ_gxb4vN39UFCvwg>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 3A7DEA0005D; Wed, 27 Jan 2021 18:15:02 -0500 (EST)
+ id 4CDA1A0005D; Wed, 27 Jan 2021 18:40:58 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-84-gfc141fe8b8-fm-20210125.001-gfc141fe8
 Mime-Version: 1.0
-Message-Id: <6ea6d5b9-0e31-4a87-8990-b5ce53e2416d@www.fastmail.com>
-In-Reply-To: <PS1PR06MB260095F62386276E75ADC5708ABB0@PS1PR06MB2600.apcprd06.prod.outlook.com>
-References: <PS1PR06MB260095F62386276E75ADC5708ABB0@PS1PR06MB2600.apcprd06.prod.outlook.com>
-Date: Thu, 28 Jan 2021 09:44:41 +1030
+Message-Id: <2a850fc9-d9fc-4bea-8a1c-37d14d6d57b0@www.fastmail.com>
+In-Reply-To: <20210127070054.81719-1-joel@jms.id.au>
+References: <20210127070054.81719-1-joel@jms.id.au>
+Date: Thu, 28 Jan 2021 10:10:36 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Troy Lee" <troy_lee@aspeedtech.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: Supporting new interfaces in phosphor-ipmi-flash
-Content-Type: text/plain
+To: "Joel Stanley" <joel@jms.id.au>,
+ "Klaus Heinrich Kiwi" <klaus@linux.vnet.ibm.com>,
+ "Ryan Chen" <ryan_chen@aspeedtech.com>, openbmc@lists.ozlabs.org
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2 0/6] FIT verification
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,25 +100,28 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Wed, 27 Jan 2021, at 20:13, Troy Lee wrote:
-> Hi team,
-> 
-> For security consideration, user might want to disable AST2500/AST2600 
-> P2A functionality by default. To compensate the effect to 
-> phosphor-ipmi-flash, we're planning to support two alternative in-band 
-> firmware upgrade over PCIe for AST2500/AST2600 (AST2520 and AST2620 are 
-> excluded):
->  - Through a reserved **VGA** memory on BAR[0], or
->  - Through a reserved **PCIe** shared memory on BAR[1]
-> 
-> The usage pretty much the same as P2A, but it runs on different BAR, 
-> offset and length.
-> This will involves modifying phosphor-ipmi-flash/[tools|bmc]. Should I 
-> create new **interfaces**, e.g. astpcie/astvga?
-> 
+On Wed, 27 Jan 2021, at 17:30, Joel Stanley wrote:
+> As part of our effort to enable secure boot in openbmc, this turns on
+> FIT verification in the SPL and u-boot.
+>=20
+> It adjusts the SRAM layout to accommodate the extra code size, moving
+> the heap to the non-parity checked 24KB of SRAM.
+>=20
+> It also modifies the way the SPL is built, including disabling feature=
+s.
+> This reduces the SPL size to 59716, meaning we could choose to leave
+> ymodem support in the build for now. Please voice your thoughts when
+> reviewing.
 
-This is the HOST2BMC functionality in the 2600 datasheet?
+If we leave ymodem in, after signing we have 1536 bytes spare*.
 
-It would be great to have more detail on how it works.
+I suggest we drop the patch disabling ymodem support so we don't have to=
+ build=20
+a separate SPL config if we want to recover.
 
 Andrew
+
+* Signing requires 512-byte alignment, and aligns the signed image size =
+to a=20
+512-byte boundary. So: (64=C3=971024)=E2=88=92((59716+3656+(512=E2=88=92=
+1))&(~(512=E2=88=921))+512)
