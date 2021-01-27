@@ -1,69 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 908EA306085
-	for <lists+openbmc@lfdr.de>; Wed, 27 Jan 2021 17:05:30 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BB7D306126
+	for <lists+openbmc@lfdr.de>; Wed, 27 Jan 2021 17:41:15 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DQpNQ6NmRzDqpM
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 03:05:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DQq9h388pzDqNZ
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 03:41:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::732;
- helo=mail-qk1-x732.google.com; envelope-from=venture@google.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=bruce.mitchell@ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=i3C2TEoH; dkim-atps=neutral
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com
- [IPv6:2607:f8b0:4864:20::732])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=KV0XOOtp; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DQpMF2vmdzDqX8
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 03:04:23 +1100 (AEDT)
-Received: by mail-qk1-x732.google.com with SMTP id x81so2198211qkb.0
- for <openbmc@lists.ozlabs.org>; Wed, 27 Jan 2021 08:04:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=bk5gFe/ZheOr0ZEK2PhTMOiknd+4muPH4yGQl3AoTlY=;
- b=i3C2TEoH3YHYZL+DLoGOlaEqbny3F5AHA7fiHgCtLxmqanNBkIMw4N2DL6uZYA7Qv5
- KB5QoLO7KuvgBGnU3DhUJo9+++inmlyf/fMgdN3E+npmGHTpPSuDzGuAJcnP4/Y8TTRI
- mRV155rABhAOUeS6x0Ep0OGkbpgApnmH4Ruu4Pz0BF2anWqeQcw923IK7xX/Dnkle6Ci
- sv/YDBZ+dLPTCfLF3xiQwQJSXNDNCY8L44BqYeP38UQHXUfB83PCx49unuab5rBVYNk6
- KJunni1qaMZIaVHlG5poyD8DrizKC9m//O0BpL6Vyu4ue4EqGvUzxk3E+N+obcqPiTIc
- g1OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=bk5gFe/ZheOr0ZEK2PhTMOiknd+4muPH4yGQl3AoTlY=;
- b=A2Zu7Rm/s9stTPwRPy9flVk6XUm0On5tuVcIB/juq22RkusAsSNXn5uwN8CtIeifWW
- hYGZH//pw40mg2roKN61Oi8n22SeOY/YaWZaVIUVCnD4qWF0xwceCTKBlH6XtpHW9/QY
- nUL6sW2dPtg8j1qSt+0Y4N3bJvSNYO6jnl0g4462hLfMti4fc/f0aAJU3OhrzCVGEmmX
- jmwUthcdTgfMhHrOyNSR015jU5I1TTJRulXhxd1iPaOoaN84DRPD7QavIZXuTVUHS1sO
- lut0aD8mGaQDyydsnoqm2gxgOnnjQ9oYslyIMyxW15bJ1v07xv3J+39APpW6B5n+rhSw
- O5NQ==
-X-Gm-Message-State: AOAM533AXb9O6qGN6J7tZ2BOixcUkueTukmcWwxWGO0wWze83VqM1n13
- iIdam1p/kzSsdtubgQ4Uu4LTdFkpvw9YmhSXGEBGig==
-X-Google-Smtp-Source: ABdhPJzV/ZMpBZO56Xi0WLctzt9WBI9Mio7FCgYGw+lrhphJq2J8cikuDPBMgLbQBmBo0LJdpYDJf/OUWE9Hyl4Cr3Q=
-X-Received: by 2002:ae9:d881:: with SMTP id
- u123mr11217517qkf.133.1611763459389; 
- Wed, 27 Jan 2021 08:04:19 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DQq7c6ly6zDqjg
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 03:39:21 +1100 (AEDT)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 10RGXGqU147135
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Jan 2021 11:39:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=mime-version : subject :
+ to : cc : from : date : content-type : message-id; s=pp1;
+ bh=WxokoKG+7DhqzytWbOhQntE2j0nm0g6ju0T8SHR0fqA=;
+ b=KV0XOOtp/2eUHdXyseY82b62R5wX0tJ3jQ3b1MHCKCYVe4yAGRHDMPt6mw/8ixInmJwx
+ bBwAyu9aIqiXvBYBCbKKZJep3OuvrvRWUHQAuLYkx6y07rcOjD35xVP0O0ws0kYWWc9b
+ NdkG8B5IF/O+4Wx/U7tTX1LxbqjLnwELvVw3GEGTSFBDMPmAWGyHl013Wekz7VjQ1q1u
+ 77UF174BY031SghdQzy87Mc8IyyqFIk/hCfDzNsp2dVYjVNqDJsNadbXEXwWQXZHJGdU
+ E4nK7KrNbYTlIH4zArersDDmj9lTv7Q4xSHEPyqKgHZCUccheYZb+UiwRgLy1N0biCSb 1g== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.75])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 36aweeyyhg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Jan 2021 11:39:18 -0500
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Bruce.Mitchell@ibm.com>;
+ Wed, 27 Jan 2021 16:39:17 -0000
+Received: from us1a3-smtp05.a3.dal06.isc4sb.com (10.146.71.159)
+ by smtp.notes.na.collabserv.com (10.106.227.123) with
+ smtp.notes.na.collabserv.com ESMTP; Wed, 27 Jan 2021 16:39:16 -0000
+Received: from us1a3-mail31.a3.dal06.isc4sb.com ([10.146.6.26])
+ by us1a3-smtp05.a3.dal06.isc4sb.com
+ with ESMTP id 2021012716391578-506394 ;
+ Wed, 27 Jan 2021 16:39:15 +0000 
 MIME-Version: 1.0
-References: <PS1PR06MB260095F62386276E75ADC5708ABB0@PS1PR06MB2600.apcprd06.prod.outlook.com>
-In-Reply-To: <PS1PR06MB260095F62386276E75ADC5708ABB0@PS1PR06MB2600.apcprd06.prod.outlook.com>
-From: Patrick Venture <venture@google.com>
-Date: Wed, 27 Jan 2021 08:04:08 -0800
-Message-ID: <CAO=notwtzF96o9oJe=5px4KFWFdzWQxHMMbFdA2JmwEFBLC8bA@mail.gmail.com>
-Subject: Re: Supporting new interfaces in phosphor-ipmi-flash
-To: Troy Lee <troy_lee@aspeedtech.com>, Brandon Kim <brandonkim@google.com>, 
- Benjamin Fair <benjaminfair@google.com>,
- William Kennington <wak@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: SMP platform_can_cpu_hotplug() for the AST2600
+To: openbmc@lists.ozlabs.org
+From: "Bruce Mitchell" <Bruce.Mitchell@ibm.com>
+Date: Wed, 27 Jan 2021 08:39:15 -0800
+X-KeepSent: 6FAB2611:F453A139-0025866A:00599AC8;
+ type=4; name=$KeepSent
+X-Mailer: IBM Notes Release 10.0.1FP5 April 28, 2020
+X-LLNOutbound: False
+X-Disclaimed: 15283
+X-TNEFEvaluated: 1
+Content-type: multipart/alternative; 
+ Boundary="0__=8FBB0CF9DFCA1C588f9e8a93df938690918c8FBB0CF9DFCA1C58"
+Content-Disposition: inline
+x-cbid: 21012716-6875-0000-0000-000004565CB3
+X-IBM-SpamModules-Scores: BY=0.000001; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.423878; ST=0; TS=0; UL=0; ISC=; MB=0.000000
+X-IBM-SpamModules-Versions: BY=3.00014629; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000295; SDB=6.01499125; UDB=6.00808912; IPR=6.01281673; 
+ MB=3.00035949; MTD=3.00000008; XFM=3.00000015; UTC=2021-01-27 16:39:16
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2021-01-27 11:06:07 - 6.00012253
+x-cbparentid: 21012716-6876-0000-0000-000026605D4A
+Message-Id: <OF6FAB2611.F453A139-ON0025866A.00599AC8-8825866A.005B7C0E@notes.na.collabserv.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
+ definitions=2021-01-27_05:2021-01-27,
+ 2021-01-27 signatures=0
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,32 +90,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: mark.rutland@arm.com, BMC-SW@aspeedtech.com, chiawei_wang@aspeedtech.com,
+ troy_lee@aspeedtech.com, ryan_chen@aspeedtech.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jan 27, 2021 at 1:44 AM Troy Lee <troy_lee@aspeedtech.com> wrote:
->
-> Hi team,
->
-> For security consideration, user might want to disable AST2500/AST2600 P2=
-A functionality by default. To compensate the effect to phosphor-ipmi-flash=
-, we're planning to support two alternative in-band firmware upgrade over P=
-CIe for AST2500/AST2600 (AST2520 and AST2620 are excluded):
->  - Through a reserved **VGA** memory on BAR[0], or
->  - Through a reserved **PCIe** shared memory on BAR[1]
->
-> The usage pretty much the same as P2A, but it runs on different BAR, offs=
-et and length.
-> This will involves modifying phosphor-ipmi-flash/[tools|bmc]. Should I cr=
-eate new **interfaces**, e.g. astpcie/astvga?
 
-I'm not sure it makes sense to create new interfaces, but rather to
-add optional parameters for those differences... but I've added some
-people to the reply line to help answer.
+--0__=8FBB0CF9DFCA1C588f9e8a93df938690918c8FBB0CF9DFCA1C58
+Content-Transfer-Encoding: quoted-printable
+Content-type: text/plain; charset=US-ASCII
 
->
-> Thanks,
-> Troy Lee
->
->
+
+I have discussed this on Discord OpenBMC on kernel-and-uboot, but I do not
+believe everyone is using Discord so I am expanding to a larger audience.
+
+I am going to be implementing SMP hotplug for the AST2600.
+Looking to see if ASPEED has any preference or suggestions regarding
+cpu=5Fkill and cpu=5Fdie for CONFIG=5FHOTPLUG=5FCPU
+that platform=5Fcan=5Fcpu=5Fhotplug() builds on so as to round out the SMP
+implementation.
+
+This is currently preventing kexec=5Fload() from succeeding.
+
+Thank you.
+
+--
+Bruce
+
+--0__=8FBB0CF9DFCA1C588f9e8a93df938690918c8FBB0CF9DFCA1C58
+Content-Transfer-Encoding: quoted-printable
+Content-type: text/html; charset=US-ASCII
+Content-Disposition: inline
+
+<html><body><p><font size=3D"2">I have discussed this on Discord OpenBMC on=
+ kernel-and-uboot, but I do not believe everyone is using Discord so I am e=
+xpanding to a larger audience.</font><br><font size=3D"2"> </font><br><font=
+ size=3D"2">I am going to be implementing SMP hotplug for the AST2600.</fon=
+t><br><font size=3D"2">Looking to see if ASPEED has any preference or sugge=
+stions regarding cpu=5Fkill and cpu=5Fdie for CONFIG=5FHOTPLUG=5FCPU</font>=
+<br><font size=3D"2">that platform=5Fcan=5Fcpu=5Fhotplug() builds on so as =
+to round out the SMP implementation.</font><br><br><font size=3D"2">This is=
+ currently preventing kexec=5Fload() from succeeding. </font><br><br><font =
+size=3D"2">Thank you.</font><br><br><font size=3D"2">-- </font><br><font si=
+ze=3D"2">Bruce</font><BR>
+</body></html>
+
+--0__=8FBB0CF9DFCA1C588f9e8a93df938690918c8FBB0CF9DFCA1C58--
+
