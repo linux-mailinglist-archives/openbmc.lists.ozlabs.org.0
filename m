@@ -2,73 +2,102 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83D25305412
-	for <lists+openbmc@lfdr.de>; Wed, 27 Jan 2021 08:11:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E5EE30572F
+	for <lists+openbmc@lfdr.de>; Wed, 27 Jan 2021 10:45:00 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DQZX453MxzDqjV
-	for <lists+openbmc@lfdr.de>; Wed, 27 Jan 2021 18:11:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DQdxP2fZHzDqtR
+	for <lists+openbmc@lfdr.de>; Wed, 27 Jan 2021 20:44:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::532;
- helo=mail-pg1-x532.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=JvSWD1ug; dkim-atps=neutral
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com
- [IPv6:2607:f8b0:4864:20::532])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=aspeedtech.com (client-ip=40.107.128.111;
+ helo=kor01-ps2-obe.outbound.protection.outlook.com;
+ envelope-from=troy_lee@aspeedtech.com; receiver=<UNKNOWN>)
+Received: from KOR01-PS2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1280111.outbound.protection.outlook.com [40.107.128.111])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DQZJq6lD7zDqhn
- for <openbmc@lists.ozlabs.org>; Wed, 27 Jan 2021 18:01:31 +1100 (AEDT)
-Received: by mail-pg1-x532.google.com with SMTP id n25so970591pgb.0
- for <openbmc@lists.ozlabs.org>; Tue, 26 Jan 2021 23:01:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=jreDLzgd7gUidibyy+C5l+ykWlyHdQlGuJy6wGt5bns=;
- b=JvSWD1ugow3OXhsjp9kxpKUX1WUt+3cKFINCXd8PXoxrBo7fcMkQ5oo/orraZj4Kkk
- 9ts7aWTcp0YDm9wtEthMnDqecNuBXzi3hN7rtibMV4xwlVMR/7W3dmlOMvG73o2Kp94E
- TlicQf/TyGsg5C8iX6ZGKxO6HiFMMyK0G4jCtxAeQz2KdlhUfm4DYJRNDXF0kDr0KAk1
- aWuwoe+/IcLwDvPs90dUcn37+5bERC4eEI7waIOCiq1EaWWErHKUpPj/GM+DXcKuG9dk
- bOADTfY4uidBwj3uBDcdIPL8c5i6jA4hAoyzTLQuswWfYvKMZlSzs7a+ymwkpvuHzSEN
- vBRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=jreDLzgd7gUidibyy+C5l+ykWlyHdQlGuJy6wGt5bns=;
- b=TWYtY+jjSZvGXGzBPgcu19ziOwFE0FS12+5O3pwCJYARHhqFi9B1WM48mxltTLBEU/
- 3iXQqeMdtXQxI874tJC9+KEIUtIPcXD7obqTPWLeJ30y2bzFy38Ak5PRIHh/uzgunZ25
- wFvzLwuGrnLz1YgSQCaJ+JT2LpgV9offVlzQzlpEvK1Gk9X0QJ0gQgoq3uAEIxAv+YmO
- JMy5KPs3yo+LlY0Sl8+epl+cjc8fxw46Y/LenKzNrlK0FXqgzTap/XbGj+exmUhXncI0
- Qp4sm5+E7HmnP9t1quwRvIjyn+DLghjKGE1v7xstr5jFJbAKnYjhchhe6SUcZNdj65Ny
- hmGQ==
-X-Gm-Message-State: AOAM5337jpQvypyQMVsBceQam2CpGdrULxDFZ0X1xI+OF7XBqjcYgptO
- TZMczjGKoyNU3Ac9xGS88aM=
-X-Google-Smtp-Source: ABdhPJxcylQCWzBmvwofKwT6gvP2mksbqIWEVW9N0PUck/j98BgCyHPPBDCHUhhuUlKu56kZOc8oUA==
-X-Received: by 2002:aa7:94a2:0:b029:1b8:eba7:773e with SMTP id
- a2-20020aa794a20000b02901b8eba7773emr9343336pfl.51.1611730888732; 
- Tue, 26 Jan 2021 23:01:28 -0800 (PST)
-Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id i1sm1258315pfb.54.2021.01.26.23.01.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Jan 2021 23:01:27 -0800 (PST)
-From: Joel Stanley <joel@jms.id.au>
-To: Andrew Jeffery <andrew@aj.id.au>,
- Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>,
- Ryan Chen <ryan_chen@aspeedtech.com>, openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc v2 6/6] config: ast2600: Reduce
- SPL image size
-Date: Wed, 27 Jan 2021 17:30:54 +1030
-Message-Id: <20210127070054.81719-7-joel@jms.id.au>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210127070054.81719-1-joel@jms.id.au>
-References: <20210127070054.81719-1-joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DQdwJ2qYxzDqjn
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Jan 2021 20:43:58 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=F/srcFh34qaeYw3jfUNSAaYz8JBy5Bz5Nv/pduW5JHLtVNodiaiPC43+jaqs2uRkPwzTVtuQ/Q4TK5ybbofPksBsUtHGq3J7+2E7UH8afTo/bnn5fWc7kySgRlfCyfd4H31hDqW+i/HYfyIPgIA/NGmqz/9HB8XBiMAAZza+hv3/a3pL3y8Sa1p6kkHbl2iW8CiuUX7b8OnUIp1jYKEMCac9jknkgHFM6mXdjcPIn4JctDw5+0yd5NeDk207T/FZXbKO25JVrPA2w7gLxYsHktCSpHcuVCng3loJZjgB7BBn5UoTQNgU1KIHGImoZe/xVMR215JLSDhNA0/GDdGuZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=O3NHd3FIwOUZbdsxfe9w+QpcKR52s0cebn4ws7mBVpM=;
+ b=fM4jP7wGoeSfpckMi5YcbuB8pNwHQzbM7VxvNnnQw4qPqwrhlpR8FUIUF1onQyfi1VBvJPgKwwYBpuqHONkraJi8AGu0w9+jTGfDkniVAn3b45IlHXbi78421sntIKckWTk5Rvt81Vj555bBZbmvi1F1fECqHBwhC/x3pFpRHinv/LuPfs12fRziLdNVLlt8f1FeTKiACPLFJHPxd0t7DXB3PS/rPCTwKvgsQ64uhesvYnQXYUhUGABDuW+kFPqcouSsbbGCurxtYrVaKCXKfSCYTh7N63Vhx7Ej0UppScU85r86jtF2/zo13AZwnVeABURCa9rRD84pn/qkOb6HQQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+Received: from PS1PR06MB2600.apcprd06.prod.outlook.com (2603:1096:803:4d::19)
+ by PS2PR06MB3256.apcprd06.prod.outlook.com (2603:1096:300:68::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3805.17; Wed, 27 Jan
+ 2021 09:43:45 +0000
+Received: from PS1PR06MB2600.apcprd06.prod.outlook.com
+ ([fe80::6031:184a:88fe:5667]) by PS1PR06MB2600.apcprd06.prod.outlook.com
+ ([fe80::6031:184a:88fe:5667%7]) with mapi id 15.20.3784.019; Wed, 27 Jan 2021
+ 09:43:45 +0000
+From: Troy Lee <troy_lee@aspeedtech.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Supporting new interfaces in phosphor-ipmi-flash
+Thread-Topic: Supporting new interfaces in phosphor-ipmi-flash
+Thread-Index: Adb0kMgRe/E68DmNSuSkTCeSdy9fVA==
+Date: Wed, 27 Jan 2021 09:43:45 +0000
+Message-ID: <PS1PR06MB260095F62386276E75ADC5708ABB0@PS1PR06MB2600.apcprd06.prod.outlook.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=aspeedtech.com;
+x-originating-ip: [118.99.190.129]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: ff8e80b7-18f3-4511-40fb-08d8c2a80a14
+x-ms-traffictypediagnostic: PS2PR06MB3256:
+x-microsoft-antispam-prvs: <PS2PR06MB3256A8218FFEA6F00A7E52C38ABB0@PS2PR06MB3256.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 9+infXMAWF6nQ10ReMMRwYWt6tFco0IekW528+HVsHx+asVPZ828+HduS9fr23ZWwbEGzriOQRVwJYJiTpZh4UMia7Mvm9vY31I4yApI3DcwaONkYoCC4wYjmYpZHzCdPZfZS8KWNBhSPOlpT/+laWzhi52xw8yDYDEU3SE5hlqKx91XnJqZuyyFo2M71TRcMQrHNiP2iCL7xaEgS7B1i5DyUwj2FHBOx8TgU3cm8ns0Cb4dW6GW0RSsOXg/lOluFyQ8XMPaP0y1e5FT6chapICtnYvCliZYp4thbAh1G7W1M9WSIYemBJ3z6f4HJmzeBJ9UAvx1AKl3ofnCt0h2qptUzLylJ+bR9TbtewZNjactl6u9+BnOMB/JAbiQOtcfax7l1JAfTTGKg2Blx8wx/Q==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PS1PR06MB2600.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(366004)(136003)(39850400004)(396003)(346002)(376002)(55016002)(71200400001)(6916009)(86362001)(2906002)(478600001)(8936002)(9686003)(8676002)(33656002)(316002)(66446008)(6506007)(66946007)(66476007)(66556008)(26005)(64756008)(186003)(76116006)(7696005)(83380400001)(4744005)(5660300002)(52536014);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?Ur3wqOLIxNLgP7ne5HWqyi4EXP5lxj9J++4W3A44tnPIYBVmTqKVtu8FQp7s?=
+ =?us-ascii?Q?nU0orYViofVm8q71ckNnIjaoRAketP7qzB62PrbD9GMO4s+2tmpObjWLkuvO?=
+ =?us-ascii?Q?ZU9355tG/6D8QnMTJv3SpNUwcbe6rpiVwrOkpbRY1WhfQKXOhvd4430vwhaD?=
+ =?us-ascii?Q?CrEo0mgtlhEucKgxt/D7WbcA+7VDfoJ5eKpW2H8cGUrBjvxPB2ALLnStDte5?=
+ =?us-ascii?Q?R3wdV+DdZX6rNT+Ny9KG1Gaz2XFvjlFGbS2IlRHVUEdsOaEAHt2/hOSHdof/?=
+ =?us-ascii?Q?LRo6W2t953t0fLH4rh8idO9OH3OSkRzj8YC5PZ7W/A6QgNlbAXp8X6PBvK3l?=
+ =?us-ascii?Q?leAqI/SHZPzqaEn9f0nwwj6ogCS8SRt9WP3LnYXx/DbKL9FTj7ZGeQdw8zia?=
+ =?us-ascii?Q?zkQ30ViUQNWNufxfL0qwZwia/SuQziizPg8o+whP5jpqs+ArfMh+sjPIWh+2?=
+ =?us-ascii?Q?+VK1agotxSdmcDy54XNXAH2/J6M4zeJgZaQxyayEby7yYMUl9n5U67up5y/k?=
+ =?us-ascii?Q?8j4CwnapZkoMRgLEYBaUyi9gg92/vCZQsdXfTnrJEvt06Ko4P8ofvRQ+MsXM?=
+ =?us-ascii?Q?/PwJMgiIEbWYVxRWJSbSSBidGeOoeecly+L3Q3hfB6EQJ3CBzjj9C1HMbh9h?=
+ =?us-ascii?Q?o5XFF9TIehZKAXLSrtZVWQAMe+R+06tAoUl/+5cdeE87ZvYguWpUKgHR9OwD?=
+ =?us-ascii?Q?gpZhQMuwEauI6EccHS60iy5ux5Z8P3ab++k3fKbrHAv5rU4HoO668AhQz5T+?=
+ =?us-ascii?Q?qpg7mGAfyKtuObVs1oUgaxho9fiRGkQ96I5Y2LNG5q/dultsSFjQ9E1nnQea?=
+ =?us-ascii?Q?TIGa69FNON/vJW/G+Q0vOR6boSxeBUqJ+P7Rw1VVRPSzOYx3aR6AP5TXgqJM?=
+ =?us-ascii?Q?Gz2MONHpFOBMH9Ntf/tE2eMGMtsMd4Mj0+WbRhugIWHu+nAZuUgmWN9kV6Pn?=
+ =?us-ascii?Q?i1qaWuQESbmXSI+/QicEaO6EO3QTZlsVuF2tMra3sIVY2DlFd1u/ZM9u/87L?=
+ =?us-ascii?Q?EJUPFz/spbFDv3PEBYOR9ObouDC3DCdWSWH3HQiqTvJCOvnMn7tbbh49E12v?=
+ =?us-ascii?Q?Xh0oFswj?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PS1PR06MB2600.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ff8e80b7-18f3-4511-40fb-08d8c2a80a14
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Jan 2021 09:43:45.0520 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: g4vsF+mV0Ii15sTAES5p3CNLkkJ2uPqRh7G7jETg5mU/GQT7DKdIIaRu3urxr3CJ6ZS6vWgjxw7LIALpwmWO/Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS2PR06MB3256
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,48 +112,21 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This modifies some features of the SPL to ensure it fits in the 64KB
-payload size.
+Hi team,
 
-This set of options reduceds the binary size by 4760 bytes with GCC 10.
+For security consideration, user might want to disable AST2500/AST2600 P2A =
+functionality by default. To compensate the effect to phosphor-ipmi-flash, =
+we're planning to support two alternative in-band firmware upgrade over PCI=
+e for AST2500/AST2600 (AST2520 and AST2620 are excluded):
+ - Through a reserved **VGA** memory on BAR[0], or
+ - Through a reserved **PCIe** shared memory on BAR[1]
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- configs/ast2600_openbmc_spl_emmc_defconfig | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+The usage pretty much the same as P2A, but it runs on different BAR, offset=
+ and length.
+This will involves modifying phosphor-ipmi-flash/[tools|bmc]. Should I crea=
+te new **interfaces**, e.g. astpcie/astvga?
 
-diff --git a/configs/ast2600_openbmc_spl_emmc_defconfig b/configs/ast2600_openbmc_spl_emmc_defconfig
-index c55a70c5c1c9..345225131075 100644
---- a/configs/ast2600_openbmc_spl_emmc_defconfig
-+++ b/configs/ast2600_openbmc_spl_emmc_defconfig
-@@ -2,8 +2,9 @@ CONFIG_ARM=y
- CONFIG_SYS_CONFIG_NAME="evb_ast2600a1_spl"
- CONFIG_SYS_DCACHE_OFF=y
- CONFIG_POSITION_INDEPENDENT=y
--CONFIG_SPL_SYS_THUMB_BUILD=y
- CONFIG_SYS_THUMB_BUILD=y
-+# CONFIG_SPL_USE_ARCH_MEMCPY is not set
-+# CONFIG_SPL_USE_ARCH_MEMSET is not set
- CONFIG_SPL_LDSCRIPT="arch/$(ARCH)/mach-aspeed/ast2600/u-boot-spl.lds"
- CONFIG_ARCH_ASPEED=y
- CONFIG_SYS_TEXT_BASE=0x10000
-@@ -51,6 +52,8 @@ CONFIG_BOARD_EARLY_INIT_F=y
- CONFIG_SPL_SYS_MALLOC_SIMPLE=y
- CONFIG_SPL_STACK_R=y
- CONFIG_SPL_SEPARATE_BSS=y
-+# CONFIG_TPL_BANNER_PRINT is not set
-+CONFIG_SPL_FIT_IMAGE_TINY=y
- CONFIG_SPL_DM_RESET=y
- CONFIG_SPL_RAM_SUPPORT=y
- CONFIG_SPL_RAM_DEVICE=y
-@@ -130,6 +133,7 @@ CONFIG_SYSRESET=y
- CONFIG_WDT=y
- CONFIG_USE_TINY_PRINTF=y
- # CONFIG_REGEX is not set
-+CONFIG_SPL_TINY_MEMSET=y
- CONFIG_TPM=y
- CONFIG_SPL_TPM=y
- # CONFIG_EFI_LOADER is not set
--- 
-2.29.2
+Thanks,
+Troy Lee
+
 
