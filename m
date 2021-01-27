@@ -1,89 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C90E306822
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 00:41:52 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECCAE306832
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 00:44:17 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DR0W132xlzDr0T
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 10:41:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DR0Yq2ScbzDr1P
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 10:44:15 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=V2jVze4H; 
+ header.s=fm1 header.b=Fq0qL+ak; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=pkmyvFmq; 
+ header.a=rsa-sha256 header.s=fm1 header.b=BYVvlsSU; 
  dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DR0V65b4GzDqX1
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 10:41:02 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DR0Y21QfvzDq8t
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 10:43:33 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 34E9F5C0222;
- Wed, 27 Jan 2021 18:41:00 -0500 (EST)
+ by mailout.nyi.internal (Postfix) with ESMTP id 32B685C01E6;
+ Wed, 27 Jan 2021 18:43:31 -0500 (EST)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Wed, 27 Jan 2021 18:41:00 -0500
+ by compute3.internal (MEProxy); Wed, 27 Jan 2021 18:43:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type:content-transfer-encoding; s=fm1; bh=09e4d
- 0fj/eTlRXitQlerFLdhLUtrByRmOwIeFer/71U=; b=V2jVze4HTNhL+ZfQJKMh9
- xxkauigv3ul+Wv32ohcBX4T+4vhw6aXFc9LWxK5nw9M2sQjTgG0a2ZNs0kFhR9PP
- kUC4xOnl3mcuRA6dsZWcRj6I0i9kuQWA3VbdZuwReCitS7RZr350tpl29SYGOr7V
- cSNANrLHZWyehgaH/hEsms4vz+45wIyG7tYKbB10ml0UeEjyRxAqM1HTs8k9BQjp
- mH2CCdaPg7+a+mKGUKF0DhTFbd/f9HG16iDnV/r+NHMlMPkagji9S6IBtnj3yyI7
- kN88wv0GzZOk4NTGoSHQHnjZN/SW2Y1YziED881fzkGQOGA6nCJx+gEN2VNeS6Ke
- w==
+ :subject:content-type; s=fm1; bh=O6h7SGRrUN5Q1kKkh9ot1d49Jvjy76f
+ /orA/FlS1hVg=; b=Fq0qL+aks9tKAGW8tymQhJj2PJdDWkJFSTYLq4ehCKEPRD7
+ uIPChq4kb3KZ9nBqeNi3uKOV1qNtpMMC0JBUjJCsy+E5hvxYgYKnCM37BC087QeM
+ ggO3tTkTRUoIvvRxdPwdx0A36j1OUzxr6wSsxxVTub/PBn9aexq52s5rQlQHsF12
+ nYDOXMZ97PPXDzZiVNqzxTrf0RRMuiI/Z8BYIsr6zedROtzEZ9lXSMzJGdNSOtX3
+ ObhKvBOT49QQvNd6N3tW+EGhl/yhtTe8vCnuaitrXdksOwuxUt+tiFoytVUZC43C
+ /KdAXIGxrsU2M12p4dnXIaX20DW8GljIkN293bg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; bh=09e4d0fj/eTlRXitQlerFLdhLUtrByRmOwIeFer/7
- 1U=; b=pkmyvFmqj9HjEwMhqEbLEYveLwjHjQYGSSvnYBnhBuXn8twyjb9XewEFy
- ohxJu0XL3OmHJRVZz+9+ujCjpryc0ANVZtZMwzCrBd1vwM9h5APz1Knkhde4Tskj
- PScVCdRkzBITyp/L8+OTGvH4/6lvcAls3tKhHh9KCrCwt2UjkrnsFKhgn/3piNMW
- 2rEPgWVxdGuD9//RbmK4RW6r1vatCLEtNLNIDarD/hMAVAb8U/8h8CzvBlWFqTs2
- x7TdU1oT25k1pYgXy18rSl3vc+odS9s6C34//+prmwg6km2NqjmyUk2wTLPrJ5x+
- J6Sov80EMYIKLsymUKjQHAB/rS/ag==
-X-ME-Sender: <xms:CvoRYFIWVRhn9uY_2gRmTpdy4cEFd09toaJBI99pyF97NC8QsnNqOA>
- <xme:CvoRYBJJ1sXmz38NJ2AYQRRZa3unQ-kcCoMMXTlek1QhvOKxsFnthKb7h_0ApxUuU
- U1cEVuies7M_HS_AA>
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=O6h7SG
+ RrUN5Q1kKkh9ot1d49Jvjy76f/orA/FlS1hVg=; b=BYVvlsSU7tSl8OhxtJOxlM
+ DjzPUEAIYBtrlEXE38+07a5dxDQVUk1mFSpDEVOeaQa/N/wfVDkRCOqgVd2eYxgR
+ 2oh+/9Od4P1P73a3wG6fS8iRQuYGjrZ4bwGqn6vNFj78F+u+GE9g/C5hTvkJ+Uk8
+ peekvKxRiDnVsiWZekSK7HPA+mjRM9B78OqqspSWKUAElGlPH02oEJb1r+QS+qe4
+ gDMNu1B4YAx28OGu2JV0adc65sbju+11EJ5ciG1eG5KBTpPse9TiGA6MLlvF0kvN
+ McD7Q/sWr0j6NxnS4O0GFpo3pWSpFPhZwDbu/OZs5fNN7kCP6SiF9iWQInfsDLAw
+ ==
+X-ME-Sender: <xms:ofoRYOD737IFDBZDD1-eqoNuegDA9pU0PVzkh01Evemz29uIqqXrJw>
+ <xme:ofoRYIiaHyDPdoQxX6zNF_8y_-FQQIKOqBrb2TNvEHl00o4J5WiRLNMip15WQKBcS
+ ihJYVBPb3lXoSnr8Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdelgdduvdcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepvdegkeehgeefvdfhteehhfduteetgeeugefgieeigeeuheekudegtdek
- gfelgfehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
- eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:CvoRYNug27EKxfLWxctan-aF2HQgtNzhg4TFoAfQZijWrRrdvAvlgg>
- <xmx:CvoRYGarz4XNiNot1T4cSJnYD6jHPhZDDgLlD1yobSMQL_b0nnYzsA>
- <xmx:CvoRYMZitT9auC4V8d82u4BZ-mMeb000_J8aRIN7V_UIRF08_D6HWA>
- <xmx:DPoRYHx9TnbnMP9Mlr0AzTgBF-Zg_OIPg-5mkuQ_gxb4vN39UFCvwg>
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpeduveejgeeljeetfffgvddutefgvdejudejfefgkeehieettdegvddtieek
+ veejieenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
+ eptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:ofoRYBlUC28Nfime-v41Otc1bt7iVNMdveFyCrGwXX0id20ye2G6MQ>
+ <xmx:ofoRYMywUO8YHhNxWwHkN5MZAxNse0lh-iw50s9cOho9GULEbWWMng>
+ <xmx:ofoRYDRThoRrKQFts38z5gbz0rtMXJZojJZHB0KqEHLWH1FihnRybQ>
+ <xmx:o_oRYKKJCFSwkRso4eB9T4mv4jhadyITYa4X0JYfgqq1LFdUM7w2BQ>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 4CDA1A0005D; Wed, 27 Jan 2021 18:40:58 -0500 (EST)
+ id 70084A0005D; Wed, 27 Jan 2021 18:43:29 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-84-gfc141fe8b8-fm-20210125.001-gfc141fe8
 Mime-Version: 1.0
-Message-Id: <2a850fc9-d9fc-4bea-8a1c-37d14d6d57b0@www.fastmail.com>
-In-Reply-To: <20210127070054.81719-1-joel@jms.id.au>
+Message-Id: <d8125f10-b54b-4e0d-a8d6-8e8a83c345eb@www.fastmail.com>
+In-Reply-To: <20210127070054.81719-2-joel@jms.id.au>
 References: <20210127070054.81719-1-joel@jms.id.au>
-Date: Thu, 28 Jan 2021 10:10:36 +1030
+ <20210127070054.81719-2-joel@jms.id.au>
+Date: Thu, 28 Jan 2021 10:13:08 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Joel Stanley" <joel@jms.id.au>,
  "Klaus Heinrich Kiwi" <klaus@linux.vnet.ibm.com>,
  "Ryan Chen" <ryan_chen@aspeedtech.com>, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2 0/6] FIT verification
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Subject: =?UTF-8?Q?Re:_[PATCH_u-boot_v2019.04-aspeed-openbmc_v2_1/6]_ast2600:_Mod?=
+ =?UTF-8?Q?ify_SPL_SRAM_layout?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,27 +101,19 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Wed, 27 Jan 2021, at 17:30, Joel Stanley wrote:
-> As part of our effort to enable secure boot in openbmc, this turns on
-> FIT verification in the SPL and u-boot.
->=20
-> It adjusts the SRAM layout to accommodate the extra code size, moving
-> the heap to the non-parity checked 24KB of SRAM.
->=20
-> It also modifies the way the SPL is built, including disabling feature=
-s.
-> This reduces the SPL size to 59716, meaning we could choose to leave
-> ymodem support in the build for now. Please voice your thoughts when
-> reviewing.
+> The SRAM is 89KB on the A1 and beyond:
+> 
+>  0x1000_0000 to 0x1000_ffff: 64KB, with parity check
+>  0x1001_0000 to 0x1001_5fff: 24KB, w/o parity check
+>  0x1001_6000 to 0x1001_63ff: 1KB, w/o parity check, each byte write once
+> 
+> Allow the image to fill the full 64KB payload size (max that secure boot
+> supports) and place the stack at the top of the 24KB of SRAM.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 
-If we leave ymodem in, after signing we have 1536 bytes spare*.
+I've pushed a change to github that enables socsec to sign larger SPLs:
 
-I suggest we drop the patch disabling ymodem support so we don't have to=
- build=20
-a separate SPL config if we want to recover.
+https://github.com/amboar/socsec/commit/e28d00cb8278d61b02cb65c320ab4bfa70c79ae1
 
-Andrew
-
-* Signing requires 512-byte alignment, and aligns the signed image size =
-to a=20
-512-byte boundary. So: (64=C3=971024)=E2=88=92((59716+3656+(512=E2=88=92=
-1))&(~(512=E2=88=921))+512)
+Acked-by: Andrew Jeffery <andrew@aj.id.au>
