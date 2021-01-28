@@ -1,55 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82B42307EBE
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 20:38:16 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9B98307EF5
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 20:48:58 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DRW3T148hzDrhh
-	for <lists+openbmc@lfdr.de>; Fri, 29 Jan 2021 06:38:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DRWHq3NfXzDsNZ
+	for <lists+openbmc@lfdr.de>; Fri, 29 Jan 2021 06:48:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=H8ByB/9L; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DRW290XVjzDrhZ;
- Fri, 29 Jan 2021 06:37:03 +1100 (AEDT)
-IronPort-SDR: QDl10Y3BclVWOeb2AIwHExjnJVCnzcJdK9MOFwDKT5a7TqPWBS09V0UaYkMrHxnC31H/Rc1LG0
- i8+vVh4YQWgA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9878"; a="199136151"
-X-IronPort-AV: E=Sophos;i="5.79,383,1602572400"; d="scan'208";a="199136151"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
- by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2021 11:36:59 -0800
-IronPort-SDR: zPVJLkT/Yoal4nkt5j9UPs7nMEwZnZuPSomlUqLjwz5fKZytTxspi5pARNs07F8fQpVOgJaixk
- NIUzuv0pn9qQ==
-X-IronPort-AV: E=Sophos;i="5.79,383,1602572400"; d="scan'208";a="363975312"
-Received: from yoojae-mobl.amr.corp.intel.com (HELO [10.212.221.93])
- ([10.212.221.93])
- by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2021 11:36:58 -0800
-Subject: Re: [PATCH v2 1/4] dt-bindings: i2c: aspeed: add buffer and DMA mode
- transfer support
-To: Joel Stanley <joel@jms.id.au>
-References: <20210112003749.10565-1-jae.hyun.yoo@linux.intel.com>
- <20210112003749.10565-2-jae.hyun.yoo@linux.intel.com>
- <20210114193416.GA3432711@robh.at.kernel.org>
- <4f67358e-58e5-65a5-3680-1cd8e9851faa@linux.intel.com>
- <CACPK8XcZTE=bnCP1-E9PTA09WnXG9Eduwx0dm-QqmQJUDa_OrQ@mail.gmail.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <1814b8d1-954c-0988-0745-e95129079708@linux.intel.com>
-Date: Thu, 28 Jan 2021 11:36:53 -0800
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DRWH12XPNzDqNN
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Jan 2021 06:48:12 +1100 (AEDT)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 10SJXfYR137756; Thu, 28 Jan 2021 14:48:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=BHImUlXFd17gPoBptzG+b33estwHwV9YCmkghV199EE=;
+ b=H8ByB/9LF74mmbhCsaOkIaUUBp3rpUGmE/H8bivlONFAP6Tsm0pa/cEVEXtEH+InoR90
+ 7ajC/xICfpeRtPxi0C/mHL03mzZPVnz1SttGBz04zZT4bNu7IPvaqmN2dbcUSJVBUlrD
+ c1BxcBaQwc1Z+oiMMBrN3f5NJFjvUXuTjyNOpyI0kbcug/FpefR+dF0mBDaaqrlZTfaA
+ a563pXFuMKGq8lt8uLWXyR30OUh7TFNXIKMVMdre0Ql/FOm14QNymuoH0voFbKtyrj1B
+ RbPFOixyzJfRDDbcWpAcbjgB+Y7LPNifYpZL8Kaj2gByXOteEjR6xIIRipleJHpRA4RF OA== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 36c3bp8h38-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Jan 2021 14:48:06 -0500
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 10SJhCfm017078;
+ Thu, 28 Jan 2021 19:48:05 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma04dal.us.ibm.com with ESMTP id 36agvf7cqh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Jan 2021 19:48:05 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 10SJm4k527591018
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 28 Jan 2021 19:48:04 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 440B6C6055;
+ Thu, 28 Jan 2021 19:48:04 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 60336C6061;
+ Thu, 28 Jan 2021 19:48:03 +0000 (GMT)
+Received: from [9.80.204.221] (unknown [9.80.204.221])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Thu, 28 Jan 2021 19:48:03 +0000 (GMT)
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 1/7] rsa: reject images
+ with unknown padding
+To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org
+References: <20210128105304.401058-1-joel@jms.id.au>
+ <20210128105304.401058-2-joel@jms.id.au>
+From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+Message-ID: <8b3d31e5-6654-5768-d533-f220a4646b86@linux.vnet.ibm.com>
+Date: Thu, 28 Jan 2021 16:48:01 -0300
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.6.1
 MIME-Version: 1.0
-In-Reply-To: <CACPK8XcZTE=bnCP1-E9PTA09WnXG9Eduwx0dm-QqmQJUDa_OrQ@mail.gmail.com>
+In-Reply-To: <20210128105304.401058-2-joel@jms.id.au>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
+ definitions=2021-01-28_12:2021-01-28,
+ 2021-01-28 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 mlxscore=0
+ priorityscore=1501 mlxlogscore=995 suspectscore=0 malwarescore=0
+ clxscore=1015 lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2101280090
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,104 +100,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, Rob Herring <robh@kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Wolfram Sang <wsa@the-dreams.de>,
- Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brendan Higgins <brendanhiggins@google.com>,
- devicetree <devicetree@vger.kernel.org>, Cedric Le Goater <clg@kaod.org>,
- Tao Ren <taoren@fb.com>, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Joel
 
-On 1/27/2021 4:06 PM, Joel Stanley wrote:
-> On Thu, 14 Jan 2021 at 20:05, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
->>
->> Hi Rob,
->>
->> On 1/14/2021 11:34 AM, Rob Herring wrote:
->>>> -- reg                       : address offset and range of bus
->>>> +- reg                       : Address offset and range of bus registers.
->>>> +
->>>> +                      An additional SRAM buffer address offset and range is
->>>> +                      optional in case of enabling I2C dedicated SRAM for
->>>> +                      buffer mode transfer support. If the optional range
->>>> +                      is defined, buffer mode will be enabled.
->>>> +                      - AST2400
->>>> +                        &i2c0 { reg = <0x40 0x40>, <0x800 0x80>; };
->>>> +                        &i2c1 { reg = <0x80 0x40>, <0x880 0x80>; };
->>>> +                        &i2c2 { reg = <0xc0 0x40>, <0x900 0x80>; };
->>>> +                        &i2c3 { reg = <0x100 0x40>, <0x980 0x80>; };
->>>> +                        &i2c4 { reg = <0x140 0x40>, <0xa00 0x80>; };
->>>> +                        &i2c5 { reg = <0x180 0x40>, <0xa80 0x80>; };
->>>> +                        &i2c6 { reg = <0x1c0 0x40>, <0xb00 0x80>; };
->>>> +                        &i2c7 { reg = <0x300 0x40>, <0xb80 0x80>; };
->>>> +                        &i2c8 { reg = <0x340 0x40>, <0xc00 0x80>; };
->>>> +                        &i2c9 { reg = <0x380 0x40>, <0xc80 0x80>; };
->>>> +                        &i2c10 { reg = <0x3c0 0x40>, <0xd00 0x80>; };
->>>> +                        &i2c11 { reg = <0x400 0x40>, <0xd80 0x80>; };
->>>> +                        &i2c12 { reg = <0x440 0x40>, <0xe00 0x80>; };
->>>> +                        &i2c13 { reg = <0x480 0x40>, <0xe80 0x80>; };
->>>
->>> All this information doesn't need to be in the binding.
->>>
->>> It's also an oddly structured dts file if this is what you are doing...
->>
->> I removed the default buffer mode settings that I added into
->> 'aspeed-g4.dtsi' and 'aspeed-g5.dtsi' in v1 to avoid touching of the
->> default transfer mode setting, but each bus should use its dedicated
->> SRAM buffer range for enabling buffer mode so I added this information
->> at here as overriding examples instead. I thought that binding document
->> is a right place for providing this information but looks like it's not.
->> Any recommended place for it? Is it good enough if I add it just into
->> the commit message?
+
+On 1/28/2021 7:52 AM, Joel Stanley wrote:
+> From: Patrick Doyle <wpdster@gmail.com>
 > 
-> I agree with Rob, we don't need this described in the device tree
-> (binding or dts). We know what the layout is for a given aspeed
-> family, so the driver can have this information hard coded.
-> 
-> (Correct me if I've misinterpted here Rob)
+> Previously we would store NULL in info->padding and jump to an illegal
+> instruction if an unknown value for "padding" was specified in the
+> device tree.
 > 
 
-Makes sense. Will add these settings into the driver module as hard
-coded per each bus.
+>   	printf("%s:%s", algo_name, info->keyname);
+> 
+> -	if (!info->checksum || !info->crypto) {
+> +	if (!info->checksum || !info->crypto || !info->padding) {
+Reviewed-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
 
->>
->>>> @@ -17,6 +72,25 @@ Optional Properties:
->>>>    - bus-frequency    : frequency of the bus clock in Hz defaults to 100 kHz when not
->>>>                 specified
->>>>    - multi-master     : states that there is another master active on this bus.
->>>> +- aspeed,dma-buf-size       : size of DMA buffer.
->>>> +                        AST2400: N/A
->>>> +                        AST2500: 2 ~ 4095
->>>> +                        AST2600: 2 ~ 4096
->>>
->>> If based on the SoC, then all this can be implied from the compatible
->>> string.
->>>
->>
->> Please help me to clarify your comment. Should I remove it from here
->> with keeping the driver handling code for each SoC compatible string?
->> Or should I change it like below?
->> aspeed,ast2400-i2c-bus: N/A
->> aspeed,ast2500-i2c-bus: 2 ~ 4095
->> aspeed,ast2600-i2c-bus: 2 ~ 4096
-> 
-> As above, we know what the buffer size is for the specific soc family,
-> so we can hard code the value to expect.
-> 
-> The downside of this hard coding is it takes away the option of using
-> more buffer space for a given master in a system that only enables
-> some of the masters. Is this a use case you were considering? If so,
-> then we might revisit some of the advice in this thread.
+>   		*err_msgp = "Unknown signature algorithm";
+>   		return -1;
+>   	}
 > 
 
-I added flexibility on this setting but it doesn't need to be. I'll add
-hard coded setting for the maximum DMA length into the driver as you
-suggested. If I add a xfer mode setting in device tree instead, enabling
-of DMA can be configured as each bus basis so there would be no concern
-I believe. Will submit v3 soon.
-
-Thanks,
-Jae
+-- 
+Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
