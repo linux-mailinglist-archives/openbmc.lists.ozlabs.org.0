@@ -1,72 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB2BE307460
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 12:06:55 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3FF630779E
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 15:05:52 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DRHjT0dKRzDqBL
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 22:06:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DRMgx0XSrzDrdD
+	for <lists+openbmc@lfdr.de>; Fri, 29 Jan 2021 01:05:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::533;
- helo=mail-pg1-x533.google.com; envelope-from=joel.stan@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=iz7sr5CJ; dkim-atps=neutral
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com
- [IPv6:2607:f8b0:4864:20::533])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=RqnremQj; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DRHQK6RKCzDqSf
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 21:53:45 +1100 (AEDT)
-Received: by mail-pg1-x533.google.com with SMTP id o16so4049068pgg.5
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 02:53:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=XNXjOS+RhXn1WwOlVyDSdQVxGXNK6doUSivvRrwQqmc=;
- b=iz7sr5CJOD4m/wUsww++k/P0ZnqkAx6XtO9M4ZJN8WVyXhUdIsmqt6S56Hi2mJY5eW
- xrZR79GLoUwG7dPdMRimzazfikJUC5T2Qrc1waAZYNLJ/7BytkbUHhVBLVxbP2fHS2Yr
- lfAxMnue65r1UznnxsstQj3zVOsUeKatO48w72fgyu/O96cO3BNAWMtUkhrhcK64HyTD
- chNINtdax7sRPS29ibLcEjI6Mp/4V0PY545kBxPAryvyddKTjom8PgErobqXPNBoktwW
- 8ziMjmwZC3mpjHU1emq0gwQ/6xnCZdkyhghejGls0oaMlDepv9yjDfO4QwXv7PLB6WIq
- dnvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=XNXjOS+RhXn1WwOlVyDSdQVxGXNK6doUSivvRrwQqmc=;
- b=AdAV2/M1fREy5UnLkuU6xbie1Bhx5YjYBd5xRGHpNXsl8Np0baSectTBFbDbKtfS+5
- 2wYsvNUZFKX4OiIHLyETyeegApb9MymUycYZgILuTwcyAEyOM3HADUXX32O2WjVoUayo
- URhV39KZQdzZMUPsoqMuzpexO8UotumEuhxuIzgWL3idWIBk9agyq7e4st3Db9f6tX1M
- iRSfe8ScVtp+EMo+iDpcYimCza3ZuJKAqO4AFk3l3z90AMw4zn3ALpbb/21NKu5o1TJA
- E8QNC3zjezzEJm04EzqtWHXkkNK8n7q1KkUArNcFmZXUHpQZw6sPeQ0zAl0MIS4dw7r+
- UUWQ==
-X-Gm-Message-State: AOAM531a8786HfoYCVSplUs4xMIZKFEUe8Wz6GaBgcQV5xu49ApeSGxR
- YUYnxo7IoF916tcv4NOaC8U2NTDUCmE=
-X-Google-Smtp-Source: ABdhPJz3JaNb9NgORUOEFIsWG93FVafVD3BjsIF0D8yEJuS/3WXb3s+I42JMYfwKpnfLODdyM1PnsA==
-X-Received: by 2002:a63:1456:: with SMTP id 22mr15905763pgu.386.1611831223440; 
- Thu, 28 Jan 2021 02:53:43 -0800 (PST)
-Received: from voyager.lan ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id q197sm5102748pfc.155.2021.01.28.02.53.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Jan 2021 02:53:42 -0800 (PST)
-From: Joel Stanley <joel@jms.id.au>
-To: Andrew Jeffery <andrew@aj.id.au>,
-	openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 7/7] image-fit:
- fit_check_format check for valid FDT
-Date: Thu, 28 Jan 2021 21:23:04 +1030
-Message-Id: <20210128105304.401058-8-joel@jms.id.au>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210128105304.401058-1-joel@jms.id.au>
-References: <20210128105304.401058-1-joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DRMf84NKQzDrS9
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Jan 2021 01:04:14 +1100 (AEDT)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 10SE37jG030348; Thu, 28 Jan 2021 09:04:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=Wh5orCvGPbTcjUXUS3Hr2QK6YcN5Zc/LX8AlOi4U3kw=;
+ b=RqnremQj05A0xZ2stiuKWgmJsQHKV+GWD4CjM+NNP0yoTlsRH2dWWpOU87NENnrYIh6G
+ fT3SJPsSjKGQZ8yiabBQYPx6pqSNs69X/crh9a4WHi9R75gTQobZhyXAjHFvCyFcohJY
+ C5JIxbfa8Oj4CZgPAURM/X2xdUaU2h2iPJ1DfRDr8IP2yp5GelL8/Gu8lxcHKel7Lt5v
+ nqRIekFcnrLcO9fgU9eGO/NQF74wQo2cBR02QMJz2cs6NlSRve2jecP9JPf+X0OSPtMq
+ qYbQ1NxcOjGQ+/igtqBuG3Z6zcCSY76tKj48xjrn7EubO+jCQot40wGWFmf9FqvoEgzP Wg== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 36bqtekgaw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Jan 2021 09:04:00 -0500
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 10SE3glJ030405;
+ Thu, 28 Jan 2021 14:03:51 GMT
+Received: from b03cxnp07027.gho.boulder.ibm.com
+ (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
+ by ppma02dal.us.ibm.com with ESMTP id 36a4mc9jsf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Jan 2021 14:03:51 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 10SE3oGB27132368
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 28 Jan 2021 14:03:50 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 57B3EC605F;
+ Thu, 28 Jan 2021 14:03:50 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3F055C6065;
+ Thu, 28 Jan 2021 14:03:49 +0000 (GMT)
+Received: from [9.80.204.221] (unknown [9.80.204.221])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Thu, 28 Jan 2021 14:03:48 +0000 (GMT)
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] ast2600: spl: Include RAM
+ loader in BL2 ifdef
+To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ Ryan Chen <ryan_chen@aspeedtech.com>, openbmc@lists.ozlabs.org
+References: <20210128092540.343138-1-joel@jms.id.au>
+From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+Message-ID: <4098ed49-ee45-9154-6ad6-314ea6d0e14f@linux.vnet.ibm.com>
+Date: Thu, 28 Jan 2021 11:03:47 -0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210128092540.343138-1-joel@jms.id.au>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
+ definitions=2021-01-28_08:2021-01-28,
+ 2021-01-28 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0
+ clxscore=1015 mlxscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ priorityscore=1501 phishscore=0 adultscore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2101280067
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,37 +102,21 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Heinrich Schuchardt <xypron.glpk@gmx.de>
 
-fit_check_format() must check that the buffer contains a flattened device
-tree before calling any device tree library functions.
 
-Failure to do may cause segmentation faults.
+On 1/28/2021 6:25 AM, Joel Stanley wrote:
+> With this patch all of the BL2 verification call sites are behind the
+> Kconfig symbol. When it is disabled, 1903 bytes is saved.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 
-Signed-off-by: Heinrich Schuchardt <xypron.glpk@gmx.de>
-(cherry picked from commit ea1a9ec5f430359720d9a0621ed1acfbba6a142a)
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- common/image-fit.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+>   SPL_LOAD_IMAGE_METHOD("RAM with Aspeed Secure Boot", 0, ASPEED_SECBOOT_DEVICE_RAM, aspeed_secboot_spl_ram_load_image);
+> +#endif /* ASPEED_SECBOOT_BL2 */
 
-diff --git a/common/image-fit.c b/common/image-fit.c
-index be4d9dc9c3b1..e64949dfa73d 100644
---- a/common/image-fit.c
-+++ b/common/image-fit.c
-@@ -1473,6 +1473,12 @@ int fit_image_check_comp(const void *fit, int noffset, uint8_t comp)
-  */
- int fit_check_format(const void *fit)
- {
-+	/* A FIT image must be a valid FDT */
-+	if (fdt_check_header(fit)) {
-+		debug("Wrong FIT format: not a flattened device tree\n");
-+		return 0;
-+	}
-+
- 	/* mandatory / node 'description' property */
- 	if (fdt_getprop(fit, 0, FIT_DESC_PROP, NULL) == NULL) {
- 		debug("Wrong FIT format: no description\n");
+Thanks,
+
+Reviewed-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+
+
 -- 
-2.29.2
-
+Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
