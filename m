@@ -1,68 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77104307426
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 11:54:02 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21845307436
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 11:56:05 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DRHQb5VQczDr9y
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 21:53:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DRHSx58FWzDqhn
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 21:56:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62c;
- helo=mail-pl1-x62c.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1032;
+ helo=mail-pj1-x1032.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=EI0asoY5; dkim-atps=neutral
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com
- [IPv6:2607:f8b0:4864:20::62c])
+ header.s=20161025 header.b=TYDuUFQ2; dkim-atps=neutral
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com
+ [IPv6:2607:f8b0:4864:20::1032])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DRHPm1W9jzDq83
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 21:53:15 +1100 (AEDT)
-Received: by mail-pl1-x62c.google.com with SMTP id d4so3109939plh.5
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 02:53:15 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DRHPp5PTBzDq83
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 21:53:18 +1100 (AEDT)
+Received: by mail-pj1-x1032.google.com with SMTP id md11so3640586pjb.0
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 02:53:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=444KRGMyob6SFpwRKcGKmjO6I+FiMLHprBoJ6vMmSnQ=;
- b=EI0asoY5dUQRu5JWgkKAHap9oRpG3aFIfXuSosxTTQy+2OVVCo7i+msqxV06nibPB+
- da1vQbqSMQkqvs3aD3MsvD2I3SsLAqTtB7M9mOV1EUcDgYq4JzxFJ1SnT0Xf/dm2u4z/
- vCrQO3poZlzvL08YRKgGhV2WqA+raaLR+yYAUsROfRfxDeO5ykJzF++yQ5kIKpf0kHqo
- Ak0bEt+DBe06AZ8RIWUHJn+XG7OEdye/l7pKZZmLwXx4n67q2cbRypT5nklSosOVLDqA
- 9obLtbn2VFO5L4KahZZYe7Eb8rwuVJ6B/+iOGylQsN8DCDU0wD1UbPj0D0AFTaQjYDOI
- qVgQ==
+ h=sender:from:to:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=Ab+RIvlfrSl7hljDLw6CIrjUIt5Hddb9nyDOy3MEBJk=;
+ b=TYDuUFQ2DxIQtBFCHkbM5ebs6imwiu2KOQm6ZuI4+91yDK1nRrbDm7CEaIFdyR84hi
+ D6ThJZBWp5zctrFBb/bI8+wDM5ndhNpeRYgVnAr/uqXfHIMRQozETDhX+UtQmC9ppTmt
+ 9Wl/89pGtigkHFT93lZuHDviE7cFoCiMZV8z1PtKvS87iyMHLXXC1RC/TICGV1Un+Xt/
+ Q94lZZVbiUziRBrr3E2reGdEkBJAELtTIliUG9eTIM9lxDdEmCJ9ES1lA9VKvnlE6b73
+ IF/MMIjNFBW/G8MGSDVMeiEq+ZciBiA1mvdy9iHY2F0NI6a+e+Y/H/821CXNJpk4OMlI
+ 9NTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=444KRGMyob6SFpwRKcGKmjO6I+FiMLHprBoJ6vMmSnQ=;
- b=Mx063Sa/iPyQ/uIomjbI3TMnb7RQ4ICjCDQbidR9/be5cQ0Pp+84irYWu7mx2w/hLP
- BVXT3009NfPL3hFfwY3XI5XhzX4zHYjUa5Odd94vq+Cz3qRRUbgWQ5dUbxIIDt1ibLvo
- G1vqrnssAphwrfXNeKaGCvX1p48PsdN2bs9ZDzKZJYfgA+QH1Q7smlWiV6GjqJQdMzsh
- Zd5KGPDMhb7VCowMDijEXQAfYmj/3gBpD8wILlgBMt5jcBcTbYxW/u7Sm5WV3hYuWlQS
- eGei+JvVhQKFpkXglC7meeVt5W5j8d0+oT5Gw2cYjRXd+DCRV2uOg/pAZ1ziI+G8PRg1
- xVGg==
-X-Gm-Message-State: AOAM530KcQpkc/amIHOylNd9G2m8nY6H/frXXp8JgmedRNFAKkriOesB
- KBn2k02Fm9FawHgf16rIi6M=
-X-Google-Smtp-Source: ABdhPJwikcqt7UVWFdPV2NpNs2sWhaBhWwlEjZd6PQjgjYycPmMLrg8E3Xt1ehQFMhak/ss8jt9uaQ==
-X-Received: by 2002:a17:90a:4598:: with SMTP id
- v24mr10342219pjg.135.1611831192006; 
- Thu, 28 Jan 2021 02:53:12 -0800 (PST)
+ :in-reply-to:references:mime-version:content-transfer-encoding;
+ bh=Ab+RIvlfrSl7hljDLw6CIrjUIt5Hddb9nyDOy3MEBJk=;
+ b=dSg3oZYmN/bRhWD7XuoDgwxThIFCIJYGMPlgFJyLRa46C2Xabls34mIqv3reE92Xer
+ RjzKtgOxG5JGPdl3g50FRTO4AwWL2NopHc1AGjqZtq+0KpHLomVjL0j6nnYRoWDX0zlw
+ cH04VvCyaQB8CSaUxSFHgcn8meOZNdaOvJirbaTlw1o739ZNacCfBOLK14Af/05ouzt8
+ qDLte7HbMwbNr9namf/GyoEOe9kQykLPu0gUOqPE7UC/RdKNzZ/mz8CLniV7NEtCW3uz
+ wOW1qvxEvBw8Dk+3KHVfyCR5Boz81Na1zqR+Z9k2qK3tgPL0ehuRDFa8BP89HVv0b6tw
+ auZQ==
+X-Gm-Message-State: AOAM532egDP8v9kRZWZj8z+2eJVdFTvTOllJVamxHKXZrYkCJ4+Q9ks2
+ mQbmy/Bdy126rbMS+OfrpQ6wmD41ilw=
+X-Google-Smtp-Source: ABdhPJyvDT3vbZnbrteH4sVT7oINpeFBLocRbAzR8METNwQC6/aJ+cubHA2oRzOFnL6IHyhz+MI1PA==
+X-Received: by 2002:a17:90a:c595:: with SMTP id
+ l21mr10468214pjt.137.1611831196066; 
+ Thu, 28 Jan 2021 02:53:16 -0800 (PST)
 Received: from voyager.lan ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id q197sm5102748pfc.155.2021.01.28.02.53.09
+ by smtp.gmail.com with ESMTPSA id q197sm5102748pfc.155.2021.01.28.02.53.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Jan 2021 02:53:11 -0800 (PST)
+ Thu, 28 Jan 2021 02:53:15 -0800 (PST)
 From: Joel Stanley <joel@jms.id.au>
 To: Andrew Jeffery <andrew@aj.id.au>,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 0/7] Blackport SHA512 for FIT
-Date: Thu, 28 Jan 2021 21:22:57 +1030
-Message-Id: <20210128105304.401058-1-joel@jms.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 1/7] rsa: reject images with
+ unknown padding
+Date: Thu, 28 Jan 2021 21:22:58 +1030
+Message-Id: <20210128105304.401058-2-joel@jms.id.au>
 X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20210128105304.401058-1-joel@jms.id.au>
+References: <20210128105304.401058-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -79,50 +82,32 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-These patches bring SHA512 support to the FIT in u-boot, SPL and
-mkimage. The majority of the feature comes in with "Add support for
-SHA384 and SHA512", while the rest are relevant bugfixes that have been
-made to master since v2019.04.
+From: Patrick Doyle <wpdster@gmail.com>
 
-There is not yet a change to the configuration to enable the new
-algorithm and therefore only a minor image size change (an increase of
-247 bytes due to "image: Check hash-nodes when checking configurations").
+Previously we would store NULL in info->padding and jump to an illegal
+instruction if an unknown value for "padding" was specified in the
+device tree.
 
-Harald Seiler (1):
-  common: hash: Remove a debug printf statement
+Signed-off-by: Patrick Doyle <pdoyle@irobot.com>
+(cherry picked from commit 19495dd9b6f5f4e893b56b0c73e14b2e671c3780)
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ common/image-sig.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Heinrich Schuchardt (1):
-  image-fit: fit_check_format check for valid FDT
-
-Patrick Doyle (1):
-  rsa: reject images with unknown padding
-
-Reuben Dowle (1):
-  Add support for SHA384 and SHA512
-
-Simon Glass (3):
-  image: Be a little more verbose when checking signatures
-  image: Return an error message from fit_config_verify_sig()
-  image: Check hash-nodes when checking configurations
-
- Kconfig                       |  26 ++-
- common/hash.c                 |  83 +++++++-
- common/image-fit.c            |  17 +-
- common/image-sig.c            |  69 +++++-
- common/spl/Kconfig            |  34 ++-
- include/hash.h                |   4 +
- include/image.h               |  18 ++
- include/u-boot/rsa-checksum.h |   1 +
- include/u-boot/sha512.h       |  38 ++++
- lib/Kconfig                   |  23 ++
- lib/Makefile                  |   1 +
- lib/sha512.c                  | 383 ++++++++++++++++++++++++++++++++++
- tools/Makefile                |   2 +
- tools/image-host.c            |   3 +-
- 14 files changed, 677 insertions(+), 25 deletions(-)
- create mode 100644 include/u-boot/sha512.h
- create mode 100644 lib/sha512.c
-
+diff --git a/common/image-sig.c b/common/image-sig.c
+index 4f6b4ec412c3..004fbc525b5c 100644
+--- a/common/image-sig.c
++++ b/common/image-sig.c
+@@ -211,7 +211,7 @@ static int fit_image_setup_verify(struct image_sign_info *info,
+ 	info->required_keynode = required_keynode;
+ 	printf("%s:%s", algo_name, info->keyname);
+ 
+-	if (!info->checksum || !info->crypto) {
++	if (!info->checksum || !info->crypto || !info->padding) {
+ 		*err_msgp = "Unknown signature algorithm";
+ 		return -1;
+ 	}
 -- 
 2.29.2
 
