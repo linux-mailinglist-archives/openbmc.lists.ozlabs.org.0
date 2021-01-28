@@ -1,68 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23BD2307E5D
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 19:46:59 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82B42307EBE
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 20:38:16 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DRTwJ2Hj6zDqBc
-	for <lists+openbmc@lfdr.de>; Fri, 29 Jan 2021 05:46:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DRW3T148hzDrhh
+	for <lists+openbmc@lfdr.de>; Fri, 29 Jan 2021 06:38:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::429;
- helo=mail-wr1-x429.google.com; envelope-from=edtanous@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=qgMDguw1; dkim-atps=neutral
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com
- [IPv6:2a00:1450:4864:20::429])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DRTmM2cr5zDsWb
- for <openbmc@lists.ozlabs.org>; Fri, 29 Jan 2021 05:40:02 +1100 (AEDT)
-Received: by mail-wr1-x429.google.com with SMTP id v15so6461169wrx.4
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 10:40:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=SCF0Yjv7mXBRwfRklaiSR0zALAgh5kRC12AYGDJhPbQ=;
- b=qgMDguw1+MrarFQ99aweQ+jbK6sRw5PP0UA8Q8UrbNljlCbhAxYK3sw8m/llgx94CO
- EWzebESGunAve7WFZekxI6TXgwf5bSvnMHkrdbL5fs9xdqeBf9uBIO5nsRKekw5Dmvz7
- ONAW7/8/NlVaXARD+aAPaAn93o9VSfxDEsw5MM0NkyiZVsxZag1P4w1QPIlrqOjmqc8S
- dyJHpvRuI0xU6dVri7oO1at7zkDPbFcMwMwSg19cXrIKMVkqpn+5jkrbP76S4bJgGCiM
- dq2IXUsPQPACy4iJwII1/zVPrdifKabOpxQIa3iIEUJyMrpsh4Q8EkJVwapYc9fdf9aG
- IQKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=SCF0Yjv7mXBRwfRklaiSR0zALAgh5kRC12AYGDJhPbQ=;
- b=Cu6oR9NZTP8wCUQlg6AIRJg+I/bTfN9dPNJdVesu208rwbBoePt9XJeXUj4XgYOkbs
- EfQZBU/AdnqqnZqBCctl7xbkOz9CxjwuQi4KC7ZFmwhTTdjZgX2pCMIBoJ+4UyBZcf31
- sTpV+yPqbT1oT4NUjRE3IlD3W+7GbKsUmrcYqHc3MQfGw3o6DvugaBPJpDIF8/hW0YAy
- ivDiizv5bijm/LR11QeV/+Mf1xXTcPNhjiRY8bdNTGk4ZvWSeR9CQFtfv665GUNSo8Mv
- Hzyrc/1DQUS7sdDaRFdMt6RNFCF89aEbhjRSJFAno5XAgz+MEqzm+4f77DltP2T0H3w5
- Hr1Q==
-X-Gm-Message-State: AOAM531XPNIcVjKaOjanWUDOnBlWBCqPzipbzgFos6PvrZ9Yn/tlSgQb
- wYdSuwxikirx7jKuB/ofYC1q/AfMJipG3MRMaJPHJA==
-X-Google-Smtp-Source: ABdhPJxb0HTJ8GO7fYrVWx41qTyh0HEXII8q5futWO3n2lT6swS31JHC2qcb926PHHTithf78CLFyWGLjuzdq9q4x0c=
-X-Received: by 2002:a5d:49cf:: with SMTP id t15mr429992wrs.217.1611859195528; 
- Thu, 28 Jan 2021 10:39:55 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DRW290XVjzDrhZ;
+ Fri, 29 Jan 2021 06:37:03 +1100 (AEDT)
+IronPort-SDR: QDl10Y3BclVWOeb2AIwHExjnJVCnzcJdK9MOFwDKT5a7TqPWBS09V0UaYkMrHxnC31H/Rc1LG0
+ i8+vVh4YQWgA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9878"; a="199136151"
+X-IronPort-AV: E=Sophos;i="5.79,383,1602572400"; d="scan'208";a="199136151"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jan 2021 11:36:59 -0800
+IronPort-SDR: zPVJLkT/Yoal4nkt5j9UPs7nMEwZnZuPSomlUqLjwz5fKZytTxspi5pARNs07F8fQpVOgJaixk
+ NIUzuv0pn9qQ==
+X-IronPort-AV: E=Sophos;i="5.79,383,1602572400"; d="scan'208";a="363975312"
+Received: from yoojae-mobl.amr.corp.intel.com (HELO [10.212.221.93])
+ ([10.212.221.93])
+ by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jan 2021 11:36:58 -0800
+Subject: Re: [PATCH v2 1/4] dt-bindings: i2c: aspeed: add buffer and DMA mode
+ transfer support
+To: Joel Stanley <joel@jms.id.au>
+References: <20210112003749.10565-1-jae.hyun.yoo@linux.intel.com>
+ <20210112003749.10565-2-jae.hyun.yoo@linux.intel.com>
+ <20210114193416.GA3432711@robh.at.kernel.org>
+ <4f67358e-58e5-65a5-3680-1cd8e9851faa@linux.intel.com>
+ <CACPK8XcZTE=bnCP1-E9PTA09WnXG9Eduwx0dm-QqmQJUDa_OrQ@mail.gmail.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <1814b8d1-954c-0988-0745-e95129079708@linux.intel.com>
+Date: Thu, 28 Jan 2021 11:36:53 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-References: <TYZPR04MB441643EFC954C795DD1290A886BB0@TYZPR04MB4416.apcprd04.prod.outlook.com>
- <CAH2-KxA20CfM9upvUkB=jhapVNF4AdVROA4wafFxxYftmvwO=w@mail.gmail.com>
- <31441611827264@mail.yandex-team.ru>
-In-Reply-To: <31441611827264@mail.yandex-team.ru>
-From: Ed Tanous <edtanous@google.com>
-Date: Thu, 28 Jan 2021 10:39:44 -0800
-Message-ID: <CAH2-KxDE0J0Q4fmYc5MvP=J+DdziCSecQHjTSJheRm7oosUdpQ@mail.gmail.com>
-Subject: Re: [entity-manager] Issue about entity-manager getting stuck
-To: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACPK8XcZTE=bnCP1-E9PTA09WnXG9Eduwx0dm-QqmQJUDa_OrQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,124 +61,104 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- =?UTF-8?B?U2Nyb24gQ2hhbmcgKOW8teS7suW7tik=?= <scron.chang@quantatw.com>
+Cc: Mark Rutland <mark.rutland@arm.com>, Rob Herring <robh@kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Wolfram Sang <wsa@the-dreams.de>,
+ Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ devicetree <devicetree@vger.kernel.org>, Cedric Le Goater <clg@kaod.org>,
+ Tao Ren <taoren@fb.com>, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Jan 28, 2021 at 1:56 AM Konstantin Klubnichkin
-<kitsok@yandex-team.ru> wrote:
->
-> Hello, Ed!
->
-> I'm not sure if my issue is relevant to what Scron discovered, but it may=
- be.
-> Sometimes (not every BMC reboot) dbus get stuck during startup.
+Hi Joel
 
-That sounds slightly different, but certainly concerning.
+On 1/27/2021 4:06 PM, Joel Stanley wrote:
+> On Thu, 14 Jan 2021 at 20:05, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+>>
+>> Hi Rob,
+>>
+>> On 1/14/2021 11:34 AM, Rob Herring wrote:
+>>>> -- reg                       : address offset and range of bus
+>>>> +- reg                       : Address offset and range of bus registers.
+>>>> +
+>>>> +                      An additional SRAM buffer address offset and range is
+>>>> +                      optional in case of enabling I2C dedicated SRAM for
+>>>> +                      buffer mode transfer support. If the optional range
+>>>> +                      is defined, buffer mode will be enabled.
+>>>> +                      - AST2400
+>>>> +                        &i2c0 { reg = <0x40 0x40>, <0x800 0x80>; };
+>>>> +                        &i2c1 { reg = <0x80 0x40>, <0x880 0x80>; };
+>>>> +                        &i2c2 { reg = <0xc0 0x40>, <0x900 0x80>; };
+>>>> +                        &i2c3 { reg = <0x100 0x40>, <0x980 0x80>; };
+>>>> +                        &i2c4 { reg = <0x140 0x40>, <0xa00 0x80>; };
+>>>> +                        &i2c5 { reg = <0x180 0x40>, <0xa80 0x80>; };
+>>>> +                        &i2c6 { reg = <0x1c0 0x40>, <0xb00 0x80>; };
+>>>> +                        &i2c7 { reg = <0x300 0x40>, <0xb80 0x80>; };
+>>>> +                        &i2c8 { reg = <0x340 0x40>, <0xc00 0x80>; };
+>>>> +                        &i2c9 { reg = <0x380 0x40>, <0xc80 0x80>; };
+>>>> +                        &i2c10 { reg = <0x3c0 0x40>, <0xd00 0x80>; };
+>>>> +                        &i2c11 { reg = <0x400 0x40>, <0xd80 0x80>; };
+>>>> +                        &i2c12 { reg = <0x440 0x40>, <0xe00 0x80>; };
+>>>> +                        &i2c13 { reg = <0x480 0x40>, <0xe80 0x80>; };
+>>>
+>>> All this information doesn't need to be in the binding.
+>>>
+>>> It's also an oddly structured dts file if this is what you are doing...
+>>
+>> I removed the default buffer mode settings that I added into
+>> 'aspeed-g4.dtsi' and 'aspeed-g5.dtsi' in v1 to avoid touching of the
+>> default transfer mode setting, but each bus should use its dedicated
+>> SRAM buffer range for enabling buffer mode so I added this information
+>> at here as overriding examples instead. I thought that binding document
+>> is a right place for providing this information but looks like it's not.
+>> Any recommended place for it? Is it good enough if I add it just into
+>> the commit message?
+> 
+> I agree with Rob, we don't need this described in the device tree
+> (binding or dts). We know what the layout is for a given aspeed
+> family, so the driver can have this information hard coded.
+> 
+> (Correct me if I've misinterpted here Rob)
+> 
 
-> systemctl or dbus don't work (fail by timeout), services stuck trying to =
-start, dbus-broker consumes a lot of CPU and dbus monitor shows storm of "P=
-roperty Changed" events from anonymous application.
+Makes sense. Will add these settings into the driver module as hard
+coded per each bus.
 
-Can you track down which anonymous application it is?
+>>
+>>>> @@ -17,6 +72,25 @@ Optional Properties:
+>>>>    - bus-frequency    : frequency of the bus clock in Hz defaults to 100 kHz when not
+>>>>                 specified
+>>>>    - multi-master     : states that there is another master active on this bus.
+>>>> +- aspeed,dma-buf-size       : size of DMA buffer.
+>>>> +                        AST2400: N/A
+>>>> +                        AST2500: 2 ~ 4095
+>>>> +                        AST2600: 2 ~ 4096
+>>>
+>>> If based on the SoC, then all this can be implied from the compatible
+>>> string.
+>>>
+>>
+>> Please help me to clarify your comment. Should I remove it from here
+>> with keeping the driver handling code for each SoC compatible string?
+>> Or should I change it like below?
+>> aspeed,ast2400-i2c-bus: N/A
+>> aspeed,ast2500-i2c-bus: 2 ~ 4095
+>> aspeed,ast2600-i2c-bus: 2 ~ 4096
+> 
+> As above, we know what the buffer size is for the specific soc family,
+> so we can hard code the value to expect.
+> 
+> The downside of this hard coding is it takes away the option of using
+> more buffer space for a given master in a system that only enables
+> some of the masters. Is this a use case you were considering? If so,
+> then we might revisit some of the advice in this thread.
+> 
 
-> The work around I've found is to kill dbus-broker and dbus-broker-launch,=
- then I can at least issue "reboot" without "-f", usually (8 times out of 1=
-0) BMC starts normally next time.
+I added flexibility on this setting but it doesn't need to be. I'll add
+hard coded setting for the maximum DMA length into the driver as you
+suggested. If I add a xfer mode setting in device tree instead, enabling
+of DMA can be configured as each bus basis so there would be no concern
+I believe. Will submit v3 soon.
 
-This doesn't really seem workable long term.
-
-> Unfortunately I don't know how to reproduce the issue for sure. It happen=
-s more often  when BMC has no network and doesn't have time source like NTP=
- or date/time saved in RTC.
-> So I suspect calling busctl in a cycle is not the only way to get system =
-stuck.
-
-Lets see if we can get this debugged.  I know I haven't seen anything
-similar, so I'm not sure I can be much help to you, but good luck
-hunting it down.
-
->
-> Thank you!
->
-> 27.01.2021, 20:08, "Ed Tanous" <edtanous@google.com>:
->
-> On Tue, Jan 26, 2021 at 10:34 PM Scron Chang (=E5=BC=B5=E4=BB=B2=E5=BB=B6=
-)
-> <Scron.Chang@quantatw.com> wrote:
->
->
->  Hi all,
->
->  I am using openbmc/entity-manager in this version: "f094125cd3bdbc8737dc=
-8035a6e9ac252f6e8840" and I found calling Dbus makes entity-manager get stu=
-ck.
->
->  Reproduce this by following steps:
->  1. systemctl stop xyz.openbmc_project.EntityManager
->  2. open another terminal and do this while-loop: "while true; do busctl =
-; sleep 1; done"
->  3. systemctl start xyz.openbmc_project.EntityManager
->  I think the root cause is this function: "nameOwnerChangedMatch." (Pleas=
-e refer to this line: https://github.com/openbmc/entity-manager/blob/f09412=
-5cd3bdbc8737dc8035a6e9ac252f6e8840/src/EntityManager.cpp#L1859.)
->
->
-> My first thought is: Don't run an empty busctl in a loop then, but I'm
-> guessing that's not what you're really trying to do. If we had more
-> ideas about what you were really hoping to accomplish, we might have
-> some better advice for how to proceed.
->
-> The intent of that code is to reconfigure entity-manager when
-> interfaces are changed, so if you're constantly attaching and
-> detaching to dbus, entity-manager (and object manager) never sees the
-> system as "up" and keeps waiting for the system to finish stabilizing
-> before it runs the config logic.
->
-> In your specific case above, the code could be a little smarter, and
-> ignore unique names in that check, only caring about newly-defined
-> well known names, but without knowing your real use case, it's hard to
-> know if that would help.
->
->
->
->  Manually calling Dbus or calling Dbus in a script makes NameOwnerChanged=
- signal and thus triggers the function: "propertiesChangedCallback" repeate=
-dly. Meanwhile, the async_wait in propertiesChangedCallback gets returned b=
-ecause of the operation_aborted.
->
->
-> Personal opinion: Don't call busctl continuously in a script. It's
-> inefficient, and causes problems like this.
->
->
->  So here is the conclusion:
->  Manually calling Dbus in a period that is less than 5 seconds leads enti=
-ty-manager keeping to trigger new async_wait and abort the old one. However=
-, the async_wait never gets done.
->
->  Is this a bug of entity-manager, or I get something wrong. Please help m=
-e with this.
->
->
-> IMO, entity-manager is working as intended, but lets try to figure out
-> what you're really trying to do, and see if we can find you a
-> solution.
->
->
->
->  Scron Chang
->  E-Mail Scron.Chang@quantatw.com
->
->
->
->
-> --
-> Best regards,
-> Konstantin Klubnichkin,
-> lead firmware engineer,
-> server hardware R&D group,
-> Yandex Moscow office.
-> tel: +7-903-510-33-33
->
+Thanks,
+Jae
