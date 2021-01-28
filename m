@@ -2,92 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3FF630779E
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 15:05:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C2C473077C1
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 15:17:59 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DRMgx0XSrzDrdD
-	for <lists+openbmc@lfdr.de>; Fri, 29 Jan 2021 01:05:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DRMxv5ywgzDrdk
+	for <lists+openbmc@lfdr.de>; Fri, 29 Jan 2021 01:17:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::131;
+ helo=mail-lf1-x131.google.com; envelope-from=osk@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=RqnremQj; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=jgQbzDNB; dkim-atps=neutral
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com
+ [IPv6:2a00:1450:4864:20::131])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DRMf84NKQzDrS9
- for <openbmc@lists.ozlabs.org>; Fri, 29 Jan 2021 01:04:14 +1100 (AEDT)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 10SE37jG030348; Thu, 28 Jan 2021 09:04:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=Wh5orCvGPbTcjUXUS3Hr2QK6YcN5Zc/LX8AlOi4U3kw=;
- b=RqnremQj05A0xZ2stiuKWgmJsQHKV+GWD4CjM+NNP0yoTlsRH2dWWpOU87NENnrYIh6G
- fT3SJPsSjKGQZ8yiabBQYPx6pqSNs69X/crh9a4WHi9R75gTQobZhyXAjHFvCyFcohJY
- C5JIxbfa8Oj4CZgPAURM/X2xdUaU2h2iPJ1DfRDr8IP2yp5GelL8/Gu8lxcHKel7Lt5v
- nqRIekFcnrLcO9fgU9eGO/NQF74wQo2cBR02QMJz2cs6NlSRve2jecP9JPf+X0OSPtMq
- qYbQ1NxcOjGQ+/igtqBuG3Z6zcCSY76tKj48xjrn7EubO+jCQot40wGWFmf9FqvoEgzP Wg== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 36bqtekgaw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 Jan 2021 09:04:00 -0500
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 10SE3glJ030405;
- Thu, 28 Jan 2021 14:03:51 GMT
-Received: from b03cxnp07027.gho.boulder.ibm.com
- (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
- by ppma02dal.us.ibm.com with ESMTP id 36a4mc9jsf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 Jan 2021 14:03:51 +0000
-Received: from b03ledav006.gho.boulder.ibm.com
- (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
- by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 10SE3oGB27132368
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 28 Jan 2021 14:03:50 GMT
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 57B3EC605F;
- Thu, 28 Jan 2021 14:03:50 +0000 (GMT)
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3F055C6065;
- Thu, 28 Jan 2021 14:03:49 +0000 (GMT)
-Received: from [9.80.204.221] (unknown [9.80.204.221])
- by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
- Thu, 28 Jan 2021 14:03:48 +0000 (GMT)
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] ast2600: spl: Include RAM
- loader in BL2 ifdef
-To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- Ryan Chen <ryan_chen@aspeedtech.com>, openbmc@lists.ozlabs.org
-References: <20210128092540.343138-1-joel@jms.id.au>
-From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-Message-ID: <4098ed49-ee45-9154-6ad6-314ea6d0e14f@linux.vnet.ibm.com>
-Date: Thu, 28 Jan 2021 11:03:47 -0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DRMwf6NwszDrTs
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Jan 2021 01:16:40 +1100 (AEDT)
+Received: by mail-lf1-x131.google.com with SMTP id q8so7760172lfm.10
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 06:16:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=mE0h3CQLYHz3Iqg8HJAIvVRxXEpiLNQqMUIL6Br57OU=;
+ b=jgQbzDNB1R87TghlAQ89/rgD6yoS0RAHkPTZ0KHkgf0/jkYP7lD+5q9D9Vi3/RaXMo
+ oqpghTgfhpffcQ2nByI+bf+JH6Ky2/5sPhHiKFYrgL9BfIhucR8SJTPEI95rHO+RX2rP
+ WV0Kh1s+IhPtGrzMxZbLLiid7mfCitEg0KFas4pv8DfnZktiUtWNNsdIXS4sAbHXWUwA
+ wP5NiMEiJvKR558rYqWgGD22OUQs1wFd2rfQwsjajD5oWg+MWluvOQL2Cq1mFGVF3Tok
+ D2te0sQTlUuDD0WmhykjDCewE39DTdx3/SN3LPWwAa0cbb47QQIjQ7aS2bAwlLBnjO8C
+ Z7BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=mE0h3CQLYHz3Iqg8HJAIvVRxXEpiLNQqMUIL6Br57OU=;
+ b=M+EU2g2EEttP6aMzRTruNptDjAggSNUNHFKao2V0fOi0eK52ronKD8wQ7M+qiPXk3i
+ D1CMwxJ6R0om0+kDuZgNsLa1COVHrRUtlbjRg49YUcmCq2LygVoIiiWMq31Y4M77Hp1y
+ v7tlt6P6wAlglu6fP5y+CQJn3hSbSdSeYAK5n+5VF+5BpjsbiJaUUErkmeMx2NhkKIOr
+ zMe+lK8u/bg/1ntL1iZDiyl1H2NOMgBVlYi6j3oyV8ab+EN0yAzdOKYyksuHC4YazZsa
+ Kp7bSLQwjup4YmKBm6TWXWgDGCE2GWCviR8545wIdPTzdx832t8ZyBL6hPUEJ26FtRnD
+ dfng==
+X-Gm-Message-State: AOAM532PiPJDONCu8m212qZgCMYDYMa1/uvuVS/yT3ctSf+iGfv+gLuN
+ 6qPPwaPSRl3vQRPzV+Pp9eFx4r168+ujfsMrsHsMww==
+X-Google-Smtp-Source: ABdhPJwWbx+V1rV0mW7tIqW2OUSBva7msvG0yYDn7vaRMTn9E99kCDGSJ/ki9oLtW5G3ajT2b6nD+WUXLYSTiaoyO6U=
+X-Received: by 2002:a19:844e:: with SMTP id g75mr7641546lfd.629.1611843395316; 
+ Thu, 28 Jan 2021 06:16:35 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20210128092540.343138-1-joel@jms.id.au>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
- definitions=2021-01-28_08:2021-01-28,
- 2021-01-28 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0
- clxscore=1015 mlxscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- priorityscore=1501 phishscore=0 adultscore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2101280067
+References: <CADfYTpENhwh+o9fYhNbtDP7RZFP=C5A5gi100TZuO5NpXdK1Uw@mail.gmail.com>
+ <20210128010650.pvafu52hayv5rfvw@thinkpad.fuzziesquirrel.com>
+In-Reply-To: <20210128010650.pvafu52hayv5rfvw@thinkpad.fuzziesquirrel.com>
+From: Oskar Senft <osk@google.com>
+Date: Thu, 28 Jan 2021 09:16:18 -0500
+Message-ID: <CABoTLcQMu3LjNokrP+kaotM1TBJxUw8GN_CHV4i7-Fd-ShmmCA@mail.gmail.com>
+Subject: Re: request repo meta-tyan
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: multipart/alternative; boundary="000000000000033ed305b9f689b4"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,24 +71,71 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000033ed305b9f689b4
+Content-Type: text/plain; charset="UTF-8"
 
+Excellent, thank you!
 
-On 1/28/2021 6:25 AM, Joel Stanley wrote:
-> With this patch all of the BL2 verification call sites are behind the
-> Kconfig symbol. When it is disabled, 1903 bytes is saved.
-> 
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+I'm working on a v1 of meta-tyan right now:
+https://github.com/osenft/openbmc/tree/tyan-dunfell
 
->   SPL_LOAD_IMAGE_METHOD("RAM with Aspeed Secure Boot", 0, ASPEED_SECBOOT_DEVICE_RAM, aspeed_secboot_spl_ram_load_image);
-> +#endif /* ASPEED_SECBOOT_BL2 */
+It's currently based on dunfell instead of head and still using kernel 5.2.
 
-Thanks,
+I'll send a PR when it's "ready" (i.e. HEAD and kernel 5.8).
 
-Reviewed-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+Oskar.
 
+On Wed, Jan 27, 2021 at 9:00 PM Brad Bishop <bradleyb@fuzziesquirrel.com>
+wrote:
 
--- 
-Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+> On Fri, Jan 22, 2021 at 04:02:02PM -0800, Nancy Yuen wrote:
+> >We are bringing up some Tyan machines using OpenBMC request the creation
+> of
+> >a meta-tyan repo.
+>
+> Hi Nancy
+>
+> With the owners plugin fully deployed and operational you should be able
+> to submit a new meta-tyan to openbmc/openbmc.  Let us know if there are
+> any problems there.
+>
+> thx - brad
+>
+
+--000000000000033ed305b9f689b4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Excellent, thank you!<div><br></div><div>I&#39;m working o=
+n a v1 of meta-tyan right now:=C2=A0<a href=3D"https://github.com/osenft/op=
+enbmc/tree/tyan-dunfell">https://github.com/osenft/openbmc/tree/tyan-dunfel=
+l</a></div><div><br></div><div></div><div>It&#39;s currently based on=C2=A0=
+dunfell instead of head and still using kernel 5.2.</div><div><br></div><di=
+v>I&#39;ll send a PR when it&#39;s &quot;ready&quot; (i.e. HEAD and kernel =
+5.8).<br></div><div><br></div><div>Oskar.</div></div><br><div class=3D"gmai=
+l_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jan 27, 2021 at 9:00=
+ PM Brad Bishop &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel.com">bradleyb=
+@fuzziesquirrel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex">On Fri, Jan 22, 2021 at 04:02:02PM -0800, Nancy Yuen wro=
+te:<br>
+&gt;We are bringing up some Tyan machines using OpenBMC request the creatio=
+n of<br>
+&gt;a meta-tyan repo.<br>
+<br>
+Hi Nancy<br>
+<br>
+With the owners plugin fully deployed and operational you should be able <b=
+r>
+to submit a new meta-tyan to openbmc/openbmc.=C2=A0 Let us know if there ar=
+e <br>
+any problems there.<br>
+<br>
+thx - brad<br>
+</blockquote></div>
+
+--000000000000033ed305b9f689b4--
