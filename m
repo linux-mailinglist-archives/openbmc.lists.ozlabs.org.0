@@ -1,66 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB028306860
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 01:08:30 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F333306878
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 01:17:53 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DR15l3YRvzDr2g
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 11:08:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DR1JZ4rWzzDr6D
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 11:17:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::732;
- helo=mail-qk1-x732.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102d;
+ helo=mail-pj1-x102d.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Mv6Q7EiC; dkim-atps=neutral
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com
- [IPv6:2607:f8b0:4864:20::732])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=phCPeNw7; dkim-atps=neutral
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com
+ [IPv6:2607:f8b0:4864:20::102d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DR14756XrzDr6D;
- Thu, 28 Jan 2021 11:07:03 +1100 (AEDT)
-Received: by mail-qk1-x732.google.com with SMTP id k193so3692545qke.6;
- Wed, 27 Jan 2021 16:07:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=mhi3gjgQqf1/WONBFnr8h+vPR9Ca5CH+RN6fDaldJjc=;
- b=Mv6Q7EiCIaFec1448WvrWEMGWeVkC8hx5W08oZKUQBY5e0km4uSyN3IXodchc+6vRh
- GRGSPRrZfrfj5+aHPWBhrLrKw9486BiXU61H/a+bV7MtFVH6eMkRG+XBRQAqZIljjNYD
- UBUmtzMygB2b20ORo6+iXUOAk0Mf5xHtuIS0U=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DR1Fz4SqyzDqQ3
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 11:15:33 +1100 (AEDT)
+Received: by mail-pj1-x102d.google.com with SMTP id cq1so2627438pjb.4
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Jan 2021 16:15:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=joo05b0MJU6/FdKRC0O+I7O3H/Ns16BrGyR11RJG5dU=;
+ b=phCPeNw70aCowu9SmnRCupe13m/oT/4p/pzPgetFtotOSc1vjC9hZNpK6DEqgHR7Ko
+ Qzl0rgc9EXatcoVXk34J/tV6t/OZeMWcdZndJ4ibmRE2fEucDI086ho23F/f1ZZp68a6
+ 6RzD10KNWep+WcuDn9WE+Vle3tQtyxdA9WU4qdbzM2GYTCxkfXwvOaAr4GUbfwuuWxbL
+ Oc5Sj3D2wL8vOYMTNW6RoyKFaSctJLUQ/FJBWYI7ieZwIwPnY7qzQmu6jrWc4xpli+h+
+ VGOVs+uuPxfSEUTcaIuaEvcN92ipp/IbtgQmguVoVqlJfAmSUQHdlXWvzvySuJW4imda
+ QfIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=mhi3gjgQqf1/WONBFnr8h+vPR9Ca5CH+RN6fDaldJjc=;
- b=F15nG9tYHL8YjVhgAgTjuJfFdJkCkjQHYhhGiiB0amoF7a2hiWOueMV4LTp5zc5ASP
- P7LGnAT7Mt6G2iulyClxX2ZN39xeYL3q2LgXOwjFBQrOk1QPgzsfFzrET/+vtO9ID8f8
- XynWlM8DTmqbxLrC/L7lkpKMYvaoUQbrzPqAxXy1tk/52GZROfrpfuMoNjRNXaQdyyvn
- 6hXHENdZikoa5bxjcwaDJbwIzw1fl/gqPISb6C+w9h4vitDoScHEulN16OJxUgt1HgKf
- GDIk4CSSxRxb/vMJZayb1dP4PiiDykKOKI1TgIj0a6tzAkZvvmGVkiuOxTcbArVOj/mK
- JqmQ==
-X-Gm-Message-State: AOAM531cmgLJjI7vaxiCpRd50D4fW8ewUMlRfksx5hq4Hfo3GpeVpV5A
- i/0bWyK6hMhTze2T9vicXfFQ9gFTCoC2QNTGQxU=
-X-Google-Smtp-Source: ABdhPJy68w8HJSlqlUbGGP0ZzbASSw5eaFrDi6nCxcmyL9qOHLooYKwViK35+qV8d4AvJRt0ts7MpvEHW7zub31iph8=
-X-Received: by 2002:a05:620a:24cd:: with SMTP id
- m13mr12997340qkn.273.1611792419153; 
- Wed, 27 Jan 2021 16:06:59 -0800 (PST)
-MIME-Version: 1.0
-References: <20210112003749.10565-1-jae.hyun.yoo@linux.intel.com>
- <20210112003749.10565-2-jae.hyun.yoo@linux.intel.com>
- <20210114193416.GA3432711@robh.at.kernel.org>
- <4f67358e-58e5-65a5-3680-1cd8e9851faa@linux.intel.com>
-In-Reply-To: <4f67358e-58e5-65a5-3680-1cd8e9851faa@linux.intel.com>
+ h=x-gm-message-state:sender:from:to:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=joo05b0MJU6/FdKRC0O+I7O3H/Ns16BrGyR11RJG5dU=;
+ b=rksonX649dMWAByoedy62y+ISXsUtBR23bKK8fIDBYXqmqHxjUO98Xmv0hRL+jAW1T
+ U/pCXz3N1XYbiZZkdFXBHIpqZf00WryU101NAZash6glWQ5IIWPjhlfr0DoyVYPnScpm
+ QrI4nQluwqryR+6XwsT8XXDcV8yRhhkwjWs5HSl/BsXfwMZVz32PiqCXylx3Inzu9+zo
+ 3q9GJa+ZlJngihOT56GtpRZrrLQFZnQv9EQPkB+zARnVNIO6k0e/9yYxcZ8DYCbgA0ga
+ dAFxVfA0lJwpkhxLjCY7bgLVE0CruDa7jRAnF6LP0p++iBnrC8sTCd7+jXaayQFVLVht
+ wkFg==
+X-Gm-Message-State: AOAM533G/KFoe3QtNLJJGcvJt6yJL+5TdOMnC1pze6QCw93u7CRlTFoA
+ qY/M9c6JpTlgPQmNlqfyZOM=
+X-Google-Smtp-Source: ABdhPJwECiTEV4fAFoqxFg4+eIQfG15lu2niOQY0oGuYyzVQRGOOP2sUd1sbJp5AVXGtXqCWGioKiA==
+X-Received: by 2002:a17:902:ba88:b029:df:fa69:1351 with SMTP id
+ k8-20020a170902ba88b02900dffa691351mr7657875pls.74.1611792929491; 
+ Wed, 27 Jan 2021 16:15:29 -0800 (PST)
+Received: from localhost.localdomain ([45.124.203.14])
+ by smtp.gmail.com with ESMTPSA id x19sm3529239pff.192.2021.01.27.16.15.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Jan 2021 16:15:28 -0800 (PST)
 From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 28 Jan 2021 00:06:46 +0000
-Message-ID: <CACPK8XcZTE=bnCP1-E9PTA09WnXG9Eduwx0dm-QqmQJUDa_OrQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] dt-bindings: i2c: aspeed: add buffer and DMA mode
- transfer support
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+To: Andrew Jeffery <andrew@aj.id.au>,
+ Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>,
+ Ryan Chen <ryan_chen@aspeedtech.com>, openbmc@lists.ozlabs.org
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc v3 0/4] FIT verification
+Date: Thu, 28 Jan 2021 10:45:16 +1030
+Message-Id: <20210128001521.266883-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.29.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,91 +77,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, Rob Herring <robh@kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Wolfram Sang <wsa@the-dreams.de>,
- Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brendan Higgins <brendanhiggins@google.com>,
- devicetree <devicetree@vger.kernel.org>, Cedric Le Goater <clg@kaod.org>,
- Tao Ren <taoren@fb.com>, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 14 Jan 2021 at 20:05, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
->
-> Hi Rob,
->
-> On 1/14/2021 11:34 AM, Rob Herring wrote:
-> >> -- reg                       : address offset and range of bus
-> >> +- reg                       : Address offset and range of bus registers.
-> >> +
-> >> +                      An additional SRAM buffer address offset and range is
-> >> +                      optional in case of enabling I2C dedicated SRAM for
-> >> +                      buffer mode transfer support. If the optional range
-> >> +                      is defined, buffer mode will be enabled.
-> >> +                      - AST2400
-> >> +                        &i2c0 { reg = <0x40 0x40>, <0x800 0x80>; };
-> >> +                        &i2c1 { reg = <0x80 0x40>, <0x880 0x80>; };
-> >> +                        &i2c2 { reg = <0xc0 0x40>, <0x900 0x80>; };
-> >> +                        &i2c3 { reg = <0x100 0x40>, <0x980 0x80>; };
-> >> +                        &i2c4 { reg = <0x140 0x40>, <0xa00 0x80>; };
-> >> +                        &i2c5 { reg = <0x180 0x40>, <0xa80 0x80>; };
-> >> +                        &i2c6 { reg = <0x1c0 0x40>, <0xb00 0x80>; };
-> >> +                        &i2c7 { reg = <0x300 0x40>, <0xb80 0x80>; };
-> >> +                        &i2c8 { reg = <0x340 0x40>, <0xc00 0x80>; };
-> >> +                        &i2c9 { reg = <0x380 0x40>, <0xc80 0x80>; };
-> >> +                        &i2c10 { reg = <0x3c0 0x40>, <0xd00 0x80>; };
-> >> +                        &i2c11 { reg = <0x400 0x40>, <0xd80 0x80>; };
-> >> +                        &i2c12 { reg = <0x440 0x40>, <0xe00 0x80>; };
-> >> +                        &i2c13 { reg = <0x480 0x40>, <0xe80 0x80>; };
-> >
-> > All this information doesn't need to be in the binding.
-> >
-> > It's also an oddly structured dts file if this is what you are doing...
->
-> I removed the default buffer mode settings that I added into
-> 'aspeed-g4.dtsi' and 'aspeed-g5.dtsi' in v1 to avoid touching of the
-> default transfer mode setting, but each bus should use its dedicated
-> SRAM buffer range for enabling buffer mode so I added this information
-> at here as overriding examples instead. I thought that binding document
-> is a right place for providing this information but looks like it's not.
-> Any recommended place for it? Is it good enough if I add it just into
-> the commit message?
+As part of our effort to enable secure boot in openbmc, this turns on
+FIT verification in the SPL and u-boot.
 
-I agree with Rob, we don't need this described in the device tree
-(binding or dts). We know what the layout is for a given aspeed
-family, so the driver can have this information hard coded.
+It adjusts the SRAM layout to accommodate the extra code size, moving
+the heap to the non-parity checked 24KB of SRAM.
 
-(Correct me if I've misinterpted here Rob)
+It also modifies the way the SPL is built, including disabling features.
 
->
-> >> @@ -17,6 +72,25 @@ Optional Properties:
-> >>   - bus-frequency    : frequency of the bus clock in Hz defaults to 100 kHz when not
-> >>                specified
-> >>   - multi-master     : states that there is another master active on this bus.
-> >> +- aspeed,dma-buf-size       : size of DMA buffer.
-> >> +                        AST2400: N/A
-> >> +                        AST2500: 2 ~ 4095
-> >> +                        AST2600: 2 ~ 4096
-> >
-> > If based on the SoC, then all this can be implied from the compatible
-> > string.
-> >
->
-> Please help me to clarify your comment. Should I remove it from here
-> with keeping the driver handling code for each SoC compatible string?
-> Or should I change it like below?
-> aspeed,ast2400-i2c-bus: N/A
-> aspeed,ast2500-i2c-bus: 2 ~ 4095
-> aspeed,ast2600-i2c-bus: 2 ~ 4096
+v3 Reorders the patches to put the size reduction changes first, and
+then enables signature verification to ensure the build can be bisected.
 
-As above, we know what the buffer size is for the specific soc family,
-so we can hard code the value to expect.
+The ymodem disable patch is dropped, as we fit cleanly under the 64KB
+boundary with the feature enabled.
 
-The downside of this hard coding is it takes away the option of using
-more buffer space for a given master in a system that only enables
-some of the masters. Is this a use case you were considering? If so,
-then we might revisit some of the advice in this thread.
+The general cleanup patch is dropped, except for the DOS_PARTITION
+change which was added to the SPL cleanup patch. These cleanups will be
+posted separately at a later date.
 
-Cheers,
+           Size   Delta
+ HEAD     44054
+ patch 1  43442    -612
+ patch 2  42337   -1105
+ patch 3  42337       0
+ patch 4  63378  +21041
 
-Joel
+Joel Stanley (4):
+  ast2600: Allow selection of SPL boot devices
+  config: ast2600: Reduce SPL image size
+  ast2600: Modify SPL SRAM layout
+  config: ast2600: Enable FIT signature verification
+
+ arch/arm/mach-aspeed/ast2600/Kconfig       | 12 ++++++++++++
+ arch/arm/mach-aspeed/ast2600/spl_boot.c    |  9 +++++++++
+ configs/ast2600_openbmc_spl_emmc_defconfig |  9 ++++++++-
+ include/configs/evb_ast2600a1_spl.h        |  4 ++--
+ 4 files changed, 31 insertions(+), 3 deletions(-)
+
+-- 
+2.29.2
+
