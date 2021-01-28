@@ -1,67 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1ADCC307437
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 11:57:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC72F307442
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 11:59:18 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DRHVZ0Bc4zDr3D
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 21:57:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DRHXh0J0RzDqhn
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 21:59:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::432;
- helo=mail-pf1-x432.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52c;
+ helo=mail-pg1-x52c.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=m5tdSlRc; dkim-atps=neutral
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com
- [IPv6:2607:f8b0:4864:20::432])
+ header.s=20161025 header.b=bDpuUHvi; dkim-atps=neutral
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com
+ [IPv6:2607:f8b0:4864:20::52c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DRHPv1ZNfzDrBB
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 21:53:22 +1100 (AEDT)
-Received: by mail-pf1-x432.google.com with SMTP id t29so3733910pfg.11
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 02:53:22 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DRHQ02TdSzDqDJ
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 21:53:27 +1100 (AEDT)
+Received: by mail-pg1-x52c.google.com with SMTP id o7so4060396pgl.1
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 02:53:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=LCVsByA/OFDH4gjalH02a3QkvbDlFZgwKxZY22+/UTM=;
- b=m5tdSlRc+TQlYKBsdUwoo6fVRDJ23M+JfXGc7wkPm8ZCReR2lSFXoib8LJDGWEbjCB
- HdQ1enkY99PerxSNs0jI+O2R/cFJWB6UJ8Zqp0Lh2H0QOdtQhFgDBPwAqJhATfW2lYI4
- 1EpPDq8NS8YBpByOPmcRTc1JhizDmaIJtCSRIY2w9LgHs3UOttAyMe0TqFbkfQi/1dY6
- L7dqh+UIq9u723vWAnHbDKdIS6dvB5OTnYCvKaKGRSZuB86n+wPeoQRWiUlv7p/yniPz
- MUw0HflIbhjYpeRTI71RVl6GDurScYDz4ui9juTolmodHDfUAmPm+mt67kvosaUN+EGZ
- WhKw==
+ bh=WlId1yJ1zlfciw90J6O7DahoTo7vnHHmOqwv2Lx10ag=;
+ b=bDpuUHviOSjBDl1Ft5kOCmB5el5xXZMz/v2bPsIFmjAoW5dD7OuclNqTab2/gjOJkZ
+ m9aZc53OpLlBipIfCW7ikj3DsFYXkv/1EOtwnybdldEUGNf3nl2yWtt1dBlVvzfVzhZr
+ HpIMB+bc8Q4+sr9jcnliav9klMhipicaKK+BrowRFUKAUO6kMIuXBJrR7+kXEPHnjIas
+ vUtSex+Zq23DXOvs9LPoy9KGK1EiHhLMl0eztf1IKq78xn4HPEC1rcQP3zZtfWI2+OtZ
+ KKJkLlOtJhOIGftZxZzIhkHdnwpAcHsY3huM43NF/VDDZZcV+zzlZh+v/tYDOIotkflQ
+ At3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=LCVsByA/OFDH4gjalH02a3QkvbDlFZgwKxZY22+/UTM=;
- b=UiVgzUezXzW9QbRbX4X/0ElRGheqxlKqMs0sCU/+aZDNUOkf/R/9l8zK9iFj0ULRnm
- A5mTy5sJMZSHLyuq3a4oI5bRTAx0sWJgd7Ag0necYRX5auuE4z8cnANuKXwT3guIhEEO
- UKP1bY6w3f7Cd06tFsxJAARyKdn3EbdgT80DiTIF5HUrDrmseENa7kNRqilaj08sCDeF
- mPlkQUmMgxnJruMIM4K2U4lSkHz5tP84riBgx+E9GytwrAPiaw+x1Ug76xBg86A7NpK3
- 1dsTFfcMFB74AN2S14/sl846QFp8rFiPVl6WYZmj1acDBhnNXeDLdjP4OEEizQa/JJXf
- X03A==
-X-Gm-Message-State: AOAM533DVeXLXEcG4XuAWdEgdgdDRlbG4JWl/pKcAbHpUqOvWiABo0eb
- z6LP/Z5CRtfUhvC77rfO4WCFT4NYONs=
-X-Google-Smtp-Source: ABdhPJyfPx9BBOaJIoVvw8Z/Z3eRC8XNTSECH4V02YLoUqDodAk+EDf38vdjdTz2LEIh9WF5fo6sVA==
-X-Received: by 2002:a63:fd04:: with SMTP id d4mr16132074pgh.232.1611831200535; 
- Thu, 28 Jan 2021 02:53:20 -0800 (PST)
+ bh=WlId1yJ1zlfciw90J6O7DahoTo7vnHHmOqwv2Lx10ag=;
+ b=XjSBDj/ujo8ug31G1kcF0KVgZvLvdex4UMej77lrMqTJtMzPqHorZ3t2iUWqWdp1DM
+ 5N951HeuU1xisKHE7qluxGTUziSSZfLYb0T2sTLz7Q+gtTeD4MIRLxQveEAFlTaGDqAb
+ rVi2C54FK4yLayMLImyWMuVqjjrL67uYTD2oa2y16SxjJ6WFVuSmS7y8tiK2eyz1mdka
+ rhdR9gGyhLSDW+FWYvz8mCyZDMi9UZ9Lm0mfn81wmxct1Jq5ii6LPSrDplF1JCWE3DFP
+ LuWtFGaHLBG7ZZdwrCuo1GDWScoWwu1ayDCannZYObgIKnZ1PKZiQ8iEUPEfc465C0Sd
+ T6fQ==
+X-Gm-Message-State: AOAM532veKbQrV+WcFqeJ8Ft8eNl3ycUXxLxuIYudWFl6kO5lvjW03dT
+ Grie0EhPWDtDQ6174abQWIUXy6tAC2E=
+X-Google-Smtp-Source: ABdhPJysUg5DhVIgs5+quTF0sacPAupwKI4mWZ+IVbdnQz9pE2OeR4vBpIl/YZ+SMNR8VkSy9p+j2g==
+X-Received: by 2002:a62:ee09:0:b029:1c0:ba8c:fcea with SMTP id
+ e9-20020a62ee090000b02901c0ba8cfceamr15061286pfi.7.1611831205137; 
+ Thu, 28 Jan 2021 02:53:25 -0800 (PST)
 Received: from voyager.lan ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id q197sm5102748pfc.155.2021.01.28.02.53.18
+ by smtp.gmail.com with ESMTPSA id q197sm5102748pfc.155.2021.01.28.02.53.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Jan 2021 02:53:19 -0800 (PST)
+ Thu, 28 Jan 2021 02:53:23 -0800 (PST)
 From: Joel Stanley <joel@jms.id.au>
 To: Andrew Jeffery <andrew@aj.id.au>,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 2/7] image: Be a little more
- verbose when checking signatures
-Date: Thu, 28 Jan 2021 21:22:59 +1030
-Message-Id: <20210128105304.401058-3-joel@jms.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 3/7] image: Return an error
+ message from fit_config_verify_sig()
+Date: Thu, 28 Jan 2021 21:23:00 +1030
+Message-Id: <20210128105304.401058-4-joel@jms.id.au>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210128105304.401058-1-joel@jms.id.au>
 References: <20210128105304.401058-1-joel@jms.id.au>
@@ -83,44 +84,38 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Simon Glass <sjg@chromium.org>
 
-It is useful to be a little more specific about what is being checked.
-Update a few messages to help with this.
+This function only returns an error message sometimes. Update it to always
+return an error message if one is available. This makes it easier to see
+what went wrong.
 
 Signed-off-by: Simon Glass <sjg@chromium.org>
-(cherry picked from commit 382cf62039f775a1aec771645e3cbc32e1e2f0e3)
+(cherry picked from commit 472f9113dbbbed88345f3d38de3ff37ca163508e)
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- common/image-fit.c | 2 +-
- tools/image-host.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ common/image-sig.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/common/image-fit.c b/common/image-fit.c
-index 95b5723f322e..c40169331c16 100644
---- a/common/image-fit.c
-+++ b/common/image-fit.c
-@@ -1870,7 +1870,7 @@ int fit_image_load(bootm_headers_t *images, ulong addr,
- 		fit_uname = fit_get_name(fit, noffset, NULL);
+diff --git a/common/image-sig.c b/common/image-sig.c
+index 004fbc525b5c..48532b15a31a 100644
+--- a/common/image-sig.c
++++ b/common/image-sig.c
+@@ -470,13 +470,14 @@ static int fit_config_verify_sig(const void *fit, int conf_noffset,
+ 		goto error;
  	}
- 	if (noffset < 0) {
--		puts("Could not find subimage node\n");
-+		printf("Could not find subimage node type '%s'\n", prop_name);
- 		bootstage_error(bootstage_id + BOOTSTAGE_SUB_SUBNODE);
- 		return -ENOENT;
- 	}
-diff --git a/tools/image-host.c b/tools/image-host.c
-index 88b329502ca3..8e94ee8f3e31 100644
---- a/tools/image-host.c
-+++ b/tools/image-host.c
-@@ -743,7 +743,8 @@ int fit_check_sign(const void *fit, const void *key)
- 	if (!cfg_noffset)
- 		return -1;
  
--	printf("Verifying Hash Integrity ... ");
-+	printf("Verifying Hash Integrity for node '%s'... ",
-+	       fdt_get_name(fit, cfg_noffset, NULL));
- 	ret = fit_config_verify(fit, cfg_noffset);
- 	if (ret)
- 		return ret;
+-	return verified ? 0 : -EPERM;
++	if (verified)
++		return 0;
+ 
+ error:
+ 	printf(" error!\n%s for '%s' hash node in '%s' config node\n",
+ 	       err_msg, fit_get_name(fit, noffset, NULL),
+ 	       fit_get_name(fit, conf_noffset, NULL));
+-	return -1;
++	return -EPERM;
+ }
+ 
+ int fit_config_verify_required_sigs(const void *fit, int conf_noffset,
 -- 
 2.29.2
 
