@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 533D93068D1
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 01:52:09 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 037D43068FC
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 01:57:35 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DR2463pfyzDqBZ
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 11:52:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DR2BM6tdkzDqWt
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 11:57:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -15,74 +15,74 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=N5qh9MSn; 
+ header.s=fm1 header.b=h9FlGqCN; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=l5LfpLkc; 
+ header.a=rsa-sha256 header.s=fm1 header.b=n7F+0tBL; 
  dkim-atps=neutral
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
  [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DR23K0bKszDqWM
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 11:51:24 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DR24n5JxWzDqB9
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 11:52:41 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 2BF6B5C00B9;
- Wed, 27 Jan 2021 19:51:21 -0500 (EST)
+ by mailout.nyi.internal (Postfix) with ESMTP id 659EE5C01F0;
+ Wed, 27 Jan 2021 19:52:39 -0500 (EST)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Wed, 27 Jan 2021 19:51:21 -0500
+ by compute3.internal (MEProxy); Wed, 27 Jan 2021 19:52:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm1; bh=PRUjFSDhZrJ0eQSDtl26q9yMYX6BrvC
- Dmue47Y9eX6s=; b=N5qh9MSn+prUTl+MgLUDjptAPdjK87M4XF2p8Zpji4HgObE
- FFBGely4tON04NG1rUQrxshWlJPgDYi0TA8qEa95SeZnGFP5OIvaczEQCf09WyB4
- MXodK+U1/GJSq1d1afdnmIcyMbfjkQ5b325P530V05wKwIWi9cj5XC9OyYdJfdvC
- sk+H+KVvrY7z20t7NxKImR55YQdT1Q8ywT5OUjJJ7LOGq/gN2hmqvM5Vv8TM5+/7
- KHgz+UEO9iAwX3iozkfIoX4wijf6wltXzXExNDz+z7PgkYhQVIb7nCZ4CN2O+umB
- YafEsHE/7l196GSTC68PisNBz1GhhMxSitCn92Q==
+ :subject:content-type; s=fm1; bh=0y65DFXh9Zb4Qdu3mtJH79VtP72P394
+ M9yhJrNNqcj8=; b=h9FlGqCNA3+5EwilhcC+1RoTWWDzQP0Xq0d0yFDu9Lami0I
+ Y1UID1SqGjVnFUjwLU4RUZuoiPIIcJ3VWk7kdWDWX+0qClX50f6tHaIkqu74DObz
+ kVNnCiDyPBv/gED+Y2grNLsbVq4spPqey4ybkyZGmRChqvap97KYMlqcGn9VLNyj
+ /LjtNcy94c7tSDPpgByWxETN5rvd909ELNJVTj2JXmwtbdFais2RI0iHgG8aZnUN
+ MpWc+DMX3A+rFZaUijdsiZvQYHUGKYdiwOD0mJYNJNR9KkNv9WHslYjmePdS4tgu
+ Ki5JGXsNUF71VhVirgVp/FRZlTA7lkEKJE5gFVA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=PRUjFS
- DhZrJ0eQSDtl26q9yMYX6BrvCDmue47Y9eX6s=; b=l5LfpLkcRgJUviyzwiq6Eh
- 0XAONGHtgfFl8L3euiPapR/tVM+JBEQLin4WLrA+rHZWTQGorawxBxhvhoKdpG9Q
- UHh+cGHRqRtAuVebOoWbLoniRnDA18C7T7iEfGeknZ7lDj5VX1xkYPg1hBGuBFkZ
- B8AK0eA5pWbiOyL1FDN6RWVURGy9INkXAoloKWpy3e3eqijaFUI+q+OOoaYqF0WT
- 9plaTeNVzYpiGOwRJgCyQTp3jx6Ku75e78O+bVcb4Kwr/fF+XiB0nQaiVKyQXCOJ
- f6LEL3aHHYGcBfzwfWgoqMF7eAD6T4q4exN9cHMWsVrUi9Z3C99ZkqqiSjq2oozA
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=0y65DF
+ Xh9Zb4Qdu3mtJH79VtP72P394M9yhJrNNqcj8=; b=n7F+0tBLA1dMpdo4KoIjG0
+ PA9Kv+gB93g+6ULK3uJTTf6RsHUZjE28knfXefza44+fW3B5CSYNVDvAyfpX6/bJ
+ OMiRNl1nKhy9ASaU1obPtIE2yFq2HF8IkF3IkN/0kWCGr9LlovnkKDDtC/avyVBs
+ 7UkN/DyGqU6TqTNormZkuj3k+GiS7tcenibSFiun6jbctqVPvkmIr1xRabWbnuAk
+ B/LgpnPnSDtXk4Bgi/zQMlUHoD4sBLLd3UwI+WgYslTOlizyLyXiTZEA9E1Skuu9
+ 3YDQ1FEfptmy/VvxZcWmLrw+rUPwYFZ6wNJIOWzFu9rSfHlpHPXCJIdJRAowtSwA
  ==
-X-ME-Sender: <xms:iAoSYLHyar0N52JpaoI0a8Y9Wu6BSR8JzNy9r4-gIpn610N_VXYHrg>
- <xme:iAoSYIV3tj33Es_9PMkZ9keAztXQkUC40-GW_HGliUUYhPcGOA8yFv9d_Gaz5fkkk
- 3ZAdzyJf6ACT3cgJg>
+X-ME-Sender: <xms:1goSYEvy64SihZRz5eQoOyQPhmA4WrEiVoMtD4-6qCtgoGfgoCjs1Q>
+ <xme:1goSYBeoP0NkHvlHrh6Q_WUch9F6rqyoEec0Qo7yulwDeMlopknAAjSRQht3hughG
+ 0LrwsLth4fUK3pY5A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdelgddviecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
  vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
  htthgvrhhnpedutddtkeeugeegvddttdeukeeiuddtgfeuuddtfeeiueetfeeileettedv
- tdfhieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ tdfhieenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpe
  grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:iAoSYNK5DrJL4-KLI0ECo0s2n5IORTEDxFoR4b0uXjI8No-9g30mPg>
- <xmx:iAoSYJE2s7kenK3uGWkF_mUG-kAnD4scfG4mf6YYoyH8As5D9HM1ow>
- <xmx:iAoSYBVGRFxhwUV4xH9G5vevxq1B8Hykrc8NNGwO5Pl2g9JI08DdjQ>
- <xmx:iQoSYAcjSkxKJoS8vMMcIU7jWX_1E2yZ4qF6e7XoE41vLyEACcJY2A>
+X-ME-Proxy: <xmx:1goSYPyTs7FRZ1xDlbYyeqRMZ5Ne5j7sqtrXtJoSKwMMZdcHssYqJA>
+ <xmx:1goSYHPWnTl3iOvEDFaZyNeoB-zAa_sqszGQHd8fyiBOXB2VipCn1Q>
+ <xmx:1goSYE9lJ__bAzo6okgoUAFVJXHOCwF3eQKR6KxLgEPhQBYL_o6EbA>
+ <xmx:1woSYCkdgPwJqRx19hETahPDo-Q8WLuC4asb40-RFQ8qmOhDCCRqog>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 0C840A0005D; Wed, 27 Jan 2021 19:51:20 -0500 (EST)
+ id 65CC3A0005E; Wed, 27 Jan 2021 19:52:38 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-84-gfc141fe8b8-fm-20210125.001-gfc141fe8
 Mime-Version: 1.0
-Message-Id: <de16ec63-f233-451c-bc7d-89bbbfc46bb6@www.fastmail.com>
-In-Reply-To: <20210128001521.266883-2-joel@jms.id.au>
+Message-Id: <891e2caa-f7ab-4a93-a762-4c5a716d1bfe@www.fastmail.com>
+In-Reply-To: <20210128001521.266883-3-joel@jms.id.au>
 References: <20210128001521.266883-1-joel@jms.id.au>
- <20210128001521.266883-2-joel@jms.id.au>
-Date: Thu, 28 Jan 2021 11:20:59 +1030
+ <20210128001521.266883-3-joel@jms.id.au>
+Date: Thu, 28 Jan 2021 11:22:18 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Joel Stanley" <joel@jms.id.au>,
  "Klaus Heinrich Kiwi" <klaus@linux.vnet.ibm.com>,
  "Ryan Chen" <ryan_chen@aspeedtech.com>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_u-boot_v2019.04-aspeed-openbmc_v3_1/4]_ast2600:_All?=
- =?UTF-8?Q?ow_selection_of_SPL_boot_devices?=
+Subject: =?UTF-8?Q?Re:_[PATCH_u-boot_v2019.04-aspeed-openbmc_v3_2/4]_config:_ast2?=
+ =?UTF-8?Q?600:_Reduce_SPL_image_size?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -101,55 +101,21 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Thu, 28 Jan 2021, at 10:45, Joel Stanley wrote:
-> The AST2600 SPL can boot from a number of sources, with or without the
-> AST2600 secure boot feature. It may be desirable to disable some of
-> these, so put them behind the defines for the drivers that are used.
+> This modifies some features of the SPL to ensure it fits in the 64KB
+> payload size once we enable FIT signature verification in the SPL.
 > 
-> Reviewed-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+> We still build with thumb, as this is selected SYS_THUMB_BUILD (ie, the
+> SPL defaults to thumb if u-boot proper is built with thumb).
+> 
+> The not using the arch memcpy/memset changes save 668 bytes. The tiny
+> memset saves 52 bytes. (Anyone who wants to test the runtime impact of
+> these changes should do so!)
+> 
+> The DOS_PARTITION change saves 229 bytes.
+> 
+> In total, this set of options reduces the binary size by 1105 bytes
+> with GCC 10.
+> 
 > Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->  arch/arm/mach-aspeed/ast2600/Kconfig    | 12 ++++++++++++
->  arch/arm/mach-aspeed/ast2600/spl_boot.c |  9 +++++++++
->  2 files changed, 21 insertions(+)
-> 
-> diff --git a/arch/arm/mach-aspeed/ast2600/Kconfig 
-> b/arch/arm/mach-aspeed/ast2600/Kconfig
-> index dd991e87c795..518f41b558d3 100644
-> --- a/arch/arm/mach-aspeed/ast2600/Kconfig
-> +++ b/arch/arm/mach-aspeed/ast2600/Kconfig
-> @@ -53,6 +53,18 @@ config TARGET_SLT_AST2600
->  
->  endchoice
->  
-> +config ASPEED_SECBOOT_BL2
-> +	bool "ASPEED secure boot BL2 support"
-> +	depends on ASPEED_AST2600
-> +	help
-> +	  Enable ASPEED's "secboot" secure boot support for verifying
-> +	  the SPL's playload ("BL2").
-> +
-> +	  Enable this is if you're using secure boot support in the AST2600 
-> (or similar)
-> +	  to verify your u-boot proper.
-> +
-> +	  Disable this is if you are using u-boot's vboot to verify u-boot.
-> +
->  source "board/aspeed/evb_ast2600a0/Kconfig"
->  source "board/aspeed/evb_ast2600a1/Kconfig"
->  source "board/aspeed/ncsi_ast2600a0/Kconfig"
-> diff --git a/arch/arm/mach-aspeed/ast2600/spl_boot.c 
-> b/arch/arm/mach-aspeed/ast2600/spl_boot.c
-> index 58a22f646e08..98cf72bf440d 100644
-> --- a/arch/arm/mach-aspeed/ast2600/spl_boot.c
-> +++ b/arch/arm/mach-aspeed/ast2600/spl_boot.c
-> @@ -42,6 +42,7 @@ static int aspeed_secboot_spl_ram_load_image(struct 
-> spl_image_info *spl_image,
->  }
->  SPL_LOAD_IMAGE_METHOD("RAM with Aspeed Secure Boot", 0, 
-> ASPEED_SECBOOT_DEVICE_RAM, aspeed_secboot_spl_ram_load_image);
 
-The orthogonal groups of MMC/RAM vs secure/not makes it hard to read :( But it 
-looks like your IS_ENABLED(ASPEED_SECBOOT_BL2) #ifdef-ery has missed 
-aspeed_secboot_spl_ram_load_image()?
-
-Andrew
+Acked-by: Andrew Jeffery <andrew@aj.id.au>
