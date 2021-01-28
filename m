@@ -2,73 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E817306888
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 01:22:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DAA203068B7
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 01:38:53 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DR1PT6M85zDr3L
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 11:22:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DR1mp5HsRzDr4h
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jan 2021 11:38:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1035;
- helo=mail-pj1-x1035.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=gbf6TJrg; dkim-atps=neutral
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com
- [IPv6:2607:f8b0:4864:20::1035])
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm1 header.b=RanXxBKM; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=UAuzOmV4; 
+ dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DR1GC5xhmzDr43
- for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 11:15:47 +1100 (AEDT)
-Received: by mail-pj1-x1035.google.com with SMTP id l18so2934516pji.3
- for <openbmc@lists.ozlabs.org>; Wed, 27 Jan 2021 16:15:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=k5FxfkQgJxX+Y+Mv01I55bzM0/UvvDUSkJ505ezrpIc=;
- b=gbf6TJrg7Uus6t01DAGNhqY0PnsrQTsnFsdJwPJY38LEf1SfXZB5fFEPYy/dDXAEt1
- 0lt31tv8AYp0SGbyOvEYlfivaJDGvUSr6qLUgI3lkOJssxuPrElHQzKRGFttcmtEnV9G
- 839gvzU1x8TEZj+szi+JnlYJFrYoSLfXyF+bQO8Z4JPigro2TtfLNK1HIAHPWSZjsmkk
- 39cK3CPZzt63IpoKs96/BjFfjMgDiwLHFfFkUrvHCd1seFc307eBTsyt/LgLySgA7Cwy
- VEpDGBwj1cwmkR/fwwdFm4HqXli3r6T3PuE8w2Dr1d+q/2mq5WYSDzXioI9ZGftJlBDE
- QbYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=k5FxfkQgJxX+Y+Mv01I55bzM0/UvvDUSkJ505ezrpIc=;
- b=EuUvUEWN/YOBBCcZe0d1ZGzpFmX3e2XCB2GpaG32r0iz9haTq+zIBssTa06PXsJqxg
- hfCKEZ3ZhAh4qVl2qKiwt7bCdcI8EegmFhFGQisWmmjoyplJSQL8d5fPYlGZwgfSe4+N
- VGk/2oACxTBFYrhcSRi74Z829bjUR+gf16gBgVoZKAt6NDEX5fkMVWiEouC6XwMJlRer
- KibvuS3lTE92fkMB2v5DsrXZpsrKhBs7u28OoJEAe/nTebl9deW08TutlMK9syIkB7p/
- zhJj8dRnAHOWgmbaFOXAwNiLhcRgNzi2IkeSy+Ez8MHRd+YD8vu8CfL971jVuARWsExf
- bnaw==
-X-Gm-Message-State: AOAM532IyNsAp/lSRCBu0A35se5qhxfvoF3RGOM7G2ilLZb5Xq3UzLLK
- l4jNoHf3SPjW0pvj9r72oIy9G0/PCP0=
-X-Google-Smtp-Source: ABdhPJy9NpAC6aiZEQ6InZb1WxocRtmSk3R6tniajjQ+ZvvGT98+BtICQOCqW9U2LAIv3j0weY8Ujg==
-X-Received: by 2002:a17:90a:c82:: with SMTP id
- v2mr8303842pja.171.1611792944304; 
- Wed, 27 Jan 2021 16:15:44 -0800 (PST)
-Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id x19sm3529239pff.192.2021.01.27.16.15.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Jan 2021 16:15:43 -0800 (PST)
-From: Joel Stanley <joel@jms.id.au>
-To: Andrew Jeffery <andrew@aj.id.au>,
- Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>,
- Ryan Chen <ryan_chen@aspeedtech.com>, openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc v3 4/4] config: ast2600: Enable
- FIT signature verification
-Date: Thu, 28 Jan 2021 10:45:20 +1030
-Message-Id: <20210128001521.266883-5-joel@jms.id.au>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210128001521.266883-1-joel@jms.id.au>
-References: <20210128001521.266883-1-joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DR1lw32PpzDqSc
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Jan 2021 11:38:03 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 8105E5C023A;
+ Wed, 27 Jan 2021 19:38:01 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Wed, 27 Jan 2021 19:38:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
+ :references:mime-version:content-type:in-reply-to; s=fm1; bh=0mK
+ +Xwz6OFanM2YRsQ3umZQnoZaTaWXutnQE4A8V+wI=; b=RanXxBKMtgxfqq1kWxI
+ Z6W7kWuo3qHH4CiLMJD20JYQujv6/yg7pFqN/1I9GI2pmdI0DTIeVAmmHuwin2Lx
+ ON2fNU7RIlDHl49fYvdCo2RkV0XPyhMw1CiGE/U4ddHvCCuOadbtVFZBECQ6EDKU
+ EwmHoLjQdlCFkWWmS8ti583z72cpDxYfqGjNMD9f32iFh/T0siKydz98HypR8tqw
+ 1KDNXwJ00RhrZE4jPvncNDdQ44gZrEmRAouJnasAtHGgrz30Vm0gzbF1GkxIS41e
+ SqQv/xqXzl7dZX6wDVWNDLTB9m+nDMtVh6S1m7vhtuZiEMGhUvR/o1cdzPvIyJ3Z
+ 7nw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=0mK+Xw
+ z6OFanM2YRsQ3umZQnoZaTaWXutnQE4A8V+wI=; b=UAuzOmV4M+KscxPldrrPea
+ do3TepqV0MRFnCaojfWXJPdmYISOyIc+8xVeIzSrviZU3Yo5xj4PtSEMNEzZZmVC
+ rRyavzFOLbE8dvh6KC/oYDhtJkHLSiqaZyKdYIqxLR61zArIKJ8g7ItsRwdCRjmA
+ UE2z6yTlG5uI40WqKIbE8/jRPd65Isg0zFUlDXZPtS21cwtoywg0Q6SV+PnLjWcA
+ +V3a53T42td6ue7qCuCksi1ToA7xk3+uxG8UBK58YrAro3E4BtNepnnCPjexdZbB
+ dqnPG7YYAPZtuek1ErlLEGa3mfh9GHi1tqesCIs7WJo/UtXjlsNTCd5WERCO1Dyw
+ ==
+X-ME-Sender: <xms:aQcSYJoL0gW5w4cOz-BcBUqFQdvjFUzn6iFIWJ8xFkYcXqTjpczJEg>
+ <xme:aQcSYLpoybbBDdtdgog9eqhEwI7ZRNUQ7GIZom7skCZeRZKW27AWWPqcoU0nM_YEx
+ YU7ATCqIozIJZk-vCc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdelgddvfecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehrrgguuceu
+ ihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhmqe
+ enucggtffrrghtthgvrhhnpeeffffhfeehgedutddvtdeuiefhudeifeekfeeifeekfedu
+ feeuvedulefgkefffeenucfkphepudejfedrudeijedrfedurdduleejnecuvehluhhsth
+ gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghrrggulhgvhigssehf
+ uhiiiihivghsqhhuihhrrhgvlhdrtghomh
+X-ME-Proxy: <xmx:aQcSYGMLsZYmpaXExsVMfWXX-Qo3C7OPzziYfkUrPMmo5Uifzi99CQ>
+ <xmx:aQcSYE43xNcwanvMQ5PmSOpWaGqeGdghAHTaCdjBQdAp3soAhFZCDw>
+ <xmx:aQcSYI5kZwSiXFnHRWqEGSH0eCvL8us24z1vRo-bhuI6Hi7uNCaowA>
+ <xmx:aQcSYNgRga3SPC8y8_lAVm7FBsUKj2K9qSFi0r3S54QMi_BbrC5kyw>
+Received: from thinkpad.fuzziesquirrel.com (unknown [173.167.31.197])
+ by mail.messagingengine.com (Postfix) with ESMTPA id D1E441080064;
+ Wed, 27 Jan 2021 19:38:00 -0500 (EST)
+Date: Wed, 27 Jan 2021 19:37:59 -0500
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Ed Tanous <edtanous@google.com>
+Subject: Re: Gerrit owners plugin coming
+Message-ID: <20210128003759.yxpynaoypt5oummc@thinkpad.fuzziesquirrel.com>
+References: <CACWQX821ADQCrekLj_bGAu=1SSLCv5pTee7jaoVo2Zs6havgnA@mail.gmail.com>
+ <CACWQX8236dghCCdnDAdnij0Di_GF7DsmAO_xEtWmk6ckKDocYg@mail.gmail.com>
+ <e18c023a-ccb3-6591-1092-cd488cd331e9@yadro.com>
+ <CAH2-KxAC1r2tSOmbCyyvnYcY0Z-iyW97FoGHbtzitVNH1u5jow@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAH2-KxAC1r2tSOmbCyyvnYcY0Z-iyW97FoGHbtzitVNH1u5jow@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,46 +96,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Alexander Amelkin <a.amelkin@yadro.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This turns on FIT signature verification for the OpenBMC SPL
-configuration, for both the SPL and u-boot.
+On Wed, Jan 27, 2021 at 09:09:56AM -0800, Ed Tanous wrote:
+>On Wed, Jan 27, 2021 at 4:02 AM Alexander Amelkin <a.amelkin@yadro.com> wrote:
 
-This enables rsa and sha algorithms for verifying the signature of the
-u-boot FIT when loading it.
+>> Does this mean that meta-<vendor> directories are not subtrees anymore
+>> and respective repositories are now obsolete and can (will?) be dropped?
+>>
+>
+>The intent was to make them read-only in case someone was relying on
+>them directly.
 
-FIT_IMAGE_TINY is selected to save approx 3KB from the image size.
+I removed all the ACLs from all the meta repositories in Github and 
+Gerrit today.  There were a couple patches that snuck in so I also ran 
+the subtree script one last time for our own subtrees (Andrew will still 
+use it for pulling upstream - e.g. poky, meta-openembedded, etc).
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
-v3: Move SPL_FIT_IMAGE_TINY to this patch
----
- configs/ast2600_openbmc_spl_emmc_defconfig | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/configs/ast2600_openbmc_spl_emmc_defconfig b/configs/ast2600_openbmc_spl_emmc_defconfig
-index 26e8790cef87..6daf6343478b 100644
---- a/configs/ast2600_openbmc_spl_emmc_defconfig
-+++ b/configs/ast2600_openbmc_spl_emmc_defconfig
-@@ -36,6 +36,9 @@ CONFIG_ARMV7_BOOT_SEC_DEFAULT=y
- CONFIG_ARMV7_PSCI_NR_CPUS=2
- CONFIG_NR_DRAM_BANKS=1
- CONFIG_FIT=y
-+CONFIG_FIT_SIGNATURE=y
-+CONFIG_SPL_FIT_SIGNATURE=y
-+CONFIG_SPL_LOAD_FIT=y
- CONFIG_USE_BOOTARGS=y
- CONFIG_BOOTARGS="console=ttyS4,115200n8 root=/dev/ram rw"
- CONFIG_USE_BOOTCOMMAND=y
-@@ -49,6 +52,7 @@ CONFIG_BOARD_EARLY_INIT_F=y
- CONFIG_SPL_SYS_MALLOC_SIMPLE=y
- CONFIG_SPL_STACK_R=y
- CONFIG_SPL_SEPARATE_BSS=y
-+CONFIG_SPL_FIT_IMAGE_TINY=y
- CONFIG_SPL_DM_RESET=y
- CONFIG_SPL_RAM_SUPPORT=y
- CONFIG_SPL_RAM_DEVICE=y
--- 
-2.29.2
-
+-brad
