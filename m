@@ -2,67 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B4E03096C2
-	for <lists+openbmc@lfdr.de>; Sat, 30 Jan 2021 17:35:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC15F3098A3
+	for <lists+openbmc@lfdr.de>; Sat, 30 Jan 2021 23:20:57 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DSfvB31WJzDrdK
-	for <lists+openbmc@lfdr.de>; Sun, 31 Jan 2021 03:35:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DSpZD3stnzDrgk
+	for <lists+openbmc@lfdr.de>; Sun, 31 Jan 2021 09:20:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.20; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=a8vBXzNf; 
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm1 header.b=HcnXahx6; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=OU2TbENq; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DSftG3MBqzDrcY
- for <openbmc@lists.ozlabs.org>; Sun, 31 Jan 2021 03:34:11 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1612024214;
- bh=bkD8tcc6TQ6B0xOy5hnrRvxDcXEQXOxiPgjHK8m2mBk=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=a8vBXzNfo2PP6rM6eOKgCGpCIsXDpQfJsbNQj+P4NkQ/ap3dsu5SKBwMdywPPG54g
- PypJoIYzkVMkoAMFCFBfkJ62ePB/c+7zfvy6PfqK/1H2BOhoJWx4pFxqMKNUN93jU0
- 8esglea/ZnEn+gHKQ95SjCzQwX/0DHIYpZITYArw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.208]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUXpQ-1lWOFa1qls-00QOqV; Sat, 30
- Jan 2021 17:30:14 +0100
-From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: linux-gpio@vger.kernel.org
-Subject: [PATCH] pinctrl: nuvoton: npcm7xx: Fix alignment of table header
- comment
-Date: Sat, 30 Jan 2021 17:29:54 +0100
-Message-Id: <20210130162954.918803-1-j.neuschaefer@gmx.net>
-X-Mailer: git-send-email 2.29.2
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DSpXf3KZxzDrP2
+ for <openbmc@lists.ozlabs.org>; Sun, 31 Jan 2021 09:19:29 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 9B6955C0153;
+ Sat, 30 Jan 2021 17:19:24 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Sat, 30 Jan 2021 17:19:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
+ :references:mime-version:content-type:in-reply-to; s=fm1; bh=R+N
+ V41vWLJzV9tEnBxi6nSXKWkg7qO4tl340Y/sItAk=; b=HcnXahx6N6kldhPYS28
+ unqJWeoybeM5RxMSYa1kx7CyeuSBFU0v9RHvHjcEfFoiNTmw+PX5TlieOFOPRW8C
+ +inbrM3arCNNuCTgj446Bc6z+JZTK6nKWR7KUBa0uLhP0iTmglfbokIb8p9C9fl+
+ dm0SXJnY+ZLPucRcVGM5A/3d5oZ38oOSGdmvOKv4Y87Abk2NL4dED+5DcHO4XG4n
+ 39ktFQbxAvPRiDK3hEQKmyQATW6nNwm9FXm06iYvLiRYNQ0H/t9WU6aolGvD+Fdk
+ OLbvDbWtUvxbp36Uwj3jhDi9Ofvpp2M8S36AHyF4ci3b1v+H0xTxs7gC6OC9N0uW
+ UcA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=R+NV41
+ vWLJzV9tEnBxi6nSXKWkg7qO4tl340Y/sItAk=; b=OU2TbENqKqZavVIPtXPgXo
+ BQE+ZSwxJiddPpkZAnIsnw2BlW5TYfDJyq/kbizWDKW3o1r+MnpMsoAAmJqs/QWq
+ rQLXOtXBr5K6HNPe2w9vJoJRq0PUQIUwy6q9XNUQjIspviUevwLD8frtRIe1CTcY
+ DJg3/KNpfxnwC14TaqVlsIqkAP4QWlySTUF4iWfWLOdMI2jyb6t9/PbcPKoZPogu
+ +eRddZjEjt8fL0r1JdRnO3o1Kw4Gfz0d7uct7OvrJi8i2UMRKsp7uxP0QR2QEmBQ
+ lNhS9hvle2sgrJuV8EHxF6IPmMHz/L+udd5Wv52GizxWn2IIykrLSD1uJYiVc95A
+ ==
+X-ME-Sender: <xms:a9sVYCnyxdiEoRU9V5UPDdOpNXzbHWhQrTBMdcRDDOfFrEsyKaX-9A>
+ <xme:a9sVYJ0NmzcGRrma9Tpi7p7z445z5-fLieyQd2H56bckRn2L-mb1FilXjNqaNI5KB
+ EE6bfgYHjfCeWfo76o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeeggdduieduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeurhgrugcu
+ uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
+ eqnecuggftrfgrthhtvghrnhepfeffhfefheeguddtvddtueeihfduieefkeefieefkeef
+ udefueevudelgfekffefnecukfhppedujeefrdduieejrdefuddrudeljeenucevlhhush
+ htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsges
+ fhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:a9sVYAoyXKV3R78QNAAP_hddzkkUvTF-WOd43A3YvBP3WedJ2y35ow>
+ <xmx:a9sVYGm2UU8RkGR6T8L5oS1LL6YGRJY7-u8UikAsZ71fyZrX4N-oow>
+ <xmx:a9sVYA3FvKIA0o0ab6nUlhxxqFvVRuFKdjAH3CFgcHmQJ6ctlWEPHw>
+ <xmx:bNsVYNy2eegCmgqxtVXWnYPOE8PF97brjiujgefwbEhFFEDNPCICqw>
+Received: from thinkpad.fuzziesquirrel.com (unknown [173.167.31.197])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 498031080059;
+ Sat, 30 Jan 2021 17:19:23 -0500 (EST)
+Date: Sat, 30 Jan 2021 17:19:21 -0500
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Brandon Kim <brandonkim@google.com>
+Subject: Re: Upstreaming downstream Google BMC repositories
+Message-ID: <20210130221921.wiug63hn326miwoh@thinkpad.fuzziesquirrel.com>
+References: <CALGRKGM0A9DHYuHrKrCLS8U0+YnbMCgVHWEXjbMW7Juhq+r=Zg@mail.gmail.com>
+ <2e3f9acc-cc58-6f71-2e42-e046109dd5ec@molgen.mpg.de>
+ <CADKL2t5ajasf9NzFbTwtT0=W7ZO2jcfD5V+tk5VVSrkZTuLNmw@mail.gmail.com>
+ <711a5031-c774-4b03-6a6e-1f14d8699789@molgen.mpg.de>
+ <CAH2-KxDdHqNXJ0uLd7QNt76MUHbt8WQd52+biaZavN4Tzb2=Vg@mail.gmail.com>
+ <X/y/es6hNBbWR/bq@heinlein>
+ <CACWQX839PL=5eYtRsmD_ZZ+OgWb_xZeuVvxOxzt7Ye1dc2Kt4Q@mail.gmail.com>
+ <CALGRKGOBTW-MY_wXKvh26Dow0xWoUh4TGwjXacZFs2Y9RJneEg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ar8P1SrjiMzeBjeLD2FlFDJqNHYVchuE9yDVDvh6Zy+QsFQjozw
- H8WZrSyR2d4RhWcry1Hl/jPs07imTmkTfLjXops3a1WHxJq9o91OASaVEU31u55ne6/FIGU
- dkLl6eYclyUr0f2OBZIpVBXZxMQ5hhtAm4Oor2X7V/K0dGiijU8XSzR7fXP5ApSBR0qUQBC
- QgZnjvEE+V09rjdZh7AVw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pTsdGVJlviA=:obU7BIlFdWTWwNuo2gu8wj
- 2Dro73Di6QWR85bWhqTp6XvyAI9Xq7fZsygKPlk7c2nCGGLn0KN4hzwnxuL0OQQHpQDsJLUg4
- Lz0Rup/WZa/G9hG45r2bgnOLN45aiQP1wm989Ma+hxz7Ne8hnZUxIRWrvG1fMYP+vJEC2mIC9
- 6e7mcrSZkRjk+l8i9A6TPM7S4/HZE4VCEDArw7qj1sugrNCSxWkRuUss+zE8GZDZnkb+IaYzM
- kN+JlqPdxBWm6hw3VgJytMjf3SRrbvKs84V/SdVj4Gh0a4B+1FVocnNRG1u6mX6F06TyjNwbF
- c0XeXLoYTLA5DehefPovVHfbw3HkSslAZ7F7EfT+c4uRSGimewiCCXalzWTno3J3tGW+Lt7oB
- KeIbujPfLQKqNazX8OMQLf59TWpLrOAE9F3/5lCSKoEWVRt5S2POw6eqlVkvaMSgFlY+u6Qde
- Eq6gLhb0tKLVOYntFz+4e0ybMq/pI8QdXB1g9OQWWaNZuCKgjW/hkhEjARjIx4CFaSvmuZWTr
- o6xPPSVSSX4L80nuuvHAmw9mTY0tjM27tlT6QN2O19ZmK7OOLEfGLhpCRHF+fo//Dk5XjW/tD
- zY6bAb1wB8W1pIsZ6CCNEVbEn4+NIWfPovFLKNMq8SoM3Lgzgypohh165KJEN73BxqkZCkSUP
- l9HqDRfT4fsOdEreS3f9kDjqJTPlD9xB1X6g+Cj+K1iiPYXyBrNfbVvY2uagwiQd4ugFF41gM
- 5ARlT/5RR4UP0VdKyeg5B8pA7V7JHzIraEtoU3TThPey4SJtHBFKQSHxYF1G6SkRDKZw/VrWs
- i6epDvMFfrNB0vcUYjYVO5r4JpIvT081Qx2mBhskcp11dX5P7qNzMm7nCXwjnaeMIBiS5CD5I
- RvuWtKqEO5FyEOgAMF/A==
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CALGRKGOBTW-MY_wXKvh26Dow0xWoUh4TGwjXacZFs2Y9RJneEg@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,39 +100,19 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>, Linus Walleij <linus.walleij@linaro.org>,
- =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Tali Perry <tali.perry1@gmail.com>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
+Cc: Paul Menzel <pmenzel@molgen.mpg.de>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>,
+ Ed Tanous <edtanous@google.com>, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Make it so that each column label is in the column that it is supposed
-to refer to.
+On Thu, Jan 14, 2021 at 03:17:57PM -0800, Brandon Kim wrote:
+>Hi everyone,
+>
+>Wanted to ping this thread to see if there were more concerns on creating
+>an openbmc/google-misc repository.
 
-Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-=2D--
- drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I finally created this today.  Apologies to the Google team for the long 
+delay.
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/n=
-uvoton/pinctrl-npcm7xx.c
-index 6de31b5ee358c..2535ca720668e 100644
-=2D-- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-@@ -923,7 +923,7 @@ struct npcm7xx_pincfg {
- };
-
- static const struct npcm7xx_pincfg pincfg[] =3D {
--	/*	PIN	  FUNCTION 1		   FUNCTION 2		  FUNCTION 3	    FLAGS */
-+	/*		PIN	  FUNCTION 1		   FUNCTION 2		  FUNCTION 3	    FLAGS */
- 	NPCM7XX_PINCFG(0,	 iox1, MFSEL1, 30,	  none, NONE, 0,	none, NONE, 0,	   =
-  0),
- 	NPCM7XX_PINCFG(1,	 iox1, MFSEL1, 30,	  none, NONE, 0,	none, NONE, 0,	   =
-  DS(8, 12)),
- 	NPCM7XX_PINCFG(2,	 iox1, MFSEL1, 30,	  none, NONE, 0,	none, NONE, 0,	   =
-  DS(8, 12)),
-=2D-
-2.29.2
-
+-brad
