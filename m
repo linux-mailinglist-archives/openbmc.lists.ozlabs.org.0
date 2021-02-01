@@ -1,87 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99A60309F6B
-	for <lists+openbmc@lfdr.de>; Mon,  1 Feb 2021 00:20:43 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E364030A053
+	for <lists+openbmc@lfdr.de>; Mon,  1 Feb 2021 03:23:04 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DTRrm4WYDzDrQ3
-	for <lists+openbmc@lfdr.de>; Mon,  1 Feb 2021 10:20:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DTWvB1mDjzDrQj
+	for <lists+openbmc@lfdr.de>; Mon,  1 Feb 2021 13:23:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::234;
+ helo=mail-oi1-x234.google.com; envelope-from=brandonkim@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=XlpJWkZc; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=HnEbehQd; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=DEmvTgAp; dkim-atps=neutral
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
+ [IPv6:2607:f8b0:4864:20::234])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DTRqq59dczDr8q
- for <openbmc@lists.ozlabs.org>; Mon,  1 Feb 2021 10:19:51 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id B1F0F5C00A4;
- Sun, 31 Jan 2021 18:19:47 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 31 Jan 2021 18:19:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=mUB2CuH+nhabt4PwDHe5zbWlfFOhcvk
- z40heJVJ0Fs0=; b=XlpJWkZcHJZCi9Ou2cxLhLHAc1ZZ7kG/KY5LpGzxKSOmt2I
- oXXpctsApwoxPQ6l9DKx8A8z8fkVu0QY0TcTzLc/8UKKfczafXieMsGvPuGsV8rE
- Ig/k6ZNqScZUFhUSy5QbsYUnWk0E8sS0u+cf5OgHLd0xEJzaa419o/D0luM/pUop
- x2c+fH28vCNKsQ9160eOK5GzhE94qqlf2daTiFxwbuq6GA9Te2Itb5KzXuiF96Lo
- sbaKjpUIkm0GWDjMi4KgY/rlt8eZDU8GlabqHOyy5rLsqwJwT7CD05OIPfOJcpVY
- 5uhQzABv6zDCKUtRlwdPMWE4voXoeCgFLIqEFgw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=mUB2Cu
- H+nhabt4PwDHe5zbWlfFOhcvkz40heJVJ0Fs0=; b=HnEbehQdB21F9bKP6dh5L9
- rB2RGSZnowDt6l7r2xiDA7RhSFDQ40xeV0rQVGqdinb+GD9gJlyDnhjuuga5yhqv
- fcamRWQyQBQ0yp8YYPQf0WoyThBzS+asbdZaezVP6/q3MQmvp79anntPI1SM8zkQ
- rrMpcdCLXVj8QwmIYa6NIe6i3VFKFnqwLa27eMlsUwvW3r1ybMjCeC2g+tOY915G
- 7gDjsJAn5LVLNSSKYtrMKQmniowYoaIZxw2Eeo42r+gI6jzGNDYS8r7qkaNEqy87
- wJINO7TsQongTyyTZRuRBkMdpZKdmaNZa9aTNl1Kl5p7nvmtktxr5UDdPHcRLaCA
- ==
-X-ME-Sender: <xms:EjsXYOsO9MXqYLjZAJOnPaIQYIHnkJ3MGIzItbdhSXZ7xOvuwPoBfg>
- <xme:EjsXYDeY62DcL3naJaLkeRV8sTWWTsbJMXOwkbODCAgWdv1W7zeCcOj8VQrYmHwZI
- ONp75ihD7zdQFcVAw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeejgddtjecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
- veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:EjsXYJyRJeubeKy54p9JcsL7aZiagQ99vwwGt1X7A5l0XzKGFfYPEA>
- <xmx:EjsXYJOThKgQRVeconYOUR_ZConxgBRBIhqWrVLs6r6NHLCyGB9aKA>
- <xmx:EjsXYO-r0J4n5fh9o_gg6WjipJ1e8hfsItv0rFwRb4sHglp43u42Ww>
- <xmx:EzsXYPL6n2puK2YNQJ9pQbSgkgwoKvIyzdXR5lECnc4Bwe3kIdeyAQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id D9534A0005D; Sun, 31 Jan 2021 18:19:46 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-84-gfc141fe8b8-fm-20210125.001-gfc141fe8
-Mime-Version: 1.0
-Message-Id: <ce482992-48a2-4744-a466-60628a52ce50@www.fastmail.com>
-In-Reply-To: <20210128072947.GB2594588@aspeedtech.com>
-References: <PS1PR06MB260095F62386276E75ADC5708ABB0@PS1PR06MB2600.apcprd06.prod.outlook.com>
- <6ea6d5b9-0e31-4a87-8990-b5ce53e2416d@www.fastmail.com>
- <20210128072947.GB2594588@aspeedtech.com>
-Date: Mon, 01 Feb 2021 09:49:10 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Troy Lee" <troy_lee@aspeedtech.com>
-Subject: Re: Supporting new interfaces in phosphor-ipmi-flash
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DTWtK6RNKzDq8M
+ for <openbmc@lists.ozlabs.org>; Mon,  1 Feb 2021 13:22:15 +1100 (AEDT)
+Received: by mail-oi1-x234.google.com with SMTP id m13so17209268oig.8
+ for <openbmc@lists.ozlabs.org>; Sun, 31 Jan 2021 18:22:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=jqdzQY30PUiaNJb6D0LWA0wISPI3WLAg1si5wimTvI0=;
+ b=DEmvTgAplYlY1Q/3TUP5IxHY6JejBIKQpYmA5Ca33yTjXDxAx1FT9fqFWvfFqt8FLw
+ lONFinbXS0B/evwoEDxSBhY+NPqDToPNO9olkxEPzgWnDEGsimmXL68H+RcNyxPWv7+o
+ RNCwIWNO05NI8cTeLgoviAJM2lFKAGXexLSQISSHzBsk9QsV+O66W7Jmz63MdrsqC5Mi
+ R0oTgT8boHfFVzB459VehvQMAuQ+wNG2xP8OBuW81nqQpNoDPIhw8GpAQWQqaQQKbPzz
+ DIPtbPEWVelt/BUqTiFLBBWayel3MKJuGAar3P+X1m42DbGk7ZjSzL7TWoMs0tGve1a+
+ qQ4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=jqdzQY30PUiaNJb6D0LWA0wISPI3WLAg1si5wimTvI0=;
+ b=I4T1EpaMC0ubtZ/ub01abZdeSkrKGGxBoJ++1+HR6Im13i0LxoVsdPT28L0diePkJS
+ 0vaZERTWbdaskYevP8SDXoSkGM3tVFpXx02aheF8aj7wn+zKnQjWVexXJ6fxo9LsWr5C
+ QLOmxP+OqK1iQRoEeIxGYQEYyfQEJXK1a3StQ5NM2Zo/5/YdPDAmznrnd0ZNZSI2YVcc
+ FatG/Uj0es6U7WzaR9TrVqWcyi3TaBZ+N0ODYejJ95x55WEBP8WcsA3akgYvzLDtsxBv
+ rhvp/Ir+QZK8U4Uc491lAEASv4AZbL3P5eckCytNVwWc7w5tLX0KBD6KNuFypCbq16VX
+ FZ8Q==
+X-Gm-Message-State: AOAM533hRaxndEdCnXt3+W0qN0tYxLTsWu5KPVz2l8uKOikEIaLDu+Dc
+ zb7rMYXVHDrkkeibqePAKblKy/SSNZ8ow3GhbYMX7Q==
+X-Google-Smtp-Source: ABdhPJx1b0BNuJ6TjcP91FKqMB0QRuSnqQb7hsER5MYvilHwBHnWlYK2BZqghhkz568gLzp1hQiTAVYd448GdkXeVYM=
+X-Received: by 2002:aca:56c8:: with SMTP id k191mr9506251oib.12.1612146131229; 
+ Sun, 31 Jan 2021 18:22:11 -0800 (PST)
+MIME-Version: 1.0
+References: <CALGRKGM0A9DHYuHrKrCLS8U0+YnbMCgVHWEXjbMW7Juhq+r=Zg@mail.gmail.com>
+ <2e3f9acc-cc58-6f71-2e42-e046109dd5ec@molgen.mpg.de>
+ <CADKL2t5ajasf9NzFbTwtT0=W7ZO2jcfD5V+tk5VVSrkZTuLNmw@mail.gmail.com>
+ <711a5031-c774-4b03-6a6e-1f14d8699789@molgen.mpg.de>
+ <CAH2-KxDdHqNXJ0uLd7QNt76MUHbt8WQd52+biaZavN4Tzb2=Vg@mail.gmail.com>
+ <X/y/es6hNBbWR/bq@heinlein>
+ <CACWQX839PL=5eYtRsmD_ZZ+OgWb_xZeuVvxOxzt7Ye1dc2Kt4Q@mail.gmail.com>
+ <CALGRKGOBTW-MY_wXKvh26Dow0xWoUh4TGwjXacZFs2Y9RJneEg@mail.gmail.com>
+ <20210130221921.wiug63hn326miwoh@thinkpad.fuzziesquirrel.com>
+ <CAH2-KxDuADgU1+hfyLXzvfu5C7Z-rZp73HYDfyCHee01dSirrA@mail.gmail.com>
+In-Reply-To: <CAH2-KxDuADgU1+hfyLXzvfu5C7Z-rZp73HYDfyCHee01dSirrA@mail.gmail.com>
+From: Brandon Kim <brandonkim@google.com>
+Date: Sun, 31 Jan 2021 18:21:59 -0800
+Message-ID: <CALGRKGMDR1=HmQDKu5iS3MaOmBSzLhVuwQxQJUOZAOWV6p3jDw@mail.gmail.com>
+Subject: Re: Upstreaming downstream Google BMC repositories
+To: Ed Tanous <edtanous@google.com>
+Content-Type: multipart/alternative; boundary="0000000000007ab84205ba3d05db"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,64 +79,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Paul Menzel <pmenzel@molgen.mpg.de>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, Ed Tanous <ed@tanous.net>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--0000000000007ab84205ba3d05db
+Content-Type: text/plain; charset="UTF-8"
 
+Thank you Brad!
 
-On Thu, 28 Jan 2021, at 17:59, Troy Lee wrote:
-> Hi Andrew,
-> 
-> The 01/28/2021 07:14, Andrew Jeffery wrote:
-> > 
-> > 
-> > On Wed, 27 Jan 2021, at 20:13, Troy Lee wrote:
-> > > Hi team,
-> > > 
-> > > For security consideration, user might want to disable AST2500/AST2600 
-> > > P2A functionality by default. To compensate the effect to 
-> > > phosphor-ipmi-flash, we're planning to support two alternative in-band 
-> > > firmware upgrade over PCIe for AST2500/AST2600 (AST2520 and AST2620 are 
-> > > excluded):
-> > >  - Through a reserved **VGA** memory on BAR[0], or
-> > >  - Through a reserved **PCIe** shared memory on BAR[1]
-> > > 
-> > > The usage pretty much the same as P2A, but it runs on different BAR, 
-> > > offset and length.
-> > > This will involves modifying phosphor-ipmi-flash/[tools|bmc]. Should I 
-> > > create new **interfaces**, e.g. astpcie/astvga?
-> > > 
-> > 
-> > This is the HOST2BMC functionality in the 2600 datasheet?
-> > 
-> > It would be great to have more detail on how it works.
-> > 
-> > Andrew
-> 
-> No, it doesn't use HOST2BMC interface, it uses VGA controller's mmio.
-> Perhaps HOST2BMC is also a possible solution, too.
-> 
-> 02:00.0 0300: 1a03:2000 (rev 51) (prog-if 00 [VGA controller])
->         Subsystem: 1a03:2000
->         Flags: bus master, medium devsel, latency 0, IRQ 16
->         Memory at f6000000 (32-bit, non-prefetchable) [size=16M]  <--- Option 1
->         Memory at f7040000 (32-bit, non-prefetchable) [size=128K] <--- Option 2
->         I/O ports at e000 [size=128]
->         Expansion ROM at 000c0000 [disabled] [size=128K]
->         Capabilities: [40] Power Management version 3
->         Capabilities: [50] MSI: Enable- Count=1/4 Maskable- 64bit+
->         Kernel driver in use: ast
->         Kernel modules: ast
-> 
-> Option 1 allocates a 1MB memory from the end of VGA memory, so it will
-> need some change to VBIOS.
-> 
-> Option 2 allocates a 4K memory from BMC memory space. Since the buffer
-> is smaller, the ipmi-blob protocol overhead will be greater.
-> 
+On Sat, Jan 30, 2021 at 2:23 PM Ed Tanous <edtanous@google.com> wrote:
 
-Okay. So for Option 2 we need to coordinate on the BMC by reserving memory in 
-the devicetree. What's the plan there? Where's that going to be documented?
+> On Sat, Jan 30, 2021 at 2:19 PM Brad Bishop <bradleyb@fuzziesquirrel.com>
+> wrote:
+> >
+> > On Thu, Jan 14, 2021 at 03:17:57PM -0800, Brandon Kim wrote:
+> > >Hi everyone,
+> > >
+> > >Wanted to ping this thread to see if there were more concerns on
+> creating
+> > >an openbmc/google-misc repository.
+> >
+> > I finally created this today.  Apologies to the Google team for the long
+> > delay.
+> >
+> > -brad
+>
+> Awesome; Thanks for getting that done (especially on a Saturday).
+>
+> -Ed
+>
 
-Andrew
+--0000000000007ab84205ba3d05db
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Thank you Brad!</div><br><div class=3D"gmail_quote"><div d=
+ir=3D"ltr" class=3D"gmail_attr">On Sat, Jan 30, 2021 at 2:23 PM Ed Tanous &=
+lt;<a href=3D"mailto:edtanous@google.com">edtanous@google.com</a>&gt; wrote=
+:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
+8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Sat, Jan 30=
+, 2021 at 2:19 PM Brad Bishop &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel=
+.com" target=3D"_blank">bradleyb@fuzziesquirrel.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; On Thu, Jan 14, 2021 at 03:17:57PM -0800, Brandon Kim wrote:<br>
+&gt; &gt;Hi everyone,<br>
+&gt; &gt;<br>
+&gt; &gt;Wanted to ping this thread to see if there were more concerns on c=
+reating<br>
+&gt; &gt;an openbmc/google-misc repository.<br>
+&gt;<br>
+&gt; I finally created this today.=C2=A0 Apologies to the Google team for t=
+he long<br>
+&gt; delay.<br>
+&gt;<br>
+&gt; -brad<br>
+<br>
+Awesome; Thanks for getting that done (especially on a Saturday).<br>
+<br>
+-Ed<br>
+</blockquote></div>
+
+--0000000000007ab84205ba3d05db--
