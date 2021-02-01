@@ -2,61 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F2CD30ACE1
-	for <lists+openbmc@lfdr.de>; Mon,  1 Feb 2021 17:45:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8819030B222
+	for <lists+openbmc@lfdr.de>; Mon,  1 Feb 2021 22:34:36 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DTv2Y60pNzDrfS
-	for <lists+openbmc@lfdr.de>; Tue,  2 Feb 2021 03:45:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DV1Rs67Z4zDr4m
+	for <lists+openbmc@lfdr.de>; Tue,  2 Feb 2021 08:34:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::130;
- helo=mail-lf1-x130.google.com; envelope-from=vkrk.user@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=msbarth@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=EUmuIo3B; dkim-atps=neutral
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com
- [IPv6:2a00:1450:4864:20::130])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=PowQLSCx; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DTv1g4QNSzDrRW
- for <openbmc@lists.ozlabs.org>; Tue,  2 Feb 2021 03:44:52 +1100 (AEDT)
-Received: by mail-lf1-x130.google.com with SMTP id h12so23659299lfp.9
- for <openbmc@lists.ozlabs.org>; Mon, 01 Feb 2021 08:44:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=KSMLITIxVeKbMm5Vnc4SaRf+y212Xp2DbExMAhs9w9U=;
- b=EUmuIo3Bbw3oAbMHHwB63ORdk+ptW4BBmFiWmrwHgwfqEGK1RfvkjyjfcosdRj6vEV
- AMADmsbeuIb/irVkQX9EO6IMJpL9V2WJhr9GvtAObpVdYaGZxpXsnunrwp62mkzm1VCf
- ld40nBOSxNZNHKqJb2mrTknHdTzfYRAW+yWRTW/VNW3gEcNn9GLLgSuc6gd0EemUWY7N
- bvMSnD5SBFpdaENzH0A9ojK6rUCWB/8vOKFCcoUa2fr7ypB3YIoRN9mXONVC8nMyADcx
- y3o9mo8/vnShwkuWPzwBimul4jQXPnB/+BH/c2pGJ3egAHSpdjMSP8bt/h984bB7Ndr3
- 4cBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=KSMLITIxVeKbMm5Vnc4SaRf+y212Xp2DbExMAhs9w9U=;
- b=Y7+u/X/i17sXRr/ugNlaF9iF22wf6Wt+K3LvSljj/cBvje/I2WqJbMphADGbRUGsKg
- MinHf/evJNWrz6lGupWBhtuudMUUCGcOmkYezSZkSBiQQexmf8LbM9F8ttYPGGXksfCs
- qaoHJ69AszZBfX+GE9k3kBkwicokyBWjS2hJ1ACmKS6+nfvA2+Voyr/7RdM/x4SoM08P
- iPUyiJZFusxEULr4/7d1uNXkC+fWAiybHNGh8i4HLwlQeyNLmiSRU2nvawlQhj9Pf5SV
- Bo9fO/Yktznr/te9++chg4Qxe/F9sviawS5//qebwNCVyGVrA51GOSYZBu6kZpjyxzSL
- PV0A==
-X-Gm-Message-State: AOAM532oi1h2n1YPL0c508K2fx3+v340t95V2NF73TXoOhaAVBg8skch
- dD2nE8P5xc4NSoV/LB2TBOZ3A3MIOzknpT2jW77b/XAQLXDUZw==
-X-Google-Smtp-Source: ABdhPJyEtqehvHfHcMt/F7ZMIKBC1Jpz0XfWmjE7zNv8hFoW5TpDswIbJAjRsGH+VnqpbLU15P19csJhPaDM3hcuq64=
-X-Received: by 2002:ac2:5f76:: with SMTP id c22mr9235517lfc.335.1612197888489; 
- Mon, 01 Feb 2021 08:44:48 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DV1Qy46KtzDqqm
+ for <openbmc@lists.ozlabs.org>; Tue,  2 Feb 2021 08:33:45 +1100 (AEDT)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 111LW84d030721; Mon, 1 Feb 2021 16:33:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=E9TyH6Gk3AuM2jxFlrYQ8feI8ttp7rx+wn0gWHqGTrU=;
+ b=PowQLSCxF0zVa4E3FrYiOpumTUA/5ncipbkFgjLTnhrkQlvY5nRp+HJbORLulwI/N6k3
+ bR/0iJdYZ7MmlrBWtF/8PfoPxOH6MDshA41KGntx8R1bU2uyaP7/HhT5LTRHDXE1pa99
+ KFIBNl06goq6KEBn3jjw4m+sklZs/NmjOUbnvjYY9g0WASVrAND5+ZTaufkyJKH2LVh6
+ +d2uHiBpET9yZ4S7h0rNVvV2SF3auSfu639rlQQusiUdy11uikM2FEu19h698Dey4Zdj
+ 3IWCMVpOJrpaLZJvq1QTjX185OnXq/BH5gK7n2iuTbcsNK7yZZJkBaZvxf+Kp/AvOnwP Dw== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 36erft9x66-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Feb 2021 16:33:38 -0500
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 111LS2eh029859;
+ Mon, 1 Feb 2021 21:33:37 GMT
+Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
+ [9.57.198.27]) by ppma04dal.us.ibm.com with ESMTP id 36er4cgn6p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Feb 2021 21:33:37 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 111LXaeu25756018
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 1 Feb 2021 21:33:36 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 92F5E112065;
+ Mon,  1 Feb 2021 21:33:36 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 61340112061;
+ Mon,  1 Feb 2021 21:33:35 +0000 (GMT)
+Received: from MSBARTH-P50.aus.stglabs.ibm.com (unknown [9.163.45.205])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon,  1 Feb 2021 21:33:35 +0000 (GMT)
+From: Matthew Barth <msbarth@linux.ibm.com>
+To: openbmc@lists.ozlabs.org, joel@jms.id.au, andrew@aj.id.au
+Subject: [PATCH linux dev-5.8 v2] pmbus:max31785: Support revision "B"
+Date: Mon,  1 Feb 2021 15:33:33 -0600
+Message-Id: <20210201213333.76490-1-msbarth@linux.ibm.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-From: VINOTHKUMAR RK <vkrk.user@gmail.com>
-Date: Mon, 1 Feb 2021 22:14:45 +0530
-Message-ID: <CAHf5cse5eKPZOPxxh9imwVQAmG4rvWc-X+4LJh=CDFGzU=FeCA@mail.gmail.com>
-Subject: AST2600: Linux driver support for PCIe RC/EP driver and USB 2.0
- Device controller
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000737c1705ba4912a8"
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.737
+ definitions=2021-02-01_08:2021-01-29,
+ 2021-02-01 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 bulkscore=0 spamscore=0
+ lowpriorityscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2102010116
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,37 +93,68 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000737c1705ba4912a8
-Content-Type: text/plain; charset="UTF-8"
+There was an issue in how the tach feedbacks of dual rotor fans were
+reported during any change in fan speeds with revision "A" of the
+MAX31785. When the fan speeds would transition to a new target speed,
+the rotor not wired to the TACH input when TACHSEL = 0 would report a
+speed of 0 until the new target was reached. This has been fixed,
+resulting in a revision "B" update where the MFR_REVISION of "B" is
+0x3061.
 
-Hello all,
+Signed-off-by: Matthew Barth <msbarth@linux.ibm.com>
+---
+ChangeLog v1->v2
+- Check for expected "max31785b" when MAX31785 single tach only found
+---
+ drivers/hwmon/pmbus/max31785.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-I'm new to OpenBMC, I'm trying to look at 'AST2600' specific driver support
-on OpenBMC Kernel (https://github.com/openbmc/linux). When I was searching
-for the below drivers, they're not available in the Kernel repository:
+diff --git a/drivers/hwmon/pmbus/max31785.c b/drivers/hwmon/pmbus/max31785.c
+index cbcd0b2301f4..9a94245cf766 100644
+--- a/drivers/hwmon/pmbus/max31785.c
++++ b/drivers/hwmon/pmbus/max31785.c
+@@ -20,6 +20,7 @@ enum max31785_regs {
+ 
+ #define MAX31785			0x3030
+ #define MAX31785A			0x3040
++#define MAX31785B			0x3061
+ 
+ #define MFR_FAN_CONFIG_DUAL_TACH	BIT(12)
+ #define MFR_FAN_CONFIG_TSFO		BIT(9)
+@@ -749,12 +750,14 @@ static int max31785_probe(struct i2c_client *client,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	if (ret == MAX31785A) {
++	if (ret == MAX31785A || ret == MAX31785B) {
+ 		dual_tach = true;
+ 	} else if (ret == MAX31785) {
+-		if (!strcmp("max31785a", id->name))
+-			dev_warn(dev, "Expected max3175a, found max31785: cannot provide secondary tachometer readings\n");
++		if (!strcmp("max31785a", id->name) ||
++		    !strcmp("max31785b", id->name))
++			dev_warn(dev, "Expected max31785a/b, found max31785: cannot provide secondary tachometer readings\n");
+ 	} else {
++		dev_err(dev, "Unrecognized MAX31785 revision: %x\n", ret);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -813,6 +816,7 @@ static int max31785_probe(struct i2c_client *client,
+ static const struct i2c_device_id max31785_id[] = {
+ 	{ "max31785", 0 },
+ 	{ "max31785a", 0 },
++	{ "max31785b", 0 },
+ 	{ },
+ };
+ 
+@@ -821,6 +825,7 @@ MODULE_DEVICE_TABLE(i2c, max31785_id);
+ static const struct of_device_id max31785_of_match[] = {
+ 	{ .compatible = "maxim,max31785" },
+ 	{ .compatible = "maxim,max31785a" },
++	{ .compatible = "maxim,max31785b" },
+ 	{ },
+ };
+ 
+-- 
+2.29.2
 
-- PCIe RC driver (where i want to see the complete PCIe tree from sysfs and
-lspci etc..,)
-- PCIe EP driver
-- USB 2.0 Device controller driver
-
-May I get some pointers/support on this?
-
-
-Regards,
-Vinoth Kumar RK
-
---000000000000737c1705ba4912a8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello all,<br><br>I&#39;m new to OpenBMC, I&#39;m trying t=
-o look at &#39;AST2600&#39; specific driver support on OpenBMC Kernel (<a h=
-ref=3D"https://github.com/openbmc/linux">https://github.com/openbmc/linux</=
-a>). When I was searching for the below drivers, they&#39;re not available =
-in the Kernel repository:<br><br>- PCIe RC driver (where i want to see the =
-complete PCIe tree from sysfs and lspci etc..,)<br>- PCIe EP driver<br>- US=
-B 2.0 Device controller driver<br><br>May I get some pointers/support on th=
-is?<br><br><br>Regards,<br>Vinoth Kumar RK<br></div>
-
---000000000000737c1705ba4912a8--
