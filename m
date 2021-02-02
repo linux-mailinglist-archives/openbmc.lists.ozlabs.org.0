@@ -1,67 +1,125 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5083A30B4A4
-	for <lists+openbmc@lfdr.de>; Tue,  2 Feb 2021 02:27:45 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AA8F30B4C8
+	for <lists+openbmc@lfdr.de>; Tue,  2 Feb 2021 02:39:54 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DV6ct3hPKzDr1Z
-	for <lists+openbmc@lfdr.de>; Tue,  2 Feb 2021 12:27:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DV6tv19h1zDqbC
+	for <lists+openbmc@lfdr.de>; Tue,  2 Feb 2021 12:39:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b2b; helo=mail-yb1-xb2b.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=PTcTVyEK; dkim-atps=neutral
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com
- [IPv6:2607:f8b0:4864:20::b2b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DV6bp43bMzDr1F
- for <openbmc@lists.ozlabs.org>; Tue,  2 Feb 2021 12:26:46 +1100 (AEDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id q201so15267478ybg.8
- for <openbmc@lists.ozlabs.org>; Mon, 01 Feb 2021 17:26:45 -0800 (PST)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=660605f9e=fran.hsu@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=Y3u+Mwjm; 
+ dkim-atps=neutral
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4DV6t04LlfzDqNp
+ for <openbmc@lists.ozlabs.org>; Tue,  2 Feb 2021 12:39:00 +1100 (AEDT)
+IronPort-SDR: UcaMyv256FYVDC7bOguBCChXEI96r1W2LKsaVdcpiRkjmZsUtHLIa2ml3t4dsXTTccYmS3/yAL
+ JU6ovlILFdwQ==
+Received: from unknown (HELO mailbx12.quanta.corp) ([10.243.91.109])
+ by mx02.quantatw.com with ESMTP; 02 Feb 2021 09:38:58 +0800
+Received: from mailbx06.quanta.corp (10.243.91.101) by mailbx12.quanta.corp
+ (10.243.91.109) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Tue, 2 Feb 2021
+ 09:38:57 +0800
+Received: from APC01-HK2-obe.outbound.protection.outlook.com (104.47.124.52)
+ by mailbx06.quanta.corp (10.243.91.101) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4
+ via Frontend Transport; Tue, 2 Feb 2021 09:38:57 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=QY+Owi/pXpIzEhbWDuQ8oIHZ5IKAbi3Dvvv/HSuIXC7BTUB9rz6djINwr1uA/RxQotsDCU4uVxN/31Ng7aLgja/lUU3JCqaI8LT9IkP+46gHjEnpY+hoAanvKJNCV3lYTdfSi3lYYQtx086XsPueRz10c5L3u1Weh+H6AF3z6u9nFYANDWBPFA0qYxvzn8WY4oCuBxgvpSrY7SSveE+cfadGgLe6ptdskeS1em4YSBq6qH6lhOTGxazFDxQwXkwVIqILJS//k1V5IvSeDfAeSVP4UEIdpT+f5SInC1II9+0OODdDH//2w0dHAjS9RkN10CwoFyWlx9URs1MIbyk7qA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MP3m6hWkoCDkt7wFMKw4385QyPxx3gt+BHnfdo/SUMo=;
+ b=Q9Ys0XVRmmM2CRnE/RnP0UFM26YP9sMm/1oF515yEqY2haWfoYznoHc3JEch0d0+gzEREO3uCzh56zQFIC6eW4u7diNBP/3eYSWxOc5adGxvMfdBMw0pmk01Mtlb+/s16gGW4Kzql8VnM3ufrxrnmC4kRj7F9nSXCjg/Liz2UVMPf9ww9mWsvU1dpEHUKYqIyq37i6EkN+nFNH5PFeDi7X7k7oPZ9K38Y/I6jIQSISHKOqiAPZL8vTBx6a6yrL1N2cHu7UMMxB5zDBtaFpdc3Yj7JRy9160q6pSa/qpQ8jvg+EHgHQGoFkKo8yD/zBbplgZ7Rhtr+G62QHk4OHq6vQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=FmKr2M/wRBlrPTZxCJEIdyNY311Pu/5oX4cGylRGkVA=;
- b=PTcTVyEKRAMSdx8l+aZsgZVks0zru4CFHoI21JldAExkqTbhWCQV49ef0m1F1hTKN7
- lgQYDMxi1218mMU/tnywSpPOwgoTy0ttJuqbZCh/kAYxpO5Q2/AgocfWDnTyUhyu0WmF
- zuOjm66jPa6SP8LjVtG9CaL0RqkMXDfthWHk5NcpS47HKvE6sm4cdSSn6zafUI+gD7bq
- A8LR77L/vnE34O12q108QTgsl1oAU34vL7u3M7uWT6RXXbk/h0H/z56biSlreRkPOmIk
- feATsrFKGBTllHDQikQgcAdPX4w+2RQBC0Bfhb727UIrt4rzf0IC5sGld14OCq+HapIL
- 10zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=FmKr2M/wRBlrPTZxCJEIdyNY311Pu/5oX4cGylRGkVA=;
- b=do39yOA4+C+g/m3Gg3ZdVduPz4WnyYwzXv5oHLlf383WQdLuC0KoGBHgUida5dNvQ0
- /EXYMvaA+U7plHbg3hDbnbulv/Sh+fCdvHsfvC/AxMb7o363Un2go89DG3b+EL6B7gzx
- 2UmHWwFp50Jlw/15octuuuNwkpxWlWfT+QKfzg1+/DIv0mOJ4iBUV/sdsSfyJarjSR04
- QTCXww5CnZh60jHMh6WrlhwumYrJs9pCSBGL2KBPnxu23ilsEx18G1wzYloeekdLJYaU
- ww5LumfhohxjhvyEnXba0ZMmtvEkllZZvM9CVAYWfSIdAhsjd0rUDFlzVTchJj2R6I66
- Gi6Q==
-X-Gm-Message-State: AOAM530c+OeiNIvjwbbVzv6nRPOzB1GpqZig+237/zxRxEqeJCfy8ptW
- Q88SAKVVesOd+OW14KybYoV/ctFk9oHDy7ED51djhrYbAfakTwcp
-X-Google-Smtp-Source: ABdhPJwrpLnJwge/Gwfo62SHzGgNwWYJ5IvSBoKFtFiasHFSh7TPIxDoewp1C+PmMXhxCpvG/R1HSijsQHf8mPLzfoc=
-X-Received: by 2002:a25:d0c4:: with SMTP id
- h187mr12433094ybg.209.1612229202071; 
- Mon, 01 Feb 2021 17:26:42 -0800 (PST)
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MP3m6hWkoCDkt7wFMKw4385QyPxx3gt+BHnfdo/SUMo=;
+ b=Y3u+MwjmsZ41kx3li03JGw8OA5d3062dE9CAAPfJ1N1LZpSSuG5Wuj4rMI9RdojkeTINXL9Ojy1z7O+oUC0FK0+UO3G4VUmK/bHBZgMh61BUVAIQ0Kay+XBV/a+LAi7u2bem9Y5dg7Gu/RNsAEVyu9E6Uoz/+EGtHiHY/quRLPI=
+Received: from TYZPR04MB4366.apcprd04.prod.outlook.com (2603:1096:400:2c::13)
+ by TYZPR04MB4287.apcprd04.prod.outlook.com (2603:1096:400:24::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3805.22; Tue, 2 Feb
+ 2021 01:38:56 +0000
+Received: from TYZPR04MB4366.apcprd04.prod.outlook.com
+ ([fe80::c13:c6c3:a6a3:29d1]) by TYZPR04MB4366.apcprd04.prod.outlook.com
+ ([fe80::c13:c6c3:a6a3:29d1%6]) with mapi id 15.20.3805.028; Tue, 2 Feb 2021
+ 01:38:56 +0000
+From: =?big5?B?RnJhbiBIc3UgKK59u3jBvik=?= <Fran.Hsu@quantatw.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: dbus-broker caused the system OOM issue.
+Thread-Topic: dbus-broker caused the system OOM issue.
+Thread-Index: Adb5AUObMwVPeTs5QJC4Evp5OV1wlg==
+Date: Tue, 2 Feb 2021 01:38:56 +0000
+Message-ID: <TYZPR04MB43666E803D310720362F0CD4F3B59@TYZPR04MB4366.apcprd04.prod.outlook.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=quantatw.com;
+x-originating-ip: [220.135.135.179]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 08aa28aa-093d-414a-5f9d-08d8c71b4e65
+x-ms-traffictypediagnostic: TYZPR04MB4287:
+x-microsoft-antispam-prvs: <TYZPR04MB4287140ADFBC76BFEF7E87E8F3B59@TYZPR04MB4287.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: N64r70tMp0zgUdfAsNNe+9FhL1YAhPlxeFNQINKD9zdVO2fAaizPlUq8W5LPEqONi20ZrpUpuyw3KE2Uk9mTeavDwWrzk7iAhTOQ24tW442OpQ/Oe1cIvnVBE+JNgcIu9ajqvg64H3RmlMDlVEJtznym86DskqbCX0tYfMB10jnAqJbjZJmTYYleq4vgKdLLiBPlBV10q7eC3BWd+PONXlr3O4FUZNg44iC6XTuej2bXujf6GBbemV49UZxkqabxUMyk6pJdbXGraI/O93nsR/pvW6Q/Na8wDefZMDPkQY+z3K/zHGC51/+bk5ZuL/Sq1AkgJESp9kuEvz24Z2S93MM4rWvKtJLDwj3ZWZilX+8UXcP8UT7zlUslAkYIBxN7MnEgwkYlHccQl7NYidPkNTuBqt37Byn5ecO1NOIvGdogUVRs+o52ziUZuoOAnbxIhFkQu8f/cISoiesQ6Mzk9fJVQSX1CuIzgK161IVheES6YFvwC6uf5HlkAKQ23ycZk4IlThF8TgHfv7PUciuT8g==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR04MB4366.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(376002)(366004)(346002)(136003)(396003)(39860400002)(8676002)(66946007)(52536014)(33656002)(478600001)(7696005)(71200400001)(8936002)(66476007)(66446008)(66556008)(64756008)(76116006)(5660300002)(83380400001)(6916009)(2906002)(85182001)(186003)(9686003)(55016002)(6506007)(26005)(86362001)(316002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?big5?B?NzhEQUpockVGZzBYaTFZaUYwNHFkYXIxNG14UUNuMDdUaVpWZ3dtNzZramEvaTRO?=
+ =?big5?B?cjUvanFOZHl1WnpsUmR2RVFPU1M3WDYyZEhmZ2pjSC9DKy9CV2ZiLzR3anp4dnl0?=
+ =?big5?B?d0dKUi9oR091WTI0a3lxV245K3lLdGxVdUw5ZFF6dS9Kc3dwYVZjYktrNGJySFhV?=
+ =?big5?B?a25LTzl4cmxuWGlnWEJPU0FnejBLMjFBdjh1b2ZsekJZcFphYkQ1NHRla3BmY0k3?=
+ =?big5?B?SWw2aFMvb2hhU1Q3MXMvYWZOSDlZZS9YT2ZOVHpwYkR0NnBwOHhSMjUrU010YlJT?=
+ =?big5?B?SXkyNG1GYUNKSDh0QkgrQ3V5WkU5bEt0MHhEM1Z2T1hqSWF6OFRUWEp6SGFWTHJy?=
+ =?big5?B?SHE2c1RjSkw4V2ZGOWJSZTdYeEZ4NzZvcDg1aHBXbmg2NUk4OUtRdXZnZE5SSXdn?=
+ =?big5?B?enlyQjBGNGpwV0hTQ0xSMGJ5Tno3UkZjM2RUeXNJTEYwTlRHaUJwNllJTFlFdm9I?=
+ =?big5?B?aWRCYWZiRjcxdW9RYWtEUGJ0SG9NMmFyemFsMnVDV0pkS1d4cVpWZ0hBOVNmanBI?=
+ =?big5?B?RDhXeWNsQXVKckRTRGVWUmN2eFdPWjFSbkNFTlNLMW1XSlVzRW9ibCtGVEJpUy9m?=
+ =?big5?B?RWozMW5uamFrQ0NxM2x5TEFLeWVtTEl5RWZWSGF4S2JQWGpicVM4elE0RkdqYjZ0?=
+ =?big5?B?aXZQNXJYdTREN3hBMEdEbHNCTW1YaHVRVTFXc0RxT21QZUdmNmlWdFFyeXpIVnFH?=
+ =?big5?B?MGxMZWhyTnFadDZNdGluZWM0WjRyRUJuY2xaNHNYV0xDSFg3MFZSaWZCZVhxZXVK?=
+ =?big5?B?S25sMy9KZmpPNm9hN3R3akFubHZ2cFVBOGNzZ2x1d3p5Z1VpditwaUtXQWthaVNn?=
+ =?big5?B?Zko0Z3JhUEp2VFpYUjhpUjUzczZsOGlpNEpRcVFXN0N3WmlYNnhwZkdxRWFndms5?=
+ =?big5?B?T0k2RUs2QzlvT2EwdXpNMGdyL21CekZIY05PWHJ3MG5CcnJPYS80NEtoeDMzd3Qz?=
+ =?big5?B?dnlOaXhHUi9iNFlVaUZOWmhrR1lrWkFYVHQyWEZTaktwdXBTaDhuTEpkdU9UbE41?=
+ =?big5?B?b0Q4YWg4QWNQOUJyVktTMFRqdnRRZ2VWcTBSc1ovcm9zYldRVE9iVDdkeGUyWDNZ?=
+ =?big5?B?SkFwblVZYnA4MWJ0Wm50cnNEa1dOK3A5NXZNRGQ1ZFhLa2VnbWZHM1JFaVVsTTI5?=
+ =?big5?B?L1dtSkMzYTZxa1pPNVg0T3AvNzNyWk42MlNPb0xKdjBZOTg4bUhzNTUySHRXWi9r?=
+ =?big5?B?Q28rZG1RM1ZpOXBmQ3lOMzVkcE40TEZWKzJzTE9kQkFDWThsVXVFZFBjNjZiZ2Ev?=
+ =?big5?B?U05DUlhhL2J1Qy9WQWRvUE9UNDF1aEgxQ000OVROSEZybkYrOGNweU00QUd4SGI5?=
+ =?big5?Q?LEIRADLvIb2fAnKuUUBITXePIsDXxT6O?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <31abd546-4538-ecf0-134e-b8e48e75b3ad@linux.intel.com>
-In-Reply-To: <31abd546-4538-ecf0-134e-b8e48e75b3ad@linux.intel.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Mon, 1 Feb 2021 17:26:31 -0800
-Message-ID: <CACWQX83KhqORsx-Gm4CCEndADO-GEgNHtxPpHR2ptsgzmtU9xA@mail.gmail.com>
-Subject: Re: Sensor Value PropertiesChanged Events
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR04MB4366.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 08aa28aa-093d-414a-5f9d-08d8c71b4e65
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Feb 2021 01:38:56.5160 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: TBUX5g4D/I7EGe0G7g65Ogc+cFMR8j5PdGs01v42P3sw7IdGXfCm8VdUN9a60O+HnH++GDnBeAgfynI41NcUPg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR04MB4287
+X-OriginatorOrg: quantatw.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,152 +131,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Feb 1, 2021 at 4:44 PM Bills, Jason M
-<jason.m.bills@linux.intel.com> wrote:
->
-> Hi All,
->
-> There is an issue and idea that James Feist and I chatted about to maybe
-> relieve some of our D-Bus traffic.
->
-> A major contributor to our D-Bus traffic (as seen in dbus-monitor) is
-> the polling sensors updating the xyz.openbmc_project.Sensor.Value.Value
-> property on each polling loop, which generates a PropertiesChanged
-> signal for every sensor on every polling loop (once per second?).
->
-> The concern is that more important D-Bus messages could be getting
-> delayed as D-Bus processes these Sensor Value signals.
->
-> The idea to fix this is to change the sensors with a custom getter on
-> the Value property, so the last read can be pulled from D-Bus using a
-> get-property call, but it would no longer signal a PropertiesChanged event.
-
-Doesn't this break..... like... everything that relies on sensor
-values changing over time?
-
->
-> I pushed a proposed change here:
-> https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/40199.
->
-> Our original assumption was that nobody was matching on this
-> PropertiesChanged signal for the Value property; however, it was pointed
-> out to me today, that PID control has a match for it and may be using it.
-
-Pid control, telemetry, redfish event service are the ones that
-immediately come to mind.  It should be noted, dbus-sensors even uses
-that message internally for things like CFM sensor, which has to base
-its output on a transform of other sensor values, so there'd be a lot
-of stuff to fix if we did this, we'd have to make sure it's worth it.
-
->
-> So, I wanted to start a broader community discussion about this issue:
->
-> 1. Is this a real concern or are PropertiesChanged signals so
-> lightweight that removing them won't help with D-Bus load?
-
-It's a valid concern IMO.  It's arguably the current limit on how fast
-we can scan sensors on large-sensor-count BMCs.  In terms of
-dbus-sensors architecture stuff, it's next in line on my priority list
-after the whole "reading sensors from hwmon blocks the thread"
-problem.
-
->
-> 2. Does anyone need to match on sensor Value property updates or is
-> reading them with get-property enough?
-
-See above.  Lots of stuff needs property value updates, and moving all
-that stuff back to polling doesn't really seem like an option, or a
-good thing.
-
->
-> 3. Does PID control use the Value match?  If so and there are benefits
-> to removing these signals, could PID control manage without them?
-
-Phosphor-pid-control and friends could theoretically move to polling,
-but that seems much much worse, and increases the dbus traffic
-overall, given that every poll would now have to go round trip through
-both processes, instead of one way.
-
->
->
-> As a side note, I still have two remaining services that publish
-> PropertiesChanged events on sensor Value properties:
->
-> PWM Sensors.  I have a proposed (and untested) change here:
-> gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/40200.
->
-> A Power sensor, that I will track down based on this discussion.
-
-
-One thought I've had in this area was to rearrange/redefine the dbus
-interfaces such that a single properties changed (or equivalent) could
-batch multiple sensor values together, thus avoiding the per-message
-cost, while still keeping the eventing available.
-
-The three basic strawman ideas I've had for this in
-phosphor-dbus-interfaces yaml would be something like
-
-NewSensorValueValueAPI
-- name: Names
-type: array<string>
-- name: Values
-type: array<double>
-description: >
-The sensor reading.
-- name: MaxValues
-type: array<double>
-description: >
-The Maximum supported sensor reading.
-- name: MinValues
-type: array<double>
-description: >
-The Minimum supported sensor reading.
-- name: Units
-type: array<enum[self.Unit]>
-
-
-Because all properties are vector<double>, and Names are specified in
-a single property, the PropertiesChanged events could batch together
-10s of sensors in a single message, and use a tombstone value for
-"haven't updated since the last update"
-
-The other thought was we could completely delete the Value property
-from Sensor.Value, and replace it with a SensorManager that would live
-at /xyz/openbmc_project/sensors, which would publish a
-SensorValuesUpdated signal with a dict of name and value, again,
-allowing sensor producers to batch the sensor reads, but still keeping
-it reasonably close to the existing API.
-
-In both cases, the implementation in dbus-sensors or phosphor-hwmon
-would be something like "read as many sensors as I can in 250ms, then
-batch it up and send out one event" the 250ms timer would help with
-stuck sensors, and avoid a lot of latency if the system is overloaded.
-
-The third one is a little more out there.  We could change the
-sensor.Value.Value property into an FD type, and point to a memmapped
-area of memory into which we write the current sensor value.  That
-way, the "sensor value" on dbus rarely changes, but you can always
-read the current state of the sensor with zero overhead or context
-switching to the sensor processes.  If this works, it has the
-potential to speed up most sensor polling operations by an order of
-magnitude, but seems hard to do, and has a lot of questions.  Does
-inotify work on mmaped files?  How do FD permissions work when sent
-over dbus?  How do you "lock" the memory region to write it (or do you
-not have to)?
-
-
-
-With all of the above said, I think we really need to take a look and
-profile why individual dbus messages are so slow, and if it's fixable
-at a lower layer than the interfaces.  I know there were some efforts
-to put the broker into the kernel that kinda petered out, but I was
-never clear as to why.  I wanted to try grabbing those patches to see
-what performance benefit they gave at some point.
-
->
-> Thanks!
-> -Jason
+SGVsbG8sDQoJU29tZXRpbWVzIG15IEJNQyB3aWxsIHJ1biBvdXQgb2YgbWVtb3J5IHNvIHRoYXQg
+SSB0cnkgdG8gZmluZCBvdXQgd2hpY2ggcHJvY2VzcyBjYXVzZWQgdGhlIE9PTSBpc3N1ZS4NCkZy
+b20gdGhlIGh0b3AgaW5mb3JtYXRpb24sIGl0IGxvb2tzIGxpa2UgdGhlIGRidXMtYnJva2VyIHVz
+ZXMgaHVnZSBtZW1vcnkgc3BhY2UuDQpXaGF0IEknbSBkb2luZyBpcyB0byBzZW5kIHRoZSBpcG1p
+IHNkciBsaXN0IGNvbW1hbmQgZnJvbSBIb3N0IE9TIHRocnUgdGhlIGtjcyBpbnRlcmZhY2UgZXZl
+cnkgMiBzZWNvbmRzLg0KSW4gdGhlIGJlZ2dpbmcsIEkgY291bGQgc2VlIHRoZSBkYnVzLWJyb2tl
+ciB1c2VzIHVwIHRvIDQwME1CIGFuZCB0aGVuIHJlZHVjZWQgdG8gbGVzcyB0aGFuIDEwME1CLg0K
+QnV0IGFmdGVyIHNvbWUgaG91cnMgSSBjb3VsZCBzZWUgdGhlIG1lbW9yeSB1c2FnZSBrZWVwIGlu
+Y3JlYXNpbmcgYW5kIHRoZSBkYnVzLWJyb2tlciBjYXVzZWQgc3lzdGVtIE9PTSBldmVudHVhbGx5
+Lg0KDQogIDEgIFt8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fCAgICAgICAgICA2Ny4x
+JV0gICBUYXNrczogMTA0LCAyMCB0aHI7IDIgcnVubmluZw0KICAyICBbfHx8fHx8fHx8fHx8fHx8
+fHx8fHx8fHx8fHx8fHx8ICAgICAgICAgICAgNjAuNCVdICAgTG9hZCBhdmVyYWdlOiAzLjEyIDMu
+MzQgMy41NA0KICBNZW1bfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fDk2OU0v
+MTAwM01dICAgVXB0aW1lOiAxMjo1OToxMg0KICBTd3BbICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgMEsvMEtdDQoNCiAgUElEIFVTRVIgICAgICBQUkkgIE5JICBWSVJU
+ICAgUkVTICAgU0hSIFMgQ1BVJSBNRU0lICAgVElNRSsgIENvbW1hbmQNCiAgMjgxIG1lc3NhZ2Vi
+dSAgMjAgICAwICA4NzBNICA4NjhNICAgMzc2IFMgIDAuNiA4Ni42IDQwOjU0LjMyIGRidXMtYnJv
+a2VyIC0tbG9nIDQgLS1jb250cm9sbGVyIDkgLS1tYWNoaW5lLWlkIDkzMmMNCiAgMjY1IG1lc3Nh
+Z2VidSAgMjAgICAwICAyNTlNICAgMjg0ICAgICA0IFMgIDAuMCAgMC4wICAwOjAwLjM0IC91c3Iv
+YmluL2RidXMtYnJva2VyLWxhdW5jaCAtLXNjb3BlIHN5c3RlbSAtLWF1ZGl0DQoNClZlcnNpb246
+DQoJZGJ1cy1icm9rZXIgOjI1LXIwDQoNCkknZCBhcHByZWNpYXRlIGFueSBjb21tZW50cyBvciBm
+ZWVkYmFjay4NCg0KVGhhbmtzLA0KRnJhbiBIc3UNCkUtTWFpbCA6IEZyYW4uSHN1QFF1YW50YVRX
+LmNvbQ0KVGVsOiArODg2LTMtMzI3LTIzNDUgRXh0OiAxNjkzNQ0KDQoNCg==
