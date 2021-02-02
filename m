@@ -1,89 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB11C30D1A9
-	for <lists+openbmc@lfdr.de>; Wed,  3 Feb 2021 03:38:47 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A307E30D1C9
+	for <lists+openbmc@lfdr.de>; Wed,  3 Feb 2021 03:50:08 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DVm8N6HvxzDrcP
-	for <lists+openbmc@lfdr.de>; Wed,  3 Feb 2021 13:38:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DVmPT3GskzDwmf
+	for <lists+openbmc@lfdr.de>; Wed,  3 Feb 2021 13:50:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=fKLt/+fW; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DVW7D53PczDq9s
- for <openbmc@lists.ozlabs.org>; Wed,  3 Feb 2021 03:51:51 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 112GZHsC027943
- for <openbmc@lists.ozlabs.org>; Tue, 2 Feb 2021 11:51:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=to : from : subject :
- message-id : date : mime-version : content-type :
- content-transfer-encoding; s=pp1;
- bh=Jp4tzkgqQzJ2nmppjBx2s2O8rOax3csf9R5cxTUz/1U=;
- b=fKLt/+fWcok0bD9fvqDdUhyMtMtBMdfCvp37vGCkuAF2oSzik+kezjWKsIovdwdTkzPR
- 98VAGZMZXhi09jtLEfrxMIJTy3EyhH38nU0men9xFm2dlFYmPfJtRtqAawK3UFzPF//X
- 9YkNzr1COIDbjv8wGm/G1hyGnvA4RFLmAavdJ0YXwa80jsDhjnFJRkPkYCqz8MhNtini
- kSGRlVZMh2py2ab/s19PMk3vNgm9uIwhztxDAFrJueeFzyU/7ir3qirB0HOkp1nd3+vf
- 6caCfbX0M0fVpKhoSnrL3mtRRlaXjiFeKBvPDD0eUvPwjnDh1pLUvaz3lVaI67ySYr72 fg== 
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 36f988bekc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 02 Feb 2021 11:51:47 -0500
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 112Gm7i6016110
- for <openbmc@lists.ozlabs.org>; Tue, 2 Feb 2021 16:51:46 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma03wdc.us.ibm.com with ESMTP id 36f2nwu66v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 02 Feb 2021 16:51:46 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 112GpkaZ27525626
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 2 Feb 2021 16:51:46 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69C14124052
- for <openbmc@lists.ozlabs.org>; Tue,  2 Feb 2021 16:51:46 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3D615124053
- for <openbmc@lists.ozlabs.org>; Tue,  2 Feb 2021 16:51:46 +0000 (GMT)
-Received: from demeter.local (unknown [9.80.194.248])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue,  2 Feb 2021 16:51:46 +0000 (GMT)
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group meeting - Wednesday February 3
-Message-ID: <e42da574-888d-cc33-3f7f-80c8cef4dac0@linux.ibm.com>
-Date: Tue, 2 Feb 2021 10:51:45 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.5.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DVcB43g8WzDqbk
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Feb 2021 07:39:39 +1100 (AEDT)
+IronPort-SDR: kT4DxRl9tTvUO4qfplIHeEZ7j3hrE39TdSvw5YfQjbBP/nA6McHH9PBH+YLQOTkIT3lKOIlDvU
+ PFDgMiE7VEvg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9883"; a="181073478"
+X-IronPort-AV: E=Sophos;i="5.79,396,1602572400"; d="scan'208";a="181073478"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Feb 2021 12:39:33 -0800
+IronPort-SDR: 7ZsDED+RDfPRmP5jygC/371wVzBkmv1tumMhIIf+0gW+OdpfCbdmcATLFLefDkGkAQ+8B1gc89
+ AsAan3fFvg5A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.79,396,1602572400"; d="scan'208";a="370943906"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga008.fm.intel.com with ESMTP; 02 Feb 2021 12:39:32 -0800
+Received: from [10.212.238.16] (jmbills-MOBL.amr.corp.intel.com
+ [10.212.238.16])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id ED2415802A4;
+ Tue,  2 Feb 2021 12:39:31 -0800 (PST)
+Subject: Re: Sensor Value PropertiesChanged Events
+To: Ed Tanous <ed@tanous.net>
+References: <31abd546-4538-ecf0-134e-b8e48e75b3ad@linux.intel.com>
+ <CACWQX83KhqORsx-Gm4CCEndADO-GEgNHtxPpHR2ptsgzmtU9xA@mail.gmail.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <f6ed3a5f-2d4c-e554-400f-ba7caaae316e@linux.intel.com>
+Date: Tue, 2 Feb 2021 12:39:31 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <CACWQX83KhqORsx-Gm4CCEndADO-GEgNHtxPpHR2ptsgzmtU9xA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.737
- definitions=2021-02-02_08:2021-02-02,
- 2021-02-02 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011
- lowpriorityscore=0 malwarescore=0 suspectscore=0 mlxlogscore=775
- bulkscore=0 priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0
- mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2102020108
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,47 +62,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday February 3 at 10:00am PDT.
-
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
-and anything else that comes up:
-
-1. Continue to discuss APIs to disable HTTPS 
-https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/39006 
-<https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/39006>
-
-2. Review Linux-PAM changes 
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/40102 
-<https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/40102> and 
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-user-manager/+/39853 
-<https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-user-manager/+/39853> 
 
 
-3. Discuss plans for IBM Enterprise system “service” login support.
-3a. Implement restricted roles and restricted privileges per Redfish 
-spec DSP0266 1.12.0 aka 2020.4 
-https://www.dmtf.org/sites/default/files/standards/documents/DSP0266_1.12.0.pdf 
-<https://www.dmtf.org/sites/default/files/standards/documents/DSP0266_1.12.0.pdf> 
+On 2/1/2021 5:26 PM, Ed Tanous wrote:
+> On Mon, Feb 1, 2021 at 4:44 PM Bills, Jason M
+> <jason.m.bills@linux.intel.com> wrote:
+>>
+>> Hi All,
+>>
+>> There is an issue and idea that James Feist and I chatted about to maybe
+>> relieve some of our D-Bus traffic.
+>>
+>> A major contributor to our D-Bus traffic (as seen in dbus-monitor) is
+>> the polling sensors updating the xyz.openbmc_project.Sensor.Value.Value
+>> property on each polling loop, which generates a PropertiesChanged
+>> signal for every sensor on every polling loop (once per second?).
+>>
+>> The concern is that more important D-Bus messages could be getting
+>> delayed as D-Bus processes these Sensor Value signals.
+>>
+>> The idea to fix this is to change the sensors with a custom getter on
+>> the Value property, so the last read can be pulled from D-Bus using a
+>> get-property call, but it would no longer signal a PropertiesChanged event.
+> 
+> Doesn't this break..... like... everything that relies on sensor
+> values changing over time?
 
-3b. Story here: https://github.com/ibm-openbmc/dev/issues/1756 
-<https://github.com/ibm-openbmc/dev/issues/1756>
-3c. Need a special REST API to require variable privileges: 
-https://github.com/ibm-openbmc/dev/issues/2875 
-<https://github.com/ibm-openbmc/dev/issues/2875>
+I think this was my incorrect assumption that the PropertiesChanged 
+signal for sensor value updates was not used and could be removed 
+without significant impact.  I will abandon my proposed change, but I'm 
+glad there are other thoughts and discussion around this issue.
 
-4. Need help for 
-https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/39756 
-<https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/39756> ?
+Thanks!
+-Jason
 
-5. (Discord > OpenBMC > #yocto 2021-02-02) Security concerns using a 
-sstate cache.
-
-
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+> 
+>>
+>> I pushed a proposed change here:
+>> https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/40199.
+>>
+>> Our original assumption was that nobody was matching on this
+>> PropertiesChanged signal for the Value property; however, it was pointed
+>> out to me today, that PID control has a match for it and may be using it.
+> 
+snip...
