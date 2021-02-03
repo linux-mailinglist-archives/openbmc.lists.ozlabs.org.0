@@ -1,132 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9403E30D3FF
-	for <lists+openbmc@lfdr.de>; Wed,  3 Feb 2021 08:23:30 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3E7130D49C
+	for <lists+openbmc@lfdr.de>; Wed,  3 Feb 2021 09:05:41 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DVtSv5NLnzDwth
-	for <lists+openbmc@lfdr.de>; Wed,  3 Feb 2021 18:23:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DVvPb1PXszDws0
+	for <lists+openbmc@lfdr.de>; Wed,  3 Feb 2021 19:05:39 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=661d9a4c6=scron.chang@quantatw.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=quantacorp.onmicrosoft.com
- header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-quantacorp-onmicrosoft-com header.b=Ohd5TD4n; 
- dkim-atps=neutral
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 4DVtSB1vXRzDwnb
- for <openbmc@lists.ozlabs.org>; Wed,  3 Feb 2021 18:22:45 +1100 (AEDT)
-IronPort-SDR: aPESCboXyI6+OBYtqka9YJ2dTINJiUBzgUkR8e9MLKPw170wou/+fvvXMrPsPSZli6YejOICa0
- +dGGI8QVyRmQ==
-Received: from unknown (HELO mailbx09.quanta.corp) ([10.243.91.106])
- by mx02.quantatw.com with ESMTP; 03 Feb 2021 15:22:42 +0800
-Received: from mailbx05.quanta.corp (10.243.91.100) by mailbx09.quanta.corp
- (10.243.91.106) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Wed, 3 Feb 2021
- 15:22:42 +0800
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (104.47.125.59)
- by mailbx05.quanta.corp (10.243.91.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4
- via Frontend Transport; Wed, 3 Feb 2021 15:22:42 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Qxn6wN4exIFenfqR2KWhFZ3QiBTIZ5K41ek5EXIrA6rn8CM8g2H+/GKD2V4zWnenBu9keGtrWrOv24cosf8sHu/aquZfbIcCmSzWPcMb3vMUXU45CA3abBi9lgEaZtI56Nss5cDFQKgffAIppF2j5/ULZ1qHYLDW+4qSaN44vZUihroJSGhrA7ZtlzvAEGVKp7R+Qfa3Ps9mwGnBuQcOvgFkXovanbK53NFrNLMppcmKnSwSCN7aCh03SzetSF6y5Ccm2s0KAbd6O2O9T7I9V1BWEBhzHAKAD3g7fmKjyCB/p2vjZgW9TrNfNWNhMYyWntR2Hw1CfTcDG97edCplNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=813l639fEJpfUaPod4iSKhMegVqcn4YXYI5bH3UJVzc=;
- b=H2zT3C3nA0sWdKhEcRDXUSFig/17xQwt2XD86cq1yqBa2BUURoDpIY7mkFE56McQhTTCL1xAdbDWq66qvTyqRs4C6+3CejaQq0pBs56SiDD0XAFb4JaRiNd95Iso16lNninUckkSOS7gZkDs2Ck7lH3QYI9u1/9zQ2YITT632GYyR/8p9qKI07cdR2zPFPhtMbym6OYmZ4MWZT7LqNJNXso6QzrC8pELjGYPp6TJezRkD1JTYfuW83+oYFeO5NQo3rDewEfAi22cNG/hHRyHMAyuvogOpgh3ld9E3dNEscDfGa+gQlSrDS8JGY1fc6+VhQ6vIw4Ju5fFTju0Uto/XA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
- dkim=pass header.d=quantatw.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=813l639fEJpfUaPod4iSKhMegVqcn4YXYI5bH3UJVzc=;
- b=Ohd5TD4n67+4pbCIX1AbPFmyZsvaSGVtMrhlwb08yU0TjGah6bOdKrBTv237m7sgqLaCsZebEv8CgZ5KUWcmRKpEMvoFyO2XJXrf9aDlv/Y+rAb8QnalL9PMz6M9fFaypcUmjcrUQLSn4ITT29c/9k3gUAcY3Nq1t9ZQ1h5lVm8=
-Received: from HK0PR04MB2564.apcprd04.prod.outlook.com (2603:1096:203:67::10)
- by HKAPR04MB4066.apcprd04.prod.outlook.com (2603:1096:203:d8::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3825.19; Wed, 3 Feb
- 2021 07:22:40 +0000
-Received: from HK0PR04MB2564.apcprd04.prod.outlook.com
- ([fe80::8cc7:12a2:abfd:c51]) by HK0PR04MB2564.apcprd04.prod.outlook.com
- ([fe80::8cc7:12a2:abfd:c51%7]) with mapi id 15.20.3805.026; Wed, 3 Feb 2021
- 07:22:40 +0000
-From: =?big5?B?U2Nyb24gQ2hhbmcgKLFppfKptSk=?= <Scron.Chang@quantatw.com>
-To: Ed Tanous <edtanous@google.com>
-Subject: RE: [entity-manager] Issue about entity-manager getting stuck
-Thread-Topic: [entity-manager] Issue about entity-manager getting stuck
-Thread-Index: Adb0diyKK8cE9nwESFKTsQMV9K5OLgAWJ+gAAUs4ZxA=
-Date: Wed, 3 Feb 2021 07:22:40 +0000
-Message-ID: <HK0PR04MB2564A9FFB0B2C5116BC409C286B49@HK0PR04MB2564.apcprd04.prod.outlook.com>
-References: <TYZPR04MB441643EFC954C795DD1290A886BB0@TYZPR04MB4416.apcprd04.prod.outlook.com>
- <CAH2-KxA20CfM9upvUkB=jhapVNF4AdVROA4wafFxxYftmvwO=w@mail.gmail.com>
-In-Reply-To: <CAH2-KxA20CfM9upvUkB=jhapVNF4AdVROA4wafFxxYftmvwO=w@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: google.com; dkim=none (message not signed)
- header.d=none;google.com; dmarc=none action=none header.from=quantatw.com;
-x-originating-ip: [220.135.135.179]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 47328fad-f67f-4b59-df62-08d8c8147dcf
-x-ms-traffictypediagnostic: HKAPR04MB4066:
-x-microsoft-antispam-prvs: <HKAPR04MB40665A17102EE7B282E7F51186B49@HKAPR04MB4066.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 6BLTCPPpEl9kuPaYHIHLP9irQHtJqAHa0QTP2SwpbnK4KeiZjPB8j8j57f7r038XsjtmRZ4YEW1xEr0ZjUm453BcjlT6qjrEV1K8y8j9IwPttHv9WhOG/2uvBqX96N8WcQvhsPjMpH1CC+iaZmuA5W0Q15wUCiFP2Hsia3imz6FbZqSuJ0AlYAbsxgFA+yqLunDxTdDHs7oNc6WM9wcJSSWKyGnRPII7S0nldz3i1J0Y2EFJJ+TcOIIPaLsLdc+cctNltD/Pg7+R7M5XyomP+AWzzyjWkJ9OmV5yUo4qJWiF4llg1ajeNFhIVyYFT3uGR6rBUYsI40uHdbH32CKfhc+EtuiH5iNFM7Ba+6TrsfWOR3LdPcMgHLM5XrmTcm6HiboDc4LPr0EVXvW7X3HVpMrihDminPdTVdASMj/dJCntdurpfaxiswTL/IpXdq394dcHQuQvGpz+6RMXWKOqr1ho65CbmCRBDaeduhMThMO4aHgaTgqHiHaJyBvkHAqfSYfZoiug28M+dVSvxfQltfJC7Q3B1+g9oVn7PpIG3G/h1RF7i5m9y11Q954FY2RTT6QvtOsSdyVJBVw7W7h/6nf1gnCurjjtCqBM3I+rPJs=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:HK0PR04MB2564.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(346002)(376002)(136003)(39860400002)(366004)(396003)(2906002)(86362001)(85182001)(8676002)(26005)(966005)(5660300002)(186003)(52536014)(64756008)(66556008)(66946007)(76116006)(478600001)(7696005)(66476007)(45080400002)(66446008)(55016002)(9686003)(6506007)(6916009)(316002)(53546011)(33656002)(8936002)(4326008)(71200400001)(83380400001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?big5?B?d2RhL05JWjZsMkZKMnlUTE5TTWlYY1pEWWd4U1FyQmpvaXVQM1RhYW95aFVPN0xy?=
- =?big5?B?RE1KWVh1WmxIZWdJQ0owQjVDUDhOc0VLVDdrWHVFT3U4NHlEYmtwUmY3akV3dkQr?=
- =?big5?B?T0tPbm9GQXgwRkJ1S3ZaeDd1T0dKZlFXUk1xTGo2Q0txQzRvVXZxUkY0NVlCcjRa?=
- =?big5?B?UWhVK1BFR3lpeEpKRW1iVmVWa3A0UTJMeGtpRkUrZ2V3YmZuNkY1NzB4Q29BUUxU?=
- =?big5?B?enF2N1pFUnM1Q3dFc3o4VmpEWTllYjN4WElMRTROdElwQ3MveC96R203ckJET0ZW?=
- =?big5?B?Y0VDTlZBMjdlVWFRcjE5QXU4ZjNIVERXYW9sV1ZsWlFvQTlLdjFucUczbWpVbGxR?=
- =?big5?B?WUhQQjY3aEtNMlhBcEFJTFAwRXU0cjY5KzZYZ25jT0Z6NndmbjRyeG5NdzBhWlJL?=
- =?big5?B?TSs1RzluaHdTajJvNFloYzJINmZoTWt3Mk1YbForbmZjZUNUNUs4Z2VlV2Zyak5K?=
- =?big5?B?b3ZCTDZQRzUxNEw3bGVHb0JTeDQ3dDNQQkQ5eTVSSURaZHZXY3ZRZ1RYOHl4RUdG?=
- =?big5?B?Um9TR1d0ZXduVWJUdlFEQ1NQaUlwMmRTMWxhYjRQOWZseHVMQzBCbEMySGtDZ0xz?=
- =?big5?B?TisyZDhPakdPRUc4YkhhZUl1aEtUL3dzdFNXeDg5V3pzNnJQbEdaWmxkellZWWxJ?=
- =?big5?B?NklaTks1c1VqbWxPWUNwNDMzMlpaWGM1R21USEhpbjVoSFlPdlhtcXY0WDJxRnkx?=
- =?big5?B?b0cyVXozb0pIWktLd3Z6bmlrN2gzSmhJQmcraThJY1ZmSitJblRvZTBXS2E2NWox?=
- =?big5?B?bjFGK0VpL1NVbjFSalRydlk4TVp5Z2lycjFFWmVQR0lVTGppSU0xbjNDTlVQU1pn?=
- =?big5?B?Mit3OVd5T2o3WVBndElmM3RZVWlqeGxhaS9rTTV4QVdGb0dxTW82M0x1Y09YTmlB?=
- =?big5?B?QkY5MHAxTk9NVUpyK1Rxb1VZNXp6VUVuejEyaUFDS2MwRlcxY3dUVmw2ZmlDMmJR?=
- =?big5?B?SGtYSUVKNzN0ZEZndkVIVDNSNW40RHkvcGZiSFVvT1NlUlUyQitOd0RMNFFlUjhr?=
- =?big5?B?bEVXb3lsSm84T2FuenBiVTBMV0QzUDgwejhtZmdsR1dFOHNHSVoxN3RVemhaTnND?=
- =?big5?B?WHRVcGZiYmMxTFg5R3B5bTZQeS9aR1VZSzZnS1BQa20yN29mcEtrSUQ4SVA0T293?=
- =?big5?B?T0hPN1dRV21ITXFXSVNlVmZ6cWFvdzVWREtTSnVGemJ1TmFVS3ZMVnV3UDRJMGJ3?=
- =?big5?B?Q3AvUnc2QkZsZVpSMndzTktKdHJkMTlLL2lib2FMc2pVVHBsanM4TlBHLysvRTRz?=
- =?big5?B?UU8xdTE5dnNDUE5WQ0ZKaTgrc3ZuSU53MjFIS1UwTzdYTXMzS0hDL1JUd3dEeXdJ?=
- =?big5?B?WUJPVkJpbFYwL1A0TWtyNnAzVUN3VGRxSThJdTBWLzN2TDZnTit3UlZYTXJrQzQ1?=
- =?big5?B?amZEMlV5UDM3ZVo2a1cyWUdyNHIrS3hjR0JLcm1SOE9zQi9paGkrenVpVFdsZDh3?=
- =?big5?B?M2JNN1h4ekxweU45aFN4WFVEL0VYenlGUWMzd3k5ZGpXeGdHYk1hQTByVzRneHFP?=
- =?big5?B?Rmw0dkRGSWpneHZJOEF2R2JNSkpZMVBxTWY5R0NEcW5pcmxWWjVpTmdUcXgvMDdU?=
- =?big5?B?dGpGOGJTYkk3UHJXbGVxQ21IYURzbkVDSStONWVERFpZcHNMV25JTC8xZllhY3Y0?=
- =?big5?Q?ZfIYfyO3TwsCi0nINx3INr0txomLuuInzCKhsg+d3OKfJnyP?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2d;
+ helo=mail-qv1-xf2d.google.com; envelope-from=tali.perry1@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Qn0LWq7a; dkim-atps=neutral
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com
+ [IPv6:2607:f8b0:4864:20::f2d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DVvNb2NldzDqRJ
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Feb 2021 19:04:42 +1100 (AEDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id ew18so11249391qvb.4
+ for <openbmc@lists.ozlabs.org>; Wed, 03 Feb 2021 00:04:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=O2Hto7ZXL4ShhckRFS/H2L6BfVw229Jhi1sui7ny/TE=;
+ b=Qn0LWq7aQqMWjmUmvGdQcCPJkjGaVg/XlJ471ClPd57zCFKwRoUuamHLjClac0+cjU
+ F7PlqV7q5HhQIMY/7ov5tP8Yyvi9avttrxtmeQ64V4wAwY2Y+d6FnvfSPsW+Peye2a9n
+ n2EWqNvGUdcdcqdd+9e8Iqwefq/K3d6AnnKSehuSKHaweHsOHLE3UXISxxjF7tF3fs+J
+ TBj6JMfSqTrKx+N4KX8FsVS5S1Cs9RQKwsUK7cT2Sspk/LG6PwbZfXH//07fS++7AcsL
+ HFVsfS1kqN/B4sq2NAEusR+c6lh/WtgEPufeEAt+nfO2KQPb4gzjORMJvU2OsJi4iBcI
+ vCmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=O2Hto7ZXL4ShhckRFS/H2L6BfVw229Jhi1sui7ny/TE=;
+ b=MBZp/RVJpnCN7+M7uwunUeZxfesAwfP/4qKxyZHfXCogQW99Vt5SdvqThXejOrZCt6
+ U2UMm5lWwFM3ru7WIFVQ4ulLkDOwZSANNGnX9iNWA+kV5GmIae195I9uAUYwl7lVtlCx
+ ECRpknAF/xyKOcOe45rM5XcKtrKeAN/4Fm5XR42eHBN4rnFJ3qvckuZjKgo5UTHIl+Z5
+ 2cZW7/pM5hEQBmYLILliG0rm3pX3sVn/IY4loubG2v7empQcHvogNkH2J37hmHktHgv6
+ boIuqWlNx1EX9oFvN3D9NI+UJVC0ozp56q1jlIVa84ZiMT/lmKzz2oL8XLss5sIFBS+3
+ ITmg==
+X-Gm-Message-State: AOAM53013xaW0ZRERHU/AyXVd4C13EaEb7M6yCG56Gy/+7BzezTtXSXs
+ 8PZOVFmzVD9SApX8WWINS+jBbnWixT6fcCfe/A8=
+X-Google-Smtp-Source: ABdhPJyq6WRZgXdbtWpyEqjoRjeLcnNJnqg5gV0N9Lkyci8DUh89xDIfUHg+b0b5RaLpStVKNf2xcVrOGRllEJDPwJg=
+X-Received: by 2002:a0c:d60a:: with SMTP id c10mr1779304qvj.21.1612339477534; 
+ Wed, 03 Feb 2021 00:04:37 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB2564.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47328fad-f67f-4b59-df62-08d8c8147dcf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Feb 2021 07:22:40.7482 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: cn+wjq+MK9mobjcDAHoQlYF2hSHhZt5Vg7E96HE3o0FwZXnst1e6iymyDCgvzRIwGnvOoZNMinFGd3OgvM9YQA622fJVj+fOaitR3I1qnIs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HKAPR04MB4066
-X-OriginatorOrg: quantatw.com
+References: <20210126124540.3320214-1-lee.jones@linaro.org>
+ <20210126124540.3320214-16-lee.jones@linaro.org>
+In-Reply-To: <20210126124540.3320214-16-lee.jones@linaro.org>
+From: Tali Perry <tali.perry1@gmail.com>
+Date: Wed, 3 Feb 2021 10:08:02 +0200
+Message-ID: <CAHb3i=tVE+hJ46tPp-WYoAXRmWnempbSPtww+9v+B4rS2Y2VFA@mail.gmail.com>
+Subject: Re: [PATCH 15/21] clk: clk-npcm7xx: Remove unused static const tables
+ 'npcm7xx_gates' and 'npcm7xx_divs_fx'
+To: Lee Jones <lee.jones@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000d0d9af05ba6a09a7"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -138,84 +72,463 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Benjamin Fair <benjaminfair@google.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ Michael Turquette <mturquette@baylibre.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ linux-clk@vger.kernel.org, Nuvoton Technologies <tali.perry@nuvoton.com>,
+ Stephen Boyd <sboyd@kernel.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgRWQsDQpUaGFua3MgZm9yIHlvdXIgcmVwbHkuDQoNCkluIG15IGNhc2UsIEkgaGF2ZSBhIHNj
-cmlwdCB1c2luZyB0aGUgZm9sbG93aW5nIGNvbW1hbmQgdG8gY2hlY2sgdGhlIGhvc3Qgc3RhdHVz
-IGFuZCB0aGVuIHJlc2V0dGluZyB0aGUgcGVjaSBtb2R1bGUgYmFzZWQgb24gaXRzIHJlc3VsdC4N
-CmJ1c2N0bCBnZXQtcHJvcGVydHkgeHl6Lm9wZW5ibWNfcHJvamVjdC5TdGF0ZS5DaGFzc2lzIC94
-eXovb3BlbmJtY19wcm9qZWN0L3N0YXRlL29zIHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuT3Bl
-cmF0aW5nU3lzdGVtLlN0YXR1cyBPcGVyYXRpbmdTeXN0ZW1TdGF0ZQ0KDQpOb3cgSSB1bmRlcnN0
-b29kIHRoZSByZWFzb24gd2h5IGVudGl0eS1tYW5hZ2VyIGNhdGNoIHRoZSBuYW1lT3duZXJDaGFu
-Z2VkIHNpZ25hbC4NCkhvd2V2ZXIsIHBsZWFzZSBhbGxvdyBtZSB0byBkaXNjdXNzIG9uZSBxdWVz
-dGlvbiBmdXJ0aGVybW9yZS4gSG93IGRvZXMgZW50aXR5LW1hbmFnZXIgZGVmaW5lIHRoZSB3YWl0
-aW5nIHRpbWUgZm9yIHRoZSBzeXN0ZW0gdG8gYmVjb21lIHJlYWR5PyBBY2NvcmRpbmcgdG8gdGhl
-IHNvdXJjZSBjb2RlLCB0aGUgY3VycmVudCB3YWl0aW5nIHRpbWUgaXMgNSBzZWNvbmRzLg0KKFBs
-ZWFzZSByZWZlciB0byB0aGlzIGxpbmU6DQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9lbnRp
-dHktbWFuYWdlci9ibG9iL2YwOTQxMjVjZDNiZGJjODczN2RjODAzNWE2ZTlhYzI1MmY2ZTg4NDAv
-c3JjL0VudGl0eU1hbmFnZXIuY3BwI0wxNjg3KQ0KDQpJZiB0aGUgd2FpdGluZyB0aW1lIGNhbiBj
-aGFuZ2UgdG8gMSBzZWNvbmQsIHRoZSBlbnRpdHktbWFuYWdlcidzIHJlc3BvbnNlIGNhbiBiZWNv
-bWUgZmFzdGVyIGFuZCBiYXJlbHkgZ2V0IHN0dWNrLiBJIGZvdW5kIGVudGl0eS1tYW5hZ2VyIGRp
-ZCB1c2UgMSBzZWNvbmQgYmVmb3JlIHRoaXMgUFIuDQooUGxlYXNlIHJlZmVyIHRvIHRoaXMgUFI6
-DQpodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9lbnRpdHktbWFu
-YWdlci8rLzI1MTkzKQ0KDQpJbiB0aGlzIFBSLCB0aGVyZSBpcyBub3QgbXVjaCBjb21tZW50LiBN
-YXkgSSBhc2sgdGhlIHJlYXNvbiBmb3IgY2hhbmdpbmcgdGhlIHdhaXRpbmcgdGltZT8gQW5kIHdo
-YXQgc2hvdWxkIGJlIGNvbmNlcm5lZCBpZiBlbnRpdHktbWFuYWdlciB1c2VzIHRoZSBzaG9ydGVy
-IHdhaXRpbmcgdGltZT8NCg0KU2Nyb24gQ2hhbmcNCkUtTWFpbCAgU2Nyb24uQ2hhbmdAcXVhbnRh
-dHcuY29tDQpFeHQuICAgIDExOTM2DQoNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZy
-b206IEVkIFRhbm91cyA8ZWR0YW5vdXNAZ29vZ2xlLmNvbT4gDQpTZW50OiBUaHVyc2RheSwgSmFu
-dWFyeSAyOCwgMjAyMSAxOjA3IEFNDQpUbzogU2Nyb24gQ2hhbmcgKLFppfKptSkgPFNjcm9uLkNo
-YW5nQHF1YW50YXR3LmNvbT4NCkNjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNClN1YmplY3Q6
-IFJlOiBbZW50aXR5LW1hbmFnZXJdIElzc3VlIGFib3V0IGVudGl0eS1tYW5hZ2VyIGdldHRpbmcg
-c3R1Y2sNCg0KT24gVHVlLCBKYW4gMjYsIDIwMjEgYXQgMTA6MzQgUE0gU2Nyb24gQ2hhbmcgKLFp
-pfKptSkNCjxTY3Jvbi5DaGFuZ0BxdWFudGF0dy5jb20+IHdyb3RlOg0KPg0KPiBIaSBhbGwsDQo+
-DQo+IEkgYW0gdXNpbmcgb3BlbmJtYy9lbnRpdHktbWFuYWdlciBpbiB0aGlzIHZlcnNpb246ICJm
-MDk0MTI1Y2QzYmRiYzg3MzdkYzgwMzVhNmU5YWMyNTJmNmU4ODQwIiBhbmQgSSBmb3VuZCBjYWxs
-aW5nIERidXMgbWFrZXMgZW50aXR5LW1hbmFnZXIgZ2V0IHN0dWNrLg0KPg0KPiBSZXByb2R1Y2Ug
-dGhpcyBieSBmb2xsb3dpbmcgc3RlcHM6DQo+IDEuIHN5c3RlbWN0bCBzdG9wIHh5ei5vcGVuYm1j
-X3Byb2plY3QuRW50aXR5TWFuYWdlciAyLiBvcGVuIGFub3RoZXIgDQo+IHRlcm1pbmFsIGFuZCBk
-byB0aGlzIHdoaWxlLWxvb3A6ICJ3aGlsZSB0cnVlOyBkbyBidXNjdGwgOyBzbGVlcCAxOyBkb25l
-Ig0KPiAzLiBzeXN0ZW1jdGwgc3RhcnQgeHl6Lm9wZW5ibWNfcHJvamVjdC5FbnRpdHlNYW5hZ2Vy
-IEkgdGhpbmsgdGhlIHJvb3QgDQo+IGNhdXNlIGlzIHRoaXMgZnVuY3Rpb246ICJuYW1lT3duZXJD
-aGFuZ2VkTWF0Y2guIiAoUGxlYXNlIHJlZmVyIHRvIHRoaXMgDQo+IGxpbmU6IA0KPiBodHRwczov
-L2FwYzAxLnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMlM0ElMkYl
-MkZnaXRoDQo+IHViLmNvbSUyRm9wZW5ibWMlMkZlbnRpdHktbWFuYWdlciUyRmJsb2IlMkZmMDk0
-MTI1Y2QzYmRiYzg3MzdkYzgwMzVhNmUNCj4gOWFjMjUyZjZlODg0MCUyRnNyYyUyRkVudGl0eU1h
-bmFnZXIuY3BwJTIzTDE4NTkmYW1wO2RhdGE9MDQlN0MwMSU3Q1Njcg0KPiBvbi5DaGFuZyU0MHF1
-YW50YXR3LmNvbSU3QzMxYjQ2YzBjMDQxYjQwMmRjM2Q2MDhkOGMyZTVmOWRkJTdDMTc5YjAzMjcw
-DQo+IDdmYzQ5NzNhYzczOGRlNzMxMzU2MWIyJTdDMSU3QzAlN0M2Mzc0NzM2NDAyOTk2NTI3NzAl
-N0NVbmtub3duJTdDVFdGcGINCj4gR1pzYjNkOGV5SldJam9pTUM0d0xqQXdNREFpTENKUUlqb2lW
-Mmx1TXpJaUxDSkJUaUk2SWsxaGFXd2lMQ0pYVkNJNk1uMA0KPiAlM0QlN0MxMDAwJmFtcDtzZGF0
-YT1WY0JSUjUlMkJURyUyRkZzY0hSMTRic0RNcWdoRTczcVJoR1loenRFMjVGS0l6RSUzDQo+IEQm
-YW1wO3Jlc2VydmVkPTAuKQ0KDQpNeSBmaXJzdCB0aG91Z2h0IGlzOiBEb24ndCBydW4gYW4gZW1w
-dHkgYnVzY3RsIGluIGEgbG9vcCB0aGVuLCBidXQgSSdtIGd1ZXNzaW5nIHRoYXQncyBub3Qgd2hh
-dCB5b3UncmUgcmVhbGx5IHRyeWluZyB0byBkby4gIElmIHdlIGhhZCBtb3JlIGlkZWFzIGFib3V0
-IHdoYXQgeW91IHdlcmUgcmVhbGx5IGhvcGluZyB0byBhY2NvbXBsaXNoLCB3ZSBtaWdodCBoYXZl
-IHNvbWUgYmV0dGVyIGFkdmljZSBmb3IgaG93IHRvIHByb2NlZWQuDQoNClRoZSBpbnRlbnQgb2Yg
-dGhhdCBjb2RlIGlzIHRvIHJlY29uZmlndXJlIGVudGl0eS1tYW5hZ2VyIHdoZW4gaW50ZXJmYWNl
-cyBhcmUgY2hhbmdlZCwgc28gaWYgeW91J3JlIGNvbnN0YW50bHkgYXR0YWNoaW5nIGFuZCBkZXRh
-Y2hpbmcgdG8gZGJ1cywgZW50aXR5LW1hbmFnZXIgKGFuZCBvYmplY3QgbWFuYWdlcikgbmV2ZXIg
-c2VlcyB0aGUgc3lzdGVtIGFzICJ1cCIgYW5kIGtlZXBzIHdhaXRpbmcgZm9yIHRoZSBzeXN0ZW0g
-dG8gZmluaXNoIHN0YWJpbGl6aW5nIGJlZm9yZSBpdCBydW5zIHRoZSBjb25maWcgbG9naWMuDQoN
-CkluIHlvdXIgc3BlY2lmaWMgY2FzZSBhYm92ZSwgdGhlIGNvZGUgY291bGQgYmUgYSBsaXR0bGUg
-c21hcnRlciwgYW5kIGlnbm9yZSB1bmlxdWUgbmFtZXMgaW4gdGhhdCBjaGVjaywgb25seSBjYXJp
-bmcgYWJvdXQgbmV3bHktZGVmaW5lZCB3ZWxsIGtub3duIG5hbWVzLCBidXQgd2l0aG91dCBrbm93
-aW5nIHlvdXIgcmVhbCB1c2UgY2FzZSwgaXQncyBoYXJkIHRvIGtub3cgaWYgdGhhdCB3b3VsZCBo
-ZWxwLg0KDQo+DQo+IE1hbnVhbGx5IGNhbGxpbmcgRGJ1cyBvciBjYWxsaW5nIERidXMgaW4gYSBz
-Y3JpcHQgbWFrZXMgTmFtZU93bmVyQ2hhbmdlZCBzaWduYWwgYW5kIHRodXMgdHJpZ2dlcnMgdGhl
-IGZ1bmN0aW9uOiAicHJvcGVydGllc0NoYW5nZWRDYWxsYmFjayIgcmVwZWF0ZWRseS4gTWVhbndo
-aWxlLCB0aGUgYXN5bmNfd2FpdCBpbiBwcm9wZXJ0aWVzQ2hhbmdlZENhbGxiYWNrIGdldHMgcmV0
-dXJuZWQgYmVjYXVzZSBvZiB0aGUgb3BlcmF0aW9uX2Fib3J0ZWQuDQoNClBlcnNvbmFsIG9waW5p
-b246IERvbid0IGNhbGwgYnVzY3RsIGNvbnRpbnVvdXNseSBpbiBhIHNjcmlwdC4gIEl0J3MgaW5l
-ZmZpY2llbnQsIGFuZCBjYXVzZXMgcHJvYmxlbXMgbGlrZSB0aGlzLg0KDQo+IFNvIGhlcmUgaXMg
-dGhlIGNvbmNsdXNpb246DQo+IE1hbnVhbGx5IGNhbGxpbmcgRGJ1cyBpbiBhIHBlcmlvZCB0aGF0
-IGlzIGxlc3MgdGhhbiA1IHNlY29uZHMgbGVhZHMgZW50aXR5LW1hbmFnZXIga2VlcGluZyB0byB0
-cmlnZ2VyIG5ldyBhc3luY193YWl0IGFuZCBhYm9ydCB0aGUgb2xkIG9uZS4gSG93ZXZlciwgdGhl
-IGFzeW5jX3dhaXQgbmV2ZXIgZ2V0cyBkb25lLg0KPg0KPiBJcyB0aGlzIGEgYnVnIG9mIGVudGl0
-eS1tYW5hZ2VyLCBvciBJIGdldCBzb21ldGhpbmcgd3JvbmcuIFBsZWFzZSBoZWxwIG1lIHdpdGgg
-dGhpcy4NCg0KSU1PLCBlbnRpdHktbWFuYWdlciBpcyB3b3JraW5nIGFzIGludGVuZGVkLCBidXQg
-bGV0cyB0cnkgdG8gZmlndXJlIG91dCB3aGF0IHlvdSdyZSByZWFsbHkgdHJ5aW5nIHRvIGRvLCBh
-bmQgc2VlIGlmIHdlIGNhbiBmaW5kIHlvdSBhIHNvbHV0aW9uLg0KDQo+DQo+IFNjcm9uIENoYW5n
-DQo+IEUtTWFpbCAgU2Nyb24uQ2hhbmdAcXVhbnRhdHcuY29tDQo+DQo=
+--000000000000d0d9af05ba6a09a7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Reviewed-by: Tali Perry <tali.perry1@gmail.com>
+
+Thanks for the fix !
+
+On Tue, Jan 26, 2021 at 2:46 PM Lee Jones <lee.jones@linaro.org> wrote:
+
+> Fixes the following W=3D1 kernel build warning(s):
+>
+>  drivers/clk/clk-npcm7xx.c:438:43: warning: =E2=80=98npcm7xx_gates=E2=80=
+=99 defined but
+> not used [-Wunused-const-variable=3D]
+>  drivers/clk/clk-npcm7xx.c:365:48: warning: =E2=80=98npcm7xx_divs_fx=E2=
+=80=99 defined but
+> not used [-Wunused-const-variable=3D]
+>
+> Cc: Avi Fishman <avifishman70@gmail.com>
+> Cc: Tomer Maimon <tmaimon77@gmail.com>
+> Cc: Tali Perry <tali.perry1@gmail.com>
+> Cc: Patrick Venture <venture@google.com>
+> Cc: Nancy Yuen <yuenn@google.com>
+> Cc: Benjamin Fair <benjaminfair@google.com>
+> Cc: Michael Turquette <mturquette@baylibre.com>
+> Cc: Stephen Boyd <sboyd@kernel.org>
+> Cc: Nuvoton Technologies <tali.perry@nuvoton.com>
+> Cc: openbmc@lists.ozlabs.org
+> Cc: linux-clk@vger.kernel.org
+> Signed-off-by: Lee Jones <lee.jones@linaro.org>
+> ---
+>  drivers/clk/clk-npcm7xx.c | 108 --------------------------------------
+>  1 file changed, 108 deletions(-)
+>
+> diff --git a/drivers/clk/clk-npcm7xx.c b/drivers/clk/clk-npcm7xx.c
+> index 27a86b7a34dbf..e677bb5a784b9 100644
+> --- a/drivers/clk/clk-npcm7xx.c
+> +++ b/drivers/clk/clk-npcm7xx.c
+> @@ -361,13 +361,6 @@ static const struct npcm7xx_clk_mux_data
+> npcm7xx_muxes[] __initconst =3D {
+>         dvcssel_mux_parents, ARRAY_SIZE(dvcssel_mux_parents), 0, -1},
+>  };
+>
+> -/* fixed ratio dividers (no register): */
+> -static const struct npcm7xx_clk_div_fixed_data npcm7xx_divs_fx[]
+> __initconst =3D {
+> -       { 1, 2, NPCM7XX_CLK_S_MC, NPCM7XX_CLK_S_MC_MUX, 0, NPCM7XX_CLK_MC=
+},
+> -       { 1, 2, NPCM7XX_CLK_S_PLL1_DIV2, NPCM7XX_CLK_S_PLL1, 0, -1},
+> -       { 1, 2, NPCM7XX_CLK_S_PLL2_DIV2, NPCM7XX_CLK_S_PLL2, 0, -1},
+> -};
+> -
+>  /* configurable dividers: */
+>  static const struct npcm7xx_clk_div_data npcm7xx_divs[] __initconst =3D =
+{
+>         {NPCM7XX_CLKDIV1, 28, 3, NPCM7XX_CLK_S_ADC,
+> @@ -435,107 +428,6 @@ static const struct npcm7xx_clk_div_data
+> npcm7xx_divs[] __initconst =3D {
+>
+>  };
+>
+> -static const struct npcm7xx_clk_gate_data npcm7xx_gates[] __initconst =
+=3D {
+> -       {NPCM7XX_CLKEN1, 31, "smb1-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN1, 30, "smb0-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN1, 29, "smb7-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN1, 28, "smb6-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN1, 27, "adc-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN1, 26, "wdt-gate", NPCM7XX_CLK_S_TIMER, 0},
+> -       {NPCM7XX_CLKEN1, 25, "usbdev3-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN1, 24, "usbdev6-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN1, 23, "usbdev5-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN1, 22, "usbdev4-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN1, 21, "emc2-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN1, 20, "timer5_9-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN1, 19, "timer0_4-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN1, 18, "pwmm0-gate", NPCM7XX_CLK_S_APB3, 0},
+> -       {NPCM7XX_CLKEN1, 17, "huart-gate", NPCM7XX_CLK_S_UART, 0},
+> -       {NPCM7XX_CLKEN1, 16, "smb5-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN1, 15, "smb4-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN1, 14, "smb3-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN1, 13, "smb2-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN1, 12, "mc-gate", NPCM7XX_CLK_S_MC, 0},
+> -       {NPCM7XX_CLKEN1, 11, "uart01-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN1, 10, "aes-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN1, 9, "peci-gate", NPCM7XX_CLK_S_APB3, 0},
+> -       {NPCM7XX_CLKEN1, 8, "usbdev2-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN1, 7, "uart23-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN1, 6, "emc1-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN1, 5, "usbdev1-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN1, 4, "shm-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       /* bit 3 is reserved */
+> -       {NPCM7XX_CLKEN1, 2, "kcs-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN1, 1, "spi3-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN1, 0, "spi0-gate", NPCM7XX_CLK_S_AHB, 0},
+> -
+> -       {NPCM7XX_CLKEN2, 31, "cp-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN2, 30, "tock-gate", NPCM7XX_CLK_S_TOCK, 0},
+> -       /* bit 29 is reserved */
+> -       {NPCM7XX_CLKEN2, 28, "gmac1-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN2, 27, "usbif-gate", NPCM7XX_CLK_S_USBIF, 0},
+> -       {NPCM7XX_CLKEN2, 26, "usbhost-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN2, 25, "gmac2-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       /* bit 24 is reserved */
+> -       {NPCM7XX_CLKEN2, 23, "pspi2-gate", NPCM7XX_CLK_S_APB5, 0},
+> -       {NPCM7XX_CLKEN2, 22, "pspi1-gate", NPCM7XX_CLK_S_APB5, 0},
+> -       {NPCM7XX_CLKEN2, 21, "3des-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       /* bit 20 is reserved */
+> -       {NPCM7XX_CLKEN2, 19, "siox2-gate", NPCM7XX_CLK_S_APB3, 0},
+> -       {NPCM7XX_CLKEN2, 18, "siox1-gate", NPCM7XX_CLK_S_APB3, 0},
+> -       /* bit 17 is reserved */
+> -       {NPCM7XX_CLKEN2, 16, "fuse-gate", NPCM7XX_CLK_S_APB4, 0},
+> -       /*  bit 15 is reserved */
+> -       {NPCM7XX_CLKEN2, 14, "vcd-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN2, 13, "ece-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN2, 12, "vdma-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN2, 11, "ahbpcibrg-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN2, 10, "gfxsys-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN2, 9, "sdhc-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN2, 8, "mmc-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN2, 7, "mft7-gate", NPCM7XX_CLK_S_APB4, 0},
+> -       {NPCM7XX_CLKEN2, 6, "mft6-gate", NPCM7XX_CLK_S_APB4, 0},
+> -       {NPCM7XX_CLKEN2, 5, "mft5-gate", NPCM7XX_CLK_S_APB4, 0},
+> -       {NPCM7XX_CLKEN2, 4, "mft4-gate", NPCM7XX_CLK_S_APB4, 0},
+> -       {NPCM7XX_CLKEN2, 3, "mft3-gate", NPCM7XX_CLK_S_APB4, 0},
+> -       {NPCM7XX_CLKEN2, 2, "mft2-gate", NPCM7XX_CLK_S_APB4, 0},
+> -       {NPCM7XX_CLKEN2, 1, "mft1-gate", NPCM7XX_CLK_S_APB4, 0},
+> -       {NPCM7XX_CLKEN2, 0, "mft0-gate", NPCM7XX_CLK_S_APB4, 0},
+> -
+> -       {NPCM7XX_CLKEN3, 31, "gpiom7-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN3, 30, "gpiom6-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN3, 29, "gpiom5-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN3, 28, "gpiom4-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN3, 27, "gpiom3-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN3, 26, "gpiom2-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN3, 25, "gpiom1-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN3, 24, "gpiom0-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN3, 23, "espi-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN3, 22, "smb11-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN3, 21, "smb10-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN3, 20, "smb9-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN3, 19, "smb8-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN3, 18, "smb15-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN3, 17, "rng-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN3, 16, "timer10_14-gate", NPCM7XX_CLK_S_APB1, 0},
+> -       {NPCM7XX_CLKEN3, 15, "pcirc-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN3, 14, "sececc-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN3, 13, "sha-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN3, 12, "smb14-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       /* bit 11 is reserved */
+> -       /* bit 10 is reserved */
+> -       {NPCM7XX_CLKEN3, 9, "pcimbx-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       /* bit 8 is reserved */
+> -       {NPCM7XX_CLKEN3, 7, "usbdev9-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN3, 6, "usbdev8-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN3, 5, "usbdev7-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN3, 4, "usbdev0-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN3, 3, "smb13-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN3, 2, "spix-gate", NPCM7XX_CLK_S_AHB, 0},
+> -       {NPCM7XX_CLKEN3, 1, "smb12-gate", NPCM7XX_CLK_S_APB2, 0},
+> -       {NPCM7XX_CLKEN3, 0, "pwmm1-gate", NPCM7XX_CLK_S_APB3, 0},
+> -};
+> -
+>  static DEFINE_SPINLOCK(npcm7xx_clk_lock);
+>
+>  static void __init npcm7xx_clk_init(struct device_node *clk_np)
+> --
+> 2.25.1
+>
+>
+
+--000000000000d0d9af05ba6a09a7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:monospace,monospace">Reviewed-by: Tali Perry &lt;<a href=3D"mailto=
+:tali.perry1@gmail.com">tali.perry1@gmail.com</a>&gt;</div><div class=3D"gm=
+ail_default" style=3D"font-family:monospace,monospace"><br></div><div class=
+=3D"gmail_default" style=3D"font-family:monospace,monospace">Thanks for the=
+ fix !</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"=
+gmail_attr">On Tue, Jan 26, 2021 at 2:46 PM Lee Jones &lt;<a href=3D"mailto=
+:lee.jones@linaro.org">lee.jones@linaro.org</a>&gt; wrote:<br></div><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
+x solid rgb(204,204,204);padding-left:1ex">Fixes the following W=3D1 kernel=
+ build warning(s):<br>
+<br>
+=C2=A0drivers/clk/clk-npcm7xx.c:438:43: warning: =E2=80=98npcm7xx_gates=E2=
+=80=99 defined but not used [-Wunused-const-variable=3D]<br>
+=C2=A0drivers/clk/clk-npcm7xx.c:365:48: warning: =E2=80=98npcm7xx_divs_fx=
+=E2=80=99 defined but not used [-Wunused-const-variable=3D]<br>
+<br>
+Cc: Avi Fishman &lt;<a href=3D"mailto:avifishman70@gmail.com" target=3D"_bl=
+ank">avifishman70@gmail.com</a>&gt;<br>
+Cc: Tomer Maimon &lt;<a href=3D"mailto:tmaimon77@gmail.com" target=3D"_blan=
+k">tmaimon77@gmail.com</a>&gt;<br>
+Cc: Tali Perry &lt;<a href=3D"mailto:tali.perry1@gmail.com" target=3D"_blan=
+k">tali.perry1@gmail.com</a>&gt;<br>
+Cc: Patrick Venture &lt;<a href=3D"mailto:venture@google.com" target=3D"_bl=
+ank">venture@google.com</a>&gt;<br>
+Cc: Nancy Yuen &lt;<a href=3D"mailto:yuenn@google.com" target=3D"_blank">yu=
+enn@google.com</a>&gt;<br>
+Cc: Benjamin Fair &lt;<a href=3D"mailto:benjaminfair@google.com" target=3D"=
+_blank">benjaminfair@google.com</a>&gt;<br>
+Cc: Michael Turquette &lt;<a href=3D"mailto:mturquette@baylibre.com" target=
+=3D"_blank">mturquette@baylibre.com</a>&gt;<br>
+Cc: Stephen Boyd &lt;<a href=3D"mailto:sboyd@kernel.org" target=3D"_blank">=
+sboyd@kernel.org</a>&gt;<br>
+Cc: Nuvoton Technologies &lt;<a href=3D"mailto:tali.perry@nuvoton.com" targ=
+et=3D"_blank">tali.perry@nuvoton.com</a>&gt;<br>
+Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@l=
+ists.ozlabs.org</a><br>
+Cc: <a href=3D"mailto:linux-clk@vger.kernel.org" target=3D"_blank">linux-cl=
+k@vger.kernel.org</a><br>
+Signed-off-by: Lee Jones &lt;<a href=3D"mailto:lee.jones@linaro.org" target=
+=3D"_blank">lee.jones@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0drivers/clk/clk-npcm7xx.c | 108 -------------------------------------=
+-<br>
+=C2=A01 file changed, 108 deletions(-)<br>
+<br>
+diff --git a/drivers/clk/clk-npcm7xx.c b/drivers/clk/clk-npcm7xx.c<br>
+index 27a86b7a34dbf..e677bb5a784b9 100644<br>
+--- a/drivers/clk/clk-npcm7xx.c<br>
++++ b/drivers/clk/clk-npcm7xx.c<br>
+@@ -361,13 +361,6 @@ static const struct npcm7xx_clk_mux_data npcm7xx_muxes=
+[] __initconst =3D {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 dvcssel_mux_parents, ARRAY_SIZE(dvcssel_mux_par=
+ents), 0, -1},<br>
+=C2=A0};<br>
+<br>
+-/* fixed ratio dividers (no register): */<br>
+-static const struct npcm7xx_clk_div_fixed_data npcm7xx_divs_fx[] __initcon=
+st =3D {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{ 1, 2, NPCM7XX_CLK_S_MC, NPCM7XX_CLK_S_MC_MUX,=
+ 0, NPCM7XX_CLK_MC},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{ 1, 2, NPCM7XX_CLK_S_PLL1_DIV2, NPCM7XX_CLK_S_=
+PLL1, 0, -1},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{ 1, 2, NPCM7XX_CLK_S_PLL2_DIV2, NPCM7XX_CLK_S_=
+PLL2, 0, -1},<br>
+-};<br>
+-<br>
+=C2=A0/* configurable dividers: */<br>
+=C2=A0static const struct npcm7xx_clk_div_data npcm7xx_divs[] __initconst =
+=3D {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 {NPCM7XX_CLKDIV1, 28, 3, NPCM7XX_CLK_S_ADC,<br>
+@@ -435,107 +428,6 @@ static const struct npcm7xx_clk_div_data npcm7xx_divs=
+[] __initconst =3D {<br>
+<br>
+=C2=A0};<br>
+<br>
+-static const struct npcm7xx_clk_gate_data npcm7xx_gates[] __initconst =3D =
+{<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 31, &quot;smb1-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 30, &quot;smb0-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 29, &quot;smb7-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 28, &quot;smb6-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 27, &quot;adc-gate&quot;, NPCM=
+7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 26, &quot;wdt-gate&quot;, NPCM=
+7XX_CLK_S_TIMER, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 25, &quot;usbdev3-gate&quot;, =
+NPCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 24, &quot;usbdev6-gate&quot;, =
+NPCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 23, &quot;usbdev5-gate&quot;, =
+NPCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 22, &quot;usbdev4-gate&quot;, =
+NPCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 21, &quot;emc2-gate&quot;, NPC=
+M7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 20, &quot;timer5_9-gate&quot;,=
+ NPCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 19, &quot;timer0_4-gate&quot;,=
+ NPCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 18, &quot;pwmm0-gate&quot;, NP=
+CM7XX_CLK_S_APB3, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 17, &quot;huart-gate&quot;, NP=
+CM7XX_CLK_S_UART, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 16, &quot;smb5-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 15, &quot;smb4-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 14, &quot;smb3-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 13, &quot;smb2-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 12, &quot;mc-gate&quot;, NPCM7=
+XX_CLK_S_MC, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 11, &quot;uart01-gate&quot;, N=
+PCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 10, &quot;aes-gate&quot;, NPCM=
+7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 9, &quot;peci-gate&quot;, NPCM=
+7XX_CLK_S_APB3, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 8, &quot;usbdev2-gate&quot;, N=
+PCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 7, &quot;uart23-gate&quot;, NP=
+CM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 6, &quot;emc1-gate&quot;, NPCM=
+7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 5, &quot;usbdev1-gate&quot;, N=
+PCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 4, &quot;shm-gate&quot;, NPCM7=
+XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/* bit 3 is reserved */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 2, &quot;kcs-gate&quot;, NPCM7=
+XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 1, &quot;spi3-gate&quot;, NPCM=
+7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN1, 0, &quot;spi0-gate&quot;, NPCM=
+7XX_CLK_S_AHB, 0},<br>
+-<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 31, &quot;cp-gate&quot;, NPCM7=
+XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 30, &quot;tock-gate&quot;, NPC=
+M7XX_CLK_S_TOCK, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/* bit 29 is reserved */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 28, &quot;gmac1-gate&quot;, NP=
+CM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 27, &quot;usbif-gate&quot;, NP=
+CM7XX_CLK_S_USBIF, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 26, &quot;usbhost-gate&quot;, =
+NPCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 25, &quot;gmac2-gate&quot;, NP=
+CM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/* bit 24 is reserved */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 23, &quot;pspi2-gate&quot;, NP=
+CM7XX_CLK_S_APB5, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 22, &quot;pspi1-gate&quot;, NP=
+CM7XX_CLK_S_APB5, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 21, &quot;3des-gate&quot;, NPC=
+M7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/* bit 20 is reserved */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 19, &quot;siox2-gate&quot;, NP=
+CM7XX_CLK_S_APB3, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 18, &quot;siox1-gate&quot;, NP=
+CM7XX_CLK_S_APB3, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/* bit 17 is reserved */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 16, &quot;fuse-gate&quot;, NPC=
+M7XX_CLK_S_APB4, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/*=C2=A0 bit 15 is reserved */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 14, &quot;vcd-gate&quot;, NPCM=
+7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 13, &quot;ece-gate&quot;, NPCM=
+7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 12, &quot;vdma-gate&quot;, NPC=
+M7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 11, &quot;ahbpcibrg-gate&quot;=
+, NPCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 10, &quot;gfxsys-gate&quot;, N=
+PCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 9, &quot;sdhc-gate&quot;, NPCM=
+7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 8, &quot;mmc-gate&quot;, NPCM7=
+XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 7, &quot;mft7-gate&quot;, NPCM=
+7XX_CLK_S_APB4, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 6, &quot;mft6-gate&quot;, NPCM=
+7XX_CLK_S_APB4, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 5, &quot;mft5-gate&quot;, NPCM=
+7XX_CLK_S_APB4, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 4, &quot;mft4-gate&quot;, NPCM=
+7XX_CLK_S_APB4, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 3, &quot;mft3-gate&quot;, NPCM=
+7XX_CLK_S_APB4, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 2, &quot;mft2-gate&quot;, NPCM=
+7XX_CLK_S_APB4, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 1, &quot;mft1-gate&quot;, NPCM=
+7XX_CLK_S_APB4, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN2, 0, &quot;mft0-gate&quot;, NPCM=
+7XX_CLK_S_APB4, 0},<br>
+-<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 31, &quot;gpiom7-gate&quot;, N=
+PCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 30, &quot;gpiom6-gate&quot;, N=
+PCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 29, &quot;gpiom5-gate&quot;, N=
+PCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 28, &quot;gpiom4-gate&quot;, N=
+PCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 27, &quot;gpiom3-gate&quot;, N=
+PCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 26, &quot;gpiom2-gate&quot;, N=
+PCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 25, &quot;gpiom1-gate&quot;, N=
+PCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 24, &quot;gpiom0-gate&quot;, N=
+PCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 23, &quot;espi-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 22, &quot;smb11-gate&quot;, NP=
+CM7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 21, &quot;smb10-gate&quot;, NP=
+CM7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 20, &quot;smb9-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 19, &quot;smb8-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 18, &quot;smb15-gate&quot;, NP=
+CM7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 17, &quot;rng-gate&quot;, NPCM=
+7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 16, &quot;timer10_14-gate&quot=
+;, NPCM7XX_CLK_S_APB1, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 15, &quot;pcirc-gate&quot;, NP=
+CM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 14, &quot;sececc-gate&quot;, N=
+PCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 13, &quot;sha-gate&quot;, NPCM=
+7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 12, &quot;smb14-gate&quot;, NP=
+CM7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/* bit 11 is reserved */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/* bit 10 is reserved */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 9, &quot;pcimbx-gate&quot;, NP=
+CM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/* bit 8 is reserved */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 7, &quot;usbdev9-gate&quot;, N=
+PCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 6, &quot;usbdev8-gate&quot;, N=
+PCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 5, &quot;usbdev7-gate&quot;, N=
+PCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 4, &quot;usbdev0-gate&quot;, N=
+PCM7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 3, &quot;smb13-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 2, &quot;spix-gate&quot;, NPCM=
+7XX_CLK_S_AHB, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 1, &quot;smb12-gate&quot;, NPC=
+M7XX_CLK_S_APB2, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{NPCM7XX_CLKEN3, 0, &quot;pwmm1-gate&quot;, NPC=
+M7XX_CLK_S_APB3, 0},<br>
+-};<br>
+-<br>
+=C2=A0static DEFINE_SPINLOCK(npcm7xx_clk_lock);<br>
+<br>
+=C2=A0static void __init npcm7xx_clk_init(struct device_node *clk_np)<br>
+-- <br>
+2.25.1<br>
+<br>
+</blockquote></div></div>
+
+--000000000000d0d9af05ba6a09a7--
