@@ -1,56 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5330730EBC0
-	for <lists+openbmc@lfdr.de>; Thu,  4 Feb 2021 06:12:02 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91E2330EED2
+	for <lists+openbmc@lfdr.de>; Thu,  4 Feb 2021 09:48:58 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DWRVl2VhVzDwr5
-	for <lists+openbmc@lfdr.de>; Thu,  4 Feb 2021 16:11:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DWXK33wn3zDwvW
+	for <lists+openbmc@lfdr.de>; Thu,  4 Feb 2021 19:48:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
- envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::635;
+ helo=mail-pl1-x635.google.com; envelope-from=manojkiran.eda@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ZtVP1gKl; dkim-atps=neutral
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com
+ [IPv6:2607:f8b0:4864:20::635])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DWRTv3ym6zDqSQ
- for <openbmc@lists.ozlabs.org>; Thu,  4 Feb 2021 16:11:14 +1100 (AEDT)
-IronPort-SDR: 8a05a5pXU64TYPOxhRpqxXi/gjJgmC4aWWr2cOfuSuE2rMth+55DZ+kQpoiAYgEyZdIXLA5UIy
- 6Ml1QnTxleyA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9884"; a="168281936"
-X-IronPort-AV: E=Sophos;i="5.79,400,1602572400"; 
- d="scan'208,217";a="168281936"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Feb 2021 21:11:10 -0800
-IronPort-SDR: RzUXbwxCuSy1RJQuF2/aSjyFehLjXeEb+b6KCx4kNsTEO77Gl88fNF7ZX2LAY6jFgug+G6try5
- WkffIifxhLbw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,400,1602572400"; 
- d="scan'208,217";a="356260970"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga007.fm.intel.com with ESMTP; 03 Feb 2021 21:11:09 -0800
-Received: from shwdeopenbmc (shwdeopenbmc.ccr.corp.intel.com [10.239.164.28])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id C3AFE5802A4;
- Wed,  3 Feb 2021 21:11:08 -0800 (PST)
-Date: Thu, 04 Feb 2021 13:11:09 +0800
-From: "chunhui.jia" <chunhui.jia@linux.intel.com>
-To: "Jayashree D" <jayashree-d@hcl.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re:  Boot Sequence Configuration in D-BUS interfaces.
-In-Reply-To: <SG2PR04MB3093C3B95174DA7371D078D6E1B69@SG2PR04MB3093.apcprd04.prod.outlook.com>
-References: <SG2PR04MB3093C3B95174DA7371D078D6E1B69@SG2PR04MB3093.apcprd04.prod.outlook.com>
-X-Mailer: NetEase FlashMail 2.4.1.32
-X-Priority: 3 (Normal)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DWXHr2X0ZzDwhK
+ for <openbmc@lists.ozlabs.org>; Thu,  4 Feb 2021 19:47:49 +1100 (AEDT)
+Received: by mail-pl1-x635.google.com with SMTP id x9so1392710plb.5
+ for <openbmc@lists.ozlabs.org>; Thu, 04 Feb 2021 00:47:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:message-id:in-reply-to:references:subject
+ :mime-version; bh=BDmD8EPgrHVWddmPHwU6u4I1Q3EIluMG79Hi1tZntHs=;
+ b=ZtVP1gKl7U/Q4FOqJTr8a7mXLX7J83ySeX6dyPr9y4ER57ibu8C/jxHFDTvSQUOHnk
+ 04cTqYrE1qejA43Cbo9fXgyp3FF393PFPaETt+xumfd8mOQcIkk66+DZx+X34VSTCueV
+ ghViE4zgn0v74dCOqT2TjleZ5yhtIAVlx2uwqKLSxZV1l2me+KFdMsS4QSINAzoV+KEs
+ yvbg6OATRAzaAysXWGU4ucfrjK6F5W4LL8LzpAGwm7wy7PoVlSxfpzN8dynnDN2kGZ3D
+ fxemcPx1brA9/DMFLkG1Y/+9+RBEDhwS9wiVz12xRVEnkgWn6Skl3E97QF/3JBv1VP0W
+ nVDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+ :references:subject:mime-version;
+ bh=BDmD8EPgrHVWddmPHwU6u4I1Q3EIluMG79Hi1tZntHs=;
+ b=IdC8tBdoPhqzIKsFHRg1WPWtJ5ROZDHEkKW85F+SFRT6qsjukrkwPKSxoAjH6Gxj7W
+ XVHIOoffy3yTu/fT49AzIvcNdcuiouPIujFXm37w9XXwFhHqkm8oV1YDYXTf5/G3GZd4
+ 3hv3pFHYPKuLDznIOUxgj1NExyhFxBa9h2a0ks89NMFhOpcs+hXH83ju57V9DJtgNL5t
+ l2RABlfNFAJXvQGE9lCuySSb0m4in84+DVFBY9pdn8gIrAh02rIFMruLzM/TlCtVBPvA
+ p7S56uaXUGc10GMEI7FEm7TB2c6EGAPKMm70fZ7YWwWqQnM2CBOOVaSE30IoB4TbyKZV
+ T6Sw==
+X-Gm-Message-State: AOAM530zWi1EQOHQTavPJyu1NzRa90nd8q6+YrEvsvpilSnrHxT629LC
+ ezNCJQzq/qAHMmnsRmVMwrvbyiHLbPM+/w==
+X-Google-Smtp-Source: ABdhPJzPdQezuaF46EQBLX1LiWig7HM+46TfRwO4PtWV6BzoprRaR4PlZE6etRhb0nXOvK9baYTUYA==
+X-Received: by 2002:a17:902:f541:b029:de:ae4d:2c7b with SMTP id
+ h1-20020a170902f541b02900deae4d2c7bmr7191436plf.62.1612428464651; 
+ Thu, 04 Feb 2021 00:47:44 -0800 (PST)
+Received: from juliet ([183.82.158.140])
+ by smtp.gmail.com with ESMTPSA id z18sm4758769pfq.68.2021.02.04.00.47.39
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Thu, 04 Feb 2021 00:47:43 -0800 (PST)
+Date: Thu, 4 Feb 2021 14:17:37 +0530
+From: manoj kiran <manojkiran.eda@gmail.com>
+To: "=?utf-8?Q?openbmc=40lists.ozlabs.org?=" <openbmc@lists.ozlabs.org>
+Message-ID: <92FA1C68-B326-4562-97DB-0D1D56648197@getmailspring.com>
+In-Reply-To: <YBi83kwe6SZqkcq0@heinlein>
+References: <YBi83kwe6SZqkcq0@heinlein>
+Subject: Re: Progress Codes in BMC
+X-Mailer: Mailspring
 MIME-Version: 1.0
-Message-ID: <601B81E9.1080206@linux.intel.com>
-Content-Type: multipart/alternative;
- boundary="NetEase-FlashMail-003-ed178c1d-93ba-4755-82eb-06f7631d01fc"
+Content-Type: multipart/alternative; boundary="601bb4a9_27838f5c_111c"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,145 +76,151 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "=?utf-8?Q?kunyi731=40gmail.com?=" <kunyi731@gmail.com>,
+ "=?utf-8?Q?ed=40tanous.net?=" <ed@tanous.net>,
+ "=?utf-8?Q?benjaminfair=40google.com?=" <benjaminfair@google.com>,
+ "=?utf-8?Q?anoo=40us.ibm.com?=" <anoo@us.ibm.com>,
+ "=?utf-8?Q?deepak.kodihalli.83=40gmail.com?=" <deepak.kodihalli.83@gmail.com>,
+ "=?utf-8?Q?gmills=40linux.ibm.com?=" <gmills@linux.ibm.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ "=?utf-8?Q?vishwa=40linux.ibm.com?=" <vishwa@linux.ibm.com>,
+ Supreeth Venkatesh <supreeth.venkatesh@amd.com>,
+ "=?utf-8?Q?jason.m.bills=40linux.intel.com?=" <jason.m.bills@linux.intel.com>,
+ "=?utf-8?Q?vijaykhemka=40fb.com?=" <vijaykhemka@fb.com>,
+ "=?utf-8?Q?wak=40google.com?=" <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---NetEase-FlashMail-003-ed178c1d-93ba-4755-82eb-06f7631d01fc
+--601bb4a9_27838f5c_111c
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-SmF5YXNocmVlLA0KDQpUaGUgY29tYmluYXRpb24gb2YgYm9vdCBtb2RlIGFuZCBib290IHNvdXJj
-ZSBtYXBzIHRvIElQTUkgYm9vdCBvcmRlci4NCg0KU2FtcGxlIGNvZGUgZm9yIG1hcHBpbmcgY291
-bGQgYmUgZm91bmQgaW4gDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1ob3N0
-LWlwbWlkL2Jsb2IvOGE3MjM2YWU5MzA5YTQxM2NlYzA2NDRiYWY5ZTY5ZjNmOWE4MDE2MC9jaGFz
-c2lzaGFuZGxlci5jcHAjTDE2OTUNCg0KDQoyMDIxLTAyLTA0IA0KDQpjaHVuaHVpLmppYSANCg0K
-DQoNCuWPkeS7tuS6uu+8mkpheWFzaHJlZSBEIDxqYXlhc2hyZWUtZEBoY2wuY29tPg0K5Y+R6YCB
-5pe26Ze077yaMjAyMS0wMi0wMSAyMTo1Nw0K5Li76aKY77yaQm9vdCBTZXF1ZW5jZSBDb25maWd1
-cmF0aW9uIGluIEQtQlVTIGludGVyZmFjZXMuDQrmlLbku7bkurrvvJoib3BlbmJtY0BsaXN0cy5v
-emxhYnMub3JnIjxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQrmioTpgIHvvJoNCg0KQ2xhc3Np
-ZmljYXRpb246IFB1YmxpYw0KSGkgVGVhbSwNCiANCkluIHBob3NwaG9yLWRidXMtaW50ZXJmYWNl
-cyByZXBvLCBib290IG9yZGVyIHN1cHBvcnRzIG9ubHkgYm9vdCBtb2RlIGFuZCBib290IHNvdXJj
-ZSBkYnVzIGludGVyZmFjZXMuIA0KV2UgbmVlZCB0byBkaXNwbGF5IGFsbCB0aGUgYm9vdCBvcmRl
-ciBzZXF1ZW5jZXMgKCAiVVNCX0RFViIsICJORVRfSVBWNiIsICJTQVRBX0hERCIsICJTQVRBX0NE
-IiwgIk90aGVycyIgKSB1c2luZyBkYnVzIGludGVyZmFjZXMuIA0KUGxlYXNlIHByb3ZpZGUgeW91
-ciBzdWdnZXN0aW9ucyBvbiB0aGlzIHBhcnQuDQogDQpSZWdhcmRzLA0KSmF5YXNocmVlDQogDQo6
-OkRJU0NMQUlNRVI6Og0KDQoNClRoZSBjb250ZW50cyBvZiB0aGlzIGUtbWFpbCBhbmQgYW55IGF0
-dGFjaG1lbnQocykgYXJlIGNvbmZpZGVudGlhbCBhbmQgaW50ZW5kZWQgZm9yIHRoZSBuYW1lZCBy
-ZWNpcGllbnQocykgb25seS4gRS1tYWlsIHRyYW5zbWlzc2lvbiBpcyBub3QgZ3VhcmFudGVlZCB0
-byBiZSBzZWN1cmUgb3IgZXJyb3ItZnJlZSBhcyBpbmZvcm1hdGlvbiBjb3VsZCBiZSBpbnRlcmNl
-cHRlZCwgY29ycnVwdGVkLCBsb3N0LCBkZXN0cm95ZWQsIGFycml2ZSBsYXRlIG9yIGluY29tcGxl
-dGUsIG9yIG1heSBjb250YWluIHZpcnVzZXMgaW4gdHJhbnNtaXNzaW9uLiBUaGUgZSBtYWlsIGFu
-ZCBpdHMgY29udGVudHMgKHdpdGggb3Igd2l0aG91dCByZWZlcnJlZCBlcnJvcnMpIHNoYWxsIHRo
-ZXJlZm9yZSBub3QgYXR0YWNoIGFueSBsaWFiaWxpdHkgb24gdGhlIG9yaWdpbmF0b3Igb3IgSENM
-IG9yIGl0cyBhZmZpbGlhdGVzLiBWaWV3cyBvciBvcGluaW9ucywgaWYgYW55LCBwcmVzZW50ZWQg
-aW4gdGhpcyBlbWFpbCBhcmUgc29sZWx5IHRob3NlIG9mIHRoZSBhdXRob3IgYW5kIG1heSBub3Qg
-bmVjZXNzYXJpbHkgcmVmbGVjdCB0aGUgdmlld3Mgb3Igb3BpbmlvbnMgb2YgSENMIG9yIGl0cyBh
-ZmZpbGlhdGVzLiBBbnkgZm9ybSBvZiByZXByb2R1Y3Rpb24sIGRpc3NlbWluYXRpb24sIGNvcHlp
-bmcsIGRpc2Nsb3N1cmUsIG1vZGlmaWNhdGlvbiwgZGlzdHJpYnV0aW9uIGFuZCAvIG9yIHB1Ymxp
-Y2F0aW9uIG9mIHRoaXMgbWVzc2FnZSB3aXRob3V0IHRoZSBwcmlvciB3cml0dGVuIGNvbnNlbnQg
-b2YgYXV0aG9yaXplZCByZXByZXNlbnRhdGl2ZSBvZiBIQ0wgaXMgc3RyaWN0bHkgcHJvaGliaXRl
-ZC4gSWYgeW91IGhhdmUgcmVjZWl2ZWQgdGhpcyBlbWFpbCBpbiBlcnJvciBwbGVhc2UgZGVsZXRl
-IGl0IGFuZCBub3RpZnkgdGhlIHNlbmRlciBpbW1lZGlhdGVseS4gQmVmb3JlIG9wZW5pbmcgYW55
-IGVtYWlsIGFuZC9vciBhdHRhY2htZW50cywgcGxlYXNlIGNoZWNrIHRoZW0gZm9yIHZpcnVzZXMg
-YW5kIG90aGVyIGRlZmVjdHMu
+Hi All,
 
---NetEase-FlashMail-003-ed178c1d-93ba-4755-82eb-06f7631d01fc
+Thanks to everyone for all the implementation ideas on this thread.
+After understanding all the inputs from the community , we were planning to proceed forward with using the existing infrastructure provided by phosphor-host-postd, phosphor-post-code-manager repo's & leverage the BIOS POSTCode Log service to do the job.
+The plan is to start with minimal working pieces. On the first go we are planning to come up with patchsets that will do the following:
+1.Come up with a compilation flag & make sure phosphor-host-postd still hosts the dbus interface even if it does not see the snoop port.
+2.PLDM will receive the 72bytes of progress code from the hypervisor via File I/O, and then just send the first 8 bytes(discard everything else) to the existing Raw Property & use the existing redfish BIOS Post Code log service to check if things are working.
+
+In the next iteration :
+1. We will try to modify the existing dbus property (Boot.Raw) to array[byte] & the piece of code that uses this property in other repos including the post-code-manager.
+2. There might be a need to Modify/Add new interfaces used by post-code-manager to parse the buffer & host the dbus objects to such an extent that an AdditionalDataURI can be given to clients(base64 encoded buffer) apart from filling the existing redfish message registry.
+
+Does the community foresee any issues/problems if we stick to the above-mentioned plan?
+Thanks,
+Manoj
+
+On Feb 2 2021, at 8:15 am, Patrick Williams <patrick@stwcx.xyz> wrote:
+> On Mon, Feb 01, 2021 at 07:21:39PM -0500, Brad Bishop wrote:
+> > On Sat, Jan 30, 2021 at 08:31:26AM -0600, Patrick Williams wrote:
+> > >On Wed, Jan 27, 2021 at 08:05:26PM -0500, Brad Bishop wrote:
+> > >>
+> > >> There are multiple sources of the codes - on Power the power sequencing
+> > >> is done on the BMC and that is considered part of the server boot so we
+> > >> have both those applications indicating their progress along with the
+> > >> more traditional progress flowing down from system firmware.
+> > >
+> > >The `xyz.openbmc_project.State.Boot.Raw` is the interface to use here.
+> > >You just write the `Value` property.
+> >
+> > Ok. Do I have it right - on any application that wants to post a
+> > "progress code" you would just implement this interface on a single
+> > (arbitrary?) path and continually write to the Value property?
+>
+> I think it is even simpler than that. You just need to make a dbus
+> client call to write to the Boot.Raw value. This might happen from your
+> boot sequence on the BMC-side or from PLDM for the Host-side.
+>
+> You will want the phosphor-post-code-manager application running, which will
+> listen to the PropertyChanged signals from Boot.Raw and keep the running
+> history for you.
+>
+> There is also phosphor-host-postd. Currently it has an implementation
+> that looks at LPC to get the post codes. There was a proposed
+> implementation [1] that added multi-host support and I think support to
+> get the value directly from dbus client writes to Boot.Raw instead of
+> the lpc-snoop method. Then there is code in fb-ipmi-oem that writes the
+> results of some IPMB messages into the Boot.Raw value[2]. Looking at
+> this I'm not positive that all the pieces are all there, but I think it
+> is mostly there. Maybe check with the author on 1 to see where it is
+> at.
+>
+> This design doc might be useful too [3].
+> 1. https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-postd/+/36509
+> 2. https://github.com/openbmc/fb-ipmi-oem/blob/master/src/biccommands.cpp#L76
+> 3. https://github.com/openbmc/docs/blob/master/designs/multi-host-postcode.md
+>
+> --
+> Patrick Williams
+>
+
+
+--601bb4a9_27838f5c_111c
 Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
-L0VOIj4NCjxIVE1MIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIiB4bWxu
-czp2ID0gDQoidXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm8gPSANCiJ1cm46
-c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTpvZmZpY2UiIHhtbG5zOncgPSANCiJ1cm46c2No
-ZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptID0gDQoiaHR0cDovL3NjaGVt
-YXMubWljcm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIj48SEVBRD4NCjxNRVRBIGNvbnRl
-bnQ9InRleHQvaHRtbDsgY2hhcnNldD11dGYtOCIgaHR0cC1lcXVpdj1Db250ZW50LVR5cGU+DQo8
-TUVUQSBuYW1lPUdFTkVSQVRPUiBjb250ZW50PSJNU0hUTUwgMTEuMDAuMTA1NzAuMTAwMSI+DQo8
-U1RZTEU+PCEtLQovKiBGb250IERlZmluaXRpb25zICovCkBmb250LWZhY2UKCXtmb250LWZhbWls
-eToiQ2FtYnJpYSBNYXRoIjsKCXBhbm9zZS0xOjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQpAZm9udC1m
-YWNlCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsKCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0
-O30KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2
-Lk1zb05vcm1hbAoJe21hcmdpbjowaW47CgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7Cglmb250LXNp
-emU6MTEuMHB0OwoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQphOmxpbmssIHNw
-YW4uTXNvSHlwZXJsaW5rCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5OwoJY29sb3I6IzA1NjNDMTsK
-CXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQphOnZpc2l0ZWQsIHNwYW4uTXNvSHlwZXJsaW5r
-Rm9sbG93ZWQKCXttc28tc3R5bGUtcHJpb3JpdHk6OTk7Cgljb2xvcjojOTU0RjcyOwoJdGV4dC1k
-ZWNvcmF0aW9uOnVuZGVybGluZTt9CnNwYW4uRW1haWxTdHlsZTE3Cgl7bXNvLXN0eWxlLXR5cGU6
-cGVyc29uYWwtY29tcG9zZTsKCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOwoJY29s
-b3I6d2luZG93dGV4dDt9Ci5Nc29DaHBEZWZhdWx0Cgl7bXNvLXN0eWxlLXR5cGU6ZXhwb3J0LW9u
-bHk7Cglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9CkBwYWdlIFdvcmRTZWN0aW9u
-MQoJe3NpemU6OC41aW4gMTEuMGluOwoJbWFyZ2luOjEuMGluIDEuMGluIDEuMGluIDEuMGluO30K
-ZGl2LldvcmRTZWN0aW9uMQoJe3BhZ2U6V29yZFNlY3Rpb24xO30KLS0+PC9TVFlMRT4NCjwhLS0g
-Zmxhc2htYWlsIHN0eWxlIGJlZ2luIC0tPg0KPFNUWUxFIHR5cGU9dGV4dC9jc3M+CmJvZHkge2Jv
-cmRlci13aWR0aDowO21hcmdpbjowfQppbWcge2JvcmRlcjowO21hcmdpbjowO3BhZGRpbmc6MH0K
-PC9TVFlMRT4NCjxCQVNFIHRhcmdldD1fYmxhbms+PCEtLSBmbGFzaG1haWwgc3R5bGUgZW5kIC0t
-PjwvSEVBRD4NCjxCT0RZIA0Kc3R5bGU9IkJPUkRFUi1MRUZULVdJRFRIOiAwcHg7IEZPTlQtU0la
-RTogMTAuNXB0OyBGT05ULUZBTUlMWTogYXJpYWw7IEJPUkRFUi1SSUdIVC1XSURUSDogMHB4OyBC
-T1JERVItQk9UVE9NLVdJRFRIOiAwcHg7IENPTE9SOiAjMDAwMDAwOyBNQVJHSU46IDEycHg7IExJ
-TkUtSEVJR0hUOiAxLjU7IEJPUkRFUi1UT1AtV0lEVEg6IDBweCIgDQptYXJnaW5oZWlnaHQ9IjAi
-IG1hcmdpbndpZHRoPSIwIj4NCjxESVY+SmF5YXNocmVlLDwvRElWPg0KPERJVj4mbmJzcDs8L0RJ
-Vj4NCjxESVY+VGhlIGNvbWJpbmF0aW9uIG9mIGJvb3QgbW9kZSBhbmQgYm9vdCBzb3VyY2UgbWFw
-cyB0byBJUE1JIGJvb3Qgb3JkZXIuPC9ESVY+DQo8RElWPiZuYnNwOzwvRElWPg0KPERJVj5TYW1w
-bGUgY29kZSBmb3IgbWFwcGluZyBjb3VsZCBiZSBmb3VuZCBpbiA8L0RJVj4NCjxESVY+PEEgDQpo
-cmVmPSJodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1ob3N0LWlwbWlkL2Jsb2Iv
-OGE3MjM2YWU5MzA5YTQxM2NlYzA2NDRiYWY5ZTY5ZjNmOWE4MDE2MC9jaGFzc2lzaGFuZGxlci5j
-cHAjTDE2OTUiPmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLWhvc3QtaXBtaWQv
-YmxvYi84YTcyMzZhZTkzMDlhNDEzY2VjMDY0NGJhZjllNjlmM2Y5YTgwMTYwL2NoYXNzaXNoYW5k
-bGVyLmNwcCNMMTY5NTwvQT48L0RJVj4NCjxESVY+Jm5ic3A7PC9ESVY+DQo8RElWPiZuYnNwOzwv
-RElWPg0KPERJViBzdHlsZT0iRk9OVC1TSVpFOiAxMHB0OyBGT05ULUZBTUlMWTogVmVyZGFuYTsg
-Q09MT1I6ICNjMGMwYzAiIA0KYWxpZ249bGVmdD4yMDIxLTAyLTA0IA0KPEhSIGlkPVNpZ25OYW1l
-SFIgDQpzdHlsZT0iQk9SREVSLVRPUDogI2MwYzBjMCAxcHggc29saWQ7IEhFSUdIVDogMXB4OyBC
-T1JERVItUklHSFQ6IDBweDsgV0lEVEg6IDEyMnB4OyBCT1JERVItQk9UVE9NOiAwcHg7IEJPUkRF
-Ui1MRUZUOiAwcHgiIA0KYWxpZ249bGVmdD4NCjxTUEFOIGlkPV9GbGFzaFNpZ25OYW1lPmNodW5o
-dWkuamlhPC9TUEFOPiA8L0RJVj4NCjxIUiANCnN0eWxlPSJCT1JERVItVE9QOiAjYzBjMGMwIDFw
-eCBzb2xpZDsgSEVJR0hUOiAxcHg7IEJPUkRFUi1SSUdIVDogMHB4OyBCT1JERVItQk9UVE9NOiAw
-cHg7IEJPUkRFUi1MRUZUOiAwcHgiPg0KDQo8QkxPQ0tRVU9URSBpZD1udGVzLWZsYXNobWFpbC1x
-dW90ZSANCnN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQtRkFNSUxZOiBWZXJkYW5hOyBQQURE
-SU5HLUxFRlQ6IDBweDsgTUFSR0lOLUxFRlQ6IDBweCI+DQogIDxESVY+PFNUUk9ORz7lj5Hku7bk
-urrvvJo8L1NUUk9ORz5KYXlhc2hyZWUgRCAmbHQ7amF5YXNocmVlLWRAaGNsLmNvbSZndDs8L0RJ
-Vj4NCiAgPERJVj48U1RST05HPuWPkemAgeaXtumXtO+8mjwvU1RST05HPjIwMjEtMDItMDEmbmJz
-cDsyMTo1NzwvRElWPg0KICA8RElWPjxTVFJPTkc+5Li76aKY77yaPC9TVFJPTkc+Qm9vdCBTZXF1
-ZW5jZSBDb25maWd1cmF0aW9uIGluIEQtQlVTIA0KaW50ZXJmYWNlcy48L0RJVj4NCiAgPERJVj48
-U1RST05HPuaUtuS7tuS6uu+8mjwvU1RST05HPiJvcGVuYm1jQGxpc3RzLm96bGFicy5vcmciJmx0
-O29wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZndDs8L0RJVj4NCiAgPERJVj48U1RST05HPuaKhOmA
-ge+8mjwvU1RST05HPjwvRElWPg0KICA8RElWPiZuYnNwOzwvRElWPg0KICA8RElWPg0KICA8RElW
-IGNsYXNzPVdvcmRTZWN0aW9uMT4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsIHN0eWxlPSJNQVJHSU4t
-Qk9UVE9NOiAxMnB0Ij5DbGFzc2lmaWNhdGlvbjogPEI+PFNQQU4gDQogIHN0eWxlPSJDT0xPUjog
-Z3JlZW4iPlB1YmxpYzwvU1BBTj48L0I+PFNQQU4gDQogIHN0eWxlPSJGT05ULVNJWkU6IDEycHQi
-PjxvOnA+PC9vOnA+PC9TUEFOPjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsPkhpIFRlYW0sPG86
-cD48L286cD48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48bzpwPiZuYnNwOzwvbzpwPjwvUD4N
-CiAgPFAgY2xhc3M9TXNvTm9ybWFsPkluIHBob3NwaG9yLWRidXMtaW50ZXJmYWNlcyByZXBvLCBi
-b290IG9yZGVyIHN1cHBvcnRzIG9ubHkgDQogIGJvb3QgbW9kZSBhbmQgYm9vdCBzb3VyY2UgZGJ1
-cyBpbnRlcmZhY2VzLiA8bzpwPjwvbzpwPjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsPldlIG5l
-ZWQgdG8gZGlzcGxheSBhbGwgdGhlIGJvb3Qgb3JkZXIgc2VxdWVuY2VzICggDQogICJVU0JfREVW
-IiwgIk5FVF9JUFY2IiwgIlNBVEFfSEREIiwgIlNBVEFfQ0QiLCAiT3RoZXJzIiApIHVzaW5nIGRi
-dXMgDQogIGludGVyZmFjZXMuIDxvOnA+PC9vOnA+PC9QPg0KICA8UCBjbGFzcz1Nc29Ob3JtYWw+
-UGxlYXNlIHByb3ZpZGUgeW91ciBzdWdnZXN0aW9ucyBvbiB0aGlzIA0KcGFydC48bzpwPjwvbzpw
-PjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsPjxvOnA+Jm5ic3A7PC9vOnA+PC9QPg0KICA8UCBj
-bGFzcz1Nc29Ob3JtYWw+UmVnYXJkcyw8bzpwPjwvbzpwPjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9y
-bWFsPkpheWFzaHJlZTxvOnA+PC9vOnA+PC9QPg0KICA8UCBjbGFzcz1Nc29Ob3JtYWw+PG86cD4m
-bmJzcDs8L286cD48L1A+PC9ESVY+PEZPTlQgY29sb3I9Z3JheSBzaXplPTEgDQogIGZhY2U9QXJp
-YWw+OjpESVNDTEFJTUVSOjo8QlI+DQogIDxIUj4NCiAgVGhlIGNvbnRlbnRzIG9mIHRoaXMgZS1t
-YWlsIGFuZCBhbnkgYXR0YWNobWVudChzKSBhcmUgY29uZmlkZW50aWFsIGFuZCANCiAgaW50ZW5k
-ZWQgZm9yIHRoZSBuYW1lZCByZWNpcGllbnQocykgb25seS4gRS1tYWlsIHRyYW5zbWlzc2lvbiBp
-cyBub3QgDQogIGd1YXJhbnRlZWQgdG8gYmUgc2VjdXJlIG9yIGVycm9yLWZyZWUgYXMgaW5mb3Jt
-YXRpb24gY291bGQgYmUgaW50ZXJjZXB0ZWQsIA0KICBjb3JydXB0ZWQsIGxvc3QsIGRlc3Ryb3ll
-ZCwgYXJyaXZlIGxhdGUgb3IgaW5jb21wbGV0ZSwgb3IgbWF5IGNvbnRhaW4gdmlydXNlcyANCiAg
-aW4gdHJhbnNtaXNzaW9uLiBUaGUgZSBtYWlsIGFuZCBpdHMgY29udGVudHMgKHdpdGggb3Igd2l0
-aG91dCByZWZlcnJlZCBlcnJvcnMpIA0KICBzaGFsbCB0aGVyZWZvcmUgbm90IGF0dGFjaCBhbnkg
-bGlhYmlsaXR5IG9uIHRoZSBvcmlnaW5hdG9yIG9yIEhDTCBvciBpdHMgDQogIGFmZmlsaWF0ZXMu
-IFZpZXdzIG9yIG9waW5pb25zLCBpZiBhbnksIHByZXNlbnRlZCBpbiB0aGlzIGVtYWlsIGFyZSBz
-b2xlbHkgDQogIHRob3NlIG9mIHRoZSBhdXRob3IgYW5kIG1heSBub3QgbmVjZXNzYXJpbHkgcmVm
-bGVjdCB0aGUgdmlld3Mgb3Igb3BpbmlvbnMgb2YgDQogIEhDTCBvciBpdHMgYWZmaWxpYXRlcy4g
-QW55IGZvcm0gb2YgcmVwcm9kdWN0aW9uLCBkaXNzZW1pbmF0aW9uLCBjb3B5aW5nLCANCiAgZGlz
-Y2xvc3VyZSwgbW9kaWZpY2F0aW9uLCBkaXN0cmlidXRpb24gYW5kIC8gb3IgcHVibGljYXRpb24g
-b2YgdGhpcyBtZXNzYWdlIA0KICB3aXRob3V0IHRoZSBwcmlvciB3cml0dGVuIGNvbnNlbnQgb2Yg
-YXV0aG9yaXplZCByZXByZXNlbnRhdGl2ZSBvZiBIQ0wgaXMgDQogIHN0cmljdGx5IHByb2hpYml0
-ZWQuIElmIHlvdSBoYXZlIHJlY2VpdmVkIHRoaXMgZW1haWwgaW4gZXJyb3IgcGxlYXNlIGRlbGV0
-ZSBpdCANCiAgYW5kIG5vdGlmeSB0aGUgc2VuZGVyIGltbWVkaWF0ZWx5LiBCZWZvcmUgb3Blbmlu
-ZyBhbnkgZW1haWwgYW5kL29yIA0KICBhdHRhY2htZW50cywgcGxlYXNlIGNoZWNrIHRoZW0gZm9y
-IHZpcnVzZXMgYW5kIG90aGVyIGRlZmVjdHMuPEJSPg0KICA8SFI+DQogIDwvRk9OVD48L0RJVj48
-L0JMT0NLUVVPVEU+PC9CT0RZPjwvSFRNTD4=
-
---NetEase-FlashMail-003-ed178c1d-93ba-4755-82eb-06f7631d01fc--
+<div>Hi All,</div><br><div>Thanks to everyone for all the implementation =
+ideas on this thread.</div><br><div>After understanding all the inputs fr=
+om the community , we were planning to proceed forward with using the exi=
+sting infrastructure provided by phosphor-host-postd, phosphor-post-code-=
+manager repo's &amp; leverage the BIOS POSTCode Log service to do the job=
+.</div><br><div>The plan is to start with minimal working pieces. On the =
+first go we are planning to come up with patchsets that will do the follo=
+wing:</div><br><div>1.Come up with a compilation flag &amp; make sure pho=
+sphor-host-postd still hosts the dbus interface even if it does not see t=
+he snoop port.</div><div>2.PLDM will receive the 72bytes of progress code=
+ from the hypervisor via =46ile I/O, and then just send the first 8 bytes=
+(discard everything else) to the existing Raw Property &amp; use the exis=
+ting redfish BIOS Post Code log service to check if things are working.</=
+div><br><div>In the next iteration :</div><div>1. We will try to modify t=
+he existing dbus property (Boot.Raw) to array=5Bbyte=5D &amp; the piece o=
+f code that uses this property in other repos including the post-code-man=
+ager.</div><div>2. There might be a need to Modify/Add new interfaces use=
+d by post-code-manager to parse the buffer &amp; host the dbus objects to=
+ such an extent that an AdditionalDataURI can be given to clients(base64 =
+encoded buffer) apart from filling the existing redfish message registry.=
+</div><br><div>Does the community foresee any issues/problems if we stick=
+ to the above-mentioned plan=3F</div><br><div>Thanks,</div><div>Manoj </d=
+iv><br><div class=3D=22gmail=5Fquote=5Fattribution=22>On =46eb 2 2021, at=
+ 8:15 am, Patrick Williams &lt;patrick=40stwcx.xyz&gt; wrote:</div><block=
+quote><div><div>On Mon, =46eb 01, 2021 at 07:21:39PM -0500, Brad Bishop w=
+rote:</div><div>&gt; On Sat, Jan 30, 2021 at 08:31:26AM -0600, Patrick Wi=
+lliams wrote:</div><div>&gt; &gt;On Wed, Jan 27, 2021 at 08:05:26PM -0500=
+, Brad Bishop wrote:</div><div>&gt; &gt;&gt;</div><div>&gt; &gt;&gt; Ther=
+e are multiple sources of the codes - on Power the power sequencing</div>=
+<div>&gt; &gt;&gt; is done on the BMC and that is considered part of the =
+server boot so we</div><div>&gt; &gt;&gt; have both those applications in=
+dicating their progress along with the</div><div>&gt; &gt;&gt; more tradi=
+tional progress flowing down from system firmware.</div><div>&gt; &gt;</d=
+iv><div>&gt; &gt;The =60xyz.openbmc=5Fproject.State.Boot.Raw=60 is the in=
+terface to use here.</div><div>&gt; &gt;You just write the =60Value=60 pr=
+operty.</div><div>&gt;</div><div>&gt; Ok. Do I have it right - on any app=
+lication that wants to post a</div><div>&gt; =22progress code=22 you woul=
+d just implement this interface on a single</div><div>&gt; (arbitrary=3F)=
+ path and continually write to the Value property=3F</div><br><div>I thin=
+k it is even simpler than that. You just need to make a dbus</div><div>cl=
+ient call to write to the Boot.Raw value. This might happen from your</di=
+v><div>boot sequence on the BMC-side or from PLDM for the Host-side.</div=
+><br><div>You will want the phosphor-post-code-manager application runnin=
+g, which will</div><div>listen to the PropertyChanged signals from Boot.R=
+aw and keep the running</div><div>history for you.</div><br><div>There is=
+ also phosphor-host-postd. Currently it has an implementation</div><div>t=
+hat looks at LPC to get the post codes. There was a proposed</div><div>im=
+plementation =5B1=5D that added multi-host support and I think support to=
+</div><div>get the value directly from dbus client writes to Boot.Raw ins=
+tead of</div><div>the lpc-snoop method. Then there is code in fb-ipmi-oem=
+ that writes the</div><div>results of some IPMB messages into the Boot.Ra=
+w value=5B2=5D. Looking at</div><div>this I'm not positive that all the p=
+ieces are all there, but I think it</div><div>is mostly there. Maybe chec=
+k with the author on 1 to see where it is</div><div>at.</div><br><div>Thi=
+s design doc might be useful too =5B3=5D.</div><br><div>1. https://gerrit=
+.openbmc-project.xyz/c/openbmc/phosphor-host-postd/+/36509</div><div>2. h=
+ttps://github.com/openbmc/fb-ipmi-oem/blob/master/src/biccommands.cpp=23L=
+76</div><div>3. https://github.com/openbmc/docs/blob/master/designs/multi=
+-host-postcode.md</div><br><div>--</div><div>Patrick Williams</div></div>=
+</blockquote>
+--601bb4a9_27838f5c_111c--
 
