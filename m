@@ -1,68 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76D1630F452
-	for <lists+openbmc@lfdr.de>; Thu,  4 Feb 2021 14:57:02 +0100 (CET)
-Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DWg8V6qGFzDwxd
-	for <lists+openbmc@lfdr.de>; Fri,  5 Feb 2021 00:56:58 +1100 (AEDT)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B0CD30F6EB
+	for <lists+openbmc@lfdr.de>; Thu,  4 Feb 2021 16:57:01 +0100 (CET)
+Received: from bilbo.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DWjpx3QV7zDwsB
+	for <lists+openbmc@lfdr.de>; Fri,  5 Feb 2021 02:56:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e31;
- helo=mail-vs1-xe31.google.com; envelope-from=deepak.kodihalli.83@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25;
+ helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=WOTa98KB; dkim-atps=neutral
-Received: from mail-vs1-xe31.google.com (mail-vs1-xe31.google.com
- [IPv6:2607:f8b0:4864:20::e31])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=TZqswgGh; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=ibaDSGXV; 
+ dkim-atps=neutral
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DWg762x1gzDqlX
- for <openbmc@lists.ozlabs.org>; Fri,  5 Feb 2021 00:55:44 +1100 (AEDT)
-Received: by mail-vs1-xe31.google.com with SMTP id k9so1787817vsr.3
- for <openbmc@lists.ozlabs.org>; Thu, 04 Feb 2021 05:55:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=0QLP1wiMU17RxSdRjih1w4VqfUo/WtP/ppEomTyP1Z8=;
- b=WOTa98KBXO1XhF1ECvu9OIAN7/CyVGLu8yxwNt6JW8n9gf72T7Q5iDE8Kk9ejkEGSA
- pwjiB8b+n8nfCZIIoGRCgeIWQb7UwtiFdDI8ABu/C1+LkWHG18CM+W2QRWqGArH0fUKt
- WsR3J2wNyzV6rBR064X/l/Tr2CZ1KxiMEOZdKZIaGa0ptjbKbLFKmdsRM8YxngPTcLzF
- s91oXu1+5KBiYJMqauy++OWDniJBls83itqeHPBBQSQpxuIwh46sELmJ+fO+MugMPSuf
- uIAcC627ILM3rRdt1fC4lx8x/E1waSWUf/fj7aMCFYBASbZfDtN5OxA9VzvLCln0d46A
- 3GkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=0QLP1wiMU17RxSdRjih1w4VqfUo/WtP/ppEomTyP1Z8=;
- b=fQBJW8pIbkqHF+uvgubIqa5DPNkgorbBrikJvajr0BdA7n9tW9T0161gW8Q17pVH5e
- oWjnIkazrat1GaxlzTwkCvfO0z/99nkwi05ZgKMM5d868lc6cWSWkSybVZn5LMkDCMbj
- XaO4DUUtUtuVHrSi1cSxBPZqlSLXgEVsu2LRSpNAKeuSxE6tY02UfNXZQC0xB8iXIbS3
- PvjEKoMygrH+oqBp9PSVsfyKOvZ1EZxEAVIQbhMnFH/mugtjuAFuY9GWBxxme0AXYiGY
- 7wSu5LDU87PYE/gJ9jAqUcRc31gPiJI0GcMU95C2KkmAz45DhSXNT2cbUdpBTF5f/u/S
- zymQ==
-X-Gm-Message-State: AOAM533IIEJ+kyPD3UtlGK8KquXETPUP906IjgiTKnOkwlATNKKmfLB3
- GBlBulsZUOtKe0oSz0a0THAkCUlJN7A7pgrlPCU=
-X-Google-Smtp-Source: ABdhPJwGhdCpuxjGTQH4c7CQoFp3nNTb96RvZWUhcWLjaWtMwtZ7QbGCOYpJinGfQKQfchgwJMgasYSiZENbbIqNgKg=
-X-Received: by 2002:a67:d896:: with SMTP id f22mr5182453vsj.43.1612446940193; 
- Thu, 04 Feb 2021 05:55:40 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DWjnl2t2XzDwnZ
+ for <openbmc@lists.ozlabs.org>; Fri,  5 Feb 2021 02:55:53 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 9F3FB10C7;
+ Thu,  4 Feb 2021 10:55:47 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Thu, 04 Feb 2021 10:55:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=Enl93kPSOIGgZW1gB1uXERO3wCp
+ hwuNpvVpldzaXiww=; b=TZqswgGhdWMb23bBFRIFcsZaZwa1gEe3zApUbjjdf1h
+ A4SdbZRNBI721d53Y7CPOUxtZK8VL5hGWeetSsZKzp3mpcmyJFwr5yI9AeqeN3+1
+ zKPDgMnjzka4gZOKvanorw2tysdjz4OQ2XHRpkoFAxa735duXlPZ2qRTkH/qauiv
+ JrQssiGDhvuB/OJONiDt3MBec9QFT48LwkdapeaGHqcOHd4EHQigBL70KqsoQOBb
+ 7BOkOUu5bB99v/YWR2ktDuD2FuXJ+lotep4gvcWKVFvQqsgHgv8FV3T4xnoN0xhc
+ ZoJ0QMFqb8k0KcOEuauNAFUaIzjVh/398WuHVmtv70A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Enl93k
+ PSOIGgZW1gB1uXERO3wCphwuNpvVpldzaXiww=; b=ibaDSGXVhBi3Pq7M7veEJg
+ VnYWxVdUbhZ7KE/n9fJLwUBunSqnNHjnUr6MHukIR2Cl8sKqC+BDNIXVQr2aJrAW
+ 7mYfD+LzmKGAWolcpXazkVykVLe2u+bsS0ZNqJw3b41Qk9+8dNurkHTY/JM/HQcP
+ 5otET1PviuYmIXy2SjmAOrkttrkRo/QNmPKNiDcJyIdPtrWjL13jhMFcokf9M6xG
+ 1r60MCwUdnJR06JSWVYMSJKmcAIIUYJd7atWUfx7cc/vmnZpHmeIFnH7DxYR7AgJ
+ lqVMXtc6dTQYf+4N6lvMcP3MuRXJ7R7rLji/9geJeBATsMxexkFGGvWrpfTj19KA
+ ==
+X-ME-Sender: <xms:ARkcYNQcHD8EJOJj0USb4xBhF52uh528eCVjJq8q1XqNv7nedziT7A>
+ <xme:ARkcYGzaRNRoJh5_wp4sad0NmUEdfz7ryTS2hUCkZuB8CF7PHafwlyh6kmwibWprD
+ HYsEz-gk8AIH-TW_oU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrgeeggdejfecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
+ fefgtdehhfektdelffevkefgueffhedtieenucfkphepudeiiedrudejiedruddvuddrke
+ dunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
+ thhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:AhkcYC1gfjhQhBt-RytDt_VhPHYi9rRrG6-tJjd6GQwwg5qHfDi6zQ>
+ <xmx:AhkcYFDNloyZc68N5Q9zyrdnsqoO9zxCQgDkYx32Q7N6o9evn-PUHg>
+ <xmx:AhkcYGgPrzrsdaIsKNP7vUvsZ2y8lM1W3y8aLRk-HN2rCELH-ipxIQ>
+ <xmx:AxkcYKYy3ECidGcHFoR-AdwBVnyfqfWJ1fm1GYgM4pRAR4CuqPfmNg>
+Received: from localhost (mobile-166-176-121-81.mycingular.net
+ [166.176.121.81])
+ by mail.messagingengine.com (Postfix) with ESMTPA id C21D21080059;
+ Thu,  4 Feb 2021 10:55:45 -0500 (EST)
+Date: Thu, 4 Feb 2021 09:55:44 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: "Ambrozewicz, Adrian" <adrian.ambrozewicz@linux.intel.com>
+Subject: Re: Sensor Value PropertiesChanged Events
+Message-ID: <YBwZAG7r8i3j8zKz@heinlein>
+References: <31abd546-4538-ecf0-134e-b8e48e75b3ad@linux.intel.com>
+ <CACWQX83KhqORsx-Gm4CCEndADO-GEgNHtxPpHR2ptsgzmtU9xA@mail.gmail.com>
+ <01c540f2-9d7e-b54c-42c0-ed0bf666a090@linux.intel.com>
 MIME-Version: 1.0
-References: <HK0PR04MB2964D0B4027D7B3AE80A3E9EFDCC0@HK0PR04MB2964.apcprd04.prod.outlook.com>
- <CAM=TmwX79oj-KZ2mj1ENGcGnq37TCo-KijWENU3_3mWC2AtdAw@mail.gmail.com>
- <HK0PR04MB296465225FD6E6F7BFDD138AFDCB0@HK0PR04MB2964.apcprd04.prod.outlook.com>
-In-Reply-To: <HK0PR04MB296465225FD6E6F7BFDD138AFDCB0@HK0PR04MB2964.apcprd04.prod.outlook.com>
-From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
-Date: Thu, 4 Feb 2021 19:25:29 +0530
-Message-ID: <CAM=TmwV46bD8PcZgbqPOK45ROJDFBhQYCEg7bHDWCZ0f6sOOYw@mail.gmail.com>
-Subject: Re: Add firmware implementation in pldm
-To: Kumar Thangavel <thangavel.k@hcl.com>, openbmc@lists.ozlabs.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="17C9T/U52h9SHA7q"
+Content-Disposition: inline
+In-Reply-To: <01c540f2-9d7e-b54c-42c0-ed0bf666a090@linux.intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,167 +96,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "richard.marian.thomaiyar@linux.intel.com"
- <richard.marian.thomaiyar@linux.intel.com>,
- "sumanth.bhat@intel.com" <sumanth.bhat@intel.com>, "Velumani T-ERS,
- HCLTech" <velumanit@hcl.com>, Patrick Williams <patrickw3@fb.com>
+Cc: "Bills, Jason M" <jason.m.bills@linux.intel.com>, Ed Tanous <ed@tanous.net>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
 
-I've pushed a design proposal for PLDM firmware update:
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/40289.
+--17C9T/U52h9SHA7q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
-Deepak
+On Tue, Feb 02, 2021 at 11:02:53AM +0100, Ambrozewicz, Adrian wrote:
+> W dniu 2/2/2021 o 01:42, Bills, Jason M pisze:
+>
+> My trust in systemd D-Bus implementation is that signals are implemented=
+=20
+> in optimal way and broker doesn't broadcast it to services without=20
+> proper 'match' defined. It should be checked though
+> Moving to polling might in fact increase D-Bus utilization by=20
+> introducing message-response communication between producer and=20
+> consumer. In certain cases of sensors which tend to update slowly,=20
+> introducing a getter with faster interval would increase the traffic, if=
+=20
+> the interval would be faster than the sensor update rate.
 
-On Thu, Dec 10, 2020 at 5:47 PM Kumar Thangavel <thangavel.k@hcl.com> wrote=
-:
->
-> Classification: Internal
->
-> Hi Deepak,
->
->            Thanks for your response.  Please find below my response inlin=
-e.
->
-> Thanks,
-> Kumar.
->
-> -----Original Message-----
-> From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
-> Sent: Wednesday, December 9, 2020 9:47 PM
-> To: Kumar Thangavel <thangavel.k@hcl.com>; richard.marian.thomaiyar@linux=
-.intel.com; sumanth.bhat@intel.com
-> Cc: openbmc@lists.ozlabs.org; Velumani T-ERS,HCLTech <velumanit@hcl.com>;=
- sdasari@fb.com; Patrick Williams <patrickw3@fb.com>; tomjose@linux.vnet.ib=
-m.com
-> Subject: Re: Add firmware implementation in pldm
->
-> [CAUTION: This Email is from outside the Organization. Unless you trust t=
-he sender, Don=E2=80=99t click links or open attachments as it may be a Phi=
-shing email, which can steal your Information and compromise your Computer.=
-]
->
-> Hi Kumar,
->
->
-> On Wed, Dec 9, 2020 at 9:20 PM Kumar Thangavel <thangavel.k@hcl.com> wrot=
-e:
-> >
-> > Classification: Internal
-> >
-> > Hi All,
-> >
-> >
-> >
-> >          We planning to do NIC firmware update for our system pldm base=
-.
->
-> Great!
->
-> >
-> >          So, We would like to add implementation support for pldm base =
-firmware update. This should be generic for all to use firmware update for =
-any devices.
-> >          Do we need to create files =E2=80=9Cfirmwareupdate.cpp/.hpp fi=
-les=E2=80=9D under pldm deamon as generic to handle firmware base pldm comm=
-ands?
->
-> Since there is a PLDM firmware update specification, a generic design and=
- implementation is a definite possibility.
->
-> >          Also, please suggest to repo add the BMC applications to send =
-and recv the command handling.
-> >
-> >          Could Please provide your comments/suggestions on this impleme=
-ntation.
->
-> Will you be able to update
-> https://apc01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgithu=
-b.com%2Fopenbmc%2Fdocs%2Fblob%2Fmaster%2Fdesigns%2Fpldm-stack.md&amp;data=
-=3D04%7C01%7Cthangavel.k%40hcl.com%7C8b7f49e176b941c2de4008d89c5de97f%7C189=
-de737c93a4f5a8b686f4ca9941912%7C0%7C0%7C637431274447773327%7CUnknown%7CTWFp=
-bGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%=
-7C1000&amp;sdata=3DXPh1Atf8nMzEFjL1lhqT4KnCdVSDabYtpak3909vZ8w%3D&amp;reser=
-ved=3D0 with a design section on firmware update? Some of the things I woul=
-d like to review via this doc update:
->
->    Kumar : Sure. I will update the document.
->
-> - How does this integrate with the current OpenBMC firmware update archit=
-ecture, and also with Redfish update service?
->
->     Kumar :     Need to explore. Please provide your suggestions on this.
->
-> - What will PLDM run on? RBT or MCTP? MCTP over what binding?
->
->     Kumar : PLDM run on NIC-SI transport.
->
-> - Do you anticipate changes to libmctp?
->
->    Kumar : No. This is based on NIC-SI transport
->
-> - How does this fit into the existing https://apc01.safelinks.protection.=
-outlook.com/?url=3Dhttps%3A%2F%2Fgithub.com%2Fopenbmc%2Fpldm&amp;data=3D04%=
-7C01%7Cthangavel.k%40hcl.com%7C8b7f49e176b941c2de4008d89c5de97f%7C189de737c=
-93a4f5a8b686f4ca9941912%7C0%7C0%7C637431274447773327%7CUnknown%7CTWFpbGZsb3=
-d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000=
-&amp;sdata=3DdM8fJwGr5lz9DWZYCXmquHfHpBQGEviOpJBCP4OdxSo%3D&amp;reserved=3D=
-0
-> design? What new components will you be adding? Will libpldm and pldmd be=
- impacted, and how?
->
->    Kumar: pldmd will be impacted to handle firmware update commands reque=
-st/response. Will investigate in detail and update you on this.
->
-> - The 5.9 Linux Kernel has some APIs for PLDM based firmware update.
-> Can we use those?
->
->   Kumar : Yes. We can use that also.
->
-> - How do we plan to test this? Is hardware a must? Or are you planning on=
- mocking a PLDM responder?
->
->  Kumar : We have hardware. So planning to test in the hardware.
->
-> I think a quick review of such a design doc will be beneficial before del=
-ving into code. Also, please note - Richard and Sumanth (copied
-> them) are working on similar stuff as well. So there could be scope for c=
-ollaboration and to avoid likely duplicate effort. We do talk about ongoing=
- PLDM activities in OpenBMC in this meet - https://apc01.safelinks.protecti=
-on.outlook.com/?url=3Dhttps%3A%2F%2Fgithub.com%2Fopenbmc%2Fopenbmc%2Fwiki%2=
-FOpenBMC-PMCI-WG&amp;data=3D04%7C01%7Cthangavel.k%40hcl.com%7C8b7f49e176b94=
-1c2de4008d89c5de97f%7C189de737c93a4f5a8b686f4ca9941912%7C0%7C0%7C6374312744=
-47773327%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTi=
-I6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&amp;sdata=3DrDTsCy7Jza%2F6g8jl7a2CzKwzvoT0X=
-HHnD9Gdb1197AY%3D&amp;reserved=3D0.
->
-> Kumar :  Sure.  Will join the discussion.
->
-> Thanks,
-> Deepak
->
-> >
-> > Thanks,
-> >
-> > Kumar.
-> >
-> > ::DISCLAIMER::
-> > ________________________________
-> > The contents of this e-mail and any attachment(s) are confidential and =
-intended for the named recipient(s) only. E-mail transmission is not guaran=
-teed to be secure or error-free as information could be intercepted, corrup=
-ted, lost, destroyed, arrive late or incomplete, or may contain viruses in =
-transmission. The e mail and its contents (with or without referred errors)=
- shall therefore not attach any liability on the originator or HCL or its a=
-ffiliates. Views or opinions, if any, presented in this email are solely th=
-ose of the author and may not necessarily reflect the views or opinions of =
-HCL or its affiliates. Any form of reproduction, dissemination, copying, di=
-sclosure, modification, distribution and / or publication of this message w=
-ithout the prior written consent of authorized representative of HCL is str=
-ictly prohibited. If you have received this email in error please delete it=
- and notify the sender immediately. Before opening any email and/or attachm=
-ents, please check them for viruses and other defects.
-> > ________________________________
+You raise a very good point here.  When I review code that contains a
+signal match almost every time I see code with very little in the match
+and doing a bunch of filtering in C++ code and I have to point this out.
+It is like doing a `SELECT *` in SQL.
+
+I wouldn't be surprised if there are lots of cases where we're effectively
+broadcasting signals and then dropping them on the receive side rather than
+allowing dbus-broker to filter out who gets them.  We might be able to
+code something up in sdbusplus to warn when the filtering is likely
+insufficient but that'd probably become a runtime check that gets lost
+in a journal message.
+
+--=20
+Patrick Williams
+
+--17C9T/U52h9SHA7q
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmAcGP4ACgkQqwNHzC0A
+wRlYMw/+Jvs5LKHFF2rVXmJE63j3xMn1IaHkba8mcRpakPF94nmOGqWX8m3fOsgl
+PO3aXwMiL7uQavoamk1B6nci47I6Ox9vgRIU0/uEFtZur+qrheKp8zUE1M0ibkJI
+GlgvsNTgJ07ogJHsYWBLRZ21CKsI4rVNvkA+LlX6AX9WhEfYC1XqhS/dPr3/hSqW
+9Lo7eHkRiMBrWVvOFKJxA0S1PxF7GlJZyhNBclVKeJK7TSLfvyUAaw01FZ8Z3oyS
+6CI1XoBL9Xct6TuDwy1WSgpgRurQxHYtU5Sn6LfFBo2j3e8H36lnTZGxpkKGVIKD
+8qwbqs943AWTkCmGepa78fk6QEvMXqPk/AudQX2ucP1a2RmApF8n5zN07R7HI+/T
+b1VzQu6zMlyFwMne+CBuLl1nHIHbV90SCBaxsLGXyyaNXWt2H/1GFjv65IautsD0
+Eaq0cAtX70jmP0cNFK/4kE9TTdqPJBwVklMp+Cr7lNi0tHFL3bZAADKZrBAxZm+i
+HW4D0cXCgkI7tx1ZzpwwgZkAhTer6vnvJOdKIGAJgnTWVrjwFxJh4NVywgAZU0oi
+sWusoBSpHUq8HxV5HPATcrOlQpUtm54pJbkt8SmIj5K/NYUOE/7Kot5/n2WDPEP+
+eC1bPvKgpNSAwu8OhZYW5NjP7xdLq/m1OBqNu86Jjl28bQXIDvU=
+=AqHi
+-----END PGP SIGNATURE-----
+
+--17C9T/U52h9SHA7q--
