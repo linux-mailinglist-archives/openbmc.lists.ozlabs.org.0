@@ -1,64 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FAF23131A7
-	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 13:03:35 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD1933131CB
+	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 13:08:11 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DZ4Rm4XwyzDsrV
-	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 23:03:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DZ4Y447p4zDvVG
+	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 23:08:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=pcpartner.com (client-ip=2607:f8b0:4864:20::731;
- helo=mail-qk1-x731.google.com; envelope-from=seiresli@pcpartner.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=pcpartner-com.20150623.gappssmtp.com
- header.i=@pcpartner-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=GfKKU+kq; dkim-atps=neutral
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com
- [IPv6:2607:f8b0:4864:20::731])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=sboyd@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dkim=fail reason="signature verification failed" (2048-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=RPOj45dX; 
+ dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DX0863h5mzDqCZ
- for <openbmc@lists.ozlabs.org>; Fri,  5 Feb 2021 13:42:39 +1100 (AEDT)
-Received: by mail-qk1-x731.google.com with SMTP id 19so5610662qkh.3
- for <openbmc@lists.ozlabs.org>; Thu, 04 Feb 2021 18:42:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=pcpartner-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=lCtMBnHMfjo9xb1AnufWGYIsNLbVDtBvEKyZGCaLgQI=;
- b=GfKKU+kqzEqCgTocE5XMl7GISjqqLgmsWMF1iPnU8qLtbxdyyB3bftFUlNSD8Taf7o
- os6b2lmBOgjotYsy3UE/3k+SbX7l86CpumW6DO24WTiJ1QvxACi4pZCHRxYyQFTA3IIN
- B968klyFJFM1opgFyok6OCgoIUWxv5PAH+2qSPbG8+ZFUrVtJWmTQ2i0TEdJF91iTM92
- 0koG9YfbDiM4l0RrzUes39ndpwiORATMm7CR4QiGJpQVwBPSwQa9Ll5/vcBIk7wT78NM
- hipc6RF6ksikwoCAuMK3Sgh67EFPQ2cyIA7uZlTDAQYo8GQzmCDDj8tzv3gr3K1eM+Va
- p5WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=lCtMBnHMfjo9xb1AnufWGYIsNLbVDtBvEKyZGCaLgQI=;
- b=WTfBcRhYmk0+zCAeRT9Fhu864jq5CrBUZ7qKhoxkWS0zHK2TP3iRLQ8J1i425GASqu
- vavU8rd70cLJQDKl51LK3XTdfdFaxapC4gCDZXkclNg8xzBl+JQtEGjtjCDK2a+/nqU5
- LnosbJuSNnPoh/4uJ5ASEurXBFq5arKbiU+ZJ2rL5CAClqVLPklhpYjAAOGsh+GM74tz
- 8WQlO0AP84ZA1j289CNme2lyxYT4P+7O4xCowXsLljt42oBOjLkuYqwAxQ5St4hlgrEN
- uYiedSq4/7jsuC+6NQS7R6zFsm0Fm00PniI29Kr9bukHb+dF7DZ4y60lbW3UvQr9Qm1v
- /hyQ==
-X-Gm-Message-State: AOAM532RQ/Uzp0Ee+iusw0mcmIuBIsob7P63Uwdo0o1fLUnhcH1mWZPs
- GFr15F5H4szZgNB825u/3X0X3mpZ7QnuL+QcEGbPFKSWiOI=
-X-Google-Smtp-Source: ABdhPJyYFj8MMI9Y7VsYV7ko0sr6lIm61nNK6QJc1YOcQdeOy77YPr98HTnf3/otaEJ7u4SW3gdStTky5Q9FxlMYsdM=
-X-Received: by 2002:ac8:554d:: with SMTP id o13mr2585816qtr.55.1612492956194; 
- Thu, 04 Feb 2021 18:42:36 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DXPk565BdzDwlR
+ for <openbmc@lists.ozlabs.org>; Sat,  6 Feb 2021 05:55:09 +1100 (AEDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 8D95764EFE;
+ Fri,  5 Feb 2021 18:55:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1612551306;
+ bh=l2A8CAgF/G7BGZq7431N93An0up6jDTvpRHYH8cBfG8=;
+ h=In-Reply-To:References:Subject:From:To:Date:From;
+ b=RPOj45dXJLj+vuNI8ahjCDXbfaAmoG+k7jRNp9Mp4pxf/xI3v4qYPHjTR0eZjUonW
+ SIkvXTlfrM4M5V1csQXDB3KtpyaetGu3A6NSZYiVjly/E1FtXUuVDnKKj90+hT7kga
+ 72GNn9IGjtdxL9hhA7OKuQ0JoS0oaz+FFxGgl8kX1jZmqqDFq/kLas956fzVQg3+Tp
+ cgoCrwd84QWZpwzQ6Ju8Ml1ADw81R8AIzyyJMcL7KtTYIWcDxWum6dtU8ejQXc+zPm
+ cCC61w8Y3422l2yvWjt7AzjbIe5Cj51B0BEhUV+uecnjDzzoWzG0vHppylMCNsvTKj
+ IHO260731sTEw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-From: Seires Li <seiresli@pcpartner.com>
-Date: Fri, 5 Feb 2021 10:42:25 +0800
-Message-ID: <CAJwvfaOb1SnFzf3i-LQB3nT_YAdLR=NPVpbOyDdR-+Y4-oyZfQ@mail.gmail.com>
-Subject: PCPartner CCLA
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000db6dcc05ba8dc556"
-X-Mailman-Approved-At: Mon, 08 Feb 2021 22:58:03 +1100
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210203083155.GA2329016@dell>
+References: <20210126124540.3320214-1-lee.jones@linaro.org>
+ <20210203083155.GA2329016@dell>
+Subject: Re: [PATCH 00/21] [Set 2] Rid W=1 warnings from Clock
+From: Stephen Boyd <sboyd@kernel.org>
+To: Ahmad Fatoum <a.fatoum@pengutronix.de>, Andy Gross <agross@kernel.org>,
+ Avi Fishman <avifishman70@gmail.com>, Benjamin Fair <benjaminfair@google.com>,
+ Bjorn Andersson <bjorn.andersson@linaro.org>,
+ Boris BREZILLON <boris.brezillon@free-electrons.com>,
+ Chen-Yu Tsai <wens@csie.org>,
+ Emilio =?utf-8?q?L=C3=B3pez?= <emilio@elopez.com.ar>,
+ Fabio Estevam <festevam@gmail.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>, Jan Kotas <jank@cadence.com>,
+ Jernej Skrabec <jernej.skrabec@siol.net>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Lee Jones <lee.jones@linaro.org>,
+ Loc Ho <lho@apm.com>, Maxime Ripard <mripard@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>,
+ Michal Simek <michal.simek@xilinx.com>, NXP Linux Team <linux-imx@nxp.com>,
+ Nancy Yuen <yuenn@google.com>, Nuvoton Technologies <tali.perry@nuvoton.com>,
+ Patrick Venture <venture@google.com>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Peter De Schrijver <pdeschrijver@nvidia.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>, P
+ rashant Gaikwad <pgaikwad@nvidia.com>, Rajan Vaja <rajan.vaja@xilinx.com>,
+ Rajeev Kumar <rajeev-dlh.kumar@st.com>, Richard Woodruff <r-woodruff2@ti.com>,
+ Russell King <linux@armlinux.org.uk>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Shawn Guo <shawnguo@kernel.org>, Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
+ =?utf-8?q?S=C3=B6ren?= Brinkmann <soren.brinkmann@xilinx.com>,
+ Tali Perry <tali.perry1@gmail.com>, Tero Kristo <kristo@kernel.org>,
+ Thierry Reding <thierry.reding@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
+ Viresh Kumar <vireshk@kernel.org>, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+ openbmc@lists.ozlabs.org
+Date: Fri, 05 Feb 2021 10:55:05 -0800
+Message-ID: <161255130506.76967.8682382463883809207@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
+X-Mailman-Approved-At: Mon, 08 Feb 2021 22:58:04 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,42 +87,20 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Arthur Cheng <arthurcheng@pcpartner.com>,
- Richard Yu <RichardYu@pcpartner.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000db6dcc05ba8dc556
-Content-Type: text/plain; charset="UTF-8"
+Quoting Lee Jones (2021-02-03 00:31:55)
+> On Tue, 26 Jan 2021, Lee Jones wrote:
+>=20
+> > This set is part of a larger effort attempting to clean-up W=3D1
+> > kernel builds, which are currently overwhelmingly riddled with
+> > niggly little warnings.
+> >=20
+> > This is the last set.  Clock is clean after this.
+>=20
+> Out of interest, what normally happens to the patches which aren't
+> picked up by individual driver Maintainers?
+>=20
 
-Hi,
-Attached is the signed CCLA from PCPartner.
-
-Please let us know what else to prepare
-
- OpenBMC.CCLA_PCP Signed_20210204.pdf
-<https://drive.google.com/file/d/1wpiHl8WtyAo9WU1iL_M-KWEK-NoROxv_/view?usp=drive_web>
-
-Regards
-Seires
-
---000000000000db6dcc05ba8dc556
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi,<div>Attached is the signed CCLA from PCPartner.</div><=
-div><br></div><div>Please let us know what else to prepare</div><div><br><d=
-iv class=3D"gmail_chip gmail_drive_chip" style=3D"width:396px;height:18px;m=
-ax-height:18px;background-color:#f5f5f5;padding:5px;color:#222;font-family:=
-arial;font-style:normal;font-weight:bold;font-size:13px;border:1px solid #d=
-dd;line-height:1"><a href=3D"https://drive.google.com/file/d/1wpiHl8WtyAo9W=
-U1iL_M-KWEK-NoROxv_/view?usp=3Ddrive_web" target=3D"_blank" style=3D"displa=
-y:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;te=
-xt-decoration:none;padding:1px 0px;border:none;width:100%"><img style=3D"ve=
-rtical-align: bottom; border: none;" src=3D"https://drive-thirdparty.google=
-usercontent.com/16/type/application/pdf">=C2=A0<span dir=3D"ltr" style=3D"c=
-olor:#15c;text-decoration:none;vertical-align:bottom">OpenBMC.CCLA_PCP Sign=
-ed_20210204.pdf</span></a></div><br></div><div>Regards</div><div>Seires</di=
-v></div>
-
---000000000000db6dcc05ba8dc556--
+I have to go in and figure it out! :)
