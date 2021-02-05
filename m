@@ -1,118 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F0353102C5
-	for <lists+openbmc@lfdr.de>; Fri,  5 Feb 2021 03:28:04 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94FBC310401
+	for <lists+openbmc@lfdr.de>; Fri,  5 Feb 2021 05:20:30 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DWzq51N0ZzDqbc
-	for <lists+openbmc@lfdr.de>; Fri,  5 Feb 2021 13:28:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DX2Jq6zstzDvbM
+	for <lists+openbmc@lfdr.de>; Fri,  5 Feb 2021 15:20:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=40.107.128.135;
- helo=kor01-ps2-obe.outbound.protection.outlook.com;
- envelope-from=troy_lee@aspeedtech.com; receiver=<UNKNOWN>)
-Received: from KOR01-PS2-obe.outbound.protection.outlook.com
- (mail-eopbgr1280135.outbound.protection.outlook.com [40.107.128.135])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52e;
+ helo=mail-ed1-x52e.google.com; envelope-from=vkrk.user@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Wt3n1mkE; dkim-atps=neutral
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com
+ [IPv6:2a00:1450:4864:20::52e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DWzpB3Y4rzDqBS
- for <openbmc@lists.ozlabs.org>; Fri,  5 Feb 2021 13:27:12 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=I8S9nA0nYT977nE53ujL3lNPXe3WPBBf0BEsmjzK7frg87HQ5Yo0FmtBPn2dZZ3Yjmyz6PFuFjy/2OVDzxEfzivx2JPjGd+TqmHuEQtFyvO5CRhuZ5GP2p+njvs5YqPyndM+3vxHKMBZ7C+bHNTXvNAj9AJxYKgUbbSmD0RbhO0uteXhdEwj6oErJIpFuw1HlMFvYbY4e2vZYUtgCvEpOjG3mjsDSYFCLvC/tprt0Y6w1tdlDyRF8x6UlszRXmtOnwOYFFAUrCJkMCGGGonS+3sX4UuCsvIxJ/ttNaHbC3WZda70hJVcsmZVpN7FRhWRpVexfScAdRrO6NI8gp9VpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pbVA7W9Yl9SqLOTdZT4u+B1bByzUOnF/3QBhHzKHalo=;
- b=ByCGAtL2DoU2S+fl2AbvYGwM5n4mzx0DdlGfdgiRdIkj1m7gXZLATiCwTn3cHqkh61lsBU4NnN6IYvvWzEabwgFBlE7cCAwwEweN6T4rCPhQeP6GN3msUdpGZuLpnAKc/k2r1+rSUhvRLgeoEdR+GEf0bVg7tn6J2RRWrXBMFkGWGLEWSTDf2tVVp5VydYifkm3IWHAFDx2LrcFh9ZsKcykSPXa6TdDdPjIReKejRGPT7tlVKTgD+AHcyo7yvs1Y1yuMkWX6VJm6JbOTO7Qceih+WStEYPbjxF7Owk4pmFLGBqjIchbgUnj+EPyfkRk8Z8yj2eXt+PySRVY+VcDr5w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-Received: from PS1PR06MB2600.apcprd06.prod.outlook.com (2603:1096:803:4d::19)
- by PS2PR06MB3544.apcprd06.prod.outlook.com (2603:1096:300:6d::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3805.28; Fri, 5 Feb
- 2021 02:27:04 +0000
-Received: from PS1PR06MB2600.apcprd06.prod.outlook.com
- ([fe80::6031:184a:88fe:5667]) by PS1PR06MB2600.apcprd06.prod.outlook.com
- ([fe80::6031:184a:88fe:5667%7]) with mapi id 15.20.3825.021; Fri, 5 Feb 2021
- 02:27:04 +0000
-From: Troy Lee <troy_lee@aspeedtech.com>
-To: VINOTHKUMAR RK <vkrk.user@gmail.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: RE: evb-ast2600: Getting some build errors - 'u-boot.bin' is too
- large!'
-Thread-Topic: evb-ast2600: Getting some build errors - 'u-boot.bin' is too
- large!'
-Thread-Index: AQHW+vFPViRLRAm5PEWwpC/TsH6us6pI1kzA
-Date: Fri, 5 Feb 2021 02:27:04 +0000
-Message-ID: <PS1PR06MB2600DD0B6A4F3F30C771342A8AB29@PS1PR06MB2600.apcprd06.prod.outlook.com>
-References: <CAHf5csd1tt-VNS9Wfuwqito2Fy75bfhArAEhZP_d1LXeOz+YVA@mail.gmail.com>
-In-Reply-To: <CAHf5csd1tt-VNS9Wfuwqito2Fy75bfhArAEhZP_d1LXeOz+YVA@mail.gmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=aspeedtech.com;
-x-originating-ip: [118.99.190.129]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: e34b326e-a139-4e91-4ecb-08d8c97d870a
-x-ms-traffictypediagnostic: PS2PR06MB3544:
-x-microsoft-antispam-prvs: <PS2PR06MB354448423B034D9FFB1597DA8AB29@PS2PR06MB3544.apcprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2803;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: ouzUJTOOQhe/FOTWq8CpNOxcnc2KojYxdWgyFgwkm8PsX1hHV/UV8pVXjyGPJGrF25eMsNcukkyaOBosL8Z82B6fYaIHF0Cfl5JgWLU6VRx0c8PZha+0vxFITUhfXkMJs7tOiEaFRQpMxNTzdL+0HLC1AWjv24jbOKJmgj7grgFZopE7NA9EEQnXmEJK/ATUdkbuAp5wxyOER9dRTXaINrbq7XGFbGEoCjfh65GppMM7freZ1kele2/AQ0/1mKkBSR7nJHGIws33+CuZMIikOb7lDbj1Qzh1FZn518BopLBPJX6RzLeiL1XEJLaQ3qzHoZ5fdqcqOuntv6sOUHxCG4/F06t1O0bBAj7yoZWBwhEPZtz5qhxGE7Vqo/AzXDvOd9FqM20bbfJ8AYQyv05yFfcKq8Qls+TRiTgYE7G4p48QYvGd2KYyV1v3Jl8HxoEXwMEdzcINLxxCMnrX7CNbDzLFdlMzZEdnBDOPZQ60Rd8P4NpCKxB5MNAqSmUqK7T04pf352/P9aJUH3bS9LWvfJdgiGs+3fUCwWRU15a0WRRfrzH6ucvbyH+ixCnt5AVyWTjjDaP7fQqRneDGZokNFbedGjWZhwgpqsFqpHKKo+4=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PS1PR06MB2600.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(39840400004)(366004)(376002)(396003)(346002)(136003)(66446008)(66556008)(33656002)(71200400001)(7696005)(76116006)(66946007)(26005)(86362001)(5660300002)(66476007)(9326002)(8936002)(9686003)(966005)(83380400001)(8676002)(53546011)(64756008)(166002)(6506007)(52536014)(2906002)(186003)(478600001)(55016002)(110136005)(316002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?elh5TkxYaEdhcmM1dmFEbFVMcWdmOGxtT0tVQ09tRmFobU12aXFNNlZJb2RF?=
- =?utf-8?B?aUlqaVVXTlI2alFFTnB5NGZ4Wkh0clFFakMrQk5tczhuQTMwK1hVL3d5M05w?=
- =?utf-8?B?THNVeHJSYi8yMmYvZm8yL2VTK0FVY1BLZ2dlK1FKYUpaeUFzQ0Zka2RWdmJO?=
- =?utf-8?B?WDU3emZwZ25rcktDSEtGdk5WQytMOXRQclNQNmp2cDNkRmZkblUwSiszRGZm?=
- =?utf-8?B?QnNiQ2pkYm5jTUVmN2Yrb3dVRGE5eVR5U3VvczlHbEM4OGFEaUEvUTBOZ3BS?=
- =?utf-8?B?M1BjMjlQclR6RGxVb3J1Smc3emlTbE4vNXQxZmxZdGZYTU12REhwZzI1b3pV?=
- =?utf-8?B?aXg2SVY3N1JSeTZhcTlGT01kUGtJMUsyMHlVVkc3K2R0TndvaWJVNk8wbFlQ?=
- =?utf-8?B?ME5WL0M4ZG12TkJWZm1HNW1yS2NtNXAzMkIySlNiVEFlZGQvZEszMnJ5WEIr?=
- =?utf-8?B?S1BkRXlLUUdwVWhTWFlDUHVoNEVzelRuNHpCbnR0dkZkcElOOUptdXVEam8z?=
- =?utf-8?B?cVVTVGpJbHBCYXdtVEFJZ1JpZkNhRkZnaWF6TlRsa0FXRDl0ZUNaeGR2dXU3?=
- =?utf-8?B?T09XWVZLendabTFWMGZXWU9RMGZTUEtiSGozelNvVXdRMklsMmNyUDZMZEZK?=
- =?utf-8?B?OUxqSlNHdGF4RDArOWxyM21OSDhjSXJ2L3E2cTVOVXlWSDd3Ti8wNEp3eTFa?=
- =?utf-8?B?dkhmeVl0WWVzUWp5VVpmUzIvVktMWjN4TXAyOVVOK3c1cGMrbGdMZkljejd2?=
- =?utf-8?B?dHhJdks2V2xxTUw4TnRpWHhvWm1aOTNCdkVETFlFcUYrUmFkemhtL3puL3g3?=
- =?utf-8?B?NkdSSlRnbnlHb0lLcHRKbXV1MEczMTU4NCtFckl3eERhL3E1SW1MY09uK2Uw?=
- =?utf-8?B?dVpaMXdLR2FpQk9WOEozcHR5Nk5Jd1I1MzRITFpXQzdJTXdvVkYrc2lkeldO?=
- =?utf-8?B?Z0hhQ3daU2Y5VTBUS21JNnZybzV3YkJZWFY2dTBQbm1ydElwb3FYbXdEa0NW?=
- =?utf-8?B?ZVVZUy9sMkI2alFRSEIxRm9oNEttRVZpT29YaVo2MHhRSFJIV2NJRkYwSzA0?=
- =?utf-8?B?QXllUGNRV0sxQ01HKzFhaVR3NHZUd1lMdFR3M1FSaDREMS9QaENHTDl5Nm5p?=
- =?utf-8?B?cGtGNWN1Y1RBZi92RFlUQVlnWWVZSUlSLzZJMm9RTGdRK0gvMVBwMmY4Rk9B?=
- =?utf-8?B?YUlJdmJweThvVTF2eDhrMkViL3B5anpKSEtRVlo5c051bEZJd3dvejhZSUxS?=
- =?utf-8?B?aDJkVUZneWFQcU44Sk9OWWNTVW1OY3VoVklyb05icWJNRTI5ejhrWHNsZ2hh?=
- =?utf-8?B?dEV0WHByMXBLZS9jSlorYmtjNTJBdjlkaVBRaElreW5rczVmc2hRaHB3REhY?=
- =?utf-8?B?TnpXRlhjVVBqblptYW1qRVh5UGc1UWdtbzF6d1BaVU9EQnhwWlpoSDJqSEN5?=
- =?utf-8?B?R0NrSzVhc0Y2ZTZJeW5LeDBrc1RQczlLMmtEYzNSQkQ1YUdzRDNmRmVibFFv?=
- =?utf-8?B?bWJpTFVGeTU2VDgxYlFKdmpuUjVERVRJSXRrNGFXaFo5b014cFhJV1VUVG03?=
- =?utf-8?B?WDRIWWlYbzBzOTZaYjF2amRMUkhhZ0NQTXJTbFZSNDdDZnVzRWNUbnRFUWpk?=
- =?utf-8?B?UmhKclRpVUh1aHU5ZFZhbGV5OWl2bXF2ZDhFQVkrYTVmaHNnZjlYb0pCcTZS?=
- =?utf-8?B?NW5RNnI0WmRRUkl3L3lnVWQ3OVk1Nno1dEhnKzdCczRYRHBtdjRLRlREaExN?=
- =?utf-8?Q?M9glsdrR5r8vMaFVEBJZadiTa5yoFD7MLgQzIPl?=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_PS1PR06MB2600DD0B6A4F3F30C771342A8AB29PS1PR06MB2600apcp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DX2Hp6NbRzDvbG
+ for <openbmc@lists.ozlabs.org>; Fri,  5 Feb 2021 15:19:33 +1100 (AEDT)
+Received: by mail-ed1-x52e.google.com with SMTP id q2so7162440edi.4
+ for <openbmc@lists.ozlabs.org>; Thu, 04 Feb 2021 20:19:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Ttmui+t8Kxt2hqB3U15CcmDM9YJNY/jMFEunvreD5DQ=;
+ b=Wt3n1mkEBhFw6eA23N5zoxDt1nC+ulP0F0J/RwwUaOXwVOZlmQ7lXmMj1BmEzuNpOp
+ L014OHOURV2eUyZoETMOZoQDmU4h+BFbF+0AwxZ9a4jjZ3HPpgbbhduGHUA6apFgH4ye
+ 4JSO4oUYRMOm6M8/pUspEM6Izig7rLcY9O+PNT5mHfxSWGoUTPvLHUHmhe6Q2byPLUgz
+ 5pwMyReKr/5p9xwWR4OS/7K1r6Qixddhzm/4KqQURwGR8x7kABVoge0SYb7YuqBp9eR6
+ efKUWX4jL1fXjyUkBrhbUmqbUPmYVYOuGlPTpxr/z9dq3La4BeY7P7+sTK1G90irZmTQ
+ ihNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Ttmui+t8Kxt2hqB3U15CcmDM9YJNY/jMFEunvreD5DQ=;
+ b=P4QN0GrkE0unQz9yr0dQDcZsi35vBWUtJ4C4CztVJpU5/iTzjUhnAg9+aL7w9ugbCF
+ OFWpD6u+s6OMS8WKy0hAEOaNUFlB9IAX4vmYswLnGOnznFHg0JjskUs9ooYOsZEAxzmw
+ JPRC1MyYcaMd5b24CfsvKIz7hmiOOuxeMhM7pFWbde/Je4LDEwyaJuE12a1UFQYlM54h
+ 30eTPHXkjIvjL95V6dEya9GDb/Vy9OhikHHP0gLnBE7gc738fLx/6FbHRgsbS07l10rp
+ wuLGn/HNzF9hhxNPG9iemzrw9df9DDaVhQZ3AoFfl+ny4ZKXJIfYcFrxfrOPSJkZK0FI
+ Kchg==
+X-Gm-Message-State: AOAM5329Wl9715P1NmixNokn2MdygEjDKfThe6F3l+9lSu1fwZTeEb3Z
+ wTNlRtoJYw+qYTujBkBhlcUblJ6bXIG6HRV0mXX1ZvOQic852w==
+X-Google-Smtp-Source: ABdhPJxc9XVV5ucYebszW7R8ugl08cYJ4iEpTlqCxItipBVPjGf2hkapgYlDzxp6dqfdsC8i3/cBAk3LikeOjbpCIbs=
+X-Received: by 2002:a50:fe85:: with SMTP id d5mr1841991edt.140.1612498767545; 
+ Thu, 04 Feb 2021 20:19:27 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PS1PR06MB2600.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e34b326e-a139-4e91-4ecb-08d8c97d870a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Feb 2021 02:27:04.4281 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 6tfCco5VOlHY9NtdkPIOPuzNt9ujjrKhlpQc/YeaWf6mZ0322eBl2Ec2mSDYLgPnWc58WM8XojMAX4tzM70liA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS2PR06MB3544
+References: <CAHf5csd1tt-VNS9Wfuwqito2Fy75bfhArAEhZP_d1LXeOz+YVA@mail.gmail.com>
+ <PS1PR06MB2600DD0B6A4F3F30C771342A8AB29@PS1PR06MB2600.apcprd06.prod.outlook.com>
+In-Reply-To: <PS1PR06MB2600DD0B6A4F3F30C771342A8AB29@PS1PR06MB2600.apcprd06.prod.outlook.com>
+From: VINOTHKUMAR RK <vkrk.user@gmail.com>
+Date: Fri, 5 Feb 2021 09:49:16 +0530
+Message-ID: <CAHf5csdnjHmMm6HFqevH=w=QLwZ1PzZ4UTDOq7sxYaoVn__8rg@mail.gmail.com>
+Subject: Re: evb-ast2600: Getting some build errors - 'u-boot.bin' is too
+ large!'
+To: Troy Lee <troy_lee@aspeedtech.com>
+Content-Type: multipart/alternative; boundary="0000000000003d872b05ba8f20ab"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -124,308 +72,556 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_PS1PR06MB2600DD0B6A4F3F30C771342A8AB29PS1PR06MB2600apcp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--0000000000003d872b05ba8f20ab
+Content-Type: text/plain; charset="UTF-8"
 
-SGkgVmlub3Roa3VtYXIsDQoNClBsZWFzZSByZWZlciB0byB0aGUgZm9sbG93aW5nIHR3byBjaGFu
-Z2VzIGluIEdlcnJpdDoNCg0KICAqICAgaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5
-ei9jL29wZW5ibWMvbWV0YS1waG9zcGhvci8rLzM5MzQzDQogICogICBodHRwczovL2dlcnJpdC5v
-cGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9tZXRhLWFzcGVlZC8rLzM5MzQ0DQoNClRoYW5r
-cywNClRyb3kgTGVlDQoNCkZyb206IG9wZW5ibWMgPG9wZW5ibWMtYm91bmNlcyt0cm95X2xlZT1h
-c3BlZWR0ZWNoLmNvbUBsaXN0cy5vemxhYnMub3JnPiBPbiBCZWhhbGYgT2YgVklOT1RIS1VNQVIg
-UksNClNlbnQ6IFRodXJzZGF5LCBGZWJydWFyeSA0LCAyMDIxIDg6MjggUE0NClRvOiBvcGVuYm1j
-QGxpc3RzLm96bGFicy5vcmcNClN1YmplY3Q6IGV2Yi1hc3QyNjAwOiBHZXR0aW5nIHNvbWUgYnVp
-bGQgZXJyb3JzIC0gJ3UtYm9vdC5iaW4nIGlzIHRvbyBsYXJnZSEnDQoNCkhpLA0KDQpJJ20gdHJ5
-aW5nIHRvIGJ1aWxkIGZvciBldmItYXN0MjYwMCBwbGF0Zm9ybSwgYnV0IGl0IGRvZXNuJ3Qgc3Vj
-Y2VlZC4gUGxlYXNlIGhlbHAuDQoNCkJ1aWxkIGNvbW1hbmQ6IChmcmVzaCBjaGVja291dCBhbmQg
-YnVpbGQpDQpURU1QTEFURUNPTkY9bWV0YS1ldmIvbWV0YS1ldmItYXNwZWVkL21ldGEtZXZiLWFz
-dDI2MDAvY29uZiAuIG9wZW5ibWMtZW52DQpiaXRiYWtlIG9ibWMtcGhvc3Bob3ItaW1hZ2UNCg0K
-QnJhbmNoIGRldGFpbHM6DQpjb21taXQgN2RjMmY3YTM4ZGNjYjNkODdhOWI3OWQwYTY2YjI1ZGEx
-MDI3YTcyZg0KDQoNCkVycm9yIExvZzoNCkxvYWRpbmcgY2FjaGU6IDEwMCUgfCAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IEVUQTogIC0tOi0t
-Oi0tDQpMb2FkZWQgMCBlbnRyaWVzIGZyb20gZGVwZW5kZW5jeSBjYWNoZS4NClBhcnNpbmcgcmVj
-aXBlczogMTAwJSB8IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjfCBUaW1lOiAwOjAwOjQ0DQpQYXJzaW5nIG9mIDI0MjQgLmJiIGZpbGVzIGNvbXBs
-ZXRlICgwIGNhY2hlZCwgMjQyNCBwYXJzZWQpLiAzNjgzIHRhcmdldHMsIDM2MiBza2lwcGVkLCAw
-IG1hc2tlZCwgMCBlcnJvcnMuDQpXQVJOSU5HOiBObyBiYiBmaWxlcyBpbiBkZWZhdWx0IG1hdGNo
-ZWQgQkJGSUxFX1BBVFRFUk5fbWV0YS1ldmItYXN0MjYwMCAnXi9ob21lL3Zpbm90aC9wcm9qZWN0
-L29wZW5ibWMvbWV0YS1ldmIvbWV0YS1ldmItYXNwZWVkL21ldGEtZXZiLWFzdDI2MDAvJw0KTk9U
-RTogUmVzb2x2aW5nIGFueSBtaXNzaW5nIHRhc2sgcXVldWUgZGVwZW5kZW5jaWVzDQoNCkJ1aWxk
-IENvbmZpZ3VyYXRpb246DQpCQl9WRVJTSU9OICAgICAgICAgICA9ICIxLjQ5LjAiDQpCVUlMRF9T
-WVMgICAgICAgICAgICA9ICJ4ODZfNjQtbGludXgiDQpOQVRJVkVMU0JTVFJJTkcgICAgICA9ICJ1
-YnVudHUtMjAuMDQiDQpUQVJHRVRfU1lTICAgICAgICAgICA9ICJhcm0tb3BlbmJtYy1saW51eC1n
-bnVlYWJpIg0KTUFDSElORSAgICAgICAgICAgICAgPSAiZXZiLWFzdDI2MDAiDQpESVNUUk8gICAg
-ICAgICAgICAgICA9ICJvcGVuYm1jLXBob3NwaG9yIg0KRElTVFJPX1ZFUlNJT04gICAgICAgPSAi
-MC4xLjAiDQpUVU5FX0ZFQVRVUkVTICAgICAgICA9ICJhcm0gYXJtdjdhIHZmcCB2ZnB2NGQxNiBj
-YWxsY29udmVudGlvbi1oYXJkIg0KVEFSR0VUX0ZQVSAgICAgICAgICAgPSAiaGFyZCINCm1ldGEN
-Cm1ldGEtcG9reQ0KbWV0YS1vZQ0KbWV0YS1uZXR3b3JraW5nDQptZXRhLXB5dGhvbg0KbWV0YS1w
-aG9zcGhvcg0KbWV0YS1hc3BlZWQNCm1ldGEtZXZiLWFzdDI2MDAgICAgID0gIm1hc3Rlcjo3ZGMy
-ZjdhMzhkY2NiM2Q4N2E5Yjc5ZDBhNjZiMjVkYTEwMjdhNzJmIg0KDQpJbml0aWFsaXNpbmcgdGFz
-a3M6IDEwMCUgfCMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjI3wgVGltZTogMDowMDowMw0KU3N0YXRlIHN1bW1hcnk6IFdhbnRlZCAxMzc4IEZvdW5kIDkz
-OSBNaXNzZWQgNDM5IEN1cnJlbnQgMCAoNjglIG1hdGNoLCAwJSBjb21wbGV0ZSkNCk5PVEU6IEV4
-ZWN1dGluZyBUYXNrcw0KV0FSTklORzogbGludXgtYXNwZWVkLTUuOC4xNytnaXRBVVRPSU5DKzNj
-Yzk1YWU0MDctcjAgZG9fa2VybmVsX21ldGFkYXRhOiBGZWF0dXJlICdwaG9zcGhvci1ncGlvLWtl
-eXMnIG5vdCBmb3VuZCwgYnV0IEtFUk5FTF9EQU5HTElOR19GRUFUVVJFU19XQVJOX09OTFkgaXMg
-c2V0DQpXQVJOSU5HOiBsaW51eC1hc3BlZWQtNS44LjE3K2dpdEFVVE9JTkMrM2NjOTVhZTQwNy1y
-MCBkb19rZXJuZWxfbWV0YWRhdGE6IFRoaXMgbWF5IGNhdXNlIHJ1bnRpbWUgaXNzdWVzLCBkcm9w
-cGluZyBmZWF0dXJlIGFuZCBhbGxvd2luZyBjb25maWd1cmF0aW9uIHRvIGNvbnRpbnVlDQpXQVJO
-SU5HOiBsaW51eC1hc3BlZWQtNS44LjE3K2dpdEFVVE9JTkMrM2NjOTVhZTQwNy1yMCBkb19rZXJu
-ZWxfbWV0YWRhdGE6IEZlYXR1cmUgJ3Bob3NwaG9yLXZsYW4nIG5vdCBmb3VuZCwgYnV0IEtFUk5F
-TF9EQU5HTElOR19GRUFUVVJFU19XQVJOX09OTFkgaXMgc2V0DQpXQVJOSU5HOiBsaW51eC1hc3Bl
-ZWQtNS44LjE3K2dpdEFVVE9JTkMrM2NjOTVhZTQwNy1yMCBkb19rZXJuZWxfbWV0YWRhdGE6IFRo
-aXMgbWF5IGNhdXNlIHJ1bnRpbWUgaXNzdWVzLCBkcm9wcGluZyBmZWF0dXJlIGFuZCBhbGxvd2lu
-ZyBjb25maWd1cmF0aW9uIHRvIGNvbnRpbnVlDQpXQVJOSU5HOiBsaW51eC1hc3BlZWQtNS44LjE3
-K2dpdEFVVE9JTkMrM2NjOTVhZTQwNy1yMCBkb19rZXJuZWxfY29uZmlnbWU6IEZlYXR1cmUgJ3Bo
-b3NwaG9yLWdwaW8ta2V5cycgbm90IGZvdW5kLCBidXQgS0VSTkVMX0RBTkdMSU5HX0ZFQVRVUkVT
-X1dBUk5fT05MWSBpcyBzZXQNCldBUk5JTkc6IGxpbnV4LWFzcGVlZC01LjguMTcrZ2l0QVVUT0lO
-QyszY2M5NWFlNDA3LXIwIGRvX2tlcm5lbF9jb25maWdtZTogVGhpcyBtYXkgY2F1c2UgcnVudGlt
-ZSBpc3N1ZXMsIGRyb3BwaW5nIGZlYXR1cmUgYW5kIGFsbG93aW5nIGNvbmZpZ3VyYXRpb24gdG8g
-Y29udGludWUNCldBUk5JTkc6IGxpbnV4LWFzcGVlZC01LjguMTcrZ2l0QVVUT0lOQyszY2M5NWFl
-NDA3LXIwIGRvX2tlcm5lbF9jb25maWdtZTogRmVhdHVyZSAncGhvc3Bob3Itdmxhbicgbm90IGZv
-dW5kLCBidXQgS0VSTkVMX0RBTkdMSU5HX0ZFQVRVUkVTX1dBUk5fT05MWSBpcyBzZXQNCldBUk5J
-Tkc6IGxpbnV4LWFzcGVlZC01LjguMTcrZ2l0QVVUT0lOQyszY2M5NWFlNDA3LXIwIGRvX2tlcm5l
-bF9jb25maWdtZTogVGhpcyBtYXkgY2F1c2UgcnVudGltZSBpc3N1ZXMsIGRyb3BwaW5nIGZlYXR1
-cmUgYW5kIGFsbG93aW5nIGNvbmZpZ3VyYXRpb24gdG8gY29udGludWUNCldBUk5JTkc6IG9ibWMt
-cGhvc3Bob3Itc3lzZC0xLjAtcjEgZG9fcGFja2FnZV9xYTogUUEgSXNzdWU6IG9ibWMtcGhvc3Bo
-b3Itc3lzZDogU1JDX1VSSSB1c2VzIFBOIG5vdCBCUE4gW3NyYy11cmktYmFkXQ0KRVJST1I6IG9i
-bWMtcGhvc3Bob3ItaW1hZ2UtMS4wLXIwIGRvX2dlbmVyYXRlX3N0YXRpYzogSW1hZ2UgJy9ob21l
-L3Zpbm90aC9wcm9qZWN0L29wZW5ibWMvYnVpbGQvdG1wL2RlcGxveS9pbWFnZXMvZXZiLWFzdDI2
-MDAvdS1ib290LmJpbicgaXMgdG9vIGxhcmdlIQ0KRVJST1I6IExvZ2ZpbGUgb2YgZmFpbHVyZSBz
-dG9yZWQgaW46IC9ob21lL3Zpbm90aC9wcm9qZWN0L29wZW5ibWMvYnVpbGQvdG1wL3dvcmsvZXZi
-X2FzdDI2MDAtb3BlbmJtYy1saW51eC1nbnVlYWJpL29ibWMtcGhvc3Bob3ItaW1hZ2UvMS4wLXIw
-L3RlbXAvbG9nLmRvX2dlbmVyYXRlX3N0YXRpYy4yMTc2Nzk2DQpFUlJPUjogVGFzayAoL2hvbWUv
-dmlub3RoL3Byb2plY3Qvb3BlbmJtYy9tZXRhLXBob3NwaG9yL3JlY2lwZXMtcGhvc3Bob3IvaW1h
-Z2VzL29ibWMtcGhvc3Bob3ItaW1hZ2UuYmI6ZG9fZ2VuZXJhdGVfc3RhdGljKSBmYWlsZWQgd2l0
-aCBleGl0IGNvZGUgJzEnDQpOT1RFOiBUYXNrcyBTdW1tYXJ5OiBBdHRlbXB0ZWQgNDA0MSB0YXNr
-cyBvZiB3aGljaCAyNjgwIGRpZG4ndCBuZWVkIHRvIGJlIHJlcnVuIGFuZCAxIGZhaWxlZC4NCg0K
-U3VtbWFyeTogMSB0YXNrIGZhaWxlZDoNCiAgL2hvbWUvdmlub3RoL3Byb2plY3Qvb3BlbmJtYy9t
-ZXRhLXBob3NwaG9yL3JlY2lwZXMtcGhvc3Bob3IvaW1hZ2VzL29ibWMtcGhvc3Bob3ItaW1hZ2Uu
-YmI6ZG9fZ2VuZXJhdGVfc3RhdGljDQpTdW1tYXJ5OiBUaGVyZSB3ZXJlIDEwIFdBUk5JTkcgbWVz
-c2FnZXMgc2hvd24uDQpTdW1tYXJ5OiBUaGVyZSB3YXMgMSBFUlJPUiBtZXNzYWdlIHNob3duLCBy
-ZXR1cm5pbmcgYSBub24temVybyBleGl0IGNvZGUuDQoNCg0KDQpSZWdhcmRzLA0KVklOT1RIS1VN
-QVIgUksNCg==
+Hi Troy,
 
---_000_PS1PR06MB2600DD0B6A4F3F30C771342A8AB29PS1PR06MB2600apcp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+Thanks for sharing the changes, with this I'm able to generate mtd image.
+But when I try to load them through Qemu, it's getting stuck with the below
+error. Is there any workaround?
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-V2luZ2RpbmdzOw0KCXBhbm9zZS0xOjUgMCAwIDAgMCAwIDAgMCAwIDA7fQ0KQGZvbnQtZmFjZQ0K
-CXtmb250LWZhbWlseTrmlrDntLDmmI7pq5Q7DQoJcGFub3NlLTE6MiAyIDUgMCAwIDAgMCAwIDAg
-MDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0x
-OjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJp
-Ow0KCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1m
-YW1pbHk6IlxA5paw57Sw5piO6auUIjsNCglwYW5vc2UtMToyIDEgNiAxIDAgMSAxIDEgMSAxO30N
-Ci8qIFN0eWxlIERlZmluaXRpb25zICovDQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYu
-TXNvTm9ybWFsDQoJe21hcmdpbjowY207DQoJZm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWls
-eToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQphOmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21z
-by1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjojMDU2M0MxOw0KCXRleHQtZGVjb3JhdGlvbjp1
-bmRlcmxpbmU7fQ0KcC5Nc29MaXN0UGFyYWdyYXBoLCBsaS5Nc29MaXN0UGFyYWdyYXBoLCBkaXYu
-TXNvTGlzdFBhcmFncmFwaA0KCXttc28tc3R5bGUtcHJpb3JpdHk6MzQ7DQoJbWFyZ2luLXRvcDow
-Y207DQoJbWFyZ2luLXJpZ2h0OjBjbTsNCgltYXJnaW4tYm90dG9tOjBjbTsNCgltYXJnaW4tbGVm
-dDozNi4wcHQ7DQoJZm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fu
-cy1zZXJpZjt9DQpzcGFuLkVtYWlsU3R5bGUxOA0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1y
-ZXBseTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0
-ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZv
-bnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCkBwYWdlIFdvcmRTZWN0aW9uMQ0KCXtz
-aXplOjYxMi4wcHQgNzkyLjBwdDsNCgltYXJnaW46NzIuMHB0IDkwLjBwdCA3Mi4wcHQgOTAuMHB0
-O30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3JkU2VjdGlvbjE7fQ0KLyogTGlzdCBEZWZp
-bml0aW9ucyAqLw0KQGxpc3QgbDANCgl7bXNvLWxpc3QtaWQ6MjMzMDU1NjA4Ow0KCW1zby1saXN0
-LXR5cGU6aHlicmlkOw0KCW1zby1saXN0LXRlbXBsYXRlLWlkczoxNTUyMTM0MjAgLTE3Nzk2MDM0
-NiA2NzY5ODY5MSA2NzY5ODY5MyA2NzY5ODY4OSA2NzY5ODY5MSA2NzY5ODY5MyA2NzY5ODY4OSA2
-NzY5ODY5MSA2NzY5ODY5Mzt9DQpAbGlzdCBsMDpsZXZlbDENCgl7bXNvLWxldmVsLXN0YXJ0LWF0
-OjM7DQoJbXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVsbGV0Ow0KCW1zby1sZXZlbC10ZXh0Oi07
-DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjps
-ZWZ0Ow0KCXRleHQtaW5kZW50Oi0xOC4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMt
-c2VyaWY7DQoJbXNvLWZhcmVhc3QtZm9udC1mYW1pbHk65paw57Sw5piO6auUO30NCkBsaXN0IGww
-OmxldmVsMg0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxldmVsLXRl
-eHQ6bzsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0
-aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LTE4LjBwdDsNCglmb250LWZhbWlseToiQ291cmllciBO
-ZXciO30NCkBsaXN0IGwwOmxldmVsMw0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7
-DQoJbXNvLWxldmVsLXRleHQ674KnOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1s
-ZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotMTguMHB0Ow0KCWZvbnQt
-ZmFtaWx5OldpbmdkaW5nczt9DQpAbGlzdCBsMDpsZXZlbDQNCgl7bXNvLWxldmVsLW51bWJlci1m
-b3JtYXQ6YnVsbGV0Ow0KCW1zby1sZXZlbC10ZXh0Ou+CtzsNCgltc28tbGV2ZWwtdGFiLXN0b3A6
-bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LTE4
-LjBwdDsNCglmb250LWZhbWlseTpTeW1ib2w7fQ0KQGxpc3QgbDA6bGV2ZWw1DQoJe21zby1sZXZl
-bC1udW1iZXItZm9ybWF0OmJ1bGxldDsNCgltc28tbGV2ZWwtdGV4dDpvOw0KCW1zby1sZXZlbC10
-YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWlu
-ZGVudDotMTguMHB0Ow0KCWZvbnQtZmFtaWx5OiJDb3VyaWVyIE5ldyI7fQ0KQGxpc3QgbDA6bGV2
-ZWw2DQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsNCgltc28tbGV2ZWwtdGV4dDrv
-gqc7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlv
-bjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0xOC4wcHQ7DQoJZm9udC1mYW1pbHk6V2luZ2RpbmdzO30N
-CkBsaXN0IGwwOmxldmVsNw0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNv
-LWxldmVsLXRleHQ674K3Ow0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1u
-dW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotMTguMHB0Ow0KCWZvbnQtZmFtaWx5
-OlN5bWJvbDt9DQpAbGlzdCBsMDpsZXZlbDgNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVs
-bGV0Ow0KCW1zby1sZXZlbC10ZXh0Om87DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNv
-LWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0xOC4wcHQ7DQoJZm9u
-dC1mYW1pbHk6IkNvdXJpZXIgTmV3Ijt9DQpAbGlzdCBsMDpsZXZlbDkNCgl7bXNvLWxldmVsLW51
-bWJlci1mb3JtYXQ6YnVsbGV0Ow0KCW1zby1sZXZlbC10ZXh0Ou+CpzsNCgltc28tbGV2ZWwtdGFi
-LXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRl
-bnQ6LTE4LjBwdDsNCglmb250LWZhbWlseTpXaW5nZGluZ3M7fQ0Kb2wNCgl7bWFyZ2luLWJvdHRv
-bTowY207fQ0KdWwNCgl7bWFyZ2luLWJvdHRvbTowY207fQ0KLS0+PC9zdHlsZT48IS0tW2lmIGd0
-ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlZGVmYXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9IjEw
-MjYiIC8+DQo8L3htbD48IVtlbmRpZl0tLT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNo
-YXBlbGF5b3V0IHY6ZXh0PSJlZGl0Ij4NCjxvOmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIxIiAv
-Pg0KPC9vOnNoYXBlbGF5b3V0PjwveG1sPjwhW2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkgbGFu
-Zz0iRU4tVVMiIGxpbms9IiMwNTYzQzEiIHZsaW5rPSIjOTU0RjcyIiBzdHlsZT0id29yZC13cmFw
-OmJyZWFrLXdvcmQiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPkhpIFZpbm90aGt1bWFyLDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5QbGVhc2UgcmVm
-ZXIgdG8gdGhlIGZvbGxvd2luZyB0d28gY2hhbmdlcyBpbiBHZXJyaXQ6PG86cD48L286cD48L3A+
-DQo8dWwgc3R5bGU9Im1hcmdpbi10b3A6MGNtIiB0eXBlPSJkaXNjIj4NCjxsaSBjbGFzcz0iTXNv
-TGlzdFBhcmFncmFwaCIgc3R5bGU9Im1hcmdpbi1sZWZ0OjBjbTttc28tbGlzdDpsMCBsZXZlbDEg
-bGZvMSI+PGEgaHJlZj0iaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5i
-bWMvbWV0YS1waG9zcGhvci8rLzM5MzQzIj5odHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3Qu
-eHl6L2Mvb3BlbmJtYy9tZXRhLXBob3NwaG9yLysvMzkzNDM8L2E+PG86cD48L286cD48L2xpPjxs
-aSBjbGFzcz0iTXNvTGlzdFBhcmFncmFwaCIgc3R5bGU9Im1hcmdpbi1sZWZ0OjBjbTttc28tbGlz
-dDpsMCBsZXZlbDEgbGZvMSI+PGEgaHJlZj0iaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0
-Lnh5ei9jL29wZW5ibWMvbWV0YS1hc3BlZWQvKy8zOTM0NCI+aHR0cHM6Ly9nZXJyaXQub3BlbmJt
-Yy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMvbWV0YS1hc3BlZWQvKy8zOTM0NDwvYT48bzpwPjwvbzpw
-PjwvbGk+PC91bD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+VGhhbmtzLDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+VHJveSBMZWU8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxv
-OnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdiBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRvcDpz
-b2xpZCAjRTFFMUUxIDEuMHB0O3BhZGRpbmc6My4wcHQgMGNtIDBjbSAwY20iPg0KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+PGI+RnJvbTo8L2I+IG9wZW5ibWMgJmx0O29wZW5ibWMtYm91bmNlcyt0cm95
-X2xlZT1hc3BlZWR0ZWNoLmNvbUBsaXN0cy5vemxhYnMub3JnJmd0Ow0KPGI+T24gQmVoYWxmIE9m
-IDwvYj5WSU5PVEhLVU1BUiBSSzxicj4NCjxiPlNlbnQ6PC9iPiBUaHVyc2RheSwgRmVicnVhcnkg
-NCwgMjAyMSA4OjI4IFBNPGJyPg0KPGI+VG86PC9iPiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8
-YnI+DQo8Yj5TdWJqZWN0OjwvYj4gZXZiLWFzdDI2MDA6IEdldHRpbmcgc29tZSBidWlsZCBlcnJv
-cnMgLSAndS1ib290LmJpbicgaXMgdG9vIGxhcmdlISc8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8ZGl2Pg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+SGksPG86cD48L286cD48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj5JJ20gdHJ5aW5nIHRvIGJ1aWxkIGZvciBldmItYXN0MjYwMCBwbGF0Zm9ybSwgYnV0
-IGl0IGRvZXNuJ3Qgc3VjY2VlZC4gUGxlYXNlIGhlbHAuPG86cD48L286cD48L3A+DQo8L2Rpdj4N
-CjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2
-Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkJ1aWxkIGNvbW1hbmQ6IChmcmVzaCBjaGVj
-a291dCBhbmQgYnVpbGQpPG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIj5URU1QTEFURUNPTkY9bWV0YS1ldmIvbWV0YS1ldmItYXNwZWVkL21ldGEtZXZi
-LWFzdDI2MDAvY29uZiAuIG9wZW5ibWMtZW52PGJyPg0KYml0YmFrZSBvYm1jLXBob3NwaG9yLWlt
-YWdlPG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48
-bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PkJyYW5jaCBkZXRhaWxzOjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+Y29tbWl0IDdkYzJmN2EzOGRjY2IzZDg3YTliNzlkMGE2NmIyNWRhMTAyN2E3
-MmYmbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj5FcnJvciBMb2c6PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj5Mb2FkaW5nIGNhY2hlOiAxMDAlIHwgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
-Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
-bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
-YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
-cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
-OyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
-ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
-Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
-bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
-YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgfCBF
-VEE6ICZuYnNwOy0tOi0tOi0tPGJyPg0KTG9hZGVkIDAgZW50cmllcyBmcm9tIGRlcGVuZGVuY3kg
-Y2FjaGUuPGJyPg0KUGFyc2luZyByZWNpcGVzOiAxMDAlIHwjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyN8IFRpbWU6IDA6MDA6NDQ8YnI+DQpQYXJz
-aW5nIG9mIDI0MjQgLmJiIGZpbGVzIGNvbXBsZXRlICgwIGNhY2hlZCwgMjQyNCBwYXJzZWQpLiAz
-NjgzIHRhcmdldHMsIDM2MiBza2lwcGVkLCAwIG1hc2tlZCwgMCBlcnJvcnMuPGJyPg0KV0FSTklO
-RzogTm8gYmIgZmlsZXMgaW4gZGVmYXVsdCBtYXRjaGVkIEJCRklMRV9QQVRURVJOX21ldGEtZXZi
-LWFzdDI2MDAgJ14vaG9tZS92aW5vdGgvcHJvamVjdC9vcGVuYm1jL21ldGEtZXZiL21ldGEtZXZi
-LWFzcGVlZC9tZXRhLWV2Yi1hc3QyNjAwLyc8YnI+DQpOT1RFOiBSZXNvbHZpbmcgYW55IG1pc3Np
-bmcgdGFzayBxdWV1ZSBkZXBlbmRlbmNpZXM8YnI+DQo8YnI+DQpCdWlsZCBDb25maWd1cmF0aW9u
-Ojxicj4NCkJCX1ZFUlNJT04gJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyA9ICZx
-dW90OzEuNDkuMCZxdW90Ozxicj4NCkJVSUxEX1NZUyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
-cDsgJm5ic3A7ICZuYnNwOz0gJnF1b3Q7eDg2XzY0LWxpbnV4JnF1b3Q7PGJyPg0KTkFUSVZFTFNC
-U1RSSU5HICZuYnNwOyAmbmJzcDsgJm5ic3A7PSAmcXVvdDt1YnVudHUtMjAuMDQmcXVvdDs8YnI+
-DQpUQVJHRVRfU1lTICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgPSAmcXVvdDth
-cm0tb3BlbmJtYy1saW51eC1nbnVlYWJpJnF1b3Q7PGJyPg0KTUFDSElORSAmbmJzcDsgJm5ic3A7
-ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDs9ICZxdW90O2V2Yi1hc3QyNjAwJnF1
-b3Q7PGJyPg0KRElTVFJPICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
-ICZuYnNwOyA9ICZxdW90O29wZW5ibWMtcGhvc3Bob3ImcXVvdDs8YnI+DQpESVNUUk9fVkVSU0lP
-TiAmbmJzcDsgJm5ic3A7ICZuYnNwOyA9ICZxdW90OzAuMS4wJnF1b3Q7PGJyPg0KVFVORV9GRUFU
-VVJFUyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDs9ICZxdW90O2FybSBhcm12N2EgdmZwIHZm
-cHY0ZDE2IGNhbGxjb252ZW50aW9uLWhhcmQmcXVvdDs8YnI+DQpUQVJHRVRfRlBVICZuYnNwOyAm
-bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgPSAmcXVvdDtoYXJkJnF1b3Q7PGJyPg0KbWV0YSAm
-bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IDxi
-cj4NCm1ldGEtcG9reSAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOzxi
-cj4NCm1ldGEtb2UgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
-c3A7PGJyPg0KbWV0YS1uZXR3b3JraW5nICZuYnNwOyAmbmJzcDsgJm5ic3A7PGJyPg0KbWV0YS1w
-eXRob24gJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOzxicj4NCm1ldGEtcGhvc3Bo
-b3IgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7PGJyPg0KbWV0YS1hc3BlZWQgJm5ic3A7ICZu
-YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOzxicj4NCm1ldGEtZXZiLWFzdDI2MDAgJm5ic3A7ICZu
-YnNwOyA9ICZxdW90O21hc3Rlcjo3ZGMyZjdhMzhkY2NiM2Q4N2E5Yjc5ZDBhNjZiMjVkYTEwMjdh
-NzJmJnF1b3Q7PGJyPg0KPGJyPg0KSW5pdGlhbGlzaW5nIHRhc2tzOiAxMDAlIHwjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyN8IFRpbWU6IDA6MDA6MDM8
-YnI+DQpTc3RhdGUgc3VtbWFyeTogV2FudGVkIDEzNzggRm91bmQgOTM5IE1pc3NlZCA0MzkgQ3Vy
-cmVudCAwICg2OCUgbWF0Y2gsIDAlIGNvbXBsZXRlKTxicj4NCk5PVEU6IEV4ZWN1dGluZyBUYXNr
-czxicj4NCldBUk5JTkc6IGxpbnV4LWFzcGVlZC01LjguMTcrZ2l0QVVUT0lOQyszY2M5NWFlNDA3
-LXIwIGRvX2tlcm5lbF9tZXRhZGF0YTogRmVhdHVyZSAncGhvc3Bob3ItZ3Bpby1rZXlzJyBub3Qg
-Zm91bmQsIGJ1dCBLRVJORUxfREFOR0xJTkdfRkVBVFVSRVNfV0FSTl9PTkxZIGlzIHNldDxicj4N
-CldBUk5JTkc6IGxpbnV4LWFzcGVlZC01LjguMTcrZ2l0QVVUT0lOQyszY2M5NWFlNDA3LXIwIGRv
-X2tlcm5lbF9tZXRhZGF0YTogVGhpcyBtYXkgY2F1c2UgcnVudGltZSBpc3N1ZXMsIGRyb3BwaW5n
-IGZlYXR1cmUgYW5kIGFsbG93aW5nIGNvbmZpZ3VyYXRpb24gdG8gY29udGludWU8YnI+DQpXQVJO
-SU5HOiBsaW51eC1hc3BlZWQtNS44LjE3K2dpdEFVVE9JTkMrM2NjOTVhZTQwNy1yMCBkb19rZXJu
-ZWxfbWV0YWRhdGE6IEZlYXR1cmUgJ3Bob3NwaG9yLXZsYW4nIG5vdCBmb3VuZCwgYnV0IEtFUk5F
-TF9EQU5HTElOR19GRUFUVVJFU19XQVJOX09OTFkgaXMgc2V0PGJyPg0KV0FSTklORzogbGludXgt
-YXNwZWVkLTUuOC4xNytnaXRBVVRPSU5DKzNjYzk1YWU0MDctcjAgZG9fa2VybmVsX21ldGFkYXRh
-OiBUaGlzIG1heSBjYXVzZSBydW50aW1lIGlzc3VlcywgZHJvcHBpbmcgZmVhdHVyZSBhbmQgYWxs
-b3dpbmcgY29uZmlndXJhdGlvbiB0byBjb250aW51ZTxicj4NCldBUk5JTkc6IGxpbnV4LWFzcGVl
-ZC01LjguMTcrZ2l0QVVUT0lOQyszY2M5NWFlNDA3LXIwIGRvX2tlcm5lbF9jb25maWdtZTogRmVh
-dHVyZSAncGhvc3Bob3ItZ3Bpby1rZXlzJyBub3QgZm91bmQsIGJ1dCBLRVJORUxfREFOR0xJTkdf
-RkVBVFVSRVNfV0FSTl9PTkxZIGlzIHNldDxicj4NCldBUk5JTkc6IGxpbnV4LWFzcGVlZC01Ljgu
-MTcrZ2l0QVVUT0lOQyszY2M5NWFlNDA3LXIwIGRvX2tlcm5lbF9jb25maWdtZTogVGhpcyBtYXkg
-Y2F1c2UgcnVudGltZSBpc3N1ZXMsIGRyb3BwaW5nIGZlYXR1cmUgYW5kIGFsbG93aW5nIGNvbmZp
-Z3VyYXRpb24gdG8gY29udGludWU8YnI+DQpXQVJOSU5HOiBsaW51eC1hc3BlZWQtNS44LjE3K2dp
-dEFVVE9JTkMrM2NjOTVhZTQwNy1yMCBkb19rZXJuZWxfY29uZmlnbWU6IEZlYXR1cmUgJ3Bob3Nw
-aG9yLXZsYW4nIG5vdCBmb3VuZCwgYnV0IEtFUk5FTF9EQU5HTElOR19GRUFUVVJFU19XQVJOX09O
-TFkgaXMgc2V0PGJyPg0KV0FSTklORzogbGludXgtYXNwZWVkLTUuOC4xNytnaXRBVVRPSU5DKzNj
-Yzk1YWU0MDctcjAgZG9fa2VybmVsX2NvbmZpZ21lOiBUaGlzIG1heSBjYXVzZSBydW50aW1lIGlz
-c3VlcywgZHJvcHBpbmcgZmVhdHVyZSBhbmQgYWxsb3dpbmcgY29uZmlndXJhdGlvbiB0byBjb250
-aW51ZTxicj4NCldBUk5JTkc6IG9ibWMtcGhvc3Bob3Itc3lzZC0xLjAtcjEgZG9fcGFja2FnZV9x
-YTogUUEgSXNzdWU6IG9ibWMtcGhvc3Bob3Itc3lzZDogU1JDX1VSSSB1c2VzIFBOIG5vdCBCUE4g
-W3NyYy11cmktYmFkXTxicj4NCkVSUk9SOiBvYm1jLXBob3NwaG9yLWltYWdlLTEuMC1yMCBkb19n
-ZW5lcmF0ZV9zdGF0aWM6IEltYWdlICcvaG9tZS92aW5vdGgvcHJvamVjdC9vcGVuYm1jL2J1aWxk
-L3RtcC9kZXBsb3kvaW1hZ2VzL2V2Yi1hc3QyNjAwL3UtYm9vdC5iaW4nIGlzIHRvbyBsYXJnZSE8
-YnI+DQpFUlJPUjogTG9nZmlsZSBvZiBmYWlsdXJlIHN0b3JlZCBpbjogL2hvbWUvdmlub3RoL3By
-b2plY3Qvb3BlbmJtYy9idWlsZC90bXAvd29yay9ldmJfYXN0MjYwMC1vcGVuYm1jLWxpbnV4LWdu
-dWVhYmkvb2JtYy1waG9zcGhvci1pbWFnZS8xLjAtcjAvdGVtcC9sb2cuZG9fZ2VuZXJhdGVfc3Rh
-dGljLjIxNzY3OTY8YnI+DQpFUlJPUjogVGFzayAoL2hvbWUvdmlub3RoL3Byb2plY3Qvb3BlbmJt
-Yy9tZXRhLXBob3NwaG9yL3JlY2lwZXMtcGhvc3Bob3IvaW1hZ2VzL29ibWMtcGhvc3Bob3ItaW1h
-Z2UuYmI6ZG9fZ2VuZXJhdGVfc3RhdGljKSBmYWlsZWQgd2l0aCBleGl0IGNvZGUgJzEnPGJyPg0K
-Tk9URTogVGFza3MgU3VtbWFyeTogQXR0ZW1wdGVkIDQwNDEgdGFza3Mgb2Ygd2hpY2ggMjY4MCBk
-aWRuJ3QgbmVlZCB0byBiZSByZXJ1biBhbmQgMSBmYWlsZWQuPGJyPg0KPGJyPg0KU3VtbWFyeTog
-MSB0YXNrIGZhaWxlZDo8YnI+DQombmJzcDsgL2hvbWUvdmlub3RoL3Byb2plY3Qvb3BlbmJtYy9t
-ZXRhLXBob3NwaG9yL3JlY2lwZXMtcGhvc3Bob3IvaW1hZ2VzL29ibWMtcGhvc3Bob3ItaW1hZ2Uu
-YmI6ZG9fZ2VuZXJhdGVfc3RhdGljPGJyPg0KU3VtbWFyeTogVGhlcmUgd2VyZSAxMCBXQVJOSU5H
-IG1lc3NhZ2VzIHNob3duLjxicj4NClN1bW1hcnk6IFRoZXJlIHdhcyAxIEVSUk9SIG1lc3NhZ2Ug
-c2hvd24sIHJldHVybmluZyBhIG5vbi16ZXJvIGV4aXQgY29kZS48bzpwPjwvbzpwPjwvcD4NCjwv
-ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0K
-PC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+
-DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwv
-cD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPlJlZ2FyZHMsPG86cD48L286
-cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5WSU5PVEhLVU1BUiBS
-SzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1s
-Pg0K
+Error log:
+------------
+fdt_root: FDT_ERR_BADMAGIC
+ERROR: root node setup failed
+ - must RESET the board to recover.
 
---_000_PS1PR06MB2600DD0B6A4F3F30C771342A8AB29PS1PR06MB2600apcp_--
+FDT creation failed! hanging...### ERROR ### Please RESET the board ###
+
+
+Qemu command:
+-----------------------
+qemu-system-arm -m 1G -M ast2600-evb -nographic -drive
+file=obmc-phosphor-image-evb-ast2600-20210205034901.static.mtd,format=raw,if=mtd
+-net nic -net user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:2443
+-:443,hostname=qemu
+
+Qemu log:
+--------------
+U-Boot 2019.04 (Feb 04 2021 - 10:27:21 +0000)
+
+SOC: AST2600-A0
+eSPI Mode: SIO:Enable : SuperIO-2e
+Eth: MAC0: RGMII, MAC1: RGMII, MAC2: RGMII, MAC3: RGMII
+Model: AST2600 EVB
+DRAM:  already initialized, 240 MiB (capacity:256 MiB, VGA:64 MiB), ECC off
+PCIE-0: Link down
+MMC:
+
+sdhci_slot0@100: 1, sdhci_slot1@200: 2, emmc_slot0@100: 0
+Loading Environment from SPI Flash... *** Warning -
+spi_flash_probe_bus_cs() failed, using default environment
+
+In:    serial@1e784000
+Out:   serial@1e784000
+Err:   serial@1e784000
+Model: AST2600 EVB
+Net:
+Warning: ftgmac@1e660000 (eth0) using random MAC address - 5e:23:16:3b:07:db
+eth0: ftgmac@1e660000
+Warning: ftgmac@1e680000 (eth1) using random MAC address - 92:2d:b9:4b:a5:93
+, eth1: ftgmac@1e680000
+Warning: ftgmac@1e670000 (eth2) using random MAC address - f6:16:60:c6:0a:2d
+, eth2: ftgmac@1e670000
+Warning: ftgmac@1e690000 (eth3) using random MAC address - 02:43:32:16:41:6d
+, eth3: ftgmac@1e690000
+Hit any key to stop autoboot:  0
+## Loading kernel from FIT Image at 20100000 ...
+   Using 'conf@aspeed-ast2600-evb.dtb' configuration
+   Trying 'kernel@1' kernel subimage
+     Description:  Linux kernel
+     Type:         Kernel Image
+     Compression:  uncompressed
+     Data Start:   0x2010012c
+     Data Size:    3527112 Bytes = 3.4 MiB
+     Architecture: ARM
+     OS:           Linux
+     Load Address: 0x80001000
+     Entry Point:  0x80001000
+     Hash algo:    sha256
+     Hash value:
+ d3bfde4459bab8272cda12f0747d47735521c9ee4f5786283cfea439398c976d
+   Verifying Hash Integrity ... sha256+ OK
+## Loading ramdisk from FIT Image at 20100000 ...
+   Using 'conf@aspeed-ast2600-evb.dtb' configuration
+   Trying 'ramdisk@1' ramdisk subimage
+     Description:  obmc-phosphor-initramfs
+     Type:         RAMDisk Image
+     Compression:  uncompressed
+     Data Start:   0x20465cf8
+     Data Size:    1087608 Bytes = 1 MiB
+     Architecture: ARM
+     OS:           Linux
+     Load Address: unavailable
+     Entry Point:  unavailable
+     Hash algo:    sha256
+     Hash value:
+ 488f44eb0c954ef85ede0c1dde3803696b3637d41996fc2be9610bbdb756b1a9
+   Verifying Hash Integrity ... sha256+ OK
+## Loading fdt from FIT Image at 20100000 ...
+   Using 'conf@aspeed-ast2600-evb.dtb' configuration
+   Trying 'fdt@aspeed-ast2600-evb.dtb' fdt subimage
+     Description:  Flattened Device Tree blob
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x2045d408
+     Data Size:    34852 Bytes = 34 KiB
+     Architecture: ARM
+     Hash algo:    sha256
+     Hash value:
+ a9bcf2a34ea7477d2c5f86ec793b659ecce07554dee5897460198f513ede4d0b
+   Verifying Hash Integrity ... sha256+ OK
+   Booting using the fdt blob at 0x2045d408
+   Loading Kernel Image ... OK
+   Loading Ramdisk to 8ce57000, end 8cf60878 ... OK
+   Loading Device Tree to 8ce4b000, end 8ce56823 ... OK
+fdt_root: FDT_ERR_BADMAGIC
+ERROR: root node setup failed
+ - must RESET the board to recover.
+
+FDT creation failed! hanging...### ERROR ### Please RESET the board ###
+
+
+
+
+
+Regards,
+Vinoth Kumar RK
+
+On Fri, 5 Feb 2021 at 07:57, Troy Lee <troy_lee@aspeedtech.com> wrote:
+
+> Hi Vinothkumar,
+>
+>
+>
+> Please refer to the following two changes in Gerrit:
+>
+>    - https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/39343
+>    - https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/39344
+>
+>
+>
+> Thanks,
+>
+> Troy Lee
+>
+>
+>
+> *From:* openbmc <openbmc-bounces+troy_lee=aspeedtech.com@lists.ozlabs.org>
+> *On Behalf Of *VINOTHKUMAR RK
+> *Sent:* Thursday, February 4, 2021 8:28 PM
+> *To:* openbmc@lists.ozlabs.org
+> *Subject:* evb-ast2600: Getting some build errors - 'u-boot.bin' is too
+> large!'
+>
+>
+>
+> Hi,
+>
+>
+>
+> I'm trying to build for evb-ast2600 platform, but it doesn't succeed.
+> Please help.
+>
+>
+>
+> Build command: (fresh checkout and build)
+>
+> TEMPLATECONF=meta-evb/meta-evb-aspeed/meta-evb-ast2600/conf . openbmc-env
+> bitbake obmc-phosphor-image
+>
+>
+>
+> Branch details:
+>
+> commit 7dc2f7a38dccb3d87a9b79d0a66b25da1027a72f
+>
+>
+>
+>
+>
+> Error Log:
+>
+> Loading cache: 100% |
+>
+>                                         | ETA:  --:--:--
+> Loaded 0 entries from dependency cache.
+> Parsing recipes: 100%
+> |########################################################################################################################################################################|
+> Time: 0:00:44
+> Parsing of 2424 .bb files complete (0 cached, 2424 parsed). 3683 targets,
+> 362 skipped, 0 masked, 0 errors.
+> WARNING: No bb files in default matched BBFILE_PATTERN_meta-evb-ast2600
+> '^/home/vinoth/project/openbmc/meta-evb/meta-evb-aspeed/meta-evb-ast2600/'
+> NOTE: Resolving any missing task queue dependencies
+>
+> Build Configuration:
+> BB_VERSION           = "1.49.0"
+> BUILD_SYS            = "x86_64-linux"
+> NATIVELSBSTRING      = "ubuntu-20.04"
+> TARGET_SYS           = "arm-openbmc-linux-gnueabi"
+> MACHINE              = "evb-ast2600"
+> DISTRO               = "openbmc-phosphor"
+> DISTRO_VERSION       = "0.1.0"
+> TUNE_FEATURES        = "arm armv7a vfp vfpv4d16 callconvention-hard"
+> TARGET_FPU           = "hard"
+> meta
+> meta-poky
+> meta-oe
+> meta-networking
+> meta-python
+> meta-phosphor
+> meta-aspeed
+> meta-evb-ast2600     = "master:7dc2f7a38dccb3d87a9b79d0a66b25da1027a72f"
+>
+> Initialising tasks: 100%
+> |#####################################################################################################################################################################|
+> Time: 0:00:03
+> Sstate summary: Wanted 1378 Found 939 Missed 439 Current 0 (68% match, 0%
+> complete)
+> NOTE: Executing Tasks
+> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_metadata:
+> Feature 'phosphor-gpio-keys' not found, but
+> KERNEL_DANGLING_FEATURES_WARN_ONLY is set
+> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_metadata:
+> This may cause runtime issues, dropping feature and allowing configuration
+> to continue
+> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_metadata:
+> Feature 'phosphor-vlan' not found, but KERNEL_DANGLING_FEATURES_WARN_ONLY
+> is set
+> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_metadata:
+> This may cause runtime issues, dropping feature and allowing configuration
+> to continue
+> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_configme:
+> Feature 'phosphor-gpio-keys' not found, but
+> KERNEL_DANGLING_FEATURES_WARN_ONLY is set
+> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_configme:
+> This may cause runtime issues, dropping feature and allowing configuration
+> to continue
+> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_configme:
+> Feature 'phosphor-vlan' not found, but KERNEL_DANGLING_FEATURES_WARN_ONLY
+> is set
+> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_configme:
+> This may cause runtime issues, dropping feature and allowing configuration
+> to continue
+> WARNING: obmc-phosphor-sysd-1.0-r1 do_package_qa: QA Issue:
+> obmc-phosphor-sysd: SRC_URI uses PN not BPN [src-uri-bad]
+> ERROR: obmc-phosphor-image-1.0-r0 do_generate_static: Image
+> '/home/vinoth/project/openbmc/build/tmp/deploy/images/evb-ast2600/u-boot.bin'
+> is too large!
+> ERROR: Logfile of failure stored in:
+> /home/vinoth/project/openbmc/build/tmp/work/evb_ast2600-openbmc-linux-gnueabi/obmc-phosphor-image/1.0-r0/temp/log.do_generate_static.2176796
+> ERROR: Task
+> (/home/vinoth/project/openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:do_generate_static)
+> failed with exit code '1'
+> NOTE: Tasks Summary: Attempted 4041 tasks of which 2680 didn't need to be
+> rerun and 1 failed.
+>
+> Summary: 1 task failed:
+>
+> /home/vinoth/project/openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:
+> do_generate_static
+> Summary: There were 10 WARNING messages shown.
+> Summary: There was 1 ERROR message shown, returning a non-zero exit code.
+>
+>
+>
+>
+>
+>
+>
+> Regards,
+>
+> VINOTHKUMAR RK
+>
+
+--0000000000003d872b05ba8f20ab
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div di=
+r=3D"ltr">Hi Troy,<div><br></div><div>Thanks for sharing the changes, with =
+this I&#39;m able to generate=C2=A0mtd image. But when I try to load them t=
+hrough Qemu,=C2=A0it&#39;s getting stuck with the below error. Is there any=
+ workaround?</div><div><br></div><div>Error log:</div><div>------------</di=
+v><div><div>fdt_root: FDT_ERR_BADMAGIC</div><div>ERROR: root node setup fai=
+led</div><div>=C2=A0- must RESET the board to recover.</div><div><br></div>=
+<div>FDT creation failed! hanging...### ERROR ### Please RESET the board ##=
+#</div></div><div><br></div><div><br></div><div>Qemu command:</div><div>---=
+--------------------</div><div>qemu-system-arm -m 1G -M ast2600-evb -nograp=
+hic -drive file=3Dobmc-phosphor-image-evb-ast2600-20210205034901.static.mtd=
+,format=3Draw,if=3Dmtd -net nic -net user,hostfwd=3D:127.0.0.1:2222-:22,hos=
+tfwd=3D:127.0.0.1:2443-:443,hostname=3Dqemu<br></div><div><br></div><div>Qe=
+mu log:</div><div>--------------</div><div><div>U-Boot 2019.04 (Feb 04 2021=
+ - 10:27:21 +0000)</div><div><br></div><div>SOC: AST2600-A0=C2=A0</div><div=
+>eSPI Mode: SIO:Enable : SuperIO-2e</div><div>Eth: MAC0: RGMII, MAC1: RGMII=
+, MAC2: RGMII, MAC3: RGMII</div><div>Model: AST2600 EVB</div><div>DRAM:=C2=
+=A0 already initialized, 240 MiB (capacity:256 MiB, VGA:64 MiB), ECC off</d=
+iv><div>PCIE-0: Link down</div><div>MMC:=C2=A0 =C2=A0</div><div><br></div><=
+div>sdhci_slot0@100: 1, sdhci_slot1@200: 2, emmc_slot0@100: 0</div><div>Loa=
+ding Environment from SPI Flash... *** Warning - spi_flash_probe_bus_cs() f=
+ailed, using default environment</div><div><br></div><div>In:=C2=A0 =C2=A0 =
+serial@1e784000</div><div>Out:=C2=A0 =C2=A0serial@1e784000</div><div>Err:=
+=C2=A0 =C2=A0serial@1e784000</div><div>Model: AST2600 EVB</div><div>Net:=C2=
+=A0 =C2=A0</div><div>Warning: ftgmac@1e660000 (eth0) using random MAC addre=
+ss - 5e:23:16:3b:07:db</div><div>eth0: ftgmac@1e660000</div><div>Warning: f=
+tgmac@1e680000 (eth1) using random MAC address - 92:2d:b9:4b:a5:93</div><di=
+v>, eth1: ftgmac@1e680000</div><div>Warning: ftgmac@1e670000 (eth2) using r=
+andom MAC address - f6:16:60:c6:0a:2d</div><div>, eth2: ftgmac@1e670000</di=
+v><div>Warning: ftgmac@1e690000 (eth3) using random MAC address - 02:43:32:=
+16:41:6d</div><div>, eth3: ftgmac@1e690000</div><div>Hit any key to stop au=
+toboot:=C2=A0 0=C2=A0</div><div>## Loading kernel from FIT Image at 2010000=
+0 ...<br></div><div>=C2=A0 =C2=A0Using &#39;conf@aspeed-ast2600-evb.dtb&#39=
+; configuration</div><div>=C2=A0 =C2=A0Trying &#39;kernel@1&#39; kernel sub=
+image</div><div>=C2=A0 =C2=A0 =C2=A0Description:=C2=A0 Linux kernel</div><d=
+iv>=C2=A0 =C2=A0 =C2=A0Type:=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Kernel Image<=
+/div><div>=C2=A0 =C2=A0 =C2=A0Compression:=C2=A0 uncompressed</div><div>=C2=
+=A0 =C2=A0 =C2=A0Data Start:=C2=A0 =C2=A00x2010012c</div><div>=C2=A0 =C2=A0=
+ =C2=A0Data Size:=C2=A0 =C2=A0 3527112 Bytes =3D 3.4 MiB</div><div>=C2=A0 =
+=C2=A0 =C2=A0Architecture: ARM</div><div>=C2=A0 =C2=A0 =C2=A0OS:=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Linux</div><div>=C2=A0 =C2=A0 =C2=A0Load Add=
+ress: 0x80001000</div><div>=C2=A0 =C2=A0 =C2=A0Entry Point:=C2=A0 0x8000100=
+0</div><div>=C2=A0 =C2=A0 =C2=A0Hash algo:=C2=A0 =C2=A0 sha256</div><div>=
+=C2=A0 =C2=A0 =C2=A0Hash value:=C2=A0 =C2=A0d3bfde4459bab8272cda12f0747d477=
+35521c9ee4f5786283cfea439398c976d</div><div>=C2=A0 =C2=A0Verifying Hash Int=
+egrity ... sha256+ OK</div><div>## Loading ramdisk from FIT Image at 201000=
+00 ...</div><div>=C2=A0 =C2=A0Using &#39;conf@aspeed-ast2600-evb.dtb&#39; c=
+onfiguration</div><div>=C2=A0 =C2=A0Trying &#39;ramdisk@1&#39; ramdisk subi=
+mage</div><div>=C2=A0 =C2=A0 =C2=A0Description:=C2=A0 obmc-phosphor-initram=
+fs</div><div>=C2=A0 =C2=A0 =C2=A0Type:=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0RAM=
+Disk Image</div><div>=C2=A0 =C2=A0 =C2=A0Compression:=C2=A0 uncompressed</d=
+iv><div>=C2=A0 =C2=A0 =C2=A0Data Start:=C2=A0 =C2=A00x20465cf8</div><div>=
+=C2=A0 =C2=A0 =C2=A0Data Size:=C2=A0 =C2=A0 1087608 Bytes =3D 1 MiB</div><d=
+iv>=C2=A0 =C2=A0 =C2=A0Architecture: ARM</div><div>=C2=A0 =C2=A0 =C2=A0OS:=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Linux</div><div>=C2=A0 =C2=A0 =C2=
+=A0Load Address: unavailable</div><div>=C2=A0 =C2=A0 =C2=A0Entry Point:=C2=
+=A0 unavailable</div><div>=C2=A0 =C2=A0 =C2=A0Hash algo:=C2=A0 =C2=A0 sha25=
+6</div><div>=C2=A0 =C2=A0 =C2=A0Hash value:=C2=A0 =C2=A0488f44eb0c954ef85ed=
+e0c1dde3803696b3637d41996fc2be9610bbdb756b1a9</div><div>=C2=A0 =C2=A0Verify=
+ing Hash Integrity ... sha256+ OK</div><div>## Loading fdt from FIT Image a=
+t 20100000 ...</div><div>=C2=A0 =C2=A0Using &#39;conf@aspeed-ast2600-evb.dt=
+b&#39; configuration</div><div>=C2=A0 =C2=A0Trying &#39;fdt@aspeed-ast2600-=
+evb.dtb&#39; fdt subimage</div><div>=C2=A0 =C2=A0 =C2=A0Description:=C2=A0 =
+Flattened Device Tree blob</div><div>=C2=A0 =C2=A0 =C2=A0Type:=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0Flat Device Tree</div><div>=C2=A0 =C2=A0 =C2=A0Compres=
+sion:=C2=A0 uncompressed</div><div>=C2=A0 =C2=A0 =C2=A0Data Start:=C2=A0 =
+=C2=A00x2045d408</div><div>=C2=A0 =C2=A0 =C2=A0Data Size:=C2=A0 =C2=A0 3485=
+2 Bytes =3D 34 KiB</div><div>=C2=A0 =C2=A0 =C2=A0Architecture: ARM</div><di=
+v>=C2=A0 =C2=A0 =C2=A0Hash algo:=C2=A0 =C2=A0 sha256</div><div>=C2=A0 =C2=
+=A0 =C2=A0Hash value:=C2=A0 =C2=A0a9bcf2a34ea7477d2c5f86ec793b659ecce07554d=
+ee5897460198f513ede4d0b</div><div>=C2=A0 =C2=A0Verifying Hash Integrity ...=
+ sha256+ OK</div><div>=C2=A0 =C2=A0Booting using the fdt blob at 0x2045d408=
+</div><div>=C2=A0 =C2=A0Loading Kernel Image ... OK</div><div>=C2=A0 =C2=A0=
+Loading Ramdisk to 8ce57000, end 8cf60878 ... OK</div><div>=C2=A0 =C2=A0Loa=
+ding Device Tree to 8ce4b000, end 8ce56823 ... OK</div><div>fdt_root: FDT_E=
+RR_BADMAGIC</div><div>ERROR: root node setup failed</div><div>=C2=A0- must =
+RESET the board to recover.</div><div><br></div><div>FDT creation failed! h=
+anging...### ERROR ### Please RESET the board ###</div></div><div><br></div=
+><div><br></div><div><br></div><div><br></div><div><br></div><div>Regards,<=
+/div><div>Vinoth Kumar RK</div></div></div></div></div></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, 5 Feb 2021 a=
+t 07:57, Troy Lee &lt;<a href=3D"mailto:troy_lee@aspeedtech.com">troy_lee@a=
+speedtech.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
+ng-left:1ex">
+
+
+
+
+
+<div lang=3D"EN-US" style=3D"overflow-wrap: break-word;">
+<div class=3D"gmail-m_-6097364044091149149WordSection1">
+<p class=3D"MsoNormal">Hi Vinothkumar,<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Please refer to the following two changes in Gerrit:=
+<u></u><u></u></p>
+<ul style=3D"margin-top:0cm" type=3D"disc">
+<li class=3D"gmail-m_-6097364044091149149MsoListParagraph" style=3D"margin-=
+left:0cm"><a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/meta-phos=
+phor/+/39343" target=3D"_blank">https://gerrit.openbmc-project.xyz/c/openbm=
+c/meta-phosphor/+/39343</a><u></u><u></u></li><li class=3D"gmail-m_-6097364=
+044091149149MsoListParagraph" style=3D"margin-left:0cm"><a href=3D"https://=
+gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/39344" target=3D"_blank"=
+>https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/39344</a><u></u=
+><u></u></li></ul>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Thanks,<u></u><u></u></p>
+<p class=3D"MsoNormal">Troy Lee<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
+top:1pt solid rgb(225,225,225);padding:3pt 0cm 0cm">
+<p class=3D"MsoNormal"><b>From:</b> openbmc &lt;openbmc-bounces+troy_lee=3D=
+<a href=3D"mailto:aspeedtech.com@lists.ozlabs.org" target=3D"_blank">aspeed=
+tech.com@lists.ozlabs.org</a>&gt;
+<b>On Behalf Of </b>VINOTHKUMAR RK<br>
+<b>Sent:</b> Thursday, February 4, 2021 8:28 PM<br>
+<b>To:</b> <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">op=
+enbmc@lists.ozlabs.org</a><br>
+<b>Subject:</b> evb-ast2600: Getting some build errors - &#39;u-boot.bin&#3=
+9; is too large!&#39;<u></u><u></u></p>
+</div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div>
+<p class=3D"MsoNormal">Hi,<u></u><u></u></p>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">I&#39;m trying to build for evb-ast2600 platform, bu=
+t it doesn&#39;t succeed. Please help.<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Build command: (fresh checkout and build)<u></u><u><=
+/u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">TEMPLATECONF=3Dmeta-evb/meta-evb-aspeed/meta-evb-ast=
+2600/conf . openbmc-env<br>
+bitbake obmc-phosphor-image<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Branch details:<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">commit 7dc2f7a38dccb3d87a9b79d0a66b25da1027a72f=C2=
+=A0<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Error Log:<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Loading cache: 100% | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | ETA: =C2=A0--:--:--<br>
+Loaded 0 entries from dependency cache.<br>
+Parsing recipes: 100% |####################################################=
+###########################################################################=
+#########################################| Time: 0:00:44<br>
+Parsing of 2424 .bb files complete (0 cached, 2424 parsed). 3683 targets, 3=
+62 skipped, 0 masked, 0 errors.<br>
+WARNING: No bb files in default matched BBFILE_PATTERN_meta-evb-ast2600 &#3=
+9;^/home/vinoth/project/openbmc/meta-evb/meta-evb-aspeed/meta-evb-ast2600/&=
+#39;<br>
+NOTE: Resolving any missing task queue dependencies<br>
+<br>
+Build Configuration:<br>
+BB_VERSION =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D &quot;1.49.0&quot;<br>
+BUILD_SYS =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;x86_64-linux&q=
+uot;<br>
+NATIVELSBSTRING =C2=A0 =C2=A0 =C2=A0=3D &quot;ubuntu-20.04&quot;<br>
+TARGET_SYS =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D &quot;arm-openbmc-linux-g=
+nueabi&quot;<br>
+MACHINE =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;evb-ast26=
+00&quot;<br>
+DISTRO =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D &quot;openbmc-p=
+hosphor&quot;<br>
+DISTRO_VERSION =C2=A0 =C2=A0 =C2=A0 =3D &quot;0.1.0&quot;<br>
+TUNE_FEATURES =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;arm armv7a vfp vfpv4d16 =
+callconvention-hard&quot;<br>
+TARGET_FPU =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D &quot;hard&quot;<br>
+meta =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>
+meta-poky =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<br>
+meta-oe =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<br>
+meta-networking =C2=A0 =C2=A0 =C2=A0<br>
+meta-python =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<br>
+meta-phosphor =C2=A0 =C2=A0 =C2=A0 =C2=A0<br>
+meta-aspeed =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<br>
+meta-evb-ast2600 =C2=A0 =C2=A0 =3D &quot;master:7dc2f7a38dccb3d87a9b79d0a66=
+b25da1027a72f&quot;<br>
+<br>
+Initialising tasks: 100% |#################################################=
+###########################################################################=
+#########################################| Time: 0:00:03<br>
+Sstate summary: Wanted 1378 Found 939 Missed 439 Current 0 (68% match, 0% c=
+omplete)<br>
+NOTE: Executing Tasks<br>
+WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_metadata: F=
+eature &#39;phosphor-gpio-keys&#39; not found, but KERNEL_DANGLING_FEATURES=
+_WARN_ONLY is set<br>
+WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_metadata: T=
+his may cause runtime issues, dropping feature and allowing configuration t=
+o continue<br>
+WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_metadata: F=
+eature &#39;phosphor-vlan&#39; not found, but KERNEL_DANGLING_FEATURES_WARN=
+_ONLY is set<br>
+WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_metadata: T=
+his may cause runtime issues, dropping feature and allowing configuration t=
+o continue<br>
+WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_configme: F=
+eature &#39;phosphor-gpio-keys&#39; not found, but KERNEL_DANGLING_FEATURES=
+_WARN_ONLY is set<br>
+WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_configme: T=
+his may cause runtime issues, dropping feature and allowing configuration t=
+o continue<br>
+WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_configme: F=
+eature &#39;phosphor-vlan&#39; not found, but KERNEL_DANGLING_FEATURES_WARN=
+_ONLY is set<br>
+WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 do_kernel_configme: T=
+his may cause runtime issues, dropping feature and allowing configuration t=
+o continue<br>
+WARNING: obmc-phosphor-sysd-1.0-r1 do_package_qa: QA Issue: obmc-phosphor-s=
+ysd: SRC_URI uses PN not BPN [src-uri-bad]<br>
+ERROR: obmc-phosphor-image-1.0-r0 do_generate_static: Image &#39;/home/vino=
+th/project/openbmc/build/tmp/deploy/images/evb-ast2600/u-boot.bin&#39; is t=
+oo large!<br>
+ERROR: Logfile of failure stored in: /home/vinoth/project/openbmc/build/tmp=
+/work/evb_ast2600-openbmc-linux-gnueabi/obmc-phosphor-image/1.0-r0/temp/log=
+.do_generate_static.2176796<br>
+ERROR: Task (/home/vinoth/project/openbmc/meta-phosphor/recipes-phosphor/im=
+ages/obmc-phosphor-image.bb:do_generate_static) failed with exit code &#39;=
+1&#39;<br>
+NOTE: Tasks Summary: Attempted 4041 tasks of which 2680 didn&#39;t need to =
+be rerun and 1 failed.<br>
+<br>
+Summary: 1 task failed:<br>
+=C2=A0 /home/vinoth/project/openbmc/meta-phosphor/recipes-phosphor/images/o=
+bmc-phosphor-image.bb:do_generate_static<br>
+Summary: There were 10 WARNING messages shown.<br>
+Summary: There was 1 ERROR message shown, returning a non-zero exit code.<u=
+></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Regards,<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">VINOTHKUMAR RK<u></u><u></u></p>
+</div>
+</div>
+</div>
+</div>
+
+</blockquote></div>
+
+--0000000000003d872b05ba8f20ab--
