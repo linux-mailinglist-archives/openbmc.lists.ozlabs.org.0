@@ -2,61 +2,99 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CA19310C82
-	for <lists+openbmc@lfdr.de>; Fri,  5 Feb 2021 15:20:01 +0100 (CET)
-Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DXHcZ19WbzDvXW
-	for <lists+openbmc@lfdr.de>; Sat,  6 Feb 2021 01:19:58 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 900CE310DA1
+	for <lists+openbmc@lfdr.de>; Fri,  5 Feb 2021 17:10:59 +0100 (CET)
+Received: from bilbo.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DXL4c6ThRzDwl7
+	for <lists+openbmc@lfdr.de>; Sat,  6 Feb 2021 03:10:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b34;
- helo=mail-yb1-xb34.google.com; envelope-from=priyankapillai1206@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=hU+Ox9jN; dkim-atps=neutral
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com
- [IPv6:2607:f8b0:4864:20::b34])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=E9GxZ7+B; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DXHbj2bsdzDvWr
- for <openbmc@lists.ozlabs.org>; Sat,  6 Feb 2021 01:19:09 +1100 (AEDT)
-Received: by mail-yb1-xb34.google.com with SMTP id j84so6902796ybg.1
- for <openbmc@lists.ozlabs.org>; Fri, 05 Feb 2021 06:19:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=t+B94bpqWLJrEeYaElAfnIb0T0Xe7xqST8+ZkraGkUs=;
- b=hU+Ox9jNt7jnpkAO9L3boIKGs1rs4m8CC0SBV1AM7hE8Mm9yV3PAB48LhFhUN+evBJ
- Dou0WufM/12hm+EptqXL33eVYUShrYZbhABPv1adsSssN/lETSjd4kG9sdc5X061AZMw
- X5lWcDekQb2e8/ZuO38q661v5wFIPkgFcfu3iGmcNO5IFwNDe3HTmAlC91XCibdKn4qO
- AQre1rjBjX+foPO615+pftWJoEHuHOQqenZ8C+vuaT0+ch6PmFR7uq462R21lX/n5i0t
- v01JsDzfAU+LBR4KuPoGSbAovii0iw/YDXZn2DfvOTtO86pta2a02yTBYnquyvnh8XMQ
- In/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=t+B94bpqWLJrEeYaElAfnIb0T0Xe7xqST8+ZkraGkUs=;
- b=aTeDnXJnp88dwXAKsqMhv+jcRFffXtmYn6TujfL7wdRNwZOWVq/1vCr/t4b/47nt7N
- cF4dRLOBi49pV2CNw7/Sv8OgGn0458Ll7LDTt8lsC9179DqTkOgD9TJZT6Qg0zLeYZ2q
- htxIpn+HYELTKLLdMlMk22zGUlb+M3mrWUhzM+fh2Ui0G+dT4O+IV7stdTeF/UOK5J4A
- MBKgzt7D8xEO4NvgABlUN2nw3ML86vSBWM6aXNxFprgYsr7yxT0depCzjh2yzaUhO0mh
- Lx0q7dAXQQn9s0xt+RkBtwMRUFfzOw3oUO3g8lYXjxuNSXMJ7ndE4SUR4YpRouiS00mY
- yv6w==
-X-Gm-Message-State: AOAM531yiolzNZoWhHXEx0cym3kdzXzB4xpd4TOH6UbtjA7f8xw2RBQc
- ZfiEy2XY23KWs3uMksEbv42Edqe8+H5OfEuBXAr64FJR54Y=
-X-Google-Smtp-Source: ABdhPJw9h0PzPBqUcrJQ/C96VrH7qfZzw0gYxPj0lJcqn9STvshVOzld7vLjiuKoV9TzChdLQAAA+CA0bAT3LZgw2l0=
-X-Received: by 2002:a25:1003:: with SMTP id 3mr6441256ybq.294.1612534744284;
- Fri, 05 Feb 2021 06:19:04 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DXL3T2Py3zDwkP
+ for <openbmc@lists.ozlabs.org>; Sat,  6 Feb 2021 03:09:56 +1100 (AEDT)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 115G3mOp195012
+ for <openbmc@lists.ozlabs.org>; Fri, 5 Feb 2021 11:09:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=qlt1O4Ms91ZI7Y46omiDnze9Uh6i45qa0qaqxY+J7UI=;
+ b=E9GxZ7+BJRt5m7+vc1Z86LdAvL1P/VOndbxoFkLNZPcx9HjyMEF90kDj5Sq5+1gABO0T
+ bKy/sva20JyEDENh05uipb55qzDSHI4gATNvRxiwf0jLj6dxUpvF6MMYJINpsM4p8sIp
+ Vux48YhVANfxIDQbtxC0jedBxGI+SKbWg7L+pJZXkfakum8I7UMLVEyjoskxci435QTp
+ 23yWdXM6iZs4IaFG+cPvky+Po0Fwzjtkmr4w3x5MUUx2DkYlPEFOaqLphRma5uhrTmrJ
+ QcYN2y55AMGqqSD85DI6dVxyJhDXQGO3JQA+rDsnykKEGIiYaBxobomU27yFF8dGW8KC Sg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 36h3dqsa1n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 05 Feb 2021 11:09:52 -0500
+Received: from m0127361.ppops.net (m0127361.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 115G4w4C007502
+ for <openbmc@lists.ozlabs.org>; Fri, 5 Feb 2021 11:09:52 -0500
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 36h3dqsa19-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 05 Feb 2021 11:09:52 -0500
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 115G2Dim022345;
+ Fri, 5 Feb 2021 16:09:51 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma03dal.us.ibm.com with ESMTP id 36f3kw1jq9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 05 Feb 2021 16:09:51 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 115G9oWF24052176
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 5 Feb 2021 16:09:50 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7F69ABE051;
+ Fri,  5 Feb 2021 16:09:50 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2596FBE053;
+ Fri,  5 Feb 2021 16:09:50 +0000 (GMT)
+Received: from demeter.local (unknown [9.80.214.11])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Fri,  5 Feb 2021 16:09:49 +0000 (GMT)
+Subject: Re: Requesting feedback on GUI design - TPM Required policy and
+ Virtual TPM
+To: Priyanka Pillai <priyankapillai1206@gmail.com>, openbmc@lists.ozlabs.org
+References: <CAJCnuYnOW4wceOdy_vcyO_PVdw66AjNo9O3VYKsQFY-+9v1KBw@mail.gmail.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <c12b12b1-a425-7e5f-6421-327da8c79f4c@linux.ibm.com>
+Date: Fri, 5 Feb 2021 10:09:49 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.5.0
 MIME-Version: 1.0
-From: Priyanka Pillai <priyankapillai1206@gmail.com>
-Date: Fri, 5 Feb 2021 19:48:53 +0530
-Message-ID: <CAJCnuYnOW4wceOdy_vcyO_PVdw66AjNo9O3VYKsQFY-+9v1KBw@mail.gmail.com>
-Subject: Requesting feedback on GUI design - TPM Required policy and Virtual
- TPM
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="0000000000009f013905ba978086"
+In-Reply-To: <CAJCnuYnOW4wceOdy_vcyO_PVdw66AjNo9O3VYKsQFY-+9v1KBw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.737
+ definitions=2021-02-05_09:2021-02-05,
+ 2021-02-05 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=959
+ suspectscore=0 impostorscore=0 bulkscore=0 clxscore=1015 mlxscore=0
+ phishscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
+ adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2102050102
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,52 +109,39 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000009f013905ba978086
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2/5/21 8:18 AM, Priyanka Pillai wrote:
+> Hello, We have decided to remove the TPM Required Policy from...
+> This Message Is From an External Sender
+> This message came from outside your organization.
+>
+> Hello,
+>
+> *We have decided to remove the TPM Required Policy from the Server 
+> Power Operations Page and move it to the Security Panel page. *
+> Our findings:
+> * TPM Required policy is rarely required to be disabled during the 
+> power operations.
+> * Only in cases of troubleshooting or if a physical TPM card is not 
+> part of the system, is when this setting needs to be disabled.
+> * In all other cases, it is not advisable to disable it.
+> * It affects the security of the host boot process.
+>
+> Similarly, we shall be *adding Virtual TPM to the security page* as 
+> well, since it’s usage is the same and it affects security of the 
+> logical partitions boot process.
 
-Hello,
+Note this refers to the host's TPM (and not a TPM that measures the BMC 
+such as the BMC Trusted Boot design being discussed here 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/26169).
 
-*We have decided to remove the TPM Required Policy from the Server Power
-Operations Page and move it to the Security Panel page. *
-Our findings:
-* TPM Required policy is rarely required to be disabled during the power
-operations.
-* Only in cases of troubleshooting or if a physical TPM card is not part of
-the system, is when this setting needs to be disabled.
-* In all other cases, it is not advisable to disable it.
-* It affects the security of the host boot process.
+These findings sound right to me (but I am not a TPM expert).
 
-Similarly, we shall be *adding Virtual TPM to the security page* as well,
-since it=E2=80=99s usage is the same and it affects security of the logical
-partitions boot process.
+Joseph
 
-Does anyone from the community have any concerns regarding this?
+> Does anyone from the community have any concerns regarding this?
+>
+> Warm regards,
+> *Priyanka Pillai*
+> User Experience Designer
+> IBM iX : Interactive Experience
 
-Warm regards,
-*Priyanka Pillai*
-User Experience Designer
-IBM iX : Interactive Experience
-
---0000000000009f013905ba978086
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hello,<br><br></div><div><b>We have decided to=C2=A0r=
-emove the TPM Required Policy from the Server Power Operations Page and mov=
-e it to the Security Panel page. </b><br>Our findings:<br>* TPM Required po=
-licy is rarely required to be disabled=C2=A0during the power operations.<br=
->* Only in cases of troubleshooting or if a physical TPM card is not part o=
-f the system, is when this setting needs to be disabled.<br>* In all other =
-cases, it is not advisable to disable it.<br>* It affects the security of t=
-he host boot process.<br><br>Similarly, we shall be <b>adding Virtual TPM t=
-o the security page</b> as well, since it=E2=80=99s usage is the same and i=
-t affects security of the logical partitions boot process.<br><br>Does anyo=
-ne from the community have any concerns regarding this?<br></div><div><br><=
-font size=3D"2" face=3D"Georgia">Warm regards,</font><br>
-<b><font size=3D"3" face=3D"Georgia">Priyanka Pillai</font></b><br>
-<font size=3D"1" face=3D"Arial" color=3D"#696969">User Experience Designer<=
-br>
-IBM iX : Interactive Experience</font></div></div>
-
---0000000000009f013905ba978086--
