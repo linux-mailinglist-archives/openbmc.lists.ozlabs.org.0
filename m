@@ -2,54 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EFF8311C44
-	for <lists+openbmc@lfdr.de>; Sat,  6 Feb 2021 09:50:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DFB61312686
+	for <lists+openbmc@lfdr.de>; Sun,  7 Feb 2021 18:59:19 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DXmFN4hKkzDwmZ
-	for <lists+openbmc@lfdr.de>; Sat,  6 Feb 2021 19:50:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DYcNg4j2szDwk9
+	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 04:59:15 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.65; helo=m1365.mail.163.com;
- envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=eCJZFSV+; dkim-atps=neutral
-X-Greylist: delayed 918 seconds by postgrey-1.36 at bilbo;
- Sat, 06 Feb 2021 19:49:19 AEDT
-Received: from m1365.mail.163.com (m1365.mail.163.com [220.181.13.65])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d32;
+ helo=mail-io1-xd32.google.com; envelope-from=gmouse@google.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=oT0+jEMz; dkim-atps=neutral
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com
+ [IPv6:2607:f8b0:4864:20::d32])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DXmDb3wpzzDvr8
- for <openbmc@lists.ozlabs.org>; Sat,  6 Feb 2021 19:49:15 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=R18oN
- kDLquR9Ztc9AHagca+l63GtY38tPvA3J39aU0o=; b=eCJZFSV+iyC+cpXiD/m/B
- 26gLr9DibU1QDQ6otfB85r0avk0njHlwLHwDSsSyi/Q7wl640D8GvCVh4TYqKKU3
- lWdj55i4sVU6VFcATnCyx4OeaQKjBoexuQFHE0CSI/YunFk9FkVMjXrlLTR54qlz
- iCSmzPlkFiaC2wcVr0gJxo=
-Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
- ajax-webmail-wmsvr65 (Coremail) ; Sat, 6 Feb 2021 16:33:47 +0800 (CST)
-X-Originating-IP: [106.120.127.15]
-Date: Sat, 6 Feb 2021 16:33:47 +0800 (CST)
-From: www <ouyangxuan10@163.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Does openbmc implement NC-SI over MCTP over SMBus to obtain
- information?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
- Copyright (c) 2002-2021 www.mailtech.cn 163com
-X-CM-CTRLDATA: SijJE2Zvb3Rlcl9odG09MzYzOjU2
-Content-Type: multipart/alternative; 
- boundary="----=_Part_13911_1032738031.1612600427316"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DYcMv1vmWzDwhg
+ for <openbmc@lists.ozlabs.org>; Mon,  8 Feb 2021 04:58:26 +1100 (AEDT)
+Received: by mail-io1-xd32.google.com with SMTP id n201so12643033iod.12
+ for <openbmc@lists.ozlabs.org>; Sun, 07 Feb 2021 09:58:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=bTFbqDNGh0lY4DDg3pM2ZZG8MbMTdtdst9kY5eS3h/s=;
+ b=oT0+jEMznyj9JKnmj3HbHm5yf/xmMfhonJnwHfzfmtsvbDWx7lKjMBzT9QvKavGXsv
+ fqLtZG7kGTqLxMk9evSoktJUSJas4gQPeHmbnwh/mDHD1ex6u11q8bxzaVQx0oX+7kLF
+ a+GDDQTEhTbr9h52VNkxL7KhrOtPcOXNCJffmaOe79BFcAidmupFDpzvyXhRWxIboUcs
+ JTca5pTMCADQ82tcRzoM92I3BKQrzDmJl9hPMWswLRdcpprOZ09IUAQfhw9XTR33DE5i
+ O8Sn2SDgcVJlBwUi75Mu8uLdhnibm5PfQU0TH8v6vLGThDjFEyLLSPSi+sj8bCACX8kw
+ qq8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=bTFbqDNGh0lY4DDg3pM2ZZG8MbMTdtdst9kY5eS3h/s=;
+ b=pekUdXJnG50Zc7iFA2E393cdmxP/b6elqzMnQISzYPgejc7B8Vw3VFuBxlS5CHGus5
+ iSu2CoWQlvmc7nxO1GBnhUjDrgvHsEY3t97ilWMOB67nVpLjjY9FdbcPE3IJprTkmnMn
+ IcOgrzwFThOXAh2j9MCig7IvnXLVig3qWka90Oh2puqnhSN+M8mipj1z9mlZ2eqlqpJ6
+ 2u9HsjnpHI/Lwh4y2B+vdlOk1LH0PcL5km+Aa46mGWZs+AacqGJou1Ng0i+K5DZPUiKj
+ lmeFcu7QbY2wbMzP5qqDJbhRk2Bq9kEqksvK7pZDED8ddIWVxgxoIlTVaV6oaDNa0BYW
+ j8Ug==
+X-Gm-Message-State: AOAM532hCwRPp8kg2V26Krm0jyPJtP61jekRFCuWWsKtSZeqkXbfymOM
+ G40mRvV1dZMbk3os2FtosTWo+T+9a1PNC9+mwb59+9r6f8bGzA==
+X-Google-Smtp-Source: ABdhPJzXLB9ixTsWn9c+my6SxEKNj1f10uiYF/tuCtYtGmLlpF7IPJIpddrn1R0pJDC6ZM7JoMXTUzvOq8G+q7pkRCw=
+X-Received: by 2002:a05:6638:a1b:: with SMTP id
+ 27mr14228258jan.144.1612720701911; 
+ Sun, 07 Feb 2021 09:58:21 -0800 (PST)
 MIME-Version: 1.0
-Message-ID: <380419ba.ece.1777679c335.Coremail.ouyangxuan10@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: QcGowAB3fQVrVB5gg6R_AA--.37341W
-X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/xtbBQQsx2l++I-ZC-QAAsq
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+From: Anton Kachalov <rnouse@google.com>
+Date: Sun, 7 Feb 2021 18:58:11 +0100
+Message-ID: <CADVsX8_ua6nShjGQbK1nVqsn34+dArF69sCLcLt6U+0_zXj54w@mail.gmail.com>
+Subject: [PATCH] ARM: dts: nuvoton: Fix flash layout
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="0000000000008f8f2605bac2ccac"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,23 +71,97 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_13911_1032738031.1612600427316
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+--0000000000008f8f2605bac2ccac
+Content-Type: text/plain; charset="UTF-8"
 
-RGVhciBhbGwsCgoKRG9lcyBvcGVuYm1jIGltcGxlbWVudCBOQy1TSSBvdmVyIE1DVFAgb3ZlciBT
-TUJ1cyB0byBvYnRhaW4gaW5mb3JtYXRpb24/IAoKCnRoYW5rcywKQnlyb24=
-------=_Part_13911_1032738031.1612600427316
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+This change satisfies OpenBMC requirements for flash layout.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+RGVhciBhbGwsPC9kaXY+
-PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij5E
-b2VzIG9wZW5ibWMgaW1wbGVtZW50IE5DLVNJIG92ZXIgTUNUUCBvdmVyIFNNQnVzIHRvIG9idGFp
-biBpbmZvcm1hdGlvbj8mbmJzcDs8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPjxicj48L2Rp
-dj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPnRoYW5rcyw8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46
-MDsiPkJ5cm9uPC9kaXY+PC9kaXY+PGJyPjxicj48c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+
-PHA+Jm5ic3A7PC9wPjwvc3Bhbj4=
-------=_Part_13911_1032738031.1612600427316--
+Signed-off-by: Anton D. Kachalov <gmouse@google.com>
+---
+ arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 28 +++++++----------------
+ 1 file changed, 8 insertions(+), 20 deletions(-)
 
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+index bd1eb6ee380f..741c1fee8552 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+@@ -182,8 +182,8 @@ bbuboot2@80000 {
+  reg = <0x0080000 0x80000>;
+  read-only;
+  };
+- envparam@100000 {
+- label = "env-param";
++ ubootenv@100000 {
++ label = "u-boot-env";
+  reg = <0x0100000 0x40000>;
+  read-only;
+  };
+@@ -195,25 +195,13 @@ kernel@200000 {
+  label = "kernel";
+  reg = <0x0200000 0x400000>;
+  };
+- rootfs@600000 {
+- label = "rootfs";
+- reg = <0x0600000 0x700000>;
++ rofs@780000 {
++ label = "rofs";
++ reg = <0x0780000 0x1680000>;
+  };
+- spare1@D00000 {
+- label = "spare1";
+- reg = <0x0D00000 0x200000>;
+- };
+- spare2@0F00000 {
+- label = "spare2";
+- reg = <0x0F00000 0x200000>;
+- };
+- spare3@1100000 {
+- label = "spare3";
+- reg = <0x1100000 0x200000>;
+- };
+- spare4@1300000 {
+- label = "spare4";
+- reg = <0x1300000 0x0>;
++ rwfs@1e00000 {
++ label = "rwfs";
++ reg = <0x1e00000 0x200000>;
+  };
+  };
+  };
+-- 
+2.30.0.478.g8a0d178c01-goog
+
+--0000000000008f8f2605bac2ccac
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>This change satisfies OpenBMC requirements for flash =
+layout.<br><br>Signed-off-by: Anton D. Kachalov &lt;<a href=3D"mailto:gmous=
+e@google.com">gmouse@google.com</a>&gt;<br>---<br>=C2=A0arch/arm/boot/dts/n=
+uvoton-npcm750-evb.dts | 28 +++++++----------------<br>=C2=A01 file changed=
+, 8 insertions(+), 20 deletions(-)<br><br>diff --git a/arch/arm/boot/dts/nu=
+voton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts<br>index =
+bd1eb6ee380f..741c1fee8552 100644<br>--- a/arch/arm/boot/dts/nuvoton-npcm75=
+0-evb.dts<br>+++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts<br>@@ -182,8 +=
+182,8 @@ bbuboot2@80000 {<br>=C2=A0				reg =3D &lt;0x0080000 0x80000&gt;;<b=
+r>=C2=A0				read-only;<br>=C2=A0				};<br>-			envparam@100000 {<br>-				lab=
+el =3D &quot;env-param&quot;;<br>+			ubootenv@100000 {<br>+				label =3D &q=
+uot;u-boot-env&quot;;<br>=C2=A0				reg =3D &lt;0x0100000 0x40000&gt;;<br>=
+=C2=A0				read-only;<br>=C2=A0				};<br>@@ -195,25 +195,13 @@ kernel@200000=
+ {<br>=C2=A0				label =3D &quot;kernel&quot;;<br>=C2=A0				reg =3D &lt;0x02=
+00000 0x400000&gt;;<br>=C2=A0				};<br>-			rootfs@600000 {<br>-				label =
+=3D &quot;rootfs&quot;;<br>-				reg =3D &lt;0x0600000 0x700000&gt;;<br>+			=
+rofs@780000 {<br>+				label =3D &quot;rofs&quot;;<br>+				reg =3D &lt;0x078=
+0000 0x1680000&gt;;<br>=C2=A0				};<br>-			spare1@D00000 {<br>-				label =
+=3D &quot;spare1&quot;;<br>-				reg =3D &lt;0x0D00000 0x200000&gt;;<br>-			=
+	};<br>-			spare2@0F00000 {<br>-				label =3D &quot;spare2&quot;;<br>-				r=
+eg =3D &lt;0x0F00000 0x200000&gt;;<br>-				};<br>-			spare3@1100000 {<br>-	=
+			label =3D &quot;spare3&quot;;<br>-				reg =3D &lt;0x1100000 0x200000&gt;=
+;<br>-				};<br>-			spare4@1300000 {<br>-				label =3D &quot;spare4&quot;;<=
+br>-				reg =3D &lt;0x1300000 0x0&gt;;<br>+			rwfs@1e00000 {<br>+				label =
+=3D &quot;rwfs&quot;;<br>+				reg =3D &lt;0x1e00000 0x200000&gt;;<br>=C2=A0=
+			};<br>=C2=A0		};<br>=C2=A0	};<br>-- <br>2.30.0.478.g8a0d178c01-goog<br><=
+br></div><div><br></div></div>
+
+--0000000000008f8f2605bac2ccac--
