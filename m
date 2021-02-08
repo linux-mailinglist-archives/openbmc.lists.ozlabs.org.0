@@ -2,63 +2,96 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60991313F40
-	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 20:39:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B8A023140DD
+	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 21:49:02 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DZGZ24PRDzDvVX
-	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 06:39:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DZJ63529nzDvXM
+	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 07:48:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::129;
- helo=mail-lf1-x129.google.com; envelope-from=aladyshev22@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20;
+ helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=pD+O+ymg; dkim-atps=neutral
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com
- [IPv6:2a00:1450:4864:20::129])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=GxRr2fxK; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=Qcw2rAtj; 
+ dkim-atps=neutral
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
+ [64.147.123.20])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DZGXx2MCrzDvVJ
- for <openbmc@lists.ozlabs.org>; Tue,  9 Feb 2021 06:38:36 +1100 (AEDT)
-Received: by mail-lf1-x129.google.com with SMTP id j19so3870029lfr.12
- for <openbmc@lists.ozlabs.org>; Mon, 08 Feb 2021 11:38:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=9MBaP0iBiwW0iSh9st+CQFiJBD434V32CapT2bYlh1Y=;
- b=pD+O+ymgnbXoierdayBvz3eWqDcEzYsWKaJCqXSF/z6+U4kMvVi3+bMdcgbrQtg2fu
- NTvFPnBOyq5MGZKdnYLP8z13u3x5KgDLbWqNqAeqCGQznM7soFAByA6PM/KabHlMQhaz
- NgVgpOeXRhGU1YXR3nE6SR12H09ggQVL6p834PdbndVYk4487NeSiVZIFe3rZmh2wUfb
- eU0xWWd1pBE283DNJKQrve+wYJWz1S4j9gd+JaXFRIjrQ98fUBoTsfr5edhNuzb5dlEv
- XcnhbHlfuQ3BBrOkqcW9JLq8YcYyDdPs90PLdh6mgiEO/pcmon3EbIf7vm/rjexJFGLu
- g70w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=9MBaP0iBiwW0iSh9st+CQFiJBD434V32CapT2bYlh1Y=;
- b=H4eYlXfvfghyXg19iCGtGgkzy+OwAyXPpIXsISeniEkyNzpS/trjrSSVATZagWM2kU
- cCEvA/eDFfmbJKFTw/ueJ3NUpJiCfaERrnrEw8RHEO3TJ6xGgW7WR9qJ5F6v6V9UoUGe
- cyTP3OP3QGf9foZtkbFC7pli4pbozSMHJTQFlYwWxTOlEbX9jP+FjhVKciIBCQUWmCZJ
- Loqc0sw+xTO4wkuokipolwZqKalUOz912a9C3KYdmlZuaAnD8IDnqp8SWlK+XB7eZGJ+
- ZvqPbALtib71LxsU76qcKqKhdSL8hBxpc975GADSgPCDMyaIA9M6/tzwhP6jx3a7+Vsw
- lv6A==
-X-Gm-Message-State: AOAM532XRA6j2CjLfO0qN6bKgc8FdpZimtsaqDTOXPBmkaYsy3jpOWSw
- d8exoBBJE6bM9Rfl7NOYYNgMO20H/V9lnkKv7fdE1zwSkZ4=
-X-Google-Smtp-Source: ABdhPJz9o3pWF8+hipUH+BfJV5VDeK6BbABT4JX3nV2GYecwMY4KPJxqQutvCMxgjgn6mNCeh/ZJ56GV/Uk4Kv8aMOY=
-X-Received: by 2002:ac2:5979:: with SMTP id h25mr10623196lfp.285.1612813109259; 
- Mon, 08 Feb 2021 11:38:29 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DZJ4t2KjtzDvW4
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Feb 2021 07:47:55 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 071F6452;
+ Mon,  8 Feb 2021 15:47:51 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Mon, 08 Feb 2021 15:47:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=AJJR2MW8hoVGpZ0AGXNYTlu5Z2x
+ DP21/oIH9gQWW5ts=; b=GxRr2fxK5GuhGSZojZFr4g8j4/LlCt0Mjd82ETMhuVj
+ hUsEJldjj9crgE8g0mCuUPZQ8RD/n/thDwUaC56DB8W8cxMZbGbbNW2WCtXmZDnV
+ 6/0v9AXWj7UPdP/sx3ng/KzqAKyUsEf3OzyE8f4xGxKQrljaVKsSTePmAO0zkcff
+ tUuancaG+NM98eB0duMxMFC2lMxOeUjZ1FqAr+Sk00GQsHHSf/oiRXJ+B0aYc5XO
+ IkQhaPgVH2t3PRPbEKTM31GyOUeljR8lmPKKgvC5wi2Rt2I4R4h/z2LS/X+CyXPT
+ KGEp288uo6EqMP3o9yIMsh4J/Zpy3Zc4H/r/wIkq6NA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=AJJR2M
+ W8hoVGpZ0AGXNYTlu5Z2xDP21/oIH9gQWW5ts=; b=Qcw2rAtjQ4H5jlpV2GPfc2
+ ljzS63tPYRUJdKNPBNWKmqmcCTzDmKxxRtULVk7ieD/pk54SiSlM+pBuQWXi10SS
+ eYS/5928pONUwD2qkfnfuGQ8JIZRhjzAW6wFJbXYP0cAXyYPC9BbP4AfYuo6wpOw
+ yWp7J1RYXRWRu3vjFbNIL1VEq38jaAGrfN69VXEBUp6W8CqOqsiwrZpF9dO3c69U
+ E0RdUPFvymEY8UZT7BsPQ9YZ6UWDPJZJ8MnRBl1GuWbRbLCHHzr29c9GrSG3ZL+q
+ ohAe1rL6vhfqinVa2JH0fCojY90I+OmjRpGTrhXtP6z8W9O7PGCoWtfV93qCGDxQ
+ ==
+X-ME-Sender: <xms:dqMhYJtx60Y4YpP2V_wWXM3CG2p76Wv3EeYH37ElTUVi8Mt8c_tEFA>
+ <xme:dqMhYCe9Kie1gCTE-Q8xnoyC0bPArxyRXo6fF1dgExrB7aFA0sqJoFRvCcA71SWqd
+ lONKyttvEgToH5vorE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrheefgddugedvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpeffhf
+ fvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
+ ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
+ epieduvdffhfeuieetteffhffgkeekheejhffffeevledtudeileffudfggfetffegnecu
+ ffhomhgrihhnpehophgvnhgsmhgtrdhorhhgnecukfhppeejiedrvdehtddrkeegrddvfe
+ einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
+ thhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:dqMhYMzrdzyDpHmaBNEDmcb1hveXBhwM0pT2f-a4X-P8xSeY4soH4g>
+ <xmx:dqMhYAMa3AmZZ1xqavzsGkugz-CkygtCQmc6AjPHvwB9IjyJlE0pHQ>
+ <xmx:dqMhYJ-JHcMAstkVr0Jh8_-7KAEPa3Y2WFYJk1X6S5FnDHffhYJohQ>
+ <xmx:d6MhYGE2sjcbX8qtwswnX5M0tcdRDEyZc2MP0HMpsbEW3yz0ze0joQ>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 91300240065;
+ Mon,  8 Feb 2021 15:47:50 -0500 (EST)
+Date: Mon, 8 Feb 2021 14:47:49 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Subject: Re: Change in ...meta-alibaba[master]: thor: initial machine creation
+Message-ID: <YCGjdU3N6bHS/A1a@heinlein>
+References: <94c8af34-dcae-e33d-a0f0-a5540ef518fd@linux.alibaba.com>
+ <YAneI7zHQx217lmu@heinlein>
+ <5841da60f00cade13d87d5b8795f8a25021c2e44.camel@fuzziesquirrel.com>
+ <f8678061-4662-4445-a4d0-016040f00979@linux.alibaba.com>
+ <0008fa42-2a5c-b092-8da6-7eaa91e775f7@linux.alibaba.com>
+ <0FC93EA6-AE09-46A6-9BF2-36471B85755B@fuzziesquirrel.com>
+ <fe3fef11-56c7-85a4-b3fc-35ab29e99f60@linux.alibaba.com>
+ <20210202135122.kbvdfnq6ed2onuhi@thinkpad.fuzziesquirrel.com>
+ <e7991363-133b-0ae5-9bb1-fd48719738d9@linux.alibaba.com>
+ <20210208144446.l454phquipyvi7ur@thinkpad.fuzziesquirrel.com>
 MIME-Version: 1.0
-From: Konstantin Aladyshev <aladyshev22@gmail.com>
-Date: Mon, 8 Feb 2021 22:38:18 +0300
-Message-ID: <CACSj6VW38ctPRF7VeOnm7CB39QtFyK0SAMtggm9uZxU3JHU4QQ@mail.gmail.com>
-Subject: Support for the "BIOS boot type" option in the 'phosphor-host-ipmid'
-To: openbmc@lists.ozlabs.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="VAtTcn3C+Zec/fPO"
+Content-Disposition: inline
+In-Reply-To: <20210208144446.l454phquipyvi7ur@thinkpad.fuzziesquirrel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,102 +103,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: snowyang <SnowYang@linux.alibaba.com>, openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-What was the point of splitting IPMI boot source interface to BootMode
-and BootSource?
-https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc=
-_project/Control/Boot/Mode.interface.yaml
-https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc=
-_project/Control/Boot/Source.interface.yaml
 
-In the IPMI specification all possible boot options are represented by
-"Boot Device Selector" field in the "Get System Boot Options" =D1=81ommand:
+--VAtTcn3C+Zec/fPO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-```
-[5:2] - Boot device selector
-0000b =3D No override
-0001b =3D Force PXE
-0010b =3D Force boot from default Hard-drive
-0011b =3D Force boot from default Hard-drive, request Safe Mode
-0100b =3D Force boot from default Diagnostic Partition
-0101b =3D Force boot from default CD/DVD
-0110b =3D Force boot into BIOS Setup
-0111b =3D Force boot from remotely connected (redirected) Floppy/primary
-removable media
-1001b =3D Force boot from primary remote media
-1000b =3D Force boot from remotely connected (redirected) CD/DVD
-1010b =3D reserved
-1011b =3D Force boot from remotely connected (redirected) Hard Drive
-1100-1110b =3D Reserved
-1111b =3D Force boot from Floppy/primary removable media
-```
+On Mon, Feb 08, 2021 at 09:44:46AM -0500, Brad Bishop wrote:
+>=20
+> This is an intermittant bug in the os-release recipe that we haven't=20
+> been able to track down.  You can ignore this failure.  I'll remove the=
+=20
+> verified -1.
 
-With this in mind, splitting Boot device selector to `BootMode` and
-`BootSource` seems to be redundant:
+I thought I had fixed all the known os-release recipe issues not too
+long ago.  This one seems new to me:
 
+    ERROR: Task (/home/jenkins-slave/workspace/ci-openbmc/distro/ubuntu/lab=
+el/docker-builder/target/romulus/openbmc/meta/recipes-core/os-release/os-re=
+lease.bb:do_package_qa) failed with exit code '134'
 
-https://github.com/openbmc/phosphor-host-ipmid/blob/master/chassishandler.c=
-pp
-```
-std::map<IpmiValue, Source::Sources> sourceIpmiToDbus =3D {
-    {0x01, Source::Sources::Network},
-    {0x02, Source::Sources::Disk},
-    {0x05, Source::Sources::ExternalMedia},
-    {0x0f, Source::Sources::RemovableMedia},
-    {ipmiDefault, Source::Sources::Default}};
+https://jenkins.openbmc.org/job/ci-openbmc/1758/distro=3Dubuntu,label=3Ddoc=
+ker-builder,target=3Dromulus/console
 
-std::map<IpmiValue, Mode::Modes> modeIpmiToDbus =3D {
-#ifdef ENABLE_BOOT_FLAG_SAFE_MODE_SUPPORT
-    {0x03, Mode::Modes::Safe},
-#endif // ENABLE_BOOT_SAFE_MODE_SUPPORT
-    {0x06, Mode::Modes::Setup},
-    {ipmiDefault, Mode::Modes::Regular}};
-```
+Andrew, have you seen this issue very often?  Next time we see it, is
+there any way to get to the full build tree from bitbake?  There should
+be a log buried somewhere under /tmp that will give us the details of
+what really happened here.
 
-And the main question is, what is the best way to add `BIOS boot type`
-option functionality to the current design?
-Currently `phosphor-host-ipmid` lacks support for the IPMI BIOS boot type f=
-ield:
+--=20
+Patrick Williams
 
-```
-[5] - BIOS boot type (for BIOS that support both legacy and EFI boots)
-0b =3D =E2=80=9CPC compatible=E2=80=9D boot (legacy)
-1b =3D Extensible Firmware Interface Boot (EFI)
-```
+--VAtTcn3C+Zec/fPO
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Because of this it is not possible to select EFI or Legacy boot with
-the ipmitool. `phosphor-host-ipmid` always reports BIOS boot type flag
-as "Legacy". And this could lead to problems in the HOST firmware that
-expects this feature to be working in the BMC.
+-----BEGIN PGP SIGNATURE-----
 
-```
-~$ ipmitool -U root -P 0penBmc -H 192.168.101.221 -I lanplus -C 17
-chassis bootdev none options=3Defiboot
-Set Boot Device to none
-~$ ipmitool -U root -P 0penBmc -H 192.168.101.221 -I lanplus -C 17
-chassis bootparam get 5
-Boot parameter version: 1
-Boot parameter 5 is valid/unlocked
-Boot parameter data: 8000000000
- Boot Flags :
-   - Boot Flag Valid
-   - Options apply to only next boot
-   - BIOS PC Compatible (legacy) boot
-   - Boot Device Selector : No override
-   - Console Redirection control : System Default
-   - BIOS verbosity : Console redirection occurs per BIOS
-configuration setting (default)
-   - BIOS Mux Control Override : BIOS uses recommended setting of the
-mux at the end of POST
-```
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmAho3MACgkQqwNHzC0A
+wRmfihAAjIEMQaHhEDUwveAJAjVQ0JTcG92R6G/zxzsT0dtVRVUwgHwDR+DFbj+q
+1gHQAhXIY5yB7O6jtzBxhlqHZD/iElPfK9qsvDwGB1nMYScH0TWw6l+Mf0cTuazt
+sFhd4UU4qFmbBM/eZ65jNxg9O/Bodo7hWEpNvle4bTDqY6VHATJMoeOD2paESStD
+YH7ny7eSd07mz4WfC5TcWbkF5Z8iT3RgBSWA2QYPay++xXMsmh7NhHFBhpECsWTZ
+6ZXMUS2a1OokUfsixx5+zEq2qmzo+NnDsHEZpup8fEXIrzix5BjdWvkwmr7XEB7U
+87Es8WD2WVfH5+upqvjm1NhaBX/OGOr/btBhH9RV32S56o+z8fXjlySQjG5L1ISC
+49YziokVMjO3dZDvnFjPHI02Fh2uYajlufzactEcdiSkbEBr3KWjvv4vtkBMIXVI
+kr5MPaXSsgYCuJhfLD+FPDlHZRi7eZ7sHw1G8fVxN5CBYpFSjhMn/cVEuZmTgiMC
+vRMvxTT9adlHgFqdDdNfpr7dRBQ09nKR2jZFSPlBITiGrxKoUh6f0nCxe47lBHbg
+UpV3sWsUg5P1teERj6i52+J7IqNhEzS3OT1QfH6gLlKHq4B9mgXg2Evg3EVZ+WjS
+pUcKeJ9dPZaKLO+euVIdqoxwWkrzMAUYovKjHwgPcx3a6EkwXQQ=
+=b2ux
+-----END PGP SIGNATURE-----
 
-What is the best way to add support for this kind of functionality?
-Should I add another phosphor-dbus-interface, something like
-`/xyz/openbmc_project/Control/Boot/Type.interface.yaml`?
-I guess I just want to know OpenBMC community opinion regarding this
-problem before I start working on the solution.
-
-Best regards,
-Konstantin Aladyshev
+--VAtTcn3C+Zec/fPO--
