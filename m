@@ -1,65 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E4623132C4
-	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 13:52:57 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5AE0313578
+	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 15:46:34 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DZ5Xk1fN3zDqNk
-	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 23:52:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DZ83r18SjzDrdp
+	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 01:46:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::129;
- helo=mail-il1-x129.google.com; envelope-from=gmouse@google.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=nJNcln/Z; dkim-atps=neutral
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com
- [IPv6:2607:f8b0:4864:20::129])
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm1 header.b=EH2a9396; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=T4pA+XhP; 
+ dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DZ5Vk1tGFzDqTh
- for <openbmc@lists.ozlabs.org>; Mon,  8 Feb 2021 23:51:05 +1100 (AEDT)
-Received: by mail-il1-x129.google.com with SMTP id o7so8067240ils.2
- for <openbmc@lists.ozlabs.org>; Mon, 08 Feb 2021 04:51:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=xFVeZJ7lz7AWqlAKx4YTcKAsAGR9dJOeBFypzvLIaw8=;
- b=nJNcln/ZQw3GsXyCVMUMay1+/yvMVlklemXiASGidMvx2cA7QhqVi4fmXshTR6j42x
- MuhhBgufL9ULTkYrkfwg3P8qpV3Fv4hfFhX4ki9+GRTsu8Z41PWZ6C8gm/CWNiYqUJAz
- ioW5n2OUkxg4MeJGvSRKfylyYk+3rM7W3pKmOrmdcyyzrWsHVRkGjlxwkhl8rU3gvvBE
- Jzd2bYIIqTRi1I2GSL9FhsstbY8GdFw44DWtk13LxTS1B4vhBv/FvF0kf82IpgEsPK19
- 15QA4gXBbmj9kTNbPzJLcbfMI/9RF9ZJ5Q/1TlUEHhD2t70IkQWUoH0D3QD3z8ePcRoh
- cUAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=xFVeZJ7lz7AWqlAKx4YTcKAsAGR9dJOeBFypzvLIaw8=;
- b=HygC05g1DmiAOAkTa8bI6C17vHnkgD9a/a61+hLMC+PKYxZSi4zuJcUI4EezEjJU/P
- uTuftd1OSZgH6RSztUhtvH8dQwuc3OCnO885ZidygILciHlApH5ffFIdZ6SL5A05n6oC
- nZjxCWXL0FQr3fwX/HaRdVpFm93BuCxZ7IgesXrf8p/HIPyJLUcu9WkFY+xBOldRv0Wy
- lp4Zn9WHQhJ7dw+M0UqAvzWXVdz3KlRc1unsfjsWu0cszzpUjETdSBY4aP7NltaVexQf
- KSWkjzM2M06DyC7WJD49jPIlYtSyz01rWtG7zABU67sORPK0m1tIxiXuAVDnJ/H4/lx5
- cTGw==
-X-Gm-Message-State: AOAM530ZKZnr+NzsOhXHy4Q6wxdhDYojdV4z1m0nK/SiyaEOKXQglNqK
- NeTzuvUO1X+7c98CJuSpEp1z3E1Uk/lu1d3wH32g8XjgTtM=
-X-Google-Smtp-Source: ABdhPJypWJABn2TgWs000rTBgvF8u4vlXH171FP3V5MmezWgW9A76bhWqBSjjHFlTDYjv4oN/bInliEW8N5b+MpQR7c=
-X-Received: by 2002:a05:6e02:1ca4:: with SMTP id
- x4mr8716445ill.58.1612788662645; 
- Mon, 08 Feb 2021 04:51:02 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DZ8213KfqzDrTg
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Feb 2021 01:44:55 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id CAB855C00CA;
+ Mon,  8 Feb 2021 09:44:48 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Mon, 08 Feb 2021 09:44:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
+ :references:mime-version:content-type:content-transfer-encoding
+ :in-reply-to; s=fm1; bh=FBBzCRxOC43QUl2Wxe7slWO+9ncMjqFDtn1BO2UW
+ 1iQ=; b=EH2a9396Goj0ApctRrRPvwHVrmt+4+MmKDmiAFR+cTgLMuTSFaXWH6XQ
+ 69WdPfepKkopHkPHgGdIhsRoKdRlOxrntH6/m2HKK45NibYHrYfZ4cgieiRgweMK
+ usx7w87zVubdUUSQQ4S2KalqrbZL1g34imE1O4Xtv9auezoL8gvt6tme2YWApusd
+ in2O1oKQdZmhnnMkmAmtyj1XW+p/l1dnxjclThKw1vyDEpjUsZpTRjIXZZkxHEmm
+ ImHmfgRXbSpXlimMFrwsSkpr9nDDngfQOVTBh3hzjd4N4fKan9Tz+XfLE9DcdGpe
+ NX/DkKfIbx2INg2fuS1XVr4Dt+iLsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=FBBzCRxOC43QUl2Wxe7slWO+9ncMjqFDtn1BO2UW1
+ iQ=; b=T4pA+XhPF0z7oxluN92btkhtKDvSOfluw2vx/njyn4vPMDKLEY10ixzEL
+ +Myft0HxpFQpQLAGoqswTHNbc9rt+NL9rPLnOLFcTia/dL8SN8weFXfXrnnhriIK
+ 1J+3EfOp9oII82I4dtRZGxn8RVxeB0eMt45GRbPEe/SLN02xSkY2jP3fsQog09vl
+ GAJkq3wj9EskE0Be5mrtqNz7Dt98iQRBREmYPBmEK/QBf7pZiQq6l8PsSr8sSBHu
+ gjGzmV5bdbBBNOYFAZxEdmk7EBMkdsm5FHRmwfZP/MvggcxCG9DFuium7jhvCnNR
+ OLoBuhJ6A0rou8HjzapqSgL+ThcnA==
+X-ME-Sender: <xms:YE4hYEru-2F65uX-BTie4moDnccY6Rw6X4j5b-FBkDzQ0EwZGcGcNg>
+ <xme:YE4hYKlyCFHdIanQ30gmz9rgxGofquyVF3nFPst3-lI3hvLFWP0-nFCaEAGYqSp3N
+ gmX6f7_lQN_ozOjaqg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrheefgdeiiecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtugfgjgesthekre
+ dttddtudenucfhrhhomhepuehrrgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhu
+ iiiiihgvshhquhhirhhrvghlrdgtohhmqeenucggtffrrghtthgvrhhnpedvffevteeuje
+ ehhedvgffgheeljefhffefieejffeggfdukefhvedtgeejvdegheenucfkphepudejfedr
+ udeijedrfedurdduleejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+ hilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
+X-ME-Proxy: <xmx:YE4hYGGdjfrjaNl2-W9i0bK4IQ0xRFDpKm5h2X-1k7qhT7jq14hxKw>
+ <xmx:YE4hYDoVyN6WUSkg1DlIF_E6my-js4iWzdC3WhSRGwx4-_QRS77vvw>
+ <xmx:YE4hYC4vuorIt_FLsgTuSJ-rj1wUJu1fKSTu8P7Jc7Q66FH9VRQgeg>
+ <xmx:YE4hYJzcXxzDMTxsy1BrVXi0VuXQMRMl5rgd3qXwKrjNbni6N7sw0g>
+Received: from thinkpad.fuzziesquirrel.com (unknown [173.167.31.197])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 02C68240062;
+ Mon,  8 Feb 2021 09:44:47 -0500 (EST)
+Date: Mon, 8 Feb 2021 09:44:46 -0500
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: snowyang <SnowYang@linux.alibaba.com>
+Subject: Re: Change in ...meta-alibaba[master]: thor: initial machine creation
+Message-ID: <20210208144446.l454phquipyvi7ur@thinkpad.fuzziesquirrel.com>
+References: <4ufnKrB2SUu3u1SbJu709Q@ismtpd0004p1sjc2.sendgrid.net>
+ <94c8af34-dcae-e33d-a0f0-a5540ef518fd@linux.alibaba.com>
+ <YAneI7zHQx217lmu@heinlein>
+ <5841da60f00cade13d87d5b8795f8a25021c2e44.camel@fuzziesquirrel.com>
+ <f8678061-4662-4445-a4d0-016040f00979@linux.alibaba.com>
+ <0008fa42-2a5c-b092-8da6-7eaa91e775f7@linux.alibaba.com>
+ <0FC93EA6-AE09-46A6-9BF2-36471B85755B@fuzziesquirrel.com>
+ <fe3fef11-56c7-85a4-b3fc-35ab29e99f60@linux.alibaba.com>
+ <20210202135122.kbvdfnq6ed2onuhi@thinkpad.fuzziesquirrel.com>
+ <e7991363-133b-0ae5-9bb1-fd48719738d9@linux.alibaba.com>
 MIME-Version: 1.0
-References: <CADVsX8_ua6nShjGQbK1nVqsn34+dArF69sCLcLt6U+0_zXj54w@mail.gmail.com>
-In-Reply-To: <CADVsX8_ua6nShjGQbK1nVqsn34+dArF69sCLcLt6U+0_zXj54w@mail.gmail.com>
-From: Anton Kachalov <rnouse@google.com>
-Date: Mon, 8 Feb 2021 13:50:50 +0100
-Message-ID: <CADVsX8_M3DdUTY7Y0gubD18eSUufA1bzcjRZgOnVgg1xP9SMNQ@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: nuvoton: Fix flash layout
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e7991363-133b-0ae5-9bb1-fd48719738d9@linux.alibaba.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,100 +102,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Here is base64 encoded patch:
+On Sat, Feb 06, 2021 at 09:16:29PM +0800, snowyang wrote:
+>
+>Hi Brad,
+>
+>    I have push the code to openbmc/openbmc, but it built faild. 
+>while  i read the log ,it show me that the building project is 
+>Romulus,i think it 's wrong, and how to change the configrature to 
+>build the machine of thor which created by alibab?
 
-=== CUT ===
-RnJvbSAwMTBhYTg5ODI2ZjUxZjNjMTc2MTY1YjU5YWJmZTcyYmFhZmYxYzhkIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiAiQW50b24gRC4gS2FjaGFsb3YiIDxnbW91c2VAZ29vZ2xlLmNv
-bT4KRGF0ZTogU3VuLCA3IEZlYiAyMDIxIDE4OjUxOjQ4ICswMTAwClN1YmplY3Q6IFtQQVRDSF0g
-QVJNOiBkdHM6IG51dm90b246IEZpeCBmbGFzaCBsYXlvdXQKIFRoaXMgY2hhbmdlIHNhdGlzZnkg
-T3BlbkJNQyByZXF1aXJlbWVudHMgZm9yIGZsYXNoIGxheW91dC4KClNpZ25lZC1vZmYtYnk6IEFu
-dG9uIEQuIEthY2hhbG92IDxnbW91c2VAZ29vZ2xlLmNvbT4KLS0tCiBhcmNoL2FybS9ib290L2R0
-cy9udXZvdG9uLW5wY203NTAtZXZiLmR0cyB8IDI4ICsrKysrKystLS0tLS0tLS0tLS0tLS0tCiAx
-IGZpbGUgY2hhbmdlZCwgOCBpbnNlcnRpb25zKCspLCAyMCBkZWxldGlvbnMoLSkKCmRpZmYgLS1n
-aXQgYS9hcmNoL2FybS9ib290L2R0cy9udXZvdG9uLW5wY203NTAtZXZiLmR0cyBiL2FyY2gvYXJt
-L2Jvb3QvZHRzL251dm90b24tbnBjbTc1MC1ldmIuZHRzCmluZGV4IGJkMWViNmVlMzgwZi4uNzQx
-YzFmZWU4NTUyIDEwMDY0NAotLS0gYS9hcmNoL2FybS9ib290L2R0cy9udXZvdG9uLW5wY203NTAt
-ZXZiLmR0cworKysgYi9hcmNoL2FybS9ib290L2R0cy9udXZvdG9uLW5wY203NTAtZXZiLmR0cwpA
-QCAtMTgyLDggKzE4Miw4IEBAIGJidWJvb3QyQDgwMDAwIHsKIAkJCQlyZWcgPSA8MHgwMDgwMDAw
-IDB4ODAwMDA+OwogCQkJCXJlYWQtb25seTsKIAkJCQl9OwotCQkJZW52cGFyYW1AMTAwMDAwIHsK
-LQkJCQlsYWJlbCA9ICJlbnYtcGFyYW0iOworCQkJdWJvb3RlbnZAMTAwMDAwIHsKKwkJCQlsYWJl
-bCA9ICJ1LWJvb3QtZW52IjsKIAkJCQlyZWcgPSA8MHgwMTAwMDAwIDB4NDAwMDA+OwogCQkJCXJl
-YWQtb25seTsKIAkJCQl9OwpAQCAtMTk1LDI1ICsxOTUsMTMgQEAga2VybmVsQDIwMDAwMCB7CiAJ
-CQkJbGFiZWwgPSAia2VybmVsIjsKIAkJCQlyZWcgPSA8MHgwMjAwMDAwIDB4NDAwMDAwPjsKIAkJ
-CQl9OwotCQkJcm9vdGZzQDYwMDAwMCB7Ci0JCQkJbGFiZWwgPSAicm9vdGZzIjsKLQkJCQlyZWcg
-PSA8MHgwNjAwMDAwIDB4NzAwMDAwPjsKKwkJCXJvZnNANzgwMDAwIHsKKwkJCQlsYWJlbCA9ICJy
-b2ZzIjsKKwkJCQlyZWcgPSA8MHgwNzgwMDAwIDB4MTY4MDAwMD47CiAJCQkJfTsKLQkJCXNwYXJl
-MUBEMDAwMDAgewotCQkJCWxhYmVsID0gInNwYXJlMSI7Ci0JCQkJcmVnID0gPDB4MEQwMDAwMCAw
-eDIwMDAwMD47Ci0JCQkJfTsKLQkJCXNwYXJlMkAwRjAwMDAwIHsKLQkJCQlsYWJlbCA9ICJzcGFy
-ZTIiOwotCQkJCXJlZyA9IDwweDBGMDAwMDAgMHgyMDAwMDA+OwotCQkJCX07Ci0JCQlzcGFyZTNA
-MTEwMDAwMCB7Ci0JCQkJbGFiZWwgPSAic3BhcmUzIjsKLQkJCQlyZWcgPSA8MHgxMTAwMDAwIDB4
-MjAwMDAwPjsKLQkJCQl9OwotCQkJc3BhcmU0QDEzMDAwMDAgewotCQkJCWxhYmVsID0gInNwYXJl
-NCI7Ci0JCQkJcmVnID0gPDB4MTMwMDAwMCAweDA+OworCQkJcndmc0AxZTAwMDAwIHsKKwkJCQls
-YWJlbCA9ICJyd2ZzIjsKKwkJCQlyZWcgPSA8MHgxZTAwMDAwIDB4MjAwMDAwPjsKIAkJCX07CiAJ
-CX07CiAJfTsKLS0gCjIuMzAuMC40NzguZzhhMGQxNzhjMDEtZ29vZwoK
-=== /CUT ===
+This is an intermittant bug in the os-release recipe that we haven't 
+been able to track down.  You can ignore this failure.  I'll remove the 
+verified -1.
 
-On Sun, 7 Feb 2021 at 18:58, Anton Kachalov <rnouse@google.com> wrote:
->
-> This change satisfies OpenBMC requirements for flash layout.
->
-> Signed-off-by: Anton D. Kachalov <gmouse@google.com>
-> ---
->  arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 28 +++++++----------------
->  1 file changed, 8 insertions(+), 20 deletions(-)
->
-> diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> index bd1eb6ee380f..741c1fee8552 100644
-> --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> @@ -182,8 +182,8 @@ bbuboot2@80000 {
->   reg = <0x0080000 0x80000>;
->   read-only;
->   };
-> - envparam@100000 {
-> - label = "env-param";
-> + ubootenv@100000 {
-> + label = "u-boot-env";
->   reg = <0x0100000 0x40000>;
->   read-only;
->   };
-> @@ -195,25 +195,13 @@ kernel@200000 {
->   label = "kernel";
->   reg = <0x0200000 0x400000>;
->   };
-> - rootfs@600000 {
-> - label = "rootfs";
-> - reg = <0x0600000 0x700000>;
-> + rofs@780000 {
-> + label = "rofs";
-> + reg = <0x0780000 0x1680000>;
->   };
-> - spare1@D00000 {
-> - label = "spare1";
-> - reg = <0x0D00000 0x200000>;
-> - };
-> - spare2@0F00000 {
-> - label = "spare2";
-> - reg = <0x0F00000 0x200000>;
-> - };
-> - spare3@1100000 {
-> - label = "spare3";
-> - reg = <0x1100000 0x200000>;
-> - };
-> - spare4@1300000 {
-> - label = "spare4";
-> - reg = <0x1300000 0x0>;
-> + rwfs@1e00000 {
-> + label = "rwfs";
-> + reg = <0x1e00000 0x200000>;
->   };
->   };
->   };
-> --
-> 2.30.0.478.g8a0d178c01-goog
->
->
+-brad
