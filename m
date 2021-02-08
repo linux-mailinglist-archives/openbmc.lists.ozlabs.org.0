@@ -1,83 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFDC2314143
-	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 22:07:34 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE0A931424C
+	for <lists+openbmc@lfdr.de>; Mon,  8 Feb 2021 22:53:10 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DZJWR6qDwzDrgP
-	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 08:07:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DZKX43G9pzDsrY
+	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 08:53:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32f;
- helo=mail-ot1-x32f.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=209.85.167.174;
+ helo=mail-oi1-f174.google.com; envelope-from=robherring2@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=ZgQigFEe; dkim-atps=neutral
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
- [IPv6:2607:f8b0:4864:20::32f])
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com
+ [209.85.167.174])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DZJVh0hpWzDvW4
- for <openbmc@lists.ozlabs.org>; Tue,  9 Feb 2021 08:06:49 +1100 (AEDT)
-Received: by mail-ot1-x32f.google.com with SMTP id l23so3872678otn.10
- for <openbmc@lists.ozlabs.org>; Mon, 08 Feb 2021 13:06:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=1mF8a0f1IQJDlsSpL0S8b49OJtbM7c6SqE0FAeJ/tyk=;
- b=ZgQigFEeyMF6RPHzfFj/q4tFdsIH1eCdVeOjItmLGI6bKqjg/FvjgC19/n0mK++37n
- Q/1TDj+EsXTNVE1DsSHXcggA6mwYGGhMUPuW6lY/sAUJ9k4zCp5efvOeZCdTVeGC0BP4
- tFxFxXHTbiE+i9L3h8f99pk4NKs/sTA/W4YwdJZLROJnHNtwcZcz4S+F2aUoiAYBP0BN
- 2KOjAWakEEGbtPLzRDtnQzYZAcH8ISdtZh/g/H7qSoAsWP14vUs+mrWj/XiE4SfP9/RV
- w8PlukBIX+bdS9CSImrR8KzdkR8liGnJXu5N/jpAoeEZqvZK1E8AhSWeRAQlVo1qW22g
- E7Rw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DZKWK0P63zDqfK
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Feb 2021 08:52:27 +1100 (AEDT)
+Received: by mail-oi1-f174.google.com with SMTP id i3so6393148oif.1
+ for <openbmc@lists.ozlabs.org>; Mon, 08 Feb 2021 13:52:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=1mF8a0f1IQJDlsSpL0S8b49OJtbM7c6SqE0FAeJ/tyk=;
- b=tY+KYqJxJMgT7U7imxv54QxkTjxZGT1gCea3kUt8sdRo5lhUsLnqlxlmzx1JAHqTF9
- 8AGBNx1hgAe2w34IUFulTm1RrkNgeHP8qYOtd7U6UDghdRPjflAxORKvPBP24FIIhYjG
- bau/XYF7YmyS7JNelUO6zwgtVmnF1MWmJ2fLiteiSj6Sgc9gix5v0Np4rhOSh84sfoOx
- NF8zQ/zRX4GQ/QrTudPsDgirOfsrpc1GNRR5NYFuWl0COo+OFmaaVerGfJBr5bpTEPQw
- PBGp7KDIg0TrA3ciFC4yvh0zjSrIe8082QxhjuOsyM/UpGmUfVbU3g0k2vcDCUkECb8P
- DDEg==
-X-Gm-Message-State: AOAM530UKeJaHs+OROxCdRkeVZV0nPeaQfJGVrmrA1m7j3Jh8obXSfjd
- fMPu8nosVbo38W9lLNL23+b1GEnNWSY6+g==
-X-Google-Smtp-Source: ABdhPJwVkq2VWEOIZltHutKFX20Y7GM7g9KMzTtG2gdbrY9yXTSVUqxn5fhB9r0XMUL+BgQRFQ+Wiw==
-X-Received: by 2002:a9d:4f0b:: with SMTP id d11mr7033688otl.208.1612818405648; 
- Mon, 08 Feb 2021 13:06:45 -0800 (PST)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:1448:f93a:980c:e25a])
- by smtp.gmail.com with ESMTPSA id m7sm3942864otq.33.2021.02.08.13.06.44
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 08 Feb 2021 13:06:45 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: Change in ...meta-alibaba[master]: thor: initial machine creation
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <YCGjdU3N6bHS/A1a@heinlein>
-Date: Mon, 8 Feb 2021 15:06:44 -0600
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <35675947-5C93-4D51-AE6D-2BD178956213@gmail.com>
-References: <94c8af34-dcae-e33d-a0f0-a5540ef518fd@linux.alibaba.com>
- <YAneI7zHQx217lmu@heinlein>
- <5841da60f00cade13d87d5b8795f8a25021c2e44.camel@fuzziesquirrel.com>
- <f8678061-4662-4445-a4d0-016040f00979@linux.alibaba.com>
- <0008fa42-2a5c-b092-8da6-7eaa91e775f7@linux.alibaba.com>
- <0FC93EA6-AE09-46A6-9BF2-36471B85755B@fuzziesquirrel.com>
- <fe3fef11-56c7-85a4-b3fc-35ab29e99f60@linux.alibaba.com>
- <20210202135122.kbvdfnq6ed2onuhi@thinkpad.fuzziesquirrel.com>
- <e7991363-133b-0ae5-9bb1-fd48719738d9@linux.alibaba.com>
- <20210208144446.l454phquipyvi7ur@thinkpad.fuzziesquirrel.com>
- <YCGjdU3N6bHS/A1a@heinlein>
-To: Patrick Williams <patrick@stwcx.xyz>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:content-transfer-encoding
+ :in-reply-to;
+ bh=U8tnst308e6RauLdVa5a7TNIbxkAWuY5AsfA0wur2Dk=;
+ b=KWVSr+1BNTZk+FbDQtPEyDyq3VwR+quhasEZaNKD/Bb0bIAlJB4Q/y9OWzQjvG972+
+ 48QybZo7AcONdr9nPB6aBUJnZrdFf+VYfjk/B6hMBMrFYFEUKAYtL2ZwjAaGAY8lyjCC
+ dHEKl960AbOtdbHzShWSpkMDs8g8n+LdvMfKqWPGBRPJxybI7RaxY0PQ39JFm6QmW81U
+ E/xl6VgY/feY/aAiKCXEWQYSP4ZqL52RK44OwnKSg55HnAgZRJKDXU8Htw6ObiOBtJcS
+ AE1gzlWiKfKbgropKT+gYuprJNS2Ec5PZgpwB899BkArt16qUSHQNtRjXQVKsaa0FV6z
+ AwYQ==
+X-Gm-Message-State: AOAM533tCJpDuCrOt8C4oMYFClNFGQwxcCX80r869pP178vZh0/96wRQ
+ /l8XaimuVvzEgTVJ6AHCRg==
+X-Google-Smtp-Source: ABdhPJyujBb8um9slbs8pmbjX48fp1di4TFtFS/wbVUEAmUdc/fIQmMdKAfXk+Pfz8wf0F7yNniuSw==
+X-Received: by 2002:aca:5a57:: with SMTP id o84mr569707oib.0.1612821144124;
+ Mon, 08 Feb 2021 13:52:24 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
+ [24.155.109.49])
+ by smtp.gmail.com with ESMTPSA id n93sm3878402ota.37.2021.02.08.13.52.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Feb 2021 13:52:23 -0800 (PST)
+Received: (nullmailer pid 2085478 invoked by uid 1000);
+ Mon, 08 Feb 2021 21:52:22 -0000
+Date: Mon, 8 Feb 2021 15:52:22 -0600
+From: Rob Herring <robh@kernel.org>
+To: Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: Convert nuvoton, npcm750 binding
+ to YAML
+Message-ID: <20210208215222.GA2085425@robh.at.kernel.org>
+References: <20210116010907.3475405-1-j.neuschaefer@gmx.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210116010907.3475405-1-j.neuschaefer@gmx.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,57 +69,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: snowyang <SnowYang@linux.alibaba.com>, openbmc <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
+Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Sat, 16 Jan 2021 02:09:05 +0100, Jonathan Neuschäfer wrote:
+> The general trend is to have devicetree bindings in YAML format, to
+> allow automatic validation of bindings and devicetrees.
+> 
+> Convert the NPCM SoC family's binding to YAML before it accumulates more
+> entries.
+> 
+> The nuvoton,npcm750-evb compatible string is introduced to keep the
+> structure of the binding a little simpler.
+> 
+> Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+> ---
+> 
+> If someone else wants to be listed as the maintainer, please let me
+> know.
+> 
+> 
+> v2:
+> - Fix indentation to satisfy yamllint
+> - Fix $schema line
+> 
+> v1:
+> - https://lore.kernel.org/lkml/20210108224008.705687-1-j.neuschaefer@gmx.net/
+> ---
+>  .../devicetree/bindings/arm/npcm/npcm.txt     |  6 -----
+>  .../devicetree/bindings/arm/npcm/npcm.yaml    | 23 +++++++++++++++++++
+>  2 files changed, 23 insertions(+), 6 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.txt
+>  create mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.yaml
+> 
 
-
-> On Feb 8, 2021, at 2:47 PM, Patrick Williams <patrick@stwcx.xyz> =
-wrote:
->=20
-> On Mon, Feb 08, 2021 at 09:44:46AM -0500, Brad Bishop wrote:
->>=20
->> This is an intermittant bug in the os-release recipe that we haven't=20=
-
->> been able to track down.  You can ignore this failure.  I'll remove =
-the=20
->> verified -1.
->=20
-> I thought I had fixed all the known os-release recipe issues not too
-> long ago.  This one seems new to me:
->=20
->    ERROR: Task =
-(/home/jenkins-slave/workspace/ci-openbmc/distro/ubuntu/label/docker-build=
-er/target/romulus/openbmc/meta/recipes-core/os-release/os-release.bb:do_pa=
-ckage_qa) failed with exit code '134'
->=20
-> =
-https://jenkins.openbmc.org/job/ci-openbmc/1758/distro=3Dubuntu,label=3Ddo=
-cker-builder,target=3Dromulus/console
->=20
-> Andrew, have you seen this issue very often?  Next time we see it, is
-> there any way to get to the full build tree from bitbake?  There =
-should
-> be a log buried somewhere under /tmp that will give us the details of
-> what really happened here.
-
-Yeah, I=E2=80=99ve been seeing this one intermittently for a while. =
-There was such
-limited data, I=E2=80=99ve just been retriggering when I see it.
-
-The docker builds are setup to use $WORKSPACE as a build dir
-so it is persistent after the docker container exits butI had to =
-configure
-the jenkins jobs to delete the workspaces when done due to space
-issues on the nodes.
-
-Best bet may be to try and identify the file(s) we need and I can
-have the jenkins job archive them.
-
-
->=20
-> --=20
-> Patrick Williams
-
+Reviewed-by: Rob Herring <robh@kernel.org>
