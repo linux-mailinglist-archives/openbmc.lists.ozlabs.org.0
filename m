@@ -2,61 +2,47 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04DB2314EE1
-	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 13:27:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CBD4315231
+	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 15:57:49 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DZhwS2r8dzDqyw
-	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 23:27:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DZmGL6YcjzDscm
+	for <lists+openbmc@lfdr.de>; Wed, 10 Feb 2021 01:57:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::729;
- helo=mail-qk1-x729.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Gzr3GZV/; dkim-atps=neutral
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com
- [IPv6:2607:f8b0:4864:20::729])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DZhtk0mhqzDskF
- for <openbmc@lists.ozlabs.org>; Tue,  9 Feb 2021 23:25:33 +1100 (AEDT)
-Received: by mail-qk1-x729.google.com with SMTP id b14so4110852qkk.0
- for <openbmc@lists.ozlabs.org>; Tue, 09 Feb 2021 04:25:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=pLHsYCXVHT/BdYn1H1uR2orIeU66/PHvFwt2ixsYZJY=;
- b=Gzr3GZV/Wsub94JC4CNg4CBUbc7L5z7lR8fzmCQgIHG2fM1Z+QUi5Dbb3agPd4F2us
- OnQQqOxxQMXd6dFiEQCXBv/QBQxC5NfZnyI9Nqr2Sg+EZkzW0whztLY1WAaFCxI/7GR2
- Vu6haYqRdZbNbbPUE6Sx995ZDoa0buwE3Cju4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=pLHsYCXVHT/BdYn1H1uR2orIeU66/PHvFwt2ixsYZJY=;
- b=qG7wjLaym4YNZ4z08TmFlFs6siYh3qqhyYCLvo4Sz5rLuyi620k/FFaKVRhPNVcdFx
- Oe4z72rV3gBpA5ErbnftjJEiKYzMQhTsBc3T9Mxk7cwIG1BRueC8/OIcZMELDvq/feGA
- JhUtal2Lvv1ROTPVul3zu6YOIJeRxF3ay2P6ii7J3IZ21cMhC1U03EMM8ZEtAkNiQNTu
- WRNMtYODpYFEKXtyw3XKZ3s32d/wVfR3yVjtxWJ4qLsqwdLZpb6oDVGGdMEUU5qW9pcx
- 93a+cx42MfAzrjspLa4o/wJO1LSc5bbWdOYCn45nXiFEr5EHWxJfThWHYhMumae1tzIE
- 0Vfw==
-X-Gm-Message-State: AOAM5339R6R02Yggy+sv6xaIyIdal9hGKOzQ9lqf7nX7OUCxHUO928oN
- KXBUCIk839dapuH9vsDLCggTWC0+It4Juqq4saU=
-X-Google-Smtp-Source: ABdhPJxefs+RIt/Zw1Qk7U/n3fKsJ+yQsdrf4/armFXk2vuo1diIgIVCHDrJcXu5a9Ts+4IjIXhVpsMvLhtt18fYiRU=
-X-Received: by 2002:a37:ac10:: with SMTP id e16mr21208359qkm.465.1612873528815; 
- Tue, 09 Feb 2021 04:25:28 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DZmDF3CBFzDqqn
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Feb 2021 01:55:56 +1100 (AEDT)
+IronPort-SDR: dHd2ndbho9sQKR/5QM0Dm5lqBU4LwuiaiJruzlLPaVAZinZ7l90S0PS5gp0IYY4kUFuI/2zrsp
+ gTfV774/H0kw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9889"; a="178380316"
+X-IronPort-AV: E=Sophos;i="5.81,165,1610438400"; d="scan'208";a="178380316"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2021 06:55:52 -0800
+IronPort-SDR: C566/sni7TEBledKYfVftt2cKu9dNnZdmNGq3CRy+qi2h9EQlJlq21rxUfnVJCk/uJbp3E+NN1
+ dYQ1NzlKpaFQ==
+X-IronPort-AV: E=Sophos;i="5.81,165,1610438400"; d="scan'208";a="586465030"
+Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
+ ([10.7.150.62])
+ by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2021 06:55:52 -0800
+Date: Tue, 9 Feb 2021 06:55:51 -0800
+From: Vernon Mauery <vernon.mauery@linux.intel.com>
+To: "Mohammed.Habeeb ISV" <mohammed.habeeb@inventec.com>
+Subject: Re: ipmi lan interface question
+Message-ID: <20210209145446.GA20035@mauery.jf.intel.com>
+References: <PS2PR02MB35415290A2191B61F232947990B69@PS2PR02MB3541.apcprd02.prod.outlook.com>
 MIME-Version: 1.0
-References: <CACPK8Xd0aMcXrUD4YLWHMSz9rb7p0KKQGVCHRxFWdajGXcgLZg@mail.gmail.com>
- <1610358177-3874-1-git-send-email-willie_thai@compal.com>
-In-Reply-To: <1610358177-3874-1-git-send-email-willie_thai@compal.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 9 Feb 2021 12:25:16 +0000
-Message-ID: <CACPK8XfNrYFNy0KHjxa=nM01LV7PMnVC5U7_Wuudf_xk3tQ2iw@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: aspeed: Add device tree for Liwu2 BMC
-To: Willie Thai <williethaitu@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <PS2PR02MB35415290A2191B61F232947990B69@PS2PR02MB3541.apcprd02.prod.outlook.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,374 +54,117 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Willie Thai <willie_thai@compal.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 11 Jan 2021 at 09:45, Willie Thai <williethaitu@gmail.com> wrote:
+On 01-Feb-2021 11:29 PM, Mohammed.Habeeb ISV wrote:
+>Hi
 >
-> The Liwu2 is a server platform with an ASPEED AST2500 based BMC.
-
-You need to have a signed-off-by in your commit message.
-
-Please make sure you run ./scripts/checkpatch.pl on your patch before
-sending it.
-
-The patch looks okay; there are some minor issues to fix that I have
-mentioned below. Apologies for the delay in reviewing it.
-
-
-> ---
->  arch/arm/boot/dts/Makefile                    |   1 +
->  arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts | 320 ++++++++++++++++++++++++++
->  2 files changed, 321 insertions(+)
->  create mode 100755 arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts
+>I am trying to test the ipmi lan interface for the first time. However, I see setting Authtype is failing. Please review the below logs and let me know if any inputs.
+>OpenBMC Version is 2.9 .
 >
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 5a14adc..16fc64d 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1354,6 +1354,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->         aspeed-bmc-arm-centriq2400-rep.dtb \
->         aspeed-bmc-arm-stardragon4800-rep2.dtb \
->         aspeed-bmc-bytedance-g220a.dtb \
-> +       aspeed-bmc-compal-liwu2.dts \
->         aspeed-bmc-facebook-cmm.dtb \
->         aspeed-bmc-facebook-minipack.dtb \
->         aspeed-bmc-facebook-tiogapass.dtb \
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts b/arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts
-> new file mode 100755
-> index 0000000..a93af32
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts
-> @@ -0,0 +1,320 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/dts-v1/;
-> +
-> +#include "aspeed-g5.dtsi"
-> +#include <dt-bindings/gpio/aspeed-gpio.h>
-> +
-> +/ {
-> +       model = "AST2500 liwu2";
-> +       compatible = "aspeed,ast2500";
-> +
-> +       aliases {
-> +               serial4 = &uart5;
-> +       };
-> +
-> +       chosen {
-> +               stdout-path = &uart5;
-> +               bootargs = "console=tty0 console=ttyS4,115200 earlyprintk";
-> +       };
-> +
-> +       memory@80000000 {
-> +               reg = <0x80000000 0x20000000>;
-> +       };
-> +
-> +       reserved-memory {
-> +               #address-cells = <1>;
-> +               #size-cells = <1>;
-> +               ranges;
-> +
-> +               gfx_memory: framebuffer {
-> +                       size = <0x01000000>;
-> +                       alignment = <0x01000000>;
-> +                       compatible = "shared-dma-pool";
-> +                       reusable;
-> +               };
-> +       };
-> +
-> +       iio-hwmon {
-> +               compatible = "iio-hwmon";
-> +               io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-> +                             <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
-> +                             <&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
-> +                             <&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
-> +       };
-> +
-> +       leds {
-> +               compatible = "gpio-leds";
-> +
-> +               LED_FAN0_FAULT {
-
-Node names have lower case.
-
-> +                       label = "LED_FAN0_FAULT";
-> +                       gpios = <&gpio ASPEED_GPIO(F, 4) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +               LED_FAN1_FAULT {
-> +                       label = "LED_FAN1_FAULT";
-> +                       gpios = <&gpio ASPEED_GPIO(F, 5) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +               LED_FAN2_FAULT {
-> +                       label = "LED_FAN2_FAULT";
-> +                       gpios = <&gpio ASPEED_GPIO(H, 2) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +               LED_FAN3_FAULT {
-> +                       label = "LED_FAN3_FAULT";
-> +                       gpios = <&gpio ASPEED_GPIO(H, 5) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +               LED_FAN4_FAULT {
-> +                       label = "LED_FAN4_FAULT";
-> +                       gpios = <&gpio ASPEED_GPIO(H, 6) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +               LED_FAN5_FAULT {
-> +                       label = "LED_FAN5_FAULT";
-> +                       gpios = <&gpio ASPEED_GPIO(H, 7) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +               FP_LED_STATUS_AMBER_N {
-> +                       label = "FP_LED_STATUS_AMBER_N";
-> +                       gpios = <&gpio ASPEED_GPIO(S, 5) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +               REAR_ID_LED_N {
-> +                       label = "REAR_ID_LED_N";
-> +                       gpios = <&gpio ASPEED_GPIO(S, 6) GPIO_ACTIVE_LOW>;
-> +               };
-> +       };
-> +};
-> +
-> +&fmc {
-> +       status = "okay";
-> +       flash@0 {
-> +               status = "okay";
-> +               m25p,fast-read;
-> +               label = "bmc";
-> +               spi-max-frequency = <50000000>;
-> +#include "openbmc-flash-layout.dtsi"
-> +       };
-> +};
-> +
-> +&spi1 {
-> +       status = "okay";
-> +       flash@0 {
-> +               status = "okay";
-> +               m25p,fast-read;
-> +               label = "pnor";
-> +               spi-max-frequency = <100000000>;
-> +       };
-> +};
-> +
-> +&spi2 {
-> +       status = "okay";
-> +};
-> +
-> +&uart5 {
-> +       status = "okay";
-> +};
-> +
-> +&mac0 {
-> +       status = "okay";
-> +
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_rgmii1_default &pinctrl_mdio1_default>;
-> +};
-> +
-> +&mac1 {
-> +       status = "okay";
-> +
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-> +};
-> +
-> +&adc {
-> +       status = "okay";
-> +};
-> +
-> +&i2c0 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c1 {
-> +       status = "okay";
-> +
-> +       eeprom@54 {
-> +               compatible = "atmel,24c64";
-> +               reg = <0x54>;
-> +               pagesize = <32>;
-> +       };
-> +};
-> +
-> +&i2c2 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c3 {
-> +       status = "okay";
-> +
-> +       tmp75@48 {
-> +               compatible = "ti,tmp75";
-> +               reg = <0x48>;
-> +       };
-> +
-> +       tmp75@4b {
-> +               compatible = "ti,tmp75";
-> +               reg = <0x4b>;
-> +       };
-> +
-> +       tmp75@4c {
-> +               compatible = "ti,tmp75";
-> +               reg = <0x4c>;
-> +       };
-> +
-> +       tmp75@4d {
-> +               compatible = "ti,tmp75";
-> +               reg = <0x4d>;
-> +       };
-> +
-> +       vr-controller@5a {
-> +               compatible = "ti,tps53679";
-> +               reg = <0x5a>;
-> +       };
-> +
-> +       vr-controller@5d {
-> +               compatible = "ti,tps53679";
-> +               reg = <0x5d>;
-> +       };
-> +
-> +       vr-controller@68 {
-> +               compatible = "ti,tps53679";
-> +               reg = <0x68>;
-> +       };
-> +
-> +       vr-controller@6a {
-> +               compatible = "ti,tps53679";
-> +               reg = <0x6a>;
-> +       };
-> +
-> +       vr-controller@6c {
-> +               compatible = "ti,tps53679";
-> +               reg = <0x6c>;
-> +       };
-> +
-> +       vr-controller@6e {
-> +               compatible = "ti,tps53679";
-> +               reg = <0x6e>;
-> +       };
-> +
-> +};
-> +
-> +&i2c4 {
-> +       status = "okay";
-> +
-> +       eeprom@51 {
-> +        compatible = "atmel,24c64";
-
-The whitespace looks wrong here.
-
-> +        reg = <0x51>;
-> +        pagesize = <32>;
-> +    };
-> +};
-> +
-> +&i2c5 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c6 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c7 {
-> +       status = "okay";
-> +
-> +       power-supply@58 {
-> +               compatible = "pmbus";
-> +               reg = <0x58>;
-> +       };
-> +
-> +       power-supply@59 {
-> +               compatible = "pmbus";
-> +               reg = <0x59>;
-> +       };
-> +};
-> +
-> +
-> +&sdmmc {
-> +       status = "okay";
-> +};
-> +
-> +&sdhci0 {
-> +       status = "okay";
-> +
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_sd1_default>;
-> +};
-> +
-> +&vhub {
-> +       status = "okay";
-> +};
-> +
-> +&ehci1 {
-> +       status = "okay";
-> +};
-> +
-> +&uhci {
-> +       status = "okay";
-> +};
-> +
-> +&gfx {
-> +     status = "okay";
-> +     memory-region = <&gfx_memory>;
-> +};
-> +
-> +&pwm_tacho {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
-> +               &pinctrl_pwm2_default &pinctrl_pwm3_default
-> +               &pinctrl_pwm4_default &pinctrl_pwm5_default
-> +               &pinctrl_pwm6_default &pinctrl_pwm7_default>;
-> +
-> +       fan@0 {
-> +               reg = <0x00>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
-> +       };
-> +
-> +       fan@1 {
-> +               reg = <0x01>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
-> +       };
-> +
-> +       fan@2 {
-> +               reg = <0x02>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
-> +       };
-> +
-> +       fan@3 {
-> +               reg = <0x03>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
-> +       };
-> +
-> +       fan@4 {
-> +               reg = <0x04>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x08 0x09>;
-> +       };
-> +
-> +       fan@5 {
-> +               reg = <0x05>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x0a 0x0b>;
-> +       };
-> +
-> +       fan@6 {
-> +               reg = <0x06>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x0c 0x0d>;
-> +       };
-> +
-> +       fan@7 {
-> +               reg = <0x07>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x0e 0x0f>;
-> +       };
-> +
-> +};
-> +
-> --
-> 2.7.4
+>Setup:
+>Openbmc machince 2.7(seahawk) ------openbmc machine 2.9(transformers)
 >
+>
+>Below is the command outputs.
+>
+>/* 10.41.8.50 is transformers 2.9 BMC IP.*/
+>seahawk:/# ipmitool -H 10.41.8.50 -U test -P test123 lan print -vvv
+
+The default interface type (-I parameter) is lan, or in IPMI language, 
+RMCP 1/1.5 connection. OpenBMC does not support this type of connection 
+because it is terribly insecure. Make sure you choose RMCP+ (-I lanplus) 
+as your interface type and cipher suite 17 (-C 17).
+
+On newer versions of ipmitool, it will automatically negotiate the best 
+cipher suite, but on older versions, it is best to choose 17.
+
+--Vernon
+
+>Sending IPMI/RMCP presence ping packet
+>send_packet (12 bytes)
+>06 00 ff 06 00 00 11 be 80 00 00 00
+>ipmi_lan_send_cmd:opened=[1], open=[474656]
+>>> IPMI Request Session Header (level 0)
+>>>   Authtype   : NONE
+>>>   Sequence   : 0x00000000
+>>>   Session ID : 0x00000000
+>>> IPMI Request Message Header
+>>>   Rs Addr    : 20
+>>>   NetFn      : 06
+>>>   Rs LUN     : 0
+>>>   Rq Addr    : 81
+>>>   Rq Seq     : 01
+>>>   Rq Lun     : 0
+>>>   Command    : 38
+>send_packet (23 bytes)
+>06 00 ff 07 00 00 00 00 00 00 00 00 00 09 20 18
+>c8 81 04 38 0e 04 31
+>recv_packet (31 bytes)
+>06 00 ff 07 00 00 00 00 00 00 00 00 00 10 81 1c
+>63 20 04 38 00 01 80 04 02 00 00 00 00 1d 00
+>ipmi message header (31 bytes)
+>06 00 ff 07 00 00 00 00 00 00 00 00 00 10 81 1c
+>63 20 04 38 00 01 80 04 02 00 00 00 00 1d 00
+><< IPMI Response Session Header
+><<   Authtype   : NONE
+><<   Sequence   : 0x00000000
+><<   Session ID : 0x00000000
+><< IPMI Response Message Header
+><<   Rq Addr    : 81
+><<   NetFn      : 07
+><<   Rq LUN     : 0
+><<   Rs Addr    : 20
+><<   Rq Seq     : 01
+><<   Rs Lun     : 0+
+><<   Command    : 38
+><<   Compl Code : 0x00
+>get_auth_capabilities (9 bytes)
+>01 80 04 02 00 00 00 00 1d
+>Channel 01 Authentication Capabilities:
+>  Privilege Level : ADMINISTRATOR
+>  Auth Types      :
+>  Per-msg auth    : enabled
+>  User level auth : enabled
+>  Non-null users  : enabled
+>  Null users      : disabled
+>  Anonymous login : disabled
+>
+>Authentication type NONE not supported
+>Error: Unable to establish LAN session
+>Error: Unable to establish IPMI v1.5 / RMCP session
+>seahawk:/#
+>
+>Since , AuthType NONE is not supported tried to set the auth type to MD5 but it fails.
+>sysadmin@transformers:~# ipmitool lan set 1 auth Admin MD5,PASSWORD -vvv
+>Loading IANA PEN Registry...
+>Running Get PICMG Properties my_addr 0x20, transit 0, target 0
+>Error response 0xc1 from Get PICMG Properties
+>Running Get VSO Capabilities my_addr 0x20, transit 0, target 0
+>Invalid completion code received: Invalid command
+>Acquire IPMB address
+>Discovered IPMB address 0x0
+>Interface address: my_addr 0x20 transit 0:0 target 0x20:0 ipmb_target 0
+>
+>Channel type: 802.3 LAN
+>Auth Type Enable        : callback=0x00 user=0x00 operator=0x00 admin=0x00 oem=0x00
+>authtype data (5 bytes)
+>00 00 00 14 00
+>Warning: Set LAN Parameter failed: Unknown (0x82)
+>sysadmin@transformers:~#
+>
+>sysadmin@transformers:~# ipmitool channel getaccess 1 4
+>Maximum User IDs     : 15
+>Enabled User IDs     : 4
+>
+>User ID              : 4
+>User Name            : test
+>Fixed Name           : No
+>Access Available     : callback
+>Link Authentication  : enabled
+>IPMI Messaging       : enabled
+>Privilege Level      : ADMINISTRATOR
+>Enable Status        : enabled
+>sysadmin@transformers:~#
