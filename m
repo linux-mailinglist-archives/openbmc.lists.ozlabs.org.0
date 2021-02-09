@@ -1,51 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84AE3314B0A
-	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 10:07:55 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D33B7314EC2
+	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 13:14:27 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DZcVc62QPzDsgd
-	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 20:07:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DZhdr39hGzDrhK
+	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 23:14:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=troy_lee@aspeedtech.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::734;
+ helo=mail-qk1-x734.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=UGlY2FQW; dkim-atps=neutral
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com
+ [IPv6:2607:f8b0:4864:20::734])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DZcTk6KjNzDsc2
- for <openbmc@lists.ozlabs.org>; Tue,  9 Feb 2021 20:07:04 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 11990HW5034447
- for <openbmc@lists.ozlabs.org>; Tue, 9 Feb 2021 17:00:17 +0800 (GMT-8)
- (envelope-from troy_lee@aspeedtech.com)
-Received: from aspeedtech.com (192.168.100.253) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 9 Feb
- 2021 17:06:55 +0800
-Date: Tue, 9 Feb 2021 09:06:55 +0000
-From: Troy Lee <troy_lee@aspeedtech.com>
-To: <openbmc@lists.ozlabs.org>
-CC: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: Supporting new interfaces in phosphor-ipmi-flash
-Message-ID: <20210209090655.GA1147175@aspeedtech.com>
-References: <PS1PR06MB260095F62386276E75ADC5708ABB0@PS1PR06MB2600.apcprd06.prod.outlook.com>
- <6ea6d5b9-0e31-4a87-8990-b5ce53e2416d@www.fastmail.com>
- <20210128072947.GB2594588@aspeedtech.com>
- <ce482992-48a2-4744-a466-60628a52ce50@www.fastmail.com>
- <20210201073724.GA2623538@aspeedtech.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DZhZN57MTzDrhK;
+ Tue,  9 Feb 2021 23:11:18 +1100 (AEDT)
+Received: by mail-qk1-x734.google.com with SMTP id m144so1843427qke.10;
+ Tue, 09 Feb 2021 04:11:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=9b1+FT42iYfcBaXACNqZZ8m0dOYDgpi8jpItwihB888=;
+ b=UGlY2FQWhtT3walGbEZSEZicPmfHAAfnO+Qy2cpBcfFE/eCtSyGhllrt7V3ARb+idi
+ VZmpoIChaC56Wocfdzm1xDhttnJKU2403POE7bOYgWPj0jFttWxJPiUHMEt9Rug7z7/G
+ gZKy8gxFr7zOIt15N98S/AxtUPaWeD5aZRssE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=9b1+FT42iYfcBaXACNqZZ8m0dOYDgpi8jpItwihB888=;
+ b=O+1LfGApso0tYn4erWqEHBBFXckrH/CLKROkzXVbwAK3CJMh1P1uf+QwnBOxUzIDIn
+ 01dRNschQc8lEIOqx13SmIffn5lHMxYd/4MA1oOMfrBoBnsApzjZQ7RT78qEq/jlac7x
+ qaCkPr2hIWdty2JdQds9cwpigAX2REkBj1YUWqeIRXV8rQj//hcsJ3c6caBINM4KUR+w
+ L3FkaBk7vttl7qFNI2szqr05Eslb20hFshvxrUYW1eMgQrqGI2ohTfvr9P3zLl7ve3hQ
+ Jr7yimJttdkec7c2a5VMS/4CWJhCmgyjlJ5bzX2aX2+6fxNLt0IgE8WBFdHfaBdgYcTP
+ X8zg==
+X-Gm-Message-State: AOAM531d5h5OuRwoQH7ZQ5g5e7FuxMNP9KyLpZVbQ9WSIuMD9r519grj
+ g5aAIJmCivwWTi/AwSgaebN8oGco7PSaQlL8peo=
+X-Google-Smtp-Source: ABdhPJznG+/3DRBuaBXOdhGQaUyUKQ7CvJxjrD65Ucij76t+VNLlWYhA5nJdNKP2loti8FRSBk9GJ1U7fyFVqRwjKmQ=
+X-Received: by 2002:ae9:e314:: with SMTP id v20mr11627616qkf.66.1612872671495; 
+ Tue, 09 Feb 2021 04:11:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-In-Reply-To: <20210201073724.GA2623538@aspeedtech.com>
-X-Originating-IP: [192.168.100.253]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 11990HW5034447
+References: <20210112003749.10565-1-jae.hyun.yoo@linux.intel.com>
+ <20210112003749.10565-2-jae.hyun.yoo@linux.intel.com>
+ <20210114193416.GA3432711@robh.at.kernel.org>
+ <4f67358e-58e5-65a5-3680-1cd8e9851faa@linux.intel.com>
+ <CACPK8XcZTE=bnCP1-E9PTA09WnXG9Eduwx0dm-QqmQJUDa_OrQ@mail.gmail.com>
+ <1814b8d1-954c-0988-0745-e95129079708@linux.intel.com>
+ <87ed4085-26e4-98f8-21e3-b1e3c16b0891@linux.intel.com>
+In-Reply-To: <87ed4085-26e4-98f8-21e3-b1e3c16b0891@linux.intel.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 9 Feb 2021 12:10:59 +0000
+Message-ID: <CACPK8XekihpoXEeyUbWSXsRkVMbX1gKG-gSeYgWq=s3UR2gi1g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: i2c: aspeed: add buffer and DMA mode
+ transfer support
+To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,116 +74,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>, Rob Herring <robh@kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Wolfram Sang <wsa@the-dreams.de>,
+ Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ devicetree <devicetree@vger.kernel.org>, Cedric Le Goater <clg@kaod.org>,
+ Tao Ren <taoren@fb.com>, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Team,
+On Wed, 3 Feb 2021 at 23:03, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+>
+> Hi Joel
+>
+> On 1/28/2021 11:36 AM, Jae Hyun Yoo wrote:
+> > Hi Joel
+> >
+> > On 1/27/2021 4:06 PM, Joel Stanley wrote:
+> >>>> All this information doesn't need to be in the binding.
+> >>>>
+> >>>> It's also an oddly structured dts file if this is what you are doing...
+> >>>
+> >>> I removed the default buffer mode settings that I added into
+> >>> 'aspeed-g4.dtsi' and 'aspeed-g5.dtsi' in v1 to avoid touching of the
+> >>> default transfer mode setting, but each bus should use its dedicated
+> >>> SRAM buffer range for enabling buffer mode so I added this information
+> >>> at here as overriding examples instead. I thought that binding document
+> >>> is a right place for providing this information but looks like it's not.
+> >>> Any recommended place for it? Is it good enough if I add it just into
+> >>> the commit message?
+> >>
+> >> I agree with Rob, we don't need this described in the device tree
+> >> (binding or dts). We know what the layout is for a given aspeed
+> >> family, so the driver can have this information hard coded.
+> >>
+> >> (Correct me if I've misinterpted here Rob)
+> >>
+> >
+> > Makes sense. Will add these settings into the driver module as hard
+> > coded per each bus.
+> >
+>
+> Realized that the SRAM buffer range setting should be added into device
+> tree because each bus module should get the dedicated IO resource range.
+> So I'm going to add it to dtsi default reg setting for each I2C bus
+> and will remove this description in binding. Also, I'll add a mode
+> setting property instead to keep the current setting as byte mode.
 
-While I'm evaluating the performance for the design, I notice that the
-maximum IPMI through/put over KCS / IPMB / LAN is about 120 command per
-second. Does anyone know where the bottleneck is?
-
-If we wants to send 64MB image through 4K memory buffer, it takes 2^14
-ipmi blobWrite commands. With the through/put mentioned above, it will
-need about 2 min to send just "IPMI" commands. The image copy to memory
-just takes few seconds. I'd like to know if I could do anything to
-improve the IPMI through/put.
-
-Thanks,
-Troy Lee
-
-The 02/01/2021 15:37, Troy Lee wrote:
-> Hi Andrew,
-> 
-> You make a very good point, I should propose the design document before
-> finilize the implementation. 
-> 
-> For option 2, we need to coordinate a 4K buffer from device tree, let's
-> say:
-> 
-> ```
-> reserved-memory {
->     pcie_ssm_memory: region@98000000 {
->         no-map;
->         reg = <0x98000000 0x00001000>; /* 4K */
->     };
-> };
-> 
-> pcie_ssm {
->     compatible = "aspeed,ast2600-pcie-sharedmem";
->     status = "okay";
->     memory-region = <&pcie_ssm_memory>;
-> };
-> ```
-> 
-> When initialing the pcie-sharedmem driver, the driver will fills the
-> reserved memory address into:
->  - SCUC48 if the soc is AST2600
->  - SCU194 if the soc is AST2500
-> 
-> When the host runs burn_my_bmc (phosphor-ipmi-flash/tool), bmc will open 
-> the window when recieve blobSessionOpen command by setting:
->  - SCUC24[8] to 1 if the soc is AST2600
->  - SCU184[8] to 1 if the soc is AST2500
-> 
-> The host start copy firmware image into VGA PCIe BAR[1]+0xE000 with 4K
-> size, then host issues a blobWrite to BMC. BMC copys the firmware data
-> from reserved memory region then acknowledge the host ipmi command. This
-> procedure will run repeatedly until all firmware image are sented.
-> 
-> The host sends a blobSession close to close the shared memory
-> window, then follows by a blobCommit to indicate the file is copyed.
-> 
-> 
-> Sequence diagram:
-> ```
->  +-------------+                                         +------------+
->  | burn my bmc |                                         | ipmi hostd |
->  +-------------+                                         +------------+
->         |                                                       |
->         |             blobOpen                                  |
->         +------------------------------------------------------>+
->         |                                                       |
->         |             blobSessionOpen                          +-+
->         +----------------------------------------------------->| |
->         |                                                      | +-+ IOCTL OpenWindow
->         |                            +-----------------+       | | | SCUC24[8] = 1
->         |                            | PCIe Shared Mem |       | | | (SCU184[8] = 1)
->         |                            | BAR[1] + 0xE000 <-------+ <-+
->         |                            +-----------------+       | |
->         |                                     |                | |
->         |             blobSession ACK         |                | |
->         +<-----------------------------------------------------+-+
->         |                                     |                 |
-> +---------------------------------------------------------------------+
-> |loop/  |                                     |                 |     |
-> +---+   | memcpy(BAR[1]+0xE000, IMG+offset, size)               |     |
-> |       +------------------------------------>+                 |     |
-> |       |             blobWrite               |                +-+    |
-> |       +----------------------------------------------------->| |    |
-> |       |                                     |    memcpy()    | |    |
-> |       |                                     +<---------------+ |    |
-> |       |             blobWrite ACK           |                | |    |
-> |       +<-----------------------------------------------------+-+    |
-> |       |                                     |                 |     |
-> |       |                                     |                 |     |
-> |       |                                     |                 |     |
-> +---------------------------------------------------------------------+
->         |                                     |                 |
->         |             blobSessionClose        |                +-+
->         +----------------------------------------------------->+ +-+ IOCTL CloseWindow
->         |                                     |                | | | SCUC24[8] = 0
->         |                                     |                | | | (SCU184[8] = 0)
->         |                                     |                | +<+
->         |                                     |                | |
->         |                                     X<---------------+-+
->         |             blobCommit                                |
->         +------------------------------------------------------->
->         |                                                       |
->         |                                                       |
->         |                                                       |
->         +                                                       +
-> ```
-> 
-> Thanks,
-> Troy Lee
+I don't understand. What do you propose adding?
