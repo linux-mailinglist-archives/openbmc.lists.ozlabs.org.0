@@ -1,90 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C55C2314531
-	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 02:02:55 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEE3A314990
+	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 08:37:27 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DZPl128K3zDsXK
-	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 12:02:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DZZVD6SQFzDqjV
+	for <lists+openbmc@lfdr.de>; Tue,  9 Feb 2021 18:37:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
- helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=sboyd@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=LjMAfjlZ; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=cC2NJ5t5; 
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=lU4BPzzM; 
  dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DZPk7687nzDqRM
- for <openbmc@lists.ozlabs.org>; Tue,  9 Feb 2021 12:02:06 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id BFEFE5C01AE;
- Mon,  8 Feb 2021 20:02:04 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Mon, 08 Feb 2021 20:02:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=U+Ci9Db+j+OKTbfhIKfz4JUMTCl
- JSyzD+MljU4yJdRc=; b=LjMAfjlZjZer3gAhcHaR8ggCrvqUB4mc8kUdLebPOLr
- lWn21TkC7gn8iHnx2buRiPRkhGfY7ER3zqV/qVT3Z3JI7jmaKLZ3JoUX6I4vytSF
- 4htVYPQoGNtgwJFeyKYF20eCpaWqYeaxHgAJPyKu4QfM+E0NCgESRH94ttsRpGBL
- //ybA+WB50DyGKSt1oRakhdH7InViDYWGCkFomoF72bJlBqvhAq5J5n83zzbULuj
- FiNn9eHfIp4ARTJV+58Q+3yDzxRwtQkVq1fxlrV+3Z8QprNfgjxCxp4+gARJNZlS
- vVjFh/dEfcy3036BaZrZ8OGbCYBD/tY9q/Jjvrigjgg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=U+Ci9D
- b+j+OKTbfhIKfz4JUMTClJSyzD+MljU4yJdRc=; b=cC2NJ5t5gTZKjac72vJGC/
- abRCvFHpOniGKFsRhKPHrTaUROg34poe/NAi96KxlLQUKobG9esA7LSmfjFh9JJL
- ZO68fsgR+VR+FOkz8/uI24pftYpQsHVTZNUisMqk1oG3lgxeGkegVQgHcJjsNM1x
- 98PYy3Mj1Klw1dofo1eQ8Uz1lJiNAoodinENHWOSW9TpfZZbuSX+f2yS+k9wag4S
- SH4WXU6dm9okMmuCX7IcDfQYJoz4ftHTZRVNKn8wllAFkrvs2m0M8D6boy4GkTMQ
- SxZ1vePICfQhx4qoWdx7u0tABPnQjKyZm+3/m+eTbRe23BcbHpPAiJwZOs2UUvmw
- ==
-X-ME-Sender: <xms:C98hYEkeBj4sfdkktGXGgzACMT9v9V6hsALyAUNI-ky5Ptfkd7elCA>
- <xme:C98hYDz8kYmJcPS9cwE0lGFEd_rHjxBOHOsDgmL-7ROMTbzLi0XQeH-omuFLJNjOh
- Ubwbpp3lhFgYntvJjE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrheeggdeftdcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
- fefgtdehhfektdelffevkefgueffhedtieenucfkphepjeeirddvhedtrdekgedrvdefie
- enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
- rhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:C98hYPhCO-yxVAaKJDxWmzgiyWBe8Vqtut9LH0o9eYUPWQWaDMZLuQ>
- <xmx:C98hYIVAsWGg_Sb4r6FPV5V5OQKR8Ky5XLFvgtcf31-kRn_rX_MZqg>
- <xmx:C98hYB0AC7gnBBHvggEvSOl6NI8DUKFPxGUNuFVFt1mtz80c66D3rg>
- <xmx:DN8hYLwAK_NVxKDGyRysk9gcZLvJru6EmFaC-Sv5avOC503_ehGDjw>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 283EE240066;
- Mon,  8 Feb 2021 20:02:03 -0500 (EST)
-Date: Mon, 8 Feb 2021 19:02:01 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: Does openbmc implement NC-SI over MCTP over SMBus to obtain
- information?
-Message-ID: <YCHfCQP72MmgNQSg@heinlein>
-References: <380419ba.ece.1777679c335.Coremail.ouyangxuan10@163.com>
- <12175d11-f353-4926-a125-f01e59135113@www.fastmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DZZTS069FzDqP4;
+ Tue,  9 Feb 2021 18:36:43 +1100 (AEDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B3B6B64E0D;
+ Tue,  9 Feb 2021 07:36:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1612856200;
+ bh=G769Yqc/eLFiJYEOdppz3f+n4p9N+1dJg7vbaQQq4FU=;
+ h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+ b=lU4BPzzM/9NcH7NqTOMW3e/IApzKmdZ02tzOGIe/2x1fpMhu4j/jnlQNqUf7kJGR0
+ 2Wnraxd9PvnaIDP1QAJbnlk2TGcjpqFfwbiXNp/MhQEGIZVOeE4VXFRNrHxgsw0YC0
+ oFYLgq3aLKndtsqANVATSfmVp+A0TuDIG4p1iiwPlwMz2CmNFQyh2mKmii+XOOPFEn
+ 0Ps0lemoICpvi3qXd+ACa/e6Fa/Aedugqos+nvkZVXO4Tv8Lm/w0tTv0qjn8jNL+i5
+ 8vuu0D9vf4n2d72yDiq0ApXXh3DMpBja87kCl6mLBVxf6xykUR4ioKt8N3qYnZf3Bd
+ lQidkcVGPmKPA==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="kGH5MgiybCwHUHF5"
-Content-Disposition: inline
-In-Reply-To: <12175d11-f353-4926-a125-f01e59135113@www.fastmail.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20201221223225.14723-2-jae.hyun.yoo@linux.intel.com>
+References: <20201221223225.14723-1-jae.hyun.yoo@linux.intel.com>
+ <20201221223225.14723-2-jae.hyun.yoo@linux.intel.com>
+Subject: Re: [PATCH v2 1/1] media: aspeed: fix clock handling logic
+From: Stephen Boyd <sboyd@kernel.org>
+To: Andrew Jeffery <andrew@aj.id.au>, Eddie James <eajames@linux.ibm.com>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Joel Stanley <joel@jms.id.au>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>
+Date: Mon, 08 Feb 2021 23:36:39 -0800
+Message-ID: <161285619930.76967.620222959363595605@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,63 +60,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: www <ouyangxuan10@163.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, benwei@fb.com,
- amithash@fb.com
+Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ linux-clk@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---kGH5MgiybCwHUHF5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Feb 09, 2021 at 11:11:57AM +1030, Andrew Jeffery wrote:
+Quoting Jae Hyun Yoo (2020-12-21 14:32:25)
+> Video engine uses eclk and vclk for its clock sources and its reset
+> control is coupled with eclk so the current clock enabling sequence works
+> like below.
 >=20
+>  Enable eclk
+>  De-assert Video Engine reset
+>  10ms delay
+>  Enable vclk
 >=20
-> On Sat, 6 Feb 2021, at 19:03, www wrote:
-> > Dear all,
-> >=20
-> > Does openbmc implement NC-SI over MCTP over SMBus to obtain information=
-?=20
+> It introduces improper reset on the Video Engine hardware and eventually
+> the hardware generates unexpected DMA memory transfers that can corrupt
+> memory region in random and sporadic patterns. This issue is observed
+> very rarely on some specific AST2500 SoCs but it causes a critical
+> kernel panic with making a various shape of signature so it's extremely
+> hard to debug. Moreover, the issue is observed even when the video
+> engine is not actively used because udevd turns on the video engine
+> hardware for a short time to make a query in every boot.
 >=20
-> Unfortunately not. There is an out-of-tree implementation of the SMBus MC=
-TP=20
-> binding, but that needs some effort put into it for it to go anywhere. We=
-'re=20
-> likely to see a socket-based AF_MCTP implementation before SMBus support =
-is=20
-> merged in libmctp for the purposes of OpenBMC.
+> To fix this issue, this commit changes the clock handling logic to make
+> the reset de-assertion triggered after enabling both eclk and vclk. Also,
+> it adds clk_unprepare call for a case when probe fails.
 >=20
-> I haven't yet heard of anyone running NC-SI over MCTP so you might be bre=
-aking=20
-> new ground on that front too :)
+> Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
+> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> Reviewed-by: Eddie James <eajames@linux.ibm.com>
+>=20
+> clk: ast2600: fix reset settings for eclk and vclk
+>=20
+> Video engine reset setting should be coupled with eclk to match it
+> with the setting for previous Aspeed SoCs which is defined in
+> clk-aspeed.c since all Aspeed SoCs are sharing a single video engine
+> driver. Also, reset bit 6 is defined as 'Video Engine' reset in
+> datasheet so it should be de-asserted when eclk is enabled. This
+> commit fixes the setting.
+>=20
+> Fixes: d3d04f6c330a ("clk: Add support for AST2600 SoC")
+> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> ---
 
-CCing Ben and Amithash.  I think we added some code recently on top of
-the Intel-BMC/libmctp to talk to an NC-SI NIC.
-
---=20
-Patrick Williams
-
---kGH5MgiybCwHUHF5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmAh3wcACgkQqwNHzC0A
-wRnATxAAoaIsz/9DonAP5zoevqHrfuMWwfSRR2oyK8g4ZYem4DXo5pK3q6t2rY7r
-rOu2TLRnU4JjH/OFIgUzVjLQqmbgB3AI8Y+HJytGIcZ1lUZIAFvPd+Ntcpcni544
-Nfsj6Y7RLUYfOq1zdI5hcuv0RgjSPjjTTncd5BuXehyrPhoLU3RrMliT4O8yYd/C
-Ux/Wbmt6SAjYLbRAL4dsRBGflX74IEeSW5c8gpQ32R0K4VBzgabGCefQGImASzZR
-5REPOe1LzVcIq7ej/upRlqmcsXImSTPq+zIkrIMCIHf0uknfqQ2S5vp7nKAlHywV
-x2X4RJTOYGZURzp8r9rX6I+Vr9M9RtNrtLFBALH/WWtPY7qZVdCh8WlCWYoHhgzR
-pDoVyFJBwy3HjRB5MeBt8jEpmBZJOqCmpsBU0KlPzpxULoGMZ4vxTvmtX9B90VOB
-puYz3zxa+2CMUvKhoJmTfQKe+WXCEQ3vXuSskeZNpxxaMFjH0um1GTFFermPA3Mo
-vJJJXHzFfD9u1UY+g1cUyz9EHR+hRDGxmgFRIFKg5T3IIA0pNWMH0y1jc4rcZa5a
-huqKYRwdgwHtOrlFkf0QZ/eFXqetGR61G2J4WuZw0T6uzvzTruD0hnCvf7Cv7GK7
-lLuY8+sHlVkOTuwF2lCq98UOo/ECkLtcjmJvAxfhBQbflLhhw6o=
-=jZpj
------END PGP SIGNATURE-----
-
---kGH5MgiybCwHUHF5--
+Acked-by: Stephen Boyd <sboyd@kernel.org>
