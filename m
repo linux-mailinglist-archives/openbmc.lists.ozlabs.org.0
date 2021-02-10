@@ -2,66 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 546473169CD
-	for <lists+openbmc@lfdr.de>; Wed, 10 Feb 2021 16:12:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7235A316ABE
+	for <lists+openbmc@lfdr.de>; Wed, 10 Feb 2021 17:09:08 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DbNXY0dpTzDwfw
-	for <lists+openbmc@lfdr.de>; Thu, 11 Feb 2021 02:12:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DbPp90BX0zDwZP
+	for <lists+openbmc@lfdr.de>; Thu, 11 Feb 2021 03:09:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=kRP6pbQL; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DbLWN0lLgzDsmh
- for <openbmc@lists.ozlabs.org>; Thu, 11 Feb 2021 00:41:03 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 952C94127C
- for <openbmc@lists.ozlabs.org>; Wed, 10 Feb 2021 13:40:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1612964453; x=1614778854; bh=4vSozRjdPG5OssbpGnYKEVSEZ
- xN+pgx3RH6bev04qCs=; b=kRP6pbQL+x8lbCS9/3E+NroMFLw8q3H7V3Di1s/mB
- +03oW+3DOf5xoEjP8Hg13tI7Upf2jGqKYFeAnRGbOZ/L7tNqqQvNT81GC7OQtyAl
- 4VR8BYAzj5osOE65agthrfh1ucy82ed9BKOv6l0d8KIgtKzrrnWPo0VFQaBOH6v4
- ck=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id IDx0ZR7ao72U for <openbmc@lists.ozlabs.org>;
- Wed, 10 Feb 2021 16:40:53 +0300 (MSK)
-Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
- [172.17.100.103])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DbPn16kwMzDvrC
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Feb 2021 03:08:04 +1100 (AEDT)
+IronPort-SDR: mTODe754zRzMGEs1bVPEsTFfRlZXwx5tZoRJMiACNTqdbei803bRwLkKUYi1XsqMWcAvYlU73o
+ 3HFxn/34dZmQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9891"; a="169774274"
+X-IronPort-AV: E=Sophos;i="5.81,168,1610438400"; d="scan'208";a="169774274"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2021 08:07:59 -0800
+IronPort-SDR: EMjDNRAIcReWPdMU1b2eOWlk6FGvOVieVWTyyAvC9OHJvIoKtsF2ldY4tu5FPIV0HGqyYz5ef1
+ rGaznhySVRKA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,168,1610438400"; d="scan'208";a="578456993"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga005.jf.intel.com with ESMTP; 10 Feb 2021 08:07:58 -0800
+Received: from [10.209.46.5] (jmbills-MOBL.amr.corp.intel.com [10.209.46.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 0DC24404AD
- for <openbmc@lists.ozlabs.org>; Wed, 10 Feb 2021 16:40:53 +0300 (MSK)
-Received: from [10.199.0.64] (10.199.0.64) by T-EXCH-03.corp.yadro.com
- (172.17.100.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 10
- Feb 2021 16:40:52 +0300
-Message-ID: <fd4a04a5c1cc11589413fc44a27c863d600f9896.camel@yadro.com>
-Subject: Re: Kernel moving to Linux v5.10, dropping PECI
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: <openbmc@lists.ozlabs.org>
-Date: Wed, 10 Feb 2021 16:40:51 +0300
-In-Reply-To: <CACPK8XcCVmibRzOvrca87pzWzg0K5=ZBMeFQE7xorcLN8gxQdQ@mail.gmail.com>
-References: <CACPK8XcCVmibRzOvrca87pzWzg0K5=ZBMeFQE7xorcLN8gxQdQ@mail.gmail.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5 
+ by linux.intel.com (Postfix) with ESMTPS id 6F5605808AB
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Feb 2021 08:07:58 -0800 (PST)
+Subject: Re: peci-pcie CI issues
+To: openbmc@lists.ozlabs.org
+References: <6c2c44435e704f6eee95b7e35cbc39ccfae32b62.camel@yadro.com>
+ <EC305987-22B3-40D2-86A6-4FF95B395956@stwcx.xyz>
+ <CACWQX82quUYK+r0BkDqT0ZABXgRPj797Wwr8Joov05w8tCLwuA@mail.gmail.com>
+ <27dbc305c6c53c338b5eefec68fbcda38ff44672.camel@yadro.com>
+ <YCPPbAlAUHtn+Vv1@heinlein>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <b71222f2-c0dc-cc30-afb8-c3a8669279f8@linux.intel.com>
+Date: Wed, 10 Feb 2021 08:07:57 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <YCPPbAlAUHtn+Vv1@heinlein>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.0.64]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-03.corp.yadro.com (172.17.100.103)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,56 +67,126 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 2021-02-10 at 12:43 +0000, Joel Stanley wrote:
-> The openbmc kernel will move to a 5.10 based tree for Aspeed and
-> Nuoton machines.
-> 
->     linux-openbmc: Move to Linux 5.10
-> 
->     This moves the OpenBMC kernel to a v5.10 base for both Aspeed and
->     Nuvoton. There are 125 patches in the tree, with 80 of those
-> patches not
->     yet queued for merging in v5.11.
-> 
->     Notably the PECI patchset has been dropped as the author, Intel,
-> has
->     elected to develop it out of tree instead of submitting it for
-> mainline
->     inclusion.
-> 
->     https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/40404
-> 
-> Regarding the PECI situation, I raised it on the list back in August.
-> The conversation finished up in October with a commitment that the
-> work would be done as soon as possible.
-> 
-> This kernel config option is enabled by machines from Facebook,
-> Bytedance, HPE, Lenovo, Quanta and Supermicro. (Surprisingly Intel
-> doesn't enable it on their platform?). It would be great for someone
-> from one of those teams to step up and submit the PECI patchset
-> upstream.
-
-Intel enable PECI in their downstream port 
-https://github.com/Intel-BMC/openbmc , where they do have downstream
-fork of the kernel with PECI patches: 
-https://github.com/Intel-BMC/linux
-We used to branch from the fork for our x86 platform, so now it's
-really tricky for us to follow upstream. We will very appropriate if
-one will push PECI patches upstream, but this is still Intel's code
-under development and this sounds a bit risky if someone but Intel do
-upstreaming. 
-So I'd like first to see Intel's position about not to upstream the
-patches: what is the problem there?
-
-> 
-> In the meantime these in-tree systems will regress their PECI support
-> until the patchset is submitted to mainline.
-> 
-> Cheers,
-> 
-> Joel
--- 
-Best regards,
-Andrei Kartashev
 
 
+On 2/10/2021 4:19 AM, Patrick Williams wrote:
+> On Wed, Feb 10, 2021 at 01:04:41PM +0300, Andrei Kartashev wrote:
+>> As far as I can see, boost was updated to 1.75.0, but looks like it
+>> didn't help, CI still failed to build peci-pcie:
+>> https://jenkins.openbmc.org/job/ci-repository/12229/console
+>>
+> 
+> Hi Andrei,
+> 
+> Repository-level CI isn't done with bitbake but under a docker build we
+> have set up.  Jason put up a patch yesterday to update that to use Boost
+> 1.75[1].  Once that is merged then the `ci-repository` job will use the
+> desired Boost version.
+> 
+> 1. https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/40426
+> 
+
+It looks like there is a new failure after the boost 1.75 update.  Does 
+anyone know what this error means?  I also see this error on another 
+repo: https://jenkins.openbmc.org/job/ci-repository/12253/.
+
+   CXX 
+xyz/openbmc_project/Logging/Internal/Manager/phosphor_log_manager-server.o
+In file included from /usr/include/c++/10/memory:83,
+                  from /usr/local/include/sdbusplus/message.hpp:11,
+                  from /usr/local/include/sdbusplus/bus.hpp:7,
+                  from /usr/local/include/sdbusplus/server.hpp:3,
+                  from 
+/usr/local/include/xyz/openbmc_project/Logging/ErrorBlocksTransition/server.hpp:5,
+                  from elog_block.hpp:5,
+                  from log_manager.hpp:3,
+                  from log_manager.cpp:3:
+/usr/include/c++/10/bits/unique_ptr.h: In instantiation of 'typename 
+std::_MakeUniq<_Tp>::__single_object std::make_unique(_Args&& ...) [with 
+_Tp = phosphor::logging::Entry; _Args = {sdbusplus::bus::bus&, 
+std::__cxx11::basic_string<char, std::char_traits<char>, 
+std::allocator<char> >&, unsigned int&, long int&, 
+sdbusplus::xyz::openbmc_project::Logging::server::Entry::Level&, 
+std::__cxx11::basic_string<char, std::char_traits<char>, 
+std::allocator<char> >, std::vector<std::__cxx11::basic_string<char, 
+std::char_traits<char>, std::allocator<char> >, 
+std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, 
+std::allocator<char> > > >, 
+std::vector<std::tuple<std::__cxx11::basic_string<char, 
+std::char_traits<char>, std::allocator<char> >, 
+std::__cxx11::basic_string<char, std::char_traits<char>, 
+std::allocator<char> >, std::__cxx11::basic_string<char, 
+std::char_traits<char>, std::allocator<char> > >, 
+std::allocator<std::tuple<std::__cxx11::basic_string<char, 
+std::char_traits<char>, std::allocator<char> >, 
+std::__cxx11::basic_string<char, std::char_traits<char>, 
+std::allocator<char> >, std::__cxx11::basic_string<char, 
+std::char_traits<char>, std::allocator<char> > > > >, const 
+std::__cxx11::basic_string<char, std::char_traits<char>, 
+std::allocator<char> >&, phosphor::logging::internal::Manager&}; 
+typename std::_MakeUniq<_Tp>::__single_object = 
+std::unique_ptr<phosphor::logging::Entry>]':
+log_manager.cpp:235:74:   required from here
+/usr/include/c++/10/bits/unique_ptr.h:962:30: error: invalid 
+new-expression of abstract class type 'phosphor::logging::Entry'
+   962 |     { return unique_ptr<_Tp>(new 
+_Tp(std::forward<_Args>(__args)...)); }
+       | 
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from log_manager.hpp:4,
+                  from log_manager.cpp:3:
+elog_entry.hpp:38:7: note:   because the following virtual functions are 
+pure within 'phosphor::logging::Entry':
+    38 | class Entry : public EntryIfaces
+       |       ^~~~~
+In file included from elog_entry.hpp:3,
+                  from log_manager.hpp:4,
+                  from log_manager.cpp:3:
+/usr/local/include/xyz/openbmc_project/Logging/Entry/server.hpp:92:45: 
+note:     'virtual sdbusplus::message::unix_fd 
+sdbusplus::xyz::openbmc_project::Logging::server::Entry::getEntry()'
+    92 |         virtual sdbusplus::message::unix_fd getEntry(
+       |                                             ^~~~~~~~
+In file included from /usr/include/c++/10/memory:83,
+                  from /usr/local/include/sdbusplus/message.hpp:11,
+                  from /usr/local/include/sdbusplus/bus.hpp:7,
+                  from /usr/local/include/sdbusplus/server.hpp:3,
+                  from 
+/usr/local/include/xyz/openbmc_project/Logging/ErrorBlocksTransition/server.hpp:5,
+                  from elog_block.hpp:5,
+                  from log_manager.hpp:3,
+                  from log_manager.cpp:3:
+/usr/include/c++/10/bits/unique_ptr.h: In instantiation of 'typename 
+std::_MakeUniq<_Tp>::__single_object std::make_unique(_Args&& ...) [with 
+_Tp = phosphor::logging::Entry; _Args = {sdbusplus::bus::bus&, 
+std::__cxx11::basic_string<char, std::char_traits<char>, 
+std::allocator<char> >, long int&, 
+phosphor::logging::internal::Manager&}; typename 
+std::_MakeUniq<_Tp>::__single_object = 
+std::unique_ptr<phosphor::logging::Entry>]':
+log_manager.cpp:571:68:   required from here
+/usr/include/c++/10/bits/unique_ptr.h:962:30: error: invalid 
+new-expression of abstract class type 'phosphor::logging::Entry'
+   962 |     { return unique_ptr<_Tp>(new 
+_Tp(std::forward<_Args>(__args)...)); }
+       | 
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   CXXLD    libphosphor_logging.la
+   CXXLD    logging-test
+   CXXLD    callout-test
+make[2]: Leaving directory 
+'/phosphor-logging-b50c705c3bb3738673f98cd371b408a5b48e629a'
+make[2]: *** [Makefile:1631: phosphor_log_manager-log_manager.o] Error 1
+make[1]: *** [Makefile:2013: all-recursive] Error 1
+make[1]: Leaving directory 
+'/phosphor-logging-b50c705c3bb3738673f98cd371b408a5b48e629a'
+make: *** [Makefile:910: all] Error 2
+The command '/bin/sh -c curl -L 
+https://github.com/openbmc/phosphor-logging/archive/b50c705c3bb3738673f98cd371b408a5b48e629a.tar.gz 
+| tar -xz && cd phosphor-logging-* && ./bootstrap.sh && ./configure 
+--prefix=/usr/local --enable-metadata-processing 
+YAML_DIR=/usr/local/share/phosphor-dbus-yaml/yaml && make -j80 && make 
+install' returned a non-zero code: 2
+
+Thanks,
+-Jason
