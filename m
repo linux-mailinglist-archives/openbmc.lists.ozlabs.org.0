@@ -2,60 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB0383183A9
-	for <lists+openbmc@lfdr.de>; Thu, 11 Feb 2021 03:45:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E44E231865D
+	for <lists+openbmc@lfdr.de>; Thu, 11 Feb 2021 09:36:20 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dbgw86t00zDwly
-	for <lists+openbmc@lfdr.de>; Thu, 11 Feb 2021 13:45:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DbqjF1JcyzDvY0
+	for <lists+openbmc@lfdr.de>; Thu, 11 Feb 2021 19:36:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72e;
- helo=mail-qk1-x72e.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=flex--gmouse.bounces.google.com
+ (client-ip=2a00:1450:4864:20::349; helo=mail-wm1-x349.google.com;
+ envelope-from=3muwkyaykb6ulrtzxjlttlqj.htrtujsgrhqnxyx.teqfgx.twl@flex--gmouse.bounces.google.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=EsynKwC9; dkim-atps=neutral
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com
- [IPv6:2607:f8b0:4864:20::72e])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=eRRFCi1o; dkim-atps=neutral
+Received: from mail-wm1-x349.google.com (mail-wm1-x349.google.com
+ [IPv6:2a00:1450:4864:20::349])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DbgvK3lmkzDwjv
- for <openbmc@lists.ozlabs.org>; Thu, 11 Feb 2021 13:44:26 +1100 (AEDT)
-Received: by mail-qk1-x72e.google.com with SMTP id b14so3977268qkk.0
- for <openbmc@lists.ozlabs.org>; Wed, 10 Feb 2021 18:44:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=H6te9h6yqkP9W8hfwVoLUPmFab1lNl6NGBWaDGT5GF8=;
- b=EsynKwC91M1LekTNc6KagOkCYCG/EZlmd5tlTlT97YlwvpPzd/tQQ3/ROrU9p4S8dL
- GeDd2u7l/QoRaLIcPxyOeK3TK/fONJDAy5x6B8/9rgCaWxZdkb7cEJo5VDhuxUlM1qTb
- DknkbHaXrY4fAPPTcfZqmG418r0No7lj5o9v0=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dbqgy5DxxzDwmD
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Feb 2021 19:35:03 +1100 (AEDT)
+Received: by mail-wm1-x349.google.com with SMTP id z188so5283766wme.1
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Feb 2021 00:35:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=sender:date:message-id:mime-version:subject:from:to:cc;
+ bh=XoHdkQfGIq0UPLGmwj/uEJr/Rth4Y5UbWF/+QD+59Zg=;
+ b=eRRFCi1oHv8Na4x50Lg/Dp3xPN0goocMfG9v3YA/kAg4aWIc1YW2ArK8kmR3a8zOAo
+ hbhF5qaOs6PnZ5ob46+yTTzfRiUUj/CDRwhNXFWDX7VJkM4o6oeu6OTpXi15dGCabtK9
+ 3T1EWPMo0PAA4wBqWzfrL7y3S0DoZXCE5yduzr2l4PftiBnIapSe/fbAeIKnOUzhA5A3
+ vyi4XCiv0R5CGJ61jIvnuK4apG6x/x+BxiEEmB2XzRLUTtHjOemxsaXXBhO1fkIRDdqJ
+ D3iq4ldtzqTSEwxSdbdAnxuIIWSUO+PA/vTXasUpG/KomYa6RIk2wxJ1f6AwN58YkWQf
+ brXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=H6te9h6yqkP9W8hfwVoLUPmFab1lNl6NGBWaDGT5GF8=;
- b=D0ZaKmSiTg6E65OD+/jrfzR5O8GG0ejKUaDbycFLzLUD0QHriM7+snfkdhQ+DtF8Kc
- o1vVadCBrxF7QYUllNxQ4urZ0nrTVSxn3uCkMTktd+iW0uMWDBeUi/hQpoFbqQlj2bx8
- WEonI9dLqeL3zKZ8uzAi/BrStQeLYVIbvCozM5AvlAsFpWLpHAHIEk5aCdcN5nX1qyLp
- 2XRTDkuEBMHtR4yGiuhfzDSaZhd2sVIfZU53CbCvPgloBMfWh5exyiVj1P2lSWmjh+U0
- AWUTftns5JrlY6uaYlgIPXIUip25NQUxHR+sGlDns7FN5/KfKdvVOts7UODGoy5IHxj2
- HKvg==
-X-Gm-Message-State: AOAM532tIyYt8moTC2vHmRB80zRxmbEmvGxe1zPSgQZEg8jcd5s5ejl3
- kLKT14wEKegWUm+3cRK/8kLA4qRamDQsni7p/ICFALPw
-X-Google-Smtp-Source: ABdhPJxln5O1xdd7/6lM4KQe8cRZMLxDzQ/RjrAdahm0pFIoLD38uOqOepJAZ5HWcdQemelTNBMrswiIb+nUJDsYcSg=
-X-Received: by 2002:ae9:e314:: with SMTP id v20mr6596028qkf.66.1613011463055; 
- Wed, 10 Feb 2021 18:44:23 -0800 (PST)
-MIME-Version: 1.0
-References: <20210210204613.49560-1-eajames@linux.ibm.com>
-In-Reply-To: <20210210204613.49560-1-eajames@linux.ibm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 11 Feb 2021 02:44:11 +0000
-Message-ID: <CACPK8XdB93-H-TChZXUse7iQ0vk4OtdY1=PGBhrO+080TfO8TQ@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.8] fsi: aspeed: Set poll timeout based on
- clock divider
-To: Eddie James <eajames@linux.ibm.com>
+ h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+ :to:cc;
+ bh=XoHdkQfGIq0UPLGmwj/uEJr/Rth4Y5UbWF/+QD+59Zg=;
+ b=fHNWHbJadCTfzXv7MoZ5BZzlbQMfB5+oSgb7JQsuPYcvGKWAFscHFUFoQr3xBvQJJl
+ WfWiZxI3U1Xa6ufcyxlkABZ0Q0rIul9K37Raw+/zvywyYmjE3IjPV4eg3ZF9V5wFpFvS
+ jIDZ6MrpH3owE17DVXZa+f/npkb/E5aXWv50RX/svpjSNqZb4M+RwMaN15fBSVacBQDF
+ i/E7k+fRn+bZjKPmIwFt9ALk2LgJrAu0l/+BrDhyzGFSoaK96nNqGdEjCOsagLvppZZ/
+ /UZd269DWlXImd72kKp+C8VjMQErRrOj/5xb51ycdMDuon7eI2N1CtpJjxL9ho39pWng
+ hsOQ==
+X-Gm-Message-State: AOAM530LSqK6mmDl7yRcm6Eqg76fM02gXuJJTztXlmXqfMnSHf1ReppN
+ 25j7IH8dUBENIUyHnf0a8smB1Ap8VG06e5l6S/b200SPhCAm8GnMl2T9kKY2vsSA1r99WniRk1x
+ Xa5EUDX0PRmaQLOmVDolBLErQWLI4payWzNSLRfyvcyD+5B6MuGf3jdVfU2Z7s2eK
+X-Google-Smtp-Source: ABdhPJzrq8vLDgM37smg7wsVQgTCdFf1URF3oAGcbjzZe2/xgBF/2MEvoQVEYAqbLMOgTGelYpjyWpQe0Ho=
+X-Received: from gmouse.zrh.corp.google.com
+ ([2a00:79e0:42:200:bc3a:4732:1655:1b61])
+ (user=gmouse job=sendgmr) by 2002:a05:600c:6c5:: with SMTP id
+ b5mr3909306wmn.137.1613032498522; Thu, 11 Feb 2021 00:34:58 -0800 (PST)
+Date: Thu, 11 Feb 2021 09:34:53 +0100
+Message-Id: <20210211083454.37117-1-gmouse@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.30.0.478.g8a0d178c01-goog
+Subject: [PATCH] ARM: dts: nuvoton: Fix flash layout This change satisfy
+ OpenBMC requirements for flash layout.
+From: gmouse@google.com
+To: openbmc@lists.ozlabs.org
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -68,100 +74,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "Anton D. Kachalov" <gmouse@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 10 Feb 2021 at 20:46, Eddie James <eajames@linux.ibm.com> wrote:
->
-> The timeout for polling for transfer acknowledgment on the OPB
-> was very long, occasionally resulting in scheduling problems.
-> Instead, use a timeout based on the clock divider specified with
-> the module parameter. In benchmarking, the worst case poll times
-> didn't increase significantly with increased divider until it
-> reached 16 and higher. The average poll time increased linearly
-> with the divider.
->
-> div  1: max:150us avg: 2us
-> div  2: max:155us avg: 3us
-> div  4: max:149us avg: 7us
-> div  8: max:153us avg:13us
-> div 16: max:197us avg:21us
-> div 32: max:181us avg:50us
-> div 64: max:262us avg:100us
+From: "Anton D. Kachalov" <gmouse@google.com>
 
-Nice testing. How did you create these numbers?
+Signed-off-by: Anton D. Kachalov <gmouse@google.com>
+---
+ arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 28 +++++++----------------
+ 1 file changed, 8 insertions(+), 20 deletions(-)
 
-As this is an upper bound (normally the operation will complete and
-the opb_read/write will return within seconds), I think we should set
-the timeout to a constant. Choose something sensible (300us? 500?).
-There's no need for it to scale, as in most cases the loop will go
-around a few times and exit.
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+index bd1eb6ee380f..741c1fee8552 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+@@ -182,8 +182,8 @@ bbuboot2@80000 {
+ 				reg = <0x0080000 0x80000>;
+ 				read-only;
+ 				};
+-			envparam@100000 {
+-				label = "env-param";
++			ubootenv@100000 {
++				label = "u-boot-env";
+ 				reg = <0x0100000 0x40000>;
+ 				read-only;
+ 				};
+@@ -195,25 +195,13 @@ kernel@200000 {
+ 				label = "kernel";
+ 				reg = <0x0200000 0x400000>;
+ 				};
+-			rootfs@600000 {
+-				label = "rootfs";
+-				reg = <0x0600000 0x700000>;
++			rofs@780000 {
++				label = "rofs";
++				reg = <0x0780000 0x1680000>;
+ 				};
+-			spare1@D00000 {
+-				label = "spare1";
+-				reg = <0x0D00000 0x200000>;
+-				};
+-			spare2@0F00000 {
+-				label = "spare2";
+-				reg = <0x0F00000 0x200000>;
+-				};
+-			spare3@1100000 {
+-				label = "spare3";
+-				reg = <0x1100000 0x200000>;
+-				};
+-			spare4@1300000 {
+-				label = "spare4";
+-				reg = <0x1300000 0x0>;
++			rwfs@1e00000 {
++				label = "rwfs";
++				reg = <0x1e00000 0x200000>;
+ 			};
+ 		};
+ 	};
+-- 
+2.30.0.478.g8a0d178c01-goog
 
-Please mention in your commit message the backtrace you saw that
-motivated this patch. I'm not completely sure this fixes the root
-cause, but it's a good improvement nonetheless.
-
-Finally, submit your next version on the upstream lists. I can apply
-it to the openbmc tree at the same time as the fsi tree.
-
-Cheers,
-
-Joel
-
->
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> ---
->  drivers/fsi/fsi-master-aspeed.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-> index c71d7e9a32b0..13f7e07beacc 100644
-> --- a/drivers/fsi/fsi-master-aspeed.c
-> +++ b/drivers/fsi/fsi-master-aspeed.c
-> @@ -25,6 +25,7 @@ struct fsi_master_aspeed {
->         void __iomem            *base;
->         struct clk              *clk;
->         struct gpio_desc        *cfam_reset_gpio;
-> +       int                     timeout_us;
->  };
->
->  #define to_fsi_master_aspeed(m) \
-> @@ -92,8 +93,6 @@ static const u32 fsi_base = 0xa0000000;
->  static u16 aspeed_fsi_divisor = FSI_DIVISOR_DEFAULT;
->  module_param_named(bus_div,aspeed_fsi_divisor, ushort, 0);
->
-> -#define OPB_POLL_TIMEOUT               10000
-> -
->  static int __opb_write(struct fsi_master_aspeed *aspeed, u32 addr,
->                        u32 val, u32 transfer_size)
->  {
-> @@ -110,7 +109,7 @@ static int __opb_write(struct fsi_master_aspeed *aspeed, u32 addr,
->
->         ret = readl_poll_timeout(base + OPB_IRQ_STATUS, reg,
->                                 (reg & OPB0_XFER_ACK_EN) != 0,
-> -                               0, OPB_POLL_TIMEOUT);
-> +                               0, aspeed->timeout_us);
->
->         status = readl(base + OPB0_STATUS);
->
-> @@ -157,7 +156,7 @@ static int __opb_read(struct fsi_master_aspeed *aspeed, uint32_t addr,
->
->         ret = readl_poll_timeout(base + OPB_IRQ_STATUS, reg,
->                            (reg & OPB0_XFER_ACK_EN) != 0,
-> -                          0, OPB_POLL_TIMEOUT);
-> +                          0, aspeed->timeout_us);
->
->         status = readl(base + OPB0_STATUS);
->
-> @@ -609,6 +608,7 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
->         dev_set_drvdata(&pdev->dev, aspeed);
->
->         mutex_init(&aspeed->lock);
-> +       aspeed->timeout_us = min(10000, max(1, aspeed_fsi_divisor / 8) * 300);
->         aspeed_master_init(aspeed);
->
->         rc = fsi_master_register(&aspeed->master);
-> --
-> 2.27.0
->
