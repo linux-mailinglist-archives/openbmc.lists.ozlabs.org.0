@@ -1,65 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C73C4318FA9
-	for <lists+openbmc@lfdr.de>; Thu, 11 Feb 2021 17:16:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F3D6319271
+	for <lists+openbmc@lfdr.de>; Thu, 11 Feb 2021 19:43:24 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dc1w96blszDwpQ
-	for <lists+openbmc@lfdr.de>; Fri, 12 Feb 2021 03:16:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dc59j2f6xzDwqM
+	for <lists+openbmc@lfdr.de>; Fri, 12 Feb 2021 05:43:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2f;
- helo=mail-io1-xd2f.google.com; envelope-from=gmouse@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=S+PhE58V; dkim-atps=neutral
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com
- [IPv6:2607:f8b0:4864:20::d2f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=uJYtArnn; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dc1vD35M0zDwlp
- for <openbmc@lists.ozlabs.org>; Fri, 12 Feb 2021 03:15:34 +1100 (AEDT)
-Received: by mail-io1-xd2f.google.com with SMTP id u8so6196130ior.13
- for <openbmc@lists.ozlabs.org>; Thu, 11 Feb 2021 08:15:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=KXV1+3CdwabgX6BOo6FI778/hmWSO+tE3Hoi29pCu0E=;
- b=S+PhE58V5O0tNKSvBrTZ/qn96pWMWSJ4Rky2IFgYImOMEiqHjIUbSj5MfCLPa7b0zV
- q//ICQ2Dg5jrsB/dBiwz04dAPCs+ff9crAdNI7mg/buZg8wfpP2X0yurV4v4lv41N3RF
- /w0LoQ+LcSJwHF3HthE1s1szKT/3JhFhdfII4M9W9BFrAeG7NwThPyP7dNvzE0ujdP4x
- B3lNCoW+C6QzWzt2852lsuDzwVLh0rgXVX/JZcxsCqWEgVfrByWuvVo8NcPWR9x5SuWc
- mEKuiraAgy6i02uy7pa+0ZkE1RzNMhq74tMYm8uPQd42L9x54dVpDzLsd0SCqDxPW9gq
- FoJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=KXV1+3CdwabgX6BOo6FI778/hmWSO+tE3Hoi29pCu0E=;
- b=h4VkLBH4s7Owvn9wbLFYm0PU1n2m7c5U6gvpM7QNWMssba0KK7OuG6nW7RaCM+beDk
- XmWfJc/DwdewSR9wQGHqH88oWbTSu+2aTB/GPsfPRxQ+UwnI3LWFuEqRr98eeUHPR5Tp
- 1ODr0sr8eet1ZAAjEncmxQlTQ0fG3vN/bwWroGayI08pKGluFpUb3+8JLXohkrXrpLsE
- dEuhFCG4gHT0l6obJZnhXCiTGB+v1GjLWGlF2lCFUc73VsEI79qoz3555BGoNCCQLZSt
- Z26xkhzU5lPF3e5FP7OZcrmdAB+ZTF8DIUOquUsQJe8D3kcIBWb/OI7a8rIkbM9LbRoP
- SoHg==
-X-Gm-Message-State: AOAM532nzySj7mjuepNTP9Gc5xyFHZBOfVEBq2Z1ol9qP3bWnnrvqbrD
- /KF5Q7gA48KdEBqDU/8QDKDdK7nidY18FF+POWs36JxDBYg=
-X-Google-Smtp-Source: ABdhPJyyfiJ59mJLEun0pziKVBTyMbIvn8FNe4EA2k5mRSmPFd6S2y6UA7pNWIizLveUuSh9BiH2CoSmozXSdHdsEaU=
-X-Received: by 2002:a6b:f311:: with SMTP id m17mr5873495ioh.55.1613060130256; 
- Thu, 11 Feb 2021 08:15:30 -0800 (PST)
-MIME-Version: 1.0
-References: <20210211083454.37117-1-gmouse@google.com>
-In-Reply-To: <20210211083454.37117-1-gmouse@google.com>
-From: Anton Kachalov <gmouse@google.com>
-Date: Thu, 11 Feb 2021 17:15:17 +0100
-Message-ID: <CADVsX8-A+zc3jfwhXjOfEd3xsBQ9hvPSvAiNw62gbcf2dVozpQ@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: nuvoton: Fix flash layout This change satisfy
- OpenBMC requirements for flash layout.
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Joel Stanley <joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dc58w4HkQzDwly
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Feb 2021 05:42:40 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id A6065412FB;
+ Thu, 11 Feb 2021 18:42:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1613068952; x=1614883353; bh=UzGQfJEVdFoNerVLaXq8x9fN3
+ xSmGaemVk2qSv6I0KE=; b=uJYtArnnS6koAUsGnbmUlPllOlh5bcNx0/Vpol1v4
+ QtyZX9jKNeJIEK1WtMbpvhMAG3uJCe7RrwvyQlV6gEVsUPq5fHRFVZRsSO0wc6XL
+ BR1tfdUvWmwxZa5i/9zZzzthXq5GJKU8p75kRJCDzPDmdI44k7aTC17WngbcKno4
+ d4=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id Dcn45_rYTASg; Thu, 11 Feb 2021 21:42:32 +0300 (MSK)
+Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
+ [172.17.100.103])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id ACD6C41203;
+ Thu, 11 Feb 2021 21:42:32 +0300 (MSK)
+Received: from [10.199.0.78] (10.199.0.78) by T-EXCH-03.corp.yadro.com
+ (172.17.100.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 11
+ Feb 2021 21:42:32 +0300
+Message-ID: <69108959f3207d5c7e2915c226b1c8313ae95abb.camel@yadro.com>
+Subject: Re: peci-pcie CI issues
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
+ <openbmc@lists.ozlabs.org>
+Date: Thu, 11 Feb 2021 21:42:31 +0300
+In-Reply-To: <bd5b3fc428578b8cea195a250866e368ccce3be0.camel@yadro.com>
+References: <6c2c44435e704f6eee95b7e35cbc39ccfae32b62.camel@yadro.com>
+ <EC305987-22B3-40D2-86A6-4FF95B395956@stwcx.xyz>
+ <CACWQX82quUYK+r0BkDqT0ZABXgRPj797Wwr8Joov05w8tCLwuA@mail.gmail.com>
+ <27dbc305c6c53c338b5eefec68fbcda38ff44672.camel@yadro.com>
+ <YCPPbAlAUHtn+Vv1@heinlein>
+ <b71222f2-c0dc-cc30-afb8-c3a8669279f8@linux.intel.com>
+ <bd5b3fc428578b8cea195a250866e368ccce3be0.camel@yadro.com>
+Organization: YADRO
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.199.0.78]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-03.corp.yadro.com (172.17.100.103)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,66 +82,165 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi, Joel.
+It compiles now, issue fixed.
 
-This is the correct patch.
+On Wed, 2021-02-10 at 19:22 +0300, Andrei Kartashev wrote:
+> I guess, it relates to this patchset:
+> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-logging/+/40361
+> 
+> On Wed, 2021-02-10 at 08:07 -0800, Bills, Jason M wrote:
+> > On 2/10/2021 4:19 AM, Patrick Williams wrote:
+> > > On Wed, Feb 10, 2021 at 01:04:41PM +0300, Andrei Kartashev wrote:
+> > > > As far as I can see, boost was updated to 1.75.0, but looks
+> > > > like
+> > > > it
+> > > > didn't help, CI still failed to build peci-pcie:
+> > > > https://jenkins.openbmc.org/job/ci-repository/12229/console
+> > > > 
+> > > 
+> > > Hi Andrei,
+> > > 
+> > > Repository-level CI isn't done with bitbake but under a docker
+> > > build we
+> > > have set up.  Jason put up a patch yesterday to update that to
+> > > use
+> > > Boost
+> > > 1.75[1].  Once that is merged then the `ci-repository` job will
+> > > use
+> > > the
+> > > desired Boost version.
+> > > 
+> > > 1. 
+> > > https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/40426
+> > > 
+> > 
+> > It looks like there is a new failure after the boost 1.75
+> > update.  Does 
+> > anyone know what this error means?  I also see this error on
+> > another 
+> > repo: https://jenkins.openbmc.org/job/ci-repository/12253/.
+> > 
+> >    CXX 
+> > xyz/openbmc_project/Logging/Internal/Manager/phosphor_log_manager-
+> > server.o
+> > In file included from /usr/include/c++/10/memory:83,
+> >                   from /usr/local/include/sdbusplus/message.hpp:11,
+> >                   from /usr/local/include/sdbusplus/bus.hpp:7,
+> >                   from /usr/local/include/sdbusplus/server.hpp:3,
+> >                   from 
+> > /usr/local/include/xyz/openbmc_project/Logging/ErrorBlocksTransitio
+> > n/
+> > server.hpp:5,
+> >                   from elog_block.hpp:5,
+> >                   from log_manager.hpp:3,
+> >                   from log_manager.cpp:3:
+> > /usr/include/c++/10/bits/unique_ptr.h: In instantiation of
+> > 'typename 
+> > std::_MakeUniq<_Tp>::__single_object std::make_unique(_Args&& ...)
+> > [with 
+> > _Tp = phosphor::logging::Entry; _Args = {sdbusplus::bus::bus&, 
+> > std::__cxx11::basic_string<char, std::char_traits<char>, 
+> > std::allocator<char> >&, unsigned int&, long int&, 
+> > sdbusplus::xyz::openbmc_project::Logging::server::Entry::Level&, 
+> > std::__cxx11::basic_string<char, std::char_traits<char>, 
+> > std::allocator<char> >,
+> > std::vector<std::__cxx11::basic_string<char, 
+> > std::char_traits<char>, std::allocator<char> >, 
+> > std::allocator<std::__cxx11::basic_string<char,
+> > std::char_traits<char>, 
+> > std::allocator<char> > > >, 
+> > std::vector<std::tuple<std::__cxx11::basic_string<char, 
+> > std::char_traits<char>, std::allocator<char> >, 
+> > std::__cxx11::basic_string<char, std::char_traits<char>, 
+> > std::allocator<char> >, std::__cxx11::basic_string<char, 
+> > std::char_traits<char>, std::allocator<char> > >, 
+> > std::allocator<std::tuple<std::__cxx11::basic_string<char, 
+> > std::char_traits<char>, std::allocator<char> >, 
+> > std::__cxx11::basic_string<char, std::char_traits<char>, 
+> > std::allocator<char> >, std::__cxx11::basic_string<char, 
+> > std::char_traits<char>, std::allocator<char> > > > >, const 
+> > std::__cxx11::basic_string<char, std::char_traits<char>, 
+> > std::allocator<char> >&, phosphor::logging::internal::Manager&}; 
+> > typename std::_MakeUniq<_Tp>::__single_object = 
+> > std::unique_ptr<phosphor::logging::Entry>]':
+> > log_manager.cpp:235:74:   required from here
+> > /usr/include/c++/10/bits/unique_ptr.h:962:30: error: invalid 
+> > new-expression of abstract class type 'phosphor::logging::Entry'
+> >    962 |     { return unique_ptr<_Tp>(new 
+> > _Tp(std::forward<_Args>(__args)...)); }
+> >        | 
+> > ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > In file included from log_manager.hpp:4,
+> >                   from log_manager.cpp:3:
+> > elog_entry.hpp:38:7: note:   because the following virtual
+> > functions
+> > are 
+> > pure within 'phosphor::logging::Entry':
+> >     38 | class Entry : public EntryIfaces
+> >        |       ^~~~~
+> > In file included from elog_entry.hpp:3,
+> >                   from log_manager.hpp:4,
+> >                   from log_manager.cpp:3:
+> > /usr/local/include/xyz/openbmc_project/Logging/Entry/server.hpp:92:
+> > 45
+> > : 
+> > note:     'virtual sdbusplus::message::unix_fd 
+> > sdbusplus::xyz::openbmc_project::Logging::server::Entry::getEntry()
+> > '
+> >     92 |         virtual sdbusplus::message::unix_fd getEntry(
+> >        |                                             ^~~~~~~~
+> > In file included from /usr/include/c++/10/memory:83,
+> >                   from /usr/local/include/sdbusplus/message.hpp:11,
+> >                   from /usr/local/include/sdbusplus/bus.hpp:7,
+> >                   from /usr/local/include/sdbusplus/server.hpp:3,
+> >                   from 
+> > /usr/local/include/xyz/openbmc_project/Logging/ErrorBlocksTransitio
+> > n/
+> > server.hpp:5,
+> >                   from elog_block.hpp:5,
+> >                   from log_manager.hpp:3,
+> >                   from log_manager.cpp:3:
+> > /usr/include/c++/10/bits/unique_ptr.h: In instantiation of
+> > 'typename 
+> > std::_MakeUniq<_Tp>::__single_object std::make_unique(_Args&& ...)
+> > [with 
+> > _Tp = phosphor::logging::Entry; _Args = {sdbusplus::bus::bus&, 
+> > std::__cxx11::basic_string<char, std::char_traits<char>, 
+> > std::allocator<char> >, long int&, 
+> > phosphor::logging::internal::Manager&}; typename 
+> > std::_MakeUniq<_Tp>::__single_object = 
+> > std::unique_ptr<phosphor::logging::Entry>]':
+> > log_manager.cpp:571:68:   required from here
+> > /usr/include/c++/10/bits/unique_ptr.h:962:30: error: invalid 
+> > new-expression of abstract class type 'phosphor::logging::Entry'
+> >    962 |     { return unique_ptr<_Tp>(new 
+> > _Tp(std::forward<_Args>(__args)...)); }
+> >        | 
+> > ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >    CXXLD    libphosphor_logging.la
+> >    CXXLD    logging-test
+> >    CXXLD    callout-test
+> > make[2]: Leaving directory 
+> > '/phosphor-logging-b50c705c3bb3738673f98cd371b408a5b48e629a'
+> > make[2]: *** [Makefile:1631: phosphor_log_manager-log_manager.o]
+> > Error 1
+> > make[1]: *** [Makefile:2013: all-recursive] Error 1
+> > make[1]: Leaving directory 
+> > '/phosphor-logging-b50c705c3bb3738673f98cd371b408a5b48e629a'
+> > make: *** [Makefile:910: all] Error 2
+> > The command '/bin/sh -c curl -L 
+> > https://github.com/openbmc/phosphor-logging/archive/b50c705c3bb3738673f98cd371b408a5b48e629a.tar.gz 
+> > > tar -xz && cd phosphor-logging-* && ./bootstrap.sh &&
+> > > ./configure 
+> > --prefix=/usr/local --enable-metadata-processing 
+> > YAML_DIR=/usr/local/share/phosphor-dbus-yaml/yaml && make -j80 &&
+> > make 
+> > install' returned a non-zero code: 2
+> > 
+> > Thanks,
+> > -Jason
+-- 
+Best regards,
+Andrei Kartashev
 
-On Thu, 11 Feb 2021 at 09:34, <gmouse@google.com> wrote:
->
-> From: "Anton D. Kachalov" <gmouse@google.com>
->
-> Signed-off-by: Anton D. Kachalov <gmouse@google.com>
-> ---
->  arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 28 +++++++----------------
->  1 file changed, 8 insertions(+), 20 deletions(-)
->
-> diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> index bd1eb6ee380f..741c1fee8552 100644
-> --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> @@ -182,8 +182,8 @@ bbuboot2@80000 {
->                                 reg = <0x0080000 0x80000>;
->                                 read-only;
->                                 };
-> -                       envparam@100000 {
-> -                               label = "env-param";
-> +                       ubootenv@100000 {
-> +                               label = "u-boot-env";
->                                 reg = <0x0100000 0x40000>;
->                                 read-only;
->                                 };
-> @@ -195,25 +195,13 @@ kernel@200000 {
->                                 label = "kernel";
->                                 reg = <0x0200000 0x400000>;
->                                 };
-> -                       rootfs@600000 {
-> -                               label = "rootfs";
-> -                               reg = <0x0600000 0x700000>;
-> +                       rofs@780000 {
-> +                               label = "rofs";
-> +                               reg = <0x0780000 0x1680000>;
->                                 };
-> -                       spare1@D00000 {
-> -                               label = "spare1";
-> -                               reg = <0x0D00000 0x200000>;
-> -                               };
-> -                       spare2@0F00000 {
-> -                               label = "spare2";
-> -                               reg = <0x0F00000 0x200000>;
-> -                               };
-> -                       spare3@1100000 {
-> -                               label = "spare3";
-> -                               reg = <0x1100000 0x200000>;
-> -                               };
-> -                       spare4@1300000 {
-> -                               label = "spare4";
-> -                               reg = <0x1300000 0x0>;
-> +                       rwfs@1e00000 {
-> +                               label = "rwfs";
-> +                               reg = <0x1e00000 0x200000>;
->                         };
->                 };
->         };
-> --
-> 2.30.0.478.g8a0d178c01-goog
->
+
