@@ -2,85 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B09E53197A1
-	for <lists+openbmc@lfdr.de>; Fri, 12 Feb 2021 01:52:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 91665319924
+	for <lists+openbmc@lfdr.de>; Fri, 12 Feb 2021 05:31:21 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DcFM467WVzDwvq
-	for <lists+openbmc@lfdr.de>; Fri, 12 Feb 2021 11:52:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DcLD66pHGzDwl4
+	for <lists+openbmc@lfdr.de>; Fri, 12 Feb 2021 15:31:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.24;
- helo=wout1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c2a;
+ helo=mail-oo1-xc2a.google.com; envelope-from=groeck7@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=dXJdEov/; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=M7+Roh3u; 
- dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=i4f4fMqc; dkim-atps=neutral
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com
+ [IPv6:2607:f8b0:4864:20::c2a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DcDqz2BDzzDwtG
- for <openbmc@lists.ozlabs.org>; Fri, 12 Feb 2021 11:28:30 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 1EEF2A62
- for <openbmc@lists.ozlabs.org>; Thu, 11 Feb 2021 19:28:26 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Thu, 11 Feb 2021 19:28:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:subject:message-id:mime-version:content-type; s=
- fm1; bh=aKSFxGs6x5W6u8VrYh1s6FWLyDQm2CZxRIUZM0AoKGA=; b=dXJdEov/
- 843VrQ55sdd5gseVtEvO4ncTHKLUA6JNw4HVbbPhVDXsrdYvK7KEc5gE5aLVr2TH
- etrt7mMLDWRItZqskDAiXa7uw2VUxzvj6Pw9Izj3RKU7+HujS4Wnt8cN8/14Fvhd
- ZYpB1KaXuOSeSvsATe/ACo7wdzjQ4sLWtJ0Hn/iWfbE3x0DBVhXptyiC3aDtPhhv
- A/BtvwHjnUgaR19nFAAOsEtY2F+G6qY9sBs0w98folBv9PWdfy3cO+zJh3/CMc3A
- S/6RPLq7rRb3ypiEbk8R/kZETizq5NhJa58jJ/VNDi0aCdmQVtP9LAQF5oJpDMIh
- xgzzpD2wwHs9xA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:message-id
- :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; bh=aKSFxGs6x5W6u8VrYh1s6FWLyDQm2
- CZxRIUZM0AoKGA=; b=M7+Roh3uDslpTEO+R6vYV/DnwuzNCOvp99jIdetq4X/7f
- mZTyzGxQFCj98iSeAvmDuCcBrZOnnmfoBvdYtxaIAqhSUIEI/3+72Qtoz0epA7bF
- NAfYfr3jfOC51+WAZQ01tTElHWR2Ecfh+CvzNz/mO4bq1wNXkte6m42gHmD7H9B5
- Cm4X6vnGua76jaw4B+5CG4Znz2dVqkbE/si4f+Ey09MbzeYQOt50v+AmPVn9xd75
- ZcMO30nT1hCP8/oM7p/vMFI02D180/2OEEDFZTDMNay37WhH+9EG3Ztp1obx6yj5
- d5/cLXwOSPgqNKUihvtMHiiXikMiu5y57h5TRhJHg==
-X-ME-Sender: <xms:qcslYD2fSwaaOK4SX9RnAnEa0yZGxDdz5KlCfBMPWy_Rl88BMDec8Q>
- <xme:qcslYFOdoyTHqoqrsFfPDXEQWB20dA1RIP08swyrqlVjRee8JdOioaCSZJYHfQrtC
- L1Bh1ao-e37Yo_q0LU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledriedtgddvfecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfggtggusehgtderredttddvnecu
- hfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsthiftg
- igrdighiiiqeenucggtffrrghtthgvrhhnpeeftdffvefggeelleehteelkefgheduhfej
- feeggeeifedutdehvdethfehveehvdenucffohhmrghinhepohhpvghnsghmtgdqphhroh
- hjvggtthdrgiihiienucfkphepudeiiedrudejiedruddvfedrudegfeenucevlhhushht
- vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsth
- iftgigrdighiii
-X-ME-Proxy: <xmx:qcslYBUgx79TrpATiNZ5IRaJm4Z6oCPwTkTMgV6ajwkfE4N5OijySg>
- <xmx:qcslYNYFGmf8Y34rhsO1Zk3E5NQN9zlM2vj7QxUSPZF6eSZaU_sUEg>
- <xmx:qcslYEvud3d9sfggCAbMTjFORxZXZD-UZmrPTIS6f_SUXUwMLthBuQ>
- <xmx:qcslYIm7bK0FjCXpwHfp9C14jeXZUrvxInw4-qr7RYMPbnguexq9Xw>
-Received: from localhost (mobile-166-176-123-143.mycingular.net
- [166.176.123.143])
- by mail.messagingengine.com (Postfix) with ESMTPA id 6A253240066
- for <openbmc@lists.ozlabs.org>; Thu, 11 Feb 2021 19:28:25 -0500 (EST)
-Date: Thu, 11 Feb 2021 18:28:24 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Upcoming enhancements to `run-unit-test-docker`
-Message-ID: <YCXLqK7KgvwYwWDl@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DcLC54tC8zDwwW
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Feb 2021 15:30:21 +1100 (AEDT)
+Received: by mail-oo1-xc2a.google.com with SMTP id h38so1805695ooi.8
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Feb 2021 20:30:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=aOeCDqDzBA3dsZYfJecar357cM/2/of0V8qDCALwWfY=;
+ b=i4f4fMqcZZXCsUdY9/WeSgZIgObL9iEP6Bvy0U7zXUmBUNtk8UWtFI0rF1fxusFDtp
+ kjN9lvIQ1AkzCPHWpnbpOXpFO83pq4182mSK+uEVXR8pkdLyN/XJMc043TPXDC5yejii
+ OvnhGe0TaHiWDZeJ8x7ZGEAbJ5HzWYxYIQXTCgTYaWAcdg7M6g+FUmwx7GmphOOeuSs/
+ LH6IhGDoPD0PXCSRRd9qvkX4wOUoVq2U14IZQdMXnnHeP0muEomAyuiLCM53MlpoPltX
+ QMDFtL46QVeFsxVQWSUDGPyMQs+XT4c/VxG59SNIoHbFVAyz1l++eYseWyyLT+2wpXVe
+ vE/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :references:mime-version:content-disposition:in-reply-to:user-agent;
+ bh=aOeCDqDzBA3dsZYfJecar357cM/2/of0V8qDCALwWfY=;
+ b=ZNpUbZ8HISbdkVN+NSn2VRIVGKQA1GYrAvvD5YDiA8f/+7mmWWVr32ewgySHyp0fp/
+ +s9OiWaTSBDLSXjBrildiS9qUDEhv3EzqAbck1r6GffEbqgOprA0wzSg4+5/4NBaaf7i
+ r/MteiPvLtW1jsxwaIy278SjMqZAybr82+OXZr7lJH6VyZN/Iw9ek0d2eUOLKb40+jVP
+ 6NyC9ifKPxZNrXiJYOHD/FUH887ZkJ5d/ys8ROLEfiL+lXFc56E0dxWWNZquQkkQouhz
+ 2rQh66+0HPBeR6kU0HYom/7F8wTvB53foJWMG/VR+UV1G1y+f9CiTXF7HrQVK8vC4Sq1
+ y3oA==
+X-Gm-Message-State: AOAM533IZaaIEVc8a+5uN1ZPTCR2JD4GRzYuzDlRVyDrC8R/6ixd2GHx
+ j5TLdTTH3GaMdXyuqxlU614=
+X-Google-Smtp-Source: ABdhPJzxdhJXCakra3xPLLVyujacVXook4u1jf93dBk65e5glZOkHxhDKOK61G5iCM81gs4+m4teoQ==
+X-Received: by 2002:a4a:4958:: with SMTP id z85mr775192ooa.38.1613104218273;
+ Thu, 11 Feb 2021 20:30:18 -0800 (PST)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id 88sm1449171otx.15.2021.02.11.20.30.17
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Thu, 11 Feb 2021 20:30:17 -0800 (PST)
+Date: Thu, 11 Feb 2021 20:30:16 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Tian Tao <tiantao6@hisilicon.com>
+Subject: Re: [PATCH] hwmon: (npcm750-pwm-fan): replace spin_lock_irqsave by
+ spin_lock in hard IRQ
+Message-ID: <20210212043016.GA104680@roeck-us.net>
+References: <1612696333-50502-1-git-send-email-tiantao6@hisilicon.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="UBSax1b/WBi387DV"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <1612696333-50502-1-git-send-email-tiantao6@hisilicon.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,103 +78,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-hwmon@vger.kernel.org, linux-pwm@vger.kernel.org, jdelvare@suse.com,
+ openbmc@lists.ozlabs.org, thierry.reding@gmail.com, lee.jones@linaro.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Sun, Feb 07, 2021 at 07:12:13PM +0800, Tian Tao wrote:
+> The code has been in a irq-disabled context since it is hard IRQ. There
+> is no necessity to do it again.
+> 
+> Signed-off-by: Tian Tao <tiantao6@hisilicon.com>
 
---UBSax1b/WBi387DV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Applied.
 
-Hello,
+Thanks,
+Guenter
 
-Inside openbmc-build-scripts is a tool which is used by Jenkins to run
-repository-level CI and I think some developers also use it:
-`run-unit-test-docker`.  I've rewritten a component of this, which is
-now at `scripts/build-unit-test-docker`, in Python and done some
-enhancements to it.  The [currently] last commit in this sequence is at
-[1].
-
-Important notices:
-
-    - Location change: build-unit-test-docker.sh ->
-      scripts/build-unit-test-docker
-        + I suspect few people run this directly, but instead use
-          `run-unit-test-docker` which hides the rename.
-
-    - Python3.6 minimum.
-        + Bitbake already requires this so it really shouldn't be a
-          problem for anyone.
-
-    - Python 'sh' module needed.
-        + You can install this with the 'python3-sh' package on many
-          distros or 'pip install sh'.
-
-    - Docker stages are now tagged with different names / tag revs.
-        + I wrote a `scripts/clean-unit-test-docker` which will clean
-          out old Docker tags and can be ran periodically.
-
-Major changes:
-
-    - Rewrite in Python.
-    - Significant speed improvements:
-        - Docker stages all build in parallel to formulate the final image.
-        - All Docker stages are tagged and reused from run to run.
-        - CMake packages now use the Ninja backend.  This is the same as
-          bitbake and faster than make.
-    - Included packages are defined in a dictionary rather than as raw
-      Dockerfiles.
-
-Upcoming changes:
-
-    - Shortly, I will add support to incorporate base package changes
-      into the image itself.  We have had cases where a change to
-      a common package like `sdbusplus` broke CI because a package that
-      depended on it failed to compile with the changes.  I'll add code
-      that uses some of the GERRIT_* environment variables to determine
-      if the commit-under-test is part of one of the base packages and
-      include it in the Docker image for the test run.
-
-    - Topic-based testing.  We often run into co-dependencies between
-      phosphor-dbus-interfaces and another repository.  Within the next
-      month I'll enhance the script so that if you change PDI and your
-      repository and tag the commit with the same topic, the PDI commit
-      from that topic will be pulled into the Docker image so your
-      repository commit can pass CI.
-
-    - Some refactoring.  I did a lot of incremental changes from the
-      original shell script to the Python version I currently have and
-      didn't always rewrite in the most Pythonic way.  There will be
-      some more, mostly non-functional, changes to fix this.
-
-Feel free to comment on the review series if you have any concerns with
-these changes.
-
-1. https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/403=
-66
-
---=20
-Patrick Williams
-
---UBSax1b/WBi387DV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmAly6UACgkQqwNHzC0A
-wRkkjw/9ESzu4KEMw+9dMrjyTLAAmfO9DBBTRyCC7H/ccgsbwrY/sH003O/br3Hn
-VEvV4m/7cC/KFw0elVMTSJILUHyIcGjExLsI/YvhGdRFJ4Jz2mY0cTzEJhaj3Xg7
-EB/HSoreRYRJH54K/13J7z5sP12yMk5G6UKB6xw5pGTf3X2QIVyrWnxc71Ht96xd
-uwkIEcPkI4Nuj8ebk7Zu01ZMPeOe13kQH8ohyjsCJ2zgbcS2+N3hcSG2Jgl+0rw8
-7F4Ao4ESdzIrLGrbB8hDzTpWKwjm7Q6jrLPaoK8NCetaWozGDSUAJWtAXw7WdOFd
-M5usVjZDWahW2NFQKNMVroImapcaX6En+RpfUZV8rLhbRF8ffNoQK9jv98o3xxpB
-s5fn/g9fFN8kWHk9qjpq4iZDEe3qJn6LijqTDkguD5Mfl0JBnIEaT9wyY2rNyycs
-NvV64xcj1Fi93pla88YlopgpMnYsd5vRVHSvqJF/dMQ2Gtlw9CvdkhPBYEuqR8H/
-TAUGN11FHWGZ6RqjESVL2bIrSBJ49oWShDeiZU1Ge7s847gjwY6zzqABW3tBCFvs
-qBfX2+4Jn7rpTOr0V3fPQWq0mg0Mt1N6BTk+xRuJryoGel7ln5xLMOnYnXOsu9tm
-7LErDSGZ3KHWs7Jrp4pn3+tfLJn/bOWRqq9JHDzr6vvov1zBrn8=
-=6vR/
------END PGP SIGNATURE-----
-
---UBSax1b/WBi387DV--
+> ---
+>  drivers/hwmon/npcm750-pwm-fan.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/hwmon/npcm750-pwm-fan.c b/drivers/hwmon/npcm750-pwm-fan.c
+> index 11a2860..6c27af1 100644
+> --- a/drivers/hwmon/npcm750-pwm-fan.c
+> +++ b/drivers/hwmon/npcm750-pwm-fan.c
+> @@ -481,12 +481,11 @@ static inline void npcm7xx_check_cmp(struct npcm7xx_pwm_fan_data *data,
+>  static irqreturn_t npcm7xx_fan_isr(int irq, void *dev_id)
+>  {
+>  	struct npcm7xx_pwm_fan_data *data = dev_id;
+> -	unsigned long flags;
+>  	int module;
+>  	u8 flag;
+>  
+>  	module = irq - data->fan_irq[0];
+> -	spin_lock_irqsave(&data->fan_lock[module], flags);
+> +	spin_lock(&data->fan_lock[module]);
+>  
+>  	flag = ioread8(NPCM7XX_FAN_REG_TICTRL(data->fan_base, module));
+>  	if (flag > 0) {
+> @@ -496,7 +495,7 @@ static irqreturn_t npcm7xx_fan_isr(int irq, void *dev_id)
+>  		return IRQ_HANDLED;
+>  	}
+>  
+> -	spin_unlock_irqrestore(&data->fan_lock[module], flags);
+> +	spin_unlock(&data->fan_lock[module]);
+>  
+>  	return IRQ_NONE;
+>  }
