@@ -2,39 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A73B31B35E
-	for <lists+openbmc@lfdr.de>; Mon, 15 Feb 2021 00:28:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FC8931B35D
+	for <lists+openbmc@lfdr.de>; Mon, 15 Feb 2021 00:28:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Df3MZ3RP7z30RK
-	for <lists+openbmc@lfdr.de>; Mon, 15 Feb 2021 10:28:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Df3MF2fFpz3cmW
+	for <lists+openbmc@lfdr.de>; Mon, 15 Feb 2021 10:28:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch
  (client-ip=185.16.172.187; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch;
  receiver=<UNKNOWN>)
+X-Greylist: delayed 344 seconds by postgrey-1.36 at bilbo;
+ Sun, 14 Feb 2021 03:04:44 AEDT
 Received: from vps0.lunn.ch (vps0.lunn.ch [185.16.172.187])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DdG960PwKzDqC6
- for <openbmc@lists.ozlabs.org>; Sun, 14 Feb 2021 03:31:53 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DdFYm6xmLzDsYY
+ for <openbmc@lists.ozlabs.org>; Sun, 14 Feb 2021 03:04:44 +1100 (AEDT)
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94)
  (envelope-from <andrew@lunn.ch>)
- id 1lAxJT-0064CT-UT; Sat, 13 Feb 2021 16:58:27 +0100
-Date: Sat, 13 Feb 2021 16:58:27 +0100
+ id 1lAxPO-0064Gc-9F; Sat, 13 Feb 2021 17:04:34 +0100
+Date: Sat, 13 Feb 2021 17:04:34 +0100
 From: Andrew Lunn <andrew@lunn.ch>
-To: Stephen Boyd <sboyd@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+To: Stephen Boyd <sboyd@kernel.org>
 Subject: Re: [PATCH 00/21] [Set 2] Rid W=1 warnings from Clock
-Message-ID: <YCf3Iwt3KGZRtNgN@lunn.ch>
-References: <20210126124540.3320214-1-lee.jones@linaro.org>
- <161307643148.1254594.6590013599999468609@swboyd.mtv.corp.google.com>
+Message-ID: <YCf4kkMsX+Ymgy6N@lunn.ch>
+References: <161307643148.1254594.6590013599999468609@swboyd.mtv.corp.google.com>
  <20210211211054.GD4572@dell>
  <161309925025.1254594.6210738031889810500@swboyd.mtv.corp.google.com>
+ <20210212092016.GF4572@dell>
+ <161316374113.1254594.14156657225822268891@swboyd.mtv.corp.google.com>
+ <20210212212503.GC179940@dell> <20210212212630.GD179940@dell>
+ <161316754567.1254594.9542583200097699504@swboyd.mtv.corp.google.com>
+ <20210212223739.GE179940@dell>
+ <161317480301.1254594.16648868282165823277@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <161309925025.1254594.6210738031889810500@swboyd.mtv.corp.google.com>
+In-Reply-To: <161317480301.1254594.16648868282165823277@swboyd.mtv.corp.google.com>
 X-Mailman-Approved-At: Mon, 15 Feb 2021 10:22:39 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -81,38 +88,14 @@ Cc: Prashant Gaikwad <pgaikwad@nvidia.com>, Tomer Maimon <tmaimon77@gmail.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Feb 11, 2021 at 07:07:30PM -0800, Stephen Boyd wrote:
-> Quoting Lee Jones (2021-02-11 13:10:54)
-> > On Thu, 11 Feb 2021, Stephen Boyd wrote:
-> > 
-> > > Quoting Lee Jones (2021-01-26 04:45:19)
-> > > > This set is part of a larger effort attempting to clean-up W=1
-> > > > kernel builds, which are currently overwhelmingly riddled with
-> > > > niggly little warnings.
-> > > > 
-> > > > This is the last set.  Clock is clean after this.
-> > > 
-> > > Is it possible to slam in some patch that makes W=1 the default for the
-> > > clk directory? I'm trying to avoid seeing this patch series again.
-> > 
-> > One of my main goals of this project is that everyone (contributors,
-> > maintainers auto-builder robots etc) will be enabling W=1 builds
-> > *locally*.
-> > 
-> > This isn't something you'll want to do at a global (i.e. in Mainline)
-> > level.  That's kinda the point of W=1.
-> > 
-> 
-> Agreed, but is it possible to pass W=1 in the drivers/clk/Makefile?
+> I'm trying to see if we can make lives better for everyone by exposing
+> the warnings by default in the drivers/clk/ directory now that there are
+> supposedly none left. Shouldn't we tighten the screws now that we've
+> cleaned them?
 
-About a cycle ago, Arnd and i played around with this idea. The
-Ethernet PHY subsystem is W=1 clean, and most of he network stack
-is. But keeping it clean is not so easy, when developers do sometimes
-add new warnings, since they have no idea the code is W=1 clean.
+Do you use patchwork? netdev has a bot attached which applies the
+patch and does a W=1 build, and will report any new warnings. But it
+does not email the developer, as far as i know. It is up to you as the
+maintainer to reject the patch and say why.
 
-You are also not the only one asking for such a feature. RDMA also
-asked recently.
-
-Arnd, do you plan to push the patches?
-
-      Andrew
+	   Andrew
