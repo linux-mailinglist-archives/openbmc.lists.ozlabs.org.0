@@ -2,88 +2,120 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 622BC31A478
-	for <lists+openbmc@lfdr.de>; Fri, 12 Feb 2021 19:22:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F15831AD81
+	for <lists+openbmc@lfdr.de>; Sat, 13 Feb 2021 19:11:11 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DchgL63Q1zDwtg
-	for <lists+openbmc@lfdr.de>; Sat, 13 Feb 2021 05:22:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DdJMc3RQzzDqZV
+	for <lists+openbmc@lfdr.de>; Sun, 14 Feb 2021 05:11:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=r8dIFfv/; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=awAFjvYn; 
+ smtp.mailfrom=inventec.com (client-ip=40.107.131.114;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=udupa.ashwini@inventec.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=InventecCorp.onmicrosoft.com
+ header.i=@InventecCorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-InventecCorp-onmicrosoft-com header.b=SRX8lBgf; 
  dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1310114.outbound.protection.outlook.com [40.107.131.114])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DchfM1zHWzDwss
- for <openbmc@lists.ozlabs.org>; Sat, 13 Feb 2021 05:21:45 +1100 (AEDT)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id A4431C10;
- Fri, 12 Feb 2021 13:21:38 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Fri, 12 Feb 2021 13:21:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=QS/tkjk5NUiWmWrFgIPCnl1XD4V
- UlhrdD6p0bARg76A=; b=r8dIFfv/BEwA5V31CjXiF5mp4++hfQG9yJmOOzUTQDY
- lJI6Wej7y/zNwxTHwrO1xmy9gYhxh9PLibn6Q8mASYKI9zh1grbYSdQ3gmDzirsb
- xiunyMWL84OuZ7QX01/baOwon6/ut6r+eRGFOZFlunMYbMXCDsjDwB8BM61oClkj
- tZWl1RXKCzGIiZonUHr4jeVTycP3L4jM4wksQijm65mYGWG9vgYBJKOFVck+pfJu
- 3deMqAKzD4LXoq1XHdbD4H8PeVDas+n9dXuFYsrOzafWmLMhixwjwhvSdN7AVWXk
- xoi28ynm3OAzNHpTF97AT/5isfagqcNp2RoeLw6mxvg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=QS/tkj
- k5NUiWmWrFgIPCnl1XD4VUlhrdD6p0bARg76A=; b=awAFjvYneH4kV2D7KRVufK
- vEKZgsP2vbHhYZAI8V2KNogjCC+63S7xasR6fmh+TeoDLlT1fzyKJAQMIPnx1ZTE
- GjbJZCvX1yjGx9UqtvVWheeoiL2NlKmyJVLt3Z8u7KMBzA1iD89zUWA6dBgMcZ+5
- v4RtUfxDvCTqptM1YfJcZVsxb9y+Hbxdbr3ktwTm8XSGG4DknUjmino2SdKGDm+o
- afFEG0awR1fKHqDt6J+18KJq0AXCN03WpWmaU0m3+Wiquw3thTU14lLSvgIaZ0He
- 6bEbpTsEeBSpUva6YFQWvLtnY4+yYfEmVYQ9FeL6egWVQJKpVoW1rZGnDJhOXgFg
- ==
-X-ME-Sender: <xms:MccmYCSGnhUNDWwsHVEOPqbiCd4hEM1AVVva1pKM8p4f6uBVXnmnXA>
- <xme:MccmYB2AHRupueiEkYCRNL-f702_M_VvJ-77zkGegCw6OBi1NVFAYUIDu8SxceXwS
- fDROiznI9Es5Dzr24I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledriedugdduudegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheplefhjeefkeetveffgeetffdufeeh
- leefhedvgffgvdfghfejhfefffekieeiveejnecuffhomhgrihhnpehgihhthhhusgdrtg
- homhenucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedt
- necurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:MccmYEzmD1snL9v5fFcRUp1EQF0EF4t5r1AtOLF962viHXakaJy9bw>
- <xmx:MccmYFw5q75TTnDHpKU5KCjiVaET6Lahd4BSC-Z89-N6rvOJzfMaVQ>
- <xmx:MccmYI8HBkutw3AI5nnV2tqt_FPew-59A4HrhTXfnLWK4SSKNeMvKw>
- <xmx:MscmYHRXeIOoqv1p4J3nhw5uHBmOqF-U2UsnMHp8j4o2grKUe6SSwQ>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 401511080059;
- Fri, 12 Feb 2021 13:21:37 -0500 (EST)
-Date: Fri, 12 Feb 2021 12:21:35 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Johnathan Mantey <johnathanx.mantey@intel.com>
-Subject: Re: Upcoming enhancements to `run-unit-test-docker`
-Message-ID: <YCbHLxM5XaRcIJ8L@heinlein>
-References: <YCXLqK7KgvwYwWDl@heinlein>
- <80c3bd03-7cdf-a22a-b5cb-ee05915ab04c@intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DdJLl115jzDq9Z
+ for <openbmc@lists.ozlabs.org>; Sun, 14 Feb 2021 05:10:21 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=V99r6N99H/SyhJemsiBFvHqwHwBBY7k6gjGEezwDWoAgLJS7Qnwek/Pf3yvGrQE5P8uqQIwpQnxPGtMSO92drrEshXV6tCiRFCRxP8Zvdn9WkHLbBDpTOShNKM/OVi9lv4BViS/a6auZzVcgbL1mZjcmalamasTjprmVhLDNr9r/KlpnPvmyiUxYHeIoEy49Hj3TvnZllJER1PiJasn+r5H5hA+GFc5iRhx+ZtRGFKYal52Q2ms3ihtOqFIr3Ox0yROYiK5iPx8ZSqdlPFCT/KjrxpXLDG9higMfrA27Mo1IS1hihcVrAa0Fq2E6vDaT1adNsXgNjg72y8ZyMkgggg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FeMmSRLtgWhOzpA2ieU8UVjSkA5T2u0z97DdG7iH5Ik=;
+ b=PEjyKmxgdWtz5IsROTm26dhKVj2fWI/0KJGKbbbeLxSl/jv0vsoCCPpzB9SrnwHR3e8gi4uiGIJiDnHavAdPOgixq0UOzvPONHRiJz1f/abnfisltRmeXGxzivRisAmVzKHCrPVZtaaGtvyUcmd3sQ9rIcLY7P5sqywmCJ5vuFppNlx0XIiPVFoo8nbHb9bL7wrXb4OL36WQhFin7XwVxC0nYuNYqP4mltW2LdEOOoXYfPD1WEBhZM1Tx8eTNB2ivhmc2cYoXfvVjLFAgnXyL1wrlhjVHkbOFGjXu3rhgyaUpkJToybrDGYZW6CkhUS+UsdxydsCjWpm4oVuDl3acg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=inventec.com; dmarc=pass action=none header.from=inventec.com;
+ dkim=pass header.d=inventec.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=InventecCorp.onmicrosoft.com; s=selector2-InventecCorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FeMmSRLtgWhOzpA2ieU8UVjSkA5T2u0z97DdG7iH5Ik=;
+ b=SRX8lBgfLnHQjRmWBpM/QWuudAFjSVz2knduzcONlrFn2FC0om3ijdPXFOwObSvJz5x1sjpURe1zSF4igbQJdT2c/HpEx5RM9dJ5ytq8WQbeYVd9fh4nwlC1Oqe0HVsiZprEwRiYo7Q5OTFKztK+qj2gthwPmOesl+bsUp3HAq0=
+Received: from SG2PR02MB2796.apcprd02.prod.outlook.com (2603:1096:4:59::20) by
+ SG2PR02MB3178.apcprd02.prod.outlook.com (2603:1096:4:62::21) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3846.38; Sat, 13 Feb 2021 18:08:37 +0000
+Received: from SG2PR02MB2796.apcprd02.prod.outlook.com
+ ([fe80::740c:c7c0:872f:1ccc]) by SG2PR02MB2796.apcprd02.prod.outlook.com
+ ([fe80::740c:c7c0:872f:1ccc%7]) with mapi id 15.20.3825.034; Sat, 13 Feb 2021
+ 18:08:36 +0000
+From: Udupa.Ashwini ISV <udupa.ashwini@inventec.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Redfish v1/Systems/system/EthernetInterfaces
+Thread-Topic: Redfish v1/Systems/system/EthernetInterfaces
+Thread-Index: AdcA6cGzNFkuOxBET+q6tGgjuo9o4ABSXQ1w
+Date: Sat, 13 Feb 2021 18:08:36 +0000
+Message-ID: <SG2PR02MB27961D3A938C94341747757C858A9@SG2PR02MB2796.apcprd02.prod.outlook.com>
+References: <SG2PR02MB2796B5FB2DB9AAAE2594BA1E858B9@SG2PR02MB2796.apcprd02.prod.outlook.com>
+In-Reply-To: <SG2PR02MB2796B5FB2DB9AAAE2594BA1E858B9@SG2PR02MB2796.apcprd02.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=inventec.com;
+x-originating-ip: [2601:641:8000:1920:9d45:6b81:180f:f642]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 9e1d3258-b616-4c38-09b4-08d8d04a6272
+x-ms-traffictypediagnostic: SG2PR02MB3178:
+x-microsoft-antispam-prvs: <SG2PR02MB31787D1A83DA3CD5AD1E70E3858A9@SG2PR02MB3178.apcprd02.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:5516;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: z3Egz55xJohDoMTzxqvQxybA3MxQJNrjrNea/gy5d1xgx2URRmFAKE9k9wPKIlTbpDxoZDV1gBZwaB+im9kvzZMLKPGlPvqM1syH2CPQgZv+hIY8jwmAAsFuy7jEfxZDGJPp1owpOpewArcJdpOvuw82obUhZahskqrbNgCRALN8Tj84CrMflVBRtrvpWkXV9PVGftDsO+T6fmxS/rTUkzaiDSZ3m1f9kChTsh1PdDsUWFhahq6ZWEFAdO/iMeSSviVmFl93xAAtmvJBGv8YcHVc27qerHSXzmZlyCpbohFfPjSBPSj07R8htPSCl027PD/aZ54OF0aEYt9Pv+DjCTdO5LdPS3JXhshA7v2a4RV4AHCnTKrVsaG3AJN0eKw7gnEsAzxR1xCKYmTMZ2dKaTUmWOU5uYAYRsuoWeSkxBgx+3WsXNJyCC+uUkNKUq6pL6g2CMY00Ie75VjJytHn60Su2eUAoYtCuGSooAtqpjRtXAi3wVNetjOpwArB7Dj12BjRtvFHbo4uVdsvoheWBw==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SG2PR02MB2796.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(396003)(136003)(376002)(366004)(39830400003)(346002)(9326002)(52536014)(8676002)(6916009)(8936002)(71200400001)(5660300002)(4744005)(186003)(55016002)(6506007)(478600001)(86362001)(33656002)(9686003)(76116006)(7696005)(316002)(2906002)(66946007)(66476007)(64756008)(66446008)(66556008);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?1lOP4fJEZ8UoLxWSSIb+rquU3x3BV1dcUy0c01ktAiiQWm39hTJVTp0bi3Vm?=
+ =?us-ascii?Q?OvcgeoLv9VxHoSuyEHVkzNdVQYq9Dt7asdwuVaqZuJve4BRyQHvnGbTj6tyj?=
+ =?us-ascii?Q?KbGsMvatta6j6Y4VgAehyrOge9kIk/1j79Fw22Sf2c+Hk8Yk+BiTbgB6eXx8?=
+ =?us-ascii?Q?vCMgvFEfkCQqBTH/+4Tz86XMWWF9pBvB/4/npr7Qgaw2wpl+AvhndkB9Dn+2?=
+ =?us-ascii?Q?HuKoCz1Z+OvJ3KoJkIYPZuApKMrAFEqj98K3hjnk+mzgrVpdIeLV5uNxjrUb?=
+ =?us-ascii?Q?6ejrDeJCnuSD2y2GRCNTaIQWCNCo3jW2wYB5g3QTEAU8/FvbvNh6ucKO2q9o?=
+ =?us-ascii?Q?8MUA5/F1/ppaQt9uqd7IlfqwP8e1j5viSxf/7WnjOUqjWWf30Dq3TCQJAOGR?=
+ =?us-ascii?Q?m0hWdKGn21JmyS4rNk5o9KkOIsto9VbyxiADYl2GpA2KcRJStPaxiljxQjRe?=
+ =?us-ascii?Q?4U6n7k0HvyhnjToZMJ317N2gK685FO72SiFF9iEIB4pSzmK43sBH75Pb7ZY9?=
+ =?us-ascii?Q?Hkyj0FXpzEJp7fU9kq+lgPVq/bWHumPFgxhvUJMPMzXrNzXBf/XJJ++pYBLm?=
+ =?us-ascii?Q?Mw7/vEaxK6JQ8bkPVEgthOdFk2Ygiqlp/lm+154JSGNcYezcdwKgqrFFaBlF?=
+ =?us-ascii?Q?qvf/hSyOCMZTN3/+NcZ+VQEP+rNUFDLCP1mNla27wEOcktm8fd7oGkeWcf7j?=
+ =?us-ascii?Q?AWtyCJnE7ULZ66h9lqFF4yGzO5MxfAE3SNwcBo8+vUgkl68ijBgcJ5U4Af+J?=
+ =?us-ascii?Q?UXhZhwak7K4XkqpF5/yKczw+kb+FQG0whXTJ6CMgVMySUTA5GL1PJA3ucnui?=
+ =?us-ascii?Q?fFqBz8LfpTjOCDKl6zXxYzuhRrNM+AkxG4sJL4lA3X5c4iVunJS6wNFxptex?=
+ =?us-ascii?Q?EtAD3CHULJURhzSBsw8JXhqnsyWAexSeaPA5Bz5oMG9SlYzpbnx6QNPkccw3?=
+ =?us-ascii?Q?WSVwLeavONJu8cb0PgFN7klJpL48O5A+465vRkcEotYkycXCJO1cV53tFlqs?=
+ =?us-ascii?Q?4KG+T5oOdBOD2Vkuu0na3ApQpI+8/7NE3qr0lxd3WQV43wY1bu2XehyWBilD?=
+ =?us-ascii?Q?QZsgHkxHlgMGxby2u84F+/v5tEGw7V6zfLLMiUOCse0pgi5knu0UUKOaL51A?=
+ =?us-ascii?Q?kMkbJQTairr/yzyknDAz1OjDVMF+MAUQ/pIuw1i9V0ybwRCCKolQ3qTVO+Rs?=
+ =?us-ascii?Q?R4eSEPHzKbTFwpAZgJsSp+Yllm5ABBddH2wYTd9jTdaDKp00pRtwIhOZVK5F?=
+ =?us-ascii?Q?9F/ctt2g21g6vA+Z8XcmlayH0JjbH9d0P4/17qM+ASM41J8p1Uaw1BJq/1SI?=
+ =?us-ascii?Q?y1ha2egcmadXwBWgDr+FfK6q67pQ6B/7IzpNeVZxKiRzLNDl6DagS7jPF4f/?=
+ =?us-ascii?Q?z39AWmzCsu6F4rnq11qkpekeePnQ?=
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_SG2PR02MB27961D3A938C94341747757C858A9SG2PR02MB2796apcp_"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="QP05S6W61xstg4Ne"
-Content-Disposition: inline
-In-Reply-To: <80c3bd03-7cdf-a22a-b5cb-ee05915ab04c@intel.com>
+X-OriginatorOrg: inventec.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SG2PR02MB2796.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9e1d3258-b616-4c38-09b4-08d8d04a6272
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Feb 2021 18:08:36.7994 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 2ae41f0c-acca-40f1-9c63-49475ff38512
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Wc4sxgcFbHe4C2p1qlkCz/ERCjXPbU8SD+7M2Xb8NkGn8D5GTjJorB6tWSK5vTjnMzOSGT7+xzLvn5mU736rJ+e4ZJ/vwRGF0YeEQtzskVM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR02MB3178
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,116 +127,123 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---QP05S6W61xstg4Ne
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--_000_SG2PR02MB27961D3A938C94341747757C858A9SG2PR02MB2796apcp_
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 12, 2021 at 08:22:02AM -0800, Johnathan Mantey wrote:
-> On 2/11/21 4:28 PM, Patrick Williams wrote:
-> I tried using this script a day or two ago. I needed to fix some unit=20
-> tests for a commit I pushed earlier this month. I had used the script in=
-=20
-> the past and couldn't remember how to use it.
->=20
-> A year ago I had to fix some unit tests, and I had to get Docker, and=20
-> this test script configured. I have long since forgotten how I got the=20
-> system setup, so I went back to try and run the unit tests I had fully=20
-> configured and running from a year ago. In spite of having a fully=20
-> configured environment I could not figure out how to run the tests any=20
-> longer.
->=20
-> I decided to find the run-unit-test-docker.sh contents on the github=20
-> repos, to see if I could read prepared content for how to configure, and=
-=20
-> run the unit test script. The readme.md is one line. The comments in the=
-=20
-> shell script assume you know what each settable parameter does, and how=
-=20
-> it is to be assigned.
 
-Andrew Jeffery pointed out this document last night:
-    https://github.com/openbmc/docs/blob/master/testing/local-ci-build.md
+Hi,
 
-I have all of my repositories cloned into a single subdirectory, which
-makes using this script much easier than if they were spread out.
-You'll see the doc above references as `/path/to/ci_test_area` and doing
-additional clones / git-worktrees, but if you just keep everything
-cloned in one sub-directory that *is* the ci_test_area / WORKSPACE.
+I am new to OpenBmc and Redfish.
+I saw in bmcweb/Redfish.md, that below Redfish is targeted for OpenBmc:
+/redfish/v1/Systems/system/EthernetInterfaces
 
-I typically run this little helper script from a repo I want to test:
+But, in redfish-core/lib/systems.hpp, I don't see EthernetInterfaces and I =
+don't see it on my server Redfish too.
+Its only present in Managers/bmc/EthernetInterfaces.
 
-$ which lf-ut
-lf-ut () {
-	REPO=3D"$(git rev-parse --show-toplevel)"
-	UT_PATH=3D"$(wd path obmcsrc)/openbmc-build-scripts"
-	UNIT_TEST_PKG=3D"$(basename $REPO)" WORKSPACE=3D"$(dirname $REPO)" "$UT_PA=
-TH/run-unit-test-docker.sh"
-}
-$ EXTRA_UNIT_TEST_ARGS=3D"--noformat" lf-ut
+How do I add Systems/system/EthernetInterfaces Redfish support? What change=
+s do I need to make?
 
-I use zsh, so ... Anyhow, `wd path obmcsrc` is the path to my workspace
-where all the code is extracted.
+Regards,
+Ashwini
 
-> I'm pretty sure I had 1:1 assistance from someone familiar with the test=
-=20
-> configuration to get this to work. The effort involved is more than "get=
-=20
-> docker, run script".
->=20
-> I request that someone familiar with the configuration and operation of=
-=20
-> this script please provide information about how to get the environment=
-=20
-> configured, and some example use cases for running the system. One place=
-=20
-> in particular that I found difficult/impossible was to run a test on=20
-> code that required changes in other repositories. For example, if=20
-> phosphor-network needed changes that are provided by=20
-> phosphor-dbus-interfaces how would you configure the test run to be=20
-> successful?
 
-Right now there isn't a way to test two repositories together.  This is
-an aspect I mentioned of wanting to improve (at least for Gerrit).  Your
-only option right now is:
+--_000_SG2PR02MB27961D3A938C94341747757C858A9SG2PR02MB2796apcp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-   1. Push your phosphor-dbus-interfaces change to Gerrit.
-   2. Edit `scripts/build-unit-test-docker` and insert a "rev" keyword
-      under "phosphor-dbus-interfaces" with your git commit hash from
-      step 1 (this should hopefully be obvious when you look at the
-      script).
-   3. Run something like `lf-ut` above from inside phosphor-network.
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+h2
+	{mso-style-priority:9;
+	mso-style-link:"Heading 2 Char";
+	margin-top:2.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:"Calibri Light",sans-serif;
+	color:#2F5496;
+	font-weight:normal;}
+span.Heading2Char
+	{mso-style-name:"Heading 2 Char";
+	mso-style-priority:9;
+	mso-style-link:"Heading 2";
+	font-family:"Calibri Light",sans-serif;
+	color:#2F5496;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Hi,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I am new to OpenBmc and Redfish.<o:p></o:p></p>
+<h2 style=3D"background:white"><span style=3D"font-size:11.0pt;font-family:=
+&quot;Calibri&quot;,sans-serif;color:black">I saw in bmcweb/Redfish.md, tha=
+t below Redfish is targeted for OpenBmc:
+</span><span style=3D"font-size:11.0pt;font-family:&quot;Calibri&quot;,sans=
+-serif;color:windowtext"><o:p></o:p></span></h2>
+<h2 style=3D"background:white"><span style=3D"font-size:11.0pt;font-family:=
+&quot;Calibri&quot;,sans-serif;color:black">/redfish/v1/Systems/system/Ethe=
+rnetInterfaces</span><span style=3D"font-size:11.0pt;font-family:&quot;Cali=
+bri&quot;,sans-serif;color:windowtext"><o:p></o:p></span></h2>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">But, in redfish-core/lib/systems.hpp, I don&#8217;t =
+see EthernetInterfaces and I don&#8217;t see it on my server Redfish too.<o=
+:p></o:p></p>
+<p class=3D"MsoNormal">Its only present in Managers/bmc/EthernetInterfaces.=
+ <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">How do I add Systems/system/EthernetInterfaces Redfi=
+sh support? What changes do I need to make?<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Regards,<o:p></o:p></p>
+<p class=3D"MsoNormal">Ashwini<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
 
-** Step #2 assumes you're running my new versions of the script **
-
-Hope this helps!
-
---=20
-Patrick Williams
-
---QP05S6W61xstg4Ne
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmAmxy0ACgkQqwNHzC0A
-wRlyUA/+KjWuAiLYdZ2bPvdXZCGpNZ+d+nl8cksDSNgy6kSqiKL/HL380IlGMKg4
-k7SaVb+ljOCj9ulKOTIopZ36un2SEp8pZLP8CgfN0zigCGaQJ25kkNkjhm6clZFI
-Wse7kH4FLvKfkOmI7eTPNRrUNVfKXDoTrdnBnxBnygDVBZ97qJtkzK+cAU8ytrC8
-nso2VYTbjT/qU3MDKPY5slwtdX12Tg4n9XI3jQqql0yKcn3pAWct/hrsNNHa/zQa
-9lQcr5uk/g0GMfg6doDbfW6latCDI7vTTvaa8GT4B6snX0bV6sA3YcVpaYM9uL5w
-hKIt2CsfFzpio7ywBVikWykyU3tZxVgQKBN8tg8dmfyjEzlg3UB8dwHgQLW/qQKv
-mdYmFfeLT/8i0XZ179L+YuXXhxqPxy0NF2RrM09Bskb7JmoTH3J25vhCNI+142kH
-Ik8YGiYko+1pLaxSCFh7ApEtWxl8+JVJ2kH9nZQCGofI2zCEcJYsPsD8EQlzOurr
-Qx9G5f5Nc9QKOQVZlPl4E/sCCot6OYRCHs4Q4QBmmOJdELtq87ngTP3Uw8KETB8U
-WNR0WkRgWNQvGZoBO4oAN7bgcL7b8fdVsWIvWimfMOQxHnWzHMowrhxHadQ6Egca
-sDJlKHIxctRgTwTVmeLkvADvIEohsiIuaKBtv0eEUxHyi06p5lI=
-=krEu
------END PGP SIGNATURE-----
-
---QP05S6W61xstg4Ne--
+--_000_SG2PR02MB27961D3A938C94341747757C858A9SG2PR02MB2796apcp_--
