@@ -2,76 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A39E31CB9E
-	for <lists+openbmc@lfdr.de>; Tue, 16 Feb 2021 15:13:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E5E8431D001
+	for <lists+openbmc@lfdr.de>; Tue, 16 Feb 2021 19:16:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dg2y92Vymz30NM
-	for <lists+openbmc@lfdr.de>; Wed, 17 Feb 2021 01:13:37 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ppeqajvb;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dg8Lj0FrXz30Lw
+	for <lists+openbmc@lfdr.de>; Wed, 17 Feb 2021 05:16:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::235;
- helo=mail-oi1-x235.google.com; envelope-from=geissonator@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=ppeqajvb; dkim-atps=neutral
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com
- [IPv6:2607:f8b0:4864:20::235])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir;
+ Wed, 17 Feb 2021 05:16:34 AEDT
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dg2xx0ZQkz2y0B
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 01:13:23 +1100 (AEDT)
-Received: by mail-oi1-x235.google.com with SMTP id k204so11347078oih.3
- for <openbmc@lists.ozlabs.org>; Tue, 16 Feb 2021 06:13:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=wWquFD3TWicLvoj15pXLW86nnGXGd7MjupgzuVM7H20=;
- b=ppeqajvb/J3Zu9pf6X8JUjy4PzloXbJOx6tHiCe5m1PHjiJ5UfFGOW9upFF2wnV3vN
- fvZjSMjleif2cJAszalS4OaLSS0JhTlRmEgVX9Nj7Zg0nP0RoY4RumocIxv8Yz3Ef+us
- QUiL5nUc9e20W7gABinN0svpLsHuIhyrZ3CjqcGKeItSylONcI8yhsVSay0Q6Text/8Q
- xCinrPMmn2tASrlgGqTfakcv+0ZoDBZqMQugrd31GjNdc2ejeC1qC7VW0Oh0vd0D3HRw
- 8WvZW833kX3t0b1ho1YojYFvkzdjwdyv/fPnciMPabPPyReK9zTuqSttD139ET1ErIGj
- YjqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=wWquFD3TWicLvoj15pXLW86nnGXGd7MjupgzuVM7H20=;
- b=Cuozf+YNHf7swKJLUL94JjpsSmOsJPdSHI23bGvTF/jEouazx8oUPFrjONNjBU6KL+
- pBdX+pgAlAbxcHqD3KfldwAw2vaBnJdlXnNqK77NdRr7g5kFeTeYGInkDfsYrgJ9EU1H
- 5RPj2+SDQEjCezyJ+YJvEADQI+9dKyZ0VOzBEORMSgxZqeeIVua8ijjkvlruUMo7gHzj
- 4JFXEWVAWX1tMlLNpuP8Vw6PoYTh4zujg6pN6jv2ljrxp9It0r4IGEmkNmHlD9YO2tTl
- 2fiw9g3vRI2+malv73pG8t3GWSd/plDY0n1p0ar1cvLMOLlrTa3JP/ME41Z1mOM6Xavo
- +/+g==
-X-Gm-Message-State: AOAM531z8Lumo/kRoRqAQnm1rhC4g0+frusAkXEg4o7XipGN2zPe1uoM
- hPA2Fil8mIVNsMJg0jAVweqzwvCsD9iHbQ==
-X-Google-Smtp-Source: ABdhPJzYdNyB4klaDYsJ11ycCW6Q232k2X/+6gqUnxmf64nf201hosvEYD8p20Mo7PPLczj1Cm+Y8Q==
-X-Received: by 2002:a05:6808:4d0:: with SMTP id
- a16mr2697535oie.87.1613484796979; 
- Tue, 16 Feb 2021 06:13:16 -0800 (PST)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:f09a:78e2:9921:cd92])
- by smtp.gmail.com with ESMTPSA id t14sm4542665oif.30.2021.02.16.06.13.16
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 16 Feb 2021 06:13:16 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: Upcoming enhancements to `run-unit-test-docker`
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <YCXLqK7KgvwYwWDl@heinlein>
-Date: Tue, 16 Feb 2021 08:13:15 -0600
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <7E64EF5A-1C4A-4414-B3AA-D973ECCA0BBD@gmail.com>
-References: <YCXLqK7KgvwYwWDl@heinlein>
-To: Patrick Williams <patrick@stwcx.xyz>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dg8LV1MQDz30KN;
+ Wed, 17 Feb 2021 05:16:34 +1100 (AEDT)
+IronPort-SDR: T7OgI7rXK8KQLtLqzK1jh3qwxVz0ol2Lmdkk4LwrIAiOnoVQyJTuogokqL2l0mj81Fh3yPxtFO
+ +GcSPZ5KWgEQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9897"; a="170634243"
+X-IronPort-AV: E=Sophos;i="5.81,184,1610438400"; d="scan'208";a="170634243"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Feb 2021 10:15:24 -0800
+IronPort-SDR: 6pXYhCqPaIaxYtx0EOvaa965LEVjcd9ChuE5ozGOVd9YHcYUTUo89x5JgR4Yw+JjW759Ra+Xl5
+ tvtzLGj8ukpA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,184,1610438400"; d="scan'208";a="493375887"
+Received: from maru.jf.intel.com ([10.54.51.77])
+ by fmsmga001.fm.intel.com with ESMTP; 16 Feb 2021 10:15:23 -0800
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+To: Brendan Higgins <brendanhiggins@google.com>,
+ Wolfram Sang <wsa@the-dreams.de>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Rob Herring <robh+dt@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Tao Ren <taoren@fb.com>, Cedric Le Goater <clg@kaod.org>
+Subject: [PATCH v3 0/4] i2c: aspeed: Add buffer and DMA modes support
+Date: Tue, 16 Feb 2021 10:27:31 -0800
+Message-Id: <20210216182735.11639-1-jae.hyun.yoo@linux.intel.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,61 +58,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-i2c@vger.kernel.org,
+ linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This patch series adds buffer mode and DMA mode transfer support for the
+Aspeed I2C driver. With this change, buffer mode and DMA mode can be
+selectively used depend on platform configuration.
 
+* Buffer mode
+  AST2400:
+    It has 2 KBytes (256 Bytes x 8 pages) of I2C SRAM buffer pool from
+    0x1e78a800 to 0x1e78afff that can be used for all busses with
+    buffer pool manipulation. To simplify implementation for supporting
+    both AST2400 and AST2500, it assigns each 128 Bytes per bus without
+    using buffer pool manipulation so total 1792 Bytes of I2C SRAM
+    buffer will be used.
 
-> On Feb 11, 2021, at 6:28 PM, Patrick Williams <patrick@stwcx.xyz> =
-wrote:
->=20
-> Hello,
->=20
-> Inside openbmc-build-scripts is a tool which is used by Jenkins to run
-> repository-level CI and I think some developers also use it:
-> `run-unit-test-docker`.  I've rewritten a component of this, which is
-> now at `scripts/build-unit-test-docker`, in Python and done some
-> enhancements to it.  The [currently] last commit in this sequence is =
-at
-> [1].
->=20
-> Important notices:
->=20
->    - Location change: build-unit-test-docker.sh ->
->      scripts/build-unit-test-docker
->        + I suspect few people run this directly, but instead use
->          `run-unit-test-docker` which hides the rename.
->=20
->    - Python3.6 minimum.
->        + Bitbake already requires this so it really shouldn't be a
->          problem for anyone.
->=20
->    - Python 'sh' module needed.
->        + You can install this with the 'python3-sh' package on many
->          distros or 'pip install sh'.
->=20
->    - Docker stages are now tagged with different names / tag revs.
->        + I wrote a `scripts/clean-unit-test-docker` which will clean
->          out old Docker tags and can be ran periodically.
->=20
-> Major changes:
->=20
->    - Rewrite in Python.
->    - Significant speed improvements:
->        - Docker stages all build in parallel to formulate the final =
-image.
->        - All Docker stages are tagged and reused from run to run.
->        - CMake packages now use the Ninja backend.  This is the same =
-as
->          bitbake and faster than make.
->    - Included packages are defined in a dictionary rather than as raw
->      Dockerfiles.
+  AST2500:
+    It has 16 Bytes of individual I2C SRAM buffer per each bus and its
+    range is from 0x1e78a200 to 0x1e78a2df, so it doesn't have 'buffer
+    page selection' bit field in the Function control register, and
+    neither 'base address pointer' bit field in the Pool buffer control
+    register it has. To simplify implementation for supporting both
+    AST2400 and AST2500, it writes zeros on those register bit fields
+    but it's okay because it does nothing in AST2500.
 
+  AST2600:
+    It has 32 Bytes of individual I2C SRAM buffer per each bus and its
+    range is from 0x1e78ac00 to 0x1e78adff. Works just like AST2500
+    does.
 
-Thanks for doing this Patrick! I submitted your first set of
-commits this morning so we=E2=80=99re officially on the new python
-based scripts in CI.
+* DMA mode
+  Only AST2500 and later versions support DMA mode under some limitations
+  in case of AST2500:
+    I2C is sharing the DMA H/W with UHCI host controller and MCTP
+    controller. Since those controllers operate with DMA mode only, I2C
+    has to use buffer mode or byte mode instead if one of those
+    controllers is enabled. Also make sure that if SD/eMMC or Port80
+    snoop uses DMA mode instead of PIO or FIFO respectively, I2C can't
+    use DMA mode.
 
-Let Patrick and I know if you see anything amiss.
+Please review it.
+
+Changes since v2:
+- Added SRAM resources back to default dtsi and added a mode selection
+  property.
+- Refined SoC family dependent xfer mode configuration functions.
+
+Changes since v1:
+V1: https://lore.kernel.org/linux-arm-kernel/20191007231313.4700-1-jae.hyun.yoo@linux.intel.com/
+- Removed a bug fix patch which was merged already from this patch series. 
+- Removed buffer reg settings from default device tree and added the settings
+  into bindings document to show the predefined buffer range per each bus.
+- Updated commit message and comments.
+- Refined driver code using abstract functions.
+
+Jae Hyun Yoo (4):
+  dt-bindings: i2c: aspeed: add transfer mode support
+  ARM: dts: aspeed: modify I2C node to support buffer mode
+  i2c: aspeed: add buffer mode transfer support
+  i2c: aspeed: add DMA mode transfer support
+
+ .../devicetree/bindings/i2c/i2c-aspeed.txt    |  37 +-
+ arch/arm/boot/dts/aspeed-g4.dtsi              |  47 +-
+ arch/arm/boot/dts/aspeed-g5.dtsi              |  47 +-
+ arch/arm/boot/dts/aspeed-g6.dtsi              |  32 +-
+ drivers/i2c/busses/i2c-aspeed.c               | 637 ++++++++++++++++--
+ 5 files changed, 684 insertions(+), 116 deletions(-)
+
+-- 
+2.17.1
 
