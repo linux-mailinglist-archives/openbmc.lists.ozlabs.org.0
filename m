@@ -1,78 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22C4231E169
-	for <lists+openbmc@lfdr.de>; Wed, 17 Feb 2021 22:32:51 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B22C31E2A2
+	for <lists+openbmc@lfdr.de>; Wed, 17 Feb 2021 23:42:24 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DgrfT1Njpz3clV
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 08:32:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DgtBk4VbSz30MG
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 09:42:22 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=YZQognyY;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=V+USs4SN;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b36; helo=mail-yb1-xb36.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::433;
+ helo=mail-wr1-x433.google.com; envelope-from=lee.jones@linaro.org;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=YZQognyY; dkim-atps=neutral
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com
- [IPv6:2607:f8b0:4864:20::b36])
+ unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
+ header.s=google header.b=V+USs4SN; dkim-atps=neutral
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
+ [IPv6:2a00:1450:4864:20::433])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DgrfF0XFyz30HK
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 08:32:34 +1100 (AEDT)
-Received: by mail-yb1-xb36.google.com with SMTP id x19so137135ybe.0
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 13:32:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=gnjxlpOukpy1VVx30BX4LRpoSbywyqXxT2c7Lti6bbY=;
- b=YZQognyYmfRS00hSoPG93IgMkuE303yzUrrLj5jAF9/Xt3qkpoe8tuB03I1tvtqb0S
- 9Pn7T9e7GBwLJ2uOq4X+TJhVIak12izMeyX9NC5Sma26hRKpv3e+aXLGEsGwPOxgc4Oh
- MI8OFjEldP+G/SVK65fzRbz4GRn+m2MBOZbJohaKwx/RYU06R4Oxm3hUIFTKh//NM8iP
- 61qVwBbMZyUuTZR/D2P3aK0K7mfIrQ2rkP7Rk1VG5vUx0yDLVHh5VVrjKmPvlAkDBYkW
- ZtO0Mkb343tIaptS9LXxcTp3022E88rjEma9Y89Msp1NqymkNIPE+lqGK9bRrj+r/TPf
- zMXw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dfv7G5Pqsz30J4
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Feb 2021 19:20:55 +1100 (AEDT)
+Received: by mail-wr1-x433.google.com with SMTP id v15so11909405wrx.4
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Feb 2021 00:20:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:content-transfer-encoding:in-reply-to;
+ bh=KKS3mm60WVea5SPhQi4hdtnoG3z+A2HjNVoJZwC0MIY=;
+ b=V+USs4SNTFDKkTKblk5EQSbgBy9+OQlZ7dMb5/oxFQ8yc930tIWzrfZeEYnXoEuEUX
+ 8KyzcXaqo9XY2Pj2wNoXPdWT68qxIxf2c8fhkc9H3Sas+S+8ZEm+VLVTzO0LDz5bk9EF
+ rwGKBdpgyBRzhSD762tKTqJ5UwrKtFMj6udokMjDGhrDyuRqSYgyNbyk/xMr0kYHofjD
+ rQHOw5KHcQSff1rpA2z+dTbcTpfiPuuwWY9HPH6qq9Rowd/Jw4y5OHSicLNzs27EKLV8
+ 8cRO/HOFzG3l4CvsDtG8VsV8EVbgs9ikc7BCqoX4peqYpnb9w4ktGh1DH6xiH54NlRCB
+ RrZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=gnjxlpOukpy1VVx30BX4LRpoSbywyqXxT2c7Lti6bbY=;
- b=s03HFXqqlzgL8EwcahpqyQm1bh/YRheCCu2MK0kS+x0+18Y4S1QTco8oLoWD9MGo7A
- w5mbtHdKgtBnCCe/6isXXaiyTS1t4VXhOsoNnPcafb2+yEs6zcp286PyWpa2Gd7GSE0r
- JXMfB5eYzJsYVjecanHVVcyZVWyndL9deH+UyiQtxn+vOxviIvFvVyLpMYIY1nUeN+uC
- UZnNOODu/ImRvNJbzEsGoN0PTZ7LMHYo07u1iyH5jqv1apZP7BCSVGiDpisixfB+4E6d
- 7z07fWG5zDAr9WSVfawi5eSKCxy7Llh81o46pZcUgmnJVQxQL7YZhDK2ZCe+3JSML3fT
- pgvQ==
-X-Gm-Message-State: AOAM531REzMXUh9TAuJBlsKe91FJfvBxJHDv95Eu417uTDqI5ykzPJoO
- +kWvF2iStjvsas95KIxGLnt2BBsWyXu0ggGpyAPuqw==
-X-Google-Smtp-Source: ABdhPJzaogreSeiQ0HvG920ueCU/YKRqGN5x1aMd+3wkjr4VRQD8s3wu8O6vqaJnuiFa7aoHqvJVsZX9WZrNJmxMrpg=
-X-Received: by 2002:a25:2c82:: with SMTP id s124mr2082653ybs.340.1613597552049; 
- Wed, 17 Feb 2021 13:32:32 -0800 (PST)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:content-transfer-encoding
+ :in-reply-to;
+ bh=KKS3mm60WVea5SPhQi4hdtnoG3z+A2HjNVoJZwC0MIY=;
+ b=mmVcWK45ZqoIbq6e2Sf9HfGnmK1rphWT8y2T/dyRj9KuED/jHUYdVVLxpW/nQIKRio
+ 9KzEZV8/2zW96Cu4yp1EK/BjqCorThw0IV3grTW8MiMd5Dw/XU5rrT/pBlV0B1jZM0vz
+ t1mvJwuUj78CNfAsQaPqhiC8d8cB8SLHwwy7mirjvnNrA5DrLN0rgqvnZjWKR+mOMur2
+ 1/ECYnZJzd/CdDxfs9FcYY/mpOYVuRI0H1fiJxRr9q60LNtIL1DdJaso2GPotXTBZpAp
+ L/i3JTNw6z+QVAYzSKaVrIONF7DONlFae1cLcnEBlIScLG2rRepbDSfykbNTTzf4ZOdC
+ H0TA==
+X-Gm-Message-State: AOAM530G7VBOVn4C1xwU42b5bIkqm61m74BbXKocTrZ4YcfRoKgg86lq
+ wpGqMk7SFB5zTGAxYpALLlR7UQ==
+X-Google-Smtp-Source: ABdhPJzmArPGlwjG+vZMBP5b+78FxkLwYjxyYaijAK0x7nUBtsPckPTKlS5li+Bv3M/6zI/ofh8kxw==
+X-Received: by 2002:adf:ab11:: with SMTP id q17mr22837604wrc.192.1613463649320; 
+ Tue, 16 Feb 2021 00:20:49 -0800 (PST)
+Received: from dell ([91.110.221.165])
+ by smtp.gmail.com with ESMTPSA id c22sm29673333wrb.91.2021.02.16.00.20.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Feb 2021 00:20:48 -0800 (PST)
+Date: Tue, 16 Feb 2021 08:20:46 +0000
+From: Lee Jones <lee.jones@linaro.org>
+To: Jakub Kicinski <kuba@kernel.org>
+Subject: Re: [PATCH 00/21] [Set 2] Rid W=1 warnings from Clock
+Message-ID: <20210216082046.GA4803@dell>
+References: <20210212212503.GC179940@dell> <20210212212630.GD179940@dell>
+ <161316754567.1254594.9542583200097699504@swboyd.mtv.corp.google.com>
+ <20210212223739.GE179940@dell>
+ <161317480301.1254594.16648868282165823277@swboyd.mtv.corp.google.com>
+ <YCf4kkMsX+Ymgy6N@lunn.ch>
+ <161333644244.1254594.4498059850307971318@swboyd.mtv.corp.google.com>
+ <YCmUOHTtc+j4eLkO@lunn.ch> <20210215084952.GF179940@dell>
+ <20210215094509.0b1f0bbf@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
 MIME-Version: 1.0
-References: <SG2PR02MB2796B5FB2DB9AAAE2594BA1E858B9@SG2PR02MB2796.apcprd02.prod.outlook.com>
- <SG2PR02MB27961D3A938C94341747757C858A9@SG2PR02MB2796.apcprd02.prod.outlook.com>
- <CACWQX807_KpeTHnMqPMt8E+h_ggMpKy0_Jr82HPV+oRushXdXw@mail.gmail.com>
- <SG2PR02MB2796736A2D3DCEB0AC9AEC9985869@SG2PR02MB2796.apcprd02.prod.outlook.com>
- <CACWQX80r9dYEGbwftH32Sc6fRmDLHeYg24tdO+8hME9V_bDDCg@mail.gmail.com>
- <SG2PR02MB2796D7A6B15C18F348369F0A85869@SG2PR02MB2796.apcprd02.prod.outlook.com>
- <CACWQX81Wg-+tcj+QbUCN8K=Ox7EeCmPL_b2VSYr3ziM-d2va4g@mail.gmail.com>
- <SG2PR02MB2796CC3A1DDD20838992AF5185869@SG2PR02MB2796.apcprd02.prod.outlook.com>
-In-Reply-To: <SG2PR02MB2796CC3A1DDD20838992AF5185869@SG2PR02MB2796.apcprd02.prod.outlook.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Wed, 17 Feb 2021 13:32:20 -0800
-Message-ID: <CACWQX80UBr2vGm3-ixo_G2W1SjYhmJTuX+SmpP947e5y922H_w@mail.gmail.com>
-Subject: Re: Redfish v1/Systems/system/EthernetInterfaces
-To: "Udupa.Ashwini ISV" <udupa.ashwini@inventec.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210215094509.0b1f0bbf@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+X-Mailman-Approved-At: Thu, 18 Feb 2021 09:42:10 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,152 +89,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Andrew Lunn <andrew@lunn.ch>, Prashant Gaikwad <pgaikwad@nvidia.com>,
+ Tomer Maimon <tmaimon77@gmail.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Michael Turquette <mturquette@baylibre.com>,
+ Bjorn Andersson <bjorn.andersson@linaro.org>,
+ Rajeev Kumar <rajeev-dlh.kumar@st.com>, Jan Kotas <jank@cadence.com>,
+ Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>,
+ Michal Simek <michal.simek@xilinx.com>,
+ Boris BREZILLON <boris.brezillon@free-electrons.com>,
+ linux-omap@vger.kernel.org, Ahmad Fatoum <a.fatoum@pengutronix.de>,
+ Benjamin Fair <benjaminfair@google.com>,
+ Emilio =?iso-8859-1?Q?L=F3pez?= <emilio@elopez.com.ar>,
+ Viresh Kumar <vireshk@kernel.org>, openbmc@lists.ozlabs.org,
+ Russell King <linux@armlinux.org.uk>, Jonathan Hunter <jonathanh@nvidia.com>,
+ Chen-Yu Tsai <wens@csie.org>, Andy Gross <agross@kernel.org>,
+ Loc Ho <lho@apm.com>, NXP Linux Team <linux-imx@nxp.com>,
+ Richard Woodruff <r-woodruff2@ti.com>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+ Sascha Hauer <s.hauer@pengutronix.de>, linux-clk@vger.kernel.org,
+ Maxime Ripard <mripard@kernel.org>, linux-tegra@vger.kernel.org,
+ Tali Perry <tali.perry1@gmail.com>, linux-arm-kernel@lists.infradead.org,
+ =?iso-8859-1?Q?S=F6ren?= Brinkmann <soren.brinkmann@xilinx.com>,
+ Jernej Skrabec <jernej.skrabec@siol.net>, Rajan Vaja <rajan.vaja@xilinx.com>,
+ Tero Kristo <kristo@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+ Patrick Venture <venture@google.com>,
+ Peter De Schrijver <pdeschrijver@nvidia.com>, linux-kernel@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>,
+ Nuvoton Technologies <tali.perry@nuvoton.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Shiraz Hashim <shiraz.linux.kernel@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Feb 17, 2021 at 1:23 PM Udupa.Ashwini ISV
-<udupa.ashwini@inventec.com> wrote:
->
-> On Wed, Feb 17, 2021 at 12:13 PM Udupa.Ashwini ISV <udupa.ashwini@invente=
-c.com> wrote:
-> > >
-> > > Hi Ed,
-> > >
-> > >
-> > >
-> > > Its Inventec platform.
-> > >
-> > > https://github.com/openbmc/openbmc/tree/master/meta-inventec
-> > >
-> > > I just wanted to know how to implement /redfish/v1/Systems/system/Eth=
-ernetInterfaces.
-> >
-> > Excellent, that helps.  I originally misread, and thought the interface=
- was missing on the platform, not that you were trying to add it to redfish=
-.
-> >
-> > >
-> > >
-> > >
-> > > Regards,
-> > >
-> > > Ashwini
-> >
-> > Please don't top post.
-> >
-> > >
-> > >
-> > >
-> > > From: Ed Tanous <ed@tanous.net>
-> > > Sent: Saturday, February 13, 2021 10:18 AM
-> > > To: Udupa.Ashwini ISV <udupa.ashwini@inventec.com>
-> > > Cc: openbmc@lists.ozlabs.org
-> > > Subject: Re: Redfish v1/Systems/system/EthernetInterfaces
-> > >
-> > >
-> > >
-> > >
-> > >
-> > >
-> > >
-> > > On Sat, Feb 13, 2021 at 10:11 AM Udupa.Ashwini ISV <udupa.ashwini@inv=
-entec.com> wrote:
-> > >
-> > >
-> > >
-> > > Hi,
-> > >
-> > >
-> > >
-> > > I am new to OpenBmc and Redfish.
-> > >
-> > > I saw in bmcweb/Redfish.md, that below Redfish is targeted for OpenBm=
-c:
-> >
-> > This doc is really old, and was originally written as an initial stab a=
-t what interfaces we should write.  Unfortunately, when it got converted in=
-to a "here's the interfaces we support today" doc, that path didn't get scr=
-ubbed.  We don't have an implementation of it today.  I can get a review op=
-en to update the doc.
-> >
-> > >
-> > > /redfish/v1/Systems/system/EthernetInterfaces
-> > >
-> > >
-> > >
-> > > But, in redfish-core/lib/systems.hpp, I don=E2=80=99t see EthernetInt=
-erfaces and I don=E2=80=99t see it on my server Redfish too.
-> >
-> > Today, we don't have this implemented because we don't really have a pa=
-th to get that information from the host.  Doing that would require either =
-an in-band application running on the main processor to send new ip address=
-es to the bmc, or an NCSI, MCTP, or PLDM connection directly to the NIC tha=
-t supported getting that level of information.
-> > Both of which likely require a new daemon to expose those APIs to debug=
-.
->
-> Thanks Ed.
-> So, only those implemented in "bmcweb/redfish-core/lib/"  are currently i=
-mplemented in OpenBMC Redfish right?
+On Mon, 15 Feb 2021, Jakub Kicinski wrote:
 
-Correct.
+> On Mon, 15 Feb 2021 08:49:52 +0000 Lee Jones wrote:
+> > > Jakub can explain how he added these checks.  
+> > 
+> > Yes, please share.
+> 
+> https://github.com/kuba-moo/nipa
 
-> I don=E2=80=99t see below implemented too:
-> Systems/system/BootOptions
+Thanks for this.
 
-I thought there were patches in review to add this, you might try
-checking gerrit.
+Oh, I see.  So you conduct tests locally, then post them up in a
+section called 'Checks' using the provided API.  I assume that
+Patchwork does not alert the user when something has gone awry?  Is
+this something Nipa does?
 
-> Please confirm.
->
-> But, are these implemented?
-> 1. Systems/system/NetworkInterfaces
-No.
-
-> 2. Systems/system/PCIeFunctions
-Yes, but the only thing that publishes data of that type that I know
-of is peci-pcie.  If that doesn't work for you, you'll likely need to
-implement the appropriate dbus interfaces for your system.
-
-> If so, what changes are needed to make these working?
->
->
-> > We do have /redfish/v1/Systems/hypervisor/EthernetInterfaces today.
-> > We'd ideally want to follow very closely to what that does, expose a ne=
-w path on DBus that implements the xyz.openbmc_project.Network.EthernetInte=
-rface interface, and grab the data from it.
-> >
-> > >
-> > >
-> > >
-> > > What upstream system are you trying this on?  If your platform isn=E2=
-=80=99t upstream, can you point at the code review where you=E2=80=99re add=
-ing it?
-> > >
-> > >
-> > >
-> > > If you don=E2=80=99t have either, take note that it=E2=80=99s really =
-difficult to help debug or make suggestions for platforms that we can=E2=80=
-=99t see the code for.
-> > >
-> > >
-> > >
-> > > Its only present in Managers/bmc/EthernetInterfaces.
-> > >
-> > >
-> > >
-> > > How do I add Systems/system/EthernetInterfaces Redfish support? What =
-changes do I need to make?
-> > >
-> > >
-> > >
-> > > Regards,
-> > >
-> > > Ashwini
-> > >
-> > >
-> > >
-> > > --
-> > >
-> > > -Ed
+-- 
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
