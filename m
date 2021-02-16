@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1665C31D007
-	for <lists+openbmc@lfdr.de>; Tue, 16 Feb 2021 19:17:55 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A66C431D015
+	for <lists+openbmc@lfdr.de>; Tue, 16 Feb 2021 19:18:33 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dg8N06BWZz3cTZ
-	for <lists+openbmc@lfdr.de>; Wed, 17 Feb 2021 05:17:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dg8Nj74TJz3cXP
+	for <lists+openbmc@lfdr.de>; Wed, 17 Feb 2021 05:18:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,21 +16,21 @@ Authentication-Results: lists.ozlabs.org;
 Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dg8LX2QLSz30Lw;
- Wed, 17 Feb 2021 05:16:36 +1100 (AEDT)
-IronPort-SDR: 69ktk2OIEsgOHqmVZyliFyDI6Jh+4Wv+3izFLIl1OpKaafZUTxmpZC806wEsXNZ2wZOEzJKL+I
- Q5Tx80tH/6ZA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9897"; a="170634291"
-X-IronPort-AV: E=Sophos;i="5.81,184,1610438400"; d="scan'208";a="170634291"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dg8LY34gPz30NJ;
+ Wed, 17 Feb 2021 05:16:37 +1100 (AEDT)
+IronPort-SDR: nu4ABarnfdzUUc4UVeq0KEyKjCOeln+v8Q+4EwzeiYJqiWEHZvdQA263SqIAhy7coRXABz6vhZ
+ PMnRoShOWXRQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9897"; a="170634301"
+X-IronPort-AV: E=Sophos;i="5.81,184,1610438400"; d="scan'208";a="170634301"
 Received: from fmsmga001.fm.intel.com ([10.253.24.23])
  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Feb 2021 10:15:31 -0800
-IronPort-SDR: I5ST+nMNFyqwPK+wTDBxsnaSUbLB5UjmqMYJIbGmrSoBFTtonxvyrEnS/AJ7jhd4xHAgFnguYw
- P46R3bBqTSTg==
+ 16 Feb 2021 10:15:32 -0800
+IronPort-SDR: n1bdBO7d8l5CWqRaNlcAlRpLh9B2mdDSvs4raZx4/lfvdUrC5F3TcBw39KStAaBr7lXzNT0Ogg
+ GRE3lsLGdQGQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,184,1610438400"; d="scan'208";a="493376148"
+X-IronPort-AV: E=Sophos;i="5.81,184,1610438400"; d="scan'208";a="493376179"
 Received: from maru.jf.intel.com ([10.54.51.77])
- by fmsmga001.fm.intel.com with ESMTP; 16 Feb 2021 10:15:31 -0800
+ by fmsmga001.fm.intel.com with ESMTP; 16 Feb 2021 10:15:32 -0800
 From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 To: Brendan Higgins <brendanhiggins@google.com>,
  Wolfram Sang <wsa@the-dreams.de>,
@@ -38,9 +38,9 @@ To: Brendan Higgins <brendanhiggins@google.com>,
  Joel Stanley <joel@jms.id.au>, Rob Herring <robh+dt@kernel.org>,
  Mark Rutland <mark.rutland@arm.com>, Andrew Jeffery <andrew@aj.id.au>,
  Tao Ren <taoren@fb.com>, Cedric Le Goater <clg@kaod.org>
-Subject: [PATCH v3 3/4] i2c: aspeed: add buffer mode transfer support
-Date: Tue, 16 Feb 2021 10:27:34 -0800
-Message-Id: <20210216182735.11639-4-jae.hyun.yoo@linux.intel.com>
+Subject: [PATCH v3 4/4] i2c: aspeed: add DMA mode transfer support
+Date: Tue, 16 Feb 2021 10:27:35 -0800
+Message-Id: <20210216182735.11639-5-jae.hyun.yoo@linux.intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210216182735.11639-1-jae.hyun.yoo@linux.intel.com>
 References: <20210216182735.11639-1-jae.hyun.yoo@linux.intel.com>
@@ -61,710 +61,493 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This driver uses byte mode that makes lots of interrupt calls
-which isn't good for performance and it makes the driver very
-timing sensitive. To improve performance of the driver, this commit
-adds buffer mode transfer support which uses I2C SRAM buffer
-instead of using a single byte buffer.
+This commit adds DMA mode transfer support.
+
+Only AST2500 and later versions support DMA mode.
+
+AST2500 has these restrictions:
+  - If one of these controllers is enabled
+      * UHCI host controller
+      * MCTP controller
+    I2C has to use buffer mode or byte mode instead
+    since these controllers run only in DMA mode and
+    I2C is sharing the same DMA H/W with them.
+  - If one of these controllers uses DMA mode, I2C
+    can't use DMA mode
+      * SD/eMMC
+      * Port80 snoop
 
 Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Tested-by: Tao Ren <taoren@fb.com>
 ---
 Changes since v2:
 - Refined SoC family dependent xfer mode configuration functions.
 
 Changes since v1:
-- Updated commit message.
+- Updated commit message and comments.
 - Refined using abstract functions.
 
- drivers/i2c/busses/i2c-aspeed.c | 464 ++++++++++++++++++++++++++++----
- 1 file changed, 412 insertions(+), 52 deletions(-)
+ drivers/i2c/busses/i2c-aspeed.c | 257 ++++++++++++++++++++++++++------
+ 1 file changed, 212 insertions(+), 45 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index 724bf30600d6..343e621ff133 100644
+index 343e621ff133..304d08011ca7 100644
 --- a/drivers/i2c/busses/i2c-aspeed.c
 +++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -7,6 +7,7 @@
-  *  Copyright 2017 Google, Inc.
-  */
- 
-+#include <linux/bitfield.h>
+@@ -10,6 +10,8 @@
+ #include <linux/bitfield.h>
  #include <linux/clk.h>
  #include <linux/completion.h>
++#include <linux/dma-mapping.h>
++#include <linux/dmapool.h>
  #include <linux/err.h>
-@@ -19,15 +20,24 @@
- #include <linux/irqchip/chained_irq.h>
- #include <linux/irqdomain.h>
- #include <linux/kernel.h>
-+#include <linux/mfd/syscon.h>
- #include <linux/module.h>
- #include <linux/of_address.h>
- #include <linux/of_irq.h>
- #include <linux/of_platform.h>
- #include <linux/platform_device.h>
-+#include <linux/regmap.h>
- #include <linux/reset.h>
- #include <linux/slab.h>
- 
--/* I2C Register */
-+/* I2C Global Registers */
-+/* 0x00 : I2CG Interrupt Status Register  */
-+/* 0x08 : I2CG Interrupt Target Assignment  */
-+/* 0x0c : I2CG Global Control Register (AST2500)  */
-+#define ASPEED_I2CG_GLOBAL_CTRL_REG			0x0c
-+#define  ASPEED_I2CG_SRAM_BUFFER_EN			BIT(0)
-+
-+/* I2C Bus Registers */
- #define ASPEED_I2C_FUN_CTRL_REG				0x00
- #define ASPEED_I2C_AC_TIMING_REG1			0x04
- #define ASPEED_I2C_AC_TIMING_REG2			0x08
-@@ -35,14 +45,12 @@
- #define ASPEED_I2C_INTR_STS_REG				0x10
- #define ASPEED_I2C_CMD_REG				0x14
+ #include <linux/errno.h>
+ #include <linux/i2c.h>
+@@ -47,6 +49,8 @@
  #define ASPEED_I2C_DEV_ADDR_REG				0x18
-+#define ASPEED_I2C_BUF_CTRL_REG				0x1c
+ #define ASPEED_I2C_BUF_CTRL_REG				0x1c
  #define ASPEED_I2C_BYTE_BUF_REG				0x20
++#define ASPEED_I2C_DMA_ADDR_REG				0x24
++#define ASPEED_I2C_DMA_LEN_REG				0x28
  
--/* Global Register Definition */
--/* 0x00 : I2C Interrupt Status Register  */
--/* 0x08 : I2C Interrupt Target Assignment  */
--
  /* Device Register Definition */
  /* 0x00 : I2CD Function Control Register  */
-+#define ASPEED_I2CD_BUFFER_PAGE_SEL_MASK		GENMASK(22, 20)
- #define ASPEED_I2CD_MULTI_MASTER_DIS			BIT(15)
- #define ASPEED_I2CD_SDA_DRIVE_1T_EN			BIT(8)
- #define ASPEED_I2CD_M_SDA_DRIVE_1T_EN			BIT(7)
-@@ -103,6 +111,8 @@
+@@ -111,6 +115,8 @@
  #define ASPEED_I2CD_BUS_RECOVER_CMD			BIT(11)
  
  /* Command Bit */
-+#define ASPEED_I2CD_RX_BUFF_ENABLE			BIT(7)
-+#define ASPEED_I2CD_TX_BUFF_ENABLE			BIT(6)
++#define ASPEED_I2CD_RX_DMA_ENABLE			BIT(9)
++#define ASPEED_I2CD_TX_DMA_ENABLE			BIT(8)
+ #define ASPEED_I2CD_RX_BUFF_ENABLE			BIT(7)
+ #define ASPEED_I2CD_TX_BUFF_ENABLE			BIT(6)
  #define ASPEED_I2CD_M_STOP_CMD				BIT(5)
- #define ASPEED_I2CD_M_S_RX_CMD_LAST			BIT(4)
- #define ASPEED_I2CD_M_RX_CMD				BIT(3)
-@@ -119,6 +129,13 @@
- /* 0x18 : I2CD Slave Device Address Register   */
- #define ASPEED_I2CD_DEV_ADDR_MASK			GENMASK(6, 0)
+@@ -136,6 +142,14 @@
+ #define ASPEED_I2CD_BUF_TX_COUNT_MASK			GENMASK(15, 8)
+ #define ASPEED_I2CD_BUF_OFFSET_MASK			GENMASK(5, 0)
  
-+/* 0x1c : I2CD Buffer Control Register */
-+/* Use 8-bits or 6-bits wide bit fileds to support both AST2400 and AST2500 */
-+#define ASPEED_I2CD_BUF_RX_COUNT_MASK			GENMASK(31, 24)
-+#define ASPEED_I2CD_BUF_RX_SIZE_MASK			GENMASK(23, 16)
-+#define ASPEED_I2CD_BUF_TX_COUNT_MASK			GENMASK(15, 8)
-+#define ASPEED_I2CD_BUF_OFFSET_MASK			GENMASK(5, 0)
++/* 0x24 : I2CD DMA Mode Buffer Address Register */
++#define ASPEED_I2CD_DMA_ADDR_MASK			GENMASK(31, 2)
++#define ASPEED_I2CD_DMA_ALIGN				4
++
++/* 0x28 : I2CD DMA Transfer Length Register */
++#define ASPEED_I2CD_DMA_LEN_SHIFT			0
++#define ASPEED_I2CD_DMA_LEN_MASK			GENMASK(11, 0)
 +
  enum aspeed_i2c_master_state {
  	ASPEED_I2C_MASTER_INACTIVE,
  	ASPEED_I2C_MASTER_PENDING,
-@@ -140,6 +157,12 @@ enum aspeed_i2c_slave_state {
- 	ASPEED_I2C_SLAVE_STOP,
+@@ -161,6 +175,7 @@ struct aspeed_i2c_config {
+ 	u32 (*get_clk_reg_val)(struct device *dev, u32 divisor);
+ 	int (*enable_sram)(void);
+ 	int (*set_buf_xfer_mode)(struct device *dev);
++	int (*set_dma_xfer_mode)(struct device *dev);
  };
  
-+struct aspeed_i2c_config {
-+	u32 (*get_clk_reg_val)(struct device *dev, u32 divisor);
-+	int (*enable_sram)(void);
-+	int (*set_buf_xfer_mode)(struct device *dev);
-+};
-+
  struct aspeed_i2c_bus {
- 	struct i2c_adapter		adap;
- 	struct device			*dev;
-@@ -148,8 +171,7 @@ struct aspeed_i2c_bus {
- 	/* Synchronizes I/O mem access to base. */
- 	spinlock_t			lock;
- 	struct completion		cmd_complete;
--	u32				(*get_clk_reg_val)(struct device *dev,
--							   u32 divisor);
-+	struct aspeed_i2c_config	*config;
- 	unsigned long			parent_clk_frequency;
- 	u32				bus_frequency;
- 	/* Transaction state. */
-@@ -164,6 +186,11 @@ struct aspeed_i2c_bus {
- 	int				master_xfer_result;
- 	/* Multi-master */
- 	bool				multi_master;
-+	/* Buffer mode */
-+	void __iomem			*buf_base;
-+	u8				buf_offset;
-+	u8				buf_page;
-+	size_t				buf_size;
+@@ -190,6 +205,12 @@ struct aspeed_i2c_bus {
+ 	void __iomem			*buf_base;
+ 	u8				buf_offset;
+ 	u8				buf_page;
++	/* DMA mode */
++	struct dma_pool			*dma_pool;
++	dma_addr_t			dma_handle;
++	u8				*dma_buf;
++	size_t				dma_len;
++	/* Buffer/DMA mode */
+ 	size_t				buf_size;
  #if IS_ENABLED(CONFIG_I2C_SLAVE)
  	struct i2c_client		*slave;
- 	enum aspeed_i2c_slave_state	slave_state;
-@@ -241,6 +268,77 @@ static int aspeed_i2c_recover_bus(struct aspeed_i2c_bus *bus)
- }
+@@ -272,9 +293,13 @@ static inline void
+ aspeed_i2c_slave_handle_rx_done(struct aspeed_i2c_bus *bus, u32 irq_status,
+ 				u8 *value)
+ {
+-	if (bus->buf_base &&
++	if (bus->dma_buf &&
+ 	    bus->slave_state == ASPEED_I2C_SLAVE_WRITE_RECEIVED &&
+ 	    !(irq_status & ASPEED_I2CD_INTR_NORMAL_STOP))
++		*value = bus->dma_buf[0];
++	else if (bus->buf_base &&
++		 bus->slave_state == ASPEED_I2C_SLAVE_WRITE_RECEIVED &&
++		 !(irq_status & ASPEED_I2CD_INTR_NORMAL_STOP))
+ 		*value = readb(bus->buf_base);
+ 	else
+ 		*value = readl(bus->base + ASPEED_I2C_BYTE_BUF_REG) >> 8;
+@@ -288,7 +313,18 @@ aspeed_i2c_slave_handle_normal_stop(struct aspeed_i2c_bus *bus, u32 irq_status,
  
- #if IS_ENABLED(CONFIG_I2C_SLAVE)
-+static inline void
-+aspeed_i2c_slave_handle_rx_done(struct aspeed_i2c_bus *bus, u32 irq_status,
-+				u8 *value)
-+{
-+	if (bus->buf_base &&
-+	    bus->slave_state == ASPEED_I2C_SLAVE_WRITE_RECEIVED &&
-+	    !(irq_status & ASPEED_I2CD_INTR_NORMAL_STOP))
-+		*value = readb(bus->buf_base);
-+	else
-+		*value = readl(bus->base + ASPEED_I2C_BYTE_BUF_REG) >> 8;
-+}
-+
-+static inline void
-+aspeed_i2c_slave_handle_normal_stop(struct aspeed_i2c_bus *bus, u32 irq_status,
-+				    u8 *value)
-+{
-+	int i, len;
-+
-+	if (bus->slave_state == ASPEED_I2C_SLAVE_WRITE_RECEIVED &&
-+	    irq_status & ASPEED_I2CD_INTR_RX_DONE) {
-+		if (bus->buf_base) {
-+			len = FIELD_GET(ASPEED_I2CD_BUF_RX_COUNT_MASK,
+ 	if (bus->slave_state == ASPEED_I2C_SLAVE_WRITE_RECEIVED &&
+ 	    irq_status & ASPEED_I2CD_INTR_RX_DONE) {
+-		if (bus->buf_base) {
++		if (bus->dma_buf) {
++			len = bus->buf_size -
++			      FIELD_GET(ASPEED_I2CD_DMA_LEN_MASK,
 +					readl(bus->base +
-+					      ASPEED_I2C_BUF_CTRL_REG));
++					      ASPEED_I2C_DMA_LEN_REG));
 +			for (i = 0; i < len; i++) {
-+				*value = readb(bus->buf_base + i);
++				*value = bus->dma_buf[i];
 +				i2c_slave_event(bus->slave,
 +						I2C_SLAVE_WRITE_RECEIVED,
 +						value);
 +			}
-+		}
-+	}
-+}
-+
-+static inline void
-+aspeed_i2c_slave_handle_write_requested(struct aspeed_i2c_bus *bus, u8 *value)
-+{
-+	if (bus->buf_base) {
-+		writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK,
-+				  bus->buf_size - 1) |
-+		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
-+				  bus->buf_offset),
-+		       bus->base + ASPEED_I2C_BUF_CTRL_REG);
-+		writel(ASPEED_I2CD_RX_BUFF_ENABLE,
++		} else if (bus->buf_base) {
+ 			len = FIELD_GET(ASPEED_I2CD_BUF_RX_COUNT_MASK,
+ 					readl(bus->base +
+ 					      ASPEED_I2C_BUF_CTRL_REG));
+@@ -305,7 +341,14 @@ aspeed_i2c_slave_handle_normal_stop(struct aspeed_i2c_bus *bus, u32 irq_status,
+ static inline void
+ aspeed_i2c_slave_handle_write_requested(struct aspeed_i2c_bus *bus, u8 *value)
+ {
+-	if (bus->buf_base) {
++	if (bus->dma_buf) {
++		writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
++		       bus->base + ASPEED_I2C_DMA_ADDR_REG);
++		writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, bus->buf_size),
++		       bus->base + ASPEED_I2C_DMA_LEN_REG);
++		writel(ASPEED_I2CD_RX_DMA_ENABLE,
 +		       bus->base + ASPEED_I2C_CMD_REG);
-+	}
-+}
-+
-+static inline void
-+aspeed_i2c_slave_handle_write_received(struct aspeed_i2c_bus *bus, u8 *value)
-+{
-+	int i, len;
-+
-+	if (bus->buf_base) {
-+		len = FIELD_GET(ASPEED_I2CD_BUF_RX_COUNT_MASK,
++	} else if (bus->buf_base) {
+ 		writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK,
+ 				  bus->buf_size - 1) |
+ 		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
+@@ -321,7 +364,23 @@ aspeed_i2c_slave_handle_write_received(struct aspeed_i2c_bus *bus, u8 *value)
+ {
+ 	int i, len;
+ 
+-	if (bus->buf_base) {
++	if (bus->dma_buf) {
++		len = bus->buf_size -
++		      FIELD_GET(ASPEED_I2CD_DMA_LEN_MASK,
 +				readl(bus->base +
-+				      ASPEED_I2C_BUF_CTRL_REG));
++				      ASPEED_I2C_DMA_LEN_REG));
 +		for (i = 1; i < len; i++) {
-+			*value = readb(bus->buf_base + i);
++			*value = bus->dma_buf[i];
 +			i2c_slave_event(bus->slave, I2C_SLAVE_WRITE_RECEIVED,
 +					value);
 +		}
-+		writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK,
-+				  bus->buf_size - 1) |
-+		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK, bus->buf_offset),
-+		       bus->base + ASPEED_I2C_BUF_CTRL_REG);
-+		writel(ASPEED_I2CD_RX_BUFF_ENABLE,
++		writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
++		       bus->base + ASPEED_I2C_DMA_ADDR_REG);
++		writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, bus->buf_size),
++		       bus->base + ASPEED_I2C_DMA_LEN_REG);
++		writel(ASPEED_I2CD_RX_DMA_ENABLE,
 +		       bus->base + ASPEED_I2C_CMD_REG);
-+	}
-+}
-+
- static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- {
- 	u32 command, irq_handled = 0;
-@@ -267,7 +365,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 
- 	/* Slave was sent something. */
- 	if (irq_status & ASPEED_I2CD_INTR_RX_DONE) {
--		value = readl(bus->base + ASPEED_I2C_BYTE_BUF_REG) >> 8;
-+		aspeed_i2c_slave_handle_rx_done(bus, irq_status, &value);
- 		/* Handle address frame. */
- 		if (bus->slave_state == ASPEED_I2C_SLAVE_START) {
- 			if (value & 0x1)
-@@ -282,9 +380,11 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 
- 	/* Slave was asked to stop. */
- 	if (irq_status & ASPEED_I2CD_INTR_NORMAL_STOP) {
-+		aspeed_i2c_slave_handle_normal_stop(bus, irq_status, &value);
- 		irq_handled |= ASPEED_I2CD_INTR_NORMAL_STOP;
- 		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
++	} else if (bus->buf_base) {
+ 		len = FIELD_GET(ASPEED_I2CD_BUF_RX_COUNT_MASK,
+ 				readl(bus->base +
+ 				      ASPEED_I2C_BUF_CTRL_REG));
+@@ -451,7 +510,15 @@ aspeed_i2c_prepare_rx_buf(struct aspeed_i2c_bus *bus, struct i2c_msg *msg)
+ 		command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
  	}
-+
- 	if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
- 	    bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
- 		irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
-@@ -314,9 +414,11 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 	case ASPEED_I2C_SLAVE_WRITE_REQUESTED:
- 		bus->slave_state = ASPEED_I2C_SLAVE_WRITE_RECEIVED;
- 		i2c_slave_event(slave, I2C_SLAVE_WRITE_REQUESTED, &value);
-+		aspeed_i2c_slave_handle_write_requested(bus, &value);
- 		break;
- 	case ASPEED_I2C_SLAVE_WRITE_RECEIVED:
- 		i2c_slave_event(slave, I2C_SLAVE_WRITE_RECEIVED, &value);
-+		aspeed_i2c_slave_handle_write_received(bus, &value);
- 		break;
- 	case ASPEED_I2C_SLAVE_STOP:
- 		i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
-@@ -336,12 +438,76 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- }
- #endif /* CONFIG_I2C_SLAVE */
  
-+static inline u32
-+aspeed_i2c_prepare_rx_buf(struct aspeed_i2c_bus *bus, struct i2c_msg *msg)
-+{
-+	u32 command = 0;
-+	int len;
+-	if (bus->buf_base) {
++	if (bus->dma_buf) {
++		command |= ASPEED_I2CD_RX_DMA_ENABLE;
 +
-+	if (msg->len > bus->buf_size) {
-+		len = bus->buf_size;
++		writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
++		       bus->base + ASPEED_I2C_DMA_ADDR_REG);
++		writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, len),
++		       bus->base + ASPEED_I2C_DMA_LEN_REG);
++		bus->dma_len = len;
 +	} else {
-+		len = msg->len;
-+		command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
-+	}
-+
-+	if (bus->buf_base) {
-+		command |= ASPEED_I2CD_RX_BUFF_ENABLE;
-+
-+		writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK, len - 1) |
-+		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK, bus->buf_offset),
-+		       bus->base + ASPEED_I2C_BUF_CTRL_REG);
-+	}
-+
-+	return command;
-+}
-+
-+static inline u32
-+aspeed_i2c_prepare_tx_buf(struct aspeed_i2c_bus *bus, struct i2c_msg *msg)
-+{
-+	u8 slave_addr = i2c_8bit_addr_from_msg(msg);
-+	u32 command = 0;
-+	int len;
-+
-+	if (msg->len + 1 > bus->buf_size)
-+		len = bus->buf_size;
-+	else
-+		len = msg->len + 1;
-+
-+	if (bus->buf_base) {
-+		u8 wbuf[4];
-+		int i;
-+
-+		command |= ASPEED_I2CD_TX_BUFF_ENABLE;
-+
-+		/*
-+		 * Yeah, it looks bad but byte writing on remapped I2C SRAM
-+		 * causes corruption so use this way to make dword writings.
-+		 */
-+		wbuf[0] = slave_addr;
-+		for (i = 1; i < len; i++) {
-+			wbuf[i % 4] = msg->buf[i - 1];
-+			if (i % 4 == 3)
-+				writel(*(u32 *)wbuf, bus->buf_base + i - 3);
-+		}
-+		if (--i % 4 != 3)
-+			writel(*(u32 *)wbuf, bus->buf_base + i - (i % 4));
-+
-+		writel(FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK, len - 1) |
-+		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK, bus->buf_offset),
-+		       bus->base + ASPEED_I2C_BUF_CTRL_REG);
-+	}
-+
-+	bus->buf_index = len - 1;
-+
-+	return command;
-+}
-+
- /* precondition: bus.lock has been acquired. */
- static void aspeed_i2c_do_start(struct aspeed_i2c_bus *bus)
- {
- 	u32 command = ASPEED_I2CD_M_START_CMD | ASPEED_I2CD_M_TX_CMD;
- 	struct i2c_msg *msg = &bus->msgs[bus->msgs_index];
--	u8 slave_addr = i2c_8bit_addr_from_msg(msg);
+ 		command |= ASPEED_I2CD_RX_BUFF_ENABLE;
  
- #if IS_ENABLED(CONFIG_I2C_SLAVE)
- 	/*
-@@ -360,12 +526,21 @@ static void aspeed_i2c_do_start(struct aspeed_i2c_bus *bus)
+ 		writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK, len - 1) |
+@@ -474,7 +541,18 @@ aspeed_i2c_prepare_tx_buf(struct aspeed_i2c_bus *bus, struct i2c_msg *msg)
+ 	else
+ 		len = msg->len + 1;
  
+-	if (bus->buf_base) {
++	if (bus->dma_buf) {
++		command |= ASPEED_I2CD_TX_DMA_ENABLE;
++
++		bus->dma_buf[0] = slave_addr;
++		memcpy(bus->dma_buf + 1, msg->buf, len);
++
++		writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
++		       bus->base + ASPEED_I2C_DMA_ADDR_REG);
++		writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, len),
++		       bus->base + ASPEED_I2C_DMA_LEN_REG);
++		bus->dma_len = len;
++	} else {
+ 		u8 wbuf[4];
+ 		int i;
+ 
+@@ -527,18 +605,19 @@ static void aspeed_i2c_do_start(struct aspeed_i2c_bus *bus)
  	if (msg->flags & I2C_M_RD) {
  		command |= ASPEED_I2CD_M_RX_CMD;
--		/* Need to let the hardware know to NACK after RX. */
--		if (msg->len == 1 && !(msg->flags & I2C_M_RECV_LEN))
--			command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
-+		if (!(msg->flags & I2C_M_RECV_LEN)) {
-+			if (msg->len && bus->buf_base)
-+				command |= aspeed_i2c_prepare_rx_buf(bus, msg);
-+
-+			/* Need to let the hardware know to NACK after RX. */
-+			if (msg->len <= 1)
-+				command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
-+		}
-+	} else if (msg->len && bus->buf_base) {
-+		command |= aspeed_i2c_prepare_tx_buf(bus, msg);
+ 		if (!(msg->flags & I2C_M_RECV_LEN)) {
+-			if (msg->len && bus->buf_base)
++			if (msg->len && (bus->dma_buf || bus->buf_base))
+ 				command |= aspeed_i2c_prepare_rx_buf(bus, msg);
+ 
+ 			/* Need to let the hardware know to NACK after RX. */
+ 			if (msg->len <= 1)
+ 				command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
+ 		}
+-	} else if (msg->len && bus->buf_base) {
++	} else if (msg->len && (bus->dma_buf || bus->buf_base)) {
+ 		command |= aspeed_i2c_prepare_tx_buf(bus, msg);
  	}
  
--	writel(slave_addr, bus->base + ASPEED_I2C_BYTE_BUF_REG);
-+	if (!(command & ASPEED_I2CD_TX_BUFF_ENABLE))
-+		writel(i2c_8bit_addr_from_msg(msg),
-+		       bus->base + ASPEED_I2C_BYTE_BUF_REG);
+-	if (!(command & ASPEED_I2CD_TX_BUFF_ENABLE))
++	if (!(command & (ASPEED_I2CD_TX_BUFF_ENABLE |
++			 ASPEED_I2CD_TX_DMA_ENABLE)))
+ 		writel(i2c_8bit_addr_from_msg(msg),
+ 		       bus->base + ASPEED_I2C_BYTE_BUF_REG);
  	writel(command, bus->base + ASPEED_I2C_CMD_REG);
- }
- 
-@@ -400,6 +575,103 @@ static int aspeed_i2c_is_irq_error(u32 irq_status)
- 	return 0;
- }
- 
-+static inline u32
-+aspeed_i2c_master_handle_tx_first(struct aspeed_i2c_bus *bus,
-+				  struct i2c_msg *msg)
-+{
-+	u32 command = 0;
-+
-+	if (bus->buf_base) {
-+		u8 wbuf[4];
-+		int len;
-+		int i;
-+
-+		if (msg->len - bus->buf_index > bus->buf_size)
-+			len = bus->buf_size;
-+		else
-+			len = msg->len - bus->buf_index;
-+
-+		command |= ASPEED_I2CD_TX_BUFF_ENABLE;
-+
-+		if (msg->len - bus->buf_index > bus->buf_size)
-+			len = bus->buf_size;
-+		else
-+			len = msg->len - bus->buf_index;
-+
-+		for (i = 0; i < len; i++) {
-+			wbuf[i % 4] = msg->buf[bus->buf_index + i];
-+			if (i % 4 == 3)
-+				writel(*(u32 *)wbuf,
-+				       bus->buf_base + i - 3);
-+		}
-+		if (--i % 4 != 3)
-+			writel(*(u32 *)wbuf,
-+			       bus->buf_base + i - (i % 4));
-+
-+		writel(FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK,
-+				  len - 1) |
-+		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
-+				  bus->buf_offset),
-+		       bus->base + ASPEED_I2C_BUF_CTRL_REG);
-+
-+		bus->buf_index += len;
-+	} else {
-+		writel(msg->buf[bus->buf_index++],
-+		       bus->base + ASPEED_I2C_BYTE_BUF_REG);
-+	}
-+
-+	return command;
-+}
-+
-+static inline void
-+aspeed_i2c_master_handle_rx(struct aspeed_i2c_bus *bus, struct i2c_msg *msg)
-+{
-+	u8 recv_byte;
-+	int len;
-+
-+	if (bus->buf_base) {
-+		len = FIELD_GET(ASPEED_I2CD_BUF_RX_COUNT_MASK,
-+				readl(bus->base + ASPEED_I2C_BUF_CTRL_REG));
-+		memcpy_fromio(msg->buf + bus->buf_index, bus->buf_base, len);
-+		bus->buf_index += len;
-+	} else {
-+		recv_byte = readl(bus->base + ASPEED_I2C_BYTE_BUF_REG) >> 8;
-+		msg->buf[bus->buf_index++] = recv_byte;
-+	}
-+}
-+
-+static inline u32
-+aspeed_i2c_master_handle_rx_next(struct aspeed_i2c_bus *bus,
-+				 struct i2c_msg *msg)
-+{
-+	u32 command = 0;
-+
-+	if (bus->buf_base) {
-+		int len;
-+
-+		if (msg->len - bus->buf_index > bus->buf_size) {
-+			len = bus->buf_size;
-+		} else {
-+			len = msg->len - bus->buf_index;
-+			command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
-+		}
-+
-+		command |= ASPEED_I2CD_RX_BUFF_ENABLE;
-+
-+		writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK,
-+				  len - 1) |
-+		       FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK, 0) |
-+		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
-+				  bus->buf_offset),
-+		       bus->base + ASPEED_I2C_BUF_CTRL_REG);
-+	} else {
-+		if (bus->buf_index + 1 == msg->len)
-+			command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
-+	}
-+
-+	return command;
-+}
-+
- static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+@@ -581,38 +660,51 @@ aspeed_i2c_master_handle_tx_first(struct aspeed_i2c_bus *bus,
  {
- 	u32 irq_handled = 0, command = 0;
-@@ -508,11 +780,10 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		fallthrough;
- 	case ASPEED_I2C_MASTER_TX_FIRST:
- 		if (bus->buf_index < msg->len) {
-+			command = ASPEED_I2CD_M_TX_CMD;
-+			command |= aspeed_i2c_master_handle_tx_first(bus, msg);
-+			writel(command, bus->base + ASPEED_I2C_CMD_REG);
- 			bus->master_state = ASPEED_I2C_MASTER_TX;
--			writel(msg->buf[bus->buf_index++],
--			       bus->base + ASPEED_I2C_BYTE_BUF_REG);
--			writel(ASPEED_I2CD_M_TX_CMD,
--			       bus->base + ASPEED_I2C_CMD_REG);
- 		} else {
- 			aspeed_i2c_next_msg_or_stop(bus);
- 		}
-@@ -529,26 +800,26 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		}
- 		irq_handled |= ASPEED_I2CD_INTR_RX_DONE;
+ 	u32 command = 0;
  
--		recv_byte = readl(bus->base + ASPEED_I2C_BYTE_BUF_REG) >> 8;
--		msg->buf[bus->buf_index++] = recv_byte;
--
- 		if (msg->flags & I2C_M_RECV_LEN) {
-+			recv_byte = readl(bus->base +
-+					ASPEED_I2C_BYTE_BUF_REG) >> 8;
- 			if (unlikely(recv_byte > I2C_SMBUS_BLOCK_MAX)) {
- 				bus->cmd_err = -EPROTO;
- 				aspeed_i2c_do_stop(bus);
- 				goto out_no_complete;
- 			}
--			msg->len = recv_byte +
--					((msg->flags & I2C_CLIENT_PEC) ? 2 : 1);
-+			msg->len = recv_byte + ((msg->flags & I2C_CLIENT_PEC) ?
-+						2 : 1);
- 			msg->flags &= ~I2C_M_RECV_LEN;
-+		} else if (msg->len) {
-+			aspeed_i2c_master_handle_rx(bus, msg);
- 		}
+-	if (bus->buf_base) {
+-		u8 wbuf[4];
++	if (bus->dma_buf || bus->buf_base) {
+ 		int len;
+-		int i;
  
- 		if (bus->buf_index < msg->len) {
--			bus->master_state = ASPEED_I2C_MASTER_RX;
- 			command = ASPEED_I2CD_M_RX_CMD;
--			if (bus->buf_index + 1 == msg->len)
--				command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
-+			command |= aspeed_i2c_master_handle_rx_next(bus, msg);
- 			writel(command, bus->base + ASPEED_I2C_CMD_REG);
-+			bus->master_state = ASPEED_I2C_MASTER_RX;
- 		} else {
- 			aspeed_i2c_next_msg_or_stop(bus);
- 		}
-@@ -887,7 +1158,7 @@ static int aspeed_i2c_init_clk(struct aspeed_i2c_bus *bus)
- 	clk_reg_val &= (ASPEED_I2CD_TIME_TBUF_MASK |
- 			ASPEED_I2CD_TIME_THDSTA_MASK |
- 			ASPEED_I2CD_TIME_TACST_MASK);
--	clk_reg_val |= bus->get_clk_reg_val(bus->dev, divisor);
-+	clk_reg_val |= bus->config->get_clk_reg_val(bus->dev, divisor);
- 	writel(clk_reg_val, bus->base + ASPEED_I2C_AC_TIMING_REG1);
- 	writel(ASPEED_NO_TIMEOUT_CTRL, bus->base + ASPEED_I2C_AC_TIMING_REG2);
+ 		if (msg->len - bus->buf_index > bus->buf_size)
+ 			len = bus->buf_size;
+ 		else
+ 			len = msg->len - bus->buf_index;
  
-@@ -908,6 +1179,9 @@ static int aspeed_i2c_init(struct aspeed_i2c_bus *bus,
- 	if (ret < 0)
- 		return ret;
+-		command |= ASPEED_I2CD_TX_BUFF_ENABLE;
++		if (bus->dma_buf) {
++			command |= ASPEED_I2CD_TX_DMA_ENABLE;
  
-+	fun_ctrl_reg |= FIELD_PREP(ASPEED_I2CD_BUFFER_PAGE_SEL_MASK,
-+				   bus->buf_page);
+-		if (msg->len - bus->buf_index > bus->buf_size)
+-			len = bus->buf_size;
+-		else
+-			len = msg->len - bus->buf_index;
++			memcpy(bus->dma_buf, msg->buf + bus->buf_index, len);
+ 
+-		for (i = 0; i < len; i++) {
+-			wbuf[i % 4] = msg->buf[bus->buf_index + i];
+-			if (i % 4 == 3)
++			writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
++			       bus->base + ASPEED_I2C_DMA_ADDR_REG);
++			writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, len),
++			       bus->base + ASPEED_I2C_DMA_LEN_REG);
++			bus->dma_len = len;
++		} else {
++			u8 wbuf[4];
++			int i;
 +
- 	if (of_property_read_bool(pdev->dev.of_node, "multi-master"))
- 		bus->multi_master = true;
- 	else
-@@ -948,40 +1222,129 @@ static int aspeed_i2c_reset(struct aspeed_i2c_bus *bus)
- 	return ret;
++			command |= ASPEED_I2CD_TX_BUFF_ENABLE;
++
++			if (msg->len - bus->buf_index > bus->buf_size)
++				len = bus->buf_size;
++			else
++				len = msg->len - bus->buf_index;
++
++			for (i = 0; i < len; i++) {
++				wbuf[i % 4] = msg->buf[bus->buf_index + i];
++				if (i % 4 == 3)
++					writel(*(u32 *)wbuf,
++					       bus->buf_base + i - 3);
++			}
++			if (--i % 4 != 3)
+ 				writel(*(u32 *)wbuf,
+-				       bus->buf_base + i - 3);
+-		}
+-		if (--i % 4 != 3)
+-			writel(*(u32 *)wbuf,
+-			       bus->buf_base + i - (i % 4));
++				       bus->buf_base + i - (i % 4));
+ 
+-		writel(FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK,
+-				  len - 1) |
+-		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
+-				  bus->buf_offset),
+-		       bus->base + ASPEED_I2C_BUF_CTRL_REG);
++			writel(FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK,
++					  len - 1) |
++			       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
++					  bus->buf_offset),
++			       bus->base + ASPEED_I2C_BUF_CTRL_REG);
++		}
+ 
+ 		bus->buf_index += len;
+ 	} else {
+@@ -629,7 +721,14 @@ aspeed_i2c_master_handle_rx(struct aspeed_i2c_bus *bus, struct i2c_msg *msg)
+ 	u8 recv_byte;
+ 	int len;
+ 
+-	if (bus->buf_base) {
++	if (bus->dma_buf) {
++		len = bus->dma_len -
++		      FIELD_GET(ASPEED_I2CD_DMA_LEN_MASK,
++				readl(bus->base + ASPEED_I2C_DMA_LEN_REG));
++
++		memcpy(msg->buf + bus->buf_index, bus->dma_buf, len);
++		bus->buf_index += len;
++	} else if (bus->buf_base) {
+ 		len = FIELD_GET(ASPEED_I2CD_BUF_RX_COUNT_MASK,
+ 				readl(bus->base + ASPEED_I2C_BUF_CTRL_REG));
+ 		memcpy_fromio(msg->buf + bus->buf_index, bus->buf_base, len);
+@@ -646,7 +745,7 @@ aspeed_i2c_master_handle_rx_next(struct aspeed_i2c_bus *bus,
+ {
+ 	u32 command = 0;
+ 
+-	if (bus->buf_base) {
++	if (bus->dma_buf || bus->buf_base) {
+ 		int len;
+ 
+ 		if (msg->len - bus->buf_index > bus->buf_size) {
+@@ -656,14 +755,24 @@ aspeed_i2c_master_handle_rx_next(struct aspeed_i2c_bus *bus,
+ 			command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
+ 		}
+ 
+-		command |= ASPEED_I2CD_RX_BUFF_ENABLE;
++		if (bus->dma_buf) {
++			command |= ASPEED_I2CD_RX_DMA_ENABLE;
+ 
+-		writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK,
+-				  len - 1) |
+-		       FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK, 0) |
+-		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
+-				  bus->buf_offset),
+-		       bus->base + ASPEED_I2C_BUF_CTRL_REG);
++			writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
++			       bus->base + ASPEED_I2C_DMA_ADDR_REG);
++			writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, len),
++			       bus->base + ASPEED_I2C_DMA_LEN_REG);
++			bus->dma_len = len;
++		} else {
++			command |= ASPEED_I2CD_RX_BUFF_ENABLE;
++
++			writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK,
++					  len - 1) |
++			       FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK, 0) |
++			       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
++					  bus->buf_offset),
++			       bus->base + ASPEED_I2C_BUF_CTRL_REG);
++		}
+ 	} else {
+ 		if (bus->buf_index + 1 == msg->len)
+ 			command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
+@@ -1283,22 +1392,63 @@ static int aspeed_i2c_25xx_set_buf_xfer_mode(struct device *dev)
+ 	return bus->buf_size ? 0 : -EINVAL;
  }
  
-+static int aspeed_i2c_24xx_enable_sram(void)
++static int aspeed_i2c_24xx_set_dma_xfer_mode(struct device *dev)
 +{
-+	/* SRAM is enabled by default */
++	/* AST24xx doesn't support DMA mode */
 +
-+	return 0;
++	return -EBADR;
 +}
 +
-+static int aspeed_i2c_25xx_enable_sram(void)
++static int aspeed_i2c_25xx_set_dma_xfer_mode(struct device *dev)
 +{
-+	struct regmap *gr_regmap;
++	struct platform_device *pdev = to_platform_device(dev);
++	struct aspeed_i2c_bus *bus = platform_get_drvdata(pdev);
 +	int ret;
 +
-+	gr_regmap = syscon_regmap_lookup_by_compatible("aspeed,ast2500-i2c-gr");
++	ret = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
++	if (!ret) {
++		bus->buf_size = ASPEED_I2CD_DMA_LEN_MASK >>
++				ASPEED_I2CD_DMA_LEN_SHIFT;
++		bus->dma_pool = dma_pool_create("i2c-aspeed",
++						&pdev->dev,
++						bus->buf_size,
++						ASPEED_I2CD_DMA_ALIGN,
++						0);
++		if (bus->dma_pool)
++			bus->dma_buf = dma_pool_alloc(bus->dma_pool,
++						      GFP_KERNEL,
++						      &bus->dma_handle);
 +
-+	if (IS_ERR(gr_regmap))
-+		ret = PTR_ERR(gr_regmap);
-+	else
-+		ret = regmap_update_bits(gr_regmap,
-+					 ASPEED_I2CG_GLOBAL_CTRL_REG,
-+					 ASPEED_I2CG_SRAM_BUFFER_EN,
-+					 ASPEED_I2CG_SRAM_BUFFER_EN);
++		if (!bus->dma_buf) {
++			ret = -ENOMEM;
++			bus->buf_size = 0;
++			dev_dbg(&pdev->dev, "Cannot allocate DMA buffer\n");
++			dma_pool_destroy(bus->dma_pool);
++		}
++	}
 +
 +	return ret;
 +}
 +
-+static int aspeed_i2c_24xx_set_buf_xfer_mode(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct aspeed_i2c_bus *bus = platform_get_drvdata(pdev);
-+	struct resource *res = platform_get_resource(pdev,
-+						     IORESOURCE_MEM, 1);
-+
-+	if (res && resource_size(res) >= 2)
-+		bus->buf_base = devm_ioremap_resource(&pdev->dev, res);
-+
-+	if (!IS_ERR_OR_NULL(bus->buf_base)) {
-+		bus->buf_size = resource_size(res);
-+		bus->buf_page = ((res->start >> 8) & GENMASK(3, 0)) - 8;
-+		bus->buf_offset = (res->start >> 2) &
-+				  ASPEED_I2CD_BUF_OFFSET_MASK;
-+	}
-+
-+	return bus->buf_size ? 0 : -EINVAL;
-+}
-+
-+static int aspeed_i2c_25xx_set_buf_xfer_mode(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct aspeed_i2c_bus *bus = platform_get_drvdata(pdev);
-+	struct resource *res = platform_get_resource(pdev,
-+						     IORESOURCE_MEM, 1);
-+
-+	if (res && resource_size(res) >= 2)
-+		bus->buf_base = devm_ioremap_resource(&pdev->dev, res);
-+
-+	if (!IS_ERR_OR_NULL(bus->buf_base))
-+		bus->buf_size = resource_size(res);
-+
-+	return bus->buf_size ? 0 : -EINVAL;
-+}
-+
-+static const struct aspeed_i2c_config ast24xx_config = {
-+	.get_clk_reg_val = aspeed_i2c_24xx_get_clk_reg_val,
-+	.enable_sram = aspeed_i2c_24xx_enable_sram,
-+	.set_buf_xfer_mode = aspeed_i2c_24xx_set_buf_xfer_mode,
-+};
-+
-+static const struct aspeed_i2c_config ast25xx_config = {
-+	.get_clk_reg_val = aspeed_i2c_25xx_get_clk_reg_val,
-+	.enable_sram = aspeed_i2c_25xx_enable_sram,
-+	.set_buf_xfer_mode = aspeed_i2c_25xx_set_buf_xfer_mode,
-+};
-+
-+static const struct aspeed_i2c_config ast26xx_config = {
-+	.get_clk_reg_val = aspeed_i2c_25xx_get_clk_reg_val,
-+	.enable_sram = aspeed_i2c_24xx_enable_sram,
-+	.set_buf_xfer_mode = aspeed_i2c_25xx_set_buf_xfer_mode,
-+};
-+
- static const struct of_device_id aspeed_i2c_bus_of_table[] = {
--	{
--		.compatible = "aspeed,ast2400-i2c-bus",
--		.data = aspeed_i2c_24xx_get_clk_reg_val,
--	},
--	{
--		.compatible = "aspeed,ast2500-i2c-bus",
--		.data = aspeed_i2c_25xx_get_clk_reg_val,
--	},
--	{
--		.compatible = "aspeed,ast2600-i2c-bus",
--		.data = aspeed_i2c_25xx_get_clk_reg_val,
--	},
--	{ },
-+	{ .compatible = "aspeed,ast2400-i2c-bus", .data = &ast24xx_config, },
-+	{ .compatible = "aspeed,ast2500-i2c-bus", .data = &ast25xx_config, },
-+	{ .compatible = "aspeed,ast2600-i2c-bus", .data = &ast26xx_config, },
-+	{}
+ static const struct aspeed_i2c_config ast24xx_config = {
+ 	.get_clk_reg_val = aspeed_i2c_24xx_get_clk_reg_val,
+ 	.enable_sram = aspeed_i2c_24xx_enable_sram,
+ 	.set_buf_xfer_mode = aspeed_i2c_24xx_set_buf_xfer_mode,
++	.set_dma_xfer_mode = aspeed_i2c_24xx_set_dma_xfer_mode,
  };
- MODULE_DEVICE_TABLE(of, aspeed_i2c_bus_of_table);
  
-+static void aspeed_i2c_set_xfer_mode(struct aspeed_i2c_bus *bus)
-+{
-+	struct platform_device *pdev = to_platform_device(bus->dev);
-+	const char *mode;
-+	int ret;
-+
-+	mode = of_get_property(pdev->dev.of_node, "aspeed,i2c-xfer-mode", NULL);
-+	if (!mode || strncasecmp(mode, "byte", 4) == 0)
-+		return;
-+
-+	ret = bus->config->enable_sram();
-+	if (!ret && !strncasecmp(mode, "buf", 3))
-+		ret = bus->config->set_buf_xfer_mode(bus->dev);
-+
-+	if (ret)
-+		dev_dbg(&pdev->dev, "Use default (byte) xfer mode\n");
-+}
-+
- static int aspeed_i2c_probe_bus(struct platform_device *pdev)
- {
- 	const struct of_device_id *match;
- 	struct aspeed_i2c_bus *bus;
- 	struct clk *parent_clk;
--	struct resource *res;
- 	int irq, ret;
+ static const struct aspeed_i2c_config ast25xx_config = {
+ 	.get_clk_reg_val = aspeed_i2c_25xx_get_clk_reg_val,
+ 	.enable_sram = aspeed_i2c_25xx_enable_sram,
+ 	.set_buf_xfer_mode = aspeed_i2c_25xx_set_buf_xfer_mode,
++	.set_dma_xfer_mode = aspeed_i2c_25xx_set_dma_xfer_mode,
+ };
  
- 	bus = devm_kzalloc(&pdev->dev, sizeof(*bus), GFP_KERNEL);
- 	if (!bus)
- 		return -ENOMEM;
+ static const struct aspeed_i2c_config ast26xx_config = {
+ 	.get_clk_reg_val = aspeed_i2c_25xx_get_clk_reg_val,
+ 	.enable_sram = aspeed_i2c_24xx_enable_sram,
+ 	.set_buf_xfer_mode = aspeed_i2c_25xx_set_buf_xfer_mode,
++	.set_dma_xfer_mode = aspeed_i2c_25xx_set_dma_xfer_mode,
+ };
  
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	bus->base = devm_ioremap_resource(&pdev->dev, res);
-+	bus->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(bus->base))
- 		return PTR_ERR(bus->base);
+ static const struct of_device_id aspeed_i2c_bus_of_table[] = {
+@@ -1320,8 +1470,12 @@ static void aspeed_i2c_set_xfer_mode(struct aspeed_i2c_bus *bus)
+ 		return;
  
-+	bus->dev = &pdev->dev;
-+	platform_set_drvdata(pdev, bus);
-+
- 	parent_clk = devm_clk_get(&pdev->dev, NULL);
- 	if (IS_ERR(parent_clk))
- 		return PTR_ERR(parent_clk);
-@@ -1007,10 +1370,11 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
+ 	ret = bus->config->enable_sram();
+-	if (!ret && !strncasecmp(mode, "buf", 3))
+-		ret = bus->config->set_buf_xfer_mode(bus->dev);
++	if (!ret) {
++		if (!strncasecmp(mode, "buf", 3))
++			ret = bus->config->set_buf_xfer_mode(bus->dev);
++		else if (!strncasecmp(mode, "dma", 3))
++			ret = bus->config->set_dma_xfer_mode(bus->dev);
++	}
  
- 	match = of_match_node(aspeed_i2c_bus_of_table, pdev->dev.of_node);
- 	if (!match)
--		bus->get_clk_reg_val = aspeed_i2c_24xx_get_clk_reg_val;
--	else
--		bus->get_clk_reg_val = (u32 (*)(struct device *, u32))
--				match->data;
-+		return -EINVAL;
-+
-+	bus->config = (struct aspeed_i2c_config *)match->data;
-+
-+	aspeed_i2c_set_xfer_mode(bus);
- 
- 	/* Initialize the I2C adapter */
- 	spin_lock_init(&bus->lock);
-@@ -1023,8 +1387,6 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
- 	strlcpy(bus->adap.name, pdev->name, sizeof(bus->adap.name));
- 	i2c_set_adapdata(&bus->adap, bus);
- 
--	bus->dev = &pdev->dev;
--
- 	/* Clean up any left over interrupt state. */
- 	writel(0, bus->base + ASPEED_I2C_INTR_CTRL_REG);
- 	writel(0xffffffff, bus->base + ASPEED_I2C_INTR_STS_REG);
-@@ -1046,10 +1408,8 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
+ 	if (ret)
+ 		dev_dbg(&pdev->dev, "Use default (byte) xfer mode\n");
+@@ -1396,22 +1550,31 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
+ 	 */
+ 	ret = aspeed_i2c_init(bus, pdev);
  	if (ret < 0)
- 		return ret;
+-		return ret;
++		goto out_free_dma_buf;
  
--	platform_set_drvdata(pdev, bus);
--
--	dev_info(bus->dev, "i2c bus %d registered, irq %d\n",
--		 bus->adap.nr, irq);
-+	dev_info(bus->dev, "i2c bus %d registered (%s mode), irq %d\n",
-+		 bus->adap.nr, bus->buf_base ? "buf" : "byte", irq);
+ 	irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
+ 	ret = devm_request_irq(&pdev->dev, irq, aspeed_i2c_bus_irq,
+ 			       0, dev_name(&pdev->dev), bus);
+ 	if (ret < 0)
+-		return ret;
++		goto out_free_dma_buf;
+ 
+ 	ret = i2c_add_adapter(&bus->adap);
+ 	if (ret < 0)
+-		return ret;
++		goto out_free_dma_buf;
+ 
+ 	dev_info(bus->dev, "i2c bus %d registered (%s mode), irq %d\n",
+-		 bus->adap.nr, bus->buf_base ? "buf" : "byte", irq);
++		 bus->adap.nr, bus->dma_buf ? "dma" :
++					      bus->buf_base ? "buf" : "byte",
++		 irq);
  
  	return 0;
++
++out_free_dma_buf:
++	if (bus->dma_buf)
++		dma_pool_free(bus->dma_pool, bus->dma_buf, bus->dma_handle);
++	dma_pool_destroy(bus->dma_pool);
++
++	return ret;
  }
+ 
+ static int aspeed_i2c_remove_bus(struct platform_device *pdev)
+@@ -1429,6 +1592,10 @@ static int aspeed_i2c_remove_bus(struct platform_device *pdev)
+ 
+ 	reset_control_assert(bus->rst);
+ 
++	if (bus->dma_buf)
++		dma_pool_free(bus->dma_pool, bus->dma_buf, bus->dma_handle);
++	dma_pool_destroy(bus->dma_pool);
++
+ 	i2c_del_adapter(&bus->adap);
+ 
+ 	return 0;
 -- 
 2.17.1
 
