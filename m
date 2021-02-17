@@ -1,69 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F73531D9EA
-	for <lists+openbmc@lfdr.de>; Wed, 17 Feb 2021 14:03:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EB9D31DEEB
+	for <lists+openbmc@lfdr.de>; Wed, 17 Feb 2021 19:14:33 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DgdLh65qKz3cW6
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 00:03:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DgmFf0WZtz3bcw
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 05:14:30 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=KewIi/LC;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=TWN5/+2y;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d30;
- helo=mail-io1-xd30.google.com; envelope-from=gmouse@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::233;
+ helo=mail-oi1-x233.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=KewIi/LC; dkim-atps=neutral
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com
- [IPv6:2607:f8b0:4864:20::d30])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=TWN5/+2y; dkim-atps=neutral
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
+ [IPv6:2607:f8b0:4864:20::233])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DgdLT22Hrz3cPs
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 00:03:10 +1100 (AEDT)
-Received: by mail-io1-xd30.google.com with SMTP id a7so2447061iok.12
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 05:03:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=9T8dfk3KwVwENRD0wC1bGsRA8JwWjMd2I1KyKq3Oxlo=;
- b=KewIi/LCMPydkFs+gEkadN21QytgmrbzykEY+PSIFJeKwTjcwVYzhA4o3M2WIh3mwJ
- IqUo0iRUOOCDHeQtg240whjYLNDMtR30A8nJlQh2pa7CtXxCjL3mQMo9aAbaD1corDKk
- Ib1QN/AX4aoBBUZkdgTaXqrMYJyvNcd3IALVnKEjI8QarSTyImnWcm7OKLqJdV3QF6WV
- /lvBtO0jIbL84ROCsuBOMV8V2bbeMcoM/w3bM0SoI/NH1b36LwNuUOgkBIqzxsV8WnJj
- pBfYEKCsNMXddzqo38lTqM7oFqZjS5kSldPuco9g+Tl3MZ1GhaHiqRJHyV0G2ns1jljA
- M4Ew==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DgmFQ65DSz30K5
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 05:14:16 +1100 (AEDT)
+Received: by mail-oi1-x233.google.com with SMTP id l3so15960819oii.2
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 10:14:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=O5wgPSX0EqeMbJR+BLOmiQdB8oreVzSi/8OkWea4uy0=;
+ b=TWN5/+2yVsVXhJhz49mXMQy7ePKvYzwJmxEkEIq7pa43DajPkwNKRvwVnYKBNnB/0B
+ OJ3v1CZUTVUd/Y3DBphR9Zb4MpYWa50nkJK0g0RopZ4hjYlv7Onv0lxKfHJpSJKmYTKn
+ 1Yn5vvn7RIIZVh36Mq1wwtqtWVWrjVglq3yxVOKWWHjLqZ60CK3M/YVYPmf+9QloDit3
+ 2CGaL16vesY5YgVtEomiDcBlbkHE5S6pQCPZlAMv2Ynpu8zu3upbEUq9w4Q4nTebrUCR
+ AmBwMrEBOv25IE+pksT3Thuc+1mtsLf9T2hSFuD5h1HE7OgWvIB7n8Wok7w9NTLRB6rA
+ q6gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=9T8dfk3KwVwENRD0wC1bGsRA8JwWjMd2I1KyKq3Oxlo=;
- b=Maph1SpjgjMSLEyQolFUiO2AkOkI5peO/Ejh5AMGpMDCKrTpFsuia1MCK646JzYE8P
- 3tYgIzpP5Lj4I0Lk1GdLqmyi7MHTeFT/ShibdNbUnqU4GD08v/cZKi7DlROwa4a6Y7Y6
- 7Xu3Lk/RlI5MkOCju4k8zsyejGooQV+ToVv/g7Xsma7aw6Rduojy5BWPumCk0d3q8CTa
- cV8EFfU6U+DWe3QpioiGO9zaFvqACaFl8YRS7NIzutLxvb7wKTM84eZno15Zd/SU4/xP
- ud6zx1345oRtx0TxSBG83TST+witQiPRS9hsTQoENrBadnJHG4V0Ge0gxrlU2psnzYzw
- qN1w==
-X-Gm-Message-State: AOAM532vgtlqVZhuiopWFvrdKh0P96G4yP67w7SA24q4L28x2Py18IC+
- KcgiP+T3I6baUrRmtz7GJaU3Tm/hxbbLNQMC/efdzEs/Zf0=
-X-Google-Smtp-Source: ABdhPJzVWgj2ZyxUDpgzP0RfZhmfDwMGeKtpF9+HZG1hOKUmA2K8Zdk94g3ClZN8jpUy4vK3iDMJkGULnDKaqoLOslM=
-X-Received: by 2002:a5d:8490:: with SMTP id t16mr20427765iom.91.1613566985436; 
- Wed, 17 Feb 2021 05:03:05 -0800 (PST)
-MIME-Version: 1.0
-References: <20210211083454.37117-1-gmouse@google.com>
- <CADVsX8-A+zc3jfwhXjOfEd3xsBQ9hvPSvAiNw62gbcf2dVozpQ@mail.gmail.com>
-In-Reply-To: <CADVsX8-A+zc3jfwhXjOfEd3xsBQ9hvPSvAiNw62gbcf2dVozpQ@mail.gmail.com>
-From: Anton Kachalov <gmouse@google.com>
-Date: Wed, 17 Feb 2021 14:02:53 +0100
-Message-ID: <CADVsX88GRvve4uy2USUjB6PvMrE8=JJsWU7eLo5RDm5UQz3cyA@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: nuvoton: Fix flash layout This change satisfy
- OpenBMC requirements for flash layout.
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Joel Stanley <joel@jms.id.au>
-Content-Type: text/plain; charset="UTF-8"
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=O5wgPSX0EqeMbJR+BLOmiQdB8oreVzSi/8OkWea4uy0=;
+ b=panYLOVrO1Fb5H/QwpvbxxsJFq2xmK/n8MgPI1KwTgtoFpG7GRM6a8H4vAEMNHzqYa
+ GoClROYVJv29r2V9++R3khElSOkijAS/cuYraF9i2WCfrLAZ7JM4Y6nnm8LKoboG8oHP
+ bg15k8qItRKfgFemlBaAzaHb1MO9v3uF1uvB0y2OtawQOr9L+3qiubYaoGSsAbJVeJZA
+ qgm/1X5xBeLaQnA36z/H4PP6KHjxe6JKPEc0iwHvUAliaMc011Nv5xr1DbccUq7jnjNm
+ n6D7sFaCPG4jO1gFwtlb+UNgQPaSGCJupSiF4L6jNUttgMbB5gd6k0Gper6q7HTHgycO
+ WCvg==
+X-Gm-Message-State: AOAM531gWCXIr5PGjRtR1tpMSzyqRTLw7oecrzC9K1fzmtFqRSXr545h
+ KIODli9gC0X/1YARmSMGz1nwxfNtm9RZaw==
+X-Google-Smtp-Source: ABdhPJwLw/J08m57imTO91TiYt+hHuLtXAI9UVlXIyyyTituQQiHnZpar89+fQCPYt1B+iasVxtWVw==
+X-Received: by 2002:aca:b1c1:: with SMTP id a184mr49659oif.117.1613585651142; 
+ Wed, 17 Feb 2021 10:14:11 -0800 (PST)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:7529:b119:20bd:9ab4])
+ by smtp.gmail.com with ESMTPSA id r15sm530498otq.77.2021.02.17.10.14.10
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 17 Feb 2021 10:14:10 -0800 (PST)
+From: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: replace witherspoon-tacoma with rainier in CI
+Message-Id: <3309719B-0B3F-44AC-BF30-7E7745A4BA67@gmail.com>
+Date: Wed, 17 Feb 2021 12:14:09 -0600
+To: openbmc <openbmc@lists.ozlabs.org>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,70 +83,18 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Gently ping.
+The witherspoon-tacoma system was a variant of IBM's witherspoon system =
+that
+supported the AST2600. We introduced it into CI primarily to give the =
+community
+CI coverage of the new AST2600 chip.
 
-On Thu, 11 Feb 2021 at 17:15, Anton Kachalov <gmouse@google.com> wrote:
->
-> Hi, Joel.
->
-> This is the correct patch.
->
-> On Thu, 11 Feb 2021 at 09:34, <gmouse@google.com> wrote:
-> >
-> > From: "Anton D. Kachalov" <gmouse@google.com>
-> >
-> > Signed-off-by: Anton D. Kachalov <gmouse@google.com>
-> > ---
-> >  arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 28 +++++++----------------
-> >  1 file changed, 8 insertions(+), 20 deletions(-)
-> >
-> > diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> > index bd1eb6ee380f..741c1fee8552 100644
-> > --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> > +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> > @@ -182,8 +182,8 @@ bbuboot2@80000 {
-> >                                 reg = <0x0080000 0x80000>;
-> >                                 read-only;
-> >                                 };
-> > -                       envparam@100000 {
-> > -                               label = "env-param";
-> > +                       ubootenv@100000 {
-> > +                               label = "u-boot-env";
-> >                                 reg = <0x0100000 0x40000>;
-> >                                 read-only;
-> >                                 };
-> > @@ -195,25 +195,13 @@ kernel@200000 {
-> >                                 label = "kernel";
-> >                                 reg = <0x0200000 0x400000>;
-> >                                 };
-> > -                       rootfs@600000 {
-> > -                               label = "rootfs";
-> > -                               reg = <0x0600000 0x700000>;
-> > +                       rofs@780000 {
-> > +                               label = "rofs";
-> > +                               reg = <0x0780000 0x1680000>;
-> >                                 };
-> > -                       spare1@D00000 {
-> > -                               label = "spare1";
-> > -                               reg = <0x0D00000 0x200000>;
-> > -                               };
-> > -                       spare2@0F00000 {
-> > -                               label = "spare2";
-> > -                               reg = <0x0F00000 0x200000>;
-> > -                               };
-> > -                       spare3@1100000 {
-> > -                               label = "spare3";
-> > -                               reg = <0x1100000 0x200000>;
-> > -                               };
-> > -                       spare4@1300000 {
-> > -                               label = "spare4";
-> > -                               reg = <0x1300000 0x0>;
-> > +                       rwfs@1e00000 {
-> > +                               label = "rwfs";
-> > +                               reg = <0x1e00000 0x200000>;
-> >                         };
-> >                 };
-> >         };
-> > --
-> > 2.30.0.478.g8a0d178c01-goog
-> >
+IBM has begun shifting it's focus away from witherspoon-tacoma and on to
+rainier. Rainier is also an AST2600 based system, has more features =
+enabled
+on it, and is the direction of most new IBM development.
+
+I'd like to propose replacing witherspoon-tacoma in our CI jobs with =
+rainier.
+
+Andrew=
