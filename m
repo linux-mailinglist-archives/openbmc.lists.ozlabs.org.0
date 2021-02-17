@@ -2,131 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25DF531E005
-	for <lists+openbmc@lfdr.de>; Wed, 17 Feb 2021 21:14:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A026231E024
+	for <lists+openbmc@lfdr.de>; Wed, 17 Feb 2021 21:24:42 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dgpvq1Pk8z3cT3
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 07:14:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dgq7r55rPz3cSN
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 07:24:40 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=InventecCorp.onmicrosoft.com header.i=@InventecCorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-InventecCorp-onmicrosoft-com header.b=wAv9PX6/;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=As+gy4EJ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=inventec.com (client-ip=2a01:111:f400:febe::705;
- helo=apc01-pu1-obe.outbound.protection.outlook.com;
- envelope-from=udupa.ashwini@inventec.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=InventecCorp.onmicrosoft.com
- header.i=@InventecCorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-InventecCorp-onmicrosoft-com header.b=wAv9PX6/; 
- dkim-atps=neutral
-Received: from APC01-PU1-obe.outbound.protection.outlook.com
- (mail-pu1apc01on0705.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:febe::705])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b30; helo=mail-yb1-xb30.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=As+gy4EJ; dkim-atps=neutral
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com
+ [IPv6:2607:f8b0:4864:20::b30])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DgpvV3ySCz30Hj
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 07:13:56 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IIjSuLY2B/psmflOGcpJWDCTkkOJZSTWazpcxpH335fahHK7+UW7bnyukYbB2wgnwjymymxRjpTHPrv7ydHMb+JjeHIPyDm6d6NLDKVFkpzrARauDxr2W2SVkrJjy9JofFXHLz6vXMAqPz77NntfC96dZWGRzug0WKH7RoohQkM5QxOsRgx1CFhcbjVJ6XyzbN5FWqzVegzFekH0S4FCO2V/+wp+8KE7V6yNNXo8u9a4O1JydZUTIAAQSl1gO5+0qdvAU7iPi+Xq55HM41ybpDz068hTe6wVR/DHauEopOJVu9IXAlGrNXazXsGgbREZb8W+L0dF7gcFGxta6fZ4qA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/ReNNxhMLni8qcl6JwPb1XihSXRZZ1Li9v+GRgwJcB8=;
- b=jEczydSpEy5GkgFyOyOvBUm5N1etEtpk1fRnzaCfu87tKEjEH/QsGZ2Qphje0GTY2HJffAzOzYR7wvqUXf3kN1WLTLMsSE6cDvP2DXQSQ2sBF2MYRcmGHPyQegH+xKGIjiNj4KpSjihpErEu+N7uZFOPiQrGH6M7z6R2yDGgbjDOUKkp8wQjK/j215HiJ5EPeQMHpMgD0VCATgbU9Ec4c4MANg5Aksq4cJJNlJChX1E9TYrQtA195cSjF62ivu6dMmsmP0GDgEsifSUvMu9eIsqRJIEbY8zhlaBRoyoOC7GUZvQdJgbKlC4WfAFWZSag5HKk+mU1s9H14dGd5LIDqQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=inventec.com; dmarc=pass action=none header.from=inventec.com;
- dkim=pass header.d=inventec.com; arc=none
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dgq7d0bBjz30JL
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 07:24:26 +1100 (AEDT)
+Received: by mail-yb1-xb30.google.com with SMTP id u75so282041ybi.10
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 12:24:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=InventecCorp.onmicrosoft.com; s=selector2-InventecCorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/ReNNxhMLni8qcl6JwPb1XihSXRZZ1Li9v+GRgwJcB8=;
- b=wAv9PX6/xVjLXjGwNeNzpzF9O35yghTQnHc3FnLbBylwUGDnnghnqnKRuHuyCVby1JgUCLs+kxYCjb1lUgV3eiNcDqOdW9KOy3pZmo79TfTrwJyclt9xatzGCYu9ESDOlYHXZuy6KMYQySdeCooHy842ANqZZOVQ5op9Zb/0mGI=
-Received: from SG2PR02MB2796.apcprd02.prod.outlook.com (2603:1096:4:59::20) by
- SG2PR02MB3356.apcprd02.prod.outlook.com (2603:1096:4:47::13) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3846.30; Wed, 17 Feb 2021 20:13:07 +0000
-Received: from SG2PR02MB2796.apcprd02.prod.outlook.com
- ([fe80::740c:c7c0:872f:1ccc]) by SG2PR02MB2796.apcprd02.prod.outlook.com
- ([fe80::740c:c7c0:872f:1ccc%7]) with mapi id 15.20.3846.039; Wed, 17 Feb 2021
- 20:13:07 +0000
-From: Udupa.Ashwini ISV <udupa.ashwini@inventec.com>
-To: Ed Tanous <ed@tanous.net>
-Subject: RE: Redfish v1/Systems/system/EthernetInterfaces
-Thread-Topic: Redfish v1/Systems/system/EthernetInterfaces
-Thread-Index: AdcA6cGzNFkuOxBET+q6tGgjuo9o4ABSXQ1wAABT3oAAzSYpUA==
-Date: Wed, 17 Feb 2021 20:13:07 +0000
-Message-ID: <SG2PR02MB2796736A2D3DCEB0AC9AEC9985869@SG2PR02MB2796.apcprd02.prod.outlook.com>
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=8oLzAC02Gkm/Fh2MDIzbaSva17t7bqRY1qprrdRJxkM=;
+ b=As+gy4EJwiv68Qd+FujQX41JiHWpIiYmHDicUnOE38l+fM985cVgsZYckrRkoUrJlF
+ Yfb0qGrRxp3prCBdsdEyFgJ0VpKMKsjE+Ztxx+VUP5Ezz9L6RIsh5JgngBabWkYKWOgr
+ A1M/jj4ST3Xc6u0uLL4Tcm0cl0Z+mwy/RNcf3EySTl9iiWrVfUKB+vLHs5mw1bG5pl4k
+ L1mFmypeKxbzeZe3H168BA7A3e2BQOyoS0HoQN6BU3ADbXvVhKgG6wc2BaOPjjdil3nT
+ wMqX2fNcS7P0bjstIxEIF2SrjkT9JJ2ywC5Emgfsms2EI6/sCh8PoBarXyAYw6NAPK5b
+ CVfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=8oLzAC02Gkm/Fh2MDIzbaSva17t7bqRY1qprrdRJxkM=;
+ b=gJI7+gf5KBQnrKTF2PAqS8/DlubY0NrcXp1NLRZVYE08ACOpJGBugelV6s1XO12eTg
+ S7WwF+bhbcUfDK/C0yZbBhNzzXHbjuk0l5SZnXK9/MqG4gYHftMut/HkA3+qciy9tTwz
+ bNAFnQ885S74/9K72X/MLzK3jz/JYb2nxrBmvUzQeOJGlaRWL95JBIASEd1AZoswcmz1
+ elwRVvDisTQHFG57/xQYbusZifldmc+7nCHG22C6HRr6J7JPEErLtDUcSdkDXw1ymhPc
+ RjqAPuo2J0gdmvZQe7z/QnVjcp83r6qrHEaCj8wCOdkgogVjhSgAsAO87qerVKJtdQwg
+ w7sg==
+X-Gm-Message-State: AOAM530Qr/6eI8MYgcwdhkFgFtld7ttFHiW5yQm0XRWoD6oHXfiLQj64
+ 1bWebKahrLRwEr/H+qVZLgl0TzscxzfWqE6rrFC+qQ==
+X-Google-Smtp-Source: ABdhPJztqB96mDha+uvK3lAA1vZjRj+yvKkjxw/ITXxGrvbPqf+QMmYRVA6tV9oUsvIBduVbqaDFq/17ZUdZTYM8pQ8=
+X-Received: by 2002:a25:8687:: with SMTP id z7mr1535565ybk.209.1613593462715; 
+ Wed, 17 Feb 2021 12:24:22 -0800 (PST)
+MIME-Version: 1.0
 References: <SG2PR02MB2796B5FB2DB9AAAE2594BA1E858B9@SG2PR02MB2796.apcprd02.prod.outlook.com>
  <SG2PR02MB27961D3A938C94341747757C858A9@SG2PR02MB2796.apcprd02.prod.outlook.com>
  <CACWQX807_KpeTHnMqPMt8E+h_ggMpKy0_Jr82HPV+oRushXdXw@mail.gmail.com>
-In-Reply-To: <CACWQX807_KpeTHnMqPMt8E+h_ggMpKy0_Jr82HPV+oRushXdXw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: tanous.net; dkim=none (message not signed)
- header.d=none;tanous.net; dmarc=none action=none header.from=inventec.com;
-x-originating-ip: [24.6.83.119]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: d4d36269-1fd8-4648-b54c-08d8d38070dc
-x-ms-traffictypediagnostic: SG2PR02MB3356:
-x-microsoft-antispam-prvs: <SG2PR02MB3356532A69E142995F10447485869@SG2PR02MB3356.apcprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5797;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: SdDgDCjLRTFKsM+zEjaBFCxcJZRDlNRMhGUWGnDM3fzPUPJj+33/6OXJcBmNSTOswPhoNVre6/YEhfJXezKtntvSdep+L+quKvUd0ELyHQylZ/sNUxwZwQ99CKq8gblG5zHXAXWjgmw8YhYtPYGxBf6vkd/zlXGa/Ak/+MzfEGTNV0mfow/I+LXc3EFFfQfOsjqoOMCSc3E3ISQXdBZ9opkUfletbI70oiSzFN3juqrxoSs7huouIQeVMDTulXazCbkiV/18dedPZkOAW1DX6Nw6ESODfiNBJMS/5QACB6An2cClf4rrZROyjO8D+CZaCNw2309rjr0XtvJPULK8xje1k7WFwZQSwe/hnsNerMkx2Gl5kkrQYiKxtqPA7yO70bZ3TBd6iKO8inxtkx/nr5IKTTJ48EYaYzD5q92EUEO5Aan38H1BYirqv6eNM6PYeoYzfP4C6MWQhHOsSOd95DBSYB7FZ4OYCoRIDWOtgBr5fApOc9+PMStl0l1DNKIcQl1vnUXXSZZvH7bUNKj2k1vvSLAhpdlklUY2jiVMq4xUkk+czh9qjWXAghBqziNzrkijVrPJ+whjqqXa/eByEzoMJaF6FwiQ4bsTsYIyhHk=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SG2PR02MB2796.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(39860400002)(366004)(376002)(346002)(136003)(396003)(4326008)(8936002)(8676002)(9686003)(71200400001)(26005)(186003)(5660300002)(6916009)(53546011)(9326002)(6506007)(66476007)(7696005)(55016002)(166002)(86362001)(76116006)(66946007)(66446008)(33656002)(66556008)(2906002)(52536014)(64756008)(966005)(478600001)(316002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?RjE4RUJvaDNLSUNwRGdkblF1UHA4UWU1SVhYalVBTHZaU1B4RFJIQ1V6MjFG?=
- =?utf-8?B?dlFkTVRsN2tsWHdiUVp2dWRKcTZpVmo0cCsxTDR2VE1UWEZ4YnF1R3lybUdW?=
- =?utf-8?B?Y1cyenJwa0xEWTVPZHMvREZDRWo2K2FRdmZwSTM0SVhSUm82anhmR0JkNmtN?=
- =?utf-8?B?Tk42a0FKckQ1ZWw3NGpNZ1F1Y0oxQStMRkorRldVazdYOFdZTkQzLzUzVXNt?=
- =?utf-8?B?aWhqZWNRektYV0hLLzdjTUx0blVNdzNiQjdWVVpPVS83UUt0LzVHVHZobGxi?=
- =?utf-8?B?TDQ2Z3FtQ0puUTM4VmRMS3N3Y2dtMHEyb25BY0RQY1NpZHd5aGlhcWRoSHFk?=
- =?utf-8?B?UVFYL2FkbWtTdGUwdEd4N2JoQXVIejNldytBMDhza05GS1ErYzhtT1VtL1Fq?=
- =?utf-8?B?RmtrbklpOTYzdXdGdDhwSmM4TGxXM2Qwem1TUkVURUZDTGF3L2wzOG1DY0ZQ?=
- =?utf-8?B?ZHRKZktNYlBTODFCbndFRDRUb09oTCtvWkxiTHgvaldlUk1ZdHRaUlFIZ1hY?=
- =?utf-8?B?MUNwdUo4Nlh3YXVOcmR4OHpNMlJ1UjdBTXFhOXE1QnE0NjNBNS9uWktudW1L?=
- =?utf-8?B?ZlZCdys0cWJrQTFPcFpra01acEU1SzJMODBCM1FVYlRLc3FjeG13aDFLNldw?=
- =?utf-8?B?OVR1dGJaVEZaQWtIR05UcnA4V3ZXdWFmazBGK3BYR2JHTllicGNZbkFwUzMr?=
- =?utf-8?B?S0FRZWxqYm1sR1ExTlVuK0NZWTdCYU5JeHUyUDM0aUZZOTNsejBmL0lMM2h5?=
- =?utf-8?B?MnkwemJ6Qzc0YVBWK1psV2JCR0ZTZVIzTHBvbEd4SHZDSDVrSllsdzJXMDhn?=
- =?utf-8?B?UWdPQ1ZlV09QbGIxMGNGYlpTSWFQQndVRHFudUhCVGIzcTNnTTVTY0ZkYzg0?=
- =?utf-8?B?cGQ4OTZJcUw0UmNNanpKcU9lQTRkMnpDbFhCVm9XbVpjOTYwRGRiRUVuQXRY?=
- =?utf-8?B?Yzk2TjhiVlRLeThuelJCcXpNVWgxT2Q4ZzNHUXdwVm5zZjNLcEdsSEVzWGEx?=
- =?utf-8?B?U3g2VnBOZ2RVbWFteUtiL3dsUTBiamhLdm1KUXlvem9WRzNoTHVoYjNHZFNI?=
- =?utf-8?B?OWUvTFdvUWk4Ylg1RzF2YzRFalJXQk9lYnh6WTdiUEFYTjh3TVI5TVVpcC9t?=
- =?utf-8?B?U2h5azh2NUJKU3YxTVpYU3hmVXErVzFibHNkTjJ4WnEzVElIREdYNlVxaFJY?=
- =?utf-8?B?Sm9xQlY4T0c4N3JnSlJYQllnMndIWmFlVksycEQ3MXdtemFpcGpQOSt0QUp1?=
- =?utf-8?B?WFFtSXo2WDFUVlV6UVNScnhrRmEyMGhQZ3Jhck4yUDV4dncyTU5YTXV3aHVL?=
- =?utf-8?B?OHM1R0plOGJKc1hYMGM1N1Q3Mi9wN1lzdTI2Um9qLzNFZGlGSWsrZEZPUXpv?=
- =?utf-8?B?bG1abVZUZHdNSktMa0ZxZENqQUNUM3k3OUZtTTFFTzFSSFByWU1NQm5UZXlM?=
- =?utf-8?B?a1NPbFZybit0SThiM2pCTkRhckpyallVMkoxOTNvTytsUWl1Z0oxbDhZZkln?=
- =?utf-8?B?R2RNWUM1VlJwNUFuSTdmQ01YUnJTKzdHS3NmSXhHOXhjdXRucytrSXJ6Vkpk?=
- =?utf-8?B?Yk1YYnFFaUFuUlZLNGM4bUFKaVdLVFM1QnM2amplSzhwNFhEWTlZS0h2M3FS?=
- =?utf-8?B?RU0ralhPU2tqVHQxcFVyRnI2Uk02SXpONDI1dDZhT0pkMVNya0U5NktRa1pB?=
- =?utf-8?B?UG04TGJaUmpmYkJzaDhlSGpYd2cyRHJLclNNVVM4cEhMNTFOSVN6em45RGVh?=
- =?utf-8?Q?GnxyYPTp5+MSwKH21E=3D?=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_SG2PR02MB2796736A2D3DCEB0AC9AEC9985869SG2PR02MB2796apcp_"
-MIME-Version: 1.0
-X-OriginatorOrg: inventec.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SG2PR02MB2796.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d4d36269-1fd8-4648-b54c-08d8d38070dc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Feb 2021 20:13:07.4113 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 2ae41f0c-acca-40f1-9c63-49475ff38512
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: PnimxKOKuhRZLfY5Sd/Twi7fgtEbCSbQK5fJinz6Ghrwmoxgw93rObfcrxCoUyuhZRxhuWKzyN5sCns6fk9IQ+rR7SOqyFRljHHhzTm9GOE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR02MB3356
+ <SG2PR02MB2796736A2D3DCEB0AC9AEC9985869@SG2PR02MB2796.apcprd02.prod.outlook.com>
+In-Reply-To: <SG2PR02MB2796736A2D3DCEB0AC9AEC9985869@SG2PR02MB2796.apcprd02.prod.outlook.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Wed, 17 Feb 2021 12:24:11 -0800
+Message-ID: <CACWQX80r9dYEGbwftH32Sc6fRmDLHeYg24tdO+8hME9V_bDDCg@mail.gmail.com>
+Subject: Re: Redfish v1/Systems/system/EthernetInterfaces
+To: "Udupa.Ashwini ISV" <udupa.ashwini@inventec.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,150 +84,119 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_SG2PR02MB2796736A2D3DCEB0AC9AEC9985869SG2PR02MB2796apcp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+On Wed, Feb 17, 2021 at 12:13 PM Udupa.Ashwini ISV
+<udupa.ashwini@inventec.com> wrote:
+>
+> Hi Ed,
+>
+>
+>
+> Its Inventec platform.
+>
+> https://github.com/openbmc/openbmc/tree/master/meta-inventec
+>
+> I just wanted to know how to implement /redfish/v1/Systems/system/Etherne=
+tInterfaces.
 
-SGkgRWQsDQoNCkl0cyBJbnZlbnRlYyBwbGF0Zm9ybS4NCmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVu
-Ym1jL29wZW5ibWMvdHJlZS9tYXN0ZXIvbWV0YS1pbnZlbnRlYw0KSSBqdXN0IHdhbnRlZCB0byBr
-bm93IGhvdyB0byBpbXBsZW1lbnQgL3JlZGZpc2gvdjEvU3lzdGVtcy9zeXN0ZW0vRXRoZXJuZXRJ
-bnRlcmZhY2VzLg0KDQpSZWdhcmRzLA0KQXNod2luaQ0KDQpGcm9tOiBFZCBUYW5vdXMgPGVkQHRh
-bm91cy5uZXQ+DQpTZW50OiBTYXR1cmRheSwgRmVicnVhcnkgMTMsIDIwMjEgMTA6MTggQU0NClRv
-OiBVZHVwYS5Bc2h3aW5pIElTViA8dWR1cGEuYXNod2luaUBpbnZlbnRlYy5jb20+DQpDYzogb3Bl
-bmJtY0BsaXN0cy5vemxhYnMub3JnDQpTdWJqZWN0OiBSZTogUmVkZmlzaCB2MS9TeXN0ZW1zL3N5
-c3RlbS9FdGhlcm5ldEludGVyZmFjZXMNCg0KDQoNCk9uIFNhdCwgRmViIDEzLCAyMDIxIGF0IDEw
-OjExIEFNIFVkdXBhLkFzaHdpbmkgSVNWIDx1ZHVwYS5hc2h3aW5pQGludmVudGVjLmNvbTxtYWls
-dG86dWR1cGEuYXNod2luaUBpbnZlbnRlYy5jb20+PiB3cm90ZToNCg0KSGksDQoNCkkgYW0gbmV3
-IHRvIE9wZW5CbWMgYW5kIFJlZGZpc2guDQpJIHNhdyBpbiBibWN3ZWIvUmVkZmlzaC5tZCwgdGhh
-dCBiZWxvdyBSZWRmaXNoIGlzIHRhcmdldGVkIGZvciBPcGVuQm1jOg0KL3JlZGZpc2gvdjEvU3lz
-dGVtcy9zeXN0ZW0vRXRoZXJuZXRJbnRlcmZhY2VzDQoNCkJ1dCwgaW4gcmVkZmlzaC1jb3JlL2xp
-Yi9zeXN0ZW1zLmhwcCwgSSBkb27igJl0IHNlZSBFdGhlcm5ldEludGVyZmFjZXMgYW5kIEkgZG9u
-4oCZdCBzZWUgaXQgb24gbXkgc2VydmVyIFJlZGZpc2ggdG9vLg0KDQpXaGF0IHVwc3RyZWFtIHN5
-c3RlbSBhcmUgeW91IHRyeWluZyB0aGlzIG9uPyAgSWYgeW91ciBwbGF0Zm9ybSBpc27igJl0IHVw
-c3RyZWFtLCBjYW4geW91IHBvaW50IGF0IHRoZSBjb2RlIHJldmlldyB3aGVyZSB5b3XigJlyZSBh
-ZGRpbmcgaXQ/DQoNCklmIHlvdSBkb27igJl0IGhhdmUgZWl0aGVyLCB0YWtlIG5vdGUgdGhhdCBp
-dOKAmXMgcmVhbGx5IGRpZmZpY3VsdCB0byBoZWxwIGRlYnVnIG9yIG1ha2Ugc3VnZ2VzdGlvbnMg
-Zm9yIHBsYXRmb3JtcyB0aGF0IHdlIGNhbuKAmXQgc2VlIHRoZSBjb2RlIGZvci4NCg0KSXRzIG9u
-bHkgcHJlc2VudCBpbiBNYW5hZ2Vycy9ibWMvRXRoZXJuZXRJbnRlcmZhY2VzLg0KDQpIb3cgZG8g
-SSBhZGQgU3lzdGVtcy9zeXN0ZW0vRXRoZXJuZXRJbnRlcmZhY2VzIFJlZGZpc2ggc3VwcG9ydD8g
-V2hhdCBjaGFuZ2VzIGRvIEkgbmVlZCB0byBtYWtlPw0KDQpSZWdhcmRzLA0KQXNod2luaQ0KDQot
-LQ0KLUVkDQo=
+Excellent, that helps.  I originally misread, and thought the
+interface was missing on the platform, not that you were trying to add
+it to redfish.
 
---_000_SG2PR02MB2796736A2D3DCEB0AC9AEC9985869SG2PR02MB2796apcp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+>
+>
+>
+> Regards,
+>
+> Ashwini
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
-YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
-IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
-IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBpbjsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQt
-ZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCmgyDQoJe21zby1zdHlsZS1wcmlvcml0eTo5
-Ow0KCW1zby1zdHlsZS1saW5rOiJIZWFkaW5nIDIgQ2hhciI7DQoJbXNvLW1hcmdpbi10b3AtYWx0
-OmF1dG87DQoJbWFyZ2luLXJpZ2h0OjBpbjsNCgltc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0bzsN
-CgltYXJnaW4tbGVmdDowaW47DQoJZm9udC1zaXplOjE4LjBwdDsNCglmb250LWZhbWlseToiQ2Fs
-aWJyaSIsc2Fucy1zZXJpZjt9DQphOmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHls
-ZS1wcmlvcml0eTo5OTsNCgljb2xvcjpibHVlOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7
-fQ0Kc3Bhbi5IZWFkaW5nMkNoYXINCgl7bXNvLXN0eWxlLW5hbWU6IkhlYWRpbmcgMiBDaGFyIjsN
-Cgltc28tc3R5bGUtcHJpb3JpdHk6OTsNCgltc28tc3R5bGUtbGluazoiSGVhZGluZyAyIjsNCglm
-b250LWZhbWlseToiQ2FsaWJyaSBMaWdodCIsc2Fucy1zZXJpZjsNCgljb2xvcjojMkY1NDk2O30N
-CnNwYW4uRW1haWxTdHlsZTE5DQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZv
-bnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0KLk1z
-b0NocERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1mYW1pbHk6
-IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41aW4g
-MTEuMGluOw0KCW1hcmdpbjoxLjBpbiAxLjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNlY3Rp
-b24xDQoJe3BhZ2U6V29yZFNlY3Rpb24xO30NCi0tPjwvc3R5bGU+PCEtLVtpZiBndGUgbXNvIDld
-Pjx4bWw+DQo8bzpzaGFwZWRlZmF1bHRzIHY6ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAvPg0K
-PC94bWw+PCFbZW5kaWZdLS0+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxheW91
-dCB2OmV4dD0iZWRpdCI+DQo8bzppZG1hcCB2OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwvbzpz
-aGFwZWxheW91dD48L3htbD48IVtlbmRpZl0tLT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVOLVVT
-IiBsaW5rPSJibHVlIiB2bGluaz0icHVycGxlIiBzdHlsZT0id29yZC13cmFwOmJyZWFrLXdvcmQi
-Pg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkhpIEVk
-LDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48
-L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5JdHMgSW52ZW50ZWMgcGxhdGZvcm0uPG86cD48L286
-cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20v
-b3BlbmJtYy9vcGVuYm1jL3RyZWUvbWFzdGVyL21ldGEtaW52ZW50ZWMiPmh0dHBzOi8vZ2l0aHVi
-LmNvbS9vcGVuYm1jL29wZW5ibWMvdHJlZS9tYXN0ZXIvbWV0YS1pbnZlbnRlYzwvYT48bzpwPjwv
-bzpwPjwvcD4NCjxoMiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+PHNwYW4gc3R5bGU9ImZvbnQt
-c2l6ZToxMS4wcHQ7Y29sb3I6YmxhY2s7Zm9udC13ZWlnaHQ6bm9ybWFsIj5JIGp1c3Qgd2FudGVk
-IHRvIGtub3cgaG93IHRvIGltcGxlbWVudCAvcmVkZmlzaC92MS9TeXN0ZW1zL3N5c3RlbS9FdGhl
-cm5ldEludGVyZmFjZXMuPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQt
-d2VpZ2h0Om5vcm1hbCI+PG86cD48L286cD48L3NwYW4+PC9oMj4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+UmVnYXJkcyw8
-bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkFzaHdpbmk8bzpwPjwvbzpwPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdiBzdHls
-ZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRvcDpzb2xpZCAjRTFFMUUxIDEuMHB0O3BhZGRpbmc6My4w
-cHQgMGluIDBpbiAwaW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+RnJvbTo8L2I+IEVkIFRh
-bm91cyAmbHQ7ZWRAdGFub3VzLm5ldCZndDsgPGJyPg0KPGI+U2VudDo8L2I+IFNhdHVyZGF5LCBG
-ZWJydWFyeSAxMywgMjAyMSAxMDoxOCBBTTxicj4NCjxiPlRvOjwvYj4gVWR1cGEuQXNod2luaSBJ
-U1YgJmx0O3VkdXBhLmFzaHdpbmlAaW52ZW50ZWMuY29tJmd0Ozxicj4NCjxiPkNjOjwvYj4gb3Bl
-bmJtY0BsaXN0cy5vemxhYnMub3JnPGJyPg0KPGI+U3ViamVjdDo8L2I+IFJlOiBSZWRmaXNoIHYx
-L1N5c3RlbXMvc3lzdGVtL0V0aGVybmV0SW50ZXJmYWNlczxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXY+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdj4NCjxkaXY+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj5PbiBTYXQsIEZlYiAxMywgMjAyMSBhdCAxMDoxMSBBTSBVZHVw
-YS5Bc2h3aW5pIElTViAmbHQ7PGEgaHJlZj0ibWFpbHRvOnVkdXBhLmFzaHdpbmlAaW52ZW50ZWMu
-Y29tIj51ZHVwYS5hc2h3aW5pQGludmVudGVjLmNvbTwvYT4mZ3Q7IHdyb3RlOjxvOnA+PC9vOnA+
-PC9wPg0KPC9kaXY+DQo8YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLWxlZnQ6
-c29saWQgI0NDQ0NDQyAxLjBwdDtwYWRkaW5nOjBpbiAwaW4gMGluIDYuMHB0O21hcmdpbi1sZWZ0
-OjQuOHB0O21hcmdpbi1yaWdodDowaW4iPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0
-OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9
-Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj5IaSw8
-bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRv
-cC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+Jm5ic3A7PG86cD48L286cD48
-L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87
-bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPkkgYW0gbmV3IHRvIE9wZW5CbWMgYW5kIFJlZGZp
-c2guPG86cD48L286cD48L3A+DQo8aDIgc3R5bGU9ImJhY2tncm91bmQ6d2hpdGUiPjxzcGFuIHN0
-eWxlPSJmb250LXNpemU6MTEuMHB0O2NvbG9yOmJsYWNrIj5JIHNhdyBpbiBibWN3ZWIvUmVkZmlz
-aC5tZCwgdGhhdCBiZWxvdyBSZWRmaXNoIGlzIHRhcmdldGVkIGZvciBPcGVuQm1jOg0KPC9zcGFu
-PjxvOnA+PC9vOnA+PC9oMj4NCjxoMiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+PHNwYW4gc3R5
-bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Y29sb3I6YmxhY2siPi9yZWRmaXNoL3YxL1N5c3RlbXMvc3lz
-dGVtL0V0aGVybmV0SW50ZXJmYWNlczwvc3Bhbj48bzpwPjwvbzpwPjwvaDI+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0
-b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIg
-c3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRv
-Ij5CdXQsIGluIHJlZGZpc2gtY29yZS9saWIvc3lzdGVtcy5ocHAsIEkgZG9u4oCZdCBzZWUgRXRo
-ZXJuZXRJbnRlcmZhY2VzIGFuZCBJIGRvbuKAmXQgc2VlIGl0IG9uIG15IHNlcnZlciBSZWRmaXNo
-IHRvby48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Jsb2NrcXVvdGU+DQo8ZGl2
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxk
-aXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5XaGF0IHVwc3RyZWFtIHN5c3RlbSBhcmUgeW91IHRy
-eWluZyB0aGlzIG9uPyZuYnNwOyBJZiB5b3VyIHBsYXRmb3JtIGlzbuKAmXQgdXBzdHJlYW0sIGNh
-biB5b3UgcG9pbnQgYXQgdGhlIGNvZGUgcmV2aWV3IHdoZXJlIHlvdeKAmXJlIGFkZGluZyBpdD88
-bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+
-Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+SWYg
-eW91IGRvbuKAmXQgaGF2ZSBlaXRoZXIsIHRha2Ugbm90ZSB0aGF0IGl04oCZcyByZWFsbHkgZGlm
-ZmljdWx0IHRvIGhlbHAgZGVidWcgb3IgbWFrZSBzdWdnZXN0aW9ucyBmb3IgcGxhdGZvcm1zIHRo
-YXQgd2UgY2Fu4oCZdCBzZWUgdGhlIGNvZGUgZm9yLjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8
-ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4N
-CjxibG9ja3F1b3RlIHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItbGVmdDpzb2xpZCAjQ0NDQ0ND
-IDEuMHB0O3BhZGRpbmc6MGluIDBpbiAwaW4gNi4wcHQ7bWFyZ2luLWxlZnQ6NC44cHQ7bWFyZ2lu
-LXJpZ2h0OjBpbiI+DQo8ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJt
-c28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+SXRzIG9u
-bHkgcHJlc2VudCBpbiBNYW5hZ2Vycy9ibWMvRXRoZXJuZXRJbnRlcmZhY2VzLg0KPG86cD48L286
-cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1
-dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJn
-aW4tYm90dG9tLWFsdDphdXRvIj5Ib3cgZG8gSSBhZGQgU3lzdGVtcy9zeXN0ZW0vRXRoZXJuZXRJ
-bnRlcmZhY2VzIFJlZGZpc2ggc3VwcG9ydD8gV2hhdCBjaGFuZ2VzIGRvIEkgbmVlZCB0byBtYWtl
-PzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4t
-dG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpw
-PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0
-bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+UmVnYXJkcyw8bzpwPjwvbzpwPjwvcD4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFy
-Z2luLWJvdHRvbS1hbHQ6YXV0byI+QXNod2luaTxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9t
-LWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Jsb2Nr
-cXVvdGU+DQo8L2Rpdj4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+LS0gPG86cD48L286
-cD48L3A+DQo8ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPi1FZDxvOnA+PC9vOnA+
-PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
+Please don't top post.
 
---_000_SG2PR02MB2796736A2D3DCEB0AC9AEC9985869SG2PR02MB2796apcp_--
+>
+>
+>
+> From: Ed Tanous <ed@tanous.net>
+> Sent: Saturday, February 13, 2021 10:18 AM
+> To: Udupa.Ashwini ISV <udupa.ashwini@inventec.com>
+> Cc: openbmc@lists.ozlabs.org
+> Subject: Re: Redfish v1/Systems/system/EthernetInterfaces
+>
+>
+>
+>
+>
+>
+>
+> On Sat, Feb 13, 2021 at 10:11 AM Udupa.Ashwini ISV <udupa.ashwini@invente=
+c.com> wrote:
+>
+>
+>
+> Hi,
+>
+>
+>
+> I am new to OpenBmc and Redfish.
+>
+> I saw in bmcweb/Redfish.md, that below Redfish is targeted for OpenBmc:
+
+This doc is really old, and was originally written as an initial stab
+at what interfaces we should write.  Unfortunately, when it got
+converted into a "here's the interfaces we support today" doc, that
+path didn't get scrubbed.  We don't have an implementation of it
+today.  I can get a review open to update the doc.
+
+>
+> /redfish/v1/Systems/system/EthernetInterfaces
+>
+>
+>
+> But, in redfish-core/lib/systems.hpp, I don=E2=80=99t see EthernetInterfa=
+ces and I don=E2=80=99t see it on my server Redfish too.
+
+Today, we don't have this implemented because we don't really have a
+path to get that information from the host.  Doing that would require
+either an in-band application running on the main processor to send
+new ip addresses to the bmc, or an NCSI, MCTP, or PLDM connection
+directly to the NIC that supported getting that level of information.
+Both of which likely require a new daemon to expose those APIs to
+debug.
+
+We do have /redfish/v1/Systems/hypervisor/EthernetInterfaces today.
+We'd ideally want to follow very closely to what that does, expose a
+new path on DBus that implements the
+xyz.openbmc_project.Network.EthernetInterface interface, and grab the
+data from it.
+
+>
+>
+>
+> What upstream system are you trying this on?  If your platform isn=E2=80=
+=99t upstream, can you point at the code review where you=E2=80=99re adding=
+ it?
+>
+>
+>
+> If you don=E2=80=99t have either, take note that it=E2=80=99s really diff=
+icult to help debug or make suggestions for platforms that we can=E2=80=99t=
+ see the code for.
+>
+>
+>
+> Its only present in Managers/bmc/EthernetInterfaces.
+>
+>
+>
+> How do I add Systems/system/EthernetInterfaces Redfish support? What chan=
+ges do I need to make?
+>
+>
+>
+> Regards,
+>
+> Ashwini
+>
+>
+>
+> --
+>
+> -Ed
