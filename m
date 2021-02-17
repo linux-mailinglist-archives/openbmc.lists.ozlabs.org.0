@@ -2,95 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31C1C31E338
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 00:49:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB82B31E335
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 00:47:55 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dgvgc1MJ3z30M9
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 10:49:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DgvfK6pRsz30KS
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 10:47:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=CMMl7RP4;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=Q1SKjoWv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2d;
+ helo=mail-io1-xd2d.google.com; envelope-from=yuenn@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=CMMl7RP4; dkim-atps=neutral
-X-Greylist: delayed 1759 seconds by postgrey-1.36 at boromir;
- Thu, 18 Feb 2021 10:48:47 AEDT
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=Q1SKjoWv; dkim-atps=neutral
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com
+ [IPv6:2607:f8b0:4864:20::d2d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DgvgM5Sfqz30GZ
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 10:48:47 +1100 (AEDT)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 11HN9t2Z062261
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 18:19:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=4hB50uAcXOIbflgv5fJh6ewhHjIHURWEKUWU2Pii5gI=;
- b=CMMl7RP4/AypLxDOdyCYawX4zmFU84lyb0DATTyiMk76XfkgF8BqFZFc05v6BKoLtasH
- G2oip5YEnlwcUQLiMNd7Bpuxyb6DjvzrKnbA4JzrKDFHaxOZb5abynDLlK0FRovMOO2B
- ipJWOCNxMWMSPdTITz6mzZM6NOecHEzzyTqnoIBnb2zAq1QMT/noEj/PY6jKtibEHxgM
- TOJLXuEapoKX+vHxBs8iA7VjXFALgwhXCedf3RJLFPJqgXNJelFqLinBnAQA+vjSdwxp
- pArs0zRyPazjdSSQs0689+c04IqJbd6a5OO9eNoScbwXpEH0FoQg1E27rSMGlZoQlfPk 9A== 
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
- [169.55.91.170])
- by mx0b-001b2d01.pphosted.com with ESMTP id 36sbyd8y47-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 18:19:22 -0500
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
- by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 11HNH5Bd019714
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 23:19:22 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma02wdc.us.ibm.com with ESMTP id 36p6d9hptq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 23:19:20 +0000
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
- [9.57.199.109])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 11HNJJrM33227088
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 23:19:19 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 51D6C112061
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 23:19:19 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 267BC112065
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 23:19:19 +0000 (GMT)
-Received: from demeter.local (unknown [9.85.172.6])
- by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 23:19:19 +0000 (GMT)
-Subject: Re: Security Working Group meeting - Wednesday February 17 - results
-To: openbmc@lists.ozlabs.org
-References: <f6a11337-711a-81db-23a8-44bc24b0072f@linux.ibm.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <ec572762-8edc-83dc-219a-6d9cdb5b13c5@linux.ibm.com>
-Date: Wed, 17 Feb 2021 17:19:18 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.6.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dgvf652fSz2ydJ
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 10:47:40 +1100 (AEDT)
+Received: by mail-io1-xd2d.google.com with SMTP id e133so154805iof.8
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 15:47:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=M13nSPhIf6N1oE1NldUk7lxgijOkf7SUfBDYE7CbyCg=;
+ b=Q1SKjoWvJI8t3aGULew5BgFWmyLKqIi0ZHiVx/wvQRel7EUbtBzmj3fZrv9eB2hPK5
+ Z6UY3eM6M7u8gj3RNYsz45pLr5VgUFgswVzO0V9KyhXxEUWTxsxXGt9KH+xBckbbfDMF
+ 7ZtAsTlFbW7Y8bRDXhfJTnHbfr+pIsFoZvpuoX4QOLukYuH6nmb6DCyTe5a0HEjuQSxD
+ 7pTNNkHjb/QmFYbghwDBfR5NMCNRknIyzBNRAEQdgBU+4Y4eJFIXsrSxTbu9xthENqjj
+ 0rDvehJBXTqouQv5fq0gU8aYdOuNdBBKdX5kzAojw07Rg8JkeNCQu5N77c7QhS9/zyHj
+ O7fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=M13nSPhIf6N1oE1NldUk7lxgijOkf7SUfBDYE7CbyCg=;
+ b=EHr90O3wOgA4o9Q7JC5tvMaQzmW7pBNUxjqwYLZo96eNwVDszC7kni2a6HE1ab9EQ9
+ woiCNnaLrYyBBiwf1+0oEFQSf4IniS3enH69z1wJELnes7xDFchDp/qjHhZPTcnWmmep
+ fNrctmx68hm8029fqHc2ez7Khgl50fsQc/IQaTStaEVQkg2GwmaQaG6adEnwDQLj0L8S
+ NEaV+yXZMhF8aoVi2igpU4EyX3zhQ+RTC+gA7lUQWJFJ2p5zQNxNLH27+tJsuikEmJzE
+ +4a0Lv+oWDu+mcSf3RKsiTYkocqyrcMNhX6gC2+hqeNtpyY8B35xiORPqbxkjmg+ZpA7
+ 5Akw==
+X-Gm-Message-State: AOAM532gTCnDH2PVYagxbw1D43upN/PPZyt/z3ZQ7+ikisvjYUxIEkC2
+ NsFizSW2tpFVtZTksfbExUCiB6Mg4gK2Ckv08ywoisZ7ZdiZYg==
+X-Google-Smtp-Source: ABdhPJwjTN0rIjNmMP6SX7rxjootRAuLj0PrVa+qcXaSJ/fgoq6W76NJaczglK8GnaGdTDkz+jsX5BOqKn9DtX0V1IM=
+X-Received: by 2002:a05:6638:b12:: with SMTP id
+ a18mr1904741jab.114.1613605656278; 
+ Wed, 17 Feb 2021 15:47:36 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <f6a11337-711a-81db-23a8-44bc24b0072f@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-02-17_19:2021-02-16,
- 2021-02-17 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 adultscore=0
- clxscore=1015 lowpriorityscore=0 impostorscore=0 spamscore=0 bulkscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 mlxscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2102170166
+References: <71820e5a-1231-1937-1344-dee9f4a03600@os.amperecomputing.com>
+In-Reply-To: <71820e5a-1231-1937-1344-dee9f4a03600@os.amperecomputing.com>
+From: Nancy Yuen <yuenn@google.com>
+Date: Wed, 17 Feb 2021 15:46:59 -0800
+Message-ID: <CADfYTpF9yX0xheCwu5mftWs9b4YAe=ttGNNsf7GL8KkpW4dAcw@mail.gmail.com>
+Subject: Re: Any convention on putting source codes into openbmc/openbmc
+ repository
+To: Thang Nguyen <thang@os.amperecomputing.com>
+Content-Type: multipart/alternative; boundary="000000000000f38a1205bb90d7a4"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,72 +75,141 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/16/21 5:53 PM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday February 17 at 10:00am PDT.
+--000000000000f38a1205bb90d7a4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Code should be put into an appropriate repo, and repos created where
+necessary.  Then referenced in recipes from openbmc/openbmc metalayers.
+
+On Wed, Feb 17, 2021 at 12:55 AM Thang Nguyen <thang@os.amperecomputing.com=
 >
-> We'll discuss the following items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
-> and anything else that comes up:
+wrote:
+
+> Hi,
 >
-> 1. Gerrit review FYI: log failed authentication attempts 
-> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/39872
-No discussion.
-
+> We implemented several features using c/cpp codes. Currently we put the
+> c/cpp source into the openbmc repository like below:
 >
-> 2. Gerrit review FTI: tie-in between Redfish sessions and IPMI 
-> sessions.  Redfish will GET & DELETE IMPI sessions 
-> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/37785
-Why is this function needed?
 >
-> 3. (Joseph) Discuss adding Web-based SSH to BMCWeb ~ 
-> https://github.com/ibm-openbmc/dev/issues/2243
-
-Sounds good. But don’t call this SSH because it is not.  Do the webui 
-part the same as the host console.  Do the BMCWeb portion using a new 
-D-Bus service (do not fork in bmcweb).
-
-
-Bonus topics:
-4. Interested in improving the documentation for the OpenBMC interface 
-overview > Physical interfaces 
-<https://github.com/openbmc/docs/blob/master/architecture/interface-overview.md#physical-interfaces>? 
-https://github.com/openbmc/docs/blob/master/architecture/interface-overview.md#physical-interfaces 
-(See related review 
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/40424.)
-
-ANSWER: Yes, this is worthwhile.  Add to the agenda for next time.
-
-Is the ASCII art helpful or distracting?
-
-We discusses some ideas: Diagram for BMC cards and PCIe cards.  
-Alternate Placement of TPMs, TOD battery.
-
-
-5. Openssl released version 1.1.1j.
-
-This led to a discussion of how much the OpenBMC project should be 
-tracking and announcing CVEs -- Security Incident Response Team (SIRT) 
-work.  Currently various members are tracking this privately.  Is it 
-even worthwhile, for example, for the OpenBMC project to announce that 
-CVE-whatever affects OpenBMC and the fix is going to the latest kernel 
-version going into OpenBMC commmit whatever?  (No clear consensus was 
-reached.)
-
-Inhibitors to open source SIRT work includes: (A) some members are 
-already doing this privately, and are not able to share due to 
-confidentiality and repeating in open source is just extra work, (B) we 
-are not all on the same release - that is: OpenBMC has not identified 
-any Long Term Support (LTS) releases.
-
-At present, there is no OpenBMC effort to show which CVEs are fixed.  
-This is left as an exercise to interested downstream projects.
-
+> https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-ampere/meta-co=
+mmon/recipes-ac01/host/ampere-host-error-monitor
 >
-> Access, agenda and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group 
-> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
+>
+> https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-ampere/meta-ja=
+de/recipes-ampere/host/ampere-scp-failover
+>
+> I check from http://github.com/openbmc/openbmc but don't see source
+> codes put there. Is there any rule that prevent source codes put into
+> the openbmc repository?
+>
+>
+> Best Regards,
+>
+> Thang Q. Nguyen -
+>
+>
 
+--=20
+
+Nancy Yuen
+
+=E2=80=A2
+
+Google Platforms
+
+=E2=80=A2
+
+yuenn@google.com
+
+=E2=80=A2
+
+Google LLC
+
+--000000000000f38a1205bb90d7a4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Code should be put into an appropriate repo, and repos cre=
+ated where necessary.=C2=A0 Then referenced in recipes from openbmc/openbmc=
+ metalayers.</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"=
+gmail_attr">On Wed, Feb 17, 2021 at 12:55 AM Thang Nguyen &lt;<a href=3D"ma=
+ilto:thang@os.amperecomputing.com">thang@os.amperecomputing.com</a>&gt; wro=
+te:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
+0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi,<br>
+<br>
+We implemented several features using c/cpp codes. Currently we put the <br=
+>
+c/cpp source into the openbmc repository like below:<br>
+<br>
+<a href=3D"https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-amper=
+e/meta-common/recipes-ac01/host/ampere-host-error-monitor" rel=3D"noreferre=
+r" target=3D"_blank">https://github.com/ampere-openbmc/openbmc/tree/ampere/=
+meta-ampere/meta-common/recipes-ac01/host/ampere-host-error-monitor</a><br>
+<br>
+<a href=3D"https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-amper=
+e/meta-jade/recipes-ampere/host/ampere-scp-failover" rel=3D"noreferrer" tar=
+get=3D"_blank">https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-a=
+mpere/meta-jade/recipes-ampere/host/ampere-scp-failover</a><br>
+<br>
+I check from <a href=3D"http://github.com/openbmc/openbmc" rel=3D"noreferre=
+r" target=3D"_blank">http://github.com/openbmc/openbmc</a> but don&#39;t se=
+e source <br>
+codes put there. Is there any rule that prevent source codes put into <br>
+the openbmc repository?<br>
+<br>
+<br>
+Best Regards,<br>
+<br>
+Thang Q. Nguyen -<br>
+<br>
+</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
+ class=3D"gmail_signature"><div dir=3D"ltr"><span><div dir=3D"ltr" style=3D=
+"margin-left:0pt" align=3D"left"><span><div dir=3D"ltr" align=3D"left"><tab=
+le style=3D"border:none;border-collapse:collapse"><colgroup><col width=3D"7=
+6"><col width=3D"7"><col width=3D"111"><col width=3D"7"><col width=3D"122">=
+<col width=3D"7"><col width=3D"71"></colgroup><tbody><tr style=3D"height:15=
+pt"><td style=3D"border-top:1.5pt solid rgb(213,15,37);vertical-align:middl=
+e;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:cent=
+er;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-fam=
+ily:Roboto,sans-serif;color:rgb(102,102,102);background-color:transparent;f=
+ont-weight:700;vertical-align:baseline;white-space:pre-wrap">Nancy Yuen</sp=
+an></p></td><td style=3D"border-top:1.5pt solid rgb(102,102,102);vertical-a=
+lign:middle;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-=
+align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11p=
+t;font-family:Arial;color:rgb(255,0,0);background-color:transparent;font-we=
+ight:700;vertical-align:baseline;white-space:pre-wrap">=E2=80=A2</span></p>=
+</td><td style=3D"border-top:1.5pt solid rgb(51,105,232);vertical-align:mid=
+dle;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:ce=
+nter;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-f=
+amily:Roboto,sans-serif;color:rgb(102,102,102);background-color:transparent=
+;font-weight:700;vertical-align:baseline;white-space:pre-wrap">Google Platf=
+orms=C2=A0</span></p></td><td style=3D"border-top:1.5pt solid rgb(102,102,1=
+02);vertical-align:middle;overflow:hidden"><p dir=3D"ltr" style=3D"line-hei=
+ght:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D=
+"font-size:11pt;font-family:Arial;color:rgb(61,133,198);background-color:tr=
+ansparent;font-weight:700;vertical-align:baseline;white-space:pre-wrap">=E2=
+=80=A2</span></p></td><td style=3D"border-top:1.5pt solid rgb(0,153,57);ver=
+tical-align:middle;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.3=
+8;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-s=
+ize:10pt;font-family:Roboto,sans-serif;color:rgb(102,102,102);background-co=
+lor:transparent;font-weight:700;vertical-align:baseline;white-space:pre-wra=
+p"><a href=3D"mailto:yuenn@google.com" target=3D"_blank">yuenn@google.com</=
+a></span></p></td><td style=3D"border-top:1.5pt solid rgb(102,102,102);vert=
+ical-align:middle;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38=
+;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-si=
+ze:11pt;font-family:Arial;color:rgb(0,153,57);background-color:transparent;=
+font-weight:700;vertical-align:baseline;white-space:pre-wrap">=E2=80=A2</sp=
+an></p></td><td style=3D"border-top:1.5pt solid rgb(238,178,17);vertical-al=
+ign:middle;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-a=
+lign:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt=
+;font-family:Roboto,sans-serif;color:rgb(102,102,102);background-color:tran=
+sparent;font-weight:700;vertical-align:baseline;white-space:pre-wrap">Googl=
+e LLC</span></p></td></tr></tbody></table></div></span></div></span></div><=
+/div>
+
+--000000000000f38a1205bb90d7a4--
