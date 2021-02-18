@@ -1,49 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54D0A31F073
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 20:52:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4988531F0AD
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 21:05:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DhQN63H3xz30Mw
-	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 06:52:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DhQgB2bVMz30ML
+	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 07:05:26 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=0qdOVKvV;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b29; helo=mail-yb1-xb29.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=0qdOVKvV; dkim-atps=neutral
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com
+ [IPv6:2607:f8b0:4864:20::b29])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DhQMx11ltz30Kw
- for <openbmc@lists.ozlabs.org>; Fri, 19 Feb 2021 06:52:07 +1100 (AEDT)
-IronPort-SDR: yeriIzGNz/bOycl8MGwwyK+SxQKYQBsf22JHvJ2y4SUyZTVG+L5WisfVUJ/yecp8ryfSMHD4ox
- ekE1BqimytrA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9899"; a="171304074"
-X-IronPort-AV: E=Sophos;i="5.81,187,1610438400"; d="scan'208";a="171304074"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2021 11:52:03 -0800
-IronPort-SDR: FEW4WfL3NXyTZcw1/QkPplsSc8Nhb94HRJtM5fREW0T7CeaXlntLj8sPJhCoVydpj+wLcibeET
- Bs2FYDHHA5lg==
-X-IronPort-AV: E=Sophos;i="5.81,187,1610438400"; d="scan'208";a="427407229"
-Received: from jmanteyx-desk.jf.intel.com ([10.54.51.75])
- by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2021 11:52:01 -0800
-To: Michael Richardson <mcr@sandelman.ca>
-References: <HK0PR04MB2737A1AA6BFD979A359584D3C9859@HK0PR04MB2737.apcprd04.prod.outlook.com>
- <47e7db9c-f07d-0b27-5e38-328fb6ba3d53@intel.com> <17303.1613669867@localhost>
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
-Subject: Re: ANSI Escape sequence unexpected output
-Message-ID: <f01d2a0f-7889-0cbf-30c2-6ea411668ea2@intel.com>
-Date: Thu, 18 Feb 2021 11:52:00 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DhQfy6Xrkz30Hq
+ for <openbmc@lists.ozlabs.org>; Fri, 19 Feb 2021 07:05:12 +1100 (AEDT)
+Received: by mail-yb1-xb29.google.com with SMTP id r127so3385065ybr.1
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 12:05:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=9JXIKOLA1z/qQ3+zeu2zspRFQls52Ucd/8UKg1fUuYM=;
+ b=0qdOVKvV1tppUDs7zJDmGFM+3ALRcpJ+NTPLLE4APKCX/lOZxFe6EoTpzJ6fbZ91On
+ trrQTXgzTducILvJLpis2QBhNo4c+OTPQchYmS8tJ4rUoypstrS7iuQYIQkRLoLiQ4Va
+ V0F9ckltg/pfvlLnkmb5BYybnSgVQSNn1isPNyUNS8zcLB3YudBfjaUpnIT9XAnZXimf
+ YmWcZL6kHzTSTLDX7dTtpDMkVm/GOQsWZQPRbbe4VIxuEl6HSg8CA26n4KX9xqxAj1rm
+ 71Zm5uM4tCXqFv7Thwp2AhEDhfhAehg2DfoG2AXQSlWO1Qc6wrNtsogpz7x2yt80c4vH
+ clQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=9JXIKOLA1z/qQ3+zeu2zspRFQls52Ucd/8UKg1fUuYM=;
+ b=Ytdwdm7cH9kw72ZJ21JQfqKTa2F3GQ20S96STW0G5sdbkmDMLI+59YCFpRfdlf2pnp
+ HP8bzyJScGqhDjT0CvtG+z12YtReWcibm/d1b+TbqfTL7u3EzgL0Nb7aDoq4n+bNlxtc
+ yj5brB3UnPFK1Lz5yWB13fguz7ZPUOItcEBqgzbnrvCms3o9mvcZdmkcCR8lN4FSy1BL
+ iDLLNrn1OfKDV84MoKuWAMB0G8JoYqrnc04+Xl3HYxMPeiGFSSnwqIUiz0FM0k9pd1QH
+ P3qH6coYTRArYJzLyPjE7v9Tdjjwi2RjYFTuG1WvTqRqnHhhaMXkv+THBmFwqmVI7xdL
+ +/Tw==
+X-Gm-Message-State: AOAM530bIaa5HGOM0KlAuHAuQv51kCvqKMSCn8jrmN5nRLPxWJIaCqqi
+ l81gBMySu7BAgpY5kYnBSrBZwvscnmwZIdwjv4qGBA==
+X-Google-Smtp-Source: ABdhPJzPeMhBQ5cej4HfsPuzCBwC+awo9hFNACHKPr0wXSeBQaHB6Yw0OCUES0G1wPa1M97QufRPuDgxDU5JrAPDuaw=
+X-Received: by 2002:a25:a541:: with SMTP id h59mr8922056ybi.203.1613678708540; 
+ Thu, 18 Feb 2021 12:05:08 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <17303.1613669867@localhost>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="1jGOxvIhi4X7Nw8bOQT9wY0dXN9Y1j8Lz"
+References: <20210218190654.kkdsmrlxgenzr6nz@thinkpad.fuzziesquirrel.com>
+In-Reply-To: <20210218190654.kkdsmrlxgenzr6nz@thinkpad.fuzziesquirrel.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Thu, 18 Feb 2021 12:04:57 -0800
+Message-ID: <CACWQX81HtHCqXZCzmJqppR+tBy5xDjBHa_q5gw7YTHZ9UaAH2w@mail.gmail.com>
+Subject: Re: any in-progress Redfish TelemetryService enhancements?
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,107 +75,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- =?UTF-8?B?RGF2aWQgV2FuZyAo546L5oyv5a6HKQ==?= <DavidWang@quantatw.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, piotr.matuszczak@intel.com,
+ =?UTF-8?Q?Adrian_Ambro=C5=BCewicz?= <adrian.ambrozewicz@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---1jGOxvIhi4X7Nw8bOQT9wY0dXN9Y1j8Lz
-Content-Type: multipart/mixed; boundary="a9RD0V5bhnROcGdKEPCXg1Kcr9R7E4Txy";
- protected-headers="v1"
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
-To: Michael Richardson <mcr@sandelman.ca>
-Cc: =?UTF-8?B?RGF2aWQgV2FuZyAo546L5oyv5a6HKQ==?= <DavidWang@quantatw.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Message-ID: <f01d2a0f-7889-0cbf-30c2-6ea411668ea2@intel.com>
-Subject: Re: ANSI Escape sequence unexpected output
-References: <HK0PR04MB2737A1AA6BFD979A359584D3C9859@HK0PR04MB2737.apcprd04.prod.outlook.com>
- <47e7db9c-f07d-0b27-5e38-328fb6ba3d53@intel.com> <17303.1613669867@localhost>
-In-Reply-To: <17303.1613669867@localhost>
-
---a9RD0V5bhnROcGdKEPCXg1Kcr9R7E4Txy
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
-
-On 2/18/21 9:37 AM, Michael Richardson wrote:
-> Johnathan Mantey <johnathanx.mantey@intel.com> wrote:
->      > David, I see a garbage sequence like this all the time.
+On Thu, Feb 18, 2021 at 11:16 AM Brad Bishop
+<bradleyb@fuzziesquirrel.com> wrote:
 >
->      > I run an Expect script that controls my terminal emulator (kermi=
-t), and
->      > I see a sequence like this: [[39;88R I have tried multiple times=
- to
->
-> That's the result of a Device-Status Report.
-> https://en.wikipedia.org/wiki/ANSI_escape_code#CSIsection, see "DSR" or=
- "CSI 6n"
-> 39 88 is the size of your terminal, or the one that Kermit is emulating=
- for you.
-> (I seem to recall think that kermit has a full-screen mode. So many dif=
-ferent
-> versions of it over the decades)
-> You may be able to turn kermit responding off, or change it's terminal =
-type
-> to dumb.
->
-> The shell is emitting ESC [ 6n to set the stty size of the terminal.
-> "resize" does this, but I think gnureadline does too.
-Thanks for the information.
-
-This motivated me to mess with this again.
-FWIW, The DSR command is present when I run Kermit from within a TMux fra=
-me.
-This code, [[40;162R, is present when I run without TMux, and just use=20
-Konsole.
-Both sequences are emitted AFTER the password has been input, and accepte=
-d.
-
-Password:
-Last login: Thu Feb 18 19:45:28 UTC 2021 on ttyS4
-^[[39;81Rroot@intel-obmc
-
-Using "set terminal type dumb" did not impact the emission of the ESC=20
-sequence.
-I haven't found the "turn responding off" control yet.
-
-> --
-> ]               Never tell me the odds!                 | ipv6 mesh net=
-works [
-> ]   Michael Richardson, Sandelman Software Works        |    IoT archit=
-ect   [
-> ]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rai=
-ls    [
->
+> Has anyone thought about how to implement the Append behaviors for the
+> ReportUpdates property in a MetricReportDefinition?
 >
 
---=20
-Johnathan Mantey
-Senior Software Engineer
-*azad te**chnology partners*
-Contributing to Technology Innovation since 1992
-Phone: (503) 712-6764
-Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
+As an aside, if anyone else is interested in Telemetry Service,
+there's a lot of code there that's not having a lot of community
+feedback or testing on the reviews, so if anyone else is interested
+please pull down the patches and provide constructive feedback.
 
+https://gerrit.openbmc-project.xyz/q/topic:%2522telemetry%2522+(status:open+OR+status:merged)+status:open
 
-
---a9RD0V5bhnROcGdKEPCXg1Kcr9R7E4Txy--
-
---1jGOxvIhi4X7Nw8bOQT9wY0dXN9Y1j8Lz
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsB5BAABCAAjFiEEEynmy4K0ckuoyjA+Ocg9x5uaKcAFAmAuxWAFAwAAAAAACgkQOcg9x5uaKcB+
-7AgAlx22eLNXgAkGpkfVK3gWLPO329AMg79cPcVxBM3yadQs0WtbNllr8HDP93DyPlF7kjvF4Nbj
-YxM5CSmEWgf9l2SnmGZiWTs+EhzOgU6fnPlvEDOcBR04eTOlAEBXWA9x9l24Fs84IslxkgHiyUTq
-BBVHhVVlZG9564Y0l+luHJUCQGuGOtDzl3fg2bgma5n2hF590FX/9bigXTlixp3iR/dYoO1azRj/
-gwDJGXrf/PnuvZmRQ4ssconiqaULY0wu75hhz/8ruwVcImA3cw8PrVCltApBrsEr5kd6wBCaqILM
-3LO73befcCMSZWW8xO/hUB9JdFBOKg6u7kNavuqveQ==
-=Vtpl
------END PGP SIGNATURE-----
-
---1jGOxvIhi4X7Nw8bOQT9wY0dXN9Y1j8Lz--
+> thx - brad
