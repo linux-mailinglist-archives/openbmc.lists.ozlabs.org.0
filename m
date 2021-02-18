@@ -2,133 +2,136 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9441031E3ED
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 02:31:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CBD6831E4DC
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 05:04:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DgxyK4tJdz30M5
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 12:31:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dh1Ln6MzQz30Lp
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 15:04:49 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=Gnr9nZz8;
+	dkim=pass (1024-bit key; unprotected) header.d=InventecCorp.onmicrosoft.com header.i=@InventecCorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-InventecCorp-onmicrosoft-com header.b=MR8ZrLvl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.69.101;
- helo=nam04-co1-obe.outbound.protection.outlook.com;
- envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=inventec.com (client-ip=40.107.131.102;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=udupa.ashwini@inventec.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=Gnr9nZz8; 
+ unprotected) header.d=InventecCorp.onmicrosoft.com
+ header.i=@InventecCorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-InventecCorp-onmicrosoft-com header.b=MR8ZrLvl; 
  dkim-atps=neutral
-Received: from NAM04-CO1-obe.outbound.protection.outlook.com
- (mail-eopbgr690101.outbound.protection.outlook.com [40.107.69.101])
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1310102.outbound.protection.outlook.com [40.107.131.102])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dgxy241myz30Hn
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 12:31:36 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dh1LW3yjBz30KH
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 15:04:33 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aBlbUdoDK7BwCqPSx+vw46WgUYfkFaCtgWE964wDmakYGaxnuuz3VcS9ihLEKzJDu7SGnLE8F3m6n46ygpb18zkuYN9WqGpGf1+BsoVFC54jtWWqJ7u4RFP70TN4UA3IiATm+in519ZBjjZFUMWzFXP9e9XTPVF6/J8lnFgRhVz2Dy/t9uStufzzPfkuACRqVVCg9EQFxwztlIx3NB0A9Gcl8lCVSUTYg4+SLMwVtX4FjuyM9LXF1MajoC/r84p4WhXig69dxytIiPCAKYMcITPzVv2F5H9evbidmINt7Qr4BVZg0JR0tHfnyAwI4YSoyl6emaF0eGldo98g1L5kWA==
+ b=S8XMcReLsf8zCUPgmfIHpeskJjkQn+y2I8LBdikh8+E1kYNvvoMcVY3UUgupqM1BPear+eynq/2qS/IPoSGKWhhWL2+n5SYNZmSSYzMmjgTzSn+RNdFhpsvxezxrnbs33XTgWsmzhoNDw9BrgDFVmUhUFYW+kvXF4+Z0a22MQdbfRhNm/26qgGLLdaL8DenE3Evk+VW6FPctV8qHmEKNUBnc0xxNWzVAD/C3ZtyArPpOfuV6usCmzIQa8ozIfgALSFf9SJWlGQbSClj9xmvk7enW+QvVD63clzRSLI+1LqRrJW8V7Cldu+Lu5+u43W2k3bc4B4wjp7iqQ0uHAmNjzQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wGvqO92Z3FB8+jgy9gCdnhFNOf741QojB3+0nEvHW2w=;
- b=MblKbf+Z8bIZXBoHfElvq875Fmur4bjfSUHfGRkty+mVeYf8Cd84vHG68oFjHqWhiqOmlWbiKsMvdvyJ9wwcZ0GgD3zcs8Gnu6X/biyAQvHCCOEIIj3jpuZh+xgBM7K88Xyb5QuWcms4+MZd4VG8eTa0+WMr0d7fSVY3BjsD20yiQAhCLuelK0WByZ6s9ZmUcaOYcQWFQEyGhHdYqiz4onVGjzWRRi7dwhfN+vI0W6WAAWzZKpvJRkhihXHskehgNgqdxINzfeRPlAxCAczYo2+ZPehFRNkGDTkhjTFPzwx1X56PLGbvXWvNm/0TIFDZdA7S2EuN2FfX+tZ8a8zkQg==
+ bh=tJfbK9loXKDZ3pinSui+HVlnaqbpgagF4qH6jXd9oIE=;
+ b=i2faoXR6+gIrQIl6FCoQEkDyQzeOtaGRwRUJh0fHRoSqiKM85MP3T/0lrezEZA3SXPRvGtUTZmQDitlk/XakS9QP/bqT969D/KwoR1ODRcURC4zejhx4AJedb+YVcxjhdCbpbqTf1Yf9M4UymS7a4cAmy4GxORVd2ufrb0Yz4YQS+eoI7jskuWocwbIbQiuIjE7BWfTOL7Ee/C/w8Nn4o/K3n3zDeZDJ+CbIa3odNKwTkcbp38ta+cCx1BoSTFtr0HPoGTafvj2cxx3XouVLHSYERhiGABsEE1g6ZE1ZVidLx2Cs2YuaJDepuPsqonDx/kOd0FHzE7ktQPUx6Wo/5A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
+ smtp.mailfrom=inventec.com; dmarc=pass action=none header.from=inventec.com;
+ dkim=pass header.d=inventec.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
+ d=InventecCorp.onmicrosoft.com; s=selector2-InventecCorp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wGvqO92Z3FB8+jgy9gCdnhFNOf741QojB3+0nEvHW2w=;
- b=Gnr9nZz87s38CvRpd2LPPv3Z1MM/RYR87Pro/SJjG9yeGDmVqQpNvSzZ/my+TcmjEArDNjfMS9XUIJNbi027z71U1ZjkSeiQAZy6CWJP+xc2Xogz2EaeQB7eT3DBF2ydOMH01r2lnaVkk0pkZs39M0b74MlW7s5wjWbQ2hAdiKs=
-Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=os.amperecomputing.com;
-Received: from BYAPR01MB4678.prod.exchangelabs.com (2603:10b6:a03:88::27) by
- BY3PR01MB6628.prod.exchangelabs.com (2603:10b6:a03:369::17) with Microsoft
+ bh=tJfbK9loXKDZ3pinSui+HVlnaqbpgagF4qH6jXd9oIE=;
+ b=MR8ZrLvle9+ZzOX4i0JykBz54NSxVjKUKnlvDBXBsVACmdxI1SUZPGTHv7Aly2ARz8F2QbRbb1klZ8NEM5oDsOARlATnpaxI+2DNLeWSkYFIJpFNuo52KvqEusZ4IMNien4TG84G1n1xvY3HG612E817iZgO/ppsbr8TRnsPmkk=
+Received: from SG2PR02MB2796.apcprd02.prod.outlook.com (2603:1096:4:59::20) by
+ SG2PR02MB2397.apcprd02.prod.outlook.com (2603:1096:3:27::20) with
+ Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3846.29; Thu, 18 Feb 2021 01:31:31 +0000
-Received: from BYAPR01MB4678.prod.exchangelabs.com
- ([fe80::650e:6480:5f2a:4b96]) by BYAPR01MB4678.prod.exchangelabs.com
- ([fe80::650e:6480:5f2a:4b96%6]) with mapi id 15.20.3825.040; Thu, 18 Feb 2021
- 01:31:30 +0000
-Subject: Re: Any convention on putting source codes into openbmc/openbmc
- repository
-To: Nancy Yuen <yuenn@google.com>
-References: <71820e5a-1231-1937-1344-dee9f4a03600@os.amperecomputing.com>
- <CADfYTpF9yX0xheCwu5mftWs9b4YAe=ttGNNsf7GL8KkpW4dAcw@mail.gmail.com>
-From: Thang Nguyen <thang@os.amperecomputing.com>
-Message-ID: <42403202-49c9-2b85-1207-4c84ec491332@os.amperecomputing.com>
-Date: Thu, 18 Feb 2021 08:31:21 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.7.1
-In-Reply-To: <CADfYTpF9yX0xheCwu5mftWs9b4YAe=ttGNNsf7GL8KkpW4dAcw@mail.gmail.com>
-Content-Type: multipart/alternative;
- boundary="------------0F39530537A062C2C8D1F202"
+ 15.20.3868.27; Thu, 18 Feb 2021 04:04:13 +0000
+Received: from SG2PR02MB2796.apcprd02.prod.outlook.com
+ ([fe80::740c:c7c0:872f:1ccc]) by SG2PR02MB2796.apcprd02.prod.outlook.com
+ ([fe80::740c:c7c0:872f:1ccc%7]) with mapi id 15.20.3846.039; Thu, 18 Feb 2021
+ 04:04:13 +0000
+From: Udupa.Ashwini ISV <udupa.ashwini@inventec.com>
+To: Ed Tanous <ed@tanous.net>
+Subject: RE: Redfish v1/Systems/system/EthernetInterfaces
+Thread-Topic: Redfish v1/Systems/system/EthernetInterfaces
+Thread-Index: AdcA6cGzNFkuOxBET+q6tGgjuo9o4ABSXQ1wAABT3oAAzSYpUAAAbvSAAAC2Q9AAAK55gAAAl2HAAABlMgAADZ7vQA==
+Date: Thu, 18 Feb 2021 04:04:13 +0000
+Message-ID: <SG2PR02MB2796FF03FB70A2CBE2A79D5185859@SG2PR02MB2796.apcprd02.prod.outlook.com>
+References: <SG2PR02MB2796B5FB2DB9AAAE2594BA1E858B9@SG2PR02MB2796.apcprd02.prod.outlook.com>
+ <SG2PR02MB27961D3A938C94341747757C858A9@SG2PR02MB2796.apcprd02.prod.outlook.com>
+ <CACWQX807_KpeTHnMqPMt8E+h_ggMpKy0_Jr82HPV+oRushXdXw@mail.gmail.com>
+ <SG2PR02MB2796736A2D3DCEB0AC9AEC9985869@SG2PR02MB2796.apcprd02.prod.outlook.com>
+ <CACWQX80r9dYEGbwftH32Sc6fRmDLHeYg24tdO+8hME9V_bDDCg@mail.gmail.com>
+ <SG2PR02MB2796D7A6B15C18F348369F0A85869@SG2PR02MB2796.apcprd02.prod.outlook.com>
+ <CACWQX81Wg-+tcj+QbUCN8K=Ox7EeCmPL_b2VSYr3ziM-d2va4g@mail.gmail.com>
+ <SG2PR02MB2796CC3A1DDD20838992AF5185869@SG2PR02MB2796.apcprd02.prod.outlook.com>
+ <CACWQX80UBr2vGm3-ixo_G2W1SjYhmJTuX+SmpP947e5y922H_w@mail.gmail.com>
+In-Reply-To: <CACWQX80UBr2vGm3-ixo_G2W1SjYhmJTuX+SmpP947e5y922H_w@mail.gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-X-Originating-IP: [113.23.108.203]
-X-ClientProxiedBy: HK2PR02CA0154.apcprd02.prod.outlook.com
- (2603:1096:201:1f::14) To BYAPR01MB4678.prod.exchangelabs.com
- (2603:10b6:a03:88::27)
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from HCM-FVFX4014HV2J.local (113.23.108.203) by
- HK2PR02CA0154.apcprd02.prod.outlook.com (2603:1096:201:1f::14) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3868.27 via Frontend Transport; Thu, 18 Feb 2021 01:31:28 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: f1b72962-3915-44b3-e045-08d8d3aceb27
-X-MS-TrafficTypeDiagnostic: BY3PR01MB6628:
-X-Microsoft-Antispam-PRVS: <BY3PR01MB6628E3C5FB309A4CE5C76DEF8D859@BY3PR01MB6628.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:7219;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: n1YV7iUAOwCy4Rv5UvGzGmva34QZYz9KD5zjMs6LgZiUYyUkOA5zR5T0A81Pt3AuHoVHtNIA0EaHECsorbZVIgw5rLuDc5KRY8tXLJtwFY0mo4ruwZmXYMBlJjFHGXZiGiZhxkwIPgRyJ/vqGrWnUFLbPpChFBv7AEpPOg1kB7g9jnVzplWAQuSKCdSEzy4It858ToH7k/MUi6CatwLjpRGEYjtWwCWq57wO9SQ07WnQHIM+pkC98/9J0DclwwlwljlTc6BX3D6cOsOT6aO5xgeYSkttrtohZMOtm0Bk92Za1lEg2miT4KAhWFZ8On/DvU8yAYGMJ3rO/+ba0BWnOOkr718t4UuNC1MzJf91ISp/uLHA3BnKJXk7wa25tmLfbJPF+9rUGJhK7Hd9uGHV4CVU4D5v1s7ee0vbkJC51H2s2rDOV/WU57Z7m4CGN9Bz2iSz5hrKCLVfjgaMeGiM80nA17QJ4YnlyGbSvIw/R5gOX3Wf52Px92fgskR2ZuyEUCL/qRJrOtpAaN3Jp1RA+TXcC4qm1M4fk7Lv7s0S8MUIGlDhZ6Hd2T+rtgjjFn8FC2RiBUFfGPC9jEMYwdtv1d9fpMBw7VKEP7Kf4fd+ZFkjgw7582zuQTtTNjjKNrYK/3A6fJzO9XZT8oCLPRZkH90P8b4XDWbGEc5k82N6DMLxApgxLUfXF+/PX0xm38k+O7qmeXszWEAViKAdhcBdLg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR01MB4678.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(39840400004)(376002)(136003)(346002)(396003)(366004)(4326008)(2906002)(186003)(16526019)(86362001)(8936002)(33964004)(6486002)(6916009)(66556008)(66476007)(52116002)(66946007)(956004)(2616005)(31686004)(8676002)(966005)(6512007)(31696002)(166002)(478600001)(316002)(6666004)(53546011)(19273905006)(26005)(5660300002)(6506007)(45980500001)(43740500002)(563064011);
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: tanous.net; dkim=none (message not signed)
+ header.d=none;tanous.net; dmarc=none action=none header.from=inventec.com;
+x-originating-ip: [24.6.83.119]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: e4649e2e-2424-4f71-2456-08d8d3c240a1
+x-ms-traffictypediagnostic: SG2PR02MB2397:
+x-microsoft-antispam-prvs: <SG2PR02MB23978AFAB1BB5D38AC2DE2F985859@SG2PR02MB2397.apcprd02.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: gg16xrT9wOAb5opkvFxWK6dQQjugo+l7TvPOdZ2GFFerxhkGb4T+3Z9sqFc2n0eOLJybAWTfCqs5jSaPegu98sMW/xFqGxU9arYWsbT/cmdkID6T7UWq6E/LtiG0W56nJ+univAMjFAor/vUCuGfpI57DVRtoRp0RC4S/5HTIn0XYn7qj1KDiMSkZja1EC+9MF+wxK8fk/lW/ERCG8ANodskFxBWBwF6S8POMSvUcvYWEhcYexd7SIgQO58lDiYPlWF7OQB3sBuXs0kGgUseULSMSLS9NIU1XxLMHbEDHGMVeHvN0ahJOF3KgVQmrwR4DJeb6/YhhrbeIuC7fHlobWNvhHAxdo1w8PJHKGKeA3UGrtv3dZBFz/MY811n7xbqtU187B80NMXQJJ22LawSkNrVHCv6S4cK5cVKnuibulvcGIh7+Ra3ytU3mZOMcNx3+NwcXhiytt0a01Iz6wxJqsdi6CwW2Y8GFZoUzwQAZ9/g5ZXR1gTogy0bFMddSInWsCuTQz0hrsAUDCSekH0z7lGZckuau8b68jc1Rqp6AG1+FRcmlHWbJTNAwoKRhyIMxQngCNImlCzElx4D5U8yDJ1GJpAOjgJG7+4qM3uchZU=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SG2PR02MB2796.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(136003)(396003)(366004)(376002)(39860400002)(346002)(4326008)(8936002)(8676002)(66476007)(9686003)(5660300002)(52536014)(186003)(64756008)(55016002)(66446008)(316002)(76116006)(26005)(66946007)(71200400001)(33656002)(2906002)(966005)(478600001)(19627235002)(86362001)(6506007)(83380400001)(7696005)(66556008)(53546011)(6916009);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?VytIdkFGeDcxcktwMGtrUkVxVVJ4T1pLWmpHajBPMEtjaU9Wd0RONC8zUUk4?=
- =?utf-8?B?K093ZStHcmszZDdHVGdqK1lUT2FFYUZlM1crdjBqb2hVUG52S3h3QldXUDFh?=
- =?utf-8?B?ZzRIQmpUQkV3VE1vUzV6SjRuQUtsMkRSc011YnA3Y3M3RGY4SDhDRzBDYlRx?=
- =?utf-8?B?MUlJSWVXaHZBYkladlR4NVE1WmtjelBQSTlQV25iUzR6MEFTaG8xNnBnaUJ4?=
- =?utf-8?B?RVVnQXpZRm1nU0l4SzNpYnJyeWQ1S0s3Y2NuNVZhMmhBNWRzTGtJK29DNCtw?=
- =?utf-8?B?dE5BZzQxNS9Dd0V2dkFTZzU5dmxHajBzWFZXVUJwVEx4R1NlbE1qQUdxYjZB?=
- =?utf-8?B?QTNzTVBKSHNZZVBQWkZ1YUNlQStXVWNvTnhzeU1XMUlETFA4UzQwRXIzTUpH?=
- =?utf-8?B?bkR6QjhSQ0gzS0pOWTdtSGg2L2s4cUV3ek1PL08wdS9xVUI1UDdpLzVDL01y?=
- =?utf-8?B?c1RCTnFWcHFTeUg1WG1TUUNEeXBVT201ZlFQTWhPRUxkM0YwejR5RjQvWE1v?=
- =?utf-8?B?UTB1SHlEOHRsSG9DZVRiYlViNzZlRTVISTRPbXh5NGVCNjJsZXRvTmRBbHVZ?=
- =?utf-8?B?UHp2UWR3OEIzdzlvN3hJZENHNE1udFIxYnNQR200b0tQNjJncktxci8zTXFq?=
- =?utf-8?B?THpFSmhhOGRtZjdET1REQXNFN2NtSG4xVFpZcUJHNW9nK1owdzVFZGU5blZj?=
- =?utf-8?B?dXBGRU1xZC9uVzA4VnNvSUt3RFo3ZjUwblpDQmlmRXNVUXJIOGVKRmUzV2hD?=
- =?utf-8?B?OU1wdDY1d2lLdkhScE1GbGtSci9XaTZudWxiTXo2UXhjQ0pvSnpNa2lQZkp4?=
- =?utf-8?B?S2Qxa1p3V0o0ZFJzQ2VzNEVBNExuS0MwUmdOY2dTUEFGWnZJNlFzcmp3WWZK?=
- =?utf-8?B?QUlBSVR2OXBmUjIwdW1uTzZ1eHhEcDNnVzZrZjBDOGxZV0hWaXh6dW5aQVdv?=
- =?utf-8?B?d1hVZ0FwWm5QWFVRVmQ5ZmlUM1VOcVFFTFN2QkNLQ215aWhqTHVxSVFERUUy?=
- =?utf-8?B?dnZYRS9VRjdLMTh5Wkhzc0ZxUGxVM2xlMmhWUTM5V0VwM0pKVSttYVY1M2tD?=
- =?utf-8?B?aDNkblNNMkQ4RVVYMGVMQjZjQWZLMEJLa1dtU3E5ZmtrRHdRUC9vMDNNZ0R3?=
- =?utf-8?B?VUVueU5LcDhoTjZhYzBReXgzcXl5bWFCMUhQY3hkU0Zra0NnVW9ZTDdVYlNk?=
- =?utf-8?B?dFRiemdTRUZFSURIbmYzZ1V6M2U3MFJZakhaT2dRSjFUeDhNMHhNQ20xcFRa?=
- =?utf-8?B?ck9WUC9EbUc5Mmd5TjljYWVsb2VxVmdYVjlPa1h1WTYxWC9FVGJPaU5OQ0FS?=
- =?utf-8?B?MHdMaG84U3QrMWdpUXZYWnZoS1VuZDZCZ01ueXQxU1FkeGc4dngzcWdWTEZE?=
- =?utf-8?B?UzM2MGdPSFZRZGVkaXF2ZEIrUkNzUElvVHlRZERzVVpxTzlvVGRQRG9ZRVlj?=
- =?utf-8?B?cEE5d3YwbXoyZHVIUitaa0Z3NlZLRDk4RS9TZ2dwbWdBRHBobHNvN3FWbjh0?=
- =?utf-8?B?dGRVcTV5bTRLNS9JZTdrTVZlNGp2TmVPTmVmTTRjbDNpNkNtejQ1c0tLRjdM?=
- =?utf-8?B?VFFxeitPRFV2bVRhTUhHellybTFONytOSUhqWDRjeXJUL0h2WmpWb0pjbURp?=
- =?utf-8?B?OGJ3SnZScEo0VjRNblZiVCtKWFBmWG55MXNPNW1JNExSUXQyc1pSY1dOeFFQ?=
- =?utf-8?B?SjY2TUlRT1VsNVd3UWYrR200NVBmaFhVY1JkM1F0TlRJQTE1Yk56YmdkVGxW?=
- =?utf-8?Q?Fuzwzs3/UNqx/mi4b8wvoRDJD0IuVFKVQZ4Yu7G?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f1b72962-3915-44b3-e045-08d8d3aceb27
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4678.prod.exchangelabs.com
+x-ms-exchange-antispam-messagedata: =?utf-8?B?Y3FlTkdmSkVWcjJtMVM4UVFlRGFCR0UwdzdDVGJyTkNoNWxhQ3R5YzZMekE1?=
+ =?utf-8?B?U2lONmlzYkNUMmNGdHl4d1JlOG90OU9ueUpkdFJvOHg1RlpYUXVqOWEwMFlr?=
+ =?utf-8?B?Y0dkOXpSNFcrejQycjFqZ3IwbE00TGhHK2hoZnpIUkhwVVMrVWxzU256Q3o2?=
+ =?utf-8?B?RW5XbStQVXFCRTB4VXo5aUk1YkZpb3lzL0hRNnVkWVkxekRadCs0SmQzSjNl?=
+ =?utf-8?B?akpxbGJzdEgwbG1JVGNMTGZPOTkzS3NUVzNrcGVva1E4dWpBK3RoRksvbVRa?=
+ =?utf-8?B?dVJtRW9ydk5zZVZpK29DejFUd3IwbnVKbFAyVXZYRTh1dFJ6QnVpR1A5SnND?=
+ =?utf-8?B?QjJ3L0IvWXVkZmVsZW84dml5ZUg4TTIzOWFpR04vMlJTYms4djE3V1RtMTFk?=
+ =?utf-8?B?Nm5RV0VRWFVwS1IxdnhGcnM0Qngyckc0bVFJZ1BUZ1d4Tmd4TE9lM05nT1NL?=
+ =?utf-8?B?U2pRcklSTTZMMTFoQVNzbmFlS09GcldubzRPZStCN0VDbTladndjNmhuRmpY?=
+ =?utf-8?B?aXZwUVM2MlY3TW9ER1JveHRZemhzRnExV3ZLRnNpaytuWHJLZEdTeXR6WW1M?=
+ =?utf-8?B?WE1nV2YzWWplYy9XTzVtSFYvdlJDbENHY21KQkZWd3FmdVI0YmJmbFZrN0Mw?=
+ =?utf-8?B?M2U5T3oxZUhiMEg0OS95eVpWWWxWRTRncUtrWG0yT1RRc2RGMTlSR0RNVkVq?=
+ =?utf-8?B?N0d6YWIzS3JvN3BJcHpZZGpYUm1FOHZlSVp5WGxYVklIU25UME1wN2lobitI?=
+ =?utf-8?B?THdBQ1NFUnBySzRxY0J6UnVkNlBmQ1kvbmhCaUoxZ0E3RW9sTHUzanozM3U4?=
+ =?utf-8?B?YUVrQVFoZHJ0djI5elZHZDVEQnZTMm5iWWM4R29MTVpzN05PZmdtNk5nbFVq?=
+ =?utf-8?B?Z1lsSWg2aGV2SUtreXJRS2JJbnhqN0dZN1N5VkRRVGFjbEwxMVZaSE9rZ1ZV?=
+ =?utf-8?B?UnNzNXRaRXBqMzhVVEE2WWVvK1d5UldOUkg5WEpCSWJDZElWdVBGU1ByNnpJ?=
+ =?utf-8?B?UTgySFRGVmNySDdTZzA2elZRMTcweUZ6T2lFY2xSY1ZlM2tIS2lVNndHQnMw?=
+ =?utf-8?B?SzJEYUJTdk5lZmxCdW9MTnYzWUhuMTA1Y1ZRU29ZQ2U1dFpZMkU1TWg3L0di?=
+ =?utf-8?B?N2huUVJiODRTcGxqVEU4SmZ1SVIrZVc4Q3FJSTRNQTVaVjdXdFVKQ1lvNUNH?=
+ =?utf-8?B?alNYSzJiaXlDcFl5VGtVRTFmbC9qSU56ZHhNcVkvQ05VdUE3MVhjL1NETThG?=
+ =?utf-8?B?Q1ZiQ0NvWWRYZ2ZoekhxWHhiL2JxcU52QzBPY1BsTHRBa0YwSmgwK3l6K3dV?=
+ =?utf-8?B?QUFqMkRsdDh2QzBkWkdBWEtDSmVMVG4vdGJQaHlJTGlhNHNQMUNHeDA4cHNx?=
+ =?utf-8?B?c0VIc2xoZk9jem0rWlRvcitaQVFjaVFXbTRSYVYvZHZzRlkrUTVXRUZmSTdN?=
+ =?utf-8?B?Qk1YUWllOTBMV3kxa3gvaC9VNmg2YkRlMTRCRk51UGhwU2JSVmZZNDQycXQ4?=
+ =?utf-8?B?dnFPaWpRallGQ1hIR3NzOUh5VExYL2JqQkd2Q1ZsbWZSVFFHMGJYRXV2TGRV?=
+ =?utf-8?B?UjFZR1piZVRwdmd6RWFiS0p2VFFHRis3MVpsWDZtTmJaZ1ptd3hWcGhvN0h5?=
+ =?utf-8?B?TGdGclo2SVdieTZJNUNQM0RzQk4zZTFhQi9pbHo1eU96MzBQMzQ1MTFUTVp5?=
+ =?utf-8?B?RG5maDhyRmFhaDZKK1pyeG15YnFjTHJhSlYwNVBVMHN3T3czaG5Nb0VUbW9V?=
+ =?utf-8?Q?N6nttPvB4Z1s7slCyY=3D?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: inventec.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Feb 2021 01:31:30.8158 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nN2TAh1hKmTwR8Qfxl2T2ctJmvT7xcUWmRI3oEd+fISu2sI1KSuUyUFMwOCwF7jzdCjYt4NJQuHu7W4TfUvdHi8RRbp2bzDHSlqi3INmRZI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY3PR01MB6628
+X-MS-Exchange-CrossTenant-AuthSource: SG2PR02MB2796.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e4649e2e-2424-4f71-2456-08d8d3c240a1
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Feb 2021 04:04:13.2005 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 2ae41f0c-acca-40f1-9c63-49475ff38512
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: A9GtjqelqhHRNCLXB/DbObTkbHGuZOXoMNffdOiJBHWQ9jOIUrNASYnRQTFVH/7MuZP1TXCL9uzdmDUImUuK6YRcgL0PRZAxWQB3p+R5qNI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR02MB2397
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -140,176 +143,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---------------0F39530537A062C2C8D1F202
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-
-On 18/02/2021 06:46, Nancy Yuen wrote:
-> Code should be put into an appropriate repo, and repos created where 
-> necessary.  Then referenced in recipes from openbmc/openbmc metalayers.
-Thanks Nancy for the feedback. Do we have requirement for this or just a 
-recommendation?
->
-> On Wed, Feb 17, 2021 at 12:55 AM Thang Nguyen 
-> <thang@os.amperecomputing.com <mailto:thang@os.amperecomputing.com>> 
-> wrote:
->
->     Hi,
->
->     We implemented several features using c/cpp codes. Currently we
->     put the
->     c/cpp source into the openbmc repository like below:
->
->     https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-ampere/meta-common/recipes-ac01/host/ampere-host-error-monitor
->     <https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-ampere/meta-common/recipes-ac01/host/ampere-host-error-monitor>
->
->     https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-ampere/meta-jade/recipes-ampere/host/ampere-scp-failover
->     <https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-ampere/meta-jade/recipes-ampere/host/ampere-scp-failover>
->
->     I check from http://github.com/openbmc/openbmc
->     <http://github.com/openbmc/openbmc> but don't see source
->     codes put there. Is there any rule that prevent source codes put into
->     the openbmc repository?
->
->
->     Best Regards,
->
->     Thang Q. Nguyen -
->
->
->
-> -- 
->
-> Nancy Yuen
->
-> 	
->
-> •
->
-> 	
->
-> Google Platforms
->
-> 	
->
-> •
->
-> 	
->
-> yuenn@google.com <mailto:yuenn@google.com>
->
-> 	
->
-> •
->
-> 	
->
-> Google LLC
->
-
---------------0F39530537A062C2C8D1F202
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 18/02/2021 06:46, Nancy Yuen wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:CADfYTpF9yX0xheCwu5mftWs9b4YAe=ttGNNsf7GL8KkpW4dAcw@mail.gmail.com">
-      
-      <div dir="ltr">Code should be put into an appropriate repo, and
-        repos created where necessary.&nbsp; Then referenced in recipes from
-        openbmc/openbmc metalayers.</div>
-    </blockquote>
-    Thanks Nancy for the feedback. Do we have requirement for this or
-    just a recommendation?<br>
-    <blockquote type="cite" cite="mid:CADfYTpF9yX0xheCwu5mftWs9b4YAe=ttGNNsf7GL8KkpW4dAcw@mail.gmail.com"><br>
-      <div class="gmail_quote">
-        <div dir="ltr" class="gmail_attr">On Wed, Feb 17, 2021 at 12:55
-          AM Thang Nguyen &lt;<a href="mailto:thang@os.amperecomputing.com" moz-do-not-send="true">thang@os.amperecomputing.com</a>&gt;
-          wrote:<br>
-        </div>
-        <blockquote class="gmail_quote" style="margin:0px 0px 0px
-          0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi,<br>
-          <br>
-          We implemented several features using c/cpp codes. Currently
-          we put the <br>
-          c/cpp source into the openbmc repository like below:<br>
-          <br>
-          <a href="https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-ampere/meta-common/recipes-ac01/host/ampere-host-error-monitor" rel="noreferrer" target="_blank" moz-do-not-send="true">https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-ampere/meta-common/recipes-ac01/host/ampere-host-error-monitor</a><br>
-          <br>
-          <a href="https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-ampere/meta-jade/recipes-ampere/host/ampere-scp-failover" rel="noreferrer" target="_blank" moz-do-not-send="true">https://github.com/ampere-openbmc/openbmc/tree/ampere/meta-ampere/meta-jade/recipes-ampere/host/ampere-scp-failover</a><br>
-          <br>
-          I check from <a href="http://github.com/openbmc/openbmc" rel="noreferrer" target="_blank" moz-do-not-send="true">http://github.com/openbmc/openbmc</a>
-          but don't see source <br>
-          codes put there. Is there any rule that prevent source codes
-          put into <br>
-          the openbmc repository?<br>
-          <br>
-          <br>
-          Best Regards,<br>
-          <br>
-          Thang Q. Nguyen -<br>
-          <br>
-        </blockquote>
-      </div>
-      <br clear="all">
-      <div><br>
-      </div>
-      -- <br>
-      <div dir="ltr" class="gmail_signature">
-        <div dir="ltr"><span>
-            <div dir="ltr" style="margin-left:0pt" align="left"><span>
-                <div dir="ltr" align="left">
-                  <table style="border:none;border-collapse:collapse">
-                    <colgroup><col width="76"><col width="7"><col width="111"><col width="7"><col width="122"><col width="7"><col width="71"></colgroup><tbody>
-                      <tr style="height:15pt">
-                        <td style="border-top:1.5pt solid
-                          rgb(213,15,37);vertical-align:middle;overflow:hidden">
-                          <p dir="ltr" style="line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style="font-size:10pt;font-family:Roboto,sans-serif;color:rgb(102,102,102);background-color:transparent;font-weight:700;vertical-align:baseline;white-space:pre-wrap">Nancy Yuen</span></p>
-                        </td>
-                        <td style="border-top:1.5pt solid
-                          rgb(102,102,102);vertical-align:middle;overflow:hidden">
-                          <p dir="ltr" style="line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style="font-size:11pt;font-family:Arial;color:rgb(255,0,0);background-color:transparent;font-weight:700;vertical-align:baseline;white-space:pre-wrap">•</span></p>
-                        </td>
-                        <td style="border-top:1.5pt solid
-                          rgb(51,105,232);vertical-align:middle;overflow:hidden">
-                          <p dir="ltr" style="line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style="font-size:10pt;font-family:Roboto,sans-serif;color:rgb(102,102,102);background-color:transparent;font-weight:700;vertical-align:baseline;white-space:pre-wrap">Google Platforms&nbsp;</span></p>
-                        </td>
-                        <td style="border-top:1.5pt solid
-                          rgb(102,102,102);vertical-align:middle;overflow:hidden">
-                          <p dir="ltr" style="line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style="font-size:11pt;font-family:Arial;color:rgb(61,133,198);background-color:transparent;font-weight:700;vertical-align:baseline;white-space:pre-wrap">•</span></p>
-                        </td>
-                        <td style="border-top:1.5pt solid
-                          rgb(0,153,57);vertical-align:middle;overflow:hidden">
-                          <p dir="ltr" style="line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style="font-size:10pt;font-family:Roboto,sans-serif;color:rgb(102,102,102);background-color:transparent;font-weight:700;vertical-align:baseline;white-space:pre-wrap"><a href="mailto:yuenn@google.com" target="_blank" moz-do-not-send="true">yuenn@google.com</a></span></p>
-                        </td>
-                        <td style="border-top:1.5pt solid
-                          rgb(102,102,102);vertical-align:middle;overflow:hidden">
-                          <p dir="ltr" style="line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style="font-size:11pt;font-family:Arial;color:rgb(0,153,57);background-color:transparent;font-weight:700;vertical-align:baseline;white-space:pre-wrap">•</span></p>
-                        </td>
-                        <td style="border-top:1.5pt solid
-                          rgb(238,178,17);vertical-align:middle;overflow:hidden">
-                          <p dir="ltr" style="line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style="font-size:10pt;font-family:Roboto,sans-serif;color:rgb(102,102,102);background-color:transparent;font-weight:700;vertical-align:baseline;white-space:pre-wrap">Google LLC</span></p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </span></div>
-          </span></div>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------0F39530537A062C2C8D1F202--
+DQpPbiBXZWQsIEZlYiAxNywgMjAyMSBhdCAxOjIzIFBNIFVkdXBhLkFzaHdpbmkgSVNWIDx1ZHVw
+YS5hc2h3aW5pQGludmVudGVjLmNvbT4gd3JvdGU6DQo+DQo+IE9uIFdlZCwgRmViIDE3LCAyMDIx
+IGF0IDEyOjEzIFBNIFVkdXBhLkFzaHdpbmkgSVNWIDx1ZHVwYS5hc2h3aW5pQGludmVudGVjLmNv
+bT4gd3JvdGU6DQo+ID4gPg0KPiA+ID4gSGkgRWQsDQo+ID4gPg0KPiA+ID4NCj4gPiA+DQo+ID4g
+PiBJdHMgSW52ZW50ZWMgcGxhdGZvcm0uDQo+ID4gPg0KPiA+ID4gaHR0cHM6Ly9naXRodWIuY29t
+L29wZW5ibWMvb3BlbmJtYy90cmVlL21hc3Rlci9tZXRhLWludmVudGVjDQo+ID4gPg0KPiA+ID4g
+SSBqdXN0IHdhbnRlZCB0byBrbm93IGhvdyB0byBpbXBsZW1lbnQgL3JlZGZpc2gvdjEvU3lzdGVt
+cy9zeXN0ZW0vRXRoZXJuZXRJbnRlcmZhY2VzLg0KPiA+DQo+ID4gRXhjZWxsZW50LCB0aGF0IGhl
+bHBzLiAgSSBvcmlnaW5hbGx5IG1pc3JlYWQsIGFuZCB0aG91Z2h0IHRoZSBpbnRlcmZhY2Ugd2Fz
+IG1pc3Npbmcgb24gdGhlIHBsYXRmb3JtLCBub3QgdGhhdCB5b3Ugd2VyZSB0cnlpbmcgdG8gYWRk
+IGl0IHRvIHJlZGZpc2guDQo+ID4NCj4gPiA+DQo+ID4gPg0KPiA+ID4NCj4gPiA+IFJlZ2FyZHMs
+DQo+ID4gPg0KPiA+ID4gQXNod2luaQ0KPiA+DQo+ID4gUGxlYXNlIGRvbid0IHRvcCBwb3N0Lg0K
+PiA+DQo+ID4gPg0KPiA+ID4NCj4gPiA+DQo+ID4gPiBGcm9tOiBFZCBUYW5vdXMgPGVkQHRhbm91
+cy5uZXQ+DQo+ID4gPiBTZW50OiBTYXR1cmRheSwgRmVicnVhcnkgMTMsIDIwMjEgMTA6MTggQU0N
+Cj4gPiA+IFRvOiBVZHVwYS5Bc2h3aW5pIElTViA8dWR1cGEuYXNod2luaUBpbnZlbnRlYy5jb20+
+DQo+ID4gPiBDYzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQo+ID4gPiBTdWJqZWN0OiBSZTog
+UmVkZmlzaCB2MS9TeXN0ZW1zL3N5c3RlbS9FdGhlcm5ldEludGVyZmFjZXMNCj4gPiA+DQo+ID4g
+Pg0KPiA+ID4NCj4gPiA+DQo+ID4gPg0KPiA+ID4NCj4gPiA+DQo+ID4gPiBPbiBTYXQsIEZlYiAx
+MywgMjAyMSBhdCAxMDoxMSBBTSBVZHVwYS5Bc2h3aW5pIElTViA8dWR1cGEuYXNod2luaUBpbnZl
+bnRlYy5jb20+IHdyb3RlOg0KPiA+ID4NCj4gPiA+DQo+ID4gPg0KPiA+ID4gSGksDQo+ID4gPg0K
+PiA+ID4NCj4gPiA+DQo+ID4gPiBJIGFtIG5ldyB0byBPcGVuQm1jIGFuZCBSZWRmaXNoLg0KPiA+
+ID4NCj4gPiA+IEkgc2F3IGluIGJtY3dlYi9SZWRmaXNoLm1kLCB0aGF0IGJlbG93IFJlZGZpc2gg
+aXMgdGFyZ2V0ZWQgZm9yIE9wZW5CbWM6DQo+ID4NCj4gPiBUaGlzIGRvYyBpcyByZWFsbHkgb2xk
+LCBhbmQgd2FzIG9yaWdpbmFsbHkgd3JpdHRlbiBhcyBhbiBpbml0aWFsIHN0YWIgYXQgd2hhdCBp
+bnRlcmZhY2VzIHdlIHNob3VsZCB3cml0ZS4gIFVuZm9ydHVuYXRlbHksIHdoZW4gaXQgZ290IGNv
+bnZlcnRlZCBpbnRvIGEgImhlcmUncyB0aGUgaW50ZXJmYWNlcyB3ZSBzdXBwb3J0IHRvZGF5IiBk
+b2MsIHRoYXQgcGF0aCBkaWRuJ3QgZ2V0IHNjcnViYmVkLiAgV2UgZG9uJ3QgaGF2ZSBhbiBpbXBs
+ZW1lbnRhdGlvbiBvZiBpdCB0b2RheS4gIEkgY2FuIGdldCBhIHJldmlldyBvcGVuIHRvIHVwZGF0
+ZSB0aGUgZG9jLg0KDQoNCkNhbiB5b3UgcGxlYXNlIG9wZW4gYSByZXZpZXcgdG8gdXBkYXRlIHRo
+ZSBkb2M/IEl0IHJlYWxseSBoZWxwcyB0byBrbm93IHdoYXQgaXMgY3VycmVudGx5IGltcGxlbWVu
+dGVkIGluIE9wZW5CbWMgYW5kIHdoYXQgaXMgbm90Lg0KDQo+ID4gPg0KPiA+ID4gL3JlZGZpc2gv
+djEvU3lzdGVtcy9zeXN0ZW0vRXRoZXJuZXRJbnRlcmZhY2VzDQo+ID4gPg0KPiA+ID4NCj4gPiA+
+DQo+ID4gPiBCdXQsIGluIHJlZGZpc2gtY29yZS9saWIvc3lzdGVtcy5ocHAsIEkgZG9u4oCZdCBz
+ZWUgRXRoZXJuZXRJbnRlcmZhY2VzIGFuZCBJIGRvbuKAmXQgc2VlIGl0IG9uIG15IHNlcnZlciBS
+ZWRmaXNoIHRvby4NCj4gPg0KPiA+IFRvZGF5LCB3ZSBkb24ndCBoYXZlIHRoaXMgaW1wbGVtZW50
+ZWQgYmVjYXVzZSB3ZSBkb24ndCByZWFsbHkgaGF2ZSBhIHBhdGggdG8gZ2V0IHRoYXQgaW5mb3Jt
+YXRpb24gZnJvbSB0aGUgaG9zdC4gIERvaW5nIHRoYXQgd291bGQgcmVxdWlyZSBlaXRoZXIgYW4g
+aW4tYmFuZCBhcHBsaWNhdGlvbiBydW5uaW5nIG9uIHRoZSBtYWluIHByb2Nlc3NvciB0byBzZW5k
+IG5ldyBpcCBhZGRyZXNzZXMgdG8gdGhlIGJtYywgb3IgYW4gTkNTSSwgTUNUUCwgb3IgUExETSBj
+b25uZWN0aW9uIGRpcmVjdGx5IHRvIHRoZSBOSUMgdGhhdCBzdXBwb3J0ZWQgZ2V0dGluZyB0aGF0
+IGxldmVsIG9mIGluZm9ybWF0aW9uLg0KPiA+IEJvdGggb2Ygd2hpY2ggbGlrZWx5IHJlcXVpcmUg
+YSBuZXcgZGFlbW9uIHRvIGV4cG9zZSB0aG9zZSBBUElzIHRvIGRlYnVnLg0KPg0KPiBUaGFua3Mg
+RWQuDQo+IFNvLCBvbmx5IHRob3NlIGltcGxlbWVudGVkIGluICJibWN3ZWIvcmVkZmlzaC1jb3Jl
+L2xpYi8iICBhcmUgY3VycmVudGx5IGltcGxlbWVudGVkIGluIE9wZW5CTUMgUmVkZmlzaCByaWdo
+dD8NCg0KQ29ycmVjdC4NCg0KPiBJIGRvbuKAmXQgc2VlIGJlbG93IGltcGxlbWVudGVkIHRvbzoN
+Cj4gU3lzdGVtcy9zeXN0ZW0vQm9vdE9wdGlvbnMNCg0KSSB0aG91Z2h0IHRoZXJlIHdlcmUgcGF0
+Y2hlcyBpbiByZXZpZXcgdG8gYWRkIHRoaXMsIHlvdSBtaWdodCB0cnkgY2hlY2tpbmcgZ2Vycml0
+Lg0KDQo+IFBsZWFzZSBjb25maXJtLg0KPg0KPiBCdXQsIGFyZSB0aGVzZSBpbXBsZW1lbnRlZD8N
+Cj4gMS4gU3lzdGVtcy9zeXN0ZW0vTmV0d29ya0ludGVyZmFjZXMNCk5vLg0KDQo+IDIuIFN5c3Rl
+bXMvc3lzdGVtL1BDSWVGdW5jdGlvbnMNClllcywgYnV0IHRoZSBvbmx5IHRoaW5nIHRoYXQgcHVi
+bGlzaGVzIGRhdGEgb2YgdGhhdCB0eXBlIHRoYXQgSSBrbm93IG9mIGlzIHBlY2ktcGNpZS4gIElm
+IHRoYXQgZG9lc24ndCB3b3JrIGZvciB5b3UsIHlvdSdsbCBsaWtlbHkgbmVlZCB0byBpbXBsZW1l
+bnQgdGhlIGFwcHJvcHJpYXRlIGRidXMgaW50ZXJmYWNlcyBmb3IgeW91ciBzeXN0ZW0uDQoNCj4g
+SWYgc28sIHdoYXQgY2hhbmdlcyBhcmUgbmVlZGVkIHRvIG1ha2UgdGhlc2Ugd29ya2luZz8NCj4N
+Cj4NCj4gPiBXZSBkbyBoYXZlIC9yZWRmaXNoL3YxL1N5c3RlbXMvaHlwZXJ2aXNvci9FdGhlcm5l
+dEludGVyZmFjZXMgdG9kYXkuDQo+ID4gV2UnZCBpZGVhbGx5IHdhbnQgdG8gZm9sbG93IHZlcnkg
+Y2xvc2VseSB0byB3aGF0IHRoYXQgZG9lcywgZXhwb3NlIGEgbmV3IHBhdGggb24gREJ1cyB0aGF0
+IGltcGxlbWVudHMgdGhlIHh5ei5vcGVuYm1jX3Byb2plY3QuTmV0d29yay5FdGhlcm5ldEludGVy
+ZmFjZSBpbnRlcmZhY2UsIGFuZCBncmFiIHRoZSBkYXRhIGZyb20gaXQuDQo+ID4NCj4gPiA+DQo+
+ID4gPg0KPiA+ID4NCj4gPiA+IFdoYXQgdXBzdHJlYW0gc3lzdGVtIGFyZSB5b3UgdHJ5aW5nIHRo
+aXMgb24/ICBJZiB5b3VyIHBsYXRmb3JtIGlzbuKAmXQgdXBzdHJlYW0sIGNhbiB5b3UgcG9pbnQg
+YXQgdGhlIGNvZGUgcmV2aWV3IHdoZXJlIHlvdeKAmXJlIGFkZGluZyBpdD8NCj4gPiA+DQo+ID4g
+Pg0KPiA+ID4NCj4gPiA+IElmIHlvdSBkb27igJl0IGhhdmUgZWl0aGVyLCB0YWtlIG5vdGUgdGhh
+dCBpdOKAmXMgcmVhbGx5IGRpZmZpY3VsdCB0byBoZWxwIGRlYnVnIG9yIG1ha2Ugc3VnZ2VzdGlv
+bnMgZm9yIHBsYXRmb3JtcyB0aGF0IHdlIGNhbuKAmXQgc2VlIHRoZSBjb2RlIGZvci4NCj4gPiA+
+DQo+ID4gPg0KPiA+ID4NCj4gPiA+IEl0cyBvbmx5IHByZXNlbnQgaW4gTWFuYWdlcnMvYm1jL0V0
+aGVybmV0SW50ZXJmYWNlcy4NCj4gPiA+DQo+ID4gPg0KPiA+ID4NCj4gPiA+IEhvdyBkbyBJIGFk
+ZCBTeXN0ZW1zL3N5c3RlbS9FdGhlcm5ldEludGVyZmFjZXMgUmVkZmlzaCBzdXBwb3J0PyBXaGF0
+IGNoYW5nZXMgZG8gSSBuZWVkIHRvIG1ha2U/DQo+ID4gPg0KPiA+ID4NCj4gPiA+DQo+ID4gPiBS
+ZWdhcmRzLA0KPiA+ID4NCj4gPiA+IEFzaHdpbmkNCj4gPiA+DQo+ID4gPg0KPiA+ID4NCj4gPiA+
+IC0tDQo+ID4gPg0KPiA+ID4gLUVkDQo=
