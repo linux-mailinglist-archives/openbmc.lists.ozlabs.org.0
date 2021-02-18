@@ -1,58 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EB4531E66C
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 07:49:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C4F931E654
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 07:31:12 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dh50f1vznz30MG
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 17:49:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dh4bf1XXlz3bPF
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 17:31:10 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=BtjhXC6e;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=troy_lee@aspeedtech.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::c2d;
+ helo=mail-oo1-xc2d.google.com; envelope-from=yulei.sh@bytedance.com;
  receiver=<UNKNOWN>)
-X-Greylist: delayed 965 seconds by postgrey-1.36 at boromir;
- Thu, 18 Feb 2021 17:49:12 AEDT
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=bytedance-com.20150623.gappssmtp.com
+ header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=BtjhXC6e; dkim-atps=neutral
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com
+ [IPv6:2607:f8b0:4864:20::c2d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dh50S5Gy5z30Kb
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 17:49:10 +1100 (AEDT)
-Received: from twspam01.aspeedtech.com (localhost [127.0.0.2] (may be forged))
- by twspam01.aspeedtech.com with ESMTP id 11I6PxXI092348
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 14:25:59 +0800 (GMT-8)
- (envelope-from troy_lee@aspeedtech.com)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 11I6Pd8b092330;
- Thu, 18 Feb 2021 14:25:39 +0800 (GMT-8)
- (envelope-from troy_lee@aspeedtech.com)
-Received: from aspeedtech.com (192.168.100.253) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 18 Feb
- 2021 14:32:47 +0800
-Date: Thu, 18 Feb 2021 06:24:06 +0000
-From: Troy Lee <troy_lee@aspeedtech.com>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: Supporting new interfaces in phosphor-ipmi-flash
-Message-ID: <20210218062406.GA31664@aspeedtech.com>
-References: <PS1PR06MB260095F62386276E75ADC5708ABB0@PS1PR06MB2600.apcprd06.prod.outlook.com>
- <6ea6d5b9-0e31-4a87-8990-b5ce53e2416d@www.fastmail.com>
- <20210128072947.GB2594588@aspeedtech.com>
- <ce482992-48a2-4744-a466-60628a52ce50@www.fastmail.com>
- <20210201073724.GA2623538@aspeedtech.com>
- <20210209090655.GA1147175@aspeedtech.com>
- <838ffed7-37e3-4d73-a8f9-944439df9317@www.fastmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dh4bP3SQ1z30K3
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 17:30:56 +1100 (AEDT)
+Received: by mail-oo1-xc2d.google.com with SMTP id g46so208333ooi.9
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 22:30:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=L1mWLOId3e3FXYp+dhUF4jyKFOLtnvt2Mi4XytMIg7A=;
+ b=BtjhXC6ehbABvOKuAaRrVU11wJ0wrj9oM9P1g4COqCh7C8o0V8YuZ+sKhb3JgD0Ooo
+ mABrfMOz7BDKLgM2RP0RSW+iKYHgzmL2OhFj2dkVSMsnq9isAaLVq0H4RqYbSClKOULT
+ rNWaWDkyo3SOe1244NuArEWaPOqLqQrwWjGeSU8lHVwwWz4cQth0Ejsaa36VFXFhN0Q2
+ mKO4DoEWOTvZhT1Q10fLzcYMetVafRUKP1jObKZdW3Ri79I+VQJjaMw7/K64IR2ftxyT
+ QNNPiJ242uWznxA03Em9MMtUDPhr9JRTU1FAGtSXjBRToTnE9AQkcggumakzagza89j7
+ HI+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=L1mWLOId3e3FXYp+dhUF4jyKFOLtnvt2Mi4XytMIg7A=;
+ b=n3ERq2UVdNypL6tEJIr7HHaUHI9tPwrnxskUW1AN1JSdZUaDOl7vbtjDdIIC9HMFbG
+ lD1dIp/DuzhSIq/OD3S0ksK/bcYDvl5VqXyc6cnzlYdHkjPoZu/xxdVO8twnnIKYsyly
+ glgNeOJn6NSpu2CVccNM6DYGPPG4CYM1CiCr/Jop++bcBdCCAKJrIUyzmn2TS8Xo2TrN
+ 56ld6WNkzmZj1SoP2CzpaZ6opvxGipsiPlXcdOhJbdM1FZ6wjCYTgYwKZNQ3wwlK3hJa
+ 5u79RO5oaSz47Ox76F3DjBkl8/3E+rIClhk3JyY7xAAAH37k069lkAi8a0xWML+1V+qL
+ rgCw==
+X-Gm-Message-State: AOAM532xxJzNZGBJ8F8G7RsInlqzhagTRkEm+d0SH3WmlAqZpJ3l9Omm
+ 09c3qO2vVI3uZeO9wAez8qkf6xwwx6pyNuefSdsW0Qrjcw/H9w==
+X-Google-Smtp-Source: ABdhPJzOQ0T56gLP05mU6+cLgLXQWBApVHi8QaIdmNpCtx4vwZ8+/xlcMIemRy8PwyWR2GX7kV9TutxU0b532hEu9+c=
+X-Received: by 2002:a4a:c4c7:: with SMTP id g7mr2012691ooq.10.1613629853090;
+ Wed, 17 Feb 2021 22:30:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-In-Reply-To: <838ffed7-37e3-4d73-a8f9-944439df9317@www.fastmail.com>
-X-Originating-IP: [192.168.100.253]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 11I6Pd8b092330
+References: <YCXLqK7KgvwYwWDl@heinlein>
+In-Reply-To: <YCXLqK7KgvwYwWDl@heinlein>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Thu, 18 Feb 2021 14:30:42 +0800
+Message-ID: <CAGm54UHw90NbTWFpOrddtkc27rqi1gzgWj8KSPEFzUgAfhiF-w@mail.gmail.com>
+Subject: Re: [External] Upcoming enhancements to `run-unit-test-docker`
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,84 +75,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew,
+Reporting a bug on building with proxy:
 
-The 02/15/2021 07:26, Andrew Jeffery wrote:
-> 
-> 
-> On Tue, 9 Feb 2021, at 19:36, Troy Lee wrote:
-> > Hi Team,
-> > 
-> > While I'm evaluating the performance for the design, I notice that the
-> > maximum IPMI through/put over KCS / IPMB / LAN is about 120 command per
-> > second. Does anyone know where the bottleneck is?
-> 
-> So a few thoughts:
-> 
-> There are a some hints on performance profiling in the wiki:
-> 
-> https://github.com/openbmc/openbmc/wiki/Performance-Profiling-in-OpenBMC
-> 
-> However, I'd start by inspecting the message timings on D-Bus. You can capture
-> the D-Bus traffic on the BMC with:
-> 
-> ```shell
-> # busctl capture > /tmp/dbus.pcap
-> ```
-> 
-> After that, run your image transfer test. Once the transfer completes, stop the
-> capture and copy the pcap file off the BMC.
-> 
-> One approach to analysing the capture is to use Wireshark[1]. However, I've
-> found that for this kind of exploratory stuff, scripting the filtering and
-> output can give useful results. On that front I've written dbus-pcap:
-> 
-> https://github.com/openbmc/openbmc-tools/tree/master/dbus-pcap
-The tool is very useful, I used to use dbus-monitor and inspect message
-traffic by eyes only.
+    base: WARNING: Retrying (Retry(total=4, connect=None, read=None,
+redirect=None, status=None)) after connection broken by
+'ProxyError('Cannot connect to proxy.',
+NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object
+at 0x7efe419e99d0>: Failed to establish a new connection: [Errno -2]
+Name or service not known'))': /simple/inflection/
+    RAN: /usr/bin/docker build --build-arg http_proxy=http://<myproxy>
+--build-arg 'https_proxy={https_proxy}' --network=host --force-rm
+--no-cache=false -t
+openbmc/ubuntu-unit-test-base:2021-W07-773f263e895d8ed6 -
 
-> 
-> which can spit out the messages in JSON format if necessary and it takes
-> standard D-Bus match rules for filtering as optional positional arguments:
-> 
-> https://dbus.freedesktop.org/doc/dbus-specification.html#message-bus-routing-match-rules
-> 
-> If the overhead is not dominated by the IPC on its own, it's probably time to
-> start inspecting specific processes with `perf`. The wiki talks a little more
-> about that.
-> 
-> Hope that helps.
-> 
-> Andrew
-> 
-> [1] https://www.wireshark.org/
+The https_proxy is not correctly set.
+Submitted https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/40699
+to fix the issue.
 
-It roughly takes 8ms to process a blobWrite command. I'll see if any thing 
-I can help to improve or it is a limitation.
+On Fri, Feb 12, 2021 at 8:51 AM Patrick Williams <patrick@stwcx.xyz> wrote:
+>
+> Hello,
+>
+> Inside openbmc-build-scripts is a tool which is used by Jenkins to run
+> repository-level CI and I think some developers also use it:
+> `run-unit-test-docker`.  I've rewritten a component of this, which is
+> now at `scripts/build-unit-test-docker`, in Python and done some
+> enhancements to it.  The [currently] last commit in this sequence is at
+> [1].
+>
+> Important notices:
+>
+>     - Location change: build-unit-test-docker.sh ->
+>       scripts/build-unit-test-docker
+>         + I suspect few people run this directly, but instead use
+>           `run-unit-test-docker` which hides the rename.
+>
+>     - Python3.6 minimum.
+>         + Bitbake already requires this so it really shouldn't be a
+>           problem for anyone.
+>
+>     - Python 'sh' module needed.
+>         + You can install this with the 'python3-sh' package on many
+>           distros or 'pip install sh'.
+>
+>     - Docker stages are now tagged with different names / tag revs.
+>         + I wrote a `scripts/clean-unit-test-docker` which will clean
+>           out old Docker tags and can be ran periodically.
+>
+> Major changes:
+>
+>     - Rewrite in Python.
+>     - Significant speed improvements:
+>         - Docker stages all build in parallel to formulate the final image.
+>         - All Docker stages are tagged and reused from run to run.
+>         - CMake packages now use the Ninja backend.  This is the same as
+>           bitbake and faster than make.
+>     - Included packages are defined in a dictionary rather than as raw
+>       Dockerfiles.
+>
+> Upcoming changes:
+>
+>     - Shortly, I will add support to incorporate base package changes
+>       into the image itself.  We have had cases where a change to
+>       a common package like `sdbusplus` broke CI because a package that
+>       depended on it failed to compile with the changes.  I'll add code
+>       that uses some of the GERRIT_* environment variables to determine
+>       if the commit-under-test is part of one of the base packages and
+>       include it in the Docker image for the test run.
+>
+>     - Topic-based testing.  We often run into co-dependencies between
+>       phosphor-dbus-interfaces and another repository.  Within the next
+>       month I'll enhance the script so that if you change PDI and your
+>       repository and tag the commit with the same topic, the PDI commit
+>       from that topic will be pulled into the Docker image so your
+>       repository commit can pass CI.
+>
+>     - Some refactoring.  I did a lot of incremental changes from the
+>       original shell script to the Python version I currently have and
+>       didn't always rewrite in the most Pythonic way.  There will be
+>       some more, mostly non-functional, changes to fix this.
+>
+> Feel free to comment on the review series if you have any concerns with
+> these changes.
+>
+> 1. https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/40366
+>
+> --
+> Patrick Williams
 
-```
-# OBMC OEM BlobTransfer blobWrite
-1613620034.097539:
-CookedMessage(header=CookedHeader(fixed=FixedHeader(endian=108, type=1, flags=0, version=1, length=32, cookie=107), fields=[Field(type=<MessageFieldType.PATH: 1>, data='/xyz/openbmc_project/Ipmi'), Field(type=<MessageFieldType.MEMBER: 3>, data='execute'), Field(type=<MessageFieldType.INTERFACE: 2>, data='xyz.openbmc_project.Ipmi.Server'), Field(type=<MessageFieldType.DESTINATION: 6>, data='xyz.openbmc_project.Ipmi.Host'), Field(type=<MessageFieldType.SIGNATURE: 8>, data='yyyaya{sv}'), Field(type=<MessageFieldType.SENDER: 7>, data=':1.75')]), body=[46, 0, 128, [207, 194, 0, 4, 211, 39, 84, 226, 0, 0, 64, 0, 0, 0, 16, 0], []])
 
-# Cascaded Checking User Priviledge, not sure where it introduced, but
-# it shows on every command even with in-band channel
-1613620034.097977:
-CookedMessage(header=CookedHeader(fixed=FixedHeader(endian=108, type=1, flags=0, version=1, length=10, cookie=224), fields=[Field(type=<MessageFieldType.PATH: 1>, data='/org/freedesktop/DBus'), Field(type=<MessageFieldType.MEMBER: 3>, data='GetConnectionUnixUser'), Field(type=<MessageFieldType.INTERFACE: 2>, data='org.freedesktop.DBus'), Field(type=<MessageFieldType.DESTINATION: 6>, data='org.freedesktop.DBus'), Field(type=<MessageFieldType.SIGNATURE: 8>, data='s'), Field(type=<MessageFieldType.SENDER: 7>, data=':1.72')]), body=[':1.75'])
 
-# Method returns for checking user priviledge
-1613620034.098058:
-CookedMessage(header=CookedHeader(fixed=FixedHeader(endian=108, type=2, flags=1, version=1, length=4, cookie=4294967295), fields=[Field(type=<MessageFieldType.REPLY_SERIAL: 5>, data=224), Field(type=<MessageFieldType.SENDER: 7>, data='org.freedesktop.DBus'), Field(type=<MessageFieldType.DESTINATION: 6>, data=':1.72'), Field(type=<MessageFieldType.SIGNATURE: 8>, data='u')]), body=[0])
-
-# Method returns for OBMC OEM BlobTransfer blobWrite
-1613620034.106147:
-CookedMessage(header=CookedHeader(fixed=FixedHeader(endian=108, type=2, flags=1, version=1, length=11, cookie=225), fields=[Field(type=<MessageFieldType.REPLY_SERIAL: 5>, data=107), Field(type=<MessageFieldType.DESTINATION: 6>, data=':1.75'), Field(type=<MessageFieldType.SIGNATURE: 8>, data='(yyyyay)'), Field(type=<MessageFieldType.SENDER: 7>, data=':1.72')]), body=[[47, 0, 128, 0, [207, 194, 0]]])
-```
-
-Thanks,
-Troy Lee
-
+-- 
+BRs,
+Lei YU
