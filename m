@@ -2,68 +2,134 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C4F931E654
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 07:31:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CB5A31E6B9
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 08:13:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dh4bf1XXlz3bPF
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 17:31:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dh5X13dY8z30NP
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 18:13:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=BtjhXC6e;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=zPuPonHC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::c2d;
- helo=mail-oo1-xc2d.google.com; envelope-from=yulei.sh@bytedance.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=BtjhXC6e; dkim-atps=neutral
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com
- [IPv6:2607:f8b0:4864:20::c2d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dh4bP3SQ1z30K3
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 17:30:56 +1100 (AEDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id g46so208333ooi.9
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 22:30:56 -0800 (PST)
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=6769880a0=davidwang@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=zPuPonHC; 
+ dkim-atps=neutral
+X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir;
+ Thu, 18 Feb 2021 18:12:50 AEDT
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4Dh5Wk4XYNz30Kb
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 18:12:49 +1100 (AEDT)
+IronPort-SDR: h7WkdgYr/xHvzMU7kzxA132hgfJmzmUC6ezevn0xjdQbXUO+yCzQSBJxiT1aiqW9HQNuauQoAn
+ KJJ4Z0rfzS1w==
+Received: from unknown (HELO mailbx12.quanta.corp) ([10.243.91.109])
+ by mx02.quantatw.com with ESMTP; 18 Feb 2021 15:11:43 +0800
+Received: from mailbx06.quanta.corp (10.243.91.101) by mailbx12.quanta.corp
+ (10.243.91.109) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Thu, 18 Feb
+ 2021 15:11:47 +0800
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (104.47.125.56)
+ by mailbx06.quanta.corp (10.243.91.101) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4
+ via Frontend Transport; Thu, 18 Feb 2021 15:11:47 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=STm5OoViEiq4ku4zTpubWb3wQWqWBq84btHLO6AqumcNow+89M2XpTb2mMKWt/muHpxZ4Iub3VD9LCWaPR2I4+ZgB/ctsp+6fSP5OKaqAzlqR7VCpRoQDqW+0lKT3bJ+FCMM92s7GnoHb8rDpvEYgvKBLHFgSWdnuF2tKt5Yc2GaTrAfmwRs9Qwa+rMcgqLGmJrQOoj/7l+0tcs+f2ikW/W8p3J94K4poXTy7EAJklC4T2ZQFaqKbF36Moz6uiFZWwxTlsioskaPhZVcQsxdhhUIeFpOAP0EHcX9vseeJnfcfiODWidhmK3yMCh+ihY3MnezvfrAhTJvlnRi0UpGRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Meqxqs4UFeDXkZfg8/QMWEPI602xB1E/75FgRJUaFD8=;
+ b=Pto95cWBjGpnDXLVjjQDVvQAMEWEKWJNWPHq3HKIazPelSjg6kIHnb2IFTYpcw+6rUhWrGN9pc6LOXZpo3aNbW/xj4LwDBwLV8VtMd0mjPf4BTOS1g9HFNZGqQ70aBu/1gu8/EMOncEpOW9RfbQBlFnVStsdh34q67bLZqau/XhT52bU2hy5nK9Gite8U7iAOHVexIqzF6pmeXQjMH0nbzQtkF1qv+UMSWQhB5IrIphYkvw/kPazeOEC4xgk/SDwOj2LXPVZpJtsXbNMaD81RraIOVKol5vOxQia+VTip0inVYshJViytJGGk+ejvs5Xejc2nxTZPkEkxddmRWx77Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=L1mWLOId3e3FXYp+dhUF4jyKFOLtnvt2Mi4XytMIg7A=;
- b=BtjhXC6ehbABvOKuAaRrVU11wJ0wrj9oM9P1g4COqCh7C8o0V8YuZ+sKhb3JgD0Ooo
- mABrfMOz7BDKLgM2RP0RSW+iKYHgzmL2OhFj2dkVSMsnq9isAaLVq0H4RqYbSClKOULT
- rNWaWDkyo3SOe1244NuArEWaPOqLqQrwWjGeSU8lHVwwWz4cQth0Ejsaa36VFXFhN0Q2
- mKO4DoEWOTvZhT1Q10fLzcYMetVafRUKP1jObKZdW3Ri79I+VQJjaMw7/K64IR2ftxyT
- QNNPiJ242uWznxA03Em9MMtUDPhr9JRTU1FAGtSXjBRToTnE9AQkcggumakzagza89j7
- HI+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=L1mWLOId3e3FXYp+dhUF4jyKFOLtnvt2Mi4XytMIg7A=;
- b=n3ERq2UVdNypL6tEJIr7HHaUHI9tPwrnxskUW1AN1JSdZUaDOl7vbtjDdIIC9HMFbG
- lD1dIp/DuzhSIq/OD3S0ksK/bcYDvl5VqXyc6cnzlYdHkjPoZu/xxdVO8twnnIKYsyly
- glgNeOJn6NSpu2CVccNM6DYGPPG4CYM1CiCr/Jop++bcBdCCAKJrIUyzmn2TS8Xo2TrN
- 56ld6WNkzmZj1SoP2CzpaZ6opvxGipsiPlXcdOhJbdM1FZ6wjCYTgYwKZNQ3wwlK3hJa
- 5u79RO5oaSz47Ox76F3DjBkl8/3E+rIClhk3JyY7xAAAH37k069lkAi8a0xWML+1V+qL
- rgCw==
-X-Gm-Message-State: AOAM532xxJzNZGBJ8F8G7RsInlqzhagTRkEm+d0SH3WmlAqZpJ3l9Omm
- 09c3qO2vVI3uZeO9wAez8qkf6xwwx6pyNuefSdsW0Qrjcw/H9w==
-X-Google-Smtp-Source: ABdhPJzOQ0T56gLP05mU6+cLgLXQWBApVHi8QaIdmNpCtx4vwZ8+/xlcMIemRy8PwyWR2GX7kV9TutxU0b532hEu9+c=
-X-Received: by 2002:a4a:c4c7:: with SMTP id g7mr2012691ooq.10.1613629853090;
- Wed, 17 Feb 2021 22:30:53 -0800 (PST)
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Meqxqs4UFeDXkZfg8/QMWEPI602xB1E/75FgRJUaFD8=;
+ b=zPuPonHCPb3TifRRGjxx0gUKRYyk/XfQoNp/bITqXj9pxuihVybWdN4V0nuuOLYsjuatlditIKwjwcV5F+O7kOIm3q2raBwqn2VfU9JD7VIUfpflCSjJfdKBVobsq1Er1Ngw76QegZ9UzrzM93gJ4NucCF4/BNpfQChr1NRdTNQ=
+Received: from HK0PR04MB2737.apcprd04.prod.outlook.com (2603:1096:203:5b::20)
+ by HKAPR04MB3956.apcprd04.prod.outlook.com (2603:1096:203:d5::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3868.27; Thu, 18 Feb
+ 2021 07:11:40 +0000
+Received: from HK0PR04MB2737.apcprd04.prod.outlook.com
+ ([fe80::69e8:9f69:4230:d8b4]) by HK0PR04MB2737.apcprd04.prod.outlook.com
+ ([fe80::69e8:9f69:4230:d8b4%6]) with mapi id 15.20.3868.028; Thu, 18 Feb 2021
+ 07:11:40 +0000
+From: =?big5?B?RGF2aWQgV2FuZyAopP2utqZ0KQ==?= <DavidWang@quantatw.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: ANSI Escape sequence unexpected output
+Thread-Topic: ANSI Escape sequence unexpected output
+Thread-Index: AdcFxEtS+fFreU74QjqE13t2aq5KQg==
+Date: Thu, 18 Feb 2021 07:11:40 +0000
+Message-ID: <HK0PR04MB2737A1AA6BFD979A359584D3C9859@HK0PR04MB2737.apcprd04.prod.outlook.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=quantatw.com;
+x-originating-ip: [60.251.243.66]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1685854e-b626-44d8-30f8-08d8d3dc7086
+x-ms-traffictypediagnostic: HKAPR04MB3956:
+x-microsoft-antispam-prvs: <HKAPR04MB395690CDF111E4B7BCE48B4BC9859@HKAPR04MB3956.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: bcOyiGMHZxNLfqMHk4t40Vp8AeBHf54xAFA5ho0P+dIYKz235EPgCXRal7zjadpt7R7eII/VxKjnkOdMpbG222mMycoP6Ylj2q6+RAJl9+bDrH9GW0lXFknxJpzjziGUFwbNUtaRz5ChsV0sfesLkVFbkKx2VTkg7DbIvU6z/86JbtG2co1Xl6zITSaCznx+LgFIs3+EAER4O4mDrpHYGjzF0C5FaE3VtpptD+EDsyUQjqaxmuaHUE/08GX9er5FKtftp5JEH8ulM2NrtoUJBnPi+FnZqjE/ux8PVo7shV9AVw+rxdg+Fbvhp+JVzXIVYV8fTCC0zaa4rd+zDztE1l9Y10pWKZjnrXtPDp+obKamgJuy5GtjWhJA5XZUwiWfrtF3gDCj9zf/NwRhWHpZZA3so68GRBXyws93J7ajl9affl8qcQw4I9b2e02jxkU9y87k/Wm0PJ39Xmmjw8TluVu7lHx7FXvvQo4s4DWuDjy2QH5IC5EbpZ+FEzGuYI2PVM+utF0ZzJ+1PqIQHUlpxDEWm/PS2/FnLwOqUyVP+QrNkofakQCiy3kwB9jC+bXwjOEimTxkI0kVX/XBjHsc2Q==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR04MB2737.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(376002)(396003)(346002)(366004)(136003)(39860400002)(26005)(7696005)(186003)(86362001)(83380400001)(8936002)(4744005)(478600001)(85182001)(71200400001)(6916009)(52536014)(8676002)(5660300002)(966005)(15188155005)(2906002)(33656002)(16799955002)(6506007)(9686003)(76116006)(64756008)(66556008)(66476007)(66946007)(66446008)(55016002)(316002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?big5?B?Q1ZTT0V1djVOOUhWOHM1ZXFLdGlWZGJkQWIxUTN6V3VLREpBZHgyTUhtV21XNDJo?=
+ =?big5?B?SGZTb01NU2MvUUhxTUUzOEQ2M2tWeTZlM2JEcHd2aldMTlYreDhaWTdzdzhtdkZ0?=
+ =?big5?B?b0ZLdFNvUHJ5S1BabG5udXdJR0ZEaUlqMEdvT0x2Q2VTZlR1V2ZDWVIrclp4dDlw?=
+ =?big5?B?TkgvUGlJZ1J2emdCejQ3MjNVMHB4YmdGNzVVQXpyZ2J0VlF4cFNDVU5ydDVUcGI0?=
+ =?big5?B?Uy8vTU5BWlBBeWdUOHlIbGFpZlRMaWtlNkYvcTNEbm04SXByMU5ibkE3QXppV1l4?=
+ =?big5?B?R1hvZFcyNGt0WGtvNzNiZ2xzODIwRlYvNUl2ZEVJbGhuaUpZMVFCd3grNWlUMDJN?=
+ =?big5?B?K2RRQU9hSVlkNVRPU2lnb2QrYWtLeHlqQXEyem04dUNkMUdocjJucVQxVDZ2SDMy?=
+ =?big5?B?ODROc1pYM0NqMEw2RmRBbm9JbXV1Tzk1MmtrZzZHZTQ0MGtoQUdOVnMyTUNGSVlp?=
+ =?big5?B?azh1QmFXM1QrY0pldFhCU3Bkd0hWLyt0bUkxK1V6OVpzUWdodlZMSGlIeGJUN1Q5?=
+ =?big5?B?cGV2ckQxS3RrcnBnZExqaURVSlp1c3grVDZlcnJJSkUvTzdlV29xbUNNdDZVR2lB?=
+ =?big5?B?UDlkZ1hibm1nYW0zRktyeTRlSmg1RGY1d2Z1bTd5bmFCZXEydVppaVVVN2pqODFo?=
+ =?big5?B?ZkdNKzh4MEMzL2NhdVFJQUxmWjBLYlVBbXNIdmhaN2xILy9IMmRUcHBpTGdac3Vh?=
+ =?big5?B?Yml3dnFsemJmV3NaSis3bHI0V3V4bitCb2hUdjRPaFNBMjF6NEUyd1V5R1poekJm?=
+ =?big5?B?WVdvazRHdlBpaS9zaHRyNUVEWUowNFZnOU42b1piQXFoWVM2M0M0WkxYcmdxZ0pr?=
+ =?big5?B?ZUswNUZpV3hlbnZaUVFqdDRUdEExRGxrTVJFL1daajFyVkZRdXUxdG5qYmpnL25S?=
+ =?big5?B?NWFWcFZkSEpma21EcXRHRkExNFVBbVBkeXk4aXBmYnZxaEcrYy9ZWndjSzN5R2NR?=
+ =?big5?B?L1hPV3cxUG1HbWwvYjZseGcrY1NyV3dxQi9KUFBPTWUxQTQ0Z1V5Tm1PUXNiamVn?=
+ =?big5?B?QjVlVlFndlRkdkxyUFNSYTYwSklsdytFTnZyME1iSjd4OGxRdEZiSlQ4dUhlZFpC?=
+ =?big5?B?L0IxQW84UnR2Q0lNNk9RMWFrNm92Z2FZR1kzSGtHcnNRUDFkNm5sa3E5SFJDMGpV?=
+ =?big5?B?aXdqYmNFamZ6N3lJamxjbzdXREE4WUtrRnBWd3pqSUQrd0U0NkhRaE1CcDYvSXB0?=
+ =?big5?B?Q2kxUzZnV1UzcTRyaHJ5UnN6RFhydjllSDM4MXNZTjBWWEVteTRwZjZVUENQV0d2?=
+ =?big5?B?eDVPK1NSUzg1V1lpdmlXc2U5MExSWUNLNTdVc1VnTHhmQ1ZIc3oxaUFCcXFRWEo1?=
+ =?big5?B?UEVkaDExcldyRnBsMEZyaFgwdnpNbGxZOGRKYXMrellOcVM0M2lIcWhURG5UUzhE?=
+ =?big5?B?elNpc2o0NnVqNkIzYVVuemIyc3Q2T0JVWW14ZCs3WWRLcjRnODdiSk9VVmRWZWxn?=
+ =?big5?B?UkNHVFB4KzNMWmU0T3ZnR2dDSjkxbE9XMXo4c3UwVlYrN1hITDZtRlZHeWQxTW5E?=
+ =?big5?B?Y2U1b3REVnh5aXNuT1RpMmZYbHFFamZLamdkbnlxS1BLSTAwN2FHOWtjRGxZa3dv?=
+ =?big5?B?MGsvSkxZQ25CNzc2aG8zaWw3SGVmWjd4V2FnSUxkYkUrTVBnYmlrTXc3dG5vVnVW?=
+ =?big5?Q?SS6R7y+ndhzl0xqoxjmztvrYHPc=3D?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <YCXLqK7KgvwYwWDl@heinlein>
-In-Reply-To: <YCXLqK7KgvwYwWDl@heinlein>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Thu, 18 Feb 2021 14:30:42 +0800
-Message-ID: <CAGm54UHw90NbTWFpOrddtkc27rqi1gzgWj8KSPEFzUgAfhiF-w@mail.gmail.com>
-Subject: Re: [External] Upcoming enhancements to `run-unit-test-docker`
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB2737.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1685854e-b626-44d8-30f8-08d8d3dc7086
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Feb 2021 07:11:40.5294 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: QhTm51NT0op5btTAe013pOjfZpJkJaLmsy/eAylnfSG1js2dKLxxbUWMkIerNOFK24bTkm2/jsVLW8WlL9R+VA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HKAPR04MB3956
+X-OriginatorOrg: quantatw.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,100 +141,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Reporting a bug on building with proxy:
-
-    base: WARNING: Retrying (Retry(total=4, connect=None, read=None,
-redirect=None, status=None)) after connection broken by
-'ProxyError('Cannot connect to proxy.',
-NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object
-at 0x7efe419e99d0>: Failed to establish a new connection: [Errno -2]
-Name or service not known'))': /simple/inflection/
-    RAN: /usr/bin/docker build --build-arg http_proxy=http://<myproxy>
---build-arg 'https_proxy={https_proxy}' --network=host --force-rm
---no-cache=false -t
-openbmc/ubuntu-unit-test-base:2021-W07-773f263e895d8ed6 -
-
-The https_proxy is not correctly set.
-Submitted https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/40699
-to fix the issue.
-
-On Fri, Feb 12, 2021 at 8:51 AM Patrick Williams <patrick@stwcx.xyz> wrote:
->
-> Hello,
->
-> Inside openbmc-build-scripts is a tool which is used by Jenkins to run
-> repository-level CI and I think some developers also use it:
-> `run-unit-test-docker`.  I've rewritten a component of this, which is
-> now at `scripts/build-unit-test-docker`, in Python and done some
-> enhancements to it.  The [currently] last commit in this sequence is at
-> [1].
->
-> Important notices:
->
->     - Location change: build-unit-test-docker.sh ->
->       scripts/build-unit-test-docker
->         + I suspect few people run this directly, but instead use
->           `run-unit-test-docker` which hides the rename.
->
->     - Python3.6 minimum.
->         + Bitbake already requires this so it really shouldn't be a
->           problem for anyone.
->
->     - Python 'sh' module needed.
->         + You can install this with the 'python3-sh' package on many
->           distros or 'pip install sh'.
->
->     - Docker stages are now tagged with different names / tag revs.
->         + I wrote a `scripts/clean-unit-test-docker` which will clean
->           out old Docker tags and can be ran periodically.
->
-> Major changes:
->
->     - Rewrite in Python.
->     - Significant speed improvements:
->         - Docker stages all build in parallel to formulate the final image.
->         - All Docker stages are tagged and reused from run to run.
->         - CMake packages now use the Ninja backend.  This is the same as
->           bitbake and faster than make.
->     - Included packages are defined in a dictionary rather than as raw
->       Dockerfiles.
->
-> Upcoming changes:
->
->     - Shortly, I will add support to incorporate base package changes
->       into the image itself.  We have had cases where a change to
->       a common package like `sdbusplus` broke CI because a package that
->       depended on it failed to compile with the changes.  I'll add code
->       that uses some of the GERRIT_* environment variables to determine
->       if the commit-under-test is part of one of the base packages and
->       include it in the Docker image for the test run.
->
->     - Topic-based testing.  We often run into co-dependencies between
->       phosphor-dbus-interfaces and another repository.  Within the next
->       month I'll enhance the script so that if you change PDI and your
->       repository and tag the commit with the same topic, the PDI commit
->       from that topic will be pulled into the Docker image so your
->       repository commit can pass CI.
->
->     - Some refactoring.  I did a lot of incremental changes from the
->       original shell script to the Python version I currently have and
->       didn't always rewrite in the most Pythonic way.  There will be
->       some more, mostly non-functional, changes to fix this.
->
-> Feel free to comment on the review series if you have any concerns with
-> these changes.
->
-> 1. https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/40366
->
-> --
-> Patrick Williams
-
-
-
--- 
-BRs,
-Lei YU
+SGkgYWxsLA0KICAgIHdoZW4gSSB1c2UgdGhlIGhvc3QgY29uc29sZSB2aWEgdWFydCB0byBsb2cg
+aW4gdG8gb3MsIHNvbWV0aW1lcyBzb21lIHVuZXhwZWN0ZWQgb3V0cHV0IGlzIHByaW50IHRvIHN0
+ZG91dCwgc3VjaCBhczoNCg0KbG9naW46IHJvb3QNClBhc3N3b3JkOg0KTGFzdCBMb2dpbjogIFRo
+dSAgIEphbiAgIDcgIDA2OjUyOjE4ICBVVEMgIDIwMjEgIG9uIHR0eVMwDQpyb290QGludGVsLWNv
+cmVpNy02NDp+IyAgOzE1M1IgICAgIDwtLS0tLS0tICBUaGlzIGlzIHRoZSB1bmV4cGVjdGVkIG91
+dHB1dA0KDQpJdCBhbHNvIGhhcHBlbiB3aGVuIHVzaW5nIG9ibWMtY29uc29sZS1jbGllbnQgb3Ig
+aXBtaXRvb2wgc29sIGFjdGl2YXRlLg0KSXQgbG9va3MgbGlrZSBhbiBBTlNJIEVzY2FwZSBzZXF1
+ZW5jZQ0KIkVzY0xpbmU7Q29sdW1uUglSZXNwb25zZTogY3Vyc29yIGlzIGF0IHYsaAlDUFIiDQpy
+ZWY6IGh0dHA6Ly9hc2NpaS10YWJsZS5jb20vYW5zaS1lc2NhcGUtc2VxdWVuY2VzLXZ0LTEwMC5w
+aHANCnJlZjogaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMTYwMjY4NTgvcmVh
+ZGluZy10aGUtZGV2aWNlLXN0YXR1cy1yZXBvcnQtYW5zaS1lc2NhcGUtc2VxdWVuY2UtcmVwbHkN
+Cg0KTXkgcXVlc3Rpb24gaXMsDQpob3cgdG8gcHJldmVudCB0aGlzIGVzY2FwZSBzZXF1ZW5jZSBm
+cm9tIHByaW50aW5nIHRvIHRoZSBzdGRvdXQ/DQpXaGljaCBwYWNrYWdlIGluIG9wZW5ibWMgaXMg
+ZG9pbmcgdGhpcz8NCkhhcyBhbnlvbmUgaGFkIGEgc2ltaWxhciBwcm9ibGVtPw0KUGxlYXNlIGxl
+YXZlIGFueSBjb21tZW50cy4NClRoYW5rcw0KDQpEYXZpZA0KDQo=
