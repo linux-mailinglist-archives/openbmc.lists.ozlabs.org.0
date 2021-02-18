@@ -2,56 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F93C31E803
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 10:30:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 462AB31E90C
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 12:36:22 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dh8Zm1mhvz30RJ
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 20:30:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DhCMm2l8rz30Q6
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 22:36:20 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=ozlabs.org header.i=@ozlabs.org header.a=rsa-sha256 header.s=201707 header.b=k3q61lbu;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=AxIjwBhd;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=ozlabs.org (client-ip=203.11.71.1; helo=ozlabs.org;
- envelope-from=jk@ozlabs.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d30;
+ helo=mail-io1-xd30.google.com; envelope-from=gmouse@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- secure) header.d=ozlabs.org header.i=@ozlabs.org header.a=rsa-sha256
- header.s=201707 header.b=k3q61lbu; dkim-atps=neutral
-Received: from ozlabs.org (bilbo.ozlabs.org [203.11.71.1])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=AxIjwBhd; dkim-atps=neutral
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com
+ [IPv6:2607:f8b0:4864:20::d30])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dh8ZW4wfXz30J3
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 20:30:27 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
- SHA256) (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Dh8ZT0Drrz9sRf;
- Thu, 18 Feb 2021 20:30:24 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
- t=1613640626; bh=xjrha/R47UIo/NSSHhPKw71rK3Kg9uG34DxysoyE78c=;
- h=Subject:From:To:Date:In-Reply-To:References:From;
- b=k3q61lbuuufY+bYpyE6Y21m94Gn9P1JL1xZhMkGltItHmC/JQjPgQfz2LY6rpToPa
- IyNj53M9rSLThryNYXaFzWygNX8rTS7aWdbfTnhiIusFuN57DnGg5I2JoC99RipZz6
- VG//RO0MMcqv/yiyE0WKZRtQ/HGPW08WOYxKI5qnqe9mR7kZTblXyoVg58CZ1HNwKE
- nvCDYu0IzDImqCpX+QCAqEu1NbN1q2c/NAjWifDmrn3oXAIkn++hF4Wg8PEpOSfYBL
- BAIQdLo8lvZmU4vRM6qQsI+aAtc4u2JIKPvsAt4oKhGHzs89v8a1aMxtL0gGzt0r3P
- O2Y75G332iuAQ==
-Message-ID: <d86c9e7af760118af1ca2f44e370836414efe4b7.camel@ozlabs.org>
-Subject: Re: ANSI Escape sequence unexpected output
-From: Jeremy Kerr <jk@ozlabs.org>
-To: David Wang =?UTF-8?Q?=28=E7=8E=8B=E6=8C=AF=E5=AE=87=29?=
- <DavidWang@quantatw.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Date: Thu, 18 Feb 2021 17:30:18 +0800
-In-Reply-To: <HK0PR04MB2737A1AA6BFD979A359584D3C9859@HK0PR04MB2737.apcprd04.prod.outlook.com>
-References: <HK0PR04MB2737A1AA6BFD979A359584D3C9859@HK0PR04MB2737.apcprd04.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.3-1 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DhCMX3Sw0z30LZ
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 22:36:07 +1100 (AEDT)
+Received: by mail-io1-xd30.google.com with SMTP id a7so1597690iok.12
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 03:36:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Cil0AxjhJT4tyaNMAeDU7MxGyjnsoPR8BsnbhJvUUjA=;
+ b=AxIjwBhdiRwhFBTVBN9L6uwdB6vXYVQ9IXjQLAdNHlBvuyob3npGrPt1jE2O2dPbNq
+ 5J5yXMuusxGNOZL50lLk8SPW93a6B/pWCt7Ww+GpcudfoNpslDo6EKP9qb6YRk7pIR79
+ ZCXfJzYUFL0TagYsn9QmIjVepYhNiOmHnf+o6Pj2thKZviBa/pgt+wSQ1VDukX3Zk4wQ
+ 309yk1sINbmEf7nsIYD5l48R7ARz6sxoxsHNdJachrUKZQfACQNw36aPO5kjmmZfWKd5
+ oMmFS8Ik6bdHaApqD82kb9yv+WA9BZKqDlRMI237Y4C15Bs/+NDYblBKUtFVeFjNTVns
+ 0cvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Cil0AxjhJT4tyaNMAeDU7MxGyjnsoPR8BsnbhJvUUjA=;
+ b=gYPdSOrRB67RniacJz2C8G1QFLaHdIIZVaLfcy0QpXgStVVaFHGSEkQl0oy0f9pE7H
+ UH6KtkNpJ6VRFlA8XLCg9vGvIrnrieAPRHD8GnQnHP4yO0vSfmnJIHJ9wmD6986150L+
+ Gl13KDaLjZw9k3ZLFDyujym1tQBdqkM/1d3yNcf9+kMwr1nSeMxKZa94R6UVdMZcJp3H
+ AiZKkghHgI+8j6hfdU9FCMu/xyB3Ldz0I6C9T/DnNevWHR9GIg0Tg/MhopTKBxkMxoQN
+ EH2OCG+ihD0dauvSkZTpuH+6BcSbswdB5YtIzth70/w+nQPQbY0J2iwoqJle8gayrn7s
+ 22hg==
+X-Gm-Message-State: AOAM531Q2ZUYlsvtjFFYZz1lJ2osqurKIBj9yV7xrCvm57Q5bHu3aPmk
+ t3nF4effWiEv3Q//D3RyH89WaTVGkiVk2wCynio8U44v471Zug==
+X-Google-Smtp-Source: ABdhPJzO6R16bebsUTug4lnEZRaXTHl+dURCCQLvqmUH39Xk9frzhEhWEqWhj7zSLONvLcI6TH3ASmwtxTqUjtpXRt4=
+X-Received: by 2002:a02:62c6:: with SMTP id d189mr4057293jac.144.1613648164760; 
+ Thu, 18 Feb 2021 03:36:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210211083454.37117-1-gmouse@google.com>
+ <CADVsX8-A+zc3jfwhXjOfEd3xsBQ9hvPSvAiNw62gbcf2dVozpQ@mail.gmail.com>
+ <CACPK8XeMV4=XKFwLUOZX056D4oobV82ZvsxXkFV-4wvjcgvA4g@mail.gmail.com>
+In-Reply-To: <CACPK8XeMV4=XKFwLUOZX056D4oobV82ZvsxXkFV-4wvjcgvA4g@mail.gmail.com>
+From: Anton Kachalov <gmouse@google.com>
+Date: Thu, 18 Feb 2021 12:35:53 +0100
+Message-ID: <CADVsX8_4OsRxKsWRXwEx9r0qsT3pzmDkaaGEFu3h0b_bDj2Y3g@mail.gmail.com>
+Subject: Re: [PATCH] ARM: dts: nuvoton: Fix flash layout This change satisfy
+ OpenBMC requirements for flash layout.
+To: Joel Stanley <joel@jms.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,34 +76,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi David,
+Hi, Joel.
 
->     when I use the host console via uart to log in to os, sometimes
-> some unexpected output is print to stdout, such as:
-> 
-> login: root
-> Password:
-> Last Login:  Thu   Jan   7  06:52:18  UTC  2021  on ttyS0
-> root@intel-corei7-64:~#  ;153R     <-------  This is the unexpected
-> output
+Ok, I will resend. What do you mean with sending to mainline lists?
+In MAINTAINERS the arm/nuvoton mentions this openbmc@ mailing list.
 
-It looks like you're only receiving part of the full ANSI escape
-sequence there (I assume this escape sequence is coming from host
-during the initial shell setup). This may happen if the serial
-connection to the host is dropping characters.
-
-Do you also see characters dropped if you output a large amount of data
-from the host? Perhaps try a `ls -l /usr/bin` and see if the output
-formatting looks OK.
-
-What is the hardware serial connection between the host and the BMC
-here? Does it provide hardware flow control?
-
-Regards,
-
-
-Jeremy
-
+On Thu, 18 Feb 2021 at 06:13, Joel Stanley <joel@jms.id.au> wrote:
+>
+> On Thu, 11 Feb 2021 at 16:15, Anton Kachalov <gmouse@google.com> wrote:
+> >
+> > Hi, Joel.
+> >
+> > This is the correct patch.
+>
+> Thanks. I didn't get this email; can you resend the patch?
+>
+> Please send it to the mainline lists, and use get_maintainers.pl so
+> the nuvoton team can review.
+>
+> I will apply it to the nuvoton tree for merging next merge window, and
+> to the openbmc tree.
+>
+> Cheers,
+>
+> Joel
+>
+> >
+> > On Thu, 11 Feb 2021 at 09:34, <gmouse@google.com> wrote:
+> > >
+> > > From: "Anton D. Kachalov" <gmouse@google.com>
+> > >
+> > > Signed-off-by: Anton D. Kachalov <gmouse@google.com>
+> > > ---
+> > >  arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 28 +++++++----------------
+> > >  1 file changed, 8 insertions(+), 20 deletions(-)
+> > >
+> > > diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+> > > index bd1eb6ee380f..741c1fee8552 100644
+> > > --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+> > > +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+> > > @@ -182,8 +182,8 @@ bbuboot2@80000 {
+> > >                                 reg = <0x0080000 0x80000>;
+> > >                                 read-only;
+> > >                                 };
+> > > -                       envparam@100000 {
+> > > -                               label = "env-param";
+> > > +                       ubootenv@100000 {
+> > > +                               label = "u-boot-env";
+> > >                                 reg = <0x0100000 0x40000>;
+> > >                                 read-only;
+> > >                                 };
+> > > @@ -195,25 +195,13 @@ kernel@200000 {
+> > >                                 label = "kernel";
+> > >                                 reg = <0x0200000 0x400000>;
+> > >                                 };
+> > > -                       rootfs@600000 {
+> > > -                               label = "rootfs";
+> > > -                               reg = <0x0600000 0x700000>;
+> > > +                       rofs@780000 {
+> > > +                               label = "rofs";
+> > > +                               reg = <0x0780000 0x1680000>;
+> > >                                 };
+> > > -                       spare1@D00000 {
+> > > -                               label = "spare1";
+> > > -                               reg = <0x0D00000 0x200000>;
+> > > -                               };
+> > > -                       spare2@0F00000 {
+> > > -                               label = "spare2";
+> > > -                               reg = <0x0F00000 0x200000>;
+> > > -                               };
+> > > -                       spare3@1100000 {
+> > > -                               label = "spare3";
+> > > -                               reg = <0x1100000 0x200000>;
+> > > -                               };
+> > > -                       spare4@1300000 {
+> > > -                               label = "spare4";
+> > > -                               reg = <0x1300000 0x0>;
+> > > +                       rwfs@1e00000 {
+> > > +                               label = "rwfs";
+> > > +                               reg = <0x1e00000 0x200000>;
+> > >                         };
+> > >                 };
+> > >         };
+> > > --
+> > > 2.30.0.478.g8a0d178c01-goog
+> > >
