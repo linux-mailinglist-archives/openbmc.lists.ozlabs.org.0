@@ -2,64 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4B9931E54D
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 06:14:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 27A9331E552
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 06:24:25 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dh2tp6rLFz30NM
-	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 16:14:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dh36b1Np8z30PK
+	for <lists+openbmc@lfdr.de>; Thu, 18 Feb 2021 16:24:23 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=KPXgl+Jp;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Vrw++keg;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2b;
- helo=mail-qv1-xf2b.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f30;
+ helo=mail-qv1-xf30.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=KPXgl+Jp; dkim-atps=neutral
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com
- [IPv6:2607:f8b0:4864:20::f2b])
+ header.s=google header.b=Vrw++keg; dkim-atps=neutral
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com
+ [IPv6:2607:f8b0:4864:20::f30])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dh2tX4qWqz30Hq
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 16:13:55 +1100 (AEDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id 2so433276qvd.0
- for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 21:13:55 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dh36N1ZzJz30JB
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 16:24:11 +1100 (AEDT)
+Received: by mail-qv1-xf30.google.com with SMTP id dr7so439840qvb.1
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Feb 2021 21:24:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=gv57M2Hmq8v3nJoHRiXi4xdui1yLd9S4+2jHDMZjRGk=;
- b=KPXgl+JpmFtJVvdOm8J0xTCgwLAKryALnDbvIymJE3ZnYEiCxoB6HLA4C02wJSbsnL
- SyHuE9mQT3z21HldwB0tnX2mcZVDCwlVezi/53oraUjCgxS219W+nvxdUV0HbekSKt8n
- FJVzrbmFg0msHDR0ty3OEmLxcycQ1skVFU0OI=
+ :cc; bh=jWKF0h2KqOPNfFDJgvLkGAn6La91C6mZ5ZYHp1jeRXM=;
+ b=Vrw++kegEGndwTYRuVAuXCemEcen1zX5PSsS64LOvSKyQX/O2E5+by0BjqFzTAuC/j
+ +EEHFdV/FSvr9l7GXCl7oOGeBd2kc51AdqW4fOYzt2MTfrFmovI1aLWCr483joTLk3c1
+ LperSzRWxGnzyI+HnwWfiCVj+Pe2vTu8+Hk9w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=gv57M2Hmq8v3nJoHRiXi4xdui1yLd9S4+2jHDMZjRGk=;
- b=Ijsu8EZMDyWTRw4r4vyfqs9qEC61FtNVnBK1a9TBe7SjmvrHROkdg0QnjEOYeucbBb
- LNnvIIV5ydd3bx41bigZelzuWAx78PZ+DdNnpXYo+sxOeaPE8IiUuJfmvc5xkJoJq4bg
- WAvWtZGYp1CkkzrS4uvgItGKsxNYmmTeHg9zWWSWmU9oIUgpLaGVAEBWjZ6S4yeJqGH+
- jqeQ4MhXaDAqVYPdU7QlmzMaxG8ixYVlcgwFxVfkQLEiHjHNsNMVzM3LD6m35vngAXhH
- MDj0KgS3Dw34BHyJtMV4q9+PEjTSGcnXhpNz7J1m/KR99MYUo9xt7uuv1gbz3LafhCx7
- V0vQ==
-X-Gm-Message-State: AOAM531siczmcSDcGmtPPboT46c7plEiIuW+mUDbYObggk5ahZB65SnS
- 8lGpDldtR6IqZLMFW0F/LaAP0nivqHWHPXh/8So=
-X-Google-Smtp-Source: ABdhPJz1p5nQT3nHx+8Ew5ZAttZvgB2CgafyZ7fVD+0Zs0P+EIiASCZy5lbmbNqvpeHMJaDN366h6LdZAw6sXClHtPY=
-X-Received: by 2002:ad4:4693:: with SMTP id bq19mr2548218qvb.43.1613625230334; 
- Wed, 17 Feb 2021 21:13:50 -0800 (PST)
+ bh=jWKF0h2KqOPNfFDJgvLkGAn6La91C6mZ5ZYHp1jeRXM=;
+ b=ox8JLfjW5f6yXbjijbkhtXhvHpaF5km/CPfuD6LE03z4D0gfyFbYEy/iOcb28b52ua
+ Z3HmPILKklhqvgEgW+TfEW4FDCIKpUP4DgpbQz0R3WX/TS30H6oeUTWHlJFYkd76UvtF
+ wX9GR0pzGWvvHZh+bUhNpJPMimYT3Me1WeN5DCztIth2FolkxUJVtQ+23paROezNjQ8m
+ XCR3yFRGAd7IVKnM//h+LPi5I1Qn4hYZMrIQTGD5Qv1EUtVzC/c4y6nxWGwklCW83eCq
+ 62wrXLQpYs4ntJSEwUhwUFYq5uF6wFB2PZnW74FrETtwcE4CEncMZH05UAeOj62InF0/
+ YI6g==
+X-Gm-Message-State: AOAM531qFpTW/aDPw4eireB4I5zfQYofLcNQyx23mNegoW7IAf2+7XNE
+ 4ohE8jsrK8XYyvqp6ILDUXUrpxj0DZmgYBaPD77bDxDp
+X-Google-Smtp-Source: ABdhPJyhEhzMIFY5VIQunZ6CqiDW+r6Qw5JyrQcnEkDUWbELVfluj8H3V0yWamlsZfC2VO4nuzDOgOds5HN1m3vJQWg=
+X-Received: by 2002:a05:6214:10e7:: with SMTP id
+ q7mr2612739qvt.16.1613625847783; 
+ Wed, 17 Feb 2021 21:24:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20210211083454.37117-1-gmouse@google.com>
- <CADVsX8-A+zc3jfwhXjOfEd3xsBQ9hvPSvAiNw62gbcf2dVozpQ@mail.gmail.com>
-In-Reply-To: <CADVsX8-A+zc3jfwhXjOfEd3xsBQ9hvPSvAiNw62gbcf2dVozpQ@mail.gmail.com>
+References: <71820e5a-1231-1937-1344-dee9f4a03600@os.amperecomputing.com>
+ <CADfYTpF9yX0xheCwu5mftWs9b4YAe=ttGNNsf7GL8KkpW4dAcw@mail.gmail.com>
+ <42403202-49c9-2b85-1207-4c84ec491332@os.amperecomputing.com>
+In-Reply-To: <42403202-49c9-2b85-1207-4c84ec491332@os.amperecomputing.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 18 Feb 2021 05:13:38 +0000
-Message-ID: <CACPK8XeMV4=XKFwLUOZX056D4oobV82ZvsxXkFV-4wvjcgvA4g@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: nuvoton: Fix flash layout This change satisfy
- OpenBMC requirements for flash layout.
-To: Anton Kachalov <gmouse@google.com>
+Date: Thu, 18 Feb 2021 05:23:56 +0000
+Message-ID: <CACPK8XdFxB4JQR09tNvV-DN4V4fiUmbY2_7+MArh_jdAs1YVkQ@mail.gmail.com>
+Subject: Re: Any convention on putting source codes into openbmc/openbmc
+ repository
+To: Thang Nguyen <thang@os.amperecomputing.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -76,81 +78,40 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 11 Feb 2021 at 16:15, Anton Kachalov <gmouse@google.com> wrote:
+On Thu, 18 Feb 2021 at 01:31, Thang Nguyen <thang@os.amperecomputing.com> wrote:
 >
-> Hi, Joel.
 >
-> This is the correct patch.
+> On 18/02/2021 06:46, Nancy Yuen wrote:
+>
+> Code should be put into an appropriate repo, and repos created where necessary.  Then referenced in recipes from openbmc/openbmc metalayers.
+>
+> Thanks Nancy for the feedback. Do we have requirement for this or just a recommendation?
 
-Thanks. I didn't get this email; can you resend the patch?
+It's a requirement.
 
-Please send it to the mainline lists, and use get_maintainers.pl so
-the nuvoton team can review.
+OpenBMC uses a project called yocto, which is itself based on
+openembedded (OE). OE is a set of build scripts and configuration
+files for building a filesystem. The filesystem will contain
+applications, such as ipmi daemons, web servers, sensor monitoring
+code, etc. The source code for those applications comes from the
+application's repository. For example, our ssh server (dropbear) comes
+from dropbear's website.
 
-I will apply it to the nuvoton tree for merging next merge window, and
-to the openbmc tree.
+For applications that are developed exclusively for openbmc, we host
+their source code as part of the openbmc organisation on github. But
+the source code lives outside of the main yocto-derived repository,
+and is checked out at build time.
+
+If you have application code that you wish to be part of your system,
+you should first see if it makes sense to contribute that code to an
+existing repository. If it is unique, or deserves it's own repository,
+then you can mail the list to request the creation of a new repository
+for your code.
+
+Apologies if I've covered something you already understood. Once
+you've been around the project for a while it becomes second nature,
+but it was hard to describe the concepts from scratch!
 
 Cheers,
 
 Joel
-
->
-> On Thu, 11 Feb 2021 at 09:34, <gmouse@google.com> wrote:
-> >
-> > From: "Anton D. Kachalov" <gmouse@google.com>
-> >
-> > Signed-off-by: Anton D. Kachalov <gmouse@google.com>
-> > ---
-> >  arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 28 +++++++----------------
-> >  1 file changed, 8 insertions(+), 20 deletions(-)
-> >
-> > diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> > index bd1eb6ee380f..741c1fee8552 100644
-> > --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> > +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> > @@ -182,8 +182,8 @@ bbuboot2@80000 {
-> >                                 reg = <0x0080000 0x80000>;
-> >                                 read-only;
-> >                                 };
-> > -                       envparam@100000 {
-> > -                               label = "env-param";
-> > +                       ubootenv@100000 {
-> > +                               label = "u-boot-env";
-> >                                 reg = <0x0100000 0x40000>;
-> >                                 read-only;
-> >                                 };
-> > @@ -195,25 +195,13 @@ kernel@200000 {
-> >                                 label = "kernel";
-> >                                 reg = <0x0200000 0x400000>;
-> >                                 };
-> > -                       rootfs@600000 {
-> > -                               label = "rootfs";
-> > -                               reg = <0x0600000 0x700000>;
-> > +                       rofs@780000 {
-> > +                               label = "rofs";
-> > +                               reg = <0x0780000 0x1680000>;
-> >                                 };
-> > -                       spare1@D00000 {
-> > -                               label = "spare1";
-> > -                               reg = <0x0D00000 0x200000>;
-> > -                               };
-> > -                       spare2@0F00000 {
-> > -                               label = "spare2";
-> > -                               reg = <0x0F00000 0x200000>;
-> > -                               };
-> > -                       spare3@1100000 {
-> > -                               label = "spare3";
-> > -                               reg = <0x1100000 0x200000>;
-> > -                               };
-> > -                       spare4@1300000 {
-> > -                               label = "spare4";
-> > -                               reg = <0x1300000 0x0>;
-> > +                       rwfs@1e00000 {
-> > +                               label = "rwfs";
-> > +                               reg = <0x1e00000 0x200000>;
-> >                         };
-> >                 };
-> >         };
-> > --
-> > 2.30.0.478.g8a0d178c01-goog
-> >
