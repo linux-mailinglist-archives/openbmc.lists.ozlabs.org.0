@@ -2,83 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0555031F383
-	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 02:07:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C3F931FA84
+	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 15:26:35 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DhYNC0hJ6z30Qf
-	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 12:07:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dhv5j4Yfbz3cLH
+	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 01:26:33 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=dRsXTrRz;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=UFpwJQsw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=FoLOrDxh;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::429;
- helo=mail-wr1-x429.google.com; envelope-from=lee.jones@linaro.org;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.229;
+ helo=new3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
- header.s=google header.b=dRsXTrRz; dkim-atps=neutral
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com
- [IPv6:2a00:1450:4864:20::429])
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=UFpwJQsw; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=FoLOrDxh; 
+ dkim-atps=neutral
+Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com
+ [66.111.4.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dh8bV1c5kz30KF
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 20:31:17 +1100 (AEDT)
-Received: by mail-wr1-x429.google.com with SMTP id g6so2095329wrs.11
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 01:31:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:content-transfer-encoding:in-reply-to;
- bh=VaSKa4DdnHoyZyCFHmPaCow3KCxH2Ne1C09ADbZ1yus=;
- b=dRsXTrRzk7Wc31VNcTbJfc4NgGYL0oYa4TrPkTQZMezCPZJix76Gti85Vp4Yt4U+uY
- qvfk2XL5qC9qgVqCHKJ9gGyJh/v2yDaSoxO5sAkmaNzasrphNDslGJIOOjdGbKAz1QQK
- 4xghW/rirIb3npghDbJJSNGXUipsbkyVznUa4nXfrFhP8ZjY8c+Ngpd8ML3l765bhShk
- uP8iWjoRLeekT1gz2uN5nT6zKWr0JErbR50lvlx6YtfOcFshe+PTQqtahpMP8imSEncX
- 8m2OjhT/DZN+hMQTXLqi/ott3uA8MLN18PbnxALj4/JHkwpwuvmJoM83JRMCZM5wrFlR
- rwmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:content-transfer-encoding
- :in-reply-to;
- bh=VaSKa4DdnHoyZyCFHmPaCow3KCxH2Ne1C09ADbZ1yus=;
- b=XJuppka1LSMlCK7V7DzVV7e5SKQjb5EyWu/vp5xvSY9Wk06bQpd1UXe8KZGyioU+5u
- bvERJBtTUw8oez4FfIY+qZbv1JcW3wF/UlXhmU0Mk+7p3DHMKOqvoerfzERJowgFXSzB
- HKz6XAZm4LxgLq3c4EiKgunS50NFaqolOycVBP9ef7MLW6jgcLh4Lfo7QrsKAb3jCuBW
- F55bLpA+yYJ3cYcn6/vAEA4Ryt6S5Cs/kdPNcZ4iQxuNs3NzAUH81m0lWF08b38aybh4
- NZaobrmmnqM6ikBpob2COPNKOMuCKkEB4B7FRL/3BRaCw4qInyXUfhvLohJUJBGzfFTG
- 4Hhw==
-X-Gm-Message-State: AOAM533BgjdlHfTwcCk60MUnzBbEhsA/AiVgTNqz2NoiomfgLPdhpJR9
- aWUOorSGdX4/qljfXhqTJ5P1ow==
-X-Google-Smtp-Source: ABdhPJxE8kmixkGOJBaQqpcOpvjiGzXrQRnCSlhlsVN/0EM3RqJlhWDEhhKX5MEo/csg0r4Y/dUISA==
-X-Received: by 2002:adf:d1ce:: with SMTP id b14mr3340189wrd.329.1613640671985; 
- Thu, 18 Feb 2021 01:31:11 -0800 (PST)
-Received: from dell ([91.110.221.153])
- by smtp.gmail.com with ESMTPSA id m24sm8233954wml.36.2021.02.18.01.31.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Feb 2021 01:31:11 -0800 (PST)
-Date: Thu, 18 Feb 2021 09:31:08 +0000
-From: Lee Jones <lee.jones@linaro.org>
-To: Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [PATCH 00/21] [Set 2] Rid W=1 warnings from Clock
-Message-ID: <20210218093108.GA62231@dell>
-References: <161316754567.1254594.9542583200097699504@swboyd.mtv.corp.google.com>
- <20210212223739.GE179940@dell>
- <161317480301.1254594.16648868282165823277@swboyd.mtv.corp.google.com>
- <YCf4kkMsX+Ymgy6N@lunn.ch>
- <161333644244.1254594.4498059850307971318@swboyd.mtv.corp.google.com>
- <YCmUOHTtc+j4eLkO@lunn.ch> <20210215084952.GF179940@dell>
- <20210215094509.0b1f0bbf@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <20210216082046.GA4803@dell>
- <20210217100830.50db2195@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dhv4s4C0Gz30Qj;
+ Sat, 20 Feb 2021 01:25:48 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 31E68580342;
+ Fri, 19 Feb 2021 09:25:44 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute3.internal (MEProxy); Fri, 19 Feb 2021 09:25:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=fm2; bh=FsrzPsv6OPy2s0HzNgRya7RFf2
+ dKgOCEMkjhAogzc4Q=; b=UFpwJQswCMtAG9CPQyWnimBuOsUKGXxK/OvHOc5228
+ ykTtbpchX2ftZE3Seq9NLdH9lPtpGLn6oyR6dn9tf1A9DfqBOsmy67Ryzc9/tUFB
+ OCCFGFv8Tt6fQd/vRc3FQ1vE/H/GVC3l1o7NmVXzJmE3trq+65qvwYGglXijuJ2D
+ OxG57HFsYNScFaFNqjT71YkbwL+Nh1Mx7zTXXmAGvDMRZbnQVhQiCrobJqERyDnd
+ /uBYKvKIdYSleWdy6AKCqksG4vXlsl7adKqL1y2Fk+4OpDfokA9lsZ96PLE3ymkP
+ BE9+0FiWA3OG21EbjOAYslo4J0Yt71cDKTQMB9RS3SfA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:date:from
+ :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=FsrzPsv6OPy2s0HzN
+ gRya7RFf2dKgOCEMkjhAogzc4Q=; b=FoLOrDxhBbp9a0vOd1lxrfuWfjuBmf8m2
+ 0IvMCil+cxA7AGG2mdFoZ7c0ZuScCF8NTpjJz1E99jMZKUIlHuFaFuGxhj4eD7r4
+ 7wDQ7CKwkFhf/yqwfYUMrlxnO9aErp+xofXV+K950oE9i58But3yZcKFMHQom9lV
+ VDGwAA2iYn0+NhEz8G8yWF9k3mPgaaWzuFeJPt6JaL60cyFINgRbtbAB6nTSDYAI
+ 8n4s/McgI7DN+hm9L4ciAiMVOgs2JS0dPuUNBdcAUI8MqhfXN02QLwQ8gX/ifQQJ
+ Pz+r2xqBkVQoX9g+Yofd1PGSfqP9LVwYXKRy0Pu94oSctM7LQHVPQ==
+X-ME-Sender: <xms:ZsovYDuP-ybKSjMmdXyd93-DYDIMxkwrZU_TLpyf-5bkjgacXO3L4g>
+ <xme:ZsovYEcaJRgGaaEVw4c9SRZMN4KsDoVpNkSnHgR6FEwHxXidXRw1NJmNLedfAgxpF
+ Cfxr9bUtlVdkt-YfA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrjeeigdeigecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertd
+ dtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhi
+ ugdrrghuqeenucggtffrrghtthgvrhhnpeejgffffedvveekudfhheduffeuudethefhhe
+ egvefhlefggfffudefffduteffudenucffohhmrghinhepihhnthgvlhdrtghomhdpghhi
+ thhhuhgsrdgtohhmpdgumhhtfhdrohhrghenucfkphepudegrddvrdeluddrfeejnecuve
+ hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgif
+ segrjhdrihgurdgruh
+X-ME-Proxy: <xmx:ZsovYGxSPGDtr989h1CfmmdiV91s6HL_p5FT7fBxxGtdOnBrUMvePw>
+ <xmx:ZsovYCOMLxSmL_8SfvpgP5GOMfC5HQcxRJCRl1dOY6nn0r9Z51RMxw>
+ <xmx:ZsovYD_hrRbrjyjHFF4mhYkAvM7xQOfFSgd65nTm51xQ5eFb65ZsYA>
+ <xmx:aMovYLNiH3Wqj8d2yMrBjUvZM4g1uyIHh9nwomtoM1DCWQ4-tLT-9Q>
+Received: from localhost.localdomain
+ (ppp14-2-91-37.adl-apt-pir-bras31.tpg.internode.on.net [14.2.91.37])
+ by mail.messagingengine.com (Postfix) with ESMTPA id A2EEE24005D;
+ Fri, 19 Feb 2021 09:25:35 -0500 (EST)
+From: Andrew Jeffery <andrew@aj.id.au>
+To: openipmi-developer@lists.sourceforge.net, openbmc@lists.ozlabs.org,
+ minyard@acm.org
+Subject: [PATCH 00/19] ipmi: Allow raw access to KCS devices
+Date: Sat, 20 Feb 2021 00:55:04 +1030
+Message-Id: <20210219142523.3464540-1-andrew@aj.id.au>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210217100830.50db2195@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-X-Mailman-Approved-At: Fri, 19 Feb 2021 12:07:43 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,72 +95,143 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Lunn <andrew@lunn.ch>, Prashant Gaikwad <pgaikwad@nvidia.com>,
- Tomer Maimon <tmaimon77@gmail.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Michael Turquette <mturquette@baylibre.com>,
- Bjorn Andersson <bjorn.andersson@linaro.org>,
- Rajeev Kumar <rajeev-dlh.kumar@st.com>, Jan Kotas <jank@cadence.com>,
- Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>,
- Michal Simek <michal.simek@xilinx.com>,
- Boris BREZILLON <boris.brezillon@free-electrons.com>,
- linux-omap@vger.kernel.org, Ahmad Fatoum <a.fatoum@pengutronix.de>,
- Benjamin Fair <benjaminfair@google.com>,
- Emilio =?iso-8859-1?Q?L=F3pez?= <emilio@elopez.com.ar>,
- Viresh Kumar <vireshk@kernel.org>, openbmc@lists.ozlabs.org,
- Russell King <linux@armlinux.org.uk>, Jonathan Hunter <jonathanh@nvidia.com>,
- Chen-Yu Tsai <wens@csie.org>, Andy Gross <agross@kernel.org>,
- Loc Ho <lho@apm.com>, NXP Linux Team <linux-imx@nxp.com>,
- Richard Woodruff <r-woodruff2@ti.com>,
- Pengutronix Kernel Team <kernel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
- Sascha Hauer <s.hauer@pengutronix.de>, linux-clk@vger.kernel.org,
- Maxime Ripard <mripard@kernel.org>, linux-tegra@vger.kernel.org,
- Tali Perry <tali.perry1@gmail.com>, linux-arm-kernel@lists.infradead.org,
- =?iso-8859-1?Q?S=F6ren?= Brinkmann <soren.brinkmann@xilinx.com>,
- Jernej Skrabec <jernej.skrabec@siol.net>, Rajan Vaja <rajan.vaja@xilinx.com>,
- Tero Kristo <kristo@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
- Patrick Venture <venture@google.com>,
- Peter De Schrijver <pdeschrijver@nvidia.com>, linux-kernel@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>,
- Nuvoton Technologies <tali.perry@nuvoton.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Shiraz Hashim <shiraz.linux.kernel@gmail.com>
+Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com,
+ linux-aspeed@lists.ozlabs.org, linux-gpio@vger.kernel.org,
+ avifishman70@gmail.com, venture@google.com, linus.walleij@linaro.org,
+ linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org,
+ lee.jones@linaro.org, chiawei_wang@aspeedtech.com,
+ linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 17 Feb 2021, Jakub Kicinski wrote:
+Hello,
 
-> On Tue, 16 Feb 2021 08:20:46 +0000 Lee Jones wrote:
-> > On Mon, 15 Feb 2021, Jakub Kicinski wrote:
-> > > On Mon, 15 Feb 2021 08:49:52 +0000 Lee Jones wrote:  
-> > > > Yes, please share.  
-> > > 
-> > > https://github.com/kuba-moo/nipa  
-> > 
-> > Thanks for this.
-> > 
-> > Oh, I see.  So you conduct tests locally, then post them up in a
-> > section called 'Checks' using the provided API.  
-> 
-> For some definition of "locally" - NIPA runs on a rented VM.
+This series is a bit of a mix of things, but its primary purpose is to
+expose BMC KCS IPMI devices to userspace in a way that enables userspace
+to talk to host firmware using protocols that are not IPMI.  The new
+chardev implementation exposes the Input Data Register (IDR), Output
+Data Register (ODR) and Status Register (STR) via read() and write(),
+and implements poll() for event monitoring.
 
-Right.  Infrastructure that you control vs by Patchwork.
+The existing /dev/ipmi-kcs* chardev interface exposes the KCS devices in
+a way which encoded the IPMI protocol in its behaviour. However, as
+LPC[0] KCS devices give us bi-directional interrupts between the host
+and a BMC with both a data and status byte, they are useful for purposes
+beyond IPMI.
 
-> > I assume that Patchwork does not alert the user when something has
-> > gone awry?  Is this something Nipa does?
-> 
-> The way we run it on netdev is maintainer-centric, IOW we see 
-> the failures in patchwork and complain to people manually.
-> The netdev mailing list gets too many messages as is, if NIPA 
-> responded with results automatically (which is not that hard
-> technically) my concern is that people would be more likely to
-> send untested patches to the mailing list and rely on the bot.
+As a concrete example, libmctp[1] implements a vendor-defined
+host-interface MCTP[2] binding using a combination of LPC Firmware
+cycles for bulk data transfer and a KCS device via LPC IO cycles for
+out-of-band protocol control messages[3]. This gives a throughput
+improvement over the standard KCS binding[4] while continuing to exploit
+the ease of setup of the LPC bus for early boot firmware on the host
+processor.
 
-That makes sense.  Thank you for the explanation.
+The series takes a bit of a winding path to achieve its aim:
+
+1. It begins with patches 1-5 put together by Chia-Wei, which I've
+rebased on v5.11. These fix the ASPEED LPC bindings and other non-KCS
+LPC-related ASPEED device drivers in a way that enables the SerIRQ
+patches at the end of the series. With Joel's review I'm hoping these 5
+can go through the aspeed tree, and that the rest can go through the
+IPMI tree.
+
+2. Next, patches 6-13 fairly heavily refactor the KCS support in the
+IPMI part of the tree, re-architecting things such that it's possible to
+support multiple chardev implementations sitting on top of the ASPEED
+and Nuvoton device drivers. However, the KCS code didn't really have
+great separation of concerns as it stood, so even if we disregard the
+multiple-chardev support I think the cleanups are worthwhile.
+
+3. Patch 14 adds some interrupt management capabilities to the KCS
+device drivers in preparation for patch 15, which introduces the new
+"raw" KCS device interface. I'm not stoked about the device name/path,
+so if people are looking to bikeshed something then feel free to lay
+into that.
+
+4. The remaining patches switch the ASPEED KCS devicetree binding to
+dt-schema, add a new interrupt property to describe the SerIRQ behaviour
+of the device and finally clean up Serial IRQ support in the ASPEED KCS
+driver.
+
+Rob: The dt-binding patches still come before the relevant driver
+changes, I tried to keep the two close together in the series, hence the
+bindings changes not being patches 1 and 2.
+
+I've exercised the series under qemu with the rainier-bmc machine plus
+some preliminary KCS support[5]. I've also substituted this series in
+place of a hacky out-of-tree driver that we've been using for the
+libmctp stack and successfully booted the host processor under our
+internal full-platform simulation tools for a Rainier system.
+
+Note that this work touches the Nuvoton driver as well as ASPEED's, but
+I don't have the capability to test those changes or the IPMI chardev
+path. Tested-by tags would be much appreciated if you can exercise one
+or both.
+
+Please review!
+
+Andrew
+
+[0] https://www.intel.com/content/dam/www/program/design/us/en/documents/low-pin-count-interface-specification.pdf
+[1] https://github.com/openbmc/libmctp/
+[2] https://www.dmtf.org/sites/default/files/standards/documents/DSP0236_1.3.1.pdf
+[3] https://github.com/openbmc/libmctp/blob/master/docs/bindings/vendor-astlpc.md
+[4] https://www.dmtf.org/sites/default/files/standards/documents/DSP0254_1.0.0.pdf
+[5] https://github.com/amboar/qemu/tree/kcs
+
+Andrew Jeffery (14):
+  ipmi: kcs_bmc_aspeed: Use of match data to extract KCS properties
+  ipmi: kcs_bmc: Make status update atomic
+  ipmi: kcs_bmc: Rename {read,write}_{status,data}() functions
+  ipmi: kcs_bmc: Split out kcs_bmc_cdev_ipmi
+  ipmi: kcs_bmc: Turn the driver data-structures inside-out
+  ipmi: kcs_bmc: Split headers into device and client
+  ipmi: kcs_bmc: Strip private client data from struct kcs_bmc
+  ipmi: kcs_bmc: Decouple the IPMI chardev from the core
+  ipmi: kcs_bmc: Allow clients to control KCS IRQ state
+  ipmi: kcs_bmc: Add a "raw" character device interface
+  dt-bindings: ipmi: Convert ASPEED KCS binding to schema
+  dt-bindings: ipmi: Add optional SerIRQ property to ASPEED KCS devices
+  ipmi: kcs_bmc_aspeed: Implement KCS SerIRQ configuration
+  ipmi: kcs_bmc_aspeed: Fix IBFIE typo from datasheet
+
+Chia-Wei, Wang (5):
+  dt-bindings: aspeed-lpc: Remove LPC partitioning
+  ARM: dts: Remove LPC BMC and Host partitions
+  ipmi: kcs: aspeed: Adapt to new LPC DTS layout
+  pinctrl: aspeed-g5: Adapt to new LPC device tree layout
+  soc: aspeed: Adapt to new LPC device tree layout
+
+ Documentation/ABI/testing/dev-raw-kcs         |  25 +
+ .../bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml | 106 ++++
+ .../bindings/ipmi/aspeed-kcs-bmc.txt          |  33 -
+ .../devicetree/bindings/mfd/aspeed-lpc.txt    | 100 +--
+ arch/arm/boot/dts/aspeed-g4.dtsi              |  68 +--
+ arch/arm/boot/dts/aspeed-g5.dtsi              | 119 ++--
+ arch/arm/boot/dts/aspeed-g6.dtsi              | 121 ++--
+ drivers/char/ipmi/Kconfig                     |  30 +
+ drivers/char/ipmi/Makefile                    |   2 +
+ drivers/char/ipmi/kcs_bmc.c                   | 532 +++++-----------
+ drivers/char/ipmi/kcs_bmc.h                   |  94 +--
+ drivers/char/ipmi/kcs_bmc_aspeed.c            | 536 ++++++++++------
+ drivers/char/ipmi/kcs_bmc_cdev_ipmi.c         | 570 ++++++++++++++++++
+ drivers/char/ipmi/kcs_bmc_cdev_raw.c          | 442 ++++++++++++++
+ drivers/char/ipmi/kcs_bmc_client.h            |  47 ++
+ drivers/char/ipmi/kcs_bmc_device.h            |  20 +
+ drivers/char/ipmi/kcs_bmc_npcm7xx.c           |  98 ++-
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c    |  17 +-
+ drivers/soc/aspeed/aspeed-lpc-ctrl.c          |  20 +-
+ drivers/soc/aspeed/aspeed-lpc-snoop.c         |  23 +-
+ 20 files changed, 2021 insertions(+), 982 deletions(-)
+ create mode 100644 Documentation/ABI/testing/dev-raw-kcs
+ create mode 100644 Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/ipmi/aspeed-kcs-bmc.txt
+ create mode 100644 drivers/char/ipmi/kcs_bmc_cdev_ipmi.c
+ create mode 100644 drivers/char/ipmi/kcs_bmc_cdev_raw.c
+ create mode 100644 drivers/char/ipmi/kcs_bmc_client.h
+ create mode 100644 drivers/char/ipmi/kcs_bmc_device.h
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+2.27.0
+
