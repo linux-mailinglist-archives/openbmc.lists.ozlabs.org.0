@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0799B31FAEF
-	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 15:35:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B8BD231FAF5
+	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 15:35:50 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DhvHv6Cm8z3d3v
-	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 01:35:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DhvJN4S3Zz3cTZ
+	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 01:35:48 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=LuAdh3bT;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VCr6wQiG;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=qAW333sn;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ovFpiPRP;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,69 +19,68 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=LuAdh3bT; 
+ header.s=fm2 header.b=qAW333sn; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=VCr6wQiG; 
+ header.a=rsa-sha256 header.s=fm2 header.b=ovFpiPRP; 
  dkim-atps=neutral
 Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com
  [66.111.4.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dhv731lyFz3cQ4;
- Sat, 20 Feb 2021 01:27:43 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dhv7B2j8Dz3cRY;
+ Sat, 20 Feb 2021 01:27:50 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 581FB5803C3;
- Fri, 19 Feb 2021 09:27:41 -0500 (EST)
+ by mailnew.nyi.internal (Postfix) with ESMTP id 76A9C5803C7;
+ Fri, 19 Feb 2021 09:27:48 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Fri, 19 Feb 2021 09:27:41 -0500
+ by compute3.internal (MEProxy); Fri, 19 Feb 2021 09:27:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm2; bh=VNXUckXhWf104
- SCgHGqEwb2slaaFyK0SHtZQq67z01A=; b=LuAdh3bT24Cvz7Rbc4zR45ImmSGbg
- 0Yz58kKjoaHl2THSVhpgfLhcVDP4szp1uO2/Kmk8kQb7683v6VaqoRpGw06ItnVc
- 6bHe7X5azvxR2+Kas625hwwoM+XAZPJvOZG8eN4zH8UoDwmYJxMhlIM3p/AowYSd
- ZUUZnCQUHDlTPO2d893A3eP1ul4yqTcvYvFlPOMt1UCt5GIxhnGF0OW35NPyF4EL
- +ponm44NZfc/nXhcRZwVIcoTSl0vYzzpnEZqlmtwylQW18pJqSO/ji7qDre5oyHK
- 7qU87c114lBEA+FujeS1MVhAjLtZs9RxbTZPO7+Wni8goexS4uTTonBIA==
+ :mime-version:content-transfer-encoding; s=fm2; bh=qbH62si7fZofL
+ 8qBiF9TdRVx1jIFWTr/Ce2qQHbzWB0=; b=qAW333sn3u2g4N/YAc/OQGZxDs5eq
+ eCKdBJ/wBTDXlPk9zFNE1IIdgboGDTMqvlT8NTQ/dNeVXEknGvykuXQ9G9uxiYsD
+ KxYIaZ0HTglcR2qQvWj0O/s05/I1n4vMw2/soNsGipqEQWMguzluJkjGu00NdpIB
+ nL4HJ+cUFuKoqlm7rB1PWHOrpA2jal9nQc1yA9lF1Ykw/5yEWmUTKwiZJPVMzh3I
+ ykDef/5tpjsKQ7HQ7rfdPjH0JIQFUO7uzfiqRJUja4L1And33t0V3OrQwVQ0s0iJ
+ 6wJ+hTPWa+3ncE+HbqIIj8Bjc/KyO7GL3sQvNU9S1uUsTKZzJ9+L8t68w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=VNXUckXhWf104SCgHGqEwb2slaaFyK0SHtZQq67z01A=; b=VCr6wQiG
- IctyXO7SLN9mFvT6o++LRDoYmgrWh6CDC045msp3FkToGtudYMYfY7PTs1mQMT+E
- 4fJ9i8WoDNrWcD903JvBxycvAt9TqQMyu2ijas5gKcYjkioMVX9/guUyDMfaLTYj
- qqRcuGKZv4fAlNyv5czCGzPnRFpJv92pVo9I+wj4BTrUSWtpitMayFLfkKF/1miL
- YNQPMxZIA5te7C9Pt6/eiG6zZkJ8p6vPM9Chtv17/lF9OnBvJDLyGhIfqHJ1svxF
- iLTWuvdLwi7GzkJAXThVBbwAUcRYkIdGqeLAzRPYH5SyoH5scKydiEDyPFv77MP2
- 8ZQigCW0YSTSKA==
-X-ME-Sender: <xms:3covYGMvKRsIfOvVfmeijimdV3GtAHANZiw2JVn0lM956G6l--B-iA>
- <xme:3covYE87VmJ3utNkw0IOb4n3uM7PM4ZVOxTdOg5cMf9JodhDTBx9kmHh0L0ZB1xki
- kaLi96vair6A3-y6g>
+ fm2; bh=qbH62si7fZofL8qBiF9TdRVx1jIFWTr/Ce2qQHbzWB0=; b=ovFpiPRP
+ +Y0TZ0ShYgsz3NzdMXbjm+6S6G/G7iKLDflP9LiViBE1X39y/e2Flka2vTceC8yw
+ Bd9pXzj6/9Dnfz0JoxstJhjvUKZIVIQDyt+fReK9iFdbT6sccz9koZhXI6GmNOZw
+ eBTCyLUIOlDsnyITb7PinXP0W+hqiGxbCKOMLYU6hkLJNNjJA2RYGy7bAPM+fvrv
+ AOzFOwYQ81zrRkUbdS9uT5CSR34OjkCgEN0aSun8s1bOgR1KB6OO/lDWD+FXqWcc
+ ztZPBwRK7Z4OukNkbCAsT2a2LmRV3lnwvg3NjUqzHeO28x+LrNESG9sKY68e2D2t
+ tq0AK2l5XCfDMA==
+X-ME-Sender: <xms:5MovYErrmDdE5BZgEgnn-MZbIK4vbpLDvmCgeqezRw3fjsl8flRPsg>
+ <xme:5MovYKrGrmv2IFs1K1bmtqI8rQ1LhDx2hI-5TCEVeizHWH64MT50eqtzjEltpxdPO
+ A2oVUhGPtcR1fKIxQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrjeeigdeigecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
  ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
  rdhiugdrrghuqeenucggtffrrghtthgvrhhnpeejgfdvveehteekveeggeellefgleette
  ejffelffdvudduveeiffegteelvefhteenucfkphepudegrddvrdeluddrfeejnecuvehl
- uhhsthgvrhfuihiivgepleenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
- grjhdrihgurdgruh
-X-ME-Proxy: <xmx:3covYNSSNH6BgmqXNgqPF0O0ENakk2A5vV22P5MP8z0qwzJLZvRhFw>
- <xmx:3covYGtooHBVwAgY6YdDapYLHsb8y-EeIyQhvgQY8vy5IShQ1J-_Zg>
- <xmx:3covYOdbBFvWMvNj9W7N7ILEZ9ydQK7RBVoCciNWGCZ3G5ALJqSS3g>
- <xmx:3covYBtyTHAKfBFJrw4hgNXud8JAP7AQOO2tuPsJfrqpClLBFiZlSA>
+ uhhsthgvrhfuihiivgepuddtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfi
+ esrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:5MovYJOq_2fbS9P2zzdwOh1r6Da5L44Em1yUupsQKHEt5pNuIRNtQA>
+ <xmx:5MovYL4eg_nKxUaJDe_AUyZxSe0Fv_fO3ipbexF0vSIHRp_-EdlyAg>
+ <xmx:5MovYD6P3mG4VJYGEILsTIsPqWxid4gppwU4Uni1M6jPCCPQq20ktw>
+ <xmx:5MovYHqIbiIupDU4pTmnphywoLbKo-2fvwfvyHjoGm75oulorktwaw>
 Received: from localhost.localdomain
  (ppp14-2-91-37.adl-apt-pir-bras31.tpg.internode.on.net [14.2.91.37])
- by mail.messagingengine.com (Postfix) with ESMTPA id DAE33240064;
- Fri, 19 Feb 2021 09:27:34 -0500 (EST)
+ by mail.messagingengine.com (Postfix) with ESMTPA id EAFA3240066;
+ Fri, 19 Feb 2021 09:27:41 -0500 (EST)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openipmi-developer@lists.sourceforge.net, openbmc@lists.ozlabs.org,
  minyard@acm.org
-Subject: [PATCH 17/19] dt-bindings: ipmi: Add optional SerIRQ property to
- ASPEED KCS devices
-Date: Sat, 20 Feb 2021 00:55:21 +1030
-Message-Id: <20210219142523.3464540-18-andrew@aj.id.au>
+Subject: [PATCH 18/19] ipmi: kcs_bmc_aspeed: Implement KCS SerIRQ configuration
+Date: Sat, 20 Feb 2021 00:55:22 +1030
+Message-Id: <20210219142523.3464540-19-andrew@aj.id.au>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210219142523.3464540-1-andrew@aj.id.au>
 References: <20210219142523.3464540-1-andrew@aj.id.au>
@@ -107,52 +106,216 @@ Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Allocating IO and IRQ resources to LPC devices is in-theory an operation
-for the host, however ASPEED don't appear to expose this capability
-outside the BMC (e.g. SuperIO). Instead, we are left with BMC-internal
-registers for managing these resources, so introduce a devicetree
-property for KCS devices to describe SerIRQ properties.
+Apply the SerIRQ ID and level/sense behaviours from the devicetree if
+provided.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- .../bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml      | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/char/ipmi/kcs_bmc_aspeed.c | 126 +++++++++++++++++++++++++++++
+ 1 file changed, 126 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml b/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
-index 1c1cc4265948..808475a2c2ca 100644
---- a/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
-+++ b/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
-@@ -47,6 +47,18 @@ properties:
-       channels the status address is derived from the data address, but the
-       status address may be optionally provided.
+diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
+index 17afe9449e72..649d795a5a75 100644
+--- a/drivers/char/ipmi/kcs_bmc_aspeed.c
++++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
+@@ -9,6 +9,7 @@
+ #include <linux/errno.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
++#include <linux/irq.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -39,6 +40,20 @@
+ #define LPC_HICR4            0x010
+ #define     LPC_HICR4_LADR12AS       BIT(7)
+ #define     LPC_HICR4_KCSENBL        BIT(2)
++#define LPC_SIRQCR2	     0x078
++#define     LPC_SIRQCR2_SEL1IRQX     BIT(13)
++#define     LPC_SIRQCR2_IRQXE1       BIT(12)
++#define     LPC_SIRQCR2_ID1IRQX_MASK GENMASK(11, 8)
++#define     LPC_SIRQCR2_ID1IRQX_SHIFT 8
++#define LPC_HICR5	     0x080
++#define     LPC_HICR5_ID3IRQX_MASK   GENMASK(23, 20)
++#define     LPC_HICR5_ID3IRQX_SHIFT  20
++#define     LPC_HICR5_ID2IRQX_MASK   GENMASK(19, 16)
++#define     LPC_HICR5_ID2IRQX_SHIFT  16
++#define     LPC_HICR5_SEL3IRQX       BIT(15)
++#define     LPC_HICR5_IRQXE3         BIT(14)
++#define     LPC_HICR5_SEL2IRQX       BIT(13)
++#define     LPC_HICR5_IRQXE2         BIT(12)
+ #define LPC_LADR3H           0x014
+ #define LPC_LADR3L           0x018
+ #define LPC_LADR12H          0x01C
+@@ -55,6 +70,17 @@
+ #define LPC_HICRB            0x100
+ #define     LPC_HICRB_IBFIF4         BIT(1)
+ #define     LPC_HICRB_LPC4E          BIT(0)
++#define LPC_HICRC            0x104
++#define     LPC_HICRC_ID4IRQX_MASK   GENMASK(7, 4)
++#define     LPC_HICRC_ID4IRQX_SHIFT  4
++#define     LPC_HICRC_TY4IRQX_MASK   GENMASK(3, 2)
++#define     LPC_HICRC_TY4IRQX_SHIFT  2
++#define     LPC_HICRC_TY4IRQX_LOW    0b00
++#define     LPC_HICRC_TY4IRQX_HIGH   0b01
++#define     LPC_HICRC_TY4IRQX_RSVD   0b10
++#define     LPC_HICRC_TY4IRQX_RISING 0b11
++#define     LPC_HICRC_OBF4_AUTO_CLR  BIT(1)
++#define     LPC_HICRC_IRQXE4         BIT(0)
+ #define LPC_LADR4            0x110
+ #define LPC_IDR4             0x114
+ #define LPC_ODR4             0x118
+@@ -99,10 +125,37 @@ static u8 aspeed_kcs_inb(struct kcs_bmc_device *kcs_bmc, u32 reg)
+ static void aspeed_kcs_outb(struct kcs_bmc_device *kcs_bmc, u32 reg, u8 data)
+ {
+ 	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
++	unsigned int ier;
+ 	int rc;
  
-+  aspeed,lpc-interrupts:
-+    $ref: "/schemas/types.yaml#/definitions/uint32-matrix"
-+    minItems: 1
-+    maxItems: 1
-+    description: |
-+      A 2-cell property expressing the LPC SerIRQ number and the interrupt
-+      level/sense encoding (specified in the standard fashion).
+ 	rc = regmap_write(priv->map, reg, data);
+ 	WARN(rc != 0, "regmap_write() failed: %d\n", rc);
 +
-+      Note that the generated interrupt is issued from the BMC to the host, and
-+      thus the target interrupt controller is not captured by the BMC's
-+      devicetree.
-+
-   kcs_chan:
-     deprecated: true
-     $ref: '/schemas/types.yaml#/definitions/uint32'
-@@ -84,9 +96,11 @@ allOf:
++	/* Trigger the SerIRQ on ODR writes if enabled */
++	switch (kcs_bmc->channel) {
++	case 1:
++		regmap_read(priv->map, LPC_SIRQCR2, &ier);
++		if (reg == LPC_ODR1 && (ier & LPC_SIRQCR2_SEL1IRQX))
++			regmap_write(priv->map, LPC_SIRQCR2, ier | LPC_SIRQCR2_IRQXE1);
++		break;
++	case 2:
++		regmap_read(priv->map, LPC_HICR5, &ier);
++		if (reg == LPC_ODR2 && (ier & LPC_HICR5_SEL2IRQX))
++			regmap_write(priv->map, LPC_HICR5, ier | LPC_HICR5_IRQXE2);
++		break;
++	case 3:
++		regmap_read(priv->map, LPC_HICR5, &ier);
++		if (reg == LPC_ODR3 && (ier & LPC_HICR5_SEL3IRQX))
++			regmap_write(priv->map, LPC_HICR5, ier | LPC_HICR5_IRQXE3);
++		break;
++	case 4:
++		regmap_read(priv->map, LPC_HICRC, &ier);
++		if (reg == LPC_ODR4 && (ier & LPC_HICRC_ID4IRQX_MASK))
++			regmap_write(priv->map, LPC_HICRC, ier | LPC_HICRC_IRQXE4);
++		break;
++	default:
++		break;
++	}
+ }
  
- examples:
-   - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-     kcs3: kcs@24 {
-         compatible = "aspeed,ast2600-kcs-bmc";
-         reg = <0x24 0x1>, <0x30 0x1>, <0x3c 0x1>;
-         aspeed,lpc-io-reg = <0xca2>;
-+        aspeed,lpc-interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-         interrupts = <8>;
-     };
+ static void aspeed_kcs_updateb(struct kcs_bmc_device *kcs_bmc, u32 reg, u8 mask, u8 val)
+@@ -161,6 +214,66 @@ static void aspeed_kcs_set_address(struct kcs_bmc_device *kcs_bmc, u16 addr)
+ 	}
+ }
+ 
++static inline int aspeed_kcs_map_serirq_type(u32 dt_type)
++{
++	switch (dt_type) {
++	case IRQ_TYPE_EDGE_RISING:
++		return LPC_HICRC_TY4IRQX_RISING;
++	case IRQ_TYPE_LEVEL_HIGH:
++		return LPC_HICRC_TY4IRQX_HIGH;
++	case IRQ_TYPE_LEVEL_LOW:
++		return LPC_HICRC_TY4IRQX_LOW;
++	default:
++		return -EINVAL;
++	}
++}
++
++static int aspeed_kcs_config_serirq(struct aspeed_kcs_bmc *priv, u32 id, u32 dt_type)
++{
++	unsigned int mask, val;
++
++	if (id > 15)
++		return -EINVAL;
++
++	switch (priv->kcs_bmc.channel) {
++	case 1:
++		mask = LPC_SIRQCR2_SEL1IRQX | LPC_SIRQCR2_ID1IRQX_MASK;
++		val = LPC_SIRQCR2_SEL1IRQX | (id << LPC_SIRQCR2_ID1IRQX_SHIFT);
++		regmap_update_bits(priv->map, LPC_SIRQCR2, mask, val);
++		break;
++	case 2:
++		mask = LPC_HICR5_SEL2IRQX | LPC_HICR5_ID2IRQX_MASK;
++		val = LPC_HICR5_SEL2IRQX | (id << LPC_HICR5_ID2IRQX_SHIFT);
++		regmap_update_bits(priv->map, LPC_HICR5, mask, val);
++		break;
++	case 3:
++		mask = LPC_HICR5_SEL3IRQX | LPC_HICR5_ID3IRQX_MASK;
++		val = LPC_HICR5_SEL3IRQX | (id << LPC_HICR5_ID3IRQX_SHIFT);
++		regmap_update_bits(priv->map, LPC_HICR5, mask, val);
++		break;
++	case 4:
++	{
++		unsigned int hw_type;
++
++		hw_type = aspeed_kcs_map_serirq_type(dt_type);
++		if (hw_type < 0)
++			return hw_type;
++
++		mask = LPC_HICRC_ID4IRQX_MASK | LPC_HICRC_TY4IRQX_MASK | LPC_HICRC_OBF4_AUTO_CLR;
++		val = (id << LPC_HICRC_ID4IRQX_SHIFT) | (hw_type << LPC_HICRC_TY4IRQX_SHIFT);
++		regmap_update_bits(priv->map, LPC_HICRC, mask, val);
++		break;
++	}
++	default:
++		dev_warn(priv->kcs_bmc.dev,
++			 "SerIRQ configuration not supported on KCS channel %d\n",
++			 priv->kcs_bmc.channel);
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static void aspeed_kcs_enable_channel(struct kcs_bmc_device *kcs_bmc, bool enable)
+ {
+ 	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
+@@ -371,6 +484,8 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+ 	struct aspeed_kcs_bmc *priv;
+ 	struct device_node *np;
+ 	int rc, channel, addr;
++	bool have_serirq;
++	u32 serirq[2];
+ 
+ 	np = pdev->dev.of_node->parent;
+ 	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
+@@ -379,6 +494,7 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+ 		dev_err(&pdev->dev, "unsupported LPC device binding\n");
+ 		return -ENODEV;
+ 	}
++
+ 	ops = of_device_get_match_data(&pdev->dev);
+ 	if (!ops)
+ 		return -EINVAL;
+@@ -391,6 +507,12 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+ 	if (addr < 0)
+ 		return addr;
+ 
++	rc = of_property_read_u32_array(pdev->dev.of_node, "aspeed,lpc-interrupts", serirq, 2);
++	if ((rc && rc != -EINVAL))
++		return -EINVAL;
++
++	have_serirq = !rc;
++
+ 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+@@ -413,6 +535,9 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+ 
+ 	aspeed_kcs_set_address(kcs_bmc, addr);
+ 
++	if (have_serirq)
++		aspeed_kcs_config_serirq(priv, serirq[0], serirq[1]);
++
+ 	rc = aspeed_kcs_config_irq(kcs_bmc, pdev);
+ 	if (rc)
+ 		return rc;
+@@ -482,4 +607,5 @@ module_platform_driver(ast_kcs_bmc_driver);
+ 
+ MODULE_LICENSE("GPL v2");
+ MODULE_AUTHOR("Haiyue Wang <haiyue.wang@linux.intel.com>");
++MODULE_AUTHOR("Andrew Jeffery <andrew@aj.id.au>");
+ MODULE_DESCRIPTION("Aspeed device interface to the KCS BMC device");
 -- 
 2.27.0
 
