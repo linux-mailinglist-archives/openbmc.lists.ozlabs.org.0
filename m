@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A26031FAEC
-	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 15:35:00 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0799B31FAEF
+	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 15:35:26 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DhvHQ2D3mz3cb9
-	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 01:34:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DhvHv6Cm8z3d3v
+	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 01:35:23 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=ZmxHCyKA;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=wOjiBr6C;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=LuAdh3bT;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VCr6wQiG;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,68 +19,69 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=ZmxHCyKA; 
+ header.s=fm2 header.b=LuAdh3bT; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=wOjiBr6C; 
+ header.a=rsa-sha256 header.s=fm2 header.b=VCr6wQiG; 
  dkim-atps=neutral
 Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com
  [66.111.4.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dhv6w26x9z3cMW;
- Sat, 20 Feb 2021 01:27:36 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dhv731lyFz3cQ4;
+ Sat, 20 Feb 2021 01:27:43 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 6311E5803C1;
- Fri, 19 Feb 2021 09:27:34 -0500 (EST)
+ by mailnew.nyi.internal (Postfix) with ESMTP id 581FB5803C3;
+ Fri, 19 Feb 2021 09:27:41 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Fri, 19 Feb 2021 09:27:34 -0500
+ by compute3.internal (MEProxy); Fri, 19 Feb 2021 09:27:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm2; bh=VWc2JEncu0Xjp
- jSk1gHgmKo9FZz2GeTal7pM7FnaRmE=; b=ZmxHCyKA+DmQpbU9OsyjEMSRvfGLn
- i8ZGPSuEpTbDvpiAIPZAK+C3WnpOC9KbQODumo6lQzQje3zJjldGhYEuZTGSH8nH
- XWLwnJuWINuEueYK1zPNirrRau5eBy45Xg7/Cb4Gi97TTFYHUFHAoXDOeAIbVxho
- NZ07FCuL4La4Y+SsZgYUyeYsCBFtOevO+3Bk/vO3SmZjNdqBIEA2ea21kCEG1NKf
- LKcgH7zSwqv8C3s7TVBRYX23ExuHPoqgi9bv8SdXMCIE6dSxo+1gGRprmvcQeXnh
- XaKemHE+c85eucvF6UEX4WTxf2uswGOgKiDkU5CsdHliFr+JACoJ4fUAQ==
+ :mime-version:content-transfer-encoding; s=fm2; bh=VNXUckXhWf104
+ SCgHGqEwb2slaaFyK0SHtZQq67z01A=; b=LuAdh3bT24Cvz7Rbc4zR45ImmSGbg
+ 0Yz58kKjoaHl2THSVhpgfLhcVDP4szp1uO2/Kmk8kQb7683v6VaqoRpGw06ItnVc
+ 6bHe7X5azvxR2+Kas625hwwoM+XAZPJvOZG8eN4zH8UoDwmYJxMhlIM3p/AowYSd
+ ZUUZnCQUHDlTPO2d893A3eP1ul4yqTcvYvFlPOMt1UCt5GIxhnGF0OW35NPyF4EL
+ +ponm44NZfc/nXhcRZwVIcoTSl0vYzzpnEZqlmtwylQW18pJqSO/ji7qDre5oyHK
+ 7qU87c114lBEA+FujeS1MVhAjLtZs9RxbTZPO7+Wni8goexS4uTTonBIA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=VWc2JEncu0XjpjSk1gHgmKo9FZz2GeTal7pM7FnaRmE=; b=wOjiBr6C
- 3FKA2E08WwIXAneLYATEvnwQQ6rq0Liz6uWDKoLWVaTpmMlxu3nNsFiK8yLhz1lz
- LqeaOJMruYL2+6pNvsUxxEKZqb58PyWNWRkwjvU8JhaOUTwVq4CbdBpxFzqRfrw8
- WY4BaKwNH6ecyaRr69RY+s3E1lm+eu6ViUjdXCCCrfq84HI3x1XXqqSlRSTDYvUa
- CKTpQYzQy7bg90HnQa94q2IgXTk3WPyPK51dXG+MYmcZv5gSU0/UXuDGJ2pDllGQ
- j3ZfRRuiD38IwUokjxfEyoMbduNbzg5xKEhhD3guQ2WfXlFJgmN1IXFW2hBoIO1I
- FVnWzVC/GvtZpw==
-X-ME-Sender: <xms:1sovYJnPPN9wsanteCFAX4NtDIkV-GOiFxBh2C1FwRHwEr_VnXAHiA>
- <xme:1sovYE32aQbolyg6BCf-q6IQqsNsUQqNqvlMm42uXfq4gvb86oCrC6CfjkMYw0omc
- JuQR8DCV2BVTHKrMw>
+ fm2; bh=VNXUckXhWf104SCgHGqEwb2slaaFyK0SHtZQq67z01A=; b=VCr6wQiG
+ IctyXO7SLN9mFvT6o++LRDoYmgrWh6CDC045msp3FkToGtudYMYfY7PTs1mQMT+E
+ 4fJ9i8WoDNrWcD903JvBxycvAt9TqQMyu2ijas5gKcYjkioMVX9/guUyDMfaLTYj
+ qqRcuGKZv4fAlNyv5czCGzPnRFpJv92pVo9I+wj4BTrUSWtpitMayFLfkKF/1miL
+ YNQPMxZIA5te7C9Pt6/eiG6zZkJ8p6vPM9Chtv17/lF9OnBvJDLyGhIfqHJ1svxF
+ iLTWuvdLwi7GzkJAXThVBbwAUcRYkIdGqeLAzRPYH5SyoH5scKydiEDyPFv77MP2
+ 8ZQigCW0YSTSKA==
+X-ME-Sender: <xms:3covYGMvKRsIfOvVfmeijimdV3GtAHANZiw2JVn0lM956G6l--B-iA>
+ <xme:3covYE87VmJ3utNkw0IOb4n3uM7PM4ZVOxTdOg5cMf9JodhDTBx9kmHh0L0ZB1xki
+ kaLi96vair6A3-y6g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrjeeigdeigecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
  ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
- rdhiugdrrghuqeenucggtffrrghtthgvrhhnpeeluedvvedtgffggefggfeugeevgffhje
- efiedtvdehvdfhtefftefffeeihfevvdenucffohhmrghinhepuggvvhhitggvthhrvggv
- rdhorhhgnecukfhppedugedrvddrledurdefjeenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:1sovYPpkw7rkIX7tN6pVChDLuOVvY7M6zKCfnzGWEDJpN9xKLmN0rw>
- <xmx:1sovYJkGRjm2eUeJhkODiKsQHs1Xr-x76m0NTjoDDwRmoljdnoymEQ>
- <xmx:1sovYH0JDkzcUMxTtE9r_1RbbNkofwtn3xR_HVAKNxEXKUlOJxJANA>
- <xmx:1sovYIEof0nrw5RmzAnkiGUawSoPqqi8Cqzuz6xnyAYlfNii6ma8IQ>
+ rdhiugdrrghuqeenucggtffrrghtthgvrhhnpeejgfdvveehteekveeggeellefgleette
+ ejffelffdvudduveeiffegteelvefhteenucfkphepudegrddvrdeluddrfeejnecuvehl
+ uhhsthgvrhfuihiivgepleenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
+ grjhdrihgurdgruh
+X-ME-Proxy: <xmx:3covYNSSNH6BgmqXNgqPF0O0ENakk2A5vV22P5MP8z0qwzJLZvRhFw>
+ <xmx:3covYGtooHBVwAgY6YdDapYLHsb8y-EeIyQhvgQY8vy5IShQ1J-_Zg>
+ <xmx:3covYOdbBFvWMvNj9W7N7ILEZ9ydQK7RBVoCciNWGCZ3G5ALJqSS3g>
+ <xmx:3covYBtyTHAKfBFJrw4hgNXud8JAP7AQOO2tuPsJfrqpClLBFiZlSA>
 Received: from localhost.localdomain
  (ppp14-2-91-37.adl-apt-pir-bras31.tpg.internode.on.net [14.2.91.37])
- by mail.messagingengine.com (Postfix) with ESMTPA id F4057240057;
- Fri, 19 Feb 2021 09:27:27 -0500 (EST)
+ by mail.messagingengine.com (Postfix) with ESMTPA id DAE33240064;
+ Fri, 19 Feb 2021 09:27:34 -0500 (EST)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openipmi-developer@lists.sourceforge.net, openbmc@lists.ozlabs.org,
  minyard@acm.org
-Subject: [PATCH 16/19] dt-bindings: ipmi: Convert ASPEED KCS binding to schema
-Date: Sat, 20 Feb 2021 00:55:20 +1030
-Message-Id: <20210219142523.3464540-17-andrew@aj.id.au>
+Subject: [PATCH 17/19] dt-bindings: ipmi: Add optional SerIRQ property to
+ ASPEED KCS devices
+Date: Sat, 20 Feb 2021 00:55:21 +1030
+Message-Id: <20210219142523.3464540-18-andrew@aj.id.au>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210219142523.3464540-1-andrew@aj.id.au>
 References: <20210219142523.3464540-1-andrew@aj.id.au>
@@ -106,156 +107,52 @@ Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Given the deprecated binding, improve the ability to detect issues in
-the platform devicetrees. Further, a subsequent patch will introduce a
-new interrupts property for specifying SerIRQ behaviour, so convert
-before we do any further additions.
+Allocating IO and IRQ resources to LPC devices is in-theory an operation
+for the host, however ASPEED don't appear to expose this capability
+outside the BMC (e.g. SuperIO). Instead, we are left with BMC-internal
+registers for managing these resources, so introduce a devicetree
+property for KCS devices to describe SerIRQ properties.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- .../bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml | 92 +++++++++++++++++++
- .../bindings/ipmi/aspeed-kcs-bmc.txt          | 33 -------
- 2 files changed, 92 insertions(+), 33 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
- delete mode 100644 Documentation/devicetree/bindings/ipmi/aspeed-kcs-bmc.txt
+ .../bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml      | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml b/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
-new file mode 100644
-index 000000000000..1c1cc4265948
---- /dev/null
+index 1c1cc4265948..808475a2c2ca 100644
+--- a/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
 +++ b/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
-@@ -0,0 +1,92 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/ipmi/aspeed,ast2400-kcs-bmc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: ASPEED BMC KCS Devices
-+
-+maintainers:
-+  - Andrew Jeffery <andrew@aj.id.au>
-+
-+description: |
-+  The Aspeed BMC SoCs typically use the Keyboard-Controller-Style (KCS)
-+  interfaces on the LPC bus for in-band IPMI communication with their host.
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - description: Channel ID derived from reg
-+        items:
-+          enum:
-+            - aspeed,ast2400-kcs-bmc-v2
-+            - aspeed,ast2500-kcs-bmc-v2
-+            - aspeed,ast2600-kcs-bmc
-+
-+      - description: Old-style with explicit channel ID, no reg
-+        deprecated: true
-+        items:
-+          enum:
-+            - aspeed,ast2400-kcs-bmc
-+            - aspeed,ast2500-kcs-bmc
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  reg:
-+    minItems: 3
-+    maxItems: 3
-+    description: IDR, ODR and STR register addresses
-+
-+  aspeed,lpc-io-reg:
-+    $ref: '/schemas/types.yaml#/definitions/uint32'
+@@ -47,6 +47,18 @@ properties:
+       channels the status address is derived from the data address, but the
+       status address may be optionally provided.
+ 
++  aspeed,lpc-interrupts:
++    $ref: "/schemas/types.yaml#/definitions/uint32-matrix"
 +    minItems: 1
-+    maxItems: 2
++    maxItems: 1
 +    description: |
-+      The host CPU LPC IO data and status addresses for the device. For most
-+      channels the status address is derived from the data address, but the
-+      status address may be optionally provided.
++      A 2-cell property expressing the LPC SerIRQ number and the interrupt
++      level/sense encoding (specified in the standard fashion).
 +
-+  kcs_chan:
-+    deprecated: true
-+    $ref: '/schemas/types.yaml#/definitions/uint32'
-+    maxItems: 1
-+    description: The LPC channel number in the controller
++      Note that the generated interrupt is issued from the BMC to the host, and
++      thus the target interrupt controller is not captured by the BMC's
++      devicetree.
 +
-+  kcs_addr:
-+    deprecated: true
-+    $ref: '/schemas/types.yaml#/definitions/uint32'
-+    maxItems: 1
-+    description: The host CPU IO map address
-+
-+required:
-+  - compatible
-+  - interrupts
-+
-+additionalProperties: false
-+
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - aspeed,ast2400-kcs-bmc
-+              - aspeed,ast2500-kcs-bmc
-+    then:
-+      required:
-+        - kcs_chan
-+        - kcs_addr
-+    else:
-+      required:
-+        - reg
-+        - aspeed,lpc-io-reg
-+
-+examples:
-+  - |
-+    kcs3: kcs@24 {
-+        compatible = "aspeed,ast2600-kcs-bmc";
-+        reg = <0x24 0x1>, <0x30 0x1>, <0x3c 0x1>;
-+        aspeed,lpc-io-reg = <0xca2>;
-+        interrupts = <8>;
-+    };
-diff --git a/Documentation/devicetree/bindings/ipmi/aspeed-kcs-bmc.txt b/Documentation/devicetree/bindings/ipmi/aspeed-kcs-bmc.txt
-deleted file mode 100644
-index 193e71ca96b0..000000000000
---- a/Documentation/devicetree/bindings/ipmi/aspeed-kcs-bmc.txt
-+++ /dev/null
-@@ -1,33 +0,0 @@
--# Aspeed KCS (Keyboard Controller Style) IPMI interface
--
--The Aspeed SOCs (AST2400 and AST2500) are commonly used as BMCs
--(Baseboard Management Controllers) and the KCS interface can be
--used to perform in-band IPMI communication with their host.
--
--## v1
--Required properties:
--- compatible : should be one of
--    "aspeed,ast2400-kcs-bmc"
--    "aspeed,ast2500-kcs-bmc"
--- interrupts : interrupt generated by the controller
--- kcs_chan : The LPC channel number in the controller
--- kcs_addr : The host CPU IO map address
--
--## v2
--Required properties:
--- compatible : should be one of
--    "aspeed,ast2400-kcs-bmc-v2"
--    "aspeed,ast2500-kcs-bmc-v2"
--- reg : The address and size of the IDR, ODR and STR registers
--- interrupts : interrupt generated by the controller
--- aspeed,lpc-io-reg : The host CPU LPC IO address for the device
--
--Example:
--
--    kcs3: kcs@24 {
--        compatible = "aspeed,ast2500-kcs-bmc-v2";
--        reg = <0x24 0x1>, <0x30 0x1>, <0x3c 0x1>;
--        aspeed,lpc-reg = <0xca2>;
--        interrupts = <8>;
--        status = "okay";
--    };
+   kcs_chan:
+     deprecated: true
+     $ref: '/schemas/types.yaml#/definitions/uint32'
+@@ -84,9 +96,11 @@ allOf:
+ 
+ examples:
+   - |
++    #include <dt-bindings/interrupt-controller/irq.h>
+     kcs3: kcs@24 {
+         compatible = "aspeed,ast2600-kcs-bmc";
+         reg = <0x24 0x1>, <0x30 0x1>, <0x3c 0x1>;
+         aspeed,lpc-io-reg = <0xca2>;
++        aspeed,lpc-interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
+         interrupts = <8>;
+     };
 -- 
 2.27.0
 
