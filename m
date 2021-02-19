@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C345231FAAF
-	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 15:28:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CCF431FAB7
+	for <lists+openbmc@lfdr.de>; Fri, 19 Feb 2021 15:29:18 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dhv8N49Y9z3cXQ
-	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 01:28:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dhv8r1sJtz3cQ7
+	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 01:29:16 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=KlsYLZ8e;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=AUyrovFL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=GBIevE0q;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=aFR4zNHk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,68 +19,69 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=KlsYLZ8e; 
+ header.s=fm2 header.b=GBIevE0q; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=AUyrovFL; 
+ header.a=rsa-sha256 header.s=fm2 header.b=aFR4zNHk; 
  dkim-atps=neutral
 Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com
  [66.111.4.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dhv5S2CSHz3bVX;
- Sat, 20 Feb 2021 01:26:20 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.nyi.internal (Postfix) with ESMTP id BF0DF58036E;
- Fri, 19 Feb 2021 09:26:17 -0500 (EST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dhv5Z538kz3cG5;
+ Sat, 20 Feb 2021 01:26:26 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailnew.nyi.internal (Postfix) with ESMTP id C994058037F;
+ Fri, 19 Feb 2021 09:26:24 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Fri, 19 Feb 2021 09:26:17 -0500
+ by compute3.internal (MEProxy); Fri, 19 Feb 2021 09:26:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm2; bh=jNbBcvWLt+Jil
- WCwRd5v7udB5/AUekeRtyC2gytq2FQ=; b=KlsYLZ8ehpfqswl6zhzIoRvnIgcd+
- k+10oSI816Qc8gCxdZh1kI4nIKnuMhvqiEEm6nYKEnT14g6bxIto99YYgZ/LFbg5
- IuvSDPGgXPJPHCpoX4h4c1nbvEBZyKjdlpGspdM74JuPjbjqk74xatQOd5dw0cs8
- hVkI/T+9fK7BZc1G5sdUIoAgyWc1sef9+0lI24K+GOTAq6G1XbrTWdQv3pMKScaa
- 2vF1hsJUs4f1hcoU3sTArFVCN9Ca4p2+WeBxBSAYbrlNBk/rccjRVHGgcMCJqX7J
- It1+i5p556ghKTlSfgFq48zqZniQ64Xt1l6qb3aQ82uVNniVO5Oq/jNAw==
+ :mime-version:content-transfer-encoding; s=fm2; bh=Wz3rX2JLSP5Um
+ Nsodg+6xxFvrCs/exUmWb2IW/KKfH8=; b=GBIevE0qUmg7yG7Po5bnyawiRA5Jx
+ sgf7eey621kylHh7nI/lxxBW5ONVU5O60nauiBuTBq7/TKkoEEqc3KfZFZ1xegJo
+ 552tI19Wx/i6hIf/scSgBom8/xW0hVR54F5v9Bpg9dGIEmLpG3kLM3ntxxiCx0xs
+ lb5MrEb7ZVTvMxZIi4BS9vtwPixW1hORusVzjfVHDfh8YTZJtuawDZGgv0pHYBQT
+ Vd0irPLME4z615Sudgkuio47nlSn3dO6iQgZrbJVrQkKCe9Ojnb9OiuDpBaBYHL0
+ AlyvH+YHwoNsS3gzofnI49ov9E7BuFbSJ1Z/4nHhXkjMgnINV96HTyzqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=jNbBcvWLt+JilWCwRd5v7udB5/AUekeRtyC2gytq2FQ=; b=AUyrovFL
- E7wE3KfsZ2+NxCCXkL8v2TwTd3GdQT58jkRS7OaXSGYuopDrc5LCrB0JbwVFSY9z
- DYvfb8tbR6IWPsf/KkLTs+DO9w/wmmdSDgDpDDQ+QaOBSf6hQp+EotEZdiSGDLU9
- LNfOg0wcPHjsRjbCjDFKm9YVAQs9ZesrvAmzXubkzEpDbFnjYZSGGbJElQJCDRYi
- JcTIpMByhgkzkPqXXlPFR6XWw5tjT7ARIPXR9aCzxOrQrG3alqX8D4PokdgQ2niU
- npcEmWBNwLvBzZu7LE+26B/TIzQjLNgepLYCbB1WzxwG6txqnDWYQcG+EDk9eaJ3
- OBkkDPf8IpMKtw==
-X-ME-Sender: <xms:icovYD9I1TG4Ti2Eo6Y9ZH1xjGsvR1nPXz73JLmW2AJxqdgmN1rAoQ>
- <xme:icovYFv8X-uokxIW9tweuNKp-aiCySZgzPLO8qcfjVTzqydjTCb-QAeF3TJmN6ka7
- iS5GSCeVIf9-M3TeA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrjeeigdeifecutefuodetggdotefrodftvf
+ fm2; bh=Wz3rX2JLSP5UmNsodg+6xxFvrCs/exUmWb2IW/KKfH8=; b=aFR4zNHk
+ rbxP2mzGl6iG0BJns4R2dF0UB60/1T1dvDefSxl1fPaWDZVr/DuwiBd9Fwv47QpK
+ Tdmx1i6MajStQGgbldReYnilVzxCqllWiKVeh0nxxrjVTAKwG5SQY01yisiK8Lju
+ Wviai5E/L+3r8yrQmlgk/JPBykTCxcSMCb7dzMMapX4ZtUyj+uhdZjixNKo+sfny
+ KUdMVsphxNdGATjZ0avppy5/EjTlnTjVxG50N+XPp8mRPmYMyYZknAdy1AhOY9at
+ /c01Ra6gsSSlDjXhcIMMhnMJGjqwEF3fWyLZgns5jPiDKwJFCa8vX52N01m+uFWw
+ NNK97DChvrtvug==
+X-ME-Sender: <xms:kMovYDWpJZS0G4Qg3Tbq2s0jnEvg4jlp54O03BdoNCkPaV0v-c0pfg>
+ <xme:kMovYLnF4CSvZ-dFxQX8LPnhpcaUghEI4QLweoKi2jiGt6S5f5cI_cbi1rpPOD4cg
+ 3PDm8mg_I8DZ6R2GQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrjeeigdeigecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefhvffufffkofgjfhgggfestdekredtredttdenucfhrhhomheptehnughrvgif
- ucflvghffhgvrhihuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrfgrthhtvg
- hrnhepjefgvdevheetkeevgeegleelgfelteetjeffleffvdduudevieffgeetleevhfet
- necukfhppedugedrvddrledurdefjeenucevlhhushhtvghrufhiiigvpedunecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:icovYOoqxTaDd78x_HViVss_lXQz4iKqrFVSAiwGTHrllwrIkiBNsQ>
- <xmx:icovYKnKExqKumvRjfmIzF37_30hDwunUAVA6jijbUgkZ4EDonaEOw>
- <xmx:icovYKydEy5i3Oewt9juYhP5nzQBzUhcplVBtRwoy4pERWlPBWl6Hw>
- <xmx:icovYBrnWSJfsULUCr1wm43SujNH0v7rJuH71FxmShiR7Xq-TCnztg>
+ uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
+ ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
+ rdhiugdrrghuqeenucggtffrrghtthgvrhhnpeejgfdvveehteekveeggeellefgleette
+ ejffelffdvudduveeiffegteelvefhteenucfkphepudegrddvrdeluddrfeejnecuvehl
+ uhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
+ grjhdrihgurdgruh
+X-ME-Proxy: <xmx:kMovYPa9RFEqMzNuzXqzbESfmAlT2-Zo5jj1dTsCW8JmxLUEInBTKA>
+ <xmx:kMovYOVRmxRXQmiSYeT9FZmT2-_bWDnVV8bsErGw-KYDT3YrPoxZQw>
+ <xmx:kMovYNlgFaNfLgP6TkgCK7p4nFV839VP56cc0X3LEAK09TlZ_GAz6w>
+ <xmx:kMovYP07RGA1J_6zLBYkSLv2wwZJLE7-wdZMmZ8DH41i-CGNJC2dLA>
 Received: from localhost.localdomain
  (ppp14-2-91-37.adl-apt-pir-bras31.tpg.internode.on.net [14.2.91.37])
- by mail.messagingengine.com (Postfix) with ESMTPA id 5180F24005A;
- Fri, 19 Feb 2021 09:26:11 -0500 (EST)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 3AC8A24005A;
+ Fri, 19 Feb 2021 09:26:17 -0500 (EST)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openipmi-developer@lists.sourceforge.net, openbmc@lists.ozlabs.org,
  minyard@acm.org
-Subject: [PATCH 05/19] soc: aspeed: Adapt to new LPC device tree layout
-Date: Sat, 20 Feb 2021 00:55:09 +1030
-Message-Id: <20210219142523.3464540-6-andrew@aj.id.au>
+Subject: [PATCH 06/19] ipmi: kcs_bmc_aspeed: Use of match data to extract KCS
+ properties
+Date: Sat, 20 Feb 2021 00:55:10 +1030
+Message-Id: <20210219142523.3464540-7-andrew@aj.id.au>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210219142523.3464540-1-andrew@aj.id.au>
 References: <20210219142523.3464540-1-andrew@aj.id.au>
@@ -99,140 +100,263 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com,
  linux-aspeed@lists.ozlabs.org, linux-gpio@vger.kernel.org,
- avifishman70@gmail.com, venture@google.com, "Chia-Wei,
- Wang" <chiawei_wang@aspeedtech.com>, linux-kernel@vger.kernel.org,
- tali.perry1@gmail.com, robh+dt@kernel.org, lee.jones@linaro.org,
- linus.walleij@linaro.org, linux-arm-kernel@lists.infradead.org,
- benjaminfair@google.com
+ avifishman70@gmail.com, venture@google.com, linus.walleij@linaro.org,
+ linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org,
+ lee.jones@linaro.org, chiawei_wang@aspeedtech.com,
+ linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>
+Unpack and remove the aspeed_kcs_probe_of_v[12]() functions to aid
+rearranging how the private device-driver memory is allocated.
 
-Add check against LPC device v2 compatible string to
-ensure that the fixed device tree layout is adopted.
-The LPC register offsets are also fixed accordingly.
-
-Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-Tested-by: Andrew Jeffery <andrew@aj.id.au>
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/soc/aspeed/aspeed-lpc-ctrl.c  | 20 ++++++++++++++------
- drivers/soc/aspeed/aspeed-lpc-snoop.c | 23 +++++++++++++++--------
- 2 files changed, 29 insertions(+), 14 deletions(-)
+ drivers/char/ipmi/kcs_bmc_aspeed.c | 146 ++++++++++++++---------------
+ 1 file changed, 68 insertions(+), 78 deletions(-)
 
-diff --git a/drivers/soc/aspeed/aspeed-lpc-ctrl.c b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
-index 439bcd6b8c4a..c557ffd0992c 100644
---- a/drivers/soc/aspeed/aspeed-lpc-ctrl.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
-@@ -18,15 +18,15 @@
+diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
+index eefe362f65f0..061f53676206 100644
+--- a/drivers/char/ipmi/kcs_bmc_aspeed.c
++++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
+@@ -13,6 +13,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_address.h>
++#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/poll.h>
+ #include <linux/regmap.h>
+@@ -63,6 +64,10 @@ struct aspeed_kcs_bmc {
+ 	struct regmap *map;
+ };
  
- #define DEVICE_NAME	"aspeed-lpc-ctrl"
++struct aspeed_kcs_of_ops {
++	int (*get_channel)(struct platform_device *pdev);
++	int (*get_io_address)(struct platform_device *pdev);
++};
  
--#define HICR5 0x0
-+#define HICR5 0x80
- #define HICR5_ENL2H	BIT(8)
- #define HICR5_ENFWH	BIT(10)
+ static u8 aspeed_kcs_inb(struct kcs_bmc *kcs_bmc, u32 reg)
+ {
+@@ -231,13 +236,10 @@ static const struct kcs_ioreg ast_kcs_bmc_ioregs[KCS_CHANNEL_MAX] = {
+ 	{ .idr = LPC_IDR4, .odr = LPC_ODR4, .str = LPC_STR4 },
+ };
  
--#define HICR6 0x4
-+#define HICR6 0x84
- #define SW_FWH2AHB	BIT(17)
- 
--#define HICR7 0x8
--#define HICR8 0xc
-+#define HICR7 0x88
-+#define HICR8 0x8c
- 
- struct aspeed_lpc_ctrl {
- 	struct miscdevice	miscdev;
-@@ -215,6 +215,7 @@ static int aspeed_lpc_ctrl_probe(struct platform_device *pdev)
- 	struct device_node *node;
- 	struct resource resm;
- 	struct device *dev;
-+	struct device_node *np;
+-static struct kcs_bmc *aspeed_kcs_probe_of_v1(struct platform_device *pdev)
++static int aspeed_kcs_of_v1_get_channel(struct platform_device *pdev)
+ {
+-	struct aspeed_kcs_bmc *priv;
+ 	struct device_node *np;
+-	struct kcs_bmc *kcs;
+ 	u32 channel;
+-	u32 slave;
  	int rc;
  
- 	dev = &pdev->dev;
-@@ -270,8 +271,15 @@ static int aspeed_lpc_ctrl_probe(struct platform_device *pdev)
- 		}
+ 	np = pdev->dev.of_node;
+@@ -245,105 +247,78 @@ static struct kcs_bmc *aspeed_kcs_probe_of_v1(struct platform_device *pdev)
+ 	rc = of_property_read_u32(np, "kcs_chan", &channel);
+ 	if ((rc != 0) || (channel == 0 || channel > KCS_CHANNEL_MAX)) {
+ 		dev_err(&pdev->dev, "no valid 'kcs_chan' configured\n");
+-		return ERR_PTR(-EINVAL);
++		return -EINVAL;
  	}
  
--	lpc_ctrl->regmap = syscon_node_to_regmap(
--			pdev->dev.parent->of_node);
-+	np = pdev->dev.parent->of_node;
-+	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
-+	    !of_device_is_compatible(np, "aspeed,ast2500-lpc-v2") &&
-+	    !of_device_is_compatible(np, "aspeed,ast2600-lpc-v2")) {
-+		dev_err(dev, "unsupported LPC device binding\n");
-+		return -ENODEV;
-+	}
-+
-+	lpc_ctrl->regmap = syscon_node_to_regmap(np);
- 	if (IS_ERR(lpc_ctrl->regmap)) {
- 		dev_err(dev, "Couldn't get regmap\n");
- 		return -ENODEV;
-diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-index 682ba0eb4eba..ab0f0a54fea6 100644
---- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-@@ -28,26 +28,25 @@
- #define NUM_SNOOP_CHANNELS 2
- #define SNOOP_FIFO_SIZE 2048
+-	kcs = kcs_bmc_alloc(&pdev->dev, sizeof(struct aspeed_kcs_bmc), channel);
+-	if (!kcs)
+-		return ERR_PTR(-ENOMEM);
++	return channel;
++}
  
--#define HICR5	0x0
-+#define HICR5	0x80
- #define HICR5_EN_SNP0W		BIT(0)
- #define HICR5_ENINT_SNP0W	BIT(1)
- #define HICR5_EN_SNP1W		BIT(2)
- #define HICR5_ENINT_SNP1W	BIT(3)
+-	priv = kcs_bmc_priv(kcs);
+-	priv->map = syscon_node_to_regmap(pdev->dev.parent->of_node);
+-	if (IS_ERR(priv->map)) {
+-		dev_err(&pdev->dev, "Couldn't get regmap\n");
+-		return ERR_PTR(-ENODEV);
+-	}
++static int aspeed_kcs_of_v1_get_io_address(struct platform_device *pdev)
++{
++	u32 slave;
++	int rc;
+ 
+-	rc = of_property_read_u32(np, "kcs_addr", &slave);
+-	if (rc) {
++	rc = of_property_read_u32(pdev->dev.of_node, "kcs_addr", &slave);
++	if (rc || slave > 0xffff) {
+ 		dev_err(&pdev->dev, "no valid 'kcs_addr' configured\n");
+-		return ERR_PTR(-EINVAL);
++		return -EINVAL;
+ 	}
+ 
+-	kcs->ioreg = ast_kcs_bmc_ioregs[channel - 1];
+-	aspeed_kcs_set_address(kcs, slave);
 -
--#define HICR6	0x4
-+#define HICR6	0x84
- #define HICR6_STR_SNP0W		BIT(0)
- #define HICR6_STR_SNP1W		BIT(1)
--#define SNPWADR	0x10
-+#define SNPWADR	0x90
- #define SNPWADR_CH0_MASK	GENMASK(15, 0)
- #define SNPWADR_CH0_SHIFT	0
- #define SNPWADR_CH1_MASK	GENMASK(31, 16)
- #define SNPWADR_CH1_SHIFT	16
--#define SNPWDR	0x14
-+#define SNPWDR	0x94
- #define SNPWDR_CH0_MASK		GENMASK(7, 0)
- #define SNPWDR_CH0_SHIFT	0
- #define SNPWDR_CH1_MASK		GENMASK(15, 8)
- #define SNPWDR_CH1_SHIFT	8
--#define HICRB	0x80
-+#define HICRB	0x100
- #define HICRB_ENSNP0D		BIT(14)
- #define HICRB_ENSNP1D		BIT(15)
+-	return kcs;
+-}
+-
+-static int aspeed_kcs_calculate_channel(const struct kcs_ioreg *regs)
+-{
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(ast_kcs_bmc_ioregs); i++) {
+-		if (!memcmp(&ast_kcs_bmc_ioregs[i], regs, sizeof(*regs)))
+-			return i + 1;
+-	}
+-
+-	return -EINVAL;
++	return slave;
+ }
  
-@@ -258,6 +257,7 @@ static int aspeed_lpc_snoop_probe(struct platform_device *pdev)
+-static struct kcs_bmc *aspeed_kcs_probe_of_v2(struct platform_device *pdev)
++static int aspeed_kcs_of_v2_get_channel(struct platform_device *pdev)
  {
- 	struct aspeed_lpc_snoop *lpc_snoop;
- 	struct device *dev;
-+	struct device_node *np;
- 	u32 port;
- 	int rc;
+-	struct aspeed_kcs_bmc *priv;
+ 	struct device_node *np;
+ 	struct kcs_ioreg ioreg;
+-	struct kcs_bmc *kcs;
+ 	const __be32 *reg;
+-	int channel;
+-	u32 slave;
+-	int rc;
++	int i;
  
-@@ -267,8 +267,15 @@ static int aspeed_lpc_snoop_probe(struct platform_device *pdev)
- 	if (!lpc_snoop)
- 		return -ENOMEM;
+ 	np = pdev->dev.of_node;
  
--	lpc_snoop->regmap = syscon_node_to_regmap(
--			pdev->dev.parent->of_node);
-+	np = pdev->dev.parent->of_node;
-+	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
-+	    !of_device_is_compatible(np, "aspeed,ast2500-lpc-v2") &&
-+	    !of_device_is_compatible(np, "aspeed,ast2600-lpc-v2")) {
-+		dev_err(dev, "unsupported LPC device binding\n");
-+		return -ENODEV;
-+	}
+ 	/* Don't translate addresses, we want offsets for the regmaps */
+ 	reg = of_get_address(np, 0, NULL, NULL);
+ 	if (!reg)
+-		return ERR_PTR(-EINVAL);
++		return -EINVAL;
+ 	ioreg.idr = be32_to_cpup(reg);
+ 
+ 	reg = of_get_address(np, 1, NULL, NULL);
+ 	if (!reg)
+-		return ERR_PTR(-EINVAL);
++		return -EINVAL;
+ 	ioreg.odr = be32_to_cpup(reg);
+ 
+ 	reg = of_get_address(np, 2, NULL, NULL);
+ 	if (!reg)
+-		return ERR_PTR(-EINVAL);
++		return -EINVAL;
+ 	ioreg.str = be32_to_cpup(reg);
+ 
+-	channel = aspeed_kcs_calculate_channel(&ioreg);
+-	if (channel < 0)
+-		return ERR_PTR(channel);
+-
+-	kcs = kcs_bmc_alloc(&pdev->dev, sizeof(struct aspeed_kcs_bmc), channel);
+-	if (!kcs)
+-		return ERR_PTR(-ENOMEM);
+-
+-	kcs->ioreg = ioreg;
+-
+-	priv = kcs_bmc_priv(kcs);
+-	priv->map = syscon_node_to_regmap(pdev->dev.parent->of_node);
+-	if (IS_ERR(priv->map)) {
+-		dev_err(&pdev->dev, "Couldn't get regmap\n");
+-		return ERR_PTR(-ENODEV);
++	for (i = 0; i < ARRAY_SIZE(ast_kcs_bmc_ioregs); i++) {
++		if (!memcmp(&ast_kcs_bmc_ioregs[i], &ioreg, sizeof(ioreg)))
++			return i + 1;
+ 	}
+ 
+-	rc = of_property_read_u32(np, "aspeed,lpc-io-reg", &slave);
+-	if (rc)
+-		return ERR_PTR(rc);
++	return -EINVAL;
++}
+ 
+-	aspeed_kcs_set_address(kcs, slave);
++static int aspeed_kcs_of_v2_get_io_address(struct platform_device *pdev)
++{
++	uint32_t slave;
++	int rc;
+ 
+-	return kcs;
++	rc = of_property_read_u32(pdev->dev.of_node, "aspeed,lpc-io-reg", &slave);
++	if (rc || slave > 0xffff)
++		return -EINVAL;
 +
-+	lpc_snoop->regmap = syscon_node_to_regmap(np);
- 	if (IS_ERR(lpc_snoop->regmap)) {
- 		dev_err(dev, "Couldn't get regmap\n");
++	return slave;
+ }
+ 
+ static int aspeed_kcs_probe(struct platform_device *pdev)
+ {
++	const struct aspeed_kcs_of_ops *ops;
+ 	struct device *dev = &pdev->dev;
+ 	struct kcs_bmc *kcs_bmc;
+ 	struct device_node *np;
+-	int rc;
++	int rc, channel, addr;
+ 
+ 	np = dev->of_node->parent;
+ 	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
+@@ -352,23 +327,28 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+ 		dev_err(dev, "unsupported LPC device binding\n");
  		return -ENODEV;
+ 	}
+-
+-	np = dev->of_node;
+-	if (of_device_is_compatible(np, "aspeed,ast2400-kcs-bmc") ||
+-	    of_device_is_compatible(np, "aspeed,ast2500-kcs-bmc"))
+-		kcs_bmc = aspeed_kcs_probe_of_v1(pdev);
+-	else if (of_device_is_compatible(np, "aspeed,ast2400-kcs-bmc-v2") ||
+-		 of_device_is_compatible(np, "aspeed,ast2500-kcs-bmc-v2"))
+-		kcs_bmc = aspeed_kcs_probe_of_v2(pdev);
+-	else
++	ops = of_device_get_match_data(&pdev->dev);
++	if (!ops)
+ 		return -EINVAL;
+ 
+-	if (IS_ERR(kcs_bmc))
+-		return PTR_ERR(kcs_bmc);
++	channel = ops->get_channel(pdev);
++	if (channel < 0)
++		return channel;
+ 
++	kcs_bmc = kcs_bmc_alloc(&pdev->dev, sizeof(struct aspeed_kcs_bmc), channel);
++	if (!kcs_bmc)
++		return -ENOMEM;
++
++	kcs_bmc->ioreg = ast_kcs_bmc_ioregs[channel - 1];
+ 	kcs_bmc->io_inputb = aspeed_kcs_inb;
+ 	kcs_bmc->io_outputb = aspeed_kcs_outb;
+ 
++	addr = ops->get_io_address(pdev);
++	if (addr < 0)
++		return addr;
++
++	aspeed_kcs_set_address(kcs_bmc, addr);
++
+ 	rc = aspeed_kcs_config_irq(kcs_bmc, pdev);
+ 	if (rc)
+ 		return rc;
+@@ -400,11 +380,21 @@ static int aspeed_kcs_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static const struct aspeed_kcs_of_ops of_v1_ops = {
++	.get_channel = aspeed_kcs_of_v1_get_channel,
++	.get_io_address = aspeed_kcs_of_v1_get_io_address,
++};
++
++static const struct aspeed_kcs_of_ops of_v2_ops = {
++	.get_channel = aspeed_kcs_of_v2_get_channel,
++	.get_io_address = aspeed_kcs_of_v2_get_io_address,
++};
++
+ static const struct of_device_id ast_kcs_bmc_match[] = {
+-	{ .compatible = "aspeed,ast2400-kcs-bmc" },
+-	{ .compatible = "aspeed,ast2500-kcs-bmc" },
+-	{ .compatible = "aspeed,ast2400-kcs-bmc-v2" },
+-	{ .compatible = "aspeed,ast2500-kcs-bmc-v2" },
++	{ .compatible = "aspeed,ast2400-kcs-bmc", .data = &of_v1_ops },
++	{ .compatible = "aspeed,ast2500-kcs-bmc", .data = &of_v1_ops },
++	{ .compatible = "aspeed,ast2400-kcs-bmc-v2", .data = &of_v2_ops },
++	{ .compatible = "aspeed,ast2500-kcs-bmc-v2", .data = &of_v2_ops },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, ast_kcs_bmc_match);
 -- 
 2.27.0
 
