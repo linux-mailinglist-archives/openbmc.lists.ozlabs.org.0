@@ -1,58 +1,103 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63A7A32024E
-	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 01:54:20 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48A4C320268
+	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 02:14:04 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dj9223Z4Lz3cPW
-	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 11:54:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dj9Sp0n70z3cML
+	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 12:14:02 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=BPaxp0rK;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.151; helo=mga17.intel.com;
- envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 63 seconds by postgrey-1.36 at boromir;
- Sat, 20 Feb 2021 11:54:08 AEDT
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=hotmail.com (client-ip=40.92.21.57;
+ helo=nam12-bn8-obe.outbound.protection.outlook.com;
+ envelope-from=zkxz@hotmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256
+ header.s=selector1 header.b=BPaxp0rK; 
+ dkim-atps=neutral
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com
+ (mail-bn8nam12olkn2057.outbound.protection.outlook.com [40.92.21.57])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dj91r6Vjvz3bVd
- for <openbmc@lists.ozlabs.org>; Sat, 20 Feb 2021 11:54:08 +1100 (AEDT)
-IronPort-SDR: IAHXUtOONS+8OZEBl/1nJ/8QwrjJ69OW8mIl7Lzhb7QQmVaNbWikKI5ZOGVy3UZcMh34FDDcVS
- wGEn7Jahm+Rw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9900"; a="163790621"
-X-IronPort-AV: E=Sophos;i="5.81,191,1610438400"; 
- d="scan'208,217";a="163790621"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2021 16:52:58 -0800
-IronPort-SDR: RXG+xliCoNZvXEu82EZIElhXiNQnh/4DV4qc2WKH+S65M0UY40+IhWySRLqckWKM7EC/Y6ssMH
- 42Xv4WjiLBHg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,191,1610438400"; 
- d="scan'208,217";a="379095437"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga002.jf.intel.com with ESMTP; 19 Feb 2021 16:52:58 -0800
-Received: from shwdeopenbmc (shwdeopenbmc.ccr.corp.intel.com [10.239.164.28])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id AA6805800BD;
- Fri, 19 Feb 2021 16:52:57 -0800 (PST)
-Date: Sat, 20 Feb 2021 08:52:58 +0800
-From: "chunhui.jia" <chunhui.jia@linux.intel.com>
-To: "Kun Zhao" <zkxz@hotmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re:  overlayFS security concern
-In-Reply-To: <BYAPR14MB23420BA1183F22A48EF8B97ACF839@BYAPR14MB2342.namprd14.prod.outlook.com>
-References: <BYAPR14MB23420BA1183F22A48EF8B97ACF839@BYAPR14MB2342.namprd14.prod.outlook.com>
-X-Mailer: NetEase FlashMail 2.4.1.32
-X-Priority: 3 (Normal)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dj9SV5H63z30Ht
+ for <openbmc@lists.ozlabs.org>; Sat, 20 Feb 2021 12:13:45 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=QtCAYEm8X5gnE9v+gUZzeEO3Q/ynMwRfpfqBCN4z9NAVVPmJSbxRwMO9p6xk2ySgfzjTb70v3nvhbW3K32EFk2o5IZeYlgDzXyqcOH/O8oHsLX0dKyqY2HPLhTjHQupRO3z45qgyvNvpkAIPQczgtPBhinGO2Xi1+l9BukSIfiyligJU/dbEgc8zQaKB7ojWMShFh9SZxr+/iWezToYCG61BWNpUmfp6x2panzFFpz9ypbXzGw0RekYG/Z3UKcBz6wIBVCSpOd1vCqiBt97/b2uvQw8vfbKUicJuoX+OAesx4iabkbNIh3YS1t4yd2KLtK4fElvfCwRFMfKoFUzL9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nqiHhfVNLDNxEVXO8xoCLFTNRKBwN6fEEAaCpw2DFFs=;
+ b=lT/2w7Sh2SMLJq7Vif/oLROEZED9yVD39aWlObDfetzRohw8tdExcRHnBvJLquhMvX5mHIlLmSpNhWfCGnq45TgpfbT62LF0HQNF4z42sRpZSLR9bLqGEKrjJAVxv6agqgV7Y3zJEpikaanr6fZxxR7Hju+Pnp7J/ZU0nF0Lks35+/wlAynIpQddT/kSvxlZzv4U8zb57VNBRvJXasSuAvEiJNVojvT/4Du0+jH6FxHF2av7vYCan1ZEzlx9xKDqLrJsta7/KG/AKXZvLbEuqL3lX5i31WyXk1NGLxHYGvM/ut5vfdqf4iQBPARBsNgVsZMyw/dLb9P1K+TqCM87pA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nqiHhfVNLDNxEVXO8xoCLFTNRKBwN6fEEAaCpw2DFFs=;
+ b=BPaxp0rKhsCPgy95q3LKXinmH8X1OmTnC9nDrMj3CBby+qwNAiRWPZhZjEV3Ki+p10+e020gyU2xu4MV/cxGfSTLDU2vtaZ3FoAdnbYXV1Dw7kD6lAiQFiqq3VgWj8aiG965aKdgfrG87lWT8ABWvOEt9UMbFwaaW8Wm/A80Q+9bXcXbsKckGn+6fqlpqfDi2c2JYvIoWMa6i77hl5YTIlSII8NTes1DvD654TSKZXimjEQ1peqH0BncHGUlQmbqCzqPrNEi//1YxRTLHQZJssRpbRpLeShH1Q+gxo5ZxTGQVOXNemAvRtPHMCEk1V+w+Z5CTDEY/2tni2W9GDKHVg==
+Received: from BN8NAM12FT049.eop-nam12.prod.protection.outlook.com
+ (2a01:111:e400:fc66::44) by
+ BN8NAM12HT172.eop-nam12.prod.protection.outlook.com (2a01:111:e400:fc66::332)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3890.8; Sat, 20 Feb
+ 2021 01:13:41 +0000
+Received: from BYAPR14MB2342.namprd14.prod.outlook.com
+ (2a01:111:e400:fc66::42) by BN8NAM12FT049.mail.protection.outlook.com
+ (2a01:111:e400:fc66::124) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3890.8 via Frontend
+ Transport; Sat, 20 Feb 2021 01:13:40 +0000
+Received: from BYAPR14MB2342.namprd14.prod.outlook.com
+ ([fe80::5d98:ad3a:8911:84b6]) by BYAPR14MB2342.namprd14.prod.outlook.com
+ ([fe80::5d98:ad3a:8911:84b6%7]) with mapi id 15.20.3868.030; Sat, 20 Feb 2021
+ 01:13:40 +0000
+From: Kun Zhao <zkxz@hotmail.com>
+To: chunhui.jia <chunhui.jia@linux.intel.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE:  overlayFS security concern
+Thread-Topic: overlayFS security concern
+Thread-Index: AQHXBx2UWn4JuuHBIkS3VJD7oQMUJKpgNzsAgAADpCQ=
+Date: Sat, 20 Feb 2021 01:13:40 +0000
+Message-ID: <BYAPR14MB2342F147732017184BC1C58ACF839@BYAPR14MB2342.namprd14.prod.outlook.com>
+References: <BYAPR14MB23420BA1183F22A48EF8B97ACF839@BYAPR14MB2342.namprd14.prod.outlook.com>,
+ <60305D66.2050303@linux.intel.com>
+In-Reply-To: <60305D66.2050303@linux.intel.com>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:286B31AA3F85BD0DB131FB7321058BAA21C16A1E54AB99C5D024C1507D951811;
+ UpperCasedChecksum:EE7EDEA8D78BCD02F5BDE4820FF95854F28A8F47432E2A3F82C3E0EE2C2FE305;
+ SizeAsReceived:6922; Count:44
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [QpYiU1f2SfH5IggOL/ShhW76YedJpMZh]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 44
+x-eopattributedmessage: 0
+x-ms-office365-filtering-correlation-id: a6892b34-d59c-4427-47ae-08d8d53cc26c
+x-ms-traffictypediagnostic: BN8NAM12HT172:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: bVFUDtcQFFv7s6e/0sFKbWBMaTmGTyGg8G5xEohK26jQrwSLg3G6ireAU8ZkZXI+oZyujnBguuPUHNG1fbnS4nuSeYfvdFAkRbPjrGdHHPjSlaT0n4XKa1Z7lukphsUs4wu+tkZyYNYBmpnlykgv0hhG9K4SIkxVl+rzjdAAgNwFAaMCNrGelYsR37FPVA5gxXkqnF9c7z9nY5bxd/uySUzX7ds4wz75/R0F+yPCZmiofpvA5CwB71OhZLcful9JqLxVf4Rjlz9Q3pXmzOJOYEQ0zJxdfHisI9RjumjPtFgK6JH/ZQ8s70QnGutM8OMN3gFhtSQuefbrpvvU/LdjVwPM1L9ehoC3HhnoYT2GxyOFDm+ritwk5mvsIq4RzRqwy5tmsktwBpL2vVw7Kk1nPg==
+x-ms-exchange-antispam-messagedata: G4R7e3wW1v8uV2xsVwT9dEQty1+7+LPuDKrHK+hfTQa31zOUxvVpudt46Js2Bq5zt4Li6O24hN+4Mi1Zc2hXTCmU9yBUg4KiMCyh94HEeh9aFkOOHmfkF9cYt2nLV6L8ORQSOgqhvGikSiS+UpG+Vg==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/related;
+ boundary="_005_BYAPR14MB2342F147732017184BC1C58ACF839BYAPR14MB2342namp_";
+ type="multipart/alternative"
 MIME-Version: 1.0
-Message-ID: <60305D66.2050303@linux.intel.com>
-Content-Type: multipart/alternative;
- boundary="NetEase-FlashMail-003-67bad9f5-2744-44e7-810d-3e4cd01bf8bf"
+X-OriginatorOrg: hotmail.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-AuthSource: BN8NAM12FT049.eop-nam12.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: a6892b34-d59c-4427-47ae-08d8d53cc26c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Feb 2021 01:13:40.8086 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8NAM12HT172
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,146 +112,282 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---NetEase-FlashMail-003-67bad9f5-2744-44e7-810d-3e4cd01bf8bf
-Content-Type: text/plain; charset="utf-8"
+--_005_BYAPR14MB2342F147732017184BC1C58ACF839BYAPR14MB2342namp_
+Content-Type: multipart/alternative;
+	boundary="_000_BYAPR14MB2342F147732017184BC1C58ACF839BYAPR14MB2342namp_"
+
+--_000_BYAPR14MB2342F147732017184BC1C58ACF839BYAPR14MB2342namp_
+Content-Type: text/plain; charset="gb2312"
 Content-Transfer-Encoding: base64
 
-TWFpbnRhaW5pbmcgMiBkaWZmZXJlbnQgYnVpbGQgY29uZmlndXJhdGlvbnMgd291bGQgYmUgcG9z
-c2libGUgc29sdXRpb246ICBkZXYgYnVpbGQgYW5kIHJlbGVhc2UgYnVpbGQuIA0KMS4gZW5hYmxl
-IGRlYnVnZ2luZyB0ZWNoIGluIGRldiBidWlsZC4gDQoyLiB3aGVuIHVzaW5nIG9wZW5ibWMgZm9y
-IHByb2R1Y3QsIGRpc2FibGUgYWxsIHBvdGVudGlhbCB3YXlzIHRoYXQgY291bGQgaGFybSBzZWN1
-cml0eS4NCg0KDQoyMDIxLTAyLTIwIA0KDQpjaHVuaHVpLmppYSANCg0KDQoNCuWPkeS7tuS6uu+8
-mkt1biBaaGFvIDx6a3h6QGhvdG1haWwuY29tPg0K5Y+R6YCB5pe26Ze077yaMjAyMS0wMi0yMCAw
-ODozMQ0K5Li76aKY77yab3ZlcmxheUZTIHNlY3VyaXR5IGNvbmNlcm4NCuaUtuS7tuS6uu+8miJv
-cGVuYm1jQGxpc3RzLm96bGFicy5vcmciPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NCuaKhOmA
-ge+8mg0KDQpIaSBUZWFtLA0KIA0KSGF2ZSB0aGUgZm9sbG93aW5nIGNhc2UgZXZlciBiZWVuIGRp
-c2N1c3NlZCBiZWZvcmU/LA0KQW55b25lIGtub3dzIHRoZSByb290IHBhc3N3b3JkIHdpbGwgYmUg
-YWJsZSB0byBsZXQgYm1jIHJ1biB0aGVpciBvd24gY29kZSBieSBzY3AgdGhlIGNvZGUgaW50byBi
-bWMgd2l0aCB0aGUgc2FtZSBmaWxlIHBhdGggYXMgYW55IHNlcnZpY2VzIGluIHJvb3Rmcy4gSXQg
-d2lsbCBtYWtlIHRoZSBzZWN1cmUgYm9vdCB0b3RhbGx5IHVzZWxlc3MuDQogDQpTbyBiZXNpZGVz
-LA0KMS4gZGlzYWJsZSBzY3AgKGJ1dCBzY3AgaXMgb25lIG9mIHRoZSBmaXJtd2FyZSB1cGxvYWQg
-d2F5KQ0KMi4gZG9u4oCZdCB1c2Ugb3ZlcmxheUZTIChidXQgaXTigJlzIHJlYWxseSB1c2VmdWwg
-Zm9yIGRlYnVnZ2luZyBkdXJpbmcgZGV2ZWxvcCwgYW5kIGNvbmZpZ3VyYXRpb24gbWFuYWdlbWVu
-dCkNCkFueSBvdGhlciBzb2x1dGlvbnM/DQogDQogDQogDQpUaGFua3MuDQpLdW4NCiA=
+VGhhbmsgeW91LCBDaHVuaHVpLiBCdXQgeW91IG1lYW4gdG8gZGlzYWJsZSBzY3AsIHJpZ2h0PyBG
+aXJtd2FyZSB1cGxvYWQgdGhyb3VnaCBzY3AgZnVuY3Rpb24gd2lsbCBiZSBsb3N0IGluIHRoaXMg
+d2F5LiBNYXliZSBub3QgYSBnb29kIGNob2ljZSBmb3IgdXMuDQpCVFcsIGlzIHNjcCBzdGlsbCBh
+IHJlY29tbWVuZGVkIHdheSBmb3IgT3BlbkJNQyBmaXJtd2FyZSB1cGRhdGU/DQoNCg0KDQpUaGFu
+a3MuDQpLdW4NCg0KRnJvbTogY2h1bmh1aS5qaWE8bWFpbHRvOmNodW5odWkuamlhQGxpbnV4Lmlu
+dGVsLmNvbT4NClNlbnQ6IEZyaWRheSwgRmVicnVhcnkgMTksIDIwMjEgNDo1MyBQTQ0KVG86IEt1
+biBaaGFvPG1haWx0bzp6a3h6QGhvdG1haWwuY29tPjsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
+PG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpTdWJqZWN0OiBSZTogb3ZlcmxheUZT
+IHNlY3VyaXR5IGNvbmNlcm4NCg0KTWFpbnRhaW5pbmcgMiBkaWZmZXJlbnQgYnVpbGQgY29uZmln
+dXJhdGlvbnMgd291bGQgYmUgcG9zc2libGUgc29sdXRpb246ICBkZXYgYnVpbGQgYW5kIHJlbGVh
+c2UgYnVpbGQuDQoxLiBlbmFibGUgZGVidWdnaW5nIHRlY2ggaW4gZGV2IGJ1aWxkLg0KMi4gd2hl
+biB1c2luZyBvcGVuYm1jIGZvciBwcm9kdWN0LCBkaXNhYmxlIGFsbCBwb3RlbnRpYWwgd2F5cyB0
+aGF0IGNvdWxkIGhhcm0gc2VjdXJpdHkuDQoNCg0KMjAyMS0wMi0yMA0KDQpjaHVuaHVpLmppYQ0K
+DQq3orz+yMujukt1biBaaGFvIDx6a3h6QGhvdG1haWwuY29tPg0Kt6LLzcqxvOSjujIwMjEtMDIt
+MjAgMDg6MzENCtb3zOKjum92ZXJsYXlGUyBzZWN1cml0eSBjb25jZXJuDQrK1bz+yMujuiJvcGVu
+Ym1jQGxpc3RzLm96bGFicy5vcmciPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NCrOty82jug0K
+DQpIaSBUZWFtLA0KDQpIYXZlIHRoZSBmb2xsb3dpbmcgY2FzZSBldmVyIGJlZW4gZGlzY3Vzc2Vk
+IGJlZm9yZT8sDQpBbnlvbmUga25vd3MgdGhlIHJvb3QgcGFzc3dvcmQgd2lsbCBiZSBhYmxlIHRv
+IGxldCBibWMgcnVuIHRoZWlyIG93biBjb2RlIGJ5IHNjcCB0aGUgY29kZSBpbnRvIGJtYyB3aXRo
+IHRoZSBzYW1lIGZpbGUgcGF0aCBhcyBhbnkgc2VydmljZXMgaW4gcm9vdGZzLiBJdCB3aWxsIG1h
+a2UgdGhlIHNlY3VyZSBib290IHRvdGFsbHkgdXNlbGVzcy4NCg0KU28gYmVzaWRlcywNCjEuIGRp
+c2FibGUgc2NwIChidXQgc2NwIGlzIG9uZSBvZiB0aGUgZmlybXdhcmUgdXBsb2FkIHdheSkNCjIu
+IGRvbqGvdCB1c2Ugb3ZlcmxheUZTIChidXQgaXShr3MgcmVhbGx5IHVzZWZ1bCBmb3IgZGVidWdn
+aW5nIGR1cmluZyBkZXZlbG9wLCBhbmQgY29uZmlndXJhdGlvbiBtYW5hZ2VtZW50KQ0KQW55IG90
+aGVyIHNvbHV0aW9ucz8NCg0KDQoNClRoYW5rcy4NCkt1bg0KDQoNCg==
 
---NetEase-FlashMail-003-67bad9f5-2744-44e7-810d-3e4cd01bf8bf
-Content-Type: text/html; charset="utf-8"
+--_000_BYAPR14MB2342F147732017184BC1C58ACF839BYAPR14MB2342namp_
+Content-Type: text/html; charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dgb2312">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Microsoft YaHei";
+	panose-1:2 11 5 3 2 2 4 2 2 4;}
+@font-face
+	{font-family:"\@DengXian";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@Microsoft YaHei";}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+span.DefaultFontHxMailStyle
+	{mso-style-name:"Default Font HxMail Style";
+	font-family:"Calibri",sans-serif;
+	color:windowtext;
+	font-weight:normal;
+	font-style:normal;
+	text-decoration:none none;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style>
+</head>
+<body lang=3D"EN-US" link=3D"blue" vlink=3D"#954F72" style=3D"word-wrap:bre=
+ak-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">Thank you, Ch=
+unhui. But you mean to disable scp, right? Firmware upload through scp func=
+tion will be lost in this way. Maybe not a good choice for us.<o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">BTW, is scp s=
+till a recommended way for OpenBMC firmware update?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
+o:p></span></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks.<o:p></o:p></p>
+<p class=3D"MsoNormal">Kun<o:p></o:p></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
+o:p></span></p>
+<div style=3D"mso-element:para-border-div;border:none;border-top:solid #E1E=
+1E1 1.0pt;padding:3.0pt 0in 0in 0in">
+<p class=3D"MsoNormal" style=3D"border:none;padding:0in"><b>From: </b><a hr=
+ef=3D"mailto:chunhui.jia@linux.intel.com">chunhui.jia</a><br>
+<b>Sent: </b>Friday, February 19, 2021 4:53 PM<br>
+<b>To: </b><a href=3D"mailto:zkxz@hotmail.com">Kun Zhao</a>; <a href=3D"mai=
+lto:openbmc@lists.ozlabs.org">
+openbmc@lists.ozlabs.org</a><br>
+<b>Subject: </b>Re: overlayFS security concern</p>
+</div>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
+o:p></span></p>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:black">Maintaining 2 different build configurati=
+ons would be possible solution: &nbsp;dev build and release build.
+<o:p></o:p></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:black">1. enable debugging tech in&nbsp;dev buil=
+d.
+<o:p></o:p></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:black">2. when using openbmc for product, disabl=
+e all potential ways&nbsp;that could harm security.<o:p></o:p></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:black">&nbsp;<o:p></o:p></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:black">&nbsp;<o:p></o:p></span></p>
+</div>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ve=
+rdana&quot;,sans-serif;color:silver">2021-02-20
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ve=
+rdana&quot;,sans-serif;color:silver"><img border=3D"0" width=3D"122" height=
+=3D"1" style=3D"width:1.2708in;height:.0104in" id=3D"Horizontal_x0020_Line_=
+x0020_1" src=3D"cid:image001.png@01D706E2.906431E0"></span><span style=3D"f=
+ont-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:silver"><o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ve=
+rdana&quot;,sans-serif;color:silver">chunhui.jia
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Ar=
+ial&quot;,sans-serif;color:black"><img border=3D"0" width=3D"684" height=3D=
+"1" style=3D"width:7.125in;height:.0104in" id=3D"Horizontal_x0020_Line_x002=
+0_2" src=3D"cid:image002.png@01D706E2.906431E0"></span><span style=3D"font-=
+size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;color:black"><o:p></o:=
+p></span></p>
+<blockquote style=3D"margin-left:0in;margin-top:5.0pt;margin-bottom:5.0pt">
+<div>
+<p class=3D"MsoNormal"><strong><span lang=3D"ZH-CN" style=3D"font-size:10.0=
+pt;font-family:&quot;Microsoft YaHei&quot;,sans-serif;color:black">=B7=A2=
+=BC=FE=C8=CB=A3=BA</span></strong><span style=3D"font-size:10.0pt;font-fami=
+ly:&quot;Verdana&quot;,sans-serif;color:black">Kun Zhao &lt;zkxz@hotmail.co=
+m&gt;<o:p></o:p></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><strong><span lang=3D"ZH-CN" style=3D"font-size:10.0=
+pt;font-family:&quot;Microsoft YaHei&quot;,sans-serif;color:black">=B7=A2=
+=CB=CD=CA=B1=BC=E4=A3=BA</span></strong><span style=3D"font-size:10.0pt;fon=
+t-family:&quot;Verdana&quot;,sans-serif;color:black">2021-02-20&nbsp;08:31<=
+o:p></o:p></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><strong><span lang=3D"ZH-CN" style=3D"font-size:10.0=
+pt;font-family:&quot;Microsoft YaHei&quot;,sans-serif;color:black">=D6=F7=
+=CC=E2=A3=BA</span></strong><span style=3D"font-size:10.0pt;font-family:&qu=
+ot;Verdana&quot;,sans-serif;color:black">overlayFS security concern<o:p></o=
+:p></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><strong><span lang=3D"ZH-CN" style=3D"font-size:10.0=
+pt;font-family:&quot;Microsoft YaHei&quot;,sans-serif;color:black">=CA=D5=
+=BC=FE=C8=CB=A3=BA</span></strong><span style=3D"font-size:10.0pt;font-fami=
+ly:&quot;Verdana&quot;,sans-serif;color:black">&quot;openbmc@lists.ozlabs.o=
+rg&quot;&lt;openbmc@lists.ozlabs.org&gt;<o:p></o:p></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><strong><span lang=3D"ZH-CN" style=3D"font-size:10.0=
+pt;font-family:&quot;Microsoft YaHei&quot;,sans-serif;color:black">=B3=AD=
+=CB=CD=A3=BA</span></strong><span style=3D"font-size:10.0pt;font-family:&qu=
+ot;Verdana&quot;,sans-serif;color:black"><o:p></o:p></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Ve=
+rdana&quot;,sans-serif;color:black">&nbsp;<o:p></o:p></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">Hi Team,<o:p>=
+</o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
+o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">Have the foll=
+owing case ever been discussed before?,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">Anyone knows =
+the root password will be able to let bmc run their own code by scp the cod=
+e into bmc with the same file path as any services in rootfs. It will make =
+the secure boot totally useless.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
+o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">So besides,<o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">1. disable sc=
+p (but scp is one of the firmware upload way)<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">2. don=A1=AFt=
+ use overlayFS (but it=A1=AFs really useful for debugging during develop, a=
+nd configuration management)<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">Any other sol=
+utions?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
+o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:black"><o:p>&nbsp;</o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span style=3D"color:black"><o:p>&nbsp;</o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span style=3D"color:black">Thanks.<o:p></o:p></span=
+></p>
+<p class=3D"MsoNormal"><span style=3D"color:black">Kun<o:p></o:p></span></p=
+>
+</div>
+</blockquote>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:0in;margin-right:45.0pt;=
+margin-bottom:9.0pt;margin-left:9.0pt">
+<span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
+o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_BYAPR14MB2342F147732017184BC1C58ACF839BYAPR14MB2342namp_--
+
+--_005_BYAPR14MB2342F147732017184BC1C58ACF839BYAPR14MB2342namp_
+Content-Type: image/png; name="A24FB62FC7144662BA1C9A0C79685324.png"
+Content-Description: A24FB62FC7144662BA1C9A0C79685324.png
+Content-Disposition: inline; filename="A24FB62FC7144662BA1C9A0C79685324.png";
+	size=122; creation-date="Sat, 20 Feb 2021 01:13:39 GMT";
+	modification-date="Sat, 20 Feb 2021 01:13:39 GMT"
+Content-ID: <image001.png@01D706E2.906431E0>
 Content-Transfer-Encoding: base64
 
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
-L0VOIj4NCjxIVE1MIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIiB4bWxu
-czpvID0gDQoidXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4bWxuczp3
-ID0gDQoidXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bSA9IA0K
-Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vb2ZmaWNlLzIwMDQvMTIvb21tbCI+PEhFQUQ+
-DQo8TUVUQSBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiIGh0dHAtZXF1aXY9Q29u
-dGVudC1UeXBlPg0KPE1FVEEgbmFtZT1HRU5FUkFUT1IgY29udGVudD0iTVNIVE1MIDExLjAwLjEw
-NTcwLjEwMDEiPg0KPFNUWUxFPjwhLS0KLyogRm9udCBEZWZpbml0aW9ucyAqLwpAZm9udC1mYWNl
-Cgl7Zm9udC1mYW1pbHk6V2luZ2RpbmdzOwoJcGFub3NlLTE6NSAwIDAgMCAwIDAgMCAwIDAgMDt9
-CkBmb250LWZhY2UKCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsKCXBhbm9zZS0xOjIgNCA1
-IDMgNSA0IDYgMyAyIDQ7fQpAZm9udC1mYWNlCgl7Zm9udC1mYW1pbHk6RGVuZ1hpYW47CglwYW5v
-c2UtMToyIDEgNiAwIDMgMSAxIDEgMSAxO30KQGZvbnQtZmFjZQoJe2ZvbnQtZmFtaWx5OkNhbGli
-cmk7CglwYW5vc2UtMToyIDE1IDUgMiAyIDIgNCAzIDIgNDt9CkBmb250LWZhY2UKCXtmb250LWZh
-bWlseToiXEBEZW5nWGlhbiI7CglwYW5vc2UtMToyIDEgNiAwIDMgMSAxIDEgMSAxO30KLyogU3R5
-bGUgRGVmaW5pdGlvbnMgKi8KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1h
-bAoJe21hcmdpbjowaW47Cglmb250LXNpemU6MTEuMHB0OwoJZm9udC1mYW1pbHk6IkNhbGlicmki
-LHNhbnMtc2VyaWY7fQpzcGFuLkRlZmF1bHRGb250SHhNYWlsU3R5bGUKCXttc28tc3R5bGUtbmFt
-ZToiRGVmYXVsdCBGb250IEh4TWFpbCBTdHlsZSI7Cglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fu
-cy1zZXJpZjsKCWNvbG9yOndpbmRvd3RleHQ7Cglmb250LXdlaWdodDpub3JtYWw7Cglmb250LXN0
-eWxlOm5vcm1hbDsKCXRleHQtZGVjb3JhdGlvbjpub25lIG5vbmU7fQouTXNvQ2hwRGVmYXVsdAoJ
-e21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5O30KQHBhZ2UgV29yZFNlY3Rpb24xCgl7c2l6ZTo4
-LjVpbiAxMS4waW47CgltYXJnaW46MS4waW4gMS4yNWluIDEuMGluIDEuMjVpbjt9CmRpdi5Xb3Jk
-U2VjdGlvbjEKCXtwYWdlOldvcmRTZWN0aW9uMTt9Ci8qIExpc3QgRGVmaW5pdGlvbnMgKi8KQGxp
-c3QgbDAKCXttc28tbGlzdC1pZDo4OTAwNzAwNTE7Cgltc28tbGlzdC10eXBlOmh5YnJpZDsKCW1z
-by1saXN0LXRlbXBsYXRlLWlkczotMTIzNzkyMzMxOCA2NzY5ODY4OSA2NzY5ODY5MSA2NzY5ODY5
-MyA2NzY5ODY4OSA2NzY5ODY5MSA2NzY5ODY5MyA2NzY5ODY4OSA2NzY5ODY5MSA2NzY5ODY5Mzt9
-CkBsaXN0IGwwOmxldmVsMQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsKCW1zby1s
-ZXZlbC10ZXh0OlxGMEI3OwoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7Cgltc28tbGV2ZWwtbnVt
-YmVyLXBvc2l0aW9uOmxlZnQ7Cgl0ZXh0LWluZGVudDotLjI1aW47Cglmb250LWZhbWlseTpTeW1i
-b2w7fQpAbGlzdCBsMDpsZXZlbDIKCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7Cglt
-c28tbGV2ZWwtdGV4dDpvOwoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7Cgltc28tbGV2ZWwtbnVt
-YmVyLXBvc2l0aW9uOmxlZnQ7Cgl0ZXh0LWluZGVudDotLjI1aW47Cglmb250LWZhbWlseToiQ291
-cmllciBOZXciO30KQGxpc3QgbDA6bGV2ZWwzCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVs
-bGV0OwoJbXNvLWxldmVsLXRleHQ6XEYwQTc7Cgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsKCW1z
-by1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsKCXRleHQtaW5kZW50Oi0uMjVpbjsKCWZvbnQt
-ZmFtaWx5OldpbmdkaW5nczt9CkBsaXN0IGwwOmxldmVsNAoJe21zby1sZXZlbC1udW1iZXItZm9y
-bWF0OmJ1bGxldDsKCW1zby1sZXZlbC10ZXh0OlxGMEI3OwoJbXNvLWxldmVsLXRhYi1zdG9wOm5v
-bmU7Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7Cgl0ZXh0LWluZGVudDotLjI1aW47
-Cglmb250LWZhbWlseTpTeW1ib2w7fQpAbGlzdCBsMDpsZXZlbDUKCXttc28tbGV2ZWwtbnVtYmVy
-LWZvcm1hdDpidWxsZXQ7Cgltc28tbGV2ZWwtdGV4dDpvOwoJbXNvLWxldmVsLXRhYi1zdG9wOm5v
-bmU7Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7Cgl0ZXh0LWluZGVudDotLjI1aW47
-Cglmb250LWZhbWlseToiQ291cmllciBOZXciO30KQGxpc3QgbDA6bGV2ZWw2Cgl7bXNvLWxldmVs
-LW51bWJlci1mb3JtYXQ6YnVsbGV0OwoJbXNvLWxldmVsLXRleHQ6XEYwQTc7Cgltc28tbGV2ZWwt
-dGFiLXN0b3A6bm9uZTsKCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsKCXRleHQtaW5k
-ZW50Oi0uMjVpbjsKCWZvbnQtZmFtaWx5OldpbmdkaW5nczt9CkBsaXN0IGwwOmxldmVsNwoJe21z
-by1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsKCW1zby1sZXZlbC10ZXh0OlxGMEI3OwoJbXNv
-LWxldmVsLXRhYi1zdG9wOm5vbmU7Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7Cgl0
-ZXh0LWluZGVudDotLjI1aW47Cglmb250LWZhbWlseTpTeW1ib2w7fQpAbGlzdCBsMDpsZXZlbDgK
-CXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7Cgltc28tbGV2ZWwtdGV4dDpvOwoJbXNv
-LWxldmVsLXRhYi1zdG9wOm5vbmU7Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7Cgl0
-ZXh0LWluZGVudDotLjI1aW47Cglmb250LWZhbWlseToiQ291cmllciBOZXciO30KQGxpc3QgbDA6
-bGV2ZWw5Cgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVsbGV0OwoJbXNvLWxldmVsLXRleHQ6
-XEYwQTc7Cgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsKCW1zby1sZXZlbC1udW1iZXItcG9zaXRp
-b246bGVmdDsKCXRleHQtaW5kZW50Oi0uMjVpbjsKCWZvbnQtZmFtaWx5OldpbmdkaW5nczt9Cm9s
-Cgl7bWFyZ2luLWJvdHRvbTowaW47fQp1bAoJe21hcmdpbi1ib3R0b206MGluO30KLS0+PC9TVFlM
-RT4NCjwhLS0gZmxhc2htYWlsIHN0eWxlIGJlZ2luIC0tPg0KPFNUWUxFIHR5cGU9dGV4dC9jc3M+
-CmJvZHkge2JvcmRlci13aWR0aDowO21hcmdpbjowfQppbWcge2JvcmRlcjowO21hcmdpbjowO3Bh
-ZGRpbmc6MH0KPC9TVFlMRT4NCjxCQVNFIHRhcmdldD1fYmxhbms+PCEtLSBmbGFzaG1haWwgc3R5
-bGUgZW5kIC0tPjwvSEVBRD4NCjxCT0RZIA0Kc3R5bGU9IkJPUkRFUi1MRUZULVdJRFRIOiAwcHg7
-IEZPTlQtU0laRTogMTAuNXB0OyBGT05ULUZBTUlMWTogYXJpYWw7IEJPUkRFUi1SSUdIVC1XSURU
-SDogMHB4OyBCT1JERVItQk9UVE9NLVdJRFRIOiAwcHg7IENPTE9SOiAjMDAwMDAwOyBNQVJHSU46
-IDEycHg7IExJTkUtSEVJR0hUOiAxLjU7IEJPUkRFUi1UT1AtV0lEVEg6IDBweCIgDQptYXJnaW5o
-ZWlnaHQ9IjAiIG1hcmdpbndpZHRoPSIwIj4NCjxESVY+TWFpbnRhaW5pbmcgMiBkaWZmZXJlbnQg
-YnVpbGQgY29uZmlndXJhdGlvbnMgd291bGQgYmUgcG9zc2libGUgc29sdXRpb246IA0KJm5ic3A7
-ZGV2IGJ1aWxkIGFuZCByZWxlYXNlIGJ1aWxkLiA8L0RJVj4NCjxESVY+MS4gZW5hYmxlIGRlYnVn
-Z2luZyB0ZWNoIGluJm5ic3A7ZGV2IGJ1aWxkLiA8L0RJVj4NCjxESVY+Mi4gd2hlbiB1c2luZyBv
-cGVuYm1jIGZvciBwcm9kdWN0LCBkaXNhYmxlIGFsbCBwb3RlbnRpYWwgd2F5cyZuYnNwO3RoYXQg
-DQpjb3VsZCBoYXJtIHNlY3VyaXR5LjwvRElWPg0KPERJVj4mbmJzcDs8L0RJVj4NCjxESVY+Jm5i
-c3A7PC9ESVY+DQo8RElWIHN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQtRkFNSUxZOiBWZXJk
-YW5hOyBDT0xPUjogI2MwYzBjMCIgDQphbGlnbj1sZWZ0PjIwMjEtMDItMjAgDQo8SFIgaWQ9U2ln
-bk5hbWVIUiANCnN0eWxlPSJCT1JERVItVE9QOiAjYzBjMGMwIDFweCBzb2xpZDsgSEVJR0hUOiAx
-cHg7IEJPUkRFUi1SSUdIVDogMHB4OyBXSURUSDogMTIycHg7IEJPUkRFUi1CT1RUT006IDBweDsg
-Qk9SREVSLUxFRlQ6IDBweCIgDQphbGlnbj1sZWZ0Pg0KPFNQQU4gaWQ9X0ZsYXNoU2lnbk5hbWU+
-Y2h1bmh1aS5qaWE8L1NQQU4+IDwvRElWPg0KPEhSIA0Kc3R5bGU9IkJPUkRFUi1UT1A6ICNjMGMw
-YzAgMXB4IHNvbGlkOyBIRUlHSFQ6IDFweDsgQk9SREVSLVJJR0hUOiAwcHg7IEJPUkRFUi1CT1RU
-T006IDBweDsgQk9SREVSLUxFRlQ6IDBweCI+DQoNCjxCTE9DS1FVT1RFIGlkPW50ZXMtZmxhc2ht
-YWlsLXF1b3RlIA0Kc3R5bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1GQU1JTFk6IFZlcmRhbmE7
-IFBBRERJTkctTEVGVDogMHB4OyBNQVJHSU4tTEVGVDogMHB4Ij4NCiAgPERJVj48U1RST05HPuWP
-keS7tuS6uu+8mjwvU1RST05HPkt1biBaaGFvICZsdDt6a3h6QGhvdG1haWwuY29tJmd0OzwvRElW
-Pg0KICA8RElWPjxTVFJPTkc+5Y+R6YCB5pe26Ze077yaPC9TVFJPTkc+MjAyMS0wMi0yMCZuYnNw
-OzA4OjMxPC9ESVY+DQogIDxESVY+PFNUUk9ORz7kuLvpopjvvJo8L1NUUk9ORz5vdmVybGF5RlMg
-c2VjdXJpdHkgY29uY2VybjwvRElWPg0KICA8RElWPjxTVFJPTkc+5pS25Lu25Lq677yaPC9TVFJP
-Tkc+Im9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyImbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
-Jmd0OzwvRElWPg0KICA8RElWPjxTVFJPTkc+5oqE6YCB77yaPC9TVFJPTkc+PC9ESVY+DQogIDxE
-SVY+Jm5ic3A7PC9ESVY+DQogIDxESVY+DQogIDxESVYgY2xhc3M9V29yZFNlY3Rpb24xPg0KICA8
-UCBjbGFzcz1Nc29Ob3JtYWw+PFNQQU4gY2xhc3M9RGVmYXVsdEZvbnRIeE1haWxTdHlsZT5IaSAN
-CiAgVGVhbSw8bzpwPjwvbzpwPjwvU1BBTj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BB
-TiANCiAgY2xhc3M9RGVmYXVsdEZvbnRIeE1haWxTdHlsZT48bzpwPiZuYnNwOzwvbzpwPjwvU1BB
-Tj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BBTiBjbGFzcz1EZWZhdWx0Rm9udEh4TWFp
-bFN0eWxlPkhhdmUgdGhlIGZvbGxvd2luZyBjYXNlIA0KICBldmVyIGJlZW4gZGlzY3Vzc2VkIGJl
-Zm9yZT8sPG86cD48L286cD48L1NQQU4+PC9QPg0KICA8UCBjbGFzcz1Nc29Ob3JtYWw+PFNQQU4g
-Y2xhc3M9RGVmYXVsdEZvbnRIeE1haWxTdHlsZT5BbnlvbmUga25vd3MgdGhlIHJvb3QgDQogIHBh
-c3N3b3JkIHdpbGwgYmUgYWJsZSB0byBsZXQgYm1jIHJ1biB0aGVpciBvd24gY29kZSBieSBzY3Ag
-dGhlIGNvZGUgaW50byBibWMgDQogIHdpdGggdGhlIHNhbWUgZmlsZSBwYXRoIGFzIGFueSBzZXJ2
-aWNlcyBpbiByb290ZnMuIEl0IHdpbGwgbWFrZSB0aGUgc2VjdXJlIA0KICBib290IHRvdGFsbHkg
-dXNlbGVzcy48bzpwPjwvbzpwPjwvU1BBTj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BB
-TiANCiAgY2xhc3M9RGVmYXVsdEZvbnRIeE1haWxTdHlsZT48bzpwPiZuYnNwOzwvbzpwPjwvU1BB
-Tj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BBTiBjbGFzcz1EZWZhdWx0Rm9udEh4TWFp
-bFN0eWxlPlNvIA0KICBiZXNpZGVzLDxvOnA+PC9vOnA+PC9TUEFOPjwvUD4NCiAgPFAgY2xhc3M9
-TXNvTm9ybWFsPjxTUEFOIGNsYXNzPURlZmF1bHRGb250SHhNYWlsU3R5bGU+MS4gZGlzYWJsZSBz
-Y3AgKGJ1dCBzY3AgDQogIGlzIG9uZSBvZiB0aGUgZmlybXdhcmUgdXBsb2FkIHdheSk8bzpwPjwv
-bzpwPjwvU1BBTj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BBTiBjbGFzcz1EZWZhdWx0
-Rm9udEh4TWFpbFN0eWxlPjIuIGRvbuKAmXQgdXNlIG92ZXJsYXlGUyANCiAgKGJ1dCBpdOKAmXMg
-cmVhbGx5IHVzZWZ1bCBmb3IgZGVidWdnaW5nIGR1cmluZyBkZXZlbG9wLCBhbmQgY29uZmlndXJh
-dGlvbiANCiAgbWFuYWdlbWVudCk8bzpwPjwvbzpwPjwvU1BBTj48L1A+DQogIDxQIGNsYXNzPU1z
-b05vcm1hbD48U1BBTiBjbGFzcz1EZWZhdWx0Rm9udEh4TWFpbFN0eWxlPkFueSBvdGhlciANCiAg
-c29sdXRpb25zPzxvOnA+PC9vOnA+PC9TUEFOPjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsPjxT
-UEFOIA0KICBjbGFzcz1EZWZhdWx0Rm9udEh4TWFpbFN0eWxlPjxvOnA+Jm5ic3A7PC9vOnA+PC9T
-UEFOPjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsPjxvOnA+Jm5ic3A7PC9vOnA+PC9QPg0KICA8
-UCBjbGFzcz1Nc29Ob3JtYWw+PG86cD4mbmJzcDs8L286cD48L1A+DQogIDxQIGNsYXNzPU1zb05v
-cm1hbD5UaGFua3MuPG86cD48L286cD48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD5LdW48bzpw
-PjwvbzpwPjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsPjxTUEFOIA0KICBjbGFzcz1EZWZhdWx0
-Rm9udEh4TWFpbFN0eWxlPjxvOnA+Jm5ic3A7PC9vOnA+PC9TUEFOPjwvUD48L0RJVj48L0RJVj48
-L0JMT0NLUVVPVEU+PC9CT0RZPjwvSFRNTD4=
+iVBORw0KGgoAAAANSUhEUgAAAHoAAAABCAYAAAARvLrmAAAAAXNSR0IArs4c6QAAAARnQU1BAACx
+jwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAPSURBVChTYxgFIwEwMAAAAekAAR2FTkQAAAAA
+SUVORK5CYII=
 
---NetEase-FlashMail-003-67bad9f5-2744-44e7-810d-3e4cd01bf8bf--
+--_005_BYAPR14MB2342F147732017184BC1C58ACF839BYAPR14MB2342namp_
+Content-Type: image/png; name="82282195F0154A20AF6CCE387F3ED633.png"
+Content-Description: 82282195F0154A20AF6CCE387F3ED633.png
+Content-Disposition: inline; filename="82282195F0154A20AF6CCE387F3ED633.png";
+	size=133; creation-date="Sat, 20 Feb 2021 01:13:39 GMT";
+	modification-date="Sat, 20 Feb 2021 01:13:39 GMT"
+Content-ID: <image002.png@01D706E2.906431E0>
+Content-Transfer-Encoding: base64
 
+iVBORw0KGgoAAAANSUhEUgAAAqwAAAABCAYAAAAb3/wpAAAAAXNSR0IArs4c6QAAAARnQU1BAACx
+jwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAaSURBVEhL7cExAQAAAMKg9U9tDQ8gAAD4VQMK
+sQAB44Zk/AAAAABJRU5ErkJggg==
+
+--_005_BYAPR14MB2342F147732017184BC1C58ACF839BYAPR14MB2342namp_--
