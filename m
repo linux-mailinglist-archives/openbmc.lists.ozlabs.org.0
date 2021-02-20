@@ -1,98 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59B2B32023F
-	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 01:31:38 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63A7A32024E
+	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 01:54:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dj8Wr1QkLz3cLY
-	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 11:31:36 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=V+DhDy8H;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dj9223Z4Lz3cPW
+	for <lists+openbmc@lfdr.de>; Sat, 20 Feb 2021 11:54:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=hotmail.com (client-ip=40.92.21.46;
- helo=nam12-bn8-obe.outbound.protection.outlook.com;
- envelope-from=zkxz@hotmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256
- header.s=selector1 header.b=V+DhDy8H; 
- dkim-atps=neutral
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam12olkn2046.outbound.protection.outlook.com [40.92.21.46])
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
+X-Greylist: delayed 63 seconds by postgrey-1.36 at boromir;
+ Sat, 20 Feb 2021 11:54:08 AEDT
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dj8WX3J55z3cGg
- for <openbmc@lists.ozlabs.org>; Sat, 20 Feb 2021 11:31:18 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FPA8QKlcvdfTWS/PIus40fZkTNFQwFOtYjAnvCxJ+eFOYfF1RSqiLJoLUd8plQ/+eINyMDRuc+Y1q2nGMuLeuOPGf2HpEU9F6x2933o5IxTbWFFkPLsdiw6rDNKfgxBlGofKrfP34UZnbDTpNah7PjytqyEztiHP+7K0yAfaI++lFyG6aGCCLXJo8KFi1pK2qJdGMuEuleREpgekrQOKTAtBcEhvwRQ4Oyh7y5ZI9pQIXhoORNkT6TzXm5sjr4cQ++8WHL8NKtQ7+aJyKHeB1ujA9vo8muMpLPNezsEiugriy47Ka2oHbu+vxUi1+PZpuv5jbBT2uxMw+ifwCgaV9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=C5+pG3RehBDBDrxRSxyuUT+ybbhQ4gABR+kkywXnegE=;
- b=GxaWtzmUYEdBy7GOxhOclm76dBRcCITDA8XVSN8USEYexQ9BrSQ2rt7p37bEqm57fS31A3alTykPjFqIsqGiFmJWsimPzqc8mIFAS/L6zXED68UG5C8FToBY/iJZ5BQBmDqbpsv3agcG5HjDzm2FKWz6n9MyYMsHbR2w8stwk7NFcTsovtOAln2SofGZOfUvIUitg+8z0J05TUB8mGF9f79nCuexvUch3mKX4Y7TlUy4tlebTwsBZPAH1ydCLL3ZclqII7wtG8pbGbdXXTLJbCBClhrTfQbphrK6Adwv5egtxkoGzpMd/5k3aMIb2gsbw1zhZ0HJMwAaAnA9DAe3Aw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=C5+pG3RehBDBDrxRSxyuUT+ybbhQ4gABR+kkywXnegE=;
- b=V+DhDy8HRBXIBgOxu0eW/qerRKnqgAGKUGP9PzikdtV2IYm8S8KtZPlQ1anxpCxD6rXC72wZv6/FINevcz51MI++O4W0k1N3lTVYKZe84/JcPX1MERJknkKvbHVMAPnGf2ClrsRS+dHnf296ym4BQ0YZoII665YxPql7OoO6vp6+M+TXPk0l2DWoN6WeD2BkMIr6/A4toOiCWEFdOlNujRwakrcuk4Ds14fK//KRwNrVONckBuO2qb3+9fZaxGfFdZF+1t8Nn2jNlLht7dmwKhDwnXX5QhQvwTeDnBKT7eQOHyuw/LvnWsXNqor2/vIxJxB/r5MvztOtrT3lesykeA==
-Received: from DM6NAM12FT003.eop-nam12.prod.protection.outlook.com
- (2a01:111:e400:fc64::47) by
- DM6NAM12HT009.eop-nam12.prod.protection.outlook.com (2a01:111:e400:fc64::155)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3890.8; Sat, 20 Feb
- 2021 00:31:13 +0000
-Received: from DM6PR14MB2348.namprd14.prod.outlook.com
- (2a01:111:e400:fc64::45) by DM6NAM12FT003.mail.protection.outlook.com
- (2a01:111:e400:fc64::340) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3890.8 via Frontend
- Transport; Sat, 20 Feb 2021 00:31:13 +0000
-Received: from DM6PR14MB2348.namprd14.prod.outlook.com
- ([fe80::31cf:2cae:54cf:8d8]) by DM6PR14MB2348.namprd14.prod.outlook.com
- ([fe80::31cf:2cae:54cf:8d8%3]) with mapi id 15.20.3868.029; Sat, 20 Feb 2021
- 00:31:13 +0000
-From: Kun Zhao <zkxz@hotmail.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: overlayFS security concern
-Thread-Topic: overlayFS security concern
-Thread-Index: AQHXBx2UWn4JuuHBIkS3VJD7oQMUJA==
-Date: Sat, 20 Feb 2021 00:31:12 +0000
-Message-ID: <BYAPR14MB23420BA1183F22A48EF8B97ACF839@BYAPR14MB2342.namprd14.prod.outlook.com>
-Accept-Language: en-US, zh-CN
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-incomingtopheadermarker: OriginalChecksum:07FF6C7BC26040FD0E5CF4638F54A37E3CA0D41AF7A2EB38F3C4BF4FD62D15D0;
- UpperCasedChecksum:0C93C964D3C190620A73014B229D9D70A11919A70C171383D82C7AB0C895AE0E;
- SizeAsReceived:6659; Count:42
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn: [iS2IeKtiDrMKP9b09LavSKELXRhZgFDp]
-x-ms-publictraffictype: Email
-x-incomingheadercount: 42
-x-eopattributedmessage: 0
-x-ms-office365-filtering-correlation-id: 1c891e18-0c8e-4440-8194-08d8d536d3ce
-x-ms-traffictypediagnostic: DM6NAM12HT009:
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: tWkKsxYCNeFgJofMKvHyQzNlF1bh7hbTA/mGmwYAXPhMoxRU4o8c626kvz85d1JyFswGjnmANk/L3zvsFu7/UVC04SB9BHRvBU6f5QqxnGpdpRamn+HmYdHAytzWIP6jtva8zhfCOKn/IzYZ1CMOCix/Uy7qy6R/Vnu7Qv7Q1ZenVn6iWJHEt4SyVqmIwXemH3CmOllwYAaHfNWQHG2BjyLRNtH6syFJzHQNVZwHUxnxUrfsBmFcd3jxoW+UwDpsquUDcc00vAmPh9EDGiScrDe5NERzL+vgw8092cbMBZ7IWO+PYK5wZhuyGCMmIbNBWb+Pj9d0wPckt9MWhQDnmsDHn9K2MVwn0HkyGfnbvEU5rYQKTjv38qgANxNUkgAXApSgZlRSq6YFgZ/Hk9t3Pw==
-x-ms-exchange-antispam-messagedata: OTqxjFbApkPaAMMvaL/XEj+EzNCSTD0kY0MfvatRcTShwHfXrl72C0NlmsSHfRxflpaPGqf7DGNVzuEb7FyKUq3acIV3FwLthEQwZTGstYDkeQ4ui+WutUmX5zThhEUoRoWsqdqhJU+9e18u74tEMQ==
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_BYAPR14MB23420BA1183F22A48EF8B97ACF839BYAPR14MB2342namp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dj91r6Vjvz3bVd
+ for <openbmc@lists.ozlabs.org>; Sat, 20 Feb 2021 11:54:08 +1100 (AEDT)
+IronPort-SDR: IAHXUtOONS+8OZEBl/1nJ/8QwrjJ69OW8mIl7Lzhb7QQmVaNbWikKI5ZOGVy3UZcMh34FDDcVS
+ wGEn7Jahm+Rw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9900"; a="163790621"
+X-IronPort-AV: E=Sophos;i="5.81,191,1610438400"; 
+ d="scan'208,217";a="163790621"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Feb 2021 16:52:58 -0800
+IronPort-SDR: RXG+xliCoNZvXEu82EZIElhXiNQnh/4DV4qc2WKH+S65M0UY40+IhWySRLqckWKM7EC/Y6ssMH
+ 42Xv4WjiLBHg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,191,1610438400"; 
+ d="scan'208,217";a="379095437"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga002.jf.intel.com with ESMTP; 19 Feb 2021 16:52:58 -0800
+Received: from shwdeopenbmc (shwdeopenbmc.ccr.corp.intel.com [10.239.164.28])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id AA6805800BD;
+ Fri, 19 Feb 2021 16:52:57 -0800 (PST)
+Date: Sat, 20 Feb 2021 08:52:58 +0800
+From: "chunhui.jia" <chunhui.jia@linux.intel.com>
+To: "Kun Zhao" <zkxz@hotmail.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re:  overlayFS security concern
+In-Reply-To: <BYAPR14MB23420BA1183F22A48EF8B97ACF839@BYAPR14MB2342.namprd14.prod.outlook.com>
+References: <BYAPR14MB23420BA1183F22A48EF8B97ACF839@BYAPR14MB2342.namprd14.prod.outlook.com>
+X-Mailer: NetEase FlashMail 2.4.1.32
+X-Priority: 3 (Normal)
 MIME-Version: 1.0
-X-OriginatorOrg: hotmail.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-AuthSource: DM6NAM12FT003.eop-nam12.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1c891e18-0c8e-4440-8194-08d8d536d3ce
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Feb 2021 00:31:13.0072 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6NAM12HT009
+Message-ID: <60305D66.2050303@linux.intel.com>
+Content-Type: multipart/alternative;
+ boundary="NetEase-FlashMail-003-67bad9f5-2744-44e7-810d-3e4cd01bf8bf"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,184 +67,146 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BYAPR14MB23420BA1183F22A48EF8B97ACF839BYAPR14MB2342namp_
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+--NetEase-FlashMail-003-67bad9f5-2744-44e7-810d-3e4cd01bf8bf
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Hi Team,
+TWFpbnRhaW5pbmcgMiBkaWZmZXJlbnQgYnVpbGQgY29uZmlndXJhdGlvbnMgd291bGQgYmUgcG9z
+c2libGUgc29sdXRpb246ICBkZXYgYnVpbGQgYW5kIHJlbGVhc2UgYnVpbGQuIA0KMS4gZW5hYmxl
+IGRlYnVnZ2luZyB0ZWNoIGluIGRldiBidWlsZC4gDQoyLiB3aGVuIHVzaW5nIG9wZW5ibWMgZm9y
+IHByb2R1Y3QsIGRpc2FibGUgYWxsIHBvdGVudGlhbCB3YXlzIHRoYXQgY291bGQgaGFybSBzZWN1
+cml0eS4NCg0KDQoyMDIxLTAyLTIwIA0KDQpjaHVuaHVpLmppYSANCg0KDQoNCuWPkeS7tuS6uu+8
+mkt1biBaaGFvIDx6a3h6QGhvdG1haWwuY29tPg0K5Y+R6YCB5pe26Ze077yaMjAyMS0wMi0yMCAw
+ODozMQ0K5Li76aKY77yab3ZlcmxheUZTIHNlY3VyaXR5IGNvbmNlcm4NCuaUtuS7tuS6uu+8miJv
+cGVuYm1jQGxpc3RzLm96bGFicy5vcmciPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NCuaKhOmA
+ge+8mg0KDQpIaSBUZWFtLA0KIA0KSGF2ZSB0aGUgZm9sbG93aW5nIGNhc2UgZXZlciBiZWVuIGRp
+c2N1c3NlZCBiZWZvcmU/LA0KQW55b25lIGtub3dzIHRoZSByb290IHBhc3N3b3JkIHdpbGwgYmUg
+YWJsZSB0byBsZXQgYm1jIHJ1biB0aGVpciBvd24gY29kZSBieSBzY3AgdGhlIGNvZGUgaW50byBi
+bWMgd2l0aCB0aGUgc2FtZSBmaWxlIHBhdGggYXMgYW55IHNlcnZpY2VzIGluIHJvb3Rmcy4gSXQg
+d2lsbCBtYWtlIHRoZSBzZWN1cmUgYm9vdCB0b3RhbGx5IHVzZWxlc3MuDQogDQpTbyBiZXNpZGVz
+LA0KMS4gZGlzYWJsZSBzY3AgKGJ1dCBzY3AgaXMgb25lIG9mIHRoZSBmaXJtd2FyZSB1cGxvYWQg
+d2F5KQ0KMi4gZG9u4oCZdCB1c2Ugb3ZlcmxheUZTIChidXQgaXTigJlzIHJlYWxseSB1c2VmdWwg
+Zm9yIGRlYnVnZ2luZyBkdXJpbmcgZGV2ZWxvcCwgYW5kIGNvbmZpZ3VyYXRpb24gbWFuYWdlbWVu
+dCkNCkFueSBvdGhlciBzb2x1dGlvbnM/DQogDQogDQogDQpUaGFua3MuDQpLdW4NCiA=
 
-Have the following case ever been discussed before?,
-Anyone knows the root password will be able to let bmc run their own code b=
-y scp the code into bmc with the same file path as any services in rootfs. =
-It will make the secure boot totally useless.
+--NetEase-FlashMail-003-67bad9f5-2744-44e7-810d-3e4cd01bf8bf
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-So besides,
-1. disable scp (but scp is one of the firmware upload way)
-2. don=92t use overlayFS (but it=92s really useful for debugging during dev=
-elop, and configuration management)
-Any other solutions?
+PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
+L0VOIj4NCjxIVE1MIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIiB4bWxu
+czpvID0gDQoidXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4bWxuczp3
+ID0gDQoidXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bSA9IA0K
+Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vb2ZmaWNlLzIwMDQvMTIvb21tbCI+PEhFQUQ+
+DQo8TUVUQSBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiIGh0dHAtZXF1aXY9Q29u
+dGVudC1UeXBlPg0KPE1FVEEgbmFtZT1HRU5FUkFUT1IgY29udGVudD0iTVNIVE1MIDExLjAwLjEw
+NTcwLjEwMDEiPg0KPFNUWUxFPjwhLS0KLyogRm9udCBEZWZpbml0aW9ucyAqLwpAZm9udC1mYWNl
+Cgl7Zm9udC1mYW1pbHk6V2luZ2RpbmdzOwoJcGFub3NlLTE6NSAwIDAgMCAwIDAgMCAwIDAgMDt9
+CkBmb250LWZhY2UKCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsKCXBhbm9zZS0xOjIgNCA1
+IDMgNSA0IDYgMyAyIDQ7fQpAZm9udC1mYWNlCgl7Zm9udC1mYW1pbHk6RGVuZ1hpYW47CglwYW5v
+c2UtMToyIDEgNiAwIDMgMSAxIDEgMSAxO30KQGZvbnQtZmFjZQoJe2ZvbnQtZmFtaWx5OkNhbGli
+cmk7CglwYW5vc2UtMToyIDE1IDUgMiAyIDIgNCAzIDIgNDt9CkBmb250LWZhY2UKCXtmb250LWZh
+bWlseToiXEBEZW5nWGlhbiI7CglwYW5vc2UtMToyIDEgNiAwIDMgMSAxIDEgMSAxO30KLyogU3R5
+bGUgRGVmaW5pdGlvbnMgKi8KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1h
+bAoJe21hcmdpbjowaW47Cglmb250LXNpemU6MTEuMHB0OwoJZm9udC1mYW1pbHk6IkNhbGlicmki
+LHNhbnMtc2VyaWY7fQpzcGFuLkRlZmF1bHRGb250SHhNYWlsU3R5bGUKCXttc28tc3R5bGUtbmFt
+ZToiRGVmYXVsdCBGb250IEh4TWFpbCBTdHlsZSI7Cglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fu
+cy1zZXJpZjsKCWNvbG9yOndpbmRvd3RleHQ7Cglmb250LXdlaWdodDpub3JtYWw7Cglmb250LXN0
+eWxlOm5vcm1hbDsKCXRleHQtZGVjb3JhdGlvbjpub25lIG5vbmU7fQouTXNvQ2hwRGVmYXVsdAoJ
+e21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5O30KQHBhZ2UgV29yZFNlY3Rpb24xCgl7c2l6ZTo4
+LjVpbiAxMS4waW47CgltYXJnaW46MS4waW4gMS4yNWluIDEuMGluIDEuMjVpbjt9CmRpdi5Xb3Jk
+U2VjdGlvbjEKCXtwYWdlOldvcmRTZWN0aW9uMTt9Ci8qIExpc3QgRGVmaW5pdGlvbnMgKi8KQGxp
+c3QgbDAKCXttc28tbGlzdC1pZDo4OTAwNzAwNTE7Cgltc28tbGlzdC10eXBlOmh5YnJpZDsKCW1z
+by1saXN0LXRlbXBsYXRlLWlkczotMTIzNzkyMzMxOCA2NzY5ODY4OSA2NzY5ODY5MSA2NzY5ODY5
+MyA2NzY5ODY4OSA2NzY5ODY5MSA2NzY5ODY5MyA2NzY5ODY4OSA2NzY5ODY5MSA2NzY5ODY5Mzt9
+CkBsaXN0IGwwOmxldmVsMQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsKCW1zby1s
+ZXZlbC10ZXh0OlxGMEI3OwoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7Cgltc28tbGV2ZWwtbnVt
+YmVyLXBvc2l0aW9uOmxlZnQ7Cgl0ZXh0LWluZGVudDotLjI1aW47Cglmb250LWZhbWlseTpTeW1i
+b2w7fQpAbGlzdCBsMDpsZXZlbDIKCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7Cglt
+c28tbGV2ZWwtdGV4dDpvOwoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7Cgltc28tbGV2ZWwtbnVt
+YmVyLXBvc2l0aW9uOmxlZnQ7Cgl0ZXh0LWluZGVudDotLjI1aW47Cglmb250LWZhbWlseToiQ291
+cmllciBOZXciO30KQGxpc3QgbDA6bGV2ZWwzCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVs
+bGV0OwoJbXNvLWxldmVsLXRleHQ6XEYwQTc7Cgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsKCW1z
+by1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsKCXRleHQtaW5kZW50Oi0uMjVpbjsKCWZvbnQt
+ZmFtaWx5OldpbmdkaW5nczt9CkBsaXN0IGwwOmxldmVsNAoJe21zby1sZXZlbC1udW1iZXItZm9y
+bWF0OmJ1bGxldDsKCW1zby1sZXZlbC10ZXh0OlxGMEI3OwoJbXNvLWxldmVsLXRhYi1zdG9wOm5v
+bmU7Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7Cgl0ZXh0LWluZGVudDotLjI1aW47
+Cglmb250LWZhbWlseTpTeW1ib2w7fQpAbGlzdCBsMDpsZXZlbDUKCXttc28tbGV2ZWwtbnVtYmVy
+LWZvcm1hdDpidWxsZXQ7Cgltc28tbGV2ZWwtdGV4dDpvOwoJbXNvLWxldmVsLXRhYi1zdG9wOm5v
+bmU7Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7Cgl0ZXh0LWluZGVudDotLjI1aW47
+Cglmb250LWZhbWlseToiQ291cmllciBOZXciO30KQGxpc3QgbDA6bGV2ZWw2Cgl7bXNvLWxldmVs
+LW51bWJlci1mb3JtYXQ6YnVsbGV0OwoJbXNvLWxldmVsLXRleHQ6XEYwQTc7Cgltc28tbGV2ZWwt
+dGFiLXN0b3A6bm9uZTsKCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsKCXRleHQtaW5k
+ZW50Oi0uMjVpbjsKCWZvbnQtZmFtaWx5OldpbmdkaW5nczt9CkBsaXN0IGwwOmxldmVsNwoJe21z
+by1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsKCW1zby1sZXZlbC10ZXh0OlxGMEI3OwoJbXNv
+LWxldmVsLXRhYi1zdG9wOm5vbmU7Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7Cgl0
+ZXh0LWluZGVudDotLjI1aW47Cglmb250LWZhbWlseTpTeW1ib2w7fQpAbGlzdCBsMDpsZXZlbDgK
+CXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7Cgltc28tbGV2ZWwtdGV4dDpvOwoJbXNv
+LWxldmVsLXRhYi1zdG9wOm5vbmU7Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7Cgl0
+ZXh0LWluZGVudDotLjI1aW47Cglmb250LWZhbWlseToiQ291cmllciBOZXciO30KQGxpc3QgbDA6
+bGV2ZWw5Cgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVsbGV0OwoJbXNvLWxldmVsLXRleHQ6
+XEYwQTc7Cgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsKCW1zby1sZXZlbC1udW1iZXItcG9zaXRp
+b246bGVmdDsKCXRleHQtaW5kZW50Oi0uMjVpbjsKCWZvbnQtZmFtaWx5OldpbmdkaW5nczt9Cm9s
+Cgl7bWFyZ2luLWJvdHRvbTowaW47fQp1bAoJe21hcmdpbi1ib3R0b206MGluO30KLS0+PC9TVFlM
+RT4NCjwhLS0gZmxhc2htYWlsIHN0eWxlIGJlZ2luIC0tPg0KPFNUWUxFIHR5cGU9dGV4dC9jc3M+
+CmJvZHkge2JvcmRlci13aWR0aDowO21hcmdpbjowfQppbWcge2JvcmRlcjowO21hcmdpbjowO3Bh
+ZGRpbmc6MH0KPC9TVFlMRT4NCjxCQVNFIHRhcmdldD1fYmxhbms+PCEtLSBmbGFzaG1haWwgc3R5
+bGUgZW5kIC0tPjwvSEVBRD4NCjxCT0RZIA0Kc3R5bGU9IkJPUkRFUi1MRUZULVdJRFRIOiAwcHg7
+IEZPTlQtU0laRTogMTAuNXB0OyBGT05ULUZBTUlMWTogYXJpYWw7IEJPUkRFUi1SSUdIVC1XSURU
+SDogMHB4OyBCT1JERVItQk9UVE9NLVdJRFRIOiAwcHg7IENPTE9SOiAjMDAwMDAwOyBNQVJHSU46
+IDEycHg7IExJTkUtSEVJR0hUOiAxLjU7IEJPUkRFUi1UT1AtV0lEVEg6IDBweCIgDQptYXJnaW5o
+ZWlnaHQ9IjAiIG1hcmdpbndpZHRoPSIwIj4NCjxESVY+TWFpbnRhaW5pbmcgMiBkaWZmZXJlbnQg
+YnVpbGQgY29uZmlndXJhdGlvbnMgd291bGQgYmUgcG9zc2libGUgc29sdXRpb246IA0KJm5ic3A7
+ZGV2IGJ1aWxkIGFuZCByZWxlYXNlIGJ1aWxkLiA8L0RJVj4NCjxESVY+MS4gZW5hYmxlIGRlYnVn
+Z2luZyB0ZWNoIGluJm5ic3A7ZGV2IGJ1aWxkLiA8L0RJVj4NCjxESVY+Mi4gd2hlbiB1c2luZyBv
+cGVuYm1jIGZvciBwcm9kdWN0LCBkaXNhYmxlIGFsbCBwb3RlbnRpYWwgd2F5cyZuYnNwO3RoYXQg
+DQpjb3VsZCBoYXJtIHNlY3VyaXR5LjwvRElWPg0KPERJVj4mbmJzcDs8L0RJVj4NCjxESVY+Jm5i
+c3A7PC9ESVY+DQo8RElWIHN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQtRkFNSUxZOiBWZXJk
+YW5hOyBDT0xPUjogI2MwYzBjMCIgDQphbGlnbj1sZWZ0PjIwMjEtMDItMjAgDQo8SFIgaWQ9U2ln
+bk5hbWVIUiANCnN0eWxlPSJCT1JERVItVE9QOiAjYzBjMGMwIDFweCBzb2xpZDsgSEVJR0hUOiAx
+cHg7IEJPUkRFUi1SSUdIVDogMHB4OyBXSURUSDogMTIycHg7IEJPUkRFUi1CT1RUT006IDBweDsg
+Qk9SREVSLUxFRlQ6IDBweCIgDQphbGlnbj1sZWZ0Pg0KPFNQQU4gaWQ9X0ZsYXNoU2lnbk5hbWU+
+Y2h1bmh1aS5qaWE8L1NQQU4+IDwvRElWPg0KPEhSIA0Kc3R5bGU9IkJPUkRFUi1UT1A6ICNjMGMw
+YzAgMXB4IHNvbGlkOyBIRUlHSFQ6IDFweDsgQk9SREVSLVJJR0hUOiAwcHg7IEJPUkRFUi1CT1RU
+T006IDBweDsgQk9SREVSLUxFRlQ6IDBweCI+DQoNCjxCTE9DS1FVT1RFIGlkPW50ZXMtZmxhc2ht
+YWlsLXF1b3RlIA0Kc3R5bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1GQU1JTFk6IFZlcmRhbmE7
+IFBBRERJTkctTEVGVDogMHB4OyBNQVJHSU4tTEVGVDogMHB4Ij4NCiAgPERJVj48U1RST05HPuWP
+keS7tuS6uu+8mjwvU1RST05HPkt1biBaaGFvICZsdDt6a3h6QGhvdG1haWwuY29tJmd0OzwvRElW
+Pg0KICA8RElWPjxTVFJPTkc+5Y+R6YCB5pe26Ze077yaPC9TVFJPTkc+MjAyMS0wMi0yMCZuYnNw
+OzA4OjMxPC9ESVY+DQogIDxESVY+PFNUUk9ORz7kuLvpopjvvJo8L1NUUk9ORz5vdmVybGF5RlMg
+c2VjdXJpdHkgY29uY2VybjwvRElWPg0KICA8RElWPjxTVFJPTkc+5pS25Lu25Lq677yaPC9TVFJP
+Tkc+Im9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyImbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
+Jmd0OzwvRElWPg0KICA8RElWPjxTVFJPTkc+5oqE6YCB77yaPC9TVFJPTkc+PC9ESVY+DQogIDxE
+SVY+Jm5ic3A7PC9ESVY+DQogIDxESVY+DQogIDxESVYgY2xhc3M9V29yZFNlY3Rpb24xPg0KICA8
+UCBjbGFzcz1Nc29Ob3JtYWw+PFNQQU4gY2xhc3M9RGVmYXVsdEZvbnRIeE1haWxTdHlsZT5IaSAN
+CiAgVGVhbSw8bzpwPjwvbzpwPjwvU1BBTj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BB
+TiANCiAgY2xhc3M9RGVmYXVsdEZvbnRIeE1haWxTdHlsZT48bzpwPiZuYnNwOzwvbzpwPjwvU1BB
+Tj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BBTiBjbGFzcz1EZWZhdWx0Rm9udEh4TWFp
+bFN0eWxlPkhhdmUgdGhlIGZvbGxvd2luZyBjYXNlIA0KICBldmVyIGJlZW4gZGlzY3Vzc2VkIGJl
+Zm9yZT8sPG86cD48L286cD48L1NQQU4+PC9QPg0KICA8UCBjbGFzcz1Nc29Ob3JtYWw+PFNQQU4g
+Y2xhc3M9RGVmYXVsdEZvbnRIeE1haWxTdHlsZT5BbnlvbmUga25vd3MgdGhlIHJvb3QgDQogIHBh
+c3N3b3JkIHdpbGwgYmUgYWJsZSB0byBsZXQgYm1jIHJ1biB0aGVpciBvd24gY29kZSBieSBzY3Ag
+dGhlIGNvZGUgaW50byBibWMgDQogIHdpdGggdGhlIHNhbWUgZmlsZSBwYXRoIGFzIGFueSBzZXJ2
+aWNlcyBpbiByb290ZnMuIEl0IHdpbGwgbWFrZSB0aGUgc2VjdXJlIA0KICBib290IHRvdGFsbHkg
+dXNlbGVzcy48bzpwPjwvbzpwPjwvU1BBTj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BB
+TiANCiAgY2xhc3M9RGVmYXVsdEZvbnRIeE1haWxTdHlsZT48bzpwPiZuYnNwOzwvbzpwPjwvU1BB
+Tj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BBTiBjbGFzcz1EZWZhdWx0Rm9udEh4TWFp
+bFN0eWxlPlNvIA0KICBiZXNpZGVzLDxvOnA+PC9vOnA+PC9TUEFOPjwvUD4NCiAgPFAgY2xhc3M9
+TXNvTm9ybWFsPjxTUEFOIGNsYXNzPURlZmF1bHRGb250SHhNYWlsU3R5bGU+MS4gZGlzYWJsZSBz
+Y3AgKGJ1dCBzY3AgDQogIGlzIG9uZSBvZiB0aGUgZmlybXdhcmUgdXBsb2FkIHdheSk8bzpwPjwv
+bzpwPjwvU1BBTj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BBTiBjbGFzcz1EZWZhdWx0
+Rm9udEh4TWFpbFN0eWxlPjIuIGRvbuKAmXQgdXNlIG92ZXJsYXlGUyANCiAgKGJ1dCBpdOKAmXMg
+cmVhbGx5IHVzZWZ1bCBmb3IgZGVidWdnaW5nIGR1cmluZyBkZXZlbG9wLCBhbmQgY29uZmlndXJh
+dGlvbiANCiAgbWFuYWdlbWVudCk8bzpwPjwvbzpwPjwvU1BBTj48L1A+DQogIDxQIGNsYXNzPU1z
+b05vcm1hbD48U1BBTiBjbGFzcz1EZWZhdWx0Rm9udEh4TWFpbFN0eWxlPkFueSBvdGhlciANCiAg
+c29sdXRpb25zPzxvOnA+PC9vOnA+PC9TUEFOPjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsPjxT
+UEFOIA0KICBjbGFzcz1EZWZhdWx0Rm9udEh4TWFpbFN0eWxlPjxvOnA+Jm5ic3A7PC9vOnA+PC9T
+UEFOPjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsPjxvOnA+Jm5ic3A7PC9vOnA+PC9QPg0KICA8
+UCBjbGFzcz1Nc29Ob3JtYWw+PG86cD4mbmJzcDs8L286cD48L1A+DQogIDxQIGNsYXNzPU1zb05v
+cm1hbD5UaGFua3MuPG86cD48L286cD48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD5LdW48bzpw
+PjwvbzpwPjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsPjxTUEFOIA0KICBjbGFzcz1EZWZhdWx0
+Rm9udEh4TWFpbFN0eWxlPjxvOnA+Jm5ic3A7PC9vOnA+PC9TUEFOPjwvUD48L0RJVj48L0RJVj48
+L0JMT0NLUVVPVEU+PC9CT0RZPjwvSFRNTD4=
 
+--NetEase-FlashMail-003-67bad9f5-2744-44e7-810d-3e4cd01bf8bf--
 
-
-Thanks.
-Kun
-
-
---_000_BYAPR14MB23420BA1183F22A48EF8B97ACF839BYAPR14MB2342namp_
-Content-Type: text/html; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
-hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
-fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
-252">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:DengXian;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@DengXian";
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.DefaultFontHxMailStyle
-	{mso-style-name:"Default Font HxMail Style";
-	font-family:"Calibri",sans-serif;
-	color:windowtext;
-	font-weight:normal;
-	font-style:normal;
-	text-decoration:none none;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.25in 1.0in 1.25in;}
-div.WordSection1
-	{page:WordSection1;}
-/* List Definitions */
-@list l0
-	{mso-list-id:890070051;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-1237923318 67698689 67698691 67698693 67698689 6769=
-8691 67698693 67698689 67698691 67698693;}
-@list l0:level1
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Symbol;}
-@list l0:level2
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level3
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0A7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-@list l0:level4
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Symbol;}
-@list l0:level5
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level6
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0A7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-@list l0:level7
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Symbol;}
-@list l0:level8
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level9
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0A7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-ol
-	{margin-bottom:0in;}
-ul
-	{margin-bottom:0in;}
---></style>
-</head>
-<body lang=3D"EN-US" style=3D"word-wrap:break-word">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">Hi Team,<o:p>=
-</o:p></span></p>
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
-o:p></span></p>
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">Have the foll=
-owing case ever been discussed before?,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">Anyone knows =
-the root password will be able to let bmc run their own code by scp the cod=
-e into bmc with the same file path as any services in rootfs. It will make =
-the secure boot totally useless.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
-o:p></span></p>
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">So besides,<o=
-:p></o:p></span></p>
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">1. disable sc=
-p (but scp is one of the firmware upload way)<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">2. don=92t us=
-e overlayFS (but it=92s really useful for debugging during develop, and con=
-figuration management)<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle">Any other sol=
-utions?<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
-o:p></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks.<o:p></o:p></p>
-<p class=3D"MsoNormal">Kun<o:p></o:p></p>
-<p class=3D"MsoNormal"><span class=3D"DefaultFontHxMailStyle"><o:p>&nbsp;</=
-o:p></span></p>
-</div>
-</body>
-</html>
-
---_000_BYAPR14MB23420BA1183F22A48EF8B97ACF839BYAPR14MB2342namp_--
