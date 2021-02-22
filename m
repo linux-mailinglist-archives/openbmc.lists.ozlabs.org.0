@@ -1,77 +1,131 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85147320E8F
-	for <lists+openbmc@lfdr.de>; Mon, 22 Feb 2021 00:41:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C83B83211F7
+	for <lists+openbmc@lfdr.de>; Mon, 22 Feb 2021 09:26:05 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DkMK62mylz30Mx
-	for <lists+openbmc@lfdr.de>; Mon, 22 Feb 2021 10:41:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DkZyM6WyHz3bPY
+	for <lists+openbmc@lfdr.de>; Mon, 22 Feb 2021 19:26:03 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=JCaFMk6x;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=Oo7eZv6D;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52f;
- helo=mail-pg1-x52f.google.com; envelope-from=williethaitu@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=JCaFMk6x; dkim-atps=neutral
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com
- [IPv6:2607:f8b0:4864:20::52f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.93.93;
+ helo=nam10-dm6-obe.outbound.protection.outlook.com;
+ envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=Oo7eZv6D; 
+ dkim-atps=neutral
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10on2093.outbound.protection.outlook.com [40.107.93.93])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DhjRW3GR2z30Qf
- for <openbmc@lists.ozlabs.org>; Fri, 19 Feb 2021 18:11:18 +1100 (AEDT)
-Received: by mail-pg1-x52f.google.com with SMTP id p21so3125294pgl.12
- for <openbmc@lists.ozlabs.org>; Thu, 18 Feb 2021 23:11:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=qE18/BrZ1tRgI+5cT12rehCUB0WCiL8kZ1C+arbQ+ak=;
- b=JCaFMk6x8eTHUdMDll+Otr57O3SWHQBzzHRRqt8LTAsIPUjf2wps7PPLbkPlDeXmVS
- k7n5UNSmRyVDttZ1FDA8NlBz3tFxB+NQdKKGnFRhjx28t6UAwibYKJLu2P65SNgoInva
- 63JBw4V+8Ya0/+CYihnWoJwgHscriVhX77uXSN5SHHiYgw+zQn4a6o+H/3lk18wYCJSx
- 1MlQy045dWnSu483phiSIR4wXxma7PhTbkMnBhLQz0uN9QHNmfNjVpA5MZk8BVPc8MWr
- p5aVpRZ4gvdtXIsxJlsj5UO+Ptn2fRr/8C3+iAR5vwkKKzys2yG9jx+a0k+4Dr0LxLx0
- ABvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references;
- bh=qE18/BrZ1tRgI+5cT12rehCUB0WCiL8kZ1C+arbQ+ak=;
- b=DgY3eI2keDH6N0famwGEM7y3QT/qyDqGuN/6DbB8r7wGrLY2F1Fx/i4c1LASoVuzo/
- 7UZIFNllvjE8MXIs/N6zSld+/gPxiwmrgUwTg7ibZxBfHR2NEvK3cUAC8svy8xAoVlR3
- Vv5dXVQTDoQMFNXMt4SvWdh9PYtgtZXlUZTXjSKfzTKZn707MAM8pPl5OvEAPcl9o5I7
- 8o7630c2bTGxPeynl7vzS5nD6ZTZ2B1zPC0KStJSu7wjwIbC5pA6Vl00EirLg7JREMIL
- 2qGXjFHWUc2FQE8EayhlADhtn0iKNWToWe7QlMHOMeNuez+SoLPOTUYHpKQvP2Ddv4Oa
- Sltg==
-X-Gm-Message-State: AOAM531nODsKljaxrtTea/eIeGUMRqmUrr1lv//qOKcF+QLNHtBTwR/V
- jl1BBMdwwxnp/q9eDGPhXSuY3hp2D7A=
-X-Google-Smtp-Source: ABdhPJzmrz9Ot5zCGHF62p6oWaGjimj+ot29Bd6caNiPiUBPExmkiMsZMMIiQIWDTESFG7n7d91B7A==
-X-Received: by 2002:aa7:8742:0:b029:1ed:4d14:7513 with SMTP id
- g2-20020aa787420000b02901ed4d147513mr626387pfo.66.1613718675103; 
- Thu, 18 Feb 2021 23:11:15 -0800 (PST)
-Received: from localhost.localdomain (125-227-158-249.HINET-IP.hinet.net.
- [125.227.158.249])
- by smtp.gmail.com with ESMTPSA id h186sm4546568pgc.38.2021.02.18.23.11.13
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 18 Feb 2021 23:11:14 -0800 (PST)
-From: Willie Thai <williethaitu@gmail.com>
-X-Google-Original-From: Willie Thai <willie_thai@compal.com>
-To: joel@jms.id.au,
-	openbmc@lists.ozlabs.org,
-	andrew@aj.id.au
-Subject: [[PATCH linux dev-5.8] ARM: dts: Aspeed: Add Compal's Liwu2 BMC
- machine] ARM: dts: aspeed: Add device tree for Compal's Liwu2 BMC
-Date: Fri, 19 Feb 2021 15:11:10 +0800
-Message-Id: <1613718670-24417-1-git-send-email-willie_thai@compal.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <CACPK8XfNrYFNy0KHjxa=nM01LV7PMnVC5U7_Wuudf_xk3tQ2iw@mail.gmail.com>
-References: <CACPK8XfNrYFNy0KHjxa=nM01LV7PMnVC5U7_Wuudf_xk3tQ2iw@mail.gmail.com>
-X-Mailman-Approved-At: Mon, 22 Feb 2021 10:41:17 +1100
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DkZy526FGz30Km
+ for <openbmc@lists.ozlabs.org>; Mon, 22 Feb 2021 19:25:46 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Rf2St/W5Egt7xDp8EevotoxxCg1NZca+WF/nwoDLxnAWTXGrUjGknGzQrBQfNM9NkxbnBaXEiBnzMZCjmuDhOddZiaVz5SoDR2ZfRbZlPRMNFZw+TVOoGcTEuweWd+wDFc9wi93XJeK7GoK4yVUCIrdZAuR4xHD+hOpwjJgf4mnq2YlfBEYRlFxd4VyBCwI0T+OO+RMh1F6KvLsrSanYXHL9LXbwcWfWUzpy5LSLjWwekCsNc/EJVu+z9xs4CMVvJ2VlAzF5bxbILhnIH8XRxHvzfs/70cHv47UYBQlAftaJZUGS+JTnoR1USJcbYUduuzdfPNYeYYTc4UG/FoDNSQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Dm/KZ5erH7ns+cZ8aJ5YoPyjZk9rb/3Du0AnWyLv6s0=;
+ b=FX9DacLQ4aos3pnbCEqbrVibw7xFE/qVzSRe/Xm3zdYJgthjB2YMjCpC9RW8/YADdrUzsVwoLsqyel1h6gil7UwOKnpXcMNnlGxpEQHfTVF2V4IeqyAejgJJVwodk8pqHUQGNX2fGTu+jrGhB9r8IKUlw3Fb9V5JYlKiYQlQD7w0HPYvdx46kBDl5ewUrRwiGpCn5Yl8Rjn99u/nJVpJX7Jf/VIgRIgAmy4FXr42VhHcrf6zSE2pN80hw7HXw554qK6mlqGgxDHeVCv4KFwIP/KRThF+4hSUEEZzEUAEJo7eEF4jSzcH/v7EKPw0f0seUSTIkZsKzPEbwXig9u2WjQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Dm/KZ5erH7ns+cZ8aJ5YoPyjZk9rb/3Du0AnWyLv6s0=;
+ b=Oo7eZv6DTzi9B4ysqEDE+76o7VDY/V1seXW9P3n7w0Sow/LhtBVuRZuZFSBsB3Y0Tc7nUagY3u/BRs0rN8wOioeyvrE/PMMCDXEy8NcZlEuPe6AKqxAVGp2hNez09zycSLHOEBcBEVUMHB4ZDfE/jSxhCGu4Lom0z0GOUzp12Co=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=os.amperecomputing.com;
+Received: from BYAPR01MB4678.prod.exchangelabs.com (2603:10b6:a03:88::27) by
+ BYAPR01MB5447.prod.exchangelabs.com (2603:10b6:a03:120::14) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3846.34; Mon, 22 Feb 2021 08:25:39 +0000
+Received: from BYAPR01MB4678.prod.exchangelabs.com
+ ([fe80::650e:6480:5f2a:4b96]) by BYAPR01MB4678.prod.exchangelabs.com
+ ([fe80::650e:6480:5f2a:4b96%6]) with mapi id 15.20.3825.040; Mon, 22 Feb 2021
+ 08:25:38 +0000
+Subject: Re: Any convention on putting source codes into openbmc/openbmc
+ repository
+To: Patrick Williams <patrick@stwcx.xyz>, Joel Stanley <joel@jms.id.au>
+References: <71820e5a-1231-1937-1344-dee9f4a03600@os.amperecomputing.com>
+ <CADfYTpF9yX0xheCwu5mftWs9b4YAe=ttGNNsf7GL8KkpW4dAcw@mail.gmail.com>
+ <42403202-49c9-2b85-1207-4c84ec491332@os.amperecomputing.com>
+ <CACPK8XdFxB4JQR09tNvV-DN4V4fiUmbY2_7+MArh_jdAs1YVkQ@mail.gmail.com>
+ <YDFBBgX2kRHMlGQK@heinlein>
+From: Thang Nguyen <thang@os.amperecomputing.com>
+Message-ID: <a53b3558-5502-9e87-7ec2-13b578e1fedd@os.amperecomputing.com>
+Date: Mon, 22 Feb 2021 15:25:31 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.1
+In-Reply-To: <YDFBBgX2kRHMlGQK@heinlein>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [118.69.219.201]
+X-ClientProxiedBy: HK2PR02CA0167.apcprd02.prod.outlook.com
+ (2603:1096:201:1f::27) To BYAPR01MB4678.prod.exchangelabs.com
+ (2603:10b6:a03:88::27)
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from HCM-FVFX4014HV2J.local (118.69.219.201) by
+ HK2PR02CA0167.apcprd02.prod.outlook.com (2603:1096:201:1f::27) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3868.27 via Frontend Transport; Mon, 22 Feb 2021 08:25:37 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 3d38a44f-28d3-4abf-befa-08d8d70b6f49
+X-MS-TrafficTypeDiagnostic: BYAPR01MB5447:
+X-Microsoft-Antispam-PRVS: <BYAPR01MB5447968DAA191C6A0BD3573E8D819@BYAPR01MB5447.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: NgUd8m540aIEnODaj4Y6Nvx8FYG8NIX2FHayXBKMtXetzElJ/uS/aXJyxhbiKpSQqZSTLLj9rlmPFjtHEZQ3fNAq4LtukyqnJANwynAczHWKsbiIEYRYKQhFJGW46kNKcH9YgGq//O2OjUXg4RiRfA0OBFNJ1mayVRPUNuIeU1AdjL3XSMYuPbqDKG2O3puHlwV1TdJa/KR0tvlOb8ZpMOrJJFw65wh5pKmrQaXaTW/0Owpk7tck5db4SvPzxc9px1S2sbm2F4WVfw4seXBqKBsvuvKway3s2TJEIiTf6ZL1YI4FJSdL/gCHBKhABELVhj1O+J7JD73SizwEGiuB9WlvEqobFE//nrBAU3PIYq2N0IDnKE67nc+Q7frvUyZqqd61hMMOW/G0tWzPo8DKoKH7NANGUTyibd9Dlr5xhf4MapmLZ++xalCr05VzSmC3HXY/HSPATaL3Tiz/4qji2MkrqJxC0RzpgU00DZ9yYAU4tdJfOhmLYE00HaZl2HiK/fKI70vUo2mP4sYqJeHRlBT7tDxp4XexcbRuUkbtg0HwvqfB5tTTkRBBlL85Lng871GqXh9YV1TU25IYGECTBN3DzZdICr7NLMn6r1oOIERP2yFA2ZncHps9s0b0dqmzDepJL+zwG5ALMGTuVP/jM3nLVDnZmLd1vLXiO/nd3l7pIeJdVaIy+esAKONV3vHycUINDUIxahWTzl5/JJ5Ofw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BYAPR01MB4678.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(39840400004)(136003)(396003)(376002)(366004)(346002)(478600001)(8676002)(66946007)(6506007)(2906002)(6666004)(66476007)(19273905006)(53546011)(66556008)(5660300002)(110136005)(26005)(966005)(52116002)(6486002)(31696002)(31686004)(956004)(186003)(2616005)(316002)(16526019)(4326008)(8936002)(86362001)(6512007)(45980500001)(43740500002)(563064011);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData: =?Windows-1252?Q?CX6ZRcZer6uPOeiFwhghcR+kbIdClD/02D0WQssQ6TzjQ/eMgzmqMlMs?=
+ =?Windows-1252?Q?WPYFxqEuJz1WzCsmTySetu2Pt12tEOiZSzBUmUeqzlmF56E20waDdeYF?=
+ =?Windows-1252?Q?BJ2INjc7Lp1HA8cL1rA+q5QAutvVSP9DunvmDhbi2C6ozKxYcgYl6R9U?=
+ =?Windows-1252?Q?aJ1Ks19u5BX4/EbHXU8GrlvcUB0/1FFUsiTuB4JU4qaLWcEetAhdAlqJ?=
+ =?Windows-1252?Q?mMzxlO0YWhnpaltdSfs3xI3ovA6UweMrcG+MtXk8zLloTRiDnixj8zah?=
+ =?Windows-1252?Q?knwOu55gnFaJpAEHispon3MGDcVZoU5563YXChERyzCrRkz8WmjEB53/?=
+ =?Windows-1252?Q?9P40RdDAOxgMwC3PG74IToeDYklcxAmikDkZL/ogRV5oR9aTxUPbDqxx?=
+ =?Windows-1252?Q?9K7wXLhQiqRxaRVMf6MnDN8vhZhZAhjTTWzwl2FLWrAeqgclqaAkQF+8?=
+ =?Windows-1252?Q?Og+jF71scnF/kDB3rb0dOHxqopmwtFIVaOAEBrOvX3St4J4Vd+EWXyfa?=
+ =?Windows-1252?Q?2uTCngCK8N/Zl1APi8NpwrjcCapP3YmwE3hc6WfSwtJhkzoENFJKqrlb?=
+ =?Windows-1252?Q?MwxBFbtPXW7pTwzCEfX/qKnp+DeqIBgHbjSUuefeF9rqsesxUoMr9AaU?=
+ =?Windows-1252?Q?ByBEIjFsWbCq/sEyN/+g/RRpDkwjBtJnqqMoTUYK9qxghT9at4eqGsD/?=
+ =?Windows-1252?Q?lxTw09dgRnkYPwmsiJ7lC+h6+fbm/WDQ3ObhJSTrDytl6hl5p+P+2vrV?=
+ =?Windows-1252?Q?pNLLpa00Ihj9VTRo53dT57phJW3Lxx/3d/8qTdukh4e1QhqhgfdItVgf?=
+ =?Windows-1252?Q?ohOj3IV11NGF3+tbSrrnZbjN9MrFd0mQ2GRTw48b8JtsNFzmk+jY5nc5?=
+ =?Windows-1252?Q?0VTllnf1AvGqmBEoRBDMVdyLIoCDQrdlYUFJQCMVM1jqZIZCcZhAcUoA?=
+ =?Windows-1252?Q?qM7zHjRm0esEkvTX3TmjWr7BF/KeHICeR6P2a5cX/5ML5DmveLFutrdu?=
+ =?Windows-1252?Q?EMnMW6pQYu4psmsMlWj59JaPEb22nrWheusyvijPOV2CgQt2Fgaj5Bms?=
+ =?Windows-1252?Q?HWr6AHQ5U0Savp8qkEhAs74ULNChMJgNsmax83yXe05NZ5tNZZPfC1YQ?=
+ =?Windows-1252?Q?BZ+C6DKC0Lcviq7G1YP6Y1j6aLOrIiOwCLhzDls++bzJ6gwz28t/jFRc?=
+ =?Windows-1252?Q?yMkm3RXKhyjNZEY0gmNxP/FKXPXAfC5STDamP2VCi+oAdIDHi7s5eK4W?=
+ =?Windows-1252?Q?ITNSIkIev2m0slfd/2IV2M+6JxzP3RK2cnhMHU9YjzfctafOXJ5PlSt1?=
+ =?Windows-1252?Q?ubEF5sK9VnVkjucr4VtQOeutTWVtLfrikad+lVKPD2AYBQkjK6qNIpql?=
+ =?Windows-1252?Q?kdOmGzaIkE2MDoRY8MgC+klAKXw8C7FvnyOPAp19FxmBa3C7Lp26wUgl?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3d38a44f-28d3-4abf-befa-08d8d70b6f49
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4678.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Feb 2021 08:25:38.6080 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Vwd5r+CTy1cxFFKVNdqkvgZJ0Q0nmi1Tv1T7Ck3Py5kAEJd10u9/ODlPmJVEujkj5lPWO+ijcY9JS9KMe8gBL/KW21xdMt2w25KuA552piU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB5447
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,364 +137,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Willie Thai <willie_thai@compal.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The Liwu2 is a server platform with an ASPEED AST2500 based BMC.
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: willie_thai@compal.com
----
- arch/arm/boot/dts/Makefile                    |   1 +
- arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts | 325 ++++++++++++++++++++++++++
- 2 files changed, 326 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts
+On 21/02/2021 00:04, Patrick Williams wrote:
+> On Thu, Feb 18, 2021 at 05:23:56AM +0000, Joel Stanley wrote:
+>> On Thu, 18 Feb 2021 at 01:31, Thang Nguyen <thang@os.amperecomputing.com> wrote:
+>>>
+>>> On 18/02/2021 06:46, Nancy Yuen wrote:
+>>>
+>>> Code should be put into an appropriate repo, and repos created where necessary.  Then referenced in recipes from openbmc/openbmc metalayers.
+>>>
+>> It's a requirement.
+> My opinion is that there are two reasons that come to my mind on why we
+> follow this convention right now beyond just that Yocto is happier with it:
+>
+>      1. We like to have a discussion before making a new repository to
+>         make sure we're not fragmenting the codebase more than necessary.
+>         Often problems/solutions overlap more than might seem obvious
+>         when you're looking at it just from your machine or architecture's
+>         perspective.  There may be some existing implementation that
+>         could be modified slightly to make it fit your needs, or it could
+>         be that someone else has the same problem and would like to work
+>         with you on implementation.
+Thanks. It clears for me.
+>
+>      2. All of our CI infrastructure is set up where machine recipes go
+>         in openbmc/openbmc and code goes in various code repositories.
+>         If you try to put code directly into openbmc/openbmc you do not
+>         gain any of those CI efforts we already have:
+>              * Build of your code and unit tests when someone
+>                makes a code change.
+>              * Unit test execution.
+>              * Code formatting.
+>              * Static code analysis.
+>         We have a lot of support at a repository level that doesn't exist
+>         in openbmc/openbmc directly, because it isn't approriate for what
+>         is there.
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 6320124..a67576d 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1354,6 +1354,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-arm-centriq2400-rep.dtb \
- 	aspeed-bmc-arm-stardragon4800-rep2.dtb \
- 	aspeed-bmc-bytedance-g220a.dtb \
-+	aspeed-bmc-compal-liwu2.dtb \
- 	aspeed-bmc-facebook-cmm.dtb \
- 	aspeed-bmc-facebook-minipack.dtb \
- 	aspeed-bmc-facebook-tiogapass.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts b/arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts
-new file mode 100644
-index 0000000..68faf3d
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts
-@@ -0,0 +1,325 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/dts-v1/;
-+
-+#include "aspeed-g5.dtsi"
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+
-+/ {
-+	model = "AST2500 liwu2";
-+	compatible = "aspeed,ast2500";
-+
-+	aliases {
-+		serial4 = &uart5;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+		bootargs = "console=tty0 console=ttyS4,115200 earlyprintk";
-+	};
-+
-+	memory@80000000 {
-+		reg = <0x80000000 0x20000000>;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		gfx_memory: framebuffer {
-+			size = <0x01000000>;
-+			alignment = <0x01000000>;
-+			compatible = "shared-dma-pool";
-+			reusable;
-+		};
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-+				<&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
-+				<&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
-+				<&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		led_fan0_fault {
-+			label = "LED_FAN0_FAULT";
-+			gpios = <&gpio ASPEED_GPIO(F, 4) GPIO_ACTIVE_LOW>;
-+		};
-+
-+		led_fan1_fault {
-+			label = "LED_FAN1_FAULT";
-+			gpios = <&gpio ASPEED_GPIO(F, 5) GPIO_ACTIVE_LOW>;
-+		};
-+
-+		led_fan2_fault {
-+			label = "LED_FAN2_FAULT";
-+			gpios = <&gpio ASPEED_GPIO(H, 2) GPIO_ACTIVE_LOW>;
-+		};
-+
-+		led_fan3_fault {
-+			label = "LED_FAN3_FAULT";
-+			gpios = <&gpio ASPEED_GPIO(H, 5) GPIO_ACTIVE_LOW>;
-+		};
-+
-+		led_fan4_fault {
-+			label = "LED_FAN4_FAULT";
-+			gpios = <&gpio ASPEED_GPIO(H, 6) GPIO_ACTIVE_LOW>;
-+		};
-+
-+		led_fan5_fault {
-+			label = "LED_FAN5_FAULT";
-+			gpios = <&gpio ASPEED_GPIO(H, 7) GPIO_ACTIVE_LOW>;
-+		};
-+
-+		fp_led_status_amber_n {
-+			label = "FP_LED_STATUS_AMBER_N";
-+			gpios = <&gpio ASPEED_GPIO(S, 5) GPIO_ACTIVE_LOW>;
-+		};
-+
-+		rear_id_led_n {
-+			label = "REAR_ID_LED_N";
-+			gpios = <&gpio ASPEED_GPIO(S, 6) GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+};
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "bmc";
-+		spi-max-frequency = <50000000>;
-+#include "openbmc-flash-layout.dtsi"
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "pnor";
-+		spi-max-frequency = <100000000>;
-+	};
-+};
-+
-+&spi2 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+&mac0 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii1_default &pinctrl_mdio1_default>;
-+};
-+
-+&mac1 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-+};
-+
-+&adc {
-+	status = "okay";
-+};
-+
-+&i2c0 {
-+	status = "okay";
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+
-+	eeprom@54 {
-+		compatible = "atmel,24c64";
-+		reg = <0x54>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+};
-+
-+&i2c3 {
-+	status = "okay";
-+
-+	tmp75@48 {
-+		compatible = "ti,tmp75";
-+		reg = <0x48>;
-+	};
-+
-+	tmp75@4b {
-+		compatible = "ti,tmp75";
-+		reg = <0x4b>;
-+	};
-+
-+	tmp75@4c {
-+		compatible = "ti,tmp75";
-+		reg = <0x4c>;
-+	};
-+
-+	tmp75@4d {
-+		compatible = "ti,tmp75";
-+		reg = <0x4d>;
-+	};
-+
-+	vr-controller@5a {
-+		compatible = "ti,tps53679";
-+		reg = <0x5a>;
-+	};
-+
-+	vr-controller@5d {
-+		compatible = "ti,tps53679";
-+		reg = <0x5d>;
-+	};
-+
-+	vr-controller@68 {
-+		compatible = "ti,tps53679";
-+		reg = <0x68>;
-+	};
-+
-+	vr-controller@6a {
-+		compatible = "ti,tps53679";
-+		reg = <0x6a>;
-+	};
-+
-+	vr-controller@6c {
-+		compatible = "ti,tps53679";
-+		reg = <0x6c>;
-+	};
-+
-+	vr-controller@6e {
-+		compatible = "ti,tps53679";
-+		reg = <0x6e>;
-+	};
-+
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+
-+	eeprom@51 {
-+		compatible = "atmel,24c64";
-+		reg = <0x51>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+
-+	power-supply@58 {
-+		compatible = "pmbus";
-+		reg = <0x58>;
-+	};
-+
-+	power-supply@59 {
-+		compatible = "pmbus";
-+		reg = <0x59>;
-+	};
-+};
-+
-+
-+&sdmmc {
-+	status = "okay";
-+};
-+
-+&sdhci0 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_sd1_default>;
-+};
-+
-+/*
-+ * Enable port A as device (via the virtual hub) and port B as
-+ * host by default on the eval board. This can be easily changed
-+ * by replacing the override below with &ehci0 { ... } to enable
-+ * host on both ports.
-+ */
-+&vhub {
-+	status = "okay";
-+};
-+
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+&uhci {
-+	status = "okay";
-+};
-+
-+&gfx {
-+	status = "okay";
-+	memory-region = <&gfx_memory>;
-+};
-+
-+&pwm_tacho {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
-+		&pinctrl_pwm2_default &pinctrl_pwm3_default
-+		&pinctrl_pwm4_default &pinctrl_pwm5_default
-+		&pinctrl_pwm6_default &pinctrl_pwm7_default>;
-+
-+	fan@0 {
-+		reg = <0x00>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
-+	};
-+
-+	fan@1 {
-+		reg = <0x01>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
-+	};
-+
-+	fan@2 {
-+		reg = <0x02>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
-+	};
-+
-+	fan@3 {
-+		reg = <0x03>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
-+	};
-+
-+	fan@4 {
-+		reg = <0x04>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x08 0x09>;
-+	};
-+
-+	fan@5 {
-+		reg = <0x05>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x0a 0x0b>;
-+	};
-+
-+	fan@6 {
-+		reg = <0x06>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x0c 0x0d>;
-+	};
-+
-+	fan@7 {
-+		reg = <0x07>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x0e 0x0f>;
-+	};
-+
-+};
--- 
-2.7.4
+Does the CI setup automatically? if not, how can I set it up?
 
+It seems I don't have CI setup on the 
+http://github.com/openbmc/ssifbridge repository. How can I have CI for it?
+
+>
+> Hopefully this gives you some additional context on why.
+>
