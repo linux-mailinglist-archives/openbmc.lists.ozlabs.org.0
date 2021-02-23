@@ -1,94 +1,139 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67910322587
-	for <lists+openbmc@lfdr.de>; Tue, 23 Feb 2021 06:49:30 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5B313226EE
+	for <lists+openbmc@lfdr.de>; Tue, 23 Feb 2021 09:12:50 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dl7RD3YGmz3cLf
-	for <lists+openbmc@lfdr.de>; Tue, 23 Feb 2021 16:49:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DlBcc50Kdz3cGd
+	for <lists+openbmc@lfdr.de>; Tue, 23 Feb 2021 19:12:48 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=UPaKuARi;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=yf7GWgqR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=UPaKuARi; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dl7Qz5N1nz30KP
- for <openbmc@lists.ozlabs.org>; Tue, 23 Feb 2021 16:49:15 +1100 (AEDT)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 11N5Y0ki084278
- for <openbmc@lists.ozlabs.org>; Tue, 23 Feb 2021 00:49:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : from : to
- : cc : date : mime-version : references : content-transfer-encoding :
- content-type : message-id : subject; s=pp1;
- bh=OgZNOfbPFtIJVDEWwsStzt4dMFLmoJtZzeIQnBM2ggA=;
- b=UPaKuARimOlLQN1wS4yCcOD69Kg8HJ1bcfvJXnX9vEFR6kFoP7kjTAqZ91b1HwTttjTZ
- PeDMlAeRnKOW9aqFQyVoWU5+pvbNXLzsnP4o6QdIVRp5PZVUGN8BQeFRDtSEluC/BCaN
- AvcbChm7dhsvUViTO6+rVtvpr8Ph8wehg0Wp3YRqbL3IGtvmumlHoe6/DfUjynxe2GmW
- RmtCwsFD74Mm9CQga2/fxi6plvtKPxmJCBJFPWgF22W6t0I/1xAwieC8ihtXJax8nTyT
- wL5jakNqqDQ+RRiFZIY6RluNpS0X80AOGod0bKe8O7pz2PCebDxrEUA70AnkAhzFGYEJ Gg== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.81])
- by mx0a-001b2d01.pphosted.com with ESMTP id 36vkftvwwu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 23 Feb 2021 00:49:12 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Tue, 23 Feb 2021 05:49:11 -0000
-Received: from us1a3-smtp06.a3.dal06.isc4sb.com (10.146.103.243)
- by smtp.notes.na.collabserv.com (10.106.227.88) with
- smtp.notes.na.collabserv.com ESMTP; Tue, 23 Feb 2021 05:49:08 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp06.a3.dal06.isc4sb.com
- with ESMTP id 2021022305490890-40403 ;
- Tue, 23 Feb 2021 05:49:08 +0000 
-In-Reply-To: <CAGm54UHXEkGZc9nrr+ttMJJGbQObWYwO4rdpm4CYzBAEGT1YiQ@mail.gmail.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: Lei Yu <yulei.sh@bytedance.com>
-Date: Tue, 23 Feb 2021 05:49:08 +0000
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=6811cc6c5=davidwang@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=yf7GWgqR; 
+ dkim-atps=neutral
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4DlBcL6hz7z30Ml
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Feb 2021 19:12:33 +1100 (AEDT)
+IronPort-SDR: YG+/vbf+OJztmaUtdpJ49ysGpQX1O+Uo/pRDBGuriQnj7E7AekkwWwSf/M/poHRlaG8HFCfWyO
+ bheZGBl4j0IA==
+Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
+ by mx02.quantatw.com with ESMTP; 23 Feb 2021 16:12:32 +0800
+Received: from mailbx05.quanta.corp (10.243.91.100) by mailbx08.quanta.corp
+ (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Tue, 23 Feb
+ 2021 16:12:24 +0800
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (104.47.125.56)
+ by mailbx05.quanta.corp (10.243.91.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4
+ via Frontend Transport; Tue, 23 Feb 2021 16:12:23 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ORJGrouAETF2/Pq60OOIygR9+dpsc1W7zy8FCoA6xm6TIbTIAX+IuHgrsrwwDxDXM5EkD7fVqvhHuHhTUU+c+OnfGS9s+LzGbQGPoDdL9gSUh4L5XRVpbxC+sH9uet8I/N+JrqqeQ0jZw5RlJmzZkwhx9m6wgj1mPsibd4+VhgCwdpWNYXd1XQfvOiQ8uO8qqZIfA8GPZRfSWHKWSQW1lpyd/fyvp3zMFL4gFCsh/hPgwY5Uh4DPfQsWUvYj4K6y+r+wcbJ4XKwn4s7mWucT9FNPb+od+nu8jrbCWFEFC+QuozYsjVNY3Nu0fjTb00EElMAxOtRGk4lgTw1vJJrXcQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rJ2NO8Uv9gRWcMEhvftpZi84TZdw/Bp2+TKAc8GQvPA=;
+ b=R8kvhkK3s6wsFe6dlhPHOR7GFkdvf32fAsADANE5NXyavZDQmXvC6mKP7H/sbmwfNTSrQ5earLf8KnWww/tmOckBxuNKOMKq9yTrdgNWFwvvPWqm+JiPPov2cGXziQd/XXgJEkArTxOBgAptVM3/Pu8kSWoqW3nzQry7FaysFk1PnlNUThU3Z+HVmvFBDq0IcwyalPz7lSxXR4Mz3Rb8o3Tp9/MYzeYbnrrto0HvPr5G6j6l2PZy98QPwm/ghyjqIUh+FD4GZ9X950PzI9ahx52UXOwLoINAfYWjHdt+aU2/590L4IDQ/3fb6TZzuvbZwyKe1k8cjivTCKvlWKILEQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rJ2NO8Uv9gRWcMEhvftpZi84TZdw/Bp2+TKAc8GQvPA=;
+ b=yf7GWgqR+tonjJvdtf1tyDts/O56bQbyjlWtoIqJXJ7hbTgNSnJDHojjSXCrdhuDP1GiApCESN5/mLMc6BZJAdHqorhzRlusAx3oA3ibZhX1hI0XWVVzMZTZGpK4+9s8B9+8nsShOePMfvfeI6FJMMJ+z31ruaQEfNlWi5NPafw=
+Received: from HK0PR04MB2737.apcprd04.prod.outlook.com (2603:1096:203:5b::20)
+ by HK2PR04MB3684.apcprd04.prod.outlook.com (2603:1096:202:30::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3868.28; Tue, 23 Feb
+ 2021 08:12:29 +0000
+Received: from HK0PR04MB2737.apcprd04.prod.outlook.com
+ ([fe80::69e8:9f69:4230:d8b4]) by HK0PR04MB2737.apcprd04.prod.outlook.com
+ ([fe80::69e8:9f69:4230:d8b4%6]) with mapi id 15.20.3868.033; Tue, 23 Feb 2021
+ 08:12:28 +0000
+From: =?utf-8?B?RGF2aWQgV2FuZyAo546L5oyv5a6HKQ==?= <DavidWang@quantatw.com>
+To: Johnathan Mantey <johnathanx.mantey@intel.com>, Michael Richardson
+ <mcr@sandelman.ca>, "jk@ozlabs.org" <jk@ozlabs.org>
+Subject: RE: ANSI Escape sequence unexpected output
+Thread-Topic: ANSI Escape sequence unexpected output
+Thread-Index: AdcFxEtS+fFreU74QjqE13t2aq5KQgAU1HAAAAFKD4AABK/+AADi5ctg
+Date: Tue, 23 Feb 2021 08:12:28 +0000
+Message-ID: <HK0PR04MB2737BDC541BD24AF0678383EC9809@HK0PR04MB2737.apcprd04.prod.outlook.com>
+References: <HK0PR04MB2737A1AA6BFD979A359584D3C9859@HK0PR04MB2737.apcprd04.prod.outlook.com>
+ <47e7db9c-f07d-0b27-5e38-328fb6ba3d53@intel.com> <17303.1613669867@localhost>
+ <f01d2a0f-7889-0cbf-30c2-6ea411668ea2@intel.com>
+In-Reply-To: <f01d2a0f-7889-0cbf-30c2-6ea411668ea2@intel.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: intel.com; dkim=none (message not signed)
+ header.d=none;intel.com; dmarc=none action=none header.from=quantatw.com;
+x-originating-ip: [60.251.243.66]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 09d5fb23-ad42-479f-3993-08d8d7d2c314
+x-ms-traffictypediagnostic: HK2PR04MB3684:
+x-microsoft-antispam-prvs: <HK2PR04MB3684A1DC7EC2F7756A42FC90C9809@HK2PR04MB3684.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:3968;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 4GpW/Sehoa0Jj0WhRmMkC66+buczf/BZwv1fno+mG/xMMDwhRQcswfusmIlmBsn5djFEdWuRy+LdCGR2ZJfmeiBQZxeJ83udNpiN6+ar/ERWxKsyPn+H9M8vTJVxMnQkb4aZ6/dz+AGTMJtHlh1FzO+mmi7HKOd1F+tiO/r5xM5pVbusTsZLUGtp9eEjpIbbOyosRH5hKamR0/MQpuaeZ5zSpSnPPgY3kZt+Vg1B92Ok0xpxr+rStiobpx9UwwIlhnxcywzdW12vP2cxLWsL9U3SeJf8f/d57kepHIvREx1cTUQcrjsfnx5AZ/jkuAePaVb4ft6RABPLl2hjTdy+wBzLswK+eyiqb52VRIxYUCdjSFG+eyfMWvVCh9pzrVSbDxXyN3dGyu+8360yLnXU/OS5R+7A2mw+JEjyx4vNDAlAhv+3XDZ0hag8NKu6IQna0XfyCwLqf/KJx3WMxEKwEJClkBTjRz74yfairuoj/gVR0j4DYLrMP+NWoRUyEGObRl36Njbo9AzxTCQHQGl2ErNmW7ZEexzNPD4KiWuTeLByKXnagZUDuEn/tfHIFoxFA24naZ0ktrPUN0vFHCmo5mSwUAnelDX7zmXIKnBupRQ=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR04MB2737.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(136003)(39860400002)(366004)(346002)(396003)(376002)(186003)(478600001)(8936002)(83380400001)(7696005)(26005)(33656002)(66476007)(71200400001)(55016002)(86362001)(85182001)(8676002)(66556008)(5660300002)(110136005)(64756008)(66946007)(2906002)(9686003)(4326008)(76116006)(66446008)(52536014)(966005)(316002)(6506007);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?utf-8?B?ZEJUUXdSK3RiVTNBMTNDZnFxUmcrQnlleW4rMUhmVXNrNFlCK3RVbGw2TENv?=
+ =?utf-8?B?MkplOFYxU281eEszb0wvNStvNDFzWk9zdW9vQnY5T1J3dm9HN3ZjRDRzQ1hy?=
+ =?utf-8?B?ZzhIOUVvMnpDamJIallKZTl3RFB5UVlxcm5kc044WTNpMFMxbitZc1pWSVJn?=
+ =?utf-8?B?N1dlZjVKaVlnb3NNL2p0bWMrQVdLQmtPRTNkYzUwWm14SXVKaXBGSFJGSE8x?=
+ =?utf-8?B?aWJTWnhaVUowbzFFREhHWUU5cTVoMGtYVktGRWlkRGtkK2ZpeUhmNmxZeWhp?=
+ =?utf-8?B?d2ZkTGFuakVtbG50eGVrYzc2eW4rb0tNUUU1SmpteHdHRHlRZFhsVFJ4Vmts?=
+ =?utf-8?B?RG83T3RCS2k5bmpqazVjRjFCdzZmZ0M1cW5JK3J4SDcwUmtjZmlLUkIvOThw?=
+ =?utf-8?B?UEJsYkJySDZPRkJhTHNuVkFheDFDZ3NtcUd4NjBOR0VKNS9TczR2S1FWalNs?=
+ =?utf-8?B?cUppTnJYcFJRR2JLNVJ6VXp0K0p2NVY1Q2RuOXNncFFjZmNNcFVFSlJaNzkz?=
+ =?utf-8?B?dUkwOFE1V2ZNWmxyVFRIYTdJUUhqYlEvMEJQcFQ2Qnd5TmJtVlAzN0FJT1hY?=
+ =?utf-8?B?S3pPa09pbk5YaFBJQmkyT1dqeks4Zzc3Y1ZNeEpaL0dCaTNsYTE1SEk2QS9m?=
+ =?utf-8?B?OGdIVlpVYTNZR0tTaWRoeEVGWWFKZzZWVkVKNVNNdTZXNytUUzNGNFFaTWNI?=
+ =?utf-8?B?RVIyWnM2bnE4dlRERUtRWFdzNkZDYjVrRVVjOHdmZmNLNkJWdHFlczF0R3Zo?=
+ =?utf-8?B?WE5EQm5DR1hUZEYraGJMVEZtbUk2T0JOUDRteUNvbDVxd0grbFd4VzBDK09p?=
+ =?utf-8?B?MmpOc0x6S2c5K3JQc3FxRUZHQTJ3MkVraUtZQncrRUcrNEZKb3JIWElSYjdo?=
+ =?utf-8?B?VHNFSHF3NEJYVEVRUXRlS28wcEFQMTRtc0t0SUxsMDU1YnY2bTFzY2Q2blVP?=
+ =?utf-8?B?K2dRRUpHKzQ5c1E3b29ndHRkSVh3Z1h3KzZhRnpLYk9zTGdHSFJiWU5mTks1?=
+ =?utf-8?B?MjRISFZVUy85dmFTeHp1QTk1ODBzUUVuZjc3dExYZ1grTkNmdVp3OUNmUnlN?=
+ =?utf-8?B?cE0vbWk2QmIrNEF6dkdvTmVwT0xuTVV5TlI3MmFmWXFzSUM1VGZPYnR2N2tR?=
+ =?utf-8?B?OG5LcnZxV1RvS3J4V2VVUWE2dU5ndFZ5U1JqR2RUK09LTFdOUlFLVXFzRVpJ?=
+ =?utf-8?B?bk1neXdrcFVPRnBCNENFamxnTW5KNEg2SDBTT0k0akx3NFVEdDBpY1Rpck0y?=
+ =?utf-8?B?Z1luY3c0NHNmMU5KU2xJZG8yYWZiYW5ad3BVRzZYaWdrOEluSnE4bWhVbENP?=
+ =?utf-8?B?YS92ZU93ODJuazI0UDJHZndOZUltVFVxb0MyR1hVQ0JKQTRMT2xVd2h5WG9I?=
+ =?utf-8?B?ZFlIUXY3aEU1SGNqOUNaYnplWWdIaVh6dXgzUDRlS3h0Uk5lVlRFTG5rN1RK?=
+ =?utf-8?B?T2lab05TbVhhMXpaRm1INzBvMjg0OXBwYWFXdmNab2NvM0dTWGVvVXRHVDJy?=
+ =?utf-8?B?dE56RzB0Y3NNN0VnWXNIWDRaTVY0MXRuMTJab0JVOVpQYTNxdHlDWWpmRDNi?=
+ =?utf-8?B?WkdmNEozeVZQNWJuV2dBUWpJV21YeTl1VnNEbk5ncGdub2lHYlFaR09Ka0JE?=
+ =?utf-8?B?a0dGdlJUS1VuQlZybEsvN04rcEZUcnc4SjVrWnA5cmc0Wm5iQ1pZdC9xU1BQ?=
+ =?utf-8?B?OTZyakYrQXBQZWI3ZW9GY01pSy9mR0tTc08vNmErYjQ4aGVlOGdRNzNzMEI0?=
+ =?utf-8?Q?0laNBOAIqbuSTwWOuQ=3D?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <CAGm54UHXEkGZc9nrr+ttMJJGbQObWYwO4rdpm4CYzBAEGT1YiQ@mail.gmail.com>,
- <BYAPR14MB23420BA1183F22A48EF8B97ACF839@BYAPR14MB2342.namprd14.prod.outlook.com>
- <3803c1a3-bee8-4e78-a23f-7e50858eda1a@beta.fastmail.com>
- <YDE90CWoSXCHjgYK@heinlein>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP130 January 13, 2021 at 14:04
-X-LLNOutbound: False
-X-Disclaimed: 20671
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 21022305-3067-0000-0000-0000052BE7FE
-X-IBM-SpamModules-Scores: BY=0.031777; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.388783; ST=0; TS=0; UL=0; ISC=; MB=0.002328
-X-IBM-SpamModules-Versions: BY=3.00014776; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01511830; UDB=6.00816505; IPR=6.01294355; 
- MB=3.00036224; MTD=3.00000008; XFM=3.00000015; UTC=2021-02-23 05:49:10
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2021-02-23 02:42:44 - 6.00012323
-x-cbparentid: 21022305-3068-0000-0000-00000289EE79
-Message-Id: <OF9998A4FA.EDA29860-ON00258685.001EE7D7-00258685.001FF6FB@notes.na.collabserv.com>
-Subject: RE: overlayFS security concern
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-02-23_01:2021-02-22,
- 2021-02-23 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB2737.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 09d5fb23-ad42-479f-3993-08d8d7d2c314
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Feb 2021 08:12:28.8152 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: et08X20ynayH6fdRek71J0vDIpyfzD85Ar/YksTyQB8kk32NY1pJWgEGjcLMuji91pcNKOz+1ZeiYLUqJbXmHA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR04MB3684
+X-OriginatorOrg: quantatw.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,110 +145,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Kun Zhao <zkxz@hotmail.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Feb 22, Lei Yu wrote:
->On Sun, Feb 21, 2021 at 12:56 AM Patrick Williams <patrick@stwcx.xyz>
->wrote:
->> On Sat, Feb 20, 2021 at 11:46:08AM +1030, Andrew Jeffery wrote:
->> > On Sat, 20 Feb 2021, at 11:01, Kun Zhao wrote:
->> > > 2. don=E2=80=99t use overlayFS (but it=E2=80=99s really useful for d=
-ebugging
->during
->> > > develop, and configuration management)
->> >
->> > Possibly, but it's probably worth looking at IMA instead:
->>
->> IMA (or similar) is likely a good option.
->>
->> There is also work going on to remove 'root' from many users and
->> daemons so it should be harder to overwrite executables.  If you
->> have root I'm pretty sure you can always subvert even something
->like
->> IMA.
->>
-
-
->> A protection we could do which would make attacks slightly harder
->> than they are today would be to change how we mount OverlayFS.
->Right
->> now we mount it on top of root, but we could be more explicit about
->> mounting it only on top of places we expect to be read-write.
->`/etc`
->> and `/var` are the two that come to mind but I'm sure there are
->others.
->> This shouldn't be very difficult to implement for someone wanting
->to
->> take the initiative.
->
-
-I've offered before and the offer still stands.
-
-As the author of the original system layout including the init=20
-and update scripts in the base layout and havng provided design=20
-input to all 3 of the base, ubi, and mmc layouts I'm happy to=20
-work on migrating the base layout to also transition from full=20
-filesystem overlay to the direct mount of var with etc overlay=20
-that exists on the other two layouts.
-
-However, I don't have the access needed to test and regress the=20
-transition from the current layout.  I need the assistance of=20
-someone that is using the current layout and willing to test and=20
-provide feedback on the transition.
-
-[ Openbmc developent is not my primary work and I don't have=20
-access to a system using the static layout that I can get=20
-reflashed for recovery ]
-
-
-Once this is done we can work as a community to seperate out the=20
-overload of defaults and configuration that is in etc, probably=20
-by a combination of moving openbmc content to /var/lib, and=20
-perhaps by making /etc distributed empty via the system empty=20
-init support (where /etc would be a plain writable filesystem=20
-of pure configuration vs distribution defaults).
-
-Only after that can overlayfs be removed from the kernel.
-
->Yup, as far as I remember, the "ubi layout" distro feature only mount
->specific directories instead of root.
->Checking the code, it enables the `read-only-rootfs`
->IMAGE=5FFEATURES[1], and use a different init script to mount only /etc
->by `preinit-mounts.bb`[2]
->The same for `phosphor-mmc` as well.
->
->@anoo should know this well :)
->
-
-And I also know it, having been involved in all three layouts.
-
->[1]:
->https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A=5F=5Fgithub.com=5Fop=
-enb
->mc=5Fopenbmc=5Fblob=5Fmaster=5Fmeta-2Dphosphor=5Frecipes-2Dphosphor=5Fimag=
-es=5Fobmc
->-2Dphosphor-2Dimage.bb-23L35&d=3DDwIFaQ&c=3Djf=5FiaSHvJObTbx-siA1ZOg&r=3Db=
-vv7
->AJEECoRKBU02rcu4F5DWd-EwX8As2xrXeO9ZSo4&m=3DLykl2abBxWlXUeD9IOsaSRujrlt
->BLI3LARBleKpfHMA&s=3DR=5FDHDXjMbd3D6V1ycREvdpSYQpPPGmYQdRctW3JRnHU&e=3D=20
->[2]:
->https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A=5F=5Fgithub.com=5Fop=
-enb
->mc=5Fopenbmc=5Fblob=5Fmaster=5Fmeta-2Dphosphor=5Frecipes-2Dphosphor=5Fprei=
-nit-2Dm
->ounts=5Fpreinit-2Dmounts=5Finit&d=3DDwIFaQ&c=3Djf=5FiaSHvJObTbx-siA1ZOg&r=
-=3Dbvv7A
->JEECoRKBU02rcu4F5DWd-EwX8As2xrXeO9ZSo4&m=3DLykl2abBxWlXUeD9IOsaSRujrltB
->LI3LARBleKpfHMA&s=3DDSsCadWHqoLFHZ2JIx0c6psN1joBzjxI-je9q6is13I&e=3D=20
->
->--=20
->BRs,
->Lei YU
-
-
-milton
-
+SSBkb24ndCB0aGluayB0aGlzIGlzIGEgcHJvYmxlbSBvZiBkcm9wcGluZyBjaGFyZWN0ZXJzLg0K
+VGhlIGVycm9yIHNlZW1zIHRvIG9jY3VyIG9ubHkgYXQgdGhlIGZpcnN0IHRpbWUgYWZ0ZXIgYm9v
+dC4NCg0KPiBUaGlzIG1vdGl2YXRlZCBtZSB0byBtZXNzIHdpdGggdGhpcyBhZ2Fpbi4NCj4gRldJ
+VywgVGhlIERTUiBjb21tYW5kIGlzIHByZXNlbnQgd2hlbiBJIHJ1biBLZXJtaXQgZnJvbSB3aXRo
+aW4gYSBUTXV4IGZyYW1lLg0KPiBUaGlzIGNvZGUsIFtbNDA7MTYyUiwgaXMgcHJlc2VudCB3aGVu
+IEkgcnVuIHdpdGhvdXQgVE11eCwgYW5kIGp1c3QgdXNlIA0KPiBLb25zb2xlLg0KPiBCb3RoIHNl
+cXVlbmNlcyBhcmUgZW1pdHRlZCBBRlRFUiB0aGUgcGFzc3dvcmQgaGFzIGJlZW4gaW5wdXQsIGFu
+ZCBhY2NlcHRlZC4NCg0KPiBQYXNzd29yZDoNCj4gTGFzdCBsb2dpbjogVGh1IEZlYiAxOCAxOTo0
+NToyOCBVVEMgMjAyMSBvbiB0dHlTNA0KPiBeW1szOTs4MVJyb290IGF0IGludGVsLW9ibWMNCg0K
+PiBVc2luZyAic2V0IHRlcm1pbmFsIHR5cGUgZHVtYiIgZGlkIG5vdCBpbXBhY3QgdGhlIGVtaXNz
+aW9uIG9mIHRoZSBFU0MgDQo+IHNlcXVlbmNlLg0KPiBJIGhhdmVuJ3QgZm91bmQgdGhlICJ0dXJu
+IHJlc3BvbmRpbmcgb2ZmIiBjb250cm9sIHlldC4NCg0KSSB0aGluayB0aGlzIGlzIG5vdCBsaWtl
+IGEgdGVybWluYWwgcHJvYmxlbSwgYnV0IHRoZSBlc2NhcGUgY2hhcmVjdGVyIGlzIG5vdCByZWFk
+IGNvcnJlY3RseSBhbmQgdGhlIHJlbWFpbmluZyBzdHJpbmcgaXMgb3V0cHV0IHRvIHN0ZG91dC4g
+UGxlYXNlIGNvcnJlY3QgbWUgaWYgdGhlcmUgaXMgYW4gZXJyb3IuDQpJIGhhdmUgZm91bmQgc2lt
+aWxhciBjb2RlcyB1bmRlciBsaW51eDoNCmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2xpbnV4
+L2Jsb2IvNTk5ZDdmOTk3OTMwODI5ZjEzZTA1ZDMzMmUzZTdmY2NkODlkMzQwZC9kcml2ZXJzL3R0
+eS92dC92dC5jI0wxODI5DQpCdXQgSSB0cmllZCB0byBpbnNlcnQgdGhlIGRlYnVnIGNvZGUgdG8g
+dmVyaWZ5IGJ1dCBmb3VuZCB0aGF0IHRoZXkgZG9u4oCZdCBzZWVtIHRvIGJlIHRoZSBjdWxwcml0
+Lg0K
