@@ -2,53 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7CF6323BC7
-	for <lists+openbmc@lfdr.de>; Wed, 24 Feb 2021 13:11:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71127323F6A
+	for <lists+openbmc@lfdr.de>; Wed, 24 Feb 2021 16:14:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DlvsT23Pzz3cYX
-	for <lists+openbmc@lfdr.de>; Wed, 24 Feb 2021 23:11:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dlzx03nrkz3cGP
+	for <lists+openbmc@lfdr.de>; Thu, 25 Feb 2021 02:14:44 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=fADY4uGf;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jozef.wludzik@linux.intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir;
- Wed, 24 Feb 2021 23:11:16 AEDT
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=fADY4uGf; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DlvsJ1gq1z30Hr
- for <openbmc@lists.ozlabs.org>; Wed, 24 Feb 2021 23:11:15 +1100 (AEDT)
-IronPort-SDR: nQaMwx3obsVrkLsAGM5LSDotB+EDGQAzj+/XPfuHeDgjZaqAgJ59trkXar04+8MGyuE8CDbLaI
- JBIPJAyaQwYQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9904"; a="184440608"
-X-IronPort-AV: E=Sophos;i="5.81,202,1610438400"; d="scan'208";a="184440608"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Feb 2021 04:10:06 -0800
-IronPort-SDR: RwhYfg2aDRy9f5mAO2HiXaiMaFNjH/Z87PFIEmDhLaj+/i80qEYAXO1l0sxB5W3DdxnBgaaR87
- b0ZqsmxYe8MQ==
-X-IronPort-AV: E=Sophos;i="5.81,202,1610438400"; d="scan'208";a="403670238"
-Received: from jwludzik-mobl.ger.corp.intel.com (HELO [10.213.1.73])
- ([10.213.1.73])
- by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Feb 2021 04:10:05 -0800
-Subject: Re: any in-progress Redfish TelemetryService enhancements?
-To: openbmc@lists.ozlabs.org
-References: <20210218190654.kkdsmrlxgenzr6nz@thinkpad.fuzziesquirrel.com>
- <CACWQX81HtHCqXZCzmJqppR+tBy5xDjBHa_q5gw7YTHZ9UaAH2w@mail.gmail.com>
- <20210219193348.n5e6w4e2vr4sk5ge@thinkpad.fuzziesquirrel.com>
-From: "Wludzik, Jozef" <jozef.wludzik@linux.intel.com>
-Message-ID: <47d61387-d71f-b72a-fe30-316a3a37829b@linux.intel.com>
-Date: Wed, 24 Feb 2021 13:09:56 +0100
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dlzwm2Dmlz30HJ
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Feb 2021 02:14:31 +1100 (AEDT)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 11OF6TjA102991
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Feb 2021 10:14:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : subject :
+ message-id : date : mime-version : content-type :
+ content-transfer-encoding; s=pp1;
+ bh=4wUG7cV1Roq2BuAOiOeNcjvxRBTAT2Zx74yjaI8H978=;
+ b=fADY4uGfHdfy+QoWArWmCtXkk/ix1A62LvfoCI/7GFtG7KMKYLk5e49hgqgiNrI+Jdms
+ nv+3TmrY/EtnGSqYxIPQab9ZrAPmwjtEKcgczKCfd0sIRLD7ASpE7mSL/4DZY55ceVXr
+ VCl+SOxsb0sM3v2fLW6FcS+WtznXTmKvFhFm4aRJvd1624+QtTkR7zt9Dm8NPFt7a+7G
+ YtwwXr5FawA0JZVU3Z6djQfRYMekIFUg1thR1LGdA38I9N/wrlgCISpGdbnyYd7PkpDk
+ C88W4V/TljQYqCMhTdeJQcC+8L4ZuY7Okh6AE5FrSq7rxz9vFxzusjT39PJK09elsZwi 3Q== 
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 36wk3tnhe0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Feb 2021 10:14:26 -0500
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 11OF7pY1016533
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Feb 2021 15:14:26 GMT
+Received: from b03cxnp07027.gho.boulder.ibm.com
+ (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
+ by ppma03dal.us.ibm.com with ESMTP id 36v5y97t1j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Feb 2021 15:14:25 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 11OFEOoe17957372
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Feb 2021 15:14:24 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B85DEC6094
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Feb 2021 15:14:24 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D71F4C6098
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Feb 2021 15:14:23 +0000 (GMT)
+Received: from [9.206.206.190] (unknown [9.206.206.190])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Feb 2021 15:14:23 +0000 (GMT)
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Redfish 2020.4 release webinar
+Message-ID: <48a9da2d-d86a-45ee-08ba-86bf1b0065cc@linux.vnet.ibm.com>
+Date: Wed, 24 Feb 2021 08:14:21 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <20210219193348.n5e6w4e2vr4sk5ge@thinkpad.fuzziesquirrel.com>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-02-24_06:2021-02-24,
+ 2021-02-24 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ mlxlogscore=694 spamscore=0 phishscore=0 mlxscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2102240114
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,50 +102,26 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi, "Append" is on the list of to dos and should be ready till summer
-(might be ready). Other feature that are described by Redfish Telemetry
-Model should be ready till the end of summer too -> triggers and
-collection functions.
+Redfish is hosting a webinar on March 5th. Details below.
 
-About the issue, the metric reading is not updated when there is no
-update from the sensor dbus. To debug it best way to monitor the
-PropertiesChanged signal from the service that implement the sensor. If
-there is no signal from service than metric won't be updated. If there
-is a signal, then Telemetry service has a regression.
+DMTF’s Redfish Forum[1] would like to invite the OpenBMC community to 
+learn about the Redfish 2020.4[2] release via a live webinar hosted on 
+Zoom on March 5 at 11am PT.
 
-I would be very glad for any feedback on telemetry, even filing a bug on
-Telemetry sounds great. Thanks in advance
+The Forum chairs will present the contents of the release including 
+focusing on: new power and thermal modeling, ‘Conditions’ within the 
+common ‘Status’ property, and additional account types added to manager 
+accounts.
 
-Thanks,
-Jozef
+Attendees will be able to ask questions during the Q and A session via 
+the chat function. We look forward to a lively discussion.
 
-On 2/19/2021 20:33 PM, Brad Bishop wrote:
-> On Thu, Feb 18, 2021 at 12:04:57PM -0800, Ed Tanous wrote:
->> On Thu, Feb 18, 2021 at 11:16 AM Brad Bishop
->> <bradleyb@fuzziesquirrel.com> wrote:
->>>
->>> Has anyone thought about how to implement the Append behaviors for the
->>> ReportUpdates property in a MetricReportDefinition?
->>>
->>
->> As an aside, if anyone else is interested in Telemetry Service,
->> there's a lot of code there that's not having a lot of community
->> feedback or testing on the reviews, so if anyone else is interested
->> please pull down the patches and provide constructive feedback.
->>
->> https://gerrit.openbmc-project.xyz/q/topic:%2522telemetry%2522+(status:open+OR+status:merged)+status:open
->>
-> 
-> I pulled these in and did some quick sanity checking.  I was able to
-> create a report definition and then see the report get generated and
-> read it.
-> 
-> I have to say - it was really nice being able to pull a feature in and
-> having it work out of the box.  So really great job to the Intel team in
-> that respect.
-> 
-> I did find a bug with the telemetry service itself - when reports with
-> multiple metrics are created, the last (or maybe all but the first?)
-> metric in the report isn't updated after the initial reading.  I was too
-> lazy to file a bug and didn't save any information.  I'll try to do that
-> soon.
+Register today 
+https://us02web.zoom.us/webinar/register/WN_GMQdIVWrT1Ky_VHq17jbGQ
+
+For questions email webinars@dmtf.org.
+
+[1] https://www.dmtf.org/standards/redfish
+[2] 
+https://www.dmtf.org/sites/default/files/Redfish_Release_2020.4_Overview.pdf
+[3] https://us02web.zoom.us/webinar/register/WN_GMQdIVWrT1Ky_VHq17jbGQ
