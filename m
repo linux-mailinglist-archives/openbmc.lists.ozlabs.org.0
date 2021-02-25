@@ -2,66 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C33C13253B1
-	for <lists+openbmc@lfdr.de>; Thu, 25 Feb 2021 17:43:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0214F3253E7
+	for <lists+openbmc@lfdr.de>; Thu, 25 Feb 2021 17:48:17 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dmdrb5zKMz3cZL
-	for <lists+openbmc@lfdr.de>; Fri, 26 Feb 2021 03:43:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DmdyR0212z3cZt
+	for <lists+openbmc@lfdr.de>; Fri, 26 Feb 2021 03:48:15 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=mAu36UQo;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=lJGOWRTw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::335;
- helo=mail-ot1-x335.google.com; envelope-from=groeck7@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22f;
+ helo=mail-oi1-x22f.google.com; envelope-from=groeck7@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=mAu36UQo; dkim-atps=neutral
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com
- [IPv6:2607:f8b0:4864:20::335])
+ header.s=20161025 header.b=lJGOWRTw; dkim-atps=neutral
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com
+ [IPv6:2607:f8b0:4864:20::22f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DmdrJ2pYzz3cY4;
- Fri, 26 Feb 2021 03:42:55 +1100 (AEDT)
-Received: by mail-ot1-x335.google.com with SMTP id 105so6299489otd.3;
- Thu, 25 Feb 2021 08:42:55 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dmdy75Z9Fz3cLr;
+ Fri, 26 Feb 2021 03:47:58 +1100 (AEDT)
+Received: by mail-oi1-x22f.google.com with SMTP id q186so6645917oig.12;
+ Thu, 25 Feb 2021 08:47:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:subject:to:cc:references:from:autocrypt:message-id:date
  :user-agent:mime-version:in-reply-to:content-language
  :content-transfer-encoding;
- bh=vF7Sr8k6T1GIk11C2IVF7kon90r3481y7roC0/ZPwhg=;
- b=mAu36UQooRjl3tsctsIBh3jB6R1Omw0/dQOmKEBz636LJYpvPWvb+oUAfDIb2eMc0w
- cM798f5Bm/1ykvy5GOLMqOylxHPJbGLFkgzGwuGOHwfr72lEIA69PUqgWUmeMFvVQUYC
- iLu1H73SkK6v7Pkiey/XHSDOQjyZS+YrptvLyt8rLIl2M2oqWw21Hv5jWc3qruJtbiJk
- gHM7e3o4c849feRLbbhICd7rxeiwdNJl+788qCO9qN2qrMW5KiaTRm69d/os0JyYcxyu
- kPf+ZwpX5dyn/i5iy09DAQ14RF+LQ2PPXNxiCA+nRuyPBhYY88yuF/SbBv1Gfx0P/ias
- gsOg==
+ bh=az6/5sv7SGsBjh1i/c65JEKtmkb6vMifZ9O5uEmeCso=;
+ b=lJGOWRTwXqDp8SeQjTd1iuKQ4lPVeIuZsbUlwi71ZQVPgh8VfYTv2HK3wrY7rndb/J
+ MeYevG4HAIYx3z0G1dIYHKBvyZYPnQHKE0YgvbYfttPIICUM6VTbKKZ94PrAjaHSaIP8
+ lDHBLjWiEpK6RkhEM+T79WIv0YRq31YxgsrY+aPx5zDnS3v7Qnv5pdV3DsN+n8imGmeI
+ 7YZpdasAEN+3Hu1O7R0qLCpi3DC3H7FIMkUISVBKbPPt9FusL3Qyvy41m8+T3qygJMeL
+ ivfnvtRZxbvNPJ0rUIyPScjoKwuulQgvlTJeJD1sYMKrOACdtwpNibjdmPvU2Exb5NkN
+ niJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
  :message-id:date:user-agent:mime-version:in-reply-to
  :content-language:content-transfer-encoding;
- bh=vF7Sr8k6T1GIk11C2IVF7kon90r3481y7roC0/ZPwhg=;
- b=HxKiTqsF568UvIghqxnUERkXwd6YKYpmXrWEEbNRgVTCA2H8lM00BYVU2RO7Wgz4EV
- oa0h3MJVgMCUC9uKsCNdTqPSJYWUoa7BKsd1Km8XxVgh7NYQLt/9Iyz7YMe8ocvq15mK
- /XvUFAU3UTOjtq2X0DsCsAD398KLC8fNHHnOIW5ZCnL8imuo+7mFWboOBKellMRhrW42
- eA2OfJ6V9V1u7L5hhaDvGwD2qsIJWt29NSpDVIBrkwejJpaRZAjEaeysypuG6KFWnxJN
- hgEO0tisG73XYPTxLRGvoOg3idxAdzza9pEMEpPO9237NqLux4ZHnoj0DTEpM8bUhz4I
- GApw==
-X-Gm-Message-State: AOAM533apANP0AKmNTlW5OAecEllwkkGjcTyfzIK4c2UV4uvqF6vu4YQ
- xjFSXrbnXLqYuqrSi9h1vmE=
-X-Google-Smtp-Source: ABdhPJwbI7qWysZeUMz3ZE0h5wFCF7D78MHpK9XO1djLaiz1MMmG9BHm8+5LkrNLp5Ppq8T+j25VRw==
-X-Received: by 2002:a9d:1465:: with SMTP id h92mr2936956oth.141.1614271371869; 
- Thu, 25 Feb 2021 08:42:51 -0800 (PST)
+ bh=az6/5sv7SGsBjh1i/c65JEKtmkb6vMifZ9O5uEmeCso=;
+ b=P8J84Q0UsBqItJe+cQ/zOZlB5wkudAYcowwZB9Qy6lPZNvT7GHlCAqC2LHFJeEN1hf
+ E2Z6qLzZ8cyRXKxjeTCRx5VNjmGjsxZaJdedUMgygG/O1PY0SzP6s3efEUPE0udS0dmY
+ SueW3uC0vyT2RUbpajvYwAwkLA5euhTJFHQnvagq5ff9n2OoUYjKmq4B6i9KFBtcC1z4
+ DouC013skomxrXQdkmjFTxL4hMk2Z4badGpwEPUhXiVdYJBeLzH/8A8cQkldO+Sp6imK
+ z702wGrMpXhVkGWd+hhCLRUS7kdB3GWz8MvJCQiiG05ldBY72r3Yu7lZwd5GSf2KdTmM
+ /F5Q==
+X-Gm-Message-State: AOAM532firR67E24BgdS1jIbgvFkbmOGhNf7xZTyh6OFcLiNjD1sWhBb
+ uKfPvpq62VrQt6VSD1MIaso=
+X-Google-Smtp-Source: ABdhPJyNXhvv74P8RFan/9aB+RJmNZR+69bnq9a1MXWTFEExRveSpjRP0Y1ye2KazypNBk7g195gqg==
+X-Received: by 2002:aca:4bc5:: with SMTP id y188mr2560988oia.135.1614271673946; 
+ Thu, 25 Feb 2021 08:47:53 -0800 (PST)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- u15sm995990oiu.28.2021.02.25.08.42.49
+ n1sm1165457oog.31.2021.02.25.08.47.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Feb 2021 08:42:51 -0800 (PST)
-Subject: Re: [PATCH 4/4] docs: hwmon: (smpro-hwmon) Add documentation
+ Thu, 25 Feb 2021 08:47:53 -0800 (PST)
+Subject: Re: [PATCH 1/4] dt-bindings: mfd: Add bindings for Ampere Altra SMPro
+ drivers
 To: Quan Nguyen <quan@os.amperecomputing.com>, Joel Stanley <joel@jms.id.au>, 
  Andrew Jeffery <andrew@aj.id.au>, Jean Delvare <jdelvare@suse.com>,
  Rob Herring <robh+dt@kernel.org>, Lee Jones <lee.jones@linaro.org>,
@@ -70,7 +71,7 @@ To: Quan Nguyen <quan@os.amperecomputing.com>, Joel Stanley <joel@jms.id.au>,
  linux-doc@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
  openbmc@lists.ozlabs.org
 References: <20210225101854.13896-1-quan@os.amperecomputing.com>
- <20210225101854.13896-5-quan@os.amperecomputing.com>
+ <20210225101854.13896-2-quan@os.amperecomputing.com>
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
@@ -115,15 +116,15 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-Message-ID: <00d6d57e-86a4-bd61-335c-3ff42c0dc1f7@roeck-us.net>
-Date: Thu, 25 Feb 2021 08:42:48 -0800
+Message-ID: <9f3845c5-ee4b-76d6-82dd-fa838f8f44ba@roeck-us.net>
+Date: Thu, 25 Feb 2021 08:47:51 -0800
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <20210225101854.13896-5-quan@os.amperecomputing.com>
+In-Reply-To: <20210225101854.13896-2-quan@os.amperecomputing.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,185 +143,143 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On 2/25/21 2:18 AM, Quan Nguyen wrote:
-> Add documentation for the Ampere(R)'s Altra(R) SMpro hwmon driver.
+> Adds device tree bindings for SMPro drivers found on the Mt.Jade hardware
+> reference platform with Ampere's Altra Processor family.
 > 
-> Signed-off-by: Thu Nguyen <thu@os.amperecomputing.com>
 > Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
 > ---
->  Documentation/hwmon/index.rst       |   1 +
->  Documentation/hwmon/smpro-hwmon.rst | 100 ++++++++++++++++++++++++++++
->  2 files changed, 101 insertions(+)
->  create mode 100644 Documentation/hwmon/smpro-hwmon.rst
+>  .../bindings/hwmon/ampere,ac01-hwmon.yaml     | 27 ++++++
+>  .../bindings/mfd/ampere,ac01-smpro.yaml       | 82 +++++++++++++++++++
+>  2 files changed, 109 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
+>  create mode 100644 Documentation/devicetree/bindings/mfd/ampere,ac01-smpro.yaml
 > 
-> diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
-> index 8d5a2df1ecb6..b48a980ed08b 100644
-> --- a/Documentation/hwmon/index.rst
-> +++ b/Documentation/hwmon/index.rst
-> @@ -164,6 +164,7 @@ Hardware Monitoring Kernel Drivers
->     sis5595
->     sl28cpld
->     smm665
-> +   smpro-hwmon
-
-"hwmon" seems a bit redundant here.
-
->     smsc47b397
->     smsc47m192
->     smsc47m1
-> diff --git a/Documentation/hwmon/smpro-hwmon.rst b/Documentation/hwmon/smpro-hwmon.rst
+> diff --git a/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml b/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
 > new file mode 100644
-> index 000000000000..d546b90982e5
+> index 000000000000..d13862ba646b
 > --- /dev/null
-> +++ b/Documentation/hwmon/smpro-hwmon.rst
-> @@ -0,0 +1,100 @@
-> +.. SPDX-License-Identifier: GPL-2.0-or-later
+> +++ b/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
+> @@ -0,0 +1,27 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/hwmon/ampere,ac01-hwmon.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +Kernel driver Ampere(R)'s Altra(R) SMpro hwmon
-> +==============================================
+> +title: Hardware monitoring driver for the Ampere Altra SMPro
 > +
-> +Supported chips:
+> +maintainers:
+> +  - Quan Nguyen <quan@os.amperecomputing.com>
 > +
-> +  * Ampere(R) Altra(R)
+> +description: |
+> +  This module is part of the Ampere Altra SMPro multi-function device. For more
+> +  details see ../mfd/ampere,ac01-smpro.yaml.
 > +
-> +    Prefix: 'smpro'
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - ampere,ac01-hwmon
 > +
-> +    Reference: Altra SoC BMC Interface Specification
+> +  reg:
+> +    maxItems: 1
 > +
-> +Author: Thu Nguyen <thu@os.amperecomputing.com>
+> +required:
+> +  - compatible
 > +
-> +Description
-> +-----------
-> +This driver supports hardware monitoring for Ampere(R) Altra(R) SoC's based on the
-> +SMpro co-processor (SMpro).
-> +The following sensor types are supported by the driver:
+> +additionalProperties: false
+> diff --git a/Documentation/devicetree/bindings/mfd/ampere,ac01-smpro.yaml b/Documentation/devicetree/bindings/mfd/ampere,ac01-smpro.yaml
+> new file mode 100644
+> index 000000000000..06b0239413ae
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mfd/ampere,ac01-smpro.yaml
+> @@ -0,0 +1,82 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/ampere,ac01-smpro.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +  * temperature
-> +  * voltage
-> +  * current
-> +  * power
+> +title: Ampere Altra SMPro firmware driver
 > +
-> +The SMpro interface provides the registers to query the various sensors and
-> +their values which are then exported to userspace by this driver.
+> +maintainers:
+> +  - Quan Nguyen <quan@os.amperecomputing.com>
 > +
-> +Usage Notes
-> +-----------
+> +description: |
+> +  Ampere Altra SMPro firmware may contain different blocks like hardware
+> +  monitoring, error monitoring and other miscellaneous features.
 > +
-> +SMpro hwmon driver creates two sysfs files for each sensor.
+> +properties:
+> +  compatible:
+> +    const: ampere,ac01-smpro
+
+Is that the same as the "ampere,smpro" in
+arch/arm/boot/dts/nuvoton-npcm730-kudo.dts ?
+
+Guenter
+
 > +
-> +* File ``<sensor_type><idx>_label`` reports the sensor label.
-> +* File ``<sensor_type><idx>_input`` returns the sensor value.
+> +  reg:
+> +    description:
+> +      I2C device address.
+> +    maxItems: 1
 > +
-> +The sysfs files are allocated in the SMpro root fs folder.
-> +There is one root folder for each SMpro instance.
+> +  "#address-cells":
+> +    const: 1
 > +
-> +When the SoC is turned off, the driver is failed to read the registers.
-> +It returns TIMEDOUT Error(-110) for the read sensors.
+> +  "#size-cells":
+> +    const: 0
 > +
-
-Maybe better something like
-
-When the SoC is turned off, the driver will fail to read registers
-and return -ETIMEDOUT.
-
-Can that indeed happen ? That seems to be highly undesirable.
-
-> +Sysfs entries
-> +-------------
+> +patternProperties:
+> +  "^hwmon(@[0-9a-f]+)?$":
+> +    $ref: ../hwmon/ampere,ac01-hwmon.yaml
 > +
-> +The following sysfs files are supported:
+> +  "^misc(@[0-9a-f]+)?$":
+> +    type: object
+> +    description: Ampere Altra SMPro Misc driver
+> +    properties:
+> +      compatible:
+> +        const: "ampere,ac01-misc"
 > +
-> +* Ampere(R) Altra(R):
+> +  "^errmon(@[0-9a-f]+)?$":
+> +    type: object
+> +    description: Ampere Altra SMPro Error Monitor driver
+> +    properties:
+> +      compatible:
+> +        const: "ampere,ac01-errmon"
 > +
-> +===============    =============   ======= ===============================================
-> +Name        Unit        Perm    Description
-> +temp1_input     mili Celsius     RO    SoC temperature
-
-s/mili/milli/ throughout
-
-> +temp2_input     mili Celsius     RO    Highest temperature reported by the SoC VRDs
-> +temp3_input     mili Celsius     RO    Highest temperature reported by the DIMM VRDs
-> +temp4_input     mili Celsius     RO    Highest temperature reported by the Core VRDs
-
-What does "highest" stand for here ? Is it the _current_ highest
-temperature, added up by the hardware/firmware, or is it the historic
-highest temperature ? Historic data should be reported as tempX_highest.
-
-> +temp5_input     mili Celsius     RO    Highest temperature of DIMM Channel 0 to 3
-
-drop; reported individually.
-
-> +temp6_input     mili Celsius     RO    Temperature of DIMM0 on CH0
-> +temp7_input     mili Celsius     RO    Temperature of DIMM0 on CH1
-> +temp8_input     mili Celsius     RO    Temperature of DIMM0 on CH2
-> +temp9_input     mili Celsius     RO    Temperature of DIMM0 on CH3
-> +temp10_input     mili Celsius     RO    Highest temperature of DIMM Channel 4 to 7
-
-drop; reported individually.
-
-> +temp11_input     mili Celsius     RO    Temperature of DIMM0 on CH4
-> +temp12_input     mili Celsius     RO    Temperature of DIMM0 on CH5
-> +temp13_input     mili Celsius     RO    Temperature of DIMM0 on CH6
-> +temp14_input     mili Celsius     RO    Temperature of DIMM0 on CH7
-> +temp15_input     mili Celsius     RO    MEM HOT Threshold
-> +temp16_input     mili Celsius     RO    SoC VRD HOT Threshold
-
-Report as tempX_max or tempX_crit, as appropriate (eg temp2_max or
-temp2_crit for SoC VRD HOT Threshold). If there is a single threshold
-temperature for all DIMMs, report the same limit value for all DIMM
-temperature sensors.
-
-> +temp17_input     mili Celsius     RO    Highest temperature reported by the RCA VRD
-
-Same question about "highest" as above. Either "highest" is
-inappropriate, or there are multiple RCA VRDs and only the
-highest temperature of those is reported (which should be
-explicitly stated).
-
-> +in0_input     mili Volt     RO    Core voltage
-> +in1_input     mili Volt     RO    SoC voltage
-> +in2_input     mili Volt     RO    DIMM VRD1 voltage
-> +in3_input     mili Volt     RO    DIMM VRD2 voltage
-> +in4_input     mili Volt     RO    Maximum voltage of DIMM VRD1 and VRD2
-
-drop; reported individually.
-
-> +in5_input     mili Volt     RO    RCA VRD voltage
-> +cur1_input     mili Ampere     RO    Core VRD current
-> +cur2_input     mili Ampere     RO    SoC VRD current
-> +cur3_input     mili Ampere     RO    DIMM VRD1 current
-> +cur4_input     mili Ampere     RO    DIMM VRD2 current
-> +cur5_input     mili Ampere     RO    RCA VRD current
-> +power1_input     nano Wat     RO    Core VRD power
-
-Expected scale is micro-Watt.
-
-> +power2_input     nano Wat     RO    SoC VRD power
-> +power3_input     nano Wat     RO    DIMM VRD1 power
-> +power4_input     nano Wat     RO    DIMM VRD2 power
-> +power5_input     nano Wat     RO    CPU VRD power, total of SoC and Core VRD power
-
-drop
-
-> +power6_input     nano Wat     RO    Total of DIMM VRD1 and VRD2 power
-
-drop
-
-> +power7_input     nano Wat     RO    RCA VRD power
-> +power8_input     nano Wat     RO    Socket TDP
-
-Report as max attribute
-
-> +===============    =============   ======= ===============================================
+> +required:
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +  - compatible
+> +  - reg
 > +
-> +Example::
+> +additionalProperties: false
 > +
-> +    # cat in0_input
-> +    830
-> +    # cat temp1_input
-> +    37000
-> +    # cat curr1_input
-> +    9000
-> +    # cat power5_input
-> +    19500000
+> +examples:
+> +  - |
+> +    i2c {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        smpro@4f {
+> +            compatible = "ampere,ac01-smpro";
+> +            reg = <0x4f>;
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            hwmon {
+> +                compatible = "ampere,ac01-hwmon";
+> +            };
+> +
+> +            misc {
+> +                compatible = "ampere,ac01-misc";
+> +            };
+> +
+> +            errmon {
+> +                compatible = "ampere,ac01-errmon";
+> +            };
+> +
+> +        };
+> +    };
 > 
 
