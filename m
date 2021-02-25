@@ -2,62 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5142C32523C
-	for <lists+openbmc@lfdr.de>; Thu, 25 Feb 2021 16:21:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 31BF3325237
+	for <lists+openbmc@lfdr.de>; Thu, 25 Feb 2021 16:20:03 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dmc1q1Zp7z3cZL
-	for <lists+openbmc@lfdr.de>; Fri, 26 Feb 2021 02:21:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dmc0b23ngz3cjg
+	for <lists+openbmc@lfdr.de>; Fri, 26 Feb 2021 02:19:59 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bisyst.ru header.i=@bisyst.ru header.a=rsa-sha256 header.s=mail header.b=JqFiOkmP;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=OYUpQ0JY;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bisyst.ru (client-ip=2a02:6b8:0:1a2d::606;
- helo=forward103o.mail.yandex.net; envelope-from=pavlov@bisyst.ru;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::529;
+ helo=mail-ed1-x529.google.com; envelope-from=parishrutb@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bisyst.ru header.i=@bisyst.ru header.a=rsa-sha256
- header.s=mail header.b=JqFiOkmP; dkim-atps=neutral
-X-Greylist: delayed 507 seconds by postgrey-1.36 at boromir;
- Fri, 26 Feb 2021 02:20:50 AEDT
-Received: from forward103o.mail.yandex.net (forward103o.mail.yandex.net
- [IPv6:2a02:6b8:0:1a2d::606])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=OYUpQ0JY; dkim-atps=neutral
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com
+ [IPv6:2a00:1450:4864:20::529])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dmc1Z38sFz3cWJ
- for <openbmc@lists.ozlabs.org>; Fri, 26 Feb 2021 02:20:50 +1100 (AEDT)
-Received: from forward103q.mail.yandex.net (forward103q.mail.yandex.net
- [IPv6:2a02:6b8:c0e:50:0:640:b21c:d009])
- by forward103o.mail.yandex.net (Yandex) with ESMTP id 975D75F82C47
- for <openbmc@lists.ozlabs.org>; Thu, 25 Feb 2021 18:12:09 +0300 (MSK)
-Received: from vla5-8987bf54d6da.qloud-c.yandex.net
- (vla5-8987bf54d6da.qloud-c.yandex.net
- [IPv6:2a02:6b8:c18:3614:0:640:8987:bf54])
- by forward103q.mail.yandex.net (Yandex) with ESMTP id 9511761E0005
- for <openbmc@lists.ozlabs.org>; Thu, 25 Feb 2021 18:12:09 +0300 (MSK)
-Received: from mail.yandex.ru (mail.yandex.ru [46.148.198.118])
- by vla5-8987bf54d6da.qloud-c.yandex.net (mxback/Yandex) with HTTP id
- 4CmxdX0HqiE1-C8HuG2nw; Thu, 25 Feb 2021 18:12:09 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bisyst.ru; s=mail;
- t=1614265929; bh=o7QCOrEQcHWjc1GnvgyOZkpmDl8DYiJGbF/KOrB3IeQ=;
- h=Message-Id:Date:Subject:To:From;
- b=JqFiOkmPojXrKHeRnzTgAiwW+C0a382W3y5hO4usQzJd4Q7mtbKmXHtEkwyDh6Q6p
- +pksSknmp/UOeoU0UJa3cNcc05vW80GE2vpwTizERFFPvh/8MFe9aTJf6QdME6qtug
- NdJm5QYZra2B/4I8lGWTFhPIWwY0gu9ciMr244F8=
-Authentication-Results: vla5-8987bf54d6da.qloud-c.yandex.net;
- dkim=pass header.i=@bisyst.ru
-Received: by vla1-3b11765fa32e.qloud-c.yandex.net with HTTP;
- Thu, 25 Feb 2021 18:12:08 +0300
-From: =?utf-8?B?0J3QuNC60LjRgtCwINCf0LDQstC70L7Qsg==?= <pavlov@bisyst.ru>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Question about compile bmcweb
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dmc0L6C98z3cYy
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Feb 2021 02:19:44 +1100 (AEDT)
+Received: by mail-ed1-x529.google.com with SMTP id h10so7335535edl.6
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Feb 2021 07:19:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=IgfyBBizeQB1KtJCOZLksZCt6vnmhfxKz6MB4zCrlr0=;
+ b=OYUpQ0JYn9TXVZHtd/+V0WmCRfx5PaO56pL5DaQyOr/wnu8D5pgahgaTGQd53R6ju9
+ cktZlCnl716t+BoKqPYaUcQluCd+10L0GlFVNq6IZwweYH2yYPLs/kqGQe7a4pn/nk42
+ Qz/Gw87dyfYSMWwlBRmiwH7+l7/Pd/3INZTKzFVmnXh/66JQ9rAxVr1ZYM+YAT4hU3Eq
+ T0TccAECszg9PAgYH6sy7e+78J0x1nAYbpe2yHqfU4XtRjhZuQaHSekHCYen+GeY2+Jo
+ lSceRCF8XB31opwd5PflHjWqYyR0JCW8vvlK1bYrCNXBB8Qyl3fJtehRLimswD4UCgX4
+ Z7Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=IgfyBBizeQB1KtJCOZLksZCt6vnmhfxKz6MB4zCrlr0=;
+ b=Y+ojuPYzUTb2oVzczzJ7nONRiO+ES/Phz6mIR0TthspKe/BplgDUaKp4mOMvXlaVpM
+ zYYJma8N3i8OvE47vEDuPjLCscJrpThp4PuE5b51MJRMTzZUFqiXeADoT+VMF/K4dmxX
+ Cni5Uyn85bw7eGMyg30DIh5d50t1Kx3eWkkgYaEchW/keNZ4l3Xg1KEnEXHmrZxBPEar
+ 6B3NA9bbsCabpqACX0TBPU53Hf59Lp1+a0FXmjIYKvEIt9CvNBe2iHg9M0GGsL908Y9w
+ PjXNfpfsdke9iJBhYFIa4cd2hEgRRrHvs7C2eWXgRLZkm24bHNmtVRZEDL+uFvr79nO6
+ Yvow==
+X-Gm-Message-State: AOAM531CMd8nJ8avNMml3zQnHNVSjCmFYimdWa63o4Dt4lKMCAn0URI8
+ VnAYNoeicR5ZxTPyb3hjWgpPRXZ9i/RiNMOEoChLqgT9yYO8Kg==
+X-Google-Smtp-Source: ABdhPJxezLCcvN3niuhRM0OtHB7Q+c7aykVYNELDfNkM7mnat8FVf1JZhLjX2vv01L3fz9iCEv0/FXYTLWT1qd6y1XU=
+X-Received: by 2002:a05:6402:2030:: with SMTP id
+ ay16mr3444901edb.156.1614266379030; 
+ Thu, 25 Feb 2021 07:19:39 -0800 (PST)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Thu, 25 Feb 2021 18:12:08 +0300
-Message-Id: <170251614265496@mail.yandex.ru>
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
+References: <CA+FKyEWtGpmB9P4YUryOprn7GG604f27MV27KAG6bs72zNo_ew@mail.gmail.com>
+In-Reply-To: <CA+FKyEWtGpmB9P4YUryOprn7GG604f27MV27KAG6bs72zNo_ew@mail.gmail.com>
+From: Parishrut Bhatia <parishrutb@gmail.com>
+Date: Thu, 25 Feb 2021 20:49:26 +0530
+Message-ID: <CA+FKyEV8xSPOOZCknSq93Y0EkbTGATi5w_SHHyaJrHOsQ7VqeA@mail.gmail.com>
+Subject: Requesting feedback on in-progress GUI designs (Hardware status and
+ inventory)
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000018523505bc2aae5b"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,34 +78,52 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGRpdj48ZGl2Pm5pa2l0YUB1YnVudHU6fi9ibWN3ZWIkIG5pbmphIC1DIGJ1aWxkZGlyPC9kaXY+
-PGRpdj5uaW5qYTogRW50ZXJpbmcgZGlyZWN0b3J5IGBidWlsZGRpcic8L2Rpdj48ZGl2PlsxLzI0
-XSBDb21waWxpbmcgQysrIG9iamVjdCAnc3VicHJvamVjdHMvdGlueXhtbDItNy4wLjEvY2U5NzI2
-NUBAeG1sdGVzdEBleGUveG1sdGVzdC5jcHAubycuPC9kaXY+PGRpdj5GQUlMRUQ6IHN1YnByb2pl
-Y3RzL3Rpbnl4bWwyLTcuMC4xL2NlOTcyNjVAQHhtbHRlc3RAZXhlL3htbHRlc3QuY3BwLm/CoDwv
-ZGl2PjxkaXY+YysrIC1Jc3VicHJvamVjdHMvdGlueXhtbDItNy4wLjEvY2U5NzI2NUBAeG1sdGVz
-dEBleGUgLUlzdWJwcm9qZWN0cy90aW55eG1sMi03LjAuMSAtSS4uL3N1YnByb2plY3RzL3Rpbnl4
-bWwyLTcuMC4xIC1mbHRvIC1mZGlhZ25vc3RpY3MtY29sb3I9YWx3YXlzIC1waXBlIC1EX0ZJTEVf
-T0ZGU0VUX0JJVFM9NjQgLVdhbGwgLVdpbnZhbGlkLXBjaCAtV25vbi12aXJ0dWFsLWR0b3IgLVdl
-eHRyYSAtV3BlZGFudGljIC1XZXJyb3IgLXN0ZD1jKysxNyAtZm5vLXJ0dGkgLU8yIC1nIC1NRCAt
-TVEgJ3N1YnByb2plY3RzL3Rpbnl4bWwyLTcuMC4xL2NlOTcyNjVAQHhtbHRlc3RAZXhlL3htbHRl
-c3QuY3BwLm8nIC1NRiAnc3VicHJvamVjdHMvdGlueXhtbDItNy4wLjEvY2U5NzI2NUBAeG1sdGVz
-dEBleGUveG1sdGVzdC5jcHAuby5kJyAtbyAnc3VicHJvamVjdHMvdGlueXhtbDItNy4wLjEvY2U5
-NzI2NUBAeG1sdGVzdEBleGUveG1sdGVzdC5jcHAubycgLWMgLi4vc3VicHJvamVjdHMvdGlueXht
-bDItNy4wLjEveG1sdGVzdC5jcHA8L2Rpdj48ZGl2Pi4uL3N1YnByb2plY3RzL3Rpbnl4bWwyLTcu
-MC4xL3htbHRlc3QuY3BwOiBJbiBmdW5jdGlvbiDigJhpbnQgbWFpbihpbnQsIGNvbnN0IGNoYXIq
-KinigJk6PC9kaXY+PGRpdj4uLi9zdWJwcm9qZWN0cy90aW55eG1sMi03LjAuMS94bWx0ZXN0LmNw
-cDo3MDc6MTA6IGVycm9yOiBpZ25vcmluZyByZXR1cm4gdmFsdWUgb2Yg4oCYY2hhciogZmdldHMo
-Y2hhciosIGludCwgRklMRSop4oCZLCBkZWNsYXJlZCB3aXRoIGF0dHJpYnV0ZSB3YXJuX3VudXNl
-ZF9yZXN1bHQgWy1XZXJyb3I9dW51c2VkLXJlc3VsdF08L2Rpdj48ZGl2PsKgIDcwNyB8IMKgIMKg
-IGZnZXRzKCBzYXZlZEJ1ZiwgMjU2LCBzYXZlZCApOzwvZGl2PjxkaXY+wqAgwqAgwqAgfCDCoCDC
-oCB+fn5+fl5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fjwvZGl2PjxkaXY+Li4vc3VicHJvamVjdHMv
-dGlueXhtbDItNy4wLjEveG1sdGVzdC5jcHA6MTA2Nzo5OiBlcnJvcjogaWdub3JpbmcgcmV0dXJu
-IHZhbHVlIG9mIOKAmGNoYXIqIGZnZXRzKGNoYXIqLCBpbnQsIEZJTEUqKeKAmSwgZGVjbGFyZWQg
-d2l0aCBhdHRyaWJ1dGUgd2Fybl91bnVzZWRfcmVzdWx0IFstV2Vycm9yPXVudXNlZC1yZXN1bHRd
-PC9kaXY+PGRpdj7CoDEwNjcgfCDCoCDCoGZnZXRzKCBidWYsIDEwMjQsIHRleHRmaWxlICk7PC9k
-aXY+PGRpdj7CoCDCoCDCoCB8IMKgIMKgfn5+fn5efn5+fn5+fn5+fn5+fn5+fn5+fn5+fjwvZGl2
-PjxkaXY+Y2MxcGx1czogYWxsIHdhcm5pbmdzIGJlaW5nIHRyZWF0ZWQgYXMgZXJyb3JzPC9kaXY+
-PGRpdj7CoDwvZGl2PjxkaXY+SGVscCBwbGVhc2U8L2Rpdj48ZGl2PkhvdyB0byBmaXggdGhpcyBw
-cm9ibGVtLCBiZWNhdXNlIEkgY2FudCBjb21waWxlIGJtY3dlYiB3aXRoIHRoaXMgZXJyb3JzLjwv
-ZGl2PjwvZGl2Pg==
+--00000000000018523505bc2aae5b
+Content-Type: text/plain; charset="UTF-8"
+
+Hello,
+
+Requesting feedback on the current iteration of new Hardware status and
+inventory screens in the WebUI:
+https://github.com/openbmc/webui-vue/issues/54
+<https://github.com/openbmc/webui-vue/issues/44>
+Thanks in advance,
+*Parishrut Bhatia*
+User Experience Designer | IBM iX, Bangalore
++91 9811 930 069
+
+*"Everyone wants to go to heaven, but no one wants to die."*
+
+--00000000000018523505bc2aae5b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div>Hello,</div><div><br></div><div>Requ=
+esting feedback on the current iteration of new Hardware status and invento=
+ry screens in the WebUI:<br></div><div><a href=3D"https://github.com/openbm=
+c/webui-vue/issues/54">https://github.com/openbmc/webui-vue/issues/54</a></=
+div><div><a href=3D"https://github.com/openbmc/webui-vue/issues/44" target=
+=3D"_blank"></a></div><div>Thanks in advance<font color=3D"#888888">,<br></=
+font></div><font color=3D"#888888"></font><div><div dir=3D"ltr" class=3D"gm=
+ail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div><di=
+v dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr">=
+<div style=3D"font-size:12.72px"><span style=3D"background-color:rgb(255,25=
+5,255)"><font style=3D"font-size:12.72px" face=3D"tahoma, sans-serif"><b>Pa=
+rishrut Bhatia</b></font></span><div style=3D"font-size:12.72px"><span styl=
+e=3D"color:rgb(102,102,102)"><span style=3D"background-color:rgb(255,255,25=
+5)"><span style=3D"font-family:tahoma,sans-serif;font-size:small">User Expe=
+rience Designer | IBM iX, Bangalore</span></span></span></div><div style=3D=
+"font-size:12.72px"><span style=3D"color:rgb(102,102,102)"><span style=3D"b=
+ackground-color:rgb(255,255,255)"><span style=3D"font-family:tahoma,sans-se=
+rif;font-size:12.72px">+91 9811 930 069</span></span></span></div><div styl=
+e=3D"font-size:12.72px"><span style=3D"background-color:rgb(255,255,255)"><=
+br></span></div><div style=3D"font-size:12.72px"><i><span style=3D"color:rg=
+b(102,102,102)"><span style=3D"background-color:rgb(255,255,255)">&quot;Eve=
+ryone wants to go to heaven, but no one wants to die.&quot;</span></span></=
+i><br></div><br><br></div></div></div></div></div></div></div></div></div><=
+/div></div></div><div class=3D"gmail_quote"><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex">
+</blockquote></div></div>
+
+--00000000000018523505bc2aae5b--
