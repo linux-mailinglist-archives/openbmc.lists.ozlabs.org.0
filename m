@@ -2,48 +2,129 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B03432445A
-	for <lists+openbmc@lfdr.de>; Wed, 24 Feb 2021 20:06:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 654F1324DC9
+	for <lists+openbmc@lfdr.de>; Thu, 25 Feb 2021 11:19:59 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dm5480pYnz3cJb
-	for <lists+openbmc@lfdr.de>; Thu, 25 Feb 2021 06:06:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DmTLP2h9Dz3cKV
+	for <lists+openbmc@lfdr.de>; Thu, 25 Feb 2021 21:19:57 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=CYkd1sr6;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.237.122;
+ helo=nam12-bn8-obe.outbound.protection.outlook.com;
+ envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=CYkd1sr6; 
+ dkim-atps=neutral
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com
+ (mail-bn8nam12on2122.outbound.protection.outlook.com [40.107.237.122])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dm52H6JVcz3cJR;
- Thu, 25 Feb 2021 06:04:39 +1100 (AEDT)
-IronPort-SDR: QyZkHMXJ5bqDS4PHvZhU2usdHIbPKiv38k0V0asLCW++Iwq08ulN/8tf4XrvPMhiPvvZSysPV7
- XVc+NlseWGBg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9905"; a="184578408"
-X-IronPort-AV: E=Sophos;i="5.81,203,1610438400"; d="scan'208";a="184578408"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Feb 2021 11:04:34 -0800
-IronPort-SDR: RGI7Uo3MVhDUBI/KPv/KhjVwX4FPoRivLE2pBqG24WRGafMwhIwko3CNnr0MA94ftYt/NkDwxO
- Hv80nwZyGWFw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,203,1610438400"; d="scan'208";a="367098945"
-Received: from maru.jf.intel.com ([10.54.51.77])
- by orsmga006.jf.intel.com with ESMTP; 24 Feb 2021 11:04:34 -0800
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-To: Brendan Higgins <brendanhiggins@google.com>,
- Wolfram Sang <wsa@the-dreams.de>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Joel Stanley <joel@jms.id.au>, Rob Herring <robh+dt@kernel.org>,
- Mark Rutland <mark.rutland@arm.com>, Andrew Jeffery <andrew@aj.id.au>,
- Tao Ren <taoren@fb.com>, Cedric Le Goater <clg@kaod.org>
-Subject: [PATCH v4 4/4] i2c: aspeed: add DMA mode transfer support
-Date: Wed, 24 Feb 2021 11:17:20 -0800
-Message-Id: <20210224191720.7724-5-jae.hyun.yoo@linux.intel.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210224191720.7724-1-jae.hyun.yoo@linux.intel.com>
-References: <20210224191720.7724-1-jae.hyun.yoo@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DmTL50rQGz3cGZ;
+ Thu, 25 Feb 2021 21:19:39 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=E6j3NFF8q05oNiH2REJL+vbfTKqQj5q6qdbH4ZvJQkEp6lkmyVqVBMXK9VXp2l/BZWAHN7OpfiZrL4Z/QklEpOjXvb7FucOfD0e44NhmPKM1dGZU9qEjqzjFu0OPBCMf1zaKaPp5ozYjUXh7me3e6rWD32u3JKZRHiuUNkRzFZvF2KQtKVwU4E92XQZ4f/GsJlZbbBY5OJbO6WG9gjkHUW3jv5lvOsJM81wvXF+uHY6T2YiRxggHH9TMzwtOu/59P9x6HgG/CPCaebFlnPc+gNPCZ4QXK0BE3KlTL/ap9owZvGeCBD4j9c1zFH1vbjqGc5UrzFDym3xrMKXGwxYJnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PPvoP/KFCa1JoNmZY/KCpykl8Qo3IL8ZZaZMA4VQvHM=;
+ b=BYhg3Bpky1IcF7sSNFh+iQRMZZayyn4fRsYEf2J9i+/YYGp+uMg/hVtp4OpFiT8BseROO2AG+dbZKfe00IxWgNLdbzaw/4XoF6vdd0MwN2E2s2CVX5goQ9TYSxmSyEcZ9+enFrrSkBgYO9aeTpmF+nFo4vIBRkr40FZ5XVTj1jRWCum3G3aeHtnBY6kktt6zo5d0uRPzh5MyOipcr8lyavqvztC6U1vjx7mmt9tQCHlocBI2j1MHQel4fHYbzcCHvUmggFrDTiJ/ydwXKvy1PUPA2YFR2St+TztOp/2t27nRtSHWrz5rnPoa+DKKiLnU89JlAwO9jpH18pntlNW/gQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PPvoP/KFCa1JoNmZY/KCpykl8Qo3IL8ZZaZMA4VQvHM=;
+ b=CYkd1sr6z/mt6Q6uou9HCjTSx0kgSfyZXde+qLiM1nn0u1YJNGTF1SORmaHXLbXCYjepfjW2QQmPH3LpVdWiCXUt+uHqr8X9DgGL8vYBC0TUQ3q6yRTo//Ej/hNOi4nLecPYOiP4Dcd1nqBLrJdSARj4kxw0HsdvXlNrALLY/rI=
+Authentication-Results: jms.id.au; dkim=none (message not signed)
+ header.d=none;jms.id.au; dmarc=none action=none
+ header.from=os.amperecomputing.com;
+Received: from MW2PR0102MB3482.prod.exchangelabs.com (2603:10b6:302:c::32) by
+ MW4PR01MB6179.prod.exchangelabs.com (2603:10b6:303:67::16) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3868.32; Thu, 25 Feb 2021 10:19:32 +0000
+Received: from MW2PR0102MB3482.prod.exchangelabs.com
+ ([fe80::682c:4e20:b53d:e660]) by MW2PR0102MB3482.prod.exchangelabs.com
+ ([fe80::682c:4e20:b53d:e660%7]) with mapi id 15.20.3890.019; Thu, 25 Feb 2021
+ 10:19:32 +0000
+From: Quan Nguyen <quan@os.amperecomputing.com>
+To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
+ Rob Herring <robh+dt@kernel.org>, Lee Jones <lee.jones@linaro.org>,
+ Jonathan Corbet <corbet@lwn.net>, linux-hwmon@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org
+Subject: [PATCH 0/4] Add Ampere's Altra SMPro hwmon driver
+Date: Thu, 25 Feb 2021 17:18:50 +0700
+Message-Id: <20210225101854.13896-1-quan@os.amperecomputing.com>
+X-Mailer: git-send-email 2.28.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [118.69.219.201]
+X-ClientProxiedBy: HK0PR01CA0061.apcprd01.prod.exchangelabs.com
+ (2603:1096:203:a6::25) To MW2PR0102MB3482.prod.exchangelabs.com
+ (2603:10b6:302:c::32)
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from hcm-sw-17.amperecomputing.com (118.69.219.201) by
+ HK0PR01CA0061.apcprd01.prod.exchangelabs.com (2603:1096:203:a6::25) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3890.19 via Frontend
+ Transport; Thu, 25 Feb 2021 10:19:27 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 8ca25638-c3a2-4d6c-56ac-08d8d976d70b
+X-MS-TrafficTypeDiagnostic: MW4PR01MB6179:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <MW4PR01MB6179E0E399D6F5BC86A34BDCF29E9@MW4PR01MB6179.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:4125;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: wAgee1rSs+Td92/s8UU8+3l0LKYGPc8oo7iv35B/yxgjUNetNE6l08t3UK2Qh4J/RK7RTlAJuvnlp2QxoLCxiBTNiP9hxXaoJ6RHY7oA1uhJFPqkJPqacC8EPkbaepV3/XtIBUvxdEhBoWu/rKuDzqPexHC3gKuStOzCeJpn+shSZ3zKpatBtbk+bxdaYwWMHAsR+NaOseFh4qR3/uPmPaWH8fBXF8VELoVgAFsdRqiIXCT5R87KuodDH/G00Ahwus11RtFkRnGUcOqyLnuxUl1b9dpl1yMA7BWWtZpRdqpIXEAQSTGZOi8Zxg1NX1FtE5J/8TGCPrA86+WLc6PgFDmcLRYr9HeBicxwXltNeFrttR/rSoaA3Nd+mdS5XKQNoEj5z5RAQ1VI9ktnuHYZoG18+6T6pbRGZ8p+mYyqr/YFHngQ1dEZ/2w6REw+7l/D/bfnZ4cI89GlQpVNosfaiL6RkUz0mWD8/2mYImwI+gxWDnmzDbk+FPz/QsE1c49Kh9SjjaRJmJu4XXmAZPLxYDFrcvMCdk0D01zp533fRp/opTEzAyyzXhOrEb14dyKV
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MW2PR0102MB3482.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(396003)(39850400004)(376002)(366004)(346002)(136003)(2906002)(186003)(8936002)(26005)(6512007)(8676002)(16526019)(86362001)(83380400001)(110136005)(52116002)(316002)(4326008)(6506007)(478600001)(5660300002)(7416002)(66556008)(6666004)(921005)(1076003)(6486002)(66946007)(66476007)(2616005)(107886003)(956004)(54906003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?K9x104xuN2+FrEfm00fQD3FAxsH0Wyo/aXjefAkvBT0TJB+q5T1kr9+bgeR4?=
+ =?us-ascii?Q?RzBkiHE4ro5drwQ4WqZcibUcWDz8XZI+f9f8wqA4eOo2PXuDPiws3Sf/raKP?=
+ =?us-ascii?Q?8ZK0MZV+/y8hlHaD8SzL6B9u5/KKbPZgkAgLlNHZ0Jh0nXuGQRfmuxNhltW1?=
+ =?us-ascii?Q?v3ACkS4y+otkbtL1UVnDernB9WkDJ0MUo7x65dgxIWMX9XAatzetnNzAf+d7?=
+ =?us-ascii?Q?WWReViklbN7T3/0MkWxP3hljcUrLjs+6AFCdJQ2d7RslDtjN3I6NiM7finzP?=
+ =?us-ascii?Q?OSVkcAVqXDiiGfwFe/mivDm94V3lrCryzoaxUnxrJ6exS8xaqUawTA5z8HGT?=
+ =?us-ascii?Q?O/iJE0STSlRnQkdgH4/Bp//rv+2cp9ZsUQpxLgjUo4Ixm11CDzZMhXY5lrA1?=
+ =?us-ascii?Q?tHd0lzDdsxUw4gTsDuYCtI9f8PLiSQWMNONQravFIpYhVUzkujbfMhIMqeqA?=
+ =?us-ascii?Q?p/w7gWzVxosTG1wI5wCvGf03N9R8bvqWyQJ7ZsRiSqQv0p5qswjM8UMd1D20?=
+ =?us-ascii?Q?kXbwRCzGCkkVFBfoN7Tck39o5VASULJXzkZZj1FwCXumSBMCQXPgWMMlYk4F?=
+ =?us-ascii?Q?nXa/A+2Ao4UU1z/ltAi3BMU7p7fN95TqKSC28lFguvkhzuMbxQEG7eYFq2k6?=
+ =?us-ascii?Q?Lnp9DD7U5XsSFvr1PIBn1NW6+TnJTLAt3wtc4Shs03a0VbXazpeA02GgDW9Z?=
+ =?us-ascii?Q?aqzzzsqRbV0a6eKsKLcwd8KrpypHHAahe1rKJ4cD2j9b1Cw874Yf+oDJp0qi?=
+ =?us-ascii?Q?Imldx24iFLRvcuUxQCOuAu7f0MQ8L7Khn80jhvhNhlcZ6aOae4PNZoRvtbVP?=
+ =?us-ascii?Q?3aCSXmb91lUmINCWl2dtI6D2fN9AKESila8Nv5iI5pjBi7/keUg2fYjaCo/j?=
+ =?us-ascii?Q?RzOLWkznsbEb3b50xslkMQfT9s8ioVwfo6DaVFd4HiautMGceG8/9FJC0o2+?=
+ =?us-ascii?Q?eLs29mcn8RJdwlYkZHEacUBjnAicTCFV0I27nfGd1KSR5PXJDF70W6fxoSGF?=
+ =?us-ascii?Q?DfLSF5+cb3q9B7iEP0q7DpzUF6bGshhMVB1WdeYK7YgiICqNEM36/HQtxe84?=
+ =?us-ascii?Q?exHfimyUnp0XvPNVstujyduBalAjVaRhIQRAmvfZRwmVmGyi0rhvVTnpKB8U?=
+ =?us-ascii?Q?w2n6xLPWcCPOocaXu6mB2YKcAqZneSlbM/Rh67/T05r5Am6f2rMlvIKyXbki?=
+ =?us-ascii?Q?Bb1/Ro9wCzmKRZDersbgYdUL+QZGFW7H0Ulu5wA1cszF7nZeJetoIwduxEAU?=
+ =?us-ascii?Q?iU4t0N9W5nIoleupoxgoWu/sS0Xg4fVI5j89hC0JRncDKsx4ng/awouhjOt+?=
+ =?us-ascii?Q?t5VgVrvI5eArWH3yDpI1X+KB?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8ca25638-c3a2-4d6c-56ac-08d8d976d70b
+X-MS-Exchange-CrossTenant-AuthSource: MW2PR0102MB3482.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2021 10:19:31.8913 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: FpndLkPYyPthhvunDmPDrsuoFKu9dS4myTh1Pk/fB0Pw1hoUNj41CLE5ssQ/yKA9loccJJjnbu72T16peV7wnyKujOO71ajxMYt8J67D+sc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR01MB6179
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,510 +136,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-i2c@vger.kernel.org,
- linux-aspeed@lists.ozlabs.org
+Cc: Open Source Submission <patches@amperecomputing.com>,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This commit adds DMA mode transfer support.
+This patch series adds support for Ampere SMpro hwmon driver. This driver
+supports accessing various CPU sensors provided by the SMpro co-processor
+including temperature, power, voltages, and current found on Ampere
+Altra processor family.
 
-Only AST2500 and later versions support DMA mode.
+Quan Nguyen (4):
+  dt-bindings: mfd: Add bindings for Ampere Altra SMPro drivers
+  mfd: simple-mfd-i2c: Adds Ampere's Altra SMpro support
+  hwmon: smpro: Add Ampere's Altra smpro-hwmon driver
+  docs: hwmon: (smpro-hwmon) Add documentation
 
-AST2500 has these restrictions:
-  - If one of these controllers is enabled
-      * UHCI host controller
-      * MCTP controller
-    I2C has to use buffer mode or byte mode instead
-    since these controllers run only in DMA mode and
-    I2C is sharing the same DMA H/W with them.
-  - If one of these controllers uses DMA mode, I2C
-    can't use DMA mode
-      * SD/eMMC
-      * Port80 snoop
+ .../bindings/hwmon/ampere,ac01-hwmon.yaml     |  27 +
+ .../bindings/mfd/ampere,ac01-smpro.yaml       |  82 +++
+ Documentation/hwmon/index.rst                 |   1 +
+ Documentation/hwmon/smpro-hwmon.rst           | 100 +++
+ drivers/hwmon/Kconfig                         |   8 +
+ drivers/hwmon/Makefile                        |   1 +
+ drivers/hwmon/smpro-hwmon.c                   | 620 ++++++++++++++++++
+ drivers/mfd/Kconfig                           |  10 +
+ drivers/mfd/simple-mfd-i2c.c                  |  15 +-
+ 9 files changed, 862 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
+ create mode 100644 Documentation/devicetree/bindings/mfd/ampere,ac01-smpro.yaml
+ create mode 100644 Documentation/hwmon/smpro-hwmon.rst
+ create mode 100644 drivers/hwmon/smpro-hwmon.c
 
-Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
----
-Changes since v3:
-- None
-
-Changes since v2:
-- Refined SoC family dependent xfer mode configuration functions.
-
-Changes since v1:
-- Updated commit message and comments.
-- Refined using abstract functions.
-
- drivers/i2c/busses/i2c-aspeed.c | 265 ++++++++++++++++++++++++++------
- 1 file changed, 216 insertions(+), 49 deletions(-)
-
-diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index ffc52937df26..3e3bb014b027 100644
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -10,6 +10,8 @@
- #include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/completion.h>
-+#include <linux/dma-mapping.h>
-+#include <linux/dmapool.h>
- #include <linux/err.h>
- #include <linux/errno.h>
- #include <linux/i2c.h>
-@@ -47,6 +49,8 @@
- #define ASPEED_I2C_DEV_ADDR_REG				0x18
- #define ASPEED_I2C_BUF_CTRL_REG				0x1c
- #define ASPEED_I2C_BYTE_BUF_REG				0x20
-+#define ASPEED_I2C_DMA_ADDR_REG				0x24
-+#define ASPEED_I2C_DMA_LEN_REG				0x28
- 
- /* Device Register Definition */
- /* 0x00 : I2CD Function Control Register  */
-@@ -111,6 +115,8 @@
- #define ASPEED_I2CD_BUS_RECOVER_CMD			BIT(11)
- 
- /* Command Bit */
-+#define ASPEED_I2CD_RX_DMA_ENABLE			BIT(9)
-+#define ASPEED_I2CD_TX_DMA_ENABLE			BIT(8)
- #define ASPEED_I2CD_RX_BUFF_ENABLE			BIT(7)
- #define ASPEED_I2CD_TX_BUFF_ENABLE			BIT(6)
- #define ASPEED_I2CD_M_STOP_CMD				BIT(5)
-@@ -136,6 +142,14 @@
- #define ASPEED_I2CD_BUF_TX_COUNT_MASK			GENMASK(15, 8)
- #define ASPEED_I2CD_BUF_OFFSET_MASK			GENMASK(5, 0)
- 
-+/* 0x24 : I2CD DMA Mode Buffer Address Register */
-+#define ASPEED_I2CD_DMA_ADDR_MASK			GENMASK(31, 2)
-+#define ASPEED_I2CD_DMA_ALIGN				4
-+
-+/* 0x28 : I2CD DMA Transfer Length Register */
-+#define ASPEED_I2CD_DMA_LEN_SHIFT			0
-+#define ASPEED_I2CD_DMA_LEN_MASK			GENMASK(11, 0)
-+
- enum aspeed_i2c_master_state {
- 	ASPEED_I2C_MASTER_INACTIVE,
- 	ASPEED_I2C_MASTER_PENDING,
-@@ -161,6 +175,7 @@ struct aspeed_i2c_config {
- 	u32 (*get_clk_reg_val)(struct device *dev, u32 divisor);
- 	int (*enable_sram)(void);
- 	int (*set_buf_xfer_mode)(struct device *dev);
-+	int (*set_dma_xfer_mode)(struct device *dev);
- };
- 
- struct aspeed_i2c_bus {
-@@ -190,6 +205,12 @@ struct aspeed_i2c_bus {
- 	void __iomem			*buf_base;
- 	u8				buf_offset;
- 	u8				buf_page;
-+	/* DMA mode */
-+	struct dma_pool			*dma_pool;
-+	dma_addr_t			dma_handle;
-+	u8				*dma_buf;
-+	size_t				dma_len;
-+	/* Buffer/DMA mode */
- 	size_t				buf_size;
- #if IS_ENABLED(CONFIG_I2C_SLAVE)
- 	struct i2c_client		*slave;
-@@ -272,9 +293,13 @@ static inline void
- aspeed_i2c_slave_handle_rx_done(struct aspeed_i2c_bus *bus, u32 irq_status,
- 				u8 *value)
- {
--	if (bus->buf_base &&
-+	if (bus->dma_buf &&
- 	    bus->slave_state == ASPEED_I2C_SLAVE_WRITE_RECEIVED &&
- 	    !(irq_status & ASPEED_I2CD_INTR_NORMAL_STOP))
-+		*value = bus->dma_buf[0];
-+	else if (bus->buf_base &&
-+		 bus->slave_state == ASPEED_I2C_SLAVE_WRITE_RECEIVED &&
-+		 !(irq_status & ASPEED_I2CD_INTR_NORMAL_STOP))
- 		*value = readb(bus->buf_base);
- 	else
- 		*value = readl(bus->base + ASPEED_I2C_BYTE_BUF_REG) >> 8;
-@@ -288,7 +313,18 @@ aspeed_i2c_slave_handle_normal_stop(struct aspeed_i2c_bus *bus, u32 irq_status,
- 
- 	if (bus->slave_state == ASPEED_I2C_SLAVE_WRITE_RECEIVED &&
- 	    irq_status & ASPEED_I2CD_INTR_RX_DONE) {
--		if (bus->buf_base) {
-+		if (bus->dma_buf) {
-+			len = bus->buf_size -
-+			      FIELD_GET(ASPEED_I2CD_DMA_LEN_MASK,
-+					readl(bus->base +
-+					      ASPEED_I2C_DMA_LEN_REG));
-+			for (i = 0; i < len; i++) {
-+				*value = bus->dma_buf[i];
-+				i2c_slave_event(bus->slave,
-+						I2C_SLAVE_WRITE_RECEIVED,
-+						value);
-+			}
-+		} else if (bus->buf_base) {
- 			len = FIELD_GET(ASPEED_I2CD_BUF_RX_COUNT_MASK,
- 					readl(bus->base +
- 					      ASPEED_I2C_BUF_CTRL_REG));
-@@ -305,7 +341,14 @@ aspeed_i2c_slave_handle_normal_stop(struct aspeed_i2c_bus *bus, u32 irq_status,
- static inline void
- aspeed_i2c_slave_handle_write_requested(struct aspeed_i2c_bus *bus, u8 *value)
- {
--	if (bus->buf_base) {
-+	if (bus->dma_buf) {
-+		writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
-+		       bus->base + ASPEED_I2C_DMA_ADDR_REG);
-+		writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, bus->buf_size),
-+		       bus->base + ASPEED_I2C_DMA_LEN_REG);
-+		writel(ASPEED_I2CD_RX_DMA_ENABLE,
-+		       bus->base + ASPEED_I2C_CMD_REG);
-+	} else if (bus->buf_base) {
- 		writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK,
- 				  bus->buf_size - 1) |
- 		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
-@@ -321,7 +364,23 @@ aspeed_i2c_slave_handle_write_received(struct aspeed_i2c_bus *bus, u8 *value)
- {
- 	int i, len;
- 
--	if (bus->buf_base) {
-+	if (bus->dma_buf) {
-+		len = bus->buf_size -
-+		      FIELD_GET(ASPEED_I2CD_DMA_LEN_MASK,
-+				readl(bus->base +
-+				      ASPEED_I2C_DMA_LEN_REG));
-+		for (i = 1; i < len; i++) {
-+			*value = bus->dma_buf[i];
-+			i2c_slave_event(bus->slave, I2C_SLAVE_WRITE_RECEIVED,
-+					value);
-+		}
-+		writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
-+		       bus->base + ASPEED_I2C_DMA_ADDR_REG);
-+		writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, bus->buf_size),
-+		       bus->base + ASPEED_I2C_DMA_LEN_REG);
-+		writel(ASPEED_I2CD_RX_DMA_ENABLE,
-+		       bus->base + ASPEED_I2C_CMD_REG);
-+	} else if (bus->buf_base) {
- 		len = FIELD_GET(ASPEED_I2CD_BUF_RX_COUNT_MASK,
- 				readl(bus->base +
- 				      ASPEED_I2C_BUF_CTRL_REG));
-@@ -451,7 +510,15 @@ aspeed_i2c_prepare_rx_buf(struct aspeed_i2c_bus *bus, struct i2c_msg *msg)
- 		command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
- 	}
- 
--	if (bus->buf_base) {
-+	if (bus->dma_buf) {
-+		command |= ASPEED_I2CD_RX_DMA_ENABLE;
-+
-+		writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
-+		       bus->base + ASPEED_I2C_DMA_ADDR_REG);
-+		writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, len),
-+		       bus->base + ASPEED_I2C_DMA_LEN_REG);
-+		bus->dma_len = len;
-+	} else {
- 		command |= ASPEED_I2CD_RX_BUFF_ENABLE;
- 
- 		writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK, len - 1) |
-@@ -474,7 +541,18 @@ aspeed_i2c_prepare_tx_buf(struct aspeed_i2c_bus *bus, struct i2c_msg *msg)
- 	else
- 		len = msg->len + 1;
- 
--	if (bus->buf_base) {
-+	if (bus->dma_buf) {
-+		command |= ASPEED_I2CD_TX_DMA_ENABLE;
-+
-+		bus->dma_buf[0] = slave_addr;
-+		memcpy(bus->dma_buf + 1, msg->buf, len);
-+
-+		writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
-+		       bus->base + ASPEED_I2C_DMA_ADDR_REG);
-+		writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, len),
-+		       bus->base + ASPEED_I2C_DMA_LEN_REG);
-+		bus->dma_len = len;
-+	} else {
- 		u8 wbuf[4];
- 		int i;
- 
-@@ -527,18 +605,19 @@ static void aspeed_i2c_do_start(struct aspeed_i2c_bus *bus)
- 	if (msg->flags & I2C_M_RD) {
- 		command |= ASPEED_I2CD_M_RX_CMD;
- 		if (!(msg->flags & I2C_M_RECV_LEN)) {
--			if (msg->len && bus->buf_base)
-+			if (msg->len && (bus->dma_buf || bus->buf_base))
- 				command |= aspeed_i2c_prepare_rx_buf(bus, msg);
- 
- 			/* Need to let the hardware know to NACK after RX. */
- 			if (msg->len <= 1)
- 				command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
- 		}
--	} else if (msg->len && bus->buf_base) {
-+	} else if (msg->len && (bus->dma_buf || bus->buf_base)) {
- 		command |= aspeed_i2c_prepare_tx_buf(bus, msg);
- 	}
- 
--	if (!(command & ASPEED_I2CD_TX_BUFF_ENABLE))
-+	if (!(command & (ASPEED_I2CD_TX_BUFF_ENABLE |
-+			 ASPEED_I2CD_TX_DMA_ENABLE)))
- 		writel(i2c_8bit_addr_from_msg(msg),
- 		       bus->base + ASPEED_I2C_BYTE_BUF_REG);
- 	writel(command, bus->base + ASPEED_I2C_CMD_REG);
-@@ -581,42 +660,55 @@ aspeed_i2c_master_handle_tx_first(struct aspeed_i2c_bus *bus,
- {
- 	u32 command = 0;
- 
--	if (bus->buf_base) {
--		u8 wbuf[4];
-+	if (bus->dma_buf || bus->buf_base) {
- 		int len;
--		int i;
- 
- 		if (msg->len - bus->buf_index > bus->buf_size)
- 			len = bus->buf_size;
- 		else
- 			len = msg->len - bus->buf_index;
- 
--		command |= ASPEED_I2CD_TX_BUFF_ENABLE;
-+		if (bus->dma_buf) {
-+			command |= ASPEED_I2CD_TX_DMA_ENABLE;
- 
--		if (msg->len - bus->buf_index > bus->buf_size)
--			len = bus->buf_size;
--		else
--			len = msg->len - bus->buf_index;
-+			memcpy(bus->dma_buf, msg->buf + bus->buf_index, len);
- 
--		/*
--		 * Looks bad here again but use dword writings to avoid data
--		 * corruption of byte writing on remapped I2C SRAM.
--		 */
--		for (i = 0; i < len; i++) {
--			wbuf[i % 4] = msg->buf[bus->buf_index + i];
--			if (i % 4 == 3)
-+			writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
-+			       bus->base + ASPEED_I2C_DMA_ADDR_REG);
-+			writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, len),
-+			       bus->base + ASPEED_I2C_DMA_LEN_REG);
-+			bus->dma_len = len;
-+		} else {
-+			u8 wbuf[4];
-+			int i;
-+
-+			command |= ASPEED_I2CD_TX_BUFF_ENABLE;
-+
-+			if (msg->len - bus->buf_index > bus->buf_size)
-+				len = bus->buf_size;
-+			else
-+				len = msg->len - bus->buf_index;
-+
-+			/*
-+			 * Looks bad here again but use dword writings to avoid
-+			 * data corruption of byte writing on remapped I2C SRAM.
-+			 */
-+			for (i = 0; i < len; i++) {
-+				wbuf[i % 4] = msg->buf[bus->buf_index + i];
-+				if (i % 4 == 3)
-+					writel(*(u32 *)wbuf,
-+					       bus->buf_base + i - 3);
-+			}
-+			if (--i % 4 != 3)
- 				writel(*(u32 *)wbuf,
--				       bus->buf_base + i - 3);
--		}
--		if (--i % 4 != 3)
--			writel(*(u32 *)wbuf,
--			       bus->buf_base + i - (i % 4));
-+				       bus->buf_base + i - (i % 4));
- 
--		writel(FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK,
--				  len - 1) |
--		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
--				  bus->buf_offset),
--		       bus->base + ASPEED_I2C_BUF_CTRL_REG);
-+			writel(FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK,
-+					  len - 1) |
-+			       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
-+					  bus->buf_offset),
-+			       bus->base + ASPEED_I2C_BUF_CTRL_REG);
-+		}
- 
- 		bus->buf_index += len;
- 	} else {
-@@ -633,7 +725,14 @@ aspeed_i2c_master_handle_rx(struct aspeed_i2c_bus *bus, struct i2c_msg *msg)
- 	u8 recv_byte;
- 	int len;
- 
--	if (bus->buf_base) {
-+	if (bus->dma_buf) {
-+		len = bus->dma_len -
-+		      FIELD_GET(ASPEED_I2CD_DMA_LEN_MASK,
-+				readl(bus->base + ASPEED_I2C_DMA_LEN_REG));
-+
-+		memcpy(msg->buf + bus->buf_index, bus->dma_buf, len);
-+		bus->buf_index += len;
-+	} else if (bus->buf_base) {
- 		len = FIELD_GET(ASPEED_I2CD_BUF_RX_COUNT_MASK,
- 				readl(bus->base + ASPEED_I2C_BUF_CTRL_REG));
- 		memcpy_fromio(msg->buf + bus->buf_index, bus->buf_base, len);
-@@ -650,7 +749,7 @@ aspeed_i2c_master_handle_rx_next(struct aspeed_i2c_bus *bus,
- {
- 	u32 command = 0;
- 
--	if (bus->buf_base) {
-+	if (bus->dma_buf || bus->buf_base) {
- 		int len;
- 
- 		if (msg->len - bus->buf_index > bus->buf_size) {
-@@ -660,14 +759,24 @@ aspeed_i2c_master_handle_rx_next(struct aspeed_i2c_bus *bus,
- 			command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
- 		}
- 
--		command |= ASPEED_I2CD_RX_BUFF_ENABLE;
-+		if (bus->dma_buf) {
-+			command |= ASPEED_I2CD_RX_DMA_ENABLE;
- 
--		writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK,
--				  len - 1) |
--		       FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK, 0) |
--		       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
--				  bus->buf_offset),
--		       bus->base + ASPEED_I2C_BUF_CTRL_REG);
-+			writel(bus->dma_handle & ASPEED_I2CD_DMA_ADDR_MASK,
-+			       bus->base + ASPEED_I2C_DMA_ADDR_REG);
-+			writel(FIELD_PREP(ASPEED_I2CD_DMA_LEN_MASK, len),
-+			       bus->base + ASPEED_I2C_DMA_LEN_REG);
-+			bus->dma_len = len;
-+		} else {
-+			command |= ASPEED_I2CD_RX_BUFF_ENABLE;
-+
-+			writel(FIELD_PREP(ASPEED_I2CD_BUF_RX_SIZE_MASK,
-+					  len - 1) |
-+			       FIELD_PREP(ASPEED_I2CD_BUF_TX_COUNT_MASK, 0) |
-+			       FIELD_PREP(ASPEED_I2CD_BUF_OFFSET_MASK,
-+					  bus->buf_offset),
-+			       bus->base + ASPEED_I2C_BUF_CTRL_REG);
-+		}
- 	} else {
- 		if (bus->buf_index + 1 == msg->len)
- 			command |= ASPEED_I2CD_M_S_RX_CMD_LAST;
-@@ -1287,22 +1396,63 @@ static int aspeed_i2c_25xx_set_buf_xfer_mode(struct device *dev)
- 	return bus->buf_size ? 0 : -EINVAL;
- }
- 
-+static int aspeed_i2c_24xx_set_dma_xfer_mode(struct device *dev)
-+{
-+	/* AST24xx doesn't support DMA mode */
-+
-+	return -EBADR;
-+}
-+
-+static int aspeed_i2c_25xx_set_dma_xfer_mode(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct aspeed_i2c_bus *bus = platform_get_drvdata(pdev);
-+	int ret;
-+
-+	ret = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
-+	if (!ret) {
-+		bus->buf_size = ASPEED_I2CD_DMA_LEN_MASK >>
-+				ASPEED_I2CD_DMA_LEN_SHIFT;
-+		bus->dma_pool = dma_pool_create("i2c-aspeed",
-+						&pdev->dev,
-+						bus->buf_size,
-+						ASPEED_I2CD_DMA_ALIGN,
-+						0);
-+		if (bus->dma_pool)
-+			bus->dma_buf = dma_pool_alloc(bus->dma_pool,
-+						      GFP_KERNEL,
-+						      &bus->dma_handle);
-+
-+		if (!bus->dma_buf) {
-+			ret = -ENOMEM;
-+			bus->buf_size = 0;
-+			dev_dbg(&pdev->dev, "Cannot allocate DMA buffer\n");
-+			dma_pool_destroy(bus->dma_pool);
-+		}
-+	}
-+
-+	return ret;
-+}
-+
- static const struct aspeed_i2c_config ast24xx_config = {
- 	.get_clk_reg_val = aspeed_i2c_24xx_get_clk_reg_val,
- 	.enable_sram = aspeed_i2c_24xx_enable_sram,
- 	.set_buf_xfer_mode = aspeed_i2c_24xx_set_buf_xfer_mode,
-+	.set_dma_xfer_mode = aspeed_i2c_24xx_set_dma_xfer_mode,
- };
- 
- static const struct aspeed_i2c_config ast25xx_config = {
- 	.get_clk_reg_val = aspeed_i2c_25xx_get_clk_reg_val,
- 	.enable_sram = aspeed_i2c_25xx_enable_sram,
- 	.set_buf_xfer_mode = aspeed_i2c_25xx_set_buf_xfer_mode,
-+	.set_dma_xfer_mode = aspeed_i2c_25xx_set_dma_xfer_mode,
- };
- 
- static const struct aspeed_i2c_config ast26xx_config = {
- 	.get_clk_reg_val = aspeed_i2c_25xx_get_clk_reg_val,
- 	.enable_sram = aspeed_i2c_24xx_enable_sram,
- 	.set_buf_xfer_mode = aspeed_i2c_25xx_set_buf_xfer_mode,
-+	.set_dma_xfer_mode = aspeed_i2c_25xx_set_dma_xfer_mode,
- };
- 
- static const struct of_device_id aspeed_i2c_bus_of_table[] = {
-@@ -1324,8 +1474,12 @@ static void aspeed_i2c_set_xfer_mode(struct aspeed_i2c_bus *bus)
- 		return;
- 
- 	ret = bus->config->enable_sram();
--	if (!ret && !strncasecmp(mode, "buf", 3))
--		ret = bus->config->set_buf_xfer_mode(bus->dev);
-+	if (!ret) {
-+		if (!strncasecmp(mode, "buf", 3))
-+			ret = bus->config->set_buf_xfer_mode(bus->dev);
-+		else if (!strncasecmp(mode, "dma", 3))
-+			ret = bus->config->set_dma_xfer_mode(bus->dev);
-+	}
- 
- 	if (ret)
- 		dev_dbg(&pdev->dev, "Use default (byte) xfer mode\n");
-@@ -1400,22 +1554,31 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
- 	 */
- 	ret = aspeed_i2c_init(bus, pdev);
- 	if (ret < 0)
--		return ret;
-+		goto out_free_dma_buf;
- 
- 	irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
- 	ret = devm_request_irq(&pdev->dev, irq, aspeed_i2c_bus_irq,
- 			       0, dev_name(&pdev->dev), bus);
- 	if (ret < 0)
--		return ret;
-+		goto out_free_dma_buf;
- 
- 	ret = i2c_add_adapter(&bus->adap);
- 	if (ret < 0)
--		return ret;
-+		goto out_free_dma_buf;
- 
- 	dev_info(bus->dev, "i2c bus %d registered (%s mode), irq %d\n",
--		 bus->adap.nr, bus->buf_base ? "buf" : "byte", irq);
-+		 bus->adap.nr, bus->dma_buf ? "dma" :
-+					      bus->buf_base ? "buf" : "byte",
-+		 irq);
- 
- 	return 0;
-+
-+out_free_dma_buf:
-+	if (bus->dma_buf)
-+		dma_pool_free(bus->dma_pool, bus->dma_buf, bus->dma_handle);
-+	dma_pool_destroy(bus->dma_pool);
-+
-+	return ret;
- }
- 
- static int aspeed_i2c_remove_bus(struct platform_device *pdev)
-@@ -1433,6 +1596,10 @@ static int aspeed_i2c_remove_bus(struct platform_device *pdev)
- 
- 	reset_control_assert(bus->rst);
- 
-+	if (bus->dma_buf)
-+		dma_pool_free(bus->dma_pool, bus->dma_buf, bus->dma_handle);
-+	dma_pool_destroy(bus->dma_pool);
-+
- 	i2c_del_adapter(&bus->adap);
- 
- 	return 0;
 -- 
-2.17.1
+2.28.0
 
