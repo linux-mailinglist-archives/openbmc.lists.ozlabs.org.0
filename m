@@ -2,129 +2,135 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0214F3253E7
-	for <lists+openbmc@lfdr.de>; Thu, 25 Feb 2021 17:48:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 14227325BB0
+	for <lists+openbmc@lfdr.de>; Fri, 26 Feb 2021 03:41:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DmdyR0212z3cZt
-	for <lists+openbmc@lfdr.de>; Fri, 26 Feb 2021 03:48:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dmv6j0Yjrz3cl4
+	for <lists+openbmc@lfdr.de>; Fri, 26 Feb 2021 13:41:17 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=lJGOWRTw;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=QqvI1CzE;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22f;
- helo=mail-oi1-x22f.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=lJGOWRTw; dkim-atps=neutral
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com
- [IPv6:2607:f8b0:4864:20::22f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dmdy75Z9Fz3cLr;
- Fri, 26 Feb 2021 03:47:58 +1100 (AEDT)
-Received: by mail-oi1-x22f.google.com with SMTP id q186so6645917oig.12;
- Thu, 25 Feb 2021 08:47:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:subject:to:cc:references:from:autocrypt:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=az6/5sv7SGsBjh1i/c65JEKtmkb6vMifZ9O5uEmeCso=;
- b=lJGOWRTwXqDp8SeQjTd1iuKQ4lPVeIuZsbUlwi71ZQVPgh8VfYTv2HK3wrY7rndb/J
- MeYevG4HAIYx3z0G1dIYHKBvyZYPnQHKE0YgvbYfttPIICUM6VTbKKZ94PrAjaHSaIP8
- lDHBLjWiEpK6RkhEM+T79WIv0YRq31YxgsrY+aPx5zDnS3v7Qnv5pdV3DsN+n8imGmeI
- 7YZpdasAEN+3Hu1O7R0qLCpi3DC3H7FIMkUISVBKbPPt9FusL3Qyvy41m8+T3qygJMeL
- ivfnvtRZxbvNPJ0rUIyPScjoKwuulQgvlTJeJD1sYMKrOACdtwpNibjdmPvU2Exb5NkN
- niJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
- :message-id:date:user-agent:mime-version:in-reply-to
- :content-language:content-transfer-encoding;
- bh=az6/5sv7SGsBjh1i/c65JEKtmkb6vMifZ9O5uEmeCso=;
- b=P8J84Q0UsBqItJe+cQ/zOZlB5wkudAYcowwZB9Qy6lPZNvT7GHlCAqC2LHFJeEN1hf
- E2Z6qLzZ8cyRXKxjeTCRx5VNjmGjsxZaJdedUMgygG/O1PY0SzP6s3efEUPE0udS0dmY
- SueW3uC0vyT2RUbpajvYwAwkLA5euhTJFHQnvagq5ff9n2OoUYjKmq4B6i9KFBtcC1z4
- DouC013skomxrXQdkmjFTxL4hMk2Z4badGpwEPUhXiVdYJBeLzH/8A8cQkldO+Sp6imK
- z702wGrMpXhVkGWd+hhCLRUS7kdB3GWz8MvJCQiiG05ldBY72r3Yu7lZwd5GSf2KdTmM
- /F5Q==
-X-Gm-Message-State: AOAM532firR67E24BgdS1jIbgvFkbmOGhNf7xZTyh6OFcLiNjD1sWhBb
- uKfPvpq62VrQt6VSD1MIaso=
-X-Google-Smtp-Source: ABdhPJyNXhvv74P8RFan/9aB+RJmNZR+69bnq9a1MXWTFEExRveSpjRP0Y1ye2KazypNBk7g195gqg==
-X-Received: by 2002:aca:4bc5:: with SMTP id y188mr2560988oia.135.1614271673946; 
- Thu, 25 Feb 2021 08:47:53 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- n1sm1165457oog.31.2021.02.25.08.47.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Feb 2021 08:47:53 -0800 (PST)
-Subject: Re: [PATCH 1/4] dt-bindings: mfd: Add bindings for Ampere Altra SMPro
- drivers
-To: Quan Nguyen <quan@os.amperecomputing.com>, Joel Stanley <joel@jms.id.au>, 
- Andrew Jeffery <andrew@aj.id.au>, Jean Delvare <jdelvare@suse.com>,
- Rob Herring <robh+dt@kernel.org>, Lee Jones <lee.jones@linaro.org>,
- Jonathan Corbet <corbet@lwn.net>, linux-hwmon@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- openbmc@lists.ozlabs.org
-References: <20210225101854.13896-1-quan@os.amperecomputing.com>
- <20210225101854.13896-2-quan@os.amperecomputing.com>
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-Message-ID: <9f3845c5-ee4b-76d6-82dd-fa838f8f44ba@roeck-us.net>
-Date: Thu, 25 Feb 2021 08:47:51 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=6841323e9=scron.chang@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=QqvI1CzE; 
+ dkim-atps=neutral
+X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir;
+ Fri, 26 Feb 2021 13:41:01 AEDT
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4Dmv6P4sFkz2y0G
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Feb 2021 13:41:00 +1100 (AEDT)
+IronPort-SDR: O2IcMMLGUrrr6cmS873wog97mu5j/ALKZwqC4q6wvQf5DHKEIsnnEcRyYAWF6xKfCGQvo/EgGW
+ eiayE/7V8dlA==
+Received: from unknown (HELO mailbx07.quanta.corp) ([10.243.91.102])
+ by mx01.quantatw.com with ESMTP; 26 Feb 2021 10:39:53 +0800
+Received: from mailbx05.quanta.corp (10.243.91.100) by mailbx07.quanta.corp
+ (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Fri, 26 Feb
+ 2021 10:39:52 +0800
+Received: from APC01-PU1-obe.outbound.protection.outlook.com (104.47.126.59)
+ by mailbx05.quanta.corp (10.243.91.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4
+ via Frontend Transport; Fri, 26 Feb 2021 10:39:52 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=S+QU3I4pzQphleprXvQgTUGKHtbtNcxAsBbvaCxwpYDvR0ECLxGhWY8ubSAYfAk6yRmwUwglZYJDRy3FwzwoKFr7TedqlEG1SjyZ12a90dZOgMGu3VKOtG8FFl70BRPuT+SctbiCN1oa+QNoEQSwdFynsXh1hs/s3izh2sKjJ/sFJiy3/DZaljv4bapo+IBtpbTaKXU0Sxpk0MA5y8EO6Hut8BZdoq6SMrZWXJp4ncREeGO1VG7zLUHynXv+y/XW+hOxNw18uxJ3EcIZGiXmTgxa9NXJQ7Vl7hJIkiEIv2+yjdxexC3QhUTlMEoYQKozv6MHSpPGqA7OrJIUPUYT5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hkG3IoNyYnmJjKXRIFA32xrU0mlTRYHRjt6pUIY6t4U=;
+ b=PE1Hvs1EqKO2VowOQ0IOeU7T9M7vlIkcjjgBR78a9pM/zZ8uoEHiYMMImjqzhYjFG8KUmbqsYmaC+sMJMdF+Wpa+tFITjIUib6c62+ANrvuf7X8EU2MQah2lsY4X+UlRHOqZfHsJHlfOEnluRSbs/DWKdS4/OMo6iPYndqcxLkCamO/R2Xg+NFQzAHRfwDvWR5vQ9rVN62VkhPULOCm+gdbYPhZKO+hGTyvMNpo/ATzOySF47GuWbbdCGwlfluNvYen+x4G+36pfjJ+jaw7LhMAQSd8cye08ackrhGDJdcjFBXTPD1CS9/B9Oe6npEsSkr1GsF2BYYpO/1GPPxnysQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hkG3IoNyYnmJjKXRIFA32xrU0mlTRYHRjt6pUIY6t4U=;
+ b=QqvI1CzEXHKHpwDOlGOr7HMYN43XCtnDMlMhCemnkgqcUPbVS6jLcCeEmR8zFfmgEDeOfVoipP8S9AVNV00UCF7GVIRHELydMzQlvoXFpMYQl3kN7InbZhr6cY7DnsIAkybNVLklHwx3GKUQRC+lzxduBnDZnarDu7VgqvITiVo=
+Received: from HK0PR04MB2564.apcprd04.prod.outlook.com (2603:1096:203:67::10)
+ by HK0PR04MB2292.apcprd04.prod.outlook.com (2603:1096:203:4b::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3890.20; Fri, 26 Feb
+ 2021 02:39:51 +0000
+Received: from HK0PR04MB2564.apcprd04.prod.outlook.com
+ ([fe80::8cc7:12a2:abfd:c51]) by HK0PR04MB2564.apcprd04.prod.outlook.com
+ ([fe80::8cc7:12a2:abfd:c51%7]) with mapi id 15.20.3890.019; Fri, 26 Feb 2021
+ 02:39:51 +0000
+From: =?big5?B?U2Nyb24gQ2hhbmcgKLFppfKptSk=?= <Scron.Chang@quantatw.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: The entityID and entityInstance always be 0.1.
+Thread-Topic: The entityID and entityInstance always be 0.1.
+Thread-Index: AdcL5d/3mIPE6KpESgGvXuHOrcuXfQ==
+Date: Fri, 26 Feb 2021 02:39:51 +0000
+Message-ID: <HK0PR04MB25640ECCDEBE6D56436E8C1B869D9@HK0PR04MB2564.apcprd04.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=quantatw.com;
+x-originating-ip: [60.251.243.66]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 52f2d4ee-7915-4410-3503-08d8d9ffcab7
+x-ms-traffictypediagnostic: HK0PR04MB2292:
+x-ms-exchange-minimumurldomainage: github.com#4889
+x-microsoft-antispam-prvs: <HK0PR04MB22928125A405ABE41BD857CE869D9@HK0PR04MB2292.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7691;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: tjolvO57rGfW/AIQo3lYd8LT/qGKK8EAOvOGtmkwMMYHvK6Td4DcR3dHv6oIzHt+P7SuHrmpfpvBJHs4Vt3dZUVk8ANVVFz0Itt8BYCvRKuUbq5i79BSDhyqA0r2oMkJgIofd50tBB+PYyF6fJhr//QwdtBiDztQR3zBoJHuAXEv97mf/cg6UF1sZOpDnTmhEyA96HoE4tqCMdFTNHBDCqOuZiXZa4rV3q1xWSK8VQy7L5Nr2EiCFziv7BjviurjZFHTv7gUQsFQwueqkdw8drRsmvLRom9KyTvJVEtK+bGfUjwuqD1gbRFGbg2rgq23AwRHrA8GmrgtI1Z/eOgDtmQHXE4Bj8HB/UIyATN1hauwuwDs+JJMyXna75f5eg2Gcc0cpCWe5i1ouZI76+FUO2ycRVY8p7t1y2Rwj6uRL2IzY835j3Q0G0zfzfHP+UUe9OTDnGYbh7V/ZZmXPoB1FZm56LhEXxDatJp9wY7V3ISfn0paM5FOZpu/BQ2C1IgyOjGejCVvYWUIGJLbwQDnlthfdPssGSSNbk9YwldLQVHsygy5lwqQlIgEyyp/PosQb5Tpbv9AE5BxMb7PcNlIvSQMD1025c2wF0D+nXfIois=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR04MB2564.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(136003)(39860400002)(346002)(376002)(366004)(396003)(966005)(86362001)(33656002)(5660300002)(478600001)(52536014)(71200400001)(316002)(85182001)(6916009)(186003)(8676002)(8936002)(6506007)(4744005)(55016002)(76116006)(66446008)(66556008)(9686003)(64756008)(66476007)(66946007)(26005)(7696005)(2906002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?big5?B?MEpBK013THQ0Y2xUVVU5TXVUVS9laHBjZEFodk1OZlVrUlZ1eG5BZkQySlNPMXgz?=
+ =?big5?B?MDZCVDNnRjRPSzlWWTVPV3ZVR25LcEoxWXU1K0tMSHdrck5IVlcyMjdMZ1liTUh4?=
+ =?big5?B?V3hNZUx0V2kwVXVpVEJLdlB3UnhSWGVDbFk0OWkyQjl5R25LOUp5SVhOSlBsZDBh?=
+ =?big5?B?eFp0ck1pb0pQWjJ3RDdIeWw4aVM4UmkzL3Z1VDhuOFNsYko0U2FJSHJoYVlvdGNo?=
+ =?big5?B?MERvVkY1R00xUkFWYnhsMHBwQTRBMFh5MVd2L0RLa0pLY29pS09mcTdrNkNPYXRt?=
+ =?big5?B?cmRmOU5vdmJ6NUlTcHBlRnFKZHgzSG1qb09icXBtc0FaZW9FMytVMWplSnBJNDZK?=
+ =?big5?B?a0N5YzRzNXZzQi9WUHFMNmxIcGVTYXNETDNybGIvdzFWa1NFNDh6U2dGNDhOYmZN?=
+ =?big5?B?b2hTV3BhcUg5ZVRXS2ZDSDBKT3BoOGRlWUVVZzFRWkFRSDFSQnBnWVdvVGpSazg0?=
+ =?big5?B?Mk83YkFJaHNVWGZGOEV1USt0TlZETVVMOFRFZ3JweXFkMXFEaHZ3aXpqVVQyRDNj?=
+ =?big5?B?Nm1EanQwZERKUUozeWZ3WUozVTgzdHVJcGxHYU4zNzJGeml3a2lPREFlYVI1SWRs?=
+ =?big5?B?ZGVRWW5Sb21TcHRHaGw1dy9SZWw3UVdqUitKbzJtR0lwMC8rUWd1VzZjZXcySE9w?=
+ =?big5?B?ZTFJZmh1TnM4R1BuVXVpVklSMFNzUjAwc25iczN1MmNpZTBwNVorU1hsV0lIdGZp?=
+ =?big5?B?Q3NIUjFwT1haL3Y5L05rakpmd3g2OGQvVUlCL0JUbGtMV08vMzhoT0M1WVlNQUVo?=
+ =?big5?B?d1VtSGZjcEU2VUxJN2JMcXR2cVR3dU10c205eTVwQVdoaUZzYlgxQy9Vc1RKNHlN?=
+ =?big5?B?Sjc4QXJneE9iQWJjWkJrS1FyeUFkK2NRWkRtOEsrbStTT0lMTFJtZ2lQUlFSSnNl?=
+ =?big5?B?WGpQUmJnQ3kxWEF2c09NMU5lRUduc0NMMjV2WEJZNUx2SEZZallPSEtNU3RGN2Nm?=
+ =?big5?B?bkNZVk41UWFXSUI0dmNnQWp6NXE3cXlJblB3ZXNaQW4rME81WkMwU1p6UEk0N3NL?=
+ =?big5?B?QVdNcE4yZ2hNdUU3cGlaL3hPU0ZUaHhOVHlLaU9xNStXRlc4MSt2amt3THY2NnMr?=
+ =?big5?B?Mzh3RmpwQzlVcmIrK0RuOXJxaTVoalgzSXl0Q0VaZVlqR1g1NlRZY3I5Nm5XRkpW?=
+ =?big5?B?Smdzc1huMXBZNmQ1SU8rRkx6YmVGMi9mbTVqYzg0cGdlblZwLzNrU3VWYkNNNjN1?=
+ =?big5?B?aGFrdEIxcWhnNkFNSkhtdWdIaUJtK2dwcEVjdXRjY2dQM2FKT3FWQTlKTXFTWnN3?=
+ =?big5?B?cUdZTHR4aGNmNE5ORzFpb1poUjNwaytTZlpSOWtlNmZYVHB0Y08zODZ0U3c5Nldi?=
+ =?big5?B?emtZS2twalpVWTRVdjJOdW13TGlPeG15SFd4c3FGL0JCOStDWUJkQW1JSndDRXZy?=
+ =?big5?B?N1huOUl4Qml5dEFweThrd0o3c1Z4T0pmQ1BTcEtmRVZxUmoyTkhTWk51NS9kVnkz?=
+ =?big5?B?a2tIZS91TFRnbVg1bCtZZDZwZzBMc1FMcnhkVzhLbC9LSCtWRzVOWk1RNlVuN1Fl?=
+ =?big5?B?OGlaTCtOS0M1K0RjRElhQml1cndhb0ExYlVBaGNpdWtGT1U5dGpmUHFDb3lUU0l5?=
+ =?big5?B?a2lySDRMUzFucVkwUi9SaUxrOXVZK2g1Q0pxdHpGTll5K3hoZVI1WGgrQTk5akpn?=
+ =?big5?Q?HitlKXXdnV12iusVDwEOHWe63Dg=3D?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <20210225101854.13896-2-quan@os.amperecomputing.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB2564.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 52f2d4ee-7915-4410-3503-08d8d9ffcab7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Feb 2021 02:39:51.3597 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 0uK5eoAzGxAXUsfpz5ea+l1/oWuUrRJZp+AmVkyAcYeBjdCt1qYdlmacqFt4f86l/25JXimU2miJQEeqsLFpnNoriEIzTo2RjWtrLxPojdA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR04MB2292
+X-OriginatorOrg: quantatw.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -136,150 +142,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Open Source Submission <patches@amperecomputing.com>,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/25/21 2:18 AM, Quan Nguyen wrote:
-> Adds device tree bindings for SMPro drivers found on the Mt.Jade hardware
-> reference platform with Ampere's Altra Processor family.
-> 
-> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-> ---
->  .../bindings/hwmon/ampere,ac01-hwmon.yaml     | 27 ++++++
->  .../bindings/mfd/ampere,ac01-smpro.yaml       | 82 +++++++++++++++++++
->  2 files changed, 109 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
->  create mode 100644 Documentation/devicetree/bindings/mfd/ampere,ac01-smpro.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml b/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
-> new file mode 100644
-> index 000000000000..d13862ba646b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
-> @@ -0,0 +1,27 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/hwmon/ampere,ac01-hwmon.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Hardware monitoring driver for the Ampere Altra SMPro
-> +
-> +maintainers:
-> +  - Quan Nguyen <quan@os.amperecomputing.com>
-> +
-> +description: |
-> +  This module is part of the Ampere Altra SMPro multi-function device. For more
-> +  details see ../mfd/ampere,ac01-smpro.yaml.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - ampere,ac01-hwmon
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +
-> +additionalProperties: false
-> diff --git a/Documentation/devicetree/bindings/mfd/ampere,ac01-smpro.yaml b/Documentation/devicetree/bindings/mfd/ampere,ac01-smpro.yaml
-> new file mode 100644
-> index 000000000000..06b0239413ae
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mfd/ampere,ac01-smpro.yaml
-> @@ -0,0 +1,82 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/mfd/ampere,ac01-smpro.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Ampere Altra SMPro firmware driver
-> +
-> +maintainers:
-> +  - Quan Nguyen <quan@os.amperecomputing.com>
-> +
-> +description: |
-> +  Ampere Altra SMPro firmware may contain different blocks like hardware
-> +  monitoring, error monitoring and other miscellaneous features.
-> +
-> +properties:
-> +  compatible:
-> +    const: ampere,ac01-smpro
-
-Is that the same as the "ampere,smpro" in
-arch/arm/boot/dts/nuvoton-npcm730-kudo.dts ?
-
-Guenter
-
-> +
-> +  reg:
-> +    description:
-> +      I2C device address.
-> +    maxItems: 1
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +patternProperties:
-> +  "^hwmon(@[0-9a-f]+)?$":
-> +    $ref: ../hwmon/ampere,ac01-hwmon.yaml
-> +
-> +  "^misc(@[0-9a-f]+)?$":
-> +    type: object
-> +    description: Ampere Altra SMPro Misc driver
-> +    properties:
-> +      compatible:
-> +        const: "ampere,ac01-misc"
-> +
-> +  "^errmon(@[0-9a-f]+)?$":
-> +    type: object
-> +    description: Ampere Altra SMPro Error Monitor driver
-> +    properties:
-> +      compatible:
-> +        const: "ampere,ac01-errmon"
-> +
-> +required:
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    i2c {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        smpro@4f {
-> +            compatible = "ampere,ac01-smpro";
-> +            reg = <0x4f>;
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            hwmon {
-> +                compatible = "ampere,ac01-hwmon";
-> +            };
-> +
-> +            misc {
-> +                compatible = "ampere,ac01-misc";
-> +            };
-> +
-> +            errmon {
-> +                compatible = "ampere,ac01-errmon";
-> +            };
-> +
-> +        };
-> +    };
-> 
-
+SGkgYWxsLA0KDQpJbiBteSBjYXNlLCB0aGUgQk1DIHVzZXMgaW50ZWwtaXBtaS1vZW0sIGVudGl0
+eS1tYW5hZ2VyLCBhbmQgZGJ1cy1zZW5zb3JzIHRvIG1hbmFnZSB0aGUgbW90aGVyYm9hcmQncyBz
+ZW5zb3JzLg0KSSBpbnRlbmQgdG8gcmV0cmlldmUgZW50aXR5SUQgYW5kIGVudGl0eUluc3RhbmNl
+IHZpYSBJUE1JIGNvbW1hbmQsIGUuZy4sIGlwbWl0b29sIHNlbnNvciBnZXQgPHNlbnNvciBuYW1l
+Pi4NCkhvd2V2ZXIsIGludGVsLWlwbWktb2VtIGFsd2F5cyB0cmllcyB0byBmaW5kIHRoZSBzZW5z
+b3IncyAiZW50aXR5SUQiIGFuZCAiZW50aXR5SW5zdGFuY2UiIGZyb20gaXRzIGVudGl0eS1tYW5h
+Z2VyIGVudHJ5LiANCihwbGVhc2UgcmVmZXIgdG8NCmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1j
+L2ludGVsLWlwbWktb2VtL2Jsb2IvMDk3MDFlZmE5M2YyZTliMjViMTljNDU2MGRiNjBjMTg3OGVm
+OGE5Yy9pbmNsdWRlL3NkcnV0aWxzLmhwcCNMNDM4IGFuZA0KaHR0cHM6Ly9naXRodWIuY29tL29w
+ZW5ibWMvaW50ZWwtaXBtaS1vZW0vYmxvYi8wOTcwMWVmYTkzZjJlOWIyNWIxOWM0NTYwZGI2MGMx
+ODc4ZWY4YTljL2luY2x1ZGUvc2RydXRpbHMuaHBwI0w0NzApIA0KDQpJdCBzZWVtcyBsaWtlIHRo
+ZSBlbnRpdHktbWFuYWdlciBzaG91bGQgY3JlYXRlIHRoZXNlIHR3byBhdHRyaWJ1dGVzIGNvbnN1
+bWVkIGJ5IGludGVsLWlwbWktb2VtLCBidXQgc2NoZW1hIGRvZXNuJ3QgaW5jbHVkZSB0aGVtLg0K
+QmVzaWRlcywgZW50aXR5LW1hbmFnZXIgZG9lc24ndCBjcmVhdGUgImVudGl0eUlEIiBhbmQgImVu
+dGl0eUluc3RhbmNlIiBieSBpdHNlbGYuDQpJJ20gY3VyaW91cyBob3cgaW5pdGlhbGx5IGVudGl0
+eS1tYW5hZ2VyIG9yIGludGVsLWlwbWktb2VtIHBsYW5zIHRvIGltcGxlbWVudCB0aGlzIGZlYXR1
+cmUuDQoNCkFueSBzdWdnZXN0aW9uIHdpbGwgYmUgdmVyeSBhcHByZWNpYXRlZC4NCg0KU2Nyb24g
+Q2hhbmcNCkUtTWFpbCAgU2Nyb24uQ2hhbmdAcXVhbnRhdHcuY29tDQpFeHQuICAgIDExOTM2DQoN
+Cg==
