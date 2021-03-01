@@ -1,137 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CB0B327E8B
-	for <lists+openbmc@lfdr.de>; Mon,  1 Mar 2021 13:46:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76A70327F5C
+	for <lists+openbmc@lfdr.de>; Mon,  1 Mar 2021 14:23:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dq0Pw2r2rz3cQf
-	for <lists+openbmc@lfdr.de>; Mon,  1 Mar 2021 23:46:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dq1Dh19PJz3cWl
+	for <lists+openbmc@lfdr.de>; Tue,  2 Mar 2021 00:23:48 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=VdL9Jmsj;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=VdnymNys;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.244.103;
- helo=nam12-mw2-obe.outbound.protection.outlook.com;
- envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=VdL9Jmsj; 
- dkim-atps=neutral
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com
- (mail-mw2nam12on2103.outbound.protection.outlook.com [40.107.244.103])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::236;
+ helo=mail-oi1-x236.google.com; envelope-from=tmaimon77@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=VdnymNys; dkim-atps=neutral
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com
+ [IPv6:2607:f8b0:4864:20::236])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dq0Pc5nQsz30LZ;
- Mon,  1 Mar 2021 23:46:26 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SH74+kRDxQUUmd1/r8AtMrhvdjHLXV6ArVrxCRA0l0fmqLhNaCqqV12/RB6KvjIO/K9hKoblYW+0W8xiUCc8hvZ8gW3ZobiBc/XHeFIOaZZjslQ2l8h0byrC7dzb2mXhrvVMScOF/HEIVwAYpNLSbxvPIMEvzCCawHGzYUwDXh714uNEoDLizsIInVij2CFEZNehZOS4WHMBlnn+D1agyIl1PFMh1tjE1lrZIyuRQJTmCUSTuQzDMBRng4x0AXv2SgrJsASdOTOHJrFV0BzVNPl7Pp/L3xWEwWvIuV0t++1FJrf2LRobY5f4I7IUFf6tuvEHV3A0BOjx/MRapibqtw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=guj5ZvMxk9PlGkADhiHwbUMQ51dQ3aBSm26frPeNQeU=;
- b=MaRPfABuxuQUrtIf3o6W1fFbAmFRX7uuolgMvYaUgciXCpN48p9nrCAvnEhCTfqdoWMihz/ujMrmADph4qTYU9fSQ0OsQwNU32xcKOpqLvoFnkZ2GOxBQNNjGxVrsKgWNQqYsxa7gXJsX4Y4yZQyAKtn9OXbQym/YTKvm4FeRjcoUNPuVnc8rbFSbQfIu4QztPDqQKBshQz4giT/SVriK4YZX76H5BrAYQj0uD6q3t/upSOomJ97RKKhaVaOvdml7+NsMouCP1MAVHuwYNuubDdl/sVQaeyau4SvP9fUKbH6oczPLbQ9JMCwGr+OPoUgOic7SRputIsfd8Kmcz65Lw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=guj5ZvMxk9PlGkADhiHwbUMQ51dQ3aBSm26frPeNQeU=;
- b=VdL9Jmsje0iydCzot3Poysgmj6BzXWakEaH7h3broMCb8EKCXDUqqAZkd2WHMWLtUwt7Wxh6ldESEACYtbuMmGP3399XrDVJarUksbW0ZFKZg6HlB9ifilkLwc4VrtGkf3VQbp+du7KYZz5hHMIA6cujeW91TEvEQx8xbJyU2dE=
-Authentication-Results: os.amperecomputing.com; dkim=none (message not signed)
- header.d=none; os.amperecomputing.com;
- dmarc=none action=none
- header.from=os.amperecomputing.com;
-Received: from MW2PR0102MB3482.prod.exchangelabs.com (2603:10b6:302:c::32) by
- MWHPR01MB2720.prod.exchangelabs.com (2603:10b6:300:fd::23) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3890.23; Mon, 1 Mar 2021 12:46:19 +0000
-Received: from MW2PR0102MB3482.prod.exchangelabs.com
- ([fe80::682c:4e20:b53d:e660]) by MW2PR0102MB3482.prod.exchangelabs.com
- ([fe80::682c:4e20:b53d:e660%7]) with mapi id 15.20.3890.028; Mon, 1 Mar 2021
- 12:46:19 +0000
-Subject: Re: [PATCH 2/4] mfd: simple-mfd-i2c: Adds Ampere's Altra SMpro support
-To: Lee Jones <lee.jones@linaro.org>
-References: <20210225101854.13896-1-quan@os.amperecomputing.com>
- <20210225101854.13896-3-quan@os.amperecomputing.com>
- <20210226083114.GE641347@dell>
-From: Quan Nguyen <quan@os.amperecomputing.com>
-Message-ID: <f4b00f4c-6e6c-810d-d16d-5d01ebf4d36d@os.amperecomputing.com>
-Date: Mon, 1 Mar 2021 19:46:08 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.8.0
-In-Reply-To: <20210226083114.GE641347@dell>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [118.69.219.201]
-X-ClientProxiedBy: HK2PR02CA0168.apcprd02.prod.outlook.com
- (2603:1096:201:1f::28) To MW2PR0102MB3482.prod.exchangelabs.com
- (2603:10b6:302:c::32)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dq1DS02f2z30QF
+ for <openbmc@lists.ozlabs.org>; Tue,  2 Mar 2021 00:23:34 +1100 (AEDT)
+Received: by mail-oi1-x236.google.com with SMTP id x20so17945949oie.11
+ for <openbmc@lists.ozlabs.org>; Mon, 01 Mar 2021 05:23:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Lkwa763hxSjrHkFW9hYdgwfUDb1UMb5DhaGlyQ4KLVs=;
+ b=VdnymNyshjjQ682vUMA9WWBeIzSbN4jfetXtB09SRIUNcssx+CgBNXnTMSuCsKYyvv
+ OscU2UjpgaiVCxxLpSTP6x3tFv+ooJSAQzxsUSmF1gAAMuXDX620ySJAt/abS/LnjHwQ
+ 7r8Wlu2S5s5eyGg8NoeBZ5VRn9s49zyg7BSTI+ESGdHcVQswjITkpFJm2gPqsshSb36L
+ dy4RVK7YLPywPl317UnAfECcm9vqEPHtQjKQYC4jd9WkYktHiD9Giqo1iaMh3uSdvttW
+ licYq1I2C0X6ZTzlU9mq39eSM+nZImOlVXx+vgQjYodL6U8kUL16aPzNUI74Aer8FGuH
+ MCFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Lkwa763hxSjrHkFW9hYdgwfUDb1UMb5DhaGlyQ4KLVs=;
+ b=AtlJMVnJmPfO5Nf/u9yNZ0OraOlDqO0xVoZHUTpRR2nVGcIiBOnrcN/G7OMU48lSLL
+ T+anKzZgAVK8xMET160muJUCypVxYfXEuQ8bytGE3Z6rsrM+xbQ6lGf7V1s1UQPirszG
+ vlv/0oaqNeZVo9P0WflaHfOjx8rMT43vDl9FQbID4AGL3bxuH6nLaxvJb6JJvNxS5K9M
+ 4GQlxAQ/dIWi4ONXaVjUsMCVXWFP3kjp6BsZ4lRtGg32fEEIj0zehkXiTO1fgg+I/Uhq
+ fzpuLz6iZ7y6vn8GSjZVfOlaCDDZqVAYbr0S+jU3mRIfaFbJIJRvCquV/8Yq0bWjCxvn
+ w2qw==
+X-Gm-Message-State: AOAM5312Aefpuuy/vITwQXzWdlo+Esc+9ohtxgV4Pa45U+H93XhwgkiF
+ jIl6snCz1rwPbTDzqWIvD/29cjWn8cYTchb3uIs=
+X-Google-Smtp-Source: ABdhPJwnOoppPdZcyzyLZoJNQ297/GIJDao2FxOrXYhRbPsHvCdzQi1hL3lXUdMbGnc2l9lNWG2PrDOEtv+v4BZVsBM=
+X-Received: by 2002:a05:6808:130d:: with SMTP id
+ y13mr11391569oiv.167.1614605010037; 
+ Mon, 01 Mar 2021 05:23:30 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from [10.38.33.120] (118.69.219.201) by
- HK2PR02CA0168.apcprd02.prod.outlook.com (2603:1096:201:1f::28) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3890.20 via Frontend Transport; Mon, 1 Mar 2021 12:46:15 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: e3ce00d6-1599-41f5-248e-08d8dcb002d3
-X-MS-TrafficTypeDiagnostic: MWHPR01MB2720:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <MWHPR01MB2720258E3EECFA95A223ED40F29A9@MWHPR01MB2720.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: V0KBaay5DVObAVOelw2zyXGUe5CcfvutSp2W3yTdZcyJRF6MVnvhXndOUs2LoKjw7/9InOZVmNk32BdicquYWYlRxH1whcbZKhxG6D+6Fcw15PKPJOrIYvX/jIt49Ral2OyLok8LcF67kIOephdWS1dt8asU2MCmPiE/RmF2Lp1FI6kN+B16YYMmw+Ue2A8Tw6QhlqbZkOpmCmng6Kyo23IEJgfhcTChiLpf9qtuvWWIaZXnZW/CBz1BCuCqb2TYfYiQYD8DKKMkjO/xUTdmk3Fy42RCuCbdJMabiO3Ot4/wI/P7KQiXlIqBO8rw9QculJNilV3HeNG/3MlO5oKNJ+E2E19Dr2nDWjYuVAwiJcqDnRou1himWob1AGld5/xRbKoE22J1VnBDxOMrI+cc9N74Oc1UvSm4BVJq96fQOpDRN8Ci19VIGzOdgDAcoBffZc2iEII9RTu9mn8IxZm2QxsqcsOlngSRkDSxSep9orbnAQn/H+nVWUODk4msEGEudJKbWgb+SjT40gcXoezGYcWqBbCuUqIQcahu0gEMCHzcifQkCz1YdeF1OOgDuG4CcT4Q0fnZmmveEHHHEz6+FoWPimla4rZJ7E/WgppWWn0=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW2PR0102MB3482.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(39840400004)(366004)(396003)(376002)(346002)(136003)(83380400001)(16526019)(186003)(26005)(86362001)(31696002)(8676002)(8936002)(4326008)(6666004)(53546011)(107886003)(5660300002)(6486002)(478600001)(66946007)(66476007)(66556008)(956004)(7416002)(2616005)(54906003)(16576012)(316002)(31686004)(52116002)(2906002)(6916009)(43740500002)(45980500001);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?ZHB1bmtZNm0wOUhLOTZpSS85dGs1c0F4azFjMk9aTWhaNUl4SVErWFAzTktq?=
- =?utf-8?B?YVVOd3ordEI2YmJsMkwxdzBpaVY1aTJGeGxKWGpCcFNxTWdnUlFOVk5MUHFm?=
- =?utf-8?B?SkJPYkl3YW5WeS9ySEpZMUJJUFJ5ejJtRHVPSk9jOHJiQTF6MlhEdmE3WXkw?=
- =?utf-8?B?ZHRMLzV3Z1E5ZzlBVmJmdHpYS2JiNVVkNjFERVpKTkh5dHJoajAwODZZR1lI?=
- =?utf-8?B?TnFZVDAzSTlKU2k5WlBPbjA4YlgzU1dxM3YrT00vZmxWVmpiWkpPQ3JZc1F0?=
- =?utf-8?B?MVhIYnYwcHBiVWZKWTM1cWpmeDNndmF1WUl1MUFKVFRKcldZQ0RaazVRZXpa?=
- =?utf-8?B?QmRBQ1lVL3Y3cjd4VlVzOHBsbHRpWVVNejFNK1JlbGQ0OWRHYjQ5aUVmTldE?=
- =?utf-8?B?cTVhVkhkcERvUS9yL2ZRN1JNQmJKa2Joekk3MU5mL2FnV04vYlE5ZXp0ME0x?=
- =?utf-8?B?c2RIS0RqdXlIZ3Q1bmI5WXZDQUxmYlh0dCtJcFUvWldDcGFBbi84aHh3YXlN?=
- =?utf-8?B?L3ZEOFNKSHY0MTNYZ21NeWFicGF1OTV6dlZtU3FJRE9nR2Z1WHQ5a3craWk0?=
- =?utf-8?B?cktSUDFFQUo1Yi9KeDJrOEpiUjhuWGVUZkdJQXFLcWtXYnRRNERXSWRBSW5I?=
- =?utf-8?B?OXJPWmxUaXlFNjNpZG1wOTFvUElsc3BtQ1VyOC9ZNXFnRU5sa01iYkd6SDRQ?=
- =?utf-8?B?VjdSM2YreHcxRVhvdklLNVFDVnpTbFdMSEMrN200SmJqQ2hWVWZaQmE5dlB5?=
- =?utf-8?B?S08vVUx1YXQ5SnZPZy8vaEw5SzhCRTdQb3RMWUh4UC9NVCthcU53SGhUeTJJ?=
- =?utf-8?B?VzlHU2hiaDhmL2V5SU1qUExsM0dJYlIwVE1Sa1BtelRJaEttV2kyckpJbTc5?=
- =?utf-8?B?eTJJUE1GYTErSnlKOW9yejRRWlNFOEloMlNGbEpHc0ZCTVF6emdXdnR3aWFO?=
- =?utf-8?B?a1JaSTB0WmdJc1hCaWZkZlRXb29kNnVWTE1EMVNhWXNrNEhydlBwSHNrcERs?=
- =?utf-8?B?YUNMZ082cnFidWpReE0rQzQxODBCMFhleTZuK01oemN1dmgrT2tvT05HRFdI?=
- =?utf-8?B?Y1FMVG56Z3pxMnIzZnpvUUxNbnU2WmNKcWZRc2V0aUkvNzJWWk9nV0k4WGU1?=
- =?utf-8?B?WU1kbVBiRnJvTGt4MXNlRkdObUU0N2pXOW5SaklwNG1DRTVRRlFaaTV6NHJa?=
- =?utf-8?B?UFdrNU8wUlRXaVBmdmRCY3lqcEpXN3BOMGFNQ0xLdzVvYmVPakZQcWRZelg0?=
- =?utf-8?B?anRxVlJnTjAzOWpaKzl1SFcwQlRkMExZL2t6OGNkUm8zQUl1d3h5NGZMYm5p?=
- =?utf-8?B?MG52VkorYzQrMzFxK3BjajU5VVgzZm9idk9GMGdPSmpQUzE2RnlJcG5vSWVI?=
- =?utf-8?B?UFQ2Wm82eU9LMG5oQUdXQWw0K0dzVUlBZEh3K09YRjNscVpxdG94OVBuRjk4?=
- =?utf-8?B?eEFPanU2OERFUmR4UXREOHlkRmdGRDgvODh3NGxPSmZDZ0s0QVBPMnVaTDR2?=
- =?utf-8?B?VVpGcFJMRG9TQjhLRDRVb3pDZVFhMG52bmJyclFtaGZRMDg4MTVOZjR3RkxG?=
- =?utf-8?B?VmtyYUtNUCtZVnJwc2I0WXpQYkZiVUFGQlBVN2d6STkzdm1zZ2wxZlVtZzFZ?=
- =?utf-8?B?b2tPZHoyY1VpOWZ0Wm5PajZwRXNYeGM1Tkh2MTFONmUvdHpxdHNycGFFUFhO?=
- =?utf-8?B?NktrWU9Sb3JYTnJnLzZHSGEwT2FKVkFKZkluVk5HQ0lHMkdqdGRWb0dxanM1?=
- =?utf-8?Q?RklODXOBsyQbKsHPVnJYBTOd5dwV8zLJOWyJpK2?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e3ce00d6-1599-41f5-248e-08d8dcb002d3
-X-MS-Exchange-CrossTenant-AuthSource: MW2PR0102MB3482.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Mar 2021 12:46:19.7299 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hiJ7K4wi5e/aqydDEKPRZrpRCQ6WGOF3ktq/w4qTf1GRqWihVEI3zJEI4wYt6tRiHKC3hdKqgsF+wpMapKW/KRnvFeO3epy/Y4BO69/McaI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR01MB2720
+References: <20210218122546.3546582-1-gmouse@google.com>
+ <CADKL2t6P4gaSUZEFgk7y+TNBRw0Lhf8mXTxzLdbe3FhGs0WH+w@mail.gmail.com>
+ <CAP6Zq1jf4-XAhLQxqNx3LM7-YzDr8zaVPb-jznn8o=frxTotdQ@mail.gmail.com>
+ <CADVsX8-4gJYs1P7y4VazyXPNC2TxgmUi1MgOpLgx3iAV9n62Hg@mail.gmail.com>
+In-Reply-To: <CADVsX8-4gJYs1P7y4VazyXPNC2TxgmUi1MgOpLgx3iAV9n62Hg@mail.gmail.com>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 1 Mar 2021 15:36:58 +0200
+Message-ID: <CAP6Zq1hd56Su6YjqyOJP2fDHuYYkShEGsFaYou6fGzhZhu-HKQ@mail.gmail.com>
+Subject: Re: [PATCH] ARM: dts: nuvoton: Fix flash layout
+To: Anton Kachalov <gmouse@google.com>
+Content-Type: multipart/alternative; boundary="00000000000013750205bc798691"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -143,101 +77,342 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, linux-aspeed@lists.ozlabs.org,
- Jonathan Corbet <corbet@lwn.net>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Phong Vo <phong@os.amperecomputing.com>, Rob Herring <robh+dt@kernel.org>,
- Open Source Submission <patches@amperecomputing.com>,
- Guenter Roeck <linux@roeck-us.net>
+Cc: devicetree <devicetree@vger.kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 26/02/2021 15:31, Lee Jones wrote:
-> On Thu, 25 Feb 2021, Quan Nguyen wrote:
-> 
->> Adds an MFD driver for SMpro found on the Mt.Jade hardware reference
->> platform with Ampere's Altra processor family.
+--00000000000013750205bc798691
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Anton,
+
+The reason the u-boot Env is at 0x100000 address is that some
+costumers have:
+one copy of Bootblock and U-boot at 0x0 - 0x80000
+second copy of Bootblock and U-boot at 0x80000 - 0x100000.
+
+we have two options;
+1. Modify the OpenBMC device tree flash layout u-boot Env address to
+0x100000.
+2. Add a patch to OpnBMC platform that using openbmc flash layout to
+modify CONFIG_ENV_OFFSET
+in the u-boot.
+
+Thanks,
+
+Tomer
+
+
+On Fri, 26 Feb 2021 at 22:10, Anton Kachalov <gmouse@google.com> wrote:
+
+> Hello, Tomer.
+>
+> Seems like Nuvoton's u-boot expects the uboot-env at different address
+> comparing to openbmc-flash-layout.dtsi:
+>
+>
+> https://github.com/Nuvoton-Israel/u-boot/blob/npcm7xx-v2019.01/include/configs/poleg.h#L30
+>
+> Vs.
+>
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm/boot/dts/openbmc-flash-layout.dtsi#n13
+>
+> The change is more about making partitions naming the same as expected by
+> OpenBMC.
+>
+> On Sun, 21 Feb 2021 at 17:40, Tomer Maimon <tmaimon77@gmail.com> wrote:
+>
+>> Hi Benjamin and Anton,
 >>
->> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
->> ---
->>   drivers/mfd/Kconfig          | 10 ++++++++++
->>   drivers/mfd/simple-mfd-i2c.c | 15 +++++++++++++--
->>   2 files changed, 23 insertions(+), 2 deletions(-)
+>> Sorry for the late reply,
 >>
->> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
->> index b74efa469e90..5414371bdea1 100644
->> --- a/drivers/mfd/Kconfig
->> +++ b/drivers/mfd/Kconfig
->> @@ -77,6 +77,16 @@ config MFD_AS3711
->>   	help
->>   	  Support for the AS3711 PMIC from AMS
->>   
->> +config MFD_SMPRO
->> +	tristate "Ampere Computing MFD SMpro core driver"
->> +	select MFD_SIMPLE_MFD_I2C
-> 
-> Nice to see another user here.
-> 
->> +	help
->> +	  Say yes here to enable SMpro driver support for Ampere's Altra
->> +	  processor family.
->> +
->> +	  Ampere's Altra SMpro exposes an I2C regmap interface that can
->> +	  be accessed by child devices.
->> +
->>   config MFD_AS3722
->>   	tristate "ams AS3722 Power Management IC"
->>   	select MFD_CORE
->> diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
->> index 87f684cff9a1..0459a9fbd3f5 100644
->> --- a/drivers/mfd/simple-mfd-i2c.c
->> +++ b/drivers/mfd/simple-mfd-i2c.c
->> @@ -21,14 +21,24 @@ static const struct regmap_config simple_regmap_config = {
->>   	.val_bits = 8,
->>   };
->>   
->> +static const struct regmap_config simple_word_regmap_config = {
->> +	.reg_bits = 8,
->> +	.val_bits = 16,
->> +};
->> +
->>   static int simple_mfd_i2c_probe(struct i2c_client *i2c)
->>   {
->>   	const struct regmap_config *config;
->>   	struct regmap *regmap;
->>   
->>   	config = device_get_match_data(&i2c->dev);
->> -	if (!config)
->> -		config = &simple_regmap_config;
->> +	if (!config) {
->> +		if (of_device_is_compatible(i2c->dev.of_node,
->> +						"ampere,ac01-smpro"))
-> 
-> Could you use 'struct of_device_id's .data attribute instead please?
-> 
-Thank you, but I'm not sure if I got it right.
+>> The EVB FIU0-CS0 partitioning is used for testing the EVB and this is why
+>> it is different than the OpenBMC flash layout.
+>>
+>>
+>>
+>> Are you using the NPCM7XX EVB for OpenBMC? if yes we can consider to
+>> modify the flash partition to OpenBMC use.
+>>
+>> On Thu, 18 Feb 2021 at 19:11, Benjamin Fair <benjaminfair@google.com>
+>> wrote:
+>>
+>>> On Thu, 18 Feb 2021 at 04:42, <gmouse@google.com> wrote:
+>>> >
+>>> > From: "Anton D. Kachalov" <gmouse@google.com>
+>>> >
+>>> > This change satisfy OpenBMC requirements for flash layout.
+>>> >
+>>> > Signed-off-by: Anton D. Kachalov <gmouse@google.com>
+>>> > ---
+>>> >  arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 28 +++++++----------------
+>>> >  1 file changed, 8 insertions(+), 20 deletions(-)
+>>> >
+>>> > diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+>>> b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+>>> > index bd1eb6ee380f..741c1fee8552 100644
+>>> > --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+>>> > +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+>>> > @@ -182,8 +182,8 @@ bbuboot2@80000 {
+>>> >                                 reg = <0x0080000 0x80000>;
+>>> >                                 read-only;
+>>> >                                 };
+>>> > -                       envparam@100000 {
+>>> > -                               label = "env-param";
+>>> > +                       ubootenv@100000 {
+>>> > +                               label = "u-boot-env";
+>>> >                                 reg = <0x0100000 0x40000>;
+>>> >                                 read-only;
+>>> >                                 };
+>>> > @@ -195,25 +195,13 @@ kernel@200000 {
+>>> >                                 label = "kernel";
+>>> >                                 reg = <0x0200000 0x400000>;
+>>> >                                 };
+>>> > -                       rootfs@600000 {
+>>> > -                               label = "rootfs";
+>>> > -                               reg = <0x0600000 0x700000>;
+>>> > +                       rofs@780000 {
+>>> > +                               label = "rofs";
+>>> > +                               reg = <0x0780000 0x1680000>;
+>>> >                                 };
+>>> > -                       spare1@D00000 {
+>>> > -                               label = "spare1";
+>>> > -                               reg = <0x0D00000 0x200000>;
+>>> > -                               };
+>>> > -                       spare2@0F00000 {
+>>> > -                               label = "spare2";
+>>> > -                               reg = <0x0F00000 0x200000>;
+>>> > -                               };
+>>> > -                       spare3@1100000 {
+>>> > -                               label = "spare3";
+>>> > -                               reg = <0x1100000 0x200000>;
+>>> > -                               };
+>>> > -                       spare4@1300000 {
+>>> > -                               label = "spare4";
+>>> > -                               reg = <0x1300000 0x0>;
+>>> > +                       rwfs@1e00000 {
+>>> > +                               label = "rwfs";
+>>> > +                               reg = <0x1e00000 0x200000>;
+>>> >                         };
+>>>
+>>> I recommend just including the openbmc-flash-layout.dtsi file here
+>>> instead since that contains the common flash layout for most OpenBMC
+>>> systems.
+>>>
+>>> Good solution,
+>> Do you mean nuvoton-openbmc-flash-layout?
+>>
+>>> >                 };
+>>> >         };
+>>> > --
+>>> > 2.30.0.478.g8a0d178c01-goog
+>>> >
+>>>
+>>
+>> Thanks,
+>>
+>> Tomer
+>>
+>
 
-Do you mean we could use .data attribute to get the expected 
-reg_bits/val_bits values and translate them to simple_word_regmap_config 
-without the need to match the compatible string ?
+--00000000000013750205bc798691
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->> +			config = &simple_word_regmap_config;
->> +		else
->> +			config = &simple_regmap_config;
->> +	}
->>   
->>   	regmap = devm_regmap_init_i2c(i2c, config);
->>   	if (IS_ERR(regmap))
->> @@ -39,6 +49,7 @@ static int simple_mfd_i2c_probe(struct i2c_client *i2c)
->>   
->>   static const struct of_device_id simple_mfd_i2c_of_match[] = {
->>   	{ .compatible = "kontron,sl28cpld" },
->> +	{ .compatible = "ampere,ac01-smpro" },
->>   	{}
->>   };
->>   MODULE_DEVICE_TABLE(of, simple_mfd_i2c_of_match);
-> 
+<div dir=3D"ltr">Hi Anton,<div><br></div><div>The reason the u-boot Env is =
+at 0x100000 address is that some costumers=C2=A0have:</div><div>one copy of=
+ Bootblock and U-boot at 0x0 - 0x80000</div><div>second copy of Bootblock a=
+nd U-boot at 0x80000 - 0x100000.</div><div><br></div><div>we have two optio=
+ns;</div><div>1. Modify the OpenBMC device tree flash layout u-boot Env add=
+ress to 0x100000.<br></div><div>2. Add a patch to OpnBMC platform that usin=
+g openbmc flash layout to modify=C2=A0<span class=3D"gmail-pl-en" style=3D"=
+box-sizing:border-box;font-family:SFMono-Regular,Consolas,&quot;Liberation =
+Mono&quot;,Menlo,monospace;font-size:12px;white-space:pre">CONFIG_ENV_OFFSE=
+T </span><span class=3D"gmail-pl-en" style=3D"box-sizing:border-box;white-s=
+pace:pre"><font face=3D"arial, sans-serif" style=3D"">in the u-boot.</font>=
+</span></div><div><span class=3D"gmail-pl-en" style=3D"box-sizing:border-bo=
+x;white-space:pre"><font face=3D"arial, sans-serif" style=3D""><br></font><=
+/span></div><div><span class=3D"gmail-pl-en" style=3D"box-sizing:border-box=
+;white-space:pre"><font face=3D"arial, sans-serif" style=3D"">Thanks,</font=
+></span></div><div><span class=3D"gmail-pl-en" style=3D"box-sizing:border-b=
+ox;white-space:pre"><font face=3D"arial, sans-serif" style=3D""><br></font>=
+</span></div><div><span class=3D"gmail-pl-en" style=3D"box-sizing:border-bo=
+x;white-space:pre"><font face=3D"arial, sans-serif" style=3D"">Tomer</font>=
+</span></div><div><span class=3D"gmail-pl-en" style=3D"box-sizing:border-bo=
+x;white-space:pre"><font face=3D"arial, sans-serif" style=3D""><br></font><=
+/span></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"=
+gmail_attr">On Fri, 26 Feb 2021 at 22:10, Anton Kachalov &lt;<a href=3D"mai=
+lto:gmouse@google.com">gmouse@google.com</a>&gt; wrote:<br></div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr">H=
+ello, Tomer.<br></div><div dir=3D"ltr"><div><br></div><div>Seems like Nuvot=
+on&#39;s=C2=A0u-boot expects the uboot-env at different address comparing t=
+o openbmc-flash-layout.dtsi:</div><div><br></div><div><a href=3D"https://gi=
+thub.com/Nuvoton-Israel/u-boot/blob/npcm7xx-v2019.01/include/configs/poleg.=
+h#L30" target=3D"_blank">https://github.com/Nuvoton-Israel/u-boot/blob/npcm=
+7xx-v2019.01/include/configs/poleg.h#L30</a><br></div><div><br></div><div>V=
+s.</div><div><br></div><div><a href=3D"https://git.kernel.org/pub/scm/linux=
+/kernel/git/torvalds/linux.git/tree/arch/arm/boot/dts/openbmc-flash-layout.=
+dtsi#n13" target=3D"_blank">https://git.kernel.org/pub/scm/linux/kernel/git=
+/torvalds/linux.git/tree/arch/arm/boot/dts/openbmc-flash-layout.dtsi#n13</a=
+><br></div><div><br></div><div>The change is more about making partitions n=
+aming the same as expected by OpenBMC.</div><div><br></div></div><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, 21 Feb 2021 =
+at 17:40, Tomer Maimon &lt;<a href=3D"mailto:tmaimon77@gmail.com" target=3D=
+"_blank">tmaimon77@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr">Hi=C2=A0Benja=
+min and Anton,<div><br></div><div>Sorry for the late reply,</div><div><br><=
+/div><div><p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt"><font fa=
+ce=3D"arial, sans-serif">The EVB FIU0-CS0
+partitioning=C2=A0is used for testing=C2=A0the EVB and this is why it is
+different=C2=A0than the OpenBMC flash layout.</font></p>
 
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt"><font face=3D"aria=
+l, sans-serif">=C2=A0</font></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0cm 0cm 0.0001pt"><font face=3D"aria=
+l, sans-serif">Are you using the NPCM7XX EVB for
+OpenBMC? if yes we can consider to modify the flash partition to OpenBMC us=
+e.</font></p></div><div><br></div></div><div class=3D"gmail_quote"><div dir=
+=3D"ltr" class=3D"gmail_attr">On Thu, 18 Feb 2021 at 19:11, Benjamin Fair &=
+lt;<a href=3D"mailto:benjaminfair@google.com" target=3D"_blank">benjaminfai=
+r@google.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">On Thu, 18 Feb 2021 at 04:42, &lt;<a href=3D"mailto:gmouse@goog=
+le.com" target=3D"_blank">gmouse@google.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; From: &quot;Anton D. Kachalov&quot; &lt;<a href=3D"mailto:gmouse@googl=
+e.com" target=3D"_blank">gmouse@google.com</a>&gt;<br>
+&gt;<br>
+&gt; This change satisfy OpenBMC requirements for flash layout.<br>
+&gt;<br>
+&gt; Signed-off-by: Anton D. Kachalov &lt;<a href=3D"mailto:gmouse@google.c=
+om" target=3D"_blank">gmouse@google.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 28 +++++++----------=
+------<br>
+&gt;=C2=A0 1 file changed, 8 insertions(+), 20 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot=
+/dts/nuvoton-npcm750-evb.dts<br>
+&gt; index bd1eb6ee380f..741c1fee8552 100644<br>
+&gt; --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts<br>
+&gt; +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts<br>
+&gt; @@ -182,8 +182,8 @@ bbuboot2@80000 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x0080000 0x800=
+00&gt;;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0read-only;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0envparam@100000 {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;env-param&quot;;<=
+br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0ubootenv@100000 {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;u-boot-env&quot;;=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x0100000 0x400=
+00&gt;;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0read-only;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
+&gt; @@ -195,25 +195,13 @@ kernel@200000 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;kernel&quot=
+;;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x0200000 0x400=
+000&gt;;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0rootfs@600000 {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;rootfs&quot;;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x0600000 0x700000&gt=
+;;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0rofs@780000 {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;rofs&quot;;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x0780000 0x1680000&g=
+t;;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0spare1@D00000 {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;spare1&quot;;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x0D00000 0x200000&gt=
+;;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0spare2@0F00000 {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;spare2&quot;;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x0F00000 0x200000&gt=
+;;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0spare3@1100000 {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;spare3&quot;;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x1100000 0x200000&gt=
+;;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0spare4@1300000 {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;spare4&quot;;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x1300000 0x0&gt;;<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0rwfs@1e00000 {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;rwfs&quot;;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x1e00000 0x200000&gt=
+;;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0};<br>
+<br>
+I recommend just including the openbmc-flash-layout.dtsi file here<br>
+instead since that contains the common flash layout for most OpenBMC<br>
+systems.<br>
+<br></blockquote><div>Good=C2=A0<font face=3D"arial, sans-serif">solution</=
+font>,=C2=A0</div><div>Do you mean nuvoton-openbmc-flash-layout?</div><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
+1px solid rgb(204,204,204);padding-left:1ex">
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
+&gt; --<br>
+&gt; 2.30.0.478.g8a0d178c01-goog<br>
+&gt;<br></blockquote><div><br></div><div>Thanks,</div><div><br></div><div>T=
+omer=C2=A0</div></div></div>
+</blockquote></div></div>
+</blockquote></div>
+
+--00000000000013750205bc798691--
