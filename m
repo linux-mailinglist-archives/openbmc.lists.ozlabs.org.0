@@ -2,101 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 262B932A07C
-	for <lists+openbmc@lfdr.de>; Tue,  2 Mar 2021 14:22:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D408132A6D9
+	for <lists+openbmc@lfdr.de>; Tue,  2 Mar 2021 18:02:49 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dqd8712g1z3cZy
-	for <lists+openbmc@lfdr.de>; Wed,  3 Mar 2021 00:21:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dqk2v6DDZz3cPh
+	for <lists+openbmc@lfdr.de>; Wed,  3 Mar 2021 04:02:47 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=XyTQ5eJI;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=u26jiNM9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22b;
+ helo=mail-oi1-x22b.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=XyTQ5eJI; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=u26jiNM9; dkim-atps=neutral
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com
+ [IPv6:2607:f8b0:4864:20::22b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dqd7v2KSMz30JW
- for <openbmc@lists.ozlabs.org>; Wed,  3 Mar 2021 00:21:46 +1100 (AEDT)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 122D9o5l024016
- for <openbmc@lists.ozlabs.org>; Tue, 2 Mar 2021 08:21:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=DSQ6AFcvBTZdDhfm5F/Y1Bgy56r57VlzKUMepRBQBWc=;
- b=XyTQ5eJI+RrEpfgg5CO4exwiWoSvuGBbUkRKEMTTL0Fk1anDcB9C74o5W81nXvJW7ExT
- Y1o1OrLloG8toap90AikPDhfbF/7d5WPuWFm9UqhLoe21oM+eIEacPXu1Bcqx8o9Na0a
- veLFRFhQxm4MPO0bW/5NFw9hq/GpUa8mjq9DhAJ+a5dmFsVEemUh49a7VvTLzppMFB87
- j+iPAfLoKierFfKctaFzA8jA0+SpmfDqUdGMLL4JGPzJd1Cff2Xuy6MMmjNUzXD1ugCi
- r7CN1dMOfe9tsiukYCylOfnDDoI/hiW/sy6979bzrj/1CDRtnGv/T+v0OyCsOC9SOHMs 6w== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 371p0f0ggv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 02 Mar 2021 08:21:44 -0500
-Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 122DAjJw030416
- for <openbmc@lists.ozlabs.org>; Tue, 2 Mar 2021 08:21:44 -0500
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0b-001b2d01.pphosted.com with ESMTP id 371p0f0ggn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 02 Mar 2021 08:21:44 -0500
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 122DIJ7E012012;
- Tue, 2 Mar 2021 13:21:43 GMT
-Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
- [9.57.198.26]) by ppma01wdc.us.ibm.com with ESMTP id 36ydq8y6yq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 02 Mar 2021 13:21:43 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 122DLhTk11469196
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 2 Mar 2021 13:21:43 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6D348AC062;
- Tue,  2 Mar 2021 13:21:43 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E1D6AAC05E;
- Tue,  2 Mar 2021 13:21:42 +0000 (GMT)
-Received: from [9.85.166.234] (unknown [9.85.166.234])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue,  2 Mar 2021 13:21:42 +0000 (GMT)
-Subject: Re: (Aspeed2600) Booting with a SPL loading U-boot fitImage
-To: Dan Zhang <dz4list@gmail.com>, openbmc@lists.ozlabs.org
-References: <mailman.1404.1614626722.7079.openbmc@lists.ozlabs.org>
- <CAJxKyLcnj=Op-+LLfjCQmX-MFCsk8duud1_Tk0RWjXAzUiKNAA@mail.gmail.com>
-From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-Message-ID: <8dc7f4a2-4298-5c46-bae2-02a195b4c7b1@linux.vnet.ibm.com>
-Date: Tue, 2 Mar 2021 10:21:42 -0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dqk2g5MSzz3cG2
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Mar 2021 04:02:34 +1100 (AEDT)
+Received: by mail-oi1-x22b.google.com with SMTP id z126so22669080oiz.6
+ for <openbmc@lists.ozlabs.org>; Tue, 02 Mar 2021 09:02:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=P2JKjpMLEEuRc5ZRlDOfs18K1+TMftC95oOTofyZoJ4=;
+ b=u26jiNM9f6hAcKbvIpdUc/FUPe5bSTwgh6Nu0YKjZirv2uA2eZzcnnJAjKdzA32B9a
+ Pvx/AJnPIg3qBdkUct7/VF3XxZJcHFDZH80drZyCjji6BKitf7dHOMoRW+0dz3Snd0N9
+ 37uiVO3itcihxEjN6WVTXX3U+ZzOrO7iLoPgePcHHJVetQHE4aRI/zXaxESknfsq+Yfn
+ jWRyX1xmQ/cTAJsD9b6PH/xfSMP+duVzcy69FsQV7HTwEuYAuEkay2tvL+n9IW6IiarG
+ gAfnm41s+APbunuDniVDET7xQi0uOkWgvk6tbDLJenKgUqFPK/xujH0v38Q6kQPKXzY2
+ YV4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=P2JKjpMLEEuRc5ZRlDOfs18K1+TMftC95oOTofyZoJ4=;
+ b=mDPA939XYHuD0KcfFRNLlzcV5O3wlrOSB3cbW55no93Y0ftUU0jrdZtc3JTzoTBlPe
+ +SJ8Kv/wKkpXZy2xMzuz/BLVC7KT9PW1CsNHvLi0peSYviMdGIwNOkp+oCwnfLftcENP
+ qthhOlH8Kvj0x0cZhGhMVxQehk0rewYeREG4dCGBlckiQh9KOBWhPZ9LAdMhKLHv3aC3
+ pNYg6Dmt1b67jgkvcMaTmtLqYBpzNMXMBjYQWPYrom6DBiWn0BFZ5SEvGmhoPMlsnQkA
+ +no6SaME+v1nfRECHnYilZMv8UmIuf4RpBVWvEY8ZFCM+VLPTp6pP6waOmHlszp2q8w5
+ U0bA==
+X-Gm-Message-State: AOAM530MVVEoh796pEb1NjQSEup6ZfdyzDVhraOnzy9FOAfcbziW01lL
+ 3w867qe2mimEyKvLqtfLOIuEIBFi0PpzQg==
+X-Google-Smtp-Source: ABdhPJzOe80YTHFREd2wqnsddxDS2f7+a1rM9EVvoVXGEh3Og77RTMvIQmATAntMfUxOUItwjQzODA==
+X-Received: by 2002:aca:bf8a:: with SMTP id p132mr3942718oif.9.1614704549271; 
+ Tue, 02 Mar 2021 09:02:29 -0800 (PST)
+Received: from krtaylors-MacBook-Pro.local (072-182-104-102.res.spectrum.com.
+ [72.182.104.102])
+ by smtp.gmail.com with ESMTPSA id y7sm4237802oiy.57.2021.03.02.09.02.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Mar 2021 09:02:27 -0800 (PST)
+Subject: Re: Equinix CCLA
+To: My Truong <mtruong@equinix.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <MN2PR04MB6127F039EDCE65A0B700B452BA9A9@MN2PR04MB6127.namprd04.prod.outlook.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <6a204901-c608-16af-12e6-89432c82d889@gmail.com>
+Date: Tue, 2 Mar 2021 11:02:26 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAJxKyLcnj=Op-+LLfjCQmX-MFCsk8duud1_Tk0RWjXAzUiKNAA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <MN2PR04MB6127F039EDCE65A0B700B452BA9A9@MN2PR04MB6127.namprd04.prod.outlook.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-03-02_06:2021-03-01,
- 2021-03-02 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0
- mlxscore=0 suspectscore=0 adultscore=0 mlxlogscore=849 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2103020107
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,24 +88,27 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 3/1/21 1:34 PM, My Truong wrote:
+> Hello OpenBMC Community,
+> 
+> The (formerly) Packet team is updating their CCLA to reflect the new entity and contributors. The updated and signed document are attached.
 
+Your revised CCLA update has been accepted, thank you for keeping it 
+updated!
 
-On 3/2/2021 4:54 AM, Dan Zhang wrote:
+Kurt Taylor (krtaylor)
 
-> I think within A FIT image, the u-boot binary is not located at your entry point 0x81000000,
-> it is behind the fit header, somewhere. This means the entry_point and load_addr is not the same as spl_boot.c defined.
-> spl_image->entry_point= CONFIG_ASPEED_UBOOT_DRAM_BASE;
-> spl_image->load_addr= CONFIG_ASPEED_UBOOT_DRAM_BASE;
-> Also, the u-boot code itself before relocation is position aware ( SYS_TEXT_BASE must be set to 0x81000000, as your second try works). This means the entry_point shall be the same as SYS_TEXT_BASE.
+> 
+> Cheers,
+> My
+> 
+> 
+> My D. Truong
+> Director, Hardware Engineering
+> 
+> This email is sent on behalf of Equinix, Inc. or one of its group companies in the territory from where this email has been sent. The email and any files transmitted with it are confidential and solely for the use of the intended recipient. If you have received this email in error please delete this email immediately and notify the sender.
+>   
+> 
+> 
+> 
 
-I think it's not that simple. See my answer (to myself) in this same thread with new information.
-  
-> In fb/OpenBMC, verified boot implementation, use mkimage option:
->    -p => place external data at a static position,
-> thus we specify the somewhere to a static offset , then you can set the entry_point = load_addr + offset.
-
-Verified boot should work if you are having u-boot proper validating the Linux Kernel fitimage, but I don't see how the Aspeed 2600 SPL would be able to load and verify the u-boot proper fitimage - the code simply isn't there..
-
-It seems to me that the SPL_LOAD_FIT code should handle recognizing the fitimage, moving it's 'loadables' images into memory and setting the entry point accordingly.
-
-  -Klaus
