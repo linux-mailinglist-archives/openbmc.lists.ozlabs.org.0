@@ -1,71 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C60D232B8B0
-	for <lists+openbmc@lfdr.de>; Wed,  3 Mar 2021 15:43:00 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 140EC32B90F
+	for <lists+openbmc@lfdr.de>; Wed,  3 Mar 2021 17:04:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DrGv662Frz3cPF
-	for <lists+openbmc@lfdr.de>; Thu,  4 Mar 2021 01:42:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DrJjY0l3Jz3clt
+	for <lists+openbmc@lfdr.de>; Thu,  4 Mar 2021 03:04:49 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=oYYn/C64;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=jLo9wGIf;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.17.21; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=oYYn/C64; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DrGtt4V2gz2ysr
- for <openbmc@lists.ozlabs.org>; Thu,  4 Mar 2021 01:42:46 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 95D9541220;
- Wed,  3 Mar 2021 14:42:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-language:content-transfer-encoding:content-type
- :content-type:in-reply-to:mime-version:user-agent:date:date
- :message-id:from:from:references:subject:subject:received
- :received:received; s=mta-01; t=1614782561; x=1616596962; bh=zAo
- saDo5P3li1poi/hBYTdw4AHgmsWndyaMv+52lm9c=; b=oYYn/C643kZ5TyeJZBC
- 2FUeOxihlb/re19MkHV3kuT2jISS0U7sOPrrXoozWw25URsXtcsqfy42nG8yUmRp
- +lD8hBckAtq7faLhIQuyvfuU05EVl6QzUxkSisxuN3mNLbsl2zNcdQeAKX9KiiFd
- 8jy14ySKqdg8VzxFoEibK8E8=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id S2nw-YqeOMTS; Wed,  3 Mar 2021 17:42:41 +0300 (MSK)
-Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
- [172.17.100.103])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id EA69341253;
- Wed,  3 Mar 2021 17:42:40 +0300 (MSK)
-Received: from [10.199.0.22] (10.199.0.22) by T-EXCH-03.corp.yadro.com
- (172.17.100.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 3 Mar
- 2021 17:42:40 +0300
-Subject: Re: RPMS
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <6ee37eca-0399-fc0d-8f76-1685167505fc@yadro.com>
- <YD+PzxNr6DGFtRU5@heinlein>
-From: Alexander Amelkin <a.amelkin@yadro.com>
-Message-ID: <bb7ff5cf-a7d5-5a84-18a4-bae040ea1150@yadro.com>
-Date: Wed, 3 Mar 2021 17:42:39 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=jLo9wGIf; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DrJj859ylz3cWl
+ for <openbmc@lists.ozlabs.org>; Thu,  4 Mar 2021 03:04:28 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1614787217;
+ bh=vXITFOlRrrM/ot0qtV+OpIUql+KKoRQFHgp+WqwkmIo=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=jLo9wGIfMHHRt3TIIZgJ7KrKDq9WAQef2SQgVZb13guZWzpbc7aAVUoGAl0p6Ldzr
+ NFiFJ6iRTXZ2RQbBQ69r3Y7kn9I4b5UfrirX9hoiUs4Dq3SnoITg52IIlA9XiEKlCm
+ KlR+5tuPzUeELPCDStDuCo9ad3My4HAFQr+RJQTM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MXXuB-1lHmzV10Qx-00Z2rQ; Wed, 03
+ Mar 2021 16:47:30 +0100
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: openbmc@lists.ozlabs.org,
+	devicetree@vger.kernel.org
+Subject: [PATCH v2 RESEND 1/2] dt-bindings: arm: Convert nuvoton,
+ npcm750 binding to YAML
+Date: Wed,  3 Mar 2021 16:46:19 +0100
+Message-Id: <20210303154622.3018839-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.30.1
 MIME-Version: 1.0
-In-Reply-To: <YD+PzxNr6DGFtRU5@heinlein>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [10.199.0.22]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-03.corp.yadro.com (172.17.100.103)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:fr11v6FXMj6GgupdvATGzBwe2UvTw/AWyN+FGMgj9PZ1eqObakU
+ D0WHCsYt0rm20m4CKLwKghThQvSFc6ODgoeu5a4j90QWuA3KJ/SpOOxYn4Si8t+Fhk534xn
+ WVO9EZJaQuoRsWLXXF46+HsXmZEq8jbL4v2cDm4o1LTs+DdcO8GBF3DMzKPyztPeC/42lz/
+ 1KITjqS36WTJDICbwberA==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vwI64QZ96C4=:cqBv6/3bFvtF3342P35nyg
+ Ch+5YnMVq4GE/mE9i8VprKtVoUkWRQmd4+Gr2jBJ8DlbpLSDtw9ArumsAgjTNV8LM3RGFvpID
+ 69do/8IkG8m4STXhv1sWmkxxgIvS1cRitnO4Tg4h68eThCd90ys/JxyA9VeuwwZILVmLYXC7M
+ ZvvGw7xAuk7w8TL/mfN+a+akwU+1eCYqFWya7fVOC8awFzqjae3lO38NQucM53ntKIZfS9zUf
+ xPtYhmeayadzCRyhkxX/gZZQQruHwi3iM641EvWlVYBYZCsWRadG/veSO3LxpkUyr63drlvcM
+ XJBhAeX/9w8EdyR1TfcdkVOFazCnD1YB70h2IXuPVQIwHhHgPa2Qw3VsxX3NfLevdlqBM1rDv
+ c1amyvZOkcKXun1mGzxbXoYTwcY6acisy6rwN80eKXkFOH7oVGxtgBzv8qJv87cgN/MVuhF3e
+ gmaCdvTyKU1Je/AM9AwEHaEt7wYkrAfPqNOAbzngR7zZyeI4jiqjdEY2Dn3jmdUOglxUhlpnL
+ SEzy77B+O/xCm3+6LLCJteYAVi7XOFz+Eu+2kZl8Bru/oG8mDFTOuRilSBBSvxLzjyiPWkwYr
+ 572GmJvgSfPHfnc6ZiE/INFn2ll71g8FoR5VzeAV0tsI9yFnoOpGd5xQ/IXPbLHJEC9xNOYcA
+ G0jE1NuhjuRzYlYwAHe7qV7zHgqgWhxR9H5ClPcaf34JApZp/2QwJ9qrSLDzm7dD6wHq9/s1B
+ kBtSa/QFRHWSZX677yEq/bJpyIcEE8r70WYzVxIJVDUQ4II2aEOag1xShZ0ajpMydKiIhoLj4
+ K65jLrDvF8YpWKiA8t/R9YtXtBQFLN/34qSqswPQ+lS6fCCE74uZ9GKniKvAYprOHDdI29oxT
+ GG0+jpDlV3+jPMefFefg==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,72 +78,88 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Rob Herring <robh@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ linux-kernel@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-03.03.2021 16:31, Patrick Williams пишет:
-> On Wed, Mar 03, 2021 at 01:08:06AM +0300, Alexander Amelkin wrote:
->> Hi all!
->>
->> I have just noticed that we use a wrong unit name for revolutions per
->> minute.
->> The unit we use is called RPMS, which renders to "Revolution Per MinuteS".
->> The term RPM is already plural in nature and doesn't need the 'S' suffix.
-> I think you're talking about the dbus interface [1]?
+The general trend is to have devicetree bindings in YAML format, to
+allow automatic validation of bindings and devicetrees.
 
-Exactly.
+Convert the NPCM SoC family's binding to YAML before it accumulates more
+entries.
 
->
-> The units in that interface are all in their plural form.  I don't
-> recall why we decided to do that originally.
+The nuvoton,npcm750-evb compatible string is introduced to keep the
+structure of the binding a little simpler.
 
-That's right, they are. What I'm talking about is that "RPMS" is, so to 
-say, double-plural
-because it is already "revolutionS per minute" to which an extra S is 
-added.
+Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+Reviewed-by: Rob Herring <robh@kernel.org>
+=2D--
 
->> I believe it needs to be renamed to just 'RPM', what do you think?
-> In many cases of pluralized acronyms the 's' is moved to the end even
-> though it adds ambiguity as to which underlying word is pluralized.  I
-> think this is an artifact of spoken English where almost all plural
-> forms end with an 's' so it is natural to add them to acronyms.
->
-> The Cambridge dictionary indicates that either RPM or RPMs would be a
-> valid plural form [2].
+If someone else wants to be listed as the maintainer, please let me
+know.
 
-Ok, if Cambridge dictionary says so, who am I to argue,
-but it makes me, as an engineer, feel uncomfortable. :)
 
-> Interestingly, CFM is arguably both the singular and plural form because
-> the 'f' can be 'foot' or 'feet'.
+v2:
+- Fix indentation to satisfy yamllint
+- Fix $schema line
 
-I don't think it is valid to say "cubic foot per minute". A foot (a 
-mile, a revolution) is by definition just a single foot (mile, revolution).
-It can't be per anything. So it's either "cubic foot" (entity) or "cubic 
-fEEt per minute" (rate of change of the amount of the entity).
+v1:
+- https://lore.kernel.org/lkml/20210108224008.705687-1-j.neuschaefer@gmx.n=
+et/
+=2D--
+ .../devicetree/bindings/arm/npcm/npcm.txt     |  6 -----
+ .../devicetree/bindings/arm/npcm/npcm.yaml    | 23 +++++++++++++++++++
+ 2 files changed, 23 insertions(+), 6 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.yaml
 
-You don't say "mile per hour", do you? Well, at least I've never seen 
-neither "MPHs", nor "MPGs". On the other hand, English is not my mother 
-tongue.
-
->
->> The unit is used very widely, so a lot of files in openbmc project
->> and a number of other project will need to be updated.
->
-> We did make a minor mistake in that it should be 'RPMs' and not 'RPMS',
-> but I don't really see that as high-value work to fix at this point.  If
-> someone wants to go make that change across all the impacted
-> repositories, I'd certainly merge it in PDI.  If anyone feels strongly
-> about making it 'RPM' instead at the same time, I'd be fine with that as
-> well.
-
-Ok. Noted. Thanks. Will think about it. Just needed a confirmation that 
-the work, should I decide to do it, won't be in vain.
-
->
-> 1. https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Sensor/Value.interface.yaml#L55
-> 2. https://dictionary.cambridge.org/us/dictionary/english/rpm
-
-WBR, Alexander.
+diff --git a/Documentation/devicetree/bindings/arm/npcm/npcm.txt b/Documen=
+tation/devicetree/bindings/arm/npcm/npcm.txt
+deleted file mode 100644
+index 2d87d9ecea85b..0000000000000
+=2D-- a/Documentation/devicetree/bindings/arm/npcm/npcm.txt
++++ /dev/null
+@@ -1,6 +0,0 @@
+-NPCM Platforms Device Tree Bindings
+=2D-----------------------------------
+-NPCM750 SoC
+-Required root node properties:
+-	- compatible =3D "nuvoton,npcm750";
+-
+diff --git a/Documentation/devicetree/bindings/arm/npcm/npcm.yaml b/Docume=
+ntation/devicetree/bindings/arm/npcm/npcm.yaml
+new file mode 100644
+index 0000000000000..894aefb70652a
+=2D-- /dev/null
++++ b/Documentation/devicetree/bindings/arm/npcm/npcm.yaml
+@@ -0,0 +1,23 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/arm/npcm/npcm.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: NPCM Platforms Device Tree Bindings
++
++maintainers:
++  - Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
++
++properties:
++  $nodename:
++    const: '/'
++  compatible:
++    oneOf:
++      - description: NPCM750 based boards
++        items:
++          - enum:
++              - nuvoton,npcm750-evb         # NPCM750 evaluation board
++          - const: nuvoton,npcm750
++
++additionalProperties: true
+=2D-
+2.29.2
 
