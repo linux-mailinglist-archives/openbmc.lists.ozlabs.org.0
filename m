@@ -1,69 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8600B32D5FB
-	for <lists+openbmc@lfdr.de>; Thu,  4 Mar 2021 16:08:26 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 529E132D712
+	for <lists+openbmc@lfdr.de>; Thu,  4 Mar 2021 16:50:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DrvQ03bXyz3cxQ
-	for <lists+openbmc@lfdr.de>; Fri,  5 Mar 2021 02:08:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DrwL42JJzz3d56
+	for <lists+openbmc@lfdr.de>; Fri,  5 Mar 2021 02:50:04 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=UaN+JcSp;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=gGQfHTPB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22c;
- helo=mail-oi1-x22c.google.com; envelope-from=tmaimon77@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=UaN+JcSp; dkim-atps=neutral
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com
- [IPv6:2607:f8b0:4864:20::22c])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.15.15; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=gGQfHTPB; 
+ dkim-atps=neutral
+X-Greylist: delayed 357 seconds by postgrey-1.36 at boromir;
+ Fri, 05 Mar 2021 02:49:48 AEDT
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DrvPm1yNCz3cXZ
- for <openbmc@lists.ozlabs.org>; Fri,  5 Mar 2021 02:08:11 +1100 (AEDT)
-Received: by mail-oi1-x22c.google.com with SMTP id w65so6850494oie.7
- for <openbmc@lists.ozlabs.org>; Thu, 04 Mar 2021 07:08:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=iKzGMZeZ/cn332/Ak9ubbjiv8/gkfczJadoNqHFM5Xo=;
- b=UaN+JcSpgNAmAlkemnZ4DQ/N3RknzgrSOhnkCeoW6ngtSVGyDaYA0O9MWICAmPiJ8p
- /SCbDI97ndrVvYQLmT4YtojhH7v3mlinH+QEq4r2eUPX/aQoqwSVMg41H0f6YtA/dyIM
- qcVVTq919O1XdfmElb4cvTIswXzkHZmFD+llGlY1/n1lmGBl5fAYjrw32sQUiD5L+E7X
- mNWmPybh9G6qIrS1mpQlbY01sHYFoLWvFXzsg7nsGKEbM8HXEffkmFZQOcFZd0oVtGLk
- 2oXrBfKyIzqma2zaz3mPmgNgq1iRlLZ1e5jxd2n24pt1chk2oIRYlATWF8M2rhCt4jIM
- CwZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=iKzGMZeZ/cn332/Ak9ubbjiv8/gkfczJadoNqHFM5Xo=;
- b=ZtFvljcUO9sHmc8Ebcqn9daqNjElWfMHgTpiBA30nwC7/9IZcf9lxFih8yaA/IF9fG
- AHLznnsLrQwa91K7fbw/ml9xkb0Ar0iBMWEK5s8zp1lK4WRu4bibZPytHLG15CaNBw88
- OLVeh0IfbAr9PyzPwdcymjKrjjLs5Etcry7cMs3e23pViWEcLALVX2jdnHPMkBNz12f7
- jzwe3WChHbVchL9fzxiK8Tv40rBYWW+htr6ZWzW9hIMuFzKNmM9dHhQMfnTEwquCGXzt
- FBHmpi4ex7eaws5tWOjsTHfqt1BV9UiVU51JMeAOmdHiV9anOx7NDQAj6iz0eUJnbKRr
- qQgA==
-X-Gm-Message-State: AOAM530Iu2joVDXtAxmOeb4G+lDYjR6n3K1V6UkdrOz01+8S/w3TAgWU
- fTDOcnkaH8QJ4iJiEAP7GVf0E+hzpfxSeMacjE4=
-X-Google-Smtp-Source: ABdhPJya+fpV0clbsZyOiWZmUznVFBRNOLRY02gUr9osM+d5q6XYqmC1tMpppHppR4qTQNPvH5y+fNONzK2VaB3L+pE=
-X-Received: by 2002:aca:3946:: with SMTP id g67mr3205812oia.42.1614870487923; 
- Thu, 04 Mar 2021 07:08:07 -0800 (PST)
-MIME-Version: 1.0
-References: <20210303154622.3018839-1-j.neuschaefer@gmx.net>
- <20210303154622.3018839-2-j.neuschaefer@gmx.net>
-In-Reply-To: <20210303154622.3018839-2-j.neuschaefer@gmx.net>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Thu, 4 Mar 2021 17:21:36 +0200
-Message-ID: <CAP6Zq1hwp+wJpbN496096q8izRRoU2Jg+OKugcSk+BcXWfME9A@mail.gmail.com>
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DrwKm3cMSz30M3
+ for <openbmc@lists.ozlabs.org>; Fri,  5 Mar 2021 02:49:47 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1614872984;
+ bh=VPzS3XtaV2jscfNrk2ckzZDmYf8qCvklrXC7Xl+tdY8=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=gGQfHTPBOkyvvUgThgguY82/3w58geLqNHdLTAiZ+sGNw0zonSCERkoZoL8MaLluc
+ CtJ4NrKblbf00yoQLb+LYdRB8k1vVRh26ylCtwfYne29IP2GiHp/T8RgumIM15790E
+ Ga7DtuFOptoRLHjpUEpAB/nioJfNK3RYFfYcZ5A8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N1wlv-1lkSgz3l9N-012I0C; Thu, 04
+ Mar 2021 16:42:09 +0100
+Date: Thu, 4 Mar 2021 16:42:07 +0100
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Tomer Maimon <tmaimon77@gmail.com>
 Subject: Re: [PATCH v2 RESEND 2/2] ARM: dts: Add board-specific compatible
  string to npcm750-evb devicetree
-To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Content-Type: multipart/alternative; boundary="000000000000ca817405bcb7555e"
+Message-ID: <YED/zzV5kb35k2vb@latitude>
+References: <20210303154622.3018839-1-j.neuschaefer@gmx.net>
+ <20210303154622.3018839-2-j.neuschaefer@gmx.net>
+ <CAP6Zq1hwp+wJpbN496096q8izRRoU2Jg+OKugcSk+BcXWfME9A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="jauI0NPFqHr1tpGx"
+Content-Disposition: inline
+In-Reply-To: <CAP6Zq1hwp+wJpbN496096q8izRRoU2Jg+OKugcSk+BcXWfME9A@mail.gmail.com>
+X-Provags-ID: V03:K1:dX47pp6N1kFMXQkOQn8hUd6L0alawbDNcXiMH+vHmgaY+iWFk6b
+ e9jGTEDQojWW+hCidvV93nYTNvj530fL/7wFR89fsleK1WFtHenjtYOGBnSd51jStjCACoP
+ D0XXKulJ3Nk4cOYuDb+MYWd9VFf98uc1IuWiwbh588VsLWUZLtmQ2epsJGSh1LpFMwA/38b
+ vCHD1fhYpAd3+GOSM1pgw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UpfOGr5ZjNE=:ZlW2wK3sI2APho3ekE/LHP
+ AqR0Cgj4wG4/Fb98KYlR0B2V2ZZWMxRVfpuk/vi+FW931YbeEB0c56VVHUl1Yk7rCdHjHwKe6
+ PJtYqfjk9iKKuJNWUODRINWZMkLT74Cht8EAaSuZnW6x41X4P375mhdZ7gT5ujpCOSWq957GL
+ PCuIjda9ISX3oYSCgv6jDe4dOncpKytOVUnwhAH+6CSIbBy1gmJD/whC8dIo+KbHuP6cXiFFv
+ Q1Jin3KVydwMj6/0UjIiQgZBKlFtvW0boVLQZi+1tK3os5GZ9QROnlp4o4LlQ0aoUToPhPRqr
+ uFSZxVwFE5e+bEYIbok74HNHYb7bIJbYEQfTmxpnj40rWdlFgcMut/1o1iLbOr0FQJVjFBwz9
+ qMf8X2VT/xe17NcoH9ndP+vSjFsndwsTc/DjGFoeH+ZPkDilF7pALyXCbOCoR6ey7kjBMUBGh
+ yAo2T18ykAuT8e1raxxELqppBot+mLNgt8B+IcADLQXwbaSgRl+WFRtqsI/e4VPlCGHkD8coP
+ jXNYYINin0F2xEtdLSxpIoRRxhePC4/TW2CuBkrquVAXv79aUmrz4Ez2WRpmK0mliJ1RaMjpC
+ ujTxmswFfbLxCoazdLZ9n/Y9kuU+sfQ7jsira9XbZYap01Hr69DYDmXPw2W+Nb+gMex6KkLfw
+ wNnM3YtthEpamAsUg75gMWyUar2p1rNHFPmMr7TvAggv77n7OV080pZDnBKCTjVfspOE8KSSq
+ dt5tOyLT9I779pgjiZJdcJyAqBzBJ36LPU0/QYodq5pK/dkcG/jD8iH17JMiRtvM0ltMulfPQ
+ ywCvdjl8+PFZrgCuCNS4TMdxqI6a7DbhX7CtrVzyO4Jkw9aoeU5ZVEroWdnZayAiCEKSbNgEj
+ wnpmHVk3wmVjuclDgCww==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,115 +87,93 @@ Cc: devicetree <devicetree@vger.kernel.org>,
  Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>,
  Patrick Venture <venture@google.com>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>
+ Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000ca817405bcb7555e
-Content-Type: text/plain; charset="UTF-8"
+
+--jauI0NPFqHr1tpGx
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Jonathan,
+On Thu, Mar 04, 2021 at 05:21:36PM +0200, Tomer Maimon wrote:
+> Hi Jonathan,
+>=20
+> Thanks a lot for sending the patch,
+>=20
+> I think that when it related to the SoC EVB it can stay with the
+> genral compatible name nuvoton,npcm750
+>=20
+> you can see it also in,
+> https://github.com/torvalds/linux/blob/master/arch/arm/boot/dts/aspeed-as=
+t2500-evb.dts#L8
 
-Thanks a lot for sending the patch,
+To make the single compatible string match the DT binding, I'll have to
+write the binding a little differently. I wrote it like this:
 
-I think that when it related to the SoC EVB it can stay with the
-genral compatible name nuvoton,npcm750
+  compatible:
+    oneOf:
+      - description: NPCM750 based boards
+        items:
+          - enum:
+              - nuvoton,npcm750-evb         # NPCM750 evaluation board
+          - const: nuvoton,npcm750
 
-you can see it also in,
-https://github.com/torvalds/linux/blob/master/arch/arm/boot/dts/aspeed-ast2=
-500-evb.dts#L8
 
-Thanks again,
+I guess I could do something like this:
 
-Tomer
+  compatible:
+    oneOf:
+      - description: NPCM750 development board
+        const: nuvoton,npcm750
 
-On Wed, 3 Mar 2021 at 17:47, Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.ne=
-t>
-wrote:
 
-> According to the revised binding, the devicetree needs a board-specific
-> compatible string.
->
-> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-> ---
->
-> v2:
-> - no changes
-> ---
->  arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> index 9f13d08f5804e..dea3dbc4a6a52 100644
-> --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> @@ -9,7 +9,7 @@
->
->  / {
->         model =3D "Nuvoton npcm750 Development Board (Device Tree)";
-> -       compatible =3D "nuvoton,npcm750";
-> +       compatible =3D "nuvoton,npcm750-evb", "nuvoton,npcm750";
->
->         aliases {
->                 ethernet2 =3D &gmac0;
-> --
-> 2.29.2
->
->
+And later add this part, when needed:
 
---000000000000ca817405bcb7555e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+      - description: NPCM750 based boards
+        items:
+          - enum:
+              - vendor,foo-bar-bmc
+          - const: nuvoton,npcm750
 
-<div dir=3D"ltr">Hi=C2=A0Jonathan,<div><br></div><div>Thanks a lot for send=
-ing the patch,</div><div><br></div><div>I think that when it related to the=
- SoC EVB it can stay with the genral=C2=A0compatible name nuvoton,npcm750</=
-div><div><br></div><div>you can see it also in,</div><div><a href=3D"https:=
-//github.com/torvalds/linux/blob/master/arch/arm/boot/dts/aspeed-ast2500-ev=
-b.dts#L8" target=3D"_blank">https://github.com/torvalds/linux/blob/master/a=
-rch/arm/boot/dts/aspeed-ast2500-evb.dts#L8</a><br></div><div><br></div><div=
->Thanks again,</div><div><br></div><div>Tomer</div></div><br><div class=3D"=
-gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, 3 Mar 2021 at 17=
-:47, Jonathan Neusch=C3=A4fer &lt;<a href=3D"mailto:j.neuschaefer@gmx.net" =
-target=3D"_blank">j.neuschaefer@gmx.net</a>&gt; wrote:<br></div><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
-lid rgb(204,204,204);padding-left:1ex">According to the revised binding, th=
-e devicetree needs a board-specific<br>
-compatible string.<br>
-<br>
-Signed-off-by: Jonathan Neusch=C3=A4fer &lt;<a href=3D"mailto:j.neuschaefer=
-@gmx.net" target=3D"_blank">j.neuschaefer@gmx.net</a>&gt;<br>
----<br>
-<br>
-v2:<br>
-- no changes<br>
----<br>
-=C2=A0arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 2 +-<br>
-=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
-<br>
-diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/=
-nuvoton-npcm750-evb.dts<br>
-index 9f13d08f5804e..dea3dbc4a6a52 100644<br>
---- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts<br>
-+++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts<br>
-@@ -9,7 +9,7 @@<br>
-<br>
-=C2=A0/ {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 model =3D &quot;Nuvoton npcm750 Development Boa=
-rd (Device Tree)&quot;;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0compatible =3D &quot;nuvoton,npcm750&quot;;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0compatible =3D &quot;nuvoton,npcm750-evb&quot;,=
- &quot;nuvoton,npcm750&quot;;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 aliases {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ethernet2 =3D &amp;=
-gmac0;<br>
---<br>
-2.29.2<br>
-<br>
-</blockquote></div>
 
---000000000000ca817405bcb7555e--
+What do you think?
+
+
+Thanks,
+Jonathan Neusch=C3=A4fer
+
+
+> On Wed, 3 Mar 2021 at 17:47, Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.=
+net>
+> wrote:
+[...]
+> >  / {
+> >         model =3D "Nuvoton npcm750 Development Board (Device Tree)";
+> > -       compatible =3D "nuvoton,npcm750";
+> > +       compatible =3D "nuvoton,npcm750-evb", "nuvoton,npcm750";
+
+--jauI0NPFqHr1tpGx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmBA/8UACgkQCDBEmo7z
+X9uThA//c7olZ+Kqwd7U6t2kYlBKyTffPaezxpMzoBRm279l3m6K766RRCLYoeQL
+wnAM/m6lvU3OXGiQwGxGyruFjDWxXo5p8UNFW+dI3JLzpkty7Jl7gu/EH7e/nWad
+ftV4REogYqABKD8WL6LXk9cEf/8nnyVJX2PAlNjcNIGRcYusQ66Y75gQRm6JtBjN
+QTImrmP1FySoS/Gea8CmKfFWYjSpccMYgG7aObHc+7SbtArJ6inBT15kbKba53k5
+F047NDjZslQk/h+j0JxDWwef70KwtDT2S63DdJfTHUbW52Z6xuwd0xfSMk1rTun1
+Gg1oBiQLXg5554IYB9d773X03uOeGJasT4et33obA0vdaDsYd6AAHcSMX80rZaiZ
+fyRbFRjHM08Q6XZ+VayvUkxkN6of5ZpM+wBlGAPHJuAyXGfbCoHnHRLJd1c2XXjT
+C5duUdTEF2pWGyBc/C4UrnTy8AUKenPDy4Zm0ZA2m6OvX1LQ2WF9pwynnDb1OZaT
+a3HsfNDyMoU1I41MRs1QsXdiUOplX78PDS008incEHgryOdw/3g0JEYeMls442oU
+pbleWoWzObbrroZ/fU0qe08zvY/ZG4XJcys+CIkpElyx3uDQhKzlpP6Z8RHprPyh
+KXqF0RRUZtbvNeoS1sstiw+LGbDjRrdzdQ8gAHxRxiZNSuil66I=
+=l5TV
+-----END PGP SIGNATURE-----
+
+--jauI0NPFqHr1tpGx--
