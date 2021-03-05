@@ -1,93 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B67032F5B2
-	for <lists+openbmc@lfdr.de>; Fri,  5 Mar 2021 23:06:01 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC96B32F5DF
+	for <lists+openbmc@lfdr.de>; Fri,  5 Mar 2021 23:27:24 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DshdM0XXPz3d6B
-	for <lists+openbmc@lfdr.de>; Sat,  6 Mar 2021 09:05:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dsj605x2Qz3dDP
+	for <lists+openbmc@lfdr.de>; Sat,  6 Mar 2021 09:27:20 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=iR6b8E+u;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=PIpxhtly;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=OU9XaFYO;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com;
+ envelope-from=bruce.mitchell@ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=iR6b8E+u; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=PIpxhtly; 
- dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=OU9XaFYO; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dshd42fslz3dC3
- for <openbmc@lists.ozlabs.org>; Sat,  6 Mar 2021 09:05:42 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 3A308183B;
- Fri,  5 Mar 2021 17:05:39 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Fri, 05 Mar 2021 17:05:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=o1dwVeGPIrGmM5tKVqzTF+A3ar3
- PZ76pD1tNrgmDUEE=; b=iR6b8E+u9R+S4pO689HdI3wGYteb6b2vZ8cHVzbte/3
- vEnzCbAmP5sYpaMiwYuLXQti/K84EDzcC6vW+7+8kdkMXEz2Q1SGf9HbaGNfHdqh
- E+m3DALH2MRMsWCXmb5Ua7qrn0molN3YL2Cz99DCtGvI2QfNvsXkDs31s5JV+tg1
- Zg9HdlW6lA+7ouYKS71JfT4kkk9RR3DY6RCIHI6XamQFctgcZFkh1D5ooLBtUSKX
- ttzNnEtu0YT8xy0HPaP9J1MwhlsuvJbA7UQGbN74AXuqVkkEXm6/c19d8SfLQn0l
- sUl/X/MFfrZbxuC5EY3tKW3cOp/vhjFMg6hXZwbFz+g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=o1dwVe
- GPIrGmM5tKVqzTF+A3ar3PZ76pD1tNrgmDUEE=; b=PIpxhtlydmKCRJTPJmWHtd
- DPDciUOLwd7RQ8xP62MCYMT7Dj1GFRKJliTFbnioe9U4+KE/6/FqG26mk1mSyQ18
- xpPxU0NUpSWc9paP1+IeU7ZQDL7A7kASoumy814NQf59dedoTepZl+ZALjJtySUp
- /rk/GOdj9Pf9oT3azrJOYIAEKaVyk9tHCsFewFkuTUaVR4nbogtfy4ra1SHyqdw5
- /zW9kvIyY0QAyUv6A90BgfZB3t06ynpbAO37RVSjAVUfjeyxDvKeUninx0O9N4wh
- o9ThqVTeWCefvvYAqjQs+7W6hNgsnNd1Tlbdnb5EXGZyAnWdIYlUlPtUePv4tgLQ
- ==
-X-ME-Sender: <xms:MqtCYA5Li_awxw-dLNcK8V5_0cJrF21eWvlWrGmNx27xIU28uX5dAQ>
- <xme:MqtCYB6lm7uqSV5mer30NzfBMFfdlFjwOq4MVoSC5z7qMNZuTtmxNKM6wJReIvX15
- Oh4zpagJeyAECLka_8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddtiedgudeghecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enfghrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtdorredt
- tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
- hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeefieekvdejjeehteeggeegfeeg
- ffetuefggedtvddugefguefgfeejvdeuvdevveenucfkphepjeeirddvhedtrdekgedrvd
- efieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
- rghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:MqtCYPeZpuqjb4_qtHa8mV6WRpXKPZe7tOLTPKfOQ8-0_KfAWBvxtQ>
- <xmx:MqtCYFLk2v0F0kMqiNRsk3AnXLcEaKUcF9k3NUWpWkDu5hKkBbTteg>
- <xmx:MqtCYEKnMJNdIlBvb5-NYuEkBCZMVKZZw0rRVesaWTuJnkFnHbfSkw>
- <xmx:MqtCYLkduMnIUIBbVpmluP1_JKSSgvD3VgSsJoOkb7Vey0qVEzw5cQ>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id ECE7C240057;
- Fri,  5 Mar 2021 17:05:37 -0500 (EST)
-Date: Fri, 5 Mar 2021 16:05:36 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Re: Request new repo for IBM-specific code
-Message-ID: <YEKrMMxgcljwRNDt@heinlein>
-References: <b8af3438-f85a-cb82-c88c-9c4e120399e9@linux.ibm.com>
- <YEKDY6+zfW5Uuqkl@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dsj5l74K3z30KJ
+ for <openbmc@lists.ozlabs.org>; Sat,  6 Mar 2021 09:27:06 +1100 (AEDT)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 125M2tZo090613
+ for <openbmc@lists.ozlabs.org>; Fri, 5 Mar 2021 17:27:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=in-reply-to : from : to
+ : cc : date : mime-version : references : content-transfer-encoding :
+ content-type : message-id : subject; s=pp1;
+ bh=jYLtRTf1Ka9hF85Hnhd4iCaKZSwo26kw9Mja7y/n6Zo=;
+ b=OU9XaFYOCbLJl4JAorcJGgeZM0PjiqJeLzjm2M/q4kLUZfRRKI9/B7xsOHDSBmF8eQfL
+ LiOlN9IENmhEoYNwCTBJEAMa0y34n6EKaDq9/D93bKckTLhKbElL3HfOURqF85jO26Y2
+ R6rd1HVmE1TAHn1qhoEk7QumcHjFsfLgwmDWLI3jel1fhms0kt7nYrSn4KnfNBxuJ1RB
+ YHvqi4/lUJY2rGJoxepYTB6ZCM6agvIgnHHZWQn+PZzYLMRw5LKTJKHZeVkZhuhnLn9w
+ rP7TtF/jNA6yo6rndHi2BOeij7l3COzRhzvCfycCzW2zaGL/Hotf716ky/gVcVuTM3BO +A== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.74])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 373u6ebafn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 05 Mar 2021 17:27:04 -0500
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Bruce.Mitchell@ibm.com>;
+ Fri, 5 Mar 2021 22:27:03 -0000
+Received: from us1a3-smtp03.a3.dal06.isc4sb.com (10.106.154.98)
+ by smtp.notes.na.collabserv.com (10.106.227.92) with
+ smtp.notes.na.collabserv.com ESMTP; Fri, 5 Mar 2021 22:27:03 -0000
+Received: from us1a3-mail33.a3.dal06.isc4sb.com ([10.146.6.20])
+ by us1a3-smtp03.a3.dal06.isc4sb.com
+ with ESMTP id 2021030522270241-848610 ;
+ Fri, 5 Mar 2021 22:27:02 +0000 
+In-Reply-To: <CACPK8XdmbXK4CVfydO5yq4Qka--wT1fR-vuqFKD_rg29fAquMA@mail.gmail.com>
+From: "Bruce Mitchell" <Bruce.Mitchell@ibm.com>
+To: Joel Stanley <joel@jms.id.au>
+Date: Fri, 5 Mar 2021 22:27:02 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="5idnB0G9arQ+2yy1"
-Content-Disposition: inline
-In-Reply-To: <YEKDY6+zfW5Uuqkl@heinlein>
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <CACPK8XdmbXK4CVfydO5yq4Qka--wT1fR-vuqFKD_rg29fAquMA@mail.gmail.com>,
+ <OFC6D46F57.69575CC5-ON00258681.0002C252-88258681.0004EA2C@notes.na.collabserv.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP130 January 13, 2021 at 14:04
+X-KeepSent: 9A0016A1:FD9B7171-0025868F:007B5317;
+ type=4; name=$KeepSent
+X-LLNOutbound: False
+X-Disclaimed: 30347
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 21030522-3165-0000-0000-000005949C61
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0; SC=0;
+ ST=0; TS=0; UL=0; ISC=; MB=0.010583
+X-IBM-SpamModules-Versions: BY=3.00014826; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000296; SDB=6.01515836; UDB=6.00818898; IPR=6.01298352; 
+ MB=3.00036306; MTD=3.00000008; XFM=3.00000015; UTC=2021-03-05 22:27:03
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2021-03-03 13:27:16 - 6.00012344
+x-cbparentid: 21030522-3166-0000-0000-0000CD8FA097
+Message-Id: <OF9A0016A1.FD9B7171-ON0025868F.007B5317-0025868F.007B531B@notes.na.collabserv.com>
+Subject: RE: My kexec test patches for OpenBMC
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-03-05_14:2021-03-03,
+ 2021-03-05 signatures=0
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,69 +100,150 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---5idnB0G9arQ+2yy1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 05, 2021 at 01:15:47PM -0600, Patrick Williams wrote:
-> On Thu, Mar 04, 2021 at 09:14:47PM -0600, Joseph Reynolds wrote:
+-----"openbmc" <openbmc-bounces+bruce.mitchell=3Dibm.com@lists.ozlabs.org> =
+wrote: -----
 
-> My first reading of what is there, I'm not sure why typical certificate
-> based authentication couldn't solve your needs (but I'm just guessing
-> what your needs are).  It seems like you have a root-authority (IBM), a
-> a daily expiring certificate, and some fields in the certificate you
-> want to confirm (ex. serial number).  I've seen other production-level
-> systems doing similar for SSH/HTTPS without additional PAM modules.
+>To: Bruce Mitchell <Bruce.Mitchell@ibm.com>
+>From: Joel Stanley
+>Sent by: "openbmc"
+>Date: 02/24/2021 00:04
+>Cc: Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist
+><openbmc@lists.ozlabs.org>
+>Subject: [EXTERNAL] Re: My kexec test patches for OpenBMC
+>
+>On Fri, 19 Feb 2021 at 00:53, Bruce Mitchell
+><Bruce.Mitchell@ibm.com> wrote:
+>>
+>> Hello Joel,
+>>
+>> Per your request yesterday, I am emailing the details of my
+>kexec/kdump development efforts.
+>
+>Thanks. Here's what I tested:
+>
+>https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A=5F=5Fgithub.com=5Fsh
+>enki=5Flinux=5Fcommits=5Fast2600-2Dkexec&d=3DDwIFaQ&c=3Djf=5FiaSHvJObTbx-s=
+iA1Z
+>Og&r=3DXYNAOU-BEndJr70kO1xkYnetCkaomJrlYQm5DudYzNc&m=3DoX=5FdPGCu4X3pBZl
+>Dw0XYgu4z-3G1JebwP-IvlNbEMDE&s=3DgT3O534rB4ZDIPbf6Z78bKCR=5Fop-JR1uYcv
+>bd3z18RA&e=3D
+>
 
-For more concrete example of what I'm talking about, see 'sshd_config'
-options AuthorizePrincipalsCommand and TrustedUserCAKeys.
+Your kernel changes are similar to what I had done. Since you know
+the community better than I do, I propose submitting your changes.
+I can do the labor, but want you to get the credit. How would you
+like me to proceed?
 
-- An IBM certificate would be the CA for TrustedUserCAKeys (and
-  installed on only IBM Enterprise systems.
-- AuthorizedPrincipalsCommand would be a small dbus lookup to get
-  the system serial number.
+>>
+>> I am running QEMU
+>>
+>> qemu-system-arm --version
+>> QEMU emulator version 5.2.0 (v5.1.0-3479-g27ca38d3db)
+>
+>That looks fine. I'm using cedric's tree, but anything that will
+>boot
+>your kernel is fine.
+>
+>> qemu-system-arm -d cpu=5Freset -M tacoma-bmc -kernel
+>/tmp/tmp.y2fpdAXM1h.kernel -dtb /tmp/tmp.BWkadwNbTf.dtb -initrd
+>/tmp/tmp.jRpFbzfpBs.initrd -drive
+>file=3Dobmc-phosphor-image-witherspoon-tacoma.wic,if=3Dsd,format=3Draw,i
+>ndex=3D2 -net nic -net
+>user,hostfwd=3D:127.0.0.1:2222-:22,hostfwd=3D:127.0.0.1:2443-:443,host
+>name=3Dqemu -nographic -append "crashkernel=3D64M
+>console=3DttyS4,115200n8 rootwait root=3DPARTLABEL=3Drofs-a"
+>
+>You could simplify your qemu setup if you want. Here's how I
+>tested:
+>
+> $ qemu-system-arm -M tacoma-bmc -nographic -net nic -nic
+>user,hostfwd=3D::2222-:22,tftp=3D/srv/tftp/ -kernel
+>aspeed-g5-dev/arch/arm/boot/zImage -dtb
+>aspeed-g5-dev/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dtb -initrd
+>~/dev/kernels/misc/rootfs.cpio.xz
+>
+>This uses a small initramfs with the kexec utility, and has a copy
+>of
+>the kernel, initrd and dtb inside to make testing easy.
+>
+>Or, if you want, you can copy files into the system over the ssh
+>port:
+>
+>I have this in my ~/.ssh/config:
+>
+>Host qemu
+> Hostname localhost
+> Port 2222
+> User root
+> UserKnownHostsFile /dev/null
+> StrictHostKeyChecking no
+>
+>And then you can use scp like this:
+>
+>scp aspeed-g5-dev/arch/arm/boot/zImage
+>aspeed-g5-dev/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dtb
+>/home/joel/dev/kernels/misc/rootfs.cpio.xz qemu:
+>
+>> From OpenBMC within QEMU I am using the following to test kexec
+>>
+>> kexec -d -l /home/kexec=5Ffiles/tmp.y2fpdAXM1h.kernel
+>--initrd=3D/home/kexec=5Ffiles/tmp.jRpFbzfpBs.initrd
+>--dtb=3D/home/kexec=5Ffiles/tmp.BWkadwNbTf.dtb --append=3D"earlycon
+>console=3DttyS4,115200n8 rootwait root=3DPARTLABEL=3Drofs-a 1 maxcpus=3D1
+>reset=5Fdevices"
+>> kexec -d -e
+>
+>Here's how I was running it:
+>
+># kexec -l zImage --dtb aspeed-bmc-opp-tacoma.dtb --initrd
+>rootfs.cpio.xz
+># kexec -e
+>
+>I haven't set a new command line, so it uses the command line from
+>the
+>device tree (console=3DttyS4,115200n8).
+>
+>With my patch we will not get the secondary CPU:
+>
+>[ 0.039517] ASPEED AST2600 rev A1 (05010303)
+>[ 0.042030] smp: Bringing up secondary CPUs .
+>[ 1.163950] CPU1: failed to come online
+>[ 1.167999] smp: Brought up 1 node, 1 CPU
+>[ 1.168164] SMP: Total of 1 processors activated (2250.00
+>BogoMIPS).
+>
+>That should be the next step in working on the kexec patches. We
+>want
+>the secondary CPU to be in a state such that the new kernel can
+>take
+>control as it would in a firmware boot.
+>
+>Note that this didn't require any changes to the system beyond the
+>kernel patch. I'm using the same defconfig as we have in the tree.
+>
+>Cheers,
+>
+>Joel
+>
+>
 
-Your login credentials would be a certificate signed by the IBM CA where
-the system serial number is included in the Principals of the cert.  The
-certificate can be set to expire in 24 hours.
+Hello Joel,
 
-I'm pretty sure SSH certificates can be standard X.509 certificates
-which can be used for mTLS in a similar way.  bmcweb could be configured
-to do similar operations as already built in to SSH.
+Thanks again for your advice and sharing your wisdom.
+I am being urged by our manager to get this up-streamed
+sooner rather than later. How can I best work with the
+system to make this happen?
 
-I don't know if you would want to install the CA and configuration with
-a bbappend in your own layer or via a local.conf override on your build
-system.  You might want to look at
-meta-phosphor/classes/phosphor-deploy-ssh-keys.bbclass as a method of
-installing extensions, like SSH keys, in a build.
+Thank you!
 
---=20
-Patrick Williams
+--
+Bruce
 
---5idnB0G9arQ+2yy1
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmBCqy4ACgkQqwNHzC0A
-wRl+LQ/8CriqgpcMrBdd1s89etjbfvdvzB/4v9ENWcPrUvtrmqmF/hOazUPPYh10
-X3huQzIPKsJHxMV5gYpM+AZSTAdpUfTb5a2OewH1xLCXt1NgU5yq0MqXUyEzGrgi
-H6PtEyh6UNfVEK37h5H5uoRVZ43+YTb5O/r+OSaOOfewl+RdSt8wFYYORq5V0/+j
-XxCzSe6sUpY8BOAc2NDsJXhKQ3y9RjXFyCbb7MUfWmrMxSzhcV3JGgZBux37uAS+
-30zTtJS6CRyHc6VH/aVfS7MTzri2Lq874Z3k9Z51KoxC7WSfibBHqgOUH+dB07dL
-ln5W5VhXqVcuFHTKGAGoZ9q7OJkgqXRgiAdjBi9uWyj5nPwPXJTaxAkW81AWikPe
-GkFka4lDrq9UuV1Xqc3aDyFCSC3mW9PIyZSu/Ow2BCSOje+cuvY26elCd7TLEtre
-rG4VMW/00grVKOI+p82q9AAhJHsoM3M8wMGXVYZacEUu4tVKgYeTR5DucaBoiZOf
-18M2YaheIMQoKAfxQoiBgHYM0NxqGxqSZH7yT4MY85S6VimtM50vbnpycqIYXDsa
-p5dJy7Kuu0Y0wLdsvyWvhee8W1k4jDEBUEtrnXeWvezZr0saIsp2VFVhD0SXoiOg
-PKGUe/F6TwkZ/MbX780ARm6vMj9blL6DfxsWKOClwbW/1Om4MwM=
-=CqnI
------END PGP SIGNATURE-----
-
---5idnB0G9arQ+2yy1--
