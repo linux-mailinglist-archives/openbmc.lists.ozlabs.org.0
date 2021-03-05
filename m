@@ -2,61 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40B8D32F661
-	for <lists+openbmc@lfdr.de>; Sat,  6 Mar 2021 00:09:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 623FE32F692
+	for <lists+openbmc@lfdr.de>; Sat,  6 Mar 2021 00:25:14 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dsk371g7Sz3dFd
-	for <lists+openbmc@lfdr.de>; Sat,  6 Mar 2021 10:09:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DskNm31THz3cKp
+	for <lists+openbmc@lfdr.de>; Sat,  6 Mar 2021 10:25:12 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=myGqMZBv;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.167.174;
- helo=mail-oi1-f174.google.com; envelope-from=robherring2@gmail.com;
- receiver=<UNKNOWN>)
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com
- [209.85.167.174])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=myGqMZBv; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dsk2w6b4xz30N0;
- Sat,  6 Mar 2021 10:09:44 +1100 (AEDT)
-Received: by mail-oi1-f174.google.com with SMTP id l133so4338221oib.4;
- Fri, 05 Mar 2021 15:09:44 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=XrYODSIj7UXVI1uCbWVvuJ9MDvf1FusiVZYMMI3JkzE=;
- b=aw4a1edLUj8pkZVK0a+1Yhz6SjHPA76jA7E1b2oltj4zMyiTbou4C7pBDWQ0pTQsc8
- lMrJHhdaelXBQelTzpYsK7fexP7cGg14Qa8uiPcQ7fk+UnWutEIXsBACPxrV+NMou2HE
- Re8QrxVEGJJ0C7FV03hU3pyKS+pIj2WrdARv+hq2z+GbKbhLzgfZvQj6fnNfbSN8e7cU
- jcwSPjBhF7BcjxMxMorUp7Y/FyJYu18qK6Naeb3w6D9hGc+S9aP4jWFhjAaLvm+O7IUS
- KDj8ZtouGVkf10phZzzjF9m2VxpBqSvLYlbMOQFTZdipfIxtAJJMDOPOenzHfgzTiIXb
- ez8Q==
-X-Gm-Message-State: AOAM531Zpul8YO9azI2nSIFwsIXk6ORMC0eh0GDJhh7/2tu6ggOUlEoq
- UrQJGVivEFF2vpqps7zt5w==
-X-Google-Smtp-Source: ABdhPJxEV9cNQ+u/FV083e8uupzMrx3E3n1YaYFtT8S202fGkWxSE3FlaHA0lY05b966tc3KmXUmRA==
-X-Received: by 2002:aca:4587:: with SMTP id s129mr8889344oia.133.1614985782649; 
- Fri, 05 Mar 2021 15:09:42 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
- [24.155.109.49])
- by smtp.gmail.com with ESMTPSA id r13sm853187oot.41.2021.03.05.15.09.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Mar 2021 15:09:41 -0800 (PST)
-Received: (nullmailer pid 813032 invoked by uid 1000);
- Fri, 05 Mar 2021 23:09:40 -0000
-Date: Fri, 5 Mar 2021 17:09:40 -0600
-From: Rob Herring <robh@kernel.org>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: [PATCH 17/19] dt-bindings: ipmi: Add optional SerIRQ property to
- ASPEED KCS devices
-Message-ID: <20210305230940.GA809870@robh.at.kernel.org>
-References: <20210219142523.3464540-1-andrew@aj.id.au>
- <20210219142523.3464540-18-andrew@aj.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DskNT2V7Sz30NW
+ for <openbmc@lists.ozlabs.org>; Sat,  6 Mar 2021 10:24:56 +1100 (AEDT)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 125NDlXq037416
+ for <openbmc@lists.ozlabs.org>; Fri, 5 Mar 2021 18:24:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=in-reply-to : from : to
+ : cc : date : mime-version : references : content-transfer-encoding :
+ content-type : message-id : subject; s=pp1;
+ bh=hfB+bB1mMXG4Xei+63OdXweLPDaytuUOgZgGedqJrAI=;
+ b=myGqMZBvt/lZlD1LyTraLYiLAV1/C+3I4TybvL4nlsnbIbHP4U9hXTRYmbxhHpliuG39
+ k2/lPM1kvxKHa04UIwN6v6o7JuWhsksFIxUaVJtbYywaVLn9vKi0XhaasP2Z0VX2ia2c
+ g7/nkeUMu99IeauoeZ8H+/mpcrW/FO7wMEDYjw4XnbSf6Dwt0Wq9djd7d2Z7EU3N3k9J
+ MwjcQQEAyG7o6ESlK1qmgn+SMgud8oLnJaHkTKaxrvMdn2xgA7bWFSuCoW9zydKAZZ1J
+ 0BRB819neX63K01m94eQP9ukEevVR0CFce99wFSRoPoBe7UWnLM4YBTSoOn/p3/jcN/h Zg== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.113])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 373x4hr681-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 05 Mar 2021 18:24:53 -0500
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Fri, 5 Mar 2021 23:24:53 -0000
+Received: from us1b3-smtp01.a3dr.sjc01.isc4sb.com (10.122.7.174)
+ by smtp.notes.na.collabserv.com (10.122.47.56) with
+ smtp.notes.na.collabserv.com ESMTP; Fri, 5 Mar 2021 23:24:51 -0000
+Received: from us1b3-mail158.a3dr.sjc03.isc4sb.com ([10.160.174.218])
+ by us1b3-smtp01.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2021030523245082-862514 ;
+ Fri, 5 Mar 2021 23:24:50 +0000 
+In-Reply-To: <CACWQX80qvHZ2HSvmgeLcJ_X5ZYwRDb-6cw6nOKb6qd_9V971FQ@mail.gmail.com>
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: ed@tanous.net
+Date: Fri, 5 Mar 2021 23:24:51 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210219142523.3464540-18-andrew@aj.id.au>
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <CACWQX80qvHZ2HSvmgeLcJ_X5ZYwRDb-6cw6nOKb6qd_9V971FQ@mail.gmail.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP130 January 13, 2021 at 14:04
+X-LLNOutbound: False
+X-Disclaimed: 4711
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 21030523-7691-0000-0000-00000E7E633C
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0; SC=0;
+ ST=0; TS=0; UL=0; ISC=; MB=0.000643
+X-IBM-SpamModules-Versions: BY=3.00014826; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000296; SDB=6.01515835; UDB=6.00818898; IPR=6.01298352; 
+ MB=3.00036306; MTD=3.00000008; XFM=3.00000015; UTC=2021-03-05 23:24:52
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2021-03-03 13:15:12 - 6.00012344
+x-cbparentid: 21030523-7692-0000-0000-00002F8167DE
+Message-Id: <OFE48BADA9.7DEA6041-ON0025868F.008040B6-0025868F.00809E34@notes.na.collabserv.com>
+Subject: RE: No option to delete SSL certificates
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-03-05_16:2021-03-03,
+ 2021-03-05 signatures=0
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,66 +97,19 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, chiawei_wang@aspeedtech.com,
- tmaimon77@gmail.com, minyard@acm.org, linux-gpio@vger.kernel.org,
- avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, tali.perry1@gmail.com,
- linux-aspeed@lists.ozlabs.org, openipmi-developer@lists.sourceforge.net,
- lee.jones@linaro.org, linus.walleij@linaro.org,
- linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
+Cc: openbmc@lists.ozlabs.org, Jayanth Othayoth <ojayanth@in.ibm.com>,
+ Devender Rao <devenrao@in.ibm.com>, mohammed.habeeb@inventec.com,
+ gmills@linux.vnet.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, Feb 20, 2021 at 12:55:21AM +1030, Andrew Jeffery wrote:
-> Allocating IO and IRQ resources to LPC devices is in-theory an operation
-> for the host, however ASPEED don't appear to expose this capability
-> outside the BMC (e.g. SuperIO). Instead, we are left with BMC-internal
-> registers for managing these resources, so introduce a devicetree
-> property for KCS devices to describe SerIRQ properties.
-> 
-> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> ---
->  .../bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml      | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml b/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
-> index 1c1cc4265948..808475a2c2ca 100644
-> --- a/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
-> +++ b/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
-> @@ -47,6 +47,18 @@ properties:
->        channels the status address is derived from the data address, but the
->        status address may be optionally provided.
->  
-> +  aspeed,lpc-interrupts:
-> +    $ref: "/schemas/types.yaml#/definitions/uint32-matrix"
-> +    minItems: 1
-> +    maxItems: 1
-> +    description: |
-> +      A 2-cell property expressing the LPC SerIRQ number and the interrupt
-> +      level/sense encoding (specified in the standard fashion).
+=20
+> I can't explain why the TrustStore certificate isn't deletable, that seem=
+s like a bug in webui-vue. =20
+  =20
+That is the only certificate type that can be deleted.
 
-That would be uint32-array with 'maxItems: 2'.
+https://github.com/openbmc/webui-vue/blob/d6752694d31362bd42c3cbb51a35d36fa=
+2bc25e1/src/views/AccessControl/SslCertificates/SslCertificates.vue#L179-L1=
+84
 
-> +
-> +      Note that the generated interrupt is issued from the BMC to the host, and
-> +      thus the target interrupt controller is not captured by the BMC's
-> +      devicetree.
-> +
->    kcs_chan:
->      deprecated: true
->      $ref: '/schemas/types.yaml#/definitions/uint32'
-> @@ -84,9 +96,11 @@ allOf:
->  
->  examples:
->    - |
-> +    #include <dt-bindings/interrupt-controller/irq.h>
->      kcs3: kcs@24 {
->          compatible = "aspeed,ast2600-kcs-bmc";
->          reg = <0x24 0x1>, <0x30 0x1>, <0x3c 0x1>;
->          aspeed,lpc-io-reg = <0xca2>;
-> +        aspeed,lpc-interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
->          interrupts = <8>;
->      };
-> -- 
-> 2.27.0
-> 
