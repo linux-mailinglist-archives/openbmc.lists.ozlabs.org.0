@@ -1,94 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A57A132F3BB
-	for <lists+openbmc@lfdr.de>; Fri,  5 Mar 2021 20:21:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD7AF32F49B
+	for <lists+openbmc@lfdr.de>; Fri,  5 Mar 2021 21:29:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DsczD4nDFz3dCs
-	for <lists+openbmc@lfdr.de>; Sat,  6 Mar 2021 06:21:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DsfTY5hMMz3dHb
+	for <lists+openbmc@lfdr.de>; Sat,  6 Mar 2021 07:29:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=GVxpXTFp;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=KFAp7fb6;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=xnOsiGwu;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.24;
- helo=wout1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b36; helo=mail-yb1-xb36.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=GVxpXTFp; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=KFAp7fb6; 
- dkim-atps=neutral
-X-Greylist: delayed 303 seconds by postgrey-1.36 at boromir;
- Sat, 06 Mar 2021 06:20:57 AEDT
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=xnOsiGwu; dkim-atps=neutral
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com
+ [IPv6:2607:f8b0:4864:20::b36])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dscyx0SLlz3cKQ
- for <openbmc@lists.ozlabs.org>; Sat,  6 Mar 2021 06:20:56 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 74A052B15;
- Fri,  5 Mar 2021 14:15:50 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Fri, 05 Mar 2021 14:15:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=S95s2QCES1ydLDRUD8sJqrmfb7q
- w0T3IygFmGVYAdY8=; b=GVxpXTFphTzJvaGVqW1Om89DGJLWaXrbkrdEITM21kO
- Hg+TmTJBQRUhnVkOUHHJL3tD8UPVnVa+T58OQK97JW6naa4jTbBFGJQM80hFGfVv
- 0giR0tCP3KRpxH41sf9ihSOOUTSzY3KBCJwkVptJAF2WXay+aonyIxpW3Wi3LUh3
- jCN2b84GTfwz+Wz3UdA6hB56YrYCY5xNZ9Gum9URDlHVqrFXbF6QqMJAjT5jvS9Q
- 3hTlrKZ39lT4f0FCA5m0SJ/3sxl0lbh8hyPDLisk6OUYbRw1o06vWCp3DgSv8IJr
- +BjMghfUXLKaI9tL/6noDO2psMSXE2XLBpibrYSXBDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=S95s2Q
- CES1ydLDRUD8sJqrmfb7qw0T3IygFmGVYAdY8=; b=KFAp7fb6mUwa40E/rHwY5F
- Ya81zw2gtEncFv5gorw9yw1USWaNu0ibfQxl4UtaA77YfGt00HaIzD47RrB0l/PJ
- 8VjwV5lVJ1GIp5244adluODSiG4o5lS+KRYUXuB8Y6+XfNb3aLLS9/V3uhOx8Her
- /z9vOetbHb3eWJ+bjPa+haYj62MxBr6FzzHAj/e7Tth/kQGSGf4D50XwgoKddE7x
- 3zbMzCq+iNc05RPHF/oWbh27EHzLbN16UJkvW51DN4ZxR4RDk8djZK0cWoXQJwVT
- OVWvOItbvsTMSH0tfFNVpzlyw3bV6URUtRentQIoFp68T6GkdoKFlSJjJH4/Rffg
- ==
-X-ME-Sender: <xms:ZYNCYHF10xTyBEFgXoqrH8QONmZ2LY_DD4HN_2gXMwXas2KwnRHqwg>
- <xme:ZYNCYJuao6ODdl_3-SBLOU2JhkAbenWjn3iggNagDXUb9mN8jUurDfNFPvUFXa9tq
- d-4MGGunOFtMJy0rvE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddtiedgudduvdcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enfghrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
- tddunecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
- hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeefffffvdfgtdeludefleefvdff
- kedvfeefueelveduiedtgeeuvefgtdeiueeuveenucffohhmrghinhepghhithhhuhgsrd
- gtohhmnecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgep
- tdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:ZYNCYJX8oLV_A6qeE05nndoXTaJYiitQa-KiRWhyi2ShxgX4jief8g>
- <xmx:ZYNCYFH856ph0VBqNtOJBo2FpzFgDqiIAJAgL9rXTT1i9rdC-Jwh7Q>
- <xmx:ZYNCYL1exI9TjBSSPGk2zyp8Kz1AG5oSQwcAfHGbbSiLUlHlxkBQog>
- <xmx:ZoNCYLskZ7Q0jd9GWO9WP2cVLZTivgc_uoFtYixQoEbfRhJRDafiDw>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 0416624005B;
- Fri,  5 Mar 2021 14:15:48 -0500 (EST)
-Date: Fri, 5 Mar 2021 13:15:47 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Re: Request new repo for IBM-specific code
-Message-ID: <YEKDY6+zfW5Uuqkl@heinlein>
-References: <b8af3438-f85a-cb82-c88c-9c4e120399e9@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DsfTK03sCz30NW
+ for <openbmc@lists.ozlabs.org>; Sat,  6 Mar 2021 07:28:50 +1100 (AEDT)
+Received: by mail-yb1-xb36.google.com with SMTP id h82so3231113ybc.13
+ for <openbmc@lists.ozlabs.org>; Fri, 05 Mar 2021 12:28:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=QGEW/MPj/xJYnatQW2O2vtAKo1G4C9bPCO27K3jp5rg=;
+ b=xnOsiGwucTZTV02LQo+3fjXXFPTMJFoLwgahMZoN9dce1prEm3PZH0qxEiFEEHdiEY
+ wKjz1dumx+zltV6ihalQhi0z9WWLQFbMWAxlvu2q7uY+DHSTq3OV8BGCkvL+akVAkwCw
+ VgeFUQKqJsjFm6BaJw038RKFHda1qJwhOXXocJa3LWsuZFgL3qNHFUO4sEU9yvPRjWAo
+ NbB1iHom0SkAWfJH4QLBVDfzJQUo3p9zOxrpwq7uINVNDUTlT+wjeE2ewP9PDOdl8TSO
+ golFoWkODpbsOG0Dqvpx/R1RP5UIU2Xz+c9w2CgdUtEZLeDZyuUH9oum8jiRhJekLgAt
+ iF7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=QGEW/MPj/xJYnatQW2O2vtAKo1G4C9bPCO27K3jp5rg=;
+ b=Tylq+TWsb0NUkgvtlZUO9coICqxlmhyYtFgYO+tGMMDEmMYqB07SgtRb1ChBlEhpb0
+ 0dKBR4720t9VWvoJ7fIneyCfMnkE3AiI0ymzri64lhK2E8oimDEvh1nJCHANJWjHdJQx
+ X27ak0x5354CDzWBSDVegz5n8np5ymR2WHBxDL/W9UQasSFTNIcVll4aNyHyUovgE2zB
+ LVmsSA48sHRygvo4HuOyNcqEsntFkAZ+COLb3HD3yyi35cwXN/V5IRalQmXt/4+okr/j
+ 6QXKShpkzilsHIal4BV8UutxDFcaTKSFP+LeoyJ48Qm0zEpTKupOXAQl5jiakufULIDI
+ wZnw==
+X-Gm-Message-State: AOAM530GkDYnStIH5S8Sin24vrEzyNe5vm0Q2XorsHULlYH5LPtzFNcF
+ 2HavYCSB0U/eTDQ8QBho7xwkI0V8nW0tvlfyS+KS0w==
+X-Google-Smtp-Source: ABdhPJzFYtMIjI/et+mr0fzOIyCcQXnIsysH4c+YSXsjwXbow4OU5I0FtG6+WnUCnAYxSh69SBxWC7y44hhHY/gVfVI=
+X-Received: by 2002:a25:d251:: with SMTP id j78mr15290610ybg.480.1614976126513; 
+ Fri, 05 Mar 2021 12:28:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="SU3XhomAPxkPWtaT"
-Content-Disposition: inline
-In-Reply-To: <b8af3438-f85a-cb82-c88c-9c4e120399e9@linux.ibm.com>
+References: <PS2PR02MB35414D7358C4248DF668A4E790969@PS2PR02MB3541.apcprd02.prod.outlook.com>
+ <6fafb378-5de7-74e3-4fef-17cb93d61c41@linux.vnet.ibm.com>
+ <CACWQX83ouxxsU+zqeix56feoHerQXJ9uKD+gmgfG8PDSoU6y1Q@mail.gmail.com>
+ <OF78757961.7D9FD99E-ON0025868F.0066A7C0-0025868F.0066A7C9@notes.na.collabserv.com>
+In-Reply-To: <OF78757961.7D9FD99E-ON0025868F.0066A7C0-0025868F.0066A7C9@notes.na.collabserv.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Fri, 5 Mar 2021 12:28:35 -0800
+Message-ID: <CACWQX80qvHZ2HSvmgeLcJ_X5ZYwRDb-6cw6nOKb6qd_9V971FQ@mail.gmail.com>
+Subject: Re: No option to delete SSL certificates
+To: Milton Miller II <miltonm@us.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,80 +78,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: Devender Rao <devenrao@in.ibm.com>,
+ "Mohammed.Habeeb ISV" <mohammed.habeeb@inventec.com>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Jayanth Othayoth <ojayanth@in.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Fri, Mar 5, 2021 at 10:41 AM Milton Miller II <miltonm@us.ibm.com> wrote:
+>
+> On March 05, Ed Tanous wrote:
+> >On Fri, Mar 5, 2021 at 9:43 AM Gunnar Mills
+> ><gmills@linux.vnet.ibm.com> wrote:
+> >>
+> >> On 3/4/2021 8:52 PM, Mohammed.Habeeb ISV wrote:
+> >> > In webui-vue , SSL certificates has only replace option. Delete
+> >button
+> >> > is greyed out.
+> >> >
+> >> > Is there any reason for not providing delete option?
+> >
+> >I can't explain why the TrustStore certificate isn't deletable, that
+> >seems like a bug in webui-vue.
+> >
+> >The HTTPS certificate isn't deletable because that would effectively
+> >disable the HTTPS interface entirely, which seems like a problem,
+> >given that you're currently using the HTTPS interface to communicate
+> >with the BMC.  Because of that, we only support replacing the
+> >certificate.  In a perfect world, we could regenerate a new
+> >self-signed certificate if the old one was deleted, but nobody has
+> >written that code so far as I'm aware, I suspect because it's just as
+> >easy to replace the certificate with your own self-signed cert.
+>
+> There was also discussion (but I don't remember if it was email
+> or in a gerrit review) that deleting invalid certificates was
+> a bad idea when they are invalid for the current time because
+> sometimes the issue is the loss of the real time clock, and we
+> don't want to delete what should be a good cert and replace with
+> a self signed one just because the RTC is wrong.
 
---SU3XhomAPxkPWtaT
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think that's a different issue.  This is talking about the actual
+delete API a user would request.
 
-On Thu, Mar 04, 2021 at 09:14:47PM -0600, Joseph Reynolds wrote:
-> What is the right repository for a new Linux-PAM module to implement an=
-=20
-> IBM-specific ACF authentication?
->=20
-> The access control file (ACF) design was introduced to the OpenBMC=20
-> security working group and is described in [IBM issue 1737][] and=20
-> further explained in [IBM issue 2562][].
+>
+> Deleting the current cert can cause issues with certificate
+> pinning in the browser.
 
-I'm not really seeing much documentation on this in either issue.  Do
-you have a document describing your requirements and how you're planning
-to accomplish it?
+You're either talking about HSTS, which isn't affected by certificate
+changes, or you're talking about HPKP which we've never supported in
+bmcweb, and I thought the browsers removed support for it anyway.
+Either way, I don't think it's a concern in OpenBMC in this case.  We
+can (and expect to in a security conscious org) replace the
+certificate at will often.
 
-My first reading of what is there, I'm not sure why typical certificate
-based authentication couldn't solve your needs (but I'm just guessing
-what your needs are).  It seems like you have a root-authority (IBM), a
-a daily expiring certificate, and some fields in the certificate you
-want to confirm (ex. serial number).  I've seen other production-level
-systems doing similar for SSH/HTTPS without additional PAM modules.
-
-> Note the [pam-ipmi modules][] are scoped to the OpenBMC project because=
-=20
-> the IPMI implementation is shared by all of OpenBMC.=A0 By comparison, th=
-e=20
-> proposed ibm-pam-acf module is intended only for IBM Enterprise=20
-> systems.=A0 The intended implementation is based on standard cryptography=
-=20
-> techniques and could be developed into a general authentication=20
-> solution, but the ACF is specific to IBM in terms of its exact format=20
-> and content, and I expect it will only be used by IBM and its partners.
-
-Are you planning to open up the tools necessary to create these ACFs?
-
-> Can we create a new OpenBMC repo for this?=A0 Perhaps ibm-pam-acf?=A0 Or=
-=20
-> should this go into some other repo?
->=20
-> - Joseph
->=20
-> [IBM issue 1737]: https://github.com/ibm-openbmc/dev/issues/1737
-> [IBM issue 2562]: https://github.com/ibm-openbmc/dev/issues/2562
-> [pam-ipmi modules]: https://github.com/openbmc/pam-ipmi
-
---=20
-Patrick Williams
-
---SU3XhomAPxkPWtaT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmBCg2EACgkQqwNHzC0A
-wRnHkg/+OjdOQGb4rPkuk8rAFFXs6MGML+a08KhQhbrlpsmVgqMQoFuqoMXgDl93
-TZY7QDlVn/v69uto8T2/OZ4uoLnqxagfY7whEddtH5jFhLKfwq0G7ooCthZH74aL
-6p3rL701y4EJaONgmSnJ2IxJTGvHdqjy1jIjj8jzELGaFKqYDNUoCJ+eyzfi08Ij
-xlSWOMdgAk7UcfNi+NxxOxSbOJwtqmW5koUfwg/OIqxo4UidLXxOIROQLN5VAFau
-2srhxDXSferSooxgByOYE5Z1+3Gr2VUYgpDWENw2Q5oHRUqJC9UAvXBtIkgSOxZz
-U6IrA9Dp4+dFPG6sKTG/VqQ7gd+NZgrAZsYaCrwlxjBHarMAfa9l+oPn1bydFtvU
-6OIItAvyvbrCB4SaY+Ey6jl88pwZ9cyY/CoSH+BaE4/NSCe9VEZew/Y6JcmALQUu
-UOs9awGQ5ynX/TPuQg6+iZTbEycClS+MkAWcbrKrfZYFSmUk96EF9SvyqUyclMfy
-MTOtBsfe+bY+nzG7niAgT3OHPM9TPN/nvazr5Z8ewGoYsuIQavYCdUBycZ734jBJ
-Ervv9wD5l3FqoX0q0uesUu8jreCwJ56sCiNhLVrEXdzcG7oRUjnlJQ5IpAZqeTfS
-Ehq0RHqPcH7tiNpVpYCAOOBWX8kFHNufEoZp5JgowFJlPUbETbk=
-=5K9t
------END PGP SIGNATURE-----
-
---SU3XhomAPxkPWtaT--
+>
+> >>>
+> >> Looking at the code, I believe the only certificate that can be
+> >deleted
+> >> in bmcweb is the Trust Store Certificate
+> >>
+> >https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_openb
+> >mc_bmcweb_blob_feaf15005555a3099c7f22a7e3d16c99ccb40e72_redfish-2Dcor
+> >e_lib_certificate-5Fservice.hpp-23L1347&d=DwIBaQ&c=jf_iaSHvJObTbx-siA
+> >1ZOg&r=bvv7AJEECoRKBU02rcu4F5DWd-EwX8As2xrXeO9ZSo4&m=GvsftEwmNCL39tSW
+> >9RGR21w8wiSqAcgIUtjTN26kt-I&s=4FlXy5_5pFttulDVBgxnYBpZTTWQNlWVwxr8jkW
+> >aJBc&e=
+> >>
+> >> And this is reflected in the webui-vue code:
+> >>
+> >https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_openb
+> >mc_webui-2Dvue_blob_4da9495925d601bb4edfb8b007d5b54792b7491b_src_view
+> >s_AccessControl_SslCertificates_SslCertificates.vue-23L183&d=DwIBaQ&c
+> >=jf_iaSHvJObTbx-siA1ZOg&r=bvv7AJEECoRKBU02rcu4F5DWd-EwX8As2xrXeO9ZSo4
+> >&m=GvsftEwmNCL39tSW9RGR21w8wiSqAcgIUtjTN26kt-I&s=pc4yE_OEI6ePP--E_F8p
+> >Shj3Ve0pOiAANBMLi8YPeHY&e=
+> >>
+> >> I am not sure if there is a reason for not supporting deleting
+> >other
+> >> certificates or just no one has done the work.
+> >>
+> >https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_openb
+> >mc_bmcweb_commit_07a602993f1007b0b0b764bdb3f14f302a8d2e26&d=DwIBaQ&c=
+> >jf_iaSHvJObTbx-siA1ZOg&r=bvv7AJEECoRKBU02rcu4F5DWd-EwX8As2xrXeO9ZSo4&
+> >m=GvsftEwmNCL39tSW9RGR21w8wiSqAcgIUtjTN26kt-I&s=iAukDzsq2iqjh1UJw1y0b
+> >Lv7ci9m2WLqKdF634OdPs8&e=
+> >>
+> >> Thanks,
+> >> Gunnar
+>
+> milton
+>
