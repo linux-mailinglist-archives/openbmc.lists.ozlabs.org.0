@@ -2,13 +2,13 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 298B0331A81
-	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 23:57:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D1435331A80
+	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 23:56:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DvYcz0xvLz3dBk
-	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 09:57:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DvYcW5r9rz3cbC
+	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 09:56:43 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qlbs55s1;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ddtJ8cuu;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,60 +18,60 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=qlbs55s1; dkim-atps=neutral
+ header.s=pp1 header.b=ddtJ8cuu; dkim-atps=neutral
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
  [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DvYYw0FYjz3cJq
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DvYYw083Mz3cJD
  for <openbmc@lists.ozlabs.org>; Tue,  9 Mar 2021 09:54:26 +1100 (AEDT)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 128MYurT143257; Mon, 8 Mar 2021 17:54:23 -0500
+ 128MXf69097224; Mon, 8 Mar 2021 17:54:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=kacaNPUnsLrpu4yFbDOHHseis4pFxQmUl4hequ77e/I=;
- b=qlbs55s1RWeB4NQCvyDnVh6ZzQhLS/Mk1nsPecktq5bMlQX1NiRTPm6fZfs6MUjAsKsV
- GPLy/JsP/edBs+8d8ju7mvsJWehbeBtIh+HrPUFSoiaqVbAtrq8LhA3FOE+mIdMQSOYH
- 9R/CDjM6204WnY46Z5AtJ22ZQSvSyNxtIfkopGpK/BLnWrVxkoAHRAtTMJOCcT8cfrNP
- Mb57z/8lWiRarPAtxI7u4fVFOgd0v1LDdWy5KydQZP2Biajv4IJEcSTrM78HIyCaZlMW
- 56p0DrAbdnSgIWY5fW1fBJKx/RfzZEpPDslfuG9GJ21ZCW+uZbdDOh2kJgMx3ZA0UXcl 0A== 
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 375qvy8sb3-1
+ bh=0fz5EkoNbbbfmepLw9E9sTztwzcwsygT5oREV4oknEE=;
+ b=ddtJ8cuuPx9K9QLKiTUCAL0JyUyCXxbnIKJwxnJjpr/cso8UZga4bqRw1pHecSvEAznz
+ ITc0c3uvCnG0ED5/tvpH0qVb7TXMr1zI04igdI9ndhsPz2L8HqKX1qByOeGQ0VuOJbyw
+ GErgqu7g5G0osQxTM2QKZThqGy6UuWBPcidcOIAS+2mVcfLlfFqm2ShKwoRjfkkjnU5t
+ 6lTtHIIVKQI1Z6TDvxiljp4W4x+b8Cf2l/eriEHorRlGNXWSg5zwBF6NPfD79HxFSEGg
+ o+Qw1jIxhrCQK7qiLD9kZiaqKp5ENu4quvYOg1LqIS6FYtLuzv5nIr1AjfoXJWUNKaAC Kg== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 375vm8rmf1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 08 Mar 2021 17:54:23 -0500
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 128MptcN016217;
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 128MrL1r005597;
  Mon, 8 Mar 2021 22:54:22 GMT
 Received: from b03cxnp08027.gho.boulder.ibm.com
  (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
- by ppma01dal.us.ibm.com with ESMTP id 3741c9pfuj-1
+ by ppma04dal.us.ibm.com with ESMTP id 3741c9ef9q-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 08 Mar 2021 22:54:22 +0000
 Received: from b03ledav006.gho.boulder.ibm.com
  (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
  by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 128MsLFM12517764
+ 128MsLcc11731522
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Mon, 8 Mar 2021 22:54:21 GMT
 Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 41C99C605B;
+ by IMSVA (Postfix) with ESMTP id 80004C605A;
  Mon,  8 Mar 2021 22:54:21 +0000 (GMT)
 Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 12B03C6057;
+ by IMSVA (Postfix) with ESMTP id 53F64C6057;
  Mon,  8 Mar 2021 22:54:21 +0000 (GMT)
 Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.41.147])
  by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
  Mon,  8 Mar 2021 22:54:21 +0000 (GMT)
 From: Eddie James <eajames@linux.ibm.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.10 03/35] ARM: dts: aspeed: rainier: Add
- gpio-keys-polled for fans
-Date: Mon,  8 Mar 2021 16:53:47 -0600
-Message-Id: <20210308225419.46530-4-eajames@linux.ibm.com>
+Subject: [PATCH linux dev-5.10 04/35] ARM: dts: aspeed: rainier: Set MAX31785
+ config
+Date: Mon,  8 Mar 2021 16:53:48 -0600
+Message-Id: <20210308225419.46530-5-eajames@linux.ibm.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210308225419.46530-1-eajames@linux.ibm.com>
 References: <20210308225419.46530-1-eajames@linux.ibm.com>
@@ -82,11 +82,11 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
  definitions=2021-03-08_20:2021-03-08,
  2021-03-08 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 phishscore=0 mlxlogscore=999 adultscore=0
- spamscore=0 bulkscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2103080118
+ bulkscore=0 spamscore=0
+ mlxlogscore=999 priorityscore=1501 lowpriorityscore=0 impostorscore=0
+ malwarescore=0 mlxscore=0 suspectscore=0 adultscore=0 phishscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2103080118
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,71 +101,98 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Brandon Wyman <bjwyman@gmail.com>
+From: Matthew Barth <msbarth@linux.ibm.com>
 
-Add a gpio-keys-polled section to the Rainier device tree for the fan
-presence signals on the PCA9552 I2C device on bus 7.
+Set the MAX31785 device configuration properties
 
-Signed-off-by: Brandon Wyman <bjwyman@gmail.com>
 Signed-off-by: Matthew Barth <msbarth@linux.ibm.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 43 ++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 54 ++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index f52c10dd1a18..98c396283c1b 100644
+index 98c396283c1b..e147ff549517 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -183,6 +183,49 @@ front-sys-pwron0 {
- 			gpios = <&pca_oppanel 3 GPIO_ACTIVE_LOW>;
+@@ -827,24 +827,78 @@ fan0: fan@0 {
+ 			compatible = "pmbus-fan";
+ 			reg = <0>;
+ 			tach-pulses = <2>;
++			maxim,fan-rotor-input = "tach";
++			maxim,fan-pwm-freq = <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp = <2>;
++			maxim,fan-fault-pin-mon;
+ 		};
+ 
+ 		fan1: fan@1 {
+ 			compatible = "pmbus-fan";
+ 			reg = <1>;
+ 			tach-pulses = <2>;
++			maxim,fan-rotor-input = "tach";
++			maxim,fan-pwm-freq = <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp = <2>;
++			maxim,fan-fault-pin-mon;
+ 		};
+ 
+ 		fan2: fan@2 {
+ 			compatible = "pmbus-fan";
+ 			reg = <2>;
+ 			tach-pulses = <2>;
++			maxim,fan-rotor-input = "tach";
++			maxim,fan-pwm-freq = <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp = <2>;
++			maxim,fan-fault-pin-mon;
+ 		};
+ 
+ 		fan3: fan@3 {
+ 			compatible = "pmbus-fan";
+ 			reg = <3>;
+ 			tach-pulses = <2>;
++			maxim,fan-rotor-input = "tach";
++			maxim,fan-pwm-freq = <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp = <2>;
++			maxim,fan-fault-pin-mon;
++		};
++
++		fan4: fan@4 {
++			compatible = "pmbus-fan";
++			reg = <4>;
++			tach-pulses = <2>;
++			maxim,fan-rotor-input = "tach";
++			maxim,fan-pwm-freq = <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp = <2>;
++			maxim,fan-fault-pin-mon;
++		};
++
++		fan5: fan@5 {
++			compatible = "pmbus-fan";
++			reg = <5>;
++			tach-pulses = <2>;
++			maxim,fan-rotor-input = "tach";
++			maxim,fan-pwm-freq = <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp = <2>;
++			maxim,fan-fault-pin-mon;
  		};
  	};
-+
-+	gpio-keys-polled {
-+		compatible = "gpio-keys-polled";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		poll-interval = <1000>;
-+
-+		fan0-presence {
-+			label = "fan0-presence";
-+			gpios = <&pca0 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <6>;
-+		};
-+
-+		fan1-presence {
-+			label = "fan1-presence";
-+			gpios = <&pca0 7 GPIO_ACTIVE_LOW>;
-+			linux,code = <7>;
-+		};
-+
-+		fan2-presence {
-+			label = "fan2-presence";
-+			gpios = <&pca0 8 GPIO_ACTIVE_LOW>;
-+			linux,code = <8>;
-+		};
-+
-+		fan3-presence {
-+			label = "fan3-presence";
-+			gpios = <&pca0 9 GPIO_ACTIVE_LOW>;
-+			linux,code = <9>;
-+		};
-+
-+		fan4-presence {
-+			label = "fan4-presence";
-+			gpios = <&pca0 10 GPIO_ACTIVE_LOW>;
-+			linux,code = <10>;
-+		};
-+
-+		fan5-presence {
-+			label = "fan5-presence";
-+			gpios = <&pca0 11 GPIO_ACTIVE_LOW>;
-+			linux,code = <11>;
-+		};
-+	};
- };
  
- &ehci1 {
 -- 
 2.27.0
 
