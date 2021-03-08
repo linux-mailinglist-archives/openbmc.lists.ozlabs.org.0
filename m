@@ -1,58 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 786EF3309C5
-	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 09:55:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F8753312CD
+	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 17:04:11 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DvBxn3GGhz3cYX
-	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 19:55:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DvNST41xKz3cR9
+	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 03:04:09 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=W01HBC0F;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b33; helo=mail-yb1-xb33.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=W01HBC0F; dkim-atps=neutral
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com
+ [IPv6:2607:f8b0:4864:20::b33])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DvBxb457jz30LH
- for <openbmc@lists.ozlabs.org>; Mon,  8 Mar 2021 19:55:14 +1100 (AEDT)
-IronPort-SDR: uep1I9L08+LMdyYQ+gTTAGE67Wpfi7ZYeoIFamoF3gVaP/ScZLUvkCa+zjdyHvEJsSTpHJrcuH
- G4OIx90GRwuA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9916"; a="187352734"
-X-IronPort-AV: E=Sophos;i="5.81,232,1610438400"; 
- d="scan'208,217";a="187352734"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Mar 2021 00:55:11 -0800
-IronPort-SDR: f4IrYlN0cksKNnh350KdvUpidR8mROmuA6FuvgFz2VhtROeCNC+QeBOY8C11+qkN7+xPy/QlVK
- RgJ6tPC6Vmeg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,232,1610438400"; 
- d="scan'208,217";a="409221540"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga008.jf.intel.com with ESMTP; 08 Mar 2021 00:55:11 -0800
-Received: from shwdeopenbmc (shwdeopenbmc.ccr.corp.intel.com [10.239.164.28])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 3ED125808BA;
- Mon,  8 Mar 2021 00:55:10 -0800 (PST)
-Date: Mon, 08 Mar 2021 16:55:11 +0800
-From: "chunhui.jia" <chunhui.jia@linux.intel.com>
-To: "Snowyang@linux.alibaba-inc.com" <SnowYang@linux.alibaba.com>,
- "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
- "openbmc" <openbmc@lists.ozlabs.org>, "Patrick Williams" <patrick@stwcx.xyz>
-Subject: Re:  Re:  why the command run failed?
-In-Reply-To: <604590EF.2060409@linux.intel.com>
-References: <f4211735-48ab-c0a1-ce41-cfb3cbb61a32@linux.alibaba.com>
- <604590EF.2060409@linux.intel.com>
-X-Mailer: NetEase FlashMail 2.4.1.32
-X-Priority: 3 (Normal)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DvNSF40Pxz3cKT
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Mar 2021 03:03:54 +1100 (AEDT)
+Received: by mail-yb1-xb33.google.com with SMTP id 133so10656930ybd.5
+ for <openbmc@lists.ozlabs.org>; Mon, 08 Mar 2021 08:03:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=lBMIDOvoN4EOZ8/bvEkiikMKVOQfy/u36FnB+Jtku6c=;
+ b=W01HBC0FO93OArriL9EljyuRT8ias3CaneZCtwLHN/hzPiWjU2E1Is7Q1DdZlEEj85
+ kP2WEeMk0ijwwAw3n9pWWz+UyNV/jbJa7A22T5/RmL8LZWBKyuiSXdl/sINZ1AREMKvq
+ 4uzJUvkHz4MZ126oInUFTAsPq7Vio7pr6qZBJWqiw9NHRpK3Q+kLYz3EEOkAOr1qWSD5
+ PB36v74xYJc2k7tNa1B0CWjKD2Y/dMq9wIWqeJdtbjZXJYllLikZNb4gSstsYOb/wKso
+ 91JdA3D5+jzXFqsSFxMwmsn3JpUwJSVlrC3vN5mRWIBfglDWGBV2THyOCLPFVND+3v5H
+ sJaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=lBMIDOvoN4EOZ8/bvEkiikMKVOQfy/u36FnB+Jtku6c=;
+ b=AIALBcYSQq1NfLrdXfZRu15VXQPRwZtrjg2R3HsSrcBVG+uWJzhpNMdDcdUqHl3B9K
+ qdpguRJ3NC4k0Xos6MIHKWYSRCrSNaVeJHZ3QtfKFU9nYUahQ678c4jeZt+ae1ALOnnl
+ t+y73B9N97esGrt8hN6z8LNejDpNTEv77Dg9f52IdRLwzw0ZjseugwswYiKpngiJAJd8
+ 833uqicpIJiNOa2YD6aP6TZGkvrwKzFaFJEbiHPAd5e5Bcppf0r5dnIpZOkPWj6pgDd/
+ hr4BWsk+28kcNZk4wTiI723KLkVC0XAEi/ezV8T51nOw0tOKIpY7ORfhgwk5gGCBgYeB
+ 3Gjw==
+X-Gm-Message-State: AOAM531KS0jY1Sp+dulMpnghAYYVqBewOn3SVGiJ1HIT6/07LdLAQbyI
+ 6MvKe6gLYRCEwRqZuHkkqeC5co0Z8XGKXJXFqMeC9Q==
+X-Google-Smtp-Source: ABdhPJzGFqQP3VkP4oujOITX4YgcSKNq/G0CFe7WAPkHSjbgFy7IUJYumt1wAROqDycx5op3+Iac1QTUTN7+DsMzGFU=
+X-Received: by 2002:a25:e695:: with SMTP id
+ d143mr37196556ybh.148.1615219430959; 
+ Mon, 08 Mar 2021 08:03:50 -0800 (PST)
 MIME-Version: 1.0
-Message-ID: <6045E66C.9030406@linux.intel.com>
-Content-Type: multipart/alternative;
- boundary="NetEase-FlashMail-003-dfa7a908-0054-47f2-98a2-2f5b20a24477"
+References: <b8af3438-f85a-cb82-c88c-9c4e120399e9@linux.ibm.com>
+In-Reply-To: <b8af3438-f85a-cb82-c88c-9c4e120399e9@linux.ibm.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Mon, 8 Mar 2021 08:03:40 -0800
+Message-ID: <CACWQX8048sDqehYaRAS9-T8G8ffWgLo-1fOVsozAC=4TtJdFqw@mail.gmail.com>
+Subject: Re: Request new repo for IBM-specific code
+To: Joseph Reynolds <jrey@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,72 +76,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---NetEase-FlashMail-003-dfa7a908-0054-47f2-98a2-2f5b20a24477
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+On Thu, Mar 4, 2021 at 7:15 PM Joseph Reynolds <jrey@linux.ibm.com> wrote:
+>
+> What is the right repository for a new Linux-PAM module to implement an
+> IBM-specific ACF authentication?
+>
+> The access control file (ACF) design was introduced to the OpenBMC
+> security working group and is described in [IBM issue 1737][] and
+> further explained in [IBM issue 2562][].
 
-VGhlcmUgaXMgbG9nIGluIHBhdGggbGlrZSA8cm9vdGRpcj4vYnVpbGQvdG1wL3dvcmsvYXJtdjdh
-aGYtdmZwdjRkMTYtb3BlbmJtYy1saW51eC1nbnVlYWJpL3Bob3NwaG9yLWlwbWktaG9zdC8xLjAr
-Z2l0QVVUT0lOQytkYTA2ZDE1Y2FiLXIxL3RlbXAuDQpZb3UgY291bGQgY2hlY2sgdGhhdCBmb3Ig
-ZmFpbHVyZSBkZXRhaWxzLg0KDQoyMDIxLTAzLTA4IA0KDQpjaHVuaHVpLmppYSANCg0KDQoNCuWP
-keS7tuS6uu+8miJTbm93eWFuZ0BsaW51eC5hbGliYWJhLWluYy5jb20iIDxTbm93WWFuZ0BsaW51
-eC5hbGliYWJhLmNvbT4NCuWPkemAgeaXtumXtO+8mjIwMjEtMDMtMDMgMDk6NTINCuS4u+mimO+8
-mndoeSB0aGUgY29tbWFuZCBydW4gZmFpbGVkPw0K5pS25Lu25Lq677yaIkJyYWQgQmlzaG9wIjxi
-cmFkbGV5YkBmdXp6aWVzcXVpcnJlbC5jb20+LCJvcGVuYm1jIjxvcGVuYm1jQGxpc3RzLm96bGFi
-cy5vcmc+LCJQYXRyaWNrIFdpbGxpYW1zIjxwYXRyaWNrQHN0d2N4Lnh5ej4NCuaKhOmAge+8mg0K
-DQpIaSwgICAgDQogICAgd2hpbGUgaSB1c2UgY29tbWFuZCAiZGV2dG9vbCBtb2RpZnkgcGhvc3Bo
-b3ItaXBtaS1ob3N0IiB0byBnZXQgdGhlIHNvdXJjZSBjb2RlLGl0ICByZXBvcnQgZXJyb3IgYXMg
-YmVsb3cuIFNvIHdoeT8NClRoYW5rcw==
+Could you describe it in a design doc?  Implementing ACL seems like
+something that's going to affect a lot of the system (at a minimum
+every outward facing client).  Unless you really think that you can do
+this with no changes to the client repos or phosphor-user-manager, it
+seems like it's worth discussion.  For what it's worth, I really don't
+want to branch the authorization code in bmcweb depending on what
+company compiled the code.  They were hard enough to get right in the
+general case, and matter a lot for security.  The likelihood we get
+them right for every flavor of auth that a company might want to do
+seems unlikely.  If we as a project need an "ultra user" that seems
+like it shouldn't be specific to IBM, or should be a generic
+configuration that IBM systems apply on top, using common routines.
+I've already detailed a path toward this in a previous email on this
+topic.
 
---NetEase-FlashMail-003-dfa7a908-0054-47f2-98a2-2f5b20a24477
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+>
+> Note the [pam-ipmi modules][] are scoped to the OpenBMC project because
+> the IPMI implementation is shared by all of OpenBMC.  By comparison, the
+> proposed ibm-pam-acf module is intended only for IBM Enterprise
+> systems.  The intended implementation is based on standard cryptography
+> techniques and could be developed into a general authentication
+> solution, but the ACF is specific to IBM in terms of its exact format
+> and content, and I expect it will only be used by IBM and its partners.
 
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
-L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
-Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT4NCjxNRVRBIG5hbWU9R0VORVJBVE9SIGNvbnRl
-bnQ9Ik1TSFRNTCAxMS4wMC4xMDU3MC4xMDAxIj48IS0tIGZsYXNobWFpbCBzdHlsZSBiZWdpbiAt
-LT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46MH0K
-aW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9CjwvU1RZTEU+DQo8QkFTRSB0YXJnZXQ9
-X2JsYW5rPjwhLS0gZmxhc2htYWlsIHN0eWxlIGVuZCAtLT48L0hFQUQ+DQo8Qk9EWSANCnN0eWxl
-PSJCT1JERVItTEVGVC1XSURUSDogMHB4OyBGT05ULVNJWkU6IDEwLjVwdDsgRk9OVC1GQU1JTFk6
-IGFyaWFsOyBCT1JERVItUklHSFQtV0lEVEg6IDBweDsgQk9SREVSLUJPVFRPTS1XSURUSDogMHB4
-OyBDT0xPUjogIzAwMDAwMDsgTUFSR0lOOiAxMnB4OyBMSU5FLUhFSUdIVDogMS41OyBCT1JERVIt
-VE9QLVdJRFRIOiAwcHgiIA0KbWFyZ2luaGVpZ2h0PSIwIiBtYXJnaW53aWR0aD0iMCI+DQo8RElW
-PlRoZXJlIGlzIGxvZyBpbiBwYXRoIGxpa2UgDQombHQ7cm9vdGRpciZndDsvYnVpbGQvdG1wL3dv
-cmsvYXJtdjdhaGYtdmZwdjRkMTYtb3BlbmJtYy1saW51eC1nbnVlYWJpL3Bob3NwaG9yLWlwbWkt
-aG9zdC8xLjArZ2l0QVVUT0lOQytkYTA2ZDE1Y2FiLXIxL3RlbXAuPC9ESVY+DQo8RElWPllvdSBj
-b3VsZCBjaGVjayB0aGF0IGZvciBmYWlsdXJlIGRldGFpbHMuPC9ESVY+DQo8QkxPQ0tRVU9URSAN
-CnN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQtRkFNSUxZOiBWZXJkYW5hOyBQQURESU5HLUxF
-RlQ6IDBweDsgTUFSR0lOLUxFRlQ6IDBweCI+DQogIDxESVY+Jm5ic3A7PC9ESVY+DQogIDxESVYg
-c3R5bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1GQU1JTFk6IFZlcmRhbmE7IENPTE9SOiAjYzBj
-MGMwIiANCiAgYWxpZ249bGVmdD4yMDIxLTAzLTA4IA0KICA8SFIgaWQ9U2lnbk5hbWVIUiANCiAg
-c3R5bGU9IkJPUkRFUi1UT1A6ICNjMGMwYzAgMXB4IHNvbGlkOyBIRUlHSFQ6IDFweDsgQk9SREVS
-LVJJR0hUOiAwcHg7IFdJRFRIOiAxMjJweDsgQk9SREVSLUJPVFRPTTogMHB4OyBCT1JERVItTEVG
-VDogMHB4IiANCiAgYWxpZ249bGVmdD4NCiAgPFNQQU4gaWQ9X0ZsYXNoU2lnbk5hbWU+Y2h1bmh1
-aS5qaWE8L1NQQU4+IDwvRElWPg0KICA8RElWPg0KICA8SFIgDQogIHN0eWxlPSJCT1JERVItVE9Q
-OiAjYzBjMGMwIDFweCBzb2xpZDsgSEVJR0hUOiAxcHg7IEJPUkRFUi1SSUdIVDogMHB4OyBCT1JE
-RVItQk9UVE9NOiAwcHg7IEJPUkRFUi1MRUZUOiAwcHgiPg0KICA8L0RJVj4NCiAgPEJMT0NLUVVP
-VEUgaWQ9bnRlcy1mbGFzaG1haWwtcXVvdGUgDQogIHN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZP
-TlQtRkFNSUxZOiBWZXJkYW5hOyBQQURESU5HLUxFRlQ6IDBweDsgTUFSR0lOLUxFRlQ6IDBweCI+
-DQogICAgPERJVj48U1RST05HPuWPkeS7tuS6uu+8mjwvU1RST05HPiJTbm93eWFuZ0BsaW51eC5h
-bGliYWJhLWluYy5jb20iIA0KICAgICZsdDtTbm93WWFuZ0BsaW51eC5hbGliYWJhLmNvbSZndDs8
-L0RJVj4NCiAgICA8RElWPjxTVFJPTkc+5Y+R6YCB5pe26Ze077yaPC9TVFJPTkc+MjAyMS0wMy0w
-MyZuYnNwOzA5OjUyPC9ESVY+DQogICAgPERJVj48U1RST05HPuS4u+mimO+8mjwvU1RST05HPndo
-eSB0aGUgY29tbWFuZCBydW4gZmFpbGVkPzwvRElWPg0KICAgIDxESVY+PFNUUk9ORz7mlLbku7bk
-urrvvJo8L1NUUk9ORz4iQnJhZCANCiAgICBCaXNob3AiJmx0O2JyYWRsZXliQGZ1enppZXNxdWly
-cmVsLmNvbSZndDssIm9wZW5ibWMiJmx0O29wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZndDssIlBh
-dHJpY2sgDQogICAgV2lsbGlhbXMiJmx0O3BhdHJpY2tAc3R3Y3gueHl6Jmd0OzwvRElWPg0KICAg
-IDxESVY+PFNUUk9ORz7mioTpgIHvvJo8L1NUUk9ORz48L0RJVj4NCiAgICA8RElWPiZuYnNwOzwv
-RElWPg0KICAgIDxESVY+DQogICAgPFA+SGksJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7PC9QPg0K
-ICAgIDxQPiZuYnNwOyZuYnNwOyZuYnNwOyB3aGlsZSBpIHVzZSBjb21tYW5kICJkZXZ0b29sIG1v
-ZGlmeSANCiAgICBwaG9zcGhvci1pcG1pLWhvc3QiIHRvIGdldCB0aGUgc291cmNlIGNvZGUsaXQm
-bmJzcDsgcmVwb3J0IGVycm9yIGFzIGJlbG93LiANCiAgICBTbyB3aHk/PC9QPg0KICAgIDxQPlRo
-YW5rczwvUD4NCiAgICA8UD4mbmJzcDs8L1A+DQogICAgPFA+PEJSPjwvUD48L0RJVj48L0JMT0NL
-UVVPVEU+PC9CTE9DS1FVT1RFPjwvQk9EWT48L0hUTUw+
+Have you released the specifications for this file format with an
+appropriate license?  That seems like a good first step to figuring
+out if these could find a home in OpenBMC.  If you've already done
+that, could you link them?
 
---NetEase-FlashMail-003-dfa7a908-0054-47f2-98a2-2f5b20a24477--
+>
+> Can we create a new OpenBMC repo for this?  Perhaps ibm-pam-acf?  Or
+> should this go into some other repo?
 
+Could you please post the code you're planning on putting there
+somewhere that we can see it in gerrit?  I suspect that would help
+review whether or not a new repo is warranted, and probably give hints
+as to what design you're planning on implementing.
+
+
+
+
+>
+> - Joseph
+>
+> [IBM issue 1737]: https://github.com/ibm-openbmc/dev/issues/1737
+> [IBM issue 2562]: https://github.com/ibm-openbmc/dev/issues/2562
+> [pam-ipmi modules]: https://github.com/openbmc/pam-ipmi
