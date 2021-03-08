@@ -2,64 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 919D13305F7
-	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 03:52:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 08A2E33079E
+	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 06:40:02 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dv2tS4RyZz3cLZ
-	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 13:52:00 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=vRzy0W3i;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dv6cH6Sk1z3cR3
+	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 16:39:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42e;
- helo=mail-wr1-x42e.google.com; envelope-from=dz4list@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=vRzy0W3i; dkim-atps=neutral
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com
- [IPv6:2a00:1450:4864:20::42e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
+X-Greylist: delayed 63 seconds by postgrey-1.36 at boromir;
+ Mon, 08 Mar 2021 16:39:50 AEDT
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dv2tD3BLyz30LP
- for <openbmc@lists.ozlabs.org>; Mon,  8 Mar 2021 13:51:45 +1100 (AEDT)
-Received: by mail-wr1-x42e.google.com with SMTP id w11so9827216wrr.10
- for <openbmc@lists.ozlabs.org>; Sun, 07 Mar 2021 18:51:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=5tBF6vkKwqewhOD+akMQkvVSMkRK7/ADG+UVz63SCKE=;
- b=vRzy0W3iZ5AlvCldYmXR/rrd3u49z50RXKb/LtiZ3h35SW1X3rSfbJI+u3eQZsmZqE
- vUtmTy3rlfYizbiQWRzgIogZ4Ph2zXSH0AYZj2Ici31WsrdTQIE713mx1WinCh2BMTpR
- wpuk5UNzYudtNNDKVtkdZhx1Oiy9+qBi7UE0woe6iPSDXOrB7vosUZmODGLoCQONHAce
- rO65bf6wib+EtCyYJSRGS8cbXPDWrhlF8bSsbRGk2fXPdN32EyqG+tu8ycwsVcCcV1Fj
- Uov3gpGlQVLGpI976H3vy8HzZRnPGTNnmaOyE2r4zH3Tt0jbAmOZ6MY5SoGknwTapMRe
- ImQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=5tBF6vkKwqewhOD+akMQkvVSMkRK7/ADG+UVz63SCKE=;
- b=buepMd8ZjHzZvbJlmG8H/NzwKo0nDoV8rZzuKBMQIIPQEQeEGouf49qtjEYlFlZxkR
- 5wWZcG9o2GrCBEu4Z9zKZyWWsbR4IPsNiUQ8CAPn1hGAwUuaG++Tc3TY/cTjaAuEd8ue
- KwpCKjdBkpMv4sLW727ElZ9EFQ55QY7BNuSoKesnCRFnO+vepB3zxetinGMZwN0NE4c7
- 0+awD0MvuFEMyo/2eInlLklJ31WGlRZ4UYAK7Nqbz8smdfFQy7vqy4Ybt9Lu3e7rrrJi
- v221i965ucTIKFnbwc8oUFL4HItFWfLtbIaixo71KIWOZrm5DDNvFxw5ivIfN6bBN/ZG
- +Q9w==
-X-Gm-Message-State: AOAM530iOt101UtKE45YFcj1dYtK7xZWwIu0bPQTTQFJKEkad3Lel7kk
- Qek98Bp9UFHwPTGDz9SRVaw5PZZSYnDcPF5EntZfLYxJJo0=
-X-Google-Smtp-Source: ABdhPJwPaR8xmBNZ49Tm8VhrSAj8o8Rm+DUVqcdHV+tjw5RCJEsrVoXnw260dytN4BTp7aIlZTiTP/auvWmx31FcMBU=
-X-Received: by 2002:a05:6000:18a3:: with SMTP id
- b3mr20491246wri.373.1615171897694; 
- Sun, 07 Mar 2021 18:51:37 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dv6c61GgLz30Qk
+ for <openbmc@lists.ozlabs.org>; Mon,  8 Mar 2021 16:39:50 +1100 (AEDT)
+IronPort-SDR: i2J9Bb0N74zf46cGg7bTaJLsIjniRtNW3UVZFih0GiFXPruN5FLvU3890rY2Vnmb44PzBlabz4
+ 9uqyfQYmPPGA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9916"; a="167879611"
+X-IronPort-AV: E=Sophos;i="5.81,231,1610438400"; 
+ d="scan'208,217";a="167879611"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Mar 2021 21:38:41 -0800
+IronPort-SDR: qTJ049v2oxEAveZCJ5fpRRTn93O0nLJpMUU77nUL1hsL0OIXy4fV+NQXsuSU+bfTy4tvd06vI8
+ 6v6mOV77Cl9g==
+X-IronPort-AV: E=Sophos;i="5.81,231,1610438400"; 
+ d="scan'208,217";a="409171206"
+Received: from rramakax-mobl.gar.corp.intel.com (HELO [10.252.168.58])
+ ([10.252.168.58])
+ by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Mar 2021 21:38:39 -0800
+Subject: Reg OpenBMC PMCI WG Meeting - Moving to Discord #PMCI Voice channel
+ from Today
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+To: Andrew Jeffery <andrew@aj.id.au>, "Bhat, Sumanth"
+ <sumanth.bhat@intel.com>, "Winiarska, Iwona" <iwona.winiarska@intel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Tom Joseph <tomjose@linux.vnet.ibm.com>, dkodihalli@nvidia.com,
+ jk@codeconstruct.com.au
+References: <68c64a4a-c655-31d8-7089-8d1cd507b34b@linux.intel.com>
+Message-ID: <1f3308bf-a551-142a-e321-ac6e7eada70c@linux.intel.com>
+Date: Mon, 8 Mar 2021 11:08:37 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-From: Dan Zhang <dz4list@gmail.com>
-Date: Sun, 7 Mar 2021 18:51:26 -0800
-Message-ID: <CAJxKyLed1p-WbcEOZjZ67r61QeEYZ7LBK8xSRDWNNr21pvaMbw@mail.gmail.com>
-Subject: Re: [oe-core][RFC 0/3] u-boot: Support SPL Verified Boot
-To: openbmc@lists.ozlabs.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <68c64a4a-c655-31d8-7089-8d1cd507b34b@linux.intel.com>
+Content-Type: multipart/alternative;
+ boundary="------------CA7A6D9C2E25E2FF4F514DE6"
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,69 +68,80 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Klaus,
+This is a multi-part message in MIME format.
+--------------CA7A6D9C2E25E2FF4F514DE6
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Thank you very much for providing this solution to build and sign
-u-boot fit-image.
+Hi All,
 
-I have one suggestion: decouple the U-Boot fit build and signing.
+Gentle reminder- From today we will be moving to discord #PMCI Voice 
+channel for OpenBMC PMCI WG meeting.
 
-UBOOT_FIT ==> Create the uboot fit-image (essentially all your
-proposal did, except the latest sign step in uboot_fit_assemble())
-SPL_SIGN_ENABLE ==> create the uboot fit-image, also sign it.
+Please connect to Discord(https://discord.gg/TMNFSSpE84 
+<https://discord.gg/TMNFSSpE84>) Voice channel - PMCI (Note: Manually 
+join to PMCI Voice channel).
 
-This similar to kernel_fit means create the kernel fitimage, while
-UBOOT_SIGN_ENABLE means sign it.
+Note: If you are facing issues in connecting to voice channel, please 
+configure your VPN settings accordingly, or disconnect VPN.
 
-This will allow the user to use a simple script to sign an unsigned
-image with any key, w/o need to be able to tweak the recipe and
-rebuild the image.
-i.e. the manufacturing team, the testing team.
+Regards,
 
-BRs
-Dan Zhang
+Richard
 
-> From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-> To: openembedded-core@lists.openembedded.org
-> Cc: joel@jms.id.au, andrew@aj.id.au, openbmc@lists.ozlabs.org
-> Bcc:
-> Date: Sat,  6 Mar 2021 08:28:19 -0300
-> Subject: [oe-core][RFC 0/3] u-boot: Support SPL Verified Boot
-> This patch series aims at extending U-Boot's verified boot support to
-> also include SPL signing.
->
-> The proposal is to some of the infrastructure (variables, functions)
-> used to sign the Kernel FitImage to more common locations, and then
-> essentially duplicate the method currently used to sign the Kernel
-> fitImage to also sign the U-Boot fitImage.
->
-> In the UBOOT_SIGN_ENABLE = "1" scenario, nothing really changes: The
-> Kernel fitImage is created, then signed, and the pubkey is added to
-> u-boot.dtb which is concatenated with the u-boot-nodtb.bin to create the
-> u-boot final image.
->
-> In case SPL_SIGN_ENABLE = "1", The U-Boot PN will take care of (re-)
-> creating the U-Boot fitImage (using custom .its script) after compile,
-> sign it, and contatenate the u-boot-spl.dtb (with the public key) with
-> u-boot-spl-nodtb.bin to create the final U-Boot SPl on deploy.
->
-> In case both UBOOT_SIGN_ENABLE and SPL_SIGN_ENABLE are set, the Kernel
-> PN will take care of creating and signing the U-Boot fitImage (becase we
-> need to also sign the FDT image containing the Kernel pubkey), and take
-> care of deploying it.
->
-> I tested all three scenarios using OpenBMC upstream, and although there
-> might be some areas of improvement (like deploying the new binaries and
-> symlinks with more useful names), it appears to work well.
->
-> One caveat is that when moving between the scenarios above, the user
-> might need to remove the tmp/ directory, since there could be a
-> collision for some of the files deployed into the images directory,
-> since the configuration may determine which PN does that.
->
-> Reviews, thoughts and comments are very very welcome,
->
-> Thanks,
->
->  -Klaus
->
+--------------CA7A6D9C2E25E2FF4F514DE6
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hi All,</p>
+    <p>Gentle reminder- From today we will be moving to discord #PMCI
+      Voice channel for OpenBMC PMCI WG meeting.</p>
+    <p><span style="color: rgb(36, 41, 46); font-family: -apple-system,
+        BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial,
+        sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI
+        Emoji&quot;; font-size: 16px; font-style: normal;
+        font-variant-ligatures: normal; font-variant-caps: normal;
+        font-weight: 400; letter-spacing: normal; orphans: 2;
+        text-align: start; text-indent: 0px; text-transform: none;
+        white-space: normal; widows: 2; word-spacing: 0px;
+        -webkit-text-stroke-width: 0px; background-color: rgb(255, 255,
+        255); text-decoration-thickness: initial; text-decoration-style:
+        initial; text-decoration-color: initial; display: inline
+        !important; float: none;">Please connect to Discord(</span><a
+        href="https://discord.gg/TMNFSSpE84" rel="nofollow"
+        style="box-sizing: border-box; background-color: rgb(255, 255,
+        255); color: var(--color-text-link); text-decoration: none;
+        font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe
+        UI&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color
+        Emoji&quot;, &quot;Segoe UI Emoji&quot;; font-size: 16px;
+        font-style: normal; font-variant-ligatures: normal;
+        font-variant-caps: normal; font-weight: 400; letter-spacing:
+        normal; orphans: 2; text-align: start; text-indent: 0px;
+        text-transform: none; white-space: normal; widows: 2;
+        word-spacing: 0px; -webkit-text-stroke-width: 0px;">
+        https://discord.gg/TMNFSSpE84 </a><span style="color: rgb(36,
+        41, 46); font-family: -apple-system, BlinkMacSystemFont,
+        &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif, &quot;Apple
+        Color Emoji&quot;, &quot;Segoe UI Emoji&quot;; font-size: 16px;
+        font-style: normal; font-variant-ligatures: normal;
+        font-variant-caps: normal; font-weight: 400; letter-spacing:
+        normal; orphans: 2; text-align: start; text-indent: 0px;
+        text-transform: none; white-space: normal; widows: 2;
+        word-spacing: 0px; -webkit-text-stroke-width: 0px;
+        background-color: rgb(255, 255, 255); text-decoration-thickness:
+        initial; text-decoration-style: initial; text-decoration-color:
+        initial; display: inline !important; float: none;">) Voice
+        channel - PMCI (Note: Manually join to PMCI Voice channel).</span></p>
+    <p>Note: If you are facing issues in connecting to voice channel,
+      please configure your VPN settings accordingly, or disconnect VPN.</p>
+    <p>Regards,</p>
+    Richard
+  </body>
+</html>
+
+--------------CA7A6D9C2E25E2FF4F514DE6--
