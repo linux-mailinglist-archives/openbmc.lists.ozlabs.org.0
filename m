@@ -1,14 +1,14 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEE3E331ABC
-	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 00:08:09 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FCA3331ACE
+	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 00:09:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DvYsg6Gc8z3dC6
-	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 10:08:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DvYtn1hF7z3clZ
+	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 10:09:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=CDuSzOzm;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=kzeh7V7u;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,60 +18,60 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=CDuSzOzm; dkim-atps=neutral
+ header.s=pp1 header.b=kzeh7V7u; dkim-atps=neutral
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
  [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DvYZ26BHxz3cJq
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DvYZ26DnSz3cPn
  for <openbmc@lists.ozlabs.org>; Tue,  9 Mar 2021 09:54:34 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 128MYfpB060998; Mon, 8 Mar 2021 17:54:32 -0500
+ 128MZPWp076033; Mon, 8 Mar 2021 17:54:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=ugQdmvdORSA40qsSnWl0TB6Ebq/yYT5pZxiRBYDdmsA=;
- b=CDuSzOzm+rBC6BeMh7UhqrGIbU0Wuzr8LF3r1Y5e2PUzNpIpBvb7BA4Rp8lAU9g9K/Co
- Tdoo1eb1ArbjBM43XABqA3gRrVvNaqbBwnuZ8FWrcs4RdABaNGArPd2vs6nH7pIAVCRW
- Bh9t1o3bq5HhQ2jVEuuIttPGeXK/dpEJRvTtVMXCY38Gzdl1150Gv/rkjoE2AP+O7mJP
- XkAflggBmmHgHriR88O4hkJkbIcRNJ3Vld+7VsmnX5zNXDQD4LE3iWEammyWzKBrMIrG
- UigtiWHJvfLEfXVtct+gaTnObnEz6QC8gaPNUTsiqqlFTMkUHsbw5Vd+4aebXIIxPM6e dg== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 375uwx9gsf-1
+ bh=aWvWUhpStSVN/hPu3hb/yP4vhl3xoO1lt9P053FmBJU=;
+ b=kzeh7V7u7JZoJ2BisqAYSV8XaP7rKp6kmSQ3481x/DCourbdxw5F1ti/LNHf3cuMPNce
+ 9NFQJ0gFCGI0Y5ng9R0MxzLswpOv6Oa2bvXcbSTfZZKYhj3QpxZZXK58XeyvFCjsZoEx
+ c49qSn72CwUznUJ87Kg+Es4CiLfAmxdDr6rkOzaK6rYblCb9+Ave/3djTQd9qasgEwVV
+ GgdNemewer/aTPpGcxZpmHdqAaEj19t3k6ev47hgslSsa/4lWNv5CJQDpyxV3bpEwhsH
+ TRl9sv4C0plDERGA1z+J+dhIc6G5E0cSRhdPfdEmA+WyrNMJZyrkvBd8SSgIJICtQgaK qw== 
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 375udq2cdj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 08 Mar 2021 17:54:32 -0500
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 128MqqOW017839;
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 128Mpd4A025299;
  Mon, 8 Mar 2021 22:54:31 GMT
 Received: from b03cxnp07028.gho.boulder.ibm.com
  (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
- by ppma05wdc.us.ibm.com with ESMTP id 3741c99w8y-1
+ by ppma03wdc.us.ibm.com with ESMTP id 3741c91xm4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 08 Mar 2021 22:54:31 +0000
 Received: from b03ledav006.gho.boulder.ibm.com
  (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
  by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 128MsULL23134614
+ 128MsUvm15794644
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Mon, 8 Mar 2021 22:54:30 GMT
 Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 57354C6061;
+ by IMSVA (Postfix) with ESMTP id 9D0D7C605F;
  Mon,  8 Mar 2021 22:54:30 +0000 (GMT)
 Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 28791C605F;
+ by IMSVA (Postfix) with ESMTP id 6A244C6062;
  Mon,  8 Mar 2021 22:54:30 +0000 (GMT)
 Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.41.147])
  by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
  Mon,  8 Mar 2021 22:54:30 +0000 (GMT)
 From: Eddie James <eajames@linux.ibm.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.10 34/35] pmbus: (max31785) Add a local
- pmbus_set_page() implementation
-Date: Mon,  8 Mar 2021 16:54:18 -0600
-Message-Id: <20210308225419.46530-35-eajames@linux.ibm.com>
+Subject: [PATCH linux dev-5.10 35/35] pmbus: (max31785) Retry enabling fans
+ after writing MFR_FAN_CONFIG
+Date: Mon,  8 Mar 2021 16:54:19 -0600
+Message-Id: <20210308225419.46530-36-eajames@linux.ibm.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210308225419.46530-1-eajames@linux.ibm.com>
 References: <20210308225419.46530-1-eajames@linux.ibm.com>
@@ -82,10 +82,10 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
  definitions=2021-03-08_20:2021-03-08,
  2021-03-08 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999
- lowpriorityscore=0 bulkscore=0 phishscore=0 malwarescore=0 spamscore=0
- mlxscore=0 adultscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ adultscore=0 clxscore=1015
+ impostorscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2009150000 definitions=main-2103080118
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -103,101 +103,72 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Andrew Jeffery <andrew@aj.id.au>
 
-Extensive testing and tracing has shown that the MAX31785 is unreliable
-in the face of PAGE write commands, ACK'ing the PAGE request but
-reporting a value of 0 on some subsequent PAGE reads. The trace data
-suggests that a one-shot retry of the PAGE write is enough to get the
-requested value to stick.
+It has been observed across large fleets of systems that a small subset
+of those systems occasionally loose control of some number of fans
+across a BMC reboot (their hwmon fan attributes are missing from sysfs).
 
-As we configure the device before registering with the PMBus core,
-centralise PAGE handling inside the driver and implement the one-shot
-retry semantics there.
+>From extensive testing and tracing it was discovered that writes
+enabling a fan in FAN_CONFIG_1_2 failed to stick on the system under
+test with a frequency of about 1 in 1000 re-binds of the driver.
+
+The MAX31785 datasheet recommends in the documentation for
+MFR_FAN_CONFIG that the asssociated fan(s) be disabled before updating
+the register. The sequence in question implements this suggestion, and
+the observed loss-of-fans symptom occurs when the write to re-enable the
+fan in FAN_CONFIG_1_2 fails to stick.
+
+The trace data suggests a one-shot retry is enough to successfully
+update FAN_CONFIG_1_2. With the workaround, no loss of fans was observed
+in over 20,000 consecutive rebinds of the driver.
 
 OpenBMC-Staging-Count: 1
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- drivers/hwmon/pmbus/max31785.c | 32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ drivers/hwmon/pmbus/max31785.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/hwmon/pmbus/max31785.c b/drivers/hwmon/pmbus/max31785.c
-index 5cfa7e97b489..1e021c38d507 100644
+index 1e021c38d507..0c2fe22018a3 100644
 --- a/drivers/hwmon/pmbus/max31785.c
 +++ b/drivers/hwmon/pmbus/max31785.c
-@@ -362,6 +362,27 @@ static int max31785_write_word_data(struct i2c_client *client, int page,
- 	return -ENXIO;
- }
- 
-+static int max31785_pmbus_set_page(struct i2c_client *client, int page)
-+{
-+	int ret;
+@@ -398,6 +398,7 @@ static int max31785_of_fan_config(struct i2c_client *client,
+ 	u32 page;
+ 	u32 uval;
+ 	int ret;
 +	int i;
-+
+ 
+ 	if (!of_device_is_compatible(child, "pmbus-fan"))
+ 		return 0;
+@@ -574,10 +575,24 @@ static int max31785_of_fan_config(struct i2c_client *client,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_FAN_CONFIG_12,
+-						 pb_cfg);
+-	if (ret < 0)
+-		return ret;
 +	for (i = 0; i < 2; i++) {
-+		ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
++		ret = max31785_i2c_smbus_write_byte_data(client,
++							 PMBUS_FAN_CONFIG_12,
++							 pb_cfg);
 +		if (ret < 0)
-+			return ret;
++			continue;
 +
-+		ret = max31785_i2c_smbus_read_byte_data(client, PMBUS_PAGE);
++		ret = max31785_i2c_smbus_read_byte_data(client,
++							PMBUS_FAN_CONFIG_12);
 +		if (ret < 0)
-+			return ret;
++			continue;
 +
-+		if (ret == page)
-+			return 0;
++		if (ret == pb_cfg)
++			break;
 +	}
 +
-+	return -EIO;
-+}
-+
- /*
-  * Returns negative error codes if an unrecoverable problem is detected, 0 if a
-  * recoverable problem is detected, or a positive value on success.
-@@ -392,7 +413,7 @@ static int max31785_of_fan_config(struct i2c_client *client,
- 		return -ENXIO;
- 	}
++	if (i == 2)
++		return -EIO;
  
--	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
-+	ret = max31785_pmbus_set_page(client, page);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -599,7 +620,7 @@ static int max31785_of_tmp_config(struct i2c_client *client,
- 		return -ENXIO;
- 	}
- 
--	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
-+	ret = max31785_pmbus_set_page(client, page);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -700,7 +721,7 @@ static int max31785_configure_dual_tach(struct i2c_client *client,
- 	int i;
- 
- 	for (i = 0; i < MAX31785_NR_FAN_PAGES; i++) {
--		ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, i);
-+		ret = max31785_pmbus_set_page(client, i);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -741,7 +762,7 @@ static int max31785_probe(struct i2c_client *client)
- 
- 	*info = max31785_info;
- 
--	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, 255);
-+	ret = max31785_pmbus_set_page(client, 255);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -785,8 +806,7 @@ static int max31785_probe(struct i2c_client *client)
- 		if (!have_fan || fan_configured)
- 			continue;
- 
--		ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE,
--							 i);
-+		ret = max31785_pmbus_set_page(client, i);
- 		if (ret < 0)
- 			return ret;
- 
+ 	/*
+ 	 * Fans are on pages 0 - 5. If the page property of a fan node is
 -- 
 2.27.0
 
