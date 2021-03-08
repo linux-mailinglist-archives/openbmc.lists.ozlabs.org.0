@@ -2,133 +2,169 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD4C43307BA
-	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 06:53:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FB9B330804
+	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 07:17:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dv6vg5vzSz3cLN
-	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 16:53:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dv7RG2WQxz3cSn
+	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 17:17:14 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=IwFV7EWH;
+	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=ixDEen3o;
+	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=ixDEen3o;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.220.115;
- helo=nam11-co1-obe.outbound.protection.outlook.com;
- envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=IwFV7EWH; 
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
+ (client-ip=40.107.132.123; helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
+ header.s=selector2 header.b=ixDEen3o; 
+ dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM
+ header.a=rsa-sha256 header.s=selector2 header.b=ixDEen3o; 
  dkim-atps=neutral
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com
- (mail-co1nam11on2115.outbound.protection.outlook.com [40.107.220.115])
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320123.outbound.protection.outlook.com [40.107.132.123])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dv6vN2m36z3cGn
- for <openbmc@lists.ozlabs.org>; Mon,  8 Mar 2021 16:53:02 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dv7Qx4sX9z30Hd
+ for <openbmc@lists.ozlabs.org>; Mon,  8 Mar 2021 17:16:54 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UJV4oM2UeIf07ABz9o4U474o74dAfAr6cp9Y5betMNE=;
+ b=ixDEen3ovIzVD0ooImhZsCybIsUPZ4NhYEcUCb/kvYZsPYNgkgO67sXe4j2SganaL4sxKZ4vRcaijG1qpPQEqbCiPC6P3YfjqjtW4KKHyFPzD+MJaYLcOUUXNaEjpvj7opHQsvmLCeQpw8nLK3RnEFIikEs0Vz2lGyXLuY2w5Tld9rU4nM7XckPKeIoqGjPpX2C7piyvTtsJNgu7AHXdJcAoG/TbwbGo1eMLMSH5wHMriuTwisOBCMGYrAVpBu5jz2lzPKSLkbY9ZQhDFSlXDDHT5Hre7Pntczk1XdFB0BkUMXtHYnrlywXb2Z5rDwBkMEADxmwId9am+yWELPmVDw==
+Received: from HK2PR04CA0063.apcprd04.prod.outlook.com (2603:1096:202:14::31)
+ by TYZPR04MB4528.apcprd04.prod.outlook.com (2603:1096:400:58::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3912.18; Mon, 8 Mar
+ 2021 06:16:39 +0000
+Received: from HK2APC01FT058.eop-APC01.prod.protection.outlook.com
+ (2603:1096:202:14:cafe::7) by HK2PR04CA0063.outlook.office365.com
+ (2603:1096:202:14::31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3912.17 via Frontend
+ Transport; Mon, 8 Mar 2021 06:16:39 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.51)
+ smtp.mailfrom=hcl.com; google.com; dkim=pass (signature was verified)
+ header.d=HCL.COM;google.com; dmarc=pass action=none header.from=hcl.com;
+Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
+ 192.8.245.51 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.245.51; helo=APC01-PU1-obe.outbound.protection.outlook.com;
+Received: from APC01-PU1-obe.outbound.protection.outlook.com (192.8.245.51) by
+ HK2APC01FT058.mail.protection.outlook.com (10.152.249.150) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3912.19 via Frontend Transport; Mon, 8 Mar 2021 06:16:38 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=L1u1lKsB+/A7dF1SrBTq6GfF2sOyzYGCAiV4a808cnJ+c+VjF01Ww/pMPl4TiGlIRxnmXeT7SifOAMBJeOkWY1P1uR/out7SvstffSSuRf6W0jwNJHqzrZcI5a825mllxFUm/IUV6gajF/K59Q8IGDk6pNknyVAsrskYUm6kWVeV4nJf1rQH2yvXnXOEQlhvnZr4b0AgdBQCE9f2bUEWgKdYvMhbqK0+IMchW0XF1ZqAi6UtuvWFsrdbbG4iGr4PnR2kc/Dz4IA9uASQcLLykdPPpXthrW+0vdxZJbz5HI40ZmQ/3CmuMxUISNCYvSMJWOZUOJxE2I7kkk2LXHOf7A==
+ b=oRkMfe+9oIHVX87AxDBW0ySX9RrYsU+CERFUKDrcl83Ua3yly2IoYCs1DMcb4M+ppZhYhnafjITyLfr5qyAXNwxUjLSkbaHUCNlK/NtYOHwXV+PRK+fxYV2fQtIma7MGzGGfBjB6PUGYm0N5mdazZgZYAusY3bLYbd6JzvhDKi0B1MVgHa+7oBjh+WN97Bi2r0VqDHkAzBk4LuzgXk4QAEeR6KmzKLJxTAwaBCkQtLaQeqyFDjJZypcQHxpc0YSaFg4YzeY98FL6y8dN5KoGuyRXA1Ax059zU5FSeDQzvtbewCixme0WMXRHz/9FWbJC6xwI3sjbfUigI3DISxuvkg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CcZiKEEpviXRiGiIUHruAF0MqfpoYk+4ELkEDH204BU=;
- b=EJ0Szn+oyOYLc9ZGdPzxt6yeUAUy66nYW4/TYSeV90PEoW18mtyK/rjtqFCuEG3a3CRHKnEsjjAPV2TgCiNEYl4Q8VZ8M7/7Klvla+0ALnBwwkgw2e4qjur7XDzVkXB5CBvRODo6ans70OD6zKz4dZknxVU7r8De7XHDcmTpTh/RigJQo3PmtSVAoW7EEInspyQTsUzEtQUMd5rVwUYFlL8nE4n788umFLYzr4a4U+tsjqaE3up8MygOCL71+IMryMipcO/2V84qIfSPfyLpasHluJJf9PpzIBBCvvIlHY2XbmU/CZZ9adQrVp0y0OvbuL1kenC1H1Ibj3SjfVa5Bw==
+ bh=UJV4oM2UeIf07ABz9o4U474o74dAfAr6cp9Y5betMNE=;
+ b=WCqiTOZT4SXd4Df4B//tTAiHROyHhYBW/C4BE/5JbpX90QgNi2qaJDDfuiZ1UKL+VSyuS1y7zJQMQ62F3L7Y8WQ1WbybJsdQmtA+MDo8bSDD8SDb4cGZJXfo3r5JEXGYSs0FKyhc6OJqQCMm1wvyZL8jwYkirxBLuUjjHCsfr2Gsh0KcFqIFS3PEA1/oCrB8VZ9goDRckcIvOI9a7NDwQ4zS3xgLlUbjP0cnv0nKddqJLTByF5lTmb9vbu/Gh9nCwXtgH8sUB45dvqTau+ZehjWyAY0nSaXfRENXBI8NGx8Auz4aLYNLUvCwAbuUnLMjvE9IC04whY+ezaHRVNEFqA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
+ smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
+ header.d=hcl.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CcZiKEEpviXRiGiIUHruAF0MqfpoYk+4ELkEDH204BU=;
- b=IwFV7EWHoPYN4/4wFM2sm9Aohq3BcI/QpyYrkNmzhJfnsxAWWquhbED1Em65XAId/QAt/3rXzxldUzpyD7L4Jsx+i9oax0e0HZFockX8U1CV4uszSaeytP0ACZoKlupInngDUAaLLIjnsjhK1Fn2EZvuq01mEUifXs7B9oG3k4w=
-Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=os.amperecomputing.com;
-Received: from BYAPR01MB4678.prod.exchangelabs.com (2603:10b6:a03:88::27) by
- BY5PR01MB5890.prod.exchangelabs.com (2603:10b6:a03:1cb::13) with Microsoft
+ bh=UJV4oM2UeIf07ABz9o4U474o74dAfAr6cp9Y5betMNE=;
+ b=ixDEen3ovIzVD0ooImhZsCybIsUPZ4NhYEcUCb/kvYZsPYNgkgO67sXe4j2SganaL4sxKZ4vRcaijG1qpPQEqbCiPC6P3YfjqjtW4KKHyFPzD+MJaYLcOUUXNaEjpvj7opHQsvmLCeQpw8nLK3RnEFIikEs0Vz2lGyXLuY2w5Tld9rU4nM7XckPKeIoqGjPpX2C7piyvTtsJNgu7AHXdJcAoG/TbwbGo1eMLMSH5wHMriuTwisOBCMGYrAVpBu5jz2lzPKSLkbY9ZQhDFSlXDDHT5Hre7Pntczk1XdFB0BkUMXtHYnrlywXb2Z5rDwBkMEADxmwId9am+yWELPmVDw==
+Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
+ SG2PR04MB3772.apcprd04.prod.outlook.com (2603:1096:4:a1::15) with
+ Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3846.27; Mon, 8 Mar 2021 05:52:49 +0000
-Received: from BYAPR01MB4678.prod.exchangelabs.com
- ([fe80::650e:6480:5f2a:4b96]) by BYAPR01MB4678.prod.exchangelabs.com
- ([fe80::650e:6480:5f2a:4b96%6]) with mapi id 15.20.3912.026; Mon, 8 Mar 2021
- 05:52:49 +0000
-Subject: Re: evb-ast2600: Getting some build errors - 'u-boot.bin' is too
- large!'
-To: openbmc@lists.ozlabs.org
-References: <CAHf5csd1tt-VNS9Wfuwqito2Fy75bfhArAEhZP_d1LXeOz+YVA@mail.gmail.com>
- <PS1PR06MB2600DD0B6A4F3F30C771342A8AB29@PS1PR06MB2600.apcprd06.prod.outlook.com>
-From: Thang Nguyen <thang@os.amperecomputing.com>
-Message-ID: <8bfeaac7-8e70-c45b-8a87-8ab7d667cab2@os.amperecomputing.com>
-Date: Mon, 8 Mar 2021 12:52:41 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.7.1
-In-Reply-To: <PS1PR06MB2600DD0B6A4F3F30C771342A8AB29@PS1PR06MB2600.apcprd06.prod.outlook.com>
-Content-Type: multipart/alternative;
- boundary="------------0BD4431E352BD64A0ABD2DD3"
+ 15.20.3912.19; Mon, 8 Mar 2021 06:16:36 +0000
+Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
+ ([fe80::b84d:4fa9:f44b:a049]) by SG2PR04MB3093.apcprd04.prod.outlook.com
+ ([fe80::b84d:4fa9:f44b:a049%3]) with mapi id 15.20.3912.027; Mon, 8 Mar 2021
+ 06:16:36 +0000
+From: Jayashree D <jayashree-d@hcl.com>
+To: Ed Tanous <edtanous@google.com>
+Subject: RE: Negative value returns for sensor in tiogapass
+Thread-Topic: Negative value returns for sensor in tiogapass
+Thread-Index: AdcMHNUlzX6I6Je8Q2WRGNkpWs0ATgAP1CQAAeFPK8A=
+Date: Mon, 8 Mar 2021 06:16:36 +0000
+Message-ID: <SG2PR04MB3093F7CA1D6801FDF9D6C5BAE1939@SG2PR04MB3093.apcprd04.prod.outlook.com>
+References: <SG2PR04MB30939CC20F08C50A7031DBA5E19D9@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <CAH2-KxA4tQvaxzFcAWYhYrq9WeCLrLTRdknZW66XUBzOipoFrg@mail.gmail.com>
+In-Reply-To: <CAH2-KxA4tQvaxzFcAWYhYrq9WeCLrLTRdknZW66XUBzOipoFrg@mail.gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-X-Originating-IP: [118.69.219.201]
-X-ClientProxiedBy: HKAPR03CA0015.apcprd03.prod.outlook.com
- (2603:1096:203:c8::20) To BYAPR01MB4678.prod.exchangelabs.com
- (2603:10b6:a03:88::27)
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from HCM-FVFX4014HV2J.local (118.69.219.201) by
- HKAPR03CA0015.apcprd03.prod.outlook.com (2603:1096:203:c8::20) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3933.16 via Frontend Transport; Mon, 8 Mar 2021 05:52:48 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 673ca1df-a83c-4994-1b14-08d8e1f66787
-X-MS-TrafficTypeDiagnostic: BY5PR01MB5890:
-X-Microsoft-Antispam-PRVS: <BY5PR01MB58905B7DB16D19F5B813AD168D939@BY5PR01MB5890.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1775;
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiYTY0YzQ4YmUtNDhhZi00YWI4LTgwODgtYjZmZjFlZjk3YmYzIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX1B1YmwxYyJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6ImRacm5GekFrY3Y3TENURU9GaVZ5XC93aGxQUlpYWUdXTGVyY1wvVHhmamRmZmZ2VFhSWjFabVwvMWs5dEwxYXZNcHMifQ==
+x-hclclassification: HCL_Cla5s_Publ1c
+Authentication-Results-Original: google.com; dkim=none (message not signed)
+ header.d=none;google.com; dmarc=none action=none header.from=hcl.com;
+x-originating-ip: [192.8.226.44]
+x-ms-publictraffictype: Email
+X-MS-Office365-Filtering-Correlation-Id: e2ca7416-362c-4f38-7dd5-08d8e1f9bc55
+x-ms-traffictypediagnostic: SG2PR04MB3772:|TYZPR04MB4528:
+X-Microsoft-Antispam-PRVS: <TYZPR04MB452885A1D050B93A80719785E1939@TYZPR04MB4528.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:5797;OLM:5797;
 X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: H0ouTk1o3nqfpQ2l7ZVBO9iD0vZMA8kvBXsiD1alL+/i6GICTVAH7/CdV3juyjbdEf8xOJqENBYYgRyo2+tGoA8yFaRcNuraMdOzWhAqg1nM+4hNjwXMJdbNkP+zUjnC72tslUNW/hM9tDTdsyAamivPkR2BIwObVXUQFvqc6xXRcoodxPkz0PawDsJNwyRFOwfWcKXybvIhwwyFlR3qwb+33gVQZNF2+2Ntw9piUAp/4xqWHi5zSObRTNEXA3qD9NWnIUZNmMPHwgf5EflNpAjKreWNlf9jKbCbZXyIkCrMC6Ft26m3zfu9mwxxoZ22CWmmA9yMTon/GhHcZDa0cl8/YOvniVeTwHN+XK0qTM2DpjEIXbhQeC46ln6WAglAP7p8REXVLAPuE6/kWA4MasBV35OXYAUdj/dQ6A0V/QOJoHLZp58SVcnpqhEJZ99F98AZiYAjFZ5x/TNWB74LbZaZOIv/PJ5dNrU9uxvz6m+WjtKh+5k5w7Gzww9/jUwGb4PR/3PWWUFGeJKoHCHYbfR+7ou8YdcNfrfOokPxQ2D5JFWHsR2Yeh/wKsqlrkjkE6PdZXGx9utsWHldRGt+47j7wRU/n2NlOjYuIuV/+a8jc54LXw6JVHjlQD9N5y7lwFpQamswdzyLXsNi8SuBrH0yfPatFkV55h6yv+9t89ejbYQod/UEMN/oG29rimUE
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR01MB4678.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(396003)(136003)(346002)(366004)(376002)(39840400004)(2906002)(31696002)(86362001)(166002)(53546011)(2616005)(186003)(6666004)(6506007)(478600001)(956004)(26005)(8676002)(83380400001)(52116002)(5660300002)(16526019)(8936002)(6486002)(6916009)(66556008)(33964004)(31686004)(6512007)(66946007)(316002)(66476007)(966005)(45980500001)(43740500002);
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original: 0C8kCwTmxo1f8h7TYDnqGfSI68nJlH7udwPFTg35/doI6dAYFLYAZvuokuSg/5zduGMMZ+gIDA3RaksBh7KkynuLItNpkjnuHJjofux6ct1mV7s+AMEJQHTy6vS9VBxcA54FUbOgC7gSZ9tJV6+yYU89lohimfQL08pNZnMOV0hvUZ3wmxNNt9Sx2u4B2YMJ6SmK2/uafSltr0e67n15BJxO/zQgKb9yobJXV+s0SiAUmXl05r4wEpObjdgWqLTDfs7ZssZ8MQi1JVW90S5MngetUQNux93qqNB93SK3U0vgA8PKC5ArttswWQGpzB/isWbkFk0XdnTrUz3/QSXLpBfbf1HRzwMJYTnQ1KFaE5BGiK9EXrmdImhNOE9T2cUj5m2yuDVHeD8QbMptAIM6FIa1KrVRntaTe4TH2v10i+GalX+WDLvZ0YfjPLLFB9bTEGCAgqdVb4RSP91KXNMqNP8v8E2oehMGSJBK/49nUZW5GYrwemvx8XZwd2jfgE6mFJUUxLlS215lBFKECkRxwwaRgS00Z93nDhDextTiWKV0SxPR+XHVfqXsnl3uyNqBLdj35DXi2Wn5fFN8uh4wmzcrhj/0FQxpqD+h1+PKPZA=
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
+ SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
+ PTR:; CAT:NONE;
+ SFS:(4636009)(346002)(396003)(39860400002)(136003)(366004)(376002)(71200400001)(66556008)(55016002)(9686003)(478600001)(4326008)(26005)(86362001)(8676002)(316002)(2906002)(8936002)(5660300002)(33656002)(76116006)(966005)(83380400001)(66476007)(7696005)(6506007)(53546011)(6916009)(52536014)(186003)(66946007)(64756008)(66446008);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?a25aY1NkMmllckVjbmxmaENaa3JhM1A4cmhGbWlWb2lNb2dHZVZ1bTY1UHFa?=
- =?utf-8?B?V3ZQbDlGdXJ3R1UwK21nQzE3UWY5NUFWZXF5MEFKRWNKNEhUQWxycEFBUTRo?=
- =?utf-8?B?N2pYNFhrYnRaQ1N1RGxCaXZaSzAxN0U3VEpEUzVONlFTMjBLUDcwUGZyKzVt?=
- =?utf-8?B?a1p6eFRUeEcrdXQvOTU2alJhRXFDbVZzbEZzUzZ1YklydmIzU1RvaGUxZ1hn?=
- =?utf-8?B?UkJBanZZSjUrQnlBNFp3Ylg3MWMwRnpQeDloRm9TYnlUc1RVU2NVdi9CU1N2?=
- =?utf-8?B?ZDArYnZ1VGo3LytGWGVGdThVa1BPT2tuMmdQejR5UFdoeHRtVDFZRWZVMCtG?=
- =?utf-8?B?SDdXN2FWTXdpVW92cnZEQkp1eVNpMjA3cGMxTmowUk5XUmR5TjVDaENUdERy?=
- =?utf-8?B?dGREblg0MXFSYlNaeG9ETW82eGxWZG5lTzNpRDhVTU5lTmNNSFpuZTJCeWxm?=
- =?utf-8?B?Tm93NFBCWDVHdlBySlp5OXM4aUxCTzVuTkQ5OThjaWhHam5JWU45bWZQZDgw?=
- =?utf-8?B?UmtBd2cwRVRCUU5VaERweXA2WE1iaGtHeG5pNDJ0Rnc1L3cvamhaM0lCNWty?=
- =?utf-8?B?c1M5TEpySWltaFh4K0Q3K3dIdmh2ek0vVG1RZVVDV1MrSGZkeVJPSDFUM0hn?=
- =?utf-8?B?KzV2RmNZQmZhTkZIZ1BqdVVDNTZRS3ZETHpRKy9PRUc4SWZpRk11Z2V2QmNR?=
- =?utf-8?B?ZHQ5YmdvRzkvbGhSamxFNkVGNHdGM21SbGtISU5NRWF6Y0IxdFhXOUh4SDkr?=
- =?utf-8?B?TWlGWWhBWUg1UGJ2L08yVW1KdktIMjJoUHFGS3FsMG9NekxmWElxOTdpUHcv?=
- =?utf-8?B?Q2Rndm9ZNTd1TC8xMDNUL1dibTZLT2lnaExhdlQ3aUpiM1RyU1V2cVZ5YUJO?=
- =?utf-8?B?MGVnQTRhbmVGZzh3TElwdnZIcG5zZHhFV1NvcUxYeEtkeDRZSTlpakFvTk1B?=
- =?utf-8?B?QlZ2SWlBUUZNblVSbTUxZGxsSVUwZllRbzB3SGxHWHlzbzF4S0N1Y2Ryc2RO?=
- =?utf-8?B?ZmdEWEFXN1FMYkJGK2JvbllhQ2NPSWNGSThoUHhXNWhDOTk0K2hrb0ZxWkhz?=
- =?utf-8?B?MnpIcVhieG9VYklGVk1GbzI0RjU4bTZIdUsycUFJYkR1SmkwN3B2NlB2cTFM?=
- =?utf-8?B?UG9qNFNKeEVLM0UxWVk3VjVPNlpLWkYybFpCYzh1SGM3SEcyaDRYQzBkMkZS?=
- =?utf-8?B?Zi83L1htelRobjNSK3ROazRCbDVjc0tzNXM5Z3BKUkZJUFkyeGEzMWxRQmYx?=
- =?utf-8?B?NDZZVXhnUUV0bitlRWFlc1ZhNEVPb0dGOEwxeXBHd3BIQzIvWlhXWVpCKzVM?=
- =?utf-8?B?ajVpUGt5em0zOEp2TTIrQWZOajYwdGF4Nld3SUM3S2lQTERSTGwyejZNcVBz?=
- =?utf-8?B?R3FRV0g5anZESDlyOUZVdDRqUU9PWHptS1dBT0hZeXduZEFuSVowVTh1K2Ra?=
- =?utf-8?B?WmZBNmZoVWFab1lhRyt0Z09lb202ZGhrY1htbDMraXM3OHdHdW5kNW1BcWsz?=
- =?utf-8?B?UldIYVBIbmVYUVVYYUdSNDFINXhYbE9CaGV6Y2VCcEZ2Y1hZMFJ2QnlBV3Vr?=
- =?utf-8?B?THplU3V4dk9iZjJSVWk1aFplTTBsZEswcTd3NncxakJYL1dZcFhUWlhjY2xI?=
- =?utf-8?B?NUlVSDAwMDRVZDVnVWl5SUtkS0pFd3I0bjFJRUpIMWwwMTF1akdTbEhUclJU?=
- =?utf-8?B?enlmVVk3Z3FxUWtPRllFL2RDZlo4eU9OMEs0MTdVNm5LRlQvNHZkc0RCL1NQ?=
- =?utf-8?Q?WzoTFApLBNalNAeSKqPu1hI0aOSwU+QUBtWi28S?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 673ca1df-a83c-4994-1b14-08d8e1f66787
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4678.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Mar 2021 05:52:48.9296 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 677eN2xjge/iqK1Qq9jLIfPNvSDY1JzjCdFVaya9gCBt0Q7KYa1ZaoWC7uJ7PJmNX0QWsWi9lr2cfF1CZD6IyLZ89lgvfZZrsj6prrZrZgo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR01MB5890
+x-ms-exchange-antispam-messagedata: =?utf-8?B?VHRQVVZUZ2pjRko0RGRBMzdDa3FMY1NvbEVUUUFsNjdjU25hSW1DWndIWnNU?=
+ =?utf-8?B?M0xGL2QvQ0pyaXRmbHlhamtyaGFxVGJrSmN0WCtTYm9RMHBBVXhSTHN0WkpC?=
+ =?utf-8?B?Smo3alA5UWNYVThRengvejJmek95WkRlYlkycFpHRHJFN3hZcy93cHFKUUVr?=
+ =?utf-8?B?TVpjZjNFb2FPSmpZdkZSMUxobDNiUUplRjdOQ1JhMmp4WTRudlJma0pOSk9u?=
+ =?utf-8?B?c3VmSFViQ01iYm5Jdmp5MzV6eUZySkRLUENPRngxOFo4Wkh2WUpKam54aC8w?=
+ =?utf-8?B?eW9HTUp0ZkZIRncwUjJadHpZWE5Xc0tjV0NwWGdWMEw1RlorTFZkajVMVFln?=
+ =?utf-8?B?YitYOUQ4ME9Zd3ZaQ3lLRGg5dEFWUTlHcjJ5MCtCTGFnaXE0czJVSlJRZDFr?=
+ =?utf-8?B?SnhxSlpOL2xjTExHM0ZXdEY3THhzR0t1N3FiREJaREM0Vm5YazROTkllTGhH?=
+ =?utf-8?B?elZ3bndybUk5QnZNSVpCVmt5NktxYTdwblVyK3cwcWxVYjhkUUJka04xYWpF?=
+ =?utf-8?B?V0M5bnFSTGRDZ3BMR2kyVmRBbGUrYXlSdWladmhrakNaTjFtWHNtYWxoUWxq?=
+ =?utf-8?B?SUFxNHpsN3NKQXRhd1RxOWMzcnIrWmJWZG1VdE8zUlhHRG1rME9UZUxuU1dK?=
+ =?utf-8?B?Vjh5eXBWK3BENDU5aXdZSHl5ZTl2TW5FNVJEUkxqR0FPdDFDREdXVWRsL2c5?=
+ =?utf-8?B?b2owbUx0OEZhYTAzaitmaWN6YThYYnlFUG9JQXN2WEtvVWRDcDBMVjB5WWRF?=
+ =?utf-8?B?NHR6dG5saVB5c1FpbUR4NTNVUWRGZWVCakVGc0FZUzlmQTB1NlRabjI1bFdH?=
+ =?utf-8?B?Z0ZQb3ZnQTZGSW1ZTW9NekJxc2lxSzR0TUVVRStsRzd3OTNlQlljVEdLUkJj?=
+ =?utf-8?B?N0dLTTRXNVN1QjdpK3dYTDJtVm9yWDJtTXBFMmxHekpNd2VMdU1lWDJuQUpZ?=
+ =?utf-8?B?b1Ywa2lLODVzN3NXQTJWbW4zY0oyRWRwWG9KNjY0VEZqeTlBa0pkb29IeVVC?=
+ =?utf-8?B?OGZpWE9LcHdKaW1nUjlRU2JNVDF0OXA4bnJvemFhaVNlTkFZY1JQMjJsVk9a?=
+ =?utf-8?B?MVY0VjlBcDFGRVJwTzdnN0pKS2VCRFlhRWRadklXNHB6Mi9TRFZHeDE0VkVo?=
+ =?utf-8?B?T2hnUWQyaDN4RzhQc0ZZQXlVaUx5NHc2bmNPbFdhQUVZUVV6dmpCOU9MNHZO?=
+ =?utf-8?B?L0V0aGU0MlNIMEY1bkZKUmR6SU1DbVcrRFlwQTViZmJDLzZkR1pYczRiRGQx?=
+ =?utf-8?B?MjZHQ1prQkkxNjJmMnd5OGxYM0ovdkZxSDlTL3NxQytCcVBDOXpkb3pHSStO?=
+ =?utf-8?B?c0twWUMxcjF5Smljdk9UWmxHSXA1eUhCeTVCRi9mM0d6anJiS1dXNkZ1eSt5?=
+ =?utf-8?B?NUVpTGlybWVaZWNDMWlLZlg1bnU3Nk1jZkswUExXbjFaQW5XRUZITHFNTXNE?=
+ =?utf-8?B?U3dYUTRBOHFiNDVQbGhPSmdQWE00cnByUXBCRWpuWitING90L05ORDR0RHpo?=
+ =?utf-8?B?QTBWWGJES1VybDJJWXBTYmloZWs0a3NnVHRjOHlwTUUxOG4xc2dxcG5KNUhu?=
+ =?utf-8?B?cGVVUk5Pai9IeDkreWo3eDVnQUtHSjBQWUdnZy9FRCtiR01BWUN3YU9CeW1m?=
+ =?utf-8?B?b2lWbXhLSWYzZFlEWjdLeVphZnNsK3NQakpBQ0VROHU5L29qRzEyV2hFWnVB?=
+ =?utf-8?B?Wi9nUExKTFlWZ0kvNWhnK1NiY2o3K2lwdUlNR09IRzV6bFNkR1p1akhmQjZP?=
+ =?utf-8?Q?mMbeBhdEIHk8GGHRL4=3D?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB3772
+X-DLP: MSGProcess
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: HK2APC01FT058.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: fe12229f-56b3-4704-c6b3-08d8e1f9ba69
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: p/X38Yk5tbOP+CW+s3xhRjSmWPsKJgJx+u+gGNl4qsfNm2OtHC+ioXsXMiIY5E2BCa7WAvjPS1A8pipWDgM95QojzkhnVuKXLM1mNfRhT2KSKxA/te6bjxiphhe/uHjzd7IDTFRAenEWl8lasdjBIjtq7R9M8zSDWCUH5O6m3qe5IR3jUIa2NxsedRcg1fYAmVbEoQ3vyvfgxPezIowSSGD4BeW+KRSO5NFE/eiIrQA0KdOgkYxfrHe7dabKtbrg4z4o/qpRPIiwSeJOOLiiYqPYF5JgeG7OjEHUbAulJwm7ljM+2JMkpiLUL3gwlx/LHv0zPVQGiq6mc8P76oJMmq7jiUtS9uZGGGFcu0629rfDT+HUh1nY28UTHKL4pLxQLSnuRHLDlLrS6AsUFghWrqbjRjEQoeTod+2lnmVsgej8od3y1uwG19miJuZU1MnUupaWmgdaeBfWmACAukHwkgEvU0iH8h7Vx842EswLd2YX8rW+AeFbaTrbyOD9ypbdfL6NWuPuSgWZwXL3BxqIyajTqlK5DJw+xJLYJxgHtcrlElskOf7Nas+5vHpI7DbkoUjDQRzeRbBQl61FbIvRab/dEyY/GKRPLyFXkf9l/qsXMamh13WZsZEteKQtnnlD2/9R+D6OpNZyLjOFJ0XQr8mnzDL09u2XAsY1S6Gf7L1VOk5Tip+iMtkSMl0gVcn/ytVIOejOgkyzoYYWRh+i9odTD7M5bYMuZDyOKlWNUm+oeTcTtP9D8sYNWlXcICVv5AtHoMujshJGAQA5wPBBPPUy4IDMwcGWAorLmEzufAE=
+X-Forefront-Antispam-Report: CIP:192.8.245.51; CTRY:IN; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:APC01-PU1-obe.outbound.protection.outlook.com;
+ PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(4636009)(39860400002)(346002)(136003)(376002)(396003)(36840700001)(46966006)(26005)(186003)(8936002)(70586007)(2906002)(33656002)(36906005)(82740400003)(6506007)(53546011)(4326008)(70206006)(478600001)(356005)(7696005)(83380400001)(336012)(81166007)(47076005)(966005)(9686003)(34020700004)(82310400003)(36860700001)(86362001)(6916009)(52536014)(5660300002)(55016002)(8676002)(316002)(36900700001);
+ DIR:OUT; SFP:1102; 
+X-OriginatorOrg: HCL.COM
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Mar 2021 06:16:38.9503 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e2ca7416-362c-4f38-7dd5-08d8e1f9bc55
+X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.51];
+ Helo=[APC01-PU1-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: HK2APC01FT058.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR04MB4528
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -140,375 +176,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---------------0BD4431E352BD64A0ABD2DD3
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-Hi,
-
-On 05/02/2021 09:27, Troy Lee wrote:
->
-> Hi Vinothkumar,
->
-> Please refer to the following two changes in Gerrit:
->
->   * https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/39343
->     <https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/39343>
->   * https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/39344
->     <https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/39344>
->
-Are these changes merged? I can't access these links.
->
->  *
->
-> Thanks,
->
-> Troy Lee
->
-> *From:* openbmc 
-> <openbmc-bounces+troy_lee=aspeedtech.com@lists.ozlabs.org> *On Behalf 
-> Of *VINOTHKUMAR RK
-> *Sent:* Thursday, February 4, 2021 8:28 PM
-> *To:* openbmc@lists.ozlabs.org
-> *Subject:* evb-ast2600: Getting some build errors - 'u-boot.bin' is 
-> too large!'
->
-> Hi,
->
-> I'm trying to build for evb-ast2600 platform, but it doesn't succeed. 
-> Please help.
->
-> Build command: (fresh checkout and build)
->
-> TEMPLATECONF=meta-evb/meta-evb-aspeed/meta-evb-ast2600/conf . openbmc-env
-> bitbake obmc-phosphor-image
->
-> Branch details:
->
-> commit 7dc2f7a38dccb3d87a9b79d0a66b25da1027a72f
->
-> Error Log:
->
-> Loading cache: 100% |                                   | ETA:  --:--:--
-> Loaded 0 entries from dependency cache.
-> Parsing recipes: 100% 
-> |########################################################################################################################################################################| 
-> Time: 0:00:44
-> Parsing of 2424 .bb files complete (0 cached, 2424 parsed). 3683 
-> targets, 362 skipped, 0 masked, 0 errors.
-> WARNING: No bb files in default matched 
-> BBFILE_PATTERN_meta-evb-ast2600 
-> '^/home/vinoth/project/openbmc/meta-evb/meta-evb-aspeed/meta-evb-ast2600/'
-> NOTE: Resolving any missing task queue dependencies
->
-> Build Configuration:
-> BB_VERSION           = "1.49.0"
-> BUILD_SYS            = "x86_64-linux"
-> NATIVELSBSTRING      = "ubuntu-20.04"
-> TARGET_SYS           = "arm-openbmc-linux-gnueabi"
-> MACHINE              = "evb-ast2600"
-> DISTRO               = "openbmc-phosphor"
-> DISTRO_VERSION       = "0.1.0"
-> TUNE_FEATURES        = "arm armv7a vfp vfpv4d16 callconvention-hard"
-> TARGET_FPU           = "hard"
-> meta
-> meta-poky
-> meta-oe
-> meta-networking
-> meta-python
-> meta-phosphor
-> meta-aspeed
-> meta-evb-ast2600     = "master:7dc2f7a38dccb3d87a9b79d0a66b25da1027a72f"
->
-> Initialising tasks: 100% 
-> |#####################################################################################################################################################################| 
-> Time: 0:00:03
-> Sstate summary: Wanted 1378 Found 939 Missed 439 Current 0 (68% match, 
-> 0% complete)
-> NOTE: Executing Tasks
-> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 
-> do_kernel_metadata: Feature 'phosphor-gpio-keys' not found, but 
-> KERNEL_DANGLING_FEATURES_WARN_ONLY is set
-> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 
-> do_kernel_metadata: This may cause runtime issues, dropping feature 
-> and allowing configuration to continue
-> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 
-> do_kernel_metadata: Feature 'phosphor-vlan' not found, but 
-> KERNEL_DANGLING_FEATURES_WARN_ONLY is set
-> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 
-> do_kernel_metadata: This may cause runtime issues, dropping feature 
-> and allowing configuration to continue
-> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 
-> do_kernel_configme: Feature 'phosphor-gpio-keys' not found, but 
-> KERNEL_DANGLING_FEATURES_WARN_ONLY is set
-> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 
-> do_kernel_configme: This may cause runtime issues, dropping feature 
-> and allowing configuration to continue
-> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 
-> do_kernel_configme: Feature 'phosphor-vlan' not found, but 
-> KERNEL_DANGLING_FEATURES_WARN_ONLY is set
-> WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0 
-> do_kernel_configme: This may cause runtime issues, dropping feature 
-> and allowing configuration to continue
-> WARNING: obmc-phosphor-sysd-1.0-r1 do_package_qa: QA Issue: 
-> obmc-phosphor-sysd: SRC_URI uses PN not BPN [src-uri-bad]
-> ERROR: obmc-phosphor-image-1.0-r0 do_generate_static: Image 
-> '/home/vinoth/project/openbmc/build/tmp/deploy/images/evb-ast2600/u-boot.bin' 
-> is too large!
-> ERROR: Logfile of failure stored in: 
-> /home/vinoth/project/openbmc/build/tmp/work/evb_ast2600-openbmc-linux-gnueabi/obmc-phosphor-image/1.0-r0/temp/log.do_generate_static.2176796
-> ERROR: Task 
-> (/home/vinoth/project/openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:do_generate_static) 
-> failed with exit code '1'
-> NOTE: Tasks Summary: Attempted 4041 tasks of which 2680 didn't need to 
-> be rerun and 1 failed.
->
-> Summary: 1 task failed:
-> /home/vinoth/project/openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:do_generate_static
-> Summary: There were 10 WARNING messages shown.
-> Summary: There was 1 ERROR message shown, returning a non-zero exit code.
->
-> Regards,
->
-> VINOTHKUMAR RK
->
-
---------------0BD4431E352BD64A0ABD2DD3
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body>
-    <p>Hi,<br>
-    </p>
-    <div class="moz-cite-prefix">On 05/02/2021 09:27, Troy Lee wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:PS1PR06MB2600DD0B6A4F3F30C771342A8AB29@PS1PR06MB2600.apcprd06.prod.outlook.com">
-      
-      <meta name="Generator" content="Microsoft Word 15 (filtered
-        medium)">
-      <style>@font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}@font-face
-	{font-family:新細明體;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}@font-face
-	{font-family:"\@新細明體";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{mso-style-priority:34;
-	margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:0cm;
-	margin-left:36.0pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}span.EmailStyle18
-	{mso-style-type:personal-reply;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}div.WordSection1
-	{page:WordSection1;}ol
-	{margin-bottom:0cm;}ul
-	{margin-bottom:0cm;}</style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext="edit" spidmax="1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext="edit">
-<o:idmap v:ext="edit" data="1" />
-</o:shapelayout></xml><![endif]-->
-      <div class="WordSection1">
-        <p class="MsoNormal">Hi Vinothkumar,<o:p></o:p></p>
-        <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-        <p class="MsoNormal">Please refer to the following two changes
-          in Gerrit:<o:p></o:p></p>
-        <ul style="margin-top:0cm" type="disc">
-          <li class="MsoListParagraph" style="margin-left:0cm;mso-list:l0 level1 lfo1"><a href="https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/39343" moz-do-not-send="true">https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/39343</a><o:p></o:p></li>
-          <li class="MsoListParagraph" style="margin-left:0cm;mso-list:l0 level1 lfo1"><a href="https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/39344" moz-do-not-send="true">https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/39344</a></li>
-        </ul>
-      </div>
-    </blockquote>
-    Are these changes merged? I can't access these links. <br>
-    <blockquote type="cite" cite="mid:PS1PR06MB2600DD0B6A4F3F30C771342A8AB29@PS1PR06MB2600.apcprd06.prod.outlook.com">
-      <div class="WordSection1">
-        <ul style="margin-top:0cm" type="disc">
-          <li class="MsoListParagraph" style="margin-left:0cm;mso-list:l0 level1 lfo1"><o:p></o:p></li>
-        </ul>
-        <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-        <p class="MsoNormal">Thanks,<o:p></o:p></p>
-        <p class="MsoNormal">Troy Lee<o:p></o:p></p>
-        <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-        <div style="border:none;border-top:solid #E1E1E1
-          1.0pt;padding:3.0pt 0cm 0cm 0cm">
-          <p class="MsoNormal"><b>From:</b> openbmc
-            <a class="moz-txt-link-rfc2396E" href="mailto:openbmc-bounces+troy_lee=aspeedtech.com@lists.ozlabs.org">&lt;openbmc-bounces+troy_lee=aspeedtech.com@lists.ozlabs.org&gt;</a>
-            <b>On Behalf Of </b>VINOTHKUMAR RK<br>
-            <b>Sent:</b> Thursday, February 4, 2021 8:28 PM<br>
-            <b>To:</b> <a class="moz-txt-link-abbreviated" href="mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a><br>
-            <b>Subject:</b> evb-ast2600: Getting some build errors -
-            'u-boot.bin' is too large!'<o:p></o:p></p>
-        </div>
-        <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-        <div>
-          <p class="MsoNormal">Hi,<o:p></o:p></p>
-          <div>
-            <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal">I'm trying to build for evb-ast2600
-              platform, but it doesn't succeed. Please help.<o:p></o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal">Build command: (fresh checkout and
-              build)<o:p></o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal">TEMPLATECONF=meta-evb/meta-evb-aspeed/meta-evb-ast2600/conf
-              . openbmc-env<br>
-              bitbake obmc-phosphor-image<o:p></o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal">Branch details:<o:p></o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal">commit
-              7dc2f7a38dccb3d87a9b79d0a66b25da1027a72f&nbsp;<o:p></o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal">Error Log:<o:p></o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal">Loading cache: 100% | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | ETA: &nbsp;--:--:--<br>
-              Loaded 0 entries from dependency cache.<br>
-              Parsing recipes: 100%
-|########################################################################################################################################################################|
-              Time: 0:00:44<br>
-              Parsing of 2424 .bb files complete (0 cached, 2424
-              parsed). 3683 targets, 362 skipped, 0 masked, 0 errors.<br>
-              WARNING: No bb files in default matched
-              BBFILE_PATTERN_meta-evb-ast2600
-'^/home/vinoth/project/openbmc/meta-evb/meta-evb-aspeed/meta-evb-ast2600/'<br>
-              NOTE: Resolving any missing task queue dependencies<br>
-              <br>
-              Build Configuration:<br>
-              BB_VERSION &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; = &quot;1.49.0&quot;<br>
-              BUILD_SYS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;= &quot;x86_64-linux&quot;<br>
-              NATIVELSBSTRING &nbsp; &nbsp; &nbsp;= &quot;ubuntu-20.04&quot;<br>
-              TARGET_SYS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; = &quot;arm-openbmc-linux-gnueabi&quot;<br>
-              MACHINE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;= &quot;evb-ast2600&quot;<br>
-              DISTRO &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; = &quot;openbmc-phosphor&quot;<br>
-              DISTRO_VERSION &nbsp; &nbsp; &nbsp; = &quot;0.1.0&quot;<br>
-              TUNE_FEATURES &nbsp; &nbsp; &nbsp; &nbsp;= &quot;arm armv7a vfp vfpv4d16
-              callconvention-hard&quot;<br>
-              TARGET_FPU &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; = &quot;hard&quot;<br>
-              meta &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br>
-              meta-poky &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br>
-              meta-oe &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br>
-              meta-networking &nbsp; &nbsp; &nbsp;<br>
-              meta-python &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br>
-              meta-phosphor &nbsp; &nbsp; &nbsp; &nbsp;<br>
-              meta-aspeed &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br>
-              meta-evb-ast2600 &nbsp; &nbsp; =
-              &quot;master:7dc2f7a38dccb3d87a9b79d0a66b25da1027a72f&quot;<br>
-              <br>
-              Initialising tasks: 100%
-|#####################################################################################################################################################################|
-              Time: 0:00:03<br>
-              Sstate summary: Wanted 1378 Found 939 Missed 439 Current 0
-              (68% match, 0% complete)<br>
-              NOTE: Executing Tasks<br>
-              WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0
-              do_kernel_metadata: Feature 'phosphor-gpio-keys' not
-              found, but KERNEL_DANGLING_FEATURES_WARN_ONLY is set<br>
-              WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0
-              do_kernel_metadata: This may cause runtime issues,
-              dropping feature and allowing configuration to continue<br>
-              WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0
-              do_kernel_metadata: Feature 'phosphor-vlan' not found, but
-              KERNEL_DANGLING_FEATURES_WARN_ONLY is set<br>
-              WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0
-              do_kernel_metadata: This may cause runtime issues,
-              dropping feature and allowing configuration to continue<br>
-              WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0
-              do_kernel_configme: Feature 'phosphor-gpio-keys' not
-              found, but KERNEL_DANGLING_FEATURES_WARN_ONLY is set<br>
-              WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0
-              do_kernel_configme: This may cause runtime issues,
-              dropping feature and allowing configuration to continue<br>
-              WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0
-              do_kernel_configme: Feature 'phosphor-vlan' not found, but
-              KERNEL_DANGLING_FEATURES_WARN_ONLY is set<br>
-              WARNING: linux-aspeed-5.8.17+gitAUTOINC+3cc95ae407-r0
-              do_kernel_configme: This may cause runtime issues,
-              dropping feature and allowing configuration to continue<br>
-              WARNING: obmc-phosphor-sysd-1.0-r1 do_package_qa: QA
-              Issue: obmc-phosphor-sysd: SRC_URI uses PN not BPN
-              [src-uri-bad]<br>
-              ERROR: obmc-phosphor-image-1.0-r0 do_generate_static:
-              Image
-'/home/vinoth/project/openbmc/build/tmp/deploy/images/evb-ast2600/u-boot.bin'
-              is too large!<br>
-              ERROR: Logfile of failure stored in:
-/home/vinoth/project/openbmc/build/tmp/work/evb_ast2600-openbmc-linux-gnueabi/obmc-phosphor-image/1.0-r0/temp/log.do_generate_static.2176796<br>
-              ERROR: Task
-(/home/vinoth/project/openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:do_generate_static)
-              failed with exit code '1'<br>
-              NOTE: Tasks Summary: Attempted 4041 tasks of which 2680
-              didn't need to be rerun and 1 failed.<br>
-              <br>
-              Summary: 1 task failed:<br>
-              &nbsp;
-/home/vinoth/project/openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:do_generate_static<br>
-              Summary: There were 10 WARNING messages shown.<br>
-              Summary: There was 1 ERROR message shown, returning a
-              non-zero exit code.<o:p></o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal">Regards,<o:p></o:p></p>
-          </div>
-          <div>
-            <p class="MsoNormal">VINOTHKUMAR RK<o:p></o:p></p>
-          </div>
-        </div>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------0BD4431E352BD64A0ABD2DD3--
+Q2xhc3NpZmljYXRpb246IFB1YmxpYw0KDQpIaSBFZCwNCg0KSW4gdGhlIGJlbG93IGxpbmssIFBY
+RTE0MTBDVlIgYW5kIEFETTEyNzhIU0MgYXJlIHVzaW5nIHRoZSBzYW1lIHJlYWRpbmcgZm9ybWF0
+Lg0KSSBhbSBub3QgYWJsZSB0byBmaW5kIGFueSBpbmZvcm1hdGlvbiBvbiBQWEUxNDEwQ1ZSLiBJ
+ZiB0aGVyZSBpcyBhbnkgc3BlYyBhdmFpbGFibGUsIGNvdWxkIHlvdSBwbGVhc2Ugc2hhcmUgaXQu
+DQpJdCB3aWxsIGJlIGhlbHBmdWwgdG8gYW5hbHl6ZSBib3RoIHRoZSBzcGVjcyBhbmQgZml4IHRo
+ZSBwcm9ibGVtLg0KDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9kYnVzLXNlbnNvcnMvYmxv
+Yi9tYXN0ZXIvc3JjL0lwbWJTZW5zb3IuY3BwI0wxNDQNCg0KUmVnYXJkcywNCkpheWFzaHJlZQ0K
+DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBFZCBUYW5vdXMgPGVkdGFub3Vz
+QGdvb2dsZS5jb20+IA0KU2VudDogRnJpZGF5LCBGZWJydWFyeSAyNiwgMjAyMSA5OjU3IFBNDQpU
+bzogSmF5YXNocmVlIEQgPGpheWFzaHJlZS1kQGhjbC5jb20+DQpDYzogb3BlbmJtY0BsaXN0cy5v
+emxhYnMub3JnDQpTdWJqZWN0OiBSZTogTmVnYXRpdmUgdmFsdWUgcmV0dXJucyBmb3Igc2Vuc29y
+IGluIHRpb2dhcGFzcw0KDQpbQ0FVVElPTjogVGhpcyBFbWFpbCBpcyBmcm9tIG91dHNpZGUgdGhl
+IE9yZ2FuaXphdGlvbi4gVW5sZXNzIHlvdSB0cnVzdCB0aGUgc2VuZGVyLCBEb27igJl0IGNsaWNr
+IGxpbmtzIG9yIG9wZW4gYXR0YWNobWVudHMgYXMgaXQgbWF5IGJlIGEgUGhpc2hpbmcgZW1haWws
+IHdoaWNoIGNhbiBzdGVhbCB5b3VyIEluZm9ybWF0aW9uIGFuZCBjb21wcm9taXNlIHlvdXIgQ29t
+cHV0ZXIuXQ0KDQpPbiBGcmksIEZlYiAyNiwgMjAyMSBhdCAxMjo1NSBBTSBKYXlhc2hyZWUgRCA8
+amF5YXNocmVlLWRAaGNsLmNvbT4gd3JvdGU6DQo+DQo+IENsYXNzaWZpY2F0aW9uOiBQdWJsaWMN
+Cj4NCj4gSGkgVGVhbSwNCj4NCj4NCj4NCj4gUmVjZW50bHksIEkgaGF2ZSB0ZXN0ZWQgc2Vuc29y
+cyBmb3IgdGlvZ2FwYXNzLCBpbiB3aGljaCBvbmUgc2Vuc29yIHJldHVybnMgbmVnYXRpdmUgdmFs
+dWUuDQo+DQo+IEFmdGVyIGFuYWx5c2luZyB0aGUgY29kZSBpbiB0aGUgZGJ1cy1zZW5zb3JzIHJl
+cG8sIEkgZm91bmQgdGhlIGZvbGxvd2luZyBpc3N1ZS4NCj4NCj4NCj4NCj4gZGJ1cy1zZW5zb3Jz
+L0lwbWJTZW5zb3IuY3BwIGF0IG1hc3RlciDCtyBvcGVuYm1jL2RidXMtc2Vuc29ycyANCj4gKGdp
+dGh1Yi5jb20pDQo+DQo+DQo+DQo+IEZyb20gdGhlIGFib3ZlIGxpbmssIFdlIG5lZWQgb25seSBi
+ZWxvdyBsaW5lIGluIHRoZSBjb2RlIHRvIHByb2Nlc3MgdGhlIEhTQyBzZW5zb3JzIHZhbHVlIGZv
+ciB0aW9nYXBhc3MuDQo+DQo+DQo+DQo+IGludDE2X3QgdmFsdWUgPSAoKGRhdGFbNF0gPDwgOCkg
+fCBkYXRhWzNdKTsNCj4NCj4NCj4NCj4gU2luY2UgdGhlIGJlbG93IGxvZ2ljIGlzIGFkZGVkLCB0
+aGUgdmFsdWVzIGdldCBzaGlmdGVkIGFuZCBnZXR0aW5nIG5lZ2F0aXZlIHZhbHVlcyBhcyBvdXRw
+dXQuDQo+DQo+DQo+DQo+IGNvbnN0ZXhwciBjb25zdCBzaXplX3Qgc2hpZnQgPSAxNiAtIDExOyAv
+LyAxMWJpdCBpbnRvIDE2Yml0DQo+DQo+IHZhbHVlIDw8PSBzaGlmdDsNCj4NCj4gdmFsdWUgPj49
+IHNoaWZ0Ow0KPg0KPg0KPg0KPiBDb3VsZCB5b3UgcGxlYXNlIHN1Z2dlc3QgYW55IGlkZWEgdG8g
+cmVzb2x2ZSB0aGlzIGlzc3VlLg0KDQpJIGhhdmVuJ3QgbG9va2VkIGF0IHRoaXMgaW4gZGV0YWls
+LCBidXQgd2Ugc2hvdWxkIGZvbGxvdyB3aGF0ZXZlciB0aGUgc3BlYyBzYXlzIGhlcmUuICBJZiB3
+aG9tZXZlciB3cm90ZSB0aGlzIG9yaWdpbmFsbHkgcHV0IGluIHRoZSB3cm9uZyBtYXRoICh3aGlj
+aCBzZWVtcyBsaWtlbHksIGdpdmVuIHRoZXkgd2VyZSBpbXBsZW1lbnRpbmcgNCB0eXBlcyBhbmQg
+cHJvYmFibHkgb25seSB1c2luZyBvbmUpIHRoZW4gd2Ugc2hvdWxkIGp1c3QgZ2V0IGl0IGZpeGVk
+IGFuZCBkbyB3aGF0IHRoZSBzcGVjIHNheXMuDQoNCj4NCj4NCj4NCj4gUmVnYXJkcywNCj4NCj4g
+SmF5YXNocmVlDQo+DQo+DQo+DQo+IDo6RElTQ0xBSU1FUjo6DQo+IF9fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fDQo+IFRoZSBjb250ZW50cyBvZiB0aGlzIGUtbWFpbCBhbmQgYW55IGF0
+dGFjaG1lbnQocykgYXJlIGNvbmZpZGVudGlhbCBhbmQgaW50ZW5kZWQgZm9yIHRoZSBuYW1lZCBy
+ZWNpcGllbnQocykgb25seS4gRS1tYWlsIHRyYW5zbWlzc2lvbiBpcyBub3QgZ3VhcmFudGVlZCB0
+byBiZSBzZWN1cmUgb3IgZXJyb3ItZnJlZSBhcyBpbmZvcm1hdGlvbiBjb3VsZCBiZSBpbnRlcmNl
+cHRlZCwgY29ycnVwdGVkLCBsb3N0LCBkZXN0cm95ZWQsIGFycml2ZSBsYXRlIG9yIGluY29tcGxl
+dGUsIG9yIG1heSBjb250YWluIHZpcnVzZXMgaW4gdHJhbnNtaXNzaW9uLiBUaGUgZSBtYWlsIGFu
+ZCBpdHMgY29udGVudHMgKHdpdGggb3Igd2l0aG91dCByZWZlcnJlZCBlcnJvcnMpIHNoYWxsIHRo
+ZXJlZm9yZSBub3QgYXR0YWNoIGFueSBsaWFiaWxpdHkgb24gdGhlIG9yaWdpbmF0b3Igb3IgSENM
+IG9yIGl0cyBhZmZpbGlhdGVzLiBWaWV3cyBvciBvcGluaW9ucywgaWYgYW55LCBwcmVzZW50ZWQg
+aW4gdGhpcyBlbWFpbCBhcmUgc29sZWx5IHRob3NlIG9mIHRoZSBhdXRob3IgYW5kIG1heSBub3Qg
+bmVjZXNzYXJpbHkgcmVmbGVjdCB0aGUgdmlld3Mgb3Igb3BpbmlvbnMgb2YgSENMIG9yIGl0cyBh
+ZmZpbGlhdGVzLiBBbnkgZm9ybSBvZiByZXByb2R1Y3Rpb24sIGRpc3NlbWluYXRpb24sIGNvcHlp
+bmcsIGRpc2Nsb3N1cmUsIG1vZGlmaWNhdGlvbiwgZGlzdHJpYnV0aW9uIGFuZCAvIG9yIHB1Ymxp
+Y2F0aW9uIG9mIHRoaXMgbWVzc2FnZSB3aXRob3V0IHRoZSBwcmlvciB3cml0dGVuIGNvbnNlbnQg
+b2YgYXV0aG9yaXplZCByZXByZXNlbnRhdGl2ZSBvZiBIQ0wgaXMgc3RyaWN0bHkgcHJvaGliaXRl
+ZC4gSWYgeW91IGhhdmUgcmVjZWl2ZWQgdGhpcyBlbWFpbCBpbiBlcnJvciBwbGVhc2UgZGVsZXRl
+IGl0IGFuZCBub3RpZnkgdGhlIHNlbmRlciBpbW1lZGlhdGVseS4gQmVmb3JlIG9wZW5pbmcgYW55
+IGVtYWlsIGFuZC9vciBhdHRhY2htZW50cywgcGxlYXNlIGNoZWNrIHRoZW0gZm9yIHZpcnVzZXMg
+YW5kIG90aGVyIGRlZmVjdHMuDQo+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQo=
