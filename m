@@ -1,95 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30691331A51
-	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 23:42:16 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 773AA331A7B
+	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 23:56:23 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DvYHp0r0sz3cRF
-	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 09:42:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DvYc53lwSz3cQH
+	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 09:56:21 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=XDqNyYdQ;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=aiqt4A7b;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZvmvzN75;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
- helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=XDqNyYdQ; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=aiqt4A7b; 
- dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (unknown [66.111.4.27])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=ZvmvzN75; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DvYHV30jQz2ysx
- for <openbmc@lists.ozlabs.org>; Tue,  9 Mar 2021 09:41:57 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 95B065C0103;
- Mon,  8 Mar 2021 17:41:45 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Mon, 08 Mar 2021 17:41:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=P5rIS/1AuLGFmSR4fbFDERxUSSw
- Lum6atkYz596iBbM=; b=XDqNyYdQolKCyft/TbV5Orjy8qR1lwzQc2aXI62yf6y
- xpC8lw9YZgJU6j5W3A0JNHJuzF3wYPi/f1K9NM1tyNKadC/xeOgPMrEeVz3DoOPg
- D6zAh+bulyZlMeBnAZFQd4crkx6cqcgHDUu7ZAKhjfhDGwa+a65mtc/ZgG4gl9bV
- zu+wS9yU/AoOfd4j2EuknbTA5C057p5uSgEDD4AHdnjWYIb3blwyhprVPrgGpbxB
- K48FvXpsHeWbC3ILSI2e7hYw9J0G9ealHv7uYUaEw7bLUtU8hpR8RJo7UF43vRem
- CzXPG98R5tRNCu4C9fg+L0E0GaJwaHAZaAwvHjQmubw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=P5rIS/
- 1AuLGFmSR4fbFDERxUSSwLum6atkYz596iBbM=; b=aiqt4A7by5y5NWVx+LssMr
- 1InIep0MebB7UR6mY45tgVxC/rrm189+ngrJiNKtaRrXqR7LUyh+A/KtkhglV7b0
- 5gZ2BaBK7hkXhBPwZ4aoEncNyfV+yIUvLcXYHIZsVrU2IMunt4/W52NNwjkLUN1S
- 1QtNvWQmTkm5DA/sYc9VGmsqSmZ/36kFH8qy8jRc8xDwApXOWFCcTSfqWKxgh7j5
- UuO2BJ6QT/2hNcsTq7+lzn0ytpAY6rJog31hXCA9kIfJe5JWQcisoGyM65dxPJwl
- 5ak7UNLkh0HlHEcjsUqzdMsPOlmikGEy28Gyqd2y8TZTa/uKsDkYsGl9NdxXalbQ
- ==
-X-ME-Sender: <xms:J6hGYCkzPCfx9cqlZMbTMZW7JsHaTaVLbGzoPYZVi46l3nRLktDkxQ>
- <xme:J6hGYJ26WsooCFI64vgiBYUq8ocsHiTFGw6-WjlvaTppGJslFM1GzwhfSwghB3FJS
- 7EwMo7rhz3-keYYdl0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudduhedgtdduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- udenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheptdefjeetuedtfeelfeeiieevveek
- geeuvedtveefiedvhfeiueeugffhkeelvdfhnecukfhppeejiedrvdehtddrkeegrddvfe
- einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
- thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:J6hGYArbZtIM499HHHgsdGamKRgq8vOPBlUMqV2lHzVQcuCLFjWwBg>
- <xmx:J6hGYGmrsdy3JJUjbrPZ0eZBE8_2wdfEbIYS-jvhETcPMwjIQOwxVQ>
- <xmx:J6hGYA0WtuZ4SXpQQZ87g2JdBDY5LhEV3c2nuwMHF-r7pumDpKRXCg>
- <xmx:KahGYBjEDlsZ9fj8DOctBwyuWVLdIB474V0MawcwoStAG6S3hknu5g>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 7F3A1240057;
- Mon,  8 Mar 2021 17:41:43 -0500 (EST)
-Date: Mon, 8 Mar 2021 16:41:40 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Re: Request new repo for IBM-specific code - pam_2fa discussion
-Message-ID: <YEaoJH+TP0A79tfM@heinlein>
-References: <b8af3438-f85a-cb82-c88c-9c4e120399e9@linux.ibm.com>
- <YEKDY6+zfW5Uuqkl@heinlein>
- <dc7eb87e-c13f-dcb7-7b98-dbeb382d7caa@linux.ibm.com>
- <YEZwz6C5uGk8Vobs@heinlein>
- <15f3a43c-d876-38e0-8397-9db8a3896d38@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DvYYv64zHz30RD
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Mar 2021 09:54:26 +1100 (AEDT)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 128Mc4DI080209; Mon, 8 Mar 2021 17:54:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=OizCEhlJADZ7k7BN0suUoIBsC6pWlbVYXPvwv0OHcT4=;
+ b=ZvmvzN750wTNMnLcGG7an8iexkubRqwexzPWYitmi5/qvp0ANQpmXkUukBQJQPDTNQmO
+ FEjgY8lLnlnUEx20Y6+QQExI7CBIoFH3gGheyNIK8VoWQrpZ30YLibEKlaWJqWJzXaxj
+ wwAti7M09o4IRPqQYQaxNn03NTfR1FKL+HIFbl7n2JMuGkX2V0bMS48G7UbfNxInNV+f
+ 6croaz0zsgApxur442zab3UXqxYUGzTpKeHgHqywyIP5zuLD1U02R4vCTPnbzR32De9m
+ hrfWQCTidFvGY1U1/eQJaJ0e+EFpp7XIagzxB3i3pcd6sN/MJs4LilsOvkRF5Ls+oBAH xQ== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 37577ggg6u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Mar 2021 17:54:22 -0500
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 128MptcM016217;
+ Mon, 8 Mar 2021 22:54:21 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma01dal.us.ibm.com with ESMTP id 3741c9pfuf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Mar 2021 22:54:21 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 128MsKIQ14156176
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 8 Mar 2021 22:54:20 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C02AC605D;
+ Mon,  8 Mar 2021 22:54:20 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2A76BC6057;
+ Mon,  8 Mar 2021 22:54:20 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.41.147])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon,  8 Mar 2021 22:54:19 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.10 00/35] Rainier and Everest system updates
+Date: Mon,  8 Mar 2021 16:53:44 -0600
+Message-Id: <20210308225419.46530-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="wZy9NCa6qb3TjtRb"
-Content-Disposition: inline
-In-Reply-To: <15f3a43c-d876-38e0-8397-9db8a3896d38@linux.ibm.com>
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-03-08_20:2021-03-08,
+ 2021-03-08 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ mlxlogscore=999 impostorscore=0 suspectscore=0 bulkscore=0
+ priorityscore=1501 clxscore=1015 mlxscore=0 phishscore=0 spamscore=0
+ malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2009150000 definitions=main-2103080118
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,90 +94,106 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This lengthy series updates device trees and drivers for the AST2600
+systems Rainier and Everest.
 
---wZy9NCa6qb3TjtRb
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Patches 1-12 update the Rainier device tree. These changes are well
+tested.
+Patches 13-15 provide some eMMC improvements.
+Patch 16 fixes an observed problem on the Tacoma system.
+Patches 17-24 update the Everest device tree. These changes are
+somewhat tested in simulation and minimally tested on hardware.
+Patch 25 adds device trees for the second version of the Rainier
+BMC board.
+Patches 26-35 are device driver fixes and improvments. Some have
+already been accepted in linux-next.
 
-On Mon, Mar 08, 2021 at 02:30:26PM -0600, Joseph Reynolds wrote:
-> Patrick, thanks for that.=A0 I was unaware of the pam_2fa project.=A0 I=
-=20
-> agree this could a be a good way for BMCs to get 2FA.
->=20
-> However, as I tried to state in this email thread, the IBM firmware=20
-> service organization requires that all credentials be brought onto the=20
-> work site because some sites have no way to communicate with an external=
-=20
-> server.=A0 That is, once you are on a customer site, you might not be abl=
-e=20
-> to call into IBM (or even have access to a phone).=A0 Although this is no=
-t=20
-> typical, I don't think it is unique to IBM.=A0 What is done other secure=
-=20
-> installations?
+Alpana Kumari (3):
+  ARM: dts: aspeed: rainier: Add presence GPIOs
+  ARM: dts: aspeed: everest: GPIOs support
+  ARM: dts: aspeed: rainier: Support pass 2 planar
 
-I might have poorly explained my thought process before.  I know
-*normal* 2FA requires remote access to the 2FA server.  The PAM_2FA
-allows configuration of the URL and there is no reason why the URL
-cannot be a localhost implementation of the 2FA protocol.  All the
-protocol does is POST to the URL and make a decision based on the HTTP
-return code.
+Andrew Jeffery (8):
+  dt: bindings: mmc: Add phase control properties for the Aspeed SDHCI
+  mmc: sdhci: aspeed: Expose data sample phase delay tuning
+  ARM: dts: aspeed: tacoma: Add data sample phase delay for eMMC
+  i2c: Allow throttling of transfers to client devices
+  pmbus: (ucd9000) Throttle SMBus transfers to avoid poor behaviour
+  pmbus: (core) Add a one-shot retry in pmbus_set_page()
+  pmbus: (max31785) Add a local pmbus_set_page() implementation
+  pmbus: (max31785) Retry enabling fans after writing MFR_FAN_CONFIG
 
-Proposal:
-    * Use 'pam_2fa' using Yubikey protocol to point at a 'localhost' URL.
-    * Implement Yubikey 2FA protocol (described in pam_2fa
-      documentation) in a small daemon on the BMC, specific for ACF
-      certificates.
-        - 2FA request will get the ACF password.
-        - ACF daemon hashes password, checks with installed certificate
-          and returns 4xx/2xx codes as appropriate.
-    * Set PAM config to use 'pam_2fa' (pointed at localhost) for IBM
-      service users.
+Brandon Wyman (2):
+  ARM: dts: aspeed: rainier: Add gpio-keys-polled for fans
+  ARM: dts: aspeed: everest: Add power supply i2c devices
 
-In summary, the service accounts can have a static primary password AND
-an ACF-secured secondary password which is checked with the standard 2FA
-protocol.
+Dylan Hung (1):
+  ftgmac100: Restart MAC HW once
 
-> The IBM ACF design in terms of 2FA is:
-=2E..
-> 2. The ACF has no secrets (other than the password hash stored within=20
-> it) and can be installed onto the BMC by the admin or the service rep.
+Eddie James (7):
+  ARM: dts: aspeed: rainier: Add additional processor CFAMs
+  ARM: dts: aspeed: rainier 4U: Fix fan configuration
+  ARM: dts: aspeed: tacoma: Remove CFAM reset GPIO
+  ARM: dts: Aspeed: Everest: Add FSI CFAMs and re-number engines
+  ARM: dts: Aspeed: Everest: Add RTC
+  hwmon: (pmbus) Add a PMBUS_NO_CAPABILITY platform data flag
+  hwmon: (pmbus/ibm-cffps) Set the PMBUS_NO_CAPABILITY flag
 
-Doesn't the service user have access you're not expecting the 'admin' to
-be able to have on your machines?  How do you ensure a compromised ACF
-cannot be replayed onto another machine?  With admin-level access it is
-fairly trivial to fake out the serial number.
+Jim Wright (1):
+  ARM: dts: aspeed: everest: Add UCD90320 power sequencer
 
-I might be misunderstanding something with "... or ther service rep".
-It seems like there is a gap in how the service rep would install
-something when the ACF is what gives them permissions to do the install?
+Joel Stanley (2):
+  ARM: dts: aspeed: rainier: Mark controllers as restricted
+  fsi: scom: Handle FSI2PIB timeout
 
---=20
-Patrick Williams
+Matthew Barth (3):
+  ARM: dts: aspeed: rainier: Set MAX31785 config
+  ARM: dts: Aspeed: Everest: Add max31785 fan controller device
+  ARM: dts: Aspeed: Everest: Add pca9552 fan presence
 
---wZy9NCa6qb3TjtRb
-Content-Type: application/pgp-signature; name="signature.asc"
+Milton Miller (1):
+  net/ncsi: Avoid channel_monitor hrtimer deadlock
 
------BEGIN PGP SIGNATURE-----
+PriyangaRamasamy (1):
+  ARM: dts: aspeed: Everest: Add I2C components
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmBGqCIACgkQqwNHzC0A
-wRkOBQ//df/whQsuITawtnE9IuIkViTIa1gWEKBt1TRgMsudqcflFEycn9zZ0UsW
-yvElMqgNM7/d3K24fSGDx0s+kK1fwhmkUJyKklsYXhszXpWZcZu40LhPWhxO0Yxf
-Hr7+bbUmISimFbHneLPQ9V48tFyxs6Hy9bdiwhrXKyfAEi4wQqTRW3hOGZ9Klb2S
-q0UmKQNOMP4rjk2zSzOLgBCHlTsZQ+Xb4xKjeq+5uerusYgBvBawG+v0pW9RZKRW
-d1l9JKzieC/0T3vUttq17wZVrchWaco1apo4BXEvW+G9kzpMfcINaB0OfSNsPnFO
-oK1YKerCQbIF8oqfDgirZYzD2xygVCizpivlw1bNAkh709tDsXNHbfSSaOpo029i
-HfqIFINen1AzesEkTNZ0nFulQVQdMUNrMgKsCCSWESocTGOIuRdJ0daRajK5lx1P
-DQBw0mMZgXrxvxeYXCUyaTXfAXbDqvZXZNj2qIJZY7eYAjCQb90SPgFFbWoBcW7C
-VYf5rSI7RMQX83CAGUHuQrf2b/NBeBiv2oAh+Etb339jmcJXYziUatEWhUOKWO3b
-OJVd3tisKFlKJDyrNqxl9+Y8AuuV5p3Uhz7As4OPrpxTiENtqvf4oikdNkCCZ9P9
-pF+nZZPf/PseERrW3px//ikX+0MWdTEpc+swl25aQPGJbQQGye0=
-=51cl
------END PGP SIGNATURE-----
+Vishwanatha Subbanna (6):
+  ARM: dts: aspeed: rainier: Add Operator Panel LEDs
+  ARM: dts: aspeed: rainier: Add directly controlled LEDs
+  ARM: dts: aspeed: rainier: Add leds that are off PCA9552
+  ARM: dts: aspeed: rainier: Add leds that are off pic16f882
+  ARM: dts: aspeed: rainier: Add leds on optional DASD cards
+  ARM: dts: aspeed: rainier: Add leds that are on optional PCI cable
+    cards
 
---wZy9NCa6qb3TjtRb--
+ .../devicetree/bindings/mmc/aspeed,sdhci.yaml |    8 +
+ arch/arm/boot/dts/Makefile                    |    2 +
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts  | 1756 +++++++++++-
+ .../boot/dts/aspeed-bmc-ibm-rainier-4u-v2.dts |  198 ++
+ .../boot/dts/aspeed-bmc-ibm-rainier-4u.dts    |   14 +
+ .../boot/dts/aspeed-bmc-ibm-rainier-v2.dts    |  198 ++
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts  | 2411 +++++++++++++++--
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts   |    3 +-
+ drivers/fsi/fsi-scom.c                        |   18 +
+ drivers/hwmon/pmbus/ibm-cffps.c               |    2 +-
+ drivers/hwmon/pmbus/max31785.c                |   55 +-
+ drivers/hwmon/pmbus/pmbus_core.c              |   39 +-
+ drivers/hwmon/pmbus/ucd9000.c                 |    4 +
+ drivers/i2c/i2c-core-base.c                   |    8 +-
+ drivers/i2c/i2c-core-smbus.c                  |  169 +-
+ drivers/i2c/i2c-core.h                        |   21 +
+ drivers/mmc/host/sdhci-of-aspeed.c            |   65 +-
+ drivers/net/ethernet/faraday/ftgmac100.c      |    1 +
+ include/linux/i2c.h                           |    5 +
+ include/linux/pmbus.h                         |    9 +
+ net/ncsi/ncsi-manage.c                        |   18 +-
+ 21 files changed, 4662 insertions(+), 342 deletions(-)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u-v2.dts
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-ibm-rainier-v2.dts
+
+-- 
+2.27.0
+
