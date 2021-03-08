@@ -1,14 +1,14 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C2FE331AD2
-	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 00:10:31 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEE3E331ABC
+	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 00:08:09 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DvYwP2hD8z3dnJ
-	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 10:10:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DvYsg6Gc8z3dC6
+	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 10:08:07 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=apyemrhQ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=CDuSzOzm;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,60 +18,60 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=apyemrhQ; dkim-atps=neutral
+ header.s=pp1 header.b=CDuSzOzm; dkim-atps=neutral
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
  [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DvYZ26XhXz3cQ0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DvYZ26BHxz3cJq
  for <openbmc@lists.ozlabs.org>; Tue,  9 Mar 2021 09:54:34 +1100 (AEDT)
 Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 128MYfdv060904; Mon, 8 Mar 2021 17:54:32 -0500
+ 128MYfpB060998; Mon, 8 Mar 2021 17:54:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=P1sjrZuoc+DHvVd3Og0hVYljjFgI26y0ukIq/pf50ek=;
- b=apyemrhQYCwgvhIFpLm3gegAoNaZjIqC9ESs/QBblKWlbd/hWi24LyBVebEOJ0ipuht1
- GCOPORFN7a4Q39Nj6lNnShZQ2h7ltjT0bHFtO3+GlQi+rHf+dop9fU6cql/uwYWaZvCa
- LQymyetSWDGkrBz31uQOwXAbLCnqWxBYmLco57gn6S1cDsikHnikj581X2BFcJTCvD3P
- rq3lb1lQA8EfwGM6jpT1SLngPizC2wILSjj9YBxVK6p8jxwmE1FRbTbeA9AQso0fLjGA
- XbYa/Uflh4b4/pTFogH9yV1yDJBp5dv0oFrU/nCj8XSyJHMIZ8G4zTGRxiPWbHj8W8J5 tg== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 375uwx9gsh-1
+ bh=ugQdmvdORSA40qsSnWl0TB6Ebq/yYT5pZxiRBYDdmsA=;
+ b=CDuSzOzm+rBC6BeMh7UhqrGIbU0Wuzr8LF3r1Y5e2PUzNpIpBvb7BA4Rp8lAU9g9K/Co
+ Tdoo1eb1ArbjBM43XABqA3gRrVvNaqbBwnuZ8FWrcs4RdABaNGArPd2vs6nH7pIAVCRW
+ Bh9t1o3bq5HhQ2jVEuuIttPGeXK/dpEJRvTtVMXCY38Gzdl1150Gv/rkjoE2AP+O7mJP
+ XkAflggBmmHgHriR88O4hkJkbIcRNJ3Vld+7VsmnX5zNXDQD4LE3iWEammyWzKBrMIrG
+ UigtiWHJvfLEfXVtct+gaTnObnEz6QC8gaPNUTsiqqlFTMkUHsbw5Vd+4aebXIIxPM6e dg== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 375uwx9gsf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 08 Mar 2021 17:54:32 -0500
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 128Mqr6d018106;
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 128MqqOW017839;
  Mon, 8 Mar 2021 22:54:31 GMT
 Received: from b03cxnp07028.gho.boulder.ibm.com
  (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
- by ppma02dal.us.ibm.com with ESMTP id 3741c96eug-1
+ by ppma05wdc.us.ibm.com with ESMTP id 3741c99w8y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 08 Mar 2021 22:54:31 +0000
 Received: from b03ledav006.gho.boulder.ibm.com
  (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
  by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 128MsUji21430650
+ 128MsULL23134614
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Mon, 8 Mar 2021 22:54:30 GMT
 Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 150ADC605A;
+ by IMSVA (Postfix) with ESMTP id 57354C6061;
  Mon,  8 Mar 2021 22:54:30 +0000 (GMT)
 Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DB9C4C6061;
- Mon,  8 Mar 2021 22:54:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 28791C605F;
+ Mon,  8 Mar 2021 22:54:30 +0000 (GMT)
 Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.41.147])
  by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
- Mon,  8 Mar 2021 22:54:29 +0000 (GMT)
+ Mon,  8 Mar 2021 22:54:30 +0000 (GMT)
 From: Eddie James <eajames@linux.ibm.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.10 33/35] pmbus: (core) Add a one-shot retry in
- pmbus_set_page()
-Date: Mon,  8 Mar 2021 16:54:17 -0600
-Message-Id: <20210308225419.46530-34-eajames@linux.ibm.com>
+Subject: [PATCH linux dev-5.10 34/35] pmbus: (max31785) Add a local
+ pmbus_set_page() implementation
+Date: Mon,  8 Mar 2021 16:54:18 -0600
+Message-Id: <20210308225419.46530-35-eajames@linux.ibm.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210308225419.46530-1-eajames@linux.ibm.com>
 References: <20210308225419.46530-1-eajames@linux.ibm.com>
@@ -103,74 +103,101 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Andrew Jeffery <andrew@aj.id.au>
 
-From extensive testing and tracing it was discovered that the MAX31785
-occasionally fails to switch pages despite ACK'ing the PAGE PMBus data
-write. I suspect this behaviour had been seen on other devices as well,
-as pmbus_set_page() already read-back the freshly set value and errored
-out if it wasn't what we requested.
+Extensive testing and tracing has shown that the MAX31785 is unreliable
+in the face of PAGE write commands, ACK'ing the PAGE request but
+reporting a value of 0 on some subsequent PAGE reads. The trace data
+suggests that a one-shot retry of the PAGE write is enough to get the
+requested value to stick.
 
-In the case of the MAX31785 it was shown that a one-shot retry was
-enough to get the PAGE write to stick if the inital command failed. To
-improve robustness, only error out if the one-shot retry also fails to
-stick.
+As we configure the device before registering with the PMBus core,
+centralise PAGE handling inside the driver and implement the one-shot
+retry semantics there.
 
 OpenBMC-Staging-Count: 1
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ drivers/hwmon/pmbus/max31785.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index 44c1a0a07509..dd4a09d18730 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -151,25 +151,34 @@ int pmbus_set_page(struct i2c_client *client, int page, int phase)
+diff --git a/drivers/hwmon/pmbus/max31785.c b/drivers/hwmon/pmbus/max31785.c
+index 5cfa7e97b489..1e021c38d507 100644
+--- a/drivers/hwmon/pmbus/max31785.c
++++ b/drivers/hwmon/pmbus/max31785.c
+@@ -362,6 +362,27 @@ static int max31785_write_word_data(struct i2c_client *client, int page,
+ 	return -ENXIO;
+ }
  
- 	if (!(data->info->func[page] & PMBUS_PAGE_VIRTUAL) &&
- 	    data->info->pages > 1 && page != data->currpage) {
-+		int i;
++static int max31785_pmbus_set_page(struct i2c_client *client, int page)
++{
++	int ret;
++	int i;
 +
- 		dev_dbg(&client->dev, "Want page %u, %u cached\n", page,
- 			data->currpage);
- 
--		rv = i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
--		if (rv < 0) {
-+		for (i = 0; i < 2; i++) {
- 			rv = i2c_smbus_write_byte_data(client, PMBUS_PAGE,
- 						       page);
--			dev_dbg(&client->dev,
--				"Failed to set page %u, performed one-shot retry %s: %d\n",
--				page, rv ? "and failed" : "with success", rv);
-+			if (rv)
-+				continue;
++	for (i = 0; i < 2; i++) {
++		ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
++		if (ret < 0)
++			return ret;
 +
-+			rv = i2c_smbus_read_byte_data(client, PMBUS_PAGE);
- 			if (rv < 0)
--				return rv;
--		}
-+				continue;
- 
--		rv = i2c_smbus_read_byte_data(client, PMBUS_PAGE);
--		if (rv < 0)
--			return rv;
-+			/* Success, exit loop */
-+			if (rv == page)
-+				break;
++		ret = max31785_i2c_smbus_read_byte_data(client, PMBUS_PAGE);
++		if (ret < 0)
++			return ret;
 +
-+			rv = i2c_smbus_read_byte_data(client, PMBUS_STATUS_CML);
-+			if (rv < 0)
-+				continue;
++		if (ret == page)
++			return 0;
++	}
 +
-+			if (rv & PB_CML_FAULT_INVALID_DATA)
-+				return -EIO;
-+		}
- 
--		if (rv != page)
-+		if (i == 2)
- 			return -EIO;
++	return -EIO;
++}
++
+ /*
+  * Returns negative error codes if an unrecoverable problem is detected, 0 if a
+  * recoverable problem is detected, or a positive value on success.
+@@ -392,7 +413,7 @@ static int max31785_of_fan_config(struct i2c_client *client,
+ 		return -ENXIO;
  	}
- 	data->currpage = page;
+ 
+-	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
++	ret = max31785_pmbus_set_page(client, page);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -599,7 +620,7 @@ static int max31785_of_tmp_config(struct i2c_client *client,
+ 		return -ENXIO;
+ 	}
+ 
+-	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
++	ret = max31785_pmbus_set_page(client, page);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -700,7 +721,7 @@ static int max31785_configure_dual_tach(struct i2c_client *client,
+ 	int i;
+ 
+ 	for (i = 0; i < MAX31785_NR_FAN_PAGES; i++) {
+-		ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, i);
++		ret = max31785_pmbus_set_page(client, i);
+ 		if (ret < 0)
+ 			return ret;
+ 
+@@ -741,7 +762,7 @@ static int max31785_probe(struct i2c_client *client)
+ 
+ 	*info = max31785_info;
+ 
+-	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, 255);
++	ret = max31785_pmbus_set_page(client, 255);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -785,8 +806,7 @@ static int max31785_probe(struct i2c_client *client)
+ 		if (!have_fan || fan_configured)
+ 			continue;
+ 
+-		ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE,
+-							 i);
++		ret = max31785_pmbus_set_page(client, i);
+ 		if (ret < 0)
+ 			return ret;
+ 
 -- 
 2.27.0
 
