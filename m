@@ -1,77 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B3B5331A8A
-	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 23:58:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEB5E331A8F
+	for <lists+openbmc@lfdr.de>; Mon,  8 Mar 2021 23:59:52 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DvYfr0dc8z3cjm
-	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 09:58:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DvYh65cjNz3dMC
+	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 09:59:50 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=g4EjBpMi;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ss+uD98J;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
  helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=g4EjBpMi; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.s=pp1 header.b=ss+uD98J; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DvYYw1RhTz3cKP
- for <openbmc@lists.ozlabs.org>; Tue,  9 Mar 2021 09:54:26 +1100 (AEDT)
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 128Mc28H080087; Mon, 8 Mar 2021 17:54:24 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DvYYw5GXPz30Qw
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Mar 2021 09:54:27 +1100 (AEDT)
+Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 128MXlNc173175; Mon, 8 Mar 2021 17:54:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=tpUYqazV3+Drywy60jwQAfVShmOD4D6/ziEHmOJ5Q78=;
- b=g4EjBpMi9+oAp5uKpiH8Sj90tS9jv7x5x+tBG8Vqbts2cCJPiwTKoDttd8x9sm8XD17N
- vIwrTIra7xyhsL+QAUqow5m1TkchzOy2CpLZFxIAo+ms1Bh+h40usNBFYEhacbRlKui9
- EiuboYzi1fl/Re98IjQtqhgETVGt9+5SfzFsACmNjqreRNrCttHhskeGzq4FDrPhwl7b
- KHTg7BE5dZG9OGIGvGi/q1l0207ALaohXm+p8hqAq+NLys2w4tbVIvahRrHxfP3w+9Bj
- LOsizU9KVDiAGzSnQ3NwEx+zZYG3+huA8uhut7iXLN4m6HIFW8SS4WK47C+yZ7EGmC5h 1Q== 
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0b-001b2d01.pphosted.com with ESMTP id 37577ggg78-1
+ bh=GOVt+pRUNw/AXqj6KIJXzYFtHqTQ7R1NgghuSC0S2+0=;
+ b=ss+uD98JI3vTgBEvwQ/EZLS4sAmgv9QhUDFKuMaOyCn4Po69CdXA+ez5ho6ZEY8MOwtU
+ tVg8X/K8QSqoGGxO2ZvyseUj/nUo4poGb1Ae+uCRGSKIitPgpYXr824jIHRg2XUzn1E3
+ L1lKjNxiLfch32TJbJxIlnvzByS45cO4hDSuRpx9xjkDz2kmTm3hRQ+td43u9s8E0RNY
+ Y2QVxzPxFCbnyRuCf0c8JXSiclb0S3E2jaiZ8C4VYGwtD+2yAdNfFLSt7GkHP6RyKJVN
+ teFtAVBR+qWXLjP1l1tXRS80LsZwvmTdRNuN+9HjBtTj64dxhwtNui0BZ6LrgzCjAKnE jg== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 375urk1tfk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Mar 2021 17:54:24 -0500
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 128MrLpA005599;
- Mon, 8 Mar 2021 22:54:23 GMT
+ Mon, 08 Mar 2021 17:54:25 -0500
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 128Mqr6Z018106;
+ Mon, 8 Mar 2021 22:54:24 GMT
 Received: from b03cxnp08028.gho.boulder.ibm.com
  (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma04dal.us.ibm.com with ESMTP id 3741c9ef9s-1
+ by ppma02dal.us.ibm.com with ESMTP id 3741c96etv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Mar 2021 22:54:23 +0000
+ Mon, 08 Mar 2021 22:54:24 +0000
 Received: from b03ledav006.gho.boulder.ibm.com
  (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
  by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 128MsMgO29491506
+ 128MsM2j34013532
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 8 Mar 2021 22:54:22 GMT
+ Mon, 8 Mar 2021 22:54:23 GMT
 Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 94400C605A;
+ by IMSVA (Postfix) with ESMTP id D5304C605D;
  Mon,  8 Mar 2021 22:54:22 +0000 (GMT)
 Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 65CEAC6057;
+ by IMSVA (Postfix) with ESMTP id A6368C6057;
  Mon,  8 Mar 2021 22:54:22 +0000 (GMT)
 Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.41.147])
  by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
  Mon,  8 Mar 2021 22:54:22 +0000 (GMT)
 From: Eddie James <eajames@linux.ibm.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.10 08/35] ARM: dts: aspeed: rainier: Add leds on
- optional DASD cards
-Date: Mon,  8 Mar 2021 16:53:52 -0600
-Message-Id: <20210308225419.46530-9-eajames@linux.ibm.com>
+Subject: [PATCH linux dev-5.10 09/35] ARM: dts: aspeed: rainier: Add leds that
+ are on optional PCI cable cards
+Date: Mon,  8 Mar 2021 16:53:53 -0600
+Message-Id: <20210308225419.46530-10-eajames@linux.ibm.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210308225419.46530-1-eajames@linux.ibm.com>
 References: <20210308225419.46530-1-eajames@linux.ibm.com>
@@ -82,11 +82,11 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
  definitions=2021-03-08_20:2021-03-08,
  2021-03-08 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- mlxlogscore=962 impostorscore=0 suspectscore=0 bulkscore=0
- priorityscore=1501 clxscore=1015 mlxscore=0 phishscore=0 spamscore=0
- malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2009150000 definitions=main-2103080118
+ malwarescore=0 suspectscore=0
+ mlxlogscore=999 phishscore=0 impostorscore=0 mlxscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 bulkscore=0 adultscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2103080118
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,188 +103,96 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
 
-These cards are not hot pluggable and must be installed
-prior to boot. LEDs on these are controlled by PCA9552
-i2c expander
+These are LEDs on the cable cards that plug into PCIE slots.
+The LEDs are controlled by pca9552 i2c expander
 
 Signed-off-by: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 425 +++++++++++++++++++
- 1 file changed, 425 insertions(+)
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 264 +++++++++++++++++++
+ 1 file changed, 264 insertions(+)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 32b63112091c..c507e8da101e 100644
+index c507e8da101e..3a9183bae259 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -634,6 +634,161 @@ tpm-wilson {
+@@ -789,6 +789,70 @@ nvme23 {
+ 			gpios = <&pca4 7 GPIO_ACTIVE_LOW>;
  		};
  	};
- 
-+	leds-optional-dasd-pyramid0 {
++
++	leds-optional-cablecard0 {
 +		compatible = "gpio-leds";
 +
-+		nvme0 {
++		cablecard0-cxp-top {
 +			retain-state-shutdown;
 +			default-state = "keep";
-+			gpios = <&pca2 0 GPIO_ACTIVE_LOW>;
++			gpios = <&pca5 0 GPIO_ACTIVE_LOW>;
 +		};
 +
-+		nvme1 {
++		cablecard0-cxp-bot {
 +			retain-state-shutdown;
 +			default-state = "keep";
-+			gpios = <&pca2 1 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme2 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca2 2 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme3 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca2 3 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme4 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca2 4 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme5 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca2 5 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme6 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca2 6 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme7 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca2 7 GPIO_ACTIVE_LOW>;
++			gpios = <&pca5 1 GPIO_ACTIVE_LOW>;
 +		};
 +	};
 +
-+	leds-optional-dasd-pyramid1 {
++	leds-optional-cablecard3 {
 +		compatible = "gpio-leds";
 +
-+		nvme8 {
++		cablecard3-cxp-top {
 +			retain-state-shutdown;
 +			default-state = "keep";
-+			gpios = <&pca3 0 GPIO_ACTIVE_LOW>;
++			gpios = <&pca6 0 GPIO_ACTIVE_LOW>;
 +		};
 +
-+		nvme9 {
++		cablecard3-cxp-bot {
 +			retain-state-shutdown;
 +			default-state = "keep";
-+			gpios = <&pca3 1 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme10 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca3 2 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme11 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca3 3 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme12 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca3 4 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme13 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca3 5 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme14 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca3 6 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme15 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca3 7 GPIO_ACTIVE_LOW>;
++			gpios = <&pca6 1 GPIO_ACTIVE_LOW>;
 +		};
 +	};
 +
-+	leds-optional-dasd-pyramid2 {
++	leds-optional-cablecard4 {
 +		compatible = "gpio-leds";
 +
-+		nvme16 {
++		cablecard4-cxp-top {
 +			retain-state-shutdown;
 +			default-state = "keep";
-+			gpios = <&pca4 0 GPIO_ACTIVE_LOW>;
++			gpios = <&pca7 0 GPIO_ACTIVE_LOW>;
 +		};
 +
-+		nvme17 {
++		cablecard4-cxp-bot {
 +			retain-state-shutdown;
 +			default-state = "keep";
-+			gpios = <&pca4 1 GPIO_ACTIVE_LOW>;
++			gpios = <&pca7 1 GPIO_ACTIVE_LOW>;
++		};
++	};
++
++	leds-optional-cablecard10 {
++		compatible = "gpio-leds";
++
++		cablecard10-cxp-top {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca8 0 GPIO_ACTIVE_LOW>;
 +		};
 +
-+		nvme18 {
++		cablecard10-cxp-bot {
 +			retain-state-shutdown;
 +			default-state = "keep";
-+			gpios = <&pca4 2 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme19 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca4 3 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme20 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca4 4 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme21 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca4 5 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme22 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca4 6 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		nvme23 {
-+			retain-state-shutdown;
-+			default-state = "keep";
-+			gpios = <&pca4 7 GPIO_ACTIVE_LOW>;
++			gpios = <&pca8 1 GPIO_ACTIVE_LOW>;
 +		};
 +	};
  };
  
  &ehci1 {
-@@ -2269,6 +2424,96 @@ eeprom@50 {
+@@ -1541,6 +1605,56 @@ eeprom@52 {
  		compatible = "atmel,24c64";
- 		reg = <0x50>;
+ 		reg = <0x52>;
  	};
 +
-+	pca2: pca9552@60 {
-+		compatible = "nxp,pca9552";
++	pca5: pca9551@60 {
++		compatible = "nxp,pca9551";
 +		reg = <0x60>;
 +		#address-cells = <1>;
 +		#size-cells = <0>;
@@ -331,57 +239,17 @@ index 32b63112091c..c507e8da101e 100644
 +			reg = <7>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
-+
-+		gpio@8 {
-+			reg = <8>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@9 {
-+			reg = <9>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@10 {
-+			reg = <10>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@11 {
-+			reg = <11>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@12 {
-+			reg = <12>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@13 {
-+			reg = <13>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@14 {
-+			reg = <14>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@15 {
-+			reg = <15>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
 +	};
  };
  
- &i2c14 {
-@@ -2278,6 +2523,96 @@ eeprom@50 {
+ &i2c5 {
+@@ -1565,6 +1679,106 @@ eeprom@51 {
  		compatible = "atmel,24c64";
- 		reg = <0x50>;
+ 		reg = <0x51>;
  	};
 +
-+	pca3: pca9552@60 {
-+		compatible = "nxp,pca9552";
++	pca6: pca9551@60 {
++		compatible = "nxp,pca9551";
 +		reg = <0x60>;
 +		#address-cells = <1>;
 +		#size-cells = <0>;
@@ -428,57 +296,67 @@ index 32b63112091c..c507e8da101e 100644
 +			reg = <7>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
++	};
 +
-+		gpio@8 {
-+			reg = <8>;
++	pca7: pca9551@61 {
++		compatible = "nxp,pca9551";
++		reg = <0x61>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
-+		gpio@9 {
-+			reg = <9>;
++		gpio@1 {
++			reg = <1>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
-+		gpio@10 {
-+			reg = <10>;
++		gpio@2 {
++			reg = <2>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
-+		gpio@11 {
-+			reg = <11>;
++		gpio@3 {
++			reg = <3>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
-+		gpio@12 {
-+			reg = <12>;
++		gpio@4 {
++			reg = <4>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
-+		gpio@13 {
-+			reg = <13>;
++		gpio@5 {
++			reg = <5>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
-+		gpio@14 {
-+			reg = <14>;
++		gpio@6 {
++			reg = <6>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
-+		gpio@15 {
-+			reg = <15>;
++		gpio@7 {
++			reg = <7>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
 +	};
  };
  
- &i2c15 {
-@@ -2287,6 +2622,96 @@ eeprom@50 {
+ &i2c6 {
+@@ -2411,6 +2625,56 @@ eeprom@51 {
  		compatible = "atmel,24c64";
- 		reg = <0x50>;
+ 		reg = <0x51>;
  	};
 +
-+	pca4: pca9552@60 {
-+		compatible = "nxp,pca9552";
++	pca8: pca9551@60 {
++		compatible = "nxp,pca9551";
 +		reg = <0x60>;
 +		#address-cells = <1>;
 +		#size-cells = <0>;
@@ -525,50 +403,10 @@ index 32b63112091c..c507e8da101e 100644
 +			reg = <7>;
 +			type = <PCA955X_TYPE_GPIO>;
 +		};
-+
-+		gpio@8 {
-+			reg = <8>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@9 {
-+			reg = <9>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@10 {
-+			reg = <10>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@11 {
-+			reg = <11>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@12 {
-+			reg = <12>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@13 {
-+			reg = <13>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@14 {
-+			reg = <14>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@15 {
-+			reg = <15>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
 +	};
  };
  
- &vuart1 {
+ &i2c12 {
 -- 
 2.27.0
 
