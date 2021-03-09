@@ -1,121 +1,98 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3C9D332D83
-	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 18:45:36 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40C69332D80
+	for <lists+openbmc@lfdr.de>; Tue,  9 Mar 2021 18:43:56 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dw2g270tbz3cPp
-	for <lists+openbmc@lfdr.de>; Wed, 10 Mar 2021 04:45:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Dw2d62DTrz3cRq
+	for <lists+openbmc@lfdr.de>; Wed, 10 Mar 2021 04:43:54 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=InventecCorp.onmicrosoft.com header.i=@InventecCorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-InventecCorp-onmicrosoft-com header.b=ROJSw+hn;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=DdHQ5SYC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=inventec.com (client-ip=40.107.131.102;
- helo=apc01-sg2-obe.outbound.protection.outlook.com;
- envelope-from=udupa.ashwini@inventec.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=InventecCorp.onmicrosoft.com
- header.i=@InventecCorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-InventecCorp-onmicrosoft-com header.b=ROJSw+hn; 
- dkim-atps=neutral
-Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-eopbgr1310102.outbound.protection.outlook.com [40.107.131.102])
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=DdHQ5SYC; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dw2fn5Cz0z30KF
- for <openbmc@lists.ozlabs.org>; Wed, 10 Mar 2021 04:45:19 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fuL+iFac4RFe7yr+MnqY3J4sdn8iJ4rS0URRDDxdSbsXK9e9V6wsYxgI209Gro7PKr8kEIdQuOFYlA16uXE/VYI0W8Odbf5ha/44uo810fzrrwLUY/nEvQbga4PiZ8tEduneV1/MTGMm/YyASicQM6GFuMxkvJnUlrLx8o2PPyz6o9P+t04DjBdwQfRVHjGTLVxpWfS9XZHKjBq0DPaBsplU4/wAMdEl+deVwjroGqzvQvLrIAfbXUWws1wIqdQ301coNOiMu8k8dgDEjiFH+hSI3QV86ahMANQfw02Q8E2dNnJg+2kTYdJfwuInNff9+B8igT7cIgl+wdCy8Wzcpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2Jj+vIXYRm4w0rr62RbYfrYelaORPPhPfpVaEy817kA=;
- b=odYRL/Yj/1baf2l8I/zKzPWtOqK+J4SqJMl42RLVjANYeOid2oN4si/6M6Iaw91FKnHYcwXw4kRhpah2NRRyBEhqT4wUDSd+RN4tz16vOndo04I9CyYafYKul3OK/bwmP72Eu9XCbX02z2RvqE1nN2B/Nnu0U//NFMSPAZCVGO8D16X+eUnaKlZXPMcqOrrsgf3xCWJXN6gQzzfB0JXoArFXz2ylAiPAIZF/16o7GbH98bnkRBTfez1uQ/zeqzelSuJ2DWAv6jI3XRLIKM+0gamMU7z4uSkhHgpQApaKbmZumTC903rfT3u5A4McmJg7nle+oeMNrDR5DHL5+LBdOg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=inventec.com; dmarc=pass action=none header.from=inventec.com;
- dkim=pass header.d=inventec.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=InventecCorp.onmicrosoft.com; s=selector2-InventecCorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2Jj+vIXYRm4w0rr62RbYfrYelaORPPhPfpVaEy817kA=;
- b=ROJSw+hnxSyJnILk40dgfF3Gltgktzc19rRsB0AttJ+ixd+qC/gmPIM1b6w5hiaOPdFoF2eK5d7AeqXgqJHvX/hmsdlJMhVGTkREr8tMNwRdEGplBlLiFxCnV6U/2lvR6mWfpsep2ZFOgXa+KTpxHBoswe5NJjroLemW2u+c4VU=
-Received: from SG2PR02MB2796.apcprd02.prod.outlook.com (2603:1096:4:59::20) by
- SG2PR02MB2397.apcprd02.prod.outlook.com (2603:1096:3:27::20) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3912.26; Tue, 9 Mar 2021 17:43:12 +0000
-Received: from SG2PR02MB2796.apcprd02.prod.outlook.com
- ([fe80::740c:c7c0:872f:1ccc]) by SG2PR02MB2796.apcprd02.prod.outlook.com
- ([fe80::740c:c7c0:872f:1ccc%7]) with mapi id 15.20.3912.030; Tue, 9 Mar 2021
- 17:43:11 +0000
-From: Udupa.Ashwini ISV <udupa.ashwini@inventec.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Redfish Event Service not working
-Thread-Topic: Redfish Event Service not working
-Thread-Index: AdcUwpQiVL+73feETgSuM3tmbHff2Q==
-Date: Tue, 9 Mar 2021 17:43:11 +0000
-Message-ID: <SG2PR02MB2796E924068DCCEE90ACD28585929@SG2PR02MB2796.apcprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-authentication-results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=inventec.com;
-x-originating-ip: [24.6.83.119]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 4d74770d-d3ff-43a3-faa0-08d8e322cf5c
-x-ms-traffictypediagnostic: SG2PR02MB2397:
-x-microsoft-antispam-prvs: <SG2PR02MB2397B94737A92890CA2F10E885929@SG2PR02MB2397.apcprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 2BWnF3ekXTNFEP1ARQEwb09kAtj62oBHsqoJSRxGIQ3LL1YAZoreGcXzZsouBCKzRRBo05igVrx5IwcwygEUiZ3cEYUbsfowRh7spmhYai9XHJE01IA2ZXTmbq45XpMq+AmGwmuu6PBCRcSHkI1T/aqA/ft2lJmYfpBaU9FeiLooGGj349oKl9EZD8uJcmvzvJiEUzjtV0BtJ0AKfU8SsmokxGys0fFmSCLOawUxOk59Y/sXdbK+t6Oq5PbeO7ZcW+rnHMHv5pc8BOKKNBdP4ndhKvadIAzi8hYeRdJwCuZsdbe/0AttsA9Sjh+uMmzEC+CuMbJXnKuS9kCNx7UpyJf7w2XRtAHfOoTtp+ogbLP25nk/wspBbm1HLgNHyQm2+GMQyiFBSfYZOrf3xJrd//i7cYJUxMfa4Owl/1zBS+n/BuI4PHTgC/+TBKAeItgbRsdB2LejwonVsB3ymdWxvmE0rXsT6abfdtOqezj3Y/BWmT6LIZD33dlDETRT4HxB0mIDa1sVoa2AJdQ5HF4Cng==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SG2PR02MB2796.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(346002)(376002)(396003)(136003)(39850400004)(5660300002)(186003)(6916009)(8676002)(83380400001)(55016002)(8936002)(9686003)(99936003)(316002)(4744005)(52536014)(478600001)(26005)(9326002)(66616009)(2906002)(7696005)(66556008)(66446008)(71200400001)(66946007)(64756008)(66476007)(76116006)(33656002)(86362001)(6506007);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?arAzCaygY7CFC0N6r7FSRwzQ9DF/gCbGzSF54+t/UHnsFEB+IT3960h+Fvyf?=
- =?us-ascii?Q?PEEDk7Ftb5jXkmX0IujfHXX6pNyFNSkn5Qo19huhz0TjJCVgmUjeJGPhvNxT?=
- =?us-ascii?Q?/Zl1IsYz7qm3sV3iYapSnz0xmIXl4bcrHL844HXw+bMRbW0a/U1XYAUBq6/u?=
- =?us-ascii?Q?/0DfOEWxMvrzQb/IZkh0Hu5eQFKrU0sRKBfvI1vQrTUOEG66NwqamrNIQcaU?=
- =?us-ascii?Q?gdzmOEIYVkt6QXj/OeA0y1d3K/zyeVFCZ5RMRILWzHyAZGlV1VA+zCH/9WkL?=
- =?us-ascii?Q?WrvESfVUm6iGYlMO2AEpZTTCFbY/GBX8J0fNyj5tEwskeq20vvcPuZOBGd5G?=
- =?us-ascii?Q?qktLCgYO5J/N/U3v1nfD5PdQQ4Ch7XpIqZJmMiaUw8X0qRKgFtV8MODmXrmW?=
- =?us-ascii?Q?+lSEpbdlFSgRXfo79oeGUbXT6tt79jcGzPzAx4RzO9mpq0ymfasPRueIRIay?=
- =?us-ascii?Q?+VYBw415nhte0RB6d2UO815tfFss3U74bOFaRcH6CNQTmNb2Sa6z1zil1S7N?=
- =?us-ascii?Q?gCFtlmYIerbjleMicBTJ0B/T5PYAv5LgMTKxAC4tnpw0J+Dz8zmIDjYwpjYp?=
- =?us-ascii?Q?xpOkMRvbm4RDiqTDTo0F82VssmwTj6996V8C4MgvbZag1kITeXQlePcFXnhH?=
- =?us-ascii?Q?0YS4633ZrLfe5opDbEqnQHJj4Z3mkNQ+R/Pujwb1oVC0WPgtJ+FR6BeHE1+T?=
- =?us-ascii?Q?5NiTqCRSjqb/wz1ChMU01IPKSUKqR8gn/JdZEy6VIZnWXUC6ejmvWCNmIaqY?=
- =?us-ascii?Q?ANU+uT+n8z6VY5cr3vK/mAJitfa8obWVP2xMbz1E8rdpQHIa+o+bzo3iKWlk?=
- =?us-ascii?Q?uPhw9782l6/ZRRELpv0ZZe6dVspNXAb+EaWlznyysBE5aXN9WLS6IPwXhe5e?=
- =?us-ascii?Q?E4Tsyww46gsZlYzM2CBlXGNRlSIGogEsQKIPmsyGU3DAkkFfnWsx0SqAnmI7?=
- =?us-ascii?Q?hhJ79wix0B/z8KIT4gx/k6HO+HyROgNu5fL2VxigWqEF8GDFWyItSfJc615X?=
- =?us-ascii?Q?V64Y693g/wQgOIlkN4d1uZKiiYmawmPG5QGdpEM53l2KYnIN1DvpzX15MUSu?=
- =?us-ascii?Q?qAWj8p/0U3E1HmRIjaA1tGUyeW0s3HQ7FN65L7DeXUYp1TLYESYwEm2lFKLG?=
- =?us-ascii?Q?QdjFNx1gXJtVDhyXXzwi+4xciZXbv3KdY/pOSg/RjGi2sLhC4LOFIZuytH4k?=
- =?us-ascii?Q?rQ90aIYn6S0CcMG5nYJtuXRuQlE2KQMOhcGAX2ebV1hDEC++GHFVsd8NAgCC?=
- =?us-ascii?Q?F4VRPsN2XFnCEV2gtGJmj5HSdYltPcl3PtfD1FmOSbUaKdl1rN8MWrmm+8L6?=
- =?us-ascii?Q?ccY=3D?=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/mixed;
- boundary="_004_SG2PR02MB2796E924068DCCEE90ACD28585929SG2PR02MB2796apcp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dw2cs517pz30N9
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Mar 2021 04:43:41 +1100 (AEDT)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 129Hdifd050412; Tue, 9 Mar 2021 12:43:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=NrXQb8nzSGv6auqDBAQySWCdoWtI4y27JoT3v1Glke0=;
+ b=DdHQ5SYC2Nekh6EnWdX6Rr4uiSV1yJnmbWFxiZT+vzPEUPzB5x5ebOgNT7RK8x0XnzTh
+ 8JdRxYkQN8BlGspd1zLnEFLMyk7mqQwuMwShscm+ZWyiCswgJtDdfJAk0he+Ux3xiBSb
+ 0lfYZk/bUv/nSXb7UvZf3iBCRq4++xGbCJLr/fyQFW/9W6uH8Ao1kVI6XT9kB2/EptPg
+ 1B0s/DaeKdQRoibl5tiIn6RUmmXI4Prvo/mM7XP0T0nfiPqT8hPfctbZKF9pywXwRCcO
+ ma/Sd5ILmNN5I8ZlTirdUCm2GirgTK4y51iJ0Ukosn8LQIs5NbJZAz6WlyrjQMI4MtK/ Og== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 375wmk1qpf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Mar 2021 12:43:37 -0500
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 129HRQxH007506;
+ Tue, 9 Mar 2021 17:43:36 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma02dal.us.ibm.com with ESMTP id 3768rbahx1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Mar 2021 17:43:36 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 129HhaQI27263338
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 9 Mar 2021 17:43:36 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E932B112067;
+ Tue,  9 Mar 2021 17:43:35 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A014711206E;
+ Tue,  9 Mar 2021 17:43:35 +0000 (GMT)
+Received: from demeter.local (unknown [9.160.115.82])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Tue,  9 Mar 2021 17:43:35 +0000 (GMT)
+Subject: Re: Request new repo for IBM-specific code - pam_2fa discussion
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <b8af3438-f85a-cb82-c88c-9c4e120399e9@linux.ibm.com>
+ <YEKDY6+zfW5Uuqkl@heinlein>
+ <dc7eb87e-c13f-dcb7-7b98-dbeb382d7caa@linux.ibm.com>
+ <YEZwz6C5uGk8Vobs@heinlein>
+ <15f3a43c-d876-38e0-8397-9db8a3896d38@linux.ibm.com>
+ <YEaoJH+TP0A79tfM@heinlein>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <39a37872-79fd-7377-6ebe-1f50d42ab282@linux.ibm.com>
+Date: Tue, 9 Mar 2021 11:43:34 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.0
 MIME-Version: 1.0
-X-OriginatorOrg: inventec.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SG2PR02MB2796.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4d74770d-d3ff-43a3-faa0-08d8e322cf5c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Mar 2021 17:43:11.7171 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 2ae41f0c-acca-40f1-9c63-49475ff38512
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: sTxDBw+jrNJYirwQtCCRascGFjjAtKCrCAhhhheAsDgKXjOp46FNxuU9fzuBhurwBCzk10BzhWPfjaSe6UCF+mYVxQ3J4jO4KGsn+QwneGk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR02MB2397
+In-Reply-To: <YEaoJH+TP0A79tfM@heinlein>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-03-09_14:2021-03-08,
+ 2021-03-09 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 bulkscore=0 adultscore=0
+ suspectscore=0 mlxlogscore=999 mlxscore=0 spamscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2103090084
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -127,133 +104,91 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_004_SG2PR02MB2796E924068DCCEE90ACD28585929SG2PR02MB2796apcp_
-Content-Type: multipart/alternative;
-	boundary="_000_SG2PR02MB2796E924068DCCEE90ACD28585929SG2PR02MB2796apcp_"
-
---_000_SG2PR02MB2796E924068DCCEE90ACD28585929SG2PR02MB2796apcp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-I am trying to test redfish event service in OpenBmc.
-I am running the Redfish Event Listener with config.ini as attached. I am t=
-rying with http connection.
-
-I have "-Dinsecure-push-style-notification=3Denabled" in my bmcweb_%.bbappe=
-nd to have http push style notification enabled.
-But, I don't see event logs in the console of my Redfish event listener. I =
-also don't see Events_.txt.
-If I send test event through redfish, I see the event in my listener.
-
-Can you please let me know what's wrong in my config.ini?
-What kind of logs are captured in event listener? Do all redfish systems ev=
-ent log entries ( /redfish/v1/Systems/system/LogServices/EventLog/Entries) =
-are seen?
-
-Regards,
-Ashwini
-
-
---_000_SG2PR02MB2796E924068DCCEE90ACD28585929SG2PR02MB2796apcp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On 3/8/21 4:41 PM, Patrick Williams wrote:
+> On Mon, Mar 08, 2021 at 02:30:26PM -0600, Joseph Reynolds wrote:
+>> Patrick, thanks for that.  I was unaware of the pam_2fa project.  I
+>> agree this could a be a good way for BMCs to get 2FA.
+>>
+>> However, as I tried to state in this email thread, the IBM firmware
+>> service organization requires that all credentials be brought onto the
+>> work site because some sites have no way to communicate with an external
+>> server.  That is, once you are on a customer site, you might not be able
+>> to call into IBM (or even have access to a phone).  Although this is not
+>> typical, I don't think it is unique to IBM.  What is done other secure
+>> installations?
+> I might have poorly explained my thought process before.  I know
+> *normal* 2FA requires remote access to the 2FA server.  The PAM_2FA
+> allows configuration of the URL and there is no reason why the URL
+> cannot be a localhost implementation of the 2FA protocol.  All the
+> protocol does is POST to the URL and make a decision based on the HTTP
+> return code.
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle18
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
-break-word">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi,<o:p></o:p></p>
-<p class=3D"MsoNormal">I am trying to test redfish event service in OpenBmc=
-.<o:p></o:p></p>
-<p class=3D"MsoNormal">I am running the Redfish Event Listener with config.=
-ini as attached. I am trying with http connection.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I have &#8220;-Dinsecure-push-style-notification=3De=
-nabled&quot; in my bmcweb_%.bbappend to have http push style notification e=
-nabled.<o:p></o:p></p>
-<p class=3D"MsoNormal">But, I don&#8217;t see event logs in the console of =
-my Redfish event listener. I also don&#8217;t see Events_.txt.<o:p></o:p></=
-p>
-<p class=3D"MsoNormal">If I send test event through redfish, I see the even=
-t in my listener.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Can you please let me know what&#8217;s wrong in my =
-config.ini?<o:p></o:p></p>
-<p class=3D"MsoNormal">What kind of logs are captured in event listener? Do=
- all redfish systems event log entries ( /redfish/v1/Systems/system/LogServ=
-ices/EventLog/Entries) are seen?
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Regards,<o:p></o:p></p>
-<p class=3D"MsoNormal">Ashwini<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
+> Proposal:
+>      * Use 'pam_2fa' using Yubikey protocol to point at a 'localhost' URL.
+>      * Implement Yubikey 2FA protocol (described in pam_2fa
+>        documentation) in a small daemon on the BMC, specific for ACF
+>        certificates.
+>          - 2FA request will get the ACF password.
+>          - ACF daemon hashes password, checks with installed certificate
+>            and returns 4xx/2xx codes as appropriate.
+>      * Set PAM config to use 'pam_2fa' (pointed at localhost) for IBM
+>        service users.
 
---_000_SG2PR02MB2796E924068DCCEE90ACD28585929SG2PR02MB2796apcp_--
+Thanks again.  I see it now.  This could work for IBM ACFs.
 
---_004_SG2PR02MB2796E924068DCCEE90ACD28585929SG2PR02MB2796apcp_
-Content-Type: application/octet-stream; name="config.ini"
-Content-Description: config.ini
-Content-Disposition: attachment; filename="config.ini"; size=540;
-	creation-date="Tue, 09 Mar 2021 08:52:21 GMT";
-	modification-date="Tue, 09 Mar 2021 08:51:44 GMT"
-Content-Transfer-Encoding: base64
+Your proposal is:
+Instead of writing a new Linux-PAM module which checks the password with 
+the ACF, this proposal uses pam_2fa.so together with a new BMC-hosted 
+HTTPS server (implemented as a new systemd service) which checks the 
+password with the ACF.  Instead of putting the checks into my new 
+proposed Linux-PAM module, I would put them into the HTTPS REST API server.
 
-W0luZm9ybWF0aW9uXQ0KVXBkYXRlZCA9IEFwcmlsIDI0LCAyMDE3DQpEZXNjcmlwdGlvbiA9IFJl
-ZGZpc2ggRXZlbnQgTGlzdGVuZXIgVG9vbA0KDQpbU3lzdGVtSW5mb3JtYXRpb25dDQpMaXN0ZW5l
-cklQID0gMC4wLjAuMA0KTGlzdGVuZXJQb3J0ID0gODANClVzZVNTTCA9IG9mZg0KDQpbQ2VydGlm
-aWNhdGVEZXRhaWxzXQ0KY2VydGZpbGUgPSBjZXJ0LnBlbQ0Ka2V5ZmlsZSA9IHNlcnZlci5rZXkN
-Cg0KW1N1YnNjaXB0aW9uRGV0YWlsc10NCkRlc3RpbmF0aW9uID0gaHR0cDovLzEwLjQxLjguMTYw
-OjgwL2hvbWUvYXNod2luaS9yZWRmaXNoLw0KI0V2ZW50VHlwZXMgPSBBbGVydA0KQ29udGV4dCA9
-IFB1YmxpYw0KUHJvdG9jb2wgPSBSZWRmaXNoDQpTdWJzY3JpcHRpb25VUkkgPSAvcmVkZmlzaC92
-MS9FdmVudFNlcnZpY2UvU3Vic2NyaXB0aW9ucw0KDQpbU2VydmVySW5mb3JtYXRpb25dDQpTZXJ2
-ZXJJUHMgPSBodHRwczovLzEwLjQxLjguMzENClVzZXJOYW1lcyA9IHJvb3QNClBhc3N3b3JkcyA9
-IDBwZW5CbWMNCmNlcnRjaGVjayA9IG9mZg0K
+I'm not sure what advantage this would give.  It seems like this gives 
+me a tested PAM module in exchange for implementing a REST API server.  
+I'm not sure I want to make that trade.  The Linux-PAM coding aspects of 
+my proposed module are well-understood and straightforward.
 
---_004_SG2PR02MB2796E924068DCCEE90ACD28585929SG2PR02MB2796apcp_--
+> In summary, the service accounts can have a static primary password AND
+> an ACF-secured secondary password which is checked with the standard 2FA
+> protocol.
+>
+>> The IBM ACF design in terms of 2FA is:
+> ...
+>> 2. The ACF has no secrets (other than the password hash stored within
+>> it) and can be installed onto the BMC by the admin or the service rep.
+> Doesn't the service user have access you're not expecting the 'admin' to
+> be able to have on your machines?  How do you ensure a compromised ACF
+> cannot be replayed onto another machine?  With admin-level access it is
+> fairly trivial to fake out the serial number.
+
+Yes, on IBM Enterprise machines, service access is a superset of admin 
+access.  In particular, the interface to change an existing machine 
+serial number requires service access.  However, it remains possible for 
+a machine owner to use shenanigans to change serial numbers.  This, plus 
+the admin's ability to record the service user password and to change 
+the BMC's TOD would give them the ability to re-use an ACF.
+
+> I might be misunderstanding something with "... or ther service rep".
+> It seems like there is a gap in how the service rep would install
+> something when the ACF is what gives them permissions to do the install?
+
+You are correct.  I didn't explain scenarios.
+
+First, note the proposed REST API to install the ACF requires admin 
+authority.  There are multiple alternate workflows:
+1. A security conscious system owner would have the admin install the 
+ACF immediately before service and remove it immediately afterward.  And 
+probably look over the service agent's shoulder.
+2. A trusting system owner would share admin access with the service 
+agent who would install and remove the ACF on behalf of the owner.
+3. A forgetful system owner would not have admin access (having lost the 
+password).  In this case the service agent asserts physical presence to 
+open a time window in which they could upload the ACF without 
+authentication or authority needed.
+
+Joseph
+
