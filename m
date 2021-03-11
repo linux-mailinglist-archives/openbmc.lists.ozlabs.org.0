@@ -2,79 +2,94 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0DAC337AEB
-	for <lists+openbmc@lfdr.de>; Thu, 11 Mar 2021 18:35:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 08D80337E73
+	for <lists+openbmc@lfdr.de>; Thu, 11 Mar 2021 20:46:48 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DxGL959Fzz3cVr
-	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 04:35:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DxKFy0Mr2z3cZS
+	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 06:46:46 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=MbUx97Zo;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=LtQQkosi;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22f;
- helo=mail-oi1-x22f.google.com; envelope-from=kurt.r.taylor@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=MbUx97Zo; dkim-atps=neutral
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com
- [IPv6:2607:f8b0:4864:20::22f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=LtQQkosi; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DxGKx5RSdz30N8
- for <openbmc@lists.ozlabs.org>; Fri, 12 Mar 2021 04:34:58 +1100 (AEDT)
-Received: by mail-oi1-x22f.google.com with SMTP id y131so21090941oia.8
- for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 09:34:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=CaWR/La/aL6Jg38Edkd6OoPVGYYEOnUmRccFU/5iEIE=;
- b=MbUx97ZoE7v3eUJhuh6mE2ErZVrvULLm1HlMuMmUIgR5U2ecUymDSqldtihGJI4lGj
- Wt47wUcm2QvmVHZseAZf/kIvGArn5jfglV8bLqnwK6TWYIZVz6k5fMTkKGt5eNP/6qVu
- gDV3r+iOqD23N9TR5BP4uaoTIRnR6tiFgo+72ncsJ/5j2l0z4gPWtC65py0BQbOZMOAO
- 8EitVsrMGjltg5Z9+Y2PRaAtVZZFXMDeJZB36Wv5+elUi+xBqlCLGO2uja6FzV8f7fZh
- IsxwiNDcdde9oJM8U0V7mfpXwuaw+VlswtaNYQEdGFNNSNqiDg1Svi6JIOLEx+72ceTJ
- Hm5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=CaWR/La/aL6Jg38Edkd6OoPVGYYEOnUmRccFU/5iEIE=;
- b=pZKX8JyGt6QHAE7UO/jo+sHSbfAeKc0AW56feGgdPBbOFKjpWbFY/gAWmblPW5Cion
- 5+jdZfUIoA4lSCjzICMRn04/N2Mm6EORhZxHX22Kc0SRC01FDD6rAfBapQj737sK7Yf8
- E5M4XF2HsNAgW0zGqUwMFohEWMDQAEBHxhqEd7plZI+f8iNru1EpKDl6OLwTqpISbczA
- GDgXJfEu9HHDhaXKPQ8WQMuvFufISVb/JdR47B14WTPBHSAmPTpgs+FiGtLTdXHa0gJK
- bFU38auSQnZ+du2sXTV3gPh+CleszgPQbUP43ZU7v4l8LQf4KbTFrUXHD7Fj8HKnKTzE
- ZTOA==
-X-Gm-Message-State: AOAM530hBCFXJJ/RQEeA7jBE2qn/PZ4kyPZpK3n/PdnWjLdeiCqZGru9
- wefTUuXit7d1srJLVfZsJdBqaHK9E5mapQ==
-X-Google-Smtp-Source: ABdhPJzXhrJWAjQg1557YsSZIX7UAzLg6a/4VYuIUWVEw2y6AXuB2erpBzBZA4QpQDWxJAfUc2ddcQ==
-X-Received: by 2002:aca:d68e:: with SMTP id n136mr7372235oig.179.1615484093603; 
- Thu, 11 Mar 2021 09:34:53 -0800 (PST)
-Received: from krtaylors-MacBook-Pro.local (072-182-104-102.res.spectrum.com.
- [72.182.104.102])
- by smtp.gmail.com with ESMTPSA id 3sm754954otw.58.2021.03.11.09.34.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Mar 2021 09:34:52 -0800 (PST)
-Subject: Re: Bosch Sicherheitssysteme GmbH CCLA
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- "Meisenecker Robert (BT/ETI-CS)" <Robert.Meisenecker@de.bosch.com>
-References: <ab897f9a1daf4d7b900d64cf453aab69@de.bosch.com>
- <20210309213111.7puayatdyodbn7yg@thinkpad.fuzziesquirrel.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <00bda121-233b-0736-e789-113b3dd775a5@gmail.com>
-Date: Thu, 11 Mar 2021 11:34:42 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DxKFk1mKKz30QY
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Mar 2021 06:46:33 +1100 (AEDT)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 12BJX4q2113125
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 14:46:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : from : to :
+ references : message-id : date : mime-version : in-reply-to : content-type
+ : content-transfer-encoding; s=pp1;
+ bh=SGzwlcKGt2VljX54J3lgWHqyCuQyzIHeVOcdftjEwSo=;
+ b=LtQQkosizkojsdeHK1KCexXmiLyICDMP4v2UsfMg8CUv0V9KiCq4jbTOc2+5MvvN2C5b
+ K+RJXl78Ltl0QyaXlmkJtvgIm+Cv8CaHCKaBEGgoWcU+JJmmaRu5kXvpw/FcHnrczSAf
+ Han2LE4ImqosCbiXxUBPm3GvOQGzx9rYDY0ubBo95OFdc7VipQ45/4rdXxjyZaJOZpKt
+ TswkdHr0YkkPLoo0g+L6SWbszuFSXpmA6UHN6y4EftJQX4h8H3TENnMHHLuMtHHOeUUp
+ +rVqbIhx1TJneAtCX1KVhr9U2ATpcgD+PhzduEqdPnHpgaFsUjVod+bRG7E/bTeNrgrg PA== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3774mesrd7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 14:46:25 -0500
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12BJfgW8030274
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 19:46:24 GMT
+Received: from b03cxnp07027.gho.boulder.ibm.com
+ (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
+ by ppma02dal.us.ibm.com with ESMTP id 3768rbxrvn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 19:46:24 +0000
+Received: from b03ledav002.gho.boulder.ibm.com
+ (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
+ by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 12BJkN9x14483888
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 19:46:23 GMT
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 37952136061
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 19:46:23 +0000 (GMT)
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 70BDF13605E
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 19:46:22 +0000 (GMT)
+Received: from [9.81.205.160] (unknown [9.81.205.160])
+ by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 19:46:21 +0000 (GMT)
+Subject: Re: Redfish 2020.4 release webinar
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <48a9da2d-d86a-45ee-08ba-86bf1b0065cc@linux.vnet.ibm.com>
+Message-ID: <6bec11db-5131-2c32-8653-878e3c86ff18@linux.vnet.ibm.com>
+Date: Thu, 11 Mar 2021 12:46:20 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-In-Reply-To: <20210309213111.7puayatdyodbn7yg@thinkpad.fuzziesquirrel.com>
+In-Reply-To: <48a9da2d-d86a-45ee-08ba-86bf1b0065cc@linux.vnet.ibm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-03-11_08:2021-03-10,
+ 2021-03-11 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 mlxscore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=735
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2103110100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,36 +101,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/9/21 3:31 PM, Brad Bishop wrote:
-> On Tue, Mar 02, 2021 at 12:23:21PM +0000, Meisenecker Robert (BT/ETI-CS) 
-> wrote:
->> Dear OpenBMC team,
->>
->> just to make sure that our contribution request from 2021-02-11 did 
->> not get lost:
->> please find our signed CCLA in the attachment.
-
-Hi Robert, welcome!
-
-I did not received email dated 2-11, but I had previously been working 
-with Bosch to resolve a CCLA for pending contributions. Is this related 
-to the email I sent about a year ago (Mark Jonas)?
-
-If not, can you work with that team to resolve this? Maybe add them to 
-your CCLA?
-
-Also, your CCLA does not have any contributing developers (and CLA 
-manager) listed on Schedule A. Please correct that at your earliest 
-convenience.
-
-Kurt Taylor (krtaylor)
-
-> Hello Robert and Bosch.  It appears it did get lost - apologies for 
-> that.  Your CCLA has been accepted - welcome Bosch!
+On 2/24/2021 8:14 AM, Gunnar Mills wrote:
+> Redfish is hosting a webinar on March 5th. Details below.
 > 
-> thx - brad
+> DMTF’s Redfish Forum[1] would like to invite the OpenBMC community to 
+> learn about the Redfish 2020.4[2] release via a live webinar hosted on 
+> Zoom on March 5 at 11am PT.
+> 
+> The Forum chairs will present the contents of the release including 
+> focusing on: new power and thermal modeling, ‘Conditions’ within the 
+> common ‘Status’ property, and additional account types added to manager 
+> accounts.
+> 
+
+If anyone missed this and would like to watch the reply, it is available 
+at https://www.youtube.com/watch?v=QkQAeWd_9UY
+
+> 
+> For questions email webinars@dmtf.org.
+> 
+> [1] https://www.dmtf.org/standards/redfish
+> [2] 
+> https://www.dmtf.org/sites/default/files/Redfish_Release_2020.4_Overview.pdf 
+> 
+
 
