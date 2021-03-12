@@ -2,67 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB2BF338254
-	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 01:31:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DF535338278
+	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 01:35:31 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DxRZ65sD3z3bcs
-	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 11:31:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DxRg56Xmtz2y0K
+	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 11:35:29 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=nesLpw1f;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=QJlcawyG;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::729;
- helo=mail-qk1-x729.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2c;
+ helo=mail-qv1-xf2c.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=nesLpw1f; dkim-atps=neutral
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com
- [IPv6:2607:f8b0:4864:20::729])
+ header.s=google header.b=QJlcawyG; dkim-atps=neutral
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com
+ [IPv6:2607:f8b0:4864:20::f2c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DxRYs3Pz4z2xxt
- for <openbmc@lists.ozlabs.org>; Fri, 12 Mar 2021 11:30:56 +1100 (AEDT)
-Received: by mail-qk1-x729.google.com with SMTP id l4so22705103qkl.0
- for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 16:30:55 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DxRft5CZSz2xxt
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Mar 2021 11:35:18 +1100 (AEDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id by2so3494957qvb.11
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 16:35:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=QV0nSjA2HCF0nyhhD6GRSbmdenKZ5e1eqH/d40mJkSs=;
- b=nesLpw1fSD2QrBdUD9MlDSHerKWLSvRGs/KFRtOa95iDTA+xTARbVIsO343GVAlQtx
- GbExX7soPOJ4QZGgQy3sZ4f3vjQLDFSZbvhOwclVfLnNPdYwCz1WO0W+2Fj5wcTzttEe
- RSTWuy5RSAowJJRWVYZq+a/JRxWl1NbzBChgo=
+ :cc; bh=oLxA7r+fBOWMVd7T7P2NcXytilJkXu1spGty0kJ9U2M=;
+ b=QJlcawyGX0/bMbBOxzK+e1Z50fc5qeOzCNtTVaTxR9qjLVxmSnwYitPCicpqRByLlE
+ pfDu4kpuCdwm7vYTB+38XTRWblr7QYs31cwQDnpJnob9eYSqASek8X3v2CWUWjQIenhU
+ nIUXqc9m2i5DwfOFwLNfT/rUhDJYTP5dR1qt4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=QV0nSjA2HCF0nyhhD6GRSbmdenKZ5e1eqH/d40mJkSs=;
- b=AcIl2qj5ISJpTNztooc5m4VvZB36eT/+gHP63P4Eoh9JUtaE6GwjJkbc642VcVSBFU
- dWoU/dUGQlCXqSqA7YQx0mm7IdI5lHEk3B5Vw1xktCZXX2eELj12M96aTPdwz4sOegfZ
- GYZulPM07d+VtUatRMefdFuJ+snYU7OOeh/qMHAMR3/MAbB+4Gt4rU4x1G+XAIhInU6q
- IFJ4qSd9hBN1zdULOoL4fN+5X2+9GxFFLe58X+EXwKfq/JAWBm7H7b8yi+4qqEssdlae
- nd41O3kmHejwvRYxsZWeIOxbUD+FItygf/RBRvCxtU/uc1RUIbT2oa/uN6ouzWT1cTHg
- sJIQ==
-X-Gm-Message-State: AOAM532criZIpcmcs2PdxgZ87H0zJjSE1aBDcsZdQO8xeR6qItJKvgSe
- 3VSRDuIvgkTkJwKjxaIIvzTBmc7qwT/2EQnYhA4=
-X-Google-Smtp-Source: ABdhPJxN8bpyXWZQlqs3hcIvBKKlnYL/6PluqaxshZ+uUrIhEIbRAbBf2Bxx03r7sF6I3VU9uQRC8b80eIAEiwWenA0=
-X-Received: by 2002:a05:620a:4055:: with SMTP id
- i21mr10355565qko.55.1615509054134; 
- Thu, 11 Mar 2021 16:30:54 -0800 (PST)
+ bh=oLxA7r+fBOWMVd7T7P2NcXytilJkXu1spGty0kJ9U2M=;
+ b=jdD5XGPkOyzHKVW5JfV0VoymWBKRNLOMY9oBvnE65LhqZ4sNUb1suTATv/7cFUuv+b
+ HNEM9WZ49I8Iqeoh2Gi1BQCVSNp3EmqEddMcemA4iHXSm6mxqZ8JUAmeURRZaqP7FHYX
+ 5PMasTcr8Wi06A3zRq2IOr9OXdjRuhypMLc6iCoBhBXTsSMCVZoYeoCXk0tB84ce2jbt
+ oSdsrL4IsmROkepgR/IriAZUXzodyS6uxtcUy7DzbyfQ6Og9UpxSYTBs3Wrqk7VQzVP+
+ uUIk3NeZQRRb0Ttt7Nxf034gxn7Ew5NPHFtREW6eeq9lZozUcWc6YJep+fFBn8r/pTEN
+ ioxg==
+X-Gm-Message-State: AOAM532p5DFZU3+lOIHQcYOX4r3yW0PJoPeR7pJC2myb66Xt6CopTIL8
+ vsqoMMfsF5ub8dekCguFjbmP0zPXjfGSQDfcrvSoS13vg/A=
+X-Google-Smtp-Source: ABdhPJwbo9nO1QqZ5yAegbwNDD4/OLkBmPmmkdF6se/W/svpVATmeUETWiWxw9nNyhUSyDNla7UmY+tpxzZkxcTADbA=
+X-Received: by 2002:a05:6214:180d:: with SMTP id
+ o13mr10124676qvw.10.1615509316152; 
+ Thu, 11 Mar 2021 16:35:16 -0800 (PST)
 MIME-Version: 1.0
 References: <20210308225419.46530-1-eajames@linux.ibm.com>
- <20210308225419.46530-7-eajames@linux.ibm.com>
- <CACPK8Xc9XqM3UtpF0xywFwfj8anXWE1-TvbHCQskogrBBF_ZCQ@mail.gmail.com>
- <OF39939D76.45BF746F-ON00258696.0001FF38-00258696.0001FF3E@notes.na.collabserv.com>
-In-Reply-To: <OF39939D76.45BF746F-ON00258696.0001FF38-00258696.0001FF3E@notes.na.collabserv.com>
+ <20210308225419.46530-28-eajames@linux.ibm.com>
+In-Reply-To: <20210308225419.46530-28-eajames@linux.ibm.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 12 Mar 2021 00:30:42 +0000
-Message-ID: <CACPK8XfBu5_2xs_Eu=OtShNFQnAQ+Tc1Q1qM7Qgcaggd-yLumQ@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.10 06/35] ARM: dts: aspeed: rainier: Add leds
- that are off PCA9552
-To: Milton Miller II <miltonm@us.ibm.com>
+Date: Fri, 12 Mar 2021 00:35:03 +0000
+Message-ID: <CACPK8XdA4a_DnjBzs+-3auYcd06-v2aF1-qvtPKE6q3+wU+RWw@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.10 27/35] net/ncsi: Avoid channel_monitor
+ hrtimer deadlock
+To: Eddie James <eajames@linux.ibm.com>, Milton Miller II <miltonm@us.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -75,53 +73,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 12 Mar 2021 at 00:21, Milton Miller II <miltonm@us.ibm.com> wrote:
+On Mon, 8 Mar 2021 at 22:56, Eddie James <eajames@linux.ibm.com> wrote:
 >
+> From: Milton Miller <miltonm@us.ibm.com>
 >
+> Calling ncsi_stop_channel_monitor from channel_monitor is a guaranteed
+> deadlock on SMP because stop calls del_timer_sync on the timer that
+> inoked channel_monitor as its timer function.
 >
-> -----"openbmc" <openbmc-bounces+miltonm=us.ibm.com@lists.ozlabs.org> wrote: -----
+> Recognise the inherent race of marking the monitor disabled before
+> deleting the timer by just returning if enable was cleared.  After
+> a timeout (the default case -- reset to START when response recieved)
+> just mark the monitor.enabled false.
 >
-> >To: Eddie James <eajames@linux.ibm.com>
-> >From: Joel Stanley
-> >Sent by: "openbmc"
-> >Date: 03/11/2021 06:09PM
-> >Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> >Subject: [EXTERNAL] Re: [PATCH linux dev-5.10 06/35] ARM: dts:
-> >aspeed: rainier: Add leds that are off PCA9552
-> >
-> >On Mon, 8 Mar 2021 at 22:54, Eddie James <eajames@linux.ibm.com>
-> >wrote:
-> >>
-> >> From: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
-> >>
-> >> These LEDs are on the fans and are connected via a
-> >> pca9551 i2c expander
-> >
-> >This change doesn't make sense. The pca9551 is an i2c LED expander,
-> >so
-> >we don't need to expose the pins as GPIOs and then attach a gpio-leds
-> >driver to them. We should instead simply configure the pca955x driver
-> >to drive the LEDs as LEDs.
+> If the channel has an entrie on the channel_queue list, or if the the
+> state is not ACTIVE or INACTIVE, then warn and mark the timer stopped
+> and don't restart, as the locking is broken somehow.
 >
-> I'll refresh your memory on why we have been doing this in our
-> devie trees and then let you consider if this is desired or not.
->
-> The led system insistes on creating a compact map (no holes) (as
-> does the reset subsystem).
->
-> However, this means the relative led number for a pin changes
-> as the prior pins change from gpio to led configuration.
->
-> For example if pins 2 and 7 are leds, they become leds 0 and 1.
-> Changing pin 5 to also be an led means that pin 7 is now led 2
-> not led 1 on the led subsystem.
+> Fixes: 0795fb2021f0 ("net/ncsi: Stop monitor if channel times out or is inactive")
+> Signed-off-by: Milton Miller <miltonm@us.ibm.com>
 
-Thanks for the rationale reminder.
+Please send upstream for review.
 
-Are these led numbers important to userspace, or does the renumbering
-affect device tree changes only?
+
+> ---
+>  net/ncsi/ncsi-manage.c | 18 ++++++++++++------
+>  1 file changed, 12 insertions(+), 6 deletions(-)
+>
+> diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
+> index a9cb355324d1..5a2beaf874c7 100644
+> --- a/net/ncsi/ncsi-manage.c
+> +++ b/net/ncsi/ncsi-manage.c
+> @@ -105,13 +105,20 @@ static void ncsi_channel_monitor(struct timer_list *t)
+>         monitor_state = nc->monitor.state;
+>         spin_unlock_irqrestore(&nc->lock, flags);
+>
+> -       if (!enabled || chained) {
+> -               ncsi_stop_channel_monitor(nc);
+> -               return;
+> +       if (!enabled)
+> +               return;         /* expected race disabling timer */
+> +       if (WARN_ON_ONCE(chained)) {
+> +               goto bad_state;
+>         }
+>         if (state != NCSI_CHANNEL_INACTIVE &&
+>             state != NCSI_CHANNEL_ACTIVE) {
+> -               ncsi_stop_channel_monitor(nc);
+> +bad_state:
+> +               netdev_warn(ndp->ndev.dev,
+> +                           "Bad NCSI monitor state channel %d 0x%x %s queue\n",
+> +                           nc->id, state, chained ? "on" : "off");
+> +               spin_lock_irqsave(&nc->lock, flags);
+> +               nc->monitor.enabled = false;
+> +               spin_unlock_irqrestore(&nc->lock, flags);
+>                 return;
+>         }
+>
+> @@ -136,10 +143,9 @@ static void ncsi_channel_monitor(struct timer_list *t)
+>                 ncsi_report_link(ndp, true);
+>                 ndp->flags |= NCSI_DEV_RESHUFFLE;
+>
+> -               ncsi_stop_channel_monitor(nc);
+> -
+>                 ncm = &nc->modes[NCSI_MODE_LINK];
+>                 spin_lock_irqsave(&nc->lock, flags);
+> +               nc->monitor.enabled = false;
+>                 nc->state = NCSI_CHANNEL_INVISIBLE;
+>                 ncm->data[2] &= ~0x1;
+>                 spin_unlock_irqrestore(&nc->lock, flags);
+> --
+> 2.27.0
+>
