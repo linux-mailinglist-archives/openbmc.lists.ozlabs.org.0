@@ -1,66 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D238D338235
-	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 01:24:17 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FAE5338240
+	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 01:27:15 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DxRQ75vD8z3cWb
-	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 11:24:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DxRTY4dSNz3cTy
+	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 11:27:13 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=JLb7Cces;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Whz4MyDX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72c;
- helo=mail-qk1-x72c.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::731;
+ helo=mail-qk1-x731.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=JLb7Cces; dkim-atps=neutral
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com
- [IPv6:2607:f8b0:4864:20::72c])
+ header.s=google header.b=Whz4MyDX; dkim-atps=neutral
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com
+ [IPv6:2607:f8b0:4864:20::731])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DxRPw5DsKz2xZr
- for <openbmc@lists.ozlabs.org>; Fri, 12 Mar 2021 11:24:03 +1100 (AEDT)
-Received: by mail-qk1-x72c.google.com with SMTP id n79so22680686qke.3
- for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 16:24:03 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DxRTH0dsKz2yjN;
+ Fri, 12 Mar 2021 11:26:58 +1100 (AEDT)
+Received: by mail-qk1-x731.google.com with SMTP id l4so22697173qkl.0;
+ Thu, 11 Mar 2021 16:26:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=lm/j+GbCDf4OOHQeboiyUtvHmwjj+FzkBBODE/422vo=;
- b=JLb7CcesTBz4krQTOASeansCLNGPZ4pqU+ulzOAMicphmez2mVZOKKg2Js9x77jMif
- DqPThG/6JjSTRSkQJcfFSiFr17N04qpAz8xQJi3i/2dUJLP2Sx/UKsRTbzKT/tFZUm0I
- TvM6t7qW0CkdIA8dStQohoifwKQJuIlVT5o+s=
+ :cc; bh=FbmokgZymiS3iblK7SguwZRYnWpNx1j40+buPp7T5hI=;
+ b=Whz4MyDX/Z4x61M2IOu46yFDNbrBy9hxI40mUilWmBGYlA6KNkDz/vz3svNyBHzQWQ
+ gLeaU5E2C4JDURV0Ro3lWaIi7CZzig33rNWCj6r1XmNNZeowmF0drcd3o1ADJTATwwGH
+ iP65fPEnz//mgxSwPRetyM1YEmdYAMC9np278=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=lm/j+GbCDf4OOHQeboiyUtvHmwjj+FzkBBODE/422vo=;
- b=A+PP8EIj0st7cLWEjPih8xTuSsic5CJYucl1OQ6aU7c5ZIGMtbBndF7ws+X5UUuKlV
- velRjMyHqAee8/KthyOea1q1y0UXpOekwjbIHA9lGySpOE7ZapFq3ndc4FzpZtlH0+8e
- ITF/DyFPW1SaZiAmbx4ptIvqB8290ejdMnejIg8VZuFHkqNOBklcfHxDHeR97tdTJH/N
- CB3xc1XT89yFJM7F+Uo7MbDOyGCoudHOmWTY1LliPUtq1LV+t+GUGATvQfoe5AjBSY2H
- o3cSrVOMhtTFJI4CcrG7XIzyr3ZGYFQaeFWpgPHUW54+LhC2q1TUU1N5syXvz6WwgJhV
- c55A==
-X-Gm-Message-State: AOAM533uwSIaxuvqekzXw4PC1rfXm3uPCzaSK0mrSC7ZfAhZgk5yGFuh
- Nw8QEU2hTAMrcFhApM+gPxWOFKmKK2WyoMvyqxw=
-X-Google-Smtp-Source: ABdhPJzud0cqvpzeJqkccZEFzzniG//8CjGsaTsk88LI/7iWwHQwTZHzAdgD4K4xX27tAabzdbh7NItQdA+Bkl+rvXU=
-X-Received: by 2002:a05:620a:c11:: with SMTP id
- l17mr10470866qki.487.1615508641277; 
- Thu, 11 Mar 2021 16:24:01 -0800 (PST)
+ bh=FbmokgZymiS3iblK7SguwZRYnWpNx1j40+buPp7T5hI=;
+ b=gcDXvr0n63iH4fvbFs+6R2ejLO3b2BQGP7bzi6tbnFluBS9Hp+ujRhrv0TnEW1Lylv
+ gtgbK89QBBYranJQIyDDd5Cbqtz2ix688Y+WpA8nfUnDlViW4Cc22Rr579m/3RsPx1yY
+ hJpyCBd9c7X0/lDol0AyEDsTptCOR0N5b1SpNB1QHnO4r7VvyHUe6/+kQQKLEWHOkFki
+ 5Wx0BpsGjm0aUOrUkQfaM2rLkbhop6NU5yZ7Pe7OCzIK/2weGFYGOK5XXlqZBylDWTcu
+ nfAFHFBhYZbgZq2k0QiricSGg1F8r4xPO2ZCetYjFn2abrH4tfZ4iGHmzxxSU8QXlFx/
+ GavQ==
+X-Gm-Message-State: AOAM530ze/WqOYdb5ddnErmeaaeWWGX3N1EQY5CfOvhKq1EHoOHYltMJ
+ aI442zQbhTsRmole0FrFtyDWf0GsNIlJCudxjvLG9Q2TBuY=
+X-Google-Smtp-Source: ABdhPJzQy1fZxNI+jlTTtWmDGQKTLadDYa40QFao7q89di04GjVYULBfHmtP6r+/2GRiITO90WaY0pQIh8Gx0mHD8xQ=
+X-Received: by 2002:a37:a147:: with SMTP id k68mr10400285qke.66.1615508815554; 
+ Thu, 11 Mar 2021 16:26:55 -0800 (PST)
 MIME-Version: 1.0
-References: <20210308225419.46530-1-eajames@linux.ibm.com>
- <20210308225419.46530-31-eajames@linux.ibm.com>
-In-Reply-To: <20210308225419.46530-31-eajames@linux.ibm.com>
+References: <20201019085717.32413-1-dylan_hung@aspeedtech.com>
+ <20201019085717.32413-5-dylan_hung@aspeedtech.com>
+ <CACPK8Xc8NSBzN+LnZ=b5t7ODjLg9B6m2WDdR-C9SRWaDEXwOtQ@mail.gmail.com>
+In-Reply-To: <CACPK8Xc8NSBzN+LnZ=b5t7ODjLg9B6m2WDdR-C9SRWaDEXwOtQ@mail.gmail.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 12 Mar 2021 00:23:49 +0000
-Message-ID: <CACPK8XeDofks4xzismhcA5oJVnxkc2yWwG65fG1X8HH2ajt79A@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.10 30/35] hwmon: (pmbus/ibm-cffps) Set the
- PMBUS_NO_CAPABILITY flag
-To: Eddie James <eajames@linux.ibm.com>
+Date: Fri, 12 Mar 2021 00:26:43 +0000
+Message-ID: <CACPK8XfMEy2o39v3CG4Zzj9H_kqSFBOddL3SC-_OryMqVXEjOw@mail.gmail.com>
+Subject: Re: [PATCH 4/4] ftgmac100: Restart MAC HW once
+To: Dylan Hung <dylan_hung@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,45 +72,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: BMC-SW <BMC-SW@aspeedtech.com>, Po-Yu Chuang <ratbert@faraday-tech.com>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ Networking <netdev@vger.kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Jakub Kicinski <kuba@kernel.org>, "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 8 Mar 2021 at 22:56, Eddie James <eajames@linux.ibm.com> wrote:
+On Tue, 20 Oct 2020 at 04:14, Joel Stanley <joel@jms.id.au> wrote:
 >
-> Several power supplies supported by the IBM CFFPS driver don't
-> report valid data in the CAPABILITY register. This results in PEC
-> being enabled when it's not supported by the device, and since
-> the automatic version detection might fail, disable use of the
-> CAPABILITY register across the board for this driver.
+> On Mon, 19 Oct 2020 at 08:57, Dylan Hung <dylan_hung@aspeedtech.com> wrote:
+> >
+> > The interrupt handler may set the flag to reset the mac in the future,
+> > but that flag is not cleared once the reset has occured.
+> >
+> > Fixes: 10cbd6407609 ("ftgmac100: Rework NAPI & interrupts handling")
+> > Signed-off-by: Dylan Hung <dylan_hung@aspeedtech.com>
+> > Signed-off-by: Joel Stanley <joel@jms.id.au>
 >
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> Link: https://lore.kernel.org/r/20201222152640.27749-3-eajames@linux.ibm.com
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-I have applied the commits to this driver that have been made upstream:
+net maintainers, this one never made it into the tree. Do you need me
+to re-send it?
 
+Cheers,
 
-f7a652182cc7 hwmon: (pmbus/ibm-cffps) Set the PMBUS_NO_CAPABILITY flag
-3bce071a301f hwmon: (pmbus) shrink code and remove pmbus_do_remove()
+Joel
 
-> ---
->  drivers/hwmon/pmbus/ibm-cffps.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/drivers/hwmon/pmbus/ibm-cffps.c b/drivers/hwmon/pmbus/ibm-cffps.c
-> index 2fb7540ee952..f7bb7bebe045 100644
-> --- a/drivers/hwmon/pmbus/ibm-cffps.c
-> +++ b/drivers/hwmon/pmbus/ibm-cffps.c
-> @@ -472,7 +472,7 @@ static struct pmbus_driver_info ibm_cffps_info[] = {
->  };
->
->  static struct pmbus_platform_data ibm_cffps_pdata = {
-> -       .flags = PMBUS_SKIP_STATUS_CHECK,
-> +       .flags = PMBUS_SKIP_STATUS_CHECK | PMBUS_NO_CAPABILITY,
->  };
->
->  static int ibm_cffps_probe(struct i2c_client *client)
-> --
-> 2.27.0
->
+> > ---
+> >  drivers/net/ethernet/faraday/ftgmac100.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/ethernet/faraday/ftgmac100.c
+> > index 0c67fc3e27df..57736b049de3 100644
+> > --- a/drivers/net/ethernet/faraday/ftgmac100.c
+> > +++ b/drivers/net/ethernet/faraday/ftgmac100.c
+> > @@ -1326,6 +1326,7 @@ static int ftgmac100_poll(struct napi_struct *napi, int budget)
+> >          */
+> >         if (unlikely(priv->need_mac_restart)) {
+> >                 ftgmac100_start_hw(priv);
+> > +               priv->need_mac_restart = false;
+> >
+> >                 /* Re-enable "bad" interrupts */
+> >                 ftgmac100_write(FTGMAC100_INT_BAD, priv->base + FTGMAC100_OFFSET_IER);
+> > --
+> > 2.17.1
+> >
