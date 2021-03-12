@@ -2,64 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDCBD33827C
-	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 01:36:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8441D33827E
+	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 01:37:56 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DxRh96xNzz30Pl
-	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 11:36:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DxRjt3sRXz3cWb
+	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 11:37:54 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=VIJu6AZ2;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=X/HfUFSC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::733;
- helo=mail-qk1-x733.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::734;
+ helo=mail-qk1-x734.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=VIJu6AZ2; dkim-atps=neutral
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com
- [IPv6:2607:f8b0:4864:20::733])
+ header.s=google header.b=X/HfUFSC; dkim-atps=neutral
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com
+ [IPv6:2607:f8b0:4864:20::734])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DxRgz07Vmz2xZt
- for <openbmc@lists.ozlabs.org>; Fri, 12 Mar 2021 11:36:14 +1100 (AEDT)
-Received: by mail-qk1-x733.google.com with SMTP id t4so22753959qkp.1
- for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 16:36:14 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DxRjg1sSjz2xZt
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Mar 2021 11:37:43 +1100 (AEDT)
+Received: by mail-qk1-x734.google.com with SMTP id 130so22672723qkh.11
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Mar 2021 16:37:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=5KF5lJjRLF+PxZKHDUBQQs4qJMBMkrRjJLK4pfNLoFw=;
- b=VIJu6AZ2ZOBEtW9Xn2MjBJmFMDsBDlIIt3MeCkhgGEKTWTk3xzha5PQOFHg9706gfV
- ndbwmLEMMv1adzFwuZc+mXohwnJE4s9vqv/0yoUCnxbHuDJslvKWZoloK4c+YTtVhXdA
- RmE8Dy3ctI+4AjSlGrHekb5G3ixmLso2ZC32A=
+ :cc; bh=iX3aF5Mn3G6+TJGzFtX6/jBzUi9WYwYJc6gdIjVWitI=;
+ b=X/HfUFSCRu0Qgw31GLxpHrJ9ePMNMMKsZHpr/3G4XYZxb/Iox0ANNcoHfQ1Q1Ufwtn
+ vKrlUcDY4W1bPQ7g4zREkLwY+daaoTx7q9pbawwBaKh7qSaW8lfXCv5/Caa+vW6sPo61
+ RUqtkZJHoaaRpTw0xkHyOtPIgOCFOsEGdBi9o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=5KF5lJjRLF+PxZKHDUBQQs4qJMBMkrRjJLK4pfNLoFw=;
- b=C1xTBK/9JQbuRcaXHwmmzbhWBpoaUWcDl8S5bJ4UrhsQO1i1JWHSqxIAVENsY/BHzB
- N3ECVc3PhBL3+HkRO5p5fgv0S7j/27rEIz3HW6tEfUfs6TxTf1txGGy7sDenTrEt78Gl
- fjsxJULFDvNbQS2EOLD6TjUUOTaP+d0ETcPLM7dfxI07pOvJqtHSdjSBsERzD4OfkVc2
- DeYNWoZ84j56sxUtCzI2v1ep57JrelUOyBblT4vB7vCXNcVejUSB2sMU6+++k5HGZwVo
- FhLKIlOWLjzY63JQm3XUbnpOAJkjnEk59Q5HhQK7ZH8yFn1krzcTzpH16A0rsI8y/fcT
- ZiGA==
-X-Gm-Message-State: AOAM533GWqJb7nPmx/HOrdBS4OiYQI5tlYGmob5Kzawlyul+KocW2KDb
- ZfaOKvKpgrXHV3/G4X+6uVleJTTxgcalMx6dTy0=
-X-Google-Smtp-Source: ABdhPJyu/4XMpl731qLN4Z3iVEzBTzDJK2OKEaYV2LQPKTzpCWaMpuKr1xnBvrBGDnH4SwPDzDQYOpETLaNfP4r9TJY=
-X-Received: by 2002:a37:a147:: with SMTP id k68mr10431239qke.66.1615509369663; 
- Thu, 11 Mar 2021 16:36:09 -0800 (PST)
+ bh=iX3aF5Mn3G6+TJGzFtX6/jBzUi9WYwYJc6gdIjVWitI=;
+ b=o/SuVPw2tk3g2lnbuZlpu6BkVsmePQJWqMznUmLI7d0fBQxsG0prZi2e2Dh4EbE3Fl
+ TJLv9EYz5Ve+pMFAKhvM3GsAGaNpFW3e4obrDRX112k8H3+LvCp+tjf7rsnIn0PCc5Yh
+ RAS76Ag2hJCtIMJUPnHMsGGA/2FlQwODrsC3gZxSReyPpl3TJSFpr859jxBKwnMNbfyw
+ 6yTuxI4BKVHgK9juMBYaH5lLF8gaa8MYgRpwayC7WJFP9lxSujsuGb799gwx3UewduS6
+ usXsYgya6Mx++cwv2g8YCA5jRpPwnivhj1pqIO/7/bkDx+dx0mQ7RB+4YkkVqTeyswFg
+ E/Ew==
+X-Gm-Message-State: AOAM53064q8SFoa89neotpu580AotBhqvMoMRGU8LcGcmm0HQTPnzQv/
+ 7/ERIBKrT1/FDhVbD9Gpm6ahVnVn6FICo+LcwjY=
+X-Google-Smtp-Source: ABdhPJw1ywUYMcQe/rHz25f9keM0juxWqqB2yG5hGsU8TfQMhxJZq4utP3VKynSiE8CrmlL+dxfkmoRpw4+U5ScbNcA=
+X-Received: by 2002:a05:620a:1410:: with SMTP id
+ d16mr10453775qkj.465.1615509459901; 
+ Thu, 11 Mar 2021 16:37:39 -0800 (PST)
 MIME-Version: 1.0
 References: <20210308225419.46530-1-eajames@linux.ibm.com>
- <20210308225419.46530-34-eajames@linux.ibm.com>
-In-Reply-To: <20210308225419.46530-34-eajames@linux.ibm.com>
+In-Reply-To: <20210308225419.46530-1-eajames@linux.ibm.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 12 Mar 2021 00:35:57 +0000
-Message-ID: <CACPK8XevDUym6e8f1O4DD4F4rVc=rRga1oQoGhdupbMTf-HT4A@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.10 33/35] pmbus: (core) Add a one-shot retry
- in pmbus_set_page()
-To: Eddie James <eajames@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>
+Date: Fri, 12 Mar 2021 00:37:27 +0000
+Message-ID: <CACPK8XfsXcPqbnsv4Oc7C=FQPNvwyNP0P71czfqWhUv4hzyOqg@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.10 00/35] Rainier and Everest system updates
+To: Eddie James <eajames@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -76,82 +75,127 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 8 Mar 2021 at 22:56, Eddie James <eajames@linux.ibm.com> wrote:
->
-> From: Andrew Jeffery <andrew@aj.id.au>
->
-> From extensive testing and tracing it was discovered that the MAX31785
-> occasionally fails to switch pages despite ACK'ing the PAGE PMBus data
-> write. I suspect this behaviour had been seen on other devices as well,
-> as pmbus_set_page() already read-back the freshly set value and errored
-> out if it wasn't what we requested.
->
-> In the case of the MAX31785 it was shown that a one-shot retry was
-> enough to get the PAGE write to stick if the inital command failed. To
-> improve robustness, only error out if the one-shot retry also fails to
-> stick.
->
-> OpenBMC-Staging-Count: 1
-> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+Hi Eddie,
 
-Andrew, please review the pmbus related changes and let me know how
-you would like to proceed.
+On Mon, 8 Mar 2021 at 22:54, Eddie James <eajames@linux.ibm.com> wrote:
+>
+> This lengthy series updates device trees and drivers for the AST2600
+> systems Rainier and Everest.
 
-> ---
->  drivers/hwmon/pmbus/pmbus_core.c | 31 ++++++++++++++++++++-----------
->  1 file changed, 20 insertions(+), 11 deletions(-)
+This is an unrelated collection of changes that really shouldn't be
+submitted as a single patchset.
+
+Please consider my suggestion for a common rainier/everest device tree
+and re-submit those changes.
+
+I've merged the changes that I have added reviewed-by tags to, and
+backported the pmbus change.
+
+For future revisions please consider sending the patches to mainline
+for review and integration. We can then apply them to the openbmc
+tree.
+
+Cheers,
+
+Joel
+
+
+
 >
-> diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-> index 44c1a0a07509..dd4a09d18730 100644
-> --- a/drivers/hwmon/pmbus/pmbus_core.c
-> +++ b/drivers/hwmon/pmbus/pmbus_core.c
-> @@ -151,25 +151,34 @@ int pmbus_set_page(struct i2c_client *client, int page, int phase)
+> Patches 1-12 update the Rainier device tree. These changes are well
+> tested.
+> Patches 13-15 provide some eMMC improvements.
+> Patch 16 fixes an observed problem on the Tacoma system.
+> Patches 17-24 update the Everest device tree. These changes are
+> somewhat tested in simulation and minimally tested on hardware.
+> Patch 25 adds device trees for the second version of the Rainier
+> BMC board.
+> Patches 26-35 are device driver fixes and improvments. Some have
+> already been accepted in linux-next.
 >
->         if (!(data->info->func[page] & PMBUS_PAGE_VIRTUAL) &&
->             data->info->pages > 1 && page != data->currpage) {
-> +               int i;
-> +
->                 dev_dbg(&client->dev, "Want page %u, %u cached\n", page,
->                         data->currpage);
+> Alpana Kumari (3):
+>   ARM: dts: aspeed: rainier: Add presence GPIOs
+>   ARM: dts: aspeed: everest: GPIOs support
+>   ARM: dts: aspeed: rainier: Support pass 2 planar
 >
-> -               rv = i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
-> -               if (rv < 0) {
-> +               for (i = 0; i < 2; i++) {
->                         rv = i2c_smbus_write_byte_data(client, PMBUS_PAGE,
->                                                        page);
-> -                       dev_dbg(&client->dev,
-> -                               "Failed to set page %u, performed one-shot retry %s: %d\n",
-> -                               page, rv ? "and failed" : "with success", rv);
-> +                       if (rv)
-> +                               continue;
-> +
-> +                       rv = i2c_smbus_read_byte_data(client, PMBUS_PAGE);
->                         if (rv < 0)
-> -                               return rv;
-> -               }
-> +                               continue;
+> Andrew Jeffery (8):
+>   dt: bindings: mmc: Add phase control properties for the Aspeed SDHCI
+>   mmc: sdhci: aspeed: Expose data sample phase delay tuning
+>   ARM: dts: aspeed: tacoma: Add data sample phase delay for eMMC
+>   i2c: Allow throttling of transfers to client devices
+>   pmbus: (ucd9000) Throttle SMBus transfers to avoid poor behaviour
+>   pmbus: (core) Add a one-shot retry in pmbus_set_page()
+>   pmbus: (max31785) Add a local pmbus_set_page() implementation
+>   pmbus: (max31785) Retry enabling fans after writing MFR_FAN_CONFIG
 >
-> -               rv = i2c_smbus_read_byte_data(client, PMBUS_PAGE);
-> -               if (rv < 0)
-> -                       return rv;
-> +                       /* Success, exit loop */
-> +                       if (rv == page)
-> +                               break;
-> +
-> +                       rv = i2c_smbus_read_byte_data(client, PMBUS_STATUS_CML);
-> +                       if (rv < 0)
-> +                               continue;
-> +
-> +                       if (rv & PB_CML_FAULT_INVALID_DATA)
-> +                               return -EIO;
-> +               }
+> Brandon Wyman (2):
+>   ARM: dts: aspeed: rainier: Add gpio-keys-polled for fans
+>   ARM: dts: aspeed: everest: Add power supply i2c devices
 >
-> -               if (rv != page)
-> +               if (i == 2)
->                         return -EIO;
->         }
->         data->currpage = page;
+> Dylan Hung (1):
+>   ftgmac100: Restart MAC HW once
+>
+> Eddie James (7):
+>   ARM: dts: aspeed: rainier: Add additional processor CFAMs
+>   ARM: dts: aspeed: rainier 4U: Fix fan configuration
+>   ARM: dts: aspeed: tacoma: Remove CFAM reset GPIO
+>   ARM: dts: Aspeed: Everest: Add FSI CFAMs and re-number engines
+>   ARM: dts: Aspeed: Everest: Add RTC
+>   hwmon: (pmbus) Add a PMBUS_NO_CAPABILITY platform data flag
+>   hwmon: (pmbus/ibm-cffps) Set the PMBUS_NO_CAPABILITY flag
+>
+> Jim Wright (1):
+>   ARM: dts: aspeed: everest: Add UCD90320 power sequencer
+>
+> Joel Stanley (2):
+>   ARM: dts: aspeed: rainier: Mark controllers as restricted
+>   fsi: scom: Handle FSI2PIB timeout
+>
+> Matthew Barth (3):
+>   ARM: dts: aspeed: rainier: Set MAX31785 config
+>   ARM: dts: Aspeed: Everest: Add max31785 fan controller device
+>   ARM: dts: Aspeed: Everest: Add pca9552 fan presence
+>
+> Milton Miller (1):
+>   net/ncsi: Avoid channel_monitor hrtimer deadlock
+>
+> PriyangaRamasamy (1):
+>   ARM: dts: aspeed: Everest: Add I2C components
+>
+> Vishwanatha Subbanna (6):
+>   ARM: dts: aspeed: rainier: Add Operator Panel LEDs
+>   ARM: dts: aspeed: rainier: Add directly controlled LEDs
+>   ARM: dts: aspeed: rainier: Add leds that are off PCA9552
+>   ARM: dts: aspeed: rainier: Add leds that are off pic16f882
+>   ARM: dts: aspeed: rainier: Add leds on optional DASD cards
+>   ARM: dts: aspeed: rainier: Add leds that are on optional PCI cable
+>     cards
+>
+>  .../devicetree/bindings/mmc/aspeed,sdhci.yaml |    8 +
+>  arch/arm/boot/dts/Makefile                    |    2 +
+>  arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts  | 1756 +++++++++++-
+>  .../boot/dts/aspeed-bmc-ibm-rainier-4u-v2.dts |  198 ++
+>  .../boot/dts/aspeed-bmc-ibm-rainier-4u.dts    |   14 +
+>  .../boot/dts/aspeed-bmc-ibm-rainier-v2.dts    |  198 ++
+>  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts  | 2411 +++++++++++++++--
+>  arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts   |    3 +-
+>  drivers/fsi/fsi-scom.c                        |   18 +
+>  drivers/hwmon/pmbus/ibm-cffps.c               |    2 +-
+>  drivers/hwmon/pmbus/max31785.c                |   55 +-
+>  drivers/hwmon/pmbus/pmbus_core.c              |   39 +-
+>  drivers/hwmon/pmbus/ucd9000.c                 |    4 +
+>  drivers/i2c/i2c-core-base.c                   |    8 +-
+>  drivers/i2c/i2c-core-smbus.c                  |  169 +-
+>  drivers/i2c/i2c-core.h                        |   21 +
+>  drivers/mmc/host/sdhci-of-aspeed.c            |   65 +-
+>  drivers/net/ethernet/faraday/ftgmac100.c      |    1 +
+>  include/linux/i2c.h                           |    5 +
+>  include/linux/pmbus.h                         |    9 +
+>  net/ncsi/ncsi-manage.c                        |   18 +-
+>  21 files changed, 4662 insertions(+), 342 deletions(-)
+>  create mode 100644 arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u-v2.dts
+>  create mode 100644 arch/arm/boot/dts/aspeed-bmc-ibm-rainier-v2.dts
+>
 > --
 > 2.27.0
 >
