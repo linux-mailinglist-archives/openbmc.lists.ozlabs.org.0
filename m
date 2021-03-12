@@ -1,103 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92CD4338656
-	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 08:05:57 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55610339538
+	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 18:40:55 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DxcKb41rQz3cVW
-	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 18:05:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DxtQF2ldgz3d8W
+	for <lists+openbmc@lfdr.de>; Sat, 13 Mar 2021 04:40:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=OPpFuDrD;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=ov9wMDrK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=vishwa@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::436;
+ helo=mail-wr1-x436.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=OPpFuDrD; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=ov9wMDrK; dkim-atps=neutral
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com
+ [IPv6:2a00:1450:4864:20::436])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DxcKL1cXfz3cG2
- for <openbmc@lists.ozlabs.org>; Fri, 12 Mar 2021 18:05:41 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12C74EFa190189; Fri, 12 Mar 2021 02:05:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : mime-version :
- content-type : from : in-reply-to : date : cc : content-transfer-encoding
- : message-id : references : to; s=pp1;
- bh=qOkhosEoEgYcjpxh1CjQRReDaKC/6ulWlR9Vmr5GCY8=;
- b=OPpFuDrDB6Z0jIeYH/+7/xvecscuSyl2WAB4njh3UKUso/hVd1spLik32BM/SIrYP0ry
- nb9Soa7h+dzPHboV6wxZUQDTPKvP1WOCMte62+0dbm/A5vorLYIa0B3eUibtodMg4rR9
- xLtQDTVEmCkFt0rEvWi+O1X/zlMgCT4YElO/FIxD6HHDp+S/s7pRpfzM0o3xqA9ul7bj
- srTlpzD+VBitULB08dcJ87pUvwFJ3i/7SMALYClxH+Xu0ntMttZdYChrSO9NteoLr+id
- 7GnhwGyZbB4MJMkz0WLDxGSMpGjrTqlmdFkRGlvnRBarG8ZjtZ8Acp+VH9sYpmc6LQBR rA== 
-Received: from ppma06fra.de.ibm.com (48.49.7a9f.ip4.static.sl-reverse.com
- [159.122.73.72])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3774m4e932-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 12 Mar 2021 02:05:37 -0500
-Received: from pps.filterd (ppma06fra.de.ibm.com [127.0.0.1])
- by ppma06fra.de.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12C6m9jU006387;
- Fri, 12 Mar 2021 07:05:34 GMT
-Received: from b06avi18878370.portsmouth.uk.ibm.com
- (b06avi18878370.portsmouth.uk.ibm.com [9.149.26.194])
- by ppma06fra.de.ibm.com with ESMTP id 3768n61cs0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 12 Mar 2021 07:05:34 +0000
-Received: from d06av24.portsmouth.uk.ibm.com (mk.ibm.com [9.149.105.60])
- by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id 12C75Gg835062134
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Mar 2021 07:05:16 GMT
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5E4AD4203F;
- Fri, 12 Mar 2021 07:05:32 +0000 (GMT)
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4ECB042042;
- Fri, 12 Mar 2021 07:05:31 +0000 (GMT)
-Received: from [9.199.45.202] (unknown [9.199.45.202])
- by d06av24.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
- Fri, 12 Mar 2021 07:05:31 +0000 (GMT)
-Subject: Re: [PATCH linux dev-5.10 06/35] ARM: dts: aspeed: rainier: Add leds
- that are off PCA9552
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Content-Type: text/html;
-	charset=utf-8
-X-Apple-Auto-Saved: 1
-X-Apple-Mail-Remote-Attachments: YES
-From: vishwanatha subbanna <vishwa@linux.vnet.ibm.com>
-X-Apple-Base-Url: x-msg://3/
-In-Reply-To: <CACPK8XfBu5_2xs_Eu=OtShNFQnAQ+Tc1Q1qM7Qgcaggd-yLumQ@mail.gmail.com>
-X-Apple-Windows-Friendly: 1
-Date: Fri, 12 Mar 2021 12:35:22 +0530
-X-Apple-Mail-Signature: SKIP_SIGNATURE
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DxtQ1419sz3ckr
+ for <openbmc@lists.ozlabs.org>; Sat, 13 Mar 2021 04:40:38 +1100 (AEDT)
+Received: by mail-wr1-x436.google.com with SMTP id o14so1456115wrm.11
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Mar 2021 09:40:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=t9NKzFe8+frHWt4qj4hgJ5Ox6u/9Ht7nPMdA3yd1drA=;
+ b=ov9wMDrKFiJ9nEozvXqZeExMwIH4cknHRtgIw8LHiGVr33EH9WiDuf01imQ8y8yzQ/
+ sFU3VdWAXn8Q7zvSxf2Z79muAr8QD8/vCCnd0O7lgQS/fkrnpqsGQhSq7fR7uO798Ju+
+ 5ROV7ENqLYZ1GAn73ZvQgvhpMukWMvFqCA0qYGKkEnjVTYdI77TFBCZPk/lmqj7q6Wjn
+ r98vUHD3NzvlzDlLwRgaxSeH7E3io7T5V8McFkaeLC2u6s0r1ZBWRTkV0ku7kYHl1gIH
+ EoW2jGh9xPj0ff16D6eJjuqnUsf5U7N5J37B2HGqPAlDh1phiCQRnB9orIYjzOwbauY7
+ OiRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=t9NKzFe8+frHWt4qj4hgJ5Ox6u/9Ht7nPMdA3yd1drA=;
+ b=DCbd94UBl+tj8XXTcDTVGfGc7FtCzFtR3uOR9vegvKnZnH2gNGY7L36M1TBVhAeH0Z
+ hCrb3MDH4jSyh3VQXkJM1hhmTzaSGfSLkRUhUX0a2kIvpSX4TFHUVTKWa4HwNnjAFF5A
+ zqMHtguvdB3WIIdACXIKB6bikERGSDc1F196A8IjVvW2pNEvItGKxWAY5S8yXer8os0K
+ AQpevMYo8T0uVeXWb8WhQaSAG9N0HEpz69X74Ni7Ue9/WpVq6DBg0xZDe33KM49sT6ES
+ TYu/RVtRaWrdOOIuYV2gqrvnAJsa7cXp3n9Sbz7nZIB7nsd+m/eFsm/URTPhoXPJvEJP
+ JS+g==
+X-Gm-Message-State: AOAM532PBM5VZYUI3NjeYfUHibjZHPUY+CuKqhgPzLvk+BW8Yz8x+Mkz
+ I359QrgD1bha2U06qn9rvyytdsA/9HEeN593E8wELw==
+X-Google-Smtp-Source: ABdhPJwSvAxFfZZKfTsqk2krgKfqYYADohssVX/4B/rhq8tQFdwa98MaGyug3mTBZZz+v+y3V0OGko8xHixp3Pufl/Y=
+X-Received: by 2002:adf:9bce:: with SMTP id e14mr15843313wrc.29.1615570831921; 
+ Fri, 12 Mar 2021 09:40:31 -0800 (PST)
+MIME-Version: 1.0
+References: <PSAPR04MB423111B8AD11A19255C79215F86F9@PSAPR04MB4231.apcprd04.prod.outlook.com>
+In-Reply-To: <PSAPR04MB423111B8AD11A19255C79215F86F9@PSAPR04MB4231.apcprd04.prod.outlook.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Fri, 12 Mar 2021 09:40:20 -0800
+Message-ID: <CAH2-KxAf2H2KXcFM2FkmaOdaxLdcSPWWnwe4uapt3DZzT9=3tA@mail.gmail.com>
+Subject: Re: Fan PWM settings via Redfish
+To: =?UTF-8?B?QnJ1Y2UgTGVlICjmnY7mmIDls7sp?= <Bruce_Lee@quantatw.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <6ACEC474-8CFD-4BA9-B8FF-CCD41007AA67@linux.vnet.ibm.com>
-References: <20210308225419.46530-1-eajames@linux.ibm.com>
- <20210308225419.46530-7-eajames@linux.ibm.com>
- <CACPK8Xc9XqM3UtpF0xywFwfj8anXWE1-TvbHCQskogrBBF_ZCQ@mail.gmail.com>
- <OF39939D76.45BF746F-ON00258696.0001FF38-00258696.0001FF3E@notes.na.collabserv.com>
- <CACPK8XfBu5_2xs_Eu=OtShNFQnAQ+Tc1Q1qM7Qgcaggd-yLumQ@mail.gmail.com>
-X-Uniform-Type-Identifier: com.apple.mail-draft
-To: Joel Stanley <joel@jms.id.au>
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-03-12_02:2021-03-10,
- 2021-03-12 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 impostorscore=0
- priorityscore=1501 mlxlogscore=999 phishscore=0 spamscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2103120044
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,73 +75,240 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Nan Zhou <nanzhou@google.com>, "rhanley@google.com" <rhanley@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<html><head></head><body dir=3D"auto" style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;"><div =
-style=3D"word-wrap: break-word; -webkit-nbsp-mode: space; line-break: =
-after-white-space;"><br class=3D""><br class=3D""><blockquote =
-type=3D"cite" class=3D"">On 12-Mar-2021, at 6:00 AM, Joel Stanley &lt;<a =
-href=3D"mailto:joel@jms.id.au" class=3D"">joel@jms.id.au</a>&gt; =
-wrote:<br class=3D""><br class=3D"">On Fri, 12 Mar 2021 at 00:21, Milton =
-Miller II &lt;<a href=3D"mailto:miltonm@us.ibm.com" =
-class=3D"">miltonm@us.ibm.com</a>&gt; wrote:<br class=3D""><blockquote =
-type=3D"cite" class=3D""><br class=3D""><br class=3D""><br =
-class=3D"">-----"openbmc" &lt;<a =
-href=3D"mailto:openbmc-bounces+miltonm=3Dus.ibm.com@lists.ozlabs.org" =
-class=3D"">openbmc-bounces+miltonm=3Dus.ibm.com@lists.ozlabs.org</a>&gt; =
-wrote: -----<br class=3D""><br class=3D""><blockquote type=3D"cite" =
-class=3D"">To: Eddie James &lt;<a href=3D"mailto:eajames@linux.ibm.com" =
-class=3D"">eajames@linux.ibm.com</a>&gt;<br class=3D"">From: Joel =
-Stanley<br class=3D"">Sent by: "openbmc"<br class=3D"">Date: 03/11/2021 =
-06:09PM<br class=3D"">Cc: OpenBMC Maillist &lt;<a =
-href=3D"mailto:openbmc@lists.ozlabs.org" =
-class=3D"">openbmc@lists.ozlabs.org</a>&gt;<br class=3D"">Subject: =
-[EXTERNAL] Re: [PATCH linux dev-5.10 06/35] ARM: dts:<br =
-class=3D"">aspeed: rainier: Add leds that are off PCA9552<br =
-class=3D""><br class=3D"">On Mon, 8 Mar 2021 at 22:54, Eddie James =
-&lt;<a href=3D"mailto:eajames@linux.ibm.com" =
-class=3D"">eajames@linux.ibm.com</a>&gt;<br class=3D"">wrote:<br =
-class=3D""><blockquote type=3D"cite" class=3D""><br class=3D"">From: =
-Vishwanatha Subbanna &lt;<a href=3D"mailto:vishwa@linux.vnet.ibm.com" =
-class=3D"">vishwa@linux.vnet.ibm.com</a>&gt;<br class=3D""><br =
-class=3D"">These LEDs are on the fans and are connected via a<br =
-class=3D"">pca9551 i2c expander<br class=3D""></blockquote><br =
-class=3D"">This change doesn't make sense. The pca9551 is an i2c LED =
-expander,<br class=3D"">so<br class=3D"">we don't need to expose the =
-pins as GPIOs and then attach a gpio-leds<br class=3D"">driver to them. =
-We should instead simply configure the pca955x driver<br class=3D"">to =
-drive the LEDs as LEDs.<br class=3D""></blockquote><br class=3D"">I'll =
-refresh your memory on why we have been doing this in our<br =
-class=3D"">devie trees and then let you consider if this is desired or =
-not.<br class=3D""><br class=3D"">The led system insistes on creating a =
-compact map (no holes) (as<br class=3D"">does the reset subsystem).<br =
-class=3D""><br class=3D"">However, this means the relative led number =
-for a pin changes<br class=3D"">as the prior pins change from gpio to =
-led configuration.<br class=3D""><br class=3D"">For example if pins 2 =
-and 7 are leds, they become leds 0 and 1.<br class=3D"">Changing pin 5 =
-to also be an led means that pin 7 is now led 2<br class=3D"">not led 1 =
-on the led subsystem.<br class=3D""></blockquote><br class=3D"">Thanks =
-for the rationale reminder.<br class=3D""><br class=3D"">Are these led =
-numbers important to userspace, or does the renumbering<br =
-class=3D"">affect device tree changes only?<br =
-class=3D""></blockquote><div class=3D""><br class=3D""></div><div =
-class=3D""><br class=3D""></div>Here are my technical needs.<div =
-class=3D"">- I need these LEDs associated with names and this __must =
-not__ change</div><div class=3D"">- I need those LEDs represented as =
-`/sys/class/leds/&lt;$name&gt;`</div><div class=3D""><br =
-class=3D""></div><div class=3D"">What can I do :</div><div class=3D"">- =
-use `leds-gpio` like how it=E2=80=99s done today</div><div class=3D""><br =
-class=3D""></div><div class=3D"">OR</div><div class=3D""><br =
-class=3D""></div><div class=3D"">- Use =E2=80=9Clabel=E2=80=9D in =
-PCA955X_TYPE_LED</div><div class=3D"">&nbsp; &nbsp;- However, putting =
-this label, it results in `/sys/class/leds/pca955x:&lt;$label&gt;`. As =
-opposed to `/sys/class/leds/&lt;$label&gt;`.</div><div class=3D""><br =
-class=3D""></div><div class=3D"">Is there a way where I can get =
-`/sys/class/leds/&lt;$label&gt;` ?. I did not get this from the =
-documentation. Seeing pca955x on 100 entries seems a noise</div><div =
-class=3D""><br class=3D""></div><div class=3D"">!! Vishwa =
-!!&nbsp;</div></div></body></html>=
+On Thu, Mar 11, 2021 at 10:37 PM Bruce Lee (=E6=9D=8E=E6=98=80=E5=B3=BB) <B=
+ruce_Lee@quantatw.com> wrote:
+>
+> Hi All,
+>
+>
+>
+> We are designing and implementing the Fan PWM settings via Redfish. The g=
+oal is that clients can set sensor value to bmc via Redfish.
+>
+>
+>
+> We divide the work into three phases.
+>
+>
+>
+> Phase 1 is to remove the definition =E2=80=9CBMCWEB_INSECURE_UNRESTRICTED=
+_SENSOR_OVERRIDE=E2=80=9D and use new definition to =E2=80=9CBMCWEB_SPECIAL=
+_MODE_SENSOR_OVERRIDE=E2=80=9D.
+>
+> The =E2=80=9CBMCWEB_INSECURE_UNRESTRICTED_SENSOR_OVERRIDE=E2=80=9D was ad=
+ded by Intel group, please refer to https://gerrit.openbmc-project.xyz/c/op=
+enbmc/bmcweb/+/30000,
+>
+> The Intel solution has 4 conditions needs to match one of them and that c=
+an be work to override sensor but actually not all project needs those cond=
+itions, so we want to propose to remove the insecure definition and use new=
+ definition to include the intel solution and execute when compile. It woul=
+d be no compile time with option for common project. And the insecure issue=
+ we will discuss in phase 2.
+>
+>
+>
+> Example below:
+>
+> -------------------------------------------------------------------------=
+----------------------------
+>
+> [Before modified]
+>
+> #ifdef BMCWEB_INSECURE_UNRESTRICTED_SENSOR_OVERRIDE
+>
+> // Proceed with sensor override
+>
+> setSensorsOverride(sensorAsyncResp, allCollections);
+>
+> return;
+>
+> #endif
+>
+> doIntelSpecialModeManager code =E2=80=A6
+>
+> -------------------------------------------------------------------------=
+----------------------------
+>
+> [After modified]
+>
+> #ifdef BMCWEB_SPECIAL_MODE_SENSOR_OVERRIDE
+>
+>       doIntelSpecialModeManager code =E2=80=A6
+>
+>       return;
+>
+> #endif
+>
+> //Proceed with sensor override
+>
+> setSensorsOverride(sensorAsyncResp, allCollections);
+>
+> -------------------------------------------------------------------------=
+----------------------------
+>
+>
+>
+>
+
+I suspect this check and option needs to be moved into the individual
+sensors, so that we can differentiate between "should be settable in a
+test context" and "should be settable in a normal context".
+
+>
+> Phase 2 is to add a condition to check the sensor name=E2=80=99s Mutable =
+value of EM if the value is true do the sensor override function else not d=
+o.
+
+I suspect this patchset needs to be moved forward if you're hoping to
+use the mutable param:
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/363=
+33
+
+>
+> The Mutable value can be set in the sensor configuration of Entity-Manage=
+, when using the patch command to override the sensor, it needs to check th=
+e EntityManager subtree=E2=80=99s sensor name and its interface =E2=80=9Cxy=
+z.openbmc_project.Configuration.I2CFan.Connector=E2=80=9D to check the corr=
+esponding property name=E2=80=99s mutable value to decide whether executing=
+ the override function.
+
+See above.  I suspect that the redfish code doesn't need to check the
+mutability of the sensor, the interface should just have the correct
+behavior.  The only place I would expect to need to know the
+mutability of a sensor is in the IPMI sdr, where we will need to set
+the modifiable bit appropriately.
+
+>
+> This achieves feature parity with the ipmi::sensor::Mutability parameter =
+of the old hardcoded YAML configuration files
+
+Not sure what you're referring to.  That may have been something done in a =
+fork.
+
+>
+>
+>
+> Execute steps:
+>
+> 1.       Patch command to override sensor.
+>
+> 2.       Check the EM of sensor=E2=80=99s Mutable value
+>
+> 3.       If Mutable value is true do sensor override action else not do.
+>
+>
+>
+>
+>
+> Phase 3 is to add a new get command to get the Zone_$id=E2=80=99s "Manual=
+" value and patch command to change the fan mode from auto to manual mode (=
+"Manual":true).
+>
+> Because the fan control is use package phosphor-pid-control, when we need=
+ to set fan pwm, it needs to set the fan mode from auto mode to manual mode=
+, for now, the phosphor-pid-control has already provided ipmi-oem command t=
+o achieve this feature, so we need to implement this fan mode change via re=
+dfish command.
+
+Doesn't this already work today?  I thought we had all that sorted a
+long time ago.  For some reason I thought we intentionally didn't
+expose the manual/automatic param, because that only applied to the
+PID loops, and PWM sensor didn't expose that interface.  I need to go
+look at the code at some point.
+
+>
+>
+>
+> Example URLs                            |Method     |Example Payload
+>
+> --------------------------------------- |-------------- |--
+>
+> /redfish/v1/Managers/bmc      |GET           |"Oem": {
+>
+>                                                       |                  =
+ |         Fan": {
+>
+>                                                      |                   =
+|                    "FanZones": {
+>
+>                                                       |                  =
+ |                              "@odata.id": "/redfish/v1/Managers/bmc#/Oem=
+/OpenBmc/Fan/FanZones",
+>
+>                                                       |                  =
+ |                              "@odata.type": "#OemManager.FanZones",
+>
+>                                                       |                  =
+ |                              "Zone_0": {
+>
+>                                                       |                  =
+ |                                         "@odata.id": "/redfish/v1/Manage=
+rs/bmc#/Oem/OpenBmc/Fan/FanZones/Zone_0",
+>
+>                                                       |                  =
+ |                                         "@odata.type": "#OemManager.FanZ=
+one",
+>
+>                                                       |                  =
+ |                                         "Chassis": {
+>
+>                                                       |                  =
+ |                                                    "@odata.id": "/redfis=
+h/v1/Chassis/GSZ_EVT"
+>
+>                                                       |                  =
+ |                                         },
+>
+>                                                       |                  =
+ |                                         "FailSafePercent": 100.0,
+>
+>                                                       |                  =
+ |                                         "MinThermalOutput": 0.0,
+>
+>                                                       |                  =
+ |                                         "ZoneIndex": 0.0,
+>
+>                                                       |                  =
+ |                                         "Manual":false
+>
+>                                                       |                  =
+ |                              },
+>
+>                                                       |                  =
+ |                   },
+>
+>                                                       |                  =
+ |         },
+>
+>                                                      |                   =
+|}
+>
+> --------------------------------------- |-------------- |----
+>
+> /redfish/v1/Managers/bmc    | PATCH      |"Oem": { "Fan": { "FanZones": {=
+ "Zone_0": { "Manual":true } } }
+>
+>
+
+It should be noted, this schema needs some serious cleanup to make it
+proper resources, paths, and collections, and should version the
+schema files appropriately.  If you're planning on extending it, I
+would expect _some_ effort to be put into cleanup.  There's several
+github bugs that have more details, and I will leave it up to you to
+decide how much you'd like to do as part of this work, but please plan
+on some.
+
+>
+> If any thoughts on this topic, feel free to give your comments. Thanks!
+>
+>
+>
+> Sincerely,
+>
+> Bruce
