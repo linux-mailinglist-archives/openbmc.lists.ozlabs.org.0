@@ -2,120 +2,132 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9DEA346CDE
-	for <lists+openbmc@lfdr.de>; Tue, 23 Mar 2021 23:26:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 52323346CE8
+	for <lists+openbmc@lfdr.de>; Tue, 23 Mar 2021 23:27:00 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F4mDn5mLWz30NJ
-	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 09:26:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F4mFG214zz3bcq
+	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 09:26:58 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=FIIcorp.onmicrosoft.com header.i=@FIIcorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-FIIcorp-onmicrosoft-com header.b=jSOwBUlE;
+	dkim=pass (2048-bit key; unprotected) header.d=FIIcorp.onmicrosoft.com header.i=@FIIcorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-FIIcorp-onmicrosoft-com header.b=U27ERb/v;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fii-na.com (client-ip=40.107.69.80;
- helo=nam04-co1-obe.outbound.protection.outlook.com;
- envelope-from=xiao-peng.chen@fii-na.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=fii-na.com (client-ip=40.107.94.60;
+ helo=nam10-mw2-obe.outbound.protection.outlook.com;
+ envelope-from=lancelot.cy.kao@fii-na.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=FIIcorp.onmicrosoft.com
  header.i=@FIIcorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector1-FIIcorp-onmicrosoft-com header.b=jSOwBUlE; 
+ header.s=selector1-FIIcorp-onmicrosoft-com header.b=U27ERb/v; 
  dkim-atps=neutral
-Received: from NAM04-CO1-obe.outbound.protection.outlook.com
- (mail-eopbgr690080.outbound.protection.outlook.com [40.107.69.80])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam10on2060.outbound.protection.outlook.com [40.107.94.60])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dxwqd0rTrz30M6
- for <openbmc@lists.ozlabs.org>; Sat, 13 Mar 2021 06:29:31 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Dxwvm0hdgz3cJK
+ for <openbmc@lists.ozlabs.org>; Sat, 13 Mar 2021 06:33:07 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kCff11QCQMjKLPmTZVrlMJVvZHHDcQNzOvSTMZXgno4I9CAYnULQz3n3DlUHC/VEbjOdPqvIkNxLrVT5TI9DuPJ/UAwJURRHnnOgd2bnC+yXA3BgF54hebzLEZtR466jnrpBOIF7tvJtDKtjQEjFgWi0D0o8uCYmKpljWQZ6rohjZuIypcg9MZumGlXI9XMygaLuJZbXhANdEVb36+toeVWYGeVi8MR3OLBPnBhAarIeC9uZ+K759R7WkstPwSLTYLVKn6n8zh9GV+71y/rQdQfRxpohziO1fJPXP5COExVYm9qmnh80wIzpwo2mQdcMdNXfkQ2K/PG69n22tHyTmg==
+ b=k2XPD/Qz3lFdtIv16RLwFfJpKVCBBnJp44pdQ3ThTt4TsmiOKvD47+vdsxXGmRXVmppb2XJ/ZCQ1xHuipY3HOkXJO4aH8QPbM23hbNLuQrbfMwTShpWJhrwJXk1FebE1fLGfEMSPKZXEuw2Bc1gcLcXD8cdShdI9JN3s7iUAggN7Jfa/ae3/KADVgDrTmXsvZvEzDtGzSKmGo6VMeXkd7IPfoPpslZUqUg5Z2wa8ecidVPgjWfCm2q5p1g/ybOtf2WMd+Nl0YY0DLicdQgPc7ry+E6uMRJJTd0wkaxm0+GRF8TlllAisVwwru3ScaPg35eEYBPvWfDe9p7E/pQSKMA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b7KmJVWtKSpez96A1+5hq2mvOQLjN9QuGmnKwlu2H6Y=;
- b=LhriICf7ZOr4P3/cLhm5DEqrs+tgoaV/2RrzHIu1PAsYGfrWDHeFmN8Q8MCwzALV6urAcZ4PaNNkqU7NIoo2+ab2eYs3m8chZYYwQRA6ob7bSFZlJX9AXkTlIkf8ZqqirBpuKOtt0VujwW94/86Lb98CxreOhBzAaqZRzuq3nUTcaiQna309r4icZ8zeITgrFowBkS+LmihrKNXnY3eEueUXpPpmKus1OL/vFZ7ue40YBL7v0pYMMCl6wqAK5WgLQJp6KcvFCl6atw0o7+aYTqhPYvO22izX5SNwY3pCIuurj4l4ZFbk+20XFvt+9m2eP4MXgr65RxDBGPmk1uI8Lw==
+ bh=EIOZQCYA/PGRqDQJ6CkpcVayiZVMdoxXIZNqEwRsQyQ=;
+ b=AUGLhVPxWF0EZgTiQdaSGEh3zbywzJHlQnGTCeSnkFWjBWBd5a9HsadM/nIZjDJN9NjWpvrEHlUQL/ybQ4QDEKqT0g4ubgMUpdL7mlCLolESugxr1qEXL8xqBMjNQIlLW+YWLWrSol3FKv0B7FjsxpI+YtCMIHG6GHExx5Yc8JIpijJhBNN4B28GlAr3Zo5acW2S+1RVL45MEBcMoWUc5S4vk+gs1ffx+Rdtd5sGLLsumCjwZKq8l8zxKcC0owWWIzNnV51PlVwUMsg6+Ay6xXajgeL7V7mpnpCcx+uLOqQulwVNzwf4k0jrg4PShuDHiQ1MLPBKfOSO9eW6l1wUzg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=fii-na.com; dmarc=pass action=none header.from=fii-na.com;
  dkim=pass header.d=fii-na.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=FIIcorp.onmicrosoft.com; s=selector1-FIIcorp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b7KmJVWtKSpez96A1+5hq2mvOQLjN9QuGmnKwlu2H6Y=;
- b=jSOwBUlE1EB3yIsVoqSQ2CZRh/yJHTAmGuX1SgLIuRmhLwXHIoYbnk2/64tS6851xjcdm53QkVV6KiC41UcnsgHayhvuE2JNsjT9de7uKv7c41c4OkdiWlD1uqT13BvlH2f77mItoFn5MQfiGzqUuFuO0BkDFy8fLO06OOSjPHdtwjkRveLOdU68Pnpf7HrObcg3gsMO2Q9a8YA1MMrwfHnMdVc6tFSSLhKPsUdh/nDIq6Q08to4ly27gf0GblOIhJJDzy2xKwmMp2wTeDMN8EYqX1WHFJrszbLIqgKyTLI7cGf2HbN1CzqehZfcDwa0MU8Ylod0kWSqMPMXecx/Ow==
-Received: from BYAPR08MB5207.namprd08.prod.outlook.com (2603:10b6:a03:72::33)
- by SJ0PR08MB6623.namprd08.prod.outlook.com (2603:10b6:a03:2d9::7)
+ bh=EIOZQCYA/PGRqDQJ6CkpcVayiZVMdoxXIZNqEwRsQyQ=;
+ b=U27ERb/v6u9sLi79Fu/wlSYkExWh2s5tb6vNhMiyjKSbvfPkAHAMOPN+UD2zYIssyycqb7TgdD2oOVbuqmgKjbdr61gMcRPZ6c1srDbmxqs5Fwt0b5mxPWAcyOiVelXrNg28r5DL6fIrZniYgX19Q2cbvrb2udsqINe+vkSA6yzcAFIHjUIdz86MlhuGSKsS4uSFOzV17azRX1TKONJevenQhiiAP0hVLEUEo+DGzxUOBkxVo9m3A+XKIVoDMnGfRa98fmLLANM/d61/JFPwE0VLyOb+e2mmoFccGnTZttkx3FJCKQqP4wiP/+bg1bvLiYSBk3qoXZUzFQ0SWZ1jGw==
+Received: from SN6PR08MB5087.namprd08.prod.outlook.com (2603:10b6:805:73::11)
+ by SN6PR08MB3965.namprd08.prod.outlook.com (2603:10b6:805:21::32)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3912.19; Fri, 12 Mar
- 2021 19:29:26 +0000
-Received: from BYAPR08MB5207.namprd08.prod.outlook.com
- ([fe80::210b:44b5:21c9:f38d]) by BYAPR08MB5207.namprd08.prod.outlook.com
- ([fe80::210b:44b5:21c9:f38d%4]) with mapi id 15.20.3933.031; Fri, 12 Mar 2021
- 19:29:26 +0000
-From: XP Chen <Xiao-Peng.Chen@fii-na.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3933.31; Fri, 12 Mar
+ 2021 19:32:59 +0000
+Received: from SN6PR08MB5087.namprd08.prod.outlook.com
+ ([fe80::18be:ce2:a837:e61a]) by SN6PR08MB5087.namprd08.prod.outlook.com
+ ([fe80::18be:ce2:a837:e61a%5]) with mapi id 15.20.3912.030; Fri, 12 Mar 2021
+ 19:32:59 +0000
+From: Lancelot Kao <lancelot.cy.kao@fii-na.com>
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
  "bradleyb@fuzziesquirrel.com" <bradleyb@fuzziesquirrel.com>
 Subject: group for foxconn CI / fii oem repo 
 Thread-Topic: group for foxconn CI / fii oem repo 
-Thread-Index: AdcXdflGL+FGFMTlSM6XVXSLHUuYWA==
-Date: Fri, 12 Mar 2021 19:29:25 +0000
-Message-ID: <BYAPR08MB5207126C4F83094A41DEE01CF16F9@BYAPR08MB5207.namprd08.prod.outlook.com>
+Thread-Index: AdcXdflGL+FGFMTlSM6XVXSLHUuYWP//nHyA
+Date: Fri, 12 Mar 2021 19:32:59 +0000
+Message-ID: <988A363C-0A57-4B5D-BDDA-5D6F61B9574A@fii-na.com>
+References: <BYAPR08MB5207126C4F83094A41DEE01CF16F9@BYAPR08MB5207.namprd08.prod.outlook.com>
+In-Reply-To: <BYAPR08MB5207126C4F83094A41DEE01CF16F9@BYAPR08MB5207.namprd08.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/16.46.21021202
 authentication-results: lists.ozlabs.org; dkim=none (message not signed)
  header.d=none;lists.ozlabs.org; dmarc=none action=none
  header.from=fii-na.com;
 x-originating-ip: [65.205.114.151]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 624bf8b6-4d98-481e-706a-08d8e58d25dc
-x-ms-traffictypediagnostic: SJ0PR08MB6623:
+x-ms-office365-filtering-correlation-id: 763bab6e-7054-4028-fb68-08d8e58da539
+x-ms-traffictypediagnostic: SN6PR08MB3965:
 x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <SJ0PR08MB6623C7C4EE73B0A47670DD4FF16F9@SJ0PR08MB6623.namprd08.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-microsoft-antispam-prvs: <SN6PR08MB3965F1634BD81EF0EB0823E89C6F9@SN6PR08MB3965.namprd08.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7219;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: DNEWpqA9VkI/EvkhI7MlGxw2SLgdG69DtgGgGslm/b+zPTOChZ0H9sReYtHpNs90pfjole/HAOYPZKrD75FOOLu1dA4qfp/zis176HlK4/Djgi064doLl5thWfxkM9JtqBN1jLEu/0n9nx8PN2fLQJ0DAqWu53vyfLC8AfRHmthXHJCk+G0vb8dpIv+X6c/cRUSBsDn1IXBjvjW00NBRkLMqv5ixD5fCayAojqHAIa0UknO0ONA0eIpAs2JJh7Pp3S1ywp3EiTPM1HFs1jHIEuFDShiG5mTZT9cGAuDFEU2IV7b7mAC1S6hYluzLXLm4CW5Jf8+J4cH01WM0tkL4zN7Snl+rRFlYIoa0CRltNqARk9ub/U5k2hvhJPYqNo35Rjfp1IMLltXySTI/NkPBg6GxxGBW2wVyP6H0MgzkcUqOoSPW2L0HNuMzmm/DjTFpGMCACk+QfXGl1GgzaPeA33VkRQDds7wyJ+IFroJcdo9xYUSJKj1xk6cZuWzrEJRBZz20LGHOXcYBqlYAhrVDRg==
+x-microsoft-antispam-message-info: NHS0mg3QnUK80s14PpJvMASYroQWiHI/51QSq0AdqiYkGHsxsoyxnzusc9p0UEZXiFyWk3HvoCT3Ey2xI5uRmtj2kxyMw1jUBEnqmzQUjQbN/8unNs54Ujlh8QnayV0GTLiCh/3kp6Y9Kxmtj5OvY4thBwgFqr/UZz4R3uhSHszAkGzeL1MvpInnEL3e1sX4ZP+eZHHHTP/obK5uVHYIdKCA1vsBWJtaPzcfQ1Zq3Xr9aG1i8ZH8xWONWqzHz5kF8PF4EtjnAUd6X/yW0oG93uMETK4QztzRJ+99Z/JYsJMUSweDepIYUKBRpGRbXUZvrBX0aYaFSNldVuBd0EUE4XeFZGN7ku0WyXhdsUWaSq/raT/iRx/5QsfOyGV9DOORVv/u5idut9184VE7z8mDLP4DJ6ZJ5Jq+KF7I2GeU/16n295meJ2Ou/GAInyX76v7U4XOXMmWCKVIvs1YLRThh6jg1rU7HzeQ0VfQtfDrrbWv3qOlfMZqHP/H9KRasZTaJd6mw8r4Af/bpAIqhmvhYnSlw2EWRk9EeuuBofYlQt2rYXtpo1oRAg71GEOGSIng5rBjDozpT+KcGG2l0QQ/SiLr9Wt0eH+QhWnjNB4kC2GZrbHjFRbcU/lKcUmst8NU
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR08MB5207.namprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(346002)(376002)(366004)(39860400002)(136003)(396003)(7696005)(9686003)(316002)(6506007)(52536014)(33656002)(86362001)(8936002)(66476007)(558084003)(66556008)(2906002)(76116006)(478600001)(4743002)(64756008)(4326008)(71200400001)(107886003)(5660300002)(54906003)(8676002)(110136005)(26005)(66446008)(9326002)(186003)(55016002)(66946007);
+ IPV:NLI; SFV:NSPM; H:SN6PR08MB5087.namprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(346002)(366004)(376002)(396003)(136003)(39860400002)(36756003)(64756008)(2906002)(8936002)(76116006)(66446008)(186003)(4326008)(33656002)(71200400001)(2616005)(66946007)(66476007)(478600001)(26005)(6512007)(316002)(66556008)(5660300002)(558084003)(107886003)(6486002)(4743002)(8676002)(6506007)(86362001)(110136005)(54906003)(45980500001);
  DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?9u0l/lJc6srDx8/uZmgZYdTtKHvUaQJZY8PsfwreD0KmlMdMDEKiR1aLeHBA?=
- =?us-ascii?Q?f7rK6Volbp/whixt9hly6rOgYIsQos6HFrFsczms/Yj7qH7VVuAZsooun7l0?=
- =?us-ascii?Q?SjHsH1gPw39zok0YwsWN7hBNd4ni2qDI+u45v38NUAz8BFOCGlRgEQSpHfB7?=
- =?us-ascii?Q?72QB3LunsImml+CxJGGRZWIPem7IjwxmW1dt59D2rESF/uJpAP5hUsPCQ9UZ?=
- =?us-ascii?Q?sFo0nbI4X6kxcZCp/ibaKeZTNeWY/H0ZP0o6yVKLq68lHXAn9ZEVMJAsF6CN?=
- =?us-ascii?Q?krHFd9fhnXDR32JAqnWX/aSNu/yB3Ob7m/Z7H2Qx8hdjywXT7xgYlPthXK4Z?=
- =?us-ascii?Q?Y9qgTnZSZsmpQlliVIIUEgZiM0i5EDIhuFnPhwVesR8FPy9pm2OMgpD46Rwn?=
- =?us-ascii?Q?l6whqTZlULVSYxv/cbhWouxwjlbTn3fwG2YM+5NDFNHGvvvFMpYpMqc6SD5v?=
- =?us-ascii?Q?nbzOMZg31Pqa4JNVgQDflkaIM2OVWmojMl1Ai4AJEVtsUhMDkn16YuJjfinF?=
- =?us-ascii?Q?+wJqo2WAa23vxAKF/aBRZoaJYD445vR8gagT04Cbc7isfs/EXkXgovUTtJMP?=
- =?us-ascii?Q?DWoeOtTZoYy0p969dmY8lKXN8QympTV2FpfwwjA+RtPFmFmP4eTikDF2Ybl6?=
- =?us-ascii?Q?EYVjOpHleJNXqRrwF8hwGquJLxqEYG8DSPQMmI+c6+cKeU1fmIkcBoniiqcd?=
- =?us-ascii?Q?rhWaXSU07rtogDIjMJjj+5bSlUMmxPgi2DmDGbSM1Ri13gxHVsLt/j6ME+K9?=
- =?us-ascii?Q?us0vS35jojrF/AhIlpy1alXNPtymenurg2dMptjRzYJPyZoQDaD9i9poL9YU?=
- =?us-ascii?Q?GmXVUXl0ckLnjByITHLiZMJV1khJpVRs08Pf1MnkHLAg8CP096McXiZij7EM?=
- =?us-ascii?Q?mjT5eoCkFqexB1B3X0yTg9mlTGkPwrSLq13+Vm8ML7IvUme1c2p3aJ1CVu3/?=
- =?us-ascii?Q?v3OrV4edUjSbw04/7GMqTreGQMb0WYzSLIXCtpFeLPbeEvFpHXBJQCyHZX2j?=
- =?us-ascii?Q?+fGaYi7HeJrAg+JVMM/NB8J1x6m9MCt3ZTB71lo/MEGNAR21e86GEUI2aAPd?=
- =?us-ascii?Q?PE1JSFN1Qz2Sl6i2QRBIrcO+9+9FP9/9+zpdsTSaATThgPTEWFqsWGtzbE+O?=
- =?us-ascii?Q?zr0n3HOSBU7bIyipc6HhTVlDK7BBtqYkMTrh4FnufuCx1ziCOa9W4PWxetG9?=
- =?us-ascii?Q?ebR6mskAiQH0hE5U6RYo1tahB5I+d93ZMOd+H5grl86N2DQIFMA7Vz8J2Ouh?=
- =?us-ascii?Q?QkwsKThnswM7it8yNol2iSEkuon3IVC3PV3COkTgPWH7rrsAf+fW9VaxUaCq?=
- =?us-ascii?Q?6dWw1Mcn+EGrVEAzBDJGV6Be?=
-Content-Type: multipart/alternative;
- boundary="_000_BYAPR08MB5207126C4F83094A41DEE01CF16F9BYAPR08MB5207namp_"
+x-ms-exchange-antispam-messagedata: =?utf-8?B?Qmo3OGdOaWxiZ3k2VW5DQ0JvTXd1TFNuTEo5NkhobVIyNytLZXVFZGhuVmZH?=
+ =?utf-8?B?MnE5UEdaNlFJRjNWb2xoL0NmL3dITTlaNmUrOTVDck5NcFRMcmFiQUwzUDZw?=
+ =?utf-8?B?QXdRZnhHR2w3NTlndWJRT0RHYlpRb2pGaEZWMkxZc2UrSi9uZjc5a0ZsZngv?=
+ =?utf-8?B?TjB3Sis1ay9yaGM5bGowbzBlSHJhczBhOElEOHFodHVHN0NYb3pPUTZCazBX?=
+ =?utf-8?B?ZXhnT2x1a3NORnZyV3dsQ0d4bG42bTFQeGIzLzNHVG12L3lUaGM5bmpweG1J?=
+ =?utf-8?B?cUZIWGNMYWJEbkc3bDlSMVBqOUsrTmtYMklXLzZabWdlNmttVXNab0JqUmp6?=
+ =?utf-8?B?UUFxblgwTlJSVzhaNXM1bllIbGFZMktHWjRuekZWNWpES1lxY1J6NWFJSUJ3?=
+ =?utf-8?B?V0Nac2JaZGhVSzlXWDhuaENrZEliUjduWWdVRWlpcXhTTHhTWW54cXpjZ0J1?=
+ =?utf-8?B?TXBwUElQZDJ4Y1B2ZmU5UEJRMU4xNE53LzBjTnVyNC95RkNWbTRCYmlFVzR0?=
+ =?utf-8?B?NHRIM2V6L0U1ZjE3NnVHeW80UkZOVWlsSm5LOFlldEkwemFjMzFaQ0JzU2dK?=
+ =?utf-8?B?Q05KYm1UOU1Zb2x4MkljYWFhZEt3T0dOVHFkNnhWblF2WnR4L0dxdVpSR2cw?=
+ =?utf-8?B?R0xkL2VoS1FWY08ydTRjZjd5SS9MMHF1MUpUOEFYdDBzcHdXdVYrQmJXa09t?=
+ =?utf-8?B?emM2WDlZcWxzNzBoNGlKdnljYzR5SXNRZTF5WUZ3dnhwZXRIa0Zmbi9RTS9n?=
+ =?utf-8?B?dC8rRnUzeEExOERiY0VkdTVqQTV3a29odXlyb1Z2T0F4UnNPNmtkcnJLWVY1?=
+ =?utf-8?B?dFlXTXRxaXhXZ0ZXdUh5RWNXSnIzWkE1Zk1Wd1o3UWdTdUhtUG9OanV0ZzIx?=
+ =?utf-8?B?Qzh4aC9EUDcxSU9lWWVYbVNwUFRUVWhDT2tWRmlDZjFjd3BpSnJJOTNuL1pY?=
+ =?utf-8?B?TW9uU2R3V0NSM3ZYaWtNa0luQmoxV0VDMEsxVFJndEJvbXU3ZGYzV0VrK3pF?=
+ =?utf-8?B?ay9ZK3FmWkZUcTgzMGk4NE9leUhUdzdyb0grVjV3KzJuaUMwcjNZRDJ3ampL?=
+ =?utf-8?B?UDZJZzI5dk5YSC8yS3lvMVdYQjhIWmRUTXlRdHNleGRoNmJBZUxTcDJtT2ly?=
+ =?utf-8?B?Znl6Q1RQRG1QNnFoVit4SmdXK240WjZMb0JXaVI2R3ZlUWJVN1hpR3grczVH?=
+ =?utf-8?B?NkZES2VBN2hCU0NCejBZNTdwZTV3R0FzakJPRlZ1UU1sYmVZK2xySDVXbU16?=
+ =?utf-8?B?R1hKV1VJNVdqUWFMdGRmQVBLMUNiTVJzZVJnZXFtMzFYSUtUcnoya1BVVUhT?=
+ =?utf-8?B?c2FsOU82T0ovMVBxZzVKVE9GQmlMYmhIYm9ZbkhGcDliREF4VDlCYU1peVdB?=
+ =?utf-8?B?eWxLWmowR0M0ajdMTElSbWxXYWZpcU1NVGNsUWxoUWxtOGhGUVJlYWNqNEIy?=
+ =?utf-8?B?Y3NiTEFBdFhPb09RbkNHWFprQUtTSFpxcEpGc05SRXd3dzRMS05hVm43K1BR?=
+ =?utf-8?B?anBjdCs3NGZydm5ZdG1aVWJQR2RRT044VDBMYk9XRjlaQVRrWUd0UVEyZ3Vo?=
+ =?utf-8?B?ZXNyQ2tuS2ttZ0lLNTBZclVhQ25PMEF2Z093dTJDQXYwdmVhRXp1c09VV1FH?=
+ =?utf-8?B?eU51SW9KOFhsMzY2SFB1RFFOWGJYcDV4OThyUHd4dGpVWEsyNElvZjhURE9C?=
+ =?utf-8?B?Q0k4T0l6eFJJOXJsTEtYYitWY3NCWnBTZ3dJMmp6UWVxdVROWW9EOHFaTm5H?=
+ =?utf-8?B?ZEhKanBORFBiWEFQWEc3dUJYVVRiU1NBQ1doUml1RktwaDFoNUsrQUp2akE0?=
+ =?utf-8?B?cW00Vy90N0pocXhhNWRCUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <23331E77DFC82D43888587B0628ECAF1@namprd08.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
 X-OriginatorOrg: FII-NA.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR08MB5207.namprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 624bf8b6-4d98-481e-706a-08d8e58d25dc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Mar 2021 19:29:25.9519 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: SN6PR08MB5087.namprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 763bab6e-7054-4028-fb68-08d8e58da539
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Mar 2021 19:32:59.6985 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 2f78a81d-6abb-4840-a061-3fe5396c72f2
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 0xYb7ItMoSMLgMRdbcVIcdwg+nvmdQEnceywpOS8sdbUtbdQ5vD7GQeKApoiN2HV1SiypSnmZZQsuAx04My2GjU7v8Q/86ROpUXGjxR+e4w=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR08MB6623
+X-MS-Exchange-CrossTenant-userprincipalname: Hg6vilOm3HUheaUkz/HU1lJCqtjhZYDZlwZW0ZCU1Gj7PXqlK2qL4Nt0PNeRaUjgy0NRLUm6wufWuJAMTDOcESU8vd8uOo4CDNoMxw/jRXk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR08MB3965
 X-Mailman-Approved-At: Wed, 24 Mar 2021 09:25:27 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -128,108 +140,13 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Lancelot Kao <lancelot.cy.kao@fii-na.com>,
- "vveerach@google.com" <vveerach@google.com>
+Cc: XP Chen <Xiao-Peng.Chen@fii-na.com>,
+ "vveerach@google.com" <vveerach@google.com>,
+ Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BYAPR08MB5207126C4F83094A41DEE01CF16F9BYAPR08MB5207namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Hi Brad,
-                How can we create Ci group on gerrit and add people to it
-And we need to create new repo for the Foxconn ipmi oem
-
-Can you please help with that
-
-
-Thanks,
-Xiaopeng XP Chen
-BMC developer
-FII USA
-
-
---_000_BYAPR08MB5207126C4F83094A41DEE01CF16F9BYAPR08MB5207namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:DengXian;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@DengXian";
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi Brad,<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; How can we create Ci group on gerrit=
- and add people to it
-<o:p></o:p></p>
-<p class=3D"MsoNormal">And we need to create new repo for the Foxconn ipmi =
-oem <o:p>
-</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Can you please help with that <o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
-<p class=3D"MsoNormal">Xiaopeng XP Chen <o:p></o:p></p>
-<p class=3D"MsoNormal">BMC developer <o:p></o:p></p>
-<p class=3D"MsoNormal">FII USA<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
-
---_000_BYAPR08MB5207126C4F83094A41DEE01CF16F9BYAPR08MB5207namp_--
+SGkgQnJhZCwNCjEuIEhvdyBjYW4gd2UgY3JlYXRlIENpIGdyb3VwIG9uIGdlcnJpdCBhbmQgYWRk
+IHBlb3BsZSB0byBpdCANCjIuIHdlIGFsc28gbmVlZCB0byBjcmVhdGUgbmV3IHJlcG8gZm9yIHRo
+ZSBGb3hjb25uIGlwbWkgb2VtIA0KwqANCkNhbiB5b3UgcGxlYXNlIGhlbHAgd2l0aCB0aGF0Pw0K
+wqANCsKgDQrCoA0KDQo=
