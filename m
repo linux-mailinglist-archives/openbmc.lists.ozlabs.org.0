@@ -2,68 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55610339538
-	for <lists+openbmc@lfdr.de>; Fri, 12 Mar 2021 18:40:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD00A339FA6
+	for <lists+openbmc@lfdr.de>; Sat, 13 Mar 2021 18:54:02 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DxtQF2ldgz3d8W
-	for <lists+openbmc@lfdr.de>; Sat, 13 Mar 2021 04:40:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DyVfw5vTjz3cX4
+	for <lists+openbmc@lfdr.de>; Sun, 14 Mar 2021 04:54:00 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=ov9wMDrK;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=ABpYJWgk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::436;
- helo=mail-wr1-x436.google.com; envelope-from=edtanous@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=ov9wMDrK; dkim-atps=neutral
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com
- [IPv6:2a00:1450:4864:20::436])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.15.18; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=ABpYJWgk; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DxtQ1419sz3ckr
- for <openbmc@lists.ozlabs.org>; Sat, 13 Mar 2021 04:40:38 +1100 (AEDT)
-Received: by mail-wr1-x436.google.com with SMTP id o14so1456115wrm.11
- for <openbmc@lists.ozlabs.org>; Fri, 12 Mar 2021 09:40:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=t9NKzFe8+frHWt4qj4hgJ5Ox6u/9Ht7nPMdA3yd1drA=;
- b=ov9wMDrKFiJ9nEozvXqZeExMwIH4cknHRtgIw8LHiGVr33EH9WiDuf01imQ8y8yzQ/
- sFU3VdWAXn8Q7zvSxf2Z79muAr8QD8/vCCnd0O7lgQS/fkrnpqsGQhSq7fR7uO798Ju+
- 5ROV7ENqLYZ1GAn73ZvQgvhpMukWMvFqCA0qYGKkEnjVTYdI77TFBCZPk/lmqj7q6Wjn
- r98vUHD3NzvlzDlLwRgaxSeH7E3io7T5V8McFkaeLC2u6s0r1ZBWRTkV0ku7kYHl1gIH
- EoW2jGh9xPj0ff16D6eJjuqnUsf5U7N5J37B2HGqPAlDh1phiCQRnB9orIYjzOwbauY7
- OiRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=t9NKzFe8+frHWt4qj4hgJ5Ox6u/9Ht7nPMdA3yd1drA=;
- b=DCbd94UBl+tj8XXTcDTVGfGc7FtCzFtR3uOR9vegvKnZnH2gNGY7L36M1TBVhAeH0Z
- hCrb3MDH4jSyh3VQXkJM1hhmTzaSGfSLkRUhUX0a2kIvpSX4TFHUVTKWa4HwNnjAFF5A
- zqMHtguvdB3WIIdACXIKB6bikERGSDc1F196A8IjVvW2pNEvItGKxWAY5S8yXer8os0K
- AQpevMYo8T0uVeXWb8WhQaSAG9N0HEpz69X74Ni7Ue9/WpVq6DBg0xZDe33KM49sT6ES
- TYu/RVtRaWrdOOIuYV2gqrvnAJsa7cXp3n9Sbz7nZIB7nsd+m/eFsm/URTPhoXPJvEJP
- JS+g==
-X-Gm-Message-State: AOAM532PBM5VZYUI3NjeYfUHibjZHPUY+CuKqhgPzLvk+BW8Yz8x+Mkz
- I359QrgD1bha2U06qn9rvyytdsA/9HEeN593E8wELw==
-X-Google-Smtp-Source: ABdhPJwSvAxFfZZKfTsqk2krgKfqYYADohssVX/4B/rhq8tQFdwa98MaGyug3mTBZZz+v+y3V0OGko8xHixp3Pufl/Y=
-X-Received: by 2002:adf:9bce:: with SMTP id e14mr15843313wrc.29.1615570831921; 
- Fri, 12 Mar 2021 09:40:31 -0800 (PST)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DyVfg3Bm7z30Nx
+ for <openbmc@lists.ozlabs.org>; Sun, 14 Mar 2021 04:53:44 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1615658012;
+ bh=rPjOZivutM7ahGyVWHlvhc8+PQSNNyb2U5RIaFJFD+k=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=ABpYJWgkH6r6itLhACPB/qVGYIWMzoxD/GzCKPk36AcgFgsTj5kRGlOI1ojU70PSs
+ emSSpZUBu2TTR6g72ahUTWCqSMpdUlX2mm2SDn5o8hotfrKmez1Q8TweWpdV/XzKay
+ BTKUpozw0JqlJBfV4o5qVJDGehYCA1x8HGMDIgC0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MHG8g-1lYHbo1Jj6-00DHEx; Sat, 13
+ Mar 2021 18:53:32 +0100
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: devicetree@vger.kernel.org
+Subject: [PATCH v3] dt-bindings: arm: Convert nuvoton,npcm750 binding to YAML
+Date: Sat, 13 Mar 2021 18:53:20 +0100
+Message-Id: <20210313175321.2515675-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.30.1
 MIME-Version: 1.0
-References: <PSAPR04MB423111B8AD11A19255C79215F86F9@PSAPR04MB4231.apcprd04.prod.outlook.com>
-In-Reply-To: <PSAPR04MB423111B8AD11A19255C79215F86F9@PSAPR04MB4231.apcprd04.prod.outlook.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Fri, 12 Mar 2021 09:40:20 -0800
-Message-ID: <CAH2-KxAf2H2KXcFM2FkmaOdaxLdcSPWWnwe4uapt3DZzT9=3tA@mail.gmail.com>
-Subject: Re: Fan PWM settings via Redfish
-To: =?UTF-8?B?QnJ1Y2UgTGVlICjmnY7mmIDls7sp?= <Bruce_Lee@quantatw.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:YdgVKbC+uUFqsQ4VX7wi1nGPYir69EyeuaQ6msT1UYLjj9qKCTK
+ Fwav/8WA1ILbpzevkIxu9AwKMyGZIJiB2TWKOYlrSF70VIrC0V5fyaE6k99gRV0NORr8wg2
+ ssbHuv4vymjrGlWchvj2LvbLYK5e1mrEgrDTSZxEzDNPq/ibqV6NWTFyjaz0iBxP/L2F2+B
+ z2zpFPMwx+z++OqCg9mUw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GdCqp6B9Iz8=:FZCD7bzr46fFwmS6yIDdEr
+ YJcHuTzfylef+APiHJk1USHhg2Nm+JgSQ8Vnck4CM0yeSEwDc2jMOFagqlDEP6QK+3w2GrYu9
+ vtsqOGBtJoFunqbo7oMfcb1kqSaF1rRvwLpQchWk26CkBwDdRHOxUh1N6OOqYkpJVLjqDFvUJ
+ xyGXbojGD5XsMr6Lt0V3A+peJ++FSgjsPrcRsm2+jRG3FsHAnsgxtaSzE10RWmIscBqKphhaT
+ O6Dbpx/cUr8iuqHQP6sw0mm9jWIxC8SA4+2wNMnqnUxqWWiWd1LUdBtNxzZ48tbaJpkwHxTyc
+ dLEwkIlwKPvQ/zJMiQsyPD8vdTuvUWysc+kMQEfpFOj7CgdQOsfMMFcnPpzaV+dClS7bg3JXG
+ FqhsfYRNCh+DcLttvr/FrUPAWKeWKTGALDmP+pdZsOdg+89iLI2qG5R3F9DLnUhqSDgYGb7ME
+ HFtnjXhBevBAMdiQdp7E1r42d00wt4mLPGEL5gN3PcUVS2jRo0W8nW4q1QBb1jZzW2GvL05Cw
+ cZNyDcPegJbEWVGtITC81SZ3vIQ01Tgd7F8c9186lxrY9vBjwjNVBG6FhIvNTP/NNLrE/43rH
+ 8IR1kSeaMZjWP7EhUZba764hxO1gjDhAd8efcOR0Z41Zau7EdeJXKiuod/+vNPVFFGhwpixro
+ O4EgEgrqCi8x9AlBCD/onkHVHkIUXlHYIQRoUEjmj1zCfNMiZKqIYPsJ+1nz18xHKqHBtJ/hq
+ JdcirVw/CzH++o+u04UEh8FRD0ixXhWbXJE7Op48T+px9mM3orI1s7jTuhdhDmCy0EKQsh4Md
+ aOqUiDndG0sYUyjgqwCGA4+7wo3VD0MNCakBkked3dg5cueJGe+a/U4QEwWmALSAsUDQ3OJN8
+ hvbSarBDkEQuvOxranbg==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,240 +76,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Nan Zhou <nanzhou@google.com>, "rhanley@google.com" <rhanley@google.com>
+Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ linux-kernel@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Mar 11, 2021 at 10:37 PM Bruce Lee (=E6=9D=8E=E6=98=80=E5=B3=BB) <B=
-ruce_Lee@quantatw.com> wrote:
->
-> Hi All,
->
->
->
-> We are designing and implementing the Fan PWM settings via Redfish. The g=
-oal is that clients can set sensor value to bmc via Redfish.
->
->
->
-> We divide the work into three phases.
->
->
->
-> Phase 1 is to remove the definition =E2=80=9CBMCWEB_INSECURE_UNRESTRICTED=
-_SENSOR_OVERRIDE=E2=80=9D and use new definition to =E2=80=9CBMCWEB_SPECIAL=
-_MODE_SENSOR_OVERRIDE=E2=80=9D.
->
-> The =E2=80=9CBMCWEB_INSECURE_UNRESTRICTED_SENSOR_OVERRIDE=E2=80=9D was ad=
-ded by Intel group, please refer to https://gerrit.openbmc-project.xyz/c/op=
-enbmc/bmcweb/+/30000,
->
-> The Intel solution has 4 conditions needs to match one of them and that c=
-an be work to override sensor but actually not all project needs those cond=
-itions, so we want to propose to remove the insecure definition and use new=
- definition to include the intel solution and execute when compile. It woul=
-d be no compile time with option for common project. And the insecure issue=
- we will discuss in phase 2.
->
->
->
-> Example below:
->
-> -------------------------------------------------------------------------=
-----------------------------
->
-> [Before modified]
->
-> #ifdef BMCWEB_INSECURE_UNRESTRICTED_SENSOR_OVERRIDE
->
-> // Proceed with sensor override
->
-> setSensorsOverride(sensorAsyncResp, allCollections);
->
-> return;
->
-> #endif
->
-> doIntelSpecialModeManager code =E2=80=A6
->
-> -------------------------------------------------------------------------=
-----------------------------
->
-> [After modified]
->
-> #ifdef BMCWEB_SPECIAL_MODE_SENSOR_OVERRIDE
->
->       doIntelSpecialModeManager code =E2=80=A6
->
->       return;
->
-> #endif
->
-> //Proceed with sensor override
->
-> setSensorsOverride(sensorAsyncResp, allCollections);
->
-> -------------------------------------------------------------------------=
-----------------------------
->
->
->
->
+The general trend is to have devicetree bindings in YAML format, to
+allow automatic validation of bindings and devicetrees.
 
-I suspect this check and option needs to be moved into the individual
-sensors, so that we can differentiate between "should be settable in a
-test context" and "should be settable in a normal context".
+Convert the NPCM SoC family's binding to YAML before it accumulates more
+entries.
 
->
-> Phase 2 is to add a condition to check the sensor name=E2=80=99s Mutable =
-value of EM if the value is true do the sensor override function else not d=
-o.
+Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+=2D--
 
-I suspect this patchset needs to be moved forward if you're hoping to
-use the mutable param:
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/363=
-33
+If someone else wants to be listed as the maintainer, please let me
+know.
 
->
-> The Mutable value can be set in the sensor configuration of Entity-Manage=
-, when using the patch command to override the sensor, it needs to check th=
-e EntityManager subtree=E2=80=99s sensor name and its interface =E2=80=9Cxy=
-z.openbmc_project.Configuration.I2CFan.Connector=E2=80=9D to check the corr=
-esponding property name=E2=80=99s mutable value to decide whether executing=
- the override function.
 
-See above.  I suspect that the redfish code doesn't need to check the
-mutability of the sensor, the interface should just have the correct
-behavior.  The only place I would expect to need to know the
-mutability of a sensor is in the IPMI sdr, where we will need to set
-the modifiable bit appropriately.
+v3:
+- In this version, I removed the nuvoton,npcm750-evb compatible string
+  again. I had previously introduced it to simplify the binding a little
+  bit, but Tomer Maimon suggested to keep /compatible of
+  nuvoton-npcm750-evb.dts as-is (i.e. only use "nuvoton,npcm750", no
+  board-specific string).
+  Because of this change, I am not including Rob Herring's R-b tag.
 
->
-> This achieves feature parity with the ipmi::sensor::Mutability parameter =
-of the old hardcoded YAML configuration files
+v2:
+- https://lore.kernel.org/lkml/20210116010907.3475405-1-j.neuschaefer@gmx.=
+net/
+  https://lore.kernel.org/lkml/20210303154622.3018839-1-j.neuschaefer@gmx.=
+net/
+- Fix indentation to satisfy yamllint
+- Fix $schema line
+=2D--
+ .../devicetree/bindings/arm/npcm/npcm.txt     |  6 ------
+ .../devicetree/bindings/arm/npcm/npcm.yaml    | 20 +++++++++++++++++++
+ 2 files changed, 20 insertions(+), 6 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.yaml
 
-Not sure what you're referring to.  That may have been something done in a =
-fork.
+diff --git a/Documentation/devicetree/bindings/arm/npcm/npcm.txt b/Documen=
+tation/devicetree/bindings/arm/npcm/npcm.txt
+deleted file mode 100644
+index 2d87d9ecea85b..0000000000000
+=2D-- a/Documentation/devicetree/bindings/arm/npcm/npcm.txt
++++ /dev/null
+@@ -1,6 +0,0 @@
+-NPCM Platforms Device Tree Bindings
+=2D-----------------------------------
+-NPCM750 SoC
+-Required root node properties:
+-	- compatible =3D "nuvoton,npcm750";
+-
+diff --git a/Documentation/devicetree/bindings/arm/npcm/npcm.yaml b/Docume=
+ntation/devicetree/bindings/arm/npcm/npcm.yaml
+new file mode 100644
+index 0000000000000..8cca0396a5d59
+=2D-- /dev/null
++++ b/Documentation/devicetree/bindings/arm/npcm/npcm.yaml
+@@ -0,0 +1,20 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/arm/npcm/npcm.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: NPCM Platforms Device Tree Bindings
++
++maintainers:
++  - Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
++
++properties:
++  $nodename:
++    const: '/'
++  compatible:
++    oneOf:
++      - description: NPCM750 development board
++        const: nuvoton,npcm750
++
++additionalProperties: true
+=2D-
+2.30.1
 
->
->
->
-> Execute steps:
->
-> 1.       Patch command to override sensor.
->
-> 2.       Check the EM of sensor=E2=80=99s Mutable value
->
-> 3.       If Mutable value is true do sensor override action else not do.
->
->
->
->
->
-> Phase 3 is to add a new get command to get the Zone_$id=E2=80=99s "Manual=
-" value and patch command to change the fan mode from auto to manual mode (=
-"Manual":true).
->
-> Because the fan control is use package phosphor-pid-control, when we need=
- to set fan pwm, it needs to set the fan mode from auto mode to manual mode=
-, for now, the phosphor-pid-control has already provided ipmi-oem command t=
-o achieve this feature, so we need to implement this fan mode change via re=
-dfish command.
-
-Doesn't this already work today?  I thought we had all that sorted a
-long time ago.  For some reason I thought we intentionally didn't
-expose the manual/automatic param, because that only applied to the
-PID loops, and PWM sensor didn't expose that interface.  I need to go
-look at the code at some point.
-
->
->
->
-> Example URLs                            |Method     |Example Payload
->
-> --------------------------------------- |-------------- |--
->
-> /redfish/v1/Managers/bmc      |GET           |"Oem": {
->
->                                                       |                  =
- |         Fan": {
->
->                                                      |                   =
-|                    "FanZones": {
->
->                                                       |                  =
- |                              "@odata.id": "/redfish/v1/Managers/bmc#/Oem=
-/OpenBmc/Fan/FanZones",
->
->                                                       |                  =
- |                              "@odata.type": "#OemManager.FanZones",
->
->                                                       |                  =
- |                              "Zone_0": {
->
->                                                       |                  =
- |                                         "@odata.id": "/redfish/v1/Manage=
-rs/bmc#/Oem/OpenBmc/Fan/FanZones/Zone_0",
->
->                                                       |                  =
- |                                         "@odata.type": "#OemManager.FanZ=
-one",
->
->                                                       |                  =
- |                                         "Chassis": {
->
->                                                       |                  =
- |                                                    "@odata.id": "/redfis=
-h/v1/Chassis/GSZ_EVT"
->
->                                                       |                  =
- |                                         },
->
->                                                       |                  =
- |                                         "FailSafePercent": 100.0,
->
->                                                       |                  =
- |                                         "MinThermalOutput": 0.0,
->
->                                                       |                  =
- |                                         "ZoneIndex": 0.0,
->
->                                                       |                  =
- |                                         "Manual":false
->
->                                                       |                  =
- |                              },
->
->                                                       |                  =
- |                   },
->
->                                                       |                  =
- |         },
->
->                                                      |                   =
-|}
->
-> --------------------------------------- |-------------- |----
->
-> /redfish/v1/Managers/bmc    | PATCH      |"Oem": { "Fan": { "FanZones": {=
- "Zone_0": { "Manual":true } } }
->
->
-
-It should be noted, this schema needs some serious cleanup to make it
-proper resources, paths, and collections, and should version the
-schema files appropriately.  If you're planning on extending it, I
-would expect _some_ effort to be put into cleanup.  There's several
-github bugs that have more details, and I will leave it up to you to
-decide how much you'd like to do as part of this work, but please plan
-on some.
-
->
-> If any thoughts on this topic, feel free to give your comments. Thanks!
->
->
->
-> Sincerely,
->
-> Bruce
