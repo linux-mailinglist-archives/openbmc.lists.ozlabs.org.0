@@ -2,99 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5820A33C26F
-	for <lists+openbmc@lfdr.de>; Mon, 15 Mar 2021 17:47:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E807533C2C9
+	for <lists+openbmc@lfdr.de>; Mon, 15 Mar 2021 17:58:43 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Dzj5Y2qfPz3019
-	for <lists+openbmc@lfdr.de>; Tue, 16 Mar 2021 03:47:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DzjL96hh0z3032
+	for <lists+openbmc@lfdr.de>; Tue, 16 Mar 2021 03:58:41 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=FHlenvJs;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=SxwYzXXR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
  helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=FHlenvJs; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.s=pp1 header.b=SxwYzXXR; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Dzj5K0Ghrz2yxn
- for <openbmc@lists.ozlabs.org>; Tue, 16 Mar 2021 03:47:31 +1100 (AEDT)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12FGYB5s080971
- for <openbmc@lists.ozlabs.org>; Mon, 15 Mar 2021 12:47:29 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DzjKy3Zgvz2yRJ
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Mar 2021 03:58:29 +1100 (AEDT)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 12FGYWp7155645; Mon, 15 Mar 2021 12:58:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=D3kaDOKLhs5SkGfZwX7Dv+Fp2yOXZZb/hjewpChECcM=;
- b=FHlenvJsLXhauzFMwIpfXKycIT4yj1cRLSf1zb3jy4VYlk0Nsu/7aeygnlLHK3f3myvS
- VuubCpg3ruGCyAfwUtpAdIPaJ/EmlHTR2DzLWNnPgfZ4LrR6Uu2x7NKFP/TMIA42/bAe
- tsMyAd8YNJCg+CnPt5EDbQuoI0XwKPWCXpWeILSIMgTffTK1JdCjpG4kmrlmW8X0WqZ4
- x/w7zXxvp6YiVBUKQusUO0DWN8qr/A5v0FZyfpmkC8UiSFzOvbxDfzg3JrcW5NTdH2ju
- 9z4O6ewmyl4UOYW+tEb1nCMa+ioB//SANZ1JWrcK+JZJpGKtaWHJ2HFDwwvsBDXib9vK jw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 37aasbs3rm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 15 Mar 2021 12:47:29 -0400
-Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 12FGYwwn083826
- for <openbmc@lists.ozlabs.org>; Mon, 15 Mar 2021 12:47:29 -0400
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0b-001b2d01.pphosted.com with ESMTP id 37aasbs3re-1
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=COEaM+7FNd6JNpNGm8NMxCIxPQnYhcUZTbVytDgoXRE=;
+ b=SxwYzXXREFjl8BplH0KKC2Nk5IpxGpD1pmYGd3O1Hw/K8Yc1ot7qgLFFrj4dBBOE48pb
+ zxkPtfSNCzMvntI8MD416L2Ng86Vw34W7zMn292YWzu2n6Nbc7xM/mjgS+wkuoWJFPbe
+ 2NYDKK7OyTWIgR610yw71BLeqL6gEf2tYyR2f8/pvuPQCY1rbOYrbNvGnrwPYb5TcwH3
+ FKCmHMFEKNM5LLBfYm2YevfhBlOZXpQiahJuxbCko4sFDM91xRdPMtm0KeNveqVZLUsm
+ +HaFSvAh3XIpxYrNGJLBFAerGVbfNrz8XkfrZUz3FttR+zABGRGwQhJCJvLbCQAADiXj dg== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 37aa8rb16m-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 15 Mar 2021 12:47:29 -0400
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12FGg1q6011311;
- Mon, 15 Mar 2021 16:47:28 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
- [9.57.198.24]) by ppma02dal.us.ibm.com with ESMTP id 378n19mt95-1
+ Mon, 15 Mar 2021 12:58:21 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12FGkp85021167;
+ Mon, 15 Mar 2021 16:58:20 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma02wdc.us.ibm.com with ESMTP id 378n1a0r7q-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 15 Mar 2021 16:47:28 +0000
+ Mon, 15 Mar 2021 16:58:20 +0000
 Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
  [9.57.199.111])
- by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 12FGlRcg27984130
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 12FGwJPD25886998
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 15 Mar 2021 16:47:27 GMT
+ Mon, 15 Mar 2021 16:58:19 GMT
 Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 61AD7AC05F;
- Mon, 15 Mar 2021 16:47:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9A1B4AC05E;
+ Mon, 15 Mar 2021 16:58:19 +0000 (GMT)
 Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D4FE9AC05E;
- Mon, 15 Mar 2021 16:47:26 +0000 (GMT)
-Received: from [9.85.168.62] (unknown [9.85.168.62])
+ by IMSVA (Postfix) with ESMTP id 6C9A7AC059;
+ Mon, 15 Mar 2021 16:58:18 +0000 (GMT)
+Received: from T480-KlausKiwi.localdomain (unknown [9.85.168.62])
  by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Mon, 15 Mar 2021 16:47:26 +0000 (GMT)
-Subject: Re: [oe-core][RFC 0/3] u-boot: Support SPL Verified Boot
-To: openbmc@lists.ozlabs.org, Dan Zhang <dz4list@gmail.com>
-References: <CAJxKyLed1p-WbcEOZjZ67r61QeEYZ7LBK8xSRDWNNr21pvaMbw@mail.gmail.com>
+ Mon, 15 Mar 2021 16:58:18 +0000 (GMT)
 From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-Message-ID: <6e63a539-f021-28d3-f60d-a0c301ff599f@linux.vnet.ibm.com>
-Date: Mon, 15 Mar 2021 13:47:25 -0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+To: openembedded-core@lists.openembedded.org
+Subject: [PATCH 0/4] u-boot: Support for SPL verified boot 
+Date: Mon, 15 Mar 2021 13:58:02 -0300
+Message-Id: <20210315165806.1633-1-klaus@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <CAJxKyLed1p-WbcEOZjZ67r61QeEYZ7LBK8xSRDWNNr21pvaMbw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
  definitions=2021-03-15_08:2021-03-15,
  2021-03-15 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- impostorscore=0 mlxscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0
- mlxlogscore=999 adultscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ mlxscore=0 suspectscore=0
+ bulkscore=0 adultscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=999 spamscore=0 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2009150000 definitions=main-2103150113
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -107,49 +93,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: andrew@aj.id.au, Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>,
+ openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This patch series aims at extending U-Boot's verified boot support to
+also include SPL.
+
+Presently, setting UBOOT_SIGN_ENABLE instructs the classes uboot-sign
+and kernel-fitimage to create and sign a Linux Kernel fitImage. This
+proposal introduces the variable SPL_SIGN_ENABLE that aims at (re-)
+creating the U-Boot (proper) uImage fitImage and signing it.
+
+In order to accomplish this, the first patch moves some of necessary
+infrastructure (variables, functions) used to sign the Kernel
+fitImage to more common locations, and then essentially duplicates the
+method currently used to sign the Kernel fitImage to also sign the
+U-Boot fitImage.
+
+In the UBOOT_SIGN_ENABLE = "1" scenario, nothing really changes: The
+Kernel fitImage is created, then signed, and the pubkey is added to
+u-boot.dtb which is concatenated with the u-boot-nodtb.bin to create
+the u-boot final image.
+
+In case SPL_SIGN_ENABLE = "1", The U-Boot PN will take care of (re-)
+creating the U-Boot fitImage (using custom .its script) after compile,
+sign it, and contatenate the u-boot-spl.dtb (with the public key) with
+u-boot-spl-nodtb.bin to create the final U-Boot SPl on deploy.
+
+In case both UBOOT_SIGN_ENABLE and SPL_SIGN_ENABLE are set, the Kernel
+PN will take care of creating and signing the U-Boot fitImage (becase
+we need to also sign the FDT image containing the Kernel pubkey), and
+take care of deploying it.
+
+One caveat is that when moving between the scenarios above, the user
+might need to remove the tmp/ directory, since there could be a
+collision for some of the files deployed into the images directory,
+since the configuration may determine which PN does that.
+
+I added oe-selftest testcases and also tested this on upstream OpenBMC
+with AST2600 BMC devices.
 
 
-On 3/7/2021 11:51 PM, Dan Zhang wrote:
-> Hi Klaus,
-
-Hi Dan - sorry, your reply went under my radar last week!
-
-> Thank you very much for providing this solution to build and sign
-> u-boot fit-image.
-> 
-> I have one suggestion: decouple the U-Boot fit build and signing.
-> 
-> UBOOT_FIT ==> Create the uboot fit-image (essentially all your
-> proposal did, except the latest sign step in uboot_fit_assemble())
-> SPL_SIGN_ENABLE ==> create the uboot fit-image, also sign it.
-> 
-> This similar to kernel_fit means create the kernel fitimage, while
-> UBOOT_SIGN_ENABLE means sign it.
-> 
-> This will allow the user to use a simple script to sign an unsigned
-> image with any key, w/o need to be able to tweak the recipe and
-> rebuild the image.
-> i.e. the manufacturing team, the testing team.
-
-Thanks for the suggestion, however, I'm a bit hesitant with this change,
-since for U-Boot the creation/support for the fitImage uImage needs
-to be set in the u-boot config, so unlike the kernel I don't think
-we could simply enable it on the machine.conf and expect it to work.
-
-I'm about to send the patches below as a proper submission to
-openembedded-devel, and I'll continue cross-posting to the openbmc
-list. However, please feel free to answer with you suggestions and
-copy the openembedded mailing-list as well.
-
-Thanks!
-
-  -Klaus
+ meta/classes/kernel-fitimage.bbclass     |  69 +++-------------
+ meta/classes/uboot-config.bbclass        |  58 +++++++++++++
+ meta/classes/uboot-sign.bbclass          | 395
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ meta/lib/oeqa/selftest/cases/fitimage.py | 293
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ meta/recipes-bsp/u-boot/u-boot.inc       |  46 -----------
+ 5 files changed, 736 insertions(+), 125 deletions(-)
 
 
+Signed-off-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
 
 
--- 
-Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
