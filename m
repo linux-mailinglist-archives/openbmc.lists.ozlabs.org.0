@@ -1,91 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01ADF33E17F
-	for <lists+openbmc@lfdr.de>; Tue, 16 Mar 2021 23:38:36 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C467A33E1C7
+	for <lists+openbmc@lfdr.de>; Tue, 16 Mar 2021 23:58:42 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F0Sqs6kdRz30JK
-	for <lists+openbmc@lfdr.de>; Wed, 17 Mar 2021 09:38:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F0TH45jqvz30QZ
+	for <lists+openbmc@lfdr.de>; Wed, 17 Mar 2021 09:58:40 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=flEKuPDM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=EWmR7xSZ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=hlRVOa2x;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=flEKuPDM; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=EWmR7xSZ; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=hlRVOa2x; 
+ dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F0Sqd1dQrz2yxC
- for <openbmc@lists.ozlabs.org>; Wed, 17 Mar 2021 09:38:19 +1100 (AEDT)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12GMXtis111066
- for <openbmc@lists.ozlabs.org>; Tue, 16 Mar 2021 18:38:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : subject :
- from : to : date : mime-version : references : content-transfer-encoding :
- content-type : message-id; s=pp1;
- bh=jY5LGyg39dCRVSJu8VDoEaMYvIucAqxmHcwdBTERaLM=;
- b=flEKuPDMeO6HyeHbgfq7Da3s/tPWf0sTZ0c/bHTF5zItt0AJM5YaFPntrR73o580RK4s
- 8r9Q94yyRxKNq4zMOyPVSuGkSnqMbiWo3ayvI2Zbo7c5kpx5AeBaZbf6u6NDVVmdGVZM
- uD2HbEH0nHy+SaoYt81euQixlRLWB4q7vTRsgu2sJ5jIQ3pzixd0AiCybM8v360DXX5h
- GmP5sQsm3WLyBmyueUZDdzYtO5CsET1BFN5Ull42ZalUTI72WNFk7+J+ghrRolHJtr+0
- P36Xmg2LmJfSQdq3rZCz3xlKYAucND59+RPr/l0Gs4RfzxSBfhqDTGIXLiYGFkGafgms gQ== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.74])
- by mx0a-001b2d01.pphosted.com with ESMTP id 37b0krrb0k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 16 Mar 2021 18:38:16 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
- Tue, 16 Mar 2021 22:38:15 -0000
-Received: from us1a3-smtp01.a3.dal06.isc4sb.com (10.106.154.95)
- by smtp.notes.na.collabserv.com (10.106.227.92) with
- smtp.notes.na.collabserv.com ESMTP; Tue, 16 Mar 2021 22:38:14 -0000
-Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
- by us1a3-smtp01.a3.dal06.isc4sb.com
- with ESMTP id 2021031622381396-822981 ;
- Tue, 16 Mar 2021 22:38:13 +0000 
-In-Reply-To: <OF23D4B149.F0AC8E03-ON00258670.007599F8-00258670.007654E7@LocalDomain>
-Subject: GUI Design Work Group - Wednesday, 3/17/21 at 10:00 AM Central
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: openbmc@lists.ozlabs.org
-Date: Tue, 16 Mar 2021 22:38:13 +0000
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <OF23D4B149.F0AC8E03-ON00258670.007599F8-00258670.007654E7@LocalDomain>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP130 January 13, 2021 at 14:04
-X-LLNOutbound: False
-X-Disclaimed: 40215
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 21031622-3165-0000-0000-000005A5BDF5
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0; SC=0;
- ST=0; TS=0; UL=0; ISC=; MB=0.224004
-X-IBM-SpamModules-Versions: BY=3.00014881; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000296; SDB=6.01521490; UDB=6.00822281; IPR=6.01304004; 
- MB=3.00036388; MTD=3.00000008; XFM=3.00000015; UTC=2021-03-16 22:38:15
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2021-03-12 19:08:28 - 6.00012368
-x-cbparentid: 21031622-3166-0000-0000-0000CDACC0E6
-Message-Id: <OF68399B97.6EDDCC89-ON0025869A.007C36D9-0025869A.007C5980@notes.na.collabserv.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-03-16_08:2021-03-16,
- 2021-03-16 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F0TGm6PMbz301l
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Mar 2021 09:58:24 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 65A595C00A8;
+ Tue, 16 Mar 2021 18:58:20 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Tue, 16 Mar 2021 18:58:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm2; bh=opOPH9Nrc0cbEpchECGp0CoINMWJmYu
+ /3173y3YZr/I=; b=EWmR7xSZarTr5b4ZJ06jgsxk0+3ZfN7sgdLcznuS52g7wHJ
+ qAbHVw5ICmD+sNoX5xHjuMnrPBGnkFVfVyWBfGbD4qJt0K4mTEBOGsr51QpzTSGG
+ YYCOhvallMRJc2TGJWciO44wBTpiYkFgB2yYk7t+n3zVPP6wQ5UZbHQ93NExjsvF
+ PHLgfcVdZRW2txvTQ+QK8gI+Tkeurt6AQ8QE/x71wy0RUA2GgKBZ5p88rVF0UWbh
+ dPcavlqj0GapifkWSzTmGHCTGP4929G5PwAWn6W6a7aZgpNN65N+SEIN4DdJbufA
+ VwX/sdwxvhFVX8BjWj5g1YLpfPoVJrwoOhgnL6g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=opOPH9
+ Nrc0cbEpchECGp0CoINMWJmYu/3173y3YZr/I=; b=hlRVOa2xBk3y+NUHBmFhZT
+ lcj2RS34ADLKCTucwYFb2etOwnimJL+0RlcqIIeIATOSy6A676kmbjMzsJo+gume
+ 9QRD1LCaB1YxnD8EejxdT5N7LV7jR6rn0YHQqDjyw5zeyTlT4kQd71RDFqWbQ53/
+ Feoj9W+glAL5G/Zs47qMQVAiLTKx5Liz9iQE43Yck9qpwrO3629Ck75bjf0byhjb
+ xMx2m2UB2EWLhp6ubfVaBapVlhryXCbiS/Uml3PbNhgWQkj8Re+D608EiD4Io3Xx
+ WbPfuEC8AeTlhJ1zh+Y8RBMSqGsrtnhzdy6QL9Zvd7gA9EINnfanyWGEpE1u7b8Q
+ ==
+X-ME-Sender: <xms:CjhRYDrYTlPG1_TRczvorlPEYSqQkXHmTKtmI07uP4ussi5hNk9YZw>
+ <xme:CjhRYNpIRDh0ZkWyVzVCxj_GwseKM82AfoHu6p4qkM5dX9Ha1xwd3scNNFODYK3Rj
+ RQu5x5rtgo7_07kuQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudeffecutefuodetggdotefrodftvfcurf
+ hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+ hrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughrvgif
+ ucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrghtth
+ gvrhhnpeffgfdvueeigfeftefgteejfeegvdeltdehudektefhfeduveeludelvdejieef
+ ueenucffohhmrghinheprggsohhuthgrmhgriihonhdrtghomhdpkhgvrhhnvghlrdhorh
+ hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghn
+ ughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:CjhRYAM533pITrKA7iQAuYIQ96Q8EmNO-RML4Lxupk5giI5DdNsf6w>
+ <xmx:CjhRYG5k60tyRwF027ox_tKcyAJbzO4h7TQtdMRnvOqe-W2jbBGQfA>
+ <xmx:CjhRYC5bIAWbGeUqjK-5P7_nRXPkzYcCG97oOMsVQntT9vPFf-UDmg>
+ <xmx:DDhRYCFgPj7KJchHi78uciALHvapTe4oVTUqxuqduM35VPIkrfD4iQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id C285EA00073; Tue, 16 Mar 2021 18:58:18 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-206-g078a48fda5-fm-20210226.001-g078a48fd
+Mime-Version: 1.0
+Message-Id: <de103327-1b43-44f3-abbf-34aa9fd3ca27@www.fastmail.com>
+In-Reply-To: <OFAC3A0AF2.EC072501-ON0025869A.00702F91-0025869A.0071CC00@notes.na.collabserv.com>
+References: <OF9A0016A1.FD9B7171-ON0025868F.007B5317-0025868F.007B531B@LocalDomain>
+ <CACPK8XdmbXK4CVfydO5yq4Qka--wT1fR-vuqFKD_rg29fAquMA@mail.gmail.com>
+ <OFC6D46F57.69575CC5-ON00258681.0002C252-88258681.0004EA2C@notes.na.collabserv.com>
+ <OFAC3A0AF2.EC072501-ON0025869A.00702F91-0025869A.0071CC00@notes.na.collabserv.com>
+Date: Wed, 17 Mar 2021 09:27:58 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Bruce Mitchell" <Bruce.Mitchell@ibm.com>, "Joel Stanley" <joel@jms.id.au>
+Subject: Re: My kexec test patches for OpenBMC
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,30 +99,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Andrew Jeffery <andrewrj@au1.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
-
-Please join us for the GUI Design Work Group if you are interested in the f=
-ollowing items:
-
-- Firmware: Switch to backup - https://gerrit.openbmc-project.xyz/c/openbmc=
-/webui-vue/+/41022
-- Moving TPM out of Power server operations and into Security panel - https=
-://lists.ozlabs.org/pipermail/openbmc/2021-February/024937.html
-- WIP Round table discussion
 
 
-If you have a topic, please feel free to add it to the agenda, reply to thi=
-s email, or mention me in the discord channel (https://discord.gg/wWU5rTcb).
-=20
-Meeting info: https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group=
-#meeting-info
+On Wed, 17 Mar 2021, at 07:12, Bruce Mitchell wrote:
+> 
+> 
+> -----Bruce Mitchell/US/IBM wrote: -----
 
+> >Hello Joel,
+> >
+> >Thanks again for your advice and sharing your wisdom.
+> >I am being urged by our manager to get this up-streamed
+> >sooner rather than later. How can I best work with the
+> >system to make this happen?
+> >
+> >Thank you!
+> >
+> >--
+> >Bruce
+> >
+> >
+> 
+> Hi Joel and Andrew,
+> 
+> I cannot find any response to this thread in my inbox,
+> however I may still have missed it.
 
-Thank you!
-=20
-Derick Montague
-IBM Cognitive Systems User Experience
+I don't think you missed anything :)
 
+> 
+> "Joel's kernel changes are similar to what I had done. Since you know
+> the community better than I do, I propose submitting your changes.
+> I can do the labor, but want you to get the credit. How would you
+> like me to proceed?"
+
+Well, you've both ended up with the same implementation as far as I'm 
+aware? I don't think it matters too much which way the patches go in 
+terms of credit. Let's not hold the show up on something like that. 
+Joel will need to review your patches on the upstream list anyway, so 
+you might as well just post them rather than wait on getting 
+permission. "Bias for action" from Amazon's leadership principles is a 
+helpful mindset[1] (and it's worth reading the others).
+
+[1] https://www.aboutamazon.com/about-us/leadership-principles
+
+Before sending your patches, please read the following and make sure 
+you are confident your work satisfies all the listed requirements:
+
+1. https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/coding-style.rst?h=v5.11
+2. https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/submit-checklist.rst?h=v5.11
+
+The very minimum is that ./scripts/checkpatch.pl says your patches are 
+clean and that you Cc the appropriate maintainers as listed by 
+./scripts/get_maintainer.pl.
+
+The process of emailing patches is terrible, so if you have any 
+questions about that please don't hesitate to ask.
+
+Cheers,
+
+Andrew
