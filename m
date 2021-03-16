@@ -1,72 +1,95 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 303FC33D72E
-	for <lists+openbmc@lfdr.de>; Tue, 16 Mar 2021 16:18:49 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42FE433DF0E
+	for <lists+openbmc@lfdr.de>; Tue, 16 Mar 2021 21:43:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F0H4R17Zxz30JY
-	for <lists+openbmc@lfdr.de>; Wed, 17 Mar 2021 02:18:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F0QGt288pz3bVZ
+	for <lists+openbmc@lfdr.de>; Wed, 17 Mar 2021 07:43:18 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=r6RlhxnP;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=sTZwieeJ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42e;
- helo=mail-wr1-x42e.google.com; envelope-from=edtanous@google.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=bruce.mitchell@ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=r6RlhxnP; dkim-atps=neutral
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com
- [IPv6:2a00:1450:4864:20::42e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=sTZwieeJ; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F0H4C4YJWz309w
- for <openbmc@lists.ozlabs.org>; Wed, 17 Mar 2021 02:18:32 +1100 (AEDT)
-Received: by mail-wr1-x42e.google.com with SMTP id l12so10675304wry.2
- for <openbmc@lists.ozlabs.org>; Tue, 16 Mar 2021 08:18:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=ryNVjMVntkFAFhl9NVH2uJCyeEaoXLXkoZx72hKyt3Y=;
- b=r6RlhxnPzl7xldVLkXJn4H/htSWmktmVC5qbZ2l8P/KFKrekbzDOXdbsMDXkDPhrUQ
- rdS/gXrc/O1z076fzctzkbN9FlxLEmTpU96IRSo8COeMMPmM07PCA8Z1AGY/3qcZtfnG
- 3WZyGRu08XMX8+Vhfoc7vxa4z/alMW8D2mV4pFKFhOVmfzDamvCfxVYXr11Y2fe7mATg
- nebRObUyaqT/YYUfL5S1jSv8RWACGYrW9PjHi5g2RhYcX53pTktk5/1Uyvr/Cdsx6a7B
- iGwAalqrM+Y2WwAoucKYyDDwb7sqXcy4537jiL6kXco+koSkUlqzMl/IMRfdZBS9kXKK
- AoSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=ryNVjMVntkFAFhl9NVH2uJCyeEaoXLXkoZx72hKyt3Y=;
- b=Nhk+iFA1BGuJ8Tpo1qGJJSaQynjNlr2M3wXdYXLppxmURjyYPOapDoc9bVEnBaeXhX
- pZbgNvorEfRZW7kNrNoOtmE/gRykba2/29lOhiktYUgX87xJhESfGVHpAJOWtzoRaSp4
- JxXoOjKCt0ccrE8Rt9M8Y5+9jerdtP0iTS6g9S8lgzJxuhUEuu5nxUBre5DSqUO2fCtO
- 9VZzG3rFMxvgYDN3I+KQikmIwWj9MM6qI5KUzfYGtPwhidh8dmOLbY0ufV1HeGMcAk1I
- /Nrdiajjv8+jisuPQ+f5tBBKO0k/g2fjF3qE33scePbY5iJQ9LZMsaw2nYEGKui+OKdm
- mL0g==
-X-Gm-Message-State: AOAM533sQil3nWEnwWCHJU10hM5kicYwvQSr7jQBN/QUIyjnOFamD1xd
- FlXNmRtNlMg7KJb7ptz2OYa+BDYSZhRI/kMpw1G/ZQ==
-X-Google-Smtp-Source: ABdhPJyTgTYhoL2p+mKRaPJp5vDCPMBzgo5RwyMIdxX6E4WDBZScCYgzY8qIiP/By7JL6gtIEGZoCOTIqaK3mCzQlu4=
-X-Received: by 2002:a05:6000:2c8:: with SMTP id
- o8mr2546975wry.407.1615907906162; 
- Tue, 16 Mar 2021 08:18:26 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F0QGd0gYYz30Cb
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Mar 2021 07:43:04 +1100 (AEDT)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 12GKY4M6134035
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Mar 2021 16:43:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=in-reply-to : from : to
+ : cc : date : mime-version : references : content-transfer-encoding :
+ content-type : message-id : subject; s=pp1;
+ bh=Am5P6FMs5IllmZjPyM7It/FxeX3v8+Eg1yiPx57p1dw=;
+ b=sTZwieeJosVUPFC1857+5Bsy/SE8bjsgDOf4Ag+edUbGb/AgsTZfaiB8s1sPWMcYEX8Q
+ oKx5+wcRMLEdPzjeTNN4zVdpAbl3nkjzg2Eff+Nftsjpcn5ykYDCfIHli6T63GOf/1s7
+ XTWTGw80k5m7H5nV7Je+kkX5/gWkRzactYjj6024k3ZJ0lZIbY2xi/yl0lEp9K4c0SXz
+ OpHeUAeaXxkdQ3iVJt0DGXJUNzMofj1bA/vTvk3yEgAWAZPVugo8m7hnNhQWsXZ0oHZh
+ weWHFtw/jGKbhdwTDgUmAS+KWbhpoT5nRiG5uX3LPCfibC8rVKj1N234IUk4N0bDdA+z 0A== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.114])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 37b0gcp5ns-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Mar 2021 16:43:01 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Bruce.Mitchell@ibm.com>;
+ Tue, 16 Mar 2021 20:43:01 -0000
+Received: from us1b3-smtp04.a3dr.sjc01.isc4sb.com (10.122.203.161)
+ by smtp.notes.na.collabserv.com (10.122.47.58) with
+ smtp.notes.na.collabserv.com ESMTP; Tue, 16 Mar 2021 20:42:58 -0000
+Received: from us1b3-mail33.a3dr.sjc01.isc4sb.com ([10.122.7.203])
+ by us1b3-smtp04.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2021031620425853-713668 ;
+ Tue, 16 Mar 2021 20:42:58 +0000 
+In-Reply-To: <OF9A0016A1.FD9B7171-ON0025868F.007B5317-0025868F.007B531B@LocalDomain>
+From: "Bruce Mitchell" <Bruce.Mitchell@ibm.com>
+To: Joel Stanley <joel@jms.id.au>, "Andrew Jeffery" <andrew@aj.id.au>
+Date: Tue, 16 Mar 2021 20:42:57 +0000
 MIME-Version: 1.0
-References: <PSAPR04MB423111B8AD11A19255C79215F86F9@PSAPR04MB4231.apcprd04.prod.outlook.com>
- <CAH2-KxAf2H2KXcFM2FkmaOdaxLdcSPWWnwe4uapt3DZzT9=3tA@mail.gmail.com>
- <PSAPR04MB42319855C13384AA43CEBE48F86B9@PSAPR04MB4231.apcprd04.prod.outlook.com>
-In-Reply-To: <PSAPR04MB42319855C13384AA43CEBE48F86B9@PSAPR04MB4231.apcprd04.prod.outlook.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Tue, 16 Mar 2021 08:18:15 -0700
-Message-ID: <CAH2-KxAgikHVL8yg59e_VnmSxAyEe_AXsR4CiP_JpKZsEWNDuQ@mail.gmail.com>
-Subject: Re: Fan PWM settings via Redfish
-To: =?UTF-8?B?QnJ1Y2UgTGVlICjmnY7mmIDls7sp?= <Bruce_Lee@quantatw.com>
-Content-Type: text/plain; charset="UTF-8"
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <OF9A0016A1.FD9B7171-ON0025868F.007B5317-0025868F.007B531B@LocalDomain>,
+ <CACPK8XdmbXK4CVfydO5yq4Qka--wT1fR-vuqFKD_rg29fAquMA@mail.gmail.com>,
+ <OFC6D46F57.69575CC5-ON00258681.0002C252-88258681.0004EA2C@notes.na.collabserv.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP130 January 13, 2021 at 14:04
+X-KeepSent: AC3A0AF2:EC072501-0025869A:00702F91;
+ type=4; name=$KeepSent
+X-LLNOutbound: False
+X-Disclaimed: 16055
+X-TNEFEvaluated: 1
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 21031620-1639-0000-0000-0000037F6427
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0; SC=0;
+ ST=0; TS=0; UL=0; ISC=; MB=0.010312
+X-IBM-SpamModules-Versions: BY=3.00014881; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000296; SDB=6.01521491; UDB=6.00822281; IPR=6.01304004; 
+ MB=3.00036388; MTD=3.00000008; XFM=3.00000015; UTC=2021-03-16 20:42:59
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2021-03-12 19:14:57 - 6.00012368
+x-cbparentid: 21031620-1640-0000-0000-0000C8E867A7
+Message-Id: <OFAC3A0AF2.EC072501-ON0025869A.00702F91-0025869A.0071CC00@notes.na.collabserv.com>
+Subject: RE: My kexec test patches for OpenBMC
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-03-16_07:2021-03-16,
+ 2021-03-16 signatures=0
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,310 +101,194 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Nan Zhou <nanzhou@google.com>, "rhanley@google.com" <rhanley@google.com>
+Cc: Andrew Jeffery <andrewrj@au1.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, bradleyb@fuzziesquirrel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Mar 16, 2021 at 2:35 AM Bruce Lee (=E6=9D=8E=E6=98=80=E5=B3=BB) <Br=
-uce_Lee@quantatw.com> wrote:
->
->
->
-> -----Original Message-----
-> From: Ed Tanous <edtanous@google.com>
-> Sent: Saturday, March 13, 2021 1:40 AM
-> To: Bruce Lee (=E6=9D=8E=E6=98=80=E5=B3=BB) <Bruce_Lee@quantatw.com>
-> Cc: Nan Zhou <nanzhou@google.com>; rhanley@google.com; openbmc@lists.ozla=
-bs.org
-> Subject: Re: Fan PWM settings via Redfish
->
-> On Thu, Mar 11, 2021 at 10:37 PM Bruce Lee (=E6=9D=8E=E6=98=80=E5=B3=BB) =
-<Bruce_Lee@quantatw.com> wrote:
-> >
-> > Hi All,
-> >
-> >
-> >
-> > We are designing and implementing the Fan PWM settings via Redfish. The=
- goal is that clients can set sensor value to bmc via Redfish.
-> >
-> >
-> >
-> > We divide the work into three phases.
-> >
-> >
-> >
-> > Phase 1 is to remove the definition =E2=80=9CBMCWEB_INSECURE_UNRESTRICT=
-ED_SENSOR_OVERRIDE=E2=80=9D and use new definition to =E2=80=9CBMCWEB_SPECI=
-AL_MODE_SENSOR_OVERRIDE=E2=80=9D.
-> >
-> > The =E2=80=9CBMCWEB_INSECURE_UNRESTRICTED_SENSOR_OVERRIDE=E2=80=9D was =
-added by Intel
-> > group, please refer to
-> > https://apc01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fger=
-r
-> > it.openbmc-project.xyz%2Fc%2Fopenbmc%2Fbmcweb%2F%2B%2F30000&amp;data=3D=
-0
-> > 4%7C01%7CBruce_Lee%40quantatw.com%7C64a1153cd45b46eeca4008d8e57df35c%7
-> > C179b032707fc4973ac738de7313561b2%7C1%7C0%7C637511676404227113%7CUnkno
-> > wn%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiL
-> > CJXVCI6Mn0%3D%7C1000&amp;sdata=3Df604Piz1vDfItDZ3docZOPfryJesavkbOwhKyw=
-J
-> > oXlU%3D&amp;reserved=3D0,
-> >
-> > The Intel solution has 4 conditions needs to match one of them and that=
- can be work to override sensor but actually not all project needs those co=
-nditions, so we want to propose to remove the insecure definition and use n=
-ew definition to include the intel solution and execute when compile. It wo=
-uld be no compile time with option for common project. And the insecure iss=
-ue we will discuss in phase 2.
-> >
-> >
-> >
-> > Example below:
-> >
-> > ----------------------------------------------------------------------
-> > -------------------------------
-> >
-> > [Before modified]
-> >
-> > #ifdef BMCWEB_INSECURE_UNRESTRICTED_SENSOR_OVERRIDE
-> >
-> > // Proceed with sensor override
-> >
-> > setSensorsOverride(sensorAsyncResp, allCollections);
-> >
-> > return;
-> >
-> > #endif
-> >
-> > doIntelSpecialModeManager code =E2=80=A6
-> >
-> > ----------------------------------------------------------------------
-> > -------------------------------
-> >
-> > [After modified]
-> >
-> > #ifdef BMCWEB_SPECIAL_MODE_SENSOR_OVERRIDE
-> >
-> >       doIntelSpecialModeManager code =E2=80=A6
-> >
-> >       return;
-> >
-> > #endif
-> >
-> > //Proceed with sensor override
-> >
-> > setSensorsOverride(sensorAsyncResp, allCollections);
-> >
-> > ----------------------------------------------------------------------
-> > -------------------------------
-> >
-> >
-> >
-> >
->
-> >I suspect this check and option needs to be moved into the individual se=
-nsors, so that we can differentiate between "should be settable in a test c=
-ontext" and "should be settable in a normal context".
-> 1. Does you mean don't change the Intel definition and keep the origin co=
-de when compile time?
 
-No, this means that the checking code needs to move from redfish into
-dbus-sensors.
 
-> 2. What do you mean this option needs to be moved into the individual sen=
-sors so that we can differentiate between "should be settable in a test con=
-text" and "should be settable in a normal context".
-> Please provide more details about your thinking.
+-----Bruce Mitchell/US/IBM wrote: -----
 
-Individual sensors need to provide an appropriate dbus interface.
-Part of that is enforcing whether or not they're writable, and
-checking for the debug state of the system to do so.
+>To: Joel Stanley <joel@jms.id.au>
+>From: Bruce Mitchell/US/IBM
+>Date: 03/05/2021 14:27
+>Cc: Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist
+><openbmc@lists.ozlabs.org>
+>Subject: Re: [EXTERNAL] Re: My kexec test patches for OpenBMC
+>
+>
+>-----"openbmc"
+><openbmc-bounces+bruce.mitchell=3Dibm.com@lists.ozlabs.org> wrote:
+>-----
+>
+>>To: Bruce Mitchell <Bruce.Mitchell@ibm.com>
+>>From: Joel Stanley
+>>Sent by: "openbmc"
+>>Date: 02/24/2021 00:04
+>>Cc: Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist
+>><openbmc@lists.ozlabs.org>
+>>Subject: [EXTERNAL] Re: My kexec test patches for OpenBMC
+>>
+>>On Fri, 19 Feb 2021 at 00:53, Bruce Mitchell
+>><Bruce.Mitchell@ibm.com> wrote:
+>>>
+>>> Hello Joel,
+>>>
+>>> Per your request yesterday, I am emailing the details of my
+>>kexec/kdump development efforts.
+>>
+>>Thanks. Here's what I tested:
+>>
+>>https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A=5F=5Fgithub.com=5Fs
+>h
+>>enki=5Flinux=5Fcommits=5Fast2600-2Dkexec&d=3DDwIFaQ&c=3Djf=5FiaSHvJObTbx-=
+siA1
+>Z
+>>Og&r=3DXYNAOU-BEndJr70kO1xkYnetCkaomJrlYQm5DudYzNc&m=3DoX=5FdPGCu4X3pBZ
+>l
+>>Dw0XYgu4z-3G1JebwP-IvlNbEMDE&s=3DgT3O534rB4ZDIPbf6Z78bKCR=5Fop-JR1uYc
+>v
+>>bd3z18RA&e=3D
+>>
+>
+>Your kernel changes are similar to what I had done. Since you know
+>the community better than I do, I propose submitting your changes.
+>I can do the labor, but want you to get the credit. How would you
+>like me to proceed?
+>
+>>>
+>>> I am running QEMU
+>>>
+>>> qemu-system-arm --version
+>>> QEMU emulator version 5.2.0 (v5.1.0-3479-g27ca38d3db)
+>>
+>>That looks fine. I'm using cedric's tree, but anything that will
+>>boot
+>>your kernel is fine.
+>>
+>>> qemu-system-arm -d cpu=5Freset -M tacoma-bmc -kernel
+>>/tmp/tmp.y2fpdAXM1h.kernel -dtb /tmp/tmp.BWkadwNbTf.dtb -initrd
+>>/tmp/tmp.jRpFbzfpBs.initrd -drive
+>>file=3Dobmc-phosphor-image-witherspoon-tacoma.wic,if=3Dsd,format=3Draw,
+>i
+>>ndex=3D2 -net nic -net
+>>user,hostfwd=3D:127.0.0.1:2222-:22,hostfwd=3D:127.0.0.1:2443-:443,hos
+>t
+>>name=3Dqemu -nographic -append "crashkernel=3D64M
+>>console=3DttyS4,115200n8 rootwait root=3DPARTLABEL=3Drofs-a"
+>>
+>>You could simplify your qemu setup if you want. Here's how I
+>>tested:
+>>
+>> $ qemu-system-arm -M tacoma-bmc -nographic -net nic -nic
+>>user,hostfwd=3D::2222-:22,tftp=3D/srv/tftp/ -kernel
+>>aspeed-g5-dev/arch/arm/boot/zImage -dtb
+>>aspeed-g5-dev/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dtb -initrd
+>>~/dev/kernels/misc/rootfs.cpio.xz
+>>
+>>This uses a small initramfs with the kexec utility, and has a
+>copy
+>>of
+>>the kernel, initrd and dtb inside to make testing easy.
+>>
+>>Or, if you want, you can copy files into the system over the ssh
+>>port:
+>>
+>>I have this in my ~/.ssh/config:
+>>
+>>Host qemu
+>> Hostname localhost
+>> Port 2222
+>> User root
+>> UserKnownHostsFile /dev/null
+>> StrictHostKeyChecking no
+>>
+>>And then you can use scp like this:
+>>
+>>scp aspeed-g5-dev/arch/arm/boot/zImage
+>>aspeed-g5-dev/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dtb
+>>/home/joel/dev/kernels/misc/rootfs.cpio.xz qemu:
+>>
+>>> From OpenBMC within QEMU I am using the following to test kexec
+>>>
+>>> kexec -d -l /home/kexec=5Ffiles/tmp.y2fpdAXM1h.kernel
+>>--initrd=3D/home/kexec=5Ffiles/tmp.jRpFbzfpBs.initrd
+>>--dtb=3D/home/kexec=5Ffiles/tmp.BWkadwNbTf.dtb --append=3D"earlycon
+>>console=3DttyS4,115200n8 rootwait root=3DPARTLABEL=3Drofs-a 1 maxcpus=3D1
+>>reset=5Fdevices"
+>>> kexec -d -e
+>>
+>>Here's how I was running it:
+>>
+>># kexec -l zImage --dtb aspeed-bmc-opp-tacoma.dtb --initrd
+>>rootfs.cpio.xz
+>># kexec -e
+>>
+>>I haven't set a new command line, so it uses the command line
+>from
+>>the
+>>device tree (console=3DttyS4,115200n8).
+>>
+>>With my patch we will not get the secondary CPU:
+>>
+>>[ 0.039517] ASPEED AST2600 rev A1 (05010303)
+>>[ 0.042030] smp: Bringing up secondary CPUs .
+>>[ 1.163950] CPU1: failed to come online
+>>[ 1.167999] smp: Brought up 1 node, 1 CPU
+>>[ 1.168164] SMP: Total of 1 processors activated (2250.00
+>>BogoMIPS).
+>>
+>>That should be the next step in working on the kexec patches. We
+>>want
+>>the secondary CPU to be in a state such that the new kernel can
+>>take
+>>control as it would in a firmware boot.
+>>
+>>Note that this didn't require any changes to the system beyond
+>the
+>>kernel patch. I'm using the same defconfig as we have in the
+>tree.
+>>
+>>Cheers,
+>>
+>>Joel
+>>
+>>
+>
+>Hello Joel,
+>
+>Thanks again for your advice and sharing your wisdom.
+>I am being urged by our manager to get this up-streamed
+>sooner rather than later. How can I best work with the
+>system to make this happen?
+>
+>Thank you!
+>
+>--
+>Bruce
+>
+>
 
->
->
-> >
-> > Phase 2 is to add a condition to check the sensor name=E2=80=99s Mutabl=
-e value of EM if the value is true do the sensor override function else not=
- do.
->
-> >I suspect this patchset needs to be moved forward if you're hoping to us=
-e the mutable param:
-> >https://apc01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgerr=
-it.openbmc-project.xyz%2Fc%2Fopenbmc%2Fphosphor-dbus-interfaces%2F%2B%2F363=
-33&amp;data=3D04%7C01%>7CBruce_Lee%40quantatw.com%7C64a1153cd45b46eeca4008d=
-8e57df35c%7C179b032707fc4973ac738de7313561b2%7C1%7C0%7C637511676404227113%7=
-CUnknown%>7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWw=
-iLCJXVCI6Mn0%3D%7C1000&amp;sdata=3DtdExxB%2BY7O1cKb%2FYMdvPGnw7YThW7J55jytD=
-Ph4YWYo%3D&amp;reserved=3D0
+Hi Joel and Andrew,
 
-Not quite, but close.  I wouldn't expect the configurability to be
-directly configurable.  External sensor types should be mutable, all
-other types should not be mutable (except in a debug context).  I
-don't think there's any reason to add a separate "IsMutable" parameter
-into the EM json, unless it really needs to be configurable per
-sensor, which I don't think is the case.
+I cannot find any response to this thread in my inbox,
+however I may still have missed it.
 
->
-> >
-> > The Mutable value can be set in the sensor configuration of Entity-Mana=
-ge, when using the patch command to override the sensor, it needs to check =
-the EntityManager subtree=E2=80=99s sensor name and its interface =E2=80=9C=
-xyz.openbmc_project.Configuration.I2CFan.Connector=E2=80=9D to check the co=
-rresponding property name=E2=80=99s mutable value to decide whether executi=
-ng the override function.
->
-> >See above.  I suspect that the redfish code doesn't need to check the mu=
-tability of the sensor, the interface should just have the correct behavior=
-.  The only place I would expect to need to know the >mutability of a senso=
-r is in the IPMI sdr, where we will need to set the modifiable bit appropri=
-ately.
->
-> For now, the function to set sensor in redfish code is to set the d-bus v=
-alue directly (internally writable),  if we don't check the EM mutability i=
-n Redfish, follow the Add Mutable property to Sensor Value interface, we st=
-ill need to check the sensor mutable property to know whether or not to wri=
-te the d-bus value in redfish or we need other external services to know wh=
-ether or not to grant write permission to their users like IPMI sensor.
+"Joel's kernel changes are similar to what I had done. Since you know
+the community better than I do, I propose submitting your changes.
+I can do the labor, but want you to get the credit. How would you
+like me to proceed?"
 
-I'm not really following this.  My point is that the only thing that
-really needs to "check" the mutability requirement is dbus-sensors.
-They should only allow setting when sensors are mutable, and reject
-when they're not.
+Also openbmc/meta-aspeed/MAINTAINERS and the
+Linux ARM/ASPEED MACHINE SUPPORT MAINTAINERS
+can communicate faster with Joel than I.
 
->
-> >
-> > This achieves feature parity with the ipmi::sensor::Mutability
-> > parameter of the old hardcoded YAML configuration files
->
-> >Not sure what you're referring to.  That may have been something done in=
- a fork.
->
-> >
-> >
-> >
-> > Execute steps:
-> >
-> > 1.       Patch command to override sensor.
-> >
-> > 2.       Check the EM of sensor=E2=80=99s Mutable value
-> >
-> > 3.       If Mutable value is true do sensor override action else not do=
-.
-> >
-> >
-> >
-> >
-> >
-> > Phase 3 is to add a new get command to get the Zone_$id=E2=80=99s "Manu=
-al" value and patch command to change the fan mode from auto to manual mode=
- ("Manual":true).
-> >
-> > Because the fan control is use package phosphor-pid-control, when we ne=
-ed to set fan pwm, it needs to set the fan mode from auto mode to manual mo=
-de, for now, the phosphor-pid-control has already provided ipmi-oem command=
- to achieve this feature, so we need to implement this fan mode change via =
-redfish command.
->
-> >Doesn't this already work today?  I thought we had all that sorted a lon=
-g time ago.  For some reason I thought we intentionally didn't expose the m=
-anual/automatic param, because that only applied to >the PID loops, and PWM=
- sensor didn't expose that interface.  I need to go look at the code at som=
-e point.
->
-> Yes, ipmi-oem is work today. I agree it is not properly to show on redfis=
-h to let users can easily change the fan mode, the reason to change fan mod=
-e to the manual is for debugging. Maybe let users use ipmi-oem to replace s=
-how on Redfish URLs.
->
-> >
-> >
-> >
-> > Example URLs                            |Method     |Example Payload
-> >
-> > --------------------------------------- |-------------- |--
-> >
-> > /redfish/v1/Managers/bmc      |GET           |"Oem": {
-> >
-> >                                                       |                =
-   |         Fan": {
-> >
-> >                                                      |                 =
-  |                    "FanZones": {
-> >
-> >                                                       |                =
-   |                              "@odata.id": "/redfish/v1/Managers/bmc#/O=
-em/OpenBmc/Fan/FanZones",
-> >
-> >                                                       |                =
-   |                              "@odata.type": "#OemManager.FanZones",
-> >
-> >                                                       |                =
-   |                              "Zone_0": {
-> >
-> >                                                       |                =
-   |                                         "@odata.id": "/redfish/v1/Mana=
-gers/bmc#/Oem/OpenBmc/Fan/FanZones/Zone_0",
-> >
-> >                                                       |                =
-   |                                         "@odata.type": "#OemManager.Fa=
-nZone",
-> >
-> >                                                       |                =
-   |                                         "Chassis": {
-> >
-> >                                                       |                =
-   |                                                    "@odata.id": "/redf=
-ish/v1/Chassis/GSZ_EVT"
-> >
-> >                                                       |                =
-   |                                         },
-> >
-> >                                                       |                =
-   |                                         "FailSafePercent": 100.0,
-> >
-> >                                                       |                =
-   |                                         "MinThermalOutput": 0.0,
-> >
-> >                                                       |                =
-   |                                         "ZoneIndex": 0.0,
-> >
-> >                                                       |                =
-   |                                         "Manual":false
-> >
-> >                                                       |                =
-   |                              },
-> >
-> >                                                       |                =
-   |                   },
-> >
-> >                                                       |                =
-   |         },
-> >
-> >                                                      |                 =
-  |}
-> >
-> > --------------------------------------- |-------------- |----
-> >
-> > /redfish/v1/Managers/bmc    | PATCH      |"Oem": { "Fan": { "FanZones":=
- { "Zone_0": { "Manual":true } } }
-> >
-> >
->
-> >It should be noted, this schema needs some serious cleanup to make it pr=
-oper resources, paths, and collections, and should version the schema files=
- appropriately.  If you're planning on extending it, I ?>would expect _some=
-_ effort to be put into cleanup.  There's several github bugs that have mor=
-e details, and I will leave it up to you to decide how much you'd like to d=
-o as part of this work, but please >plan on some.
->
-> >
-> > If any thoughts on this topic, feel free to give your comments. Thanks!
-> >
-> >
-> >
-> > Sincerely,
-> >
-> > Bruce
+I am seeking direction on how to be effective in making this
+happen that works with the community.
+
+Thank you!
+
+--
+Bruce
+
