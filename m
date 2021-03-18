@@ -2,77 +2,158 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 773DB340BDE
-	for <lists+openbmc@lfdr.de>; Thu, 18 Mar 2021 18:31:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AE772340ED8
+	for <lists+openbmc@lfdr.de>; Thu, 18 Mar 2021 21:09:15 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F1Yx736c3z3btL
-	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 04:31:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F1dQd4bslz3bvc
+	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 07:09:13 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=TdOlPco+;
+	dkim=pass (1024-bit key; unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com header.b=WQL3wIJU;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::431;
- helo=mail-wr1-x431.google.com; envelope-from=edtanous@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=TdOlPco+; dkim-atps=neutral
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com
- [IPv6:2a00:1450:4864:20::431])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=zhikui.ren@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com
+ header.b=WQL3wIJU; dkim-atps=neutral
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F1Ywv1sSdz2yq8
- for <openbmc@lists.ozlabs.org>; Fri, 19 Mar 2021 04:31:42 +1100 (AEDT)
-Received: by mail-wr1-x431.google.com with SMTP id j7so6423285wrd.1
- for <openbmc@lists.ozlabs.org>; Thu, 18 Mar 2021 10:31:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=EFdzkCaBV5OW7NdDLUhQlkxBDazxd1mPEIWxiJTirdE=;
- b=TdOlPco+LuZWuTzdcCq1Ah+OMNnIbCYlCuFyZzPOVGHksiA9t+/fS3Fa66CNyT8Liz
- rDRrkpD7nlXE3cYN08UFSt/yxp7zGMwew8+TOKcLksDKO0ry0pQx7QkRXZjkn8Z1tV1K
- cQZkKqiUP26sgD7iMMIpxEP9HlfMeXoyHdWLyWG7B60yZ3GomSXB+oujv1lWQs8qUrff
- vYLB+OnGYgaldprJb1Lc9cXwlXffB2on45KkdFnPv2bfOApxyk9Cibn5VfllW864CmGo
- 0ypf2ZbJMoU3+hlcLiNXg21++pnM/sX0xxZjkp9d80tRDzpvYKiz8f6tdqPOqYkpfwzL
- p1uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=EFdzkCaBV5OW7NdDLUhQlkxBDazxd1mPEIWxiJTirdE=;
- b=ib/XmUbzwCN9u+jKMnlg+Uo0XPVAzbOREGXBHpawT9c45MTO4eqcJWxb8QBmsfLbC3
- gfnrpE69V0Dh/j9I2vFlVM5t3BGNm/5I8cOYyERsb5uMERIcHE4/f5a5eF3ce6BnDE7q
- DkHWvE7ROSeSLTjQr/mfoY3q5wMazL4vhwgiORkqW0f2+a56kysMPeLZ4m2F1ufzcWzc
- 6dgMWhbfR9NJPSo4cwoOF+wD527M09uZEMYEIqeiRiJYjz0nXvN12jhzg7ipWWYwTwjT
- 79iQimchBxpYEUjM8Dqnsbj+Z3ov6bWsZVUwRKNyMiEd6Ossfy0gfIgnwj6nGKfIzbEL
- V/UQ==
-X-Gm-Message-State: AOAM530Gm8/1TQMhiKR8DYV2/5ajajrjR5KztQUwzpDe3/pjAXSJr3+r
- d/PyUd4X9puek6UAVSwAO5dx+iIhATf1H2VtY6MNnw==
-X-Google-Smtp-Source: ABdhPJxBJHuROTIQy5CUuQqnZoVsIno4+RHDvNJBg4QAUf0S5vFQz35fL8xZxQC6Ywy5Kk/oCyMS9ihkKvAyv8W6ru0=
-X-Received: by 2002:a05:6000:2c8:: with SMTP id
- o8mr332985wry.407.1616088696531; 
- Thu, 18 Mar 2021 10:31:36 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F1dQK3bKgz3bpW
+ for <openbmc@lists.ozlabs.org>; Fri, 19 Mar 2021 07:08:55 +1100 (AEDT)
+IronPort-SDR: Ivaz5bNGj7S5Sju19d/S4Ukp0WOO3vEVVmhhGHJ8BOD5QmEVBm/u/8jys0QoFmb7Z7d5Uf1X4q
+ bzzYTXRGKKQQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9927"; a="176895065"
+X-IronPort-AV: E=Sophos;i="5.81,259,1610438400"; d="scan'208";a="176895065"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+ by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Mar 2021 13:08:52 -0700
+IronPort-SDR: 1s1K2AQ+Ebp7iJuX0KNv1k/5+h2JLSImjbztQTxf+mwznIgaJhhBe6A5ppsrdoc0JFcpekRssp
+ GerQBXVsvN4w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,259,1610438400"; d="scan'208";a="434005325"
+Received: from orsmsx606.amr.corp.intel.com ([10.22.229.19])
+ by fmsmga004.fm.intel.com with ESMTP; 18 Mar 2021 13:08:51 -0700
+Received: from orsmsx605.amr.corp.intel.com (10.22.229.18) by
+ ORSMSX606.amr.corp.intel.com (10.22.229.19) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2106.2; Thu, 18 Mar 2021 13:08:51 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx605.amr.corp.intel.com (10.22.229.18) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2
+ via Frontend Transport; Thu, 18 Mar 2021 13:08:51 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.104)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2106.2; Thu, 18 Mar 2021 13:08:50 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=iOhV4JTuqMvdWsq0zZnwHyVCr4fugTq/rvZKeuh0zCUjaXaKC8RLSO1F2/dU+1XrXTWuVGEMOxhiofdoc4vGZniO+FxljJil95lgFJlWthvdLelTvTNWTDGla8W5EW9WsIsd0t3DS6MxKn1fKuYoot+C7+ziCyPqjrsSazyV0ezszrBLqwl4wEqEgUrdBSZHaWin1O1Ln0XMoirqqLDV3nfUrMkr+dEcrESA7Hd4yRIH0j5G/br7M0qN7GX6vNyuK/xRJJiil9slMmzrzfB9ReBAtyQPd+qQoQ/AGgkMFKUbwrnSC9C5FKSRYLpZmL6QJjDy8tXWyu4veuQ0JOilQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uFOvWV/8GRg87HfFGegQuDxbL2+GSJnKpEbr9gj7PLQ=;
+ b=FdQaqH2rL7jWlRM0W+m8boGFoEUSDUy4HnqscsZ5rI+AYqCnu9Alx+YZraBaCJGZpDAB2WSR5i1LEbWuiufl2VmTI9d9IaTv93W3XkMKtokwTayADuLoDnUE93g3KeBskYeGAFKC4gHJPGH9hFnf8sQINi/otJTdq4jYEBWAszxIPtv6SapUB/foJlfNuvB9OV5/AY8Pm+4Qm7t76hPet+zi+Ru4R3E6VgXq13OqvsN0uQ4QMrYz8ggjrojPQHhsK3Y1AC2LQ1YXwfb72JVrLA70DdaR/WQPJi1n4lN1tN2ui3QYTRiHkAF5DeNIXE76TCr1Rw5GL8CkN2uMHqZ6KA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uFOvWV/8GRg87HfFGegQuDxbL2+GSJnKpEbr9gj7PLQ=;
+ b=WQL3wIJUfyzk/DjRzmyKKOGXY4x5av2rRFGd5lI3Y5CouuoOR0eEoJmlzW9lBZSkBaxzqFwVaXXvku1EKMYGSRR62vRci7loWqbsWNLmemApWa2XbqikiqA3noVomorVlDIADvYfl+SgvQp0K6xI9YbtBiF/PcHHJ7S9YzepIPk=
+Received: from DM6PR11MB4410.namprd11.prod.outlook.com (2603:10b6:5:1d9::11)
+ by DM6PR11MB3035.namprd11.prod.outlook.com (2603:10b6:5:69::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3955.18; Thu, 18 Mar
+ 2021 20:08:50 +0000
+Received: from DM6PR11MB4410.namprd11.prod.outlook.com
+ ([fe80::d040:bf81:df34:7648]) by DM6PR11MB4410.namprd11.prod.outlook.com
+ ([fe80::d040:bf81:df34:7648%3]) with mapi id 15.20.3933.032; Thu, 18 Mar 2021
+ 20:08:50 +0000
+From: "Ren, Zhikui" <zhikui.ren@intel.com>
+To: Thang Nguyen <thang@os.amperecomputing.com>, OpenBMC Maillist
+ <openbmc@lists.ozlabs.org>
+Subject: RE: Where to collect information for Redfish System's Processors,
+ Storage, Memory data
+Thread-Topic: Where to collect information for Redfish System's Processors,
+ Storage, Memory data
+Thread-Index: AQHXGk5bmpyzcDwpB02ckXa9+uLk8qqIkRgwgADOWACAAM/TUA==
+Date: Thu, 18 Mar 2021 20:08:50 +0000
+Message-ID: <DM6PR11MB44106F3A52B2949ACA9950C594699@DM6PR11MB4410.namprd11.prod.outlook.com>
+References: <925a9eba-db8f-fba0-7d17-db32860c44ba@os.amperecomputing.com>
+ <DM6PR11MB4410AB2F408E39757C2D38B1946A9@DM6PR11MB4410.namprd11.prod.outlook.com>
+ <f5275c09-4eb8-fc19-520a-5c3d23a94235@os.amperecomputing.com>
+In-Reply-To: <f5275c09-4eb8-fc19-520a-5c3d23a94235@os.amperecomputing.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-reaction: no-action
+dlp-version: 11.5.1.3
+dlp-product: dlpe-windows
+authentication-results: os.amperecomputing.com; dkim=none (message not signed)
+ header.d=none; os.amperecomputing.com;
+ dmarc=none action=none header.from=intel.com;
+x-originating-ip: [73.11.44.68]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: d186f25b-d426-41b4-40a5-08d8ea49a582
+x-ms-traffictypediagnostic: DM6PR11MB3035:
+x-microsoft-antispam-prvs: <DM6PR11MB3035D0184E290EE26084FBE994699@DM6PR11MB3035.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: UTxh77nfcAvL0CEvNxhl8wzvFeexx6ZvaM64zaOkMpFfXl2m9De23zkndIoCOk1xZQaDV8aGwy74FcRMjJEFZcd9WBwyxiUMD6Y5mVOZxItadKZ4o3Ci7j23Mdy/XHI/+byCxOYWNgm6/5RyTt/6NnRqCW3669L5/8n1xQ9W2UvimEHxY5+5BxS83BeJd4ZFn5bVpkvS0nNGLBoWddsoj++zKAZsiv7bRwOCjSHLMgaKZ1+FrY5Y5vEMlSfu2vz1ZLe8KYdUMBRGTLdwQMy5B+Pw9GSpw+V/MP3GhGoCE27oQ+D7CdCzuivTLxs816kBirRhuf6IvgiCOkuyPunladlb+U3aWETCgNwLTWwCyh0cNHaaNt4gX4PhnNNSX2elc9cmqn/KO3J1bP7zKl70DX3J88jfCVKAqi31vzhcb1EPKNBLElLNtwgF259t7+yuMTQ5TCNB1OaT0XmpwbPK42eko8hJnG1IP5ms+MdVslEIVWDfmv0R9XwCx5zlvapRGlcFovtQjz+yBmO7TJNpzgmkm5YdQgh5U200+uVx05+/4wesvoek5RihcKS1dtbyEMYqokcLOFxIyAKhHUhit360nh+vo986o8KEZ3awGSk+fnEpbw1aO8PbTMTdi069mYPiYXomVNDwywoR67bBs+W6iG23JHX80Qx1Mr84GujbIITUZbo+is/ItoFjWDF+
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR11MB4410.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(39860400002)(136003)(396003)(376002)(346002)(366004)(186003)(55016002)(316002)(76116006)(9686003)(83380400001)(38100700001)(52536014)(110136005)(33656002)(478600001)(8936002)(71200400001)(26005)(7696005)(19627235002)(66946007)(8676002)(64756008)(5660300002)(66556008)(66476007)(6506007)(86362001)(2906002)(53546011)(66446008)(966005);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?utf-8?B?N0JabjVGZnE2YUcrbS9kNTNLNzVwSVI4ZGNVMkRWbWp5eUFUQXBHYVlGM0Vr?=
+ =?utf-8?B?Z0dZWUJCQzlaK1RjU2gycCtkVHdXVnFyeWFvYURlOTNIUDRnRktJTXErNTBz?=
+ =?utf-8?B?aVRhbzc4SHB1bGZmZVg3aStlS05kSGtmaDZoeXRnb2tFd1prN1ZjRjFsWFhn?=
+ =?utf-8?B?VzBZUStUN0piNUQyekR4cWpOWStzVFVLK25pVlBMakdaOGdxb2s5Q096VHps?=
+ =?utf-8?B?RlcvdlFsdGgzbW9ub2srcG5vdkx3eXQrcVpudVNOWTVoZFN0QnBXeEdTd0FC?=
+ =?utf-8?B?MFZsSTN0VlVaMEtWbzlTUXFPbGlvKzhpd0pCbzJsd3VxQXByd0x3Ujdka3BV?=
+ =?utf-8?B?azIzdi80YWw2UGtSVFFhQTdVYlpucUUwQXVKMk0vRFh2U1RzMjNUU0x0SUJs?=
+ =?utf-8?B?ZWtpTFJXeEtNbGQzbkFhYktEdUV4TWFqdmUvZmF6dUdDeDVCZ0NvZTZHRzRN?=
+ =?utf-8?B?bzAvNnZUNERaa21xMnFYOW9rUjErYkExTEY3Tk9aS1pVTDIvK3YwVGxIUlNo?=
+ =?utf-8?B?YS9ad3hBMW1iSEM0cmdHNHdvQTlvT3JBeWUvQ2t2R2hnYXZvQURnRXRHM211?=
+ =?utf-8?B?d3VTSUtxbnZyZ21nazJFRGFYdDhoYnRGaklUcmtlbWNOangyTGNmR1BkbTZy?=
+ =?utf-8?B?SUxJcmt3dC9YT0dvNytVdFlJcys4SmpqNjEwRmxDQW1TM3M2YmJWRjQ2VXdD?=
+ =?utf-8?B?L0ErUURZelFjWmxTMUNhMFpVT3lrakhPcHRjVUhNRUpOaVplUXFTSFVZVGpw?=
+ =?utf-8?B?MzRXbW9hbS9nSlU1bmt5S3V4b2UrTXlSZ3AvM3pNVGhCMllnNzlaVFlHNjRZ?=
+ =?utf-8?B?ckdqOE1yZEROcSswYnJEeVkyMElGK2pBc1FaODZpWlB4bXpmVkx1NENKcnpH?=
+ =?utf-8?B?cjRLb0M5UldYMEFtNlNsL3hmZURvTkoxOTJTcFI4Y1Y0bDRTN3p1akR3cTJF?=
+ =?utf-8?B?T09QdUxBR1pWcGdUclV4dzRCcWpvQmtlUGt1Uk5wdHFtaXo1dXkxb004NXVJ?=
+ =?utf-8?B?NENiNHFIY2I5U2Evd20xRHY3NnRhYVIydkpYRm42dlE5ek1LdXhKNnN4cnZt?=
+ =?utf-8?B?REptL3QvdytrTlNsZFl6SitvSWZzTFVlQkQrQ0xWTEJJbjlSK1k1RUZ3TVRQ?=
+ =?utf-8?B?dTExbEZ5NWZLZEhJRVhjdFphVGYrSDJzd00xS3RPOHNPblFiL1V4czc0NnNY?=
+ =?utf-8?B?Q1YwOUFnNUhMZmE2UTVEcTJhSC9Qdkh4Rm0zTzlpa013eXZOU1FYWThJbFFm?=
+ =?utf-8?B?Nld6anFwMHZadGV1cHhud29jT0ZMVkIwditQbzQyZWNSVjZQUGxPUWFieks0?=
+ =?utf-8?B?QmlZSlZkWURzeFBraXFRbHJBYm9sTzUrTFhwWFJ3eThLZGkvZTZqbFVpQ3pk?=
+ =?utf-8?B?YVE0bXk1UzB4c3A5OTIzanZKd09UVDhqRG5MckdJYmg3czFWbFJTSkhaVmth?=
+ =?utf-8?B?NElOdXhNempUdlZqdFF2Y3BWeFVidnVHQ1I4TEcvZC9oaXlsQW4zSzdVcVRR?=
+ =?utf-8?B?OFhVdjdNdC9nOXBhNHlKMFVsakh2RkFBck5yVWVXOXVsQzlIcG1OejdxeVpL?=
+ =?utf-8?B?SVNMREZDOEVqMGRWWHBNNW54bm1aRXVoUDZ2UmtBSVJLcVNhM0xyVFhJWVJ4?=
+ =?utf-8?B?S2dISWhibURRQUFRZzdSVGJqMTBoWXN6KytQZUhpd0NEK1RhbjI1bXliQXFh?=
+ =?utf-8?B?bGU1T2xBYkxzcFVLM1dLTDRjNFpJamNuQTN0NjRTUWk3S3o4UnE3VzZUekIr?=
+ =?utf-8?Q?R2BiZU+3qdOzU3HDh0=3D?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <SG2PR04MB30939CC20F08C50A7031DBA5E19D9@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <CAH2-KxA4tQvaxzFcAWYhYrq9WeCLrLTRdknZW66XUBzOipoFrg@mail.gmail.com>
- <SG2PR04MB3093F7CA1D6801FDF9D6C5BAE1939@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <CACWQX80yb9PiT5S=rg_xOBiqJgETwRHekN=dE18rtxKKPuWfPA@mail.gmail.com>
- <SL2PR04MB30975F3703CAFEFBC1328025E1929@SL2PR04MB3097.apcprd04.prod.outlook.com>
- <SG2PR04MB30938BD2D16A0956E2BEEFD6E16A9@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <DM6PR11MB441097913A35ADC1B63974E5946A9@DM6PR11MB4410.namprd11.prod.outlook.com>
- <CAH2-KxAva6Sz6Q7GN-B8Tat+K855M1LZ2FiTcqxx7Smui=MqNA@mail.gmail.com>
- <DM6PR11MB441073C8A728B64BAA84733D94699@DM6PR11MB4410.namprd11.prod.outlook.com>
-In-Reply-To: <DM6PR11MB441073C8A728B64BAA84733D94699@DM6PR11MB4410.namprd11.prod.outlook.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Thu, 18 Mar 2021 10:31:25 -0700
-Message-ID: <CAH2-KxBu_Feznt8_J2y3FVcYZmVat+rFfoWX1_B-dqSA+AQ0xA@mail.gmail.com>
-Subject: Re: Negative value returns for sensor in tiogapass
-To: "Ren, Zhikui" <zhikui.ren@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR11MB4410.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d186f25b-d426-41b4-40a5-08d8ea49a582
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Mar 2021 20:08:50.1895 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: c9Tf/Pln2Zf6/pes756iNWoJlXRUOzBlcqlXYOzJVqu8o7opoD99Zii3WmUEAaOV9x3sieo0M4SzaFh1svAokw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR11MB3035
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,262 +165,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Jayashree D <jayashree-d@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Mar 18, 2021 at 10:27 AM Ren, Zhikui <zhikui.ren@intel.com> wrote:
->
->
->
-> >-----Original Message-----
-> >From: Ed Tanous <edtanous@google.com>
-> >Sent: Thursday, March 18, 2021 9:11 AM
-> >To: Ren, Zhikui <zhikui.ren@intel.com>
-> >Cc: Jayashree D <jayashree-d@hcl.com>; openbmc@lists.ozlabs.org
-> >Subject: Re: Negative value returns for sensor in tiogapass
-> >
-> >On Wed, Mar 17, 2021 at 11:18 AM Ren, Zhikui <zhikui.ren@intel.com> wrot=
-e:
-> >>
-> >>
-> >>
-> >> -----Original Message-----
-> >> From: openbmc <openbmc-bounces+zhikui.ren=3Dintel.com@lists.ozlabs.org=
->
-> >> On Behalf Of Jayashree D
-> >> Sent: Wednesday, March 17, 2021 12:39 AM
-> >> To: Ed Tanous <edtanous@google.com>
-> >> Cc: openbmc@lists.ozlabs.org
-> >> Subject: RE: Negative value returns for sensor in tiogapass
-> >>
-> >> Classification: Public
-> >>
-> >> Hi Ed,
-> >>
-> >> PMBus spec only have read and write format. In the below link, PXE VR =
-uses
-> >11 bit format. Also sign extend the 11bit reading so that negatives show
-> >correctly.
-> >>
-> >> https://github.com/openbmc/dbus-
-> >sensors/commit/e4a970d9aea97c7c1a11c63
-> >> 215e7d3cda2124e54#diff-
-> >135678dd2046935c5dd0be8e5a5a529d33231203149e786
-> >> d57b15a3cc0cc1240
-> >>
-> >>             constexpr const size_t shift =3D 16 - 11; // 11bit into 16=
-bit
-> >>             value <<=3D shift;
-> >>             value >>=3D shift;
-> >>
-> >> Could anyone from the intel team can clarify the need of above logic u=
-sed in
-> >IpmbSensor.
-> >>
-> >> [Ren, Zhikui]  This change was made to allow negative numbers be repor=
-ted
-> >correctly.  This can happen during test. Without the change, 255degree w=
-ill be
-> >reported and trip threshold event incorrectly.
-> >
-> >Can you walk through what your test was?  It's sounding like Jayashree w=
-as
-> >seeing incorrect values in a real world application.  Is it possible we =
-fixed
-> >something in a test by breaking something in the real world?  Can you th=
-ink of
-> >any other reasons why others would be seeing different behavior?
-> >
-> [Ren, Zhikui] The issue here is the two device's temperatures are not of =
-the same format.
-> PXE1410 uses PMBus LINEAR11 format, where the mantissa  is a signed 11-bi=
-t 2=E2=80=99s complement integer.
-> ADM1278 temperature is 11 bit, but not with LINEAR11 format.
-> We should rename the current elevenBit to  linearElevenBit and add eleven=
-Bit without the sign extension for ADM1278.
-
-I'll leave it between you and Jayashree to figure out who will push
-the patch, but that approach sounds reasonable to me.
-
->
-> >> Exponent data is not used because it is always 0.
-> >>
-> >> Regards,
-> >> Jayashree
-> >>
-> >> -----Original Message-----
-> >> From: Jayashree D
-> >> Sent: Tuesday, March 9, 2021 4:48 PM
-> >> To: Ed Tanous <ed@tanous.net>
-> >> Cc: Ed Tanous <edtanous@google.com>; openbmc@lists.ozlabs.org
-> >> Subject: RE: Negative value returns for sensor in tiogapass
-> >>
-> >> Classification: Public
-> >>
-> >> Thanks Ed, I'll check it out.
-> >>
-> >> -----Original Message-----
-> >> From: Ed Tanous <ed@tanous.net>
-> >> Sent: Monday, March 8, 2021 9:37 PM
-> >> To: Jayashree D <jayashree-d@hcl.com>
-> >> Cc: Ed Tanous <edtanous@google.com>; openbmc@lists.ozlabs.org
-> >> Subject: Re: Negative value returns for sensor in tiogapass
-> >>
-> >> [CAUTION: This Email is from outside the Organization. Unless you
-> >> trust the sender, Don't click links or open attachments as it may be a
-> >> Phishing email, which can steal your Information and compromise your
-> >> Computer.]
-> >>
-> >> On Sun, Mar 7, 2021 at 10:17 PM Jayashree D <jayashree-d@hcl.com> wrot=
-e:
-> >> >
-> >> > Classification: Public
-> >> >
-> >> > Hi Ed,
-> >> >
-> >> > In the below link, PXE1410CVR and ADM1278HSC are using the same
-> >reading format.
-> >> > I am not able to find any information on PXE1410CVR. If there is any=
- spec
-> >available, could you please share it.
-> >> > It will be helpful to analyze both the specs and fix the problem.
-> >>
-> >> I don't have any specs available for those.  I would assume they follo=
-w the
-> >pmbus spec though, you might start there.
-> >>
-> >> >
-> >> > https://apc01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2F=
-gi
-> >> > th
-> >> > ub.com%2Fopenbmc%2Fdbus-
-> >sensors%2Fblob%2Fmaster%2Fsrc%2FIpmbSensor.c
-> >> > pp
-> >> > %23L144&amp;data=3D04%7C01%7Cjayashree-
-> >d%40hcl.com%7C8676d30f4d3a4dda1
-> >> > e0
-> >> >
-> >e08d8e24c4957%7C189de737c93a4f5a8b686f4ca9941912%7C0%7C0%7C637508
-> >164
-> >> > 56
-> >> >
-> >8775248%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2
-> >luMzIi
-> >> > LC
-> >> >
-> >JBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&amp;sdata=3D5lhuUdfI%2BG75C8I1
-> >HDAa
-> >> > EH
-> >> > VP46%2Bz1r3nJV0ek3CiiR4%3D&amp;reserved=3D0
-> >> >
-> >> > Regards,
-> >> > Jayashree
-> >> >
-> >> >
-> >> > -----Original Message-----
-> >> > From: Ed Tanous <edtanous@google.com>
-> >> > Sent: Friday, February 26, 2021 9:57 PM
-> >> > To: Jayashree D <jayashree-d@hcl.com>
-> >> > Cc: openbmc@lists.ozlabs.org
-> >> > Subject: Re: Negative value returns for sensor in tiogapass
-> >> >
-> >> > [CAUTION: This Email is from outside the Organization. Unless you
-> >> > trust the sender, Don't click links or open attachments as it may be
-> >> > a Phishing email, which can steal your Information and compromise
-> >> > your Computer.]
-> >> >
-> >> > On Fri, Feb 26, 2021 at 12:55 AM Jayashree D <jayashree-d@hcl.com>
-> >wrote:
-> >> > >
-> >> > > Classification: Public
-> >> > >
-> >> > > Hi Team,
-> >> > >
-> >> > >
-> >> > >
-> >> > > Recently, I have tested sensors for tiogapass, in which one sensor
-> >returns negative value.
-> >> > >
-> >> > > After analysing the code in the dbus-sensors repo, I found the fol=
-lowing
-> >issue.
-> >> > >
-> >> > >
-> >> > >
-> >> > > dbus-sensors/IpmbSensor.cpp at master * openbmc/dbus-sensors
-> >> > > (github.com)
-> >> > >
-> >> > >
-> >> > >
-> >> > > From the above link, We need only below line in the code to proces=
-s the
-> >HSC sensors value for tiogapass.
-> >> > >
-> >> > >
-> >> > >
-> >> > > int16_t value =3D ((data[4] << 8) | data[3]);
-> >> > >
-> >> > >
-> >> > >
-> >> > > Since the below logic is added, the values get shifted and getting
-> >negative values as output.
-> >> > >
-> >> > >
-> >> > >
-> >> > > constexpr const size_t shift =3D 16 - 11; // 11bit into 16bit
-> >> > >
-> >> > > value <<=3D shift;
-> >> > >
-> >> > > value >>=3D shift;
-> >> > >
-> >> > >
-> >> > >
-> >> > > Could you please suggest any idea to resolve this issue.
-> >> >
-> >> > I haven't looked at this in detail, but we should follow whatever th=
-e spec
-> >says here.  If whomever wrote this originally put in the wrong math (whi=
-ch
-> >seems likely, given they were implementing 4 types and probably only usi=
-ng
-> >one) then we should just get it fixed and do what the spec says.
-> >> >
-> >> > >
-> >> > >
-> >> > >
-> >> > > Regards,
-> >> > >
-> >> > > Jayashree
-> >> > >
-> >> > >
-> >> > >
-> >> > > ::DISCLAIMER::
-> >> > > ________________________________
-> >> > > The contents of this e-mail and any attachment(s) are confidential=
- and
-> >intended for the named recipient(s) only. E-mail transmission is not
-> >guaranteed to be secure or error-free as information could be intercepte=
-d,
-> >corrupted, lost, destroyed, arrive late or incomplete, or may contain vi=
-ruses in
-> >transmission. The e mail and its contents (with or without referred erro=
-rs)
-> >shall therefore not attach any liability on the originator or HCL or its=
- affiliates.
-> >Views or opinions, if any, presented in this email are solely those of t=
-he
-> >author and may not necessarily reflect the views or opinions of HCL or i=
-ts
-> >affiliates. Any form of reproduction, dissemination, copying, disclosure=
-,
-> >modification, distribution and / or publication of this message without =
-the
-> >prior written consent of authorized representative of HCL is strictly pr=
-ohibited.
-> >If you have received this email in error please delete it and notify the=
- sender
-> >immediately. Before opening any email and/or attachments, please check
-> >them for viruses and other defects.
-> >> > > ________________________________
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IFRoYW5nIE5ndXllbiA8dGhh
+bmdAb3MuYW1wZXJlY29tcHV0aW5nLmNvbT4NCj5TZW50OiBUaHVyc2RheSwgTWFyY2ggMTgsIDIw
+MjEgMTI6NDEgQU0NCj5UbzogUmVuLCBaaGlrdWkgPHpoaWt1aS5yZW5AaW50ZWwuY29tPjsgT3Bl
+bkJNQyBNYWlsbGlzdA0KPjxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQo+U3ViamVjdDogUmU6
+IFdoZXJlIHRvIGNvbGxlY3QgaW5mb3JtYXRpb24gZm9yIFJlZGZpc2ggU3lzdGVtJ3MgUHJvY2Vz
+c29ycywNCj5TdG9yYWdlLCBNZW1vcnkgZGF0YQ0KPg0KPg0KPk9uIDE4LzAzLzIwMjEgMDI6MjYs
+IFJlbiwgWmhpa3VpIHdyb3RlOg0KPj4NCj4+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0K
+Pj4+IEZyb206IG9wZW5ibWMgPG9wZW5ibWMtDQo+Ym91bmNlcyt6aGlrdWkucmVuPWludGVsLmNv
+bUBsaXN0cy5vemxhYnMub3JnPg0KPj4+IE9uIEJlaGFsZiBPZiBUaGFuZyBOZ3V5ZW4NCj4+PiBT
+ZW50OiBUdWVzZGF5LCBNYXJjaCAxNiwgMjAyMSAzOjIyIEFNDQo+Pj4gVG86IE9wZW5CTUMgTWFp
+bGxpc3QgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NCj4+PiBTdWJqZWN0OiBXaGVyZSB0byBj
+b2xsZWN0IGluZm9ybWF0aW9uIGZvciBSZWRmaXNoIFN5c3RlbSdzDQo+Pj4gUHJvY2Vzc29ycywg
+U3RvcmFnZSwgTWVtb3J5IGRhdGENCj4+Pg0KPj4+IEhpLA0KPj4+DQo+Pj4gSSBhbSBsb29raW5n
+IGZvciBob3cgdG8gc3VwcG9ydCBSZWRmaXNoIFN5c3RlbSBzY2hlbWEgd2hpY2gNCj4+PiBpbmZv
+cm1hdGlvbg0KPj4gPmZyb20gSG9zdDoNCj4+PiAtIFByb2Nlc3NvcnM6IHJlZGZpc2gvdjEvU3lz
+dGVtcy9zeXN0ZW0vUHJvY2Vzc29ycw0KPj4+DQo+Pj4gLSBTdG9yYWdlOiByZWRmaXNoL3YxL1N5
+c3RlbXMvc3lzdGVtL1N0b3JhZ2UNCj4+Pg0KPj4+IC0gTWVtb3J5OiByZWRmaXNoL3YxL1N5c3Rl
+bXMvc3lzdGVtL01lbW9yeQ0KPj4+DQo+Pj4gSSBsb29rZWQgaW50byB0aGUgYm1jd2ViIHJlcG9z
+aXRvcnkgYXQgcmVkZmlzaC1jb3JlL2xpYi9tZW1vcnkuaHBwDQo+Pj4gYW5kIHJlZGZpc2gtY29y
+ZS9saWIvcGNpZS5ocHAgYnV0IGp1c3Qgc2VlIGRvR2V0KCkgZnVuY3Rpb24gdG8gcmVhZA0KPj4+
+IGRhdGEgZnJvbSBkYnVzIHRvIHJlcG9ydCB2aWEgUmVkZmlzaC4gVGhlcmUgaXMgbm8gZG9Qb3N0
+KCkgZnVuY3Rpb24NCj4+PiB0byBwb3N0IGNvZGVzIHRvIFJlZGZpc2guDQo+Pj4NCj4+PiBNeSBx
+dWVzdGlvbnMgYXJlOg0KPj4+DQo+Pj4gMS4gSG93IGNhbiBIb3N0IEJJT1MgY29sbGVjdCBpbmZv
+cm1hdGlvbiBhbmQgc2VuZCB0byBCTUMgc28gdGhhdCBCTUMNCj4+PiBjYW4gcmVwb3J0IHZpYSBS
+ZWRmaXNoPyB2aWEgaW4tYmFuZCBSZWRmaXNoPw0KPj4+DQo+Pj4gMi4gSWYgdGhlIGluZm9ybWF0
+aW9uIGlzIG5vdCBmcm9tIEJJT1MsIGhvdyBjYW4gQk1DIGNvbGxlY3QgaW5mb3JtYXRpb24/DQo+
+Pj4gV2hhdCByZWNpcGVzL3JlcG9zaXRvcmllcyBhcmUgdXNlZCB0byBjb2xsZWN0IGluZm9ybWF0
+aW9uPw0KPj4+DQo+PiBbUmVuLCBaaGlrdWldIGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Nt
+Ymlvcy1tZHIgaXMgdGhlIHNlcnZpY2UNCj4+IHRoYXQgcG9wdWxhdGVzIGRidXMgb2JqZWN0cw0K
+Pg0KPltUaGFuZ10gVGhhbmtzIGZvciB5b3VyIGluZm9ybWF0aW9uLiBCdXQgSSBkb24ndCBzZWUg
+YW55IG1ldGEtKiB1c2Ugc21iaW9zLQ0KPm1kci4gSG93IGNhbiBPcGVuQk1DIGdldCBTTUJJT1Mg
+aW5mb3JtYXRpb24/DQo+DQo+RG8gd2UgbmVlZCB0byBpbXBsZW1lbnQgSVBNSSBPRU0gb3Igc29t
+ZXRoaW5nIGxpa2UgdGhhdCB0byBzZW5kIGRhdGEgdG8NCj5CTUM/DQo+DQpbUmVuLCBaaGlrdWld
+IEkgc2F3IGFub3RoZXIgcHJvcG9zYWwgZm9yIGFkZGluZyBQT1NUIGFuZCBQQVRDSCBpbiByZWRm
+aXNoIGluIGEgZGlmZmVyZW50IHRocmVhZC4gDQpGb3IgY29tcGxldGVuZXNzIG9mIGluZm9ybWF0
+aW9uLCBoZXJlIGlzIHRoZSBleGlzdGluZyBJUE1JIGhhbmRsZXIgaW4gaW50ZWwtaXBtaS1vZW06
+IA0KaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvaW50ZWwtaXBtaS1vZW0vYmxvYi9tYXN0ZXIv
+c3JjL3NtYmlvc2hhbmRsZXIuY3BwDQoNCj5BbmQgVUVGSSAoRURLMikgY29sbGVjdHMgU01CSU9T
+IGRhdGEgYW5kIHNlbmQgdG8gQk1DIG92ZXIgSVBNST8NCj4NCj4+PiBUaGFua3MsDQo+Pj4NCj4+
+PiBUaGFuZyBRLiBOZ3V5ZW4gLQ0K
