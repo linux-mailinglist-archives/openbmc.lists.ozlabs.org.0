@@ -2,158 +2,135 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A206340EDA
-	for <lists+openbmc@lfdr.de>; Thu, 18 Mar 2021 21:10:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 975393412A4
+	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 03:14:25 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F1dSV3N0hz3bvm
-	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 07:10:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F1nWz3n4Wz2y8H
+	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 13:14:23 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com header.b=wak0X8YF;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=QERw2wxW;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=zhikui.ren@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.68.114;
+ helo=nam04-bn3-obe.outbound.protection.outlook.com;
+ envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com
- header.b=wak0X8YF; dkim-atps=neutral
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=QERw2wxW; 
+ dkim-atps=neutral
+Received: from NAM04-BN3-obe.outbound.protection.outlook.com
+ (mail-eopbgr680114.outbound.protection.outlook.com [40.107.68.114])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F1dSC33Rgz30RT
- for <openbmc@lists.ozlabs.org>; Fri, 19 Mar 2021 07:10:35 +1100 (AEDT)
-IronPort-SDR: JC7XDyBNaxaML67n6xylmLe+mAnocjBSzcKuNPC7g5YE7rEDr1hXtSuDsDin18ajKRj4BnBKOf
- +Fw00/BhZZDg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9927"; a="169056414"
-X-IronPort-AV: E=Sophos;i="5.81,259,1610438400"; d="scan'208";a="169056414"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2021 13:10:33 -0700
-IronPort-SDR: wS6Z62wsZ4y3reg0SQvcYjBNsgtfv3F2zw2apSJLgMDvaxDEq+NRyA5bq2XV4kHHtkrRCUJQH5
- S7xoYtHL0NLA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,259,1610438400"; d="scan'208";a="379887856"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by fmsmga007.fm.intel.com with ESMTP; 18 Mar 2021 13:10:33 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Thu, 18 Mar 2021 13:10:32 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2
- via Frontend Transport; Thu, 18 Mar 2021 13:10:32 -0700
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (104.47.56.47) by
- edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2106.2; Thu, 18 Mar 2021 13:10:32 -0700
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F1nWj55blz309d
+ for <openbmc@lists.ozlabs.org>; Fri, 19 Mar 2021 13:14:08 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Xz3SIuTxg5Qp+2fWMGgluYbJNlBuR4MMaYB8aJc/Y+3EeIOhiHONuccPJwWWh5Vas1ryenT0IgkVnhIuwzqY/2rcNk+uUCMP7Y/CWV3Qx/NLlixgPCDk7Lh7dV+Kc5E2ZBjfA/vGehNRMj7hmr9zy22h8H8TFswmE2oc3Sz8kWB0acxQnJDDn2eoslwa+xShf817XUShTUiyS05KlRr3OzhmG8YySjGeNN5PIbbxc82FYM3+T9067oCa1OVAjuJNY7S+0obcW01IznmztdGlQoXCwnpiuse0BK2hgowH4nXLgYv8qDXgxTv8Im70JA2BW6zYQviDY65J1JoslawH6w==
+ b=AjnJPPw7EtA2c/FGnxg60P1mzvXC9l+rb9iU/SVUjQtJgsZ7yuyBhsHGzPKbwWhxRd96U3FhkaCiKzx+rpO6wScDZLZuy09sPimKRq4oQFg5pJS5rVW83O1Zj9o1jBgAZ6E1quKCBLPZwfwQ0XxOFocLZiRXfOOt7OFqurohyq4hbzlbTlOn3Ot+ATL/pCj0qUDQKozMzN5sv5e4PfyV9v4mz17dj87AmMxFyTMt8B6ObfNad0TcxGMViy5ht8JNPvbZITUWIXnIrs2+8Ijtnaq2fBDOQ+moQBnR9g5OKwkpxGMAZ9pW5rVluKBzUnZt7ps5sxaWoZkXn/vbmzqDKg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nR3HNZtytoIUpI4iKMVWYp9f4MaiMjEpbCWQENlYf2I=;
- b=XPHZ7DTpnr74Ai8PMqMdN1Blz2bjQkXbnBZx3eR/aFXB5ipz7tKhGWs0DJ8NZIq2TynmIUKScyntazTKICBjNIgDocZdVCYUtMwNcV7O9nnsZUVvuh6J/IiRsGtMTdnS+e7Z2cVErcjuyALDiG6b51ep8A6BNEgR+KhZgC+ptfqyd4DSKtTOiEsKanXVVXON2jgxB3yTXi8NXqfo0XlgLHx6q5af4XV37rnUVrPCOWIEn4QGvXWGDLoOUffkKFGCu0xHpI1feE6wNW07GOCdTjXu7Ne3GWFsOsHzEU+CXeEg8jIxvhkqUZ4gc2gdg0OR/mttRMaMJNTNzgMhukIEsQ==
+ bh=1koxgsI0DpcUGOLo2TEGKimwcW6uj+G8sz42Q2bxTb0=;
+ b=joEeWPsR+7O4GbP1xUv0rEieKaISkcdIYs5Sx7YnImCLNiMCfZz6RCAQI3A1TE8EOMbRYuck2uEb2yNcpSnshZ1JKWqT4wstIYcxuH+w5rhIhD78GMmIkPoMdXIHGNlszZqYyY3k0FWMLIGOzlBPfU8jTa7yDPuZuuJbpwh/X49Ay64flXMarzeofiEpz8TbOdrqESnLH16N4U1MaQbRFHDmrTZdQXcw35yiW1jCNllEp7+XyoCteXMssmru7AmuY0lDCZiw1WE8fCApDmfXOSbt1MbE/rCjUdNDOAz2lK/YzxQt771i9ZohBp+NLucUBNNyy/NoNkJiMY35VEWn9A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
- s=selector2-intel-onmicrosoft-com;
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nR3HNZtytoIUpI4iKMVWYp9f4MaiMjEpbCWQENlYf2I=;
- b=wak0X8YFPmxNjDQhbXIcgAUS2eWWOrdTylm7lfVKeNRjfrFgiYzvrdR1isBV04sZVfC7XCUXwZBlRcRzblaUpxBIbvRq17yclcWJRFrQuDXmHeu1GziWiqms2sBKgDbTTBNT9SgpNeibbPDb9b0MHye4uupg3w7NlMn+zq8hKUg=
-Received: from DM6PR11MB4410.namprd11.prod.outlook.com (2603:10b6:5:1d9::11)
- by DM5PR1101MB2137.namprd11.prod.outlook.com (2603:10b6:4:50::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3955.18; Thu, 18 Mar
- 2021 20:10:31 +0000
-Received: from DM6PR11MB4410.namprd11.prod.outlook.com
- ([fe80::d040:bf81:df34:7648]) by DM6PR11MB4410.namprd11.prod.outlook.com
- ([fe80::d040:bf81:df34:7648%3]) with mapi id 15.20.3933.032; Thu, 18 Mar 2021
- 20:10:31 +0000
-From: "Ren, Zhikui" <zhikui.ren@intel.com>
-To: "Ren, Zhikui" <zhikui.ren@intel.com>, Thang Nguyen
- <thang@os.amperecomputing.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: RE: Where to collect information for Redfish System's Processors,
+ bh=1koxgsI0DpcUGOLo2TEGKimwcW6uj+G8sz42Q2bxTb0=;
+ b=QERw2wxWuI2cSXDxlGdsZNAOfKCeVzyLMa0CZ2y9DAXDDMCEpUIwp+KXvYKyL462EF9kVM8j0DsG5gYBG4pCxFXpAa5qHtOnmIo0ojg77cjkK3ncrbXzM51p8SAAitsVC9UjAgSygxyZHlNk1Opq1fgY3mE/mZmaAQSlNwcwSZE=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=os.amperecomputing.com;
+Received: from BYAPR01MB4678.prod.exchangelabs.com (2603:10b6:a03:88::27) by
+ BYAPR01MB5447.prod.exchangelabs.com (2603:10b6:a03:120::14) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3933.32; Fri, 19 Mar 2021 02:13:59 +0000
+Received: from BYAPR01MB4678.prod.exchangelabs.com
+ ([fe80::650e:6480:5f2a:4b96]) by BYAPR01MB4678.prod.exchangelabs.com
+ ([fe80::650e:6480:5f2a:4b96%6]) with mapi id 15.20.3955.018; Fri, 19 Mar 2021
+ 02:13:59 +0000
+Subject: Re: Where to collect information for Redfish System's Processors,
  Storage, Memory data
-Thread-Topic: Where to collect information for Redfish System's Processors,
- Storage, Memory data
-Thread-Index: AQHXGk5bmpyzcDwpB02ckXa9+uLk8qqIkRgwgADOWACAAM/TUIAAAX0Q
-Date: Thu, 18 Mar 2021 20:10:31 +0000
-Message-ID: <DM6PR11MB4410DB8621A9D65B900FEC1B94699@DM6PR11MB4410.namprd11.prod.outlook.com>
+To: Ed Tanous <edtanous@google.com>
 References: <925a9eba-db8f-fba0-7d17-db32860c44ba@os.amperecomputing.com>
- <DM6PR11MB4410AB2F408E39757C2D38B1946A9@DM6PR11MB4410.namprd11.prod.outlook.com>
- <f5275c09-4eb8-fc19-520a-5c3d23a94235@os.amperecomputing.com>
- <DM6PR11MB44106F3A52B2949ACA9950C594699@DM6PR11MB4410.namprd11.prod.outlook.com>
-In-Reply-To: <DM6PR11MB44106F3A52B2949ACA9950C594699@DM6PR11MB4410.namprd11.prod.outlook.com>
-Accept-Language: en-US
+ <CAH2-KxCUYzjckT7xEAtcdV4Q_2h4B7GdAcXw_TTqBA6O76Q7Ng@mail.gmail.com>
+ <1cd3b4fb-a729-52cf-e03e-1cb3b4a1bbf8@os.amperecomputing.com>
+ <CAH2-KxDv8jgFP8gRQgGkKruUk-scUOr5Mja6NkTgO4ODGGnmvA@mail.gmail.com>
+From: Thang Nguyen <thang@os.amperecomputing.com>
+Message-ID: <a1063850-c42c-ccbc-e3b1-34211f6e766a@os.amperecomputing.com>
+Date: Fri, 19 Mar 2021 09:13:48 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.8.1
+In-Reply-To: <CAH2-KxDv8jgFP8gRQgGkKruUk-scUOr5Mja6NkTgO4ODGGnmvA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-reaction: no-action
-dlp-version: 11.5.1.3
-dlp-product: dlpe-windows
-authentication-results: intel.com; dkim=none (message not signed)
- header.d=none;intel.com; dmarc=none action=none header.from=intel.com;
-x-originating-ip: [73.11.44.68]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 3954d381-a22e-47d1-a6af-08d8ea49e1c5
-x-ms-traffictypediagnostic: DM5PR1101MB2137:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM5PR1101MB21373469B30887C1A6D498F994699@DM5PR1101MB2137.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: uwoupothzpNDrQI0bBG5HFJMypi4Pr2Fc5hTkvJzuPHDgpA2rf7kG3WapaNRvsyfijgF5Ce+q0OMaf9iFYjd81NiWdQ64qt80hsvBIEeY0ykhxGrf5/xrqSXOHVtSbfuIRHGWQZQBjOfOhwU73sN2Pq82pSonBU4SYUMCfldKYod5axD+eBEtzZpUUrHpIq0ttXQd6HlyW872ErDyK++aDFfO5dP0GnrFxUrAvR6dnUthAFQ54T1HR9+rSCngMaMqHgeFDng2cFizoHE1PHfxrAqaCCYKVb5wfOIb0fWG5mXhe7oixP7g12Wffdonvm6RlZ8v8f1AYIb7k3RopI2O/1l0d7i3prZuGCMceSdWq42S5LNBhFz67h7uhlz2uxGPHJ/fiWQrXy+pVTpiK0Ub+jhZmprOeUXx4u79AqlHjmoUT+cQxpj71ABJX8B5LJb4Q1JkzwdII3BoDOpPM+DlkXgXDfZlKs3z+gjStUYL9S39R4VlwIZIcKlJiPrI0kkZhwkEX0X3+R2VwtjMubzKjWhelSYeNbs9KmkRkjJaEgY1Us3fjIE3Bunjx5HaKxpnAFr9iXQLSfeE8qsLS0Qg8x56o4zE9qdvngATKHnkQeXrCLGsF7CtS7aam+iZd03HBoTzzJ4F0n56PcxHWNk4dZ4DOPF1KeKvXoYppYvYBA4Ls3SuKX8iL42Ck8xsPRR
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR11MB4410.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(376002)(346002)(136003)(366004)(396003)(39860400002)(7696005)(33656002)(2940100002)(66446008)(2906002)(64756008)(8936002)(53546011)(8676002)(19627235002)(86362001)(55016002)(5660300002)(83380400001)(186003)(38100700001)(110136005)(478600001)(316002)(9686003)(71200400001)(26005)(66476007)(52536014)(76116006)(6506007)(966005)(66946007)(66556008);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?VEhGOTNsVmhCVENhMUpkbTZ0dm9DMS90S3hINVJtQ0FaZVhhSHFkK3E2RXFk?=
- =?utf-8?B?RlNKTHlHQWRFQWwrQ3F3Ri9kUzZmaDhsellwMXZ0bEhhdS9GNUZ2dFpIQW9m?=
- =?utf-8?B?TDN0T2lLdHdrcTA0RW4za1FDdXpLbndkVVJEMWZjeExKLzV2UEdWYVhHc3VP?=
- =?utf-8?B?UWpDcWx0OVZkWXdHM203cGk4SkQvalRqNUFDQUtDMUI0YTNFTzBULzRFOUhi?=
- =?utf-8?B?cjQzdFNrRTRCLzNmK2IzRU5jckdpZ1BSRG5lVlNEaFpMUVVTQm9aTFNhTFVQ?=
- =?utf-8?B?YXNZT0prbTFzZVJXYW04OGpvSWlWRm02Nm5TZ29pdnU3ZTk3ZmVHc1U1VnNB?=
- =?utf-8?B?N0IyV3hvczJ0aEc2aWRUUXNCNXRIWEZ5MG1hSVVkTGlPRENISSt6a1dOR0JH?=
- =?utf-8?B?ZElTWExRNngzOVg1WTNjT1pOK3Q5M3hTTzJKblRkYy9lTmplb25nVXVLWll4?=
- =?utf-8?B?eEpYK3MwaDUvRHhGZW5wQi9BeFBCc1FWQlBBaDhJM3NCbTUzWkZONnIrVW5n?=
- =?utf-8?B?L1laQUpoNFExSVg0SGhkN0xaUzUyVHo1TDg2N2phY1BpMmhHaUdCR3RlNm1z?=
- =?utf-8?B?R3hEMG9HYnJZL2hvM1RyaHdaRmwwYXVwYU9YMmxVRjVKY0lXMkZmcmpsVVJv?=
- =?utf-8?B?SzN5YWYwaE5rdHFEbmVXNjUzRWxvRHJPSmNMdUdaeTcxVTVqekxpM0lJM3ox?=
- =?utf-8?B?M2ZBakg0NHl6Z1FydUlNNzY2dFFVcTUwSnFiNkE3QS9UVkxic3hldTdxU2Rj?=
- =?utf-8?B?WHpPNDdlNVBGVVpyeml4QWJ2Ukt3Mm9RMndiMGtWdEJIb3NCUWVTSERLSGJE?=
- =?utf-8?B?eFphNE9FSGcyaDd5QzQ0UnlKaXRZMmE3R0N2bUFSM0c1QVVvaTBQbnl6TGtp?=
- =?utf-8?B?WVZYOHg0S1NiMFowUm5EcjUyNEdsNDA2QmFsQjNWK0E1WUZpM2oxbTY5Mnl4?=
- =?utf-8?B?OE9sWWt4ZFlwTzNYTHNGTkIrQWVLdkZoeVlrMDlUbWp4SU9UbzUrdnVOaWYy?=
- =?utf-8?B?RENhSUxpUjVjT0phb3BFcUYzbEl2ZVBuODNyTXJhMTUxYklUb3RUSk9CaXdT?=
- =?utf-8?B?WTJtdGJvc0FQdVNZZGVUMjRMeEg5MGlzZE5BcjJPcnRHQ0ZEajA4TERiay93?=
- =?utf-8?B?NkQ1UHhlUDhTN2tHV2FjWERJNndPakI3di9ialllZ3BmNldNRStudGE4blhs?=
- =?utf-8?B?bTNGazZCWkVjNkNteEpmMDgveC8rVzdJNG9Wd0g4SkVCSVAxYW9YV3czSWxW?=
- =?utf-8?B?YWJhbG5MM2w3bnptRE1YenAyQW5VdzNLbTlKRXVkVlZaUTZsQmxNbU0zdEdN?=
- =?utf-8?B?NmJjSXg4c0N2dlJLUjk2Z2xXWXJTZHBEamF5MTBUWjN6VjlOa3FRcmVWTVBr?=
- =?utf-8?B?ZWJuZGtWZ3R0R2JJVXpGUFhoYXgvb1Z1dlFFY3lqZXVEOGNzOXVkM2MyMHpK?=
- =?utf-8?B?enBieGRZZ0d1Z3VUZW9sVjg5VjQ2VEVNZjBqV2Q3Nmh2aXQ1eDFPekRJM2N3?=
- =?utf-8?B?emMwcHIvYWlTR2ZvWnFGZHJuTU9YeldTbWtKWnBZR2hKOGFJbThoRWdFVCtv?=
- =?utf-8?B?ZGJSNFRRcFJBODA5SXJweVY0cW8yQkpYMjNTRnB5NVZaZEl5dzVJNGZNbkE5?=
- =?utf-8?B?SW5VK1VZZVpQR24zdzFyWFRGV1F0TTlTVElaL0tNOXVMcUZyTFdvVU82OE1t?=
- =?utf-8?B?cjlpN0NCTUVDZEptdzNPczU4bURlVG0xWHd2cDlCU2gvVmJEWlhTUDROUjZB?=
- =?utf-8?Q?032rBak3nmfYqO3uOE=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+X-Originating-IP: [118.69.219.201]
+X-ClientProxiedBy: HKAPR04CA0005.apcprd04.prod.outlook.com
+ (2603:1096:203:d0::15) To BYAPR01MB4678.prod.exchangelabs.com
+ (2603:10b6:a03:88::27)
 MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from HCM-FVFX4014HV2J.local (118.69.219.201) by
+ HKAPR04CA0005.apcprd04.prod.outlook.com (2603:1096:203:d0::15) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3955.18 via Frontend Transport; Fri, 19 Mar 2021 02:13:58 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: f0c6178e-88f5-4c36-671e-08d8ea7ca846
+X-MS-TrafficTypeDiagnostic: BYAPR01MB5447:
+X-Microsoft-Antispam-PRVS: <BYAPR01MB544701CA8DFE18F2B6E655778D689@BYAPR01MB5447.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: S+DTMEo0KOA4YnJqiyQLAAQmAfpqcFpc0Toj/9stTjXmOSwJ7xMAFTI4g2sm334TsWNyx8b2XCDijGjiQHok4gdtL6B8UDWlDG8tHQvb4vJ6TKPAYle/MEedYi3kd+kju/6T9CMVYkxalTTOwFHccv89gxgMDdFwuozuBzvLE3BgKJfBmkAnnYAXv+IvsxyJa0u2PLA4OVWn0zjNfGG4fFe8A3IOIeMwxXMtymBNoJVM3zPZGz+MOmoGb1D2Q+3SyIqFAX/oSFTR28Hlji2dGAYahsyJ5Trn2upOpS8peoWCGi+at/J7JQ5LnrWLNXZTQg66LDLj290F9bx5ONZz+OCf2S77BEKaLOHtuLb6wJOWB2RyM4yDXV7yEjJOSPrqCWNQwyRIeTuf9l0zJ4Ttjrj69/xBUn8gyncTWV4leCXERyt3VEgAKcFV64TTi56jLRefilK8vagC9utk3xgS5uSFz0NBtS/TiK7rFyIuiko1wcpJdG0qzwXTmQf8WH/YabJgAgfABhkLVK4ieUsz31bCIHoryNg3jfqR0I+/kilSLeFamzQ9V+O6j5gtWVh5nDMyvKOjIb36i66fT19hwg1vBRHvkC+BsKl0NShWEl7Fr0iqgReECNX3RrAgLvDAAIhDa1Qjk/I2EQUAyPEMZaF4Jt0ZbRCGErawARy/v4q63K56pN5Np8a7A18KMiAI/VyN4QmUQVS9fW/kRwOZMA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BYAPR01MB4678.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(396003)(39850400004)(366004)(136003)(376002)(346002)(5660300002)(8936002)(66476007)(66946007)(2616005)(186003)(16526019)(52116002)(38100700001)(316002)(6486002)(6666004)(86362001)(31696002)(26005)(66556008)(478600001)(6506007)(83380400001)(4326008)(956004)(6916009)(6512007)(19627235002)(53546011)(8676002)(2906002)(31686004)(43740500002)(45980500001);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?RjdGZG5oSERtemhjdEd2Z2pIbDRVZHl3YXpTL1FXZDZyalJKM1dyWkhieTBj?=
+ =?utf-8?B?VzF2a0dhK3ZwMFZQR1YxbTFsanZLZDd4VnBjRVZjVVN6c3ZrN2JzMWw2Zksy?=
+ =?utf-8?B?dUpZSVM0WVpCbHNkMy9WdGhTRmpsTW0zb2RXZVA4ZjBhM0JSVFl6UmdqR0Jt?=
+ =?utf-8?B?dzUzR0dMRXZXZDFJVnNJMWl2RVM4T3BtaXNreVFpNU5KTmM3YTVORVJWWHNq?=
+ =?utf-8?B?SVVNbU1NbklPTFBtL0F1VFluUHoxdnFBM1VBT3ppVjVwVE81RUs1UDR4OTdk?=
+ =?utf-8?B?NFFuMU1Vc2lNSVp2ZVRyTzBheW41eTh1TlNwSjZzajJTT3d5NHMwdml1UXNn?=
+ =?utf-8?B?a3k1emJKRHBUcEliYXVqalJtbzZYUlZyNHFYZ2F0MUdKVnZzZHBTVkNrem9R?=
+ =?utf-8?B?bmIxOW4zRlZEc0ExTHVZcWc0bHdMbEQzT21qSGVMb0hTSExKRm9mVVpiaVJo?=
+ =?utf-8?B?KzlkQ0RBOFZQeVFIaThMVHp6NnV3WDdrd1lVUmkrOGMzUTdJUmVLbzJuNm1B?=
+ =?utf-8?B?QXlxK1ErUEdacGc2Ly9aSFFROFM3VE53QlB1aGNlNE5QdDF0RFNQMTAza3Ew?=
+ =?utf-8?B?UXlpcitheVVQTCsrVWFkZzNHTk1iNm03TUNvTkZvSS9vRlU5Wm5XNExrWE13?=
+ =?utf-8?B?OW1IWU4yekxJSTQ3dm5RRno4d2kvZXpoQjVZUFN1elg1NnpySkJyUG4zVHNt?=
+ =?utf-8?B?VWJPb281VFk2US8rK1F4azRLU1oxMnFUMXlJcFh5NlBIZS8xYmtYQlJYbmNM?=
+ =?utf-8?B?V0l6a2kzbGtDUzFyb2IxaGZtVXpnTEhDbCs2dTY5RVdqVmhmTEpSdFN4cG9I?=
+ =?utf-8?B?REVXSHhSVi9Nc01HVHJVY2JlT2VlQTFOSmNvSkV3USt6cks3RTl1NTluekZv?=
+ =?utf-8?B?dXRENUoxZE1CWG5pdUU3amdUVXdBU0IvbkJPaHpXa211M1pFQjNSa3U1NU1m?=
+ =?utf-8?B?NUpPZjhJZzJiYVc4NFduMXhyTVhMQUwyWlRaWU80dFNJc1NtNWRhUVpFYTBr?=
+ =?utf-8?B?bngrTXVCaVdjWUdKQ1p4aTNFajIrNUxVMXdRQTI2Rkl6UExHdHlaOVFuekZG?=
+ =?utf-8?B?WGU4cXZFdWZubFpWZGpGNDJOcm0rZGptY2tDOGdMNmo4Z0hNcWZhTU40WTlU?=
+ =?utf-8?B?SlFHY2FBT0RhRFl6TkprWGw2R0lzZC9sdi9tZEwrSVlqZTRKSmJ3YzJSSWFi?=
+ =?utf-8?B?Yll5RE54RDlpUGYzbENuY1VyaEN5b0MwU2txMkU2dmlXcTgvU3NBZVBTN2FP?=
+ =?utf-8?B?RUZQbDRMTit5dlcwUkx0V3NFM2pRYU9WOW5ZWVZoQ1B3ZVgwcDVTdkxFSXdH?=
+ =?utf-8?B?MzNRSlR3cUxLcDM0WjJ5SHIwcC9IZU5tcFQ4WTZMVUZiZEpPcFRWNW1uOHM4?=
+ =?utf-8?B?eGszcDJwSVRNRFJXS3Q4enVIb1hTOU5zblpEQmEzeXdtNGNpb2FPYkxJSDZ6?=
+ =?utf-8?B?b2lqUWhMeDNQc1FGTDREOW85WSt5b29lK3pVaVh2enJNUXoxTGVXc2xMclFT?=
+ =?utf-8?B?Ym9KaHNqMktJUzc5NHdSNG1CQlcwT2p5enpzZnhhQVJlV08zZG95Z0JhTGd4?=
+ =?utf-8?B?MWpBUmRzZU9EcmZOU2c4YjIxK1JCNHJJa0MzUzFOdGRsNW90SzZNQ2Uyc2R2?=
+ =?utf-8?B?QlJERmY4NVpxNmlmcytvVjFZZWpQanJvZHh4a29FN01hM0FiWWdnWnFmOVlz?=
+ =?utf-8?B?VXprR0ppcUZuQWFvWWtDNnlyN0liZHlBZmpodDJlQ0drRW1Wemc5TFlUYzJB?=
+ =?utf-8?Q?6+prlq4aqT8kmsEVxtLcAs14nOuZKyk0DmFnTzl?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f0c6178e-88f5-4c36-671e-08d8ea7ca846
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4678.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR11MB4410.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3954d381-a22e-47d1-a6af-08d8ea49e1c5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Mar 2021 20:10:31.3574 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: UaASVrC22evhdUWaoyoFeJcODdWuNegm8j3Ztq8szOq6QcwRimTP/lvBQv48Zq/+EaTTgz0I0ytLYtwXuLu91g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR1101MB2137
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Mar 2021 02:13:59.4154 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: DztWhhC9F2cZNJDHIbIj7LSCA78lVDWiV3xl4r9rKcgtneFCmL7ehHorrAoV9ejlyB3BS4DbcG47TbQy/v5Nufg17wG/CiuGTqMshOvlv6I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB5447
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -165,56 +142,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IG9wZW5ibWMgPG9wZW5ibWMt
-Ym91bmNlcyt6aGlrdWkucmVuPWludGVsLmNvbUBsaXN0cy5vemxhYnMub3JnPg0KPk9uIEJlaGFs
-ZiBPZiBSZW4sIFpoaWt1aQ0KPlNlbnQ6IFRodXJzZGF5LCBNYXJjaCAxOCwgMjAyMSAxOjA5IFBN
-DQo+VG86IFRoYW5nIE5ndXllbiA8dGhhbmdAb3MuYW1wZXJlY29tcHV0aW5nLmNvbT47IE9wZW5C
-TUMgTWFpbGxpc3QNCj48b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPg0KPlN1YmplY3Q6IFJFOiBX
-aGVyZSB0byBjb2xsZWN0IGluZm9ybWF0aW9uIGZvciBSZWRmaXNoIFN5c3RlbSdzIFByb2Nlc3Nv
-cnMsDQo+U3RvcmFnZSwgTWVtb3J5IGRhdGENCj4NCj4NCj4NCj4+LS0tLS1PcmlnaW5hbCBNZXNz
-YWdlLS0tLS0NCj4+RnJvbTogVGhhbmcgTmd1eWVuIDx0aGFuZ0Bvcy5hbXBlcmVjb21wdXRpbmcu
-Y29tPg0KPj5TZW50OiBUaHVyc2RheSwgTWFyY2ggMTgsIDIwMjEgMTI6NDEgQU0NCj4+VG86IFJl
-biwgWmhpa3VpIDx6aGlrdWkucmVuQGludGVsLmNvbT47IE9wZW5CTUMgTWFpbGxpc3QNCj4+PG9w
-ZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NCj4+U3ViamVjdDogUmU6IFdoZXJlIHRvIGNvbGxlY3Qg
-aW5mb3JtYXRpb24gZm9yIFJlZGZpc2ggU3lzdGVtJ3MNCj4+UHJvY2Vzc29ycywgU3RvcmFnZSwg
-TWVtb3J5IGRhdGENCj4+DQo+Pg0KPj5PbiAxOC8wMy8yMDIxIDAyOjI2LCBSZW4sIFpoaWt1aSB3
-cm90ZToNCj4+Pg0KPj4+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPj4+PiBGcm9tOiBv
-cGVuYm1jIDxvcGVuYm1jLQ0KPj5ib3VuY2VzK3poaWt1aS5yZW49aW50ZWwuY29tQGxpc3RzLm96
-bGFicy5vcmc+DQo+Pj4+IE9uIEJlaGFsZiBPZiBUaGFuZyBOZ3V5ZW4NCj4+Pj4gU2VudDogVHVl
-c2RheSwgTWFyY2ggMTYsIDIwMjEgMzoyMiBBTQ0KPj4+PiBUbzogT3BlbkJNQyBNYWlsbGlzdCA8
-b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPg0KPj4+PiBTdWJqZWN0OiBXaGVyZSB0byBjb2xsZWN0
-IGluZm9ybWF0aW9uIGZvciBSZWRmaXNoIFN5c3RlbSdzDQo+Pj4+IFByb2Nlc3NvcnMsIFN0b3Jh
-Z2UsIE1lbW9yeSBkYXRhDQo+Pj4+DQo+Pj4+IEhpLA0KPj4+Pg0KPj4+PiBJIGFtIGxvb2tpbmcg
-Zm9yIGhvdyB0byBzdXBwb3J0IFJlZGZpc2ggU3lzdGVtIHNjaGVtYSB3aGljaA0KPj4+PiBpbmZv
-cm1hdGlvbg0KPj4+ID5mcm9tIEhvc3Q6DQo+Pj4+IC0gUHJvY2Vzc29yczogcmVkZmlzaC92MS9T
-eXN0ZW1zL3N5c3RlbS9Qcm9jZXNzb3JzDQo+Pj4+DQo+Pj4+IC0gU3RvcmFnZTogcmVkZmlzaC92
-MS9TeXN0ZW1zL3N5c3RlbS9TdG9yYWdlDQo+Pj4+DQo+Pj4+IC0gTWVtb3J5OiByZWRmaXNoL3Yx
-L1N5c3RlbXMvc3lzdGVtL01lbW9yeQ0KPj4+Pg0KPj4+PiBJIGxvb2tlZCBpbnRvIHRoZSBibWN3
-ZWIgcmVwb3NpdG9yeSBhdCByZWRmaXNoLWNvcmUvbGliL21lbW9yeS5ocHANCj4+Pj4gYW5kIHJl
-ZGZpc2gtY29yZS9saWIvcGNpZS5ocHAgYnV0IGp1c3Qgc2VlIGRvR2V0KCkgZnVuY3Rpb24gdG8g
-cmVhZA0KPj4+PiBkYXRhIGZyb20gZGJ1cyB0byByZXBvcnQgdmlhIFJlZGZpc2guIFRoZXJlIGlz
-IG5vIGRvUG9zdCgpIGZ1bmN0aW9uDQo+Pj4+IHRvIHBvc3QgY29kZXMgdG8gUmVkZmlzaC4NCj4+
-Pj4NCj4+Pj4gTXkgcXVlc3Rpb25zIGFyZToNCj4+Pj4NCj4+Pj4gMS4gSG93IGNhbiBIb3N0IEJJ
-T1MgY29sbGVjdCBpbmZvcm1hdGlvbiBhbmQgc2VuZCB0byBCTUMgc28gdGhhdCBCTUMNCj4+Pj4g
-Y2FuIHJlcG9ydCB2aWEgUmVkZmlzaD8gdmlhIGluLWJhbmQgUmVkZmlzaD8NCj4+Pj4NCj4+Pj4g
-Mi4gSWYgdGhlIGluZm9ybWF0aW9uIGlzIG5vdCBmcm9tIEJJT1MsIGhvdyBjYW4gQk1DIGNvbGxl
-Y3QgaW5mb3JtYXRpb24/DQo+Pj4+IFdoYXQgcmVjaXBlcy9yZXBvc2l0b3JpZXMgYXJlIHVzZWQg
-dG8gY29sbGVjdCBpbmZvcm1hdGlvbj8NCj4+Pj4NCj4+PiBbUmVuLCBaaGlrdWldIGh0dHBzOi8v
-Z2l0aHViLmNvbS9vcGVuYm1jL3NtYmlvcy1tZHIgaXMgdGhlIHNlcnZpY2UNCj4+PiB0aGF0IHBv
-cHVsYXRlcyBkYnVzIG9iamVjdHMNCj4+DQo+PltUaGFuZ10gVGhhbmtzIGZvciB5b3VyIGluZm9y
-bWF0aW9uLiBCdXQgSSBkb24ndCBzZWUgYW55IG1ldGEtKiB1c2UNCj4+c21iaW9zLSBtZHIuIEhv
-dyBjYW4gT3BlbkJNQyBnZXQgU01CSU9TIGluZm9ybWF0aW9uPw0KPj4NCj4+RG8gd2UgbmVlZCB0
-byBpbXBsZW1lbnQgSVBNSSBPRU0gb3Igc29tZXRoaW5nIGxpa2UgdGhhdCB0byBzZW5kIGRhdGEg
-dG8NCj4+Qk1DPw0KPj4NCj5bUmVuLCBaaGlrdWldIEkgc2F3IGFub3RoZXIgcHJvcG9zYWwgZm9y
-IGFkZGluZyBQT1NUIGFuZCBQQVRDSCBpbiByZWRmaXNoIGluIGENCj5kaWZmZXJlbnQgdGhyZWFk
-Lg0KPkZvciBjb21wbGV0ZW5lc3Mgb2YgaW5mb3JtYXRpb24sIGhlcmUgaXMgdGhlIGV4aXN0aW5n
-IElQTUkgaGFuZGxlciBpbiBpbnRlbC0NCj5pcG1pLW9lbToNCj5odHRwczovL2dpdGh1Yi5jb20v
-b3BlbmJtYy9pbnRlbC1pcG1pLQ0KPm9lbS9ibG9iL21hc3Rlci9zcmMvc21iaW9zaGFuZGxlci5j
-cHANCltSZW4sIFpoaWt1aV0gQW5kIGZvciBNRFJWMiBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJt
-Yy9pbnRlbC1pcG1pLW9lbS9ibG9iL21hc3Rlci9zcmMvc21iaW9zbWRydjJoYW5kbGVyLmNwcA0K
-Pg0KPj5BbmQgVUVGSSAoRURLMikgY29sbGVjdHMgU01CSU9TIGRhdGEgYW5kIHNlbmQgdG8gQk1D
-IG92ZXIgSVBNST8NCj4+DQo+Pj4+IFRoYW5rcywNCj4+Pj4NCj4+Pj4gVGhhbmcgUS4gTmd1eWVu
-IC0NCg==
+
+On 18/03/2021 23:07, Ed Tanous wrote:
+> On Thu, Mar 18, 2021 at 1:26 AM Thang Nguyen
+> <thang@os.amperecomputing.com> wrote:
+>>
+>> On 18/03/2021 02:45, Ed Tanous wrote:
+>>> On Tue, Mar 16, 2021 at 3:22 AM Thang Nguyen
+>>> <thang@os.amperecomputing.com> wrote:
+>>>> Hi,
+>>>>
+>>>> I am looking for how to support Redfish System schema which information
+>>>> from Host:
+>>>>
+>>>> - Processors: redfish/v1/Systems/system/Processors
+>>>>
+>>>> - Storage: redfish/v1/Systems/system/Storage
+>>>>
+>>>> - Memory: redfish/v1/Systems/system/Memory
+>>>>
+>>>> I looked into the bmcweb repository at redfish-core/lib/memory.hpp and
+>>>> redfish-core/lib/pcie.hpp but just see doGet() function to read data
+>>>> from dbus to report via Redfish. There is no doPost() function to post
+>>>> codes to Redfish.
+>>> Today, there's no way to do this sort of Redfish POST/PATCH for normal
+>>> BIOS use cases.  I'm working on a design doc for how to add this (via
+>>> redfish host interface) to bmcweb.  If you have any ideas here for how
+>>> this should work, or requirements for what you're trying to do,
+>>> please, share.
+>> I checked on the Redfish Schema Supplement document and saw attributes
+>> from the Memory, Pcie, ... schema are read-only. It means no POST/PATCH
+>> action is supported now.
+>>
+>> How's about suggesting on supporting POST/PATCH action with the needed
+>> information change to read-write? UEFI will then collect data and send
+>> Redfish commands via the Redfish Host Interface.
+>
+> That's effectively what I'm hoping to propose.  ar ethe Memory and
+> PCIe schemas the only things you need?
+
+I think the following information should be sent from UEFI: CPU 
+(information in SMBIOS type 4)), Memory, PCIE, Storage (SSD/NVMe, HDD, 
+...) and firmware information (information in SMBIOS Type 0).
+
+I see in some hardware designs, there are I2C connections from BMC to 
+DIMM SPD and PCIE slots. I wonder if we can have alternative way to read 
+DIMM SPD and PCIE devices information.
+
+>
+>>>> My questions are:
+>>>>
+>>>> 1. How can Host BIOS collect information and send to BMC so that BMC can
+>>>> report via Redfish? via in-band Redfish?
+>>>>
+>>>> 2. If the information is not from BIOS, how can BMC collect information?
+>>>> What recipes/repositories are used to collect information?
+>>>>
+>>>>
+>>>> Thanks,
+>>>>
+>>>> Thang Q. Nguyen -
+>>>>
