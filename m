@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DC3B341552
-	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 07:21:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AF659341561
+	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 07:28:44 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F1v0X3mCgz3bxn
-	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 17:21:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F1v9Q55lvz3bwb
+	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 17:28:42 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=iUz/zNDt;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p9WxThGy;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=czl0aAnT;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=KuQYyQcv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,68 +19,67 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=iUz/zNDt; 
+ header.s=fm2 header.b=czl0aAnT; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=p9WxThGy; 
+ header.a=rsa-sha256 header.s=fm2 header.b=KuQYyQcv; 
  dkim-atps=neutral
 Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
  [66.111.4.230])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F1v0C3Qr8z3bpJ;
- Fri, 19 Mar 2021 17:20:42 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F1v984Smxz3bqZ;
+ Fri, 19 Mar 2021 17:28:28 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 9C2E3580A7A;
- Fri, 19 Mar 2021 02:20:38 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Fri, 19 Mar 2021 02:20:38 -0400
+ by mailnew.nyi.internal (Postfix) with ESMTP id 79132580A7A;
+ Fri, 19 Mar 2021 02:28:26 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute3.internal (MEProxy); Fri, 19 Mar 2021 02:28:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=fm2; bh=DQ0e988igZ7sIe0ymg68c1lDju
- Q6xtIxXzAGPLSh1nI=; b=iUz/zNDta8Y4JVXEyCbmxRcBFb5BonujfrZcF74o1l
- Lq9sUqDmc7QhyS25xjwdSc17BL7nsG8FJ4BqoJw+cVF9k/Bs6A4Y2pSY+mpRdzd8
- uDzMOQCJgIixT0HWC947AfbzNVGU9TXK1fJoIHykU9K/neeKvT2/V55RjotrPW3f
- 0bdAYas6+ipiflJbLSUZmDhU3tm4wBe22TJKRzLjUIfgoEqNIX6SMmA+bw6KHLWQ
- ViwTslmqAoZFFa54qdeXE6XEVlD6bGKBhFv2lAr8lGBUkUU09vn0CQ8xApEzHE8K
- xImiHcEUDKCI5mJDACqyPD5b7ZnF5SV9V8CCgXxdloww==
+ :content-transfer-encoding; s=fm2; bh=jqgrbOeF372kIwTWjevU9VS3gs
+ JIe6BCt8qh17+30Ws=; b=czl0aAnTucQqpeAVrdeq5zoo+NvsiSKJIfuWYluNjX
+ 4wMSfY5kyD0CNy3WYxfz/5B/2MXU2H8AQFNSvMs4qNAnKrRg373jrIatUZCF+fD0
+ 5O4YIgaJZK3RHljosZEtVr64Cv+iy/vPUzWUs+cptukE9PFSvNid5//zJWXmEzq7
+ IUuJwx1gRroCQ1dp/jPN3PcJvqLWoCtW8eajphloH2jBiKqWUaxRBG0N5qgQCSJ0
+ 9ai8Pd1xpH9fUZ9gArRiwIuNiCHz8Jy/WBwrr6SClItH51NV03hhwg7mrKgnDHcI
+ cOA+tuhHgwG9Xkix8zYE/vYuMaq8mp2dwWi7P7Zzs1NQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=DQ0e988igZ7sIe0ym
- g68c1lDjuQ6xtIxXzAGPLSh1nI=; b=p9WxThGyse3NLP1n85Tefdn9wRP9DroOd
- Wt4kI5kWTS9qWGNJ6qXYJiCqAu1jViYKt6ai6060xTok9QaR6A2uG41/j3n6XWei
- KwmirTXI9Fs8k2iLrMqeORuUb/qm9poyfrkF2CJgatKUpHa2lVCaguTZCQQnaB5J
- dlg+6OAztW+KgVz0QhCOjn7XkihFW7ZTO38WqYp80YrpKWcyWbyinNAMZ6zcY27y
- GjqYzHpI7jZ9UYJx1sdBtBpfnXt9NMjm26cJWiT3CwhOALYTwSd70Ai3L8tyrIfg
- XLDPhVc00BNGyJsWvdwZf84J43/u+LFALGXA/tJ4HUXpHq1Vl4zkg==
-X-ME-Sender: <xms:tEJUYKrEAw83XIPwBr00WxFhp2WZ5d-BLl6z3o_LC1ngenwJsl8i9w>
- <xme:tEJUYIqU-cfA8GFwKefHDBOiqY2fT6E3oc5TJ-SFBUh1js33ec0n1ZYnPXJTrLztR
- ZYMn5DRwXIFH6DPDg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudefjedgleegucetufdoteggodetrfdotf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=jqgrbOeF372kIwTWj
+ evU9VS3gsJIe6BCt8qh17+30Ws=; b=KuQYyQcv39PKGIFYTELA8fxZA/QNd+P63
+ 0bP++zjwu0ls12rrN/ioZqCyFG8kPy8luaPVc1P+eRygwizrd7B5HHXM/I6xPKJi
+ YOaWYqik4hZH5KsQf6BpuGm7o6NXVLggPmxDkTej8pvhLnVLiy3hRX89jzMaWZ3n
+ qSlHU+cR9z7KCFD3CyDUq98RKlZpYBr5YMftJ+K6AXI/zQxs3yUY/8+oShVj5u9i
+ E/G83NaiLXwTDWMOwDjK6XxRcvyP5FJj7tiFA4fsabCryr9d3cykkAAYs6LWVUjS
+ W9vYbZ3ClK+w4FckeP2Mm4gOn9tC5in3hxgX8QEuOPFabXTlQP7KQ==
+X-ME-Sender: <xms:iERUYAHL707Rmg9XlMeedJvLUgGQeo9VAUOmEPGO2btS43sdmkCAfw>
+ <xme:iERUYJVxXlcE63cze4R1nh1mywzYAvrOuyXeEXiZPz-1Zgn-5IFARVBMXMmL7rHtE
+ C9lYKZdgqdCCtz_eQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudefjedgleehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
- dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
- ihgurdgruheqnecuggftrfgrthhtvghrnhepieelfedtfeetveffgeetteetveeitefhke
- etvdefteevledvheekveeihfekffefnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdp
- ihhnthgvlhdrtghomhdpghhithhhuhgsrdgtohhmpdgumhhtfhdrohhrghenucfkphepud
- dukedrvddutddrudekuddrheehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
- pehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:tEJUYPOSUPMwivbIyWS38m-BJhaItSyeFld-Wx5cogxEeh1WiUkorA>
- <xmx:tEJUYJ5PPHRMmBGYzM-2rEZsrOVsOtPxT2ZI7YgQu6OQT5WkuFXiTQ>
- <xmx:tEJUYJ6eIVNBF6GlxfKCVkaUi-NiLfOELpLPCIJJw01JAijIfOQfdg>
- <xmx:tkJUYNr0HfU6wBe_dLUJAnGFkWxAV5APce1QEPqn88fUpE8Wv0FuNw>
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhephffvufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeetnhgurhgvficu
+ lfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrghtthgvrh
+ hnpeekhfeiffejveefveehtdeiiefhfedvjeelvddvtdehffetudejtefhueeuleeftden
+ ucfkphepuddukedrvddutddrudekuddrheehnecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:iERUYKKS_u-DR3vCiOAuct8YMQVzJ8IoHyq9_opJI4CCJ63Chbdqqw>
+ <xmx:iERUYCFnXdXjaubBXkP-L2pjIAwOqBkm8K80HovciLt6NR4OtakBYg>
+ <xmx:iERUYGVTHLAFmbzzkijLOko41CQ4NxtV4Nb4tn9R-Oyx1R2mypkizA>
+ <xmx:ikRUYEaOazWhEiGAMjCW-UOstJLsdYWZs4oeNG-mO-9OGSxFqdZcbQ>
 Received: from localhost.localdomain
  (ppp118-210-181-55.adl-adc-lon-bras34.tpg.internode.on.net [118.210.181.55])
- by mail.messagingengine.com (Postfix) with ESMTPA id 3FD8C1080057;
- Fri, 19 Mar 2021 02:20:31 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id B422E24005A;
+ Fri, 19 Mar 2021 02:28:18 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openipmi-developer@lists.sourceforge.net, openbmc@lists.ozlabs.org,
  minyard@acm.org
-Subject: [PATCH v2 00/21] ipmi: Allow raw access to KCS devices
-Date: Fri, 19 Mar 2021 16:49:30 +1030
-Message-Id: <20210319061952.145040-1-andrew@aj.id.au>
+Subject: [PATCH v2 01/21] dt-bindings: aspeed-lpc: Remove LPC partitioning
+Date: Fri, 19 Mar 2021 16:57:32 +1030
+Message-Id: <20210319062752.145730-1-andrew@aj.id.au>
 X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -96,161 +95,196 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: devicetree@vger.kernel.org, ryan_chen@aspeedtech.com, tmaimon77@gmail.com,
- linux-aspeed@lists.ozlabs.org, avifishman70@gmail.com, venture@google.com,
- linus.walleij@linaro.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com,
- linux-gpio@vger.kernel.org, robh+dt@kernel.org, lee.jones@linaro.org,
- chiawei_wang@aspeedtech.com, linux-arm-kernel@lists.infradead.org,
- benjaminfair@google.com
+ linux-aspeed@lists.ozlabs.org, Rob Herring <robh@kernel.org>,
+ avifishman70@gmail.com, venture@google.com, "Chia-Wei,
+ Wang" <chiawei_wang@aspeedtech.com>, linux-kernel@vger.kernel.org,
+ tali.perry1@gmail.com, linux-gpio@vger.kernel.org, robh+dt@kernel.org,
+ lee.jones@linaro.org, linus.walleij@linaro.org,
+ linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+From: "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>
 
-This series is a bit of a mix of things, but its primary purpose is to
-expose BMC KCS IPMI devices to userspace in a way that enables userspace
-to talk to host firmware using protocols that are not IPMI.
+The LPC controller has no concept of the BMC and the Host partitions.
+This patch fixes the documentation by removing the description on LPC
+partitions. The register offsets illustrated in the DTS node examples
+are also fixed to adapt to the LPC DTS change.
 
-v1 can be found here:
+Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+Acked-by: Rob Herring <robh@kernel.org>
+Acked-by: Lee Jones <lee.jones@linaro.org>
+---
+ .../devicetree/bindings/mfd/aspeed-lpc.txt    | 100 +++++-------------
+ 1 file changed, 25 insertions(+), 75 deletions(-)
 
-https://lore.kernel.org/openbmc/20210219142523.3464540-1-andrew@aj.id.au/
-
-Changes in v2 include:
-
-* A rebase onto v5.12-rc2
-* Incorporation of off-list feedback on SerIRQ configuration from
-  Chiawei
-* Further validation on hardware for ASPEED KCS devices 2, 3 and 4
-* Lifting the existing single-open constraint of the IPMI chardev
-* Fixes addressing Rob's feedback on the conversion of the ASPEED KCS
-  binding to dt-schema
-* Fixes addressing Rob's feedback on the new aspeed,lpc-interrupts
-  property definition for the ASPEED KCS binding
-
-A new chardev device is added whose implementation exposes the Input
-Data Register (IDR), Output Data Register (ODR) and Status Register
-(STR) via read() and write(), and implements poll() for event
-monitoring.
-
-The existing /dev/ipmi-kcs* chardev interface exposes the KCS devices in
-a way which encoded the IPMI protocol in its behaviour. However, as
-LPC[0] KCS devices give us bi-directional interrupts between the host
-and a BMC with both a data and status byte, they are useful for purposes
-beyond IPMI.
-
-As a concrete example, libmctp[1] implements a vendor-defined MCTP[2]
-binding using a combination of LPC Firmware cycles for bulk data
-transfer and a KCS device via LPC IO cycles for out-of-band protocol
-control messages[3]. This gives a throughput improvement over the
-standard KCS binding[4] while continuing to exploit the ease of setup of
-the LPC bus for early boot firmware on the host processor.
-
-The series takes a bit of a winding path to achieve its aim:
-
-1. It begins with patches 1-5 put together by Chia-Wei, which I've
-rebased on v5.12-rc2. These fix the ASPEED LPC bindings and other
-non-KCS LPC-related ASPEED device drivers in a way that enables the
-SerIRQ patches at the end of the series. With Joel's review I'm hoping
-these 5 can go through the aspeed tree, and that the rest can go through
-the IPMI tree.
-
-2. Next, patches 6-13 fairly heavily refactor the KCS support in the
-IPMI part of the tree, re-architecting things such that it's possible to
-support multiple chardev implementations sitting on top of the ASPEED
-and Nuvoton device drivers. However, the KCS code didn't really have
-great separation of concerns as it stood, so even if we disregard the
-multiple-chardev support I think the cleanups are worthwhile.
-
-3. Patch 14 adds some interrupt management capabilities to the KCS
-device drivers in preparation for patch 16, which introduces the new
-"raw" KCS device interface. I'm not stoked about the device name/path,
-so if people are looking to bikeshed something then feel free to lay
-into that.
-
-4. The remaining patches switch the ASPEED KCS devicetree binding to
-dt-schema, add a new interrupt property to describe the SerIRQ behaviour
-of the device and finally clean up Serial IRQ support in the ASPEED KCS
-driver.
-
-Rob: The dt-binding patches still come before the relevant driver
-changes, I tried to keep the two close together in the series, hence the
-bindings changes not being patches 1 and 2.
-
-I've exercised the series under qemu with the rainier-bmc machine plus
-additional patches for KCS support[5]. I've also substituted this series in
-place of a hacky out-of-tree driver that we've been using for the
-libmctp stack and successfully booted the host processor under our
-internal full-platform simulation tools for a Rainier system.
-
-Note that this work touches the Nuvoton driver as well as ASPEED's, but
-I don't have the capability to test those changes or the IPMI chardev
-path. Tested-by tags would be much appreciated if you can exercise one
-or both.
-
-Please review!
-
-Andrew
-
-[0] https://www.intel.com/content/dam/www/program/design/us/en/documents/low-pin-count-interface-specification.pdf
-[1] https://github.com/openbmc/libmctp/
-[2] https://www.dmtf.org/sites/default/files/standards/documents/DSP0236_1.3.1.pdf
-[3] https://github.com/openbmc/libmctp/blob/master/docs/bindings/vendor-astlpc.md
-[4] https://www.dmtf.org/sites/default/files/standards/documents/DSP0254_1.0.0.pdf
-[5] https://lore.kernel.org/qemu-devel/20210309131641.2709380-1-clg@kaod.org/
-
-Andrew Jeffery (16):
-  ipmi: kcs_bmc_aspeed: Use of match data to extract KCS properties
-  ipmi: kcs_bmc: Make status update atomic
-  ipmi: kcs_bmc: Rename {read,write}_{status,data}() functions
-  ipmi: kcs_bmc: Split out kcs_bmc_cdev_ipmi
-  ipmi: kcs_bmc: Turn the driver data-structures inside-out
-  ipmi: kcs_bmc: Split headers into device and client
-  ipmi: kcs_bmc: Strip private client data from struct kcs_bmc
-  ipmi: kcs_bmc: Decouple the IPMI chardev from the core
-  ipmi: kcs_bmc: Allow clients to control KCS IRQ state
-  ipmi: kcs_bmc: Don't enforce single-open policy in the kernel
-  ipmi: kcs_bmc: Add a "raw" character device interface
-  dt-bindings: ipmi: Convert ASPEED KCS binding to schema
-  dt-bindings: ipmi: Add optional SerIRQ property to ASPEED KCS devices
-  ipmi: kcs_bmc_aspeed: Implement KCS SerIRQ configuration
-  ipmi: kcs_bmc_aspeed: Fix IBFIE typo from datasheet
-  ipmi: kcs_bmc_aspeed: Optionally apply status address
-
-Chia-Wei, Wang (5):
-  dt-bindings: aspeed-lpc: Remove LPC partitioning
-  ARM: dts: Remove LPC BMC and Host partitions
-  ipmi: kcs: aspeed: Adapt to new LPC DTS layout
-  pinctrl: aspeed-g5: Adapt to new LPC device tree layout
-  soc: aspeed: Adapt to new LPC device tree layout
-
- Documentation/ABI/testing/dev-raw-kcs         |  25 +
- .../bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml | 106 +++
- .../bindings/ipmi/aspeed-kcs-bmc.txt          |  33 -
- .../devicetree/bindings/mfd/aspeed-lpc.txt    | 100 +--
- arch/arm/boot/dts/aspeed-g4.dtsi              |  70 +-
- arch/arm/boot/dts/aspeed-g5.dtsi              | 121 ++--
- arch/arm/boot/dts/aspeed-g6.dtsi              | 123 ++--
- drivers/char/ipmi/Kconfig                     |  30 +
- drivers/char/ipmi/Makefile                    |   2 +
- drivers/char/ipmi/kcs_bmc.c                   | 534 ++++----------
- drivers/char/ipmi/kcs_bmc.h                   |  94 +--
- drivers/char/ipmi/kcs_bmc_aspeed.c            | 663 +++++++++++++-----
- drivers/char/ipmi/kcs_bmc_cdev_ipmi.c         | 570 +++++++++++++++
- drivers/char/ipmi/kcs_bmc_cdev_raw.c          | 443 ++++++++++++
- drivers/char/ipmi/kcs_bmc_client.h            |  47 ++
- drivers/char/ipmi/kcs_bmc_device.h            |  20 +
- drivers/char/ipmi/kcs_bmc_npcm7xx.c           |  97 ++-
- drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c    |  17 +-
- drivers/soc/aspeed/aspeed-lpc-ctrl.c          |  20 +-
- drivers/soc/aspeed/aspeed-lpc-snoop.c         |  23 +-
- 20 files changed, 2132 insertions(+), 1006 deletions(-)
- create mode 100644 Documentation/ABI/testing/dev-raw-kcs
- create mode 100644 Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
- delete mode 100644 Documentation/devicetree/bindings/ipmi/aspeed-kcs-bmc.txt
- create mode 100644 drivers/char/ipmi/kcs_bmc_cdev_ipmi.c
- create mode 100644 drivers/char/ipmi/kcs_bmc_cdev_raw.c
- create mode 100644 drivers/char/ipmi/kcs_bmc_client.h
- create mode 100644 drivers/char/ipmi/kcs_bmc_device.h
-
+diff --git a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+index d0a38ba8b9ce..936aa108eab4 100644
+--- a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
++++ b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+@@ -9,13 +9,7 @@ primary use case of the Aspeed LPC controller is as a slave on the bus
+ conditions it can also take the role of bus master.
+ 
+ The LPC controller is represented as a multi-function device to account for the
+-mix of functionality it provides. The principle split is between the register
+-layout at the start of the I/O space which is, to quote the Aspeed datasheet,
+-"basically compatible with the [LPC registers from the] popular BMC controller
+-H8S/2168[1]", and everything else, where everything else is an eclectic
+-collection of functions with a esoteric register layout. "Everything else",
+-here labeled the "host" portion of the controller, includes, but is not limited
+-to:
++mix of functionality, which includes, but is not limited to:
+ 
+ * An IPMI Block Transfer[2] Controller
+ 
+@@ -44,80 +38,36 @@ Required properties
+ ===================
+ 
+ - compatible:	One of:
+-		"aspeed,ast2400-lpc", "simple-mfd"
+-		"aspeed,ast2500-lpc", "simple-mfd"
+-		"aspeed,ast2600-lpc", "simple-mfd"
++		"aspeed,ast2400-lpc-v2", "simple-mfd", "syscon"
++		"aspeed,ast2500-lpc-v2", "simple-mfd", "syscon"
++		"aspeed,ast2600-lpc-v2", "simple-mfd", "syscon"
+ 
+ - reg:		contains the physical address and length values of the Aspeed
+                 LPC memory region.
+ 
+ - #address-cells: <1>
+ - #size-cells:	<1>
+-- ranges: 	Maps 0 to the physical address and length of the LPC memory
+-                region
+-
+-Required LPC Child nodes
+-========================
+-
+-BMC Node
+---------
+-
+-- compatible:	One of:
+-		"aspeed,ast2400-lpc-bmc"
+-		"aspeed,ast2500-lpc-bmc"
+-		"aspeed,ast2600-lpc-bmc"
+-
+-- reg:		contains the physical address and length values of the
+-                H8S/2168-compatible LPC controller memory region
+-
+-Host Node
+----------
+-
+-- compatible:   One of:
+-		"aspeed,ast2400-lpc-host", "simple-mfd", "syscon"
+-		"aspeed,ast2500-lpc-host", "simple-mfd", "syscon"
+-		"aspeed,ast2600-lpc-host", "simple-mfd", "syscon"
+-
+-- reg:		contains the address and length values of the host-related
+-                register space for the Aspeed LPC controller
+-
+-- #address-cells: <1>
+-- #size-cells:	<1>
+-- ranges: 	Maps 0 to the address and length of the host-related LPC memory
++- ranges:	Maps 0 to the physical address and length of the LPC memory
+                 region
+ 
+ Example:
+ 
+ lpc: lpc@1e789000 {
+-	compatible = "aspeed,ast2500-lpc", "simple-mfd";
++	compatible = "aspeed,ast2500-lpc-v2", "simple-mfd", "syscon";
+ 	reg = <0x1e789000 0x1000>;
+ 
+ 	#address-cells = <1>;
+ 	#size-cells = <1>;
+ 	ranges = <0x0 0x1e789000 0x1000>;
+ 
+-	lpc_bmc: lpc-bmc@0 {
+-		compatible = "aspeed,ast2500-lpc-bmc";
++	lpc_snoop: lpc-snoop@0 {
++		compatible = "aspeed,ast2600-lpc-snoop";
+ 		reg = <0x0 0x80>;
+-	};
+-
+-	lpc_host: lpc-host@80 {
+-		compatible = "aspeed,ast2500-lpc-host", "simple-mfd", "syscon";
+-		reg = <0x80 0x1e0>;
+-		reg-io-width = <4>;
+-
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		ranges = <0x0 0x80 0x1e0>;
++		interrupts = <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>;
++		snoop-ports = <0x80>;
+ 	};
+ };
+ 
+-BMC Node Children
+-==================
+-
+-
+-Host Node Children
+-==================
+ 
+ LPC Host Interface Controller
+ -------------------
+@@ -149,14 +99,12 @@ Optional properties:
+ 
+ Example:
+ 
+-lpc-host@80 {
+-	lpc_ctrl: lpc-ctrl@0 {
+-		compatible = "aspeed,ast2500-lpc-ctrl";
+-		reg = <0x0 0x80>;
+-		clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
+-		memory-region = <&flash_memory>;
+-		flash = <&spi>;
+-	};
++lpc_ctrl: lpc-ctrl@80 {
++	compatible = "aspeed,ast2500-lpc-ctrl";
++	reg = <0x80 0x80>;
++	clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
++	memory-region = <&flash_memory>;
++	flash = <&spi>;
+ };
+ 
+ LPC Host Controller
+@@ -179,9 +127,9 @@ Required properties:
+ 
+ Example:
+ 
+-lhc: lhc@20 {
++lhc: lhc@a0 {
+ 	compatible = "aspeed,ast2500-lhc";
+-	reg = <0x20 0x24 0x48 0x8>;
++	reg = <0xa0 0x24 0xc8 0x8>;
+ };
+ 
+ LPC reset control
+@@ -192,16 +140,18 @@ state of the LPC bus. Some systems may chose to modify this configuration.
+ 
+ Required properties:
+ 
+- - compatible:		"aspeed,ast2600-lpc-reset" or
+-			"aspeed,ast2500-lpc-reset"
+-			"aspeed,ast2400-lpc-reset"
++ - compatible:		One of:
++			"aspeed,ast2600-lpc-reset";
++			"aspeed,ast2500-lpc-reset";
++			"aspeed,ast2400-lpc-reset";
++
+  - reg:			offset and length of the IP in the LHC memory region
+  - #reset-controller	indicates the number of reset cells expected
+ 
+ Example:
+ 
+-lpc_reset: reset-controller@18 {
++lpc_reset: reset-controller@98 {
+         compatible = "aspeed,ast2500-lpc-reset";
+-        reg = <0x18 0x4>;
++        reg = <0x98 0x4>;
+         #reset-cells = <1>;
+ };
 -- 
 2.27.0
 
