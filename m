@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55B5034158A
-	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 07:29:51 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AAC6341591
+	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 07:30:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F1vBj2W5wz3bxm
-	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 17:29:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F1vCD74V2z3bwt
+	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 17:30:16 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=OCmJLCs4;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LqTz8BGA;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=hODnRte/;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jWpyY1GC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,68 +19,69 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=OCmJLCs4; 
+ header.s=fm2 header.b=hODnRte/; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=LqTz8BGA; 
+ header.a=rsa-sha256 header.s=fm2 header.b=jWpyY1GC; 
  dkim-atps=neutral
 Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
  [66.111.4.230])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F1v9L6pKHz3bxn;
- Fri, 19 Mar 2021 17:28:38 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F1v9S4vsTz3bxF;
+ Fri, 19 Mar 2021 17:28:44 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 0E7FB580A7C;
- Fri, 19 Mar 2021 02:28:37 -0400 (EDT)
+ by mailnew.nyi.internal (Postfix) with ESMTP id C1F40580A7F;
+ Fri, 19 Mar 2021 02:28:42 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Fri, 19 Mar 2021 02:28:37 -0400
+ by compute3.internal (MEProxy); Fri, 19 Mar 2021 02:28:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm2; bh=3rglRCF2+66zH
- KVRZ4boDJXOEtO8m9hvabADBH87BCQ=; b=OCmJLCs4g7q1/uXGIYjxhtHRAMwpJ
- MDuR7EJpwmYZPttmVjsipap02dNAwYtDVS3ji9A5IETgNYLJ397OcoRUiEcKix1s
- cJJbILPpuEpcQWmLPslWgV6/uQK5N4Tt8vr/XgeZ/RNKkUadcEmzEAVVCmY31KMu
- I0lJ2qfhcjrktRAhUK/v9Pm4DAZErB637f7Mwn8XaEe/Cf326Aw3uoGx+kN8jqfv
- OAtbpXJrQMUvp4a5xNQLRf3yiw0bibq1uicW5iVBM117P0lUhf1T+6xWVyyqEbO9
- bWvVxZndmZCXXTegYtfPXY4hxnO5PeTnofT8Vx7ouxg+LYJ1JELWyHL3w==
+ :mime-version:content-transfer-encoding; s=fm2; bh=sic3qYlOCrq3L
+ +pvEQYeldSvAa2Qy+Xy8lgLaF/EF40=; b=hODnRte/FtT1Aaf25m+nUpIsfLOmq
+ E2bOshf1RD+Trr8qtHai6iDdVPuW7zrzuzHHlg9nNbAZlBdYiPVbshOFMSLIp+8q
+ NmfqJ42/HFi+eMBC62U5XOWqFV1MUKX5TzEytDNP5gMduhXnjuwtq7HpxFbtTG4l
+ SPcsCJorPa0cPgAYrSdWph0rz+yclBaCZ5eAwbv/838XKITSUFhE21W9CyXqyknm
+ +MFkL76NTghRogIVKEjAzUlrHlWInB1RROymNdgXg1u9cnPf6tfNmGjkS+N1IDdI
+ iF+S4CEAVxw2D433EvA0ZECL4H4v84MRVquQyImJ4jMZkSJzWqm+rmwkg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=3rglRCF2+66zHKVRZ4boDJXOEtO8m9hvabADBH87BCQ=; b=LqTz8BGA
- hDUGtrL4/ajCM3j9kl665R82qFQnrLOiRQVVRBk1KhD5uleW8s9+Zzf3Rsb15H5e
- AaIel1xvJDtYN3nc0RtdVgdPHpyBTx8ZTdV3E3YFMBISDyJr936YfPUo6/JAYxb5
- PxVb+mWvzZL1RTOyaccqnFaKxuqa1j2qQpCgbXshYnnTgXZ44H15iQHz7Xhlhc3e
- Vs8SAJlZDOeR6L4/3oFUc9rZs5xFgtf2zBHFSCf7KJBoz47zh7YNyp7a5HwRMvSR
- pjpT+0VVxUZKgOMN1ocEFVVwGanYamLbk/miJWshO48Og25FIIrd9P98xradh+F4
- RQU5QgDF4TgOqw==
-X-ME-Sender: <xms:lERUYDm76GeCzQJtceZSGCCA53pQmjRl2qU4-nk-fXCP9ncPUp4nCg>
- <xme:lERUYG0Jz6SZtaDFU28jsaeAfZm72DO0s5w_WU9OeDYcIVprZaoaYYLQGsscJzBJv
- C32XnR3QQVwiiTvcQ>
+ fm2; bh=sic3qYlOCrq3L+pvEQYeldSvAa2Qy+Xy8lgLaF/EF40=; b=jWpyY1GC
+ mffDjfEx9SJn4iKY3jQDrqEq9y9dGlgfQrzBQM+sohwMnweR+7e47e3B8Rx90+JS
+ Erwm5BSONeYAAk12IxKsgRFVFSwgX3NJVgWBhs7alXB2TF832R81DPTvaWFVe4VW
+ SJ2DETmEDM7pU31vur+PW3t2KnsBiNY0uShBu/boWy2cYUtosT94V8H02peakQQC
+ nEAPcVekVqp+If4guezmhbkD3+pUbwAZSIWqQeud67Gh78+ZiPDAAsPuFhjSaEUd
+ rYxz+ipAvCwl40RKsbX11TPVsGSJobqyKeI85xXztOr4/7SFxq80JVfc49+UHjFK
+ p5iSy3NBG1c8Mw==
+X-ME-Sender: <xms:mkRUYCIq35iFQKpVxZTfyNRsePp9Sgi7V-JtyrjK1TIMIOdD2RURYg>
+ <xme:mkRUYKKYLTIbgWr1G8s1fewV9h0vPH-iXv99_voTiQdgpbG1ojrubJHQ1p7e0ajO7
+ 9znTXBhR8QB7xpZag>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudefjedgleehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  cujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeetnhgurhgv
  ficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrghtth
  gvrhhnpeejgfdvveehteekveeggeellefgleetteejffelffdvudduveeiffegteelvefh
- teenucfkphepuddukedrvddutddrudekuddrheehnecuvehluhhsthgvrhfuihiivgepud
+ teenucfkphepuddukedrvddutddrudekuddrheehnecuvehluhhsthgvrhfuihiivgepvd
  enucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:lERUYJpJe1ypQskdHwMh30yZLLphuMQ-Bf54SXhxhqGzlOGwHkyyBw>
- <xmx:lERUYLkees89apBR6wFMEEh0PoXsPGrJ0Z5Vc42-9HS-8HW1uQlL2Q>
- <xmx:lERUYB0PaQv5FvEM2cGNgtLOdbI5lR9TV4TD6NoJsZhsCW0MU0Q3Dg>
- <xmx:lURUYN526DlGWIh701Iy9bA8J2gy83SKRQF4P_8_29gLfAEboAOcuA>
+X-ME-Proxy: <xmx:mkRUYCvhQ33mQqgNLMcOv2yGmKaG9zfUg6gI3nXWsiWATaYr3lTnjQ>
+ <xmx:mkRUYHbtunRPZGfXQm-ONk6dCbWObR-F9ybB5M5KzBO6KB35afaDng>
+ <xmx:mkRUYJbj-h3e92wCRxmu1OxU_FXTzFZfuuSzOwA4Cr96gAVUV-8Dvw>
+ <xmx:mkRUYBKQuUTsmBKmbMnO3rPrlTaBJ_7BaWLygMttcou72b71zJ5ktw>
 Received: from localhost.localdomain
  (ppp118-210-181-55.adl-adc-lon-bras34.tpg.internode.on.net [118.210.181.55])
- by mail.messagingengine.com (Postfix) with ESMTPA id EC605240054;
- Fri, 19 Mar 2021 02:28:30 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 35E67240054;
+ Fri, 19 Mar 2021 02:28:36 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openipmi-developer@lists.sourceforge.net, openbmc@lists.ozlabs.org,
  minyard@acm.org
-Subject: [PATCH v2 03/21] ipmi: kcs: aspeed: Adapt to new LPC DTS layout
-Date: Fri, 19 Mar 2021 16:57:34 +1030
-Message-Id: <20210319062752.145730-3-andrew@aj.id.au>
+Subject: [PATCH v2 04/21] pinctrl: aspeed-g5: Adapt to new LPC device tree
+ layout
+Date: Fri, 19 Mar 2021 16:57:35 +1030
+Message-Id: <20210319062752.145730-4-andrew@aj.id.au>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210319062752.145730-1-andrew@aj.id.au>
 References: <20210319062752.145730-1-andrew@aj.id.au>
@@ -97,10 +98,9 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Haiyue Wang <haiyue.wang@linux.intel.com>,
- ryan_chen@aspeedtech.com, tmaimon77@gmail.com, linux-aspeed@lists.ozlabs.org,
- avifishman70@gmail.com, venture@google.com, "Chia-Wei,
- Wang" <chiawei_wang@aspeedtech.com>, linux-kernel@vger.kernel.org,
+Cc: devicetree@vger.kernel.org, ryan_chen@aspeedtech.com, tmaimon77@gmail.com,
+ linux-aspeed@lists.ozlabs.org, avifishman70@gmail.com, venture@google.com,
+ "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>, linux-kernel@vger.kernel.org,
  tali.perry1@gmail.com, linux-gpio@vger.kernel.org, robh+dt@kernel.org,
  lee.jones@linaro.org, linus.walleij@linaro.org,
  linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
@@ -115,68 +115,49 @@ The LPC register offsets are also fixed accordingly.
 
 Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
 Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-Acked-by: Haiyue Wang <haiyue.wang@linux.intel.com>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 ---
- drivers/char/ipmi/kcs_bmc_aspeed.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
-index a140203c079b..eefe362f65f0 100644
---- a/drivers/char/ipmi/kcs_bmc_aspeed.c
-+++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
-@@ -27,7 +27,6 @@
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
+index 0cab4c2576e2..996ebcba4d38 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
+@@ -60,7 +60,7 @@
+ #define COND2		{ ASPEED_IP_SCU, SCU94, GENMASK(1, 0), 0, 0 }
  
- #define KCS_CHANNEL_MAX     4
+ /* LHCR0 is offset from the end of the H8S/2168-compatible registers */
+-#define LHCR0		0x20
++#define LHCR0		0xa0
+ #define GFX064		0x64
  
--/* mapped to lpc-bmc@0 IO space */
- #define LPC_HICR0            0x000
- #define     LPC_HICR0_LPC3E          BIT(7)
- #define     LPC_HICR0_LPC2E          BIT(6)
-@@ -52,15 +51,13 @@
- #define LPC_STR1             0x03C
- #define LPC_STR2             0x040
- #define LPC_STR3             0x044
--
--/* mapped to lpc-host@80 IO space */
--#define LPC_HICRB            0x080
-+#define LPC_HICRB            0x100
- #define     LPC_HICRB_IBFIF4         BIT(1)
- #define     LPC_HICRB_LPC4E          BIT(0)
--#define LPC_LADR4            0x090
--#define LPC_IDR4             0x094
--#define LPC_ODR4             0x098
--#define LPC_STR4             0x09C
-+#define LPC_LADR4            0x110
-+#define LPC_IDR4             0x114
-+#define LPC_ODR4             0x118
-+#define LPC_STR4             0x11C
+ #define B14 0
+@@ -2648,14 +2648,19 @@ static struct regmap *aspeed_g5_acquire_regmap(struct aspeed_pinmux_data *ctx,
+ 	}
  
- struct aspeed_kcs_bmc {
- 	struct regmap *map;
-@@ -348,12 +345,20 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
- 	struct device_node *np;
- 	int rc;
+ 	if (ip == ASPEED_IP_LPC) {
+-		struct device_node *node;
++		struct device_node *np;
+ 		struct regmap *map;
  
--	np = pdev->dev.of_node;
-+	np = dev->of_node->parent;
-+	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
-+	    !of_device_is_compatible(np, "aspeed,ast2500-lpc-v2") &&
-+	    !of_device_is_compatible(np, "aspeed,ast2600-lpc-v2")) {
-+		dev_err(dev, "unsupported LPC device binding\n");
-+		return -ENODEV;
-+	}
+-		node = of_parse_phandle(ctx->dev->of_node,
++		np = of_parse_phandle(ctx->dev->of_node,
+ 					"aspeed,external-nodes", 1);
+-		if (node) {
+-			map = syscon_node_to_regmap(node->parent);
+-			of_node_put(node);
++		if (np) {
++			if (!of_device_is_compatible(np->parent, "aspeed,ast2400-lpc-v2") &&
++			    !of_device_is_compatible(np->parent, "aspeed,ast2500-lpc-v2") &&
++			    !of_device_is_compatible(np->parent, "aspeed,ast2600-lpc-v2"))
++				return ERR_PTR(-ENODEV);
 +
-+	np = dev->of_node;
- 	if (of_device_is_compatible(np, "aspeed,ast2400-kcs-bmc") ||
--			of_device_is_compatible(np, "aspeed,ast2500-kcs-bmc"))
-+	    of_device_is_compatible(np, "aspeed,ast2500-kcs-bmc"))
- 		kcs_bmc = aspeed_kcs_probe_of_v1(pdev);
- 	else if (of_device_is_compatible(np, "aspeed,ast2400-kcs-bmc-v2") ||
--			of_device_is_compatible(np, "aspeed,ast2500-kcs-bmc-v2"))
-+		 of_device_is_compatible(np, "aspeed,ast2500-kcs-bmc-v2"))
- 		kcs_bmc = aspeed_kcs_probe_of_v2(pdev);
- 	else
- 		return -EINVAL;
++			map = syscon_node_to_regmap(np->parent);
++			of_node_put(np);
+ 			if (IS_ERR(map))
+ 				return map;
+ 		} else
 -- 
 2.27.0
 
