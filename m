@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AAC6341591
-	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 07:30:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D31043415B9
+	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 07:31:01 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F1vCD74V2z3bwt
-	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 17:30:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F1vD35jFRz3c4K
+	for <lists+openbmc@lfdr.de>; Fri, 19 Mar 2021 17:30:59 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=hODnRte/;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jWpyY1GC;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=bmx//uyg;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=j73iwh1P;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,69 +19,68 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=hODnRte/; 
+ header.s=fm2 header.b=bmx//uyg; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=jWpyY1GC; 
+ header.a=rsa-sha256 header.s=fm2 header.b=j73iwh1P; 
  dkim-atps=neutral
 Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
  [66.111.4.230])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F1v9S4vsTz3bxF;
- Fri, 19 Mar 2021 17:28:44 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F1v9Z4xGcz3bvX;
+ Fri, 19 Mar 2021 17:28:50 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id C1F40580A7F;
- Fri, 19 Mar 2021 02:28:42 -0400 (EDT)
+ by mailnew.nyi.internal (Postfix) with ESMTP id C1BFB580A7A;
+ Fri, 19 Mar 2021 02:28:48 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Fri, 19 Mar 2021 02:28:42 -0400
+ by compute3.internal (MEProxy); Fri, 19 Mar 2021 02:28:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm2; bh=sic3qYlOCrq3L
- +pvEQYeldSvAa2Qy+Xy8lgLaF/EF40=; b=hODnRte/FtT1Aaf25m+nUpIsfLOmq
- E2bOshf1RD+Trr8qtHai6iDdVPuW7zrzuzHHlg9nNbAZlBdYiPVbshOFMSLIp+8q
- NmfqJ42/HFi+eMBC62U5XOWqFV1MUKX5TzEytDNP5gMduhXnjuwtq7HpxFbtTG4l
- SPcsCJorPa0cPgAYrSdWph0rz+yclBaCZ5eAwbv/838XKITSUFhE21W9CyXqyknm
- +MFkL76NTghRogIVKEjAzUlrHlWInB1RROymNdgXg1u9cnPf6tfNmGjkS+N1IDdI
- iF+S4CEAVxw2D433EvA0ZECL4H4v84MRVquQyImJ4jMZkSJzWqm+rmwkg==
+ :mime-version:content-transfer-encoding; s=fm2; bh=jXk9X+CpMGc9m
+ 2udSUAL4q3h08wm/yg9nEbrKHZ03A8=; b=bmx//uygFN4zHRjJ5Zr03MlO2eTtk
+ 9EmHFtxEBjdMW4pY6QJXaWtAfulM/ErlpAO8XKshGvlz82zROxsPQthpH3TtwJbR
+ gVefHJWTwN8cxhO2A2U446rqTwm+D/fCt5LuA4loQtJEbrzkxZLiom0oUOcJXiej
+ G7Ojy4De9Em1jbZe+B19nONuxybUTix4hOyffBoyHmg8wE7EgYFqBJZ5n1gyA125
+ shl7XFu6n/dmCcYZxFCF5/bn1MFRA3Sg5xNvQkbON9LPP6cZvNJDdlgCEorsDS4v
+ iay6saGpoRIy610XYnccVRI00X129J77qK4AmXmkY3Nd9uGLVeb+fk2lw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=sic3qYlOCrq3L+pvEQYeldSvAa2Qy+Xy8lgLaF/EF40=; b=jWpyY1GC
- mffDjfEx9SJn4iKY3jQDrqEq9y9dGlgfQrzBQM+sohwMnweR+7e47e3B8Rx90+JS
- Erwm5BSONeYAAk12IxKsgRFVFSwgX3NJVgWBhs7alXB2TF832R81DPTvaWFVe4VW
- SJ2DETmEDM7pU31vur+PW3t2KnsBiNY0uShBu/boWy2cYUtosT94V8H02peakQQC
- nEAPcVekVqp+If4guezmhbkD3+pUbwAZSIWqQeud67Gh78+ZiPDAAsPuFhjSaEUd
- rYxz+ipAvCwl40RKsbX11TPVsGSJobqyKeI85xXztOr4/7SFxq80JVfc49+UHjFK
- p5iSy3NBG1c8Mw==
-X-ME-Sender: <xms:mkRUYCIq35iFQKpVxZTfyNRsePp9Sgi7V-JtyrjK1TIMIOdD2RURYg>
- <xme:mkRUYKKYLTIbgWr1G8s1fewV9h0vPH-iXv99_voTiQdgpbG1ojrubJHQ1p7e0ajO7
- 9znTXBhR8QB7xpZag>
+ fm2; bh=jXk9X+CpMGc9m2udSUAL4q3h08wm/yg9nEbrKHZ03A8=; b=j73iwh1P
+ hSxlkrMqS4TDwnru5fwJOE5SGfBI+mqm5RVA7lu3Apu+4BHhqBEE61YoEUvjSA+z
+ rc5ELZb61vP/wHHOiEq1UiCI3tOkOknHFlaqKs4MkrXUzhGJJGxKYvDzIOck9zrn
+ K11mCrWsjzxSW3k8AtDYqWHxB9z1G0mBAmI22FM5M8OlGahR/GSLofBqNv3jD6fX
+ b4bTaD1lEasydFlAurNwxy726hDXYRvNmXY/VyPLGuSXpED7o79uPYpYp4dY5Y1y
+ SkKtiogwCamge/0ILgqlCI4KVJPad7HTwmZRG2m35EC4OU8tULTyZHOt6Rih6FLv
+ 2zKfwqDbmKr0tA==
+X-ME-Sender: <xms:oERUYBltM7qHpJN4Fa_euZtEy03mxCpD8YQr4sSbgO7aeYcZJ9DxiA>
+ <xme:oERUYM0F7ARSmqCf1SzZi4JbtRnlnfbzftLP_xQKkPkeOTsIfCJQV_nYGyeF-3OYD
+ xkhi3SAgmfOH8CO8A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudefjedgleehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  cujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeetnhgurhgv
  ficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrghtth
  gvrhhnpeejgfdvveehteekveeggeellefgleetteejffelffdvudduveeiffegteelvefh
- teenucfkphepuddukedrvddutddrudekuddrheehnecuvehluhhsthgvrhfuihiivgepvd
+ teenucfkphepuddukedrvddutddrudekuddrheehnecuvehluhhsthgvrhfuihiivgepfe
  enucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:mkRUYCvhQ33mQqgNLMcOv2yGmKaG9zfUg6gI3nXWsiWATaYr3lTnjQ>
- <xmx:mkRUYHbtunRPZGfXQm-ONk6dCbWObR-F9ybB5M5KzBO6KB35afaDng>
- <xmx:mkRUYJbj-h3e92wCRxmu1OxU_FXTzFZfuuSzOwA4Cr96gAVUV-8Dvw>
- <xmx:mkRUYBKQuUTsmBKmbMnO3rPrlTaBJ_7BaWLygMttcou72b71zJ5ktw>
+X-ME-Proxy: <xmx:oERUYHr-EDw-KoeHCJLO5EvBZrJyreBppsICOdGjGuixCGfu631TKA>
+ <xmx:oERUYBliOYGGS7BcaBuUzrzlacxD2uBuK2YorjaTg5LvtoTE_2IhnA>
+ <xmx:oERUYP3-4OzsRV5bO9qGELyM27Gb2L0JzZAkvvrcX3DhbL5BGUtxtw>
+ <xmx:oERUYAHSuwihUsu7UhQ3JVItaWriDn0uNlprun5nfxnbD9AIGPBL0g>
 Received: from localhost.localdomain
  (ppp118-210-181-55.adl-adc-lon-bras34.tpg.internode.on.net [118.210.181.55])
- by mail.messagingengine.com (Postfix) with ESMTPA id 35E67240054;
- Fri, 19 Mar 2021 02:28:36 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 31253240054;
+ Fri, 19 Mar 2021 02:28:42 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openipmi-developer@lists.sourceforge.net, openbmc@lists.ozlabs.org,
  minyard@acm.org
-Subject: [PATCH v2 04/21] pinctrl: aspeed-g5: Adapt to new LPC device tree
- layout
-Date: Fri, 19 Mar 2021 16:57:35 +1030
-Message-Id: <20210319062752.145730-4-andrew@aj.id.au>
+Subject: [PATCH v2 05/21] soc: aspeed: Adapt to new LPC device tree layout
+Date: Fri, 19 Mar 2021 16:57:36 +1030
+Message-Id: <20210319062752.145730-5-andrew@aj.id.au>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210319062752.145730-1-andrew@aj.id.au>
 References: <20210319062752.145730-1-andrew@aj.id.au>
@@ -115,49 +114,123 @@ The LPC register offsets are also fixed accordingly.
 
 Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
 Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
 ---
- drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/soc/aspeed/aspeed-lpc-ctrl.c  | 20 ++++++++++++++------
+ drivers/soc/aspeed/aspeed-lpc-snoop.c | 23 +++++++++++++++--------
+ 2 files changed, 29 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-index 0cab4c2576e2..996ebcba4d38 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-@@ -60,7 +60,7 @@
- #define COND2		{ ASPEED_IP_SCU, SCU94, GENMASK(1, 0), 0, 0 }
+diff --git a/drivers/soc/aspeed/aspeed-lpc-ctrl.c b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
+index 439bcd6b8c4a..c557ffd0992c 100644
+--- a/drivers/soc/aspeed/aspeed-lpc-ctrl.c
++++ b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
+@@ -18,15 +18,15 @@
  
- /* LHCR0 is offset from the end of the H8S/2168-compatible registers */
--#define LHCR0		0x20
-+#define LHCR0		0xa0
- #define GFX064		0x64
+ #define DEVICE_NAME	"aspeed-lpc-ctrl"
  
- #define B14 0
-@@ -2648,14 +2648,19 @@ static struct regmap *aspeed_g5_acquire_regmap(struct aspeed_pinmux_data *ctx,
+-#define HICR5 0x0
++#define HICR5 0x80
+ #define HICR5_ENL2H	BIT(8)
+ #define HICR5_ENFWH	BIT(10)
+ 
+-#define HICR6 0x4
++#define HICR6 0x84
+ #define SW_FWH2AHB	BIT(17)
+ 
+-#define HICR7 0x8
+-#define HICR8 0xc
++#define HICR7 0x88
++#define HICR8 0x8c
+ 
+ struct aspeed_lpc_ctrl {
+ 	struct miscdevice	miscdev;
+@@ -215,6 +215,7 @@ static int aspeed_lpc_ctrl_probe(struct platform_device *pdev)
+ 	struct device_node *node;
+ 	struct resource resm;
+ 	struct device *dev;
++	struct device_node *np;
+ 	int rc;
+ 
+ 	dev = &pdev->dev;
+@@ -270,8 +271,15 @@ static int aspeed_lpc_ctrl_probe(struct platform_device *pdev)
+ 		}
  	}
  
- 	if (ip == ASPEED_IP_LPC) {
--		struct device_node *node;
-+		struct device_node *np;
- 		struct regmap *map;
- 
--		node = of_parse_phandle(ctx->dev->of_node,
-+		np = of_parse_phandle(ctx->dev->of_node,
- 					"aspeed,external-nodes", 1);
--		if (node) {
--			map = syscon_node_to_regmap(node->parent);
--			of_node_put(node);
-+		if (np) {
-+			if (!of_device_is_compatible(np->parent, "aspeed,ast2400-lpc-v2") &&
-+			    !of_device_is_compatible(np->parent, "aspeed,ast2500-lpc-v2") &&
-+			    !of_device_is_compatible(np->parent, "aspeed,ast2600-lpc-v2"))
-+				return ERR_PTR(-ENODEV);
+-	lpc_ctrl->regmap = syscon_node_to_regmap(
+-			pdev->dev.parent->of_node);
++	np = pdev->dev.parent->of_node;
++	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
++	    !of_device_is_compatible(np, "aspeed,ast2500-lpc-v2") &&
++	    !of_device_is_compatible(np, "aspeed,ast2600-lpc-v2")) {
++		dev_err(dev, "unsupported LPC device binding\n");
++		return -ENODEV;
++	}
 +
-+			map = syscon_node_to_regmap(np->parent);
-+			of_node_put(np);
- 			if (IS_ERR(map))
- 				return map;
- 		} else
++	lpc_ctrl->regmap = syscon_node_to_regmap(np);
+ 	if (IS_ERR(lpc_ctrl->regmap)) {
+ 		dev_err(dev, "Couldn't get regmap\n");
+ 		return -ENODEV;
+diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+index 20acac6342ef..210455efb321 100644
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -29,26 +29,25 @@
+ #define NUM_SNOOP_CHANNELS 2
+ #define SNOOP_FIFO_SIZE 2048
+ 
+-#define HICR5	0x0
++#define HICR5	0x80
+ #define HICR5_EN_SNP0W		BIT(0)
+ #define HICR5_ENINT_SNP0W	BIT(1)
+ #define HICR5_EN_SNP1W		BIT(2)
+ #define HICR5_ENINT_SNP1W	BIT(3)
+-
+-#define HICR6	0x4
++#define HICR6	0x84
+ #define HICR6_STR_SNP0W		BIT(0)
+ #define HICR6_STR_SNP1W		BIT(1)
+-#define SNPWADR	0x10
++#define SNPWADR	0x90
+ #define SNPWADR_CH0_MASK	GENMASK(15, 0)
+ #define SNPWADR_CH0_SHIFT	0
+ #define SNPWADR_CH1_MASK	GENMASK(31, 16)
+ #define SNPWADR_CH1_SHIFT	16
+-#define SNPWDR	0x14
++#define SNPWDR	0x94
+ #define SNPWDR_CH0_MASK		GENMASK(7, 0)
+ #define SNPWDR_CH0_SHIFT	0
+ #define SNPWDR_CH1_MASK		GENMASK(15, 8)
+ #define SNPWDR_CH1_SHIFT	8
+-#define HICRB	0x80
++#define HICRB	0x100
+ #define HICRB_ENSNP0D		BIT(14)
+ #define HICRB_ENSNP1D		BIT(15)
+ 
+@@ -260,6 +259,7 @@ static int aspeed_lpc_snoop_probe(struct platform_device *pdev)
+ {
+ 	struct aspeed_lpc_snoop *lpc_snoop;
+ 	struct device *dev;
++	struct device_node *np;
+ 	u32 port;
+ 	int rc;
+ 
+@@ -269,8 +269,15 @@ static int aspeed_lpc_snoop_probe(struct platform_device *pdev)
+ 	if (!lpc_snoop)
+ 		return -ENOMEM;
+ 
+-	lpc_snoop->regmap = syscon_node_to_regmap(
+-			pdev->dev.parent->of_node);
++	np = pdev->dev.parent->of_node;
++	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
++	    !of_device_is_compatible(np, "aspeed,ast2500-lpc-v2") &&
++	    !of_device_is_compatible(np, "aspeed,ast2600-lpc-v2")) {
++		dev_err(dev, "unsupported LPC device binding\n");
++		return -ENODEV;
++	}
++
++	lpc_snoop->regmap = syscon_node_to_regmap(np);
+ 	if (IS_ERR(lpc_snoop->regmap)) {
+ 		dev_err(dev, "Couldn't get regmap\n");
+ 		return -ENODEV;
 -- 
 2.27.0
 
