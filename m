@@ -2,73 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91A67342F0D
-	for <lists+openbmc@lfdr.de>; Sat, 20 Mar 2021 19:45:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 09CFD342F10
+	for <lists+openbmc@lfdr.de>; Sat, 20 Mar 2021 19:47:34 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F2qSt42skz2ysp
-	for <lists+openbmc@lfdr.de>; Sun, 21 Mar 2021 05:45:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F2qWS031Bz2yy9
+	for <lists+openbmc@lfdr.de>; Sun, 21 Mar 2021 05:47:32 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=gNCTz1TE;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=NSfDKI2F;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.21; helo=mout.gmx.net;
+ (client-ip=212.227.17.20; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=gNCTz1TE; 
+ header.s=badeba3b8450 header.b=NSfDKI2F; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F2qSd2VQNz2xYb
- for <openbmc@lists.ozlabs.org>; Sun, 21 Mar 2021 05:45:01 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F2qWD5Mpfz2xYb
+ for <openbmc@lists.ozlabs.org>; Sun, 21 Mar 2021 05:47:20 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1616265888;
- bh=d1vLtDraAtkMqHk6HROk38CMMUZVffe5COQYlFCGvjg=;
+ s=badeba3b8450; t=1616266033;
+ bh=LuOjfQRBhHaxebGkf9teuGUSZn3FEqur6K8tG5qXzbw=;
  h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=gNCTz1TEHRD3nAWVERGBvz4eZtmiAjN1QtMt2n43X0jxFLlx4dSyyFpRWQbcD7SsG
- sqrCM1lJJwfsbL8EjJBEkZE+mXVWXFRgmBZt+DK62V5ObZHYr734SKMdSgrODFrMCv
- 08bhd2ueFbhd2Y4GAwbVyobiuRz+UtgWVNnoLfW0=
+ b=NSfDKI2FYEv4rlvO2c/VGEasauxFNeXLDT9XBpN/3AGKYEkXk1HANVmi9TSY2F/kL
+ GjCctfv90pKvApD/4WbtMi0wbmDbhjsX3+mxFPMxeTDifaI5N1wPGVyvmR03ygFqWM
+ qhW8824Xkj7EPmfOUL1cE0xlygYfIwHmVMdY5/Ww=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MLzFx-1l6IKX1U3N-00HveN; Sat, 20
- Mar 2021 19:44:48 +0100
-Date: Sat, 20 Mar 2021 19:44:47 +0100
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MdefJ-1lxIQa02AD-00Zjd1; Sat, 20
+ Mar 2021 19:47:13 +0100
+Date: Sat, 20 Mar 2021 19:47:12 +0100
 From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Subject: Re: [PATCH 13/14] ARM: dts: Add devicetree for Supermicro X9SCi-LN4F
- based on WPCM450
-Message-ID: <YFZCnwmKT89wTGml@latitude>
+Subject: Re: [PATCH 00/14] Initial support for Nuvoton WPCM450 BMC SoC
+Message-ID: <YFZDMN2Y45LywFhp@latitude>
 References: <20210320181610.680870-1-j.neuschaefer@gmx.net>
- <20210320181610.680870-14-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Z1VQwSmFz+hiTBWT"
+ protocol="application/pgp-signature"; boundary="u+V4Hm1L7gfdagCz"
 Content-Disposition: inline
-In-Reply-To: <20210320181610.680870-14-j.neuschaefer@gmx.net>
-X-Provags-ID: V03:K1:vkJZm344XxWzxVLFJbgPxKxyIbETOxSDelWoxR9zduf2ke/h6S1
- rtcyQ5bS8j4Rt1IDy2rYrFSM/cuqC6RUd0+uJIXVOWc4/R/8ry4RiC4AC6IeX4s6kmaklSs
- mWjcRN/cGCa0iejgJRV8O9Ppe9EyXj3k3/uyyGjkKaWXe+1OvAoMcSlHY1KB31CmuJ1qdoy
- vBo4qhz5Tiz27mr9mdfHA==
+In-Reply-To: <20210320181610.680870-1-j.neuschaefer@gmx.net>
+X-Provags-ID: V03:K1:o8+G4TVvh3KdxtyWxezJR3C4JAolmncFVIJVLrEkLtrqwecWd9p
+ OKjY6SZZo2QXxEEVtO6KvB7rqC/AWy3Dz2rUOQSzYZQ7ZHhIeSTOpJ5AoRmsIgz5oTc1Z0f
+ lIWHXcaBN+nrI0MYoFR2EoRvuwOaAjt0oZT1ven8FiZMt+Dx/xHZeh52aCR8t/1/zeGck3P
+ Xs6+KWaS5T/bY4oJIixYg==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+XV7oEPMWik=:6W/DHQC9ZT3vehD8OtkMIu
- 1Q2hSz5ctzZElAhfO1eiNyvI0ZpY6n9mD2ARiG0vz3FOoMqg2knX52cLYLaYd5RZJB96ZUuhd
- 2vP3RiVRgwxR//WtvvV1uajqChJy6j6qYXtuDAqkQBhdZ8aY6EiDPjiRIvq+rzPe5XtmuBf6h
- YtViZ9E0yMIUaPl4qBHQ9g58YnwEqWj9JZQTKzxb4HNsfgZsXLO+SRBSVmmMVgh+kjByVhah7
- MGDHRaiaNIqGpww63zlH+ekbe1ZnYAKU7M77iKzKnu7O64Lw1Krh2kT7OHQRUCD1SryHpNu1F
- iuHKoc1BzAHFCyGGHoJ3+tYRB/g3NN6QnietagsiOuPJ79PmLgAxM6sXNeJrQFY1glj0SP1jx
- aJ9Yk7FxHv/gKf3dMnjAQ7u15/AhmbUQG5hFwH/Ajdk5GPDiBUrFHtqhGcVRcHa2vgGrIAoU1
- HNMBOivEKSckt6jADpfWyj8wRcDJ4vhFTckcbaF9C81ngCaDmiFmGPsfd/UcXOOYIJXj2rAux
- dmz0Sv+K1Gw1egALPtpwkmuOC6cAUF679QbP+TUL97uwZIhyBgZT7dObxFz+6s/dIf5eVDEUM
- JNB345QHXf4XYRoA2qgkLVlM1S+YPP6PMh2u7lFJqutlI7nsagZdap9qoOzRTaMQ6JOEPv0cs
- 3ULNTZU6gySFjwPIay9idSzIruxCEg1LPQt4vceRC/UmeTD8y6V9bOMyQbEfOBjJZ4yEACYSz
- fT3OM63NVixoiFAyboAPnlISGJFatBZG36IKP7skabR3uQhIrmPoCH8ALs3uWR24X9UbFLhlO
- DANHgr3HLhaGDnY0IlKFdezhjxgA3tgd9RswMlwxnNSOOAemOB13kDzXAmL/Iw+l7NtPjIkUw
- ycJX27yhIUASt+Ij4DoA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:b093PQXZp68=:pheTT2yS73H0mjRqZcfJQY
+ IhFsMWInNOs/KEXtpDqYKZifUuzPtcwNtPTta4TuDqquzixrDL1kasqRk8D1VIqljfYO5nRAz
+ lMy2QGXAjp/f4Ich8q6Kzu23I8BZIA6ULqG3/JXDCggWQ1et7RF++BPdWtuV3WWi8dNZEKSF9
+ zqvTEu3W0y6QlT4CM470EpNXCEtKWdmmEal0u6LoHsYAoLA7vlTraNRthvL1RGeqDUisIt30Z
+ sxZJu7X4cXbsqqwf8T3iu6bZ3g04tFalZZBdMiwvv7y8U3S36vOcvQDRR/vfkndD5F3aKxra9
+ 0Rtl0nNK7B06RrCPkIp70dbks2GfQhBSu6toZmERZu83gwKRJLiuUnQozKWQTudeugEz3IyjU
+ EVvbTNQfJrSa2ZeebLS5Ld+BHuqWwR2+tekgG+2XqKiZIupSOEN5cfQHNPMPea0eDwnmv0y4I
+ P2SnWvEHJV/qKqr2LjOjoddeahuPjVDqCLAkk7lopjeO1STYrDsKvRJkm7ZIGAvaQaKDkWGBv
+ pGQjcFfxYpniSctUT+7gmD9RQnAJjaVuB8h4u4ixBcYbiq2ZnyIQIleb7M37C2hDI1fPfSfkq
+ qOKiPVn50LZe6hzcpLQVRaKwf0T4Hpa4c7vJ9QI30MzBy+6vu6N6XOY4UByC8KGi+yi1YFwSY
+ RvbCYDMjx72LmVqELUsEUmKnRe/vRiEqpu/KgF0EDJbGt5Hf0h2LuzSiV0b5zjrcsvIryGrgp
+ ENA5MYbPbH1AMnZreYBIGetw8y2Nf8Wtkts71zbQyGnu9+mtt4bzHoR8HdBdrsFFOHGQ3RXN/
+ slx9/pbd9PTdg+z0BUWacF774XnP0aSaD59uR+C/IDcVVFkvvIezRaO2hc6nnX0h74SQ3745X
+ AW+cMbo+l68EMjZJagpeDy6Ewi00Ap1sJ5d7mvGWk9ASb8ggP6+i6Ab+sbJr/X0UR1u0PuYUh
+ PeLkQeN/G2fcqSgXdFRg0bAdvFEF2pLuisHrO+XvFzCaa+8EKE8lt+gkQivOFPkrEw7x0fZ4p
+ 8XU1JYM1y6QkeeCXhZ28GIYXZNB62xaYebZnUeacm6l9CcYasd1pbamT3Ni7l8gbuqy7oA5z/
+ d0Tnr2pa1e0lbpcNTrX3IzHYx3gkYLxIo5ONA0pFs5aswWEYhWH2tp38hlEOhrj7XQQmWirGI
+ k0ERrJyrRZUlVoIW8DJTh2yipkWpmpw2Aj9MG/1x9qbC5wBje1zAykInEKL4epniNsJq95jB/
+ ott8/6Gi/wguFRklB
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,61 +83,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- Arnd Bergmann <arnd@arndb.de>, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>,
- soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
- Olof Johansson <olof@lixom.net>, linux-arm-kernel@lists.infradead.org,
- Benjamin Fair <benjaminfair@google.com>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---Z1VQwSmFz+hiTBWT
+--u+V4Hm1L7gfdagCz
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Mar 20, 2021 at 07:16:09PM +0100, Jonathan Neusch=C3=A4fer wrote:
-> The Supermicro X9SCi-LN4F is a server mainboard featuring the WPCM450
-> BMC. This patch adds a minimal devicetree for Linux running on the BMC.
->=20
-> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-> ---
-[...]
-> +&serial1 {
-> +	/* "Serial over LAN" port. Connected to ttyS2 of the host system. */
-> +	status =3D "okay";
-> +};
+On Sat, Mar 20, 2021 at 07:15:56PM +0100, Jonathan Neusch=C3=A4fer wrote:
+> This series adds basic support for the Nuvoton WPCM450 BMC SoC. It's an o=
+lder
+> SoC but still commonly found on eBay, mostly in Supermicro X9 server boar=
+ds.
 
-One thing to note here: The SOL functionality doesn't work with this
-patchset alone, because it requires a special register setting in the
-SoC's System Global Control Register block (SPSWC.SPMOD =3D 2).
+Something I forgot to mention: I wrote a bit of third-party
+documentation based on the various vendor kernel trees and it's
+available at:
 
-So it might make sense to drop the serial1 enablement for now.
+  https://github.com/neuschaefer/wpcm450/wiki
 
 
+
+Best regards,
 Jonathan Neusch=C3=A4fer
 
---Z1VQwSmFz+hiTBWT
+--u+V4Hm1L7gfdagCz
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmBWQpAACgkQCDBEmo7z
-X9tGjQ//aEFlx3SOxaQ8W9hBuavu5Rzz+ztJmvFmw6zDW89XgAdw4nn8blv3UG1M
-Kb1DiUuvsCJZMmr0xeKYn98lMpewRE6n0xIc5EFSVrS8TYJ6A/eWZPlc5YLF4KrX
-A5IKyQSOjkBx6X1joLYVGvPjTwf0JSY7m1k4l30hcYhnnGSd37tIxcw08THb9fQd
-JmB5t8zM5zmDicoPJbH2TUZW1ndLVbBLCzcYKWeIf2aSUFA6R9sZqeXSb9L6TQpp
-sdoWXnNlGPOKZmUc4A1SvOOyFf1IdgfQ/lXar53EP0PgC8amX+YL/hm+vRY0iVk5
-XLLlfp2e7jCdoDd0jpaY7HrdgBWTMJUOkJVLVqFAEo/N9k2eqroelzw9pywLoxvT
-nr5gG32XJvV5+v8Y7hfr+9QzEYPMR50Hb/XbY3urdnoCBVyleRs30CsCqHoitn+X
-krhg6Py0Ri8WCx86gfdCcOx1wUorV6V6U5iRQRxkwxnlDWxZwg6LHtm5juAmMxzS
-/sIv5FluU2oOgyVrAMVcH1D1soadCyOkhoY2uuF90rNj8C9e9KkVPpvWeIEjOFNv
-Ew3Lc2X6s4wQ9Vqvsa0tvvwLwxVBf10T7qSuiFTR+UMcbqEm4vSjHK0a+Lpbaepe
-tUYQ5x4fCGzXlYGsujtxYreG3wQK4KqnXITrnov7WM4pOVa2Fxg=
-=b1Yc
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmBWQzAACgkQCDBEmo7z
+X9sNUQ//QYevCWqjbbrsYVVPQWIT8JzCoGIJDIpfzMsgBsu3pkklN9zSZs/R+yH9
+O4lDdU3eHDU53sgkoOEreUR89NfqJZ+/nZQD1V5KmrNl3gDFFiuofKSDGs8ay7JA
+2Eu5oyFceIoB93QjE6JIjcYXy2eQutaui+3q5/dqqJfUwBPHCHcDygLynoXuSb1R
+q7IpkNms4PrZzcCoOd2FS81TWEsnuSwABx9n6s7SfNCn2RMMzyVsOwfPiCryleQI
+LLz8bFWaeIM+VpxGwWvOK6xPO0PMnzXL6+sl2XPakyJSc74slvw0+X2XBvzUx+tg
+oFf8IKpDcO/j7A6LS68jInhUFOp3NIIxuvFZj+pk4zOg9a4Z0jnx6jZxCNIk9K8e
+OsSK1tHf5Oyh2eJrKRNAVEE3xSjvKfGLcJFDLRpgNKEoeSDBqTdFHarOilKGHzHJ
+revhD2cryCtdcvUaaJX/TCE8KSwQVzKkpgL/xAjzxqQMpl+yTEpLQf4qUY3G9K/Q
+S00Dd/He+q9FLT8mLfwwzYdXOU3o/HNcj+lcOc320C0DVyDmQG7OU4B7DM7U7hVD
+34PhR9AswDGo01EESVuU2NZtBVn4TQYTeUsdQJLlkN9Y0/lp1C6I/BLzn6uFwkXV
+L67mVUZHLhDmV63EgRh7WhlA4wJB4Lueg8w6cEbgEAx99DIy6S4=
+=Bcqm
 -----END PGP SIGNATURE-----
 
---Z1VQwSmFz+hiTBWT--
+--u+V4Hm1L7gfdagCz--
