@@ -1,76 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B135342E59
-	for <lists+openbmc@lfdr.de>; Sat, 20 Mar 2021 17:25:55 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8712342E6A
+	for <lists+openbmc@lfdr.de>; Sat, 20 Mar 2021 17:40:59 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F2mN01qX7z2yZ0
-	for <lists+openbmc@lfdr.de>; Sun, 21 Mar 2021 03:25:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F2mjP6Ddyz2yYw
+	for <lists+openbmc@lfdr.de>; Sun, 21 Mar 2021 03:40:57 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=TKFg4pfG;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=e9ygfgMl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.21; helo=mout.gmx.net;
+ (client-ip=212.227.17.20; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=TKFg4pfG; 
+ header.s=badeba3b8450 header.b=e9ygfgMl; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F2mMj3PHGz2y8P
- for <openbmc@lists.ozlabs.org>; Sun, 21 Mar 2021 03:25:34 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F2mj9359Rz2y0G
+ for <openbmc@lists.ozlabs.org>; Sun, 21 Mar 2021 03:40:42 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1616257522;
- bh=ZpkTsQVJAs0NmjcD3kPzM+Qqlv9LHiEPdh8aPjoXU6w=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=TKFg4pfGRP4tnVOXItunWvOkHGvYjwSoE0129cCYJgIS0Jk1yAG3E2746msZq0n54
- 4e8mqrcaiBHNFnmsJhL7ivB0w2ADgjAS8IiGQqkemTajDVQ4UiLl6bSpAdvTuiDHH5
- L/6Ri1SJLxSs1y+Bxgrqn3ZygH0Y3xWKnchIJQKQ=
+ s=badeba3b8450; t=1616258432;
+ bh=YH9XORTfn1PpxKNFKfrJeDcEQVyGUJ9q2ohzY93Pbv0=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=e9ygfgMlHg8G8uYjUvARw2l+tFBErylXVSlAfCw0+u+5Oh4V0IJMzA6q91r6C5Uhf
+ hvWONorUJaDA4sJtpiZ7CCINyI9ld6UY6wLJl1A6IaPNk36izdzA9g59t2QVF37Cmw
+ GClRuoZj90G7m3VmIYG4d7Tx7O3cCpmCZZbJKe9c=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgNh1-1ltRSY3f4R-00hyOH; Sat, 20
- Mar 2021 17:25:21 +0100
-Date: Sat, 20 Mar 2021 17:25:19 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v3] dt-bindings: arm: Convert nuvoton,npcm750 binding to
- YAML
-Message-ID: <YFYh79cydgukgTSv@latitude>
-References: <20210313175321.2515675-1-j.neuschaefer@gmx.net>
- <20210315162338.GA973222@robh.at.kernel.org>
- <YE+dmdBBk0BZ7BIO@latitude>
- <CAP6Zq1hsmTQfA+EvRmJsK2UosV3YAeRqNxA+jRaeYUx5T-wE1A@mail.gmail.com>
+Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvsEx-1le56l0LUl-00swy2; Sat, 20
+ Mar 2021 17:40:32 +0100
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: devicetree@vger.kernel.org
+Subject: [PATCH v4 1/2] dt-bindings: arm: Convert nuvoton,
+ npcm750 binding to YAML
+Date: Sat, 20 Mar 2021 17:40:21 +0100
+Message-Id: <20210320164023.614059-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="OByzjVDcIkp4YBkT"
-Content-Disposition: inline
-In-Reply-To: <CAP6Zq1hsmTQfA+EvRmJsK2UosV3YAeRqNxA+jRaeYUx5T-wE1A@mail.gmail.com>
-X-Provags-ID: V03:K1:5gJjv8CuTmoyg4ZYdvDNUl7h45WoDH2ALmkuUuiOumF3NA9yGzj
- k/LKmhSLnK0V0J56db+X7EpdYlj6F2yYt5WqHSHylG5AtBa/2Ami/8ZnoFycfXV9RW5woQE
- QZyfsqEtmFwa8im7O0+r4kz+ecHSR9DMco3DBfkxEe/+rWtMbx5NwH8nHCiCm+51Hj741Hw
- 8q31mPXxMcfoU2yjnFnig==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:5mcEISnS4ytZc1DrW7VlEyN1Uokwd9BkTpb49mWOTy+A529zSzy
+ NRO979GeLVz1VFHG/mU53D0khQYFNen+S9LBf21FUW7iDTqOxecZcta3Z8OCFRlMPQZg8+M
+ Ljt8K7Qjj3nFk24Xakr9jHcAUw0wzRlgk8JppJxEEF2P00h4zsl5RzdNsEjhEG2G/IUZwiY
+ Bx4gi15BVLirkUkc51mdA==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:h3bbpHIxfWU=:9Fwy92oSnTi9znW9izPVaT
- dxpolH6gYH7XXKvbx+O8Mk97e/UqQPqLj9hpfLEy8Ww19b2Pa0JrOkeFbZXW5Zy9071HyabBH
- G76vTjEF6JzjhP4EvA3tRFU9jrQaclid6h/VyEgzECyWGkp44eYKJO9bzRN1vbfkXizAqPl1z
- +JhA2Q+J2HSJe1D+Kzsaag3oUc0ED1Bg2i1rLBS0911GdLhSk+oLvr16RQ73DzCPcALn7imtJ
- H42me/ZjGCRvkAUpAv+TkT5lzsOWB5xmrD01Tomk1HJZt4Z/T2Kg+OiCSs5FJvVdDOsBuWn/G
- tomrly+S0t551AY56p760ALloBqsoQzNMCYfDo44lk1Joo6Q0JA33jzCSUq7qFRFq7i9UBPk3
- g315lIiFD9xzz6c8VS9KuLJ0BAQmBTbVAtz41RAuWQubMiNxhgma3RI/OmUsrDw8Pfzw4zu4c
- WXu3S+HLyMFHOOL2WuwVXN/EBM/+NIBbQpgIjEezvaXuP7avs79kz61QP9dHgVtv0W42vnT6r
- ERa9tYjacXJZ86Tfn/Nkr2WHtUe3J0SbTfBk97I1qsBsRYZ75lJGl7X4jT8eglsZBsyHHqd+C
- ddLp1FyR5lkT2j2WmQwckwmEZkQu/EKws2JVPGAIsdZ8BkxkzEXvq4Vr8L2q+9RW0b1QJESkS
- 6GdviuJx2JcNDvQLqGYka6UhUzHGP92BhewAXKwY5ufQUdhpHrityl1PSbYA0d16wem85E4Gs
- 7HoLu77IpUyBS+ypiP/OjUHLa2dVKgj6lT8gIPm43LDf5cHoKFmYP1X230Xw85wManq2mTGeO
- +7UKdWyhXNcv08AyAOPdrBi6aQE1N7kuc9TlBBNmWa6q5+pa81GY6TzZU+3psZze0Z1CTtUJL
- n0uzPkGjhqCrM7fRWrRg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vhgu733j7xE=:3vWRqFrgXnB+oO2F71xL0W
+ DooYj1dnNhi6zt9vvcxMG5qd8tCPnYbst+mq0TxbLffgYeAxMTBpU7XHn3CXxe2O32Pby83fa
+ VcOd3gurR+rMFn+43uPpePcLvUFwmE+HULXPm/HA+xGYp/u+DX9F/059Rl/dWvMFHVkONzKKx
+ 5d9h6MMwpTnj8QIrysGB9Gb5+bVrJZC8daDgZW3mJjK4ia9accgnKs7tn2x4XMzgTlfCcxanJ
+ WVg0i72QXdvPuZNbncpdh8kshLP3qr2Owbn/ubs8pqKnXVqGcCWCvDDvUq6LuEQ77fiH5mfAw
+ xqMe2Jvxg9U9Hwn8TEfe9Lh2aBedNOwdtysVaJ3oWKpaC0EDcWI2jSlx55tBqsNbo3MpGHdaT
+ Iww9cR1OFPC8Ii6ZWyfIHRFDoln1n5SgTv+1V+ytPrtE1wQXg+uQSnORiHOQnHZlz4oGWBnGa
+ li8oA4DI0z75UpUpguGiGlCDbwUjkHL2SZQ+10jBzgo0HuP4dfzdeyGl2BLqbhbpKKusqKHMN
+ uuiSWvkp/zbhjhVgHmCFiAfxacDS4IGYIZYzmELw4YYpMp0F9cIiBmxpAl94Rtusn0RCw8RG6
+ 50pwU9FW8qu3b3nHieQipYvRMmXHz0pgRw9lFQfebklXkg1YiEokvNk9OQZ4Ho1PiQ2cK+zKo
+ P5KFAJ8fsq9UStGQS6oXamNRSq3LSbIqgnYe36GAMsMbLbKyaWYNeHPg/rSfWwm27PAmnhxOu
+ 23wUzWSrZXvbU9aR6FNGjLZFLYAjtRHR/eUjkzWfeijtCMTXqNoKcC5PStTGUk8q1x1dKwLVu
+ itYlMcIKpPBACIwkZrW2dCGQoUN/It6Fp/6Y8UvUjxHoeJPHfxAU0K8p+JCQK54hiWDff4V2k
+ oxL4QNJp92XfzVS8uqDZgB0M37RWlWl5RBz6c03zZSLmOIvtyGBL6IgUdFu69zG9iV2swossb
+ BfkkL8Ce+q2lBhzEqZvhN8TgNZ/Tgb3+P0AX4QyS3mqrg3NIVKnib8mLgwOzeG3Lv58D1P0V9
+ 7B0hPDWw78ybA5d0ymBDFeOxsyDFX0OmEGKRZu1+9HF3ufon49WsqXpSKF9JTu7pjvDyk7Kzc
+ 7mLswFUMaeZH/z2WVt6wR43pfDqq4RsLmcFxJgjX0q2/NicvbAqFLhqfAhsmaxJnxIlWJ5YMb
+ 2nufe032d5DP+2toeFcWXL4QLN0+NYW2lNTNPwQ6uVTLlowvmv2RpbDhHRucK1F6iM6Et2SnT
+ ws/w3HOSv7SrMSJgf
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,65 +82,95 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Rob Herring <robh@kernel.org>, Benjamin Fair <benjaminfair@google.com>,
- devicetree <devicetree@vger.kernel.org>, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Tali Perry <tali.perry1@gmail.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ openbmc@lists.ozlabs.org,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ linux-kernel@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+The general trend is to have devicetree bindings in YAML format, to
+allow automatic validation of bindings and devicetrees.
 
---OByzjVDcIkp4YBkT
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Convert the NPCM SoC family's binding to YAML before it accumulates more
+entries.
 
-On Tue, Mar 16, 2021 at 01:03:38PM +0200, Tomer Maimon wrote:
-> Hi,
->=20
-> Appreciate your help Jonathan and Rob,
->=20
-> Just seeing the following EVB device tree
-> https://github.com/torvalds/linux/blob/master/arch/arm/boot/dts/aspeed-as=
-t2500-evb.dts#L8
->=20
-> And not a EVB board.
-> https://github.com/torvalds/linux/blob/master/arch/arm/boot/dts/aspeed-bm=
-c-facebook-cmm.dts#L9
+The nuvoton,npcm750-evb compatible string is introduced to keep the
+structure of the binding a little simpler.
 
-I see.
+Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+Reviewed-by: Rob Herring <robh@kernel.org>
+=2D--
 
->=20
-> but still also option V2 is good for us.
+v4:
+- After some discussion with Rob and Tomer, I reverted the patch back to v=
+2.
+- Applied Rob's R-b
 
-That's good to know.
+v3:
+- https://lore.kernel.org/lkml/20210313175321.2515675-1-j.neuschaefer@gmx.=
+net/
+- Removed board-specific compatible string for evaluation board.
 
+v2:
+- Fix indentation to satisfy yamllint
+- Fix $schema line
 
+v1:
+- https://lore.kernel.org/lkml/20210108224008.705687-1-j.neuschaefer@gmx.n=
+et/
+=2D--
+ .../devicetree/bindings/arm/npcm/npcm.txt     |  6 -----
+ .../devicetree/bindings/arm/npcm/npcm.yaml    | 23 +++++++++++++++++++
+ 2 files changed, 23 insertions(+), 6 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.yaml
 
-Thanks,
-Jonathan Neusch=C3=A4fer
+diff --git a/Documentation/devicetree/bindings/arm/npcm/npcm.txt b/Documen=
+tation/devicetree/bindings/arm/npcm/npcm.txt
+deleted file mode 100644
+index 2d87d9ecea85b..0000000000000
+=2D-- a/Documentation/devicetree/bindings/arm/npcm/npcm.txt
++++ /dev/null
+@@ -1,6 +0,0 @@
+-NPCM Platforms Device Tree Bindings
+=2D-----------------------------------
+-NPCM750 SoC
+-Required root node properties:
+-	- compatible =3D "nuvoton,npcm750";
+-
+diff --git a/Documentation/devicetree/bindings/arm/npcm/npcm.yaml b/Docume=
+ntation/devicetree/bindings/arm/npcm/npcm.yaml
+new file mode 100644
+index 0000000000000..894aefb70652a
+=2D-- /dev/null
++++ b/Documentation/devicetree/bindings/arm/npcm/npcm.yaml
+@@ -0,0 +1,23 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/arm/npcm/npcm.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: NPCM Platforms Device Tree Bindings
++
++maintainers:
++  - Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
++
++properties:
++  $nodename:
++    const: '/'
++  compatible:
++    oneOf:
++      - description: NPCM750 based boards
++        items:
++          - enum:
++              - nuvoton,npcm750-evb         # NPCM750 evaluation board
++          - const: nuvoton,npcm750
++
++additionalProperties: true
+=2D-
+2.30.2
 
---OByzjVDcIkp4YBkT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmBWIegACgkQCDBEmo7z
-X9u3SBAAi7yF8y7prcMxeGu6T/oC2LpqRpmxMKOL9+ltzU3sjL7us8m8fwabaXSU
-dnrzNCEBzOrbhJxG5N23t4dttdjeH8dGU3bOUGkKwsedxltrTIHaOuJCoJZeKzn9
-zYM53pYfarMiNYSPQNWhF5OPl71CyABQfeqdVK29hpVRxdAE8V8Ts9nQ1jPR+ete
-SzmvZM3tDHCDQWPDVGCIWY5UZr2BYGOFGDOEyuH0XPsTODM6yXnRLw2RvFjPRtnX
-4LGoso8IpWDoUBZEvaTXyprQZ4X5C2lcAb1FCxZ+mEjBPPhtgkcK1JVy99E6/y7A
-BhkB2Vbv7bhkCrC6GVbPx4j7a45wegkEomDANGVKvTIw3CkrxCAfpVOGQY5Tv91K
-emnFaNkRziV3/erQN52FuyYQNWJ4K58Ec7zt9GO5DZTRBXdg3GCPNf0e3mOFXLo5
-8emly5xbSqA/Rh/lwBZcHlqx2ZIUFjRdyUdwawtKL9MMyGAGxe1kECKgKxwbtY0I
-k25TpiBvJOIbJIeUkZtlO2QkbpUKwNeIEq1m/43OVtBzAT7SISu0ObakT6q4m44y
-YDpjtUo258DbO+lVrB/WpIZzE6M/nW6aCvku9ahOMXAh4i6EYzILYieb0SZi/T7D
-k/7J4twe1H9nXmeX3QkCMEMxKYG4wTbjhns1/PwdMKz0xUiMXCI=
-=s8+L
------END PGP SIGNATURE-----
-
---OByzjVDcIkp4YBkT--
