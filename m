@@ -1,79 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29DC1342F92
-	for <lists+openbmc@lfdr.de>; Sat, 20 Mar 2021 21:44:44 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id E362F3430CE
+	for <lists+openbmc@lfdr.de>; Sun, 21 Mar 2021 05:00:56 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F2t6f0x9Hz301D
-	for <lists+openbmc@lfdr.de>; Sun, 21 Mar 2021 07:44:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F33ny6pMNz2yhr
+	for <lists+openbmc@lfdr.de>; Sun, 21 Mar 2021 15:00:54 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=MzsCcUtF;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=UVm3+kSW;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.18; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=MzsCcUtF; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1030;
+ helo=mail-pj1-x1030.google.com; envelope-from=sunithaharish04@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=UVm3+kSW; dkim-atps=neutral
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com
+ [IPv6:2607:f8b0:4864:20::1030])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F2t6N2mTBz2xfb
- for <openbmc@lists.ozlabs.org>; Sun, 21 Mar 2021 07:44:25 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1616273041;
- bh=I1uxDkqVHbCR5GFqrDLurMaSGLta0rEs3GRT85AXsPI=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=MzsCcUtFxDJcnbKACYU2oKKsK87EVr7b0IlG6b9q5r1wyyR2X2rN2HBXfHA+0Bm1L
- 16Bxh+kfBcpvwSWsCSHVPBjd3n6lqFCoNtFLTtfByfmTJgy+F6HiXeSN/z9/jQ3+lm
- YyBdTUoECLThF9/DwoswUPJr61aci3LcMZst7KyA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Ma20k-1l9MSz0vps-00W0d8; Sat, 20
- Mar 2021 21:44:01 +0100
-Date: Sat, 20 Mar 2021 21:43:59 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH 11/14] watchdog: npcm: Add support for WPCM450
-Message-ID: <YFZej3Eg6yfCeGwC@latitude>
-References: <20210320181610.680870-1-j.neuschaefer@gmx.net>
- <20210320181610.680870-12-j.neuschaefer@gmx.net>
- <bd66894d-2ff8-f0cf-7fbc-cf4609094ef2@roeck-us.net>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F33nj5BVRz2xZH
+ for <openbmc@lists.ozlabs.org>; Sun, 21 Mar 2021 15:00:39 +1100 (AEDT)
+Received: by mail-pj1-x1030.google.com with SMTP id
+ nh23-20020a17090b3657b02900c0d5e235a8so6821723pjb.0
+ for <openbmc@lists.ozlabs.org>; Sat, 20 Mar 2021 21:00:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=to:from:subject:cc:message-id:date:user-agent:mime-version
+ :content-transfer-encoding:content-language;
+ bh=05wtTUWhAFSXSt8xP3f62zkcdn/UStAyPDnpyyX8VDs=;
+ b=UVm3+kSWB6djF+mvy77LRxVlPs9HWIA1+PgqrT49WJPulaxQtD3etmeFdgvESCBAz0
+ khVYywakbyAvryS2dsgIngyQy16tlL/+d9UTaxXB46hVUEuzYT1yebHT685PIY+jzRBI
+ 3Qcc6K/CQ/bmSViqAJQ2cEYM1HlCQBFjbTOj/xc3oRgTqvNjwlViROqk+yGe1vNu6irJ
+ 2uXBEsDysAw0p4MoZ+0ChNdVZr9q+sbzbGLJVqYcS3ZWI6CIUeEUAkvJLR9L3viUc0o1
+ peANvwFURmEcdEwDMpqrc+gBap6KO9LqcK2Kgw1i73mKHrrfUPhUKiKn2pRrCqDbn61K
+ o4gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:to:from:subject:cc:message-id:date:user-agent
+ :mime-version:content-transfer-encoding:content-language;
+ bh=05wtTUWhAFSXSt8xP3f62zkcdn/UStAyPDnpyyX8VDs=;
+ b=paLNEMhCtK2SZFUpYs+YmxQ2cEQLEfR2VWI57gHeNpsp063DmW/dp2FH+HNiG04s3y
+ WhB1iVJjVh0K5U1ltBLjsEeFILpdHbFrFwTvWHpBqnUf3O0OkrM91R8Oc3NCdL9XSQtQ
+ e+rkiUW5P+kDqUr7AUBIrOzZC59w9Z2G/5+LNpBkCa+ZFP8mXSCv6c+5P6Fkk5WRtjhD
+ KDeMIfm7IRAfbOxZ2VQfMbAQe4KmBMZiGN9HJ1HcWSpz+RiHBd9OFtONPCCjDzsKtBUI
+ ZRHMHOnYS1P/ycSnk1FmbaAejKOyYS+X6Pd9WgiTgW7OAzEtGOAnfnIR8FzH6O0uwa4u
+ LVUQ==
+X-Gm-Message-State: AOAM530kvK8tZZOJQVIYPVV4k/MBjkL7KiKd3/e2khmNewQdu2ynG8Wy
+ nkRA2jt2e9LZKZqAIROypOw=
+X-Google-Smtp-Source: ABdhPJzMrwHIrvt37XkupaKqYiCKR8J9ejohz73V/ArCqaBwXcf258wgbFzVvtRAyD0sqMylSMZE+A==
+X-Received: by 2002:a17:902:be0c:b029:e6:f0b:91ab with SMTP id
+ r12-20020a170902be0cb02900e60f0b91abmr21342093pls.2.1616299235788; 
+ Sat, 20 Mar 2021 21:00:35 -0700 (PDT)
+Received: from [192.168.0.103] ([124.123.104.18])
+ by smtp.gmail.com with ESMTPSA id p17sm9542846pjv.49.2021.03.20.21.00.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 20 Mar 2021 21:00:35 -0700 (PDT)
+To: openbmc@lists.ozlabs.org
+From: Sunitha Harish <sunithaharish04@gmail.com>
+Subject: UnitTest using the /tmp file system
+Message-ID: <158971a4-119a-eeb4-bf83-72ed17e29d9f@gmail.com>
+Date: Sun, 21 Mar 2021 09:30:30 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Wy8EjUemgdhkONYP"
-Content-Disposition: inline
-In-Reply-To: <bd66894d-2ff8-f0cf-7fbc-cf4609094ef2@roeck-us.net>
-X-Provags-ID: V03:K1:z6wSN01V5RzuYpjYHcKMiN3aHNuJ+jErDxcJ+YqN6xL+k03BK3c
- 6HM6wRMf5oj0qXdD6t3o9yhyfz6gGxYUM8dvJJ7eQomrhbeQCz+kyi7PrAvwY5fW5WUqYNf
- 4Q9j05nHfNMqTxolzY137kzJt25TN/kbb0z5Df9k/OdkWGctWA0DXeFEsXSe/7/gc6yzEfN
- KAMaoSxIrfgGEb/IF7qBA==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Lv1DmPc7Kdw=:kSZD6xA/UQCj6o/jl8YIZ1
- EVtHt0jue9Bl2V9Mmrj6R3b5MGYCU586DR2FSy7thVv9U/GzzVulCsvLYKMHplMINV9ekvZFh
- XlwJvIbAxaec0LmkNRAwm78LroNxEThL7eCes29JZ7OmRP0xb2DIuWm1Ej6CkkeTneOKRrx+1
- h4fiP32HZeHF8mw0aH+gkyc5TCdLDYVVtZs/WEjNDcvQWNDJaIWcX4cLBVbxlxSJ831KkjVmn
- w71JBHRu4jsXif5uIjWvJwzGlwy9mE33PzRoRQErKJSOdieHALBRDPsK59ShgpZRojUGmdLuY
- 4ap36by0WGd4z2zxAfU42PctoXmQd+F5073Xo7IC8a/BKWko5wRd1j5jWtx+CfXgz61TDKmkZ
- vmxM1FkLWfI5m4KbKs7DWaHDsmCvpwRB6DJ6nTqDlEDskbaPZeD3n6VzUNdN2mwY1aw1aanTy
- OA867lEDdmXJ3u7OZhYrQD8LhI1eBnuke60ERqqRsVoX1w3OXA+PXcjIXkIKiK/1nLCeAVnwM
- rvEkEloygtODM4YKGmF9FQKxEpSJ4yhRdJNlMTbOxLCUcL9P9Tn1KZ4RNELzwUb6dtMiKfcHM
- F/wFkE1F6Ogvux2t4SCNoHxGzvWYlWqKZPU+i81PcU+LLngwHAuZU+2RSWXS3Sgl7oX1xQVCt
- Xoo+cA1U4W8vw6azIVZAMW50FEtERYY5/abJzfbF91SOi3riD3rCaqdwf24oETkJ/Bz0WHg9Y
- QUmYcjEmrrARFMI965ED+pHSagjqIooODe4L1IzN/DkLRNHwdUav11vteGzMB1clsx1uW8zCp
- X8rcpsr1D7mijnwNmQWkh0efO8isvUOc8ZKRTcNFzWTpy66ty7zSr0X5pxx/lcJlqL1VSlbWE
- E9tPLQptBkIymV9u1o+lCKfmw/OcQ2V/TCkFwQmbCTZ0GIIJGxg/ZcrZ11C11JjZluxA93RLD
- tVZy7gGnDFZ5aKSzGxPZKgrh5ltjdXc5I0zcsmtv+dDMcnPUYRZcPbs9nfm5eQglIOWDXUhpG
- jsbJo9Z7QXl/9q7P15on40TDRuwh98RleguptGH/3/wZ0JgcQzYVe5Lk6oa8PBMEiGreqAi8j
- PPGUmWCNZJcBb81Ayl5JNA/tHbKmxMl+kYRD0A9ZXevKgyVo8eYUjI3g6DCRLbbHvZx0ydZgt
- 6rqVwKyjScqvkdV1sZvrjC4pCAJBdUiBfIUGD0GRfD4b7aoOWIjhpB55YHweEatQ17PG4EnPb
- JLqZhZe0vt3ywM0Wh
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,50 +82,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Wim Van Sebroeck <wim@linux-watchdog.org>,
- Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- linux-kernel@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>,
- Tali Perry <tali.perry1@gmail.com>, linux-arm-kernel@lists.infradead.org,
- linux-watchdog@vger.kernel.org
+Cc: deepak.kodihalli.83@gmail.com, edtanous@google.com,
+ bradleyb@fuzziesquirrel.com, gmills@us.ibm.com, geissonator@yahoo.com,
+ ratagupt@linux.vnet.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi,
 
---Wy8EjUemgdhkONYP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is regarding the unit tests in various repos under openbmc like: 
+phosphor-bmc-code-management, phosphor-logging, phosphor-networkd, pldm 
+etc . I have seen the testcases using the /tmp filesystem to create the 
+directories/files when the UT is run.
 
-On Sat, Mar 20, 2021 at 01:24:31PM -0700, Guenter Roeck wrote:
-> On 3/20/21 11:16 AM, Jonathan Neusch=C3=A4fer wrote:
->=20
-> Patch description goes here.
+I followed the similar way of writing the UT in one of my commits 
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/37352 .  As per 
+the review comments in this commit, using the /tmp file system for UT is 
+anti-pattern, and this needs to be changed by mocking the same. I agree 
+that this is a valid thing to do.
 
-Ah right, I forgot to add one. I'll fix it in the next iteration.
+Now this email is to discuss why this was originally done? Can the 
+community come-up with a generalized solution for this ?
+
+Thanks & regards,
+Sunitha
 
 
-Jonathan
 
---Wy8EjUemgdhkONYP
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmBWXoMACgkQCDBEmo7z
-X9tPiRAAvkv6tfjOOgM95MG2HhT2PytoRTq2mFRgcZ2Hl+ZrPMtcm9nAEa3Lvz4e
-Xuf+zBSF4iebdp5WY1paCHAvM+l23mn3F4HDldEWu7l9vFfysOvDxuaIeMVihC3q
-g8cfx7DQfXAMe+R8sdyAbE52lR8ZVSzTWiYh2Lkb23t3zGvtoxtfvcG9IITpXyLP
-SWiKl18uHRcMSHPEpB0blgBabE0BkO0Om1Tjsgi/h2Jahxwwio4unsyps/F7YAqi
-N8zmr164rt8AIJlFJVED8xpkm/94VJbmJdqpMMsGV0i/itGVHQ4RSHdqe3G3nlWo
-GxkJyGrXY6pFD1WfvdyG2SwyQ2zAwhtqn678sLZ8sc5uamkezzvp0AUofgoMSYI7
-ebi+l421mQe6fPwyJSufFJ8pDoIa7ohjOJOSpM9wOoyzQSD5RQwDL+JY560PY80i
-zN6VS/1/V423GRQxXW0dJ4UdEWtZlfm3r1mwfRFY8kW9SeiT7BVqVrrq0ydG86HN
-jejPBByNfDjjtxdGcJhRBO5lwN1Li8d4fR4w0mw1FrBQXm1UGGVSAxsO1/iWRKqe
-iEw2xCpVHICnOmQwO+mW4/blErFBuSw6nnQ77zHzgYJI1syy2sbBKKcO4vmq199F
-lMr4mOvpuDxtotGlQcqpdvRZxpb2oBjNVohTIc/sl6v2CyNeZrA=
-=F2JL
------END PGP SIGNATURE-----
-
---Wy8EjUemgdhkONYP--
