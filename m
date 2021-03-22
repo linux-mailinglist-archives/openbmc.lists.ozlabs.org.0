@@ -1,64 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B292344618
-	for <lists+openbmc@lfdr.de>; Mon, 22 Mar 2021 14:44:31 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 189A53449F6
+	for <lists+openbmc@lfdr.de>; Mon, 22 Mar 2021 16:58:11 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F3whs1XLpz304L
-	for <lists+openbmc@lfdr.de>; Tue, 23 Mar 2021 00:44:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F3zg50gFZz3037
+	for <lists+openbmc@lfdr.de>; Tue, 23 Mar 2021 02:58:09 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=Dgr3E2UC;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=hcV1yQxM;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2a;
- helo=mail-io1-xd2a.google.com; envelope-from=manojkiran.eda@gmail.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=bruce.mitchell@linux.vnet.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Dgr3E2UC; dkim-atps=neutral
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
- [IPv6:2607:f8b0:4864:20::d2a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=hcV1yQxM; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F3whd6G61z2y0N
- for <openbmc@lists.ozlabs.org>; Tue, 23 Mar 2021 00:44:16 +1100 (AEDT)
-Received: by mail-io1-xd2a.google.com with SMTP id z136so13960569iof.10
- for <openbmc@lists.ozlabs.org>; Mon, 22 Mar 2021 06:44:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=blmjp27tHMXfYUQGNoHo2kF6INKKhEij5X01I+SrwW0=;
- b=Dgr3E2UC5r1pQi4TfiLnwWvbzPkysL6o4DGvikil4vwcewWyBZq4Fmp+TfN4U3At2E
- 3Zj5hth4YLYHY6FcqCp0WcxJttHRondgX+ohWzJWJF/mRPjmtZBxJUzRpOj7SDGzSKhi
- OXZxh76KowLWWljJsE4H/KdLdek6gCzQKzUzw5DbDOiqBpPCbFLD9t2GILiCgMrAG8Bq
- j6tJN8OoT7dLfFt5eguAbOAUobo+3ZhzbPZ831TBfKwYDJdROxGicl21CFLuNBWke2Nv
- mSx5W0xuGj6I/+ioxKtYuci6eJRe0bWaiZypWYm2oitWZOI+rIR/RFVnc7HfGb9JC/BG
- Xakg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=blmjp27tHMXfYUQGNoHo2kF6INKKhEij5X01I+SrwW0=;
- b=RXEArNsD+LcyK1QKNaYtk5jJRZIfPki0F37E2zmIgGxr0/gCEoXk/6NFIVkpnJ85wF
- TT8vsBatY4hZs/L7RVfAS3McVuOPg8r+IkXDG3mpLlYWKqhVZdNifqcXQzjHmy5VUWKm
- 599DiKtIrextctpmhf/3Ukx472f3fVyYSFTiTJoR3BdaBIkqOHTaaNSVQurMO/04XzWt
- eFF7HRMUhZLFjBIVx92tDi+HVkdW0Y1ll3niNvE8EJvsAJ/ehiXQtw/Qveh/syopvPt1
- vhAZKtU1HBKri7Oi5pQtd3pwbuk7EqAOA5C726MeylwFQrSwXC/Y9fqKzdLTtM+HLYLq
- NcCQ==
-X-Gm-Message-State: AOAM531EuslB6p8OI/H3jnQFKxE+4q689/iM1J1mN6t23WjGktbpF0o6
- 0KV+Yss8RMlflw8s1/khafIRRuXxEP/X63hm3hXdccD3ZmhQ4w==
-X-Google-Smtp-Source: ABdhPJzavfTWXFv2D/wg60WFSbB2WL8UQNOzjU9yfod5HP6/friQ30cuLv+U2dG2UBqDPXSlpvSM5cgN2M0siw/g7Cg=
-X-Received: by 2002:a02:a303:: with SMTP id q3mr11332434jai.32.1616420653017; 
- Mon, 22 Mar 2021 06:44:13 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F3zfr6QrLz2y8B
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Mar 2021 02:57:55 +1100 (AEDT)
+Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 12MFXWOD094464; Mon, 22 Mar 2021 11:57:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=c6vRmmtUGUJlx017UalS2ChY9nfv4US7GTgVD+etBJI=;
+ b=hcV1yQxM+M7sCpqoL1beMIYfRFudxRoqKB4Zizi38Kj1NXZ59AGyWzYM4feInUrB8gGr
+ YjDsrWb08n/h2sGuXz6iOoylmBKOY3C3BfXdw7jsnrdEOlGS+VMPIftxcY7ojbiXCYhh
+ veE7ceMmbPhz4trt8u2jDyf8Cju8D1w2D7gGGKe+yodcpgMfB9g9PLpcBvYK//ODdZ/G
+ IMnqbWINVzlJRm9plIDnrnspIj5B1Pvq/b6vlo4NDybP15qTH5IPnH3TvJo7HKlwYysx
+ bXazOR6QDFaNqF2wYRs/KRqTKA16GOSuT6OitTUYbYq0wXyuCHozT+8o1bzFAmK5FYeP YQ== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 37ef6medk1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Mar 2021 11:57:52 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12MFqU8s002647;
+ Mon, 22 Mar 2021 15:57:51 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma02dal.us.ibm.com with ESMTP id 37d9amb76w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Mar 2021 15:57:51 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 12MFvoiX35783024
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Mar 2021 15:57:50 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5ABE4C6059;
+ Mon, 22 Mar 2021 15:57:50 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1999CC605B;
+ Mon, 22 Mar 2021 15:57:50 +0000 (GMT)
+Received: from fstone06p1.aus.stglabs.ibm.com (unknown [9.3.116.158])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon, 22 Mar 2021 15:57:49 +0000 (GMT)
+From: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
+To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org
+Subject: [PATCH linux-next tag: next-20210322] ARM: aspeed: Add CPU hotplug
+ callbacks for kexec support
+Date: Mon, 22 Mar 2021 15:57:20 +0000
+Message-Id: <20210322155720.2161941-1-bruce.mitchell@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-From: manoj kiran <manojkiran.eda@gmail.com>
-Date: Mon, 22 Mar 2021 19:14:01 +0530
-Message-ID: <CAFe7vzSvFt7bpAGz9u+vH42RQd9vPEQ_1pvi-1UNDJXMdOAPrQ@mail.gmail.com>
-Subject: Spell check in OpenBMC CI
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000d4adc605be204251"
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-03-22_08:2021-03-22,
+ 2021-03-22 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0
+ priorityscore=1501 adultscore=0 impostorscore=0 mlxscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 clxscore=1011 bulkscore=0 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2103220111
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,115 +95,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d4adc605be204251
-Content-Type: text/plain; charset="UTF-8"
+These callbacks are required for kexec to function. The AST2600 does not
+expose any controls for powering down it's CPU cores, so we borrow the
+approach taken from socfpga and wait in the idle loop.
 
-Apologies for sending this email again - for some reason it fails to
-publish this on to mailing list.
+Author: Joel Stanley <joel@jms.id.au>
 
-Hi All,
+Signed-off-by: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
+---
+ arch/arm/mach-aspeed/platsmp.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-OpenBMC coders are all atrocious spellers. In my opinion, spell-checks are
-never given the highest priority as we always were more obsessed with code.
-Correcting spelling mistakes is not as easy as it sounds, it cannot be
-automated as many reasonable-sounding corrections could change the meaning
-of the comment.
+diff --git a/arch/arm/mach-aspeed/platsmp.c b/arch/arm/mach-aspeed/platsmp.c
+index 2324becf7991..1ae3ff5a9701 100644
+--- a/arch/arm/mach-aspeed/platsmp.c
++++ b/arch/arm/mach-aspeed/platsmp.c
+@@ -7,6 +7,8 @@
+ #include <linux/of.h>
+ #include <linux/smp.h>
+ 
++#include <asm/proc-fns.h>
++
+ #define BOOT_ADDR	0x00
+ #define BOOT_SIG	0x04
+ 
+@@ -53,9 +55,27 @@ static void __init aspeed_g6_smp_prepare_cpus(unsigned int max_cpus)
+ 	iounmap(base);
+ }
+ 
++#ifdef CONFIG_HOTPLUG_CPU
++static void aspeed_g6_cpu_die(unsigned int cpu)
++{
++        /* Do WFI. If we wake up early, go back into WFI */
++        while (1)
++                cpu_do_idle();
++}
++
++static int aspeed_g6_cpu_kill(unsigned int cpu)
++{
++        return 1;
++}
++#endif
++
+ static const struct smp_operations aspeed_smp_ops __initconst = {
+ 	.smp_prepare_cpus	= aspeed_g6_smp_prepare_cpus,
+ 	.smp_boot_secondary	= aspeed_g6_boot_secondary,
++#ifdef CONFIG_HOTPLUG_CPU
++	.cpu_die		= aspeed_g6_cpu_die,
++	.cpu_kill		= aspeed_g6_cpu_kill,
++#endif
+ };
+ 
+ CPU_METHOD_OF_DECLARE(aspeed_smp, "aspeed,ast2600-smp", &aspeed_smp_ops);
+-- 
+2.25.1
 
-I have been recently working on enabling the spell check on commits in
-OpenBMC CI so that the CI can score a -1 when it sees a potential
-incorrect/misspelled word(s) in the commit as per its knowledge acquired
-from the dictionary.
-While checking the existing implementations in various opensource projects,
-I was impressed with the way the Linux project[1] addressed this issue, It
-seems to use a python library called codespell [2] for improving their
-upstream patches. It seemed pretty simple & doable even in OpenBMC.
-
-As an initial work, tried to bring the same package in OpenBMC & my intent
-is to start with just checking the commit message first [3], and then
-improve the infrastructure to check the comments in the code as well. The
-only real concern is that we should have a dictionary that should be simple
-& easily editable.
-
-My initial patch-set addresses this issue by having two dictionaries:
-One generic dictionary that comes along with the code spell library [4], so
-that we can update this dictionary with the mistakes done at a global level.
-
-Another OpenBMC specific dictionary[5] that sits in the
-openbmc-build-scripts repository, allows users of OpenBMC to add words into
-them. ( I copied the dictionary currently being used in the Linux project
-as an initial version)
-
-Dictionary format :
-Each line corresponds to a single word and they follow the "mistake->
-correction" format.
-
-I'd love community feedback on this . Please feel free to stop by [3] and
-give your suggestions/review comments.
-
-Thanks,
-Manoj
-
-[1] https://github.com/torvalds/linux/blob/master/scripts/checkpatch.pl#L62
-[2] https://github.com/codespell-project/codespell
-[3]
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/41454
-[4]
-https://github.com/codespell-project/codespell/blob/master/codespell_lib/data/dictionary.txt
-[5]
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/41454/1/dictionary/openbmc-spelling.txt
-
---000000000000d4adc605be204251
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div style=3D"font-family:monospace,monospace" class=3D"gm=
-ail_default">Apologies for sending this email again - for some reason it fa=
-ils to publish this on to mailing list.<br></div><div style=3D"font-family:=
-monospace,monospace" class=3D"gmail_default"><br></div><div style=3D"font-f=
-amily:monospace,monospace" class=3D"gmail_default">Hi All,<br><br>OpenBMC c=
-oders are all atrocious spellers. In my opinion, spell-checks are never giv=
-en the highest priority as we always were more obsessed with code. Correcti=
-ng spelling mistakes is not as easy as it sounds, it cannot be automated as=
- many reasonable-sounding corrections could change the meaning of the comme=
-nt.<br><br>I have been recently working on enabling the spell check on comm=
-its in OpenBMC CI so that the CI can score a -1 when it sees a potential in=
-correct/misspelled word(s) in the commit as per its knowledge acquired from=
- the dictionary.<br>While checking the existing implementations in various =
-opensource projects, I was impressed with the way the Linux project[1] addr=
-essed this issue, It seems to use a python library called codespell [2] for=
- improving their upstream patches. It seemed pretty simple &amp; doable eve=
-n in OpenBMC.<br><br>As an initial work, tried to bring the same package in=
- OpenBMC &amp; my intent is to start with just checking the commit message =
-first [3], and then improve the infrastructure to check the comments in the=
- code as well. The only real concern is that we should have a dictionary th=
-at should be simple &amp; easily editable.<br><br>My initial patch-set addr=
-esses this issue by having two dictionaries:<br>One generic dictionary that=
- comes along with the code spell library [4], so that we can update this di=
-ctionary with the mistakes done at a global level.<br><br>Another OpenBMC s=
-pecific dictionary[5] that sits in the openbmc-build-scripts repository, al=
-lows users of OpenBMC to add words into them. ( I copied the dictionary cur=
-rently being used in the Linux project as an initial version)<br><br>Dictio=
-nary format :<br>Each line corresponds to a single word and they follow the=
- &quot;mistake-&gt; correction&quot; format.<br><br>I&#39;d love community =
-feedback on this . Please feel free to stop by [3] and give your suggestion=
-s/review comments.</div><div style=3D"font-family:monospace,monospace" clas=
-s=3D"gmail_default"><br></div><div style=3D"font-family:monospace,monospace=
-" class=3D"gmail_default">Thanks,<br>Manoj<br><br>[1] <a href=3D"https://gi=
-thub.com/torvalds/linux/blob/master/scripts/checkpatch.pl#L62">https://gith=
-ub.com/torvalds/linux/blob/master/scripts/checkpatch.pl#L62</a><br>[2] <a h=
-ref=3D"https://github.com/codespell-project/codespell">https://github.com/c=
-odespell-project/codespell</a><br>[3] <a href=3D"https://gerrit.openbmc-pro=
-ject.xyz/c/openbmc/openbmc-build-scripts/+/41454">https://gerrit.openbmc-pr=
-oject.xyz/c/openbmc/openbmc-build-scripts/+/41454</a><br>[4] <a href=3D"htt=
-ps://github.com/codespell-project/codespell/blob/master/codespell_lib/data/=
-dictionary.txt">https://github.com/codespell-project/codespell/blob/master/=
-codespell_lib/data/dictionary.txt</a><br>[5] <a href=3D"https://gerrit.open=
-bmc-project.xyz/c/openbmc/openbmc-build-scripts/+/41454/1/dictionary/openbm=
-c-spelling.txt">https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-=
-scripts/+/41454/1/dictionary/openbmc-spelling.txt</a></div><div class=3D"gm=
-ail_default" style=3D"font-family:monospace,monospace"><br></div></div>
-
---000000000000d4adc605be204251--
