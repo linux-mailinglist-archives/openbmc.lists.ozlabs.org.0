@@ -2,72 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87B80343273
-	for <lists+openbmc@lfdr.de>; Sun, 21 Mar 2021 13:31:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B95E343A6A
+	for <lists+openbmc@lfdr.de>; Mon, 22 Mar 2021 08:17:26 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F3H7D3cVnz300P
-	for <lists+openbmc@lfdr.de>; Sun, 21 Mar 2021 23:31:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F3m6D356tz301Y
+	for <lists+openbmc@lfdr.de>; Mon, 22 Mar 2021 18:17:24 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=K4MFOgmk;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=KoXirFip;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.19; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=K4MFOgmk; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1029;
+ helo=mail-pj1-x1029.google.com; envelope-from=manojkiran.eda@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=KoXirFip; dkim-atps=neutral
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com
+ [IPv6:2607:f8b0:4864:20::1029])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F3H6z2gDLz2xg6
- for <openbmc@lists.ozlabs.org>; Sun, 21 Mar 2021 23:31:22 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1616329869;
- bh=50Y/rHSssdb5Pwhs5XahNE/25EWb0MYPd2+DkOjaeSo=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=K4MFOgmkGsCESMw93aZbF3tNIhXEMdLh8c1/gCzCjBH47PHtNeSWRNCNZRDxQlsUH
- yRxoc+T5plK26zQtl0Eo4BDqsF4WdAAKSqJpupnrggn93jlEwyvM/Cbix2x7zMkf/i
- iQvMC3sj5QLEfdHlgvkS2UZykwEJSgmnQ3ElbCbE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mj8mV-1lrUhF3pG1-00fAWY; Sun, 21
- Mar 2021 13:31:09 +0100
-Date: Sun, 21 Mar 2021 13:31:07 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH 00/14] Initial support for Nuvoton WPCM450 BMC SoC
-Message-ID: <YFc8ix6TsQhLIC2v@latitude>
-References: <20210320181610.680870-1-j.neuschaefer@gmx.net>
- <CAP6Zq1jdO_kw-B-SX0VNiVqQ1rz1vbt+DJ1quvm286+cbKec1Q@mail.gmail.com>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F3m603tltz2y0G
+ for <openbmc@lists.ozlabs.org>; Mon, 22 Mar 2021 18:17:09 +1100 (AEDT)
+Received: by mail-pj1-x1029.google.com with SMTP id
+ a22-20020a17090aa516b02900c1215e9b33so9963777pjq.5
+ for <openbmc@lists.ozlabs.org>; Mon, 22 Mar 2021 00:17:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:message-id:subject:mime-version;
+ bh=a60UWUZYVUu+LH1x6MD9++jcE8eHA8ZTlOU4ycy+Uk8=;
+ b=KoXirFipe8WKscC7cIlU0btJLsVRAUr6BwpQyx3NwY371PsjHRvsKYM01v+96rFunS
+ vcgRq0sVGjaFof2rBDSrJnh1zv7mewTWY6WzSUxrVKquaLChQemSsgnaBkkDa1XbsNCS
+ qFOOdGFiGchqcjuhC9Ruq42XBTSniQPfS8z6MeJm5j+8jJeLLNzHbKY9jlHCun8Dk6yI
+ 5jiuz3pVupUo7vVTyf1LJzBcZR836TxqhICu9Prsdm8QyVxKmJ6kCMO3AmGU8/SIRJT8
+ 2uC9g0UL4BQQUL2QW9rf+unNBJES3t3yFwodkIwLbBJc/O3NYfabw4+WRUiHrEApZ/zE
+ N8qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:message-id:subject:mime-version;
+ bh=a60UWUZYVUu+LH1x6MD9++jcE8eHA8ZTlOU4ycy+Uk8=;
+ b=INxaiuFGMhuvkRgkE1DsX6LLiyBFSkajvuyaGg3WteDtqDtkz0kAd07HLFPq6jKvDL
+ BNEHw/omPK73Eq28okQF8PR7Dg0RrRRae89CQcYWSzn5/QYWUYli/aSbBaTmOT/GOJbi
+ iEs9jDn378tybsPp0RFNnYJCLQs6j+7MQ2DNkUjI6XAGP/1X/5fDilyhOnlNKSCM1KmN
+ DQmWB0uGqnh6Pe81wP/mKCSVrPP8FNUF09g/B9Pu9qxmXsQKbs3w+om+SIbTLbCOphN+
+ 9mHUISy63Un5xBldA06fJC9dEn4NTxNO4mPgkcw9xkBWWcyfP4gyEt+3xvC58Rf95ZgM
+ l6wg==
+X-Gm-Message-State: AOAM532rcnPY3rjM/yRCmjK6j1KpeuvNW8Wx2Y/ZpGv8Fd9xnRTuUJFQ
+ 3fzFYEnKvyvLZR4bejVlMqPeXShF72iqRg==
+X-Google-Smtp-Source: ABdhPJxRkeq3Af+dhm6wkvFptCbglpMMbt7OzsScYTbb4AQWPCfRqTPHdMwkBvRdyXUmjmUe0gyD1Q==
+X-Received: by 2002:a17:90a:d41:: with SMTP id
+ 1mr12114599pju.232.1616397427179; 
+ Mon, 22 Mar 2021 00:17:07 -0700 (PDT)
+Received: from juliet ([183.82.155.202])
+ by smtp.gmail.com with ESMTPSA id w37sm11300223pgl.13.2021.03.22.00.17.05
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Mon, 22 Mar 2021 00:17:06 -0700 (PDT)
+Date: Mon, 22 Mar 2021 12:47:03 +0530
+From: manoj kiran <manojkiran.eda@gmail.com>
+To: "=?utf-8?Q?openbmc=40lists.ozlabs.org?=" <openbmc@lists.ozlabs.org>
+Message-ID: <6EE109AE-3FB9-4E5F-A6E3-88528EABFA56@getmailspring.com>
+Subject: Spell checker in OpenBMC CI
+X-Mailer: Mailspring
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="ilxIgzm+yXs67A+p"
-Content-Disposition: inline
-In-Reply-To: <CAP6Zq1jdO_kw-B-SX0VNiVqQ1rz1vbt+DJ1quvm286+cbKec1Q@mail.gmail.com>
-X-Provags-ID: V03:K1:FQs9pDrWozbdgB4aDvQJNyPj2qq4NUi4WXWfmpdJ9Ugs4le4doN
- vAUyUjwOFkMcwaivZp+wkpUWkuzY4nri9ZCR7tZhFTEffA/Lh1Xw9rm1HtP9E3Ni7Dz20xh
- y9JZYMocTjRBzWsA7voim/gFXOapLP5ZSrGeer53sOdnZpZIAgGjXNBPwSU/yoQurDCbuA1
- jierxz6Mvs/CkddABmvSg==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Sqz6zrCVGo0=:fb6rpxLt5B0hw5thCb9eeF
- bQIIdxRE9R5+SKzws+F0Y1QssVXt7m1y8Uuc0x0B+3xT4mcR4ov/ubEmpi3/oB67VnR9Z2bI6
- dEaxreH4+J1oKkZ8cqsBiWk7k5Q//Rvo63jodH0Gqo67Dj25EcKUkzG0gWhrZTnZPDlVSKyjh
- wTaQdhWy9H+IrOHyXFJomY+UURogtjyOf0EXtK+8vnYHULbEUFhRJO8CfVDL7LPLTdgCPBaIc
- T0re3EOMeir1Bvy/kByR6M2WblaHNghIMtr5BZc2Qeiq9MPzJlSzYo5tVx/4DvYQFnTpah6ok
- BLl6SbskYQ+jJvKZcYOFm505FpYA8EWt0OkHN2BqTC5smZ79uBuwjsIMUAzHhjctEOAoYv/+1
- 4d8WN2msJZuvmWaYHOkEtLB+HSH/6/AYU6deVWnFKlkqYVbiv6Q6YzSUc3cAxQA4gP/zW0XC8
- KH85vAd3L2eILogfWC71pEKRfsx722rBddYulqVlYoN0pYhgsydwSdMJzzF6G9GrFcz2mK7eJ
- UNkKJSsQhZ+zK9R0bKMAjROJp/7YKRht2GIHdsK5KkEhP/p4SnBZGv5yK7Mf/vmHZV8Da0qs5
- MtEeifs9tZHSsdCED+dOcJ7dkB1u7C0cFhmKgLpzubqY4ONuH+vB6y0ZE/mezLKm2WoGhPJBx
- FdIlAMKshvmwrX4f/06vvVfANJYvf3d1XpEJ2Thmgj5YT5UFZEC53Xb1WaWhtFH7XxXOriwQ9
- ekmp57ewVjoW5Fw61i7JgXTPFJMHNdhWD2PHz7WnDB3yknetESFKmvd3W+lp21zPmBDhG+puU
- SYINtf3viibAseRDs/Dmh9Uo2XmvJ8c3CorsiqkxpzWn7j7NfhXa4R5uwC/nU+JzIbrKVCob6
- O2Lvrj9/hyCVNhy4JnGw==
+Content-Type: multipart/alternative; boundary="6058446f_207eb3a9_1a57"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,62 +78,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---ilxIgzm+yXs67A+p
-Content-Type: text/plain; charset=us-ascii
+--6058446f_207eb3a9_1a57
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
+
+Hi All,
+
+OpenBMC coders are all atrocious spellers. In my opinion, spell-checks are never given the highest priority as we always were more obsessed with code. Correcting spelling mistakes is not as easy as it sounds, it cannot be automated as many reasonable-sounding corrections could change the meaning of the comment.
+
+I have been recently working on enabling the spell check on commits in OpenBMC CI so that the CI can score a -1 when it sees a potential incorrect/misspelled word(s) in the commit as per its knowledge acquired from the dictionary.
+While checking the existing implementations in various opensource projects, I was impressed with the way the Linux project[1] addressed this issue, It seems to use a python library called codespell [2] for improving their upstream patches. It seemed pretty simple & doable even in OpenBMC.
+
+As an initial work, tried to bring the same package in OpenBMC & my intent is to start with just checking the commit message first [3], and then improve the infrastructure to check the comments in the code as well. The only real concern is that we should have a dictionary that should be simple & easily editable.
+
+My initial patch-set addresses this issue by having two dictionaries:
+One generic dictionary that comes along with the code spell library [4], so that we can update this dictionary with the mistakes done at a global level.
+
+Another OpenBMC specific dictionary[5] that sits in the openbmc-build-scripts repository, allows users of OpenBMC to add words into them. ( I copied the dictionary currently being used in the Linux project as an initial version)
+
+Dictionary format :
+Each line corresponds to a single word and they follow the "mistake-> correction" format.
+
+I'd love community feedback on this . Please feel free to stop by [3] and give your suggestions/review comments.
+Thanks,
+Manoj
+
+[1] https://github.com/torvalds/linux/blob/master/scripts/checkpatch.pl#L62
+[2] https://github.com/codespell-project/codespell
+[3] https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/41454
+[4] https://github.com/codespell-project/codespell/blob/master/codespell_lib/data/dictionary.txt
+[5] https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/41454/1/dictionary/openbmc-spelling.txt
+
+
+--6058446f_207eb3a9_1a57
+Content-Type: text/html; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Sun, Mar 21, 2021 at 01:07:53PM +0200, Tomer Maimon wrote:
-> Hi Jonathan,
->=20
-> Thanks a lot for trying to add WPCM450.
->=20
-> Hoever WPCM450 is in EOL for several years and we are not supporting this
-> product anymore.
-> As you said it is only available in the secondary market.
->=20
-> Due to it is better not to add the WPCM450 under Nuvoton maintenance.
+<div>Hi All,</div><div>&nbsp;</div><div>OpenBMC coders are all atrocious =
+spellers. In my opinion, spell-checks are never given the highest priorit=
+y as we always were more obsessed with code. Correcting spelling mistakes=
+ is not as easy as it sounds, it cannot be automated as many reasonable-s=
+ounding corrections could change the meaning of the comment. </div><br><d=
+iv>I have been recently working on enabling the spell check on commits in=
+ OpenBMC CI so that the CI can score a -1 when it sees a potential incorr=
+ect/misspelled word(s) in the commit as per its knowledge acquired from t=
+he dictionary. </div><br><div>While checking the existing implementations=
+ in various opensource projects, I was impressed with the way the Linux p=
+roject=5B1=5D addressed this issue, It seems to use a python library call=
+ed <strong>codespell </strong>=5B2=5D for improving their upstream patche=
+s. It seemed pretty simple &amp; doable even in OpenBMC.</div><div>&nbsp;=
+</div><div>As an initial work, tried to bring the same package in OpenBMC=
+ &amp; my intent is to start with just checking the commit message first =
+=5B3=5D, and then improve the infrastructure to check the comments in the=
+ code as well. The only real concern is that we should have a dictionary =
+that should be simple &amp; easily editable.</div><div>&nbsp;</div><div>M=
+y initial patch-set addresses this issue by having two dictionaries:</div=
+><ol><li><div>One generic dictionary that comes along with the code spell=
+ library =5B4=5D, so that we can update this dictionary with the mistakes=
+ done at a global level.</div></li><li><div>Another OpenBMC specific dict=
+ionary=5B5=5D that sits in the openbmc-build-scripts repository, allows u=
+sers of OpenBMC to add words into them. ( I copied the dictionary current=
+ly being used in the Linux project as an initial version)</div></li></ol>=
+<div><strong>Dictionary format :</strong></div><ul><li><div>Each line cor=
+responds to a single word and they follow the =22mistake-&gt; correction=22=
+ format.</div></li></ul><br><div>I'd love community feedback on this . Pl=
+ease feel free to stop by =5B3=5D and give your suggestions/review commen=
+ts.</div><br><div>Thanks,</div><div>Manoj</div><br><div>=5B1=5D https://g=
+ithub.com/torvalds/linux/blob/master/scripts/checkpatch.pl=23L62</div><di=
+v>=5B2=5D https://github.com/codespell-project/codespell</div><div>=5B3=5D=
+ https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/414=
+54</div><div>=5B4=5D https://github.com/codespell-project/codespell/blob/=
+master/codespell=5Flib/data/dictionary.txt</div><div>=5B5=5D https://gerr=
+it.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/41454/1/dictiona=
+ry/openbmc-spelling.txt</div><br>
+--6058446f_207eb3a9_1a57--
 
-I understand. I will instead add a new, separate section for WPCM450 to
-the MAINTAINERS file.
-
-> Again we highly appreciate your support and time on NPCM750 patches.
-
-I expect there will be some more cooperation, because the SoCs share
-some architectural similarity, for example the 100Mbit Ethernet
-controller.
-
-
-Best regards,
-Jonathan
-
---ilxIgzm+yXs67A+p
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmBXPIMACgkQCDBEmo7z
-X9u1mA//SQ1OYXP0aAQV5lmvmwj1JJq9R1Hxu1Bu4plirEkWUGR9IYbUpNEb0Wjt
-aslffTV/Y9LjLYryXv2lQRVdbylFF2IsQL2oM+N6H9wl+GqoYswLdSuJ7YtQnWYs
-yw2hEtB3Dt9vS+p86JWT8cb2r0v+hpdnuYuhFG9kLx4hl/HI8//NsDmP9LuzLgR8
-ebh1k25S7SFGuHYQDw1LFoTCZuh43RTM0EdR8NXyPLIbAcE6DZC2d160E7cSfRcN
-+RMt/GDMwlFdsbVoN/jH0yknDm+sLlDtSquixbztH65lcWiDliYtPYbFB1HopJrP
-dSikkJQFP6agSKeyHNUlHwChQxulkqV5EmS3HoF+SQcG/1WySakvz/qWKn3p1cBl
-v9wKLbPvCw1H3UnWuXG5ZRZ6E8cTnoqvDyBFdCCeYmGchZc7CV0nBk2ldibD8Sd2
-1a1nXau6B+GeVDFfgNoIulFSb+xJpar8/soZc3YyZHDnGsj3HuQBVech2X7zHccj
-ZXrUeLetzM0HZ8wARcMsKQCcNhCVEot8d+4zdInLafEGZk1htAnvK89TKYdIXbks
-5m43CTcDF7mn1Kb/6EJliXoR/6WtXXceEnMhYaGqFzIuCgH3hRpR8msqjHbnbYr7
-C3PTO9D22Hb5puORp1jhJD+jNSyvIG23MnSDtJbQTZd4xSikR4k=
-=QlNO
------END PGP SIGNATURE-----
-
---ilxIgzm+yXs67A+p--
