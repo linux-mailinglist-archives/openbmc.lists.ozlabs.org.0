@@ -2,164 +2,140 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 311FE3485DD
-	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 01:29:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C686348469
+	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 23:15:37 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F5QwB1PnZz30KR
-	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 11:29:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F5MxZ43hMz30Kq
+	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 09:15:30 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=dell.com header.i=@dell.com header.a=rsa-sha256 header.s=smtpout1 header.b=lauwsMvb;
+	dkim=pass (1024-bit key; unprotected) header.d=equinixinc.onmicrosoft.com header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-equinixinc-onmicrosoft-com header.b=DVNPr2me;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=dell.com (client-ip=148.163.133.20;
- helo=mx0a-00154904.pphosted.com; envelope-from=prashanth.giri@dell.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=dell.com header.i=@dell.com header.a=rsa-sha256
- header.s=smtpout1 header.b=lauwsMvb; dkim-atps=neutral
-X-Greylist: delayed 12631 seconds by postgrey-1.36 at boromir;
- Thu, 25 Mar 2021 11:29:15 AEDT
-Received: from mx0a-00154904.pphosted.com (mx0a-00154904.pphosted.com
- [148.163.133.20])
+ smtp.mailfrom=equinix.com (client-ip=148.163.159.192;
+ helo=mx0b-00268f01.pphosted.com;
+ envelope-from=prvs=471742a9cc=zweiss@equinix.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=equinixinc.onmicrosoft.com
+ header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-equinixinc-onmicrosoft-com header.b=DVNPr2me; 
+ dkim-atps=neutral
+Received: from mx0b-00268f01.pphosted.com (mx0b-00268f01.pphosted.com
+ [148.163.159.192])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F5Qvv3ljfz301j
- for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 11:29:13 +1100 (AEDT)
-Received: from pps.filterd (m0170393.ppops.net [127.0.0.1])
- by mx0a-00154904.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12OKqR6g012158
- for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 16:58:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com;
- h=from : to : subject :
- date : message-id : content-type : mime-version; s=smtpout1;
- bh=nv2pwuca64DhDu+OY3r8ZYnL+s9vdRU6iuQSUPC1Lpk=;
- b=lauwsMvbXX8rwFwQ0PUKNlBGfhgYJEqMuj0LGVNkm+v7RJJl149OIrWlV0pw9OV56Pk5
- DNI00YYXOl+9fUxRXz/jXMgpN5jIRZGLl40feKDyIwx58j0U9URNej0iwkv40cEunSjL
- eR5ydXZ/4QPjfQUphp3XnRkpmMxJooryrokAg4uZcCPcIpMaSKJEMv9UbyVlxbyXRoTW
- fuuVSGvlB9oH5zgyrq2CEgGwXPL8QDo6hrnSO94Y0U7mMJBOIiwnCSGxAj97G767PXIN
- pW2ZBFljcNTzTyvYrflR9TcoepSsxQ+TS/rT8yBSTub3jir7UoFTJVg3EQifo7Ce3zzg 6Q== 
-Received: from mx0a-00154901.pphosted.com (mx0b-00154901.pphosted.com
- [67.231.157.37])
- by mx0a-00154904.pphosted.com with ESMTP id 37dcchfp2r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 16:58:38 -0400
-Received: from pps.filterd (m0089484.ppops.net [127.0.0.1])
- by mx0b-00154901.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12OKt1FW016033
- for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 16:58:37 -0400
-Received: from nam10-bn7-obe.outbound.protection.outlook.com
- (mail-bn7nam10lp2104.outbound.protection.outlook.com [104.47.70.104])
- by mx0b-00154901.pphosted.com with ESMTP id 37dxcafhqx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 16:58:36 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F5MxJ3qlSz30Bl
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 09:15:14 +1100 (AEDT)
+Received: from pps.filterd (m0105197.ppops.net [127.0.0.1])
+ by mx0a-00268f01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 12OMD0KB018279; Wed, 24 Mar 2021 22:15:10 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10lp2103.outbound.protection.outlook.com [104.47.58.103])
+ by mx0a-00268f01.pphosted.com with ESMTP id 37d8j7prme-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Mar 2021 22:15:10 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bFjia1yrQlkq6wDirR5Q2Kiyiep0BlTOLDNmQgvAzfvTN4P82h+o6UT08FG5v/hfVEuke/st9zWSzamUpUgFHVMxmsZ6ITRPtux8y291O0M//zmUz3Sg7MPNWRLoE3KZgnwoaCQ70r/W1NyOPCu4X3umwKZThzMlPqqTnn5t0YlTm+xWzcr5IyRICGWYhp9fwhYr76hjxZl643nIqaG4fi/VDw2zCDW4Kbtv3Tp1DWmYH3syJjMudbdShP7dYOmRlCfHSAfCSAr3aNgFvKhqaO45nmHWEnV4laMP29Ws3+lndN9F3AmQ05m/T4bM6J2nEcCnyyuCn6XDNHLuaV6Vow==
+ b=Is2rSJl2vucU/SAEeNWOppOoXnHjjJ8JiG/lirzZbTM08q6JV+S32ezTJv/q9LQ/aZvW5yLrKnV5TRGCQGD4RumWX0jE2Z0scXw5luk11isxl+FS1gbIligXXSepxW3Pk6Kbtmf+YPqXFo8IHNSOP3ATbOe+Zi9NsDRWdBa0+lx7QZ7ORjh6L/DvNAKiodSHzqO2Jpaw0/NmPojaZFPkNJXvujssie+gGfZ9yTKlCzHet+zfC/DxSG0Axj8k4Ia8ecacatKbJFHMvjnfM0vb8/MFevDs1jEu4v8eTFaa527xfc0PCciiMjMxP9+tsa9zGvVtNJP/wbfOB/woXdUF6w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nv2pwuca64DhDu+OY3r8ZYnL+s9vdRU6iuQSUPC1Lpk=;
- b=a2lwYQtbK65/32HdQqnK/kQ7Yb4Hyb08Y2PLw6h+/Kscku3TCQ0w0KUhVWty/xGq6J10COWtzPbrB3ESeaYreL7CBN94Go3Ed9TgOJej1GQlEX0I/Rf1nqyV7hPY+NUyr7nYlIGt9Hv8jdDrxHPTJyqrzz+pw/zTuDJVDvX0NWwr+UTOo9Ss+8wqjPgSBWs5nWcNx9BHyQQhAVo+uuYG+JUuV2iXrOMbQi01JRmYME5qYeweFgUveSQcwj0FRnovGMWRiw4qu3thmrf1/eX3ZN4/gPvgGLXkxj3OZ1fn08zttbiGnuspumJ+omQtah/8kZyTuKxBO+YgTzmrNlgnbw==
+ bh=hSeO5KVvm7b7EIEJVp4ps1P2ZmvtQyCl4EWJJ0kg9AQ=;
+ b=npXC5a0oDKmrv3omKklpFpyRBo4vekXGau++Sc4G5N1JT8xeqIosiJvqCIwnVnPdoTP0GVHKi78LrP2U4Jp3Hf3srPBj75M5bIuSz4MA2JQwdpC668MCCZGxmvBWEjCtPDryyfe05meAWqO74JPLlo2kI2HZsz/yACDO3Jb9AFikqTuL4TaqAx4r6PYgjGyMsX0m/Hv7CLkkFwUtdYYXzyjzVq4YGAxU/bJ5bxWaoYwMX2PIDDWi1KLBMehg2PUldY2uHRyutrMdNdLfUxUX/IBoRDE9q9Ba9Ekg6NCbuCS2cim+O+jy7uyyqEAwFKxxJpmLpaimOlKLkqvWMCIxUQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=dell.com; dmarc=pass action=none header.from=dell.com;
- dkim=pass header.d=dell.com; arc=none
-Received: from DM6PR19MB3417.namprd19.prod.outlook.com (2603:10b6:5:18d::30)
- by DM6PR19MB3738.namprd19.prod.outlook.com (2603:10b6:5:240::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3977.25; Wed, 24 Mar
- 2021 20:58:27 +0000
-Received: from DM6PR19MB3417.namprd19.prod.outlook.com
- ([fe80::1915:7f2c:fe1a:b4d3]) by DM6PR19MB3417.namprd19.prod.outlook.com
- ([fe80::1915:7f2c:fe1a:b4d3%6]) with mapi id 15.20.3955.027; Wed, 24 Mar 2021
- 20:58:26 +0000
-From: "Giri, Prashanth" <Prashanth.Giri@dell.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: License of generated code by sdbus++
-Thread-Topic: License of generated code by sdbus++
-Thread-Index: Adcg8CNwtb6flRC2TFKefB3mCSU/7A==
-Date: Wed, 24 Mar 2021 20:58:26 +0000
-Message-ID: <DM6PR19MB34172FAC6C40C87026A7C68495639@DM6PR19MB3417.namprd19.prod.outlook.com>
+ smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
+ dkim=pass header.d=equinix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=equinixinc.onmicrosoft.com; s=selector2-equinixinc-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hSeO5KVvm7b7EIEJVp4ps1P2ZmvtQyCl4EWJJ0kg9AQ=;
+ b=DVNPr2meG5A6FKJpV2seNEwm/jHwBOSc/ll/KUsZjU3rtV9OeJh4MLGZUO8r63tOZZdZbgc6Aankjp4kGgfzNtt/9X9v6vPkDHyFS1P8OclFq9ytkzBb9BpI7ZRaukyUuo2ixmpAIQen4e2r1GQsGXT8mgOEaN0q5Z63X7uKalQ=
+Received: from DM5PR04MB0762.namprd04.prod.outlook.com (2603:10b6:3:f3::13) by
+ DM6PR04MB6281.namprd04.prod.outlook.com (2603:10b6:5:1e8::21) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3977.25; Wed, 24 Mar 2021 22:15:08 +0000
+Received: from DM5PR04MB0762.namprd04.prod.outlook.com
+ ([fe80::4c98:aeb:87a8:13ad]) by DM5PR04MB0762.namprd04.prod.outlook.com
+ ([fe80::4c98:aeb:87a8:13ad%5]) with mapi id 15.20.3955.027; Wed, 24 Mar 2021
+ 22:15:06 +0000
+From: Zev Weiss <zweiss@equinix.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: RFC: ASRockRack E3C246D4I port
+Thread-Topic: RFC: ASRockRack E3C246D4I port
+Thread-Index: AQHXIPslhF1rjYgJgUmBZivSy6DePA==
+Date: Wed, 24 Mar 2021 22:15:06 +0000
+Message-ID: <YFu56TGJQyKRSOt2@packtop>
+References: <YErVxrB4afOz1ejt@packtop>
+ <CACPK8XfpdF7_Thsg-96nkneoQDYayTEznbR8HDCOePG4=YruVg@mail.gmail.com>
+In-Reply-To: <CACPK8XfpdF7_Thsg-96nkneoQDYayTEznbR8HDCOePG4=YruVg@mail.gmail.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Enabled=True;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_SiteId=945c199a-83a2-4e80-9f8c-5a91be5752dd;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Owner=Prashanth_Giri@Dell.com; 
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_SetDate=2021-03-24T20:54:59.6244127Z;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Name=External Public;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_ActionId=76f77ab5-9071-418b-864c-bf8d853fc29c;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Extended_MSFT_Method=Manual
-authentication-results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none header.from=Dell.com;
-x-originating-ip: [65.36.111.2]
+authentication-results: jms.id.au; dkim=none (message not signed)
+ header.d=none;jms.id.au; dmarc=none action=none header.from=equinix.com;
+x-originating-ip: [24.181.166.149]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 3134d02e-0b02-44ac-1aea-08d8ef0791f4
-x-ms-traffictypediagnostic: DM6PR19MB3738:
-x-microsoft-antispam-prvs: <DM6PR19MB3738143D04416189EEC49AE795639@DM6PR19MB3738.namprd19.prod.outlook.com>
-x-exotenant: 2khUwGVqB6N9v58KS13ncyUmMJd8q4
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: c205f32a-558a-4479-d2e3-08d8ef1247d0
+x-ms-traffictypediagnostic: DM6PR04MB6281:
+x-microsoft-antispam-prvs: <DM6PR04MB62815C1123B71F9DE63C4347C3639@DM6PR04MB6281.namprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: yoKlfQ20uJ92L0Cove2P9UBqhSu0w20D52Faxl1oT9GVVyjLTQRe5Kpk/B0FpZ3uQMuzwOaEa8Y5ElcT5Yi/UZxSH8GNj8EvS+YMsgC+let/JNp4CHckWgaHECDyhT4P+GdDTtxRXGrZn4jUO+4p2YRt/uPTSPeN6ik/doL/i+46/REDmq/9NkBC33CWQ7bnnPSCWrDE4DambiHWWD05jMlfcrIG4irBWpkJz9htxrk//pZ3vvCffo2EKPpisfHdEYmZmbtE8SlsQnOWbsNusnh6fHcLShR1qS9l/o53MHin5DbIi59F1jasjHiQ/qeU8ZleBztC3OY4zsm4uCpXdwwdHAhCMN3NF27Em6crAFUV0+wOdVbMIXcqShnodz2CvRG+yw1t1uMlK9jZ+GEEYSQF0l0iNUGUlFy6EbfL4Qs98oEV1X66LE2IWZ/DmFsTx42Lfl2NIcRUDgDpJ8AQ6Z8J0ktxpTCI2VgIE7mHC8wvd7s234G9r17QhWjiG6C9JgaMSPhJ/wWUZc4kWna97lrGAMlCrYbabs5iSqZTZIjgS1GSDe/2lRLzK1QTnMvIniBmYG4gokEUNrNUQkJtkLK7JUJMDsGzxGhxMIx2IdpXPFfvYU7cNH1srIV8H0qu9/ysW8aXwwNWHlSbPR0qFeX7vZo4Q8QSOMIu3t4FCu0=
+x-microsoft-antispam-message-info: ZwbZcUlPRvpQ4ZNNfgzGdBWdMmLPPDeknPlrEjOmhkeGQ2xnmyA5EcVC+S9d6Or/DGNG6Xim3hrIIjTDOu9xvn70EvIKLKcQKdbRCrGrPP5DtWVSSfo/hikiHEgLZ22OUg6Zel8dqsI2RwwfXgIUSxeYRVH9tjtCbiy8//r5F8m9zoskmH7YqFDsj5NUauW8x58Xzu17gM+igzyzTNYTQl+l80gGhqkZQMrraH7ewF1wkolLsafIj3QNJDiKZfZYcOreFn9AewXfY4iL3NCEyc13v23im9eDZZfun74U7isMfmFH8i0mGzwV+29f/mdf1Ihg///oUAZjYlwtQHE9OrlrfLX9HcEzkbs3NG/LuzVtOXmsuKQZoUNBoC6KCHN1HmPIFORJqtFoNa085xkOItkue32cc5P0Splyjtdg+VxBCia91f18aw2aFyLTq5RprDB2V8iRTHysE4nrgAb0pnvoVTa3olN4KbTmK6E7NBWK/fe3vHtobBtODlukpCpodxjpzsRS4nwmO75iM+fibglKzl+zWxJcDKA623N/HHCiRTolIEgxkWu0plf8AEPWi2GEsymERkkpQmk2bkUOzh6eiVeeypJjuFU8YZrDxj2sKDql/9oMme0rjMxwIEk1+i6WCD8BFeg41c6D8/jfJ2DiEeFkEm4SSzal9+TBoa0UxOHUtz8cWTD5dbh3fvV/nRylCynC6g/8sR668WcRj8I5/wHm+3McVA676u6Cl10=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR19MB3417.namprd19.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(346002)(396003)(136003)(39860400002)(366004)(376002)(55016002)(66476007)(66556008)(316002)(83380400001)(9686003)(2906002)(6506007)(8936002)(86362001)(52536014)(6916009)(786003)(5660300002)(8676002)(478600001)(33656002)(4744005)(9326002)(76116006)(26005)(66946007)(7696005)(71200400001)(66446008)(64756008)(38100700001)(186003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?+0aVVORJ9cX+HT4rWd1nTWkkeWwyq/3GkGgwZcTHurpt/PVckYaZntA/5V1U?=
- =?us-ascii?Q?8tyq5gntES4K+oV/4bJgSKO4WpQUQYWI5Alznqdk94ZKJMF84JxrO/8esK9i?=
- =?us-ascii?Q?uALRwfpkrpRKq5hFbfn2ChVWelqvUis7fJlKmgnxuN4F4fMN13yJ9wSJ0KzH?=
- =?us-ascii?Q?prC+RV9IZ+PKoSnt8Qph7U8+CdtdmMXbeeX2sywD2PmondLflh13qwSfwQb6?=
- =?us-ascii?Q?YwojuCoOTIibYIywGvq0Gb3PcY1gReVEseg3kQlLxB7WZUdFurHeVVdi+lpT?=
- =?us-ascii?Q?AL6++CnCMNu2Yc36VfZT1rxHl0TH3erYRkkrzj/T/ib1fYhz5CvSprPRiSC8?=
- =?us-ascii?Q?0jUGuq2BIv1KRwn51qtJrEMtNwWhOhD9EEI9UTuqFe8DIUqCW/3GGLd23h2i?=
- =?us-ascii?Q?mJQYiw0q/TEir6Y4XbrsVoPP+ZTBZZZnzJhq1c+usKw75yk0icqK7aZ3/qLd?=
- =?us-ascii?Q?NDws1cFgbdAHaRw5dSYkblNePREfjfoiMpH6ex1sUQKoYDVH0EgUnkJTEpWe?=
- =?us-ascii?Q?TxHTBqfcMmQvfubYLWyHDVPxDurxynEAWx2muxGRVuwkx4b8M0QMB78ZVt8D?=
- =?us-ascii?Q?GQfJh20EmgqyTnVtYJRD3Jv1uyBbeCQDHpS1ZKhoI6FVSOmRVyobhF1zBL9l?=
- =?us-ascii?Q?pxN3r6cHTj5lvd+ybuMKGg7MBTLCVpYfOHzoJP1/XWDRalQcXINgQEuGKmOe?=
- =?us-ascii?Q?jSi9LTNAIZuexmpWQSsDG9goQxsn4xfF4WM55z+lFHra5hMhbrayOAsZhLi3?=
- =?us-ascii?Q?GvMV/JD7m+FDHups+lxV8yezVNG7t0SyiMaDWTsvQQF4kMl4FyCFWHuq551n?=
- =?us-ascii?Q?zkM9Mz/g5TUMMqAplBmJgZGeGzauBJX2TSp+g4RROyqmDSCe53dGEIObWE0i?=
- =?us-ascii?Q?Du6H5RsgLAnYqE1U8UD0IW0eUn/wPVpSWE4hHg706/5Irfk/HuxEvvx4KEjO?=
- =?us-ascii?Q?R/LVbVXQpxziqGeVgy9aoNQYLE0VxM5MBYN5lyhPbWZ/IR4UVk3Vtr35Pdcs?=
- =?us-ascii?Q?uHc3cN+JLcDnex3ZMH16eIVwf6K3k9J1LmO4KyBhN9+5PCmhFppxgrE3oYlA?=
- =?us-ascii?Q?msZIYfLL4ARnKlnTGwQQzXHLfeayqB31ijPHB6wQnjU3x+pr7/E+Izg/xY+l?=
- =?us-ascii?Q?ROgSRpim1Cv4LQKgXgIWHKWBZ0eoexx/MOGLNMvGknxpGiZvPgQexk1JYY1U?=
- =?us-ascii?Q?2kkgMKZJhWBaxmBdlMwgrGrzecV+1+WCwoWc9gFcesqbfAwbIOHk25dj+SDh?=
- =?us-ascii?Q?+KlL0iM+pmeN0IAtLCEppGp+I1yaL+qq05LLCEtV2ACddk4HLb2V7T+KORcY?=
- =?us-ascii?Q?tS4=3D?=
+ IPV:NLI; SFV:NSPM; H:DM5PR04MB0762.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(7916004)(4636009)(396003)(136003)(376002)(346002)(366004)(39860400002)(6916009)(6506007)(66946007)(76116006)(66446008)(64756008)(66556008)(66476007)(478600001)(2906002)(83380400001)(8676002)(966005)(8936002)(26005)(6512007)(9686003)(71200400001)(4326008)(5660300002)(38100700001)(6486002)(86362001)(316002)(33716001)(186003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?sPS+fWUDuIT05Qb3n7OCNPQ/rEAoUxCBQGjlfEX4PXN35DzcQ//QAMVY9VHV?=
+ =?us-ascii?Q?D0jwQ526kjyD/RfHIl86PnsUvggxQfpH0XiwElRUk7ntDIpovgZJslBlvDnR?=
+ =?us-ascii?Q?Km0GLo3SjcKVzA9rt1DYLlXqTGlAzfhmG1izcQM5zuyDqjSZTub7wGkJ43pX?=
+ =?us-ascii?Q?p4ZUw4pfhrLmlORGstHB8o9tjjUGXJP9PAHDvWnB89bMbkDTuDdc1NK4ZFqt?=
+ =?us-ascii?Q?p8Qvje7zcxSvIl180iczu+Zn9PrNle+B1PptsYQ1t2FiiuvEC8AO4paNCFt4?=
+ =?us-ascii?Q?v7naWy9HYsneOmRWTaJHW1YixlRwHFI40XP0/OmK45k/unG+iba1vPTqYESz?=
+ =?us-ascii?Q?ctkFV2jcCzJFpjfP6s6aCRrarmormToKkcvKZmHZI/dRTzrC4wxLVYkfiCaT?=
+ =?us-ascii?Q?brBkFDaaXjGvJHzxLGdniI9IIRiUOu69aH/0rbTvQ2DuKc24N18YF8vecHO9?=
+ =?us-ascii?Q?viQRxLqWWQ3me1hEsYJwg08yqDUrXPSGMA2+W1ZgavxKWbY9M2z3vH9dr8uR?=
+ =?us-ascii?Q?j9JgN+h2j4tvi3U6Im+msq3OHX2X2mhNxtxjiE+R/AEyqX4yOezqAHPpmYoq?=
+ =?us-ascii?Q?00tBgMW3dLyaUhP7/9Bz8PqYBYSy+gzW8vkrSHNm4mZXn0KwXEKtTFUZxc8c?=
+ =?us-ascii?Q?KnT/QgwI7FKoTNZdnftPq2YUIEJT5Jg10KlUJQjgXsg9DWdFd+JlyG4NbyLj?=
+ =?us-ascii?Q?DJ2s1Ki3uGSUcg4Z9Q+7ezmzjUZDg2+hnY9RO4940YeW3zAvZ78AnKLWM2lU?=
+ =?us-ascii?Q?1AKYMxpFwMuVoSG5b+IriNwYxToq/IKGMHw0IuFUEB1uPCs1nwr6B9HIbDNm?=
+ =?us-ascii?Q?ORUBj8GUwuafdF+EhbfhWwsmExRdC/l2yy7JdQQEwJxlnKaboeU+IChtuID+?=
+ =?us-ascii?Q?hwDo9aR3skxtPDuBKmQv52J02sqXYmKQnftU00F89+yRJkyGkjyDN8e6TF2q?=
+ =?us-ascii?Q?GQJYHntLCXeuX+lbeFqqRlyAnPZf15mIYJpE5gbA/+SqA7vUyRdi2yQneBWo?=
+ =?us-ascii?Q?XeNXTgdEtSHY+ieLy5ewrIt22GBEEncZoYiyf5mJkKicPvqy4u5cZYYWATDV?=
+ =?us-ascii?Q?TAkyMmgFhAh2GtkpRgyZa0XHObBx+84OpI2LcAC84yY0ybThAI75mYcV36oh?=
+ =?us-ascii?Q?dvq5TR0tu4kvzErbriBGYsQXL9mfxlDlnwOT69JgFfFvHUyhXTtgeWntZKaJ?=
+ =?us-ascii?Q?g0GaASE3kjsRwDSVcMiKXasavIYGkELEUNsZkkto/MyeXJUq7sUV4xgQPM3P?=
+ =?us-ascii?Q?xw7aGGTTfb0AMn6MWXAP9H8mkp3bBCi+jrrvOcpbKIulUMEM0rbhsTFLvPjK?=
+ =?us-ascii?Q?ByFn4QYs3Et88zwnLQ4c/OXm?=
 x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_DM6PR19MB34172FAC6C40C87026A7C68495639DM6PR19MB3417namp_"
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <F072155A1E30A140A2E198E3125EA445@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-OriginatorOrg: Dell.com
+X-OriginatorOrg: equinix.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR19MB3417.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3134d02e-0b02-44ac-1aea-08d8ef0791f4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Mar 2021 20:58:26.4119 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: DM5PR04MB0762.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c205f32a-558a-4479-d2e3-08d8ef1247d0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Mar 2021 22:15:06.3983 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 945c199a-83a2-4e80-9f8c-5a91be5752dd
+X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: U/8VIhCRVrsJScT1oBYg6SWkW4jwvcb6UEtKU3fE9IJavLC33qStPJrQCHK0SGEb1GpJ4t/yNZpI+vVrYi9c9Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR19MB3738
+X-MS-Exchange-CrossTenant-userprincipalname: Ox7BVG8FgWEksUTzE2DpY5/CtXnSv1jG6rws/D3ugn6PjXFmw1aocXdVINUmtkVlxiofhaVSzxl8PHKLQUbC3w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR04MB6281
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
  definitions=2021-03-24_13:2021-03-24,
  2021-03-24 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0
- priorityscore=1501 mlxlogscore=999 spamscore=0 mlxscore=0
- lowpriorityscore=0 adultscore=0 malwarescore=0 phishscore=0 clxscore=1011
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2103240152
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxscore=0 adultscore=0
- spamscore=0 mlxlogscore=999 phishscore=0 malwarescore=0 suspectscore=0
+ malwarescore=0 suspectscore=0
+ clxscore=1011 impostorscore=0 priorityscore=1501 mlxscore=0 phishscore=0
+ bulkscore=0 adultscore=0 spamscore=0 mlxlogscore=999 lowpriorityscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2103240152
+ definitions=main-2103240158
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -171,95 +147,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_DM6PR19MB34172FAC6C40C87026A7C68495639DM6PR19MB3417namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Hi All,
-
-I see the sdbusplus library repo itself is Apache Licensed. Am wondering if=
- the auto generated code from sdbus++ is also Apache ?  Did not find any sp=
-ecial wording on the generated code in the license file in the repository.
-Is it safe to mix the generated code with closed (proprietary) sources ?
-
-Please advise.
-
-Thanks in advance,
-
---Prashanth
-
---_000_DM6PR19MB34172FAC6C40C87026A7C68495639DM6PR19MB3417namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On Tue, Mar 23, 2021 at 08:50:07PM CDT, Joel Stanley wrote:
+>On Tue, 23 Mar 2021 at 22:25, Zev Weiss <zweiss@equinix.com> wrote:
+>>
+>> Hello all,
+>>
+>> We (Equinix Metal, formerly known as Packet) having been working on a
+>> port of OpenBMC to the ASRockRack E3C246D4I board
+>> (https://www.asrockrack.com/general/productdetail.asp?Model=3DE3C246D4I-=
+2T,
+>> an AST2500-equipped Xeon E-2100 mini-ITX board), and we're now looking t=
+o
+>> get some feedback from the community and hopefully start the process of
+>> getting it merged upstream.
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:DengXian;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@DengXian";
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi All,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I see the sdbusplus library repo itself is Apache Li=
-censed. Am wondering if the auto generated code from sdbus++ is also Apache=
- ? &nbsp;Did not find any special wording on the generated code in the lice=
-nse file in the repository.<o:p></o:p></p>
-<p class=3D"MsoNormal">Is it safe to mix the generated code with closed (pr=
-oprietary) sources ?<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Please advise.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks in advance,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">--Prashanth<o:p></o:p></p>
-</div>
-</body>
-</html>
+>Nice!
+>
+>>
+>> It's currently sitting in a Github branch, since at the moment I'm
+>> mostly seeking fairly broad guidance on what sorts of things will need
+>> to happen to get it into a mergeable form (not sure if gerrit is the
+>> right tool for that).  Anyone who'd like to can take a look at:
+>> https://github.com/zevweiss/openbmc/tree/e3c246d4i
+>>
+>> Known issues, in approximate descending order of significance (by my
+>> estimate):
+>>
+>>   - The kernel situation is...kind of messy.  This mostly stems from
+>>     having a dependency on the PECI code, which is why the branch is
+>>     based on the 2.9.0 tag (the last one before the PECI patchset was
+>>     dropped from the openbmc kernel) instead of something more recent.
+>>     We've got some additional PECI patches on top of that to work around
+>>     some limitations in the PECI support on the particular CPU we're
+>>     working with, some of which is fairly gross hardcoding for that
+>>     specific SKU.  There are also a few non-PECI-related kernel patches
+>>     that I've posted upstream but not yet incorporated the resulting
+>>     review feedback on.
+>
+>As you point out, it would be great if someone could take on the PECI
+>maintainership and get the code merged to mainline.
+>
+>Out of interest, can you still boot the host without PECI support?
+>
 
---_000_DM6PR19MB34172FAC6C40C87026A7C68495639DM6PR19MB3417namp_--
+Yes, we're using PECI for monitoring CPU thermals but that's about it;
+we can boot the host without it.
+
+>I recommend submitting your device tree now, and getting some level of
+>support in the openbmc tree. From there you can work to get the other
+>fixes into the tree.
+>
+
+Alright, I'll start out with getting some baseline bits and pieces in
+place and see about the trickier parts when I get to them.
+
+
+Thanks,
+Zev
