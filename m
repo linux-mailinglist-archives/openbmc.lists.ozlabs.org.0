@@ -2,67 +2,134 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CED733475D6
-	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 11:21:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D07F347763
+	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 12:31:00 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F546F6JxMz30Lp
-	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 21:21:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F55dt1R3xz30QN
+	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 22:30:58 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=hGdgJIzr;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=rBbEU7G6;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::936;
- helo=mail-ua1-x936.google.com; envelope-from=ulf.hansson@linaro.org;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
- header.s=google header.b=hGdgJIzr; dkim-atps=neutral
-Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com
- [IPv6:2607:f8b0:4864:20::936])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F54600HV5z2yYw
- for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 21:21:41 +1100 (AEDT)
-Received: by mail-ua1-x936.google.com with SMTP id e1so294981uaa.4
- for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 03:21:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=7apWozlOt2FqRFycW0Hur3TIoMg6mDhSrYsqHBdsqD4=;
- b=hGdgJIzrda8kSnAFgL4/2AUpL5DTF8JT9DcD9XJSSpJprxaISt3xgyXRR3jSTS8hG5
- uL4YqQ/0t1Wc4rlLCIuHzW2N0vlvtZQcUqKEXndQDVU8y9ab7HORaN2ubRe0VbcnfiF7
- SWAF2+YXtocGRkfGZPFjC88QArPPOgUXpu5lNHGECtxP/9a6i8uiLSTQh/ldr9aO6OU6
- Z8x+8pP+FbqFtXh2Lr1o9Z2lpL8IjqMDs/Dyk351DYp+IgUrv9G6/kEQV6+BsfmBMqYm
- NhKE8+zdjIas5GNlgwbqdTrMbWauhdm9//jvwQXb4FC9hqIXfrtUfXnrSw4lqBzQUiRW
- ySYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=7apWozlOt2FqRFycW0Hur3TIoMg6mDhSrYsqHBdsqD4=;
- b=srcWoDTeyL3mzd6WSpl4+aKrNwnRL2fK/YYoZj8QVWHvN0dltKPpz0AVIsBVTeaNmP
- cCQUgw0Mcm+4p6ykhzm5rlWiCoGRze0MEhmoIDHxNZvh0ngUvEVRyVFQPobEOydYAUe1
- E7oketgwF78bwQYF3ginbDhsRS2jXWdMaIONVFZuy7odfRZrVRQoa4IyNFCOj3JTn5DF
- Dt0nvdVLPnJ9oRDm/9TI9GLeRWeVxo1PIMce4n/iBHcqVuSRngw/DUgc3csilYOvvPzm
- vhrs7jWM2yvlO7sQxz402M4JQFi7/gTiXmTZ9OKpNPEtqA27yFCP8n9w3oeJxDD4sTUH
- mbPA==
-X-Gm-Message-State: AOAM533BoOWj+5gr7jEmIz9KNwX4rYx/qH0dvgN9ggFdWZFFJ5fEAZLD
- fy36obBGislV3JHnPscqmQaLTV5S2Ui6ksI7DKvMJg==
-X-Google-Smtp-Source: ABdhPJx11OsxN0jvvUTrVF43kL0pyJRkssrUH5DhNuWjNKYwMbxeLZCTPogRmz6xHOov1pAOQN7zV2LeS3TnJLPKDIA=
-X-Received: by 2002:a9f:2843:: with SMTP id c61mr952901uac.129.1616581295909; 
- Wed, 24 Mar 2021 03:21:35 -0700 (PDT)
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=710e33ba8=duke.du@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=rBbEU7G6; 
+ dkim-atps=neutral
+X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir;
+ Wed, 24 Mar 2021 22:30:43 AEDT
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4F55db5fhZz2yZC
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 22:30:42 +1100 (AEDT)
+IronPort-SDR: 0chGSI9ehO0VBYA5Tq1B6Hjh7SylGTt6Urul1VpCerRx3NKSail6s63f4o/PH6tYa9vc0gGyp4
+ Fm4k/xOxKd7g==
+Received: from unknown (HELO mailbx05.quanta.corp) ([10.243.91.100])
+ by mx02.quantatw.com with ESMTP; 24 Mar 2021 19:29:35 +0800
+Received: from mailbx10.quanta.corp (10.243.91.107) by mailbx05.quanta.corp
+ (10.243.91.100) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Wed, 24 Mar
+ 2021 19:29:34 +0800
+Received: from APC01-PU1-obe.outbound.protection.outlook.com (10.243.91.252)
+ by mailbx10.quanta.corp (10.243.91.107) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2
+ via Frontend Transport; Wed, 24 Mar 2021 19:29:33 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=PIjwEC5l9+uCl0FCGGugqQuPSw+IfGzoF/lVewVDvmm1Q9otuumjV/ZfEOLL+jD/mPVI/OehjWiSKWKd7VTjaxSZGW1cJsEXk/2PpcLw4OwcwG7/LHgXRFY29FZuveooZvDtFsaxTb7Xvg6oQlHa/9k74OIMIQJAfQVPTyme7rE31wO7+L0JoIYYcA4HwT3dAvxjD+dirECVrhdNmDebk8S4gvhbxKFlyT125paOuRTAxvzgaCyvb8omAPVpGlxXXzUoYgojuToEoi/l/b1+yk74QTlNdQRz1Ny4Lqd+RlKnloRFQZdxO4yprBsxNgrcvyNTX/8cBuvusqo6ZRBCyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YnuJJ+Qc8umufNdiXAJ/RgES+GjQZBFrslC4WdZN6/4=;
+ b=Am7CRP/hTxETNRVaSoSa0zaOF17SQbWYc6Y/wAhG05kzHAyJ6q/SEjkLlEw42iSubcmjrMwgiSDHV5I/Sed0U1TcwBU2Qw/HmgDckx2NdVkw9xCeKJ2nfpcSH41x93W+ncIhah1vmCOEpOIBXX0XGGYI0RfVffPrvcRGaBUhrdKb3RM4eCuGXypF+UvaYNQhCQkjsCi+k3ua4/6rMIw0eaJ5C3sTejlTkBvcFMVwTX4wEOWhjoUWaQxDi84nNu+hCcEnkm7NktAqwfLKVoYRbfjXcuXKi+vs/lQM8sx/h0Dll2cmGKGbTSMZnPwMBCr2GyxFVG/iZJnRMWDF3obeRg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YnuJJ+Qc8umufNdiXAJ/RgES+GjQZBFrslC4WdZN6/4=;
+ b=rBbEU7G6N0tzNQjka6IgygO1AHtCbpd7chvT2g3QOoG/Ixjpsp0TYCuM8nLJLFoAeZJ1p2dKe9HoF4F6TjuAxVuwzdRKWTCu5crEyLhMSJm1Sed/NY8KU9bpEqgc+3cuTQyyUmyQlqJSUsBjp/cKK2ItIL6Usa72cC25qwjh+lM=
+Received: from TY2PR04MB3712.apcprd04.prod.outlook.com (2603:1096:404:100::15)
+ by TY2PR04MB3389.apcprd04.prod.outlook.com (2603:1096:404:93::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3955.18; Wed, 24 Mar
+ 2021 11:28:31 +0000
+Received: from TY2PR04MB3712.apcprd04.prod.outlook.com
+ ([fe80::8cfe:610a:b81c:221c]) by TY2PR04MB3712.apcprd04.prod.outlook.com
+ ([fe80::8cfe:610a:b81c:221c%7]) with mapi id 15.20.3955.027; Wed, 24 Mar 2021
+ 11:28:31 +0000
+From: =?big5?B?RHVrZSBEdSAop/myu7nFKQ==?= <Duke.Du@quantatw.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Question of phosphor-sel-logger
+Thread-Topic: Question of phosphor-sel-logger
+Thread-Index: AdcgoHwyqfZQU98ITCqUNZr+o4bhCA==
+Date: Wed, 24 Mar 2021 11:28:31 +0000
+Message-ID: <TY2PR04MB3712DCE11C578706F5F6401F88639@TY2PR04MB3712.apcprd04.prod.outlook.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=quantatw.com;
+x-originating-ip: [60.251.243.66]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 18fbc0c0-be44-4783-b35f-08d8eeb7f3fb
+x-ms-traffictypediagnostic: TY2PR04MB3389:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <TY2PR04MB338967686EF3B79FACF6806A88639@TY2PR04MB3389.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: MtoCeLUAmKfph+8+AswKUky7ndTj/IM3Clbrwoe1tR+wg/3NpkP63WK92COLdRegcKFHxa2IASMv+2jUfYmAVdPK0o551XcLLcjJ0jSqNvqNHL+aWu5v6QN0dfxVr2iEO5MyXeUv7E7LmUJDlMIUqr5xKblru+RrD6yBhMGbP0nczEk1w9Eb6N288cxysujL+8RX3aEmGfoMhNVogiMGe9GTA7whvlCohijMU4s4YNKXH++cbMMb8a06t/zBZAX6XUMJerILqD+QtqnFZ0/wmsV6uKt3Vu9hWrSWE7/znP9sKp8gm2Sfa51KB6+P2TLgDmzFKyYUefTlIeqf4PLXDRstldol3tW9+ITDdehSOjjy72TpDsGNOGrFIrOKKxV6uZC2oD2wgbhdOo4dVgVx40wR/vaWsEPV9tWVDngiyjhAdu2hN0H7wdkvGYnFpW7hfERpIJubOBRebGACQaBf8ZP8ZDre776bv6KdaRJL8f4+PaC1WZDbmBoWMX2BmiNB4cgl3SQPIBK1oawwit7Ai0doholxaEYD2/3jLktRmeL/MlBhXTEnTpNjRzWzsWq1+f/Wrc86TWV58neITFuIsED6rn5YMTZEZigqaAIkJfAInh8WoZAGwqTNR4h9lqVJuJE99+3wszXPn9Z6cSg3tJSOqblILzeMRqGljnJ6Dr2r+RtGXGEI2mEU3Zp/nd7nrTXwwlCYd4TBkFHzg2rdK6RbIeLeVhEFEV5/i3dhPb4=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TY2PR04MB3712.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(136003)(366004)(396003)(376002)(346002)(39860400002)(66946007)(85182001)(7696005)(2906002)(9686003)(186003)(6916009)(64756008)(66476007)(26005)(8936002)(38100700001)(66446008)(33656002)(76116006)(6506007)(478600001)(107886003)(54906003)(4744005)(5660300002)(316002)(83380400001)(4326008)(966005)(86362001)(55016002)(71200400001)(8676002)(52536014)(66556008);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?big5?B?c3FINEl0dUwvVFFaL2NXNlFlOG9KWjU1NnIwRlMvWUZLU1pyeGlTbmpsWG5OY2x2?=
+ =?big5?B?djZjTjlrZkhLZlhWSWFDK1BxREtFNURWUmtENkpGbndvQ2I2RWYwN2VmYXU1YjVX?=
+ =?big5?B?bkd3ZUQrY0JqdG9reFFwaFhlWFVQelBNdmRSUkdNeUloTGVWMGpGVnlsYXBtZ0xs?=
+ =?big5?B?MlN4WTl2NFArM2hyWHFzTVVIaUtUNUNnK3pqNTNsZFp4aGlHMXFTM3RiSjk4UXdE?=
+ =?big5?B?dTJxY2k4K214eTM2K3h4OTFPcU9BaFBia3FBSDZqNG5CWE9CUTUrMndocU9kUGo0?=
+ =?big5?B?UWR1R2ZnVXhwQ3J1R3lQWC9rSzVjUWRVSE9ScnJPK1VEZTYra0RkZ0dCYldSU1BU?=
+ =?big5?B?UVdlTTdPc21EK1dEQUFpbXFOWmYzNXFCY2tYMXJJMUNxbm1FVEVjTm1vMWZlNUov?=
+ =?big5?B?b3hYUERXYmNGbVBaYmpZeGdvR1g1eWtyWVVxelV2SHBHdzhTcFFVY3gvWFZSR0Vr?=
+ =?big5?B?TklHUXQ2V3hQWHVUdzhIT1pZMlVnNklXQUJKVDRxc1NyclNHOHNyWTZHYkswSklL?=
+ =?big5?B?WlJPWmdEY04vbGVMSDd6OHdqOGxBUWFFNXI5OFgwc3liZmxNZ1p6SzlyRkVqZUk3?=
+ =?big5?B?R3RZNjI4SVZQYTdIM3QyNUVqc21CSmM2YWRrV01nYlByVk1jUnVJNmI0UXlSSDN4?=
+ =?big5?B?NkxCOU5ycjNLZWJEMG5EekZNWDNzZkhkVVpNSURqS3VJTmU3K3lJMThkTDV1T0Er?=
+ =?big5?B?OENzZWNTWTIrSFNZelU2VUdSaGg5Q1htTDZYNGNiZ2dmTUczRHlUOVFDMnpHU01F?=
+ =?big5?B?SExaMUlYL2Z4VXBKcC9qL3BnSEd6NjJzTldSLzZZdk5md2Uwa20vWTJXTGJFRnBa?=
+ =?big5?B?RVRjNHNWV0xRSUljWCtQZE9wVWJ2bEtHb0g1MmgxaWJTYXJUNWs0Rkx1bUUwNkZI?=
+ =?big5?B?QW1YT3AzY29WSEd2ditvUFRDZXpDcWt0aUVVYkpWcWR1ckpjd21JSm8zcVhBZlJ3?=
+ =?big5?B?b1hiNE0wWFF4OVNDYUtrVDFCOXZOc0lCRW1qUjdaVXowNnhKWlF3TkhGTC9RY3F5?=
+ =?big5?B?b0pwMytiaWF3NVFrT3BHYnlxTmxqTjlJN3dnR1hmOGNJR2NiVEF5bks5UzFJNDAr?=
+ =?big5?B?VTFnVXlRcHlWS0N4cW5HbFpsSCtBRlpQeHY5cjhSL3JUM1IrUDZUODBBSTVPaHoy?=
+ =?big5?B?YWFEQi9pMExYWjVEeGxjbjNJQTJJdVVSNVh2eXozV3RkNVdsSnJoVzZYbWFwcUt4?=
+ =?big5?B?b2h5WjZGSWF4V0ZVbmhNUlY3WnFvdGxETmZSSFUwdEpGUDl2MUtuT2dSTTM2MC9j?=
+ =?big5?B?ckxXKzVRY3FKL0hZdVVFM2tTM2t6SjFZL2gwMGFkTmc4YVpKaGsrRGdWR0ZjNWFx?=
+ =?big5?B?dWV6M0N0T0oraU9pMFNHKzZKdkkvUVJ5dG1vV09jVmVmbE9TMENuVVZvUTlFYlRF?=
+ =?big5?B?TncySUJTK0RvSURPWEVTc05ISVByRXA1N2orTjRSVitFTHRyZExFQzJraTZSSk5l?=
+ =?big5?B?eGE0U0tZLyt3Z2ZSUHJoNktXL2NCZ2F5MjN4RVRqVXNoWlM3WWNRL2Y4UkZuMFF6?=
+ =?big5?B?b1ZlK0docSt0ajk4NVFlUjNSaHN2RXVkMTI2VWtLaVBZNVZpSThYd0Q1QkF5UW1h?=
+ =?big5?B?YURLVFZ6bG5qUjFvMVQ4V21MVVRrYUtTZ0R1MS81Z0ZTSXlwcmY0cXYrNWlkMXJC?=
+ =?big5?Q?GoUraIuCFQyD3serq0KB6kpHgKk=3D?=
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20210324155013.1e5faa3c@xhacker.debian>
-In-Reply-To: <20210324155013.1e5faa3c@xhacker.debian>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Wed, 24 Mar 2021 11:20:59 +0100
-Message-ID: <CAPDyKFpau=FRCupREsgZiwFv-XRhH04si1wKiEPwM4K2+fct1w@mail.gmail.com>
-Subject: Re: [PATCH] mmc: sdhci: replace mmc->parent with mmc_dev() for
- consistency
-To: Jisheng Zhang <Jisheng.Zhang@synaptics.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY2PR04MB3712.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 18fbc0c0-be44-4783-b35f-08d8eeb7f3fb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Mar 2021 11:28:31.2140 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 8BEzcPoejMGLH5fpuXJt/PqLdzl1//J01RN29FteAT+++EBbaNXtKlKAhSHGehOTo0CN3tIAcLkTSnvO51ERsQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR04MB3389
+X-OriginatorOrg: quantatw.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,335 +141,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Andrew Jeffery <andrew@aj.id.au>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- linux-mmc <linux-mmc@vger.kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- linux-tegra <linux-tegra@vger.kernel.org>,
- Angelo Dureghello <angelo.dureghello@timesys.com>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: "vernon.mauery@linux.intel.com" <vernon.mauery@linux.intel.com>,
+ "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>,
+ =?big5?B?RnJhbiBIc3UgKK59u3jBvik=?= <Fran.Hsu@quantatw.com>,
+ =?big5?B?R2VvcmdlIEh1bmcgKKx4qb63cSk=?= <George.Hung@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 24 Mar 2021 at 08:50, Jisheng Zhang <Jisheng.Zhang@synaptics.com> wrote:
->
-> As pointed out by Ulf, "both "mmc->parent" and mmc_dev(mmc) are being
-> used in the entire c-file". Convert all the mmc->parent usage in all
-> sdhci host driver to mmc_dev() for consistency.
->
-> Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
-> Signed-off-by: Jisheng Zhang <Jisheng.Zhang@synaptics.com>
-
-Applied for next, thanks!
-
-Kind regards
-Uffe
-
-
-> ---
->  drivers/mmc/host/sdhci-esdhc-mcf.c |  8 +++----
->  drivers/mmc/host/sdhci-of-aspeed.c |  2 +-
->  drivers/mmc/host/sdhci-tegra.c     | 34 +++++++++++++++---------------
->  drivers/mmc/host/sdhci.c           | 24 ++++++++++-----------
->  drivers/mmc/host/sdhci_am654.c     |  2 +-
->  5 files changed, 35 insertions(+), 35 deletions(-)
->
-> diff --git a/drivers/mmc/host/sdhci-esdhc-mcf.c b/drivers/mmc/host/sdhci-esdhc-mcf.c
-> index ca7a1690b2a8..05926bf5ecf9 100644
-> --- a/drivers/mmc/host/sdhci-esdhc-mcf.c
-> +++ b/drivers/mmc/host/sdhci-esdhc-mcf.c
-> @@ -367,14 +367,14 @@ static int esdhc_mcf_plat_init(struct sdhci_host *host,
->                                struct pltfm_mcf_data *mcf_data)
->  {
->         struct mcf_esdhc_platform_data *plat_data;
-> +       struct device *dev = mmc_dev(host->mmc);
->
-> -       if (!host->mmc->parent->platform_data) {
-> -               dev_err(mmc_dev(host->mmc), "no platform data!\n");
-> +       if (!dev->platform_data) {
-> +               dev_err(dev, "no platform data!\n");
->                 return -EINVAL;
->         }
->
-> -       plat_data = (struct mcf_esdhc_platform_data *)
-> -                       host->mmc->parent->platform_data;
-> +       plat_data = (struct mcf_esdhc_platform_data *)dev->platform_data;
->
->         /* Card_detect */
->         switch (plat_data->cd_type) {
-> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-> index 7d8692e90996..d001c51074a0 100644
-> --- a/drivers/mmc/host/sdhci-of-aspeed.c
-> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
-> @@ -181,7 +181,7 @@ aspeed_sdhci_configure_phase(struct sdhci_host *host, unsigned long rate)
->         struct aspeed_sdhci *sdhci;
->         struct device *dev;
->
-> -       dev = host->mmc->parent;
-> +       dev = mmc_dev(host->mmc);
->         sdhci = sdhci_pltfm_priv(sdhci_priv(host));
->
->         if (!sdhci->phase_desc)
-> diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
-> index 41d193fa77bb..c61f797a853f 100644
-> --- a/drivers/mmc/host/sdhci-tegra.c
-> +++ b/drivers/mmc/host/sdhci-tegra.c
-> @@ -596,49 +596,49 @@ static void tegra_sdhci_parse_pad_autocal_dt(struct sdhci_host *host)
->                         &tegra_host->autocal_offsets;
->         int err;
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-up-offset-3v3",
->                         &autocal->pull_up_3v3);
->         if (err)
->                 autocal->pull_up_3v3 = 0;
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-down-offset-3v3",
->                         &autocal->pull_down_3v3);
->         if (err)
->                 autocal->pull_down_3v3 = 0;
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-up-offset-1v8",
->                         &autocal->pull_up_1v8);
->         if (err)
->                 autocal->pull_up_1v8 = 0;
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-down-offset-1v8",
->                         &autocal->pull_down_1v8);
->         if (err)
->                 autocal->pull_down_1v8 = 0;
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-up-offset-sdr104",
->                         &autocal->pull_up_sdr104);
->         if (err)
->                 autocal->pull_up_sdr104 = autocal->pull_up_1v8;
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-down-offset-sdr104",
->                         &autocal->pull_down_sdr104);
->         if (err)
->                 autocal->pull_down_sdr104 = autocal->pull_down_1v8;
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-up-offset-hs400",
->                         &autocal->pull_up_hs400);
->         if (err)
->                 autocal->pull_up_hs400 = autocal->pull_up_1v8;
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-down-offset-hs400",
->                         &autocal->pull_down_hs400);
->         if (err)
-> @@ -653,7 +653,7 @@ static void tegra_sdhci_parse_pad_autocal_dt(struct sdhci_host *host)
->         if (!(tegra_host->soc_data->nvquirks & NVQUIRK_NEEDS_PAD_CONTROL))
->                 return;
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-up-offset-3v3-timeout",
->                         &autocal->pull_up_3v3_timeout);
->         if (err) {
-> @@ -664,7 +664,7 @@ static void tegra_sdhci_parse_pad_autocal_dt(struct sdhci_host *host)
->                 autocal->pull_up_3v3_timeout = 0;
->         }
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-down-offset-3v3-timeout",
->                         &autocal->pull_down_3v3_timeout);
->         if (err) {
-> @@ -675,7 +675,7 @@ static void tegra_sdhci_parse_pad_autocal_dt(struct sdhci_host *host)
->                 autocal->pull_down_3v3_timeout = 0;
->         }
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-up-offset-1v8-timeout",
->                         &autocal->pull_up_1v8_timeout);
->         if (err) {
-> @@ -686,7 +686,7 @@ static void tegra_sdhci_parse_pad_autocal_dt(struct sdhci_host *host)
->                 autocal->pull_up_1v8_timeout = 0;
->         }
->
-> -       err = device_property_read_u32(host->mmc->parent,
-> +       err = device_property_read_u32(mmc_dev(host->mmc),
->                         "nvidia,pad-autocal-pull-down-offset-1v8-timeout",
->                         &autocal->pull_down_1v8_timeout);
->         if (err) {
-> @@ -720,17 +720,17 @@ static void tegra_sdhci_parse_tap_and_trim(struct sdhci_host *host)
->         struct sdhci_tegra *tegra_host = sdhci_pltfm_priv(pltfm_host);
->         int err;
->
-> -       err = device_property_read_u32(host->mmc->parent, "nvidia,default-tap",
-> +       err = device_property_read_u32(mmc_dev(host->mmc), "nvidia,default-tap",
->                                        &tegra_host->default_tap);
->         if (err)
->                 tegra_host->default_tap = 0;
->
-> -       err = device_property_read_u32(host->mmc->parent, "nvidia,default-trim",
-> +       err = device_property_read_u32(mmc_dev(host->mmc), "nvidia,default-trim",
->                                        &tegra_host->default_trim);
->         if (err)
->                 tegra_host->default_trim = 0;
->
-> -       err = device_property_read_u32(host->mmc->parent, "nvidia,dqs-trim",
-> +       err = device_property_read_u32(mmc_dev(host->mmc), "nvidia,dqs-trim",
->                                        &tegra_host->dqs_trim);
->         if (err)
->                 tegra_host->dqs_trim = 0x11;
-> @@ -741,7 +741,7 @@ static void tegra_sdhci_parse_dt(struct sdhci_host *host)
->         struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
->         struct sdhci_tegra *tegra_host = sdhci_pltfm_priv(pltfm_host);
->
-> -       if (device_property_read_bool(host->mmc->parent, "supports-cqe"))
-> +       if (device_property_read_bool(mmc_dev(host->mmc), "supports-cqe"))
->                 tegra_host->enable_hwcq = true;
->         else
->                 tegra_host->enable_hwcq = false;
-> @@ -1529,7 +1529,7 @@ static int sdhci_tegra_add_host(struct sdhci_host *host)
->
->         host->mmc->caps2 |= MMC_CAP2_CQE | MMC_CAP2_CQE_DCMD;
->
-> -       cq_host = devm_kzalloc(host->mmc->parent,
-> +       cq_host = devm_kzalloc(mmc_dev(host->mmc),
->                                 sizeof(*cq_host), GFP_KERNEL);
->         if (!cq_host) {
->                 ret = -ENOMEM;
-> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-> index aefd0441658c..bf238ade1602 100644
-> --- a/drivers/mmc/host/sdhci.c
-> +++ b/drivers/mmc/host/sdhci.c
-> @@ -188,7 +188,7 @@ static void sdhci_runtime_pm_bus_on(struct sdhci_host *host)
->         if (host->bus_on)
->                 return;
->         host->bus_on = true;
-> -       pm_runtime_get_noresume(host->mmc->parent);
-> +       pm_runtime_get_noresume(mmc_dev(host->mmc));
->  }
->
->  static void sdhci_runtime_pm_bus_off(struct sdhci_host *host)
-> @@ -196,7 +196,7 @@ static void sdhci_runtime_pm_bus_off(struct sdhci_host *host)
->         if (!host->bus_on)
->                 return;
->         host->bus_on = false;
-> -       pm_runtime_put_noidle(host->mmc->parent);
-> +       pm_runtime_put_noidle(mmc_dev(host->mmc));
->  }
->
->  void sdhci_reset(struct sdhci_host *host, u8 mask)
-> @@ -648,7 +648,7 @@ static int sdhci_pre_dma_transfer(struct sdhci_host *host,
->                         }
->                 }
->                 /* Switch ownership to the DMA */
-> -               dma_sync_single_for_device(host->mmc->parent,
-> +               dma_sync_single_for_device(mmc_dev(host->mmc),
->                                            host->bounce_addr,
->                                            host->bounce_buffer_size,
->                                            mmc_get_dma_dir(data));
-> @@ -1176,7 +1176,7 @@ static int sdhci_external_dma_init(struct sdhci_host *host)
->         int ret = 0;
->         struct mmc_host *mmc = host->mmc;
->
-> -       host->tx_chan = dma_request_chan(mmc->parent, "tx");
-> +       host->tx_chan = dma_request_chan(mmc_dev(mmc), "tx");
->         if (IS_ERR(host->tx_chan)) {
->                 ret = PTR_ERR(host->tx_chan);
->                 if (ret != -EPROBE_DEFER)
-> @@ -1185,7 +1185,7 @@ static int sdhci_external_dma_init(struct sdhci_host *host)
->                 return ret;
->         }
->
-> -       host->rx_chan = dma_request_chan(mmc->parent, "rx");
-> +       host->rx_chan = dma_request_chan(mmc_dev(mmc), "rx");
->         if (IS_ERR(host->rx_chan)) {
->                 if (host->tx_chan) {
->                         dma_release_channel(host->tx_chan);
-> @@ -2489,14 +2489,14 @@ void sdhci_enable_sdio_irq(struct mmc_host *mmc, int enable)
->         unsigned long flags;
->
->         if (enable)
-> -               pm_runtime_get_noresume(mmc->parent);
-> +               pm_runtime_get_noresume(mmc_dev(mmc));
->
->         spin_lock_irqsave(&host->lock, flags);
->         sdhci_enable_sdio_irq_nolock(host, enable);
->         spin_unlock_irqrestore(&host->lock, flags);
->
->         if (!enable)
-> -               pm_runtime_put_noidle(mmc->parent);
-> +               pm_runtime_put_noidle(mmc_dev(mmc));
->  }
->  EXPORT_SYMBOL_GPL(sdhci_enable_sdio_irq);
->
-> @@ -3063,7 +3063,7 @@ static bool sdhci_request_done(struct sdhci_host *host)
->                                                 length = host->bounce_buffer_size;
->                                         }
->                                         dma_sync_single_for_cpu(
-> -                                               host->mmc->parent,
-> +                                               mmc_dev(host->mmc),
->                                                 host->bounce_addr,
->                                                 host->bounce_buffer_size,
->                                                 DMA_FROM_DEVICE);
-> @@ -3074,7 +3074,7 @@ static bool sdhci_request_done(struct sdhci_host *host)
->                                 } else {
->                                         /* No copying, just switch ownership */
->                                         dma_sync_single_for_cpu(
-> -                                               host->mmc->parent,
-> +                                               mmc_dev(host->mmc),
->                                                 host->bounce_addr,
->                                                 host->bounce_buffer_size,
->                                                 mmc_get_dma_dir(data));
-> @@ -4053,7 +4053,7 @@ static void sdhci_allocate_bounce_buffer(struct sdhci_host *host)
->          * speedups by the help of a bounce buffer to group scattered
->          * reads/writes together.
->          */
-> -       host->bounce_buffer = devm_kmalloc(mmc->parent,
-> +       host->bounce_buffer = devm_kmalloc(mmc_dev(mmc),
->                                            bounce_size,
->                                            GFP_KERNEL);
->         if (!host->bounce_buffer) {
-> @@ -4067,11 +4067,11 @@ static void sdhci_allocate_bounce_buffer(struct sdhci_host *host)
->                 return;
->         }
->
-> -       host->bounce_addr = dma_map_single(mmc->parent,
-> +       host->bounce_addr = dma_map_single(mmc_dev(mmc),
->                                            host->bounce_buffer,
->                                            bounce_size,
->                                            DMA_BIDIRECTIONAL);
-> -       ret = dma_mapping_error(mmc->parent, host->bounce_addr);
-> +       ret = dma_mapping_error(mmc_dev(mmc), host->bounce_addr);
->         if (ret)
->                 /* Again fall back to max_segs == 1 */
->                 return;
-> diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
-> index 7a34649b0754..1fad6e442688 100644
-> --- a/drivers/mmc/host/sdhci_am654.c
-> +++ b/drivers/mmc/host/sdhci_am654.c
-> @@ -558,7 +558,7 @@ static int sdhci_am654_cqe_add_host(struct sdhci_host *host)
->         struct cqhci_host *cq_host;
->         int ret;
->
-> -       cq_host = devm_kzalloc(host->mmc->parent, sizeof(struct cqhci_host),
-> +       cq_host = devm_kzalloc(mmc_dev(host->mmc), sizeof(struct cqhci_host),
->                                GFP_KERNEL);
->         if (!cq_host)
->                 return -ENOMEM;
-> --
-> 2.31.0
->
+SGkgYWxsLA0KDQogICAgIEkgdXNlZCBwYWNrYWdlIHBob3NwaG9yLWh3bW9uIGFuZCBwaG9zcG9y
+LXNlbC1sb2dnZXIgdG8gbW9uaXRvciBzZW5zb3IgYW5kIGNyZWF0ZSBsb2cgd2hlbiBzZW5zb3Ig
+cmVhZGluZw0KICAgY3Jvc3MgdGhlIHRocmVzaG9sZC4gSSBmb3VuZCBhZnRlciB0aGUgY29tbWl0
+IDI1YjI2ZTE2MmJkMTA5YjUxYWEwOWIxNmYyNmY5YWEzZDlkOTQwZmEgb2YgcGhvc3Bob3Itc2Vs
+LWxvZ2dlciANCiAgIHdvdWxkIGNhdGNoIHRoZSBzaWduYWwgIlRocmVzaG9sZEFzc2VydGVkIiB0
+byBjcmVhdGUgc2Vuc29yIHRocmVob2xkIGxvZyBpbiB0aGUgam91cm5hbCwgYnV0IHRoZSBwaG9z
+cGhvci1od21vbiANCiAgIHdvdWxkIG5vdCBzZW5kIHRoZSBzaWduYWwgIlRocmVzaG9sZEFzc2Vy
+dGVkIiB3aGVuIHNlbnNvciByZWFkaW5nIGlzIGFibm9ybWFsIHNvIHRoYXQgcGhvc3Bob3Itc2Vs
+LWxvZ2dlcg0KICAgd291bGQgbm90IGNyZWF0ZSB0aGUgc2Vuc29yIHRocmVob2xkIGxvZywgYW0g
+SSByaWdodCA/DQoNCiAgIElmIEknbSByaWdodCwgY2FuIHlvdSBnaXZlIG1lIHNvbWUgc3VnZ2Vz
+dGlvbiB0byBmaXggdGhpcyBzaWRlIGVmZmVjdCwgb3Igd2hhdCBzZXR0aW5nIEkgaGF2ZSBsb3N0
+IGluIHRoZQ0KICAgcGhvc3Bob3ItaHdtb24gb3IgcGhvc3Bob3Itc2VsLWxvZ2dlciA/IA0KDQog
+ICBwaG9zcGhvci1zZWwtbG9nZ2VyIGNvbW1pdCAyNWIyNmUxNjJiZDEwOWI1MWFhMDliMTZmMjZm
+OWFhM2Q5ZDk0MGZhIGxpbmsgOg0KICAgaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bo
+b3Itc2VsLWxvZ2dlci9jb21taXQvMjViMjZlMTYyYmQxMDliNTFhYTA5YjE2ZjI2ZjlhYTNkOWQ5
+NDBmYQ0KDQogICBUaGFua3MgdmVyeSBtdWNoICENCiAgIER1a2UNCg==
