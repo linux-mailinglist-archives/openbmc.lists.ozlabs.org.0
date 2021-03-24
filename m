@@ -1,70 +1,126 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF4F3347207
-	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 08:07:38 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B60E7348B58
+	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 09:16:44 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F4zp05FMBz3022
-	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 18:07:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F5dHG5G7rz3bnM
+	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 19:16:42 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=gmQ6qNBe;
+	dkim=pass (1024-bit key; unprotected) header.d=Synaptics.onmicrosoft.com header.i=@Synaptics.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-Synaptics-onmicrosoft-com header.b=OIRYA0Ad;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::12d;
- helo=mail-il1-x12d.google.com; envelope-from=gmouse@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=gmQ6qNBe; dkim-atps=neutral
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com
- [IPv6:2607:f8b0:4864:20::12d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=synaptics.com (client-ip=40.107.244.78;
+ helo=nam12-mw2-obe.outbound.protection.outlook.com;
+ envelope-from=jisheng.zhang@synaptics.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=Synaptics.onmicrosoft.com
+ header.i=@Synaptics.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-Synaptics-onmicrosoft-com header.b=OIRYA0Ad; 
+ dkim-atps=neutral
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12on2078.outbound.protection.outlook.com [40.107.244.78])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F4znm11QKz3022
- for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 18:07:21 +1100 (AEDT)
-Received: by mail-il1-x12d.google.com with SMTP id j11so20462283ilu.13
- for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 00:07:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=qI8+Vulo2EKpYq/OYNezAgXZf+iTLFrnNVnbFK3dIn0=;
- b=gmQ6qNBe2t+dT8C/IuG2BmZuUqXVd89QKDudwn5ZzNiZ4DpPeS2gTuIS55TSoxr9J5
- UyJr5Pr+gCkg02OpD4pizFRbocbHU/4XJAIHrBLcezi8rOvwqL/qrh+MoyyRsfECuWMe
- 8DPe5EZcmk2QofXY8vDJYTTGf0CUaYG4/v856hQhkcW48IaG74f+Cge3lW3pwjGMnoCe
- 2piFfLuZ+8pEr3nfXF8zmAMELZmXyQzpVSN9JcqAwNMkLjRGEoQgbMYgh7nwouHdhOAc
- Ld+MFpODaBvOxSjkq5pJ+f/YOWmDMA0fuqOCDWVbzpcsVxPC210tUatb5Aga9tgv0Isj
- oDIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=qI8+Vulo2EKpYq/OYNezAgXZf+iTLFrnNVnbFK3dIn0=;
- b=DgFGPEcd+rh0CFZXvsli21zMu/7F0gdT+gprj4cVvBRSzJHdFdpk0NkVDuzTq9rz0U
- zKQuqVhqz6ZZj296pvB/joTBAINoKqhV/eABwVZ/9KpZTjooaBcpYYChnS+LpKHTJTBp
- kfBMt2xXYFYiFVU+nImRbZBee44+4i7l4suDBozK/dd6qBXL7/AIVw7mEznugx8sVUK1
- jkZR7H3fuSUvrfl9A0Wg8zCfwCVSebbV8+pbGMx31dKY7X7yqYB0i0uzZlCV5XrAmggi
- zg2C9FYgqhMIg/Vte1Zjc/Sj+xzybWS444s+s6wRsRc1UE9wFROU5a1R75BjCFMoelmA
- bf4Q==
-X-Gm-Message-State: AOAM530DPAt/sHCzojcP9fK3EjHwghEetSgFYIhNV37/rmEzsKaARMvQ
- bQM8O2+ZfzX6YHiGuK0BMUw07nPtW9yEPoXAPdgq8g==
-X-Google-Smtp-Source: ABdhPJy6R0dDialPa+D6JruieV+DuvZckANllwcydG1tzYQ2+AhlVe4dzyX4coOjDF9u0U4Uzm+cUqBxHW9PWwu4Xr4=
-X-Received: by 2002:a92:d604:: with SMTP id w4mr1552067ilm.11.1616569637562;
- Wed, 24 Mar 2021 00:07:17 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F50lV3tfpz2xb9;
+ Wed, 24 Mar 2021 18:50:28 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=odrjEiV+sWIVvb4CjbyN7V+tbMmZ+Ndb+VM3Mk+THNAfMT7qQDjOzLfDKBMaXq1Ymipf4PEcIJQC1baImlF6magdxVMonfFN0btGIfr1JmbIbEl3M8kTn4U5aIydHCBzYeiHfbVSQc0tQzX4BHecmsQdGhpYzvowJh8WY1vlWmW19lJoEB0R7NK57fpTSTtMD72EHkxbc4v0qKXRjCtiTwKlDU0ckVhcePHJFOwOjwLoXl7b/CFRULZpHmGKXcfgACtoY2a1V74HXK0ecLdOV2aQvqSdSFVLePpO/FIrJy7weSwvv6S1/UwOjYTbimw+aiq8YVmHOuzwj7mNQON1Xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VIXyB4Y0zI3S5VVl77tjBQGyk+Y/1eftBDGEMYEDxyk=;
+ b=OEYz5lwXNrYdsjbHepzacRpetryC7fC5vgmiLOkXgG6zH83os8cb4s/sTY3Kl6C/GfD+f7b3XI714cqOWvBOWS3qigbZSGu7rpIrym1sb1MZawaR+4KAwN1tEOVtqDSQIzZ5PJNEfPPwriMgKp6927yf2mwHbDvHVfhfYdLlqsLO1wSLiOciNo+CaJhD5ghi8kLMXbhxNbHaD4BkovBecrzFjkvc++8RM49IqorqzlE3rPy/fB/9ba2BSmIpC1hwqItJ6QksoBkjLg6my4I//TP68AT2IdB+um/OPHifF3uzmbDhdA+WvwJCKY3JXvyHN/6gSMmlxdb0nT3z10klFw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=synaptics.com; dmarc=pass action=none
+ header.from=synaptics.com; dkim=pass header.d=synaptics.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=Synaptics.onmicrosoft.com; s=selector2-Synaptics-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VIXyB4Y0zI3S5VVl77tjBQGyk+Y/1eftBDGEMYEDxyk=;
+ b=OIRYA0AdOYLmzVllFmVilavnKTgZzuwO3cYzDWu+0WJ1GIUKTIkfPf2+TXsnn1HanUJks5EjJBZEKIIotgC/CAgF4UGQO2Z5P69HFgDyP3T6t/HUhcKFIE+KUPhVHLeiehJZ8+5M2yI5W7PmUayISmzmMojmE+Latu5VvBq6xPk=
+Authentication-Results: timesys.com; dkim=none (message not signed)
+ header.d=none;timesys.com; dmarc=none action=none header.from=synaptics.com;
+Received: from BY5PR03MB5345.namprd03.prod.outlook.com (2603:10b6:a03:219::16)
+ by BYAPR03MB4805.namprd03.prod.outlook.com (2603:10b6:a03:12e::31)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3977.25; Wed, 24 Mar
+ 2021 07:50:22 +0000
+Received: from BY5PR03MB5345.namprd03.prod.outlook.com
+ ([fe80::8569:341f:4bc6:5b72]) by BY5PR03MB5345.namprd03.prod.outlook.com
+ ([fe80::8569:341f:4bc6:5b72%7]) with mapi id 15.20.3955.027; Wed, 24 Mar 2021
+ 07:50:22 +0000
+Date: Wed, 24 Mar 2021 15:50:13 +0800
+From: Jisheng Zhang <Jisheng.Zhang@synaptics.com>
+To: Angelo Dureghello <angelo.dureghello@timesys.com>, Adrian Hunter
+ <adrian.hunter@intel.com>, Ulf Hansson <ulf.hansson@linaro.org>, Andrew
+ Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>, Thierry Reding
+ <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>
+Subject: [PATCH] mmc: sdhci: replace mmc->parent with mmc_dev() for consistency
+Message-ID: <20210324155013.1e5faa3c@xhacker.debian>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [192.147.44.204]
+X-ClientProxiedBy: SJ0PR13CA0176.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c7::31) To BY5PR03MB5345.namprd03.prod.outlook.com
+ (2603:10b6:a03:219::16)
 MIME-Version: 1.0
-References: <20210308171049.3962577-1-gmouse@google.com>
-In-Reply-To: <20210308171049.3962577-1-gmouse@google.com>
-From: Anton Kachalov <gmouse@google.com>
-Date: Wed, 24 Mar 2021 08:07:06 +0100
-Message-ID: <CADVsX8-Vy=t9Y1VYqY9kLY-4EjsaUN2fNABw6JzM8noXB+SBvA@mail.gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: nuvoton: Fix flash layout
-To: Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
- Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
- Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
- Rob Herring <robh+dt@kernel.org>
-Content-Type: multipart/alternative; boundary="00000000000001000005be42f398"
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from xhacker.debian (192.147.44.204) by
+ SJ0PR13CA0176.namprd13.prod.outlook.com (2603:10b6:a03:2c7::31) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3977.9 via Frontend
+ Transport; Wed, 24 Mar 2021 07:50:18 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: a13c86d1-0165-4baf-55b2-08d8ee997a35
+X-MS-TrafficTypeDiagnostic: BYAPR03MB4805:
+X-Microsoft-Antispam-PRVS: <BYAPR03MB480544C8F948DEA24AA53208ED639@BYAPR03MB4805.namprd03.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:4303;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: RFrSWPqxb7ESPZsBzKzelUXOwwqqFsypKQh8UwpuLD6nMpqsHjs2fK/b9655SqgIfuI4QwfDX1J/Qt8orOIWzv3GRyIgzlb7satZpfSnWFlt585TPWtNA6aaXwPsw3BDLbP+8pkuD4PzrPZJqb2izqDzN6Nw/GZ/xTw/eHfYKjM+TlKq5xsYZhuysE1I4tAx63VNnD0Njr8sp9GZOLSOKieUWk8b6hk3BoepXIsZkwkAWoJ8sgFa6NHhVt+3uXI2k8vCOLu21iXIWJ/eEp02BoLjnVOM0pmHVJZvFQ+tBXrlYg/m9OBF5inJhOT3C8AIwhByfOSizXXHkjiHRLV8XhEua98lKbSiABhY9Dig2sUmI30pmj/e4gQ0HYq8S2MhogFJuf3Rq+6FfNl/QzTxj5dbT5Yq4fYsN6PvBKaZ2LVyQ08q2WjrJw+AR2Lq3IpROIniCBTRCqCjYSnsFjsmrTCetsa6tJCSiLSfZj/hlUhVw/go63dw7wnVf/761Ei/GcYfSXrtBzdWB/Hm4aQh7hobtGldzeLMKg54H8uh4UGTnjy6lhzowmg2jNgm0z6nAp3RtJKS+TUGDOJNvwAsXl35Wvrp8DCPPaRxrui1x+wj6g5us/pGT8lx6AvdsWM1GjBYErSsJOK0Vfgq6MiMe6JM2nEiw45JboQ3Xvo90UM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY5PR03MB5345.namprd03.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(346002)(366004)(136003)(376002)(396003)(39850400004)(7696005)(478600001)(52116002)(6666004)(6506007)(110136005)(7416002)(186003)(16526019)(26005)(4326008)(316002)(2906002)(55016002)(9686003)(956004)(66946007)(30864003)(1076003)(66556008)(86362001)(66476007)(5660300002)(83380400001)(8676002)(38100700001)(8936002);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?kLE3tdQHpy2mTqeU2q5cCWIRk2tM6jZO5bW4u+VD6aTJxFbzPHEJUFeFqo9D?=
+ =?us-ascii?Q?4uASzORjlcnWgezH2YAnm6mHCxOmgPO8Vk7qotcKh0W5SX2fTL96ITHMhGQa?=
+ =?us-ascii?Q?JkbInEs6pq2Fu73IIkO1yEA+OzPC0kgc83EcaX6AxQ9Ey+6Khl7lfxtwCzQm?=
+ =?us-ascii?Q?oX0GGpvh8EpCJqowdZldMu9jNIWOor9KebNStQZgjzgCIfn/GxjdAyyrgaT7?=
+ =?us-ascii?Q?Fb+rPyUEOKR8yoJWVC69Ein/ymTPAkM0/b8Cz4sBaHxTWZeIOfcajQ9NevIn?=
+ =?us-ascii?Q?sOCgtRL2w8I2K9FBEIcCu7CfwDri/7Tq/iJizOANooHY3OItL70rHtgt7Pn3?=
+ =?us-ascii?Q?gLl5XKMrVyBp8FC7LLy51zNVGkMEi2tNG+yO+oc/wrQ4PG1Mvn8w/tC8D/T/?=
+ =?us-ascii?Q?CZqhG3C9RWULchqYqDTctoxHQ6ryyD1P07ySEmGYtLqzTFHdWF5BCZ+0Karj?=
+ =?us-ascii?Q?yYNP2ugPItnT6WEHrLgKJtkCv4SpHwj+efh70ofVZHYDipYJKsp8+cWZPpQg?=
+ =?us-ascii?Q?QsUhp4jzJAHw0HpfC8U60bReAtrN17zaSiRYm1R9cqyYUfvHt0N73t3CSqTu?=
+ =?us-ascii?Q?Jty5l4YetpjThTh8addGEl5Sx6pphuz0lKK/60DVcK6knjeELRAVg1yPXI77?=
+ =?us-ascii?Q?6t0Nf1lqMmE0JroHuBIYfhBcOPbU2F0RVy29kfGIR1A9mwkpXyKPtEKKJkMo?=
+ =?us-ascii?Q?+1jV5+DLdemJuQmPSfKGKUquWpVdOX5w8TmxlTJHJilbJjhzR+J6/eelDdlm?=
+ =?us-ascii?Q?ZqC4uWx6tX9nDQC4xFP63Kni8XDg3ZOhrixt/JaUYj4KIQPTJnVMMyU5kpsB?=
+ =?us-ascii?Q?Y12gOW92JBT96cJdXCZLLFcvHG4yKgyaSpwgzdJD090L4KD6qIedxTHLC5tx?=
+ =?us-ascii?Q?4nv4VekOgNUhFnQ3pt6yiTSCaBJV9OzeRfE7yDqjMCwnSKIDl3mmNaw2pl/Y?=
+ =?us-ascii?Q?ttnYbHlV+21DitfpSZqcrLu+CbCwi1GFuC3kQZqQ1zwrWYsLpu57gLIIOnAG?=
+ =?us-ascii?Q?aAu/RRl/VdYVnpNGtsR/BQ4Os6474PIU3n8MJ4H35RtwtGIyOCx7ndPk4zRm?=
+ =?us-ascii?Q?1sWkZZfp31CZx2OOHrsgO1c7kTP3/1ovkcC9//K7QiE2WlxVkAwKlNOc7jwR?=
+ =?us-ascii?Q?0s4fq8UOB8PpXn8LJUIoe1EdWn94dl1qQmoC+u0yUAse6dHKz//rvmG3p5VH?=
+ =?us-ascii?Q?hRqebo7mBLvtbUeeG/FBrWHL+YVJ64tXjiDwM2PBkckGSRZLKqNOo4SDUauZ?=
+ =?us-ascii?Q?6CZ77O7re2kZ5A6be267Fz5I5/UK3f6UuGwDucbR+/9t6QyGrbs0qPWi66NX?=
+ =?us-ascii?Q?fpaWteyS1E20Jf0TQFaHO67z?=
+X-OriginatorOrg: synaptics.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a13c86d1-0165-4baf-55b2-08d8ee997a35
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR03MB5345.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Mar 2021 07:50:22.2330 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 335d1fbc-2124-4173-9863-17e7051a2a0e
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /emMWIYbvh37R6x743IauuMPr+scbAWywyDXowNKhAAC6oJjDo50E3exbanO3ChHJcWc+yJTXOIjkpPXFUzcHQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR03MB4805
+X-Mailman-Approved-At: Thu, 25 Mar 2021 19:16:05 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,190 +132,319 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000001000005be42f398
-Content-Type: text/plain; charset="UTF-8"
+As pointed out by Ulf, "both "mmc->parent" and mmc_dev(mmc) are being
+used in the entire c-file". Convert all the mmc->parent usage in all
+sdhci host driver to mmc_dev() for consistency.
 
-Gently ping
+Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Jisheng Zhang <Jisheng.Zhang@synaptics.com>
+---
+ drivers/mmc/host/sdhci-esdhc-mcf.c |  8 +++----
+ drivers/mmc/host/sdhci-of-aspeed.c |  2 +-
+ drivers/mmc/host/sdhci-tegra.c     | 34 +++++++++++++++---------------
+ drivers/mmc/host/sdhci.c           | 24 ++++++++++-----------
+ drivers/mmc/host/sdhci_am654.c     |  2 +-
+ 5 files changed, 35 insertions(+), 35 deletions(-)
 
-On Mon, 8 Mar 2021 at 18:11, <gmouse@google.com> wrote:
+diff --git a/drivers/mmc/host/sdhci-esdhc-mcf.c b/drivers/mmc/host/sdhci-esdhc-mcf.c
+index ca7a1690b2a8..05926bf5ecf9 100644
+--- a/drivers/mmc/host/sdhci-esdhc-mcf.c
++++ b/drivers/mmc/host/sdhci-esdhc-mcf.c
+@@ -367,14 +367,14 @@ static int esdhc_mcf_plat_init(struct sdhci_host *host,
+ 			       struct pltfm_mcf_data *mcf_data)
+ {
+ 	struct mcf_esdhc_platform_data *plat_data;
++	struct device *dev = mmc_dev(host->mmc);
+ 
+-	if (!host->mmc->parent->platform_data) {
+-		dev_err(mmc_dev(host->mmc), "no platform data!\n");
++	if (!dev->platform_data) {
++		dev_err(dev, "no platform data!\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	plat_data = (struct mcf_esdhc_platform_data *)
+-			host->mmc->parent->platform_data;
++	plat_data = (struct mcf_esdhc_platform_data *)dev->platform_data;
+ 
+ 	/* Card_detect */
+ 	switch (plat_data->cd_type) {
+diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
+index 7d8692e90996..d001c51074a0 100644
+--- a/drivers/mmc/host/sdhci-of-aspeed.c
++++ b/drivers/mmc/host/sdhci-of-aspeed.c
+@@ -181,7 +181,7 @@ aspeed_sdhci_configure_phase(struct sdhci_host *host, unsigned long rate)
+ 	struct aspeed_sdhci *sdhci;
+ 	struct device *dev;
+ 
+-	dev = host->mmc->parent;
++	dev = mmc_dev(host->mmc);
+ 	sdhci = sdhci_pltfm_priv(sdhci_priv(host));
+ 
+ 	if (!sdhci->phase_desc)
+diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
+index 41d193fa77bb..c61f797a853f 100644
+--- a/drivers/mmc/host/sdhci-tegra.c
++++ b/drivers/mmc/host/sdhci-tegra.c
+@@ -596,49 +596,49 @@ static void tegra_sdhci_parse_pad_autocal_dt(struct sdhci_host *host)
+ 			&tegra_host->autocal_offsets;
+ 	int err;
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-up-offset-3v3",
+ 			&autocal->pull_up_3v3);
+ 	if (err)
+ 		autocal->pull_up_3v3 = 0;
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-down-offset-3v3",
+ 			&autocal->pull_down_3v3);
+ 	if (err)
+ 		autocal->pull_down_3v3 = 0;
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-up-offset-1v8",
+ 			&autocal->pull_up_1v8);
+ 	if (err)
+ 		autocal->pull_up_1v8 = 0;
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-down-offset-1v8",
+ 			&autocal->pull_down_1v8);
+ 	if (err)
+ 		autocal->pull_down_1v8 = 0;
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-up-offset-sdr104",
+ 			&autocal->pull_up_sdr104);
+ 	if (err)
+ 		autocal->pull_up_sdr104 = autocal->pull_up_1v8;
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-down-offset-sdr104",
+ 			&autocal->pull_down_sdr104);
+ 	if (err)
+ 		autocal->pull_down_sdr104 = autocal->pull_down_1v8;
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-up-offset-hs400",
+ 			&autocal->pull_up_hs400);
+ 	if (err)
+ 		autocal->pull_up_hs400 = autocal->pull_up_1v8;
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-down-offset-hs400",
+ 			&autocal->pull_down_hs400);
+ 	if (err)
+@@ -653,7 +653,7 @@ static void tegra_sdhci_parse_pad_autocal_dt(struct sdhci_host *host)
+ 	if (!(tegra_host->soc_data->nvquirks & NVQUIRK_NEEDS_PAD_CONTROL))
+ 		return;
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-up-offset-3v3-timeout",
+ 			&autocal->pull_up_3v3_timeout);
+ 	if (err) {
+@@ -664,7 +664,7 @@ static void tegra_sdhci_parse_pad_autocal_dt(struct sdhci_host *host)
+ 		autocal->pull_up_3v3_timeout = 0;
+ 	}
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-down-offset-3v3-timeout",
+ 			&autocal->pull_down_3v3_timeout);
+ 	if (err) {
+@@ -675,7 +675,7 @@ static void tegra_sdhci_parse_pad_autocal_dt(struct sdhci_host *host)
+ 		autocal->pull_down_3v3_timeout = 0;
+ 	}
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-up-offset-1v8-timeout",
+ 			&autocal->pull_up_1v8_timeout);
+ 	if (err) {
+@@ -686,7 +686,7 @@ static void tegra_sdhci_parse_pad_autocal_dt(struct sdhci_host *host)
+ 		autocal->pull_up_1v8_timeout = 0;
+ 	}
+ 
+-	err = device_property_read_u32(host->mmc->parent,
++	err = device_property_read_u32(mmc_dev(host->mmc),
+ 			"nvidia,pad-autocal-pull-down-offset-1v8-timeout",
+ 			&autocal->pull_down_1v8_timeout);
+ 	if (err) {
+@@ -720,17 +720,17 @@ static void tegra_sdhci_parse_tap_and_trim(struct sdhci_host *host)
+ 	struct sdhci_tegra *tegra_host = sdhci_pltfm_priv(pltfm_host);
+ 	int err;
+ 
+-	err = device_property_read_u32(host->mmc->parent, "nvidia,default-tap",
++	err = device_property_read_u32(mmc_dev(host->mmc), "nvidia,default-tap",
+ 				       &tegra_host->default_tap);
+ 	if (err)
+ 		tegra_host->default_tap = 0;
+ 
+-	err = device_property_read_u32(host->mmc->parent, "nvidia,default-trim",
++	err = device_property_read_u32(mmc_dev(host->mmc), "nvidia,default-trim",
+ 				       &tegra_host->default_trim);
+ 	if (err)
+ 		tegra_host->default_trim = 0;
+ 
+-	err = device_property_read_u32(host->mmc->parent, "nvidia,dqs-trim",
++	err = device_property_read_u32(mmc_dev(host->mmc), "nvidia,dqs-trim",
+ 				       &tegra_host->dqs_trim);
+ 	if (err)
+ 		tegra_host->dqs_trim = 0x11;
+@@ -741,7 +741,7 @@ static void tegra_sdhci_parse_dt(struct sdhci_host *host)
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_tegra *tegra_host = sdhci_pltfm_priv(pltfm_host);
+ 
+-	if (device_property_read_bool(host->mmc->parent, "supports-cqe"))
++	if (device_property_read_bool(mmc_dev(host->mmc), "supports-cqe"))
+ 		tegra_host->enable_hwcq = true;
+ 	else
+ 		tegra_host->enable_hwcq = false;
+@@ -1529,7 +1529,7 @@ static int sdhci_tegra_add_host(struct sdhci_host *host)
+ 
+ 	host->mmc->caps2 |= MMC_CAP2_CQE | MMC_CAP2_CQE_DCMD;
+ 
+-	cq_host = devm_kzalloc(host->mmc->parent,
++	cq_host = devm_kzalloc(mmc_dev(host->mmc),
+ 				sizeof(*cq_host), GFP_KERNEL);
+ 	if (!cq_host) {
+ 		ret = -ENOMEM;
+diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+index aefd0441658c..bf238ade1602 100644
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -188,7 +188,7 @@ static void sdhci_runtime_pm_bus_on(struct sdhci_host *host)
+ 	if (host->bus_on)
+ 		return;
+ 	host->bus_on = true;
+-	pm_runtime_get_noresume(host->mmc->parent);
++	pm_runtime_get_noresume(mmc_dev(host->mmc));
+ }
+ 
+ static void sdhci_runtime_pm_bus_off(struct sdhci_host *host)
+@@ -196,7 +196,7 @@ static void sdhci_runtime_pm_bus_off(struct sdhci_host *host)
+ 	if (!host->bus_on)
+ 		return;
+ 	host->bus_on = false;
+-	pm_runtime_put_noidle(host->mmc->parent);
++	pm_runtime_put_noidle(mmc_dev(host->mmc));
+ }
+ 
+ void sdhci_reset(struct sdhci_host *host, u8 mask)
+@@ -648,7 +648,7 @@ static int sdhci_pre_dma_transfer(struct sdhci_host *host,
+ 			}
+ 		}
+ 		/* Switch ownership to the DMA */
+-		dma_sync_single_for_device(host->mmc->parent,
++		dma_sync_single_for_device(mmc_dev(host->mmc),
+ 					   host->bounce_addr,
+ 					   host->bounce_buffer_size,
+ 					   mmc_get_dma_dir(data));
+@@ -1176,7 +1176,7 @@ static int sdhci_external_dma_init(struct sdhci_host *host)
+ 	int ret = 0;
+ 	struct mmc_host *mmc = host->mmc;
+ 
+-	host->tx_chan = dma_request_chan(mmc->parent, "tx");
++	host->tx_chan = dma_request_chan(mmc_dev(mmc), "tx");
+ 	if (IS_ERR(host->tx_chan)) {
+ 		ret = PTR_ERR(host->tx_chan);
+ 		if (ret != -EPROBE_DEFER)
+@@ -1185,7 +1185,7 @@ static int sdhci_external_dma_init(struct sdhci_host *host)
+ 		return ret;
+ 	}
+ 
+-	host->rx_chan = dma_request_chan(mmc->parent, "rx");
++	host->rx_chan = dma_request_chan(mmc_dev(mmc), "rx");
+ 	if (IS_ERR(host->rx_chan)) {
+ 		if (host->tx_chan) {
+ 			dma_release_channel(host->tx_chan);
+@@ -2489,14 +2489,14 @@ void sdhci_enable_sdio_irq(struct mmc_host *mmc, int enable)
+ 	unsigned long flags;
+ 
+ 	if (enable)
+-		pm_runtime_get_noresume(mmc->parent);
++		pm_runtime_get_noresume(mmc_dev(mmc));
+ 
+ 	spin_lock_irqsave(&host->lock, flags);
+ 	sdhci_enable_sdio_irq_nolock(host, enable);
+ 	spin_unlock_irqrestore(&host->lock, flags);
+ 
+ 	if (!enable)
+-		pm_runtime_put_noidle(mmc->parent);
++		pm_runtime_put_noidle(mmc_dev(mmc));
+ }
+ EXPORT_SYMBOL_GPL(sdhci_enable_sdio_irq);
+ 
+@@ -3063,7 +3063,7 @@ static bool sdhci_request_done(struct sdhci_host *host)
+ 						length = host->bounce_buffer_size;
+ 					}
+ 					dma_sync_single_for_cpu(
+-						host->mmc->parent,
++						mmc_dev(host->mmc),
+ 						host->bounce_addr,
+ 						host->bounce_buffer_size,
+ 						DMA_FROM_DEVICE);
+@@ -3074,7 +3074,7 @@ static bool sdhci_request_done(struct sdhci_host *host)
+ 				} else {
+ 					/* No copying, just switch ownership */
+ 					dma_sync_single_for_cpu(
+-						host->mmc->parent,
++						mmc_dev(host->mmc),
+ 						host->bounce_addr,
+ 						host->bounce_buffer_size,
+ 						mmc_get_dma_dir(data));
+@@ -4053,7 +4053,7 @@ static void sdhci_allocate_bounce_buffer(struct sdhci_host *host)
+ 	 * speedups by the help of a bounce buffer to group scattered
+ 	 * reads/writes together.
+ 	 */
+-	host->bounce_buffer = devm_kmalloc(mmc->parent,
++	host->bounce_buffer = devm_kmalloc(mmc_dev(mmc),
+ 					   bounce_size,
+ 					   GFP_KERNEL);
+ 	if (!host->bounce_buffer) {
+@@ -4067,11 +4067,11 @@ static void sdhci_allocate_bounce_buffer(struct sdhci_host *host)
+ 		return;
+ 	}
+ 
+-	host->bounce_addr = dma_map_single(mmc->parent,
++	host->bounce_addr = dma_map_single(mmc_dev(mmc),
+ 					   host->bounce_buffer,
+ 					   bounce_size,
+ 					   DMA_BIDIRECTIONAL);
+-	ret = dma_mapping_error(mmc->parent, host->bounce_addr);
++	ret = dma_mapping_error(mmc_dev(mmc), host->bounce_addr);
+ 	if (ret)
+ 		/* Again fall back to max_segs == 1 */
+ 		return;
+diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
+index 7a34649b0754..1fad6e442688 100644
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -558,7 +558,7 @@ static int sdhci_am654_cqe_add_host(struct sdhci_host *host)
+ 	struct cqhci_host *cq_host;
+ 	int ret;
+ 
+-	cq_host = devm_kzalloc(host->mmc->parent, sizeof(struct cqhci_host),
++	cq_host = devm_kzalloc(mmc_dev(host->mmc), sizeof(struct cqhci_host),
+ 			       GFP_KERNEL);
+ 	if (!cq_host)
+ 		return -ENOMEM;
+-- 
+2.31.0
 
-> From: "Anton D. Kachalov" <gmouse@google.com>
->
-> This change follows OpenBMC partitions' naming layout.
->
-> Signed-off-by: Anton D. Kachalov <gmouse@google.com>
-> ---
->  arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 38 +++++++----------------
->  1 file changed, 11 insertions(+), 27 deletions(-)
->
-> diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> index 9f13d08f5804..55c5a89592d7 100644
-> --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> @@ -78,8 +78,8 @@ partitions@80000000 {
->                         compatible = "fixed-partitions";
->                         #address-cells = <1>;
->                         #size-cells = <1>;
-> -                       bbuboot1@0 {
-> -                               label = "bb-uboot-1";
-> +                       u-boot@0 {
-> +                               label = "u-boot";
->                                 reg = <0x0000000 0x80000>;
->                                 read-only;
->                                 };
-> @@ -88,38 +88,22 @@ bbuboot2@80000 {
->                                 reg = <0x0080000 0x80000>;
->                                 read-only;
->                                 };
-> -                       envparam@100000 {
-> -                               label = "env-param";
-> +                       u-boot-env@100000 {
-> +                               label = "u-boot-env";
->                                 reg = <0x0100000 0x40000>;
->                                 read-only;
->                                 };
-> -                       spare@140000 {
-> -                               label = "spare";
-> -                               reg = <0x0140000 0xC0000>;
-> -                               };
->                         kernel@200000 {
->                                 label = "kernel";
-> -                               reg = <0x0200000 0x400000>;
-> -                               };
-> -                       rootfs@600000 {
-> -                               label = "rootfs";
-> -                               reg = <0x0600000 0x700000>;
-> -                               };
-> -                       spare1@D00000 {
-> -                               label = "spare1";
-> -                               reg = <0x0D00000 0x200000>;
-> -                               };
-> -                       spare2@0F00000 {
-> -                               label = "spare2";
-> -                               reg = <0x0F00000 0x200000>;
-> +                               reg = <0x0200000 0x580000>;
->                                 };
-> -                       spare3@1100000 {
-> -                               label = "spare3";
-> -                               reg = <0x1100000 0x200000>;
-> +                       rofs@780000 {
-> +                               label = "rofs";
-> +                               reg = <0x0780000 0x1680000>;
->                                 };
-> -                       spare4@1300000 {
-> -                               label = "spare4";
-> -                               reg = <0x1300000 0x0>;
-> +                       rwfs@1e00000 {
-> +                               label = "rwfs";
-> +                               reg = <0x1e00000 0x200000>;
->                         };
->                 };
->         };
-> --
-> 2.30.1.766.gb4fecdf3b7-goog
->
->
-
---00000000000001000005be42f398
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
-
-PGRpdiBkaXI9Imx0ciI+R2VudGx5IHBpbmc8L2Rpdj48YnI+PGRpdiBjbGFzcz0iZ21haWxfcXVv
-dGUiPjxkaXYgZGlyPSJsdHIiIGNsYXNzPSJnbWFpbF9hdHRyIj5PbiBNb24sIDggTWFyIDIwMjEg
-YXQgMTg6MTEsICZsdDs8YSBocmVmPSJtYWlsdG86Z21vdXNlQGdvb2dsZS5jb20iPmdtb3VzZUBn
-b29nbGUuY29tPC9hPiZndDsgd3JvdGU6PGJyPjwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJnbWFp
-bF9xdW90ZSIgc3R5bGU9Im1hcmdpbjowcHggMHB4IDBweCAwLjhleDtib3JkZXItbGVmdDoxcHgg
-c29saWQgcmdiKDIwNCwyMDQsMjA0KTtwYWRkaW5nLWxlZnQ6MWV4Ij5Gcm9tOiAmcXVvdDtBbnRv
-biBELiBLYWNoYWxvdiZxdW90OyAmbHQ7PGEgaHJlZj0ibWFpbHRvOmdtb3VzZUBnb29nbGUuY29t
-IiB0YXJnZXQ9Il9ibGFuayI+Z21vdXNlQGdvb2dsZS5jb208L2E+Jmd0Ozxicj4NCjxicj4NClRo
-aXMgY2hhbmdlIGZvbGxvd3MgT3BlbkJNQyBwYXJ0aXRpb25zJiMzOTsgbmFtaW5nIGxheW91dC48
-YnI+DQo8YnI+DQpTaWduZWQtb2ZmLWJ5OiBBbnRvbiBELiBLYWNoYWxvdiAmbHQ7PGEgaHJlZj0i
-bWFpbHRvOmdtb3VzZUBnb29nbGUuY29tIiB0YXJnZXQ9Il9ibGFuayI+Z21vdXNlQGdvb2dsZS5j
-b208L2E+Jmd0Ozxicj4NCi0tLTxicj4NCsKgYXJjaC9hcm0vYm9vdC9kdHMvbnV2b3Rvbi1ucGNt
-NzUwLWV2Yi5kdHMgfCAzOCArKysrKysrLS0tLS0tLS0tLS0tLS0tLTxicj4NCsKgMSBmaWxlIGNo
-YW5nZWQsIDExIGluc2VydGlvbnMoKyksIDI3IGRlbGV0aW9ucygtKTxicj4NCjxicj4NCmRpZmYg
-LS1naXQgYS9hcmNoL2FybS9ib290L2R0cy9udXZvdG9uLW5wY203NTAtZXZiLmR0cyBiL2FyY2gv
-YXJtL2Jvb3QvZHRzL251dm90b24tbnBjbTc1MC1ldmIuZHRzPGJyPg0KaW5kZXggOWYxM2QwOGY1
-ODA0Li41NWM1YTg5NTkyZDcgMTAwNjQ0PGJyPg0KLS0tIGEvYXJjaC9hcm0vYm9vdC9kdHMvbnV2
-b3Rvbi1ucGNtNzUwLWV2Yi5kdHM8YnI+DQorKysgYi9hcmNoL2FybS9ib290L2R0cy9udXZvdG9u
-LW5wY203NTAtZXZiLmR0czxicj4NCkBAIC03OCw4ICs3OCw4IEBAIHBhcnRpdGlvbnNAODAwMDAw
-MDAgezxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbXBhdGlibGUg
-PSAmcXVvdDtmaXhlZC1wYXJ0aXRpb25zJnF1b3Q7Ozxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgICNhZGRyZXNzLWNlbGxzID0gJmx0OzEmZ3Q7Ozxicj4NCsKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgICNzaXplLWNlbGxzID0gJmx0OzEmZ3Q7Ozxicj4N
-Ci3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGJidWJvb3QxQDAgezxicj4NCi3C
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGxhYmVsID0gJnF1
-b3Q7YmItdWJvb3QtMSZxdW90Ozs8YnI+DQorwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqB1LWJvb3RAMCB7PGJyPg0KK8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgbGFiZWwgPSAmcXVvdDt1LWJvb3QmcXVvdDs7PGJyPg0KwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmVnID0gJmx0OzB4MDAwMDAwMCAw
-eDgwMDAwJmd0Ozs8YnI+DQrCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCByZWFkLW9ubHk7PGJyPg0KwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgfTs8YnI+DQpAQCAtODgsMzggKzg4LDIyIEBAIGJidWJvb3QyQDgwMDAw
-IHs8YnI+DQrCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBy
-ZWcgPSAmbHQ7MHgwMDgwMDAwIDB4ODAwMDAmZ3Q7Ozxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHJlYWQtb25seTs8YnI+DQrCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Ozxicj4NCi3CoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoGVudnBhcmFtQDEwMDAwMCB7PGJyPg0KLcKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgbGFiZWwgPSAmcXVvdDtlbnYtcGFy
-YW0mcXVvdDs7PGJyPg0KK8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgdS1ib290
-LWVudkAxMDAwMDAgezxicj4NCivCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoGxhYmVsID0gJnF1b3Q7dS1ib290LWVudiZxdW90Ozs8YnI+DQrCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZWcgPSAmbHQ7MHgwMTAwMDAw
-IDB4NDAwMDAmZ3Q7Ozxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIHJlYWQtb25seTs8YnI+DQrCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCB9Ozxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoHNwYXJlQDE0MDAwMCB7PGJyPg0KLcKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgbGFiZWwgPSAmcXVvdDtzcGFyZSZxdW90Ozs8YnI+DQotwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqByZWcgPSAmbHQ7MHgwMTQwMDAw
-IDB4QzAwMDAmZ3Q7Ozxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoH07PGJyPg0KwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAga2Vy
-bmVsQDIwMDAwMCB7PGJyPg0KwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgbGFiZWwgPSAmcXVvdDtrZXJuZWwmcXVvdDs7PGJyPg0KLcKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgcmVnID0gJmx0OzB4MDIwMDAwMCAweDQw
-MDAwMCZndDs7PGJyPg0KLcKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgfTs8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqByb290ZnNA
-NjAwMDAwIHs8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqBsYWJlbCA9ICZxdW90O3Jvb3RmcyZxdW90Ozs8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqByZWcgPSAmbHQ7MHgwNjAwMDAwIDB4NzAwMDAw
-Jmd0Ozs8YnI+DQotwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqB9Ozxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHNwYXJlMUBEMDAw
-MDAgezxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oGxhYmVsID0gJnF1b3Q7c3BhcmUxJnF1b3Q7Ozxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHJlZyA9ICZsdDsweDBEMDAwMDAgMHgyMDAwMDAmZ3Q7
-Ozxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoH07
-PGJyPg0KLcKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgc3BhcmUyQDBGMDAwMDAg
-ezxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGxh
-YmVsID0gJnF1b3Q7c3BhcmUyJnF1b3Q7Ozxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoHJlZyA9ICZsdDsweDBGMDAwMDAgMHgyMDAwMDAmZ3Q7Ozxi
-cj4NCivCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHJlZyA9
-ICZsdDsweDAyMDAwMDAgMHg1ODAwMDAmZ3Q7Ozxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH07PGJyPg0KLcKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgc3BhcmUzQDExMDAwMDAgezxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGxhYmVsID0gJnF1b3Q7c3BhcmUzJnF1b3Q7Ozxicj4N
-Ci3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHJlZyA9ICZs
-dDsweDExMDAwMDAgMHgyMDAwMDAmZ3Q7Ozxicj4NCivCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoHJvZnNANzgwMDAwIHs8YnI+DQorwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqBsYWJlbCA9ICZxdW90O3JvZnMmcXVvdDs7PGJyPg0KK8KgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgcmVnID0gJmx0OzB4MDc4
-MDAwMCAweDE2ODAwMDAmZ3Q7Ozxicj4NCsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIH07PGJyPg0KLcKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgc3BhcmU0QDEzMDAwMDAgezxicj4NCi3CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoGxhYmVsID0gJnF1b3Q7c3BhcmU0JnF1b3Q7Ozxicj4NCi3CoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHJlZyA9ICZsdDsweDEzMDAw
-MDAgMHgwJmd0Ozs8YnI+DQorwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqByd2Zz
-QDFlMDAwMDAgezxicj4NCivCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoGxhYmVsID0gJnF1b3Q7cndmcyZxdW90Ozs8YnI+DQorwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqByZWcgPSAmbHQ7MHgxZTAwMDAwIDB4MjAwMDAw
-Jmd0Ozs8YnI+DQrCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Ozxicj4NCsKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIH07PGJyPg0KwqAgwqAgwqAgwqAgfTs8YnI+DQotLSA8YnI+
-DQoyLjMwLjEuNzY2LmdiNGZlY2RmM2I3LWdvb2c8YnI+DQo8YnI+DQo8L2Jsb2NrcXVvdGU+PC9k
-aXY+DQo=
---00000000000001000005be42f398--
