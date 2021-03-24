@@ -2,98 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18301346B30
-	for <lists+openbmc@lfdr.de>; Tue, 23 Mar 2021 22:38:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 66D77346F0F
+	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 02:50:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F4l9F15dpz30Pf
-	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 08:38:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F4rmD301Gz30C5
+	for <lists+openbmc@lfdr.de>; Wed, 24 Mar 2021 12:50:36 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=WIUuuBsu;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=BmM66b2v;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::831;
+ helo=mail-qt1-x831.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=WIUuuBsu; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=BmM66b2v; dkim-atps=neutral
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com
+ [IPv6:2607:f8b0:4864:20::831])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F4l90618tz2xxl
- for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 08:38:12 +1100 (AEDT)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12NLXG3e119130
- for <openbmc@lists.ozlabs.org>; Tue, 23 Mar 2021 17:38:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : subject : to :
- message-id : date : content-type : content-transfer-encoding :
- mime-version; s=pp1; bh=Vmco3V1LEF6XbtVj2SWmbb8KpvZoesFN5y6vnWk2bf8=;
- b=WIUuuBsu58/8j8F2DfP/MLM8fTPBqTdYZ2exsCNnENJrYADiZ12C2DKUl/GefMvjF4Zv
- xDfEo9CGXpmmwiNxoF1WSkFdTF36VP43OJsd2k2sa/u1kqJwzcKCTbuIdlCokTuMZAkU
- Eb5WQLFnScuUfFAJVGjVE4msZboqEW9Aje4BFz9xX/WZEd/LytfjM9bpEdK4/y5oGgXk
- xOZc4nfZTZcT5hSYtASdp9baGlrHwhlYopbGfgJMvZBugtLYSfS8Nba6xYowrXM+sRnl
- Hcx6judOvFhlI+rVfwCbciuonDkSY7PdXyV11hkEjwkTC2K8hO6Nbxyn/RJ1wr+swubh oQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 37fq7chspp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 23 Mar 2021 17:38:08 -0400
-Received: from m0098404.ppops.net (m0098404.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 12NLXNF5121724
- for <openbmc@lists.ozlabs.org>; Tue, 23 Mar 2021 17:38:08 -0400
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 37fq7chspe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Mar 2021 17:38:08 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12NLRbAc019964;
- Tue, 23 Mar 2021 21:38:07 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma04dal.us.ibm.com with ESMTP id 37d9akf96w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Mar 2021 21:38:07 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 12NLc6P630736678
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Mar 2021 21:38:06 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CC499AE05F;
- Tue, 23 Mar 2021 21:38:06 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8278EAE063;
- Tue, 23 Mar 2021 21:38:06 +0000 (GMT)
-Received: from demeter.local (unknown [9.160.86.38])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS;
- Tue, 23 Mar 2021 21:38:06 +0000 (GMT)
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: NOTICE: Backward incompatible Linux-PAM module replacement
-To: openbmc <openbmc@lists.ozlabs.org>, Andrew Geissler <geissonator@gmail.com>
-Message-ID: <e4dc8f12-4807-cf03-0eea-f19d67387879@linux.ibm.com>
-Date: Tue, 23 Mar 2021 16:38:05 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.8.1
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F4rm03K12z2yQw
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 12:50:23 +1100 (AEDT)
+Received: by mail-qt1-x831.google.com with SMTP id c6so16519533qtc.1
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Mar 2021 18:50:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=UYgmluPC9dm0uxk45HI8lFdpHExa/a1wL0gAE3Zk1ss=;
+ b=BmM66b2vSMlxClWTk7KOLrfYzc2JdGvh7kFORfjOm3vcV0uUWahPndxbJt/8xwfwd8
+ uoVOvJbBVfKFMmNmMBi4Mlnw8WqFflx5PhQJuvISW8nbiDOzMcdRSbOtZuZ/GX+9wpfO
+ KWzG0JSyCS/3G8QtkBMC8aMT7LqWrNrgc+2qk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=UYgmluPC9dm0uxk45HI8lFdpHExa/a1wL0gAE3Zk1ss=;
+ b=F4P/+IegnVCVu5f4aQRR0RnNVIk0Q5oZB+4vPzrn82QZAA+JqAIBFT0i643Ip+IGcL
+ +EMg54FR9v4p7iV0Cpkeo9C4Qu0ZrFL7SH1vlwhuH58XJyeSaAWe5WLLn/0UF9JthlrP
+ RKymNQhdeZ9IdR2r+tbzIbQvEA6/GM+yvY/kJJ1zgAxDwf+zV+elve0ctW+uC8sYLyIQ
+ SSErUaMy408NVb1oAgi33tY+IKg1vOgVbUbqmNA9LwJAUV252puAKE6Nzxu54Z6pUgzL
+ Euo6YwNKO/lJNfpJOvfv+wFUFfB4p/9vX4fgvDMoqbaWBnioXYUFFoLpaifiBjZZb+tE
+ tN9g==
+X-Gm-Message-State: AOAM5317KTDGpnZJB+XOT4kMCUqGOQgjFUmJkoHPhgq4KatTJnz6eAjT
+ CIAmyEsW7eU1XDiLSy0amMbJv/RW+XfJ+21d4Pk=
+X-Google-Smtp-Source: ABdhPJzbPBLNUMudW0XNEe3iHIytqQQ9LiUSBtP8XHzMZ7SPE4PYrdm1MzJ9i7/vitmGZKr2p9gK6YEzFGtFum8JR+A=
+X-Received: by 2002:aed:2ee7:: with SMTP id k94mr1050007qtd.135.1616550619643; 
+ Tue, 23 Mar 2021 18:50:19 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-03-23_11:2021-03-23,
- 2021-03-23 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0
- lowpriorityscore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
- impostorscore=0 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
- clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2103230159
+References: <YErVxrB4afOz1ejt@packtop>
+In-Reply-To: <YErVxrB4afOz1ejt@packtop>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 24 Mar 2021 01:50:07 +0000
+Message-ID: <CACPK8XfpdF7_Thsg-96nkneoQDYayTEznbR8HDCOePG4=YruVg@mail.gmail.com>
+Subject: Re: RFC: ASRockRack E3C246D4I port
+To: Zev Weiss <zweiss@equinix.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,116 +70,76 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-OpenBMC community,
+On Tue, 23 Mar 2021 at 22:25, Zev Weiss <zweiss@equinix.com> wrote:
+>
+> Hello all,
+>
+> We (Equinix Metal, formerly known as Packet) having been working on a
+> port of OpenBMC to the ASRockRack E3C246D4I board
+> (https://www.asrockrack.com/general/productdetail.asp?Model=E3C246D4I-2T,
+> an AST2500-equipped Xeon E-2100 mini-ITX board), and we're now looking to
+> get some feedback from the community and hopefully start the process of
+> getting it merged upstream.
 
-Please read this if you support firmware downgrade AND if you allow the 
-BMC admin to dynamically configure the BMC's authentication and password 
-related parameters.
-- Firmware downgrade is firmware update to an older firmware image.
-- Dynamically configurable BMC parameters affected include: Redfish 
-properties AccountLockoutThreshold and AccountLockoutDuration, related 
-D-Bus properties for RememberOldPasswordTimes, minimum password length, 
-and includes any on-BMC customization to the /etc/pam.d/ files.
+Nice!
 
-We are seeking approval or strenuous objections to this change.
+>
+> It's currently sitting in a Github branch, since at the moment I'm
+> mostly seeking fairly broad guidance on what sorts of things will need
+> to happen to get it into a mergeable form (not sure if gerrit is the
+> right tool for that).  Anyone who'd like to can take a look at:
+> https://github.com/zevweiss/openbmc/tree/e3c246d4i
+>
+> Known issues, in approximate descending order of significance (by my
+> estimate):
+>
+>   - The kernel situation is...kind of messy.  This mostly stems from
+>     having a dependency on the PECI code, which is why the branch is
+>     based on the 2.9.0 tag (the last one before the PECI patchset was
+>     dropped from the openbmc kernel) instead of something more recent.
+>     We've got some additional PECI patches on top of that to work around
+>     some limitations in the PECI support on the particular CPU we're
+>     working with, some of which is fairly gross hardcoding for that
+>     specific SKU.  There are also a few non-PECI-related kernel patches
+>     that I've posted upstream but not yet incorporated the resulting
+>     review feedback on.
 
-Thanks,
-Joseph
+As you point out, it would be great if someone could take on the PECI
+maintainership and get the code merged to mainline.
 
+Out of interest, can you still boot the host without PECI support?
 
-Summary:
+I recommend submitting your device tree now, and getting some level of
+support in the openbmc tree. From there you can work to get the other
+fixes into the tree.
 
-1. The OpenBMC project is making an incompatible change to its Linux-PAM 
-configuration.
-2. A new service converts PAM configuration files to adapt to the 
-changes and preserve existing supported customization.
-3. But no backward conversion is planned, so downgrading a BMC across 
-this incompatible change will cause PAM to fail.  And because PAM is 
-needed for authentication, this will brick the BMC.
+Cheers,
 
+Joel
 
-What happened?
-
-Some Linux-PAM modules used by OpenBMC were deprecated and removed from 
-the underlying Yocto recipes.  These modules are no longer supported by 
-their project, and are no longer available from the Yocto project.
-
-
-What is OpenBMC doing?
-
-OpenBMC has a temporary patch to use the old unsupported PAM modules to 
-give time to use the replacement modules.  Thanks Andrew!  There is a 
-patch (see below) to use newer PAM modules which provide equivalent BMC 
-security function.
-
-
-What is the problem?
-
-The patch necessarily changes the PAM configuration files under 
-/etc/pam.d/.  This conflicts with BMC's APIs which allow the BMC admin 
-to (indirectly) change these same files.  If your BMC has any such 
-changes, they conflict with the changes in this patch!  A new conversion 
-service which runs on the BMC resolves the conflict.  See the patch for 
-details (file libpam_%.bbapend).
-
-This patch provides only a *forward* conversion service, meaning it 
-converts old config files to new.
-
-Although it would be easy enough to provide a *backward* conversion 
-service, such a service would have to run on older releases, and we 
-missed the time window to do that at the project level, and backward 
-compatibility is not deemed essential for BMCs, and that would add 
-complexity, so that is a nonstarter.
-
-In summary, you can think of this patch as a downgrade barrier.  You can 
-upgrade without any issues: the conversion service will convert your 
-BMC's PAM configuration.  And you can downgrade without issues if you 
-don't cross the barrier.  Specifically, if you do *not* yet have this 
-change then you can downgrade to any older version, and if you *do* have 
-this change then you can downgrade to any older release as far back as 
-when the change was made, but no further back.
-
-
-Notes:
-
-1. Please note the conversion service handles only those items which are 
-modifiable from supported Redfish and D-Bus APIs.  The conversion 
-service may remove nonstandard on-BMC customized PAM configurations and 
-reset them to defaults.  See the patch for details (file 
-convert-pam-configs.sh).
-
-2. If you have a non-standard PAM configuration built-in to the readonly 
-/etc/pam.d/ directory AND your BMC does not allow the admin to 
-dynamically configure these files, then forward conversion should not 
-need to make any changes, so you have no additional worries.
-
-3. The PAM configuration data is totally independent from the user 
-account data (/etc/passwd and /etc/shadow).   Specifically, the issue 
-described here does not affect any local user accounts you have 
-dynamically created on the BMC and does not affect forward or backward 
-migration.
-
-4. The commit message also describes an incompatible operational change: 
-The pam_tally2 command (invoked from the BMC's command line) is no 
-longer present. If you used the "pam_tally2 -u USER -r" command to 
-unlock a user after repeated authentication failures, change to use: 
-faillock --user USER --reset
-
-
-The patch is technically two co-requisite patches in different source 
-repos.  These must be applied together, or else you will brick your system:
-1) https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/41357
-2) 
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-user-manager/+/39853
-
-Can the co-req condition be softened into a pre-req, so one patch could 
-be applied first, and then the other?  This was considered (on the 
-Discord > OpenBMC > #yocto channel and in earlier gerrit reviews).  The 
-idea is to temporarily have both the old and new PAM modules available 
-on the BMC, and to enhance phosphor user manager be able to work with 
-both the old and new PAM configuration files. That approach was rejected 
-due to complexity.
-
+>
+>   - There are various hacks to get things like x86-power-control and
+>     host-error-monitor compiling and working reasonably, and I'm sort of
+>     skeptical that the approach I took there would be considered
+>     desirable.
+>
+>   - The directory naming is currently meta-equinix/meta-e3c246d4i;
+>     starting out I was a bit unsure whether to name based on the
+>     maintainer/developer of the layer or the maker of the hardware and we
+>     ended up with the former, though I see Ed's in-progress x570d4u port
+>     has things under meta-asrock, so perhaps that should be renamed?
+>
+>   - There are some relatively generic patches for dbus-sensors and
+>     entity-manager that should probably be merged independently.
+>
+>
+> If anyone can give it a look and let me know what the best way forward
+> would be for this we'd certainly appreciate it.
+>
+>
+> Thanks,
+> Zev Weiss
