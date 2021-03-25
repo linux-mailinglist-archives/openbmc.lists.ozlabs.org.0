@@ -1,62 +1,165 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5DB33486F3
-	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 03:31:42 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4635348916
+	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 07:28:44 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F5Td84nJbz30Mg
-	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 13:31:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F5Ztf5HScz30hc
+	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 17:28:42 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=H7qkBh33;
+	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=H7qkBh33;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phytium.com.cn (client-ip=165.227.154.27;
- helo=zg8tmty1ljiyny4xntqumjca.icoremail.net;
- envelope-from=wangmin@phytium.com.cn; receiver=<UNKNOWN>)
-Received: from zg8tmty1ljiyny4xntqumjca.icoremail.net
- (zg8tmty1ljiyny4xntqumjca.icoremail.net [165.227.154.27])
- by lists.ozlabs.org (Postfix) with SMTP id 4F5Tcx0ghCz2ywx
- for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 13:31:18 +1100 (AEDT)
-Received: from LAPTOPS6JR0A6O (unknown [223.153.195.250])
- by c1app8 (Coremail) with SMTP id CAINCgCXGgXl9VtgBsdqBA--.43903S2;
- Thu, 25 Mar 2021 10:31:02 +0800 (CST)
-From: <wangmin@phytium.com.cn>
-To: "'Joseph Reynolds'" <jrey@linux.ibm.com>,
- "'OpenBMC Maillist'" <openbmc@lists.ozlabs.org>
-References: <!&!AAAAAAAAAAAuAAAAAAAAAO4CP8j4rjtAsuu29GjYeJQBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAABwHLy5A/79RoxKRBG5yGpSAQAAAAA=@phytium.com.cn>
- <3c7899d1-39c7-c0f4-7822-21fa8d66f709@linux.ibm.com>
- <!&!AAAAAAAAAAAuAAAAAAAAAO4CP8j4rjtAsuu29GjYeJQBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAABBDGRyySNtR7TzEws+7PMjAQAAAAA=@phytium.com.cn>
- <d3f8c98d-be45-3545-7133-b4d8f2fcf817@linux.ibm.com>
-In-Reply-To: <d3f8c98d-be45-3545-7133-b4d8f2fcf817@linux.ibm.com>
-Subject: =?UTF-8?Q?=E5=9B=9E=E5=A4=8D:_=E5=9B=9E=E5=A4=8D:_=5BOpenBMC=5D:_root_is_?=
- =?UTF-8?Q?rejected_to_login_an_aarch64_ope?= =?UTF-8?Q?nBmc_system?=
-Date: Thu, 25 Mar 2021 10:31:02 +0800
-Message-ID: <!&!AAAAAAAAAAAuAAAAAAAAAO4CP8j4rjtAsuu29GjYeJQBAMO2jhD3dRHOtM0AqgC7tuYAAAAAAA4AABAAAAAouOq1/S6oQJzDGfyGz2vOAQAAAAA=@phytium.com.cn>
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
+ (client-ip=40.107.132.138; helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
+ header.s=selector2 header.b=H7qkBh33; 
+ dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM
+ header.a=rsa-sha256 header.s=selector2 header.b=H7qkBh33; 
+ dkim-atps=neutral
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320138.outbound.protection.outlook.com [40.107.132.138])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F5ZtL1w5Hz309W
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 17:28:23 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=r0ZpilgsmGVv0l1O/HGOYeSCvxHOZk4ppOeEsVv635k=;
+ b=H7qkBh33osqxDT3Ca0Ngru/cDHt5wO92LeZsgpwjFfELAYH1LTOCY8jcl5HlUS2PE3RHvobPB/K9PtyGAfkZESBZIlrNSLvk6731Eel3Q0psT+jw3apmVoi0BZHGs3WwJUBFmJeiRPw3QzzVtRoIIptt75fATBXg3aTyQniaFLk3PhLLqJafJRIsBmG1pRVVYfZqY7NyEy9zaKUJDFjWLTWaTp8fUPTneHFdkisybuU4aLxm/c9ODCQprv7tkCY12gPA8hIfU6LyhiLYNZd8bVY++/dxOb/EWEgmmJjPRYcARpEy4/uj6Z/l8gsvp63kPE3F1k9jQdjWdn8jKLeiCA==
+Received: from SG2P153CA0040.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c6::9) by
+ TY2PR04MB4077.apcprd04.prod.outlook.com (2603:1096:404:800f::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3977.26; Thu, 25 Mar
+ 2021 06:28:09 +0000
+Received: from SG2APC01FT004.eop-APC01.prod.protection.outlook.com
+ (2603:1096:4:c6:cafe::bd) by SG2P153CA0040.outlook.office365.com
+ (2603:1096:4:c6::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3999.1 via Frontend
+ Transport; Thu, 25 Mar 2021 06:28:08 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.52)
+ smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
+ header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
+ header.from=hcl.com;
+Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
+ 192.8.245.52 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.245.52; helo=APC01-PU1-obe.outbound.protection.outlook.com;
+Received: from APC01-PU1-obe.outbound.protection.outlook.com (192.8.245.52) by
+ SG2APC01FT004.mail.protection.outlook.com (10.152.250.163) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3977.25 via Frontend Transport; Thu, 25 Mar 2021 06:28:06 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AzzmF6O0RKKIAOy3uQOZaAIjhxMHxF17tmFDmr2N2MolxI0c4TbkXyxL6wupQtjWFScS0W6kb+o/UwkBKIvQkOyoCTqIh7gtm3Kh0RQmtQFy2HEq0p6obkEvUA01xA7ekxoCmTUwI6fH6HliuKpq/rQnVCI4KBOlKa3ts+r0oTg6E1mWa0Ity1OCB/vz+n+KQON94GdtXJOw8YOT9uwDkHG15rxKz5yxaAPn3vOO9lcG3ZDqvzmzsin9cISygYGJ1FDrQyny3FI/rUKhYFMzXlqgNNqkYnZ8CxlAEn0Gz7WrlfaNWAM3018s9f0zY0enLrETrRlll3W3ElBZfAgR5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=r0ZpilgsmGVv0l1O/HGOYeSCvxHOZk4ppOeEsVv635k=;
+ b=VOUPcV+ZoREBxr9l1VVtriJR3GctxSxywEsvl+sA7pPTuuvN7kH3/Yb4ygduOzxG75BEdpwYAZX7lI1JOUtbgx46+JB9V94YpwrPt7BgpwkeUA7ZEgaE32l4lIrDo1ivIlrwozEOl+zZeJPxYXYd5+5z6JyaQQNpa9DE+H9i85TmCZkyHiwFAMJBZ+JSYnteb0ZbY/JWu6kc2FyovjTxCNRsKqpRMo3Fm2NRiiFn22BbqjiUg7JhE6qZETBGvhxthOjyR1sa67tCrGZfz1p1o5Yz6v6cOPPZ+ElxVm7MHUCAWVTHEQEnMeyez5CDaCzImKwWT1TjaPHvStl1QWXPkA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
+ header.d=hcl.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=r0ZpilgsmGVv0l1O/HGOYeSCvxHOZk4ppOeEsVv635k=;
+ b=H7qkBh33osqxDT3Ca0Ngru/cDHt5wO92LeZsgpwjFfELAYH1LTOCY8jcl5HlUS2PE3RHvobPB/K9PtyGAfkZESBZIlrNSLvk6731Eel3Q0psT+jw3apmVoi0BZHGs3WwJUBFmJeiRPw3QzzVtRoIIptt75fATBXg3aTyQniaFLk3PhLLqJafJRIsBmG1pRVVYfZqY7NyEy9zaKUJDFjWLTWaTp8fUPTneHFdkisybuU4aLxm/c9ODCQprv7tkCY12gPA8hIfU6LyhiLYNZd8bVY++/dxOb/EWEgmmJjPRYcARpEy4/uj6Z/l8gsvp63kPE3F1k9jQdjWdn8jKLeiCA==
+Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
+ SG2PR04MB2281.apcprd04.prod.outlook.com (2603:1096:4:5::16) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3955.18; Thu, 25 Mar 2021 06:28:04 +0000
+Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
+ ([fe80::f4f5:46fc:706f:2eed]) by SG2PR04MB3093.apcprd04.prod.outlook.com
+ ([fe80::f4f5:46fc:706f:2eed%5]) with mapi id 15.20.3955.027; Thu, 25 Mar 2021
+ 06:28:04 +0000
+From: Jayashree D <jayashree-d@hcl.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: RE: Gerrit trigger CI from Jenkins
+Thread-Topic: Gerrit trigger CI from Jenkins
+Thread-Index: AdcbJZSlLQ4HAJI3TACjnCeG7/Gu/AGGiKCA
+Date: Thu, 25 Mar 2021 06:28:04 +0000
+Message-ID: <SG2PR04MB3093138F50B102737D402D6CE1629@SG2PR04MB3093.apcprd04.prod.outlook.com>
+References: <SG2PR04MB3093BF84F15469B9F151FBE7E16A9@SG2PR04MB3093.apcprd04.prod.outlook.com>
+In-Reply-To: <SG2PR04MB3093BF84F15469B9F151FBE7E16A9@SG2PR04MB3093.apcprd04.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiMGY1OGI0ZmUtY2I4ZS00ZmMwLTkwZjgtODZmNTFmNmZkYzQ3IiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX1B1YmwxYyJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6InZNSTBpeGRJaUpYa1wvbnZWcXhGTThvRVRRelhZVXl3YkRwT1NQVmJSMEpXaXRHSk8xWTcxOHBSWlZkZVFQZitBIn0=
+x-hclclassification: HCL_Cla5s_Publ1c
+Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
+ signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=hcl.com;
+x-originating-ip: [2409:4072:6c96:4410:31d1:a16:ec2e:44f]
+x-ms-publictraffictype: Email
+X-MS-Office365-Filtering-Correlation-Id: 67732e49-07c3-44e9-ca1d-08d8ef572717
+x-ms-traffictypediagnostic: SG2PR04MB2281:|TY2PR04MB4077:
+X-Microsoft-Antispam-PRVS: <TY2PR04MB407768411B9CD792162D2A88E1629@TY2PR04MB4077.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6430;OLM:6430;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original: uIu8Rs51tlEUKV4l+bOi9yDquCT8mQokmeQ5Mwpqf8OI4/RdHCiUcj2hrNlsLKrTrVBlzV8geYgmjI9sxUGNoqApboXuWVSt+xo5cF1x3nKFjIxm0vCkPkNNZ5V85mZxVVjqF/Ug4DQ8jYuN/3cETC20ykiUu3/i8pVdSlEnwgq2YIdY8KWUpVFnUdQ0FTGPwZoYicemqKpcA17yUfuurQE0HcRCZagnU+MzCfS1G5qTd9E3La48gHhgVSMaNhnp1N5OFVVd6qSYm4fTuToMkzBHx4ztVUGjIxKQ3KJe55kpeZk30B7gT7Kq9hxGDiQyREMWEgsAlvhkAm1jDQshD8xYZKnWOb3spoKhygKQsQSQ8gjuiLBqSevwej72Z1XA4tgny5ZkXFcOHpRU8sk7w8GOp8YhGmJnRpwynoI9iywUPoOWbR+b/+QvwIZPPceb0Pv+iPfvfAOpnVatEuvwK2CM/osT9Yk9yFKx9kh5qAIJHk4X4zXRjL2UGgnvUEn2yR3kNAeb5f6W3FI++7QDvVNZGeqWr02LF7shsPZwP3OXElZ4ZEEDJ+7hZ7sTURfShAYZJvi1/aK1YPzLckJNgyojJXRIXRVLvjFg8Dg6DQlMEis7/UFmfUKslcT7MnPI82/mKXJThej9jpXTXn2aiqE1uJgl6PePkQi3jnAhOQk=
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
+ SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
+ PTR:; CAT:NONE;
+ SFS:(4636009)(376002)(396003)(346002)(39860400002)(136003)(366004)(33656002)(8936002)(8676002)(71200400001)(83380400001)(86362001)(5660300002)(2906002)(6506007)(186003)(53546011)(38100700001)(66476007)(66446008)(52536014)(76116006)(316002)(7696005)(66946007)(66556008)(64756008)(478600001)(9686003)(6916009)(55016002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?iWY47UHLQgdeg1PbiCe1yNQgQl0467iLbltKNGnHZ02Qvgyj9DMOeKL3d6EY?=
+ =?us-ascii?Q?G2Bumdpa2D5kD5wKMAW4epNgREea2/tacKYSvvSZzIT0E05e/9xiQzGO0vEr?=
+ =?us-ascii?Q?jzQNQb5IDlsBmxcY7VQCY4h4JHyIL1TGAsZniZTV3wBcwaxp2xZ/lOOB2Cg6?=
+ =?us-ascii?Q?rjps1nxla4JIHu7sqJbR8PQzpqs/ktA89DsFHgZX9zWjQwTmKPE1D+/PpUSV?=
+ =?us-ascii?Q?nMVn6XhouRazUxE4Dlt+j33UZLd9tK/eefOcuIpI51Sl4aoQKYxmZ06eaY25?=
+ =?us-ascii?Q?DxnMdEjvaDg4stqQQaYkiiFa5HvZ3FyoMjReV0wAWPYgQfq4NRfMmDuERQyg?=
+ =?us-ascii?Q?BdWiTpmy9yCOQGk5ywHXEGZuQtTi7Qq5bFyS9CD67UhDE/74BZBgkxq43CUS?=
+ =?us-ascii?Q?R1ZkFeDGvt0KXhaEDNlceNmyW7sFdtleAikN8JzS44vi8aPsaUfrHPDR8vdF?=
+ =?us-ascii?Q?4rNdm8bVn7AV1rv8XzI9TSdlANSFc5MBWBO3CnUuBkne0dxZTrlxwbPB5bW0?=
+ =?us-ascii?Q?SRWgX/EYBQKRrOfBAugHHq2X0npZBceUYRpjNZCFdTjbql7oLgY9ifCr8+yF?=
+ =?us-ascii?Q?CmJsMWTlFAd3QoYiFVkFQrdtI3q/sB3+TNYCjKxt646mSDoZjjztUcES7z7a?=
+ =?us-ascii?Q?VtzvHp6pMj4wSY6SI3Mx90opzsTz4mpZ0m0XbImzCdkqRoSmufN+Az2RvA8y?=
+ =?us-ascii?Q?fY9jgNLbWRRC5ZM0mxmq0saV7Rf9mSHb6kNezEzH6YaFnKIvzWPBQveY1Rhy?=
+ =?us-ascii?Q?5U51Tif+fNcGc5rKxwbvrrR/7vpbyUM6YKQ+Ks7RvJim1JU8Zr9rW8Gbv/0E?=
+ =?us-ascii?Q?hIALyRqIeN+dI3+sfx5YpwoQ58q+byESHC0Ir1uXZItue1Ex/3caPPMdSY+o?=
+ =?us-ascii?Q?214DCz8MrVmj87Fhfa7q2jAAoUpdzyxHphHdOLMGjsudhkQKcADJI44iikzI?=
+ =?us-ascii?Q?CDf3UbM9rTN/nFJHHx+0Kr7IlPXkN9X+hVtkdCNI6EoKbl+RW8AVPEs7+fmz?=
+ =?us-ascii?Q?FFpXCQj+tPoSo/aODA6OHqWmyXjxFvf7pxl3/lCXtxzCtaqxJHoNofUHHFFS?=
+ =?us-ascii?Q?c/X80Dc4FDADY4JOBG/Y7XoVeKcecB63o3R9fDjZTQbbYp/rvA3gRgUt875G?=
+ =?us-ascii?Q?RvQrZRWgOOIv/0xArrq47Djtp09NsrO54aubv9d1DNBf6hnWWio5CqhE0/3e?=
+ =?us-ascii?Q?9lIpU3GAZ3OHnwsrtwMoVT/4NEXs9TYeDsYGTefm2pDr1IzRme4eADY88aNM?=
+ =?us-ascii?Q?vVCexTcHiAA+DFjhMQAhfL1zJoPIMYqGK0dg5CvrlQ9EQoRXBuibAV3kAOm7?=
+ =?us-ascii?Q?jbT3q08MRkgV2pQZw5Ph3moUe0005E4sMLeOP1+kjoiX3KFAZLPLAUmEIoJJ?=
+ =?us-ascii?Q?v0sjzag=3D?=
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_SG2PR04MB3093138F50B102737D402D6CE1629SG2PR04MB3093apcp_"
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQL08ZUln25zJLVsshfNeva3yPF06wHPmnnlAngrYg0BcuAVPKgqdVJw
-Content-Language: zh-cn
-X-CM-TRANSID: CAINCgCXGgXl9VtgBsdqBA--.43903S2
-X-Coremail-Antispam: 1UD129KBjvAXoWDXrWDtFykWFyUJF4xuw17KFg_yoW7KrW8Ko
- W5KrnrA34rWw1UXryUJws7Ca95Wa4Fg3ZYv3s0vFn8Jr4DK3W5Jw4DZr13WFWfAr4UXF4D
- GFyfGa45CF97trn5n29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
- AaLaJ3UjIYCTnIWjp_UUUYx7k0a2IF6w4kM7kC6x804xWl14x267AKxVWUJVW8JwAFc2x0
- x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj4
- 1l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0
- I7IYx2IY6xkF7I0E14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjc
- xK6I8E87Iv6xkF7I0E14v26r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG
- 64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r
- 1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwAKzVCY07xG64k0F24l
- c2xSY4AK67AK6r4UMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I
- 0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWU
- AVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcV
- CY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_WFyUJVCq3wCI42IY6I8E87Iv
- 67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf
- 9x07bozuZUUUUU=
-X-CM-SenderInfo: 5zdqwzdlq61x51wl3zoofrzhdfq/
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB2281
+X-DLP: MSGProcess
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: SG2APC01FT004.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: c017840a-f655-476d-8f63-08d8ef57257e
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: hN7/qbqLQeLHNg6avyDFzb/iaxU441JTxXID/MPu1UpJaUwyfFKqHOu0ORGrOh9WXF1UAu3px6cjw0kyilsvu46o8YCyI8PsnPuei7NFEXTvSAMTEhdPT6s3TcRl0sUwWKsXZpHluq4yVZLZN5OA3/yNTBeINGjdq/tq9VUOilX5EhAwxc8ZVBZk+k5qHxIiLsqSsXfuDagXaInDtiyLh48QTMPoJs7FkoivyPtR2brUghNWzc6Y0VNkEnhHnrmLNeDODuH3MDvmOTzqNlKyXUkOJI+/R4U21rtqKOv8m202HsPHexGBlH6Jrr5S0GTuF+VGBbsZT8cQP4/cbmeFbofzGEmPRxHzepA6BNwgiBWbOfQNPHnDJBFzfDtr42GzOA8i1dSmxxBB1/60+SKxGKs9Tjs7lgy1TWR7A+SN+jE+KyeyRihm4F1TMfduKMDgaK/vWwbskO9rjWKchuJFDbEZ5sOiH7FOyz9OJOTpcJA8irbLO/eA+DT3TT0FRmSMsEJBZn31EJ5/IjUXRs0fuY4zdlNSBISU3sCmMoRP77kH7VyuR35xerbv4zk+DaOE+0fVyXLUCpGujhjwMib2UikCm9e7mVZuOdAHhBroW7JhKATBE7Ldodt28oPBrsO+N1K5feNpGlsEC37xvnjXJcsFuaVgT4LLUo2cqzOeESvU5awnbqcpbkJmsufzHTZ6HTJ96gko35ZW4Rrx7/L3T5bZR820AUUKtJ223tXUob0=
+X-Forefront-Antispam-Report: CIP:192.8.245.52; CTRY:IN; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:APC01-PU1-obe.outbound.protection.outlook.com;
+ PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(4636009)(396003)(136003)(39860400002)(346002)(376002)(46966006)(36840700001)(83380400001)(55016002)(82740400003)(336012)(86362001)(82310400003)(34020700004)(356005)(8936002)(26005)(53546011)(70586007)(70206006)(33656002)(36860700001)(2906002)(6506007)(9686003)(6916009)(47076005)(7696005)(52536014)(5660300002)(81166007)(316002)(36906005)(8676002)(186003)(478600001)(36900700001);
+ DIR:OUT; SFP:1102; 
+X-OriginatorOrg: HCL.COM
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2021 06:28:06.4171 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 67732e49-07c3-44e9-ca1d-08d8ef572717
+X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.52];
+ Helo=[APC01-PU1-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: SG2APC01FT004.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR04MB4077
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,1745 +171,198 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?B?J+WImOWLh+m5jyc=?= <liuyongpeng@phytium.com.cn>,
- shuyiqi@phytium.com.cn
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--_000_SG2PR04MB3093138F50B102737D402D6CE1629SG2PR04MB3093apcp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Classification: Public
+Hi Team,
+
+I am working on Gerrit Trigger Integration from Jenkins.
+Is there any steps followed for continuous Integration of gerrit from Jenki=
+ns ?
+I am facing issue in connecting Gerrit server from Jenkins.
+Could anyone please share your thoughts on this.
+
+Regards,
+Jayashree.
 
 
->  -----=E9=82=AE=E4=BB=B6=E5=8E=9F=E4=BB=B6-----
->  =E5=8F=91=E4=BB=B6=E4=BA=BA: Joseph Reynolds <jrey@linux.ibm.com>
->  =E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4: =
-2021=E5=B9=B43=E6=9C=8824=E6=97=A5 22:05
->  =E6=94=B6=E4=BB=B6=E4=BA=BA: wangmin@phytium.com.cn; 'OpenBMC =
-Maillist'
->  <openbmc@lists.ozlabs.org>
->  =E6=8A=84=E9=80=81: '=E5=88=98=E5=8B=87=E9=B9=8F' =
-<liuyongpeng@phytium.com.cn>; shuyiqi@phytium.com.cn
->  =E4=B8=BB=E9=A2=98: Re: =E5=9B=9E=E5=A4=8D: [OpenBMC]: root is =
-rejected to login an aarch64 openBmc
->  system
-> =20
->  On 3/23/21 9:02 PM, wangmin@phytium.com.cn wrote:
->  >>
->  >>   On 3/23/21 4:52 AM, wangmin@phytium.com.cn wrote:
->  >>   > I am sorry, the startup log was pasted wrong contents in the =
-last
->  >>   > email. The following texts are showing the startup log. [ =
-8.450487][
->  >>   > 1] VFS: Mounted root (squashfs filesystem) readonly on device =
-1:0.=20
->  >>   > =E2=80=8D =E2=80=8D =E2=80=8D =E2=80=8D =E2=80=8D =E2=80=8D =
-=E2=80=8D =E2=80=8D=20
->  >>   >
->  > Hi Joseph,
->  > Thank your response. I had uncommented the text line "tmpfs =
-/var/volatile
->  tmpfs defaults 0 0"
->  > in the file "/etc/fstab". The OpenBMC system runs in an emergency
->  > mode. User root is able to login the system.
-> =20
-Hi Joseph, Thank you all the same.  Fortunately,  the cause of the =
-openBmc runs in an emergency mode
-was found. The openBmc rootfs was built by a not root user, so all the =
-files in the rootfs are not assign root privilege.
-The below text lines are printed while the system is starting to run as =
-emergency mode.
+From: Jayashree D
+Sent: Wednesday, March 17, 2021 5:40 PM
+To: openbmc@lists.ozlabs.org
+Subject: Gerrit trigger CI from Jenkins
 
-[FAILED] Failed to mount Huge Pages File System.
-See 'systemctl status dev-hugepages.mount' for details.
-[FAILED] Failed to mount POSIX Message Queue File System.
-See 'systemctl status dev-mqueue.mount' for details.
-[FAILED] Failed to mount Kernel Debug File System.
-See 'systemctl status sys-kernel-debug.mount' for details.
-[FAILED] Failed to mount Temporary Directory (/tmp).
-See 'systemctl status tmp.mount' for details.
+Classification: Public
+Hi Team,
 
-After setting the rootfs's owner to root, the openBMC is able to run on =
-an aarch64 soc.
-However, there will be still some bugs to be fixed. Thanks again.
+I am working on Gerrit Trigger Integration from Jenkins.
+Is there any steps followed for continuous Integration of gerrit from Jenki=
+ns ?
+I am facing issue in connecting Gerrit server from Jenkins.
+Could anyone please share your thoughts on this.
 
-[    4.602043][ 1] systemd[1]: Listening on udev Kernel Socket.
-[  OK  ] Listening on udev Kernel Socket.
-[    4.623103][ 1] systemd[1]: Mounting Huge Pages File System...
-         Mounting Huge Pages File System...
-[    4.642999][ 1] systemd[1]: Mounting POSIX Message Queue File =
-System...
-         Mounting POSIX Message Queue File System...
-[    4.663017][ 1] systemd[1]: Mounting Kernel Debug File System...
-         Mounting Kernel Debug File System...
-[    4.682955][ 1] systemd[1]: Mounting Temporary Directory (/tmp)...
-         Mounting Temporary Directory (/tmp)...
-[    4.702056][ 1] systemd[1]: Condition check resulted in Create list =
-of static device nodes for the current kernel being skipped.
-[    4.713807][ 1] systemd[1]: Condition check resulted in File System =
-Check on Root Device being skipped.
-[    4.724505][ 1] systemd[1]: Starting Journal Service...
-         Starting Journal Service...
-[    4.742215][ 1] systemd[1]: Condition check resulted in Load Kernel =
-Modules being skipped.
-[    4.750610][ 1] systemd[1]: Condition check resulted in FUSE Control =
-File System being skipped.
-[    4.760388][ 1] systemd[1]: Mounting Kernel Configuration File =
-System...
-         Mounting Kernel Configuration File System...
-[    4.782997][ 1] systemd[1]: Starting Remount Root and Kernel File =
-Systems...
-         Starting Remount Root and Kernel File Systems...
-[    4.795579][ 0] EXT4-fs (ram0): re-mounted. Opts: (null)
-[    4.807220][ 2] systemd[1]: Starting Apply Kernel Variables...
-         Starting Apply Kernel Variables...
-[    4.827309][ 3] systemd[1]: Starting udev Coldplug all Devices...
-         Starting udev Coldplug all Devices...
-[    4.851418][ 3] systemd[1]: Started Hardware RNG Entropy Gatherer =
-Daemon.
-[  OK  ] Started Hardware RNG Entropy Gatherer Daemon.
-[    4.876522][ 3] systemd[1]: Started Journal Service.
-[  OK  ] Started Journal Service.
-[  OK  ] Mounted Huge Pages File System.
-[  OK  ] Mounted POSIX Message Queue File System.
-[  OK  ] Mounted Kernel Debug File System.
-[  OK  ] Mounted Temporary Directory (/tmp).
-[  OK  ] Mounted Kernel Configuration File System.
-[  OK  ] Started Remount Root and Kernel File Systems.
-[  OK  ] Started Apply Kernel Variables.
-         Starting Rebuild Hardware Database...
-         Starting Flush Journal to Persistent Storage    5.026847][ 0] =
-systemd-journald[1464]: Received client request to flush runtime =
-journal.
-m...
-         Starting Create System Users...
-[  OK  ] Started udev Coldplug all Devices.
-[FAILED] Failed to start Rebuild Hardware Database.
-See 'systemctl status systemd-hwdb-update.service' for details.
-[  OK  ] Started Flush Journal to Persistent Storage.
-[FAILED] Failed to start Create System Users.
-See 'systemctl status systemd-sysusers.service' for details.
-         Starting Create Static Device Nodes in /dev...
-[  OK  ] Started Create Static Device Nodes in /dev.
-[  OK  ] Reached target Local File Systems (Pre).
-         Mounting /var/volatile...
-         Starting udev Kernel Device Manager...
-[  OK  ] Mounted /var/volatile.
-[  OK  ] Started udev Kernel Device Manager.
-         Starting Network Service...
-         Starting Load/Save Random Seed...
-[  OK  ] Reached target Local File Systems.
-         Starting Commit a transient machine-id on disk...
-         Starting Create Volatile Files and Directories...
-[  OK  ] Started Network Service.
-[  OK  ] Started Create Volatile Files and Directories.
-         Starting Run pending postinsts...
-         Starting Rebuild Journal Catalog...
-         Starting Network Name Resolution...
-[    5.407248][ 0] random: fast init done
-         Starting Network Time Synchronization...
-[FAILED] Failed to start Commit a transient machine-id on disk.
-See 'systemctl status systemd-machine-id-commit.service' for details.
-[FAILED] Failed to start Rebuild Journal Catalog.
-See 'systemctl status systemd-journal-catalog-update.service' for =
-details.
-[FAILED] Failed to start Network Time Synchronization.
-See 'systemctl status systemd-timesyncd.service' for details.
-[  OK  ] Started Network Name Resolution.
-[  OK  ] Started Run pending postinsts.
-[  OK  ] Reached target Network.
-[  OK  ] Reached target Host and Network Name Lookups.
-[  OK  ] Stopped Network Time Synchronization.
-         Starting Network Time Synchronization...
-         Starting Update is Completed...
-[FAILED] Failed to start Network Time Synchronization.
-See 'systemctl status systemd-timesyncd.service' for details.
-[FAILED] Failed to start Update is Completed.
-See 'systemctl status systemd-update-done.service' for details.
-[  OK  ] Stopped Network Time Synchronization.
-[FAILED] Failed to start Network Time Synchronization.
-See 'systemctl status systemd-timesyncd.service' for details.
-[  OK  ] Reached target System Initialization.
-[  OK  ] Started Daily Cleanup of Temporary Directories.
-[  OK  ] Reached target System Time Set.
-[  OK  ] Reached target System Time Synchronized.
-[  OK  ] Started Daily rotation of log files.
-[  OK  ] Reached target Timers.
-[  OK  ] Listening on Avahi mDNS/DNS-SD Stack Activation Socket.
-[  OK  ] Listening on BMC Webserver socket.
-[  OK  ] Listening on D-Bus System Message Bus Socket.
-[  OK  ] Listening on dropbear.socket.
-[  OK  ] Listening on Phosphor Host=E9=88=A5=EE=9B=95le SSH =
-Per-Connection socket.
-[  OK  ] Listening on phosphor-ipmi-net@eth0.socket.
-[  OK  ] Reached target Sockets.
-         Starting D-Bus System Message Bus...
-[  OK  ] Started D-Bus System Message Bus.
-[  OK  ] Reached target Basic System.
-         Starting Avahi mDNS/DNS-SD Stack...
-[  OK  ] Started Start bmcweb server.
-         Starting SSH Key Generation...
-[  OK  ] Started LPC Snoop Daemon.
-         Starting Name Service Cache Daemon...
-         Starting LDAP daemon...
-[  OK  ] Started ttyVUART0 Console Server.
-         Starting Host logging...
-         Starting OpenPOWER Host0 Control...
-[  OK  ] Started Phosphor certificate manager for authority.
-[  OK  ] Started Phosphor certificate manager for bmcweb.
-[  OK  ] Started Phosphor certificate manager for nslcd.
-[  OK  ] Started phosphor systemd target monitor.
-         Starting System Logging Service...
-[  OK  ] Started Lightweight SLP Server.
-         Starting OpenBMC ipKVM daemon...
-         Starting Permit User Sessions...
-         Starting Intel Power Control...
-         Starting Phosphor Dump Manager...
-         Starting Entity Manager...
-[  OK  ] Started Fru Device.
-         Starting Phosphor Inventory Manager...
-[    6.483830][ 2] audit: type=3D1701 audit(6.275:2): auid=3D4294967295 =
-uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2513 comm=3D"phosphor-invent" =
-exe=3D"/usr/bin/phosphor-inventory" sig=3D6 res=3D1
-         Starting Phosphor LDAP privilege mapper...
-[    6.510694][ 3] audit: type=3D1701 audit(6.303:3): auid=3D4294967295 =
-uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2515 comm=3D"phosphor-ldap-m" =
-exe=3D"/usr/bin/phosphor-ldap-mapper" sig=3D6 res=3D1
-         Starting Phosphor LED Group Management Daemon...
-[  OK  ] Started IPMI SEL Logging Service.
-         Starting Phosphor Log Manager...
-[    6.570991][ 3] audit: type=3D1701 audit(6.363:4): auid=3D4294967295 =
-uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2519 comm=3D"phosphor-log-ma" =
-exe=3D"/usr/bin/phosphor-log-manager" sig=3D6 res=3D1
-         Starting Phosphor DBus Service Discovery Manager...
-         Starting Phosphor Settings Daemon...
-         Starting Phosphor Download Manager...
-         Starting Post code manager...
-[    6.647312][ 3] audit: type=3D1701 audit(6.439:5): auid=3D4294967295 =
-uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2524 comm=3D"post-code-manag" =
-exe=3D"/usr/bin/post-code-manager" sig=3D6 res=3D1
-         Starting Rsyslog config updater...
-         Starting Phosphor User Manager...
-[  OK  ] Started System Logging Service.
-[  OK  ] Started Name Service Cache Daemon.
-[FAILED] Failed to start SSH Key Generation.
-See 'systemctl status dropbearkey.service' for details.
-[  OK  ] Started LDAP daemon.
-[  OK  ] Started OpenBMC ipKVM daemon.
-[    6.785104][ 3] audit: type=3D1701 audit(6.575:6): auid=3D4294967295 =
-uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2530 comm=3D"obmc-ikvm" =
-exe=3D"/usr/bin/obmc-ikvm" sig=3D6 res=3D1
-[  OK  ] Started Permit User Sessions.
-[FAILED] Failed to start Intel Power Control.
-See 'systemctl status =
-xyz.openbmc_proje=E9=88=A5=EE=9B=99is.Control.Power.service' for =
-details.
-[FAILED] Failed to start Phosphor Dump Manager.
-See 'systemctl status xyz.openbmc_project.Dump.Manager.service' for =
-details.
-[FAILED] Failed to start Entity Manager.
-See 'systemctl status xyz.openbmc_project.EntityManager.service' for =
-details.
-[DEPEND] Dependency failed for Hwmon Temp Sensor.
-[DEPEND] Dependency failed for CPU Sensor.
-[DEPEND] Dependency failed for Adc Sensor.
-[DEPEND] Dependency failed for Fan Sensor.
-[DEPEND] Dependency failed for Exit Air Temp Sensor.
-[DEPEND] Dependency failed for IPMB Sensor.
-[DEPEND] Dependency failed for Intrusion Sensor.
-[DEPEND] Dependency failed for MCU Temp Sensor.
-[DEPEND] Dependency failed for PSU Sensor.
-[  OK  ] Started OpenPOWER Host0 Control.
-[  OK  ] Started Phosphor Inventory Manager.
-[  OK  ] Started Phosphor LED Group Management Daemon.
-[  OK  ] Started Phosphor DBus Service Discovery Manager.
-[  OK  ] Started Phosphor Settings Daemon.
-[  OK  ] Started Phosphor Download Manager.
-[  OK  ] Started Post code manager.
-[  OK  ] Started Rsyslog config updater.
-[  OK  ] Created slice system-systemd\x2dcoredump.slice.
-[  OK  ] Reached target Phosphor Object Mapper.
-[  OK  ] Started Getty on tty1.
-         Starting Wait for =
-/xyz/ope=E9=88=A5=EE=9B=89ontrol/host0/boot/one_time...
-[    7.258180][ 3] random: crng init done
-[    7.261948][ 0] random: 7 urandom warning(s) missed due to =
-ratelimiting
-         Starting Wait for =
-/xyz/ope=E9=88=A5=EE=9B=85project/control/host0/boot...
-         Starting Wait for =
-/xyz/ope=E9=88=A5?host0/power_restore_policy...
-         Starting Wait for =
-/xyz/ope=E9=88=A5=EE=9B=9Arol/host0/restriction_mode...
-         Starting Wait for =
-/xyz/ope=E9=88=A5=EE=9B=95ject/led/groups/bmc_booted...
-         Starting Wait for /xyz/openbmc_project/led/groups...
-         Starting Wait for /xyz/openbmc_project/state/chassis0...
-         Starting Wait for /xyz/openbmc_project/state/host0...
-         Starting Wait for /xyz/openbmc_project/time/owner...
-         Starting Wait for =
-/xyz/ope=E9=88=A5=EE=9B=93c_project/time/sync_method...
-[  OK  ] Started Phosphor DBus Monitor.
-[  OK  ] Started Serial Getty on ttyAMA0.
-[  OK  ] Reached target Login Prompts.
-         Starting Phosphor Ldap config updater...
-         Starting Phosphor SNMP conf Manager...
-[    7.498023][ 3] audit: type=3D1701 audit(7.287:7): auid=3D4294967295 =
-uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2546 comm=3D"phosphor-ldap-c" =
-exe=3D"/usr/bin/phosphor-ldap-conf" sig=3D6 res=3D1
-         Starting Phosphor Network Manager...
-         Starting OpenBMC Software Update Manager...
-         Starting Phosphor BMC State Manager...
-         Starting Phosphor Chassis State Manager...
-[  OK  ] Started Process Core Dump (PID 2514/UID 0).
-[  OK  ] Started Process Core Dump (PID 2516/UID 0).
-[  OK  ] Started Process Core Dump (PID 2520/UID 0).
-[  OK  ] Started Process Core Dump (PID 2525/UID 0).
-[  OK  ] Started Process Core Dump (PID 2531/UID 0).
-[FAILED] Failed to start Load/Save Random Seed.
-See 'systemctl status systemd-random-seed.service' for details.
-[  OK  ] Started Wait for =
-/xyz/open=E9=88=A5=EE=9B=9A/control/host0/boot/one_time.
-[  OK  ] Started Wait for /xyz/openbmc_project/control/host0/boot.
-[  OK  ] Started Wait for =
-/xyz/open=E9=88=A5=EE=9B=95l/host0/power_restore_policy.
-[  OK  ] Started Wait for =
-/xyz/open=E9=88=A5=EE=9B=95ntrol/host0/restriction_mode.
-[  OK  ] Started Wait for =
-/xyz/open=E9=88=A5=EE=9B=96roject/led/groups/bmc_booted.
-[  OK  ] Started Wait for /xyz/openbmc_project/led/groups.
-[  OK  ] Started Wait for /xyz/openbmc_project/time/owner.
-[  OK  ] Started Wait for /xyz/openbmc_project/time/sync_method.
-[FAILED] Failed to start Phosphor Network Manager.
-See 'systemctl status xyz.openbmc_project.Network.service' for details.
-[  OK  ] Started Phosphor SNMP conf Manager.
-[  OK  ] Started OpenBMC Software Update Manager.
-[  OK  ] Stopped     7.936135][ 3] audit: type=3D1701 audit(7.727:8): =
-auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2552 =
-comm=3D"phosphor-chassi" exe=3D"/usr/bin/phosphor-chassis-state-manager" =
-sig=3D6 res=3D1
-;39mLPC Snoop Daemon.
-[  OK  ] Started LPC Snoop Daemon.
-[  OK  ] Stopped ttyVUART0 Console Server.
-[  OK  ] Started ttyVUART0 Console Server.
-[  OK  ] Started FRU Fault monitor service.
-         Starting Phosphor Inband IPMI...
-[  OK  ] Stopped Lightweight SLP Server.
-[  OK  ] Started Lightweight SLP Server.
-[  OK  ] Stopped Phosphor Dump Manager.
-         Starting Phosphor Dump Manager...
-         Starting Phosphor Version Software Manager...
-[  OK  ] Started Process Core Dump (PID 2548/UID 0).
-[FAILED] Failed to start Phosphor Inband IPMI.
-See 'systemctl status phosphor-ipmi-host.service' for details.
-[DEPEND] Dependency failed for Network IPMI daemon.
-[DEPEND] Dependency failed for Phosphor IPMI KCS DBus Bridge.
-[FAILED] Failed to start Phosphor Dump Manager.
-See 'systemctl status xyz.openbmc_project.Dump.Manager.service' for =
-details.
-[FAILED] Failed to start Phosphor Ldap config updater.
-See 'systemctl status xyz.openbmc_project.Ldap.Config.service' for =
-details.
-[  OK  ] Started Phosphor Chassis State Manager.
-[  OK  ] Started Phosphor Version Software Manager.
-[  OK  ] Reached target Host0 running after reset.
-[  OK  ] Stopped Entity Manager.
-         Starting Entity Manager...
-[  OK  ] Started Process Core Dump (PID 2581/UID 0).
-[FAILED] Failed to start Entity Manager.
-See 'systemctl status xyz.openbmc_project.EntityManager.service' for =
-details.
-[  OK  ] Started Phosphor BMC State Manager.
-[  OK  ] Stopped Phosphor Network Manager.
-         Starting Phosphor Network Manager...
-[FAILED] Failed to start Phosphor Network Manager.
-See 'systemctl status xyz.openbmc_project.Network.service' for details.
-[  OK  ] Stopped LPC Snoop Daemon.
-[FAILED] Failed to start LPC Snoop Daemon.
-See 'systemctl status lpcsnoop.service' for details.
-[  OK  ] Stopped ttyVUART0 Console Server.
-[FAILED] Failed to start ttyVUART0 Console Server.
-See 'systemctl status obmc-console@ttyVUART0.service' for details.
-[  OK  ] Stopped Phosphor Inband IPMI.
-         Starting Phosphor Inband IPMI...
-[  OK  ] Stopped Lightweight SLP Server.
-[FAILED] Failed to start Lightweight SLP Server.
-See 'systemctl status slpd-lite.service' for details.
-[  OK  ] Stopped Phosphor Dump Manager.
-[FAILED] Failed to start Phosphor Dump Manager.
-See 'systemctl status xyz.openbmc_project.Dump.Manager.service' for =
-details.
-[  OK  ] Stopped Phosphor Ldap config updater.
-         Starting Phosphor Ldap config updater...
-[    9.434732][ 3] audit: type=3D1701 audit(9.227:9): auid=3D4294967295 =
-uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2605 comm=3D"phosphor-ldap-c" =
-exe=3D"/usr/bin/phosphor-ldap-conf" sig=3D6 res=3D1
-[FAILED] Failed to start Phosphor Inband IPMI.
-See 'systemctl status phosphor-ipmi-host.service' for details.
-[  OK  ] Stopped Entity Manager.
-[FAILED] Failed to start Entity Manager.
-See 'systemctl status xyz.openbmc_project.EntityManager.service' for =
-details.
-[  OK  ] Stopped Phosphor Chassis State Manager.
-         Starting Phosphor Chassis State Manager...
-[  OK  ] Started Process Core Dump (PID 2606/UID 0).
-[FAILED] Failed to start Phosphor Ldap config updater.
-See 'systemctl status xyz.openbmc_project.Ldap.Config.service' for =
-details.
-[  OK  ] Started     9.627866][ 3] audit: type=3D1701 audit(9.419:10): =
-auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2607 =
-comm=3D"phosphor-chassi" exe=3D"/usr/bin/phosphor-chassis-state-manager" =
-sig=3D6 res=3D1
-;39mPhosphor Chassis State Manager.
-[  OK  ] Started Process Core Dump (PID 2612/UID 0).
-[  OK  ] Stopped Intel Power Control.
-         Starting Intel Power Control...
-[FAILED] Failed to start Intel Power Control.
-See 'systemctl status =
-xyz.openbmc_proje=E9=88=A5=EE=9B=99is.Control.Power.service' for =
-details.
-[  OK  ] Stopped Phosphor Network Manager.
-[FAILED] Failed to start Phosphor Network Manager.
-See 'systemctl status xyz.openbmc_project.Network.service' for details.
-[  OK  ] Stopped Phosphor Inband IPMI.
-[FAILED] Failed to start Phosphor Inband IPMI.
-See 'systemctl status phosphor-ipmi-host.service' for details.
-[  OK  ] Stopped Phosphor Ldap config updater.
-[FAILED] Failed to start Phosphor Ldap config updater.
-See 'systemctl status xyz.openbmc_project.Ldap.Config.service' for =
-details.
-[  OK  ] Stopped Phosphor Chassis State Manager.
-[FAILED] Failed to start Phosphor Chassis State Manager.
-See 'systemctl status xyz.openbmc_project.State.Chassis.service' for =
-details.
+Regards,
+Jayashree.
 
-Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro) 0.1.0 =
-ft2500 ttyAMA0
+::DISCLAIMER::
+________________________________
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
+smission. The e mail and its contents (with or without referred errors) sha=
+ll therefore not attach any liability on the originator or HCL or its affil=
+iates. Views or opinions, if any, presented in this email are solely those =
+of the author and may not necessarily reflect the views or opinions of HCL =
+or its affiliates. Any form of reproduction, dissemination, copying, disclo=
+sure, modification, distribution and / or publication of this message witho=
+ut the prior written consent of authorized representative of HCL is strictl=
+y prohibited. If you have received this email in error please delete it and=
+ notify the sender immediately. Before opening any email and/or attachments=
+, please check them for viruses and other defects.
+________________________________
 
-ft2500 login: [   13.425766][ 3] audit: type=3D1701 audit(13.215:11): =
-auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2619 =
-comm=3D"phosphor-invent" exe=3D"/usr/bin/phosphor-inventory" sig=3D6 =
-res=3D1
-[   13.441431][ 3] audit: type=3D1701 audit(13.219:12): =
-auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2621 =
-comm=3D"phosphor-ldap-m" exe=3D"/usr/bin/phosphor-ldap-mapper" sig=3D6 =
-res=3D1
-[   13.457052][ 3] audit: type=3D1701 audit(13.223:13): =
-auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2624 =
-comm=3D"phosphor-log-ma" exe=3D"/usr/bin/phosphor-log-manager" sig=3D6 =
-res=3D1
-[   13.477213][ 3] audit: type=3D1701 audit(13.267:14): =
-auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D2646 =
-comm=3D"obmc-ikvm" exe=3D"/usr/bin/obmc-ikvm" sig=3D6 res=3D1
+--_000_SG2PR04MB3093138F50B102737D402D6CE1629SG2PR04MB3093apcp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-ft2500 login: root
-Password:=20
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
+span.EmailStyle18
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle19
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:#1F497D;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
+pan style=3D"color:green">Public</span></b><span style=3D"font-size:12.0pt"=
+><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:#1F497D">Hi Team,<o:p></o:p></s=
+pan></p>
+<p class=3D"MsoNormal"><span style=3D"color:#1F497D"><o:p>&nbsp;</o:p></spa=
+n></p>
+<p class=3D"MsoNormal">I am working on Gerrit Trigger Integration from Jenk=
+ins.<o:p></o:p></p>
+<p class=3D"MsoNormal">Is there any steps followed for continuous Integrati=
+on of gerrit from Jenkins ?<br>
+I am facing issue in connecting Gerrit server from Jenkins.<o:p></o:p></p>
+<p class=3D"MsoNormal">Could anyone please share your thoughts on this.<o:p=
+></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Regards,<o:p></o:p></p>
+<p class=3D"MsoNormal">Jayashree.<o:p></o:p></p>
+<p class=3D"MsoNormal"><span style=3D"color:#1F497D"><o:p>&nbsp;</o:p></spa=
+n></p>
+<p class=3D"MsoNormal"><span style=3D"color:#1F497D"><o:p>&nbsp;</o:p></spa=
+n></p>
+<div>
+<div style=3D"border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0in =
+0in 0in">
+<p class=3D"MsoNormal"><a name=3D"_____replyseparator"></a><b>From:</b> Jay=
+ashree D <br>
+<b>Sent:</b> Wednesday, March 17, 2021 5:40 PM<br>
+<b>To:</b> openbmc@lists.ozlabs.org<br>
+<b>Subject:</b> Gerrit trigger CI from Jenkins<o:p></o:p></p>
+</div>
+</div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
+pan style=3D"color:green">Public</span></b><span style=3D"font-size:12.0pt"=
+><o:p></o:p></span></p>
+<p class=3D"MsoNormal">Hi Team,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I am working on Gerrit Trigger Integration from Jenk=
+ins.<o:p></o:p></p>
+<p class=3D"MsoNormal">Is there any steps followed for continuous Integrati=
+on of gerrit from Jenkins ?<br>
+I am facing issue in connecting Gerrit server from Jenkins.<o:p></o:p></p>
+<p class=3D"MsoNormal">Could anyone please share your thoughts on this.<o:p=
+></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Regards,<o:p></o:p></p>
+<p class=3D"MsoNormal">Jayashree.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
+<hr>
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or
+ incomplete, or may contain viruses in transmission. The e mail and its con=
+tents (with or without referred errors) shall therefore not attach any liab=
+ility on the originator or HCL or its affiliates. Views or opinions, if any=
+, presented in this email are solely
+ those of the author and may not necessarily reflect the views or opinions =
+of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
+ disclosure, modification, distribution and / or publication of this messag=
+e without the prior written consent
+ of authorized representative of HCL is strictly prohibited. If you have re=
+ceived this email in error please delete it and notify the sender immediate=
+ly. Before opening any email and/or attachments, please check them for viru=
+ses and other defects.<br>
+<hr>
+</font>
+</body>
+</html>
 
-Login incorrect
-ft2500 login: root
-Password:=20
-root@ft2500:~# ls
-bmcweb_persistent_data.json
-root@ft2500:~# uname -a
-Linux ft2500 4.19.15-g30f0c49c3-dirty #9 SMP PREEMPT Fri Mar 19 16:23:13 =
-UTC 2021 aarch64 GNU/Linux
-root@ft2500:~# cat /etc/os-release=20
-ID=3Dopenbmc-phosphor
-NAME=3D"Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)"
-VERSION=3D"0.1.0"
-VERSION_ID=3D0.1.0
-PRETTY_NAME=3D"Phosphor OpenBMC (Phosphor OpenBMC Project Reference =
-Distro) 0.1.0"
-BUILD_ID=3D"20201125002258"
-OPENBMC_TARGET_MACHINE=3D"ft2500"
-root@ft2500:~# [  238.034191][ 0] usb 2-2: USB disconnect, device number =
-2
-
->  Thanks for checking that.  It sounds like your BMC's /etc files are
->  good.  Unfortunately, I have no experience with Linux configuration, =
-startup,
->  or emergency mode, so I cannot offer any help here.
-> =20
->  - Joseph
-> =20
->  >>   You asked why root login fails.  The log below shows a number of
->  >>   failures.  These include:
->  >>   > systemd[1]: Running with  unpopulated /etc.
->  >>   > systemd[1]: System cannot  boot: Missing /etc/machine-id and =
-/etc
->  is
->  >>   mounted read-only.
->  > I checked that the file "/etc/shadow" and the dirent "/etc/pam.d" =
-exist.
->  >
->  >>   The root user login credentials are stored in /etc/passwd and
->  >>   /etc/shadow.  Also, the Linux-PAM authentication stack is stored =
-under
->  >>   /etc/pam.d/.  So, if /etc is messed up, logins will fail.
->  >>
->  >>   I don't see any fstab entries for /etc, meaning nothing hides =
-its
->  >>   content.  Can you look at your readonly /etc file system (from =
-your
->  >>   build artifacts, or inside your install image) to see if the =
-files
->  >>   mentioned above are present?  But please note I am not an fstab
->  expert.
->  >>
->  >>   Good luck,
->  >>   Joseph
->  > I have no idea why the system runs in emergency mode. Feel free to
->  > give some thoughts on the issue, the below text lines are the =
-content of the
->  startup log.
->  >
->  > [    2.044027][ 3] VFS: Mounted root (squashfs filesystem) readonly =
-on
->  device 1:0.
->  > [    2.051540][ 3] devtmpfs: mounted
->  > [    2.055297][ 3] Freeing unused kernel memory: 1344K
->  > [    2.060279][ 3] Run /sbin/init as init process
->  > [    2.126531][ 3] systemd[1]: systemd 244.3+ running in system =
-mode.
->  (+PAM -AUDIT -SELINUX -IMA -APPAR)
->  > [    2.148585][ 3] systemd[1]: Detected architecture arm64.
->  >
->  > Welcome to Phosphor OpenBMC (Phosphor OpenBMC Project Reference
->  Distro) 0.1.0!
->  >
->  > [    2.170085][ 3] systemd[1]: Set hostname to <phytium_arm64>.
->  > [    2.177862][ 3] random: systemd: uninitialized urandom read (16 =
-bytes
->  read)
->  > [    2.184835][ 3] systemd[1]: Initializing machine ID from random
->  generator.
->  > [    2.191748][ 3] systemd[1]: Installed transient /etc/machine-id =
-file.
->  > [    2.250899][ 3] random: systemd: uninitialized urandom read (16 =
-bytes
->  read)
->  > [    2.257923][ 3] systemd[1]: system-getty.slice: unit configures =
-an IP
->  firewall, but the local system.
->  > [    2.270618][ 3] systemd[1]: (This warning is only shown for the =
-first unit
->  using IP firewalling.)
->  > [    2.280218][ 3] systemd[1]: Created slice system-getty.slice.
->  > [  OK  ] Created slice system-getty.slice.
->  > [    2.302077][ 3] random: systemd: uninitialized urandom read (16 =
-bytes
->  read)
->  > [    2.309286][ 3] systemd[1]: Created slice =
-system-serial\x2dgetty.slice.
->  > [  OK  ] Created slice system-serial\x2dgetty.slice.
->  > [    2.330128][ 3] systemd[1]: Started Dispatch Password Requests =
-to
->  Console Directory Watch.
->  > [  OK  ] Started Dispatch Password =C3=A2=C3=80=C2=A6ts to Console =
-Directory Watch.
->  > [    2.354103][ 3] systemd[1]: Started Forward Password Requests to =
-Wall
->  Directory Watch.
->  > [  OK  ] Started Forward Password R=C3=A2=E2=82=AC=E2=80=A6uests to =
-Wall Directory Watch.
->  > [    2.378081][ 3] systemd[1]: Reached target Paths.
->  > [  OK  ] Reached target Paths.
->  > [    2.394068][ 3] systemd[1]: Reached target Remote File Systems.
->  > [  OK  ] Reached target Remote File Systems.
->  > [    2.414068][ 3] systemd[1]: Reached target Slices.
->  > [  OK  ] Reached target Slices.
->  > [    2.430071][ 3] systemd[1]: Reached target Swap.
->  > [  OK  ] Reached target Swap.
->  > [    2.446293][ 3] systemd[1]: Listening on Syslog Socket.
->  > [  OK  ] Listening on Syslog Socket.
->  > [    2.467220][ 3] systemd[1]: Listening on Process Core Dump =
-Socket.
->  > [  OK  ] Listening on Process Core Dump Socket.
->  > [    2.486120][ 3] systemd[1]: Listening on initctl Compatibility =
-Named
->  Pipe.
->  > [  OK  ] Listening on initctl[    2.494822][ 0] usb 2-2: new =
-SuperSpeed
->  Gen 1 USB device number 2 usingd
->  >   Compatibility Named Pipe.
->  > [    2.514215][ 3] systemd[1]: Listening on Journal Audit Socket.
->  > [  OK  ] Listening on Journal Audit Socket.
->  > [    2.532382][ 0] usb-storage 2-2:1.0: USB Mass Storage device =
-detected
->  > [    2.538920][ 0] scsi host4: usb-storage 2-2:1.0
->  > [    2.546153][ 3] systemd[1]: Listening on Journal Socket =
-(/dev/log).
->  > [  OK  ] Listening on Journal Socket (/dev/log).
->  > [    2.566158][ 3] systemd[1]: Listening on Journal Socket.
->  > [  OK  ] Listening on Journal Socket.
->  > [    2.590185][ 3] systemd[1]: Listening on Network Service Netlink
->  Socket.
->  > [  OK  ] Listening on Network Service Netlink Socket.
->  > [    2.610172][ 3] systemd[1]: Listening on udev Control Socket.
->  > [  OK  ] Listening on udev Control Socket.
->  > [    2.630125][ 3] systemd[1]: Listening on udev Kernel Socket.
->  > [  OK  ] Listening on udev Kernel Socket.
->  > [    2.651160][ 3] systemd[1]: Mounting Huge Pages File System...
->  >           Mounting Huge Pages File System...
->  > [    2.671120][ 3] systemd[1]: Mounting POSIX Message Queue File
->  System...
->  >           Mounting POSIX Message Queue File System...
->  > [    2.691112][ 1] systemd[1]: Mounting Kernel Debug File System...
->  >           Mounting Kernel Debug File System...
->  > [    2.714920][ 1] systemd[1]: Mounting Temporary Directory =
-(/tmp)...
->  >           Mounting Temporary Directory (/tmp)...
->  > [    2.738097][ 1] systemd[1]: Condition check resulted in Create =
-list of
->  static device nodes for the c.
->  > [    2.750575][ 1] systemd[1]: Starting File System Check on Root =
-Device...
->  >           Starting File System Check on Root Device...
->  > [    2.771480][ 2] systemd[1]: Starting Journal Service...
->  >           Starting Journa[    2.777184][ 2] systemd[1]: Condition =
-check
->  resulted in Load Kernel Modules .
->  > l Service...
->  > [    2.788090][ 2] systemd[1]: Condition check resulted in FUSE =
-Control
->  File System being skipped.
->  > [    2.799386][ 2] systemd[1]: Mounting Kernel Configuration File
->  System...
->  >           Mounting Kernel Configuration File System...
->  > [    2.823495][ 2] systemd[1]: Starting Apply Kernel Variables...
->  >           Starting Apply Kernel Variables...
->  > [    2.843199][ 2] systemd[1]: Starting udev Coldplug all =
-Devices...
->  >           Starting udev Coldplug all Devices...
->  > [    2.866823][ 2] systemd[1]: Started Journal Service.
->  > [  OK  ] Started Journal Service.
->  > [FAILED] Failed to mount Huge Pages File System.
->  > See 'systemctl status dev-hugepages.mount' for details.
->  > [FAILED] Failed to mount POSIX Message Queue File System.
->  > See 'systemctl status dev-mqueue.mount' for details.
->  > [FAILED] Failed to mount Kernel Debug File System.
->  > See 'systemctl status sys-kernel-debug.mount' for details.
->  > [FAILED] Failed to mount Temporary Directory (/tmp).
->  > See 'systemctl status tmp.mount' for details.
->  > [DEPEND] Dependency failed for Network Name Resolution.
->  > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  > [DEPEND] Dependency failed for Network Time Synchronization.
->  > [  OK  ] Started File System Check on Root Device.
->  > [FAILED] Failed to mount Kernel Configuration File System.
->  > See 'systemctl status sys-kernel-config.mount' for details.
->  > [  OK  ] Started Apply Kernel Variables.
->  > [  OK  ] Reached target Host and Network Name Lookups.
->  > [  OK  ] Reached target System Time Set.
->  > [  OK  ] Reached target System Time Synchronized.
->  >           Starting Remount Root and Kernel File Systems...
->  > [  OK  ] Started udev Coldplug all Devices.
->  > [FAILED] Failed to start Remount Root and Kernel File Systems.
->  > See 'systemctl status systemd-remount-fs.service' for details.
->  >           Starting Flush Journal to Persistent Storage...
->  > [    3.227668][ 3] systemd-journald[1452]: Received client request =
-to flush
->  runtime journal.
->  >           Starting Create Static Device Nodes in /dev...
->  > [  OK  ] Started Flush Journal to Persistent Storage.
->  > [  OK  ] Started Create Static Device Nodes in /dev.
->  > [  OK  ] Reached target Local File Systems (Pre).
->  >           Mounting /var/volatile...
->  >           Starting udev Kernel Device Manager...
->  > [FAILED] Failed to mount /var/volatile.
->  > See 'systemctl status var-volatile.mount' for details.
->  > [DEPEND] Dependency failed for Bind mount volatile /var/cache.
->  > [DEPEND] Dependency failed for Local File Systems.
->  > [DEPEND] Dependency failed for Bind mount volatile /srv.
->  > [DEPEND] Dependency failed for Bind mount volatile /var/lib.
->  > [DEPEND] Dependency failed for Bind mount volatile /var/spool.
->  > [  OK  ] Started udev Kernel Device Manager.
->  > [    3.460610][ 0] random: fast init done
->  > [  OK  ] Stopped Dispatch Password =C3=A2=E2=82=AC=E2=80=A6ts to =
-Console Directory Watch.
->  > [  OK  ] Stopped Forward Password R=C3=A2=E2=82=AC=E2=80=A6uests to =
-Wall Directory Watch.
->  > [  OK  ] Reached target Timers.
->  > [    3.548046][ 0] scsi 4:0:0:0: Direct-Access      USB      =
-SanDisk
->  3.2Gen1 1.00 PQ: 0 ANSI: 6
->  > [    3.556938][ 0] sd 4:0:0:0: [sdb] 240353280 512-byte logical =
-blocks:
->  (123 GB/115 GiB)
->  > [    3.565978][ 1] sd 4:0:0:0: [sdb] Write Protect is off
->  > [  OK  ] Closed     3.572198][ 0] sd 4:0:0:0: [sdb] Write cache: =
-disabled,
->  read cache: enabled, doesn'tA
->  > 39mSyslog Socket.
->  > [  OK  ] Reached targe[    3.595391][ 1]  sdb: sdb1
->  > t Login Prompts.
->  > [    3.603064][ 1] sd 4:0:0:0: [sdb] Attached SCSI removable disk
->  >           Starting Network Service...
->  >           Starting Load/Save Random Seed...
->  > [  OK  ] Reached target Sockets.
->  >           Mounting Kernel Configuration File System...
->  > [  OK  ] Started Emergency Shell.
->  > [  OK  ] Reached target Emergency Mode.
->  >           Starting Create Volatile Files and Directories...
->  > [  OK  ] Started Network Service.
->  > [  OK  ] Started Load/Save Random Seed.
->  > [FAILED] Failed to mount Kernel Configuration File System.
->  > See 'systemctl status sys-kernel-config.mount' for details.
->  > [  OK  ] Started Create Volatile Files and Directories.
->  > [  OK  ] Reached target Network.
->  >           Starting Run pending postinsts...
->  > [FAILED] Failed to start Run pending postinsts.
->  > See 'systemctl status run-postinsts.service' for details.
->  > You are in emergency mode. After logging in, type "journalctl -xb" =
-to
->  > view systeGive root password for maintenance (or press Control-D to
->  > continue):
->  > Login incorrect
->  >
->  > Give root password for maintenance
->  > (or press Control-D to continue):
->  > Login incorrect
->  >
->  > Give root password for maintenance
->  > (or press Control-D to continue):
->  > Login incorrect
->  >
->  > Give root password for maintenance
->  > (or press Control-D to continue):
->  > Login incorrect
->  >
->  > Give root password for maintenance
->  > (or press Control-D to continue):
->  > Reloading system manager configuration Starting default target You =
-are
->  > in emergency mode. After Give root password for maintenance (or =
-press
->  > Control-D to continue):
->  > Login incorrect
->  >
->  > Give root password for maintenance
->  > (or press Control-D to continue):
->  > Login incorrect
->  >
->  > Give root password for maintenance
->  > (or press Control-D to continue):
->  > Reloading system manager configuration Starting default target You =
-are
->  > in emergency mode. After Give root password for maintenance (or =
-press
->  > Control-D to continue):
->  > ~ # devmem
->  > BusyBox v1.31.1 (2021-03-03 02:43:05 UTC) multi-call binary.
->  >
->  > Usage: devmem ADDRESS [WIDTH [VALUE]]
->  > ~ #
->  > CTRL-A Z for help | 115200 8N1 | NOR | Minicom 2.7 | VT102 | =
-Offline |
->  > ttyUSB0
->  >
->  >>   > I am sorry, the startup log was pasted wrong contents in the =
-last
->  >>   > email. The following texts are showing the
->  >>   >
->  >>   > startup log.
->  >>   >
->  >>   > [    8.450487][ 1] VFS: Mounted root (squashfs filesystem) =
-readonly
->  on
->  >>   > device 1:0.
->  >>   >
->  >>   > [    8.457904][ 1] devtmpfs: mounted
->  >>   >
->  >>   > [    8.461538][ 1] Freeing unused kernel memory: 1344K
->  >>   >
->  >>   > [    8.466494][ 1] Run /sbin/init as init process
->  >>   >
->  >>   > [    8.561032][ 1] systemd[1]: systemd 244.3+ running in =
-system
->  mode.
->  >>   > (+PAM -AUDIT -SELINUX -IMA -APPARMOR -SMACK +SYSVINIT -UTMP
->  >>   > -LIBCRYPTSETUP -GCRYPT -GNUTLS -ACL +XZ -LZ4 -SECCOMP +BLKID
->  >>   -ELFUTILS
->  >>   > +KMOD -IDN2 -IDN -PCRE2 default-hierarchy=3Dhybrid)
->  >>   >
->  >>   > [    8.583865][ 1] systemd[1]: Detected architecture arm64.
->  >>   >
->  >>   > [    8.589282][ 1] systemd[1]: Running with unpopulated /etc.
->  >>   >
->  >>   > Welcome to Phosphor OpenBMC (Phosphor OpenBMC Project
->  Reference
->  >>   > Distro) 0.1.0!
->  >>   >
->  >>   > [    8.616684][ 1] systemd[1]: Set hostname to <ft2500>.
->  >>   >
->  >>   > [    8.621737][ 1] systemd[1]: System cannot boot: Missing
->  >>   > /etc/machine-id and /etc is mounted read-only.
->  >>   >
->  >>   > [    8.631004][ 1] systemd[1]: Booting up is supported only =
-when:
->  >>   >
->  >>   > [    8.636815][ 1] systemd[1]: 1) /etc/machine-id exists and =
-is
->  populated.
->  >>   >
->  >>   > [    8.643403][ 1] systemd[1]: 2) /etc/machine-id exists and =
-is
->  empty.
->  >>   >
->  >>   > [    8.649646][ 1] systemd[1]: 3) /etc/machine-id is missing =
-and /etc
->  >>   > is writable.
->  >>   >
->  >>   > [    8.909871][ 1] systemd[1]: Failed to populate /etc with =
-preset
->  >>   > unit settings, ignoring: Read-only file system
->  >>   >
->  >>   > [    8.953437][ 1] systemd[1]:
->  >>   > /lib/systemd/system/phosphor-ipmi-net@.socket:3: Invalid =
-interface
->  >>   > name, ignoring: sys-subsystem-net-devices-%i.device
->  >>   >
->  >>   > [    8.987426][ 1] systemd[1]: Failed to put bus name to =
-hashmap:
->  File
->  >>   > exists
->  >>   >
->  >>   > [    8.994294][ 1] systemd[1]:
->  xyz.openbmc_project.State.Host.service:
->  >>   > Two services allocated for the same bus name
->  >>   > xyz.openbmc_project.State.Host, refusing operation.
->  >>   >
->  >>   > [    9.010841][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-reset-running@.target+0 =E9=88=AB
->  obmc-host-reset-running@0.target
->  >>   >
->  >>   > [    9.023396][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-stop@.target+0 =E9=88=ABobmc-host-stop@0.target
->  >>   >
->  >>   > [    9.033834][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-startmin@.target+0 =
-=E9=88=ABobmc-host-startmin@0.target
->  >>   >
->  >>   > [    9.047367][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-power-on@.target+0 =E9=88=ABobmc-power-on@0.target
->  >>   >
->  >>   > [    9.057600][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-power-start@.target+0 =E9=88=ABobmc-power-start@0.target
->  >>   >
->  >>   > [    9.072831][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-power-start-pre@.target+0 =
-=E9=88=ABobmc-power-start-pre@0.target
->  >>   >
->  >>   > [    9.084856][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-started@.target+0 =
-=E9=88=ABobmc-host-started@0.target
->  >>   >
->  >>   > [    9.095814][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-starting@.target+0 =
-=E9=88=ABobmc-host-starting@0.target
->  >>   >
->  >>   > [    9.106930][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-start-pre@.target+0 =
-=E9=88=ABobmc-host-start-pre@0.target
->  >>   >
->  >>   > [    9.122329][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-quiesce@.target+0 =
-=E9=88=ABobmc-host-quiesce@0.target
->  >>   >
->  >>   > [    9.133285][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-chassis-poweroff@.target+0 =E9=88=AB
->  obmc-chassis-poweroff@0.target
->  >>   >
->  >>   > [    9.146007][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-power-off@.target+0 =E9=88=ABobmc-power-off@0.target
->  >>   >
->  >>   > [    9.156446][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-power-stop@.target+0 =E9=88=ABobmc-power-stop@0.target
->  >>   >
->  >>   > [    9.167236][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-power-stop-pre@.target+0 =
-=E9=88=ABobmc-power-stop-pre@0.target
->  >>   >
->  >>   > [    9.179055][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-stopped@.target+0 =
-=E9=88=ABobmc-host-stopped@0.target
->  >>   >
->  >>   > [    9.190016][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-stopping@.target+0 =
-=E9=88=ABobmc-host-stopping@0.target
->  >>   >
->  >>   > [    9.201162][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-stop-pre@.target+0 =
-=E9=88=ABobmc-host-stop-pre@0.target
->  >>   >
->  >>   > [    9.212993][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-chassis-powerreset@.target+0 =E9=88=AB
->  obmc-chassis-powerreset@0.target
->  >>   >
->  >>   > [    9.225026][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-chassis-poweron@.target+0 =E9=88=AB
->  obmc-chassis-poweron@0.target
->  >>   >
->  >>   > [    9.238767][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-chassis-powered-off@.target+0 =E9=88=AB
->  >>   obmc-chassis-powered-off@0.target
->  >>   >
->  >>   > [    9.272031][ 1] systemd[1]:
->  >>   > /lib/systemd/system/phosphor-pid-control.service:7: Neither a =
-valid
->  >>   > executable name nor an absolute path: {bindir}/swampd
->  >>   >
->  >>   > [    9.285365][ 1] systemd[1]: phosphor-pid-control.service: =
-Unit
->  >>   > configuration has fatal error, unit will not be started.
->  >>   >
->  >>   > [    9.308206][ 1] systemd[1]: unit_file_find_fragment:
->  >>   > obmc-host-reset@.target+0 =E9=88=ABobmc-host-reset@0.target
->  >>   >
->  >>   > [    9.332286][ 1] systemd[1]: phosphor-pid-control.service: =
-Cannot
->  >>   > add dependency job, ignoring: Unit =
-phosphor-pid-control.service has a
->  >>   > bad unit file setting.
->  >>   >
->  >>   > [    9.346322][ 1] systemd[1]:
->  xyz.openbmc_project.State.Host.service:
->  >>   > Cannot add dependency job, ignoring: Unit
->  >>   > xyz.openbmc_project.State.Host.service failed to load =
-properly: File
->  >>   > exists.
->  >>   >
->  >>   > [    9.364178][ 1] random: systemd: uninitialized urandom read =
-(16
->  >>   > bytes read)
->  >>   >
->  >>   > [    9.371220][ 1] systemd[1]: system-mapper\x2dwait.slice: =
-unit
->  >>   > configures an IP firewall, but the local system does not =
-support
->  >>   > BPF/cgroup firewalling.
->  >>   >
->  >>   > [    9.384639][ 1] systemd[1]: (This warning is only shown for =
-the
->  >>   > first unit using IP firewalling.)
->  >>   >
->  >>   > [    9.394482][ 1] systemd[1]: Created slice
->  system-mapper\x2dwait.slice.
->  >>   >
->  >>   > [  OK  ] Created slice system-mapper\x2dwait.slice.
->  >>   >
->  >>   > [    9.415686][ 1] random: systemd: uninitialized urandom read =
-(16
->  >>   > bytes read)
->  >>   >
->  >>   > [    9.422990][ 1] systemd[1]: Created slice
->  >>   system-obmc\x2dconsole.slice.
->  >>   >
->  >>   > [  OK  ] Created slice system-obmc\x2dconsole.slice.
->  >>   >
->  >>   > [    9.443668][ 1] random: systemd: uninitialized urandom read =
-(16
->  >>   > bytes read)
->  >>   >
->  >>   > [    9.450959][ 1] systemd[1]: Created slice
->  >>   > system-obmc\x2dled\x2dgroup\x2dstart.slice.
->  >>   >
->  >>   > [  OK  ] Created slice =
-system-obmc\x2dled\x2dgroup\x2dstart.slice.
->  >>   >
->  >>   > [    9.476116][ 1] systemd[1]: Created slice
->  >>   > system-org.openbmc.control.Host.slice.
->  >>   >
->  >>   > [  OK  ] Created slice system-org.openbmc.control.Host.slice.
->  >>   >
->  >>   > [    9.500025][ 1] systemd[1]: Created slice
->  >>   > system-phosphor\x2dcertificate\x2dmanager.slice.
->  >>   >
->  >>   > [  OK  ] Created slice =
-system-phosp=E9=88=A5=EE=9B=8Acertificate\x2dmanager.slice.
->  >>   >
->  >>   > [    9.524018][ 1] systemd[1]: Created slice
->  >>   > system-phosphor\x2ddiscover\x2dsystem\x2dstate.slice.
->  >>   >
->  >>   > [  OK  ] Created slice system-phosp=E9=88=A5
->  =EE=9B=95ver\x2dsystem\x2dstate.slice.
->  >>   >
->  >>   > [    9.548011][ 1] systemd[1]: Created slice
->  >>   > system-phosphor\x2dipmi\x2dkcs.slice.
->  >>   >
->  >>   > [  OK  ] Created slice system-phosphor\x2dipmi\x2dkcs.slice.
->  >>   >
->  >>   > [    9.572014][ 1] systemd[1]: Created slice
->  >>   > system-phosphor\x2dipmi\x2dnet.slice.
->  >>   >
->  >>   > [  OK  ] Created slice system-phosphor\x2dipmi\x2dnet.slice.
->  >>   >
->  >>   > [    9.596078][ 1] systemd[1]: Created slice
->  >>   > system-phosphor\x2dreset\x2dhost\x2dcheck.slice.
->  >>   >
->  >>   > [  OK  ] Created slice system-phosp=E9=88=A5
->  =EE=9B=8Areset\x2dhost\x2dcheck.slice.
->  >>   >
->  >>   > [    9.620149][ 1] systemd[1]: Created slice
->  >>   > system-phosphor\x2dreset\x2dhost\x2drunning.slice.
->  >>   >
->  >>   > [  OK  ] Created slice system-phosp=E9=88=A5
->  =EE=9B=8Bset\x2dhost\x2drunning.slice.
->  >>   >
->  >>   > [    9.644060][ 1] systemd[1]: Created slice
->  >>   > system-phosphor\x2dreset\x2dsensor\x2dstates.slice.
->  >>   >
->  >>   > [  OK  ] Created slice =
-system-phosp=E9=88=A5=EE=9B=99et\x2dsensor\x2dstates.slice.
->  >>   >
->  >>   > [    9.668015][ 1] systemd[1]: Created slice
->  system-serial\x2dgetty.slice.
->  >>   >
->  >>   > [  OK  ] Created slice system-serial\x2dgetty.slice.
->  >>   >
->  >>   > [    9.691756][ 1] systemd[1]: Started Dispatch Password =
-Requests
->  to
->  >>   > Console Directory Watch.
->  >>   >
->  >>   > [  OK  ] Started Dispatch Password =E9=88=A5=EE=9B=9As to =
-Console Directory
->  Watch.
->  >>   >
->  >>   > [    9.715715][ 1] systemd[1]: Started Forward Password =
-Requests to
->  >>   > Wall Directory Watch.
->  >>   >
->  >>   > [  OK  ] Started Forward Password R=E9=88=A5=EE=9B=9Bests to =
-Wall Directory
->  Watch.
->  >>   >
->  >>   > [    9.739718][ 1] systemd[1]: Reached target Paths.
->  >>   >
->  >>   > [  OK  ] Reached target Paths.
->  >>   >
->  >>   > [    9.759675][ 1] systemd[1]: Reached target Slices.
->  >>   >
->  >>   > [  OK  ] Reached target Slices.
->  >>   >
->  >>   > [    9.779675][ 1] systemd[1]: Reached target Swap.
->  >>   >
->  >>   > [  OK  ] Reached target Swap.
->  >>   >
->  >>   > [    9.800012][ 1] systemd[1]: Listening on Syslog Socket.
->  >>   >
->  >>   > [  OK  ] Listening on Syslog Socket.
->  >>   >
->  >>   > [    9.821145][ 1] systemd[1]: Listening on Process Core Dump
->  Socket.
->  >>   >
->  >>   > [  OK  ] Listening on Process Core Dump Socket.
->  >>   >
->  >>   > [    9.843743][ 1] systemd[1]: Listening on initctl =
-Compatibility
->  >>   > Named Pipe.
->  >>   >
->  >>   > [  OK  ] Listening on initctl Compatibility Named Pipe.
->  >>   >
->  >>   > [    9.867847][ 1] systemd[1]: Listening on Journal Audit =
-Socket.
->  >>   >
->  >>   > [  OK  ] Listening on Journal Audit Socket.
->  >>   >
->  >>   > [    9.887759][ 1] systemd[1]: Listening on Journal Socket =
-(/dev/log).
->  >>   >
->  >>   > [  OK  ] Listening on Journal Socket (/dev/log).
->  >>   >
->  >>   > [    9.907805][ 1] systemd[1]: Listening on Journal Socket.
->  >>   >
->  >>   > [  OK  ] Listening on Journal Socket.
->  >>   >
->  >>   > [    9.927816][ 1] systemd[1]: Listening on udev Control =
-Socket.
->  >>   >
->  >>   > [  OK  ] Listening on udev Control Socket.
->  >>   >
->  >>   > [    9.947744][ 1] systemd[1]: Listening on udev Kernel =
-Socket.
->  >>   >
->  >>   > [  OK  ] Listening on udev Kernel Socket.
->  >>   >
->  >>   > [    9.969124][ 1] systemd[1]: Mounting Huge Pages File =
-System...
->  >>   >
->  >>   >          Mounting Huge Pages File System...
->  >>   >
->  >>   > [    9.993276][ 1] systemd[1]: Mounting POSIX Message Queue =
-File
->  >>   System...
->  >>   >
->  >>   >          Mounting POSIX Message Queue File System...
->  >>   >
->  >>   > [   10.017245][ 1] systemd[1]: Mounting Kernel Debug File =
-System...
->  >>   >
->  >>   >          Mounting Kernel Debug File System...
->  >>   >
->  >>   > [   10.037219][ 1] systemd[1]: Mounting Temporary Directory
->  (/tmp)...
->  >>   >
->  >>   >          Mounting Temporary Directory (/tmp)...
->  >>   >
->  >>   > [   10.055761][ 1] systemd[1]: Condition check resulted in =
-Create list
->  >>   > of static device nodes for the current kernel being skipped.
->  >>   >
->  >>   > [   10.068965][ 1] systemd[1]: Starting File System Check on =
-Root
->  >>   > Device...
->  >>   >
->  >>   >          Starting File System Check on Root Device...
->  >>   >
->  >>   > [   10.093656][ 1] systemd[1]: Starting Journal Service...
->  >>   >
->  >>   >          Startin[ 10.099411][ 1] systemd[1]: Condition check
->  resulted
->  >>   > in Load Kernel Modules being skipped.
->  >>   >
->  >>   > g Journ[   10.108709][ 1] systemd[1]: Condition check resulted =
-in
->  FUSE
->  >>   > Control File System being skipped.
->  >>   >
->  >>   > al Service...
->  >>   >
->  >>   > [   10.120331][ 1] systemd[1]: Mounting Kernel Configuration =
-File
->  >>   > System...
->  >>   >
->  >>   >          Mounting Kernel Configuration File System...
->  >>   >
->  >>   > [   10.145358][ 1] systemd[1]: Starting Apply Kernel =
-Variables...
->  >>   >
->  >>   >          Starting Apply Kernel Variables...
->  >>   >
->  >>   > [   10.165374][ 1] systemd[1]: Starting udev Coldplug all =
-Devices...
->  >>   >
->  >>   >          Starting udev Coldplug all Devices...
->  >>   >
->  >>   > [   10.187869][ 1] systemd[1]: Condition check resulted in =
-Bind
->  mount
->  >>   > volatile /var/cache being skipped.
->  >>   >
->  >>   > [   10.197113][ 1] systemd[1]: Condition check resulted in =
-Bind
->  mount
->  >>   > volatile /var/lib being skipped.
->  >>   >
->  >>   > [   10.206189][ 1] systemd[1]: Condition check resulted in =
-Bind
->  mount
->  >>   > volatile /var/spool being skipped.
->  >>   >
->  >>   > [   10.215515][ 1] systemd[1]: Condition check resulted in =
-Bind
->  mount
->  >>   > volatile /srv being skipped.
->  >>   >
->  >>   > [   10.229131][ 1] systemd[1]: Started Hardware RNG Entropy
->  Gatherer
->  >>   > Daemon.
->  >>   >
->  >>   > [  OK  ] Started Hardware RNG Entropy Gatherer Daemon.
->  >>   >
->  >>   > [   10.252583][ 1] systemd[1]: Started Journal Service.
->  >>   >
->  >>   > [  OK  ] Started Journal Service.
->  >>   >
->  >>   > [FAILED] Failed to mount Huge Pages File System.
->  >>   >
->  >>   > See 'systemctl status dev-hugepages.mount' for details.
->  >>   >
->  >>   > [FAILED] Failed to mount POSIX Message Queue File System.
->  >>   >
->  >>   > See 'systemctl status dev-mqueue.mount' for details.
->  >>   >
->  >>   > [FAILED] Failed to mount Kernel Debug File System.
->  >>   >
->  >>   > See 'systemctl status sys-kernel-debug.mount' for details.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [  OK  ] Started File System Check on Root Device.
->  >>   >
->  >>   > [FAILED] Failed to mount Kernel Configuration File System.
->  >>   >
->  >>   > See 'systemctl status sys-kernel-config.mount' for details.
->  >>   >
->  >>   > [  OK  ] Started Apply Kernel Variables.
->  >>   >
->  >>   >          Starting Remount Root and Kernel File Systems...
->  >>   >
->  >>   > [FAILED] Failed to start Remount Root and Kernel File Syst[
->  >>   > 10.502419][ 0] random: fast init done
->  >>   >
->  >>   > ems.
->  >>   >
->  >>   > See 'systemctl status systemd-remount-fs.service' for details.
->  >>   >
->  >>   >          Starting Flush Journal to Persistent
->  >>   Storage   10.538824][21]
->  >>   > systemd-journald[2228]: Received client request to flush =
-runtime
->  journal.
->  >>   >
->  >>   > 0m...
->  >>   >
->  >>   >          Starting Load/Save Random Seed...
->  >>   >
->  >>   >          Starting Create Static Device Nodes in /dev...
->  >>   >
->  >>   > [  OK  ] Started udev Coldplug all Devices.
->  >>   >
->  >>   > [  OK  ] Started Flush Journal to Persistent Storage.
->  >>   >
->  >>   > [  OK  ] Started Load/Save Random Seed.
->  >>   >
->  >>   > [  OK  ] Started Create Static Device Nodes in /dev.
->  >>   >
->  >>   > [  OK  ] Reached target Local File Systems (Pre).
->  >>   >
->  >>   > [  OK  ] Reached target Local File Systems.
->  >>   >
->  >>   >          Starting Create Volatile Files and Directories...
->  >>   >
->  >>   >          Starting udev Kernel Device Manager...
->  >>   >
->  >>   > [  OK  ] Started Create Volatile Files and Directories.
->  >>   >
->  >>   > [  OK  ] Started udev Kernel Device Manager.
->  >>   >
->  >>   >          Starting Run pending postinsts...
->  >>   >
->  >>   >          Mounting Kerne[   10.790127][27] igb 0000:04:00.1
->  >>   enp4s0f1:
->  >>   > renamed from eth1
->  >>   >
->  >>   > l Configuration File System...
->  >>   >
->  >>   > [FAILED] Failed to mount Kernel Configuration File System.
->  >>   >
->  >>   > [   10.827779][22] igb 0000:04:00.0 enp4s0f0: renamed from =
-eth0
->  >>   >
->  >>   > See 'systemctl status sys-kernel-config.mount' for details.
->  >>   >
->  >>   > [   10.860175][51] igb 0000:04:00.3 enp4s0f3: renamed from =
-eth3
->  >>   >
->  >>   > [FAILED] Failed to start Run pending postinsts.
->  >>   >
->  >>   > See 'systemctl status run-postinsts.service' for details.
->  >>   >
->  >>   > [   10.907728][57] igb 0000:04:00.2 enp4s0f2: renamed from =
-eth2
->  >>   >
->  >>   > [  OK  ] Created slice system-xyz.openbmc_project.Hwmon.slice.
->  >>   >
->  >>   >          Mounting Huge Pages File System...
->  >>   >
->  >>   >          Mounting POSIX Message Queue File System...
->  >>   >
->  >>   >          Mounting Kernel Debug File System...
->  >>   >
->  >>   > [FAILED] Failed to mount Kernel Configuration File System.
->  >>   >
->  >>   > See 'systemctl status sys-kernel-config.mount' for details.
->  >>   >
->  >>   > [FAILED] Failed to mount Huge Pages File System.
->  >>   >
->  >>   > See 'systemctl status dev-hugepages.mount' for details.
->  >>   >
->  >>   > [FAILED] Failed to mount POSIX Message Queue File System.
->  >>   >
->  >>   > See 'systemctl status dev-mqueue.mount' for details.
->  >>   >
->  >>   > [FAILED] Failed to mount Kernel Debug File System.
->  >>   >
->  >>   > See 'systemctl status sys-kernel-debug.mount' for details.
->  >>   >
->  >>   > [  OK  ] Reached target System Initialization.
->  >>   >
->  >>   > [  OK  ] Started Daily rotation of log files.
->  >>   >
->  >>   > [  OK  ] Started Daily Cleanup of Temporary Directories.
->  >>   >
->  >>   > [  OK  ] Reached target Timers.
->  >>   >
->  >>   > [  OK  ] Listening on Avahi mDNS/DNS-SD Stack Activation =
-Socket.
->  >>   >
->  >>   > [  OK  ] Listening on BMC Webserver socket.
->  >>   >
->  >>   > [  OK  ] Listening on D-Bus System Message Bus Socket.
->  >>   >
->  >>   > [  OK  ] Listening on dropbear.socket.
->  >>   >
->  >>   > [  OK  ] Listening on Phosphor Host=E9=88=A5=EE=9B=95le SSH =
-Per-Connection
->  socket.
->  >>   >
->  >>   > [  OK  ] Listening on phosphor-ipmi-net@eth0.socket.
->  >>   >
->  >>   > [  OK  ] Reached target Sockets.
->  >>   >
->  >>   > [  OK  ] Reached target Basic System.
->  >>   >
->  >>   >          Starting Avahi mDNS/DNS-SD Stack...
->  >>   >
->  >>   >          Starting SSH Key Generation...
->  >>   >
->  >>   > [  OK  ] Started LPC Snoop Daemon.
->  >>   >
->  >>   >          Starting Name Service Cache Daemon...
->  >>   >
->  >>   >          Starting LDAP daemon...
->  >>   >
->  >>   > [  OK  ] Started ttyVUART0 Console Server.
->  >>   >
->  >>   >          Starting Host logging...
->  >>   >
->  >>   >          Starting OpenPOWER Host0 Control...
->  >>   >
->  >>   > [  OK  ] Started Phosphor certificate manager for authority.
->  >>   >
->  >>   > [  OK  ] Started Phosphor certificate manager for bmcweb.
->  >>   >
->  >>   > [  OK  ] Started Phosphor certificate manager for nslcd.
->  >>   >
->  >>   > [  OK  ] Started phosphor systemd target monitor.
->  >>   >
->  >>   >          Starting System Logging Service...
->  >>   >
->  >>   > [  OK  ] Started Lightweight SLP Server.
->  >>   >
->  >>   >          Starting Permit User Sessions...
->  >>   >
->  >>   >          Starting Intel Power Control...
->  >>   >
->  >>   >          Starting Phosphor Dump Manager...
->  >>   >
->  >>   >          Starting Entity Manager...
->  >>   >
->  >>   > [  OK  ] Started Fru Device.
->  >>   >
->  >>   >          Starting Phosphor Inventory Manager...
->  >>   >
->  >>   >          Starting Phosphor LDAP privilege mapper...
->  >>   >
->  >>   >          Starting Phosphor LED Group Management Daemon...
->  >>   >
->  >>   > [  OK  ] Started IPMI SEL Logging Service.
->  >>   >
->  >>   >          Starting Phosphor Log Manager...
->  >>   >
->  >>   >          Starting Phosphor DBus Service Discovery Manager...
->  >>   >
->  >>   >          Starting Phosphor Settings Daemon...
->  >>   >
->  >>   >          Starting Phosphor Download Manager...
->  >>   >
->  >>   >          Starting Post code manager...
->  >>   >
->  >>   >          Starting Rsyslog config updater...
->  >>   >
->  >>   >          Starting Phosphor User Manager...
->  >>   >
->  >>   > [  OK  ] Started System Logging Service.
->  >>   >
->  >>   > [FAILED] Failed to start SSH Key Generation.
->  >>   >
->  >>   > See 'systemctl status dropbearkey.service' for details.
->  >>   >
->  >>   > [FAILED] Failed to start Name Service Cache Daemon.
->  >>   >
->  >>   > See 'systemctl status nscd.service' for details.
->  >>   >
->  >>   > [  OK  ] Started LDAP daemon.
->  >>   >
->  >>   > [  OK  ] Started Permit User Sessions.
->  >>   >
->  >>   > [FAILED] Failed to start Phosphor Dump Manager.
->  >>   >
->  >>   > See 'systemctl status =
-xyz.openbmc_project.Dump.Manager.service' for
->  >>   > details.
->  >>   >
->  >>   > [FAILED] Failed to start Entity Manager.
->  >>   >
->  >>   > See 'systemctl status =
-xyz.openbmc_project.EntityManager.service' for
->  >>   > details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for MCU Temp Sensor.
->  >>   >
->  >>   > [DEPEND] Dependency failed for Hwmon Temp Sensor.
->  >>   >
->  >>   > [DEPEND] Dependency failed for PSU Sensor.
->  >>   >
->  >>   > [DEPEND] Dependency failed for Exit Air Temp Sensor.
->  >>   >
->  >>   > [DEPEND] Dependency failed for Adc Sensor.
->  >>   >
->  >>   > [DEPEND] Dependency failed for Intrusion Sensor.
->  >>   >
->  >>   > [DEPEND] Dependency failed for IPMB Sensor.
->  >>   >
->  >>   > [DEPEND] Dependency failed for Fan Sensor.
->  >>   >
->  >>   > [DEPEND] Dependency failed for CPU Sensor.
->  >>   >
->  >>   >          Mounting Temporary Directory (/tmp)...
->  >>   >
->  >>   > [  OK  ] Started Serial Getty on ttyS0.
->  >>   >
->  >>   > [  OK  ] Reached target Login Prompts.
->  >>   >
->  >>   >          Starting Phosphor Ldap config updater...
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > [   12.819393][23] random: crng init done
->  >>   >
->  >>   > [   12.823136][23] random: 7 urandom warning(s) missed due to
->  >>   ratelimiting
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [  OK  ] Stopped LPC Snoop Daemon.
->  >>   >
->  >>   > [  OK  ] Started LPC Snoop Daemon.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [  OK  ] Stopped Name Service Cache Daemon.
->  >>   >
->  >>   >          Starting Name Service Cache Daemon...
->  >>   >
->  >>   > [  OK  ] Stopped ttyVUART0 Console Server.
->  >>   >
->  >>   > [  OK  ] Started ttyVUART0 Console Server.
->  >>   >
->  >>   > [  OK  ] Stopped Lightweight SLP Server.
->  >>   >
->  >>   > [  OK  ] Started Lightweight SLP Server.
->  >>   >
->  >>   > [  OK  ] Stopped Phosphor Dump Manager.
->  >>   >
->  >>   >          Starting Phosphor Dump Manager...
->  >>   >
->  >>   > [FAILED] Failed to start Name Service Cache Daemon.
->  >>   >
->  >>   > See 'systemctl status nscd.service' for details.
->  >>   >
->  >>   > [FAILED] Failed to start Phosphor Dump Manager.
->  >>   >
->  >>   > See 'systemctl status =
-xyz.openbmc_project.Dump.Manager.service' for
->  >>   > details.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [  OK  ] Stopped Entity Manager.
->  >>   >
->  >>   >          Starting Entity Manager...
->  >>   >
->  >>   > [FAILED] Failed to start Entity Manager.
->  >>   >
->  >>   > See 'systemctl status =
-xyz.openbmc_project.EntityManager.service' for
->  >>   > details.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [FAILED] Failed to mount Temporary Directory (/tmp).
->  >>   >
->  >>   > See 'systemctl status tmp.mount' for details.
->  >>   >
->  >>   > [DEPEND] Dependency failed for D-Bus System Message Bus.
->  >>   >
->  >>   > [  OK  ] Stopped LPC Snoop Daemon.
->  >>   >
->  >>   > [FAILED] Failed to start LPC Snoop Daemon.
->  >>   >
->  >>   > See 'systemctl status lpcsnoop.service' for details.
->  >>   >
->  >>   > [  OK  ] Stopped Name Service Cache Daemon.
->  >>   >
->  >>   > [FAILED] Failed to start Name Service Cache Daemon.
->  >>   >
->  >>   > See 'systemctl status nscd.service' for details.
->  >>   >
->  >>   > [  OK  ] Stopped ttyVUART0 Console Server.
->  >>   >
->  >>   > [FAILED] Failed to start ttyVUART0 Console Server.
->  >>   >
->  >>   > See 'systemctl status obmc-console@ttyVUART0.service' for =
-details.
->  >>   >
->  >>   > [  OK  ] Stopped Lightweight SLP Server.
->  >>   >
->  >>   > [FAILED] Failed to start Lightweight SLP Server.
->  >>   >
->  >>   > See 'systemctl status slpd-lite.service' for details.
->  >>   >
->  >>   > [  OK  ] Stopped Phosphor Dump Manager.
->  >>   >
->  >>   > [  OK  ] Listening on D-Bus System Message Bus Socket.
->  >>   >
->  >>   > [FAILED] Failed to start Phosphor Dump Manager.
->  >>   >
->  >>   > See 'systemctl status =
-xyz.openbmc_project.Dump.Manager.service' for
->  >>   > details.
->  >>   >
->  >>   > [  OK  ] Stopped Entity Manager.
->  >>   >
->  >>   > [FAILED] Failed to start Entity Manager.
->  >>   >
->  >>   > See 'systemctl status =
-xyz.openbmc_project.EntityManager.service' for
->  >>   > details.
->  >>   >
->  >>   > [   17.251376][24] audit: type=3D1701 audit(1616511064.752:2):
->  >>   > auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D3552
->  >>   > comm=3D"phosphor-rsyslo" =
-exe=3D"/usr/bin/phosphor-rsyslog-conf" sig=3D6
->  res=3D1
->  >>   >
->  >>   > [   17.267548][24] audit: type=3D1701 audit(1616511064.752:3):
->  >>   > auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D3553
->  >>   > comm=3D"phosphor-user-m" =
-exe=3D"/usr/bin/phosphor-user-manager"
->  sig=3D6
->  >>   res=3D1
->  >>   >
->  >>   > [   17.283681][24] audit: type=3D1701 audit(1616511064.752:4):
->  >>   > auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D3525
->  >>   > comm=3D"phosphor-certif"
->  exe=3D"/usr/bin/phosphor-certificate-manager"
->  >>   > sig=3D6 res=3D1
->  >>   >
->  >>   > [   17.300416][24] audit: type=3D1701 audit(1616511064.752:5):
->  >>   > auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D3550
->  >>   > comm=3D"phosphor-downlo"
->  exe=3D"/usr/bin/phosphor-download-manager"
->  >>   sig=3D6
->  >>   > res=3D1
->  >>   >
->  >>   > [   17.316868][24] audit: type=3D1701 audit(1616511064.752:6):
->  >>   > auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D3543
->  >>   > comm=3D"phosphor-ldap-m" exe=3D"/usr/bin/phosphor-ldap-mapper"
->  sig=3D6
->  >>   res=3D1
->  >>   >
->  >>   > [   17.332888][24] audit: type=3D1701 audit(1616511064.752:7):
->  >>   > auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D3528
->  >>   > comm=3D"phosphor-certif"
->  exe=3D"/usr/bin/phosphor-certificate-manager"
->  >>   > sig=3D6 res=3D1
->  >>   >
->  >>   > [   17.349614][24] audit: type=3D1701 audit(1616511064.752:8):
->  >>   > auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D3544
->  >>   > comm=3D"phosphor-ledman" exe=3D"/usr/bin/phosphor-ledmanager"
->  sig=3D6
->  >>   res=3D1
->  >>   >
->  >>   > [   17.365550][24] audit: type=3D1701 audit(1616511064.752:9):
->  >>   > auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D3551
->  >>   > comm=3D"post-code-manag" exe=3D"/usr/bin/post-code-manager" =
-sig=3D6
->  res=3D1
->  >>   >
->  >>   > [   17.381328][24] audit: type=3D1701 =
-audit(1616511064.752:10):
->  >>   > auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D3526
->  >>   > comm=3D"phosphor-certif"
->  exe=3D"/usr/bin/phosphor-certificate-manager"
->  >>   > sig=3D6 res=3D1
->  >>   >
->  >>   > [   17.398133][24] audit: type=3D1701 =
-audit(1616511064.752:11):
->  >>   > auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D3560
->  >>   > comm=3D"phosphor-ldap-c" exe=3D"/usr/bin/phosphor-ldap-conf" =
-sig=3D6
->  res=3D1
->  >>   >
->  >>   > Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)
->  0.1.0
->  >>   > phytium_arm64 ttyS0
->  >>   >
->  >>   > phytium_arm64 login:
->  >>   >
->  >>   > phytium_arm64 login: root
->  >>   >
->  >>   > Login incorrect
->  >>   >
->  >>   > phytium_arm64 login: phytium
->  >>   >
->  >>   > Password:
->  >>   >
->  >>   > Login incorrect
->  >>   >
->  >>   > phytium_arm64 login:
->  >>   >
->  >>   > Log
->  >>   >
->  >>   > Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)
->  0.1.0
->  >>   > phytium_arm64 ttyS0
->  >>   >
->  >>   > phytium_arm64 login: root
->  >>   >
->  >>   > Login incorrect
->  >>   >
->  >>   > phytium_arm64 login: phytium
->  >>   >
->  >>   > Password:
->  >>   >
->  >>   > Login incorrect
->  >>   >
->  >>   > phytium_arm64 login: phytium
->  >>   >
->  >>   > Password:
->  >>   >
->  >>   > Login incorrect
->  >>   >
->  >>   > phytium_arm64 login: phytium
->  >>   >
->  >>   > Password:
->  >>   >
->  >>   > Login incorrect
->  >>   >
->  >>   > phytium_arm64 login: phytium
->  >>   >
->  >>   > Password:
->  >>   >
->  >>   > Log
->  >>   >
->  >>   > Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)
->  0.1.0
->  >>   > phytium_arm64 ttyS0
->  >>   >
->  >>   > phytium_arm64 login:
->  >>   >
->  >>   > phytium_arm64 login:
->  >>   >
->  >>   > phytium_arm64 login:
->  >>   >
->  >>   > phytium_arm64 login:
->  >>   >
-
+--_000_SG2PR04MB3093138F50B102737D402D6CE1629SG2PR04MB3093apcp_--
