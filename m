@@ -2,165 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B85B349777
-	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 17:59:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F875349808
+	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 18:30:58 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F5rtP34xgz3bcN
-	for <lists+openbmc@lfdr.de>; Fri, 26 Mar 2021 03:59:25 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=dell.com header.i=@dell.com header.a=rsa-sha256 header.s=smtpout1 header.b=aHjfX8QR;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F5sZm1fSqz3bsh
+	for <lists+openbmc@lfdr.de>; Fri, 26 Mar 2021 04:30:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=dell.com (client-ip=148.163.133.20;
- helo=mx0a-00154904.pphosted.com; envelope-from=prashanth.giri@dell.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=dell.com header.i=@dell.com header.a=rsa-sha256
- header.s=smtpout1 header.b=aHjfX8QR; dkim-atps=neutral
-Received: from mx0a-00154904.pphosted.com (mx0a-00154904.pphosted.com
- [148.163.133.20])
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F5rt64WDSz30GS
- for <openbmc@lists.ozlabs.org>; Fri, 26 Mar 2021 03:59:07 +1100 (AEDT)
-Received: from pps.filterd (m0170389.ppops.net [127.0.0.1])
- by mx0a-00154904.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12PGrEYi025319
- for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 12:59:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com;
- h=from : to : subject :
- date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=smtpout1;
- bh=Q5ejlOFfo6hGbMm0V6jny8N71IfgK5/RCjJPm8vmqRI=;
- b=aHjfX8QRFHC0Vj32nW4CMPFiyuQmkXQGGaPIJnQMhSupwgDWq/MOQEh128LsrEcZz5nm
- Xxeh9yYKyrT0wcZYlQSnOuM/D1OHBVTTuzQB8mslSzGosR8hmANRT3oXCTnPsM+0Ib4z
- xgs6lGt8A6Bz1kDfJcpwaaQ5+3k1npv/yd1sDXNtLlFIDJ7zHOs/9KpWG+jl5qZ/2TOh
- PG/ACinpF2A6JZDmFsAqhKDRFcxn1LOQGIUhGX65cwZX1yBvwQp6WBcAmyFi0MEkNk0B
- WXNK0/OBH7dCllaaRooMTX4M51z04zkdv0Lf73nMg+3rK0wpAhX4gRmqPJkSrEws7gDD EA== 
-Received: from mx0a-00154901.pphosted.com (mx0a-00154901.pphosted.com
- [67.231.149.39])
- by mx0a-00154904.pphosted.com with ESMTP id 37dd2kb15t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 12:59:05 -0400
-Received: from pps.filterd (m0142693.ppops.net [127.0.0.1])
- by mx0a-00154901.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12PGteEn149037
- for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 12:59:05 -0400
-Received: from nam02-cy1-obe.outbound.protection.outlook.com
- (mail-cys01nam02lp2054.outbound.protection.outlook.com [104.47.37.54])
- by mx0a-00154901.pphosted.com with ESMTP id 37dx0mp1gg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 12:59:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=b+sE8PQIYvgZ4+Il39jhWZvw8+gpQ88q9Qr9yF1+yoU93LQ/0EMDMMeycH02uatdVKGtpufbnwrQPrfTFT0ichfjbUh1MnnuH87ap87tPAKh4/9YZYTaL+tqdFevfg6QuYgy27qezGwwOCxeGcy0AKiTCdqUyDRlgsHqY5eu4wgD3tlhcC96WchS6/1vATq9+vXNJGRPawb8g7RXxp9Co6gPnHzdA4+uAEP8ofAloUJxF/zTmrnXc4THM4jUYfgTjhTZrzu3Rq0narECjWBpnaubY7D3sN+ytezPE/cqzfGnQjsRdl6cYfiqXJc6l0fqGJfjJK7mwv240O7s1mi6cQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Q5ejlOFfo6hGbMm0V6jny8N71IfgK5/RCjJPm8vmqRI=;
- b=d/E6lDH/icRqHJHmsscAyQ+WyVUu1K0fII1XhXmncUNkqC1S+R6e9dtZewGz0fDHbX5SZ2Lbf8TWP9inMuxQMus+shKccY+p2+uBTUPly2ifQaJioCUUViTo/kzfmCG3fuhqvfKaUv5tdoilKLgJKD4z8NljwbtSRP84Z80kA8+ufBijwIFzyNBAlfieHeC8QDyrIqH+mQUd4z/vpjIXze5tQ4sQLKlVTGHsG7po2OATx9tnnmYX/p3BB1ACyJX0HPcJaYalPY5wEsmeYuvbgKWAxl+BYVZlgszJZ2R/WfWOXF44OnI1wCA25Ce7J8ll7DFR8inD/i8qTYBBnhCcsQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=dell.com; dmarc=pass action=none header.from=dell.com;
- dkim=pass header.d=dell.com; arc=none
-Received: from DM6PR19MB3417.namprd19.prod.outlook.com (2603:10b6:5:18d::30)
- by DM5PR19MB0923.namprd19.prod.outlook.com (2603:10b6:3:2d::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3977.24; Thu, 25 Mar
- 2021 16:59:03 +0000
-Received: from DM6PR19MB3417.namprd19.prod.outlook.com
- ([fe80::1915:7f2c:fe1a:b4d3]) by DM6PR19MB3417.namprd19.prod.outlook.com
- ([fe80::1915:7f2c:fe1a:b4d3%6]) with mapi id 15.20.3977.026; Thu, 25 Mar 2021
- 16:59:03 +0000
-From: "Giri, Prashanth" <Prashanth.Giri@dell.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: License of generated code by sdbus++
-Thread-Topic: License of generated code by sdbus++
-Thread-Index: Adcg8CNwtb6flRC2TFKefB3mCSU/7AAp5KoA
-Date: Thu, 25 Mar 2021 16:59:03 +0000
-Message-ID: <DM6PR19MB3417AD45FACB8BCBA4563EA895629@DM6PR19MB3417.namprd19.prod.outlook.com>
-References: <DM6PR19MB34172FAC6C40C87026A7C68495639@DM6PR19MB3417.namprd19.prod.outlook.com>
-In-Reply-To: <DM6PR19MB34172FAC6C40C87026A7C68495639@DM6PR19MB3417.namprd19.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Enabled=True;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_SiteId=945c199a-83a2-4e80-9f8c-5a91be5752dd;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Owner=Prashanth_Giri@Dell.com; 
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_SetDate=2021-03-24T20:54:59.6244127Z;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Name=External Public;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_ActionId=76f77ab5-9071-418b-864c-bf8d853fc29c;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Extended_MSFT_Method=Manual
-authentication-results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none header.from=Dell.com;
-x-originating-ip: [65.36.111.2]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: e0d7a043-dd78-4868-b5e6-08d8efaf4b8d
-x-ms-traffictypediagnostic: DM5PR19MB0923:
-x-microsoft-antispam-prvs: <DM5PR19MB09238CEDD3BF631A671B132095629@DM5PR19MB0923.namprd19.prod.outlook.com>
-x-exotenant: 2khUwGVqB6N9v58KS13ncyUmMJd8q4
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: nDDO6pFkbVobO9TSvLkzdbkJPmQDXSBFoMXVbsY0KhnPPXS1+xjtmKs+mxTPi9ZsutioOcvtZ2dxYjotzo0RTPcjG7g4qb0lj8XryF0BgB9q9mmKrvrtS1WUvAi3gToV6/ZT1A+TB2nAe05BnMaf3tOfsSYKwZlcnvQ34pgCM3Z/vtj7pjLU2k6y5xSpD5C23uQbuuXEqlPSeK/UTTf9kNFu74+V6hHXTHj/L0x5OcSD1xJ29opKaGjJKEx0+buhzvFs2F7+2vfPJqVQc+h2wqhsQCAsbPRCHunSGeC0G0fBMOgXMevIwp0+iUBy5eD0DONqqAYmhKTWFI1jgCJwyMWtJASweDZVwjcScTlsp2NdtYRY9jlFsR0Y/6512oIIr4UA9y1fRpvPaoEiovv/YB04BaXxUXJIajWju+jh4/lHTGJHlmGcKFcq73Ixdsx2nctfR5QC1/Gs82Y2a0pmmspaa2xjLXZ4vDaTJG/WR5D8A7r7pQGygNTh4EvFykkDpUTjHDnCtvYhTZQXobTSbIWCAXysQVRWYr4F2wpCenwSRtTeVVZzR1VcMD2IVSenirLImxYUYpovayoV1W/+UvH8RCkXd7FjCJp5QoAEzdpx3qlBUlR/HItue5U8V2lnTqVYAY4YPXoeKW1XUEWZZfS9fvtZmYjpWB7ts4TedWA=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR19MB3417.namprd19.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(39860400002)(366004)(376002)(346002)(136003)(396003)(478600001)(38100700001)(7696005)(6916009)(186003)(26005)(8676002)(52536014)(4744005)(316002)(6506007)(786003)(5660300002)(8936002)(71200400001)(66446008)(76116006)(66946007)(9686003)(33656002)(55016002)(83380400001)(86362001)(66556008)(2906002)(66476007)(64756008);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata: =?iso-8859-1?Q?4AW1g8pSocCGrsjcu97sWZ9Cu3j4W+s3l913OBs5z23+ew+DEtcQs10KSl?=
- =?iso-8859-1?Q?C0hYK7ECsfYtOI76JOaH3NXPvmSj2+pD9q4tjPlPCc2rPUcbWNMqjUEp5k?=
- =?iso-8859-1?Q?2hnsKN2B4jWsBqgm/ujERFuDxf5fH2Kc5XZ0SErQbDBKyc7n01gLdMSViG?=
- =?iso-8859-1?Q?yv80hvsDe4Ix2EB+p9iE4YhOOHzHtYZfGb3UDvL/6qR855ieP8+9/rUsDD?=
- =?iso-8859-1?Q?rHfYBwLfUD3Mc1MnMyJd6YMwk1xpy7iqBWq3b3KlHyln45pDHtKC0RBIJe?=
- =?iso-8859-1?Q?qi6qlJvhVwIDeLq9H4S4ITtsf0w4qJXrPytfQvOr2gLc5PVIjbnGJw09Ra?=
- =?iso-8859-1?Q?mUKUHjhZwbjWRj8ymAG+LSaWGtGZbO/AW0VvLkanTAgVvMSU3hYLiQzYMK?=
- =?iso-8859-1?Q?uV4ogoJM6atg15imckm6Ck++dkrtM94Itw+B+j7A6lgnte83W7HJ0HcvED?=
- =?iso-8859-1?Q?qfHU2O08D0Di+ObBO8wr2i11HCsEnz9+djYePfXZmsv4NMcThCw3bEkbXp?=
- =?iso-8859-1?Q?gH+q8gJEmQ8DcbgcEoXYQ8u598XGIDrLB5++vziUxw87RIq1cdufOGo/Ol?=
- =?iso-8859-1?Q?6cMOYTyAB9jRa8suBZuf3rRs7npa+yBiPoY/Ju4lTIQZXQXe64iDJAdiOS?=
- =?iso-8859-1?Q?8et4oZRnwDwKOOza3RRdkMNdrvtLAFk/gUQ/FncNmcvQlfs1gUHbOvRrr5?=
- =?iso-8859-1?Q?93QoVfW0NL0SGzWlpoVYNidiDJFEo6QJgWSi4Pzk9+k0kC+qMxwzyPHh7L?=
- =?iso-8859-1?Q?KRC8U+QF2sZ4tVVR5xrb9Zo8spiACezSDYke+ulDdYeNqODcKq6ICXO1N2?=
- =?iso-8859-1?Q?sDnempykRjyHT4PF2gZcvbU+2jlcp9ZanV6lcXT9bU3c/3r72kZWrWIota?=
- =?iso-8859-1?Q?wV6QfOPDwri4iymGONjib2VaGPBZZyqDsyG01FcGiB1zwxv0bZlsoAagqn?=
- =?iso-8859-1?Q?GyG7HoSPYS9FWlhQWROCUCO1K/m3MF4P17mSLcvqUQYl5wM0xecEIc+dw5?=
- =?iso-8859-1?Q?w354iiU9nWO0AlK4WgrjBlk4fkotnnYAMGy2uWS7Sc8JH9t5jOLN3fEDNH?=
- =?iso-8859-1?Q?+bR4VMpZPb/je6ihp4aAzwBvc3upd5QWsOkJ6qIyuOfzUUJMeBLUErfMCw?=
- =?iso-8859-1?Q?oVwAIwnlZIDdDAasb1UV7d8ciEvXnO76RNpZpNgTZmFbtaLKxleODXPc7I?=
- =?iso-8859-1?Q?3uTlKCEDT8TFFKE/xQne1rOEJIQk50sWheBAcqVuSNCo0P5ez8jlJWeEcj?=
- =?iso-8859-1?Q?fGcj6h4431n5EGbvJMKvOrwzNofWWlqVC9UYCdGEmkpDrcx8yqvvyIKfBy?=
- =?iso-8859-1?Q?NM9YtetcokKK5ahz6TY2kiZy3ElNxAECZKij5RoKslq6EPg=3D?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F5sZb19bzz30Bw
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Mar 2021 04:30:46 +1100 (AEDT)
+IronPort-SDR: UxGcpGLKTNH3xDUSWxJxZT1lhEqAUA74Gavaotza6bnx/g6jGW3Cq/xAPNDe00JLHNM4C1K6GI
+ +Wct72fiVdsw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9934"; a="211119580"
+X-IronPort-AV: E=Sophos;i="5.81,278,1610438400"; d="scan'208";a="211119580"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Mar 2021 10:30:41 -0700
+IronPort-SDR: q9pGDVa7kVGnq37rftj0iaIyCQ+bOZctvuJoC0Q0sxoXSx5bTmXIr3T1iv619asP+m8kBOzDEE
+ vh8IOra2CavA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,278,1610438400"; d="scan'208";a="375158770"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga003.jf.intel.com with ESMTP; 25 Mar 2021 10:30:40 -0700
+Received: from [10.209.30.119] (jmbills-MOBL.amr.corp.intel.com
+ [10.209.30.119])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 939F5580716
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 10:30:40 -0700 (PDT)
+Subject: Re: Question of phosphor-sel-logger
+To: openbmc@lists.ozlabs.org
+References: <TY2PR04MB3712DCE11C578706F5F6401F88639@TY2PR04MB3712.apcprd04.prod.outlook.com>
+ <707efde2-b301-fc23-be4c-92d1d96d8432@linux.ibm.com>
+ <TY2PR04MB37121D9EE4CD05A70D5F6C5B88629@TY2PR04MB3712.apcprd04.prod.outlook.com>
+ <f92a8942-ea95-6ca2-402b-d2fec89d2357@linux.ibm.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <7dbd2aa3-c34b-0a50-f125-9366a67425e5@linux.intel.com>
+Date: Thu, 25 Mar 2021 10:30:39 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-X-OriginatorOrg: Dell.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR19MB3417.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e0d7a043-dd78-4868-b5e6-08d8efaf4b8d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Mar 2021 16:59:03.8029 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 945c199a-83a2-4e80-9f8c-5a91be5752dd
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 89501L+jFy9oP6hoTWrX8owSEaHf2AlKBL0ucxfpjvfv83TRO+DaGPpVgzpM+7W/2dKc39PX+gax1pLwrT/gRg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR19MB0923
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-03-25_05:2021-03-24,
- 2021-03-25 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0
- priorityscore=1501 spamscore=0 phishscore=0 mlxlogscore=999 clxscore=1015
- malwarescore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0
- impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2009150000 definitions=main-2103250122
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- spamscore=0 phishscore=0
- malwarescore=0 bulkscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2103250122
+In-Reply-To: <f92a8942-ea95-6ca2-402b-d2fec89d2357@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -175,16 +67,132 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi All,
 
-I see the sdbusplus library repo itself is Apache Licensed. Am wondering if=
- the auto generated code from sdbus++ is also Apache ? =A0Did not find any =
-special wording on the generated code in the license file in the repository=
-.
-Is it safe to mix the generated code with closed (proprietary) sources ?
 
-Please advise.
+On 3/25/2021 7:25 AM, Matt Spinler wrote:
+> 
+> 
+> On 3/25/2021 3:22 AM, Duke Du (杜祥嘉) wrote:
+>>> -----Original Message-----
+>>> From: Matt Spinler <mspinler@linux.ibm.com>
+>>> Sent: Wednesday, March 24, 2021 9:20 PM
+>>> To: Duke Du (杜祥嘉) <Duke.Du@quantatw.com>; openbmc@lists.ozlabs.org
+>>> Cc: vernon.mauery@linux.intel.com; jason.m.bills@linux.intel.com; 
+>>> Fran Hsu
+>>> (徐誌謙) <Fran.Hsu@quantatw.com>; George Hung (洪忠敬)
+>>> <George.Hung@quantatw.com>
+>>> Subject: Re: Question of phosphor-sel-logger
+>>>
+>>>
+>>>
+>>> On 3/24/2021 6:28 AM, Duke Du (杜祥嘉) wrote:
+>>>> Hi all,
+>>>>
+>>>>        I used package phosphor-hwmon and phospor-sel-logger to
+>>> monitor sensor and create log when sensor reading
+>>>>      cross the threshold. I found after the commit
+>>> 25b26e162bd109b51aa09b16f26f9aa3d9d940fa of phosphor-sel-logger
+>>>>      would catch the signal "ThresholdAsserted" to create sensor 
+>>>> threhold
+>>> log in the journal, but the phosphor-hwmon
+>>>>      would not send the signal "ThresholdAsserted" when sensor reading
+>>> is abnormal so that phosphor-sel-logger
+>>>>      would not create the sensor threhold log, am I right ?
+>>>>
+>>>>      If I'm right, can you give me some suggestion to fix this side 
+>>>> effect, or
+>>> what setting I have lost in the
+>>>>      phosphor-hwmon or phosphor-sel-logger ?
+>>> Hi,
+>>> That signal isn't defined in phosphor-dbus-interfaces, so phosphor-hwmon
+>>> cannot use it.  When I tried to add it, it was rejected as-is with a
+>>> recommendation to break it up into separate signals for each alarm 
+>>> property
+>>> on each interface.  At that point I gave up and had the code I was 
+>>> working
+>>> on at the time just look at propertiesChanged signals instead.
+>>>
+>>> If you would like to take that up it would entail:
+>>> * Update
+>>> https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgerrit. 
+>>>
+>>> openbmc-project.xyz%2Fc%2Fopenbmc%2Fphosphor-dbus-interfaces%2F%2B
+>>> %2F39899&amp;data=04%7C01%7CDuke.Du%40quantatw.com%7Cc5bf4d3d1
+>>> 6f046cc6efa08d8eec78fd7%7C179b032707fc4973ac738de7313561b2%7C1%7
+>>> C0%7C637521888783853893%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4w
+>>> LjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&amp
+>>> ;sdata=XoY4nKa3Go%2F9jt2coyzOcnXNrcMaw6XUtqnmK57k0ds%3D&amp;res
+>>> erved=0
+>>> as requested
+>>> * Update phosphor-hwmon to emit the new signals
+>>> * Update phosphor-sel-logger to also listen for these new signals in 
+>>> addition
+>>> to the  current one, or change the dbus-sensors code to only emit the 
+>>> new
+>>> signals.
+>>>
+>>>
+>> Hi Matt,
+>>
+>>     Thanks for your reply, I want to add a event monitor to listen 
+>> "signal PropertyChanged" for
+>>     "phosphor-phosphor-hwmon" only, like watchdog event monitor
+>>     
+>> (https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-sel-logger/+/37774), 
+>>
+>>     I think this is a simple way to fix this side effect, what do you 
+>> think about my thought ?
+>>     Please feel free to give me some suggestion, thanks very much !
+> 
+> I don't really know the best way to go here other than what I already 
+> suggested.  sel-logger used to look at PropertiesChanged, but was 
+> changed to use ThresholdAsserted I think so that it could capture the 
+> sensor value within the signal.  But applications that need 
+> phosphor-dbus-interfaces bindings for their operations, like 
+> phosphor-hwmon, can't use ThresholdAsserted because it failed the PDI 
+> review.
+> 
+> Jason or Vernon, what do you suggest?
+With just PropertiesChanged we were getting events but when we read the 
+current sensor value it had changed, so we were getting cases where an 
+event showed a threshold was crossed but the value in that event was 
+below the threshold.
 
-Thanks in advance,
+As Matt noted, we attempted to fix this issue by creating the 
+ThresholdAsserted signal so the value that triggered the threshold event 
+could be sent with it and logged correctly.
 
---Prashanth
+I think the best options are
+1. Find a new solution to the original problem where we can report 
+accurate threshold crossed value with just PropertiesChanged.
+2. Pursue Matt's proposed change to phosphor-dbus-interfaces to get the 
+signal officially defined to include the sensor value in the signal.
+
+Thanks,
+-Jason
+
+> 
+> 
+>>
+>> Thanks
+>> Duke
+>>
+>>>>      phosphor-sel-logger commit
+>>> 25b26e162bd109b51aa09b16f26f9aa3d9d940fa link :
+>>>> https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgith
+>>>>
+>>> ub.com%2Fopenbmc%2Fphosphor-sel-logger%2Fcommit%2F25b26e162bd10
+>>> 9b51aa0
+>>> 9b16f26f9aa3d9d940fa&amp;data=04%7C01%7CDuke.Du%40quantatw.com%
+>>> 7Cc5bf4
+>>> d3d16f046cc6efa08d8eec78fd7%7C179b032707fc4973ac738de7313561b2%7C
+>>> 1%7C0
+>>> %7C637521888783853893%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjA
+>>> wMDAiLCJQ
+>>> IjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&amp;sdata=rHxKqIk
+>>> Vg7
+>>>> yQXmqvjXal7I6eVBzw3ifl26gsZF8o4xo%3D&amp;reserved=0
+>>>>
+>>>>      Thanks very much !
+>>>>      Duke
+> 
