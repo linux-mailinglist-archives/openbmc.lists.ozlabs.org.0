@@ -1,58 +1,104 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F875349808
-	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 18:30:58 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49BE8349C26
+	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 23:17:12 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F5sZm1fSqz3bsh
-	for <lists+openbmc@lfdr.de>; Fri, 26 Mar 2021 04:30:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F5zx21kpMz30Gc
+	for <lists+openbmc@lfdr.de>; Fri, 26 Mar 2021 09:17:10 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ieIyZ1K0;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=ieIyZ1K0; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F5sZb19bzz30Bw
- for <openbmc@lists.ozlabs.org>; Fri, 26 Mar 2021 04:30:46 +1100 (AEDT)
-IronPort-SDR: UxGcpGLKTNH3xDUSWxJxZT1lhEqAUA74Gavaotza6bnx/g6jGW3Cq/xAPNDe00JLHNM4C1K6GI
- +Wct72fiVdsw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9934"; a="211119580"
-X-IronPort-AV: E=Sophos;i="5.81,278,1610438400"; d="scan'208";a="211119580"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Mar 2021 10:30:41 -0700
-IronPort-SDR: q9pGDVa7kVGnq37rftj0iaIyCQ+bOZctvuJoC0Q0sxoXSx5bTmXIr3T1iv619asP+m8kBOzDEE
- vh8IOra2CavA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,278,1610438400"; d="scan'208";a="375158770"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga003.jf.intel.com with ESMTP; 25 Mar 2021 10:30:40 -0700
-Received: from [10.209.30.119] (jmbills-MOBL.amr.corp.intel.com
- [10.209.30.119])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 939F5580716
- for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 10:30:40 -0700 (PDT)
-Subject: Re: Question of phosphor-sel-logger
-To: openbmc@lists.ozlabs.org
-References: <TY2PR04MB3712DCE11C578706F5F6401F88639@TY2PR04MB3712.apcprd04.prod.outlook.com>
- <707efde2-b301-fc23-be4c-92d1d96d8432@linux.ibm.com>
- <TY2PR04MB37121D9EE4CD05A70D5F6C5B88629@TY2PR04MB3712.apcprd04.prod.outlook.com>
- <f92a8942-ea95-6ca2-402b-d2fec89d2357@linux.ibm.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <7dbd2aa3-c34b-0a50-f125-9366a67425e5@linux.intel.com>
-Date: Thu, 25 Mar 2021 10:30:39 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F5zwn2WlCz304Z
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Mar 2021 09:16:56 +1100 (AEDT)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 12PM2oxp080455
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 18:16:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=Ga0bNK94B/byxkFQcp+cUY44JUTNGEOHvS1WShGG26o=;
+ b=ieIyZ1K0pEYpp1ZXeveq10KBQp64fJfo3y5djnAUI8GUJ4XyslcScKv64RU3FdgGccjt
+ lPbv/CjSfh92UdjKLIu5ao1QSgU9XpMuLiPyMa6hnkvlS1GcrFqlYw4cOmv7svYb2C+s
+ xJ9i4iKywzOys4lM9+Ykf08NjmFMOvEXryv+rgbg88tWP4fE1tlULWyBDH8f+wEsL4GY
+ 70TCLRycrsluBzF/Wlmc2UoE8d+A1NBg7CRyQqOw/nC62tVaN5j0Avkapz+99Hlf3h0m
+ touauBZaIam7HncLXHCLU6VqmAFuidYA1cVNfoFgqmJ6L0WIMO7MPpNDVpZzUwJN1IHb Aw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 37h1j92fbv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 18:16:52 -0400
+Received: from m0098421.ppops.net (m0098421.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 12PM3m5D083749
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 18:16:52 -0400
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 37h1j92fbp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Mar 2021 18:16:52 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12PM7UTa009118;
+ Thu, 25 Mar 2021 22:16:51 GMT
+Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
+ [9.57.198.28]) by ppma01dal.us.ibm.com with ESMTP id 37h1508vwn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Mar 2021 22:16:51 +0000
+Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
+ [9.57.199.106])
+ by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 12PMGpS021758304
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 25 Mar 2021 22:16:51 GMT
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0C4AC2805E;
+ Thu, 25 Mar 2021 22:16:51 +0000 (GMT)
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B7AEB2805C;
+ Thu, 25 Mar 2021 22:16:50 +0000 (GMT)
+Received: from [9.160.75.159] (unknown [9.160.75.159])
+ by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTP;
+ Thu, 25 Mar 2021 22:16:50 +0000 (GMT)
+Subject: Re: IPMI SEL Parsing
+To: rgrs <rgrs@protonmail.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <gmu36wVnmbV9lyt9EpYcnZmnPwjF9wtDS0N8K0jOk9UR2uUO0QwQaackzJRPLjil_ZqLxTzX3qEMGl3IE6baoIpS-xh9aMnQL3VkAyXK6KU=@protonmail.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <0a6dd101-fbea-7fdf-b9a6-3895b48a7f47@linux.ibm.com>
+Date: Thu, 25 Mar 2021 17:16:50 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <f92a8942-ea95-6ca2-402b-d2fec89d2357@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <gmu36wVnmbV9lyt9EpYcnZmnPwjF9wtDS0N8K0jOk9UR2uUO0QwQaackzJRPLjil_ZqLxTzX3qEMGl3IE6baoIpS-xh9aMnQL3VkAyXK6KU=@protonmail.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: KKLoKZC9WeOCh42k_u3GHcEdJl_ra2RX
+X-Proofpoint-ORIG-GUID: m4s8zc27eItRwL2yy0hiwN8c1F38omfw
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-03-25_08:2021-03-25,
+ 2021-03-25 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ suspectscore=0 adultscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 spamscore=0 mlxscore=0 phishscore=0 clxscore=1015
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2103250000 definitions=main-2103250161
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,130 +115,24 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On 3/25/2021 7:25 AM, Matt Spinler wrote:
-> 
-> 
-> On 3/25/2021 3:22 AM, Duke Du (杜祥嘉) wrote:
->>> -----Original Message-----
->>> From: Matt Spinler <mspinler@linux.ibm.com>
->>> Sent: Wednesday, March 24, 2021 9:20 PM
->>> To: Duke Du (杜祥嘉) <Duke.Du@quantatw.com>; openbmc@lists.ozlabs.org
->>> Cc: vernon.mauery@linux.intel.com; jason.m.bills@linux.intel.com; 
->>> Fran Hsu
->>> (徐誌謙) <Fran.Hsu@quantatw.com>; George Hung (洪忠敬)
->>> <George.Hung@quantatw.com>
->>> Subject: Re: Question of phosphor-sel-logger
->>>
->>>
->>>
->>> On 3/24/2021 6:28 AM, Duke Du (杜祥嘉) wrote:
->>>> Hi all,
->>>>
->>>>        I used package phosphor-hwmon and phospor-sel-logger to
->>> monitor sensor and create log when sensor reading
->>>>      cross the threshold. I found after the commit
->>> 25b26e162bd109b51aa09b16f26f9aa3d9d940fa of phosphor-sel-logger
->>>>      would catch the signal "ThresholdAsserted" to create sensor 
->>>> threhold
->>> log in the journal, but the phosphor-hwmon
->>>>      would not send the signal "ThresholdAsserted" when sensor reading
->>> is abnormal so that phosphor-sel-logger
->>>>      would not create the sensor threhold log, am I right ?
->>>>
->>>>      If I'm right, can you give me some suggestion to fix this side 
->>>> effect, or
->>> what setting I have lost in the
->>>>      phosphor-hwmon or phosphor-sel-logger ?
->>> Hi,
->>> That signal isn't defined in phosphor-dbus-interfaces, so phosphor-hwmon
->>> cannot use it.  When I tried to add it, it was rejected as-is with a
->>> recommendation to break it up into separate signals for each alarm 
->>> property
->>> on each interface.  At that point I gave up and had the code I was 
->>> working
->>> on at the time just look at propertiesChanged signals instead.
->>>
->>> If you would like to take that up it would entail:
->>> * Update
->>> https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgerrit. 
->>>
->>> openbmc-project.xyz%2Fc%2Fopenbmc%2Fphosphor-dbus-interfaces%2F%2B
->>> %2F39899&amp;data=04%7C01%7CDuke.Du%40quantatw.com%7Cc5bf4d3d1
->>> 6f046cc6efa08d8eec78fd7%7C179b032707fc4973ac738de7313561b2%7C1%7
->>> C0%7C637521888783853893%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4w
->>> LjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&amp
->>> ;sdata=XoY4nKa3Go%2F9jt2coyzOcnXNrcMaw6XUtqnmK57k0ds%3D&amp;res
->>> erved=0
->>> as requested
->>> * Update phosphor-hwmon to emit the new signals
->>> * Update phosphor-sel-logger to also listen for these new signals in 
->>> addition
->>> to the  current one, or change the dbus-sensors code to only emit the 
->>> new
->>> signals.
->>>
->>>
->> Hi Matt,
->>
->>     Thanks for your reply, I want to add a event monitor to listen 
->> "signal PropertyChanged" for
->>     "phosphor-phosphor-hwmon" only, like watchdog event monitor
->>     
->> (https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-sel-logger/+/37774), 
->>
->>     I think this is a simple way to fix this side effect, what do you 
->> think about my thought ?
->>     Please feel free to give me some suggestion, thanks very much !
-> 
-> I don't really know the best way to go here other than what I already 
-> suggested.  sel-logger used to look at PropertiesChanged, but was 
-> changed to use ThresholdAsserted I think so that it could capture the 
-> sensor value within the signal.  But applications that need 
-> phosphor-dbus-interfaces bindings for their operations, like 
-> phosphor-hwmon, can't use ThresholdAsserted because it failed the PDI 
-> review.
-> 
-> Jason or Vernon, what do you suggest?
-With just PropertiesChanged we were getting events but when we read the 
-current sensor value it had changed, so we were getting cases where an 
-event showed a threshold was crossed but the value in that event was 
-below the threshold.
+On 3/25/2021 7:49 AM, rgrs wrote:
+> Hi All, "ipmitool sel list" always shows the records as "Undetermined=20
+> system hardware failure". Logging/entry doesn't have the proper=20
+> association. How do I add association for log entries and respective=20
+> FRUs? Which package creates Logging/entry=20
+> Hi All,
+>
+> "ipmitool sel list" always shows the records as "Undetermined system=20
+> hardware failure".
+> Logging/entry doesn't have the proper association. How do I add=20
+> association for log entries and respective FRUs?
+>
+> Which package creates Logging/entry object on sensor events? I don't=20
+> see any call to SelAdd in phosphor-hwmon.
 
-As Matt noted, we attempted to fix this issue by creating the 
-ThresholdAsserted signal so the value that triggered the threshold event 
-could be sent with it and logged correctly.
+What are the SELs for - threshold alarms, or some other sort of failures?
 
-I think the best options are
-1. Find a new solution to the original problem where we can report 
-accurate threshold crossed value with just PropertiesChanged.
-2. Pursue Matt's proposed change to phosphor-dbus-interfaces to get the 
-signal officially defined to include the sensor value in the signal.
+>
+> Thanks,
+> Raj
 
-Thanks,
--Jason
-
-> 
-> 
->>
->> Thanks
->> Duke
->>
->>>>      phosphor-sel-logger commit
->>> 25b26e162bd109b51aa09b16f26f9aa3d9d940fa link :
->>>> https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgith
->>>>
->>> ub.com%2Fopenbmc%2Fphosphor-sel-logger%2Fcommit%2F25b26e162bd10
->>> 9b51aa0
->>> 9b16f26f9aa3d9d940fa&amp;data=04%7C01%7CDuke.Du%40quantatw.com%
->>> 7Cc5bf4
->>> d3d16f046cc6efa08d8eec78fd7%7C179b032707fc4973ac738de7313561b2%7C
->>> 1%7C0
->>> %7C637521888783853893%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjA
->>> wMDAiLCJQ
->>> IjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&amp;sdata=rHxKqIk
->>> Vg7
->>>> yQXmqvjXal7I6eVBzw3ifl26gsZF8o4xo%3D&amp;reserved=0
->>>>
->>>>      Thanks very much !
->>>>      Duke
-> 
