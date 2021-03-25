@@ -1,72 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F646348576
-	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 00:43:48 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EB5B3485D8
+	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 01:28:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F5PvQ3FHSz30Gr
-	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 10:43:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F5Qty01Ywz3bcq
+	for <lists+openbmc@lfdr.de>; Thu, 25 Mar 2021 11:28:26 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=JhWVZMnj;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=b2jUpoCB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::82c;
- helo=mail-qt1-x82c.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::236;
+ helo=mail-oi1-x236.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=JhWVZMnj; dkim-atps=neutral
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com
- [IPv6:2607:f8b0:4864:20::82c])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=b2jUpoCB; dkim-atps=neutral
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com
+ [IPv6:2607:f8b0:4864:20::236])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F5PvB5Lb2z3035
- for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 10:43:33 +1100 (AEDT)
-Received: by mail-qt1-x82c.google.com with SMTP id x9so422104qto.8
- for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 16:43:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=YZBCSqUYrKchZGdTTqMZpi2OJXCBU05V9ihMz1ffAD8=;
- b=JhWVZMnj5X9LRyhEmGV4rFmahSDiNqkhvW5h7+dMT9wayuojyVmgLuZEXqN92R5cmt
- nRrU7XYipMu4xKHJEBwH2EZt8X2UXCqQsWO1N2GGc7qXWNV2dX8QBoIZenwW4XgbTfpe
- 0Q994jk1q3lX1WWIGO15mRSjpJr6ERstJ2e/g=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F5Qtk1jtdz30BX
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Mar 2021 11:28:13 +1100 (AEDT)
+Received: by mail-oi1-x236.google.com with SMTP id d12so339958oiw.12
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Mar 2021 17:28:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=8pTl7fgAuNugxIIc6yggX/V2ut90p2oe8L6Brp/jYgs=;
+ b=b2jUpoCBEmydvn4zxnBzu3TELKEd/wZymyu4twqPRjlze3ipjI8V286YfKhCNSVl7Y
+ Q3b76yFgL5F7ZTPtDCAiy4hdunU3XBYvn6kxrZwDum6VZ+epQ5FZQgiRu5KcTiDjRSgA
+ ecsSxxjUK0n1wStDxv0XnorYOywnQouXNazl+LFQC2RSrp+FZbdhYhUr3rvrLQ5aZe3W
+ x0dIwhNC2mEk4gCvAJwZS94sKLvV9bDkK6eZv8WcNt6Ch7fM7DIYnl3SjiFGD3UzMAtk
+ apfTEpLReZecEdxHoxc2ZgwYUhn6mse0NTxXGtBmsn1gWuDUPDVloO9XT/sn45GRHQkq
+ Et7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=YZBCSqUYrKchZGdTTqMZpi2OJXCBU05V9ihMz1ffAD8=;
- b=ThLYOj5Zwc+rZOxFHV16rsMCbJWAHqvFxPeDu0nwNwaS5e6WbVLqvMkZ48j0D44eVo
- 4/8jAZm15weEj2uvMhn9MZkfL0nIP8aFgFgpZbH6SEB5eo0gEGFh30Rn5i7ktU/OLUQF
- mQ+tRgpuLiBKNmJZLBvqZ5VvVABshk7L5D/5r8leUgzWB2I6xmO7ePVsq77akhGrwDF2
- GRdrjelMdJekwZBa9LkAQ2wsiV6T6Fb7nLIhdzoHfCPJlxeKDuQKYRcmOoPGGM/SVjsM
- fOTs2LvXqUCz1HS7TyAf+bQZJ16+IW3k3JJ2v07ivHYuLetedWwT/qxiA4kYZp6dIt1P
- bfkg==
-X-Gm-Message-State: AOAM532o2R+CPEKdJvFbRtiBgaKJjBcg9g7OTsiwmVlUHiBgyp2yyutI
- CzGUJuo1wrb18Kskhs1fRBMyjIBeaM+SUc/UKNg=
-X-Google-Smtp-Source: ABdhPJykDmHFonXxYBYEwP27Ax4TP/iOj/toTtWNjd2rK2Hk6P/kr2k5cg+yxfy2OOBu+da6ZAlnXgSEsVEmKtzq+3o=
-X-Received: by 2002:aed:2ee7:: with SMTP id k94mr5225912qtd.135.1616629408068; 
- Wed, 24 Mar 2021 16:43:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210308225419.46530-1-eajames@linux.ibm.com>
- <20210308225419.46530-7-eajames@linux.ibm.com>
- <CACPK8Xc9XqM3UtpF0xywFwfj8anXWE1-TvbHCQskogrBBF_ZCQ@mail.gmail.com>
- <OF39939D76.45BF746F-ON00258696.0001FF38-00258696.0001FF3E@notes.na.collabserv.com>
- <CACPK8XfBu5_2xs_Eu=OtShNFQnAQ+Tc1Q1qM7Qgcaggd-yLumQ@mail.gmail.com>
- <6ACEC474-8CFD-4BA9-B8FF-CCD41007AA67@linux.vnet.ibm.com>
-In-Reply-To: <6ACEC474-8CFD-4BA9-B8FF-CCD41007AA67@linux.vnet.ibm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 24 Mar 2021 23:43:16 +0000
-Message-ID: <CACPK8Xf8iY5LOXgJLvBS0okokG-QNQJ3idPvmcF9eMaRQSBGzQ@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.10 06/35] ARM: dts: aspeed: rainier: Add leds
- that are off PCA9552
-To: vishwanatha subbanna <vishwa@linux.vnet.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=8pTl7fgAuNugxIIc6yggX/V2ut90p2oe8L6Brp/jYgs=;
+ b=NKx8vnGTWIdD2ENqw++LOo+pCVXqRmYZp/zjONsd24Ekdu0YKYYBH8WLNxyC5KRFTJ
+ lzgkGmOfGpSnI1VneZTFaMP2x/eJ7LnS1yMygk6Et1xYu0uaeHbroSaebVA+kiQtkeJW
+ wccP5hvezRU/GwpMS/RdGTB8jGpB2ss1lsjt6u2Ch0G7HdmU2OqCmNyeYQ+RhplxWx6w
+ i5uGD7k2Q9qUlPQ2UaahiZIxhY6+pMVdxXC2c0c7RV3x6UTqsheUp/6/ESFXO7lSWCke
+ oWfLekz2HDEKVbqDry5OMoVflbME95vEiBzUn5M/QPEcxW9C9KUzAJHzDCY5Sp/xF1kz
+ 0/Fw==
+X-Gm-Message-State: AOAM5337G3EQRguPevN2r0r+fpfoobPjoyFJ2rTbxpVtJqKzlc/FM3+/
+ oC2GKqhpO175o797Sk5qGRqfw1L/rX10oQ==
+X-Google-Smtp-Source: ABdhPJwhz/miUiHHPfWYAZSzDMk/G+fpQVDK36oP4JMZugsjLwXMxOTIwbVh2Q1fNfBQummimWQesw==
+X-Received: by 2002:a05:6808:bd6:: with SMTP id
+ o22mr4168128oik.129.1616632089271; 
+ Wed, 24 Mar 2021 17:28:09 -0700 (PDT)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:71ba:472a:3360:7d4d])
+ by smtp.gmail.com with ESMTPSA id j10sm935242oos.27.2021.03.24.17.28.08
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 24 Mar 2021 17:28:08 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: Thoughts on performance profiling and tools for OpenBMC
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <CAJOps0ubONA_FCO+n9Gu_OfBBYuY9RhQw-AaELfyLRJjA+e8PQ@mail.gmail.com>
+Date: Wed, 24 Mar 2021 19:28:07 -0500
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <3A131195-2BD0-4336-9B76-738DA4F513CC@gmail.com>
+References: <CAJOps0ubONA_FCO+n9Gu_OfBBYuY9RhQw-AaELfyLRJjA+e8PQ@mail.gmail.com>
+To: Sui Chen <suichen@google.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,93 +83,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 12 Mar 2021 at 07:05, vishwanatha subbanna
-<vishwa@linux.vnet.ibm.com> wrote:
->
->
->
-> On 12-Mar-2021, at 6:00 AM, Joel Stanley <joel@jms.id.au> wrote:
->
-> On Fri, 12 Mar 2021 at 00:21, Milton Miller II <miltonm@us.ibm.com> wrote=
-:
->
->
->
->
-> -----"openbmc" <openbmc-bounces+miltonm=3Dus.ibm.com@lists.ozlabs.org> wr=
-ote: -----
->
-> To: Eddie James <eajames@linux.ibm.com>
-> From: Joel Stanley
-> Sent by: "openbmc"
-> Date: 03/11/2021 06:09PM
-> Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> Subject: [EXTERNAL] Re: [PATCH linux dev-5.10 06/35] ARM: dts:
-> aspeed: rainier: Add leds that are off PCA9552
->
-> On Mon, 8 Mar 2021 at 22:54, Eddie James <eajames@linux.ibm.com>
-> wrote:
->
->
-> From: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
->
-> These LEDs are on the fans and are connected via a
-> pca9551 i2c expander
->
->
-> This change doesn't make sense. The pca9551 is an i2c LED expander,
-> so
-> we don't need to expose the pins as GPIOs and then attach a gpio-leds
-> driver to them. We should instead simply configure the pca955x driver
-> to drive the LEDs as LEDs.
->
->
-> I'll refresh your memory on why we have been doing this in our
-> devie trees and then let you consider if this is desired or not.
->
-> The led system insistes on creating a compact map (no holes) (as
-> does the reset subsystem).
->
-> However, this means the relative led number for a pin changes
-> as the prior pins change from gpio to led configuration.
->
-> For example if pins 2 and 7 are leds, they become leds 0 and 1.
-> Changing pin 5 to also be an led means that pin 7 is now led 2
-> not led 1 on the led subsystem.
->
->
-> Thanks for the rationale reminder.
->
-> Are these led numbers important to userspace, or does the renumbering
-> affect device tree changes only?
->
->
->
-> Here are my technical needs.
-> - I need these LEDs associated with names and this __must not__ change
-> - I need those LEDs represented as `/sys/class/leds/<$name>`
->
-> What can I do :
-> - use `leds-gpio` like how it=E2=80=99s done today
->
-> OR
->
-> - Use =E2=80=9Clabel=E2=80=9D in PCA955X_TYPE_LED
->    - However, putting this label, it results in `/sys/class/leds/pca955x:=
-<$label>`. As opposed to `/sys/class/leds/<$label>`.
->
-> Is there a way where I can get `/sys/class/leds/<$label>` ?. I did not ge=
-t this from the documentation. Seeing pca955x on 100 entries seems a noise
 
-The prefix has been present in the driver since it was introduced in
-2008. Is there any reason we can't have userspace ignore the pca955x
-prefix?
 
-Cheers,
+> On Mar 22, 2021, at 5:05 PM, Sui Chen <suichen@google.com> wrote:
+>=20
+<snip>
+>=20
+> [ Proposed Design ]
+>=20
+> 1. Continue the previous effort [7] on a sensor-reading performance
+> benchmark for the BMC. This will naturally lead to investigation into
+> the lower levels such as I2C and async processing.
+>=20
+> 2. Try the community=E2=80=99s ideas on performance optimization in =
+benchmarks
+> and measure performance difference. If an optimization generates
+> performance gain, attempt to land it in OpenBMC code.
+>=20
+> 3. Distill ideas and observations into performance tools. For example,
+> enhance or expand the existing DBus visualizer tool [8].
+>=20
+> 4. Repeat the process in other areas of BMC performance, such as web
+> request processing.
 
-Joel
+I had to workaround a lot of performance issues in our first AST2500=20
+based systems. A lot of the issues were early in the boot of the BMC
+when systemd was starting up all of the different services in parallel
+and things like mapper were introspecting all new D-Bus objects=20
+showing up on the bus.
+
+Moving from python to c++ applications helped a lot. Changing=20
+application nice levels was not helpful (too many d-bus commands
+between apps so if one had a higher priority like mapper it would
+timeout waiting for lower priority apps).
+
+AndrewJ and I tried to track some of the issues and tools out on
+this wiki:
+https://github.com/openbmc/openbmc/wiki/Performance-Profiling-in-OpenBMC
+
+We=E2=80=99ve gotten a bit of a reprieve with our move to the AST2600 =
+but
+it=E2=80=99s only a matter of time :)
+
+I=E2=80=99m always a fan on trying to improve existing tools vs. rolling =
+our
+own but recognize that=E2=80=99s not always an option.
+
+I=E2=80=99m all for anything and everything we can do in this area! =
+Thanks
+for taking the initiative Sui. =20
+
+Andrew=
