@@ -1,90 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2DC434AFF5
-	for <lists+openbmc@lfdr.de>; Fri, 26 Mar 2021 21:14:43 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92F5D34AFF9
+	for <lists+openbmc@lfdr.de>; Fri, 26 Mar 2021 21:15:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F6Y9F54t7z3c1F
-	for <lists+openbmc@lfdr.de>; Sat, 27 Mar 2021 07:14:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F6Y9m4MBzz3c6Q
+	for <lists+openbmc@lfdr.de>; Sat, 27 Mar 2021 07:15:08 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Byzj1uZl;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qs0d6H9e;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
  helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Byzj1uZl; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.s=pp1 header.b=qs0d6H9e; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F6Y911D14z2yyW
- for <openbmc@lists.ozlabs.org>; Sat, 27 Mar 2021 07:14:28 +1100 (AEDT)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12QK3eKG178670; Fri, 26 Mar 2021 16:14:22 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F6Y934z02z3bxc
+ for <openbmc@lists.ozlabs.org>; Sat, 27 Mar 2021 07:14:31 +1100 (AEDT)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 12QK4HvU026740; Fri, 26 Mar 2021 16:14:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=kj4h2szO5rVrrcCi9LjwYIw2bVW4/T5XzP2bkZMT/F0=;
- b=Byzj1uZlcLmXoBf6iboM5FHPS9bwqylO6j1BUOoHjV9lXDrah06/dwfbkyMjhGFZ6sH3
- ns1CsxpGzDqXYCR2fPKKP6xU7AomyqcToq4J1Z57ifFFE0oJfKKrj8aVW8zbcS1t05Uw
- Pd+Z/WqbrApvcCCND0cKxpg3TVJI7KuOFGtYOXNdluhKZypsxrv4iNRzCz//RZHjTB9J
- ZbjCUuLv81k7+Chw+H3XNpQEJ8PELqqJxWj3PyAblG3BCNLyquC/M3s8gBDEByI8+bPj
- STNuY1mm7NIMy1nvYJvbOMwyLOXnuFgDbKycNHV48e7zQF6Rz6iiGGAqxoSo0FkdwUxi Ow== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0b-001b2d01.pphosted.com with ESMTP id 37hcd21ywc-1
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=q8Y4C34XtHA5A5EqxlChyD+z3AcqRWWgnpEG/I9ZjqM=;
+ b=qs0d6H9eG+qnK7hxOI7yBIQ5f8iM3jQJ8Dh4j6VKF0sI8bDeXIqfPN7/qsyMSiYsuWGL
+ YRWYuOsVXXVZBijW5N4gDgAHDW9gIpyY+BWrzfBep3Dlc+TIPwgIEe8GS8rBfZM61XEI
+ QxRH1Tqx2e9fzOm9oLbfEefHPdyderRhMnCVuDMwS+Vr4dgreZOCQ0xb5w2pGZ1TWz9a
+ LvwC9Dvb4W3YfyOfMELql1syCGFvswJdgLMr7s5oQ3bQIy93z9+2DsrlRCGMb4PROPgU
+ i0aY0NK+ot7W9fh4UnXkAbEalZumqXYZf+tEQlQqN0LdOAbFmW+t68jSGlzFSw3cuYHa dA== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 37hcdut3e8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Mar 2021 16:14:22 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12QKDo5t029041;
- Fri, 26 Mar 2021 20:14:21 GMT
-Received: from b03cxnp07027.gho.boulder.ibm.com
- (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
- by ppma05wdc.us.ibm.com with ESMTP id 37hjsfsd3r-1
+ Fri, 26 Mar 2021 16:14:26 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12QKDnSD001280;
+ Fri, 26 Mar 2021 20:14:25 GMT
+Received: from b03cxnp08025.gho.boulder.ibm.com
+ (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
+ by ppma01dal.us.ibm.com with ESMTP id 37h150hmmh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Mar 2021 20:14:21 +0000
+ Fri, 26 Mar 2021 20:14:25 +0000
 Received: from b03ledav004.gho.boulder.ibm.com
  (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 12QKELSj30736768
+ by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 12QKEN5V27066712
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Mar 2021 20:14:21 GMT
+ Fri, 26 Mar 2021 20:14:24 GMT
 Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ECBE67805E;
- Fri, 26 Mar 2021 20:14:20 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D631C7805F;
+ Fri, 26 Mar 2021 20:14:23 +0000 (GMT)
 Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6C49F7805C;
- Fri, 26 Mar 2021 20:14:19 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 599DE7805C;
+ Fri, 26 Mar 2021 20:14:22 +0000 (GMT)
 Received: from T480-KlausKiwi.localdomain (unknown [9.85.195.191])
  by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
- Fri, 26 Mar 2021 20:14:19 +0000 (GMT)
+ Fri, 26 Mar 2021 20:14:22 +0000 (GMT)
 From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
 To: openembedded-core@lists.openembedded.org
-Subject: [PATCH v2 0/4] u-boot: Support for SPL verified boot
-Date: Fri, 26 Mar 2021 17:14:06 -0300
-Message-Id: <20210326201410.13906-1-klaus@linux.vnet.ibm.com>
+Subject: [PATCH v2 1/4] u-boot: Move definitions to common locations
+Date: Fri, 26 Mar 2021 17:14:07 -0300
+Message-Id: <20210326201410.13906-2-klaus@linux.vnet.ibm.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210326201410.13906-1-klaus@linux.vnet.ibm.com>
+References: <20210326201410.13906-1-klaus@linux.vnet.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 8nQ-95sP6x_ljn10YOw8nhUwj69SWQPI
-X-Proofpoint-ORIG-GUID: 8nQ-95sP6x_ljn10YOw8nhUwj69SWQPI
+X-Proofpoint-GUID: Hc41mlsCT8RD9zmOD-Fnqdg3z5YF62KQ
+X-Proofpoint-ORIG-GUID: Hc41mlsCT8RD9zmOD-Fnqdg3z5YF62KQ
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-03-26_11:2021-03-26,
+ definitions=2021-03-26_08:2021-03-26,
  2021-03-26 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0
- malwarescore=0 suspectscore=0 mlxlogscore=999 spamscore=0 clxscore=1011
- phishscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2103250000
- definitions=main-2103260149
+ adultscore=0 mlxscore=0
+ priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
+ mlxlogscore=999 clxscore=1015 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2103250000 definitions=main-2103260149
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,62 +103,280 @@ Cc: andrew@aj.id.au, klaus@linux.vnet.ibm.com, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This patch series aims at extending U-Boot's verified boot support to
-also include SPL.
-
-Presently, setting UBOOT_SIGN_ENABLE instructs the classes uboot-sign
-and kernel-fitimage to create and sign a Linux Kernel fitImage. This
-proposal introduces the variables UBOOT_FITIMAGE_ENABLE and
-SPL_SIGN_ENABLE that will, respectively, create and sign a U-Boot
-(proper) fitImage that the SPL can load (and verify if enabled)
-
-In order to accomplish this, the first patch moves some of necessary
-infrastructure (variables, functions) used to sign the Kernel
-fitImage to more common locations, and then essentially duplicates the
-method currently used to sign the Kernel fitImage to also sign the
-U-Boot fitImage.
-
-If the variable UBOOT_FITIMAGE_ENABLE = "1", the uboot-sign class will
-copy the SPL files (nodtb image and dtb file) from the u-boot recipe to
-the staging area, so that the Kernel recipe can then create the U-Boot
-fitImage.
-
-In case SPL_SIGN_ENABLE = "1", the U-Boot fitImage will be signed using
-the key provided by SPL_SIGN_KEYNAME / SPL_SIGN_KEYDIR, or will
-auto-generate keys based on UBOOT_FIT_HASH_ALG, UBOOT_FIT_SIGN_ALG and
-UBOOT_FIT_SIGN_NUMBITS if UBOOT_FIT_GENERATE_KEYS is "1".
-
-After the operations above, the Kernel recipe will deploy the (signed)
-U-Boot fitImage, the ITS script used to create it, as well as the SPL
-concatenated with the DTB containing the pubkey to the images directory.
-
-The reason why the U-Boot fitImage is created by the Kernel is in order
-to make sure that, when UBOOT_SIGN_ENABLE is set (and the Kernel
-fitImage is signed), the U-Boot fitImage being created/signed contains
-the pubkey used by the Kernel recipe to sign the Kernel fitImage.
-
-I added oe-selftest testcases and also tested this on upstream OpenBMC
-with AST2600 BMC devices.
+Move some definitions from u-boot.inc into uboot-config.bbclass and
+similarly from kernel-fitimage.bbclass into uboot-sign.bbclass, so that
+they can be useful when signing the U-boot proper fitimage, for a
+verified-boot SPL.
 
 Signed-off-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-
 ---
-Changes since V1:
+ meta/classes/kernel-fitimage.bbclass | 58 ----------------------------
+ meta/classes/uboot-config.bbclass    | 56 +++++++++++++++++++++++++++
+ meta/classes/uboot-sign.bbclass      | 35 +++++++++++++++++
+ meta/recipes-bsp/u-boot/u-boot.inc   | 46 ----------------------
+ 4 files changed, 91 insertions(+), 104 deletions(-)
 
- * Separated SPL_SIGN_ENABLE from UBOOT_FITIMAGE_ENABLE so that an
-   U-Boot fitImage can be created without a signature
-
- * Completely moved the task of creating/signing the U-Boot fitImage to
-   the Kernel recipe, so that we don't get collisions when reusing the
-   build tree while changing the configuration. This is apparently also
-   necessary for testcases to be sane.
-
- * Testcases changes and additions, covering the above scenarios
-
- meta/classes/kernel-fitimage.bbclass     |  82 ++---
- meta/classes/uboot-config.bbclass        |  58 ++++
- meta/classes/uboot-sign.bbclass          | 407 +++++++++++++++++++++++--
- meta/lib/oeqa/selftest/cases/fitimage.py | 468 +++++++++++++++++++++++++++++
- meta/recipes-bsp/u-boot/u-boot.inc       |  46 ---
- 5 files changed, 928 insertions(+), 133 deletions(-)
+diff --git a/meta/classes/kernel-fitimage.bbclass b/meta/classes/kernel-fitimage.bbclass
+index b9d8270027..6b7c1c3a7d 100644
+--- a/meta/classes/kernel-fitimage.bbclass
++++ b/meta/classes/kernel-fitimage.bbclass
+@@ -53,30 +53,6 @@ python __anonymous () {
+                 d.appendVarFlag('do_assemble_fitimage_initramfs', 'depends', ' %s:do_populate_sysroot' % uboot_pn)
+ }
+ 
+-# Options for the device tree compiler passed to mkimage '-D' feature:
+-UBOOT_MKIMAGE_DTCOPTS ??= ""
+-
+-# fitImage Hash Algo
+-FIT_HASH_ALG ?= "sha256"
+-
+-# fitImage Signature Algo
+-FIT_SIGN_ALG ?= "rsa2048"
+-
+-# Generate keys for signing fitImage
+-FIT_GENERATE_KEYS ?= "0"
+-
+-# Size of private key in number of bits
+-FIT_SIGN_NUMBITS ?= "2048"
+-
+-# args to openssl genrsa (Default is just the public exponent)
+-FIT_KEY_GENRSA_ARGS ?= "-F4"
+-
+-# args to openssl req (Default is -batch for non interactive mode and
+-# -new for new certificate)
+-FIT_KEY_REQ_ARGS ?= "-batch -new"
+-
+-# Standard format for public key certificate
+-FIT_KEY_SIGN_PKCS ?= "-x509"
+ 
+ # Description string
+ FIT_DESC ?= "U-Boot fitImage for ${DISTRO_NAME}/${PV}/${MACHINE}"
+@@ -84,13 +60,6 @@ FIT_DESC ?= "U-Boot fitImage for ${DISTRO_NAME}/${PV}/${MACHINE}"
+ # Sign individual images as well
+ FIT_SIGN_INDIVIDUAL ?= "0"
+ 
+-# mkimage command
+-UBOOT_MKIMAGE ?= "uboot-mkimage"
+-UBOOT_MKIMAGE_SIGN ?= "${UBOOT_MKIMAGE}"
+-
+-# Arguments passed to mkimage for signing
+-UBOOT_MKIMAGE_SIGN_ARGS ?= ""
+-
+ #
+ # Emit the fitImage ITS header
+ #
+@@ -698,33 +667,6 @@ do_assemble_fitimage_initramfs() {
+ 
+ addtask assemble_fitimage_initramfs before do_deploy after do_bundle_initramfs
+ 
+-do_generate_rsa_keys() {
+-	if [ "${UBOOT_SIGN_ENABLE}" = "0" ] && [ "${FIT_GENERATE_KEYS}" = "1" ]; then
+-		bbwarn "FIT_GENERATE_KEYS is set to 1 eventhough UBOOT_SIGN_ENABLE is set to 0. The keys will not be generated as they won't be used."
+-	fi
+-
+-	if [ "${UBOOT_SIGN_ENABLE}" = "1" ] && [ "${FIT_GENERATE_KEYS}" = "1" ]; then
+-
+-		# Generate keys only if they don't already exist
+-		if [ ! -f "${UBOOT_SIGN_KEYDIR}/${UBOOT_SIGN_KEYNAME}".key ] || \
+-			[ ! -f "${UBOOT_SIGN_KEYDIR}/${UBOOT_SIGN_KEYNAME}".crt]; then
+-
+-			# make directory if it does not already exist
+-			mkdir -p "${UBOOT_SIGN_KEYDIR}"
+-
+-			echo "Generating RSA private key for signing fitImage"
+-			openssl genrsa ${FIT_KEY_GENRSA_ARGS} -out \
+-				"${UBOOT_SIGN_KEYDIR}/${UBOOT_SIGN_KEYNAME}".key \
+-				"${FIT_SIGN_NUMBITS}"
+-
+-			echo "Generating certificate for signing fitImage"
+-			openssl req ${FIT_KEY_REQ_ARGS} "${FIT_KEY_SIGN_PKCS}" \
+-				-key "${UBOOT_SIGN_KEYDIR}/${UBOOT_SIGN_KEYNAME}".key \
+-				-out "${UBOOT_SIGN_KEYDIR}/${UBOOT_SIGN_KEYNAME}".crt
+-		fi
+-	fi
+-}
+-
+ addtask generate_rsa_keys before do_assemble_fitimage after do_compile
+ 
+ kernel_do_deploy[vardepsexclude] = "DATETIME"
+diff --git a/meta/classes/uboot-config.bbclass b/meta/classes/uboot-config.bbclass
+index 89ff970fcc..31487c1418 100644
+--- a/meta/classes/uboot-config.bbclass
++++ b/meta/classes/uboot-config.bbclass
+@@ -11,7 +11,63 @@
+ #
+ # Copyright 2013, 2014 (C) O.S. Systems Software LTDA.
+ 
++# Some versions of u-boot use .bin and others use .img.  By default use .bin
++# but enable individual recipes to change this value.
++UBOOT_SUFFIX ??= "bin"
+ UBOOT_BINARY ?= "u-boot.${UBOOT_SUFFIX}"
++UBOOT_BINARYNAME ?= "${@os.path.splitext(d.getVar("UBOOT_BINARY"))[0]}"
++UBOOT_IMAGE ?= "u-boot-${MACHINE}-${PV}-${PR}.${UBOOT_SUFFIX}"
++UBOOT_SYMLINK ?= "u-boot-${MACHINE}.${UBOOT_SUFFIX}"
++UBOOT_MAKE_TARGET ?= "all"
++
++# Output the ELF generated. Some platforms can use the ELF file and directly
++# load it (JTAG booting, QEMU) additionally the ELF can be used for debugging
++# purposes.
++UBOOT_ELF ?= ""
++UBOOT_ELF_SUFFIX ?= "elf"
++UBOOT_ELF_IMAGE ?= "u-boot-${MACHINE}-${PV}-${PR}.${UBOOT_ELF_SUFFIX}"
++UBOOT_ELF_BINARY ?= "u-boot.${UBOOT_ELF_SUFFIX}"
++UBOOT_ELF_SYMLINK ?= "u-boot-${MACHINE}.${UBOOT_ELF_SUFFIX}"
++
++# Some versions of u-boot build an SPL (Second Program Loader) image that
++# should be packaged along with the u-boot binary as well as placed in the
++# deploy directory.  For those versions they can set the following variables
++# to allow packaging the SPL.
++SPL_BINARY ?= ""
++SPL_BINARYNAME ?= "${@os.path.basename(d.getVar("SPL_BINARY"))}"
++SPL_IMAGE ?= "${SPL_BINARYNAME}-${MACHINE}-${PV}-${PR}"
++SPL_SYMLINK ?= "${SPL_BINARYNAME}-${MACHINE}"
++
++# Additional environment variables or a script can be installed alongside
++# u-boot to be used automatically on boot.  This file, typically 'uEnv.txt'
++# or 'boot.scr', should be packaged along with u-boot as well as placed in the
++# deploy directory.  Machine configurations needing one of these files should
++# include it in the SRC_URI and set the UBOOT_ENV parameter.
++UBOOT_ENV_SUFFIX ?= "txt"
++UBOOT_ENV ?= ""
++UBOOT_ENV_BINARY ?= "${UBOOT_ENV}.${UBOOT_ENV_SUFFIX}"
++UBOOT_ENV_IMAGE ?= "${UBOOT_ENV}-${MACHINE}-${PV}-${PR}.${UBOOT_ENV_SUFFIX}"
++UBOOT_ENV_SYMLINK ?= "${UBOOT_ENV}-${MACHINE}.${UBOOT_ENV_SUFFIX}"
++
++# Default name of u-boot initial env, but enable individual recipes to change
++# this value.
++UBOOT_INITIAL_ENV ?= "${PN}-initial-env"
++
++# U-Boot EXTLINUX variables. U-Boot searches for /boot/extlinux/extlinux.conf
++# to find EXTLINUX conf file.
++UBOOT_EXTLINUX_INSTALL_DIR ?= "/boot/extlinux"
++UBOOT_EXTLINUX_CONF_NAME ?= "extlinux.conf"
++UBOOT_EXTLINUX_SYMLINK ?= "${UBOOT_EXTLINUX_CONF_NAME}-${MACHINE}-${PR}"
++
++# Options for the device tree compiler passed to mkimage '-D' feature:
++UBOOT_MKIMAGE_DTCOPTS ??= ""
++
++# mkimage command
++UBOOT_MKIMAGE ?= "uboot-mkimage"
++UBOOT_MKIMAGE_SIGN ?= "${UBOOT_MKIMAGE}"
++
++# Arguments passed to mkimage for signing
++UBOOT_MKIMAGE_SIGN_ARGS ?= ""
+ 
+ python () {
+     ubootmachine = d.getVar("UBOOT_MACHINE")
+diff --git a/meta/classes/uboot-sign.bbclass b/meta/classes/uboot-sign.bbclass
+index 713196df41..d57bef6669 100644
+--- a/meta/classes/uboot-sign.bbclass
++++ b/meta/classes/uboot-sign.bbclass
+@@ -31,6 +31,9 @@
+ #
+ # For more details on signature process, please refer to U-Boot documentation.
+ 
++# We need some variables from u-boot-config
++inherit uboot-config
++
+ # Signature activation.
+ UBOOT_SIGN_ENABLE ?= "0"
+ 
+@@ -41,6 +44,38 @@ UBOOT_DTB_SYMLINK ?= "u-boot-${MACHINE}.dtb"
+ UBOOT_NODTB_IMAGE ?= "u-boot-nodtb-${MACHINE}-${PV}-${PR}.${UBOOT_SUFFIX}"
+ UBOOT_NODTB_BINARY ?= "u-boot-nodtb.${UBOOT_SUFFIX}"
+ UBOOT_NODTB_SYMLINK ?= "u-boot-nodtb-${MACHINE}.${UBOOT_SUFFIX}"
++UBOOT_ITS_IMAGE ?= "u-boot-${MACHINE}-${PV}-${PR}.its"
++UBOOT_ITS ?= "u-boot.its"
++UBOOT_ITS_SYMLINK ?= "u-boot-${MACHINE}.its"
++SPL_DIR ?= "${@os.path.dirname(d.getVar("SPL_BINARY")) or '.'}"
++SPL_DTB_IMAGE ?= "u-boot-spl-${MACHINE}-${PV}-${PR}.dtb"
++SPL_DTB_BINARY ?= "u-boot-spl.dtb"
++SPL_DTB_SYMLINK ?= "u-boot-spl-${MACHINE}.dtb"
++SPL_NODTB_IMAGE ?= "${@os.path.splitext(d.getVar("SPL_BINARYNAME"))[0]}-nodtb-${MACHINE}-${PV}-${PR}${@os.path.splitext(d.getVar("SPL_BINARYNAME"))[1]}"
++SPL_NODTB_BINARY ?= "${@os.path.splitext(d.getVar("SPL_BINARYNAME"))[0]}-nodtb${@os.path.splitext(d.getVar("SPL_BINARYNAME"))[1]}"
++SPL_NODTB_SYMLINK ?= "${@os.path.splitext(d.getVar("SPL_BINARYNAME"))[0]}-nodtb-${MACHINE}${@os.path.splitext(d.getVar("SPL_BINARYNAME"))[1]}"
++
++# fitImage Hash Algo
++FIT_HASH_ALG ?= "sha256"
++
++# fitImage Signature Algo
++FIT_SIGN_ALG ?= "rsa2048"
++
++# Generate keys for signing fitImage
++FIT_GENERATE_KEYS ?= "0"
++
++# Size of private key in number of bits
++FIT_SIGN_NUMBITS ?= "2048"
++
++# args to openssl genrsa (Default is just the public exponent)
++FIT_KEY_GENRSA_ARGS ?= "-F4"
++
++# args to openssl req (Default is -batch for non interactive mode and
++# -new for new certificate)
++FIT_KEY_REQ_ARGS ?= "-batch -new"
++
++# Standard format for public key certificate
++FIT_KEY_SIGN_PKCS ?= "-x509"
+ 
+ # Functions in this bbclass is for u-boot only
+ UBOOT_PN = "${@d.getVar('PREFERRED_PROVIDER_u-boot') or 'u-boot'}"
+diff --git a/meta/recipes-bsp/u-boot/u-boot.inc b/meta/recipes-bsp/u-boot/u-boot.inc
+index 251178db33..5398c2e621 100644
+--- a/meta/recipes-bsp/u-boot/u-boot.inc
++++ b/meta/recipes-bsp/u-boot/u-boot.inc
+@@ -24,52 +24,6 @@ PACKAGECONFIG[openssl] = ",,openssl-native"
+ # file already exists it will not be overwritten.
+ UBOOT_LOCALVERSION ?= ""
+ 
+-# Some versions of u-boot use .bin and others use .img.  By default use .bin
+-# but enable individual recipes to change this value.
+-UBOOT_SUFFIX ??= "bin"
+-UBOOT_IMAGE ?= "u-boot-${MACHINE}-${PV}-${PR}.${UBOOT_SUFFIX}"
+-UBOOT_SYMLINK ?= "u-boot-${MACHINE}.${UBOOT_SUFFIX}"
+-UBOOT_MAKE_TARGET ?= "all"
+-
+-# Output the ELF generated. Some platforms can use the ELF file and directly
+-# load it (JTAG booting, QEMU) additionally the ELF can be used for debugging
+-# purposes.
+-UBOOT_ELF ?= ""
+-UBOOT_ELF_SUFFIX ?= "elf"
+-UBOOT_ELF_IMAGE ?= "u-boot-${MACHINE}-${PV}-${PR}.${UBOOT_ELF_SUFFIX}"
+-UBOOT_ELF_BINARY ?= "u-boot.${UBOOT_ELF_SUFFIX}"
+-UBOOT_ELF_SYMLINK ?= "u-boot-${MACHINE}.${UBOOT_ELF_SUFFIX}"
+-
+-# Some versions of u-boot build an SPL (Second Program Loader) image that
+-# should be packaged along with the u-boot binary as well as placed in the
+-# deploy directory.  For those versions they can set the following variables
+-# to allow packaging the SPL.
+-SPL_BINARY ?= ""
+-SPL_BINARYNAME ?= "${@os.path.basename(d.getVar("SPL_BINARY"))}"
+-SPL_IMAGE ?= "${SPL_BINARYNAME}-${MACHINE}-${PV}-${PR}"
+-SPL_SYMLINK ?= "${SPL_BINARYNAME}-${MACHINE}"
+-
+-# Additional environment variables or a script can be installed alongside
+-# u-boot to be used automatically on boot.  This file, typically 'uEnv.txt'
+-# or 'boot.scr', should be packaged along with u-boot as well as placed in the
+-# deploy directory.  Machine configurations needing one of these files should
+-# include it in the SRC_URI and set the UBOOT_ENV parameter.
+-UBOOT_ENV_SUFFIX ?= "txt"
+-UBOOT_ENV ?= ""
+-UBOOT_ENV_BINARY ?= "${UBOOT_ENV}.${UBOOT_ENV_SUFFIX}"
+-UBOOT_ENV_IMAGE ?= "${UBOOT_ENV}-${MACHINE}-${PV}-${PR}.${UBOOT_ENV_SUFFIX}"
+-UBOOT_ENV_SYMLINK ?= "${UBOOT_ENV}-${MACHINE}.${UBOOT_ENV_SUFFIX}"
+-
+-# Default name of u-boot initial env, but enable individual recipes to change
+-# this value.
+-UBOOT_INITIAL_ENV ?= "${PN}-initial-env"
+-
+-# U-Boot EXTLINUX variables. U-Boot searches for /boot/extlinux/extlinux.conf
+-# to find EXTLINUX conf file.
+-UBOOT_EXTLINUX_INSTALL_DIR ?= "/boot/extlinux"
+-UBOOT_EXTLINUX_CONF_NAME ?= "extlinux.conf"
+-UBOOT_EXTLINUX_SYMLINK ?= "${UBOOT_EXTLINUX_CONF_NAME}-${MACHINE}-${PR}"
+-
+ do_configure () {
+     if [ -n "${UBOOT_CONFIG}" ]; then
+         unset i j
+-- 
+2.25.1
 
