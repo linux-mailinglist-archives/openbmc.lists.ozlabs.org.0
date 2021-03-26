@@ -1,79 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C68534AECC
-	for <lists+openbmc@lfdr.de>; Fri, 26 Mar 2021 19:53:03 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2DC434AFF5
+	for <lists+openbmc@lfdr.de>; Fri, 26 Mar 2021 21:14:43 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F6WM11tzSz3c1X
-	for <lists+openbmc@lfdr.de>; Sat, 27 Mar 2021 05:53:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F6Y9F54t7z3c1F
+	for <lists+openbmc@lfdr.de>; Sat, 27 Mar 2021 07:14:41 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=SCa92GsM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Byzj1uZl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.20; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=SCa92GsM; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F6WLk4v8Dz3bsL
- for <openbmc@lists.ozlabs.org>; Sat, 27 Mar 2021 05:52:44 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1616784732;
- bh=vouNfrqvwnj2jRCoiDlj0eW2eBcDSogKLdODonG/KnI=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=SCa92GsM3XsF4UQmE99IdhJFZvJ4vT+nzMpycsh58J/K78gRssvq5TiqbCxLzHDXb
- nMe8MIcb6Oy/U+sVQyJ33qZbHYK+s1RuCNVT8Bqxz8uV6s9dZ09DSmPNQg3mTpB3cx
- c2cXP9UKnKBe8iSHnBN4a5HkXvtbxPb+2PVlU6VA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MfpSb-1lssib042D-00gK0m; Fri, 26
- Mar 2021 19:52:12 +0100
-Date: Fri, 26 Mar 2021 19:52:07 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 08/14] irqchip: Add driver for WPCM450 interrupt controller
-Message-ID: <YF4tV+L71Lso94kT@latitude>
-References: <20210320181610.680870-1-j.neuschaefer@gmx.net>
- <20210320181610.680870-9-j.neuschaefer@gmx.net>
- <87sg4kiia4.wl-maz@kernel.org>
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=Byzj1uZl; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F6Y911D14z2yyW
+ for <openbmc@lists.ozlabs.org>; Sat, 27 Mar 2021 07:14:28 +1100 (AEDT)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 12QK3eKG178670; Fri, 26 Mar 2021 16:14:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=kj4h2szO5rVrrcCi9LjwYIw2bVW4/T5XzP2bkZMT/F0=;
+ b=Byzj1uZlcLmXoBf6iboM5FHPS9bwqylO6j1BUOoHjV9lXDrah06/dwfbkyMjhGFZ6sH3
+ ns1CsxpGzDqXYCR2fPKKP6xU7AomyqcToq4J1Z57ifFFE0oJfKKrj8aVW8zbcS1t05Uw
+ Pd+Z/WqbrApvcCCND0cKxpg3TVJI7KuOFGtYOXNdluhKZypsxrv4iNRzCz//RZHjTB9J
+ ZbjCUuLv81k7+Chw+H3XNpQEJ8PELqqJxWj3PyAblG3BCNLyquC/M3s8gBDEByI8+bPj
+ STNuY1mm7NIMy1nvYJvbOMwyLOXnuFgDbKycNHV48e7zQF6Rz6iiGGAqxoSo0FkdwUxi Ow== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 37hcd21ywc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Mar 2021 16:14:22 -0400
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12QKDo5t029041;
+ Fri, 26 Mar 2021 20:14:21 GMT
+Received: from b03cxnp07027.gho.boulder.ibm.com
+ (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
+ by ppma05wdc.us.ibm.com with ESMTP id 37hjsfsd3r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Mar 2021 20:14:21 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 12QKELSj30736768
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 26 Mar 2021 20:14:21 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ECBE67805E;
+ Fri, 26 Mar 2021 20:14:20 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6C49F7805C;
+ Fri, 26 Mar 2021 20:14:19 +0000 (GMT)
+Received: from T480-KlausKiwi.localdomain (unknown [9.85.195.191])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Fri, 26 Mar 2021 20:14:19 +0000 (GMT)
+From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+To: openembedded-core@lists.openembedded.org
+Subject: [PATCH v2 0/4] u-boot: Support for SPL verified boot
+Date: Fri, 26 Mar 2021 17:14:06 -0300
+Message-Id: <20210326201410.13906-1-klaus@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="/vCPRjWtsUq/JNe6"
-Content-Disposition: inline
-In-Reply-To: <87sg4kiia4.wl-maz@kernel.org>
-X-Provags-ID: V03:K1:OkGnUsBmuQYhTqJmp/2lqe1nQZt9b9czacZw6IjmkhZkAOOmhC/
- OIE+fyEAMzy9BuK7JUXvO8+6j/iHH0/c5fXydAZXWKEh8bbgN2q9KozHbG9Dqq3sEy30qf0
- LZUf/aQtWH7PjPRaeAdCONwDIXcfVB3jV8vm7S4I+H4ICbhlcVQHR5JVv5zAhstnEm9dmBo
- ylB6JaG3zVsZo8ONIx0xQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OUEWgO+SBWg=:4rJ3YB5GY+AMLWGZ8QnMTy
- mhq+izkM6FfkE4QxSh4efHDJZraFL/STrZQ1L31IUx8A4ZPv/qBPCrYSslLcBVSQJy8xlhJ2/
- 8Ka9hm63QukTVkNMeKEhbUquunSAcJOq7kI5hkBxqmLiLdqs0rnfAKi46TcmmQRKn3xm6Lcq3
- KzPw99DIUIll8w4OM/1yIRBy4cxTHxkjLWZeuKpjx42eR5zPrEK6s/7EGCa9m1FfV4Or2rbqX
- JPcyMjE5hy+8650ontqA8yjJPrq87n7lmmgARQNOQW47xr7PAvZGXsHt1KSC5GQF3eRG0j/eM
- vEXlPQZnDZOX5kd5/wXIYegqWZfBwiErOHYB1w7llg39gYJpqVf7XkcNGl7dYhulKjeXPU25b
- wGZTsPl8boSpLIKWjvUsmojnefjlL9qiUOcuuJocKHyu1c0DCrmpT7SZDMEXqLWTr6ASuaVXZ
- AoW2ON9bInM2IRjPct0Yn3sfGMtkOgmHknyaoCSzw15JEJ8tGxXu9zYScJZI6rmVmlwvikus2
- qXAl2m1VT3ecSfoyc5E9Sp/1/8pkI39zaWSwsm9jY8bKIiuaINAEFtHh8vTT1SQp/YX9ALhBo
- wKwkaTkvIufTNjVfP9TiE+jh6fNbRwPqvbDtSu0VtBVupbGvYTTSwRWJrhnFJ9VgQMrfK9Jlm
- Vl+4qhPKVH6dBzIlZzR78bARH5B4n7b08ASJ1GxV4qtAnNTo+VaNZrmlWdUte+doEgGoS0cN7
- yltQ53irHxno2zcRavgW0xezWugBp4CZO8DRsEI2c7XpvlUeqDEeJguqRa1NW+nbwiDfeUA0A
- Awderu5gB3cIqTEB2oZIH7axB+yj8Q7SsfqG/QCp36NfKDGEB7/A/jWKCQAykgy+VkqQY92r9
- FkhAO6HT+DQhOQsbygOjEYMyh1VvwiDo2EWt0YiVN+5utzcMjoY6rB/HP35ZHUpPJutEQse6/
- EdhaYBVDLi5X8FLWGVQ5MPljimL29+qYj2tSDadd5ZI1KTM+eFzBq9LLM7reFjsZqsHG9687X
- TSB5Ku6NnHPrx87bFHhaIjBOXZhRZcw02BYnspSI+8shIbJ1DXNqnV9+24gO/94hQQ9zMz1RY
- d8n7zdr3s285SDE/EzKLcwOp+1A7fhlbgMZ6+vg4ShLUb7mhRlFiSA7DlTFKN62XpvmuMwwHE
- 9PM+nZtoVZnkJbqidg/sZ6PqjjmOJuWOl/XOT4x/Vm8kHHjwXNOY0BY6tLkVlriKGvhvlpyaW
- A56515AYTmKdNIxaS
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 8nQ-95sP6x_ljn10YOw8nhUwj69SWQPI
+X-Proofpoint-ORIG-GUID: 8nQ-95sP6x_ljn10YOw8nhUwj69SWQPI
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-03-26_11:2021-03-26,
+ 2021-03-26 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0
+ malwarescore=0 suspectscore=0 mlxlogscore=999 spamscore=0 clxscore=1011
+ phishscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2103250000
+ definitions=main-2103260149
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,161 +96,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- openbmc@lists.ozlabs.org,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- linux-kernel@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
- Thomas Gleixner <tglx@linutronix.de>, Tali Perry <tali.perry1@gmail.com>,
- linux-arm-kernel@lists.infradead.org, Benjamin Fair <benjaminfair@google.com>
+Cc: andrew@aj.id.au, klaus@linux.vnet.ibm.com, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This patch series aims at extending U-Boot's verified boot support to
+also include SPL.
 
---/vCPRjWtsUq/JNe6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Presently, setting UBOOT_SIGN_ENABLE instructs the classes uboot-sign
+and kernel-fitimage to create and sign a Linux Kernel fitImage. This
+proposal introduces the variables UBOOT_FITIMAGE_ENABLE and
+SPL_SIGN_ENABLE that will, respectively, create and sign a U-Boot
+(proper) fitImage that the SPL can load (and verify if enabled)
 
-On Wed, Mar 24, 2021 at 05:16:35PM +0000, Marc Zyngier wrote:
-> On Sat, 20 Mar 2021 18:16:04 +0000,
-> Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net> wrote:
-> >=20
-> > The WPCM450 AIC ("Advanced Interrupt Controller") is the interrupt
-> > controller found in the Nuvoton WPCM450 SoC and other Winbond/Nuvoton
-> > SoCs.
-> >=20
-> > The list of registers if based on the AMI vendor kernel and the
-> > Nuvoton W90N745 datasheet.
-> >=20
-> > Although the hardware supports other interrupt modes, the driver only
-> > supports high-level interrupts at the moment, because other modes could
-> > not be tested so far.
-> >=20
-> > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-> > ---
-[...]
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +// Copyright 2021 Jonathan Neusch=C3=A4fer
-> > +
-> > +#include <linux/console.h>
->=20
-> That's unexpected. Why do you need this?
+In order to accomplish this, the first patch moves some of necessary
+infrastructure (variables, functions) used to sign the Kernel
+fitImage to more common locations, and then essentially duplicates the
+method currently used to sign the Kernel fitImage to also sign the
+U-Boot fitImage.
 
-I forgot about linux/printk.h.
+If the variable UBOOT_FITIMAGE_ENABLE = "1", the uboot-sign class will
+copy the SPL files (nodtb image and dtb file) from the u-boot recipe to
+the staging area, so that the Kernel recipe can then create the U-Boot
+fitImage.
 
-> > +#define AIC_SCR_SRCTYPE_LOW_LEVEL	(0 << 6)
-> > +#define AIC_SCR_SRCTYPE_HIGH_LEVEL	(1 << 6)
-> > +#define AIC_SCR_SRCTYPE_NEG_EDGE	(2 << 6)
-> > +#define AIC_SCR_SRCTYPE_POS_EDGE	(3 << 6)
-> > +#define AIC_SCR_PRIORITY(x)		(x)
->=20
-> A mask would be welcomed for this field.
+In case SPL_SIGN_ENABLE = "1", the U-Boot fitImage will be signed using
+the key provided by SPL_SIGN_KEYNAME / SPL_SIGN_KEYDIR, or will
+auto-generate keys based on UBOOT_FIT_HASH_ALG, UBOOT_FIT_SIGN_ALG and
+UBOOT_FIT_SIGN_NUMBITS if UBOOT_FIT_GENERATE_KEYS is "1".
 
-Ok, I'll add
+After the operations above, the Kernel recipe will deploy the (signed)
+U-Boot fitImage, the ITS script used to create it, as well as the SPL
+concatenated with the DTB containing the pubkey to the images directory.
 
-+#define AIC_SCR_PRIORITY_MASK           0x7
+The reason why the U-Boot fitImage is created by the Kernel is in order
+to make sure that, when UBOOT_SIGN_ENABLE is set (and the Kernel
+fitImage is signed), the U-Boot fitImage being created/signed contains
+the pubkey used by the Kernel recipe to sign the Kernel fitImage.
 
-Should I apply it in AIC_SCR_PRIORITY(x), too?
+I added oe-selftest testcases and also tested this on upstream OpenBMC
+with AST2600 BMC devices.
 
-> > +
-> > +#define IRQS		32
->=20
-> Please use something a bit less generic.
+Signed-off-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
 
-Ok, I'll rename it to AIC_NUM_IRQS.
+---
+Changes since V1:
 
-> > +static void wpcm450_aic_init_hw(void)
-> > +{
-> > +	int i;
-> > +
-> > +	/* Disable (mask) all interrupts */
-> > +	writel(0xffffffff, aic->regs + AIC_MDCR);
->=20
-> Consider using relaxed accessors throughout this driver.
+ * Separated SPL_SIGN_ENABLE from UBOOT_FITIMAGE_ENABLE so that an
+   U-Boot fitImage can be created without a signature
 
-I'll read up on how to use them correctly.
+ * Completely moved the task of creating/signing the U-Boot fitImage to
+   the Kernel recipe, so that we don't get collisions when reusing the
+   build tree while changing the configuration. This is apparently also
+   necessary for testcases to be sane.
 
-> > +static void __exception_irq_entry wpcm450_aic_handle_irq(struct pt_reg=
-s *regs)
-> > +{
-> > +	int hwirq;
-> > +
-> > +	/* Determine the interrupt source */
-> > +	/* Read IPER to signal that nIRQ can be de-asserted */
-> > +	hwirq =3D readl(aic->regs + AIC_IPER) / 4;
-> > +
-> > +	handle_domain_irq(aic->domain, hwirq, regs);
-> > +}
-> > +
-> > +static void wpcm450_aic_ack(struct irq_data *d)
-> > +{
-> > +	/* Signal end-of-service */
-> > +	writel(0, aic->regs + AIC_EOSCR);
->=20
-> Is that an Ack or an EOI? My gut feeling is that the above read is the
-> Ack, and that this write should actually be an EOI callback.
+ * Testcases changes and additions, covering the above scenarios
 
-I agree that EOSCR (End of Service Command Register) matches the
-description of EOI.
+ meta/classes/kernel-fitimage.bbclass     |  82 ++---
+ meta/classes/uboot-config.bbclass        |  58 ++++
+ meta/classes/uboot-sign.bbclass          | 407 +++++++++++++++++++++++--
+ meta/lib/oeqa/selftest/cases/fitimage.py | 468 +++++++++++++++++++++++++++++
+ meta/recipes-bsp/u-boot/u-boot.inc       |  46 ---
+ 5 files changed, 928 insertions(+), 133 deletions(-)
 
-The reading IPER serves a dual purpose, as indicated above. I could
-move the IPER read to a separate irq_ack function and use ISNR
-(Interrupt source number register) in the IRQ handler instead. This
-should work (haven't tested it yet), but I'm not sure it's strictly
-better.
-
-> > +static void wpcm450_aic_mask(struct irq_data *d)
-> > +{
-> > +	unsigned int mask =3D 1U << d->hwirq;
->=20
-> Consider using BIT().
-
-Will do.
-
-> > +static int wpcm450_aic_set_type(struct irq_data *d, unsigned int flow_=
-type)
-> > +{
-> > +	/*
-> > +	 * The hardware supports high/low level, as well as rising/falling ed=
-ge
-> > +	 * modes, and the DT binding accommodates for that, but as long as
-> > +	 * other modes than high level mode are not used and can't be tested,
-> > +	 * they are rejected in this driver.
-> > +	 */
-> > +	if ((flow_type & IRQ_TYPE_SENSE_MASK) !=3D IRQ_TYPE_LEVEL_HIGH) {
-> > +		pr_err("IRQ mode %#x is not supported\n", flow_type);
->=20
-> The core kernel shouts loudly enough, no need for extra messages.
-
-Ok.
-
-> Otherwise, looks good.
->=20
-> 	M.
-
-
-Thanks for your review!
-Jonathan Neusch=C3=A4fer
-
---/vCPRjWtsUq/JNe6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmBeLU8ACgkQCDBEmo7z
-X9tr6RAAwD+HGPSKLsoLr4AXFAWH1Zpa5j10/AATwVFzpwyJiClqMKu1rEPtHlm2
-2A6PD/y5X9Jl0IlmzKx6aWigahjx6qbkh3JZgnJR65kVKVlJsuyr+PvsC9ZOF0WU
-Tkc8ABVHaa3ZogBBQdIqcwOokDMv8C1vAxf1Fe7+p7XnzUz04HiDb9/sJmFO+rI5
-rItvh3KsrlBLrhdH++mlMVaNFA1FcdvMdZrajdDDVe02znZYUpW3pQ20A2FFgU6M
-NqDRc6x10sX62g8cZyt9HunlFOyykR6v9miVJG+t0SudErpq0twwa8VrseZPUGIU
-hmRb1tsi3Qj1MqTn0F6C4LovCxcqCG8Ew4O5BpF8A07ilRffMqq2Ux4tqzaylNyu
-kM/T+2+FTtj4c/ofVBU5q2js+Hywg8BkwlA0FmegMmfQdbwc91zLt28wRZ/Bq7A2
-lEfFdscPGKg34UP7ZImVa2/OZewchNkdLH4fovnqJj64SV+qb96Se+nmqIz1P8cw
-xVyOuSrKzmI3hosvPOOHbo94u41ltjgEiEBKIn6GXnS/7EYOd0kDjHJYPDavVMbN
-ZTBczNSLmLU7C2Kz2Tk/b3xpEnWPVLSaIrFV3X7INb495agu8r2oOzH60+4psVce
-sZdcnytva7c0Rwmsqhe3rarut05I6HNeOl06yeZv0loxtqz6hyw=
-=A8O7
------END PGP SIGNATURE-----
-
---/vCPRjWtsUq/JNe6--
