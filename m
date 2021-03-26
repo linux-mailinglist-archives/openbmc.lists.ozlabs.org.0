@@ -2,92 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8737434AFFE
-	for <lists+openbmc@lfdr.de>; Fri, 26 Mar 2021 21:16:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4832734B0FE
+	for <lists+openbmc@lfdr.de>; Fri, 26 Mar 2021 22:01:30 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F6YCg3rb7z30L1
-	for <lists+openbmc@lfdr.de>; Sat, 27 Mar 2021 07:16:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F6ZCD1w34z30hl
+	for <lists+openbmc@lfdr.de>; Sat, 27 Mar 2021 08:01:28 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=XVbAFoaS;
+	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=KyBAwMKo;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ho3F79Gd;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=XVbAFoaS; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=KyBAwMKo; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=ho3F79Gd; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F6Y9D32bdz3c1Y
- for <openbmc@lists.ozlabs.org>; Sat, 27 Mar 2021 07:14:40 +1100 (AEDT)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12QK3tq8015775; Fri, 26 Mar 2021 16:14:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=1iw7ja7AOKeE2uWcvnqlBY8BwxmQyMg4yS+lpnuzrWE=;
- b=XVbAFoaSiJMoh7VSjk4qQtN+tvls7iUUXPKFQxAiIy8KiPCq4tiSn9/7A21OVqZnANQP
- /g/r5Pj/xb8Icmfr8fIrEswYlwpB1QExkx5fSi0LrhaWTEkg2bn+lbI36rOq/z9L3Hy/
- OiItuO0IFCUOAMYVRTfYNhd2d4Oy2IyNcUSjofc7KwhjfbQUDca27/7pmNCW+J5dOMa0
- EX5ZqeXM5Am3XefExjpRQZ9A4NGzJNYJWtkzl6sMUEu2gYcULKyRzF0sr5zhdyRMkm01
- FxBT0YhmWQ5grX55hQO3KNNpydKbM73SYDA0tsmeUAc0NzRcOqluQbGRn9k95vyqdNhy jw== 
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0a-001b2d01.pphosted.com with ESMTP id 37h74w0x5s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Mar 2021 16:14:35 -0400
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12QKCZTd012075;
- Fri, 26 Mar 2021 20:14:34 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma04wdc.us.ibm.com with ESMTP id 37h14h7q8f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Mar 2021 20:14:34 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 12QKEXOB15139204
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Mar 2021 20:14:33 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A57E17805E;
- Fri, 26 Mar 2021 20:14:33 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EB9ED7805F;
- Fri, 26 Mar 2021 20:14:31 +0000 (GMT)
-Received: from T480-KlausKiwi.localdomain (unknown [9.85.195.191])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
- Fri, 26 Mar 2021 20:14:31 +0000 (GMT)
-From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-To: openembedded-core@lists.openembedded.org
-Subject: [PATCH v2 4/4] oe-selftest: Add U-Boot fitImage signing testcases
-Date: Fri, 26 Mar 2021 17:14:10 -0300
-Message-Id: <20210326201410.13906-5-klaus@linux.vnet.ibm.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210326201410.13906-1-klaus@linux.vnet.ibm.com>
-References: <20210326201410.13906-1-klaus@linux.vnet.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 3zV0cSrY6ZryVTbreZufEtLz0EL0gJHM
-X-Proofpoint-ORIG-GUID: 3zV0cSrY6ZryVTbreZufEtLz0EL0gJHM
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-03-26_11:2021-03-26,
- 2021-03-26 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 mlxlogscore=999
- bulkscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 malwarescore=0 clxscore=1015 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2103250000
- definitions=main-2103260149
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F6ZBy1Fy2z2xYj
+ for <openbmc@lists.ozlabs.org>; Sat, 27 Mar 2021 08:01:13 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 603865C00A8
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Mar 2021 17:01:09 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Fri, 26 Mar 2021 17:01:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm2; bh=sS6I1TxwQI1yBahIHKnqZ4E/lq0+SOF
+ qOge9rfpDu/0=; b=KyBAwMKoyP2uylG3HattLZiC9qLRQRPLg4nE98l4lIyJyrC
+ Hqi64oLtBfz4atM8Oxy7/l4RlgYFZHXOWTF2X704EeyqUFsvxvDhl/X6hs2Cl5Dq
+ LCxEczjcMXBRHLg/wANm658zont+C+ZO0Jdvt5ssLqnLcSgV3YuwciW7WBaQJvDI
+ ysg/8vBiJjGaO8kQxb5Zbqx0+jlmEblRrW27CVQPLYOuba2vXYPUInsLplfhNx8U
+ p+Cblf6PpFYEdnJqC6H2Bzijp/GG4DhxbzC0Wx/WsNeLcN/LDNMPhVPPMyFQSq4x
+ bnUQndgLbmRzonUOPUaU+i6PpUCEiz5Vi3dCO6Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=sS6I1T
+ xwQI1yBahIHKnqZ4E/lq0+SOFqOge9rfpDu/0=; b=ho3F79GdmPF20vxZrDe/j3
+ k9JEcFgF0dSbH/V4DsLiKTn6+PbeqKZJqVCT8SLNWbRWgJ/7Y2PyQ/yfOGuxGiFK
+ bfBkIFP26KfxTpiiuKmeylqQK5F4poe4mtAPF4GUYnsoGlASPIvng8ygiqeVDdd0
+ UgrVlwh3VVWZdT1dGCeTQv9LMYKfPHG/hexXCgMrw9kA54OVhAEaI0mi3bdEXFbA
+ wVp+A4rLzyJGz7Y85bAO/D2yN1L6T6J2wKosClu1w7uAKgqSfSJuINuT1LyOV52+
+ sz/qj+R9SDVGnCsyeVtvyEsP1b+pET1yCyMuCXzIW1U1YmTsh26ZjzeSvbJlewLA
+ ==
+X-ME-Sender: <xms:lEteYDwmkEvhURiElJ5GEnNprmpw00-xA_mZJXFUIa0pDORh5Fr2iw>
+ <xme:lEteYLRLAD71PHju4EHgYoAv-58_rnRq_79WvXRfz9fDrTWZVBMb8VHkoH3WK8YI5
+ E7fdNTAYm4i0oysbA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudehvddgudegkecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesth
+ dtredtreertdenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughr
+ vgifsegrjhdrihgurdgruheqnecuggftrfgrthhtvghrnhepudfftddvveekfffgteffff
+ euveegjeelgefhffejtdehtdfhlefgkeefhfefkeeinecuffhomhgrihhnpehkvghrnhgv
+ lhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+ hmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:lEteYNVLdIPBQJXUF7PalXqAUPxEgH_bC-JxPImjm2Dk3NWYhvLT8A>
+ <xmx:lEteYNgT5Veo2FwJ66qA8soHs7-NLPO-I1eitBSRsGIK8vhsmfkn5A>
+ <xmx:lEteYFBHwRNjZyBMtjRxAYDIhSpHn2fRmJMVZEMRfslg_cfxyzMWbQ>
+ <xmx:lUteYIOcUJzmmMd_2ojs5QXoSnvs46n02HXI7mVAJS-zJCHGV79R9Q>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 90E65A00079; Fri, 26 Mar 2021 17:01:08 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-273-g8500d2492d-fm-20210323.002-g8500d249
+Mime-Version: 1.0
+Message-Id: <7cce5f73-e7f5-4d3a-8b79-c8dc65059813@beta.fastmail.com>
+In-Reply-To: <36bafa0b-5dd3-6da5-b18d-847ee4a46459@linux.intel.com>
+References: <gmu36wVnmbV9lyt9EpYcnZmnPwjF9wtDS0N8K0jOk9UR2uUO0QwQaackzJRPLjil_ZqLxTzX3qEMGl3IE6baoIpS-xh9aMnQL3VkAyXK6KU=@protonmail.com>
+ <0a6dd101-fbea-7fdf-b9a6-3895b48a7f47@linux.ibm.com>
+ <5197cbe7-1a8b-80ab-2712-9a8f07457432@linux.vnet.ibm.com>
+ <nGEUmLQrNSqmytvShVUeFvOUKjW1cOTYv9Hrcmj7LyP1rfIdLOt8f7IkqzPKaXHZXHRGYtHBcjnt6Qo5c1fIw4doEmVwMmGI2e2rNhNXWZw=@protonmail.com>
+ <5bcbc6b0-b9d3-a002-0f24-97bd91ba5bf8@linux.vnet.ibm.com>
+ <36bafa0b-5dd3-6da5-b18d-847ee4a46459@linux.intel.com>
+Date: Sat, 27 Mar 2021 07:30:47 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: openbmc@lists.ozlabs.org
+Subject: Re: IPMI SEL Parsing
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,506 +100,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, klaus@linux.vnet.ibm.com, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Derived from the similar kernel fitImage sign testcase, the U-Boot
-fitImage testcases exercises the following fitimage.FitImageTest
-scenarios:
 
- * test_uboot_fit_image - create unsigned U-Boot fitImage
- * test_uboot_sign_fit_image - create unsigned U-Boot fitImage in
-   addition to signed Kernel fitImage
- * test_sign_standalone_uboot_fit_image - Create signed U-Boot fitImage
-   without a Kernel fitImage
- * test_sign_cascaded_uboot_fit_image - Create and sign U-Boot and
-   Kernel fitImages
 
-Signed-off-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
----
- meta/lib/oeqa/selftest/cases/fitimage.py | 468 +++++++++++++++++++++++
- 1 file changed, 468 insertions(+)
+On Sat, 27 Mar 2021, at 02:38, Bills, Jason M wrote:
+> 
+> 
+> On 3/26/2021 6:47 AM, Bruce Mitchell wrote:
+> > On 3/26/2021 01:04, rgrs wrote:
+> >> Hi Matt, Bruce,
+> >>
+> >> Yes, SELs for sensor events, threshold alarms.
+> >> When a sensor value is beyond the range of thresholds, we need to log 
+> >> the SEL.
+> >>
+> >> My understanding of OpenBMC implementation:
+> >> dbus-sensors/phosphor-hwmon logs d-bus errors (logging/entry).
+> >> Each entry object has a "callout", that is used by phosphor-ipmi-host 
+> >> to convert dbus-error logs to IPMI SEL (16 bytes).
+> Please note that there are two locations that SEL entries can be logged:
+> 1. D-Bus
+> 2. Journal/syslog
+> 
+> It looks like you are using D-Bus which I'm not familiar with.
+> 
+> >>
+> >>
+> >> The issue I am facing:
+> >> 1. SEL creation: when I change sensor thresholds, I don't see a log 
+> >> generated for that sensor.
+> >> (phosphor-sel-logger has the capability to monitor threshold events 
+> >> and log SEL. But phosphor-hwmon doesn't generate the signal that 
+> >> phosphor-sel-logger is looking for.)
+> There is another thread on the mailing list that is discussing this 
+> issue: Question of phosphor-sel-logger. 
 
-diff --git a/meta/lib/oeqa/selftest/cases/fitimage.py b/meta/lib/oeqa/selftest/cases/fitimage.py
-index 02692de822..b911fded74 100644
---- a/meta/lib/oeqa/selftest/cases/fitimage.py
-+++ b/meta/lib/oeqa/selftest/cases/fitimage.py
-@@ -231,6 +231,474 @@ UBOOT_MKIMAGE_SIGN_ARGS = "-c 'a smart comment'"
-         result = runCmd('grep "### uboot-mkimage signing wrapper message" %s/log.do_assemble_fitimage' % tempdir, ignore_status=True)
-         self.assertEqual(result.status, 0, 'UBOOT_MKIMAGE_SIGN did not work')
- 
-+    def test_uboot_fit_image(self):
-+        """
-+        Summary:     Check if Uboot FIT image and Image Tree Source
-+                     (its) are built and the Image Tree Source has the
-+                     correct fields.
-+        Expected:    1. u-boot-fitImage and u-boot-its can be built
-+                     2. The type, load address, entrypoint address and
-+                     default values of U-boot image are correct in the
-+                     Image Tree Source. Not all the fields are tested,
-+                     only the key fields that wont vary between
-+                     different architectures.
-+        Product:     oe-core
-+        Author:      Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-+                     based on work by Usama Arif <usama.arif@arm.com>
-+        """
-+        config = """
-+# We need at least CONFIG_SPL_LOAD_FIT and CONFIG_SPL_OF_CONTROL set
-+MACHINE = "qemuarm"
-+UBOOT_MACHINE = "am57xx_evm_defconfig"
-+SPL_BINARY = "MLO"
-+
-+# Enable creation of the U-Boot fitImage
-+UBOOT_FITIMAGE_ENABLE = "1"
-+
-+# (U-boot) fitImage properties
-+UBOOT_LOADADDRESS = "0x80080000"
-+UBOOT_ENTRYPOINT = "0x80080000"
-+UBOOT_FIT_DESC = "A model description"
-+
-+# Enable creation of Kernel fitImage
-+KERNEL_IMAGETYPES += " fitImage "
-+KERNEL_CLASSES = " kernel-fitimage"
-+UBOOT_SIGN_ENABLE = "1"
-+FIT_GENERATE_KEYS = "1"
-+UBOOT_SIGN_KEYDIR = "${TOPDIR}/signing-keys"
-+UBOOT_SIGN_KEYNAME = "oe-selftest"
-+FIT_SIGN_INDIVIDUAL = "1"
-+"""
-+        self.write_config(config)
-+
-+        # The U-Boot fitImage is created as part of linux recipe
-+        bitbake("virtual/kernel")
-+
-+        deploy_dir_image = get_bb_var('DEPLOY_DIR_IMAGE')
-+        machine = get_bb_var('MACHINE')
-+        fitimage_its_path = os.path.join(deploy_dir_image,
-+            "u-boot-its-%s" % (machine,))
-+        fitimage_path = os.path.join(deploy_dir_image,
-+            "u-boot-fitImage-%s" % (machine,))
-+
-+        self.assertTrue(os.path.exists(fitimage_its_path),
-+            "%s image tree source doesn't exist" % (fitimage_its_path))
-+        self.assertTrue(os.path.exists(fitimage_path),
-+            "%s FIT image doesn't exist" % (fitimage_path))
-+
-+        # Check that the type, load address, entrypoint address and default
-+        # values for kernel and ramdisk in Image Tree Source are as expected.
-+        # The order of fields in the below array is important. Not all the
-+        # fields are tested, only the key fields that wont vary between
-+        # different architectures.
-+        its_field_check = [
-+            'description = "A model description";',
-+            'type = "uboot";',
-+            'load = <0x80080000>;',
-+            'entry = <0x80080000>;',
-+            'default = "conf";',
-+            'loadables = "uboot";',
-+            'fdt = "fdt";'
-+            ]
-+
-+        with open(fitimage_its_path) as its_file:
-+            field_index = 0
-+            for line in its_file:
-+                if field_index == len(its_field_check):
-+                    break
-+                if its_field_check[field_index] in line:
-+                    field_index +=1
-+
-+        if field_index != len(its_field_check): # if its equal, the test passed
-+            self.assertTrue(field_index == len(its_field_check),
-+                "Fields in Image Tree Source File %s did not match, error in finding %s"
-+                % (fitimage_its_path, its_field_check[field_index]))
-+
-+    def test_uboot_sign_fit_image(self):
-+        """
-+        Summary:     Check if Uboot FIT image and Image Tree Source
-+                     (its) are built and the Image Tree Source has the
-+                     correct fields, in the scenario where the Kernel
-+                     is also creating/signing it's fitImage.
-+        Expected:    1. u-boot-fitImage and u-boot-its can be built
-+                     2. The type, load address, entrypoint address and
-+                     default values of U-boot image are correct in the
-+                     Image Tree Source. Not all the fields are tested,
-+                     only the key fields that wont vary between
-+                     different architectures.
-+        Product:     oe-core
-+        Author:      Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-+                     based on work by Usama Arif <usama.arif@arm.com>
-+        """
-+        config = """
-+# We need at least CONFIG_SPL_LOAD_FIT and CONFIG_SPL_OF_CONTROL set
-+MACHINE = "qemuarm"
-+UBOOT_MACHINE = "am57xx_evm_defconfig"
-+SPL_BINARY = "MLO"
-+
-+# Enable creation of the U-Boot fitImage
-+UBOOT_FITIMAGE_ENABLE = "1"
-+
-+# (U-boot) fitImage properties
-+UBOOT_LOADADDRESS = "0x80080000"
-+UBOOT_ENTRYPOINT = "0x80080000"
-+UBOOT_FIT_DESC = "A model description"
-+KERNEL_IMAGETYPES += " fitImage "
-+KERNEL_CLASSES = " kernel-fitimage test-mkimage-wrapper "
-+UBOOT_SIGN_ENABLE = "1"
-+FIT_GENERATE_KEYS = "1"
-+UBOOT_SIGN_KEYDIR = "${TOPDIR}/signing-keys"
-+UBOOT_SIGN_KEYNAME = "oe-selftest"
-+FIT_SIGN_INDIVIDUAL = "1"
-+UBOOT_MKIMAGE_SIGN_ARGS = "-c 'a smart U-Boot comment'"
-+"""
-+        self.write_config(config)
-+
-+        # The U-Boot fitImage is created as part of linux recipe
-+        bitbake("virtual/kernel")
-+
-+        deploy_dir_image = get_bb_var('DEPLOY_DIR_IMAGE')
-+        machine = get_bb_var('MACHINE')
-+        fitimage_its_path = os.path.join(deploy_dir_image,
-+            "u-boot-its-%s" % (machine,))
-+        fitimage_path = os.path.join(deploy_dir_image,
-+            "u-boot-fitImage-%s" % (machine,))
-+
-+        self.assertTrue(os.path.exists(fitimage_its_path),
-+            "%s image tree source doesn't exist" % (fitimage_its_path))
-+        self.assertTrue(os.path.exists(fitimage_path),
-+            "%s FIT image doesn't exist" % (fitimage_path))
-+
-+        # Check that the type, load address, entrypoint address and default
-+        # values for kernel and ramdisk in Image Tree Source are as expected.
-+        # The order of fields in the below array is important. Not all the
-+        # fields are tested, only the key fields that wont vary between
-+        # different architectures.
-+        its_field_check = [
-+            'description = "A model description";',
-+            'type = "uboot";',
-+            'load = <0x80080000>;',
-+            'entry = <0x80080000>;',
-+            'default = "conf";',
-+            'loadables = "uboot";',
-+            'fdt = "fdt";'
-+            ]
-+
-+        with open(fitimage_its_path) as its_file:
-+            field_index = 0
-+            for line in its_file:
-+                if field_index == len(its_field_check):
-+                    break
-+                if its_field_check[field_index] in line:
-+                    field_index +=1
-+
-+        if field_index != len(its_field_check): # if its equal, the test passed
-+            self.assertTrue(field_index == len(its_field_check),
-+                "Fields in Image Tree Source File %s did not match, error in finding %s"
-+                % (fitimage_its_path, its_field_check[field_index]))
-+
-+
-+    def test_sign_standalone_uboot_fit_image(self):
-+        """
-+        Summary:     Check if U-Boot FIT image and Image Tree Source (its) are
-+                     created and signed correctly for the scenario where only
-+                     the U-Boot proper fitImage is being created and signed.
-+        Expected:    1) U-Boot its and FIT image are built successfully
-+                     2) Scanning the its file indicates signing is enabled
-+                        as requested by SPL_SIGN_ENABLE (using keys generated
-+                        via UBOOT_FIT_GENERATE_KEYS)
-+                     3) Dumping the FIT image indicates signature values
-+                        are present
-+                     4) Examination of the do_uboot_assemble_fitimage
-+                     runfile/logfile indicate that UBOOT_MKIMAGE, UBOOT_MKIMAGE_SIGN
-+                     and SPL_MKIMAGE_SIGN_ARGS are working as expected.
-+        Product:     oe-core
-+        Author:      Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com> based upon
-+                     work by Paul Eggleton <paul.eggleton@microsoft.com> and
-+                     Usama Arif <usama.arif@arm.com>
-+        """
-+        config = """
-+# There's no U-boot deconfig with CONFIG_FIT_SIGNATURE yet, so we need at
-+# least CONFIG_SPL_LOAD_FIT and CONFIG_SPL_OF_CONTROL set
-+MACHINE = "qemuarm"
-+UBOOT_MACHINE = "am57xx_evm_defconfig"
-+SPL_BINARY = "MLO"
-+# The kernel-fitimage class is a dependency even if we're only
-+# creating/signing the U-Boot fitImage
-+KERNEL_CLASSES = " kernel-fitimage test-mkimage-wrapper "
-+# Enable creation and signing of the U-Boot fitImage
-+UBOOT_FITIMAGE_ENABLE = "1"
-+SPL_SIGN_ENABLE = "1"
-+SPL_SIGN_KEYNAME = "spl-oe-selftest"
-+SPL_SIGN_KEYDIR = "${TOPDIR}/signing-keys"
-+UBOOT_DTB_BINARY = "u-boot.dtb"
-+UBOOT_ENTRYPOINT  = "0x80000000"
-+UBOOT_LOADADDRESS = "0x80000000"
-+UBOOT_DTB_LOADADDRESS = "0x82000000"
-+UBOOT_ARCH = "arm"
-+SPL_MKIMAGE_DTCOPTS = "-I dts -O dtb -p 2000"
-+SPL_MKIMAGE_SIGN_ARGS = "-c 'a smart U-Boot comment'"
-+UBOOT_EXTLINUX = "0"
-+UBOOT_FIT_GENERATE_KEYS = "1"
-+UBOOT_FIT_HASH_ALG = "sha256"
-+"""
-+        self.write_config(config)
-+
-+        # The U-Boot fitImage is created as part of linux recipe
-+        bitbake("virtual/kernel")
-+
-+        image_type = "core-image-minimal"
-+        deploy_dir_image = get_bb_var('DEPLOY_DIR_IMAGE')
-+        machine = get_bb_var('MACHINE')
-+        fitimage_its_path = os.path.join(deploy_dir_image,
-+            "u-boot-its-%s" % (machine,))
-+        fitimage_path = os.path.join(deploy_dir_image,
-+            "u-boot-fitImage-%s" % (machine,))
-+
-+        self.assertTrue(os.path.exists(fitimage_its_path),
-+            "%s image tree source doesn't exist" % (fitimage_its_path))
-+        self.assertTrue(os.path.exists(fitimage_path),
-+            "%s FIT image doesn't exist" % (fitimage_path))
-+
-+        req_itspaths = [
-+            ['/', 'images', 'uboot'],
-+            ['/', 'images', 'uboot', 'signature'],
-+            ['/', 'images', 'fdt'],
-+            ['/', 'images', 'fdt', 'signature'],
-+        ]
-+
-+        itspath = []
-+        itspaths = []
-+        linect = 0
-+        sigs = {}
-+        with open(fitimage_its_path) as its_file:
-+            linect += 1
-+            for line in its_file:
-+                line = line.strip()
-+                if line.endswith('};'):
-+                    itspath.pop()
-+                elif line.endswith('{'):
-+                    itspath.append(line[:-1].strip())
-+                    itspaths.append(itspath[:])
-+                elif itspath and itspath[-1] == 'signature':
-+                    itsdotpath = '.'.join(itspath)
-+                    if not itsdotpath in sigs:
-+                        sigs[itsdotpath] = {}
-+                    if not '=' in line or not line.endswith(';'):
-+                        self.fail('Unexpected formatting in %s sigs section line %d:%s' % (fitimage_its_path, linect, line))
-+                    key, value = line.split('=', 1)
-+                    sigs[itsdotpath][key.rstrip()] = value.lstrip().rstrip(';')
-+
-+        for reqpath in req_itspaths:
-+            if not reqpath in itspaths:
-+                self.fail('Missing section in its file: %s' % reqpath)
-+
-+        reqsigvalues_image = {
-+            'algo': '"sha256,rsa2048"',
-+            'key-name-hint': '"spl-oe-selftest"',
-+        }
-+
-+        for itspath, values in sigs.items():
-+            reqsigvalues = reqsigvalues_image
-+            for reqkey, reqvalue in reqsigvalues.items():
-+                value = values.get(reqkey, None)
-+                if value is None:
-+                    self.fail('Missing key "%s" in its file signature section %s' % (reqkey, itspath))
-+                self.assertEqual(value, reqvalue)
-+
-+        # Dump the image to see if it really got signed
-+        bitbake("u-boot-tools-native -c addto_recipe_sysroot")
-+        result = runCmd('bitbake -e u-boot-tools-native | grep ^RECIPE_SYSROOT_NATIVE=')
-+        recipe_sysroot_native = result.output.split('=')[1].strip('"')
-+        dumpimage_path = os.path.join(recipe_sysroot_native, 'usr', 'bin', 'dumpimage')
-+        result = runCmd('%s -l %s' % (dumpimage_path, fitimage_path))
-+        in_signed = None
-+        signed_sections = {}
-+        for line in result.output.splitlines():
-+            if line.startswith((' Image')):
-+                in_signed = re.search('\((.*)\)', line).groups()[0]
-+            elif re.match(' \w', line):
-+                in_signed = None
-+            elif in_signed:
-+                if not in_signed in signed_sections:
-+                    signed_sections[in_signed] = {}
-+                key, value = line.split(':', 1)
-+                signed_sections[in_signed][key.strip()] = value.strip()
-+        self.assertIn('uboot', signed_sections)
-+        self.assertIn('fdt', signed_sections)
-+        for signed_section, values in signed_sections.items():
-+            value = values.get('Sign algo', None)
-+            self.assertEqual(value, 'sha256,rsa2048:spl-oe-selftest', 'Signature algorithm for %s not expected value' % signed_section)
-+            value = values.get('Sign value', None)
-+            self.assertEqual(len(value), 512, 'Signature value for section %s not expected length' % signed_section)
-+
-+        # Check for SPL_MKIMAGE_SIGN_ARGS
-+        result = runCmd('bitbake -e virtual/kernel | grep ^T=')
-+        tempdir = result.output.split('=', 1)[1].strip().strip('')
-+        result = runCmd('grep "a smart U-Boot comment" %s/run.do_uboot_assemble_fitimage' % tempdir, ignore_status=True)
-+        self.assertEqual(result.status, 0, 'SPL_MKIMAGE_SIGN_ARGS value did not get used')
-+
-+        # Check for evidence of test-mkimage-wrapper class
-+        result = runCmd('grep "### uboot-mkimage wrapper message" %s/log.do_uboot_assemble_fitimage' % tempdir, ignore_status=True)
-+        self.assertEqual(result.status, 0, 'UBOOT_MKIMAGE did not work')
-+        result = runCmd('grep "### uboot-mkimage signing wrapper message" %s/log.do_uboot_assemble_fitimage' % tempdir, ignore_status=True)
-+        self.assertEqual(result.status, 0, 'UBOOT_MKIMAGE_SIGN did not work')
-+
-+    def test_sign_cascaded_uboot_fit_image(self):
-+        """
-+        Summary:     Check if U-Boot FIT image and Image Tree Source (its) are
-+                     created and signed correctly for the scenario where both
-+                     U-Boot proper and Kernel fitImages are being created and
-+                     signed.
-+        Expected:    1) U-Boot its and FIT image are built successfully
-+                     2) Scanning the its file indicates signing is enabled
-+                        as requested by SPL_SIGN_ENABLE (using keys generated
-+                        via UBOOT_FIT_GENERATE_KEYS)
-+                     3) Dumping the FIT image indicates signature values
-+                        are present
-+                     4) Examination of the do_uboot_assemble_fitimage
-+                     runfile/logfile indicate that UBOOT_MKIMAGE, UBOOT_MKIMAGE_SIGN
-+                     and SPL_MKIMAGE_SIGN_ARGS are working as expected.
-+        Product:     oe-core
-+        Author:      Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com> based upon
-+                     work by Paul Eggleton <paul.eggleton@microsoft.com> and
-+                     Usama Arif <usama.arif@arm.com>
-+        """
-+        config = """
-+# There's no U-boot deconfig with CONFIG_FIT_SIGNATURE yet, so we need at
-+# least CONFIG_SPL_LOAD_FIT and CONFIG_SPL_OF_CONTROL set
-+MACHINE = "qemuarm"
-+UBOOT_MACHINE = "am57xx_evm_defconfig"
-+SPL_BINARY = "MLO"
-+# Enable creation and signing of the U-Boot fitImage
-+UBOOT_FITIMAGE_ENABLE = "1"
-+SPL_SIGN_ENABLE = "1"
-+SPL_SIGN_KEYNAME = "spl-cascaded-oe-selftest"
-+SPL_SIGN_KEYDIR = "${TOPDIR}/signing-keys"
-+UBOOT_DTB_BINARY = "u-boot.dtb"
-+UBOOT_ENTRYPOINT  = "0x80000000"
-+UBOOT_LOADADDRESS = "0x80000000"
-+UBOOT_MKIMAGE_DTCOPTS = "-I dts -O dtb -p 2000"
-+UBOOT_MKIMAGE_SIGN_ARGS = "-c 'a smart cascaded Kernel comment'"
-+UBOOT_DTB_LOADADDRESS = "0x82000000"
-+UBOOT_ARCH = "arm"
-+SPL_MKIMAGE_DTCOPTS = "-I dts -O dtb -p 2000"
-+SPL_MKIMAGE_SIGN_ARGS = "-c 'a smart cascaded U-Boot comment'"
-+UBOOT_EXTLINUX = "0"
-+UBOOT_FIT_GENERATE_KEYS = "1"
-+UBOOT_FIT_HASH_ALG = "sha256"
-+KERNEL_IMAGETYPES += " fitImage "
-+KERNEL_CLASSES = " kernel-fitimage test-mkimage-wrapper "
-+UBOOT_SIGN_ENABLE = "1"
-+FIT_GENERATE_KEYS = "1"
-+UBOOT_SIGN_KEYDIR = "${TOPDIR}/signing-keys"
-+UBOOT_SIGN_KEYNAME = "kernel-oe-selftest"
-+FIT_SIGN_INDIVIDUAL = "1"
-+"""
-+        self.write_config(config)
-+
-+        # The U-Boot fitImage is created as part of linux recipe
-+        bitbake("virtual/kernel")
-+
-+        image_type = "core-image-minimal"
-+        deploy_dir_image = get_bb_var('DEPLOY_DIR_IMAGE')
-+        machine = get_bb_var('MACHINE')
-+        fitimage_its_path = os.path.join(deploy_dir_image,
-+            "u-boot-its-%s" % (machine,))
-+        fitimage_path = os.path.join(deploy_dir_image,
-+            "u-boot-fitImage-%s" % (machine,))
-+
-+        self.assertTrue(os.path.exists(fitimage_its_path),
-+            "%s image tree source doesn't exist" % (fitimage_its_path))
-+        self.assertTrue(os.path.exists(fitimage_path),
-+            "%s FIT image doesn't exist" % (fitimage_path))
-+
-+        req_itspaths = [
-+            ['/', 'images', 'uboot'],
-+            ['/', 'images', 'uboot', 'signature'],
-+            ['/', 'images', 'fdt'],
-+            ['/', 'images', 'fdt', 'signature'],
-+        ]
-+
-+        itspath = []
-+        itspaths = []
-+        linect = 0
-+        sigs = {}
-+        with open(fitimage_its_path) as its_file:
-+            linect += 1
-+            for line in its_file:
-+                line = line.strip()
-+                if line.endswith('};'):
-+                    itspath.pop()
-+                elif line.endswith('{'):
-+                    itspath.append(line[:-1].strip())
-+                    itspaths.append(itspath[:])
-+                elif itspath and itspath[-1] == 'signature':
-+                    itsdotpath = '.'.join(itspath)
-+                    if not itsdotpath in sigs:
-+                        sigs[itsdotpath] = {}
-+                    if not '=' in line or not line.endswith(';'):
-+                        self.fail('Unexpected formatting in %s sigs section line %d:%s' % (fitimage_its_path, linect, line))
-+                    key, value = line.split('=', 1)
-+                    sigs[itsdotpath][key.rstrip()] = value.lstrip().rstrip(';')
-+
-+        for reqpath in req_itspaths:
-+            if not reqpath in itspaths:
-+                self.fail('Missing section in its file: %s' % reqpath)
-+
-+        reqsigvalues_image = {
-+            'algo': '"sha256,rsa2048"',
-+            'key-name-hint': '"spl-cascaded-oe-selftest"',
-+        }
-+
-+        for itspath, values in sigs.items():
-+            reqsigvalues = reqsigvalues_image
-+            for reqkey, reqvalue in reqsigvalues.items():
-+                value = values.get(reqkey, None)
-+                if value is None:
-+                    self.fail('Missing key "%s" in its file signature section %s' % (reqkey, itspath))
-+                self.assertEqual(value, reqvalue)
-+
-+        # Dump the image to see if it really got signed
-+        bitbake("u-boot-tools-native -c addto_recipe_sysroot")
-+        result = runCmd('bitbake -e u-boot-tools-native | grep ^RECIPE_SYSROOT_NATIVE=')
-+        recipe_sysroot_native = result.output.split('=')[1].strip('"')
-+        dumpimage_path = os.path.join(recipe_sysroot_native, 'usr', 'bin', 'dumpimage')
-+        result = runCmd('%s -l %s' % (dumpimage_path, fitimage_path))
-+        in_signed = None
-+        signed_sections = {}
-+        for line in result.output.splitlines():
-+            if line.startswith((' Image')):
-+                in_signed = re.search('\((.*)\)', line).groups()[0]
-+            elif re.match(' \w', line):
-+                in_signed = None
-+            elif in_signed:
-+                if not in_signed in signed_sections:
-+                    signed_sections[in_signed] = {}
-+                key, value = line.split(':', 1)
-+                signed_sections[in_signed][key.strip()] = value.strip()
-+        self.assertIn('uboot', signed_sections)
-+        self.assertIn('fdt', signed_sections)
-+        for signed_section, values in signed_sections.items():
-+            value = values.get('Sign algo', None)
-+            self.assertEqual(value, 'sha256,rsa2048:spl-cascaded-oe-selftest', 'Signature algorithm for %s not expected value' % signed_section)
-+            value = values.get('Sign value', None)
-+            self.assertEqual(len(value), 512, 'Signature value for section %s not expected length' % signed_section)
-+
-+        # Check for SPL_MKIMAGE_SIGN_ARGS
-+        result = runCmd('bitbake -e virtual/kernel | grep ^T=')
-+        tempdir = result.output.split('=', 1)[1].strip().strip('')
-+        result = runCmd('grep "a smart cascaded U-Boot comment" %s/run.do_uboot_assemble_fitimage' % tempdir, ignore_status=True)
-+        self.assertEqual(result.status, 0, 'SPL_MKIMAGE_SIGN_ARGS value did not get used')
-+
-+        # Check for evidence of test-mkimage-wrapper class
-+        result = runCmd('grep "### uboot-mkimage wrapper message" %s/log.do_uboot_assemble_fitimage' % tempdir, ignore_status=True)
-+        self.assertEqual(result.status, 0, 'UBOOT_MKIMAGE did not work')
-+        result = runCmd('grep "### uboot-mkimage signing wrapper message" %s/log.do_uboot_assemble_fitimage' % tempdir, ignore_status=True)
-+        self.assertEqual(result.status, 0, 'UBOOT_MKIMAGE_SIGN did not work')
-+
-+
-+
-     def test_initramfs_bundle(self):
-         """
-         Summary:     Verifies the content of the initramfs bundle node in the FIT Image Tree Source (its)
--- 
-2.25.1
+Note that we have the list archived on https://lore.kernel.org/ at https://lore.kernel.org/openbmc and this is a great way to identify other posts :)
 
+> We can use that thread to 
+> resolve this signaling issue.
+
+Looks like it's
+
+https://lore.kernel.org/openbmc/TY2PR04MB3712DCE11C578706F5F6401F88639@TY2PR04MB3712.apcprd04.prod.outlook.com/
+
+Andrew
