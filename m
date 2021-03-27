@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E7B634B76E
-	for <lists+openbmc@lfdr.de>; Sat, 27 Mar 2021 14:44:58 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19FB334B776
+	for <lists+openbmc@lfdr.de>; Sat, 27 Mar 2021 15:04:15 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F70T42HLLz3bpY
-	for <lists+openbmc@lfdr.de>; Sun, 28 Mar 2021 00:44:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F70vK12TFz30Cd
+	for <lists+openbmc@lfdr.de>; Sun, 28 Mar 2021 01:04:13 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=nm4UTlAp;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bF33XQOR;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=bvd/bNgu;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=KunnCbIg;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,75 +19,75 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=nm4UTlAp; 
+ header.s=fm1 header.b=bvd/bNgu; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=bF33XQOR; 
+ header.a=rsa-sha256 header.s=fm2 header.b=KunnCbIg; 
  dkim-atps=neutral
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
  [66.111.4.28])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F70Sp25ytz2xy9
- for <openbmc@lists.ozlabs.org>; Sun, 28 Mar 2021 00:44:41 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F70v44TwYz2xYm
+ for <openbmc@lists.ozlabs.org>; Sun, 28 Mar 2021 01:04:00 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 51B935C00CA;
- Sat, 27 Mar 2021 09:44:37 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Sat, 27 Mar 2021 09:44:37 -0400
+ by mailout.nyi.internal (Postfix) with ESMTP id 48DA05C00A2;
+ Sat, 27 Mar 2021 10:03:58 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Sat, 27 Mar 2021 10:03:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=EZcd8L3/AWQsGI1dd+CUP8BPIjL
- qyyqbyQyYYyfE4zE=; b=nm4UTlApMVM0padbmUcHZSWhk8zRlRNliX0aRtiaISB
- D/aWyWTdRW5IzuIhBkwrWWyjGQ7lCk0qVS4htRQvfAWZbFE9XNqBE/hX9iJf5uhR
- 3M/lKC2Ld0ivk41VyEA3hyGRSr64bWMyGdj6Q9qo5ZcDU2JabMBcFz2pp3rAMNSW
- 5oUrvqh3NCjhQMpqHhnAoZ1eXXS5dVxEQmdTtJxYbzHpvrw/n6KjzuICE81OGVKT
- 4I0vM2e8q3GubJaGuPyfoT9yCIduEtJ52OOGik/S21kWt84hKRNoCPunffrxQSCW
- xVatCDUOXnq6WZLd3qSGzR1KCYskreRrAkYHp4YHVYA==
+ :content-type:in-reply-to; s=fm1; bh=p+FeFfbO8N1sPyKoiaKfZp0UpbM
+ hRcmRrBMSLk8/HO4=; b=bvd/bNguc6FbmTumgw5LsppUgqzaRNWSbqgDGDHtfBM
+ dN0uedJFAEfDoF1HilLPn+5fm92kkxB+XgdDJn6O3KcuWD6eNB8DKjcVjtgodTrb
+ bnJCZk/aZMVFIIbfqokqWSrIglvGHTe0NAc6H8dZUeB5EwbODIvs/tuCgmwbqauX
+ sWKeF8ZeVOLPaNLVfcYvfr6mVh/h72eTGIoovp194uUau3OzibEO2IovF/C4g1VE
+ JpZW9sWtXDPxLlhQSN/CKb+uBaAMurSg9B3KTH7kKsJ61DNL+JhQAHikT6DAPhIe
+ fJj6vtpuAqSMBiL+A1sP35DPnfPha2v52zRxT+AH9uA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=EZcd8L
- 3/AWQsGI1dd+CUP8BPIjLqyyqbyQyYYyfE4zE=; b=bF33XQOR5xn5FqKBw5uh/I
- c6le0XA8fAIxe0acSbJUCnBa64bsHbpvoml1KY0TkLf4U5xKwDGx5e65wK9X/Co6
- nk8bBzYwm+4BJeYn2ATfJfEGg1dlguQGyGCHPWRjJVFwS1k+3sgnjPR/L19k2/nm
- LfuoowgAKTBQcgBOMpeW1UH5A6Gg5Y2MgCoiybXSIlQmdm72aVs01FLzP440srVD
- fuWH7NFIoz+WIzfXfmOp881KO1J/UzojqQ1BhIuuJma4ZyGtwW7faiy9RzwtCCdR
- 9dNUEaSEhI++9T8myTIpA3LbHVVo/nAva1UvWOwejJB1PiRk5F/LudEFc1KICMsg
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=p+FeFf
+ bO8N1sPyKoiaKfZp0UpbMhRcmRrBMSLk8/HO4=; b=KunnCbIgBwZfodx+CqDMyd
+ Do8Hpy+03z+wLJ+yFrnRJTxMom7UeouAupV1jH28r29wUyLFJKhJzDOD8cj1mkaZ
+ +1jmg+tQgY+6T+h6NYXJ4RImKiFk3wX6FnJGJLcjpD0osBO+jXWfLnDpbv52Iv+4
+ O4KlC5xS3c7Cjr4DkURZ2H3EOlkUk8Jwy0A2Rhe4SCCuyL7ZLdXlyhAcGCgtdnL6
+ 1FVoeVBg3HW7/aWrqEC89YbZPZMpsq+Sfz1ZLwo1zytiqbbRt0mA2k/DqdGTdyH4
+ MdzNOFV7Pn2ljYBiisImk04frqW5sfkZSQT9uDzhqkFrtIMwSeXfnsnG3fjOidDg
  ==
-X-ME-Sender: <xms:xDZfYFTDRtAFLJReuB9NiaE3v8AmEWHETy0Sp7sKP_eeBYF7rtRVLQ>
- <xme:xDZfYOy-BHOeCXiw7JHczS4ql3ISqwWOd6RIHEbo51L83gEnO2Spe_52NzHLWxc2K
- 3NaIXthlRPXRj9lu0k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudehgedgheehucetufdoteggodetrfdotf
+X-ME-Sender: <xms:TDtfYHigCO6Cp30Sa-81SgWlrwXbh6tvILQr1XzrG70tCV9rz1n5sw>
+ <xme:TDtfYEA_bmAqqnk82-HlikWR72wtPZ_JlSDF5nW-3_QGBfGUrd6iepLiPtNje3zCG
+ CJNbLZLo9FOkwKjUJQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudehgedgiedtucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepvdfgtdehvedvieduvdegteeffeet
- veeihffhjeduiefgtefgfeekteelgefgtdfgnecuffhomhgrihhnpehsphgugidrohhrgh
- dpghhithhhuhgsrdgtohhmnecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhs
- thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhessh
- htfigtgidrgiihii
-X-ME-Proxy: <xmx:xDZfYK2qfd2cKEpJEsLCl1PmIQpM2YmW64b1r8RBtxODCzyJYGl4Nw>
- <xmx:xDZfYNCFONggQlGocrWHFzHkOuJ8Yf_JfABnS5KyHDVmd4cxtVOEdQ>
- <xmx:xDZfYOidTdC9HvlTw-ufT3Nplv0FNuh8kmslS5vLz2NC_CQHFxVENg>
- <xmx:xTZfYEdjEWJBuaF3KRqT7i3yzWPvc2oHly3qNg7-E9Bd7mSPm8ohFA>
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ udenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepvdettddvkeetiefgleegheelkeef
+ hfefjeekheetgfdujefggfehtdffteffudeunecuffhomhgrihhnpehophgvnhgsmhgtqd
+ hprhhojhgvtghtrdighiiipdhgihhthhhusgdrtghomhenucfkphepjeeirddvhedtrdek
+ gedrvdefieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+ hmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:TDtfYHHGJOIl6CE-7mzXP7_7Fpp9C1VqyGG_XeCChWhd9mG9t2C_SA>
+ <xmx:TDtfYERwAYeKMPKLOnR_20o_CvV5wP9qzNc--T26oCr3J_O2yafCRg>
+ <xmx:TDtfYEypbXlnm3hFJWZQHkGx6V9vrjQe1EBfW_leK87TjO_zdmHWIg>
+ <xmx:TjtfYDou9WoH8XnKM0A5oDCiS2R1bxIAIQFHwZ8AFGNu05_TISTsyA>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 6FDBF1080054;
- Sat, 27 Mar 2021 09:44:36 -0400 (EDT)
-Date: Sat, 27 Mar 2021 08:44:34 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id 9905124005D;
+ Sat, 27 Mar 2021 10:03:56 -0400 (EDT)
+Date: Sat, 27 Mar 2021 09:03:55 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: "Giri, Prashanth" <Prashanth.Giri@dell.com>
-Subject: Re: License of generated code by sdbus++
-Message-ID: <YF82wrt7FUCr59/U@heinlein>
-References: <DM6PR19MB34172FAC6C40C87026A7C68495639@DM6PR19MB3417.namprd19.prod.outlook.com>
+To: Sunitha Harish <sunithaharish04@gmail.com>
+Subject: Re: UnitTest using the /tmp file system
+Message-ID: <YF87S2Y9texS/ac0@heinlein>
+References: <158971a4-119a-eeb4-bf83-72ed17e29d9f@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="0qfyevJKz+piWmaV"
+ protocol="application/pgp-signature"; boundary="MJhcfh/UCEPtbk1k"
 Content-Disposition: inline
-In-Reply-To: <DM6PR19MB34172FAC6C40C87026A7C68495639@DM6PR19MB3417.namprd19.prod.outlook.com>
+In-Reply-To: <158971a4-119a-eeb4-bf83-72ed17e29d9f@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,80 +99,95 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, deepak.kodihalli.83@gmail.com,
+ edtanous@google.com, bradleyb@fuzziesquirrel.com, gmills@us.ibm.com,
+ geissonator@yahoo.com, ratagupt@linux.vnet.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---0qfyevJKz+piWmaV
-Content-Type: text/plain; charset=us-ascii
+--MJhcfh/UCEPtbk1k
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 24, 2021 at 08:58:26PM +0000, Giri, Prashanth wrote:
+On Sun, Mar 21, 2021 at 09:30:30AM +0530, Sunitha Harish wrote:
 
-I am not a lawyer and I would suggest discussing with your legal team.
-
-I am the original author of the majority of the sdbusplus code and
-especially the auto-generated templates.
-
-> I see the sdbusplus library repo itself is Apache Licensed. Am wondering =
-if the auto generated code from sdbus++ is also Apache ?  Did not find any =
-special wording on the generated code in the license file in the repository.
-
-You are correct that we do NOT have any special exemption in the
-repository like many compiler-compiler or binding-generation libraries
-might have[1,2].  My opinion is that if you consider the output of the
-sdbus++ program, which combines your provided YAML with our templates,
-the bulk of the IP value is contained in the template.  The output of
-the program should be considered a derivative work of the templates
-themselves[3] and you should follow any requirements imposed by the
-Apache license on Derivative Works.
-
-> Is it safe to mix the generated code with closed (proprietary) sources ?
-
-I'm going to assume you agree that the output of the code generator is
-Apache licensed.  Generally, Apache is considered one of the "safest"
-licenses for commercial (including closed source) and that is a
-significant reason why it was chosen as the default license for OpenBMC
-code repositories.  The generated code links against the
-libsdbusplus.so, so in all cases you would be including into your binary
-image some amount of Apache-licensed code for which you must follow the
-requirements set out under Redistribution[4].  Using the code generator
-should not impose additional requirements on you.
-
-> Thanks in advance,
+> This is regarding the unit tests in various repos under openbmc like:=20
+> phosphor-bmc-code-management, phosphor-logging, phosphor-networkd, pldm=
+=20
+> etc . I have seen the testcases using the /tmp filesystem to create the=
+=20
+> directories/files when the UT is run.
 >=20
-> --Prashanth
+> I followed the similar way of writing the UT in one of my commits=20
+> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/37352 .=A0 As per=
+=20
+> the review comments in this commit, using the /tmp file system for UT is=
+=20
+> anti-pattern, and this needs to be changed by mocking the same. I agree=
+=20
+> that this is a valid thing to do.
 
-I hope this helps you.
+With respect to this being an "anti-pattern", I'm not sure where this
+statement is coming from.  Generally we have very few statements on how
+unit-testing should be done across the project and this is certainly not
+an "anti-pattern" documented in our usual place[1].
 
-1. https://spdx.org/licenses/GPL-2.0-with-bison-exception.html
-2. https://github.com/protocolbuffers/protobuf/blob/master/LICENSE#L29
-3. https://github.com/openbmc/sdbusplus/blob/master/LICENSE#L40
-4. https://github.com/openbmc/sdbusplus/blob/master/LICENSE#L89
+In terms of "what is appropriate to do in a unit test", I see two
+possible perspectives:
+    1. Anything is permissible and appropriate to do in a unit test (and
+       thus nothing is *required* to be mocked).
+    2. No system calls may be called from the unit test (and thus all
+       system calls are required to be mocked).
+
+Anything other than these two possibilities seems, to me, relatively
+arbitrary without specific evidence that the un-mocked code is
+problematic.  Nobody actually follows #2 because if you did you'd need
+to mock even the 'sbrk' call which is used to create your heap.  So, the
+question is why is one set of system calls reasonable to use in a
+unit-test and another not?
+
+We have many unit tests across the project that interact with either
+the file system or dbus.  Whoever wrote them probably decided that was
+the most pragmatic way to test their code and gain the coverage they
+were looking for and whoever maintained the repository accepted that as
+a solution.  In this case, I would encourage you to dig deeper into the
+maintainer's opinion as to why this is an inappropriate approach for
+this particular repository or unit-test.
+
+There is one specific problem area we have encountered with fs-using UTs
+and it is aggravated by the fact that we run tests in parallel and
+sometimes Jenkins jobs land on the same machine: any files you create in
+the file system, or dbus services you create, should use some sort of
+randomness to avoid collisions between separate UTs.  I see in your
+original commit, before the UTs were removed, that you used 'mkdtemp'
+with an XXXXXX pattern which should resolve this potential issue.
+
+1. https://github.com/openbmc/docs/blob/0f6c884822ca2d101e2a0bf3256ecf4f6f2=
+431a3/anti-patterns.md
 
 --=20
 Patrick Williams
 
---0qfyevJKz+piWmaV
+--MJhcfh/UCEPtbk1k
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmBfNsEACgkQqwNHzC0A
-wRn90BAAkqWBRbJUP0eAR0MgRVVIaakmxt3e3FE9Y0BJpaqvc+KDYIZUamkQu0Ss
-/KFGArYJPNJQr4NqyMjuHP1JZ97XfQi/gMBqbKFr/U66soe2hzzRzDMsxhj9y4IX
-+xr+HHV1tOZBuvvWbGCh+tsTa2HSHN7gioguJYoTAwe5b48iiPVV5Xfzh2mTAXAa
-Cm0eRwzyL19mO64IeExmIeXz/N2jCUMBSFfzhBJTfDVpd8189Bjmk2kEwM4glXZB
-d1R9kTA4/eDEQR0cNv7zSkDRwrhUhZPR+3KnqSCCMkWCASw3+BPGlmDMkTCIxEEf
-smbGQlGG5luwacYqCreawxpaSVgmkac4ubNb4iexYxg2555eazGb31agI/NKubQg
-5m3xK0fYVcOxyR/W/N3nPmXK9fWcfl6ajXgCAHpcf15GGqBYrrvooSQ42RSN1Mlq
-tBMgIhOEFybaRVgSfYCerr/x0mDwvP4vF87i4YOv0088YbhN5N4V6rElToeJsaYb
-QsU5chQOMqsgzD4tccP0X78J09joXYYriQss1X8I6KB8Z0pBIicb5dJgOpIG05LR
-vQJvsbn42SzWFbBZmHJe7OOh5jzi6kLJObPSravcS4f/edjv1t4/j5TYy5T7muo7
-THkrcvPqC2EBF0i9S8mA3n1/HW6OLK+snJ0vY8vQzf/nNhGev6w=
-=RHWv
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmBfO0kACgkQqwNHzC0A
+wRmD/w/+MYTuwiktQwGPg/3NSX7NOlmeYqVLPSI1f1fS96OgMYYDvrRNNdNOKYHP
+zDfgsNm2AnuaKzOrg1DHI/IMIm5daR7l/mVnVKQ0T5wl3P7O7jbSwxwdnr+yeYsM
+G+JJ2R5sXNopBeQ0ghcHdSzYRJTyAgX15NpMEpCFtFR2brBCZbdLMTl23A5aqGMh
+KaRTavBYUSLzKfN35y8NVHnoWFc9xJSa3KBUsbK8j9Bkw2qzwV0dgJkrx6E50Kak
+5yIarHVtEI39bXce4sqzUnb+kgR9VmAdrjD+KIGZvluUrDCHgHUQCHfKtRlTDsj2
+W72q4lvsNKHLg7QJp6ns0UlJjZx9WUkfXh8ku5IsCeAdlw3+iMfexGzTX5OgvtBW
+lwLJrjMaBW//sAM6ar7jg9DxaaK60GWPkM+RTU5NdImuWGltOvsdk+uJchvYc2Wj
+JYVb0/loxCcxNNxIKrtUNZr4XKrwT9aocU46G+Xeq/2mMnWDcSBvDrfPoPfYovGI
+DK7d4PqsTDNP6DRbssSAsR+a3D70dXgvuqaQACF6gunyAGcMvQ9MaRtSRYoS2e1G
+Ia51ax8rhHnS2g9RouLQkzWhDIERK1qofx0S2UzAfbFuEhBskMIternrNmFnI02j
+BGteq/9cHTkqK46gkxHhy0PtwdtDlBVIVBr5uspV9t22EyxH3A4=
+=wsjC
 -----END PGP SIGNATURE-----
 
---0qfyevJKz+piWmaV--
+--MJhcfh/UCEPtbk1k--
