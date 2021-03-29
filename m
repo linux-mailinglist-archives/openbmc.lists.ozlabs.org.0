@@ -1,98 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21A9334D79B
-	for <lists+openbmc@lfdr.de>; Mon, 29 Mar 2021 20:53:46 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1A8634DBF4
+	for <lists+openbmc@lfdr.de>; Tue, 30 Mar 2021 00:37:26 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F8MDS0hDhz30DW
-	for <lists+openbmc@lfdr.de>; Tue, 30 Mar 2021 05:53:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F8SBX66bWz303F
+	for <lists+openbmc@lfdr.de>; Tue, 30 Mar 2021 09:37:24 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=KFagsfSU;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=e1yUwA7x;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::732;
+ helo=mail-qk1-x732.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=KFagsfSU; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=e1yUwA7x; dkim-atps=neutral
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com
+ [IPv6:2607:f8b0:4864:20::732])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F8MDC73j0z302J
- for <openbmc@lists.ozlabs.org>; Tue, 30 Mar 2021 05:53:30 +1100 (AEDT)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12TIWkiN153555; Mon, 29 Mar 2021 14:53:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=piSc+6fVOdb41m9EQxRGIh6spRbSPyyncpj1ybeuCK4=;
- b=KFagsfSUohY/74sahmP5ST+UJ+VLHaT5l9ppTFAuMwy9NoIpaOBMlx6HAIRlcHN7M35v
- XUbPOYTr0JtWtlVAZHCN6JcClbeWaOEZsmRFU7jKcuVuzHSi96kxnfMkg1Nl4teeFKXe
- Wjae1IQVSN8JHBoHQzSjrKr+ztEeVGjTo8wuR5nrhVVlGBj8dYkYNwsxJ2kaPXQxsbxf
- iDJGTbiDr2q5kwpoaa3qiZBVJ+r12A4wcq6ewzdnJkURCoSMwrJ/POEAL1Z+u2UoR8JX
- 1jjGVkYJ2cMJoTNJkCu16bN1T5JM+ThgpaRtliexULCcYa44FNUhkSMLeYZTH5NdGLL8 Rg== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 37jhrugptq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Mar 2021 14:53:27 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12TIq4Nd027816;
- Mon, 29 Mar 2021 18:53:26 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma05wdc.us.ibm.com with ESMTP id 37hvb90cfq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Mar 2021 18:53:26 +0000
-Received: from b03ledav001.gho.boulder.ibm.com
- (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 12TIrPu531719784
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Mar 2021 18:53:25 GMT
-Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7AF346E056;
- Mon, 29 Mar 2021 18:53:25 +0000 (GMT)
-Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A25BD6E053;
- Mon, 29 Mar 2021 18:53:24 +0000 (GMT)
-Received: from [9.160.118.64] (unknown [9.160.118.64])
- by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTP;
- Mon, 29 Mar 2021 18:53:24 +0000 (GMT)
-Subject: Re: [phosphor-virtual-sensor] get sensor service fail
-To: =?UTF-8?B?SGFydmV5IFd1ICjlkLPltIfntq0p?= <Harvey.Wu@quantatw.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <TY2PR04MB39339884DCB08EC59BC95894957E9@TY2PR04MB3933.apcprd04.prod.outlook.com>
-From: Matt Spinler <mspinler@linux.ibm.com>
-Message-ID: <81b62058-1b6e-b2d2-d5c6-743fc48b77be@linux.ibm.com>
-Date: Mon, 29 Mar 2021 13:53:24 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
-In-Reply-To: <TY2PR04MB39339884DCB08EC59BC95894957E9@TY2PR04MB3933.apcprd04.prod.outlook.com>
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: olrQaHxJbxP6nQEB1A4bmLhVm8wOJUnf
-X-Proofpoint-ORIG-GUID: olrQaHxJbxP6nQEB1A4bmLhVm8wOJUnf
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F8SBJ6KlHz2yRK
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Mar 2021 09:37:10 +1100 (AEDT)
+Received: by mail-qk1-x732.google.com with SMTP id g20so14119579qkk.1
+ for <openbmc@lists.ozlabs.org>; Mon, 29 Mar 2021 15:37:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=J3LZFdF5YvJWwAl17IRXjpmJ8TzQHtGRs0aUTrBvQ6Y=;
+ b=e1yUwA7xcXtPaI+E+8kZ3r9vug2W0bkWsuPB8S49KYp/b87gSuClUOBizW6egNoMlp
+ ELzRQriOHnjRYYm/z1+RUSRvm+U/IzyvrH4IrJgyfXMLLk1X6b39tl/Jt9kDGXc8rIBb
+ gs9qBRI8oniiq5lgYIS/VSX7HrnJgrLYN92oc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=J3LZFdF5YvJWwAl17IRXjpmJ8TzQHtGRs0aUTrBvQ6Y=;
+ b=WU9JFUkK7zoC0g8Ld9CW2nC2zHrqfu5CVnXpJ5Y1uvZL8TqL1lAfnlsx7poWLWwQnN
+ vcqPI2rwoY0N9btyxXT4CU8vzQv0fkNT5vxnvyFmPkKJdeD/Pb/94AQeVU7GTn0DP8zj
+ HwhkVfoHm/64sggfCkoG4G2uv7pr4KWprSP3oPmhB0wq+u9Q87x8n8FkqLH973sSu7zP
+ 2QqJcpJZ+hCWLzyG5i9tssp6kfR0r+9Qz001wqPNkaevfQ0n2csFV/eplwGXkvEUXt76
+ fDsq9WkhPGuyUnR9TtFhSg7ufzMDU5Yflk3E2YuJ0eQA9KLt5dummWL4Q2CmpCRo1dnX
+ TA1A==
+X-Gm-Message-State: AOAM533izfTpEDoqnCaDuZVgAVBWAcJ+ANNIQiXV/eokIapnVnHeo5FE
+ DMDv8mXl9TYN0mtDGaBPhvuLwCey4lLbI3e5xm8=
+X-Google-Smtp-Source: ABdhPJw6J6aZXXwXYa6t/ytEVSYlmzuH8GF3tMk3L1J6Kt8ijjsJy1N5D0bJixd+ZCa45k9w7SRzC5Q+8jH96ylVnOk=
+X-Received: by 2002:a05:620a:1410:: with SMTP id
+ d16mr27513436qkj.465.1617057428127; 
+ Mon, 29 Mar 2021 15:37:08 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-03-29_11:2021-03-26,
- 2021-03-29 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=934 mlxscore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 spamscore=0
- suspectscore=0 malwarescore=0 clxscore=1011 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2103250000 definitions=main-2103290136
+References: <20210327004920.388957-1-wak@google.com>
+In-Reply-To: <20210327004920.388957-1-wak@google.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 29 Mar 2021 22:36:55 +0000
+Message-ID: <CACPK8XeLbxOX1-FGDqqepY4vuP=QR8tRAVvR0AoX=V-eVWWwiQ@mail.gmail.com>
+Subject: Re: [[PATCH linux dev-5.10] net: npcm: Support for fixed PHYs
+To: "William A. Kennington III" <wak@google.com>,
+ Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,50 +72,112 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?B?RHVrZSBEdSAo5p2c56Wl5ZiJKQ==?= <Duke.Du@quantatw.com>,
- =?UTF-8?B?RnJhbiBIc3UgKOW+kOiqjOismSk=?= <Fran.Hsu@quantatw.com>,
- =?UTF-8?B?R2VvcmdlIEh1bmcgKOa0quW/oOaVrCk=?= <George.Hung@quantatw.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Sat, 27 Mar 2021 at 00:49, William A. Kennington III <wak@google.com> wrote:
+>
+> Most of our machines don't have PHYs between the NIC and the BMC over
+> their NC-SI port. We don't want to use the kernel NC-SI machinery, but
+> we do want phyless support.
+>
+> Signed-off-by: William A. Kennington III <wak@google.com>
 
+This looks fine to me. Tomer, Avi, can I please get a review from
+someone at Nuvoton?
 
-On 3/29/2021 4:13 AM, Harvey Wu (吳崇維) wrote:
-> Hi All, In current phosphor-virtual-sensor, the function getService 
-> will return empty string only when catch error name = 
-> “xyz.openbmc_project.Common.Error.ResourceNotFound” 
-> (https://github.com/openbmc/phosphor-virtual-sensor/blob/master/dbusUtils.hpp#L37 
-> ZjQcmQRYFpfptBannerStart
-> This Message Is From an External Sender
-> This message came from outside your organization.
-> ZjQcmQRYFpfptBannerEnd
->
-> Hi All,
->
->         In current phosphor-virtual-sensor, the function getService 
-> will return empty string only when catch error name = 
-> “xyz.openbmc_project.Common.Error.ResourceNotFound” 
-> (https://github.com/openbmc/phosphor-virtual-sensor/blob/master/dbusUtils.hpp#L37 
-> <https://github.com/openbmc/phosphor-virtual-sensor/blob/master/dbusUtils.hpp#L37>).
->
->         But in my system, when bus call didn’t get sensor service, the 
-> exception name will be “org.freedesktop.DBus.Error.FileNotFound”, and 
-> then service will be get failed.
->
->         It seems need to modified the origin condition or add another 
-> elseif condition. Do I misunderstand something?
->
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-You seem to just be missing the mapper commit 
-https://github.com/openbmc/phosphor-objmgr/commit/3735ea2ee546b2436895cf956daf0090a6d2d406 
-which will return ResourceNotFound.
+It would be great to see this driver submitted upstream too!
 
-> Thanks.
+> ---
+>  drivers/net/ethernet/nuvoton/npcm7xx_emc.c | 31 +++++++++++++++++++++-
+>  1 file changed, 30 insertions(+), 1 deletion(-)
 >
-> Harvey Wu
+> diff --git a/drivers/net/ethernet/nuvoton/npcm7xx_emc.c b/drivers/net/ethernet/nuvoton/npcm7xx_emc.c
+> index f07449e2f68d..1dc871a72180 100644
+> --- a/drivers/net/ethernet/nuvoton/npcm7xx_emc.c
+> +++ b/drivers/net/ethernet/nuvoton/npcm7xx_emc.c
+> @@ -26,6 +26,7 @@
+>  #include <linux/of.h>
+>  #include <linux/of_net.h>
+>  #include <linux/of_device.h>
+> +#include <linux/of_mdio.h>
+>  #include <linux/dma-mapping.h>
 >
-> Email: Harvey.Wu@quantatw.com <mailto:Harvey.Wu@quantatw.com>
+>  #include <linux/regmap.h>
+> @@ -242,6 +243,7 @@ struct  npcm7xx_ether {
+>         struct net_device *ndev;
+>         struct resource *res;
+>         unsigned int msg_enable;
+> +       struct device_node *phy_dn;
+>         struct mii_bus *mii_bus;
+>         struct phy_device *phy_dev;
+>         struct napi_struct napi;
+> @@ -1774,6 +1776,17 @@ static int npcm7xx_mii_setup(struct net_device *dev)
 >
-> Ext: 17408
+>         pdev = ether->pdev;
 >
-
+> +       if (ether->phy_dn) {
+> +               ether->phy_dev = of_phy_connect(dev, ether->phy_dn,
+> +                                       &adjust_link, 0, 0);
+> +               if (!ether->phy_dn) {
+> +                       dev_err(&dev->dev, "could not connect to phy %pOF\n",
+> +                               ether->phy_dn);
+> +                       return -ENODEV;
+> +               }
+> +               return 0;
+> +       }
+> +
+>         ether->mii_bus = mdiobus_alloc();
+>         if (!ether->mii_bus) {
+>                 err = -ENOMEM;
+> @@ -2011,6 +2024,15 @@ static int npcm7xx_ether_probe(struct platform_device *pdev)
+>                 }
+>         } else {
+>                 ether->use_ncsi = false;
+> +
+> +               ether->phy_dn = of_parse_phandle(np, "phy-handle", 0);
+> +               if (!ether->phy_dn && of_phy_is_fixed_link(np)) {
+> +                       error = of_phy_register_fixed_link(np);
+> +                       if (error < 0)
+> +                               goto failed_free_napi;
+> +                       ether->phy_dn = of_node_get(np);
+> +               }
+> +
+>         error = npcm7xx_mii_setup(dev);
+>         if (error < 0) {
+>                 dev_err(&pdev->dev, "npcm7xx_mii_setup err\n");
+> @@ -2032,6 +2054,9 @@ static int npcm7xx_ether_probe(struct platform_device *pdev)
+>         return 0;
+>
+>  failed_free_napi:
+> +       of_node_put(ether->phy_dn);
+> +       if (of_phy_is_fixed_link(np))
+> +               of_phy_deregister_fixed_link(np);
+>         netif_napi_del(&ether->napi);
+>         platform_set_drvdata(pdev, NULL);
+>  failed_free_io:
+> @@ -2048,13 +2073,17 @@ static int npcm7xx_ether_remove(struct platform_device *pdev)
+>  {
+>         struct net_device *dev = platform_get_drvdata(pdev);
+>         struct npcm7xx_ether *ether = netdev_priv(dev);
+> +       struct device_node *np = pdev->dev.of_node;
+>
+>  #ifdef CONFIG_DEBUG_FS
+>         debugfs_remove_recursive(ether->dbgfs_dir);
+>  #endif
+> -
+>         unregister_netdev(dev);
+>
+> +       of_node_put(ether->phy_dn);
+> +       if (of_phy_is_fixed_link(np))
+> +               of_phy_deregister_fixed_link(np);
+> +
+>         free_irq(ether->txirq, dev);
+>         free_irq(ether->rxirq, dev);
+>
+> --
+> 2.31.0.291.g576ba9dcdaf-goog
+>
