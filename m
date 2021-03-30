@@ -1,62 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BF6634F2EE
-	for <lists+openbmc@lfdr.de>; Tue, 30 Mar 2021 23:16:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F302034F3F7
+	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 00:06:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F92LB2PvWz3c1d
-	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 08:16:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F93Rp6jYfz3c1y
+	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 09:05:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.210.41; helo=mail-ot1-f41.google.com;
- envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com
- [209.85.210.41])
+ smtp.mailfrom=gmail.com (client-ip=209.85.167.181;
+ helo=mail-oi1-f181.google.com; envelope-from=robherring2@gmail.com;
+ receiver=<UNKNOWN>)
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com
+ [209.85.167.181])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F92Kz52nPz2yYn;
- Wed, 31 Mar 2021 08:15:51 +1100 (AEDT)
-Received: by mail-ot1-f41.google.com with SMTP id
- w21-20020a9d63950000b02901ce7b8c45b4so16922681otk.5; 
- Tue, 30 Mar 2021 14:15:51 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F93Rc1Bfbz3bqZ;
+ Wed, 31 Mar 2021 09:05:47 +1100 (AEDT)
+Received: by mail-oi1-f181.google.com with SMTP id m13so17975645oiw.13;
+ Tue, 30 Mar 2021 15:05:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=4vChBJJ6EYanz1jBGjgMMr+PeNDASuUg2ns+WfjA4bE=;
- b=FIl/c///aldC/runDZnPL538vHYizg02POyZhFjdPRN94ycsdV/zlfQ7vecQjTcFxJ
- 0LBXHCfY7kuacW+af7GAUte2n42BqmQSFTDqfcuFY9c1w6Vh+Fw29W9XDGTv+I99rseK
- gM1SP8a4+xhhRofidQs5hY20VP1U7xYsx/qdBCOFRS8j/qP5XOiYoPReLqZe75i2xTLt
- 42/AugW2rgRKJZqeK1/xBu7XCkEtQPcw0DgBQbdy2UVQIDpGa2mawoHS4Ez5gT6cCmo3
- YnCnMJAdBlfLjmN9+KchltI9Og+03Z9YIuNCB4yPGb+tBXhA4/qVfhwolxCRhGLHZEJ8
- BAHw==
-X-Gm-Message-State: AOAM532VFzCx3buojutdm309wYdOAAm6P7Ui8thzfyoEy5iRttKBIK1T
- 0Fb1oXczE6I3Ij+gbHQlAQ==
-X-Google-Smtp-Source: ABdhPJz0LTLMITQ7Y8/X5B6FbMkC38+yfV0Tx1qBMnvJjdAy8X4mInt+GzTPko2+l4MglZX/rGRzRA==
-X-Received: by 2002:a9d:171d:: with SMTP id i29mr28517424ota.294.1617138948168; 
- Tue, 30 Mar 2021 14:15:48 -0700 (PDT)
+ bh=K57+sZPGNUEdeNlTqUnowLYV4JcIVUw0MSAp4gezLB4=;
+ b=biLeAn+wJaudcYe+yNPh4/xPguIkhJJ8f89vL0RD1oJ9LAGlwjWzhXtrEn8izGNsKI
+ tJZThCeDZ08HUzBOvzG4IV4YvPb/Hl3RVCXJPeeTOi0njcO7xC5d0YMXz/23YOT/l9jS
+ 6YB8lvav+RIQnzVYlIgI2GIjbpHJXaZZMvuSTHdyX12U+KCk0dqqKdQ5qDdYu0HPiSZq
+ MMsb40QX7J9XAMh+u7wc/s+kdXBB3SHpQAe2cl1B6iCizE6rtnJDo+mC2lwzgIcU30dm
+ XZVC+f9CHEIExON8qDgLVqHRFHUFlfxpl4XR8VZd1rtLl5GZWAutDkLkGJO07RQwsoNh
+ vtFw==
+X-Gm-Message-State: AOAM530FND5opU7JhD6hyN87stlglNxufn1rYq35VVDDDHKktNJxtCiP
+ yRfeLT2JzUPA0eeJbMpQKQ==
+X-Google-Smtp-Source: ABdhPJyjT4fITT5nkHsfFaZVDJZo+ZYrw/hsB/2n8AZ79xoGHPmTkbIWolYQQdVP8dc22ukOImDz5w==
+X-Received: by 2002:a05:6808:13d0:: with SMTP id
+ d16mr53428oiw.169.1617141945047; 
+ Tue, 30 Mar 2021 15:05:45 -0700 (PDT)
 Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
  [24.155.109.49])
- by smtp.gmail.com with ESMTPSA id j4sm15914oom.11.2021.03.30.14.14.44
+ by smtp.gmail.com with ESMTPSA id h9sm41272ooi.22.2021.03.30.15.05.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Mar 2021 14:14:51 -0700 (PDT)
-Received: (nullmailer pid 729378 invoked by uid 1000);
- Tue, 30 Mar 2021 21:14:44 -0000
-Date: Tue, 30 Mar 2021 16:14:44 -0500
+ Tue, 30 Mar 2021 15:05:44 -0700 (PDT)
+Received: (nullmailer pid 797160 invoked by uid 1000);
+ Tue, 30 Mar 2021 22:05:43 -0000
+Date: Tue, 30 Mar 2021 17:05:43 -0500
 From: Rob Herring <robh@kernel.org>
 To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v2 1/4] dt-bindings: mfd: Add bindings for Ampere Altra
- SMPro drivers
-Message-ID: <20210330211443.GA326528@robh.at.kernel.org>
-References: <20210329015238.19474-1-quan@os.amperecomputing.com>
- <20210329015238.19474-2-quan@os.amperecomputing.com>
+Subject: Re: [PATCH v1 3/3] bindings: ipmi: Add binding for Aspeed SSIF BMC
+ driver
+Message-ID: <20210330220543.GA795792@robh.at.kernel.org>
+References: <20210329121759.5644-1-quan@os.amperecomputing.com>
+ <20210329121759.5644-4-quan@os.amperecomputing.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210329015238.19474-2-quan@os.amperecomputing.com>
+In-Reply-To: <20210329121759.5644-4-quan@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,157 +69,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, linux-aspeed@lists.ozlabs.org,
- Jonathan Corbet <corbet@lwn.net>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Phong Vo <phong@os.amperecomputing.com>,
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ Corey Minyard <minyard@acm.org>, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>,
+ Wolfram Sang <wsa@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ openipmi-developer@lists.sourceforge.net,
  Open Source Submission <patches@amperecomputing.com>,
- Lee Jones <lee.jones@linaro.org>, Guenter Roeck <linux@roeck-us.net>
+ linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Mar 29, 2021 at 08:52:35AM +0700, Quan Nguyen wrote:
-> Adds device tree bindings for SMPro drivers found on the Mt.Jade hardware
-> reference platform with Ampere's Altra Processor family.
+On Mon, Mar 29, 2021 at 07:17:59PM +0700, Quan Nguyen wrote:
+> Add device tree binding document for the Aspeed SSIF BMC driver.
 > 
 > Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
 > ---
->  .../bindings/hwmon/ampere,ac01-hwmon.yaml     | 27 ++++++
->  .../devicetree/bindings/mfd/ampere,smpro.yaml | 82 +++++++++++++++++++
->  2 files changed, 109 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
->  create mode 100644 Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
+>  .../bindings/ipmi/aspeed-ssif-bmc.txt          | 18 ++++++++++++++++++
+
+Bindings should now be in DT schema format.
+
+>  1 file changed, 18 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.txt
 > 
-> diff --git a/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml b/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
+> diff --git a/Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.txt b/Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.txt
 > new file mode 100644
-> index 000000000000..015130a281f4
+> index 000000000000..1616f0188db9
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
-> @@ -0,0 +1,27 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/hwmon/ampere,ac01-hwmon.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +++ b/Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.txt
+> @@ -0,0 +1,18 @@
+> +# Aspeed SSIF (SMBus system interface) IPMI BMC interface
 > +
-> +title: Hardware monitoring driver for the Ampere Altra SMPro
+> +The Aspeed AST2500 are commonly used as BMCs (Baseboard Management Controllers)
+> +and the SSIF slave interface can be used to perform in-band IPMI communication
+> +with their host.
 > +
-> +maintainers:
-> +  - Quan Nguyen <quan@os.amperecomputing.com>
+> +Required properties:
 > +
-> +description: |
-> +  This module is part of the Ampere Altra SMPro multi-function device. For more
-> +  details see ../mfd/ampere,smpro.yaml.
+> +- compatible : should be
+> +       "aspeed,ast2500-ssif-bmc"
+> +- reg: I2C address the registers
 > +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - ampere,ac01-hwmon
+> +Example:
 > +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +
-> +additionalProperties: false
-> diff --git a/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
-> new file mode 100644
-> index 000000000000..bf789c8a3d7d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
-> @@ -0,0 +1,82 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/mfd/ampere,smpro.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Ampere Altra SMPro firmware driver
-> +
-> +maintainers:
-> +  - Quan Nguyen <quan@os.amperecomputing.com>
-> +
-> +description: |
-> +  Ampere Altra SMPro firmware may contain different blocks like hardware
-> +  monitoring, error monitoring and other miscellaneous features.
-> +
-> +properties:
-> +  compatible:
-> +    const: ampere,smpro
-
-Only 1 version of SMPro? Needs to be more specific or provide details on 
-how the exact version of firmware/hardware is discovered.
-
-> +
-> +  reg:
-> +    description:
-> +      I2C device address.
-> +    maxItems: 1
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +patternProperties:
-> +  "^hwmon(@[0-9a-f]+)?$":
-> +    $ref: ../hwmon/ampere,ac01-hwmon.yaml
-> +
-> +  "^misc(@[0-9a-f]+)?$":
-> +    type: object
-> +    description: Ampere Altra SMPro Misc driver
-
-Bindings describe h/w, not drivers.
-
-> +    properties:
-> +      compatible:
-> +        const: "ampere,ac01-misc"
-> +
-> +  "^errmon(@[0-9a-f]+)?$":
-> +    type: object
-> +    description: Ampere Altra SMPro Error Monitor driver
-> +    properties:
-> +      compatible:
-> +        const: "ampere,ac01-errmon"
-> +
-> +required:
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    i2c {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        smpro@4f {
-> +            compatible = "ampere,smpro";
-> +            reg = <0x4f>;
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            hwmon {
-> +                compatible = "ampere,ac01-hwmon";
-> +            };
-> +
-> +            misc {
-> +                compatible = "ampere,ac01-misc";
-> +            };
-> +
-> +            errmon {
-> +                compatible = "ampere,ac01-errmon";
-> +            };
-
-None of the child nodes have any resources in DT, so you don't need 
-them in DT.
-
-Rob
+> +       ssif-bmc@10 {
+> +               compatible = "aspeed,ast2500-ssif-bmc";
+> +               reg = <0x10>;
+> +       };
+> -- 
+> 2.28.0
+> 
