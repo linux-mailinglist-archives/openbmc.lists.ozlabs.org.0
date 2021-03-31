@@ -2,65 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7079734FABC
-	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 09:51:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 11F35350110
+	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 15:19:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F9JQv375rz304Q
-	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 18:51:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F9Rjb0sGhz3bt3
+	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 00:19:15 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=PTGFvl2R;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=JHusXlpL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::733;
- helo=mail-qk1-x733.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32b;
+ helo=mail-ot1-x32b.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=PTGFvl2R; dkim-atps=neutral
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com
- [IPv6:2607:f8b0:4864:20::733])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=JHusXlpL; dkim-atps=neutral
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com
+ [IPv6:2607:f8b0:4864:20::32b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F9JQc6NbGz2yx8;
- Wed, 31 Mar 2021 18:50:47 +1100 (AEDT)
-Received: by mail-qk1-x733.google.com with SMTP id c3so18511086qkc.5;
- Wed, 31 Mar 2021 00:50:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=PvFE5J3FezlEE8pnDN5zAGS+SdlnCyime9vQnsZ9wkY=;
- b=PTGFvl2RypZxM0OoGUctoQGNsTqmeQLWPd4faKZB3LNwJY5otlqSbQokWFD+XxB4cZ
- k7JcAGMHpQ6KFSA1ShU4X+lxf2geDdc31fr0WaZmQY56ejVKYekOO2OgPZ+IUK3N0tjk
- rXeVUBoRE+TKa8974Zv0HzFjrsw95+klEl990=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F9RjN05jTz3bpJ
+ for <openbmc@lists.ozlabs.org>; Thu,  1 Apr 2021 00:19:02 +1100 (AEDT)
+Received: by mail-ot1-x32b.google.com with SMTP id
+ v24-20020a9d69d80000b02901b9aec33371so18881789oto.2
+ for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 06:19:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=RhE1Mgj/cz80RWN+jatG4U6LYbA6awm9Se2bkQEmtKE=;
+ b=JHusXlpLtx3+6a56KH8mfJaBpRlTFfnWar/dp4NWdITWpczuBB2C6DX41TNIi6KYaQ
+ QuZLB7wek7/QNsAdDIdRSbU0uohlvm7Ax/2YPDEt1cStD2ObGkZnN1r3Wg5NJOYsotoG
+ mWDYtcIBcuXyQt9Cr+I1EBxm8H3nXT4LxeTMwEqGgpDDVeTGI2JkiRRraEBhuST7GUyq
+ J+3Ztb/amR+iWi5kBiJMSK73uplYJsyyQHrDkn3xPn865FqRHnGazJbQwkgJeF71KCka
+ bxPRHZ/ShvrY5owFhriWnngVd35CbeUUKMYeenuDZRpG1qf6CQv88dByFYP5iSzury56
+ wUNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=PvFE5J3FezlEE8pnDN5zAGS+SdlnCyime9vQnsZ9wkY=;
- b=YCd/aJtireby4JX8vVrrZ9W10/4JzGrXgfPSt7Dx9MmKdC6jvWurjRgYqzrpygnuXr
- 6p2WoDh5TPoqTFHC3D2ESPW+/LfeRh/YcmzU2x13KxGg7bkH9MKV2Y3SFTkVmGpMmscI
- gdSgvQmkzbI8EB1OOpEY9k5xBGqsIIudZfpWC2YHbbGNNjLqVXJYx4+ZqmctuDOxQGm+
- 4yzEDYgh7kA8hK1K2dDTz+0USrHimY7iVLdbOY6+5KH4o7s1MPcsWC+vQYV8A0b/lubr
- rsTR8ZtgkoR7PG1xWhezZZctPuHIWpuhT+szXISgJ2fji/cQblk3ZREru2wa95aymkoV
- 9c/Q==
-X-Gm-Message-State: AOAM532mMFMZoTj+rhp2cSzU0EJyDC7R4uxmrxuLYlGz+mZEyX6EOs6O
- KyH38MpaQeewpEBQwfK3ikQ/x8UCFK5MfTqfd8g=
-X-Google-Smtp-Source: ABdhPJyMt3JEgZQNa/c4w8WpbFN1v/ZWTRBHzplPfi6vA5v5QT21JEeEclDxFGpB1WMPbDt6DMynOc5coOB4FZ/iNj0=
-X-Received: by 2002:a37:d202:: with SMTP id f2mr1940297qkj.273.1617177044244; 
- Wed, 31 Mar 2021 00:50:44 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210330002338.335-1-zev@bewilderbeest.net>
- <20210330002338.335-4-zev@bewilderbeest.net>
- <CACPK8XcwMYgc9R24KuGa0hqKQAxawDScHp1+y62aeEvcpvPiSw@mail.gmail.com>
-In-Reply-To: <CACPK8XcwMYgc9R24KuGa0hqKQAxawDScHp1+y62aeEvcpvPiSw@mail.gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 31 Mar 2021 07:50:32 +0000
-Message-ID: <CACPK8XfBsq6H5qsSNgwqdRhHXTUYnNQKekSNMnxXoVaAzMc=MQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] ARM: dts: aspeed: add ASRock E3C246D4I BMC
-To: Zev Weiss <zev@bewilderbeest.net>
-Content-Type: text/plain; charset="UTF-8"
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=RhE1Mgj/cz80RWN+jatG4U6LYbA6awm9Se2bkQEmtKE=;
+ b=UONTJwakp36VY7jtZPrq+hwW9zpbDgdqglzFFDlDF/39HZtcZrGvXEnaAzqEvz3bZM
+ +NqzxJgcToi1cbgq2LNYqU9XtBGAJ6t0agcdv8Jev/2jbIrd3/a+noBZWO41tnvJosz7
+ IQx/Gb1vydbsLnmvn2xk1tJMS9zMolHYz0spG+QC0u1yVqHwuimCdgEVBP0LCULN4yVZ
+ elTOwRIshCMD6/RS2SbVlimzU89qBNThWzMW5hFkwvprQhbac5S6CwI3iwtXUNVpBSqH
+ 2UbShUc4QdG0aoDkeIKCAA2o2P7dcmEqoW7YbFGHGSL78hXJxSjzHyOvQDTxSIv5FRdp
+ tUHQ==
+X-Gm-Message-State: AOAM5325ZQyJWHbUJfZw2XrbOpBF/Mpzhl0M/w9j6vy8ikZ6ZxHueUBy
+ bXi6H21z1ISiYOZSoYqQEuk=
+X-Google-Smtp-Source: ABdhPJwFrQujk3PmarVnxLsf3fk2TWBbQXOo82j2A4ZH6YhJkvL6EyWvIvSWsSIAhwkzjAZFYdAmNw==
+X-Received: by 2002:a9d:628d:: with SMTP id x13mr2509709otk.19.1617196737978; 
+ Wed, 31 Mar 2021 06:18:57 -0700 (PDT)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:304c:83dd:7e06:d5f0])
+ by smtp.gmail.com with ESMTPSA id n6sm413492oop.48.2021.03.31.06.18.57
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 31 Mar 2021 06:18:57 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: Add member into Lenovo designated employees list
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <SL2PR03MB41392EC887269BEBAF453E96B67C9@SL2PR03MB4139.apcprd03.prod.outlook.com>
+Date: Wed, 31 Mar 2021 08:18:56 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9D88EA1B-4409-4BD8-A341-EAAC8FF0007A@gmail.com>
+References: <SL2PR03MB41392EC887269BEBAF453E96B67C9@SL2PR03MB4139.apcprd03.prod.outlook.com>
+To: Duke KH Du <dukh@lenovo.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,41 +83,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 31 Mar 2021 at 07:41, Joel Stanley <joel@jms.id.au> wrote:
->
-> On Tue, 30 Mar 2021 at 00:25, Zev Weiss <zev@bewilderbeest.net> wrote:
-> >
-> > This is a relatively low-cost AST2500-based Xeon E-2100/E-2200 series
-> > mini-ITX board that we hope can provide a decent platform for OpenBMC
-> > development.
-> >
-> > This initial device-tree provides the necessary configuration for
-> > basic BMC functionality such as host power control, serial console and
-> > KVM support, and POST code snooping.
-> >
-> > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
->
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
->
-> > ---
-> >  .../boot/dts/aspeed-bmc-asrock-e3c246d4i.dts  | 188 ++++++++++++++++++
-> >  1 file changed, 188 insertions(+)
-> >  create mode 100644 arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts
-> >
-> > diff --git a/arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts b/arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts
-> > new file mode 100644
-> > index 000000000000..27b34c3cf67a
-> > --- /dev/null
-> > +++ b/arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts
 
-When adding the device tree please also add it to the makefile in
-arch/arm/boot/dts.
+
+> On Mar 31, 2021, at 2:14 AM, Duke KH Du <dukh@lenovo.com> wrote:
+>=20
+> Hi Master,
+> =20
+> I would like to add our new member in Lenovo designated employees list =
+as below=EF=BC=9F
+> Could you help on it?
+
+Hey Duke, I noticed Lenovo was not added to the script used by jenkins =
+to
+validate groups so I put up a commit here for that:
+=
+https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/41738=
+
+
+Currently the Lenovo gerrit group only has one person in it:
+=
+https://gerrit.openbmc-project.xyz/admin/groups/b009effba2bf2e62802e74d749=
+db360d52c2a245,members
+
+And no one is approved to add people currently:
+=
+https://gerrit.openbmc-project.xyz/admin/groups/9f33fac15a90496c21b873f5f9=
+918af1a633a47b,members=20
+
+Could you recommend someone with a gerrit account that we can add to be =
+in
+charge of adding new developers from your company to this group?
+
+It does look like ritzenyang needs to be added to the Lenovo CLA though =
+before
+he can contribute code?
+
+> Thanks.
+> =20
+> ritzenyang  ryang14@lenovo.com
+
