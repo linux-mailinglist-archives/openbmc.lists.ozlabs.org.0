@@ -2,93 +2,127 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1107A34F5A2
-	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 02:56:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E98634F681
+	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 04:14:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F97Dj0NF7z3bvk
-	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 11:56:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F98z025lwz3c11
+	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 13:14:52 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=CDHUsOqc;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=rPZssIRh;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=CDHUsOqc; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.220.105;
+ helo=nam11-co1-obe.outbound.protection.outlook.com;
+ envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=rPZssIRh; 
+ dkim-atps=neutral
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2105.outbound.protection.outlook.com [40.107.220.105])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F97DS0bdCz3bpZ
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 11:56:23 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12V0WxtJ192296
- for <openbmc@lists.ozlabs.org>; Tue, 30 Mar 2021 20:56:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=to : from : subject :
- message-id : date : content-type : content-transfer-encoding :
- mime-version; s=pp1; bh=UV1hR8SZu7iLoJqDHgBcXwnzyaBDC/LPjKlIgC2qGLE=;
- b=CDHUsOqc6/8ZOe2ge5ykHXbYeN08gBtlQEulF/JVyE33XpcMvu1EnLmGN74sCcRjsYHo
- apptBIw2FDcDWFiUdhhMITWsUvcQRjqAVZ8ljeOE0A10Ipt0m/RpNKU4xXy6ldFxod0D
- NWIcGEmRoDV8+wGRkmcz5TqQBhnXGf18C/UrnLnNz399FRK8unzX67BBHzWG91Bp6bsb
- fL3ysfyzwGQcVux1lQhWYe6Sp992y6GX+iQtKHSC/FtyXODSmr60mbiz6FUj3wS+ZgII
- sLmCYr96nunzHZNLCFFoFWzA8lN8AAp3iAZUWmoj/yU94xIxBSijC1WWUV5ka6V6fgQc Vw== 
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 37mb4qvyh8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 30 Mar 2021 20:56:21 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12V0q8Ti028007
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 00:56:20 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma01dal.us.ibm.com with ESMTP id 37maaw9xt8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 00:56:20 +0000
-Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
- [9.57.199.106])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 12V0uJcT26476850
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 00:56:19 GMT
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2BAC72805E
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 00:56:19 +0000 (GMT)
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ED69D2805A
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 00:56:18 +0000 (GMT)
-Received: from demeter.local (unknown [9.160.39.65])
- by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 00:56:18 +0000 (GMT)
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group - Wednesday March 31
-Message-ID: <a8366b66-4a8a-2492-7034-a35b06421961@linux.ibm.com>
-Date: Tue, 30 Mar 2021 19:56:18 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F98yk21J6z3bvd
+ for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 13:14:36 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GcyU8uonUucZIWglLe8XuuvGIN8MYs+fNiEvrUgmnb1zhNlRy8atlm9D2Ysa3Xd1Ggr6Gps1U8iLP4vKTLGkWSS53/jmiKaiJBUGQW1jcEGcgeH/w6wjy+GjDrs/A9PGFw+BO5SSKD1Zalfxt1B9rkwchTk/o4m92cKXxM4e5HBR7nPGsyzdvOzJvdW2dBoQi/lY1EEjn7Obo+ROcvYILOC2h2PxJ6sT9R+lscCjbuZARJmCln9pvi7eXO5X1wAcoqh6Qhk7AmhPiT8ioU+4AW9EhIIvGeYFxaNpIFl1zj4fFRpK8faWTBc6bVP0VwmxUvnqzY7Odifs0X9PnERBZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QLavYJZcVG77BHk9tP8BOzjP42OaQ4CWc45vqtHRPiE=;
+ b=FVjZidKWNTd+WmJjZhiRp5PXXgANGQJJLvuLvsNJEThOXnvMOuLfbD/DMRhSywPPQzLFeSWCCeIVG7i6hVNyek5qS1d7sfRNbABoBjoNLomjt3w/5M6Ny/iBKbdSYTL8BFACvJXOqtMrkjt6fZynN+2SW4mcwW3/ge+AvlW9CYYV87P9Ui9oGKBnsuH8Kc/h2/QELkX3RjVTtaAEqdGFONf+UAVTUQ4FIiGcKx8zG2V4koBXPsxBhi8PU0pueA/T8FJ9G8R8jLj3CX7P8knaXcl6FlIH+MUMk7RTy53aqHbC5trtXkU9MrK0kkBvb10nYqlcgz7g0+s7FLtnYEXKdg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QLavYJZcVG77BHk9tP8BOzjP42OaQ4CWc45vqtHRPiE=;
+ b=rPZssIRhrF54JaQ9MpbyOjxF4kLLTYdWswNYktrJX0Z8c/SbU/cqUxoNjsHzKs/wJ6ZGoJTiFGYmtfAROce+eZO3X4YEeWhVEQ+qDIu/svyBo0EZ+hlpEAVrJa572rJ+Ti6PYPb43hZfLcnKb4nOBx/WfDH3Z8mTWQ+JtoUPOSQ=
+Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
+ DM6PR01MB5482.prod.exchangelabs.com (2603:10b6:5:150::33) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3977.31; Wed, 31 Mar 2021 02:14:30 +0000
+Received: from DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::fd97:f560:f2cf:d58d]) by DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::fd97:f560:f2cf:d58d%5]) with mapi id 15.20.3977.033; Wed, 31 Mar 2021
+ 02:14:29 +0000
+From: Thu Nguyen OS <thu@os.amperecomputing.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: The common solution to support bind/unbind the hwmon driver base on
+ the host state.
+Thread-Topic: The common solution to support bind/unbind the hwmon driver base
+ on the host state.
+Thread-Index: AQHXJdOU6ZunssCJTkiHUAYwame9Rw==
+Date: Wed, 31 Mar 2021 02:14:29 +0000
+Message-ID: <7252DA19-35E9-4A14-A7DF-7BBC54A312C2@amperemail.onmicrosoft.com>
+Accept-Language: en-US
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 0h47eblepyIl2mPcmMHA8X4Dj2MHqZra
-X-Proofpoint-ORIG-GUID: 0h47eblepyIl2mPcmMHA8X4Dj2MHqZra
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=os.amperecomputing.com;
+x-originating-ip: [118.69.219.201]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: cfee347a-9b6a-4b91-f52e-08d8f3eab78a
+x-ms-traffictypediagnostic: DM6PR01MB5482:
+x-microsoft-antispam-prvs: <DM6PR01MB5482DB2603DD3EDF01209C3F907C9@DM6PR01MB5482.prod.exchangelabs.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: c+YaQobYbjkGTtCZqSOO5IA3MMfN4DBhW0QjR9T49ZOwYrMqWRReT6F9hZccy3WEg3Qee9DNyViHNXxxpwGtFw6QVliZY4WE4p/CrwgDf2n3Pzmz9sIX1Ojt39IgToF/tAuX2pqzJmKxHHKge6jQQk0WzA06QrMCIW4CJN+xXGIrJ7iUzEa1M9NMy/8ry9Vky/JbZBHvgK35rrxiWY8HFeDnPJGB+kQ3bDj+uAZp3NCjcu+XKWJcEwVjyPzEGDrU3ncNKOmmZzMKXZJKZy1yUHVzcIrL/KNrDCfhiASjXTQrZk7+3OM887jpUcNB60AximGD+GRJlQr/d5Xz8tisSygD+2Tqfaej0z1s+VTPD5Tw8lh3HrVkiGcYmEr0H8dkOU3ehPg6WHqL6elcRvQpPGjuzfc2VHla9H+c9RTEvja+yUvF3nBaZd4GMdsUaIepbeBkZND9J3hX0OzjpW+sqLHs2Yx7pRmlVCzuFm4ppuDzNer2n6c1edgnEPRAZFPDwaIG16nbVuyymAjG9s+/mesrlvseAa6pAOJz/t9ZpQNtbEl5hD4haDkEcSPygLm4zh7HWMLmibgDTrt5HCRy8sJUpVIUw8WMdA+agozoPrjTiwJkg51CkLc6f5rQ1JUZyQ9thFS1Vsw2BTYScC7GrQ==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(376002)(366004)(396003)(39830400003)(136003)(346002)(4744005)(9686003)(71200400001)(66556008)(66946007)(6486002)(64756008)(26005)(38100700001)(6506007)(8936002)(86362001)(66476007)(186003)(91956017)(2906002)(478600001)(76116006)(6916009)(5660300002)(316002)(33656002)(8676002)(66446008)(6512007)(83380400001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?utf-8?B?ZTZacS9mT1NDQTJDOFV3YS8ydGk5VXhmbnpEL2x5K2VhdkZwMzFIajRJSEJp?=
+ =?utf-8?B?TVVEZ2RWY3FGOEFJUkdCeDR4eG5ta3JXMFJpSnJQM3pmTzNRVnp0c29MVXho?=
+ =?utf-8?B?dFVDN0tSd1d6MHJ2TzdFdHZEUHloSU42NTdoNk94bUVYak13MlZ2dkhqNExu?=
+ =?utf-8?B?THZvQ3BEZHlZdVVTaURpZUNnR1JYZ1dIN1dobVNxMEhGN3MySlV0QzRpa2Za?=
+ =?utf-8?B?SVJ4aXo5YURkRWhvMFUrenJRT3JTVy9lWG5PVUI1RGZlUDhaSGUwL2xudGZ6?=
+ =?utf-8?B?QmNQNUhzYTA0N1llaVhJM0xGU1QxVjdoS21vOURFdlBVeENObVdIcEMwUVJu?=
+ =?utf-8?B?VnR5VTFZTktVcEdTZE9kOU5FamY3T2pPSFNvcWRudlkwb08yRVRTYU54dnM5?=
+ =?utf-8?B?dUZMa0dPc20xR044bkdVNnFlUjFISlQyeTlGeXZMUHIrVHRkS1B6MWltejBL?=
+ =?utf-8?B?c1gyTlBlSDFXYzZ5QjBhM3JGVHFGYnVhS25hSlhqRnU4eWlEQ2NDaFhVR1p4?=
+ =?utf-8?B?U3pzenFnSFVyRytPMGJ2Wk1KRVljQ3hhRXZUK3BLREFaVzRHRVJGSXhueXQ2?=
+ =?utf-8?B?STBLaFFRV2p2UCtYYXBsUXdFSkxGNTlsdzgwK3JEbDRpcXZVOFJKNGtCd0xU?=
+ =?utf-8?B?SllyQTdxUWpMV20xQlMzaTB0T0dMajU5bVhFaUxHTEVmMEZuMmI1Nlpjd2RY?=
+ =?utf-8?B?UFk5UE9Qanhob2VDODRzMUxvK21sZThvdFRkdDRrS1ovSG13S2hYREVYUE1k?=
+ =?utf-8?B?YnREaGxLRFJwQzVuZEZqOFN2L3JWVStPVnVPRk9rV0hCa3NjckJYa0dYRTBs?=
+ =?utf-8?B?UDY0K3hNOUxmS0RSVXBKVDRXNWd1QVBuT1NuT0M5V1NLRVBUQnpZM243eEVI?=
+ =?utf-8?B?aXFkRXpLb1puNFdXbWkrTUwvTWVPYUxNcTV3YW4xNFZUeXdYWjFCT1pLb3Bj?=
+ =?utf-8?B?c2lzLzB0bGhCSHBYZVFtMllmSElXdG4vbitQZW9jb0hibzFncXd6RW9RaUVx?=
+ =?utf-8?B?ZFhOM3JPRXhqcDExRUFrVlhFT3c5cWtDd0dqTkVQS2luWnVJS1ByNm9DNVJ6?=
+ =?utf-8?B?cmRpeGRJUE5qc0p0MGE5bHJWMXp5VHkwcjhxM005THJvbmhTOHdoSVVrb1JH?=
+ =?utf-8?B?TlIzT28zNGpMcGtnVmFieXYyMTRERUpQNm9UaE9OR0Nhb01nUGRFVE1MaUJV?=
+ =?utf-8?B?NjAwYWdzQnhWYmRydmNQSEdNYVNKL3VhMld0SmRvclhWNTM5cmdNUlBqTnpK?=
+ =?utf-8?B?aG9SSlNrYzlRQzJnbk1MSW83WWYyZUFsRm5DbThsRnFUOUh2a2J6cGd3NTRJ?=
+ =?utf-8?B?c2xrbEF0dThONTYxTXRqcWh1dHMyVGYzbDZLRFJtclJoZWoyNGxJSE1xanh1?=
+ =?utf-8?B?Z25rbjJaRkk3WkFUUCtZS3BER3p4UEhyRXEzcHFNSkRwb2NvOGpRZ3FvNEIv?=
+ =?utf-8?B?dWRCLzJ4N1ZEYnd6RTlzdkRZeEFoZHpad1ZKVmFrRFE4Z1BFdnFUZ3kveE9s?=
+ =?utf-8?B?cHkxdlFBMm5nNWgvRXVENC9YMi8rdHEwTkwzWXJ0MVFLUFRXQmpQUmhLMDFy?=
+ =?utf-8?B?RncrYkFsdmJnN1psZzc2S1Jna0c1NTVtWk9mNGVBSTNXd1JDTWVBZXlLdGFn?=
+ =?utf-8?B?QzFnbE03SVNlKzh0MmU2aHAwTFVXWFZ2SmtaRjRuN3hPTEZnTC83MVo1RndB?=
+ =?utf-8?B?QmNRNlcxdlkwVjNJV3JTQy9FVHRCVkM5ZUxHWWt3T3pIRDViek5rZFdKVVRa?=
+ =?utf-8?Q?pHAznE/4Ehb7h1N5lqrM/NEJ8ZMsiyeNAWrbYuL?=
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_7252DA1935E94A14A7DF7BBC54A312C2amperemailonmicrosoftco_"
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-03-30_13:2021-03-30,
- 2021-03-30 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- spamscore=0 clxscore=1015 adultscore=0 malwarescore=0 bulkscore=0
- mlxlogscore=747 mlxscore=0 impostorscore=0 suspectscore=0
- priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2103300000 definitions=main-2103310000
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cfee347a-9b6a-4b91-f52e-08d8f3eab78a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Mar 2021 02:14:29.8590 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: TOjnt4FUFfA4+316O3A818TJRPrrxcgmMAo2MZvpHP6QcmwXb++vyNQGiZLZj8PMyLvoUFqEjquEkX9lmQo5EEMaH8Fb1QzQBogvmQ0qrq4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB5482
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,41 +137,125 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday March 31 at 10:00am PDT.
+--_000_7252DA1935E94A14A7DF7BBC54A312C2amperemailonmicrosoftco_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
-and anything else that comes up:
+SGkgQWxsLA0KDQpDdXJyZW50bHksIEluIE10amFkZSBwbGF0Zm9ybSBvZiBBbXBlcmUsIHdlIGhh
+dmUgU01Qcm8gbWRmIGRyaXZlcnMgKFNNUHJvIGh3bW9uLCBTTVBybyBlcnJtb24sIFNNUHJvIG1p
+c2MgZHJpdmVyKS4NClRoZSBkcml2ZXJzIHdpbGwgYmUgbG9hZGVkIGJ5IGtlcm5lbCB3aGVuIHRo
+ZSBCTUMgYm9vdCB1cC4gQnV0IHRoZXkgYXJlIG9ubHkgYmluZGVkIHdoZW4gdGhlIGhvc3QgaXMg
+YWxyZWFkeSBPbi4NClRoZXkgYXJlIGFsc28gdW5iaW5kZWQgd2hlbiB0aGUgaG9zdCBpcyBPZmYu
+DQpUbyBzdXBwb3J0IGJpbmRpbmcvdW5iaW5kaW5nIHRoZSBTTVBybyBkcml2ZXNyLCB3ZSBoYXZl
+IG9uZSBzZXJ2aWNlIG5hbWUgZHJpdmVyLWJpbmRlci4NCg0KICAxLiAgV2hlbiB0aGUgRGJ1cyBw
+cm9wZXJ0eSBDdXJyZW50SG9zdFN0YXRlIG9mIHNlcnZpY2UgeHl6Lm9wZW5ibWNfcHJvamVjdC5T
+dGF0ZS5Ib3N0IGNoYW5nZXMgdG8g4oCcbm90IE9mZuKAnSwgd2Ugd2lsbCBiaW5kIHRoZSBkcml2
+ZXJzLg0KICAyLiAgV2hlbiB0aGUgRGJ1cyBwcm9wZXJ0eSBSZXF1ZXN0ZWRIb3N0VHJhbnNpdGlv
+biBvZiBzZXJ2aWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuSG9zdCBPUiBEYnVzIHByb3Bl
+cnR5IFJlcXVlc3RlZFBvd2VyVHJhbnNpdGlvbiBvZiB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRl
+LkNoYXNzaXMNCg0KY2hhbmdlIHRvIE9mZiwgd2Ugd2lsbCB1bmJpbmQgdGhlIGRyaXZlcnMuDQoN
+ClRoZSBkcml2ZXItYmluZGVyIGlzIHdvcmtpbmcgYXMgZXhwZWN0ZWQsIGl0IGhhdmUgdGhlIGNv
+bmZpZ3VyYXRpb24gZmlsZSB0byBjb25maWd1cmUgd2hpY2ggZHJpdmVycyB3aWxsIGJlIGJpbmRl
+ZC91bmJpbmRlZC4NCkJ1dCB0aGF0IGlzIG91ciBzb2x1dGlvbi4NCg0KRG8gd2UgaGF2ZSBhbnkg
+Y29tbW9uIHNvbHV0aW9uIHRvIGRvIHRoYXQgam9iPw0KDQpSZWdhcmRzLg0KVGh1IE5ndXllbi4N
+Cg0KDQo=
 
- 1.
+--_000_7252DA1935E94A14A7DF7BBC54A312C2amperemailonmicrosoftco_
+Content-Type: text/html; charset="utf-8"
+Content-ID: <E731CFAFFC6B634190363842E9B0AD3C@prod.exchangelabs.com>
+Content-Transfer-Encoding: base64
 
-    Joseph: https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/41560
-    <https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/41560>  Add
-    PerformService privilege.
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6eD0idXJuOnNjaGVtYXMtbWljcm9z
+b2Z0LWNvbTpvZmZpY2U6ZXhjZWwiIHhtbG5zOm09Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5j
+b20vb2ZmaWNlLzIwMDQvMTIvb21tbCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnL1RSL1JFQy1o
+dG1sNDAiPg0KPGhlYWQ+DQo8bWV0YSBodHRwLWVxdWl2PSJDb250ZW50LVR5cGUiIGNvbnRlbnQ9
+InRleHQvaHRtbDsgY2hhcnNldD11dGYtOCI+DQo8bWV0YSBuYW1lPSJHZW5lcmF0b3IiIGNvbnRl
+bnQ9Ik1pY3Jvc29mdCBXb3JkIDE1IChmaWx0ZXJlZCBtZWRpdW0pIj4NCjxzdHlsZT48IS0tDQov
+KiBGb250IERlZmluaXRpb25zICovDQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlh
+IE1hdGgiOw0KCXBhbm9zZS0xOjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtm
+b250LWZhbWlseTpDYWxpYnJpOw0KCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0O30NCi8q
+IFN0eWxlIERlZmluaXRpb25zICovDQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNv
+Tm9ybWFsDQoJe21hcmdpbjowY207DQoJZm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToi
+Q2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpwLk1zb0xpc3RQYXJhZ3JhcGgsIGxpLk1zb0xpc3RQYXJh
+Z3JhcGgsIGRpdi5Nc29MaXN0UGFyYWdyYXBoDQoJe21zby1zdHlsZS1wcmlvcml0eTozNDsNCglt
+YXJnaW4tdG9wOjBjbTsNCgltYXJnaW4tcmlnaHQ6MGNtOw0KCW1hcmdpbi1ib3R0b206MGNtOw0K
+CW1hcmdpbi1sZWZ0OjM2LjBwdDsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQtZmFtaWx5OiJD
+YWxpYnJpIixzYW5zLXNlcmlmO30NCnNwYW4uRW1haWxTdHlsZTE3DQoJe21zby1zdHlsZS10eXBl
+OnBlcnNvbmFsLWNvbXBvc2U7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7DQoJ
+Y29sb3I6d2luZG93dGV4dDt9DQouTXNvQ2hwRGVmYXVsdA0KCXttc28tc3R5bGUtdHlwZTpleHBv
+cnQtb25seTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpAcGFnZSBXb3Jk
+U2VjdGlvbjENCgl7c2l6ZTo2MTIuMHB0IDc5Mi4wcHQ7DQoJbWFyZ2luOjcyLjBwdCA3Mi4wcHQg
+NzIuMHB0IDcyLjBwdDt9DQpkaXYuV29yZFNlY3Rpb24xDQoJe3BhZ2U6V29yZFNlY3Rpb24xO30N
+Ci8qIExpc3QgRGVmaW5pdGlvbnMgKi8NCkBsaXN0IGwwDQoJe21zby1saXN0LWlkOjIxMzUyOTUy
+Mjc7DQoJbXNvLWxpc3QtdHlwZTpoeWJyaWQ7DQoJbXNvLWxpc3QtdGVtcGxhdGUtaWRzOi0yMDg3
+NDMwMDMwIDY3Njk4NzAzIDY3Njk4NzEzIDY3Njk4NzE1IDY3Njk4NzAzIDY3Njk4NzEzIDY3Njk4
+NzE1IDY3Njk4NzAzIDY3Njk4NzEzIDY3Njk4NzE1O30NCkBsaXN0IGwwOmxldmVsMQ0KCXttc28t
+bGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJ
+dGV4dC1pbmRlbnQ6LTE4LjBwdDt9DQpAbGlzdCBsMDpsZXZlbDINCgl7bXNvLWxldmVsLW51bWJl
+ci1mb3JtYXQ6YWxwaGEtbG93ZXI7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxl
+dmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0xOC4wcHQ7fQ0KQGxpc3Qg
+bDA6bGV2ZWwzDQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OnJvbWFuLWxvd2VyOw0KCW1zby1s
+ZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246cmlnaHQ7DQoJ
+dGV4dC1pbmRlbnQ6LTkuMHB0O30NCkBsaXN0IGwwOmxldmVsNA0KCXttc28tbGV2ZWwtdGFiLXN0
+b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6
+LTE4LjBwdDt9DQpAbGlzdCBsMDpsZXZlbDUNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YWxw
+aGEtbG93ZXI7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1w
+b3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0xOC4wcHQ7fQ0KQGxpc3QgbDA6bGV2ZWw2DQoJ
+e21zby1sZXZlbC1udW1iZXItZm9ybWF0OnJvbWFuLWxvd2VyOw0KCW1zby1sZXZlbC10YWItc3Rv
+cDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246cmlnaHQ7DQoJdGV4dC1pbmRlbnQ6
+LTkuMHB0O30NCkBsaXN0IGwwOmxldmVsNw0KCXttc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCglt
+c28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LTE4LjBwdDt9DQpA
+bGlzdCBsMDpsZXZlbDgNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YWxwaGEtbG93ZXI7DQoJ
+bXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0
+Ow0KCXRleHQtaW5kZW50Oi0xOC4wcHQ7fQ0KQGxpc3QgbDA6bGV2ZWw5DQoJe21zby1sZXZlbC1u
+dW1iZXItZm9ybWF0OnJvbWFuLWxvd2VyOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1z
+by1sZXZlbC1udW1iZXItcG9zaXRpb246cmlnaHQ7DQoJdGV4dC1pbmRlbnQ6LTkuMHB0O30NCm9s
+DQoJe21hcmdpbi1ib3R0b206MGNtO30NCnVsDQoJe21hcmdpbi1ib3R0b206MGNtO30NCi0tPjwv
+c3R5bGU+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJlbi1WTiIgbGluaz0iIzA1NjNDMSIgdmxpbms9
+IiM5NTRGNzIiIHN0eWxlPSJ3b3JkLXdyYXA6YnJlYWstd29yZCI+DQo8ZGl2IGNsYXNzPSJXb3Jk
+U2VjdGlvbjEiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPkhpIEFs
+bCw8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5n
+PSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1h
+bCI+PHNwYW4gbGFuZz0iRU4tVVMiPkN1cnJlbnRseSwgSW4gTXRqYWRlIHBsYXRmb3JtIG9mIEFt
+cGVyZSwgd2UgaGF2ZSBTTVBybyBtZGYgZHJpdmVycyAoU01Qcm8gaHdtb24sIFNNUHJvIGVycm1v
+biwgU01Qcm8gbWlzYyBkcml2ZXIpLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj5UaGUgZHJpdmVycyB3aWxsIGJlIGxvYWRlZCBi
+eSBrZXJuZWwgd2hlbiB0aGUgQk1DIGJvb3QgdXAuIEJ1dCB0aGV5IGFyZSBvbmx5IGJpbmRlZCB3
+aGVuIHRoZSBob3N0IGlzIGFscmVhZHkgT24uPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xh
+c3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPlRoZXkgYXJlIGFsc28gdW5iaW5kZWQg
+d2hlbiB0aGUgaG9zdCBpcyBPZmYuPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPlRvIHN1cHBvcnQgYmluZGluZy91bmJpbmRpbmcg
+dGhlIFNNUHJvIGRyaXZlc3IsIHdlIGhhdmUgb25lIHNlcnZpY2UgbmFtZSBkcml2ZXItYmluZGVy
+LjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxvbCBzdHlsZT0ibWFyZ2luLXRvcDowY20iIHN0YXJ0
+PSIxIiB0eXBlPSIxIj4NCjxsaSBjbGFzcz0iTXNvTGlzdFBhcmFncmFwaCIgc3R5bGU9Im1hcmdp
+bi1sZWZ0OjBjbTttc28tbGlzdDpsMCBsZXZlbDEgbGZvMSI+PHNwYW4gbGFuZz0iRU4tVVMiPldo
+ZW4gdGhlIERidXMgcHJvcGVydHkgQ3VycmVudEhvc3RTdGF0ZSBvZiBzZXJ2aWNlIHh5ei5vcGVu
+Ym1jX3Byb2plY3QuU3RhdGUuSG9zdCBjaGFuZ2VzIHRvIOKAnG5vdCBPZmbigJ0sIHdlIHdpbGwg
+YmluZCB0aGUgZHJpdmVycy48bzpwPjwvbzpwPjwvc3Bhbj48L2xpPjxsaSBjbGFzcz0iTXNvTGlz
+dFBhcmFncmFwaCIgc3R5bGU9Im1hcmdpbi1sZWZ0OjBjbTttc28tbGlzdDpsMCBsZXZlbDEgbGZv
+MSI+PHNwYW4gbGFuZz0iRU4tVVMiPldoZW4gdGhlIERidXMgcHJvcGVydHkgUmVxdWVzdGVkSG9z
+dFRyYW5zaXRpb24gb2Ygc2VydmljZSB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkhvc3QgT1Ig
+RGJ1cyBwcm9wZXJ0eSBSZXF1ZXN0ZWRQb3dlclRyYW5zaXRpb24gb2YgeHl6Lm9wZW5ibWNfcHJv
+amVjdC5TdGF0ZS5DaGFzc2lzPG86cD48L286cD48L3NwYW4+PC9saT48L29sPg0KPHAgY2xhc3M9
+Ik1zb0xpc3RQYXJhZ3JhcGgiPjxzcGFuIGxhbmc9IkVOLVVTIj5jaGFuZ2UgdG8gT2ZmLCB3ZSB3
+aWxsIHVuYmluZCB0aGUgZHJpdmVycy48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0i
+TXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9w
+Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPlRoZSBkcml2ZXItYmlu
+ZGVyIGlzIHdvcmtpbmcgYXMgZXhwZWN0ZWQsIGl0IGhhdmUgdGhlIGNvbmZpZ3VyYXRpb24gZmls
+ZSB0byBjb25maWd1cmUgd2hpY2ggZHJpdmVycyB3aWxsIGJlIGJpbmRlZC91bmJpbmRlZC48bzpw
+PjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1V
+UyI+QnV0IHRoYXQgaXMgb3VyIHNvbHV0aW9uLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNs
+YXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bh
+bj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+RG8gd2UgaGF2
+ZSBhbnkgY29tbW9uIHNvbHV0aW9uIHRvIGRvIHRoYXQgam9iPzxvOnA+PC9vOnA+PC9zcGFuPjwv
+cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPiZuYnNwOzwv
+bzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+
+UmVnYXJkcy48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
+biBsYW5nPSJFTi1VUyI+VGh1IE5ndXllbi48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+
+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+Jm5ic3A7
+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
 
- 2.
-
-    Joseph: Design for User role configuration
-    https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/41652
-    <https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/41652>
-
- 3.
-
-    Joseph: Interest in OpenBMC learning series talk “OpenBMC secure
-    engineering”?
-
- 4.
-
-    Anton: Privilege separation
-    <https://docs.google.com/document/d/1EI-HfPb_NMp9GD0fY6-XCpnKAX6-ZsdpDEsmiX5d6fc/edit#heading=h.b167mnkkse22>
-
-
-
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
-
-- Joseph
-
-
+--_000_7252DA1935E94A14A7DF7BBC54A312C2amperemailonmicrosoftco_--
