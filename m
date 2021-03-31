@@ -2,96 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DA7035070C
-	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 20:58:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AAFBC35082E
+	for <lists+openbmc@lfdr.de>; Wed, 31 Mar 2021 22:28:57 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F9bDc39Q4z30J0
-	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 05:58:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F9dFM5CgCz3bcW
+	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 07:28:55 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZErCe0U4;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=h1K+P6si;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::336;
+ helo=mail-ot1-x336.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=ZErCe0U4; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=h1K+P6si; dkim-atps=neutral
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com
+ [IPv6:2607:f8b0:4864:20::336])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F9bDL3tYLz303F
- for <openbmc@lists.ozlabs.org>; Thu,  1 Apr 2021 05:57:53 +1100 (AEDT)
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 12VIXN1X150821
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 14:57:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : from : to :
- references : message-id : date : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=hCptCO2lc0SNieA7Rey2ligUZkR7uUcNMGfF7XGt+8s=;
- b=ZErCe0U4+kICOqmy6++IMSWnCOzeYO7zx+xDlxgtxkaCZeEzQlew071W4CzNzmdgvr7x
- /h6ygXRyRaoUX5BkTIwhJnp7p8/Xliz6ntK6i3uXRH8vwKmpFTGyPRyZGlq2g7Cici7Z
- NYtbq69qFK8eDUqmPMcL0OqtRZqpGxaEKUnmzxm/zMDbWOyB+f5jOk1uavZS7FEK0tC2
- /MrSBS/ObSauwVTod+Q6F7Q66oAeTOGwYKVrVS/b3QQ6flOn0AD07oovMYVdSqxQssH2
- 4QZN2nkPMaxVJKAJuNapYUJQGRqBQCj0D4cleKN/+HJqo5OmnZjQNbtIgPOE534vbHil SQ== 
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
- [169.55.91.170])
- by mx0b-001b2d01.pphosted.com with ESMTP id 37mxdb930f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 14:57:51 -0400
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
- by ppma02wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 12VIvaTO024490
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 18:57:51 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma02wdc.us.ibm.com with ESMTP id 37maacyck1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 18:57:51 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 12VIvo9d30409136
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 18:57:50 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B0FED124055
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 18:57:50 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 76EB6124053
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 18:57:50 +0000 (GMT)
-Received: from demeter.local (unknown [9.160.114.226])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 18:57:50 +0000 (GMT)
-Subject: Re: Security Working Group - Wednesday March 31 - results
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-References: <a8366b66-4a8a-2492-7034-a35b06421961@linux.ibm.com>
-Message-ID: <925affec-2bf6-e3a6-7388-36d3e80ee443@linux.ibm.com>
-Date: Wed, 31 Mar 2021 13:57:48 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F9dF72s9jz2xfV
+ for <openbmc@lists.ozlabs.org>; Thu,  1 Apr 2021 07:28:42 +1100 (AEDT)
+Received: by mail-ot1-x336.google.com with SMTP id
+ k14-20020a9d7dce0000b02901b866632f29so93676otn.1
+ for <openbmc@lists.ozlabs.org>; Wed, 31 Mar 2021 13:28:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=fURVKOVi12nZMjgOMDsv31/Mxea6qscKLsSINh/1ADw=;
+ b=h1K+P6siusL8erOUNyPoDmrpKyvqDJ4LX6BQJuKKYXFk8P0Jud6EoLo++TySC75xmx
+ HfZDeFqyDBOu2I9zJY2IsdaFVbslNiHub/6ARviv8sZoEKE5y6uU+3fg2+7ipIV+nRbG
+ 8ym1Y6+BNI83PUhFZmAHZyU01GygeR5aLoJpapILfIOavejB8tDGXEWN/G7IagLmMKFs
+ PV60YJGaEVbM09Q7kp6717RCDO4FhtA5adYUAMByH6GKyK1Usy7jNrvUlmHLhRZh6HBD
+ KrX56so5F/00+4/YZAHNURwY9K6L/0FhBhzc1zhRX52wIWzh+A3nLmMcDrMWWXHugv9W
+ otIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=fURVKOVi12nZMjgOMDsv31/Mxea6qscKLsSINh/1ADw=;
+ b=p/ozf2HZVbJW5zPWy0GU0NlFL1hu+G2CtBeKBNCV2j2EhsIbFQ6CwWHAWVAdj/bcPA
+ WE0fBdrcRvPMmZn+F7H5COEFvet4OC3HlyuyiA/vYavD4NgbSu6Vx7wuSVEoufmkolH/
+ glpp0VwljVzzcL31+RLqv7weSYVSazsPdXBZe2MMPsmJfqiuaA9ZlyjfbEw2hGm+W73g
+ laQgEBAuJOCAlVZ4rY72SabUMVVoztr4/xMYf5GUsNvlur7lv7BsVPi5UhyrOqeaNN3q
+ XT3KpIXUHO7YJesII+gd8hk0p2tRZbQZEcgVQpbK4juRJn45BLn7odmoqEwe8OsIUL2h
+ 9Adw==
+X-Gm-Message-State: AOAM531PoVtHI3t/VKnFx9VBI3wJFVJpmaKWVAF43LhyY6cv/YGPNKCw
+ s2Q+v9+vGfxgBAzFLJwph9M=
+X-Google-Smtp-Source: ABdhPJwjmkRLt1Gh1o2uM+OoOgo3/6YBkLry5YFEUlzdHsGmXCdqid7iMM/MFFAcViI8r4tAKZiynA==
+X-Received: by 2002:a05:6830:4001:: with SMTP id
+ h1mr3863804ots.159.1617222517959; 
+ Wed, 31 Mar 2021 13:28:37 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-104-102.res.spectrum.com.
+ [72.182.104.102])
+ by smtp.gmail.com with ESMTPSA id y11sm740237ots.80.2021.03.31.13.28.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 31 Mar 2021 13:28:37 -0700 (PDT)
+Subject: Re: group for foxconn CI / fii oem repo
+To: Lancelot Kao <lancelot.cy.kao@fii-na.com>,
+ Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, Neil Chen <Neil.Chen@fii-usa.com>
+References: <DM6PR08MB58838020F8543D03C6235064B2929@DM6PR08MB5883.namprd08.prod.outlook.com>
+ <DM6PR08MB58834FC516032C1D11C9F9F9B26F9@DM6PR08MB5883.namprd08.prod.outlook.com>
+ <20210315205148.z6mcrx32kxr56lm2@thinkpad.fuzziesquirrel.com>
+ <DM6PR08MB5883E400A28403E42592BF07B27E9@DM6PR08MB5883.namprd08.prod.outlook.com>
+ <48C1C5DD-1D95-4001-A7AB-55F5ECD912E3@fii-na.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <39a634e5-744a-4a9c-2221-3a1d39dedec4@gmail.com>
+Date: Wed, 31 Mar 2021 15:28:36 -0500
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.0
-In-Reply-To: <a8366b66-4a8a-2492-7034-a35b06421961@linux.ibm.com>
+ Gecko/20100101 Thunderbird/78.8.0
+MIME-Version: 1.0
+In-Reply-To: <48C1C5DD-1D95-4001-A7AB-55F5ECD912E3@fii-na.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: rNm9nL7-guqsARj7QX0wRBIEmpxnfU2-
-X-Proofpoint-GUID: rNm9nL7-guqsARj7QX0wRBIEmpxnfU2-
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
-MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
- definitions=2021-03-31_10:2021-03-31,
- 2021-03-31 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0
- bulkscore=0 suspectscore=0 clxscore=1015 phishscore=0 mlxlogscore=999
- spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2103300000 definitions=main-2103310126
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,73 +92,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "vveerach@google.com" <vveerach@google.com>,
+ XP Chen <Xiao-Peng.Chen@fii-na.com>,
+ Mustatfa Shehabi <Mustafa.Shehabi@fii-na.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/30/21 7:56 PM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday March 31 at 10:00am PDT.
->
-> We'll discuss the following items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
-> and anything else that comes up:
->
-> 1.
->
->   Joseph: https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/41560
-> <https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/41560> Add
->   PerformService privilege.
+On 3/29/21 1:40 PM, Lancelot Kao wrote:
+>     Hi, Brad
+> 	Here is an update, thanks
+>     mohaimen.alsamarai@fii-na.com
+>      lancelot.kao@fii-usa.com
+>      Xiao-Peng.Chen@fii-na.com
+>      Mustafa.Shehabi@fii-na.com
+>      Neil.Chen@fii-usa.com
+>      avery.zl.yang@fii-na.com
 
-Dropping the OemOpenBMCPerformService privilege and custom 
-OemOpenBMCServiceAgent role in favor of a more general design.
+Hi Lancelot, I don't see avery.zl.yang on the CLA - do you need to 
+refresh your company's CCLA?
 
+Kurt Taylor (krtaylor)
 
->
-> 2.
->
->   Joseph: Design for User role configuration
->   https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/41652
-> <https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/41652>
-DISCUSSION:
-
-The design above will intersect with its counterpart 
-operation-to-privilege design - in that they both specify privileges.  
-We should sketch out that design before proceeding with this one. Next 
-piece is operation-to-privilege customization design because it affects 
-this design.
-
-
->
-> 3.
->
->   Joseph: Interest in OpenBMC learning series talk “OpenBMC secure
->   engineering”?
-
-Nope.  Joseph plans to give the talk.
-
->
-> 4.
->
->   Anton: Privilege separation
-> <https://docs.google.com/document/d/1EI-HfPb_NMp9GD0fY6-XCpnKAX6-ZsdpDEsmiX5d6fc/edit#heading=h.b167mnkkse22>
-
-Anton reviewed his doc.  We discussed having the D-bus broker use ACLs.
-
-Key to get reviews: create something each maintainer can test.
-
-Need to cover all D-Bus users with ACL before we can throw the secure 
-switch (rough number of services to be changed 
-<https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/37844>for 
-a based set of targets runnable under qemu).
-
->
->
->
-> Access, agenda and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group 
-> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
->
-> - Joseph
->
->
+> 
+> --
+> Best Regards.
+>   
+> Lancelot Kao
+> 
+> ﻿    Hi Brad,	
+> 
+>      You can add people below as maintainer for the Foxconn-ipmi-oem
+>      mohaimen.alsamarai@fii-na.com
+>      lancelot.cy.kao@fii-na.com
+>      Xiao-Peng.Chen@fii-na.com
+>      Mustafa.Shehabi@fii-na.com
+> 
+>      Thanks,
+>      Mohaimen
+> 
+>      -----Original Message-----
+>      From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+>      Sent: Monday, March 15, 2021 3:52 PM
+>      To: Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>
+>      Cc: openbmc@lists.ozlabs.org; vveerach@google.com; Lancelot Kao <lancelot.cy.kao@fii-na.com>
+>      Subject: Re: group for foxconn CI / fii oem repo
+> 
+>      On Fri, Mar 12, 2021 at 07:25:42PM +0000, Mohaimen Alsamarai wrote:
+>      >Hi Brad,
+>      >                How can we create Ci group on gerrit and add people to
+>      >it
+> 
+>      Created fii/ci-authorized and fii/ci-authorized-owners.  Please add people to fii/ci-authorized to automatically approve patch authors for CI.
+> 
+>      >And we need to create new repo for the Foxconn ipmi oem
+> 
+>      Created openbmc/foxconn-ipmi-oem.  This repository needs a maintainer - can I get a github account handle to invite to the OpenBMC organization and assign the maintainer role?
+> 
+>      thx -brad
+> 
 
