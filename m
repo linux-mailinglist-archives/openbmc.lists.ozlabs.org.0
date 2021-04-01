@@ -2,50 +2,49 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20001350B73
-	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 02:58:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 863CD350B77
+	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 02:58:57 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F9lDV0yZ5z3brV
-	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 11:58:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F9lDv3yNQz3btg
+	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 11:58:55 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=GVnld6BI;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=Qw0d/+b7;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
  helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=GVnld6BI; 
+ header.a=rsa-sha256 header.s=thorn header.b=Qw0d/+b7; 
  dkim-atps=neutral
 Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [IPv6:2605:2700:0:5::4713:9cab])
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F9lCZ31rfz30B3;
- Thu,  1 Apr 2021 11:57:46 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F9lCf4Gkwz309y;
+ Thu,  1 Apr 2021 11:57:50 +1100 (AEDT)
 Received: from hatter.bewilderbeest.net (unknown [IPv6:2600:6c44:7f:ba20::7c6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 2F984705;
- Wed, 31 Mar 2021 17:57:44 -0700 (PDT)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 3B062ADE;
+ Wed, 31 Mar 2021 17:57:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1617238665;
- bh=PTKpsiq59YVCzDvb+a0Y+GyuK4KgA1bmlXXrXsWSgms=;
+ s=thorn; t=1617238669;
+ bh=VeSdxtND3tSvk8Zkgif2XWXT/Is3+dLyTKL7yc7Qvoc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=GVnld6BIBB3+yPy40DXDBGCzsu8mpRyugYH1GBA59wK8KRirWKUYc8HNcFuSGatch
- pR2sREfK2VUa3x4nmTdnzdYgT8pz4IH56qvpOxcBlUmdY2jjpMzpzZesXJnwgdPQ8J
- tWRj1NRlh5MOmZilmBzTFNJ0pWi5xQwcGHEDkQSY=
+ b=Qw0d/+b7JOOOzLuE0outZCZECFMgfxfVMs0LradvxSyvSqCYckRGnvUOytFASHby/
+ nvFgoetdI4403Wy/K+GX26I48WvL7XsyEeMTRwGdzn23gHUEQkepDyi28Oc/cxXZev
+ Wv5fooTglZjs1VKGHJbGL3pTqaRMuSbkpFNFuSyE=
 From: Zev Weiss <zev@bewilderbeest.net>
 To: Joel Stanley <joel@jms.id.au>
-Subject: [PATCH v2 2/3] drivers/tty/serial/8250: add DT property for aspeed
- vuart sirq polarity
-Date: Wed, 31 Mar 2021 19:57:01 -0500
-Message-Id: <20210401005702.28271-3-zev@bewilderbeest.net>
+Subject: [PATCH v2 3/3] dt-bindings: serial: 8250: add aspeed, sirq-active-high
+Date: Wed, 31 Mar 2021 19:57:02 -0500
+Message-Id: <20210401005702.28271-4-zev@bewilderbeest.net>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210401005702.28271-1-zev@bewilderbeest.net>
 References: <YGOuhjD19SmjmQou@hatter.bewilderbeest.net>
@@ -63,36 +62,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Zev Weiss <zev@bewilderbeest.net>,
- Andrew Jeffery <andrew@aj.id.au>,
+Cc: - <devicetree@vger.kernel.org>, linux-aspeed@lists.ozlabs.org,
+ Zev Weiss <zev@bewilderbeest.net>, Andrew Jeffery <andrew@aj.id.au>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- Jiri Slaby <jirislaby@kernel.org>, linux-arm-kernel@lists.infradead.org
+ linux-kernel@vger.kernel.org, Lubomir Rintel <lkundrak@v3.sk>,
+ Rob Herring <robh+dt@kernel.org>, linux-serial@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This provides a simple boolean to use instead of the deprecated
-aspeed,sirq-polarity-sense property.
+This provides a simpler, more direct alternative to the deprecated
+aspeed,sirq-polarity-sense property for indicating the polarity of
+the Aspeed VUART's SIRQ line.
 
 Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 ---
- drivers/tty/serial/8250/8250_aspeed_vuart.c | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/devicetree/bindings/serial/8250.yaml | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_aspeed_vuart.c b/drivers/tty/serial/8250/8250_aspeed_vuart.c
-index c33e02cbde93..e5ef9f957f9a 100644
---- a/drivers/tty/serial/8250/8250_aspeed_vuart.c
-+++ b/drivers/tty/serial/8250/8250_aspeed_vuart.c
-@@ -482,6 +482,9 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
- 		of_node_put(sirq_polarity_sense_args.np);
- 	}
+diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b/Documentation/devicetree/bindings/serial/8250.yaml
+index 491b9297432d..e79bb6ab9d2c 100644
+--- a/Documentation/devicetree/bindings/serial/8250.yaml
++++ b/Documentation/devicetree/bindings/serial/8250.yaml
+@@ -12,8 +12,9 @@ maintainers:
+ allOf:
+   - $ref: /schemas/serial.yaml#
+   - if:
+-      required:
+-        - aspeed,sirq-polarity-sense
++      anyOf:
++        - required: [ aspeed,sirq-active-high ]
++        - required: [ aspeed,sirq-polarity-sense ]
+     then:
+       properties:
+         compatible:
+@@ -190,6 +191,12 @@ properties:
+       applicable to aspeed,ast2500-vuart.
+     deprecated: true
  
-+	if (of_property_read_bool(np, "aspeed,sirq-active-high"))
-+		aspeed_vuart_set_sirq_polarity(vuart, 1);
++  aspeed,sirq-active-high:
++    type: boolean
++    description: |
++      Set to indicate that the SIRQ polarity is active-high (default
++      is active-low).  Only applicable to aspeed,ast2500-vuart.
 +
- 	aspeed_vuart_set_enabled(vuart, true);
- 	aspeed_vuart_set_host_tx_discard(vuart, true);
- 	platform_set_drvdata(pdev, vuart);
+ required:
+   - reg
+   - interrupts
+@@ -228,7 +235,7 @@ examples:
+         interrupts = <8>;
+         clocks = <&syscon ASPEED_CLK_APB>;
+         no-loopback-test;
+-        aspeed,sirq-polarity-sense = <&syscon 0x70 25>;
++        aspeed,sirq-active-high;
+     };
+ 
+ ...
 -- 
 2.31.1
 
