@@ -1,92 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 095BC350D69
-	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 06:05:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0AE7350D78
+	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 06:09:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4F9qN90Cghz30MK
-	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 15:05:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4F9qT175fvz30CS
+	for <lists+openbmc@lfdr.de>; Thu,  1 Apr 2021 15:09:41 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=IrQSKxYQ;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=flu+nAeG;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=kdlFaZDp;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.221;
- helo=new1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=IrQSKxYQ; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=flu+nAeG; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=kdlFaZDp; 
  dkim-atps=neutral
-Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
- [66.111.4.221])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4F9qMp6Wv0z302H;
- Thu,  1 Apr 2021 15:05:10 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 13799580857;
- Thu,  1 Apr 2021 00:05:07 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Thu, 01 Apr 2021 00:05:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=bM72u7Zut+UqToL176LTPYUWVZDWGgs
- ivmdUNPFKxMU=; b=IrQSKxYQzpv/1jouAp11qxZyIIHeQnXCrcT9S70hS3YFos+
- qX1yamOzq5tRUNluxnpDJJaC4BQsGg0fqnKCBN6Uko4thO9s1rf09dj5P72ybqqY
- T7uJ78Xj/NZvZYnhLXyqUNt7D5uHuG9Yi13uTVI67dfVjwYMUl3ST0wiOUW/zWKs
- yZaA0YYviLCftcX2ZdE1XVPXd4orzokOzolQr6l5Dz8+1T/aQYr4zsYD9LTrFzGZ
- 0CH9gBy8eUs87ymtI8RVq7Cwx+bIkj5gGmRczRj6RBg/PHbdAjLJOSswY1bgQKfu
- nLkGdJ5pHimIBU0Fp6k28lBc/sNw9bueam+qvJw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=bM72u7
- Zut+UqToL176LTPYUWVZDWGgsivmdUNPFKxMU=; b=flu+nAeG56GJ4xCUCWHFAk
- lpu8FXQMkirsiz9hQpRBsMLmpy2uil4XUE30IFWyKX4eG4RZsJoCmoAeiVpo7qmF
- HXaBKvJq2pgVwljWOyLY2bNru499SaaWUx0bV5GHbSYkf/0RK5pa5sW/MMLHZzGj
- I2BQqGF5Xx3Scxz8izYko3o5EWPtPvcOB7wUj8eibny07vGzxqZTFvQJYWhvOWtX
- cZMz9P0u0WZLDiXMtmudcra28kPmPw+ki6woB2lDdFzgCq1N/e5SDXl99XfcNIYd
- xl2FHT7769A8YVD/RQYnkRLNgTbXcMjrCDiyHhUJNLDixSzQJfVe8ZYWO4bRErow
- ==
-X-ME-Sender: <xms:cUZlYJAFHOqSxDwnmsOA0a8s57EnBEMLKb1zkJMbKkSZMQ5RvonblA>
- <xme:cUZlYHjaoyP0oCg4CpUtoO0fiT1il4DSkP3YNPxDCK9Ew_V06DZCCHso2q281nWAI
- 4UzQozQOep4j_956w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudeifedgjeeiucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepudehtddtleektedvfeeitdeljeekveelkeegvdfhtdejhefgfedtfedv
- jeejledtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
- gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:cUZlYEktDNHkVnociacTZn9o_1v1vGrEK6B-J_7z9MLkinn_-CpWhQ>
- <xmx:cUZlYDxKDkUu4S9fKlrpI2gRku7K6cE5wNap_DlMnEsc657fexkrTg>
- <xmx:cUZlYORHW_GgcOHywhUXRNVEczxo1Kj6Xqgkz1MBRmpvURTiy9mlCg>
- <xmx:c0ZlYBH6NEkHP1Z7OxOJv0bSfsi-IUy7ymsHeOje4V9oSQxSlcD2Kw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 0A181A00073; Thu,  1 Apr 2021 00:05:04 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-273-g8500d2492d-fm-20210323.002-g8500d249
-Mime-Version: 1.0
-Message-Id: <d66753ee-7db2-41e5-9fe5-762b1ab678bc@www.fastmail.com>
-In-Reply-To: <20210401005702.28271-4-zev@bewilderbeest.net>
-References: <YGOuhjD19SmjmQou@hatter.bewilderbeest.net>
- <20210401005702.28271-1-zev@bewilderbeest.net>
- <20210401005702.28271-4-zev@bewilderbeest.net>
-Date: Thu, 01 Apr 2021 14:34:44 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Zev Weiss" <zev@bewilderbeest.net>, "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_v2_3/3]_dt-bindings:_serial:_8250:_add_aspeed,
- sirq-?= =?UTF-8?Q?active-high?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4F9qSl0z0fz2yxq;
+ Thu,  1 Apr 2021 15:09:25 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (unknown [IPv6:2600:6c44:7f:ba20::7c6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id EEF256F;
+ Wed, 31 Mar 2021 21:09:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1617250163;
+ bh=xmMfpeeniJlU6d7Nfx23h70TUMsB7Ki/f+sL2o7yC2I=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=kdlFaZDp+5zjWclx7ps6OKfuDJiib1sb3BZsQqHLd38aXr3TZYqUTxJUEA+pHw7v2
+ leXKIlsarOfpWIU4kpuqSa3+RARc3XxSgm5U7Cje8cqt3WW4v/b4aTU48TfGvP3NaW
+ WbW8ofVx7FaQ2sIEm9QFg3crHzFpHj7iSpU1h+gg=
+Date: Wed, 31 Mar 2021 23:09:20 -0500
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH] ARM: dts: aspeed: add ASRock E3C246D4I BMC
+Message-ID: <YGVHcGnwvN638d6z@hatter.bewilderbeest.net>
+References: <CACPK8XfBsq6H5qsSNgwqdRhHXTUYnNQKekSNMnxXoVaAzMc=MQ@mail.gmail.com>
+ <20210401025104.2278-1-zev@bewilderbeest.net>
+ <CACPK8Xcr+OauMH2NFSOKF7TZ2HDDnpqPvbnqg17YbKmhroqBMw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CACPK8Xcr+OauMH2NFSOKF7TZ2HDDnpqPvbnqg17YbKmhroqBMw@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,42 +63,298 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: - <devicetree@vger.kernel.org>, linux-aspeed@lists.ozlabs.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Lubomir Rintel <lkundrak@v3.sk>,
- Rob Herring <robh+dt@kernel.org>, linux-serial@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
+Cc: devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Arnd Bergmann <arnd@arndb.de>,
+ Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ SoC Team <soc@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Olof Johansson <olof@lixom.net>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Wed, Mar 31, 2021 at 10:51:42PM CDT, Joel Stanley wrote:
+>Hi Zev,
+>
+>On Thu, 1 Apr 2021 at 02:57, Zev Weiss <zev@bewilderbeest.net> wrote:
+>>
+>> This is a relatively low-cost AST2500-based Xeon E-2100/E-2200 series
+>> mini-ITX board that we hope can provide a decent platform for OpenBMC
+>> development.
+>>
+>> This initial device-tree provides the necessary configuration for
+>> basic BMC functionality such as host power control, serial console and
+>> KVM support, and POST code snooping.
+>
+>The patch looks good! Some minor things below.
+>
+>When sending subsequent versions, make sure to add -v N to your git
+>format-patch to mark it as the Nth version.
+>
+>You've also set this to be threaded with a previous version of the
+>patch. We normally don't do that, and in this case it's doubly
+>confusing as you've split this patch out from the previous series.
+>
+>I noticed you cc'd soc@kernel.org. We normally only do this when we
+>want the soc maintainers to apply a patch directly without going
+>through another maintainer. In this case the patch should go through
+>the aspeed maintainer's tree (me), so you don't need to cc that
+>address.
+>
+
+Hmm, that came from using './scripts/get_maintainer.pl --no-rolestats' 
+with git send-email's --cc-cmd flag; does there happen to be a similarly 
+easy alternative that wouldn't do the "wrong" thing there?
+
+Ack on the rest, will send v3 soon.
 
 
-On Thu, 1 Apr 2021, at 11:27, Zev Weiss wrote:
-> This provides a simpler, more direct alternative to the deprecated
-> aspeed,sirq-polarity-sense property for indicating the polarity of
-> the Aspeed VUART's SIRQ line.
-> 
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> ---
->  Documentation/devicetree/bindings/serial/8250.yaml | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/serial/8250.yaml 
-> b/Documentation/devicetree/bindings/serial/8250.yaml
-> index 491b9297432d..e79bb6ab9d2c 100644
-> --- a/Documentation/devicetree/bindings/serial/8250.yaml
-> +++ b/Documentation/devicetree/bindings/serial/8250.yaml
-> @@ -12,8 +12,9 @@ maintainers:
->  allOf:
->    - $ref: /schemas/serial.yaml#
->    - if:
-> -      required:
-> -        - aspeed,sirq-polarity-sense
-> +      anyOf:
-> +        - required: [ aspeed,sirq-active-high ]
+Thanks,
+Zev
 
-Do you think we could make use of the approach I put forward here?
-
-https://lore.kernel.org/openbmc/20210319062752.145730-18-andrew@aj.id.au/T/#u
-
-Andrew
+>> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+>> Reviewed-by: Joel Stanley <joel@jms.id.au>
+>> ---
+>
+>This spot just here is where you should put the changes between v1 and v2.
+>
+>>  arch/arm/boot/dts/Makefile                    |   1 +
+>>  .../boot/dts/aspeed-bmc-asrock-e3c246d4i.dts  | 202 ++++++++++++++++++
+>>  2 files changed, 203 insertions(+)
+>>  create mode 100644 arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts
+>>
+>> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+>> index 8e5d4ab4e75e..b12911262ca1 100644
+>> --- a/arch/arm/boot/dts/Makefile
+>> +++ b/arch/arm/boot/dts/Makefile
+>> @@ -1406,6 +1406,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>>         aspeed-bmc-ampere-mtjade.dtb \
+>>         aspeed-bmc-arm-centriq2400-rep.dtb \
+>>         aspeed-bmc-arm-stardragon4800-rep2.dtb \
+>> +       aspeed-bmc-asrock-e3c246d4i.dts \
+>
+>This should be the output name (.dtb).
+>
+>>         aspeed-bmc-bytedance-g220a.dtb \
+>>         aspeed-bmc-facebook-cmm.dtb \
+>>         aspeed-bmc-facebook-galaxy100.dtb \
+>> diff --git a/arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts b/arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts
+>> new file mode 100644
+>> index 000000000000..dcab6e78dfa4
+>> --- /dev/null
+>> +++ b/arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts
+>
+>The device tree itself looks good!
+>
+>If you fix up the things I mentioned and send a v3 I will apply it.
+>
+>Cheers,
+>
+>Joel
+>
+>> @@ -0,0 +1,202 @@
+>> +// SPDX-License-Identifier: GPL-2.0+
+>> +/dts-v1/;
+>> +
+>> +#include "aspeed-g5.dtsi"
+>> +#include <dt-bindings/gpio/aspeed-gpio.h>
+>> +#include <dt-bindings/i2c/i2c.h>
+>> +
+>> +/{
+>> +       model = "ASRock E3C246D4I BMC";
+>> +       compatible = "asrock,e3c246d4i-bmc", "aspeed,ast2500";
+>> +
+>> +       aliases {
+>> +               serial4 = &uart5;
+>> +       };
+>> +
+>> +       chosen {
+>> +               stdout-path = &uart5;
+>> +               bootargs = "console=tty0 console=ttyS4,115200 earlyprintk";
+>> +       };
+>> +
+>> +       memory@80000000 {
+>> +               reg = <0x80000000 0x20000000>;
+>> +       };
+>> +
+>> +       leds {
+>> +               compatible = "gpio-leds";
+>> +
+>> +               heartbeat {
+>> +                       /* BMC_HB_LED_N */
+>> +                       gpios = <&gpio ASPEED_GPIO(H, 6) GPIO_ACTIVE_LOW>;
+>> +                       linux,default-trigger = "timer";
+>> +               };
+>> +
+>> +               system-fault {
+>> +                       /* SYSTEM_FAULT_LED_N */
+>> +                       gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_LOW>;
+>> +                       panic-indicator;
+>> +               };
+>> +       };
+>> +
+>> +       gpio-keys {
+>> +               compatible = "gpio-keys";
+>> +
+>> +               uid-button {
+>> +                       label = "uid-button";
+>> +                       gpios = <&gpio ASPEED_GPIO(F, 1) GPIO_ACTIVE_LOW>;
+>> +                       linux,code = <ASPEED_GPIO(F, 1)>;
+>> +               };
+>> +       };
+>> +
+>> +       iio-hwmon {
+>> +               compatible = "iio-hwmon";
+>> +               io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>, <&adc 4>,
+>> +                       <&adc 5>, <&adc 6>, <&adc 7>, <&adc 8>, <&adc 9>,
+>> +                       <&adc 10>, <&adc 11>, <&adc 12>;
+>> +       };
+>> +};
+>> +
+>> +&fmc {
+>> +       status = "okay";
+>> +       flash@0 {
+>> +               status = "okay";
+>> +               m25p,fast-read;
+>> +               label = "bmc";
+>> +               spi-max-frequency = <100000000>; /* 100 MHz */
+>> +#include "openbmc-flash-layout.dtsi"
+>> +       };
+>> +};
+>> +
+>> +&uart5 {
+>> +       status = "okay";
+>> +};
+>> +
+>> +&vuart {
+>> +       status = "okay";
+>> +       aspeed,sirq-active-high;
+>> +};
+>> +
+>> +&mac0 {
+>> +       status = "okay";
+>> +
+>> +       pinctrl-names = "default";
+>> +       pinctrl-0 = <&pinctrl_rgmii1_default &pinctrl_mdio1_default>;
+>> +};
+>> +
+>> +&i2c1 {
+>> +       status = "okay";
+>> +
+>> +       /* thermal sensor, one diode run to a disconnected header */
+>> +       w83773g@4c {
+>> +               compatible = "nuvoton,w83773g";
+>> +               reg = <0x4c>;
+>> +       };
+>> +};
+>> +
+>> +&i2c3 {
+>> +       status = "okay";
+>> +
+>> +       /* FRU EEPROM */
+>> +       eeprom@57 {
+>> +               compatible = "st,24c128", "atmel,24c128";
+>> +               reg = <0x57>;
+>> +               pagesize = <16>;
+>> +       };
+>> +};
+>> +
+>> +&video {
+>> +       status = "okay";
+>> +};
+>> +
+>> +&vhub {
+>> +       status = "okay";
+>> +};
+>> +
+>> +&lpc_ctrl {
+>> +       status = "okay";
+>> +};
+>> +
+>> +&lpc_snoop {
+>> +       status = "okay";
+>> +       snoop-ports = <0x80>;
+>> +};
+>> +
+>> +&gpio {
+>> +       status = "okay";
+>> +       gpio-line-names =
+>> +               /*  A */ "BMC_MAC1_INTB", "BMC_MAC2_INTB", "NMI_BTN_N", "BMC_NMI",
+>> +                       "", "", "", "",
+>> +               /*  B */ "", "", "", "", "", "IRQ_BMC_PCH_SMI_LPC_N", "", "",
+>> +               /*  C */ "", "", "", "", "", "", "", "",
+>> +               /*  D */ "BMC_PSIN", "BMC_PSOUT", "BMC_RESETCON", "RESETCON",
+>> +                       "", "", "", "",
+>> +               /*  E */ "", "", "", "", "", "", "", "",
+>> +               /*  F */ "LOCATORLED_STATUS_N", "LOCATORBTN", "", "",
+>> +                       "", "", "BMC_PCH_SCI_LPC", "BMC_NCSI_MUX_CTL",
+>> +               /*  G */ "HWM_BAT_EN", "CHASSIS_ID0", "CHASSIS_ID1", "CHASSIS_ID2",
+>> +                       "BMC_ALERT1_N_R", "BMC_ALERT2_N_R", "BMC_ALERT3_N", "SML0ALERT",
+>> +               /*  H */ "FM_ME_RCVR_N", "O_PWROK", "SKL_CNL_R", "D4_DIMM_EVENT_3V_N",
+>> +                       "MFG_MODE_N", "BMC_RTCRST", "BMC_HB_LED_N", "BMC_CASEOPEN",
+>> +               /*  I */ "", "", "", "", "", "", "", "",
+>> +               /*  J */ "BMC_READY", "BMC_PCH_BIOS_CS_N", "BMC_SMI", "",
+>> +                       "", "", "", "",
+>> +               /*  K */ "", "", "", "", "", "", "", "",
+>> +               /*  L */ "BMC_CTS1", "BMC_DCD1", "BMC_DSR1", "BMC_RI1",
+>> +                       "BMC_DTR1", "BMC_RTS1", "BMC_TXD1", "BMC_RXD1",
+>> +               /*  M */ "BMC_LAN0_DIS_N", "BMC_LAN1_DIS_N", "", "",
+>> +                       "", "", "", "",
+>> +               /*  N */ "", "", "", "", "", "", "", "",
+>> +               /*  O */ "", "", "", "", "", "", "", "",
+>> +               /*  P */ "", "", "", "", "", "", "", "",
+>> +               /*  Q */ "", "", "", "",
+>> +                       "BMC_SBM_PRESENT_1_N", "BMC_SBM_PRESENT_2_N",
+>> +                       "BMC_SBM_PRESENT_3_N", "BMC_PCIE_WAKE_N",
+>> +               /*  R */ "", "", "", "", "", "", "", "",
+>> +               /*  S */ "PCHHOT_BMC_N", "", "RSMRST",
+>> +                       "", "", "", "", "",
+>> +               /*  T */ "", "", "", "", "", "", "", "",
+>> +               /*  U */ "", "", "", "", "", "", "", "",
+>> +               /*  V */ "", "", "", "", "", "", "", "",
+>> +               /*  W */ "PS_PWROK", /* dummy always-high signal */
+>> +                       "", "", "", "", "", "", "",
+>> +               /*  X */ "", "", "", "", "", "", "", "",
+>> +               /*  Y */ "SLP_S3", "SLP_S5", "", "", "", "", "", "",
+>> +               /*  Z */ "CPU_CATERR_BMC_PCH_N", "", "SYSTEM_FAULT_LED_N", "BMC_THROTTLE_N",
+>> +                       "", "", "", "",
+>> +               /* AA */ "CPU1_THERMTRIP_LATCH_N", "", "CPU1_PROCHOT_N", "",
+>> +                       "", "", "IRQ_SMI_ACTIVE_N", "FM_BIOS_POST_CMPLT_N",
+>> +               /* AB */ "", "", "ME_OVERRIDE", "BMC_DMI_MODIFY",
+>> +                       "", "", "", "",
+>> +               /* AC */ "LAD0", "LAD1", "LAD2", "LAD3",
+>> +                       "CK_33M_BMC", "LFRAME", "SERIRQ", "S_PLTRST";
+>> +
+>> +       /* Assert BMC_READY so BIOS doesn't sit around waiting for it */
+>> +       bmc-ready {
+>> +               gpio-hog;
+>> +               gpios = <ASPEED_GPIO(J, 0) GPIO_ACTIVE_LOW>;
+>> +               output-high;
+>> +       };
+>> +};
+>> +
+>> +&adc {
+>> +       status = "okay";
+>> +       pinctrl-names = "default";
+>> +       pinctrl-0 = <&pinctrl_adc0_default
+>> +                       &pinctrl_adc1_default
+>> +                       &pinctrl_adc2_default
+>> +                       &pinctrl_adc3_default
+>> +                       &pinctrl_adc4_default
+>> +                       &pinctrl_adc5_default
+>> +                       &pinctrl_adc6_default
+>> +                       &pinctrl_adc7_default
+>> +                       &pinctrl_adc8_default
+>> +                       &pinctrl_adc9_default
+>> +                       &pinctrl_adc10_default
+>> +                       &pinctrl_adc11_default
+>> +                       &pinctrl_adc12_default>;
+>> +};
+>> +
+>> +&kcs3 {
+>> +       status = "okay";
+>> +       aspeed,lpc-io-reg = <0xca2>;
+>> +};
+>> --
+>> 2.31.1
+>>
