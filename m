@@ -2,132 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E288535271A
-	for <lists+openbmc@lfdr.de>; Fri,  2 Apr 2021 09:53:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 89391352777
+	for <lists+openbmc@lfdr.de>; Fri,  2 Apr 2021 10:35:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FBXNW6Ggcz3bmg
-	for <lists+openbmc@lfdr.de>; Fri,  2 Apr 2021 18:53:15 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=l3ZwzFLb;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FBYK12RqRz3byn
+	for <lists+openbmc@lfdr.de>; Fri,  2 Apr 2021 19:35:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.92.101;
- helo=nam10-bn7-obe.outbound.protection.outlook.com;
- envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=l3ZwzFLb; 
- dkim-atps=neutral
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com
- (mail-bn7nam10on2101.outbound.protection.outlook.com [40.107.92.101])
+ smtp.mailfrom=kaod.org (client-ip=178.33.43.201; helo=4.mo52.mail-out.ovh.net;
+ envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+X-Greylist: delayed 4751 seconds by postgrey-1.36 at boromir;
+ Fri, 02 Apr 2021 19:35:07 AEDT
+Received: from 4.mo52.mail-out.ovh.net (4.mo52.mail-out.ovh.net
+ [178.33.43.201])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FBXNG0lxcz2xZF
- for <openbmc@lists.ozlabs.org>; Fri,  2 Apr 2021 18:52:59 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GMikWtmKpDESvHkZaLawM53CYDfqFy9kMpWvM5LkPkEMWaueqs53ccNR7jhGf/wbM/bY8f1gCfYAQDPCTfBAdP0JB2QMeZarJUfrFe38vZQ1GNON+Xl7A6a6COEdUZ7F2dY+3hihvdf0REt6ytmkkrIaGcHf7i5JI5pjOff+Wn1xSea2Y+OghjIgBa0KNlRalF8CNe6oftCKPSJJRWET+hpW4ScN2rE+f04V/Ft6mQxrKfin/ot1beN0CpGd5f65VBCxm7dUBDtd0zI5Mh7vX9ygv/WrXwkWfnFCb7z8mXSTzQ2t5BPzqiOTXYu2Jpc5anaVESR6oRWyBGenh2zGcQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O/df3x1tcdw57vMBkFRnBrWPw9RXANxn2iprrNohqvo=;
- b=WdgeIJTuWpUU3Kb40NxVKD+48b+FJhC8T9wToWe5TCkBgLLqsXftVj5MQzbJwLPzmWQOhG3bhTdJUwdZ85xovsyw1aEbnHa8N7plglTXAk++4TpdNZc6b7OKSFYA2XrMcUakiVlnQJUF1/1b0UWCeRuaYtYNUnducTnTKVeRzudBgfVFqyzrNymxlZOJfby2rDZbHgC2dcMPFw8GdsXYq9FyzMa5c8ZmS6fPnklDd/gaRLr9P5F1/A3Og3RTTRgHFNnxgjxntXn56r+qxZnctRA3awjRKyfb5k/EyOEzK75xTzPVPVAT5xIVFHr36CezDhEaomZQVRY38sp5fBjhZw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O/df3x1tcdw57vMBkFRnBrWPw9RXANxn2iprrNohqvo=;
- b=l3ZwzFLbZUEAXJ8ledROOekklj/tmXOaeilEwIO739Peq20wWN6grZmKqrdWqTkYLL6yiTIDcJr01yyaqR/eE5GrvfXVXACqGkUR9uY6NbwcClJ5dATkKabE4UBKDC8hTD3tMl9qhUxJnUCVNwBCudunmMXcjBwgB0VdeHzQ7KU=
-Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
- DM6PR01MB4745.prod.exchangelabs.com (2603:10b6:5:67::26) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3977.24; Fri, 2 Apr 2021 07:52:52 +0000
-Received: from DM6PR01MB5145.prod.exchangelabs.com
- ([fe80::fd97:f560:f2cf:d58d]) by DM6PR01MB5145.prod.exchangelabs.com
- ([fe80::fd97:f560:f2cf:d58d%5]) with mapi id 15.20.3999.029; Fri, 2 Apr 2021
- 07:52:46 +0000
-From: Thu Nguyen OS <thu@os.amperecomputing.com>
-To: Joseph Reynolds <jrey@linux.ibm.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: Re: The common solution to support bind/unbind the hwmon driver base
- on the host state.
-Thread-Topic: The common solution to support bind/unbind the hwmon driver base
- on the host state.
-Thread-Index: AQHXJdOU6ZunssCJTkiHUAYwame9R6qeRj+AgAMNx4A=
-Date: Fri, 2 Apr 2021 07:52:45 +0000
-Message-ID: <7843F2AF-30DE-4F78-B7C1-2BBDC99689B5@amperemail.onmicrosoft.com>
-References: <7252DA19-35E9-4A14-A7DF-7BBC54A312C2@amperemail.onmicrosoft.com>
- <12cb9e34-d110-1575-0b39-296083bd6410@linux.ibm.com>
-In-Reply-To: <12cb9e34-d110-1575-0b39-296083bd6410@linux.ibm.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: linux.ibm.com; dkim=none (message not signed)
- header.d=none;linux.ibm.com; dmarc=none action=none
- header.from=os.amperecomputing.com;
-x-originating-ip: [118.69.219.201]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 92241c4a-0773-496d-6905-08d8f5ac4ded
-x-ms-traffictypediagnostic: DM6PR01MB4745:
-x-microsoft-antispam-prvs: <DM6PR01MB4745DE6C4429A6131AABAB3E907A9@DM6PR01MB4745.prod.exchangelabs.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: JuJj8JtO7qy45NNhwJDrwv4hn0JPf+tQfl5li2/BJ5fCxuy04LmfhrIo1OF0QzA2D/k8QGbVN0VnmA3w58xbNrpFJ6jBVLXkDCUQJrTZGcG/IWaC9qNSROh7f6zag8U1vrt1fZaVMbC99R87GegZUxNFxuGOgnUNBouhJ04nSJpU87y1uy7mV/gEftoko1DAM3tLHfXIT3N0lTnYOhrCz7OACQLQnIUsKQhLw6CutrOxoli9fvtAX9mbiE7RGLqcm0OHIusAREXiRvSeJx87dRaOSKoUs6JNlDuVbQMQq8+U4JwqUpPiASw5eiBzTCwgTkTpVlOifybAccim1R1m9iZHfBIYW7WWUMZ+t8bDJxa86h4VrNmcw+XjIV7SXM02FJX5VNe+oBw6vuZ+9eKxjBBUz+Ij+BVCf+WKpPH+NkCPsa/1p7QEkHcIE7rA7ZTfH0FD4Z6bPIVK3wGqWR643G5RYtOB36siXvZtOjbve6WCo1uXmLgOkx0JhmVTMQIW+3J2YsgNtjsV5pGpEuFdnJR7B0C0lMhzowMxWVyHp4vX7zK2VdhEmugk3hZ/kMptmzOWTc/drB4QoSSRiCBRhBInDIaZrdv0/beKUhwtHry7J030V7qLpfKqD0O3wSqwG0/hBQhe9U/ErYjmOYdhkA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(136003)(396003)(39850400004)(376002)(346002)(8676002)(76116006)(110136005)(91956017)(66946007)(64756008)(83380400001)(66556008)(66476007)(6506007)(53546011)(71200400001)(33656002)(316002)(6512007)(9686003)(6486002)(86362001)(2906002)(38100700001)(478600001)(8936002)(66446008)(5660300002)(186003)(26005);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?cm16MVNsbkplUHE3MWV6YVNKWUd4RTQyOXUvQlRxL2N4L1l2Nzg3MDZIWVBS?=
- =?utf-8?B?cGJkNGJlUUQvWnhTNjU2N2tHc1hKcS9HNG5pYnFXVTZXME9zVmtnMWU2czZO?=
- =?utf-8?B?SnkweTBsZGFrbkFkcG1lMXM3VDlZM2FaWVBUcEd1SFNQVUJldGtDZFg4Z29w?=
- =?utf-8?B?ME5YMFYxSHJabDVDU0hqU3B3bFA2Sm8zZzhnRldoa1VJVUtiRXJrbm50SXdp?=
- =?utf-8?B?M2l0akJ5bDZsUGFXSnJMdGxZOXpHYmlIMEdiRWJxdUd3Nzc3T0xjd0V1RXgz?=
- =?utf-8?B?ZnQ2NEJITXFldmkvRGdZeTB6Y2crWEFKeGx6VDFlV3d3dUZEaHVzbEJXM21S?=
- =?utf-8?B?RksyWmdHRytIVE1BQTk3S2lCbGZhTW5naERxZ1lUYmVjS1I0dk5HS09vSno5?=
- =?utf-8?B?SUxmNUF1YWZnMkgrSjVVS2NZdFRMRHE5YTFSUDN2MFJ1cEZpRmptVi9lZTRZ?=
- =?utf-8?B?Z3cybjlrV3o4NjlHSThkVWp2cktRa1RwK1h5MUNaUUJOVTR4OVBCM2pvUnB0?=
- =?utf-8?B?TmdVM2hwSzg3ZGJDazgvYU1JWWJxSWx2TThNWDk1OUNLL3lIcjRWTm9XL0xK?=
- =?utf-8?B?ZVU5eG1zejNUVU0xaFVXdlVTZ2xpZHZiYzFpMmk1R3o1S05zODlnN1VHZllV?=
- =?utf-8?B?YUJSS0psOXdRTDJCRTJPaTY1Wmpvejh4Y3p6cFlKYmplQ05aVEtrbFByR0du?=
- =?utf-8?B?WkRkK01id0ZUZ1dQQURuOTB0N1JqSVJOOTNNb3hlVjZNMndiOFE1VlpJTzlp?=
- =?utf-8?B?RGd4Rk0vaEhucFltQ1NCejR1VG5lbDdyUmN2L3VvZTU5K3hGSDZlSlVpTW42?=
- =?utf-8?B?OGlpVmRpWHlRa2Zsd1E3b0taRVhyYWYxbFBoQ1Z1TFA5ZnRDZE90MUVyZ1FQ?=
- =?utf-8?B?TE1ZYmJxN0hUM2Q5bUpaNFRDSDZKaEw4d25UM3I3bmRiZ2RTTHluS2hCcjhx?=
- =?utf-8?B?QzlFTnJlekk1OWJqVlR6UUI1SVhXUGR1SndIVWNxZUFwYk5CSG9sR1pkdlg5?=
- =?utf-8?B?VFZ2aHdGK0x4UG5aWlF3bDg4TjVaM3M1RDJzV2ozYUpRaXJSZ0RZTkxENm5t?=
- =?utf-8?B?MFdxOEdTZ0QrRmdRUVBYN05Pa0d1V3FXV0grb3ZhdmNVelJZZXZtY2hSYVMy?=
- =?utf-8?B?V3dQQWpSKzYvYjJUaldLS2FJZ3lKTzh3RGlFV2w5VVRkUThmL1l1NjFjc3dD?=
- =?utf-8?B?dGxwRC9uMVFlTnI2MFNJU3JtcFV5ZTVxdk5wbVBUNTA2MXdodENSQ09wcFZi?=
- =?utf-8?B?Tk13QjJJTHFHTXBoSFBBOTZvVlhOR1AxTTU4UFJtN0RlMXd0TXRQdnJNbW1P?=
- =?utf-8?B?WXZ6UExvZkhBaEpWR08rQTFDZktCRG5qQTBLd0JVOStjYnphaVVFZ1VZTTcy?=
- =?utf-8?B?eXRmREZNcWtadGNQMzVuVmZEWVZXQnlyb1VmOWdSYWk2SVpUMk15azhua21n?=
- =?utf-8?B?UlptRzJneEVlUDZTcDRaQWlZRUEwU1NqaTJ3RGlyMmRSbTF3Ky9xMldaV2VH?=
- =?utf-8?B?UzBzam5XZFNwR2VFL3RQNVV6UHF0NEtKaGM3Y3BOaFRsaHhqM1VWaEZVMng0?=
- =?utf-8?B?aURhNG44NWd3Vk5uSW40MHErK2t0REF2K0FMTHE4RmQxSXUvbUdJeG9ZTDVi?=
- =?utf-8?B?eGxMbC9vYzh6QzhtbG9lYSsrT3M3Snp6amZSdGhIRkhuSTdQYW1sYWMrOWUr?=
- =?utf-8?B?WHFnT2VoR2tqbHZ2VGxqTGNpeDl4dDB1R0o4VktUM25lNExXYzFndlFPbGRG?=
- =?utf-8?Q?uIZHD5QkRFn/5RvVlIt3KLGb8UEfTVMH9ZtbD+i?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <8B7574A701E0D945BA2EEE24ED6384D8@prod.exchangelabs.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FBYJq3K2lz3bs8
+ for <openbmc@lists.ozlabs.org>; Fri,  2 Apr 2021 19:35:04 +1100 (AEDT)
+Received: from mxplan5.mail.ovh.net (unknown [10.108.4.108])
+ by mo52.mail-out.ovh.net (Postfix) with ESMTPS id EE4AC255CC7;
+ Fri,  2 Apr 2021 09:15:48 +0200 (CEST)
+Received: from kaod.org (37.59.142.105) by DAG4EX1.mxp5.local (172.16.2.31)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2; Fri, 2 Apr 2021
+ 09:15:48 +0200
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-105G00688ac810b-28ca-43d8-a263-7d636fa21bc3,
+ CED0CE0CC895D647B8CFE0BE9502FE01F599FB05) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Subject: Re: [ast2500] aspeed-smc fail with MX25L25635F
+To: Shakeeb B K <shakeebbk@gmail.com>
+References: <CABYu0WivHn9L4hbY0E3k+G_c6RH7bu6NuxwmeSNG90c_A_4Qig@mail.gmail.com>
+ <CABYu0WhxPKePtGMGPojguaTJu21hMq4S=j6_5qRz5kPZC4yfFQ@mail.gmail.com>
+ <b17f2faf-4c50-4b68-bbad-6d91a7661c61@kaod.org>
+ <CABYu0Wi=Y2B0WsKqYd9Fin=Weow28ex6YzBPnKuoQq4cB26n6Q@mail.gmail.com>
+From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
+Message-ID: <da335562-6472-d165-8b91-0fcf6c6873f4@kaod.org>
+Date: Fri, 2 Apr 2021 09:15:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 92241c4a-0773-496d-6905-08d8f5ac4ded
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Apr 2021 07:52:46.1920 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qeasXnvqYBPhT9+LT4m+GRK7+pV6FN/1DqRqSxmgSJmig1NKVP0gvd9/M9pejGGeVJMuCp0lVXtvnsgGjj2fGG8my7H7yqBA4Esl2Rp7Pxk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB4745
+In-Reply-To: <CABYu0Wi=Y2B0WsKqYd9Fin=Weow28ex6YzBPnKuoQq4cB26n6Q@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.105]
+X-ClientProxiedBy: DAG5EX2.mxp5.local (172.16.2.42) To DAG4EX1.mxp5.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: 5f48871e-8823-402f-854b-62c7c9244f65
+X-Ovh-Tracer-Id: 14169450331311016925
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduledrudeihedguddvtdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefuvfhfhffkffgfgggjtgfgihesthekredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeevfeelfffffeefudevudekjeeikeffvdeltdffjeeiieetveetjeffvdejteekvdenucffohhmrghinhepmhgrtghrohhnihigrdgtohhmpdhouhhtlhhoohhkrdgtohhmnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpqdhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdprhgtphhtthhopehshhgrkhgvvggssghksehgmhgrihhlrdgtohhm
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -139,43 +66,93 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SSB0aG91Z2h0IHRoYXQgT3BlbkJtYyBjb21tdW5pdHkgaGF2ZSB0byBoYXZlIHRoZSBzb2x1dGlv
-biBmb3IgdGhpcy4NCkkgY2FuIHByb3Bvc2UgbXkgc29sdXRpb24gYnV0IEkgZG9uJ3QgdGhpbmsg
-aXQgaXMgY29tbW9uIGVub3VnaC4NCg0KUmVnYXJkcywNClRodSBOZ3V5ZW4uDQoNCu+7v09uIDMx
-LzAzLzIwMjEsIDIzOjE0LCAiSm9zZXBoIFJleW5vbGRzIiA8anJleUBsaW51eC5pYm0uY29tPiB3
-cm90ZToNCg0KICAgIE9uIDMvMzAvMjEgOToxNCBQTSwgVGh1IE5ndXllbiBPUyB3cm90ZToNCiAg
-ICA+IEhpIEFsbCwgQ3VycmVudGx5LCBJbiBNdGphZGUgcGxhdGZvcm0gb2YgQW1wZXJlLCB3ZSBo
-YXZlIFNNUHJvIG1kZiANCiAgICA+IGRyaXZlcnMgKFNNUHJvIGh3bW9uLCBTTVBybyBlcnJtb24s
-IFNNUHJvIG1pc2MgZHJpdmVyKS4gVGhlIGRyaXZlcnMgDQogICAgPiB3aWxsIGJlIGxvYWRlZCBi
-eSBrZXJuZWwgd2hlbiB0aGUgQk1DIGJvb3QgdXAuIEJ1dCB0aGV5IGFyZSBvbmx5IA0KICAgID4g
-YmluZGVkIHdoZW4gdGhlIGhvc3QgaXMgYWxyZWFkeSBPbi4g4oCNIOKAjSDigI0g4oCNIA0KICAg
-ID4NCiAgICA+IEhpIEFsbCwNCiAgICA+DQogICAgPiBDdXJyZW50bHksIEluIE10amFkZSBwbGF0
-Zm9ybSBvZiBBbXBlcmUsIHdlIGhhdmUgU01Qcm8gbWRmIGRyaXZlcnMgDQogICAgPiAoU01Qcm8g
-aHdtb24sIFNNUHJvIGVycm1vbiwgU01Qcm8gbWlzYyBkcml2ZXIpLg0KICAgID4NCiAgICA+IFRo
-ZSBkcml2ZXJzIHdpbGwgYmUgbG9hZGVkIGJ5IGtlcm5lbCB3aGVuIHRoZSBCTUMgYm9vdCB1cC4g
-QnV0IHRoZXkgDQogICAgPiBhcmUgb25seSBiaW5kZWQgd2hlbiB0aGUgaG9zdCBpcyBhbHJlYWR5
-IE9uLg0KICAgID4NCiAgICA+IFRoZXkgYXJlIGFsc28gdW5iaW5kZWQgd2hlbiB0aGUgaG9zdCBp
-cyBPZmYuDQogICAgPg0KICAgID4gVG8gc3VwcG9ydCBiaW5kaW5nL3VuYmluZGluZyB0aGUgU01Q
-cm8gZHJpdmVzciwgd2UgaGF2ZSBvbmUgc2VydmljZSANCiAgICA+IG5hbWUgZHJpdmVyLWJpbmRl
-ci4NCiAgICA+DQogICAgPiAgMS4gV2hlbiB0aGUgRGJ1cyBwcm9wZXJ0eSBDdXJyZW50SG9zdFN0
-YXRlIG9mIHNlcnZpY2UNCiAgICA+ICAgICB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkhvc3Qg
-Y2hhbmdlcyB0byDigJxub3QgT2Zm4oCdLCB3ZSB3aWxsIGJpbmQNCiAgICA+ICAgICB0aGUgZHJp
-dmVycy4NCiAgICA+ICAyLiBXaGVuIHRoZSBEYnVzIHByb3BlcnR5IFJlcXVlc3RlZEhvc3RUcmFu
-c2l0aW9uIG9mIHNlcnZpY2UNCiAgICA+ICAgICB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkhv
-c3QgT1IgRGJ1cyBwcm9wZXJ0eQ0KICAgID4gICAgIFJlcXVlc3RlZFBvd2VyVHJhbnNpdGlvbiBv
-ZiB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkNoYXNzaXMNCiAgICA+DQogICAgPiBjaGFuZ2Ug
-dG8gT2ZmLCB3ZSB3aWxsIHVuYmluZCB0aGUgZHJpdmVycy4NCiAgICA+DQogICAgPiBUaGUgZHJp
-dmVyLWJpbmRlciBpcyB3b3JraW5nIGFzIGV4cGVjdGVkLCBpdCBoYXZlIHRoZSBjb25maWd1cmF0
-aW9uIA0KICAgID4gZmlsZSB0byBjb25maWd1cmUgd2hpY2ggZHJpdmVycyB3aWxsIGJlIGJpbmRl
-ZC91bmJpbmRlZC4NCiAgICA+DQogICAgPiBCdXQgdGhhdCBpcyBvdXIgc29sdXRpb24uDQogICAg
-Pg0KICAgID4gRG8gd2UgaGF2ZSBhbnkgY29tbW9uIHNvbHV0aW9uIHRvIGRvIHRoYXQgam9iPw0K
-ICAgID4NCg0KICAgIFRodSwNCg0KICAgIEkgZG9uJ3QgaGF2ZSBhIHNvbHV0aW9uLiAgQnV0IEkg
-ZG8gd2FudCB0byBiZSBhYmxlIHRvIGJpbmQgYW5kIHVuYmluZCANCiAgICBkcml2ZXJzIGZvciB0
-aGUgQk1DLWF0dGFjaGVkIFVTQiBwb3J0cyAoYXMgdGhlIHVuZGVybHlpbmcgbWVjaGFuaXNtIHdo
-ZW4gDQogICAgdGhlIEJNQyBhZG1pbiBkaXNhYmxlcyB0aGUgcG9ydHMpLCBzbyBJIHRoaW5rIGl0
-IHdvdWxkIGJlIGdvb2QgdG8gaGF2ZSBhIA0KICAgIGNvbW1vbiBzb2x1dGlvbiBvciB1bmRlcnN0
-YW5kIHRoZSBiZXN0IHByYWN0aWNlcy4NCg0KICAgIEpvc2VwaA0KDQogICAgPiBSZWdhcmRzLg0K
-ICAgID4NCiAgICA+IFRodSBOZ3V5ZW4uDQogICAgPg0KDQoNCg==
+Hello,
+
+On 4/1/21 5:22 PM, Shakeeb B K wrote:
+> Hi Cédric,
+> 
+> The part we are using is *MX25L25635F* https://www.macronix.com/Lists/Datasheet/Attachments/7414/MX25L25635F,%203V,%20256Mb,%20v1.5.pdf <https://nam11.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.macronix.com%2FLists%2FDatasheet%2FAttachments%2F7414%2FMX25L25635F%2C%25203V%2C%2520256Mb%2C%2520v1.5.pdf&data=04%7C01%7Cspasha%40nvidia.com%7C4cf89d8779c84d638c6f08d8ef7d0919%7C43083d15727340c1b7db39efd9ccc17a%7C0%7C0%7C637522667609971209%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=hYy5Cpi06y4T0DpFb4%2FDeo2nEy5Cn3rf3l%2BEO%2FaPP%2FU%3D&reserved=0>
+> 
+> Attaching the failed boot log - full_boot.log
+
+This was failing in 5.8 already.
+
+> The patch that fixes the problem - workaround.patch
+
+OK. You are disabling Dual I/O.
+
+> A patch to override read opcode - 001-Debug.patch
+> Failing log with post fixup read opcode update - fail_post_fixup.log
+
+Could you check the SPI wiring on the schematics of your AST2500 dgx board ?  
+
+If it is single wired, then I suggest a work around like the one attached.
+
+Thanks,
+
+C. 
+
+
+
+From: Cédric Le Goater <clg@kaod.org>
+Subject: [PATCH] mtd: spi-nor: aspeed: force single IO on tacoma
+Date: Wed, 16 Oct 2019 08:14:10 +0200
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
+---
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts  |    1 +
+ drivers/mtd/spi-nor/controllers/aspeed-smc.c |    6 +++++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+Index: linux-openbmc.git/drivers/mtd/spi-nor/controllers/aspeed-smc.c
+===================================================================
+--- linux-openbmc.git.orig/drivers/mtd/spi-nor/controllers/aspeed-smc.c
++++ linux-openbmc.git/drivers/mtd/spi-nor/controllers/aspeed-smc.c
+@@ -1265,6 +1265,7 @@ static int aspeed_smc_setup_flash(struct
+ 		struct aspeed_smc_chip *chip;
+ 		struct spi_nor *nor;
+ 		struct mtd_info *mtd;
++		struct spi_nor_hwcaps child_hwcaps = hwcaps;
+ 
+ 		/* This driver does not support NAND or NOR flash devices. */
+ 		if (!of_device_is_compatible(child, "jedec,spi-nor"))
+@@ -1303,6 +1304,9 @@ static int aspeed_smc_setup_flash(struct
+ 		dev_info(dev, "Using %d MHz SPI frequency\n",
+ 			 chip->clk_rate / 1000000);
+ 
++		if (of_property_read_bool(child, "single-io"))
++			child_hwcaps.mask &= ~SNOR_HWCAPS_READ_1_1_2;
++
+ 		chip->controller = controller;
+ 		chip->ctl = controller->regs + info->ctl0 + cs * 4;
+ 		chip->cs = cs;
+@@ -1324,7 +1328,7 @@ static int aspeed_smc_setup_flash(struct
+ 		 * attach when board support is present as determined
+ 		 * by of property.
+ 		 */
+-		ret = spi_nor_scan(nor, NULL, &hwcaps);
++		ret = spi_nor_scan(nor, NULL, &child_hwcaps);
+ 		if (ret)
+ 			break;
+ 
+Index: linux-openbmc.git/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+===================================================================
+--- linux-openbmc.git.orig/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
++++ linux-openbmc.git/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+@@ -158,6 +158,7 @@
+ 	flash@0 {
+ 		status = "okay";
+ 		m25p,fast-read;
++		single-io;
+ 		label = "pnor";
+ 		spi-max-frequency = <100000000>;
+ 	};
+
+
