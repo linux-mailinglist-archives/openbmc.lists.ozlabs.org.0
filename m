@@ -2,57 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4104C352512
-	for <lists+openbmc@lfdr.de>; Fri,  2 Apr 2021 03:20:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A594352544
+	for <lists+openbmc@lfdr.de>; Fri,  2 Apr 2021 03:56:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FBMg12Bbtz3bvm
-	for <lists+openbmc@lfdr.de>; Fri,  2 Apr 2021 12:20:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FBNT72wymz3bsF
+	for <lists+openbmc@lfdr.de>; Fri,  2 Apr 2021 12:56:43 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=HfKFGPOy;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=MOvmixvz;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::22e;
+ helo=mail-oi1-x22e.google.com; envelope-from=yulei.sh@bytedance.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=HfKFGPOy; 
- dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [IPv6:2605:2700:0:5::4713:9cab])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=bytedance-com.20150623.gappssmtp.com
+ header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=MOvmixvz; dkim-atps=neutral
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com
+ [IPv6:2607:f8b0:4864:20::22e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FBMff0l37z2yZC;
- Fri,  2 Apr 2021 12:19:53 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (unknown [IPv6:2600:6c44:7f:ba20::7c6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 077D4198;
- Thu,  1 Apr 2021 18:19:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1617326389;
- bh=G8rBZRZvYmpd8o2JnBLz+E9kxXF/0mTp2nuOMD0ePt4=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=HfKFGPOy/jqFi/BvkNmXkrnBaEFVbosfT3gvTTCGAShQzSfVHKvS8LGi909Oo6cjT
- DjdjMlrA7IeRZLDE0t4Xq0nZrycHq1uarkkOLR+Z213w1EOBcqy1QseADj3NDeigjE
- DnygHZ1rUPTyHGMr6FPzHpWt9aM8ljyDbZuG9XjQ=
-Date: Thu, 1 Apr 2021 20:19:47 -0500
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: [PATCH v3 4/4] dt-bindings: serial: 8250: add aspeed, lpc-address
- and aspeed,sirq
-Message-ID: <YGZxM31x0All76gm@hatter.bewilderbeest.net>
-References: <20210402004716.15961-1-zev@bewilderbeest.net>
- <20210402004716.15961-5-zev@bewilderbeest.net>
- <639f957f-a0d7-4a06-8598-90da0e17820b@beta.fastmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FBNSt1JCkz3bsB
+ for <openbmc@lists.ozlabs.org>; Fri,  2 Apr 2021 12:56:25 +1100 (AEDT)
+Received: by mail-oi1-x22e.google.com with SMTP id w70so3739092oie.0
+ for <openbmc@lists.ozlabs.org>; Thu, 01 Apr 2021 18:56:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=7s6YT6IDnIcg8puAI/lAb8fC+DtgzMpuiktVXH/A09M=;
+ b=MOvmixvzProhF8mE7emErm2JWxbr4lTwH3XW3NEHEuJiv9cDVMCg041PXLt4hfKqY9
+ epAjLLofXf84T797hM5Z4d9VuqpcWwlCwz9fTmZ4NOrmajpBltKGD7ig+swA1EjLZKPV
+ E2w/MOT2zp5FTDUsQM698Za0Ar/G+EwnMNctRCYUudvm7bxNf6es1S03+/IYZlY4Ftj9
+ RHAagkY/ddKOenolZJxsxNx+UCw6uz7PdgvP+hdxMlURBBwKK0nCzQWNezEUac/Q6zAs
+ 5DyRVYMdPXZApJdTokm/xhbgYE5bKac2UjGQUVsv18TJd2E2ozqLWpxqzBXfNbtEy+3J
+ UYrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=7s6YT6IDnIcg8puAI/lAb8fC+DtgzMpuiktVXH/A09M=;
+ b=NbyJWrFWM2zyuIfR58yOILmYIiglUsWpOYgW9uba07MjazIk5dKDWLz0CxkKIK6S/w
+ wlzIIi6AMeHM/DJjaGY8aA+OXZCodDAiFXKKG6XogCRIRpPKJi21QnBCSrNvGry/QJBX
+ ifuthB9PNK6gMgOuJKhl0Hrk3i7uQ3dPfvXXLkfeXGdsnKGu/eQa7GdKE15aUOxjSLkn
+ +2ilPFJUjUKxCUWCmo14tFp730dCkuFbJQlqPmE4M36gKM1HGD4hOWnloi9xR7IXxZcs
+ i6sx/xDKN9vDS1TKp7GhNFiGP+q29JUL0Lc4o1b44dO/ICGfCyvsI1evyLnU0OPyTXtR
+ JfTA==
+X-Gm-Message-State: AOAM532aSPFq/3UnaBMnRjeyiphRE4UsOXL7mmnM9FZr/NNPpp8J+ofO
+ zTdg1NGmVgaylOjRveTd8Ku7bkg+lqwmmZ7WMSsblA==
+X-Google-Smtp-Source: ABdhPJxdtsj//erv9SnIYsmSI3tI6zcPh9p6LEP8oMx+l+NZlB40H30USmkwT2vx+XV/8jgDfS6bjopkVnzawpIKK5o=
+X-Received: by 2002:a05:6808:98a:: with SMTP id
+ a10mr8246383oic.28.1617328581941; 
+ Thu, 01 Apr 2021 18:56:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <639f957f-a0d7-4a06-8598-90da0e17820b@beta.fastmail.com>
+References: <gmu36wVnmbV9lyt9EpYcnZmnPwjF9wtDS0N8K0jOk9UR2uUO0QwQaackzJRPLjil_ZqLxTzX3qEMGl3IE6baoIpS-xh9aMnQL3VkAyXK6KU=@protonmail.com>
+ <0a6dd101-fbea-7fdf-b9a6-3895b48a7f47@linux.ibm.com>
+ <5197cbe7-1a8b-80ab-2712-9a8f07457432@linux.vnet.ibm.com>
+ <nGEUmLQrNSqmytvShVUeFvOUKjW1cOTYv9Hrcmj7LyP1rfIdLOt8f7IkqzPKaXHZXHRGYtHBcjnt6Qo5c1fIw4doEmVwMmGI2e2rNhNXWZw=@protonmail.com>
+ <5bcbc6b0-b9d3-a002-0f24-97bd91ba5bf8@linux.vnet.ibm.com>
+ <36bafa0b-5dd3-6da5-b18d-847ee4a46459@linux.intel.com>
+ <CAGm54UEc9DOGZS0LLhFMP4SNw_-sJ2oa146wXfYvmF3As4xXsQ@mail.gmail.com>
+ <axfftQgj4Du8QvWHD4CHEuPSLSJGtLZZTzpZplCpN1Mu63yr4Xm1RiZTuewl3CNqPUZ8mrmZdJsEJUOQiL39Ft64mfW7DzBdLrkDLhylGiY=@protonmail.com>
+ <CAGm54UHGr+F-vnO69PLr0MN699BDEDsZiHYoX1WPmF1DZnQLVw@mail.gmail.com>
+ <2FVxBtO4gLzVYqZqGL8XwOcI2a_r6x0CaPGmGozxe_VeNp3Y3y05vSntyZPvfn4EDRsHsLjWJnrVSzbeeVDKhPvLILmFKB3hw-MFaEvepAw=@protonmail.com>
+In-Reply-To: <2FVxBtO4gLzVYqZqGL8XwOcI2a_r6x0CaPGmGozxe_VeNp3Y3y05vSntyZPvfn4EDRsHsLjWJnrVSzbeeVDKhPvLILmFKB3hw-MFaEvepAw=@protonmail.com>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Fri, 2 Apr 2021 09:56:11 +0800
+Message-ID: <CAGm54UFX9LPHArj-2q=w2pNtwgpkjZJE_0Dgd3_8cXB9z3L2vQ@mail.gmail.com>
+Subject: Re: IPMI SEL Parsing
+To: rgrs <rgrs@protonmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,60 +87,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: - <devicetree@vger.kernel.org>, linux-aspeed@lists.ozlabs.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Lubomir Rintel <lkundrak@v3.sk>,
- Rob Herring <robh+dt@kernel.org>, linux-serial@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
+Cc: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
+ openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Apr 01, 2021 at 08:14:39PM CDT, Andrew Jeffery wrote:
+On Thu, Apr 1, 2021 at 8:56 PM rgrs <rgrs@protonmail.com> wrote:
+>
+> Hi Lei,
 >
 >
->On Fri, 2 Apr 2021, at 11:17, Zev Weiss wrote:
->> These correspond to the existing lpc_address, sirq, and sirq_polarity
->> sysfs attributes; the second element of aspeed,sirq provides a
->> replacement for the deprecated aspeed,sirq-polarity-sense property.
->>
->> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
->> ---
->>  .../devicetree/bindings/serial/8250.yaml      | 27 ++++++++++++++++---
->>  1 file changed, 24 insertions(+), 3 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/serial/8250.yaml
->> b/Documentation/devicetree/bindings/serial/8250.yaml
->> index 491b9297432d..a6e01f9b745f 100644
->> --- a/Documentation/devicetree/bindings/serial/8250.yaml
->> +++ b/Documentation/devicetree/bindings/serial/8250.yaml
->> @@ -12,8 +12,13 @@ maintainers:
->>  allOf:
->>    - $ref: /schemas/serial.yaml#
->>    - if:
->> -      required:
->> -        - aspeed,sirq-polarity-sense
->> +      anyOf:
->> +        - required:
->> +            - aspeed,lpc-address
 >
->Why not aspeed,lpc-io-reg like the KCS binding?
+> Is FRU EEPROM required for inventory to work? My board has unprogrammed E=
+EPROM.
 >
->There are some things we can do to improve it, but we shouldn't go and invent something different. I prefer aspeed,lpc-io-reg because it's name derives from the generic 'reg' property as does it's behaviour (if you assume a related `#size-cells = 0`).
+> I constructed the busctl command according as below, I still get =E2=80=
+=9CUndetermined Hardware Failure=E2=80=9D. Please can you let me know if my=
+ config YAML has any issues?
 >
->> +        - required:
->> +            - aspeed,sirq
 >
->Why not aspeed,lpc-interrupts like the KCS binding?
->
->The generic IRQ property is 'interrupts', so like aspeed,lpc-io-reg the interrupts proposal for KCS follows in name and form. I'm hiding it behind the aspeed vendor prefix for now while I'm not satisfied that I understand the requirements of non-aspeed parts. Similarly, I added the lpc prefix because we don't tend to describe the host devicetree in the BMC devicetree (and so there's no parent interrupt controller that we can reference via a phandle) and we need a way to differentiate from the local interrupts property.
->
->I don't see a reason for either of them to differ from what we already have for KCS, and I don't see any reason to continue the sysfs naming scheme in the binding.
->
+> # busctl call "xyz.openbmc_project.Logging.IPMI" "/xyz/openbmc_project/Lo=
+gging/IPMI" xyz.openbmc_project.Logging.IPMI IpmiSelAdd ssaybq "Sensor mess=
+age" /xyz/openbmc_project/sensors/temperature/BMC_Temp 3 0x01 0xFF 0xFF tru=
+e 0x20
 
-Ah, OK -- I was aiming for consistency with the existing vuart sysfs 
-attributes, but if that's not a worthwhile concern I'm fine with 
-aspeed,lpc-io-reg & aspeed,lpc-interrupts.
-
-
-Zev
-
+You need to put /xyz/openbmc_project/sensors/temperature/BMC_Temp into
+sp3-ipmi-inventory-sensors.yaml as well to make ipmid to know how to
+map the dbus path to the sensor id in the sel.
