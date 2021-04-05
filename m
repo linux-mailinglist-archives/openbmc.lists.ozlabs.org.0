@@ -1,79 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1219E3545FC
-	for <lists+openbmc@lfdr.de>; Mon,  5 Apr 2021 19:26:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03ABF354649
+	for <lists+openbmc@lfdr.de>; Mon,  5 Apr 2021 19:47:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FDcyw06lVz2xfW
-	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 03:26:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FDdQf0Ttyz3028
+	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 03:47:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=leu1NZKA;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=l7eJPONs;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.21; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=leu1NZKA; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b34;
+ helo=mail-yb1-xb34.google.com; envelope-from=sandeepajesh@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=l7eJPONs; dkim-atps=neutral
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com
+ [IPv6:2607:f8b0:4864:20::b34])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FDcyf42R9z2yjc
- for <openbmc@lists.ozlabs.org>; Tue,  6 Apr 2021 03:26:31 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1617643557;
- bh=8QwlMiwX64oOcfsj2nl07gpYTlnVUHSkHQ00+qKlIHA=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=leu1NZKA83oVQvBax3fQh8/KhBIOpgI8yFH0XR7YiVCUTBDumqdfxFet68gu4HFqh
- 7QjX8gNLS3Bpxumn+Ll2r8qOZF3QVq56u0oPoA+4F29qY/WiIg2GIrMZRCIEvkBZHu
- eHrgS9Lw89IRNyGMS2X8Y24aQJJiZFi66Xe90Twc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEV3C-1lMMVb0QSA-00G3rl; Mon, 05
- Apr 2021 19:25:57 +0200
-Date: Mon, 5 Apr 2021 19:25:54 +0200
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Subject: Re: [PATCH 08/14] irqchip: Add driver for WPCM450 interrupt controller
-Message-ID: <YGtIItromiJcS+D5@latitude>
-References: <20210320181610.680870-1-j.neuschaefer@gmx.net>
- <20210320181610.680870-9-j.neuschaefer@gmx.net>
- <87sg4kiia4.wl-maz@kernel.org> <YF4tV+L71Lso94kT@latitude>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FDdQP3zHGz2yQr
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Apr 2021 03:47:08 +1000 (AEST)
+Received: by mail-yb1-xb34.google.com with SMTP id z1so13287994ybf.6
+ for <openbmc@lists.ozlabs.org>; Mon, 05 Apr 2021 10:47:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=38y90F1FQ23ANXlZArCZYpTniByDQyke/HhyfRsjGbw=;
+ b=l7eJPONsXJ2edU7RBG9W6YRN0PCEyicD+6EKS4F2WKmDjy1HrsjCZZbRcKQo3PHkwD
+ WkvLgj4lpWvIOo4oCe2JT/0DWI26GtI3JozD+HCa5LiiFXwRPmj6Dlyjw5pF7aet5W14
+ RWFIckoE9VtUQSNxRUeBkBWgs2woOPFL1yteT/Ihr82Vj5Nmifk4DKIo5KtPv4rwzjDp
+ D/5TlWUovvbux+OHofHVfPCQIz2UG92+aXU6gbgL8DeHQC5+1w2TVYLcfEx+jwmCxw88
+ 9M1fe1AK6YiYlnARL0GfhLbRLbYGN4IvITkKr2qkYbC4dlP4fRM0GywAFBhYlS8uFW31
+ XL9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=38y90F1FQ23ANXlZArCZYpTniByDQyke/HhyfRsjGbw=;
+ b=qBkpOootc0ISWeCsXbMSgrrchwZaLvC1CkAAHjLRHPdPwIaBoR2z/rHmCD9Q9nc5AM
+ 1+JBtQl2zvi5O4wdyhtFhGU2DyqgaqGSPSDAP7ig6keAEKJHLRW13LSWnIBYPAOt24Ei
+ 4ZccSjWBmStWOmQRmT+XDnI22MTI0S4E0uH+BasY0/0duqfgCB7xii51bfihqKtRIbJz
+ /kpl3JYccsABcaiFj0gs2+nFcmDN67nyQB+2dSo0eZCKVyX2s/1Xt7MHypkldebUehS2
+ 6fHT4v6z7pucLitLbtJSVhhlz1Tu/Xtp2nG6i68PBke8Elt7yhogZqI4UJ9WeBhQv2lb
+ IunA==
+X-Gm-Message-State: AOAM533xnQEC4EQztk1fUbh5+IVag/qHS0BvhtnJVaZgWI7v2/Fo6FlB
+ wrmzDrGLDp7g3/rBUIboHXOVdENRGd48IEQFONC1PZJ5mMQ=
+X-Google-Smtp-Source: ABdhPJzSZhQ3xbQtQE0dBtGxl9t0A/6chrBzECGWPpW9XP9U5KX+jeo4ttPYE/km08W5udXBcHvxsMEE6SPwsKa3mLw=
+X-Received: by 2002:a25:38c6:: with SMTP id
+ f189mr38947893yba.183.1617644823397; 
+ Mon, 05 Apr 2021 10:47:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="4AQSdZ92OjkaqPvH"
-Content-Disposition: inline
-In-Reply-To: <YF4tV+L71Lso94kT@latitude>
-X-Provags-ID: V03:K1:p1zHUkzRzxzWhOD4bcMwkzAZtO7KGswuN37odQTC0atpBMA8ci5
- LEc6MhivxABtKuMCX57keE9YN0S3rc6kPe6HJY6RfqY9PGU3iapjVthzFUtlMZJT9QUSvPU
- jSSPVdIwOI0/oUr7gk0brc3cmXvyCDFdyHHJ9cMW3tsYym96GHhDK23aMBtFvN1nBQHu+9B
- Ip1j6UZ6Ca1X5cDneGXNQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:LEYGygEwAss=:nAcSOgt9vVvnKzvM2NKjWi
- DWCgDTDGySGY/P0pl5rDlA75Jq/4JAYlwjaPbi4dfh/zrlHb3soauvWeUzueFKBNeVkQUFNDn
- zXTFx7FhJDMYA+aMUL4Yrw8RLOzPPoTPEESHx9JrQCAdf/alqdR4sNEWjxIhiCEpv4fO+zy9Z
- lJkP1v9om9FTqbrfabh5kvnCoxxisqFVBuQQtlXFtria89Mn7gSwDtl+RmudRXkffstv+ujOm
- mkPvk0lzpsBSDHC87FmYHtITnR9R7R/+4kzktGhQ+Fq8i7HTX3jkFEbkeSjaTkCCPtDNdRAs7
- k/vBnLyO/0IuZXDG2JwzRWIWa4J1o3+jqw6TkYeBumOJ/jZJOrQqa4F8LHv9rLOx5v0guDhfd
- 8zc2lx9V5rRDDQRnE2mJXURKln/di0722mI9VIVSEFhvpde87ZfrP41wRd0srDdvuFgPsE2mA
- pWynGs+eNMQmZwWq7x3XpcfVYeorfnfov06Wrvy/5SQux3iCUzabVbXygtvF0j5zSKx8nYGl7
- TrFrJM8pKQMOUPqntS4RC3aFY/r29Klae3Z4yvnlWLZcyYZ4YnQezQASj2pnst4umO6KZ7Tij
- Wmdp8Eq56U0JG67wISWEtcQXqc2ig+Q9MbXfm0k9cJo6NMNVgRHTkyhbHWct4Y5cvAlKPsdhK
- tiUlhJ4UPRgUpSyvgYWPWlkRYt3LRh1axUvaXqNBU0LUIChtqfupjXwK76DLF5+8VJlLV1b2A
- TN2Uvh3nzg3fV5xgmcaRsUE+Z5KZiqdWx2LWuZ7ykaQQSc5wFJZgzqRnOJ9vS4RWxvOfTJZQQ
- oy5X37tQdHvZrUlywakBKH80o2McRs+BRxSn0TlE2B0MixJq22k5hUJWNY5ClwZ8p9xqCBBs4
- JoaLwFGFReYWw9vGauMskXp/24sA1BMpo+EYmsz1aMjRsI/Shqew639tqmXExBGjVPbtF5RAM
- q4yA0bmPMG5uNRdXJOFCIMCdbD/VF4Ctv2voG0S4ihg40y6i5M4995a5Na7ddJXOTg+nRk9ua
- xr//z3T3EztUAKczBTVz2ZVEf9CaLkbeP/WOwCZQd3G9HTOgXZQWXxu4/QcMTGqwqxyEj3TE5
- OOU9GL8hZfitFi1eAKY4VjEUtHins3VnkEsH/BEYjE8OgB03+/zFhSAh29m7TseOu9A0l4xJ6
- iPh2k90ybYZCZ3ma9EJBnAZB+TAlOIfZk0EaWGRD2CoOjUX8/sfaSLwcoWM9jUoXzaxmnwXhq
- rwC9IXGN5eU41O0MG
+From: sandeep sharma <sandeepajesh@gmail.com>
+Date: Mon, 5 Apr 2021 23:16:51 +0530
+Message-ID: <CAEMunhAZTchE56EGZAa9JbHBUTUaAigKgM4MvNr3MCcB=pm-QA@mail.gmail.com>
+Subject: how to add a new user using ipmitool
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000012474005bf3d4962"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,60 +71,105 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Marc Zyngier <maz@kernel.org>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>,
- Russell King <linux@armlinux.org.uk>, Thomas Gleixner <tglx@linutronix.de>,
- linux-arm-kernel@lists.infradead.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--00000000000012474005bf3d4962
+Content-Type: text/plain; charset="UTF-8"
 
---4AQSdZ92OjkaqPvH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ We are working on a prototype based on ast2600  and can someone please
+help me with commands to create a user using ipmitool in openbmc? Is there
+any link which I can refer for all commands related to ipmi?
 
-On Fri, Mar 26, 2021 at 07:52:07PM +0100, Jonathan Neusch=C3=A4fer wrote:
-> On Wed, Mar 24, 2021 at 05:16:35PM +0000, Marc Zyngier wrote:
-> > On Sat, 20 Mar 2021 18:16:04 +0000, Jonathan Neusch=C3=A4fer <j.neuscha=
-efer@gmx.net> wrote:
-[...]
-> > > +	/* Disable (mask) all interrupts */
-> > > +	writel(0xffffffff, aic->regs + AIC_MDCR);
-> >=20
-> > Consider using relaxed accessors throughout this driver.
->=20
-> I'll read up on how to use them correctly.
+Steps I have tried:-
+root@cn81xx-obmc:~# ipmitool user summary 1
+Maximum IDs    : 15
+Enabled User Count  : 1
+Fixed Name Count    : 0
+root@cn81xx-obmc:~# ipmitool user list 1
+ID  Name     Callin  Link Auth IPMI Msg   Channel Priv Limit
+1   root             false   true       true       ADMINISTRATOR
+2                    true    false      false      NO ACCESS
+3                    true    false      false      NO ACCESS
+4                    true    false      false      NO ACCESS
+5                    true    false      false      NO ACCESS
+6                    true    false      false      NO ACCESS
+7                    true    false      false      NO ACCESS
+8                    true    false      false      NO ACCESS
+9                    true    false      false      NO ACCESS
+10                   true    false      false      NO ACCESS
+11                   true    false      false      NO ACCESS
+12                   true    false      false      NO ACCESS
+13                   true    false      false      NO ACCESS
+14                   true    false      false      NO ACCESS
+15                   true    false      false      NO ACCESS
+root@cn81xx-obmc:~# ipmitool user set name 2 newuser
+Set User Name command failed (user 2, name newuser): Unspecified error
+root@cn81xx-obmc:~# ipmitool user set name 2 newuser -vv
+Loading IANA PEN Registry...
+Running Get PICMG Properties my_addr 0x20, transit 0, target 0
+Error response 0xc1 from Get PICMG Properties
+Running Get VSO Capabilities my_addr 0x20, transit 0, target 0
+Invalid completion code received: Invalid command
+Acquire IPMB address
+Discovered IPMB address 0x0
+Interface address: my_addr 0x20 transit 0:0 target 0x20:0 ipmb_target 0
 
-Upon further consideration, I decided not to bother with relaxed MMIO
-access, because it doesn't make a difference on the target platform =E2=80=
-=94
-Nuvoton WPCM450 with ARM926 (ARMv5).
+Set User Name command failed (user 2, name newuser): Unspecified error
+root@cn81xx-obmc:~#
 
+-- 
+Thx-
+Sandeep S
 
-Best regards,
-Jonathan Neusch=C3=A4fer
+--00000000000012474005bf3d4962
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
---4AQSdZ92OjkaqPvH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmBrSBkACgkQCDBEmo7z
-X9svMA//YAXiLbUioLglHMBqqALp913Rk+qnWGFNbggq+N/o12D5AgmjEMuXRMqj
-9r2hi0SE0lMlyjpG+7Q70vFsMJKPiWMgvwpMLcxWaJLKGwL6759OW2jUBFrjwZbw
-Vg3eIVsojbGs/hzMc82tt8C4IX/W7VQQLm1EXAiV7sPGbxphtUNW0OzNCY6KxfmU
-5oe9klAgO+wONS78TNYK3Z9/o+036xkE4KuZFCpgZv8ix1HVwe2rThUkWoh732j/
-d9Nz3NPib84pW+UtVMuKFqvuLdT3j9QgdXV5cBVw04cHDhGfwsXyUDjATan4l5+Z
-9i6wmQ8IPXcH2pYfC+6bPjBDB2clfl7iUtS3wUPAdUDwlqi4CLt4dYr3PyspxlIv
-3YVsXQdQz69yibd1Y4UazSkGgTPZ9hSVYTUTfDPIU2XYPQPQjXytm6UZt0L9pGIk
-SGqgt7o/5Dfry/quguTYLhBZ0YrNFZwBsfSWVMqbEa7ulXqswCAtRQ7vcpaRpf0v
-2k7Rb6ATpA3ZCGUrued2urctadlw/JwTJb4+7/lnOS1AUpEjWbBmyWuhkcmBV5GW
-Kj2cSEwsFatxri77E5KNE1gSK/dp1PLuYaUEuh+WWBJkouYojtflNwKkl69Jd2Vp
-q1SupFHoy/jzmqJb6wrrvJJtyEHxB6og0uWNFFilj/fNpuw54cY=
-=javG
------END PGP SIGNATURE-----
-
---4AQSdZ92OjkaqPvH--
+PGRpdiBkaXI9Imx0ciI+DQoNCldlIGFyZSB3b3JraW5nIG9uIGEgcHJvdG90eXBlIGJhc2VkIG9u
+IGFzdDI2MDDCoCBhbmQgY2FuIHNvbWVvbmUgcGxlYXNlIGhlbHAgbWUgd2l0aCBjb21tYW5kcyB0
+byBjcmVhdGUgYSB1c2VyIHVzaW5nIGlwbWl0b29sIGluIG9wZW5ibWM/IElzIHRoZXJlIGFueSBs
+aW5rIHdoaWNoIEkgY2FuIHJlZmVyIGZvciBhbGwgY29tbWFuZHMgcmVsYXRlZCB0byBpcG1pPzxk
+aXY+PGJyPlN0ZXBzIEkgaGF2ZSB0cmllZDotPGJyPnJvb3RAY244MXh4LW9ibWM6fiMgaXBtaXRv
+b2wgdXNlciBzdW1tYXJ5IDE8YnI+TWF4aW11bSBJRHMJIMKgIMKgOiAxNTxicj5FbmFibGVkIFVz
+ZXIgQ291bnQgwqA6IDE8YnI+Rml4ZWQgTmFtZSBDb3VudCDCoCDCoDogMDxicj5yb290QGNuODF4
+eC1vYm1jOn4jIGlwbWl0b29sIHVzZXIgbGlzdCAxPGJyPklEIMKgTmFtZQkgwqAgwqAgQ2FsbGlu
+IMKgTGluayBBdXRoCUlQTUkgTXNnIMKgIENoYW5uZWwgUHJpdiBMaW1pdDxicj4xIMKgIHJvb3Qg
+wqAgwqAgwqAgwqAgwqAgwqAgZmFsc2UgwqAgdHJ1ZSDCoCDCoCDCoCB0cnVlIMKgIMKgIMKgIEFE
+TUlOSVNUUkFUT1I8YnI+MiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHRydWUgwqAgwqBm
+YWxzZSDCoCDCoCDCoGZhbHNlIMKgIMKgIMKgTk8gQUNDRVNTPGJyPjMgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqB0cnVlIMKgIMKgZmFsc2UgwqAgwqAgwqBmYWxzZSDCoCDCoCDCoE5PIEFD
+Q0VTUzxicj40IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgdHJ1ZSDCoCDCoGZhbHNlIMKg
+IMKgIMKgZmFsc2UgwqAgwqAgwqBOTyBBQ0NFU1M8YnI+NSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoHRydWUgwqAgwqBmYWxzZSDCoCDCoCDCoGZhbHNlIMKgIMKgIMKgTk8gQUNDRVNTPGJy
+PjYgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB0cnVlIMKgIMKgZmFsc2UgwqAgwqAgwqBm
+YWxzZSDCoCDCoCDCoE5PIEFDQ0VTUzxicj43IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+dHJ1ZSDCoCDCoGZhbHNlIMKgIMKgIMKgZmFsc2UgwqAgwqAgwqBOTyBBQ0NFU1M8YnI+OCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHRydWUgwqAgwqBmYWxzZSDCoCDCoCDCoGZhbHNlIMKg
+IMKgIMKgTk8gQUNDRVNTPGJyPjkgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB0cnVlIMKg
+IMKgZmFsc2UgwqAgwqAgwqBmYWxzZSDCoCDCoCDCoE5PIEFDQ0VTUzxicj4xMCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCB0cnVlIMKgIMKgZmFsc2UgwqAgwqAgwqBmYWxzZSDCoCDCoCDCoE5P
+IEFDQ0VTUzxicj4xMSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB0cnVlIMKgIMKgZmFsc2Ug
+wqAgwqAgwqBmYWxzZSDCoCDCoCDCoE5PIEFDQ0VTUzxicj4xMiDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCB0cnVlIMKgIMKgZmFsc2UgwqAgwqAgwqBmYWxzZSDCoCDCoCDCoE5PIEFDQ0VTUzxi
+cj4xMyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB0cnVlIMKgIMKgZmFsc2UgwqAgwqAgwqBm
+YWxzZSDCoCDCoCDCoE5PIEFDQ0VTUzxicj4xNCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB0
+cnVlIMKgIMKgZmFsc2UgwqAgwqAgwqBmYWxzZSDCoCDCoCDCoE5PIEFDQ0VTUzxicj4xNSDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB0cnVlIMKgIMKgZmFsc2UgwqAgwqAgwqBmYWxzZSDCoCDC
+oCDCoE5PIEFDQ0VTUzxicj5yb290QGNuODF4eC1vYm1jOn4jIGlwbWl0b29sIHVzZXIgc2V0IG5h
+bWUgMiBuZXd1c2VyIMKgIMKgIMKgIDxicj5TZXQgVXNlciBOYW1lIGNvbW1hbmQgZmFpbGVkICh1
+c2VyIDIsIG5hbWUgbmV3dXNlcik6IFVuc3BlY2lmaWVkIGVycm9yPGJyPnJvb3RAY244MXh4LW9i
+bWM6fiMgaXBtaXRvb2wgdXNlciBzZXQgbmFtZSAyIG5ld3VzZXIgLXZ2IDxicj5Mb2FkaW5nIElB
+TkEgUEVOIFJlZ2lzdHJ5Li4uPGJyPlJ1bm5pbmcgR2V0IFBJQ01HIFByb3BlcnRpZXMgbXlfYWRk
+ciAweDIwLCB0cmFuc2l0IDAsIHRhcmdldCAwPGJyPkVycm9yIHJlc3BvbnNlIDB4YzEgZnJvbSBH
+ZXQgUElDTUcgUHJvcGVydGllczxicj5SdW5uaW5nIEdldCBWU08gQ2FwYWJpbGl0aWVzIG15X2Fk
+ZHIgMHgyMCwgdHJhbnNpdCAwLCB0YXJnZXQgMDxicj5JbnZhbGlkIGNvbXBsZXRpb24gY29kZSBy
+ZWNlaXZlZDogSW52YWxpZCBjb21tYW5kPGJyPkFjcXVpcmUgSVBNQiBhZGRyZXNzPGJyPkRpc2Nv
+dmVyZWQgSVBNQiBhZGRyZXNzIDB4MDxicj5JbnRlcmZhY2UgYWRkcmVzczogbXlfYWRkciAweDIw
+IHRyYW5zaXQgMDowIHRhcmdldCAweDIwOjAgaXBtYl90YXJnZXQgMDxicj48YnI+U2V0IFVzZXIg
+TmFtZSBjb21tYW5kIGZhaWxlZCAodXNlciAyLCBuYW1lIG5ld3VzZXIpOiBVbnNwZWNpZmllZCBl
+cnJvcjxicj5yb290QGNuODF4eC1vYm1jOn4jwqA8YnIgY2xlYXI9ImFsbCI+PGRpdj48YnI+PC9k
+aXY+LS0gPGJyPjxkaXYgZGlyPSJsdHIiIGNsYXNzPSJnbWFpbF9zaWduYXR1cmUiIGRhdGEtc21h
+cnRtYWlsPSJnbWFpbF9zaWduYXR1cmUiPjxkaXYgZGlyPSJsdHIiPjxkaXY+VGh4LTwvZGl2Pjxk
+aXY+U2FuZGVlcCBTPGJyPjwvZGl2PjwvZGl2PjwvZGl2PjwvZGl2PjwvZGl2Pg0K
+--00000000000012474005bf3d4962--
