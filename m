@@ -1,77 +1,97 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D5AB355365
-	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 14:14:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EF2A3554DF
+	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 15:21:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FF5zd14Czz30GN
-	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 22:14:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FF7TX4hFDz30B4
+	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 23:21:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=bKBYLMBD;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qC+sQs3L;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.21; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=bKBYLMBD; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FF5xV0LbFz3bpw
- for <openbmc@lists.ozlabs.org>; Tue,  6 Apr 2021 22:12:13 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1617711120;
- bh=PGxh9D7zcvvJfUqYSQVc04GxFHyRLS1XqsJU+VlT6BU=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bKBYLMBDeSCxAcVIW5xE2Jue2hoG9IDD1piz3qC8oXu+gpG/LlmYEG/USqJH1+Ruy
- 0cnoa4SC222UNAOlXewZANqwkKg4omW4QxtNXrxVhY/oYTMmQknC+nBT/u/K8ON8GT
- SkOhuQrDradd8FA28Tj0hA/ZyljMP1ZIJQYQV3RE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MNbox-1lF6OK3aG3-00P4HB; Tue, 06
- Apr 2021 14:11:59 +0200
-From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH v2 10/10] MAINTAINERS: Add entry for Nuvoton WPCM450
-Date: Tue,  6 Apr 2021 14:09:21 +0200
-Message-Id: <20210406120921.2484986-11-j.neuschaefer@gmx.net>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210406120921.2484986-1-j.neuschaefer@gmx.net>
-References: <20210406120921.2484986-1-j.neuschaefer@gmx.net>
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=qC+sQs3L; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FF7TJ1DsMz2yYx
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Apr 2021 23:21:23 +1000 (AEST)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 136D53I7104256; Tue, 6 Apr 2021 09:21:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=k2jns/F88LeSyodYkbox75sZ+cQPdV8uQxHh4yoWJlU=;
+ b=qC+sQs3Le0Qqp3cl1KHayMsW2mAo+wgQD3YyXifF6+/S64XFj+lZ5MgVXBjKDYZiV/r8
+ HP6P/c6XCFZ8xRciOua63kK4lGoarLkhrk47qXVa/yELjzsRGwrZF70NEKQrJa4mzfXn
+ xjqkD2luBhUsmXGP98Q5licQkdoc8arZpAp3xXh4saOli5A6Osr4v7glEp50mA+vJL8n
+ 7p76nZ4CGbVEmAH4S3a3ldxag+jZIF9gD3JIFkvNII0iDsnL99nkY2+Vb0YBzQavxExv
+ 8n65r6ZE5pIm8JHOefT6mgUgpqgCXa7BsT6qArxO8Gs/mCthUHVTTDKAi9LsuHY5Dbrx 7g== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 37q605b2xs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Apr 2021 09:21:11 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 136DHeuv016945;
+ Tue, 6 Apr 2021 13:21:11 GMT
+Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
+ [9.57.198.27]) by ppma02dal.us.ibm.com with ESMTP id 37q3293u3s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Apr 2021 13:21:11 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 136DLAh431588862
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 6 Apr 2021 13:21:10 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 74457AC05F;
+ Tue,  6 Apr 2021 13:21:10 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3ADF9AC05E;
+ Tue,  6 Apr 2021 13:21:09 +0000 (GMT)
+Received: from [9.80.197.108] (unknown [9.80.197.108])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue,  6 Apr 2021 13:21:09 +0000 (GMT)
+Subject: Re: [OE-core] [PATCH v2 0/4] u-boot: Support for SPL verified boot
+To: Richard Purdie <richard.purdie@linuxfoundation.org>,
+ openembedded-core@lists.openembedded.org
+References: <20210326201410.13906-1-klaus@linux.vnet.ibm.com>
+ <f303476a66be3cc3beea01d3a71e2db1ef1d44c4.camel@linuxfoundation.org>
+From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+Message-ID: <c6e39587-2a84-fe75-5311-81be9f5fae84@linux.vnet.ibm.com>
+Date: Tue, 6 Apr 2021 10:21:07 -0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Z2EhOb9FQX5ezyiU0ShDDMZpCUtQItPMmkySsL3c4jvAh0iqe1i
- VRxIGpT+4knpL0z6HdEIqplXq5YVeI37Bdd5v32NJj/g4rsyIcQpumSoatW3iycfCmfoMt2
- S33LW+m8ELPFpycVzmS5gRrnl2cRVAhfWBUUsnOHuNv0nJy/YpAcM/rHkdTzlv5xZJqYmr+
- d+FXrAzfNRnRVt7RX7vdw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:v2DQm/L9XBw=:MYUuXxFKuLsUJKbs5nuwnO
- ozET949FjArxYHoyZOx3v0V48yhi1G3AnnpVcycuIfaItz1ZuqLhSZu2i2IwOAgWgpPLpqCnP
- OJf+22P1GfiiBCz6/ANtmG3gfd7xpvUIkYC+AushY8UCMIrtCGd1JK/b/eKpl4xPvWRDTniTd
- pqDbMb7G/Ksf5sN6id7BTuhwO3v9VSVWxosHr6tAOQCEQ9ITn98UUD1y0INIjjZf7qV2rERum
- 7/8G2Q/Cyccpk/2mis5LOIwG/K6eK3oKONZNA/obyV/oi9dGh0JBQqr26C32TupIoaMTdYFQC
- nTy47+jzifSKGI62t9r2bbIftyjJgCcweF5FFlkiYsMLQLy2WfmEu31xlert+Tof6Jx1oyC/w
- vVyBjCR3mNe2JAeUNny0/a1tLODxkJonw9piVjdgfBIocxMVX+fzBNWjGJQbjfsFahsgKV6pC
- 0yPjLbuhFnlJBfnetKWoCowZnrHBO9fsFECfFWNQod9OZqwe2qzIAagsAGL9R6VEBl26UBjfT
- fblRlvqwEhPNRmjrRLSAJ575NyZvg0wreccCfP9BVlxZ4yKxFFcEYujqLkl7Yy2zK/2kZeWVL
- PokvXkgkoMf8S7u9003114caGRPY0fO+x2qObzYQYvTVRA+MEsUX14zpmmFBCVXFbydHA3CdK
- xbg6C7h386DrBwTpvse4N4Z4CSd0VTrFEI/ukevAjt2XczE7504uR83M4ym0zJ6cU/FOaVi1z
- L1Tk6RcDfcazkfEaT/OaVME68HP42S5ZoOBzom6YlyOpj6HXf1FFEaoKHRYLOE++SixFZh956
- fWnMk6KGfGTMiDHgOEXjOOBVXTkBj70KHXkYMlvQwG17dE4ePOY+jcx7ZWYVEsZDNbnzAEw7z
- VALr1xI+2UuHyZzzgmt0OCCa6YNEWKjr2jwmEi3q1QZP/FIrG8UfATEhoT9+3h3uwITm1zqH+
- reC1UH8SJyufzAQ7VewHPLTKqSH/DKCqaq9fJcxBpUi08+jJLRo4JqUJruU2GZ77Zm60TtSSI
- FHlFsKeS9hzelOOqk5Sk6AZfL0sdXRzGeJiuhAw9Tg7kwdu3fO/cPFM6nZwgG2h6VSrN85GfH
- 5JWNUwoGl9hAHZE+brc2tYAWWkoon3XpieOb5ZiD3QDBrBxCeXf21tKzSucn48B/2VkLxPgWk
- WEh2yYB1GmgWvbJXTFWWebrLXIrpRzXlO55a4/RqA7S9rF7F5NGQiN31ZYkLfWLZq5G1gr/TS
- f1AzD5stV750d0N7e
+In-Reply-To: <f303476a66be3cc3beea01d3a71e2db1ef1d44c4.camel@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -mbGHgxatpX_t03fD6ESbt51c0knIeJl
+X-Proofpoint-GUID: -mbGHgxatpX_t03fD6ESbt51c0knIeJl
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-04-06_03:2021-04-01,
+ 2021-04-06 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 priorityscore=1501
+ adultscore=0 suspectscore=0 spamscore=0 phishscore=0 mlxlogscore=999
+ impostorscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104030000 definitions=main-2104060090
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,44 +103,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc: andrew@aj.id.au, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I am adding myself as the maintainer of WPCM450-related code.
 
-Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-=2D--
 
-v2:
-- Instead of expanding the NPCM entry, I'm adding a new one only for
-  WPCM450.
-=2D--
- MAINTAINERS | 9 +++++++++
- 1 file changed, 9 insertions(+)
+On 4/6/2021 7:57 AM, Richard Purdie wrote:
+> On Fri, 2021-03-26 at 17:14 -0300, Klaus Heinrich Kiwi wrote:
+>> This patch series aims at extending U-Boot's verified boot support to
+>> also include SPL.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d92f85ca831d3..661770e8e6fc1 100644
-=2D-- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2194,6 +2194,15 @@ F:	drivers/*/*npcm*
- F:	drivers/*/*/*npcm*
- F:	include/dt-bindings/clock/nuvoton,npcm7xx-clock.h
+>> Signed-off-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+> 
+> I've merged this, I wanted to say a big thanks for writing some test cases
+> for these code paths. It should start to help a lot in this area in the
+> future. I'm going to be asking that future fixes in this area add/improve
+> test cases to cover issues too.
+> 
 
-+ARM/NUVOTON WPCM450 ARCHITECTURE
-+M:	Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-+L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/*/*wpcm*
-+F:	arch/arm/boot/dts/nuvoton-wpcm450*
-+F:	arch/arm/mach-npcm/wpcm450.c
-+F:	drivers/*/*wpcm*
-+
- ARM/OPENMOKO NEO FREERUNNER (GTA02) MACHINE SUPPORT
- L:	openmoko-kernel@lists.openmoko.org (subscribers-only)
- S:	Orphan
-=2D-
-2.30.2
 
+Thanks Richard.
+
+FYI, there's a patch I sent recently with relatively important fixes (for some
+corner cases) that should apply on top of the patches above:
+
+Subject: [PATCH] uboot: Fixes SPL verified boot on corner cases
+Date: Mar 31, 2021
+
+I'd recommend applying that patch as well, before yocto / other projects start
+pulling from oe-core.
+
+Thanks,
+
+  -Klaus
+
+-- 
+Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
