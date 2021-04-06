@@ -2,139 +2,105 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E72203557A7
-	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 17:23:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AB8B3557C2
+	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 17:28:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FFBBK6MDQz30G7
-	for <lists+openbmc@lfdr.de>; Wed,  7 Apr 2021 01:23:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FFBHj2mSpz30BN
+	for <lists+openbmc@lfdr.de>; Wed,  7 Apr 2021 01:28:17 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=OEs0NZKR;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=bl8glDeV;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.244.124;
- helo=nam12-mw2-obe.outbound.protection.outlook.com;
- envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=OEs0NZKR; 
- dkim-atps=neutral
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com
- (mail-mw2nam12on2124.outbound.protection.outlook.com [40.107.244.124])
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=bl8glDeV; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FFBB441qcz2xff
- for <openbmc@lists.ozlabs.org>; Wed,  7 Apr 2021 01:23:23 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BuNg4f+0rf1CuUZjj6D00F1S40EUeqkHkmuU84A492S+Louh4+KsKFgEfcjMdOVMc8IxMX/PqNMghskMsD9+nBQdkKrm+s7TDEuEBfwGmu0T9HAaq68W72FZtBIFIlApaTY/O8VeDqKzaK33n6pqLu+z/Bobf9s/i53gin4uuhqgtTnvciwBX+M6Ac6eNPKQ1PAuvHz8AEibWNzhhalq32yeJlX5uwGUd47+9JRFBh9KmduwcSGO99vlWNVFAVNpkEdulIWHrAOyEUJPDyaIqR8EpHmLKmQPQB7gGIjJ3175/ubVVTu4hs7lc1BplCxzxGX9pcVw5hd0qC8zMPEQkg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eBH2wbSo055ycysp3ZyW3Jfk2ZNAvRqC6TbaqbeoPTA=;
- b=ni6qk5UuZD1+SswF5XvLWl6a+KmFMfQsL1KWLwLMKD9yDZ5NhtCQZJmKHcwkDkeeyF8+L3b0Vr9xuitW3Bux6acQ6Di4lLF3GZq4r9KW8GCXN6Y0lEgvhwHjS0yhtXibTmz0BRUIIy0TOo77v+EexrJaklpHBR4FaX9tlG0OEFcUgTaWHzpOD5pTyWAHeWaVtAKtGa9uKO5Vdu2bFmP3g48RI6L9OWFx1F6wvigh/TYJnAWhoDFXVuTzCxkTSWX4/2EW5N3KPpgF9bBr+R0mKAR57wJrSl5r/TLfrwCX3l3tSdFeKofwsMXvtZl7Bgz9CPfKYdNIsDMW4+FdXywutQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eBH2wbSo055ycysp3ZyW3Jfk2ZNAvRqC6TbaqbeoPTA=;
- b=OEs0NZKRGWM8ipcoh8QO2CbyCMzdLxGjCeP7pqYyvlAaA2YIIqOUL+6xl1kVFNPg/+EHGdZE6+RHzQMcqLZHfO86okj3noIJ371pKjc99wD5UQRJw8xIg7AhaSbR3XTLnd/29PDusyePyexicf1zsichc+WQDEIRwxA3I7BPJzU=
-Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
- DM5PR01MB2570.prod.exchangelabs.com (2603:10b6:3:42::8) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3999.26; Tue, 6 Apr 2021 15:23:17 +0000
-Received: from DM6PR01MB5145.prod.exchangelabs.com
- ([fe80::fd97:f560:f2cf:d58d]) by DM6PR01MB5145.prod.exchangelabs.com
- ([fe80::fd97:f560:f2cf:d58d%5]) with mapi id 15.20.3999.032; Tue, 6 Apr 2021
- 15:23:17 +0000
-From: Thu Nguyen OS <thu@os.amperecomputing.com>
-To: Matt Spinler <mspinler@linux.ibm.com>, Joseph Reynolds
- <jrey@linux.ibm.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FFBHR3snQz2xZl
+ for <openbmc@lists.ozlabs.org>; Wed,  7 Apr 2021 01:28:02 +1000 (AEST)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 136F4ir3022695; Tue, 6 Apr 2021 11:27:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=Fs+uSZq46+9yz3VdXCrc1RQC0iWgVziT+Nr32TTTmK0=;
+ b=bl8glDeVDxTT8sJ66mN5it2ph7yrA5hE8kYYi/L2KeXfJ8WWqgqbAuoTQXdAglbhr5Nc
+ 9PGV4jVTXvgGgh/LRi7sHb8AIwVCMjOF8+VQKXniUbyF5mmotorN4btfvRCA7SAuUVGv
+ xVwb+3S0J3+MTAXrOqYs8KPw/Geb1vdrA6JYx4u9fEg7KaALolqYfRiwJTXr+RGtQiLz
+ 8K0DVRq8EToqGlpSUEluNVvKRMqqIRxivSm+KnGud5nqNhj2IOcn58p+8VSZ/BsTNSVO
+ 4JQ0CrlKIGQOAE5C4F/TWb0B9Kv45Z3pKbVQIeZc69xN8XP1+hzCvnRD9HvHPs4ENF/r 5g== 
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 37rsxa99xe-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Apr 2021 11:27:55 -0400
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 136FNQQb023901;
+ Tue, 6 Apr 2021 15:27:54 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma03wdc.us.ibm.com with ESMTP id 37qbgye81x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Apr 2021 15:27:54 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 136FRsVU33358090
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 6 Apr 2021 15:27:54 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C18BAC05E;
+ Tue,  6 Apr 2021 15:27:54 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DC5C6AC05B;
+ Tue,  6 Apr 2021 15:27:53 +0000 (GMT)
+Received: from [9.160.119.78] (unknown [9.160.119.78])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue,  6 Apr 2021 15:27:53 +0000 (GMT)
 Subject: Re: The common solution to support bind/unbind the hwmon driver base
  on the host state.
-Thread-Topic: The common solution to support bind/unbind the hwmon driver base
- on the host state.
-Thread-Index: AQHXJdOU6ZunssCJTkiHUAYwame9R6qeRj+AgAMNx4CABLrDAIAAeGaA//+cW4CAAfevAA==
-Date: Tue, 6 Apr 2021 15:23:17 +0000
-Message-ID: <3E440C07-3F1F-48BF-A40C-F8E8A38350B5@amperemail.onmicrosoft.com>
+To: Thu Nguyen OS <thu@os.amperecomputing.com>,
+ Joseph Reynolds <jrey@linux.ibm.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 References: <7252DA19-35E9-4A14-A7DF-7BBC54A312C2@amperemail.onmicrosoft.com>
  <12cb9e34-d110-1575-0b39-296083bd6410@linux.ibm.com>
  <7843F2AF-30DE-4F78-B7C1-2BBDC99689B5@amperemail.onmicrosoft.com>
  <a988408c-64ad-35e6-eb12-2c2babf802c0@linux.ibm.com>
  <2E3157F2-E7D6-49B6-A015-A9DA00E6CD78@amperemail.onmicrosoft.com>
  <2eeceb70-2ca6-59ec-6545-35e08782fb29@linux.ibm.com>
-In-Reply-To: <2eeceb70-2ca6-59ec-6545-35e08782fb29@linux.ibm.com>
-Accept-Language: en-US
+ <3E440C07-3F1F-48BF-A40C-F8E8A38350B5@amperemail.onmicrosoft.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <1fb3e1d6-e7ed-6aef-dbfa-111e42ed5fa6@linux.ibm.com>
+Date: Tue, 6 Apr 2021 10:27:53 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
+In-Reply-To: <3E440C07-3F1F-48BF-A40C-F8E8A38350B5@amperemail.onmicrosoft.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: linux.ibm.com; dkim=none (message not signed)
- header.d=none;linux.ibm.com; dmarc=none action=none
- header.from=os.amperecomputing.com;
-x-originating-ip: [2402:800:6344:7949:c4d7:b1a3:559f:d358]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: d3e63063-31f1-463b-3972-08d8f90fe787
-x-ms-traffictypediagnostic: DM5PR01MB2570:
-x-microsoft-antispam-prvs: <DM5PR01MB2570326C8D886B9772917E0F90769@DM5PR01MB2570.prod.exchangelabs.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 6UJ0946FZaBi+zvJWMYgLwLYXiIc7ni9mhmStFfpNPGSjLts8X0yW1GVN45K4SSW4wl9DtR4vHLzibDLGrlW22dVPZcdIIBt7C5zjt2j1HXXYqv9Xf51zQxyOAOhd9Vlzz3qHOk6IkF4JZHpCUxNhjdWbSPpTCAqIugery0LhTOHv74PPJr2Okx3/KC67pfvhpdt2P+ByQNQ+jOtcxnGFw3+KjHF1fmZ9cJVKZbj04saxC7tZjP18awhixbp3vDOi75j6n/iY8uIvqYQfIPyOG74hCCURFkLeOpbNghRLxY/n4o9UvJ2LI+WsZUJHj0eRoiLj2WOnZeeq98i/whiqk+bvAbVOTFylrosEnvioduoIyC4ECnRZG39vdLxr4AgZ86dR52cHzBQ9rQ9PYev6RKIbxGJ6yn2g4gFSz5mvkoWIoxw0+lPDvmoo6Sm+e8a36GXQaHE+j6g3sWVdXcHyqGJtO7OOB7IM13B2g+aaXDps+VN6BDlfjSRZH0ZlAcl/Qp52PcmgFDmO+N+L23Ns1EY6jRzM2z+01F7HTDiVKHfUN0ELVavoyf0EeCUP9LsILqQ1Y7udK7FOlh5VDm61wBDaUQpdsyNpS+0Rm/UNlwOlzmFh2B3RuEv79Zq6ERbCTvC6JPIoQTxTGKtB071F+0UmnbgHnyYxI8lbz7vBsdPAnTMoD1rHoIGmil6T/clkAyxH99/itQc5dLE3Q3vfoSym4B8+gOl9zebPe3WdwA=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(396003)(376002)(366004)(346002)(39850400004)(136003)(966005)(6512007)(9686003)(66946007)(478600001)(6486002)(6506007)(66446008)(64756008)(53546011)(316002)(110136005)(66476007)(5660300002)(71200400001)(83380400001)(66556008)(2906002)(38100700001)(8676002)(186003)(86362001)(8936002)(33656002)(76116006)(91956017);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?dG5tMXYvOWpYb3VLTndaUjhWVlJuY0pSc0pCRnkwTHBoME9nNndYc2dPUkdp?=
- =?utf-8?B?UjBud0FsUTErV3NoMUxacFB5MElMUVlwclYxWktaYnVidTdVQ1BoeGgramdu?=
- =?utf-8?B?d1BQOWcrU0R0SDNzcm1hYTl6Y0NyVStJVmFIbjd1T0xOdnkvQ2xmVkxRRmhW?=
- =?utf-8?B?dHdtbG1xZzhoTXZUc2RYc05oMG9xN2s0S216cytEQ3cxY0JJK1cyWmJBVUR2?=
- =?utf-8?B?YlV5YVJ0TlI3aUJsTEJoNFpCdk9LZ1BIeCtmdytVSHRLM0Z2V0JISWxOckVz?=
- =?utf-8?B?MWpoeGJmUzZ6bFhibjBLTUxTcWh6Z0JjWkJJdVVBK2Q0bUtRK0ZUelRpeGhW?=
- =?utf-8?B?ZWQyNlMvNFArN09ValJNamlldi9jblFqQ05sd0pvYVkrVWJUYS9zaFN6eW9F?=
- =?utf-8?B?eVlBTDVtblMvekNKWGxtTDY5WHZhaEVXZE8vbVBReUs1WFl5YWhsRFZTSUxh?=
- =?utf-8?B?UnF6R3NpQWdyTjV3eUZRSnNzOFhNVlNCOGN0TzlNN2dKcUN4dzdDODRqcUUv?=
- =?utf-8?B?NjJaYWxNbCtnaXlLaUJUeFFRQ1pESGVxR0tSK0JZZmNvSFdQenZjUlo0bE9L?=
- =?utf-8?B?b1A1U2JXcVBmcGVlaTROVHh1Nlp6L0dTaExLem1hZFhMMEJzQkJoRkRSYnZH?=
- =?utf-8?B?QzVlM2QybFFCVmtDdVlaSjZuM0FjczZuMk5SdWNha3l4OXozNzZ0S1ppajlY?=
- =?utf-8?B?NXd3UlNJQW1NaVVpc29oOGwrQ0dCNm0xRTJPRWlKVy9HanJNRXdXNTNHR1Y2?=
- =?utf-8?B?OWtJd05XcnN4WnMyeHlrajUvLzlsVG1XM1JWSEg5QUJZUFlFZ3BKZzdtbzdB?=
- =?utf-8?B?V01BWlM4K0lacU1nKzdhMzZBNHdFTThCa1B0cU4xYitUVXduRjV2RXgzUm1l?=
- =?utf-8?B?L0xQVVRJcDVEUUVrSzRWMUtCMThpRmpLbjdVV1REU0crbWErb0dpMjF3Q3VC?=
- =?utf-8?B?YlFJcHdRNkVoT2xBYnZQZzRoV1ljSlhwbXpIcDlFOFpPeFc2TmZIVTJscnVT?=
- =?utf-8?B?amZjU3dhYmlCejZnbXdZN3JUbDBVNktKL3owN0JkcjZLVHpyamMvM0NNK1Fl?=
- =?utf-8?B?Mkt4aGlZL2Z6QkdXMFJaQ2NhOGE4WlM5dUlOcEpsM1EwdTFuRC8rRi9meUFv?=
- =?utf-8?B?Zk1rNS9kUXR5dE9qcG9GZStRUjQ3SitpSktQMjlyb2xhYWE2SkxMWmgxbW9n?=
- =?utf-8?B?WmdkNTFrcWIzQTdOSFBTOUVKVTlTaGx5T1JtU1NnMjlFeENBVEhCZjJFcmxs?=
- =?utf-8?B?VnZaQnRkNTdBbHFJQ2lsL0t2SllyOVpyeTgxWjA5WnB3TXFyYnJtM1RHWmQr?=
- =?utf-8?B?TmZ6TlQ0ODhBNU9yd2xLamtrYzN2di9CcFZHK1hLSTNxSnVFY29wT2hvTCtq?=
- =?utf-8?B?S2xNMU1NSFRWcjdYZWpWQnlSWVRFcCtUNkZTNHhlNkhSemkyVzdJckwvVTFr?=
- =?utf-8?B?MnB5bU54MzdrNWRvTy9oeFBqOWg0ajh2Vk5yaFptSDVIVmhyZndBbkpmbGM4?=
- =?utf-8?B?Q212NXVLUzFmRmV5YlZ3WGZvMnR3MmtaaTNoTm5HeklCazJnRGhxRVVYNTYw?=
- =?utf-8?B?emtlb0V2Mk9laHhMM3BDYUQ5T3Ftc2tiQzJ1NEQ2azRMSXpLdEZKMjJMRzU5?=
- =?utf-8?B?eTl5S1FzU2pIcUgrZUMrSVVPdFVpQXRYaThmSGYyNXloWXhHQ1ZQSGtXb1Rl?=
- =?utf-8?B?R0RCcnpFZHBiTzFIWjdhQk5Mdmo5YXlxdkVUZUNPc09QUWV5Sm90aENkeS9w?=
- =?utf-8?B?ekhMeTRiYUtteDViVE5Kai83di9HckpJTXVsVDYvaklkRUJjOHFnby92b09T?=
- =?utf-8?B?ME1KYytha2RXTEM4am1QdElwNUwrVy9lNWpQNUZtZHNhSUR3UXdJNStvQjZj?=
- =?utf-8?Q?iytrbtwhFiwat?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <563D72EB88AC014588F9DD5956EA335B@prod.exchangelabs.com>
-Content-Transfer-Encoding: base64
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: u3D5OdgybW2Lc3TYFqmULxVKte2Dmwep
+X-Proofpoint-GUID: u3D5OdgybW2Lc3TYFqmULxVKte2Dmwep
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d3e63063-31f1-463b-3972-08d8f90fe787
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Apr 2021 15:23:17.6160 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 8gt1KTAB1xWLDZiE9dwd1SzB40tlzWHd+q5jKOjnwznki8vXTZfhUwyf0PUayLpSjzHslCcwyrI6EXWasbcrYw/fp6sFUiYyYb3JrU6fksw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR01MB2570
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.761
+ definitions=2021-04-06_04:2021-04-01,
+ 2021-04-06 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 mlxlogscore=999 adultscore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104030000 definitions=main-2104060102
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -149,115 +115,164 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-TGV0IG1lIHRoaW5rIGFib3V0ICJwdXR0aW5nIGl0IGludG8gcGhvc3Bob3ItaHdtb24iLg0KVGhl
-cmUgYXJlIHR3byBwcm9ibGVtIHdpdGggdGhpczoNCjEuIEN1cnJlbnRseSBwaG9zcGhvci1od21v
-biBzdGFydCBiZWZvcmUgcGhvc3Bob3Itc3RhdGUtbWFuYWdlciBjcmVhdGUgQ3VycmVudEhvc3RT
-dGF0ZSBkYnVzIHByb3BlcnR5LiBTbyB0aGVyZSBpcyB0aGUgc2hvcnQgdGltZSB3aGljaCB3ZSBj
-YW4ndCBhY2Nlc3MgdGhpcyBwcm9wZXJ0eSB0byBrbm93IHRoZSBob3N0IHN0YXRlLg0KMi4gV2Ug
-bmVlZCBhZGQgb25lIG9yIHNvbWUgb3B0aW9ucyBpbiBzZW5zb3IgY29uZmlndXJhdGlvbiBmaWxl
-IHRvIGRpZmZlcmVuY2UgdGhlIGJpbmRlZC91bmJpbmRlZCAgZHJpdmVycyB3aXRoIHRoZSBub3Jt
-YWwgb25lLg0KDQpSZWdhcmRzLg0KVGh1IE5ndXllbi4gDQoNCu+7v09uIDA1LzA0LzIwMjEsIDIz
-OjIwLCAiTWF0dCBTcGlubGVyIiA8bXNwaW5sZXJAbGludXguaWJtLmNvbT4gd3JvdGU6DQoNCg0K
-DQogICAgT24gNC81LzIwMjEgMTA6MTcgQU0sIFRodSBOZ3V5ZW4gT1Mgd3JvdGU6DQogICAgPiBT
-dXJlLCBJIHdpbGwgcHJlcGFyZSB0aGUgY29kZS4NCiAgICA+DQogICAgPiAxLiBEbyB5b3Ugc3Vn
-Z2VzdCB0aGUgbmFtZSBvZiByZXBvPyBJIHRob3VnaCB3ZSBjYW4gdXNlIHBob3NwaG9yLWRyaXZl
-ci1iaW5kZXIuDQoNCiAgICBBdCBvbmUgcG9pbnQsIHRoZXJlIHdhcyBnb2luZyB0byBiZSBhbiBv
-ZmZpY2lhbCB3YXkgdG8gYXNrIHdoZXJlIG5ldyANCiAgICBmdW5jdGlvbmFsaXR5IHNob3VsZCBn
-byAtIA0KICAgIGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL29wZW5ibWMvMjAyMTAxMTEyMjA5MTku
-endjNzI3dmJ3YzRpdG03aEB0aGlua3BhZC5mdXp6aWVzcXVpcnJlbC5jb20vLiANCiAgICBJIGNh
-bid0IHJlbWVtYmVyIHNlZWluZyBhIHdheSB0byBtYWtlIHRoZXNlIHJlcXVlc3RzIHRob3VnaC4g
-IE1heWJlIEJyYWQgDQogICAgY2FuIGNoaW1lIGluLg0KDQogICAgSG93IGFib3V0IGp1c3QgcHV0
-IGl0IGludG8gdGhlIHRoZSBwaG9zcGhvci1od21vbiByZXBvPw0KDQogICAgPiAyLiBCZWxvdyBp
-cyBmb3JtYXQgb2YgdGhlIGNvbmZpZ3VyYXRpb24gZmlsZSB3aGljaCBJJ20gdXNpbmcuDQogICAg
-PiB7DQogICAgPiAgICAgICAgICJob3N0RHJpdmVycyIgOg0KICAgID4gICAgICAgICB7DQogICAg
-PiAgICAgICAgICAgICAgICAiYmluZERlbGF5IiA6IDAsDQogICAgPiAgICAgICAgICAgICAgICAi
-dW5iaW5kRGVsYXkiIDogMCwNCiAgICA+ICAgICAgICAgICAgICAgICJkcml2ZXJzIiA6DQogICAg
-PiAgICAgICAgICAgICAgICBbDQogICAgPiAgICAgICAgICAgICAgICAgICAgICAgew0KICAgID4g
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFtZSIgOiAiIiwNCiAgICA+ICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgInBhdGgiIDogIiINCiAgICA+ICAgICAgICAgICAgICAgICAg
-ICAgICB9LA0KICAgID4gICAgICAgICAgICAgICAgICAgICAgIHsNCiAgICA+ICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIm5hbWUiIDogIiIsDQogICAgPiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICJwYXRoIiA6ICIiDQogICAgPiAgICAgICAgICAgICAgICAgICAgICAgfQ0KICAg
-ID4gICAgICAgICAgICAgICAgXQ0KICAgID4gICAgICAgICB9LA0KICAgID4gICAgICAgICAicG93
-ZXJEcml2ZXJzIiA6DQogICAgPiAgICAgICAgIHsNCiAgICA+ICAgICAgICAgICAgICAgICJiaW5k
-RGVsYXkiIDogMCwNCiAgICA+ICAgICAgICAgICAgICAgICJ1bmJpbmREZWxheSIgOiAwLA0KICAg
-ID4gICAgICAgICAgICAgICAgImRyaXZlcnMiIDoNCiAgICA+ICAgICAgICAgICAgICAgIFsNCiAg
-ICA+ICAgICAgICAgICAgICAgICAgICAgICB7DQogICAgPiAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICJuYW1lIiA6ICIiLA0KICAgID4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAi
-cGF0aCIgOiAiIg0KICAgID4gICAgICAgICAgICAgICAgICAgICAgIH0sDQogICAgPiAgICAgICAg
-ICAgICAgICAgICAgICAgew0KICAgID4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAibmFt
-ZSIgOiAiIiwNCiAgICA+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgInBhdGgiIDogIiIN
-CiAgICA+ICAgICAgICAgICAgICAgICAgICAgICB9DQogICAgPiAgICAgICAgICAgICAgICBdDQog
-ICAgPiAgICAgICAgICB9DQogICAgPiB9DQogICAgPiBXaGVyZToNCiAgICA+ICogaG9zdERyaXZl
-cnM6IEpzb24gZW50cnkgdG8gZGVmaW5lIHRoZSBkcml2ZXJzIHdoaWNoIGJpbmQvdW5iaW5kIHdo
-ZW4gdGhlIGhvc3QgY2hhbmdlIHN0YXRlLg0KICAgID4gKiBiaW5kRGVsYXk6IFRoZSBkZWxheSB3
-aWxsIGJlIGFwcGxpZWQgYmVmb3JlIHN0YXJ0IGJpbmRpbmcgdGhlIGRyaXZlcnMgaW4gdGhlIGxp
-c3QuDQogICAgPiAqIHVuYmluZERlbGF5OiBUaGUgZGVsYXkgd2lsbCBiZSBhcHBsaWVkIGJlZm9y
-ZSBzdGFydCB1bmJpbmRpbmcgdGhlIGRyaXZlcnMgaW4gdGhlIGxpc3QuDQogICAgPiAqIGRyaXZl
-cnM6IERlZmluZSB0aGUgbGlzdCBvZiBkcml2ZXJzIGluIG9uZSBkcml2ZXIgdHlwZS4NCiAgICA+
-ICogbmFtZTogZGVmaW5lIGRyaXZlciBuYW1lLg0KICAgID4gKiBwYXRoOiBpcyB0aGUgcGF0aCBv
-ZiB0aGF0IGRyaXZlciB3aGljaCBoYXZlIGJpbmQgYW5kIHVuYmluZCBiaW5hcnkuDQogICAgPg0K
-ICAgID4gKiBwb3dlckRyaXZlcnM6IEpzb24gZW50cnkgdG8gZGVmaW5lIHRoZSBkcml2ZXJzIHdo
-aWNoIGJpbmQvdW5iaW5kIHdoZW4gdGhlIHBvd2VyIGNoYW5nZSBzdGF0ZS4NCiAgICA+DQogICAg
-PiBEbyB5b3UgdGhpbmsgdGhlIGpzb24gZm9ybWF0IGlzIG9rPw0KDQogICAgTG9va3MgcHJldHR5
-IGdvb2QgdG8gbWUuDQoNCiAgICA+IFJlZ2FyZHMuDQogICAgPiBUaHUgTmd1eWVuLg0KICAgID4N
-CiAgICA+IE9uIDA1LzA0LzIwMjEsIDIyOjA2LCAiTWF0dCBTcGlubGVyIiA8bXNwaW5sZXJAbGlu
-dXguaWJtLmNvbT4gd3JvdGU6DQogICAgPg0KICAgID4NCiAgICA+DQogICAgPiAgICAgIE9uIDQv
-Mi8yMDIxIDI6NTIgQU0sIFRodSBOZ3V5ZW4gT1Mgd3JvdGU6DQogICAgPiAgICAgID4gSSB0aG91
-Z2h0IHRoYXQgT3BlbkJtYyBjb21tdW5pdHkgaGF2ZSB0byBoYXZlIHRoZSBzb2x1dGlvbiBmb3Ig
-dGhpcy4NCiAgICA+ICAgICAgPiBJIGNhbiBwcm9wb3NlIG15IHNvbHV0aW9uIGJ1dCBJIGRvbid0
-IHRoaW5rIGl0IGlzIGNvbW1vbiBlbm91Z2guDQogICAgPg0KICAgID4gICAgICBJIGhhdmVuJ3Qg
-c2VlbiBhbnkgY29kZSB0aGF0IGRvZXMgYSBiaW5kL3VuYmluZCBvbiBwb3dlciBvbiwgc28gSSB3
-b3VsZA0KICAgID4gICAgICB3ZWxjb21lIHlvdXIgc29sdXRpb24gYmVpbmcgdXBzdHJlYW1lZC4g
-IFdlIHB1dCBzaW1pbGFyIGZ1bmN0aW9uYWxpdHkNCiAgICA+ICAgICAgaW50byBwaG9zcGhvci1n
-cGlvLXByZXNlbmNlIHRoYXQgY2FuIGJpbmQvdW5iaW5kIGFyb3VuZCBwcmVzZW5jZQ0KICAgID4g
-ICAgICBkZXRlY3Rpb24gd2hlcmUgdGhlIGRyaXZlcnMgYXJlIGFsc28gbGlzdGVkIGluIGEgY29u
-ZmlnIGZpbGUuDQogICAgPg0KICAgID4NCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+IFJlZ2Fy
-ZHMsDQogICAgPiAgICAgID4gVGh1IE5ndXllbi4NCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+
-IE9uIDMxLzAzLzIwMjEsIDIzOjE0LCAiSm9zZXBoIFJleW5vbGRzIiA8anJleUBsaW51eC5pYm0u
-Y29tPiB3cm90ZToNCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+ICAgICAgT24gMy8zMC8yMSA5
-OjE0IFBNLCBUaHUgTmd1eWVuIE9TIHdyb3RlOg0KICAgID4gICAgICA+ICAgICAgPiBIaSBBbGws
-IEN1cnJlbnRseSwgSW4gTXRqYWRlIHBsYXRmb3JtIG9mIEFtcGVyZSwgd2UgaGF2ZSBTTVBybyBt
-ZGYNCiAgICA+ICAgICAgPiAgICAgID4gZHJpdmVycyAoU01Qcm8gaHdtb24sIFNNUHJvIGVycm1v
-biwgU01Qcm8gbWlzYyBkcml2ZXIpLiBUaGUgZHJpdmVycw0KICAgID4gICAgICA+ICAgICAgPiB3
-aWxsIGJlIGxvYWRlZCBieSBrZXJuZWwgd2hlbiB0aGUgQk1DIGJvb3QgdXAuIEJ1dCB0aGV5IGFy
-ZSBvbmx5DQogICAgPiAgICAgID4gICAgICA+IGJpbmRlZCB3aGVuIHRoZSBob3N0IGlzIGFscmVh
-ZHkgT24uIOKAjSDigI0g4oCNIOKAjQ0KICAgID4gICAgICA+ICAgICAgPg0KICAgID4gICAgICA+
-ICAgICAgPiBIaSBBbGwsDQogICAgPiAgICAgID4gICAgICA+DQogICAgPiAgICAgID4gICAgICA+
-IEN1cnJlbnRseSwgSW4gTXRqYWRlIHBsYXRmb3JtIG9mIEFtcGVyZSwgd2UgaGF2ZSBTTVBybyBt
-ZGYgZHJpdmVycw0KICAgID4gICAgICA+ICAgICAgPiAoU01Qcm8gaHdtb24sIFNNUHJvIGVycm1v
-biwgU01Qcm8gbWlzYyBkcml2ZXIpLg0KICAgID4gICAgICA+ICAgICAgPg0KICAgID4gICAgICA+
-ICAgICAgPiBUaGUgZHJpdmVycyB3aWxsIGJlIGxvYWRlZCBieSBrZXJuZWwgd2hlbiB0aGUgQk1D
-IGJvb3QgdXAuIEJ1dCB0aGV5DQogICAgPiAgICAgID4gICAgICA+IGFyZSBvbmx5IGJpbmRlZCB3
-aGVuIHRoZSBob3N0IGlzIGFscmVhZHkgT24uDQogICAgPiAgICAgID4gICAgICA+DQogICAgPiAg
-ICAgID4gICAgICA+IFRoZXkgYXJlIGFsc28gdW5iaW5kZWQgd2hlbiB0aGUgaG9zdCBpcyBPZmYu
-DQogICAgPiAgICAgID4gICAgICA+DQogICAgPiAgICAgID4gICAgICA+IFRvIHN1cHBvcnQgYmlu
-ZGluZy91bmJpbmRpbmcgdGhlIFNNUHJvIGRyaXZlc3IsIHdlIGhhdmUgb25lIHNlcnZpY2UNCiAg
-ICA+ICAgICAgPiAgICAgID4gbmFtZSBkcml2ZXItYmluZGVyLg0KICAgID4gICAgICA+ICAgICAg
-Pg0KICAgID4gICAgICA+ICAgICAgPiAgMS4gV2hlbiB0aGUgRGJ1cyBwcm9wZXJ0eSBDdXJyZW50
-SG9zdFN0YXRlIG9mIHNlcnZpY2UNCiAgICA+ICAgICAgPiAgICAgID4gICAgIHh5ei5vcGVuYm1j
-X3Byb2plY3QuU3RhdGUuSG9zdCBjaGFuZ2VzIHRvIOKAnG5vdCBPZmbigJ0sIHdlIHdpbGwgYmlu
-ZA0KICAgID4gICAgICA+ICAgICAgPiAgICAgdGhlIGRyaXZlcnMuDQogICAgPiAgICAgID4gICAg
-ICA+ICAyLiBXaGVuIHRoZSBEYnVzIHByb3BlcnR5IFJlcXVlc3RlZEhvc3RUcmFuc2l0aW9uIG9m
-IHNlcnZpY2UNCiAgICA+ICAgICAgPiAgICAgID4gICAgIHh5ei5vcGVuYm1jX3Byb2plY3QuU3Rh
-dGUuSG9zdCBPUiBEYnVzIHByb3BlcnR5DQogICAgPiAgICAgID4gICAgICA+ICAgICBSZXF1ZXN0
-ZWRQb3dlclRyYW5zaXRpb24gb2YgeHl6Lm9wZW5ibWNfcHJvamVjdC5TdGF0ZS5DaGFzc2lzDQog
-ICAgPiAgICAgID4gICAgICA+DQogICAgPiAgICAgID4gICAgICA+IGNoYW5nZSB0byBPZmYsIHdl
-IHdpbGwgdW5iaW5kIHRoZSBkcml2ZXJzLg0KICAgID4gICAgICA+ICAgICAgPg0KICAgID4gICAg
-ICA+ICAgICAgPiBUaGUgZHJpdmVyLWJpbmRlciBpcyB3b3JraW5nIGFzIGV4cGVjdGVkLCBpdCBo
-YXZlIHRoZSBjb25maWd1cmF0aW9uDQogICAgPiAgICAgID4gICAgICA+IGZpbGUgdG8gY29uZmln
-dXJlIHdoaWNoIGRyaXZlcnMgd2lsbCBiZSBiaW5kZWQvdW5iaW5kZWQuDQogICAgPiAgICAgID4g
-ICAgICA+DQogICAgPiAgICAgID4gICAgICA+IEJ1dCB0aGF0IGlzIG91ciBzb2x1dGlvbi4NCiAg
-ICA+ICAgICAgPiAgICAgID4NCiAgICA+ICAgICAgPiAgICAgID4gRG8gd2UgaGF2ZSBhbnkgY29t
-bW9uIHNvbHV0aW9uIHRvIGRvIHRoYXQgam9iPw0KICAgID4gICAgICA+ICAgICAgPg0KICAgID4g
-ICAgICA+DQogICAgPiAgICAgID4gICAgICBUaHUsDQogICAgPiAgICAgID4NCiAgICA+ICAgICAg
-PiAgICAgIEkgZG9uJ3QgaGF2ZSBhIHNvbHV0aW9uLiAgQnV0IEkgZG8gd2FudCB0byBiZSBhYmxl
-IHRvIGJpbmQgYW5kIHVuYmluZA0KICAgID4gICAgICA+ICAgICAgZHJpdmVycyBmb3IgdGhlIEJN
-Qy1hdHRhY2hlZCBVU0IgcG9ydHMgKGFzIHRoZSB1bmRlcmx5aW5nIG1lY2hhbmlzbSB3aGVuDQog
-ICAgPiAgICAgID4gICAgICB0aGUgQk1DIGFkbWluIGRpc2FibGVzIHRoZSBwb3J0cyksIHNvIEkg
-dGhpbmsgaXQgd291bGQgYmUgZ29vZCB0byBoYXZlIGENCiAgICA+ICAgICAgPiAgICAgIGNvbW1v
-biBzb2x1dGlvbiBvciB1bmRlcnN0YW5kIHRoZSBiZXN0IHByYWN0aWNlcy4NCiAgICA+ICAgICAg
-Pg0KICAgID4gICAgICA+ICAgICAgSm9zZXBoDQogICAgPiAgICAgID4NCiAgICA+ICAgICAgPiAg
-ICAgID4gUmVnYXJkcy4NCiAgICA+ICAgICAgPiAgICAgID4NCiAgICA+ICAgICAgPiAgICAgID4g
-VGh1IE5ndXllbi4NCiAgICA+ICAgICAgPiAgICAgID4NCiAgICA+ICAgICAgPg0KICAgID4gICAg
-ICA+DQogICAgPg0KICAgID4NCg0KDQo=
+
+
+On 4/6/2021 10:23 AM, Thu Nguyen OS wrote:
+> Let me think about "putting it into phosphor-hwmon".
+> There are two problem with this:
+> 1. Currently phosphor-hwmon start before phosphor-state-manager create CurrentHostState dbus property. So there is the short time which we can't access this property to know the host state.
+> 2. We need add one or some options in sensor configuration file to difference the binded/unbinded  drivers with the normal one.
+
+Oh, what I meant here was still having a new daemon, but just putting it 
+in the same phosphor-hwmon git repository that phosphor-hwmon-readd 
+lives in.
+
+
+> Regards.
+> Thu Nguyen.
+>
+> ﻿On 05/04/2021, 23:20, "Matt Spinler" <mspinler@linux.ibm.com> wrote:
+>
+>
+>
+>      On 4/5/2021 10:17 AM, Thu Nguyen OS wrote:
+>      > Sure, I will prepare the code.
+>      >
+>      > 1. Do you suggest the name of repo? I though we can use phosphor-driver-binder.
+>
+>      At one point, there was going to be an official way to ask where new
+>      functionality should go -
+>      https://lore.kernel.org/openbmc/20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com/.
+>      I can't remember seeing a way to make these requests though.  Maybe Brad
+>      can chime in.
+>
+>      How about just put it into the the phosphor-hwmon repo?
+>
+>      > 2. Below is format of the configuration file which I'm using.
+>      > {
+>      >         "hostDrivers" :
+>      >         {
+>      >                "bindDelay" : 0,
+>      >                "unbindDelay" : 0,
+>      >                "drivers" :
+>      >                [
+>      >                       {
+>      >                              "name" : "",
+>      >                              "path" : ""
+>      >                       },
+>      >                       {
+>      >                              "name" : "",
+>      >                              "path" : ""
+>      >                       }
+>      >                ]
+>      >         },
+>      >         "powerDrivers" :
+>      >         {
+>      >                "bindDelay" : 0,
+>      >                "unbindDelay" : 0,
+>      >                "drivers" :
+>      >                [
+>      >                       {
+>      >                              "name" : "",
+>      >                              "path" : ""
+>      >                       },
+>      >                       {
+>      >                              "name" : "",
+>      >                              "path" : ""
+>      >                       }
+>      >                ]
+>      >          }
+>      > }
+>      > Where:
+>      > * hostDrivers: Json entry to define the drivers which bind/unbind when the host change state.
+>      > * bindDelay: The delay will be applied before start binding the drivers in the list.
+>      > * unbindDelay: The delay will be applied before start unbinding the drivers in the list.
+>      > * drivers: Define the list of drivers in one driver type.
+>      > * name: define driver name.
+>      > * path: is the path of that driver which have bind and unbind binary.
+>      >
+>      > * powerDrivers: Json entry to define the drivers which bind/unbind when the power change state.
+>      >
+>      > Do you think the json format is ok?
+>
+>      Looks pretty good to me.
+>
+>      > Regards.
+>      > Thu Nguyen.
+>      >
+>      > On 05/04/2021, 22:06, "Matt Spinler" <mspinler@linux.ibm.com> wrote:
+>      >
+>      >
+>      >
+>      >      On 4/2/2021 2:52 AM, Thu Nguyen OS wrote:
+>      >      > I thought that OpenBmc community have to have the solution for this.
+>      >      > I can propose my solution but I don't think it is common enough.
+>      >
+>      >      I haven't seen any code that does a bind/unbind on power on, so I would
+>      >      welcome your solution being upstreamed.  We put similar functionality
+>      >      into phosphor-gpio-presence that can bind/unbind around presence
+>      >      detection where the drivers are also listed in a config file.
+>      >
+>      >
+>      >      >
+>      >      > Regards,
+>      >      > Thu Nguyen.
+>      >      >
+>      >      > On 31/03/2021, 23:14, "Joseph Reynolds" <jrey@linux.ibm.com> wrote:
+>      >      >
+>      >      >      On 3/30/21 9:14 PM, Thu Nguyen OS wrote:
+>      >      >      > Hi All, Currently, In Mtjade platform of Ampere, we have SMPro mdf
+>      >      >      > drivers (SMPro hwmon, SMPro errmon, SMPro misc driver). The drivers
+>      >      >      > will be loaded by kernel when the BMC boot up. But they are only
+>      >      >      > binded when the host is already On. ‍ ‍ ‍ ‍
+>      >      >      >
+>      >      >      > Hi All,
+>      >      >      >
+>      >      >      > Currently, In Mtjade platform of Ampere, we have SMPro mdf drivers
+>      >      >      > (SMPro hwmon, SMPro errmon, SMPro misc driver).
+>      >      >      >
+>      >      >      > The drivers will be loaded by kernel when the BMC boot up. But they
+>      >      >      > are only binded when the host is already On.
+>      >      >      >
+>      >      >      > They are also unbinded when the host is Off.
+>      >      >      >
+>      >      >      > To support binding/unbinding the SMPro drivesr, we have one service
+>      >      >      > name driver-binder.
+>      >      >      >
+>      >      >      >  1. When the Dbus property CurrentHostState of service
+>      >      >      >     xyz.openbmc_project.State.Host changes to “not Off”, we will bind
+>      >      >      >     the drivers.
+>      >      >      >  2. When the Dbus property RequestedHostTransition of service
+>      >      >      >     xyz.openbmc_project.State.Host OR Dbus property
+>      >      >      >     RequestedPowerTransition of xyz.openbmc_project.State.Chassis
+>      >      >      >
+>      >      >      > change to Off, we will unbind the drivers.
+>      >      >      >
+>      >      >      > The driver-binder is working as expected, it have the configuration
+>      >      >      > file to configure which drivers will be binded/unbinded.
+>      >      >      >
+>      >      >      > But that is our solution.
+>      >      >      >
+>      >      >      > Do we have any common solution to do that job?
+>      >      >      >
+>      >      >
+>      >      >      Thu,
+>      >      >
+>      >      >      I don't have a solution.  But I do want to be able to bind and unbind
+>      >      >      drivers for the BMC-attached USB ports (as the underlying mechanism when
+>      >      >      the BMC admin disables the ports), so I think it would be good to have a
+>      >      >      common solution or understand the best practices.
+>      >      >
+>      >      >      Joseph
+>      >      >
+>      >      >      > Regards.
+>      >      >      >
+>      >      >      > Thu Nguyen.
+>      >      >      >
+>      >      >
+>      >      >
+>      >
+>      >
+>
+>
+
