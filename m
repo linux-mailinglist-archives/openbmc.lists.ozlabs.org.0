@@ -1,76 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1BFF35515A
-	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 12:57:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 102CE355332
+	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 14:10:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FF4H84lRYz30Bp
-	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 20:57:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FF5v86ZK5z309c
+	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 22:10:12 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=google header.b=NS6dtPAv;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=j5k0R4DQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linuxfoundation.org (client-ip=2a00:1450:4864:20::430;
- helo=mail-wr1-x430.google.com;
- envelope-from=richard.purdie@linuxfoundation.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.15.19; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
- header.a=rsa-sha256 header.s=google header.b=NS6dtPAv; 
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=j5k0R4DQ; 
  dkim-atps=neutral
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com
- [IPv6:2a00:1450:4864:20::430])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FF4Gx3Tfvz2xZs
- for <openbmc@lists.ozlabs.org>; Tue,  6 Apr 2021 20:57:10 +1000 (AEST)
-Received: by mail-wr1-x430.google.com with SMTP id i18so10266618wrm.5
- for <openbmc@lists.ozlabs.org>; Tue, 06 Apr 2021 03:57:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linuxfoundation.org; s=google;
- h=message-id:subject:from:to:cc:date:in-reply-to:references
- :user-agent:mime-version:content-transfer-encoding;
- bh=S8VaE8lFhHiJwEdzyqCsXNvSf/JgRSLWHM7g0kuG+yQ=;
- b=NS6dtPAvd9sUbTfVqthHw7Adr6C0nT+WngfzbzmPK3Ord/iyyR4buW+PaLApBycSVf
- /o6+wMOmDX1YlSgbehJ+iXPP1xvCc22O3hDxDEUInj1bs/iTLV58V+VKfJjtKiEqjEMM
- z/4skyxFljrAT2Ev3n/+bDbHuPdtVhdorI99s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
- :references:user-agent:mime-version:content-transfer-encoding;
- bh=S8VaE8lFhHiJwEdzyqCsXNvSf/JgRSLWHM7g0kuG+yQ=;
- b=iiNw7mTCXlBIbiIHL1BYTvZLIUuRIIC5/mkJfqAwFxeiuKSqm14eLH0weIxabg+iSo
- dwq/EFCPbTdZotPdCc82Yw09/xVIwMprBPocItDk8jq9m0F+Z8LaRdzpnhT6Um9FU9A3
- NHatwEHKowCGqmSCUOBZ2yGte0qrDjnRG9MsmtQ8RW91QZBJuJYlpER+42YDoVjMzx/t
- JxAls6PDG9he1xLM8VCtw7B4qONhhAPcE3bAqQ0o6IZLlBMFEAnPQigZ3kplcS3SygZ6
- DUcdSmqrB++tBvkalcadYyQr5PauzJ6z8zQd5yCdlmUthkNd062DvxdCgh7O3paq5jqR
- qWBw==
-X-Gm-Message-State: AOAM530iB3Too6u2sZHCu+nkio1GFxYPNjOE73SnIvA0UqJg/EfJFSFm
- PRllwQvxmTVH04A6sYYm4ZaalEsDHrQK8A==
-X-Google-Smtp-Source: ABdhPJxi4eqSlyj1EJ4WqLWrbE9S5lgajb198eVGRN9dtOBgLqjRMukrwJ5qPaItU29ec/1hdM4bzA==
-X-Received: by 2002:a05:6000:1184:: with SMTP id
- g4mr8108910wrx.13.1617706625685; 
- Tue, 06 Apr 2021 03:57:05 -0700 (PDT)
-Received: from ?IPv6:2001:8b0:aba:5f3c:7a9e:d3b:5548:6469?
- ([2001:8b0:aba:5f3c:7a9e:d3b:5548:6469])
- by smtp.gmail.com with ESMTPSA id z15sm668672wrw.38.2021.04.06.03.57.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Apr 2021 03:57:05 -0700 (PDT)
-Message-ID: <f303476a66be3cc3beea01d3a71e2db1ef1d44c4.camel@linuxfoundation.org>
-Subject: Re: [OE-core] [PATCH v2 0/4] u-boot: Support for SPL verified boot
-From: Richard Purdie <richard.purdie@linuxfoundation.org>
-To: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>, 
- openembedded-core@lists.openembedded.org
-Date: Tue, 06 Apr 2021 11:57:04 +0100
-In-Reply-To: <20210326201410.13906-1-klaus@linux.vnet.ibm.com>
-References: <20210326201410.13906-1-klaus@linux.vnet.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.0-1 
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FF5tp5w9dz301B
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Apr 2021 22:09:52 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1617710975;
+ bh=zBnK+44syl2uM55jlmjjhLfGyr8wgn/qMopLwX5egrE=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=j5k0R4DQ1kRBLqfA+046ax+BoSURWxsp2AaWWDFK2O8gXmyMcWEBn5fLM6sOODC0m
+ bCTprcavOvyYgsQ9xHx8CWPDiLb0nrtS78dKv+tto3xcajc0DJdKp8ppXS+BCLpt9y
+ mheezDBTpSVVpnmZDyK/HDUabIQ6F/Xa/Z5PDgqk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MuDc7-1liNWc0LEL-00uazz; Tue, 06
+ Apr 2021 14:09:35 +0200
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH v2 00/10] Initial support for Nuvoton WPCM450 BMC SoC
+Date: Tue,  6 Apr 2021 14:09:11 +0200
+Message-Id: <20210406120921.2484986-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:n2PD0E0/Wi/cSfWgAnOHj8Pd6UsuT4wLld5XbnNo0UwDKU4q0+W
+ I+BMIjHcMr8I1g5i39X3dK8Je1qhvLbD3LqaiJLEXLVhlMJSOjvXncxF6KjrHI1PPJhjUXf
+ oh6bzrIEBxR+JLbNlKVI/kJz02DYCpzoVkNrO6rvv7Xf4IUZlXpEAq8RG25ZitCENpFZl5a
+ qb9IhMnuXr0I0dz/FHXIA==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:deAxC+E8twU=:7cGBMKnUUtXQ/AXZvLd9Y5
+ MQfjBJMKk2gowyxOI4HoOnN5wlZZ00IdG+VwUq1fzWbz6yL/c3gNeighkENwrcQ8A2TNQ30IA
+ rFQj1QYYSE8VbAINcwM4h0088hIC+qs+vZ7ZsDleuLXTF1txDreNx0bfRw1wX7pcnTnNm405J
+ +FX6gQptSgEWJpMUOofPOd4IIEM0ULRZNjQGHT4n9xzuyslL/jFqvjvG/VGtCo+FJ9rGxF6nO
+ NlIu2vTlurUJG94kQzCx5pImBeoKVV33MP3b08FVxisxMcDAW8Ds8U+WeVFsaQYxwC5F+TnY1
+ E6TY9VL5Q57GKXOriBAvdaT7D7qZsw51tJzIkCxLik8LrUcjM1x/PAJ/7ul9FgVu3GnXHVvD4
+ hNmiRwThC6GyUf+P5lhL34VWVPFqYH6KzaxgMh1ujoarRCEtdNZx3KKsvd88QEbKL++l1ERVi
+ FJ2eIzIFGKkzU9iYlEUHW7b9RvZsgdHpSLFESogYkUqZRmYt5OrAKZqFStzpB4tGKO78bPRzQ
+ CIyVKUbOmrzrKU5RqYxStoM6RdvS39so4lVX9mvG34DlqHOtpHvpKHpsi3/8Up+qYbGvtAC7h
+ 2vG95DjNkOygQajEm3UEA77+2FvY9co6kWYT9dIehael6dvq1D6iTCiZAKCH7slgIYMXyz8tn
+ MTeN2vscmQcJk7pTq7RseLHR1CkI+bTZgNWEYipxEe3IP0/8aVnN0aFDo4Y/2rVmVIchSkbTc
+ CmzR+9Wp96neuLBHghmEKFt2ypZfLJ/Hpki2afx74rY1RnGWBjysZ/gtNlBAf884SARYUh7ZJ
+ 0JremgqlxDx9bdo7+viAlIzjx0ZZr5ywt7d1aeNm72prdjfqGO5OaMU1qhtesw4CoYr5NHIv+
+ jls8X1YinaC/9wGg28WI/tFHp6+7DSMbVIKHym7omwRdjAkoSagjCt/Ii2X8HIOdAatZT1//2
+ Uvz1cFI9vA13ozw4moAiXAdYkAxmc8tD9qvAyNOxAGQlKA9Zvp7rJFJeLTGachaqcTt67QJ5G
+ C3unwo71JCtr9y1vlBwi/978TD42H15BS8lSCtSVzaUH05hwjS7Qu/H6VbSAapCDogUmGTaow
+ oxUEWvQZtvXZKp/LqMHKV8Y4jFR/nWrQHO6R9SIBQmPXCgaAXgYUdlPxM4ic2h7uCY1UEJrPb
+ b2SVuMH1sKpcxcbl57H5E7aLuqnEIOHm0U5wogk3Yd2CSTehxHoOO63eYCybd0C+UIzodHZI9
+ YBSuY6C7yeVfLFror
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,56 +81,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, openbmc@lists.ozlabs.org
+Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 2021-03-26 at 17:14 -0300, Klaus Heinrich Kiwi wrote:
-> This patch series aims at extending U-Boot's verified boot support to
-> also include SPL.
-> 
-> Presently, setting UBOOT_SIGN_ENABLE instructs the classes uboot-sign
-> and kernel-fitimage to create and sign a Linux Kernel fitImage. This
-> proposal introduces the variables UBOOT_FITIMAGE_ENABLE and
-> SPL_SIGN_ENABLE that will, respectively, create and sign a U-Boot
-> (proper) fitImage that the SPL can load (and verify if enabled)
-> 
-> In order to accomplish this, the first patch moves some of necessary
-> infrastructure (variables, functions) used to sign the Kernel
-> fitImage to more common locations, and then essentially duplicates the
-> method currently used to sign the Kernel fitImage to also sign the
-> U-Boot fitImage.
-> 
-> If the variable UBOOT_FITIMAGE_ENABLE = "1", the uboot-sign class will
-> copy the SPL files (nodtb image and dtb file) from the u-boot recipe to
-> the staging area, so that the Kernel recipe can then create the U-Boot
-> fitImage.
-> 
-> In case SPL_SIGN_ENABLE = "1", the U-Boot fitImage will be signed using
-> the key provided by SPL_SIGN_KEYNAME / SPL_SIGN_KEYDIR, or will
-> auto-generate keys based on UBOOT_FIT_HASH_ALG, UBOOT_FIT_SIGN_ALG and
-> UBOOT_FIT_SIGN_NUMBITS if UBOOT_FIT_GENERATE_KEYS is "1".
-> 
-> After the operations above, the Kernel recipe will deploy the (signed)
-> U-Boot fitImage, the ITS script used to create it, as well as the SPL
-> concatenated with the DTB containing the pubkey to the images directory.
-> 
-> The reason why the U-Boot fitImage is created by the Kernel is in order
-> to make sure that, when UBOOT_SIGN_ENABLE is set (and the Kernel
-> fitImage is signed), the U-Boot fitImage being created/signed contains
-> the pubkey used by the Kernel recipe to sign the Kernel fitImage.
-> 
-> I added oe-selftest testcases and also tested this on upstream OpenBMC
-> with AST2600 BMC devices.
-> 
-> Signed-off-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+This series adds basic support for the Nuvoton WPCM450 BMC SoC. It's an ol=
+der
+SoC but still commonly found on eBay, mostly in Supermicro X9 server board=
+s.
 
-I've merged this, I wanted to say a big thanks for writing some test cases
-for these code paths. It should start to help a lot in this area in the
-future. I'm going to be asking that future fixes in this area add/improve 
-test cases to cover issues too.
+Third-party documentation is available at: https://github.com/neuschaefer/=
+wpcm450/wiki
 
-Cheers,
+Patches 1-4 add devicetree bindings for the WPCM450 SoC and its various pa=
+rts.
+Patches 5-7 add arch and driver support. Patches 8 and 9 add a devicetree =
+for
+the SoC and a board based on it. Patch 10 finally updates the MAINTAINERS =
+file.
 
-Richard
+Patch 2 requires "dt-bindings: arm: Convert nuvoton,npcm750 binding to YAM=
+L"
+(https://lore.kernel.org/lkml/20210320164023.614059-1-j.neuschaefer@gmx.ne=
+t/)
+
+
+v2:
+- Various improvements to the AIC irqchip driver, thanks to Marc Zyngier's=
+ review
+- I dropped the timer patches, which have been applied by Daniel Lezcano
+- I dropped the serial patches, which have been applied to tty-next by Gre=
+g KH
+
+v1:
+- https://lore.kernel.org/lkml/20210320181610.680870-1-j.neuschaefer@gmx.n=
+et/
+
+Jonathan Neusch=C3=A4fer (10):
+  dt-bindings: vendor-prefixes: Add Supermicro
+  dt-bindings: arm: npcm: Add nuvoton,wpcm450 compatible string
+  dt-bindings: interrupt-controller: Add nuvoton,wpcm450-aic
+  dt-bindings: watchdog: npcm: Add nuvoton,wpcm450-wdt
+  ARM: npcm: Introduce Nuvoton WPCM450 SoC
+  irqchip: Add driver for WPCM450 interrupt controller
+  watchdog: npcm: Add support for WPCM450
+  ARM: dts: Add devicetree for Nuvoton WPCM450 BMC chip
+  ARM: dts: Add devicetree for Supermicro X9SCi-LN4F based on WPCM450
+  MAINTAINERS: Add entry for Nuvoton WPCM450
+
+ .../devicetree/bindings/arm/npcm/npcm.yaml    |   6 +
+ .../nuvoton,wpcm450-aic.yaml                  |  39 +++++
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ .../bindings/watchdog/nuvoton,npcm-wdt.txt    |   3 +-
+ MAINTAINERS                                   |   9 +
+ arch/arm/boot/dts/Makefile                    |   2 +
+ .../nuvoton-wpcm450-supermicro-x9sci-ln4f.dts |  40 +++++
+ arch/arm/boot/dts/nuvoton-wpcm450.dtsi        |  76 +++++++++
+ arch/arm/mach-npcm/Kconfig                    |  13 +-
+ arch/arm/mach-npcm/Makefile                   |   1 +
+ arch/arm/mach-npcm/wpcm450.c                  |  13 ++
+ drivers/irqchip/Kconfig                       |   6 +
+ drivers/irqchip/Makefile                      |   1 +
+ drivers/irqchip/irq-wpcm450-aic.c             | 161 ++++++++++++++++++
+ drivers/watchdog/npcm_wdt.c                   |   1 +
+ 15 files changed, 371 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/interrupt-controller=
+/nuvoton,wpcm450-aic.yaml
+ create mode 100644 arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4=
+f.dts
+ create mode 100644 arch/arm/boot/dts/nuvoton-wpcm450.dtsi
+ create mode 100644 arch/arm/mach-npcm/wpcm450.c
+ create mode 100644 drivers/irqchip/irq-wpcm450-aic.c
+
+=2D-
+2.30.2
 
