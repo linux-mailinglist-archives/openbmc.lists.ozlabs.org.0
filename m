@@ -2,76 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92C4035535C
-	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 14:13:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 27A55355363
+	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 14:13:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FF5yV42SFz3c11
-	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 22:13:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FF5yw0sClz30CL
+	for <lists+openbmc@lfdr.de>; Tue,  6 Apr 2021 22:13:28 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=B5rt/n8d;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=Ub3zaSIR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.15; helo=mout.gmx.net;
+ (client-ip=212.227.17.22; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=B5rt/n8d; 
+ header.s=badeba3b8450 header.b=Ub3zaSIR; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FF5xF2xbrz30DL
- for <openbmc@lists.ozlabs.org>; Tue,  6 Apr 2021 22:12:01 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FF5xN55zYz3bs3
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Apr 2021 22:12:08 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1617711110;
- bh=tZBy5KAAZ9vu5ip+BcWqftbm3tGw9rhGKlIlf9459yg=;
+ s=badeba3b8450; t=1617711116;
+ bh=0mYa4APzjX4y4tzJVfb5VIFApuD/1wa2g96PG4y8oYk=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B5rt/n8dyE/K24eR8WBvlExqIrrgOUX6kl0CJy/Ug1GIK+2lJH99U47pWhOWIan0y
- 7Bp4KMyV1TkxpiRVoUx3ZeZn3Pn1B8xmcC1cBc4ivQfiEIBc4DLOh7XavIUJco+dH3
- GiOx4tY057o0dmQvj001yLFovIlChjiM3YwbeXbU=
+ b=Ub3zaSIRybTv919sY7OiG5Wz49aqrHPqTGFBNMp+u0egrwuWJK+SekF7gT85aGHYW
+ 2Q5hQjko/65nyjS3PEWlC8QDc46mGV1YaLFK3hU/lfwe7SQHZy1pYK+vpmxXeFyEfq
+ htF53lxcFVfWCbe2iOWoOyOd0q4WpMJRn+aLWzA8=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N0G1d-1lpX8c3fHj-00xL35; Tue, 06
- Apr 2021 14:11:49 +0200
+Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MV63q-1l2m3m0BoU-00S4S5; Tue, 06
+ Apr 2021 14:11:56 +0200
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH v2 08/10] ARM: dts: Add devicetree for Nuvoton WPCM450 BMC chip
-Date: Tue,  6 Apr 2021 14:09:19 +0200
-Message-Id: <20210406120921.2484986-9-j.neuschaefer@gmx.net>
+Subject: [PATCH v2 09/10] ARM: dts: Add devicetree for Supermicro X9SCi-LN4F
+ based on WPCM450
+Date: Tue,  6 Apr 2021 14:09:20 +0200
+Message-Id: <20210406120921.2484986-10-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210406120921.2484986-1-j.neuschaefer@gmx.net>
 References: <20210406120921.2484986-1-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:tfnzukyq6T5j6Jov6LVF0Wy9HPGJ9303YpWehXV3q7sfViq6gSc
- I9KMKchj0t79wSxluPJLzvTVFe8BJpT+qQDKKPH9TMPEfU1wwJxHA7gArdCXKb/C+Nl9mBC
- S6ZutBpD4tPQw1VFx2IsT+d3xyCWkhhHG7dlc4Ty+JiWkECu3vRNrVIu8K++MUuXFKRpeBQ
- 9ZdP3Tdv2iQk94q2yPaxg==
+X-Provags-ID: V03:K1:9DiOCvXHwoFh1kDKM09Us9g9xP2gE4HWlzUOVkEO1hQrdf2PPFo
+ b68DFZ7wrJu7ib8Me6MhvTQnQLQcF0UI7BqlK6LFSAGmFMQLSQptrojzQPZjh6LgbGlrgYf
+ pyaFmci5BiXhsiarsvY+P3VNo9+vLiyhUwa+p5x5dh7EoHxvb9EbjMe/C2B4Rv1AtEV1XhE
+ DoMpBBm1KlprrR5TL4U8Q==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CU+yLTsdxR4=:fu1bMWWg3P5326h8pIIrhg
- L18WyNLhEKyvTqLezBQdsG2jP1le8u5RNlg/gr1sV6J4jekTDTlJTFCU9M/4tw0xIhQFZLnss
- LZeZmzhrFie+eSe7qIqWaDU3h1ZOS59ajqKLrEOHg+5nNtCb48IM9h1tqqB+RQAl1MgRj1Yex
- WRnLC6P4jXIvSa6Rrgp0FgyFWI+98CEqWJwYKDyAGIcqc9hnPWUKXqVTI3aE0HF0MJZcaDawF
- vhSuXuxqGnf9jpMqaNjAhazFX0pqEV+XSBvxuHymGqiWPOsvkLL4B8kURCUZO/pNjwS+ASOBL
- 8/HpPt0ZZgkvsCy1Wy4lx4rQf1v+JlDgWRshBeTJILZJRmDcurvS0vLkkfqqHVxwPRQHLnrCu
- WSDJwF7ICO4G2rjbQIO1n+JubtmPnBNsaDNOazTxiYtXxM9dCHaMp+junqqQDS87r1j17utI2
- 0lirKtwLlelu6b2o7Wc7V4eaBOPBJbt31jR2vo577bHapelBGpa3vFcrO6npLDsPT5vCUp2Qe
- fDGCtAeRnvKeZULdrNEloF1UuiNmRQDwjjpWjq3evTeYUE2Wff6TGV5bw0h5Ibz/N98EWpN+N
- 92Mce9O5Y3Bo9J70Q0iYnJn5Bwkl1/3l+TqmBoMTqtja2WINpxtGMfBhB+Mvv7PzoLxZjdsIG
- piTeAaHSnzoE0uxriHgOmOl0k+wKz/5GLNRekgLyIGfm18ME3dJXMjn9F+yRRyT8lvRqCU4LS
- 9WtENt0KC+GfFxC1PI+TMlckyGSkCdbOrqHxIKh0WjPsbn9ylD2YtYfcNtWe4aUl4gMERtiDx
- MreWu9Pd8WMhuEqg7Xai1VmsvJcbGv1tV+XzcOBVX127B4v8XaIu28dL8eg3DyMaJ/NqaRGVw
- dZWNcYo7PkbKizWJPIHxqkJVgAZ7jnT6jDm6HgV/QlSoz8Vr3qxpLjDsGF37Hr0gFff7AE/7l
- VJuvvSE9gz8+jyvSpRLVtoWMv0BYBWJA2NfD2L4ZjI3zqJ+yFXCLt5nWySm6ZDBNg5iSZFs/+
- 6ahTOGXljEDXF7P+02AzcMKJykaGUsEdDzJrxnryWZYmUftWB5HzsUDy6Fwc38sv1D23kUVW1
- 1D6Z5wblngB31WF7uSUWwUy7CZVUk2jF0mYx3oM2il+ztfmqSVyy8/gnpeqgVOzVuqxljrrir
- SnuAeOQjHWyxChlgsg01OtW/wP8TStnYMdox/bIhbhpBx4SgAmh/nErKkhvwdqcdzJEJB7E4c
- XCVKnXySvUTK0Uqls
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/Qe8xLnpBvA=:HmbDV7ZX29oTuwy/S9tbR/
+ HpCQ0/HxeyZVGyH1zGNCPAVNjoDju7G7U9W7qHitOlDMzk8VlLPx6rCFvPLPWEFlxk5h3z8/X
+ oNWgjgTcPhxnCHMRqoZHSJN3DSVhCaQlWfC9UnyB5BcHyOYNHL88/EZ/muGs5su03qbhbnedB
+ +cJS+HSPAkULfZpTapOks4pPy1kSh2IbgC5eBSIrac+2XnKKNFNCouRvs/RIN7Ss5NGLBFlwt
+ Py10Z5Yv3FvUyaAjDu1uc+eWim5W6ySMvoTEF4iXj7Hprbb3a1Wjhu+nYsJlUnvIvQSumUfxy
+ cV5niq9BkL0fClTKMTZGzeugYgAFXFoe7129eLh6/lX7swTPI6vbzcmGq6oZf88wSNmj37kN4
+ TvzUwkOe2j2B+mC7n1rbkh1sBsHr9Oir8/QEtslIvTf3RARsoNYLfaNuFbKkgJxvAx2O7Zx9L
+ CcHBYAxUpskhndkybuq3jLbXV+lp9IhVLIZnKsIFfU7m1RjHNgvZ9cgo4+0rJuR83GbadfBD3
+ 8H0jIh6L8+bheMy+sYizHTXUfGAMYEJWiBnSXSHSbz1jt+/dnMvr6XbJ61isR0cU6TF/tO2uI
+ 9QKmWhv+ALzLjKQQeuQ/vhe34jkpgyif5yx9NN1tM4TGJLxHvGhoq+ViRlkVk5TBRWw+e6iG3
+ MiR8S548pkRxpucHdXuuzKMhVlXpZLeR6ja4wIxF4ZYSmjhajNl5BwxsDRZm9B2FVhDAAgT/h
+ 4I8/tsaevKiZ/qUs5ZgZ6dDqPqa1TuRR1Et8KcgLkwUT9ust1o2FAqOmNTKM8dYoH1dkM2fC4
+ VVyno+URu5lmP5/5W6t0dDSQF5aXEZH32P5Wq8zN8tdwXlYTWGIkPmo24mFPJiQ3eYDz6396Q
+ up7QltPkM5EBKkMvn4DYtbVGyCSOzVOvBZ62mcwnX89Fj2Ksk/1+XsB+RFanWm7Ba9GkVFYVX
+ kaEynW8ztuPXY8cKz7uljhKDc5k2C/oTWB4EnuyC8HZ/teEtjs3a7bb5SXRuVwEo98SKmM1bt
+ nP1wftmwTWmiJIsXZlOQ89Hpy8jxucakW/1H7OTZ8jp20Lo3O2XREaes4ycYElktld8zXWSh2
+ 7JWMj+L5s3Og/6ctMZ7kur82utwvhZEjuUm1xnu2JtJ5Fuu8KzCQQbhFs5u8xyTkp4YTTbqWK
+ wRhoBh+mFxZmHxWyYsMEJ8Hb0vHAZkDWPAl67yv594rTH82iaBZU/BkzBLYIDHcmQQfyW8SrU
+ unSsXH/CqpzPl5QYz
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,109 +85,89 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
+ Arnd Bergmann <arnd@arndb.de>,
  =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- linux-arm-kernel@lists.infradead.org
+ linux-kernel@vger.kernel.org, soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
+ Olof Johansson <olof@lixom.net>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The WPCM450 is an older BMC SoC in the Nuvoton NPCM family, originally
-marketed as Winbond WPCM450.
-
-This patch adds a devicetree with basic functionality.
+The Supermicro X9SCi-LN4F is a server mainboard featuring the WPCM450
+BMC. This patch adds a minimal devicetree for Linux running on the BMC.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+
+
 =2D--
 
 v2:
-- no changes
+- Group wpcm450 devicetree with npcm7xx devicetrees in the Makefile
 =2D--
- arch/arm/boot/dts/nuvoton-wpcm450.dtsi | 76 ++++++++++++++++++++++++++
- 1 file changed, 76 insertions(+)
- create mode 100644 arch/arm/boot/dts/nuvoton-wpcm450.dtsi
+ arch/arm/boot/dts/Makefile                    |  2 +
+ .../nuvoton-wpcm450-supermicro-x9sci-ln4f.dts | 40 +++++++++++++++++++
+ 2 files changed, 42 insertions(+)
+ create mode 100644 arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4=
+f.dts
 
-diff --git a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi b/arch/arm/boot/dts/nu=
-voton-wpcm450.dtsi
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 8e5d4ab4e75e6..5a9d99d5443e4 100644
+=2D-- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -333,6 +333,8 @@ dtb-$(CONFIG_ARCH_LPC18XX) +=3D \
+ dtb-$(CONFIG_ARCH_LPC32XX) +=3D \
+ 	lpc3250-ea3250.dtb \
+ 	lpc3250-phy3250.dtb
++dtb-$(CONFIG_ARCH_WPCM450) +=3D \
++	nuvoton-wpcm450-supermicro-x9sci-ln4f.dtb
+ dtb-$(CONFIG_ARCH_NPCM7XX) +=3D \
+ 	nuvoton-npcm730-gsj.dtb \
+ 	nuvoton-npcm730-kudo.dtb \
+diff --git a/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts b=
+/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts
 new file mode 100644
-index 0000000000000..d7cbeb1874840
+index 0000000000000..83f27fbf4e939
 =2D-- /dev/null
-+++ b/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
-@@ -0,0 +1,76 @@
++++ b/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts
+@@ -0,0 +1,40 @@
 +// SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
 +// Copyright 2021 Jonathan Neusch=C3=A4fer
 +
-+#include <dt-bindings/interrupt-controller/irq.h>
++/dts-v1/;
++
++/* The last 16 MiB are dedicated to the GPU */
++/memreserve/ 0x07000000 0x01000000;
++
++#include "nuvoton-wpcm450.dtsi"
 +
 +/ {
-+	compatible =3D "nuvoton,wpcm450";
-+	#address-cells =3D <1>;
-+	#size-cells =3D <1>;
++	model =3D "Supermicro X9SCi-LN4F BMC";
++	compatible =3D "supermicro,x9sci-ln4f-bmc", "nuvoton,wpcm450";
 +
-+	cpus {
-+		#address-cells =3D <1>;
-+		#size-cells =3D <0>;
-+
-+		cpu@0 {
-+			compatible =3D "arm,arm926ej-s";
-+			device_type =3D "cpu";
-+			reg =3D <0>;
-+		};
++	chosen {
++		stdout-path =3D "serial0:115200n8";
 +	};
 +
-+	clk24m: clock-24mhz {
-+		/* 24 MHz dummy clock */
-+		compatible =3D "fixed-clock";
-+		clock-frequency =3D <24000000>;
-+		#clock-cells =3D <0>;
++	memory@0 {
++		device_type =3D "memory";
++		reg =3D <0 0x08000000>; /* 128 MiB */
 +	};
++};
 +
-+	soc {
-+		compatible =3D "simple-bus";
-+		#address-cells =3D <1>;
-+		#size-cells =3D <1>;
-+		interrupt-parent =3D <&aic>;
-+		ranges;
++&serial0 {
++	/*
++	 * Debug serial port. TX is exposed on the right pad of unpopulated
++	 * resistor R1247, RX on the right pad of R1162.
++	 */
++	status =3D "okay";
++};
 +
-+		serial0: serial@b8000000 {
-+			compatible =3D "nuvoton,wpcm450-uart";
-+			reg =3D <0xb8000000 0x20>;
-+			reg-shift =3D <2>;
-+			interrupts =3D <7 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks =3D <&clk24m>;
-+			status =3D "disabled";
-+		};
++&serial1 {
++	/* "Serial over LAN" port. Connected to ttyS2 of the host system. */
++	status =3D "okay";
++};
 +
-+		serial1: serial@b8000100 {
-+			compatible =3D "nuvoton,wpcm450-uart";
-+			reg =3D <0xb8000100 0x20>;
-+			reg-shift =3D <2>;
-+			interrupts =3D <8 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks =3D <&clk24m>;
-+			status =3D "disabled";
-+		};
-+
-+		timer0: timer@b8001000 {
-+			compatible =3D "nuvoton,wpcm450-timer";
-+			interrupts =3D <12 IRQ_TYPE_LEVEL_HIGH>;
-+			reg =3D <0xb8001000 0x1c>;
-+			clocks =3D <&clk24m>;
-+		};
-+
-+		watchdog0: watchdog@b800101c {
-+			compatible =3D "nuvoton,wpcm450-wdt";
-+			interrupts =3D <1 IRQ_TYPE_LEVEL_HIGH>;
-+			reg =3D <0xb800101c 0x4>;
-+			clocks =3D <&clk24m>;
-+			status =3D "disabled";
-+		};
-+
-+		aic: interrupt-controller@b8002000 {
-+			compatible =3D "nuvoton,wpcm450-aic";
-+			reg =3D <0xb8002000 0x1000>;
-+			interrupt-controller;
-+			#interrupt-cells =3D <2>;
-+		};
-+	};
++&watchdog0 {
++	status =3D "okay";
 +};
 =2D-
 2.30.2
