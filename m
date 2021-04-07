@@ -2,79 +2,130 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C036356BC1
-	for <lists+openbmc@lfdr.de>; Wed,  7 Apr 2021 14:07:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 42FF1356BD6
+	for <lists+openbmc@lfdr.de>; Wed,  7 Apr 2021 14:12:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FFjnZ3gqbz30KJ
-	for <lists+openbmc@lfdr.de>; Wed,  7 Apr 2021 22:07:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FFjv21gSRz309y
+	for <lists+openbmc@lfdr.de>; Wed,  7 Apr 2021 22:12:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=A57dK1GK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=CNs6DRff;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.15; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=A57dK1GK; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::236;
+ helo=mail-oi1-x236.google.com; envelope-from=groeck7@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=CNs6DRff; dkim-atps=neutral
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com
+ [IPv6:2607:f8b0:4864:20::236])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FFjnJ6791z2yRW
- for <openbmc@lists.ozlabs.org>; Wed,  7 Apr 2021 22:07:14 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1617797203;
- bh=J/tag75U3iO+Y/OKgSq6pHTQL6viWXxIasOeXm8b2bA=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=A57dK1GKvV2ZCuIE/fIlfybFTTDOJoWF4jWuX3Z94Cz7jIAxkdcQrAjShKHwFPRbT
- TdGWqCu9kyY1g07nRWRVQ8TmOVVTzVlflTTOjjv/CZkxbwAeyiNMRlu3p9r5mtSUtj
- FcCzZcX1dBua1mWloHakWIWgPSqo02i3FoKARdM4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.134]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MI5UD-1lOsQm2oMh-00FAir; Wed, 07
- Apr 2021 14:06:43 +0200
-Date: Wed, 7 Apr 2021 14:06:39 +0200
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 06/10] irqchip: Add driver for WPCM450 interrupt
- controller
-Message-ID: <YG2gT7C/2P71TYfF@latitude>
-References: <20210406120921.2484986-1-j.neuschaefer@gmx.net>
- <20210406120921.2484986-7-j.neuschaefer@gmx.net>
- <87czv6pcx2.wl-maz@kernel.org>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FFjtl1Gcgz302Z;
+ Wed,  7 Apr 2021 22:11:56 +1000 (AEST)
+Received: by mail-oi1-x236.google.com with SMTP id v25so18506606oic.5;
+ Wed, 07 Apr 2021 05:11:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:subject:to:cc:references:from:autocrypt:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=WIjn0AhTwwpTEtbdjQhQORR+T5+cXMTK7UrnuECBFAM=;
+ b=CNs6DRffpuXCMVPbrFrtv07hUayfANj7GT1XCig4urJ/iDJngQ4P1gz39BcSyKnJom
+ ShV8S1iWZQM27nZ04vJyehIKw41MRx7H+OSxtoIKub9FC75sMT7pQeuxvk/KL5EDXOix
+ IIXIjwU7ovxlDb8k8Q3lRXp2UJVpmph0z2004DlfQKs59jact1Y64M7X0sAkYGwaiUXA
+ yyXBZ+GIjVm5MLOSBLVoYGuwb1tHPfdQB7i0/2AASlCYKAv9Bw9ivbng2nIsBBuVc+DK
+ X7jM+3hAO5sfYFZKCQy37xHI7ulOBRQ7Uit08iNl/+ZS1Y+l5LFkwB4/MB6mjnOneGXH
+ dSog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
+ :message-id:date:user-agent:mime-version:in-reply-to
+ :content-language:content-transfer-encoding;
+ bh=WIjn0AhTwwpTEtbdjQhQORR+T5+cXMTK7UrnuECBFAM=;
+ b=htXgt6qLI2J2Z5+dFR4bhqcwr4CasyXTzIWIgQZGNokSGqrV+aaOp/rlogQEta7Qh2
+ VfyebNZp0Web/iJIU0w45nT3sYA4TU1n4LaMf8mIvudi8rzolraNZFwnXnTvcyysff9X
+ 74PJBh7Wd4x9DHrJEYMu3XAGa/0lFZi/6yPlW9DTOJB/52CbeSW/TQS32lHaaWhMzVZJ
+ RsP38LtJclB4KH++g8Xrzo759gVf/cvbxqES/OYmY9waLskf+wo+XCxhAYvBCu7196Mf
+ 7tJ2L4VKw7GDyWFLTD5W6IG1qQyzh8MkmX5DbsDvWrqVGmZfW7BmAoSNP0ThOGgwC/jk
+ 95OA==
+X-Gm-Message-State: AOAM530kwuyONZyw4aaaefoGOPxAJ1axLm9IJAFEVtULvJgG7sJb+gih
+ PvZ3zEKvWmamL0QokzOJ6uA=
+X-Google-Smtp-Source: ABdhPJy1oxNYAiecRNIuLOcN0mlyS7k+p8U1hu5TBgm9PyyMXGacZeU59qzHRA9KGvT9kWJnHBBO/g==
+X-Received: by 2002:aca:ebd7:: with SMTP id j206mr2078266oih.60.1617797512427; 
+ Wed, 07 Apr 2021 05:11:52 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ w11sm4720629ooc.35.2021.04.07.05.11.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Apr 2021 05:11:51 -0700 (PDT)
+Subject: Re: [PATCH v2 3/4] hwmon: smpro: Add Ampere's Altra smpro-hwmon driver
+To: Quan Nguyen <quan@os.amperecomputing.com>, Joel Stanley <joel@jms.id.au>, 
+ Andrew Jeffery <andrew@aj.id.au>, Jean Delvare <jdelvare@suse.com>,
+ Rob Herring <robh+dt@kernel.org>, Lee Jones <lee.jones@linaro.org>,
+ Jonathan Corbet <corbet@lwn.net>, linux-hwmon@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org
+References: <20210329015238.19474-1-quan@os.amperecomputing.com>
+ <20210329015238.19474-4-quan@os.amperecomputing.com>
+ <bac92db0-3ef6-1615-0e92-aabd54fd0580@roeck-us.net>
+ <136d036c-1d10-cecd-abcb-d206a0c6fa51@os.amperecomputing.com>
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+Message-ID: <d9ef40ea-e4ee-cea8-96df-90ffabdff53c@roeck-us.net>
+Date: Wed, 7 Apr 2021 05:11:49 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="l0kWbujZdkLVT5mD"
-Content-Disposition: inline
-In-Reply-To: <87czv6pcx2.wl-maz@kernel.org>
-X-Provags-ID: V03:K1:Y5gSuqPtFaARAism5B+FeBemHYMx+2GXGlEMhFDECJAPGJzi79i
- oc4YKRb7jSiXoiCHCVfaJmofRLAw8fmH4mVIK4qqeVzia9TBEE1UnIliKMGRfiwNOKh+LY/
- RxkqKP/F+LHrtwgnweKsAgnHeF+4JKfDfJQMKqaxEenSwK5oY41KZS0N8r243Br9iKZcmZf
- Vx+XUFXOHhQ16jyxlqxMg==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:tH/Mj12UbCU=:JH9ZbyRNsrMqdRxGIBDAhM
- bfuEFTnglr86J74GxiaBRI2FzB42Ejjo3PIFExA7OENAZD49pCWldW9T1wcnLTHaXNuodGSQa
- TKpdw3z5lrN1QK3l/pCPaFJoFtNAJix8q2Lr+PMpiVFqL2/WY4vs8Nt/VIZui1K7V2UdtgKfQ
- 0UkyIqfrGn1pyJAo2ozVFfU6+Y3fBh32bxYuvC7U+nAZkFyR7o9qXt4qlbh5HtvVHVnzofayN
- wO8tnTTPh+b7l6vEzacGbgyqo8yQc8mdZGOZOOZ4gwqDD79wjVbF6GZps+QMFytzhDPHU1OJZ
- 9Skh0i3lrYDwKWehDtFN61HpbRHig0QDm6bYkePA7PgU6K0gwFIDNkP+yK/g+OCoHYy0slMXz
- 0fU8SskEf2BNIPZBExgV7hW/MijE9XF5C5QN1H5E+iLFVYqfZlnSGw5G4pC8pMuULMDDegEO8
- 6H+nFnrElZ8P1m14032j36B/40z4nWUXaA5D9mvwjO1uqtnPH7Z0uY9j4DqlEmc9rqPFdpVjY
- eAVRNhOvxPq2cRU5bl1rssW9wJkWkgs7piAK9QJ93/ohjTqMS8acBbfy/5chzQsl34f+1UKsd
- YNBwxcjZkVQRAJXaXelOodhBExMr1JCDojaW8qzAQc5DfJlVDU0jeh09JQADwe81ge+1yDq2z
- 4WIyZXSUxmO9iLEwX01200z0oxN+1vG/fnEeli7jW+ts9miw4p0ZQZTTfBEdo98gDoERnLRPe
- q13c4zfCCMQV5zZ3yDdb6GSlJxMTXzNDxAldigZEm+N5vdVD2HGBDtX1H66KlYfdAE3Gj6Ooq
- tBeICztf8GJOwvk+GT3HyifolRONZnA1+SPZpbZvnKVgVN9EZkx+wrOVi93p4+hexrISAx22w
- K+ZTMuPw/EThTGyBSdQU9tuAj+eAN+dLmyWAIoUckyh6HszlTX82fZI6bIW2Jg1PuCCjND0fJ
- 7A3WpqnYxg85hAhYO4In1hnsrs6yCc65cDVPnPzXvwqeUrg2u901cYQ5wbZumELiy8f72YEYR
- lhiHfMH+B7pu4gQyXanFVjWdC6NHP19C0hCKoiQAmid+Nq0ValLuCQhM62o3zblGnUbCbmp6d
- CsiwmC8mfHP9B5v4xrPggvZSvizd75RouHNnrPB6kvJX5XU3ndKjtiDmtw1fxsEKjDPXXZqY2
- x14IdnWrABIaeIWXwMXcrMNqhWh4z58+Ds3xeFPqaZ/JSu00ejiXAO43dCKYtn0v83q3f//Cb
- In/FzYbj1uk6cPQt4
+In-Reply-To: <136d036c-1d10-cecd-abcb-d206a0c6fa51@os.amperecomputing.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,72 +137,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- openbmc@lists.ozlabs.org,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- linux-kernel@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
- Thomas Gleixner <tglx@linutronix.de>, Tali Perry <tali.perry1@gmail.com>,
- linux-arm-kernel@lists.infradead.org, Benjamin Fair <benjaminfair@google.com>
+Cc: Open Source Submission <patches@amperecomputing.com>,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 4/7/21 12:41 AM, Quan Nguyen wrote:
+[ ... ]
+>>
+>> But then why don't you just use reg_ext to store SOC_VR_HOT_THRESHOLD_REG
+>> or MEM_HOT_THRESHOLD_REG ? It is already available, after all, and with it
+>> the code could be simplified to
+>>
+>>         ret = regmap_read(hwmon->regmap, temperature[channel].reg_ext, &value);
+>>         if (ret)
+>>             return ret;
+>>
+> Thank you for the comment.
+> 
+> Will change code follow this suggestion, will include in next version
+> 
+>> I don't have a datasheet, but I do wonder what is in bit 9..15. Any idea ?
+>> Main question is if there is a sign bit, as theoretic as it may be.
+>>
+> The original intention was to use this as 9-bit 2-complement value follow LM75, but the fact is that the operation temperature is 0-125 C degree, so we simply use it as-is.
+> 
 
---l0kWbujZdkLVT5mD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Apr 07, 2021 at 12:11:21PM +0100, Marc Zyngier wrote:
-> On Tue, 06 Apr 2021 13:09:17 +0100,
-> Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net> wrote:
-=2E..
-> > diff --git a/arch/arm/mach-npcm/Kconfig b/arch/arm/mach-npcm/Kconfig
-> > index 658c8efb4ca14..a71cf1d189ae5 100644
-> > --- a/arch/arm/mach-npcm/Kconfig
-> > +++ b/arch/arm/mach-npcm/Kconfig
-> > @@ -10,6 +10,7 @@ config ARCH_WPCM450
-> >  	bool "Support for WPCM450 BMC (Hermon)"
-> >  	depends on ARCH_MULTI_V5
-> >  	select CPU_ARM926T
-> > +	select WPCM450_AIC
-> >  	select NPCM7XX_TIMER
-> >  	help
-> >  	  General support for WPCM450 BMC (Hermon).
->=20
-> I can't take this patch with this particular hunk, as I don't have
-> this file in my tree. I can either drop this line, or delay the
-> merging of this patch to a later point in time.
-
-Hmm, indeed. Please apply the patch without this hunk. I'll reintroduce
-it in another patch.
-
->=20
-> The driver otherwise looks ready.
-
-Good.
+The operational temperature is not the question here. The question is if the
+chip _reports_ a sign. If it does, it should be handled, even if it is outside
+the operational range. The reported range is relevant here, not the operational
+range. After all, the chip won't really blow apart at -1 degrees C.
 
 Thanks,
-Jonathan
-
---l0kWbujZdkLVT5mD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmBtoEAACgkQCDBEmo7z
-X9vQVhAApP3ye/WFcXXj6ynr3v2cHurZM0f9lYRzT7cNBV0IsR9iGH3ftemJnEyZ
-9vtwCg9OneE7cKbEVIdbWBY0M2XAOQWTVMFUHZsQby15N+dSOYgy7rySttqqda5p
-U0J2htknDwvOXxoV3RO/lt3W4PAvrRrXrPEUevHNVgdYYV2ptUazFszf5+Y/Obd1
-FmemUJanNCU5gduFlFEZX8cx48lQqSHA/bfVrs9o3meL1dLYW6Iw1Nvi71LtrR3q
-eEvvAoY1nesqk+d4P72WAZAXNtEWMXoglgsylqyuakcLR0lno8QWGXOiJlR/95+V
-gy1VAnL6fNxbRGtQ58yBAiI+wdQVMSK8VaBL95DPRuE2PiaO9di9e2w+JbwIzPHO
-59VJvqrHKKvbHNhv6EP/E8mIMFTyxg2CvLHfYp5VoFxCtfQ7pDw1KdX5ESS0lyf9
-ir1bT29L1p/uxnDshHvBQIlXfPjXJrADVe3h1AiOhddVnhRUFIGjwX/5XG/w5kkc
-kcPfwo7V3JLgXlqWY89l2F6MqeSjwBTecv5FoxVcF7MNVAdNoT6Ac9GnfHZKhbsk
-c7JEukC1JCX61g01EimQXh5Mms/LqIkn6pQQP8xNyhU6nQcvpL8/NWqOQf1vgdoZ
-N/eB4O+Ne0CfXzykLuF3TtbZKIjAuOG5SYzNK/+F2GJNo9y/D/s=
-=qz8s
------END PGP SIGNATURE-----
-
---l0kWbujZdkLVT5mD--
+Guenter
