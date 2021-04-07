@@ -1,53 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F87435731F
-	for <lists+openbmc@lfdr.de>; Wed,  7 Apr 2021 19:25:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E15FD3573B5
+	for <lists+openbmc@lfdr.de>; Wed,  7 Apr 2021 19:55:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FFrrc0Mjtz3dV6
-	for <lists+openbmc@lfdr.de>; Thu,  8 Apr 2021 03:25:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FFsWV5ZGsz30Mp
+	for <lists+openbmc@lfdr.de>; Thu,  8 Apr 2021 03:55:50 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWg++h/Z;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=aHsyeYi8;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linuxfoundation.org (client-ip=198.145.29.99;
- helo=mail.kernel.org; envelope-from=gregkh@linuxfoundation.org;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
- header.a=rsa-sha256 header.s=korg header.b=EWg++h/Z; 
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=aHsyeYi8; 
  dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FFrrC1sSlz3dXQ;
- Thu,  8 Apr 2021 03:25:15 +1000 (AEST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 27C6361242;
- Wed,  7 Apr 2021 17:25:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1617816312;
- bh=/I9GfmleSBbs7R0HF64rsoxW4s6GV91+HDAdvacr2Fc=;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FFsWC580nz2y08;
+ Thu,  8 Apr 2021 03:55:35 +1000 (AEST)
+Received: from hatter.bewilderbeest.net (unknown [IPv6:2600:6c44:7f:ba20::7c6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id BEAF986;
+ Wed,  7 Apr 2021 10:55:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1617818132;
+ bh=cSbxWi5s2qegCXpYeUsESGzQY5rhhAwAJw3tA8Mb22M=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=EWg++h/ZHMHODvvZK/EKo/6Ulry09nDEMt4yEgv6l7BmhERFEnKYorXfN8IcJ3H7D
- Ada1H1MrYxAMneIu91RjTR+UGFClLJ3kwxIm2Gbm5KwHdh7PPcESFN6kd4Wg2ISaRj
- +qrTcWO5swVafSNM054/mTa6eoxgM6nIunJMKxHw=
-Date: Wed, 7 Apr 2021 19:25:09 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Zev Weiss <zev@bewilderbeest.net>
+ b=aHsyeYi8mUAuUSz9Ms8EjG0Mxpa2taDnyTe+z8PVOhzsZ/8p1CQcsCjGAJ9++XvQs
+ iee6oJOk9FVHZzjfomi3yGxBceaNHMdSYnQIrm3r3pd7JTR6E8kt5pQjvk/W7zXAie
+ wOqwzMPpW/VMxEpAp563swJpCA3up06pGRopK/Mk=
+Date: Wed, 7 Apr 2021 12:55:29 -0500
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Subject: Re: [PATCH v4 1/4] dt-bindings: serial: 8250: deprecate
  aspeed,sirq-polarity-sense
-Message-ID: <YG3q9brKTC4pkQbs@kroah.com>
+Message-ID: <YG3yEeIRKgTjnDxz@hatter.bewilderbeest.net>
 References: <20210402182724.20848-1-zev@bewilderbeest.net>
  <20210402182724.20848-2-zev@bewilderbeest.net>
  <YG3NR4bGRjIGZhgx@kroah.com>
  <YG3kJC+6gLC6RzzQ@hatter.bewilderbeest.net>
+ <YG3q9brKTC4pkQbs@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <YG3kJC+6gLC6RzzQ@hatter.bewilderbeest.net>
+In-Reply-To: <YG3q9brKTC4pkQbs@kroah.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,39 +74,41 @@ Cc: - <devicetree@vger.kernel.org>, linux-aspeed@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Apr 07, 2021 at 11:56:04AM -0500, Zev Weiss wrote:
-> On Wed, Apr 07, 2021 at 10:18:31AM CDT, Greg Kroah-Hartman wrote:
-> > On Fri, Apr 02, 2021 at 01:27:21PM -0500, Zev Weiss wrote:
-> > > This property ties SIRQ polarity to SCU register bits that don't
-> > > necessarily have any direct relationship to it; the only use of it
-> > > was removed in commit c82bf6e133d30e0f9172a20807814fa28aef0f67.
-> > 
-> > Please write that as:
-> > 	c82bf6e133d3 ("ARM: aspeed: g5: Do not set sirq polarity")
-> > 
-> 
-> Ack, will do.
-> 
-> > > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> > > Reviewed-by: Joel Stanley <joel@jms.id.au>
-> > > ---
-> > >  Documentation/devicetree/bindings/serial/8250.yaml | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > 
-> > What changed from previous versions?  That always goes below the ---
-> > line.
-> > 
-> 
-> I included an overview of that in the cover letter (https://lore.kernel.org/openbmc/20210402182724.20848-1-zev@bewilderbeest.net/);
-> is it desirable to also have that duplicated in the individual patches in
-> the series?
+On Wed, Apr 07, 2021 at 12:25:09PM CDT, Greg Kroah-Hartman wrote:
+>On Wed, Apr 07, 2021 at 11:56:04AM -0500, Zev Weiss wrote:
+>> On Wed, Apr 07, 2021 at 10:18:31AM CDT, Greg Kroah-Hartman wrote:
+>> > On Fri, Apr 02, 2021 at 01:27:21PM -0500, Zev Weiss wrote:
+>> > > This property ties SIRQ polarity to SCU register bits that don't
+>> > > necessarily have any direct relationship to it; the only use of it
+>> > > was removed in commit c82bf6e133d30e0f9172a20807814fa28aef0f67.
+>> >
+>> > Please write that as:
+>> > 	c82bf6e133d3 ("ARM: aspeed: g5: Do not set sirq polarity")
+>> >
+>>
+>> Ack, will do.
+>>
+>> > > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+>> > > Reviewed-by: Joel Stanley <joel@jms.id.au>
+>> > > ---
+>> > >  Documentation/devicetree/bindings/serial/8250.yaml | 1 +
+>> > >  1 file changed, 1 insertion(+)
+>> >
+>> > What changed from previous versions?  That always goes below the ---
+>> > line.
+>> >
+>>
+>> I included an overview of that in the cover letter (https://lore.kernel.org/openbmc/20210402182724.20848-1-zev@bewilderbeest.net/);
+>> is it desirable to also have that duplicated in the individual patches in
+>> the series?
+>
+>Any reason why you didn't include all of the relevant people and mailing
+>lists in that cover letter?  I've never seen it before :)
+>
 
-Any reason why you didn't include all of the relevant people and mailing
-lists in that cover letter?  I've never seen it before :)
+Ah -- is there a good rule of thumb (or git send-email trick) for that?  
+Set-union of get_maintainer.pl over all the patches in the series?  
 
-But yes, if you do send it to the right group, putting it in 00/XX is
-fine.
 
-thanks,
+Zev
 
-greg k-h
