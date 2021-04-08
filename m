@@ -2,54 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C599358BB5
-	for <lists+openbmc@lfdr.de>; Thu,  8 Apr 2021 19:51:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B8B53358C02
+	for <lists+openbmc@lfdr.de>; Thu,  8 Apr 2021 20:17:05 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FGTMQ2h0kz3bT8
-	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 03:50:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FGTxW0G0Pz3bqT
+	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 04:17:03 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=qiifLgIH;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=qiifLgIH; dkim-atps=neutral
+X-Greylist: delayed 498 seconds by postgrey-1.36 at boromir;
+ Fri, 09 Apr 2021 04:16:50 AEST
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FGTMB66lnz2y0N;
- Fri,  9 Apr 2021 03:50:45 +1000 (AEST)
-IronPort-SDR: 7UQFCggrLBFlRq2e54AxLxR5nvUkcviVWeH2WapJph7YUwjHi7UNSaciifv18RGMejZhe37uf0
- qE3tAlWYftBw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9948"; a="190398902"
-X-IronPort-AV: E=Sophos;i="5.82,207,1613462400"; d="scan'208";a="190398902"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Apr 2021 10:50:42 -0700
-IronPort-SDR: p3wh+dLx0XeI3dTL4S60AIwO/HXvhpohRVDWptGhIxxc+i8Sq6es+WRDGpb/HfdaG4cxlzj3zl
- OHfGZJhhjuhg==
-X-IronPort-AV: E=Sophos;i="5.82,207,1613462400"; d="scan'208";a="530687284"
-Received: from yoojae-mobl.amr.corp.intel.com (HELO [10.251.26.54])
- ([10.251.26.54])
- by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Apr 2021 10:50:41 -0700
-Subject: Re: [PATCH v4 1/4] dt-bindings: i2c: aspeed: add transfer mode support
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-To: Rob Herring <robh@kernel.org>
-References: <20210224191720.7724-1-jae.hyun.yoo@linux.intel.com>
- <20210224191720.7724-2-jae.hyun.yoo@linux.intel.com>
- <20210306203011.GA1152769@robh.at.kernel.org>
- <f6732348-d6c8-f49b-6123-afe542bb1f8c@linux.intel.com>
- <CAL_Jsq+H2wCyTKhGcQvgiuyMtGW0hytQgw=948q0JGLSLOo9KA@mail.gmail.com>
- <f1811747-3826-215a-d822-85170303a7c9@linux.intel.com>
-Message-ID: <fadf1244-ed6e-5973-ff1b-018bd20ff3b1@linux.intel.com>
-Date: Thu, 8 Apr 2021 10:50:41 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FGTxG4C7Dz2yQr
+ for <openbmc@lists.ozlabs.org>; Fri,  9 Apr 2021 04:16:50 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 8620441389;
+ Thu,  8 Apr 2021 18:08:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-language:content-transfer-encoding:content-type
+ :content-type:in-reply-to:mime-version:user-agent:date:date
+ :message-id:from:from:references:subject:subject:received
+ :received:received; s=mta-01; t=1617905305; x=1619719706; bh=4cp
+ +K2SwZU4JPjJDzHJl/sc1r9Y1FIoNQCmV7QCVLIM=; b=qiifLgIHl3KFf4zRRtR
+ DjKLCz+eorY2p6QWRkzyqsXLIBl6/Rbv7uT2PNHxqlQ8IJvyhiWcLAOdE3jiENVO
+ 01NfJwt35cLriyXjgyYWUkvQflIcGcsufhLKZ4on34mJBbzEan53UxOiTaOS5H++
+ UktqXVr8gjw3CuAKM74t8MD8=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id UHchCFKJflWB; Thu,  8 Apr 2021 21:08:25 +0300 (MSK)
+Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
+ [172.17.100.103])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 2EF6841375;
+ Thu,  8 Apr 2021 21:08:25 +0300 (MSK)
+Received: from [10.199.0.182] (10.199.0.182) by T-EXCH-03.corp.yadro.com
+ (172.17.100.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 8 Apr
+ 2021 21:08:25 +0300
+Subject: Re: adding sync method in phosphor-time-manager
+To: <openbmc@lists.ozlabs.org>
+References: <PU1PR04MB2248961AEF87BA87C7749050A70D0@PU1PR04MB2248.apcprd04.prod.outlook.com>
+ <20201007013446.GE6152@heinlein>
+From: Alexander Amelkin <a.amelkin@yadro.com>
+Message-ID: <80ea13b3-1779-b2b3-c295-3d09dfd41987@yadro.com>
+Date: Thu, 8 Apr 2021 21:08:24 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <f1811747-3826-215a-d822-85170303a7c9@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+In-Reply-To: <20201007013446.GE6152@heinlein>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.199.0.182]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-03.corp.yadro.com (172.17.100.103)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,98 +79,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Wolfram Sang <wsa@the-dreams.de>,
- Andrew Jeffery <andrew@aj.id.au>, Tao Ren <taoren@fb.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brendan Higgins <brendanhiggins@google.com>,
- Linux I2C <linux-i2c@vger.kernel.org>, Cedric Le Goater <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Ping.
+Hi Patrick, everybody!
 
-On 3/10/2021 7:55 AM, Jae Hyun Yoo wrote:
-> On 3/9/2021 6:15 PM, Rob Herring wrote:
->> On Tue, Mar 9, 2021 at 10:02 AM Jae Hyun Yoo
->> <jae.hyun.yoo@linux.intel.com> wrote:
->>>
->>> Hi Rob,
->>>
->>> On 3/6/2021 12:30 PM, Rob Herring wrote:
->>>> On Wed, Feb 24, 2021 at 11:17:17AM -0800, Jae Hyun Yoo wrote:
->>>>> Append bindings to support transfer mode.
->>>>>
->>>>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->>>>> Reviewed-by: Brendan Higgins <brendanhiggins@google.com>
->>>>> ---
->>>>> Changes since v3:
->>>>> - None
->>>>>
->>>>> Changes since v2:
->>>>> - Moved SRAM resources back to default dtsi and added mode selection
->>>>>     property.
->>>>>
->>>>> Changes since v1:
->>>>> - Removed buffer reg settings from default device tree and added 
->>>>> the settings
->>>>>     into here to show the predefined buffer range per each bus.
->>>>>
->>>>>    .../devicetree/bindings/i2c/i2c-aspeed.txt    | 37 
->>>>> +++++++++++++++----
->>>>>    1 file changed, 30 insertions(+), 7 deletions(-)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt 
->>>>> b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
->>>>> index b47f6ccb196a..242343177324 100644
->>>>> --- a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
->>>>> +++ b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
->>>>> @@ -17,6 +17,20 @@ Optional Properties:
->>>>>    - bus-frequency    : frequency of the bus clock in Hz defaults 
->>>>> to 100 kHz when not
->>>>>                 specified
->>>>>    - multi-master     : states that there is another master active 
->>>>> on this bus.
->>>>> +- aspeed,i2c-xfer-mode      : should be "byte", "buf" or "dma" to 
->>>>> select transfer
->>>>> +                      mode defaults to "byte" mode when not 
->>>>> specified.
->>>>> +
->>>>> +                      I2C DMA mode on AST2500 has these restrictions:
->>>>> +                        - If one of these controllers is enabled
->>>>> +                            * UHCI host controller
->>>>> +                            * MCTP controller
->>>>> +                          I2C has to use buffer mode or byte mode 
->>>>> instead
->>>>> +                          since these controllers run only in DMA 
->>>>> mode and
->>>>> +                          I2C is sharing the same DMA H/W with them.
->>>>> +                        - If one of these controllers uses DMA 
->>>>> mode, I2C
->>>>> +                          can't use DMA mode
->>>>> +                            * SD/eMMC
->>>>> +                            * Port80 snoop
->>>>
->>>> How does one decide between byte or buf mode?
->>>
->>> If a given system makes just one byte r/w transactions most of the time
->>> then byte mode will be a right setting. Otherwise, buf mode is more
->>> efficient because it doesn't generate a bunch of interrupts on every
->>> byte handling.
+As far as I can see, this discussion has had no development, to our regret.
+We would really like to read some clarification on what is the proposed 
+method
+of timekeeping for x86 systems nowadays, because with TimeOwner interface
+removed, it's not clear to me anymore.
+
+Do you allow the users to set time/date on the BMC side? If so, how do you
+propagate those changes on to the host, which in x86 is the owner of RTC?
+What if the BMC is rebooted before the time settings are propagated?
+
+If you don't allow setting the time in BMC, then what are the options 
+for the user?
+Do you allow a choice between NTP and Host time only?
+
+How and when is the time synced from the host? Is there a method to 
+force a sync?
+
+Is there maybe some document that covers this topic?
+
+WBR, Alexander Amelkin
+YADRO
+
+07.10.2020 04:34, Patrick Williams пишет:
+> On Tue, Oct 06, 2020 at 05:38:13PM +0000, Velumani T-ERS,HCLTech wrote:
+>> Classification:
+>> Hi Team,
 >>
->> Then why doesn't the driver do byte transactions when it gets small
->> 1-4? byte transactions and buffer transactions when it gets larger
->> sized transactions.
-> 
-> Good question and it could be an option of this implementation.
-> Actually, each mode needs different register handling so we need to add
-> additional conditional branches to make it dynamic mode change depends
-> on the data size which can be a downside. Also, checked that small
-> amount of data transfer efficiency in 'buf' transfer mode is almost same
-> to 'byte' mode so there would be no big benefit from the dynamic mode
-> change. Of course, we can remove the 'byte' transfer mode but we should
-> also provide flexibility of configuration on what this hardware can
-> support, IMO.
-> 
-> Thanks,
-> Jae
+>> We wanted to add another time sync method in phosphor-time-manager to get the time from the host and set it to BMC. To have this option configurable I propose a dbus property in the time interface(given below). Please provide your feedback/comments.
+>>
+>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Time/Synchronization.interface.yaml
+>> enumerations:
+>>      - name: Method
+>>        description: >
+>>          Possible methods of time synchronization.
+>>        values:
+>>          - name: NTP
+>>            description: >
+>>              Sync by using the Network Time Protocol.
+>>          - name: Manual
+>>            description: >
+>>              Sync time manually.
+>>           - name: HostSync
+>>            description: >
+>>              Sync the time from host.
+>>
+> Hopefully Vishwa can weigh in here.
+>
+> It is my understanding that the default implementation allows the host
+> to synchronize the time down already.  There use to be an interface that
+> determined the "TimeOwner" to specify if the BMC or the Host were in
+> charge of the time.  That was removed not too long ago.
+>
+> https://github.com/openbmc/phosphor-dbus-interfaces/commit/70c76a29b898f05e28c803808bd57a2b6c3f7a6f
+>
+> I think you should look through the history on this commit (it
+> references a discussion related to the mailing list) and check with the
+> people in that chain as to why it was removed before we add back in
+> something very similar.
+>
