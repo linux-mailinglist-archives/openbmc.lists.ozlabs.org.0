@@ -1,90 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35882357964
-	for <lists+openbmc@lfdr.de>; Thu,  8 Apr 2021 03:14:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F44D357970
+	for <lists+openbmc@lfdr.de>; Thu,  8 Apr 2021 03:17:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FG3FD0lsJz3btb
-	for <lists+openbmc@lfdr.de>; Thu,  8 Apr 2021 11:14:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FG3KC0VlGz3bw0
+	for <lists+openbmc@lfdr.de>; Thu,  8 Apr 2021 11:17:35 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=iPHiO6pb;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=t6WmJeCD;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=DGlDwafZ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=iPHiO6pb; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=t6WmJeCD; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=DGlDwafZ; 
  dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FG3Dz0KXjz304C
- for <openbmc@lists.ozlabs.org>; Thu,  8 Apr 2021 11:13:55 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id BD6515C014E
- for <openbmc@lists.ozlabs.org>; Wed,  7 Apr 2021 21:13:52 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Wed, 07 Apr 2021 21:13:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm2; bh=cbCbUty9LA29TklaDjbh94L8MgFBdyl
- HxtG24haJu2E=; b=iPHiO6pbqzJO9vPSPpWyJg5wfAZFn4mZb7eu6kxkoJ5syrH
- EpWK5I5O0k5aGR5dxdmdpMvB1XFq3DQuHZq+4AgU+yxT8cdEW/W9d3wKJA6LWufJ
- aBYZn45WtRtY6obDxGzeYDP+5NuNYJ8glG2xzauSIXLK7+Cr317+Q/FyTafAlTbb
- iXMv9W2IYemQelgKT/lNlBBEd2SkFf5FVKKj1AFb5TR8uHxVCJVKIrnbQjkkA9on
- bbeg9wsbI4HHPOBtIanc/9axe4poygHhpnaBI6952V0hFjrJt+MetlSBfOax6qgQ
- R2wPvHVFJpbw3IAtniAcHgwghFWdKk6fFIVhfPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=cbCbUt
- y9LA29TklaDjbh94L8MgFBdylHxtG24haJu2E=; b=t6WmJeCDpIUgIyup7AFTdT
- ZYXPzJ48iuBm3dqMqafmabLmKDJcF4Nvj/ik2uKySU/NQliAXes1rU71s8iJdl2C
- TrNAVOuSMs7+b5lvUmyTmj8ynQn1NlOTqby55E/zfcf15Zo93KexDNXXXrorA1Gd
- ubh1LVlMm5V3brtk4oVwI7HQItfO86FqxzweAMNbdSnLo1eOb9qs7CUtceXsKaCW
- IsNFEgGYeObM9hL/w5RQ3vBjCA7nM6p93A+16vxY2jMfI2qq7GJB/nL8KxCd4uGR
- /kuBBNIvwV7VHxWI1JcohwcJ1LJxYdGWw10QJdnwu7vN2C0TfGG8ngVnKHR3bw/Q
- ==
-X-ME-Sender: <xms:z1huYE6r8x604T0kHOzNdV1mwKC6WjBLb6VdM1BPOUJz8A94wbxKfg>
- <xme:z1huYF4ghvFIfHMj1jLoMbeAFDRQ-A4-xzhOwon13N6O6YvimnQJ8rG9PCjYgdCOH
- MT2HC6UfTsuKj1Npg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudejkedggeegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtsehttd
- ertderreejnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgv
- fiesrghjrdhiugdrrghuqeenucggtffrrghtthgvrhhnpedutddtkeeugeegvddttdeuke
- eiuddtgfeuuddtfeeiueetfeeileettedvtdfhieenucevlhhushhtvghrufhiiigvpedt
- necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:z1huYDeUOKnwCQa3rGTwxRjIl1SDyNSHQW0yTZcnehHI7F0JDM6rGQ>
- <xmx:z1huYJLx13sakwrrvysV9AmOnuOePEo2zZTjegw6xk0M23uoVvvFYQ>
- <xmx:z1huYILL1kjd4r-zJUrQ7hFa4sO1KzKSi2JckjSt0RG9IQF4rdsniA>
- <xmx:0FhuYNXxZBWxZfAKfYkYDSv7ipAsraf1KcPgonWISgXOaFA1IXhIZQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id BF565A00079; Wed,  7 Apr 2021 21:13:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-273-g8500d2492d-fm-20210323.002-g8500d249
-Mime-Version: 1.0
-Message-Id: <af718a56-8fc5-4219-9fa1-fee5bbf52895@www.fastmail.com>
-In-Reply-To: <20210310173222.17556-2-eajames@linux.ibm.com>
-References: <20210310173222.17556-1-eajames@linux.ibm.com>
- <20210310173222.17556-2-eajames@linux.ibm.com>
-Date: Thu, 08 Apr 2021 10:43:30 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.10_2/3]_ARM:_dts:_aspeed:_everest:_Enab?=
- =?UTF-8?Q?le_fan_watchdog?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FG3JS2Wc9z2xZJ;
+ Thu,  8 Apr 2021 11:16:55 +1000 (AEST)
+Received: from hatter.bewilderbeest.net (unknown [IPv6:2600:6c44:7f:ba20::7c6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id F0C771D2;
+ Wed,  7 Apr 2021 18:16:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1617844613;
+ bh=lv6dSEb+gNqLacuzTAbQWm1YjEzPaAvYLlGcphHDA3k=;
+ h=From:To:Cc:Subject:Date:From;
+ b=DGlDwafZ5MxolFOE2tuY5dRV5FzRzQaaYgCG2/Hi3cvLqiORHuqevUJmg7GDA7pT3
+ QH0kiX6th506pOFNtJKepeOkKFvwcQCNMsD2IrLzA5m2C8oecqigTOj8/E3/RtzmzA
+ D0MP9AhBgc83ARz3Vtgcj5OGuEUh29s9zVdDW1TA=
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Joel Stanley <joel@jms.id.au>
+Subject: [PATCH v5 0/4] serial: 8250_aspeed_vuart: generalized DT properties
+Date: Wed,  7 Apr 2021 20:16:33 -0500
+Message-Id: <20210408011637.5361-1-zev@bewilderbeest.net>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,18 +59,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ Zev Weiss <zev@bewilderbeest.net>, Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Lubomir Rintel <lkundrak@v3.sk>,
+ Rob Herring <robh+dt@kernel.org>, linux-serial@vger.kernel.org,
+ Jiri Slaby <jirislaby@kernel.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This series generalizes the aspeed-vuart driver's device tree
+properties to cover all the attributes it currently exposes via sysfs.
+
+The aspeed,sirq-polarity-sense property was a bit of a design mistake
+in that it ties Aspeed VUART SIRQ polarity to SCU register bits that
+aren't really inherently related to it; the first patch in this series
+deprecates it (though we hope to eventually remove it).
+
+The rest of the series adds two new properties, aspeed,lpc-io-reg and
+aspeed,lpc-interrupts.  The latter allows describing the SIRQ polarity
+(along with the interrupt number) directly, providing a simpler
+replacement for aspeed,sirq-polarity-sense.
 
 
-On Thu, 11 Mar 2021, at 04:02, Eddie James wrote:
-> Set watchdog 1 to pulse the fan watchdog circuit that drives the FAULT
-> pin of the MAX31785, resulting in fans running at full speed, if at
-> any point the BMC stops pulsing it, such as a BMC reboot at runtime.
-> Enable watchdog 2 for BMC reboots.
-> 
-> Signed-off-by: Matthew Barth <msbarth@linux.ibm.com>
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Changes since v4 [3]:
+ - fixed commit reference formatting in commit message
 
-Acked-by: Andrew Jeffery <andrew@aj.id.au>
+Changes since v3 [2]:
+ - renamed properties to match aspeed,ast2400-kcs-bmc
+
+Changes since v2 [0]:
+ - expanded to also handle sirq number and lpc address in addition to
+   sirq polarity
+ - added default settings if DT properties not specified
+ - refactored existing sysfs code slightly, adding range checks
+ - cleaned up 'make dt_binding_check' warnings
+
+Changes since v1 [1]:
+ - deprecate and retain aspeed,sirq-polarity-sense instead of removing it
+ - drop e3c246d4i dts addition from this series
+
+
+[0] https://lore.kernel.org/openbmc/20210401005702.28271-1-zev@bewilderbeest.net/
+[1] https://lore.kernel.org/openbmc/20210330002338.335-1-zev@bewilderbeest.net/
+[2] https://lore.kernel.org/openbmc/20210402004716.15961-1-zev@bewilderbeest.net/
+[3] https://lore.kernel.org/openbmc/20210402182724.20848-1-zev@bewilderbeest.net/
+
+
+Zev Weiss (4):
+  dt-bindings: serial: 8250: deprecate aspeed,sirq-polarity-sense
+  drivers/tty/serial/8250: refactor sirq and lpc address setting code
+  drivers/tty/serial/8250: add aspeed,lpc-io-reg and
+    aspeed,lpc-interrupts DT properties
+  dt-bindings: serial: 8250: add aspeed,lpc-io-reg and
+    aspeed,lpc-interrupts
+
+ .../devicetree/bindings/serial/8250.yaml      | 28 +++++-
+ drivers/tty/serial/8250/8250_aspeed_vuart.c   | 95 +++++++++++++++----
+ 2 files changed, 103 insertions(+), 20 deletions(-)
+
+-- 
+2.31.1
+
