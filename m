@@ -2,94 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D3F8358891
-	for <lists+openbmc@lfdr.de>; Thu,  8 Apr 2021 17:33:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EB4E35891D
+	for <lists+openbmc@lfdr.de>; Thu,  8 Apr 2021 17:59:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FGQK35D6Dz3bt1
-	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 01:33:43 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=m701xrDV;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=AcnfSV/B;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FGQtg3QG5z3bTF
+	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 01:59:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=gmail.com (client-ip=209.85.167.175;
+ helo=mail-oi1-f175.google.com; envelope-from=robherring2@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm2 header.b=m701xrDV; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=AcnfSV/B; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com
+ [209.85.167.175])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FGQFh0Xcxz3bxv
- for <openbmc@lists.ozlabs.org>; Fri,  9 Apr 2021 01:30:47 +1000 (AEST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.nyi.internal (Postfix) with ESMTP id 598765C0176;
- Thu,  8 Apr 2021 11:30:43 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute5.internal (MEProxy); Thu, 08 Apr 2021 11:30:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
- :references:mime-version:content-type:in-reply-to; s=fm2; bh=z51
- 8Sxzx58nuF6JEE8gRB4Xea5mVKxKaVN0FroLrA6U=; b=m701xrDVHi75m+z6sgj
- NF8Qq8wUCXWYebQLvXwGvEwLtZZ4U+NhU0aiVCa4oEhSfYcaJyFBbaiC/muqISqW
- PpFDivcw1OQwowx0+kBf4XXzNBe4m5X47jerDa12SfzAWOT+asfIHPWut6Nq4Frf
- eEotmvwUC5Ogt/QTrpyKX1EhAhY587gmg5KL19cOzG84mfgCv8QqSgsg8FXUcgEA
- oasGo3a53Yj7hzTvbxwbwLaDq+H14jagRocCDMfHkAV1zPOAdaOoJCStaOFaRgUW
- yano1Ylg8t7mmt4dQmVlI7fQQkS8b2fZAUztlLMqBpPWpROBhR3fbUYJBQPv9x+S
- g3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=z518Sx
- zx58nuF6JEE8gRB4Xea5mVKxKaVN0FroLrA6U=; b=AcnfSV/B4nFqm4bNyUfF/n
- 59IhoQvDsn6Ut2xtsCsvLjMTlF9n2MhOfyGd7Jl5qWXRzQ3WqSAc5zQ2JLiI2cJ9
- Z3oMhQaNgYZpFezP36Eugj/q9CgbqKbLEfW57seYJ2jW8rYfipBCsH32DRcYzzAv
- GSGg5gfoZ2zL1frehhYfJH6uAqyrQ1gQO7+PWrwIbRCQ8aIDTsOSV3K16BBouiiD
- IYCCz+MtlD03lyEkKtl5nkbD4sxYIfcqndVUzHyvQSvdClRiOlmzgE+jXpTj+3tj
- pWS/QKg2xzqE9al6mdMoDO+LaiFNzVEKftyJS6Q6Oryax5+PZKIVUn9jUkOaNTRQ
- ==
-X-ME-Sender: <xms:oiFvYAtbY4cq77jc5UnVEoBFYgmBTXTXvUCzYMTRdVGFQ7wa_S0C7Q>
- <xme:oiFvYICzJ8--3chsO0xW4uraxgL-6eOIPBEbky8Uyihf-1m3XzIGUlZ0TvtoJwgJk
- popyiBqeaKh4KxPxIE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudejledgleduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeurhgrugcu
- uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
- eqnecuggftrfgrthhtvghrnhepfeffhfefheeguddtvddtueeihfduieefkeefieefkeef
- udefueevudelgfekffefnecukfhppedujeefrdduieejrdefuddrudeljeenucevlhhush
- htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsges
- fhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:oiFvYIV7TDLn0WalhL_JSTeFntWc2u4psVSfrjsTWLDxtT-kU3qkHQ>
- <xmx:oiFvYGBLZwP7144wcqLA5WXf11RieglOh-h68hD08F6NQnQ7qxAPaA>
- <xmx:oiFvYL-lyUvRCWcjCr8Tl2Wv64hr1uAcCJcnni0AM2UaCvSPnZE6LA>
- <xmx:oyFvYBozTcHMY150Pk12sNd3yCmhyeehuILzfUoFdp7F5TmAk-NfFA>
-Received: from thinkpad.fuzziesquirrel.com (unknown [173.167.31.197])
- by mail.messagingengine.com (Postfix) with ESMTPA id 92BC0108005F;
- Thu,  8 Apr 2021 11:30:42 -0400 (EDT)
-Date: Thu, 8 Apr 2021 11:30:40 -0400
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Lancelot Kao <lancelot.cy.kao@fii-na.com>
-Subject: Re: group for foxconn CI  / fii oem repo
-Message-ID: <20210408153040.c2wvk7idgdsvl52b@thinkpad.fuzziesquirrel.com>
-References: <DM6PR08MB58838020F8543D03C6235064B2929@DM6PR08MB5883.namprd08.prod.outlook.com>
- <DM6PR08MB58834FC516032C1D11C9F9F9B26F9@DM6PR08MB5883.namprd08.prod.outlook.com>
- <20210315205148.z6mcrx32kxr56lm2@thinkpad.fuzziesquirrel.com>
- <DM6PR08MB5883E400A28403E42592BF07B27E9@DM6PR08MB5883.namprd08.prod.outlook.com>
- <48C1C5DD-1D95-4001-A7AB-55F5ECD912E3@fii-na.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FGQtS436yz309k;
+ Fri,  9 Apr 2021 01:59:11 +1000 (AEST)
+Received: by mail-oi1-f175.google.com with SMTP id a8so2638946oic.11;
+ Thu, 08 Apr 2021 08:59:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=jtoAw95rvXg1r6cke0J3PIsrEjdw50dBNfyvcmHc460=;
+ b=aGQOAPhmDtum07P3uLCBUBOaoYxu+WQlrSF8+Xczgkyzb5m8EHjMdW1eAXgoCMKifN
+ N+TNx0tcNXIiZtqD0SLXVHpnLYVD6/SD2DlWFrBVJZBmyl+ipizMHOWSIt5dZVKG4Cqu
+ zyJDq2j5SFXhIHdrGFI4GzgUIoUhTv8fQR4Fh/yaFeW/rUCW+wjSoTNpXuvTWM+wIcCO
+ pq0+jUqydFYx3GLtE3r4Er9aUXXUDdMEJZ0OP7DlwoE+Fg8X7R61zVfln1C0l5pyidh/
+ JNlAVuG2dE97g4pO8RByUgxd9ctPGrUWe1kvVa+3jvad1p0PX09AM3RtLjBJaPa1PPg+
+ evyg==
+X-Gm-Message-State: AOAM530svueG7eekOWYhBpSYABNn++/ve8rSm5Dilg+WfTLSjB7RiDiL
+ S+49suhjffgnUKdqxtejoA==
+X-Google-Smtp-Source: ABdhPJx+JWT72oKSZA+LWx7PNFVqKo3fxY81eBJG9HzWXkLOF9mbK8ZbLh65asfWyyJWKv4Ts+ehVQ==
+X-Received: by 2002:aca:da04:: with SMTP id r4mr6652760oig.123.1617897548115; 
+ Thu, 08 Apr 2021 08:59:08 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
+ [24.155.109.49])
+ by smtp.gmail.com with ESMTPSA id f12sm282199otf.65.2021.04.08.08.59.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Apr 2021 08:59:07 -0700 (PDT)
+Received: (nullmailer pid 1553733 invoked by uid 1000);
+ Thu, 08 Apr 2021 15:59:06 -0000
+Date: Thu, 8 Apr 2021 10:59:06 -0500
+From: Rob Herring <robh@kernel.org>
+To: Zev Weiss <zev@bewilderbeest.net>
+Subject: Re: [PATCH v5 1/4] dt-bindings: serial: 8250: deprecate aspeed,
+ sirq-polarity-sense
+Message-ID: <20210408155906.GA1553685@robh.at.kernel.org>
+References: <20210408011637.5361-1-zev@bewilderbeest.net>
+ <20210408011637.5361-2-zev@bewilderbeest.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <48C1C5DD-1D95-4001-A7AB-55F5ECD912E3@fii-na.com>
+In-Reply-To: <20210408011637.5361-2-zev@bewilderbeest.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,27 +68,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Neil Chen <Neil.Chen@fii-usa.com>, "vveerach@google.com" <vveerach@google.com>,
- Mustatfa Shehabi <Mustafa.Shehabi@fii-na.com>,
- XP Chen <Xiao-Peng.Chen@fii-na.com>
+Cc: - <devicetree@vger.kernel.org>, linux-aspeed@lists.ozlabs.org,
+ Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Lubomir Rintel <lkundrak@v3.sk>,
+ Rob Herring <robh+dt@kernel.org>, linux-serial@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Mar 29, 2021 at 06:40:36PM +0000, Lancelot Kao wrote:
->   Hi, Brad
->	Here is an update, thanks
->   mohaimen.alsamarai@fii-na.com
->    lancelot.kao@fii-usa.com
->    Xiao-Peng.Chen@fii-na.com
->    Mustafa.Shehabi@fii-na.com
->    Neil.Chen@fii-usa.com
->    avery.zl.yang@fii-na.com
+On Wed, 07 Apr 2021 20:16:34 -0500, Zev Weiss wrote:
+> This property ties SIRQ polarity to SCU register bits that don't
+> necessarily have any direct relationship to it; the only use of it was
+> removed in commit c82bf6e133d3 ("ARM: aspeed: g5: Do not set sirq
+> polarity").
+> 
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> ---
+>  Documentation/devicetree/bindings/serial/8250.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Wow, thats a lot of maintainers for one repo!  :-)
-
-I've sent invitations to everyone here, please accept the invitations 
-and then once that happens you should be able to merge code in Gerrit.
-
--brad
+Acked-by: Rob Herring <robh@kernel.org>
