@@ -1,71 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0950435A1FA
-	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 17:27:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C8BE35A5F6
+	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 20:41:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FH27R6MbZz2yZ3
-	for <lists+openbmc@lfdr.de>; Sat, 10 Apr 2021 01:27:31 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=wQQfjeM8;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FH6RM0GsPz3bwC
+	for <lists+openbmc@lfdr.de>; Sat, 10 Apr 2021 04:41:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b2f; helo=mail-yb1-xb2f.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=wQQfjeM8; dkim-atps=neutral
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com
- [IPv6:2607:f8b0:4864:20::b2f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=209.85.210.54; helo=mail-ot1-f54.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com
+ [209.85.210.54])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FH27D2Kptz2xfv
- for <openbmc@lists.ozlabs.org>; Sat, 10 Apr 2021 01:27:17 +1000 (AEST)
-Received: by mail-yb1-xb2f.google.com with SMTP id x189so7018067ybg.5
- for <openbmc@lists.ozlabs.org>; Fri, 09 Apr 2021 08:27:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=u9iv71vpUhXoaneorlEhNhzmUAUvyt57NgjQFCI8rGA=;
- b=wQQfjeM8sawAH0NIKuRnYFH8nGyGppn7M37pGJO/h2UXfwv8yg4T6VmXdFDGe7Fopl
- ClB2JRwQvkunlySE52PrjkaxJD50klTv1K/KRfq2ZCm29dy/LeFI+dwGVDtcPhQThbgA
- h62d4oCMD32890dCiGJA3wFvMXSSUpDExUawhppQ5wJt62FPgzfo2A3cxLXu9QIVZ3aw
- cT8dJ88oAGPNL4wjEeFbM9pe9jsrRk96lQfrWEsXg6D4Yi7eHIEGMz4upfjRHWFnRzGd
- 9uheLspYQgXiHJeBnxLSXPrifity7NTJ3kAwWuws7WkXMGVG04vZ5nTpQKjRlR+S6dez
- Hw+Q==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FH6R75RSRz30CX;
+ Sat, 10 Apr 2021 04:41:22 +1000 (AEST)
+Received: by mail-ot1-f54.google.com with SMTP id
+ s11-20020a056830124bb029021bb3524ebeso6675826otp.0; 
+ Fri, 09 Apr 2021 11:41:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=u9iv71vpUhXoaneorlEhNhzmUAUvyt57NgjQFCI8rGA=;
- b=iHoxUdf3/clhtujT4xSlmq0rUi0aTv+2QJgGYjli7PcHqxPfYxTgCmdrBpC8dd503G
- uQTTYjYtEAKElX2L1N155obgP5rmtUpCBYBTinecH8TQWpJlf9H4Zhro3yEIUOMrHTAN
- RuUFKw0RrP09Gyao2uE1OGKw5eEZ3a21ejK6Caw8SgCjYuSUlkhyu2TNKKmNOU0p5Hqk
- XnK4Hm0BX5hYH3qjkVPLdb7WHL9e0cBGnNezWnd6t1fxruh4g1iG4Jce03kYcvz2DRzq
- YtRzH+IXN0ao3vW5TIqckikbrl5fEy9IuSN2COO7wa1gA/d066m8NugOa/sDikt00JQR
- pqwA==
-X-Gm-Message-State: AOAM532g8U/J1Qxr14vn1QwvW40LGrUad8uPWgrrfuin76rre3+fwROE
- 87o2HoU1P7ljRMEIFj2HxmmE86EoJ6u8k7VrTS3+yw==
-X-Google-Smtp-Source: ABdhPJyiPUG0uI1HUQT6i9cOmPMk+pZN4F4VyqCsJyUClGd7Rto7E9m3jzK5hhcLtS9LX8Xzd9y4AfV5sIcV90d0W1I=
-X-Received: by 2002:a05:6902:1003:: with SMTP id
- w3mr16329138ybt.148.1617982034165; 
- Fri, 09 Apr 2021 08:27:14 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=4MvFSu+iSn/dauM/cnTOpr/Gc9vHIrXjG/A41VJDYI4=;
+ b=Adc8DX1Ww2Ru34mMfMrUoXquoVUpzdt94599tH+Vxe04eJsj2awqbx3OiuY5l0G2K5
+ cpOuWxoloQVyvpM/6l0KbkyfoMKysJsvZUBBD4gSHXflTesGc8GB5ZO5yQBUO/Qbd8eR
+ 8gL6laJQmkZBl0U2qTAENHxIPU37SS/Ld5ojiI/2895lR2lCmpxOEUrQitOLG1aYt3M5
+ Gq9MOOec+f9yS9hEp9bIBA/RMWJmcdaWpl/p1bASH0DPxgeN52lmMLKUGp5mvy6+fTPe
+ J94jKIlo5Qm5INVqWwP+GQdlOsmSaoPVvWUAsUIgD2BDeEJw7OSAKjJSxvGK59FrlSGP
+ GzIw==
+X-Gm-Message-State: AOAM532i/RHKdiMRc6Ue6GPqjUGmGRPsNFh3EKQOcKsk56sWPqYuEADm
+ dFeMjsSkvrE77OIyJbNK/A==
+X-Google-Smtp-Source: ABdhPJzGKW/WQeP+HhyULbXe22Y/RLS1g/vF+rFi385EeuxrtQnl324VEHdsSv/nFS6zXrD211MquA==
+X-Received: by 2002:a9d:68ce:: with SMTP id i14mr12827904oto.151.1617993680723; 
+ Fri, 09 Apr 2021 11:41:20 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
+ [24.155.109.49])
+ by smtp.gmail.com with ESMTPSA id j11sm667128ooo.45.2021.04.09.11.41.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Apr 2021 11:41:20 -0700 (PDT)
+Received: (nullmailer pid 3937011 invoked by uid 1000);
+ Fri, 09 Apr 2021 18:41:18 -0000
+Date: Fri, 9 Apr 2021 13:41:18 -0500
+From: Rob Herring <robh@kernel.org>
+To: Steven Lee <steven_lee@aspeedtech.com>
+Subject: Re: [PATCH v1 1/2] dt-bindings: mmc: sdhci-of-aspeed: Add power-gpio
+ and power-switch-gpio
+Message-ID: <20210409184118.GA3934798@robh.at.kernel.org>
+References: <20210408015218.20560-1-steven_lee@aspeedtech.com>
+ <20210408015218.20560-2-steven_lee@aspeedtech.com>
 MIME-Version: 1.0
-References: <f9127788-7f8a-59ed-e434-0f510773d2aa@linux.intel.com>
-In-Reply-To: <f9127788-7f8a-59ed-e434-0f510773d2aa@linux.intel.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Fri, 9 Apr 2021 08:27:03 -0700
-Message-ID: <CACWQX83XMxm5UW1pwyqpdaqVtfvWRWMyuTbmjuZvm+7y1PXYqg@mail.gmail.com>
-Subject: Re: Mapping standard D-Bus sensors to ProcessorMetrics (and other
- specific schemas)
-To: "Ambrozewicz, Adrian" <adrian.ambrozewicz@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210408015218.20560-2-steven_lee@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,84 +68,114 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
+ ryan_chen@aspeedtech.com,
+ "moderated list:ASPEED SD/MMC DRIVER" <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ "open list:ASPEED SD/MMC DRIVER" <linux-mmc@vger.kernel.org>,
+ "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
+ Ryan Chen <ryanchen.aspeed@gmail.com>, Adrian Hunter <adrian.hunter@intel.com>,
+ open list <linux-kernel@vger.kernel.org>, chin-ting_kuo@aspeedtech.com,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Apr 7, 2021 at 5:26 AM Ambrozewicz, Adrian
-<adrian.ambrozewicz@linux.intel.com> wrote:
->
-> Hi,
->
-> Currently bmcweb exposes sensors as part of Chassis subnodes in Sensors,
-> Power and Thermal schemas. All of them lists sensors as arrays of
-> generic properties distinguished by Id/Name etc. On the other hand - for
-> well-defined metrics Redfish specifies concrete schemas like
-> ProcessorMetrics and MemoryMetrics. They define designated Redfish
-> properties with given name and value type.
->
-> I'm starting to explore ways to implement these schemas in bmcweb, while
-> retaining interoperability with TelemetryService. This requirement
-> implicates, that source of these properties should implement
-> xyz.openbmc_project.Sensor.Value interface and comply with OpenBMC D-Bus
-> sensors architecture, which enforces predefined paths and units for
-> various types of sensors.
->
-> Question of extending xyz.openbmc_project.Sensor.Value interface (so it
-> allows for more types or nested paths, if necessary) is something  I
-> know should be considered, but seems like more or less straightforward
-> to address.
+On Thu, Apr 08, 2021 at 09:52:17AM +0800, Steven Lee wrote:
+> AST2600-A2 EVB provides the reference design for enabling SD bus power
+> and toggling SD bus signal voltage by GPIO pins.
+> Add the definition and example for power-gpio and power-switch-gpio
+> properties.
+> 
+> In the reference design, GPIOV0 of AST2600-A2 EVB is connected to power
+> load switch that providing 3.3v to SD1 bus vdd. GPIOV1 is connected to
+> a 1.8v and a 3.3v power load switch that providing signal voltage to
+> SD1 bus.
+> If GPIOV0 is active high, SD1 bus is enabled. Otherwise, SD1 bus is
+> disabled.
+> If GPIOV1 is active high, 3.3v power load switch is enabled, SD1 signal
+> voltage is 3.3v. Otherwise, 1.8v power load switch will be enabled, SD1
+> signal voltage becomes 1.8v.
+> 
+> AST2600-A2 EVB also support toggling signal voltage for SD2 bus.
+> The design is the same as SD1 bus. It uses GPIOV2 as power-gpio and GPIOV3
+> as power-switch-gpio.
+> 
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> ---
+>  .../devicetree/bindings/mmc/aspeed,sdhci.yaml | 25 +++++++++++++++++++
+>  1 file changed, 25 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+> index 987b287f3bff..515a74614f3c 100644
+> --- a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+> @@ -37,6 +37,14 @@ properties:
+>    clocks:
+>      maxItems: 1
+>      description: The SD/SDIO controller clock gate
+> +  power-gpio:
 
-I'm not following this statement.  From my perspective, this is
-something we've already solved at a dbus level.  To attach a "sensor"
-to a given inventory item, set up the association back to said
-inventory item.  Today, we only connect things to Redfish "Chassis",
-because that's currently the only node with sensors, but that's
-certainly easy to change and there's nothing about the API that
-prevents doing that.
+'-gpios' is the preferred form even if just 1.
 
-Beyond that, because MemoryMetrics and ProcessorMetrics schemas call
-out specific sensor names, I suspect we need to come up with a well
-defined set of names;  If you want to populate MemoryMetrics, you
-would expose sensors, with associations back to the dimm in question,
-and have a sensor called, say,
-/xyz/openbmc_project/remaining_block_percentage, and map that to the
-RemainingSpareBlockPercentage property.
+> +    description:
+> +      The GPIO for enabling/disabling SD bus power.
+> +    maxItems: 1
 
->
-> There is bigger issue I see now - mapping D-Bus sensors to concrete
-> Redfish properties. Mapping sensors at inventory level is sorted out
-> with use of xyz.openbmc_project.Association.Definitions interface.
-> However - I don't see (or know of) any method to link given D-Bus sensor
-> with it's designated place in Redfish schema.
+blank line
 
-This is by design.  Dbus should largely have no reliance on any
-specific protocol, and we shouldn't be building interfaces that
-require daemons pushing data on the bus to have any knowledge of
-Redfish, IPMI, PLDM, or protocol of next year.  This generally means
-that some dbus->redfish transforms are not as efficient or clean as
-they could be, but it keeps that logic quarantined into bmcweb.  I
-suspect bmcweb will need logic to translate redfish URI + property
-name to dbus path, and this logic will be non-trivial.
-
-> I've done some PoC implementation of ProcessorMetrics, which relies on
-> new D-Bus interface with 'Mapping' property (eg. 'TemperatureCelsius' or
-> 'CoreMetrics/12/UnhaltedCycles'). ProcessorMetrics node implementation
-> queries D-Bus for all sensors associated with given CPU and populates
-> properties if proper mapping was found.
-
-Do you have a pointer to it?  It'd be good to see the code you're thinking of.
-
-With that said, I would be against this approach.  This would require
-clients to hardcode in, say, BlocksWritten, as a mapping, which means
-that as we have more than just redfish, now each client needs to
-hardcode the Redfish representation, the PLDM representation, and the
-IPMI representation of the same data.  That seems messy.
-
->
-> Is my PoC approach described above feasible for OpenBMC? What are your
-> thoughts? I would like to start a discussion and hear your proposals
-> about possible alternatives.
->
-> Regards,
-> Adrian
+> +  power-switch-gpio:
+> +    description:
+> +      The GPIO for toggling the signal voltage between 3.3v and 1.8v.
+> +    maxItems: 1
+>  
+>  patternProperties:
+>    "^sdhci@[0-9a-f]+$":
+> @@ -61,6 +69,14 @@ patternProperties:
+>        sdhci,auto-cmd12:
+>          type: boolean
+>          description: Specifies that controller should use auto CMD12
+> +      power-gpio:
+> +        description:
+> +          The GPIO for enabling/disabling SD bus power.
+> +        maxItems: 1
+> +      power-switch-gpio:
+> +        description:
+> +          The GPIO for toggling the signal voltage between 3.3v and 1.8v.
+> +        maxItems: 1
+>      required:
+>        - compatible
+>        - reg
+> @@ -80,6 +96,7 @@ required:
+>  examples:
+>    - |
+>      #include <dt-bindings/clock/aspeed-clock.h>
+> +    #include <dt-bindings/gpio/aspeed-gpio.h>
+>      sdc@1e740000 {
+>              compatible = "aspeed,ast2500-sd-controller";
+>              reg = <0x1e740000 0x100>;
+> @@ -94,6 +111,10 @@ examples:
+>                      interrupts = <26>;
+>                      sdhci,auto-cmd12;
+>                      clocks = <&syscon ASPEED_CLK_SDIO>;
+> +                    power-gpio = <&gpio0 ASPEED_GPIO(V, 0)
+> +                                     GPIO_ACTIVE_HIGH>;
+> +                    power-switch-gpio = <&gpio0 ASPEED_GPIO(V, 1)
+> +                                     GPIO_ACTIVE_HIGH>;
+>              };
+>  
+>              sdhci1: sdhci@200 {
+> @@ -102,5 +123,9 @@ examples:
+>                      interrupts = <26>;
+>                      sdhci,auto-cmd12;
+>                      clocks = <&syscon ASPEED_CLK_SDIO>;
+> +                    power-gpio = <&gpio0 ASPEED_GPIO(V, 2)
+> +                                     GPIO_ACTIVE_HIGH>;
+> +                    power-switch-gpio = <&gpio0 ASPEED_GPIO(V, 3)
+> +                                     GPIO_ACTIVE_HIGH>;
+>              };
+>      };
+> -- 
+> 2.17.1
+> 
