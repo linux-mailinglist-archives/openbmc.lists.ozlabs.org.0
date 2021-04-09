@@ -2,144 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73A593594E5
-	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 07:44:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D3023594FA
+	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 07:49:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FGnC239sSz30JY
-	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 15:44:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FGnJ91ZB1z30BM
+	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 15:49:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=equinixinc.onmicrosoft.com header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-equinixinc-onmicrosoft-com header.b=Nxh2oAgf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=EycFG932;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=qrMvZHO3;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=equinix.com (client-ip=148.163.159.192;
- helo=mx0b-00268f01.pphosted.com;
- envelope-from=prvs=5733813a0f=zweiss@equinix.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=equinixinc.onmicrosoft.com
- header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-equinixinc-onmicrosoft-com header.b=Nxh2oAgf; 
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.230;
+ helo=new4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=EycFG932; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=qrMvZHO3; 
  dkim-atps=neutral
-Received: from mx0b-00268f01.pphosted.com (mx0b-00268f01.pphosted.com
- [148.163.159.192])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
+ [66.111.4.230])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FGnBj2wNBz2ysq;
- Fri,  9 Apr 2021 15:44:28 +1000 (AEST)
-Received: from pps.filterd (m0105197.ppops.net [127.0.0.1])
- by mx0a-00268f01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 1395YSwg029717; Fri, 9 Apr 2021 05:44:07 GMT
-Received: from nam10-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam10lp2103.outbound.protection.outlook.com [104.47.55.103])
- by mx0a-00268f01.pphosted.com with ESMTP id 37te7hgc8j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 09 Apr 2021 05:44:07 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AuOjN/9plRuRaCzgUYOtwNaDp16UeVw/S2blBFp9NN1gOL4AC0YzNrjJERVbi5X412mfA8oFAG1GQbuXqEwExhLRaARL8hYYHOkU6zr2zDqblcjhEqGFhdQ33a0hFt8iyvBPuxAMRP1fqCMdf2AeUveVq0XIz8arlAYCaIs/JaGo5Uemeyrattu7HMkgqp45v36XX1AkPYYSpQ42G0kbSdNXGbKFVsmTE4HUFBhvHFG2IOzvUtEr9vpAcxBwIc+DdMRWE75keHsBqqBJ/XO8hXCllbF+BQli7X7PICIctVVasYoehBVl81lssAL2nCQLYfNCBqhHqvbSM21TdkdQkw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SIQJGANvy4aZLxZ5KNDklXmbuGvzLCo1wnvU/7xr2dE=;
- b=d4FMwswr52TImkgMd9SKNR4RZ4VWqLVCrZAwEzq4zeb9twC8wQU22sSbQ4iOBXqTcyCWbJ43BMps3MaX0V8zQhScsLWb/QYTs6yUwnmQd2pc7VagHFMEfnS9lHJdYk0GsYhavi2b7r6YNsqE2782sYhyqEaK8s1NTRiRGye2pZKXaLzQ5wfiOBfPlgGiEa0Ydf+z836REbswbYOcHKuJY1tN3mf9c9KFeBZ13hTjUgHvcFWbWZlpCGDyOvC2Z9q7hhOSzOxZ/Mn0EZMrpe96jfFXlp1T2cnRKQMV7MkISpuAeXWTyAPcmmCsuiqH7xD3K/XbJ3fFEweANEqXyqK3gg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
- dkim=pass header.d=equinix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=equinixinc.onmicrosoft.com; s=selector2-equinixinc-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SIQJGANvy4aZLxZ5KNDklXmbuGvzLCo1wnvU/7xr2dE=;
- b=Nxh2oAgfqn7tOD8zWL5BIeUyY0iHLcQkOrSQ4WyVYXmmo6ikvrIZKQF75aZBUsWJ5svBK0a/ozl7uDV4RgLAk9l7O2l3U6DNPJRICSGRGpH5CBcADF0/EdZbN7vJE41z1Ss9WEBfciLJLBc9J9QhvHDxEIGk09CwOqzpFWpFdLk=
-Received: from DM5PR04MB0762.namprd04.prod.outlook.com (2603:10b6:3:f3::13) by
- DM6PR04MB6732.namprd04.prod.outlook.com (2603:10b6:5:1::18) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4020.18; Fri, 9 Apr 2021 05:44:05 +0000
-Received: from DM5PR04MB0762.namprd04.prod.outlook.com
- ([fe80::4c98:aeb:87a8:13ad]) by DM5PR04MB0762.namprd04.prod.outlook.com
- ([fe80::4c98:aeb:87a8:13ad%5]) with mapi id 15.20.4020.017; Fri, 9 Apr 2021
- 05:44:05 +0000
-From: Zev Weiss <zweiss@equinix.com>
-To: Andrew Jeffery <andrew@aj.id.au>, "g@packtop" <g@packtop>
-Subject: Re: [PATCH v2 17/21] dt-bindings: ipmi: Convert ASPEED KCS binding to
- schema
-Thread-Topic: [PATCH v2 17/21] dt-bindings: ipmi: Convert ASPEED KCS binding
- to schema
-Thread-Index: AQHXLQNa/Br1rKNdC02YFyK1SqJv1A==
-Date: Fri, 9 Apr 2021 05:44:05 +0000
-Message-ID: <YG/ppKEAs5EBUao3@packtop>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FGnHj6lpcz3bwD;
+ Fri,  9 Apr 2021 15:48:49 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailnew.nyi.internal (Postfix) with ESMTP id B07C95807C9;
+ Fri,  9 Apr 2021 01:48:47 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Fri, 09 Apr 2021 01:48:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm2; bh=/TVilphQxUnwmONvKKfXy/hpcZLrBLQ
+ Sam274NUliIA=; b=EycFG932WuI+JvF6G0D0D2qOgYkT/VTUrz53p0DeJ3CeTAh
+ PVf6yTFDqEe2yZtVLFU1Hp5JTajeMDPq1SPi+F8BFJFBYxSrsd/gmveBHciiijQl
+ dl+aEU6c9U7wJ7PKH9+hIZpjR9hmkZcSCmr3w0wkJORlEJ8W28DcS4f+LDkvKndl
+ +7eTBwtm7TqS9xGEr6ayqlDHxH4q1EPZecb04jpoqlHkByKb77JaU60/oUx57WtA
+ IZjpPWEXAg19SWJVKLbvCF7KFBTghmr0BQzoUMcmA4dlGtfUuASwQn49VnI7mfdU
+ 9EekQjDTC9J51pemamXQlrXKheiH1vnE/7vxfgw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=/TVilp
+ hQxUnwmONvKKfXy/hpcZLrBLQSam274NUliIA=; b=qrMvZHO3i8pAkcwpwxgGC+
+ XEMuzBG8K62P9KR0X8PicTp0gT2tZ2hHKJQ+ukRA0nCCqvTGvrNCnurLTgoHMvUs
+ +/Mk/9uKM1fKR4pZHVr1IMuA0/p5Mp0ERruAQsbmpHmgf/z0EmG9IOVIpPdhjMj1
+ PcpIMCqssXFXws85J4Dh2kPKV7G2+IKQZHSJ4N0oIVPQuRxj7N2uvyLS4LeumHT2
+ 1W0XzBf95j4uzeHnOiGyNEu84xvC3c4AU5PdkzqR4hLmA7VHV7DwL5L4HzroG28A
+ IFQmD6YP9a63ygx/GCEQKK8UdsJh6TnNzrLw50wLmqzl9VvEXziC7Ue2MGGizHsA
+ ==
+X-ME-Sender: <xms:vupvYBKmHXqQ6Dt5RhkXY8gKlYEXJARYBXnRjnWAvpuEvuRHd4ymMg>
+ <xme:vupvYNL9YZ6k5-hpt9JOGBDlwEt_tYv2gXrrK6a0nqC2mZPqNCh3t-HeNRDrkqgmm
+ wj4k8pc_MyGDcx1FQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudektddgleekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+ hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:vupvYJsWvIqecZN2SxvPx6G4YtNPzA-AFjHa0Xl943RYB3lyXxVEjw>
+ <xmx:vupvYCZOLJRBH8azGdFkm02ZPM18_ek9KYwa2EuqbtWsI1VQEcBxvA>
+ <xmx:vupvYIYuXyB9MaFLTl7JKdW7yEv_4nDTzWX0aEfh8y1s9r_MkhNeWg>
+ <xmx:v-pvYIK_HLm98BmpPXizl_7ujVh2FaA-JnBSua0AwEjuqDgfoeiHMA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id C87B4A0007C; Fri,  9 Apr 2021 01:48:46 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-273-g8500d2492d-fm-20210323.002-g8500d249
+Mime-Version: 1.0
+Message-Id: <6aa7c000-da09-4058-96b4-f330193c7fc6@www.fastmail.com>
+In-Reply-To: <YG/QUCIdEzW1ghVA@packtop>
 References: <20210319062752.145730-1-andrew@aj.id.au>
- <20210319062752.145730-17-andrew@aj.id.au> <YG/i9lSxxCMIzkRs@packtop>
- <29937129-3a17-4a32-a723-191b693a1e0c@www.fastmail.com>
-In-Reply-To: <29937129-3a17-4a32-a723-191b693a1e0c@www.fastmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: aj.id.au; dkim=none (message not signed)
- header.d=none;aj.id.au; dmarc=none action=none header.from=equinix.com;
-x-originating-ip: [24.181.166.149]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 20461bc9-7cd8-4969-cb83-08d8fb1a7cee
-x-ms-traffictypediagnostic: DM6PR04MB6732:
-x-microsoft-antispam-prvs: <DM6PR04MB673265AFBAF17D6F269F1FCAC3739@DM6PR04MB6732.namprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:6430;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: nD5Yqz2Jv4QCnHHufvgqrdV3qbWiuF6OuH/MLEeS9rZ3yxpUOZRcGnAOtNtXVM1zWutR4ixWOcbCAR3AKn+eYle6FjnBXx+PrHd0TRzcaBVbH6eZ0G18smhXbi2l/b1YouWT5cgNaBA1iD3CNA+5nxYX1WAnuV+KDpujkRUIy170maNfs5Q8clM/UyOAeFbuh24KQ/xqWQBnp+WrdNun6PPFPuyHbhjCugBsvCiZqzlFoPqh+yFJ6DRmPkKDRaCPcLAwLbOooT/qSunFgulqFKng6TgPF68Mq4kjdoWTV+z5YZ8a9IW+5ZMubNxNx5us6aweAA3+FaDlh0Aq66dboSjgZ4NR6AovaNZKdCRt4OoO0R7w4MPx6wj5F6tEVHRjq1sJZm7VF52lQEoqoIJuJouPpKoRlGDX8lhvdZn/1mSTNDwnIfR5W094g2PkKK28MxZlOfR5FFZINLgRvZDOzpchFVSv0XlDSACs6qYDva5vXlwDFs+oMiKaW9IhHZp+5fK8kkE/KjWHS2BiZ9cH4fcTY1PFPU1hFNqF5kZ0kf35ZZ/z+FMBo7RyfXJkWn0fakhBXA44MFKkfWDyVN/M5YQk6p1f4lgoNaCt+91HYrUospMpMePHEWMVCLSsSMhW7u2eSWx/RjdQV0OvGRJ/z+n6Mr+4tmQgApE7tQbjNJ4+j/r5FUaDZ5TRXgV1Z1/XlAHN86t6FO63lqKuWI3erdLUtxIo+irp5flIb8Uny6c9DCU00BbgFLFT1zWRY5kd
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM5PR04MB0762.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(7916004)(4636009)(136003)(396003)(346002)(376002)(366004)(39860400002)(316002)(5660300002)(6512007)(9686003)(33716001)(8676002)(2906002)(54906003)(7416002)(83380400001)(186003)(6506007)(6486002)(66946007)(71200400001)(966005)(64756008)(66446008)(76116006)(66556008)(4326008)(66476007)(478600001)(26005)(8936002)(86362001)(38100700001)(781001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?XGVZg1HuZOGjbNGv+oet3F4awmZ+3+9hwWgG5OeSBDePcFfCoMMNAFh3rgC4?=
- =?us-ascii?Q?U6Oe7xZ/L86SwW14hQg4WbvwnfXidscPZoa/YpC7xjyHhrpVWl1aUqStokQy?=
- =?us-ascii?Q?Pea7UApk1TAREq/uOvF2o8ppTVyLYP5PDrojDC1r3qeHry3N2qY3K1PWF725?=
- =?us-ascii?Q?+P/KnqccllciUeeS1hkyxUne5nGtAlceyUlUOE7cvsI7G97BG+fJ3z5wjk3D?=
- =?us-ascii?Q?VaspV+sQJC+pwWfL8H9C5yuBUz+U1ARmk/QpC6Af1CYW6K/pFX5vL6GEgpgE?=
- =?us-ascii?Q?Dpv+3wGRU+7q93OYDvKrWTAQnU81gWiScNyVSmMsJdGSjhCAUN+HlE4oDS9g?=
- =?us-ascii?Q?vP8Q2u4A1w2M1IPFSRioH2Nmw0+lmnHVAL6FlJ10Nm6z0c5Slwpc86NF+FVM?=
- =?us-ascii?Q?8vQR+40wb/FcSoYuhZX8dy6dxTl5yea2hhqaya6DeUMeDEYcLHZqvWqE2DYR?=
- =?us-ascii?Q?/u4S8EOTBmb273qcCGpJhROsWdIVU77To3xvoFyPVJZGXtQUuLUfgabDQGLD?=
- =?us-ascii?Q?zPB2JrMAwYNdIZ9tVKxBd58OziMCq7EiTsT246tdhhZHrA7UMPIVWVxDb7U+?=
- =?us-ascii?Q?ccZJdHpiLuKdg9R2mONi/VXimi6SJ4tFoy804TjTah8W8qkDy2FNxiV/4OHj?=
- =?us-ascii?Q?OMaL90jOyVaJiniTSNHzqcAF3cpp30mjQCggDoU6N0j4e3FhtVUuyQfW7kdG?=
- =?us-ascii?Q?UyO0HlV2kQM69wvFxVW/aWa3zI1U79hDv1aPCYH4FCKmSCtvhSi8mdlosHWw?=
- =?us-ascii?Q?dy3xh94ecezKm/x+zvV1zAdnitg1oQtjZlFl0yn4uDQCPsQQYaPsRAuCdFyb?=
- =?us-ascii?Q?5ZNfBiGbikri/ao+OlYc00EcRElGi2V0pUt5sNeWIDW9NQS1uD4LCPxPFyea?=
- =?us-ascii?Q?kwdsHaH8WRjZPoLn4ZCOZPw4E5eOGfAulX8/EhEfyQTkytTLhV+b6BhAGx0T?=
- =?us-ascii?Q?aKMCws0IhJ1nvyZo2fHaPzfO09EGalPKkUs/6NInNFu+QqDLCwiymo0pk75f?=
- =?us-ascii?Q?l5lvn17jzhSBHzVcHRvoh9trVd4du0NCiXluuE7z/49W9MTuwT55YQ9/kvCm?=
- =?us-ascii?Q?6ltQvstxK8ELTVk++JbeIcSH4wgjnCvrUFJdxPxxgWN23sNHUuc7oSnrCr3e?=
- =?us-ascii?Q?QafVuNOgHyNtNMHZELHjfB/tavyVOJCzP9hkj9jZSuBGDof1ZdpVpdZc9TGy?=
- =?us-ascii?Q?Hd5iIVwl4CsaQzNxWoU1WiWbaUOFEV5u9w8WpWXhHczfBG1TOlR0Qg5Jsfwj?=
- =?us-ascii?Q?MRhnRbZsV1+A1C/qDTNji0+iEE6FdpEmCc/CY3GRg/mhHs7Yc+Frvc6Hq6ms?=
- =?us-ascii?Q?c3PpOzyNorN4DtW+21ZR5BUZDXwQUVRboDv3r0bYEFvxMg=3D=3D?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <77BE7DEF9A057B4DBE4D8C530A1CA337@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: equinix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM5PR04MB0762.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 20461bc9-7cd8-4969-cb83-08d8fb1a7cee
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Apr 2021 05:44:05.5411 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 1BCRykd6pM/ZR8J37PivPkfRTakGZtLSzune5RQlOjoqj5F6f8PcWoQKlDnySgSvpbqrBTbQPXErFlNNhWmRcA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR04MB6732
-X-Proofpoint-GUID: s0GzvA1EYCqkjICThSiOpMr6MmETEOq4
-X-Proofpoint-ORIG-GUID: s0GzvA1EYCqkjICThSiOpMr6MmETEOq4
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
- definitions=2021-04-09_03:2021-04-08,
- 2021-04-09 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0
- spamscore=0 mlxscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=999
- malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2104060000
- definitions=main-2104090041
+ <20210319062752.145730-9-andrew@aj.id.au> <YG/QUCIdEzW1ghVA@packtop>
+Date: Fri, 09 Apr 2021 15:18:21 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Zev Weiss" <zweiss@equinix.com>
+Subject: Re: [PATCH v2 09/21] ipmi: kcs_bmc: Split out kcs_bmc_cdev_ipmi
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -169,74 +114,265 @@ Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "Chia-Wei,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Apr 09, 2021 at 12:33:10AM CDT, Andrew Jeffery wrote:
->
->
->On Fri, 9 Apr 2021, at 14:45, Zev Weiss wrote:
->> On Fri, Mar 19, 2021 at 01:27:48AM CDT, Andrew Jeffery wrote:
->> >Given the deprecated binding, improve the ability to detect issues in
->> >the platform devicetrees. Further, a subsequent patch will introduce a
->> >new interrupts property for specifying SerIRQ behaviour, so convert
->> >before we do any further additions.
->> >
->> >Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
->> >---
->> > .../bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml | 92 +++++++++++++++++++
->> > .../bindings/ipmi/aspeed-kcs-bmc.txt          | 33 -------
->> > 2 files changed, 92 insertions(+), 33 deletions(-)
->> > create mode 100644 Documentation/devicetree/bindings/ipmi/aspeed,ast24=
-00-kcs-bmc.yaml
->> > delete mode 100644 Documentation/devicetree/bindings/ipmi/aspeed-kcs-b=
-mc.txt
->> >
->> >diff --git a/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-=
-bmc.yaml b/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.ya=
-ml
->> >new file mode 100644
->> >index 000000000000..697ca575454f
->> >--- /dev/null
->> >+++ b/Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yam=
-l
->> >@@ -0,0 +1,92 @@
->> >+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> >+%YAML 1.2
->> >+---
->> >+$id: http://devicetree.org/schemas/ipmi/aspeed,ast2400-kcs-bmc.yaml
->> >+$schema: http://devicetree.org/meta-schemas/core.yaml
->> >+
->> >+title: ASPEED BMC KCS Devices
->> >+
->> >+maintainers:
->> >+  - Andrew Jeffery <andrew@aj.id.au>
->> >+
->> >+description: |
->> >+  The Aspeed BMC SoCs typically use the Keyboard-Controller-Style (KCS=
-)
->> >+  interfaces on the LPC bus for in-band IPMI communication with their =
-host.
->> >+
->> >+properties:
->> >+  compatible:
->> >+    oneOf:
->> >+      - description: Channel ID derived from reg
->> >+        items:
->> >+          enum:
->> >+            - aspeed,ast2400-kcs-bmc-v2
->> >+            - aspeed,ast2500-kcs-bmc-v2
->> >+            - aspeed,ast2600-kcs-bmc
->>
->> Should this have a "-v2" suffix?
->
->Well, that was kind of a matter of perspective. The 2600 compatible was
->added after we'd done the v2 of the binding for the 2400 and 2500 so it
->never needed correcting. But it is a case of "don't use the deprecated
->properties with the 2600 compatible".
->
->I don't think a change is necessary?
->
-
-It just looked inconsistent with the corresponding string in the
-ast_kcs_bmc_match[] table; perhaps that should be changed instead then?
 
 
-Zev
+On Fri, 9 Apr 2021, at 13:26, Zev Weiss wrote:
+> On Fri, Mar 19, 2021 at 01:27:40AM CDT, Andrew Jeffery wrote:
+> >Take steps towards defining a coherent API to separate the KCS device
+> >drivers from the userspace interface. Decreasing the coupling will
+> >improve the separation of concerns and enable the introduction of
+> >alternative userspace interfaces.
+> >
+> >For now, simply split the chardev logic out to a separate file. The code
+> >continues to build into the same module.
+> >
+> >Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+> >---
+> > drivers/char/ipmi/Makefile            |   2 +-
+> > drivers/char/ipmi/kcs_bmc.c           | 423 +------------------------
+> > drivers/char/ipmi/kcs_bmc.h           |  10 +-
+> > drivers/char/ipmi/kcs_bmc_cdev_ipmi.c | 428 ++++++++++++++++++++++++++
+> > 4 files changed, 451 insertions(+), 412 deletions(-)
+> > create mode 100644 drivers/char/ipmi/kcs_bmc_cdev_ipmi.c
+> >
+> >diff --git a/drivers/char/ipmi/Makefile b/drivers/char/ipmi/Makefile
+> >index 0822adc2ec41..a302bc865370 100644
+> >--- a/drivers/char/ipmi/Makefile
+> >+++ b/drivers/char/ipmi/Makefile
+> >@@ -22,7 +22,7 @@ obj-$(CONFIG_IPMI_SSIF) += ipmi_ssif.o
+> > obj-$(CONFIG_IPMI_POWERNV) += ipmi_powernv.o
+> > obj-$(CONFIG_IPMI_WATCHDOG) += ipmi_watchdog.o
+> > obj-$(CONFIG_IPMI_POWEROFF) += ipmi_poweroff.o
+> >-obj-$(CONFIG_IPMI_KCS_BMC) += kcs_bmc.o
+> >+obj-$(CONFIG_IPMI_KCS_BMC) += kcs_bmc.o kcs_bmc_cdev_ipmi.o
+> > obj-$(CONFIG_ASPEED_BT_IPMI_BMC) += bt-bmc.o
+> > obj-$(CONFIG_ASPEED_KCS_IPMI_BMC) += kcs_bmc_aspeed.o
+> > obj-$(CONFIG_NPCM7XX_KCS_IPMI_BMC) += kcs_bmc_npcm7xx.o
+> >diff --git a/drivers/char/ipmi/kcs_bmc.c b/drivers/char/ipmi/kcs_bmc.c
+> >index c4336c1f2d6d..ef5c48ffe74a 100644
+> >--- a/drivers/char/ipmi/kcs_bmc.c
+> >+++ b/drivers/char/ipmi/kcs_bmc.c
+> >@@ -3,446 +3,51 @@
+> >  * Copyright (c) 2015-2018, Intel Corporation.
+> >  */
+> >
+> >-#define pr_fmt(fmt) "kcs-bmc: " fmt
+> >-
+> >-#include <linux/errno.h>
+> >-#include <linux/io.h>
+> >-#include <linux/ipmi_bmc.h>
+> > #include <linux/module.h>
+> >-#include <linux/platform_device.h>
+> >-#include <linux/poll.h>
+> >-#include <linux/sched.h>
+> >-#include <linux/slab.h>
+> >
+> > #include "kcs_bmc.h"
+> >
+> >-#define DEVICE_NAME "ipmi-kcs"
+> >-
+> >-#define KCS_MSG_BUFSIZ    1000
+> >-
+> >-#define KCS_ZERO_DATA     0
+> >-
+> >-
+> >-/* IPMI 2.0 - Table 9-1, KCS Interface Status Register Bits */
+> >-#define KCS_STATUS_STATE(state) (state << 6)
+> >-#define KCS_STATUS_STATE_MASK   GENMASK(7, 6)
+> >-#define KCS_STATUS_CMD_DAT      BIT(3)
+> >-#define KCS_STATUS_SMS_ATN      BIT(2)
+> >-#define KCS_STATUS_IBF          BIT(1)
+> >-#define KCS_STATUS_OBF          BIT(0)
+> >-
+> >-/* IPMI 2.0 - Table 9-2, KCS Interface State Bits */
+> >-enum kcs_states {
+> >-	IDLE_STATE  = 0,
+> >-	READ_STATE  = 1,
+> >-	WRITE_STATE = 2,
+> >-	ERROR_STATE = 3,
+> >-};
+> >-
+> >-/* IPMI 2.0 - Table 9-3, KCS Interface Control Codes */
+> >-#define KCS_CMD_GET_STATUS_ABORT  0x60
+> >-#define KCS_CMD_WRITE_START       0x61
+> >-#define KCS_CMD_WRITE_END         0x62
+> >-#define KCS_CMD_READ_BYTE         0x68
+> >-
+> >-static inline u8 kcs_bmc_read_data(struct kcs_bmc *kcs_bmc)
+> >+u8 kcs_bmc_read_data(struct kcs_bmc *kcs_bmc)
+> > {
+> > 	return kcs_bmc->io_inputb(kcs_bmc, kcs_bmc->ioreg.idr);
+> > }
+> >+EXPORT_SYMBOL(kcs_bmc_read_data);
+> >
+> >-static inline void kcs_bmc_write_data(struct kcs_bmc *kcs_bmc, u8 data)
+> >+void kcs_bmc_write_data(struct kcs_bmc *kcs_bmc, u8 data)
+> > {
+> > 	kcs_bmc->io_outputb(kcs_bmc, kcs_bmc->ioreg.odr, data);
+> > }
+> >+EXPORT_SYMBOL(kcs_bmc_write_data);
+> >
+> >-static inline u8 kcs_bmc_read_status(struct kcs_bmc *kcs_bmc)
+> >+u8 kcs_bmc_read_status(struct kcs_bmc *kcs_bmc)
+> > {
+> > 	return kcs_bmc->io_inputb(kcs_bmc, kcs_bmc->ioreg.str);
+> > }
+> >+EXPORT_SYMBOL(kcs_bmc_read_status);
+> >
+> >-static inline void kcs_bmc_write_status(struct kcs_bmc *kcs_bmc, u8 data)
+> >+void kcs_bmc_write_status(struct kcs_bmc *kcs_bmc, u8 data)
+> > {
+> > 	kcs_bmc->io_outputb(kcs_bmc, kcs_bmc->ioreg.str, data);
+> > }
+> >+EXPORT_SYMBOL(kcs_bmc_write_status);
+> >
+> >-static void kcs_bmc_update_status(struct kcs_bmc *kcs_bmc, u8 mask, u8 val)
+> >+void kcs_bmc_update_status(struct kcs_bmc *kcs_bmc, u8 mask, u8 val)
+> > {
+> > 	kcs_bmc->io_updateb(kcs_bmc, kcs_bmc->ioreg.str, mask, val);
+> > }
+> >+EXPORT_SYMBOL(kcs_bmc_update_status);
+> >
+> >-static inline void set_state(struct kcs_bmc *kcs_bmc, u8 state)
+> >-{
+> >-	kcs_bmc_update_status(kcs_bmc, KCS_STATUS_STATE_MASK,
+> >-					KCS_STATUS_STATE(state));
+> >-}
+> >-
+> >-static void kcs_force_abort(struct kcs_bmc *kcs_bmc)
+> >-{
+> >-	set_state(kcs_bmc, ERROR_STATE);
+> >-	kcs_bmc_read_data(kcs_bmc);
+> >-	kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
+> >-
+> >-	kcs_bmc->phase = KCS_PHASE_ERROR;
+> >-	kcs_bmc->data_in_avail = false;
+> >-	kcs_bmc->data_in_idx = 0;
+> >-}
+> >-
+> >-static void kcs_bmc_handle_data(struct kcs_bmc *kcs_bmc)
+> >-{
+> >-	u8 data;
+> >-
+> >-	switch (kcs_bmc->phase) {
+> >-	case KCS_PHASE_WRITE_START:
+> >-		kcs_bmc->phase = KCS_PHASE_WRITE_DATA;
+> >-		fallthrough;
+> >-
+> >-	case KCS_PHASE_WRITE_DATA:
+> >-		if (kcs_bmc->data_in_idx < KCS_MSG_BUFSIZ) {
+> >-			set_state(kcs_bmc, WRITE_STATE);
+> >-			kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
+> >-			kcs_bmc->data_in[kcs_bmc->data_in_idx++] =
+> >-						kcs_bmc_read_data(kcs_bmc);
+> >-		} else {
+> >-			kcs_force_abort(kcs_bmc);
+> >-			kcs_bmc->error = KCS_LENGTH_ERROR;
+> >-		}
+> >-		break;
+> >-
+> >-	case KCS_PHASE_WRITE_END_CMD:
+> >-		if (kcs_bmc->data_in_idx < KCS_MSG_BUFSIZ) {
+> >-			set_state(kcs_bmc, READ_STATE);
+> >-			kcs_bmc->data_in[kcs_bmc->data_in_idx++] =
+> >-						kcs_bmc_read_data(kcs_bmc);
+> >-			kcs_bmc->phase = KCS_PHASE_WRITE_DONE;
+> >-			kcs_bmc->data_in_avail = true;
+> >-			wake_up_interruptible(&kcs_bmc->queue);
+> >-		} else {
+> >-			kcs_force_abort(kcs_bmc);
+> >-			kcs_bmc->error = KCS_LENGTH_ERROR;
+> >-		}
+> >-		break;
+> >-
+> >-	case KCS_PHASE_READ:
+> >-		if (kcs_bmc->data_out_idx == kcs_bmc->data_out_len)
+> >-			set_state(kcs_bmc, IDLE_STATE);
+> >-
+> >-		data = kcs_bmc_read_data(kcs_bmc);
+> >-		if (data != KCS_CMD_READ_BYTE) {
+> >-			set_state(kcs_bmc, ERROR_STATE);
+> >-			kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
+> >-			break;
+> >-		}
+> >-
+> >-		if (kcs_bmc->data_out_idx == kcs_bmc->data_out_len) {
+> >-			kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
+> >-			kcs_bmc->phase = KCS_PHASE_IDLE;
+> >-			break;
+> >-		}
+> >-
+> >-		kcs_bmc_write_data(kcs_bmc,
+> >-			kcs_bmc->data_out[kcs_bmc->data_out_idx++]);
+> >-		break;
+> >-
+> >-	case KCS_PHASE_ABORT_ERROR1:
+> >-		set_state(kcs_bmc, READ_STATE);
+> >-		kcs_bmc_read_data(kcs_bmc);
+> >-		kcs_bmc_write_data(kcs_bmc, kcs_bmc->error);
+> >-		kcs_bmc->phase = KCS_PHASE_ABORT_ERROR2;
+> >-		break;
+> >-
+> >-	case KCS_PHASE_ABORT_ERROR2:
+> >-		set_state(kcs_bmc, IDLE_STATE);
+> >-		kcs_bmc_read_data(kcs_bmc);
+> >-		kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
+> >-		kcs_bmc->phase = KCS_PHASE_IDLE;
+> >-		break;
+> >-
+> >-	default:
+> >-		kcs_force_abort(kcs_bmc);
+> >-		break;
+> >-	}
+> >-}
+> >-
+> >-static void kcs_bmc_handle_cmd(struct kcs_bmc *kcs_bmc)
+> >-{
+> >-	u8 cmd;
+> >-
+> >-	set_state(kcs_bmc, WRITE_STATE);
+> >-	kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
+> >-
+> >-	cmd = kcs_bmc_read_data(kcs_bmc);
+> >-	switch (cmd) {
+> >-	case KCS_CMD_WRITE_START:
+> >-		kcs_bmc->phase = KCS_PHASE_WRITE_START;
+> >-		kcs_bmc->error = KCS_NO_ERROR;
+> >-		kcs_bmc->data_in_avail = false;
+> >-		kcs_bmc->data_in_idx = 0;
+> >-		break;
+> >-
+> >-	case KCS_CMD_WRITE_END:
+> >-		if (kcs_bmc->phase != KCS_PHASE_WRITE_DATA) {
+> >-			kcs_force_abort(kcs_bmc);
+> >-			break;
+> >-		}
+> >-
+> >-		kcs_bmc->phase = KCS_PHASE_WRITE_END_CMD;
+> >-		break;
+> >-
+> >-	case KCS_CMD_GET_STATUS_ABORT:
+> >-		if (kcs_bmc->error == KCS_NO_ERROR)
+> >-			kcs_bmc->error = KCS_ABORTED_BY_COMMAND;
+> >-
+> >-		kcs_bmc->phase = KCS_PHASE_ABORT_ERROR1;
+> >-		kcs_bmc->data_in_avail = false;
+> >-		kcs_bmc->data_in_idx = 0;
+> >-		break;
+> >-
+> >-	default:
+> >-		kcs_force_abort(kcs_bmc);
+> >-		kcs_bmc->error = KCS_ILLEGAL_CONTROL_CODE;
+> >-		break;
+> >-	}
+> >-}
+> >-
+> >+int kcs_bmc_ipmi_event(struct kcs_bmc *kcs_bmc);
+> 
+> This declaration looks a bit out of place here; should it be in
+> kcs_bmc.h instead?
+
+These are only temporary and get removed later on in the series after 
+some shuffling of the code.
+
+Andrew
