@@ -2,78 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4281435966A
-	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 09:31:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DA32359689
+	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 09:39:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FGqYp18Btz30Kb
-	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 17:31:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FGqkp2ZKxz3bTX
+	for <lists+openbmc@lfdr.de>; Fri,  9 Apr 2021 17:38:58 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=Y2T6uGsV;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=WtrW6uKL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::336;
- helo=mail-ot1-x336.google.com; envelope-from=yulei.sh@bytedance.com;
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=Y2T6uGsV; dkim-atps=neutral
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com
- [IPv6:2607:f8b0:4864:20::336])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=WtrW6uKL; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FGqYW3d4Nz3004
- for <openbmc@lists.ozlabs.org>; Fri,  9 Apr 2021 17:30:53 +1000 (AEST)
-Received: by mail-ot1-x336.google.com with SMTP id
- s16-20020a0568301490b02901b83efc84a0so4800674otq.10
- for <openbmc@lists.ozlabs.org>; Fri, 09 Apr 2021 00:30:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=xlRLj71rw7eIAG0daheHHgTZzmLhxh1kCQS/incJqtU=;
- b=Y2T6uGsVFvRKgVenlJvOk+FEFglA+4ajXpBiU7AlNlLlSgHOToMSoepPR9gikPxk4v
- txvQwfss+249wnXma2dI/2a6npw+EyeFr0vY4VuarixrYEKxkgz4e55gqyEbtFYioQs7
- aoO1MQKOkLw0dnnNGDeRgA1tsU+fGCB/Q6CRzw5a7vyZDfYXpxmHj5ANXRrQDzwHv5s5
- SPJ7Wgp008D+M9G6vmykf8LzqFn/gi5pN3S2q1Onilf91jgQn4yV0+KcLrDfNkRtqw/t
- p62B6E0qyQcY9BklbZ26dzcKOvFerWeB3SHr8m4X+Ao+ZAJ8CmvJJwvfoBca/3U5zPhB
- /mMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=xlRLj71rw7eIAG0daheHHgTZzmLhxh1kCQS/incJqtU=;
- b=AY/+c8FTbJy9MJ5fXucT328Nq29BTMmVWkay12nPb2IJTM99iau2yKCTIuizxDft8v
- tGU9pddh2mjxt5g4iyYejeLUejP7RyngjrJN+ettI1oI6BhA0t5Y86GHaNyFh8vrGshI
- xqWhZ9KmnOuar4mmRIo6PXm74s+FsGXwdgt5kaikOgOVlB5V5iAzc4RbRAQRzxiLgwPx
- DCSjq4KSfBnLmqKNnMdqElU0AqqA7MFsLdUp/YKvkSzoSK6vvPuMMZgZ+A9QNYEOETHT
- aV/RqYDz9k2WnY2ckYVEyedIMXh3l3V1oWke/lIP4Fa/mi8iIPxCfkiPVKzXKJh4MjRl
- KEyA==
-X-Gm-Message-State: AOAM530eqDP5AGOPemR0y5WIFM5sJpipbvUpQBAnh1Q/azlLpwPGUnie
- rvQ1txXuPV5mGrsZYD++pgwMUnbDoIcZS7Ho8eJkVplKPshNL55XIG0=
-X-Google-Smtp-Source: ABdhPJzrONuERGP6o7RTjLj2fqWuE4Cmkxd9Nech5oPxhcZdYdGI7nAqwejrtKVW6bZ24SzOgZQ7MSG3HU4Sxzya7LU=
-X-Received: by 2002:a9d:5f15:: with SMTP id f21mr11298136oti.226.1617953449568; 
- Fri, 09 Apr 2021 00:30:49 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FGqkX4H3Pz300K;
+ Fri,  9 Apr 2021 17:38:43 +1000 (AEST)
+Received: from hatter.bewilderbeest.net (unknown [IPv6:2600:6c44:7f:ba20::7c6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 8142986;
+ Fri,  9 Apr 2021 00:38:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1617953921;
+ bh=B4QetOyO+uFZyq4PpiAKXG68c6M2ubQg27N5PfhAomQ=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=WtrW6uKLJrOMTd0j58ovYOAM7amEbDjdunQFF1e7IfmoolkUoPLKI3iZLlUEUFwRn
+ BqSxhw4iQWian4v4xB7TGHnv/jZsv/5C0hIGDe+izir8HQ8UQRt4EY8xk37/YKtnSS
+ n2iHoBLauDsjJIUTZMXiwgB6PBYsw4MHHj5nNZXg=
+Date: Fri, 9 Apr 2021 02:38:38 -0500
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
+Subject: Re: [PATCH v5 2/4] drivers/tty/serial/8250: refactor sirq and lpc
+ address setting code
+Message-ID: <YHAEfn4li6F8L9JC@hatter.bewilderbeest.net>
+References: <20210408011637.5361-1-zev@bewilderbeest.net>
+ <20210408011637.5361-3-zev@bewilderbeest.net>
+ <CAHp75Vd6kk0E-kALEGOhsg=YHKhmKLY6cpCTdviOFenO4p1-2A@mail.gmail.com>
 MIME-Version: 1.0
-References: <gmu36wVnmbV9lyt9EpYcnZmnPwjF9wtDS0N8K0jOk9UR2uUO0QwQaackzJRPLjil_ZqLxTzX3qEMGl3IE6baoIpS-xh9aMnQL3VkAyXK6KU=@protonmail.com>
- <nGEUmLQrNSqmytvShVUeFvOUKjW1cOTYv9Hrcmj7LyP1rfIdLOt8f7IkqzPKaXHZXHRGYtHBcjnt6Qo5c1fIw4doEmVwMmGI2e2rNhNXWZw=@protonmail.com>
- <5bcbc6b0-b9d3-a002-0f24-97bd91ba5bf8@linux.vnet.ibm.com>
- <36bafa0b-5dd3-6da5-b18d-847ee4a46459@linux.intel.com>
- <CAGm54UEc9DOGZS0LLhFMP4SNw_-sJ2oa146wXfYvmF3As4xXsQ@mail.gmail.com>
- <axfftQgj4Du8QvWHD4CHEuPSLSJGtLZZTzpZplCpN1Mu63yr4Xm1RiZTuewl3CNqPUZ8mrmZdJsEJUOQiL39Ft64mfW7DzBdLrkDLhylGiY=@protonmail.com>
- <CAGm54UHGr+F-vnO69PLr0MN699BDEDsZiHYoX1WPmF1DZnQLVw@mail.gmail.com>
- <2FVxBtO4gLzVYqZqGL8XwOcI2a_r6x0CaPGmGozxe_VeNp3Y3y05vSntyZPvfn4EDRsHsLjWJnrVSzbeeVDKhPvLILmFKB3hw-MFaEvepAw=@protonmail.com>
- <CAGm54UFX9LPHArj-2q=w2pNtwgpkjZJE_0Dgd3_8cXB9z3L2vQ@mail.gmail.com>
- <iLDkk0KnZ0UufxY54elPTZxzhBfLP6TM3JvJ-yIqJoON60n3r8wNXPPbZIEOolJybm41D2yeFVRhSCk_WJNiwZ6kfcu5TmSSPuUEBJOy8mU=@protonmail.com>
-In-Reply-To: <iLDkk0KnZ0UufxY54elPTZxzhBfLP6TM3JvJ-yIqJoON60n3r8wNXPPbZIEOolJybm41D2yeFVRhSCk_WJNiwZ6kfcu5TmSSPuUEBJOy8mU=@protonmail.com>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Fri, 9 Apr 2021 15:30:38 +0800
-Message-ID: <CAGm54UH9zcS5Z2XAqVH201dV2q8zukKqy7S0t73Jc-YLkqFyFw@mail.gmail.com>
-Subject: Re: [External] Re: IPMI SEL Parsing
-To: rgrs <rgrs@protonmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHp75Vd6kk0E-kALEGOhsg=YHKhmKLY6cpCTdviOFenO4p1-2A@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,27 +65,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
- openbmc <openbmc@lists.ozlabs.org>
+Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-serial@vger.kernel.org" <linux-serial@vger.kernel.org>,
+ Jiri Slaby <jirislaby@kernel.org>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Apr 8, 2021 at 8:39 PM rgrs <rgrs@protonmail.com> wrote:
+On Fri, Apr 09, 2021 at 02:24:08AM CDT, Andy Shevchenko wrote:
+>On Thursday, April 8, 2021, Zev Weiss <zev@bewilderbeest.net> wrote:
 >
-> Hi Lei,
+>> This splits dedicated aspeed_vuart_set_{sirq,lpc_address}() functions
+>> out of the sysfs store functions in preparation for adding DT
+>> properties that will be poking the same registers.  While we're at it,
+>> these functions now provide some basic bounds-checking on their
+>> arguments.
+>>
+>>
 >
-> I am still getting "undertermined system hardware failure" in ipmitool sel list. Do you have any platforms to refer to (in upstream)?
-
-We will try to upstream the related changed to
-meta-bytedance/meta-g220a in the near future.
-
+>Please, use prefix “serial: 8250_aspeed_vuart:” instead of what you have in
+>the subject line. I think I have told this already
 >
-> ipmitool sel also list only 10 logging entries and rotates after that. Is it expected?
+>
 
-Please see Lotus Xu's reply, there is a configuration argument in
-phpsphor-logging to set the max entries.
+Ah, sorry -- I fixed the cover letter after your first comment (which 
+had definitely been under-tagged); for the patches themselves I was 
+following the example of the last patch in that particular area 
+(8d310c9107a2), though I guess that wasn't the right model to follow.  
+I'll use the requested format in the future.
 
 
--- 
-BRs,
-Lei YU
