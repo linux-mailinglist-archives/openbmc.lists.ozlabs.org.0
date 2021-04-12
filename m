@@ -1,92 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE7D935B831
-	for <lists+openbmc@lfdr.de>; Mon, 12 Apr 2021 03:34:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D37A535B8A0
+	for <lists+openbmc@lfdr.de>; Mon, 12 Apr 2021 04:26:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FJWVy4YkPz30Jb
-	for <lists+openbmc@lfdr.de>; Mon, 12 Apr 2021 11:34:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FJXfY5nVdz30Gd
+	for <lists+openbmc@lfdr.de>; Mon, 12 Apr 2021 12:26:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=kF6J7vJl;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=G8BNco2N;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=teeWEse5;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=YfZipf6l;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.229;
- helo=new3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.25;
+ helo=wout2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=kF6J7vJl; 
+ header.s=fm2 header.b=teeWEse5; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=G8BNco2N; 
+ header.a=rsa-sha256 header.s=fm2 header.b=YfZipf6l; 
  dkim-atps=neutral
-Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com
- [66.111.4.229])
+X-Greylist: delayed 543 seconds by postgrey-1.36 at boromir;
+ Mon, 12 Apr 2021 12:25:57 AEST
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FJWVg1Cm7z3004;
- Mon, 12 Apr 2021 11:34:17 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FJXfF6rdvz2yyC;
+ Mon, 12 Apr 2021 12:25:57 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id C0D4A580424;
- Sun, 11 Apr 2021 21:34:14 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id D92F71588;
+ Sun, 11 Apr 2021 22:16:46 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 11 Apr 2021 21:34:14 -0400
+ by compute3.internal (MEProxy); Sun, 11 Apr 2021 22:16:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=BG5hllZBbXO/uaUx2ho6c9NeeDH0XaQ
- 6oWYDpW//0Ds=; b=kF6J7vJlfzPeJki4UBh4ni0qEwV1lpJbHHcYZAPVECpYBIS
- UG38LvqvRbNJVHEyps6jp558YoerrJPco4D31+TIbffAZtuRSGALC3cQrlEkIV7F
- W7Zeyl8OdGAeaqFlLbIO/JltoJHi+OClhehnx/yMxPy8HuIuRdX2T/eyUXIwAnZb
- GZg3CUTTJE7QWJsA4sAmiRV+Hm6xiAzZzlvF0L525y4PDr02c2Yi9mrqxjPORsQa
- J32GG3K1vzWi/ASdHFyZPm4mcRS6CBlDv7zPWsW2tG4PXG0ym3QwUTBHtk+GQJJn
- 7nLwKiOZj7Z8K33ApJoPxgDEoRUMq0kEdv0UGzQ==
+ :subject:content-type; s=fm2; bh=M9P4Fh68L8b7pD9soMp1oQ/p2ZkqGaQ
+ LEL9HTQWPbC4=; b=teeWEse5VYKyhg2a96T0CU1saAUquwJfInB1LwzFiuhO5T+
+ l2ECVgR5ZrEjYpv1l/F+mBKF5eY9aNH5/ZFVAWjWZ8mYXmPRaiX5kaxvADDLBJW7
+ U+E01xQXOpgYLZs54Hh00lP7EL6eXjnulVf5cGEAykDD1E5+PwFOC1g7DEHl0t1o
+ NhiR9zBl40fBi9HjQhPLRwpgxJvtwC1xWnIBZ9X83EXHImuMzJ22wIc1jfm7Z3h3
+ XXDHLB7/0UqN6rsNXfV2P3h4QZiv4rLsW/8C3q3pyaTrVqBZrEwT6zI4LQMS3PDz
+ GgzfeB9rkO4jFOHmDPrXrKO4+7HI0EZtWuw1ysA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=BG5hll
- ZBbXO/uaUx2ho6c9NeeDH0XaQ6oWYDpW//0Ds=; b=G8BNco2N6IZ9Vm5RUcE29x
- aMCp6xE7gGZxnkE72tX5/VULywfeW2gcpuYWWFrhCeV8ha5kwk9s7G9t/aD9bhXH
- LBfkSDUne1tF/ygIT1Pq+aXZ1U0Lr2iIMNX/Yr8ock/cgVbJRcUCRh+fGvCCzQFc
- nOnHCob/E4U13OKAoH1hufv8mXVxmPWRBHi4SMFiYrh37hWg8vZBAkFeIoFpbbM1
- TzrXtyWy64AkaS8q5TDO5EVzL9iZ1OGO/jcCwed2PUcZ0bGHQ+//DmpNxggGeRz6
- /vkOBDjFzA+BoNayVE1p04OoCeZU11uIYL5gXk8oBsPwhuCij4AJwmxQIrkEDMqw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=M9P4Fh
+ 68L8b7pD9soMp1oQ/p2ZkqGaQLEL9HTQWPbC4=; b=YfZipf6lIKLBhkNVhX0wP+
+ XJXuEmPXpgAvJ9jQmZ/7iNF2/t4htnEuZl+XA6NUXjWgoa2/TvJki5kazcNnEbNx
+ fZoDLotGuaYJ+sHefOhk3fEpFHMV74n/tu/zm1TyntxZ2rFfTzLDkRKeRKCqUhze
+ BMw7XckTtIfLn2f5HCcOD0HOES3TWVL0Jq1Xvhd+KOWPnHRX/uT6NcdyQputwrxV
+ wPV2S/b4tikV4JNSKPtLa/yp8RuEBGuRjKZFSpWuX3jfDhbBWwwY4e7aH1hc5LXi
+ 1k0l7NnGSDdT+/+9/ZdyJaHj3GQGIWWjBnrmCiIOoz4tRQMti7gXUPXVcxASeJDQ
  ==
-X-ME-Sender: <xms:laNzYHYfkdm4xZkWh1ohaN-VgrO6EdUs-eRDUnzgjNu15oZHVLOZ-g>
- <xme:laNzYGaFzKEe-bULTyvDc_hI3qKnFWN9sY8X_FtEoPwq3wmlgK67BUzdJ4y78RC3A
- stri1S7EQBO5AJccA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekiedggeegucetufdoteggodetrfdotf
+X-ME-Sender: <xms:jK1zYJoSmiZYxrC6oHg6T3EdRF3y2sZg2WHpbzKxvz_Mxe_LfoNfyw>
+ <xme:jK1zYLpjPtZA-s-MIdQbhk43Iy9SNqete5_zz-gxryes6-ffUss-IuwlrWX5f60Dk
+ c3tzEP2QViHENKHYg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekiedgheegucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepuddttdekueeggedvtddtueekiedutdfguedutdefieeuteefieelteet
- vddthfeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+ hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
  eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:laNzYJ_IVgmsW7oVD2L_M2G9J-OlwJeiVWNlgNpYIMG4LBfUEFIOcQ>
- <xmx:laNzYNqxqQvtE5pqmfQg71mk3Yq1ub6OTBQfDiOPAzmER8i7sSBubw>
- <xmx:laNzYCpaRqoJazz3ANLOaVNL-Nfuu_Qp-0kAJcg8ZwT49Fy1VTWF2g>
- <xmx:lqNzYHgjphF3n8_6Gp-wHXjnm_KPTVYBgNmZa_af57Vbu39evGVMmg>
+X-ME-Proxy: <xmx:jK1zYGPqAXkSKCOqQ2DSyuim80fHPGz2sT1o_SXSqiIxqQEW1pZQiA>
+ <xmx:jK1zYE4qjXAMZ2IjT958mEB7FGcvnxRc_aC1Pua5CMZZQ72N1v9K5w>
+ <xmx:jK1zYI7bSKCYt8j4VMNISx0u_tSUm-S26rKxqXHTVL7DV8SrSiAWtg>
+ <xmx:jq1zYHZQUMUTufmtAMNYVTbLPb5CQGLUCDEtXb57f5apJWLcdt-dOw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 3B785A00079; Sun, 11 Apr 2021 21:34:13 -0400 (EDT)
+ id 4AD64A00079; Sun, 11 Apr 2021 22:16:44 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-273-g8500d2492d-fm-20210323.002-g8500d249
 Mime-Version: 1.0
-Message-Id: <ba63f830-4758-49aa-a63e-f204a8eec1b4@www.fastmail.com>
-In-Reply-To: <CAK8P3a1HDQdbTAT4aRMLu-VFz720ynPqPHG5b22NZ5p5QfUqOw@mail.gmail.com>
-References: <20210319062752.145730-1-andrew@aj.id.au>
- <20210319062752.145730-16-andrew@aj.id.au>
- <CAK8P3a1HDQdbTAT4aRMLu-VFz720ynPqPHG5b22NZ5p5QfUqOw@mail.gmail.com>
-Date: Mon, 12 Apr 2021 11:03:52 +0930
+Message-Id: <84202973-1a94-4630-beeb-f33d044a0364@www.fastmail.com>
+In-Reply-To: <20210401044232.9637-1-zev@bewilderbeest.net>
+References: <20210401044232.9637-1-zev@bewilderbeest.net>
+Date: Mon, 12 Apr 2021 11:46:24 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Arnd Bergmann" <arnd@kernel.org>,
- "Dmitry Torokhov" <dmitry.torokhov@gmail.com>
-Subject: =?UTF-8?Q?Re:_[PATCH_v2_16/21]_ipmi:_kcs=5Fbmc:_Add_a_"raw"_character_de?=
- =?UTF-8?Q?vice_interface?=
+To: "Zev Weiss" <zev@bewilderbeest.net>, "Joel Stanley" <joel@jms.id.au>
+Subject: Re: [PATCH v3] ARM: dts: aspeed: add ASRock E3C246D4I BMC
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -99,70 +97,137 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Linux ARM <linux-arm-kernel@lists.infradead.org>,
- DTML <devicetree@vger.kernel.org>, "Chia-Wei,
- Wang" <chiawei_wang@aspeedtech.com>, Ryan Chen <ryan_chen@aspeedtech.com>,
- Tomer Maimon <tmaimon77@gmail.com>, Corey Minyard <minyard@acm.org>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Tali Perry <tali.perry1@gmail.com>,
- "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>, openipmi-developer@lists.sourceforge.net,
- Lee Jones <lee.jones@linaro.org>, Linus Walleij <linus.walleij@linaro.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Benjamin Fair <benjaminfair@google.com>
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ Arnd Bergmann <arnd@arndb.de>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+ Olof Johansson <olof@lixom.net>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 9 Apr 2021, at 17:25, Arnd Bergmann wrote:
-> On Fri, Mar 19, 2021 at 7:31 AM Andrew Jeffery <andrew@aj.id.au> wrote:
-> >
-> > The existing IPMI chardev encodes IPMI behaviours as the name suggests.
-> > However, KCS devices are useful beyond IPMI (or keyboards), as they
-> > provide a means to generate IRQs and exchange arbitrary data between a
-> > BMC and its host system.
+
+
+On Thu, 1 Apr 2021, at 15:12, Zev Weiss wrote:
+> This is a relatively low-cost AST2500-based Xeon E-2100/E-2200 series
+> mini-ITX board that we hope can provide a decent platform for OpenBMC
+> development.
 > 
-> I only noticed the series after Joel asked about the DT changes on the arm
-> side. One question though:
+> This initial device-tree provides the necessary configuration for
+> basic BMC functionality such as host power control, serial console and
+> KVM support, and POST code snooping.
 > 
-> How does this related to the drivers/input/serio/ framework that also talks
-> to the keyboard controller for things that are not keyboards?
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> ---
+> 
+> Changes since v2:
+>  - un-bungled filename in dtb-$(CONFIG_ARCH_ASPEED)
+> Changes since v1:
+>  - added entry to dtb-$(CONFIG_ARCH_ASPEED)
+>  - added board to compatible
+>  - added pinctrl properties to adc
+>  - split out of mostly-unrelated patch series
+> 
+>  arch/arm/boot/dts/Makefile                    |   1 +
+>  .../boot/dts/aspeed-bmc-asrock-e3c246d4i.dts  | 202 ++++++++++++++++++
+>  2 files changed, 203 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts
+> 
+> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> index 8e5d4ab4e75e..c22151b50ddc 100644
+> --- a/arch/arm/boot/dts/Makefile
+> +++ b/arch/arm/boot/dts/Makefile
+> @@ -1406,6 +1406,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>  	aspeed-bmc-ampere-mtjade.dtb \
+>  	aspeed-bmc-arm-centriq2400-rep.dtb \
+>  	aspeed-bmc-arm-stardragon4800-rep2.dtb \
+> +	aspeed-bmc-asrock-e3c246d4i.dtb \
+>  	aspeed-bmc-bytedance-g220a.dtb \
+>  	aspeed-bmc-facebook-cmm.dtb \
+>  	aspeed-bmc-facebook-galaxy100.dtb \
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts 
+> b/arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts
+> new file mode 100644
+> index 000000000000..dcab6e78dfa4
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/aspeed-bmc-asrock-e3c246d4i.dts
+> @@ -0,0 +1,202 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/dts-v1/;
+> +
+> +#include "aspeed-g5.dtsi"
+> +#include <dt-bindings/gpio/aspeed-gpio.h>
+> +#include <dt-bindings/i2c/i2c.h>
+> +
+> +/{
+> +	model = "ASRock E3C246D4I BMC";
+> +	compatible = "asrock,e3c246d4i-bmc", "aspeed,ast2500";
+> +
+> +	aliases {
+> +		serial4 = &uart5;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = &uart5;
+> +		bootargs = "console=tty0 console=ttyS4,115200 earlyprintk";
+> +	};
+> +
+> +	memory@80000000 {
+> +		reg = <0x80000000 0x20000000>;
+> +	};
+> +
+> +	leds {
+> +		compatible = "gpio-leds";
+> +
+> +		heartbeat {
+> +			/* BMC_HB_LED_N */
+> +			gpios = <&gpio ASPEED_GPIO(H, 6) GPIO_ACTIVE_LOW>;
+> +			linux,default-trigger = "timer";
+> +		};
+> +
+> +		system-fault {
+> +			/* SYSTEM_FAULT_LED_N */
+> +			gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_LOW>;
+> +			panic-indicator;
+> +		};
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		uid-button {
+> +			label = "uid-button";
+> +			gpios = <&gpio ASPEED_GPIO(F, 1) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(F, 1)>;
+> +		};
+> +	};
+> +
+> +	iio-hwmon {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>, <&adc 4>,
+> +			<&adc 5>, <&adc 6>, <&adc 7>, <&adc 8>, <&adc 9>,
+> +			<&adc 10>, <&adc 11>, <&adc 12>;
+> +	};
+> +};
+> +
+> +&fmc {
+> +	status = "okay";
+> +	flash@0 {
+> +		status = "okay";
+> +		m25p,fast-read;
+> +		label = "bmc";
+> +		spi-max-frequency = <100000000>; /* 100 MHz */
+> +#include "openbmc-flash-layout.dtsi"
+> +	};
+> +};
+> +
+> +&uart5 {
+> +	status = "okay";
+> +};
+> +
+> +&vuart {
+> +	status = "okay";
+> +	aspeed,sirq-active-high;
 
-I've taken a brief look and I feel they're somewhat closely related.
+This should probably go away, but otherwise,
 
-It's plausible that we could wrangle the code so the Aspeed and Nuvoton 
-KCS drivers move under drivers/input/serio. If you squint, the i8042 
-serio device driver has similarities with what the Aspeed and Nuvoton 
-device drivers are providing to the KCS IPMI stack.
-
-Both the KCS IPMI and raw chardev I've implemented in this patch need 
-both read and write access to the status register (STR). serio could 
-potentially expose its value through serio_interrupt() using the 
-SERIO_OOB_DATA flag, but I haven't put any thought into it beyond this 
-sentence. We'd need some extra support for writing STR via the serio 
-API. I'm not sure that fits into the abstraction (unless we make 
-serio_write() take a flags argument?).
-
-In that vein, the serio_raw interface is close to the functionality 
-that the raw chardev provides in this patch, though again serio_raw 
-lacks userspace access to STR. Flags are ignored in the ->interrupt() 
-callback so all values received via ->interrupt() are exposed as data. 
-The result is there's no way to take care of SERIO_OOB_DATA in the 
-read() path. Given that, I think we'd have to expose an ioctl() to 
-access the STR value after taking care of SERIO_OOB_DATA in 
-->interrupt().
-
-I'm not sure where that lands us.
-
-Dmitry, any thoughts here?
-
-> Are these
-> separate communication channels on adjacent I/O ports, or does there
-> need to be some arbitration?
-
-As it stands there's no arbitration.
-
-Cheers,
-
-Andrew
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
