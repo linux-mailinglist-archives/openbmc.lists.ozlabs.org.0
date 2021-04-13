@@ -2,68 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 703FC35E38A
-	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 18:12:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DA8CF35E546
+	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 19:44:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FKVxy36brz3bqB
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 02:12:54 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=HPb/Bd4u;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FKXzs682Dz3bnH
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 03:44:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=flex--wltu.bounces.google.com (client-ip=2607:f8b0:4864:20::b4a;
- helo=mail-yb1-xb4a.google.com;
- envelope-from=3-cj1yaqkb2aujrsemmejc.amkmncl9kajgqrq.mxj89q.mpe@flex--wltu.bounces.google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=HPb/Bd4u; dkim-atps=neutral
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com
- [IPv6:2607:f8b0:4864:20::b4a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FKVxm1RVrz2xZJ
- for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 02:12:44 +1000 (AEST)
-Received: by mail-yb1-xb4a.google.com with SMTP id p75so10648092ybc.8
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 09:12:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:message-id:mime-version:subject:from:to:cc;
- bh=XLtshCzLBWOmw0RxKnytaabWiPezrDLRe7ordfhtI04=;
- b=HPb/Bd4uUcAC9pW9wZD3HYLMJsvs7zCtrFCJCTrWJrU8Xs26GE+SglBEgTOmpUWEPI
- 5unK2s9CLKuSUMNNJ9dNNbvyso+VqdZ5YRMWmpGLlK/Qj2p4+JzYCwbT0kP7IZK4N71l
- J98+e9tkx4Z2ihBKCgjBkU+IopxH9OIFi9UzB1ogQu/NY+1AkhASn7IijQmMKaUfgb6Y
- +9vZorYS3zR5bQuRi4Ro3owNaKfMNPNA1dKvaQs2G44yw6STLP8ONP7/xh/r6wmHInYY
- NuZYAjiittK1H6JRDsDwUR129sxkDa8+17+HtB1ntTmy4PklEi8zrGbOGrz+Y443cIuh
- Zs8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
- bh=XLtshCzLBWOmw0RxKnytaabWiPezrDLRe7ordfhtI04=;
- b=hYuQnt9bLynqJyleSPGuQhtN749hZcn8G4h3EpnmMCsYh04DdOlfkPGW3t2TQUS3Rl
- 7kkLtcwBEWlrngZ82sJ+/hxIwiZKSO+ECsl23LRFfp2eoSJ0EgiaQhwI8+tKZWI9YMi0
- Wh4c9+ZzqQYIsIeSFoxPd72MPmFWmkp6ivDmq3+/K/1qaZ4IXA8+w4xvYwT5wpAYTZVT
- rxrz7o2qHUAaP6euMEIVDdFRHT9KP21X43oH7a3fyarqgJtBgCVHxyM7BkNKMDl3IHt9
- 8mJmwsFqfloowdlKwrkYN6FkCGQT9ryeIvkIOjN2fyQFd97SSI5L8y+ouf1UP6231pWp
- 4SpQ==
-X-Gm-Message-State: AOAM533lhMubr8NyKHl36yfWGWASxdD2dokFIpWl8f4zbQZv3tarLDuF
- UBEoPv+r2jAfxtX0Ory98Nufp1LJFt1mCFhTawpJJkC1bXodVdKjWoDGPUPFKlN12tnkaST9H0i
- bPB53z4w9FtvH+ddMT7UcSM76tAqxtYGqHqJ0haydb3Xg/JT2T/K893CIWUc=
-X-Google-Smtp-Source: ABdhPJzFIpuAqYIl4s/acDaN5UqqvGh6HbZb+zDoKgMYIFKw75GAvXWzLaj7AyXQnfwNvnliKmo5ZRnw
-X-Received: from wltu.svl.corp.google.com ([2620:15c:2c5:3:dc07:df1f:1158:224])
- (user=wltu job=sendgmr) by 2002:a25:dc51:: with SMTP id
- y78mr16336802ybe.364.1618330361198; 
- Tue, 13 Apr 2021 09:12:41 -0700 (PDT)
-Date: Tue, 13 Apr 2021 09:12:38 -0700
-Message-Id: <20210413161238.2816187-1-wltu@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.31.1.295.g9ea45b61b8-goog
-Subject: [PATCH] board: ast-g4: Enable SGPIO in SCU
-From: Willy Tu <wltu@google.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FKXzj065Pz2yxx
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 03:44:31 +1000 (AEST)
+IronPort-SDR: EC3r2xRAHMMfXTxRkZRku2W326FGV/MHvslA6w04hlxZCYx47B6xaGIAJ5OQqwirXPAcJnbalh
+ 94i7R1h2u3DQ==
+X-IronPort-AV: E=McAfee;i="6200,9189,9953"; a="174568946"
+X-IronPort-AV: E=Sophos;i="5.82,219,1613462400"; d="scan'208";a="174568946"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Apr 2021 10:44:24 -0700
+IronPort-SDR: I4890AEddeIKUDrc/PXS2RJ7Q4HwZnF/nQQlSdw5dWHyuUxAEiplpX2YjWKy9RwcGNouXdQSLd
+ dcNXMq+0ko0A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.82,219,1613462400"; d="scan'208";a="424353992"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga008.jf.intel.com with ESMTP; 13 Apr 2021 10:44:24 -0700
+Received: from [10.212.186.170] (jmbills-MOBL.amr.corp.intel.com
+ [10.212.186.170])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 3136B580021
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 10:44:24 -0700 (PDT)
+Subject: Re: Lost the threshold redfish log when update phosphor-sel-logger.
 To: openbmc@lists.ozlabs.org
-Content-Type: text/plain; charset="UTF-8"
+References: <E89303EA-4B66-4BAB-9A8B-C68EA398DA63@amperemail.onmicrosoft.com>
+ <94EE2CFC-1679-492D-9EF8-D7A8F24BF086@amperemail.onmicrosoft.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <c19528bc-815b-cf38-b07a-ea5e84529232@linux.intel.com>
+Date: Tue, 13 Apr 2021 10:44:23 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <94EE2CFC-1679-492D-9EF8-D7A8F24BF086@amperemail.onmicrosoft.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,56 +62,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Willy Tu <wltu@google.com>, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add option to enable register for SGPIO in SCU
-for ast-g4.
 
-Signed-off-by: Willy Tu <wltu@google.com>
----
- board/aspeed/ast-g4/Kconfig  |  4 ++++
- board/aspeed/ast-g4/ast-g4.c | 13 +++++++++++++
- 2 files changed, 17 insertions(+)
 
-diff --git a/board/aspeed/ast-g4/Kconfig b/board/aspeed/ast-g4/Kconfig
-index 2bec9a733a..e78030ae34 100644
---- a/board/aspeed/ast-g4/Kconfig
-+++ b/board/aspeed/ast-g4/Kconfig
-@@ -19,4 +19,8 @@ config SYS_CONFIG_NAME
- 	default "ast-g4-phy" if ASPEED_NET_PHY
- 	default "ast-g4-ncsi" if ASPEED_NET_NCSI
+On 4/13/2021 12:51 AM, Thu Nguyen OS wrote:
+> Dear Zhikui Ren, Patrick Williams and Jason M. Bills,
+> 
+> Do you have any comment in this?
+> 
+> Dear Zhikui Ren,
+> 
+> Do you verify this commit with the sensors which added thru phosphor-hwmon?
+This issue was recently discussed here: 
+https://lore.kernel.org/openbmc/TY2PR04MB3712DCE11C578706F5F6401F88639@TY2PR04MB3712.apcprd04.prod.outlook.com/.
 
-+config ENABLE_SGPIO
-+    tristate "Enable SGPIO in SCU"
-+	default n
-+
- endif
-diff --git a/board/aspeed/ast-g4/ast-g4.c b/board/aspeed/ast-g4/ast-g4.c
-index 656495307b..e2463d4524 100644
---- a/board/aspeed/ast-g4/ast-g4.c
-+++ b/board/aspeed/ast-g4/ast-g4.c
-@@ -22,6 +22,19 @@ int board_init(void)
- 	/* address of boot parameters */
- 	gd->bd->bi_boot_params = CONFIG_SYS_SDRAM_BASE + 0x100;
- 	gd->flags = 0;
-+
-+#ifdef CONFIG_ENABLE_SGPIO
-+	/* Unlock SCU */
-+	writel(SCU_PROTECT_UNLOCK, AST_SCU_BASE);
-+
-+	/* Enable SGPIO Master */
-+	u32 reg = readl(AST_SCU_BASE + AST_SCU_FUN_PIN_CTRL2);
-+	reg |= (SCU_FUN_PIN_SGPMI |
-+			SCU_FUN_PIN_SGPMO |
-+			SCU_FUN_PIN_SGPMLD |
-+			SCU_FUN_PIN_SGPMCK);
-+	writel(reg, AST_SCU_BASE + AST_SCU_FUN_PIN_CTRL2);
-+#endif
- 	return 0;
- }
+Since that discussion, this change to phosphor-dbus-interfaces was 
+merged to add support for new threshold signals that contain the sensor 
+value: 
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/39899.
 
---
-2.31.1.295.g9ea45b61b8-goog
-
+I believe that corresponding changes can now be added to dbus-sensors, 
+hwmon, and sel-logger to correctly handle these new signals to resolve 
+the issue you see here.
+> 
+> Regards.
+> 
+> Thu Nguyen.
+> 
+> *From: *Thu Nguyen OS <thu@os.amperecomputing.com>
+> *Date: *Monday, 5 April 2021 at 22:28
+> *To: *"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+> *Subject: *Lost the threshold redfish log when update phosphor-sel-logger.
+> 
+> Hi All,
+> 
+> After updating the base code of our openBmc source for Mt Jade platform 
+> to new version, I saw all of threshold warning/error of hwmon are losted.
+> 
+> Below is the sensor value and the configured thresholds.
+> 
+> Check in the web, the sensor value is bigger than warning threshold, but 
+> there are no log SEL entry in Redfish log.
+> 
+> After spending some time on debugging, I found that the below commit is 
+> the cause:
+> 
+> https://github.com/openbmc/phosphor-sel-logger/commit/25b26e162bd109b51aa09b16f26f9aa3d9d940fa
+> 
+> Remove this commit in phosphor-sel-logger, I can see the warning log in 
+> Redfish.
+> 
+> Do I need any configuration in phosphor-sel-logger to make this commit work?
+> 
+> Thanks.
+> 
+> Thu Nguyen.
+> 
