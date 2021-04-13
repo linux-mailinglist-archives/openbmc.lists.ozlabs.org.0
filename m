@@ -1,95 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50A4535E8C6
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 00:09:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 939FE35E8F4
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 00:19:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FKfsJ1wvLz3bys
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 08:09:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FKg5Q3HKRz30hl
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 08:19:54 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qsLIqKXo;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=k5kwV5Vw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=qsLIqKXo; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.s=pp1 header.b=k5kwV5Vw; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FKfrn0t0Cz3bVH
- for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 08:08:56 +1000 (AEST)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 13DM3YuU024740
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 18:08:54 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FKg5B3fzcz2ydK
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 08:19:41 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 13DM4LqH022960
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 18:19:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=to : from : subject :
- message-id : date : content-type : content-transfer-encoding :
- mime-version; s=pp1; bh=XQ6AuEHDT8WxPgOZmcYG/oa82KuDLVapj8JZuFsgAEE=;
- b=qsLIqKXow9J74fx6oY1Y+j7YPitML1j8qNK9xidEna6zKLC+ztwz3fm4caeGH83KVXeR
- uzpA5grziz3da7qBeNnavQDdCGjReT5MQY+GJq6wFuseLQ2i22eUKuGVwrj/GyG6lP4t
- EQOaS89cnaz/A//LmVWQNxhTYJrJyeH6y/6nCcN0dk8SM7T3YCBS3ePSo5DufAxtt/62
- un1Z5znFUnLirNaPPNaJSxngB4PFYTUuWkvYGaQ1DdNjqF+n16pRED/TGlvDHCvrOV9V
- FirsEvW4rEboNPQqo/t00sEl7OunsWha+nAC00XawBDdONA46ajv1KXTwYg62Ot7vYl9 xA== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0b-001b2d01.pphosted.com with ESMTP id 37vtntndss-1
+ h=in-reply-to : subject :
+ from : to : date : references : content-type : message-id :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=YRkPIJlEhLH14KUkpuVo7oX0z0Ev2al2mOMHCPlFTqk=;
+ b=k5kwV5VwiSMQIxq+0ReNbEqcDcUW6sb7uCtjX1tUxRsp0S30ag2tH2nBUboebGlxtyPh
+ VU4/Ph+R7i/85JOZpGK4N66qN/t8q/QlJgIkyCsjBtlSuYPTqoMz2Owci9QKVRB0jGdy
+ u91w/lSCPXnl9D3vJ9WjWX83s6cHXwNMT4uZwl1Z+Mzm8XMmIGTB736uSp8W7z3yZyox
+ FHWST47j+njgfIvqOfCrPJjLy3bs2yPiAa/MoBhaP8x1hJ/4uuQiOWFYhU2VLcUy6KjE
+ pD1jVA12XgrIbo+SEhnx9y1iPSrJYADNHDdciaFSbP8RIGxCK6DyYRO1wk3IXn6p560z vw== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.82])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 37wdws9nhh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 18:08:53 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 13DM8JZF021595
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 22:08:53 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma05wdc.us.ibm.com with ESMTP id 37u3n9v6h1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 22:08:53 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 13DM8qb824117744
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 22:08:52 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7955E78074
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 22:08:52 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2F5C778070
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 22:08:52 +0000 (GMT)
-Received: from demeter.local (unknown [9.160.29.196])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 22:08:52 +0000 (GMT)
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group - Wednesday April 14
-Message-ID: <29402903-aa83-cdc9-9ab6-cfbe3593f466@linux.ibm.com>
-Date: Tue, 13 Apr 2021 17:08:50 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Mr7rhlX6LxdYEYTO-OYEMzO3s5rBx6wk
-X-Proofpoint-ORIG-GUID: Mr7rhlX6LxdYEYTO-OYEMzO3s5rBx6wk
-Content-Transfer-Encoding: 7bit
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 18:19:39 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Tue, 13 Apr 2021 22:19:39 -0000
+Received: from us1a3-smtp06.a3.dal06.isc4sb.com (10.146.103.243)
+ by smtp.notes.na.collabserv.com (10.106.227.105) with
+ smtp.notes.na.collabserv.com ESMTP; Tue, 13 Apr 2021 22:19:38 -0000
+Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
+ by us1a3-smtp06.a3.dal06.isc4sb.com
+ with ESMTP id 2021041322193798-727303 ;
+ Tue, 13 Apr 2021 22:19:37 +0000 
+In-Reply-To: <OF7717BEC1.0F210BFD-ON002586A8.007A0BC0-002586A8.007A0BC5@LocalDomain>
+Subject: GUI Design Work Group - Wednesday, 4/13/21 at 10:00 AM Cenral
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: openbmc@lists.ozlabs.org
+Date: Tue, 13 Apr 2021 22:19:37 +0000
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <OF7717BEC1.0F210BFD-ON002586A8.007A0BC0-002586A8.007A0BC5@LocalDomain>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP130 January 13, 2021 at 14:04
+X-LLNOutbound: False
+X-Disclaimed: 4423
+X-TNEFEvaluated: 1
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 21041322-9463-0000-0000-0000058FA997
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0; SC=0;
+ ST=0; TS=0; UL=0; ISC=; MB=0.000073
+X-IBM-SpamModules-Versions: BY=3.00014940; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000296; SDB=6.01526390; UDB=6.00825165; IPR=6.01308321; 
+ MB=3.00036522; MTD=3.00000008; XFM=3.00000015; UTC=2021-04-13 22:19:38
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2021-03-25 10:44:38 - 6.00012377
+x-cbparentid: 21041322-9464-0000-0000-00006110ABB9
+Message-Id: <OF151D14B0.3FD245BA-ON002586B6.007AA556-002586B6.007AA55A@notes.na.collabserv.com>
+X-Proofpoint-ORIG-GUID: tedvp5D4yMF21domDXcnJiIdtSW_gNXg
+X-Proofpoint-GUID: tedvp5D4yMF21domDXcnJiIdtSW_gNXg
+Content-Transfer-Encoding: quoted-printable
 X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
- definitions=2021-04-13_16:2021-04-13,
+ definitions=2021-04-13_15:2021-04-13,
  2021-04-13 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0
- mlxscore=0 impostorscore=0 clxscore=1015 mlxlogscore=825 bulkscore=0
- priorityscore=1501 spamscore=0 lowpriorityscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2104060000 definitions=main-2104130142
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,21 +103,27 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday April 14 at 10:00am PDT.
+Hello,
 
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
-and anything else that comes up:
+Please join us for the GUI Design Work Group if you are interested in the f=
+ollowing items:
 
-1. (no topics)
+- Firmware Update - AllowedActions progress
+- Event Logs - Delete all entries progress
+- Redfish Hard coded end points progress
+- Global and OEM content progress
 
-It should be a lively discussion.
 
 
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+If you have a topic, please feel free to add it to the agenda, reply to thi=
+s email, or mention me in the discord channel (https://discord.gg/wWU5rTcb).
+=20
+Meeting info: https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group=
+#meeting-info
 
-- Joseph
+
+Thank you!
+=20
+Derick Montague
+IBM Cognitive Systems User Experience
 
