@@ -2,75 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BCFE35D9BF
-	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 10:13:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A225735D9EC
+	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 10:22:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FKJJK2ZXyz3byH
-	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 18:13:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FKJWT4Gj5z3c0k
+	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 18:22:45 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=OKJtr+FK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rbngbYah;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62a;
- helo=mail-pl1-x62a.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=arnd@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=OKJtr+FK; dkim-atps=neutral
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com
- [IPv6:2607:f8b0:4864:20::62a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=rbngbYah; 
+ dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FKJCK2SYbz2yxL
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 18:08:45 +1000 (AEST)
-Received: by mail-pl1-x62a.google.com with SMTP id w8so5452051plg.9
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 01:08:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=EjvgTHA+Tin2MEhCTbmUG5j0WAf9Ij8tWpp11lNb5G4=;
- b=OKJtr+FKexDEggdoYVAg6lDqMc6YdkYAEU0nhOuqKRMI8ojUQJ1pW3bPbGkJ+OWgh/
- 9BUX0/EbQudijf2UyPfrtx38W+jrHQVL4ThujlyPYs5qUQpK48UA22MZA+bjpYQ8hmCf
- cC0NacWI9obm/K/6SlqUGmIlyvPEcqu2WRhOXSxAR2Ke3iJVhKeASRbpoQlukaWZ1yTu
- HOz5ODTrwZCcWV2h0PvHvkjAaJq4ub5jLxmGVaatqDUSA6AsMT5ZaDh4rB+xOwspyV0K
- oZqZ9KxqV7kBwlMU0omP/MdeQ3/SmaaICTCThE8Y1NOgdma/iLBi346CB3bfo1iDwqu0
- 1IWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=EjvgTHA+Tin2MEhCTbmUG5j0WAf9Ij8tWpp11lNb5G4=;
- b=Ddt6tjLubIfImiai/kltM8+cfHarrxQa9aIOANELK+5ngAXvsWt+50CZyTYTzPnYJZ
- Daa4tALArFIqpZM4faEi2pyxhnkqSQIqSoKAdpHmBcm4FtiGxFcHVDAAiakDOyD6+gxW
- nL7dBwqhoKIks5vJbRMlv1DuJ7I9Wgu5XF2Zazk0DzqGpluoScXAImOjdpZiimAkrttW
- iSBZxc3CGEDDtOTnY0pmc2ljNGSwW8XQpdEjVQy96EiHeX6ruF1xvg9ZBxw8QkmlzXCP
- 9KXnRGwspWDOQpm/b6neq9j2hQ5U+TOQqjrRCpD6OWQ60FFoiOVAkKe4MmePCb9MDKol
- F5nw==
-X-Gm-Message-State: AOAM533Wmn35bkq//AHZSKC3b07aZ8m2ccOip5ettHLuuUg3jQyDIxiG
- j6o8d8mYXa5K2h+32ZQ+BtBwdlPpnOc=
-X-Google-Smtp-Source: ABdhPJwbGzzKl0XM12BrWDjAWxbnTrxxa26gijBvtlDeKzEvQvMC/OiFWgX5eUsAmMktGpOgSokj+A==
-X-Received: by 2002:a17:902:dac9:b029:ea:c77e:dc62 with SMTP id
- q9-20020a170902dac9b02900eac77edc62mr15501313plx.30.1618301322501; 
- Tue, 13 Apr 2021 01:08:42 -0700 (PDT)
-Received: from voyager.lan ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id nh24sm1443507pjb.38.2021.04.13.01.08.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Apr 2021 01:08:41 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org, Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>,
- Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 11/11] configs/openbmc: Enable
- hw accelerated sha
-Date: Tue, 13 Apr 2021 17:37:55 +0930
-Message-Id: <20210413080755.73572-12-joel@jms.id.au>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210413080755.73572-1-joel@jms.id.au>
-References: <20210413080755.73572-1-joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FKJWC5gZ3z2xYv;
+ Tue, 13 Apr 2021 18:22:31 +1000 (AEST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9877F6128E;
+ Tue, 13 Apr 2021 08:22:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1618302148;
+ bh=FCK+SMdbdUGO5PuqGh46hY625MCpqFUerFbVNWNJmsU=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=rbngbYahMGe4TQffxAdJtnqoA+4uAXIIzQstIvnXyycZn6yoYgbMTptGxkY1QwoCN
+ qaRj1wD0ufR2Z6BbaKA79azUIvCglPP1Q9d9Lkh7TDvzW9aq7byrS6HOAtEK604XId
+ TxIecErW1PFjgVRTpT/6hn9OUwz9c6l3XRtTUWJXAwV80As1OviKsH0xrI7tBnuYVB
+ 3TnSL2TNKhzj/rw0+Ms+XlqmAcJSrUvQxex+CUOvd0VjfuLCV7Q6r0gA40TTX8fqce
+ PeJ50GXDTxHT4XTSgLiu9HSuHNFAX2bKVELWG8//h8siSyxG99z0Zic5Y9fDM0gcMp
+ 59hXM3+4vWrCw==
+Received: by mail-wm1-f41.google.com with SMTP id
+ j4-20020a05600c4104b029010c62bc1e20so8242412wmi.3; 
+ Tue, 13 Apr 2021 01:22:28 -0700 (PDT)
+X-Gm-Message-State: AOAM531KCd/2rL1FitKqW1xFaSDx2rly4yQ2SKXDTYB/jCA4HWRYM7HU
+ 69qervIE+rMvsoQhpQdnOAz56rl7JDpotqGE0oY=
+X-Google-Smtp-Source: ABdhPJx46kLBDXZba+CnxN/ZUNBoeLvXIwiYMUqu2i8IPMHM68OBFUpSsmGRmKG5BR+iCqeSFMqyDnLyPD7VzAFJe3M=
+X-Received: by 2002:a7b:c14a:: with SMTP id z10mr2831003wmi.75.1618302147230; 
+ Tue, 13 Apr 2021 01:22:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210319062752.145730-1-andrew@aj.id.au>
+ <20210319062752.145730-16-andrew@aj.id.au>
+ <CAK8P3a1HDQdbTAT4aRMLu-VFz720ynPqPHG5b22NZ5p5QfUqOw@mail.gmail.com>
+ <ba63f830-4758-49aa-a63e-f204a8eec1b4@www.fastmail.com>
+ <CAK8P3a3RXr5CR7DJgD9rEkN8owpPxXRgzRnPB_5LuQcHkzc4LA@mail.gmail.com>
+ <e2d7268b-bdaf-45bf-bb21-a5b9f7e985a4@www.fastmail.com>
+In-Reply-To: <e2d7268b-bdaf-45bf-bb21-a5b9f7e985a4@www.fastmail.com>
+From: Arnd Bergmann <arnd@kernel.org>
+Date: Tue, 13 Apr 2021 10:22:11 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a1VFKuewt65RUK6hFAhZYSFFVUX7_nuJLoZW2WoPXGVTw@mail.gmail.com>
+Message-ID: <CAK8P3a1VFKuewt65RUK6hFAhZYSFFVUX7_nuJLoZW2WoPXGVTw@mail.gmail.com>
+Subject: Re: [PATCH v2 16/21] ipmi: kcs_bmc: Add a "raw" character device
+ interface
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,72 +71,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Cc: Linux ARM <linux-arm-kernel@lists.infradead.org>,
+ DTML <devicetree@vger.kernel.org>, "Chia-Wei,
+ Wang" <chiawei_wang@aspeedtech.com>, Ryan Chen <ryan_chen@aspeedtech.com>,
+ Tomer Maimon <tmaimon77@gmail.com>, Corey Minyard <minyard@acm.org>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, openipmi-developer@lists.sourceforge.net,
+ Lee Jones <lee.jones@linaro.org>, Linus Walleij <linus.walleij@linaro.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SHA512 will be used by the openbmc secure boot implementation when
-verifying FIT images of both u-boot proper and the kernel.
+On Tue, Apr 13, 2021 at 1:45 AM Andrew Jeffery <andrew@aj.id.au> wrote:
+> On Mon, 12 Apr 2021, at 18:18, Arnd Bergmann wrote:
+> > On Mon, Apr 12, 2021 at 3:33 AM Andrew Jeffery <andrew@aj.id.au> wrote:
+> > > On Fri, 9 Apr 2021, at 17:25, Arnd Bergmann wrote:
+> > > > On Fri, Mar 19, 2021 at 7:31 AM Andrew Jeffery <andrew@aj.id.au> wrote:
+> > > > >
+> > > > > The existing IPMI chardev encodes IPMI behaviours as the name suggests.
+> > > > > However, KCS devices are useful beyond IPMI (or keyboards), as they
+> > > > > provide a means to generate IRQs and exchange arbitrary data between a
+> > > > > BMC and its host system.
+> > > >
+> > > > I only noticed the series after Joel asked about the DT changes on the arm
+> > > > side. One question though:
+> > > >
+> > > > How does this related to the drivers/input/serio/ framework that also talks
+> > > > to the keyboard controller for things that are not keyboards?
+> > >
+> > > I've taken a brief look and I feel they're somewhat closely related.
+> > >
+> > > It's plausible that we could wrangle the code so the Aspeed and Nuvoton
+> > > KCS drivers move under drivers/input/serio. If you squint, the i8042
+> > > serio device driver has similarities with what the Aspeed and Nuvoton
+> > > device drivers are providing to the KCS IPMI stack.
+> >
+> > After looking some more into it, I finally understood that the two are
+> > rather complementary. While the  drivers/char/ipmi/kcs_bmc.c
+> > is the other (bmc) end of drivers/char/ipmi/ipmi_kcs_sm.c, it seems
+> > that the proposed kcs_bmc_cdev_raw.c interface would be
+> > what corresponds to the other side of
+> > drivers/input/serio/i8042.c+userio.c.
+>
+> Right. I guess the question is should we be splitting kernel subsystems
+> along host/bmc lines? Doesn't feel intuitive, it's all Linux, but maybe
+> we can consolidate in the future if it makes sense?
 
-The hash command is useful, and adds only a small amount of binary size
-given the algorithms are already included in the image.
+We actually have a number of subsystems with somewhat overlapping
+functionality. I brought up serio, because it has an abstraction for multiple
+things that communicate over the keyboard controller and I thought
+the problem you were trying to solve was also related to the keyboard
+controller.
+It is also one of multiple abstractions that allow you to connect a device
+to a uart (along with serdev and tty_ldisc, probably at least one more that
+you can nest above or below these).
 
-Using hardware acceleration instead of a software implementation saves a
-significant amount of binary size (approx. 12KB for the SPL).
+Consolidating the kcs_bmc.c interface into something that already
+exists would obviously be best, but it's not clear which of these that
+should be, that depends on the fundamental properties of the hardware
+interface.
 
-Note that the hardware implementation is only useful when booting from a
-payload in memory, as is the case with MMC or network boot. It cannot be
-used when booting from SPI NOR.
+> > Then again, these are also on
+> > separate ports (0x60 for the keyboard controller, 0xca2 for the BMC
+> > KCS), so they would never actually talk to one another.
+>
+> Well, sort of I guess. On Power systems we don't use the keyboard
+> controller for IPMI or keyboards, so we're just kinda exploiting the
+> hardware for our own purposes.
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- configs/ast2600_openbmc_spl_emmc_defconfig | 7 +++++++
- 1 file changed, 7 insertions(+)
+Can you describe in an abstract form what the hardware interface
+can do here and what you want from it? I wonder if it could be
+part of a higher-level interface such as drivers/mailbox/ instead.
 
-diff --git a/configs/ast2600_openbmc_spl_emmc_defconfig b/configs/ast2600_openbmc_spl_emmc_defconfig
-index e59d3595ebf0..05069084cbc5 100644
---- a/configs/ast2600_openbmc_spl_emmc_defconfig
-+++ b/configs/ast2600_openbmc_spl_emmc_defconfig
-@@ -36,6 +36,7 @@ CONFIG_ARMV7_BOOT_SEC_DEFAULT=y
- CONFIG_ARMV7_PSCI_NR_CPUS=2
- CONFIG_NR_DRAM_BANKS=1
- CONFIG_FIT=y
-+CONFIG_FIT_ENABLE_SHA512_SUPPORT=y
- CONFIG_FIT_SIGNATURE=y
- CONFIG_SPL_FIT_SIGNATURE=y
- CONFIG_SPL_LOAD_FIT=y
-@@ -53,6 +54,8 @@ CONFIG_SPL_STACK_R=y
- CONFIG_SPL_SEPARATE_BSS=y
- CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_USE_SECTOR=y
- CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR=0x80
-+CONFIG_SPL_SHA256_SUPPORT=y
-+CONFIG_SPL_SHA512_SUPPORT=y
- CONFIG_SPL_FIT_IMAGE_TINY=y
- CONFIG_SPL_DM_RESET=y
- CONFIG_SPL_RAM_SUPPORT=y
-@@ -80,6 +83,7 @@ CONFIG_CMD_DHCP=y
- CONFIG_CMD_MII=y
- CONFIG_CMD_PING=y
- CONFIG_CMD_NCSI=y
-+CONFIG_CMD_HASH=y
- CONFIG_CMD_EXT2=y
- CONFIG_CMD_EXT4=y
- CONFIG_CMD_EXT4_WRITE=y
-@@ -97,6 +101,7 @@ CONFIG_SYSCON=y
- CONFIG_SPL_OF_TRANSLATE=y
- CONFIG_CLK=y
- CONFIG_SPL_CLK=y
-+CONFIG_ASPEED_HACE=y
- CONFIG_DM_GPIO=y
- CONFIG_ASPEED_GPIO=y
- CONFIG_DM_I2C=y
-@@ -135,4 +140,6 @@ CONFIG_USE_TINY_PRINTF=y
- CONFIG_SPL_TINY_MEMSET=y
- CONFIG_TPM=y
- CONFIG_SPL_TPM=y
-+CONFIG_SHA_HW_ACCEL=y
-+CONFIG_SHA_PROG_HW_ACCEL=y
- # CONFIG_EFI_LOADER is not set
--- 
-2.30.2
-
+         Arnd
