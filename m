@@ -1,70 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0A6335D99F
-	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 10:08:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3729F35D9A2
+	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 10:08:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FKJBw5FBnz2yxL
-	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 18:08:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FKJCL15jbz30J6
+	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 18:08:46 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=Xqvvfiyf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=se7XjXRY;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62b;
- helo=mail-pl1-x62b.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::633;
+ helo=mail-pl1-x633.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Xqvvfiyf; dkim-atps=neutral
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com
- [IPv6:2607:f8b0:4864:20::62b])
+ header.s=20161025 header.b=se7XjXRY; dkim-atps=neutral
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com
+ [IPv6:2607:f8b0:4864:20::633])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FKJBh3S2vz2yxL
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 18:08:10 +1000 (AEST)
-Received: by mail-pl1-x62b.google.com with SMTP id y2so7786408plg.5
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 01:08:10 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FKJBh4kPhz2yxS
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 18:08:12 +1000 (AEST)
+Received: by mail-pl1-x633.google.com with SMTP id e2so3476383plh.8
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 01:08:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=xGSIVYMGcV4WW6jwMqFfL3YSEg5og8s7f8u7y5VEXPg=;
- b=XqvvfiyfKGgz7r1Yh4S0CWpmU3Fgi1PkA5jTIN5cKjntWvFnWZ26KHOmWmL993cw1Z
- rp6lNIgaZCnMVJ+IqUveq3sEjCNJiyOFOmT51VvGNO+q+Hfkgvwnl5hdHlZNossNQORE
- pARlnSLrjcF/tZ71XQwu7cxzZIS7p7uetVIwIqq7/Y/MOkAAkZMOOkXA2Xhvwt3ULpjf
- nfATQbFmFba8Y+CqVklwHeVTLM9rowWIiSmDEy/9vtnGEPE7L5WJpbo+lIv3BPawSBfz
- 4z+j5qgY4xlqJElMx9Lq7yugk9u0oN9dSD8ruSzER4wYYk2hhoDCRO+onRV7xbKLPktk
- R5eQ==
+ h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=1rx3c+zQ9Ln8uAv2IoFdGr+tmQLrpi8JfIe3thk2Kho=;
+ b=se7XjXRYsnEnMvOhyWC90QrO0/4SR22IqmB87myzX2poYM8/CCGu1lq900SUTKYGHn
+ N8WgI9gaL7vaQOIv5Arm70sGB06MwCxJMF3yqSMkxX6JWFhwWpyW2+yIP4hKescoFPal
+ hauxHYbAJcb4UCuqBeCZ9r7AFi6aQh3JkpnFw2iRSDfR3fKia2UBu9t+RW0qPe5U83T/
+ hppF10JS+o/dw6pi0T3GjYiWvhVXG102b0ETSXJjBYDlgBg4In/vuBPhs+C9lwLkI5e4
+ 6RvKFp5ukQf03f3HF+KQA/HJ+nhlUKPMWdgswMq/I/q8rntFOze2EGV5rvxMm5ZC1Xue
+ i7qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=xGSIVYMGcV4WW6jwMqFfL3YSEg5og8s7f8u7y5VEXPg=;
- b=Svq2hd3+WYcspE4D/6MVEw/cpMNuX60Eo0yU3qlzkUr5FEyIYWTWsgtPJKqhAVwZUc
- sMEN6QdjS0PjeuH8IU/HJwIEQ4C5omQRGMhcDcH1Pvd6xc2ZWoN9AVVjuT4K0ok6XghP
- yy0k7qVmtgR/Auh4FLAAsAGZposT48wxH9HfbL0O8uPqkHYseAp/utAtPDSPa8uKc52z
- YsR3NA/dw9Ki9YbpF5wPk1rUPrDKexA+FBfkImSeNtW/8E7Rx8YpOl0jeeHzrhOQItEG
- QhIBkOMtmWodf01vW/UdOcp2WONrG1tGyUc/G9kt/EkgrrulRJPdFuKh2obrock2vPeT
- /uiQ==
-X-Gm-Message-State: AOAM532cYEVr4RxQ5eEltfTKdZ9grGK/08PNoBhu0MrWIl5pWonJ4EzP
- Csfa8VtexGevrkvTznNOXAVQRTFfBwo=
-X-Google-Smtp-Source: ABdhPJxrF4/KkT4s5le4tRbzLxgvQMCtj0SLbawxhIpquFVOvW5BPIzOfGwD7PGh48HQWBnNq/LL7A==
-X-Received: by 2002:a17:90a:4005:: with SMTP id u5mr3562139pjc.6.1618301286572; 
- Tue, 13 Apr 2021 01:08:06 -0700 (PDT)
+ :in-reply-to:references:mime-version:content-transfer-encoding;
+ bh=1rx3c+zQ9Ln8uAv2IoFdGr+tmQLrpi8JfIe3thk2Kho=;
+ b=ndiH/osUKoVJNx7cT9TydhLiabrHRZdsVaq3xF7FOMDVTJNhx68ikN/BvxAzJJJqkq
+ gbvbVQI6PdbLWMAMg+mp8pgoCZ9BIDNDorwZABVSZyDVlAq2j9Yi4bbo7wwh6VeNz4TV
+ zba0mcLMgYkcYDBuA5WuGhS3KgNco+trnlo05qWSk8BtdTKzo9qHXO1vkkKtDtGVtnfD
+ 6RPJPk6k1mZn6pD6nsLWfks0vbwFkvrA8r/WVRBfizH5i3Mj+dgEazBpBUwxFdVdqHAF
+ AVYJVEecd7yrzDQz0dLxO0MfzgO+5hloOvQQmqI6mX1zwNDRQ7Y+eY8469v4y+XoQB7k
+ HkTA==
+X-Gm-Message-State: AOAM533FSgRjz5u2E7EJhXEKNyR7C5c2dR8OOj3IsWO00eS1KZaPxdU4
+ 6OspMCfOghETZTO44It3KrYBHGHilxk=
+X-Google-Smtp-Source: ABdhPJwuM9IshGxy1p9U5ckn22HXkUN68nbb2Vz3mYqtHgfiPTBAEcGiLBCJ5K5tFNOj+7J0IkZ51g==
+X-Received: by 2002:a17:90a:a00e:: with SMTP id
+ q14mr1915581pjp.70.1618301289719; 
+ Tue, 13 Apr 2021 01:08:09 -0700 (PDT)
 Received: from voyager.lan ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id nh24sm1443507pjb.38.2021.04.13.01.08.03
+ by smtp.gmail.com with ESMTPSA id nh24sm1443507pjb.38.2021.04.13.01.08.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Apr 2021 01:08:06 -0700 (PDT)
+ Tue, 13 Apr 2021 01:08:09 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org, Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>,
  Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 00/11] Use HACE to
-Date: Tue, 13 Apr 2021 17:37:44 +0930
-Message-Id: <20210413080755.73572-1-joel@jms.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 01/11] aspeed: Build secboot
+ only when enabled
+Date: Tue, 13 Apr 2021 17:37:45 +0930
+Message-Id: <20210413080755.73572-2-joel@jms.id.au>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210413080755.73572-1-joel@jms.id.au>
+References: <20210413080755.73572-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -82,61 +86,25 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This series adds support to u-boot to using the HACE hardware in the
-AST2600 to perform SHA hashing during boot.
+The configuration option controls if the secboot code is used. When
+there are no callers it is removed from the final u-boot binary. Instead
+of relying on the linker to do this, only add it to the build system if
+enabled.
 
-The first five patches rearrange the way the ast2600 SPL boots, using
-the common loading code so we can perform FIT verification on the u-boot
-proper.
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ arch/arm/mach-aspeed/ast2600/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-image-fit has been submitted upstream but not merged yet as it broke
-boards that were performing hashing but not checking the result(!).
-
-The final four patches add support for HACE and enable it in the emmc
-configuration.
-
-I intend to merge these patches into the openbmc u-boot tree while we
-wait for upstream to accept the FIT hashing changes.
-
-A large gotcha of enabling the HACE: it will break checking FIT images
-that are in SPI NOR. u-boot will try to load the FIT directly from
-memory-mapped flash, and the HACE engine can only read from SDRAM
-regions. A fallback mechanism would need to be implemented if someone
-was interested in supporting FIT + HACE + SPI NOR.
-
-Joel Stanley (11):
-  aspeed: Build secboot only when enabled
-  ast2600: Specify boot order
-  ast2600: Configure emmc boot options
-  ast2600: spl: Support common boot devices
-  config: ast2600: Enable common eMMC SPL loader
-  image-fit: use hashing infra
-  hash: Allow for SHA512 hardware implementations
-  ast2600: Add HACE to device tree
-  clk: aspeed: Add HACE yclk to ast2600
-  crypto: Add driver for Aspeed HACE
-  configs/openbmc: Enable hw accelerated sha
-
- arch/arm/dts/ast2600-rainier.dts           |   5 +
- arch/arm/dts/ast2600-tacoma.dts            |   5 +
- arch/arm/dts/ast2600.dtsi                  |   9 +
- arch/arm/dts/ast2600a1-evb.dts             |   4 +
- arch/arm/mach-aspeed/ast2600/Makefile      |   3 +-
- arch/arm/mach-aspeed/ast2600/spl.c         |  16 ++
- common/hash.c                              |  24 +-
- common/image-fit.c                         |  16 +-
- configs/ast2600_openbmc_spl_emmc_defconfig |  12 +-
- drivers/clk/aspeed/clk_ast2600.c           |  22 ++
- drivers/crypto/Kconfig                     |  16 ++
- drivers/crypto/Makefile                    |   1 +
- drivers/crypto/aspeed_hace.c               | 250 +++++++++++++++++++++
- include/configs/aspeed-common.h            |   2 +-
- include/configs/evb_ast2600a1_spl.h        |   4 +
- include/hw_sha.h                           |  26 +++
- lib/Kconfig                                |  15 +-
- 17 files changed, 415 insertions(+), 15 deletions(-)
- create mode 100644 drivers/crypto/aspeed_hace.c
-
+diff --git a/arch/arm/mach-aspeed/ast2600/Makefile b/arch/arm/mach-aspeed/ast2600/Makefile
+index 0abac4c233e4..aafc4b2fe37f 100644
+--- a/arch/arm/mach-aspeed/ast2600/Makefile
++++ b/arch/arm/mach-aspeed/ast2600/Makefile
+@@ -1,2 +1,3 @@
+-obj-y   += platform.o board_common.o scu_info.o utils.o cache.o crypto.o aspeed_verify.o
++obj-y   += platform.o board_common.o scu_info.o utils.o cache.o
++obj-$(CONFIG_ASPEED_SECURE_BOOT) += crypto.o aspeed_verify.o
+ obj-$(CONFIG_SPL_BUILD) += spl.o spl_boot.o
 -- 
 2.30.2
 
