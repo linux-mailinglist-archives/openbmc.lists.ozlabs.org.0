@@ -1,56 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA8CF35E546
-	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 19:44:43 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8332135E749
+	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 21:50:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FKXzs682Dz3bnH
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 03:44:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FKbnD0wNlz304X
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 05:50:40 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=ep3RW5lf;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.151; helo=mga17.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::1036;
+ helo=mail-pj1-x1036.google.com; envelope-from=brendanhiggins@google.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=ep3RW5lf; dkim-atps=neutral
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com
+ [IPv6:2607:f8b0:4864:20::1036])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FKXzj065Pz2yxx
- for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 03:44:31 +1000 (AEST)
-IronPort-SDR: EC3r2xRAHMMfXTxRkZRku2W326FGV/MHvslA6w04hlxZCYx47B6xaGIAJ5OQqwirXPAcJnbalh
- 94i7R1h2u3DQ==
-X-IronPort-AV: E=McAfee;i="6200,9189,9953"; a="174568946"
-X-IronPort-AV: E=Sophos;i="5.82,219,1613462400"; d="scan'208";a="174568946"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Apr 2021 10:44:24 -0700
-IronPort-SDR: I4890AEddeIKUDrc/PXS2RJ7Q4HwZnF/nQQlSdw5dWHyuUxAEiplpX2YjWKy9RwcGNouXdQSLd
- dcNXMq+0ko0A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.82,219,1613462400"; d="scan'208";a="424353992"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga008.jf.intel.com with ESMTP; 13 Apr 2021 10:44:24 -0700
-Received: from [10.212.186.170] (jmbills-MOBL.amr.corp.intel.com
- [10.212.186.170])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 3136B580021
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 10:44:24 -0700 (PDT)
-Subject: Re: Lost the threshold redfish log when update phosphor-sel-logger.
-To: openbmc@lists.ozlabs.org
-References: <E89303EA-4B66-4BAB-9A8B-C68EA398DA63@amperemail.onmicrosoft.com>
- <94EE2CFC-1679-492D-9EF8-D7A8F24BF086@amperemail.onmicrosoft.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <c19528bc-815b-cf38-b07a-ea5e84529232@linux.intel.com>
-Date: Tue, 13 Apr 2021 10:44:23 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FKbmz4vWSz304X
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 05:50:26 +1000 (AEST)
+Received: by mail-pj1-x1036.google.com with SMTP id
+ j6-20020a17090adc86b02900cbfe6f2c96so9567419pjv.1
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 12:50:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=oOecOrjP4ebjB9MfD+t/MwQe3gJqtePCpwG7b5PQgBs=;
+ b=ep3RW5lfGiKUgUbny3bLO13DIO+Ejr205QO9Sj9bTseb2gaW4CooOeZ0UQy8VFbUo4
+ IoX72M2BDxEO7GAvHFCZUjex8Xjs5EFdJz2j2ipVz8L/TDgYsBhFf718ooClu5tAY56+
+ cNV3vwNptvDHbYivOEHLlfEUesW22uB/9W7/fRxp0jEh5N85IWibEQEgCkCSpXBN2pVM
+ M/TE4CRqqcG6GBj+VLaDiv1tOZL/YPffagrD+73atSsvba5eqQEGmwBWvEVEAtzHxMca
+ jBfOfF9bViKDnyIXT7i2qh/7zBfV3rhpzaBuLm2LkW+q67OGIYjpAdGJUnyyC5xjfGCk
+ AYhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=oOecOrjP4ebjB9MfD+t/MwQe3gJqtePCpwG7b5PQgBs=;
+ b=EhIgxFHeLUEc2m155Am4Wv8ZA/fnyKGHnuV+cisEM01C0bGOZD9ahkYOj6/kinr/Ae
+ EEvqOV+GHUIaqUxc24rNipx3jambmODdV1AXcpMbo1MsnN4M6GbPPhfxRnO4R0NnaRKG
+ bY2b9okklzy2nb/6nlQiizuPtGBJbyrzKbwoGoEnXGLQqLvUwXcQTpHtajqmc+F8elq6
+ H8fmQ5ogcea2ib+TJeFOs0X4AMDW5mmI+olpfHbIMEsS+1mZLulLVQXnRnNiRf4FnEiE
+ 2RNEN9tHMkJs85Bon83OHpKYN1/w2eWpUCAKnIx1Rc5o931RuKy/RUXWHtCTGfXcfQng
+ f8Fg==
+X-Gm-Message-State: AOAM530wOkluRhlgLTE8Fb2vUVZxk2ofuEGpklQAz1K8pTbjCx4ElcF7
+ zWaIxmnYnD+AfOhTySmAIOQZmYXUC1vPYy+gllf4tA==
+X-Google-Smtp-Source: ABdhPJwaj6udX1dNnKNlsRCyFoPlCACj+fhdmzsOnCuN8ke1sAMbselzI6xf9r5pQiR9bEI7Hb/t9N6kmsPzQMoE9to=
+X-Received: by 2002:a17:90a:c7d5:: with SMTP id
+ gf21mr1692957pjb.80.1618343422498; 
+ Tue, 13 Apr 2021 12:50:22 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <94EE2CFC-1679-492D-9EF8-D7A8F24BF086@amperemail.onmicrosoft.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210224191720.7724-1-jae.hyun.yoo@linux.intel.com>
+ <20210224191720.7724-2-jae.hyun.yoo@linux.intel.com>
+ <20210306203011.GA1152769@robh.at.kernel.org>
+ <f6732348-d6c8-f49b-6123-afe542bb1f8c@linux.intel.com>
+ <CAL_Jsq+H2wCyTKhGcQvgiuyMtGW0hytQgw=948q0JGLSLOo9KA@mail.gmail.com>
+ <f1811747-3826-215a-d822-85170303a7c9@linux.intel.com>
+ <fadf1244-ed6e-5973-ff1b-018bd20ff3b1@linux.intel.com>
+In-Reply-To: <fadf1244-ed6e-5973-ff1b-018bd20ff3b1@linux.intel.com>
+From: Brendan Higgins <brendanhiggins@google.com>
+Date: Tue, 13 Apr 2021 12:50:11 -0700
+Message-ID: <CAFd5g453L_+tu=vd0foiswJP16+repffPBEPCy6mpZQqnM50Ug@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] dt-bindings: i2c: aspeed: add transfer mode support
+To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,61 +81,116 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>, Rob Herring <robh@kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Wolfram Sang <wsa@the-dreams.de>,
+ Andrew Jeffery <andrew@aj.id.au>, Tao Ren <taoren@fb.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ devicetree <devicetree@vger.kernel.org>, Linux I2C <linux-i2c@vger.kernel.org>,
+ Cedric Le Goater <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, Apr 8, 2021 at 10:50 AM Jae Hyun Yoo
+<jae.hyun.yoo@linux.intel.com> wrote:
+>
+> Ping.
+>
+> On 3/10/2021 7:55 AM, Jae Hyun Yoo wrote:
+> > On 3/9/2021 6:15 PM, Rob Herring wrote:
+> >> On Tue, Mar 9, 2021 at 10:02 AM Jae Hyun Yoo
+> >> <jae.hyun.yoo@linux.intel.com> wrote:
+> >>>
+> >>> Hi Rob,
+> >>>
+> >>> On 3/6/2021 12:30 PM, Rob Herring wrote:
+> >>>> On Wed, Feb 24, 2021 at 11:17:17AM -0800, Jae Hyun Yoo wrote:
+> >>>>> Append bindings to support transfer mode.
+> >>>>>
+> >>>>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> >>>>> Reviewed-by: Brendan Higgins <brendanhiggins@google.com>
+> >>>>> ---
+> >>>>> Changes since v3:
+> >>>>> - None
+> >>>>>
+> >>>>> Changes since v2:
+> >>>>> - Moved SRAM resources back to default dtsi and added mode selection
+> >>>>>     property.
+> >>>>>
+> >>>>> Changes since v1:
+> >>>>> - Removed buffer reg settings from default device tree and added
+> >>>>> the settings
+> >>>>>     into here to show the predefined buffer range per each bus.
+> >>>>>
+> >>>>>    .../devicetree/bindings/i2c/i2c-aspeed.txt    | 37
+> >>>>> +++++++++++++++----
+> >>>>>    1 file changed, 30 insertions(+), 7 deletions(-)
+> >>>>>
+> >>>>> diff --git a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+> >>>>> b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+> >>>>> index b47f6ccb196a..242343177324 100644
+> >>>>> --- a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+> >>>>> +++ b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+> >>>>> @@ -17,6 +17,20 @@ Optional Properties:
+> >>>>>    - bus-frequency    : frequency of the bus clock in Hz defaults
+> >>>>> to 100 kHz when not
+> >>>>>                 specified
+> >>>>>    - multi-master     : states that there is another master active
+> >>>>> on this bus.
+> >>>>> +- aspeed,i2c-xfer-mode      : should be "byte", "buf" or "dma" to
+> >>>>> select transfer
+> >>>>> +                      mode defaults to "byte" mode when not
+> >>>>> specified.
+> >>>>> +
+> >>>>> +                      I2C DMA mode on AST2500 has these restrictions:
+> >>>>> +                        - If one of these controllers is enabled
+> >>>>> +                            * UHCI host controller
+> >>>>> +                            * MCTP controller
+> >>>>> +                          I2C has to use buffer mode or byte mode
+> >>>>> instead
+> >>>>> +                          since these controllers run only in DMA
+> >>>>> mode and
+> >>>>> +                          I2C is sharing the same DMA H/W with them.
+> >>>>> +                        - If one of these controllers uses DMA
+> >>>>> mode, I2C
+> >>>>> +                          can't use DMA mode
+> >>>>> +                            * SD/eMMC
+> >>>>> +                            * Port80 snoop
+> >>>>
+> >>>> How does one decide between byte or buf mode?
+> >>>
+> >>> If a given system makes just one byte r/w transactions most of the time
+> >>> then byte mode will be a right setting. Otherwise, buf mode is more
+> >>> efficient because it doesn't generate a bunch of interrupts on every
+> >>> byte handling.
+> >>
+> >> Then why doesn't the driver do byte transactions when it gets small
+> >> 1-4? byte transactions and buffer transactions when it gets larger
+> >> sized transactions.
+> >
+> > Good question and it could be an option of this implementation.
+> > Actually, each mode needs different register handling so we need to add
+> > additional conditional branches to make it dynamic mode change depends
+> > on the data size which can be a downside. Also, checked that small
+> > amount of data transfer efficiency in 'buf' transfer mode is almost same
+> > to 'byte' mode so there would be no big benefit from the dynamic mode
+> > change. Of course, we can remove the 'byte' transfer mode but we should
+> > also provide flexibility of configuration on what this hardware can
+> > support, IMO.
 
+I would rather set the choice in device tree or Kconfig, which the
+former is what I think you did here.
 
-On 4/13/2021 12:51 AM, Thu Nguyen OS wrote:
-> Dear Zhikui Ren, Patrick Williams and Jason M. Bills,
-> 
-> Do you have any comment in this?
-> 
-> Dear Zhikui Ren,
-> 
-> Do you verify this commit with the sensors which added thru phosphor-hwmon?
-This issue was recently discussed here: 
-https://lore.kernel.org/openbmc/TY2PR04MB3712DCE11C578706F5F6401F88639@TY2PR04MB3712.apcprd04.prod.outlook.com/.
+As for doing byte mode for small transactions and buffer/DMA for large
+transactions, I would prefer sticking to a single mode based on what
+is selected at build/boot time. Seems less error prone to me. Then
+again, Rob probably has more experience in this area than I do, so
+maybe this kind of thing is pretty common and I just don't realize it.
 
-Since that discussion, this change to phosphor-dbus-interfaces was 
-merged to add support for new threshold signals that contain the sensor 
-value: 
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/39899.
+In any case, as for getting rid of byte mode, I would support that,
+but not in this patch set. I would rather switch the default and get
+users on buffer/DMA mode before taking away a fallback option.
 
-I believe that corresponding changes can now be added to dbus-sensors, 
-hwmon, and sel-logger to correctly handle these new signals to resolve 
-the issue you see here.
-> 
-> Regards.
-> 
-> Thu Nguyen.
-> 
-> *From: *Thu Nguyen OS <thu@os.amperecomputing.com>
-> *Date: *Monday, 5 April 2021 at 22:28
-> *To: *"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-> *Subject: *Lost the threshold redfish log when update phosphor-sel-logger.
-> 
-> Hi All,
-> 
-> After updating the base code of our openBmc source for Mt Jade platform 
-> to new version, I saw all of threshold warning/error of hwmon are losted.
-> 
-> Below is the sensor value and the configured thresholds.
-> 
-> Check in the web, the sensor value is bigger than warning threshold, but 
-> there are no log SEL entry in Redfish log.
-> 
-> After spending some time on debugging, I found that the below commit is 
-> the cause:
-> 
-> https://github.com/openbmc/phosphor-sel-logger/commit/25b26e162bd109b51aa09b16f26f9aa3d9d940fa
-> 
-> Remove this commit in phosphor-sel-logger, I can see the warning log in 
-> Redfish.
-> 
-> Do I need any configuration in phosphor-sel-logger to make this commit work?
-> 
-> Thanks.
-> 
-> Thu Nguyen.
-> 
+My 2 cents, but I think the OzLabs and other active OpenBMC people are
+probably a little more up to date on this.
+
+Cheers
