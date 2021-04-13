@@ -2,70 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3729F35D9A2
-	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 10:08:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 99E5935D9A3
+	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 10:09:11 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FKJCL15jbz30J6
-	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 18:08:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FKJCn3pjmz2yZL
+	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 18:09:09 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=se7XjXRY;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=AcTUZGp0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::633;
- helo=mail-pl1-x633.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::531;
+ helo=mail-pg1-x531.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=se7XjXRY; dkim-atps=neutral
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com
- [IPv6:2607:f8b0:4864:20::633])
+ header.s=20161025 header.b=AcTUZGp0; dkim-atps=neutral
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com
+ [IPv6:2607:f8b0:4864:20::531])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FKJBh4kPhz2yxS
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 18:08:12 +1000 (AEST)
-Received: by mail-pl1-x633.google.com with SMTP id e2so3476383plh.8
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 01:08:12 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FKJBm261Mz30Q9
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 18:08:16 +1000 (AEST)
+Received: by mail-pg1-x531.google.com with SMTP id q10so11364523pgj.2
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 01:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=1rx3c+zQ9Ln8uAv2IoFdGr+tmQLrpi8JfIe3thk2Kho=;
- b=se7XjXRYsnEnMvOhyWC90QrO0/4SR22IqmB87myzX2poYM8/CCGu1lq900SUTKYGHn
- N8WgI9gaL7vaQOIv5Arm70sGB06MwCxJMF3yqSMkxX6JWFhwWpyW2+yIP4hKescoFPal
- hauxHYbAJcb4UCuqBeCZ9r7AFi6aQh3JkpnFw2iRSDfR3fKia2UBu9t+RW0qPe5U83T/
- hppF10JS+o/dw6pi0T3GjYiWvhVXG102b0ETSXJjBYDlgBg4In/vuBPhs+C9lwLkI5e4
- 6RvKFp5ukQf03f3HF+KQA/HJ+nhlUKPMWdgswMq/I/q8rntFOze2EGV5rvxMm5ZC1Xue
- i7qA==
+ bh=qFNhce6RfHZCHryGGGBFUQWY5zdSmnWli03nrCWtJa0=;
+ b=AcTUZGp0IuEQQVlrLDJYTEpfn+FxYYeRhRHA2ZmMIdKCS0saefGdTqAoxIiDRwNg5x
+ 6mgE+Vq6Xcqa8Hjv8kz+K4fUJpPJzigQAJYeHGGMkssIwDh9GTw0TesC1meFvLNxjdg9
+ VTisTVSj91zzJKs/1RGT9X0JLSQvmSzpwyJys+mQL9pDSfW1+VRlziVKtPFznItiIzF9
+ 2uuOvCvh3WS3dhBVIDcx/1wr9HOqzH+4AwAlaq/gp66ab3ny+NR8krJdMt59rSGths+i
+ 56/jKfRmScbKMf0h2B6ROa37bMBJqP5jy3k7pDhJtYthO/g1NiZkIKIwa0gMMcwrgVcT
+ RChw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=1rx3c+zQ9Ln8uAv2IoFdGr+tmQLrpi8JfIe3thk2Kho=;
- b=ndiH/osUKoVJNx7cT9TydhLiabrHRZdsVaq3xF7FOMDVTJNhx68ikN/BvxAzJJJqkq
- gbvbVQI6PdbLWMAMg+mp8pgoCZ9BIDNDorwZABVSZyDVlAq2j9Yi4bbo7wwh6VeNz4TV
- zba0mcLMgYkcYDBuA5WuGhS3KgNco+trnlo05qWSk8BtdTKzo9qHXO1vkkKtDtGVtnfD
- 6RPJPk6k1mZn6pD6nsLWfks0vbwFkvrA8r/WVRBfizH5i3Mj+dgEazBpBUwxFdVdqHAF
- AVYJVEecd7yrzDQz0dLxO0MfzgO+5hloOvQQmqI6mX1zwNDRQ7Y+eY8469v4y+XoQB7k
- HkTA==
-X-Gm-Message-State: AOAM533FSgRjz5u2E7EJhXEKNyR7C5c2dR8OOj3IsWO00eS1KZaPxdU4
- 6OspMCfOghETZTO44It3KrYBHGHilxk=
-X-Google-Smtp-Source: ABdhPJwuM9IshGxy1p9U5ckn22HXkUN68nbb2Vz3mYqtHgfiPTBAEcGiLBCJ5K5tFNOj+7J0IkZ51g==
-X-Received: by 2002:a17:90a:a00e:: with SMTP id
- q14mr1915581pjp.70.1618301289719; 
- Tue, 13 Apr 2021 01:08:09 -0700 (PDT)
+ bh=qFNhce6RfHZCHryGGGBFUQWY5zdSmnWli03nrCWtJa0=;
+ b=W9svpPK7a/90vBXi0rJ7s2hOBd3jQCGT3tWMh1lo2WPg9ubZaikY0uuvaxB4Sx99Ig
+ xlzQdwzSzZpCVsKZZSmMxrOEza/aBYzdFV8ivZo+qc1NldZq3/oKAzGJ2L0fo29EiGnQ
+ s4GC+IFRcWpzHdruM5ni1/y5lhc4JGoI682ylo6F0pKpjzF9sTX5JXgiDdWsxfT3p/tj
+ GRP/V0Gjo6jKCtiPs1lGrHbjk7gDk3a5PEoL86MjTbyHUuRtAkSi1QzO67gm6KKfeyna
+ 8FesrBKDOhaa8pjNf3ARwPm9dYpbDBG/zW5Sj17kmYYaXl8QMcsBJFxvLgT3wm5sfJK0
+ B3+w==
+X-Gm-Message-State: AOAM531fwv7ldgHwWzwCusdKf6BC8LxQEcIgM9S8LUalO0UYsB+wpR6K
+ rhQdrf6foiwDTrHAsjx4TG4SYQCixRE=
+X-Google-Smtp-Source: ABdhPJwWSVfJnhaX4XDNBbb0n4UlP5Uibyy0m0Fu38m3YIPGgMVtihZMJUiUvXqgbJNg8PS3QqPGIw==
+X-Received: by 2002:aa7:970a:0:b029:24e:b5e3:6fc3 with SMTP id
+ a10-20020aa7970a0000b029024eb5e36fc3mr5813173pfg.81.1618301292959; 
+ Tue, 13 Apr 2021 01:08:12 -0700 (PDT)
 Received: from voyager.lan ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id nh24sm1443507pjb.38.2021.04.13.01.08.06
+ by smtp.gmail.com with ESMTPSA id nh24sm1443507pjb.38.2021.04.13.01.08.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Apr 2021 01:08:09 -0700 (PDT)
+ Tue, 13 Apr 2021 01:08:12 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org, Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>,
  Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 01/11] aspeed: Build secboot
- only when enabled
-Date: Tue, 13 Apr 2021 17:37:45 +0930
-Message-Id: <20210413080755.73572-2-joel@jms.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 02/11] ast2600: Specify boot
+ order
+Date: Tue, 13 Apr 2021 17:37:46 +0930
+Message-Id: <20210413080755.73572-3-joel@jms.id.au>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210413080755.73572-1-joel@jms.id.au>
 References: <20210413080755.73572-1-joel@jms.id.au>
@@ -86,25 +86,30 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The configuration option controls if the secboot code is used. When
-there are no callers it is removed from the final u-boot binary. Instead
-of relying on the linker to do this, only add it to the build system if
-enabled.
+Try to boot from the strapped device, but fall back to the UART.
 
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- arch/arm/mach-aspeed/ast2600/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/mach-aspeed/ast2600/spl.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm/mach-aspeed/ast2600/Makefile b/arch/arm/mach-aspeed/ast2600/Makefile
-index 0abac4c233e4..aafc4b2fe37f 100644
---- a/arch/arm/mach-aspeed/ast2600/Makefile
-+++ b/arch/arm/mach-aspeed/ast2600/Makefile
-@@ -1,2 +1,3 @@
--obj-y   += platform.o board_common.o scu_info.o utils.o cache.o crypto.o aspeed_verify.o
-+obj-y   += platform.o board_common.o scu_info.o utils.o cache.o
-+obj-$(CONFIG_ASPEED_SECURE_BOOT) += crypto.o aspeed_verify.o
- obj-$(CONFIG_SPL_BUILD) += spl.o spl_boot.o
+diff --git a/arch/arm/mach-aspeed/ast2600/spl.c b/arch/arm/mach-aspeed/ast2600/spl.c
+index 54f89b0e8431..d794421b4070 100644
+--- a/arch/arm/mach-aspeed/ast2600/spl.c
++++ b/arch/arm/mach-aspeed/ast2600/spl.c
+@@ -51,6 +51,12 @@ u32 spl_boot_device(void)
+ 	return BOOT_DEVICE_NONE;
+ }
+ 
++void board_boot_order(u32 *spl_boot_list)
++{
++	spl_boot_list[0] = spl_boot_device();
++	spl_boot_list[1] = ASPEED_BOOT_DEVICE_UART;
++}
++
+ #ifdef CONFIG_SPL_OS_BOOT
+ int spl_start_uboot(void)
+ {
 -- 
 2.30.2
 
