@@ -2,74 +2,99 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8332135E749
-	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 21:50:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6BFE35E7AB
+	for <lists+openbmc@lfdr.de>; Tue, 13 Apr 2021 22:41:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FKbnD0wNlz304X
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 05:50:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FKcw05rfrz30Gd
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 06:41:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=ep3RW5lf;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=V/YbERBw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::1036;
- helo=mail-pj1-x1036.google.com; envelope-from=brendanhiggins@google.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=ep3RW5lf; dkim-atps=neutral
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com
- [IPv6:2607:f8b0:4864:20::1036])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=V/YbERBw; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FKbmz4vWSz304X
- for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 05:50:26 +1000 (AEST)
-Received: by mail-pj1-x1036.google.com with SMTP id
- j6-20020a17090adc86b02900cbfe6f2c96so9567419pjv.1
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 12:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=oOecOrjP4ebjB9MfD+t/MwQe3gJqtePCpwG7b5PQgBs=;
- b=ep3RW5lfGiKUgUbny3bLO13DIO+Ejr205QO9Sj9bTseb2gaW4CooOeZ0UQy8VFbUo4
- IoX72M2BDxEO7GAvHFCZUjex8Xjs5EFdJz2j2ipVz8L/TDgYsBhFf718ooClu5tAY56+
- cNV3vwNptvDHbYivOEHLlfEUesW22uB/9W7/fRxp0jEh5N85IWibEQEgCkCSpXBN2pVM
- M/TE4CRqqcG6GBj+VLaDiv1tOZL/YPffagrD+73atSsvba5eqQEGmwBWvEVEAtzHxMca
- jBfOfF9bViKDnyIXT7i2qh/7zBfV3rhpzaBuLm2LkW+q67OGIYjpAdGJUnyyC5xjfGCk
- AYhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=oOecOrjP4ebjB9MfD+t/MwQe3gJqtePCpwG7b5PQgBs=;
- b=EhIgxFHeLUEc2m155Am4Wv8ZA/fnyKGHnuV+cisEM01C0bGOZD9ahkYOj6/kinr/Ae
- EEvqOV+GHUIaqUxc24rNipx3jambmODdV1AXcpMbo1MsnN4M6GbPPhfxRnO4R0NnaRKG
- bY2b9okklzy2nb/6nlQiizuPtGBJbyrzKbwoGoEnXGLQqLvUwXcQTpHtajqmc+F8elq6
- H8fmQ5ogcea2ib+TJeFOs0X4AMDW5mmI+olpfHbIMEsS+1mZLulLVQXnRnNiRf4FnEiE
- 2RNEN9tHMkJs85Bon83OHpKYN1/w2eWpUCAKnIx1Rc5o931RuKy/RUXWHtCTGfXcfQng
- f8Fg==
-X-Gm-Message-State: AOAM530wOkluRhlgLTE8Fb2vUVZxk2ofuEGpklQAz1K8pTbjCx4ElcF7
- zWaIxmnYnD+AfOhTySmAIOQZmYXUC1vPYy+gllf4tA==
-X-Google-Smtp-Source: ABdhPJwaj6udX1dNnKNlsRCyFoPlCACj+fhdmzsOnCuN8ke1sAMbselzI6xf9r5pQiR9bEI7Hb/t9N6kmsPzQMoE9to=
-X-Received: by 2002:a17:90a:c7d5:: with SMTP id
- gf21mr1692957pjb.80.1618343422498; 
- Tue, 13 Apr 2021 12:50:22 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FKcvl2VJVz3042
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 06:41:22 +1000 (AEST)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 13DKXKVk015399; Tue, 13 Apr 2021 16:41:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=Ps451K1b6swnzmGUh0DkHSvnslvBh0Q2AYgNyLU0nFM=;
+ b=V/YbERBw3MNUgdRiibS4tCcUNpXizylukBiagUC1fx9wWcJN38BDLoxNXvKZFH8v/VvV
+ N/2zZlRPz0n1pbRgtljNcXqFD+jWJznYGC2PTBb65XqNCNWWoAVSQgr38LzSauWrd1XU
+ hYW9ByrDT1/zi0y2PcdWUOCefAHb0D9YowWyAO8pUHX2XPzZF+gW3M0CCe8SNbAG6Jhu
+ Vk+zb42mnCv+Gvx6/tlEtP/TbANu8WFJ5mJ4m8hply34O1Rjz+8b6pdvLpMeLcBITXIh
+ aDwuvZdevi6UJl37xU55J8GLHlmcn7+rXPmIVJOBxtMbd6AReIDHSBhy6bF+MAPCDreg Ww== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 37wetsdncg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Apr 2021 16:41:08 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 13DKc6Tx028254;
+ Tue, 13 Apr 2021 20:41:08 GMT
+Received: from b03cxnp08027.gho.boulder.ibm.com
+ (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
+ by ppma04dal.us.ibm.com with ESMTP id 37u3n92nra-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Apr 2021 20:41:08 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 13DKf73K56689290
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 13 Apr 2021 20:41:07 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 06B9478060;
+ Tue, 13 Apr 2021 20:41:07 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B0DDE7805F;
+ Tue, 13 Apr 2021 20:41:05 +0000 (GMT)
+Received: from [9.80.229.103] (unknown [9.80.229.103])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Tue, 13 Apr 2021 20:41:05 +0000 (GMT)
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 10/11] crypto: Add driver
+ for Aspeed HACE
+To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org,
+ Andrew Jeffery <andrew@aj.id.au>
+References: <20210413080755.73572-1-joel@jms.id.au>
+ <20210413080755.73572-11-joel@jms.id.au>
+From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+Message-ID: <cacf13c1-91b2-ad51-606e-bb208d13ec36@linux.vnet.ibm.com>
+Date: Tue, 13 Apr 2021 17:41:03 -0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
+In-Reply-To: <20210413080755.73572-11-joel@jms.id.au>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: iQwFuTL3z8VdYSvLvjabNw8Zf2sKOnNE
+X-Proofpoint-ORIG-GUID: iQwFuTL3z8VdYSvLvjabNw8Zf2sKOnNE
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <20210224191720.7724-1-jae.hyun.yoo@linux.intel.com>
- <20210224191720.7724-2-jae.hyun.yoo@linux.intel.com>
- <20210306203011.GA1152769@robh.at.kernel.org>
- <f6732348-d6c8-f49b-6123-afe542bb1f8c@linux.intel.com>
- <CAL_Jsq+H2wCyTKhGcQvgiuyMtGW0hytQgw=948q0JGLSLOo9KA@mail.gmail.com>
- <f1811747-3826-215a-d822-85170303a7c9@linux.intel.com>
- <fadf1244-ed6e-5973-ff1b-018bd20ff3b1@linux.intel.com>
-In-Reply-To: <fadf1244-ed6e-5973-ff1b-018bd20ff3b1@linux.intel.com>
-From: Brendan Higgins <brendanhiggins@google.com>
-Date: Tue, 13 Apr 2021 12:50:11 -0700
-Message-ID: <CAFd5g453L_+tu=vd0foiswJP16+repffPBEPCy6mpZQqnM50Ug@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] dt-bindings: i2c: aspeed: add transfer mode support
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
+ definitions=2021-04-13_15:2021-04-13,
+ 2021-04-13 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ spamscore=0 phishscore=0 mlxscore=0 priorityscore=1501 adultscore=0
+ malwarescore=0 mlxlogscore=999 clxscore=1015 bulkscore=0 impostorscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104060000 definitions=main-2104130137
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,116 +106,377 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, Rob Herring <robh@kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Wolfram Sang <wsa@the-dreams.de>,
- Andrew Jeffery <andrew@aj.id.au>, Tao Ren <taoren@fb.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- devicetree <devicetree@vger.kernel.org>, Linux I2C <linux-i2c@vger.kernel.org>,
- Cedric Le Goater <clg@kaod.org>
+Cc: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Apr 8, 2021 at 10:50 AM Jae Hyun Yoo
-<jae.hyun.yoo@linux.intel.com> wrote:
->
-> Ping.
->
-> On 3/10/2021 7:55 AM, Jae Hyun Yoo wrote:
-> > On 3/9/2021 6:15 PM, Rob Herring wrote:
-> >> On Tue, Mar 9, 2021 at 10:02 AM Jae Hyun Yoo
-> >> <jae.hyun.yoo@linux.intel.com> wrote:
-> >>>
-> >>> Hi Rob,
-> >>>
-> >>> On 3/6/2021 12:30 PM, Rob Herring wrote:
-> >>>> On Wed, Feb 24, 2021 at 11:17:17AM -0800, Jae Hyun Yoo wrote:
-> >>>>> Append bindings to support transfer mode.
-> >>>>>
-> >>>>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-> >>>>> Reviewed-by: Brendan Higgins <brendanhiggins@google.com>
-> >>>>> ---
-> >>>>> Changes since v3:
-> >>>>> - None
-> >>>>>
-> >>>>> Changes since v2:
-> >>>>> - Moved SRAM resources back to default dtsi and added mode selection
-> >>>>>     property.
-> >>>>>
-> >>>>> Changes since v1:
-> >>>>> - Removed buffer reg settings from default device tree and added
-> >>>>> the settings
-> >>>>>     into here to show the predefined buffer range per each bus.
-> >>>>>
-> >>>>>    .../devicetree/bindings/i2c/i2c-aspeed.txt    | 37
-> >>>>> +++++++++++++++----
-> >>>>>    1 file changed, 30 insertions(+), 7 deletions(-)
-> >>>>>
-> >>>>> diff --git a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
-> >>>>> b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
-> >>>>> index b47f6ccb196a..242343177324 100644
-> >>>>> --- a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
-> >>>>> +++ b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
-> >>>>> @@ -17,6 +17,20 @@ Optional Properties:
-> >>>>>    - bus-frequency    : frequency of the bus clock in Hz defaults
-> >>>>> to 100 kHz when not
-> >>>>>                 specified
-> >>>>>    - multi-master     : states that there is another master active
-> >>>>> on this bus.
-> >>>>> +- aspeed,i2c-xfer-mode      : should be "byte", "buf" or "dma" to
-> >>>>> select transfer
-> >>>>> +                      mode defaults to "byte" mode when not
-> >>>>> specified.
-> >>>>> +
-> >>>>> +                      I2C DMA mode on AST2500 has these restrictions:
-> >>>>> +                        - If one of these controllers is enabled
-> >>>>> +                            * UHCI host controller
-> >>>>> +                            * MCTP controller
-> >>>>> +                          I2C has to use buffer mode or byte mode
-> >>>>> instead
-> >>>>> +                          since these controllers run only in DMA
-> >>>>> mode and
-> >>>>> +                          I2C is sharing the same DMA H/W with them.
-> >>>>> +                        - If one of these controllers uses DMA
-> >>>>> mode, I2C
-> >>>>> +                          can't use DMA mode
-> >>>>> +                            * SD/eMMC
-> >>>>> +                            * Port80 snoop
-> >>>>
-> >>>> How does one decide between byte or buf mode?
-> >>>
-> >>> If a given system makes just one byte r/w transactions most of the time
-> >>> then byte mode will be a right setting. Otherwise, buf mode is more
-> >>> efficient because it doesn't generate a bunch of interrupts on every
-> >>> byte handling.
-> >>
-> >> Then why doesn't the driver do byte transactions when it gets small
-> >> 1-4? byte transactions and buffer transactions when it gets larger
-> >> sized transactions.
-> >
-> > Good question and it could be an option of this implementation.
-> > Actually, each mode needs different register handling so we need to add
-> > additional conditional branches to make it dynamic mode change depends
-> > on the data size which can be a downside. Also, checked that small
-> > amount of data transfer efficiency in 'buf' transfer mode is almost same
-> > to 'byte' mode so there would be no big benefit from the dynamic mode
-> > change. Of course, we can remove the 'byte' transfer mode but we should
-> > also provide flexibility of configuration on what this hardware can
-> > support, IMO.
+Hi Joel,
 
-I would rather set the choice in device tree or Kconfig, which the
-former is what I think you did here.
+On 4/13/2021 5:07 AM, Joel Stanley wrote:
+> The HACE supports MD5, SHA1 and SHA2 family hash functions. This driver
+> uses it in a polling mode to perform hash calculations over buffers
+> placed in DRAM.
+> 
+> Co-developed-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>   drivers/crypto/Kconfig       |  16 +++
+>   drivers/crypto/Makefile      |   1 +
+>   drivers/crypto/aspeed_hace.c | 250 +++++++++++++++++++++++++++++++++++
+>   3 files changed, 267 insertions(+)
+>   create mode 100644 drivers/crypto/aspeed_hace.c
+> 
+> diff --git a/drivers/crypto/Kconfig b/drivers/crypto/Kconfig
+> index 1ea116be7503..f78e41e0e9e7 100644
+> --- a/drivers/crypto/Kconfig
+> +++ b/drivers/crypto/Kconfig
+> @@ -2,4 +2,20 @@ menu "Hardware crypto devices"
+> 
+>   source drivers/crypto/fsl/Kconfig
+> 
+> +config ASPEED_HACE
+> +	bool "ASPEED Hash and Crypto Engine"
+> +	select SHA_HW_ACCEL
+> +	select SHA_PROG_HW_ACCEL
+> +	depends on ASPEED_AST2600
+> +	help
+> +	 Select this option to enable a driver for using the SHA engine in
+> +	 the ASPEED BMC SoCs.
+> +
+> +	 Enabling this allows the use of SHA operations in hardware without requiring the
+> +	 SHA software implementations, saving code size.
+> +
+> +	 Due to hardware limitations it cannot be used with a FIT placed in SPI
+> +	 FLASH. Data can only be hashed if it is in SDRAM, making this relevant
+> +	 for MMC and network boot only.
+> +
+>   endmenu
+> diff --git a/drivers/crypto/Makefile b/drivers/crypto/Makefile
+> index efbd1d3fca05..ac93b1295954 100644
+> --- a/drivers/crypto/Makefile
+> +++ b/drivers/crypto/Makefile
+> @@ -4,5 +4,6 @@
+>   # 	http://www.samsung.com
+> 
+>   obj-$(CONFIG_EXYNOS_ACE_SHA)	+= ace_sha.o
+> +obj-$(CONFIG_ASPEED_HACE)	+= aspeed_hace.o
+>   obj-y += rsa_mod_exp/
+>   obj-y += fsl/
+> diff --git a/drivers/crypto/aspeed_hace.c b/drivers/crypto/aspeed_hace.c
+> new file mode 100644
+> index 000000000000..473d4d7391b7
+> --- /dev/null
+> +++ b/drivers/crypto/aspeed_hace.c
+> @@ -0,0 +1,250 @@
+> +/*
+> + * (C) Copyright ASPEED Technology Inc.
+> + * Copyright 2021 IBM Corp.
+> + *
+> + * SPDX-License-Identifier:	GPL-2.0-or-later
+> + */
+> +
+> +#include <common.h>
+> +#include <clk.h>
+> +
+> +#include <log.h>
+> +#include <asm/io.h>
+> +#include <malloc.h>
+> +#include <hash.h>
+> +
+> +#include <dm/device.h>
+> +#include <dm/fdtaddr.h>
+> +
+> +#include <linux/bitops.h>
+> +#include <linux/delay.h>
+> +#include <linux/kernel.h>
+> +#include <linux/iopoll.h>
+> +
+> +#define ASPEED_HACE_STS			0x1C
+> +#define  HACE_RSA_ISR			BIT(13)
+> +#define  HACE_CRYPTO_ISR		BIT(12)
+> +#define  HACE_HASH_ISR			BIT(9)
+> +#define  HACE_RSA_BUSY			BIT(2)
+> +#define  HACE_CRYPTO_BUSY		BIT(1)
+> +#define  HACE_HASH_BUSY			BIT(0)
+> +#define ASPEED_HACE_HASH_SRC		0x20
+> +#define ASPEED_HACE_HASH_DIGEST_BUFF	0x24
+> +#define ASPEED_HACE_HASH_KEY_BUFF	0x28
+> +#define ASPEED_HACE_HASH_DATA_LEN	0x2C
+> +#define  HACE_SG_LAST			BIT(31)
+> +#define ASPEED_HACE_HASH_CMD		0x30
+> +#define  HACE_SHA_BE_EN			BIT(3)
+> +#define  HACE_MD5_LE_EN			BIT(2)
+> +#define  HACE_ALGO_MD5			0
+> +#define  HACE_ALGO_SHA1			BIT(5)
+> +#define  HACE_ALGO_SHA224		BIT(6)
+> +#define  HACE_ALGO_SHA256		(BIT(4) | BIT(6))
+> +#define  HACE_ALGO_SHA512		(BIT(5) | BIT(6))
+> +#define  HACE_ALGO_SHA384		(BIT(5) | BIT(6) | BIT(10))
+> +#define  HACE_SG_EN			BIT(18)
+> +
+> +#define ASPEED_MAX_SG			32
+> +
+> +struct aspeed_sg {
+> +	u32 len;
+> +	u32 addr;
+> +};
+> +
+> +struct aspeed_hash_ctx {
+> +	u32 method;
+> +	u32 digest_size;
+> +	u32 len;
+> +	u32 count;
+> +	struct aspeed_sg list[ASPEED_MAX_SG] __attribute__((aligned(8)));
+> +};
+> +
+> +struct aspeed_hace {
+> +	struct clk clk;
+> +};
+> +
+> +static phys_addr_t base;
+> +
+> +static int aspeed_hace_wait_completion(u32 reg, u32 flag, int timeout_us)
+> +{
+> +	u32 val;
+> +
+> +	return readl_poll_timeout(reg, val, (val & flag) == flag, timeout_us);
+> +}
+> +
+> +static int digest_object(const void *src, unsigned int length, void *digest,
+> +		  u32 method)
+> +{
+> +	if (!((u32)src & BIT(31))) {
+> +		debug("HACE src out of bounds: can only copy from SDRAM\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	if ((u32)digest & 0x7) {
+> +		debug("HACE dest alignment incorrect: %p\n", digest);
+> +		return -EINVAL;
+> +	}
+> +
+> +	writel((u32)src, base + ASPEED_HACE_HASH_SRC);
+> +	writel((u32)digest, base + ASPEED_HACE_HASH_DIGEST_BUFF);
+> +	writel(length, base + ASPEED_HACE_HASH_DATA_LEN);
+> +	writel(HACE_SHA_BE_EN | method, base + ASPEED_HACE_HASH_CMD);
+> +
+> +	/* SHA512 hashing appears to have a througput of about 12MB/s */
+> +	return aspeed_hace_wait_completion(base + ASPEED_HACE_STS,
+> +			HACE_HASH_ISR,
+> +			1000 + (length >> 3));
 
-As for doing byte mode for small transactions and buffer/DMA for large
-transactions, I would prefer sticking to a single mode based on what
-is selected at build/boot time. Seems less error prone to me. Then
-again, Rob probably has more experience in this area than I do, so
-maybe this kind of thing is pretty common and I just don't realize it.
+In some of my previous testing with the un-cleaned patchset
+(https://github.com/klauskiwi/u-boot/tree/hace_sg_work), the
+Qemu implementation (Cedric's Aspeed-6.0 branch) worked fine,
+but on hardware I was getting errors until I explicitly
+cleared the HACE_HASH_ISR before attemptinga new command..
+It makes sense since the readl_poll_timeout() would return
+immediately, without completing the command, if the HASH_ISR bit
+is set.
 
-In any case, as for getting rid of byte mode, I would support that,
-but not in this patch set. I would rather switch the default and get
-users on buffer/DMA mode before taking away a fallback option.
+> +}
+> +
+> +void hw_sha1(const unsigned char *pbuf, unsigned int buf_len,
+> +	       unsigned char *pout, unsigned int chunk_size)
+> +{
+> +	int rc;
+> +
+> +	rc = digest_object(pbuf, buf_len, pout, HACE_ALGO_SHA1);
+> +	if (rc)
+> +		debug("HACE failure: %d\n", rc);
+> +}
+> +
+> +void hw_sha256(const unsigned char *pbuf, unsigned int buf_len,
+> +	       unsigned char *pout, unsigned int chunk_size)
+> +{
+> +	int rc;
+> +
+> +	rc = digest_object(pbuf, buf_len, pout, HACE_ALGO_SHA256);
+> +	if (rc)
+> +		debug("HACE failure: %d\n", rc);
+> +}
+> +
+> +void hw_sha512(const unsigned char *pbuf, unsigned int buf_len,
+> +	       unsigned char *pout, unsigned int chunk_size)
+> +{
+> +	int rc;
+> +
+> +	rc = digest_object(pbuf, buf_len, pout, HACE_ALGO_SHA512);
+> +	if (rc)
+> +		debug("HACE failure: %d\n", rc);
+> +}
+> +
+> +#if IS_ENABLED(CONFIG_SHA_PROG_HW_ACCEL)
+> +int hw_sha_init(struct hash_algo *algo, void **ctxp)
+> +{
+> +	struct aspeed_hash_ctx *ctx;
+> +	u32 method;
+> +
+> +	if (!strcmp(algo->name, "sha1")) {
+> +		method = HACE_ALGO_SHA1;
+> +	}
+> +	else if (!strcmp(algo->name, "sha256")) {
+> +		method = HACE_ALGO_SHA256;
+> +	}
+> +	else if (!strcmp(algo->name, "sha512")) {
+> +		method = HACE_ALGO_SHA512;
+> +	}
+> +	else  {
+> +		return -ENOTSUPP;
+> +	}
+> +
+> +	ctx = calloc(1, sizeof(*ctx));
+> +
+> +	if (ctx == NULL) {
+> +		debug("Cannot allocate memory for context\n");
+> +		return -ENOMEM;
+> +	}
+> +	ctx->method = method | HACE_SG_EN;
+> +	ctx->digest_size = algo->digest_size;
+> +	*ctxp = ctx;
+> +
+> +	return 0;
+> +}
+> +
+> +int hw_sha_update(struct hash_algo *algo, void *hash_ctx, const void *buf,
+> +		  unsigned int size, int is_last)
+> +{
+> +	struct aspeed_hash_ctx *ctx = hash_ctx;
+> +	struct aspeed_sg *sg = &ctx->list[ctx->count];
+> +
+> +	if (ctx->count >= ARRAY_SIZE(ctx->list)) {
+> +		debug("HACE error: Reached maximum number of hash segments\n");
+> +		free(ctx);
+> +		return -EINVAL;
+> +	}
+> +
+> +	sg->addr = (u32)buf;
+> +	sg->len = size;
+> +	if (is_last)
+> +		sg->len |= HACE_SG_LAST;
+> +
+> +	ctx->count++;
+> +	ctx->len += size;
+> +
+> +	return 0;
+> +}
+> +
+> +int hw_sha_finish(struct hash_algo *algo, void *hash_ctx, void *dest_buf, int size)
+> +{
+> +	struct aspeed_hash_ctx *ctx = hash_ctx;
+> +	int rc;
+> +
+> +	if (size < ctx->digest_size) {
+> +		debug("HACE error: insufficient size on destination buffer\n");
+> +		free(ctx);
+> +		return -EINVAL;
+> +	}
+> +
+> +	rc = digest_object(ctx->list, ctx->len, dest_buf, ctx->method);
+> +	if (rc)
+> +		debug("HACE Scatter-Gather failure\n");
+> +
+> +	free(ctx);
+> +
+> +	return rc;
+> +}
+> +#endif
+> +
+> +static int aspeed_hace_probe(struct udevice *dev)
+> +{
+> +	struct aspeed_hace *hace = dev_get_priv(dev);
+> +	int ret;
+> +
+> +	ret = clk_get_by_index(dev, 0, &hace->clk);
+> +	if (ret < 0) {
+> +		debug("Can't get clock for %s: %d\n", dev->name, ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = clk_enable(&hace->clk);
+> +	if (ret) {
+> +		debug("Failed to enable fsi clock (%d)\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	/* As the crypto code does not pass us any driver state */
+> +	base = devfdt_get_addr(dev);
+> +
+> +	return ret;
+> +}
+> +
+> +static int aspeed_hace_remove(struct udevice *dev)
+> +{
+> +	struct aspeed_hace *hace = dev_get_priv(dev);
+> +
+> +	clk_disable(&hace->clk);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct udevice_id aspeed_hace_ids[] = {
+> +	{ .compatible = "aspeed,ast2600-hace" },
+> +	{ }
+> +};
+> +
+> +U_BOOT_DRIVER(aspeed_hace) = {
+> +	.name		= "aspeed_hace",
+> +	.id		= UCLASS_MISC,
+> +	.of_match	= aspeed_hace_ids,
+> +	.probe		= aspeed_hace_probe,
+> +	.remove 	= aspeed_hace_remove,
+> +	.priv_auto_alloc_size = sizeof(struct aspeed_hace),
+> +	.flags  = DM_FLAG_PRE_RELOC,
+> +};
+> 
 
-My 2 cents, but I think the OzLabs and other active OpenBMC people are
-probably a little more up to date on this.
+I've tested your patchset with Cedric's Aspeed-6.0 but looks
+like the probe function is never called. Reading through the code
+a bit more, looks like you need to explicitly probe this device
+somewhere in board_init_r (that is, after sdram was initialized),
+since functions like dm_scan_fdt() and dm_extended_scan_fdt() will
+only scan subnodes of the top level, and the clocks node.
 
-Cheers
+This is what I get (with some added printfs of mine):
+
+qemu-system-arm: warning: Aspeed iBT has no chardev backend
+qemu-system-arm: warning: nic ftgmac100.0 has no peer
+qemu-system-arm: warning: nic ftgmac100.1 has no peer
+qemu-system-arm: warning: nic ftgmac100.2 has no peer
+qemu-system-arm: warning: nic ftgmac100.3 has no peer
+aspeed_timer_ctrl_pulse_enable: Timer does not support pulse mode
+aspeed_timer_ctrl_pulse_enable: Timer does not support pulse mode
+aspeed_timer_ctrl_pulse_enable: Timer does not support pulse mode
+aspeed_timer_ctrl_pulse_enable: Timer does not support pulse mode
+aspeed_ast2600_scu_write: SCU is locked!
+aspeed_ast2600_scu_write: SCU is locked!
+aspeed_smc_write: not implemented: 0x18
+
+U-Boot SPL 2019.04 (Apr 13 2021 - 17:57:20 +0000)
+aspeed_soc.io: unimplemented device read  (size 4, offset 0x0f500c)
+aspeed_soc.io: unimplemented device write (size 4, offset 0x0f500c, value 0x00000000)
+Trying to boot from MMC1
+SD: CMD8 in a wrong state
+## Checking hash(es) for Image uboot ... sha512,rsa4096:autogenerated-uboot-4096-key
+digest_object: ASPEED_HACE_STS='0xe59ff03c'
+
+digest_object: SCU080h='0xf7ff7f8a'
+
+digest_object: writing '0x90200104' to ASPEED_HACE_HASH_SRC
+
+digest_object: writing '0x902ffa50' to ASPEED_HACE_HASH_DIGEST_BUFF
+
+digest_object: writing '0x0005ccd4' to ASPEED_HACE_HASH_DATA_LEN
+
+digest_object: writing '0x00040068' to ASPEED_HACE_HASH_CMD
+HACE Scatter-Gather failure
+rsa_verify: Error in checksum calculation
+- Failed to verify required signature 'key-autogenerated-uboot-4096-key'
+  error!
+Unable to verify required signature for '' hash node in 'uboot' image node
+mmc_load_image_raw_sector: mmc block read error
+Trying to boot from UART
+CCQEMU: Terminated
+
+-- 
+Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
