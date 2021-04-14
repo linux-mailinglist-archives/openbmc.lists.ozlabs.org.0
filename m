@@ -2,77 +2,97 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C92EF35F131
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 12:04:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E1F7E35F212
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 13:17:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FKykC5jMzz30D9
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 20:04:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FL0Lx6nGbz30DL
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 21:17:45 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=lt8+i8lo;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Ov83anwB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::62e;
- helo=mail-ej1-x62e.google.com; envelope-from=lee.jones@linaro.org;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
- header.s=google header.b=lt8+i8lo; dkim-atps=neutral
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com
- [IPv6:2a00:1450:4864:20::62e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=Ov83anwB; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FKyjz6TBtz303C
- for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 20:04:07 +1000 (AEST)
-Received: by mail-ej1-x62e.google.com with SMTP id u21so30499115ejo.13
- for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 03:04:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:content-transfer-encoding:in-reply-to;
- bh=2OpST8LZI3on8yL2X/9Onf1MCgH2abOvm7orSC5DgBk=;
- b=lt8+i8lovz9jfZGaOrASIPMN/fDFTBck9Fq0nTM7pv1znMsXju14rrSC+rEONzv9ar
- u8P/Ee2s4Az7i0+dfG7w0hGm4uxOQxlg9BBeUdtQ66hdIlFpTie0XO4AFDHqK41jtekf
- PxP3cAUwvl9veQ5sUPSixbmg830+ZVLq2TlR+1K/ceAAc9pFHvIYXLFyyk1xXmwEm6Zm
- itFdzMrXqMv0FpCEDFEwPrcaS3ZlYZqrTliSbNIjY2ewsuRbOQRNjohDB3Wgm47jwWDf
- CKXzTRgoug31mdPXDoaSeNa0hJL56biyPxQz/vvKy43gXYgE5SpOc+1jKG/iszmaaDNr
- CFiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:content-transfer-encoding
- :in-reply-to;
- bh=2OpST8LZI3on8yL2X/9Onf1MCgH2abOvm7orSC5DgBk=;
- b=rsIEy+rskdnbddYouzl0We/CwvG8ULuInl2kO3bHi4Y4kwqHas8/0AKz6T5qPbDtFa
- uQT9vZqSmZDlyVoHndee20g9tJS96MAUqf0d62lbbheQlNfPLa6weDZNg4t4Ye40DNr2
- VnnMDXLiOlrfiBAOV//jA7SlnuXMuclN6PhIZPt+Tn05/zcy1GrymMomBkDgJqFsdhL3
- PDDdnjS97c8OdNQ4kvXF84t9c/tQ5CuttIihnaMY4/6K1shqwU9FnhbXRGs4q+8Pm8E2
- QRb1/6X/RRry7OzzFmsPxwNY11HgK+qAsWmTikF4/7Fe9esaEmDIHOFGQFKNlq47UNnQ
- Kn+Q==
-X-Gm-Message-State: AOAM532FrEZ5gq9RU38qBxI71oHK7H7I88wbwghdhomk2NWBq876Knz3
- iC6Mp6ciFtFZ0GT46OhofkU5LQ==
-X-Google-Smtp-Source: ABdhPJz91W52QEgwyT/N/q7ZpiRgN8LqDMeAi7/HCXCRFRkriz17el2EnLVeJBWrE/CdPAzD1GN89A==
-X-Received: by 2002:a17:907:1b06:: with SMTP id
- mp6mr37360252ejc.292.1618394640619; 
- Wed, 14 Apr 2021 03:04:00 -0700 (PDT)
-Received: from dell ([91.110.221.215])
- by smtp.gmail.com with ESMTPSA id d18sm1809230edv.1.2021.04.14.03.03.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Apr 2021 03:04:00 -0700 (PDT)
-Date: Wed, 14 Apr 2021 11:03:58 +0100
-From: Lee Jones <lee.jones@linaro.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v2 2/4] mfd: simple-mfd-i2c: Adds Ampere's Altra SMpro
- support
-Message-ID: <20210414100358.GL4869@dell>
-References: <20210329015238.19474-1-quan@os.amperecomputing.com>
- <20210329015238.19474-3-quan@os.amperecomputing.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FL0Lj1pTJz2yyC
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 21:17:32 +1000 (AEST)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 13EB4Fh6049260; Wed, 14 Apr 2021 07:17:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=Kt9N6B7ETBTNI0g9jj3P5B3eI54ge3N/HD7sqQLV7l4=;
+ b=Ov83anwBDoZx2QTAentbv2ObUC4CGGE276+OwRmfmBMbHeLaekqKgMBzRE5a/xdqAN67
+ rxcaWGagU4pPrJNECTKV3pfdn0LWdj1Jtxj2k5360Oqj/7FF2N+24bDXZrvm1c3ulIA2
+ IgGNbnc8QYlm7uDTCHG+kJ0FOeP+VQQ7WjuO8cOa5+SHIczSQZWhYSY17oVXReKkTVpt
+ K0Nkt0J7REI0+TB5F8xSS2VRibKZnI91jjUkqwKlSGRCvcGDZw+IaM2jKEhwwsWOlPyn
+ ancQH9eE07kttrrGiJBv1sn+YZRL3KCMXR0YTA00pb+r4GOyatwUA372GOgC/ITfQ6c/ bQ== 
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 37wwn62re1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Apr 2021 07:17:23 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 13EBH2o3012833;
+ Wed, 14 Apr 2021 11:17:22 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma03dal.us.ibm.com with ESMTP id 37u3n9gn31-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Apr 2021 11:17:22 +0000
+Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
+ [9.57.199.110])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 13EBHLw428115338
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 14 Apr 2021 11:17:21 GMT
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AFFD7AE063;
+ Wed, 14 Apr 2021 11:17:21 +0000 (GMT)
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E5C50AE05F;
+ Wed, 14 Apr 2021 11:17:20 +0000 (GMT)
+Received: from [9.85.205.211] (unknown [9.85.205.211])
+ by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed, 14 Apr 2021 11:17:20 +0000 (GMT)
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 02/11] ast2600: Specify
+ boot order
+To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org,
+ Andrew Jeffery <andrew@aj.id.au>
+References: <20210413080755.73572-1-joel@jms.id.au>
+ <20210413080755.73572-3-joel@jms.id.au>
+From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+Message-ID: <324da446-aef7-9e11-dbab-615ded7cea10@linux.vnet.ibm.com>
+Date: Wed, 14 Apr 2021 08:17:19 -0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210329015238.19474-3-quan@os.amperecomputing.com>
+In-Reply-To: <20210413080755.73572-3-joel@jms.id.au>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 4z-CSoZ7AwAXu9LbbCNNQzJyRVY3j_G6
+X-Proofpoint-ORIG-GUID: 4z-CSoZ7AwAXu9LbbCNNQzJyRVY3j_G6
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
+ definitions=2021-04-14_06:2021-04-14,
+ 2021-04-14 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0
+ malwarescore=0 mlxscore=0 lowpriorityscore=0 adultscore=0 spamscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104060000 definitions=main-2104140077
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,35 +104,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, linux-aspeed@lists.ozlabs.org,
- Jonathan Corbet <corbet@lwn.net>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Phong Vo <phong@os.amperecomputing.com>, Rob Herring <robh+dt@kernel.org>,
- Open Source Submission <patches@amperecomputing.com>,
- Guenter Roeck <linux@roeck-us.net>
+Cc: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 29 Mar 2021, Quan Nguyen wrote:
 
-> Adds an MFD driver for SMpro found on the Mt.Jade hardware reference
-> platform with Ampere's Altra processor family.
+
+On 4/13/2021 5:07 AM, Joel Stanley wrote:
+> Try to boot from the strapped device, but fall back to the UART.
 > 
-> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+Reviewed-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
 > ---
->  drivers/mfd/Kconfig          | 10 ++++++++++
->  drivers/mfd/simple-mfd-i2c.c |  6 ++++++
->  2 files changed, 16 insertions(+)
-
-For my own reference (apply this as-is to your sign-off block):
-
-  Acked-for-MFD-by: Lee Jones <lee.jones@linaro.org>
+>   arch/arm/mach-aspeed/ast2600/spl.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/arch/arm/mach-aspeed/ast2600/spl.c b/arch/arm/mach-aspeed/ast2600/spl.c
+> index 54f89b0e8431..d794421b4070 100644
+> --- a/arch/arm/mach-aspeed/ast2600/spl.c
+> +++ b/arch/arm/mach-aspeed/ast2600/spl.c
+> @@ -51,6 +51,12 @@ u32 spl_boot_device(void)
+>   	return BOOT_DEVICE_NONE;
+>   }
+> 
+> +void board_boot_order(u32 *spl_boot_list)
+> +{
+> +	spl_boot_list[0] = spl_boot_device();
+> +	spl_boot_list[1] = ASPEED_BOOT_DEVICE_UART;
+> +}
+> +
+>   #ifdef CONFIG_SPL_OS_BOOT
+>   int spl_start_uboot(void)
+>   {
+> 
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
