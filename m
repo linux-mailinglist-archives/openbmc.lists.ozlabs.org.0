@@ -1,98 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1F7E35F212
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 13:17:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 502A735F366
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 14:21:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FL0Lx6nGbz30DL
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 21:17:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FL1my13x7z30Gj
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 22:21:54 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Ov83anwB;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=eqLzLdr9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32e;
+ helo=mail-ot1-x32e.google.com; envelope-from=groeck7@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Ov83anwB; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=eqLzLdr9; dkim-atps=neutral
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com
+ [IPv6:2607:f8b0:4864:20::32e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FL0Lj1pTJz2yyC
- for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 21:17:32 +1000 (AEST)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 13EB4Fh6049260; Wed, 14 Apr 2021 07:17:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=Kt9N6B7ETBTNI0g9jj3P5B3eI54ge3N/HD7sqQLV7l4=;
- b=Ov83anwBDoZx2QTAentbv2ObUC4CGGE276+OwRmfmBMbHeLaekqKgMBzRE5a/xdqAN67
- rxcaWGagU4pPrJNECTKV3pfdn0LWdj1Jtxj2k5360Oqj/7FF2N+24bDXZrvm1c3ulIA2
- IgGNbnc8QYlm7uDTCHG+kJ0FOeP+VQQ7WjuO8cOa5+SHIczSQZWhYSY17oVXReKkTVpt
- K0Nkt0J7REI0+TB5F8xSS2VRibKZnI91jjUkqwKlSGRCvcGDZw+IaM2jKEhwwsWOlPyn
- ancQH9eE07kttrrGiJBv1sn+YZRL3KCMXR0YTA00pb+r4GOyatwUA372GOgC/ITfQ6c/ bQ== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 37wwn62re1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Apr 2021 07:17:23 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 13EBH2o3012833;
- Wed, 14 Apr 2021 11:17:22 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma03dal.us.ibm.com with ESMTP id 37u3n9gn31-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Apr 2021 11:17:22 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 13EBHLw428115338
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Apr 2021 11:17:21 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AFFD7AE063;
- Wed, 14 Apr 2021 11:17:21 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E5C50AE05F;
- Wed, 14 Apr 2021 11:17:20 +0000 (GMT)
-Received: from [9.85.205.211] (unknown [9.85.205.211])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
- Wed, 14 Apr 2021 11:17:20 +0000 (GMT)
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 02/11] ast2600: Specify
- boot order
-To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>
-References: <20210413080755.73572-1-joel@jms.id.au>
- <20210413080755.73572-3-joel@jms.id.au>
-From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-Message-ID: <324da446-aef7-9e11-dbab-615ded7cea10@linux.vnet.ibm.com>
-Date: Wed, 14 Apr 2021 08:17:19 -0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FL1mg1hw9z2yRW;
+ Wed, 14 Apr 2021 22:21:37 +1000 (AEST)
+Received: by mail-ot1-x32e.google.com with SMTP id
+ v19-20020a0568300913b029028423b78c2dso10515701ott.8; 
+ Wed, 14 Apr 2021 05:21:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=02BMsB15iI+PWQUPoeumqyghFPOPvXSDGERlBfTrle0=;
+ b=eqLzLdr9Pjk3+/8iLROe0LWoHNgDJdbtV2No1HXQDTNvqcRqUrQgDcV3hCGtuqXghv
+ XLK7ZJPiR0Y1xcr69vSjt2tXkhSzFk0Tho5f6L1ztMDaN9UhrjCP0LA8+Jhc/mgpMF2r
+ x4qs9jXapleWSHFcPbWx7OD0fLNiuRivrpoTLDYBtTwUXH8yYcDOA1xq8n5feqJXfqXR
+ GgOBeNNjT27Sg+f418+WU5RA6mplCs7zUU5E9C6EwIyiYewhsWwGJWsRq5ixE45W6K5w
+ VyDBKlU5E03+/YVpmkIeDJlxm+CzNsDSyDkH0VSeIzPHC5SyyULbZdMI7SCKi+A+Aggw
+ m1WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :references:mime-version:content-disposition:in-reply-to:user-agent;
+ bh=02BMsB15iI+PWQUPoeumqyghFPOPvXSDGERlBfTrle0=;
+ b=kiDh8ztS9d3n3/urQF3l1kmgoSvnz9NuKlfqe1AvkiowZB/Y9zt0OVHexvmQ555m2Z
+ vMdBL34wxY8rxoKUiSCCEfA6huZFVoby5JGvG9zMb4msF4CfsPf668lEFOqi74UBG0rD
+ SWfWCvhX3TAylcPoYCMeO9BGpibdOaNJqPk9crE05dRwimhg85YFfQDcnK5TT8sGkQT4
+ M4wRPhExhTz0CGR9HXID+0NHT1YQS0JddkytK1uUhJNtEmdbE7zezxIDAyvTfE3TuZFr
+ wh3REgSFXsThFOuoBzlIhwUmmVcljM7lkix097X5lCSv9a1IIMRaFJq7ZEqzDPzHsqun
+ UosA==
+X-Gm-Message-State: AOAM531cBabDkcZA45WNJ4d7+UeRGi/ajN+VVXfiAy/9bgrkyWO/M7WF
+ C0YZ/cvnUCwP5BcNS8Q98A4=
+X-Google-Smtp-Source: ABdhPJyaEkd7Bdabm6n+YdK3vbAc6GAFpNYwFaWwjPJxTyGPjj2SXBEQeNBvahJJ9wQDTSEEHyw3aQ==
+X-Received: by 2002:a9d:4613:: with SMTP id y19mr4685326ote.262.1618402892746; 
+ Wed, 14 Apr 2021 05:21:32 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id m127sm3495702oib.32.2021.04.14.05.21.31
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Wed, 14 Apr 2021 05:21:32 -0700 (PDT)
+Date: Wed, 14 Apr 2021 05:21:30 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Quan Nguyen <quan@os.amperecomputing.com>
+Subject: Re: [PATCH v3 2/4] mfd: simple-mfd-i2c: Adds Ampere's Altra SMpro
+ support
+Message-ID: <20210414122130.GA113503@roeck-us.net>
+References: <20210409031332.21919-1-quan@os.amperecomputing.com>
+ <20210409031332.21919-3-quan@os.amperecomputing.com>
 MIME-Version: 1.0
-In-Reply-To: <20210413080755.73572-3-joel@jms.id.au>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 4z-CSoZ7AwAXu9LbbCNNQzJyRVY3j_G6
-X-Proofpoint-ORIG-GUID: 4z-CSoZ7AwAXu9LbbCNNQzJyRVY3j_G6
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
- definitions=2021-04-14_06:2021-04-14,
- 2021-04-14 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0
- malwarescore=0 mlxscore=0 lowpriorityscore=0 adultscore=0 spamscore=0
- clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2104060000 definitions=main-2104140077
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210409031332.21919-3-quan@os.amperecomputing.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,39 +83,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
+ Jean Delvare <jdelvare@suse.com>, linux-aspeed@lists.ozlabs.org,
+ Jonathan Corbet <corbet@lwn.net>, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ Phong Vo <phong@os.amperecomputing.com>, Rob Herring <robh+dt@kernel.org>,
+ Open Source Submission <patches@amperecomputing.com>,
+ Lee Jones <lee.jones@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On 4/13/2021 5:07 AM, Joel Stanley wrote:
-> Try to boot from the strapped device, but fall back to the UART.
+On Fri, Apr 09, 2021 at 10:13:30AM +0700, Quan Nguyen wrote:
+> Adds an MFD driver for SMpro found on the Mt.Jade hardware reference
+> platform with Ampere's Altra processor family.
 > 
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-Reviewed-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+> Reported-by: kernel test robot <lkp@intel.com>
 > ---
->   arch/arm/mach-aspeed/ast2600/spl.c | 6 ++++++
->   1 file changed, 6 insertions(+)
+>  drivers/mfd/Kconfig          | 10 ++++++++++
+>  drivers/mfd/simple-mfd-i2c.c |  6 ++++++
+>  2 files changed, 16 insertions(+)
 > 
-> diff --git a/arch/arm/mach-aspeed/ast2600/spl.c b/arch/arm/mach-aspeed/ast2600/spl.c
-> index 54f89b0e8431..d794421b4070 100644
-> --- a/arch/arm/mach-aspeed/ast2600/spl.c
-> +++ b/arch/arm/mach-aspeed/ast2600/spl.c
-> @@ -51,6 +51,12 @@ u32 spl_boot_device(void)
->   	return BOOT_DEVICE_NONE;
->   }
-> 
-> +void board_boot_order(u32 *spl_boot_list)
-> +{
-> +	spl_boot_list[0] = spl_boot_device();
-> +	spl_boot_list[1] = ASPEED_BOOT_DEVICE_UART;
-> +}
-> +
->   #ifdef CONFIG_SPL_OS_BOOT
->   int spl_start_uboot(void)
->   {
-> 
+> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+> index d07e8cf93286..f7a6460f7aa0 100644
+> --- a/drivers/mfd/Kconfig
+> +++ b/drivers/mfd/Kconfig
+> @@ -77,6 +77,16 @@ config MFD_AS3711
+>  	help
+>  	  Support for the AS3711 PMIC from AMS
+>  
+> +config MFD_SMPRO
+> +	tristate "Ampere Computing MFD SMpro core driver"
+> +	select MFD_SIMPLE_MFD_I2C
 
--- 
-Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+This is missing "depends on I2C".
+
+> +	help
+> +	  Say yes here to enable SMpro driver support for Ampere's Altra
+> +	  processor family.
+> +
+> +	  Ampere's Altra SMpro exposes an I2C regmap interface that can
+> +	  be accessed by child devices.
+> +
+>  config MFD_AS3722
+>  	tristate "ams AS3722 Power Management IC"
+>  	select MFD_CORE
+> diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+> index 87f684cff9a1..9a44655f5592 100644
+> --- a/drivers/mfd/simple-mfd-i2c.c
+> +++ b/drivers/mfd/simple-mfd-i2c.c
+> @@ -21,6 +21,11 @@ static const struct regmap_config simple_regmap_config = {
+>  	.val_bits = 8,
+>  };
+>  
+> +static const struct regmap_config simple_word_regmap_config = {
+> +	.reg_bits = 8,
+> +	.val_bits = 16,
+> +};
+> +
+>  static int simple_mfd_i2c_probe(struct i2c_client *i2c)
+>  {
+>  	const struct regmap_config *config;
+> @@ -39,6 +44,7 @@ static int simple_mfd_i2c_probe(struct i2c_client *i2c)
+>  
+>  static const struct of_device_id simple_mfd_i2c_of_match[] = {
+>  	{ .compatible = "kontron,sl28cpld" },
+> +	{ .compatible = "ampere,smpro", .data = &simple_word_regmap_config },
+>  	{}
+>  };
+>  MODULE_DEVICE_TABLE(of, simple_mfd_i2c_of_match);
