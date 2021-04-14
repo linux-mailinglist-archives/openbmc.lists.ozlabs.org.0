@@ -2,69 +2,95 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C66635E9DD
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 02:06:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EB8C35EA04
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 02:32:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FKjSr337Qz30J6
-	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 10:06:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FKk1r1ml8z30Ls
+	for <lists+openbmc@lfdr.de>; Wed, 14 Apr 2021 10:32:00 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=AR5mn7tM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=HbYw7hON;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=rHiavBpy;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::102d;
- helo=mail-pj1-x102d.google.com; envelope-from=wltu@google.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.224;
+ helo=new2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=AR5mn7tM; dkim-atps=neutral
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com
- [IPv6:2607:f8b0:4864:20::102d])
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=HbYw7hON; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=rHiavBpy; 
+ dkim-atps=neutral
+Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
+ [66.111.4.224])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FKjSc0P1Zz2xfd
- for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 10:06:37 +1000 (AEST)
-Received: by mail-pj1-x102d.google.com with SMTP id
- kk2-20020a17090b4a02b02900c777aa746fso9854484pjb.3
- for <openbmc@lists.ozlabs.org>; Tue, 13 Apr 2021 17:06:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=sBGQ7fDdRGD+KgywlN1tLDWytIyy4ZgKTHWHSLZ15eI=;
- b=AR5mn7tMU/83clEz5CLHO1eJiDBbHESlDEfIKaozwfURe/CGxsmmv6+LF5s7KQeswB
- 2yEFT+HFiavcwDBSl5/HuZAhQTe0c39vVzxDt2XDCMqRP2a7eTf8YCDYErUvcdly9yr+
- JYTr2HbUW6WhZsSBkqFh6hnALm7Q5g/R9UyK/ghnI5dVrgeURSD5GZFjb2+35X86TrUH
- DFW6bKflY6jEw3G4Egv6ihGvVhxsERfJmB6ukv4xvI9VJ+dsxJQ7jQB1K9MwvQ+jRyLP
- PayPtO0256i80xOR/8LTVpHYBebsKyQ4uKxIB7tNhyafq4hXNwGD9pjICrIitzvj9Nvt
- ABEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=sBGQ7fDdRGD+KgywlN1tLDWytIyy4ZgKTHWHSLZ15eI=;
- b=WFZHWof0yvexponlmpWByxhK3frgLGfasbyTQnPTBL6hHPIQ/LT5oqjrhPIxId/YZL
- 9MXFqM3KGRbY5403BMMhAO3IrcN+SB4ZdKlvM4YICBAZEaDvr5+A/tdMJ1A0k8wwE6bK
- KQ5lEnkpH/nENVHWi91lFX+c1rS/uiU95rwNswN5niPJFM04O+S/T9vH/bWJwTBwZb5I
- edvjpNPb5qm1+ypg3D3HGf2RklQiskAqkQWAAQnX7P7lYCi00K/51stXlSaWc0vcN8aO
- cV/Sox1lwdr87f1nc5qT3BJaH+9AF5CTml9wibJlTWVMT76z6+GNP7OjqND7IvOnzqEd
- Cqog==
-X-Gm-Message-State: AOAM533jr7PDA9bA74VN/4OoV9PntzngfUBp9BescotNEZ+7yU77fCnZ
- vwgHCqKPPCiwbHtg3qSQEOz/0VTtP63/HIk+rzmtSQ==
-X-Google-Smtp-Source: ABdhPJwLltPLw/2QdNyfVTZNqmbHM3+LnbrGuVoGHALLjNo8pa+X4SwshgkJPjbkAWtFD3D9AsZS2xlM70uy2BSgliY=
-X-Received: by 2002:a17:90b:34b:: with SMTP id
- fh11mr341578pjb.105.1618358795443; 
- Tue, 13 Apr 2021 17:06:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210413161150.2815450-1-wltu@google.com>
- <CACPK8Xe7zhHbc4Ye3M8w6FLZyTxTxq6U8dX=L7x8cMkS3JSDaQ@mail.gmail.com>
-In-Reply-To: <CACPK8Xe7zhHbc4Ye3M8w6FLZyTxTxq6U8dX=L7x8cMkS3JSDaQ@mail.gmail.com>
-From: Willy Tu <wltu@google.com>
-Date: Tue, 13 Apr 2021 17:06:24 -0700
-Message-ID: <CAHwn2Xnd2TGfe2Oo+3fJoLkfzng5H=fjZH8_pgQ_fSScJxiX1g@mail.gmail.com>
-Subject: Re: [PATCH] board: ast2400: Enable SGPIO in SCU
-To: Joel Stanley <joel@jms.id.au>
-Content-Type: multipart/alternative; boundary="0000000000001f8c2205bfe38537"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FKk1W0Zh7z2yyK;
+ Wed, 14 Apr 2021 10:31:42 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 8F9AB580666;
+ Tue, 13 Apr 2021 20:31:37 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Tue, 13 Apr 2021 20:31:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm2; bh=knUE4eA4OJPF+HeLNfyGSHUwlIZ5VVc
+ yXxGwT1wC3mg=; b=HbYw7hONcS2tHP0GCTKx/rYFKmy6+Sd8TH68re77bRFrgzx
+ QfAEqd7AD81GTnpwPRTHX98f7jeTYe0eIJrVMD7TH3Ec6Gt15D3MejL0meVGrwHS
+ J5NfluxWOHookNX0PJoE6SkGMYt5rPCJ/gQX5daohJXLfcwOVgJ3S0XrgMD3BpJR
+ J/KSQK33bz/jrNS1sUH+Beav2jyJ94ajcCVDblqlzdIgjt5uaeDAduPXTJcqavWu
+ 5ZWrRj3Jg1z1hCoanX2OMsAcGREhn+umQZF6L017nZowqg/gq/E70GTZD2uGK+rL
+ 3R5nU9r7z+YX5ukYQt3oI/7NiZrlPuGorVs42ug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=knUE4e
+ A4OJPF+HeLNfyGSHUwlIZ5VVcyXxGwT1wC3mg=; b=rHiavBpyRcIE+PMbzfzvJx
+ Cr0oPNN4/2GPWA08i2c3zxaa0bCXP6OpOt0z9DxTj3u7rX9bODvYxWjKt9AMh9oq
+ at3vN/9FuHI/5WPEOKa0OsHxcVXceSH7iIFcKTVpRmz/ojIULPbaVKHczk2sWa1D
+ 24AjCtbKYoNJcRg2+JeTL2jRymF/6ytOVskQ7FqMAHT2q+YTtwiO5zxOGe4ohDAm
+ uvED+R76YyBdT354ty/u8x0Ab/7YTrQqQyWx/hw6XS2C2LDLtBex30XxQe0GjcCM
+ IhpOXK3epVnXqDeCFLLPJo4IKrr655YhdgYQdW1/byEQ7Fs5Z8LbDtYpNa99jNNw
+ ==
+X-ME-Sender: <xms:5zd2YEf91elAHYYF4a6xWKfQAzs7g9rGGYewbD2w0AF8U7yJZ-SyoQ>
+ <xme:5zd2YGO9FCnHPZFcDcYLZI4wtuK_1OstqatjI7Qh0DkBR-GKFZc3_9Su08_u9ZRVX
+ gMgo74vCRxb9gNtJw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudeltddgfeegucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhepudevjeegleejteffgfdvudetgfdvjedujeefgfekheeitedtgedvtdei
+ keevjeeinecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiii
+ gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:6Dd2YFjtn4geL8pbKnmdAxFVCoANBYEZVkahiXm_FtHrWW0aY8vmeQ>
+ <xmx:6Dd2YJ-KWD3CTYBpBOPTc1wpT8VvPQ16wE_vhPkC_b-a3QTwR38AGw>
+ <xmx:6Dd2YAukFZRXWD8XhWMtnEMZsuSwPC8CgxTCiwg3fr-9HN6LBY6b6w>
+ <xmx:6Td2YLmq1Q30OW6nlYM7YkKRtyM73qX1nztS54cbHVRn2JqlSrb0bw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id D411AA0048E; Tue, 13 Apr 2021 20:31:35 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-273-g8500d2492d-fm-20210323.002-g8500d249
+Mime-Version: 1.0
+Message-Id: <37e75b07-a5c6-422f-84b3-54f2bea0b917@www.fastmail.com>
+In-Reply-To: <CAK8P3a1VFKuewt65RUK6hFAhZYSFFVUX7_nuJLoZW2WoPXGVTw@mail.gmail.com>
+References: <20210319062752.145730-1-andrew@aj.id.au>
+ <20210319062752.145730-16-andrew@aj.id.au>
+ <CAK8P3a1HDQdbTAT4aRMLu-VFz720ynPqPHG5b22NZ5p5QfUqOw@mail.gmail.com>
+ <ba63f830-4758-49aa-a63e-f204a8eec1b4@www.fastmail.com>
+ <CAK8P3a3RXr5CR7DJgD9rEkN8owpPxXRgzRnPB_5LuQcHkzc4LA@mail.gmail.com>
+ <e2d7268b-bdaf-45bf-bb21-a5b9f7e985a4@www.fastmail.com>
+ <CAK8P3a1VFKuewt65RUK6hFAhZYSFFVUX7_nuJLoZW2WoPXGVTw@mail.gmail.com>
+Date: Wed, 14 Apr 2021 10:00:20 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Arnd Bergmann" <arnd@kernel.org>
+Subject: =?UTF-8?Q?Re:_[PATCH_v2_16/21]_ipmi:_kcs=5Fbmc:_Add_a_"raw"_character_de?=
+ =?UTF-8?Q?vice_interface?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,241 +102,108 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+Cc: Linux ARM <linux-arm-kernel@lists.infradead.org>,
+ DTML <devicetree@vger.kernel.org>, "Chia-Wei,
+ Wang" <chiawei_wang@aspeedtech.com>, Ryan Chen <ryan_chen@aspeedtech.com>,
+ Tomer Maimon <tmaimon77@gmail.com>, Corey Minyard <minyard@acm.org>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, openipmi-developer@lists.sourceforge.net,
+ Lee Jones <lee.jones@linaro.org>, Linus Walleij <linus.walleij@linaro.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
  Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000001f8c2205bfe38537
-Content-Type: text/plain; charset="UTF-8"
 
-Hi Joel,
 
-thanks for the response.
-
-Sorry, I did not update the patch to include the branch name. I'll be more
-careful next time.
-
-This change should be in `v2019.04-aspeed-openbmc` and the other patch in
-https://lore.kernel.org/openbmc/20210413161238.2816187-1-wltu@google.com/
-should
-be in `v2016.07-aspeed-openbmc`.
-
-I have not tested this change, but have tested
-https://lore.kernel.org/openbmc/20210413161238.2816187-1-wltu@google.com/ that
-I based off of (Which I have tested with my setup). Will that be an issue?
-
-Best,
-
-Willy Tu
-
-On Tue, Apr 13, 2021 at 4:32 PM Joel Stanley <joel@jms.id.au> wrote:
-
-> Hi Willy,
->
-> On Tue, 13 Apr 2021 at 16:11, Willy Tu <wltu@google.com> wrote:
+On Tue, 13 Apr 2021, at 17:52, Arnd Bergmann wrote:
+> On Tue, Apr 13, 2021 at 1:45 AM Andrew Jeffery <andrew@aj.id.au> wrote:
+> > On Mon, 12 Apr 2021, at 18:18, Arnd Bergmann wrote:
+> > > On Mon, Apr 12, 2021 at 3:33 AM Andrew Jeffery <andrew@aj.id.au> wrote:
+> > > > On Fri, 9 Apr 2021, at 17:25, Arnd Bergmann wrote:
+> > > > > On Fri, Mar 19, 2021 at 7:31 AM Andrew Jeffery <andrew@aj.id.au> wrote:
+> > > > > >
+> > > > > > The existing IPMI chardev encodes IPMI behaviours as the name suggests.
+> > > > > > However, KCS devices are useful beyond IPMI (or keyboards), as they
+> > > > > > provide a means to generate IRQs and exchange arbitrary data between a
+> > > > > > BMC and its host system.
+> > > > >
+> > > > > I only noticed the series after Joel asked about the DT changes on the arm
+> > > > > side. One question though:
+> > > > >
+> > > > > How does this related to the drivers/input/serio/ framework that also talks
+> > > > > to the keyboard controller for things that are not keyboards?
+> > > >
+> > > > I've taken a brief look and I feel they're somewhat closely related.
+> > > >
+> > > > It's plausible that we could wrangle the code so the Aspeed and Nuvoton
+> > > > KCS drivers move under drivers/input/serio. If you squint, the i8042
+> > > > serio device driver has similarities with what the Aspeed and Nuvoton
+> > > > device drivers are providing to the KCS IPMI stack.
+> > >
+> > > After looking some more into it, I finally understood that the two are
+> > > rather complementary. While the  drivers/char/ipmi/kcs_bmc.c
+> > > is the other (bmc) end of drivers/char/ipmi/ipmi_kcs_sm.c, it seems
+> > > that the proposed kcs_bmc_cdev_raw.c interface would be
+> > > what corresponds to the other side of
+> > > drivers/input/serio/i8042.c+userio.c.
 > >
-> > Add option to enable register for SGPIO in SCU.
+> > Right. I guess the question is should we be splitting kernel subsystems
+> > along host/bmc lines? Doesn't feel intuitive, it's all Linux, but maybe
+> > we can consolidate in the future if it makes sense?
+> 
+> We actually have a number of subsystems with somewhat overlapping
+> functionality. I brought up serio, because it has an abstraction for multiple
+> things that communicate over the keyboard controller and I thought
+> the problem you were trying to solve was also related to the keyboard
+> controller.
+> It is also one of multiple abstractions that allow you to connect a device
+> to a uart (along with serdev and tty_ldisc, probably at least one more that
+> you can nest above or below these).
+> 
+> Consolidating the kcs_bmc.c interface into something that already
+> exists would obviously be best, but it's not clear which of these that
+> should be, that depends on the fundamental properties of the hardware
+> interface.
+> 
+> > > Then again, these are also on
+> > > separate ports (0x60 for the keyboard controller, 0xca2 for the BMC
+> > > KCS), so they would never actually talk to one another.
 > >
-> > Included new function register values for ast2400
-> > SCU and enable the SGPIO function in board init.
->
-> Which branch would you like this patch applied to?
->
-> >
-> > Signed-off-by: Willy Tu <wltu@google.com>
-> > ---
-> >  arch/arm/include/asm/arch-aspeed/scu_ast2400.h |  4 ++++
-> >  arch/arm/mach-aspeed/ast2400/Kconfig           |  4 ++++
-> >  arch/arm/mach-aspeed/ast2400/board_common.c    | 15 +++++++++++++++
-> >  3 files changed, 23 insertions(+)
-> >
-> > diff --git a/arch/arm/include/asm/arch-aspeed/scu_ast2400.h
-> b/arch/arm/include/asm/arch-aspeed/scu_ast2400.h
-> > index 9c5d96ae84..17eaaf3e9d 100644
-> > --- a/arch/arm/include/asm/arch-aspeed/scu_ast2400.h
-> > +++ b/arch/arm/include/asm/arch-aspeed/scu_ast2400.h
-> > @@ -75,6 +75,10 @@
-> >  #define SCU_PIN_FUN_SCL2               (1 << 14)
-> >  #define SCU_PIN_FUN_SDA1               (1 << 13)
-> >  #define SCU_PIN_FUN_SDA2               (1 << 15)
-> > +#define SCU_PIN_FUN_SGPMCK             (0x1 << 8)
-> > +#define SCU_PIN_FUN_SGPMLD             (0x1 << 9)
-> > +#define SCU_PIN_FUN_SGPMO              (0x1 << 10)
-> > +#define SCU_PIN_FUN_SGPMI              (0x1 << 11)
-> >
-> >  #define SCU_D2PLL_EXT1_OFF             (1 << 0)
-> >  #define SCU_D2PLL_EXT1_BYPASS          (1 << 1)
-> > diff --git a/arch/arm/mach-aspeed/ast2400/Kconfig
-> b/arch/arm/mach-aspeed/ast2400/Kconfig
-> > index f76276860c..c4e88b5140 100644
-> > --- a/arch/arm/mach-aspeed/ast2400/Kconfig
-> > +++ b/arch/arm/mach-aspeed/ast2400/Kconfig
-> > @@ -17,6 +17,10 @@ config TARGET_EVB_AST2400
-> >           20 pin JTAG, pinouts for 14 I2Cs, 3 SPIs and eSPI, 8 PWMs.
-> >  endchoice
-> >
-> > +config ENABLE_SGPIO
-> > +    tristate "Enable SGPIO in SCU"
-> > +       default n
-> > +
-> >  source "board/aspeed/evb_ast2400/Kconfig"
-> >
-> >  endif
-> > diff --git a/arch/arm/mach-aspeed/ast2400/board_common.c
-> b/arch/arm/mach-aspeed/ast2400/board_common.c
-> > index 3829b06934..eca2ef03e5 100644
-> > --- a/arch/arm/mach-aspeed/ast2400/board_common.c
-> > +++ b/arch/arm/mach-aspeed/ast2400/board_common.c
-> > @@ -14,6 +14,21 @@ __weak int board_init(void)
-> >  {
-> >         gd->bd->bi_boot_params = CONFIG_SYS_SDRAM_BASE + 0x100;
-> >
-> > +#ifdef CONFIG_ENABLE_SGPIO
-> > +#define SCU_BASE 0x1e6e2000
-> > +#define SCU_FUN_PIN_CTRL2 0x84 /* Multi-function Pin Control#2*/
-> > +       /* Unlock SCU */
-> > +       writel(SCU_UNLOCK_VALUE, SCU_BASE);
-> > +
-> > +       /* Enable SGPIO Master */
-> > +       u32 reg = readl(SCU_BASE + SCU_FUN_PIN_CTRL2);
-> > +
-> > +       reg |= (SCU_PIN_FUN_SGPMI  |
-> > +                       SCU_PIN_FUN_SGPMO  |
-> > +                       SCU_PIN_FUN_SGPMLD |
-> > +                       SCU_PIN_FUN_SGPMCK);
-> > +       writel(reg, SCU_BASE + SCU_FUN_PIN_CTRL2);
-> > +#endif
-> >         return 0;
-> >  }
-> >
-> > --
-> > 2.31.1.295.g9ea45b61b8-goog
-> >
->
+> > Well, sort of I guess. On Power systems we don't use the keyboard
+> > controller for IPMI or keyboards, so we're just kinda exploiting the
+> > hardware for our own purposes.
+> 
+> Can you describe in an abstract form what the hardware interface
+> can do here and what you want from it? I wonder if it could be
+> part of a higher-level interface such as drivers/mailbox/ instead.
 
---0000000000001f8c2205bfe38537
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+It gives us interrupts each way between the host and BMC when we send 
+some (small amount of) data/metadata. Mailbox is possibly a fit for 
+this? We're (ab)using the keyboard controllers to implement a vendor 
+MCTP binding over LPC[1] and also a simple protocol for the (Power) 
+host to trigger BMC debug data capture in the event of issues with 
+other (more complex) in-band communication stacks. The MCTP binding is 
+what requires access to STR.
 
-<div dir=3D"ltr">Hi Joel,<div><br></div><div>thanks for the response.<div><=
-br></div><div>Sorry, I did not update the patch to include the branch name.=
- I&#39;ll be more careful next time.<br></div><div><br></div><div>This chan=
-ge should be in `v2019.04-aspeed-openbmc` and the other patch in=C2=A0<a hr=
-ef=3D"https://lore.kernel.org/openbmc/20210413161238.2816187-1-wltu@google.=
-com/">https://lore.kernel.org/openbmc/20210413161238.2816187-1-wltu@google.=
-com/</a>=C2=A0should be in `v2016.07-aspeed-openbmc`.</div><div><br></div><=
-div>I have not tested this change, but have tested=C2=A0=C2=A0<a href=3D"ht=
-tps://lore.kernel.org/openbmc/20210413161238.2816187-1-wltu@google.com/">ht=
-tps://lore.kernel.org/openbmc/20210413161238.2816187-1-wltu@google.com/</a>=
-=C2=A0that I based off of (Which I have tested with my setup). Will that be=
- an issue?</div><div><br></div><div>Best,</div><div><br></div><div>Willy Tu=
-</div></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"=
-gmail_attr">On Tue, Apr 13, 2021 at 4:32 PM Joel Stanley &lt;<a href=3D"mai=
-lto:joel@jms.id.au">joel@jms.id.au</a>&gt; wrote:<br></div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">Hi Willy,<br>
-<br>
-On Tue, 13 Apr 2021 at 16:11, Willy Tu &lt;<a href=3D"mailto:wltu@google.co=
-m" target=3D"_blank">wltu@google.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Add option to enable register for SGPIO in SCU.<br>
-&gt;<br>
-&gt; Included new function register values for ast2400<br>
-&gt; SCU and enable the SGPIO function in board init.<br>
-<br>
-Which branch would you like this patch applied to?<br>
-<br>
-&gt;<br>
-&gt; Signed-off-by: Willy Tu &lt;<a href=3D"mailto:wltu@google.com" target=
-=3D"_blank">wltu@google.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 arch/arm/include/asm/arch-aspeed/scu_ast2400.h |=C2=A0 4 ++++<br=
->
-&gt;=C2=A0 arch/arm/mach-aspeed/ast2400/Kconfig=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 4 ++++<br>
-&gt;=C2=A0 arch/arm/mach-aspeed/ast2400/board_common.c=C2=A0 =C2=A0 | 15 ++=
-+++++++++++++<br>
-&gt;=C2=A0 3 files changed, 23 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/arch/arm/include/asm/arch-aspeed/scu_ast2400.h b/arch/arm=
-/include/asm/arch-aspeed/scu_ast2400.h<br>
-&gt; index 9c5d96ae84..17eaaf3e9d 100644<br>
-&gt; --- a/arch/arm/include/asm/arch-aspeed/scu_ast2400.h<br>
-&gt; +++ b/arch/arm/include/asm/arch-aspeed/scu_ast2400.h<br>
-&gt; @@ -75,6 +75,10 @@<br>
-&gt;=C2=A0 #define SCU_PIN_FUN_SCL2=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0(1 &lt;&lt; 14)<br>
-&gt;=C2=A0 #define SCU_PIN_FUN_SDA1=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0(1 &lt;&lt; 13)<br>
-&gt;=C2=A0 #define SCU_PIN_FUN_SDA2=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0(1 &lt;&lt; 15)<br>
-&gt; +#define SCU_PIN_FUN_SGPMCK=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0(0x1 &lt;&lt; 8)<br>
-&gt; +#define SCU_PIN_FUN_SGPMLD=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0(0x1 &lt;&lt; 9)<br>
-&gt; +#define SCU_PIN_FUN_SGPMO=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 (0x1 &lt;&lt; 10)<br>
-&gt; +#define SCU_PIN_FUN_SGPMI=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 (0x1 &lt;&lt; 11)<br>
-&gt;<br>
-&gt;=C2=A0 #define SCU_D2PLL_EXT1_OFF=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0(1 &lt;&lt; 0)<br>
-&gt;=C2=A0 #define SCU_D2PLL_EXT1_BYPASS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-(1 &lt;&lt; 1)<br>
-&gt; diff --git a/arch/arm/mach-aspeed/ast2400/Kconfig b/arch/arm/mach-aspe=
-ed/ast2400/Kconfig<br>
-&gt; index f76276860c..c4e88b5140 100644<br>
-&gt; --- a/arch/arm/mach-aspeed/ast2400/Kconfig<br>
-&gt; +++ b/arch/arm/mach-aspeed/ast2400/Kconfig<br>
-&gt; @@ -17,6 +17,10 @@ config TARGET_EVB_AST2400<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A020 pin JTAG, pinouts for 14 I2=
-Cs, 3 SPIs and eSPI, 8 PWMs.<br>
-&gt;=C2=A0 endchoice<br>
-&gt;<br>
-&gt; +config ENABLE_SGPIO<br>
-&gt; +=C2=A0 =C2=A0 tristate &quot;Enable SGPIO in SCU&quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0default n<br>
-&gt; +<br>
-&gt;=C2=A0 source &quot;board/aspeed/evb_ast2400/Kconfig&quot;<br>
-&gt;<br>
-&gt;=C2=A0 endif<br>
-&gt; diff --git a/arch/arm/mach-aspeed/ast2400/board_common.c b/arch/arm/ma=
-ch-aspeed/ast2400/board_common.c<br>
-&gt; index 3829b06934..eca2ef03e5 100644<br>
-&gt; --- a/arch/arm/mach-aspeed/ast2400/board_common.c<br>
-&gt; +++ b/arch/arm/mach-aspeed/ast2400/board_common.c<br>
-&gt; @@ -14,6 +14,21 @@ __weak int board_init(void)<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gd-&gt;bd-&gt;bi_boot_params =3D CONF=
-IG_SYS_SDRAM_BASE + 0x100;<br>
-&gt;<br>
-&gt; +#ifdef CONFIG_ENABLE_SGPIO<br>
-&gt; +#define SCU_BASE 0x1e6e2000<br>
-&gt; +#define SCU_FUN_PIN_CTRL2 0x84 /* Multi-function Pin Control#2*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0/* Unlock SCU */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0writel(SCU_UNLOCK_VALUE, SCU_BASE);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0/* Enable SGPIO Master */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0u32 reg =3D readl(SCU_BASE + SCU_FUN_PIN_C=
-TRL2);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0reg |=3D (SCU_PIN_FUN_SGPMI=C2=A0 |<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0SCU_PIN_FUN_SGPMO=C2=A0 |<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0SCU_PIN_FUN_SGPMLD |<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0SCU_PIN_FUN_SGPMCK);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0writel(reg, SCU_BASE + SCU_FUN_PIN_CTRL2);=
-<br>
-&gt; +#endif<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;<br>
-&gt;=C2=A0 }<br>
-&gt;<br>
-&gt; --<br>
-&gt; 2.31.1.295.g9ea45b61b8-goog<br>
-&gt;<br>
-</blockquote></div>
+It's feasible that we could implement the debug capture protocol with 
+the serio_raw interface now that I think about it (as it only makes use 
+of data and not status). What's unclear to me right now is what impact 
+that has on the Aspeed/Nuvoton KCS drivers we have in the IPMI 
+subsystem. If we can do something sensible to service both serio and 
+IPMI with the one driver implementation then I can put together a PoC 
+for the debug data stuff using serio_raw.
 
---0000000000001f8c2205bfe38537--
+Regarding the MCTP binding, Jeremy Kerr is working in an in-kernel, 
+socket-based implementation of MCTP. Eventually this will allow us to 
+bury the KCS details in the MCTP subsystem, which removes some of the 
+motivation for the raw interface here.
+
+Andrew
+
+[1] https://github.com/openbmc/libmctp/blob/master/docs/bindings/vendor-ibm-astlpc.md
