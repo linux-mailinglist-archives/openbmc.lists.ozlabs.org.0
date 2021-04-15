@@ -1,66 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 044BA36019F
-	for <lists+openbmc@lfdr.de>; Thu, 15 Apr 2021 07:32:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8635360770
+	for <lists+openbmc@lfdr.de>; Thu, 15 Apr 2021 12:47:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FLSfS4gldz3bV7
-	for <lists+openbmc@lfdr.de>; Thu, 15 Apr 2021 15:32:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FLbdG5QMFz30B2
+	for <lists+openbmc@lfdr.de>; Thu, 15 Apr 2021 20:47:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=wistron.com header.i=@wistron.com header.a=rsa-sha256 header.s=security header.b=XeMHsbU4;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=SyCpLMrB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=wistron.com (client-ip=103.200.3.19; helo=segapp03.wistron.com;
- envelope-from=bob_king@wistron.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=wistron.com header.i=@wistron.com header.a=rsa-sha256
- header.s=security header.b=XeMHsbU4; dkim-atps=neutral
-X-Greylist: delayed 544 seconds by postgrey-1.36 at boromir;
- Thu, 15 Apr 2021 15:32:36 AEST
-Received: from segapp03.wistron.com (segapp02.wistron.com [103.200.3.19])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1035;
+ helo=mail-pj1-x1035.google.com; envelope-from=andy.shevchenko@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=SyCpLMrB; dkim-atps=neutral
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com
+ [IPv6:2607:f8b0:4864:20::1035])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FLSfD3zkYz303q
- for <openbmc@lists.ozlabs.org>; Thu, 15 Apr 2021 15:32:35 +1000 (AEST)
-Received: from EXCHAPP03.whq.wistron (unknown [10.37.38.26])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by segapp03.wistron.com (MTA) with ESMTPS id 4FLSRf55mSz5D9P8;
- Thu, 15 Apr 2021 13:23:26 +0800 (CST)
-Received: from EXCHAPP03.whq.wistron (10.37.38.26) by EXCHAPP03.whq.wistron
- (10.37.38.26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Thu, 15 Apr
- 2021 13:23:25 +0800
-Received: from EXCHAPP03.whq.wistron ([fe80::14ba:7e23:d591:99a3]) by
- EXCHAPP03.whq.wistron ([fe80::14ba:7e23:d591:99a3%2]) with mapi id
- 15.01.2176.009; Thu, 15 Apr 2021 13:23:25 +0800
-From: <Bob_King@wistron.com>
-To: <bradleyb@fuzziesquirrel.com>, <openbmc@lists.ozlabs.org>
-Subject: new meta-wistron repository 
-Thread-Topic: new meta-wistron repository 
-Thread-Index: Adcxo6t+W8N06qNMTo2kSRZwdG07xw==
-Date: Thu, 15 Apr 2021 05:23:25 +0000
-Message-ID: <103c91be2e6b46d9bce11da00308c80f@wistron.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.37.38.230]
-x-tm-snts-smtp: 1B6161C034DD07D05EE5BFEADDA1817ECE968B09839269A08693605A7A39690A2000:8
-Content-Type: multipart/alternative;
- boundary="_000_103c91be2e6b46d9bce11da00308c80fwistroncom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FLbcz3g8hz2xMW;
+ Thu, 15 Apr 2021 20:46:57 +1000 (AEST)
+Received: by mail-pj1-x1035.google.com with SMTP id r13so8081115pjf.2;
+ Thu, 15 Apr 2021 03:46:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=oV4yvPzBl+8JFQ4FMZmRE08ppy67MX2UmEYPl8EhO50=;
+ b=SyCpLMrBzeb3fwLhDpa8qxrbb//VUgy89Xbxe2C1+tWhCS9enUHbulLBHkcU6OX0y6
+ aHxwV87N38c/JoUPRfl6OhhKdhUVhou/52XznXoo8Bx5Tu22pxYcEqRVukZs1IfA2tDd
+ lNgirBp+nJPByNqRfO3W2SBS7jyrvI42Y0qbt8PZUL0CXTRAX+Fx3snanIKBTDexZDsV
+ JMY4U2CzQt/F7Xgchoi+hcCzI8t+w7vHQgYlQ3PdPAtg6af3Otr+yAA5x94ts4Y1VodI
+ 7d73jN58s11sK0a6XN+8Ktwxv3EtNqBChHGjI1PBxgR5BmasC3dTi9SFfUzyAvZE1dIV
+ 9Hgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=oV4yvPzBl+8JFQ4FMZmRE08ppy67MX2UmEYPl8EhO50=;
+ b=NjsGCQJ/46QXT7BWR4u/gjHNGTcvtGM1sV/Z9jC1lpUfUUhVQi90VcF/ITV9yxr8oP
+ zqyGW0yQ249lfgAnbaNkypihFpCwBQIWKhXAxqe7fpemXGtIcoyWJDq4kWY077L9mmga
+ zkqTb1Fw3XLYGMM8AqU5kpEi7ZJJhdYjTcoy8MJpxgZX/G6qTYMgWxMKAmUhv9z0iWB9
+ qRk/LVe0GueGMSb0qtj6MCg/MBCMOR3F5GCgJmcFMVVlUiYoDCrz59CDCuGmIwOURaxG
+ TNt0y3egyCwDrLy1o6sAf2dXwrmW8tSP7ycjmUvV2OaJaq/u4GnYoDT5AT0H6HV6CDM/
+ tsFw==
+X-Gm-Message-State: AOAM530mYpKIDNMX2inkqXbWOFm+VaQ6aHDAvz1leN8giHwm7wSt2qCn
+ z97+ZOSIe+tRbRGtQXWbsAQMMe6EIuUjKYcdlLs=
+X-Google-Smtp-Source: ABdhPJyJC4pTKN9cWqu158fTl9rbPrgh93CK4doD8LtZU92In9K69g4pbH9tiEeOcHlzTrh7Q8t7v8WNh6iO49fyHSo=
+X-Received: by 2002:a17:902:264:b029:eb:3d3a:a09c with SMTP id
+ 91-20020a1709020264b02900eb3d3aa09cmr3246929plc.0.1618483613936; Thu, 15 Apr
+ 2021 03:46:53 -0700 (PDT)
 MIME-Version: 1.0
-x-msw-jemd-newsletter: false
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wistron.com; s=security;
- t=1618464206; bh=wXcqCpCtzSBJIKDN8eXuG4f7xb+nbB5DmBtTOSen4lo=;
- h=From:To:CC:Subject:Thread-Topic:Thread-Index:Date:Message-ID:
- Accept-Language:Content-Language:Content-Type:MIME-Version;
- b=XeMHsbU4fLXL+3E7g7ScYnd3HHzGut/DuZRanNTjkCAuFq1z8hgIgEa8xbiG3QiOj
- 72h9DaDa4JM0hIWonhP41kwuqoZ5t45Ak1ExRdJiZZ6IMFYp2nDW/25e6NXciM+jC7
- vzNLqtSgpFGDyovlzgSyBjrMc8Z4GHiWf4PhiT1U=
+References: <20210412034712.16778-1-zev@bewilderbeest.net>
+ <20210412034712.16778-4-zev@bewilderbeest.net>
+In-Reply-To: <20210412034712.16778-4-zev@bewilderbeest.net>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Thu, 15 Apr 2021 13:46:37 +0300
+Message-ID: <CAHp75VfCKRn+ER4bKf+PLhXHT0yZeN4JDufxfROa4UMf=Bc6bQ@mail.gmail.com>
+Subject: Re: [PATCH v6 3/4] serial: 8250_aspeed_vuart: add aspeed,lpc-io-reg
+ and aspeed,lpc-interrupts DT properties
+To: Zev Weiss <zev@bewilderbeest.net>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,154 +76,130 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ben_Pai@wistron.com, Claire_Ku@wistron.com
+Cc: "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "open list:SERIAL DRIVERS" <linux-serial@vger.kernel.org>,
+ Jiri Slaby <jslaby@suse.com>,
+ linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Mon, Apr 12, 2021 at 7:05 AM Zev Weiss <zev@bewilderbeest.net> wrote:
+>
+> These allow describing all the Aspeed VUART attributes currently
+> available via sysfs.  aspeed,lpc-interrupts provides a replacement for
+> the deprecated aspeed,sirq-polarity-sense property.
 
---_000_103c91be2e6b46d9bce11da00308c80fwistroncom_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+One nit-pick below.
 
-Hi Brad,
+In any case it's fine.
 
-We need you help to create a new repository meta-wistron for Wistron openbm=
-c platform.
-Could you help for this?
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> ---
+>  drivers/tty/serial/8250/8250_aspeed_vuart.c | 51 ++++++++++++++++++++-
+>  1 file changed, 49 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/tty/serial/8250/8250_aspeed_vuart.c b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> index 8433f8dbb186..3c239d98747f 100644
+> --- a/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> +++ b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> @@ -28,6 +28,10 @@
+>  #define ASPEED_VUART_ADDRL             0x28
+>  #define ASPEED_VUART_ADDRH             0x2c
+>
+> +#define ASPEED_VUART_DEFAULT_LPC_ADDR  0x3f8
+> +#define ASPEED_VUART_DEFAULT_SIRQ      4
+> +#define ASPEED_VUART_DEFAULT_SIRQ_POLARITY     IRQ_TYPE_LEVEL_LOW
+> +
+>  struct aspeed_vuart {
+>         struct device           *dev;
+>         void __iomem            *regs;
+> @@ -386,6 +390,18 @@ static void aspeed_vuart_auto_configure_sirq_polarity(
+>         aspeed_vuart_set_sirq_polarity(vuart, (value & reg_mask) == 0);
+>  }
+>
+> +static int aspeed_vuart_map_irq_polarity(u32 dt)
+> +{
+> +       switch (dt) {
+> +       case IRQ_TYPE_LEVEL_LOW:
+> +               return 0;
+> +       case IRQ_TYPE_LEVEL_HIGH:
+> +               return 1;
+> +       default:
+> +               return -EINVAL;
+> +       }
+> +}
+> +
+>  static int aspeed_vuart_probe(struct platform_device *pdev)
+>  {
+>         struct of_phandle_args sirq_polarity_sense_args;
+> @@ -393,8 +409,8 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
+>         struct aspeed_vuart *vuart;
+>         struct device_node *np;
+>         struct resource *res;
+> -       u32 clk, prop;
+> -       int rc;
+> +       u32 clk, prop, sirq[2];
+> +       int rc, sirq_polarity;
+>
+>         np = pdev->dev.of_node;
+>
+> @@ -501,6 +517,37 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
+>                 of_node_put(sirq_polarity_sense_args.np);
+>         }
+>
+> +       rc = of_property_read_u32(np, "aspeed,lpc-io-reg", &prop);
+> +       if (rc < 0)
+> +               prop = ASPEED_VUART_DEFAULT_LPC_ADDR;
+> +
+> +       rc = aspeed_vuart_set_lpc_address(vuart, prop);
+> +       if (rc < 0) {
+> +               dev_err(&pdev->dev, "invalid value in aspeed,lpc-io-reg property\n");
+> +               goto err_clk_disable;
+> +       }
+> +
+> +       rc = of_property_read_u32_array(np, "aspeed,lpc-interrupts", sirq, 2);
+> +       if (rc < 0) {
+> +               sirq[0] = ASPEED_VUART_DEFAULT_SIRQ;
+> +               sirq[1] = ASPEED_VUART_DEFAULT_SIRQ_POLARITY;
+> +       }
+> +
+> +       rc = aspeed_vuart_set_sirq(vuart, sirq[0]);
+> +       if (rc < 0) {
+> +               dev_err(&pdev->dev, "invalid sirq number in aspeed,lpc-interrupts property\n");
+> +               goto err_clk_disable;
+> +       }
+> +
+> +       sirq_polarity = aspeed_vuart_map_irq_polarity(sirq[1]);
+> +       if (sirq_polarity < 0) {
+> +               dev_err(&pdev->dev, "invalid sirq polarity in aspeed,lpc-interrupts property\n");
 
-And the maintainers for meta-wistron are:
-Timothy_Huang@wistron.com
-Claire_Ku@wistron.com
-Ben_Pai@wistron.com
-Andy_YF_Wang@wistron.com
-Ken_Hsu@wistron.com
-Jolie_Ku@wistron.com
-Bob_King@wistron.com
+> +               rc = sirq_polarity;
+> +               goto err_clk_disable;
+> +       }
 
-Thanks!
+Why not to use the same pattern as above, i.e.
 
-Best Regards,
-Bob
+       rc = aspeed_vuart_map_irq_polarity(sirq[1]);
+       if (rc < 0) {
+               dev_err(&pdev->dev, "invalid sirq polarity in
+aspeed,lpc-interrupts property\n");
+               goto err_clk_disable;
+       }
+       sirq_polarity = rc;
 
+?
 
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------
-This email contains confidential or legally privileged information and is f=
-or the sole use of its intended recipient.=20
-Any unauthorized review, use, copying or distribution of this email or the =
-content of this email is strictly prohibited.
-If you are not the intended recipient, you may reply to the sender and shou=
-ld delete this e-mail immediately.
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------
+> +       aspeed_vuart_set_sirq_polarity(vuart, sirq_polarity);
+> +
+>         aspeed_vuart_set_enabled(vuart, true);
+>         aspeed_vuart_set_host_tx_discard(vuart, true);
+>         platform_set_drvdata(pdev, vuart);
 
 
---_000_103c91be2e6b46d9bce11da00308c80fwistroncom_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Brad,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">We need you help to create a ne=
-w repository meta-wistron for Wistron openbmc platform.<o:p></o:p></span></=
-p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Could you help for this?<o:p></=
-o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">And the maintainers for meta-wi=
-stron are:<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Timothy_Huang@wistron.com<o:p><=
-/o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Claire_Ku@wistron.com<o:p></o:p=
-></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Ben_Pai@wistron.com<o:p></o:p><=
-/span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Andy_YF_Wang@wistron.com<o:p></=
-o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Ken_Hsu@wistron.com<o:p></o:p><=
-/span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Jolie_Ku@wistron.com<o:p></o:p>=
-</span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Bob_King@wistron.com<o:p></o:p>=
-</span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks!<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Best Regards,<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Bob<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-=0A=0A---------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------<br />This email contains confidential or legally privileged=
- information and is for the sole use of its intended recipient. <br />Any u=
-nauthorized review, use, copying or distribution of this email or the conte=
-nt of this email is strictly prohibited.<br />If you are not the intended r=
-ecipient, you may reply to the sender and should delete this e-mail immedia=
-tely.<br />----------------------------------------------------------------=
----------------------------------------------------------------------------=
---------------------<br />=0A</body>
-</html>
-
---_000_103c91be2e6b46d9bce11da00308c80fwistroncom_--
+-- 
+With Best Regards,
+Andy Shevchenko
