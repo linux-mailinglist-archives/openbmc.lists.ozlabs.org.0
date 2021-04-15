@@ -1,51 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E544035FE50
-	for <lists+openbmc@lfdr.de>; Thu, 15 Apr 2021 01:14:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A75B36000C
+	for <lists+openbmc@lfdr.de>; Thu, 15 Apr 2021 04:33:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FLJGK65cpz3bVF
-	for <lists+openbmc@lfdr.de>; Thu, 15 Apr 2021 09:14:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FLNg20SCFz30NL
+	for <lists+openbmc@lfdr.de>; Thu, 15 Apr 2021 12:33:02 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=CQfNVJgm;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
- envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir;
- Thu, 15 Apr 2021 09:14:39 AEST
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2a;
+ helo=mail-qv1-xf2a.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=CQfNVJgm; dkim-atps=neutral
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com
+ [IPv6:2607:f8b0:4864:20::f2a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FLJG7607gz309h
- for <openbmc@lists.ozlabs.org>; Thu, 15 Apr 2021 09:14:39 +1000 (AEST)
-IronPort-SDR: wFuoNkbdu1s21hGHUURJfp4lzpDGfj2wP1/k+1CjWjCeGI3op+bg/TnykEe/OVkZ4rDaA/EHW6
- 4OAkPKtJD10g==
-X-IronPort-AV: E=McAfee;i="6200,9189,9954"; a="280069598"
-X-IronPort-AV: E=Sophos;i="5.82,223,1613462400"; d="scan'208";a="280069598"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Apr 2021 16:13:29 -0700
-IronPort-SDR: FGfFIMl6wrulixWsaa1MxlPhjsKOVUzlWM3QJ+GevLSfLsPT3ITqvDmdH5XR39TDtCjII/2TDd
- V17S70B8bKRQ==
-X-IronPort-AV: E=Sophos;i="5.82,223,1613462400"; d="scan'208";a="452670843"
-Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
- ([10.7.150.62])
- by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Apr 2021 16:13:17 -0700
-Date: Wed, 14 Apr 2021 16:13:13 -0700
-From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Subject: Re: Time for C++20.
-Message-ID: <20210414231056.GA22459@mauery.jf.intel.com>
-References: <YHdMjAsKKA+BKW8X@heinlein>
- <69ba3eb8-fab3-c0a3-2530-67ebe0de4526@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FLNfp0mjlz300X
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Apr 2021 12:32:48 +1000 (AEST)
+Received: by mail-qv1-xf2a.google.com with SMTP id i9so10815746qvo.3
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Apr 2021 19:32:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=uezIDtjTWhyotJr/TbU9MqK69AfkYUrU/mI+8YUTBXg=;
+ b=CQfNVJgmmojWav6n9liF6W9ivrXTi9pCdYUUatDRvFHt03I1cwtvOf+UzY5xjiBG5Y
+ spUbtyZK6h2Vrc39k7SdzsElcmNWgpr7niR68Qcw7VB9g55Ms9IdF+Q0LfatRAn0UsMW
+ i2MNmb8f640nn9dTsceicMi5rz5pwuvnn7SKM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=uezIDtjTWhyotJr/TbU9MqK69AfkYUrU/mI+8YUTBXg=;
+ b=Z6yXHuvByfwpRAnJbGdgrHQwYMTuGDkirNu39G/hfOwLjWA0vSH1dGWJwqEeW/d++S
+ YbsshhDfiwO4Os8Y4kYWirFzhnffbB+BvL+z7ASj/5EyfXF74N3w3VR22CC095MOrPXS
+ 2gzwlM3a+VBe6G+DoNl846gu8zg6OTYRK2Ql64mMXoIrsacEm6wml9Pjq4DORaEq0LYj
+ S+OtrybeFer22yKCZD5/awHVVSdjy/ZdQqZREY4vcHtNTXmf9YMvw3hA3Rq2JsHXbKxQ
+ swj3nONiNdku+23BIumJWx6nTi0o7ws4BK4xUBvTnDWZ/cphH11JVxoaHXVOrxlgHq3M
+ 3qAQ==
+X-Gm-Message-State: AOAM5338CtVAp3aC9lyeTK9gWmQwEen73u2EzwUkSyM/jFAI22M/KbVu
+ 672fP4Rhj2wUn+auOksNVOdEI0aKa8Wt1bpoCc8=
+X-Google-Smtp-Source: ABdhPJwYqCVlzIm58gEUxq6uLsfXCP96HwTCUQM7ZDkDvxwzbKe4kEF3AWSmDDPpUh7ht6CJ36dodilWw2FtjCz8ATo=
+X-Received: by 2002:ad4:55c1:: with SMTP id bt1mr1104647qvb.16.1618453965190; 
+ Wed, 14 Apr 2021 19:32:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <69ba3eb8-fab3-c0a3-2530-67ebe0de4526@linux.intel.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20210413080755.73572-1-joel@jms.id.au>
+ <20210413080755.73572-11-joel@jms.id.au>
+ <cacf13c1-91b2-ad51-606e-bb208d13ec36@linux.vnet.ibm.com>
+ <9779de4a-6985-8b94-9fb6-55c74a7a722f@linux.vnet.ibm.com>
+In-Reply-To: <9779de4a-6985-8b94-9fb6-55c74a7a722f@linux.vnet.ibm.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 15 Apr 2021 02:32:32 +0000
+Message-ID: <CACPK8XcNyXUhe=43NCR1RzrexJGYWw2S-kXWsYDzNYAJujnmpg@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 10/11] crypto: Add driver
+ for Aspeed HACE
+To: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,64 +76,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 14-Apr-2021 02:12 PM, Bills, Jason M wrote:
+On Wed, 14 Apr 2021 at 20:28, Klaus Heinrich Kiwi
+<klaus@linux.vnet.ibm.com> wrote:
 >
 >
->On 4/14/2021 1:11 PM, Patrick Williams wrote:
->>Hello.
->>
->>Per [1], as a project we've generally committed to using the latest C++
->>standard.  C++20 was released in early Sept. 2020 and already had pretty
->>decent compiler support at the time it was released.  We're currently
->>using GCC10 and according to [2] it has support for nearly every C++20
->>feature I could see us regularly wanting to use(*).  It seems like it
->>is a reasonable time for us to move on to it.
->>
->>* - Except I recall seeing some mention of std::source_location being
->>     useful to fix some of the issues with phosphor-logging, but that
->>     won't be available until GCC11.
-
-I am excited for this... always having the logging header file's 
-location reported is less than useful.
-
->>In general the C++ standard is backwards compatible.  This shouldn't
->>have any impact if you are writing C++17-only code.  What it allows us
->>to do is to start using features out of C++20 like the spaceship
->>operator and ranges.
->>
->>I've put up some commits to start this process.  So far the only hiccup
->>I've ran into is that you need Meson 0.57.0 or higher in order for it to
->>recognize the 'cpp_std=c++20' option.  I am adding code to our unit-test
->>framework to ensure you have this specified in your `meson.build` if you
->>are requesting C++20.
->>
->>     - https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/42252
->>         * Adds some checking to ensure you've specified a meson_version
->>           in your meson.build that can handle C++20.
->>
->>     - https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/42255
->>         * Update C++ style doc from C++17 to C++20.
->>
->>     - https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/42256
->>         * Update sdbusplus to use C++20.
->>
->>Please let me know if you have any concerns with this upgrade; I'll be
->>surprised if this not a fairly low-contention move.
->+1
 >
->I just discovered starts_with() will be available for std::string 
->which I want to use.  I turned it on locally and didn't have any 
->issues.
+> On 4/13/2021 5:41 PM, Klaus Heinrich Kiwi wrote:
+> > I've tested your patchset with Cedric's Aspeed-6.0 but looks
+> > like the probe function is never called. Reading through the code
+> > a bit more, looks like you need to explicitly probe this device
+> > somewhere in board_init_r (that is, after sdram was initialized),
+> > since functions like dm_scan_fdt() and dm_extended_scan_fdt() will
+> > only scan subnodes of the top level, and the clocks node.
+> >
+> > This is what I get (with some added printfs of mine):
 >
->coroutines are also an interesting possibility for some of our async calls.
+> I've played around a bit more, and got it to work on Qemu with the follow=
+ing changes:
+>
+>   * Added a board-specific spl_board_init() initializing the HACE driver =
+at
+>     the SPL's board_init_r() timeframe. Enabled that on the defconfig fil=
+e.
+>   * Because the driver model is using some pre-sdram malloc pool space,
+>     the changes above were causing the probing of the sdram itself to fai=
+l.
+>     Corrected by increasing the pre-sdram malloc pool to 0x1000.
 
-The c++ coroutines are implemented differently than the boost::asio 
-stuff that ipmid is currently using. It will require some rewriting. But 
-I would prefer to move on to the standard than using an older 
-implementation from boost.
+Thanks. I had added something similar when debugging this yesterday.
 
---Vernon
+I had tested the changes, but must have mixed up which images were
+being loaded into qemu.
+
+> However, when I tried to test it on a Rainier, it failed:
+> U-Boot SPL 2019.04 (Apr 14 2021 - 19:31:59 +0000)
+> already initialized, Trying to boot from MMC1
+> ## Checking hash(es) for Image uboot ... sha512,rsa4096:autogenerated-ubo=
+ot-4096-key- Failed to verify required signature 'key-autogenera'
+>   error!
+> Unable to verify required signature for '' hash node in 'uboot' image nod=
+e
+> mmc_load_image_raw_sector: mmc block read error
+> Trying to boot from UART
+> CCCCC =EF=BF=BDP
+>
+> (and yes, I had since disabled my debugging printf's). I wonder if the HA=
+SH_ISR
+> may need to be explicitly cleared, although I'd expect it to work for the=
+ first
+> command at least.
+>
+> Another interesting thing is that the SPL tries to boot from UART, but ne=
+ither
+> my fitImages, Legacy images or even RAW images are working.. Not sure if =
+we need
+> some special handling of those images before feeding them to the spl ymod=
+em loader?
+
+I wasn't able to get the SPL to load any images - raw binaries or FIT
+- from eMMC either. Something is going wrong, but I am unsure what it
+is. I will continue to debug.
+
+Cheers,
+
+Joel
