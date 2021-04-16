@@ -1,126 +1,128 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E4F03618FD
-	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 06:46:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 703BA361919
+	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 07:07:58 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FM3Zl0XjBz3br1
-	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 14:46:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FM43J2mcGz2yjL
+	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 15:07:56 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=SpbagMxi;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=QTmHlEav;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=40.107.132.93;
- helo=apc01-pu1-obe.outbound.protection.outlook.com;
- envelope-from=bruce_lee@quantatw.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=quantacorp.onmicrosoft.com
- header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-quantacorp-onmicrosoft-com header.b=SpbagMxi; 
- dkim-atps=neutral
-Received: from APC01-PU1-obe.outbound.protection.outlook.com
- (mail-eopbgr1320093.outbound.protection.outlook.com [40.107.132.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22c;
+ helo=mail-oi1-x22c.google.com; envelope-from=groeck7@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=QTmHlEav; dkim-atps=neutral
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com
+ [IPv6:2607:f8b0:4864:20::22c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FM3ZT4jznz2yyC
- for <openbmc@lists.ozlabs.org>; Fri, 16 Apr 2021 14:46:22 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DPmDsP5rT+h40dYiCNzhAgWQHdLIRh+W/wMgR4BKOlwQMd7Ru06IvTdjiZWc5gbNZBfUZC3KdJr3c+e46ofSfVBFtKplEi8ETopxUyUe1UnKPxxAGRU1zVkovP1LTW6LKSoINlcoiu1kKXSUneHbE9GxsaY7SZTM3HFuCSKBGw0o+r2L7Vq04kJ7nksGsCw16vY1DxxDoyYmWhVN+XqGOmQpAbkYUMFbMB4JPgoYgC4jf7tKMWNrXmFdtP0vFaau1mbuswC82IxTcmUBINq2kerVUksFWwv5y2MEs/8cZJcWcC/fN6PNViTbbcOSplVHgJxqUPtWbIoBuaoXI8Li9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NxdeZIbANu9ULX7X2u2Rd7R8PS4pqFx0kk6bZFC4NDE=;
- b=jZFHrrqTOUgNT7EKxUemVr1zZIKbflPffmOCWyQSbhxw794ZrsfGWv+tyGEb9WFVBbLjPXqBl5/2UPe08j1Nhjib6t1vfBKFhARTUrNx2Ocz0jQ6uEoGNl2WAw2tLJqlMz9D/eL2RsiyKCVercJlCV4gNIdVnykhH60Cw/K48VWxD+fvnDzc7ZUEqBqvwjcv3c2dWljWLP+jTv1FKDInX4zVH9rD5/ROyxBpbmeEoPNKJ5a04bpdEFkAM5sf6o1zuaJJg9l25M9yYDivBqPZdjtGH7E6LR2IqA1L0RMIMnLfhrBOo3rp1VfTxq0agM8/JNCX0N16/83dh+DnrndCqg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
- dkim=pass header.d=quantatw.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NxdeZIbANu9ULX7X2u2Rd7R8PS4pqFx0kk6bZFC4NDE=;
- b=SpbagMxi8uU/8SjO62ALndmfMDCFtmYhvbxfVfl39Jsi0TP7jD37Wt2osl5CUP79Ienh2+dEDt+4GhaH9NkdHnWX0Y2V1QUeseAxLOydg1hh+4ia8Qzo/cND2fEpobKWrVh3uJRujRk2E2S7T1vOsXvpphjyKqueiXNb27tl/lM=
-Received: from PSAPR04MB4231.apcprd04.prod.outlook.com (2603:1096:301:30::14)
- by PS1PR04MB2758.apcprd04.prod.outlook.com (2603:1096:803:49::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4020.21; Fri, 16 Apr
- 2021 04:46:01 +0000
-Received: from PSAPR04MB4231.apcprd04.prod.outlook.com
- ([fe80::4d14:874d:f2cd:e2ba]) by PSAPR04MB4231.apcprd04.prod.outlook.com
- ([fe80::4d14:874d:f2cd:e2ba%3]) with mapi id 15.20.4042.019; Fri, 16 Apr 2021
- 04:46:00 +0000
-From: =?big5?B?QnJ1Y2UgTGVlICin9an7rm0p?= <Bruce_Lee@quantatw.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: How to get the return value using the command busctl set-property?
-Thread-Topic: How to get the return value using the command busctl
- set-property?
-Thread-Index: Adcye2UidslBHmPwRmChkR5xby3BjQ==
-Date: Fri, 16 Apr 2021 04:46:00 +0000
-Message-ID: <PSAPR04MB42315F65948C859527E5D8E2F84C9@PSAPR04MB4231.apcprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=quantatw.com;
-x-originating-ip: [220.135.135.179]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 025cd0ab-1d0a-4522-07b6-08d9009288a1
-x-ms-traffictypediagnostic: PS1PR04MB2758:
-x-microsoft-antispam-prvs: <PS1PR04MB275857840BD1870813526621F84C9@PS1PR04MB2758.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: EX23HyQ77z+TSSriQ+QvMHxALN5XG/DyUJmCKgokZVxGAvVZpcugtmu5C+Muo8gYXEEZWL/SasUxMK2dI1NpI1kUEHQYvCYW8RgI/b3fvj/qymr1eH9I/O8IJEDpDTU6obzVnAsAPanZezx4YTZZeJBkke6YkS9hvB4FwA/pKa8UmCkopFrhzTE7zAkoDUC5paSqf3zCzkeimlpNfz0EOFZJatYlPH6it2RhtJwZOZ79QxvxjRfuZxVCBmFlNWPcuzH9ru7l1s6iFuL8HBAho8iLipBd4QYVSJeVcv0869ZOWebJMrN8+n1GfXM5ZNx6fJVpKi9H0ko3q3mbMtyK7DrqnJD2aMKvp30i01/uzguCu/WRl82rYzAis4xzYz2CKEPkllrY5z3WNbs75XfYctNiObUbqs/LSvZAsGgE2Pd0oGCnfFbUIFyT7CEAISPx6CHPHr2Fryu/kU0DgkWSl3FOouvlnN/A8dTD+GnyjeCGe0l0Sx78KagMVPRYqTbZH0HAbk5MUZqmzMNvYNJWhLEugky6+hg5GOoVmc4UMYa8rFPXZ7lryApRAhw01aVeOZe5WtXvzE7/jMteoFIoN9/6AqIBz1xfu50HxyJq3+m+mxQYnTyFCI02zbiO3W8E7entlFW8IYUX5zRmKqtKsA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PSAPR04MB4231.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(136003)(376002)(366004)(39860400002)(346002)(396003)(66946007)(66556008)(64756008)(52536014)(76116006)(316002)(7696005)(33656002)(54906003)(19627235002)(2906002)(66446008)(186003)(6506007)(8936002)(55016002)(26005)(85182001)(66476007)(5660300002)(4326008)(38100700002)(122000001)(8676002)(9686003)(478600001)(83380400001)(71200400001)(6916009)(86362001)(15583001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?big5?B?N1VxdU5QQXhHVERpa2ErTDdraWg2V2VoL3JKSVBZUnhTaEZzN3NaWUZwTUQxSkFm?=
- =?big5?B?L1VDNHd5NHBIYWgyUU5UVFVDWXdxQWtqRXVQK1NhdGN3TmRsNDBlVHU3c3NTamFD?=
- =?big5?B?blNXY0lLdEhyQjc5ekJ6NkMxRVNDQyswNkNaUlo3S1lWbEc4azRvTmJMcmRvaTVk?=
- =?big5?B?SUl1aVByMTd3Tkh4RWhraTRxazdrMHhtSzR4WUtoelp3ekdqVFo0aDJ2QUJieFdN?=
- =?big5?B?eFhQMVlHVTM2VUtVMHBBaWRxTTZja3g3alliTnV6Z3pSNlZEOWp6UGs0NlNKYnli?=
- =?big5?B?WEV0dVM5YjNVSXBwck5zdDZpMGVXNDFaVS9vZUNhNWI5VU5xd0h1WC9VQm1nR2Uz?=
- =?big5?B?bmVGYTZQMjdsaldNN2NsYmRWNjlleDd1djFPWFR2N1NkQnRFV2NYMFhpanRYeEFr?=
- =?big5?B?NEE4NDE4alZjZHZQbk9oaGdhMzU2RWttM1Q5aTRQRXJQeGxTK05oRm9zS0gyVjB3?=
- =?big5?B?RjdiYUhlOExZN1FYaG02YlNFOUtBWlhNNU1DNEtINFZJcDd5N0NyM1ZscGhBRWNL?=
- =?big5?B?dElPWjF5NXZxU3NpeHYzT2kvNzZRSUNIL1BrbVBqbGlIREREQVpIZ3VJMTZ0a01x?=
- =?big5?B?WlRaWm9LR3pIRmJ5NG16bXVkRlFZTzlPb1NqVmEyQ3JFRCtpQ0JyNlF5ZnNVZ0xE?=
- =?big5?B?S1g4SXVueDlCbHdOREtQZnJzeDJZem9seHVyK0lpdG5VYWNGcXJ6N2NrYTlhRTdF?=
- =?big5?B?b1FCNjYybUpNQXh5SkZZbHE5akR3VTFkODdmWlluM1BaWmM1ZGpFQncya2JkbFNO?=
- =?big5?B?L3h0eTlOejRMbTN1MXpjL0RvRjZsUmE5cXVaVjl4emtLNUhwcytRMTlMb3RzcG5O?=
- =?big5?B?V1ZKSUlSNXFhTnhjU3ArZi9DTVFBVjRNcDVrSEhubXgwdTAyQnBqQ0ZtVVRHa3JJ?=
- =?big5?B?dHZaQ0tvS2dqalhpV1lFZXk0TkhsQ2JSTHZIeHdPZU9TemlWN1VDY1IwOG9wVmYx?=
- =?big5?B?SUR1Tllobi9GbVFsMlloaTdodVhicTZLYXkrVWp2K3FzVmRacTdmbElLTGpjQ3NG?=
- =?big5?B?N1VxZno3U2JXWU41RW1Tcmtmck9FOHFac0FOdC91eUNraDl3NTlMQTMvdEowMzQy?=
- =?big5?B?ZzJuOWVKeVNvMTZubFI2UFBUa0FFeHlWclU2cHBwQ1FKTGdkblMvSENiOHg0N24w?=
- =?big5?B?MGJ6WmVnWUlLMzBqWmZUNk95U2hSUVpXQjI5L2tTRzhhbndSZVp5QVJRMG1OZWtv?=
- =?big5?B?MW9mQVBkL0tEWktSU0llMXlnMElDYzUzeFhzVzNnb3RMOTU0Ykt5czR5Y1h1eitu?=
- =?big5?B?aUl5cG0xaGUvb3Q5cFFweGZYbDlJZUtRVkdkNlp3TlpxTmliQUVFMTJrOXo0VERP?=
- =?big5?B?SkVJY28vZ0RKU0k1NHVtRHg2OUZZczNtQ01lejRWWkwvVHQzTkJFL1R1MXBzd0M5?=
- =?big5?B?V3o2aXltZHRyTHF2N0hKVzRUNUFkaEpGQzlYeWpqL001NytoelQ5TUxrWmVqRWx4?=
- =?big5?B?bFlzRFZkdDF3bXRHVTFTdVA0UmpOOE9ad3ZqbXV5ME8xdUZPZTdackxYN0VjRnVV?=
- =?big5?B?RHVybXdhRjA2Z1lhdlhzNmFHQVcwdjlTUFpxcnk3Ull6SmF3blBwSjFiUUVOSnQx?=
- =?big5?B?WUZ1aVVEbzRZWWE3Q3RNdVpZS09SY0lKcllBdWs2aTJ4VTdwSUdSa3RrMkJjM004?=
- =?big5?Q?CBBeW/+v0n9AYIyozfMJ5SYJdDYXfgeZgevURQqRTgwftcbg?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FM4326BZ4z301g;
+ Fri, 16 Apr 2021 15:07:41 +1000 (AEST)
+Received: by mail-oi1-x22c.google.com with SMTP id i18so5154324oii.2;
+ Thu, 15 Apr 2021 22:07:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:subject:to:references:from:autocrypt:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=Opf6R8LxH3XmrLOtRjsmmDOCRi/eO2vj5ieONa+2CYo=;
+ b=QTmHlEavOB40D5wX/tfP93Xzbn6cbCad2QXziYQjnSiyhSyuM6aDiK+HKe07EncGoM
+ Ft5Us3O/Ug83sKESjdj37jlV/JTWeXt6QvLif6QXAOmY2XWFigaaF0fy/QqmLQI4q4vt
+ EOEiyamYQe3bDDWgIjKdsyqkdZtnC9/dpBFUHtdWmOcCT/Ma8UyjMj1t7c40ce63diCP
+ VOy9LQlIARBIXPM3QpTf57jponKKAzFM7DoX+vJ6sChYIClOAgLp4HyRl+C7zuJ6ilX0
+ zl9iCj2SAJ5COjpELWJfs9TUVqMfRWWzANqky/XNIZdWX+4tRJCJNk02VDc8WZPnjXBB
+ 9kTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:subject:to:references:from:autocrypt
+ :message-id:date:user-agent:mime-version:in-reply-to
+ :content-language:content-transfer-encoding;
+ bh=Opf6R8LxH3XmrLOtRjsmmDOCRi/eO2vj5ieONa+2CYo=;
+ b=lJSGz7x/x/Ln4NWu2DLtiwagF6ba1AMXH9UJW7cg/fkX/PUJepSEenEZ48RHXFpe/Y
+ 8aJczIpIDVk/7yynG8VynHD6sHmeVc7MG7O3v83HXO/qVBR4YmJVlZDyOcIJZtEwiFmj
+ SJaydftxj9ZnlYJi3fME8GrIwz0U3LOZrNbMpOUCa9glRnv+02yNegGB2ry4NS+NDwnq
+ D2U8hIVSqZNC/AzazRY5aq6ff0FUgBGTl8iaBvtRrycSM3dGYNpfp2AZrn8jGepiJo1i
+ zT+MOGHk5uCt1/TBYOVjpnUfxLbIjSTlj0jfsnwAxIjw65P2JkFOgnoAUwz/bNjdLUG/
+ AY1g==
+X-Gm-Message-State: AOAM531DUPxkPf5K8c2Mpaou0T3Qh3JsRKQMidXDDtl/Bce0XUORY4ef
+ 4aKBK6wCatK15Md+e0iM7Pk=
+X-Google-Smtp-Source: ABdhPJx1rP8X5xigfpj9tR73bH+jlf7wB77aQXRUp7/WYBCMPEWrRI6FG8Wter20CAtHkG0MsJ1qug==
+X-Received: by 2002:a54:4001:: with SMTP id x1mr5217149oie.21.1618549656936;
+ Thu, 15 Apr 2021 22:07:36 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ w1sm1127063otq.75.2021.04.15.22.07.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Apr 2021 22:07:35 -0700 (PDT)
+Subject: Re: [PATCH v2] watchdog: aspeed: fix integer overflow in set_timeout
+ handler
+To: rentao.bupt@gmail.com, Wim Van Sebroeck <wim@linux-watchdog.org>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ linux-watchdog@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org, Tao Ren <taoren@fb.com>,
+ Amithash Prasad <amithash@fb.com>
+References: <20210416021337.18715-1-rentao.bupt@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+Message-ID: <2771f72a-cc3c-54a5-cc2c-715ea61be6b7@roeck-us.net>
+Date: Thu, 15 Apr 2021 22:07:32 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-X-OriginatorOrg: quantatw.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PSAPR04MB4231.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 025cd0ab-1d0a-4522-07b6-08d9009288a1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Apr 2021 04:46:00.5811 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: n3h8jZF51A2h+B7HLLfLKIiRx3zPMTKemApPNdh1n8ubgRO7m4ty385GpGYt8K7t9pTSqujMKdHZ6KkIeZrYYg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS1PR04MB2758
+In-Reply-To: <20210416021337.18715-1-rentao.bupt@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -132,63 +134,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "edtanous@google.com" <edtanous@google.com>, Nan Zhou <nanzhou@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-RG9lcyBidXNjdGwgc2V0LXByb3BlcnR5IGNhbiBnZXQgaXRzIHJldHVybiB2YWx1ZT8NCkkgdXNl
-IHRoZSBiZWxvdyBjb21tYW5kLCBhbmQgSSBmb3VuZCBpdCBoYXMgbm8gcmV0dXJuIHZhbHVlLg0K
-RG9zZSBzZXQtcHJvcGVydHkgZG9lcyBub3QgcHJvdmlkZSBhIHJldHVybiBtZXNzYWdlIGxpa2Ug
-dGhlIGdldC1wcm9wZXJ0eSBmdW5jdGlvbj8NCklmIGNhbiBnZXQgaXRzIHJldHVybiB2YWx1ZSBm
-cm9tIHNldC1wcm9wZXJ0eSwgaG93IHRvIGRvIGl0Pw0KDQppLmUuDQpidXNjdGwgc2V0LXByb3Bl
-cnR5IHh5ei5vcGVuYm1jX3Byb2plY3QuSHdtb24tMzY4Nzc2NDUyMi5Id21vbjEgL3h5ei9vcGVu
-Ym1jX3Byb2plY3Qvc2Vuc29ycy92b2x0YWdlL3ZiYXQgeHl6Lm9wZW5ibWNfcHJvamVjdC5TZW5z
-b3IuVmFsdWUgVmFsdWUgZCAyMg0Kb3INCmluIGJtY3dlYiB0aGUgY29kZSBhcyBiZWxvdzoNCmku
-ZS4NCmNyb3c6OmNvbm5lY3Rpb25zOjpzeXN0ZW1CdXMtPmFzeW5jX21ldGhvZF9jYWxsKA0KCVtz
-ZW5zb3JBc3luY1Jlc3BdKGNvbnN0IGJvb3N0OjpzeXN0ZW06OmVycm9yX2NvZGUgZWMpIHsNCgkJ
-aWYgKGVjKQ0KICAgICAgICB7DQoJCQlCTUNXRUJfTE9HX0RFQlVHDQoJCQkJPDwgInNldE92ZXJy
-aWRlVmFsdWVTdGF0dXMgREJVUyBlcnJvcjogIjw8IGVjOw0KCQkJbWVzc2FnZXM6OmludGVybmFs
-RXJyb3Ioc2Vuc29yQXN5bmNSZXNwLT5yZXMpOw0KCQkJcmV0dXJuOw0KCQl9DQoJfSwNCglpdGVt
-LnNlY29uZCwgaXRlbS5maXJzdCwNCgkib3JnLmZyZWVkZXNrdG9wLkRCdXMuUHJvcGVydGllcyIs
-ICJTZXQiLA0KCSJ4eXoub3BlbmJtY19wcm9qZWN0LlNlbnNvci5WYWx1ZSIsICJWYWx1ZSIsDQoJ
-c3RkOjp2YXJpYW50PGRvdWJsZT4oaXRlcmF0b3ItPnNlY29uZC5maXJzdCkpOw0KDQppbiBkYnVz
-LW1vbml0b3IgLS1zeXN0ZW0gSSBhbHNvIG5vdCBmb3VuZCBpdHMgcmV0dXJuIHZhbHVlIHdoZW4g
-SSB1c2Ugc2V0LXByb3BlcnR5IA0KZGJ1cy1tb25pdG9yIG1lc3NhZ2UgYXMgYmVsb3c6DQptZXRo
-b2QgY2FsbCB0aW1lPTE2MTg1NDcxODMuMzEzNTQwIHNlbmRlcj06MS44NyAtPiBkZXN0aW5hdGlv
-bj14eXoub3BlbmJtY19wcm9qZWN0Lkh3bW9uLTM2ODc3NjQ1MjIuSHdtb24xIHNlcmlhbD0yIHBh
-dGg9L3h5ei9vcGVuYm1jX3Byb2plY3Qvc2Vuc29ycy92b2x0YWdlL3ZiYXQ7IGludGVyZmENCiAg
-IHN0cmluZyAieHl6Lm9wZW5ibWNfcHJvamVjdC5TZW5zb3IuVmFsdWUiICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIA0K
-ICAgc3RyaW5nICJWYWx1ZSIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-DQogICB2YXJpYW50ICAgICAgIGRvdWJsZSAyMiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICANCm1ldGhvZCBjYWxsIHRpbWU9MTYxODU0NzE4My4zMTcxNTIgc2VuZGVyPToxLjQ1IC0+IGRl
-c3RpbmF0aW9uPW9yZy5mcmVlZGVza3RvcC5EQnVzIHNlcmlhbD0zNSBwYXRoPS9vcmcvZnJlZWRl
-c2t0b3AvREJ1czsgaW50ZXJmYWNlPW9yZy5mcmVlZGVza3RvcC5EQnVzOyBtZW1iZXI9R2V0Q29u
-bmVjdA0KICAgc3RyaW5nICI6MS44NyIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgDQptZXRob2QgcmV0dXJuIHRpbWU9MTYxODU0NzE4My4zMTc5Mzcgc2VuZGVyPW9yZy5m
-cmVlZGVza3RvcC5EQnVzIC0+IGRlc3RpbmF0aW9uPToxLjQ1IHNlcmlhbD00Mjk0OTY3Mjk1IHJl
-cGx5X3NlcmlhbD0zNSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICANCiAgIHVpbnQzMiAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIA0KbWV0aG9kIHJldHVybiB0aW1lPTE2MTg1NDcxODMuMzMwNDQxIHNlbmRlcj06
-MS40NSAtPiBkZXN0aW5hdGlvbj06MS44NyBzZXJpYWw9MzYgcmVwbHlfc2VyaWFsPTIgIA0KDQpU
-aGUgc2V0LXByb3BlcnR5IGNvZGUgYXMgYmVsb3c6IA0KaW50IHNldFNlbnNvclZhbHVlKGNvbnN0
-IGRvdWJsZSYgbmV3VmFsdWUsIGRvdWJsZSYgb2xkVmFsdWUpDQogICAgew0KICAgICAgICAgICAg
-DQogICAgICAgIGlmICghaW50ZXJuYWxTZXQpDQogICAgICAgIHsgIA0KICAgICAgICAgICAgb2xk
-VmFsdWUgPSBuZXdWYWx1ZTsNCiAgICAgICAgICAgIG92ZXJyaWRkZW5TdGF0ZSA9IHRydWU7DQog
-ICAgICAgICAgICAvLyBjaGVjayB0aHJlc2hvbGRzIGZvciBleHRlcm5hbCBzZXQNCiAgICAgICAg
-ICAgIHZhbHVlID0gbmV3VmFsdWU7DQogICAgICAgICAgICBjaGVja1RocmVzaG9sZHMoKTsNCiAg
-ICAgICAgfQ0KICAgICAgICBlbHNlIGlmICghb3ZlcnJpZGRlblN0YXRlKQ0KICAgICAgICB7DQog
-ICAgICAgICAgICBvbGRWYWx1ZSA9IG5ld1ZhbHVlOw0KICAgICAgICB9DQogICAgICAgIHJldHVy
-biAxOw0KICAgIH0NCg0Kc2Vuc29ySW50ZXJmYWNlLT5yZWdpc3Rlcl9wcm9wZXJ0eSgNCgkiVmFs
-dWUiLCB2YWx1ZSwgWyZdKGNvbnN0IGRvdWJsZSYgbmV3VmFsdWUsIGRvdWJsZSYgb2xkVmFsdWUp
-IHsNCglyZXR1cm4gc2V0U2Vuc29yVmFsdWUobmV3VmFsdWUsIG9sZFZhbHVlKTsNCn0pOw0KDQpU
-aGFua3MsDQpCcnVjZS4NCg==
+On 4/15/21 7:13 PM, rentao.bupt@gmail.com wrote:
+> From: Tao Ren <rentao.bupt@gmail.com>
+> 
+> Fix the time comparison (timeout vs. max_hw_heartbeat_ms) in set_timeout
+> handler to avoid potential integer overflow when the supplied timeout is
+> greater than aspeed's maximum allowed timeout (4294 seconds).
+> 
+
+I think this is the wrong focus: What this fixes is the wrong hardware
+timeout calculation. Again, I think that the wrong calculation leads to
+the overflow should not be the focus of this patch, though it can of
+course be mentioned.
+
+I'll leave it up to Wim to decide if he wants to apply the patch with the
+current explanation.
+
+Thanks,
+Guenter
+
+> Fixes: efa859f7d786 ("watchdog: Add Aspeed watchdog driver")
+> Reported-by: Amithash Prasad <amithash@fb.com>
+> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+> ---
+>  Changes in v2:
+>    - do not touch "wdd->timeout": only "max_hw_heartbeat_ms * 1000" is
+>      updated to "max_hw_heartbeat_ms / 1000".
+> 
+>  drivers/watchdog/aspeed_wdt.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
+> index 7e00960651fa..507fd815d767 100644
+> --- a/drivers/watchdog/aspeed_wdt.c
+> +++ b/drivers/watchdog/aspeed_wdt.c
+> @@ -147,7 +147,7 @@ static int aspeed_wdt_set_timeout(struct watchdog_device *wdd,
+>  
+>  	wdd->timeout = timeout;
+>  
+> -	actual = min(timeout, wdd->max_hw_heartbeat_ms * 1000);
+> +	actual = min(timeout, wdd->max_hw_heartbeat_ms / 1000);
+>  
+>  	writel(actual * WDT_RATE_1MHZ, wdt->base + WDT_RELOAD_VALUE);
+>  	writel(WDT_RESTART_MAGIC, wdt->base + WDT_RESTART);
+> 
+
