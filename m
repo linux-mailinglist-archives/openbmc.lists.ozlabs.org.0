@@ -1,74 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 210DD361EA2
-	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 13:30:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D44A136213F
+	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 15:42:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FMDXK082mz3bwL
-	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 21:30:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FMHSV68pdz3bxM
+	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 23:42:02 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=S9HTtZq1;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=aYUBu8Bj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::129;
- helo=mail-lf1-x129.google.com; envelope-from=aladyshev22@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=S9HTtZq1; dkim-atps=neutral
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com
- [IPv6:2a00:1450:4864:20::129])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=aYUBu8Bj; dkim-atps=neutral
+X-Greylist: delayed 432 seconds by postgrey-1.36 at boromir;
+ Fri, 16 Apr 2021 23:41:50 AEST
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FMDX15dm7z2yYh
- for <openbmc@lists.ozlabs.org>; Fri, 16 Apr 2021 21:29:52 +1000 (AEST)
-Received: by mail-lf1-x129.google.com with SMTP id j4so4721822lfp.0
- for <openbmc@lists.ozlabs.org>; Fri, 16 Apr 2021 04:29:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=rDvn2kw+AqHFVmMHA1E4Zwk58TbXRmahkn2Efahmx4U=;
- b=S9HTtZq111/Tna/SFkWcX2CkYSxXKXv+Q/6qx2Lg/pc/yELcc41wWWk3W1sDxTVRkW
- fkPoQgTOgQtOfsiUjyJWXkNxuKX+1yI5qrtxZhBrHf44Szuoa/yG78y/04sccnjrqkkJ
- BvxV/B3fl/thVoiCx9N9gltKarGPiuCAN4rC/N2FQTY6c1mS/hcASLhdKD3mhh0wXsHE
- iGbT+QBkJTWpESERzuE1v/leM3VGfKDxay2SLllNmjH2AUDu6KllVEDI1KwDATdQbErQ
- clrie93//MLjbSf0U/E6kpLuo1VlQFetPIrBLke0J9TcZB1653mMekR7+0iggRDJ5yTR
- ZC8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=rDvn2kw+AqHFVmMHA1E4Zwk58TbXRmahkn2Efahmx4U=;
- b=szDU/PzCtQS14fCj4JMMJQ7W5022oZ0qkxZAymClTuv24zb96j2QMEqS6iHZXqSIQ6
- Ezlwz5uyOkOUu5uLMhDFwaQCDHWgJAJBCA7Tb7t/PYpC49bqzlXDaweVWRyKsPZ/clih
- XqihsoW1vyWxYI42RyB4Gcb9hl/L0OaIS62PkDugGdOyXgjmNPeyuWCw+NQmn8LRXQNc
- hBk6q/IDfK91SbRQeYm8gbyA3XVwBkFnpYlcUsVeDRYCjfGVyzob0e2xTSgNv8yu170q
- R8a2G/R6eFNL97KQ7wkQsLStCrpmiS+qAW76A+/Cx/hOibXEc4fDBCCQp7O0S4nBKfeA
- jaww==
-X-Gm-Message-State: AOAM532/6bYz8mQ3kkSHjTu/b193md6iIUSrz800vrrsup+xrRkuXoqg
- tM9ppVSuYylXcRtyAzK6Xk0=
-X-Google-Smtp-Source: ABdhPJzIjXVFSMeWIjmEIokBGHB04as8Cdoi8C5k3P7qp/fu/JHi6aWnhJCwBxx3X5HoGB9ROmT7PQ==
-X-Received: by 2002:a05:6512:ad6:: with SMTP id
- n22mr2864622lfu.592.1618572586285; 
- Fri, 16 Apr 2021 04:29:46 -0700 (PDT)
-Received: from PC10319.67 ([82.97.198.254])
- by smtp.googlemail.com with ESMTPSA id t5sm913295ljc.78.2021.04.16.04.29.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Apr 2021 04:29:45 -0700 (PDT)
-From: Konstantin Aladyshev <aladyshev22@gmail.com>
-To: Joel Stanley <joel@jms.id.au>,
-	openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.10] ARM: dts: aspeed: amd-ethanolx: Enable all
- used I2C busses
-Date: Fri, 16 Apr 2021 14:30:57 +0300
-Message-Id: <20210416113057.3026-1-aladyshev22@gmail.com>
-X-Mailer: git-send-email 2.25.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FMHSG0rldz30DL
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Apr 2021 23:41:49 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 54B43413B7;
+ Fri, 16 Apr 2021 13:34:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1618580072; x=1620394473; bh=xRw/hmtRV1YGf9PaeG62WA29P
+ GLxSTVcBNQy/tco5DY=; b=aYUBu8Bjb/yqBNSQ2u9IjmRqFZ1KDiu2EcoY+jUfF
+ e2Qy6qX/6h40wK1nwdZW+lh8nN/i+JbXssT3xzMxG2ArwT14+WhhXGZc133XWBhj
+ d8pMBx77jFVQ5qGv2pWtlVRzigLaaceIu4EEF3f2zfNMiqZsmv8yKQbrEArSxXKh
+ 78=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id ITRGrvA-gWQg; Fri, 16 Apr 2021 16:34:32 +0300 (MSK)
+Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
+ [172.17.100.103])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 8AA11413A7;
+ Fri, 16 Apr 2021 16:34:30 +0300 (MSK)
+Received: from localhost.localdomain (10.199.0.148) by
+ T-EXCH-03.corp.yadro.com (172.17.100.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.669.32; Fri, 16 Apr 2021 16:34:29 +0300
+Message-ID: <23266ce6bbff6023ee2d04b2df572dd366ef2bdc.camel@yadro.com>
+Subject: Re: ClientOriginIPAddress is 0.0.0.0 or ""
+From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+To: Ed Tanous <ed@tanous.net>, Sunitha Harish <sunithaharish04@gmail.com>
+Date: Fri, 16 Apr 2021 16:42:38 +0300
+In-Reply-To: <CACWQX82sqaoP8aeWxrZZFS_G62wVebBHidpuzfA21Kd4t4BxUQ@mail.gmail.com>
+References: <HK0PR04MB3346AD905ABEB1250F51E202B1969@HK0PR04MB3346.apcprd04.prod.outlook.com>
+ <HK0PR04MB3346A7C9EA60289912747398B1699@HK0PR04MB3346.apcprd04.prod.outlook.com>
+ <CACWQX81k7NO-+8OyPhAbk9BNfB58xuK13RvHhG4m-G+nDHPniA@mail.gmail.com>
+ <d9176b8e-1944-e654-baea-81064f195d35@gmail.com>
+ <CACWQX82sqaoP8aeWxrZZFS_G62wVebBHidpuzfA21Kd4t4BxUQ@mail.gmail.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5 (3.36.5-2.fc32) 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.199.0.148]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-03.corp.yadro.com (172.17.100.103)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,74 +81,122 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Konstantin Aladyshev <aladyshev22@gmail.com>
+Cc: Jun-Lin Chen =?UTF-8?Q?=28=E9=99=B3=E4=BF=8A=E9=9C=96=29?=
+ <Jun-Lin.Chen@quantatw.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Enable all I2C busses that are used in AMD EthanolX CRB:
- i2c0 - APML P0
- i2c1 - APML P1
- i2c2 - FPGA
- i2c3 - 24LC128 EEPROM
- i2c4 - P0 Power regulators
- i2c5 - P1 Power regulators
- i2c6 - P0/P1 Thermal diode
- i2c7 - Thermal Sensors
- i2c8 - BMC I2C
+On Fri, 2021-04-09 at 07:58 -0700, Ed Tanous wrote:
+> On Thu, Apr 8, 2021 at 10:51 PM Sunitha Harish
+> <sunithaharish04@gmail.com> wrote:
+> > 
+> > On 06-04-2021 22:21, Ed Tanous wrote:
+> > > On Tue, Mar 23, 2021 at 3:28 PM Jun-Lin Chen (陳俊霖)
+> > > <Jun-Lin.Chen@quantatw.com> wrote:
+> > > > Hi,
+> > > > 
+> > > > If continously send POST sessions Redfish request via Postman. I observe
+> > > > bmcweb debug logs, it will established connection at first request then
+> > > > not fetch user ip after the second request.
+> > > > 
+> > > > 
+> > > > 
+> > > > That's why ClientOriginIPAddress in session after the second created is
+> > > > always 0.0.0.0 (not be assigned).
+> > > > 
+> > > > 
+> > > > 
+> > > > In HTTP 1.1 It uses keep-alive Header default. so BMC does not fetch
+> > > > user IP when its connection is established.
+> > > > 
+> > > > 
+> > > > 
+> > > > Is this behavior we expect?
+> > > > 
+> > > > 
+> > > > 
+> > > > Best regards,
+> > > > 
+> > > > Jun-Lin Chen
+> > > 
+> > > Sunitha,
+> > > Considering this is code you wrote, would you mind replying to Jun-Lin
+> > > about his experience and what the expected behavior is?  For what it's
+> > > worth, I've seen it report 0.0.0.0 before on my system, I just haven't
+> > > had a chance to chase it down and debug it.
+> > > 
+> > > -Ed
+> > 
+> > Hi Jun-Lin,
+> > 
+> > The ClientOriginIPAddress is expected to get populated when the session
+> > is established to the BMC ( the first request). This is a one time
+> > fetch, and it will be persisted for that session.
+> 
+> Can you think of a reason it would report all zeros?  Can you verify
+> this functionality works properly on your system?
+> Part of me wonders if this has something to do with http keepalive.
+> 
+> > Regards,
+> > Sunitha
+> > > > 
+> > > > From: Jun-Lin Chen (陳俊霖)
+> > > > Sent: Friday, March 5, 2021 4:05 PM
+> > > > To: sunharis@in.ibm.com
+> > > > Cc: openbmc@lists.ozlabs.org
+> > > > Subject: ClientOriginIPAddress is 0.0.0.0 or ""
+> > > > 
+> > > > 
+> > > > 
+> > > > Hi Sunitha,
+> > > > 
+> > > > 
+> > > > 
+> > > > I found some problem when I create session.
+> > > > 
+> > > > The property “ClientOriginIPAddress” is “” after POST
+> > > > https://${bmc}/login -d '{"username": <>,"password": <>}
+> > > > 
+> > > > And it is 0.0.0.0 after POST
+> > > > https://${bmc}/redfish/v1/SessionService/Sessions -d '{"username":
+> > > > <>,"password": <>}'
+> > > > 
+> > > > Both of them looked like something wrong. And I also look for source
+> > > > code in bmcweb repository.
+> > > > 
+> > > > There only defined the default value: “” in generateUserSession() and
+> > > > not found fetch user ip in elsewhere.
+> > > > 
+> > > > I think it is why ClientOriginIPAddress is strange.
+> > > > 
+> > > > 
+> > > > 
+> > > > May I ask what step or something I lack in creation session so this
+> > > > property is abnormal?
+> > > > 
+> > > > 
+> > > > 
+> > > > 
+> > > > 
+> > > > Best regards,
+> > > > 
+> > > > Jun-Lin Chen
+> > > > 
+> > > > 
 
-Signed-off-by: Konstantin Aladyshev <aladyshev22@gmail.com>
----
- arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts | 30 +++++++++++++++++++
- 1 file changed, 30 insertions(+)
+Hello Ed, I made some research at this point, ipAddress always sets to 0.0.0.0
+after first Request, it is done by req.emplace(parser->get()) in doWrite
+function in http/http_connection.h. fetchClientIp sets ipAddress only on
+connection start. It is possible to fix it with additional fetchClientIp inside
+handle function which seems overhead or
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts b/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
-index 96ff0aea64e5..d94f2b51762f 100644
---- a/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
-@@ -151,6 +151,31 @@ &i2c1 {
- 	status = "okay";
- };
- 
-+//FPGA
-+&i2c2 {
-+	status = "okay";
-+};
-+
-+//24LC128 EEPROM
-+&i2c3 {
-+	status = "okay";
-+};
-+
-+//P0 Power regulators
-+&i2c4 {
-+	status = "okay";
-+};
-+
-+//P1 Power regulators
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+//P0/P1 Thermal diode
-+&i2c6 {
-+	status = "okay";
-+};
-+
- // Thermal Sensors
- &i2c7 {
- 	status = "okay";
-@@ -196,6 +221,11 @@ lm75a@4f {
- 	};
- };
- 
-+//BMC I2C
-+&i2c8 {
-+	status = "okay";
-+};
-+
- &kcs1 {
- 	status = "okay";
- 	aspeed,lpc-io-reg = <0x60>;
--- 
-2.25.1
+ipAddress = req->ipAddress;
+req.emplace(parser->get());
+req->ipAddress = ipAddress;
+
+I don't like both variants but possible that ipAddress shouldn't be a part of
+Request struct.
+
+Any ideas?
 
