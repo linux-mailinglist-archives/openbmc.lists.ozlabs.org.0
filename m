@@ -2,90 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 581C4362334
-	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 16:58:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E4823627AF
+	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 20:26:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FMK8m2M42z3byV
-	for <lists+openbmc@lfdr.de>; Sat, 17 Apr 2021 00:58:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FMPmw2Bprz3brw
+	for <lists+openbmc@lfdr.de>; Sat, 17 Apr 2021 04:26:40 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=y4iEw+0r;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Cs3CMZ3/;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=I7NkKx+r;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
- helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1034;
+ helo=mail-pj1-x1034.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=y4iEw+0r; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=Cs3CMZ3/; 
- dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=I7NkKx+r; dkim-atps=neutral
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
+ [IPv6:2607:f8b0:4864:20::1034])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FMK8K5cZMz3bvK
- for <openbmc@lists.ozlabs.org>; Sat, 17 Apr 2021 00:58:08 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 3F3705C00AF;
- Fri, 16 Apr 2021 10:58:05 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Fri, 16 Apr 2021 10:58:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=5AnvCyoyptU5x5NtdQcpBAJXihE
- 0B2I0/0hzmrnD/M0=; b=y4iEw+0rOD/x8gL1A3A6xDBONafYFdw7GFQv9w0921J
- +2tLHJdsUjeXJZrfF8n0YtAnLxNkQAbTmCePEInoTRoa3CyWLf7c8C4WBito29Rq
- aKv/l2heVnxwQG15jIadK0eCc5vqLN4tFeI3Mukys2OSYl82OCFVOa7mulqhMHGC
- Y1PWvzeCvJcmPfUA1PME0/vnZfWMOd39TeXhQS1rP4O/7/abd8QcRIvbbJo1yUvo
- epGXqZsRyGyyT4krxp8MCgvBET0ZhN2Il4nDVjRYawd6FXbdG3iC4ocdY86QNhaM
- bX0neiX4yf70/396/pmgc53qXitLVj/aEb4ZOivrzJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=5AnvCy
- oyptU5x5NtdQcpBAJXihE0B2I0/0hzmrnD/M0=; b=Cs3CMZ3/onGctWPW1A0Tkn
- utp7WTHtF6k9SS5Yu6GSBm69QyOWq1dFt8nTuYph2zb3yQx20yul0bMxzblJ8o8+
- /FiWYwDxDZIb/CKmck/IxMq8GhbiiEcY8p3NWAuhIxEzn+AOQpNee6GCxv7V1J66
- 6QfZJqfsKkdHBiR3QQzssrt3pXmaazWZhocMPT/XWLoAc9W9vDGMMAVB/1aT+sE5
- hnPLXI5P6SMIRi06B68GN9dL05FgSwoxsm3NwRK2/xHUIDXVJPT3sHVxf83/NhLm
- C0c0P5pmscIBIjXheZD4KGPpsQwxTWgLLnmwvxw53eOoCfqSXVkpIT1sr84tZ5zA
- ==
-X-ME-Sender: <xms:_KV5YKhmjpgFUYWoHJnBnAhdeVT0_kZqGuwvitm_cpzI12fnO-KDfQ>
- <xme:_KV5YLDBsn9RJArSRgAWu2QJBJRxieMwSpu1CclhuvRtzU3CQXOFL-xNdE_IKGCD7
- AZ4KeaQA7ZNgmY9pOM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudelhedgkeegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- jeenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepkeduuedtfeeihfehfeehfedvjeeu
- jeeikedtteehledvhfelheekgedvieevkefhnecukfhppedutdejrdelvddrheelrddvud
- ejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
- thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:_KV5YCHwwB48wxqMIuvVV2nR9Zzhu5APX2OfhcsISMWJdaJ5WY_jEA>
- <xmx:_KV5YDRQM7HvNdv_yBnR8rO3BtEb3jiTE7rzr1U3dbnC91drlzIEyw>
- <xmx:_KV5YHyiG9HBXRu0ivxMwMu5Omco6Y-U0oe0VkQYegzALozxhDlfmQ>
- <xmx:_aV5YAquSLVxr6NnQ30SrltGyF_2wupXjk_-zMlf8QwPSAy2-bfNdg>
-Received: from localhost (mobile-107-92-59-217.mycingular.net [107.92.59.217])
- by mail.messagingengine.com (Postfix) with ESMTPA id 6D8AE1080057;
- Fri, 16 Apr 2021 10:58:04 -0400 (EDT)
-Date: Fri, 16 Apr 2021 09:58:03 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Bruce Lee =?utf-8?B?KOadjuaYgOWzuyk=?= <Bruce_Lee@quantatw.com>
-Subject: Re: How to get the return value using the command busctl set-property?
-Message-ID: <YHml+7IYIVEXYo6M@heinlein>
-References: <PSAPR04MB42315F65948C859527E5D8E2F84C9@PSAPR04MB4231.apcprd04.prod.outlook.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FMPmN4X50z3c4G;
+ Sat, 17 Apr 2021 04:26:11 +1000 (AEST)
+Received: by mail-pj1-x1034.google.com with SMTP id
+ f2-20020a17090a4a82b02900c67bf8dc69so16870404pjh.1; 
+ Fri, 16 Apr 2021 11:26:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=+NoMdFRqvCj0wjEu2wU+EppPHqkD5aPuBzCUVO8B5Dw=;
+ b=I7NkKx+ryboIFsQYOl0hn9Owr8ah4PzLF123GS1rr/xs+Is+upY0kBQ6YKQF01qdjT
+ /JXCewbuJ6m9FkA+hTJ0ZLNndSrBrcAxe1SL6n+h8Dz/6WwoLJGOl3Usr09pFM+DDcyZ
+ HJpE32jNzCiYvUL/nDIlAczIlyUI4lF30PKHl8NsfqW4O8uK4lBvECjt4Wbi84sc0yUO
+ TBw88FWyBysNTaVA0RWN6HfYwvdJzPzqKYBclHUW4yQSNJtWsJQzFIky0SHayASO+TKR
+ MGpyBRr6Fzxc539M6xaRvLtYi/XqzOG3e21wiGh1pwMNcYgqwMmamry8dLyz86+6T+LX
+ 24uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=+NoMdFRqvCj0wjEu2wU+EppPHqkD5aPuBzCUVO8B5Dw=;
+ b=Tl0OPrQoXMAHeFlSTHne/qo9NY9h/WpaATZ5ZDID6JBV0BgEVQNJNaD71d5j4GOOys
+ y9FqoM0YuTRQxAl2Dw7rY4MTiXz6jWZr1XZRE+2NSR2vPeYAn9+mFxB66KvjO0ZNm1t9
+ 1MqqXvso/XA/2yLVAktJK84JkNwEliLHKMN5r2sJo2fQl6E2zdtM+yWuxjqdlV1S0h9L
+ Q/PtJHX43/aYWFkLcf/gmf9B0u8n8gTw295KcZ5HRK4DO/tTYtinH+5cJUxzDUpc9/lq
+ 0kLUGXPTlN1raSPujvI5gjrtzZvx9YeZrf6iWkptJ14YElUEXyq8t5UkOgX4ZBXMmo3S
+ P6Bw==
+X-Gm-Message-State: AOAM531X00DClmWVDg79XNIpcic0q/F1fx9c8gO2+XecQV2cy4S8zkdR
+ 3xmspsk006zJXJVf2YT0GZQ=
+X-Google-Smtp-Source: ABdhPJw2kWFT896TOOCfe5suf1zLJSSp2jHsX2kBjJGSkduJ7jRvKnfFRK8cKa3n/6vBVu3+CGwaVQ==
+X-Received: by 2002:a17:90b:344e:: with SMTP id
+ lj14mr11195691pjb.89.1618597567017; 
+ Fri, 16 Apr 2021 11:26:07 -0700 (PDT)
+Received: from taoren-ubuntu-R90MNF91 (c-73-252-146-110.hsd1.ca.comcast.net.
+ [73.252.146.110])
+ by smtp.gmail.com with ESMTPSA id x1sm5324218pgp.24.2021.04.16.11.26.05
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Fri, 16 Apr 2021 11:26:06 -0700 (PDT)
+Date: Fri, 16 Apr 2021 11:25:59 -0700
+From: Tao Ren <rentao.bupt@gmail.com>
+To: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH v2] watchdog: aspeed: fix integer overflow in set_timeout
+ handler
+Message-ID: <20210416182558.GA4816@taoren-ubuntu-R90MNF91>
+References: <20210416021337.18715-1-rentao.bupt@gmail.com>
+ <2771f72a-cc3c-54a5-cc2c-715ea61be6b7@roeck-us.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="cBG35bXSpcBvGbf2"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <PSAPR04MB42315F65948C859527E5D8E2F84C9@PSAPR04MB4231.apcprd04.prod.outlook.com>
+In-Reply-To: <2771f72a-cc3c-54a5-cc2c-715ea61be6b7@roeck-us.net>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,88 +85,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "edtanous@google.com" <edtanous@google.com>, Nan Zhou <nanzhou@google.com>
+Cc: linux-watchdog@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ Andrew Jeffery <andrew@aj.id.au>, Tao Ren <taoren@fb.com>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Amithash Prasad <amithash@fb.com>, Wim Van Sebroeck <wim@linux-watchdog.org>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, Apr 15, 2021 at 10:07:32PM -0700, Guenter Roeck wrote:
+> On 4/15/21 7:13 PM, rentao.bupt@gmail.com wrote:
+> > From: Tao Ren <rentao.bupt@gmail.com>
+> > 
+> > Fix the time comparison (timeout vs. max_hw_heartbeat_ms) in set_timeout
+> > handler to avoid potential integer overflow when the supplied timeout is
+> > greater than aspeed's maximum allowed timeout (4294 seconds).
+> > 
+> 
+> I think this is the wrong focus: What this fixes is the wrong hardware
+> timeout calculation. Again, I think that the wrong calculation leads to
+> the overflow should not be the focus of this patch, though it can of
+> course be mentioned.
+> 
+> I'll leave it up to Wim to decide if he wants to apply the patch with the
+> current explanation.
+> 
+> Thanks,
+> Guenter
 
---cBG35bXSpcBvGbf2
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sorry I didn't get your point correctly, and I guess it was because of
+my lack of knowledge in timeout/max_hw_heartbeat_ms/worker (hopefully
+my understanding is correct now :))
 
-On Fri, Apr 16, 2021 at 04:46:00AM +0000, Bruce Lee (=E6=9D=8E=E6=98=80=E5=
-=B3=BB) wrote:
-> Does busctl set-property can get its return value?
-=2E..
-> If can get its return value from set-property, how to do it?
+Let me drop this patch and send a new one with different subject and
+description soon.
 
-There isn't really a return value from a set-property call; there is
-only a possiblity of error.
 
-If you look at 'man SD_BUS_PROPERTY' you'll see the function type
-for a property set is:
+Cheers,
 
-       typedef int (*sd_bus_property_set_t)(sd_bus *bus, const char *path,
-                                            const char *interface,
-                                            const char *property,
-                                            sd_bus_message *value,
-                                            void *userdata,
-                                            sd_bus_error *ret_error);
-
-This is where the 'int' return you're seeing from these set-property
-handlers coming from.  The way systemd handles the return code is that
-any negative number becomes a negative errno style value that systemd
-turns into an appropriate error message back across the dbus.  There is
-a paragraph in the manpage with more details:
-
-       If a callback was invoked to handle a request that expects a reply a=
-nd
-       the callback returns a negative value, the value is interpreted as a
-       negative errno-style error code and sent back to the caller as a D-B=
-us
-       error as if sd_bus_reply_method_errno(3) was called. Additionally, a=
-ll
-       callbacks take a sd_bus_error output parameter that can be used to
-       provide more detailed error information. If ret_error is set when the
-       callback finishes, the corresponding D-Bus error is sent back to the
-       caller as if sd_bus_reply_method_error(3) was called. Any error stor=
-ed
-       in ret_error takes priority over any negative values returned by the
-       same callback when determining which error to send back to the calle=
-r.
-
-The *best* way for a set-property handler to return an error is to use
-the sd_bus_reply_method_error or fill out the ret_error with
-sd_bus_error_set.  Both the ASIO object_server.hpp and the
-sdbus++-generated server bindings catch excpetions thrown out of the
-set-property handlers and turn them into sd_bus_error_set calls.
-
-Other than the negative value indicating a errno, the positive value has
-no meaning and does not do anything at a dbus level.
-
---=20
-Patrick Williams
-
---cBG35bXSpcBvGbf2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmB5pfkACgkQqwNHzC0A
-wRnbzA//V9OJbOORjX5tOC3aILv0KpQVwdaqRzRLG1rbpfCLHm9i1BK9uDeyOxSR
-TzM6iFCaeY/AQOUtqEmkb+a16mh2QWcJ/HC+6pregR6Em2jYkbb/YALb7Wvv/cnT
-YKm3X3ICq2spVLxJb+bgDeN98dfNSvug9EJefSTT8kbz20SOmGrLzT7wPanz8uDv
-Rjs+J9FkiNvAR1/TF8r1asAI2bbqQ99Ozdsa6iKpqyxVBKsqw8ttNT9Ik/NBXzZp
-Zr8sSbiKOU21s1nmOtH/TgxlBW3fKbLPo5LJHUTCp8zk5Lpwns4+IeZ2zn9U+SZA
-y7pHC1lKr1Ks8j/MsoV27lon5ioIGcVcVjo2OFHhG0V9C3g5AIqKe42nOQMV8a1u
-jZx3BjDkG0kOC+wHJWIQR+KVpg6OX2MloRSqZ9U1aAwPdm6mFQ3XaD8V0lQsNJL7
-kd+QyI7ug8aVdTp/U6n+/JuP/1/flNl1tMzl2pynTp+V7Gpl0g2pvzedtV8HmkXx
-ieiilKo8av3w0FxPFB1hS+twmiEQgem0ufajQSvmXV6w247zErMuiQ54VJutFok4
-/sBTmo2EomcRW05mVMC9QqV1w6+qVYnqti9u8n/0y1GdOb1AMoVv4EGm3Bvra574
-F/T9uUoM9P8Uyx0E9D3gteMq+K+AWtVvz7urnCWPadAfRPMLOf8=
-=9LPH
------END PGP SIGNATURE-----
-
---cBG35bXSpcBvGbf2--
+Tao
