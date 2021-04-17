@@ -1,74 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B7443628D1
-	for <lists+openbmc@lfdr.de>; Fri, 16 Apr 2021 21:41:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12F66362C69
+	for <lists+openbmc@lfdr.de>; Sat, 17 Apr 2021 02:24:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FMRQk1cvvz3bv1
-	for <lists+openbmc@lfdr.de>; Sat, 17 Apr 2021 05:41:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FMYjf0Bxmz3brT
+	for <lists+openbmc@lfdr.de>; Sat, 17 Apr 2021 10:24:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=gx+SeYv5;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=Zw4CM3C4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c33;
- helo=mail-oo1-xc33.google.com; envelope-from=proclivis@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::32f;
+ helo=mail-ot1-x32f.google.com; envelope-from=ztai@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=gx+SeYv5; dkim-atps=neutral
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com
- [IPv6:2607:f8b0:4864:20::c33])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=Zw4CM3C4; dkim-atps=neutral
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
+ [IPv6:2607:f8b0:4864:20::32f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FMRQW4YvBz3bps
- for <openbmc@lists.ozlabs.org>; Sat, 17 Apr 2021 05:40:50 +1000 (AEST)
-Received: by mail-oo1-xc33.google.com with SMTP id
- c12-20020a4ae24c0000b02901bad05f40e4so6368684oot.4
- for <openbmc@lists.ozlabs.org>; Fri, 16 Apr 2021 12:40:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=content-transfer-encoding:from:mime-version:date:subject:message-id
- :to; bh=7tZeBBeD6q5kL7UWJrbYVv7rNGcJIQdR/POqjr4kw7o=;
- b=gx+SeYv5DsnotWETTq4pZnixZcW29jC362U15qO9GPTqXEWA5DCW0ee4DRFJqTRMxj
- wnFkXDaysArtXeCB/fIzL5I+brcImgXyp9qUVFZmI1ZIBozKFpXzAPVEQY5cjf3GccBz
- jOHQqc/+/lPzCor11NoCJbPeWkqKSSnjLHN/UfaD+KT4wvJTiIGV6f4oZcf4zztTABTG
- QBfWhze7pvP9/c5fNzmNSNRcKMTRd6/SbxT13LxrlztrZpP4Tz1lBatxU4GkQBbeR3Y4
- KzV42fcLplB//9o2YsY4vHhlR8tf0fVhD88jYkvr7+aVSPwPl1tfhKtzZGVI7bebjihf
- RdUQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FMYjQ1T5Dz3bpb
+ for <openbmc@lists.ozlabs.org>; Sat, 17 Apr 2021 10:24:07 +1000 (AEST)
+Received: by mail-ot1-x32f.google.com with SMTP id
+ o13-20020a9d404d0000b029028e0a0ae6b4so8254136oti.10
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Apr 2021 17:24:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=LXXsr0B1s9fV+H+93PVy7/W/FWVzPYkJYgazSYGJq5c=;
+ b=Zw4CM3C4xe+m4aAHOwRtbsaC3REgAOt/YLlpm1imu7ALc5je4TlLxCtmAQtesJVgoG
+ ZVq5Bi+ENntCJjZk8Kyb01MZzf9GKJh4C0V0336+2sySAVJVC+j2Gnp/7VoI9Qkoh69X
+ jF8LZwmW/eQPCQ8PKfWMxFmH8PYyz2z1/JinrUK/jYdyIhB8+a7y5UYeIaLNYXmxOJmv
+ LoLmasCx/bVHyIzMVGryD7QnfErFoUs9nceJRCkoVABhPOODomCX8YzFqTQPPEzTDf3I
+ B6KQL3t3dgpilySldkKSc57MIx8hcAcgrwz+UO3znjlner2B7wMVIHsFgxo+2T4YzhFM
+ tKSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
- :subject:message-id:to;
- bh=7tZeBBeD6q5kL7UWJrbYVv7rNGcJIQdR/POqjr4kw7o=;
- b=LxTcwwxJGla3vMQxnNSgTplBHQd5EvdylDPySjHR/CUe2N+WHue0fLvUaFNTrN/PzR
- hi9QUSf1IC2j7b4RvlcM4JOSYW9GsidUwAbCvr2YHiSBnNeYfU2MCNvd4KJv9H4j/5t+
- i2C7OZbzyPi0HoHuETK1vB3DKn1t1IqPWbstVeyX392R8oj9h6C6EB9ZurOadOSUTaxR
- pP2ECOFa9AUgpP2+c1KfFz9DpwFq1HA03bcc6sQSGdPdrVbzFWbrK4v13KjXkwZVmxvE
- TaX6O7+VlibuaaofNPrBvdP046/bqqsAfAXYvHlTxJK6cwvXQR9S4ejpDLINzQlq5lfe
- xzNQ==
-X-Gm-Message-State: AOAM531yi+S+Vna8y9asH5+6JaI7YisIBIUw+1hXGXa04x4xQZ1/HZyU
- y8rvkhqu+cwtyAhSnoeloEFhnKyOVzk=
-X-Google-Smtp-Source: ABdhPJx89cLb1REtzkEkat6iZItzMG7DFgA/TomC473Wdxbsu+le0ZGjBhNKljnRDjYqhZduUPxr5A==
-X-Received: by 2002:a4a:48c2:: with SMTP id p185mr4509325ooa.73.1618602046837; 
- Fri, 16 Apr 2021 12:40:46 -0700 (PDT)
-Received: from ?IPv6:2600:100e:b022:580a:cc7f:c3b8:410d:2b72?
- ([2600:100e:b022:580a:cc7f:c3b8:410d:2b72])
- by smtp.gmail.com with ESMTPSA id m129sm1610582oif.34.2021.04.16.12.40.41
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Apr 2021 12:40:41 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From: Mike <proclivis@gmail.com>
-Mime-Version: 1.0 (1.0)
-Date: Fri, 16 Apr 2021 13:40:40 -0600
-Subject: PMC
-Message-Id: <716C1159-9317-4362-BCA2-59E052D5C944@gmail.com>
-To: openbmc@lists.ozlabs.org
-X-Mailer: iPhone Mail (18D70)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=LXXsr0B1s9fV+H+93PVy7/W/FWVzPYkJYgazSYGJq5c=;
+ b=FaUtUEAF9twR+4Ns0gQb1Ma+rKCCodfTo7COzaDkv41+G7NC5zwVgmaWwGhK6L9XSk
+ ciLmqcsyDeifYaEdDmWps9PfQBm6P+QSnXmJzG9rKLepefCX8GuWlTyDNVcxUxU7bJoi
+ 2CzQ6OXHocOA+OR8L94DKRuGgGVWtY5LDm/eByehYbtWPSm6cRF7ylr9m66isZnqFuCu
+ HLlLFWydphu70FRuDtpowF+aq1yz16ck+vU8xvkLnqY6hAaS+FH1H0WfOwzLcbeyaH+5
+ cD1+FLX5EIxcXpkVGdLtsvihhKuRSmeAVCPn3mmfo4zEfeuT/vZXwxYpIWgBdkPmwQsy
+ nYjw==
+X-Gm-Message-State: AOAM532pp0gBhc+ylJ6d9/yfyh2P7tqKCn51YIHWQ3ByAzQZYA+vqWXS
+ qpJI9KPJmzNpV/5sfa8XUwn/OqZOv3kvZUQWt68fpd6jw5H5Y13m
+X-Google-Smtp-Source: ABdhPJzb/FwujeSLVBtdmslYgSPoRgUZuP8iE64VnZL7SxvFfXxomKdjfipigK/D1L5skHeeFRe306CE6jKXH5u7ozo=
+X-Received: by 2002:a05:6830:22f9:: with SMTP id
+ t25mr5678468otc.174.1618619044169; 
+ Fri, 16 Apr 2021 17:24:04 -0700 (PDT)
+MIME-Version: 1.0
+From: Zhenfei Tai <ztai@google.com>
+Date: Fri, 16 Apr 2021 17:23:52 -0700
+Message-ID: <CAMXw96PmAoSb5LJj-CzYA-47D-nCy81gBa=T94N_u2fqWL54EQ@mail.gmail.com>
+Subject: bmcweb: Install encrypted certificate to BMC
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ed Tanous <edtanous@google.com>, gmills@us.ibm.com
+Content-Type: multipart/alternative; boundary="00000000000027f30005c0201d34"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,11 +73,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Justin Chen <juschen@google.com>, Richard Hanley <rhanley@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Is OBMC ever used as firmware for a PMC (Power Management Controller)?
+--00000000000027f30005c0201d34
+Content-Type: text/plain; charset="UTF-8"
 
-Mike
+Hi,
 
-Sent from my iPhone
+Currently certificate installation is supported by bmcweb via
+*redfish/v1/Managers/bmc/Truststore/Certificates*, where the certificate
+content is part of the JSON request.
+
+For our use case it's a more restricted environment in which we don't want
+to have plaintext certificates in the request. Instead we want to send a
+pair of encrypted key and certificate from the host to the BMC and there
+will be another daemon to decrypt them using an internal library.
+
+Since it's not supported by the Redfish schema, my plan is to use the
+*redfish/v1/CertificateSerivce/OemActions* URI and a request payload like
+below:
+{
+  "key": "encrypted key in binary",
+  "certificate": "encrypted certificate in binary"
+}
+
+The reasons to use the URI and payload are:
+1. It's related to certificate service although in opaque blobs.
+2. It's fairly company specific that probably isn't universally applicable.
+
+My questions are:
+1. Is this a reasonable approach?
+2. Shall we define an OEM schema for our request?
+
+Thanks,
+Zhenfei
+
+--00000000000027f30005c0201d34
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi,<br><div><br></div><div>Currently certificate installat=
+ion is supported by bmcweb via=C2=A0<i>redfish/v1/Managers/bmc/Truststore/C=
+ertificates</i>, where the certificate content is part of the JSON request.=
+</div><div><br></div><div>For our use case it&#39;s a more restricted envir=
+onment in which we don&#39;t want to have plaintext certificates in the req=
+uest. Instead we want to send a pair of encrypted key and certificate=C2=A0=
+from the host to the BMC and there will be another daemon to decrypt them u=
+sing an internal library.</div><div><br></div><div>Since it&#39;s not suppo=
+rted by the Redfish schema, my plan is to use the <i>redfish/v1/Certificate=
+Serivce/OemActions</i>=C2=A0URI and a request payload like below:</div><div=
+>{</div><div>=C2=A0 &quot;key&quot;: &quot;encrypted key in binary&quot;,</=
+div><div>=C2=A0 &quot;certificate&quot;: &quot;encrypted certificate in bin=
+ary&quot;</div><div>}</div><div><br></div><div>The reasons to=C2=A0use the =
+URI and payload are:</div><div>1. It&#39;s related to certificate=C2=A0serv=
+ice although in opaque blobs. </div><div>2. It&#39;s fairly company specifi=
+c that probably isn&#39;t universally applicable.</div><div><br></div><div>=
+My questions are:<br>1. Is this a reasonable approach?</div><div>2. Shall w=
+e define an OEM schema for our request?</div><div><br></div><div>Thanks,</d=
+iv><div>Zhenfei</div><div><br></div><div><br></div></div>
+
+--00000000000027f30005c0201d34--
