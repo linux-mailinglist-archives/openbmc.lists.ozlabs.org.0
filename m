@@ -1,67 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12F66362C69
-	for <lists+openbmc@lfdr.de>; Sat, 17 Apr 2021 02:24:25 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07706362D59
+	for <lists+openbmc@lfdr.de>; Sat, 17 Apr 2021 05:43:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FMYjf0Bxmz3brT
-	for <lists+openbmc@lfdr.de>; Sat, 17 Apr 2021 10:24:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FMf766VCZz3bwL
+	for <lists+openbmc@lfdr.de>; Sat, 17 Apr 2021 13:43:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=Zw4CM3C4;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=K0b5nLAi;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::32f;
- helo=mail-ot1-x32f.google.com; envelope-from=ztai@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::533;
+ helo=mail-pg1-x533.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=Zw4CM3C4; dkim-atps=neutral
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
- [IPv6:2607:f8b0:4864:20::32f])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=K0b5nLAi; dkim-atps=neutral
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com
+ [IPv6:2607:f8b0:4864:20::533])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FMYjQ1T5Dz3bpb
- for <openbmc@lists.ozlabs.org>; Sat, 17 Apr 2021 10:24:07 +1000 (AEST)
-Received: by mail-ot1-x32f.google.com with SMTP id
- o13-20020a9d404d0000b029028e0a0ae6b4so8254136oti.10
- for <openbmc@lists.ozlabs.org>; Fri, 16 Apr 2021 17:24:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=LXXsr0B1s9fV+H+93PVy7/W/FWVzPYkJYgazSYGJq5c=;
- b=Zw4CM3C4xe+m4aAHOwRtbsaC3REgAOt/YLlpm1imu7ALc5je4TlLxCtmAQtesJVgoG
- ZVq5Bi+ENntCJjZk8Kyb01MZzf9GKJh4C0V0336+2sySAVJVC+j2Gnp/7VoI9Qkoh69X
- jF8LZwmW/eQPCQ8PKfWMxFmH8PYyz2z1/JinrUK/jYdyIhB8+a7y5UYeIaLNYXmxOJmv
- LoLmasCx/bVHyIzMVGryD7QnfErFoUs9nceJRCkoVABhPOODomCX8YzFqTQPPEzTDf3I
- B6KQL3t3dgpilySldkKSc57MIx8hcAcgrwz+UO3znjlner2B7wMVIHsFgxo+2T4YzhFM
- tKSQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FMf6s5HMrz30DQ;
+ Sat, 17 Apr 2021 13:43:00 +1000 (AEST)
+Received: by mail-pg1-x533.google.com with SMTP id j32so5679763pgm.6;
+ Fri, 16 Apr 2021 20:43:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id;
+ bh=KEgAGlMIMGSD4Y3PLpFSkmFQK4X2O5FS+oaEvb1q+lY=;
+ b=K0b5nLAizD7TGQDjgaOycW3pVacY3L7Ep+L1M4RObdMN2U6homi3AL+6ANBGRcLLyP
+ wk2KHAqRuihRNK6M8acRbWXEB0Yl5BTqeVmylR0C3oBJkWqwK/TMaIKX9RziEPXg30as
+ njFyJGypqwQaTqgu51A9+FAsuVyKn9MV7JecT/nWsdZrWboOJ9fWObm2t0QhjdsHZUaJ
+ nNQceK0PgPxSCKW8hCWNwXpGqh0yWzx/fhIG7ta341FjY68/Gbaz4qLCPTvlRk4JyIwX
+ R9r/KuAf3Fa3rKTMMiOOp7VTE/aytP8eME68cR+Kq4UukzCmlj+h07YXZOeBOhnirMgu
+ WcQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=LXXsr0B1s9fV+H+93PVy7/W/FWVzPYkJYgazSYGJq5c=;
- b=FaUtUEAF9twR+4Ns0gQb1Ma+rKCCodfTo7COzaDkv41+G7NC5zwVgmaWwGhK6L9XSk
- ciLmqcsyDeifYaEdDmWps9PfQBm6P+QSnXmJzG9rKLepefCX8GuWlTyDNVcxUxU7bJoi
- 2CzQ6OXHocOA+OR8L94DKRuGgGVWtY5LDm/eByehYbtWPSm6cRF7ylr9m66isZnqFuCu
- HLlLFWydphu70FRuDtpowF+aq1yz16ck+vU8xvkLnqY6hAaS+FH1H0WfOwzLcbeyaH+5
- cD1+FLX5EIxcXpkVGdLtsvihhKuRSmeAVCPn3mmfo4zEfeuT/vZXwxYpIWgBdkPmwQsy
- nYjw==
-X-Gm-Message-State: AOAM532pp0gBhc+ylJ6d9/yfyh2P7tqKCn51YIHWQ3ByAzQZYA+vqWXS
- qpJI9KPJmzNpV/5sfa8XUwn/OqZOv3kvZUQWt68fpd6jw5H5Y13m
-X-Google-Smtp-Source: ABdhPJzb/FwujeSLVBtdmslYgSPoRgUZuP8iE64VnZL7SxvFfXxomKdjfipigK/D1L5skHeeFRe306CE6jKXH5u7ozo=
-X-Received: by 2002:a05:6830:22f9:: with SMTP id
- t25mr5678468otc.174.1618619044169; 
- Fri, 16 Apr 2021 17:24:04 -0700 (PDT)
-MIME-Version: 1.0
-From: Zhenfei Tai <ztai@google.com>
-Date: Fri, 16 Apr 2021 17:23:52 -0700
-Message-ID: <CAMXw96PmAoSb5LJj-CzYA-47D-nCy81gBa=T94N_u2fqWL54EQ@mail.gmail.com>
-Subject: bmcweb: Install encrypted certificate to BMC
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ed Tanous <edtanous@google.com>, gmills@us.ibm.com
-Content-Type: multipart/alternative; boundary="00000000000027f30005c0201d34"
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=KEgAGlMIMGSD4Y3PLpFSkmFQK4X2O5FS+oaEvb1q+lY=;
+ b=F7rrSLZbAPP6mUwDa8vERRhmIryNe7y4Gd04l53dc9AxBa8W0mZFDjPQtA2Uk5M2RU
+ QQ6F4Llq1aPkZ9jtsemlNznHHSkb+01/VSNrT7k8AtEpn1MVTkgES2q2W6Oh9nbpJVex
+ C3bRRGlvkH/Vyll8317JE+7Fhegu5WJeDbrshqgGGwRTKd69h4sVfkOfJ/v4UHffbPyr
+ AYpIYSFLs+tagp+HzJblri6eXeichaHqhTU44vVK/CfnvAIysgeS8C4ilf64MYw/A7ld
+ XTta/grk1q4LSLo1zdOm3kv7ogrx0lwapQjQaFKhRH24GIUtYFx3+MQA/EZaLwylTL/6
+ ab6A==
+X-Gm-Message-State: AOAM532Gog1MO4ZTHoU9ou81HMpW9l1HicMEaAA/SNSoe7tT60sq4BmD
+ 9u48w9Q6ph63OQFUxn+eoCc=
+X-Google-Smtp-Source: ABdhPJz8p4ON3M1hNgneJYgt8P2lIK0ojWFajm7V/CS2x1h65e9dsl/vMa9ItbnRupxHrr2DLFfO/g==
+X-Received: by 2002:a63:c14c:: with SMTP id p12mr1872172pgi.417.1618630977196; 
+ Fri, 16 Apr 2021 20:42:57 -0700 (PDT)
+Received: from taoren-ubuntu-R90MNF91.thefacebook.com
+ (c-73-252-146-110.hsd1.ca.comcast.net. [73.252.146.110])
+ by smtp.gmail.com with ESMTPSA id f18sm4434821pfk.144.2021.04.16.20.42.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Apr 2021 20:42:56 -0700 (PDT)
+From: rentao.bupt@gmail.com
+To: Wim Van Sebroeck <wim@linux-watchdog.org>,
+ Guenter Roeck <linux@roeck-us.net>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@aj.id.au>, linux-watchdog@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Tao Ren <taoren@fb.com>, Amithash Prasad <amithash@fb.com>
+Subject: [PATCH] watchdog: aspeed: fix hardware timeout calculation
+Date: Fri, 16 Apr 2021 20:42:49 -0700
+Message-Id: <20210417034249.5978-1-rentao.bupt@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,65 +79,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Justin Chen <juschen@google.com>, Richard Hanley <rhanley@google.com>
+Cc: Tao Ren <rentao.bupt@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000027f30005c0201d34
-Content-Type: text/plain; charset="UTF-8"
+From: Tao Ren <rentao.bupt@gmail.com>
 
-Hi,
+Fix hardware timeout calculation in aspeed_wdt_set_timeout function to
+ensure the reload value does not exceed the hardware limit.
 
-Currently certificate installation is supported by bmcweb via
-*redfish/v1/Managers/bmc/Truststore/Certificates*, where the certificate
-content is part of the JSON request.
+Fixes: efa859f7d786 ("watchdog: Add Aspeed watchdog driver")
+Reported-by: Amithash Prasad <amithash@fb.com>
+Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+---
+ drivers/watchdog/aspeed_wdt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-For our use case it's a more restricted environment in which we don't want
-to have plaintext certificates in the request. Instead we want to send a
-pair of encrypted key and certificate from the host to the BMC and there
-will be another daemon to decrypt them using an internal library.
+diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
+index 7e00960651fa..507fd815d767 100644
+--- a/drivers/watchdog/aspeed_wdt.c
++++ b/drivers/watchdog/aspeed_wdt.c
+@@ -147,7 +147,7 @@ static int aspeed_wdt_set_timeout(struct watchdog_device *wdd,
+ 
+ 	wdd->timeout = timeout;
+ 
+-	actual = min(timeout, wdd->max_hw_heartbeat_ms * 1000);
++	actual = min(timeout, wdd->max_hw_heartbeat_ms / 1000);
+ 
+ 	writel(actual * WDT_RATE_1MHZ, wdt->base + WDT_RELOAD_VALUE);
+ 	writel(WDT_RESTART_MAGIC, wdt->base + WDT_RESTART);
+-- 
+2.17.1
 
-Since it's not supported by the Redfish schema, my plan is to use the
-*redfish/v1/CertificateSerivce/OemActions* URI and a request payload like
-below:
-{
-  "key": "encrypted key in binary",
-  "certificate": "encrypted certificate in binary"
-}
-
-The reasons to use the URI and payload are:
-1. It's related to certificate service although in opaque blobs.
-2. It's fairly company specific that probably isn't universally applicable.
-
-My questions are:
-1. Is this a reasonable approach?
-2. Shall we define an OEM schema for our request?
-
-Thanks,
-Zhenfei
-
---00000000000027f30005c0201d34
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi,<br><div><br></div><div>Currently certificate installat=
-ion is supported by bmcweb via=C2=A0<i>redfish/v1/Managers/bmc/Truststore/C=
-ertificates</i>, where the certificate content is part of the JSON request.=
-</div><div><br></div><div>For our use case it&#39;s a more restricted envir=
-onment in which we don&#39;t want to have plaintext certificates in the req=
-uest. Instead we want to send a pair of encrypted key and certificate=C2=A0=
-from the host to the BMC and there will be another daemon to decrypt them u=
-sing an internal library.</div><div><br></div><div>Since it&#39;s not suppo=
-rted by the Redfish schema, my plan is to use the <i>redfish/v1/Certificate=
-Serivce/OemActions</i>=C2=A0URI and a request payload like below:</div><div=
->{</div><div>=C2=A0 &quot;key&quot;: &quot;encrypted key in binary&quot;,</=
-div><div>=C2=A0 &quot;certificate&quot;: &quot;encrypted certificate in bin=
-ary&quot;</div><div>}</div><div><br></div><div>The reasons to=C2=A0use the =
-URI and payload are:</div><div>1. It&#39;s related to certificate=C2=A0serv=
-ice although in opaque blobs. </div><div>2. It&#39;s fairly company specifi=
-c that probably isn&#39;t universally applicable.</div><div><br></div><div>=
-My questions are:<br>1. Is this a reasonable approach?</div><div>2. Shall w=
-e define an OEM schema for our request?</div><div><br></div><div>Thanks,</d=
-iv><div>Zhenfei</div><div><br></div><div><br></div></div>
-
---00000000000027f30005c0201d34--
