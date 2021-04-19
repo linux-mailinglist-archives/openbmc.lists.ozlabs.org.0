@@ -2,69 +2,102 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50AF436420C
-	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 14:50:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 694E8364220
+	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 14:59:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FP69F74zZz2yYg
-	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 22:50:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FP6Ml087gz2y0C
+	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 22:59:15 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=l6FC7Ua1;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qIcQ+8Lb;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f30;
- helo=mail-qv1-xf30.google.com; envelope-from=joel.stan@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=klaus@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=l6FC7Ua1; dkim-atps=neutral
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com
- [IPv6:2607:f8b0:4864:20::f30])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=qIcQ+8Lb; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FP68z4v66z2xVt
- for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 22:49:54 +1000 (AEST)
-Received: by mail-qv1-xf30.google.com with SMTP id x27so16792542qvd.2
- for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 05:49:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=w2n6dUtA1rKXLo131YjOoiKnBTV2seyqWX7KoGaAIuU=;
- b=l6FC7Ua1IBE+Dby0+67xCz0mkRwudLS29YnxrYFvuQLmdtKgaxG6k1BuoaVoKugsvf
- pQtF+jPijWVVnD9f/pu4RDl0CafqbZ+yf+dmdCDpuNFObZyN+JMjTaNVfGPOksyz6oYN
- VIZ/6Hop4U04j/hq4KDyI5/lkgZJt+3+LOUCw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=w2n6dUtA1rKXLo131YjOoiKnBTV2seyqWX7KoGaAIuU=;
- b=YTMHbN+rE+kQjD0aVAQvMRH9tKrT6CZgPmt+4mBMKLOdaAxB8bqJahETfyfzUnL/t/
- jipJ3V9jmA0pdbhV+0YLHA8+fOv0//1LJye4Ue0XvDmscVQ1cxyiwbSJsLeQYi/tYKcE
- Ny3TozTRHnQu9rLOKQVFwQTFvetEA9s91WPiRAYnU0CPR+0SNyk/x4lqbWP+sxs2T/f4
- iE070+Enz1h89FH49LczMpDDweqCrH80ZUkcRWR8FPL0t+PwflsqQJ7Q5O8so1cgqLWo
- ayLnCrkuCdDlcrVlPc9IpB/toExdNltVhDhkMh3viucU2UHo6r3Vd9J0L/xp27mdL8nc
- pLeQ==
-X-Gm-Message-State: AOAM531aAaJfR437zswKieqztUW+HfkYJT0ylFa0TGXvKlFQbFef3X67
- sn2qszc7D1dNmM5ak4uccPO2jVFXw6oFG1njtEk=
-X-Google-Smtp-Source: ABdhPJxaV7xKu3A8eK1LxV7NuURHd+6/oyDyK3wEG1YiSDZoVmXX7P3CF3MBtNjt2UgOaF3Bah1YIHPKr+GA1VVHCL8=
-X-Received: by 2002:a0c:d786:: with SMTP id z6mr20660494qvi.18.1618836591061; 
- Mon, 19 Apr 2021 05:49:51 -0700 (PDT)
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FP6MV6S1qz2xYl
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 22:59:01 +1000 (AEST)
+Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 13JCWvs5027099; Mon, 19 Apr 2021 08:58:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=Y5wUjDt8p06JhT4hbd3bzuF14P2XlgRHHlhe/Eo8N64=;
+ b=qIcQ+8LbvBqQJrM00j6ZmZhdh8aE/gaZoncHhfhd4CH0nlkPBWw3B26MLPHXPNbKE3TS
+ CVlU6/8tJnc1foIoKyj+4VCDkms+VDUQ/7EfYxkAyInbx1oXEEXZMrSajJtQ4aWOLr1u
+ aeeIa+Myh3xXBeXgOdWQre7vbPZtz30WILDCmhKDq1GP0MOLSNbpGw8V5sl/aFlqMjIe
+ ioDiAZ5Gt+lGD4uvAqAoMru/VJflrnYdznrNmBqubUAi/xs0ZamOhPq0+eyOzSiijSlk
+ KM+2LhsOQkZDoTJnc4nALWds9lfuPJPb/8oLa/kzgbR1pv7g6Na8WaSvdZOdgVuGM2ab Kw== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 380crt0qns-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Apr 2021 08:58:46 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 13JCwdcf025910;
+ Mon, 19 Apr 2021 12:58:45 GMT
+Received: from b03cxnp07028.gho.boulder.ibm.com
+ (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
+ by ppma02dal.us.ibm.com with ESMTP id 37yqa9xddy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Apr 2021 12:58:45 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 13JCwiCm27001246
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 Apr 2021 12:58:44 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E020678068;
+ Mon, 19 Apr 2021 12:58:43 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E317878060;
+ Mon, 19 Apr 2021 12:58:42 +0000 (GMT)
+Received: from [9.65.64.161] (unknown [9.65.64.161])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon, 19 Apr 2021 12:58:42 +0000 (GMT)
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 10/11] crypto: Add driver
+ for Aspeed HACE
+To: Joel Stanley <joel@jms.id.au>
 References: <20210413080755.73572-1-joel@jms.id.au>
  <20210413080755.73572-11-joel@jms.id.au>
  <cacf13c1-91b2-ad51-606e-bb208d13ec36@linux.vnet.ibm.com>
  <9779de4a-6985-8b94-9fb6-55c74a7a722f@linux.vnet.ibm.com>
  <CACPK8XcNyXUhe=43NCR1RzrexJGYWw2S-kXWsYDzNYAJujnmpg@mail.gmail.com>
  <001cda88-6e0f-cd48-d274-3764d0ceb18d@linux.vnet.ibm.com>
-In-Reply-To: <001cda88-6e0f-cd48-d274-3764d0ceb18d@linux.vnet.ibm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 19 Apr 2021 12:49:38 +0000
-Message-ID: <CACPK8XdHNDv8ELvKR9jEps7eR8Lj0n0hXp-TL48kDWWUyMH26g@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 10/11] crypto: Add driver
- for Aspeed HACE
-To: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+ <CACPK8XdHNDv8ELvKR9jEps7eR8Lj0n0hXp-TL48kDWWUyMH26g@mail.gmail.com>
+From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+Message-ID: <95c27f3c-e7c5-2f10-35fd-3f8033073074@linux.vnet.ibm.com>
+Date: Mon, 19 Apr 2021 09:58:41 -0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.1
+MIME-Version: 1.0
+In-Reply-To: <CACPK8XdHNDv8ELvKR9jEps7eR8Lj0n0hXp-TL48kDWWUyMH26g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: ZWPlZ0TwfJrRTj9a_hpFrKTMr2ZRt84n
+X-Proofpoint-ORIG-GUID: ZWPlZ0TwfJrRTj9a_hpFrKTMr2ZRt84n
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
+ definitions=2021-04-19_10:2021-04-19,
+ 2021-04-19 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ priorityscore=1501 phishscore=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 spamscore=0 adultscore=0 bulkscore=0 malwarescore=0
+ clxscore=1015 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2104060000 definitions=main-2104190088
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,138 +111,77 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: Andrew Jeffery <andrew@aj.id.au>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+ =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 15 Apr 2021 at 21:38, Klaus Heinrich Kiwi
-<klaus@linux.vnet.ibm.com> wrote:
->
->
->
-> On 4/14/2021 11:32 PM, Joel Stanley wrote:
-> >> Another interesting thing is that the SPL tries to boot from UART, but neither
-> >> my fitImages, Legacy images or even RAW images are working.. Not sure if we need
-> >> some special handling of those images before feeding them to the spl ymodem loader?
-> > I wasn't able to get the SPL to load any images - raw binaries or FIT
-> > - from eMMC either. Something is going wrong, but I am unsure what it
-> > is. I will continue to debug.
->
-> I was able to make it work on real hardware (rainier100) with the following changes
-> (in addition to the other fixups already mentioned in this thread):
->
->  From a2a2819455ec5de689fd0702cce20bfb18ec11b1 Mon Sep 17 00:00:00 2001
-> From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-> Date: Thu, 15 Apr 2021 15:16:37 -0300
-> Subject: [PATCH] HACE fixups:
->
->   * The AST2600 workbook mentions that the list structure passed to
->     ASPEED_HACE_HASH_SRC needs to be 8-byte aligned. Normally, glibc's
->     malloc() would always align memory to (at least) 8-bytes, but that's
->     the case with u-boot's pre-sdram malloc() implementation. So we need
->     to explicitly align the context to 8-bytes with malign().
+Hi Joel,
 
-We're not using the HACE engine pre-SDRAM, so we should be ok.
+On 4/19/2021 9:49 AM, Joel Stanley wrote:
+> On Thu, 15 Apr 2021 at 21:38, Klaus Heinrich Kiwi
 
-common/dlmalloc.c:
+>>
+>>    * The AST2600 workbook mentions that the list structure passed to
+>>      ASPEED_HACE_HASH_SRC needs to be 8-byte aligned. Normally, glibc's
+>>      malloc() would always align memory to (at least) 8-bytes, but that's
+>>      the case with u-boot's pre-sdram malloc() implementation. So we need
+>>      to explicitly align the context to 8-bytes with malign().
+> 
+> We're not using the HACE engine pre-SDRAM, so we should be ok.
+> 
+> common/dlmalloc.c:
+> 
+>      8-byte alignment is guaranteed by normal malloc calls, so don't
+>      bother calling memalign with an argument of 8 or less.
+> 
+> Were you able to observe any allocations that were not aligned?
 
-    8-byte alignment is guaranteed by normal malloc calls, so don't
-    bother calling memalign with an argument of 8 or less.
+yes, I thought I had. And by pre-sdram I guess I was trying to say pre-relocation.
+But that might have been an artifact of trying to probe/initialize hace in the
+SPL, so I might have mixed things.
 
-Were you able to observe any allocations that were not aligned?
+I was sure that Qemu and Hardware were behaving differently, since the same
+image would work on qemu but fail on hardware. Perhaps we should put a warning
+on Qemu for unaligned access instead of just masking.
 
->
->   * The __atribute__ ((align 8)) doesn't have an effect in struct
->     elements. Remove it.
+  
+>>
+>>    * The __atribute__ ((align 8)) doesn't have an effect in struct
+>>      elements. Remove it.
+> 
+> Agreed.
+> 
+>>
+>>    * Since the struct aspeed_hash_ctx->list element is what we need to
+>>      make sure is aligned to 9-bytes, move that to the first element of
+>>      the array, and call-out the fact that this needs to be aligned in
+>>      the declaration.
+> 
+> 9 bytes? Did you mean 8?
+> I did. A typo.
 
-Agreed.
+> Regardless, the array in the structure should be aligned as there will
+> be no padding earlier in the struct. I have added a runtime check for
+> this and have not hit that in my testing so far.
+> 
 
->
->   * Since the struct aspeed_hash_ctx->list element is what we need to
->     make sure is aligned to 9-bytes, move that to the first element of
->     the array, and call-out the fact that this needs to be aligned in
->     the declaration.
+My change involved moving the array to the first element exactly to not
+risk changing the u32 elements before it to something else and breaking
+alignment.
 
-9 bytes? Did you mean 8?
+>>
+>>     * Clear HACE_HASH_ISR before issuing new command
+> 
+> This makes sense.
+> 
+> I will send out a new series for review. I've tested it thoroughly in
+> qemu, and have tested the u-boot -> Linux path on hardware.
+> 
+> Cheers,
+> 
+> Joel
 
-Regardless, the array in the structure should be aligned as there will
-be no padding earlier in the struct. I have added a runtime check for
-this and have not hit that in my testing so far.
+Sounds good. I can give it a spin on rain100 and check if it's all good.
 
->
->    * Clear HACE_HASH_ISR before issuing new command
-
-This makes sense.
-
-I will send out a new series for review. I've tested it thoroughly in
-qemu, and have tested the u-boot -> Linux path on hardware.
-
-Cheers,
-
-Joel
-
->
-> Signed-off-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
-> ---
->   drivers/crypto/aspeed_hace.c | 15 +++++++++++++--
->   1 file changed, 13 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/crypto/aspeed_hace.c b/drivers/crypto/aspeed_hace.c
-> index 473d4d7391..0551fe6c83 100644
-> --- a/drivers/crypto/aspeed_hace.c
-> +++ b/drivers/crypto/aspeed_hace.c
-> @@ -51,12 +51,19 @@ struct aspeed_sg {
->         u32 addr;
->   };
->
-> +
-> +/*
-> + * Note: element 'list' below needs to be 8-byte aligned,
-> + *       keep it as the first element so that we can always
-> + *       guarantee that when allocating the struct (that should
-> + *       also be 8-byte aligned)
-> + */
->   struct aspeed_hash_ctx {
-> +       struct aspeed_sg list[ASPEED_MAX_SG];
->         u32 method;
->         u32 digest_size;
->         u32 len;
->         u32 count;
-> -       struct aspeed_sg list[ASPEED_MAX_SG] __attribute__((aligned(8)));
->   };
->
->   struct aspeed_hace {
-> @@ -85,6 +92,9 @@ static int digest_object(const void *src, unsigned int length, void *digest,
->                 return -EINVAL;
->         }
->
-> +       /* clear any pending interrupt */
-> +       writel(HACE_HASH_ISR, base + ASPEED_HACE_STS);
-> +
->         writel((u32)src, base + ASPEED_HACE_HASH_SRC);
->         writel((u32)digest, base + ASPEED_HACE_HASH_DIGEST_BUFF);
->         writel(length, base + ASPEED_HACE_HASH_DATA_LEN);
-> @@ -145,12 +155,13 @@ int hw_sha_init(struct hash_algo *algo, void **ctxp)
->                 return -ENOTSUPP;
->         }
->
-> -       ctx = calloc(1, sizeof(*ctx));
-> +       ctx = memalign(8, sizeof(struct aspeed_hash_ctx));
->
->         if (ctx == NULL) {
->                 debug("Cannot allocate memory for context\n");
->                 return -ENOMEM;
->         }
-> +       ctx->len = ctx->count = 0;
->         ctx->method = method | HACE_SG_EN;
->         ctx->digest_size = algo->digest_size;
->         *ctxp = ctx;
-> --
-> 2.25.1
->
->
->
->
->
-> --
-> Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+-- 
+Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
