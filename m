@@ -1,93 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29FC8363AE5
-	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 07:10:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9904363C59
+	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 09:18:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FNvyq18d1z3bmg
-	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 15:10:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FNypr63fKz3c5V
+	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 17:18:44 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=IhCIONpj;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=dYy+ypBi;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b2d; helo=mail-yb1-xb2d.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=IhCIONpj; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=dYy+ypBi; dkim-atps=neutral
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com
+ [IPv6:2607:f8b0:4864:20::b2d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FNvyV5n41z30Dy
- for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 15:10:09 +1000 (AEST)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 13J559Bk164354
- for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 01:10:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : cc : to :
- mime-version : content-type : message-id : subject; s=pp1;
- bh=bSIHm3ewFgkBW0/Tce2gGHHbEFCH3d2358CkrscVwCY=;
- b=IhCIONpjyYgZAXJo0AM5w5l8bxJq/EeO94kfV9w28NI4mYjhASMDL9prd7VYzhw9Ze2k
- koZmNTkBoE1AsULCMMOSR7sFQLyDWtX1UHvhRUKJ3TSlgQ+B5HelwTqFJ8kysXEOQMwg
- A6Se3Fv9P3pbZthtxoql9ySjhzolZfTLr7yvg/7Wb7kNBiTagrSGLMI7e0vkpST9nuoG
- HwULXyJ1WNKNDBVN55zQ6vPSnFsjqeZezvB276xRIHHTTCY7vPLcyri2dQM61LsAJzRw
- ZJS+OdRRLlJ2SjcX/U8PXp+zWtvMlJQtRFKNNJG9cabjHLWQiSX8S603SOjWLTAzKML6 XQ== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.67])
- by mx0b-001b2d01.pphosted.com with ESMTP id 380d7d3uk5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 01:10:07 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Mon, 19 Apr 2021 05:10:06 -0000
-Received: from us1a3-smtp06.a3.dal06.isc4sb.com (10.146.103.243)
- by smtp.notes.na.collabserv.com (10.106.227.16) with
- smtp.notes.na.collabserv.com ESMTP; Mon, 19 Apr 2021 05:10:05 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp06.a3.dal06.isc4sb.com
- with ESMTP id 2021041905100491-20155 ;
- Mon, 19 Apr 2021 05:10:04 +0000 
-Date: Mon, 19 Apr 2021 05:10:05 +0000
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: "yugang.chen" <yugang.chen@linux.intel.com>,
- "Ed Tanous" <edtanous@google.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FNypc2f8Fz3c0C
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 17:18:31 +1000 (AEST)
+Received: by mail-yb1-xb2d.google.com with SMTP id k73so31282678ybf.3
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 00:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=H9rmcYOS95Y5SY3Igu8yAwGQVPamw5+CTRXzfZxCy64=;
+ b=dYy+ypBiddy1dWuf9w1u+WgxSmfBGC+uUjQJqoHUwvrjleScvf9bfOs2G5XvapM0hd
+ BRzwPaV4rWVw033Bv5D7At6r8aXmGlz9m6eiFZzVY826tcC1ZQmThClCfOX/WIskVewv
+ xa4C/verN2kJP6dgobR09823xZKGyNAQVl15DA2GTXnd6pNZkLRz9UOF+X3n4ISKbp2w
+ 0YMNM3QLwG0QAOKBT+IpSTJayQTnbpqc2OR/bhM8rojQPBnmlmUS8ZMIX6zkH/gu0tOG
+ GZdTuZrnAzYplq3hXWxrs3H/50bzY/Bzn3w86ZyhNFa92vjrAkiu0R7tlnE/dkZd+KX5
+ 4/Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=H9rmcYOS95Y5SY3Igu8yAwGQVPamw5+CTRXzfZxCy64=;
+ b=mY+hTpNpsu7pqscQbSgtzjXROL3A0jFC230tB7tFfGiL/8SPuFZeJpVv2KQbD/rpCQ
+ A0zCeJRJFdWNy3LGy6pxewTUvj42nS1Gj052/XldVmt7WSt58nxJEevx5UrVks9BVAnO
+ nOn3/1EqHSjln7xgr/i2ghfbUI/zWTNDx2C7Qfkwkq4gCGuckRipdEotFpNI3zUoG0bu
+ oqCYaTWiGnqwHXNB7rMSH6kJmzTVeYE0ulBmg2w785YLx5hfOqj1jJ5qNm8cVbseaQix
+ hViM3NB8KF6kVre4EbY6ydG6Q5At6Ak5sIYZMx8RTllkH5M7ynGTp4qKnsm/4B05fgaB
+ Cd/w==
+X-Gm-Message-State: AOAM5333AMb4K6Utf/qHQlHxj4Bd5ag7SA8+RjsYY/1GDqz8vintscyA
+ ojguyae+XRoInqYgobKrSdugYsFnFW+u6CBZ17ubdw==
+X-Google-Smtp-Source: ABdhPJxdNA4ceMETCFwsL3QAl7siDfsBkjKM+rJdb2x7i7jd9dy/A6pO8kz0sgiai6LSDVfMDkKqN1bRSMJq51YpClM=
+X-Received: by 2002:a05:6902:1108:: with SMTP id
+ o8mr10927771ybu.131.1618816707027; 
+ Mon, 19 Apr 2021 00:18:27 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: IBM Traveler 10.0.1.2 Build 202002141540_20 on behalf of device with
- id
- mdm...eb5, type 1300 (maas360android) and description MaaS360-MaaS360
- Mail-Android:MaaS360-MaaS360 Mail-Android/7.40 at 20210419051005287 by
- DS-7f3618229700[SendMail]
-X-KeepSent: 53DD579A:00826AF4-002586BC:001C6372;
- type=4; name=$KeepSent
-X-LLNOutbound: False
-X-Disclaimed: 42999
-X-TNEFEvaluated: 1
-Content-Type: multipart/mixed;
- boundary="--_com.fiberlink.maas360.email_1585376887818130"
-x-cbid: 21041905-7279-0000-0000-0000050C48E6
-X-IBM-SpamModules-Scores: BY=0.005093; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0; ST=0; TS=0; UL=0; ISC=; MB=0.000062
-X-IBM-SpamModules-Versions: BY=3.00014940; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000296; SDB=6.01526391; UDB=6.00825164; IPR=6.01308321; 
- MB=3.00036522; MTD=3.00000008; XFM=3.00000015; UTC=2021-04-19 05:10:06
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2021-03-25 10:44:16 - 6.00012377
-x-cbparentid: 21041905-7280-0000-0000-00009CA14A81
-Message-Id: <OF53DD579A.00826AF4-ON002586BC.001C6372-1618809005215@notes.na.collabserv.com>
-X-Proofpoint-ORIG-GUID: ihegoUHBsLvgx_K6-oxDdNXu08SaVwM5
-X-Proofpoint-GUID: ihegoUHBsLvgx_K6-oxDdNXu08SaVwM5
-Subject: RE: apply for a new repo "openbmc/node-data-sync"
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
- definitions=2021-04-19_02:2021-04-16,
- 2021-04-19 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+References: <CAMXw96PmAoSb5LJj-CzYA-47D-nCy81gBa=T94N_u2fqWL54EQ@mail.gmail.com>
+ <10871.1618685448@localhost>
+In-Reply-To: <10871.1618685448@localhost>
+From: Ed Tanous <ed@tanous.net>
+Date: Mon, 19 Apr 2021 00:18:15 -0700
+Message-ID: <CACWQX8166T=3-ZKo+EtC-e67KzTgfgh0JxKA3G3ap1LVucbQYg@mail.gmail.com>
+Subject: Re: bmcweb: Install encrypted certificate to BMC
+To: Michael Richardson <mcr@sandelman.ca>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,35 +77,99 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Brad Bishop <bradleyb@fuzziesquirrel.com>, "Bills,
- Jason M" <jason.m.bills@linux.intel.com>, chunhui.jia@linux.intel.com
+Cc: Justin Chen <juschen@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <edtanous@google.com>,
+ Richard Hanley <rhanley@google.com>, gmills@us.ibm.com,
+ Zhenfei Tai <ztai@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Sat, Apr 17, 2021 at 11:56 AM Michael Richardson <mcr@sandelman.ca> wrote:
+>
+>
+> Zhenfei Tai <ztai@google.com> wrote:
+>     > For our use case it's a more restricted environment in which we don't want
+>     > to have plaintext certificates in the request. Instead we want to send a
+>     > pair of encrypted key and certificate from the host to the BMC and there
+>     > will be another daemon to decrypt them using an internal library.
+>
+> certificates are public objects.
+> Perhaps you are transfering a private key?
 
-----_com.fiberlink.maas360.email_1585376887818130
-Content-Type: multipart/alternative;
-	 boundary="--_com.fiberlink.maas360.email_1585376888570211"
+Correct;  This wasn't made clear in the initial email, but this
+"certificate" is really a certificate and the private key.
 
+> Is this an IDevID-like installed by the manufacturer, or is this a cert/key
+> to be used on the production floor (DC).
 
+DC.
 
-----_com.fiberlink.maas360.email_1585376888570211
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=utf-8
+>
+> If you have a daemon present that can decrypt things, then you already have a
+> private key (or symmetric key) present, and that key is subject to attack.
+> (Unless you add yet another layer of indirection via TPM chip....)
 
-=0Ayugang.chen wrote:=0A=0A> attach the design document, please take a look=
-.=0A=0APlease create a gerrit review placing this in an appropriate directo=
-ry in the OpenBMC docs repository.=0A=0AThanks,=0AMilton=0A=0A
+This wasn't clear in the initial email, but yes, this would be a case
+of exactly what you described in the "unless" part.  The TPM-like chip
+has a specific format that we're hoping to upload to it through the
+OOB interfaces that would give it a form of identity.
 
-----_com.fiberlink.maas360.email_1585376888570211
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=utf-8
+>
+> I strongly recommend that you do not invent new technology here.
+> EST (RFC7030) is considered the best technology here, with SCEP (RFC8894)
+> being a legacy choice.
 
-<br>yugang.chen wrote:<br><br>> attach the design document, please take a l=
-ook.<br><br>Please create a gerrit review placing this in an appropriate di=
-rectory in the OpenBMC docs repository.<br><br>Thanks,<br>Milton<br><br><BR>
+I read through that spec a bit.  The issue there is that it has no
+compatibility with Redfish, so implementing that would be yet another
+subsystem to build and maintain, and wouldn't work in tandem with
+Redfish aggregators once the key was decoded.  While I wouldn't be
+against anyone implementing that on OpenBMC, that wouldn't meet the
+needs of what we're trying to accomplish;  Also, it isn't clear that
+RFC8894 has provisions for custom certificate formats, of which this
+would definitely be one.
 
-----_com.fiberlink.maas360.email_1585376888570211--
+>
+>     > My questions are:
+>     > 1. Is this a reasonable approach?
+>     > 2. Shall we define an OEM schema for our request?
+>
+> Finally, I am working on a BRSKI (RFC8995, aka
+> draft-ietf-anima-bootstrapping-keyinfra, not quite published, still in middle
+> of AUTH48) module for OpenBMC.
 
-----_com.fiberlink.maas360.email_1585376887818130--
+Neat.  Looking forward to seeing it.
 
+>   You may prefer help with that instead of
+> inventing something that hasn't gone through the same level of review.
+>
+> --
+> ]               Never tell me the odds!                 | ipv6 mesh networks [
+> ]   Michael Richardson, Sandelman Software Works        |    IoT architect   [
+> ]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails    [
+>
+>
+
+While there are efforts to standardize these kinds of payloads (see
+cerberus and opentitan) the systems today will never be physically
+capable of implementing whatever protocol gets standardized, so we
+will need some solution regardless.
+
+In this case, I see 3 options for how to proceed.
+
+1. Create an OEM action within CertificateService, specific to Google,
+and namespaced as such.  I'm imagining something like "Google/SetKey".
+Considering the TPM-like devices have a device-specific format, and
+will only ever be seen on a Google system, this seems like an
+appropriate and intended use of Redfish OEM schemas.  If we went this
+route, I would commit our team to at least make progress on solving
+the existing OEM schema tech debt
+(https://github.com/openbmc/bmcweb/issues?q=is%3Aissue+is%3Aopen+label%3A%22OEM+schema%22)
+so as this would not make the situation worse.
+2. Similar to 1, but the action would be namespaced within OpenBMC.
+While this would also solve the problem, in-lies another problem with
+how a client would know what the format of the file should be.  Other
+systems that implement ROT solutions will likely have their own
+format, and clients won't be able to inspect the format.
+3. Put it within a google/v1 namespace path similar to ibm/v1.  This
+would prevent using Redfish aggregators, which would be a problem for
+the intended use case of deploying this to many bmcs.
