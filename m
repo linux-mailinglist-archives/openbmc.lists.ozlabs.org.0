@@ -1,95 +1,100 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E4B136460F
-	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 16:26:58 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CD74364663
+	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 16:47:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FP8Jv6rBkz2xZy
-	for <lists+openbmc@lfdr.de>; Tue, 20 Apr 2021 00:26:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FP8m43kfsz2y6B
+	for <lists+openbmc@lfdr.de>; Tue, 20 Apr 2021 00:47:00 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=QNjqINn/;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=iuGZz15l;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=thHzQJLo;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm2 header.b=QNjqINn/; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=iuGZz15l; 
- dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=thHzQJLo; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FP8Jc2cs3z2xZQ
- for <openbmc@lists.ozlabs.org>; Tue, 20 Apr 2021 00:26:39 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 1A881B7B;
- Mon, 19 Apr 2021 10:26:35 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Mon, 19 Apr 2021 10:26:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
- :references:mime-version:content-type:in-reply-to; s=fm2; bh=1Dj
- JjuxI6tHWzs9dE4+twvTHy9guDGMVdDg5J5uzFdI=; b=QNjqINn/csF3rJ2nmo6
- KlwpzlxWOAye8k4DHJ3hAT5ftMlV1UUdtFy1WlJ+19on3Fffh6hHxg4RVJKCkeqr
- SXy+JGWDexgAklPUa2V+1IJBmF2fkaEIffiemQYcCQ4HPEWLJipBqWiXMAM76Eme
- UlEQw2gno//GXvsZjEnc8aGHPHfSlPHSac29Z3IG3f6U7OZLh3gq7l24+up+bda8
- lTKGIpGCSCJI/LoRWBEZ63MZRcs3Mc+UHRjsfwJMgVhNABH9K5FO5/TfqJ8kQBNK
- TSLtG24lFTVl9yvxJUeHFLZ9VvmJFUvY6qz3SMQZETIqi+yfjFLYaMi9u2CntfN0
- vCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=1DjJju
- xI6tHWzs9dE4+twvTHy9guDGMVdDg5J5uzFdI=; b=iuGZz15lrneZtQZYVoq0DU
- a5Pn6HDrzyXnwNPOVyQMNdA6qlBNta8zbsDy6lB1w/YXDdjeqllkpVtztPL8TWtS
- dFV3r1RTprFni3LSx/LspuhatmzBw2Au5IKdNuBRHpQQR+2ou+2Abykxqm4/gsWO
- kPRx5qe9V26P0nX84VWwgbxPiSNJqHW6RcN0s1TscJsHCfhOzXNhwneyp1Uexyrg
- MjleQxHEzAUC19q4c3IIdSmc8W8gray4KPqlzlAXlhnzpb+r3tqEuVcPZucwqmmM
- UA0OXIcPvZeLETSvy2kbRHaEScaDnMb6h2QmmkMcMvomSsHpOfitDvN9RU/cZiAg
- ==
-X-ME-Sender: <xms:GZN9YDO4nHKsTbWFUV-Wy_zjprH_vvlfRKu-9OIAqgyYfGjqQ5P7tg>
- <xme:GZN9YN9bMusHzpg40GGLXjpQ8jHVNkJQSzBUaGW6-dJ8amobkW_yOQGSHh2BLJj_T
- PDVwvLtaMl9NAju82I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddtgedgjeejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeurhgrugcu
- uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
- eqnecuggftrfgrthhtvghrnhepfeffhfefheeguddtvddtueeihfduieefkeefieefkeef
- udefueevudelgfekffefnecukfhppedujeefrdduieejrdefuddrudeljeenucevlhhush
- htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsges
- fhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:GZN9YCTQ7237KcEvT-kvJL0kdeR9rgwQyYG9oJ2lHk1mGjbU5yJ28w>
- <xmx:GZN9YHtjL6JAdIvXPTuizEhwzPuQYxwGG7cIElY2I8BbfUOi-p30MA>
- <xmx:GZN9YLehNT3fiZPAyjgkHz70ElR_cVS0c7fUztwQnA0Fk3PPXzj4mA>
- <xmx:GpN9YMqOmPhJKKFaaDUiOuKz2lJ6ems05aTK-cxHcE8bjw3EGYNL2Q>
-Received: from thinkpad.fuzziesquirrel.com (unknown [173.167.31.197])
- by mail.messagingengine.com (Postfix) with ESMTPA id 8DF271080066;
- Mon, 19 Apr 2021 10:26:33 -0400 (EDT)
-Date: Mon, 19 Apr 2021 10:26:31 -0400
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: "yugang.chen" <yugang.chen@linux.intel.com>
-Subject: Re: apply for a new repo "openbmc/node-data-sync"
-Message-ID: <20210419142631.eutfkickwfke7aq3@thinkpad.fuzziesquirrel.com>
-References: <cab2988f-76b8-6a30-5fa9-0ee8030af7f0@linux.intel.com>
- <AF9887DB-F6CB-4CE0-90B1-17FEA2497013@fuzziesquirrel.com>
- <bd64513a-76f6-7617-9942-ced892b2c500@linux.intel.com>
- <CAH2-KxAe7v2ptH5SEJkd5YeQ-nCo_JQvwCoS5nU=ZLFac+tAuw@mail.gmail.com>
- <2e6ff1b9-733b-56ca-5cd6-fab6f0b20530@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FP8lr16cbz2xZn
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Apr 2021 00:46:47 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 13JEXQge143660; Mon, 19 Apr 2021 10:46:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : from : to :
+ references : message-id : date : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=BvL66hXkMGU5VvwGY87B9OnuXkym3VRFAOic2yEKt5w=;
+ b=thHzQJLo4RBCsdeLg1BgPFdKpehhNihbfAMuc7hKxm4Y1UOEXguWzSc/sLhtxA3M3hR7
+ ZyzybJsEXVTMF1LJEgOTgzQCiFSDxjDX1m+1XZzcfFQDRAf7Q2ArgUDvmohi6kS0AaCk
+ G87FMrn//R+uJ4+aZENNIP6ZfILTk3wPuWs8+wWgy+c0OzsGGdbTWn1jnoAD+WNy4e53
+ AtYE9ZIGakKVXJBKJth2hu4BRDGVDBXNcipd6v9f9Ngs6SRJZzsdSROTcuRvg34DC1jF
+ wqtd9N9Y8brBpx+RKZkDFcRfECWbpkS5BxxW8MDd8Lu5lFiHsXz+VHL9ZaJGYkKlF2JE Dg== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 380d88uh42-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Apr 2021 10:46:42 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 13JEaYNr029288;
+ Mon, 19 Apr 2021 14:46:41 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma02wdc.us.ibm.com with ESMTP id 37yqa9jnbr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Apr 2021 14:46:41 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 13JEkeFC17629446
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 Apr 2021 14:46:40 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C0B9FC6059;
+ Mon, 19 Apr 2021 14:46:40 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3C616C6055;
+ Mon, 19 Apr 2021 14:46:40 +0000 (GMT)
+Received: from demeter.local (unknown [9.160.2.73])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Mon, 19 Apr 2021 14:46:39 +0000 (GMT)
+Subject: Re: Need help with service-config-manager and socket activated
+ services
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>,
+ "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ "Puli, Apparao" <apparao.puli@linux.intel.com>
+References: <53032e76-bee4-9f04-231e-762c0c1b8e06@linux.ibm.com>
+Message-ID: <015eaa30-1803-20ea-2360-6819bef1221e@linux.ibm.com>
+Date: Mon, 19 Apr 2021 09:46:38 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.0
+In-Reply-To: <53032e76-bee4-9f04-231e-762c0c1b8e06@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: pDimn1QYaLEWQpFuss5LVa_b1B_iIdnX
+X-Proofpoint-GUID: pDimn1QYaLEWQpFuss5LVa_b1B_iIdnX
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <2e6ff1b9-733b-56ca-5cd6-fab6f0b20530@linux.intel.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
+ definitions=2021-04-19_10:2021-04-19,
+ 2021-04-19 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxlogscore=634
+ mlxscore=0 malwarescore=0 suspectscore=0 adultscore=0 priorityscore=1501
+ clxscore=1011 lowpriorityscore=0 phishscore=0 spamscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2104060000
+ definitions=main-2104190100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,92 +106,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
- Ed Tanous <edtanous@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- chunhui.jia@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Daniel
+On 4/7/21 6:04 PM, Joseph Reynolds wrote:
+> We are adding a new function to allow the BMC admin to disable the 
+> dropbear SSH server [issue 1763][].  This consists of a D-Bus 
+> interface controlled by [service-config-manager][] and an enhanced 
+> Redfish REST API.
 
-Typically email attachments are not opened.  To ensure your mail gets 
-read, avoid attachments.  Resending without the attachment...
+Richard and AppaRao,
 
-On Mon, Apr 19, 2021 at 12:41:00PM +0800, yugang.chen wrote:
->attach the design document, please take a look.
->
->Best Regards
->Daniel(Yugang)
->
+We are enhancing service-config-manager so it can control the dropbear 
+SSH server.  See [gerrit review 42072][].  The problem with this 
+patchset are:
+- It always reports dropbear as disabled.
+- When we enable dropbear via this service, it reports dropbear as 
+enabled for a few seconds, then it reports dropbear as disabled.
 
-># Modular System Support - PCH IO Expander
+I believe the underlying issue is that dropbear is socket activated 
+service.  Does service-config-manager understand how to control socket 
+activated services like dropbear server?
+- If so, can you help us debug what is going wrong?
+- If not, can you point us to what code needs to be enhanced to make 
+this work?
+
+Thanks,
+- Joseph
+
 >
->Author: Chen, Yugang
+> We need help to understand how to enhance service-config-manager to 
+> work with socket activated services such as dropbear.  For example, to 
+> disable dropbear, is the correct action to perform something like this?:
+>   systemctl stop dropbear.socket
+>   systemctl disable dropbear.socket
 >
->## Problem Description
->When multi modular 2 socket reference platforms (RP) are connected together,
->the BMCs on each RP shall support the ability to manage the system as either
->single 4S/8S system or standalone as 2S systems.
+> - Joseph
 >
->## Background and References
->In 4S/8S mode, only one PCH works at DMI (Direct Media Interface) mode,
->this PCH is called legacy PCH (PCH.L), the other PCHs are called PCH IO Expander
->(PCH.IO). The BMC attached to the PCH.L works as a primary and the other BMCs
->work as secondaries.
->
->## Requirements
->Check a modular system as either 4S/8S or standalone mode by GPIOs on BMC each
->time system AC on.
->Each BMC works independently in standalone mode.
->In 4S/8S mode, only primary BMC is responsible for management of system level
->resources, secondary BMCs need to collect its local management resources and report
->them to primary BMC.
->
->## Proposed Design
->Each BMC will have a property to reveal its work mode. Users can know if BMC is in standalone mode or 4S/8S mode.
->Each BMC has another property to show if the BMC mode is PCH Legacy BMC or
->Non-Legacy BMC. PCH Legacy BMC is working as primary and Non-Legacy BMC working
->as secondary.
->
->Each time a BMC reboot, The BMC needs to check 3 GPIO Pins: FM_STANDALONE_MONDE_N / FM_4S_8S_N_MODE / FM_NODE_ID to get working mode as standalone mode or primary /secondary(4S/8S) role according to the GPIO values.
->After confirming the mode and BMCs' role, BMCs should set properties according
->to the correct configuration.
->In 4S/8S mode only node id 0 will be primary BMC because only this node will be the PCH.L. Node id 1,2,3 will be the secondary nodes.
->
->Once a BMC gets mode is in 4S/8S, node roles are configured by node
->ID (GPIO Pins) and keep consistent once AC on. Once node role check is done,
->
->In 4S/8S mode, Primary BMC needs to broadcast its role to make sure there is only
->one primary BMC in the system.
->
->Need a new feature to make sure secondary BMCs send local redfish events to primary
->BMC. And primary BMC needs to add a tag to those events coming from secondary BMC so
->that user can know the event logs happened on which node.
->
->Even in 4S/8S mode, each BMC will collect its local management resources,
->including sensors, fans and do FSC according to the values of local sensors.
->PSU and Fans on each node will not be connected together. Configuration
->settings of each secondary node will remain the same, and won't be synced across
->the nodes.
->
->In 4S/8S mode, PECI will only be connected to primary node. Primary BMC needs to
->monitor all CPU and DIMM sensors and deliver the sensor values of the CPUs/DIMMs
->on secondary nodes to secondary BMCs. So that secondary BMCs can use the sensor values to control their own FSCs. Primary BMC also needs to have a way to find how many
->CPUs are in the whole system include Primary and Secondary nodes.
->
->## Alternatives Considered
->Primary node monitors all the IPMI sensors in secondary nodes and creates redfish log
->by itself.
->
->Instead of BMC reboot, only AC cycle will make BMCs check GPIO pins and set
->Legacy BMC or Non-Legacy BMC mode.
->
->Only primary BMC broadcast its role and secondary only waiting for the broadcast
->from primary.
->
->## Impacts
->Only on the motherboard where legacy PCH is located, POST code/Front Panel/KCS
->port/UART will work, while these interfaces on board with non-legacy PCH will
->not work due to BIOS and HW design. And this will cause non-functioning of
->SOL/KVM/Virtual media on secondary BMCs.
+> [issue 1763]: https://github.com/ibm-openbmc/dev/issues/1763
+> [service-config-manager]: 
+> https://github.com/openbmc/service-config-manager
+[gerrit review 42072]: 
+https://gerrit.openbmc-project.xyz/c/openbmc/service-config-manager/+/42072
+
