@@ -1,130 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7ABFB364047
-	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 13:16:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50AF436420C
+	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 14:50:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FP4503JHcz2xfT
-	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 21:16:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FP69F74zZz2yYg
+	for <lists+openbmc@lfdr.de>; Mon, 19 Apr 2021 22:50:09 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=AULY0NKO;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=l6FC7Ua1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=40.107.129.138;
- helo=kor01-sl2-obe.outbound.protection.outlook.com;
- envelope-from=bruce_lee@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f30;
+ helo=mail-qv1-xf30.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=quantacorp.onmicrosoft.com
- header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-quantacorp-onmicrosoft-com header.b=AULY0NKO; 
- dkim-atps=neutral
-Received: from KOR01-SL2-obe.outbound.protection.outlook.com
- (mail-eopbgr1290138.outbound.protection.outlook.com [40.107.129.138])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=l6FC7Ua1; dkim-atps=neutral
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com
+ [IPv6:2607:f8b0:4864:20::f30])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FP44k0GHWz2xMw
- for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 21:16:02 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EoXUZAA6CWc0uCW17g29buAIi3KD+lmvkbq4KohKNHaqwX946EqQK3yP1YCXVbBda3xI5M6nDz/fw93kV812L/YcwBZalWqghdUNDk8tsQTbJSbtbuonEGHyM8lLPl0Wz4eRzhscLT/X5kVUuncNMRXakvZN2aV65C7iSvseIFhrrd3nUm71cq4fJw/Y7TJwFzU5doC+aaToOTdEebXr8op51DHsgNza6rIm/iEy6MWYpAMtRdobBlbeyF4QBM2LoqzSov6LAi7s5jfHzPnB8tQTsdLz8WyVaQTfmOyN5QcpzW4Hhd2QHMeh0KlFTpJmhdiJdtwazI49M0DClUu6Yw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K1v6bThngmJ94BctBwk2E210yv+i1EFSVX0nD5c6dLs=;
- b=fsuj9BRjhE10FSCAoVYoRhCmLQKgEkJBdHN+N3ayHIurOvZ8BpCFmYK7lwauitcv//MBvIlgwvDm5onmJFoIa0Ciw222n79red6drvinvjAmYesogVs7OHE/y3pPdUpPPN0S2hsNqLK4p/MtyhjzDQiGqhc8+a2b1UoYCpWPvVXzNWD+aox0Fwp1QdX504ONQ2T1oKOsoGf+HUy92Ut9NO3tOLmTqL5Rzk384bCFlSDqVONgMHob1JHGdNeySbbLf1iDjv0GFDLV0jWwdL2JGyZXOkoAGVHkiWm5J08cnxbkFcBu5iuyMO/WZIRlPpZ2IQtCvHi0N/D2erxODaD2Mw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
- dkim=pass header.d=quantatw.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K1v6bThngmJ94BctBwk2E210yv+i1EFSVX0nD5c6dLs=;
- b=AULY0NKOlQgrE1dmefDPHumWvYwIIRm0QXOsQxyJqoXQJ14Ehw9+TJr9VNqDcIxTtY7UQ0rS+YwkZx7KlNd1UemmzPbeTg14LcLozfdqdjp6FKSA5mjnQ5M23IsRnncUg9gDXfMV4NznlGHDJ+gHJYVAnT33tokuWT5YXhQXJRc=
-Received: from PSAPR04MB4231.apcprd04.prod.outlook.com (2603:1096:301:30::14)
- by PS2PR04MB3815.apcprd04.prod.outlook.com (2603:1096:300:62::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4042.16; Mon, 19 Apr
- 2021 11:15:50 +0000
-Received: from PSAPR04MB4231.apcprd04.prod.outlook.com
- ([fe80::4d14:874d:f2cd:e2ba]) by PSAPR04MB4231.apcprd04.prod.outlook.com
- ([fe80::4d14:874d:f2cd:e2ba%3]) with mapi id 15.20.4042.024; Mon, 19 Apr 2021
- 11:15:50 +0000
-From: =?utf-8?B?QnJ1Y2UgTGVlICjmnY7mmIDls7sp?= <Bruce_Lee@quantatw.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: RE: How to get the return value using the command busctl set-property?
-Thread-Topic: How to get the return value using the command busctl
- set-property?
-Thread-Index: Adcye2UidslBHmPwRmChkR5xby3BjQAVYE6AAI8StWA=
-Date: Mon, 19 Apr 2021 11:15:49 +0000
-Message-ID: <PSAPR04MB42317DD4A47FB714DB65197BF8499@PSAPR04MB4231.apcprd04.prod.outlook.com>
-References: <PSAPR04MB42315F65948C859527E5D8E2F84C9@PSAPR04MB4231.apcprd04.prod.outlook.com>
- <YHml+7IYIVEXYo6M@heinlein>
-In-Reply-To: <YHml+7IYIVEXYo6M@heinlein>
-Accept-Language: en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: stwcx.xyz; dkim=none (message not signed)
- header.d=none;stwcx.xyz; dmarc=none action=none header.from=quantatw.com;
-x-originating-ip: [61.218.113.162]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c9bc67ea-4dd3-43cd-47c9-08d903247d03
-x-ms-traffictypediagnostic: PS2PR04MB3815:
-x-microsoft-antispam-prvs: <PS2PR04MB3815511A6516C243D041FB99F8499@PS2PR04MB3815.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: BUYUm4uKvgnhc1DcKYuif3SQBdCYer4T/YVcT0eIG/Vz27lnNjc570eP9urhkMUA4a3td0yLEQ7hxa/0NsLCGqie8QoE7WEbo1rsYKMDtZdyJmeFQGkOnKUWbWCfM79ziOnLLRg2K6XnRPCYLIvYwiWE8awG9syWWof/JwAIXnr5OasZpOvITckOJ3HF3pCYGxTz916HkUBTHFY6idPAd1hYwmJN5R/2Ilk4PHfq4gYDiqjdzwe4M8DrZCsQ0VlNdhJHF2QdAEKY+Xr0qdeenUADVRjIEIvKW9PB+LGWArfBnQ/LRFn5ihLHBuBK2zwA0N7nkIVm+3vPY4FIsr/zDVHePJepZi+SMqfZc/LFN3zz64nbujuGZnxhhRxqrEaeR9PbYzVVwrXRKCJwQQcQh761CjT9ixcLK+XnwJ+YhH61VkbMiBvFOTaI5hTrtz4PUZ6slCO7P2fmxrh+dWa8VX4CnbHu9Ykzpqi3raUV4No/RqKRXlAVabJzHPS2hE277EUdik/aOiL+jauloyPQQ5M8Uylabl6VSZuSJpfsMPzZdi1YUpQJ9lbcs69KpPY1NUPLe7S1DtiDhPeB8ewCCASOZDzhZ7je6+WSZ2Aafh6jViTeQTaGMmObh/Vf2322lec6svwmacyfBvAMfLWDUQ==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PSAPR04MB4231.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(396003)(39860400002)(346002)(376002)(136003)(54906003)(122000001)(8676002)(76116006)(8936002)(6506007)(38100700002)(55016002)(66556008)(7696005)(66446008)(66476007)(33656002)(64756008)(66946007)(316002)(186003)(26005)(85182001)(52536014)(83380400001)(5660300002)(86362001)(9686003)(71200400001)(6916009)(53546011)(2906002)(478600001)(4326008)(15583001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?bE9QTExUc2UzdXlQakpyYnFlVWdJU2RwZWFDRFFhZ3UzQUJpd0lwaUxFUWFY?=
- =?utf-8?B?VHo4N3YxMzkxZ1ZSN2hQcmsrWlByVVpqdlJLb0xKMyt6VXczNklOeEJPTDc5?=
- =?utf-8?B?dFdsckNVeHV2a1VEQ3dCM1FlMk1YMyt5NFdZR0txM1ZLa3h6SyswbTFYVDhv?=
- =?utf-8?B?UXdwbWFtUHlCUnFta00zem5aWGUyeTl1dzJHVlNqcVBuR0RIQVRJK3JKaDR4?=
- =?utf-8?B?bXFEN2duNGhmMC8yeVhFOW1DY2ptc2duRkw2YTQxcE9VSEtlME9lcXJBM0ZP?=
- =?utf-8?B?RU1HMjZYWm1xRU4reDNwWjNZMEErT1NYZXpBYkozcFBia2NsZCtYcm1rTlJj?=
- =?utf-8?B?a3RNc1QrWmxZeEZvTEo0SjRQNDI1VXNzNFRCdU5zQzBrVkQ5VjNkRWYzdHV4?=
- =?utf-8?B?UjVGcHhZVGxjZlBMNUVDNWJqcnZVQUZ5RndEY2tEMnBiM3VLdkZBdUs0VEVH?=
- =?utf-8?B?ekJwTmtpaGhKNGJZakRjMzQyWG43NVEzN2tKekNob3hENHlLTlRabmpwR1l5?=
- =?utf-8?B?WjBxTDdKek5BS1dtaG9mOTJJcnFkZWpoc0tIaEZlUmUvM0w4ek5nSzlJcXNz?=
- =?utf-8?B?Q0ttc2F5MzE2Zy9NN29QRGlZV1U1TWs4NmNIc3VhWUVoSkY1NVdRT0YrbnMy?=
- =?utf-8?B?VHl1M1VLWVpZd09zVnl6bFNqN0U3RURxWUdUNEtPNTZaak5rVDhKK21vaEdk?=
- =?utf-8?B?RjlwZjl1Wk52d0NHRzhtSXp3bW1rNnRUTXNvNTdHa0NwcW5OQlBkeFUyNU9Q?=
- =?utf-8?B?Uy9Na2wvam45MEJBRDVZcHdIMjB5SEtCWTNTMWdqU3ovTFVtb3J6aC9IUFV3?=
- =?utf-8?B?SFA0WWRKRTBMZDdjdktrZnIzTWZPN3lLUkVrNFMxV3lkakVnak9CM001ZGh4?=
- =?utf-8?B?cFk1SDcra2Rha1J2QzVPNDdIVTZ1NjdibjFMQ09FaXZhWnZvWk5weWRrbzgr?=
- =?utf-8?B?VXl6Nm53c0VSeGJYTkVUZ3JwcmEwaGlubGNjRmVXRHlwaEdTMnBYQmxLejhJ?=
- =?utf-8?B?cUZOWCtpQmMrWjZHRVNnaGJWclFQYmNadGp0UkwrNk1QZStNVDd2REdBL0cy?=
- =?utf-8?B?bTR5ODdNTXRVYUhBVmtzRzBkdlpGNjRKSWhHN2laZzU0QjY3eWVQYWhicVN5?=
- =?utf-8?B?T2FhWldiem14ZzM1K3U5bTgvSEE4aTJXSFdkK2RwWjR5NWloYktVY3lRanlL?=
- =?utf-8?B?ZkZVWXZEdXZmYWVDYktwL0YyZUpQcGhocjJqaW4xNEVoSldMZklkOGYzWWpw?=
- =?utf-8?B?ZTFSUHpkbmtjaVFWYUVKV0VheU9KTEFNQThscjh0WXRwTHhzN0ZOUEM5bTFm?=
- =?utf-8?B?ZDVhOUFodWtkUzZxMFdybWZ3RndKV3hva05RRGpvK0w3eURtY0ttSEVsVGNU?=
- =?utf-8?B?QkxneTFQajF2UW1Oa2UzYS9GR2J0WW1tMCtJRWJoNEJVcnFtVVpFN2pRVmhG?=
- =?utf-8?B?aXZRTFlzTUFCS1hvdk80cmpoR1FncjI1elYzSGhrUm9qcXZ6amdQL0o2bTBS?=
- =?utf-8?B?OGxkcTNRbkFCM2JDSFMrYm5YY0RmbVpJWDZPdFgwUWdLOVFBWHdaamxDL3B1?=
- =?utf-8?B?MmFWMWF5ZXF5Um1kaGFhbWVVZHJ5YTFLWS80azBFSVU4SHJXR1lQcnQwdXZt?=
- =?utf-8?B?dzhYMjFTb3dTN1NWVWVZc3V5aHptaUthY28va2hCeGN6bHQ2dFpORkdIUExV?=
- =?utf-8?B?SGgzWDFSOVRJbEZDNFFvZWtlVE90eEQzR0lKYW1KSkFpVzVuTXBQYWdUNkFY?=
- =?utf-8?Q?7jGGW9alFObMF7sYUI=3D?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FP68z4v66z2xVt
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 22:49:54 +1000 (AEST)
+Received: by mail-qv1-xf30.google.com with SMTP id x27so16792542qvd.2
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Apr 2021 05:49:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=w2n6dUtA1rKXLo131YjOoiKnBTV2seyqWX7KoGaAIuU=;
+ b=l6FC7Ua1IBE+Dby0+67xCz0mkRwudLS29YnxrYFvuQLmdtKgaxG6k1BuoaVoKugsvf
+ pQtF+jPijWVVnD9f/pu4RDl0CafqbZ+yf+dmdCDpuNFObZyN+JMjTaNVfGPOksyz6oYN
+ VIZ/6Hop4U04j/hq4KDyI5/lkgZJt+3+LOUCw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=w2n6dUtA1rKXLo131YjOoiKnBTV2seyqWX7KoGaAIuU=;
+ b=YTMHbN+rE+kQjD0aVAQvMRH9tKrT6CZgPmt+4mBMKLOdaAxB8bqJahETfyfzUnL/t/
+ jipJ3V9jmA0pdbhV+0YLHA8+fOv0//1LJye4Ue0XvDmscVQ1cxyiwbSJsLeQYi/tYKcE
+ Ny3TozTRHnQu9rLOKQVFwQTFvetEA9s91WPiRAYnU0CPR+0SNyk/x4lqbWP+sxs2T/f4
+ iE070+Enz1h89FH49LczMpDDweqCrH80ZUkcRWR8FPL0t+PwflsqQJ7Q5O8so1cgqLWo
+ ayLnCrkuCdDlcrVlPc9IpB/toExdNltVhDhkMh3viucU2UHo6r3Vd9J0L/xp27mdL8nc
+ pLeQ==
+X-Gm-Message-State: AOAM531aAaJfR437zswKieqztUW+HfkYJT0ylFa0TGXvKlFQbFef3X67
+ sn2qszc7D1dNmM5ak4uccPO2jVFXw6oFG1njtEk=
+X-Google-Smtp-Source: ABdhPJxaV7xKu3A8eK1LxV7NuURHd+6/oyDyK3wEG1YiSDZoVmXX7P3CF3MBtNjt2UgOaF3Bah1YIHPKr+GA1VVHCL8=
+X-Received: by 2002:a0c:d786:: with SMTP id z6mr20660494qvi.18.1618836591061; 
+ Mon, 19 Apr 2021 05:49:51 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: quantatw.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PSAPR04MB4231.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c9bc67ea-4dd3-43cd-47c9-08d903247d03
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Apr 2021 11:15:49.8817 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: QFoqM1Sm3bks8L+z6TCZruc2dHH39CEK6RE/zP+WoGO1BCNXkIoDJr8xMoKquonYmRmF1hSAL8H+buWOP5KRKA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS2PR04MB3815
+References: <20210413080755.73572-1-joel@jms.id.au>
+ <20210413080755.73572-11-joel@jms.id.au>
+ <cacf13c1-91b2-ad51-606e-bb208d13ec36@linux.vnet.ibm.com>
+ <9779de4a-6985-8b94-9fb6-55c74a7a722f@linux.vnet.ibm.com>
+ <CACPK8XcNyXUhe=43NCR1RzrexJGYWw2S-kXWsYDzNYAJujnmpg@mail.gmail.com>
+ <001cda88-6e0f-cd48-d274-3764d0ceb18d@linux.vnet.ibm.com>
+In-Reply-To: <001cda88-6e0f-cd48-d274-3764d0ceb18d@linux.vnet.ibm.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 19 Apr 2021 12:49:38 +0000
+Message-ID: <CACPK8XdHNDv8ELvKR9jEps7eR8Lj0n0hXp-TL48kDWWUyMH26g@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 10/11] crypto: Add driver
+ for Aspeed HACE
+To: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -136,59 +76,140 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "edtanous@google.com" <edtanous@google.com>, Nan Zhou <nanzhou@google.com>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-DQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IFBhdHJpY2sgV2lsbGlhbXMg
-PHBhdHJpY2tAc3R3Y3gueHl6Pg0KPiBTZW50OiBGcmlkYXksIEFwcmlsIDE2LCAyMDIxIDEwOjU4
-IFBNDQo+IFRvOiBCcnVjZSBMZWUgKOadjuaYgOWzuykgPEJydWNlX0xlZUBxdWFudGF0dy5jb20+
-DQo+IENjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc7IGVkdGFub3VzQGdvb2dsZS5jb207IE5h
-biBaaG91DQo+IDxuYW56aG91QGdvb2dsZS5jb20+DQo+IFN1YmplY3Q6IFJlOiBIb3cgdG8gZ2V0
-IHRoZSByZXR1cm4gdmFsdWUgdXNpbmcgdGhlIGNvbW1hbmQgYnVzY3RsIHNldC1wcm9wZXJ0eT8N
-Cj4gDQo+IE9uIEZyaSwgQXByIDE2LCAyMDIxIGF0IDA0OjQ2OjAwQU0gKzAwMDAsIEJydWNlIExl
-ZSAo5p2O5piA5bO7KSB3cm90ZToNCj4gPiBEb2VzIGJ1c2N0bCBzZXQtcHJvcGVydHkgY2FuIGdl
-dCBpdHMgcmV0dXJuIHZhbHVlPw0KPiAuLi4NCj4gPiBJZiBjYW4gZ2V0IGl0cyByZXR1cm4gdmFs
-dWUgZnJvbSBzZXQtcHJvcGVydHksIGhvdyB0byBkbyBpdD8NCj4gDQo+IFRoZXJlIGlzbid0IHJl
-YWxseSBhIHJldHVybiB2YWx1ZSBmcm9tIGEgc2V0LXByb3BlcnR5IGNhbGw7IHRoZXJlIGlzIG9u
-bHkgYSBwb3NzaWJsaXR5DQo+IG9mIGVycm9yLg0KPiANCj4gSWYgeW91IGxvb2sgYXQgJ21hbiBT
-RF9CVVNfUFJPUEVSVFknIHlvdSdsbCBzZWUgdGhlIGZ1bmN0aW9uIHR5cGUgZm9yIGENCj4gcHJv
-cGVydHkgc2V0IGlzOg0KPiANCj4gICAgICAgIHR5cGVkZWYgaW50ICgqc2RfYnVzX3Byb3BlcnR5
-X3NldF90KShzZF9idXMgKmJ1cywgY29uc3QgY2hhciAqcGF0aCwNCj4gICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb25zdCBjaGFyICppbnRlcmZhY2UsDQo+ICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29uc3QgY2hhciAqcHJv
-cGVydHksDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc2Rf
-YnVzX21lc3NhZ2UgKnZhbHVlLA0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIHZvaWQgKnVzZXJkYXRhLA0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIHNkX2J1c19lcnJvciAqcmV0X2Vycm9yKTsNCj4gDQo+IFRoaXMgaXMg
-d2hlcmUgdGhlICdpbnQnIHJldHVybiB5b3UncmUgc2VlaW5nIGZyb20gdGhlc2Ugc2V0LXByb3Bl
-cnR5IGhhbmRsZXJzDQo+IGNvbWluZyBmcm9tLiAgVGhlIHdheSBzeXN0ZW1kIGhhbmRsZXMgdGhl
-IHJldHVybiBjb2RlIGlzIHRoYXQgYW55IG5lZ2F0aXZlDQo+IG51bWJlciBiZWNvbWVzIGEgbmVn
-YXRpdmUgZXJybm8gc3R5bGUgdmFsdWUgdGhhdCBzeXN0ZW1kIHR1cm5zIGludG8gYW4NCj4gYXBw
-cm9wcmlhdGUgZXJyb3IgbWVzc2FnZSBiYWNrIGFjcm9zcyB0aGUgZGJ1cy4gIFRoZXJlIGlzIGEg
-cGFyYWdyYXBoIGluIHRoZQ0KPiBtYW5wYWdlIHdpdGggbW9yZSBkZXRhaWxzOg0KPiANCj4gICAg
-ICAgIElmIGEgY2FsbGJhY2sgd2FzIGludm9rZWQgdG8gaGFuZGxlIGEgcmVxdWVzdCB0aGF0IGV4
-cGVjdHMgYSByZXBseSBhbmQNCj4gICAgICAgIHRoZSBjYWxsYmFjayByZXR1cm5zIGEgbmVnYXRp
-dmUgdmFsdWUsIHRoZSB2YWx1ZSBpcyBpbnRlcnByZXRlZCBhcyBhDQo+ICAgICAgICBuZWdhdGl2
-ZSBlcnJuby1zdHlsZSBlcnJvciBjb2RlIGFuZCBzZW50IGJhY2sgdG8gdGhlIGNhbGxlciBhcyBh
-IEQtQnVzDQo+ICAgICAgICBlcnJvciBhcyBpZiBzZF9idXNfcmVwbHlfbWV0aG9kX2Vycm5vKDMp
-IHdhcyBjYWxsZWQuIEFkZGl0aW9uYWxseSwgYWxsDQo+ICAgICAgICBjYWxsYmFja3MgdGFrZSBh
-IHNkX2J1c19lcnJvciBvdXRwdXQgcGFyYW1ldGVyIHRoYXQgY2FuIGJlIHVzZWQgdG8NCj4gICAg
-ICAgIHByb3ZpZGUgbW9yZSBkZXRhaWxlZCBlcnJvciBpbmZvcm1hdGlvbi4gSWYgcmV0X2Vycm9y
-IGlzIHNldCB3aGVuIHRoZQ0KPiAgICAgICAgY2FsbGJhY2sgZmluaXNoZXMsIHRoZSBjb3JyZXNw
-b25kaW5nIEQtQnVzIGVycm9yIGlzIHNlbnQgYmFjayB0byB0aGUNCj4gICAgICAgIGNhbGxlciBh
-cyBpZiBzZF9idXNfcmVwbHlfbWV0aG9kX2Vycm9yKDMpIHdhcyBjYWxsZWQuIEFueSBlcnJvciBz
-dG9yZWQNCj4gICAgICAgIGluIHJldF9lcnJvciB0YWtlcyBwcmlvcml0eSBvdmVyIGFueSBuZWdh
-dGl2ZSB2YWx1ZXMgcmV0dXJuZWQgYnkgdGhlDQo+ICAgICAgICBzYW1lIGNhbGxiYWNrIHdoZW4g
-ZGV0ZXJtaW5pbmcgd2hpY2ggZXJyb3IgdG8gc2VuZCBiYWNrIHRvIHRoZSBjYWxsZXIuDQo+IA0K
-PiBUaGUgKmJlc3QqIHdheSBmb3IgYSBzZXQtcHJvcGVydHkgaGFuZGxlciB0byByZXR1cm4gYW4g
-ZXJyb3IgaXMgdG8gdXNlIHRoZQ0KPiBzZF9idXNfcmVwbHlfbWV0aG9kX2Vycm9yIG9yIGZpbGwg
-b3V0IHRoZSByZXRfZXJyb3Igd2l0aCBzZF9idXNfZXJyb3Jfc2V0Lg0KPiBCb3RoIHRoZSBBU0lP
-IG9iamVjdF9zZXJ2ZXIuaHBwIGFuZCB0aGUNCj4gc2RidXMrKy1nZW5lcmF0ZWQgc2VydmVyIGJp
-bmRpbmdzIGNhdGNoIGV4Y3BldGlvbnMgdGhyb3duIG91dCBvZiB0aGUNCj4gc2V0LXByb3BlcnR5
-IGhhbmRsZXJzIGFuZCB0dXJuIHRoZW0gaW50byBzZF9idXNfZXJyb3Jfc2V0IGNhbGxzLg0KPiAN
-Cg0KVGhhbmtzIGZvciB5b3VyIHJlcGx5LCBpdCdzIHZlcnkgdXNlZnVsIHRvIG1lLg0KDQo+IE90
-aGVyIHRoYW4gdGhlIG5lZ2F0aXZlIHZhbHVlIGluZGljYXRpbmcgYSBlcnJubywgdGhlIHBvc2l0
-aXZlIHZhbHVlIGhhcyBubw0KPiBtZWFuaW5nIGFuZCBkb2VzIG5vdCBkbyBhbnl0aGluZyBhdCBh
-IGRidXMgbGV2ZWwuDQo+IA0KPiAtLQ0KPiBQYXRyaWNrIFdpbGxpYW1zDQo=
+On Thu, 15 Apr 2021 at 21:38, Klaus Heinrich Kiwi
+<klaus@linux.vnet.ibm.com> wrote:
+>
+>
+>
+> On 4/14/2021 11:32 PM, Joel Stanley wrote:
+> >> Another interesting thing is that the SPL tries to boot from UART, but neither
+> >> my fitImages, Legacy images or even RAW images are working.. Not sure if we need
+> >> some special handling of those images before feeding them to the spl ymodem loader?
+> > I wasn't able to get the SPL to load any images - raw binaries or FIT
+> > - from eMMC either. Something is going wrong, but I am unsure what it
+> > is. I will continue to debug.
+>
+> I was able to make it work on real hardware (rainier100) with the following changes
+> (in addition to the other fixups already mentioned in this thread):
+>
+>  From a2a2819455ec5de689fd0702cce20bfb18ec11b1 Mon Sep 17 00:00:00 2001
+> From: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+> Date: Thu, 15 Apr 2021 15:16:37 -0300
+> Subject: [PATCH] HACE fixups:
+>
+>   * The AST2600 workbook mentions that the list structure passed to
+>     ASPEED_HACE_HASH_SRC needs to be 8-byte aligned. Normally, glibc's
+>     malloc() would always align memory to (at least) 8-bytes, but that's
+>     the case with u-boot's pre-sdram malloc() implementation. So we need
+>     to explicitly align the context to 8-bytes with malign().
+
+We're not using the HACE engine pre-SDRAM, so we should be ok.
+
+common/dlmalloc.c:
+
+    8-byte alignment is guaranteed by normal malloc calls, so don't
+    bother calling memalign with an argument of 8 or less.
+
+Were you able to observe any allocations that were not aligned?
+
+>
+>   * The __atribute__ ((align 8)) doesn't have an effect in struct
+>     elements. Remove it.
+
+Agreed.
+
+>
+>   * Since the struct aspeed_hash_ctx->list element is what we need to
+>     make sure is aligned to 9-bytes, move that to the first element of
+>     the array, and call-out the fact that this needs to be aligned in
+>     the declaration.
+
+9 bytes? Did you mean 8?
+
+Regardless, the array in the structure should be aligned as there will
+be no padding earlier in the struct. I have added a runtime check for
+this and have not hit that in my testing so far.
+
+>
+>    * Clear HACE_HASH_ISR before issuing new command
+
+This makes sense.
+
+I will send out a new series for review. I've tested it thoroughly in
+qemu, and have tested the u-boot -> Linux path on hardware.
+
+Cheers,
+
+Joel
+
+>
+> Signed-off-by: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
+> ---
+>   drivers/crypto/aspeed_hace.c | 15 +++++++++++++--
+>   1 file changed, 13 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/crypto/aspeed_hace.c b/drivers/crypto/aspeed_hace.c
+> index 473d4d7391..0551fe6c83 100644
+> --- a/drivers/crypto/aspeed_hace.c
+> +++ b/drivers/crypto/aspeed_hace.c
+> @@ -51,12 +51,19 @@ struct aspeed_sg {
+>         u32 addr;
+>   };
+>
+> +
+> +/*
+> + * Note: element 'list' below needs to be 8-byte aligned,
+> + *       keep it as the first element so that we can always
+> + *       guarantee that when allocating the struct (that should
+> + *       also be 8-byte aligned)
+> + */
+>   struct aspeed_hash_ctx {
+> +       struct aspeed_sg list[ASPEED_MAX_SG];
+>         u32 method;
+>         u32 digest_size;
+>         u32 len;
+>         u32 count;
+> -       struct aspeed_sg list[ASPEED_MAX_SG] __attribute__((aligned(8)));
+>   };
+>
+>   struct aspeed_hace {
+> @@ -85,6 +92,9 @@ static int digest_object(const void *src, unsigned int length, void *digest,
+>                 return -EINVAL;
+>         }
+>
+> +       /* clear any pending interrupt */
+> +       writel(HACE_HASH_ISR, base + ASPEED_HACE_STS);
+> +
+>         writel((u32)src, base + ASPEED_HACE_HASH_SRC);
+>         writel((u32)digest, base + ASPEED_HACE_HASH_DIGEST_BUFF);
+>         writel(length, base + ASPEED_HACE_HASH_DATA_LEN);
+> @@ -145,12 +155,13 @@ int hw_sha_init(struct hash_algo *algo, void **ctxp)
+>                 return -ENOTSUPP;
+>         }
+>
+> -       ctx = calloc(1, sizeof(*ctx));
+> +       ctx = memalign(8, sizeof(struct aspeed_hash_ctx));
+>
+>         if (ctx == NULL) {
+>                 debug("Cannot allocate memory for context\n");
+>                 return -ENOMEM;
+>         }
+> +       ctx->len = ctx->count = 0;
+>         ctx->method = method | HACE_SG_EN;
+>         ctx->digest_size = algo->digest_size;
+>         *ctxp = ctx;
+> --
+> 2.25.1
+>
+>
+>
+>
+>
+> --
+> Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
