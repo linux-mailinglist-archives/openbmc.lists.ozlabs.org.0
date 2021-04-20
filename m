@@ -1,52 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72F21365C07
-	for <lists+openbmc@lfdr.de>; Tue, 20 Apr 2021 17:19:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD02D365CF7
+	for <lists+openbmc@lfdr.de>; Tue, 20 Apr 2021 18:14:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FPnQx2gsHz2yyv
-	for <lists+openbmc@lfdr.de>; Wed, 21 Apr 2021 01:19:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FPpdz5QLxz301W
+	for <lists+openbmc@lfdr.de>; Wed, 21 Apr 2021 02:13:59 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=Rgqiz1wt;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=p72y/+C8;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=Rgqiz1wt; 
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=p72y/+C8; 
  dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [71.19.156.171])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FPnQj6r1nz2xZn
- for <openbmc@lists.ozlabs.org>; Wed, 21 Apr 2021 01:19:08 +1000 (AEST)
-Received: from hatter.bewilderbeest.net (unknown [IPv6:2600:6c44:7f:ba20::7c6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 1925421B;
- Tue, 20 Apr 2021 08:19:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1618931946;
- bh=oQsjsO0Yl4yjifxeL/OMKHJvvkUd/jcIQKwEeqW7BDA=;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FPpdl3ZZZz2xdL
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Apr 2021 02:13:47 +1000 (AEST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 02DE6613C4;
+ Tue, 20 Apr 2021 16:13:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1618935224;
+ bh=cD3y7b3kSrwWftJRkxx0RYSxy1zhp+eP+mHHMyD5znU=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Rgqiz1wtPfW54DSKSL8gCSziB2bmtE2CHeyGWJk1RuLk7ibMPtNNu7Bt2PHu3+c8Z
- ZOuCiZcBM/zHQK256DVdxfxB5ykkIbES9HH5dRcI1T4STN3KcU/1oPvc69wQVO3pFg
- ndAZyKi+o0BH+U87lPpQNYnVXAJubvSV0sr06DyE=
-Date: Tue, 20 Apr 2021 10:19:04 -0500
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Guenter Roeck <linux@roeck-us.net>
+ b=p72y/+C8zRB7jibKzZbKoTo/4uyciL4SpZsoR7nj2YJec0zW/MCB5DPdwwosi/2pM
+ U2GgmVaYXdVJoucJvIUgePup+nRr8NSaVmI4VG6xl3Hi4GEcaKuKdbnb/3MlwGhZRn
+ 6YRNqNYBKbW7XhTMAz++sKLDXKnCXn8YuoifOVUJodf2hEm0ZXACnhRjPBvARLkmBo
+ UVPlbEHHUb1bmAGvpqkfXtNmmKTnilvKc4djCmzP/gPch3f5XUHXy11DVceQhGqCh3
+ 0UxfV6M9+HBiNWxwXcVLwhdOhPltUygJRaw7SKNahQArEKMYUWMPhhqZL/BuI7+OI+
+ xDN6Rzd+SqB7g==
+Date: Tue, 20 Apr 2021 17:13:18 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Zev Weiss <zev@bewilderbeest.net>
 Subject: Re: Enabling pmbus power control
-Message-ID: <YH7w6HUtBSCZRWq4@hatter.bewilderbeest.net>
-References: <20210330174221.GJ4976@sirena.org.uk>
- <YGNmaNzWOYrJROvX@hatter.bewilderbeest.net>
+Message-ID: <20210420161317.GE6073@sirena.org.uk>
+References: <YGNmaNzWOYrJROvX@hatter.bewilderbeest.net>
  <20210330180200.GK4976@sirena.org.uk>
  <20210330193810.GA235990@roeck-us.net>
  <YH4ukR5egB2eG0Vo@hatter.bewilderbeest.net>
@@ -55,11 +50,14 @@ References: <20210330174221.GJ4976@sirena.org.uk>
  <9639fa33-01ca-9802-e745-5e3edb81e305@roeck-us.net>
  <YH59WOg0iKbz1d0l@hatter.bewilderbeest.net>
  <fe111c8a-9588-dbfb-624a-29bb3a5efe13@roeck-us.net>
+ <YH7w6HUtBSCZRWq4@hatter.bewilderbeest.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="KlAEzMkarCnErv5Q"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fe111c8a-9588-dbfb-624a-29bb3a5efe13@roeck-us.net>
+In-Reply-To: <YH7w6HUtBSCZRWq4@hatter.bewilderbeest.net>
+X-Cookie: Falling rock.
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,52 +72,40 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
  Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
  Liam Girdwood <lgirdwood@gmail.com>, linux-kernel@vger.kernel.org,
- Mark Brown <broonie@kernel.org>
+ Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Apr 20, 2021 at 05:52:16AM CDT, Guenter Roeck wrote:
->On 4/20/21 12:06 AM, Zev Weiss wrote:
->> On Tue, Apr 20, 2021 at 01:00:25AM CDT, Guenter Roeck wrote:
->>> On 4/19/21 10:50 PM, Zev Weiss wrote:
->>> [ ... ]
->>>
->>>> I had a glance at the enclosure driver; it looks pretty geared toward SES-like things (drivers/scsi/ses.c being its only usage I can see in the kernel at the moment) and while it could perhaps be pressed into working for this it seems like it would probably drag in a fair amount of boilerplate and result in a somewhat gratuitously confusing driver arrangement (calling the things involved in the cases we're looking at "enclosures" seems like a bit of a stretch).
->>>>
->>>> As an alternative, would something like the patch below be more along the lines of what you're suggesting?  And if so, would it make sense to generalize it into something like 'pmbus-switch.c' and add a PMBUS_HAVE_POWERSWITCH functionality bit or similar in the pmbus code instead of hardcoding it for only LM25066 support?
->>>>
->>>>
->>>
->>> No. Don't access pmbus functions from outside drivers/hwmon/pmbus.
->>>
->>> I used to be opposed to function export restrictions (aka export namespaces),
->>> but you are making a good case that we need to introduce them for pmbus
->>> functions.
->>>
->>> Guenter
->>
->> Okay -- I figured that was likely to be frowned upon, but the alternative seemed to be effectively duplicating non-trivial chunks of the pmbus code.  However, upon realizing that the LM25066 doesn't actually require any of the paging work the generic pmbus code provides, I suppose it can actually be done with a simple smbus read & write.  Does this version look better?
->>
->
->It is just getting worse and worse. You are re-implementing regulator
->support for the lm25066. The correct solution would be to implement
->regulator support in the lm25066 and use it from the secondary driver
->(which should be chip independent).
->
->Guenter
->
 
-Implementing it by way of regulator support seems like it would make 
-sense, but that in turn sounds like it would then end up just being a 
-reimplementation of REGULATOR_USERSPACE_CONSUMER, which (unless there 
-was some more subtle distinction that I missed) Mark already told me in 
-no uncertain terms is not the way to go.  So I hope I could be forgiven 
-for feeling a bit stuck here.
+--KlAEzMkarCnErv5Q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Mark, do you have any further input on what a viable approach might look 
-like?
+On Tue, Apr 20, 2021 at 10:19:04AM -0500, Zev Weiss wrote:
 
+> Mark, do you have any further input on what a viable approach might look
+> like?
 
-Thanks,
-Zev
+I already suggested writing a driver or drivers that represent the
+hardware you have, that advice remains.  It's hard to follow what you
+were trying to say with your long mail earlier today but it seems like
+you basically don't want to use any abstraction or framework, but that's
+not really suitable for upstream integration - other hardware that looks
+similar to the end user should look similar in the kernel too.
 
+--KlAEzMkarCnErv5Q
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmB+/Z0ACgkQJNaLcl1U
+h9A2Hwf/SWR76PMEbzeYJSpzqHxdwIVdQoQPT//JnsDvGXFKZpXK29a+gvAY9EW2
+vR/O/no5OLWRaQ6DRjrNbg4y3kcNsGSIMBrl1g0+jO+Iznes8ZRqBkFYcsh2uHnA
+b6ZHnLqIhfIoSxC2WfYKo1ZlHoJzZJwgD9tTIs0B6/jWJ0VmtWH1Vfkg7Efcwfq7
+YQv84OLLrLaXPBCrF9U2Gekw+Ju9JHnH8fPIlyeHQHN1JW4M/nOYc7ri5R/islne
+SLA9DkV7l/cr6YUDU6eKCB8F5I2XEpJOOLgGcnMYo0rpTZoypOUygw6ZxEXk34qy
+2AmIyG9TTs70sV/hLjrJEXBh+PNynA==
+=T6vq
+-----END PGP SIGNATURE-----
+
+--KlAEzMkarCnErv5Q--
