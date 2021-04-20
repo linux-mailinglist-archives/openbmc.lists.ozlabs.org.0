@@ -2,132 +2,124 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 562E33656E6
-	for <lists+openbmc@lfdr.de>; Tue, 20 Apr 2021 12:52:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 01A643658CC
+	for <lists+openbmc@lfdr.de>; Tue, 20 Apr 2021 14:19:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FPgWB2QYcz2yyj
-	for <lists+openbmc@lfdr.de>; Tue, 20 Apr 2021 20:52:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FPjRQ0B6cz2yxN
+	for <lists+openbmc@lfdr.de>; Tue, 20 Apr 2021 22:19:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=eVdwF/+H;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=MCs8JW8O;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::336;
- helo=mail-ot1-x336.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=eVdwF/+H; dkim-atps=neutral
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com
- [IPv6:2607:f8b0:4864:20::336])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=quantatw.com (client-ip=40.107.131.123;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=charles.hsu@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=MCs8JW8O; 
+ dkim-atps=neutral
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1310123.outbound.protection.outlook.com [40.107.131.123])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FPgVx20R6z2xZT
- for <openbmc@lists.ozlabs.org>; Tue, 20 Apr 2021 20:52:22 +1000 (AEST)
-Received: by mail-ot1-x336.google.com with SMTP id
- 101-20020a9d0d6e0000b02902816815ff62so29480141oti.9
- for <openbmc@lists.ozlabs.org>; Tue, 20 Apr 2021 03:52:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:subject:to:cc:references:from:autocrypt:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=ar1NLP1PJ/JjP7pqq8Gu408Ftb6GKKkJF8IQieN/XQ0=;
- b=eVdwF/+HgUoSK24gJnYJbT5+1XBFzzITbvdlC4ShKsCmqdWQj8tNAkxlkDZKVFtb/O
- Y7t2XfCpyo0Y/wQnSBN6q81zQPCI1/mfVxChL+C2QvEaBdD/hgBMSeVsvP0a1YoOqD2z
- XXAPF7whMeEYjNCBAWYPSGo/AOmUlkOMJw+azawjWm2XCmL+h6WUKte7LYz1cPLcrMIL
- DYkJBdX4pgye/rbgn+R13DAIzUsLp6DoqUcHlscJYAgJsi0AwUAngUfsoigzrJOCGTPt
- sGfgu4lc8QUx2UZ4DupplhhEY7RoglW5lqXyLMWjnZNTj2oGtKuKdqpwSIdQr3HkADM5
- tXTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
- :message-id:date:user-agent:mime-version:in-reply-to
- :content-language:content-transfer-encoding;
- bh=ar1NLP1PJ/JjP7pqq8Gu408Ftb6GKKkJF8IQieN/XQ0=;
- b=J6LuE/pSFeJe/RHOzj+pHu5asZmobreqnWy0kSJQvFsCqZDPbKum6XsyfthktSQT4W
- w8oosF+AznFv8SA5n5S7arpkkoXg8uxdEhSe8IQhTCc+W5kt1KcEvm8iXq7icMSvHqNm
- jYTGDnJ/zvmFWp++08Me/b4sQ8GR5XyuGvXiVirH64Ezm1sfXwztA4LkC9n4z42Oas4V
- 91p8eWTEPig1fpFXU0OJaswmd9LlopKA7BLTjZB64iSzRZZKv/w2DWetIXahiudga+YE
- RqGApY7hMRUBKZC8Dq+2CPcHcS/5jHrQSnyb6ttwwFbACt+kuvgEbEi08xm4JDGaVa+L
- /wHA==
-X-Gm-Message-State: AOAM532mge/DKEA0ftTuZymh+PHq1l6xY34yWQCZjKgntnl8yMSG3bua
- cMVIAVucFOfzxzsTggFbf0ldzFn1qq0=
-X-Google-Smtp-Source: ABdhPJz3XejbPUl+cy6OhXPqaz6SJ8sIqtfbHmIcZ9FAXPtMPCnDwSjp0FIXny3ibV/tpKUp7Gjc4g==
-X-Received: by 2002:a05:6830:1d98:: with SMTP id
- y24mr9647565oti.164.1618915939038; 
- Tue, 20 Apr 2021 03:52:19 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- i9sm2202197oog.17.2021.04.20.03.52.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Apr 2021 03:52:18 -0700 (PDT)
-Subject: Re: Enabling pmbus power control
-To: Zev Weiss <zev@bewilderbeest.net>
-References: <20210330112254.GB4976@sirena.org.uk>
- <YGNdoYq5lyERVGLO@hatter.bewilderbeest.net>
- <20210330174221.GJ4976@sirena.org.uk>
- <YGNmaNzWOYrJROvX@hatter.bewilderbeest.net>
- <20210330180200.GK4976@sirena.org.uk> <20210330193810.GA235990@roeck-us.net>
- <YH4ukR5egB2eG0Vo@hatter.bewilderbeest.net>
- <20210420033648.GA227111@roeck-us.net>
- <YH5rky8nA4nKAVdg@hatter.bewilderbeest.net>
- <9639fa33-01ca-9802-e745-5e3edb81e305@roeck-us.net>
- <YH59WOg0iKbz1d0l@hatter.bewilderbeest.net>
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-Message-ID: <fe111c8a-9588-dbfb-624a-29bb3a5efe13@roeck-us.net>
-Date: Tue, 20 Apr 2021 03:52:16 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FPjR91ZT2z2xdL
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Apr 2021 22:19:13 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Uwb3W0XzGYBQdUSEuMjH/fQgvCQL/L4qpWbYz64JNezPnl7mZ/buTUhO0T/DtjH5mLxdJp8Zgfem9QFYNPVnSsUsiE6EIBDj6olUK7FyvgjlEYA5JAVQp5n0z2nkBmbbVGKlgTZx83FRhIGE9YEvwt7AP6ZcUL7uEn3vDt8nIjBJ0IykFei9MJ6H12aaxgJzVKebYaGJ2x86rs3Mjwu4tIej9XPE6rQQVbY9NBVelaLNSJD2H2KjviPmD2CkRc8qMJV4NtIlmj+To+/WlEXLwNlWZIYtGpm06iy3iHWYtgN4HsJdH/d5SpzuI7JCjP2nt8+L3KSEYzRQ12zH/HwUpg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EAHwcoYbKii0gzdg51H0pDGi4J99GfOglswDjhwQwzw=;
+ b=gCV0DIWF7jnYeaf8zDowbRPS1FT8D9tw5B4QJiEWi9vbH+AClapxGAWszLFbk418ypprhAE8Y1FHCoZ6l8Ae+MdOzxOnoqbPM/YzDa+3RjDgj5almgTAhH5X7EFCm+JST7h+NlRn0w9v0Sihndlgc0DfE0HjXRyz4aeUmFPCmeByU7bEyxMfMCa5KxqBe6SnpvT2o7802JXtCDKQ5bTfjV0JGdTmyZnS8G6bWH3Quk1dV677FVH/wzbL7E26Y4DjXUCzxM2UvWkQjH4f8RIO94jCpVsRxy6xMiMeZ8jS9lafv+Qx2d1uOV8qnhEhUrC6bPUsi1fnjfk/IpX6z3qx9A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EAHwcoYbKii0gzdg51H0pDGi4J99GfOglswDjhwQwzw=;
+ b=MCs8JW8OGnxDRGzi5A6qjaLp8SGWDawq/rU5EQm/ru2r90VmK5GniR1A2WEwkiqdSKAOFrSP6tK+hgk3neqeSTUoRKcHS/gxNRIaM6pPf1Ohc1KN3pHaIGQWf5TsVZnvf61x6kFQTpanellwTp+XXquVaL1kA88bd3dB8CX5okw=
+Received: from SG2PR04MB2298.apcprd04.prod.outlook.com (2603:1096:4:a::22) by
+ SG2PR04MB2907.apcprd04.prod.outlook.com (2603:1096:4:18::11) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4042.16; Tue, 20 Apr 2021 12:18:55 +0000
+Received: from SG2PR04MB2298.apcprd04.prod.outlook.com
+ ([fe80::d4f8:e25d:d792:602f]) by SG2PR04MB2298.apcprd04.prod.outlook.com
+ ([fe80::d4f8:e25d:d792:602f%4]) with mapi id 15.20.4042.024; Tue, 20 Apr 2021
+ 12:18:55 +0000
+From: =?big5?B?Q2hhcmxlcyBIc3UgKK59pcPBwyk=?= <Charles.Hsu@quantatw.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: x86-power-control: make the timeout configurable
+Thread-Topic: x86-power-control: make the timeout configurable
+Thread-Index: Adc12v7qwlgcqvejT7KSoZ5DrG8NQA==
+Date: Tue, 20 Apr 2021 12:18:55 +0000
+Message-ID: <SG2PR04MB2298402C7E2E3DB9E522CDB58A489@SG2PR04MB2298.apcprd04.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=quantatw.com;
+x-originating-ip: [61.218.113.162]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 004ec822-7ac1-40ee-6bf9-08d903f677b3
+x-ms-traffictypediagnostic: SG2PR04MB2907:
+x-microsoft-antispam-prvs: <SG2PR04MB29079AF590256CDBCAD8F5E08A489@SG2PR04MB2907.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7219;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: r8jyK2yJYeRwMqXe4GkYS6lVS05Q7XPxs9qiasWrkVvkBMBl8MMB7q8zIQQHgZ23507hhYRQ5DnVE2KI3QG2Ub0uv/XF+PZeAiuVGhSIYiPMt5MHgS7GGHwV/66PsFvG1UMyopb9u5yv1alF1Zl+48tzy4B8S+HFWNzJar8qcoVth2TpRmzZpJX1nQMSxQ1cFgFEpsf/fssK0vq1Tds7soe3X3xYPdy2vx3MYG960I77oK6lCkk798U7A6mEbSmg3FHiw7xm7TAs5vQBgvu128CmrMJJbaun3Nrzpo+XrWSWB+rgum8yU1yLeN3GMsTIUmuF5wmnr2ZfHlsBbqMgN71RsMY4Xf4ppJjxxv4HUgZPlj4065FUU4JEP3NP9apGXxVhXeJ5Dv/hJQmjyms77bAgh3fvucCZwF9AsF246JltcXuU1L3XBFnih9t9cp3RevVA3uUmk06uKybkkyGlFJ+9+sMDX/dQ8INcTsq7DV/R0XXAJL7oHl/4K3qYAAm9bA25lUFXTDzmb/shMDUIGuqmk/YKm5IIdVpr4MdyA3fik5Q5NFHR+W5ccDozF8vdvclLZRitq/c6Qn5lkTFtw35ITUOyuGXomZR0BCnK5WY=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SG2PR04MB2298.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(39860400002)(396003)(366004)(136003)(376002)(346002)(55016002)(2906002)(26005)(66476007)(66446008)(7696005)(71200400001)(83380400001)(5660300002)(66946007)(122000001)(316002)(64756008)(478600001)(86362001)(6916009)(33656002)(9686003)(558084003)(54906003)(85182001)(6506007)(38100700002)(8676002)(4326008)(52536014)(76116006)(66556008)(186003)(8936002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?big5?B?eEpUUUdUNU10TGtPd0h6dDdCcXc4UFg1M3lpNjBScnhKL2t4czlsby9xUHFaZ1RR?=
+ =?big5?B?dmRHQXExV093TVptSC8xeWw4UUhKV2lJNEpleTRMWDJYUmdIdHQ3TEcwT3Qyd0RY?=
+ =?big5?B?akFBRVQ5QnkwaDUvWVlWTWR4Z3RVTjRyWDgzcUtEdWZTTVZpVTVSanJZY1o5aTZP?=
+ =?big5?B?aFNmNTZCc21pbE5hTXZtQ25xcDRLTG85NGtDM1lzNTFRSU5XdVhndzVidDIzc25q?=
+ =?big5?B?TFVlUHd1NnFzUko1eERqVGZjejZheVdyS2ZvNzRRL0l3ODB1aUtEZXUzZVVkWUJC?=
+ =?big5?B?cXVlN2I2TnkrZTRRQjh5MUgwcGZZQnFsVzJtaXlHZWh2NXFWMWJNTnpCQnkyQmY1?=
+ =?big5?B?MHRDTmpWWnV6RUNUMlRwTlhDdGM4R2IyNXpaSkdwcXRDeVlkMFBmTnAzRVR3eGlQ?=
+ =?big5?B?THRvbkNCYlJHc1ZxTGpSSFovQ2V3b21MM3Z6Q2hKZHZsZkN2Z0pDb0hKNUhOOXhr?=
+ =?big5?B?VmJZNG1hWWdxQjBYcW1Ud3FFSGt1dVdWdDdtVDFqaXpaT1lVbG9CQ2taY3EvNUZZ?=
+ =?big5?B?TEdUK2taOEdpeXByemlpL01GS0kxSTdOU3Y1aGlMemJPTzJwUjV3SEhnTVdrWG5P?=
+ =?big5?B?QTA5dXlRY0ovTnZMd2VkWWtPZDRvZjVnMHNBTGY5MXlld0NzcXJxUkJYQmNxWk11?=
+ =?big5?B?SGUycWVGWkM5RDRvb21NYXpZV3pwbUd5SUxaZDVBUzJkWTBOQXl3aUJ2Z2JiYjlv?=
+ =?big5?B?bmNMOTdPNUdkZk9HSlo5NCtRZzl2NzNFZDlBSU1kclIvUmZKQ0xSKzRCS2kvTWto?=
+ =?big5?B?YkU4dWMzYjRkbGQzTUJiVnZSRHZSM0lvcksxc1VrUkR2TTNDeFhDeFpGdzlGWEta?=
+ =?big5?B?OSthTjZhNi9LVi9CVTJBS3VsU3NkenBudU5jUnBIa0JRclVTZi93S0JIN3Bqcm5J?=
+ =?big5?B?djVqZ0IralFmaXh3USszVnZJN1hiVnBHa3AxZFhQYzZkNzFzQkh6a3RYbWZ1b0NU?=
+ =?big5?B?NERTRjB3RFJ0STc3SzF4eURmNlVqT1JRb0ZJYjJrVlJSL1RXMkVHaEY3Z2hLZmpO?=
+ =?big5?B?d2s1bHB3anp2aHhod0JGbkNqZ3V2ajhaR3gveVljZDdQUHg1Rng5VFRLMXVnNTZ1?=
+ =?big5?B?TjNYaWYxVjJscDZ6cFJzdlo0TllEM0oyWXRWRWRSRFJxdjlORjdYbHR5eGRYbkds?=
+ =?big5?B?RmtjL1Iwd0pTTVVVcHhLbktDQkdsbEZqcE44SWpQdlBJVGxWS3J6L2d6a2Z5QTNx?=
+ =?big5?B?Ti8yMGNYc0RTb29SZDd4Zmlla1N4SXhWZTFKTnB2aXBWRXZtMzJZREk5d0JXM3ZV?=
+ =?big5?B?ZnhQblJuYVFLM0hxQXNlZXg5NXluSVNqS1NuZzhxZHlxVk4rMkJBOXdVczlieGpI?=
+ =?big5?B?SGZCNFZpT2tmUDJKcUl0blFXcjRERGlyZS9yT3JFWTNCTkorNGdza0prT3hGN012?=
+ =?big5?B?bGpONU1McFdGd1dIVHVPcHk3djJPK3BPT2hyL2tzVFVLRWEyNzMrTnJ1MkEyY1RE?=
+ =?big5?B?cnZ4cUVINk9RZExuUDBJMmdsYWQ0TWRBWmxjbGVSYml4cWRxM1cxa0ZvbnpiUzNK?=
+ =?big5?B?T05rTGlRSkZMOXBNQjVkd1lIN083VmRJNkh4akZONnRPR3pFWE9SZmNIQWd4QVBi?=
+ =?big5?B?NkpkVlhCVlcxdGd2R0Z2RDlBT21JTkxoUFRFSTQ2eTBPMnRCTmt3UDI1S0lRMDZD?=
+ =?big5?Q?Lc+4AlOhX1aNLExlHOi61queLlNNISEKsAznoEkUiYZqlHm+?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <YH59WOg0iKbz1d0l@hatter.bewilderbeest.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: quantatw.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SG2PR04MB2298.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 004ec822-7ac1-40ee-6bf9-08d903f677b3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Apr 2021 12:18:55.4161 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Li7dqIvybAeRAORIGCLA8IdDnpFd4UJNfEdFuVtcYSF1pW3S9VWPt0fOKOKDIdWU8DCr4x/s3GTizffSelog8DSdtHadOFPEqZBTeNos8sg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB2907
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -139,219 +131,13 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
- Liam Girdwood <lgirdwood@gmail.com>, linux-kernel@vger.kernel.org,
- Mark Brown <broonie@kernel.org>
+Cc: "jason.m.bills@intel.com" <jason.m.bills@intel.com>,
+ "kuiying.wang@intel.com" <kuiying.wang@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 4/20/21 12:06 AM, Zev Weiss wrote:
-> On Tue, Apr 20, 2021 at 01:00:25AM CDT, Guenter Roeck wrote:
->> On 4/19/21 10:50 PM, Zev Weiss wrote:
->> [ ... ]
->>
->>> I had a glance at the enclosure driver; it looks pretty geared toward SES-like things (drivers/scsi/ses.c being its only usage I can see in the kernel at the moment) and while it could perhaps be pressed into working for this it seems like it would probably drag in a fair amount of boilerplate and result in a somewhat gratuitously confusing driver arrangement (calling the things involved in the cases we're looking at "enclosures" seems like a bit of a stretch).
->>>
->>> As an alternative, would something like the patch below be more along the lines of what you're suggesting?  And if so, would it make sense to generalize it into something like 'pmbus-switch.c' and add a PMBUS_HAVE_POWERSWITCH functionality bit or similar in the pmbus code instead of hardcoding it for only LM25066 support?
->>>
->>>
->>
->> No. Don't access pmbus functions from outside drivers/hwmon/pmbus.
->>
->> I used to be opposed to function export restrictions (aka export namespaces),
->> but you are making a good case that we need to introduce them for pmbus
->> functions.
->>
->> Guenter
-> 
-> Okay -- I figured that was likely to be frowned upon, but the alternative seemed to be effectively duplicating non-trivial chunks of the pmbus code.  However, upon realizing that the LM25066 doesn't actually require any of the paging work the generic pmbus code provides, I suppose it can actually be done with a simple smbus read & write.  Does this version look better?
-> 
-
-It is just getting worse and worse. You are re-implementing regulator
-support for the lm25066. The correct solution would be to implement
-regulator support in the lm25066 and use it from the secondary driver
-(which should be chip independent).
-
-Guenter
-
-> 
-> Zev
-> 
-> 
-> From 1662e1c59c498ad6b208e6ab450bd467d71def34 Mon Sep 17 00:00:00 2001
-> From: Zev Weiss <zev@bewilderbeest.net>
-> Date: Wed, 31 Mar 2021 01:58:35 -0500
-> Subject: [PATCH] misc: add lm25066-switch driver
-> 
-> This driver allows an lm25066 to be switched on and off from userspace
-> via sysfs.
-> 
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> ---
->  drivers/misc/Kconfig          |   7 ++
->  drivers/misc/Makefile         |   1 +
->  drivers/misc/lm25066-switch.c | 126 ++++++++++++++++++++++++++++++++++
->  3 files changed, 134 insertions(+)
->  create mode 100644 drivers/misc/lm25066-switch.c
-> 
-> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
-> index f532c59bb59b..384b6022ec15 100644
-> --- a/drivers/misc/Kconfig
-> +++ b/drivers/misc/Kconfig
-> @@ -445,6 +445,13 @@ config HISI_HIKEY_USB
->        switching between the dual-role USB-C port and the USB-A host ports
->        using only one USB controller.
->  
-> +config LM25066_SWITCH
-> +    tristate "LM25066 power switch support"
-> +    depends on OF && SENSORS_LM25066
-> +    help
-> +      This driver augments LM25066 hwmon support with power switch
-> +      functionality controllable from userspace via sysfs.
-> +
->  source "drivers/misc/c2port/Kconfig"
->  source "drivers/misc/eeprom/Kconfig"
->  source "drivers/misc/cb710/Kconfig"
-> diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
-> index 99b6f15a3c70..c948510d0cc9 100644
-> --- a/drivers/misc/Makefile
-> +++ b/drivers/misc/Makefile
-> @@ -56,3 +56,4 @@ obj-$(CONFIG_HABANA_AI)        += habanalabs/
->  obj-$(CONFIG_UACCE)        += uacce/
->  obj-$(CONFIG_XILINX_SDFEC)    += xilinx_sdfec.o
->  obj-$(CONFIG_HISI_HIKEY_USB)    += hisi_hikey_usb.o
-> +obj-$(CONFIG_LM25066_SWITCH)    += lm25066-switch.o
-> diff --git a/drivers/misc/lm25066-switch.c b/drivers/misc/lm25066-switch.c
-> new file mode 100644
-> index 000000000000..9adc67c320f9
-> --- /dev/null
-> +++ b/drivers/misc/lm25066-switch.c
-> @@ -0,0 +1,126 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * This module provides a thin wrapper around the lm25066 hwmon driver that
-> + * additionally exposes a userspace-controllable on/off power switch via
-> + * sysfs.
-> + *
-> + * Author: Zev Weiss <zweiss@equinix.com>
-> + *
-> + * Copyright (C) 2021 Equinix Services, Inc.
-> + */
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/i2c.h>
-> +#include <linux/platform_device.h>
-> +
-> +/*
-> + * The relevant PMBus command and data values for controlling the LM25066
-> + * power state.  Because it's not a paged device we skip the usual paging
-> + * business other PMBus devices might require.
-> + */
-> +#define CMD_OPERATION 0x01
-> +#define OPERATION_ON 0x80
-> +#define OPERATION_OFF 0x00
-> +
-> +static ssize_t switch_show_state(struct device *dev, struct device_attribute *attr,
-> +                                 char *buf)
-> +{
-> +    struct i2c_client *pmic = dev_get_drvdata(dev);
-> +    ssize_t ret = i2c_smbus_read_byte_data(pmic, CMD_OPERATION);
-> +    if (ret < 0)
-> +        return ret;
-> +
-> +    return sysfs_emit(buf, "%s\n", (ret & OPERATION_ON) ? "on" : "off");
-> +}
-> +
-> +static ssize_t switch_set_state(struct device *dev, struct device_attribute *attr,
-> +                                const char *buf, size_t count)
-> +{
-> +    int status;
-> +    u8 value;
-> +    struct i2c_client *pmic = dev_get_drvdata(dev);
-> +    if (sysfs_streq(buf, "on"))
-> +        value = OPERATION_ON;
-> +    else if (sysfs_streq(buf, "off"))
-> +        value = OPERATION_OFF;
-> +    else
-> +        return -EINVAL;
-> +    status = i2c_smbus_write_byte_data(pmic, CMD_OPERATION, value);
-> +    return status ? : count;
-> +}
-> +
-> +static DEVICE_ATTR(state, 0644, switch_show_state, switch_set_state);
-> +
-> +static struct attribute *attributes[] = {
-> +    &dev_attr_state.attr,
-> +    NULL,
-> +};
-> +
-> +static const struct attribute_group attr_group = {
-> +    .attrs = attributes,
-> +};
-> +
-> +static int lm25066_switch_probe(struct platform_device *pdev)
-> +{
-> +    int status;
-> +    struct device_node *np = pdev->dev.of_node;
-> +    struct device_node *pmic_np;
-> +    struct i2c_client *pmic;
-> +
-> +    pmic_np = of_parse_phandle(np, "pmic", 0);
-> +    if (!pmic_np) {
-> +        dev_err(&pdev->dev, "Cannot parse lm25066-switch pmic\n");
-> +        return -ENODEV;
-> +    }
-> +
-> +    if (!of_device_is_compatible(pmic_np, "lm25066")) {
-> +        dev_err(&pdev->dev, "lm25066-switch pmic not lm25066 compatible");
-> +        status = -ENODEV;
-> +        goto out;
-> +    }
-> +
-> +    pmic = of_find_i2c_device_by_node(pmic_np);
-> +    if (!pmic) {
-> +        status = -EPROBE_DEFER;
-> +        goto out;
-> +    }
-> +
-> +    platform_set_drvdata(pdev, pmic);
-> +
-> +    status = sysfs_create_group(&pdev->dev.kobj, &attr_group);
-> +
-> +out:
-> +    of_node_put(pmic_np);
-> +    return status;
-> +}
-> +
-> +static int lm25066_switch_remove(struct platform_device *pdev)
-> +{
-> +    struct i2c_client *pmic = platform_get_drvdata(pdev);
-> +
-> +    sysfs_remove_group(&pdev->dev.kobj, &attr_group);
-> +    put_device(&pmic->dev);
-> +
-> +    return 0;
-> +}
-> +
-> +static const struct of_device_id lm25066_switch_table[] = {
-> +    { .compatible = "lm25066-switch" },
-> +    { },
-> +};
-> +
-> +static struct platform_driver lm25066_switch_driver = {
-> +    .driver = {
-> +        .name = "lm25066-switch",
-> +        .of_match_table = lm25066_switch_table,
-> +    },
-> +    .probe = lm25066_switch_probe,
-> +    .remove = lm25066_switch_remove,
-> +};
-> +
-> +module_platform_driver(lm25066_switch_driver);
-> +
-> +MODULE_AUTHOR("Zev Weiss <zweiss@equinix.com>");
-> +MODULE_LICENSE("GPL");
-> +MODULE_DESCRIPTION("LM25066 power-switch driver");
-
+SGkgLA0KCUluIG15IGNhc2UsIHRoZXNlIHRpbWVycyB3aWxsIGJlIGRlc2lnbmVkIGFjY29yZGlu
+ZyB0byBkaWZmZXJlbnQgaGFyZHdhcmUuDQpJIHdhbnQgdG8gbWFrZSB0aGVzZSB0aW1lcnMgY29u
+ZmlndXJhYmxlIGFuZCBwdXQgdGhlbSBpbnRvIHBvd2VyLWNvbmZpZy1ob3N0MC5qc29uLg0KSWYg
+eW91IGhhdmUgYW55IHN1Z2dlc3Rpb24gb3IgdGhpcyBtb2RpZmljYXRpb24gaXMgbm90IG5lZWRl
+ZCwgcGxlYXNlIHRlbGwgbWUuDQoNClRoYW5rcy4NCkJlc3QgcmVnYXJkcywNCkNoYXJsZXMNCg0K
