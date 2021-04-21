@@ -2,47 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 350A53669AB
-	for <lists+openbmc@lfdr.de>; Wed, 21 Apr 2021 13:06:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2284136728B
+	for <lists+openbmc@lfdr.de>; Wed, 21 Apr 2021 20:29:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FQHmZ1qwgz3037
-	for <lists+openbmc@lfdr.de>; Wed, 21 Apr 2021 21:06:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FQTbs0tY0z302V
+	for <lists+openbmc@lfdr.de>; Thu, 22 Apr 2021 04:29:29 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=fbeRSnW6;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=Vn7+E2N4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=fbeRSnW6; 
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=Vn7+E2N4; 
  dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FQHmL40v2z2yYd
- for <openbmc@lists.ozlabs.org>; Wed, 21 Apr 2021 21:06:10 +1000 (AEST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CD1566144D;
- Wed, 21 Apr 2021 11:06:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1619003167;
- bh=ibymGhoC6SIgzayCKlW3avb2cLYOlJYug+lPz4rPiIE=;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FQTbc38hmz2yjB
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Apr 2021 04:29:15 +1000 (AEST)
+Received: from hatter.bewilderbeest.net (unknown [IPv6:2600:6c44:7f:ba20::7c6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 5FB4D123;
+ Wed, 21 Apr 2021 11:29:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1619029750;
+ bh=svOYheueA79L0peCZXaDTla1aQaIMKCRlqEeIVwaGSQ=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=fbeRSnW6FX6RJVQNfQKsjsOMwyuShGFCbO7OVX/nber6M7zM1IqyQDAijSuwzME8Z
- 2AJKir8gl0oltCnl2wxeaLRkl1SP9DPJgUdSG8s4/4QGolJYKDZZ0/JwVIzao07nTs
- gVG/6ulYen67+mOb74yODWu8nm8aCl6+/bxrHu3BWPO66ZikXTN54iXk647oVvFlJn
- QyMTGhoUWlyWFEGE88G+LZBc8fTCtj+jzHGYfNCB/4mbdUdO/6CYvATFwPFpsOAfHB
- Qch1zm1VS35xNf3AbmO09EATwJLXcs0dkE433pxLeFwEjSIn2nM5yscUTQkEWA2fiQ
- 0HSl+5BfkjU7g==
-Date: Wed, 21 Apr 2021 12:05:40 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Zev Weiss <zev@bewilderbeest.net>
+ b=Vn7+E2N4nZ6IElUJ1gv2/zXNP4ngmrZu6MUT0y5WDoYg+cz4GEKmsmtY2Ndjaa/LN
+ Ae4s7xGOH+pBXNMeNRGDuEeedvFZzR+fetarTa2lDjPDk6Q9PaeoURF4ODoQfAhVbE
+ JIpaZtiEgz6ctXgLtdbzyiOFOgTaFuARIgopvnI4=
+Date: Wed, 21 Apr 2021 13:29:07 -0500
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Mark Brown <broonie@kernel.org>
 Subject: Re: Enabling pmbus power control
-Message-ID: <20210421110540.GA4617@sirena.org.uk>
-References: <20210420033648.GA227111@roeck-us.net>
- <YH5rky8nA4nKAVdg@hatter.bewilderbeest.net>
+Message-ID: <YIBu8w5w8r0j03PP@hatter.bewilderbeest.net>
+References: <YH5rky8nA4nKAVdg@hatter.bewilderbeest.net>
  <9639fa33-01ca-9802-e745-5e3edb81e305@roeck-us.net>
  <YH59WOg0iKbz1d0l@hatter.bewilderbeest.net>
  <fe111c8a-9588-dbfb-624a-29bb3a5efe13@roeck-us.net>
@@ -51,13 +54,11 @@ References: <20210420033648.GA227111@roeck-us.net>
  <YH8D+LWxWPqnFd2h@hatter.bewilderbeest.net>
  <20210420171540.GG6073@sirena.org.uk>
  <YH8jUuOEJKDDDoMb@hatter.bewilderbeest.net>
+ <20210421110540.GA4617@sirena.org.uk>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="/9DWx/yDrRhgMJTb"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <YH8jUuOEJKDDDoMb@hatter.bewilderbeest.net>
-X-Cookie: RELATIVES!!
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20210421110540.GA4617@sirena.org.uk>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,39 +77,40 @@ Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Wed, Apr 21, 2021 at 06:05:40AM CDT, Mark Brown wrote:
+>On Tue, Apr 20, 2021 at 01:54:10PM -0500, Zev Weiss wrote:
+>
+>> Consider the power shelf I mentioned earlier -- it's a rackmount power
+>> supply and that's about it.  It provides DC power to arbitrary devices that
+>> it has no other connection to, just ground and +12V.  Those devices might be
+>> servers, or cooling fans, or vacuum cleaners or floodlights -- the power
+>> shelf doesn't know, or care.  It's a lot like a switchable network PDU in
+>
+>If your chassis is particularly simple then it will be particularly
+>simple to fit into a generic framework so that should make your life a
+>lot easier here.  Generally the simpler your system is the easier it
+>will be to use in something generic, it's not going to be stretching
+>ideas about how things should look and is more likely to have good
+>helpers available already.
 
---/9DWx/yDrRhgMJTb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+The simplicity of the use-case should make it easy to implement via a 
+generic framework, yes.  But at the same time, if we're talking about 
+that being a new framework that doesn't currently exist, the minimal 
+needs of this case make it difficult for me to see what sort of 
+structure or additional functionality would be required of such a 
+framework to support more complex cases, because the simple/minimal case 
+is the only example I have at hand.  I think there's also (quite 
+reasonably) a general reluctance to merge infrastructure that doesn't 
+have any users.
 
-On Tue, Apr 20, 2021 at 01:54:10PM -0500, Zev Weiss wrote:
+Given that, I'd think the appropriate approach for a first-cut 
+implementation of that would be to only implement what's presently 
+needed, and put off incorporating any other bells and whistles until 
+there's something that would use them.  It seems like a minimal, 
+only-what's-needed version of that at present would end up looking 
+extremely similar to reg-userspace-consumer though.  Would that not be 
+problematic?
 
-> Consider the power shelf I mentioned earlier -- it's a rackmount power
-> supply and that's about it.  It provides DC power to arbitrary devices that
-> it has no other connection to, just ground and +12V.  Those devices might be
-> servers, or cooling fans, or vacuum cleaners or floodlights -- the power
-> shelf doesn't know, or care.  It's a lot like a switchable network PDU in
 
-If your chassis is particularly simple then it will be particularly
-simple to fit into a generic framework so that should make your life a
-lot easier here.  Generally the simpler your system is the easier it
-will be to use in something generic, it's not going to be stretching
-ideas about how things should look and is more likely to have good
-helpers available already.
+Zev
 
---/9DWx/yDrRhgMJTb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmCABwMACgkQJNaLcl1U
-h9ADpwf/VbjMaN7n+jZDxshUvMWZB1BdyohTc3svzJBpwgEZ64SKrE1c+kHOAoO/
-7tZNItEYVN+0hugBvbWoC7zBG+X+NPue5Spl8H+vnNFUYxVigAa2bEpNSWInZnXc
-TXdumtwjtmOMAGYBCh5Q+l+1KpzZbNADLEWQcei7+DXl0XqhvHzsJTslt07/hyIw
-vEBXZTEMP7U5DWYszH7NIMyBN+qbBDVDXHVmeg+JHq8YHh2oF4GwLrx3wC2EQakF
-KEQnQ2p/1xrKkzfcSkU0fCvgvf+pN9EvxS94rBkA2xDuer4vlx0ReA9Pll63GPAK
-EJ5KQnnPxUbSziNlhuIY83TVxIPyIw==
-=xLFC
------END PGP SIGNATURE-----
-
---/9DWx/yDrRhgMJTb--
