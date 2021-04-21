@@ -1,98 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D40EF366374
-	for <lists+openbmc@lfdr.de>; Wed, 21 Apr 2021 03:50:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 097DD366383
+	for <lists+openbmc@lfdr.de>; Wed, 21 Apr 2021 04:03:28 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FQ3RX5dhZz2yxL
-	for <lists+openbmc@lfdr.de>; Wed, 21 Apr 2021 11:50:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FQ3k609lbz2yyK
+	for <lists+openbmc@lfdr.de>; Wed, 21 Apr 2021 12:03:26 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=LLqh7ipL;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=JeHwfPnV;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72c;
+ helo=mail-qk1-x72c.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=LLqh7ipL; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=JeHwfPnV; dkim-atps=neutral
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com
+ [IPv6:2607:f8b0:4864:20::72c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FQ3RG2tRBz2xZj
- for <openbmc@lists.ozlabs.org>; Wed, 21 Apr 2021 11:50:33 +1000 (AEST)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 13L1Y6CL098686; Tue, 20 Apr 2021 21:50:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to :
- references : from : message-id : date : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=sQajHCTm3YXEg3ylAXXY/ZZmiaeG5Zo04UFcMJO152M=;
- b=LLqh7ipLmJqC5aF7HKJKOwE3j+ld4oJyqtHL6wtsbj9/mi8/Sep/MP/WFHKHGu+bdcfJ
- DFZFNr7QShRkUFW+NACZfhoM8W08TJy9LW3HIPVRZKjVbVx+lzegDyphSb7KTci9wSy5
- 3+v9afJps3ko4wMKQyfOUpSCJEUq27Kw4TxBlqrEl2I/dToVH9wSMcilI/4KxyViZOHn
- p54/S9Ll/JefNB8wWFtUSdyn3Rj43bFlQJ7E3Rj9k296i2W7KPrzhTU+NmLAO6FagjXY
- T6yyAujcY/dIadyIs8YcBXZZkzyIsNgs3Avqv+2RewmIQa5Gok/INL33lq9qSKOWZN7a og== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3820868b72-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Apr 2021 21:50:30 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 13L1gonB003074;
- Wed, 21 Apr 2021 01:50:29 GMT
-Received: from b03cxnp07027.gho.boulder.ibm.com
- (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
- by ppma05wdc.us.ibm.com with ESMTP id 37yqa96hb7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Apr 2021 01:50:29 +0000
-Received: from b03ledav006.gho.boulder.ibm.com
- (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
- by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 13L1oS7s28836218
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 21 Apr 2021 01:50:28 GMT
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A682BC6063;
- Wed, 21 Apr 2021 01:50:28 +0000 (GMT)
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2B6A2C6059;
- Wed, 21 Apr 2021 01:50:28 +0000 (GMT)
-Received: from demeter.local (unknown [9.160.109.56])
- by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Wed, 21 Apr 2021 01:50:27 +0000 (GMT)
-Subject: Re: What is OpenBMC server software
-To: Thang Nguyen OS <thang@os.amperecomputing.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <843031a3-072a-a3f7-b2c4-17a5406c4daf@os.amperecomputing.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <a14798b2-5906-f770-cf45-13ff916e125c@linux.ibm.com>
-Date: Tue, 20 Apr 2021 20:50:26 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.0
-In-Reply-To: <843031a3-072a-a3f7-b2c4-17a5406c4daf@os.amperecomputing.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ssrt1TbK7Tt_rKPdDqRHbk-0BWJRRwUB
-X-Proofpoint-ORIG-GUID: ssrt1TbK7Tt_rKPdDqRHbk-0BWJRRwUB
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FQ3jt3NHpz2xYg
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Apr 2021 12:03:13 +1000 (AEST)
+Received: by mail-qk1-x72c.google.com with SMTP id q136so20552044qka.7
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Apr 2021 19:03:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=vK+vXInSnRMiNOUbW3031HxG+vD/VULRQVlvhAhYGLc=;
+ b=JeHwfPnV3ZPT0XRhFQ2r+yts7VhEHEvTEI/tBT1pS8/7joM39hNJwrx7WgY9xo/H2z
+ apjG1wmwOdbeDt1NOXQAqqpuwHrn8oZ/wIFkU8vRVICF+p+01T9fsf5O3uw9NaMjjqOL
+ lj1AJv9WzK0/3Wgay4mK/hxlQQ1wJW8HcApfY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=vK+vXInSnRMiNOUbW3031HxG+vD/VULRQVlvhAhYGLc=;
+ b=demuZFf35WsaOHaQ/UwL4TuzVCXPs8Qk3/t3GA0335WZRaO3soWJNhxb9f0DEncD/I
+ xXLcsc2T3Enu8FAc9C/FjkYXw06JkGuofL94h6s5Hk93KzCB0xQK6LsT99wUFYdiB67M
+ weFa+g6KamZglzjS6t3vNClwqNaaEVHpLb9MjDj59xFBFVHjcpHRVQLBawgsAYL49+ar
+ uRyqLTVLrjNOiPLy9sqMHVXP2J5l9cJ2jOOCnP4oxLyeHFHXRDHfStxBg+XW2OLr6mwQ
+ FhpXvOf1Qn525878VCdXGVc888Vvg9jz8CEnr9Cbwddl5cfmCYYYHhyTeTN7R0tPfQu0
+ XWpg==
+X-Gm-Message-State: AOAM533rD/VRY0EiYr82X1HUfKiFxbkJNeIV6nDg+uuEibgCmDw8KmD4
+ MLmVT8ZDbL/ACcQg6EkjeXeMAL2cb4PcxdUDjCOZAiWK
+X-Google-Smtp-Source: ABdhPJxOnLketOP/gFJycWfDZBytrmGJq/UR8GkM2yYgIlCxMLlg7uSZkFDfVePsdWRetMj1FxQW2S2BnwuqmSsDgOs=
+X-Received: by 2002:a37:c41:: with SMTP id 62mr18676512qkm.66.1618970588280;
+ Tue, 20 Apr 2021 19:03:08 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
- definitions=2021-04-20_11:2021-04-20,
- 2021-04-20 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0
- spamscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0
- priorityscore=1501 clxscore=1011 phishscore=0 adultscore=0 mlxlogscore=999
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2104060000 definitions=main-2104210011
+References: <20210420064648.994075-1-joel@jms.id.au>
+ <OF2C524D29.DA2BBB20-ON002586BD.00695579-002586BD.006F66D8@notes.na.collabserv.com>
+In-Reply-To: <OF2C524D29.DA2BBB20-ON002586BD.00695579-002586BD.006F66D8@notes.na.collabserv.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 21 Apr 2021 02:02:56 +0000
+Message-ID: <CACPK8XenOTqEs96mOpEsH2rvs=1Fn88d8ATSR6Tjio2Bmj1N9w@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2 00/10] Use HACE to
+ accelerate sha512
+To: Sandhya Koteshwara <Sandhya.Koteshwara@ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,74 +75,99 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On 4/17/21 3:27 AM, Thang Nguyen OS wrote:
-> Hi,
+On Tue, 20 Apr 2021 at 20:16, Sandhya Koteshwara
+<Sandhya.Koteshwara@ibm.com> wrote:
 >
-> The Mozilla firefox SSL configuration, https://ssl-config.mozilla.org, 
-> provide suggestion for Web server software to use secure config by 
-> selecting the right Web server software, version and OpenSSL version.
+> Hi Joel,
 >
-> However, I can't find what Web server software and version that 
-> OpenBMC is using. How can I find the information and check if OpenBMC 
-> is using the best secure configuration?
+> I am looking at the patches and confused by this: This is only applicable=
+ for MMC booting, as the HACE cannot be used to hash directly from the memo=
+ry mapped SPI NOR.
+>
+> From my understanding, when secure boot is enabled in AST2600, the secure=
+ boot microprocessor & ROM code copy the RoT image (either from SPI or eMMC=
+) to SRAM before integrity check is performed. Subsequent CoT images are co=
+pied to DRAM before integrity check. Why is the same process not applicable=
+ here and why is there a need to hash directly from SPI?
 
-Thang,
+Your understanding is correct, for Aspeed's secure boot solution.
+However we are not using that in this case (except for the initial
+image; the SPL). Once we have the SPL loaded we instead use the
+verification features in u-boot. This means we use the generic FIT
+loader code in common/.
 
-I had the same questions a while ago: When given a specific version of 
-OpenBMC, how do I know which versions of open source packages are pulled 
-in?  This is useful for both license compliance and to understand if 
-specific vulnerabilities are in your code.  I think I have some partial 
-answers.
+If someone has a use case where they want to use the u-boot boot
+infrastructure to boot from NOR, then they could submit patches to
+modify the infrastructure to first copy the FIT to DRAM, and then
+perform verification.
 
-Note that OpenBMC releases are shown here 
-https://github.com/openbmc/openbmc/wiki/Releases
-but OpenBMC versions are often identified by a git commit.  You can find 
-the OpenBMC version like this:
-- If you are in your source tree, `git log -1` will show the commit number.
-- If you have access to the BMC's file system, see file /etc/os-release.
+Cheers,
 
-The bitbake build process can produce license information; this also has 
-the exact source package versions used.  For example, it can reliably 
-tell you which version of OpenSSL your build used.  For details, refer 
-to the Yocto project `license.bbclass` and the Yocto project development 
-manual section titled "Maintaining Open Source License Compliance During 
-Your Product's Lifecycle".  I believe OpenBMC produces this data by 
-default, which means the build process writes license manifest data to 
-files under build/tmp/deploy/licenses/{your-image-name}/.
-
-If you are interested in how the source package versions are configured 
-in the OpenBMC source tree, you need to study the Yocto documentation.  
-Here are some specifics for component parts of an OpenBMC image 
-including the Linux kernel and OpenSSL:
-1. You can find the Linux kernel version from your source, like this: 
-https://github.com/openbmc/openbmc/blob/master/meta-aspeed/recipes-kernel/linux/linux-aspeed_git.bb
-2. You can find the OpenSSL recipe under: 
-https://github.com/openbmc/openbmc/tree/master/poky/meta/recipes-connectivity/openssl
-
-You can find OpenBMC's SSL transport layer security configurations here:
-  - For the Web/REST API server SSL configuration, see hard-coded values 
-here: 
-https://github.com/openbmc/bmcweb/blob/master/include/ssl_key_handler.hpp
-  - For the SSH server SSL configuration (if using the dropbear server), 
-see compile time options here: 
-https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/dropbear/dropbear/options.patch
-
-
-Finally, I've added this explanation to the OpenBMC project 
-configuration guide:
-https://github.com/openbmc/openbmc/wiki/Configuration-guide
-
-Thanks for asking!
-- Joseph
+Joel
 
 >
-> Best Regards,
+> Thanks,
+> Sandhya
 >
-> Thang Q. Nguyen -
 >
-
+> ----- Original message -----
+> From: Joel Stanley <joel@jms.id.au>
+> Sent by: "openbmc" <openbmc-bounces+sandhya.koteshwara=3Dibm.com@lists.oz=
+labs.org>
+> To: openbmc@lists.ozlabs.org, Klaus Heinrich Kiwi <klaus@linux.vnet.ibm.c=
+om>, Andrew Jeffery <andrew@aj.id.au>
+> Cc: "C=C3=A9dric Le Goater" <clg@kaod.org>
+> Subject: [EXTERNAL] [PATCH u-boot v2019.04-aspeed-openbmc v2 00/10] Use H=
+ACE to accelerate sha512
+> Date: Tue, Apr 20, 2021 2:47 AM
+>
+> This series adds support to u-boot to using the HACE hardware in the
+> AST2600 to perform SHA hashing during boot, and enable the SPL features
+> to load u-boot as a signed FIT.
+>
+> This is only applicable for MMC booting, as the HACE cannot be used to
+> hash directly from the memory mapped SPI NOR.
+>
+> These have been tested with C=C3=A9dric's aspeed-6.0 Qemu tree. You can
+> reproduce using the script in this repository:
+>
+>  https://github.com/shenki/qemu-boot-test
+>
+> Joel Stanley (10):
+>   configs/ast2600: Make early malloc pool larger
+>   crypto: Add driver for Aspeed HACE
+>   ast2600: Enable HACE probing in SPL
+>   ast2600: Add HACE to device tree
+>   ast2600: spl: Remove SECBOOT BL2 kconfig option
+>   ast2600: spl: Add ASPEED_LOADERS option
+>   ast2600: spl: Support common boot loader features
+>   config: ast2600: Configure common MMC SPL loader
+>   configs: ast2600: Enable FIT SHA512 support
+>   config: ast2600: Disable SPL raw image support
+>
+>  arch/arm/dts/ast2600-rainier.dts           |   5 +
+>  arch/arm/dts/ast2600-tacoma.dts            |   5 +
+>  arch/arm/dts/ast2600.dtsi                  |   9 +
+>  arch/arm/dts/ast2600a1-evb.dts             |   4 +
+>  arch/arm/mach-aspeed/Kconfig               |  15 ++
+>  arch/arm/mach-aspeed/ast2600/Kconfig       |  12 -
+>  arch/arm/mach-aspeed/ast2600/Makefile      |   6 +-
+>  arch/arm/mach-aspeed/ast2600/spl.c         |  30 +++
+>  arch/arm/mach-aspeed/ast2600/spl_boot.c    |  17 +-
+>  configs/ast2600_openbmc_spl_emmc_defconfig |  24 +-
+>  drivers/crypto/Kconfig                     |  19 ++
+>  drivers/crypto/Makefile                    |   1 +
+>  drivers/crypto/aspeed_hace.c               | 266 +++++++++++++++++++++
+>  13 files changed, 375 insertions(+), 38 deletions(-)
+>  create mode 100644 drivers/crypto/aspeed_hace.c
+>
+> --
+> 2.30.2
+>
+>
+>
+>
