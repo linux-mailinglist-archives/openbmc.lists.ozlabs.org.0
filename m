@@ -2,66 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8E223682CC
-	for <lists+openbmc@lfdr.de>; Thu, 22 Apr 2021 16:54:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D5B13684AD
+	for <lists+openbmc@lfdr.de>; Thu, 22 Apr 2021 18:20:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FR0mx6JJ4z303j
-	for <lists+openbmc@lfdr.de>; Fri, 23 Apr 2021 00:54:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FR2hB26YZz2yyK
+	for <lists+openbmc@lfdr.de>; Fri, 23 Apr 2021 02:20:10 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=cIIifwx2;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=s0a4UGtB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42d;
- helo=mail-wr1-x42d.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22a;
+ helo=mail-oi1-x22a.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=cIIifwx2; dkim-atps=neutral
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com
- [IPv6:2a00:1450:4864:20::42d])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=s0a4UGtB; dkim-atps=neutral
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com
+ [IPv6:2607:f8b0:4864:20::22a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FR0mj2wxnz2xZy
- for <openbmc@lists.ozlabs.org>; Fri, 23 Apr 2021 00:53:54 +1000 (AEST)
-Received: by mail-wr1-x42d.google.com with SMTP id x7so45066906wrw.10
- for <openbmc@lists.ozlabs.org>; Thu, 22 Apr 2021 07:53:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=cgl7IGG/SD6JGuzX8YMceSiprYJso9WW9CR3l1Tb/uI=;
- b=cIIifwx2DNo4nxz8nou4f0Dv9bOHS34wD90XtMd8ieObYB4Ks+8WI7dc8msrM53XAR
- rMLDKOklOfqD3oX1VtimZx13OB35ZtnfZzqDRA5RU2v+QlCNTpU1dtn+OBwrcT+/wg4m
- 0Cu8S15ycSKTVY0X6QF/y/XvDt+KHQspIpFgcYDeIZIVW2oZ2XwGa36AxhLZuKdHxAUE
- 87hHwjZ3QexsJyP9pTf8tPmpi0LTnpEpvk40wsmUiabNWDGcf65pIGaChSU4Qjr+iZVJ
- RMHr3/KePrBoxfBHFg4BT3ruLGgv0GcWMK1BtJclV6DpFBOFzZ4H+Iq38D/LLQSWXNkx
- aDmg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FR2gs4cMHz2xb2
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Apr 2021 02:19:50 +1000 (AEST)
+Received: by mail-oi1-x22a.google.com with SMTP id i81so46349030oif.6
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Apr 2021 09:19:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=aFl6EswqtlVNYkjRhQTEpepgIMixov1FSrZxGgJfPWY=;
+ b=s0a4UGtBPeJGaEKjSdzMDMKkL1169toPxo80t+CHxjloakdPF0AbSWLAQqfKhw9Rd/
+ kmM3IyARV9hkK72cYORkVGrrJxLUZ1EZEgzr4NatQbEBQZCtx4fi4D0Fb2zFNOPIa3Si
+ s/upSZ7eTefjbLnC/07XpZ1BV9FeqGWF/FHlHToM0RJOQZKXj9LTtKBkToiO1sbUSJF8
+ fij4M81+4txjovUvnZTG52361Mnm3atYaBd0w/83z2zpWC+jDZb34rMsxuuJsxZpMCwy
+ 081LlYDAykVgZEoEPa5UJIy/KVtnx/OWilQ/tWitEWQIiQj3wcey5hg+qrxULvZ291N6
+ kz2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=cgl7IGG/SD6JGuzX8YMceSiprYJso9WW9CR3l1Tb/uI=;
- b=kkYO1GHrJrjoSO8SQaK4nwUxwc83DoOqSlPRN4CX+wOhIdgBgngSWVuemkTiU4j/nR
- hhNdtcvmOOxRJFlDtKst2Fcxz1E1NrEIZoHx59EtJSXUV1EN23xSPq0l9UJSD8TbGsGd
- +5mObuMPqEPBGrlAumXv+GlmFf4C8oQWBce70+B2I/y6qe2vFDsYXrxV2gzuASdoJFyc
- hFyf+8iPw9jUrTEasbR66JNIoBYFUxKl33BMcICqXr4EJI2pIFL6W8Xtdl5Nwjk/eugb
- P5lHhbQfpRNgGX16s7EF6SmQfBUjXI7Ah6kxZ4lFwAIna6Gc1qh+igoVRXg21H2J+pWJ
- mNBw==
-X-Gm-Message-State: AOAM530RnowfqtluuGNiqYjotChKwVgNNgBrr2KrFq3AUTLWcr4rimce
- LGqw+Op8sL3byq2oj6BWyzxuDPe+9iJw74sFjFloew==
-X-Google-Smtp-Source: ABdhPJxvMrP/fPyK9kZEYt+MCex0hjW46II+X+9OZzV9cUi9+L7WhELEsdyK5OQM184RkfTRQ80Jv6Mafhbmms+0akM=
-X-Received: by 2002:a5d:4c82:: with SMTP id z2mr4623519wrs.407.1619103227527; 
- Thu, 22 Apr 2021 07:53:47 -0700 (PDT)
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=aFl6EswqtlVNYkjRhQTEpepgIMixov1FSrZxGgJfPWY=;
+ b=CdGVym8nWEpHCDlcYsl60xaxViFfs6qLsj/HB0KfWqwMcV6HoE/rV5ZcnJ96Slfl5G
+ gqvg2kCkikZxa8WW5/zmfIdC8uqwDYZOr5mi/8TUOtEXtXH28hnbQfHGqie0krHfQ/MT
+ MzOFaMzVx4dTZ1VmpAqLJ/bcKRG/7iLEHC6m9VXpSQcZoE9q1yqkt0wS/zh4ByOUgfJw
+ 4LbR5MPd1RBkwVgv3tNB0Vwc7gsTqjycogWlzwCpkv7CjMjSJZgxakmj0GH2qUiXwf3u
+ T6eaNy1siPeYJMbs+lpEOmgp68T65+qt3a4K+w9wqhokcc5UK6YURW1kqesroVNuq1WQ
+ fF8g==
+X-Gm-Message-State: AOAM530oDHbaKfUxlUVIUbSQac/GR0dBbWl/+4bhLCopursNeG+xP0P1
+ SGQ9zdI8FabURu26kwFnfl7qp8uQYoMhKg==
+X-Google-Smtp-Source: ABdhPJwtCMpRN0Kt3WeqRBgC5rPxd6ywxV3yRSxLfN/xBS0doiQP7FI+YeDL/U0zEJ+wiSR+jPmKOQ==
+X-Received: by 2002:aca:6542:: with SMTP id j2mr2785624oiw.94.1619108382578;
+ Thu, 22 Apr 2021 09:19:42 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-104-102.res.spectrum.com.
+ [72.182.104.102])
+ by smtp.gmail.com with ESMTPSA id j20sm639305ooc.29.2021.04.22.09.19.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Apr 2021 09:19:41 -0700 (PDT)
+Subject: Re: Updated CCLA from AMI
+To: Pravinash Jeyapaul <pravinashj@ami.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <DM5PR10MB1628FC36AAE7655DC27CE3ADD2479@DM5PR10MB1628.namprd10.prod.outlook.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <3006a4b8-155d-cd4c-13d5-f2d0eaf385cf@gmail.com>
+Date: Thu, 22 Apr 2021 11:19:24 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
 MIME-Version: 1.0
-References: <20210422123001.fb6knneedeqrfgaz@thinkpad.fuzziesquirrel.com>
-In-Reply-To: <20210422123001.fb6knneedeqrfgaz@thinkpad.fuzziesquirrel.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Thu, 22 Apr 2021 07:53:36 -0700
-Message-ID: <CAH2-KxBB78A=7GTPEpfKBJSGgc=Ei_DaFN0p2F4NEKbsHxJfWA@mail.gmail.com>
-Subject: Re: asrock rack layer
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <DM5PR10MB1628FC36AAE7655DC27CE3ADD2479@DM5PR10MB1628.namprd10.prod.outlook.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,44 +85,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Charlotte_Li@asrockrack.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Jeff9_Chan@asrockrack.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Apr 22, 2021 at 5:30 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
->
-> Hi Ed
->
-> The folks at ASRock Rack are looking to get a layer added to OpenBMC.
+On 4/21/21 4:31 PM, Pravinash Jeyapaul wrote:
+> Hi Brad,
+> 
+> Please use the updated CCLA from AMI.
 
-From a conversation with the asrock support folks it sounded like
-there wasn't interest in OpenBMC, so I'm glad to hear I was ill
-informed.
+Your CCLA update has been accepted, thanks for keeping it current.
 
-> You already started this here:
->
-> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/40463
->
-> You mentioned the device tree needs to be upstreamed - is that the only
-> remaining work item?
+Kurt Taylor (krtaylor)
 
-The device tree really needs filled out better, which is what I was
-stalling on.  I was having some trouble figuring out some of the
-device mappings without schematics, so that would probably be the next
-work item.
+> 
+> Regards,
+> 
+> Pravinash
+> 
+> -The information contained in this message may be confidential and 
+> proprietary to American Megatrends (AMI). This communication is intended 
+> to be read only by the individual or entity to whom it is addressed or 
+> by their designee. If the reader of this message is not the intended 
+> recipient, you are on notice that any distribution of this message, in 
+> any form, is strictly prohibited. Please promptly notify the sender by 
+> reply e-mail or by telephone at 770-246-8600, and then delete or destroy 
+> all copies of the transmission.
 
-I was also planning on making it entity-manager enabled;  I'm assuming
-the Asrock team is ok with that (as opposed to phosphor-hwmon based)?
-
-I also based it on a UBI image, which isn't very standard;  I'm
-guessing we'll want to adjust it to use a more common image layout.
-
->
-> ASRock Rack team - if you have any questions about how to help Ed (or
-> even take over the patch) please ask here - we are here to help!
-
-Glad to have you guys onboard.
-
->
-> thx - brad
