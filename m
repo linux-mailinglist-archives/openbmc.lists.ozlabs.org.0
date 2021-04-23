@@ -1,164 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C7863696A9
-	for <lists+openbmc@lfdr.de>; Fri, 23 Apr 2021 18:09:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EC85369732
+	for <lists+openbmc@lfdr.de>; Fri, 23 Apr 2021 18:37:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FRfPn057yz301j
-	for <lists+openbmc@lfdr.de>; Sat, 24 Apr 2021 02:09:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FRg222xTrz300c
+	for <lists+openbmc@lfdr.de>; Sat, 24 Apr 2021 02:37:46 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=dell.com header.i=@dell.com header.a=rsa-sha256 header.s=smtpout1 header.b=nUn4cHwl;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=t++GJjlX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=dell.com (client-ip=148.163.137.20;
- helo=mx0b-00154904.pphosted.com; envelope-from=joshua.giles@dell.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42b;
+ helo=mail-wr1-x42b.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=dell.com header.i=@dell.com header.a=rsa-sha256
- header.s=smtpout1 header.b=nUn4cHwl; dkim-atps=neutral
-X-Greylist: delayed 6375 seconds by postgrey-1.36 at boromir;
- Sat, 24 Apr 2021 02:09:33 AEST
-Received: from mx0b-00154904.pphosted.com (mx0b-00154904.pphosted.com
- [148.163.137.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=t++GJjlX; dkim-atps=neutral
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
+ [IPv6:2a00:1450:4864:20::42b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FRfPT5Pl9z2xZ2
- for <openbmc@lists.ozlabs.org>; Sat, 24 Apr 2021 02:09:31 +1000 (AEST)
-Received: from pps.filterd (m0170397.ppops.net [127.0.0.1])
- by mx0b-00154904.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 13NEMSLB027952; Fri, 23 Apr 2021 10:23:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com;
- h=from : to : cc :
- subject : date : message-id : content-type : content-transfer-encoding :
- mime-version; s=smtpout1; bh=BU6LikZXAZFUh+pCv1CxlK8v9CYh05dngAV2CjTs/38=;
- b=nUn4cHwl7jfPRoWJkOx/Xz66o/yVCY9/X/7pfqqnZlphE54EZcwkoZsdKXwDu43Kj9Wt
- dgpTwBDDtJkheqsMGKuKPi2/Xf0oNF5G2Xhj9aw9yTTV/00MtQyBqXEOcp5OM3TGsixD
- CrStFfeswZJ9XfMnmHYjlPZ+IQIRV2+GRENo9SmOmfjRly+X+m2hHmsihNH18Pjx5EOC
- Mc3y6X+rdmyqGTikynfyScezhjjjsZABK++wThiV5duTsyZ53kRtHdRL02qnz/tTS7li
- H8oabwLYS2OOMIYt5T6NzfmENfQVRQ6lj8aMX2gBkqBtPBoqhmeBj+wmGE0BdsoxDtfD qA== 
-Received: from mx0b-00154901.pphosted.com (mx0a-00154901.pphosted.com
- [67.231.149.39])
- by mx0b-00154904.pphosted.com with ESMTP id 383177x023-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 23 Apr 2021 10:23:10 -0400
-Received: from pps.filterd (m0090350.ppops.net [127.0.0.1])
- by mx0b-00154901.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 13NEJttO128221; Fri, 23 Apr 2021 10:23:09 -0400
-Received: from nam11-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam11lp2177.outbound.protection.outlook.com [104.47.58.177])
- by mx0b-00154901.pphosted.com with ESMTP id 383fr5uvsn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 23 Apr 2021 10:23:08 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QfCePHMEWLV8uWSGyF5SdvNzDL9UIPBDAAMQqDNeW5kKKCpZ33XoNuj/cQxTyY+vMAMUWO631SaNT+kypsGE3mjOcYdRw1U0ZgIpyXAASyij1gpq7mx8jGPuGeeIAbYvfNYDsKR8AO8S3IU439rJ2bbFFJbHmO/V7CrSgHyhHlaQwr3XZuja8kjj0TAQuC0wSBZBPq9dWfvXx9ShF41I+JcF0xW8mJH3Dejq08kFXqQD15GE9xK2pKdUPPf5/c7E3X2B6jgC6rldzqdBCH+XECOtXk3h1xXQHIcDiNOPJA2JSOS7+d0KkQq9TCCCVA0deWQeKgDTnhDNqQ2heLeSbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BU6LikZXAZFUh+pCv1CxlK8v9CYh05dngAV2CjTs/38=;
- b=SsFxZz74/Q4o2IWOU1zxfvvSuOqfPgdVDJ6TNFyJBSWOLGD/VPOTXKekMUI4ELdOxbFIEvk+Bj8pZ8AAbgAykgDb5gLQaEmJvHMK2vc+mR62FM/QjRDuPwF0BVmmZmVuncbeaW3Pra+ZB6Och5mY8GKxvIhTDu9u34BVuD+9CXQOJmmHYDjlekvqRmRaAVdPu/MdXfSg/qKk9vh6pgu2HXm2+pZ6zMQjwYXqP3So0foIxbLnI05kdkb1DVQweDsVg9cGFHgFKqSeUeXJps9tzjq3r0SS+Fj4OZP5L+GUPm1P5ZlmLCJBKrcgLWRkd3mInp8DiYPZ+dZZmHJB56HvBw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=dell.com; dmarc=pass action=none header.from=dell.com;
- dkim=pass header.d=dell.com; arc=none
-Received: from DM6PR19MB3561.namprd19.prod.outlook.com (2603:10b6:5:1df::25)
- by DM6PR19MB3884.namprd19.prod.outlook.com (2603:10b6:5:246::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4065.20; Fri, 23 Apr
- 2021 14:23:06 +0000
-Received: from DM6PR19MB3561.namprd19.prod.outlook.com
- ([fe80::c2:3406:6d12:100a]) by DM6PR19MB3561.namprd19.prod.outlook.com
- ([fe80::c2:3406:6d12:100a%7]) with mapi id 15.20.4065.024; Fri, 23 Apr 2021
- 14:23:06 +0000
-From: "Giles, Joshua" <Joshua.Giles@dell.com>
-To: Ed Tanous <edtanous@google.com>, Gunnar Mills <gmills@linux.vnet.ibm.com>
-Subject: Redfish Firmware Update: Host server actions required; PSU, BIOS, etc
-Thread-Topic: Redfish Firmware Update: Host server actions required; PSU,
- BIOS, etc
-Thread-Index: Adc4TCzQ8+x4eHZhRAWNdX36Z2Bvrg==
-Date: Fri, 23 Apr 2021 14:23:06 +0000
-Message-ID: <DM6PR19MB35615E928676F78225B4385595459@DM6PR19MB3561.namprd19.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: google.com; dkim=none (message not signed)
- header.d=none;google.com; dmarc=none action=none header.from=Dell.com;
-x-originating-ip: [108.193.65.153]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: cfa34454-12d3-4209-1f33-08d90663501c
-x-ms-traffictypediagnostic: DM6PR19MB3884:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM6PR19MB38847A338D9C18D6BA71F59E95459@DM6PR19MB3884.namprd19.prod.outlook.com>
-x-exotenant: 2khUwGVqB6N9v58KS13ncyUmMJd8q4
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: BO1chivYawAGihLFxgHSYb6XFKbs6TnhS3DnD5JAi2Zo7L3gvFh2GmvVKK56Gqc59d1qJq0GW3gPHo2y4FuHmVXdwVxqVn4p8tH+TxW76Wz75FzBYH9ELyvgrt+oSis3yWG/sy50lwqwgFHsdRmXsorOT5enqCqyq/m7KFGbV6sGHh9hXjugP6UBJq8hIGaKkzuscypI72rdIKfW9a0eoLG0Cl5Ug5o8kwumacxfCpjNee4HgBcHeqppxhCIyZ6H+ArcobkmT/BCd8Qv/CPSuMIPkoyvdiQDTLDdR2TZQbPos6d7OJcPCA3JxFYJAacn+NKi9NvPThM1lipFGoQ890Nmq7Lq7YIJAeS9cM2pg9CtlSHho2FOPjegdtM2bfqWBDErdBR4wkR1Aw5grc36RKyS1e5zw3ga05208QaQ+BouHn8RY6SnXSafBtLZslljcxsWM3huCO6wMREITjBGLwoBFZt6hrWrHJ4ZcJX57MRuKWsvhFr2VtAIyAyuCsAVWZkrKf+JWPI1PV6XBNTwrmaDpz7aPyUhJvyZJ/Bg77Hyfy3/Ak9ev1j7xLDst5MD3wSTL2VRYUJDP7wUDVCRpZz2Fg9VmvLqlo5wAczvV98=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR19MB3561.namprd19.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(346002)(366004)(376002)(39860400002)(396003)(136003)(66556008)(54906003)(76116006)(66446008)(66946007)(52536014)(66476007)(38100700002)(478600001)(6506007)(8936002)(9686003)(71200400001)(786003)(8676002)(110136005)(55016002)(7696005)(64756008)(33656002)(5660300002)(122000001)(4744005)(83380400001)(26005)(2906002)(4326008)(186003)(15650500001)(316002)(86362001);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?N0JoU2NNNmRaOW52YW1YbXdYUklVR3pISmZFYWR5TnlzdTBiOVZSMGg1ZEdS?=
- =?utf-8?B?QklsZ255L29sQWdFWUZoUnN5Ujg3ZUJIYW1zZ0VWMDdBQkovT3hvN2cwZHVD?=
- =?utf-8?B?VFVmbm4xeWNVdGZZSXhZbWZJM2lic05MbXlVek1FMHhjYmFsMHE4Y2VONnNy?=
- =?utf-8?B?SlJkc2tqV05NczFqTFJmcmJDNmxES2ZwT2YyN20wYUo4NDA3WEFxM1BORzRG?=
- =?utf-8?B?UnBqSEo3MmpWdDZtY0w0bHVCY28wTHhIeTdGWDBDOWF4T2ZVdTB1V3lpczlH?=
- =?utf-8?B?am1pYm85eHA4d0Q3eXdXNlpYU0NOSVdnZFdtTHd6enBRZWJxclgxUnJaVFpY?=
- =?utf-8?B?VmdkSGNwcEs4VjZhRFVpbXNja1lyUzlyTkZ1VnNBL0JDTnVjYkV0MWx5V1ho?=
- =?utf-8?B?RE9rdEhUQWZDUEk0U2wwdGxVNnR3WG1lSkY5eVZEbDRDelFMOXR4RHZYMi81?=
- =?utf-8?B?NlNIZmhpRUtyZU5nNGgzY0E0WkFrK09qTlVPY0dyTmpSOHkyVTJDclR0WVR6?=
- =?utf-8?B?Q0EyQ0dJeU1VdFVWdmRQRG4wZXZZc3RZY3pxZndRYUV3ZURRNVdjYnYvSVpP?=
- =?utf-8?B?ZDVDb2tsa2JiSThNK3NSMEYwcldxWmtPekhOL05QZklKbnJma0xaby9CUmRw?=
- =?utf-8?B?Z0JBM2FKQ1dPQ0JmVHV3aHAxTmIvY2djSGk3c0I5RXJnZzRERkNsWXRQdE5j?=
- =?utf-8?B?em9Sbkc1cDJTcVdKV2NPMzkyRk5WT3FLbnRuWXp1RnFEV2ZBekhMcG0wUlBX?=
- =?utf-8?B?cXdWdk53cks3ZS9pbmdqeUM2dWpmaXo2VVNiS2VEa0lyb2VuL0Ewb0k2WVUv?=
- =?utf-8?B?WFVNODAwOTc4eG1jRkExRWl2RVltYnhROFJ1RWI0WHhuSmxoc0JXVFlCK2Z3?=
- =?utf-8?B?YlFDTkFjQkp3OUJFbzNVeTZvQm5uU2FSN01veVRodVM5SXF3ajY2Qmx0U2pk?=
- =?utf-8?B?NkwyWGNOYmVJSEZnbG5lNEF2QTNkeVBrY3JVbjNKcWZlU3N4Z1FmWDh3aWoz?=
- =?utf-8?B?RVgzMjRUc0kvWXh6WjNmMXhwS3phOHhsV05Gb2tSNEZVTkFEQk9EYmZXU1lp?=
- =?utf-8?B?M2ZoUW95Z3RLV29taS93amE2RkFoeTIzZTVBaW4yd1ViYXRQUzZHUWs5ZGo3?=
- =?utf-8?B?MndGS3ZNeS9CanZsaWxXd25QWmJodjlEZ0lOa2hMS0ZQWFcrSzBIYUd0NENq?=
- =?utf-8?B?WXcvb2MrcURVbFNBcnBYMVFncDNNaEFBdDhQVi9lYnRSZ3BmU25leXJoeCti?=
- =?utf-8?B?MFF2TmhZa1JvMXZxUWdEcHl1alQzYnYvejc1NWZBUlhLMTZNQllPMmMvMmZJ?=
- =?utf-8?B?ejVKak5kWkJZUEFFalI0OUQ4MWdDenM2N3YzSEYyamdsWld4TklEaU1lTTNX?=
- =?utf-8?B?RkhDMzUxeFl4MTVKM0VDUmpJK3RIVVJxNG5LQ2kzTEdGdE1LSEVWN0xIL01X?=
- =?utf-8?B?SnJyNEVsbVBSdk4wWTB0a2dkWmZLUGJBV2l3Ynlmdzh2aEdzcjJWN3ZYeTFo?=
- =?utf-8?B?aFR1WmVYVlJIL3NiR1B0SnBJKzBnMzBxYjlidEJqUlIzN2tYd3FnczJGczY2?=
- =?utf-8?B?eWp4a3FtNHdTTXg1QjNkdmp2amRsejFFU2luMGdpQzNYQy85QWdUOHFuV3BV?=
- =?utf-8?B?aXVGOFoxN0F4bjFrVmtSR3E0T0RsS0dadEc3UTV6bWVVRG1OTEV0UEtKV0M0?=
- =?utf-8?B?aFoyaEFxUXhlcDgyem9KQ0hHT1oweG44UlU3d292bDdKd0hlNHFrVXYzcDhS?=
- =?utf-8?Q?/cl9glVwgi3vEp8vHckG5XMY5SLAN6pCAMEZnh8?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FRg1p43mlz2xZP
+ for <openbmc@lists.ozlabs.org>; Sat, 24 Apr 2021 02:37:32 +1000 (AEST)
+Received: by mail-wr1-x42b.google.com with SMTP id w4so45263786wrt.5
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Apr 2021 09:37:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=G0JgIKqPVQRgRoJhk50ymlUYd5sSFftLVfsMpCJrLSo=;
+ b=t++GJjlXqiN6E0F48TnAS6d/RPgYiwlc62ks+n3HvT3Zv6dot4WsNkjpqy7Vr5I/Aq
+ QevIHbQXgiyWbhL+coJAghY1QcgjrSOfoA3zRT+X/YJryJae+P8+z9wEKG2ZTICUpK8T
+ i2DqswdrpWKewLCpjNEiXePT6vismM1BzHMloI3JqR1n53ISjSA7MPkIXM1mMQbZUByw
+ PNZVn/0li+1Gag8zmKgQQq7Bamr2TlTeNcUp+hUhM8fTVufq8rGFmf/qbxpe7nxblgs2
+ N1HUbW5ySA1+nwQnxjLhzn6YHEeaClCTH6uGLZr+IAkRsW5kT7OIka1q7rpKbThkTqNv
+ 4CjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=G0JgIKqPVQRgRoJhk50ymlUYd5sSFftLVfsMpCJrLSo=;
+ b=sUS3wVDTWeNgbiAPqq04OpTfixMu2S4rdQCuu2PEGz/85njQ7MjKtEpaQ9n7d1+jKN
+ 07lv1rHvfodHGsw9lBV9j5qCTpcGzOzFYqF3fyqqk0TJ2NofxBibogUVjoMdWoJnqoKe
+ NXjEP4WZEAz1T9ecsen5DGsuyJDdzy14b7jZvlUXI5QCvBqyDGYUT6m3O2Ek9gcX2WeS
+ +Hv2sv6mqsYpNUm48oGweuwANwgMwivbj3OcmuM6io1PcJr435KDaXnRsl6hDLdcjy1E
+ IlsC3j0OxkppwsFXeEAzyCoPds6sAH96EFZWCKD7kB846YvqTAO6a/E3KjmbbMo+yXAk
+ f5fQ==
+X-Gm-Message-State: AOAM533Y2AG0f5iGK48t6DDt25D0KdI1Etazv+sRoDaLoKoRSVUkADyg
+ RVoI2S02q8GK4yh2ssUwN1RtKSFAN2tYbYPlfJKycw==
+X-Google-Smtp-Source: ABdhPJwk1DyDFuQbCx5X+M3AnGqvDvo1/chSqtDJ9yza7KzwyV5EUPSDkTZzpuOB+kSr3bcqIio40W1SUCdmoksiwTI=
+X-Received: by 2002:a05:6000:1204:: with SMTP id
+ e4mr5798134wrx.424.1619195843781; 
+ Fri, 23 Apr 2021 09:37:23 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: Dell.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR19MB3561.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cfa34454-12d3-4209-1f33-08d90663501c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2021 14:23:06.4915 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 945c199a-83a2-4e80-9f8c-5a91be5752dd
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: H7ly0CSyiMFnL9GGiLdSBadSDVE1I7YIlWpzbrmkSjqsgMPgWgoGQdxOrzdP80pkGdjsw8Z19yh54iVfXmiR1Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR19MB3884
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
- definitions=2021-04-23_04:2021-04-23,
- 2021-04-23 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- impostorscore=0 adultscore=0 clxscore=1011 lowpriorityscore=0 bulkscore=0
- phishscore=0 priorityscore=1501 mlxlogscore=909 suspectscore=0 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2104060000 definitions=main-2104230094
-X-Proofpoint-ORIG-GUID: XuPuKMbfRvbNDWWT4kfkKND-V82tJY5H
-X-Proofpoint-GUID: XuPuKMbfRvbNDWWT4kfkKND-V82tJY5H
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- bulkscore=0 malwarescore=0
- spamscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2104060000
- definitions=main-2104230094
+References: <CAMXw96PmAoSb5LJj-CzYA-47D-nCy81gBa=T94N_u2fqWL54EQ@mail.gmail.com>
+ <10871.1618685448@localhost>
+ <CACWQX8166T=3-ZKo+EtC-e67KzTgfgh0JxKA3G3ap1LVucbQYg@mail.gmail.com>
+ <YILK8BCaKDbVnad+@heinlein>
+In-Reply-To: <YILK8BCaKDbVnad+@heinlein>
+From: Ed Tanous <edtanous@google.com>
+Date: Fri, 23 Apr 2021 09:37:12 -0700
+Message-ID: <CAH2-KxBWxHkSwKbfkymTV8amdGQAcdtrnG0+bphVtq9FKPDfxg@mail.gmail.com>
+Subject: Re: bmcweb: Install encrypted certificate to BMC
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -170,15 +77,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Gunnar Mills <gmills@linux.vnet.ibm.com>,
- openbmc <openbmc@lists.ozlabs.org>, Brad Bishop <bradleyb@fuzziesquirrel.com>,
- Ed Tanous <ed@tanous.net>, "Rao, Balaji B" <Balaji.B.Rao@dell.com>
+Cc: Justin Chen <juschen@google.com>, Michael Richardson <mcr@sandelman.ca>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>,
+ Richard Hanley <rhanley@google.com>, gmills@us.ibm.com,
+ Zhenfei Tai <ztai@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGVsbG8gQWxsLA0KDQpJcyB0aGVyZSBhIHBsYW4vcHJvcG9zYWwgZm9yIFJlZGZpc2ggRmlybXdh
-cmUgVXBkYXRlcyAoVXBkYXRlU2VydmljZS9TaW1wbGVVcGRhdGUpIHRoYXQgcmVxdWlyZSBob3N0
-IHNlcnZlciBhY3Rpb25zPw0KDQpGb3IgZXhhbXBsZSwgc29tZSB2ZW5kb3IocykgbWF5IHJlcXVp
-cmUgdGhlIGhvc3QgYmUgYm9vdGVkL3JlYm9vdGVkIGluIG9yZGVyIHRvIGNvbXBsZXRlPw0KDQpX
-ZSdkIGxpa2UgdG8gbWVyZ2Ugb3VyIGVmZm9ydHMgYXJvdW5kIHRoZXNlIGJlaGF2aW9ycyB3aXRo
-IHRoZSB1cHN0cmVhbSBjb21tdW5pdHkuDQoNCi1Kb3NoIEdpbGVzDQoNCg0K
+On Fri, Apr 23, 2021 at 6:26 AM Patrick Williams <patrick@stwcx.xyz> wrote:
+>
+> On Mon, Apr 19, 2021 at 12:18:15AM -0700, Ed Tanous wrote:
+> > On Sat, Apr 17, 2021 at 11:56 AM Michael Richardson <mcr@sandelman.ca> wrote:
+> > > Zhenfei Tai <ztai@google.com> wrote:
+> > > If you have a daemon present that can decrypt things, then you already have a
+> > > private key (or symmetric key) present, and that key is subject to attack.
+> > > (Unless you add yet another layer of indirection via TPM chip....)
+> >
+> > This wasn't clear in the initial email, but yes, this would be a case
+> > of exactly what you described in the "unless" part.  The TPM-like chip
+> > has a specific format that we're hoping to upload to it through the
+> > OOB interfaces that would give it a form of identity.
+> >
+> > >
+> > > I strongly recommend that you do not invent new technology here.
+> > > EST (RFC7030) is considered the best technology here, with SCEP (RFC8894)
+> > > being a legacy choice.
+> >
+> > I read through that spec a bit.  The issue there is that it has no
+> > compatibility with Redfish, so implementing that would be yet another
+> > subsystem to build and maintain, and wouldn't work in tandem with
+> > Redfish aggregators once the key was decoded.  While I wouldn't be
+> > against anyone implementing that on OpenBMC, that wouldn't meet the
+> > needs of what we're trying to accomplish;  Also, it isn't clear that
+> > RFC8894 has provisions for custom certificate formats, of which this
+> > would definitely be one.
+>
+> There really isn't much in Redfish (or our dbus interfaces) about TPMs.
+> I think that provisioning and attestation are two big functional areas
+> that are coming to the forefront.  It would be nice if someone with
+> bandwidth and access could pave the way on the Redfish side of things
+> for TPM management.  I am certainly interested in the attestation end.
+
+FYI, Redfish just added SPDM support via the MeasurementBlock property
+in the SoftwareInventory schema.  Might be worth looking into for the
+attestation case.
+
+>
+> --
+> Patrick Williams
