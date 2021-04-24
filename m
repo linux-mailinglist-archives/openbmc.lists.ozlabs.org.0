@@ -2,63 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E43C2369C7C
-	for <lists+openbmc@lfdr.de>; Sat, 24 Apr 2021 00:23:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 397FE369DDB
+	for <lists+openbmc@lfdr.de>; Sat, 24 Apr 2021 02:39:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FRpj46XcVz301s
-	for <lists+openbmc@lfdr.de>; Sat, 24 Apr 2021 08:23:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FRsjS1bXBz2yxN
+	for <lists+openbmc@lfdr.de>; Sat, 24 Apr 2021 10:39:08 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=BlED9KAD;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=RbrIzVVb;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::b2b;
- helo=mail-yb1-xb2b.google.com; envelope-from=jasonling@google.com;
+ smtp.mailfrom=flex--wltu.bounces.google.com (client-ip=2607:f8b0:4864:20::b4a;
+ helo=mail-yb1-xb4a.google.com;
+ envelope-from=3mgidyaqkb4e1qyzlttlqj.htrtujsgrhqnxyx.t4qfgx.twl@flex--wltu.bounces.google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=BlED9KAD; dkim-atps=neutral
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com
- [IPv6:2607:f8b0:4864:20::b2b])
+ header.s=20161025 header.b=RbrIzVVb; dkim-atps=neutral
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com
+ [IPv6:2607:f8b0:4864:20::b4a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FRphr0zgdz2xMw
- for <openbmc@lists.ozlabs.org>; Sat, 24 Apr 2021 08:23:21 +1000 (AEST)
-Received: by mail-yb1-xb2b.google.com with SMTP id p202so13713152ybg.8
- for <openbmc@lists.ozlabs.org>; Fri, 23 Apr 2021 15:23:21 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FRsjB4Hjqz2y81
+ for <openbmc@lists.ozlabs.org>; Sat, 24 Apr 2021 10:38:52 +1000 (AEST)
+Received: by mail-yb1-xb4a.google.com with SMTP id
+ s2-20020a5b07420000b02904eb842efc40so26181736ybq.3
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Apr 2021 17:38:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=OVTI0NPd2n9VJENoPUi5VkDEe25hRggyzjGiMoqy26M=;
- b=BlED9KADVWwZVN9/HbuTg5VkWNDSGtGjLMDwEePY/BM0/PzotHmq+UAM1aJg5Xz1HW
- jumqoFh6iWsoRG2Jy8q34tsHauH0jSCfgb0gxNBDdBYWilXdrVLg4GA5n79I7K+tiNd3
- Dr18QV+ziWi3dxcNzg947yOSmFcokzH8cXTebYJvlA+8TBQBGUqcrZaN2XCn57xMoIfd
- OCDXRKoVBwdnjj/bsvOYEiERJvc7GxdaevJZo0K7eaULhOJa1LW3i2URk1++/8V/pOzw
- uAfWYW+uW6I/XfNBhHHAJP1bA1yhvX1NjhvjHdBxH5TrNSgWHFp0c8tHbuOC6QFgLhQt
- 1QqQ==
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=TUFOAGFbHFVFAh/DZwfKDpuwk+02e0nDQXYz3fBHcsA=;
+ b=RbrIzVVb/B127r47bQgjpjQOBVOU+0eZz3Tj4megmn6oOx8AOOzbNBD7vPFslPnx0z
+ LbCjUDc7L8aRIjoF1P4jsZtzFeiHgVzoqBK7wLXl58fOVXK929y6UQ8uYa7WH8QnPlLj
+ fiS/zjm/mEbyP1XrXziYx7G0WS8bTtY1Lhjl/i8V9ZssvAczhq69OINES3I5PFAJppAx
+ GjP0rUAXWyrILLfo2W1Nh0pD8fsgglKHyyojO09FQ0ymiJfL2SforPU+kDlUqhg16JmC
+ QA87CNrsZQJYtF2Q7EVqZq2D4B+5bOM25DrWEM25Uy2XSeP2Q0cKqCiZmMl8X21VN7Jb
+ 2YSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=OVTI0NPd2n9VJENoPUi5VkDEe25hRggyzjGiMoqy26M=;
- b=iQNX+qVKt1kzN4vlRjW2BCo7oL6QaIpqfwj68jPXhNpeS32PfIjh0PWjo/qK+WCRyS
- uVRiTkSYfkb+2f+nQ6H59o2DXtkcfD3gXwAsvqzqrFXXo0oswK/Z6qXGo1mWMthFPhuY
- kudQrO71d29dberj9/kE0g2EMBy0lHCLCbgVI3Y9yVLBBW/nszB2bp+XLVMa0/E305OQ
- 2XXnmdNrpcSU9InqNTWhRZIuCrlJf0Nbeorup4UwSoWOMM1ISmhpJIwyLmguUpDIqMPT
- l+bFAn2RJpfWXDm4CVfG9Cgo+FsRUIFoWWesk4rkFTqatmn194KBLLeA7sEWu2Rn4Vjw
- G4WA==
-X-Gm-Message-State: AOAM530H2NuEH8mbsVC8v2wgMFidNEG29Wo+MvqLrw5HheSsjrR8xYpr
- 0lDx2LvjFwKNBMVvSHttXmqaDRqEeIJn9QLw6NdIYF/EoDI=
-X-Google-Smtp-Source: ABdhPJzUy74dzQHFLQkKhPtwV2f24bWxIzI9gTe7horfWQuZO5mKokmtCk5VuuK382QKga+K9lSTjL3mdhNyfbvm33k=
-X-Received: by 2002:a5b:7c5:: with SMTP id t5mr8633186ybq.190.1619216595468;
- Fri, 23 Apr 2021 15:23:15 -0700 (PDT)
-MIME-Version: 1.0
-From: Jason Ling <jasonling@google.com>
-Date: Fri, 23 Apr 2021 15:22:35 -0700
-Message-ID: <CAHBbfcXj57K66ARd2_SQMCdNTPVtWk8Xrq0jn_k+WghjRcT-CA@mail.gmail.com>
-Subject: [pmbusplus] userspace i2c, pmbus interactions
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000fd1b5c05c0ab3d39"
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=TUFOAGFbHFVFAh/DZwfKDpuwk+02e0nDQXYz3fBHcsA=;
+ b=SEmSjGIUPImh85TJVhqO0egjFTVdOSy2LFiWOV/ZiSlm8P8cvXecfZDXirSACm6MA2
+ R3xCZoI/TQkm+LNANQavkS41yRVHBzbx7mDs4B7bVdETqIaIWxvm8xjJb06vzCgubl7/
+ dizQxvCBqamwDmEb/K3rR/YLWuSQC6F6VJv+WdpaIPKMLZn/P9CXS4ue9iFsDImMVAuN
+ J1n4Sfun0JnYhAeNTIXqygfq4HXYViRhRJ+Mti7i79Q1y+d/d6TMGiY4ir3buNTb9TuY
+ mZHg+SMlpa8HLNoxuQB/oFxxqPzFjhPeCA2y891hjcwt3KgJIk/ipxJdai0xZrpJztXs
+ OEYg==
+X-Gm-Message-State: AOAM53211ocWgvalZAXbpnmWSawFJReRJGh14OninNn/C9Z3IP03Nsjq
+ rmxtLk6jgYC+1Ff7M3clPeEVncUEoRTRh0qrR/pkWnh5HimpoZxUiC+4/IZTcZjd7mATc3K904+
+ BKh+GGOr90a4pjKNG6Sx9hFNX0rvjDK/6zYnJuzLmHZ89oQJSNu3tHhZjy2U=
+X-Google-Smtp-Source: ABdhPJxR1+5vu5+8OLNRCYFBhsZpzt2SmUTZcn/zWdWGKZhQXXYZ8+97NapGMJke8etHHfdq6ZypFB3T
+X-Received: from wltu.svl.corp.google.com
+ ([2620:15c:2c5:3:e521:396e:8693:2162])
+ (user=wltu job=sendgmr) by 2002:a25:6c0a:: with SMTP id
+ h10mr8920238ybc.167.1619224728845; 
+ Fri, 23 Apr 2021 17:38:48 -0700 (PDT)
+Date: Fri, 23 Apr 2021 17:38:21 -0700
+Message-Id: <20210424003821.3697200-1-wltu@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d-goog
+Subject: [PATCH dev-5.10] arm: dts: nuvoton: gsj: Enable Nuvoton fan filter
+From: Willy Tu <wltu@google.com>
+To: openbmc@lists.ozlabs.org
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,45 +77,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Willy Tu <wltu@google.com>, wak@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000fd1b5c05c0ab3d39
-Content-Type: text/plain; charset="UTF-8"
+gsj platform sometimes also see low fan speed issue that can be partly
+prevented with this fan filter.
 
-Hi all,
+Signed-off-by: Willy Tu <wltu@google.com>
+---
+ arch/arm/boot/dts/nuvoton-npcm730-gsj.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
-What started as an attempt to create a simple command line tool to perform
-pmbus device upgrades over i2c has turned into the start of a user-space
-i2c library (with some pmbus support).
+diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
+index 3ff116aaacb3..86facfc08c6e 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
+@@ -408,18 +408,21 @@ fan@0 {
+ 		reg = <0x00>;
+ 		fan-tach-ch = /bits/ 8 <0x00 0x01>;
+ 		cooling-levels = <127 255>;
++		fan_filter_en;
+ 	};
 
-I've already reused this library in some other obmc applications and it's
-been fairly well unit-tested. It also comes with all the public interfaces
-mocked (so you can unit test your own code).
+ 	fan@1 {
+ 		reg = <0x01>;
+ 		fan-tach-ch = /bits/ 8 <0x02 0x03>;
+ 		cooling-levels = /bits/ 8 <127 255>;
++		fan_filter_en;
+ 	};
 
-The idea is that more and more classes get added that will support
-different pmbus devices.
-General idea is that each device that gets support can expose methods to
-allow device upgrade, black box retrieval, etc..
+ 	fan@2 {
+ 		reg = <0x02>;
+ 		fan-tach-ch = /bits/ 8 <0x04 0x05>;
+ 		cooling-levels = /bits/ 8 <127 255>;
++		fan_filter_en;
+ 	};
+ };
 
-Anyways, wanted to gauge community interest in this so I can determine how
-motivated I should be to upstream it.
+--
+2.31.1.498.g6c1eba8ee3d-goog
 
---000000000000fd1b5c05c0ab3d39
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi all,<div><br></div><div>What started as an attempt to c=
-reate a simple command line tool to perform pmbus device upgrades over i2c =
-has turned into the start of a user-space i2c library (with some pmbus supp=
-ort).</div><div><br></div><div>I&#39;ve already reused this library in some=
- other obmc applications and it&#39;s been fairly well unit-tested. It also=
- comes with all the public interfaces mocked (so you can unit test your own=
- code).</div><div><br></div><div>The idea is that more and more classes get=
- added that will support different pmbus devices.=C2=A0<br>General idea is =
-that each device that gets support can expose methods to allow device upgra=
-de, black box retrieval, etc..</div><div><br></div><div>Anyways, wanted to =
-gauge community interest in this so I can determine how motivated I should =
-be to upstream it.</div><div><br></div></div>
-
---000000000000fd1b5c05c0ab3d39--
