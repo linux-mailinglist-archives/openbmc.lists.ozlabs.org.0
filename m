@@ -2,81 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C81A36BCD5
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 03:04:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1AFE36BCD6
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 03:05:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FTk7m2WK0z2yxX
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 11:04:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FTk8H5NRFz2yjP
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 11:05:19 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gapps-ntust-edu-tw.20150623.gappssmtp.com header.i=@gapps-ntust-edu-tw.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=m72DjeEf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=pRz0l7oB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=gapps.ntust.edu.tw (client-ip=2607:f8b0:4864:20::632;
- helo=mail-pl1-x632.google.com; envelope-from=m10902803@gapps.ntust.edu.tw;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634;
+ helo=mail-pl1-x634.google.com; envelope-from=jrdr.linux@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gapps-ntust-edu-tw.20150623.gappssmtp.com
- header.i=@gapps-ntust-edu-tw.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=m72DjeEf; dkim-atps=neutral
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com
- [IPv6:2607:f8b0:4864:20::632])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=pRz0l7oB; dkim-atps=neutral
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com
+ [IPv6:2607:f8b0:4864:20::634])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FS06Q5dmCz2xZH
- for <openbmc@lists.ozlabs.org>; Sat, 24 Apr 2021 15:27:39 +1000 (AEST)
-Received: by mail-pl1-x632.google.com with SMTP id e9so9266963plj.2
- for <openbmc@lists.ozlabs.org>; Fri, 23 Apr 2021 22:27:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gapps-ntust-edu-tw.20150623.gappssmtp.com; s=20150623;
- h=from:to:references:in-reply-to:subject:date:message-id:mime-version
- :content-transfer-encoding:thread-index:content-language;
- bh=gcyihooymZxwhPxMal5PKJzandHUGWJgCDZ1JQbyu8s=;
- b=m72DjeEfkuzJ/klggi4TAJ2SBzPTZHFZkF5xhIkdGv9gOcp+sFL34Q65PGihRZEUbS
- JVRnPofiYDD69JpuEcPCVJXc8Vj8rANaoY2fzKx6A8sH6Er1ChZ5wbzt89TiSk/LL+kE
- /ZjBQAYLitpCttHa2Ge8y4Q940dIQDIwjsTu3f1fsg8XfhZya9mlz84pzwxu05D/IrSs
- 8y9h116rxFTAHVFtYCuN9nuOpBg4p8j/+/LrfIhrLNrFHJ09ua5CqR/3o5h2yKhWldta
- 5su5K18PQlZqPnQ1VZ5Sqs11ExoFQMQjNAdX40FhFVuZInCRjzlL8smz+gDqVHpjoP4C
- N0XQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FSnMQ1jyvz2yQy;
+ Sun, 25 Apr 2021 22:26:39 +1000 (AEST)
+Received: by mail-pl1-x634.google.com with SMTP id g16so10626643plq.3;
+ Sun, 25 Apr 2021 05:26:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id;
+ bh=Q7owk5I/h07ZR9RenvZgNntZV/8AwXDtuPUVeIWpklw=;
+ b=pRz0l7oBO6FtwOfvsLCp3Sidezt3fCH+ojSHWrry3APSCneGlpxrA6PEKMxcbk2qzh
+ KQOxiKsrLb9dnTLpfqEKkE8Us6ALirJIweZLTpUTrrpXDVcKm2MmMPa6c7i9esjSNs9G
+ ogLFlWM4iy4AMRL/N0tJUiI4gflasVm/kol8aVm/4iglSJSSXlg72bHBh84wzpSDvmg9
+ tKMygsxycBjUnurIBrqEmpzaVsgK4XI00+VBKCb2f8CCt3w1C/+fy6E0yOo869DRVAmi
+ 8lUpwbXtp8oKCpXDA/Dt1J4QVXYDqBShIjBGIx7yel7mFur5uhUEJ3xjRATxu83hU7yN
+ yaXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:references:in-reply-to:subject:date
- :message-id:mime-version:content-transfer-encoding:thread-index
- :content-language;
- bh=gcyihooymZxwhPxMal5PKJzandHUGWJgCDZ1JQbyu8s=;
- b=sBE1qUDJFxLffknjcqu1XjfRV00Se8JrUy96/81+2IM6e8umMJCzl7bw50tj4PJqAZ
- n3ZCBmtwL/L/RqgAaU++z3NNIPAZ7LHzU2nmtjCp7EfF3MOWS0N3hWiuf1Zh1cqk3NLI
- l6iHtsrfhuIEoL19LHSONY8OUbugz0q/lezwMJNN6vsXB8I3ezwVd416yW1U4dMsi4fe
- pB5owlTdd2LSiOvYffB+NHGIIMakxrEi5kC3DNXAiTLbJEhePHDJpA+wCNaoF5/P28P1
- /Yry2ZFz+FjG7oWp/NyXoRH0SsLAcHjNAPPKug1uBYdCXvtkzjFGjHwZf31uHfmI9qKh
- imUw==
-X-Gm-Message-State: AOAM532slqmQWMbS9L4WQFt1Eu8o0OfkCqRqrg7Rna7XWuKl5GE749ak
- ivAECxUMFpfZZDDC18vqi0dg/A==
-X-Google-Smtp-Source: ABdhPJwNr6IMZ3OK36bNhW8dekDxMv6M6VDgxjafELV2jAHHXZheEeZdxhiyx5kTNvtWbCnZeGk8aQ==
-X-Received: by 2002:a17:902:d4d0:b029:eb:59ea:2f32 with SMTP id
- o16-20020a170902d4d0b02900eb59ea2f32mr7568493plg.58.1619242055826; 
- Fri, 23 Apr 2021 22:27:35 -0700 (PDT)
-Received: from LuthfiMufadelLaptop ([140.118.76.56])
- by smtp.gmail.com with ESMTPSA id k21sm5848972pfi.28.2021.04.23.22.27.34
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=Q7owk5I/h07ZR9RenvZgNntZV/8AwXDtuPUVeIWpklw=;
+ b=ul78es39OXsrecfzgYnKxjT0xH/88J6KM8yom+75H9hYD2eRdsm6e2Mx4rUWQwjE4F
+ hNfSAoy7WwGwrRVmwK/3OxtlbOWx0K1r1L+uVGYTmT8niIHmJw+WoEhL1AvfoPK7O1vh
+ eaqwhCko9g3/KvQbUldmF+rS8g50panthxJEFtE2CnZ4C+wgI4qMNHwXHSQEXJ8+VsIx
+ XTqqrJNR6d2WQw4rAOUslj4pTtATIBvEHyeiSHdN0doVpjNgJsofpEwzxyNJghtx/WUs
+ dA1F8i1PknG7uPEG+er4q9aV1tq79ftYN6mXtCyC8OC5+49FOT/1I5w4+VwsPuVOO6as
+ lvvQ==
+X-Gm-Message-State: AOAM532cDUZeaoa4ecVoQEW3VhqBoqSZiApvP/yexM4tpYJfnRu5bgDC
+ B3o3Lwu5w41oLKE0WdXoLmo=
+X-Google-Smtp-Source: ABdhPJyA4qBnZ0a7f1/UsEw+YIdSkmMmpLnxCfTeSt7ZilQ33L2out6vc8cXFAwOyMKEehZzLcUS7A==
+X-Received: by 2002:a17:90a:a081:: with SMTP id
+ r1mr5108610pjp.101.1619353595209; 
+ Sun, 25 Apr 2021 05:26:35 -0700 (PDT)
+Received: from localhost.localdomain ([49.37.83.82])
+ by smtp.gmail.com with ESMTPSA id ir3sm11695075pjb.42.2021.04.25.05.26.31
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 23 Apr 2021 22:27:35 -0700 (PDT)
-From: <m10902803@gapps.ntust.edu.tw>
-To: "'Brad Bishop'" <bradleyb@fuzziesquirrel.com>, <openbmc@lists.ozlabs.org>
-References: <000a01d73108$15144bb0$3f3ce310$@gapps.ntust.edu.tw>
- <20210415130835.bgl3qlql2jzskjl3@thinkpad.fuzziesquirrel.com>
-In-Reply-To: <20210415130835.bgl3qlql2jzskjl3@thinkpad.fuzziesquirrel.com>
-Subject: RE: OpenBMC Installation
-Date: Sat, 24 Apr 2021 13:27:33 +0800
-Message-ID: <000f01d738ca$88362cc0$98a28640$@gapps.ntust.edu.tw>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHgnvlkNpVGXSgn6ar8bqhz5Bu3TAIEgU/fqqAx9CA=
-Content-Language: en-id
+ Sun, 25 Apr 2021 05:26:34 -0700 (PDT)
+From: Souptick Joarder <jrdr.linux@gmail.com>
+To: andrew@aj.id.au,
+	linus.walleij@linaro.org,
+	joel@jms.id.au
+Subject: [PATCH] pinctrl: aspeed: Fix minor documentation error
+Date: Sun, 25 Apr 2021 17:56:24 +0530
+Message-Id: <1619353584-8196-1-git-send-email-jrdr.linux@gmail.com>
+X-Mailer: git-send-email 1.9.1
 X-Mailman-Approved-At: Tue, 27 Apr 2021 11:04:39 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -89,25 +77,98 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org, Souptick Joarder <jrdr.linux@gmail.com>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+Kernel test robot throws below warning ->
 
->Which program?  OpenBMC is an entire Linux distribution composed of dozens
-of programs.
-I used OpenBMC repository to build Romulus image and QEMU to run it. I
-follow the guide to run the OpenBMC with GUI
+drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c:2705: warning: This comment
+starts with '/**', but isn't a kernel-doc comment. Refer
+Documentation/doc-guide/kernel-doc.rst
+drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c:2614: warning: This comment
+starts with '/**', but isn't a kernel-doc comment. Refer
+Documentation/doc-guide/kernel-doc.rst
+drivers/pinctrl/aspeed/pinctrl-aspeed.c:111: warning: This comment
+starts with '/**', but isn't a kernel-doc comment. Refer
+Documentation/doc-guide/kernel-doc.rst
+drivers/pinctrl/aspeed/pinmux-aspeed.c:24: warning: This comment starts
+with '/**', but isn't a kernel-doc comment. Refer
+Documentation/doc-guide/kernel-doc.rst
 
->Which QEMU target did you use?
-I used Romulus image
+Fix minor documentation error.
 
->What was the error message?
-When I update the network it says:
-Network settings could not be saved
-Or, when I try to update the firmware, it says:
-Unable to upload image file
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Souptick Joarder <jrdr.linux@gmail.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+---
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c | 4 ++--
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 4 ++--
+ drivers/pinctrl/aspeed/pinctrl-aspeed.c    | 3 ++-
+ drivers/pinctrl/aspeed/pinmux-aspeed.c     | 3 ++-
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
-Regards,
-Luthfi
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
+index 996ebcb..4c0d266 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
+@@ -2702,8 +2702,8 @@ static int aspeed_g5_sig_expr_eval(struct aspeed_pinmux_data *ctx,
+ }
+ 
+ /**
+- * Configure a pin's signal by applying an expression's descriptor state for
+- * all descriptors in the expression.
++ * aspeed_g5_sig_expr_set() - Configure a pin's signal by applying an
++ * expression's descriptor state for all descriptors in the expression.
+  *
+  * @ctx: The pinmux context
+  * @expr: The expression associated with the function whose signal is to be
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+index 5c1a109..eeab093 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+@@ -2611,8 +2611,8 @@
+ };
+ 
+ /**
+- * Configure a pin's signal by applying an expression's descriptor state for
+- * all descriptors in the expression.
++ * aspeed_g6_sig_expr_set() - Configure a pin's signal by applying an
++ * expression's descriptor state for all descriptors in the expression.
+  *
+  * @ctx: The pinmux context
+  * @expr: The expression associated with the function whose signal is to be
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.c b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+index 9c65d56..9bbfe5c 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+@@ -108,7 +108,8 @@ static int aspeed_sig_expr_disable(struct aspeed_pinmux_data *ctx,
+ }
+ 
+ /**
+- * Disable a signal on a pin by disabling all provided signal expressions.
++ * aspeed_disable_sig() - Disable a signal on a pin by disabling all provided
++ * signal expressions.
+  *
+  * @ctx: The pinmux context
+  * @exprs: The list of signal expressions (from a priority level on a pin)
+diff --git a/drivers/pinctrl/aspeed/pinmux-aspeed.c b/drivers/pinctrl/aspeed/pinmux-aspeed.c
+index 57305ca..894e2ef 100644
+--- a/drivers/pinctrl/aspeed/pinmux-aspeed.c
++++ b/drivers/pinctrl/aspeed/pinmux-aspeed.c
+@@ -21,7 +21,8 @@ static inline void aspeed_sig_desc_print_val(
+ }
+ 
+ /**
+- * Query the enabled or disabled state of a signal descriptor
++ * aspeed_sig_desc_eval() - Query the enabled or disabled state of a signal
++ * descriptor.
+  *
+  * @desc: The signal descriptor of interest
+  * @enabled: True to query the enabled state, false to query disabled state
+-- 
+1.9.1
 
