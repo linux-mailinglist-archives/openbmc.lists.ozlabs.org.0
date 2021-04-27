@@ -2,70 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1AFE36BCD6
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 03:05:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 30A1E36BCE9
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 03:17:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FTk8H5NRFz2yjP
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 11:05:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FTkQm19kVz2yyL
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 11:17:52 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=pRz0l7oB;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=t67BWMxB;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jov++051;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634;
- helo=mail-pl1-x634.google.com; envelope-from=jrdr.linux@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=pRz0l7oB; dkim-atps=neutral
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com
- [IPv6:2607:f8b0:4864:20::634])
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=t67BWMxB; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=jov++051; 
+ dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FSnMQ1jyvz2yQy;
- Sun, 25 Apr 2021 22:26:39 +1000 (AEST)
-Received: by mail-pl1-x634.google.com with SMTP id g16so10626643plq.3;
- Sun, 25 Apr 2021 05:26:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id;
- bh=Q7owk5I/h07ZR9RenvZgNntZV/8AwXDtuPUVeIWpklw=;
- b=pRz0l7oBO6FtwOfvsLCp3Sidezt3fCH+ojSHWrry3APSCneGlpxrA6PEKMxcbk2qzh
- KQOxiKsrLb9dnTLpfqEKkE8Us6ALirJIweZLTpUTrrpXDVcKm2MmMPa6c7i9esjSNs9G
- ogLFlWM4iy4AMRL/N0tJUiI4gflasVm/kol8aVm/4iglSJSSXlg72bHBh84wzpSDvmg9
- tKMygsxycBjUnurIBrqEmpzaVsgK4XI00+VBKCb2f8CCt3w1C/+fy6E0yOo869DRVAmi
- 8lUpwbXtp8oKCpXDA/Dt1J4QVXYDqBShIjBGIx7yel7mFur5uhUEJ3xjRATxu83hU7yN
- yaXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id;
- bh=Q7owk5I/h07ZR9RenvZgNntZV/8AwXDtuPUVeIWpklw=;
- b=ul78es39OXsrecfzgYnKxjT0xH/88J6KM8yom+75H9hYD2eRdsm6e2Mx4rUWQwjE4F
- hNfSAoy7WwGwrRVmwK/3OxtlbOWx0K1r1L+uVGYTmT8niIHmJw+WoEhL1AvfoPK7O1vh
- eaqwhCko9g3/KvQbUldmF+rS8g50panthxJEFtE2CnZ4C+wgI4qMNHwXHSQEXJ8+VsIx
- XTqqrJNR6d2WQw4rAOUslj4pTtATIBvEHyeiSHdN0doVpjNgJsofpEwzxyNJghtx/WUs
- dA1F8i1PknG7uPEG+er4q9aV1tq79ftYN6mXtCyC8OC5+49FOT/1I5w4+VwsPuVOO6as
- lvvQ==
-X-Gm-Message-State: AOAM532cDUZeaoa4ecVoQEW3VhqBoqSZiApvP/yexM4tpYJfnRu5bgDC
- B3o3Lwu5w41oLKE0WdXoLmo=
-X-Google-Smtp-Source: ABdhPJyA4qBnZ0a7f1/UsEw+YIdSkmMmpLnxCfTeSt7ZilQ33L2out6vc8cXFAwOyMKEehZzLcUS7A==
-X-Received: by 2002:a17:90a:a081:: with SMTP id
- r1mr5108610pjp.101.1619353595209; 
- Sun, 25 Apr 2021 05:26:35 -0700 (PDT)
-Received: from localhost.localdomain ([49.37.83.82])
- by smtp.gmail.com with ESMTPSA id ir3sm11695075pjb.42.2021.04.25.05.26.31
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 25 Apr 2021 05:26:34 -0700 (PDT)
-From: Souptick Joarder <jrdr.linux@gmail.com>
-To: andrew@aj.id.au,
-	linus.walleij@linaro.org,
-	joel@jms.id.au
-Subject: [PATCH] pinctrl: aspeed: Fix minor documentation error
-Date: Sun, 25 Apr 2021 17:56:24 +0530
-Message-Id: <1619353584-8196-1-git-send-email-jrdr.linux@gmail.com>
-X-Mailer: git-send-email 1.9.1
-X-Mailman-Approved-At: Tue, 27 Apr 2021 11:04:39 +1000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FTkQQ1Wt9z2xYl;
+ Tue, 27 Apr 2021 11:17:33 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 23BC75C019F;
+ Mon, 26 Apr 2021 21:17:30 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Mon, 26 Apr 2021 21:17:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm2; bh=EqlXC5QCJVyxuYSkaKuNoI5/S7ZixI8
+ WET/kD4zMQE4=; b=t67BWMxBZ017WFGgFfktYcx8B7O3DWtPM/56AW+b1bGd5pw
+ DqWs6NObelbDErvGiu3zSwLhp6Qz4CNnQNSzTE0Y/Ds+IjCg6JQ2y0FhH3aC9Gng
+ 8gCXF+FSCoTblmZ5FTReBJTpxfys0bubU5u2Sp/nMXAz9xgh9Q/SrJC3V3g+p4Yv
+ xTzr5UQa9OihhGz3EtYYKsYleYuNbF9BKWrRMtY6UsF+Cy+AbqAnG15InBg1J89a
+ DkXsC2XrNCemgv+XKexDLVyyWLPygkYezyG263QbPalc0WwYufm6AAcAFPMX0auh
+ NC9VcTSvrgP2H3BnSDr76b1egBJexusxLovXDMQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=EqlXC5
+ QCJVyxuYSkaKuNoI5/S7ZixI8WET/kD4zMQE4=; b=jov++051zpecKsRF+8iRbE
+ Uq2IQ9hZ7LKJ42RakyYDE2XxH8pivmDVPWZNZPkhEHkHdgA9uG//MDAeXPO3N0Yd
+ 5glFu6E6ftzt6Ks31ofV4H9/JfZBQTjv3/Lr7lYkHrIiI8IokocmH9CRzncFGM4P
+ aDIlH0UR9JJBfKfLb90bZd99zU3CYQQm5W+tNERwS5ZjrUlQ2+nglU0M5lQ399Wa
+ H2or/VqRkXYamzeNPSguiX9HOvhNH5cKBoErFNfBokFcyzmVOv7jgJYjElHTaspo
+ vwezyUkU2BNereIwif52uXwrGkinbasmu4yfV1oRypsE240bqZaR+8YPuxzeweBg
+ ==
+X-ME-Sender: <xms:KWaHYGfeHH6dLgi9rDU1YggPko1zFQLTnLQRh4VnPFuAf6GksPSJ2A>
+ <xme:KWaHYANYBUOvE9mOg4pm1beDhujfwO5e9QUU8SRuEnin9_zO1Ol1dyVX7iwJcR-L_
+ UNAp63Zk6Ae93vn9Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdduledgjeegucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+ hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:KWaHYHiDfQrZvxWOqR0rfIkENTlzx5N91sTXn8rvlUVlfte79WHvWg>
+ <xmx:KWaHYD82EsPVpynUiGR45s0UjrIJQjxP8bMXSLXo_Uu2EPb78LEshg>
+ <xmx:KWaHYCt31Ushe1kXvbPdZ6Yj5UxR6jmMA_oAaPZeMXr2gxBvMptHBQ>
+ <xmx:KmaHYGirKlGQujUPf47_1n5CNkjLlnmdNBvOv2EyfbYJrvvf1ar8bQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 57E85A00079; Mon, 26 Apr 2021 21:17:29 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-403-gbc3c488b23-fm-20210419.005-gbc3c488b
+Mime-Version: 1.0
+Message-Id: <3cb5cc18-fc03-46d7-be3d-3d132b42c82b@www.fastmail.com>
+In-Reply-To: <1619353584-8196-1-git-send-email-jrdr.linux@gmail.com>
+References: <1619353584-8196-1-git-send-email-jrdr.linux@gmail.com>
+Date: Tue, 27 Apr 2021 10:47:09 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Souptick Joarder" <jrdr.linux@gmail.com>,
+ "Linus Walleij" <linus.walleij@linaro.org>, "Joel Stanley" <joel@jms.id.au>
+Subject: Re: [PATCH] pinctrl: aspeed: Fix minor documentation error
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,96 +98,32 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
  Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, Souptick Joarder <jrdr.linux@gmail.com>,
- linux-arm-kernel@lists.infradead.org
+ linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Kernel test robot throws below warning ->
 
-drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c:2705: warning: This comment
-starts with '/**', but isn't a kernel-doc comment. Refer
-Documentation/doc-guide/kernel-doc.rst
-drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c:2614: warning: This comment
-starts with '/**', but isn't a kernel-doc comment. Refer
-Documentation/doc-guide/kernel-doc.rst
-drivers/pinctrl/aspeed/pinctrl-aspeed.c:111: warning: This comment
-starts with '/**', but isn't a kernel-doc comment. Refer
-Documentation/doc-guide/kernel-doc.rst
-drivers/pinctrl/aspeed/pinmux-aspeed.c:24: warning: This comment starts
-with '/**', but isn't a kernel-doc comment. Refer
-Documentation/doc-guide/kernel-doc.rst
 
-Fix minor documentation error.
+On Sun, 25 Apr 2021, at 21:56, Souptick Joarder wrote:
+> Kernel test robot throws below warning ->
+> 
+> drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c:2705: warning: This comment
+> starts with '/**', but isn't a kernel-doc comment. Refer
+> Documentation/doc-guide/kernel-doc.rst
+> drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c:2614: warning: This comment
+> starts with '/**', but isn't a kernel-doc comment. Refer
+> Documentation/doc-guide/kernel-doc.rst
+> drivers/pinctrl/aspeed/pinctrl-aspeed.c:111: warning: This comment
+> starts with '/**', but isn't a kernel-doc comment. Refer
+> Documentation/doc-guide/kernel-doc.rst
+> drivers/pinctrl/aspeed/pinmux-aspeed.c:24: warning: This comment starts
+> with '/**', but isn't a kernel-doc comment. Refer
+> Documentation/doc-guide/kernel-doc.rst
+> 
+> Fix minor documentation error.
+> 
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Souptick Joarder <jrdr.linux@gmail.com>
+> Cc: Randy Dunlap <rdunlap@infradead.org>
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Souptick Joarder <jrdr.linux@gmail.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
----
- drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c | 4 ++--
- drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 4 ++--
- drivers/pinctrl/aspeed/pinctrl-aspeed.c    | 3 ++-
- drivers/pinctrl/aspeed/pinmux-aspeed.c     | 3 ++-
- 4 files changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-index 996ebcb..4c0d266 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-@@ -2702,8 +2702,8 @@ static int aspeed_g5_sig_expr_eval(struct aspeed_pinmux_data *ctx,
- }
- 
- /**
-- * Configure a pin's signal by applying an expression's descriptor state for
-- * all descriptors in the expression.
-+ * aspeed_g5_sig_expr_set() - Configure a pin's signal by applying an
-+ * expression's descriptor state for all descriptors in the expression.
-  *
-  * @ctx: The pinmux context
-  * @expr: The expression associated with the function whose signal is to be
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-index 5c1a109..eeab093 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-@@ -2611,8 +2611,8 @@
- };
- 
- /**
-- * Configure a pin's signal by applying an expression's descriptor state for
-- * all descriptors in the expression.
-+ * aspeed_g6_sig_expr_set() - Configure a pin's signal by applying an
-+ * expression's descriptor state for all descriptors in the expression.
-  *
-  * @ctx: The pinmux context
-  * @expr: The expression associated with the function whose signal is to be
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.c b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-index 9c65d56..9bbfe5c 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-@@ -108,7 +108,8 @@ static int aspeed_sig_expr_disable(struct aspeed_pinmux_data *ctx,
- }
- 
- /**
-- * Disable a signal on a pin by disabling all provided signal expressions.
-+ * aspeed_disable_sig() - Disable a signal on a pin by disabling all provided
-+ * signal expressions.
-  *
-  * @ctx: The pinmux context
-  * @exprs: The list of signal expressions (from a priority level on a pin)
-diff --git a/drivers/pinctrl/aspeed/pinmux-aspeed.c b/drivers/pinctrl/aspeed/pinmux-aspeed.c
-index 57305ca..894e2ef 100644
---- a/drivers/pinctrl/aspeed/pinmux-aspeed.c
-+++ b/drivers/pinctrl/aspeed/pinmux-aspeed.c
-@@ -21,7 +21,8 @@ static inline void aspeed_sig_desc_print_val(
- }
- 
- /**
-- * Query the enabled or disabled state of a signal descriptor
-+ * aspeed_sig_desc_eval() - Query the enabled or disabled state of a signal
-+ * descriptor.
-  *
-  * @desc: The signal descriptor of interest
-  * @enabled: True to query the enabled state, false to query disabled state
--- 
-1.9.1
-
+Acked-by: Andrew Jeffery <andrew@aj.id.au>
