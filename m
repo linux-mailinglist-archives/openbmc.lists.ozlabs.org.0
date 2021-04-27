@@ -2,54 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E24C136C9CD
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 18:55:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E031836C9CB
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 18:55:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FV7F26pTQz2yyv
-	for <lists+openbmc@lfdr.de>; Wed, 28 Apr 2021 02:55:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FV7DV6RHXz301t
+	for <lists+openbmc@lfdr.de>; Wed, 28 Apr 2021 02:55:22 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=AMyd60ET;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir;
- Wed, 28 Apr 2021 02:55:40 AEST
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::433;
+ helo=mail-wr1-x433.google.com; envelope-from=edtanous@google.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=AMyd60ET; dkim-atps=neutral
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
+ [IPv6:2a00:1450:4864:20::433])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FV7Dr2Y1Bz2yYd
- for <openbmc@lists.ozlabs.org>; Wed, 28 Apr 2021 02:55:40 +1000 (AEST)
-IronPort-SDR: MAWJhkMGgUiZQbPba3ZjwnmgMO0CIgzCTbqIaLt453YWMSvvOEcmdy/tR6nUu2ITERburH6jhG
- 4ZAUfBv9i6qQ==
-X-IronPort-AV: E=McAfee;i="6200,9189,9967"; a="196660816"
-X-IronPort-AV: E=Sophos;i="5.82,254,1613462400"; d="scan'208";a="196660816"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Apr 2021 09:54:29 -0700
-IronPort-SDR: ZQhlETvwjcPEN7yzKc9DAV7H5do4jSg/lD7eoEGjcI/yBbozdtDRSbMYpyyikLAdxDZe9Bfaxj
- rLn85XpxIYiQ==
-X-IronPort-AV: E=Sophos;i="5.82,254,1613462400"; d="scan'208";a="526165229"
-Received: from rthomaiy-mobl.gar.corp.intel.com (HELO [10.213.94.227])
- ([10.213.94.227])
- by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Apr 2021 09:54:27 -0700
-Subject: Re: Need help with service-config-manager and socket activated
- services
-To: Joseph Reynolds <jrey@linux.ibm.com>, openbmc <openbmc@lists.ozlabs.org>, 
- "Puli, Apparao" <apparao.puli@linux.intel.com>
-References: <53032e76-bee4-9f04-231e-762c0c1b8e06@linux.ibm.com>
- <015eaa30-1803-20ea-2360-6819bef1221e@linux.ibm.com>
-From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-Message-ID: <0e963efc-bc9e-b765-e3a6-80117c1dd661@linux.intel.com>
-Date: Tue, 27 Apr 2021 22:24:25 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FV7DF3KPXz2xMw
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Apr 2021 02:55:06 +1000 (AEST)
+Received: by mail-wr1-x433.google.com with SMTP id n2so7034359wrm.0
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Apr 2021 09:55:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=KVBv7N3hWS7ublm3YPXYm8G8vk04NjTkPkuEITM0t1Y=;
+ b=AMyd60ETq7QbqGFeLw4bX11ab4GgzRT5HsHLQwMhV6FgGScRUfuHTwrCAHglo3KiFm
+ QzWjrbFmV1McKm4k4qN/IC9C6UW2d2FhY6/EuhOMRby44Txj9LzFjQYkfurLSp2XYBGI
+ 0hCccPW4tmJ3R9KjDU4XRhT8LQwCIhulv06kaxJX4g16qyUxKVy+eI9e4NwLDQRmMqUV
+ HDlkt2jNStFRCLnP3un+rdY+DTlV/Wk4YtpA59D9nafndF8NdAPuEYSHUHDh9xxJ2ugG
+ UOzMFOCrzAydrCLnjNVxl7CWXjAV57qq04LXBzKS+O0+C/0tCL9v1qdu4Un/x3ZScGrX
+ mpGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=KVBv7N3hWS7ublm3YPXYm8G8vk04NjTkPkuEITM0t1Y=;
+ b=p6CNojWPi3hFc4rNt2YlJI+UFcSLidQcAUVlouoVXvYtOQz4QYI9MRqmut7eYbs3nW
+ 3FoFaKvyIJtuFYvtAsvF/R7rwiDUk+QdoX5tXXzvO7uUA1TqMIVSwuX2XGvCtUOMooX5
+ gZqPBbvp82EVjBRyh+QN/5f4YS8K/5T98Fi4KigUuipo283g2KQXGIPxTvPB9phPZPQb
+ /aFZAd3L6aXZDCx+F9kLL+ADqGNfNr5thfTcJbWcz41QPv7d3sHcjZzxZnXxtXkUku5/
+ uaROWr+PIjetZp47lZB60odl+Jo3D8RJTktbWbp7b8OPfYuRYIt/ciFy76ZjpcZ6pY3u
+ JCug==
+X-Gm-Message-State: AOAM530TjFp2D8KxYZu2vrB+Y3C/iM39c8RWdAmEy2qETKXsFFq20IP/
+ djBElclkueX6Xrc7oheaeSIMz4nIPa9UOXHsJszByA==
+X-Google-Smtp-Source: ABdhPJwm53BkPWnGXCeqQUxU3kv06nM31C8/z/vmZA2mUYyK15hchjMC5PmvoM1BceOfF2cwscWJxXBv+7YMDGSQ8MU=
+X-Received: by 2002:adf:cf09:: with SMTP id o9mr30552164wrj.366.1619542500568; 
+ Tue, 27 Apr 2021 09:55:00 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <015eaa30-1803-20ea-2360-6819bef1221e@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <SG2PR04MB30936A198A555EEBC1DBF78AE1429@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <35577f35-feff-c87f-9948-ccdb6986b6db@intel.com>
+ <CAGm54UG=qMjxSSPtPMEmnAWADjcsroa5L4sCj5FGopso3ViKOA@mail.gmail.com>
+In-Reply-To: <CAGm54UG=qMjxSSPtPMEmnAWADjcsroa5L4sCj5FGopso3ViKOA@mail.gmail.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Tue, 27 Apr 2021 09:54:48 -0700
+Message-ID: <CAH2-KxAdB0bPwoqf_tJB+hMzgSoJ34iJfy1-cwKumUPk=KkvkA@mail.gmail.com>
+Subject: Re: Entity Manager error in tiogapass
+To: Lei Yu <yulei.sh@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,68 +77,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Jayashree D <jayashree-d@hcl.com>,
+ Johnathan Mantey <johnathanx.mantey@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Joseph,
-
-Service config manager currently is not designed to monitor the new 
-service instantiated dynamically. It lists all the objects instantiated 
-when BMC FW starts and not after that.
-
-ssh service will be started dynamically based on user connection to the 
-SSH port. Hence following 2 things are possible
-
-1. Control only socket attributes
-
-2. Update service config manager to monitor signal for new unit service 
-and accordingly update the attributes as needed.
-
-Left comments in review.
-
-Regards,
-
-Richard
-
-On 4/19/2021 8:16 PM, Joseph Reynolds wrote:
-> On 4/7/21 6:04 PM, Joseph Reynolds wrote:
->> We are adding a new function to allow the BMC admin to disable the 
->> dropbear SSH server [issue 1763][]. This consists of a D-Bus 
->> interface controlled by [service-config-manager][] and an enhanced 
->> Redfish REST API.
+On Mon, Apr 26, 2021 at 7:23 PM Lei Yu <yulei.sh@bytedance.com> wrote:
 >
-> Richard and AppaRao,
+> On Tue, Apr 27, 2021 at 12:35 AM Johnathan Mantey
+> <johnathanx.mantey@intel.com> wrote:
+> >
+> > Jayashree,
+> >
+> > On 4/26/21 9:00 AM, Jayashree D wrote:
+> > >
+> > > Classification: *Confidential*
+> > >
+> > > Hi Team,
+> > >
+> > > In the latest build, I am facing the below issue in Entity Manager fo=
+r
+> > > tiogapass.
+> > >
+> > > Already issue has been created in Entity Manager Repo - entity-manage=
+r
+> > > terminated by 'std::filesystem::__cxx11::filesystem_error' =C2=B7 Iss=
+ue #8
+> > > =C2=B7 openbmc/entity-manager (github.com)
+> > > <https://github.com/openbmc/entity-manager/issues/8>
+> > >
+> > > root@tiogapass:~# systemctl status
+> > > xyz.openbmc_project.EntityManager.service -l
+> > >
+> > > =E2=97=8F xyz.openbmc_project.EntityManager.service - Entity Manager
+> > >
+> > >      Loaded: loaded
+> > > (]8;;file://tiogapass/lib/systemd/system/xyz.openbmc_project.EntityMa=
+nager.service/lib/systemd/system/xyz.openbmc_project.EntityManager.service]=
+8;;;
+> > > enabled; vendor preset: enabled)
+> > >
+> > >      Active: active (running) since Thu 1970-01-01 00:04:10 UTC; 25s =
+ago
+> > >
+> > >     Process: 851 ExecStartPre=3D/bin/mkdir -p /var/configuration
+> > > (code=3Dexited, status=3D0/SUCCESS)
+> > >
+> > >     Process: 852 ExecStartPre=3D/bin/mkdir -p /tmp/overlays
+> > > (code=3Dexited, status=3D0/SUCCESS)
+> > >
+> > >    Main PID: 853 (entity-manager)
+> > >
+> > >      CGroup: /system.slice/xyz.openbmc_project.EntityManager.service
+> > >
+> > >              =E2=94=94=E2=94=80853 /usr/bin/entity-manager
+> > >
+> > > Jan 01 00:04:09 tiogapass systemd[1]: Starting Entity Manager...
+> > >
+> > > Jan 01 00:04:10 tiogapass systemd[1]: Started Entity Manager.
+> > >
+> > > Jan 01 00:04:27 tiogapass entity-manager[853]: Inventory Added
+> > >
+> > > Jan 01 00:04:27 tiogapass entity-manager[853]: terminate called after
+> > > throwing an instance of 'std::filesystem::__cxx11::filesystem_error'
+> > >
+> > > Jan 01 00:04:27 tiogapass entity-manager[853]:   what():  filesystem
+> > > error: recursive directory iterator cannot open directory: No such
+> > > file or directory [/sys/bus/i2c/devices/i2c-16]
+> > >
+> >
+> > Check this portion of src/Overlay.cpp
+> > static bool deviceIsCreated(const std::string& devicePath,
+> >                              std::shared_ptr<uint64_t> bus,
+> >                              std::shared_ptr<uint64_t> address,
+> >                              const bool retrying)
+> >
+> > I placed a comment describing the intent of the directory iterator. I
+> > have not seen the issue described on our systems, nor in QEMU (reported
+> > by another dev), so I'm not able to identify the issue.
 >
-> We are enhancing service-config-manager so it can control the dropbear 
-> SSH server.  See [gerrit review 42072][].  The problem with this 
-> patchset are:
-> - It always reports dropbear as disabled.
-> - When we enable dropbear via this service, it reports dropbear as 
-> enabled for a few seconds, then it reports dropbear as disabled.
+> The issue is reported at
+> https://github.com/openbmc/entity-manager/issues/8, and the commit
+> that introduces the issue is
+> https://github.com/openbmc/entity-manager/commit/9b86787adea3f8f29fac2acb=
+b9fa0f48fbcf244a
 >
-> I believe the underlying issue is that dropbear is socket activated 
-> service.  Does service-config-manager understand how to control socket 
-> activated services like dropbear server?
-> - If so, can you help us debug what is going wrong?
-> - If not, can you point us to what code needs to be enhanced to make 
-> this work?
+> Could you kindly investigate the exception and see how to make it not cra=
+sh?
+
+It sounds like Jonathan isn't able to reproduce.  Do you think you
+could capture the full stack trace from the exception?  Do you have
+anything odd on your systems that would cause the differing behavior?
+
 >
-> Thanks,
-> - Joseph
->
->>
->> We need help to understand how to enhance service-config-manager to 
->> work with socket activated services such as dropbear.  For example, 
->> to disable dropbear, is the correct action to perform something like 
->> this?:
->>   systemctl stop dropbear.socket
->>   systemctl disable dropbear.socket
->>
->> - Joseph
->>
->> [issue 1763]: https://github.com/ibm-openbmc/dev/issues/1763
->> [service-config-manager]: 
->> https://github.com/openbmc/service-config-manager
-> [gerrit review 42072]: 
-> https://gerrit.openbmc-project.xyz/c/openbmc/service-config-manager/+/42072
->
+> --
+> BRs,
+> Lei YU
