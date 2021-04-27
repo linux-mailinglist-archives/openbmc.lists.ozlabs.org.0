@@ -2,72 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB89C36BD3F
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 04:23:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9307436BD5B
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 04:33:20 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FTltd5m9zz2yyK
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 12:23:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FTm5p48XQz2yxn
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 12:33:18 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=Rk+x8e8I;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=M3dIZkgb;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::336;
- helo=mail-ot1-x336.google.com; envelope-from=yulei.sh@bytedance.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c30;
+ helo=mail-oo1-xc30.google.com; envelope-from=proclivis@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=Rk+x8e8I; dkim-atps=neutral
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com
- [IPv6:2607:f8b0:4864:20::336])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=M3dIZkgb; dkim-atps=neutral
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com
+ [IPv6:2607:f8b0:4864:20::c30])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FTltN3YKlz2xYp
- for <openbmc@lists.ozlabs.org>; Tue, 27 Apr 2021 12:23:23 +1000 (AEST)
-Received: by mail-ot1-x336.google.com with SMTP id
- z20-20020a0568301294b02902a52ecbaf18so1675465otp.8
- for <openbmc@lists.ozlabs.org>; Mon, 26 Apr 2021 19:23:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=yOLSbzNiBnesilsxW/tAqdmFJfYgs1VW2Ej6f0dMIXw=;
- b=Rk+x8e8IJNMPm4DwKnbC5HX46T/iX+jZfsayu5YmW3LAedSzrq3pnZTP+eEeUpjq3G
- o7F2BlxwrN+3WD4j27hCCYtXggbWIWmyRoQfp9sLSMcf16FEscr9bG8Rp54sAFxMJnPe
- /06G86No+1jJEX2PRunsU8OKhDUnDkK1XzB5e0y2W78YfG6Eif4t3BogfId0g4GIIj8f
- jbp62KPE0QJlox+1lKCeEf0XwDOMSsNuTAsHvl0+j4DuKSEmO+jSYT40NldE+Es9MVUv
- lUDN69j2yRdHoHb9Z3uvydpHwycFAFSGlH9PY5YGEycdZWyzr2YKRtJ+9wcee2KtQtS9
- PVAQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FTm5Z0Ls7z2yQq
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Apr 2021 12:33:03 +1000 (AEST)
+Received: by mail-oo1-xc30.google.com with SMTP id
+ m25-20020a4abc990000b02901ed4500e31dso5773955oop.1
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Apr 2021 19:33:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=FJDQhyiDPcV87sMVqR9DMSohss4URBFVfTV3/Dea52k=;
+ b=M3dIZkgbm77nt3M7LimrXALbeyHnFpbPX9pttl093VjZrmmgpcw/unL6Qu0g9zMWXm
+ FgIxL7aCC46xGrTn6TYca9928PA5KmRN0NI60zZT6wlz5Ctfy+o19LyCpBJXo7282NlM
+ REMEH7AcyGS6NKNsoL68cEn68wMoNle9cuuWM2iQMbWeHvXo9BvMtyPHzBrBwgiLB4la
+ jRQb7T3QF0KKwp02A3Ou5IGZouReQec+B7aFEuc+2pnUWdvkDpz8Vx2Dp6Q4/c99GhVI
+ 6fSk6glOxdDOPjPUMxlrEKZKhzZrf+ijmJZDIk0usrab0fyNqxOlF7I42l2XemVl6mZu
+ Xu7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=yOLSbzNiBnesilsxW/tAqdmFJfYgs1VW2Ej6f0dMIXw=;
- b=X11bpd/DMW8G72tklZws9QVkrzPON3UZ3h6fdArpN6WYL3wc9KBKt8lmOErN2P6Oy7
- 3bJ+7cGjTBCpkLfY1FRRQQ9hX2JVEknohU+U12pcCggR234Il0B25g6qsEa33XX8Z3bn
- C1SB+8ljdopqoMZys0LKxrWSb3LSIuJcM/Tf+rptt8ezHAepHJ/fakcPmlfatRbkq0n4
- 6oWX3yL25/XOKRkn0QWH5B+Ainwkqa64IFXcoY6YbRajSXBy5Tt0vuoLF1iVq4co5xXN
- ws/ZLSYN+/K+cTGZnRuTPx0TiAIcHl9hb9KYUADK0tqBvdbStLOGLyjlsLQx5LP5RdOd
- lrsA==
-X-Gm-Message-State: AOAM533LvoGLUx/yvoDym0vfP2pJtftm5f9ZrG8XECoSMuNKqTfiYPMB
- 7Z73pmAFd8pUxN++/VrVOwGzF2uavENVtEWXNFDy5Q==
-X-Google-Smtp-Source: ABdhPJySEvnyTS6MbfLBmI4d/NuFzzfddq86bNIWtYb/bk4jfsmrDwKuPCUC7ZzsCAf9+6uzp+31hIGwM4IscD/iBSg=
-X-Received: by 2002:a9d:4f03:: with SMTP id d3mr7272369otl.361.1619490198142; 
- Mon, 26 Apr 2021 19:23:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <SG2PR04MB30936A198A555EEBC1DBF78AE1429@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <35577f35-feff-c87f-9948-ccdb6986b6db@intel.com>
-In-Reply-To: <35577f35-feff-c87f-9948-ccdb6986b6db@intel.com>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Tue, 27 Apr 2021 10:23:07 +0800
-Message-ID: <CAGm54UG=qMjxSSPtPMEmnAWADjcsroa5L4sCj5FGopso3ViKOA@mail.gmail.com>
-Subject: Re: Entity Manager error in tiogapass
-To: Johnathan Mantey <johnathanx.mantey@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=FJDQhyiDPcV87sMVqR9DMSohss4URBFVfTV3/Dea52k=;
+ b=juvyZrtdMdlEL9rgKJlh5CvK4YAxcrSah1LTvslK3tsUHgj/z3VaUai1vTHVhCOWgr
+ 7BB4lwWliPVY6lLmnBlGaFRoJAH5CvquhiP74HKL6wmFiTWkQANNbLEFKChIlTOqZdrU
+ 8Q9nDsbDemCThYXZGwJbm5Z/r8pBxO4de2A9SdMaHDSLC04XgyZOwXutEafs94WifXaj
+ egnzaCnm4hOKmR93LPH3X+sY8+QeZKKA+TlJBfHEas3W7P1rAuw6DktIDFtS/XXVxl4Q
+ yOxpGR8j9Pr9S452zJJvItch/vp2ZP4/tBFLOaovG7KBeX0U7QBvklSIiIrbzxveXJcH
+ n7MA==
+X-Gm-Message-State: AOAM532y9LpQpx0rXqrztMCthszjtX95vRtAiqO0JgoSuA8d1fZ0V/F+
+ QJg7ipmXFrr0CmvuiUBipY4=
+X-Google-Smtp-Source: ABdhPJzHIeS7I4ad8AwytVgjhazKc4dVV8sYNYGe2BfZMbrj4vn9polaz/DuS4xTkb/i2rV4s+c9dw==
+X-Received: by 2002:a4a:3904:: with SMTP id m4mr15738970ooa.47.1619490779504; 
+ Mon, 26 Apr 2021 19:32:59 -0700 (PDT)
+Received: from [10.25.18.6] ([70.39.92.27])
+ by smtp.gmail.com with ESMTPSA id c1sm127560oto.20.2021.04.26.19.32.59
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 26 Apr 2021 19:32:59 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: [pmbusplus] userspace i2c, pmbus interactions
+From: Mike Jones <proclivis@gmail.com>
+In-Reply-To: <CAHBbfcXj57K66ARd2_SQMCdNTPVtWk8Xrq0jn_k+WghjRcT-CA@mail.gmail.com>
+Date: Mon, 26 Apr 2021 20:32:58 -0600
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <015CB0F4-95C4-46FA-975A-595F8685405D@gmail.com>
+References: <CAHBbfcXj57K66ARd2_SQMCdNTPVtWk8Xrq0jn_k+WghjRcT-CA@mail.gmail.com>
+To: Jason Ling <jasonling@google.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,90 +82,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Jayashree D <jayashree-d@hcl.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Apr 27, 2021 at 12:35 AM Johnathan Mantey
-<johnathanx.mantey@intel.com> wrote:
->
-> Jayashree,
->
-> On 4/26/21 9:00 AM, Jayashree D wrote:
-> >
-> > Classification: *Confidential*
-> >
-> > Hi Team,
-> >
-> > In the latest build, I am facing the below issue in Entity Manager for
-> > tiogapass.
-> >
-> > Already issue has been created in Entity Manager Repo - entity-manager
-> > terminated by 'std::filesystem::__cxx11::filesystem_error' =C2=B7 Issue=
- #8
-> > =C2=B7 openbmc/entity-manager (github.com)
-> > <https://github.com/openbmc/entity-manager/issues/8>
-> >
-> > root@tiogapass:~# systemctl status
-> > xyz.openbmc_project.EntityManager.service -l
-> >
-> > =E2=97=8F xyz.openbmc_project.EntityManager.service - Entity Manager
-> >
-> >      Loaded: loaded
-> > (]8;;file://tiogapass/lib/systemd/system/xyz.openbmc_project.EntityMana=
-ger.service/lib/systemd/system/xyz.openbmc_project.EntityManager.service]8;=
-;;
-> > enabled; vendor preset: enabled)
-> >
-> >      Active: active (running) since Thu 1970-01-01 00:04:10 UTC; 25s ag=
-o
-> >
-> >     Process: 851 ExecStartPre=3D/bin/mkdir -p /var/configuration
-> > (code=3Dexited, status=3D0/SUCCESS)
-> >
-> >     Process: 852 ExecStartPre=3D/bin/mkdir -p /tmp/overlays
-> > (code=3Dexited, status=3D0/SUCCESS)
-> >
-> >    Main PID: 853 (entity-manager)
-> >
-> >      CGroup: /system.slice/xyz.openbmc_project.EntityManager.service
-> >
-> >              =E2=94=94=E2=94=80853 /usr/bin/entity-manager
-> >
-> > Jan 01 00:04:09 tiogapass systemd[1]: Starting Entity Manager...
-> >
-> > Jan 01 00:04:10 tiogapass systemd[1]: Started Entity Manager.
-> >
-> > Jan 01 00:04:27 tiogapass entity-manager[853]: Inventory Added
-> >
-> > Jan 01 00:04:27 tiogapass entity-manager[853]: terminate called after
-> > throwing an instance of 'std::filesystem::__cxx11::filesystem_error'
-> >
-> > Jan 01 00:04:27 tiogapass entity-manager[853]:   what():  filesystem
-> > error: recursive directory iterator cannot open directory: No such
-> > file or directory [/sys/bus/i2c/devices/i2c-16]
-> >
->
-> Check this portion of src/Overlay.cpp
-> static bool deviceIsCreated(const std::string& devicePath,
->                              std::shared_ptr<uint64_t> bus,
->                              std::shared_ptr<uint64_t> address,
->                              const bool retrying)
->
-> I placed a comment describing the intent of the directory iterator. I
-> have not seen the issue described on our systems, nor in QEMU (reported
-> by another dev), so I'm not able to identify the issue.
+Jason,
 
-The issue is reported at
-https://github.com/openbmc/entity-manager/issues/8, and the commit
-that introduces the issue is
-https://github.com/openbmc/entity-manager/commit/9b86787adea3f8f29fac2acbb9=
-fa0f48fbcf244a
+I am interested, because within the PMBus Specification Committee, we =
+are working on a data language intended for device programming. And =
+there is hope that eventually it can become adopted into linux and/or =
+OBMC.
 
-Could you kindly investigate the exception and see how to make it not crash=
-?
+There is a particular use model that is being driven by the IC suppliers =
+and their tools. One reason is that all the vendors have proprietary =
+tools, but they see no competitive advantage, and would rather support a =
+universal standard.
 
---=20
-BRs,
-Lei YU
+Imagine that programming might be done for:
+
+- ICT
+- Proto Builds
+- Engineering Bringup
+- Remote upgrades
+
+And the context is more than CPU based systems, but includes Networking, =
+other boards with ASICS, etc. So broad context. Hence, it has to work =
+within linux without OBMC.
+
+My view is it is a linux library anyone can use, and OBMC is the piping =
+if it were exposed to a web service, state management, etc.
+
+Now, imagine the IC manufacturer's tool produces a file that can =
+represent a qualified algorithm that is known to work under all possible =
+scenarios, including CRC errors in parts, corrupt NVM, etc. This is what =
+all the vendors do today. They take care of all the things that can go =
+wrong. In the case of ADI, if power was lost while programming, and the =
+BMC or linux can boot from an aux supply, our data files (encoding =
+algorithms), can repair the part under ALL possible random values in the =
+corrupt part.
+
+Furthermore, an integrator (CM, Design House, software team) has to deal =
+with segmented I2C busses, muxes, etc. And the integrator wants to write =
+a wrapper file that integrates all the vendor files. So this integration =
+file has to take care of muxes, order of operations, calling vendor =
+files, etc.
+
+My interest is two part:
+
+1) I am interested in anything that enables our work
+2) I am interested in inviting someone from the community, not IC =
+vendor, to our meetings to offer advice and help us define something =
+useful
+
+Mike
+
+
+
+> On Apr 23, 2021, at 4:22 PM, Jason Ling <jasonling@google.com> wrote:
+>=20
+> Hi all,
+>=20
+> What started as an attempt to create a simple command line tool to =
+perform pmbus device upgrades over i2c has turned into the start of a =
+user-space i2c library (with some pmbus support).
+>=20
+> I've already reused this library in some other obmc applications and =
+it's been fairly well unit-tested. It also comes with all the public =
+interfaces mocked (so you can unit test your own code).
+>=20
+> The idea is that more and more classes get added that will support =
+different pmbus devices.=20
+> General idea is that each device that gets support can expose methods =
+to allow device upgrade, black box retrieval, etc..
+>=20
+> Anyways, wanted to gauge community interest in this so I can determine =
+how motivated I should be to upstream it.
+>=20
+
