@@ -2,52 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7398136CAF0
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 20:12:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BFAB36CBFF
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 21:49:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FV8xm3VGvz3001
-	for <lists+openbmc@lfdr.de>; Wed, 28 Apr 2021 04:12:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FVC5g2Yc8z301D
+	for <lists+openbmc@lfdr.de>; Wed, 28 Apr 2021 05:49:43 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=meDzeEHh;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 65 seconds by postgrey-1.36 at boromir;
- Wed, 28 Apr 2021 04:12:33 AEST
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2a;
+ helo=mail-qv1-xf2a.google.com; envelope-from=vivekgani@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=meDzeEHh; dkim-atps=neutral
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com
+ [IPv6:2607:f8b0:4864:20::f2a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FV8xY6xv8z2xMw
- for <openbmc@lists.ozlabs.org>; Wed, 28 Apr 2021 04:12:33 +1000 (AEST)
-IronPort-SDR: XRwiLcS1PQ1hge1rHPV7P/kz3zvc7k7wm5KVqWMg1zyj/mDqvaS9muSvf29LPhnW50IK4YNnNo
- zAt7uh9YEptA==
-X-IronPort-AV: E=McAfee;i="6200,9189,9967"; a="196119815"
-X-IronPort-AV: E=Sophos;i="5.82,255,1613462400"; d="scan'208";a="196119815"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Apr 2021 11:11:24 -0700
-IronPort-SDR: DNwVcSC7Z092btQJdXxxPEF8YHIpN3c3HQh8uRMjV8HhRyyiBZGnsi2oQFAq1F3z0PdycS9swt
- I1HRLNNkyLhA==
-X-IronPort-AV: E=Sophos;i="5.82,255,1613462400"; d="scan'208";a="386237159"
-Received: from jmanteyx-desk.jf.intel.com ([10.54.51.75])
- by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Apr 2021 11:11:24 -0700
-Subject: Re: Entity Manager error in tiogapass
-To: Ed Tanous <edtanous@google.com>, Lei Yu <yulei.sh@bytedance.com>
-References: <SG2PR04MB30936A198A555EEBC1DBF78AE1429@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <35577f35-feff-c87f-9948-ccdb6986b6db@intel.com>
- <CAGm54UG=qMjxSSPtPMEmnAWADjcsroa5L4sCj5FGopso3ViKOA@mail.gmail.com>
- <CAH2-KxAdB0bPwoqf_tJB+hMzgSoJ34iJfy1-cwKumUPk=KkvkA@mail.gmail.com>
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
-Message-ID: <0b2957f2-dbf2-79c3-2788-b9105aef2db6@intel.com>
-Date: Tue, 27 Apr 2021 11:11:23 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FVC5Q4WXSz2y8C
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Apr 2021 05:49:28 +1000 (AEST)
+Received: by mail-qv1-xf2a.google.com with SMTP id x27so29659509qvd.2
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Apr 2021 12:49:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+ :subject:to:cc;
+ bh=i3i6fRwYNi2MTBfld91/DBcyNw3uir2M9m0tvWbNtBk=;
+ b=meDzeEHh5A6GGOGoyUBE7FJvE5QdMsPvVwINrq3EO809P2hDR1DfbQ9QMTtK7K7pAT
+ d4ubJVvIuunIZynPdijy8hnRyFugFJiDQpNbPP97/8FS05W2fx1FEctT99o1cPKlJxdu
+ IWs7AP/onVbkMC/jk+oOiQUE/6Izr6xRAFzbrtSbp6PQ+DkJxEWydA3lOiF6Iowk8Pww
+ HZgm9bs9t8dx1nRgikAIv7DbABN9PYKI1OrAPx3yg8FwvHYY9CxYfzM4DQx1bmjM6DhI
+ 9Paiob/fkIoH0wg7/L6qX5IeCfxO1oM3fBQ+P7EW8mr/FaO6jkRcSXUReacfnyKnZlSf
+ EDxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+ :from:date:message-id:subject:to:cc;
+ bh=i3i6fRwYNi2MTBfld91/DBcyNw3uir2M9m0tvWbNtBk=;
+ b=hl1i04IeegCprfSL+2DBjAYrz9s6GqlG8SkZhRzS0nNL6YjTAoRtnshTL7Wda7xsm6
+ zjHJ7+XFju21CIPo+Q6XgBjJe/azQay/u8eMzzfYlPJqyjieIp1jCa57xGmgqm4kgLko
+ rAz2f7UOBBD4IaYcEINoCQktURXdYbUptXZuo7juvdabbxM18+ZRVJtjzDwl5VU4u/U3
+ 4aLJpJgARZWh5lDchXeKLDHxeILe223EAxf4EdPkl+yrCOYA4mhAT2SmVGz1fNRIUOyW
+ RcSEBDaKtm+neX4Cv12Md2iEWHZsno1PDzSeRZ8enqTCvZwL4mYp3Ak9p/kxCepa2gPr
+ T9fQ==
+X-Gm-Message-State: AOAM531RwSZUG4YsqAOMbWIWN2KQzh28I2J4zvFH6eMBOrLxvN4u8d+H
+ 8KVIkHFGjA/E5zS/X3jqCNqSsXO1mWkiu8/wQpg=
+X-Google-Smtp-Source: ABdhPJwn1gJvuO1bRfTbG8tmp37+p62iAB7yC8j4hK3Nou4aEdE+gp9/7zikVZJgtmimvGzIgetHbvwdnSGXbIL+nvo=
+X-Received: by 2002:a0c:b399:: with SMTP id t25mr4988314qve.31.1619552963739; 
+ Tue, 27 Apr 2021 12:49:23 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAH2-KxAdB0bPwoqf_tJB+hMzgSoJ34iJfy1-cwKumUPk=KkvkA@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="0MTaucxpZF5VXqgcZ3gIw3CPaq36zvwSt"
+References: <CAHBbfcXj57K66ARd2_SQMCdNTPVtWk8Xrq0jn_k+WghjRcT-CA@mail.gmail.com>
+ <015CB0F4-95C4-46FA-975A-595F8685405D@gmail.com>
+ <CAHBbfcVcXNNK+7aP-DQMP0PPvFHy8gSptmAH08w=YUQoomFw9A@mail.gmail.com>
+ <6CB9F7DF-35CA-4C58-AC92-6150D00BA6C2@gmail.com>
+In-Reply-To: <6CB9F7DF-35CA-4C58-AC92-6150D00BA6C2@gmail.com>
+From: Vivek Gani <vivekgani@gmail.com>
+Date: Tue, 27 Apr 2021 14:49:12 -0500
+Message-ID: <CAB-qw-gMf8yvpXb9R63dxF3kHSqrTSU3uhEDoxPKGTQrWCpNhA@mail.gmail.com>
+Subject: Re: [pmbusplus] userspace i2c, pmbus interactions
+To: Mike Jones <proclivis@gmail.com>
+Content-Type: multipart/alternative; boundary="00000000000019431705c0f98f93"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,167 +77,356 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Jayashree D <jayashree-d@hcl.com>
+Reply-To: vivek@gani.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Jason Ling <jasonling@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---0MTaucxpZF5VXqgcZ3gIw3CPaq36zvwSt
-Content-Type: multipart/mixed; boundary="nz8ZYq35yIINq0Vfr4cQpT4rijQWwnjXH";
- protected-headers="v1"
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
-To: Ed Tanous <edtanous@google.com>, Lei Yu <yulei.sh@bytedance.com>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Jayashree D <jayashree-d@hcl.com>
-Message-ID: <0b2957f2-dbf2-79c3-2788-b9105aef2db6@intel.com>
-Subject: Re: Entity Manager error in tiogapass
-References: <SG2PR04MB30936A198A555EEBC1DBF78AE1429@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <35577f35-feff-c87f-9948-ccdb6986b6db@intel.com>
- <CAGm54UG=qMjxSSPtPMEmnAWADjcsroa5L4sCj5FGopso3ViKOA@mail.gmail.com>
- <CAH2-KxAdB0bPwoqf_tJB+hMzgSoJ34iJfy1-cwKumUPk=KkvkA@mail.gmail.com>
-In-Reply-To: <CAH2-KxAdB0bPwoqf_tJB+hMzgSoJ34iJfy1-cwKumUPk=KkvkA@mail.gmail.com>
+--00000000000019431705c0f98f93
+Content-Type: text/plain; charset="UTF-8"
 
---nz8ZYq35yIINq0Vfr4cQpT4rijQWwnjXH
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+Thanks Mike, to follow up with your response,
 
+I agree that most real-world configuration ends up being mfr-specific. Over
+time specs like PMBus Application Profiles may help on some aspects but
+from personal experience there's variation between vendors on aspects like
+detection of PMBus devices, or occasionally complexity around command
+timing & order. This has led us to think around a need of defining a
+standardized file format with the possibility of conventions around how
+procedures are named (e.g. configure, identify, on/off, etc.) and naming
+side-effects (e.g. requires power-cycle or boot stage) to make things
+easier for a systems engineer to orchestrate.
 
+We've been facilitating calls around what we'd want in a format and making
+some initial rough prototypes for discussion. Most recently we looked at a
+format [0] that could decouple IC vendor and system engineer aspects,
+facilitate real-world scenarios of needing human-editability, and export to
+JSON for use obmc runtime configuration.
 
-On 4/27/21 9:54 AM, Ed Tanous wrote:
-> On Mon, Apr 26, 2021 at 7:23 PM Lei Yu <yulei.sh@bytedance.com> wrote:
->> On Tue, Apr 27, 2021 at 12:35 AM Johnathan Mantey
->> <johnathanx.mantey@intel.com> wrote:
->>> Jayashree,
->>>
->>> On 4/26/21 9:00 AM, Jayashree D wrote:
->>>> Classification: *Confidential*
->>>>
->>>> Hi Team,
->>>>
->>>> In the latest build, I am facing the below issue in Entity Manager f=
-or
->>>> tiogapass.
->>>>
->>>> Already issue has been created in Entity Manager Repo - entity-manag=
-er
->>>> terminated by 'std::filesystem::__cxx11::filesystem_error' =C2=B7 Is=
-sue #8
->>>> =C2=B7 openbmc/entity-manager (github.com)
->>>> <https://github.com/openbmc/entity-manager/issues/8>
->>>>
->>>> root@tiogapass:~# systemctl status
->>>> xyz.openbmc_project.EntityManager.service -l
->>>>
->>>> =E2=97=8F xyz.openbmc_project.EntityManager.service - Entity Manager=
+This week we're trying to pick up where we left off a month ago so this is
+a great time to bring up any opinions/ideas. I want to extend the
+invitation out to anyone interested, send me an email and I can arrange to
+get you on our mailing list or would if like me to reach-out after our next
+meeting to share some highlights of what's happening.
 
->>>>
->>>>       Loaded: loaded
->>>> (]8;;file://tiogapass/lib/systemd/system/xyz.openbmc_project.EntityM=
-anager.service/lib/systemd/system/xyz.openbmc_project.EntityManager.servi=
-ce]8;;;
->>>> enabled; vendor preset: enabled)
->>>>
->>>>       Active: active (running) since Thu 1970-01-01 00:04:10 UTC; 25=
-s ago
->>>>
->>>>      Process: 851 ExecStartPre=3D/bin/mkdir -p /var/configuration
->>>> (code=3Dexited, status=3D0/SUCCESS)
->>>>
->>>>      Process: 852 ExecStartPre=3D/bin/mkdir -p /tmp/overlays
->>>> (code=3Dexited, status=3D0/SUCCESS)
->>>>
->>>>     Main PID: 853 (entity-manager)
->>>>
->>>>       CGroup: /system.slice/xyz.openbmc_project.EntityManager.servic=
-e
->>>>
->>>>               =E2=94=94=E2=94=80853 /usr/bin/entity-manager
->>>>
->>>> Jan 01 00:04:09 tiogapass systemd[1]: Starting Entity Manager...
->>>>
->>>> Jan 01 00:04:10 tiogapass systemd[1]: Started Entity Manager.
->>>>
->>>> Jan 01 00:04:27 tiogapass entity-manager[853]: Inventory Added
->>>>
->>>> Jan 01 00:04:27 tiogapass entity-manager[853]: terminate called afte=
-r
->>>> throwing an instance of 'std::filesystem::__cxx11::filesystem_error'=
+[0]:
+https://github.com/PMBusOrg/format-language-evaluation/tree/master/dhall
 
->>>>
->>>> Jan 01 00:04:27 tiogapass entity-manager[853]:   what():  filesystem=
+-Vivek Gani (CV <https://vivekgani.com/vivek_gani_resume.pdf>)
+vivek@gani.org
 
->>>> error: recursive directory iterator cannot open directory: No such
->>>> file or directory [/sys/bus/i2c/devices/i2c-16]
->>>>
->>> Check this portion of src/Overlay.cpp
->>> static bool deviceIsCreated(const std::string& devicePath,
->>>                               std::shared_ptr<uint64_t> bus,
->>>                               std::shared_ptr<uint64_t> address,
->>>                               const bool retrying)
->>>
->>> I placed a comment describing the intent of the directory iterator. I=
+On Tue, Apr 27, 2021 at 1:01 PM Mike Jones <proclivis@gmail.com> wrote:
 
->>> have not seen the issue described on our systems, nor in QEMU (report=
-ed
->>> by another dev), so I'm not able to identify the issue.
->> The issue is reported at
->> https://github.com/openbmc/entity-manager/issues/8, and the commit
->> that introduces the issue is
->> https://github.com/openbmc/entity-manager/commit/9b86787adea3f8f29fac2=
-acbb9fa0f48fbcf244a
->>
->> Could you kindly investigate the exception and see how to make it not =
-crash?
-> It sounds like Jonathan isn't able to reproduce.  Do you think you
-> could capture the full stack trace from the exception?  Do you have
-> anything odd on your systems that would cause the differing behavior?
+> Jason
 >
->> --
->> BRs,
->> Lei YU
+> On Apr 27, 2021, at 10:20 AM, Jason Ling <jasonling@google.com> wrote:
+>
+> Thanks Mike for the feedback
+>
+> And the context is more than CPU based systems, but includes Networking,
+>> other boards with ASICS, etc. So broad context. Hence, it has to work
+>> within linux without OBMC.
+>
+> Ack, although the library was written for a use-case that involves obmc,
+> it doesn't *require* obmc. Should work just fine in general Linux.
+>
+>  Now, imagine the IC manufacturer's tool produces a file that can
+>> represent a qualified algorithm that is known to work under all possible
+>> scenarios, including CRC errors in parts, corrupt NVM, etc. This is what
+>> all the vendors do today. They take care of all the things that can go
+>> wrong. In the case of ADI, if power was lost while programming, and the BMC
+>> or linux can boot from an aux supply, our data files (encoding algorithms),
+>> can repair the part under ALL possible random values in the corrupt part.
+>
+> This would be great, especially if this is codified in the pmbus spec.
+> Right now the library provides a pmbus interface but *part programming* is
+> specific to each device class...no guarantee of a common interface across
+> multiple parts.
+>
+>
+> The vendors will never agree to an industry specification for programming
+> beyond the standard STORE_USER_ALL. Most real world programming is MFR.
+>
+> This is the reason for a description file, it enables each vendor to
+> innovate, yet the end user can process the file with a single engine.
+>
+> The problem with STORE_USER_ALL is if the power fails or the NVM fails.
+>
+> For example, some companies just change a few commands, say voltage, and
+> then store. But if power is lost during the store, the other 99 values are
+> corrupted and need repair, and the part may not even have an address on the
+> bus without special commands to reset a few things. Or it might be write
+> protected. Or PEC might be required, Etc.
+>
+>
+> 1) I am interested in anything that enables our work
+>
+> Sure, I'll start carving out more time to make this work suitable for
+> upstreaming. At the very least it should give you a mockable interface to
+> allow for strong unit testing of upper layers.
+>
+>
+> ADI has code that can implement its proprietary programming via /dev/i2c.
+> All that is needed is standard SMBus code. If the programming happens in
+> user space, we imagined the data processing engine using that.
+>
+> In that context, it would be interesting to know what you are doing, as
+> you are adding value for sure. If there is an API that delineates the
+> function implemented, it would be nice to review it so I can understand
+> your work.
+>
+>
+>
+>> 2) I am interested in inviting someone from the community, not IC vendor,
+>> to our meetings to offer advice and help us define something useful
+>
+> Sounds good, feel free to reach out to me on an individual basis.
+>
+>
+> Ok. Vivek is on the same list, and he can reach out for an official invite.
+>
+> Mike
+>
+>
+> On Mon, Apr 26, 2021 at 7:33 PM Mike Jones <proclivis@gmail.com> wrote:
+>
+>> Jason,
+>>
+>> I am interested, because within the PMBus Specification Committee, we are
+>> working on a data language intended for device programming. And there is
+>> hope that eventually it can become adopted into linux and/or OBMC.
+>>
+>> There is a particular use model that is being driven by the IC suppliers
+>> and their tools. One reason is that all the vendors have proprietary tools,
+>> but they see no competitive advantage, and would rather support a universal
+>> standard.
+>>
+>> Imagine that programming might be done for:
+>>
+>> - ICT
+>> - Proto Builds
+>> - Engineering Bringup
+>> - Remote upgrades
+>>
+>> And the context is more than CPU based systems, but includes Networking,
+>> other boards with ASICS, etc. So broad context. Hence, it has to work
+>> within linux without OBMC.
+>>
+>> My view is it is a linux library anyone can use, and OBMC is the piping
+>> if it were exposed to a web service, state management, etc.
+>>
+>> Now, imagine the IC manufacturer's tool produces a file that can
+>> represent a qualified algorithm that is known to work under all possible
+>> scenarios, including CRC errors in parts, corrupt NVM, etc. This is what
+>> all the vendors do today. They take care of all the things that can go
+>> wrong. In the case of ADI, if power was lost while programming, and the BMC
+>> or linux can boot from an aux supply, our data files (encoding algorithms),
+>> can repair the part under ALL possible random values in the corrupt part.
+>>
+>> Furthermore, an integrator (CM, Design House, software team) has to deal
+>> with segmented I2C busses, muxes, etc. And the integrator wants to write a
+>> wrapper file that integrates all the vendor files. So this integration file
+>> has to take care of muxes, order of operations, calling vendor files, etc.
+>>
+>> My interest is two part:
+>>
+>> 1) I am interested in anything that enables our work
+>> 2) I am interested in inviting someone from the community, not IC vendor,
+>> to our meetings to offer advice and help us define something useful
+>>
+>> Mike
+>>
+>>
+>>
+>> > On Apr 23, 2021, at 4:22 PM, Jason Ling <jasonling@google.com> wrote:
+>> >
+>> > Hi all,
+>> >
+>> > What started as an attempt to create a simple command line tool to
+>> perform pmbus device upgrades over i2c has turned into the start of a
+>> user-space i2c library (with some pmbus support).
+>> >
+>> > I've already reused this library in some other obmc applications and
+>> it's been fairly well unit-tested. It also comes with all the public
+>> interfaces mocked (so you can unit test your own code).
+>> >
+>> > The idea is that more and more classes get added that will support
+>> different pmbus devices.
+>> > General idea is that each device that gets support can expose methods
+>> to allow device upgrade, black box retrieval, etc..
+>> >
+>> > Anyways, wanted to gauge community interest in this so I can determine
+>> how motivated I should be to upstream it.
+>> >
+>>
+>>
+>
 
-This may be just wishful thinking....
-Looking at the JSON input file for bus 16:
-"Bus": 16,
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Name=
-": "MB_C2_AVA_RTEMP",
+--00000000000019431705c0f98f93
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Would the recent sdbusplus encoding changes cause an issue?
-The "_C2" is going to be translated into something that may be problemati=
-c.
+<div dir=3D"ltr"><div dir=3D"ltr">Thanks Mike, to follow up with your respo=
+nse,<br></div><div dir=3D"ltr"><br></div><div>I agree that most real-world =
+configuration ends up being mfr-specific. Over time specs like PMBus Applic=
+ation Profiles may help on some aspects but from personal experience there&=
+#39;s variation between vendors on aspects like detection of PMBus devices,=
+ or occasionally complexity around command timing &amp; order. This has led=
+ us to think around a need of defining a standardized file format with the =
+possibility of conventions around how procedures are named (e.g. configure,=
+ identify, on/off, etc.) and naming side-effects (e.g. requires power-cycle=
+ or boot stage) to make things easier for a systems engineer to orchestrate=
+.</div><div><br></div><div>We&#39;ve been facilitating calls around what we=
+&#39;d want in a format and making some initial rough prototypes for discus=
+sion. Most recently we looked at a format [0] that could decouple IC vendor=
+ and system engineer aspects, facilitate real-world scenarios of needing hu=
+man-editability, and export to JSON for use obmc runtime configuration. <br=
+></div><div><br></div><div>This week we&#39;re trying to pick up where we l=
+eft off a month ago so this is a great time to bring up any opinions/ideas.=
+ I want to extend the invitation out to anyone interested, send me an email=
+ and I can arrange to get you on our mailing list or would if like me to re=
+ach-out after our next meeting to share some highlights of what&#39;s happe=
+ning.<br></div><div><br></div><div>[0]: <a href=3D"https://github.com/PMBus=
+Org/format-language-evaluation/tree/master/dhall">https://github.com/PMBusO=
+rg/format-language-evaluation/tree/master/dhall</a> <br></div><div><br> </d=
+iv><div>-Vivek Gani (<a href=3D"https://vivekgani.com/vivek_gani_resume.pdf=
+">CV</a>)</div><div><a href=3D"mailto:vivek@gani.org">vivek@gani.org</a><br=
+></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr"=
+>On Tue, Apr 27, 2021 at 1:01 PM Mike Jones &lt;<a href=3D"mailto:proclivis=
+@gmail.com">proclivis@gmail.com</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex"><div style=3D"overflow-wrap: break-word;">=
+Jason<br><div><br><blockquote type=3D"cite"><div>On Apr 27, 2021, at 10:20 =
+AM, Jason Ling &lt;<a href=3D"mailto:jasonling@google.com" target=3D"_blank=
+">jasonling@google.com</a>&gt; wrote:</div><br><div><div dir=3D"ltr">Thanks=
+ Mike for the feedback<div><br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">And the context is more than CPU based systems, but includes Ne=
+tworking, other boards with ASICS, etc. So broad context. Hence, it has to =
+work within linux without OBMC.</blockquote><div>Ack, although the library =
+was written for a use-case that involves obmc, it doesn&#39;t <i>require</i=
+>=C2=A0obmc. Should work just fine in general Linux.</div><div><br></div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">=C2=A0Now, imagine the IC m=
+anufacturer&#39;s tool produces a file that can represent a qualified algor=
+ithm that is known to work under all possible scenarios, including CRC erro=
+rs in parts, corrupt NVM, etc. This is what all the vendors do today. They =
+take care of all the things that can go wrong. In the case of ADI, if power=
+ was lost while programming, and the BMC or linux can boot from an aux supp=
+ly, our data files (encoding algorithms), can repair the part under ALL pos=
+sible random values in the corrupt part.</blockquote>This would be great, e=
+specially if this is codified in the pmbus spec. Right now the library prov=
+ides a pmbus interface but <i>part programming</i>=C2=A0is specific to each=
+ device class...no guarantee of a common interface across multiple parts.<b=
+r></div></div></blockquote><div><br></div><div>The vendors will never agree=
+ to an industry specification for programming beyond the standard STORE_USE=
+R_ALL. Most real world programming is MFR.</div><div><br></div><div>This is=
+ the reason for a description file, it enables each vendor to innovate, yet=
+ the end user can process the file with a single engine.</div><div><br></di=
+v><div>The problem with STORE_USER_ALL is if the power fails or the NVM fai=
+ls.</div><div><br></div><div>For example, some companies just change a few =
+commands, say voltage, and then store. But if power is lost during the stor=
+e, the other 99 values are corrupted and need repair, and the part may not =
+even have an address on the bus without special commands to reset a few thi=
+ngs. Or it might be write protected. Or PEC might be required, Etc.</div><b=
+r><blockquote type=3D"cite"><div><div dir=3D"ltr"><br><div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex">1) I am interested in anything that enabl=
+es our work</blockquote><div>Sure, I&#39;ll start carving out more time to =
+make this work suitable for upstreaming. At the very least it should give y=
+ou a mockable interface to allow for strong unit testing of upper layers.</=
+div></div></div></div></blockquote><div><br></div><div>ADI has code that ca=
+n implement its proprietary programming via /dev/i2c. All that is needed is=
+ standard SMBus code. If the programming happens in user space, we imagined=
+ the data processing engine using that.</div><div><br></div><div>In that co=
+ntext, it would be interesting to know what you are doing, as you are addin=
+g value for sure. If there is an API that delineates the function implement=
+ed, it would be nice to review it so I can understand your work.</div><br><=
+blockquote type=3D"cite"><div><div dir=3D"ltr"><div><div>=C2=A0</div><block=
+quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
+px solid rgb(204,204,204);padding-left:1ex">2) I am interested in inviting =
+someone from the community, not IC vendor, to our meetings to offer advice =
+and help us define something useful</blockquote><div>Sounds good, feel free=
+ to reach out to me on an individual basis.=C2=A0</div></div></div></div></=
+blockquote><div><br></div>Ok. Vivek is on the same list, and he can reach o=
+ut for an official invite.</div><div><br></div><div>Mike<br><blockquote typ=
+e=3D"cite"><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gm=
+ail_attr">On Mon, Apr 26, 2021 at 7:33 PM Mike Jones &lt;<a href=3D"mailto:=
+proclivis@gmail.com" target=3D"_blank">proclivis@gmail.com</a>&gt; wrote:<b=
+r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left:1px solid rgb(204,204,204);padding-left:1ex">Jason,<br>
+<br>
+I am interested, because within the PMBus Specification Committee, we are w=
+orking on a data language intended for device programming. And there is hop=
+e that eventually it can become adopted into linux and/or OBMC.<br>
+<br>
+There is a particular use model that is being driven by the IC suppliers an=
+d their tools. One reason is that all the vendors have proprietary tools, b=
+ut they see no competitive advantage, and would rather support a universal =
+standard.<br>
+<br>
+Imagine that programming might be done for:<br>
+<br>
+- ICT<br>
+- Proto Builds<br>
+- Engineering Bringup<br>
+- Remote upgrades<br>
+<br>
+And the context is more than CPU based systems, but includes Networking, ot=
+her boards with ASICS, etc. So broad context. Hence, it has to work within =
+linux without OBMC.<br>
+<br>
+My view is it is a linux library anyone can use, and OBMC is the piping if =
+it were exposed to a web service, state management, etc.<br>
+<br>
+Now, imagine the IC manufacturer&#39;s tool produces a file that can repres=
+ent a qualified algorithm that is known to work under all possible scenario=
+s, including CRC errors in parts, corrupt NVM, etc. This is what all the ve=
+ndors do today. They take care of all the things that can go wrong. In the =
+case of ADI, if power was lost while programming, and the BMC or linux can =
+boot from an aux supply, our data files (encoding algorithms), can repair t=
+he part under ALL possible random values in the corrupt part.<br>
+<br>
+Furthermore, an integrator (CM, Design House, software team) has to deal wi=
+th segmented I2C busses, muxes, etc. And the integrator wants to write a wr=
+apper file that integrates all the vendor files. So this integration file h=
+as to take care of muxes, order of operations, calling vendor files, etc.<b=
+r>
+<br>
+My interest is two part:<br>
+<br>
+1) I am interested in anything that enables our work<br>
+2) I am interested in inviting someone from the community, not IC vendor, t=
+o our meetings to offer advice and help us define something useful<br>
+<br>
+Mike<br>
+<br>
+<br>
+<br>
+&gt; On Apr 23, 2021, at 4:22 PM, Jason Ling &lt;<a href=3D"mailto:jasonlin=
+g@google.com" target=3D"_blank">jasonling@google.com</a>&gt; wrote:<br>
+&gt; <br>
+&gt; Hi all,<br>
+&gt; <br>
+&gt; What started as an attempt to create a simple command line tool to per=
+form pmbus device upgrades over i2c has turned into the start of a user-spa=
+ce i2c library (with some pmbus support).<br>
+&gt; <br>
+&gt; I&#39;ve already reused this library in some other obmc applications a=
+nd it&#39;s been fairly well unit-tested. It also comes with all the public=
+ interfaces mocked (so you can unit test your own code).<br>
+&gt; <br>
+&gt; The idea is that more and more classes get added that will support dif=
+ferent pmbus devices. <br>
+&gt; General idea is that each device that gets support can expose methods =
+to allow device upgrade, black box retrieval, etc..<br>
+&gt; <br>
+&gt; Anyways, wanted to gauge community interest in this so I can determine=
+ how motivated I should be to upstream it.<br>
+&gt; <br>
+<br>
+</blockquote></div>
+</div></blockquote></div><br></div></blockquote></div></div>
 
-Does applying=20
-https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/42512 change=20
-anything?
-
---=20
-Johnathan Mantey
-Senior Software Engineer
-*azad te**chnology partners*
-Contributing to Technology Innovation since 1992
-Phone: (503) 712-6764
-Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
-
-
-
---nz8ZYq35yIINq0Vfr4cQpT4rijQWwnjXH--
-
---0MTaucxpZF5VXqgcZ3gIw3CPaq36zvwSt
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsB5BAABCAAjFiEEEynmy4K0ckuoyjA+Ocg9x5uaKcAFAmCIU8sFAwAAAAAACgkQOcg9x5uaKcBN
-Pgf8Cvfs53uZPMv852m8FGgeggGEqBaGJi1XbFVAyYjZMp/e/SZY0ckMlQd4ySQghzGUtV0yvCii
-SeqQoI+UmcuKvjV3t0nakGAzCdPDwDWTA7XvfjqsVpF652WmR0heSv2seCKkg4lsUIpO7lXDsGRH
-yP9UKsWeKXxivt4DnXPv7eGlfX3Stk+x5IIndJJ0A+E0A2312d5OZPsQee6RumZjHxP9CxSV5KUb
-YrgQixB1V3rc3TAbF/JTekWu57NxhMCWaXNjGPfRoMYQNtBbcRSQvXc9EKLMIaFsXFiocwJpmkcI
-GR+nau8rHg9N4IBtJnSWmg2H2QlYejpj5tvX/1kCgg==
-=LOvd
------END PGP SIGNATURE-----
-
---0MTaucxpZF5VXqgcZ3gIw3CPaq36zvwSt--
+--00000000000019431705c0f98f93--
