@@ -1,53 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8168D36C5A3
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 13:54:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B06F736C70A
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 15:31:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FV0Y13HDlz2yxk
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 21:54:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FV2jW5BHgz2yxm
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 23:31:43 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=NYu9W4Wo;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=adrian.ambrozewicz@linux.intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 65 seconds by postgrey-1.36 at boromir;
- Tue, 27 Apr 2021 21:54:03 AEST
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1033;
+ helo=mail-pj1-x1033.google.com; envelope-from=ghung.quanta@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=NYu9W4Wo; dkim-atps=neutral
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com
+ [IPv6:2607:f8b0:4864:20::1033])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FV0Xq3sSwz2xYx
- for <openbmc@lists.ozlabs.org>; Tue, 27 Apr 2021 21:54:02 +1000 (AEST)
-IronPort-SDR: +q/aAIPz12TTkalrnrSQ/fD6d5vmcexefzVGo+IHcOe9zn0m8JY6IN1gQzqSiq/wZHkIwfGNod
- WOrFlf0xOM2Q==
-X-IronPort-AV: E=McAfee;i="6200,9189,9966"; a="196046476"
-X-IronPort-AV: E=Sophos;i="5.82,254,1613462400"; d="scan'208";a="196046476"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Apr 2021 04:52:56 -0700
-IronPort-SDR: o4HvMlfx2E/WXkLXbgKsA88A680j6vD6Exp65Ia4isRF+7QlqPK/NIpj4OfN0G4cHW9G+fiRzY
- xYrtq0YHbxtg==
-X-IronPort-AV: E=Sophos;i="5.82,254,1613462400"; d="scan'208";a="465461850"
-Received: from aambroze-mobl.ger.corp.intel.com (HELO [10.213.24.207])
- ([10.213.24.207])
- by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Apr 2021 04:52:54 -0700
-Subject: Re: Mapping standard D-Bus sensors to ProcessorMetrics (and other
- specific schemas)
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <f9127788-7f8a-59ed-e434-0f510773d2aa@linux.intel.com>
- <YHBDIZqvHI0THFh3@heinlein>
-From: "Ambrozewicz, Adrian" <adrian.ambrozewicz@linux.intel.com>
-Message-ID: <3d5f8ede-3506-afac-d5bd-4bc7f3331cbc@linux.intel.com>
-Date: Tue, 27 Apr 2021 13:52:51 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FV2jH2jlMz2xgJ
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Apr 2021 23:31:28 +1000 (AEST)
+Received: by mail-pj1-x1033.google.com with SMTP id
+ b14-20020a17090a6e0eb0290155c7f6a356so267474pjk.0
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Apr 2021 06:31:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=z1fPZOSB6GyNqrQqdcwTI6XcCrJqZhoSkLI7iOyNNlY=;
+ b=NYu9W4WoyWocEAQBY3RAy6Y9TzN8ZBhzfPPznmYiUVUcz/giit7Caw9YjM894PiFo7
+ FGLiy92TcT1ic4hY/1TsIJWAhLbvh5G8Ta7WD/VXJYVc+UAIcwMnEF78DD+qPq8GIf6X
+ g6my7iInzczYByntezWjqyY7NMFfeNsdtx0vuNnt2DAvixO0RtaQvQ3swXPz1E3+KMnX
+ ERXxPxU45tCoH7U8W2AS/mU18i8gB/HYTbgYW9cm6oExKu3n8aPg0amMaibEM1KFDUj2
+ 5UwUX16UCvkEmjSnA+zdCPmxZjHFks5M4UB9ZpCzFdX+69Xu2M3IZee+tOHsBqyCQQup
+ KLcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=z1fPZOSB6GyNqrQqdcwTI6XcCrJqZhoSkLI7iOyNNlY=;
+ b=Ja79usUecOSNZf4a7s1l/jFpjiFJQv2P8tgCNPSSsx/j3LUd5yvd23ayeeP7GUUmdA
+ jewC+XCz7AOGA5OWrJTqcQzQcHgGMq2NxeMZDyRQOhyKdE2ibIQTKxM8ghK/MRiAvCbv
+ 2FfGXSgzwI26YqUnMnCN12YDGHKyA0A5nUE3jy7kRRDu4VduF5OuiG+mfhuXvfMuHZ9d
+ igXXd3i5RiOW9NmXsYDGpYn4g3757NiM77sZp6u+bhVMN86WwwuoDH+dFizQmf4T1eSR
+ GN3wv44XTVvmxC7xCn8W1rU0puIh+lAtkqw47mXCbLlG5WRPmdb0D8L0rg/JggscKPkV
+ q2qA==
+X-Gm-Message-State: AOAM531qF8/M3HM826xb25NW/B7EOaFRHH+iYGCbZiPCbzGEx1zrf0JA
+ ydwD+fy6XYasEwuzr5SynN0=
+X-Google-Smtp-Source: ABdhPJwYyF9yYjT+46TQTS6G9dUM15lOq4LxmmkU8jnLypjCcL91s5XkuUNezcRKtuoC1WE+CrEbsg==
+X-Received: by 2002:a17:902:8b86:b029:e5:bef6:56b0 with SMTP id
+ ay6-20020a1709028b86b02900e5bef656b0mr24222450plb.76.1619530285133; 
+ Tue, 27 Apr 2021 06:31:25 -0700 (PDT)
+Received: from george-Quanta.com.com (220-135-135-179.HINET-IP.hinet.net.
+ [220.135.135.179])
+ by smtp.gmail.com with ESMTPSA id e65sm2783687pfe.9.2021.04.27.06.31.20
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 27 Apr 2021 06:31:22 -0700 (PDT)
+From: George Hung <ghung.quanta@gmail.com>
+X-Google-Original-From: George Hung <george.hung@quantatw.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: [PATCH dev-5.10 v1] ARM: dts: nuvoton: add fans-efuse GPIO and fix
+ naming
+Date: Tue, 27 Apr 2021 21:21:51 +0800
+Message-Id: <20210427132151.15362-1-george.hung@quantatw.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-In-Reply-To: <YHBDIZqvHI0THFh3@heinlein>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -60,77 +82,281 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: kwliu@nuvoton.com, yschu@nuvoton.com, Fran.Hsu@quantatw.com,
+ benjaminfair@google.com, openbmc@lists.ozlabs.org, brandonkim@google.com,
+ Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-W dniu 4/9/2021 o 14:05, Patrick Williams pisze:
-> On Wed, Apr 07, 2021 at 02:24:55PM +0200, Ambrozewicz, Adrian wrote:
->> Question of extending xyz.openbmc_project.Sensor.Value interface (so it
->> allows for more types or nested paths, if necessary) is something  I
->> know should be considered, but seems like more or less straightforward
->> to address.
-> 
-> I suspect this would be the more difficult direction to go down.  There
-> is already enough code that looks for sensors at specific paths that
-> you'd have to track down and fix up.  Also, there has been some concern
-> by some maintainers in other cases about having information in the paths
-> have meaning and prefering to reduce the reliance on that.
-> 
+* add fans-efuse GPIO to gpio-keys
+* use the same node name for all the pca9535 nodes
+* convert the gpio nodes to phandle
 
-Please see message from Ed, as he's supposedly proposing to follow that 
-path. I don't have strong opinions on one or the other approach.
+Signed-off-by: George Hung <george.hung@quantatw.com>
+---
+ arch/arm/boot/dts/nuvoton-npcm730-gbs.dts | 188 ++++++++++++----------
+ 1 file changed, 100 insertions(+), 88 deletions(-)
 
->> There is bigger issue I see now - mapping D-Bus sensors to concrete
->> Redfish properties. Mapping sensors at inventory level is sorted out
->> with use of xyz.openbmc_project.Association.Definitions interface.
->> However - I don't see (or know of) any method to link given D-Bus sensor
->> with it's designated place in Redfish schema.
-> 
-> I think associations are the right approach to link sensors with
-> inventory items.  There is a design document underway to define some of
-> those assocations for inventory items and it seems like your needs
-> should be an extension to that.
-> 
-> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/41468/4/architecture/dbus-inventory.md
-> 
-Thanks for the link. I linked my sensor to concrete CPU with 
-Association, similarly to already existing bmcweb Processors node 
-implementation. Will your extension be able to provide even 'deeper' 
-associations? For ProcessorMetrics we would need to map for CPU_X\Core_Y.
-
-I've read the design, however one thing is not clear for me. My current 
-understanding was that for each association there would need to exist 
-some D-bus object at given path somewhere. Would i need my CPU inventory 
-service to also expose separate objects for each core for my association 
-to be 'legal', or could we represent some virtual hierarchy with no 
-actual D-Bus object in the system?
-
->> I've done some PoC implementation of ProcessorMetrics, which relies on
->> new D-Bus interface with 'Mapping' property (eg. 'TemperatureCelsius' or
->> 'CoreMetrics/12/UnhaltedCycles'). ProcessorMetrics node implementation
->> queries D-Bus for all sensors associated with given CPU and populates
->> properties if proper mapping was found.
-> 
-> I'm not really grasping what the contents of this mapping property are.
-> Generally we want to stay away from free-form strings having programatic
-> uses.  Maybe if you can define these mappings as enumerations?
-> 
-> What is the additional information you need besides the assocation from
-> a sensor to its inventory item?
-> 
-
-In given example I would like my sensor to be source of information for 
-property defined by ProcessorMetrics schema. In the example I've used 
-property associated with given Core, thus CoreMetrics/12/UnhaltedCycles 
-maps directly to ProcessorMetrics sub-property. Enumerations could be 
-not enough as we have multiple informations to represent:
-- association with given processor (done by ProcessorMetrics)
-- association with given core (could that be handled by your proposed 
-design?)
-- linking to given property
-
-Would the enumeration be used for the last element, while leaving 
-hierarchy problem to Associations?
-
+diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
+index 24fae0e4f454..3d53fbe54055 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
+@@ -141,6 +141,12 @@
+ 			gpios = <&gpio3 25 GPIO_ACTIVE_LOW>;
+ 			linux,code = <121>;
+ 		};
++
++		fans-efuse {
++			label = "fans-efuse";
++			gpios = <&gpio4 18 GPIO_ACTIVE_HIGH>;
++			linux,code = <146>;
++		};
+ 	};
+ 
+ 	iio-hwmon {
+@@ -623,14 +629,14 @@
+ 	clock-frequency = <100000>;
+ 	status = "okay";
+ 
+-	pca9535_ifdet: pca9535-ifdet@24 {
++	pca9535_ifdet: pca9535@24 {
+ 		compatible = "nxp,pca9535";
+ 		reg = <0x24>;
+ 		gpio-controller;
+ 		#gpio-cells = <2>;
+ 	};
+ 
+-	pca9535_pwren: pca9535-pwren@20 {
++	pca9535_pwren: pca9535@20 {
+ 		compatible = "nxp,pca9535";
+ 		reg = <0x20>;
+ 		gpio-controller;
+@@ -647,14 +653,14 @@
+ 			"pwr_u2_13_en","pwr_u2_12_en";
+ 	};
+ 
+-	pca9535_pwrgd: pca9535-pwrgd@21 {
++	pca9535_pwrgd: pca9535@21 {
+ 		compatible = "nxp,pca9535";
+ 		reg = <0x21>;
+ 		gpio-controller;
+ 		#gpio-cells = <2>;
+ 	};
+ 
+-	pca9535_ledlocate: pca9535-ledlocate@22 {
++	pca9535_ledlocate: pca9535@22 {
+ 		compatible = "nxp,pca9535";
+ 		reg = <0x22>;
+ 		gpio-controller;
+@@ -662,7 +668,7 @@
+ 
+ 	};
+ 
+-	pca9535_ledfault: pca9535-ledfault@23 {
++	pca9535_ledfault: pca9535@23 {
+ 		compatible = "nxp,pca9535";
+ 		reg = <0x23>;
+ 		gpio-controller;
+@@ -670,7 +676,7 @@
+ 
+ 	};
+ 
+-	pca9535_pwrdisable: pca9535-pwrdisable@25 {
++	pca9535_pwrdisable: pca9535@25 {
+ 		compatible = "nxp,pca9535";
+ 		reg = <0x25>;
+ 		gpio-controller;
+@@ -687,7 +693,7 @@
+ 			"u2_13_pwr_dis","u2_12_pwr_dis";
+ 	};
+ 
+-	pca9535_perst: pca9535-perst@26 {
++	pca9535_perst: pca9535@26 {
+ 		compatible = "nxp,pca9535";
+ 		reg = <0x26>;
+ 		gpio-controller;
+@@ -1086,94 +1092,100 @@
+ 	};
+ };
+ 
+-&pinctrl {
+-	pinctrl-names = "default";
++&gpio0 {
++	/* POWER_OUT=gpio07, RESET_OUT=gpio06, PS_PWROK=gpio13 */
++	gpio-line-names =
++	/*0-31*/
++	"","","","","","","RESET_OUT","POWER_OUT",
++	"","","","","","PS_PWROK","","",
++	"","","","","","","","",
++	"","","","","","","","";
++};
+ 
+-	gpio0: gpio@f0010000 {
+-		/* POWER_OUT=gpio07, RESET_OUT=gpio06, PS_PWROK=gpio13 */
+-		gpio-line-names =
+-		/*0-31*/
+-		"","","","","","","RESET_OUT","POWER_OUT",
+-		"","","","","","PS_PWROK","","",
+-		"","","","","","","","",
+-		"","","","","","","","";
+-	};
+-	gpio1: gpio@f0011000 {
+-		/* SIO_POWER_GOOD=gpio59 */
+-		gpio-line-names =
+-		/*32-63*/
+-		"","","","","","","","",
+-		"","","","","","","","",
+-		"","","","","","","","",
+-		"","","","SIO_POWER_GOOD","","","","";
++&gpio1 {
++	/* SIO_POWER_GOOD=gpio59 */
++	gpio-line-names =
++	/*32-63*/
++	"","","","","","","","",
++	"","","","","","","","",
++	"","","","","","","","",
++	"","","","SIO_POWER_GOOD","","","","";
++};
++
++&gpio2 {
++	bmc_usb_mux_oe_n {
++		gpio-hog;
++		gpios = <25 GPIO_ACTIVE_HIGH>;
++		output-low;
++		line-name = "bmc-usb-mux-oe-n";
+ 	};
+-	gpio2: gpio@f0012000 {
+-		bmc_usb_mux_oe_n {
+-			gpio-hog;
+-			gpios = <25 GPIO_ACTIVE_HIGH>;
+-			output-low;
+-			line-name = "bmc-usb-mux-oe-n";
+-		};
+-		bmc_usb_mux_sel {
+-			gpio-hog;
+-			gpios = <26 GPIO_ACTIVE_HIGH>;
+-			output-low;
+-			line-name = "bmc-usb-mux-sel";
+-		};
+-		bmc_usb2517_reset_n {
+-			gpio-hog;
+-			gpios = <27 GPIO_ACTIVE_LOW>;
+-			output-low;
+-			line-name = "bmc-usb2517-reset-n";
+-		};
++	bmc_usb_mux_sel {
++		gpio-hog;
++		gpios = <26 GPIO_ACTIVE_HIGH>;
++		output-low;
++		line-name = "bmc-usb-mux-sel";
+ 	};
+-	gpio3: gpio@f0013000 {
+-		assert_cpu0_reset {
+-			gpio-hog;
+-			gpios = <14 GPIO_ACTIVE_HIGH>;
+-			output-low;
+-			line-name = "assert-cpu0-reset";
+-		};
+-		assert_pwrok_cpu0_n {
+-			gpio-hog;
+-			gpios = <15 GPIO_ACTIVE_HIGH>;
+-			output-low;
+-			line-name = "assert-pwrok-cpu0-n";
+-		};
+-		assert_cpu0_prochot {
+-			gpio-hog;
+-			gpios = <16 GPIO_ACTIVE_HIGH>;
+-			output-low;
+-			line-name = "assert-cpu0-prochot";
+-		};
++	bmc_usb2517_reset_n {
++		gpio-hog;
++		gpios = <27 GPIO_ACTIVE_LOW>;
++		output-low;
++		line-name = "bmc-usb2517-reset-n";
+ 	};
+-	gpio4: gpio@f0014000 {
+-		/* POST_COMPLETE=gpio143 */
+-		gpio-line-names =
+-			/*128-159*/
+-			"","","","","","","","",
+-			"","","","","","","","POST_COMPLETE",
+-			"","","","","","","","",
+-			"","","","","","","","";
++};
++
++&gpio3 {
++	assert_cpu0_reset {
++		gpio-hog;
++		gpios = <14 GPIO_ACTIVE_HIGH>;
++		output-low;
++		line-name = "assert-cpu0-reset";
+ 	};
+-	gpio5: gpio@f0015000 {
+-		/* POWER_BUTTON=gpio177 */
+-		gpio-line-names =
+-			/*160-191*/
+-			"","","","","","","","",
+-			"","","","","","","","",
+-			"","POWER_BUTTON","","","","","","",
+-			"","","","","","","","";
++	assert_pwrok_cpu0_n {
++		gpio-hog;
++		gpios = <15 GPIO_ACTIVE_HIGH>;
++		output-low;
++		line-name = "assert-pwrok-cpu0-n";
+ 	};
+-	gpio6: gpio@f0016000 {
+-		/* SIO_S5=gpio199, RESET_BUTTON=gpio203 */
+-		gpio-line-names =
+-			/*192-223*/
+-			"","","","","","","","SIO_S5",
+-			"","","","RESET_BUTTON","","","","",
+-			"","","","","","","","",
+-			"","","","","","","","";
++	assert_cpu0_prochot {
++		gpio-hog;
++		gpios = <16 GPIO_ACTIVE_HIGH>;
++		output-low;
++		line-name = "assert-cpu0-prochot";
+ 	};
++};
++
++&gpio4 {
++	/* POST_COMPLETE=gpio143 */
++	gpio-line-names =
++	/*128-159*/
++	"","","","","","","","",
++	"","","","","","","","POST_COMPLETE",
++	"","","","","","","","",
++	"","","","","","","","";
++};
++
++&gpio5 {
++	/* POWER_BUTTON=gpio177 */
++	gpio-line-names =
++	/*160-191*/
++	"","","","","","","","",
++	"","","","","","","","",
++	"","POWER_BUTTON","","","","","","",
++	"","","","","","","","";
++};
++
++&gpio6 {
++	/* SIO_S5=gpio199, RESET_BUTTON=gpio203 */
++	gpio-line-names =
++	/*192-223*/
++	"","","","","","","","SIO_S5",
++	"","","","RESET_BUTTON","","","","",
++	"","","","","","","","",
++	"","","","","","","","";
++};
++
++&pinctrl {
++	pinctrl-names = "default";
+ 
+ 	gpio224ol_pins: gpio224ol-pins {
+ 		pins = "GPIO224/SPIXCK";
+-- 
+2.21.0
 
