@@ -1,76 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B06F736C70A
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 15:31:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7360E36C942
+	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 18:21:57 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FV2jW5BHgz2yxm
-	for <lists+openbmc@lfdr.de>; Tue, 27 Apr 2021 23:31:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FV6Tv2ct4z2yyx
+	for <lists+openbmc@lfdr.de>; Wed, 28 Apr 2021 02:21:55 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=NYu9W4Wo;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=FkRtECqq;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1033;
- helo=mail-pj1-x1033.google.com; envelope-from=ghung.quanta@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::b35;
+ helo=mail-yb1-xb35.google.com; envelope-from=jasonling@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=NYu9W4Wo; dkim-atps=neutral
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com
- [IPv6:2607:f8b0:4864:20::1033])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=FkRtECqq; dkim-atps=neutral
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com
+ [IPv6:2607:f8b0:4864:20::b35])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FV2jH2jlMz2xgJ
- for <openbmc@lists.ozlabs.org>; Tue, 27 Apr 2021 23:31:28 +1000 (AEST)
-Received: by mail-pj1-x1033.google.com with SMTP id
- b14-20020a17090a6e0eb0290155c7f6a356so267474pjk.0
- for <openbmc@lists.ozlabs.org>; Tue, 27 Apr 2021 06:31:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=z1fPZOSB6GyNqrQqdcwTI6XcCrJqZhoSkLI7iOyNNlY=;
- b=NYu9W4WoyWocEAQBY3RAy6Y9TzN8ZBhzfPPznmYiUVUcz/giit7Caw9YjM894PiFo7
- FGLiy92TcT1ic4hY/1TsIJWAhLbvh5G8Ta7WD/VXJYVc+UAIcwMnEF78DD+qPq8GIf6X
- g6my7iInzczYByntezWjqyY7NMFfeNsdtx0vuNnt2DAvixO0RtaQvQ3swXPz1E3+KMnX
- ERXxPxU45tCoH7U8W2AS/mU18i8gB/HYTbgYW9cm6oExKu3n8aPg0amMaibEM1KFDUj2
- 5UwUX16UCvkEmjSnA+zdCPmxZjHFks5M4UB9ZpCzFdX+69Xu2M3IZee+tOHsBqyCQQup
- KLcw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FV6Tg1MZnz2y8C
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Apr 2021 02:21:40 +1000 (AEST)
+Received: by mail-yb1-xb35.google.com with SMTP id i4so32491009ybe.2
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Apr 2021 09:21:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=NKPAyRm9wflvabe0l2vwmJg+/uAqoeEU/YRQYb5EPIk=;
+ b=FkRtECqqDiggTIxcq6ac5VP6pbK8w752E/m0qK8eTeTc+pk2METNhASqaYTucmGVcF
+ sL/azhkKYzHy7TOwNdzU1ijoZGgfkl+Y/upxdiuL0hxNrKGVYynDr62fS5IjWWASjXbR
+ d8fpQ+fB5Bw1Hc3p93753EP3Ms6oM/byVspfJK7q0yE8mphlRVcEhJusnMBoypnVfs7v
+ yc0zSG83qGbI1G2UGqMTUZiu1G7HnFG2PjXwJiW2dWAF2YCoe811A5f++oO3F72af6ue
+ UzW7BgLpATUCID3HmDWszqOmVW3fNsquQR5ZfoTPJ70suKOLPCGQ5Cg3bvMJmUA6DXRI
+ SiXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=z1fPZOSB6GyNqrQqdcwTI6XcCrJqZhoSkLI7iOyNNlY=;
- b=Ja79usUecOSNZf4a7s1l/jFpjiFJQv2P8tgCNPSSsx/j3LUd5yvd23ayeeP7GUUmdA
- jewC+XCz7AOGA5OWrJTqcQzQcHgGMq2NxeMZDyRQOhyKdE2ibIQTKxM8ghK/MRiAvCbv
- 2FfGXSgzwI26YqUnMnCN12YDGHKyA0A5nUE3jy7kRRDu4VduF5OuiG+mfhuXvfMuHZ9d
- igXXd3i5RiOW9NmXsYDGpYn4g3757NiM77sZp6u+bhVMN86WwwuoDH+dFizQmf4T1eSR
- GN3wv44XTVvmxC7xCn8W1rU0puIh+lAtkqw47mXCbLlG5WRPmdb0D8L0rg/JggscKPkV
- q2qA==
-X-Gm-Message-State: AOAM531qF8/M3HM826xb25NW/B7EOaFRHH+iYGCbZiPCbzGEx1zrf0JA
- ydwD+fy6XYasEwuzr5SynN0=
-X-Google-Smtp-Source: ABdhPJwYyF9yYjT+46TQTS6G9dUM15lOq4LxmmkU8jnLypjCcL91s5XkuUNezcRKtuoC1WE+CrEbsg==
-X-Received: by 2002:a17:902:8b86:b029:e5:bef6:56b0 with SMTP id
- ay6-20020a1709028b86b02900e5bef656b0mr24222450plb.76.1619530285133; 
- Tue, 27 Apr 2021 06:31:25 -0700 (PDT)
-Received: from george-Quanta.com.com (220-135-135-179.HINET-IP.hinet.net.
- [220.135.135.179])
- by smtp.gmail.com with ESMTPSA id e65sm2783687pfe.9.2021.04.27.06.31.20
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 27 Apr 2021 06:31:22 -0700 (PDT)
-From: George Hung <ghung.quanta@gmail.com>
-X-Google-Original-From: George Hung <george.hung@quantatw.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: [PATCH dev-5.10 v1] ARM: dts: nuvoton: add fans-efuse GPIO and fix
- naming
-Date: Tue, 27 Apr 2021 21:21:51 +0800
-Message-Id: <20210427132151.15362-1-george.hung@quantatw.com>
-X-Mailer: git-send-email 2.21.0
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=NKPAyRm9wflvabe0l2vwmJg+/uAqoeEU/YRQYb5EPIk=;
+ b=dunUi8ZbhVSj0fnLR+oHs33wEqCy9+1wfkcrIsvKH72Fkuhd8561P3iB1tZTNsTU+o
+ XAmT0RfFOkRRwCxgL7zjvDS32/E3xwTiYJyL3uW4P6uW0fi3ChMw7P3v2U8hVkuAQdam
+ KZiu84hpc1HsEXvxDS38pF/tOxeBqdo3eOzHHKPOzZ7DBSI76s7Qw+2E51NplpgSh+xq
+ va62tHk94irDza3JBT8VrYn6oXl3P7n8TqOtbPutxieKaUfgUaz1IzkfdY5mkLtU/bHk
+ T9Oh4TTRDGHN1olKFlfSaOMc/T3GiG/vK7cKvD9I7AnRTC8KZKspsULSoGb/RbZA8jfm
+ EP7g==
+X-Gm-Message-State: AOAM5309/YlaEYlQtYzUkHnB2IoPne2MUt6xh32OeVESHXTrFYNJMb01
+ /OAWAVJqaj3z40IGkLKD2RWabiLGRt2RHPYoig8Nwg==
+X-Google-Smtp-Source: ABdhPJzZXXdtBILXj73mOP+6bMflg2IB7F3dLd1GbJq6+L2AeCx0A+7cRmz979HA7FrsWaedYLiBiIvUWzUm63xmgMw=
+X-Received: by 2002:a25:41d0:: with SMTP id
+ o199mr34078283yba.467.1619540495821; 
+ Tue, 27 Apr 2021 09:21:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAHBbfcXj57K66ARd2_SQMCdNTPVtWk8Xrq0jn_k+WghjRcT-CA@mail.gmail.com>
+ <015CB0F4-95C4-46FA-975A-595F8685405D@gmail.com>
+In-Reply-To: <015CB0F4-95C4-46FA-975A-595F8685405D@gmail.com>
+From: Jason Ling <jasonling@google.com>
+Date: Tue, 27 Apr 2021 09:20:56 -0700
+Message-ID: <CAHBbfcVcXNNK+7aP-DQMP0PPvFHy8gSptmAH08w=YUQoomFw9A@mail.gmail.com>
+Subject: Re: [pmbusplus] userspace i2c, pmbus interactions
+To: Mike Jones <proclivis@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000f4700a05c0f6a70b"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,281 +75,229 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kwliu@nuvoton.com, yschu@nuvoton.com, Fran.Hsu@quantatw.com,
- benjaminfair@google.com, openbmc@lists.ozlabs.org, brandonkim@google.com,
- Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-* add fans-efuse GPIO to gpio-keys
-* use the same node name for all the pca9535 nodes
-* convert the gpio nodes to phandle
+--000000000000f4700a05c0f6a70b
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: George Hung <george.hung@quantatw.com>
----
- arch/arm/boot/dts/nuvoton-npcm730-gbs.dts | 188 ++++++++++++----------
- 1 file changed, 100 insertions(+), 88 deletions(-)
+Thanks Mike for the feedback
 
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-index 24fae0e4f454..3d53fbe54055 100644
---- a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-@@ -141,6 +141,12 @@
- 			gpios = <&gpio3 25 GPIO_ACTIVE_LOW>;
- 			linux,code = <121>;
- 		};
-+
-+		fans-efuse {
-+			label = "fans-efuse";
-+			gpios = <&gpio4 18 GPIO_ACTIVE_HIGH>;
-+			linux,code = <146>;
-+		};
- 	};
- 
- 	iio-hwmon {
-@@ -623,14 +629,14 @@
- 	clock-frequency = <100000>;
- 	status = "okay";
- 
--	pca9535_ifdet: pca9535-ifdet@24 {
-+	pca9535_ifdet: pca9535@24 {
- 		compatible = "nxp,pca9535";
- 		reg = <0x24>;
- 		gpio-controller;
- 		#gpio-cells = <2>;
- 	};
- 
--	pca9535_pwren: pca9535-pwren@20 {
-+	pca9535_pwren: pca9535@20 {
- 		compatible = "nxp,pca9535";
- 		reg = <0x20>;
- 		gpio-controller;
-@@ -647,14 +653,14 @@
- 			"pwr_u2_13_en","pwr_u2_12_en";
- 	};
- 
--	pca9535_pwrgd: pca9535-pwrgd@21 {
-+	pca9535_pwrgd: pca9535@21 {
- 		compatible = "nxp,pca9535";
- 		reg = <0x21>;
- 		gpio-controller;
- 		#gpio-cells = <2>;
- 	};
- 
--	pca9535_ledlocate: pca9535-ledlocate@22 {
-+	pca9535_ledlocate: pca9535@22 {
- 		compatible = "nxp,pca9535";
- 		reg = <0x22>;
- 		gpio-controller;
-@@ -662,7 +668,7 @@
- 
- 	};
- 
--	pca9535_ledfault: pca9535-ledfault@23 {
-+	pca9535_ledfault: pca9535@23 {
- 		compatible = "nxp,pca9535";
- 		reg = <0x23>;
- 		gpio-controller;
-@@ -670,7 +676,7 @@
- 
- 	};
- 
--	pca9535_pwrdisable: pca9535-pwrdisable@25 {
-+	pca9535_pwrdisable: pca9535@25 {
- 		compatible = "nxp,pca9535";
- 		reg = <0x25>;
- 		gpio-controller;
-@@ -687,7 +693,7 @@
- 			"u2_13_pwr_dis","u2_12_pwr_dis";
- 	};
- 
--	pca9535_perst: pca9535-perst@26 {
-+	pca9535_perst: pca9535@26 {
- 		compatible = "nxp,pca9535";
- 		reg = <0x26>;
- 		gpio-controller;
-@@ -1086,94 +1092,100 @@
- 	};
- };
- 
--&pinctrl {
--	pinctrl-names = "default";
-+&gpio0 {
-+	/* POWER_OUT=gpio07, RESET_OUT=gpio06, PS_PWROK=gpio13 */
-+	gpio-line-names =
-+	/*0-31*/
-+	"","","","","","","RESET_OUT","POWER_OUT",
-+	"","","","","","PS_PWROK","","",
-+	"","","","","","","","",
-+	"","","","","","","","";
-+};
- 
--	gpio0: gpio@f0010000 {
--		/* POWER_OUT=gpio07, RESET_OUT=gpio06, PS_PWROK=gpio13 */
--		gpio-line-names =
--		/*0-31*/
--		"","","","","","","RESET_OUT","POWER_OUT",
--		"","","","","","PS_PWROK","","",
--		"","","","","","","","",
--		"","","","","","","","";
--	};
--	gpio1: gpio@f0011000 {
--		/* SIO_POWER_GOOD=gpio59 */
--		gpio-line-names =
--		/*32-63*/
--		"","","","","","","","",
--		"","","","","","","","",
--		"","","","","","","","",
--		"","","","SIO_POWER_GOOD","","","","";
-+&gpio1 {
-+	/* SIO_POWER_GOOD=gpio59 */
-+	gpio-line-names =
-+	/*32-63*/
-+	"","","","","","","","",
-+	"","","","","","","","",
-+	"","","","","","","","",
-+	"","","","SIO_POWER_GOOD","","","","";
-+};
-+
-+&gpio2 {
-+	bmc_usb_mux_oe_n {
-+		gpio-hog;
-+		gpios = <25 GPIO_ACTIVE_HIGH>;
-+		output-low;
-+		line-name = "bmc-usb-mux-oe-n";
- 	};
--	gpio2: gpio@f0012000 {
--		bmc_usb_mux_oe_n {
--			gpio-hog;
--			gpios = <25 GPIO_ACTIVE_HIGH>;
--			output-low;
--			line-name = "bmc-usb-mux-oe-n";
--		};
--		bmc_usb_mux_sel {
--			gpio-hog;
--			gpios = <26 GPIO_ACTIVE_HIGH>;
--			output-low;
--			line-name = "bmc-usb-mux-sel";
--		};
--		bmc_usb2517_reset_n {
--			gpio-hog;
--			gpios = <27 GPIO_ACTIVE_LOW>;
--			output-low;
--			line-name = "bmc-usb2517-reset-n";
--		};
-+	bmc_usb_mux_sel {
-+		gpio-hog;
-+		gpios = <26 GPIO_ACTIVE_HIGH>;
-+		output-low;
-+		line-name = "bmc-usb-mux-sel";
- 	};
--	gpio3: gpio@f0013000 {
--		assert_cpu0_reset {
--			gpio-hog;
--			gpios = <14 GPIO_ACTIVE_HIGH>;
--			output-low;
--			line-name = "assert-cpu0-reset";
--		};
--		assert_pwrok_cpu0_n {
--			gpio-hog;
--			gpios = <15 GPIO_ACTIVE_HIGH>;
--			output-low;
--			line-name = "assert-pwrok-cpu0-n";
--		};
--		assert_cpu0_prochot {
--			gpio-hog;
--			gpios = <16 GPIO_ACTIVE_HIGH>;
--			output-low;
--			line-name = "assert-cpu0-prochot";
--		};
-+	bmc_usb2517_reset_n {
-+		gpio-hog;
-+		gpios = <27 GPIO_ACTIVE_LOW>;
-+		output-low;
-+		line-name = "bmc-usb2517-reset-n";
- 	};
--	gpio4: gpio@f0014000 {
--		/* POST_COMPLETE=gpio143 */
--		gpio-line-names =
--			/*128-159*/
--			"","","","","","","","",
--			"","","","","","","","POST_COMPLETE",
--			"","","","","","","","",
--			"","","","","","","","";
-+};
-+
-+&gpio3 {
-+	assert_cpu0_reset {
-+		gpio-hog;
-+		gpios = <14 GPIO_ACTIVE_HIGH>;
-+		output-low;
-+		line-name = "assert-cpu0-reset";
- 	};
--	gpio5: gpio@f0015000 {
--		/* POWER_BUTTON=gpio177 */
--		gpio-line-names =
--			/*160-191*/
--			"","","","","","","","",
--			"","","","","","","","",
--			"","POWER_BUTTON","","","","","","",
--			"","","","","","","","";
-+	assert_pwrok_cpu0_n {
-+		gpio-hog;
-+		gpios = <15 GPIO_ACTIVE_HIGH>;
-+		output-low;
-+		line-name = "assert-pwrok-cpu0-n";
- 	};
--	gpio6: gpio@f0016000 {
--		/* SIO_S5=gpio199, RESET_BUTTON=gpio203 */
--		gpio-line-names =
--			/*192-223*/
--			"","","","","","","","SIO_S5",
--			"","","","RESET_BUTTON","","","","",
--			"","","","","","","","",
--			"","","","","","","","";
-+	assert_cpu0_prochot {
-+		gpio-hog;
-+		gpios = <16 GPIO_ACTIVE_HIGH>;
-+		output-low;
-+		line-name = "assert-cpu0-prochot";
- 	};
-+};
-+
-+&gpio4 {
-+	/* POST_COMPLETE=gpio143 */
-+	gpio-line-names =
-+	/*128-159*/
-+	"","","","","","","","",
-+	"","","","","","","","POST_COMPLETE",
-+	"","","","","","","","",
-+	"","","","","","","","";
-+};
-+
-+&gpio5 {
-+	/* POWER_BUTTON=gpio177 */
-+	gpio-line-names =
-+	/*160-191*/
-+	"","","","","","","","",
-+	"","","","","","","","",
-+	"","POWER_BUTTON","","","","","","",
-+	"","","","","","","","";
-+};
-+
-+&gpio6 {
-+	/* SIO_S5=gpio199, RESET_BUTTON=gpio203 */
-+	gpio-line-names =
-+	/*192-223*/
-+	"","","","","","","","SIO_S5",
-+	"","","","RESET_BUTTON","","","","",
-+	"","","","","","","","",
-+	"","","","","","","","";
-+};
-+
-+&pinctrl {
-+	pinctrl-names = "default";
- 
- 	gpio224ol_pins: gpio224ol-pins {
- 		pins = "GPIO224/SPIXCK";
--- 
-2.21.0
+And the context is more than CPU based systems, but includes Networking,
+> other boards with ASICS, etc. So broad context. Hence, it has to work
+> within linux without OBMC.
 
+Ack, although the library was written for a use-case that involves obmc, it
+doesn't *require* obmc. Should work just fine in general Linux.
+
+ Now, imagine the IC manufacturer's tool produces a file that can represent
+> a qualified algorithm that is known to work under all possible scenarios,
+> including CRC errors in parts, corrupt NVM, etc. This is what all the
+> vendors do today. They take care of all the things that can go wrong. In
+> the case of ADI, if power was lost while programming, and the BMC or linux
+> can boot from an aux supply, our data files (encoding algorithms), can
+> repair the part under ALL possible random values in the corrupt part.
+
+This would be great, especially if this is codified in the pmbus spec.
+Right now the library provides a pmbus interface but *part programming* is
+specific to each device class...no guarantee of a common interface across
+multiple parts.
+
+1) I am interested in anything that enables our work
+
+Sure, I'll start carving out more time to make this work suitable for
+upstreaming. At the very least it should give you a mockable interface to
+allow for strong unit testing of upper layers.
+
+
+> 2) I am interested in inviting someone from the community, not IC vendor,
+> to our meetings to offer advice and help us define something useful
+
+Sounds good, feel free to reach out to me on an individual basis.
+
+On Mon, Apr 26, 2021 at 7:33 PM Mike Jones <proclivis@gmail.com> wrote:
+
+> Jason,
+>
+> I am interested, because within the PMBus Specification Committee, we are
+> working on a data language intended for device programming. And there is
+> hope that eventually it can become adopted into linux and/or OBMC.
+>
+> There is a particular use model that is being driven by the IC suppliers
+> and their tools. One reason is that all the vendors have proprietary tools,
+> but they see no competitive advantage, and would rather support a universal
+> standard.
+>
+> Imagine that programming might be done for:
+>
+> - ICT
+> - Proto Builds
+> - Engineering Bringup
+> - Remote upgrades
+>
+> And the context is more than CPU based systems, but includes Networking,
+> other boards with ASICS, etc. So broad context. Hence, it has to work
+> within linux without OBMC.
+>
+> My view is it is a linux library anyone can use, and OBMC is the piping if
+> it were exposed to a web service, state management, etc.
+>
+> Now, imagine the IC manufacturer's tool produces a file that can represent
+> a qualified algorithm that is known to work under all possible scenarios,
+> including CRC errors in parts, corrupt NVM, etc. This is what all the
+> vendors do today. They take care of all the things that can go wrong. In
+> the case of ADI, if power was lost while programming, and the BMC or linux
+> can boot from an aux supply, our data files (encoding algorithms), can
+> repair the part under ALL possible random values in the corrupt part.
+>
+> Furthermore, an integrator (CM, Design House, software team) has to deal
+> with segmented I2C busses, muxes, etc. And the integrator wants to write a
+> wrapper file that integrates all the vendor files. So this integration file
+> has to take care of muxes, order of operations, calling vendor files, etc.
+>
+> My interest is two part:
+>
+> 1) I am interested in anything that enables our work
+> 2) I am interested in inviting someone from the community, not IC vendor,
+> to our meetings to offer advice and help us define something useful
+>
+> Mike
+>
+>
+>
+> > On Apr 23, 2021, at 4:22 PM, Jason Ling <jasonling@google.com> wrote:
+> >
+> > Hi all,
+> >
+> > What started as an attempt to create a simple command line tool to
+> perform pmbus device upgrades over i2c has turned into the start of a
+> user-space i2c library (with some pmbus support).
+> >
+> > I've already reused this library in some other obmc applications and
+> it's been fairly well unit-tested. It also comes with all the public
+> interfaces mocked (so you can unit test your own code).
+> >
+> > The idea is that more and more classes get added that will support
+> different pmbus devices.
+> > General idea is that each device that gets support can expose methods to
+> allow device upgrade, black box retrieval, etc..
+> >
+> > Anyways, wanted to gauge community interest in this so I can determine
+> how motivated I should be to upstream it.
+> >
+>
+>
+
+--000000000000f4700a05c0f6a70b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Thanks Mike for the feedback<div><br></div><blockquote cla=
+ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
+rgb(204,204,204);padding-left:1ex">And the context is more than CPU based s=
+ystems, but includes Networking, other boards with ASICS, etc. So broad con=
+text. Hence, it has to work within linux without OBMC.</blockquote><div>Ack=
+, although the library was written for a use-case that involves obmc, it do=
+esn&#39;t <i>require</i>=C2=A0obmc. Should work just fine in general Linux.=
+</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=C2=
+=A0Now, imagine the IC manufacturer&#39;s tool produces a file that can rep=
+resent a qualified algorithm that is known to work under all possible scena=
+rios, including CRC errors in parts, corrupt NVM, etc. This is what all the=
+ vendors do today. They take care of all the things that can go wrong. In t=
+he case of ADI, if power was lost while programming, and the BMC or linux c=
+an boot from an aux supply, our data files (encoding algorithms), can repai=
+r the part under ALL possible random values in the corrupt part.</blockquot=
+e>This would be great, especially if this is codified in the pmbus spec. Ri=
+ght now the library provides a pmbus interface but <i>part programming</i>=
+=C2=A0is specific to each device class...no guarantee of a common interface=
+ across multiple parts.<br><br><div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">1) I am interested in anything that enables our work</blockquote=
+><div>Sure, I&#39;ll start carving out more time to make this work suitable=
+ for upstreaming. At the very least it should give you a mockable interface=
+ to allow for strong unit testing of upper layers.</div><div>=C2=A0</div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">2) I am interested in invit=
+ing someone from the community, not IC vendor, to our meetings to offer adv=
+ice and help us define something useful</blockquote><div>Sounds good, feel =
+free to reach out to me on an individual basis.=C2=A0</div></div></div><br>=
+<div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Ap=
+r 26, 2021 at 7:33 PM Mike Jones &lt;<a href=3D"mailto:proclivis@gmail.com"=
+>proclivis@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex">Jason,<br>
+<br>
+I am interested, because within the PMBus Specification Committee, we are w=
+orking on a data language intended for device programming. And there is hop=
+e that eventually it can become adopted into linux and/or OBMC.<br>
+<br>
+There is a particular use model that is being driven by the IC suppliers an=
+d their tools. One reason is that all the vendors have proprietary tools, b=
+ut they see no competitive advantage, and would rather support a universal =
+standard.<br>
+<br>
+Imagine that programming might be done for:<br>
+<br>
+- ICT<br>
+- Proto Builds<br>
+- Engineering Bringup<br>
+- Remote upgrades<br>
+<br>
+And the context is more than CPU based systems, but includes Networking, ot=
+her boards with ASICS, etc. So broad context. Hence, it has to work within =
+linux without OBMC.<br>
+<br>
+My view is it is a linux library anyone can use, and OBMC is the piping if =
+it were exposed to a web service, state management, etc.<br>
+<br>
+Now, imagine the IC manufacturer&#39;s tool produces a file that can repres=
+ent a qualified algorithm that is known to work under all possible scenario=
+s, including CRC errors in parts, corrupt NVM, etc. This is what all the ve=
+ndors do today. They take care of all the things that can go wrong. In the =
+case of ADI, if power was lost while programming, and the BMC or linux can =
+boot from an aux supply, our data files (encoding algorithms), can repair t=
+he part under ALL possible random values in the corrupt part.<br>
+<br>
+Furthermore, an integrator (CM, Design House, software team) has to deal wi=
+th segmented I2C busses, muxes, etc. And the integrator wants to write a wr=
+apper file that integrates all the vendor files. So this integration file h=
+as to take care of muxes, order of operations, calling vendor files, etc.<b=
+r>
+<br>
+My interest is two part:<br>
+<br>
+1) I am interested in anything that enables our work<br>
+2) I am interested in inviting someone from the community, not IC vendor, t=
+o our meetings to offer advice and help us define something useful<br>
+<br>
+Mike<br>
+<br>
+<br>
+<br>
+&gt; On Apr 23, 2021, at 4:22 PM, Jason Ling &lt;<a href=3D"mailto:jasonlin=
+g@google.com" target=3D"_blank">jasonling@google.com</a>&gt; wrote:<br>
+&gt; <br>
+&gt; Hi all,<br>
+&gt; <br>
+&gt; What started as an attempt to create a simple command line tool to per=
+form pmbus device upgrades over i2c has turned into the start of a user-spa=
+ce i2c library (with some pmbus support).<br>
+&gt; <br>
+&gt; I&#39;ve already reused this library in some other obmc applications a=
+nd it&#39;s been fairly well unit-tested. It also comes with all the public=
+ interfaces mocked (so you can unit test your own code).<br>
+&gt; <br>
+&gt; The idea is that more and more classes get added that will support dif=
+ferent pmbus devices. <br>
+&gt; General idea is that each device that gets support can expose methods =
+to allow device upgrade, black box retrieval, etc..<br>
+&gt; <br>
+&gt; Anyways, wanted to gauge community interest in this so I can determine=
+ how motivated I should be to upstream it.<br>
+&gt; <br>
+<br>
+</blockquote></div>
+
+--000000000000f4700a05c0f6a70b--
