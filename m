@@ -2,53 +2,126 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F393436D9CB
-	for <lists+openbmc@lfdr.de>; Wed, 28 Apr 2021 16:47:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B946736D9E8
+	for <lists+openbmc@lfdr.de>; Wed, 28 Apr 2021 16:53:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FVhLh6dxDz303P
-	for <lists+openbmc@lfdr.de>; Thu, 29 Apr 2021 00:47:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FVhTW4Wpjz3000
+	for <lists+openbmc@lfdr.de>; Thu, 29 Apr 2021 00:53:35 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=KjT8ruMZ;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.151; helo=mga17.intel.com;
- envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ smtp.mailfrom=quantatw.com (client-ip=40.107.132.112;
+ helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=george.hung@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=KjT8ruMZ; 
+ dkim-atps=neutral
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320112.outbound.protection.outlook.com [40.107.132.112])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FVhLV6rVpz2xYZ
- for <openbmc@lists.ozlabs.org>; Thu, 29 Apr 2021 00:47:24 +1000 (AEST)
-IronPort-SDR: fooCWACogmrAA7p3gGUFzKGxczmMZ1HmyXmYMkH05sV3pTSx3q39sMGb78xyWF14lcA+IK1g5/
- LHF/gE+XdSHg==
-X-IronPort-AV: E=McAfee;i="6200,9189,9968"; a="176870214"
-X-IronPort-AV: E=Sophos;i="5.82,258,1613462400"; d="scan'208";a="176870214"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2021 07:47:17 -0700
-IronPort-SDR: p6MViUMe37Hi0RJeahOlaSqCB9KoefSFythHsSP5Vj0RS1sxq2OpW5IRbq37IoRdvCgZO2cKOC
- iu0g1+jTcfyQ==
-X-IronPort-AV: E=Sophos;i="5.82,258,1613462400"; d="scan'208";a="386542269"
-Received: from jmanteyx-desk.jf.intel.com ([10.54.51.75])
- by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2021 07:47:17 -0700
-To: Jayashree D <jayashree-d@hcl.com>, Ed Tanous <edtanous@google.com>,
- Lei Yu <yulei.sh@bytedance.com>
-References: <SG2PR04MB30936A198A555EEBC1DBF78AE1429@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <35577f35-feff-c87f-9948-ccdb6986b6db@intel.com>
- <CAGm54UG=qMjxSSPtPMEmnAWADjcsroa5L4sCj5FGopso3ViKOA@mail.gmail.com>
- <CAH2-KxAdB0bPwoqf_tJB+hMzgSoJ34iJfy1-cwKumUPk=KkvkA@mail.gmail.com>
- <0b2957f2-dbf2-79c3-2788-b9105aef2db6@intel.com>
- <SG2PR04MB30936D8EFD5142F6BD7CE0AFE1409@SG2PR04MB3093.apcprd04.prod.outlook.com>
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
-Subject: Re: Entity Manager error in tiogapass
-Message-ID: <0080861e-5421-3f73-1204-79bb121b7654@intel.com>
-Date: Wed, 28 Apr 2021 07:47:16 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FVhTF3Sxtz2xfy
+ for <openbmc@lists.ozlabs.org>; Thu, 29 Apr 2021 00:53:19 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=EF6LlqO0UilFMA39gtPgr8V9m5J/XZ09Flj7KDe/k3VaXRL4J7Fk4gSDOiKHtWFndWlHPr9Pv/cMm5Kfp9ohqjAT+4es+cltCdI2WtD/gLqH6Lo5radcddBChmhFZ8V0kDfEIGb9lt6OQ5tXEZklWRDuoeHBKjCeCX7HSspTdAYSklRMljwnZoa9S4JyHA2cTxUHXgX1pVeByy3pwN+4pRzQnyaR+0AHbrqFufR2TQVOL0JAlZ7TxKtpWmeSGrWbcwwX62gJpH46mJDTFcISXJxteAOUPV4bzvEbGui/5136l72BwY1XvoT+qxO08j1Adu7ygB+HyCZumW6TuU3Umg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=romwkQDLpxIzOPRqL3jHNo1RZdoUs3uGqA3xd1qAh9M=;
+ b=UkOUdziWQU3e0l0UMwXayOYEkE8vFuwl8wL4v0eCHo+Er+i2Ue/vHEfatMXdqXr1dKtidsLadXsYvixawdoLDskDpoXT9aV7IsIh9tvyX8m8K3I6xqt3nWoebhTWbAUjr3GDHbFZUyRZTn4RAWpIK1FI7ISyiFKwDkeRUZMahykTRwQkoD7ALTPWWVObshwnO7pjzGgdKjCOmrKtPLu+/falCwKhZX0FYrlAWxiRLHbVS10V0izqKTa9yUreppQ575+cG8Sa00lmXYVGQUSvlXxVOO1Mfcrbfi8b2m8IHNppi6KrtsHBQOzU6jzqXmoAbXPEgh2awz4ulpskkSHzJQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=romwkQDLpxIzOPRqL3jHNo1RZdoUs3uGqA3xd1qAh9M=;
+ b=KjT8ruMZDp6jRPDxTEYR10ja2FQxZhornsfvvIlAZEFmw7Vejd7DYzyCwqHN1a+DpFAkqod4BX2YumX0Jy32E8oqGd16elLydxC3HC2P3PE9yFl7y/aC03JhQkDrh5dYHhNUjcztTejkRnXNjYQ2zFXUN0swux0BqvDbQQk3n9g=
+Received: from HK0PR04MB2339.apcprd04.prod.outlook.com (2603:1096:203:46::21)
+ by HK0PR04MB2449.apcprd04.prod.outlook.com (2603:1096:203:44::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4087.26; Wed, 28 Apr
+ 2021 14:53:09 +0000
+Received: from HK0PR04MB2339.apcprd04.prod.outlook.com
+ ([fe80::8522:3491:faa6:e255]) by HK0PR04MB2339.apcprd04.prod.outlook.com
+ ([fe80::8522:3491:faa6:e255%4]) with mapi id 15.20.4065.027; Wed, 28 Apr 2021
+ 14:53:09 +0000
+From: =?big5?B?R2VvcmdlIEh1bmcgKKx4qb63cSk=?= <George.Hung@quantatw.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: RE: [Kernel] Nuvoton NPCM7xx unbind FIU issue
+Thread-Topic: [Kernel] Nuvoton NPCM7xx unbind FIU issue
+Thread-Index: Adc7yulaJSnuzQhKT6+mrR40GddPjQAPNZiAAA2DMjA=
+Date: Wed, 28 Apr 2021 14:53:08 +0000
+Message-ID: <HK0PR04MB2339D98C06FBE01614FECA228F409@HK0PR04MB2339.apcprd04.prod.outlook.com>
+References: <HK0PR04MB233983F380954AF58F9898208F409@HK0PR04MB2339.apcprd04.prod.outlook.com>
+ <CACPK8XcKhmBnXg0EY-jNaubCposQsgprvW3YaU8LqtwgkjM_VQ@mail.gmail.com>
+In-Reply-To: <CACPK8XcKhmBnXg0EY-jNaubCposQsgprvW3YaU8LqtwgkjM_VQ@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: jms.id.au; dkim=none (message not signed)
+ header.d=none;jms.id.au; dmarc=none action=none header.from=quantatw.com;
+x-originating-ip: [61.218.113.162]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 65d82a3b-7a42-4940-bf94-08d90a5556a1
+x-ms-traffictypediagnostic: HK0PR04MB2449:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <HK0PR04MB24497DB11C03D819240EF8D48F409@HK0PR04MB2449.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:5797;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: /sG1gOYf5ltYY6U61PhNaiuvh10hTN59E8gETAzIF0FkXbEbe3DmM8fdy0SYSDxyq93xzNDjXrEDGGn6OwA94fpfSrICBM4cm3tn3qTHTgnYHYMtRLFcV9+Vg079IajsRDh1j6LpezkgiXiIBuPojXLHKHJX8dA27Jhf8Ve2s+wkmy3HEvysMbTE1/0iZOKfgZD/SvMJuvxA6PmLS+/q/WWOSTBesFIeLY0C1Dca5tpynksScihOHfsQDZg8FZmeZm5dIXdzWKdknzccVTlVGKuabnThSXtER8hD1QUU5EPVRmTFzb6A8zkxYC2eiJQPg8seuu7vPh6EOpR76iJAq8+ShvoHWpa2+mnP8AmHTp93Co+eDPiKedr0CFzjxQ9qqG18YYopklyo/P4LEnJxs9JmcTCa2INjZMKnsX+MZ8xtJ8rsqqV7bWIQo25dtdiA0Wbuk3oCloIOuLT7TpE80Shwg1VRjmgF8wsmOvhmbkXX0Uu01W4N8AtyERLh6z4g7klYscFpEnTCbXOTYZetxuksJByyeZqw0pNJ/etPVvqU4UwZZOC0IF1DRSuhwR3VeHcFi6r1d5M4il3OkYPFAIsM7GNbkYOWdtPLJF3icBKIpGZLR8MpAVYH/zNzuoH6TWu9G1WcwRdClcOdljGh83EBGeaXIVfeVdYcs6649TvRTU5Zlqqnhr6xP8jKPScz
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR04MB2339.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(366004)(39850400004)(396003)(376002)(346002)(136003)(53546011)(6506007)(4326008)(186003)(107886003)(9686003)(316002)(76116006)(66446008)(66476007)(7696005)(66946007)(33656002)(64756008)(8936002)(6916009)(55016002)(66556008)(26005)(45080400002)(86362001)(8676002)(966005)(71200400001)(54906003)(52536014)(83380400001)(478600001)(122000001)(5660300002)(38100700002)(2906002)(85182001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?big5?B?ZzZrL1NkNk1jZ1ppbUU0dnBIWU54NnB3ejBoRCs4bEpOWW9IaXhjdTFla0I3dm9i?=
+ =?big5?B?Zmt3SGZyR2ZYZjdEbERCR21ZV3JydlRNVUpsSE5OWVZ2MEs2VSsvSjNRNTc3YW5t?=
+ =?big5?B?eXNHZWNWU3hHTzVURWNSSXhXRXo2bmVkV3U4akQzbWp1VnVCRmJYbU94TEtsWVdC?=
+ =?big5?B?UnJPYk0rNnE3TzQxWFVrSnNacUYxUm03OFlOcXVDT2U0VXJEMXI5TVhZZjlEaGcx?=
+ =?big5?B?UHV4NFZ4SW42M0E2cE9ZcmMrdlFIbUhXLzJURHI1eXFrNG1hdkhjUVgwNTIvUFN0?=
+ =?big5?B?Tjdvek1iQStBMEMrd2dIUnZPZnNoUmY1UGE1bHR5d2xqaE9wdEN2OU9ueE96OXBT?=
+ =?big5?B?dXVlUDNqVFUxQSs0QXpyNndNZHp0RzVEZE1JRkRkdUc1NDNyQTdUWXFBbG9XcWhI?=
+ =?big5?B?bnJiZ2k1MDlBZHJZYXJqZWR3UXdLcEtnd3VPdW0reVA0U2t5NUFHRWNjMFQ3MFJV?=
+ =?big5?B?M1pwb1lmS1JOV2JvY1JkOG9oWjhFZ3lqYU9oQmw3ODIzNTh6eXVyRTJjV3MzVEVt?=
+ =?big5?B?cVlHaDVTMnZNNlU5SHNhaFR6R1IvYUVGY1owM0Mzb0xBQndyVkh5bHBTY2ZCaW5h?=
+ =?big5?B?NmZCOUZpeUZvRXg5QlVJV20wcHpSTWZabjdjbjJzdElITE9uR1NXdG9BOVkzSlMw?=
+ =?big5?B?SVYwZ3d6ckFuY2tPMTlRYnhZWDY3YTUwN05iWnhXcGFFOGE4MmdTbmxkY2hFRml5?=
+ =?big5?B?WDRMVGlIbEMxZFU2bXNWTSsyWFY3M2hnVGZ6a0NSUVdTRWYvdTh3cXZ3SzE2K2NJ?=
+ =?big5?B?SXpVM2RNdTVhTTh2blZpWGtaMC9MaGFzZmlEMURZOS9PcGEwb3VFWCswRkhaN3ZW?=
+ =?big5?B?VnZMcldPTmNXVG9HM2ZHVTU3MXo3SnRFa2pmb3R1MmlNckxSU29NcmNMVDJlSHZt?=
+ =?big5?B?WEZrMmlzY2ZUUGRXNWk2OHNrZ3JjTUpsNm5YZExqbzlmeXRPOGJyMWRJYVJCY0gr?=
+ =?big5?B?VTljeFFYMFZnMWFuY2dTTkVXTVljeU1IemdFK3FDNHk5bHV5aVhSbHFvQ2NHNmZM?=
+ =?big5?B?L2JFSFY3eU5xaTNaejc0VmNjVis0Q1drZERLMnFMdHFlS0tjZ1Fpa2k1YmNsaDZV?=
+ =?big5?B?MjA2K1VlLzhPWkFKSVF0cGhKU1lyZURpSlNOS2p5cStaaUE0WW1mREgxT3dwQjJu?=
+ =?big5?B?eUlFYkNpRkVZS2ozeHpLYTBkRUZzQ2NibkNjWkpSdFNDR0FtMC9OTVRPR2RGbmR2?=
+ =?big5?B?czY2M3V5aitoUVBYbFM5UFpjRDZmZlQwRDF5clNMVUFaUkx3YlZpTFlFcjlhUXV4?=
+ =?big5?B?WDVHWWxSVERlZGt5bWo3MG5PbTMweEYrN0txZnFvZnhJeklzdVhRMnZiZkg2bXJt?=
+ =?big5?B?eUhQT1ZZenlCZERUUEVLcm5WYUJlQ1IxUzMvL1BhSHdFaFVmTUl2L0hVL3d6Tk0r?=
+ =?big5?B?ZUpYSE15bTJ3RnNPRGl5ZTdtaEl0cm5GV1pvWTdNYTkwMDdtSzUxbnd1RzRtSGRp?=
+ =?big5?B?K3h6dG1mOEJ5dlRvNy9OS3FkRTNLdlZ6VVRPOXVwaldGSVVONk82UWhXRVZPNTEv?=
+ =?big5?B?YlYwMUJtWm4yeEJ5L1ArYjBGcEJQRXliZEorVlVtdzF5d1dOVUNCSFoybmM1QzQr?=
+ =?big5?B?dmd4MXRuc1RCWE9KTUtpQXIvenM4ZnJCVHdPenpIUE1DU1cxeGlUWnUzWUtRWmNM?=
+ =?big5?Q?JncdQrVgiCzmLYsZqlMQ71/52bXEDLBJnp8yMqoy55a7zche?=
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <SG2PR04MB30936D8EFD5142F6BD7CE0AFE1409@SG2PR04MB3093.apcprd04.prod.outlook.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="fiKl3LDmHQJYp23vXUYYhYCe7Tho6GB9E"
+X-OriginatorOrg: quantatw.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB2339.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 65d82a3b-7a42-4940-bf94-08d90a5556a1
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Apr 2021 14:53:08.9805 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: V/pLc9Le6G9+Nla2h73utYVs2i059drTWYxYjaU+6sHV96GJtdHGZi3CIzjdADbZh6X2s2kEMl04Kcuf16g/irueUU6nH/jj2cCv5nnuvow=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR04MB2449
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,232 +133,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Benjamin Fair <benjaminfair@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ =?big5?B?RnJhbiBIc3UgKK59u3jBvik=?= <Fran.Hsu@quantatw.com>,
+ Brandon Kim <brandonkim@google.com>, William Kennington <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---fiKl3LDmHQJYp23vXUYYhYCe7Tho6GB9E
-Content-Type: multipart/mixed; boundary="pv9q89SRpxKnBtDkfbGpjdAL1AhW15pNY";
- protected-headers="v1"
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
-To: Jayashree D <jayashree-d@hcl.com>, Ed Tanous <edtanous@google.com>,
- Lei Yu <yulei.sh@bytedance.com>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Message-ID: <0080861e-5421-3f73-1204-79bb121b7654@intel.com>
-Subject: Re: Entity Manager error in tiogapass
-References: <SG2PR04MB30936A198A555EEBC1DBF78AE1429@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <35577f35-feff-c87f-9948-ccdb6986b6db@intel.com>
- <CAGm54UG=qMjxSSPtPMEmnAWADjcsroa5L4sCj5FGopso3ViKOA@mail.gmail.com>
- <CAH2-KxAdB0bPwoqf_tJB+hMzgSoJ34iJfy1-cwKumUPk=KkvkA@mail.gmail.com>
- <0b2957f2-dbf2-79c3-2788-b9105aef2db6@intel.com>
- <SG2PR04MB30936D8EFD5142F6BD7CE0AFE1409@SG2PR04MB3093.apcprd04.prod.outlook.com>
-In-Reply-To: <SG2PR04MB30936D8EFD5142F6BD7CE0AFE1409@SG2PR04MB3093.apcprd04.prod.outlook.com>
-
---pv9q89SRpxKnBtDkfbGpjdAL1AhW15pNY
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
-
-On 4/28/21 1:35 AM, Jayashree D wrote:
-> Classification: Public
->
-> Hi Johnathan,
->
-> In tiogapass json file, Bus 16 is present. But driver (i2c-16) is not c=
-reated in my hardware. So the crash occurs in entity manager.
-> If this type of case occurs, can entity manager display this as error m=
-assage not as crash ?
-It's still unclear to me what the failure mode is based on the input=20
-that has been provided.
-
-The directory_iterator only iterates over directories/files that are=20
-present. If i2c-16 isn't there, there won't be a path iterator value=20
-assigned, and the code should continue looking for files that do exist.
-There is also a secondary test to make sure the item in the path=20
-iterator is a directory, and if it is not, the directory is ignored via=20
-a "continue" statement.
-
-The code prior to this commit used directory_iterator in a loop instead=20
-of recursive_directory_iterator. The latter was suggested by Ed Tanous=20
-to simplify the logic/indent level. I agreed the solution looked cleaner =
-
-and implemented it. Perhaps this introduced an unexpected artifact that=20
-did not exist in the preceding implementation of the directory recursion.=
-
-
-> Regards,
-> Jayashree.
->
-> -----Original Message-----
-> From: Johnathan Mantey <johnathanx.mantey@intel.com>
-> Sent: Tuesday, April 27, 2021 11:41 PM
-> To: Ed Tanous <edtanous@google.com>; Lei Yu <yulei.sh@bytedance.com>
-> Cc: openbmc@lists.ozlabs.org; Jayashree D <jayashree-d@hcl.com>
-> Subject: Re: Entity Manager error in tiogapass
->
->
->
-> On 4/27/21 9:54 AM, Ed Tanous wrote:
->> On Mon, Apr 26, 2021 at 7:23 PM Lei Yu <yulei.sh@bytedance.com> wrote:=
-
->>> On Tue, Apr 27, 2021 at 12:35 AM Johnathan Mantey
->>> <johnathanx.mantey@intel.com> wrote:
->>>> Jayashree,
->>>>
->>>> On 4/26/21 9:00 AM, Jayashree D wrote:
->>>>> Classification: *Confidential*
->>>>>
->>>>> Hi Team,
->>>>>
->>>>> In the latest build, I am facing the below issue in Entity Manager
->>>>> for tiogapass.
->>>>>
->>>>> Already issue has been created in Entity Manager Repo -
->>>>> entity-manager terminated by
->>>>> 'std::filesystem::__cxx11::filesystem_error' =C2=B7 Issue #8 =C2=B7=
-
->>>>> openbmc/entity-manager (github.com)
->>>>> <https://github.com/openbmc/entity-manager/issues/8>
->>>>>
->>>>> root@tiogapass:~# systemctl status
->>>>> xyz.openbmc_project.EntityManager.service -l
->>>>>
->>>>> =E2=97=8F xyz.openbmc_project.EntityManager.service - Entity Manage=
-r
->>>>>
->>>>>        Loaded: loaded
->>>>> (]8;;file://tiogapass/lib/systemd/system/xyz.openbmc_project.Entity=
-
->>>>> Manager.service/lib/systemd/system/xyz.openbmc_project.EntityManage=
-
->>>>> r.service]8;;;
->>>>> enabled; vendor preset: enabled)
->>>>>
->>>>>        Active: active (running) since Thu 1970-01-01 00:04:10 UTC;
->>>>> 25s ago
->>>>>
->>>>>       Process: 851 ExecStartPre=3D/bin/mkdir -p /var/configuration
->>>>> (code=3Dexited, status=3D0/SUCCESS)
->>>>>
->>>>>       Process: 852 ExecStartPre=3D/bin/mkdir -p /tmp/overlays
->>>>> (code=3Dexited, status=3D0/SUCCESS)
->>>>>
->>>>>      Main PID: 853 (entity-manager)
->>>>>
->>>>>        CGroup:
->>>>> /system.slice/xyz.openbmc_project.EntityManager.service
->>>>>
->>>>>                =E2=94=94=E2=94=80853 /usr/bin/entity-manager
->>>>>
->>>>> Jan 01 00:04:09 tiogapass systemd[1]: Starting Entity Manager...
->>>>>
->>>>> Jan 01 00:04:10 tiogapass systemd[1]: Started Entity Manager.
->>>>>
->>>>> Jan 01 00:04:27 tiogapass entity-manager[853]: Inventory Added
->>>>>
->>>>> Jan 01 00:04:27 tiogapass entity-manager[853]: terminate called
->>>>> after throwing an instance of 'std::filesystem::__cxx11::filesystem=
-_error'
->>>>>
->>>>> Jan 01 00:04:27 tiogapass entity-manager[853]:   what():  filesyste=
-m
->>>>> error: recursive directory iterator cannot open directory: No such
->>>>> file or directory [/sys/bus/i2c/devices/i2c-16]
->>>>>
->>>> Check this portion of src/Overlay.cpp static bool
->>>> deviceIsCreated(const std::string& devicePath,
->>>>                                std::shared_ptr<uint64_t> bus,
->>>>                                std::shared_ptr<uint64_t> address,
->>>>                                const bool retrying)
->>>>
->>>> I placed a comment describing the intent of the directory iterator.
->>>> I have not seen the issue described on our systems, nor in QEMU
->>>> (reported by another dev), so I'm not able to identify the issue.
->>> The issue is reported at
->>> https://github.com/openbmc/entity-manager/issues/8, and the commit
->>> that introduces the issue is
->>> https://github.com/openbmc/entity-manager/commit/9b86787adea3f8f29fac=
-
->>> 2acbb9fa0f48fbcf244a
->>>
->>> Could you kindly investigate the exception and see how to make it not=
- crash?
->> It sounds like Jonathan isn't able to reproduce.  Do you think you
->> could capture the full stack trace from the exception?  Do you have
->> anything odd on your systems that would cause the differing behavior?
->>
->>> --
->>> BRs,
->>> Lei YU
-> This may be just wishful thinking....
-> Looking at the JSON input file for bus 16:
-> "Bus": 16,
->               "Name": "MB_C2_AVA_RTEMP",
->
-> Would the recent sdbusplus encoding changes cause an issue?
-> The "_C2" is going to be translated into something that may be problema=
-tic.
->
-> Does applying
-> https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/42512 change a=
-nything?
->
-> --
-> Johnathan Mantey
-> Senior Software Engineer
-> *azad te**chnology partners*
-> Contributing to Technology Innovation since 1992
-> Phone: (503) 712-6764
-> Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>=
-
->
->
-> ::DISCLAIMER::
-> ________________________________
-> The contents of this e-mail and any attachment(s) are confidential and =
-intended for the named recipient(s) only. E-mail transmission is not guar=
-anteed to be secure or error-free as information could be intercepted, co=
-rrupted, lost, destroyed, arrive late or incomplete, or may contain virus=
-es in transmission. The e mail and its contents (with or without referred=
- errors) shall therefore not attach any liability on the originator or HC=
-L or its affiliates. Views or opinions, if any, presented in this email a=
-re solely those of the author and may not necessarily reflect the views o=
-r opinions of HCL or its affiliates. Any form of reproduction, disseminat=
-ion, copying, disclosure, modification, distribution and / or publication=
- of this message without the prior written consent of authorized represen=
-tative of HCL is strictly prohibited. If you have received this email in =
-error please delete it and notify the sender immediately. Before opening =
-any email and/or attachments, please check them for viruses and other def=
-ects.
-> ________________________________
-
---=20
-Johnathan Mantey
-Senior Software Engineer
-*azad te**chnology partners*
-Contributing to Technology Innovation since 1992
-Phone: (503) 712-6764
-Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
-
-
-
---pv9q89SRpxKnBtDkfbGpjdAL1AhW15pNY--
-
---fiKl3LDmHQJYp23vXUYYhYCe7Tho6GB9E
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsB5BAABCAAjFiEEEynmy4K0ckuoyjA+Ocg9x5uaKcAFAmCJdXQFAwAAAAAACgkQOcg9x5uaKcAc
-lgf6Ax8g1B4u4L5hXbrmSL4WnyDkWdDmIoLdWE2b816BYyf21z3pL7pJtde6CoKjQHAo3Ig5szd+
-PompZh9k2Q5cTKH5mOQEdm6xZPit9IYtpAq9aaKFe8Z7/OTQKOa6zc9yW+xvIw0eFQc6jNHu8rYI
-CLJnljJ6Sz9yjRawSgsPcjFS8zi/8C5zdL2OH92nLbQGbpfxSM+P3eDMZstG09D8tpqP1IgaXKQ2
-RH6v5qztnYeEvQofAcAPfAlkNDHYwESw2gMDRYmdZ/GTnd4Ov+lroJbb8U8nd38GpchUaQ6mdPaU
-9NP3zqNL1RMgauflT6n3ykWKp3OvFWdWNxmM1Sej4Q==
-=xLme
------END PGP SIGNATURE-----
-
---fiKl3LDmHQJYp23vXUYYhYCe7Tho6GB9E--
+DQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IEpvZWwgU3RhbmxleSA8am9l
+bEBqbXMuaWQuYXU+DQo+IFNlbnQ6IFdlZG5lc2RheSwgQXByaWwgMjgsIDIwMjEgNDoyMyBQTQ0K
+PiBUbzogR2VvcmdlIEh1bmcgKKx4qb63cSkgPEdlb3JnZS5IdW5nQHF1YW50YXR3LmNvbT4NCj4g
+Q2M6IE9wZW5CTUMgTWFpbGxpc3QgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz47IFdpbGxpYW0g
+S2VubmluZ3Rvbg0KPiA8d2FrQGdvb2dsZS5jb20+OyBCcmFuZG9uIEtpbSA8YnJhbmRvbmtpbUBn
+b29nbGUuY29tPjsgQmVuamFtaW4NCj4gRmFpciA8YmVuamFtaW5mYWlyQGdvb2dsZS5jb20+OyBG
+cmFuIEhzdSAorn27eMG+KQ0KPiA8RnJhbi5Ic3VAcXVhbnRhdHcuY29tPg0KPiBTdWJqZWN0OiBS
+ZTogW0tlcm5lbF0gTnV2b3RvbiBOUENNN3h4IHVuYmluZCBGSVUgaXNzdWUNCj4gDQo+IE9uIFdl
+ZCwgMjggQXByIDIwMjEgYXQgMDE6MTUsIEdlb3JnZSBIdW5nICiseKm+t3EpDQo+IDxHZW9yZ2Uu
+SHVuZ0BxdWFudGF0dy5jb20+IHdyb3RlOg0KPiA+DQo+ID4gSGkgSm9lbCwNCj4gPg0KPiA+IEZv
+ciBrZXJuZWwgdjUueCwgd2UgZm91bmQgdGhhdCB3aGVuIHdlIHVuYmluZCBGSVUgbW9kdWxlIGF0
+IHRoZSBmaXJzdA0KPiB0aW1lLCBpdCB3b3VsZCBjYXVzZSBrZXJuZWwgd2FybmluZyBsaWtlIHRo
+YXQ6DQo+ID4NCj4gPiAtLS0tLS0tLS0tLS1bIGN1dCBoZXJlIF0tLS0tLS0tLS0tLS0NCj4gPiBX
+QVJOSU5HOiBDUFU6IDAgUElEOiAyMTc0IGF0IGxpYi9yZWZjb3VudC5jOjE5MA0KPiA+IHJlZmNv
+dW50X3N1Yl9hbmRfdGVzdF9jaGVja2VkKzB4NjAvMHhiYw0KPiA+IHJlZmNvdW50X3Q6IHVuZGVy
+ZmxvdzsgdXNlLWFmdGVyLWZyZWUuDQo+ID4gTW9kdWxlcyBsaW5rZWQgaW46DQo+ID4gQ1BVOiAw
+IFBJRDogMjE3NCBDb21tOiBnYnMtc3lzaW5pdC5zaCBOb3QgdGFpbnRlZA0KPiA+IDUuNC44MC1l
+YmFkOGNkLWRpcnR5LWM0NjQ0NGQgIzEgSGFyZHdhcmUgbmFtZTogTlBDTTdYWCBDaGlwIGZhbWls
+eQ0KPiANCj4gSG9wZWZ1bGx5IHlvdSdyZSBub3QgdXNpbmcgNS40LjgwIGFueXdoZXJlIDopDQo+
+IA0KPiA+DQo+ID4gQW5kIHRoZXJlJ3MgYSBmaXggb24ga2VybmVsIGdpdGh1YiBmb3Igbm93Og0K
+PiA+IGh0dHBzOi8vYXBjMDEuc2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1o
+dHRwcyUzQSUyRiUyRmdpdGgNCj4gPg0KPiB1Yi5jb20lMkZ0b3J2YWxkcyUyRmxpbnV4JTJGY29t
+bWl0JTJGNzk0YWFmMDE0NDRkNGU3NjVlMmIwNjdjYmEwDQo+IDFjYzY5Yw0KPiA+DQo+IDFjNjhl
+ZDkmYW1wO2RhdGE9MDQlN0MwMSU3Q0dlb3JnZS5IdW5nJTQwcXVhbnRhdHcuY29tJTdDMjcyMzNl
+DQo+IDNmMGQ2MDQ2DQo+ID4NCj4gZTU0YzdiMDhkOTBhMWVlZDBkJTdDMTc5YjAzMjcwN2ZjNDk3
+M2FjNzM4ZGU3MzEzNTYxYjIlN0MxJTdDMCUNCj4gN0M2Mzc1NTENCj4gPg0KPiA5NTAyMTc2OTg2
+MDYlN0NVbmtub3duJTdDVFdGcGJHWnNiM2Q4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0oNCj4gUUlq
+b2lWMmx1TQ0KPiA+DQo+IHpJaUxDSkJUaUk2SWsxaGFXd2lMQ0pYVkNJNk1uMCUzRCU3QzEwMDAm
+YW1wO3NkYXRhPVViTFglMkJVQVQwc2QNCj4gRkQ1Z240DQo+ID4gWnR3eUtWN1dsc3lrRW5nSVpw
+Y3JIV0NsRTQlM0QmYW1wO3Jlc2VydmVkPTANCj4gPg0KPiA+IENvdWxkIHlvdSBoZWxwIHRvIHB1
+bGwgdGhpcyBmaXggdG8gY3VycmVudCBPcGVuQk1DIGtlcm5lbCByZXBvLiB0byBmaXggdGhpcw0K
+PiBpc3N1ZSA/DQo+IA0KPiBTdXJlLiBJJ3ZlIGFwcGxpZWQgdGhpcyBjaGFuZ2UgdG8gZGV2LTUu
+MTAuDQoNCkkgZm91bmQgdGhpcyBjb21taXQsIHRoYW5rcyBhIGxvdC4NCg0KQmVzdCBSZWdhcmRz
+IA0KR2VvcmdlIEh1bmcNCg0KPiANCj4gSSBpbWFnaW5lIGl0IHdpbGwgc2hvdyB1cCBpbiB0aGUg
+c3RhYmxlIHRyZWUgc2hvcnRseSB0b28sIHNvIGlmIHlvdSBhcmUgcmVhbGx5DQo+IHVzaW5nIHY1
+LjQgSSByZWNvbW1lbmQgbWVyZ2luZyBpbiB0aGUgbGF0ZXN0IHN0YWJsZSB0cmVlIHdoZW4gdGhh
+dCBoYXBwZW5zLg0KPiANCj4gQ2hlZXJzLA0KPiANCj4gSm9lbA0K
