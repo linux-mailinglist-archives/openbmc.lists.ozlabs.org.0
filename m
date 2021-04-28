@@ -1,94 +1,107 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B61136E1A0
-	for <lists+openbmc@lfdr.de>; Thu, 29 Apr 2021 00:44:03 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5A5036E1A7
+	for <lists+openbmc@lfdr.de>; Thu, 29 Apr 2021 00:57:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FVtwK0Vhcz2xg6
-	for <lists+openbmc@lfdr.de>; Thu, 29 Apr 2021 08:44:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FVvCS5tZMz2yyL
+	for <lists+openbmc@lfdr.de>; Thu, 29 Apr 2021 08:57:08 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=RDb+MEXF;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ogARXKC3;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Iu0FpC+K;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=RDb+MEXF; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=ogARXKC3; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=Iu0FpC+K; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FVtw46GwXz2xZR
- for <openbmc@lists.ozlabs.org>; Thu, 29 Apr 2021 08:43:48 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 0A6855C00E8
- for <openbmc@lists.ozlabs.org>; Wed, 28 Apr 2021 18:43:46 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Wed, 28 Apr 2021 18:43:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm2; bh=+/vyfVjWrZLageWCV5m7aEC+l5TJ24s
- n4KNIwJ3QUeE=; b=RDb+MEXFT/4hvHfj2HitBAFbSsGeuZinbcjShUfbczXgRzu
- NgNg2cVZ2hADq0BHj2XcuBGr8HyHxfpx6M3sDKgDQ86SceacXV15WD1zkBOczMMc
- k8XoUI3BXG55OzFXG4nbzMojurJV7UhbMpd9T6crtDv6dPvbiihE2WR3DZBAM9l/
- lf5xcFLp2dJEAQaF3Cfu79jiS6Sn3jH0HYWxoctMxbhrqePeR8jZ4gJXqAQq1iL+
- llfhqgGXNlf1XsehokXHfD8GtAj3pDzVjFGtvv3nXKt2L0rqOE/h+rwhRarq7vC7
- /GMbDPREhWB6fwEjDpf73EZPzpFNglyHjj5DRIA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=+/vyfV
- jWrZLageWCV5m7aEC+l5TJ24sn4KNIwJ3QUeE=; b=ogARXKC3CA8p34+EHbZ6yO
- RsEexPd8rmDBrat1jtabLSX/25BH3b74Fvm74k9vt/o+TRnxoz1v/RoRX4nZCmzA
- L5gv+5/mWJ56IrneCDnY+QnKi2s9WyRQEHYtKzjc8Mm5CazAmUAiE3ATQBYo0mpG
- Q6DHbOvWKDSr51xxvzj4l2GJJVEw9Z+13k5xm+LslQsjDwVZBr928myV/f1moru7
- ZAyUyVfFkKUXPimBbDdi0L8AcfLHorAl1gY5yXNm/UQ0ajJaNaagOiL5N5S2mcM4
- VQZ6Q/M9JzVi2bxt5ENuq2Ky6kkKEeLt98TxZOjMq21o2o+V2fIo1yJO1hUpCVlQ
- ==
-X-ME-Sender: <xms:IeWJYBgB3yZm0t0cGHjL_JlE3BEmwKB5xc7dB7Wu2bz-Ih7YsWfMIw>
- <xme:IeWJYGAjBQIxRuhrpJtrFAPlxnoNfyDORYUi6viM5aa0AhKzrndKy0zDXaKXE-Em6
- f2AmZakQPPjf8TQ9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddvfedguddvucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucgoufhushhpvggtthffohhmrghinhculdegledmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepffevtdetleelvedvgfekueevueehffekfffgudelhefgudduveejgfek
- ueduffefnecuffhomhgrihhnpehgohhoghhlvgdrtghomhenucevlhhushhtvghrufhiii
- gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:IeWJYBGo2E2b6n9wsPhFVLz3ynPh1i6zWmkFMb0Tp3tpwdexdXnV1Q>
- <xmx:IeWJYGRBzr7EVDAjCc55yZykZ96No8kbzmoefhNWjVZ-lcjr27RiYA>
- <xmx:IeWJYOxzBcmqKEl9oFxckis_1rPQUpK5VAQL-oroRFRR1WJLlf0WaQ>
- <xmx:IuWJYN92NSE17QKKfU4YlTyHAoEaqMBQJt-MwVXufV8-V5oX6qE_2A>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 43381A0007A; Wed, 28 Apr 2021 18:43:45 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-403-gbc3c488b23-fm-20210419.005-gbc3c488b
-Mime-Version: 1.0
-Message-Id: <deebe338-fd6c-442a-a965-b51614a0d971@beta.fastmail.com>
-In-Reply-To: <314a9521-c6f1-0951-15ea-2556ebcd5cbb@linux.vnet.ibm.com>
-References: <965c9157-c64b-6594-fbdf-bd2a44c795a1@linux.ibm.com>
- <41c03072-6e30-a9bd-be1a-d74dafd9c3e1@linux.ibm.com>
- <abd0e8ef-3a1b-4f9a-851a-0663f02977ed@www.fastmail.com>
- <6a444a52-0123-e81c-fcb1-3748b4692547@linux.vnet.ibm.com>
- <63563e1e-446f-4ad6-a104-728bdaa20577@beta.fastmail.com>
- <314a9521-c6f1-0951-15ea-2556ebcd5cbb@linux.vnet.ibm.com>
-Date: Thu, 29 Apr 2021 08:13:22 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: Re: Security Working Group - Wednesday April 28 - results
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FVvCB3j6lz2xZR
+ for <openbmc@lists.ozlabs.org>; Thu, 29 Apr 2021 08:56:53 +1000 (AEST)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 13SMierZ017872; Wed, 28 Apr 2021 18:56:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=RwiGZbppi5LfqIcI/ncUAaBOo08GcgKUIhlmP75dJgo=;
+ b=Iu0FpC+KfIssjbneASsZf0jU/Rg8CwRXFOvS6px6PM0KaqzPQoK6eVcb5nq09e9FByz+
+ 6JHz4T+BOv08fwBMykQFx+ow5cjleOnajAFtvJzGKSuher5KoxNQPBEc8ocmAL2ytySA
+ YjY2aV12oqfXjCX5mP54jtBY0dcGI64nu0LUL+wzquq9UpSIcVjjZ8QQdCCeFIV9vHIW
+ d7Kw61Wgt6lSJCvJz07QwqwbGs2zTvLqZku8meZBh8zjcv02XJ1vlE3EkY7xWDL/isC8
+ 7GETOJFY9WkM43k0DOPEUrD1U6wZE14dfhYGKN/GzcYNee8nCBhrd5tKXU/t3BlIVuMx oA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 387grur6u0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 28 Apr 2021 18:56:49 -0400
+Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 13SMm9VD029206;
+ Wed, 28 Apr 2021 18:56:49 -0400
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 387grur6tt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 28 Apr 2021 18:56:49 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 13SMcj6m015010;
+ Wed, 28 Apr 2021 22:56:48 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma02wdc.us.ibm.com with ESMTP id 384aya0b7a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 28 Apr 2021 22:56:48 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 13SMultv19005844
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 28 Apr 2021 22:56:47 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9BDEE6A054;
+ Wed, 28 Apr 2021 22:56:47 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 651E96A051;
+ Wed, 28 Apr 2021 22:56:45 +0000 (GMT)
+Received: from [9.206.162.87] (unknown [9.206.162.87])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed, 28 Apr 2021 22:56:44 +0000 (GMT)
+Subject: Re: Move Inventory.Item.Board from Redfish Chassis to Redfish Assembly
+To: Ed Tanous <edtanous@google.com>
+References: <a3b81496-b34d-9198-66b0-f335de61a677@linux.vnet.ibm.com>
+ <CAH2-KxD1kB25nYADKzJ9rCb0+fu1mWKiQ_KMQ9nRvvi7ids_4w@mail.gmail.com>
+ <d181d1f7-7e9a-2f2e-edaa-3bdafef1277e@linux.vnet.ibm.com>
+ <CAH2-KxDygU-V_U2e4KOF6VCMdftwXUDvYPbMMKjg+UzwqKXWJg@mail.gmail.com>
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+Message-ID: <d248a6d9-48b0-6219-dcba-a4d1d11804b4@linux.vnet.ibm.com>
+Date: Wed, 28 Apr 2021 16:56:42 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
+In-Reply-To: <CAH2-KxDygU-V_U2e4KOF6VCMdftwXUDvYPbMMKjg+UzwqKXWJg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: HrsBxCNgS0LZimBMeOy1X0QLAa2nk48S
+X-Proofpoint-GUID: cpxDVRoeKOYlSpcK06orMXRDFgl0KVv2
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
+ definitions=2021-04-28_17:2021-04-28,
+ 2021-04-28 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0
+ adultscore=0 lowpriorityscore=0 spamscore=0 mlxscore=0 impostorscore=0
+ phishscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104060000 definitions=main-2104280144
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,56 +113,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Ed Tanous <ed@tanous.net>, Derick <derick.montague@gmail.com>, "Bills,
+ Jason M" <jason.m.bills@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On Thu, 29 Apr 2021, at 08:04, Bruce Mitchell wrote:
-> On 4/28/2021 15:28, Andrew Jeffery wrote:
-> > 
-> > 
-> > On Thu, 29 Apr 2021, at 07:55, Bruce Mitchell wrote:
-> >> On 4/28/2021 15:20, Andrew Jeffery wrote:
-> >>>
-> >>>
-> >>> On Thu, 29 Apr 2021, at 07:01, Joseph Reynolds wrote:
-> >>>> On 4/27/21 4:48 PM, Joseph Reynolds wrote:
-> >>>>> This is a reminder of the OpenBMC Security Working Group meeting
-> >>>>> scheduled for this Wednesday April 28 at 10:00am PDT.
-> >>>>>
-> >>>>> We'll discuss the following items on the agenda
-> >>>>> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>,
-> >>>>> and anything else that comes up:
-> >>>>>
-> >>>>> 1. passwordless sudo access to members of the wheel group
-> >>>> This customization does not match the common OpenBMC use cases.
-> >>>> Abandoning this commit.
-> >>>>
-> >>>> Bonus topics:
-> >>>>
-> >>>> 2. Intel Hack-a-Thon 2021 results are coming soon.
-> >>>
-> >>> What does this mean?
-> >>>
-> >>
-> >> I believe Intel is trying publishing the results of
-> >> their "Intel (security) Hack-a-Thon 2021" by the end
-> >> of next week.
-> >>
-> > 
-> > Okay, but what does that mean? Are they pushing patches? Announcing CVEs? Opening bugs?
-> > 
-> > What can we expect?
-> > 
+On 4/28/2021 1:44 PM, Ed Tanous wrote:
+>>> On Wed, Apr 28, 2021 at 9:18 AM Gunnar Mills <gmills@linux.vnet.ibm.com> wrote:
+>>>>
+>>>>    From some discussion on Discord a few weeks ago. A newer way of
+>>>> thinking in Redfish is for a simple rack server to just have one Redfish
+>>>> Chassis and things like boards modeled as Redfish Assemblies under the
+>>>> Chassis. Today we look for inventory item chassis and inventory
+>>>> item board to populate the Chassis collection. I propose we move
+>>>> the "Inventory.Item.Board" from Redfish Chassis to Redfish Assembly.
+>>>
 > 
-> OpenBMC Security Working Group Meeting Notes and Agenda are here:
-> https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit#heading=h.8bihrhc0925u
+> Here's an example of something that's type Board that creates sensors.
+> https://github.com/openbmc/entity-manager/blob/master/configurations/A2UL16RISER.json
+> There are several more like this.
 
-Okay, so:
+ From follow-on discussion in Discord this afternoon.
+Today the sensors to board association (e.g. the riser card above with 
+sensors) is "chassis"/"all_sensor. It should be  "inventory"/"sensors" 
+(Association Type #2: Linking a low-level hardware item to its sensors 
+[a]). Redfish has a "RelatedItem" property on the Sensor schema. To 
+populate the "RelatedItem" property we will use Association Type #2. 
+This is the first step to moving Inventory.Item.Board to a Redfish 
+Assembly, this is to ensure no relationships are lost.
 
-> 2 Intel HaT2021 results are being reviewed 
-> internally and are planned to be sent to the 
-> OpenBMC security response team.
+[a]https://github.com/openbmc/docs/blob/919a7b6816a5f16aa72d298e81e0756d95d5031e/architecture/sensor-architecture.md#association-type-2-linking-a-low-level-hardware-item-to-its-sensors
 
-So nothing is being made public yet it seems?
+> 
+> I don't mean to throw up roadblocks, and I definitely don't know what
+> the solution is here, but we'll need to solve it before something like
+> this can go through.
+> 
+We further discussed how staging this change might work, it probably 
+involves a compile flag for some time and separately adding 
+Inventory.Item.Board to Assembly and later removing from Chassis.
+
+Gunnar
