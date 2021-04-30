@@ -1,163 +1,162 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68AC636F63C
-	for <lists+openbmc@lfdr.de>; Fri, 30 Apr 2021 09:15:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A9B136F801
+	for <lists+openbmc@lfdr.de>; Fri, 30 Apr 2021 11:37:57 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FWkCQ395Jz2yyt
-	for <lists+openbmc@lfdr.de>; Fri, 30 Apr 2021 17:14:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FWnNM0j83z2yxL
+	for <lists+openbmc@lfdr.de>; Fri, 30 Apr 2021 19:37:55 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=hUuRH1QQ;
-	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=hUuRH1QQ;
+	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=J0mTFkTD;
+	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=J0mTFkTD;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
- (client-ip=40.107.130.118; helo=apc01-hk2-obe.outbound.protection.outlook.com;
- envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
+ (client-ip=40.107.132.110; helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=thangavel.k@hcl.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=hUuRH1QQ; 
+ header.s=selector2 header.b=J0mTFkTD; 
  dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=hUuRH1QQ; 
+ header.a=rsa-sha256 header.s=selector2 header.b=J0mTFkTD; 
  dkim-atps=neutral
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-eopbgr1300118.outbound.protection.outlook.com [40.107.130.118])
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320110.outbound.protection.outlook.com [40.107.132.110])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FWkC52qfXz2xy8
- for <openbmc@lists.ozlabs.org>; Fri, 30 Apr 2021 17:14:38 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FWnN33qldz2xYg
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Apr 2021 19:37:36 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tn56leSZn7/ciwqiIyWlHVSL29MFEb8j35bPBucnF3o=;
- b=hUuRH1QQ42+YtlM64uWKDntqPNhKsbaD99TDR5eNvjFglf5yD2FqHdm/M0dOKxNu4li3SKWB6JOkFX4nxTy9yDfrGpOszVALQmQZKVkXzhpQBI33fFQ8BNLqpEPJ6ZbCKk8HYZBobqVInCrGLM16hHju3GT3p3YZytHcUHVOoe2cHbz78gZHJsPC9T1BXjBeMsl8cgJLwVaduXgHb+ztXGvhEl6/3CB/XSYIQT4kbxgSHInzUlf8rqPQksUjdPDU+RCw73CT3CH/oAutCbwbnlzVZjvNiTuXoPlww/YH/l/zpbU6CVzMQBAq5BcdyqyJkbrKc8yAu+vHzqnpHQNFJg==
-Received: from SGAP274CA0016.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b6::28) by
- KL1PR0401MB4178.apcprd04.prod.outlook.com (2603:1096:820:2f::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4065.21; Fri, 30 Apr
- 2021 07:14:24 +0000
-Received: from HK2APC01FT024.eop-APC01.prod.protection.outlook.com
- (2603:1096:4:b6:cafe::1e) by SGAP274CA0016.outlook.office365.com
- (2603:1096:4:b6::28) with Microsoft SMTP Server (version=TLS1_2,
+ bh=MA7fkx7U7IM4Jdgoj6FNWWgh6ozQIERorVZMqz+kcOY=;
+ b=J0mTFkTDatOHSwF47SfBcqPGSnHyzLN4ozCgibGVC/+BXZA8r3j8bw0BDTwAxJGoor/wbb2dsdzIc5BDu5++RoQMkwGt3YsbDOgJLy99o8WTsAXBy9/QQpreROuSPsxZt5d26F/HUVrsuFqs8sZiChNvxwkokL/REoPHqvJzbFcevdy/9OD3tYyflTBX/8SApaOpjuw2hPDQh/8svGZm6v0LsSW9RIgovxh5sa5SCQLnD3QrQgn+RisEf74rG5AYoL4lo6/YLAkiJ7yRkVSukfaN/HZyn5dTsJMx2t5qioTr2atuMR6rmBnqQu14wPU7JJPf8Nwg3kAV3B9smN78/A==
+Received: from PS2PR01CA0072.apcprd01.prod.exchangelabs.com
+ (2603:1096:300:57::36) by PSAPR04MB4487.apcprd04.prod.outlook.com
+ (2603:1096:301:77::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4087.26; Fri, 30 Apr
+ 2021 09:37:24 +0000
+Received: from PU1APC01FT033.eop-APC01.prod.protection.outlook.com
+ (2603:1096:300:57:cafe::93) by PS2PR01CA0072.outlook.office365.com
+ (2603:1096:300:57::36) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4087.27 via Frontend
- Transport; Fri, 30 Apr 2021 07:14:23 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.51)
+ Transport; Fri, 30 Apr 2021 09:37:24 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.53)
  smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
  header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
  header.from=hcl.com;
 Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.245.51 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.245.51; helo=APC01-SG2-obe.outbound.protection.outlook.com;
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (192.8.245.51) by
- HK2APC01FT024.mail.protection.outlook.com (10.152.248.147) with
+ 192.8.245.53 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.245.53; helo=APC01-HK2-obe.outbound.protection.outlook.com;
+Received: from APC01-HK2-obe.outbound.protection.outlook.com (192.8.245.53) by
+ PU1APC01FT033.mail.protection.outlook.com (10.152.252.223) with
  Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4087.27 via Frontend Transport; Fri, 30 Apr 2021 07:14:21 +0000
+ 15.20.4087.27 via Frontend Transport; Fri, 30 Apr 2021 09:37:22 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AnAhP9Vl9xAjdsnR+Byp9M5BdcFVNp9WCERWpA5ywfwyog7UAm+nVrILoq7d6Q1LBjl6NI9C2ChKAkhJV58BjIzVe6ngHA+msSpsBLSTRHh1S9xzOSrNma0L6TdLIicCrgjKiFNlrAAac2cbdIVv73/xEWb7tyepmv8fTZ2uFERBXsrOp9+hNb0aq3P8noKBFefsLM/jMqrQnoJBfOMAXjkEkkb8Qzhz1nEl7pLrOZrhrZx9jhrvFDUMJpRyS4D7SBOaJRHcaS73NbodooNi04J9LhaHbhrSGJMtEhRfZzNPIBCYoUF7QP6YVUnv45dLBnQWyO2XeJqXlU97snk6eQ==
+ b=WfbOiL9sTg2HuHr7e74vAM60SiZaRwHoilFyiZOlz2jM1fsUoenBEt47leN2Nj+boYUkrVy/1BKBi+VLE6O7BP3J+RUpdwLEIAL5t+CCpVTPekC7g3VmAZgb1meJENxCGwcUaa+aTnKnIEepCtzEdP8R4BfYXZgrqIaMW/tAL13oL2yfsoHXDc+Ky0xWBSE/XfR/14WWhMTlgfsSj8I+QF+lmQGYCSy/Ah6muRDBXJ8z0WZPouaEcd2H0GHU3XST8YpRHO3LelPhk24KPeGe+UxXZArsE+J0E6EEE1+TqJ7eMCuplot07my7A+lY4JnbiMa89UnyXXQUA8LpNkECcA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tn56leSZn7/ciwqiIyWlHVSL29MFEb8j35bPBucnF3o=;
- b=iIIuBUR5qUk7GN9W/9aTcN8ztecXoXGKhFih3YALFLIn09zbiOMCUh5d3UfzND1zZys4nA+3hSBDbrBg511lXv9baDA7f+guoZoTqXyE+tEmCrGEkkl2WxYHK9uB7h5Xa6mHHW0kLbMEiI9keUlvRTwNHEfHzfngoVfDbBhlPJA6moF0d3x+GzsBI8pRAvrUmL0ca5nn4GJrtv0WYJCCDANviyfvJpMAabdexAjWJlrzvbUlF5CBqB8lour3KHlpny3EbrH3dxPFKBznmOAVCHTNuqoObvnFUehBqSPAWGYMkLJCqK36vJKpjWwydOtL2gBeCqelZbv3sSiJ4a9Obw==
+ bh=MA7fkx7U7IM4Jdgoj6FNWWgh6ozQIERorVZMqz+kcOY=;
+ b=gS4VoeMD8pKYmMqur+gsd2TVvBoQFF2ugtF1hWLp6PQA9ysyi9vnJTpMYkewYUvjSIuz7hWMcx2jVArJmXQHzsjAxv660RYOPEekNUzcHbHu4WMaZRO8E463GLfiR4LVq6TRBMJ+LMUKVk83vk2hMYJbYdJkI46woYg/pBmdy6xKcAirt43z8FadC8dLr8ewdcJ8bSdBd9sfaeVwtGtXnidcl0QgSwSsUVYX55xFDWV1FrR1Vdie2MjggBj5SC5CGqjUa3+gAq9i77M8am7uWn26j5hsSbYN8hbNnXu0K++fljPRcyOkaMa5qDvH9/z53RkX6vEKkbIZpyQbRAx0qQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
  header.d=hcl.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tn56leSZn7/ciwqiIyWlHVSL29MFEb8j35bPBucnF3o=;
- b=hUuRH1QQ42+YtlM64uWKDntqPNhKsbaD99TDR5eNvjFglf5yD2FqHdm/M0dOKxNu4li3SKWB6JOkFX4nxTy9yDfrGpOszVALQmQZKVkXzhpQBI33fFQ8BNLqpEPJ6ZbCKk8HYZBobqVInCrGLM16hHju3GT3p3YZytHcUHVOoe2cHbz78gZHJsPC9T1BXjBeMsl8cgJLwVaduXgHb+ztXGvhEl6/3CB/XSYIQT4kbxgSHInzUlf8rqPQksUjdPDU+RCw73CT3CH/oAutCbwbnlzVZjvNiTuXoPlww/YH/l/zpbU6CVzMQBAq5BcdyqyJkbrKc8yAu+vHzqnpHQNFJg==
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
- SG2PR04MB3561.apcprd04.prod.outlook.com (2603:1096:4:a0::10) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4087.26; Fri, 30 Apr 2021 07:14:20 +0000
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::54f8:a70d:5570:fac9]) by SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::54f8:a70d:5570:fac9%6]) with mapi id 15.20.4065.031; Fri, 30 Apr 2021
- 07:14:19 +0000
-From: Jayashree D <jayashree-d@hcl.com>
+ bh=MA7fkx7U7IM4Jdgoj6FNWWgh6ozQIERorVZMqz+kcOY=;
+ b=J0mTFkTDatOHSwF47SfBcqPGSnHyzLN4ozCgibGVC/+BXZA8r3j8bw0BDTwAxJGoor/wbb2dsdzIc5BDu5++RoQMkwGt3YsbDOgJLy99o8WTsAXBy9/QQpreROuSPsxZt5d26F/HUVrsuFqs8sZiChNvxwkokL/REoPHqvJzbFcevdy/9OD3tYyflTBX/8SApaOpjuw2hPDQh/8svGZm6v0LsSW9RIgovxh5sa5SCQLnD3QrQgn+RisEf74rG5AYoL4lo6/YLAkiJ7yRkVSukfaN/HZyn5dTsJMx2t5qioTr2atuMR6rmBnqQu14wPU7JJPf8Nwg3kAV3B9smN78/A==
+Received: from HK0PR04MB2964.apcprd04.prod.outlook.com (2603:1096:203:5d::15)
+ by HK2PR04MB3521.apcprd04.prod.outlook.com (2603:1096:202:3f::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4065.25; Fri, 30 Apr
+ 2021 09:37:18 +0000
+Received: from HK0PR04MB2964.apcprd04.prod.outlook.com
+ ([fe80::2c97:c270:68a3:2fb2]) by HK0PR04MB2964.apcprd04.prod.outlook.com
+ ([fe80::2c97:c270:68a3:2fb2%4]) with mapi id 15.20.4065.033; Fri, 30 Apr 2021
+ 09:37:17 +0000
+From: Kumar Thangavel <thangavel.k@hcl.com>
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Issue in displaying hardware name using Redfish
-Thread-Topic: Issue in displaying hardware name using Redfish
-Thread-Index: Adc9faE074rZmKWfSR+zByZ0gUXogg==
-Date: Fri, 30 Apr 2021 07:14:19 +0000
-Message-ID: <SG2PR04MB3093D4832CB9DFE036DAA41DE15E9@SG2PR04MB3093.apcprd04.prod.outlook.com>
-Accept-Language: en-US
+Subject: Include sensor monitor for our platform
+Thread-Topic: Include sensor monitor for our platform
+Thread-Index: Adc9o96EIrVJD470RVytXsEFBmz39g==
+Date: Fri, 30 Apr 2021 09:37:17 +0000
+Message-ID: <HK0PR04MB2964D4D925F6883DF2342D48FD5E9@HK0PR04MB2964.apcprd04.prod.outlook.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiYzFhNTY1ODktY2U1OC00MGExLWJhM2UtNzVjZTkzMjNiODdjIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX1B1YmwxYyJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6InZcL1FLUGE2RW1XNXZhS1JVRTVzdnEzc0l3UnBHR2Z6TzZMMWRHdlFub2pJQVpuY0M0dU51a2R0SEVUVXowRW1qIn0=
-x-hclclassification: HCL_Cla5s_Publ1c
+x-hclclassification: HCL_Cla5s_C0nf1dent1al
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiNzkyM2M1ZDctY2ZhYS00Y2Q5LWEyMzctM2I1YTA3ZWNhYWVkIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX0MwbmYxZGVudDFhbCJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6IlRuU2tnNzVBV0lQQ3cxQzBRRWR1N1QzY1NwbU5MVnJGKzNBaGdQZUJKT0FKQWE5dUJuMVg1K1VVenl3YlJZajMifQ==
 Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
  signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
  header.from=hcl.com;
-x-originating-ip: [2409:4072:649f:2e7d:191e:6879:2074:5ad8]
+x-originating-ip: [106.211.243.210]
 x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: 65c5b6e7-187a-43df-71ff-08d90ba79439
-x-ms-traffictypediagnostic: SG2PR04MB3561:|KL1PR0401MB4178:
-X-Microsoft-Antispam-PRVS: <KL1PR0401MB4178C39586A7F86F6DA7664CE15E9@KL1PR0401MB4178.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;OLM:6430;
+X-MS-Office365-Filtering-Correlation-Id: 695ba97c-51c2-4a96-8f2b-08d90bbb8e99
+x-ms-traffictypediagnostic: HK2PR04MB3521:|PSAPR04MB4487:
+x-ms-exchange-transport-forked: True
+X-Microsoft-Antispam-PRVS: <PSAPR04MB448709F101674BF6EC77ED12FD5E9@PSAPR04MB4487.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;OLM:6430;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: /dXzXlo5ghIiZOKfmqGYUyqdz19sALqyPAy7I4Z0IAKV5eJ+B4RisYVdKuqYVKbuIC8Tl6TIq3+rXB8NpRW0FTeHZf6pwsFmVzmCDACIUm/fXTzI9rH1jnc24V/V161wNNTE9A4xqV0OlM4FYSivB25mdr90y2ts6Fr+9OTRDkt5KOr+qePCBNQHee2tYY+AiyTq/EcR5dBGxb6QBmM4JaNd67NnB/q4vg5kiAUElwxUBMXBG8qtCRu7e0TX4HRUDCtMTYq1NBsss+mpfh6P5lWA2Qq/F+5VIP0O8+30uLHm+rlvOoHnBXdFy86Ovqdmbmp+pa+eHM+dMCjjPm+d6SrfPBSTX6xxe6psgc0eFJN3kyQ4kUiInNtaLzOnRYrnlWe9ZXDl+rYT9TkNTOzoqyO29bq7Z+TSaWQ3o8Hqi17KtXLNepSCr40MFGeNhTuqgsRvZb7r4Vo+Brp3XhNie9xhL7ySwHgjEUuYmi8lN4NsEHVHG5y67DjoMDm+iBeOT2FcnUezv/t3uzCIXWIxEthD1jny8nnkG5UsnyXPcyCe2fdi0YxxgPh1SOp4NylU9aV9O36noBav2g+AcMxFv84S45I2KHPdZ3RQ20nfI68=
+X-Microsoft-Antispam-Message-Info-Original: Xv1Uavw8PH++nydZyG7f3ipidufOUf/dXsF2MSZqRT/OGRgMWh3vNRaa5WxBodY7PwHagFL+4iHu/tvJqp5F96VzXxK6jvdaAv58aYqYObw4f0Tffp8ihwCqY000oSAaaepMaeKCJKZx9pJDIsJJfg3TV6CMKUqLIX7K8krgWtFW3Abqbd1gHCnbUEi4dlN6/tmveOyY044k57HOQI7QLol50MWtlTdOyKGCXOlXoBVW0LTNmyEcqOkhWmKXIGMs+T8/Jm7tPfp4HAM+nt9iJ/femnXaR8M+A4DANy3vxGW6dfSq6K0uifjDCoTJS9u2IgydG3M4k8Wzuhje/N9CVo8HdaNkZU2PAOaVw7WHUjysJW/UnudOkvdbj6CoHIN0sW8ubGZqVdAHf4Iwp+GJKQtiU06oq7TOmXiIf1YcKbAzRKutBgWKJP2KemACSHJBRR9V+BexoJOdxBLHV6g3G6n25zOVXf3NTLdkk/8C/sezM3x7Xdx6IsnCpMqtv9GwNZlSkQv8eWA350GkmzjCsWPZLHgQkkW0YBuWBCL2PEhHpWCj/55ouI+xrk6ws78rdjXPSvF+TPE13OWQhP4EjYMmVpzZYPi3OrnRqnKq0L0=
 X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
+ SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:HK0PR04MB2964.apcprd04.prod.outlook.com;
  PTR:; CAT:NONE;
- SFS:(4636009)(376002)(366004)(346002)(136003)(396003)(39860400002)(86362001)(122000001)(6506007)(38100700002)(316002)(7696005)(52536014)(66446008)(66556008)(186003)(66476007)(5660300002)(64756008)(966005)(33656002)(6916009)(2906002)(9686003)(55016002)(8676002)(83380400001)(71200400001)(76116006)(66946007)(478600001)(8936002);
+ SFS:(4636009)(39860400002)(376002)(366004)(396003)(346002)(136003)(6916009)(4326008)(83380400001)(55236004)(52536014)(2906002)(26005)(478600001)(7696005)(316002)(186003)(9686003)(55016002)(71200400001)(76116006)(6506007)(66476007)(54906003)(66446008)(64756008)(66556008)(8936002)(38100700002)(66946007)(8676002)(5660300002)(33656002)(86362001)(122000001);
  DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?MTDRQBYXx5Wi9xFy6MTeQ0VOi7/LH3QbmylHc1rmLnGJTgFjQUQagapZ0zXU?=
- =?us-ascii?Q?53grcsGJOy2FOXtW7WXT6tZ43D30dnQbuCgdyCC7G4YylhLT/MZEvkCWxjxl?=
- =?us-ascii?Q?v+WH5RWJKS/sAmPcqV9QRTIuE88/DoXKEmiG/ve6ZSHGr+A7Fzhm46gYFug5?=
- =?us-ascii?Q?yJ3U35ujChZaxAmYDOu+gYsbYulGdYUM2jHtlAauzrFMhnBFO1vF59H8CAYP?=
- =?us-ascii?Q?mGAfElM/92s0uFQvyCk2QNRH2yj0vhNJHSDgZqZu+nuXuKtStQcFAMIAROrS?=
- =?us-ascii?Q?Ga8fBMZ4+OhQUq6uQvfWqtlDB7Uz8adv7BVrsA3EDtFOWL2XanMyW7hmhqwN?=
- =?us-ascii?Q?02LJeJozqeAc6QVCxCCIolnmGEnTcneO2IWm1f77MT0dg+Us9FtWPMm0rzBV?=
- =?us-ascii?Q?4KxreF8SCuZ0IR8v8RtmLXnnRcc8j9s/4egRGYS4Btd/bhoKdFU+QtN8q79g?=
- =?us-ascii?Q?iq5XxaXu45EQACqNEfupZm7D51edUYfDJZTu6qLHW9NACI3rVy52FC6n5V6H?=
- =?us-ascii?Q?nhwxx8iJEnqDrfodFx7YuN9fGCLno4K6iQ8RYflYlFrEfhfokizlCNq0gT8B?=
- =?us-ascii?Q?QnNEzFf/EYbo3VP5VTAG76O7h0acvLzOORVVk/iQwvjyIX0zF4X8zZpa9lRG?=
- =?us-ascii?Q?BxD+QCgguAPZsRJHcF34dxfhayU5sUCvOpYzjUNd9lBugbuW8AC7q7WzNJoW?=
- =?us-ascii?Q?8iPzGe2aUbpMKrrVRckzDLmRUg4NvSSe9mfzpgSWf5OVO/2HiFYthgzQdA4y?=
- =?us-ascii?Q?m9lsc1/8uw8rw3gTVjCR74tWKeGEDX704rcn5AfUrP4I/Sd8/iTMSxFthMk/?=
- =?us-ascii?Q?eoUcX385XgYuSgaz46ksEPdBt8o3LbG30ukf+cVK6omYiMuKF7ppOfEwymC+?=
- =?us-ascii?Q?sc791vwnxXX+HvlOqCSKB+Fw0lPzoHN8XWKULIllgqfkqlVQzZ2QCbUl5ifT?=
- =?us-ascii?Q?AGKik30eSmKHAUoips+L0a58hWKwUrps7i367JK5osZLCWtOrvjP5RrtBNbt?=
- =?us-ascii?Q?AZ5ODJQyGzK1Qz2xBP53lgA9Xs6X3s3bjcSd3mooShSCf3wCTVn0qRykf9ZN?=
- =?us-ascii?Q?EvvFNOo+GPnU2ZL9woOXk31zlrUuL/lcI1GzncF9KH4x0UPyfbZLnw8zpmHH?=
- =?us-ascii?Q?SyUhXCjz3sBy5/g3CaoaQ1OTuNr7gXtRrpuEkOgXLzHS3d0MAinDXxRKqBQY?=
- =?us-ascii?Q?gb7mBUDR770baWj0Z9oyE9RyB7xNkRiz3LTtnuGSlVC5v85EwTic6gBjzdxt?=
- =?us-ascii?Q?CZnvyEtDfpn11uyFOrXp7KHXOgd74L/sY+SBgNyzy5ArT1fbwIW0dy56MOjb?=
- =?us-ascii?Q?jQ5IS24IJLDwpAl4fMs2r8zRB0Uidh3UR4I+fTl705znmdWU2jcRLU7JeRXt?=
- =?us-ascii?Q?igtR/k92CQvNJRhIQYvFSe+Qrkrb?=
-x-ms-exchange-transport-forked: True
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?wxu5BRlyTpu4/v7IeAQhsRWUImQu0rolhXF4s7BEq7u9/g6T2U2eycr0xViU?=
+ =?us-ascii?Q?JmfGPKenkdIenqHgqpQiETD1qt/Uza6PBZh65ahcgqDEVQAa0qEmmcI6jD3L?=
+ =?us-ascii?Q?V/nCAAiEJa6KkO9APk5fQtFGxPsKymXdw4lQMQz47PCMDOAz6ucZc/VgF0zJ?=
+ =?us-ascii?Q?xdiwHBSgwnn7aQqAJguWTEjaP7fc40O+CxnpoJdQhmdQybL5WV3PkqIUagTk?=
+ =?us-ascii?Q?o03Rs4QfwQtBxhj1cy6kOJT1oqGB5WX/U9tBB7BddvBonHfrooFR6XkBLeeE?=
+ =?us-ascii?Q?vpFT7cZKmugnaX4m3qweVeWu27TiZzhFcFB+jMHj6RFx0EqPkfUaYm7K0Lto?=
+ =?us-ascii?Q?GeTjWWnETIbhg06Ohgr4JP/nrmjR+gEnRAcnrdgi8TB1MM20xSh0L67ov9ss?=
+ =?us-ascii?Q?j71dShRhUkPrP/lPt+g0yYdTt1XbfiW3gWrElL0rBmWrwSmSY22sgjbWrCZU?=
+ =?us-ascii?Q?Td9lzbfWQDORlBvj9m1TT/Sep5rQrMcc45XKo61+4TxxrvB0TwXgfAM2m4rQ?=
+ =?us-ascii?Q?15IqNoiaGket9Jga6SJnzYmrxrhyaV2FqyTwGyTo0uLJxlsH+4MvOUTQ43z2?=
+ =?us-ascii?Q?5AxFKm65M//JokyM3pIHT5uIqcWbl9AoPCFkpxKiTufkGuOlG4XEu5DdYzH3?=
+ =?us-ascii?Q?9atLaFBhv9aV4innXlGaYvlOZJ5Q2ax3nyWUhhX0SOkTxmGNvchHihBBxTrs?=
+ =?us-ascii?Q?ZYmcQlssLpH903mxtVo8TTBaRIumxNyMGvEktD7oJsFLQIiOw84Gt4WBeJok?=
+ =?us-ascii?Q?cPvcN35l7yDJX1h+eImyn4IZOsF04lS2JaZGTtopyljMNRirAnbLEYBVmyLN?=
+ =?us-ascii?Q?A7VAj/rxrHV4DvDxu5vX3MbtbZAsc2wu7UIs03FNBPifVOJ6MnDAF/i7S9kI?=
+ =?us-ascii?Q?NI+KIzrFPptW6el0v/fE3MaeAqm7t2Wwu8vxRY2dFweBoxs0HVfZtYM869Ze?=
+ =?us-ascii?Q?FcbAWNG91k9GZf2WhjWz8Eork7EI0nKbMOQ0BNPylfuGUpnIYqKzS9dNLRJt?=
+ =?us-ascii?Q?D4NqUIewGhvmN+itWCnDEJMpl6ZbTCJ2ZBNNk4BXZrvJ4Wty1Fck3tIduXyr?=
+ =?us-ascii?Q?x19Hg+15lpISSIKg1TwR3OSJ7lF5d3bBLv2s3wW8t3FEGaYIJmJcwynKLqlD?=
+ =?us-ascii?Q?GL64Wt+Mcyd46LNrMeG2hrSobFRAksBxAiOAGgJ/2rb8hewMnZLmzHGu1sA6?=
+ =?us-ascii?Q?SIH/bo4916ipDsD0XRmXNS8+9zT0KIF8NEToveyht5//eoZGGryO4H/nKLnh?=
+ =?us-ascii?Q?r08kTSottGpatdwgdfg4lARog4BozbT5apktHLWHFloAHXtKS9Y7gAcWQYZ8?=
+ =?us-ascii?Q?ZykXUPW6UmAaoHQkoZUuvAXQ?=
 Content-Type: multipart/alternative;
- boundary="_000_SG2PR04MB3093D4832CB9DFE036DAA41DE15E9SG2PR04MB3093apcp_"
+ boundary="_000_HK0PR04MB2964D4D925F6883DF2342D48FD5E9HK0PR04MB2964apcp_"
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB3561
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR04MB3521
 X-DLP: MSGProcess
 X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: HK2APC01FT024.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: c8c84421-6ae5-466a-461e-08d90ba792c6
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: PU1APC01FT033.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: c42f662d-0a1d-46e8-2d03-08d90bbb8baf
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: BhmogCoKawWEWAF0fNZsoCNAua5rZs80rVS+hslJPUtfcpBBTmqBByiTSm4U7vywXtUqWnZvpsLxOyUx/GuFMbYqQjpgykBYMHneo/4gdGvpMK99GpPQObxxM+1KSh07+gOi1zadNVs9MKpvjcxvjsM4QZj1Iu34sLktAuLvcqgUK5cBObqEsN4HGt1YpDcO9w/wlMEecnLdv5me8cee7yS1VaYlD0hnqgSMfHhwjheezo9P7K4ClkySdDOT4ZyPUDR1oyFoE6Gb0P3dnfAK+ECzUQcofZNIDYRMjlf4fdOHm9kZNmzUMJ6PBZlU1B1tCSjYm73NwhXF7kFfIyPYy4OF/MWNOSYePXfU+WfQ1sT6DH8qGRI4mAB966lsE+kZQxRZoY/acB3QfhWQAA57Ju7+QnGU1VVo47D0ImuBj4MYwMgrqY1uBMyp4Jq8TwhcF/JXrhSGaBca5Yrz9YltPGZDQn4E3dLF0Omxv03+1YKkpIvQdbcbL/F/VFi2ZQizGy0nc0TAME6uzSq+TMXpCraF+DL9PIn6nDSRWoPH5yzq/uL7Hk2wgYqvIhm6OEkz5TRnW/wRMvp5PcPkoo03EsUq1yNHDYNWqm93UITTZCK8hfHi59QRUxwzMjZRgc8o0SN47x33QobAjyCY7wN+fwJVDPXd5AoHBdeKsgotKRSsGPcBP0aHrbJyKGTnS55IUw+/LxZm8vDuGlJMAU8VTjJ0oJAMmpyvAft9zAATUbg=
-X-Forefront-Antispam-Report: CIP:192.8.245.51; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-SG2-obe.outbound.protection.outlook.com;
+X-Microsoft-Antispam-Message-Info: Vd+gJH/C0BaRmbdvsFsI+D/Wwu1fmafJu33xqAp7Yl5L1OX3soeifruXWJ91sPriY4kvqphIjPNwcN1aWB4u/Z8K+MlaiZJUjAGJ3hij7HEFsG6Ga0ImpBl64Oxsl7UC30ytQCYHdnfWGq0b/vltT0nQ4649tQvCqj7wHmytrH/v1rQguvTU2TvrGfq45uoFvKluynfmEouquo47oqhjRhMgH7pIWhngLu33WK/d2/wyLGTTkiaBftwAF0vfFSPiTDnYH9nAqzmkHgtj0GFI2ECHALuH4sI617yA2KmqVm3nBB2ArYM2anzjcyg7MGnvkMABOxXKCDVVHlDLn1wasA5dwGscJ/k9gK6OUzZRnZE9jofH81ysPdBBV8svQ5TaGnhk/5S/ScpyM92lAWSpZzlo4s8MrChXAqNYNnV5nPV8nRIkTKc6Tsj+LDJ/PMeqAj/Q7zyGphW+Qkqpx5hcYPIqSLrfh0JrXsdS4JV4sG6yCE5ihLXk1DkuvxecVda/YUGKgolC2+nknXQwlob3dvmYm9WhZsmIUsHLs5VHI4BfltvIxzNcd7AdkpAYF9xGfrOOW0Yd7jzMZ+1N1v+F+dNAAfJGKQr5EC7+9MbKlQD0iJ0r3rPvQHurJAiqc8HGfJm0t4Z2KUfzcEEajIYLzPvrtr3cca9HeJ6y9+rQdT7IeAaj1EnaIbBlPiYp5m5vj4NXSTS7nwDNFqKCC6Kq/h4t2hffi0FYljc36qSaCcs=
+X-Forefront-Antispam-Report: CIP:192.8.245.53; CTRY:IN; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:APC01-HK2-obe.outbound.protection.outlook.com;
  PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(376002)(39860400002)(136003)(346002)(396003)(46966006)(36840700001)(81166007)(47076005)(2906002)(8676002)(8936002)(966005)(5660300002)(34020700004)(7696005)(83380400001)(478600001)(33656002)(316002)(82740400003)(86362001)(356005)(70206006)(186003)(55016002)(9686003)(82310400003)(36906005)(6506007)(336012)(52536014)(6916009)(36860700001)(70586007)(26005)(36900700001);
+ SFS:(4636009)(346002)(376002)(39860400002)(396003)(136003)(46966006)(36840700001)(478600001)(86362001)(52536014)(55016002)(8936002)(47076005)(316002)(4326008)(54906003)(36860700001)(5660300002)(9686003)(7696005)(6916009)(2906002)(36906005)(55236004)(186003)(82310400003)(82740400003)(83380400001)(34020700004)(81166007)(6506007)(33656002)(8676002)(356005)(336012)(26005)(70586007)(70206006)(36900700001);
  DIR:OUT; SFP:1102; 
 X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Apr 2021 07:14:21.9425 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 65c5b6e7-187a-43df-71ff-08d90ba79439
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Apr 2021 09:37:22.2736 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 695ba97c-51c2-4a96-8f2b-08d90bbb8e99
 X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.51];
- Helo=[APC01-SG2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: HK2APC01FT024.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.53];
+ Helo=[APC01-HK2-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT033.eop-APC01.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR0401MB4178
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PSAPR04MB4487
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -169,37 +168,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
+ Amithash Prasad <amithash@fb.com>,
+ Manish Kumar Thakur <manishkumar-thakur@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_SG2PR04MB3093D4832CB9DFE036DAA41DE15E9SG2PR04MB3093apcp_
+--_000_HK0PR04MB2964D4D925F6883DF2342D48FD5E9HK0PR04MB2964apcp_
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-Classification: Public
-Hi Team,
+Classification: Confidential
+Hi All,
 
-I am using Redfish commands to verify the details of sensor and hardware.
-But I am getting the hardware name as "TiogaPass\ufffdseboard" instead of "=
-TiogaPass_Baseboard".
+          We wanted to enable the sensor monitors like "ShutdownAlaramMonit=
+or" and "ThesholdAlaramLogger" to our system to monitor the sensor values o=
+f our fan.
+           These monitors were created under phosphor-fan-presence.
 
-curl -k -H "X-Auth-Token: $token" https://${bmc}/redfish/v1/Chassis
-{
-  "@odata.id": "/redfish/v1/Chassis",
-  "@odata.type": "#ChassisCollection.ChassisCollection",
-  "Members": [
-    {
-      "@odata.id": "/redfish/v1/Chassis/TiogaPass\ufffdseboard"
-    }
-  ],
-  "Members@odata.count": 1,
-  "Name": "Chassis Collection"
-}
-
-Could you please provide suggestions on this.
+           We did not have any bbappend files for phosphor-fan-presence. We=
+ enabled the fan feature using phosphor-pid-control.
+           So, Could you please provide any pointers or examples to enable =
+this feature for our platform.
 
 Thanks,
-Jayashree
+Kumar.
 ::DISCLAIMER::
 ________________________________
 The contents of this e-mail and any attachment(s) are confidential and inte=
@@ -218,7 +211,7 @@ y prohibited. If you have received this email in error please delete it and=
 , please check them for viruses and other defects.
 ________________________________
 
---_000_SG2PR04MB3093D4832CB9DFE036DAA41DE15E9SG2PR04MB3093apcp_
+--_000_HK0PR04MB2964D4D925F6883DF2342D48FD5E9HK0PR04MB2964apcp_
 Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
@@ -232,6 +225,9 @@ xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
 <meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
 <style><!--
 /* Font Definitions */
+@font-face
+	{font-family:Latha;
+	panose-1:2 0 4 0 0 0 0 0 0 0;}
 @font-face
 	{font-family:"Cambria Math";
 	panose-1:2 4 5 3 5 4 6 3 2 4;}
@@ -274,40 +270,29 @@ div.WordSection1
 <body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
 <div class=3D"WordSection1">
 <p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
-pan style=3D"color:green">Public</span></b><span style=3D"font-size:12.0pt"=
-><o:p></o:p></span></p>
-<p class=3D"MsoNormal">Hi Team, <o:p></o:p></p>
+pan style=3D"color:#B45F04">Confidential</span></b><span style=3D"font-size=
+:12.0pt"><o:p></o:p></span></p>
+<p class=3D"MsoNormal">Hi All,<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I am using Redfish commands to verify the details of=
- sensor and hardware.<o:p></o:p></p>
-<p class=3D"MsoNormal">But I am getting the hardware name as &#8220;TiogaPa=
-ss\ufffdseboard&#8221; instead of &#8220;TiogaPass_Baseboard&#8221;.<o:p></=
-o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">curl -k -H &quot;X-Auth-Token: $token&quot; https://=
-${bmc}/redfish/v1/Chassis<o:p></o:p></p>
-<p class=3D"MsoNormal">{<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; &quot;@odata.id&quot;: &quot;/redfish/v1/Chas=
-sis&quot;,<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; &quot;@odata.type&quot;: &quot;#ChassisCollec=
-tion.ChassisCollection&quot;,<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; &quot;Members&quot;: [<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; {<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;@odata.id&quot;=
-: &quot;/redfish/v1/Chassis/TiogaPass\ufffdseboard&quot;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; }<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; ],<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; &quot;Members@odata.count&quot;: 1,<o:p></o:p=
-></p>
-<p class=3D"MsoNormal">&nbsp; &quot;Name&quot;: &quot;Chassis Collection&qu=
-ot;<o:p></o:p></p>
-<p class=3D"MsoNormal">}<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Could you please provide suggestions on this.<o:p></=
-o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;We wanted to enable the sensor monitors like &#8220;ShutdownAlaramM=
+onitor&#8221; and &#8220;ThesholdAlaramLogger&#8221; to our system to
+<span style=3D"color:black">monitor the sensor values of our fan</span>. <o=
+:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;These monitors were created under phosphor-fan-presence.
+<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;We did not have any bbappend files for phosphor-fan-presence.=
+ We enabled the fan feature using phosphor-pid-control.<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp; So, Could you please provide any pointers or examples to enable th=
+is feature for our platform.
+<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
 <p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
-<p class=3D"MsoNormal">Jayashree<o:p></o:p></p>
+<p class=3D"MsoNormal">Kumar.<o:p></o:p></p>
 </div>
 <font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
 <hr>
@@ -332,4 +317,4 @@ ses and other defects.<br>
 </body>
 </html>
 
---_000_SG2PR04MB3093D4832CB9DFE036DAA41DE15E9SG2PR04MB3093apcp_--
+--_000_HK0PR04MB2964D4D925F6883DF2342D48FD5E9HK0PR04MB2964apcp_--
