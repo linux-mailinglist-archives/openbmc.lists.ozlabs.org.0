@@ -2,93 +2,163 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4F3836FC5A
-	for <lists+openbmc@lfdr.de>; Fri, 30 Apr 2021 16:27:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D8DB136FC5E
+	for <lists+openbmc@lfdr.de>; Fri, 30 Apr 2021 16:28:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FWvp45YSgz304Q
-	for <lists+openbmc@lfdr.de>; Sat,  1 May 2021 00:27:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FWvqL6kZ6z2yxT
+	for <lists+openbmc@lfdr.de>; Sat,  1 May 2021 00:28:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=ma+F8ex0;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=kOVGolb8;
+	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=bOkirizv;
+	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=bOkirizv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
+ (client-ip=40.107.132.95; helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=thangavel.k@hcl.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=ma+F8ex0; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=kOVGolb8; 
+ unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
+ header.s=selector2 header.b=bOkirizv; 
+ dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM
+ header.a=rsa-sha256 header.s=selector2 header.b=bOkirizv; 
  dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320095.outbound.protection.outlook.com [40.107.132.95])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FWvnR2vFfz3001
- for <openbmc@lists.ozlabs.org>; Sat,  1 May 2021 00:26:35 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 0238D5C00A7;
- Fri, 30 Apr 2021 10:26:33 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Fri, 30 Apr 2021 10:26:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=HNQoBNJkOss8Nz8+K0E82uCpfEn
- X3WI9bsrpgZ6tsgY=; b=ma+F8ex06nO/mCuMBQ/9I94TCMCv8nIPB8Bpe9y4IKN
- /pHX2a9rPHkFU1AYayw8pwuBFgKmolbRKW0aeUvtg60CN6AouxZ8G0wGDX31cOZG
- qwlJ9X2dP3tUphHU9DtUHbtacxtdloBm9Us4meKxFUN9H5bMrBsculYh6R4syU/f
- VF/HP4RBfdBemlsjv+RFEkqpFfDOuzuDXVP4SAVsXXVFnPwm7LQJwCFrqtn/gTqw
- fA6NbppnhzYaprN/i6xLaciAnLRt/kx6cUoJ7AS+mm81mqxat+v0itbMvP7WS2hm
- yEZIQPZo5McdVNN0CybkXz+a5CxK7FgsDoQkfE2ob4Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=HNQoBN
- JkOss8Nz8+K0E82uCpfEnX3WI9bsrpgZ6tsgY=; b=kOVGolb8SNHAqwTJA4ypnC
- DDDsY9VLW4l3rtpfN6wSveDvKW51KPF5xMzs2yuiWF8zMcdkMY/egk17jYJQLb+v
- Kp+PRU/7JIYWpQyRLtWEbCwUoezfELAiNSSSTHFB8XvoLlcvO2Tz3x5D9eEGZCge
- pl7tNO/MczxjYOPM2bBJepAKTnGQVORHoerBLVLkKZwWFW12QEX/c4q00ZVoMNVx
- qcJ1z8pYecpABE8ixEH2crp2w10Xz8Opz1gOVNmRMzDuGU0SdeN4RH4UQWDBMW29
- hs31uffuYK8+VvtZEH9rAiH/UdtWwIlWH8oqSidsbOM3NusBwD67L3skVF677j4A
- ==
-X-ME-Sender: <xms:mBOMYMsjElaFgYSHSYcmQcKUy5o1li7WW5dLTa5BdKy1AFNRPJu24Q>
- <xme:mBOMYJe7-0Iw1g9U5epypoTITlXEve89In3PdO2WlGLyIQZGbBp3VRQVjIlhnM7he
- zn8PPVvknCeFhaM-jQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddviedgjeejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpeffhf
- fvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
- ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
- epgeehheefffegkeevhedthffgudfhgeefgfdthefhkedtleffveekgfeuffehtdeinecu
- kfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
- hrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:mBOMYHzhTIidlYTyUKehppWubKCLiUWOTX82S9xRKsDWCqUM0HFi5w>
- <xmx:mBOMYPPVhMb3Nu2v6hFiFllHS6hwEzhE2YP1XkHgQOO-tCWXPZHJ8g>
- <xmx:mBOMYM8uDxHdzN-Etw6fcHBNaIjtPNbPGpHiRzXWi6ll5xhw6HeZlA>
- <xmx:mBOMYFIqjVHasE7rw3Fkd4on8IgqrwILi9V9mf2CksztUCgwd_lyXg>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236]) by mail.messagingengine.com (Postfix) with ESMTPA;
- Fri, 30 Apr 2021 10:26:32 -0400 (EDT)
-Date: Fri, 30 Apr 2021 09:26:31 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Mike Jones <proclivis@gmail.com>
-Subject: Re: PMC
-Message-ID: <YIwTlxp0a/c+LO64@heinlein>
-References: <YILLjQfgD4Q2vH5L@heinlein>
- <31F00F60-DF2D-40FB-A9BC-85538975398D@gmail.com>
- <1F0D01CD-2A39-49B3-9E63-DDFCA3371672@gmail.com>
- <YIMBmRyyjcchQFhA@heinlein>
- <845C5760-C7CA-4ACB-A465-63BF0EA851DB@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FWvq34mqkz2xb2
+ for <openbmc@lists.ozlabs.org>; Sat,  1 May 2021 00:27:58 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xepSPu6cJmZOGaz8jICUH22/ctNJL+CYYNWpgDwqqN4=;
+ b=bOkirizvVqPRrwLFZSUQm3fndLbiMf+mb6ORmG950hqpVScvtcUtrKRW8LCK4QYGNRpERMdF4RosPIMEmhqHMgz718u653UlDpLznlzo5CRgdZPRFFDLdGMg+D//b7kFpaWfVlR9E2Ikidwg+hE9JyPmf9B7YM0U+v8antgWs5d47oBBqwl1viQ1Xsensl3oas3IGMJeSMcfeZmHrNzQawP/ajb4lpX+s3ofV0B5fuHaFWJKqoa7OJKaiZd4vuzUetpQDwHTSfOAJFroDzspoFYGiOT0Gvfx/7kWdgopN70CGPCESLkq9hV3U8HDo61w3hfjJGN6JO9Vc4SBJrhQJg==
+Received: from SLXP216CA0017.KORP216.PROD.OUTLOOK.COM (2603:1096:100:6::27) by
+ KL1PR0401MB4498.apcprd04.prod.outlook.com (2603:1096:820:56::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4065.21; Fri, 30 Apr
+ 2021 14:27:52 +0000
+Received: from PU1APC01FT047.eop-APC01.prod.protection.outlook.com
+ (2603:1096:100:6:cafe::a3) by SLXP216CA0017.outlook.office365.com
+ (2603:1096:100:6::27) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4065.25 via Frontend
+ Transport; Fri, 30 Apr 2021 14:27:52 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.195.59)
+ smtp.mailfrom=hcl.com; stwcx.xyz; dkim=pass (signature was verified)
+ header.d=HCL.COM;stwcx.xyz; dmarc=pass action=none header.from=hcl.com;
+Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
+ 192.8.195.59 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.195.59; helo=APC01-SG2-obe.outbound.protection.outlook.com;
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (192.8.195.59) by
+ PU1APC01FT047.mail.protection.outlook.com (10.152.253.23) with
+ Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4087.27 via Frontend Transport; Fri, 30 Apr 2021 14:27:51 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VYfeWjZXHuCJ6Dz6+YKnuZrhaizThhzSZi3WPhDtofnaniAXRWNUFG6mWDDWh8vOuxI4wwrmRKUdC5i6cg/QyNOcIi0ujDAwM+rtvu4gC9O7xqO6v2n7bxEs+OKmD+Ow9Vkk2HGFFkOeEPp/Udk4owr5N7W4tzcatDIQhdfI4G1qR1xeSg7Z24TNFfHGNXPHwT5P3aztZpUb0xL5PAKh/YqxsL+49Ad3jqdY7+vJA16uvp1qCii38hk8KFeutqKPB+2jJXEwLNafKmeoGh+oEBvFluyHupWpgpzhQbOJR/pIAJFFltLVSyf3o/V1nEhWH+USpjEZ4/mwZ2nxhF2VMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xepSPu6cJmZOGaz8jICUH22/ctNJL+CYYNWpgDwqqN4=;
+ b=Bhzn7UJiBHzFCPkyxBdUWi2F0ChSEF2l6xX+w4kVTrt3+t3TBsch6sWCi9dMB3FrgG+vPGyCNSvEXQTHMhG8WMvZ5ZIU+7aVJcD0ys1TQi26lpcLB2/HpSaTFIz2z1re+OFFENAr7rqf2VVGjzTMaadvSo36UlB66oMnYnjY/6TGvsbVopjzgDFfdrWzEAANRvDJ3cvP886oEwQZKuWkmfUOEamRKH40f/tt4Y2Cjgdl2j0CIg0MmVoU4UP47iLzjL0GJpbJrN3Z34e3KF2UftqefrppAzFITx9jn/Fl0xfUzfKkWJpzCygmkq9pm7gtvyvQzEA48Ua/EgYUzGtbtw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
+ header.d=hcl.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xepSPu6cJmZOGaz8jICUH22/ctNJL+CYYNWpgDwqqN4=;
+ b=bOkirizvVqPRrwLFZSUQm3fndLbiMf+mb6ORmG950hqpVScvtcUtrKRW8LCK4QYGNRpERMdF4RosPIMEmhqHMgz718u653UlDpLznlzo5CRgdZPRFFDLdGMg+D//b7kFpaWfVlR9E2Ikidwg+hE9JyPmf9B7YM0U+v8antgWs5d47oBBqwl1viQ1Xsensl3oas3IGMJeSMcfeZmHrNzQawP/ajb4lpX+s3ofV0B5fuHaFWJKqoa7OJKaiZd4vuzUetpQDwHTSfOAJFroDzspoFYGiOT0Gvfx/7kWdgopN70CGPCESLkq9hV3U8HDo61w3hfjJGN6JO9Vc4SBJrhQJg==
+Received: from HK0PR04MB2964.apcprd04.prod.outlook.com (2603:1096:203:5d::15)
+ by HK2PR0401MB2161.apcprd04.prod.outlook.com (2603:1096:202:d::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4065.26; Fri, 30 Apr
+ 2021 14:27:49 +0000
+Received: from HK0PR04MB2964.apcprd04.prod.outlook.com
+ ([fe80::2c97:c270:68a3:2fb2]) by HK0PR04MB2964.apcprd04.prod.outlook.com
+ ([fe80::2c97:c270:68a3:2fb2%4]) with mapi id 15.20.4065.033; Fri, 30 Apr 2021
+ 14:27:48 +0000
+From: Kumar Thangavel <thangavel.k@hcl.com>
+To: Patrick Williams <patrick@stwcx.xyz>, Matthew Barth
+ <msbarth@linux.ibm.com>, "M:  Matt Spinler" <spinler@us.ibm.com>
+Subject: RE: Include sensor monitor for our platform
+Thread-Topic: Include sensor monitor for our platform
+Thread-Index: Adc9o96EIrVJD470RVytXsEFBmz39gAJntKAAACqSHA=
+Date: Fri, 30 Apr 2021 14:27:48 +0000
+Message-ID: <HK0PR04MB2964606A0C823C9601754AF4FD5E9@HK0PR04MB2964.apcprd04.prod.outlook.com>
+References: <HK0PR04MB2964D4D925F6883DF2342D48FD5E9@HK0PR04MB2964.apcprd04.prod.outlook.com>
+ <YIwPdXmVD5CCJWzX@heinlein>
+In-Reply-To: <YIwPdXmVD5CCJWzX@heinlein>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-hclclassification: HCL_Cla5s_C0nf1dent1al
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiZDcyZDg3ZDgtYzcwYi00MDE2LTk3ZGUtMDA1ZmQzZDM0MWUwIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX0MwbmYxZGVudDFhbCJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6Ik1SaW1SMXF2dGQzU0pmc3JJMjZ1eU55XC9lVTZnMmwwMnRWQldLNkRKbTVTWk5HNFErR2JxYytTVnR6N0JtTU9OIn0=
+Authentication-Results-Original: stwcx.xyz; dkim=none (message not signed)
+ header.d=none;stwcx.xyz; dmarc=none action=none header.from=hcl.com;
+x-originating-ip: [106.211.243.210]
+x-ms-publictraffictype: Email
+X-MS-Office365-Filtering-Correlation-Id: 26bb4ecf-8d00-4dc1-e710-08d90be42365
+x-ms-traffictypediagnostic: HK2PR0401MB2161:|KL1PR0401MB4498:
+x-ms-exchange-transport-forked: True
+X-Microsoft-Antispam-PRVS: <KL1PR0401MB449898FE1ECAAD31E1E7FB0EFD5E9@KL1PR0401MB4498.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7691;OLM:4502;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original: JDy6cRx6LqvtMfYj9qSvlvfwN9NcL5x0tDvaO5tOnzgVgiHp1KS7MJm1vr9ITDCDDl4IdD+VmDrhWSXVEg+Lz8e80NW7M5e00c84aC1AvWO/eIwZw4HJbUivJ5itOAgnTfrGjckPLQsntDvtoEe12Jg/i57NPH6jTmydspXAOzC1w0QvC/gghv3hNbHPaYqyKdOXS4xjg/RolCf06zTvLxJEsI1bCGCkaqCl+yj7bZIKJPOjGieyDfC1UbDt0oapTnfFswqNtuD3Ocsqy6lC9aW7x9prdJfG8PJ52TLhtMjC8PKHQ/0X+iJL7cXWHQ97RHls+TNgZa/8VC1Rfkkz7E5+o/QnuMsV+faAnhwfiOFosokfgAlQYQn+/ozQbCHu/KwnyqtdMYUnI0HbsoT0bCiYSE+P6L+ZHlDMtMG2Xu/r0QjbKoLvt1SrEy5pAWqky0zxvExDGR4IdR8qVeUep9BjmvKB3/ENTtOm/p1OrRck6pRsyzV+VR4oMKqN/Nbst4QOddCbpmBZfi48oEyz30ZjJUuWYXQCElu+iXUIe5BML//442B/5EKWSS3NdN43w4dfUONntDxAO+ruFQDzm0qMcCuwQvEpdmRAHTwWm1c=
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
+ SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:HK0PR04MB2964.apcprd04.prod.outlook.com;
+ PTR:; CAT:NONE;
+ SFS:(4636009)(366004)(136003)(396003)(346002)(376002)(39860400002)(8936002)(71200400001)(8676002)(38100700002)(6506007)(4326008)(186003)(54906003)(86362001)(316002)(26005)(122000001)(53546011)(33656002)(55236004)(66446008)(52536014)(2906002)(9686003)(76116006)(110136005)(66556008)(64756008)(55016002)(83380400001)(66476007)(7696005)(5660300002)(478600001)(66946007);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?27Ew6F0AADfQbYKxdFFYqVuOc3AZo5FtIDh40Gt79BBD0wmHfjPi1/5hWMqu?=
+ =?us-ascii?Q?5W//6yFk1WwSfHFc5TpMBKC9Purm4IJYmm1V/MiR4akbbshPXBNMGIVu84Kx?=
+ =?us-ascii?Q?NWkZUyzsURAg/rNKG5zV5gOdqKV+7NKpCN6xU631/OmggJUSZ1SNCebdhQn4?=
+ =?us-ascii?Q?/gr6Mg4/Dk53c00h5kcxx0VfTVBnCEIBcavFbnNDNmd1Ez2TS2UaZZgbTJjg?=
+ =?us-ascii?Q?LqmWyO9qGQmPiIwFQB7KEszWjAfnSF+c3zm2yTZ9NHBbTff9AzedqFMuCP2x?=
+ =?us-ascii?Q?tRnEVyv9OVdluAvSPxq5uZ3iLADHQTK5JIylJ12S2oZ7yXRL1bwrteiT44Q9?=
+ =?us-ascii?Q?V/cNicgoqHW6PzZMRC9Cgw5cbHJLu5XGLBkeOV+BAzZnDk2FWxsAz9rh9YBK?=
+ =?us-ascii?Q?hQV3mOcjLlj/AggfVpYGbXjZfg1O3qWX35whcQ3UZHflYC9FsuFpJa5ao25o?=
+ =?us-ascii?Q?f2aDFjoHVqFyNjs02DaS5lANEnXtXejAcSwlrblcbOX0Os/Hr6zir/EuF9+N?=
+ =?us-ascii?Q?DR94UHMGdNjEVi43OAAal1YNFQ2HGnRB7ei4SbEWa+ydoSpuUxpNscZAdInq?=
+ =?us-ascii?Q?zTjCrKzdnqewHl8OuPn9E4WqoH7m3kYFxjXnB6k39qYf372HNQDr4Ht8+Ams?=
+ =?us-ascii?Q?Xy0+vYXPOF68k5QDBiC47XVor3aDP7ntm4i1InWMSxwez4kGfTTPwYpmuC1v?=
+ =?us-ascii?Q?C1e2KrA/WEsnW3BtyO0y+pOoJ8WYrM7rvoTUzQlmndCzCZnNA24Ef2ONvVHZ?=
+ =?us-ascii?Q?80k4gb7ORmILupOLpzrRj4A6BQevxv+mnj3g6D1luAMSKoHE2naBUCoL3oe9?=
+ =?us-ascii?Q?ekQRiSZDzz+8irU5wnZTYQSll15jyGeYB/oYeGawnJyKagVUDycbB+KM5hTc?=
+ =?us-ascii?Q?P7q9GS9jnxgYa2QsdAqDnfWcm5iWcrdsK662UpIHjGVA7ypBexeObMi6qknI?=
+ =?us-ascii?Q?/bIwwNLU+SzLMyzCB4psBstMimCsfP6Wxijm0ES2+tNd66s0IhkB1e6gOnwf?=
+ =?us-ascii?Q?Lw4UV5c+6GVWJ5Ksis8ADepBhAdLKXTFVk1cwWRV7lMYwzPVtlVXjChhi4GF?=
+ =?us-ascii?Q?1xtFillc5wZ/af45eiaBjsm++jcw03Rpby/7WY4f7AFNV+HxeUDx8Xa9ecQF?=
+ =?us-ascii?Q?NmsmOX9x4UXV1qmUl9rhgSXwyEuuKmMqg+J97YEI7GOHO0QBS3Dp9Qw/njLC?=
+ =?us-ascii?Q?4ippAPCJLUt2J3ABUtEgzSXfAT7m4vu0tnSubO+c6di7AyhoXtZ+8gqp4SWA?=
+ =?us-ascii?Q?KGptjn1E/7eW3cwqLBfIbqiaHvff8H+tFTOvULCCgB+DFQfGNaUzlWpsi1kQ?=
+ =?us-ascii?Q?dPo3OfM23n8fdtK5xFOiS87v?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="agSXuSy4NlLH0EhB"
-Content-Disposition: inline
-In-Reply-To: <845C5760-C7CA-4ACB-A465-63BF0EA851DB@gmail.com>
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR0401MB2161
+X-DLP: MSGProcess
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: PU1APC01FT047.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: c043b0a1-8e14-4017-f3ec-08d90be4214d
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: jh/+a9WDUL4vQNI4CvGC93/xZ9/DKkIB08w3VbwYHBSTpk2h83RSgsJt2vlb161kSvnT8Kk49MinNCGdzfmZUkvoj/2G2r6pqT+l7n5rkm+GM3IkphI/zyvz8tamH3lwAbk9ZkGIUXH5XAgnoptOP+asYROlrkqq7xFYW4e69IkfBu+UCrRZD8petDpP7FQYxFomagg1BhmfWB2mmKraDIlCOTtR7tzKcQ2ZRRA4UF4myC40iF/DL49dHYX1ML8vXzawekb8zRofZopTxUOrk2gJdvtTkn/iUditLyxDDbvQ50fjh3Ez+FShP/fdlMFGgPtuHu2pL3+LY5LLJOQoan5r54az4df2ktDymQ9J4EUf3MoHhOJPkdBYWxFZbU408TQ5UvmLpzJNcxfhbGJdrmZOvvm04dYu3tnC/hIlEW4DGmqN4mWRwKjnZjPh/f7AjrjrGAFSpm4pPzJg2YMWt0P8KwEqaO/zLKxsQ21AOfCpQLF9Yif2/ObvZQowmkWiUnsi1GDONwpN3ArJvZhErJUHQR1LiOZJ7+TuoTlQgDQPIu+4jczoT6KlyMf19Pn8yKOvJ33LThPsrh5NqL8r2HpPjVvNNk2npS/P9Xw+/WAulRNrpjTvvSG9d06ru04bbSsmBbRdN2XU/OqnWwqTTAHW+EtlcCOAKvw0BPsstcfKTzeMero5aC6LeLvCc0yhtvDqeymf9IZaIQ73ZN0xJfKrbmhg71g8Y4TwER7Bz2U=
+X-Forefront-Antispam-Report: CIP:192.8.195.59; CTRY:IN; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:APC01-SG2-obe.outbound.protection.outlook.com;
+ PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(4636009)(39860400002)(136003)(376002)(346002)(396003)(36840700001)(46966006)(53546011)(110136005)(36906005)(70206006)(55236004)(316002)(6506007)(82310400003)(7696005)(336012)(55016002)(54906003)(36860700001)(86362001)(34020700004)(70586007)(83380400001)(5660300002)(2906002)(9686003)(52536014)(82740400003)(8936002)(4326008)(356005)(478600001)(33656002)(81166007)(8676002)(26005)(186003)(47076005)(36900700001);
+ DIR:OUT; SFP:1102; 
+X-OriginatorOrg: HCL.COM
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Apr 2021 14:27:51.5049 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 26bb4ecf-8d00-4dc1-e710-08d90be42365
+X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.195.59];
+ Helo=[APC01-SG2-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT047.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR0401MB4498
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,47 +170,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Velumani T-ERS,
+ HCLTech" <velumanit@hcl.com>, Amithash Prasad <amithash@fb.com>,
+ Manish Kumar Thakur <manishkumar-thakur@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Classification: Confidential
 
---agSXuSy4NlLH0EhB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks Patrick.
 
-On Fri, Apr 23, 2021 at 11:30:54AM -0600, Mike Jones wrote:
-> Patrick,
->=20
-> Are there existing PMC implementations for ORv3, or is the work of your i=
-nterest the first? Is their existing hardware to base OBMC running in a BMC=
- to work from?
+Added MAINTAINERS.
 
-There is not.  To the best of my knowledge our work in this area was the
-first.
+Thanks,
+Kumar.
 
---=20
+-----Original Message-----
+From: Patrick Williams <patrick@stwcx.xyz>
+Sent: Friday, April 30, 2021 7:39 PM
+To: Kumar Thangavel <thangavel.k@hcl.com>
+Cc: openbmc@lists.ozlabs.org; Manish Kumar Thakur <manishkumar-thakur@hcl.c=
+om>; Velumani T-ERS,HCLTech <velumanit@hcl.com>; Amithash Prasad <amithash@=
+fb.com>; sdasari@fb.com
+Subject: Re: Include sensor monitor for our platform
+
+On Fri, Apr 30, 2021 at 09:37:17AM +0000, Kumar Thangavel wrote:
+>           We wanted to enable the sensor monitors like "ShutdownAlaramMon=
+itor" and "ThesholdAlaramLogger" to our system to monitor the sensor values=
+ of our fan.
+>            These monitors were created under phosphor-fan-presence.
+
+I don't think there is anyone using the monitoring of phosphor-fan-presence=
+ with the control of phosphor-pid-control, but that doesn't mean it can't b=
+e done.
+
+If you look at the phosphor-fan recipe you'll see that the default PACKAGEC=
+ONFIG is "presence control monitor".  I think you'll want to bbappend this =
+to only enable "monitor" (and not control/presence).  This should configure=
+ the package so only the monitoring parts are enabled at compile time.
+
+You may want to cc the MAINTAINERS of phosphor-fan-presence for any detaile=
+d questions you run into when giving this a try (and copy the list).
+
+```
+M:  Matthew Barth <msbarth@linux.ibm.com> <msbarth!>
+M:  Matt Spinler <spinler@us.ibm.com> <mspinler[m]!> ```
+
+--
 Patrick Williams
-
---agSXuSy4NlLH0EhB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmCME5cACgkQqwNHzC0A
-wRnWOA//YmZIEumCeCDQUQEYT5zI8LP67arJIVoz4aFsV+eEz3OvKqTC5gQo81rW
-fGhSF2DD81SPSxy3ag7Uj3pFSgXui/8ZBoEHWmRGcE406yFOx2OtLTsybPcC8Kg8
-X5SQ026TS5jkYEfmVXNSbmLZ7sIrpSU7LZM4W20ECOR4cq4jBnqQvKsUczUbrYA9
-gs3455uyVFgVLtvfNkVlpyk/oFP6uBaydn7HPrg/iJUlCk2ciDoKgL1BlqPj+BO9
-BcvJoR7Hc0O+x+lWqN0W8EGNs0Qx5IG9Uf4jQRud4gKKO/XrkMEGoGPW/RsfFRyk
-y4d/drz6M4/JP0fxbfH5Q5RESARKXQ/v+ZQr7/MvrzaEYWKpEMPxPDB7CHYWugIf
-VleAbhv5+etXyySCrOkBRidFUCbQuszM2BM8dVZtkEhBAS77bDG+UUdkLvXErDVU
-QZMDtGBDck8ZIxGTZ7v46nw4iRf7tQ1spfoqZOkW5/di7k6ZZUV3+iFku7VNxX77
-JDxKWv4N/wEBWBh488N8r3vGJpFPEZoUST5J5Ne0G/37flEquU5RTjbi4waj4pfF
-3Ggfqb2JXDFswMxO6BIKu+It8kjCW03y18PcxY8gkMrKRfnTvsBFg9646GzxFfJh
-OidNdtkjpmqcengx49of6ATTbwlKCQUFrNE4Xxh5IC9d2/uM1oM=
-=cO1e
------END PGP SIGNATURE-----
-
---agSXuSy4NlLH0EhB--
+::DISCLAIMER::
+________________________________
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
+smission. The e mail and its contents (with or without referred errors) sha=
+ll therefore not attach any liability on the originator or HCL or its affil=
+iates. Views or opinions, if any, presented in this email are solely those =
+of the author and may not necessarily reflect the views or opinions of HCL =
+or its affiliates. Any form of reproduction, dissemination, copying, disclo=
+sure, modification, distribution and / or publication of this message witho=
+ut the prior written consent of authorized representative of HCL is strictl=
+y prohibited. If you have received this email in error please delete it and=
+ notify the sender immediately. Before opening any email and/or attachments=
+, please check them for viruses and other defects.
+________________________________
