@@ -1,64 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD5E3370047
-	for <lists+openbmc@lfdr.de>; Fri, 30 Apr 2021 20:15:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10F873701FA
+	for <lists+openbmc@lfdr.de>; Fri, 30 Apr 2021 22:19:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FX0sb4Lq6z300c
-	for <lists+openbmc@lfdr.de>; Sat,  1 May 2021 04:15:31 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=cWu5ucJZ;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FX3ck0d7Zz302m
+	for <lists+openbmc@lfdr.de>; Sat,  1 May 2021 06:19:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52a;
- helo=mail-ed1-x52a.google.com; envelope-from=ratankgupta31@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=cWu5ucJZ; dkim-atps=neutral
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com
- [IPv6:2a00:1450:4864:20::52a])
+ smtp.mailfrom=gmail.com (client-ip=209.85.210.44; helo=mail-ot1-f44.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com
+ [209.85.210.44])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FX0sL4G9Vz2xxg
- for <openbmc@lists.ozlabs.org>; Sat,  1 May 2021 04:15:16 +1000 (AEST)
-Received: by mail-ed1-x52a.google.com with SMTP id n25so11572004edr.5
- for <openbmc@lists.ozlabs.org>; Fri, 30 Apr 2021 11:15:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=/Um5z+j3AxlSDsEx0dRV9Ztj0sCHkUYOOd65wdXVh+4=;
- b=cWu5ucJZLyCjg46CruUC4K50w76fRYw48L4xaIgJMpZ5FRJWw+zEFAtH5hj0O6OvuS
- D0brnaNVSOqXl846yH0dvZ43oYEyCaXt2OB3KL9lsPuGRqdPgU+TmqfEecKxNspSm1wC
- OsRgStlW32unI3PQarJeKqR9fpFNqkoOsPfVPUp1e9RwcKkIGhBZlSTASciSKoxdKLLx
- IwjQ3tZ6nr6xJsn8mVNJQ0cKsPpoxJeNQ1jLLtmPSgVarOcuJWbAIODIcHIH5FOhraWh
- XRMEAh402dEutWyO748H+45wO16/VKEL+4mPCfS3P/msY8cNPuIuO9tYNs4zo3sVOlSI
- Y8kQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FX3cV6h7sz2yRQ;
+ Sat,  1 May 2021 06:19:22 +1000 (AEST)
+Received: by mail-ot1-f44.google.com with SMTP id
+ 65-20020a9d03470000b02902808b4aec6dso60743605otv.6; 
+ Fri, 30 Apr 2021 13:19:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=/Um5z+j3AxlSDsEx0dRV9Ztj0sCHkUYOOd65wdXVh+4=;
- b=jyh+1RJJKQ8togINxGc7GCobPCpU6tsgobweRNwQnxeWtVa3ggtAOyAMZk0kQaSkXa
- y8HxS7K74uTonAqG2dRo3ki5qCBaThYwrhaBAeB9UEEe6HGkeaumNFgaivVua0npbukF
- Esuc7OQrclstQgsPDoU6awuDAQ06/pHy/lmWL+T85E9zvYESmA0ofjHfgYvDuOIurpSn
- zkjqYKsl2MA/00hVv3KyuplOVRu/8QGKmnpbXpy/parHrdVYZ3W/UWLS0C8YipFQuTwx
- VZSXvTtYZSXyIzlVn0B1sscCjIlFvRjxV7ws05Br+6Tv5/1UMWocP1pb9ThEIyiXbuPc
- EbEg==
-X-Gm-Message-State: AOAM531cyH0ogHHasxulFrtG/sDUaHHwubct/WG0C+vYQYZEmG+on/Gb
- fQnAYlP7cLkAdFUoXxnpguLhsEDXSR0pmhadNGj/plI1vD4=
-X-Google-Smtp-Source: ABdhPJzT/PMXr2GNT72yklYaRBsCPMkMZr8LX70imj1CXAs9ulRCTWzLSxUGyWy1GpjVLPi08og31olqFmZ2rmG8RF0=
-X-Received: by 2002:aa7:cc15:: with SMTP id q21mr7805977edt.140.1619806511582; 
- Fri, 30 Apr 2021 11:15:11 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=05YajdrOgDhUy0VSmK12HSI6pp+IeJDTyJyysQF3p7o=;
+ b=HdykuDwBB/3OVTVtu/Kk8n2e3v/I6x32vredZomW/DhYEwIw82zD90xPOUTBdBme9A
+ qmZl8wgb9xSnwbq2Yqn6+VeYaNIyy9RwpSO1pCf+rP/wxosm95aMhgvGCE3iPq27/OjZ
+ PpIatmEI0oqPzjgmNGP5WtGCgyx6Ko10gUWXkCv5k65qegB/OrTXBcoFWhUXLxuGbYdg
+ 51XiRnywYe920l1Kyoq7UmaxT6Mp1MmtJSH0vhMFXq8f3f7txFLbc9348jDLdluPbwEm
+ HtcowRbrFPCnm+xieEclX0vK9Rqrx2oMw9seACYz5KQ/Cfjp5Ur9ktm4wst2rEx//f2T
+ ApFw==
+X-Gm-Message-State: AOAM532NlYEPpEgXHhv5OKxzRgvfz8N13ydW1SDbOo1hpkiyTk7eZcvZ
+ 7/srOMYAEY4de9Tkb+jJgA==
+X-Google-Smtp-Source: ABdhPJyhpwkye5/a50dVpExQW5qA9sdb/0cba2fjbZX1NCBrx5NgquzmypopNGw2rU4zxKfPMbFpAw==
+X-Received: by 2002:a9d:61c7:: with SMTP id h7mr5030835otk.360.1619813960116; 
+ Fri, 30 Apr 2021 13:19:20 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
+ [24.155.109.49])
+ by smtp.gmail.com with ESMTPSA id m133sm985926oia.22.2021.04.30.13.19.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 30 Apr 2021 13:19:19 -0700 (PDT)
+Received: (nullmailer pid 3818585 invoked by uid 1000);
+ Fri, 30 Apr 2021 20:19:18 -0000
+Date: Fri, 30 Apr 2021 15:19:18 -0500
+From: Rob Herring <robh@kernel.org>
+To: Quan Nguyen <quan@os.amperecomputing.com>
+Subject: Re: [PATCH v4 1/4] dt-bindings: mfd: Add bindings for Ampere Altra
+ SMPro drivers
+Message-ID: <20210430201918.GA3806853@robh.at.kernel.org>
+References: <20210422090843.4614-1-quan@os.amperecomputing.com>
+ <20210422090843.4614-2-quan@os.amperecomputing.com>
 MIME-Version: 1.0
-From: Ratan Gupta <ratankgupta31@gmail.com>
-Date: Fri, 30 Apr 2021 23:45:00 +0530
-Message-ID: <CAMhqiMoFAHcUk0nO_xoOubcZqF_dPDFweqsttTULRJK38o1Ung@mail.gmail.com>
-Subject: D-bus model proposal for pay for access features
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000ba519c05c134972b"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210422090843.4614-2-quan@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,155 +68,199 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
+ Jean Delvare <jdelvare@suse.com>, linux-aspeed@lists.ozlabs.org,
+ Jonathan Corbet <corbet@lwn.net>, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ Phong Vo <phong@os.amperecomputing.com>,
+ Open Source Submission <patches@amperecomputing.com>,
+ Lee Jones <lee.jones@linaro.org>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000ba519c05c134972b
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Apr 22, 2021 at 04:08:40PM +0700, Quan Nguyen wrote:
+> Adds device tree bindings for SMPro driver found on the Mt.Jade hardware
+> reference platform with Ampere's Altra Processor family.
+> 
+> The SMpro co-processor on Ampere Altra processor family is to monitor
+> and report various data included hwmon-related info, RAS errors, and
+> other miscellaneous information. This parent SMPro MFD driver creates
+> a single simple register map to be shared by all sub-devices and leave
+> all the specific to be handled by the child drivers.
 
-Hi All,
+Again, just because you have multiple functions aka MFD, that doesn't 
+mean you need child nodes for each function. The only thing you have 
+in DT is a register address. Does this vary? If so, how often? How many 
+different versions of a DT do you currently or expect to have? 
 
-I would like to introduce a dbus model proposal around pay for access
-features.Normally IBM system ships with more hardware than was
-purchased, which can be unlocked later.
-
-Features could be 1) AIX enabled/disabled
-2) How many processors are enabled
-3) How much memory is enabled
-
-*Proposed Model:*
-
-The model consists of following main entities:1 - licenses - these
-objects represents the features.  There will be a license represnting
-feature(one is to one relation ship) and these objects have state -
-active, inactive, unknown, etc.
-These objects could implement the Delete interface for when a client
-wishes to disable the license/feature.
-
-2 - manager - the manager object (distinct from freedesktop object
-manager) provides a method
-interface to create new license objects.
-
-*Alternate Dbus Model:*
-
-1 - Licenses: these objects represent an agreement.  These objects have an
-association to one or more features, and these objects have state -
-active,inactive, unknown, etc.
-These objects could implement the Delete interface for when a client
-wishes to disable the license.
-
-2 - Features: these objects describe the features available.
-Feature objects would be static and implementation/platform defined.
-A BMC or host firmware update
-could potentially add or remove the available features exposed as dbus
-objects.  At the moment the
-only feature attribute I can think of is a name and the feature status.
-
-3 Manager - the manager object (distinct from freedesktop object manager)
-provides a method interface to create new license objects.
-
-The difference between two models areIn the alternate Dbus model we
-are keeping the feature Dbus object and the License have an associated
-features
-In the proposed model we are only keeping the license D-bus object
-which represent the feature.
-
-Flow would be as below with the proposed model -1/ Manager object
-would be having interface like upload (License activation key)
-2/ On IBM systems we send this key to the host firmware which
-activates the features
-3/ Host Firmware sends the activated feature list to the BMC
-4/ BMC creates the licenses for the activated features
-
-I suspect an implementation of the above flow is highly IBM specific,
-but I hope some of you have some feedback that might enable some
-collaboration.
-If not - where should we put this application?
-
-Ratan
-
---000000000000ba519c05c134972b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><pre class=3D"gmail-c-mrkdwn__pre" style=3D"box-sizing:inh=
-erit;margin:4px 0px;padding:8px;font-size:12px;line-height:1.50001;font-var=
-iant-ligatures:none;white-space:pre-wrap;word-break:normal;font-family:Mona=
-co,Menlo,Consolas,&quot;Courier New&quot;,monospace;border-radius:4px;color=
-:rgb(29,28,29);font-style:normal;font-variant-caps:normal;font-weight:400;l=
-etter-spacing:normal;text-align:left;text-indent:0px;text-transform:none;wo=
-rd-spacing:0px;text-decoration-style:initial;text-decoration-color:initial"=
->Hi All,<br><br><span class=3D"gmail-c-mrkdwn__br" style=3D"box-sizing:inhe=
-rit;display:block;height:unset"></span>I would like to introduce a dbus mod=
-el proposal around pay for access features.<span class=3D"gmail-c-mrkdwn__b=
-r" style=3D"box-sizing:inherit;display:block;height:unset"></span>Normally =
-IBM system ships with more hardware than was purchased, which can be unlock=
-ed later.<br><br style=3D"box-sizing:inherit">Features could be <span class=
-=3D"gmail-c-mrkdwn__br" style=3D"box-sizing:inherit;display:block;height:un=
-set"></span>1) AIX enabled/disabled  <br style=3D"box-sizing:inherit">2) Ho=
-w many processors are enabled<br style=3D"box-sizing:inherit">3) How much m=
-emory is enabled<br><br><span class=3D"gmail-c-mrkdwn__br" style=3D"box-siz=
-ing:inherit;display:block;height:unset"></span><b>Proposed Model:</b><br><b=
-r><span class=3D"gmail-c-mrkdwn__br" style=3D"box-sizing:inherit;display:bl=
-ock;height:unset"></span>The model consists of following main entities:<spa=
-n class=3D"gmail-c-mrkdwn__br" style=3D"box-sizing:inherit;display:block;he=
-ight:unset"></span>1 - licenses - these objects represents the features.  T=
-here will be a license represnting <br>feature(one is to one relation ship)=
- and these objects have state - active, inactive, unknown, etc.<br style=3D=
-"box-sizing:inherit">These objects could implement the Delete interface for=
- when a client wishes to disable the license/feature.<br><br><span class=3D=
-"gmail-c-mrkdwn__br" style=3D"box-sizing:inherit;display:block;height:unset=
-"></span><span class=3D"gmail-c-mrkdwn__br" style=3D"box-sizing:inherit;dis=
-play:block;height:unset"></span>2 - manager - the manager object (distinct =
-from freedesktop object manager) provides a method<br>interface to create n=
-ew license objects.<br><br><span class=3D"gmail-c-mrkdwn__br" style=3D"box-=
-sizing:inherit;display:block;height:unset"></span><b>Alternate Dbus Model:<=
-/b><br><br><span class=3D"gmail-c-mrkdwn__br" style=3D"box-sizing:inherit;d=
-isplay:block;height:unset"></span>1 - Licenses: these objects represent an =
-agreement.  These objects have an<br style=3D"box-sizing:inherit">associati=
-on to one or more features, and these objects have state - active,inactive,=
- unknown, etc.<br>These objects could implement the Delete interface for wh=
-en a client wishes to disable the license.<br><br><span class=3D"gmail-c-mr=
-kdwn__br" style=3D"box-sizing:inherit;display:block;height:unset"></span>2 =
-- Features: these objects describe the features available.<br style=3D"box-=
-sizing:inherit">Feature objects would be static and implementation/platform=
- defined.  A BMC or host firmware update <br>could potentially add or remov=
-e the available features exposed as dbus objects.  At the moment the <br>on=
-ly feature attribute I can think of is a name and the feature status.<br><b=
-r><span class=3D"gmail-c-mrkdwn__br" style=3D"box-sizing:inherit;display:bl=
-ock;height:unset"></span>3 Manager - the manager object (distinct from free=
-desktop object manager)<br style=3D"box-sizing:inherit">provides a method i=
-nterface to create new license objects.<br><br><span class=3D"gmail-c-mrkdw=
-n__br" style=3D"box-sizing:inherit;display:block;height:unset"></span><span=
- class=3D"gmail-c-mrkdwn__br" style=3D"box-sizing:inherit;display:block;hei=
-ght:unset"></span>The difference between two models are<span class=3D"gmail=
--c-mrkdwn__br" style=3D"box-sizing:inherit;display:block;height:unset"></sp=
-an>In the alternate Dbus model we are keeping the feature Dbus object and t=
-he License have an associated features<br style=3D"box-sizing:inherit">In t=
-he proposed model we are only keeping the license D-bus object which repres=
-ent the feature.<br><br><span class=3D"gmail-c-mrkdwn__br" style=3D"box-siz=
-ing:inherit;display:block;height:unset"></span><span class=3D"gmail-c-mrkdw=
-n__br" style=3D"box-sizing:inherit;display:block;height:unset"></span>Flow =
-would be as below with the proposed model -<span class=3D"gmail-c-mrkdwn__b=
-r" style=3D"box-sizing:inherit;display:block;height:unset"></span>1/ Manage=
-r object would be having interface like upload (License activation key)<br =
-style=3D"box-sizing:inherit">2/ On IBM systems we send this key to the host=
- firmware which activates the features<br style=3D"box-sizing:inherit">3/ H=
-ost Firmware sends the activated feature list to the BMC<br style=3D"box-si=
-zing:inherit">4/ BMC creates the licenses for the activated features<br><br=
-><span class=3D"gmail-c-mrkdwn__br" style=3D"box-sizing:inherit;display:blo=
-ck;height:unset"></span><span class=3D"gmail-c-mrkdwn__br" style=3D"box-siz=
-ing:inherit;display:block;height:unset"></span>I suspect an implementation =
-of the above flow is highly IBM specific, <br style=3D"box-sizing:inherit">=
-but I hope some of you have some feedback that might enable some collaborat=
-ion.  <br style=3D"box-sizing:inherit">If not - where should we put this ap=
-plication?<br></pre><pre class=3D"gmail-c-mrkdwn__pre" style=3D"box-sizing:=
-inherit;margin:4px 0px;padding:8px;font-size:12px;line-height:1.50001;font-=
-variant-ligatures:none;white-space:pre-wrap;word-break:normal;font-family:M=
-onaco,Menlo,Consolas,&quot;Courier New&quot;,monospace;border-radius:4px;co=
-lor:rgb(29,28,29);font-style:normal;font-variant-caps:normal;font-weight:40=
-0;letter-spacing:normal;text-align:left;text-indent:0px;text-transform:none=
-;word-spacing:0px;text-decoration-style:initial;text-decoration-color:initi=
-al">Ratan<br></pre></div>
-
---000000000000ba519c05c134972b--
+> 
+> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+> ---
+> Changes in v4:
+>   + Revised the commit message to clarify how the specific info will
+>     be handled commented by Rob.
+> 
+> Changes in v3:
+>   + Supported list of compatible string [Rob]
+>   + Introduced reg property in DT to specify reg offset [Rob]
+>   + Updated description and other minor changes in yaml file [Rob]
+> 
+> Changes in v2:
+>   + Changed "ampere,ac01-smpro" to "ampere,smpro" [Quan]
+> 
+>  .../bindings/hwmon/ampere,ac01-hwmon.yaml     |  28 +++++
+>  .../devicetree/bindings/mfd/ampere,smpro.yaml | 105 ++++++++++++++++++
+>  2 files changed, 133 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
+>  create mode 100644 Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml b/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
+> new file mode 100644
+> index 000000000000..fbf7ec754160
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/hwmon/ampere,ac01-hwmon.yaml
+> @@ -0,0 +1,28 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/hwmon/ampere,ac01-hwmon.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Hardware monitoring driver for the Ampere Altra SMPro
+> +
+> +maintainers:
+> +  - Quan Nguyen <quan@os.amperecomputing.com>
+> +
+> +description: |
+> +  This module is part of the Ampere Altra SMPro multi-function device. For more
+> +  details see ../mfd/ampere,smpro.yaml.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - ampere,ac01-hwmon
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> diff --git a/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
+> new file mode 100644
+> index 000000000000..5613c420869e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
+> @@ -0,0 +1,105 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/ampere,smpro.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Ampere Altra SMPro firmware driver
+> +
+> +maintainers:
+> +  - Quan Nguyen <quan@os.amperecomputing.com>
+> +
+> +description: |
+> +  Ampere Altra SMPro firmware may contain different blocks like hardware
+> +  monitoring, error monitoring and other miscellaneous features.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - ampere,smpro
+> +
+> +  reg:
+> +    description:
+> +      I2C device address.
+> +    maxItems: 1
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +patternProperties:
+> +  "^hwmon(@[0-9a-f]+)?$":
+> +    $ref: ../hwmon/ampere,ac01-hwmon.yaml
+> +
+> +  "^misc(@[0-9a-f]+)?$":
+> +    type: object
+> +    description: |
+> +      This module is part of the Ampere Altra SMPro multi-function device
+> +      to support miscellaneous features
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - ampere,ac01-misc
+> +      reg:
+> +        maxItems: 1
+> +
+> +    required:
+> +      - compatible
+> +      - reg
+> +
+> +  "^errmon(@[0-9a-f]+)?$":
+> +    type: object
+> +    description: |
+> +      This module is part of the Ampere Altra SMPro multi-function device
+> +      that supports error monitoring feature.
+> +
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - ampere,ac01-errmon
+> +      reg:
+> +        maxItems: 1
+> +
+> +    required:
+> +      - compatible
+> +      - reg
+> +
+> +required:
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    i2c {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        smpro@4f {
+> +            compatible = "ampere,smpro";
+> +            reg = <0x4f>;
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            hwmon@10 {
+> +                compatible = "ampere,ac01-hwmon";
+> +                reg = <0x10>;
+> +            };
+> +
+> +            misc@b0 {
+> +                compatible = "ampere,ac01-misc";
+> +                reg = <0xb0>;
+> +            };
+> +
+> +            errmon@80 {
+> +                compatible = "ampere,ac01-errmon";
+> +                reg = <0x80>;
+> +            };
+> +
+> +        };
+> +    };
+> -- 
+> 2.28.0
+> 
