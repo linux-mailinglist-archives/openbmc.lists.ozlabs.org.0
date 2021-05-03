@@ -1,100 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71D93371063
-	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 03:37:57 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC57537106E
+	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 03:45:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FYQb73fhNz2yxk
-	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 11:37:55 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=plrAUeOw;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=od78Yzun;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FYQmB3cCGz3036
+	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 11:45:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=steven_lee@aspeedtech.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=plrAUeOw; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=od78Yzun; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FYQZm2ddlz2xgJ
- for <openbmc@lists.ozlabs.org>; Mon,  3 May 2021 11:37:35 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 31A3E5C00C1;
- Sun,  2 May 2021 21:37:31 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 02 May 2021 21:37:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm2; bh=mZpVJ
- FIf+WqaT/1O5h4TcRUOZ6dgoCpd8lt29IWl23U=; b=plrAUeOwcrQBr3cR/XuMb
- TxXHUJBeFPWSK9hsNfOqg+lls61MjRB/FulI/qjGYwz869R0AIUUNvQYqYBKRls2
- GbIMq0+6vo+xTwjsjoVIg09hEJ408RO3jA/AH/wMZp0GxpIA2FlvQJxZLHPhkUxg
- lu1sT9Nnq6YyOq4xbVHJ1eZsX4JhlqzQ6dl+2rN2eGmGcX5lP8DC/NWxCNjKo6nA
- qLiYP1lF2WnEHON8lFXGePwWS3UA9pgY76wiLyCU/zZ9hdyEZ+tEc+W+qDLC9QAN
- 4TJGEvgBXd+8Iu28lJM9Xu4XaQDehnCaBVIx911nZ75nBFr2cC6y0r/uYVrdJUaB
- w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=mZpVJFIf+WqaT/1O5h4TcRUOZ6dgoCpd8lt29IWl2
- 3U=; b=od78YzunpZ1yS9z5McSbIGw5yP/R+SCH3Nb/k8wkjmq75WqXVZjV8c2R1
- Q+CTY3IFdXG4dScWQ3YYKHa14Be5VdezdJOu/6UR3yUl9rUH6tmgyxuyILqzXrvt
- yTTY3UUGjYux1CjO96yOA0otOS/S/ApYmKq7Iln4S/XbSHe/BxiTj/wS2NdBUrNL
- t0bRuRo88DhvEstA9h1Zckg+TRJsv02pUAWNEVew42HxiK8EPx8AXFoB/cWx+lmj
- bgnTT8AzQTggq+Hc0iR5TCN8OwhpxB1T8Y5GlbefW9UD/JQm/wwWN2c0x5aIkMTx
- GwQqEM3Pbyux0nXzgAr/c2K3pr2bQ==
-X-ME-Sender: <xms:2lOPYGghlyFQdWd1IIPlpsXE2_2InxhBwdJh51RnJmc2BI-8Zhs9zw>
- <xme:2lOPYHDFMlmWxVW3K4YFY98oTBV194pXi8pS-dlINSDgh_XOLA4tbp0ydFc40lT5G
- U-ztkUmZ5mdG_IjFw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdefvddguddvtdcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdet
- nhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecugg
- ftrfgrthhtvghrnhephffgkefhudeghfejudfhtdfguedtfeehjeevteffgeduudetjeei
- jefhheffgfefnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghruf
- hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdr
- rghu
-X-ME-Proxy: <xmx:2lOPYOEIobI6zZxZta8dCeyvvVrLNeXgBauq61Bz9KkfSKMBnTy89w>
- <xmx:2lOPYPRZ2k5WLSdbLQnKO3lxJSSNsoGP1wjZDtU1OgUcZn-i0sta7Q>
- <xmx:2lOPYDxJ_YC5W4IrOrtYYcmO3vLhWwRVIilgFoNTPaubsJYjBTqCBA>
- <xmx:21OPYMovn29muaUN5PAwYU4TcgmOe6C1xkUE-tS5_4KAV8cWWm-6Lg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id A8356A00079; Sun,  2 May 2021 21:37:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-403-gbc3c488b23-fm-20210419.005-gbc3c488b
-Mime-Version: 1.0
-Message-Id: <f7a7b565-72c2-454b-9b8e-789614f66755@www.fastmail.com>
-In-Reply-To: <bc91e7df-6ad7-416f-b394-32b1a60facd6@www.fastmail.com>
-References: <b8af3438-f85a-cb82-c88c-9c4e120399e9@linux.ibm.com>
- <YEKDY6+zfW5Uuqkl@heinlein>
- <dc7eb87e-c13f-dcb7-7b98-dbeb382d7caa@linux.ibm.com>
- <YEZwz6C5uGk8Vobs@heinlein>
- <2b7c9c78-37c5-5964-5f4c-d07fadf3590a@linux.ibm.com>
- <YIwGHYc11MZ6Dxz7@heinlein>
- <4b25d1d9-b4c7-1a58-f0a0-b9fd9cd73fe8@linux.ibm.com>
- <bc91e7df-6ad7-416f-b394-32b1a60facd6@www.fastmail.com>
-Date: Mon, 03 May 2021 11:07:08 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joseph Reynolds" <jrey@linux.ibm.com>,
- "Patrick Williams" <patrick@stwcx.xyz>
-Subject: Re: Request new repo for IBM-specific code: ibm-acf
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FYQlx6Drbz2yjS;
+ Mon,  3 May 2021 11:45:33 +1000 (AEST)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 1431WAMe085691;
+ Mon, 3 May 2021 09:32:10 +0800 (GMT-8)
+ (envelope-from steven_lee@aspeedtech.com)
+Received: from localhost.localdomain (192.168.100.253) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 3 May
+ 2021 09:43:46 +0800
+From: Steven Lee <steven_lee@aspeedtech.com>
+To: Andrew Jeffery <andrew@aj.id.au>, Ulf Hansson <ulf.hansson@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Ryan Chen
+ <ryanchen.aspeed@gmail.com>, "moderated list:ASPEED SD/MMC DRIVER"
+ <linux-aspeed@lists.ozlabs.org>, "moderated list:ASPEED SD/MMC DRIVER"
+ <openbmc@lists.ozlabs.org>, "open list:ASPEED SD/MMC DRIVER"
+ <linux-mmc@vger.kernel.org>, "open list:OPEN FIRMWARE AND FLATTENED DEVICE
+ TREE BINDINGS" <devicetree@vger.kernel.org>, "moderated list:ARM/ASPEED
+ MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>, open list
+ <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 1/3] dt-bindings: mmc: sdhci-of-aspeed: Add description for
+ AST2600 EVB.
+Date: Mon, 3 May 2021 09:43:34 +0800
+Message-ID: <20210503014336.20256-2-steven_lee@aspeedtech.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20210503014336.20256-1-steven_lee@aspeedtech.com>
+References: <20210503014336.20256-1-steven_lee@aspeedtech.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [192.168.100.253]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 1431WAMe085691
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,77 +61,158 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
+Cc: chin-ting_kuo@aspeedtech.com, ryan_chen@aspeedtech.com, Hongweiz@ami.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Add the description for describing the AST 2600 EVB reference design of
+GPIO regulators and provide the example in the document.
 
+AST2600-A2 EVB has the reference design for enabling SD bus
+power and toggling SD bus signal voltage by GPIO pins.
 
-On Mon, 3 May 2021, at 09:16, Andrew Jeffery wrote:
->=20
->=20
-> On Sat, 1 May 2021, at 15:00, Joseph Reynolds wrote:
-> > On 4/30/21 8:29 AM, Patrick Williams wrote:
-> > > On Thu, Apr 29, 2021 at 04:09:58PM -0500, Joseph Reynolds wrote:
-> > >  =20
-> > >> So ... does the GitHub OpenBMC organization host vendor specific =
-repos
-> > >> (perhaps github.com/openbmc/ibm-misc), or does the source code go=
+In the reference design, GPIOV0 of AST2600-A2 EVB is connected to
+power load switch that providing 3.3v to SD1 bus vdd. GPIOV1 is
+connected to a 1.8v and a 3.3v power load switch that providing
+signal voltage to
+SD1 bus.
 
-> > >> somewhere else (such as IBM's public fork in
-> > >> github.com/ibm-openbmc/pam-ibm-acf)?
-> > > I'm strongly opposed to dumping-ground repositories like
-> > > "<company>-misc".  We approved exactly one of those and the ration=
-ale we
-> > > were given was they had a bunch of existing code they were going t=
-o work
-> > > at getting upstreamed, but wanted a place to be able to interact w=
-ith
-> > > their vendors in the interrim.  We should not be having *new* code=
- going
-> > > into that or any other "misc" repository.
-> > >
-> > > We have generally not wanted OpenBMC-oriented code in non-openbmc-=
-org
-> > > repositories that are then picked up by openbmc/openbmc recipes.  =
-If you
-> > > have a generally applicable library that isn't tied to openbmc in =
-any
-> > > way, or especially one that already has good usage outside of open=
-bmc,
-> > > then another github org seems reasonable.  That isn't what you hav=
-e
-> > > here.
-> > >
-> > > It sounds like you have a good definition here of what you want to=
- do,
-> > > so I'm fine with `openbmc/pam-ibm-acf`.  I don't see any reason we=
+If GPIOV0 is active high, SD1 bus is enabled. Otherwise, SD1 bus is
+disabled.
+If GPIOV1 is active high, 3.3v power load switch is enabled, SD1
+signal voltage is 3.3v. Otherwise, 1.8v power load switch will be
+enabled, SD1 signal voltage becomes 1.8v.
 
-> > > cannot host `openbmc/<company>-<feature>` repositories for things =
-which
-> > > are company specific, as long as those repositories are only picke=
-d up
-> > > by your meta-<company> layer.
-> >=20
-> > Patrick,
-> >=20
-> > Thanks.=C2=A0 That works for me.=C2=A0 I propose a new repo ibm-acf =
-which will=20
-> > have 4 related parts:
-> > 1. The Linux-PAM pam_ibmacf module (targeted to run on the BMC)
-> > 2. A tool to create and read ACF files (targeted to run on the build=
- host)
-> > 3. Common source library for use by the two items above and by the B=
-MC's=20
-> > function to upload & validate an ACF file.
-> > 4. Absolutely minimal test cases and documentation.
->=20
-> What? Why? I don't have much context, but I think this needs more just=
-ification.
+AST2600-A2 EVB also support toggling signal voltage for SD2 bus.
+The design is the same as SD1 bus. It uses GPIOV2 as power-gpio and
+GPIOV3 as power-switch-gpio.
 
-To clarify, "absolutely minimal test cases and documentation" is what I=20=
+Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+---
+ .../devicetree/bindings/mmc/aspeed,sdhci.yaml | 99 +++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
-what I think needs more justification.
+diff --git a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+index 987b287f3bff..dd894aba0bb7 100644
+--- a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
++++ b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+@@ -20,6 +20,19 @@ description: |+
+   the slots are dependent on the common configuration area, they are described
+   as child nodes.
+ 
++  The signal voltage of SDHCIs on AST2600-A2 EVB is able to be toggled by GPIO
++  pins. In the reference design, GPIOV0 of AST2600-A2 EVB is connected to the
++  power load switch that providing 3.3v to SD1 bus vdd, GPIOV1 is connected to
++  a 1.8v and a 3.3v power load switch that providing signal voltage to
++  SD1 bus.
++  If GPIOV0 is active high, SD1 bus is enabled. Otherwise, SD1 bus is
++  disabled. If GPIOV1 is active high, 3.3v power load switch is enabled, SD1
++  signal voltage is 3.3v. Otherwise, 1.8v power load switch will be enabled, SD1
++  signal voltage becomes 1.8v.
++  AST2600-A2 EVB also support toggling signal voltage for SD2 bus.
++  The design is the same as SD1 bus. It uses GPIOV2 as power-gpio and GPIOV3
++  as power-switch-gpio.
++
+ properties:
+   compatible:
+     enum:
+@@ -78,6 +91,7 @@ required:
+   - clocks
+ 
+ examples:
++  //Example 1
+   - |
+     #include <dt-bindings/clock/aspeed-clock.h>
+     sdc@1e740000 {
+@@ -104,3 +118,88 @@ examples:
+                     clocks = <&syscon ASPEED_CLK_SDIO>;
+             };
+     };
++
++  //Example 2 (AST2600EVB with GPIO regulator)
++  - |
++    #include <dt-bindings/clock/aspeed-clock.h>
++    #include <dt-bindings/gpio/aspeed-gpio.h>
++    vcc_sdhci0: regulator-vcc-sdhci0 {
++            compatible = "regulator-fixed";
++
++            regulator-name = "SDHCI0 Vcc";
++            regulator-min-microvolt = <3300000>;
++            regulator-max-microvolt = <3300000>;
++            gpios = <&gpio0 ASPEED_GPIO(V, 0)
++                            GPIO_ACTIVE_HIGH>;
++            enable-active-high;
++    };
++
++    vccq_sdhci0: regulator-vccq-sdhci0 {
++            compatible = "regulator-gpio";
++
++            regulator-name = "SDHCI0 VccQ";
++            regulator-min-microvolt = <1800000>;
++            regulator-max-microvolt = <3300000>;
++            gpios = <&gpio0 ASPEED_GPIO(V, 1)
++                            GPIO_ACTIVE_HIGH>;
++            gpios-states = <1>;
++            states = <3300000 1
++                      1800000 0>;
++    };
++
++    vcc_sdhci1: regulator-vcc-sdhci1 {
++            compatible = "regulator-fixed";
++
++            regulator-name = "SDHCI1 Vcc";
++            regulator-min-microvolt = <3300000>;
++            regulator-max-microvolt = <3300000>;
++            gpios = <&gpio0 ASPEED_GPIO(V, 2)
++                            GPIO_ACTIVE_HIGH>;
++            enable-active-high;
++    };
++
++    vccq_sdhci1: regulator-vccq-sdhci1 {
++            compatible = "regulator-gpio";
++
++            regulator-name = "SDHCI1 VccQ";
++            regulator-min-microvolt = <1800000>;
++            regulator-max-microvolt = <3300000>;
++            gpios = <&gpio0 ASPEED_GPIO(V, 3)
++                            GPIO_ACTIVE_HIGH>;
++            gpios-states = <1>;
++            states = <3300000 1
++                      1800000 0>;
++    };
++
++    sdc@1e740000 {
++            compatible = "aspeed,ast2600-sd-controller";
++            reg = <0x1e740000 0x100>;
++            #address-cells = <1>;
++            #size-cells = <1>;
++            ranges = <0 0x1e740000 0x20000>;
++            clocks = <&syscon ASPEED_CLK_GATE_SDCLK>;
++
++            sdhci0: sdhci@100 {
++                    compatible = "aspeed,ast2600-sdhci", "sdhci";
++                    reg = <0x100 0x100>;
++                    interrupts = <GIC_SPI 43 IRQ_TYPE_LEVEL_HIGH>;
++                    sdhci,auto-cmd12;
++                    clocks = <&syscon ASPEED_CLK_SDIO>;
++                    vmmc-supply = <&vcc_sdhci0>;
++                    vqmmc-supply = <&vccq_sdhci0>;
++                    sd-uhs-sdr104;
++                    clk-phase-uhs-sdr104 = <180>, <180>;
++            };
++
++            sdhci1: sdhci@200 {
++                    compatible = "aspeed,ast2600-sdhci", "sdhci";
++                    reg = <0x200 0x100>;
++                    interrupts = <GIC_SPI 43 IRQ_TYPE_LEVEL_HIGH>;
++                    sdhci,auto-cmd12;
++                    clocks = <&syscon ASPEED_CLK_SDIO>;
++                    vmmc-supply = <&vcc_sdhci1>;
++                    vqmmc-supply = <&vccq_sdhci1>;
++                    sd-uhs-sdr104;
++                    clk-phase-uhs-sdr104 = <0>, <0>;
++            };
++    };
+-- 
+2.17.1
 
-Andrew
