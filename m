@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC57537106E
-	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 03:45:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E5D93371072
+	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 03:46:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FYQmB3cCGz3036
-	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 11:45:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FYQmc6Qh9z30BD
+	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 11:46:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
@@ -17,29 +17,28 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FYQlx6Drbz2yjS;
- Mon,  3 May 2021 11:45:33 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FYQm216R4z2yyF;
+ Mon,  3 May 2021 11:45:37 +1000 (AEST)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 1431WAMe085691;
- Mon, 3 May 2021 09:32:10 +0800 (GMT-8)
+ by twspam01.aspeedtech.com with ESMTP id 1431WWK8085735;
+ Mon, 3 May 2021 09:32:33 +0800 (GMT-8)
  (envelope-from steven_lee@aspeedtech.com)
 Received: from localhost.localdomain (192.168.100.253) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 3 May
- 2021 09:43:46 +0800
+ 2021 09:44:09 +0800
 From: Steven Lee <steven_lee@aspeedtech.com>
-To: Andrew Jeffery <andrew@aj.id.au>, Ulf Hansson <ulf.hansson@linaro.org>,
- Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Ryan Chen
- <ryanchen.aspeed@gmail.com>, "moderated list:ASPEED SD/MMC DRIVER"
- <linux-aspeed@lists.ozlabs.org>, "moderated list:ASPEED SD/MMC DRIVER"
- <openbmc@lists.ozlabs.org>, "open list:ASPEED SD/MMC DRIVER"
- <linux-mmc@vger.kernel.org>, "open list:OPEN FIRMWARE AND FLATTENED DEVICE
- TREE BINDINGS" <devicetree@vger.kernel.org>, "moderated list:ARM/ASPEED
- MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>, open list
+To: Adrian Hunter <adrian.hunter@intel.com>, Andrew Jeffery <andrew@aj.id.au>, 
+ Ulf Hansson <ulf.hansson@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ "Philipp Zabel" <p.zabel@pengutronix.de>,
+ "moderated list:ASPEED SD/MMC DRIVER" <linux-aspeed@lists.ozlabs.org>,
+ "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-arm-kernel@lists.infradead.org>, open list
  <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 1/3] dt-bindings: mmc: sdhci-of-aspeed: Add description for
- AST2600 EVB.
-Date: Mon, 3 May 2021 09:43:34 +0800
-Message-ID: <20210503014336.20256-2-steven_lee@aspeedtech.com>
+Subject: [PATCH v2 3/3] mmc: sdhci-of-aspeed: Sync capabilities from device
+ tree to ast2600 SoC registers
+Date: Mon, 3 May 2021 09:43:36 +0800
+Message-ID: <20210503014336.20256-4-steven_lee@aspeedtech.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210503014336.20256-1-steven_lee@aspeedtech.com>
 References: <20210503014336.20256-1-steven_lee@aspeedtech.com>
@@ -49,7 +48,7 @@ X-Originating-IP: [192.168.100.253]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 1431WAMe085691
+X-MAIL: twspam01.aspeedtech.com 1431WWK8085735
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,154 +64,206 @@ Cc: chin-ting_kuo@aspeedtech.com, ryan_chen@aspeedtech.com, Hongweiz@ami.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add the description for describing the AST 2600 EVB reference design of
-GPIO regulators and provide the example in the document.
-
-AST2600-A2 EVB has the reference design for enabling SD bus
-power and toggling SD bus signal voltage by GPIO pins.
-
-In the reference design, GPIOV0 of AST2600-A2 EVB is connected to
-power load switch that providing 3.3v to SD1 bus vdd. GPIOV1 is
-connected to a 1.8v and a 3.3v power load switch that providing
-signal voltage to
-SD1 bus.
-
-If GPIOV0 is active high, SD1 bus is enabled. Otherwise, SD1 bus is
-disabled.
-If GPIOV1 is active high, 3.3v power load switch is enabled, SD1
-signal voltage is 3.3v. Otherwise, 1.8v power load switch will be
-enabled, SD1 signal voltage becomes 1.8v.
-
-AST2600-A2 EVB also support toggling signal voltage for SD2 bus.
-The design is the same as SD1 bus. It uses GPIOV2 as power-gpio and
-GPIOV3 as power-switch-gpio.
+Sync Capbility Registers(SDIO140, SDIO144, SDIO240, SDIO244) of ast2600
+SoC from the device tree.
+The bit 26(Voltage Support 1.8v) of SDIO140/SDIO240 is set to 1 if
+"mmc-hs200-1_8v" or "sd-uhs-sdr104" is added in the device tree.
+The bit 1(SDR104 Supported) of SDR144/SDR244 is set to 1 if "sd-uhs-sdr104"
+is added in the device tree.
+"timing-phase" is synced to SDIO0F4(Colock Phase Control)
 
 Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
 ---
- .../devicetree/bindings/mmc/aspeed,sdhci.yaml | 99 +++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ drivers/mmc/host/sdhci-of-aspeed.c | 107 ++++++++++++++++++++++++++---
+ 1 file changed, 98 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
-index 987b287f3bff..dd894aba0bb7 100644
---- a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
-+++ b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
-@@ -20,6 +20,19 @@ description: |+
-   the slots are dependent on the common configuration area, they are described
-   as child nodes.
+diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
+index 7d8692e90996..2d755bac777a 100644
+--- a/drivers/mmc/host/sdhci-of-aspeed.c
++++ b/drivers/mmc/host/sdhci-of-aspeed.c
+@@ -13,6 +13,7 @@
+ #include <linux/of.h>
+ #include <linux/of_platform.h>
+ #include <linux/platform_device.h>
++#include <linux/reset.h>
+ #include <linux/spinlock.h>
  
-+  The signal voltage of SDHCIs on AST2600-A2 EVB is able to be toggled by GPIO
-+  pins. In the reference design, GPIOV0 of AST2600-A2 EVB is connected to the
-+  power load switch that providing 3.3v to SD1 bus vdd, GPIOV1 is connected to
-+  a 1.8v and a 3.3v power load switch that providing signal voltage to
-+  SD1 bus.
-+  If GPIOV0 is active high, SD1 bus is enabled. Otherwise, SD1 bus is
-+  disabled. If GPIOV1 is active high, 3.3v power load switch is enabled, SD1
-+  signal voltage is 3.3v. Otherwise, 1.8v power load switch will be enabled, SD1
-+  signal voltage becomes 1.8v.
-+  AST2600-A2 EVB also support toggling signal voltage for SD2 bus.
-+  The design is the same as SD1 bus. It uses GPIOV2 as power-gpio and GPIOV3
-+  as power-switch-gpio.
+ #include "sdhci-pltfm.h"
+@@ -30,10 +31,18 @@
+ #define   ASPEED_SDC_S0_PHASE_IN_EN	BIT(2)
+ #define   ASPEED_SDC_S0_PHASE_OUT_EN	GENMASK(1, 0)
+ #define   ASPEED_SDC_PHASE_MAX		31
++#define ASPEED_SDC_CAP1_1_8V           BIT(26)
++#define ASPEED_SDC_CAP2_SDR104         BIT(1)
++#define PROBE_AFTER_ASSET_DEASSERT     0x1
 +
- properties:
-   compatible:
-     enum:
-@@ -78,6 +91,7 @@ required:
-   - clocks
++struct aspeed_sdc_info {
++	u32 flag;
++};
  
- examples:
-+  //Example 1
-   - |
-     #include <dt-bindings/clock/aspeed-clock.h>
-     sdc@1e740000 {
-@@ -104,3 +118,88 @@ examples:
-                     clocks = <&syscon ASPEED_CLK_SDIO>;
-             };
-     };
+ struct aspeed_sdc {
+ 	struct clk *clk;
+ 	struct resource *res;
++	struct reset_control *rst;
+ 
+ 	spinlock_t lock;
+ 	void __iomem *regs;
+@@ -72,6 +81,44 @@ struct aspeed_sdhci {
+ 	const struct aspeed_sdhci_phase_desc *phase_desc;
+ };
+ 
++struct aspeed_sdc_info ast2600_sdc_info = {
++	.flag = PROBE_AFTER_ASSET_DEASSERT
++};
 +
-+  //Example 2 (AST2600EVB with GPIO regulator)
-+  - |
-+    #include <dt-bindings/clock/aspeed-clock.h>
-+    #include <dt-bindings/gpio/aspeed-gpio.h>
-+    vcc_sdhci0: regulator-vcc-sdhci0 {
-+            compatible = "regulator-fixed";
++/*
++ * The function sets the mirror register for updating
++ * capbilities of the current slot.
++ *
++ *   slot | cap_idx | caps_reg | mirror_reg
++ *   -----|---------|----------|------------
++ *     0  |    0    | SDIO140  |   SDIO10
++ *     0  |    1    | SDIO144  |   SDIO14
++ *     1  |    0    | SDIO240  |   SDIO20
++ *     1  |    1    | SDIO244  |   SDIO24
++ */
++static void aspeed_sdc_set_slot_capability(struct sdhci_host *host,
++					   struct aspeed_sdc *sdc,
++					   u32 reg_val,
++					   u8 slot,
++					   u8 cap_idx)
++{
++	u8 caps_reg_offset;
++	u32 caps_reg;
++	u32 mirror_reg_offset;
++	u32 caps_val;
 +
-+            regulator-name = "SDHCI0 Vcc";
-+            regulator-min-microvolt = <3300000>;
-+            regulator-max-microvolt = <3300000>;
-+            gpios = <&gpio0 ASPEED_GPIO(V, 0)
-+                            GPIO_ACTIVE_HIGH>;
-+            enable-active-high;
-+    };
++	if (cap_idx > 1 || slot > 1)
++		return;
 +
-+    vccq_sdhci0: regulator-vccq-sdhci0 {
-+            compatible = "regulator-gpio";
++	caps_reg_offset = (cap_idx == 0) ? 0 : 4;
++	caps_reg = 0x40 + caps_reg_offset;
++	caps_val = sdhci_readl(host, caps_reg);
++	caps_val |= reg_val;
++	mirror_reg_offset = (slot == 0) ? 0x10 : 0x20;
++	mirror_reg_offset += caps_reg_offset;
++	writel(caps_val, sdc->regs + mirror_reg_offset);
++}
 +
-+            regulator-name = "SDHCI0 VccQ";
-+            regulator-min-microvolt = <1800000>;
-+            regulator-max-microvolt = <3300000>;
-+            gpios = <&gpio0 ASPEED_GPIO(V, 1)
-+                            GPIO_ACTIVE_HIGH>;
-+            gpios-states = <1>;
-+            states = <3300000 1
-+                      1800000 0>;
-+    };
+ static void aspeed_sdc_configure_8bit_mode(struct aspeed_sdc *sdc,
+ 					   struct aspeed_sdhci *sdhci,
+ 					   bool bus8)
+@@ -329,9 +376,11 @@ static int aspeed_sdhci_probe(struct platform_device *pdev)
+ {
+ 	const struct aspeed_sdhci_pdata *aspeed_pdata;
+ 	struct sdhci_pltfm_host *pltfm_host;
++	struct device_node *np = pdev->dev.of_node;
+ 	struct aspeed_sdhci *dev;
+ 	struct sdhci_host *host;
+ 	struct resource *res;
++	u32 reg_val;
+ 	int slot;
+ 	int ret;
+ 
+@@ -372,6 +421,21 @@ static int aspeed_sdhci_probe(struct platform_device *pdev)
+ 
+ 	sdhci_get_of_property(pdev);
+ 
++	if (of_property_read_bool(np, "mmc-hs200-1_8v") ||
++	    of_property_read_bool(np, "sd-uhs-sdr104"))
++		aspeed_sdc_set_slot_capability(host,
++					       dev->parent,
++					       ASPEED_SDC_CAP1_1_8V,
++					       slot,
++					       0);
 +
-+    vcc_sdhci1: regulator-vcc-sdhci1 {
-+            compatible = "regulator-fixed";
++	if (of_property_read_bool(np, "sd-uhs-sdr104"))
++		aspeed_sdc_set_slot_capability(host,
++					       dev->parent,
++					       ASPEED_SDC_CAP2_SDR104,
++					       slot,
++					       1);
 +
-+            regulator-name = "SDHCI1 Vcc";
-+            regulator-min-microvolt = <3300000>;
-+            regulator-max-microvolt = <3300000>;
-+            gpios = <&gpio0 ASPEED_GPIO(V, 2)
-+                            GPIO_ACTIVE_HIGH>;
-+            enable-active-high;
-+    };
+ 	pltfm_host->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(pltfm_host->clk))
+ 		return PTR_ERR(pltfm_host->clk);
+@@ -476,12 +540,25 @@ static struct platform_driver aspeed_sdhci_driver = {
+ 	.remove		= aspeed_sdhci_remove,
+ };
+ 
++static const struct of_device_id aspeed_sdc_of_match[] = {
++	{ .compatible = "aspeed,ast2400-sd-controller", },
++	{ .compatible = "aspeed,ast2500-sd-controller", },
++	{ .compatible = "aspeed,ast2600-sd-controller", .data = &ast2600_sdc_info},
++	{ }
++};
 +
-+    vccq_sdhci1: regulator-vccq-sdhci1 {
-+            compatible = "regulator-gpio";
++MODULE_DEVICE_TABLE(of, aspeed_sdc_of_match);
 +
-+            regulator-name = "SDHCI1 VccQ";
-+            regulator-min-microvolt = <1800000>;
-+            regulator-max-microvolt = <3300000>;
-+            gpios = <&gpio0 ASPEED_GPIO(V, 3)
-+                            GPIO_ACTIVE_HIGH>;
-+            gpios-states = <1>;
-+            states = <3300000 1
-+                      1800000 0>;
-+    };
+ static int aspeed_sdc_probe(struct platform_device *pdev)
+ 
+ {
+ 	struct device_node *parent, *child;
+ 	struct aspeed_sdc *sdc;
++	const struct of_device_id *match = NULL;
++	const struct aspeed_sdc_info *info = NULL;
 +
-+    sdc@1e740000 {
-+            compatible = "aspeed,ast2600-sd-controller";
-+            reg = <0x1e740000 0x100>;
-+            #address-cells = <1>;
-+            #size-cells = <1>;
-+            ranges = <0 0x1e740000 0x20000>;
-+            clocks = <&syscon ASPEED_CLK_GATE_SDCLK>;
+ 	int ret;
++	u32 timing_phase;
+ 
+ 	sdc = devm_kzalloc(&pdev->dev, sizeof(*sdc), GFP_KERNEL);
+ 	if (!sdc)
+@@ -489,6 +566,23 @@ static int aspeed_sdc_probe(struct platform_device *pdev)
+ 
+ 	spin_lock_init(&sdc->lock);
+ 
++	match = of_match_device(aspeed_sdc_of_match, &pdev->dev);
++	if (!match)
++		return -ENODEV;
 +
-+            sdhci0: sdhci@100 {
-+                    compatible = "aspeed,ast2600-sdhci", "sdhci";
-+                    reg = <0x100 0x100>;
-+                    interrupts = <GIC_SPI 43 IRQ_TYPE_LEVEL_HIGH>;
-+                    sdhci,auto-cmd12;
-+                    clocks = <&syscon ASPEED_CLK_SDIO>;
-+                    vmmc-supply = <&vcc_sdhci0>;
-+                    vqmmc-supply = <&vccq_sdhci0>;
-+                    sd-uhs-sdr104;
-+                    clk-phase-uhs-sdr104 = <180>, <180>;
-+            };
++	if (match->data)
++		info = match->data;
 +
-+            sdhci1: sdhci@200 {
-+                    compatible = "aspeed,ast2600-sdhci", "sdhci";
-+                    reg = <0x200 0x100>;
-+                    interrupts = <GIC_SPI 43 IRQ_TYPE_LEVEL_HIGH>;
-+                    sdhci,auto-cmd12;
-+                    clocks = <&syscon ASPEED_CLK_SDIO>;
-+                    vmmc-supply = <&vcc_sdhci1>;
-+                    vqmmc-supply = <&vccq_sdhci1>;
-+                    sd-uhs-sdr104;
-+                    clk-phase-uhs-sdr104 = <0>, <0>;
-+            };
-+    };
++	if (info) {
++		if (info->flag & PROBE_AFTER_ASSET_DEASSERT) {
++			sdc->rst = devm_reset_control_get(&pdev->dev, NULL);
++			if (!IS_ERR(sdc->rst)) {
++				reset_control_assert(sdc->rst);
++				reset_control_deassert(sdc->rst);
++			}
++		}
++	}
++
+ 	sdc->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(sdc->clk))
+ 		return PTR_ERR(sdc->clk);
+@@ -506,6 +600,10 @@ static int aspeed_sdc_probe(struct platform_device *pdev)
+ 		goto err_clk;
+ 	}
+ 
++	if (!of_property_read_u32(pdev->dev.of_node,
++				  "timing-phase", &timing_phase))
++		writel(timing_phase, sdc->regs + ASPEED_SDC_PHASE);
++
+ 	dev_set_drvdata(&pdev->dev, sdc);
+ 
+ 	parent = pdev->dev.of_node;
+@@ -536,15 +634,6 @@ static int aspeed_sdc_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static const struct of_device_id aspeed_sdc_of_match[] = {
+-	{ .compatible = "aspeed,ast2400-sd-controller", },
+-	{ .compatible = "aspeed,ast2500-sd-controller", },
+-	{ .compatible = "aspeed,ast2600-sd-controller", },
+-	{ }
+-};
+-
+-MODULE_DEVICE_TABLE(of, aspeed_sdc_of_match);
+-
+ static struct platform_driver aspeed_sdc_driver = {
+ 	.driver		= {
+ 		.name	= "sd-controller-aspeed",
 -- 
 2.17.1
 
