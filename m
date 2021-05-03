@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D2463710BE
-	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 06:20:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEACD37111E
+	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 07:05:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FYVBh3N0Mz301v
-	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 14:20:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FYWBf63Rmz3026
+	for <lists+openbmc@lfdr.de>; Mon,  3 May 2021 15:05:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=bDUARedU;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=B4jlIQXk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=an2TWdeM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=YkbzeqPr;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,81 +19,80 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=bDUARedU; 
+ header.s=fm2 header.b=an2TWdeM; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=B4jlIQXk; 
+ header.a=rsa-sha256 header.s=fm2 header.b=YkbzeqPr; 
  dkim-atps=neutral
 Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
  [66.111.4.224])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FYVBH1pwyz2xfx;
- Mon,  3 May 2021 14:20:05 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FYWBK2nDtz2xZN;
+ Mon,  3 May 2021 15:05:13 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 8994D580915;
- Mon,  3 May 2021 00:20:01 -0400 (EDT)
+ by mailnew.nyi.internal (Postfix) with ESMTP id C8347580965;
+ Mon,  3 May 2021 01:05:10 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Mon, 03 May 2021 00:20:01 -0400
+ by compute3.internal (MEProxy); Mon, 03 May 2021 01:05:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=Wp7XYzm4lyNSERoy1FmfOae3cQfvuVX
- 2QEotJK/yJJ8=; b=bDUARedUZgjPAzEnZC1bxDiwX+6f3UMtdIfPIEmZ19UArg1
- gRjpcu0moAVl/68G1R09VyDMoXzDkBnynu9KIA8ywdVm3i2eOzt/MzAroKWV9HtE
- EaawbiAPRpMmYsW/0JwECb8riPszF8U+EMMJC+kdujj2fYncAdRj+k6BxRDnJ9dp
- ToAuRIK7LRPk1sfr5UA2jjwBqyQKI05UpBcw8H4RnRbgy23JGhDdupWTOSsYuXT4
- S75haQONi0i28bLR6rLIBXwA8MdhPP8MZE5JVweg1W/FjVd3mkZBA8OPm+ue9DlE
- xqIpvmxgy+714czPXLCUZoFLt5PIAnwGKqwjLBw==
+ :subject:content-type; s=fm2; bh=wZbGrNNB8IKzZFmeNM9BGTHd9BMaGLO
+ Y6F6xSuyaF18=; b=an2TWdeMwdv8G1iuCS7DLTs+lkXvq+3tfPdMyDwI8dKWrwb
+ nqewtPcOrnJcnUQVKnwvR25JJSISoytO/AM9I10ERmpOFh3YFchv8o/zgb2pUhkN
+ 3rFGTOPy0wf9w1b92SHb/feEig5yygfJ8YHJ0H+A3zucZYwZ7q/fyRGPPKnpIsHH
+ Q1/Oko9+7NSc/136v6C1+UD/KWP3m4HTymdJ/tug0hZVVH86PpjUbleRUIqX4Bmw
+ uotf4YaCUQVHfh0pQIbCihGEIVvAVeTrdcgs34TcDN49yj48dBP0/3Yu86neanW5
+ IX18wDddBFZTiQuHMcQvRmfo+1IHUKQNvRG+CbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Wp7XYz
- m4lyNSERoy1FmfOae3cQfvuVX2QEotJK/yJJ8=; b=B4jlIQXklSprl8L9WIInZ4
- K6xyebrbKDzJHotVIMBNqWBMapb2OARcXQ7k8h4iksMYcs94Hd+8CLFN69ZjK5eW
- YQ9cvbnCFhJqZIPc2ITnnaYYeQmXsP8ZXOhnBJygSNBSGcXTr2WPBkYidrhe0z6e
- jnBdv46glIKPSf3XQuyPwmG+kkpcqUtj+89V1MSUXv9ykOTadg+a4C42+ZTUQH35
- vHNfq9oQgUGz0teetMQp3Ot2eeJ7MQGHee2YX82S5shxOckmEanipyD+y6HZ6593
- cgyvExNcwIAiwyLReo17hWhYEkJPgJZx3NRou185hS4ZiBqGUd7yWgTTq8AqcwcQ
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=wZbGrN
+ NB8IKzZFmeNM9BGTHd9BMaGLOY6F6xSuyaF18=; b=YkbzeqPr/dG3JUY06vDlmK
+ VJk70rwWuEiFMHNiufwjudRM4UPee9bLpphSHInHvz48X/pr8wm1QIIDdyEMeAH9
+ 9L8K26/XQ4A3U/oJmErTK2TabpGw9ixtKXIAigvT2xLOZT57b7tenZsZT804NOZ7
+ YmZPaxphcpPvwvIxeErT0E4ZQDHx8ybIN3se1m8+D9z2ofm+wcLvDUK53lbKwFiM
+ iUk2vKKAju/JwGtrKrHBHe6zWzLKA2qs1MfK8RcxmJHLFU+lAA9xEDXl52XqnJOp
+ /DgiEGxQTL0fU5IBhwdtl28uM7WDSiBrA+ACnzPfgITw5EsI+lGAx8/yjaDIGvRQ
  ==
-X-ME-Sender: <xms:73mPYDojdWVtg9_LOr2USDZ2uIWZdoeakfedoXaEo3WVXB6ddTUcyQ>
- <xme:73mPYNo39H0zBM3yTk6t_4UN60AA7U2SMbsOtW-eqPlBaK9h7RgxhrcmwXAuoJYfT
- jm0TMNWKNYtWowNSw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeffedgtdefucetufdoteggodetrfdotf
+X-ME-Sender: <xms:hYSPYOQ9i-YmIaf2oz8_l3gnTSGkDhB40MtrBw3M1iAe_WQDEsfVug>
+ <xme:hYSPYDxOClEVmVpc9F2c4u8tWvqBBRNnk01eWhXmcO27r8jREP03Q9SGpDiWzkaie
+ 4maE1qL2S95aaSzYg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeffedguddvucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepheehfeegfeekjeegtdetuedvgeeljedvteffudeiffduvefhiefhleef
- lefghfeknecuffhomhgrihhnpeihrghmlhdrohhrghenucevlhhushhtvghrufhiiigvpe
- dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:73mPYAP8gYu5MQvSTHL55s7uxh_jEnQPC03tZhcFNc0SMWElXhTg6A>
- <xmx:73mPYG5ramDY4t-dl9upZ_28ky4tT0hOkfSQ0V28SRJ6nWg2xEk0xg>
- <xmx:73mPYC5WgFP_J3uF-xMm3nl0TYsJjBsZMZD0jyNgcZPvF4BwDvOUEA>
- <xmx:8XmPYKj-gqfwS9VvZuy_zC_Adc0d8IFIOFHX0PkGebpW3Eqc1Qb2VQ>
+ grthhtvghrnhepudehtddtleektedvfeeitdeljeekveelkeegvdfhtdejhefgfedtfedv
+ jeejledtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
+ gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:hYSPYL2PXeI_2hOapbM_66Bgz4GwPLsvlkAlB1ibk3HDt-DKSxX1lQ>
+ <xmx:hYSPYKBtGR7LzIS7XveVVluZoP05OGw7jB7K_EXTWWoJkpKOku-UIA>
+ <xmx:hYSPYHgxFbWVSRXaZn1HR5SGxmcMaXv_TKAmT426JpXIfwZNWLEq2A>
+ <xmx:hoSPYGM25aBK1ISbcPP1Igz7dR0rp18Gu8wf0_CrLi_j7WllcTxiXg>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id CD029A00079; Mon,  3 May 2021 00:19:59 -0400 (EDT)
+ id 4BBB0A00079; Mon,  3 May 2021 01:05:09 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-403-gbc3c488b23-fm-20210419.005-gbc3c488b
 Mime-Version: 1.0
-Message-Id: <75226402-503c-4e9b-96dc-e4bd74cf20ac@www.fastmail.com>
-In-Reply-To: <20210503014336.20256-2-steven_lee@aspeedtech.com>
+Message-Id: <f1e86e81-d385-429a-ab8a-475240925f21@www.fastmail.com>
+In-Reply-To: <20210503014336.20256-4-steven_lee@aspeedtech.com>
 References: <20210503014336.20256-1-steven_lee@aspeedtech.com>
- <20210503014336.20256-2-steven_lee@aspeedtech.com>
-Date: Mon, 03 May 2021 13:49:38 +0930
+ <20210503014336.20256-4-steven_lee@aspeedtech.com>
+Date: Mon, 03 May 2021 14:34:06 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Steven Lee" <steven_lee@aspeedtech.com>,
- "Ulf Hansson" <ulf.hansson@linaro.org>, "Rob Herring" <robh+dt@kernel.org>,
- "Joel Stanley" <joel@jms.id.au>, "Ryan Chen" <ryanchen.aspeed@gmail.com>,
+ "Adrian Hunter" <adrian.hunter@intel.com>,
+ "Ulf Hansson" <ulf.hansson@linaro.org>, "Joel Stanley" <joel@jms.id.au>,
+ "Philipp Zabel" <p.zabel@pengutronix.de>,
  "moderated list:ASPEED SD/MMC DRIVER" <linux-aspeed@lists.ozlabs.org>,
  "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
- linux-mmc <linux-mmc@vger.kernel.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
  <linux-arm-kernel@lists.infradead.org>, 
  "open list" <linux-kernel@vger.kernel.org>
-Subject: =?UTF-8?Q?Re:_[PATCH_v2_1/3]_dt-bindings:_mmc:_sdhci-of-aspeed:_Add_desc?=
- =?UTF-8?Q?ription_for_AST2600_EVB.?=
+Subject: =?UTF-8?Q?Re:_[PATCH_v2_3/3]_mmc:_sdhci-of-aspeed:_Sync_capabilities_fro?=
+ =?UTF-8?Q?m_device_tree_to_ast2600_SoC_registers?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -114,175 +113,250 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 Hi Steven,
 
 On Mon, 3 May 2021, at 11:13, Steven Lee wrote:
-> Add the description for describing the AST 2600 EVB reference design of
-> GPIO regulators and provide the example in the document.
-> 
-> AST2600-A2 EVB has the reference design for enabling SD bus
-> power and toggling SD bus signal voltage by GPIO pins.
-> 
-> In the reference design, GPIOV0 of AST2600-A2 EVB is connected to
-> power load switch that providing 3.3v to SD1 bus vdd. GPIOV1 is
-> connected to a 1.8v and a 3.3v power load switch that providing
-> signal voltage to
-> SD1 bus.
-> 
-> If GPIOV0 is active high, SD1 bus is enabled. Otherwise, SD1 bus is
-> disabled.
-> If GPIOV1 is active high, 3.3v power load switch is enabled, SD1
-> signal voltage is 3.3v. Otherwise, 1.8v power load switch will be
-> enabled, SD1 signal voltage becomes 1.8v.
-> 
-> AST2600-A2 EVB also support toggling signal voltage for SD2 bus.
-> The design is the same as SD1 bus. It uses GPIOV2 as power-gpio and
-> GPIOV3 as power-switch-gpio.
+> Sync Capbility Registers(SDIO140, SDIO144, SDIO240, SDIO244) of ast2600
+> SoC from the device tree.
+> The bit 26(Voltage Support 1.8v) of SDIO140/SDIO240 is set to 1 if
+> "mmc-hs200-1_8v" or "sd-uhs-sdr104" is added in the device tree.
+> The bit 1(SDR104 Supported) of SDR144/SDR244 is set to 1 if "sd-uhs-sdr104"
+> is added in the device tree.
+> "timing-phase" is synced to SDIO0F4(Colock Phase Control)
 > 
 > Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
 > ---
->  .../devicetree/bindings/mmc/aspeed,sdhci.yaml | 99 +++++++++++++++++++
->  1 file changed, 99 insertions(+)
+>  drivers/mmc/host/sdhci-of-aspeed.c | 107 ++++++++++++++++++++++++++---
+>  1 file changed, 98 insertions(+), 9 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml 
-> b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
-> index 987b287f3bff..dd894aba0bb7 100644
-> --- a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
-> @@ -20,6 +20,19 @@ description: |+
->    the slots are dependent on the common configuration area, they are 
-> described
->    as child nodes.
+> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c 
+> b/drivers/mmc/host/sdhci-of-aspeed.c
+> index 7d8692e90996..2d755bac777a 100644
+> --- a/drivers/mmc/host/sdhci-of-aspeed.c
+> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
+> @@ -13,6 +13,7 @@
+>  #include <linux/of.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/reset.h>
+>  #include <linux/spinlock.h>
 >  
-> +  The signal voltage of SDHCIs on AST2600-A2 EVB is able to be toggled 
-> by GPIO
-> +  pins. In the reference design, GPIOV0 of AST2600-A2 EVB is connected 
-> to the
-> +  power load switch that providing 3.3v to SD1 bus vdd, GPIOV1 is 
-> connected to
-> +  a 1.8v and a 3.3v power load switch that providing signal voltage to
-> +  SD1 bus.
-> +  If GPIOV0 is active high, SD1 bus is enabled. Otherwise, SD1 bus is
-> +  disabled. If GPIOV1 is active high, 3.3v power load switch is 
-> enabled, SD1
-> +  signal voltage is 3.3v. Otherwise, 1.8v power load switch will be 
-> enabled, SD1
-> +  signal voltage becomes 1.8v.
-> +  AST2600-A2 EVB also support toggling signal voltage for SD2 bus.
-> +  The design is the same as SD1 bus. It uses GPIOV2 as power-gpio and 
-> GPIOV3
-> +  as power-switch-gpio.
-
-I don't think we should be describing design-specific details in the 
-binding document. However, I think this would be a great comment in the 
-AST2600 EVB devicetree. Can you please move it there?
-
+>  #include "sdhci-pltfm.h"
+> @@ -30,10 +31,18 @@
+>  #define   ASPEED_SDC_S0_PHASE_IN_EN	BIT(2)
+>  #define   ASPEED_SDC_S0_PHASE_OUT_EN	GENMASK(1, 0)
+>  #define   ASPEED_SDC_PHASE_MAX		31
+> +#define ASPEED_SDC_CAP1_1_8V           BIT(26)
+> +#define ASPEED_SDC_CAP2_SDR104         BIT(1)
+> +#define PROBE_AFTER_ASSET_DEASSERT     0x1
 > +
->  properties:
->    compatible:
->      enum:
-> @@ -78,6 +91,7 @@ required:
->    - clocks
+> +struct aspeed_sdc_info {
+> +	u32 flag;
+> +};
 >  
->  examples:
-> +  //Example 1
->    - |
->      #include <dt-bindings/clock/aspeed-clock.h>
->      sdc@1e740000 {
-> @@ -104,3 +118,88 @@ examples:
->                      clocks = <&syscon ASPEED_CLK_SDIO>;
->              };
->      };
+>  struct aspeed_sdc {
+>  	struct clk *clk;
+>  	struct resource *res;
+> +	struct reset_control *rst;
+>  
+>  	spinlock_t lock;
+>  	void __iomem *regs;
+> @@ -72,6 +81,44 @@ struct aspeed_sdhci {
+>  	const struct aspeed_sdhci_phase_desc *phase_desc;
+>  };
+>  
+> +struct aspeed_sdc_info ast2600_sdc_info = {
+> +	.flag = PROBE_AFTER_ASSET_DEASSERT
+> +};
 > +
-> +  //Example 2 (AST2600EVB with GPIO regulator)
+> +/*
+> + * The function sets the mirror register for updating
+> + * capbilities of the current slot.
+> + *
+> + *   slot | cap_idx | caps_reg | mirror_reg
+> + *   -----|---------|----------|------------
+> + *     0  |    0    | SDIO140  |   SDIO10
+> + *     0  |    1    | SDIO144  |   SDIO14
+> + *     1  |    0    | SDIO240  |   SDIO20
+> + *     1  |    1    | SDIO244  |   SDIO24
+> + */
+> +static void aspeed_sdc_set_slot_capability(struct sdhci_host *host,
+> +					   struct aspeed_sdc *sdc,
+> +					   u32 reg_val,
+> +					   u8 slot,
+> +					   u8 cap_idx)
 
-I feel you didn't test this with `make dt_binding_check` as `//` isn't
-a valid YAML comment token. You need to use `#` for comments (
-https://yaml.org/spec/1.2/spec.html#id2780069 ).
+Having thought about this some more now we have code, I wonder if we can get
+rid of `cap_idx` as a parameter. Something like:
 
-> +  - |
-> +    #include <dt-bindings/clock/aspeed-clock.h>
-> +    #include <dt-bindings/gpio/aspeed-gpio.h>
-> +    vcc_sdhci0: regulator-vcc-sdhci0 {
-> +            compatible = "regulator-fixed";
-> +
-> +            regulator-name = "SDHCI0 Vcc";
-> +            regulator-min-microvolt = <3300000>;
-> +            regulator-max-microvolt = <3300000>;
-> +            gpios = <&gpio0 ASPEED_GPIO(V, 0)
-> +                            GPIO_ACTIVE_HIGH>;
-> +            enable-active-high;
-> +    };
-> +
-> +    vccq_sdhci0: regulator-vccq-sdhci0 {
-> +            compatible = "regulator-gpio";
-> +
-> +            regulator-name = "SDHCI0 VccQ";
-> +            regulator-min-microvolt = <1800000>;
-> +            regulator-max-microvolt = <3300000>;
-> +            gpios = <&gpio0 ASPEED_GPIO(V, 1)
-> +                            GPIO_ACTIVE_HIGH>;
-> +            gpios-states = <1>;
-> +            states = <3300000 1
-> +                      1800000 0>;
-> +    };
-> +
-> +    vcc_sdhci1: regulator-vcc-sdhci1 {
-> +            compatible = "regulator-fixed";
-> +
-> +            regulator-name = "SDHCI1 Vcc";
-> +            regulator-min-microvolt = <3300000>;
-> +            regulator-max-microvolt = <3300000>;
-> +            gpios = <&gpio0 ASPEED_GPIO(V, 2)
-> +                            GPIO_ACTIVE_HIGH>;
-> +            enable-active-high;
-> +    };
-> +
-> +    vccq_sdhci1: regulator-vccq-sdhci1 {
-> +            compatible = "regulator-gpio";
-> +
-> +            regulator-name = "SDHCI1 VccQ";
-> +            regulator-min-microvolt = <1800000>;
-> +            regulator-max-microvolt = <3300000>;
-> +            gpios = <&gpio0 ASPEED_GPIO(V, 3)
-> +                            GPIO_ACTIVE_HIGH>;
-> +            gpios-states = <1>;
-> +            states = <3300000 1
-> +                      1800000 0>;
-> +    };
-> +
-> +    sdc@1e740000 {
-> +            compatible = "aspeed,ast2600-sd-controller";
-> +            reg = <0x1e740000 0x100>;
-> +            #address-cells = <1>;
-> +            #size-cells = <1>;
-> +            ranges = <0 0x1e740000 0x20000>;
-> +            clocks = <&syscon ASPEED_CLK_GATE_SDCLK>;
-> +
-> +            sdhci0: sdhci@100 {
-> +                    compatible = "aspeed,ast2600-sdhci", "sdhci";
-> +                    reg = <0x100 0x100>;
-> +                    interrupts = <GIC_SPI 43 IRQ_TYPE_LEVEL_HIGH>;
-> +                    sdhci,auto-cmd12;
-> +                    clocks = <&syscon ASPEED_CLK_SDIO>;
-> +                    vmmc-supply = <&vcc_sdhci0>;
-> +                    vqmmc-supply = <&vccq_sdhci0>;
-> +                    sd-uhs-sdr104;
-> +                    clk-phase-uhs-sdr104 = <180>, <180>;
-> +            };
-> +
-> +            sdhci1: sdhci@200 {
-> +                    compatible = "aspeed,ast2600-sdhci", "sdhci";
-> +                    reg = <0x200 0x100>;
-> +                    interrupts = <GIC_SPI 43 IRQ_TYPE_LEVEL_HIGH>;
-> +                    sdhci,auto-cmd12;
-> +                    clocks = <&syscon ASPEED_CLK_SDIO>;
-> +                    vmmc-supply = <&vcc_sdhci1>;
-> +                    vqmmc-supply = <&vccq_sdhci1>;
-> +                    sd-uhs-sdr104;
-> +                    clk-phase-uhs-sdr104 = <0>, <0>;
-> +            };
-> +    };
+static void aspeed_sdc_set_slot_capability(struct sdhci_host *host,
+    struct aspeed_sdc *sdc, int capability, bool enable, u8 slot);
 
-This is a good example, so can we keep this and just drop the comment 
-from the binding document?
+From there, instead of
+
+#define ASPEED_SDC_CAP1_1_8V           BIT(26)
+#define ASPEED_SDC_CAP2_SDR104         BIT(1)
+
+We do
+
+/* SDIO{10,20} */
+#define ASPEED_SDC_CAP1_1_8V           (0 * 32 + 26)
+/* SDIO{14,24} */
+#define ASPEED_SDC_CAP2_SDR104         (1 * 32 + 1)
+
+Then in the implementation of aspeed_sdc_set_slot_capability() we 
+derive cap_idx and reg_val:
+
+u8 reg_val = enable * BIT(capability % 32);
+u8 cap_reg = capability / 32;
+
+That way we get rid of the 0 and 1 magic values for cap_idx when 
+invoking aspeed_sdc_set_slot_capability() and the caller can't
+accidentally pass the wrong value.
+
+> +{
+> +	u8 caps_reg_offset;
+> +	u32 caps_reg;
+> +	u32 mirror_reg_offset;
+> +	u32 caps_val;
+> +
+> +	if (cap_idx > 1 || slot > 1)
+> +		return;
+> +
+> +	caps_reg_offset = (cap_idx == 0) ? 0 : 4;
+> +	caps_reg = 0x40 + caps_reg_offset;
+> +	caps_val = sdhci_readl(host, caps_reg);
+
+Hmm, I think you used sdhci_readl() because I commented on that last 
+time. If the global-area registers are truly mirrored we could read 
+from them as well right? In which case we could just use 
+readl(sdc->regs + mirror_reg_offset)? If so we can drop the host 
+parameter and (incorporating my suggestion above) just have:
+
+static void aspeed_sdc_set_slot_capability(struct aspeed_sdc *sdc,
+    int capability, bool enable, u8 slot);
+
+Sorry if I've sort of flip-flopped on that, but I think originally you 
+were still reading from the SDHCI (read-only) address?
+
+> +	caps_val |= reg_val;
+> +	mirror_reg_offset = (slot == 0) ? 0x10 : 0x20;
+> +	mirror_reg_offset += caps_reg_offset;
+> +	writel(caps_val, sdc->regs + mirror_reg_offset);
+> +}
+> +
+>  static void aspeed_sdc_configure_8bit_mode(struct aspeed_sdc *sdc,
+>  					   struct aspeed_sdhci *sdhci,
+>  					   bool bus8)
+> @@ -329,9 +376,11 @@ static int aspeed_sdhci_probe(struct platform_device *pdev)
+>  {
+>  	const struct aspeed_sdhci_pdata *aspeed_pdata;
+>  	struct sdhci_pltfm_host *pltfm_host;
+> +	struct device_node *np = pdev->dev.of_node;
+>  	struct aspeed_sdhci *dev;
+>  	struct sdhci_host *host;
+>  	struct resource *res;
+> +	u32 reg_val;
+>  	int slot;
+>  	int ret;
+>  
+> @@ -372,6 +421,21 @@ static int aspeed_sdhci_probe(struct platform_device *pdev)
+>  
+>  	sdhci_get_of_property(pdev);
+>  
+> +	if (of_property_read_bool(np, "mmc-hs200-1_8v") ||
+> +	    of_property_read_bool(np, "sd-uhs-sdr104"))
+> +		aspeed_sdc_set_slot_capability(host,
+> +					       dev->parent,
+> +					       ASPEED_SDC_CAP1_1_8V,
+> +					       slot,
+> +					       0);
+
+See the discussion above about reworking aspeed_sdc_set_slot_capability.
+
+> +
+> +	if (of_property_read_bool(np, "sd-uhs-sdr104"))
+> +		aspeed_sdc_set_slot_capability(host,
+> +					       dev->parent,
+> +					       ASPEED_SDC_CAP2_SDR104,
+> +					       slot,
+> +					       1);
+
+Again here.
+
+> +
+>  	pltfm_host->clk = devm_clk_get(&pdev->dev, NULL);
+>  	if (IS_ERR(pltfm_host->clk))
+>  		return PTR_ERR(pltfm_host->clk);
+> @@ -476,12 +540,25 @@ static struct platform_driver aspeed_sdhci_driver = {
+>  	.remove		= aspeed_sdhci_remove,
+>  };
+>  
+> +static const struct of_device_id aspeed_sdc_of_match[] = {
+> +	{ .compatible = "aspeed,ast2400-sd-controller", },
+> +	{ .compatible = "aspeed,ast2500-sd-controller", },
+> +	{ .compatible = "aspeed,ast2600-sd-controller", .data = &ast2600_sdc_info},
+> +	{ }
+> +};
+> +
+> +MODULE_DEVICE_TABLE(of, aspeed_sdc_of_match);
+> +
+>  static int aspeed_sdc_probe(struct platform_device *pdev)
+>  
+>  {
+>  	struct device_node *parent, *child;
+>  	struct aspeed_sdc *sdc;
+> +	const struct of_device_id *match = NULL;
+> +	const struct aspeed_sdc_info *info = NULL;
+> +
+>  	int ret;
+> +	u32 timing_phase;
+>  
+>  	sdc = devm_kzalloc(&pdev->dev, sizeof(*sdc), GFP_KERNEL);
+>  	if (!sdc)
+> @@ -489,6 +566,23 @@ static int aspeed_sdc_probe(struct platform_device *pdev)
+>  
+>  	spin_lock_init(&sdc->lock);
+>  
+> +	match = of_match_device(aspeed_sdc_of_match, &pdev->dev);
+> +	if (!match)
+> +		return -ENODEV;
+> +
+> +	if (match->data)
+> +		info = match->data;
+> +
+> +	if (info) {
+> +		if (info->flag & PROBE_AFTER_ASSET_DEASSERT) {
+> +			sdc->rst = devm_reset_control_get(&pdev->dev, NULL);
+> +			if (!IS_ERR(sdc->rst)) {
+> +				reset_control_assert(sdc->rst);
+> +				reset_control_deassert(sdc->rst);
+> +			}
+> +		}
+> +	}
+
+I think this should be a separate patch.
+
+From the code it seems that this is necessary for just the 2600? Where 
+is this documented?
+
+> +
+>  	sdc->clk = devm_clk_get(&pdev->dev, NULL);
+>  	if (IS_ERR(sdc->clk))
+>  		return PTR_ERR(sdc->clk);
+> @@ -506,6 +600,10 @@ static int aspeed_sdc_probe(struct platform_device *pdev)
+>  		goto err_clk;
+>  	}
+>  
+> +	if (!of_property_read_u32(pdev->dev.of_node,
+> +				  "timing-phase", &timing_phase))
+> +		writel(timing_phase, sdc->regs + ASPEED_SDC_PHASE);
+
+I asked on v1 that you use the phase support already in the bindings 
+and in the driver. The example you added in the binding document[1] 
+used the existing devicetree properties but it seems you haven't fixed 
+the code.
+
+Please drop your phase implementation from the patch.
+
+[1] https://lore.kernel.org/lkml/20210503014336.20256-2-steven_lee@aspeedtech.com/
 
 Cheers,
 
