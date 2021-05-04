@@ -2,55 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B07A3732A6
-	for <lists+openbmc@lfdr.de>; Wed,  5 May 2021 01:14:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C92BF3732DF
+	for <lists+openbmc@lfdr.de>; Wed,  5 May 2021 01:39:11 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FZbK64Nz6z302H
-	for <lists+openbmc@lfdr.de>; Wed,  5 May 2021 09:14:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FZbs961bhz301N
+	for <lists+openbmc@lfdr.de>; Wed,  5 May 2021 09:39:09 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=oc9AUNWe;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Qi6gSTCu;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm2 header.b=oc9AUNWe; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=Qi6gSTCu; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FZbJr43cHz2xgJ
- for <openbmc@lists.ozlabs.org>; Wed,  5 May 2021 09:14:35 +1000 (AEST)
-IronPort-SDR: pIkjgdpVClUw6QhlO3D4ciDVeoEhwUNJ5VWAF3Vqyaa2dLH4hcuUpwceYu9fCTawkG+vNkU3zl
- ATxz0W9ZCs0Q==
-X-IronPort-AV: E=McAfee;i="6200,9189,9974"; a="197714073"
-X-IronPort-AV: E=Sophos;i="5.82,273,1613462400"; d="scan'208";a="197714073"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 May 2021 16:14:31 -0700
-IronPort-SDR: FjqMx/sIRaitZcZtyvnQXNspRZi5iQ2sWUjPzqkucHDPqu6G7Fg7r2Y1g6c/V9//MepAy7btar
- L2BkqNl6xioQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.82,273,1613462400"; d="scan'208";a="390125031"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga006.jf.intel.com with ESMTP; 04 May 2021 16:14:31 -0700
-Received: from [10.212.251.97] (jmbills-MOBL.amr.corp.intel.com
- [10.212.251.97])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 4A818580932
- for <openbmc@lists.ozlabs.org>; Tue,  4 May 2021 16:14:31 -0700 (PDT)
-Subject: Re: How to add Redfish EventLog using commands
-To: openbmc@lists.ozlabs.org
-References: <11e4ee9d-d19c-dd79-aedd-8104a7ad081b@os.amperecomputing.com>
- <CACWQX81-6+PTTzFe6o5d6wvF99ELn-KTL8Or53fGXkKkKaUUEA@mail.gmail.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <b952c2d9-a35b-b802-0942-ffb05a1cd3d5@linux.intel.com>
-Date: Tue, 4 May 2021 16:14:30 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FZbrq6nxgz2xgJ
+ for <openbmc@lists.ozlabs.org>; Wed,  5 May 2021 09:38:51 +1000 (AEST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailout.nyi.internal (Postfix) with ESMTP id 4B99F5C002F;
+ Tue,  4 May 2021 19:38:46 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute1.internal (MEProxy); Tue, 04 May 2021 19:38:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
+ :references:mime-version:content-type:in-reply-to; s=fm2; bh=7jR
+ /Tz9mTO+4DbBx4phrmPk78NBI8VDwlZ9Z5VECyzE=; b=oc9AUNWeKbXZGU0x4PC
+ Pt6dL528jL+nlggDO5rqeX6UCvXiS8+Arfpi4KRIS0/R0+l/uecjn4CfkXPZ6nKf
+ bf1XZE2frmlLbpsR4KHO5QcgLb4VUl6sM2wjQMKUgZk3FTEVnhCpaIMEUqPihrJO
+ wFx9Rn1P77pqsz0nh0S3cUjouB1CuCc4xphKEV/XmqsyYROlvpYIH+QT75eQlrwZ
+ BFQ62y0IKPqAtlE4Lo7n6/ByLjqstUDD6KC/n+RwAhTVypGR/zLLKx/gO0NixcX9
+ QgH3U5a81QVN3zqgLxaNOuoefKadQYHTdo4RLkp1Iyl5AVUCRYGLegnAOEzf8nWA
+ vag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=7jR/Tz
+ 9mTO+4DbBx4phrmPk78NBI8VDwlZ9Z5VECyzE=; b=Qi6gSTCuzoqNlVB8RlvtU4
+ V286M01YBNMtfNkrzMOJpx7oKdLYz8fmWJOkrX+0z2+mYTlPdi4ySFCgHj8H6Zx0
+ 3DkkV2f7RyAN5/pw3dsI9lzzSIeAIPyTxGSG69+9M+ibGyDnyIh4Dtb6L22eqf/A
+ e6MI93i3PaAkZGKcl+82nQiJJp0RCzsDrVUSRs8yZ9qGUHLkwuBlTR+78OpRp1pt
+ 7zfjN+EgG42Ew3FmugUTf3uzfcaBPMk3mtwonlm61wtBrLFrTzAi+l3aab/NrtsA
+ z6TuMwqBK7B2vvtuPNnxjW4OhBf1BANRQBVv2NR9XHJ2k4dAlwJ68bvHqp65xI6Q
+ ==
+X-ME-Sender: <xms:BduRYCI0c1brHpicQQJt15xVH6LePFOnSISuEAy_v32BMHnHdJ3I1w>
+ <xme:BduRYKLaMSP-01rvPGQIYXC81Z8pLJ569Cm6dQNoftwzOnGxWAM3pwaEtkfG0QSfh
+ fiQZO1jW5bE2ZRCjLY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdefjedgvddtucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeurhgrugcu
+ uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
+ eqnecuggftrfgrthhtvghrnhepfeffhfefheeguddtvddtueeihfduieefkeefieefkeef
+ udefueevudelgfekffefnecukfhppedujeefrdduieejrdefuddrudeljeenucevlhhush
+ htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsges
+ fhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:BduRYCv7X8ew7cepfjxHj22R549eVVHJUiyrlQMo6BqZggSOB-Ztgg>
+ <xmx:BduRYHb_DTrRxXPn6d03BFVGFm3vEakwsSitm3a7pXpqlciaaRBxlQ>
+ <xmx:BduRYJaNhVzYjKgCoUwK9gRn0b6ME1OOolLjpVgilQF-MP2vX8WCFQ>
+ <xmx:BtuRYKAy43rZj2YAPLCVdf-qHA6x-yefnv2hzCmThboe86hGmGWteg>
+Received: from thinkpad.fuzziesquirrel.com (unknown [173.167.31.197])
+ by mail.messagingengine.com (Postfix) with ESMTPA;
+ Tue,  4 May 2021 19:38:45 -0400 (EDT)
+Date: Tue, 4 May 2021 19:38:43 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Ed Tanous <ed@tanous.net>
+Subject: Re: D-bus model proposal for pay for access features
+Message-ID: <20210504233843.hvuvmebaznanqnlv@thinkpad.fuzziesquirrel.com>
+References: <CAMhqiMoFAHcUk0nO_xoOubcZqF_dPDFweqsttTULRJK38o1Ung@mail.gmail.com>
+ <CACWQX83=CG_H8YUvEYj4BpDWFPoYkVLdpxo6n9V5LneTeeM7Bw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CACWQX81-6+PTTzFe6o5d6wvF99ELn-KTL8Or53fGXkKkKaUUEA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CACWQX83=CG_H8YUvEYj4BpDWFPoYkVLdpxo6n9V5LneTeeM7Bw@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,94 +98,133 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Ratan Gupta <ratankgupta31@gmail.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Tue, May 04, 2021 at 10:02:19AM -0700, Ed Tanous wrote:
+>> Content-Type: text/html; charset="UTF-8"
+>
+>First of all, please avoid sending html emails if you can. They don't
+>render properly on everyone's workflows.
 
++1
 
-On 5/4/2021 1:01 PM, Ed Tanous wrote:
-> On Tue, May 4, 2021 at 2:54 AM Thang Nguyen
-> <thang@os.amperecomputing.com> wrote:
+>
+>On Fri, Apr 30, 2021 at 11:15 AM Ratan Gupta <ratankgupta31@gmail.com> wrote:
 >>
->> Hi,
+>> Hi All,
 >>
->> I am looking for the mechanism to add events to Redfish EventLog. I
->> checked on the Redfish EventService design
->> (https://github.com/openbmc/docs/blob/master/designs/redfish-eventservice.md)
->> and it seems only has C++ functional calls (sd_journal_send(),
->> phosphor::logging::log(), ...) but not user commands that can be used in
->> the shell script.
-> 
-> This kind of logging and handling would imply that your script has
-> outlived what should realistically be put in a bash script, and should
-> be rewritten in something compiled (probably c++).  Redfish logs
-> require string and variable manipulation that is generally not well
-> defined in bash scripts.
-> 
->>
->> There are many use cases for adding EventLogs:
->>
->> 1. Use phosphor-gpio-monitor to monitor signals like power/reset,
->> button, ... and log the event
-> 
-> Considering that Redfish event log is for high level things, I suspect
-> this isn't a great fit.  power/reset would be handled within whatever
-> state system you're using (phosphor-state-manager or
-> x86-power-control), right?
-> 
->>
->> 2. Use phosphor-gpio-monitor to check if the Host boot fail, control the
->> mux to switch to other boot devices, along with logging events.
-> 
-> This seems like something that shouldn't be done from bash;
-> 
->>
->> 3. Check device presences (from /sys interfaces) and log events, ...
-> 
-> Redfish itself should have no knowledge of specific linux interfaces,
-> or linux at all.  Dependent on the actual /sys device you're looking
-> for, there's probably already daemons that expose those types of
-> events.  Without going into more specifics, I'm not sure this is
-> advised.
-> 
->>
->>
->> I checked on existing repositories like phosphor-sel-logger,
->> dbus-sensors, ... and they only support events for their features (like
->> power dc on/off, sensor threshold, inventory data added/removed, ...)
->> and the Redfish events added in C++.
-> 
-> Which is I think the right design choice.
-> 
->>
->> I can have a C++ codes to just support options to add different EventLog
->> data with parameters. But it can't be inside meta- folder so need a
->> repository for it.
-> 
-> For what it's worth, the bash scripts shouldn't be going in the meta
-> repo either.
-> 
->> I think it's not worth for creating a new repo just
->> to support an application with dozen like of codes to just add EventLog.
-> 
-> Disagree about whether it's worth it.  WIth that said, depending on
-> what you're trying to do, there's likely already a repo for the
-> feature you're trying to implement.
-> 
->>
->> Do you have any idea of any existing repo support adding Redfish
->> EventLog from script/command line or any repo that we can extend to
->> support such command?
-I completely agree with Ed on making sure it's the right thing to do 
-before doing it, but I wanted to share the tool we use in case it's helpful.
+>> I would like to introduce a dbus model proposal around pay for access features.Normally IBM system ships with more hardware than was purchased, which can be unlocked later.
+>
+>It would be great to get a lot more background here.  
+I will try to provide that here and in follow up discussion.
 
-For journal-based logging we use 'logger-systemd --journald' in some of 
-our scripts to add Redfish event messages to the journal: 
-https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-core/fw-update/files/fwupd.sh#L33
+>On its nose,
+>this seems like this polar opposite of open firmware 
+You certainly aren't alone having this kind of a reaction to ideas like 
+this and I can understand that point of view.  More on this below...
 
->>
->>
->> Best Regards,
->>
->> Thang Q. Nguyen -
->>
+>and something
+>that, if done wrong, could be very harmful to the goals of the
+>project.
+Can you elaborate on the goals of the project that would be harmed?
+
+> Assuming you did this, wouldn't anyone be able to simply
+>recompile the code with the license checks disabled, load it on the
+>system
+In our system design, the BMC is not doing the actual license 
+verification.  It is only a proxy, providing an interface to a user 
+interface application.
+
+Further, we don't allow BMC code to be loaded that isn't signed by IBM, 
+so unless I'm really missing something I don't think this can happen 
+even, if the validation was being done on the BMC.
+
+> and enable whatever they want without licenses?  That seems
+>like something you didn't intend, and something that's less likely on
+>closed source firmware, but probably needs considered in this design.
+>
+>As-is, I'm not sure which side of the line I come down on, but my two
+>initial thoughts are:
+>1. I don't want to support it or help the code in any way, but IBM can
+>check this into their own specific interfaces.
+We are happy to do this for now if that is the will of the community.  
+The impetus is certainly on me to show that this is in fact a feature 
+that server OEMs care about (if any of you are lurking, please jump in).
+
+I'm pretty certain this is something many server OEMs do and will 
+continue to do.  So let me ask you what is better?  A single place for 
+those with the common use case to collaborate, or a bunch of one-offs, 
+likely full of bugs and security problems.
+
+>2. This is harmful to the intent of OpenBMC and open source firmware
+>as a whole, and shouldn't be supported in any capacity in the OpenBMC
+>codebase.
+If you don't mind I would like to hear more about the intent of OpenBMC,
+and how any of this harms those intents.
+
+>
+>I think a lot more background and details than what was provided in
+>the initial email are needed before jumping to "what does the dbus
+>interface look like" type discussions.
+Happy to provide more background and details but I'm not sure where to 
+begin.  Any hints?
+
+>
+>How would open firmware principals be retained 
+Can you elaborate on these principles?  I'm curious.  I may even 
+document the answers :-)
+
+>if we're now supporting firmware locking down systems?
+Don't we already lock down systems with things like secure or verified 
+boot?  Can you help me understand lock down better?
+
+>Are patches allowed to circumvent the license checks?
+I think I covered this above but for completeness, on IBM systems the 
+checks are not be done by the BMC and only IBM signed firmware is 
+allowed.
+
+>Does IBM intend to not allow loading self-compiled firmware on their
+>systems to support this feature?
+That's correct - IBM only allows firmware signed by IBM to be installed 
+on IBM systems.
+
+>What is and isn't allowed to be locked down?
+Maybe another question is why would we disallow anything here?
+
+>Can the license checks be entirely compiled out?
+Again in an IBM design the checks aren't done on the BMC.  But if 
+someone had a design like that, and they contributed that code to 
+OpenBMC I don't see any problem with compiling it out.
+
+>Do these licenses appear on any public interfaces?  
+Right, the whole point is to show these on some kind of external 
+interface.
+
+>How do we ensure
+>that the public interfaces aren't misused?  
+How do we ensure _any_ public interface isn't misused?  Why would 
+ensuring that they aren't misued for these public interfaces be any 
+different than any other?  I don't think I understand this question.
+
+>How do we keep standards
+>compliance (or do we not care)?
+This is something that many server OEMs do so I would not be terribly 
+suprised to see it find its way into a standard management interface 
+someday.
+
+>How does this affect our standing in things like OCP open system
+>firmware groups?  
+I wouldn't expect this to affect our standing in OCP in any way.
+
+>Does this OpenBMC systems that enable this feature
+>ineligible?
+Do you mean to ask, do systems that configure OpenBMC with something 
+like this enabled make them ineligible for some kind of OCP compliance?  
+Probably, but isn't that a problem for those configuring OpenBMC in that 
+way?  I would say if you are looking for OCP compliance, don't use this 
+feature.
+
+thx - brad
