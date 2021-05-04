@@ -2,129 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1581437244D
-	for <lists+openbmc@lfdr.de>; Tue,  4 May 2021 03:47:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 135DD3726B4
+	for <lists+openbmc@lfdr.de>; Tue,  4 May 2021 09:42:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FZ2m01F55z2yyb
-	for <lists+openbmc@lfdr.de>; Tue,  4 May 2021 11:47:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FZBdQ0sRnz301g
+	for <lists+openbmc@lfdr.de>; Tue,  4 May 2021 17:42:34 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=Ke0bCar2;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=TVV5FR72;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.92.93;
- helo=nam10-bn7-obe.outbound.protection.outlook.com;
- envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=Ke0bCar2; 
- dkim-atps=neutral
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com
- (mail-bn7nam10on2093.outbound.protection.outlook.com [40.107.92.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::634;
+ helo=mail-ej1-x634.google.com; envelope-from=ratankgupta31@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=TVV5FR72; dkim-atps=neutral
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com
+ [IPv6:2a00:1450:4864:20::634])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FZ2lk6Vtnz2yRB
- for <openbmc@lists.ozlabs.org>; Tue,  4 May 2021 11:47:29 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EeyUNLFN6UNRrPju1/VEyaHbIfGJ93YJB7vQFvyncD73tdJsGWojfQFiIWbkv8ZbuA5mtYf9mtMJllSl6vU2DD8JI35/RDf//zFJs3lqUeEAKWzyGenjjz+h2p6BNY2EaBsVrOIrywykz7NHB3bDwxLz8R3JUO90plzwNX41wXYFeToLTdak8Nqz+Nl18juyfYvvyJrSoNMc5pE5vOO4lA/Wy2vKFb2UbfgUL/HXEeQEAryiu1GvRj7xyQKgneZ7wNZXQ+CI5CwT4tk+Xq/p+ERPzToXpM0NV9eyZl13vSTwwBH7KdI80ilv/bsQIp8CqCt0IAFC4APSWX6BWR7Vmw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=I88n5crhbU6V7RF4vEdFsx5HipbeI4iG6o0zVxYOyhE=;
- b=geOtYuBwYuJH+WnPqKldIlum8MjE+7k/eLzTFseLNe5HOpEUrxA+OJarVDAzs41gil9io4Q3zfU06O9uRWHdbO5JNQ9GKexwVbKgq6WW0ydUUnCHZVgiWJG59qN41Jel9VMnE7WD++QT/vckaQE7ZCze7v8wW/vUwcskM5UcaVfiiJSfrduOmQ59wc66YnQ2Qybn0UKLjuw7DReoTtn6ApC/2zeT0O+bJtOangJseE5nLQOo3EJ5n8U+HNmc3e5C/FIbWf6smY1cRSd+4HNWpAu3lqOkxtqf4vtfUAI3EMvNOZ3YnRhWD5MKbU4jJD5OQnstWmuEkyFxRYQooYTLbw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=I88n5crhbU6V7RF4vEdFsx5HipbeI4iG6o0zVxYOyhE=;
- b=Ke0bCar2TBte5lNJJXWq3tX+pEB1jMMkvKtEp9WE1wFmVv2l5e9ZLnfp7P177csgts03rutn5QB6r+5lABHgMT5N19HpHnSHfFUyLmXQsgkDKTQbUChukbpUbiUnv4V/d+ZNXYQx6rRfqP/n5TdyXeUSNlUDqyaxF20YYvm/KBg=
-Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=os.amperecomputing.com;
-Received: from BYAPR01MB4678.prod.exchangelabs.com (2603:10b6:a03:88::27) by
- BYAPR01MB4647.prod.exchangelabs.com (2603:10b6:a03:8a::17) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4087.35; Tue, 4 May 2021 01:47:22 +0000
-Received: from BYAPR01MB4678.prod.exchangelabs.com
- ([fe80::b5ad:a41e:d884:41d6]) by BYAPR01MB4678.prod.exchangelabs.com
- ([fe80::b5ad:a41e:d884:41d6%7]) with mapi id 15.20.4065.037; Tue, 4 May 2021
- 01:47:22 +0000
-Subject: Re: Request to create ampere-platform-mgmt and ampere-ipmi-oem repos
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <38d1440f-b3be-9147-5002-42536117e1e0@os.amperecomputing.com>
- <YILMPOZwlODKqxtb@heinlein>
- <7bec9fb2-35d5-8e44-463f-3eb5c0955f0d@os.amperecomputing.com>
- <YIwTaJ11MRUXY2H5@heinlein>
-From: Thang Nguyen <thang@os.amperecomputing.com>
-Message-ID: <c4c78ca7-f7cf-0995-887b-a7d7543061bb@os.amperecomputing.com>
-Date: Tue, 4 May 2021 08:47:16 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.10.0
-In-Reply-To: <YIwTaJ11MRUXY2H5@heinlein>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [1.53.112.237]
-X-ClientProxiedBy: CY4PR16CA0013.namprd16.prod.outlook.com
- (2603:10b6:903:102::23) To BYAPR01MB4678.prod.exchangelabs.com
- (2603:10b6:a03:88::27)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FZBd657Gmz2xYk
+ for <openbmc@lists.ozlabs.org>; Tue,  4 May 2021 17:42:16 +1000 (AEST)
+Received: by mail-ej1-x634.google.com with SMTP id u3so11638403eja.12
+ for <openbmc@lists.ozlabs.org>; Tue, 04 May 2021 00:42:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=DOwkFSIyM2kwAabkqv+EjOSm914v8vn0oyM95dsH/o4=;
+ b=TVV5FR727CrfA2a39uqwNCG/F7eeLTRc/QMc1N/PXgW3SoSvUkBO21GPmRlNTK39Kd
+ 6MZRgOVIXtVr/LpKvcVIQx1KP0+1EsEJDrMIiUz6AhTzVC4FuC6/mCFg5QqT4K3q6VGy
+ oADzU1NbBn7RXxHnejHHKz/HLoNfrQ21hbe0Rr5+Wyrnz1kcH5YWIt1lvXHskV/G/AJc
+ s6QmrvtWEP3bXb9fhbEHOS931FCcIzKeVXfp+dLdwqjJAMW5HxGyDFdRRiTbPqZbR2yh
+ WHDY86vTXoWMCiCp5xki8W27LM7g8llVtzqbwwELQAqpZgIRyYaFFEedNJvM8HTBcgtr
+ drHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=DOwkFSIyM2kwAabkqv+EjOSm914v8vn0oyM95dsH/o4=;
+ b=Ku4oLZKQB08yo63NIuopT02u/tCgJGvzvJOu1RTy0/R5obxNpDbfKb1VvMC72Eev0W
+ irRxRIdsU4qNCgSFgGbvsgCpc2z4X2pXWSiwCkER2KZYhhifaEE4COk78wiabaU1UyZ9
+ tM45Gr2vyZN7c85HUGFc8oQ2+OMsNvc6JHzSsfXhW/vlRRJ3p75lyYmmWN6/4kCwWU+d
+ 6EuUUMNdhbUSlB7AzFfD5zlHYGd2TyOUJ2RsyPRLFaODsWxYvqyK33Qoc85kSSiGvo7Q
+ SbnbU6Q66puMyTjoeohjTESS5AnJVPrvI9jLf1MBep+HiDxAGwiSPv41uZX7qqLV5YwE
+ dVew==
+X-Gm-Message-State: AOAM5311aspzGh2pzlgQydeZ3NMPxigl0y3Jm9oykQfzQykxH+1XqgyK
+ 76jwKo6uOYt79/g9M8oGCpWWq/UXHL4UZ+0yWPfaSakR
+X-Google-Smtp-Source: ABdhPJza1rKM3PwBNDzokoAb5zvpsgekDnLT8UlbjIqgQyjUeMSFXcWBGFmuEBzfpXQFNknVXZGpeJK9roInP2mzemA=
+X-Received: by 2002:a17:906:e28c:: with SMTP id
+ gg12mr20444086ejb.483.1620114130551; 
+ Tue, 04 May 2021 00:42:10 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from HCM-FVFX4014HV2J.local (1.53.112.237) by
- CY4PR16CA0013.namprd16.prod.outlook.com (2603:10b6:903:102::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4087.25 via Frontend
- Transport; Tue, 4 May 2021 01:47:20 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 8bb22e02-3f43-4614-9085-08d90e9e8f60
-X-MS-TrafficTypeDiagnostic: BYAPR01MB4647:
-X-Microsoft-Antispam-PRVS: <BYAPR01MB46474906C3F3961A156772508D5A9@BYAPR01MB4647.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: sqRt+KJiTLLjqGw6KOsPPgXruPE+P+c3EU5s2wVz1hH+tI7NCyxRpMiP0ffGwi4iuXSVdZ9Sg8P596UpEAbC7scAOeJ7G/DKuZv6m48LDYI3KUKK/O8qSnMHaUvzuCH0opSXP2t5TyY5Bnm7H67QOrhG+/E9EouwMB9UycIoE3xQ1Jbrx0ivAGZfFxvg+YwvrjsqBh7oVg77/Rlju+v38S+ASxmJEcupkwjWUh5R4hr2Iafibv/ZyTvc5cgFZ7avIAH3+9nmBUzl506VOqZJJrcdWlLsWBNYBZrSt8ltrAzkiVUtfT8RtnEQ+f7lH7X+310bHefg4wOhCbAJ7qbLSsDjFP6CPHP7F6ocHESRd4JzK+F0n/Odp+ybLU6+DgYC34cjXsjGnwWXQWieHLbDBAtLPWeTaHS1o3WZCkOKUsjBNg4/oqXVoEKv08U+v+4eYpIhG4kz4/IAvc0T0A9CW/LrmU5PVwBc0xifUtaE8lDzXuaVLCJ7XxTwMvK3ZnTECc07+vZdV8eXaX21fuLztWrzvHZqRILs+uy5xjsuD+WiUKB90HAWXj1WnHFe5Caarq/pktFFKlCZMgWXhmayUkAea6pZMhYNK/P3nYw56jF8PmPt60gKGs16DCCjlNrzYwgVzNcknljidmagUrJrUu4kICzIyu4UWfQjgpcHy+OzeB+NEuWKrGi3uQJhKzmzA91It68pP/QWmgTkGkaapoF4f1Tt+onc1ef2eIC82w5lsleMlNxXtfl+bwvtxxugkyRaLFn/v+tXss++VPiVlAzGVQ09ql3hDFV44bCLE7mW7o8bovMrT+DBD1SvtBahgCNVjAxMjsfR74BCKCw9wA==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR01MB4678.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(39850400004)(346002)(366004)(376002)(136003)(396003)(31696002)(478600001)(38100700002)(5660300002)(66556008)(956004)(83380400001)(38350700002)(966005)(316002)(2616005)(6666004)(66946007)(8676002)(66476007)(86362001)(4326008)(6916009)(52116002)(16526019)(6512007)(6506007)(8936002)(2906002)(53546011)(26005)(31686004)(6486002)(186003)(36456004)(42976004)(43740500002)(45980500001);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?Windows-1252?Q?3DMTfRVvwhodCtInjUtHmwvDo98N+tJECkYVNj9HX4PSY0E5/Rz/l+S3?=
- =?Windows-1252?Q?nGyi0c7yz0hHodUDywOexIJeeZRg5pcCnQ8CBA9azN/jPc40gckarqOE?=
- =?Windows-1252?Q?D1J5bw5IBJe9QkWCb/FUedT7JNw8N4GmiYadEka8AQkUHUvKW7utAKzf?=
- =?Windows-1252?Q?tqBY2tOudsSStXeEyOS8jrXQGVSBhRM7voR75oEXhBymPJ18ALwT2+Ww?=
- =?Windows-1252?Q?x7ZJmBMCZwdTvNS6OFw2smuXXh1aZChRoPsmAVlsrPn6d/uEiuoK2/I5?=
- =?Windows-1252?Q?mGClDL4Hd5Oe0GI5v+Ltfg7BwBSIScvzxKyz2rKTq/0cEn6KB/W8+XsJ?=
- =?Windows-1252?Q?QA5FHhFXatHYv/dBwgwLJXRAxm2pZr4FiJrj18I58Ldif/LdHJRXbZIi?=
- =?Windows-1252?Q?ZSCDYfOPmwRGpTsxU4L6lf7hYJ9qMeokC+qqjzsqDleNXJh3XEZR9TT2?=
- =?Windows-1252?Q?6ZZYrfb/5aDABQHwVpkPCVfcSdAMw4TrsFdK2kIgLN5hwA0W6hLOKSGE?=
- =?Windows-1252?Q?biloTojqd3zW1PhlxbJLsVYBL0SuA9z/y3VY/SFHPyk7D8Sakmx3GiDj?=
- =?Windows-1252?Q?Y61l6qTYDX+z91H0sH9ZlTDfnNrWvkYwAf7sO+L5QINRAwWM5tJ09agK?=
- =?Windows-1252?Q?xY4roccfh2j6xp1Px37MApLmBuX79uCEkRAgBcx2nMd+4pu1F+wmv37o?=
- =?Windows-1252?Q?YXywGU7oClM8PLVOooCdlpLzHCUQEU6+8B8I9/4CH1u8seCy9CJHqM6v?=
- =?Windows-1252?Q?UhyCIgFSUMpupPlaVmJ49Eh9Yi7tR9roWu7Pm/aVL9oCpL+avcRaXxsB?=
- =?Windows-1252?Q?lU5kn2uiR2NFZhOqot0sC1RkoyFlmbv0sBTZx2+uke9C2mxpecwfXnww?=
- =?Windows-1252?Q?rNkLwi+vv4OP22xyPEzq3dDmmL6MkLApqIVeXnEuxP91zS+YFHEcooXk?=
- =?Windows-1252?Q?392AJRJR+zxFFhQSUg9YlQDCrQ9aauN2vKZbA60FnXG0I+wmHcEfIVUI?=
- =?Windows-1252?Q?rf9dHTzyK3fkucZNuj0jjjzfN/IOGn0Ul20v+lZxaW/YdhS3yxj39urg?=
- =?Windows-1252?Q?ptYP6BwTQXvr/t5d2lzVHtfS1osqDimzBTaeF3uGFvaRgLCAxk5f96ux?=
- =?Windows-1252?Q?14BazHNk865RuXDdfuDYqVR32HXtyIv9WacAC+kcAS9A0G5VUPxs/FPx?=
- =?Windows-1252?Q?UIho1sHL+44gmEbq52Xdu/ssHVvhLJzY08+nxyduFlgY2UZ6T2ElVSiO?=
- =?Windows-1252?Q?ntDFP1wZVrBCIYsVjN51aTP0qx50U0ns+V7sgi7ULGcoFKqltBYEiSXK?=
- =?Windows-1252?Q?Vn+NjQVxFJFCzbHof1qTB0AzgNqvpsc/+DQ9BWyJ8a/V0TrzVkbrBl8p?=
- =?Windows-1252?Q?md7Xj79SLUeABezMMs1+SfuIvAs1myoStRB8JUKwzDSJaDL/+6m2GqDU?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8bb22e02-3f43-4614-9085-08d90e9e8f60
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4678.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 May 2021 01:47:22.3847 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5csew5wOwO82YCv6pT5GGW70sW9BEGEiDUg2JAXdhYHiXOvRkdwa/R5I4bX6OKGwZj9JiELyOdnjKr7N9wkVjQIlHTzV1Ktf3/wwLqu1b1A=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB4647
+References: <CAMhqiMoFAHcUk0nO_xoOubcZqF_dPDFweqsttTULRJK38o1Ung@mail.gmail.com>
+In-Reply-To: <CAMhqiMoFAHcUk0nO_xoOubcZqF_dPDFweqsttTULRJK38o1Ung@mail.gmail.com>
+From: Ratan Gupta <ratankgupta31@gmail.com>
+Date: Tue, 4 May 2021 13:11:35 +0530
+Message-ID: <CAMhqiMrgpVyQwXXWmyzpvHhgRCG17=5qgs-Qr--9+=U6RLQU1Q@mail.gmail.com>
+Subject: Re: D-bus model proposal for pay for access features
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000003f467a05c17c3723"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -136,54 +74,150 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, bradleyb@fuzziesquirrel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--0000000000003f467a05c17c3723
+Content-Type: text/plain; charset="UTF-8"
 
-On 30/04/2021 21:25, Patrick Williams wrote:
-> On Sat, Apr 24, 2021 at 07:48:14PM +0700, Thang Nguyen wrote:
->> I intend to push Ampere specific features, you can find current codes at
->> https://github.com/ampere-openbmc/ampere-platform-mgmt.
-> It seems to me like all of the functional areas you mentioned we already
-> have some sort of implementation.  It would be better if you could work
-> with the maintainers on these repositories to see how it can be enhanced
-> to support your use case.  As I mentioned in another email thread today,
-> I really don't want to see catch-all repositories being created.
+Hi Team,
+
+Any comments on the below proposal?
+
+Ratan
+
+On Fri, Apr 30, 2021 at 11:45 PM Ratan Gupta <ratankgupta31@gmail.com>
+wrote:
+
+> Hi All,
 >
-> If you have specific features that aren't covered by an existing
-> repository or you feel like you've ran into a roadblock coming to
-> consensus with the developers already working in those areas, we should
-> revisit making repositories for those specific functional areas.
+> I would like to introduce a dbus model proposal around pay for access features.Normally IBM system ships with more hardware than was purchased, which can be unlocked later.
 >
->> It is good to have any of below can be implemented with current existing
->> repositories:
->>
->> - utilities to flash Ampere Host firmware and NVPARM: Boot EEPROM,
->> UEFI/ATF firmware, ...
-> Are these extra utilities or the firmware update procedures themselves?
-> Have you already implemented support in phosphor-bmc-code-mgmt?  There
-> are other systems that have BIOS update for x86 done in that repository.
+> Features could be 1) AIX enabled/disabled
+> 2) How many processors are enabled
+> 3) How much memory is enabled
 >
->> - Control boot EEPROM based on current input GPIO and log the
->> information into Redfish
->> (https://github.com/ampere-openbmc/ampere-platform-mgmt/tree/ampere/altra/host-control/scp-failover)
-> This looks like something that could be implemented with
-> phosphor-gpio-monitor.  Have you looked at that?
+> *Proposed Model:*
 >
->> - Handle boot progress from Ampere's Altra SMpro, log the progress into
->> Redfish and update dbus. Note that the boot progress is based on
->> information from EDK2 and other firmware like ATF and SMpro.
-> You can probably fit this into the existing post-code repositories:
->      - phosphor-host-postd
->      - phosphor-post-code-manager
+> The model consists of following main entities:1 - licenses - these objects represents the features.  There will be a license represnting
+> feature(one is to one relation ship) and these objects have state - active, inactive, unknown, etc.
+> These objects could implement the Delete interface for when a client wishes to disable the license/feature.
 >
-> We recently did similar for a system where we get the post codes over
-> IPMB rather than GPIOs.
-Thanks Patrick for the information. Let me investigate more on these 
-repositories to see if I can use them for Ampere specific requirements.
->> - Handle events from Ampere Altra's SMpro (like Sideband controller) and
->> log to IPMI SEL and Redfish.
-> This sounds like it should go into ampere-ipmi-oem?  I'm making an
-> assumption that the SMpro is an IPMB path, which might be wrong.
+> 2 - manager - the manager object (distinct from freedesktop object manager) provides a method
+> interface to create new license objects.
 >
+> *Alternate Dbus Model:*
+>
+> 1 - Licenses: these objects represent an agreement.  These objects have an
+> association to one or more features, and these objects have state - active,inactive, unknown, etc.
+> These objects could implement the Delete interface for when a client wishes to disable the license.
+>
+> 2 - Features: these objects describe the features available.
+> Feature objects would be static and implementation/platform defined.  A BMC or host firmware update
+> could potentially add or remove the available features exposed as dbus objects.  At the moment the
+> only feature attribute I can think of is a name and the feature status.
+>
+> 3 Manager - the manager object (distinct from freedesktop object manager)
+> provides a method interface to create new license objects.
+>
+> The difference between two models areIn the alternate Dbus model we are keeping the feature Dbus object and the License have an associated features
+> In the proposed model we are only keeping the license D-bus object which represent the feature.
+>
+> Flow would be as below with the proposed model -1/ Manager object would be having interface like upload (License activation key)
+> 2/ On IBM systems we send this key to the host firmware which activates the features
+> 3/ Host Firmware sends the activated feature list to the BMC
+> 4/ BMC creates the licenses for the activated features
+>
+> I suspect an implementation of the above flow is highly IBM specific,
+> but I hope some of you have some feedback that might enable some collaboration.
+> If not - where should we put this application?
+>
+> Ratan
+>
+>
+
+--0000000000003f467a05c17c3723
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div>Hi Team,</div><div><br></div><div>An=
+y comments on the below proposal?</div><div><br></div><div>Ratan<br></div><=
+/div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">O=
+n Fri, Apr 30, 2021 at 11:45 PM Ratan Gupta &lt;<a href=3D"mailto:ratankgup=
+ta31@gmail.com" target=3D"_blank">ratankgupta31@gmail.com</a>&gt; wrote:<br=
+></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
+border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><=
+pre style=3D"box-sizing:inherit;margin:4px 0px;padding:8px;font-size:12px;l=
+ine-height:1.50001;font-variant-ligatures:none;white-space:pre-wrap;word-br=
+eak:normal;font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monosp=
+ace;border-radius:4px;color:rgb(29,28,29);font-style:normal;font-variant-ca=
+ps:normal;font-weight:400;letter-spacing:normal;text-align:left;text-indent=
+:0px;text-transform:none;word-spacing:0px;text-decoration-style:initial;tex=
+t-decoration-color:initial">Hi All,<br><br><span style=3D"box-sizing:inheri=
+t;display:block;height:unset"></span>I would like to introduce a dbus model=
+ proposal around pay for access features.<span style=3D"box-sizing:inherit;=
+display:block;height:unset"></span>Normally IBM system ships with more hard=
+ware than was purchased, which can be unlocked later.<br><br style=3D"box-s=
+izing:inherit">Features could be <span style=3D"box-sizing:inherit;display:=
+block;height:unset"></span>1) AIX enabled/disabled  <br style=3D"box-sizing=
+:inherit">2) How many processors are enabled<br style=3D"box-sizing:inherit=
+">3) How much memory is enabled<br><br><span style=3D"box-sizing:inherit;di=
+splay:block;height:unset"></span><b>Proposed Model:</b><br><br><span style=
+=3D"box-sizing:inherit;display:block;height:unset"></span>The model consist=
+s of following main entities:<span style=3D"box-sizing:inherit;display:bloc=
+k;height:unset"></span>1 - licenses - these objects represents the features=
+.  There will be a license represnting <br>feature(one is to one relation s=
+hip) and these objects have state - active, inactive, unknown, etc.<br styl=
+e=3D"box-sizing:inherit">These objects could implement the Delete interface=
+ for when a client wishes to disable the license/feature.<br><br><span styl=
+e=3D"box-sizing:inherit;display:block;height:unset"></span><span style=3D"b=
+ox-sizing:inherit;display:block;height:unset"></span>2 - manager - the mana=
+ger object (distinct from freedesktop object manager) provides a method<br>=
+interface to create new license objects.<br><br><span style=3D"box-sizing:i=
+nherit;display:block;height:unset"></span><b>Alternate Dbus Model:</b><br><=
+br><span style=3D"box-sizing:inherit;display:block;height:unset"></span>1 -=
+ Licenses: these objects represent an agreement.  These objects have an<br =
+style=3D"box-sizing:inherit">association to one or more features, and these=
+ objects have state - active,inactive, unknown, etc.<br>These objects could=
+ implement the Delete interface for when a client wishes to disable the lic=
+ense.<br><br><span style=3D"box-sizing:inherit;display:block;height:unset">=
+</span>2 - Features: these objects describe the features available.<br styl=
+e=3D"box-sizing:inherit">Feature objects would be static and implementation=
+/platform defined.  A BMC or host firmware update <br>could potentially add=
+ or remove the available features exposed as dbus objects.  At the moment t=
+he <br>only feature attribute I can think of is a name and the feature stat=
+us.<br><br><span style=3D"box-sizing:inherit;display:block;height:unset"></=
+span>3 Manager - the manager object (distinct from freedesktop object manag=
+er)<br style=3D"box-sizing:inherit">provides a method interface to create n=
+ew license objects.<br><br><span style=3D"box-sizing:inherit;display:block;=
+height:unset"></span><span style=3D"box-sizing:inherit;display:block;height=
+:unset"></span>The difference between two models are<span style=3D"box-sizi=
+ng:inherit;display:block;height:unset"></span>In the alternate Dbus model w=
+e are keeping the feature Dbus object and the License have an associated fe=
+atures<br style=3D"box-sizing:inherit">In the proposed model we are only ke=
+eping the license D-bus object which represent the feature.<br><br><span st=
+yle=3D"box-sizing:inherit;display:block;height:unset"></span><span style=3D=
+"box-sizing:inherit;display:block;height:unset"></span>Flow would be as bel=
+ow with the proposed model -<span style=3D"box-sizing:inherit;display:block=
+;height:unset"></span>1/ Manager object would be having interface like uplo=
+ad (License activation key)<br style=3D"box-sizing:inherit">2/ On IBM syste=
+ms we send this key to the host firmware which activates the features<br st=
+yle=3D"box-sizing:inherit">3/ Host Firmware sends the activated feature lis=
+t to the BMC<br style=3D"box-sizing:inherit">4/ BMC creates the licenses fo=
+r the activated features<br><br><span style=3D"box-sizing:inherit;display:b=
+lock;height:unset"></span><span style=3D"box-sizing:inherit;display:block;h=
+eight:unset"></span>I suspect an implementation of the above flow is highly=
+ IBM specific, <br style=3D"box-sizing:inherit">but I hope some of you have=
+ some feedback that might enable some collaboration.  <br style=3D"box-sizi=
+ng:inherit">If not - where should we put this application?<br></pre><pre st=
+yle=3D"box-sizing:inherit;margin:4px 0px;padding:8px;font-size:12px;line-he=
+ight:1.50001;font-variant-ligatures:none;white-space:pre-wrap;word-break:no=
+rmal;font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace;bo=
+rder-radius:4px;color:rgb(29,28,29);font-style:normal;font-variant-caps:nor=
+mal;font-weight:400;letter-spacing:normal;text-align:left;text-indent:0px;t=
+ext-transform:none;word-spacing:0px;text-decoration-style:initial;text-deco=
+ration-color:initial">Ratan<br></pre></div>
+</blockquote></div>
+</div>
+
+--0000000000003f467a05c17c3723--
