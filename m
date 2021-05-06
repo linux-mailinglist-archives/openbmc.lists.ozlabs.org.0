@@ -2,77 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 172983754EE
-	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 15:39:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B16253755DC
+	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 16:46:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FbZRq0C0Mz303y
-	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 23:39:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FbbxN4XYSz309X
+	for <lists+openbmc@lfdr.de>; Fri,  7 May 2021 00:46:16 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=rcHvD66V;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=G/yzzW3m;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=UMlFul2G;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::229;
- helo=mail-oi1-x229.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=rcHvD66V; dkim-atps=neutral
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com
- [IPv6:2607:f8b0:4864:20::229])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=G/yzzW3m; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=UMlFul2G; 
+ dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FbZRW4BsGz301K
- for <openbmc@lists.ozlabs.org>; Thu,  6 May 2021 23:38:45 +1000 (AEST)
-Received: by mail-oi1-x229.google.com with SMTP id d21so5475675oic.11
- for <openbmc@lists.ozlabs.org>; Thu, 06 May 2021 06:38:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
- :references; bh=vnrv6RTm6RWMKDXEPrKui/uiq9uM01YwnB/Q9hEsNVY=;
- b=rcHvD66VBHG3PBpZG/reLv7j5Z4zU9rqn/JSYZbzePEQY0xkl49jWJduV2lUMrmln+
- h31r6o2FvMbiAXNKePjTgZInKNhP+Efnn6iv6Os1LnckpVd7xoQUW4/4UMVLeRBARlIs
- 7bZfzymQqw73qj3ealBuHpzSjxMpzLCA8Mm6pIRyMU2bQCfNdOQb3QESUMeY2bg2xAjJ
- xBQcO/Dkhz2WglaXurEw7Q3A9mr767jwpF6q5RWqdkPrn1JNDaNw3l/B9vZwbfX9nLWs
- 2MtsAsF7n84326rmbfMSpBF5MUGXcCwl7qL3L1/Ueiyz7BYTuj7aNAkXtYSE/bcPJ89C
- GEew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:message-id:mime-version:subject:date
- :in-reply-to:cc:to:references;
- bh=vnrv6RTm6RWMKDXEPrKui/uiq9uM01YwnB/Q9hEsNVY=;
- b=pbHucquCCtscb0JjGjUwT5gNOMQTKjR26PLFI2eEygthDNBLoKeVYhzOhPWQ6VkxRd
- PKp0dsqYBEsSr3bkwXrVG3kgf53p3TFx043wyMi3Iue1MIwnmiVLlS2abnprNU1tmYyx
- xpo5YW14IG7tpWHPtwQ2aStFvvupGOHR26bxFta7hzWLhBhEJ7RpgWa1cvxdbFTqxOyL
- 4fMInQra1mGSBeoUmcFcOeGPLvDrDEb3rXVSyECaY7fTrCwL8swNdpaGkQK9bwA2Uuph
- 9n0uViuQa4dt/qwdI76FHj7PBl3EsAiOIfnrRzPFHKG8SIcdxbx9766WtL8h4y4CRXrl
- 1XSQ==
-X-Gm-Message-State: AOAM530D2x9PYGkvH5bBizw2nLdxarLuNUsD46vYOEO7rmyPS80XGSvO
- TqmC+R4+Vd84Ty7i2IHmHLM=
-X-Google-Smtp-Source: ABdhPJwfL/rKIxN+CJ7TTsZA/agovIepW07M+JCmlJKFXoCxseQaqJrNURwuVnh3BCcLWR4BNK37TQ==
-X-Received: by 2002:aca:5c87:: with SMTP id
- q129mr10373894oib.163.1620308321938; 
- Thu, 06 May 2021 06:38:41 -0700 (PDT)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:ed7c:f180:48f0:869e])
- by smtp.gmail.com with ESMTPSA id g11sm564341otk.11.2021.05.06.06.38.40
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 06 May 2021 06:38:41 -0700 (PDT)
-From: Andrew Geissler <geissonator@gmail.com>
-Message-Id: <8D110F1E-CD90-41FE-808E-C2A2A3ACD903@gmail.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_BC847439-5E6C-4841-9F1D-F583497AA3A5"
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: CI build for quanta/gbs
-Date: Thu, 6 May 2021 08:38:40 -0500
-In-Reply-To: <CALGRKGPbdcSRrTUwU6uUpYfAxGZqOFWZL+LU74bFit0EcGP95Q@mail.gmail.com>
-To: Brandon Kim <brandonkim@google.com>
-References: <HK0PR04MB233989A7F66DD0B3964E2E0B8F599@HK0PR04MB2339.apcprd04.prod.outlook.com>
- <2DE216D2-B472-42B4-AC31-40902D5600CC@gmail.com>
- <CAO=notyQFgzroaMfsQkr+ZjPm_8DE4y5s3mkadxdmic=N85OMQ@mail.gmail.com>
- <CALGRKGPbdcSRrTUwU6uUpYfAxGZqOFWZL+LU74bFit0EcGP95Q@mail.gmail.com>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fbbx00mGBz301J
+ for <openbmc@lists.ozlabs.org>; Fri,  7 May 2021 00:45:54 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id DC7925C0158
+ for <openbmc@lists.ozlabs.org>; Thu,  6 May 2021 10:45:49 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Thu, 06 May 2021 10:45:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:subject:message-id:mime-version:content-type; s=
+ fm1; bh=fuTF09IKrxlQcPcVjgRI9NbLoCT2XttsBjP3cl9wIZ0=; b=G/yzzW3m
+ HEjqi6HjqSz9o8D2DmHj0tzFeqU9omllx83wP0POOiQ4QEG+wb+5O7+lHKR+N6Pg
+ vzDH6jxZ886puMc35B/i6cAcuL5Dlisx/VddvKIXWCZq46GSrofmXuvNVu4SfQcX
+ R09PRCxDleZlz9yDQV7znmAoK7NH0fslYO+P7EtHtvAXI+a6X/kmS70+kBVtnG2O
+ oV4CerUa2exlbSVaCQB/zL8vHC0bGOxVdWCDnd8PDwk7DUgyRm4v2UyLT+F5XBLT
+ BmY7ugJCZJMHViH3Elz30q/iRXqgSFdx8oFuGFAH9Xkbdh/i96p4GvOzJAlnM5ap
+ 1ixV5Z0QXh0QkQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:message-id
+ :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm2; bh=fuTF09IKrxlQcPcVjgRI9NbLoCT2X
+ ttsBjP3cl9wIZ0=; b=UMlFul2G12YNnHYgtpyWOeyAN5eKAJqWBD9ooe32RwEui
+ fjQo1ppwickXpBgHEYZYi2cucW7RrOYQ/QPL19pw/M2YeCVwHVkfLodK2VKUE/hR
+ 1aL+u/SkOOP3jOlA7V0YNBxiNJQ7sBQkEFB1MEJt+wtiKhX0SFFuLu9z7eskH9pU
+ pVCEQ2WdJmh2zVs6Wkf8rjnDNuUh7VuSOvHb9xjmYAau2vdFgfD7/SSQ+8f0lSTI
+ tmSiV7fxRhft3RYe3RUN8aTTEJBlxMWREYd4YP6lb+ROdMsyDA7JeZzWmkEAsXhv
+ /jNENWs9/XfmkGA5CLkqfsS2Bu0xduhMetOVsXnqw==
+X-ME-Sender: <xms:HQGUYDux4sKoJSfwlNUCpWcAq_LFCWV1MzKEFqCZ2GzLrW4sNmxdGQ>
+ <xme:HQGUYEeUGnpS1vTXRwDM5xJnyosxOfnziOLw8jPXYEI57e00fa91NveqX5g1HoZ7P
+ sufDrKrdCKHMkXM4-Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdegtddgkeduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkgggtugesghdtreertddtvden
+ ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
+ gtgidrgiihiieqnecuggftrfgrthhtvghrnhepfedtffevgfegleelheetleekgfehudfh
+ jeefgeegieefuddthedvtefhheevhedvnecuffhomhgrihhnpehophgvnhgsmhgtqdhprh
+ hojhgvtghtrdighiiinecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgv
+ rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfi
+ gtgidrgiihii
+X-ME-Proxy: <xmx:HQGUYGxEXRl5P38b4vxoTGUCKb1tXUYuQs9K-4Smp7LeeuM6NWnZSw>
+ <xmx:HQGUYCOWopixJHBMYkcRe4G45iccSks9F0USS6OBXDz_Axx1GNQp5g>
+ <xmx:HQGUYD8jpQ7Juz90bbLPt64BbxI236A_4H0E8HNe7wWGp8NooCCEFQ>
+ <xmx:HQGUYGLoI7rfe08D7FeHttzYPHcV2QAWYy3q2jsGPE_roz0LHRg8lg>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236]) by mail.messagingengine.com (Postfix) with ESMTPA
+ for <openbmc@lists.ozlabs.org>; Thu,  6 May 2021 10:45:48 -0400 (EDT)
+Date: Thu, 6 May 2021 09:45:47 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+Subject: CI upgrade to clang-12.
+Message-ID: <YJQBG5s+M2bgYBaC@heinlein>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="Giz3i4Yt3+esdLB4"
+Content-Disposition: inline
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,196 +95,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Venture <venture@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- =?utf-8?B?IkZyYW4gSHN1ICjlvpDoqozorJkpIg==?= <Fran.Hsu@quantatw.com>,
- =?utf-8?B?Ikdlb3JnZSBIdW5nICjmtKrlv6DmlawpIg==?= <George.Hung@quantatw.com>,
- Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---Apple-Mail=_BC847439-5E6C-4841-9F1D-F583497AA3A5
+--Giz3i4Yt3+esdLB4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
 
+Hello,
 
+I'm merging a commit to upgrade the CI scripts to clang-12.  The main
+way this may impact you is that it means we are upgrading the tools
+like clang-format and clang-tidy.  Usually there are subtle formatting
+changes between clang-format versions and CI will flag those. =20
 
-> On May 5, 2021, at 2:37 PM, Brandon Kim <brandonkim@google.com> wrote:
->=20
-> Hi Andrew,
->=20
-> `gbs` machine will provide meta-google coverage, so it would be great =
-if `gbs` could be added in addition to `gsj` instead of as a =
-replacement.
->=20
-> Is there a shortage of OpenBMC CI nodes by any chance? Google has been =
-providing 2 of the OpenBMC CI nodes, so it would be great if adding =
-`gbs` could count towards one of those CI nodes.
+Note: It is possible that you could see formatting errors from code
+already in repositories, which will need a small commit to fix up the
+inconsistencies introduced by clang-12.
 
-Yep, google donates two servers so sounds good. I added it to our daily =
-build of master and it looks like it hit a build issue. We can =
-coordinate in discord if you like but once we get this figured out, =
-I=E2=80=99ll add it to the main openbmc/openbmc CI job.
+Commit for reference:
+* https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/42434
 
-=
-https://jenkins.openbmc.org/job/latest-master/231/label=3Ddocker-builder,t=
-arget=3Dgbs/console
+--=20
+Patrick Williams
 
->=20
-> Thank you,
-> Brandon
->=20
-> On Wed, May 5, 2021 at 10:54 AM Patrick Venture <venture@google.com =
-<mailto:venture@google.com>> wrote:
-> On Wed, May 5, 2021 at 6:25 AM Andrew Geissler <geissonator@gmail.com =
-<mailto:geissonator@gmail.com>> wrote:
-> >
-> >
-> >
-> > > On May 5, 2021, at 1:26 AM, George Hung (=E6=B4=AA=E5=BF=A0=E6=95=AC=
-) <George.Hung@quantatw.com <mailto:George.Hung@quantatw.com>> wrote:
-> > >
-> > > Hi Andrew Geissler,
-> > >
-> > > We have ported many OpenBMC features to quanta/gbs machine =
-(Nuvoton BMC platform) and hope it could be added to CI build, could you =
-help add quanta/gbs machine to CI build verification ? (I'm not familiar =
-with this, if there's anything we need to do first, please let us know)
-> >
-> > Hey George,
-> >
-> > Getting a new system into CI doesn=E2=80=99t have the most defined =
-process but
-> > I think in general it has to fall under one of these due to our =
-constraints
-> > in compute power for CI:
-> >
-> > 1) Propose an existing system in CI to replace (and the benefits of =
-that)
-> > 2) Donate a jenkins compute node to openbmc CI
-> > 3) Convince the community that your system provides additional =
-meta-*
-> >     layer coverage (or some other critical benefit) that would be =
-worth
-> >     the additional hit to the existing CI infrastructure.
-> >
-> > We currently have a =E2=80=9Cgsj=E2=80=9D system in CI. Would it =
-make sense to replace
-> > it with this new =E2=80=9Cgbs=E2=80=9D machine?
->=20
-> Jumping on this thread to say that I'm hoping to have quanta-gbs
-> support in upstream qemu shortly --- so we could also enable this as a
-> Qemu CI machine.
->=20
-> >
-> >
-> > >
-> > >
-> > > Thanks a lot.
-> > >
-> > > Best Regards
-> > > George Hung
-> > >
-> >
+--Giz3i4Yt3+esdLB4
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
---Apple-Mail=_BC847439-5E6C-4841-9F1D-F583497AA3A5
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmCUARkACgkQqwNHzC0A
+wRm/pg//QhghuG3vyObZ16MY3GCALYJIzTeyEk8g5HJak0GO9cdIO9/yFO3H++ie
+y5dQafmXOB5+Idw1ddRQf3pHrEfYhdtEE4xVBNolBDM8eawnoGpNLn0xbGJjEfpl
+bXJYsipYB6HjX3dJJWQKon+e+xv9ziJVLY4/XkEnINqVlXFAiMdWVy8BXJvlDm41
+yT3FWsvkTMHVuwwHzR0UkVVmdc59ILlflbaeNIh5r+y8OmsjqfQIoY60catfLJwS
+h5+YB0lnwCy2tCeppSEXV3iGG7+AcUCcGkVbZVOsFJ6Qnmmm/4P5lxnk9BbuhM12
+xk6mWfIkEOIZNkLzCWZT6rUd8P3/pzFOU/u2INP2rXM6vFpSUGJSgxCnQ2vJqFgF
+3B5K1YKnzJJI3RUjoBt4E2srWmOlgLVBSSsRfdytkfdsByt8un3F4JUS7TE9wdwk
+NkXD6tB3Lb7qXy9e4gqRM+XCViceUCBmyAPse3EjNL6sn3UpHUN05JGzxNZJrroa
+h5T2eStanCH9HIthuQRhywPOObvn1YQeCTU69oVUMmFPJ3ZfPv57V2G5SHs5lBO9
+yplKdqsmMYPRqTuqaGSKn/elJOvSCDGzoHukWw/hXzaABOaTqjvJhDr5CBQ6sFgA
+L8py3BqvPhOT3S0DxXehlwi3NQvvDkKsEVTAoRYanVohSmls4ks=
+=ixZy
+-----END PGP SIGNATURE-----
 
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><br =
-class=3D""><div><br class=3D""><blockquote type=3D"cite" class=3D""><div =
-class=3D"">On May 5, 2021, at 2:37 PM, Brandon Kim &lt;<a =
-href=3D"mailto:brandonkim@google.com" =
-class=3D"">brandonkim@google.com</a>&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div class=3D""><div dir=3D"ltr" =
-class=3D"">Hi Andrew,<div class=3D""><br class=3D""></div><div =
-class=3D"">`gbs` machine will provide meta-google coverage, so it would =
-be great if `gbs` could be added in addition to `gsj` instead of as a =
-replacement.</div><div class=3D""><br class=3D""></div><div class=3D"">Is =
-there a shortage of OpenBMC CI nodes by any chance? Google has been =
-providing 2 of the OpenBMC CI nodes, so it would be great if adding =
-`gbs` could count towards one of those CI =
-nodes.</div></div></div></blockquote><div><br class=3D""></div><div>Yep, =
-google donates two servers so sounds good. I added it to our daily build =
-of master and it looks like it hit a build issue. We can coordinate in =
-discord if you like but once we get this figured out, I=E2=80=99ll add =
-it to the main openbmc/openbmc CI job.</div><div><br =
-class=3D""></div><div><a =
-href=3D"https://jenkins.openbmc.org/job/latest-master/231/label=3Ddocker-b=
-uilder,target=3Dgbs/console" =
-class=3D"">https://jenkins.openbmc.org/job/latest-master/231/label=3Ddocke=
-r-builder,target=3Dgbs/console</a></div><br class=3D""><blockquote =
-type=3D"cite" class=3D""><div class=3D""><div dir=3D"ltr" class=3D""><div =
-class=3D""><br class=3D""></div><div class=3D"">Thank you,</div><div =
-class=3D"">Brandon</div></div><br class=3D""><div =
-class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, May =
-5, 2021 at 10:54 AM Patrick Venture &lt;<a =
-href=3D"mailto:venture@google.com" class=3D"">venture@google.com</a>&gt; =
-wrote:<br class=3D""></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">On Wed, May 5, 2021 at 6:25 AM Andrew =
-Geissler &lt;<a href=3D"mailto:geissonator@gmail.com" target=3D"_blank" =
-class=3D"">geissonator@gmail.com</a>&gt; wrote:<br class=3D"">
-&gt;<br class=3D"">
-&gt;<br class=3D"">
-&gt;<br class=3D"">
-&gt; &gt; On May 5, 2021, at 1:26 AM, George Hung (=E6=B4=AA=E5=BF=A0=E6=95=
-=AC) &lt;<a href=3D"mailto:George.Hung@quantatw.com" target=3D"_blank" =
-class=3D"">George.Hung@quantatw.com</a>&gt; wrote:<br class=3D"">
-&gt; &gt;<br class=3D"">
-&gt; &gt; Hi Andrew Geissler,<br class=3D"">
-&gt; &gt;<br class=3D"">
-&gt; &gt; We have ported many OpenBMC features to quanta/gbs machine =
-(Nuvoton BMC platform) and hope it could be added to CI build, could you =
-help add quanta/gbs machine to CI build verification ? (I'm not familiar =
-with this, if there's anything we need to do first, please let us =
-know)<br class=3D"">
-&gt;<br class=3D"">
-&gt; Hey George,<br class=3D"">
-&gt;<br class=3D"">
-&gt; Getting a new system into CI doesn=E2=80=99t have the most defined =
-process but<br class=3D"">
-&gt; I think in general it has to fall under one of these due to our =
-constraints<br class=3D"">
-&gt; in compute power for CI:<br class=3D"">
-&gt;<br class=3D"">
-&gt; 1) Propose an existing system in CI to replace (and the benefits of =
-that)<br class=3D"">
-&gt; 2) Donate a jenkins compute node to openbmc CI<br class=3D"">
-&gt; 3) Convince the community that your system provides additional =
-meta-*<br class=3D"">
-&gt;&nbsp; &nbsp; &nbsp;layer coverage (or some other critical benefit) =
-that would be worth<br class=3D"">
-&gt;&nbsp; &nbsp; &nbsp;the additional hit to the existing CI =
-infrastructure.<br class=3D"">
-&gt;<br class=3D"">
-&gt; We currently have a =E2=80=9Cgsj=E2=80=9D system in CI. Would it =
-make sense to replace<br class=3D"">
-&gt; it with this new =E2=80=9Cgbs=E2=80=9D machine?<br class=3D"">
-<br class=3D"">
-Jumping on this thread to say that I'm hoping to have quanta-gbs<br =
-class=3D"">
-support in upstream qemu shortly --- so we could also enable this as =
-a<br class=3D"">
-Qemu CI machine.<br class=3D"">
-<br class=3D"">
-&gt;<br class=3D"">
-&gt;<br class=3D"">
-&gt; &gt;<br class=3D"">
-&gt; &gt;<br class=3D"">
-&gt; &gt; Thanks a lot.<br class=3D"">
-&gt; &gt;<br class=3D"">
-&gt; &gt; Best Regards<br class=3D"">
-&gt; &gt; George Hung<br class=3D"">
-&gt; &gt;<br class=3D"">
-&gt;<br class=3D"">
-</blockquote></div>
-</div></blockquote></div><br class=3D""></body></html>=
-
---Apple-Mail=_BC847439-5E6C-4841-9F1D-F583497AA3A5--
+--Giz3i4Yt3+esdLB4--
