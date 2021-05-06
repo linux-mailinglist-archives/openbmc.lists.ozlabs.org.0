@@ -1,73 +1,135 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 827133757B7
-	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 17:40:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56B3D37580D
+	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 17:59:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fbd7z3yTKz3c0R
-	for <lists+openbmc@lfdr.de>; Fri,  7 May 2021 01:40:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FbdZ726nvz30Dq
+	for <lists+openbmc@lfdr.de>; Fri,  7 May 2021 01:59:43 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=uvlez+YD;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=iPV50QKd;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::334;
- helo=mail-ot1-x334.google.com; envelope-from=brandonkim@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=uvlez+YD; dkim-atps=neutral
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com
- [IPv6:2607:f8b0:4864:20::334])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.220.114;
+ helo=nam11-co1-obe.outbound.protection.outlook.com;
+ envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=iPV50QKd; 
+ dkim-atps=neutral
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2114.outbound.protection.outlook.com [40.107.220.114])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fbd5806Nqz3c6M
- for <openbmc@lists.ozlabs.org>; Fri,  7 May 2021 01:38:02 +1000 (AEST)
-Received: by mail-ot1-x334.google.com with SMTP id
- b5-20020a9d5d050000b02902a5883b0f4bso5251035oti.2
- for <openbmc@lists.ozlabs.org>; Thu, 06 May 2021 08:38:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=j0XiSp7T4LuRTCQF+FhjjKDS6TgVyCtQ1w/XmzC0IRQ=;
- b=uvlez+YDZxuWjnl+ljOTj51ztNa676QxFpJQRJZY31IvJDM/Z2HA8dZXvAyh/kovRX
- 2O1z0U/Tv/b8fgg7tCYuowNwFQqGupDsb8sPthn1aljhM6eo2zRpaBsnxizwyky/9ApH
- GQnw+dletb0CvkAuTsoALJwLku43j/ua9hgt6FIj8JP4a4q9S1tUSfd1v7pfqJpfW3me
- o9ZySKR2BXN7Liv/ICt0Em0pSh4M1pAr0m1Sc+MORgwMmGIOHR4tz7fj2XdgWQ13MLmK
- UyLtt0bb1oMt9b9K7dfDV8beyOwRYIsrTrIk5yHs818JSbL/VHNmy+RaWX+3yMTG3/QG
- N8KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=j0XiSp7T4LuRTCQF+FhjjKDS6TgVyCtQ1w/XmzC0IRQ=;
- b=rAwxnDacg8v99fARWbVcG/H/pntJjA3ZCwWuEy20p/u2QJ9CnCJbsTSCsDO+nFvaEg
- JNYltbmm7EDgES72WbdfsoJRS1uNgbVtJXayhYw0cqMjArM+Dug7aXfPW6kin2dRfQjm
- QyxVRu09cFJILabAL3KwrYNEk3Nna2NGTCML+9ja/rWZWDuFABxLWFjxg4cohLyS5KqV
- O3Z8jbLjZ+6m+MBYrYW+cSkNfmc2W5V8IWGI4Ytqy2RdO7vw4d8FeyLj5oSTKmdQqAIZ
- AI90OHrX9iAS0dCXUsTJlm1yRUx3KyTqIz++3ATOofodSsy7T2fc3mx+nBFKANdqREcG
- dAxQ==
-X-Gm-Message-State: AOAM533TkoJJ8w0yByGyr5OxpKG1PX86FL1mvysi4H+Bv4NfDxeVi7IZ
- 9a+tNxZGLyLIAm5YZ84tZHFbAxYdV6T7t6MziBS0oQ==
-X-Google-Smtp-Source: ABdhPJzatWA3FDk/wTUyrSCc5h01Wuv9zfiyheTeWgl/XjaF5QXhJInZY3g4uAfSPrPJRQ4xOb0rA2JTflzSNX3Oq/w=
-X-Received: by 2002:a05:6830:1bd8:: with SMTP id
- v24mr4144875ota.203.1620315478815; 
- Thu, 06 May 2021 08:37:58 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FbdYp4jXPz2xYp
+ for <openbmc@lists.ozlabs.org>; Fri,  7 May 2021 01:59:25 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SmqTyAq4xEICcZl0iyodACimD1p16SG1QWWTeJ46yceIu8LVPUYAPyyEGgySTaUQccC9l1x7Tt/A9PkwpPJ1noAjIB6GErL0q8N7ZQ5ZhD04Hq2GOFxaTB+U59wz+H5Hdrc9UYuWJTiPTUsQKvy9t/Sp4psIF6icJ6tapfn8wQVG2dVIuhiE8w6VKWvdz0RzUaBHHmNMh9CxlWx+Tl1nLOFX/7adMqY+FaLA3fLY6EB/fP52RFf7ZJcyBQF+bw/ryqvCfcMj9GgW9hDbpUZtj7SAuC4k0JlT1fPwreWNLAw6wtPEpNX+mue4pVwCXwF9jBmBje6ZBdwOrLwOTyfBfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=B0CjXnwVr6+0s+UcYtUx4RKMmQhwR9q9wpEh4xJGaoQ=;
+ b=dk8c/6lyenqX8/o8u2BzkUzqIIAtko/zxEEQ3SPPjpxY9xglfmoaT90ZGUInVFpON7m2gl2hIgmKBYHxpZ4KozNL3JeUKXINaUTw+4u5xJsPRtu2SJr/U6DrtM1sq7PsWGioqlfxLQOhJV1Q4Umg8+nZRqjMa32sZbxHTPi7PJqwaz6TSFjL4iAApMCBxXEypO7ZbH7VqepE4/HAd1Ff0zsctZtFj2zGLySi/b/H8lvUFWoZUb7mZuBpeJoCS+afimGGfffzgJGxTtc00/fDHBgq5OyDF9M4mJRczZ39yDFVy7acB2fUJklVzb8XM2GchDW0eRL31V7JlFSnQF7aNg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=B0CjXnwVr6+0s+UcYtUx4RKMmQhwR9q9wpEh4xJGaoQ=;
+ b=iPV50QKdNe9ajAx8iZvLiyTYEsA/HKqQ276yrE1cqOBL3lxe2/LqpyhLcvDNWvwvxs2QD2gbfX4QQTwys7GR+uhWvHeI0Ja2Xd6AC8oLImAxOuHGqQCzGZEZwtqlEXa53Oz5mImN0C4g6sLevaxYTxSxiJqv55XkwT1uD8v54V8=
+Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
+ DM6PR01MB5835.prod.exchangelabs.com (2603:10b6:5:14f::27) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4108.27; Thu, 6 May 2021 15:59:19 +0000
+Received: from DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::fd97:f560:f2cf:d58d]) by DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::fd97:f560:f2cf:d58d%5]) with mapi id 15.20.4065.039; Thu, 6 May 2021
+ 15:59:19 +0000
+From: Thu Nguyen OS <thu@os.amperecomputing.com>
+To: Matthew Barth <msbarth@linux.ibm.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: Re: Add phosphor-fan configuration for the fan which added by
+ dbus-sensor
+Thread-Topic: Add phosphor-fan configuration for the fan which added by
+ dbus-sensor
+Thread-Index: AQHXQllQCBPi6KR9P0WKkzFc+/PDQ6rWbTWAgACk+oA=
+Date: Thu, 6 May 2021 15:59:18 +0000
+Message-ID: <DAC41731-7B29-4743-87D8-40324324FF96@amperemail.onmicrosoft.com>
+References: <B6120112-33DD-41A6-A0F2-7A9FBFEEB081@amperemail.onmicrosoft.com>
+ <d6b2354e-f0e6-8819-4b39-1481660d1361@linux.ibm.com>
+In-Reply-To: <d6b2354e-f0e6-8819-4b39-1481660d1361@linux.ibm.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: linux.ibm.com; dkim=none (message not signed)
+ header.d=none;linux.ibm.com; dmarc=none action=none
+ header.from=os.amperecomputing.com;
+x-originating-ip: [2402:800:6344:392d:a1d3:195d:8023:5cd4]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 9c41973d-a1aa-4334-7556-08d910a7e82e
+x-ms-traffictypediagnostic: DM6PR01MB5835:
+x-microsoft-antispam-prvs: <DM6PR01MB583577F0B5560B897FAF2CA590589@DM6PR01MB5835.prod.exchangelabs.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7691;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: wdP8F1zz6NWdu+/pchtAJY/Vd8R48XoDPxRm/Asv8zJsGWN8KHpRpT+qGVbZKrFZNKSrx93tcrhbQa3k81qNT+SlkRHWgscx0JIrgnz2iQKRGKH2ZDwTGItIRoTqierD3JpHw2WBLlI6IL5eqDFdw5AFMchn/qPN870+LVVloqU8C/ZTPdJB//JY/QF9zXjdBSR4ub5KJPP1MuRk7cErStL43kQJ5cnIPaMXYeARdZO5cwEVLwjhoo6SeiMCZYssRl1MmG+WIGjSE34LFfcZMgoa2yCWfuhkZdYIXrQ6FqVN6vJT1URTZsks6//88ZsE9yCrO3Sp/z2o4zv6DTm4bgEOF1d8JMFqnbujv8eH2DFP2O+cPkZGbMsoGzm2R0vwXDH3ncRBDf91orkxbdvuNctQTAUZYCQRTD+olvsPiZA3zvwQI1ojWEdSSHTVZ9dduskn391Ow+n9HEzSKDxhhsFQdxvpWBG5Bap7ptsbvwSFSHJKHbspex9RsNaDhm6Im0iRqQTdkr0m8yjZl9NG4vOLptskc3+6ZaClWwUN9OqfOnvyXw8XBQe2M5CFdReIiZA1h09Afvmt/y4k8gb2Xo6UYZzNlG4Q+dzUvSObzGyIYQgr3gG1aXpTN/PcbD85YzPQVfpld5XifP02+5I6ZV3cNKWT+RQ343tfu64Cxs0=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(39830400003)(396003)(366004)(136003)(346002)(376002)(316002)(86362001)(66476007)(186003)(76116006)(478600001)(53546011)(91956017)(6486002)(71200400001)(2906002)(5660300002)(966005)(8676002)(33656002)(122000001)(83380400001)(66946007)(38100700002)(6512007)(64756008)(9686003)(66556008)(110136005)(8936002)(66446008)(6506007);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?utf-8?B?WmszVzIrS3AxUzFXY0ZsZ2dBcHFiSjRPci9zcTFoWHAvb0JYRVA0RGpHR0Mz?=
+ =?utf-8?B?cWNjMUw4aGZ5TFlUd25GRGQ1dmJtTEVBWEN1RDFLWWRuUE9IMzM5TjI4NWhq?=
+ =?utf-8?B?SllXVkcxc0ROSjB6RndMTlRwdkkyUXZCdENCYVk3NGhoM3hiWC9rMzdobXZm?=
+ =?utf-8?B?bWFNVytRRHJ5YTN6c05BaEZpbENSSzFRR09pN2J0U2IzaFJUT2RraFYvNHhR?=
+ =?utf-8?B?Zm9lNS96NEtCM2hrWm1BdlVueGZkU1RrMUFpUkcvVFNnNjZJaFdIb1dSQWU3?=
+ =?utf-8?B?TTZFaHpiZGh1WVRmQ2dVbHpXWmhVNnduYW04eHFGdEVZTk5nZXJpQU1iSWU3?=
+ =?utf-8?B?SHJaZUdxV2FTbGxEMjdNenk0NkhzTkY0RE13bThDY2JUU1N6emZsdlRyekVs?=
+ =?utf-8?B?NFJRQlcwbXI3U0NiWTBDT0kwV3NBMG9iYk9aYkdGZXVXYytRQ1BjanY5QnJi?=
+ =?utf-8?B?b2Ywc2pLQmloNXZHYkgwRGk4Yy9TZEhVN0FGc2JhYXNvYStNNEx6RE1GUFE2?=
+ =?utf-8?B?NjFnYVNZZnUzMlcxZWhwV05NY0hHb2FvTDdHZTBFWGZ0VkpRaWJuTFVnV0o4?=
+ =?utf-8?B?V2x0S2NBY2ZrbUZqOUo4QVI3Y0JsTWFTREFEdU9RMVNNa1JTNTVMY0d3YkxT?=
+ =?utf-8?B?eXFPb0ROUGY1bk1JeXpnTW1EMzBiWXVDZmVNbWdERzRaMzdiR0YrREh4bndV?=
+ =?utf-8?B?VTk4N3VzU2NDYjB4VzY2UGsyeXl2bzUveUV0cStpeDY5eERWVldUWWZXK0VS?=
+ =?utf-8?B?dzhFSzdzdGVJczJLc09zaFZ0WUxSd0ZCM0xBVU9ReGwwTjNsaG9xbzFUcmtE?=
+ =?utf-8?B?SmNYdklOMmFsbUt4WW9XSUdDb0RmZjZLaWt2RXpNeFVYVlZOMkNhNklDd1hD?=
+ =?utf-8?B?d2Q3dU5SVGwycU91cEx4bktSZ0FFM1JRVWNLa1AvNTdHUitKR1dwZjFpTFdZ?=
+ =?utf-8?B?Q0M3K2k2bEoycjJORDhXaEN2QTM5SUpBK0Vwcmd2Z3dsOTZTM2QwMFBpV21J?=
+ =?utf-8?B?c2tmM1lhQWNaNXpqM29iMSt2MVcxQjdScFZiL2xZOUF0RmtNdFU2S3dScllC?=
+ =?utf-8?B?RXNJU25WVHdKa0dYa05VeC9lSjlmZUNxczJKS1lMVTl0aThJWXJHeVc4RFBa?=
+ =?utf-8?B?NWNmdktVQWo3L3ZqOWlka3hBcXhud2pOZmQydERPcTZhM2xma2VxUXhyb2M0?=
+ =?utf-8?B?L3Rjbmp5akxiQWNLMitNWTd6b0tjQWpGV25iM25zRkJTR2kzeHJzQ2NWQnVP?=
+ =?utf-8?B?bTNpamFoTUFIcllkczduWUNValVKeHc1MnVUQ21zOHBaOUJxeWF6eloweVpW?=
+ =?utf-8?B?cWxTc09RWnYzbkRsOXFiZUN4V3UzTzdHUEZWVnRJeUkxV3FsOWI4ZEpLd1Y4?=
+ =?utf-8?B?dFFkQWtEbDRzZ3VQYW5oZFROWTVSZlh0N0d1K2dTNGVHdU0vaW5NWGZjUDdX?=
+ =?utf-8?B?Smp1c2dXZU1ESE50TmNGL25FNnFWQUZoMkM4TVBDa2orbTlDcGloK3pPV2VB?=
+ =?utf-8?B?ZDd3NUg3aFRqdURVTDdMZS90Nkxyc1FqMGtFUWQ0U2UvU3hiS0l5YW55aFVZ?=
+ =?utf-8?B?d2sxcDdMWm5sU2x1VUVKNkNDVU1UeEZveDFhUnRQM0Q2dTYxY0owRm5wV0VT?=
+ =?utf-8?B?bDFrb0lEOXVrYlJ0VHAvV0J2dFVmV09uNHJtY0lGNGM2OVNwK2k4bW5UM1Q2?=
+ =?utf-8?B?UjhGM3hodE9MdFNnRWR1K2xkYzNvMEZjdk9SVDlET3d6Z1FtYk5HblpKVHht?=
+ =?utf-8?B?enlPRzMrUU5oclBDbUQvU05ISnhpQVRkRStoNDQ3V1J2R0FZVExrc3o1czlj?=
+ =?utf-8?B?YkxudkVRb2pZUWUrMVUzRkY5dklXWUNKZFMyZUpQeTFLUjZxWlFqWE9FVnM4?=
+ =?utf-8?Q?/oHximbM3YkLo?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <95659C8ACEA1A44FAB3F0DB60CABBB69@prod.exchangelabs.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <HK0PR04MB233989A7F66DD0B3964E2E0B8F599@HK0PR04MB2339.apcprd04.prod.outlook.com>
- <2DE216D2-B472-42B4-AC31-40902D5600CC@gmail.com>
- <CAO=notyQFgzroaMfsQkr+ZjPm_8DE4y5s3mkadxdmic=N85OMQ@mail.gmail.com>
- <CALGRKGPbdcSRrTUwU6uUpYfAxGZqOFWZL+LU74bFit0EcGP95Q@mail.gmail.com>
- <8D110F1E-CD90-41FE-808E-C2A2A3ACD903@gmail.com>
-In-Reply-To: <8D110F1E-CD90-41FE-808E-C2A2A3ACD903@gmail.com>
-From: Brandon Kim <brandonkim@google.com>
-Date: Thu, 6 May 2021 08:37:46 -0700
-Message-ID: <CALGRKGNUh1yMLX20LDLAs5Df=QB8=42KWuo=TC3SG84EEHqD5w@mail.gmail.com>
-Subject: Re: CI build for quanta/gbs
-To: Andrew Geissler <geissonator@gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000008a700005c1ab18b3"
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9c41973d-a1aa-4334-7556-08d910a7e82e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 May 2021 15:59:18.9048 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vE4UZhU2VpXUOEOtTkG4NqW1I5ocRvviTbrWHOY10SSYodrtCwEMBjJmNTN3Og3AkHQnxZOCzS54SjwioIh3s3wJAS3x7V+KncHfUHicsbM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB5835
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,208 +141,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Venture <venture@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- =?UTF-8?B?RnJhbiBIc3UgKOW+kOiqjOismSk=?= <Fran.Hsu@quantatw.com>,
- =?UTF-8?B?R2VvcmdlIEh1bmcgKOa0quW/oOaVrCk=?= <George.Hung@quantatw.com>,
- Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000008a700005c1ab18b3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi Andrew,
-
-It looks like it's due to my patch to phosphor-hwmon (which, the repo is
-going through some overhaul and is causing conflicts with). The patch in
-question is in the process of getting upstreamed and the repo is settling
-down, so I'll ping you on Discord once it looks ready to be tried again
-(hopefully by end of the week).
-
-Thanks,
-Brandon
-
-On Thu, May 6, 2021 at 6:38 AM Andrew Geissler <geissonator@gmail.com>
-wrote:
-
->
->
-> On May 5, 2021, at 2:37 PM, Brandon Kim <brandonkim@google.com> wrote:
->
-> Hi Andrew,
->
-> `gbs` machine will provide meta-google coverage, so it would be great if
-> `gbs` could be added in addition to `gsj` instead of as a replacement.
->
-> Is there a shortage of OpenBMC CI nodes by any chance? Google has been
-> providing 2 of the OpenBMC CI nodes, so it would be great if adding `gbs`
-> could count towards one of those CI nodes.
->
->
-> Yep, google donates two servers so sounds good. I added it to our daily
-> build of master and it looks like it hit a build issue. We can coordinate
-> in discord if you like but once we get this figured out, I=E2=80=99ll add=
- it to the
-> main openbmc/openbmc CI job.
->
->
-> https://jenkins.openbmc.org/job/latest-master/231/label=3Ddocker-builder,=
-target=3Dgbs/console
->
->
-> Thank you,
-> Brandon
->
-> On Wed, May 5, 2021 at 10:54 AM Patrick Venture <venture@google.com>
-> wrote:
->
->> On Wed, May 5, 2021 at 6:25 AM Andrew Geissler <geissonator@gmail.com>
->> wrote:
->> >
->> >
->> >
->> > > On May 5, 2021, at 1:26 AM, George Hung (=E6=B4=AA=E5=BF=A0=E6=95=AC=
-) <
->> George.Hung@quantatw.com> wrote:
->> > >
->> > > Hi Andrew Geissler,
->> > >
->> > > We have ported many OpenBMC features to quanta/gbs machine (Nuvoton
->> BMC platform) and hope it could be added to CI build, could you help add
->> quanta/gbs machine to CI build verification ? (I'm not familiar with thi=
-s,
->> if there's anything we need to do first, please let us know)
->> >
->> > Hey George,
->> >
->> > Getting a new system into CI doesn=E2=80=99t have the most defined pro=
-cess but
->> > I think in general it has to fall under one of these due to our
->> constraints
->> > in compute power for CI:
->> >
->> > 1) Propose an existing system in CI to replace (and the benefits of
->> that)
->> > 2) Donate a jenkins compute node to openbmc CI
->> > 3) Convince the community that your system provides additional meta-*
->> >     layer coverage (or some other critical benefit) that would be wort=
-h
->> >     the additional hit to the existing CI infrastructure.
->> >
->> > We currently have a =E2=80=9Cgsj=E2=80=9D system in CI. Would it make =
-sense to replace
->> > it with this new =E2=80=9Cgbs=E2=80=9D machine?
->>
->> Jumping on this thread to say that I'm hoping to have quanta-gbs
->> support in upstream qemu shortly --- so we could also enable this as a
->> Qemu CI machine.
->>
->> >
->> >
->> > >
->> > >
->> > > Thanks a lot.
->> > >
->> > > Best Regards
->> > > George Hung
->> > >
->> >
->>
->
->
-
---0000000000008a700005c1ab18b3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Andrew,<div><br></div><div>It looks like it&#39;s due t=
-o my patch to phosphor-hwmon (which, the repo is going through some overhau=
-l and is causing conflicts with). The patch in question is in the process=
-=C2=A0of getting upstreamed and the repo is settling down, so I&#39;ll ping=
- you on Discord once it looks ready to be tried again (hopefully by end of =
-the week).</div><div><br></div><div>Thanks,</div><div>Brandon</div></div><b=
-r><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, =
-May 6, 2021 at 6:38 AM Andrew Geissler &lt;<a href=3D"mailto:geissonator@gm=
-ail.com">geissonator@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D=
-"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
-04,204,204);padding-left:1ex"><div style=3D"overflow-wrap: break-word;"><br=
-><div><br><blockquote type=3D"cite"><div>On May 5, 2021, at 2:37 PM, Brando=
-n Kim &lt;<a href=3D"mailto:brandonkim@google.com" target=3D"_blank">brando=
-nkim@google.com</a>&gt; wrote:</div><br><div><div dir=3D"ltr">Hi Andrew,<di=
-v><br></div><div>`gbs` machine will provide meta-google coverage, so it wou=
-ld be great if `gbs` could be added in addition to `gsj` instead of as a re=
-placement.</div><div><br></div><div>Is there a shortage of OpenBMC CI nodes=
- by any chance? Google has been providing 2 of the OpenBMC CI nodes, so it =
-would be great if adding `gbs` could count towards one of those CI nodes.</=
-div></div></div></blockquote><div><br></div><div>Yep, google donates two se=
-rvers so sounds good. I added it to our daily build of master and it looks =
-like it hit a build issue. We can coordinate in discord if you like but onc=
-e we get this figured out, I=E2=80=99ll add it to the main openbmc/openbmc =
-CI job.</div><div><br></div><div><a href=3D"https://jenkins.openbmc.org/job=
-/latest-master/231/label=3Ddocker-builder,target=3Dgbs/console" target=3D"_=
-blank">https://jenkins.openbmc.org/job/latest-master/231/label=3Ddocker-bui=
-lder,target=3Dgbs/console</a></div><br><blockquote type=3D"cite"><div><div =
-dir=3D"ltr"><div><br></div><div>Thank you,</div><div>Brandon</div></div><br=
-><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, M=
-ay 5, 2021 at 10:54 AM Patrick Venture &lt;<a href=3D"mailto:venture@google=
-.com" target=3D"_blank">venture@google.com</a>&gt; wrote:<br></div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex">On Wed, May 5, 2021 at 6:25 AM An=
-drew Geissler &lt;<a href=3D"mailto:geissonator@gmail.com" target=3D"_blank=
-">geissonator@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; &gt; On May 5, 2021, at 1:26 AM, George Hung (=E6=B4=AA=E5=BF=A0=E6=95=
-=AC) &lt;<a href=3D"mailto:George.Hung@quantatw.com" target=3D"_blank">Geor=
-ge.Hung@quantatw.com</a>&gt; wrote:<br>
-&gt; &gt;<br>
-&gt; &gt; Hi Andrew Geissler,<br>
-&gt; &gt;<br>
-&gt; &gt; We have ported many OpenBMC features to quanta/gbs machine (Nuvot=
-on BMC platform) and hope it could be added to CI build, could you help add=
- quanta/gbs machine to CI build verification ? (I&#39;m not familiar with t=
-his, if there&#39;s anything we need to do first, please let us know)<br>
-&gt;<br>
-&gt; Hey George,<br>
-&gt;<br>
-&gt; Getting a new system into CI doesn=E2=80=99t have the most defined pro=
-cess but<br>
-&gt; I think in general it has to fall under one of these due to our constr=
-aints<br>
-&gt; in compute power for CI:<br>
-&gt;<br>
-&gt; 1) Propose an existing system in CI to replace (and the benefits of th=
-at)<br>
-&gt; 2) Donate a jenkins compute node to openbmc CI<br>
-&gt; 3) Convince the community that your system provides additional meta-*<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0layer coverage (or some other critical benefit) tha=
-t would be worth<br>
-&gt;=C2=A0 =C2=A0 =C2=A0the additional hit to the existing CI infrastructur=
-e.<br>
-&gt;<br>
-&gt; We currently have a =E2=80=9Cgsj=E2=80=9D system in CI. Would it make =
-sense to replace<br>
-&gt; it with this new =E2=80=9Cgbs=E2=80=9D machine?<br>
-<br>
-Jumping on this thread to say that I&#39;m hoping to have quanta-gbs<br>
-support in upstream qemu shortly --- so we could also enable this as a<br>
-Qemu CI machine.<br>
-<br>
-&gt;<br>
-&gt;<br>
-&gt; &gt;<br>
-&gt; &gt;<br>
-&gt; &gt; Thanks a lot.<br>
-&gt; &gt;<br>
-&gt; &gt; Best Regards<br>
-&gt; &gt; George Hung<br>
-&gt; &gt;<br>
-&gt;<br>
-</blockquote></div>
-</div></blockquote></div><br></div></blockquote></div>
-
---0000000000008a700005c1ab18b3--
+DQoNCu+7v09uIDA2LzA1LzIwMjEsIDIwOjA5LCAiTWF0dGhldyBCYXJ0aCIgPG1zYmFydGhAbGlu
+dXguaWJtLmNvbT4gd3JvdGU6DQoNCg0KICAgIE9uIDUvNi8yMSA0OjIyIEFNLCBUaHUgTmd1eWVu
+IE9TIHdyb3RlOg0KICAgID4gSGksDQogICAgPg0KICAgID4gSeKAmW0gc3VwcG9ydGluZyB0aGUg
+ZmFuIGNvbnRyb2wgYWxnb3JpdGhtcyB1c2luZyBwaG9zcGhvci1mYW4uIFBob3NwaG9yLWZhbiBt
+b25pdG9yaW5nIGFuZCBjb250cm9sbGluZyByZXF1aXJlIGludGVyZmFjZSB4eXoub3BlbmJtY19w
+cm9qZWN0LkNvbnRyb2wuRmFuUHdtIGluIHRoZSBmYW4gaW52ZW50b3J5IG9iamVjdC4NCiAgICBU
+aGF0IGlzIGEgc2Vuc29yIGludGVyZmFjZSwgbm90IGFuIGludGVyZmFjZSB0aGF0J3MgYWRkZWQg
+dG8gaW52ZW50b3J5IG9iamVjdHMNCiAgICA+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bo
+b3NwaG9yLWZhbi1wcmVzZW5jZS9ibG9iL21hc3Rlci9kb2NzL21vbml0b3IvaW52ZW50b3J5Lm1k
+DQogICAgV2hhdCB5b3UgbGlua2VkIHRvIGhlcmUgcmVmZXJzIHRvIHdoZXJlIHRoZSBmYW4gaW52
+ZW50b3J5IG9iamVjdCBpcyBsb2NhdGVkIGFuZCBub3RoaW5nIHRvIGRvIHdpdGggd2l0aCB0aGUg
+ZmFuIHNlbnNvcnMgdGhhdCBmYW4gbW9uaXRvciBpcyB0byBiZSBtb25pdG9yaW5nLg0KDQpbVGh1
+IE5ndXllbl0gVGhlIGxpbmsgZGV0YWlsIGFib3V0IHRoZSBpbnZlbnRvcnkgY29uZmlndXJhdGlv
+biBpbiBtb25pdG9yLnlhbWwgZm9yIGZhbiBtb25pdG9yICBhbmQgZmFuLnlhbWwgZm9yIGZhbiBj
+b250cm9sIGZlYXR1cmUuIEl0IHNob3VsZCBiZSAiIFRoZSByZWxhdGl2ZSBwYXRoIHVuZGVyIGlu
+dmVudG9yeSB3aGVyZSB0aGUgZmFuJ3MgaW52ZW50b3J5IG9iamVjdCBleGlzdHMgIi4NCg0KTG9v
+ayBhdCB0aGUgZXhhbXBsZSBvZiB0aGUgZmFuIGNvbnRyb2wgY29uZmlndXJhdGlvbiAgZmlsZSBu
+YW1lZCBmYW4ueWFtbCBiZWxvdyB5b3UgY2FuIHNlZSB0aGUgeWFtbCBmaWxlIGluY2x1ZGVzICJp
+bnZlbnRvcnkiIHNldHRpbmcuIEFuZCB4eXoub3BlbmJtY19wcm9qZWN0LkNvbnRyb2wuRmFuUHdt
+IGludGVyZmFjZSBpcyByZXF1aXJlZCBpbnRlcmZhY2UgZm9yIHRoYXQgaW52ZW50b3J5IHBhdGgu
+DQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1mYW4tcHJlc2VuY2UvYmxvYi9t
+YXN0ZXIvY29udHJvbC9leGFtcGxlL2ZhbnMueWFtbA0KDQogICAgPg0KICAgID4gQnV0IEZhblNl
+bnNvciBkYWVtb24gb2YgZGJ1cy1zZW5zb3Igb25seSBhZGRzIC94eXovb3BlbmJtY19wcm9qZWN0
+L3NlbnNvcnMvZmFuX3RhY2ggdG8gaW52ZW50b3J5IGxpc3QsIGFuZCB0aGlzIHBhdGggZG9u4oCZ
+dCBzdXBwb3J0IHh5ei5vcGVuYm1jX3Byb2plY3QuQ29udHJvbC5GYW5Qd20gaW50ZXJmYWNlLg0K
+ICAgIEkgY2FudCBzcGVhayB0byB0aGUgc3VwcG9ydCBvZiBkYnVzLXNlbnNvcnMgYW5kIHRoZSB1
+c2Ugb2YgdGhlIEZhblB3bSBpbnRlcmZhY2UsIGJ1dCBwaG9zcGhvci1mYW4tbW9uaXRvciBjYW4g
+c3VwcG9ydCBlaXRoZXIgdGhlIHVzZSBvZiBSUE0gb3IgUFdNIGZhbiBzZW5zb3JzIGZvciBtb25p
+dG9yaW5nIGFuZCB1cGRhdGluZyB0aGUgY29ycmVzcG9uZGluZyBPcGVyYXRpb25hbFN0YXR1cyBv
+ZiBhIGZhbiBpbiBpbnZlbnRvcnkuDQogICAgaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhv
+c3Bob3ItZmFuLXByZXNlbmNlL2Jsb2IvbWFzdGVyL2RvY3MvbW9uaXRvci9zZW5zb3JzLm1kDQoN
+CiAgICBTdXBwbHlpbmcgdGhlIGAgInRhcmdldF9pbnRlcmZhY2UiOiAieHl6Lm9wZW5ibWNfcHJv
+amVjdC5Db250cm9sLkZhblB3bSIgYCBkaXJlY3RzIGZhbiBtb25pdG9yIHRvIG1vbml0b3IgdGhl
+IGZhbiBzZW5zb3IgdXNpbmcgdGhlIFRhcmdldCBwcm9wZXJ0eSBmcm9tIHRoYXQgaW50ZXJmYWNl
+LiBXaGVuIHRoZSAidGFyZ2V0X2ludGVyZmFjZSIgaXMgbm90IHByb3ZpZGVkIG9uIGEgZmFuIHNl
+bnNvciwgdGhlIGRlZmF1bHQgaXMgdG8gdXNlIHRoZSAieHl6Lm9wZW5ibWNfcHJvamVjdC5Db250
+cm9sLkZhblNwZWVkIiAoUlBNKSBpbnRlcmZhY2UuDQpbVGh1IE5ndXllbl0NClRoZSBwb2ludCBo
+ZXJlIGlzIHRoZSBwaG9zcGhvci1mYW4tbW9uaXRvci9jb250cm9sIGV4cGVjdCB4eXoub3BlbmJt
+Y19wcm9qZWN0LkNvbnRyb2wuRmFuUHdtIG9yIHh5ei5vcGVuYm1jX3Byb2plY3QuQ29udHJvbC5G
+YW5TcGVlZCBpcyBpbmNsdWRlZCBpbiAveHl6L29wZW5ibWNfcHJvamVjdC9zZW5zb3JzL2Zhbl90
+YWNoLg0KQnV0IGRidXMtc2Vuc29yIGRvbid0IHN1cHBvcnQgdGhhdC4gSW4gZGJ1cyBzZW5zb3Ig
+eHl6Lm9wZW5ibWNfcHJvamVjdC5Db250cm9sLkZhblB3bSBpcyBvbmx5IGF2YWlsYWJsZSBpbiAv
+eHl6L29wZW5ibWNfcHJvamVjdC9jb250cm9sL2ZhbnB3bS4NCiAgICA+DQogICAgPiBEbyB5b3Ug
+aGF2ZSBhbnkgc29sdXRpb24gdG8gbWFrZSBwaG9zcGhvci1mYW4gd29yayB3aXRoIGRidXMtc2Vu
+c29yPw0KICAgID4NCiAgICA+IEnigJltIGN1cnJlbnRseSB1cGRhdGUgRmFuU2Vuc29yIGluIGRi
+dXMtc2Vuc29yIHRvIGFkZCB4eXoub3BlbmJtY19wcm9qZWN0LkNvbnRyb2wuRmFuUHdtIHRvIC94
+eXovb3BlbmJtY19wcm9qZWN0L3NlbnNvcnMvZmFuX3RhY2guDQogICAgUmVmZXIgdG8gdGhlIGRv
+YyBsaW5rIEkgcHJvdmlkZWQgYWJvdmUgb24gaG93IHRvIHV0aWxpemUgbW9uaXRvcmluZyBmYW5z
+IHRoYXQgdXNlIGEgUFdNIHRhcmdldCBvbiB0aGF0IGludGVyZmFjZS4gVGhlbiBwaG9zcGhvci1m
+YW4tbW9uaXRvciB3aWxsIHVwZGF0ZSB0aGUgZmFuIGludmVudG9yeSBvYmplY3QncyAoYXMgY29u
+ZmlndXJlZCB3aXRoIGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLWZhbi1wcmVz
+ZW5jZS9ibG9iL21hc3Rlci9kb2NzL21vbml0b3IvaW52ZW50b3J5Lm1kKSB4eXoub3BlbmJtY19w
+cm9qZWN0LlN0YXRlLkRlY29yYXRvci5PcGVyYXRpb25hbFN0YXR1cyBGdW5jdGlvbmFsIHByb3Bl
+cnR5IGJhc2VkIG9uIGhvdyB5b3UgY29uZmlndXJlIGZhbiBtb25pdG9yIHRvIG1vbml0b3IgdGhl
+IGZhbiBzZW5zb3JzLg0KICAgID4NCiAgICA+IFJlZ2FyZHMuDQogICAgPiBUaHUgTmd1eWVuLg0K
+DQo=
