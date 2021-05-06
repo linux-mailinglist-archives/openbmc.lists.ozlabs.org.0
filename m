@@ -2,72 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 054923751D2
-	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 11:50:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 382CD375204
+	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 12:07:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FbTMq0MQjz304h
-	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 19:50:15 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=VHW0L/Z6;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FbTlh28szz30Mp
+	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 20:07:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=VHW0L/Z6; dkim-atps=neutral
-X-Greylist: delayed 579 seconds by postgrey-1.36 at boromir;
- Thu, 06 May 2021 19:49:53 AEST
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=steven_lee@aspeedtech.com;
+ receiver=<UNKNOWN>)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FbTMP1z0Rz300c
- for <openbmc@lists.ozlabs.org>; Thu,  6 May 2021 19:49:53 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id ABB4D4120D;
- Thu,  6 May 2021 09:40:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1620294008; x=1622108409; bh=s2pWtrni67szU3lxCSqYI8kbL
- na0gOUGfiebdsmAQfc=; b=VHW0L/Z6L0huc6XdbUvzsUUXxE25jDrIfYeFTS5QF
- wEALGshq1qFOT4r0ZF8/iRO22igMNLCc+dLRrHx8Il6vr5EBAmvgDpbdvfgQqH6o
- r8usfoR2XQcOhyxXwOWCN5udGmFO75k8eDRHBPNuraTTPc1LH69KUxgah4aO77+3
- vs=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ocK7KklhMJhJ; Thu,  6 May 2021 12:40:08 +0300 (MSK)
-Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
- [172.17.100.103])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 498E84120B;
- Thu,  6 May 2021 12:40:08 +0300 (MSK)
-Received: from [10.199.0.38] (10.199.0.38) by T-EXCH-03.corp.yadro.com
- (172.17.100.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 6 May
- 2021 12:40:07 +0300
-Message-ID: <f5eedf23bfea01b5d69b43f4d35970f45f5d4e99.camel@yadro.com>
-Subject: Re: Add phosphor-fan configuration for the fan which added by
- dbus-sensor
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: Thu Nguyen OS <thu@os.amperecomputing.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Date: Thu, 6 May 2021 12:40:01 +0300
-In-Reply-To: <B6120112-33DD-41A6-A0F2-7A9FBFEEB081@amperemail.onmicrosoft.com>
-References: <B6120112-33DD-41A6-A0F2-7A9FBFEEB081@amperemail.onmicrosoft.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.4 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FbTlT3ML0z2yZB;
+ Thu,  6 May 2021 20:07:16 +1000 (AEST)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 1469pPg0024628;
+ Thu, 6 May 2021 17:51:25 +0800 (GMT-8)
+ (envelope-from steven_lee@aspeedtech.com)
+Received: from localhost.localdomain (192.168.100.253) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 6 May
+ 2021 18:03:12 +0800
+From: Steven Lee <steven_lee@aspeedtech.com>
+To: Andrew Jeffery <andrew@aj.id.au>, Ulf Hansson <ulf.hansson@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, "Adrian
+ Hunter" <adrian.hunter@intel.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Ryan Chen <ryanchen.aspeed@gmail.com>,
+ "moderated list:ASPEED SD/MMC DRIVER" <linux-aspeed@lists.ozlabs.org>,
+ "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
+ "open list:ASPEED SD/MMC DRIVER" <linux-mmc@vger.kernel.org>,
+ "open list:OPEN FIRMWARE AND FLATTENED DEVICE
+ TREE BINDINGS" <devicetree@vger.kernel.org>, "moderated list:ARM/ASPEED
+ MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>, open list
+ <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3 0/5] mmc: sdhci-of-aspeed: Support toggling SD bus signal
+Date: Thu, 6 May 2021 18:03:07 +0800
+Message-ID: <20210506100312.1638-1-steven_lee@aspeedtech.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.0.38]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-03.corp.yadro.com (172.17.100.103)
+Content-Type: text/plain
+X-Originating-IP: [192.168.100.253]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 1469pPg0024628
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,37 +60,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: ryan_chen@aspeedtech.com, chin-ting_kuo@aspeedtech.com,
+ steven_lee@aspeedtech.com, Hongweiz@ami.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+AST2600-A2 EVB has the reference design for enabling SD bus
+power and toggling SD bus signal voltage between 3.3v and 1.8v by
+GPIO regulators.
+This patch series provides the example for enabling regulators and
+supporting SDR104 mode on AST2600-A2 EVB.
+The description of the reference design of AST2600-A2 EVB is added
+in the dts file.
 
-I guess, when using dbus-sensors, you supposed to use phosphor-pid-
-control package to control fans.
+This patch also include a helper for updating AST2600 sdhci capability
+registers, and assert/deassert the reset signal for cleaning up AST2600
+eMMC controller before eMMC is probed.
 
-On Thu, 2021-05-06 at 09:22 +0000, Thu Nguyen OS wrote:
-> Hi,
->  
-> I’m supporting the fan control algorithms using phosphor-fan.
-> Phosphor-fan monitoring and controlling require interface
-> xyz.openbmc_project.Control.FanPwm in the fan inventory object.
-> https://github.com/openbmc/phosphor-fan-presence/blob/master/docs/monitor/inventory.md
->  
-> But FanSensor daemon of dbus-sensor only adds
-> /xyz/openbmc_project/sensors/fan_tach to inventory list, and this
-> path don’t support xyz.openbmc_project.Control.FanPwm interface.
->  
-> Do you have any solution to make phosphor-fan work with dbus-sensor?
->  
-> I’m currently update FanSensor in dbus-sensor to add
-> xyz.openbmc_project.Control.FanPwm to
-> /xyz/openbmc_project/sensors/fan_tach.
->  
-> Regards.
-> Thu Nguyen.
+Changes from v2:
+* Move the comment of the reference design from dt-bindings to device tree.
+* Add clk-phase binding for eMMC controller.
+* Reimplement aspeed_sdc_set_slot_capability().
+* Separate the implementation of eMMC reset to another patch file.
+* Fix yaml document error per the report of dt_binding_check and
+  dtbs_check.
+
+Changes from v1:
+* Add the device tree example for AST2600 A2 EVB in dt-bindings
+  document
+* Add timing-phase for eMMC controller.
+* Remove power-gpio and power-switch-gpio from sdhci driver, they should
+  be handled by regulator.
+* Add a helper to update capability registers in the driver.
+* Sync sdhci settings from device tree to SoC capability registers.
+* Sync timing-phase from device tree to SoC Clock Phase Control
+  register
+
+Please help to review.
+
+Regards,
+Steven
+
+Steven Lee (5):
+  dt-bindings: mmc: sdhci-of-aspeed: Add an example for AST2600-A2 EVB
+  ARM: dts: aspeed: ast2600evb: Add comment for gpio regulator of sdhci
+  ARM: dts: aspeed: ast2600evb: Add phase correction for emmc
+    controller.
+  mmc: sdhci-of-aspeed: Add a helper for updating capability register.
+  mmc: sdhci-of-aspeed: Assert/Deassert reset signal before probing eMMC
+
+ .../devicetree/bindings/mmc/aspeed,sdhci.yaml | 101 ++++++++++++++++-
+ arch/arm/boot/dts/aspeed-ast2600-evb.dts      |  18 ++-
+ drivers/mmc/host/sdhci-of-aspeed.c            | 106 ++++++++++++++++--
+ 3 files changed, 211 insertions(+), 14 deletions(-)
 
 -- 
-Best regards,
-Andrei Kartashev
-
+2.17.1
 
