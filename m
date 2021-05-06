@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 382CD375204
-	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 12:07:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8ED323751F0
+	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 12:05:39 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FbTlh28szz30Mp
-	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 20:07:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FbTjY447tz304Q
+	for <lists+openbmc@lfdr.de>; Thu,  6 May 2021 20:05:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
@@ -17,15 +17,15 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FbTlT3ML0z2yZB;
- Thu,  6 May 2021 20:07:16 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FbTjG6ZQMz2ysr;
+ Thu,  6 May 2021 20:05:20 +1000 (AEST)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 1469pPg0024628;
+ by twspam01.aspeedtech.com with ESMTP id 1469pPCd024629;
  Thu, 6 May 2021 17:51:25 +0800 (GMT-8)
  (envelope-from steven_lee@aspeedtech.com)
 Received: from localhost.localdomain (192.168.100.253) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 6 May
- 2021 18:03:12 +0800
+ 2021 18:03:13 +0800
 From: Steven Lee <steven_lee@aspeedtech.com>
 To: Andrew Jeffery <andrew@aj.id.au>, Ulf Hansson <ulf.hansson@linaro.org>,
  Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, "Adrian
@@ -38,17 +38,20 @@ To: Andrew Jeffery <andrew@aj.id.au>, Ulf Hansson <ulf.hansson@linaro.org>,
  TREE BINDINGS" <devicetree@vger.kernel.org>, "moderated list:ARM/ASPEED
  MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>, open list
  <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3 0/5] mmc: sdhci-of-aspeed: Support toggling SD bus signal
-Date: Thu, 6 May 2021 18:03:07 +0800
-Message-ID: <20210506100312.1638-1-steven_lee@aspeedtech.com>
+Subject: [PATCH v3 1/5] dt-bindings: mmc: sdhci-of-aspeed: Add an example for
+ AST2600-A2 EVB
+Date: Thu, 6 May 2021 18:03:08 +0800
+Message-ID: <20210506100312.1638-2-steven_lee@aspeedtech.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20210506100312.1638-1-steven_lee@aspeedtech.com>
+References: <20210506100312.1638-1-steven_lee@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [192.168.100.253]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 1469pPg0024628
+X-MAIL: twspam01.aspeedtech.com 1469pPCd024629
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,54 +69,145 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 AST2600-A2 EVB has the reference design for enabling SD bus
-power and toggling SD bus signal voltage between 3.3v and 1.8v by
-GPIO regulators.
-This patch series provides the example for enabling regulators and
-supporting SDR104 mode on AST2600-A2 EVB.
-The description of the reference design of AST2600-A2 EVB is added
-in the dts file.
+power and toggling SD bus signal voltage by GPIO pins.
 
-This patch also include a helper for updating AST2600 sdhci capability
-registers, and assert/deassert the reset signal for cleaning up AST2600
-eMMC controller before eMMC is probed.
+In the reference design, GPIOV0 of AST2600-A2 EVB is connected to
+power load switch that providing 3.3v to SD1 bus vdd. GPIOV1 is
+connected to a 1.8v and a 3.3v power load switch that providing
+signal voltage to
+SD1 bus.
 
-Changes from v2:
-* Move the comment of the reference design from dt-bindings to device tree.
-* Add clk-phase binding for eMMC controller.
-* Reimplement aspeed_sdc_set_slot_capability().
-* Separate the implementation of eMMC reset to another patch file.
-* Fix yaml document error per the report of dt_binding_check and
-  dtbs_check.
+If GPIOV0 is active high, SD1 bus is enabled. Otherwise, SD1 bus is
+disabled.
+If GPIOV1 is active high, 3.3v power load switch is enabled, SD1
+signal voltage is 3.3v. Otherwise, 1.8v power load switch will be
+enabled, SD1 signal voltage becomes 1.8v.
 
-Changes from v1:
-* Add the device tree example for AST2600 A2 EVB in dt-bindings
-  document
-* Add timing-phase for eMMC controller.
-* Remove power-gpio and power-switch-gpio from sdhci driver, they should
-  be handled by regulator.
-* Add a helper to update capability registers in the driver.
-* Sync sdhci settings from device tree to SoC capability registers.
-* Sync timing-phase from device tree to SoC Clock Phase Control
-  register
+AST2600-A2 EVB also support toggling signal voltage for SD2 bus.
+The design is the same as SD1 bus. It uses GPIOV2 as power-gpio and
+GPIOV3 as power-switch-gpio.
 
-Please help to review.
+Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+---
+ .../devicetree/bindings/mmc/aspeed,sdhci.yaml | 101 +++++++++++++++++-
+ 1 file changed, 97 insertions(+), 4 deletions(-)
 
-Regards,
-Steven
-
-Steven Lee (5):
-  dt-bindings: mmc: sdhci-of-aspeed: Add an example for AST2600-A2 EVB
-  ARM: dts: aspeed: ast2600evb: Add comment for gpio regulator of sdhci
-  ARM: dts: aspeed: ast2600evb: Add phase correction for emmc
-    controller.
-  mmc: sdhci-of-aspeed: Add a helper for updating capability register.
-  mmc: sdhci-of-aspeed: Assert/Deassert reset signal before probing eMMC
-
- .../devicetree/bindings/mmc/aspeed,sdhci.yaml | 101 ++++++++++++++++-
- arch/arm/boot/dts/aspeed-ast2600-evb.dts      |  18 ++-
- drivers/mmc/host/sdhci-of-aspeed.c            | 106 ++++++++++++++++--
- 3 files changed, 211 insertions(+), 14 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+index 987b287f3bff..de7e61b3d37a 100644
+--- a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
++++ b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+@@ -45,10 +45,16 @@ patternProperties:
+ 
+     properties:
+       compatible:
+-        enum:
+-          - aspeed,ast2400-sdhci
+-          - aspeed,ast2500-sdhci
+-          - aspeed,ast2600-sdhci
++        oneOf:
++          - items:
++              - enum:
++                  - aspeed,ast2400-sdhci
++                  - aspeed,ast2500-sdhci
++                  - aspeed,ast2600-sdhci
++          - items:
++              - enum:
++                  - aspeed,ast2600-sdhci
++              - const: sdhci
+       reg:
+         maxItems: 1
+         description: The SDHCI registers
+@@ -104,3 +110,90 @@ examples:
+                     clocks = <&syscon ASPEED_CLK_SDIO>;
+             };
+     };
++
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++    #include <dt-bindings/clock/aspeed-clock.h>
++    #include <dt-bindings/interrupt-controller/irq.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    vcc_sdhci0: regulator-vcc-sdhci0 {
++            compatible = "regulator-fixed";
++            regulator-name = "SDHCI0 Vcc";
++            regulator-min-microvolt = <3300000>;
++            regulator-max-microvolt = <3300000>;
++            gpios = <&gpio0 168
++                            GPIO_ACTIVE_HIGH>;
++            enable-active-high;
++    };
++
++    vccq_sdhci0: regulator-vccq-sdhci0 {
++            compatible = "regulator-gpio";
++
++            regulator-name = "SDHCI0 VccQ";
++            regulator-min-microvolt = <1800000>;
++            regulator-max-microvolt = <3300000>;
++            gpios = <&gpio0 169
++                            GPIO_ACTIVE_HIGH>;
++            gpios-states = <1>;
++            states = <3300000 1>,
++                     <1800000 0>;
++    };
++
++    vcc_sdhci1: regulator-vcc-sdhci1 {
++            compatible = "regulator-fixed";
++
++            regulator-name = "SDHCI1 Vcc";
++            regulator-min-microvolt = <3300000>;
++            regulator-max-microvolt = <3300000>;
++            gpios = <&gpio0 170
++                            GPIO_ACTIVE_HIGH>;
++            enable-active-high;
++    };
++
++    vccq_sdhci1: regulator-vccq-sdhci1 {
++            compatible = "regulator-gpio";
++
++            regulator-name = "SDHCI1 VccQ";
++            regulator-min-microvolt = <1800000>;
++            regulator-max-microvolt = <3300000>;
++            gpios = <&gpio0 171
++                            GPIO_ACTIVE_HIGH>;
++            gpios-states = <1>;
++            states = <3300000 1>,
++                     <1800000 0>;
++    };
++
++    sdc@1e740000 {
++            compatible = "aspeed,ast2600-sd-controller";
++            reg = <0x1e740000 0x100>;
++            #address-cells = <1>;
++            #size-cells = <1>;
++            ranges = <0 0x1e740000 0x20000>;
++            clocks = <&syscon ASPEED_CLK_GATE_SDCLK>;
++
++            sdhci@1e740100 {
++                    compatible = "aspeed,ast2600-sdhci","sdhci";
++                    reg = <0x100 0x100>;
++                    interrupts = <GIC_SPI 43 IRQ_TYPE_LEVEL_HIGH>;
++                    sdhci,auto-cmd12;
++                    clocks = <&syscon ASPEED_CLK_SDIO>;
++                    vmmc-supply = <&vcc_sdhci0>;
++                    vqmmc-supply = <&vccq_sdhci0>;
++                    sd-uhs-sdr104;
++                    clk-phase-uhs-sdr104 = <180>, <180>;
++            };
++
++            sdhci@1e740200 {
++                    compatible = "aspeed,ast2600-sdhci","sdhci";
++                    reg = <0x200 0x100>;
++                    interrupts = <GIC_SPI 43 IRQ_TYPE_LEVEL_HIGH>;
++                    sdhci,auto-cmd12;
++                    clocks = <&syscon ASPEED_CLK_SDIO>;
++                    vmmc-supply = <&vcc_sdhci1>;
++                    vqmmc-supply = <&vccq_sdhci1>;
++                    sd-uhs-sdr104;
++                    clk-phase-uhs-sdr104 = <0>, <0>;
++            };
++    };
++
++...
 -- 
 2.17.1
 
