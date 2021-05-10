@@ -1,56 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61E5B3779F6
-	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 03:44:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B2EE377A2B
+	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 04:34:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FdkPG3BVLz2ymV
-	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 11:44:18 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=kZ3ek6kK;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FdlVm1Fpdz2yqC
+	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 12:34:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=steven_lee@aspeedtech.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=kZ3ek6kK; 
- dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [71.19.156.171])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FdkMf5C96z2yx4;
- Mon, 10 May 2021 11:42:54 +1000 (AEST)
-Received: from hatter.bewilderbeest.net (unknown [IPv6:2600:6c44:7f:ba20::7c6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 4F5AC8F;
- Sun,  9 May 2021 18:42:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1620610973;
- bh=cJWOo4TfUzj7t7/dXgttcnTX16/CdJrjTEAU3pw82dw=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=kZ3ek6kKU43A648ercUBWqvEVh3HZv9sYrQRYDSF84hJPZlSt7VYfxFAtA3sPPw+W
- t2cD3vtJwA6zK7JKdw3alNeHZjeZSYi7Xhxt2CxDFBY/xMUbWsg5hm6d/cMw4kpDZ/
- TkTMIGzanOIQlfLHRqaO2C/H9DenBJ9r9tzLiaAw=
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 3/3] serial: 8250_aspeed_vuart: use UPF_IOREMAP to set up
- register mapping
-Date: Sun,  9 May 2021 20:42:31 -0500
-Message-Id: <20210510014231.647-4-zev@bewilderbeest.net>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210510014231.647-1-zev@bewilderbeest.net>
-References: <20210510014231.647-1-zev@bewilderbeest.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FdlVT3qQ9z2yXs;
+ Mon, 10 May 2021 12:33:51 +1000 (AEST)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 14A2KSJh015471;
+ Mon, 10 May 2021 10:20:28 +0800 (GMT-8)
+ (envelope-from steven_lee@aspeedtech.com)
+Received: from aspeedtech.com (192.168.100.253) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 10 May
+ 2021 10:32:31 +0800
+Date: Mon, 10 May 2021 10:32:28 +0800
+From: Steven Lee <steven_lee@aspeedtech.com>
+To: Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v3 1/5] dt-bindings: mmc: sdhci-of-aspeed: Add an example
+ for AST2600-A2 EVB
+Message-ID: <20210510023228.GA6883@aspeedtech.com>
+References: <20210506100312.1638-1-steven_lee@aspeedtech.com>
+ <20210506100312.1638-2-steven_lee@aspeedtech.com>
+ <20210507011324.GA1119409@robh.at.kernel.org>
+ <20210507031348.GA23749@aspeedtech.com>
+ <CAL_JsqLywL6J_uVVquhOMevb6Geed-A2o7fzHQPKvVQxe4gscA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <CAL_JsqLywL6J_uVVquhOMevb6Geed-A2o7fzHQPKvVQxe4gscA@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Originating-IP: [192.168.100.253]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 14A2KSJh015471
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,86 +58,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Zev Weiss <zev@bewilderbeest.net>,
- Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
- Johan Hovold <johan@kernel.org>, linux-kernel@vger.kernel.org,
- linux-serial@vger.kernel.org, Jiri Slaby <jirislaby@kernel.org>,
- linux-arm-kernel@lists.infradead.org
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE
+ TREE BINDINGS" <devicetree@vger.kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Ryan Chen <ryan_chen@aspeedtech.com>,
+ "moderated list:ASPEED SD/MMC DRIVER" <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ "open list:ASPEED SD/MMC DRIVER" <linux-mmc@vger.kernel.org>,
+ "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
+ Ryan Chen <ryanchen.aspeed@gmail.com>, Adrian Hunter <adrian.hunter@intel.com>,
+ Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
+ open list <linux-kernel@vger.kernel.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>, "Hongweiz@ami.com" <Hongweiz@ami.com>,
+ "moderated list:ARM/ASPEED
+ MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Previously this driver's use of devm_ioremap_resource() led to
-duplicated calls to __release_region() when unbinding it (one from
-serial8250_release_std_resource() and one from devres_release_all()),
-the second of which resulted in a warning message:
+The 05/08/2021 01:21, Rob Herring wrote:
+> On Thu, May 6, 2021 at 10:14 PM Steven Lee <steven_lee@aspeedtech.com> wrote:
+> >
+> > The 05/07/2021 09:13, Rob Herring wrote:
+> > > On Thu, May 06, 2021 at 06:03:08PM +0800, Steven Lee wrote:
+> > > > AST2600-A2 EVB has the reference design for enabling SD bus
+> > > > power and toggling SD bus signal voltage by GPIO pins.
+> > > >
+> > > > In the reference design, GPIOV0 of AST2600-A2 EVB is connected to
+> > > > power load switch that providing 3.3v to SD1 bus vdd. GPIOV1 is
+> > > > connected to a 1.8v and a 3.3v power load switch that providing
+> > > > signal voltage to
+> > > > SD1 bus.
+> > > >
+> > > > If GPIOV0 is active high, SD1 bus is enabled. Otherwise, SD1 bus is
+> > > > disabled.
+> > > > If GPIOV1 is active high, 3.3v power load switch is enabled, SD1
+> > > > signal voltage is 3.3v. Otherwise, 1.8v power load switch will be
+> > > > enabled, SD1 signal voltage becomes 1.8v.
+> > > >
+> > > > AST2600-A2 EVB also support toggling signal voltage for SD2 bus.
+> > > > The design is the same as SD1 bus. It uses GPIOV2 as power-gpio and
+> > > > GPIOV3 as power-switch-gpio.
+> > > >
+> > > > Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> > > > ---
+> > > >  .../devicetree/bindings/mmc/aspeed,sdhci.yaml | 101 +++++++++++++++++-
+> > > >  1 file changed, 97 insertions(+), 4 deletions(-)
+> > > >
+> > > > diff --git a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+> > > > index 987b287f3bff..de7e61b3d37a 100644
+> > > > --- a/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+> > > > +++ b/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+> > > > @@ -45,10 +45,16 @@ patternProperties:
+> > > >
+> > > >      properties:
+> > > >        compatible:
+> > > > -        enum:
+> > > > -          - aspeed,ast2400-sdhci
+> > > > -          - aspeed,ast2500-sdhci
+> > > > -          - aspeed,ast2600-sdhci
+> > > > +        oneOf:
+> > > > +          - items:
+> > > > +              - enum:
+> > > > +                  - aspeed,ast2400-sdhci
+> > > > +                  - aspeed,ast2500-sdhci
+> > > > +                  - aspeed,ast2600-sdhci
+> > > > +          - items:
+> > > > +              - enum:
+> > > > +                  - aspeed,ast2600-sdhci
+> > > > +              - const: sdhci
+> > >
+> > > Why are you adding 'sdhci'. That's not useful as a compatible given how
+> > > many quirks different implementations have.
+> > >
+> > >
+> >
+> > It is for passing the dtbs_check of the second example.
+> > Without this definition, many device trees have the following
+> > error:
+> >
+> > ['aspeed,ast2600-sdhci', 'sdhci'] is too long
+> > Additional items are not allowed ('sdhci' was unexpected)
+> 
+> I would probably fix the dts files then. Does anything depend on 'sdhci'?
+> 
 
-  # echo 1e787000.serial > /sys/bus/platform/drivers/aspeed-vuart/unbind
-  [33091.774200] Trying to free nonexistent resource <000000001e787000-000000001e78703f>
+The build error is caused by my second example.
+My example is refer to the aspeed-g6.dtsi to append "sdhci" after
+"aspeed,ast2600-sdhci"
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm/boot/dts/aspeed-g6.dtsi?h=v5.12#n561
 
-With this change the driver uses the generic serial8250 code's
-UPF_IOREMAP to take care of the register mapping automatically instead
-of doing its own devm_ioremap_resource(), thus avoiding the duplicate
-__release_region() on unbind.
+As long as the second example is removed, the following error won't show in the dtbs_check result.
 
-In doing this we eliminate vuart->regs, since it merely duplicates
-vuart->port->port.membase, which we now use for our I/O accesses.
+```
+  SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+  DTC     arch/arm/boot/dts/aspeed-ast2500-evb.dt.yaml
+  CHECK   arch/arm/boot/dts/aspeed-ast2500-evb.dt.yaml
+  DTC     arch/arm/boot/dts/aspeed-ast2600-evb.dt.yaml
+  CHECK   arch/arm/boot/dts/aspeed-ast2600-evb.dt.yaml
+/home/slee/aspeed/patch_up/linux/arch/arm/boot/dts/aspeed-ast2600-evb.dt.yaml: sdc@1e740000: sdhci@1e740100:compatible: ['aspeed,ast2600-sdhci', 'sdhci'] is too long
+        From schema: /home/slee/aspeed/patch_up/linux/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+/home/slee/aspeed/patch_up/linux/arch/arm/boot/dts/aspeed-ast2600-evb.dt.yaml: sdc@1e740000: sdhci@1e740100:compatible: Additional items are not allowed ('sdhci' was unexpected)
+        From schema: /home/slee/aspeed/patch_up/linux/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+/home/slee/aspeed/patch_up/linux/arch/arm/boot/dts/aspeed-ast2600-evb.dt.yaml: sdc@1e740000: sdhci@1e740200:compatible: ['aspeed,ast2600-sdhci', 'sdhci'] is too long
+        From schema: /home/slee/aspeed/patch_up/linux/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
+/home/slee/aspeed/patch_up/linux/arch/arm/boot/dts/aspeed-ast2600-evb.dt.yaml: sdc@1e740000: sdhci@1e740200:compatible: Additional items are not allowed ('sdhci' was unexpected)
+        From schema: /home/slee/aspeed/patch_up/linux/Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Reported-by: Andrew Jeffery <andrew@aj.id.au>
----
- drivers/tty/serial/8250/8250_aspeed_vuart.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+```
 
-diff --git a/drivers/tty/serial/8250/8250_aspeed_vuart.c b/drivers/tty/serial/8250/8250_aspeed_vuart.c
-index 249164dc397b..2bf1d8582d9a 100644
---- a/drivers/tty/serial/8250/8250_aspeed_vuart.c
-+++ b/drivers/tty/serial/8250/8250_aspeed_vuart.c
-@@ -34,7 +34,6 @@
- 
- struct aspeed_vuart {
- 	struct device		*dev;
--	void __iomem		*regs;
- 	struct clk		*clk;
- 	int			line;
- 	struct timer_list	unthrottle_timer;
-@@ -66,12 +65,12 @@ static const int unthrottle_timeout = HZ/10;
- 
- static inline u8 aspeed_vuart_readb(struct aspeed_vuart *vuart, u8 reg)
- {
--	return readb(vuart->regs + reg);
-+	return readb(vuart->port->port.membase + reg);
- }
- 
- static inline void aspeed_vuart_writeb(struct aspeed_vuart *vuart, u8 val, u8 reg)
- {
--	writeb(val, vuart->regs + reg);
-+	writeb(val, vuart->port->port.membase + reg);
- }
- 
- static ssize_t lpc_address_show(struct device *dev,
-@@ -429,13 +428,9 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
- 	timer_setup(&vuart->unthrottle_timer, aspeed_vuart_unthrottle_exp, 0);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	vuart->regs = devm_ioremap_resource(&pdev->dev, res);
--	if (IS_ERR(vuart->regs))
--		return PTR_ERR(vuart->regs);
- 
- 	memset(&port, 0, sizeof(port));
- 	port.port.private_data = vuart;
--	port.port.membase = vuart->regs;
- 	port.port.mapbase = res->start;
- 	port.port.mapsize = resource_size(res);
- 	port.port.startup = aspeed_vuart_startup;
-@@ -492,7 +487,7 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
- 	port.port.iotype = UPIO_MEM;
- 	port.port.type = PORT_16550A;
- 	port.port.uartclk = clk;
--	port.port.flags = UPF_SHARE_IRQ | UPF_BOOT_AUTOCONF
-+	port.port.flags = UPF_SHARE_IRQ | UPF_BOOT_AUTOCONF | UPF_IOREMAP
- 		| UPF_FIXED_PORT | UPF_FIXED_TYPE | UPF_NO_THRE_TEST;
- 
- 	if (of_property_read_bool(np, "no-loopback-test"))
--- 
-2.31.1
-
+> Rob
