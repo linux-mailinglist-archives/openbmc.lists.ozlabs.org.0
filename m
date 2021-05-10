@@ -1,70 +1,48 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4077C378C50
-	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 14:35:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D415378C9E
+	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 15:15:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ff0s62CnCz3036
-	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 22:35:54 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=p21p5GYM;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ff1kY067lz3bxh
+	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 23:15:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12e;
- helo=mail-lf1-x12e.google.com; envelope-from=avifishman70@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=p21p5GYM; dkim-atps=neutral
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com
- [IPv6:2a00:1450:4864:20::12e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Ff0rr1CL3z2xv8
- for <openbmc@lists.ozlabs.org>; Mon, 10 May 2021 22:35:37 +1000 (AEST)
-Received: by mail-lf1-x12e.google.com with SMTP id h4so23158248lfv.0
- for <openbmc@lists.ozlabs.org>; Mon, 10 May 2021 05:35:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=pqQBts0ODhA92hm3MB8OjzptbtGC+ihrqRtbHG7sVXw=;
- b=p21p5GYMrcSjHSGmiskc8Q3alQtgTWaHIOtRClPQ8u0x05D6NiCK4xu/ajtEro8mNn
- PdxPhx9sV464RdvJYGUpSLGrVUxxsGJR+HKIlEFrI/zYl29AF2uf0O/D9uvXKVXoyZ94
- ex9ePliUHc7CkPWbm7ASw0htwBO5OMLP3nfDJ9jkUCtKV7ZmK/KvesKWwAR5GD0xq6MI
- YpDEVVv3QRIcUlrB5T9osuYgmpHpYJBwusQZFRO4DdPQ2Qq4PQP5me6/KstWgidNUah5
- 9BnQB0zFlzfS6akQeIPAv4/whU+FH1ic0mXg1KqUcr5RjbkOFNa7HZe75lx0VdnogPjq
- 5i3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=pqQBts0ODhA92hm3MB8OjzptbtGC+ihrqRtbHG7sVXw=;
- b=GItbFwaUN6VXiuyAqgD5GnJOV0h3D/fza89qtT5j74mrzsjCr1Ot4/urGkZB149uMq
- Mp/UPdG/Ca6ARrA0lZWDuzH2Nk/DhINv8cySju8On7wYUtjz9I+fsajSKZR5/ODuVvdx
- +xP6xSYB2LqE/PjspWurNirFnvXEa9fZBkWSoUa/5MeQsd/+FgdAogdjLQlptUG0hsxG
- 37/LrMtf0rD1YaLT/O326pkSE6RINq860AwGT+WpYtHhTcGxEP2lU6kzf6P2NX/FPMYu
- 36+WFSF69jrO8KhqtV8fNqYHEO/y4v+sSTh1OZjExuEZZgl7SBeTPw7+uMzbHzlXoanu
- VD9w==
-X-Gm-Message-State: AOAM533RvDhS0I3lN8NmJb5Nb9JCr6bBu5EA6Qb0heErqlfAph+tl4bx
- gTDBMcJSLRBg6z3Yr2OlwJte/ZqoSGlKm90GEg==
-X-Google-Smtp-Source: ABdhPJwS/kyCvvJoneMwFlct9z1xQJQwExi8EAR6IhiIrla67b7o8XgStqu9hm9rlL1d8vFgpk5gTks6Lky4wu6wnrQ=
-X-Received: by 2002:a05:6512:3d8f:: with SMTP id
- k15mr17351613lfv.227.1620650133533; 
- Mon, 10 May 2021 05:35:33 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Ff1hn1xP1z308N
+ for <openbmc@lists.ozlabs.org>; Mon, 10 May 2021 23:13:45 +1000 (AEST)
+IronPort-SDR: QKm0BK+rYS80V5EVbm3hltVPxmKoQ87I8VW7x8u+CagVpphSNC3jaQOwtSyqQLeSDcjv6SviUu
+ 5o2Ubba0d2kA==
+X-IronPort-AV: E=McAfee;i="6200,9189,9980"; a="199261258"
+X-IronPort-AV: E=Sophos;i="5.82,287,1613462400"; d="scan'208";a="199261258"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 May 2021 06:12:11 -0700
+IronPort-SDR: cvIFTPk3l/qMviQ4zOXZz5u7wXujsGpD2xZDy2UCJMkhSlGTsvEsp9+QKCPPxNo9eoDxDcd1+a
+ 1YhLpxzqJB/g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.82,287,1613462400"; d="scan'208";a="461292622"
+Received: from black.fi.intel.com ([10.237.72.28])
+ by FMSMGA003.fm.intel.com with ESMTP; 10 May 2021 06:12:07 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+ id E13F7D7; Mon, 10 May 2021 16:12:27 +0300 (EEST)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Linus Walleij <linus.walleij@linaro.org>, Mark Brown <broonie@kernel.org>,
+ openbmc@lists.ozlabs.org, linux-spi@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v1 1/7] spi: Use SPI_MODE_X_MASK
+Date: Mon, 10 May 2021 16:12:11 +0300
+Message-Id: <20210510131217.49357-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-References: <20210508113342.94457-1-j.neuschaefer@gmx.net>
-In-Reply-To: <20210508113342.94457-1-j.neuschaefer@gmx.net>
-From: Avi Fishman <avifishman70@gmail.com>
-Date: Mon, 10 May 2021 15:35:22 +0300
-Message-ID: <CAKKbWA4dJgjeKjY1MeLdpE0VV=ugKr7yMiC_5yn-9VXWtU3z6A@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Nuvoton NPCM: Add myself as reviewer
-To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,41 +54,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Cc: Benjamin Fair <benjaminfair@google.com>,
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ Tali Perry <tali.perry1@gmail.com>, Masami Hiramatsu <mhiramat@kernel.org>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, May 8, 2021 at 2:35 PM Jonathan Neusch=C3=A4fer
-<j.neuschaefer@gmx.net> wrote:
->
-> Nuvoton NPCM7xx SoCs share a lot of the hardware design with Nuvoton
-> WPCM450. I'm adding myself as a reviewer, so I don't miss patches that
-> affect both NPCM7xx and WPCM450.
->
-> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-Reviewed-by: Avi Fishman <avifishman70@gmail.com>
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 661770e8e6fc1..78f9df2b6cd20 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2184,6 +2184,7 @@ M:        Tali Perry <tali.perry1@gmail.com>
->  R:     Patrick Venture <venture@google.com>
->  R:     Nancy Yuen <yuenn@google.com>
->  R:     Benjamin Fair <benjaminfair@google.com>
-> +R:     Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
->  L:     openbmc@lists.ozlabs.org (moderated for non-subscribers)
->  S:     Supported
->  F:     Documentation/devicetree/bindings/*/*/*npcm*
-> --
-> 2.30.2
->
+Use SPI_MODE_X_MASK instead of open coded variant.
 
+While at it, fix format specifier and drop explicit casting.
 
---=20
-Regards,
-Avi
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
+ drivers/spi/spi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 407420977a73..956dce3aafca 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -3441,8 +3441,8 @@ int spi_setup(struct spi_device *spi)
+ 		spi_set_thread_rt(spi->controller);
+ 	}
+ 
+-	dev_dbg(&spi->dev, "setup mode %d, %s%s%s%s%u bits/w, %u Hz max --> %d\n",
+-			(int) (spi->mode & (SPI_CPOL | SPI_CPHA)),
++	dev_dbg(&spi->dev, "setup mode %lu, %s%s%s%s%u bits/w, %u Hz max --> %d\n",
++			spi->mode & SPI_MODE_X_MASK,
+ 			(spi->mode & SPI_CS_HIGH) ? "cs_high, " : "",
+ 			(spi->mode & SPI_LSB_FIRST) ? "lsb, " : "",
+ 			(spi->mode & SPI_3WIRE) ? "3wire, " : "",
+-- 
+2.30.2
+
