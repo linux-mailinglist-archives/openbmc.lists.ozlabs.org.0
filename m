@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36D20377BF1
-	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 07:52:03 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76407377BF4
+	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 07:52:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fdqv51LSNz3bv8
-	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 15:52:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Fdqvf3mCRz3c2m
+	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 15:52:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=O7r5u+Pb;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=thpxnPm1;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=aAyZNcO1;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=FrmDWdZO;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,67 +19,67 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=O7r5u+Pb; 
+ header.s=fm2 header.b=aAyZNcO1; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=thpxnPm1; 
+ header.a=rsa-sha256 header.s=fm2 header.b=FrmDWdZO; 
  dkim-atps=neutral
 Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
  [66.111.4.221])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fdqkg2xxXz3079;
- Mon, 10 May 2021 15:44:43 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.nyi.internal (Postfix) with ESMTP id 643455803ED;
- Mon, 10 May 2021 01:44:41 -0400 (EDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fdqkn4SwYz307Q;
+ Mon, 10 May 2021 15:44:49 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 5B78B5803EE;
+ Mon, 10 May 2021 01:44:47 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Mon, 10 May 2021 01:44:41 -0400
+ by compute3.internal (MEProxy); Mon, 10 May 2021 01:44:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm2; bh=Cf8vcTHTFHQGR
- l2fPzXB+QwMHUhRpgEuhayhDdGSR0o=; b=O7r5u+Pb8GS2Q1DY2IQJlcY3a6mOh
- dZeDbnqS2KxWPDEfwjx84Eh5A2MB2vJWrVy+5qxJCHYvfQheNJEAYlCzn+O18q7V
- XMREvbWCgMAkbo4RKMAu0UroNFALk2mcXmItY8IFPZVC1bixpfvBUonD36TJv2e+
- fOsw/nibpqiLgt9CZ+jPZ8XmFx8AxXfSczg74i6gXLQDc2Bxp/SyT2oKAOHR1h43
- f88Jzv9ddWZTBt1fhpVwHz0Df7kO7kAru0wc6L/8pU9oMCJzrulZlDldmVedgWkU
- IrU/O6Oe9xkZklJ+w16Okl4GJBDRvtFp2Zz33UnX0JZ1Ph5Bd9omohZQQ==
+ :mime-version:content-transfer-encoding; s=fm2; bh=WcWLsIVd7FBaV
+ pMfmIuuKOIgK8kxwBSDHbabyxefQ2A=; b=aAyZNcO12+sQBN9IYuW333tWOLpYD
+ ivdpU6xr9pkGxiSoJ3/ERzB7rxJDEihLIwL17hU55Im1u46uDZij3Qn59oVW0l1h
+ TtCOlDC2JNtJsPleZj1E8pgvfMkivkMaFnRDTQvQyRJG/4PPNV8x/SCB7tQm6f74
+ KYTjGMMqSJE2Ydfi+4LZqfTeMVi3/8gqRTB4igWRZ1L/XW2DoTlZfzPWRKrhe50a
+ RSTytmerxBrSsink7S2Hv6xdOo0O79C03EXioPHmM+Y35JpvZJICjCxQI6STuYoq
+ ksr61f/5q/q1H6cgSqfgJSvmBxzRiMIAvemiYKzIRozoa0MoEUEcqXAXw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=Cf8vcTHTFHQGRl2fPzXB+QwMHUhRpgEuhayhDdGSR0o=; b=thpxnPm1
- spFbmLH4SZdrghRKsDpRnTdgYoXjaWEnjRwvKmsa0W1//uuqFmlDQk7mOS21qEEz
- jOJ9rc4FLVxdfsQnQOs6sO5her+Ex8DN3gtDRMIIDL4PuVDAtm12xnFZ7sx7zFM4
- 5mIpV9wa3K5PJMwkkzGd4FPiwimfdxgvRqfE+rVdCtvisHYZaOV/z+L7UjXZiCJY
- ak8LlgOpinhORA+rSRW0xWnr9FGUo2un/If0SA1AdWQJMaFecIbwcXl2RcVOnzLZ
- +pnc7M+eU5ODgVpYSIT3S7vUdZgbrQiag8Ls4kU78Pz0qRdMMLqrCsNT9BpiafRZ
- F3zS+on2wVHAzA==
-X-ME-Sender: <xms:SciYYPSNgS8tBptoJC4wlF6FdvhpztlPyxj2XchmTV-PCOwFgNQPRA>
- <xme:SciYYAzFmFy_afRqkeGV1TJdGjgTBA5NoosrnIDt9s9r2ETTNls5vW4wfKRobkyh1
- H7XAjM1sUw-rJ38fA>
+ fm2; bh=WcWLsIVd7FBaVpMfmIuuKOIgK8kxwBSDHbabyxefQ2A=; b=FrmDWdZO
+ xfFL021Yrm8QBWfY5wI6rI4hTj23Hiy4XBUTX0QjccAUBmwuzx4K95Eu+FybileB
+ 5ZXWiAiOFTuz32MLrJVOYAjXjWSIBttbt2IYW0qt01RW8ZOuz0n87ztLeqofzP/k
+ CdkEQI9ozU+k3AhNfoUIlKP8YPjyrIWxFUFTzcPPAHjy2zV07mf01/zrHE4jo0R+
+ Z8KFnf60RgCGr/1rQiARxoyMrOsJ6uiBlrlww+ryBLph80mxVX1TTCXKwAmr0lT2
+ zNNvKOyCccojgXrFKp9blklECwEqis/pMXWhMVHEo3WJNFFttIcrsPJEQkxWo8xK
+ kBb1QTzTiRj/Ww==
+X-ME-Sender: <xms:T8iYYDfWYRQmjmBtgHYTuVvoFPLIvQAfDT5jwJclmR53Fslxk4SM_A>
+ <xme:T8iYYJO7xwhdEIH_LHVGMIFA1-V2TNir9q0VcK71lW37dAbXLagUiMlSD5cyMtJx_
+ yvtuK2xKlIRScPvYw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdegjedgleeiucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
  dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
  jhdrihgurdgruheqnecuggftrfgrthhtvghrnhepjefgvdevheetkeevgeegleelgfelte
  etjeffleffvdduudevieffgeetleevhfetnecukfhppedvtdefrdehjedrvdduhedrkeen
- ucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurh
+ ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurh
  gvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:SciYYE0GhbSA40fRuZhAosj475kjRLVT_gFhzsEbrgolTU8SQSq0gQ>
- <xmx:SciYYPBILDqUjXppjiEqkn49Y9u007jq1xlLKwW0NESoKiTJUucKKA>
- <xmx:SciYYIhy5ifno6GhxWfOZSdBLM-VVqsHbidyp1JpSYVKDpPi4zSq3A>
- <xmx:SciYYHQDNT3v-osM3PKc2RIEC3LTsxGnxINt05of50ltHGZA_o3kyQ>
+X-ME-Proxy: <xmx:T8iYYMhHdYy13Q5u79AseoKClvbXi79vhj4G7gjvqzD5bYmG2M28hg>
+ <xmx:T8iYYE-ssA2X01mwXShfDNUjR0bnyLoS57JBKwt0AuF5T2gY9M8Hnw>
+ <xmx:T8iYYPsbICY8-hqbTQ8oH2PIR06nUtSw282Ii2ewVZUtd5Azmx9hGQ>
+ <xmx:T8iYYIMPa7Bgq1lslYh-qpg-D3RGF0NyXjVjruH31oRQmR1VGw2wDA>
 Received: from localhost.localdomain (unknown [203.57.215.8])
  by mail.messagingengine.com (Postfix) with ESMTPA;
- Mon, 10 May 2021 01:44:35 -0400 (EDT)
+ Mon, 10 May 2021 01:44:41 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openipmi-developer@lists.sourceforge.net, openbmc@lists.ozlabs.org,
  minyard@acm.org
-Subject: [PATCH v3 15/16] ipmi: kcs_bmc_aspeed: Fix IBFIE typo from datasheet
-Date: Mon, 10 May 2021 15:12:12 +0930
-Message-Id: <20210510054213.1610760-16-andrew@aj.id.au>
+Subject: [PATCH v3 16/16] ipmi: kcs_bmc_aspeed: Optionally apply status address
+Date: Mon, 10 May 2021 15:12:13 +0930
+Message-Id: <20210510054213.1610760-17-andrew@aj.id.au>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210510054213.1610760-1-andrew@aj.id.au>
 References: <20210510054213.1610760-1-andrew@aj.id.au>
@@ -104,70 +104,234 @@ Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Input Buffer Full Interrupt Enable (IBFIE) is typoed as IBFIF for some
-registers in the datasheet. Fix the driver to use the sensible acronym.
+Some Aspeed KCS devices can derive the status register address from the
+address of the data register. As such, the address of the status
+register can be implicit in the configuration if desired. On the other
+hand, sometimes address schemes might be requested that are incompatible
+with the default addressing scheme. Allow these requests where possible
+if the devicetree specifies the status register address.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-Reviewed-by: Zev Weiss <zweiss@equinix.com>
+Reviewed-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
 ---
- drivers/char/ipmi/kcs_bmc_aspeed.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/char/ipmi/kcs_bmc_aspeed.c | 110 ++++++++++++++++++++---------
+ 1 file changed, 78 insertions(+), 32 deletions(-)
 
 diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
-index 9b81806b4dcb..558132b2b9f7 100644
+index 558132b2b9f7..f6c58eb2883e 100644
 --- a/drivers/char/ipmi/kcs_bmc_aspeed.c
 +++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
-@@ -50,9 +50,9 @@
- #define     LPC_HICR0_LPC2E          BIT(6)
- #define     LPC_HICR0_LPC1E          BIT(5)
- #define LPC_HICR2            0x008
--#define     LPC_HICR2_IBFIF3         BIT(3)
--#define     LPC_HICR2_IBFIF2         BIT(2)
--#define     LPC_HICR2_IBFIF1         BIT(1)
-+#define     LPC_HICR2_IBFIE3         BIT(3)
-+#define     LPC_HICR2_IBFIE2         BIT(2)
-+#define     LPC_HICR2_IBFIE1         BIT(1)
- #define LPC_HICR4            0x010
- #define     LPC_HICR4_LADR12AS       BIT(7)
- #define     LPC_HICR4_KCSENBL        BIT(2)
-@@ -83,7 +83,7 @@
+@@ -83,6 +83,8 @@
  #define LPC_STR2             0x040
  #define LPC_STR3             0x044
  #define LPC_HICRB            0x100
--#define     LPC_HICRB_IBFIF4         BIT(1)
-+#define     LPC_HICRB_IBFIE4         BIT(1)
++#define     LPC_HICRB_EN16LADR2      BIT(5)
++#define     LPC_HICRB_EN16LADR1      BIT(4)
+ #define     LPC_HICRB_IBFIE4         BIT(1)
  #define     LPC_HICRB_LPC4E          BIT(0)
  #define LPC_HICRC            0x104
- #define     LPC_HICRC_ID4IRQX_MASK   GENMASK(7, 4)
-@@ -383,20 +383,20 @@ static void aspeed_kcs_irq_mask_update(struct kcs_bmc_device *kcs_bmc, u8 mask,
+@@ -96,6 +98,11 @@
+ #define LPC_IDR4             0x114
+ #define LPC_ODR4             0x118
+ #define LPC_STR4             0x11C
++#define LPC_LSADR12	     0x120
++#define     LPC_LSADR12_LSADR2_MASK  GENMASK(31, 16)
++#define     LPC_LSADR12_LSADR2_SHIFT 16
++#define     LPC_LSADR12_LSADR1_MASK  GENMASK(15, 0)
++#define     LPC_LSADR12_LSADR1_SHIFT 0
  
- 		switch (kcs_bmc->channel) {
- 		case 1:
--			regmap_update_bits(priv->map, LPC_HICR2, LPC_HICR2_IBFIF1,
--					   enable * LPC_HICR2_IBFIF1);
-+			regmap_update_bits(priv->map, LPC_HICR2, LPC_HICR2_IBFIE1,
-+					   enable * LPC_HICR2_IBFIE1);
- 			return;
- 		case 2:
--			regmap_update_bits(priv->map, LPC_HICR2, LPC_HICR2_IBFIF2,
--					   enable * LPC_HICR2_IBFIF2);
-+			regmap_update_bits(priv->map, LPC_HICR2, LPC_HICR2_IBFIE2,
-+					   enable * LPC_HICR2_IBFIE2);
- 			return;
- 		case 3:
--			regmap_update_bits(priv->map, LPC_HICR2, LPC_HICR2_IBFIF3,
--					   enable * LPC_HICR2_IBFIF3);
-+			regmap_update_bits(priv->map, LPC_HICR2, LPC_HICR2_IBFIE3,
-+					   enable * LPC_HICR2_IBFIE3);
- 			return;
- 		case 4:
--			regmap_update_bits(priv->map, LPC_HICRB, LPC_HICRB_IBFIF4,
--					   enable * LPC_HICRB_IBFIF4);
-+			regmap_update_bits(priv->map, LPC_HICRB, LPC_HICRB_IBFIE4,
-+					   enable * LPC_HICRB_IBFIE4);
- 			return;
- 		default:
- 			pr_warn("%s: Unsupported channel: %d", __func__, kcs_bmc->channel);
+ #define OBE_POLL_PERIOD	     (HZ / 2)
+ 
+@@ -123,7 +130,7 @@ struct aspeed_kcs_bmc {
+ 
+ struct aspeed_kcs_of_ops {
+ 	int (*get_channel)(struct platform_device *pdev);
+-	int (*get_io_address)(struct platform_device *pdev);
++	int (*get_io_address)(struct platform_device *pdev, u32 addrs[2]);
+ };
+ 
+ static inline struct aspeed_kcs_bmc *to_aspeed_kcs_bmc(struct kcs_bmc_device *kcs_bmc)
+@@ -217,38 +224,64 @@ static void aspeed_kcs_updateb(struct kcs_bmc_device *kcs_bmc, u32 reg, u8 mask,
+  *     C. KCS4
+  *        D / C : CA4h / CA5h
+  */
+-static void aspeed_kcs_set_address(struct kcs_bmc_device *kcs_bmc, u16 addr)
++static int aspeed_kcs_set_address(struct kcs_bmc_device *kcs_bmc, u32 addrs[2], int nr_addrs)
+ {
+ 	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
+ 
+-	switch (kcs_bmc->channel) {
++	if (WARN_ON(nr_addrs < 1 || nr_addrs > 2))
++		return -EINVAL;
++
++	switch (priv->kcs_bmc.channel) {
+ 	case 1:
+-		regmap_update_bits(priv->map, LPC_HICR4,
+-				LPC_HICR4_LADR12AS, 0);
+-		regmap_write(priv->map, LPC_LADR12H, addr >> 8);
+-		regmap_write(priv->map, LPC_LADR12L, addr & 0xFF);
++		regmap_update_bits(priv->map, LPC_HICR4, LPC_HICR4_LADR12AS, 0);
++		regmap_write(priv->map, LPC_LADR12H, addrs[0] >> 8);
++		regmap_write(priv->map, LPC_LADR12L, addrs[0] & 0xFF);
++		if (nr_addrs == 2) {
++			regmap_update_bits(priv->map, LPC_LSADR12, LPC_LSADR12_LSADR1_MASK,
++					   addrs[1] << LPC_LSADR12_LSADR1_SHIFT);
++
++			regmap_update_bits(priv->map, LPC_HICRB, LPC_HICRB_EN16LADR1,
++					   LPC_HICRB_EN16LADR1);
++		}
+ 		break;
+ 
+ 	case 2:
+-		regmap_update_bits(priv->map, LPC_HICR4,
+-				LPC_HICR4_LADR12AS, LPC_HICR4_LADR12AS);
+-		regmap_write(priv->map, LPC_LADR12H, addr >> 8);
+-		regmap_write(priv->map, LPC_LADR12L, addr & 0xFF);
++		regmap_update_bits(priv->map, LPC_HICR4, LPC_HICR4_LADR12AS, LPC_HICR4_LADR12AS);
++		regmap_write(priv->map, LPC_LADR12H, addrs[0] >> 8);
++		regmap_write(priv->map, LPC_LADR12L, addrs[0] & 0xFF);
++		if (nr_addrs == 2) {
++			regmap_update_bits(priv->map, LPC_LSADR12, LPC_LSADR12_LSADR2_MASK,
++					   addrs[1] << LPC_LSADR12_LSADR2_SHIFT);
++
++			regmap_update_bits(priv->map, LPC_HICRB, LPC_HICRB_EN16LADR2,
++					   LPC_HICRB_EN16LADR2);
++		}
+ 		break;
+ 
+ 	case 3:
+-		regmap_write(priv->map, LPC_LADR3H, addr >> 8);
+-		regmap_write(priv->map, LPC_LADR3L, addr & 0xFF);
++		if (nr_addrs == 2) {
++			dev_err(priv->kcs_bmc.dev,
++				"Channel 3 only supports inferred status IO address\n");
++			return -EINVAL;
++		}
++
++		regmap_write(priv->map, LPC_LADR3H, addrs[0] >> 8);
++		regmap_write(priv->map, LPC_LADR3L, addrs[0] & 0xFF);
+ 		break;
+ 
+ 	case 4:
+-		regmap_write(priv->map, LPC_LADR4, ((addr + 1) << 16) |
+-			addr);
++		if (nr_addrs == 1)
++			regmap_write(priv->map, LPC_LADR4, ((addrs[0] + 1) << 16) | addrs[0]);
++		else
++			regmap_write(priv->map, LPC_LADR4, (addrs[1] << 16) | addrs[0]);
++
+ 		break;
+ 
+ 	default:
+-		break;
++		return -EINVAL;
+ 	}
++
++	return 0;
+ }
+ 
+ static inline int aspeed_kcs_map_serirq_type(u32 dt_type)
+@@ -457,18 +490,18 @@ static int aspeed_kcs_of_v1_get_channel(struct platform_device *pdev)
+ 	return channel;
+ }
+ 
+-static int aspeed_kcs_of_v1_get_io_address(struct platform_device *pdev)
++static int
++aspeed_kcs_of_v1_get_io_address(struct platform_device *pdev, u32 addrs[2])
+ {
+-	u32 slave;
+ 	int rc;
+ 
+-	rc = of_property_read_u32(pdev->dev.of_node, "kcs_addr", &slave);
+-	if (rc || slave > 0xffff) {
++	rc = of_property_read_u32(pdev->dev.of_node, "kcs_addr", addrs);
++	if (rc || addrs[0] > 0xffff) {
+ 		dev_err(&pdev->dev, "no valid 'kcs_addr' configured\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	return slave;
++	return 1;
+ }
+ 
+ static int aspeed_kcs_of_v2_get_channel(struct platform_device *pdev)
+@@ -504,16 +537,24 @@ static int aspeed_kcs_of_v2_get_channel(struct platform_device *pdev)
+ 	return -EINVAL;
+ }
+ 
+-static int aspeed_kcs_of_v2_get_io_address(struct platform_device *pdev)
++static int
++aspeed_kcs_of_v2_get_io_address(struct platform_device *pdev, u32 addrs[2])
+ {
+-	uint32_t slave;
+ 	int rc;
+ 
+-	rc = of_property_read_u32(pdev->dev.of_node, "aspeed,lpc-io-reg", &slave);
+-	if (rc || slave > 0xffff)
++	rc = of_property_read_variable_u32_array(pdev->dev.of_node,
++						 "aspeed,lpc-io-reg",
++						 addrs, 1, 2);
++	if (rc < 0)
++		return rc;
++
++	if (addrs[0] > 0xffff)
++		return -EINVAL;
++
++	if (rc == 2 && addrs[1] > 0xffff)
+ 		return -EINVAL;
+ 
+-	return slave;
++	return rc;
+ }
+ 
+ static int aspeed_kcs_probe(struct platform_device *pdev)
+@@ -522,9 +563,11 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+ 	struct kcs_bmc_device *kcs_bmc;
+ 	struct aspeed_kcs_bmc *priv;
+ 	struct device_node *np;
+-	int rc, channel, addr;
+ 	bool have_upstream_irq;
+ 	u32 upstream_irq[2];
++	int rc, channel;
++	int nr_addrs;
++	u32 addrs[2];
+ 
+ 	np = pdev->dev.of_node->parent;
+ 	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
+@@ -542,9 +585,9 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+ 	if (channel < 0)
+ 		return channel;
+ 
+-	addr = ops->get_io_address(pdev);
+-	if (addr < 0)
+-		return addr;
++	nr_addrs = ops->get_io_address(pdev, addrs);
++	if (nr_addrs < 0)
++		return nr_addrs;
+ 
+ 	np = pdev->dev.of_node;
+ 	rc = of_property_read_u32_array(np, "aspeed,lpc-interrupts", upstream_irq, 2);
+@@ -573,7 +616,9 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+ 	priv->obe.remove = false;
+ 	timer_setup(&priv->obe.timer, aspeed_kcs_check_obe, 0);
+ 
+-	aspeed_kcs_set_address(kcs_bmc, addr);
++	rc = aspeed_kcs_set_address(kcs_bmc, addrs, nr_addrs);
++	if (rc)
++		return rc;
+ 
+ 	/* Host to BMC IRQ */
+ 	rc = aspeed_kcs_config_downstream_irq(kcs_bmc, pdev);
+@@ -596,7 +641,8 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+ 
+ 	kcs_bmc_add_device(&priv->kcs_bmc);
+ 
+-	dev_info(&pdev->dev, "Initialised channel %d at 0x%x\n", kcs_bmc->channel, addr);
++	dev_info(&pdev->dev, "Initialised channel %d at 0x%x\n",
++			kcs_bmc->channel, addrs[0]);
+ 
+ 	return 0;
+ }
 -- 
 2.27.0
 
