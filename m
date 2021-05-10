@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33D09377C9C
-	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 08:56:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 172BA377C9F
+	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 08:56:50 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FdsK4113Lz2yxy
-	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 16:56:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FdsKr0Mlyz30Bc
+	for <lists+openbmc@lfdr.de>; Mon, 10 May 2021 16:56:48 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=opcELQXg;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VsRGUzG+;
+	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=dlUURnXy;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=rO9z75/k;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,67 +19,66 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=opcELQXg; 
+ header.s=fm2 header.b=dlUURnXy; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=VsRGUzG+; 
+ header.a=rsa-sha256 header.s=fm2 header.b=rO9z75/k; 
  dkim-atps=neutral
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
  [64.147.123.24])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FdsC54J9Pz2yXK
- for <openbmc@lists.ozlabs.org>; Mon, 10 May 2021 16:50:56 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailout.west.internal (Postfix) with ESMTP id 885CB1683;
- Mon, 10 May 2021 02:50:54 -0400 (EDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FdsC71zsVz2yxr
+ for <openbmc@lists.ozlabs.org>; Mon, 10 May 2021 16:50:59 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 651D516DB;
+ Mon, 10 May 2021 02:50:57 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute2.internal (MEProxy); Mon, 10 May 2021 02:50:54 -0400
+ by compute3.internal (MEProxy); Mon, 10 May 2021 02:50:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm2; bh=Y96DF4jAtoXYa
- V8LrcLdnJTx01WFFYq5SnB+Ol6U394=; b=opcELQXgc3V6/sopQajWg7hoO+cYV
- qqENwkvksNHnp0n+lfnVRn5fshM+3addbk9JjMfiyfMtY18ba5VYHIqOOOLhY6CG
- bhZx577WZ2qI81sT31H22o5rz0HRiZycUbCS8VLk1L5I1vo3oFDbBN5+rRp/1erx
- kzgxn2sIokVqVFvMyD8jdvgwT9t98U9XEQ5CcS+3BN6W9bG0k4MCD3nu3tQI3jTL
- 6mV1qCe9zcAJYkdVnUqjfIeihQQu+jEiro9bhS958snE1Zf2fbbEtH3KMjWgkEdn
- eZWNO49YMEBWURpSArZpVLwwzyiJAfzMsgOuwkY5i67V2gls6csOqNh/w==
+ :mime-version:content-transfer-encoding; s=fm2; bh=nsLAALaBsNKVR
+ j4KauJmqDuvdmIxsmXV7ge30R1+IA8=; b=dlUURnXyOsqkrLE3GsOAZsB/M8KBV
+ K95nddgv64qwH5wh2uMprTYrzVNa0C+mBYx4AcIN0fJJukgUzBrYV5Kzi83A/rBR
+ 0ST4IxnEduLynJf17ZBpvR3rQaXWvrpa1rxq98BNOl1f3kz656tABcZj3igKIBvs
+ xNsVN0VwEPfuc9jnfureW7+IHRmeMzWkNMauhCj7Pdo1xDmaYNB8RjOTBSfdOaD/
+ oSbFpFXuXSvvp2QA0zsUc7+Mg67sTqkt1DQH/Afw4LdQf9riVNXWbmc27na50SWw
+ EsgO6F8uS4LSRBhMuGuDzyyPCWQQeXU7qjmOnA6adS+G9PT2u+3nkUdtQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=Y96DF4jAtoXYaV8LrcLdnJTx01WFFYq5SnB+Ol6U394=; b=VsRGUzG+
- fecDCktsy3q/7+IqAoXqhc8Ycq+EJoH9jKEabXnyPGAdRK2b41r2dSlXVazNrUsT
- KLyEsFcFpnn/hJTKAD4F37kg6w8SUBxjLd1oFInlK0sR31p+zEyL7OOF+0gde8Dn
- kqruokfUWyr3Brze3VUi5kSHfSYiwk38WRAmWnN+XHz+o29R7XyWx7t3GV9lNXHi
- 5ftRicbley3nX5o/aAbByHenLrk4BiPRcYeu+kD0rdvcdwb2GlDKaPKK2I8yuyBY
- aUBMiA7zkIzyJba6CSdA+jD4ShQYxu/bY26UZc1MY6R88gbuXevAaDLBeNSgdOW5
- O8PntWEeTQNCxg==
-X-ME-Sender: <xms:zteYYI_C_DwQpQ0UyYhB0_PsvCxN3KXE4pDXWbcH727eIABw5N4weQ>
- <xme:zteYYAttNbRkBC_ksH5_J7Acj5cwsJpYFlvuPTOwsC-yTHsxt01P-xLO2_u4JmOH1
- LQvSIIS0JvfRKBA9g>
+ fm2; bh=nsLAALaBsNKVRj4KauJmqDuvdmIxsmXV7ge30R1+IA8=; b=rO9z75/k
+ cMv923eK7SoflpXle30JMLV6aGdsgImoIiK4wphmMaUhT9LFi6iL7VJELv8A0Bhh
+ jjI3i+zXp4pXCS7AjhU3IPKLkjO3YSHlhXjubI0QjbKHDMzapMoNfP1t3WdiIbjw
+ BAGfuE/5/XUGRL7FsBKOMk82Jh9sHUYXb3K+gZ0dbu75T+4dXYQ1lpqT5jxGVqPN
+ KwN9JZLONINUi6Nju0KEjcYUJ37YfM6+pwz8L6IWwU0lwceYpPdQCePNkqnVPHxL
+ FoWZ5Vh7g+vXO01tg7VwVdyYo/pUardX9JhrbH5Np5xZm9+qJQvWPvybABi5Yvk3
+ eSZXuByt8PDhfw==
+X-ME-Sender: <xms:0NeYYHy5Lr84vdvFUYfkiXls17HU9st1Uv10-_MGqQgLA_9paIg4jg>
+ <xme:0NeYYPR90C9tDu9yQQeEKLL1UhNdbJRikYcOQ0Q7zFdH4edM3VJfAK86y-dXiml-R
+ UpSy1HJTeX3lHrPCQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdegjedguddtlecutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
  necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtke
  ertdertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfies
  rghjrdhiugdrrghuqeenucggtffrrghtthgvrhhnpeejgfdvveehteekveeggeellefgle
  etteejffelffdvudduveeiffegteelvefhteenucfkphepvddtfedrheejrddvudehrdek
- necuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomheprghnug
+ necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheprghnug
  hrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:zteYYOCnO8JxYm9J5TLLW_7VVigO4gD_0zqNQytNi-dqiDrItN8c-A>
- <xmx:zteYYIcmnZNCZ9qhP0BtbMkCCBRAnenAWy_W_JMAZpOb4OJxtGEoiA>
- <xmx:zteYYNN1Pt3vTBxLQzcUF_FvG-KNl8BYDhD3flZtI5jxRmKnNcYOag>
- <xmx:zteYYEYW-HBFF3gT1yai06rwJvL0EiS942YOonqSvC8EohNzE88e1A>
+X-ME-Proxy: <xmx:0NeYYBUxP1kkG_kF45uDccoou8eFLv0cuUaoIJ48fWo4n1DRVg8jLg>
+ <xmx:0NeYYBgwQIDEe6wOdFjVQ7VlCeu0cdJn0pBy4NYkf1bfu8kZqI_94Q>
+ <xmx:0NeYYJDO7ailYYrLTuVVE1fG8TitwroqJnylEG9aeeatGz7SxYhTrA>
+ <xmx:0deYYE_7IthlfRqyzwoJY1Mmpn-Myj5tCNlixh2Lk5hYBXJOhcQGgw>
 Received: from localhost.localdomain (203-57-215-8.dyn.iinet.net.au
  [203.57.215.8]) by mail.messagingengine.com (Postfix) with ESMTPA;
- Mon, 10 May 2021 02:50:52 -0400 (EDT)
+ Mon, 10 May 2021 02:50:55 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.10 v3 10/18] ipmi: kcs_bmc: Don't enforce
- single-open policy in the kernel
-Date: Mon, 10 May 2021 16:19:47 +0930
-Message-Id: <20210510064955.1704652-11-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.10 v3 11/18] ipmi: kcs_bmc: Add serio adaptor
+Date: Mon, 10 May 2021 16:19:48 +0930
+Message-Id: <20210510064955.1704652-12-andrew@aj.id.au>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210510064955.1704652-1-andrew@aj.id.au>
 References: <20210510064955.1704652-1-andrew@aj.id.au>
@@ -100,125 +99,213 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Soon it will be possible for one KCS device to have multiple associated
-chardevs exposed to userspace (for IPMI and raw-style access). However,
-don't prevent userspace from:
-
-1. Opening more than one chardev at a time, or
-2. Opening the same chardev more than once.
-
-System behaviour is undefined for both classes of multiple access, so
-userspace must manage itself accordingly.
-
-The implementation delivers IBF and OBF events to the first chardev
-client to associate with the KCS device. An open on a related chardev
-cannot associate its client with the KCS device and so will not
-receive notification of events. However, any fd on any chardev may race
-their accesses to the data and status registers.
+kcs_bmc_serio acts as a bridge between the KCS drivers in the IPMI
+subsystem and the existing userspace interfaces available through the
+serio subsystem. This is useful when userspace would like to make use of
+the BMC KCS devices for purposes that aren't IPMI.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/char/ipmi/kcs_bmc.c         | 34 ++++++++++-------------------
- drivers/char/ipmi/kcs_bmc_aspeed.c  |  3 +--
- drivers/char/ipmi/kcs_bmc_npcm7xx.c |  3 +--
- 3 files changed, 14 insertions(+), 26 deletions(-)
+ drivers/char/ipmi/Kconfig         |  14 +++
+ drivers/char/ipmi/Makefile        |   1 +
+ drivers/char/ipmi/kcs_bmc_serio.c | 151 ++++++++++++++++++++++++++++++
+ 3 files changed, 166 insertions(+)
+ create mode 100644 drivers/char/ipmi/kcs_bmc_serio.c
 
-diff --git a/drivers/char/ipmi/kcs_bmc.c b/drivers/char/ipmi/kcs_bmc.c
-index 7081541bb6ce..ad9ff13ba831 100644
---- a/drivers/char/ipmi/kcs_bmc.c
-+++ b/drivers/char/ipmi/kcs_bmc.c
-@@ -55,24 +55,12 @@ EXPORT_SYMBOL(kcs_bmc_update_status);
- irqreturn_t kcs_bmc_handle_event(struct kcs_bmc_device *kcs_bmc)
- {
- 	struct kcs_bmc_client *client;
--	irqreturn_t rc;
-+	irqreturn_t rc = IRQ_NONE;
+diff --git a/drivers/char/ipmi/Kconfig b/drivers/char/ipmi/Kconfig
+index bc5f81899b62..249b31197eea 100644
+--- a/drivers/char/ipmi/Kconfig
++++ b/drivers/char/ipmi/Kconfig
+@@ -137,6 +137,20 @@ config IPMI_KCS_BMC_CDEV_IPMI
+ 	  This support is also available as a module. The module will be
+ 	  called kcs_bmc_cdev_ipmi.
  
- 	spin_lock(&kcs_bmc->lock);
- 	client = kcs_bmc->client;
--	if (client) {
-+	if (client)
- 		rc = client->ops->event(client);
--	} else {
--		u8 status;
--
--		status = kcs_bmc_read_status(kcs_bmc);
--		if (status & KCS_BMC_STR_IBF) {
--			/* Ack the event by reading the data */
--			kcs_bmc_read_data(kcs_bmc);
--			rc = IRQ_HANDLED;
--		} else {
--			rc = IRQ_NONE;
--		}
--	}
- 	spin_unlock(&kcs_bmc->lock);
- 
- 	return rc;
-@@ -81,26 +69,28 @@ EXPORT_SYMBOL(kcs_bmc_handle_event);
- 
- int kcs_bmc_enable_device(struct kcs_bmc_device *kcs_bmc, struct kcs_bmc_client *client)
- {
--	int rc;
--
- 	spin_lock_irq(&kcs_bmc->lock);
--	if (kcs_bmc->client) {
--		rc = -EBUSY;
--	} else {
-+	if (!kcs_bmc->client) {
-+		u8 mask = KCS_BMC_EVENT_TYPE_IBF;
++config IPMI_KCS_BMC_SERIO
++	depends on IPMI_KCS_BMC && SERIO
++	tristate "SerIO adaptor for BMC KCS devices"
++	help
++	  Adapts the BMC KCS device for the SerIO subsystem. This allows users
++	  to take advantage of userspace interfaces provided by SerIO where
++	  appropriate.
 +
- 		kcs_bmc->client = client;
--		rc = 0;
-+		kcs_bmc_update_event_mask(kcs_bmc, mask, mask);
- 	}
- 	spin_unlock_irq(&kcs_bmc->lock);
- 
--	return rc;
++	  Say YES if you wish to expose KCS devices on the BMC via SerIO
++	  interfaces.
++
++	  This support is also available as a module. The module will be
++	  called kcs_bmc_serio.
++
+ config ASPEED_BT_IPMI_BMC
+ 	depends on ARCH_ASPEED || COMPILE_TEST
+ 	depends on REGMAP && REGMAP_MMIO && MFD_SYSCON
+diff --git a/drivers/char/ipmi/Makefile b/drivers/char/ipmi/Makefile
+index fcfa676afddb..84f47d18007f 100644
+--- a/drivers/char/ipmi/Makefile
++++ b/drivers/char/ipmi/Makefile
+@@ -23,6 +23,7 @@ obj-$(CONFIG_IPMI_POWERNV) += ipmi_powernv.o
+ obj-$(CONFIG_IPMI_WATCHDOG) += ipmi_watchdog.o
+ obj-$(CONFIG_IPMI_POWEROFF) += ipmi_poweroff.o
+ obj-$(CONFIG_IPMI_KCS_BMC) += kcs_bmc.o
++obj-$(CONFIG_IPMI_KCS_BMC_SERIO) += kcs_bmc_serio.o
+ obj-$(CONFIG_IPMI_KCS_BMC_CDEV_IPMI) += kcs_bmc_cdev_ipmi.o
+ obj-$(CONFIG_ASPEED_BT_IPMI_BMC) += bt-bmc.o
+ obj-$(CONFIG_ASPEED_KCS_IPMI_BMC) += kcs_bmc_aspeed.o
+diff --git a/drivers/char/ipmi/kcs_bmc_serio.c b/drivers/char/ipmi/kcs_bmc_serio.c
+new file mode 100644
+index 000000000000..30a2b7ab464b
+--- /dev/null
++++ b/drivers/char/ipmi/kcs_bmc_serio.c
+@@ -0,0 +1,151 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/* Copyright (c) 2021 IBM Corp. */
++
++#include <linux/delay.h>
++#include <linux/device.h>
++#include <linux/errno.h>
++#include <linux/list.h>
++#include <linux/module.h>
++#include <linux/sched/signal.h>
++#include <linux/serio.h>
++#include <linux/slab.h>
++
++#include "kcs_bmc_client.h"
++
++struct kcs_bmc_serio {
++	struct list_head entry;
++
++	struct kcs_bmc_client client;
++	struct serio *port;
++
++	spinlock_t lock;
++};
++
++static inline struct kcs_bmc_serio *client_to_kcs_bmc_serio(struct kcs_bmc_client *client)
++{
++	return container_of(client, struct kcs_bmc_serio, client);
++}
++
++static irqreturn_t kcs_bmc_serio_event(struct kcs_bmc_client *client)
++{
++	struct kcs_bmc_serio *priv;
++	u8 handled = IRQ_NONE;
++	u8 status;
++
++	priv = client_to_kcs_bmc_serio(client);
++
++	spin_lock(&priv->lock);
++
++	status = kcs_bmc_read_status(client->dev);
++
++	if (status & KCS_BMC_STR_IBF)
++		handled = serio_interrupt(priv->port, kcs_bmc_read_data(client->dev), 0);
++
++	spin_unlock(&priv->lock);
++
++	return handled;
++}
++
++static const struct kcs_bmc_client_ops kcs_bmc_serio_client_ops = {
++	.event = kcs_bmc_serio_event,
++};
++
++static int kcs_bmc_serio_open(struct serio *port)
++{
++	struct kcs_bmc_serio *priv = port->port_data;
++
++	return kcs_bmc_enable_device(priv->client.dev, &priv->client);
++}
++
++static void kcs_bmc_serio_close(struct serio *port)
++{
++	struct kcs_bmc_serio *priv = port->port_data;
++
++	kcs_bmc_disable_device(priv->client.dev, &priv->client);
++}
++
++static DEFINE_SPINLOCK(kcs_bmc_serio_instances_lock);
++static LIST_HEAD(kcs_bmc_serio_instances);
++
++static int kcs_bmc_serio_add_device(struct kcs_bmc_device *kcs_bmc)
++{
++	struct kcs_bmc_serio *priv;
++	struct serio *port;
++
++	priv = devm_kzalloc(kcs_bmc->dev, sizeof(*priv), GFP_KERNEL);
++	port = kzalloc(sizeof(*port), GFP_KERNEL);
++	if (!(priv && port))
++		return -ENOMEM;
++
++	port->id.type = SERIO_8042;
++	port->open = kcs_bmc_serio_open;
++	port->close = kcs_bmc_serio_close;
++	port->port_data = priv;
++	port->dev.parent = kcs_bmc->dev;
++
++	spin_lock_init(&priv->lock);
++	priv->port = port;
++	priv->client.dev = kcs_bmc;
++	priv->client.ops = &kcs_bmc_serio_client_ops;
++
++	spin_lock_irq(&kcs_bmc_serio_instances_lock);
++	list_add(&priv->entry, &kcs_bmc_serio_instances);
++	spin_unlock_irq(&kcs_bmc_serio_instances_lock);
++
++	serio_register_port(port);
++
++	dev_info(kcs_bmc->dev, "Initialised serio client for channel %d", kcs_bmc->channel);
++
 +	return 0;
- }
- EXPORT_SYMBOL(kcs_bmc_enable_device);
- 
- void kcs_bmc_disable_device(struct kcs_bmc_device *kcs_bmc, struct kcs_bmc_client *client)
- {
- 	spin_lock_irq(&kcs_bmc->lock);
--	if (client == kcs_bmc->client)
-+	if (client == kcs_bmc->client) {
-+		u8 mask = KCS_BMC_EVENT_TYPE_IBF | KCS_BMC_EVENT_TYPE_OBE;
++}
 +
-+		kcs_bmc_update_event_mask(kcs_bmc, mask, 0);
- 		kcs_bmc->client = NULL;
++static int kcs_bmc_serio_remove_device(struct kcs_bmc_device *kcs_bmc)
++{
++	struct kcs_bmc_serio *priv = NULL, *pos;
++
++	spin_lock_irq(&kcs_bmc_serio_instances_lock);
++	list_for_each_entry(pos, &kcs_bmc_serio_instances, entry) {
++		if (pos->client.dev == kcs_bmc) {
++			priv = pos;
++			list_del(&pos->entry);
++			break;
++		}
 +	}
- 	spin_unlock_irq(&kcs_bmc->lock);
- }
- EXPORT_SYMBOL(kcs_bmc_disable_device);
-diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
-index fade0e2faf2c..2c88b34b803c 100644
---- a/drivers/char/ipmi/kcs_bmc_aspeed.c
-+++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
-@@ -414,8 +414,7 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, priv);
- 
--	aspeed_kcs_irq_mask_update(kcs_bmc, (KCS_BMC_EVENT_TYPE_IBF | KCS_BMC_EVENT_TYPE_OBE),
--				   KCS_BMC_EVENT_TYPE_IBF);
-+	aspeed_kcs_irq_mask_update(kcs_bmc, (KCS_BMC_EVENT_TYPE_IBF | KCS_BMC_EVENT_TYPE_OBE), 0);
- 	aspeed_kcs_enable_channel(kcs_bmc, true);
- 
- 	kcs_bmc_add_device(&priv->kcs_bmc);
-diff --git a/drivers/char/ipmi/kcs_bmc_npcm7xx.c b/drivers/char/ipmi/kcs_bmc_npcm7xx.c
-index f8b7162fb830..ab4a8caf1270 100644
---- a/drivers/char/ipmi/kcs_bmc_npcm7xx.c
-+++ b/drivers/char/ipmi/kcs_bmc_npcm7xx.c
-@@ -202,8 +202,7 @@ static int npcm7xx_kcs_probe(struct platform_device *pdev)
- 	if (rc)
- 		return rc;
- 
--	npcm7xx_kcs_irq_mask_update(kcs_bmc, (KCS_BMC_EVENT_TYPE_IBF | KCS_BMC_EVENT_TYPE_OBE),
--				    KCS_BMC_EVENT_TYPE_IBF);
-+	npcm7xx_kcs_irq_mask_update(kcs_bmc, (KCS_BMC_EVENT_TYPE_IBF | KCS_BMC_EVENT_TYPE_OBE), 0);
- 	npcm7xx_kcs_enable_channel(kcs_bmc, true);
- 
- 	pr_info("channel=%u idr=0x%x odr=0x%x str=0x%x\n",
++	spin_unlock_irq(&kcs_bmc_serio_instances_lock);
++
++	if (!priv)
++		return -ENODEV;
++
++	serio_unregister_port(priv->port);
++	kcs_bmc_disable_device(kcs_bmc, &priv->client);
++	devm_kfree(priv->client.dev->dev, priv);
++
++	return 0;
++}
++
++static const struct kcs_bmc_driver_ops kcs_bmc_serio_driver_ops = {
++	.add_device = kcs_bmc_serio_add_device,
++	.remove_device = kcs_bmc_serio_remove_device,
++};
++
++static struct kcs_bmc_driver kcs_bmc_serio_driver = {
++	.ops = &kcs_bmc_serio_driver_ops,
++};
++
++static int kcs_bmc_serio_init(void)
++{
++	kcs_bmc_register_driver(&kcs_bmc_serio_driver);
++
++	return 0;
++}
++module_init(kcs_bmc_serio_init);
++
++static void kcs_bmc_serio_exit(void)
++{
++	kcs_bmc_unregister_driver(&kcs_bmc_serio_driver);
++}
++module_exit(kcs_bmc_serio_exit);
++
++MODULE_LICENSE("GPL v2");
++MODULE_AUTHOR("Andrew Jeffery <andrew@aj.id.au>");
++MODULE_DESCRIPTION("Adapter driver for serio access to BMC KCS devices");
 -- 
 2.27.0
 
