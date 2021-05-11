@@ -1,92 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E94937B13C
-	for <lists+openbmc@lfdr.de>; Wed, 12 May 2021 00:01:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA62737B155
+	for <lists+openbmc@lfdr.de>; Wed, 12 May 2021 00:08:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FfsML4Jblz2yYB
-	for <lists+openbmc@lfdr.de>; Wed, 12 May 2021 08:01:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FfsVp4pkCz2ysp
+	for <lists+openbmc@lfdr.de>; Wed, 12 May 2021 08:08:02 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=WEECGMbX;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=u3OiRsaf;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=PMK8Tvmr;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::135;
+ helo=mail-il1-x135.google.com; envelope-from=proclivis@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=WEECGMbX; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=u3OiRsaf; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=PMK8Tvmr; dkim-atps=neutral
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com
+ [IPv6:2607:f8b0:4864:20::135])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FfsM44PCjz2xv8
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 08:01:20 +1000 (AEST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
- by mailout.nyi.internal (Postfix) with ESMTP id C00655C0170;
- Tue, 11 May 2021 18:01:17 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute6.internal (MEProxy); Tue, 11 May 2021 18:01:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=pyaDexWPEmCnwSkf4gRzuy36Mkx
- cPWF+JRVTCQU9oH0=; b=WEECGMbXQHgvqRHMtD/2f1S9TYuLvH4budOzU4yd1VP
- xg9VybtTvGzcxFJqJqatFVDJvuoATh06l6YxNDoSSyq9WRJQdW2AqFhwvD8epx+4
- Ydg/FG/r1AlWlsFDwiJma2/is6gMKLBj/SOkNzMuEPXH1VCsKcHSCdSGrP2FKrAe
- wcW5f2yhEUlQCsV9q4EqOJaPMAG1J+FdwXee2cPBsTkqDvjP0gBtJHlNFy5GgiPN
- gkT6twa21IzAkblKkiVEfkUpFrrx7Xj3nSqzZkXnevGVDGsISm+u9a2fym8E+BDE
- W0tK9nAGU/XSpUVeu3Q5Owlo+3Cm/aGOVcprix+w1mA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=pyaDex
- WPEmCnwSkf4gRzuy36MkxcPWF+JRVTCQU9oH0=; b=u3OiRsafVNySLyegu4GGAi
- vdlyeDipsEZGZSWmTFKMVvuX7f/ex4B0O+YP4TuoCCLYukGN4W5MCUjcgIL7Wb69
- dZmQXJU+Id6rk8cTW7HdzDZ7s7gCFEdG995kI4yIHXEzz5+B9KEX3ih2aNCLx+H7
- HsPECsmqQZl+onNHMhdQU7BC6k4YwX0Miwl4ymOO9bt5OU0v9eZiCMB3juGBKexX
- kLONokoJp8sbeIeN+Cib7xGoNfXFUYfDEruohXkSif1TS1Lb17gOujasPtRSzvHl
- qVe7DY0oUilrPF9cxus3oBtBH9SXRC4FmcTiQh2mMlDQ3MZ/i5gQtc/R4jIRrRuQ
- ==
-X-ME-Sender: <xms:rf6aYD1694cbR1Pybxd9Nsrcx3_pClZHQQZ-2tVY-ww2zJRhcbmPGw>
- <xme:rf6aYCH2Yxo1ViAHCi0Et5-A5TLUEkE5nRYrtOlBDFjhDXJg0XAToF3wrBKpUC2G1
- 0uq5Ge2YOoB4LVS9uo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdehuddgtdegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- jeenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepkeduuedtfeeihfehfeehfedvjeeu
- jeeikedtteehledvhfelheekgedvieevkefhnecukfhppeduieeirddujedvrdduvddurd
- dvhedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
- phgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:rf6aYD7KfYdggb9QCd2MNjjIMgFjZ-llkr9fzLtpNaBvvAUF7575Pw>
- <xmx:rf6aYI08Ti7KY2avO-xQBMaBtkfPsmkntS5NVlLgXKn86TgU1nC9oQ>
- <xmx:rf6aYGE69lXDDR5JwJgNreRNGiSMR4fdGjYR29swPbDewcU90LeOcA>
- <xmx:rf6aYBxsSv71U4rT_hlVwHitWL1gbJNRJLlSUe3-17Ky9xdpFzWX1g>
-Received: from localhost (mobile-166-172-121-251.mycingular.net
- [166.172.121.251]) by mail.messagingengine.com (Postfix) with ESMTPA;
- Tue, 11 May 2021 18:01:16 -0400 (EDT)
-Date: Tue, 11 May 2021 17:01:16 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Mike <proclivis@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FfsVX6Fvrz2xvT
+ for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 08:07:46 +1000 (AEST)
+Received: by mail-il1-x135.google.com with SMTP id p15so18539779iln.3
+ for <openbmc@lists.ozlabs.org>; Tue, 11 May 2021 15:07:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=content-transfer-encoding:from:mime-version:subject:date:message-id
+ :references:cc:in-reply-to:to;
+ bh=rvn1IEGB2BarfPzSibp8H0GurJt7Dh35XGouRMwJ+us=;
+ b=PMK8TvmrKDh89QvsXRlEbXLHC/6f+PEd7GsZFpsxXbJx3LCZCCDtLBGmYQsJmVLxTZ
+ MbXX+PF9DePrvhM5c1/5pamubeGsYkupvhXqaz28uIsGFi+EeE//mcr++z+C471CGREe
+ lsjSA774CO4xyGqpGWnJOX4gLLYH5HqIeF0htFapEtrsXq34jlHvRuv6Fb5brPTtXKqU
+ 7gUi+yVSuf4i352/4Fu04YILSDpB0pc6gcYtSUb5vpbn5BjzKszRopj4mgvd5sLfgCRc
+ /iXeqZnOTQXGLTFQufuU24LMhkSaA9wwUrKcczZmYa3M6SYdbolxK3L418XuFIl1Gcr3
+ f4NQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:content-transfer-encoding:from:mime-version
+ :subject:date:message-id:references:cc:in-reply-to:to;
+ bh=rvn1IEGB2BarfPzSibp8H0GurJt7Dh35XGouRMwJ+us=;
+ b=mQowZ0eza79xF5EMURpD1gumLr+d5oDCNToTmxlp7YcTSIup549NL6Tdpu+zCQDPiW
+ 0jmSNJ2NfMtpeX34cFxGSZVkpTVrRwzbLv5oLmK/JlaayUrcN99FlN2LPQ+urmLmDmLv
+ 63sDVsu0oHlgyIh0h+fRQ2e5TzV4mCeghU6fjcmM2B4V5oYfJxF4vTH+NicPbVleECnT
+ xfk6BI/2YU/JU0DSLPyP5v4hNssM+ijHVOCCCsfqlEDhmCWHKJJdyd/cWy/Gm+gsF6i0
+ PE7bATBAI3nNwF8VhvWlHNVHCeuqxIvuyjmDQDYqjysdUjNoXFqo1qW+9lrj7z8gfwi3
+ GQ2Q==
+X-Gm-Message-State: AOAM530wgxF9EMYRTXcWyxqRhjzLbs0AFL8vRWM+XDnU7yJOGESvGYr6
+ aGmlLaKK1DD0lE8tN1mie3vfhCTNaEM=
+X-Google-Smtp-Source: ABdhPJz2LL3PhdPeBt3niaG8NHQLQcNmdL/BuF4fai9VTfjBb8+gda6Qzc8Sw0o8AdVteXknGnBFbg==
+X-Received: by 2002:a05:6e02:1d90:: with SMTP id
+ h16mr28437255ila.59.1620770862324; 
+ Tue, 11 May 2021 15:07:42 -0700 (PDT)
+Received: from ?IPv6:2601:281:c001:2359:a4:25f:a323:2fbb?
+ ([2601:281:c001:2359:a4:25f:a323:2fbb])
+ by smtp.gmail.com with ESMTPSA id k6sm8263850ior.28.2021.05.11.15.07.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 May 2021 15:07:42 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Mike <proclivis@gmail.com>
+Mime-Version: 1.0 (1.0)
 Subject: Re: mtools bitbake failure
-Message-ID: <YJr+rFl5pV3HsDTN@heinlein>
-References: <YJr5+PsBEvGtJGfB@heinlein>
- <517DD65A-6077-450B-8C14-29385D469AA8@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="lFuw/R+HhzM6caHq"
-Content-Disposition: inline
-In-Reply-To: <517DD65A-6077-450B-8C14-29385D469AA8@gmail.com>
+Date: Tue, 11 May 2021 16:07:41 -0600
+Message-Id: <7DA2F1E6-3F2A-44B3-BBB5-94C4B873EEBA@gmail.com>
+References: <YJr+rFl5pV3HsDTN@heinlein>
+In-Reply-To: <YJr+rFl5pV3HsDTN@heinlein>
+To: Patrick Williams <patrick@stwcx.xyz>
+X-Mailer: iPhone Mail (18D70)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,45 +87,28 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---lFuw/R+HhzM6caHq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 11, 2021 at 03:55:42PM -0600, Mike wrote:
-> Perhaps tags 2.8 and 2.9 are too old? Both had this problem, but I don=E2=
-=80=99t know which version of poky they use. My description above worked fo=
-r 2.8
+Sent from my iPhone
 
-Very few people work off tags and we do not have a committed support
-structure for them.  We barely can get people to raise their hand and
-say they compile for their machine when we go to release them...
+> On May 11, 2021, at 4:01 PM, Patrick Williams <patrick@stwcx.xyz> wrote:
+>=20
+> =EF=BB=BFOn Tue, May 11, 2021 at 03:55:42PM -0600, Mike wrote:
+>> Perhaps tags 2.8 and 2.9 are too old? Both had this problem, but I don=E2=
+=80=99t know which version of poky they use. My description above worked for=
+ 2.8
+>=20
+> Very few people work off tags and we do not have a committed support
+> structure for them.  We barely can get people to raise their hand and
+> say they compile for their machine when we go to release them...
+>=20
+> Unless you have a good reason to work off a tag, I would strongly
+> encourage you to work off our master branch for all your development
+> efforts.
 
-Unless you have a good reason to work off a tag, I would strongly
-encourage you to work off our master branch for all your development
-efforts.
+Ok, my assumption of stability does not hold. Lesson learned.
 
---=20
-Patrick Williams
+Mike
 
---lFuw/R+HhzM6caHq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmCa/qoACgkQqwNHzC0A
-wRnxVBAAi0EZd7bsH9JGUe/GMQApxFV8Oua42GMcGqj4jZTcAX70KdmFYjXSkfbJ
-9xKNs1TV+ygr+S/dh2/dbyjTRPY79oBusae2P5LWE+fNXzauU6r8YUt/Kdjgmx3Y
-4hDyzZ9HvDYYhFwYZSnUaXoo0VQbS0F8cQb+FOhFYQ6Vaw3VRvswYhKZWBO0t695
-QADPMXf3EVFdVINss34Y/5boI64b33rlnXCQ8JGB911nWCI8EVgpgcfZI297P8i+
-RF9fIHN+cdRdf1LBW9IS0B1SZdtH9HyA/gSpKYlV/ZWMYM0kHjxzuUk6FgKQdb/K
-9lDkKBAUt0/h6NtiNum5Bc88Thrq7d/E4HCBYBAK6ZAde1lOHCNQt+Xyc1dQDnLv
-e++6BxvLD0KzzXGW82qie/N/9wp4ikMxSgmP/b6p3sDMsg/fb94+MgHNfNA/rWmJ
-Y0YtCnioe1AtIs8md2o88WO7UCF1NV1E5itbMOaMT9eE3GbfmMvShW+vvDSQR8xf
-aWwUFwTmbYqR7iqnCopSUAYYFzZWosHj6aDKZqkp57NY0fM697j21reiN5BBwnyC
-IgTJoKDn62m2k4FHGLGVG7Z98RmVdYIv0Yu5WkZq25HY8KrbFip+sTXCqfw1GHEd
-1Sou3rQ8n+gXPmSxBCq3gXZIMwCx4mjm8YQM5WiqETIqttV9b5c=
-=EQET
------END PGP SIGNATURE-----
-
---lFuw/R+HhzM6caHq--
+>=20
+> --=20
+> Patrick Williams
