@@ -2,130 +2,146 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8BAD37A2DA
-	for <lists+openbmc@lfdr.de>; Tue, 11 May 2021 11:00:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D47137A8A5
+	for <lists+openbmc@lfdr.de>; Tue, 11 May 2021 16:12:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FfX2V71hgz3036
-	for <lists+openbmc@lfdr.de>; Tue, 11 May 2021 19:00:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Fffxj5RzPz303q
+	for <lists+openbmc@lfdr.de>; Wed, 12 May 2021 00:12:09 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=vKTsec6W;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=QdSidzdk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.76.133;
- helo=nam02-cy1-obe.outbound.protection.outlook.com;
- envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.243.91;
+ helo=nam12-dm6-obe.outbound.protection.outlook.com;
+ envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dkim=fail reason="signature verification failed" (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=vKTsec6W; 
+ dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
+ header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector1-amperemail-onmicrosoft-com header.b=QdSidzdk; 
  dkim-atps=neutral
-Received: from NAM02-CY1-obe.outbound.protection.outlook.com
- (mail-eopbgr760133.outbound.protection.outlook.com [40.107.76.133])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12on2091.outbound.protection.outlook.com [40.107.243.91])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FfX2870lnz2yWK
- for <openbmc@lists.ozlabs.org>; Tue, 11 May 2021 19:00:31 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FffxP595Bz2yWN
+ for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 00:11:51 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZoNgRKGZxWCuYtSimuFLO9JvdfWO/jCD4/LObsi6T5Db8MTLtlxaBkk8mvf9wZyl4JrmfJ0wCtcDwVWgBoZmxXdhxDta5esSAZ8uy9uiH2bheQybWseBrLPIAnjpNrySkPDnQ/lS9013ZlaV2ylWZbNoep1mzWK2Obl3gmR6V3Bjr/4anwrGzvcATd5S9llOGLN/6OWsGRxNFtGkD61YKqtWW8yBeJY1es+NGudQFM54eMaXwIA9izstjOmM/GvcoAudCLMGMScFir9olSAzuUk/WympnW+iSxSiYYJD+Z94zAAblbqsNfyOoqwQ2lI5nskw+KV/11Tu73tNhGLxzw==
+ b=m6gZT147E2z+P3O9fHdCQ1Ct3H/qqcwsA/d5oj/r/kAuF09R3JaNdgXe05be+J66KM8DjzWYKz3Mneu+lL0J79ZBL3ypjLHGYs49Yvc0PR9iSKGGpvzoBF3FfKyr3gM8v4h3qppbscBkQJcilKQI7OIo3TQYdSv4/rxHePmxOzl1/WsYlZIFt23bap23w9bMumovYo/GwfeT4hM6fPHREN+UapbnQVNCoEdV8Q9oNHZaKLcE6RD5bKs7OFem1+NdDDY2Qqw1aAMkpPG3AELqvNqfuuLT8bEhQG3vK/Yr3udIoxdt9oRiCDKG2fmlBzHWLYOdoTVjkVAbWqgr09zyyA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oBKj7o4leYlCnHJH950fbHAopItdON2sCi5i7eDLehs=;
- b=fvOo55qB6gzpcdNMCZ234Bwne2VYrjqCN/P8X6TiulKSkMgEvU9IfXoc18MYqqv6ZGqSUP8Im8NokJB1ts9agm+bBcrJKpne42DrOiel3pBoUGXKEIHGtzuUACTwqIws9z9pp5+sKGfBbxCXpop26LdVOBZwdc3bPGMFrkliZuCzIrq14dMifrgu1MIv/K2uXK3Ip9VIO/DrqvlW7D475wChjbxHn2MS0NCBU6cIUxm1ButhzdyYE0oslVhal0ndTQKS+T7thBGpPyEKTHVXkyLyaql9NqFevEQsbqi8646633ot01UWM9aOvUGM9BCBJAR1gyOxAY784XkPcW8jJw==
+ bh=d1ACGRLxa8muME333kUi3uJNuS+DQr/7wdusc1cISV0=;
+ b=HCnk6qZwDRmTtpStK3AaXf7ocMZZpJuy2sYUYuiz4agUgRfOXqMninV02LEI10NWLtN6pYIpIkTcidX995U+A8pUypIdWbICOUOKOmBAwPfLByAyex2SNhiV+xqcrIFjyu0bOjdj2Zxjvzvsre4N0iXEskntUneNyppQ8XnpK+l9TjUp2IEMvKQY1u6koLLkAvTakeHQFFxhBm+guXo/NlTwflkTZzpvu0YZcVnVNVz16LbzowaO76Y/OE7QUJuGFSSGLgL4ldrmNHsVtKkO8G+IivUZwPHxeTs5cwF4KzYrFmr/3ro0Lfg0RVi5phfheUHhwrda5jYe/1DSevDYdg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oBKj7o4leYlCnHJH950fbHAopItdON2sCi5i7eDLehs=;
- b=vKTsec6WhGqbgB5ECTR0/pzk8zs3ooQw9n1SBrB+yJxSOqo7yBahOf/49NFCkk3dmNpGLwwExrSqlRRSxtMqEUs/ilBTiMnXLE2/E5wiXx/2lKBM5eQQGa62Nf+M44ZCktBjF+wxWJ29IozOf9zGgqLwMC8CqFnSB5Wpvj7oYVo=
+ bh=d1ACGRLxa8muME333kUi3uJNuS+DQr/7wdusc1cISV0=;
+ b=QdSidzdkF9NWqZ0V5cUd/LZFOAdutBualYfElVTjZHimosVPl7QbtpNo/S3g8q8DNwz+z8CJG9YYuNnwj+VO0w+C/dbL1gQI5KKyp7YzThhzIf9Oz41qaNAEDX2TZp94gsoS8KYzXoJx9JZPfoyjdZ5ezdthUkmkYK0MpxETUfw=
 Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
  header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=os.amperecomputing.com;
-Received: from BYAPR01MB4678.prod.exchangelabs.com (2603:10b6:a03:88::27) by
- BYAPR01MB4008.prod.exchangelabs.com (2603:10b6:a03:59::16) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4108.31; Tue, 11 May 2021 09:00:22 +0000
-Received: from BYAPR01MB4678.prod.exchangelabs.com
- ([fe80::b5ad:a41e:d884:41d6]) by BYAPR01MB4678.prod.exchangelabs.com
- ([fe80::b5ad:a41e:d884:41d6%7]) with mapi id 15.20.4129.025; Tue, 11 May 2021
- 09:00:21 +0000
-Subject: Re: Request to create ampere-platform-mgmt and ampere-ipmi-oem repos
-To: openbmc@lists.ozlabs.org
-References: <38d1440f-b3be-9147-5002-42536117e1e0@os.amperecomputing.com>
- <YILMPOZwlODKqxtb@heinlein>
- <7bec9fb2-35d5-8e44-463f-3eb5c0955f0d@os.amperecomputing.com>
- <YIwTaJ11MRUXY2H5@heinlein>
- <c4c78ca7-f7cf-0995-887b-a7d7543061bb@os.amperecomputing.com>
-From: Thang Nguyen <thang@os.amperecomputing.com>
-Message-ID: <72c90dc8-3e66-16a6-8ca0-54ca4f1797dd@os.amperecomputing.com>
-Date: Tue, 11 May 2021 16:00:12 +0700
+ header.from=amperemail.onmicrosoft.com;
+Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
+ DM6PR01MB5835.prod.exchangelabs.com (2603:10b6:5:14f::27) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4108.27; Tue, 11 May 2021 14:11:42 +0000
+Received: from DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::fd97:f560:f2cf:d58d]) by DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::fd97:f560:f2cf:d58d%5]) with mapi id 15.20.4108.031; Tue, 11 May 2021
+ 14:11:42 +0000
+Subject: Re: Add phosphor-fan configuration for the fan which added by
+ dbus-sensor
+To: Matthew Barth <msbarth@linux.ibm.com>,
+ Thu Nguyen OS <thu@os.amperecomputing.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <B6120112-33DD-41A6-A0F2-7A9FBFEEB081@amperemail.onmicrosoft.com>
+ <d6b2354e-f0e6-8819-4b39-1481660d1361@linux.ibm.com>
+ <DAC41731-7B29-4743-87D8-40324324FF96@amperemail.onmicrosoft.com>
+ <37873411-cdda-bcd5-0a2a-6cd46192f80d@linux.ibm.com>
+ <6F0BA8AE-40E7-47EB-BA16-B445738548D2@amperemail.onmicrosoft.com>
+ <17e3409e-64bb-0c3c-cbe7-028d88df17ca@linux.ibm.com>
+ <fc3155f3-87d9-a93f-1115-3a9858e23fe4@amperemail.onmicrosoft.com>
+ <2aa18bfd-0229-c73d-51ad-510d68619479@linux.ibm.com>
+From: Thu Nguyen <thu@amperemail.onmicrosoft.com>
+Message-ID: <64a79ec3-c2cc-596d-d547-8f35b1973e4a@amperemail.onmicrosoft.com>
+Date: Tue, 11 May 2021 21:11:34 +0700
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
  Gecko/20100101 Thunderbird/78.10.1
-In-Reply-To: <c4c78ca7-f7cf-0995-887b-a7d7543061bb@os.amperecomputing.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+In-Reply-To: <2aa18bfd-0229-c73d-51ad-510d68619479@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-Originating-IP: [118.69.219.201]
-X-ClientProxiedBy: HK0PR03CA0116.apcprd03.prod.outlook.com
- (2603:1096:203:b0::32) To BYAPR01MB4678.prod.exchangelabs.com
- (2603:10b6:a03:88::27)
+X-Originating-IP: [2402:800:6344:392d:d5c7:cb15:b108:6a77]
+X-ClientProxiedBy: HK2PR02CA0137.apcprd02.prod.outlook.com
+ (2603:1096:202:16::21) To DM6PR01MB5145.prod.exchangelabs.com
+ (2603:10b6:5:56::16)
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from HCM-FVFX4014HV2J.local (118.69.219.201) by
- HK0PR03CA0116.apcprd03.prod.outlook.com (2603:1096:203:b0::32) with Microsoft
+Received: from [IPv6:2402:800:6344:392d:d5c7:cb15:b108:6a77]
+ (2402:800:6344:392d:d5c7:cb15:b108:6a77) by
+ HK2PR02CA0137.apcprd02.prod.outlook.com (2603:1096:202:16::21) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4108.25 via Frontend Transport; Tue, 11 May 2021 09:00:20 +0000
+ 15.20.4108.25 via Frontend Transport; Tue, 11 May 2021 14:11:40 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 5bbdee58-740f-49ff-9f94-08d9145b3519
-X-MS-TrafficTypeDiagnostic: BYAPR01MB4008:
-X-Microsoft-Antispam-PRVS: <BYAPR01MB4008C50A426D78443915F57A8D539@BYAPR01MB4008.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
+X-MS-Office365-Filtering-Correlation-Id: 2ef311fe-1473-4376-fa28-08d91486b36f
+X-MS-TrafficTypeDiagnostic: DM6PR01MB5835:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <DM6PR01MB5835A4F09BF5BBB1DCD5492090539@DM6PR01MB5835.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8273;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: x8AQ0aRwZhx8EGuVBFA7BJAN/YW9CcvOG1neObar9MU01yBM2o/Llx5RofbmfHzJYUwQf0sLWbu3rSuh4WK/yGSRWst2NCTfoqLAQcDsM+FlxvLLkvHt5WuzAVfAxXNOLzsSaHSjibzm3Wowq53L1fUBAvRkwkA7tQ5FT7T0TY5WG90ZWD2mawJG7tBDhdF15KIaEawxULEGF+CyQ2QSdz7KSooJwCnxBDO6i2FreBIm0HVfeBr/KxNyydPS44zllU8H8PH96UpqCUPHo3XZu4eVjDpNBEaDnYpWuQNcuhRoXb2mWIYodXTD3VKGxoXfbkGBT9n5sKn/dF2z7Uzw+Mg+sc4I05uTjiApEPpXkezJkEtzOTECHRpq50qdDb4bvnuxZ3ZVvkd8RvrukaSEm9L1LydKIjCCa5oguRVbGZN+FfR+tvVQR9TIIyx8abRX0Z+173wA/ZEYpUTWtAADhmAZwedclMby/Oh5Nffvoj6+p5Q5WgqWJZpbr9t34Xzmzv8JRT2cjCwD0JZrlLXtBWZzPoLSvHYWdelAYZnSxaZ72kW2UVIqujmSGH49EVjmTeouONi/cJHfUlIjXfng07oSLdS6ThAUcb1/+rWhDOTyaBPOngXr95QQbe/r057H9DgqC0+hsyc8G5y9NNDEXreBMTdIbJ/cbOben/Zv6GeIwG8ZJSfsKV3V9b1pHnVdtFiM+NHkN9GcGNhZV5fk0TZYV/Hhc1QHx1Eg+kltxDconu4W6s2eVABX8xgwCYmiWoelF4NtBXpCu+YdtTcC4EY7t3cxCAPABXg+fwhBCF2ng7X8smdqdnqQ94ZGt16ROcV6SVIEO4Cn8OsFif39Sw==
+X-Microsoft-Antispam-Message-Info: AJRqo8nfDBBi1A4DQOQcXgsblIjNot5ZAebx2qWMzmZqyuddoe+zKme84cbrLjOEWf1Vu/I7H9EMMa5rCu11QV4ljhgsu5McnPJom4A9bBKpCv4/s/SDGI6V6p6bnu9nWTyLiYbdx6ovIEAGJE6xvFpeUGkASqjuLD+jr/ro/Jhl4V99QwMCULyE/ulRm11jHwqKJl7e90XML2QzItRKHgt0SRKTQHeJ87Z9ZOLxiSUC/poCPOZee5VUBzrze8jQ/s7eyJoAOaESf4KMyiLa5Pmdxwy/XYLUxPo1zxplzWzz8ViOGMr3h1VT4Q7NAyC+PaiWhdofE477DZJzFX6GDwONPG0Lp7fKaikfgfk9xS328GvPvwdp2tZ+y6BljLO5ZZVa+SW6dgG/Q2MPrpHLdBPwvOyGvAuPvCp7wTEKTYy+f2byhxhUuGxaBlSC5bdC4W7v3LQZfwcZcEx6Auzbu48ChS4vPrtjz0DaKxpb58+b5JCFSIyjc6a4/nPcG5+q0JTYL6wCqCsSUvbrRRc2wTklJelPciNFhS6mMyyS48VMtnb6L0g+C0eDxSi0oJZ3Fa5t/D0DRMzJG0sYfCM+D6ZgmL2Ku62F03FMaBpIQMNqSfgdTW0E4axcB1MUMOMHYx0tffEA6VMoqblg9dQerP0Yi/akTHO0Z39cWdif0XdgM0dKOZBPIA/5RsmyoxDqulTqtOOxMgWvsenmnI1OmLZA3IWs1jAxMbSotxC9QXLTwLb5jwzcSlieDKJaId8/pmi6yzPJ6LGPoIbQNwucqBOVtmxRLyYW4o5BWQD6yjc=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR01MB4678.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(396003)(346002)(366004)(136003)(39850400004)(376002)(31696002)(86362001)(316002)(52116002)(38100700002)(2616005)(83380400001)(6486002)(6506007)(16526019)(66476007)(66556008)(6916009)(186003)(66946007)(2906002)(8936002)(478600001)(26005)(31686004)(966005)(8676002)(956004)(6666004)(6512007)(53546011)(5660300002)(38350700002)(43740500002)(45980500001);
+ IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(396003)(346002)(136003)(366004)(39830400003)(376002)(31686004)(38100700002)(6666004)(6486002)(66476007)(53546011)(66946007)(52116002)(66556008)(83170400001)(478600001)(5660300002)(186003)(31696002)(316002)(83380400001)(16526019)(42882007)(2616005)(8936002)(110136005)(966005)(8676002)(2906002)(43740500002)(45980500001);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?Windows-1252?Q?dYliAUIjxyFh8zN+7VCJvmFipFsAmKqZQDe4nWMIaOBqH9rCn1wHfs5S?=
- =?Windows-1252?Q?tR0akam+o7wPKywBl/bKoR6f+mB5XqdU0htIsRXEP+zgce8rgJJBveRI?=
- =?Windows-1252?Q?E/OV0Ilq9xYbvBBfukWiz9g5s4sxqA7dENLCu+gvGdM12LBz5DmgAsKJ?=
- =?Windows-1252?Q?c2eDCT19nAB3n205ByzpvZV4E0qgnqpgb8BSg9JphyWA3K5ViKbM/WtK?=
- =?Windows-1252?Q?JzQtFTUo02pvXyHjQwfK+SWPrfzKMm0aLplzL2bVDdaZNOTu1H/oJ88w?=
- =?Windows-1252?Q?YIAe9crxa7YfxJEiTJ/2TsQq5S890SUETflvF0OZHgCSnRWqLWnMImXD?=
- =?Windows-1252?Q?VNotEbvJir90vRlmOMd70h3u9ENVpp2uxdMBg9zo2OGOE2YXlbX3EbF2?=
- =?Windows-1252?Q?b82u9TPzY2e3Ig0iu4WYjzVaOULdT1fp4Cqv8Xc11E0dOHEqJWWRxmO6?=
- =?Windows-1252?Q?e7776FyzKmmo5rm6/Ja+WpimGSncMW6w0SqNNV0vQdDCEXlLRgaSik5u?=
- =?Windows-1252?Q?RwBuKuuNGsa58Cvg/PPy6TQCsdYVns7vmuj4S7OQALZBvFDttZnR67dY?=
- =?Windows-1252?Q?BtVvmH+BLgfnAlxTbTlmt/J3aG1yRM5aDzdRTOiCk0Iq/ozxRNgG1IIG?=
- =?Windows-1252?Q?+/tsFhiH/dz7V2Y8N0yBCxjG3q9tLaiZ1au4bHsxSkFDVjDCwh8CW/WW?=
- =?Windows-1252?Q?Ox5OI3w+68Hj2ZDa2MliJRhfQ+OWn7yCRaEDA087HUf1GLGxziUtOLEy?=
- =?Windows-1252?Q?Vv3N3kFXHdS0mGZtS87imnzYiptNdp7tisZ3BADiGJ/dfHMAMtAjP4fm?=
- =?Windows-1252?Q?k2H2n8pih+335mcEYJTzFIwnn2wwUGpAEHBe9bn64tVv35ZOx6Uhwheb?=
- =?Windows-1252?Q?0zS7RcOoQ8tygnkmP5PwiDRoa5kYjUbiByeMpDJO3waT0Ig+Odxos+yh?=
- =?Windows-1252?Q?9Fz0WWGx2L7eOj5f0VJw1BTbsLCiuojpn8oxbxk7PmPaTbXcC4vIl9Tw?=
- =?Windows-1252?Q?dwCdNh20rc/AyhGQdgxuVS3xGq/cMy4+aVai4L+NTQjIKO14SrfJAwU2?=
- =?Windows-1252?Q?CZCD+FJC/EWZzvsQPbFEA9Xyzcj+wIYExq7V2Oy1HPGHlOx48dkNNdfs?=
- =?Windows-1252?Q?8EE5CrRN0VlLQMFd2gZEMeO6EUDsnSsh3s6j0RzkDhXlySd6HjytR1Ag?=
- =?Windows-1252?Q?Dllb2HDzhQ3Gum5wS+MqVN8T74P2kAuG7fT4g5OKqXWQCnAjfG6rPmkI?=
- =?Windows-1252?Q?QUcWgwy6VjaVqRkT783BZSuELw5wP9cwZpBTX9beUMucr6yM6uIn/jgZ?=
- =?Windows-1252?Q?04Y6L/RzM2gJ8ghQlHwIxOOO4vdaOwdG2SApZBTaK5dhclqJZhGmgFcO?=
- =?Windows-1252?Q?P1/UQQ9xiubHLEzYsYtbKR1fNnissZ540a8xUMbfehn64ET8yRVaR8jK?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5bbdee58-740f-49ff-9f94-08d9145b3519
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4678.prod.exchangelabs.com
+X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?eDdwWTVaNEliVTFVZVJrTGRGVHdlMFF0K2x2azYwbU5JRFdWaUVEMHRxQ1Z3?=
+ =?utf-8?B?Tk1QZFVqcjhZQVNaS1VrSXFnTE1DRWlvK245Nm43SzdKVWVDL3Z4WkdTTGdT?=
+ =?utf-8?B?d1Zvd1d6MmZiVnpWZFRheHZndnpySnJHaEloWDBFcXBjUTNPRklJL1JsdHNs?=
+ =?utf-8?B?RVZTWkxqZDAvTkF4UGhoWjhOTlgvc2lYK2ZScnE0anhTNWdsU0sydE9tMG5s?=
+ =?utf-8?B?S2ZMUkdVS2ZySE44VExmR3UwUG1ZTzFtV1pQREQwdUcvTUdRMEUycXpMc0Jj?=
+ =?utf-8?B?d3ZaS0pUd0hEbFlOc3JiYU11WkNXNmhWbTRFN1p1UTJNK2cxeTRiZ1VxSEk5?=
+ =?utf-8?B?QmhEY3BhY2k1WTBFdzh4OHF6QjMvMURKN0ZxQXJCcUpZOHZOWUJDaWNZUkow?=
+ =?utf-8?B?T3BjMGxQamZ1MVk5SytGQkgxc2Nna1cyTUxIRnpVamlnZzNhaEpkVi9EOWNj?=
+ =?utf-8?B?QWNvTVlZSHRZZjV4VXluc3pZSmVkcmhjYU5xeWZEa29HaTVKeXU2TlI5RjZi?=
+ =?utf-8?B?RTZLYm5mOUpwZXVBSVlqTUJxMStwdzZtZ29UQ0xITXdhWi9INExEeG5yeXdP?=
+ =?utf-8?B?c0hLU1ZwTmVjcTJ2TzlkRGlWRzBvTWhHaGhsSGh1Q0J5N0FZN1dKblEwTExj?=
+ =?utf-8?B?TXM4Qk4zNWNHaGJJRUdvVGNiRi9rT2xFR0V6d2VlMStaQ1lqVTQvemZ0Qzl6?=
+ =?utf-8?B?dVNtNUNmYXI5NEQwcEdJa1dqZFlrdEV4QWR4a2tUc1pPOUtRMUNqMHYvZUlv?=
+ =?utf-8?B?Q0VmbzhKSlRJVWhHam90aG5LWGJLQmcydU4zQ2pkTTJ3djFGZmF1Z2ROV1pq?=
+ =?utf-8?B?ZjI3KzZ2VWZCQnpMa08xcjRDS1ozdmJRS0IySitXK0Y3TmYyUlFkU2F2anJz?=
+ =?utf-8?B?citRemk1RWJjbVFnRTBiNnJzUThuNVZtTVR2VVdqR1lrcWpKTlU5aE96Tk9I?=
+ =?utf-8?B?RklyRTh3Z3kzK2NpaDg2eHhGVU9jNTdNSkREc2hmZU9PNVBIcmxScTlOdm1w?=
+ =?utf-8?B?Y1VYWGxqQmhJWSs3WUZFT1loVk1TSHg2MThUTlZPb0YxZkEzYXpJbzU1bUNo?=
+ =?utf-8?B?dDdoNW5rODhQOGEzM21lTWJuYTVsUXF3cTRxSGppbHVIM2NIR1Y4dUxDcmp5?=
+ =?utf-8?B?eTE1Ym4raytsczMwTnQzcUhoVEdGNmtGUmQwb0ZKbjJkLzRwMU5URE9ZRWp0?=
+ =?utf-8?B?bmEzMjNYY2FMUU50amVXblp5Vk5PbEgwdXgwLytFQWVLRVVhdHIrbFArMjI5?=
+ =?utf-8?B?aStuaG4vNWVGNGxCL1BHd3JHK1pNbFVaeDRjc1Ywd3pMcmxCenNiMzFsS2lG?=
+ =?utf-8?B?QjZLL0o2YlV3LzNWKzBSbGEzMXlUQ3dFM29JajVuRW1qVGNRanBDTnRRQlg4?=
+ =?utf-8?B?UURxNnVSM0FQSmhoVnN6TE5Cak0wZm9OazNLVG5QTHQwSkI5Sng0MlI4Q1Vl?=
+ =?utf-8?B?TkNZbWFNRG1RTnhsOHovR3Z1RFBFSnhvVVZVeWVVZGpxd2hXZEhRVDJDRXV6?=
+ =?utf-8?B?a1owd3kyV3VhWXlhZ2FUY2Z5Uk5vT1NZeEJTV29POW5SZnJrLzN2ZlZOV0xJ?=
+ =?utf-8?B?ZTE5NmI4VkQ2K21NVmdjZ1FwMnJXdTlZdm1rTFBQU2JsWHdkVlNIbml4UmZh?=
+ =?utf-8?B?N0poYWlsNVlYSU51MXFsVi9seVZXMHlWZml5RDYrQ2ZXQmw3SDVKRnZUWEdj?=
+ =?utf-8?B?VDcvakt3ajNhckE5bDhrWEUvKzBsSEFoV1p6aGJLU01BOXZvL3M1K09WTEZF?=
+ =?utf-8?B?b01jUm5veTN5VkFoUEl3TjBmZUtCdXBCQVVvdHpBbVExZ3ZERXRnNFZhZS8r?=
+ =?utf-8?B?dkdkd3dMbVVXS2MvaUMzQzlwcHVEVDRNNXQ0OUV3ektjVnUrVm02eGFaNjdx?=
+ =?utf-8?Q?BlQ0W9bLlMO5W?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2ef311fe-1473-4376-fa28-08d91486b36f
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 May 2021 09:00:21.6556 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 May 2021 14:11:42.2116 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Cl2/f5lFIWckulqgx2yWw6XsNtpQLMycJ0UTJnNoznuUT412+/+K+UMqap/BBO1wHshkLPOe1ZCK7ofiPdjeK5aSpZktDhWxWwXo5LY2TL8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB4008
+X-MS-Exchange-CrossTenant-UserPrincipalName: XzVHS9oTm0M+mGq8r4d8pVXIwkzxDvDWA6Vw2waqyudujXeoTpVgbA+pG3T4RjUEGh1le9gpk/XqACKvDdu9G/Yrp2WbsONWvCRWrAwqAmQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB5835
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -141,74 +157,81 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On 04/05/2021 08:47, Thang Nguyen wrote:
+On 11/05/2021 01:14, Matthew Barth wrote:
+> On 5/8/21 11:41 AM, Thu Nguyen wrote:
+>> On 07/05/2021 23:22, Matthew Barth wrote:
+>>> On 5/6/21 5:34 PM, Thu Nguyen OS wrote:
+>>>> ﻿On 06/05/2021, 23:30, "Matthew Barth" <msbarth@linux.ibm.com> wrote:
+>>>>
+>>>>
+>>>>       On 5/6/21 10:59 AM, Thu Nguyen OS wrote:
+>>>>       >
+>>>>       > On 06/05/2021, 20:09, "Matthew Barth" <msbarth@linux.ibm.com> wrote:
+>>>>       >
+>>>>       >
+>>>>       >     On 5/6/21 4:22 AM, Thu Nguyen OS wrote:
+>>>>       >     > Hi,
+>>>>       >     >
+>>>>       >     > I’m supporting the fan control algorithms using phosphor-fan. Phosphor-fan monitoring and controlling require interface xyz.openbmc_project.Control.FanPwm in the fan inventory object.
+>>>>       >     That is a sensor interface, not an interface that's added to inventory objects
+>>>>       >     > https://github.com/openbmc/phosphor-fan-presence/blob/master/docs/monitor/inventory.md
+>>>>       >     What you linked to here refers to where the fan inventory object is located and nothing to do with with the fan sensors that fan monitor is to be monitoring.
+>>>>       >
+>>>>       > [Thu Nguyen] The link detail about the inventory configuration in monitor.yaml for fan monitor  and fan.yaml for fan control feature. It should be " The relative path under inventory where the fan's inventory object exists ".
+>>>>
+>>>>       The README links refer to the use of JSON config files in place of YAML. YAML based configs for the fan presence and fan monitor applications has been deprecated, so please use JSON based configs instead. Fan control is in the process of getting converted to JSON based configs so that it too can have its YAML based config support deprecated. To enable the use of JSON, supply "json" to the PACKAGECONFIG and to continue using YAML based fan control, also provide "--disable-json-control" until fan control's support of JSON is completed. i.e.) https://github.com/openbmc/openbmc/blob/master/meta-ibm/recipes-phosphor/fans/phosphor-fan_%25.bbappend#L59-L60
+>>>>
+>>>>       > Look at the example of the fan control configuration  file named fan.yaml below you can see the yaml file includes "inventory" setting. And xyz.openbmc_project.Control.FanPwm interface is required interface for that inventory path.
+>>>>       > https://github.com/openbmc/phosphor-fan-presence/blob/master/control/example/fans.yaml
+>>>>       Now to address what you're seeing, the "inventory" entry for fans.yaml is just used to name a fan object created within fan control and not related to anything actually in dbus inventory. This will become "name" in the JSON based (fans.json) for fan control.
+>>>>       >     >
+>>>>       >     > But FanSensor daemon of dbus-sensor only adds /xyz/openbmc_project/sensors/fan_tach to inventory list, and this path don’t support xyz.openbmc_project.Control.FanPwm interface.
+>>>>       >     I cant speak to the support of dbus-sensors and the use of the FanPwm interface, but phosphor-fan-monitor can support either the use of RPM or PWM fan sensors for monitoring and updating the corresponding OperationalStatus of a fan in inventory.
+>>>>       >     https://github.com/openbmc/phosphor-fan-presence/blob/master/docs/monitor/sensors.md
+>>>>       >
+>>>>       >     Supplying the ` "target_interface": "xyz.openbmc_project.Control.FanPwm" ` directs fan monitor to monitor the fan sensor using the Target property from that interface. When the "target_interface" is not provided on a fan sensor, the default is to use the "xyz.openbmc_project.Control.FanSpeed" (RPM) interface.
+>>>>       > [Thu Nguyen]
+>>>>       > The point here is the phosphor-fan-monitor/control expect xyz.openbmc_project.Control.FanPwm or xyz.openbmc_project.Control.FanSpeed is included in /xyz/openbmc_project/sensors/fan_tach.
+>>>>       > But dbus-sensor don't support that. In dbus sensor xyz.openbmc_project.Control.FanPwm is only available in /xyz/openbmc_project/control/fanpwm.
+>>>>       Ok, that clarifies things...and I welcome a proposed change to support the different dbus object paths in which the xyz.openbmc_project.Control.* interfaces that the fan sensors can be be at. Before dbus-sensors existed in openbmc, the fan sensors were provided by phosphor-hwmon on the dbus object path of /xyz/openbmc_project/sensors/fan_tach regardless of being PWM or RPM so that's why they are looking at that path.
+>>>>
+>>>> [Thu Nguyen]
+>>>> How about add target_path option in fan.yaml and monitor.yaml to set the dbus object path?
+>>>> Example:
+>>>> target_path: /xyz/openbmc_project/control/fanpwm.
+>>>> The setting of target_path will override value of "FAN_SENSOR_PATH" in fan.cpp and tach_sensor.hpp.
+>>> Does dbus-sensors place the sensor value of the fan on the same dbus object path as the target? Fan monitor looks for the interfaces of both the target and the sensor value(feedback) on the same dbus object path.
+>> [Thu]
+>>
+>> 1. No. Dbus-sensor provided three difference path for one fan:
+>>
+>> /xyz/openbmc_project/control/fanpwm/<Name> have xyz.openbmc_project.Control.FanPwm.Target to control fan.
+>>
+>> /xyz/openbmc_project/sensors/fan_tach/<Name> have fan tach value in xyz.openbmc_project.Sensor.Value.Value.
+>>
+>> /xyz/openbmc_project/sensors/fan_pwm<Name> have fan Pwm value in xyz.openbmc_project.Sensor.Value.Value.
+>>
+> Ok, so then fan monitor would need to have the path given for the target and a separate path given for the sensor(feedback). My preference would be to have an optional `target_path` and optional `sensor_path` configuration options for the list of sensors on a fan to be monitored. These should be optional in the YAML based configs so we dont have to update all the configs of the systems upstream that were using YAML based fan monitoring.
+Yes, In that case we have to support two more option in 
+phosphor-fan-monitor.
 >
-> On 30/04/2021 21:25, Patrick Williams wrote:
->> On Sat, Apr 24, 2021 at 07:48:14PM +0700, Thang Nguyen wrote:
->>> I intend to push Ampere specific features, you can find current 
->>> codes at
->>> https://github.com/ampere-openbmc/ampere-platform-mgmt.
->> It seems to me like all of the functional areas you mentioned we already
->> have some sort of implementation.� It would be better if you could work
->> with the maintainers on these repositories to see how it can be enhanced
->> to support your use case.� As I mentioned in another email thread today,
->> I really don't want to see catch-all repositories being created.
+>> 2. I tried to update fan control to support "target_path" option, but still have issue with fan monitor.
 >>
->> If you have specific features that aren't covered by an existing
->> repository or you feel like you've ran into a roadblock coming to
->> consensus with the developers already working in those areas, we should
->> revisit making repositories for those specific functional areas.
+> This is fine as an optional argument in the fans.yaml file for fan control since it only deals with fan targets.
+>> 3. I wonder when I set has_target=false in monitor.yaml, the fan functional in inventory is set as false.
 >>
->>> It is good to have any of below can be implemented with current 
->>> existing
->>> repositories:
->>>
->>> - utilities to flash Ampere Host firmware and NVPARM: Boot EEPROM,
->>> UEFI/ATF firmware, ...
->> Are these extra utilities or the firmware update procedures themselves?
->> Have you already implemented support in phosphor-bmc-code-mgmt? There
->> are other systems that have BIOS update for x86 done in that repository.
-
-I use the repo also. And I extend the firmware update (by patches) to 
-support flashing Boot EEPROM.
-
-I use flashcp to write the firmware into Host SPI-NOR. But the command 
-does not support to skip an offset. For example, I want to skip first 
-4MB so that the current BIOS setting is not cleared. Any other tool to 
-support it?
-
+>> If don't have the fanpwm value, fan monitor should bypass checking fan failure in programming speed.
 >>
->>> - Control boot EEPROM based on current input GPIO and log the
->>> information into Redfish
->>> (https://github.com/ampere-openbmc/ampere-platform-mgmt/tree/ampere/altra/host-control/scp-failover) 
->>>
->> This looks like something that could be implemented with
->> phosphor-gpio-monitor.� Have you looked at that?
-Yes, I think it is feasible to use phosphor-gpio-monitor to monitor the 
-GPIO and switch the Boot EEPROM. And use logger-systemd to log Redfish 
-events.
->>
->>> - Handle boot progress from Ampere's Altra SMpro, log the progress into
->>> Redfish and update dbus. Note that the boot progress is based on
->>> information from EDK2 and other firmware like ATF and SMpro.
->> You can probably fit this into the existing post-code repositories:
->> ���� - phosphor-host-postd
->> ���� - phosphor-post-code-manager
->>
->> We recently did similar for a system where we get the post codes over
->> IPMB rather than GPIOs.
-I read the design document at 
-https://github.com/openbmc/docs/blob/master/designs/multi-host-postcode.md. 
-As I understand, it is for POST (Power On Self Test) but I want to 
-monitor boot progress and log events. I have boot-progress information 
-from the hwmon misc device. It is on the SoC sideband interface.
-> Thanks Patrick for the information. Let me investigate more on these 
-> repositories to see if I can use them for Ampere specific requirements.
->>> - Handle events from Ampere Altra's SMpro (like Sideband controller) 
->>> and
->>> log to IPMI SEL and Redfish.
->> This sounds like it should go into ampere-ipmi-oem?� I'm making an
->> assumption that the SMpro is an IPMB path, which might be wrong.
-Yes, it is on the SoC sideband interface to monitor and report RAS 
-errors. We implemented smpro-errmon driver that expose RAS error 
-information over /sys/class/hwmon. IPMI OEM seems not match this case.
+>> Is this right?
+> No it should not bypass it. If there is no target for the tach sensor(s) being monitored to compare their feedbacks against, then what is the point of monitoring that fan?
+If has_target should always is true, then do we really need it?
+>>>>       >     >
+>>>>       >     > Do you have any solution to make phosphor-fan work with dbus-sensor?
+>>>>       >     >
+>>>>       >     > I’m currently update FanSensor in dbus-sensor to add xyz.openbmc_project.Control.FanPwm to /xyz/openbmc_project/sensors/fan_tach.
+>>>>       >     Refer to the doc link I provided above on how to utilize monitoring fans that use a PWM target on that interface. Then phosphor-fan-monitor will update the fan inventory object's (as configured with https://github.com/openbmc/phosphor-fan-presence/blob/master/docs/monitor/inventory.md) xyz.openbmc_project.State.Decorator.OperationalStatus Functional property based on how you configure fan monitor to monitor the fan sensors.
+>>>>       >     >
+>>>>       >     > Regards.
+>>>>       >     > Thu Nguyen.
+>>>>       >
+>>>>
