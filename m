@@ -1,68 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A60037BE52
-	for <lists+openbmc@lfdr.de>; Wed, 12 May 2021 15:37:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A949037C406
+	for <lists+openbmc@lfdr.de>; Wed, 12 May 2021 17:30:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FgG6g1PXNz2ykS
-	for <lists+openbmc@lfdr.de>; Wed, 12 May 2021 23:36:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FgJdM5C3Hz302m
+	for <lists+openbmc@lfdr.de>; Thu, 13 May 2021 01:30:15 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=jf/JT4nR;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=eN44fyxv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22c;
- helo=mail-lj1-x22c.google.com; envelope-from=saiallforums@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32a;
+ helo=mail-ot1-x32a.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=jf/JT4nR; dkim-atps=neutral
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com
- [IPv6:2a00:1450:4864:20::22c])
+ header.s=20161025 header.b=eN44fyxv; dkim-atps=neutral
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com
+ [IPv6:2607:f8b0:4864:20::32a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FgG6Q4Cmdz2xv7
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 23:36:43 +1000 (AEST)
-Received: by mail-lj1-x22c.google.com with SMTP id p12so29640222ljg.1
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 06:36:43 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FgJd44Sxtz2y07
+ for <openbmc@lists.ozlabs.org>; Thu, 13 May 2021 01:29:58 +1000 (AEST)
+Received: by mail-ot1-x32a.google.com with SMTP id
+ i23-20020a9d68d70000b02902dc19ed4c15so16911387oto.0
+ for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 08:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Mei7NBNx5m/MdaV8nstBgB4+w5lbldX/8c8foj6vdI4=;
- b=jf/JT4nRfpR7Xnv4n8V/H8bvuDJfSbK896Nc/43Jkg09+ZoPPRJm34PDGaar31IeBk
- LudOKk7XcrNSgtoxBPExqMS3ZHTI3FGw3XtboxFaGE4t5rsVpcZ+1H8iIjtpft/fDlJO
- C9H2aLV9wX9IHiGcBotmWBwr+S4E0usdb00hUdqLVT+TZS9UFi5GB+UVPppUX997JCKT
- HD5Gf55wIk7PPIuQ4i3dKM/AafQuZ0MmzLRJDlntwVvUcljKIJl37iicg3RIn6S9UnD0
- wMZPwEnVNBxp9uA+JVnVWqUClGBJrgDmZcLtp+yL8I9ZZsxUbix06N31B5XfbXCkUUh3
- izwg==
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=/8wSCTYm0nyCVlcpdz2DiQOiilAb+bQ9bxiSwdnTrJI=;
+ b=eN44fyxvv2+nBwRChttsJlFCDznlBtSGVRatDPd9Cypb6LT0rq8K5nmCoMz4f7iZwU
+ lTntRm9vhlUBrAarhdofYGE5sKtt90rWZp8Hq3Dum63wa9t3n+24tFnc6OhbF3CmRv7G
+ x1PJyE/zpa3YxzKVYcWknPe5zRmsBGzkRqzQira9GEBBHZIm/WFEJdkxkBIOhXVdGN3T
+ lGozpl7E8fuux/jGcFfaDLvBcF6sHbxZMdRqw82OzRedktJk/Xc6jgTS/FnZwPYnQs3N
+ J/shOciUvL5wbC2qw9hI8xEp6J7CA3R0yTy3CC2nzqzBHVKApRqhS+gMRuvlrR7KELsr
+ THOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Mei7NBNx5m/MdaV8nstBgB4+w5lbldX/8c8foj6vdI4=;
- b=YYtk1QHUagG0M4MYRu2JvvrEuv5JlJLWLt23aDWUlO4E1pCfghtWnaZAArNcPy++OL
- 67lv0ZY1Z+YAQXucSzKNvEAO/o+fdR+ZgdXDmDyILCCpscZE3wqe4qjNXjplnDY/IGWG
- koo+BUhJwrqGe3T8kPC+KW1xBOAGGB9M3ngN4rJaASCOHn/DO7JcWd/XmcQieAelYr9q
- h/lgIQquxVpgEmIj5QZQujMGidZ8JpdW9jJt8bE1LbmJK/NyS9IQnueFeT4NcmWLdebX
- aYVlyw/7EbTAF94Y1AlvLeZr80KxyB3FnZ72WcJ6NmiUEFhEahN13q9DYVaapiR20aM+
- c1Iw==
-X-Gm-Message-State: AOAM5318x+StmTUPg6oQ/qNFS9TKsigYAScbzkr09FPdyf9DAmxwfqd5
- E832WbiNRoYM3g/D3xclsE/+MPsa+KLZmDIcxQWagKYM
-X-Google-Smtp-Source: ABdhPJziRC/OR/hUF5QZVnTw/TRu/qm64hoOBZ+2OESrLH7fAEBmQS9BUYjHJ0zlalp2KdAOoBI3GSXeCW7thHr/1WM=
-X-Received: by 2002:a2e:a492:: with SMTP id h18mr29878319lji.161.1620826600141; 
- Wed, 12 May 2021 06:36:40 -0700 (PDT)
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=/8wSCTYm0nyCVlcpdz2DiQOiilAb+bQ9bxiSwdnTrJI=;
+ b=WbpKINm8cy1lwpj2dJ8tR19LLd3LSEKfa3pDpHjUIFJO0lSQ2t88vGO5vggIOKpXDj
+ kfQ8ECdGbizcSqic0o842zooc6NaBPfw62t5T2FPKuOBK8mAom7yTd9SL9Lw1dt/6iYh
+ beAlNimxBRxejEIrDryBJ/yC3wsIjwDwNbZbD9x1jHdnVzkwCZoG3dtF8ypleip6f5OJ
+ rNH8TPEGPMfC98vyT+F4XfZ1aMctcVMvr15ehYw+UUBIypdWC1ly/r3LkhzkYNT/B4OI
+ AOsSK6sh1t7jKmdCdIElWd++mp34o58YRlKluItDyQ1VZ74tdnVgNbMwlln5bj23xAyI
+ HFnA==
+X-Gm-Message-State: AOAM533ApwccRvESLT3+ZVhSyK8SvPdEyiiGdh6YdVCUINvGUATDweXV
+ Y/UiO442tptQytQg+Soug8o=
+X-Google-Smtp-Source: ABdhPJxiPxZjW7kUy1VeD5MytWZth98qmJKtM+oy4DJ58buGsLCuq1192hHoCff7VdKpL3bHiNrO8Q==
+X-Received: by 2002:a05:6830:2117:: with SMTP id
+ i23mr30246914otc.331.1620833396786; 
+ Wed, 12 May 2021 08:29:56 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-104-102.res.spectrum.com.
+ [72.182.104.102])
+ by smtp.gmail.com with ESMTPSA id 65sm17676otj.17.2021.05.12.08.29.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 May 2021 08:29:56 -0700 (PDT)
+Subject: Re: Inspur's CCLA Schedule A update 2021-05-12
+To: George Liu <liuxiwei1013@gmail.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CANFuQ7CFv-ZZtzy7jvwra+xewzkzr1mjbFmDpA1yutDSuWM4ig@mail.gmail.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <cf32498b-06bc-bed7-345d-9b68d7601f43@gmail.com>
+Date: Wed, 12 May 2021 10:27:02 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
 MIME-Version: 1.0
-References: <CABqzqi4XL3B6Nv1XqgqvzkXhe25HkUN53+8MEfMY9Acn0Oy43w@mail.gmail.com>
- <YJr7SJrJ0wm/h+nR@heinlein>
-In-Reply-To: <YJr7SJrJ0wm/h+nR@heinlein>
-From: sainath grandhi <saiallforums@gmail.com>
-Date: Wed, 12 May 2021 06:36:28 -0700
-Message-ID: <CABqzqi775bJs9qvzQ8QM85Z10Nqc0XOy_W10Ek3UxaT9bHfqbg@mail.gmail.com>
-Subject: Re: Advice on delaying de-asserting PCIe reset
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CANFuQ7CFv-ZZtzy7jvwra+xewzkzr1mjbFmDpA1yutDSuWM4ig@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,52 +87,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: banht@inspur.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, May 11, 2021 at 2:46 PM Patrick Williams <patrick@stwcx.xyz> wrote:
->
-> On Tue, May 11, 2021 at 12:50:34PM -0700, sainath grandhi wrote:
-> > We are potentially facing a scenario where de-asserting the PCIe
-> > PERST# should wait until an endpoint in the PCI hierarchy is ready.
-> > Since the endpoint of interest is an FPGA, it takes "some" time to
-> > come out of reset, boot etc. to be ready and participate in Link
-> > training followed by config space requests from Linux.
->
-> I've worked on devices like this but they are a violation of the PCIe
-> spec.  You have something like 10ms or 100ms by PCIe standards for your
-> device to come out of reset.
->
-> The cases where I've dealt with this we hacked the BIOS to just delay
-> after the PERST# but before probing.
-Got it.
-When you say BIOS, do you refer to u-boot?
->
-> > So we are checking for options on how we can delay de-asserting PERST#
-> > in the Linux PCIe controller driver, if possible in a standard way.
-> >
-> > A simple approach would be to add some time delay or wait for a signal
-> > (via some pin) from the endpoint in the PCIe controller driver before
-> > de-asserting PERST#.
-> > But that would make the change specific to our use-case in an
-> > otherwise generic board controller driver. And maintaining that logic
-> > can become cumbersome.
-> >
-> > How does Linux in general support such PCI endpoints to work fine?
-> > Any advice on how to approach this scenario is appreciated.
->
-> Are you asking about Linux on the BMC or Linux on the managed host?
-> I'm trying to figure out how your questions are related to OpenBMC.
->
-I am asking about Linux on BMC.
+On 5/12/21 5:11 AM, George Liu wrote:
+> Hey Kurt:
+> 
+>           Attached is the updated Schedule A of CCLA from Inspur.
 
-> One possibility, if you're talking about a PCIe device attached to
-> the managed host, would be to separate the power sequencing of the PCIe
-> card from the host processors.  You can bring up power to the PCIe card
-> independent from the host processors to give it time to come up and
-> be ready to listen to PERST#.  That is another option if you can't
-> modify the BIOS.
->
-> --
-> Patrick Williams
+Looks fine. Thanks for keeping it up to date.
+
+Kurt Taylor (krtaylor)
+
+>           Please help review.
+> 
+>          Thanks a lot
+> 
+> George Liu
+> 
+
