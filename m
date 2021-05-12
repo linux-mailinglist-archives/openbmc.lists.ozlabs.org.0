@@ -1,98 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E91F37D33F
-	for <lists+openbmc@lfdr.de>; Wed, 12 May 2021 20:19:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E22B37D44C
+	for <lists+openbmc@lfdr.de>; Wed, 12 May 2021 22:40:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FgNNK3cbyz302m
-	for <lists+openbmc@lfdr.de>; Thu, 13 May 2021 04:19:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FgRWM19Xhz2xv7
+	for <lists+openbmc@lfdr.de>; Thu, 13 May 2021 06:40:31 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=oMie9CzA;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=e53I/Y+/;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=AvQn/t0+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=oMie9CzA; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=e53I/Y+/; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=AvQn/t0+; 
+ dkim-atps=neutral
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FgNMy72bZz2yXN
- for <openbmc@lists.ozlabs.org>; Thu, 13 May 2021 04:18:54 +1000 (AEST)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 14CI2hM9133954
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 14:18:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to :
- references : from : message-id : date : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=qqeV/SOsSBR7GWXGd4nyNx3DVgDlxAkAfHLIceJiXZw=;
- b=oMie9CzAPogp4Qc5fx0Z/3x58GDGRumTXTeCRfu+4rFaADd+QfbhMH6dlP2vNZVu4I9e
- tkJ65xiLQn910QxyOt/hcFYqWS0yvrlvTrTmok+hUY3sICZ8DsVMPJ2IBGUc19QvTG31
- nPGt6ZljHOIzgl7oFLFaERyZitUaSgOe/zJe9IsWYsLeI07ZUDRZp0cntWfLbQT0eIo0
- Baps/mPJlKvS/eqxk6hBdLTJFsMBj/AdUGDI1dEmYb/QqLnFE5wDnhJWps0trLEUGriT
- DUriG72RICr0fLgJ0inU+d8DHxTC3T+6u1h+mpO4sCTzxbbHUYBapBdi6eaNE0PlvqdE EQ== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0b-001b2d01.pphosted.com with ESMTP id 38gk82hq9u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 14:18:52 -0400
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 14CICZoR003947
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 18:18:51 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma02dal.us.ibm.com with ESMTP id 38dj99f5db-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 18:18:51 +0000
-Received: from b03ledav002.gho.boulder.ibm.com
- (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 14CIIoue29360550
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 18:18:50 GMT
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EF03A136051
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 18:18:49 +0000 (GMT)
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A742F13604F
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 18:18:49 +0000 (GMT)
-Received: from demeter.local (unknown [9.160.45.189])
- by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 12 May 2021 18:18:49 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FgRVz1Lkfz2xZN
+ for <openbmc@lists.ozlabs.org>; Thu, 13 May 2021 06:40:10 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id 699385C0129;
+ Wed, 12 May 2021 16:40:06 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute2.internal (MEProxy); Wed, 12 May 2021 16:40:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=0zJYn9tiDnHvWH3erlfk+M99kDw
+ UXRRJKkhG0iLv6SI=; b=e53I/Y+/wcdxep2VmCR/iS/t2/3rpeZDH/4xuTsUHP5
+ aJNBa61epYge1rfx9JFZ6dDEppgQG+52j4rn74O0eV7QzlGFuicsw7Ixtg7h5nmF
+ sqpp4G5+toTSL3QruhopFUOLJu2hY5+ZQuWbqm4CMWflmwpiyryfq2ZNPYpX49U2
+ IhomvpgL4k0feA89/oh0fi7YjZTi7aIehXfPcFO8dtY/E6bVKs+l+8TUc+sz/lKN
+ iaroxBsh7uMLhEogULgNSxIUGWGwHyqUFDI2wVqLz9UaKVEOLKZrTopSa92st0cM
+ ZiE7t4aVVE72tXwnxMEXCGokRcs97O1sQ0ijNiwx5vg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=0zJYn9
+ tiDnHvWH3erlfk+M99kDwUXRRJKkhG0iLv6SI=; b=AvQn/t0+yHwQEiUrL7NEIp
+ 0JF5MPKlTIoi49np/dTvKHXjE99GEy4QaSO2nP8mtqBJ7lGiIANbhRXq4kGJTI/U
+ Z9CJXv5pH924nGtg+bG/+WiZ8wM502XUrfDoy3FiwxcPcR0yI8by4Rew+v7mznnU
+ hbxjkolpHWAxmwEiiWca6rjwAMfZkojmjwuNOupML8o6t2Xd8GgE9x1JNzidSqcR
+ JxciVoEiapzo+UDP6W2aEaHLuw61EmM2KfSaeW9jnwQY0rDDL1C0UeYbahf0SS57
+ Alg4FKmYKngOUKUz5Re/8cBDF/A7CX771fWzjhd8r8ywrwQ+DQZVV+x60uoD+JUg
+ ==
+X-ME-Sender: <xms:JT2cYO4s1tE-o--jePEPlczkfLfg2TQvtUwQtYW35KWJrvZ-4ydWVQ>
+ <xme:JT2cYH4R7dsRtSYsj0WIb-ceZPGsDMWJMBuq2UCG_NdNwjUtjZt9yqFynHoeWhM7g
+ EZqHDk6p-KmvnB6ZK0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdehvddgudeglecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enfghrlhcuvffnffculddvfedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
+ tdejnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+ hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeekjeevffffvdejleeuudegvdei
+ hffhuefgfedtfefggeetfeeuteeiveefieegffenucffohhmrghinhepmhgrnhejrdhorh
+ hgpdhrvgguhhgrthdrtghomhenucfkphepudeiiedrudejvddruddvuddrjedtnecuvehl
+ uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkh
+ esshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:JT2cYNf-L_2sePx6haeXVqgGfp0kJFq3qWQ7nZGN2dWTXSZfKzuO8g>
+ <xmx:JT2cYLIXfJE-IFeHNfHj26ktKT3FHUZZXu4GwYXH9uDOtgUUOZtodg>
+ <xmx:JT2cYCLHe99Z7wePe3-8mAYvEDn6UQyEduea46bjg5LehI_TMAeM7A>
+ <xmx:Jj2cYBm2ZtAvoeF_gho-Ma89VVn0mxY5Iq65eYkFfpmXbOdIr52VZQ>
+Received: from localhost (mobile-166-172-121-70.mycingular.net
+ [166.172.121.70]) by mail.messagingengine.com (Postfix) with ESMTPA;
+ Wed, 12 May 2021 16:40:05 -0400 (EDT)
+Date: Wed, 12 May 2021 15:40:03 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Joseph Reynolds <jrey@linux.ibm.com>
 Subject: Re: Security Working Group - Wednesday May 12 - results
-To: openbmc@lists.ozlabs.org
+Message-ID: <YJw9I+q6RYpr1UO6@heinlein>
 References: <35156c27-e195-c238-1bb9-d20a30db3c63@linux.ibm.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <8febdc9d-08bb-4094-9cad-7e6035c5bd71@linux.ibm.com>
-Date: Wed, 12 May 2021 13:18:48 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.1
-In-Reply-To: <35156c27-e195-c238-1bb9-d20a30db3c63@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: O54RxP_alGEKoQTufce6taqVmJ8qOiG2
-X-Proofpoint-ORIG-GUID: O54RxP_alGEKoQTufce6taqVmJ8qOiG2
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ <8febdc9d-08bb-4094-9cad-7e6035c5bd71@linux.ibm.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
- definitions=2021-05-12_09:2021-05-12,
- 2021-05-12 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- clxscore=1015 adultscore=0 lowpriorityscore=0 suspectscore=0
- mlxlogscore=999 bulkscore=0 mlxscore=0 phishscore=0 spamscore=0
- malwarescore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2104190000 definitions=main-2105120118
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="OkFuGQuDxPxuCzKG"
+Content-Disposition: inline
+In-Reply-To: <8febdc9d-08bb-4094-9cad-7e6035c5bd71@linux.ibm.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,43 +99,71 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 5/11/21 8:59 PM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday May 12 at 10:00am PDT.
->
-> We'll discuss the following items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
-> and anything else that comes up:
->
 
-Three items were discussed.  You might want to start with item 3 first 
-to introduce the first two.  Summary:
+--OkFuGQuDxPxuCzKG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-1. Security impacts of enabling kexec (load and optionally execute new 
-kernel) in the BMC's production kernel.  How does this work and play 
-with secure boot and with IMA?
+On Wed, May 12, 2021 at 01:18:48PM -0500, Joseph Reynolds wrote:
+> On 5/11/21 8:59 PM, Joseph Reynolds wrote:
 
-2. What are the security impacts of having the proc file system file 
-/proc/sysrq-triggerwhich can cause kernel panics which can cause the BMC 
-to terminate processing?
+[ Copying some stuff from the Google Doc. ]
 
-3. In general, how can you (an operator or the BMC's host system) 
-recover a BMC which has become unresponsive, for example, because its 
-kernel processing has failed.  A design introduces using 
-/proc/sysrq-triggertogether with a recovery kernel installed by kexec.
+> Security impacts:
 
-Details, including links to the gerrit code reviews, are in the wiki.
+> - Can be used to defeat secureboot.
+> - Can this function be disabled?=C2=A0 Via kernel config.=C2=A0 Default?
+> - Can restrict which images kexec can load?
+> - Recommend?=C2=A0 Validate the kernel signature before kexec=E2=80=99ing=
+ it.=C2=A0 But that doesn't stop an attacker who uses wget to get a malicio=
+us image which they pass to kexec.
+> - Why would an attacker want to use kexec?=C2=A0 Opportunity to modify BM=
+C code, load device drivers, create trojan horse(?) or back doors.
+> - How can we force kexec to perform the same signature validation as uboo=
+t?=C2=A0 (each part and the whole: kernel, device tree, file system, =E2=80=
+=A6)
 
-- Joseph
+Some of this is a concern only because the arm32 support for kexec is
+far behind the other architectures.  Can someone investigate what, if
+anything, is going on upstream to get arm caught up?
 
->
->
-> Access, agenda and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group 
-> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
->
-> - Joseph
+On most other architectures there is a new set of system calls, enabled
+by KEXEC_FILE, which moves some of the handling done by the kexec
+executable into the kernel and has signature verification done there.
+arm32 is one of the few architectures that do not currently support this
+KConfig.
 
+See:
+- https://man7.org/linux/man-pages/man8/kexec.8.html (kexec-syscall-auto).
+- http://people.redhat.com/vgoyal/papers-presentations/linux-plumbers-2013/=
+vivek-linux-plumbers-conference-2013-presentation-kexec-secureboot.pdf
+
+--=20
+Patrick Williams
+
+--OkFuGQuDxPxuCzKG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmCcPSIACgkQqwNHzC0A
+wRnFNRAAlFpbEQRO6m5IwhbygQAIcJv2NESwhxjsuosr4OGBxiPTJ1Uon/iEfhu8
+gurtaqcO4q/cSZtaQ/K6Mb6E166Enlz4XxH0/jOmEwbiizy/sZ9NoE2LeHCake7Z
+vJ31aS5mMLg1BkaHgk7PC7guehfYcWIEaLarsum/8zSJOzD5gpvQbssQkac5q8og
+fSQSWTjK+MuYhgVbYDIutppjxNMVwj3hDF2W+NV/ZOkE0GIlFbsLhmD0F4oQY78A
+jPMq+u93IxIVpnJgvvEvuPfH7iEhbOkrYLsBFgGtrjS5n2I+OnsJI0QWRtJEy8pV
+mTnanXQwIh5dPs8XfA+xOKVwSzNbfid2m4rvX2IsnbkDyrtd69AgajLd4kzU2/v2
+RDIIdFsHXVC9j3bq7mvsoMOeAS8Mk1LgddazWh2cxN4M7w9GUas/qkC1e2H+iwC/
+4k1D4Iy/2s2EGZGptOnWnePsVQYZtUKM4+ZWUG+R/YDvLc1fleFdWXrISin9vo/g
+1bagKcEo8LykuMcUTl19c9Uo1lcn1Z9FELam3JPpowwHtr6dsh2KPMWDeWwzTx2H
+gkSFo1OohYjg2dLulcXDo9dmhU99I3z5rkkYZ/yVHl2hPefeHyvQ7FqOZ2/aKvki
+8VNfPAVIYqPV/yN2tFQ/arnuDMHurY5rjzOQKfnkb9zdaF192fc=
+=Gjyt
+-----END PGP SIGNATURE-----
+
+--OkFuGQuDxPxuCzKG--
