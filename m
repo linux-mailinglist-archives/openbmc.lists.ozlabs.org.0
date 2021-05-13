@@ -2,101 +2,137 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 436D537FFE0
-	for <lists+openbmc@lfdr.de>; Thu, 13 May 2021 23:44:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A11A73800E4
+	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 01:29:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fh4tf1XCqz3080
-	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 07:44:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Fh7DL4JtZz305x
+	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 09:29:54 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=LLhJg1tH;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gd-ms.com (client-ip=137.100.132.43; helo=vadc01-egs01.gd-ms.com;
- envelope-from=eric.wetterlind@gd-ms.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir;
- Fri, 14 May 2021 07:44:10 AEST
-Received: from vadc01-egs01.gd-ms.com (vadc01-egs01.gd-ms.com [137.100.132.43])
+ smtp.mailfrom=quantatw.com (client-ip=40.107.132.119;
+ helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=george.hung@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=LLhJg1tH; 
+ dkim-atps=neutral
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320119.outbound.protection.outlook.com [40.107.132.119])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fh4tL5dYSz2xxq
- for <openbmc@lists.ozlabs.org>; Fri, 14 May 2021 07:44:10 +1000 (AEST)
-IronPort-SDR: sUX5uDp68OwoUKGBIXicGbDhrZET5YiDEG1IZK1+sIyHVV+JlATqah20RDGopBbY8X5y7EMxKt
- bqEkWEG2RgkVVxFsG0gwuXcsjsMN8dIULM2WFWXHn0fd6sIemm0yS0SssqE5cyuzvcUmz+cATh
- 1TKDoOvuSoUF4WJ5F47T0xOz0hfrrWSM7Ti60Rz71aUxJJZ6MRELg68OxEG35VDPti1u/ez/qX
- k1ZGvrb3Shedc1F8aHxHAA7LU5mwlnpOFgj9qqkgw4dbWuHu0obxJBqfhcC9fXIE5zztHsaoyF
- xF8=
-X-IronPort-AV: E=Sophos;i="5.82,296,1613451600"; d="scan'208,217";a="261577"
-Received: from unknown (HELO eadc-e-fmsprd01.eadc-e.gd-ais.com) ([10.96.30.97])
- by vadc01-egs01.gd-ms.com with ESMTP; 13 May 2021 17:43:00 -0400
-Received: from VADC-MMB03.GD-MS.US (vadc-mmb03.gd-ms.us [10.132.100.63])
- by eadc-e-fmsprd01.eadc-e.gd-ais.com (Postfix) with ESMTP id B3D97A6803B
- for <openbmc@lists.ozlabs.org>; Thu, 13 May 2021 21:43:00 +0000 (UTC)
-Received: from VADC-MCA02.GD-MS.US (10.132.100.43) by VADC-MMB03.GD-MS.US
- (10.132.100.63) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 13 May
- 2021 17:42:59 -0400
-Received: from USG02-CY1-obe.outbound.protection.office365.us (137.100.132.86)
- by VADC-MCA02.GD-MS.US (10.132.100.79) with Microsoft SMTP Server
- (TLS) id
- 15.0.1497.2 via Frontend Transport; Thu, 13 May 2021 17:42:59 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector5401; d=microsoft.com; cv=none;
- b=NnpwAUg4RkYZNDUd4waQ4zFGeSKv7CK1Pmx3j+oMacxGYv5ZAUDLUI6tZoKVq771xtSZ6mbiTIgLPNIefuClyFKwOlSG9xoYgqNyoURTubevQklo5RnhafefouE6/Hmwn0C8zsE+bpNNv2Rh8uEHykSlX6nCGrzdRr5zmP7Y1SCaHuPkLYXyWgDPXYSCpnJiONfeiLhxuIe3/+Cj/vXIPleQvxLQQSLQAs5nCIOw75e6h66mTkhnGkZ6eWko2Em1rzFJ1PuSIIk5tkhPRUbFTj5e0/QdFyW98Xk9jof034WZ3dR1afCU2lVjQeVHkQkPF/wyvRVBYp9Al1vA8nwfmQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fh7D14tWyz2yZF
+ for <openbmc@lists.ozlabs.org>; Fri, 14 May 2021 09:29:34 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=KBPI5/1zvjUFtUBY1dqMLU+3Iyy4agarzDytLNvQpl/4eILNFJGmpuCuT9emMtmLUCLAytS3ndyxIl2NznK3JY/lgeCRKug2KPSo3hSr+DPN1rb2jJFlmbRow+hv+rVxbArfrqAZpxVN8l1wvOEysdAV3+VLxoPTzp2eToYsuVHIfDx0Xx0HbxtaDs2nAVKm+PpMW7Re1U5Q8K0oHpWwjqzHb1g45ygYbbJ8//SDCGZNs9aONyeXF+mkw1f3P5oK5rsBBhq3ET+0Dz459vK5yD0jWUicZaLP0qXKMRuTIynyWA973ceovQ7nZRa9vY4Q8LfUNk5FH1O1PDMk0Y6s2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector5401;
+ s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Qpiap5oWWoNr6igUxQDalPBHEVM41DtrD0dJQ3Eegws=;
- b=SoaSaMon24cjEVDfvbcuMdei5M6Jb6siT9BpnjBLvG0xjaQWG6SDAuWp94+urHx55nKz8Qsmstc5hDU4dZa6l9vuNDbFN0cGfPsnyIFjlyfoBWHXYc2YJmzIoVt1gADM1x57F0lDFvaLz8Pja6+LSxhT2lpYIfkdIU0SMqAUnnPqSt3P6nrCy0qyYMv21S7xfm8IF1+tSZHMfk8ybsYF7yrfIwpy5T5Bcxt4J3zAd4GphlHRv2LuC3dvirwXSQvNGJsctaZSVP7tDU/TQYqDh3Pk/x3Ce5og9xKevTpWhE+j3Ba/roymVmEmBlWG9aju2+BFF+QWU857BiL75rPOwA==
+ bh=Fp9a5NeAnvmZreBK1HQqcBLz59wZchKt1wrUJXu830E=;
+ b=kpblG2JjGZ9UkA3qIRpVDTAxffsQ/VH4K37N0TsybtyKGR7v7QB3Iy9JkGdBSkSxPFxK7pHx2aY/MafBaFvp3lbw2d7SlY2edCdiBp9rUWVtdikxncQO8mje0bfPOlFdij2QQDdYMtFc/Ho1MRQhARFkKfVY4ik+DJRv/CP2YX/9LjCQOO6wqixyvXZhV4t5tdarUNoV0iha7PsmNJfojCfSDK2r9xsxAgqGuQWe46CC0/yCpbpk5qSUQMbxFKHqaE37b4onn6X9E/rQl4znQ6cVeI4NLOSOFV3GzuxFUkSKGrSPrLkm43FzcF23zbQioQvc0KNTroYBwJVRy4yMHw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gd-ms.com; dmarc=pass action=none header.from=gd-ms.com;
- dkim=pass header.d=gd-ms.com; arc=none
-Received: from BN3P110MB0546.NAMP110.PROD.OUTLOOK.COM (2001:489a:200:40c::13)
- by BN3P110MB0418.NAMP110.PROD.OUTLOOK.COM (2001:489a:200:40a::15)
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Fp9a5NeAnvmZreBK1HQqcBLz59wZchKt1wrUJXu830E=;
+ b=LLhJg1tHF0rp6KCOjfhAi37x41/sfi7Uu7YsYMRgzxsWoJsjDmnVuWYn2gdE0ixmaJ3B56vhlX5RsIfCR/IXmlTKi/BRxWN9ey63bBEnb2zEymj5Mo5pOxWfDyXK+bhl2mANigrfY+ovROltAfnOhpa3fP+lLJveIARh4bPEQCw=
+Received: from HK0PR04MB2339.apcprd04.prod.outlook.com (2603:1096:203:46::21)
+ by HK2PR0401MB2164.apcprd04.prod.outlook.com (2603:1096:202:8::14)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4087.45; Thu, 13 May
- 2021 21:42:59 +0000
-Received: from BN3P110MB0546.NAMP110.PROD.OUTLOOK.COM
- ([fe80::f0e3:83ff:53bf:2171]) by BN3P110MB0546.NAMP110.PROD.OUTLOOK.COM
- ([fe80::f0e3:83ff:53bf:2171%8]) with mapi id 15.20.4087.053; Thu, 13 May 2021
- 21:42:58 +0000
-From: "Eric.Wetterlind@gd-ms.com" <Eric.Wetterlind@gd-ms.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Aspeed2600 EVB Hwmon problem
-Thread-Topic: Aspeed2600 EVB Hwmon problem
-Thread-Index: AddIPj9rn5DhNLaBRgWtFXf4x6iGZA==
-Date: Thu, 13 May 2021 21:42:58 +0000
-Message-ID: <BN3P110MB05467667602EC7ABA6A3C029BC519@BN3P110MB0546.NAMP110.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4129.28; Thu, 13 May
+ 2021 23:29:17 +0000
+Received: from HK0PR04MB2339.apcprd04.prod.outlook.com
+ ([fe80::8522:3491:faa6:e255]) by HK0PR04MB2339.apcprd04.prod.outlook.com
+ ([fe80::8522:3491:faa6:e255%4]) with mapi id 15.20.4108.031; Thu, 13 May 2021
+ 23:29:16 +0000
+From: =?big5?B?R2VvcmdlIEh1bmcgKKx4qb63cSk=?= <George.Hung@quantatw.com>
+To: Andrew Geissler <geissonator@gmail.com>
+Subject: RE: CI build for quanta/gbs
+Thread-Topic: CI build for quanta/gbs
+Thread-Index: AdcPP65+jY/sq0xaRI+ylE14EJw/VQzTh9kbACB1JxAAqx+EqwCOfMZAAA/q54AABmpEcA==
+Date: Thu, 13 May 2021 23:29:16 +0000
+Message-ID: <HK0PR04MB2339E6124ADE1F9EAB6D06AD8F519@HK0PR04MB2339.apcprd04.prod.outlook.com>
+References: <HK0PR04MB233989A7F66DD0B3964E2E0B8F599@HK0PR04MB2339.apcprd04.prod.outlook.com>
+ <2DE216D2-B472-42B4-AC31-40902D5600CC@gmail.com>
+ <CAO=notyQFgzroaMfsQkr+ZjPm_8DE4y5s3mkadxdmic=N85OMQ@mail.gmail.com>
+ <CALGRKGPbdcSRrTUwU6uUpYfAxGZqOFWZL+LU74bFit0EcGP95Q@mail.gmail.com>
+ <8D110F1E-CD90-41FE-808E-C2A2A3ACD903@gmail.com>
+ <CALGRKGNUh1yMLX20LDLAs5Df=QB8=42KWuo=TC3SG84EEHqD5w@mail.gmail.com>
+ <HK0PR04MB233989F62E1F9CE2C61AC99B8F579@HK0PR04MB2339.apcprd04.prod.outlook.com>
+ <7DAD0FAA-E02E-4666-846C-1363B45871FD@gmail.com>
+ <CALGRKGNyJ3WMd1CO36xD2+o8n3ACqaPpu7XwrnJfF83foFZDPg@mail.gmail.com>
+ <EF3FAEED-549A-426B-8236-79CFAE728411@gmail.com>
+ <CALGRKGM26N+vUdjahXR0L671M2CZGE8o2ochTy7=69vMGDnM0w@mail.gmail.com>
+ <HK0PR04MB23395928C8737F4177DEFA238F519@HK0PR04MB2339.apcprd04.prod.outlook.com>
+ <91B367A6-A92B-4712-8F7A-B12FB6475BFC@gmail.com>
+In-Reply-To: <91B367A6-A92B-4712-8F7A-B12FB6475BFC@gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none; lists.ozlabs.org; dmarc=none action=none header.from=gd-ms.com; 
-x-originating-ip: [137.100.137.28]
+authentication-results: gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=none action=none header.from=quantatw.com;
+x-originating-ip: [61.218.113.162]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: bf0daeea-4d2b-4895-4820-08d91658137f
-x-ms-traffictypediagnostic: BN3P110MB0418:
-x-microsoft-antispam-prvs: <BN3P110MB04188FDF5B62C73CE4770ABFBC519@BN3P110MB0418.NAMP110.PROD.OUTLOOK.COM>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-office365-filtering-correlation-id: a46170de-946f-4f3b-17d1-08d91666ed13
+x-ms-traffictypediagnostic: HK2PR0401MB2164:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <HK2PR0401MB216499B32F5B79D6BCBBCBAB8F519@HK2PR0401MB2164.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: j6mUyM03moZoxS7FiwnPuua9e/5LTKDhj0fFin2cYR0SU4tL3Zn0cw20x+u/XwVD1OCIKt7N09D2V+SqrEU8kROa1WzXhowJDI8vKnvqCHuB0BL+bbOLWiyXJhfr9bUc75/EZVtBeIHSl0uiKHT/sBTCCUFaLxzlRwQ5iDlb50Y/dZ8Kq2WywKWf27hptOl+sWIBk5weATe7Js4VbR2uEuAnbtYoqpC8QIsx5AyDXaFvgqmh1Xp6LN9hZOmAoQjLR0beodu9PxtPsgJFnCRkQARJkramatCegXrNJ4kV7FIYhXQV796b72pCVo1FA9J7kMSWsM5xVhr80ZJNHh4xSRDPU9cVDDCUkTeBGaA62F1cMW3BIlTos8V68FAa3RG+yhtiv/R5Io1rAYxxSM8nKFXgKWonEo5RJHdHyJ6stD2+nF7l+mFA8rRknkXKSUIPcmfQ4WY2pp7Y0yUIEp5ootn/lXAiUqF9sgnde+5TXV8i6hJX0bRcCycmyJRZPXgdtrDJhNqpT88SESCY42sbOA==
+x-microsoft-antispam-message-info: ifbnxXtEcojaCIE5uYPnLxKDNh35zK+4am1oc90nJWBW87YN/U8yi+bfmvtkN57xdcyZ7JWzJluEb6Ux9Mk4A8C03UbR9b7RA2jQBohnI4FMtD4lALBgOsiQ4hNYvnnHwYN4UC/ZwfZnJ3tCeM/ZfZ0vqgndYd2pys69E7sdCXqAAfONZmEZKjAOktWMBFQglu7BxiCJoFZLCEm//Oj7CPrfUBWPi4S0+qtYfC04XqbxC4xhayN7ekuQwqfTcNfz8ffl9SOC2fuDRW1Xg5h1nsf7ZkXasEiJjGaTONEANYUZN9Ij3ig3cnKXifMbd6q4njgRwuadmeARGBNChpvxvq75BdTxG1nVvD+tVw+amAQOvAk7DSt4ZzJAiLr+4Aq5w+pE3GQHLhlvmd5EjFDoDyjp0wJOl9GIOe13yX/gcGF6KetwEpzlbpPNxhBriucxjDPYNDB89qBORtBkMykEMqvtWbzJVFzv27PkaegKjohE/nyu6H985SXretENETKSwE5YRB5YGSw8QW4EWn14IN59LbmL5swqNkEiVc/hFP1GDcwkAncDw3NFkyNVHFo5fTqMxvKCVmHbcnN4hywBFtLmzxKjYIyYxRc2dckWuQAiikyB7K4HSkpJP7aUQuOZAUFzJ1h8k/bLXM07Gg0mCjq49asZlmU6djZ4bEaUtvIA8tX8G60goMGCOzHgIBaJuxnpnJlTtxE+Z19YF2ZK0c0ypzrsoh6JcUstoWanYtM=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BN3P110MB0546.NAMP110.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(366004)(376002)(346002)(396003)(136003)(39860400002)(71200400001)(7696005)(2906002)(86362001)(8676002)(186003)(6916009)(33656002)(38100700002)(122000001)(8936002)(64756008)(26005)(55016002)(6506007)(76116006)(478600001)(9326002)(5660300002)(52536014)(316002)(66446008)(9686003)(66946007)(66556008)(66476007);
+ IPV:NLI; SFV:NSPM; H:HK0PR04MB2339.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(39850400004)(396003)(376002)(136003)(346002)(366004)(6916009)(316002)(64756008)(66446008)(71200400001)(76116006)(122000001)(38100700002)(54906003)(4326008)(33656002)(186003)(85182001)(66476007)(66556008)(66946007)(53546011)(966005)(45080400002)(52536014)(7696005)(6506007)(83380400001)(5660300002)(2906002)(9686003)(26005)(55016002)(8936002)(478600001)(8676002)(86362001);
  DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: YbtnOK4PFZ8GJDl0xgyH0fSP/aVbvYR0G9jwryvb9dmY9eECl0JWkdMinXMJwRtNClRCinB0QSn9GFJ4EMBwPFEZNdERJpD7ZXDe1K5mzqxy5n/4tagmOLMnqY65RU8PP4cOtV+9V57WDuSyQ2JUE6xEk/wha9T/O5zpYu7/qpMcLhv3k1/PLL14KvSN0PhuWgBpfYGSwS9L65p23tZexsrlxqrQs/ft3j7TusmyTRpv7ynTGwQ9sbMU6rXwX0BSN8CI6BSA4m6FszOiR7cZcuemagmncvfI/YtTdXaMAUuB80Jkm7WMIRZO113jKUvPeIUnd6d8jCF0jl3p9ZSgUUHRf4vG2jWTC2sbi6VgLXfi3RNEDjpsMmamPcxlwR4RKn029zJmd+eFWFst5rzes+FaRZmT5t5h+MhgDdzFlLSUPY7RYzvyANstQpvXCDqWMF+o3ugh9cfZmmBF9Yg0zEynVoHfUdn2drwbJOdEi5kTcMCDwkDtjR+9FH/ZUucn5omtGp1QrRI5n0oEkNOcS5CxFhaQD3IiX8rjAvyvR9HzQGb881Np5aVUEKBjUqtkRB4+HZ/LpUHZRbhgILjA/vR2Thm8U7WOT2e1E/n9QFgXw3qsVupBg+obs0GSpPf81fijZkfgwBbWDg0VJ84z5RLoMR8oagYcAar9X5qB0LMRTwupPBQaIQiRZQweiku40t3qiIHlnoC4zE7OI45QBlkx+USTCn32/Lm7Eh/krqU=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_BN3P110MB05467667602EC7ABA6A3C029BC519BN3P110MB0546NAMP_"
+x-ms-exchange-antispam-messagedata: =?big5?B?b0JKR29JOGhIckZneWdvOUlFUlFBb3VtcHRhWk94cVArMGRhTzA1T2tocVlibG0x?=
+ =?big5?B?SmxSVlcvR01NVXlKYTBVSFhDbVBhcGVJL0I3cjhvOEtWcW5lN0FlaGNuMGQzek5K?=
+ =?big5?B?NXVzUGlMek4yM0pmTE1VNXB3K2xzYzRhdk9TT242TG1QYStmQ29tMHBDZFV3N0c3?=
+ =?big5?B?ZlVjVkl3UlB0YWJHOFAvbXJGb1YyY1daeHRUdkt4b2VUS1ZlNlAwaFh5MEt1ckdr?=
+ =?big5?B?L1VuLzdVVWh1UnZ3MVRKQm5HUGI3MW1EaEkwUTZMUzN4QnNjdW5yT0FPQklPdWR6?=
+ =?big5?B?Wm1ZQjZ1Z0E0ZXlyYU5DU0FVMmllYi9hUnc0b0FQTFVQT3lqUVRTNUhvREsyL2V2?=
+ =?big5?B?RkV5anFWbGpHdTZtT0lqWHdDZVlCOGpwSVVDbTZtejFSUm5GMmd0Y1daTElNZEI5?=
+ =?big5?B?bExPOVFBL0o0SHVrUEJjVjk4WjJWeFF5a3NiUlVlYjRBMzVsZFpGbW9QdUkyWXE0?=
+ =?big5?B?QzhRWUdmc3Fub2s0c0xlWkg1bU1DRGZIWmxGNzFZem03cWFCOUlTWEQzWXhVRm5Z?=
+ =?big5?B?Z2lObXR0NG92aU9YZmtTWGcveDJLMjNVNy9KOTBKYWphdEVxcTd2UWhiVDJraXpk?=
+ =?big5?B?cEpDOU5MYXM5UGY0TjE5bXoyNlJ0Tzhram95T2R3OWgybWplZTlXNFlxcU42N1Bx?=
+ =?big5?B?VnN1Tmx0YlF2LzA0aHp3K2kzbFA3dzRYc3FaTXNaQ0haNUp5ZTFCT294cHJ4SlBK?=
+ =?big5?B?cE80aHZYRjN1bjYzcHBmL3l3citINEg5Nndpbk5yVjArZlB0QjJrQkhCMHFOR0lR?=
+ =?big5?B?T1EwaTdFNWo5bUh6eUc5bmFjam93a1p4ZmNqbFNiQ2ZsK0NmcGtTZDZPMU15ekVi?=
+ =?big5?B?S2RtMzB3ZXVWVGpMcFFjbTZtWG5TeEgwZzc4b1I1NDlIRlNUVnlKeGRKa0xtOEtF?=
+ =?big5?B?dU9hYWJEeDV2QjB3YkNsZUsrMDFuLzZjMTJlZnN4TzVvOEZuNEVUWDEzeWtockNo?=
+ =?big5?B?RTNqNHl6cVNjMitueklQSm9KUzVVeDRlelhGYnR5aENkRjBmU2dPRGFxUmRaUE9L?=
+ =?big5?B?d1hFOWNpcXkrZTFjWE8vMDY3TG9wNnF3b2tPQ3NBcnpwdE45dmtLOGVXMDdRZDl5?=
+ =?big5?B?V1lmWjdGQk80OVYrdUJOc3Bqbnd2UG84UE54TFpjL3RMclJJdzUybFI3ZEFaNDl6?=
+ =?big5?B?M0hkdVZFeTNWb3dIMExaWmUwUlVSeFhvamU1ZWlJbEJGZ1F3czlRWFZIWFBYdmpD?=
+ =?big5?B?M05OWUlQUU1rWVN0RVV0ZjdkbjRZUHM2c01TWmMzclUzZm1EUWZIMU5zUzdGNXl1?=
+ =?big5?B?Z0c3WnNTaDdscG9pWVpYZG1VM0kxNVJBSW8rWkxxSkxlNU00V2tpV2hvSjZqczFU?=
+ =?big5?B?b0lTSE5Ja0ZwWnY3Wk1hckpkanIybGlwNWJMcThIbU9zR1hJZmZBRGdEUzJENFhh?=
+ =?big5?B?OGY4YzZQUkQvY0lUOFE2R3BFMjEydkRtU2FRdFhpNWt1c3l1WjNUcDMzTmZhUHZD?=
+ =?big5?B?RlMxdFZlQXNPUXZPMWVoUmFtd3NMNUxGVFBYUGx1RUlJNDI3ZjZVQTdlRUV6S2hu?=
+ =?big5?B?U0l6WTNtWC9hcktzR25QdEY5a21HdWpaWmtqOE11WEFuRVRBWXBicDV0eUw3S2pi?=
+ =?big5?B?V0ZFdzlnNER1cEYvZk5nelFPdU9zREpvY1dQQVZ2cEJiWHhOdlpOcE5Rc1h5WDdQ?=
+ =?big5?Q?r8PDoHKt4bvk8fi6+KldX9GWOtPo/CxgohQzu1tGRKrl9SJ/?=
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
+X-OriginatorOrg: quantatw.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN3P110MB0546.NAMP110.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: bf0daeea-4d2b-4895-4820-08d91658137f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 May 2021 21:42:58.8718 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB2339.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a46170de-946f-4f3b-17d1-08d91666ed13
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 May 2021 23:29:16.7543 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7c5a26cf-ddf0-400c-9703-4070b4e3a54d
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN3P110MB0418
-X-OriginatorOrg: gd-ms.com
-X-TM-SNTS-SMTP: 31223F733B7C8F1A9187DDAFFB2722D4724F9211FFF7D59F06698FFE87AA98192000:8
-X-Content-Scanned: Fidelis Mail
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 1fkNMbc63kEEvM7BBNcpyItLw+EmAhsIXEh2gPmREnB2oQcAKvsdb/E4dLmV9cGDoykmPODCnqEIObZnGY+gm4/0Y7HUUqrkjD3az7R4Hz0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR0401MB2164
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,238 +144,169 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Patrick Venture <venture@google.com>, Brandon Kim <brandonkim@google.com>,
+ =?big5?B?RnJhbiBIc3UgKK59u3jBvik=?= <Fran.Hsu@quantatw.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BN3P110MB05467667602EC7ABA6A3C029BC519BN3P110MB0546NAMP_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-Hello,
-
-I am currently trying to add a simple temp sensor to my image, which is bas=
-ed off of the evb-ast2600 image.  I have successfully been able to add this=
- sensor to a ast2500-based image, but the 2600 is not cooperating.  Any poi=
-nters would be greatly appreciated (and sanity-saving), as I am near the en=
-d of all paths I know of.
-
-Project bblayers.conf.sample contains the following:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-  ##OEROOT##/meta \
-  ##OEROOT##/meta-poky \
-  ##OEROOT##/meta-openembedded/meta-oe \
-  ##OEROOT##/meta-openembedded/meta-networking \
-  ##OEROOT##/meta-openembedded/meta-python \
-  ##OEROOT##/meta-phosphor \
-  ##OEROOT##/meta-aspeed \
-  ##OEROOT##/meta-ourproject \
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-The device tree has this (and using the standard aspeed_g6_dtsi):
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-&i2c1 {
-        status =3D "okay";
-
-        tmp423@4c {
-                compatible =3D "ti,tmp423";
-                reg =3D <0x4c>;
-        };
-};
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Recipes-phosphor/sensors contains the directory structure phosphor-hwmon/ob=
-mc/hwmon/ahb/apb/bus@1e78a000/i2c-bus@100, with tmp423.conf in it.
-
-The phosphor-hwmon_%.bbappend file contains this:
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-FILESEXTRAPATHS_prepend_ourproject :=3D "${THISDIR}/${PN}:"
-EXTRA_OECONF_append_ourproject =3D " --enable-negative-errno-on-fail"
-CHIPS =3D " \
-        bus@1e78a000/i2c-bus@100/tmp423@4c \
-        "
-ITEMSFMT =3D "ahb/apb/{0}.conf"
-ITEMS =3D "${@compose_list(d, 'ITEMSFMT', 'CHIPS')}"
-ENVS =3D "obmc/hwmon/{0}"
-SYSTEMD_ENVIRONMENT_FILE_${PN}_append_ourproject =3D " ${@compose_list(d, '=
-ENVS', 'ITEMS')}"
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-When booting up in Qemu, the device is recognized:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-#cat /sys/firmware/devicetree/base/ahb/apb/bus@1e78a000/i2c-bus@100/tmp423@=
-4c/compatible
-ti,tmp423
-
-# cat /sys/devices/platform/ahb/ahb\:apb/ahb\:apb\:bus\@1e78a000/1e78a100.i=
-2c-bus/i2c-1/1-004c/name
-tmp423
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-There is even a link in /sys/bus/i2c/devices/1-004c to /sys/devices/platfor=
-m/ahb/ahb\:apb/ahb\:apb\:bus\@1e78a000/1e78a100.i2c-bus/i2c-1/1-004c.
-
-The .conf file shows up in /etc/default/obmc/hwmon/ahb/apb/bus@1e78a000/i2c=
--bus@100.
-
-The problem is that nothing ever gets populated into /sys/class/hwmon.  It =
-is an empty directory.  On our ast2400 and ast2500 images, this same proced=
-ure, stripped down to almost the exact same specs as I've mentioned above, =
-produces a link as /sys/class/hwmon/hwmon0.
-
-What am I missing?
-
-Regards,
--Eric
-
---_000_BN3P110MB05467667602EC7ABA6A3C029BC519BN3P110MB0546NAMP_
-Content-Type: text/html; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
-break-word">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hello,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I am currently trying to add a simple temp sensor to=
- my image, which is based off of the evb-ast2600 image.&nbsp; I have succes=
-sfully been able to add this sensor to a ast2500-based image, but the 2600 =
-is not cooperating.&nbsp; Any pointers would
- be greatly appreciated (and sanity-saving), as I am near the end of all pa=
-ths I know of.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Project bblayers.conf.sample contains the following:=
-<o:p></o:p></p>
-<p class=3D"MsoNormal">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; ##OEROOT##/meta \<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; ##OEROOT##/meta-poky \<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; ##OEROOT##/meta-openembedded/meta-oe \<o:p></=
-o:p></p>
-<p class=3D"MsoNormal">&nbsp; ##OEROOT##/meta-openembedded/meta-networking =
-\<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; ##OEROOT##/meta-openembedded/meta-python \<o:=
-p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; ##OEROOT##/meta-phosphor \<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; ##OEROOT##/meta-aspeed \<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; ##OEROOT##/meta-ourproject \<o:p></o:p></p>
-<p class=3D"MsoNormal">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The device tree has this (and using the standard asp=
-eed_g6_dtsi):<o:p></o:p></p>
-<p class=3D"MsoNormal">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<o:p></o:p></p>
-<p class=3D"MsoNormal">&amp;i2c1 {<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; status =
-=3D &quot;okay&quot;;<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tmp423@4c=
- {<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; compatible =3D &quot;ti,tmp423&quot;=
-;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reg =3D &lt;0x4c&gt;;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; };<o:p></=
-o:p></p>
-<p class=3D"MsoNormal">};<o:p></o:p></p>
-<p class=3D"MsoNormal">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Recipes-phosphor/sensors contains the directory stru=
-cture phosphor-hwmon/obmc/hwmon/ahb/apb/bus@1e78a000/i2c-bus@100, with tmp4=
-23.conf in it.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The phosphor-hwmon_%.bbappend file contains this:<o:=
-p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<o:p></o:p></p>
-<p class=3D"MsoNormal">FILESEXTRAPATHS_prepend_ourproject :=3D &quot;${THIS=
-DIR}/${PN}:&quot;<o:p></o:p></p>
-<p class=3D"MsoNormal">EXTRA_OECONF_append_ourproject =3D &quot; --enable-n=
-egative-errno-on-fail&quot;<o:p></o:p></p>
-<p class=3D"MsoNormal">CHIPS =3D &quot; \<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bus@1e78a=
-000/i2c-bus@100/tmp423@4c \<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;<o:=
-p></o:p></p>
-<p class=3D"MsoNormal">ITEMSFMT =3D &quot;ahb/apb/{0}.conf&quot;<o:p></o:p>=
-</p>
-<p class=3D"MsoNormal">ITEMS =3D &quot;${@compose_list(d, 'ITEMSFMT', 'CHIP=
-S')}&quot;<o:p></o:p></p>
-<p class=3D"MsoNormal">ENVS =3D &quot;obmc/hwmon/{0}&quot;<o:p></o:p></p>
-<p class=3D"MsoNormal">SYSTEMD_ENVIRONMENT_FILE_${PN}_append_ourproject =3D=
- &quot; ${@compose_list(d, 'ENVS', 'ITEMS')}&quot;<o:p></o:p></p>
-<p class=3D"MsoNormal">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">When booting up in Qemu, the device is recognized:<o=
-:p></o:p></p>
-<p class=3D"MsoNormal">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<o:p></o:p></p>
-<p class=3D"MsoNormal">#cat /sys/firmware/devicetree/base/ahb/apb/bus@1e78a=
-000/i2c-bus@100/tmp423@4c/compatible<o:p></o:p></p>
-<p class=3D"MsoNormal">ti,tmp423<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"># cat /sys/devices/platform/ahb/ahb\:apb/ahb\:apb\:b=
-us\@1e78a000/1e78a100.i2c-bus/i2c-1/1-004c/name<o:p></o:p></p>
-<p class=3D"MsoNormal">tmp423<o:p></o:p></p>
-<p class=3D"MsoNormal">=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">There is even a link in /sys/bus/i2c/devices/1-004c =
-to /sys/devices/platform/ahb/ahb\:apb/ahb\:apb\:bus\@1e78a000/1e78a100.i2c-=
-bus/i2c-1/1-004c.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The .conf file shows up in /etc/default/obmc/hwmon/a=
-hb/apb/bus@1e78a000/i2c-bus@100.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The problem is that nothing ever gets populated into=
- /sys/class/hwmon.&nbsp; It is an empty directory.&nbsp; On our ast2400 and=
- ast2500 images, this same procedure, stripped down to almost the exact sam=
-e specs as I&#8217;ve mentioned above, produces a
- link as /sys/class/hwmon/hwmon0.&nbsp; <o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">What am I missing? <o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Regards,<o:p></o:p></p>
-<p class=3D"MsoNormal">-Eric<o:p></o:p></p>
-</div>
-</body>
-</html>
-
---_000_BN3P110MB05467667602EC7ABA6A3C029BC519BN3P110MB0546NAMP_--
+DQoNCg0KPj4gT24gTWF5IDEzLCAyMDIxLCBhdCA3OjQ3IEFNLCBHZW9yZ2UgSHVuZyAorHipvrdx
+KQ0KPjxHZW9yZ2UuSHVuZ0BxdWFudGF0dy5jb20+IHdyb3RlOg0KPj4NCj4+IEhpIEFuZHJldywN
+Cj4+DQo+PiBTb3JyeSB0byBtYWtlIHlvdXIgaW5jb252ZW5pZW5jZSwgd2UgYWxyZWFkeSBmaXgg
+YWxsIENJIGJ1aWxkIGVycm9ycyBhbmQgYWxzbw0KPnJ1biBDSSBidWlsZCBsb2NhbGx5IHRvIG1h
+a2Ugc3VyZSBpdCBjYW4gd29yayBmaW5lLg0KPg0KPkxvb2tzIGdvb2QsIEkgYWRkZWQgaXQgdG8N
+Cj5odHRwczovL2FwYzAxLnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0
+cHMlM0ElMkYlMkZqZW5raW5zLg0KPm9wZW5ibWMub3JnJTJGam9iJTJGY2ktb3BlbmJtYyUyRiZh
+bXA7ZGF0YT0wNCU3QzAxJTdDR2VvcmdlLkh1bg0KPmclNDBxdWFudGF0dy5jb20lN0NiZGYxYmQ1
+NGY5ZTY0NjlmY2ZiNjA4ZDkxNjRjZTYxMCU3QzE3OWIwMzI3MDdmDQo+YzQ5NzNhYzczOGRlNzMx
+MzU2MWIyJTdDMSU3QzAlN0M2Mzc1NjUzNDE4MDEwNzQyODYlN0NVbmtub3duJQ0KPjdDVFdGcGJH
+WnNiM2Q4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazFoYVd3
+aUwNCj5DSlhWQ0k2TW4wJTNEJTdDMTAwMCZhbXA7c2RhdGE9bHZQTHZPTjN0R2cyTnRqMFE4diUy
+RmJTMnJhOEhWaHl0DQo+N3ZaVGxncEZYeDJzJTNEJmFtcDtyZXNlcnZlZD0wDQo+DQo+QW5kcmV3
+DQoNCkhpIEFuZHJldywNCg0KVGhhbmtzIGZvciB5b3VyIGhlbHAuDQoNCkJlc3QgUmVnYXJkcw0K
+R2VvcmdlIEh1bmcNCg0KPg0KPj4NCj4+IENvdWxkIHlvdSBoZWxwIHRvIG1lcmdlIGdicyB0byBD
+SSBidWlsZCA/DQo+Pg0KPj4NCj4+IFRoYW5rcyBhIGxvdC4NCj4+DQo+PiBCZXN0IFJlZ2FyZHMN
+Cj4+IEdlb3JnZSBIdW5nDQo+Pg0KPj4NCj4+IEFwb2xvZ2llcywgb25lIG9mIG15IG9sZCBwYXRj
+aCB0aGF0IFF1YW50YSBzZWVtZWQgdG8gaGF2ZSBiZWVuIHVzaW5nIHdhcw0KPmZpbmFsbHkgbWVy
+Z2VkDQo+KGh0dHBzOi8vYXBjMDEuc2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3Vy
+bD1odHRwcyUzQSUyRiUyRmdlcnJpdC5vDQo+cGVuYm1jLXByb2plY3QueHl6JTJGYyUyRm9wZW5i
+bWMlMkZwaG9zcGhvci1od21vbiUyRiUyQiUyRjI0MzM3DQo+JTJGJmFtcDtkYXRhPTA0JTdDMDEl
+N0NHZW9yZ2UuSHVuZyU0MHF1YW50YXR3LmNvbSU3Q2JkZjFiZDU0ZjllDQo+NjQ2OWZjZmI2MDhk
+OTE2NGNlNjEwJTdDMTc5YjAzMjcwN2ZjNDk3M2FjNzM4ZGU3MzEzNTYxYjIlN0MxJTdDMA0KPiU3
+QzYzNzU2NTM0MTgwMTA3NDI4NiU3Q1Vua25vd24lN0NUV0ZwYkdac2IzZDhleUpXSWpvaU1DNHdM
+akENCj53TURBaUxDSlFJam9pVjJsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENKWFZDSTZNbjAlM0Ql
+N0MxMDAwJmFtcDtzZGENCj50YT1aSUVKMVlxJTJGVHFiJTJGNTBmVm5rMFEwd1JFbGZRRHU5SmJQ
+TEdSenMyODBGNCUzRCZhbXA7cmVzZXJ2ZQ0KPmQ9MCkgYW5kIGl0IHNlZW1zIGxpa2UgdGhhdCBj
+YXVzZWQgdGhlIHBhdGNoIGZhaWx1cmUgeW91IHNlZSBoZXJlLg0KPj4NCj4+IEhlcmUgaXMgdGhl
+IGZpeCB0aGF0IHNob3VsZCBmaXggdGhlIHByb2JsZW06DQo+PiBodHRwczovL2FwYzAxLnNhZmVs
+aW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMlM0ElMkYlMkZnZXJyDQo+Pg0K
+Pml0Lm9wZW5ibWMtcHJvamVjdC54eXolMkZjJTJGb3BlbmJtYyUyRm9wZW5ibWMlMkYlMkIlMkY0
+MzA0NiZhbQ0KPnA7ZGF0YT0NCj4+DQo+MDQlN0MwMSU3Q0dlb3JnZS5IdW5nJTQwcXVhbnRhdHcu
+Y29tJTdDYmRmMWJkNTRmOWU2NDY5ZmNmYjYwOGQ5MQ0KPjY0Y2U2MQ0KPj4NCj4wJTdDMTc5YjAz
+MjcwN2ZjNDk3M2FjNzM4ZGU3MzEzNTYxYjIlN0MxJTdDMCU3QzYzNzU2NTM0MTgwMTA3NDINCj44
+NiU3Q1VuDQo+Pg0KPmtub3duJTdDVFdGcGJHWnNiM2Q4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pR
+SWpvaVYybHVNeklpTENKQlRpSTZJaw0KPjFoYVcNCj4+DQo+d2lMQ0pYVkNJNk1uMCUzRCU3QzEw
+MDAmYW1wO3NkYXRhPUtuY2Z5eUVBZ09kTWozWktLQ1BwWWpkc3M2cGFuag0KPiUyRnNDag0KPj4g
+U3lxQlVMcGhvJTNEJmFtcDtyZXNlcnZlZD0wDQo+Pg0KPj4gVGhhbmtzLA0KPj4gQnJhbmRvbg0K
+Pj4NCj4+IE9uIE1vbiwgTWF5IDEwLCAyMDIxIGF0IDg6NTUgQU0gQW5kcmV3IEdlaXNzbGVyDQo+
+PGdlaXNzb25hdG9yQGdtYWlsLmNvbT4gd3JvdGU6DQo+Pg0KPj4NCj4+ID4gT24gTWF5IDcsIDIw
+MjEsIGF0IDc6MTkgUE0sIEJyYW5kb24gS2ltIDxicmFuZG9ua2ltQGdvb2dsZS5jb20+DQo+d3Jv
+dGU6DQo+PiA+DQo+PiA+IEhpIEFuZHJldywNCj4+ID4NCj4+ID4gRG8geW91IG1pbmQga2lja2lu
+ZyBvZmYgdGhlIGRvY2tlciBidWlsZCBhZ2FpbiBmb3IgZ2JzPyBJdCBsb29rcw0KPj4gPiBsaWtl
+IHNzbGggYnVtcCBtYXkgaGF2ZSAgYmVlbiBuZWVkZWQgZnJvbSBtZXRhLWdvb2dsZQ0KPj4gPiBo
+dHRwczovL2FwYzAxLnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMl
+M0ElMkYlMkZnZQ0KPj4gPg0KPnJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5eiUyRmMlMkZvcGVuYm1j
+JTJGb3BlbmJtYyUyRiUyQiUyRjQzMDE1JmENCj5tcDtkDQo+PiA+DQo+YXRhPTA0JTdDMDElN0NH
+ZW9yZ2UuSHVuZyU0MHF1YW50YXR3LmNvbSU3Q2JkZjFiZDU0ZjllNjQ2OWZjZmI2MDgNCj5kOTEN
+Cj4+ID4NCj42NGNlNjEwJTdDMTc5YjAzMjcwN2ZjNDk3M2FjNzM4ZGU3MzEzNTYxYjIlN0MxJTdD
+MCU3QzYzNzU2NTM0MTgNCj4wMTA3NA0KPj4gPg0KPjI4NiU3Q1Vua25vd24lN0NUV0ZwYkdac2Iz
+ZDhleUpXSWpvaU1DNHdMakF3TURBaUxDSlFJam9pVjJsdU16SQ0KPmlMQ0pCDQo+PiA+DQo+VGlJ
+NklrMWhhV3dpTENKWFZDSTZNbjAlM0QlN0MxMDAwJmFtcDtzZGF0YT10SjlXc1dNSGMyOHA5UGJ3
+MUxqbA0KPmdPSkoNCj4+ID4geXBsTHhQeXVPYkpjMHp3aHolMkZZJTNEJmFtcDtyZXNlcnZlZD0w
+DQo+Pg0KPj4gVGhlIGpvYiBydW5zIGRhaWx5ICh3aGVuIG5ldyBjb2RlIGlzIGF2YWlsYWJsZSks
+IGxvb2tzIGxpa2Ugd2WhpnJlIG9uIHRvDQo+c29tZXRoaW5nIG5ldyBub3c/DQo+Pg0KPj4gaHR0
+cHM6Ly9hcGMwMS5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNB
+JTJGJTJGamVuaw0KPj4NCj5pbnMub3BlbmJtYy5vcmclMkZqb2IlMkZsYXRlc3QtbWFzdGVyJTJG
+bGFiZWwlM0Rkb2NrZXItYnVpbGRlciUyQ3RhcmdlDQo+Pg0KPnQlM0RnYnMlMkYyMzQlMkZjb25z
+b2xlJmFtcDtkYXRhPTA0JTdDMDElN0NHZW9yZ2UuSHVuZyU0MHF1YW50YXQNCj53LmNvbSUNCj4+
+DQo+N0NiZGYxYmQ1NGY5ZTY0NjlmY2ZiNjA4ZDkxNjRjZTYxMCU3QzE3OWIwMzI3MDdmYzQ5NzNh
+YzczOGRlNzMxMzU2DQo+MWIyJQ0KPj4NCj43QzElN0MwJTdDNjM3NTY1MzQxODAxMDc0Mjg2JTdD
+VW5rbm93biU3Q1RXRnBiR1pzYjNkOGV5SldJam9pDQo+TUM0d0xqQXdNDQo+Pg0KPkRBaUxDSlFJ
+am9pVjJsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENKWFZDSTZNbjAlM0QlN0MxMDAwJmFtcDtzZGF0
+YT0NCj4lMkYNCj4+DQo+Q3JjV2dQQldoTEI0QXJFYVJ4UUJ6bjJ3OHVZcSUyRmVha2ZOZ1JLUmZP
+M3MlM0QmYW1wO3Jlc2VydmVkPTANCj4+DQo+PiAzIG91dCBvZiA1IGh1bmtzIEZBSUxFRCAtLSBy
+ZWplY3RzIGluIGZpbGUgc2Vuc29yLmhwcCBQYXRjaA0KPj4gMDAwMS1zZW5zb3ItSW1wbGVtZW50
+LXNlbnNvci1BU1lOQ19SRUFEX1RJTUVPVVQucGF0Y2ggZG9lcyBub3QNCj5hcHBseQ0KPj4gKGVu
+Zm9yY2Ugd2l0aCAtZikNCj4+DQo+PiBzdGRlcnI6DQo+PiBFUlJPUjogTG9nZmlsZSBvZiBmYWls
+dXJlIHN0b3JlZCBpbjoNCj4+IC9kYXRhMC9qZW5raW5zL3dvcmtzcGFjZS9sYXRlc3QtbWFzdGVy
+L2xhYmVsL2RvY2tlci1idWlsZGVyL3RhcmdldC9nYnMNCj4+DQo+L2J1aWxkL3dvcmsvYXJtdjdh
+LW9wZW5ibWMtbGludXgtZ251ZWFiaS9waG9zcGhvci1od21vbi8xLjArZ2l0QVVUT0kNCj5OQw0K
+Pj4gKzZkNTBjM2U5ZTEtcjEvdGVtcC9sb2cuZG9fcGF0Y2guMTkxMTgNCj4+DQo+Pg0KPj4gPg0K
+Pj4gPiBUaGFua3MsDQo+PiA+IEJyYW5kb24NCj4+ID4NCj4+ID4gT24gRnJpLCBNYXkgNywgMjAy
+MSBhdCAxMToyNiBBTSBBbmRyZXcgR2Vpc3NsZXINCj48Z2Vpc3NvbmF0b3JAZ21haWwuY29tPiB3
+cm90ZToNCj4+ID4NCj4+ID4NCj4+ID4+IE9uIE1heSA3LCAyMDIxLCBhdCAyOjEwIEFNLCBHZW9y
+Z2UgSHVuZyAorHipvrdxKQ0KPjxHZW9yZ2UuSHVuZ0BxdWFudGF0dy5jb20+IHdyb3RlOg0KPj4g
+Pj4NCj4+ID4+IEhpIEFuZHJldywNCj4+ID4+DQo+PiA+PiBXZSBhbHJlYWR5IGZpeCB0aGUgcGF0
+Y2ggZXJyb3IgZm9yIHBob3NwaG9yLWh3bW9uLCBjb3VsZCB5b3UgaGVscA0KPnByb2NlZWQgdG8g
+am9pbiB0aGUgcXVhbnRhL2dicyB0byBDSSBidWlsZCA/DQo+PiA+DQo+PiA+IEhleSBHZW9yZ2Us
+IEmhpnZlIGFkZGVkIGl0IHRvIG91ciBkYWlseSBidWlsZCwgaXShpnMgc3RpbGwgbm90IHBhc3Np
+bmcNCj4+ID4gZm9yIGdicyB0aG91Z2guIFBsZWFzZSB0YWtlIGEgbG9vayBhdA0KPj4gPiBodHRw
+czovL2FwYzAxLnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMlM0El
+MkYlMkZqZQ0KPj4gPg0KPm5raW5zLm9wZW5ibWMub3JnJTJGam9iJTJGbGF0ZXN0LW1hc3RlciUy
+RjIzMyUyRmxhYmVsJTNEZG9ja2VyLWJ1aWxkDQo+PiA+DQo+ZXIlMkN0YXJnZXQlM0RnYnMlMkYm
+YW1wO2RhdGE9MDQlN0MwMSU3Q0dlb3JnZS5IdW5nJTQwcXVhbnRhdHcuYw0KPm9tJTcNCj4+ID4N
+Cj5DYmRmMWJkNTRmOWU2NDY5ZmNmYjYwOGQ5MTY0Y2U2MTAlN0MxNzliMDMyNzA3ZmM0OTczYWM3
+MzhkZTczMTM1NjENCj5iMg0KPj4gPg0KPiU3QzElN0MwJTdDNjM3NTY1MzQxODAxMDc0Mjg2JTdD
+VW5rbm93biU3Q1RXRnBiR1pzYjNkOGV5SldJam8NCj5pTUM0d0xqDQo+PiA+DQo+QXdNREFpTENK
+UUlqb2lWMmx1TXpJaUxDSkJUaUk2SWsxaGFXd2lMQ0pYVkNJNk1uMCUzRCU3QzEwMDAmYW1wO3MN
+Cj5kYXQNCj4+ID4NCj5hPThkSEVTM3c2UWlkanc4TDhob09TeFN5SHBrSWhWZk1DQjIyWlUwY3Y1
+RlUlM0QmYW1wO3Jlc2VydmVkPTANCj4+ID4NCj4+ID4gT25jZSBJIHNlZSB0aGF0IGRhaWx5IGpv
+YiBwYXNzIEmhpmxsIGFkZCBpdCB0byBvdXIgb2ZmaWNpYWwgQ0kgam9iLg0KPj4gPg0KPj4gPj4N
+Cj4+ID4+IFRoYW5rcyBhIGxvdC4NCj4+ID4+DQo+PiA+PiBCZXN0IFJlZ2FyZHMNCj4+ID4+IEdl
+b3JnZSBIdW5nDQo+PiA+Pg0KPj4gPj4NCj4+ID4+IEhpIEFuZHJldywNCj4+ID4+DQo+PiA+PiBJ
+dCBsb29rcyBsaWtlIGl0J3MgZHVlIHRvIG15IHBhdGNoIHRvIHBob3NwaG9yLWh3bW9uICh3aGlj
+aCwgdGhlIHJlcG8gaXMNCj5nb2luZyB0aHJvdWdoIHNvbWUgb3ZlcmhhdWwgYW5kIGlzIGNhdXNp
+bmcgY29uZmxpY3RzIHdpdGgpLiBUaGUgcGF0Y2ggaW4NCj5xdWVzdGlvbiBpcyBpbiB0aGUgcHJv
+Y2VzcyBvZiBnZXR0aW5nIHVwc3RyZWFtZWQgYW5kIHRoZSByZXBvIGlzIHNldHRsaW5nDQo+ZG93
+biwgc28gSSdsbCBwaW5nIHlvdSBvbiBEaXNjb3JkIG9uY2UgaXQgbG9va3MgcmVhZHkgdG8gYmUg
+dHJpZWQgYWdhaW4NCj4oaG9wZWZ1bGx5IGJ5IGVuZCBvZiB0aGUgd2VlaykuDQo+PiA+Pg0KPj4g
+Pj4gVGhhbmtzLA0KPj4gPj4gQnJhbmRvbg0KPj4gPj4NCj4+ID4+IE9uIFRodSwgTWF5IDYsIDIw
+MjEgYXQgNjozOCBBTSBBbmRyZXcgR2Vpc3NsZXINCj48Z2Vpc3NvbmF0b3JAZ21haWwuY29tPiB3
+cm90ZToNCj4+ID4+DQo+PiA+Pg0KPj4gPj4NCj4+ID4+IE9uIE1heSA1LCAyMDIxLCBhdCAyOjM3
+IFBNLCBCcmFuZG9uIEtpbSA8YnJhbmRvbmtpbUBnb29nbGUuY29tPg0KPndyb3RlOg0KPj4gPj4N
+Cj4+ID4+IEhpIEFuZHJldywNCj4+ID4+DQo+PiA+PiBgZ2JzYCBtYWNoaW5lIHdpbGwgcHJvdmlk
+ZSBtZXRhLWdvb2dsZSBjb3ZlcmFnZSwgc28gaXQgd291bGQgYmUgZ3JlYXQgaWYNCj5gZ2JzYCBj
+b3VsZCBiZSBhZGRlZCBpbiBhZGRpdGlvbiB0byBgZ3NqYCBpbnN0ZWFkIG9mIGFzIGEgcmVwbGFj
+ZW1lbnQuDQo+PiA+Pg0KPj4gPj4gSXMgdGhlcmUgYSBzaG9ydGFnZSBvZiBPcGVuQk1DIENJIG5v
+ZGVzIGJ5IGFueSBjaGFuY2U/IEdvb2dsZSBoYXMNCj5iZWVuIHByb3ZpZGluZyAyIG9mIHRoZSBP
+cGVuQk1DIENJIG5vZGVzLCBzbyBpdCB3b3VsZCBiZSBncmVhdCBpZiBhZGRpbmcNCj5gZ2JzYCBj
+b3VsZCBjb3VudCB0b3dhcmRzIG9uZSBvZiB0aG9zZSBDSSBub2Rlcy4NCj4+ID4+DQo+PiA+PiBZ
+ZXAsIGdvb2dsZSBkb25hdGVzIHR3byBzZXJ2ZXJzIHNvIHNvdW5kcyBnb29kLiBJIGFkZGVkIGl0
+IHRvIG91ciBkYWlseQ0KPmJ1aWxkIG9mIG1hc3RlciBhbmQgaXQgbG9va3MgbGlrZSBpdCBoaXQg
+YSBidWlsZCBpc3N1ZS4gV2UgY2FuIGNvb3JkaW5hdGUgaW4NCj5kaXNjb3JkIGlmIHlvdSBsaWtl
+IGJ1dCBvbmNlIHdlIGdldCB0aGlzIGZpZ3VyZWQgb3V0LCBJoaZsbCBhZGQgaXQgdG8gdGhlIG1h
+aW4NCj5vcGVuYm1jL29wZW5ibWMgQ0kgam9iLg0KPj4gPj4NCj4+ID4+IGh0dHBzOi8vYXBjMDEu
+c2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUyRmoNCj4+
+ID4+DQo+ZW5raW5zLm9wZW5ibWMub3JnJTJGam9iJTJGbGF0ZXN0LW1hc3RlciUyRjIzMSUyRmxh
+YmVsJTNEZG9ja2VyLWJ1aQ0KPj4gPj4NCj5sZGVyJTJDdGFyZ2V0JTNEZ2JzJTJGY29uc29sZSZh
+bXA7ZGF0YT0wNCU3QzAxJTdDR2VvcmdlLkh1bmclNDBxDQo+dWFuDQo+PiA+Pg0KPnRhdHcuY29t
+JTdDYmRmMWJkNTRmOWU2NDY5ZmNmYjYwOGQ5MTY0Y2U2MTAlN0MxNzliMDMyNzA3ZmM0OTczYWM3
+Mw0KPjgNCj4+ID4+DQo+ZGU3MzEzNTYxYjIlN0MxJTdDMCU3QzYzNzU2NTM0MTgwMTA3NDI4NiU3
+Q1Vua25vd24lN0NUV0ZwYkdaDQo+c2IzZDhleQ0KPj4gPj4NCj5KV0lqb2lNQzR3TGpBd01EQWlM
+Q0pRSWpvaVYybHVNeklpTENKQlRpSTZJazFoYVd3aUxDSlhWQ0k2TW4wJTNEJTcNCj5DDQo+PiA+
+Pg0KPjEwMDAmYW1wO3NkYXRhPU9aZ3NHaEpObyUyRnNOdFBVNEJaVm51YXJCMTRkSiUyQmxjOXVq
+RlZqTVB4cWF3JTMNCj5EJmENCj4+ID4+IG1wO3Jlc2VydmVkPTANCj4+ID4+DQo+PiA+Pg0KPj4g
+Pj4NCj4+ID4+IFRoYW5rIHlvdSwNCj4+ID4+IEJyYW5kb24NCj4+ID4+DQo+PiA+PiBPbiBXZWQs
+IE1heSA1LCAyMDIxIGF0IDEwOjU0IEFNIFBhdHJpY2sgVmVudHVyZQ0KPjx2ZW50dXJlQGdvb2ds
+ZS5jb20+IHdyb3RlOg0KPj4gPj4gT24gV2VkLCBNYXkgNSwgMjAyMSBhdCA2OjI1IEFNIEFuZHJl
+dyBHZWlzc2xlcg0KPjxnZWlzc29uYXRvckBnbWFpbC5jb20+IHdyb3RlOg0KPj4gPj4gPg0KPj4g
+Pj4gPg0KPj4gPj4gPg0KPj4gPj4gPiA+IE9uIE1heSA1LCAyMDIxLCBhdCAxOjI2IEFNLCBHZW9y
+Z2UgSHVuZyAorHipvrdxKQ0KPjxHZW9yZ2UuSHVuZ0BxdWFudGF0dy5jb20+IHdyb3RlOg0KPj4g
+Pj4gPiA+DQo+PiA+PiA+ID4gSGkgQW5kcmV3IEdlaXNzbGVyLA0KPj4gPj4gPiA+DQo+PiA+PiA+
+ID4gV2UgaGF2ZSBwb3J0ZWQgbWFueSBPcGVuQk1DIGZlYXR1cmVzIHRvIHF1YW50YS9nYnMgbWFj
+aGluZQ0KPj4gPj4gPiA+IChOdXZvdG9uIEJNQyBwbGF0Zm9ybSkgYW5kIGhvcGUgaXQgY291bGQg
+YmUgYWRkZWQgdG8gQ0kgYnVpbGQsDQo+PiA+PiA+ID4gY291bGQgeW91IGhlbHAgYWRkIHF1YW50
+YS9nYnMgbWFjaGluZSB0byBDSSBidWlsZCB2ZXJpZmljYXRpb24NCj4+ID4+ID4gPiA/IChJJ20g
+bm90IGZhbWlsaWFyIHdpdGggdGhpcywgaWYgdGhlcmUncyBhbnl0aGluZyB3ZSBuZWVkIHRvDQo+
+PiA+PiA+ID4gZG8gZmlyc3QsIHBsZWFzZSBsZXQgdXMga25vdykNCj4+ID4+ID4NCj4+ID4+ID4g
+SGV5IEdlb3JnZSwNCj4+ID4+ID4NCj4+ID4+ID4gR2V0dGluZyBhIG5ldyBzeXN0ZW0gaW50byBD
+SSBkb2VzbqGmdCBoYXZlIHRoZSBtb3N0IGRlZmluZWQNCj4+ID4+ID4gcHJvY2VzcyBidXQgSSB0
+aGluayBpbiBnZW5lcmFsIGl0IGhhcyB0byBmYWxsIHVuZGVyIG9uZSBvZiB0aGVzZQ0KPj4gPj4g
+PiBkdWUgdG8gb3VyIGNvbnN0cmFpbnRzIGluIGNvbXB1dGUgcG93ZXIgZm9yIENJOg0KPj4gPj4g
+Pg0KPj4gPj4gPiAxKSBQcm9wb3NlIGFuIGV4aXN0aW5nIHN5c3RlbSBpbiBDSSB0byByZXBsYWNl
+IChhbmQgdGhlIGJlbmVmaXRzDQo+PiA+PiA+IG9mIHRoYXQpDQo+PiA+PiA+IDIpIERvbmF0ZSBh
+IGplbmtpbnMgY29tcHV0ZSBub2RlIHRvIG9wZW5ibWMgQ0kNCj4+ID4+ID4gMykgQ29udmluY2Ug
+dGhlIGNvbW11bml0eSB0aGF0IHlvdXIgc3lzdGVtIHByb3ZpZGVzIGFkZGl0aW9uYWwNCj5tZXRh
+LSoNCj4+ID4+ID4gICAgIGxheWVyIGNvdmVyYWdlIChvciBzb21lIG90aGVyIGNyaXRpY2FsIGJl
+bmVmaXQpIHRoYXQgd291bGQgYmUNCj53b3J0aA0KPj4gPj4gPiAgICAgdGhlIGFkZGl0aW9uYWwg
+aGl0IHRvIHRoZSBleGlzdGluZyBDSSBpbmZyYXN0cnVjdHVyZS4NCj4+ID4+ID4NCj4+ID4+ID4g
+V2UgY3VycmVudGx5IGhhdmUgYSChp2dzaqGoIHN5c3RlbSBpbiBDSS4gV291bGQgaXQgbWFrZSBz
+ZW5zZSB0bw0KPj4gPj4gPiByZXBsYWNlIGl0IHdpdGggdGhpcyBuZXcgoadnYnOhqCBtYWNoaW5l
+Pw0KPj4gPj4NCj4+ID4+IEp1bXBpbmcgb24gdGhpcyB0aHJlYWQgdG8gc2F5IHRoYXQgSSdtIGhv
+cGluZyB0byBoYXZlIHF1YW50YS1nYnMNCj4+ID4+IHN1cHBvcnQgaW4gdXBzdHJlYW0gcWVtdSBz
+aG9ydGx5IC0tLSBzbyB3ZSBjb3VsZCBhbHNvIGVuYWJsZSB0aGlzDQo+PiA+PiBhcyBhIFFlbXUg
+Q0kgbWFjaGluZS4NCj4+ID4+DQo+PiA+PiA+DQo+PiA+PiA+DQo+PiA+PiA+ID4NCj4+ID4+ID4g
+Pg0KPj4gPj4gPiA+IFRoYW5rcyBhIGxvdC4NCj4+ID4+ID4gPg0KPj4gPj4gPiA+IEJlc3QgUmVn
+YXJkcw0KPj4gPj4gPiA+IEdlb3JnZSBIdW5nDQo+PiA+PiA+ID4NCj4+ID4+ID4NCj4+ID4NCj4+
+DQoNCg==
