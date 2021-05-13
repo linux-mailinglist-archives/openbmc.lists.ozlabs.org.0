@@ -1,91 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53A0137F0E6
-	for <lists+openbmc@lfdr.de>; Thu, 13 May 2021 03:22:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88C4037F0F1
+	for <lists+openbmc@lfdr.de>; Thu, 13 May 2021 03:34:51 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FgYmF2GYwz303P
-	for <lists+openbmc@lfdr.de>; Thu, 13 May 2021 11:22:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FgZ2x4X2zz2yXP
+	for <lists+openbmc@lfdr.de>; Thu, 13 May 2021 11:34:49 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=YlpKlfQ8;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=X4TahsqJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=QYAPy4NF;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=r3b7d7XK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.26;
+ helo=wnew1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=YlpKlfQ8; 
+ header.s=fm2 header.b=QYAPy4NF; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=X4TahsqJ; 
+ header.a=rsa-sha256 header.s=fm2 header.b=r3b7d7XK; 
  dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
+Received: from wnew1-smtp.messagingengine.com (wnew1-smtp.messagingengine.com
+ [64.147.123.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FgYlv3T3yz2yXN;
- Thu, 13 May 2021 11:21:46 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FgZ2c5CTCz2xvD;
+ Thu, 13 May 2021 11:34:31 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 09D7D33E;
- Wed, 12 May 2021 21:21:42 -0400 (EDT)
+ by mailnew.west.internal (Postfix) with ESMTP id 7E1A01FDC;
+ Wed, 12 May 2021 21:34:28 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Wed, 12 May 2021 21:21:43 -0400
+ by compute3.internal (MEProxy); Wed, 12 May 2021 21:34:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=LJMBBhe/zWnSoQmdd8FrIcwa5mli+J+
- /2kpGJdDlKyM=; b=YlpKlfQ8Z7b/EAlOKqNPnRyUpYDOaRjvdNu6e/Z1SO1+DE7
- kv2Zsj7Lk+XK6Bn9zaUto3AxXx17FUmv19YxYeNgGuuysQUwFgZpHD1n+te1K8kD
- KBIw1yMVpBtneVwmK7bVb3q3NRi+QPg+Uo7BswTZzVL2neg6JiQOfl1hf/ChJFGX
- DRy8GENqT98fLaeKtbiX4ASQGmx1ggaYcAuf+S8UfVz6LwQTUqRvQi9SV3cq5w5s
- WHTSGwTleikD+l4j6YBXbpRkXuFcz8e//0T7fV1SZ+HdE+VoL8x6vX9KKhJ0MT1f
- xm4+r//F7sPZcSyO7dasGT22GRkDIFYuEn2wyNg==
+ :subject:content-type; s=fm2; bh=SWVR8Emae5xp73d7j3kk9BUVMAV+TJP
+ pcPLvVYttHEI=; b=QYAPy4NFRvDeoipjFKZtMfKy7SsQAQAdE1qgEDJXLKBP1u6
+ 4kWpDvtUQgvtcN4I9v1YpdLFW36cLnrUZij45Pf5J9CzXAZ2si7rGkDAbaBN4zAV
+ 8zm/LJ6KJodfkRYB8qK9VRGjKmnYmSG7QrbEMaHF8RnQc8t13dxz0wHXHNnch+RF
+ aHa6u7WLlq68BdFIehVaGSDXSHTzION+Ve+4rZ3DOJV3Ael5nbqHDfF6sayl7FZO
+ rOkmKXt5nbRnZrog4uXLLI46L+WA/t+2enI0YBA0d43IY+OVpMg3V/XWHOOzw9/4
+ XLD3A7kgySSTlMHohjN6Gn16/WBQ4aENriPZ1ww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=LJMBBh
- e/zWnSoQmdd8FrIcwa5mli+J+/2kpGJdDlKyM=; b=X4TahsqJdPc1vgMqeEavXh
- Kr4ZwWNGnb80ReXiGlX5HuVvKu0XXB65abj9azzpHWxPlVbpM+alyOpzYYc/x/V8
- TQTrMNRIS37U2XD8jiHuJZS/hdu+cS1hRSZCi6PwvszmxHeWD/LJ20gfVbQjFztG
- Dzob5ZEXOjtkhHZQJ9ICS5hDfZ9ur4+EB3VOit1ILLkQECVLIoHR7D4ObP0u8GZJ
- dixM3gJSCKfom3gxI9IkY/l4eBowSkKT660COyI/rgWWsrBGMLifPSEsjRvUTLnb
- 4jU+bTJtFuCsApofhELlVrm5Fpm3OTOt0R8osffmBoTLron5MG26o5c1PNYCxETA
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=SWVR8E
+ mae5xp73d7j3kk9BUVMAV+TJPpcPLvVYttHEI=; b=r3b7d7XKm3AEANfyaa0MPq
+ oTUBY1VA3eRDIwVUQFHjdizMuFd0fQc6xHCqzkA31DX/ufrEr5ZYb0sMYcbhfPPh
+ 23u8qUe1lm4udWmxpkQBJeUw1OE++AG7uXHtjfLX8VkAD6gXvBxAF6yptIToSmSR
+ lHsOtSsOC0iGaXvU3nuHbOQgqXGWUKV+pM+5L6Cu0PxPsGzfXIxotlvdjZnMtOzK
+ aDGYo8gDNq2yoHCBEHq8FjH4MAf9zvZJXjBLjtowVlqyQoTWPQ/C/T0ZvKe2oO3I
+ NLbwuykJWcgAO+Sxbh+ow1cZ7p0ZXH2mh76OdfqTZqiQ/p1eWVfA25k+kIQt6mRA
  ==
-X-ME-Sender: <xms:JX-cYPa92C0dVyIBnN9b7Immm2wwzXMFL9CE24byqOFjeOaP-uuY4Q>
- <xme:JX-cYOYBsvoGXFC4X-9oNg3y6MLZEcK3-wvWglJ7C83b9m99sIgQ65vIKiXzr1y4Q
- 8vCIp_3W3eqBZuWTA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdehfedggeduucetufdoteggodetrfdotf
+X-ME-Sender: <xms:IoKcYPYAcrA-ektTVMh_s0FTU3GrHaivuPK3XWTiLdQEctQu0w76ww>
+ <xme:IoKcYOaIJQy8BucmVvwV2BEO6a5gxXvSGIlWHLx_ojnKzMbrwVUB1_-y_MHUHd0mS
+ hDPPCU9u5OYowhF-Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdehfedggeefucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepuddttdekueeggedvtddtueekiedutdfguedutdefieeuteefieelteet
- vddthfeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
- eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:JX-cYB_L59YOZXJZsC5ffHczu50thD6OTOSOZWZ2k2JGArbcSf4qjQ>
- <xmx:JX-cYFrCpigqJKtUj2ygAT-lzoXp0xQZrx1VzOA2hFQwwGxBOASUmA>
- <xmx:JX-cYKpg2ZRp0BkbmcQwAInKpmyALkIGMN5B1TAalvOIlqFMV-759Q>
- <xmx:Jn-cYKLR1xkgOdcZjHJ4Uvm_abGQ5kcATKVbw-a_RD6ko5kzEYYDhw>
+ grthhtvghrnhepudehtddtleektedvfeeitdeljeekveelkeegvdfhtdejhefgfedtfedv
+ jeejledtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
+ gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:IoKcYB9GYoSK00WkYVTCKhz42FvY_-lFtGbytKYkGVm7tV9fcZZ5AQ>
+ <xmx:IoKcYFohT3SBwuvlr9DhIgfSl9Haddig_rBDsj-OLjMJh-goJz0Hvg>
+ <xmx:IoKcYKrT46SoI-qphwnsTaVVRyGzodsqutHI3MDInuWqqzN71d_kKg>
+ <xmx:JIKcYGf0Ov-KiUGmAOFbQfNwr5X29TGoLSA5oaleTqS0llwFYlJdfJWbs9Q>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 5D47EA00079; Wed, 12 May 2021 21:21:41 -0400 (EDT)
+ id B0692A00079; Wed, 12 May 2021 21:34:26 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-448-gae190416c7-fm-20210505.004-gae190416
 Mime-Version: 1.0
-Message-Id: <a8ebfb09-e2d8-4c23-b479-860a116cdb49@www.fastmail.com>
-In-Reply-To: <20210510014231.647-2-zev@bewilderbeest.net>
+Message-Id: <6d4338e2-d9be-411a-aeb7-7d46121b73d4@www.fastmail.com>
+In-Reply-To: <20210510014231.647-3-zev@bewilderbeest.net>
 References: <20210510014231.647-1-zev@bewilderbeest.net>
- <20210510014231.647-2-zev@bewilderbeest.net>
-Date: Thu, 13 May 2021 10:51:20 +0930
+ <20210510014231.647-3-zev@bewilderbeest.net>
+Date: Thu, 13 May 2021 11:04:06 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Zev Weiss" <zev@bewilderbeest.net>,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
-Subject: =?UTF-8?Q?Re:_[PATCH_1/3]_serial:_8250=5Faspeed=5Fvuart:_factor_out_aspe?=
- =?UTF-8?Q?ed=5Fvuart=5F{read,_write}b()_helper_functions?=
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ "Jeremy Kerr" <jk@ozlabs.org>
+Subject: =?UTF-8?Q?Re:_[PATCH_2/3]_serial:_8250=5Faspeed=5Fvuart:_initialize_vuar?=
+ =?UTF-8?Q?t->port_in_aspeed=5Fvuart=5Fprobe()?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -108,9 +109,48 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Mon, 10 May 2021, at 11:12, Zev Weiss wrote:
-> This is a small prepatory step for changing the way this driver does
-> its I/O accesses.
+> Previously this had only been initialized if we hit the throttling path
+> in aspeed_vuart_handle_irq(); moving it to the probe function is a
+> slight consistency improvement and avoids redundant reinitialization in
+> the interrupt handler.  It also serves as preparation for converting the
+> driver's I/O accesses to use port->port.membase instead of its own
+> vuart->regs.
 > 
 > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> ---
+>  drivers/tty/serial/8250/8250_aspeed_vuart.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/tty/serial/8250/8250_aspeed_vuart.c 
+> b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> index 9e8b2e8e32b6..249164dc397b 100644
+> --- a/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> +++ b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> @@ -349,11 +349,9 @@ static int aspeed_vuart_handle_irq(struct 
+> uart_port *port)
+>  			struct aspeed_vuart *vuart = port->private_data;
+>  			__aspeed_vuart_set_throttle(up, true);
+>  
+> -			if (!timer_pending(&vuart->unthrottle_timer)) {
+> -				vuart->port = up;
+> +			if (!timer_pending(&vuart->unthrottle_timer))
+>  				mod_timer(&vuart->unthrottle_timer,
+>  					  jiffies + unthrottle_timeout);
+> -			}
+>  
+>  		} else {
+>  			count = min(space, 256);
+> @@ -511,6 +509,7 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
+>  		goto err_clk_disable;
+>  
+>  	vuart->line = rc;
+> +	vuart->port = serial8250_get_port(vuart->line);
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+The documentation of serial8250_get_port() is somewhat concerning wrt 
+the use:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/tty/serial/8250/8250_core.c?h=v5.13-rc1#n399
+
+However, given the existing behaviour it shouldn't be problematic?
+
+Andrew
