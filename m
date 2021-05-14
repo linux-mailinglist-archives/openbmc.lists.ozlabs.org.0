@@ -2,97 +2,123 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05008380213
-	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 04:38:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 54DD838021D
+	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 04:47:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FhCPf0dqTz2yx2
-	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 12:38:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FhCc72dxdz2yyj
+	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 12:47:19 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=efG39MO2;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=MWYgaoz9;
+	dkim=pass (1024-bit key; unprotected) header.d=nuvoton.onmicrosoft.com header.i=@nuvoton.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-nuvoton-onmicrosoft-com header.b=jnnOoOat;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.230;
- helo=new4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=efG39MO2; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=MWYgaoz9; 
+ smtp.helo=apc01-hk2-obe.outbound.protection.outlook.com
+ (client-ip=40.107.130.75; helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ envelope-from=kwliu@nuvoton.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=nuvoton.onmicrosoft.com
+ header.i=@nuvoton.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-nuvoton-onmicrosoft-com header.b=jnnOoOat; 
  dkim-atps=neutral
-Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
- [66.111.4.230])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from APC01-HK2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1300075.outbound.protection.outlook.com [40.107.130.75])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FhCPJ1gYwz2xvJ;
- Fri, 14 May 2021 12:37:56 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 1421658108F;
- Thu, 13 May 2021 22:37:54 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Thu, 13 May 2021 22:37:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=hUBTUry5UEBFmGq7Z6kzWoE0pXl/muq
- bY0vR2ZhgD9o=; b=efG39MO2bmxkfXuWo7ZFIvGXVh3j8KQEvLLpQl3gtAOht79
- tZbE9vxR8cg9FKMDYxOv1QSp1Hbar57fpIUwymjBKdgBBf3kZvRpal9W0B8f9YUy
- fZAcG4W9TH/3oZ5lpdYtouOVtlF/Z/pCFUNUGy+gxZGJqm9E8bIa04bKqBpPYRsV
- tufAH549ExVjIsa2b6NzKEgaqQkWpNnggC5lqQFtNWDCYFXcWDcsL4pHbhZdq3nd
- kEAKUAcZBSNvtNfIb0Fpp9l0vQoHMtIoRD4iF5Y0t4FawjEQQAhkz9JFwy7LB1tP
- PNALngqWUxvqGi/wIr+gjd8kpa6eU2miueIESRg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=hUBTUr
- y5UEBFmGq7Z6kzWoE0pXl/muqbY0vR2ZhgD9o=; b=MWYgaoz9vPTpBWzlanPrMs
- G97GpTLJ6nV8RDBbB7VnTHnwlN8x0GsEvswLqtZBw+b0Ge8DA5iOmG+wF+uNQQ9k
- vhLHhZB4cyJQOZM66nYfI+6CTX5oVmHYaUQy6u0CXz3hCSZcLr3mTGKDersW/cqe
- zT0C4jNDIWOP9cvBzbhfNF08yop52nalHuZZ8+XAuoamC689fujBVzd2eNr8vPes
- xV+GN6rlZMVjAUEPYYoKiGnKGdtnq0LAGHgmOM/lXrLDSYSfiqvTI/Oq+dgEL7Om
- rFw+sNJlSbHaa5H7GucK3JQ7xGi2wc6OkoNzbmIcXk+cZe6vBPLQ14Ssq6yQ1QLQ
- ==
-X-ME-Sender: <xms:gOKdYEn1_e0NDWHN-Z5EtnrUVObbxn-5vFdxRrCBvUCOyBiKFoZ7ZQ>
- <xme:gOKdYD0iwzSVmYrYI-c52yAXGxMhTL33wvn-Elkhy4JsfXrmA5C3Itri9XDOYHcnu
- Mf9FHURN60WcLAZuA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdehhedgheelucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepudehtddtleektedvfeeitdeljeekveelkeegvdfhtdejhefgfedtfedv
- jeejledtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
- gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:gOKdYCq6dDXJM-6x-KEOIGDeQG1r9sFO5ca3W69qxIx9TCJZU2Kd7w>
- <xmx:gOKdYAlskPFSi-GwXAhU4xqEhU9sbU2Ewjwqfx1Vup8Qt56oLlHnYQ>
- <xmx:gOKdYC3aHT5FrDiCYKOFR_gETsyC0y7UFlFFZkfkMUz2TWiAloSazg>
- <xmx:guKdYF3bH5McHJbhDHHFHynGzJiPhEkV9cJ7S1ejEVOJ9JZphx6vtg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 09F7EA00079; Thu, 13 May 2021 22:37:52 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-448-gae190416c7-fm-20210505.004-gae190416
-Mime-Version: 1.0
-Message-Id: <57113deb-d4c1-4572-af95-fce02c04d7a9@www.fastmail.com>
-In-Reply-To: <20210514020900.GB540@aspeedtech.com>
-References: <20210506100312.1638-1-steven_lee@aspeedtech.com>
- <20210506100312.1638-6-steven_lee@aspeedtech.com>
- <20210506102458.GA20777@pengutronix.de>
- <19a81e25-dfa1-4ad3-9628-19f43f4230d2@www.fastmail.com>
- <20210507062416.GD23749@aspeedtech.com>
- <2a339218-19d7-4eea-a734-8053dd553dbb@www.fastmail.com>
- <20210510060338.GB6883@aspeedtech.com>
- <f063cb34-9a42-4373-a333-cad1d8a9c37b@www.fastmail.com>
- <20210514020900.GB540@aspeedtech.com>
-Date: Fri, 14 May 2021 12:07:30 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Steven Lee" <steven_lee@aspeedtech.com>
-Subject: =?UTF-8?Q?Re:_[PATCH_v3_5/5]_mmc:_sdhci-of-aspeed:_Assert/Deassert_reset?=
- =?UTF-8?Q?_signal_before_probing_eMMC?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FhCbr4RQ1z2yQy
+ for <openbmc@lists.ozlabs.org>; Fri, 14 May 2021 12:47:03 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fllS0PcnoJ9HsKBX5s4eJIonJBusCjneVNTPYMBgztnROYPJILOW3ljBq4zoz3SPbWIY8n5GHeb0KhykiXctUa1c1fTRGVBP6rvr1LZCimiSVnVuEAWJ2RXnxEMf1HtrXHf7ti5NNFvB10PGdhRDPYRhwqc/VGnCi/BRZl/t4fGSU028IarYUdLmLrv7guWaFMzaiALtOX7/1L6HapGgP97LwW1zRSEUB6ldJgqopOmRR2yITlfFYBzqH7+F5Z3WsUl6rcJApk8UFeqXPgFqGyTz6+DuM4DJQYIHxkrav4iH7duyveJg9H/fRF9s7sRZ4edTR5U9e9YlQxjd/MqYOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Jtl5yR9n/57p7nGruZ3r4kM8xbjBshSO2zUByXmHIIM=;
+ b=KpVh3AAdLVtLwlpi58DIeDRyuSjvKIM5OBzRk6DB3OgrN2EzR01uHeFxWWLmONuFkPV6LGtnMWAPT6bVx57uKxgftgvWiv0aJ+05LSUXIJv8CS1puk2LuS7GRl13RZBLAaGdgqVA0Bp81ENjRfBleuAHZKIpmOD5iN6h3NnnSbkipB5Z6/zxUf6rBueSoRGpdoDqFsqcGIVdLBh7s8YI/hvJ+HLysnOGwSGJ83hg5cbenlfjyt98wcPKJu7VOMQ0igTFJ6+TpGKx8+hopWVrBb+o1lFNvIi+uglLS4QReFHuoEwa3EGKirIzs3IJKhe9orfaBxDFJRif+IgsdVuakA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
+ dkim=pass header.d=nuvoton.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Jtl5yR9n/57p7nGruZ3r4kM8xbjBshSO2zUByXmHIIM=;
+ b=jnnOoOatQr9LM3zng1iSER3CcZKkteTQsJU89KQJigKnWJKflF+2bzkaN0bUey1gqxvkeksgHnbHHwnxp47aOhwMoFw6hpusUf+QiDIugSSLhf2bDu4pV77Y5B1ftUKeIKw0LQNB3uMOOcEH4t7Sxa2S3XR3PACMXEA67/62wss=
+Received: from HK2PR03MB4371.apcprd03.prod.outlook.com (2603:1096:202:1d::20)
+ by HK2PR03MB4577.apcprd03.prod.outlook.com (2603:1096:202:24::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4129.23; Fri, 14 May
+ 2021 02:46:53 +0000
+Received: from HK2PR03MB4371.apcprd03.prod.outlook.com
+ ([fe80::288b:4348:c4ae:7ea9]) by HK2PR03MB4371.apcprd03.prod.outlook.com
+ ([fe80::288b:4348:c4ae:7ea9%7]) with mapi id 15.20.4150.012; Fri, 14 May 2021
+ 02:46:53 +0000
+From: CS20 KWLiu <KWLIU@nuvoton.com>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: RE: [PATCH linux dev-5.10 v3 09/18] ipmi: kcs_bmc: Allow clients to
+ control KCS IRQ state
+Thread-Topic: [PATCH linux dev-5.10 v3 09/18] ipmi: kcs_bmc: Allow clients to
+ control KCS IRQ state
+Thread-Index: AQHXRWmESC0KO3nGnEOPSlpsbYBxFKriRt3g
+Date: Fri, 14 May 2021 02:46:53 +0000
+Message-ID: <HK2PR03MB4371F006185ADBBF812A5892AE509@HK2PR03MB4371.apcprd03.prod.outlook.com>
+References: <20210510064955.1704652-1-andrew@aj.id.au>
+ <20210510064955.1704652-10-andrew@aj.id.au>
+In-Reply-To: <20210510064955.1704652-10-andrew@aj.id.au>
+Accept-Language: en-US, zh-TW
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: aj.id.au; dkim=none (message not signed)
+ header.d=none;aj.id.au; dmarc=none action=none header.from=nuvoton.com;
+x-originating-ip: [111.255.43.202]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 9ebc5ae2-eed0-4c54-71da-08d9168287f4
+x-ms-traffictypediagnostic: HK2PR03MB4577:
+x-microsoft-antispam-prvs: <HK2PR03MB4577AF0EC68CA3F81AC10235AE509@HK2PR03MB4577.apcprd03.prod.outlook.com>
+x-ms-exchange-transport-forked: True
+x-ms-oob-tlc-oobclassifiers: OLM:1775;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Xs1Z8ZbNjATtqdAqm76HHWoyh7nNnTxGQRkyhef4kH04sn9h8sjBhQy+PFWsaYKFh211h25/KMNk6UlQtImKqqNXwraaMgVmq8Us8LyKhv4LBX0oanHxaH7D+1aHzuXHop6/Oj2p5RsSpFQPALC4Jdqd0JdEYBLFJBpWAkk8GWxPywk/Uf3J9BIlis/oL37UYCJLBtilbEzoZyqLa01fZInoxG6cq+kGmWPL/aAYlAdtCL3c7bvrYXYdQIoZcKhSS06MW4xK6DTA3nF1HVXx4o/xU5RDsf0gm/pbjVxvpbe+RdoXEZrycz/qYNjlXn25AyP+wldMYzCDgai7vYSN7uP83hky/8KfvkdE/igTs9IEKRUMAcuM7Zgz0lxbUpZa80T0dBeSs7Wc8x78vfwVK3WbIktKXlskhHVhsuN2kKgfls+hEfZRBgILS32ewrhNucAuPBg8R4kz9ZtiWeEY+cDEQxshUx0/GU05BCHBfdixhNwWDCezzu3a2uU7GNVj1E0dYz1vkXjvcDIJgtm00n0VDWelLNQVcQ5CJ2wr+NBVXoVZSgf9m+B9h/h+419KwlisBFyvNSI0f84hKMgvPB4CuO8HPTfQC5A8Dwk9Sis=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK2PR03MB4371.apcprd03.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(396003)(366004)(376002)(346002)(39850400004)(136003)(186003)(6916009)(2906002)(6506007)(122000001)(38100700002)(71200400001)(8676002)(66556008)(66946007)(66446008)(64756008)(66476007)(76116006)(26005)(8936002)(83380400001)(86362001)(5660300002)(478600001)(52536014)(33656002)(316002)(7696005)(55016002)(9686003)(4326008);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?rSm61iEjkekEpg+7Yk3dY6ypimaDuzeu0pRJtUKNPI5XZqpr9Kto2cM7CR+2?=
+ =?us-ascii?Q?XUD4ZQR8L5pJbK7h7NxtzeELKuSg9wi0RLh9q7kxPRdZG2gOE97Xz6adNE6f?=
+ =?us-ascii?Q?ZyuxaVwB9eb5OsezgI2xkjk4naZOrXijVlDvrr4rzt7lmLlazQ31qsIn4g86?=
+ =?us-ascii?Q?O2LqATpVuYIRgdOeGlg3XrJuJZvl8JLhVzS9+8dmFqfypmEvUKtry19NQJO4?=
+ =?us-ascii?Q?t4ArbGq7oKUEScXUfvbBzSsJC3H0de0oj68KiLwD9f+dGsRcSp67xRjgYw2V?=
+ =?us-ascii?Q?pPv+w3Hd9bnlZUmTQl0rkomXIxdo5DCa8yxcsH4hgB/60Ftqydi4UtQVD4u5?=
+ =?us-ascii?Q?mKaSb1nBXF5Kh7JGSjhuNNpsLpGMKJ+wxhJPCUiLH8cBzr7c4ruLnauH4CR/?=
+ =?us-ascii?Q?9tY99v+X2Nbf/tjXjd5w/qnxzNVmnC+xdwJuwvnMZkQvPN6yP4VeSwLqk/rj?=
+ =?us-ascii?Q?K5MwoVuYu/X/iVa34cilEyJPIQ2iPV+MvAFhhE/ZbbsYJzH9llMiicLSM+gM?=
+ =?us-ascii?Q?yRKhZrCHfC0ARxR/JyrtkwZcNfce0LLmZ2mYdgbQlxCyp6V4mf2WK5X+74Ky?=
+ =?us-ascii?Q?svmg5Yr2xs//QjKdCVQebYoZ2Bz0AtHf1Qb6xbF2naE0v/PVYihxY4SZaUn+?=
+ =?us-ascii?Q?/0WFUHi5xfLAhgwcOgxiduKT+z/QDLprgvXZP69CVdqNtfh8x+SrxhdmgKpn?=
+ =?us-ascii?Q?rAo3YbmE+e2Gqc8OKAUVDmqjkk/tIyFtCTE3q2Dm2B9hCEUzkpUtpUq+xqqF?=
+ =?us-ascii?Q?bJA1IP4Sq7w1wCALvC4ZS6F7aHtkNLanwSHUy7TilQY6n5WPsSAns+wrRtU4?=
+ =?us-ascii?Q?WDjJZikPcjUzR5pBvVEEtpNK6QDHv2wUDDD2G/MMVCbQH4REaJRH/2Z19H84?=
+ =?us-ascii?Q?LT7EiwkbZDYU9OYxozG1c8zEMkP3ZZI/RdxsdHlg8b8suAwk38lYAm4apdR5?=
+ =?us-ascii?Q?t6Lnoc48dD10SffLCE5jsMOVRVPD73uAXoYHQirZ3gtKKSdOaE0cfgjZESca?=
+ =?us-ascii?Q?KurhL50kOoqFdDVm0etpGE5O6r0+vmtPmhfTuoQwuKKDMARWDfq0wCVTjYbr?=
+ =?us-ascii?Q?Y1Ow7nm9KL/URLfP/K7vMNd8KpljtfO2lWkTVKTkNsqLFecODGOjjZOSzktd?=
+ =?us-ascii?Q?6EUx8mHpcL2HglBOAXogKhXXDvca0rGUz2qF79/bKRWZmArj6drELMuFVxCw?=
+ =?us-ascii?Q?Ap9Enk2NWayszmKoR4BEDtIP5IoqrW82JWV7q7CtBwoGlZ6Gpv+j8/SEVB6a?=
+ =?us-ascii?Q?yYP8qN0Mx3QKldxzDh0ir9kAJbVSJuipRpOmVMfC2r+KFAJU8fp51PTR7707?=
+ =?us-ascii?Q?vb4xaKHBuhEl1OgC6gBgRPSU?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: nuvoton.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK2PR03MB4371.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ebc5ae2-eed0-4c54-71da-08d9168287f4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 May 2021 02:46:53.0460 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Vw6K7t2XtA7jP4+RwmGM0xefHvDKR4buXF8KeNOFBhFYkfNpNrXy0CYc/EIdzdj/drUxp+dTnQuTSO4uoy22Gg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR03MB4577
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,151 +130,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>,
- "moderated list:ASPEED SD/MMC DRIVER" <linux-aspeed@lists.ozlabs.org>,
- linux-mmc <linux-mmc@vger.kernel.org>,
- "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
- Ryan Chen <ryanchen.aspeed@gmail.com>, Adrian Hunter <adrian.hunter@intel.com>,
- Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
- open list <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Philipp Zabel <p.zabel@pengutronix.de>, Hongwei Zhang <Hongweiz@ami.com>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-arm-kernel@lists.infradead.org>
+Cc: OpenBMC Development <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+>-----Original Message-----
+>diff --git a/drivers/char/ipmi/kcs_bmc_npcm7xx.c
+>b/drivers/char/ipmi/kcs_bmc_npcm7xx.c
+>index 9f0b168e487c..f8b7162fb830 100644
+>--- a/drivers/char/ipmi/kcs_bmc_npcm7xx.c
+>+++ b/drivers/char/ipmi/kcs_bmc_npcm7xx.c
+>@@ -38,6 +38,7 @@
+> #define KCS2CTL               0x2A
+> #define KCS3CTL               0x3C
+> #define    KCS_CTL_IBFIE      BIT(0)
+>+#define    KCS_CTL_OBEIE      BIT(0)
 
+Hi Andrew:
 
-On Fri, 14 May 2021, at 11:39, Steven Lee wrote:
-> The 05/13/2021 08:42, Andrew Jeffery wrote:
-> > 
-> > 
-> > On Mon, 10 May 2021, at 15:33, Steven Lee wrote:
-> > > The 05/07/2021 15:36, Andrew Jeffery wrote:
-> > > > 
-> > > > 
-> > > > On Fri, 7 May 2021, at 15:54, Steven Lee wrote:
-> > > > > The 05/07/2021 09:32, Andrew Jeffery wrote:
-> > > > > > 
-> > > > > > 
-> > > > > > On Thu, 6 May 2021, at 19:54, Philipp Zabel wrote:
-> > > > > > > Hi Steven,
-> > > > > > > 
-> > > > > > > On Thu, May 06, 2021 at 06:03:12PM +0800, Steven Lee wrote:
-> > > > > > > > +	if (info) {
-> > > > > > > > +		if (info->flag & PROBE_AFTER_ASSET_DEASSERT) {
-> > > > > > > > +			sdc->rst = devm_reset_control_get(&pdev->dev, NULL);
-> > > > > > > 
-> > > > > > > Please use devm_reset_control_get_exclusive() or
-> > > > > > > devm_reset_control_get_optional_exclusive().
-> > > > > > > 
-> > > > > > > > +			if (!IS_ERR(sdc->rst)) {
-> > > > > > > 
-> > > > > > > Please just return errors here instead of ignoring them.
-> > > > > > > The reset_control_get_optional variants return NULL in case the
-> > > > > > > device node doesn't contain a resets phandle, in case you really
-> > > > > > > consider this reset to be optional even though the flag is set?
-> > > > > > 
-> > > > > > It feels like we should get rid of the flag and leave it to the 
-> > > > > > devicetree.
-> > > > > > 
-> > > > > 
-> > > > > Do you mean adding a flag, for instance, "mmc-reset" in the
-> > > > > device tree and call of_property_read_bool() in aspeed_sdc_probe()?
-> > > > > 
-> > > > > > I'm still kind of surprised it's not something we want to do for the 
-> > > > > > 2400 and 2500 as well.
-> > > > > > 
-> > > > > 
-> > > > > Per discussion with the chip designer, AST2400 and AST2500 doesn't need
-> > > > > this implementation since the chip design is different to AST2600.
-> > > > 
-> > > > So digging a bit more deeply on this, it looks like the reset is 
-> > > > already taken care of by drivers/clk/clk-ast2600.c in the 
-> > > > clk_prepare_enable() path.
-> > > > 
-> > > > clk-ast2600 handles resets when enabling the clock for most peripherals:
-> > > > 
-> > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/clk/clk-ast2600.c?h=v5.12#n276
-> > > > 
-> > > > and this is true for both the SD controller and the eMMC controller:
-> > > > 
-> > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/clk/clk-ast2600.c?h=v5.12#n94
-> > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/clk/clk-ast2600.c?h=v5.12#n88
-> > > > 
-> > > > If this weren't the case you'd specify a reset property in the SD/eMMC 
-> > > > devicetree nodes for the 2600 and then use 
-> > > > devm_reset_control_get_optional_exclusive() as Philipp suggested. See 
-> > > > the reset binding here:
-> > > > 
-> > > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/reset/reset.txt?h=v5.12
-> > > > 
-> > > > So on the surface it seems the reset handling in this patch is 
-> > > > unnecessary. Have you observed an issue with the SoC that means it's 
-> > > > required?
-> > > > 
-> > > 
-> > > Yes, you are right, aspeed_sdc_probe() calls clk_prepare_enable(),
-> > > aspeed_g6_clk_enable() does reset eMMC.
-> > > 
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/mmc/host/sdhci-of-aspeed.c#n496
-> > > 
-> > > However, the clock of eMMC is enabled in my u-boot(2019.04).
-> > > So it is retruned in the condition of aspeed_g6_clk_is_enabled() below
-> > > and doesn't reset eMMC.
-> > > 
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/clk/clk-ast2600.c?h=v5.12#n285
-> > 
-> > Okay, so what's the issue that the patch addresses? Is there a bug? 
-> > Presumably if u-boot isn't making use of the eMMC the clock won't be 
-> > on, so we'll do the reset if the kernel wants to make use of the 
-> > device. If u-boot _is_ using the eMMC, u-boot will have done the 
-> > correct clock enable/reset sequence and so the controller should be 
-> > ready to go?
-> > 
-> > The only potential issue remaining is u-boot leaving the controller in 
-> > a configuration the kernel isn't expecting when handing over. If that's 
-> > the issue then we've forgotten to do some specific initialisation (i.e. 
-> > not just reset the entire thing) of the controller in the driver probe 
-> > path, right?
-> > 
-> 
-> If DMA engine is used before probing eMMC in kernel stage,
-> eMMC controller may have unexpected behavior when re-exectuing
-> identifying process.
-> Thus, we need to reset at the beginning of kernel since
-> kernel is a new stage. We should not assume some one do something
-> before.
-> 
-> > FWIW I haven't recently seen any poor behaviour from the controller or 
-> > driver. For us (IBM) it seems to be working well since we sorted out 
-> > the phase configuration.
-> > 
-> 
-> Yes, you are right, everything work well currently. But, kernel is a new
-> stage, we cannot assume eMMC controller is at initial state when
-> entering kernel stage.
+Appreciate all of your hard work and effort.
 
-Okay. That sounds true no matter what the hardware design though (going 
-back to the difference between the 2400/2500 and 2600).
+There is a wrong definition of kcs_bmc_npcm7xx.c.
+The OBEIE bit offset in nuvoton BMC is 1.
+#define    KCS_CTL_OBEIE        BIT(1)
 
-Given the reset is tied up in the clock gating, it would be nice if we 
-could do the following in aspeed_sdc_probe():
+Thanks,
+Joseph
 
-```
-/* Clean up the controller in case it wasn't left in a good state by the bootloader */
-clock_disable_unprepare(...);
-
-clock_prepare_enable(...);
-```
-
-But the enable_count tracked by clock_core_{en,dis}able() kills that 
-idea.
-
-This makes it seem like we need to break out the appropriate indexes 
-to add `resets` properties in the devicetree. This will need some input 
-from Joel, given the eMMC/SD resets can't currently be handled that way.
-
-Andrew
+________________________________
+________________________________
+ The privileged confidential information contained in this email is intende=
+d for use only by the addressees as indicated by the original sender of thi=
+s email. If you are not the addressee indicated in this email or are not re=
+sponsible for delivery of the email to such a person, please kindly reply t=
+o the sender indicating this fact and delete all copies of it from your com=
+puter and network server immediately. Your cooperation is highly appreciate=
+d. It is advised that any unauthorized use of confidential information of N=
+uvoton is strictly prohibited; and any information in this email irrelevant=
+ to the official business of Nuvoton shall be deemed as neither given nor e=
+ndorsed by Nuvoton.
