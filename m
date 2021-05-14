@@ -1,71 +1,99 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE736380E19
-	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 18:24:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB7F4380FB9
+	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 20:26:53 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FhYlM6ctqz30D6
-	for <lists+openbmc@lfdr.de>; Sat, 15 May 2021 02:24:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FhcSB2rwbz306C
+	for <lists+openbmc@lfdr.de>; Sat, 15 May 2021 04:26:50 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=agPv0EOl;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=oJCKA1OE;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::435;
- helo=mail-wr1-x435.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=agPv0EOl; dkim-atps=neutral
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com
- [IPv6:2a00:1450:4864:20::435])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=oJCKA1OE; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FhYl24TRkz307j
- for <openbmc@lists.ozlabs.org>; Sat, 15 May 2021 02:24:29 +1000 (AEST)
-Received: by mail-wr1-x435.google.com with SMTP id n2so30625425wrm.0
- for <openbmc@lists.ozlabs.org>; Fri, 14 May 2021 09:24:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=I+/GNJBkGrmh5PbD2uLphLUDZkMFPSEWKEZS9Wfzu/M=;
- b=agPv0EOlbEaxJqnBS9fzhZha721WWTkTeCgT20/OjwoBZICTXzC0QRVGyDP4+d1ONE
- b8T+KFy+Npz1lTLojiylJorW7x2oSAaLaCH4n9tSxj+4lW05FB6W9qJYLNt+FBqw7K/A
- tejoIgsV1Fu9hBLkkCdmonYS3N2SMAy/8JrZBEYuJyySxnfUC5dzcAoUlsn6wEEma1ql
- C81wmFDUqaXk600JUEE3mVk/2U3vP7zI9tP6ouBGemHc4RVOuB5UZtAwJwtZiIZEN7jt
- aB4OvedSE61Ry0RJ+wp6FL6K0VT2L6nJh/SC3wcYqrtDT2qa4dwnWQo2QoApP+ugezja
- jcdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=I+/GNJBkGrmh5PbD2uLphLUDZkMFPSEWKEZS9Wfzu/M=;
- b=YaxFeCfzO8CtLw444xElUAouWIZtQU88y0Wb3t8jwBIvpkR4qVhc7nWzzXNUQGqNSF
- 41i87QZhBMqGB27dsqsuDPib2rUG2M+YnStxGXRSKrilY+H2HQdK6kiZBa28Ar8ASV4B
- F+9gK/MskOBIZsucGeKra6+omDoP0QTW1VVwSBmuVHuYY8prrB3ROS1b5qT2eOe2xSZg
- lJ31ybfyI3joB89NCnAJF3XJNTZUVV/EXxp5/HXxEiqVxJVYxkRTeckIfcIlb/9zlqGj
- iJ3mmkTGPuWtcLDQ4bQEyUXynsiWb4OuXUtffhjSP6W3z0NDP9JO0cm1ggAVUguaEVaz
- QWKg==
-X-Gm-Message-State: AOAM532/Fi1dTFujmGy2lSsnQPmGqxWIv/aT5KEuluo8ASLs2nsXqBfe
- DY0eH+Q6DjFZDCc6PSmhYg4MBsDPLC8s7gGKElOV94GYTc0=
-X-Google-Smtp-Source: ABdhPJzFi/qL00ROqPIKu8+MoSEPYiGKtJvrwyMtxxF6PBO+iu/cb4IrZa2ZJzt+qQVKsT8FRi/9kFB8iOXMY6O7m18=
-X-Received: by 2002:a5d:6088:: with SMTP id w8mr58197079wrt.424.1621009461605; 
- Fri, 14 May 2021 09:24:21 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FhcRt0Bkxz2yY7
+ for <openbmc@lists.ozlabs.org>; Sat, 15 May 2021 04:26:33 +1000 (AEST)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 14EI5Wks060933; Fri, 14 May 2021 14:26:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=yiWuDwaxi4eLCbuITO7bIcyKBRFv+IXv2i3ceumx38c=;
+ b=oJCKA1OENr1ofhpmojAPvbFJpcUu6ts57uE1tKXb+749HTMlBBp7teN7B1Cd0ysvg66m
+ 7zCvv3RJ3MCmeAexPoC4sPyublf9vF2u1s46PVVXnGTqmoYpkR/N1cR17GbNWByvkBh+
+ 4MgNZrDRNtartkjc0j34MUGXcTUZIUntzmy+6nUnL0cCwIyZ+ZBknPWlhbna+Dt6lN1Z
+ q5MJal/8W5F9UziVz5zVvQwRn781ciQEubTHVPLrTi3etH2VVA9R7W1fC+VOqAul7KLC
+ 6zOgKOvf6hcS+u3yH7ektC2NN0O3r071UEPNbsQa68g7u0+vyQB7Tj/BDvaTK7rETGvb NA== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 38hw919uwu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 14 May 2021 14:26:29 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 14EICj2p006850;
+ Fri, 14 May 2021 18:26:28 GMT
+Received: from b03cxnp08025.gho.boulder.ibm.com
+ (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
+ by ppma02dal.us.ibm.com with ESMTP id 38hc6ffhww-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 14 May 2021 18:26:28 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 14EIQRs719464614
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 14 May 2021 18:26:27 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 53C3BBE04F;
+ Fri, 14 May 2021 18:26:27 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D7F33BE056;
+ Fri, 14 May 2021 18:26:26 +0000 (GMT)
+Received: from demeter.local (unknown [9.160.6.19])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Fri, 14 May 2021 18:26:26 +0000 (GMT)
+Subject: Re: Security Working Group - Wednesday May 12 - results
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <35156c27-e195-c238-1bb9-d20a30db3c63@linux.ibm.com>
+ <8febdc9d-08bb-4094-9cad-7e6035c5bd71@linux.ibm.com>
+ <YJw9I+q6RYpr1UO6@heinlein>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <cb761cb4-56d8-35ab-c2b6-097e96833260@linux.ibm.com>
+Date: Fri, 14 May 2021 13:26:25 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
+In-Reply-To: <YJw9I+q6RYpr1UO6@heinlein>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: hHrr0VrieOduZ-iqonV4-a9ThhDE-wgY
+X-Proofpoint-ORIG-GUID: hHrr0VrieOduZ-iqonV4-a9ThhDE-wgY
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <SN6PR08MB43999FF4F59E2DB627EF52CBC3659@SN6PR08MB4399.namprd08.prod.outlook.com>
- <91538a6c-60be-b8fa-7b9a-021c98a06326@linux.intel.com>
- <DM6PR08MB58830D49DACE954A4C7EDFCBB25F9@DM6PR08MB5883.namprd08.prod.outlook.com>
- <CAH2-KxBtxOOBubEKvdMRy+bbJrzc65Hn7N2EGft8vrMWcL+dAQ@mail.gmail.com>
- <71682083-58b9-ae07-dd11-8a58d8ca731e@linux.intel.com>
-In-Reply-To: <71682083-58b9-ae07-dd11-8a58d8ca731e@linux.intel.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Fri, 14 May 2021 09:24:10 -0700
-Message-ID: <CAH2-KxCSUK7DWjo8hTdjEWbGnyMW8N00Z2wnCUUgiYLjzmCOaA@mail.gmail.com>
-Subject: Re: x86-power-control for ARM CPU based system.
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
+ definitions=2021-05-14_08:2021-05-12,
+ 2021-05-14 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0
+ suspectscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
+ impostorscore=0 mlxlogscore=999 mlxscore=0 priorityscore=1501
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104190000 definitions=main-2105140142
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,138 +105,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, May 13, 2021 at 6:42 PM Bills, Jason M
-<jason.m.bills@linux.intel.com> wrote:
+On 5/12/21 3:40 PM, Patrick Williams wrote:
+> On Wed, May 12, 2021 at 01:18:48PM -0500, Joseph Reynolds wrote:
+>> On 5/11/21 8:59 PM, Joseph Reynolds wrote:
+> [ Copying some stuff from the Google Doc. ]
 >
+>> Security impacts:
+>> - Can be used to defeat secureboot.
+>> - Can this function be disabled?  Via kernel config.  Default?
+>> - Can restrict which images kexec can load?
+>> - Recommend?  Validate the kernel signature before kexec’ing it.  But that doesn't stop an attacker who uses wget to get a malicious image which they pass to kexec.
+>> - Why would an attacker want to use kexec?  Opportunity to modify BMC code, load device drivers, create trojan horse(?) or back doors.
+>> - How can we force kexec to perform the same signature validation as uboot?  (each part and the whole: kernel, device tree, file system, …)
+> Some of this is a concern only because the arm32 support for kexec is
+> far behind the other architectures.  Can someone investigate what, if
+> anything, is going on upstream to get arm caught up?
 >
+> On most other architectures there is a new set of system calls, enabled
+> by KEXEC_FILE, which moves some of the handling done by the kexec
+> executable into the kernel and has signature verification done there.
+> arm32 is one of the few architectures that do not currently support this
+> KConfig.
 >
-> On 5/13/2021 1:55 PM, Ed Tanous wrote:
-> > On Thu, Apr 29, 2021 at 8:47 AM Mohaimen Alsamarai
-> > <Mohaimen.Alsamarai@fii-na.com> wrote:
-> >>
-> >> Adding openbmc mail list
-> >>
-> >> -----Original Message-----
-> >> From: Bills, Jason M <jason.m.bills@linux.intel.com>
-> >> Sent: Tuesday, March 23, 2021 4:08 PM
-> >> To: Brandon Ong <Brandon.Ong@fii-na.com>
-> >> Cc: Lancelot Kao <lancelot.cy.kao@fii-na.com>; Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>
-> >> Subject: Re: x86-power-control for ARM CPU based system.
-> >>
-> >> Hi Brandon,
-> >> On 3/22/2021 3:43 PM, Brandon Ong wrote:
-> >>> Hi Jason,
-> >>>
-> >>> I am currently working on the implementation of the x86-power-control
-> >>> for an ARM CPU based system.
-> >>>
-> >>>
-> >>> Is there a way to add a compile option to x86-power-control in order
-> >>> to change the behavior to support the ARM power control logic if it
-> >>> were to be integrated into x86-power-control?
-> >> x86-power-control was created to solve specific timing issues with our platforms.  It wasn't designed to be a flexible solution for the community to use.
-> >
-> > And OpenBMC was initially designed for POWER platforms.  Things change :)
-> >
-> > Clearly x86-power-control seems to solve more problems, as a lot of
-> > new platforms seem to be preferring it.
-> I'm glad it is working well. :)
+> See:
+> - https://man7.org/linux/man-pages/man8/kexec.8.html (kexec-syscall-auto).
+> - http://people.redhat.com/vgoyal/papers-presentations/linux-plumbers-2013/vivek-linux-plumbers-conference-2013-presentation-kexec-secureboot.pdf
 >
-> > If the code being changed is
-> > messy, unmaintainable, or isn't well abstracted, that's a different
-> > discussion,
-> This is definitely a concern.  Since it wasn't designed as a flexible
-> solution, I'm worried it will become fragile with a lot of changes.
->
-> > but outright saying nobody else can make use of
-> > x86-power-control seems problematic, and would lead to a power control
-> > daemon per-platform, which seems hard to maintain,
-> This was not my intention, so I apologize if it came out that way.
-> Making changes to x86-power-control is definitely better than everyone
-> forking their own.
->
-> However, I have tried to think of good ways to make x86-power-control
-> more flexible and generic and have not come up with anything much
-> different from phosphor-state-manager.  So, I worry that we could spend
-> a lot of time and effort making x86-power-control flexible only to end
-> up with something that is essentially the same as what we already have.
-> But I don't want to squash any efforts here, so I'm open to ideas and
-> proposals.
 
-Brandon, it sounds like this is your time to propose something either
-here or via patchsets.
+Patrick,
 
->
-> > and in looking at
-> > the amd patches, an amd specific daemon would largely just copy-paste
-> > 95% of x86-power-control today into something like amd-power-control
-> > if we took this to the logical conclusion.
-> 95% the same sounds like a minor effort to include in x86-power-control.
->   This particular thread was mentioning a build switch for ARM CPU
-> support which made it sound like there would be significant differences,
-> so I wanted to make sure that phosphor-state-manager had been evaluated.
->
-> >
-> >>
-> >> phosphor-state-manager
-> >> (https://github.com/openbmc/phosphor-state-manager) is the OpenBMC community power state manager.  It is designed for flexibility in how different systems change power state.
-> >>
-> >> Rather than add build modifications to x86-power-control for your needs, I'd recommend that you look at phosphor-state-manager which was designed to be customizable for different systems.
-> >
-> > phosphor-state-manager has all the problems that you found when you
-> > went to use it, and found it lacking.  Clearly Brandon has found the
-> > same and is looking to make some (hopefully minor) mods to make
-> > x86-power-control more useful in more contexts.  If it's a matter of
-> > code cleanliness or separation, there's certainly a discussion to be
-> > had here, but effectively saying that everyone should go build their
-> > own version of x86-power-control seems wasteful, as a lot of platforms
-> > share similar properties to what x86-power-control does.
-> I have some vague high-level ideas of trying to figure out how to make
-> the power states and event handlers more generic, so that the various
-> events, timeouts, and state changes could be customized.  But I haven't
-> gone any further than "maybe a class or something". :)  Maybe that level
-> of flexibility isn't needed, though...
+Thanks for the info!  (I'm learning as I go.)  I'll ask my people to 
+look into this (with no promises).
 
-When I looked at the various forks, I don't really see them changing
-any of the state handlers;  The state machine seems largely unchanged,
-aside from doing things like removing watch dogs, which are just state
-transitions and probably should be configurable anyway for debug, and
-even then, I've only seen one get removed (although admittedly I
-haven't looked through every line of every fork of x86-power-control
-yet).
+- Joseph
 
->
-> >
-> > The things I see in the patch are:
-> > 1. The ability to invert polarities of the inputs.
-> > 2. The ability to disable at compile time some of the watchdogs that
-> > don't make sense on certain platforms.
-> > 3. disabling the beeper (which I'm not sure is needed so long as you
-> > handle errors silently).
-> > 4. A couple of platform-name-specific hardcodes, that I suspect aren't
-> > needed or can be abstracted.
-> >
-> > Is there a way we can avoid the duplication of code in this case?
-> I agree.  These changes sound minor and able to be integrated into
-> x86-power-control.  Is a patch already available to look at?
-
-Not that I'm aware of, but glad to hear you're open to things.
-
-Brandon, sounds like getting a couple patches put up is your next step.
-
--Ed
-
->
-> >
-> >>
-> >> Thanks,
-> >> -Jason
-> >>
-> >>>
-> >>> Thanks,
-> >>> Brandon
-> >>>
