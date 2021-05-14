@@ -2,57 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B77C6380180
-	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 03:42:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DA9E38018D
+	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 03:50:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FhB9N4rKVz306Q
-	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 11:42:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FhBM20Lfnz2ym8
+	for <lists+openbmc@lfdr.de>; Fri, 14 May 2021 11:50:54 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=blU1VJvO;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=YIIAZSDX;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=blU1VJvO; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=YIIAZSDX; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FhB995hGYz2yX6
- for <openbmc@lists.ozlabs.org>; Fri, 14 May 2021 11:42:20 +1000 (AEST)
-IronPort-SDR: Muv8cSqdCoCwEsZAadUjadCIKUDJhwM3AMUp544Uw3kQa/l2Sw5yJwFkOyW+2+ZD5M59DTX9Us
- t/cnLJnkCugQ==
-X-IronPort-AV: E=McAfee;i="6200,9189,9983"; a="199783067"
-X-IronPort-AV: E=Sophos;i="5.82,298,1613462400"; d="scan'208";a="199783067"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 May 2021 18:42:15 -0700
-IronPort-SDR: UTh2q6CqolvIUN0s09k4Jx+e+SmjueaBOuR8AgjHIpF6i0b6bIerpDk3ENlZtgc7x50qar96qN
- 977KVt4spqqw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.82,298,1613462400"; d="scan'208";a="624171445"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga006.fm.intel.com with ESMTP; 13 May 2021 18:42:14 -0700
-Received: from [10.212.129.98] (jmbills-MOBL.amr.corp.intel.com
- [10.212.129.98])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 6340B580A5D
- for <openbmc@lists.ozlabs.org>; Thu, 13 May 2021 18:42:14 -0700 (PDT)
-Subject: Re: x86-power-control for ARM CPU based system.
-To: openbmc@lists.ozlabs.org
-References: <SN6PR08MB43999FF4F59E2DB627EF52CBC3659@SN6PR08MB4399.namprd08.prod.outlook.com>
- <91538a6c-60be-b8fa-7b9a-021c98a06326@linux.intel.com>
- <DM6PR08MB58830D49DACE954A4C7EDFCBB25F9@DM6PR08MB5883.namprd08.prod.outlook.com>
- <CAH2-KxBtxOOBubEKvdMRy+bbJrzc65Hn7N2EGft8vrMWcL+dAQ@mail.gmail.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <71682083-58b9-ae07-dd11-8a58d8ca731e@linux.intel.com>
-Date: Thu, 13 May 2021 18:42:13 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <CAH2-KxBtxOOBubEKvdMRy+bbJrzc65Hn7N2EGft8vrMWcL+dAQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FhBLf0n33z2y8C
+ for <openbmc@lists.ozlabs.org>; Fri, 14 May 2021 11:50:33 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id D64925C0124;
+ Thu, 13 May 2021 21:50:28 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Thu, 13 May 2021 21:50:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type:content-transfer-encoding; s=fm2; bh=O1xif
+ JkUZp6s8Hxy8mQHUlslsEKU/mVI7LO60FWq/9s=; b=blU1VJvO6k+GAceIvDxMl
+ VjM4PvJ5qenBOuRdF/l1yowyLPOcZdBUtESL2cNvUV5gvLU1b9oJn2WtT3Bvnp9k
+ My+jZLDVyv02e6ZPOwH6TbYzISjUbp3FSJPU3FrZ8yiAMD3vPAzmIpBFHSRDxYnJ
+ 6rY/yPyKVyFU5CXW5ZYDt3d47ER9Jgv6MHg5yyBsWxq/OGRT1LDh5xmrszJkv9Qg
+ O/Jwnv4+aRsByXlVFfeR5JDcueEzmLFAgb93G2e6RGoGMGy/+wNrK/xvOCLwC3/s
+ WZFqTqcs6nBt6qoILjfNHuo+pWShQnmzfJV0SaPGcgIurUIYJYBCYNmH5hxb9Oep
+ A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=O1xifJkUZp6s8Hxy8mQHUlslsEKU/mVI7LO60FWq/
+ 9s=; b=YIIAZSDX9d2a2y6shPe9imuMx5tri0Bi5JNFMuF5kt833rkZaTRKcVNWg
+ Lv5YEWs1zDxI/7FKvfmiDpI+GmPIRJILbAHpJ5vri6X/TKhra/IRr3PEssSZevFS
+ /2gdF/ay56McV0i56FZ5dDJqh8Mw5tWNVP7VX8F7ujCHHBfKlqi3E82IPmUh7bNZ
+ +ySRE/1ABDhhgkhDkdzpWPffmHeaMop4o5imydKZT42q6T8+XRA8RPcyDaMWFAxk
+ YiJX/Q4p2lWcYLwiKlLi8npb4r76Iy7ULQuDm4wZBzprkZNjE142hPMJHPgWWMoy
+ S+wLVR5YSXiK3BfFC/SReLe+RtLLA==
+X-ME-Sender: <xms:ZNedYA4Nv-FMSWpyhL-mqz496TILY8biPmDVyNqp0YPCDd_9-GcW7w>
+ <xme:ZNedYB4_8TjvHprBTpujQpJQrVo7xCeR7krLzsorfGDiygHFjuhyBsmxGMqx462-M
+ YbsVWItqHLi02pr2Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdehhedgheduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtgfesth
+ hqredtreerjeenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughr
+ vgifsegrjhdrihgurdgruheqnecuggftrfgrthhtvghrnhepvdegkeehgeefvdfhteehhf
+ duteetgeeugefgieeigeeuheekudegtdekgfelgfehnecuvehluhhsthgvrhfuihiivgep
+ tdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:ZNedYPcrdSjy58B4_bMh64L4Cts18JjC5m3KXd8YQs8jrAUXkqQ7LA>
+ <xmx:ZNedYFIO-31jbj2PpjzUaSIGM9AxYW_msRQ1jSBUd1__sz-Ibb2ZzQ>
+ <xmx:ZNedYEKJnr4QkJ0kTuMGCj-GmwZL9IVde5TWQUi6RehZl5c_7WjVyg>
+ <xmx:ZNedYLn3Zl4pIzIQlJrkGOEi629dUIOb5mLUZw22bWftw_5Nm4JdtQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id E81A4A00079; Thu, 13 May 2021 21:50:27 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-448-gae190416c7-fm-20210505.004-gae190416
+Mime-Version: 1.0
+Message-Id: <6a1ed3ac-c09c-4596-86b4-4d7d82698c64@www.fastmail.com>
+In-Reply-To: <BN3P110MB05467667602EC7ABA6A3C029BC519@BN3P110MB0546.NAMP110.PROD.OUTLOOK.COM>
+References: <BN3P110MB05467667602EC7ABA6A3C029BC519@BN3P110MB0546.NAMP110.PROD.OUTLOOK.COM>
+Date: Fri, 14 May 2021 11:20:06 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Eric.Wetterlind@gd-ms.com" <Eric.Wetterlind@gd-ms.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re: Aspeed2600 EVB Hwmon problem
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,109 +102,181 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On 5/13/2021 1:55 PM, Ed Tanous wrote:
-> On Thu, Apr 29, 2021 at 8:47 AM Mohaimen Alsamarai
-> <Mohaimen.Alsamarai@fii-na.com> wrote:
->>
->> Adding openbmc mail list
->>
->> -----Original Message-----
->> From: Bills, Jason M <jason.m.bills@linux.intel.com>
->> Sent: Tuesday, March 23, 2021 4:08 PM
->> To: Brandon Ong <Brandon.Ong@fii-na.com>
->> Cc: Lancelot Kao <lancelot.cy.kao@fii-na.com>; Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>
->> Subject: Re: x86-power-control for ARM CPU based system.
->>
->> Hi Brandon,
->> On 3/22/2021 3:43 PM, Brandon Ong wrote:
->>> Hi Jason,
->>>
->>> I am currently working on the implementation of the x86-power-control
->>> for an ARM CPU based system.
->>>
->>>
->>> Is there a way to add a compile option to x86-power-control in order
->>> to change the behavior to support the ARM power control logic if it
->>> were to be integrated into x86-power-control?
->> x86-power-control was created to solve specific timing issues with our platforms.  It wasn't designed to be a flexible solution for the community to use.
-> 
-> And OpenBMC was initially designed for POWER platforms.  Things change :)
-> 
-> Clearly x86-power-control seems to solve more problems, as a lot of
-> new platforms seem to be preferring it.
-I'm glad it is working well. :)
+On Fri, 14 May 2021, at 07:12, Eric.Wetterlind@gd-ms.com wrote:
+> =20
+> Hello,
+>=20
+> =20
+>=20
+> I am currently trying to add a simple temp sensor to my image, which i=
+s=20
+> based off of the evb-ast2600 image.  I have successfully been able to=20=
 
-> If the code being changed is
-> messy, unmaintainable, or isn't well abstracted, that's a different
-> discussion,
-This is definitely a concern.  Since it wasn't designed as a flexible 
-solution, I'm worried it will become fragile with a lot of changes.
+> add this sensor to a ast2500-based image, but the 2600 is not=20
+> cooperating.  Any pointers would be greatly appreciated (and=20
+> sanity-saving), as I am near the end of all paths I know of.
+>=20
+> =20
+>=20
+> Project bblayers.conf.sample contains the following:
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+>   ##OEROOT##/meta \
+>=20
+>   ##OEROOT##/meta-poky \
+>=20
+>   ##OEROOT##/meta-openembedded/meta-oe \
+>=20
+>   ##OEROOT##/meta-openembedded/meta-networking \
+>=20
+>   ##OEROOT##/meta-openembedded/meta-python \
+>=20
+>   ##OEROOT##/meta-phosphor \
+>=20
+>   ##OEROOT##/meta-aspeed \
+>=20
+>   ##OEROOT##/meta-ourproject \
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> =20
+>=20
+> The device tree has this (and using the standard aspeed_g6_dtsi):
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> &i2c1 {
+>=20
+>         status =3D "okay";
+>=20
+> =20
+>=20
+>         tmp423@4c {
+>=20
+>                 compatible =3D "ti,tmp423";
+>=20
+>                 reg =3D <0x4c>;
+>=20
+>         };
+>=20
+> };
 
-> but outright saying nobody else can make use of
-> x86-power-control seems problematic, and would lead to a power control
-> daemon per-platform, which seems hard to maintain,
-This was not my intention, so I apologize if it came out that way. 
-Making changes to x86-power-control is definitely better than everyone 
-forking their own.
+Are you actually using an AST2600 EVB? Or is this for your own board=20
+design? Or are you using the EVB and adding some additional sensors via=20=
 
-However, I have tried to think of good ways to make x86-power-control 
-more flexible and generic and have not come up with anything much 
-different from phosphor-state-manager.  So, I worry that we could spend 
-a lot of time and effort making x86-power-control flexible only to end 
-up with something that is essentially the same as what we already have. 
-But I don't want to squash any efforts here, so I'm open to ideas and 
-proposals.
+e.g. the SATA connector?
 
-> and in looking at
-> the amd patches, an amd specific daemon would largely just copy-paste
-> 95% of x86-power-control today into something like amd-power-control
-> if we took this to the logical conclusion.
-95% the same sounds like a minor effort to include in x86-power-control. 
-  This particular thread was mentioning a build switch for ARM CPU 
-support which made it sound like there would be significant differences, 
-so I wanted to make sure that phosphor-state-manager had been evaluated.
+There's no such sensor on the 2600 EVB, though there is an LM75 at=20
+0x4d. Then there's the additional complexity of the groups and jumpers=20=
 
-> 
->>
->> phosphor-state-manager
->> (https://github.com/openbmc/phosphor-state-manager) is the OpenBMC community power state manager.  It is designed for flexibility in how different systems change power state.
->>
->> Rather than add build modifications to x86-power-control for your needs, I'd recommend that you look at phosphor-state-manager which was designed to be customizable for different systems.
-> 
-> phosphor-state-manager has all the problems that you found when you
-> went to use it, and found it lacking.  Clearly Brandon has found the
-> same and is looking to make some (hopefully minor) mods to make
-> x86-power-control more useful in more contexts.  If it's a matter of
-> code cleanliness or separation, there's certainly a discussion to be
-> had here, but effectively saying that everyone should go build their
-> own version of x86-power-control seems wasteful, as a lot of platforms
-> share similar properties to what x86-power-control does.
-I have some vague high-level ideas of trying to figure out how to make 
-the power states and event handlers more generic, so that the various 
-events, timeouts, and state changes could be customized.  But I haven't 
-gone any further than "maybe a class or something". :)  Maybe that level 
-of flexibility isn't needed, though...
+to select the I2C buses.
 
-> 
-> The things I see in the patch are:
-> 1. The ability to invert polarities of the inputs.
-> 2. The ability to disable at compile time some of the watchdogs that
-> don't make sense on certain platforms.
-> 3. disabling the beeper (which I'm not sure is needed so long as you
-> handle errors silently).
-> 4. A couple of platform-name-specific hardcodes, that I suspect aren't
-> needed or can be abstracted.
-> 
-> Is there a way we can avoid the duplication of code in this case?
-I agree.  These changes sound minor and able to be integrated into 
-x86-power-control.  Is a patch already available to look at?
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> =20
+>=20
+> Recipes-phosphor/sensors contains the directory structure=20
+> phosphor-hwmon/obmc/hwmon/ahb/apb/bus@1e78a000/i2c-bus@100, with=20
+> tmp423.conf in it.
+>=20
+> =20
+>=20
+> The phosphor-hwmon_%.bbappend file contains this:
+>=20
+> =20
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> FILESEXTRAPATHS_prepend_ourproject :=3D "${THISDIR}/${PN}:"
+>=20
+> EXTRA_OECONF_append_ourproject =3D " --enable-negative-errno-on-fail"
+>=20
+> CHIPS =3D " \
+>=20
+>         bus@1e78a000/i2c-bus@100/tmp423@4c \
+>=20
+>         "
+>=20
+> ITEMSFMT =3D "ahb/apb/{0}.conf"
+>=20
+> ITEMS =3D "${@compose_list(d, 'ITEMSFMT', 'CHIPS')}"
+>=20
+> ENVS =3D "obmc/hwmon/{0}"
+>=20
+> SYSTEMD_ENVIRONMENT_FILE_${PN}_append_ourproject =3D " ${@compose_list=
+(d,=20
+> 'ENVS', 'ITEMS')}"
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> =20
+>=20
+> When booting up in Qemu, the device is recognized:
 
-> 
->>
->> Thanks,
->> -Jason
->>
->>>
->>> Thanks,
->>> Brandon
->>>
+Is this the only way you're testing? Or are you also testing on=20
+appropriate hardware?
+
+How did you invoke qemu? Does the machine you chose model a sensor at=20=
+
+the appropriate address?
+
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> #cat=20
+> /sys/firmware/devicetree/base/ahb/apb/bus@1e78a000/i2c-bus@100/tmp423@=
+4c/compatible
+>=20
+> ti,tmp423
+>=20
+> =20
+>=20
+> # cat=20
+> /sys/devices/platform/ahb/ahb\:apb/ahb\:apb\:bus\@1e78a000/1e78a100.i2=
+c-bus/i2c-1/1-004c/name
+>=20
+> tmp423
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> =20
+>=20
+> There is even a link in /sys/bus/i2c/devices/1-004c to=20
+> /sys/devices/platform/ahb/ahb\:apb/ahb\:apb\:bus\@1e78a000/1e78a100.i2=
+c-bus/i2c-1/1-004c.
+>=20
+> =20
+>=20
+> The .conf file shows up in=20
+> /etc/default/obmc/hwmon/ahb/apb/bus@1e78a000/i2c-bus@100.
+>=20
+> =20
+>=20
+> The problem is that nothing ever gets populated into /sys/class/hwmon.=
+ =20
+> It is an empty directory.  On our ast2400 and ast2500 images, this sam=
+e=20
+> procedure, stripped down to almost the exact same specs as I=E2=80=99v=
+e=20
+> mentioned above, produces a link as /sys/class/hwmon/hwmon0. =20
+
+All the paths you've expressed above are for the device, not the=20
+driver. The devicetree is essentially an assertion that these devices=20=
+
+are present, so if you describe them there then they will always appear=20=
+
+at the paths you've listed above.
+
+It seems an appropriate driver is not bound to the device. This could=20=
+
+be because the driver didn't find the device present and bailed out, or=20=
+
+the kernel is not configured with the appropriate driver.
+
+What's in your kernel config? Do you have CONFIG_SENSORS_TMP421=3Dy?
+
+Is there any output in dmesg about the driver failing to probe?
+
+Andrew
