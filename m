@@ -1,58 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68B63382577
-	for <lists+openbmc@lfdr.de>; Mon, 17 May 2021 09:39:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8D26382838
+	for <lists+openbmc@lfdr.de>; Mon, 17 May 2021 11:23:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fk9yL3QCyz2yyl
-	for <lists+openbmc@lfdr.de>; Mon, 17 May 2021 17:39:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FkDG85Mfrz304C
+	for <lists+openbmc@lfdr.de>; Mon, 17 May 2021 19:23:44 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=wZE8pBAq;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=adrian.ambrozewicz@linux.intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir;
- Mon, 17 May 2021 17:39:40 AEST
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::e2e;
+ helo=mail-vs1-xe2e.google.com; envelope-from=ulf.hansson@linaro.org;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
+ header.s=google header.b=wZE8pBAq; dkim-atps=neutral
+Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com
+ [IPv6:2607:f8b0:4864:20::e2e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fk9y41ZYtz2yYK
- for <openbmc@lists.ozlabs.org>; Mon, 17 May 2021 17:39:40 +1000 (AEST)
-IronPort-SDR: qBJkXGS53nfBAHPmFmJ2IEo9qAVwdgn9cjMdim5T/u4Bl4ipsoxeNCtZGRAEvIF/Hw2Xqeigkl
- 7YSJbHKtDb2A==
-X-IronPort-AV: E=McAfee;i="6200,9189,9986"; a="187811058"
-X-IronPort-AV: E=Sophos;i="5.82,306,1613462400"; d="scan'208";a="187811058"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 May 2021 00:38:31 -0700
-IronPort-SDR: nGok/5LND7jOXUB8B/EMGW25ocyOImjPPGCtpLPip6VAW6EGzq5wi+cntyBqPfPyP7zn664Tts
- a2Nvvx8ZRrhw==
-X-IronPort-AV: E=Sophos;i="5.82,306,1613462400"; d="scan'208";a="438788019"
-Received: from aambroze-mobl.ger.corp.intel.com (HELO [10.213.1.152])
- ([10.213.1.152])
- by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 May 2021 00:38:29 -0700
-Subject: Re: Mapping standard D-Bus sensors to ProcessorMetrics (and other
- specific schemas)
-From: "Ambrozewicz, Adrian" <adrian.ambrozewicz@linux.intel.com>
-To: Ed Tanous <ed@tanous.net>, Patrick Williams <patrick@stwcx.xyz>
-References: <f9127788-7f8a-59ed-e434-0f510773d2aa@linux.intel.com>
- <YHBDIZqvHI0THFh3@heinlein>
- <3d5f8ede-3506-afac-d5bd-4bc7f3331cbc@linux.intel.com>
- <YJqaKhKlZ7BZCGA9@heinlein>
- <CACWQX82QSD=1nZAYkP=CO=-ch_YcbRXmyvLt743F-hGspTNPqw@mail.gmail.com>
- <cd3fabe8-7a8c-16bd-bc26-4287f7a1eb4d@linux.intel.com>
-Message-ID: <5252d5e3-02b8-1dba-5ca6-c703e2e9c87c@linux.intel.com>
-Date: Mon, 17 May 2021 09:38:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FkDFr5CgGz2xZs
+ for <openbmc@lists.ozlabs.org>; Mon, 17 May 2021 19:23:27 +1000 (AEST)
+Received: by mail-vs1-xe2e.google.com with SMTP id u80so2759391vsc.6
+ for <openbmc@lists.ozlabs.org>; Mon, 17 May 2021 02:23:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=kzYVzmT+Y8ce2flyvbSSPdmquvI+WpoScVhmf9xFNfc=;
+ b=wZE8pBAqeARtQbwh+YWftfz+pAOAl52rdskfYBROlX2BYGzyiP8jIhVMX2ZLlI/5TN
+ 2h55vokvcNd9L9wocrsTfFNSZ7mvGTPvyT6ydg0YrjKHLTUBuhbjdOqBt6BcYgzbTu4z
+ CJC7/JcgyYbA8qJyYy52Qlnrl5Ks8rBSWSII4TJUN/iauAg9QqBcUXZ3Uc46G84x0Wqi
+ 7EJaqNos/h447r9ZfuhH/fMb87/SWTIRaTqJufYy20AjL2e6KGye9jf84Rmi4O/7MYAE
+ 1JPV3hD1j6WJmF5EQD0WwU2Wke0Zt5Bbr1TPruhZr+U9SyoLJj18Xh+kzPIbsZqQnpMc
+ 7cvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=kzYVzmT+Y8ce2flyvbSSPdmquvI+WpoScVhmf9xFNfc=;
+ b=dhPFhyj2HY1U8dQPhqPVMFIeR38EPqg4C6msldUaqj88uhj3vnYYAWQXjJk8O5ZUhR
+ DhDroHmxHsfr/i+oZtJUCmeHl1yrWXPKOmUl13OwUJ9B+cOP/Mh8Q5OsBrXtqJJZ3ox1
+ 1q4Vsgf+YxScAwvuRM5sUKdZhHUtK6ONI4Gv951zxvSQxJ7QGvVCIZypFHxRF4FjuUVJ
+ Kvl9pnhawK2h50jgoyBanX5MMHa0kCeSkpFGeNaXo0MXbyH6T0XbErgY1mKR++yX8VQB
+ vragvQG3H48XywwZglkLLClJvsigiOVRvyLtTZdLWhUE2XztKG96JB1F9VnzLk5et6nM
+ 5pag==
+X-Gm-Message-State: AOAM5325UKuMwGKwaCImOFDe/Q5jlsHQGaozZ1w71tKG2CRoskx4jc7d
+ QyuVTeO0tY+B48GoBnvyzOmKRgmjS5r+NXXp8rf0Bg==
+X-Google-Smtp-Source: ABdhPJyXKhN5EScVDwjR162oOK33ajPAKsDnGAYw4sYWr1DOTQym8W+LchIR8j6ixX6JvWzsFngChaUy9M79BpaoBus=
+X-Received: by 2002:a05:6102:7b4:: with SMTP id
+ x20mr3923640vsg.48.1621243403858; 
+ Mon, 17 May 2021 02:23:23 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <cd3fabe8-7a8c-16bd-bc26-4287f7a1eb4d@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20210513193204.816681-1-davidgow@google.com>
+ <20210513193204.816681-6-davidgow@google.com>
+In-Reply-To: <20210513193204.816681-6-davidgow@google.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Mon, 17 May 2021 11:22:47 +0200
+Message-ID: <CAPDyKFoEeRUjHLZ3iSvPT4_0X107G3Xw+ujxJ9zsDk06dTxo7w@mail.gmail.com>
+Subject: Re: [PATCH v2 06/10] mmc: sdhci-of-aspeed: Remove some unnecessary
+ casts from KUnit tests
+To: David Gow <davidgow@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,182 +76,108 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>, linux-mmc <linux-mmc@vger.kernel.org>,
+ Daniel Latypov <dlatypov@google.com>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ Adrian Hunter <adrian.hunter@intel.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ linux-kselftest@vger.kernel.org, Shuah Khan <skhan@linuxfoundation.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>, kunit-dev@googlegroups.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Guys,
+On Thu, 13 May 2021 at 21:36, David Gow <davidgow@google.com> wrote:
+>
+> With KUnit's EXPECT macros no longer typechecking arguments as strictly,
+> get rid of a number of now unnecessary casts.
+>
+> Signed-off-by: David Gow <davidgow@google.com>
 
-Part of the problem can be solved with existing solutions. At least If I 
-understood you correctly. There are still some questions or opens to 
-cover. I would appreciate if you found time to respond.
+I guess you will funnel this via another tree than the mmc?
 
-Regards,
-Adrian
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-W dniu 5/12/2021 o 13:17, Ambrozewicz, Adrian pisze:
-> W dniu 5/11/2021 o 18:26, Ed Tanous pisze:
->> On Tue, May 11, 2021 at 7:53 AM Patrick Williams <patrick@stwcx.xyz> 
->> wrote:
->>>
->>> On Tue, Apr 27, 2021 at 01:52:51PM +0200, Ambrozewicz, Adrian wrote:
->>>> W dniu 4/9/2021 o 14:05, Patrick Williams pisze:
->>>>> On Wed, Apr 07, 2021 at 02:24:55PM +0200, Ambrozewicz, Adrian wrote:
->>>>>
->>>>> I suspect this would be the more difficult direction to go down.  
->>>>> There
->>>>> is already enough code that looks for sensors at specific paths that
->>>>> you'd have to track down and fix up.  Also, there has been some 
->>>>> concern
->>>>> by some maintainers in other cases about having information in the 
->>>>> paths
->>>>> have meaning and prefering to reduce the reliance on that.
->>>>>
->>>>
->>>> Please see message from Ed, as he's supposedly proposing to follow that
->>>> path. I don't have strong opinions on one or the other approach.
->>>
->>> I suspect you are not signing up to change all the existing code.  I'll
->>> look at Ed's reply though.
->>>
-> 
-> Crisis averted - paths and names dropped out from scope :)
-> 
->>>> I've read the design, however one thing is not clear for me. My current
->>>> understanding was that for each association there would need to exist
->>>> some D-bus object at given path somewhere. Would i need my CPU 
->>>> inventory
->>>> service to also expose separate objects for each core for my 
->>>> association
->>>> to be 'legal', or could we represent some virtual hierarchy with no
->>>> actual D-Bus object in the system?
->>>
->>> Yes.  You would need an inventory object for each entity you want to
->>> attach sensors or metrics to.  This doesn't seem like it should really
->>> be an issue.  Other people have been working on adding CPU Cores already
->>> and there is the xyz.openbmc_project.Inventory.Item.CpuCore defined.
->>>
-> 
-> Thanks for pointing that out. It seems like logical path to follow. Do 
-> you have some pointers to some reviews or discussion? CpuCore as of now 
-> is empty.
-> 
->>>>>> I've done some PoC implementation of ProcessorMetrics, which 
->>>>>> relies on
->>>>>> new D-Bus interface with 'Mapping' property (eg. 
->>>>>> 'TemperatureCelsius' or
->>>>>> 'CoreMetrics/12/UnhaltedCycles'). ProcessorMetrics node 
->>>>>> implementation
->>>>>> queries D-Bus for all sensors associated with given CPU and populates
->>>>>> properties if proper mapping was found.
->>>>>
->>>>> I'm not really grasping what the contents of this mapping property 
->>>>> are.
->>>>> Generally we want to stay away from free-form strings having 
->>>>> programatic
->>>>> uses.  Maybe if you can define these mappings as enumerations?
->>>>>
->>>>> What is the additional information you need besides the assocation 
->>>>> from
->>>>> a sensor to its inventory item?
->>>>
->>>> In given example I would like my sensor to be source of information for
->>>> property defined by ProcessorMetrics schema. In the example I've used
->>>> property associated with given Core, thus CoreMetrics/12/UnhaltedCycles
->>>> maps directly to ProcessorMetrics sub-property. Enumerations could be
->>>> not enough as we have multiple informations to represent:
->>>> - association with given processor (done by ProcessorMetrics)
->>>> - association with given core (could that be handled by your proposed
->>>> design?)
->>>> - linking to given property
->>>>
->>>> Would the enumeration be used for the last element, while leaving
->>>> hierarchy problem to Associations?
->>>
->>> "UnhaltedCycles" is not a sensor, just to be clear.  IPMI might have
->>> called these kinds of things sensors but we do not.  Sensors for us
->>> measure physical properties.  This is just a property (or maybe a
->>> "metric") but it doesn't belong in the sensors namespace or modeled with
->>> a Sensor.Value.
-> 
-> Up to this point we've established, that sensors/metrics would be linked 
-> to given item by association. That leaves figuring out how to 'glue' 
-> together Redfish property with given D-Bus entity.
-> 
->>
->> This somewhat brings up a good point, what is a "sensor" on dbus?  I
->> would've assumed that these would be well represented as sensors, as
->> they do measure physical properties.  I hadn't assumed that they had
->> this limitation because we do have the
->> /xyz/openbmc_project/utilization namespace defined already.  If we're
->> going down the path of "must be physical" it would seem like
->> utilization should be moved out of the sensors interface?  Or am I
->> taking your statement too literally?
->>
-> 
-> Agreed. I suppose we should forget about 'old ways' and previous meaning 
-> of IPMI sensor. BTW Redfish specifies such properties as 'metrics'.
-> 
-> What are the limitations of Sensor.Value interface when it comes to 
-> representing values in ProcessorMetrics and similar schemas?
-> 
-> ProcessorMetrics uses such units for its metrics:
-> - bytes
-> - % (already available as 'utilization')
-> - MHz
-> - Cel (altready available as 'temperature')
-> - count (number of events/occurrences)
-> 
-> I suppose that we could just extend namespaces and units of Sensor.Value 
-> to cover them and call it a day. We would retain compatibility with 
-> existing sensors code, TelemetryService etc. (I agree with below comment 
-> by Ed). I am aware, that when more schemas and metric types comes this 
-> list will grow, but do we have other alternative?
-> 
-> What are your thoughts? If Sensor.Value is not the way, then how would 
-> we define the next interface?
-> 
->> Not reusing sensor seems like it would lead to a lot of code
->> duplication, as every API would now need to understand everything
->> about every "publishes real time telemetry" type interface, and every
->> time we add a new one, we'd (probably) have to update the code to add
->> the new type.  That doesn't really seem maintainable to me for every
->> type of telemetry we might want;  If a sensor isn't the right place to
->> put it, how would we solve the "I want to publish all telemetry
->> values" type use cases?  Maybe namespace the interface itself, so we
->> can use the arg0namespace feature in match expressions?  I'm thinking
->> out loud at this point...
->>
->>> I don't know why the "linking to a given property" would be a dbus
->>> representation.  Metric service should know which properties from dbus
->>> map to some metric entity, right?  For a one-user piece of information,
->>> I don't see a good reason to put this on dbus.
->>
->> I think the issue here is how do you know that a specific value
->> relates to say, the processor utilization, or the ram utilization, or
->> the smart statistics?
-> 
-> Yes, this is the gap we still need to address. Perhaps idea with with an 
-> well defined enum is not a bad one?
-> 
-> Taking an example of ProcessorMetrics\CoreMetrics[]\UnhaltedCycles
-> We would have an D-Bus sensor with given interfaces:
-> 
-> xyz.openbmc_project.Association.Definitions
-> .Associations    {"cpucore", "all_sensors", "/xyz.../core/5"}
-> 
-> xyz.openbmc_project.Sensor.Value
-> .Unit        "Count" # new unit
-> .Value        123123
-> 
-> xyz.openbmc_project.CpuCore.Metrics # New imagined interface with enum
-> .Type        "UnhaltedCycles"
-> 
->>
->>>
->>> -- 
->>> Patrick Williams
-> 
-> Thanks a lot for your input, it seems like we're going in good direction.
-> 
+Kind regards
+Uffe
 
+> ---
+> This should be a no-op functionality wise, and while it depends on the
+> first couple of patches in this series, it's otherwise independent from
+> the others. I think this makes the test more readable, but if you
+> particularly dislike it, I'm happy to drop it.
+>
+>  drivers/mmc/host/sdhci-of-aspeed-test.c | 34 ++++++++++++-------------
+>  1 file changed, 17 insertions(+), 17 deletions(-)
+>
+> diff --git a/drivers/mmc/host/sdhci-of-aspeed-test.c b/drivers/mmc/host/sdhci-of-aspeed-test.c
+> index bb67d159b7d8..1ed4f86291f2 100644
+> --- a/drivers/mmc/host/sdhci-of-aspeed-test.c
+> +++ b/drivers/mmc/host/sdhci-of-aspeed-test.c
+> @@ -26,23 +26,23 @@ static void aspeed_sdhci_phase_ddr52(struct kunit *test)
+>         KUNIT_EXPECT_EQ(test, 15,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 25));
+>
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 0,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 0,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 180));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 0,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 0,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 181));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 1,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 1,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 182));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 1,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 1,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 183));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 2,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 2,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 184));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 3,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 3,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 185));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 14,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 14,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 203));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 15,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 15,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 204));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 15,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 15,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 205));
+>  }
+>
+> @@ -67,21 +67,21 @@ static void aspeed_sdhci_phase_hs200(struct kunit *test)
+>         KUNIT_EXPECT_EQ(test, 15,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 96));
+>
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 180));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 185));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 1,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 1,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 186));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 1,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 1,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 187));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 14,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 14,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 269));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 15,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 15,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 270));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 15,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 15,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 271));
+> -       KUNIT_EXPECT_EQ(test, (int)ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 15,
+> +       KUNIT_EXPECT_EQ(test, ASPEED_SDHCI_TAP_PARAM_INVERT_CLK | 15,
+>                         aspeed_sdhci_phase_to_tap(NULL, rate, 276));
+>  }
+>
+> --
+> 2.31.1.751.gd2f1c929bd-goog
+>
