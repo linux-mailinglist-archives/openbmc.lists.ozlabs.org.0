@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C65E3888FF
-	for <lists+openbmc@lfdr.de>; Wed, 19 May 2021 10:08:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5BC73888FE
+	for <lists+openbmc@lfdr.de>; Wed, 19 May 2021 10:07:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FlQTx1JDHz2yxL
-	for <lists+openbmc@lfdr.de>; Wed, 19 May 2021 18:08:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FlQTZ6KWHz2ykH
+	for <lists+openbmc@lfdr.de>; Wed, 19 May 2021 18:07:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
@@ -17,15 +17,15 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FlQTk6jQtz3037;
- Wed, 19 May 2021 18:07:54 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FlQTM729Rz2xty;
+ Wed, 19 May 2021 18:07:33 +1000 (AEST)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 14J7q2pj033695;
- Wed, 19 May 2021 15:52:02 +0800 (GMT-8)
+ by twspam01.aspeedtech.com with ESMTP id 14J7q99e033711;
+ Wed, 19 May 2021 15:52:09 +0800 (GMT-8)
  (envelope-from jamin_lin@aspeedtech.com)
 Received: from localhost.localdomain (192.168.100.253) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 19 May
- 2021 16:04:38 +0800
+ 2021 16:04:46 +0800
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, "Andrew
  Jeffery" <andrew@aj.id.au>, Brendan Higgins <brendanhiggins@google.com>,
@@ -37,17 +37,19 @@ To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, "Andrew
  list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>, open list
  <linux-kernel@vger.kernel.org>, "moderated list:ARM/ASPEED I2C DRIVER"
  <openbmc@lists.ozlabs.org>
-Subject: [PATCH 0/3] i2c: aspeed: avoid new registers definition of AST2600
-Date: Wed, 19 May 2021 16:04:26 +0800
-Message-ID: <20210519080436.18975-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH 1/3] i2c: aspeed: avoid new registers definition of AST2600
+Date: Wed, 19 May 2021 16:04:27 +0800
+Message-ID: <20210519080436.18975-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20210519080436.18975-1-jamin_lin@aspeedtech.com>
+References: <20210519080436.18975-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [192.168.100.253]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 14J7q2pj033695
+X-MAIL: twspam01.aspeedtech.com 14J7q99e033711
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,19 +66,64 @@ Cc: steven_lee@aspeedtech.com, chiawei_wang@aspeedtech.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Jamin Lin (3):
-  i2c: aspeed: avoid new registers definition of AST2600
-  ARM: dts: aspeed: Add node for AST2600 I2C
-  dt-bindings: aspeed-i2c: Convert txt to yaml format
+The register definition between AST2600 A2 and A3 is different.
+This patch avoid new registers definition of AST2600 to use
+this driver. We will submit the path for the new registers
+definition of AST2600.
 
- .../devicetree/bindings/i2c/aspeed,i2c.yaml   | 89 +++++++++++++++++++
- .../devicetree/bindings/i2c/i2c-aspeed.txt    | 49 ----------
- arch/arm/boot/dts/aspeed-g6.dtsi              |  8 ++
- drivers/i2c/busses/i2c-aspeed.c               | 22 +++++
- 4 files changed, 119 insertions(+), 49 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
- delete mode 100644 Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ drivers/i2c/busses/i2c-aspeed.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
+diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+index 724bf30600d6..007309077d9f 100644
+--- a/drivers/i2c/busses/i2c-aspeed.c
++++ b/drivers/i2c/busses/i2c-aspeed.c
+@@ -19,14 +19,20 @@
+ #include <linux/irqchip/chained_irq.h>
+ #include <linux/irqdomain.h>
+ #include <linux/kernel.h>
++#include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+ #include <linux/of_address.h>
+ #include <linux/of_irq.h>
+ #include <linux/of_platform.h>
+ #include <linux/platform_device.h>
++#include <linux/regmap.h>
+ #include <linux/reset.h>
+ #include <linux/slab.h>
+ 
++/* I2C Global Registers */
++/* 0x0c : I2CG Global Control Register (AST2500)  */
++#define ASPEED_I2CG_GLOBAL_CTRL_REG			0x0c
++
+ /* I2C Register */
+ #define ASPEED_I2C_FUN_CTRL_REG				0x00
+ #define ASPEED_I2C_AC_TIMING_REG1			0x04
+@@ -973,6 +979,22 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
+ 	struct resource *res;
+ 	int irq, ret;
+ 
++	if (of_device_is_compatible(pdev->dev.of_node,
++				    "aspeed,ast2600-i2c-bus")) {
++		u32 global_ctrl;
++		struct regmap *gr_regmap;
++
++		gr_regmap = syscon_regmap_lookup_by_compatible("aspeed,ast2600-i2c-global");
++
++		if (IS_ERR(gr_regmap)) {
++			ret = PTR_ERR(gr_regmap);
++		} else {
++			regmap_read(gr_regmap, ASPEED_I2CG_GLOBAL_CTRL_REG, &global_ctrl);
++			if (global_ctrl & BIT(2))
++				return -EIO;
++		}
++	}
++
+ 	bus = devm_kzalloc(&pdev->dev, sizeof(*bus), GFP_KERNEL);
+ 	if (!bus)
+ 		return -ENOMEM;
 -- 
 2.17.1
 
