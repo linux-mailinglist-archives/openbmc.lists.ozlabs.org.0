@@ -2,131 +2,125 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07DBE3888C2
-	for <lists+openbmc@lfdr.de>; Wed, 19 May 2021 09:54:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BA7A138893E
+	for <lists+openbmc@lfdr.de>; Wed, 19 May 2021 10:19:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FlQBV0BtTz3bsf
-	for <lists+openbmc@lfdr.de>; Wed, 19 May 2021 17:54:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FlQl557Jhz2ymN
+	for <lists+openbmc@lfdr.de>; Wed, 19 May 2021 18:19:29 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=jAqiZb0s;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=OgYlrhJj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.100.105;
- helo=nam04-bn8-obe.outbound.protection.outlook.com;
- envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=quantatw.com (client-ip=40.107.132.105;
+ helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=jun-lin.chen@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=jAqiZb0s; 
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=OgYlrhJj; 
  dkim-atps=neutral
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam08on2105.outbound.protection.outlook.com [40.107.100.105])
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320105.outbound.protection.outlook.com [40.107.132.105])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FlQ5y6LMLz2yyx;
- Wed, 19 May 2021 17:50:46 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FlQG32lSgz2xg1
+ for <openbmc@lists.ozlabs.org>; Wed, 19 May 2021 17:57:46 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=T+Fj0TSm13KXs8zLiO0Oa/WQp6il1j38hwEDRl+QkgqYU1ItJumDfRXT1ybWPjkmHUBdjRj/nerX2SKaL1xEl46FHs/fyebIY8Q44p3jx/Vk13Dp837vf9xBcSynkQtFyD3/7ByLU+Vem43rKCYbrgZ3/isvWupff7XST41nmdSO7y/xPt8zuwarb04D+x+nruy5yuL/ufAJPOc8DbQw3ph5Uu35Jhza4Dmcr7JOPzZMobJMcH4U3+IiLDwvNms+gwy3IHikfoZZFF1mH0KtpeZeR6I2tpEDEl4D8foGZa1d2brF6Cs6pJ1x+spPW0kAyjH+Ji+a7jFwlOnowSimiw==
+ b=QkYW757C+rBWXvVFJ1nd/R0qMbZ9u9PAatDWwRv0sNaxu3BEecy81GkyR+WxF9kZcffSXlRGPvJE2Om+vi84lUiLUFe6h3laEwa3Oruc3rH8l9J9y7SPdvP9ZwxzHO3ph8tFnQtsX8nnH0sbWW4Ul/h3OB+gFu68+R3HYYy4GOEmw2kio8GXrM8JVWSN+U8No5LnB8r37ffCo/emI+inmk7ifC0FFJZNuu9xeasuWfEBNk9nvBbKWv6MWUdZfNZyqCN2z1VnyYILt2HUcbIS5Cw/0VB2zEO4RvywlgdEM6V6D87XrZ6X8HQD3AsKyEOIbzymyWjgZic8K+umET9kAQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Glrb4vzD3wcH0QfrVaYtRQA6+zo8DwoaU589Hro23QA=;
- b=ILmvNx7Ln5ul94bv7hWiE2IbEYi7ItBx6r1+udCvF4gdri9XGDg0BWWzDxxp+HOWdaV/1pb9brKhrXI3C/UQXLNqIeyVdcu1eJuaEOolKsrXVHFUoJTUnD0frtW+nBggG9Fzo9VdXiqPgvSS71xVa67SpZ8tQHBrlVOXib3fwZnWbVY5gaDRT67a0JVJLvrYPxdVm7OfpeWC/rcMDGBN//DijiJKprnqFiuzRIUNrcQM4Ht5GU998N6KdXbE+8T1FRDwS3BetF9OFJlVwFUjATwhcAFcXvgGJdKC+G8zmnx1FEvFO6ScrQL0i8POPL1ILGlyjWBO9QDQBUejh9KfPg==
+ bh=mtQaMH45/P3KnHvdvzgd3M9rrpN9fSv1SJQ5f0WnCu4=;
+ b=GniMiT83oR+DUxGc6B/FppmhrIPnjW76AaxWDqZUSNkSUfeAkWfpY2eS6JEsWoIPw00P5GO8e5Eo5NuGR78CsivjPc/2mwKnS4gUtzumxLT5TWoDLEFFKENJdm4T1984s0oUwwgLZl3NqAU9VYyX4f/1WHHSMtROfO+V+Z8w7kKJZepF+HnhUx5r0/Pk+0ZQvPJrG1rFkn/XqXaqvIn9V9G3e3dYQzWy+7xM2JnXKyFAth7dpkElGdykmMbLPcDfPA3p9G41PgVPRqsJX7N9TVg7VjhZYXPegF1+wzpxcuhaZvJ5LfYRLLFc0dwoX7hqqJlFJJd2NHXQnQUFPObN2Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Glrb4vzD3wcH0QfrVaYtRQA6+zo8DwoaU589Hro23QA=;
- b=jAqiZb0s8aoYE/nmV7VQ+aXCnJEJw6fS38pEo8JcK2lqStqrYJZaX8jM0DWPoifYtOb0FdKtYKUWTJ3atl42hE7ZE7/81tkHSKPu+vtHjDiPXw4foNCmYpJ0en2ntHFGhxF/PckiXYhECloEZKgkCyK9AqiqbOsaSSvCWGpR/7k=
-Authentication-Results: acm.org; dkim=none (message not signed)
- header.d=none;acm.org; dmarc=none action=none
- header.from=os.amperecomputing.com;
-Received: from MW2PR0102MB3482.prod.exchangelabs.com (2603:10b6:302:c::32) by
- CO1PR01MB6743.prod.exchangelabs.com (2603:10b6:303:d5::10) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4129.26; Wed, 19 May 2021 07:50:45 +0000
-Received: from MW2PR0102MB3482.prod.exchangelabs.com
- ([fe80::d840:7aa7:58d4:b503]) by MW2PR0102MB3482.prod.exchangelabs.com
- ([fe80::d840:7aa7:58d4:b503%5]) with mapi id 15.20.4129.032; Wed, 19 May 2021
- 07:50:45 +0000
-From: Quan Nguyen <quan@os.amperecomputing.com>
-To: Corey Minyard <minyard@acm.org>, Rob Herring <robh+dt@kernel.org>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- Brendan Higgins <brendanhiggins@google.com>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Wolfram Sang <wsa@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- openipmi-developer@lists.sourceforge.net, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
-Subject: [PATCH v3 7/7] bindings: ipmi: Add binding for Aspeed SSIF BMC driver
-Date: Wed, 19 May 2021 14:49:34 +0700
-Message-Id: <20210519074934.20712-8-quan@os.amperecomputing.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20210519074934.20712-1-quan@os.amperecomputing.com>
-References: <20210519074934.20712-1-quan@os.amperecomputing.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [118.69.219.201]
-X-ClientProxiedBy: HK2PR04CA0081.apcprd04.prod.outlook.com
- (2603:1096:202:15::25) To MW2PR0102MB3482.prod.exchangelabs.com
- (2603:10b6:302:c::32)
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from hcm-sw-17.amperecomputing.com (118.69.219.201) by
- HK2PR04CA0081.apcprd04.prod.outlook.com (2603:1096:202:15::25) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4129.25 via Frontend Transport; Wed, 19 May 2021 07:50:41 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: e021bf21-8463-48f0-3ff5-08d91a9acef0
-X-MS-TrafficTypeDiagnostic: CO1PR01MB6743:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <CO1PR01MB67435A4745A18B03EA8B575BF22B9@CO1PR01MB6743.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:3044;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: GbwcvCL6UajBIHReFTw5Ob16SdgrVkWeVUpMqGoXeXSr3gjdqprtrvWveb2hi+0/mh4TPS8jVPqB0HgEwjN94fQkwd5JAiIS6EecxnhtnA0IY3hDB3DE/5wXWC8qukHR8mFw8ozFfVq+vVcTYnR3ghUr3Qr0bx32SxPmGlZpTWgekhQbGWyU3g837Id+nbDWC1mJzDbnu0O1st9n3tR7dtj9rClPx+QUozmBKXXwyZvmbfctJxAfjKTz2jVNHHz/pHIQN+Zgh/mzP5Ditz+BklMveXQNLIHUsxvj5+8HuI3LIy7qQdxKPOuOUelx8hOnVOnW0Y9xS5z+Jq0QToN/uw7pyppbsVZy0JY6N6e+pFq1afG3wivLEmP/OHVdvQL6WeJ7ipen25ewvQrM7hvwU5NGQmrNiCt9EvOJmTm69dtxVXHPMH0FQ0p7fze5Y866H7wPOnHLaA/hEroiUkuzxEmkjGfLFbSaemHWZPl5DY8uSo57IddGfF90HshhYWvfi5w36aGODlep9P9ElmiIlsE7qhe1OJNGXv6/d7hz9aAHSvj4x6mhuIayyxnbmYUWOwb4CrWgzULPxMzApOHKdQhdhhndBIQ68wU3VDLVVyfu3kZV5pbzhJCPh1EPHh4Vourecj6apVwLAT9tRjYHn7c8p1o3gQ7r4uEhgMAg7Fn/tDa8Dqp+9rXLnQLxFX3PtbM9pgEr+2H1Wc8cGPg2eHtB62B42SQby2h0u498bp8EiUlwTy+ZUonDT6g6rwuCQ6+I39I0vK2Eok9Mu0J3tNrKzs8pi0TXBSPngBuhKXw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW2PR0102MB3482.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(39850400004)(376002)(136003)(346002)(396003)(478600001)(66946007)(66476007)(8676002)(8936002)(956004)(921005)(66556008)(52116002)(6506007)(2616005)(966005)(6512007)(5660300002)(86362001)(4326008)(38100700002)(1076003)(38350700002)(7416002)(316002)(186003)(6666004)(2906002)(110136005)(54906003)(6486002)(16526019)(26005);
+ bh=mtQaMH45/P3KnHvdvzgd3M9rrpN9fSv1SJQ5f0WnCu4=;
+ b=OgYlrhJjf88uu+Ouvy/7IWJ7E3vyVr9Or+eMso5S6c0cHU6bqHRIJS4vHsBtornF1zqNKx3QQrtXTwyuQe1IzhsIelpFLGCk9YSJ8IdQH64eSIFnz0svGmU57N50vYF0fDUt4kDDUOs1l+E/lv8MIrUHyCHfphjbhMeh9N47dqc=
+Received: from HK0PR04MB3346.apcprd04.prod.outlook.com (2603:1096:203:87::9)
+ by HK0PR04MB2788.apcprd04.prod.outlook.com (2603:1096:203:54::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4129.25; Wed, 19 May
+ 2021 07:57:40 +0000
+Received: from HK0PR04MB3346.apcprd04.prod.outlook.com
+ ([fe80::2044:8839:c6f9:fa63]) by HK0PR04MB3346.apcprd04.prod.outlook.com
+ ([fe80::2044:8839:c6f9:fa63%7]) with mapi id 15.20.4129.033; Wed, 19 May 2021
+ 07:57:40 +0000
+From: =?big5?B?SnVuLUxpbiBDaGVuICizr6tUwE0p?= <Jun-Lin.Chen@quantatw.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: SimpleStorage proposals
+Thread-Topic: SimpleStorage proposals
+Thread-Index: AddMgrei/Fpr/op3T+CFNeQhuUFj5A==
+Date: Wed, 19 May 2021 07:57:40 +0000
+Message-ID: <HK0PR04MB33460E66D59FF4F2DF64CBDDB12B9@HK0PR04MB3346.apcprd04.prod.outlook.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=quantatw.com;
+x-originating-ip: [61.218.113.162]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 95c69f3d-f675-46fd-b0ba-08d91a9bc6b6
+x-ms-traffictypediagnostic: HK0PR04MB2788:
+x-microsoft-antispam-prvs: <HK0PR04MB27885B3FE72B6DF614C48B21B12B9@HK0PR04MB2788.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7219;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 7SKsJhXcwZPupf7B72Sm1gGPqe4IjGVtHwrHibNWWTh3ecHKyITLCmeLvtzscB8w94zO0t4o2YcJ8A+oxJnGMSDMR9CMXwRXHUJXCMaTiKQkV30r54m/COzKwrlhkjdJE/wOUVMUw0cUgyr6I5W6NVdFUvdsF95uHicPJq5D212KGORMpDpmvKgZ4jRD50MsAzDI4tpb3wiDbVTm8kGjTEaXabTa67NV+Nn+ob/SEehiwkVdbX147bydA0cFKL9uRDkYm7zUgQwGLx25cc+N/CA8iQkyPdij5RhKEsHyJINWDMOE33YqFQTavpk4nYopUtk2M2OALqOcsh14Sbf/MWeS4RbmBWQo1yK+cfHdKW98LBpklNpWjnOKqdUS258VWG6/DvZNquZG4WpOljFOtGwAyKa/Al3t3Akn0vNIqWUBqhvxUm87pu+99VuEJOcvM8LUpFiTe71aGBaxlxw7vyxqeeoJJf/NllMC7CP07ETG13X6KDk7VXLdEoQD2oIxDSsiGHerkmCHldEetdiluyLCxpyXUo8y8hnvhiwM8nzIh6Cw5n5NNLUMqQ18ioybHXeC+M2uPsvmC6rmxyOAgDLUJAdWIeyv4t8jgy4ybpa7CrJjFr9Ae8Whr7PRn6sI2hAZEd6KTMwzSPt97rjZQ8gQd5suFjoRq3t+DACcJus=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR04MB3346.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(396003)(136003)(376002)(366004)(346002)(39860400002)(76116006)(66946007)(6916009)(7116003)(85182001)(2906002)(8676002)(316002)(54906003)(66476007)(83380400001)(64756008)(166002)(966005)(5660300002)(52536014)(6506007)(478600001)(122000001)(55016002)(66446008)(86362001)(38100700002)(66556008)(7696005)(3480700007)(8936002)(9686003)(26005)(4326008)(71200400001)(186003)(33656002)(4744005);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?SEbbo1zkv1IOWhRrWfK1Dc+Y7OtdgLlNitmFeBzjBoynVymUi1dtH55i4hVf?=
- =?us-ascii?Q?zEOt3pwE0MDg++Nb0ol+tbWyjU/Vt0V6M/YLjiZ77/5cFz+h6Ur3mRCLPoiy?=
- =?us-ascii?Q?pdWEkkZwhPGRp5aomm24g9qd7VmjDBlozxNaxYESN5FuTjTsRLEm8CbQfGvs?=
- =?us-ascii?Q?Fso42bJu1hgfyZ2DtJlnn5tmamX+MV+hWGKFndMm5V9PUTaExnY6GkwBDeOn?=
- =?us-ascii?Q?1TngXfExZy8gN2hocCxyFqqhe5Pjzcjnw9EsFMK6Ys/TrNKTgtFEEKGXIF7G?=
- =?us-ascii?Q?8ZtYi1iCingVY83qVSnwg2oX6CHqASNB7LZ4r4AUH4c2T+yhiyYsNdCERvJW?=
- =?us-ascii?Q?Wt5F0cpXFS9lktdP54PPT+5nk6PQ6R103uz0H261RCpC8oW6q7OqB25cNUmO?=
- =?us-ascii?Q?jvWxpkVNHhgv8glIQ/AokRlrTZlviMS3g+wOcHneauAHm1/kD6MfOaErp0hL?=
- =?us-ascii?Q?YZCcjhQhjyKWPeE0F0nYZ0pX/DEzYkZx/Y+PxaEuXPheIEwq23DjiIGuCuZn?=
- =?us-ascii?Q?SuVuIjGhQuFZY05h1F8kiR8x/L8IZCuHY7vdg1jdenj9PpDo9drNAJK2hpIJ?=
- =?us-ascii?Q?UR2h/yvFBUPZj10ep2lUMNY2vW0yVfsfeOXl84ylbY2q8FQoxksY8x5AAwca?=
- =?us-ascii?Q?CYcRBaZsX84ULP+1qsDms5pEnSTyaodUWj4O2wXnXTOFHqBGiUG5U2wxj4dE?=
- =?us-ascii?Q?tnCnWbeD9VpTW0gRKx48afz19zzwvprFd1tcD66lGWITthRz4mgNjPcbX0J5?=
- =?us-ascii?Q?XKQfhsIdsYbAmrRkxQdMN6F/m1lXKMSf7JgT76d/p/z0jj1myWVCGWzgiLJ/?=
- =?us-ascii?Q?v1Oxc9S4JC9tUUeFFTe89Vmw37OWRsgWKW65ieWeRKRBiy9ITly06mkX0LNo?=
- =?us-ascii?Q?RXNRgCHb2EJFtgI4fLzIdhNZ+d9RwYtEY+PEl+t1fxjEs/6mHTO4LoYwwSK9?=
- =?us-ascii?Q?TCQFFl0Y4V/QexVtywUr2JFtn13akCOmGN9CoUKb3lx39PK7UrPG7ltl9qY8?=
- =?us-ascii?Q?p73Fgr+HLM44VfGS4sZJ9uQvVJCwC4fKr8komV7F1SopKGHcdUVgYI6PWBfS?=
- =?us-ascii?Q?LehSl35ONGUBAuy1NTZxFX68LL96YjZLRw+RJFq/yTCn0oBgZ7OVqz1HeMsN?=
- =?us-ascii?Q?+xgBRHhSVAk48ws8KfwG/uJk7Uskt7KBwEMmW8ia0A3HWBB7aPfNJY4ySSOf?=
- =?us-ascii?Q?Ew5c/yX6abDXESvhRrcPy6eUB0kyRw5BLh2nHjmee4X8sxShbj3l7WL+pjbX?=
- =?us-ascii?Q?JqvgwN4J+06Wsfi6vd3T2sCJHuT7gVvCP3u/yTk/QckGtNUpYqQBwVJ/b5ac?=
- =?us-ascii?Q?yaP16tnNZpXGargjHtxf6aek?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e021bf21-8463-48f0-3ff5-08d91a9acef0
-X-MS-Exchange-CrossTenant-AuthSource: MW2PR0102MB3482.prod.exchangelabs.com
+x-ms-exchange-antispam-messagedata: =?big5?B?a0RmbmJvSUhUNlhHT05hK1JSMEx6R0J1aGsrRzlFNEljWW5PWkpwOVZOeVpHSXdV?=
+ =?big5?B?aUJNZ2FVMW80U2ZucTVlcytTR2NWTjhvUldaQzN3V09LRmk0U2FnL2hZdWF4bVhv?=
+ =?big5?B?UWIrWllBUmowaGZ5TTRMcW93UFRNMXdUZ0VYUWRyUXJ1N3hVVi9JWlVDNnBQVjRv?=
+ =?big5?B?ci8xY3RjaEIyREpFbHBGMEpUWXN2b3VNWGtMMUxQWkZVc2xlT1N6U1UwcEhiUWVQ?=
+ =?big5?B?MVhhZlNDNmNvazhzQ2dIb0RObmNOZjdwcE1STFA2VTJhOHdsRk1xZitHVVhLU21K?=
+ =?big5?B?YjdGbjFWWlpUSkNSOXNLUTR2QzJZK1dhOGs5TGdKeFFWYk9DQVF0QjZyTXlLOWJz?=
+ =?big5?B?Q2c5MEZ4UE5uR214YUhnL05aejZZUThyV3JZL2NYbDhOZk5NY0F6YS9rMWpBUnU0?=
+ =?big5?B?azVUZWxRcTZIN3RaZzMyZnlqTEV3dzdIQUpsSjRQNTNIUG0zSkJiNXZrajM3NENq?=
+ =?big5?B?aVhOL0FTc2NscHJSbXBPYUxDK1NuOGordVJyblRkdlFxdmxFdnl6MDJRNEdBbytN?=
+ =?big5?B?ZzMzZ3FFVWhGcm1kSzdWNGd5T0haaUE0MjBrQytWU3RPU1pLQ3ArNjkza21UR0FW?=
+ =?big5?B?RkZObFdmODB6UGczK3dvQXQ0VWZJVU84NmxDNlhTMUtJSkpjN3ZmbGQyODBsMjVY?=
+ =?big5?B?QmxiUGY2V091Y2MxL29xM0xxZnA0SzNmUEZnYUlzR2JPd2xYYVNndXFQcTBNcldI?=
+ =?big5?B?U09xYk1TLy81c3lSaS9VT2c0bThWdTh5eHBveDhyY0crVnpsZ2xwK2tTTHVhQ2dt?=
+ =?big5?B?YjYxdjBWMDhpc3drUndPWGdMSWZaM0xDeWxxemZHN3duV2FtWGZaclA4RlBJSnN4?=
+ =?big5?B?ek5EWFhERkpIaEJjNDVBMlh2VCsxei8yTVY4aUV4Q3JJT2JUWURDU1FiLzVmeHBw?=
+ =?big5?B?dHJHdEdlU3lpTkV2RmtaU1B0T0hDTklzRFNoNXNkZklkUFRldk13NTVRbnozSGg5?=
+ =?big5?B?bTZxbEpXSU9TdnFvNlJSdDFtbGVXMzNNd1FKT1FXTXozc1hUbkFtU244NXFlTm84?=
+ =?big5?B?MTNrZG9WK2l2M29Ja09DK01ZK0ZsNW1LZXg0VmZwcGREM0FBWlREZnlJOTg2MllQ?=
+ =?big5?B?clFSOVJGS3NVYnVCMC9teUI5dDJweTZvb3ZvaGJ4Smx4UTNIR1pDUDdGUzZ4aWk5?=
+ =?big5?B?dzZDUGZSZ09wZHJQSEhKSjdjbTdYNWVuWWZHMFB1bVdPQ2wvTDJpY04rR0xqdTBn?=
+ =?big5?B?b1FuM2JweWFoV3NaUmVWcXVsSXNCZ3VTTlpIZGF5RmJUVGhITCtnQ1lCSlc1dCtk?=
+ =?big5?B?QTRjbVNybCszTVh4V2k0dlBpVHdod3cwakFhdXFuZlFQaG5VSTNVbXFyZkhoQUFJ?=
+ =?big5?B?R1FaRDBVenBaQ1NDTjFVUFNaekwxVlB0MGVVdUdmdXUrZzRqZXN4MVlJYTM1YnpE?=
+ =?big5?B?bXJNS1JBdmh3V2lRdndhZklEUTk0WnBmb0Q2NnNzREIyVDcrY1ZJaHpRUFA5SEQr?=
+ =?big5?B?NFRKMEFLb0J5eDFNNXp0Sm80R200SEpwZGh2d3hkUmhvcjVCL0pROHI5MTVSRHVM?=
+ =?big5?B?Rkd2YVJKYUxoei9HTjFJMDR2bFBvM1lQQUZUSVVwVlMzNkdTSSs5WDFpaTM2L0tL?=
+ =?big5?B?ZnYwWk5xTzVJdm5JWFNhOW4raGRSR0RUbnFwWm1tNWIyTUFYNTdtem12NUZkSWxp?=
+ =?big5?Q?2Th1I+tIa3wFth5ormqW4GeVE1/oXDk/hENMlEC8OCU9C6Ap?=
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_HK0PR04MB33460E66D59FF4F2DF64CBDDB12B9HK0PR04MB3346apcp_"
+MIME-Version: 1.0
+X-OriginatorOrg: quantatw.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2021 07:50:45.4639 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1KjyS0ZFzK0oJnUTwZiWafvCw1sgaIq2XT5Jcd6/ZEFXx7QH61G8cUrLe7nUbfdNIs7kTo17xUEXr4PJfxYb7oTiFkmS0k4cCCMTlS+bMN4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR01MB6743
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3346.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95c69f3d-f675-46fd-b0ba-08d91a9bc6b6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 May 2021 07:57:40.3441 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: CvLEGC4U00lO2IlmeaiYM24ac6i7o1xH9t2BJTic0OhbRiQHQqukuhKOFnquf7RF2cx1w2h+bV1AmHdXrYuDTqF2dlp5F15Z3mB+fWjJYh4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR04MB2788
+X-Mailman-Approved-At: Wed, 19 May 2021 18:19:16 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -138,62 +132,133 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Open Source Submission <patches@amperecomputing.com>,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Phong Vo <phong@os.amperecomputing.com>, openbmc@lists.ozlabs.org
+Cc: "bradleyb@fuzziesquirrel.com" <bradleyb@fuzziesquirrel.com>,
+ Ed Tanous <ed@tanous.net>, Nan Zhou <nanzhou@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add device tree binding document for the Aspeed SSIF BMC driver.
+--_000_HK0PR04MB33460E66D59FF4F2DF64CBDDB12B9HK0PR04MB3346apcp_
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 
-Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
----
-v3:
-  + Switched to use DT schema format [Rob]
+SGkgYWxsLA0KDQpJbiBvcmRlciB0byBpbXBsZW1lbnQgdGhlIGZlYXR1cmUgdG8gdmlldyBzaW1w
+bGUgc3RvcmFnZSBkZXZpY2Ugc3RhdHVzLCBzdWNoIFNBVEEgSEREIHByZXNlbmNlIHN0YXR1cy4N
+CldlIHByb3Bvc2UgdG8gaW1wbGVtZW50IGl0IG9uIHRoZSBSZWRmaXNoIFNpbXBsZVN0b3JhZ2Ug
+VVJJLg0KDQpBcyBvdXIgcHJvcG9zYWwgZm9yIFJlZGZpc2ggU2ltcGxlU3RvcmFnZSwgaHR0cHM6
+Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMvZG9jcy8rLzQzMzUyDQpBbmQg
+YW4gbmV3IGRhZW1vbiwgaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5i
+bWMvZG9jcy8rLzQzMzUxDQoNClRoZXJlIGFyZSB0d28gbmV3IGRidXMtaW50ZXJmYWNlcyB0byBi
+ZSBwcm9wb3NlZCwNCnh5ei5vcGVuYm1jX3Byb2plY3QuSW52ZW50b3J5Lkl0ZW0uU3RvcmFnZURl
+dmljZTogaGVyZSBpcyBhbiBlbXB0eSBpbnRlcmZhY2UganVzdCBtYXJrIHRoZSBkYnVzIHBhdGgg
+dGhhdCBTaW1wbGVTdG9yYWdlIE1hbmFnZXIgc2hvdWxkIGNvbGxlY3QuDQp4eXoub3BlbmJtY19w
+cm9qZWN0LkludmVudG9yeS5JdGVtLlNpbXBsZVN0b3JhZ2U6IGl0IHNob3VsZCBoYXZlIHRoZSBw
+cm9wZXJ0aWVzIHJlZGZpc2ggbmVlZHMsIGFuZCBjYW4gYmUgcGFyc2VyIGJ5IGJtY3dlYi4NCg0K
+VGhlIGRldGFpbHMgYXJlIGluIHRoZSBwcm9wb3NhbC4NCg0KV2VsY29tZSBhbmQgdGhhbmsgeW91
+IGZvciBjb21tZW50cyBhbmQgc3VnZ2VzdGlvbnMNCg0KQmVzdCByZWdhcmRzLA0KSnVuLUxpbiBD
+aGVuDQoNCg==
 
- .../bindings/ipmi/aspeed-ssif-bmc.yaml        | 33 +++++++++++++++++++
- 1 file changed, 33 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.yaml
+--_000_HK0PR04MB33460E66D59FF4F2DF64CBDDB12B9HK0PR04MB3346apcp_
+Content-Type: text/html; charset="big5"
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.yaml b/Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.yaml
-new file mode 100644
-index 000000000000..8608041fbf7e
---- /dev/null
-+++ b/Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.yaml
-@@ -0,0 +1,33 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/ipmi/aspeed-ssif-bmc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Aspeed SSIF IPMI interface
-+
-+description: SSIF IPMI device bindings for Aspeed
-+
-+maintainers:
-+  - Thang Nguyen <thang@os.amperecomputing.com>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - aspeed,ast2500-ssif-bmc
-+
-+  reg:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    ssif-bmc@10 {
-+        compatible = "aspeed,ast2500-ssif-bmc";
-+        reg = <0x10>;
-+    };
--- 
-2.28.0
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:=B7s=B2=D3=A9=FA=C5=E9;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@=B7s=B2=D3=A9=FA=C5=E9";
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi all,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">In order to implement the featu=
+re to view simple storage device status, such SATA HDD presence status.<o:p=
+></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">We propose to implement it on t=
+he Redfish SimpleStorage URI.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">As our proposal for Redfish Sim=
+pleStorage,
+<a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/43352">https=
+://gerrit.openbmc-project.xyz/c/openbmc/docs/+/43352</a><o:p></o:p></span><=
+/p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">And an new daemon, <a href=3D"h=
+ttps://gerrit.openbmc-project.xyz/c/openbmc/docs/+/43351">
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/43351</a><o:p></o:p></s=
+pan></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">There are two new dbus-interfac=
+es to be proposed,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">xyz.openbmc_project.Inventory.I=
+tem.StorageDevice: here is an empty interface just mark the dbus path that =
+SimpleStorage Manager should collect.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">xyz.openbmc_project.Inventory.I=
+tem.SimpleStorage: it should have the properties redfish needs, and can be =
+parser by bmcweb.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">The details are in the proposal=
+.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Welcome and thank you for comme=
+nts and suggestions<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><i><span lang=3D"EN-US" style=3D"font-family:&quot;T=
+imes New Roman&quot;,serif">Best regards,<o:p></o:p></span></i></p>
+<p class=3D"MsoNormal"><i><span lang=3D"EN-US" style=3D"font-family:&quot;T=
+imes New Roman&quot;,serif">Jun-Lin Chen<o:p></o:p></span></i></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
 
+--_000_HK0PR04MB33460E66D59FF4F2DF64CBDDB12B9HK0PR04MB3346apcp_--
