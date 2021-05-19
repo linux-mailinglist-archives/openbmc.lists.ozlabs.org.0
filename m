@@ -2,58 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAA6C3892A3
-	for <lists+openbmc@lfdr.de>; Wed, 19 May 2021 17:29:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A3B853892A6
+	for <lists+openbmc@lfdr.de>; Wed, 19 May 2021 17:30:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FlcHW5WVYz301L
-	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 01:29:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FlcHr3W26z30Hk
+	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 01:30:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.167.178;
- helo=mail-oi1-f178.google.com; envelope-from=robherring2@gmail.com;
- receiver=<UNKNOWN>)
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com
- [209.85.167.178])
+ smtp.mailfrom=gmail.com (client-ip=209.85.210.47; helo=mail-ot1-f47.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com
+ [209.85.210.47])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FlcHF173Qz2xZS;
- Thu, 20 May 2021 01:29:29 +1000 (AEST)
-Received: by mail-oi1-f178.google.com with SMTP id d21so13433672oic.11;
- Wed, 19 May 2021 08:29:28 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FlcHK38P9z2xZS;
+ Thu, 20 May 2021 01:29:33 +1000 (AEST)
+Received: by mail-ot1-f47.google.com with SMTP id
+ g7-20020a9d12870000b0290328b1342b73so4259253otg.9; 
+ Wed, 19 May 2021 08:29:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
  :message-id;
- bh=6sgw4dZNi4BFtEEc+m0JLU9MKkrHkvN3LLqqxVCcWAY=;
- b=I87jEzwGfqQ35x795z55CXJhIcExTtWRpYr1ffGT21TL0+1LCDegdHznFCnzldmT8Q
- Wz+RyJz53uJqMtcVcP/AxoX3AtS2TRsFbqfi9surA7Xz4B+Xrn/A9JK6MA6l7IdNq7Yt
- pZUeFG1pzYnGHwAFZCyQZP4HigiZ9mP5Hzgky8yqD3A89+UUacDTnrzr9yN5mTIKdThV
- h9JFsbITeScvewdd1zq5Jo62g64fFTMtcpkfxrGbHsdaSJePC6Yndltp8PQ6s5IWY++n
- wrT9ercP051VmM1Uc8iZoVQa7rO60oXkOrHtcx0cvfyuvuYr3lsM5XjWlLKj0T4jZ7He
- EEww==
-X-Gm-Message-State: AOAM531SqAIH6jhODFAmScMcegdT6wNOPOPRqbekbfoyxuAYHWBjkcEC
- cf3+dRufrOH7zFemYyELYg==
-X-Google-Smtp-Source: ABdhPJxpcJcisKTasg8QiYFuZTHsZe6ssMjCsGuLZrRJywLDzjgJu1juj+3zcOycyjoKvnHHz5hSzA==
-X-Received: by 2002:a54:481a:: with SMTP id j26mr7226575oij.154.1621438166265; 
- Wed, 19 May 2021 08:29:26 -0700 (PDT)
+ bh=k1BMeUTbeJ1Ojj2Y28GjLMZTtvIHgmmwd90fSboA3i0=;
+ b=Fxn+mC2PXwhkPX0zq9mO2l48PHV6Emqk2Q0Odym6KhKt5/lQqP8hmwjIXg6h7+L7iv
+ PPN+Q5e6GAwA8bY//Jw+94VrIHQM+tCrONUWN+BGbCSwQAcy0E8HWXzhxvpOxbIxPj7E
+ yVFft9Nj1brWnymKTHzPZ7Rauc5A0FXHQJfMh7p6muW18GgjV4m4ahs0j6CFlhVtlU55
+ 5cFauoUSQuyWH7U/4Ku3An3bawJpaim+06RdkaEtjtglAR52d4Arut5vQXyMW3aDWchq
+ F+HOEfIHUUgg93OpLlFqbWQZEHOdrBRE/PIlx79kVfT4bzFSQ3U8st9YwEisrz7XqG0t
+ 71Ew==
+X-Gm-Message-State: AOAM5338uJsVH4RKl0zD5DEwI9vvLkBZOQDhl4tYhLVwyu+K39dHRRf4
+ PnRIB6Z9cmDlTtMFgFpYJw==
+X-Google-Smtp-Source: ABdhPJzfHwRubC4A+GJbwqXIPluC9VWdzE3LtUHkth8w8OcmezXF1dBV+tE1V5FeZG+SaSCglQKYiQ==
+X-Received: by 2002:a9d:58c1:: with SMTP id s1mr9206990oth.361.1621438170894; 
+ Wed, 19 May 2021 08:29:30 -0700 (PDT)
 Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
  [24.155.109.49])
- by smtp.gmail.com with ESMTPSA id b18sm1458otk.62.2021.05.19.08.29.24
+ by smtp.gmail.com with ESMTPSA id r124sm4101937oig.38.2021.05.19.08.29.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 May 2021 08:29:25 -0700 (PDT)
-Received: (nullmailer pid 3134231 invoked by uid 1000);
+ Wed, 19 May 2021 08:29:30 -0700 (PDT)
+Received: (nullmailer pid 3134234 invoked by uid 1000);
  Wed, 19 May 2021 15:29:24 -0000
 From: Rob Herring <robh@kernel.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-In-Reply-To: <20210519074934.20712-8-quan@os.amperecomputing.com>
-References: <20210519074934.20712-1-quan@os.amperecomputing.com>
- <20210519074934.20712-8-quan@os.amperecomputing.com>
-Subject: Re: [PATCH v3 7/7] bindings: ipmi: Add binding for Aspeed SSIF BMC
- driver
+To: Jamin Lin <jamin_lin@aspeedtech.com>
+In-Reply-To: <20210519080436.18975-4-jamin_lin@aspeedtech.com>
+References: <20210519080436.18975-1-jamin_lin@aspeedtech.com>
+ <20210519080436.18975-4-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH 3/3] dt-bindings: aspeed-i2c: Convert txt to yaml format
 Date: Wed, 19 May 2021 10:29:24 -0500
-Message-Id: <1621438164.118346.3134230.nullmailer@robh.at.kernel.org>
+Message-Id: <1621438164.132520.3134233.nullmailer@robh.at.kernel.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,30 +64,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- Corey Minyard <minyard@acm.org>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Brendan Higgins <brendanhiggins@google.com>,
- Phong Vo <phong@os.amperecomputing.com>, linux-kernel@vger.kernel.org,
- Wolfram Sang <wsa@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- openipmi-developer@lists.sourceforge.net,
- Open Source Submission <patches@amperecomputing.com>,
- linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, ryan_chen@aspeedtech.com,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>, Brendan Higgins <brendanhiggins@google.com>,
+ chiawei_wang@aspeedtech.com, troy_lee@aspeedtech.com,
+ steven_lee@aspeedtech.com, open list <linux-kernel@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, Rayn Chen <rayn_chen@aspeedtech.com>,
+ "open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>,
+ "moderated list:ARM/ASPEED I2C DRIVER" <openbmc@lists.ozlabs.org>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 19 May 2021 14:49:34 +0700, Quan Nguyen wrote:
-> Add device tree binding document for the Aspeed SSIF BMC driver.
+On Wed, 19 May 2021 16:04:29 +0800, Jamin Lin wrote:
+> Add global-reg node for AST2600. Document the properties for
+> "aspeed,ast2600-i2c-global" compatible node.
 > 
-> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
-> v3:
->   + Switched to use DT schema format [Rob]
-> 
->  .../bindings/ipmi/aspeed-ssif-bmc.yaml        | 33 +++++++++++++++++++
->  1 file changed, 33 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.yaml
+>  .../devicetree/bindings/i2c/aspeed,i2c.yaml   | 89 +++++++++++++++++++
+>  .../devicetree/bindings/i2c/i2c-aspeed.txt    | 49 ----------
+>  2 files changed, 89 insertions(+), 49 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -97,16 +97,9 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.example.dts:21.13-26: Warning (reg_format): /example-0/ssif-bmc@10:reg: property has invalid length (4 bytes) (#address-cells == 1, #size-cells == 1)
-Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.example.dt.yaml: Warning (pci_device_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.example.dt.yaml: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.example.dt.yaml: Warning (simple_bus_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.example.dt.yaml: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.example.dt.yaml: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/ipmi/aspeed-ssif-bmc.example.dt.yaml: example-0: ssif-bmc@10:reg:0: [16] is too short
-	From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/reg.yaml
+Documentation/devicetree/bindings/i2c/aspeed,i2c.example.dt.yaml:0:0: /example-0/i2c-global-regs@0: failed to match any schema with compatible: ['aspeed,ast2600-i2c-global', 'syscon']
 
-See https://patchwork.ozlabs.org/patch/1480727
+See https://patchwork.ozlabs.org/patch/1480769
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
