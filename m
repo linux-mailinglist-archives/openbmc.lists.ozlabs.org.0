@@ -2,64 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C211F3899DB
-	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 01:29:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E1C6389A01
+	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 01:43:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Flpwg5D91z302m
-	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 09:29:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FlqFR3vZVz306y
+	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 09:43:39 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=HAOlx4M7;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=hV289Pn1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::732;
- helo=mail-qk1-x732.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72f;
+ helo=mail-qk1-x72f.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=HAOlx4M7; dkim-atps=neutral
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com
- [IPv6:2607:f8b0:4864:20::732])
+ header.s=google header.b=hV289Pn1; dkim-atps=neutral
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com
+ [IPv6:2607:f8b0:4864:20::72f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FlpwP3L7bz2xb6;
- Thu, 20 May 2021 09:28:52 +1000 (AEST)
-Received: by mail-qk1-x732.google.com with SMTP id v8so14547056qkv.1;
- Wed, 19 May 2021 16:28:52 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FlqF94ftTz2xv6;
+ Thu, 20 May 2021 09:43:24 +1000 (AEST)
+Received: by mail-qk1-x72f.google.com with SMTP id k127so14526113qkc.6;
+ Wed, 19 May 2021 16:43:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=+sRe31lrHGcUgSFKKGzM5XKzbij36J+nU6GLQsIGJJk=;
- b=HAOlx4M74XjBWQ8LN2fsuibOmX34Rxz0V7tqxzf7ZIWM+X+lRP/M7KyCNN/h19Q2ze
- ou41sL+m6NfWT9Y4u75hnp/iUQWwcpgGnc3lU4BxL1BpRf14BKJUseUHnAKYSRbMoIbB
- 8WFQrW9H6mTEzhMJ8n8yJGvDHvomUkP+pmbBM=
+ :cc; bh=jZj61H+nZldX9VF8Rk7SoLRZEnhdWQ15nrHYMIdlXL8=;
+ b=hV289Pn1fzt0l5vYzw9Zco9XFbeqr0tKlwl117wL+ReIbVLezHs/xFwIcMKafGIL/r
+ Ceq9AJkQHisWMOwWZVoe+E3BdzypGyKrbGtP5GVg+wjxmevjIE5q30D1Z3rQCTBmbzyl
+ JopSkzzu13aCRFAkE3C3pYN93lb/AFgpuiOcI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=+sRe31lrHGcUgSFKKGzM5XKzbij36J+nU6GLQsIGJJk=;
- b=Y6ZcTjOIFooI3FR3JKRq3bb4I8HiuWLCpeBrunZfQmrphiSN9VEIpy43SdCmGg4aop
- dl1NoTfBFJKcYw5fG9A0TxMLE6WINyLDp1sme28cRQ6vdahh4PRucpLCuCUTh+dd5O67
- 2VxqSljRbHLBOOH5dUhjoi2q/sn/nmkniR1SNJSPlhd/njzbg3h9mSTWtbAdW1MxGz65
- 5v+6twmR5T944FsD2BMSpxooFJJYGQgRK09uJ9Nhw+QTXFNmZldOrq9P/RyG9IVbaa+h
- H2vwBi9Y6IRP5yU/BLTmwz3a38QK1lpSNb285uUiQtZWKyrR6RaPNny43L7VQuDNOMgM
- OH4g==
-X-Gm-Message-State: AOAM533HS0fTliRVoFuyhW3Iq/54+T2btJ0HTxfXT1ABEmFBInjxxD1L
- XAkMFR476sDLh22LytLLkU6ns/3zJIDF8V5qW5M=
-X-Google-Smtp-Source: ABdhPJzs/PNVyZHXiN60/U4ROwriKRalRsyur5ioWhvG9uZxMJo/oQyw0WnlQ0RLEb2ucWzVwat0FQEtGAkFU+vY1FU=
-X-Received: by 2002:a05:620a:704:: with SMTP id 4mr1279089qkc.66.1621466929079; 
- Wed, 19 May 2021 16:28:49 -0700 (PDT)
+ bh=jZj61H+nZldX9VF8Rk7SoLRZEnhdWQ15nrHYMIdlXL8=;
+ b=BlLk7aoWLrokntCP7ClAje46dwKt/i0j7gY9n/HTAA+gM2/uh+totCvyK3m4Ad1Hju
+ /AVrASPRBj1CXukQ+v0kfW/Ju/9jYRg6+zqI0EXlowpheaj8BRuWKTa3p2b3c4RBI3KT
+ yVBRYZmPDVsJAtMRlteuALdxiDpzr/FacCnqKRyA/unBMYQKr3AsK1WQXLxDHQaMNUuS
+ t/hxAl4qMCihDr43ej35xjzueK8tTnJU5VnEgwlYU6eWPYo0HKti3UXaed/C9y3b0/VB
+ j6xM5+9ZUZU5HcpBaHZvtErpB8nzWTrP4rXuaeEYREZ7yvJBz4AJngpoL6T/TKSZ65GW
+ zhlQ==
+X-Gm-Message-State: AOAM532LuXAWR6F2HTMJ/3zWlwUs79lC4jZtiUQqV7aHJEAbAn0A9O4o
+ Nm0PbN7Q0uYTcyNLXHHkAhd0fKl0y7zHZ7vdJn4=
+X-Google-Smtp-Source: ABdhPJyUszWiuobnzOy5L9VplXiMBG9qLzJjbpbR0WfzIFw8cspGiZ3PnAV6tV3oDvUEgCvPn/rTmcBK9mwiyYTq9ws=
+X-Received: by 2002:a05:620a:704:: with SMTP id 4mr1331345qkc.66.1621467800517; 
+ Wed, 19 May 2021 16:43:20 -0700 (PDT)
 MIME-Version: 1.0
 References: <20210519074934.20712-1-quan@os.amperecomputing.com>
- <20210519074934.20712-4-quan@os.amperecomputing.com>
-In-Reply-To: <20210519074934.20712-4-quan@os.amperecomputing.com>
+ <20210519074934.20712-5-quan@os.amperecomputing.com>
+In-Reply-To: <20210519074934.20712-5-quan@os.amperecomputing.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 19 May 2021 23:28:37 +0000
-Message-ID: <CACPK8XeFsuEXeCvG9DC0z+tiri6ptjOFOXe3x+COEZTVqUbVFg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/7] i2c: aspeed: Fix unhandled Tx done with NAK
+Date: Wed, 19 May 2021 23:43:08 +0000
+Message-ID: <CACPK8XdyQT=cuSr9KBqC0PBkOLgBUBpyz3kZEA3JuOuZsQN_Rw@mail.gmail.com>
+Subject: Re: [PATCH v3 4/7] i2c: aspeed: Acknowledge Tx done w/wo ACK irq late
 To: Quan Nguyen <quan@os.amperecomputing.com>,
- Ryan Chen <ryan_chen@aspeedtech.com>
+ Guenter Roeck <linux@roeck-us.net>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -87,32 +87,26 @@ Cc: devicetree <devicetree@vger.kernel.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Ryan, can you please review this change?
-
 On Wed, 19 May 2021 at 07:50, Quan Nguyen <quan@os.amperecomputing.com> wrote:
 >
-> It is observed that in normal condition, when the last byte sent by
-> slave, the Tx Done with NAK irq will raise.
-> But it is also observed that sometimes master issues next transaction
-> too quick while the slave irq handler is not yet invoked and Tx Done
-> with NAK irq of last byte of previous READ PROCESSED was not ack'ed.
-> This Tx Done with NAK irq is raised together with the Slave Match and
-> Rx Done irq of the next coming transaction from master.
-> Unfortunately, the current slave irq handler handles the Slave Match and
-> Rx Done only in higher priority and ignore the Tx Done with NAK, causing
-> the complain as below:
-> "aspeed-i2c-bus 1e78a040.i2c-bus: irq handled != irq. expected
-> 0x00000086, but was 0x00000084"
+> With Tx done w/wo ACK are ack'ed early at beginning of irq handler,
+
+Is w/wo a typo? If not, please write the full words ("with and without")
+
+> it is observed that, usually, the Tx done with Ack irq raises in the
+> READ REQUESTED state. This is unexpected and complaint as below appear:
+> "Unexpected Ack on read request"
 >
-> This commit handles this case by emitting a Slave Stop event for the
-> Tx Done with NAK before processing Slave Match and Rx Done for the
-> coming transaction from master.
+> Assumed that Tx done should only be ack'ed once it was truly processed,
+> switch to late ack'ed this two irqs and seen this issue go away through
+> test with AST2500..
 
-It sounds like this patch is independent of the rest of the series,
-and can go in on it's own. Please send it separately to the i2c
-maintainers and add a suitable Fixes line, such as:
+Please read Guneter's commit message
+2be6b47211e17e6c90ead40d24d2a5cc815f2d5c to confirm that your changes
+do not invalidate the fix that they made.  Add them to CC for review.
 
-  Fixes: f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed I2C driver")
+Again, this is a fix that is independent of the ssif work. Please send
+it separately with a Fixes line.
 
 >
 > Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
@@ -120,33 +114,82 @@ maintainers and add a suitable Fixes line, such as:
 > v3:
 >   + First introduce in v3 [Quan]
 >
->  drivers/i2c/busses/i2c-aspeed.c | 5 +++++
->  1 file changed, 5 insertions(+)
+>  drivers/i2c/busses/i2c-aspeed.c | 26 ++++++++++++++++++--------
+>  1 file changed, 18 insertions(+), 8 deletions(-)
 >
 > diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-> index 724bf30600d6..3fb37c3f23d4 100644
+> index 3fb37c3f23d4..b2e9c8f0ddf7 100644
 > --- a/drivers/i2c/busses/i2c-aspeed.c
 > +++ b/drivers/i2c/busses/i2c-aspeed.c
-> @@ -254,6 +254,11 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+> @@ -606,8 +606,12 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void *dev_id)
 >
->         /* Slave was requested, restart state machine. */
->         if (irq_status & ASPEED_I2CD_INTR_SLAVE_MATCH) {
+>         spin_lock(&bus->lock);
+>         irq_received = readl(bus->base + ASPEED_I2C_INTR_STS_REG);
+> -       /* Ack all interrupts except for Rx done */
+> -       writel(irq_received & ~ASPEED_I2CD_INTR_RX_DONE,
+> +       /*
+> +        * Ack all interrupts except for Rx done and
+> +        * Tx done with/without ACK
 
-Can you explain why you need to do this handing inside the SLAVE_MATCH case?
+Nit: this comment can be on one line.
 
-Could you instead move the TX_NAK handling to be above the SLAVE_MATCH case?
 
-> +               if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
-> +                   bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
+> +        */
+> +       writel(irq_received &
+> +              ~(ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK | ASPEED_I2CD_INTR_TX_NAK),
+>                bus->base + ASPEED_I2C_INTR_STS_REG);
+>         readl(bus->base + ASPEED_I2C_INTR_STS_REG);
+>         irq_received &= ASPEED_I2CD_INTR_RECV_MASK;
+> @@ -652,12 +656,18 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void *dev_id)
+>                         "irq handled != irq. expected 0x%08x, but was 0x%08x\n",
+>                         irq_received, irq_handled);
+>
+> -       /* Ack Rx done */
+> -       if (irq_received & ASPEED_I2CD_INTR_RX_DONE) {
+> -               writel(ASPEED_I2CD_INTR_RX_DONE,
+> -                      bus->base + ASPEED_I2C_INTR_STS_REG);
+> -               readl(bus->base + ASPEED_I2C_INTR_STS_REG);
+> -       }
+> +       /* Ack Rx done and Tx done with/without ACK */
+> +       /* Note: Re-use irq_handled variable */
 
-Either way, this needs a comment to explain what we're working around.
+I'm not sure what this note means.
 
-> +                       irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
-> +                       i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
-> +               }
->                 irq_handled |= ASPEED_I2CD_INTR_SLAVE_MATCH;
->                 bus->slave_state = ASPEED_I2C_SLAVE_START;
->         }
+> +       irq_handled = 0;
+> +       if (irq_received & ASPEED_I2CD_INTR_RX_DONE)
+> +               irq_handled |= ASPEED_I2CD_INTR_RX_DONE;
+> +       if (irq_received & ASPEED_I2CD_INTR_TX_ACK)
+> +               irq_handled |= ASPEED_I2CD_INTR_TX_ACK;
+> +       if (irq_received & ASPEED_I2CD_INTR_TX_NAK)
+> +               irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
+> +       writel(irq_handled, bus->base + ASPEED_I2C_INTR_STS_REG);
+
+Are you intentionally only acking the bits that are set when we read
+from STS_REG at the start of the handler? If not, we could write this
+instead:
+
+writel(ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK |
+ASPEED_I2CD_INTR_TX_NAK,
+        bus->base + ASPEED_I2C_INTR_STS_REG);
+
+If you only want to ack the bits that are set, then do this:
+
+  writel(irq_received &
+            (ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK |
+ASPEED_I2CD_INTR_TX_NAK),
+         bus->base + ASPEED_I2C_INTR_STS_REG);
+
+That way, you can avoid all of the tests.
+
+> +       readl(bus->base + ASPEED_I2C_INTR_STS_REG);
+
+When you move this, please add a comment that reminds us why we do a
+write-then-read (see commit c926c87b8e36dcc0ea5c2a0a0227ed4f32d0516a).
+
+> +
+>         spin_unlock(&bus->lock);
+>         return irq_remaining ? IRQ_NONE : IRQ_HANDLED;
+>  }
 > --
 > 2.28.0
 >
