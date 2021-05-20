@@ -1,38 +1,38 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 514FB38B0E8
-	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 16:04:17 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C6F438B131
+	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 16:11:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FmBLR1lYfz3062
-	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 00:04:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FmBVL3S5vz302c
+	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 00:11:06 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=O8vNssRH;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=Yfx4aMmg;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.94.103;
- helo=nam10-mw2-obe.outbound.protection.outlook.com;
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.220.136;
+ helo=nam11-co1-obe.outbound.protection.outlook.com;
  envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=O8vNssRH; 
+ header.a=rsa-sha256 header.s=selector2 header.b=Yfx4aMmg; 
  dkim-atps=neutral
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com
- (mail-mw2nam10on2103.outbound.protection.outlook.com [40.107.94.103])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2136.outbound.protection.outlook.com [40.107.220.136])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FmBL51byRz2xvT;
- Fri, 21 May 2021 00:03:55 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FmBTy412yz2xYZ;
+ Fri, 21 May 2021 00:10:45 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MfmMetX4YWCM+hZ0s2oEhRsjT1xqOQu8mjU7VviEBbrMJvIjIrP50r7b3WnVD4cxQxDI2BqxoKzHkPaquZaUtKhdYJYPu4jhDTf7dXExvezI14iiD3v7HBWJ9nNQwouFCjqMhqpAtJvSxO7MVq5zXKAqZSZrUkzDQFqPuUlMcfvDF4wFX0cbQu2wCiXsFH5czIjktzIfSInQLJUx9jbzYs904Jzq0aV69X6Ihe6oOdXHkLSpkKbFpERkkpIvCNVBxF9bO7pne5i8kW84xCZ6jmwXaqHQQ9TiO8EsaUMB4C+QXu+ESnmGBQyFSeV/UAmgyEq4Y8cnOCvLDU1lr6Hjkg==
+ b=K26ULtCzB3+f0tT9Nf2QoD23veRRoeKuRhtNHbdX3ODgetx1BbDYHTXW1X07l894vgfJD94lmryNX4D5D1Fy1AlbWWe0OMFQvSRU0epWV7t6BnIZ08IL9rY5Ol0Ls0NB5Eg4BwM49Kb3I7EJXu8S9TSCWWMjQPh16/QIJqKIojp7zZYu1NcA7X050wbNJUE07wQG/Hl95AYTuk1FHizUgWJcV+uJrx0xVmEKhlD3lwSwpODPZR96RK4FZnuQLNko8T6UJO/VDnfw2+4BXCaXj/qXx/5+Z+atJRtNRyCN12VFiqllU2t76X/PHANJFa07JOZDnreAmmIPdHYAfrB7nQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lyql9MaMdh47OJgpYDRPts7soSiw2EHAounFyrEltV0=;
- b=PpDqTnSZDiIazKprJmL9dGjc7lGFWULn70di6sJzMZLw7dENBOI+ARyLyxHwOF6ifjLVzRGmbMgvdnG2ZM16WH2ish22Vl7Kulgz9VB+KQuCyPqCujTx3kU0/cQNuiILRAOKk2efuLE75E/UTkWQDqRl5CZYhOHNhfzjE7ZNo7AjHBr2t4sQ/TiRykfeUPS57Ze+e3Cg5sRN1MxzEodkdnSNSbFecEBBNuKkGdTR9L8olFttx2GzwqcXyrpfp+xGr29xQzl45Uxli80xRjl0w+lSqYT9vz3WSsgVm0VwJ1/jLeeW971Gd8c0gqxTdo5DBkMrEheuoKj8cgjz5uj4Rw==
+ bh=3GE86ePyOSJRCi3OwXbN7VwYhAoaN3TRx06w3gkUP+w=;
+ b=k4gE5ANqu+n21FLzrEmNab3f6WDBle4qMnoaOvoGoL8LZ2kAezQo9PGmSdaxUk4TueAn/MNJDztmyXZSY3hkjMZhZj6BXxMX9sBYNd+Wtac6gs0iwr3UkLYjb1AzodKSEAk0DRduqp+QimydHnZ5oEnzkr/eINJtvPz2g+/pxWtRK5mySTkgYVpT5TCpupn+CpvurUKd3t4RTptmAjNxCxEkuTbIs98uWsoKV6eb4ZLdWYL+t3Syfoy26mgO3xOSV6KF0A+6bdmF4MFWe8d2UVn+4S6wPiyRNWqO2S83flMVy0Ku4u4AYK3c0uQnKYJri9BLw9wbfe7DlxXHkYmE4Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -40,101 +40,113 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lyql9MaMdh47OJgpYDRPts7soSiw2EHAounFyrEltV0=;
- b=O8vNssRH1rSaDThpwcuwEXEes8+HZi+Q5hWtOhIzZngQDNuU4D//K6Shigz45TiMB2PqrmL8+HhIxmJMnoThHqfThcaFgGAoy6NYd/rvmhZjF58FkuTINl4Z9Cb+0Jp3SEsFBCYYOLwMfHqVx6T/pRurDYylJP1/aTxKe7YfJoc=
+ bh=3GE86ePyOSJRCi3OwXbN7VwYhAoaN3TRx06w3gkUP+w=;
+ b=Yfx4aMmgQQJOnVsug0qV1iwImmZHiVmfdno13EJrZQU4smKE8NE1UictkiBZijKLO6HWZ3Do+eMV7vnjZ5vXJrlL797XkQLxyewfLpqqsP/+vdbcgE/YMN+B3KobiuyW0Yfk+r6GFBNvzNCBC/brxp9maQCnb6wxl2e9QsXQgOE=
 Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
  header.d=none;lists.ozlabs.org; dmarc=none action=none
  header.from=os.amperecomputing.com;
 Received: from MW2PR0102MB3482.prod.exchangelabs.com (2603:10b6:302:c::32) by
- MWHPR01MB2672.prod.exchangelabs.com (2603:10b6:300:f2::10) with
+ MW4PR01MB6146.prod.exchangelabs.com (2603:10b6:303:7c::24) with
  Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4150.23; Thu, 20 May 2021 14:03:48 +0000
+ 15.20.4129.28; Thu, 20 May 2021 14:10:39 +0000
 Received: from MW2PR0102MB3482.prod.exchangelabs.com
  ([fe80::d840:7aa7:58d4:b503]) by MW2PR0102MB3482.prod.exchangelabs.com
  ([fe80::d840:7aa7:58d4:b503%5]) with mapi id 15.20.4129.034; Thu, 20 May 2021
- 14:03:47 +0000
-Subject: Re: [PATCH v3 4/7] i2c: aspeed: Acknowledge Tx done w/wo ACK irq late
-To: Guenter Roeck <linux@roeck-us.net>, Joel Stanley <joel@jms.id.au>
+ 14:10:39 +0000
+Subject: Re: [PATCH v3 5/7] i2c: aspeed: Add aspeed_set_slave_busy()
+To: Ryan Chen <ryan_chen@aspeedtech.com>, Corey Minyard <minyard@acm.org>,
+ Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@aj.id.au>, Brendan Higgins
+ <brendanhiggins@google.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Wolfram Sang <wsa@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ "openipmi-developer@lists.sourceforge.net"
+ <openipmi-developer@lists.sourceforge.net>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
 References: <20210519074934.20712-1-quan@os.amperecomputing.com>
- <20210519074934.20712-5-quan@os.amperecomputing.com>
- <CACPK8XdyQT=cuSr9KBqC0PBkOLgBUBpyz3kZEA3JuOuZsQN_Rw@mail.gmail.com>
- <414a51e8-0973-0007-9ffc-2949f3c7b0f8@roeck-us.net>
+ <20210519074934.20712-6-quan@os.amperecomputing.com>
+ <HK0PR06MB3380BFA9FD9EF8F51F9DCC23F22A9@HK0PR06MB3380.apcprd06.prod.outlook.com>
 From: Quan Nguyen <quan@os.amperecomputing.com>
-Message-ID: <f7b8ee1d-61dc-68a8-f60e-25f99e104c04@os.amperecomputing.com>
-Date: Thu, 20 May 2021 21:03:33 +0700
+Message-ID: <3eba7d01-2507-17c6-2b27-7f1a7e286413@os.amperecomputing.com>
+Date: Thu, 20 May 2021 21:10:21 +0700
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
  Gecko/20100101 Thunderbird/78.10.2
-In-Reply-To: <414a51e8-0973-0007-9ffc-2949f3c7b0f8@roeck-us.net>
+In-Reply-To: <HK0PR06MB3380BFA9FD9EF8F51F9DCC23F22A9@HK0PR06MB3380.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [2402:800:623c:5f9b:6031:ff4f:8fc2:44d0]
-X-ClientProxiedBy: HK2PR02CA0199.apcprd02.prod.outlook.com
- (2603:1096:201:20::11) To MW2PR0102MB3482.prod.exchangelabs.com
+X-ClientProxiedBy: HK2P15301CA0005.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:202:1::15) To MW2PR0102MB3482.prod.exchangelabs.com
  (2603:10b6:302:c::32)
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 Received: from [IPv6:2402:800:623c:5f9b:6031:ff4f:8fc2:44d0]
  (2402:800:623c:5f9b:6031:ff4f:8fc2:44d0) by
- HK2PR02CA0199.apcprd02.prod.outlook.com (2603:1096:201:20::11) with Microsoft
+ HK2P15301CA0005.APCP153.PROD.OUTLOOK.COM (2603:1096:202:1::15) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4150.23 via Frontend Transport; Thu, 20 May 2021 14:03:43 +0000
+ 15.20.4173.2 via Frontend Transport; Thu, 20 May 2021 14:10:34 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 9c373ca7-6ea2-4650-30b0-08d91b981676
-X-MS-TrafficTypeDiagnostic: MWHPR01MB2672:
+X-MS-Office365-Filtering-Correlation-Id: 988d9efb-bffa-4853-948d-08d91b990b77
+X-MS-TrafficTypeDiagnostic: MW4PR01MB6146:
 X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <MWHPR01MB26724707C44289B435517C81F22A9@MWHPR01MB2672.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
+X-Microsoft-Antispam-PRVS: <MW4PR01MB6146687931BE44C97194397DF22A9@MW4PR01MB6146.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:6108;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: lScz7btVUYbqeQPrvviWcyZmoxnASf9wXSzbBFmdYw0iftLQn7hz9VNzQSw/U0kl0w1uYrNLWHNM+naU1lfMELb3RejzvSjGqfDnlGDyQvO3p9yWOgbltBCmWyhtf+9RFvJ9UnUimyJIlLMwIzVsNseFvBI+bOOKu+Y95Te5cd3+nJSPb1nbrqtXeZrJ92eTLxbkHH5uZKOs8h28HAUD3BjY9z1JBgYCviY6EFe23T7JPi71qWLj6oMIGsk44qkTZC6I1PyO5xoKGbbJD7PBYu50zah0s39C8y6c+nbKcWGfXNhAcCVkYWtvCG5Vd6EbliG7CV2oz8jnUsZNR0+/DtrSZzIjor6XZPOJUMv5DValSuR2GIW1+efWsljj3/6fUaQlcu8vg4rtN5rD2/PKbV3Ivyv12HHzvgONsnf1nnIVNuMfb4CTnPGlF000wNOT/ef6SVmq9hsgS7CGhawm/3iQnPNHrZpWATuT6ztzveki3cBEuNzmc5YhZF2jfrcVph83y+mEPLmF3UJrbUK4itIm9A75rvcQOVQFqhcOUpa9DnYM1PHjfoXx/8Df7y6Uq7ujptn3tn9l24z7mvU5Kwvp2OJwTPB53lLxDvZA3dVIZZM+0MV3lTeWWZXtAg18SoHyJcmqp+Y+NzhKmFq5aGDV4tuOd3m7YSPzzs14onMMPSnUEQs4nYLkVHFbKFJk
+X-Microsoft-Antispam-Message-Info: jN2oCI6Jfy2etBIpJnUE5zIfWlrcUKRJp8fpzqM4lqDqReYtMdEkGAQ1DmSp8k7u2S+WFZUuyeHAmQtqrLYzH+OFxcdYmHQVvPidHS2Q6TGTyzS8HrJHFIWo6olgC8vjX2XLrE7e9yC49q1LBy7CHji2sdmIxk4CkkJO6PYhz2i8x8TFWco2R/9wtbzcduK1pRWM3gAmWwltbSGf+wHblbDIJHScA2CpP84s5H9K5LSXr7KczLIARz2I/bD1f9BaC7rzN4BOTIdOovxmstIbA5/1EcOejWQB6Qw62dmRl72fXBhV9G5OAV9xjgXAS7kx5Bk/Mbjyd/nCJ/GiZFr/gw0CM5CjQCAdMELaiFzN+fpmKnHRJGNIn0KE7bYGdvpGk/K/Yb6Xjd0o62USokURLmn1PL8H68lXQNEscxI5IlMeJSa3KPW8YVDaNJL9/vQUTr6InCbdL1kwPsqRuQk7DvG141W7eLlKeqYqnTfReg7CR1bDJbxiL3Syklm9OmY+I4Y9DS5yD8dWEC2LjRsrErAe2CYBn0v3A2skpwREfT36OBKliOwyeU9ZAW34XkccAjdizEEYfKFk1s+6z8XcZ9uxf8MvAy9mXtj4Wz7yco/kZwO+tJH9Jv9r2iUEc34KgrkWWeAsDCKI16SGcS6+O93c1kwPbbK95JbG92G+oeOjqnNg5nw+xrMRtLexolsobscmzjDYGbPmCuK6FNdYlQ==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:MW2PR0102MB3482.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(376002)(39840400004)(366004)(346002)(136003)(396003)(16526019)(86362001)(186003)(7416002)(83380400001)(52116002)(66556008)(66476007)(31696002)(53546011)(66946007)(6666004)(478600001)(2616005)(31686004)(8936002)(38100700002)(316002)(54906003)(8676002)(6486002)(110136005)(5660300002)(4326008)(2906002)(43740500002)(45980500001);
+ SFS:(4636009)(346002)(39840400004)(376002)(136003)(396003)(366004)(16526019)(316002)(8936002)(86362001)(186003)(53546011)(7416002)(52116002)(66476007)(6666004)(38100700002)(83380400001)(4326008)(2616005)(5660300002)(6486002)(66556008)(478600001)(8676002)(54906003)(31696002)(66946007)(2906002)(31686004)(921005)(110136005)(45980500001)(43740500002);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?cGVnaUIvL0o4NFV3SHA1S01UQVpsbTk4Uk5pclpBWEZDVERxZlR5TFFDOW41?=
- =?utf-8?B?c3ZJWmxkSFBhbHp5Qmk5czBROTE4TjNjVVdiay9DWE9qZU4zTTJZK1FLOXMr?=
- =?utf-8?B?RGY4MDFzZ1p3clFlVGhkUDVqazFmN1FGdFFzekZieFhZS2JPTFU4Z0h6YlNF?=
- =?utf-8?B?ZllWUkhYRVhueFhDNGlvMGtLRTBBVC9HRS8wRnlHdzZsVzZsRGQxbGx0M0kx?=
- =?utf-8?B?OXI4K0pjU1FLLzVGRUppekhGbDJtK3UzT1U1ZUd2Z1NlM2NnTVdGcGllTklL?=
- =?utf-8?B?aWVaODhQZTlDRkFHUGg3MzBRUk5SVU1qRklHaWt2N0JaRkkyT21QVjh1NjIr?=
- =?utf-8?B?UTdsRURsc1Fta082STdHTWZUT3Q3eU85OHZLUkUwYWdRUExKZVBleUdWVEY3?=
- =?utf-8?B?clVTcWI4MCtVNEEwbm55YlNDZnM1OG1FdGhTY2RnUXpHdU56N3VPWHBiWFNB?=
- =?utf-8?B?cGRZQ2xobTJCM1dFVlZZaTVjekxqbkNMSHlMKzk2MFZzKzg1TE51UnAweDFB?=
- =?utf-8?B?aHJTV29sNXpVbTZUam5ONzJma3pzWGtXR2laNE1mQTZwcGkwZXBwczYrZ3BT?=
- =?utf-8?B?MUdjVUFFSU8wRHpBZ3lIV0FnMjliMnM5Q1NTRjFHUTd6MmVleTAyK3lzenZm?=
- =?utf-8?B?UVcxbU9aWmorQ2lxaG9XeGhIOUVtZVMrN3crQzd1SFB3dXpWdUNWSVFUak5G?=
- =?utf-8?B?QVI0Vm1USDU5MENoU2Z0SUxScGEzUmlvdlZUUEhOdjRZcHJCY2k4SXFzdi9r?=
- =?utf-8?B?RGhxN24yUmpVbkhCVGZqMkx5UUZuUjEzSnZwMDd3d3IvVzJYTlN2eDlObkVs?=
- =?utf-8?B?TWtnNVFRdld3Q2RPRFNFQmNJZHdQYXFnYWxWSHdUUyt3RTFSaVZBL1RmZ2xr?=
- =?utf-8?B?aHRQOEtid2NRd3BuMzFibWNpRjFDQ1JqVzRKN0dWNk5kWG54YTdTUUFQS1pX?=
- =?utf-8?B?WXlMd09VK2tPUkpRb0x6OHZUejFseEpRSWwycVFzclBJdVFTSjFyemFEWENH?=
- =?utf-8?B?ci9qcEJ2MXBHZm51SVo5YWFadHVYYnFxckdoUXBlU2licG1ETHdSV1dWdEdn?=
- =?utf-8?B?RUkxUCtKZnQ5VmxuTHI0OEw0MFZhdzlkZS9wN3pGdVBJdWtYUkF2NE9Damkr?=
- =?utf-8?B?TllBdXQ0ZmlvM0Y3NFhHRXcrQmg4NnQrRjB3Mm5YYnNnaldkam1KRy93M2li?=
- =?utf-8?B?SUs1YkQxeDZLQVdYTmtwVWN3a3NLMDVWVStqUElOTEhDQ3FzN1RSZ044cDU1?=
- =?utf-8?B?TUMxTWJlZEZ0L0xLVGpYSWFmQzNZNjdtcURjN0wyTEJDZCt0MXd3Y1FQQ1dv?=
- =?utf-8?B?Z0s2MnFLMWN6a3RMU1dKSlA4TUxUa0FsaHZCLzdLQm04dmE0K05HT3ZCM0Vp?=
- =?utf-8?B?Ukgrek9hTi9aN3FCOHV5SmVOVWcyZVdwTUkzdWJKcXhwRU5HZ0pabUdjcXNF?=
- =?utf-8?B?cDBTUXFoRFZWSHhOTjdlT1JXTmprUEIvbStpcEk4cS8zd3FWa1llbnlnZmda?=
- =?utf-8?B?NHFTZkhWb2NhOHQ2SWh4UXU1L0lzRlNVb2VyLys0dFQ5QTIwOERFY2MxUzRq?=
- =?utf-8?B?dU0vN2pZbkZQaVJReEFvMUN5OThhalZGT1VIUzY1UG9Ndk5sVVdWMi9QMVJp?=
- =?utf-8?B?K0tqL3NyTEF4T05PanQyQk9LRVplMC9qSHpyWDNaVEJSOXFIcE4yY1FOSkZy?=
- =?utf-8?B?REkrajZxRVN5SDJjN0NoZ1VaSHBLTGo3NytweFJEMmRLN0FPajJxMUV4WjNq?=
- =?utf-8?B?WVRlVUUxb3E4TXJsb2N4RzhjcEt3OGROa2JxbDIwRm16WlRyVGhpUThVZlNw?=
- =?utf-8?B?K0pUcXZhNDVDQ0U5U3kvMVFRcW5kVzFLbGcxN01Pc0ZFOTdYZTRpQ2wzeWow?=
- =?utf-8?Q?SITIDzb1w5/h3?=
+X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?bHg5dmNTK3FpSUd0RGVhaDRvZ28vcUlZVzJrUnc0QU9wVnFjaHRiS1g1cE9D?=
+ =?utf-8?B?S1BwR21Gbmk1K3ltVEtZTGQ1M09wWi85VWJRcG1mVDhBUm9adWJ5dk5sVWph?=
+ =?utf-8?B?VGtiVmNGakszZUdLL2dsQ25RaVFLYjR0anNGQ3BuSWJmdjdHR1R2Q1ZqeHl1?=
+ =?utf-8?B?eEJieVNFaHVoUVNKZTZNckdoSEtTaVcvNC96ZUVJeER6VkVwWGNXM2FSYllR?=
+ =?utf-8?B?VlVXMGl3ZGpxUVV1cVVDWWM1N3h2YkJFSDZuMndlYmZlVGdteTJLeFJoSE03?=
+ =?utf-8?B?d3gzUUZSL3cranpYbkFES3p3K2lBYk5UcjNieG4yVFMrVFowUVJjMXVlaXRQ?=
+ =?utf-8?B?ZmRWdjBYVzdUcXAxQjlxdzI4clJwYTEvU0lKYjRUM3Zvdjc5VWQzNnRiV1dl?=
+ =?utf-8?B?ZndoeUEzMlBJMS9MSjZvcU45anhqbDdzbk5MYTdHWUN1cEpmd1R5YzJzUzBz?=
+ =?utf-8?B?RVBqNEYrcmxBUE55eDg5QkJxVUlmQk0zWlBDOFg2c3Vnc1dVVEJmbHNLRTRI?=
+ =?utf-8?B?WElHWUhtUGlCenFHVlIzb1NjeDVKc0ptVExTOUluQzhGeWJWdmorZDhJZ1No?=
+ =?utf-8?B?dFVjaEx1cVBPU29tcVpGTGRSelR2dnRxWHBIaXYrSFNBSldJWUVWUnQxZXRt?=
+ =?utf-8?B?ZTBTMWswaXd6cG9HRXc3QUVoaS8yZTNCcEkrSWFOUmYyV3NHOHNsMFhHL0Fj?=
+ =?utf-8?B?WnBLME5mNDE5OEhxVFZKTjdXUWdpd1dpYkpyT1dicUdKMTN0dVBpT2JrcUxx?=
+ =?utf-8?B?dHRXTWt3c2ZSUnZlektTSXdkSXBSVlF4S3BlUktCWDJCVWFJdENUTGNvN01t?=
+ =?utf-8?B?Rm1CeFFrdmdnYWJKVms4NWtuYUprbVNXaFNoeStyOHpiTnRJMWh6NnpjdFR4?=
+ =?utf-8?B?WjM0c2M4aER5TkpyVUdWUE5WQkZFa2hDMWNKd3AxQ1JQR0hhdzNEU2NKQXRj?=
+ =?utf-8?B?aXljdSsxZXNDMnh5ZEFaay92SEdHcmdQOFQvQTJsRGE0SitHbzlDcWhIT0gv?=
+ =?utf-8?B?Vitvc0M2MWVnT3dkU2x4T1RkNWxMTHpsU3JLaTVNMnFzS3ltUXJqV09wM1U3?=
+ =?utf-8?B?ZldrTkhYTk5PMjhTTy9ubFhVdCsyOEFkWjd2YVN2VmhaRWhLUk5jelUvb2hX?=
+ =?utf-8?B?LzlFNWYxWWhscVRVKzBpZC9MMjJDWmVnTEh4VCtBVFJIenRGc2l0NHRXbEw2?=
+ =?utf-8?B?ZG9rUWNmT0hpelppc3NNWlFkVnhoMHl0ZHZWUGIxRHVqb1B1V1BESTdTZWhL?=
+ =?utf-8?B?UGpwM2dTaStsN3pQcWFXWU4xZTBBbnlFa1Y0aU5wTEd5RjZ5RFh0ZHk3a05i?=
+ =?utf-8?B?Mk52VGYxZjdKS1ZacURxNGpuQnp4R0R0dDhFWmVPMXg0NUN5ZStTbUJvS0Rw?=
+ =?utf-8?B?ZkpTK29KNXJ4WStLRTBocDlmdUZLOUxpL3pPNnN0TGw3cXZLeDJBU2cyNjBZ?=
+ =?utf-8?B?bWtHZEdjR2tUbmp2Vm5CVWFBNVZkRFg4eWR6WXNoU0kzWWJpZnJBVHlNR1JP?=
+ =?utf-8?B?SWFkVS8zRFF6ZU80bmpKa25MOGpsV2JLd1FEWjl1QzlaZCs1eEI2dVd5YmRQ?=
+ =?utf-8?B?VVVjdXVOT3EyaUdpalBwSXJRZm5oSzhKdDFxODhmT3JKUklzNXVzL3JyblZ3?=
+ =?utf-8?B?aGVpMTJ0WVNpVzY2S0hDUHRadFZzQ3FXcFlneWN4cGV0WFNLTW9RdGVVUm1E?=
+ =?utf-8?B?eGtkWTBZdTFiVjl1YTYwSXhCVUNGOVJzdDdQSXNyY0xPeVJDdzNZQzUxWkNO?=
+ =?utf-8?B?NC9wajErWTgwdHdCWEc3VDBtTW1vWjBmOGRUY3FsQjZBVGRQaEcwTTMxSjJu?=
+ =?utf-8?B?bnRjUndscVNXNHF2NEZnTlhGWUZMZXl2dDMyMG1QUnNlWHV1UDlQSHdrbytr?=
+ =?utf-8?Q?Ptmbnfr1mfGt5?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c373ca7-6ea2-4650-30b0-08d91b981676
+X-MS-Exchange-CrossTenant-Network-Message-Id: 988d9efb-bffa-4853-948d-08d91b990b77
 X-MS-Exchange-CrossTenant-AuthSource: MW2PR0102MB3482.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2021 14:03:47.8407 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2021 14:10:39.4123 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /WqiZg7nkrXqekyb6VcDW0LQ4YYZt8V3LiTRqcElkn9nlHsC2I5vun29vmk+TQf7OWnZk0FhVQgQJ+ZX3gE7Yu5/JUMzLStcen3aHy7J5pE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR01MB2672
+X-MS-Exchange-CrossTenant-UserPrincipalName: 63T0X4gcnmbvlNKVNydmCE7ZyUiC7sdWITt2rT4W9xnH/bnCu157GAQ4Ti6pNqL7zNFlbhUTdeuFpv8X4T07KQ9ctAdBSBmVEoFnajPWBfI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR01MB6146
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -146,166 +158,93 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Corey Minyard <minyard@acm.org>,
- Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+Cc: Open Source Submission <patches@amperecomputing.com>,
  "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Brendan Higgins <brendanhiggins@google.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Phong Vo <phong@os.amperecomputing.com>, Wolfram Sang <wsa@kernel.org>,
- Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
- Philipp Zabel <p.zabel@pengutronix.de>,
- openipmi-developer@lists.sourceforge.net,
- Open Source Submission <patches@amperecomputing.com>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+ Phong Vo <phong@os.amperecomputing.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 20/05/2021 08:19, Guenter Roeck wrote:
-> On 5/19/21 4:43 PM, Joel Stanley wrote:
->> On Wed, 19 May 2021 at 07:50, Quan Nguyen 
->> <quan@os.amperecomputing.com> wrote:
->>>
->>> With Tx done w/wo ACK are ack'ed early at beginning of irq handler,
+On 20/05/2021 18:06, Ryan Chen wrote:
+>> -----Original Message-----
+>> From: openbmc
+>> <openbmc-bounces+ryan_chen=aspeedtech.com@lists.ozlabs.org> On Behalf
+>> Of Quan Nguyen
+>> Sent: Wednesday, May 19, 2021 3:50 PM
+>> To: Corey Minyard <minyard@acm.org>; Rob Herring <robh+dt@kernel.org>;
+>> Joel Stanley <joel@jms.id.au>; Andrew Jeffery <andrew@aj.id.au>; Brendan
+>> Higgins <brendanhiggins@google.com>; Benjamin Herrenschmidt
+>> <benh@kernel.crashing.org>; Wolfram Sang <wsa@kernel.org>; Philipp Zabel
+>> <p.zabel@pengutronix.de>; openipmi-developer@lists.sourceforge.net;
+>> devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
+>> linux-aspeed@lists.ozlabs.org; linux-kernel@vger.kernel.org;
+>> linux-i2c@vger.kernel.org
+>> Cc: Open Source Submission <patches@amperecomputing.com>; Thang Q .
+>> Nguyen <thang@os.amperecomputing.com>; Phong Vo
+>> <phong@os.amperecomputing.com>; openbmc@lists.ozlabs.org
+>> Subject: [PATCH v3 5/7] i2c: aspeed: Add aspeed_set_slave_busy()
 >>
->> Is w/wo a typo? If not, please write the full words ("with and without")
+>> Slave i2c device on AST2500 received a lot of slave irq while it is busy
+>> processing the response. To handle this case, adds and exports
+>> aspeed_set_slave_busy() for controller to temporary stop slave irq while slave
+>> is handling the response, and re-enable them again when the response is ready.
 >>
->>> it is observed that, usually, the Tx done with Ack irq raises in the
->>> READ REQUESTED state. This is unexpected and complaint as below appear:
->>> "Unexpected Ack on read request"
->>>
->>> Assumed that Tx done should only be ack'ed once it was truly processed,
->>> switch to late ack'ed this two irqs and seen this issue go away through
->>> test with AST2500..
+>> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+>> ---
+>> v3:
+>>    + First introduce in v3 [Quan]
 >>
->> Please read Guneter's commit message
->> 2be6b47211e17e6c90ead40d24d2a5cc815f2d5c to confirm that your changes
->> do not invalidate the fix that they made.  Add them to CC for review.
+>>   drivers/i2c/busses/i2c-aspeed.c | 20 ++++++++++++++++++++
+>>   1 file changed, 20 insertions(+)
 >>
+>> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+>> index b2e9c8f0ddf7..9926d04831a2 100644
+>> --- a/drivers/i2c/busses/i2c-aspeed.c
+>> +++ b/drivers/i2c/busses/i2c-aspeed.c
+>> @@ -944,6 +944,26 @@ static int aspeed_i2c_init(struct aspeed_i2c_bus
+>> *bus,
+>>   	return 0;
+>>   }
+>>
+>> +#if IS_ENABLED(CONFIG_I2C_SLAVE)
+>> +void aspeed_set_slave_busy(struct i2c_adapter *adap, bool busy) {
+>> +	struct aspeed_i2c_bus *bus = i2c_get_adapdata(adap);
+>> +	unsigned long current_mask, flags;
+>> +
+>> +	spin_lock_irqsave(&bus->lock, flags);
+>> +
+>> +	current_mask = readl(bus->base + ASPEED_I2C_INTR_CTRL_REG);
+>> +	if (busy)
+>> +		current_mask &= ~(ASPEED_I2CD_INTR_RX_DONE |
+>> ASPEED_I2CD_INTR_SLAVE_MATCH);
+>> +	else
+>> +		current_mask |= ASPEED_I2CD_INTR_RX_DONE |
+>> ASPEED_I2CD_INTR_SLAVE_MATCH;
+>> +	writel(current_mask, bus->base + ASPEED_I2C_INTR_CTRL_REG);
+>> +
+>> +	spin_unlock_irqrestore(&bus->lock, flags); }
+>> +EXPORT_SYMBOL_GPL(aspeed_set_slave_busy);
+>> +#endif
+>> +
+>>   static int aspeed_i2c_reset(struct aspeed_i2c_bus *bus)  {
+>>   	struct platform_device *pdev = to_platform_device(bus->dev);
+>> --
+>> 2.28.0
 > 
-> This might re-introduce a race condition if the code that is handling
-> Tx done sends another byte without acknowledging the original interrupt,
-> and another Tx done (or Tx nack) interrupt is received before the interrupt
-> handler returns. If that happens, the second Tx done interrupt would be
-> acknowledged but not be handled, and transmit would stall. That may well be
-> what I had observed at the time but it is too long ago to remember, sorry.
+> Hello,
+> 	The better idea is use disable i2c slave mode.
+> 	Due to if i2c controller running in slave will get slave match, and latch the SCL.
+> 	Until cpu clear interrupt status.
+> Ryan
 > 
-My assumption is that HW will start sending another byte as soon as the 
-Tx done of the previous byte is ack'ed. So if it was ack'ed early before 
-the slave irq handler to actually prepare the next byte to send, garbage 
-value might be sent out instead.
-I'm not sure if my assumption is correct but this patch do help in this 
-case.
-Please help with your comment.
+Thanks Ryan,
 
->> Again, this is a fix that is independent of the ssif work. Please send
->> it separately with a Fixes line.
->>
->>>
->>> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
->>> ---
->>> v3:
->>>    + First introduce in v3 [Quan]
->>>
->>>   drivers/i2c/busses/i2c-aspeed.c | 26 ++++++++++++++++++--------
->>>   1 file changed, 18 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/drivers/i2c/busses/i2c-aspeed.c 
->>> b/drivers/i2c/busses/i2c-aspeed.c
->>> index 3fb37c3f23d4..b2e9c8f0ddf7 100644
->>> --- a/drivers/i2c/busses/i2c-aspeed.c
->>> +++ b/drivers/i2c/busses/i2c-aspeed.c
->>> @@ -606,8 +606,12 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, 
->>> void *dev_id)
->>>
->>>          spin_lock(&bus->lock);
->>>          irq_received = readl(bus->base + ASPEED_I2C_INTR_STS_REG);
->>> -       /* Ack all interrupts except for Rx done */
->>> -       writel(irq_received & ~ASPEED_I2CD_INTR_RX_DONE,
->>> +       /*
->>> +        * Ack all interrupts except for Rx done and
->>> +        * Tx done with/without ACK
->>
->> Nit: this comment can be on one line.
->>
->>
->>> +        */
->>> +       writel(irq_received &
->>> +              ~(ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK | 
->>> ASPEED_I2CD_INTR_TX_NAK),
->>>                 bus->base + ASPEED_I2C_INTR_STS_REG);
->>>          readl(bus->base + ASPEED_I2C_INTR_STS_REG);
->>>          irq_received &= ASPEED_I2CD_INTR_RECV_MASK;
->>> @@ -652,12 +656,18 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, 
->>> void *dev_id)
->>>                          "irq handled != irq. expected 0x%08x, but 
->>> was 0x%08x\n",
->>>                          irq_received, irq_handled);
->>>
->>> -       /* Ack Rx done */
->>> -       if (irq_received & ASPEED_I2CD_INTR_RX_DONE) {
->>> -               writel(ASPEED_I2CD_INTR_RX_DONE,
->>> -                      bus->base + ASPEED_I2C_INTR_STS_REG);
->>> -               readl(bus->base + ASPEED_I2C_INTR_STS_REG);
->>> -       }
->>> +       /* Ack Rx done and Tx done with/without ACK */
->>> +       /* Note: Re-use irq_handled variable */
->>
->> I'm not sure what this note means.
->>
->>> +       irq_handled = 0;
->>> +       if (irq_received & ASPEED_I2CD_INTR_RX_DONE)
->>> +               irq_handled |= ASPEED_I2CD_INTR_RX_DONE;
->>> +       if (irq_received & ASPEED_I2CD_INTR_TX_ACK)
->>> +               irq_handled |= ASPEED_I2CD_INTR_TX_ACK;
->>> +       if (irq_received & ASPEED_I2CD_INTR_TX_NAK)
->>> +               irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
->>> +       writel(irq_handled, bus->base + ASPEED_I2C_INTR_STS_REG);
->>
->> Are you intentionally only acking the bits that are set when we read
->> from STS_REG at the start of the handler? If not, we could write this
->> instead:
->>
->> writel(ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK |
->> ASPEED_I2CD_INTR_TX_NAK,
->>          bus->base + ASPEED_I2C_INTR_STS_REG);
->>
-> 
-> This would clear those bits unconditionally even if they were not handled.
-> 
->> If you only want to ack the bits that are set, then do this:
->>
->>    writel(irq_received &
->>              (ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK |
->> ASPEED_I2CD_INTR_TX_NAK),
->>           bus->base + ASPEED_I2C_INTR_STS_REG);
->>
->> That way, you can avoid all of the tests.
->>
-> Or
->      irq_handled = irq_received &
->          (ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK | 
-> ASPEED_I2CD_INTR_TX_NAK);
->      writel(irq_handled, bus->base + ASPEED_I2C_INTR_STS_REG);
-> 
-> if the idea was to avoid the long statement.
-> 
-> Guenter
-> 
-Thanks Guenter,
-Will apply in next version.
+Do you mean to enable/disable slave function as per example code below ?
 
->>> +       readl(bus->base + ASPEED_I2C_INTR_STS_REG);
->>
->> When you move this, please add a comment that reminds us why we do a
->> write-then-read (see commit c926c87b8e36dcc0ea5c2a0a0227ed4f32d0516a).
->>
->>> +
->>>          spin_unlock(&bus->lock);
->>>          return irq_remaining ? IRQ_NONE : IRQ_HANDLED;
->>>   }
->>> -- 
->>> 2.28.0
->>>
-> 
+         /* Turn on slave mode. */
+         func_ctrl_reg_val = readl(bus->base + ASPEED_I2C_FUN_CTRL_REG);
+         func_ctrl_reg_val |= ASPEED_I2CD_SLAVE_EN;
+         writel(func_ctrl_reg_val, bus->base + ASPEED_I2C_FUN_CTRL_REG);
 
+Will try this idea.
+- Quan
