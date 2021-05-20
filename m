@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70A05389B38
-	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 04:14:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 925A7389B3B
+	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 04:14:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fltb538xnz3049
-	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 12:14:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FltbW3W7Nz302G
+	for <lists+openbmc@lfdr.de>; Thu, 20 May 2021 12:14:31 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=TBAjCkk+;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ajPVZwIR;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=d/hZn5uM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=C4p4WdVI;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,66 +19,71 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=TBAjCkk+; 
+ header.s=fm2 header.b=d/hZn5uM; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=ajPVZwIR; 
+ header.a=rsa-sha256 header.s=fm2 header.b=C4p4WdVI; 
  dkim-atps=neutral
 Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
  [66.111.4.221])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FltZn43cyz2xvK;
- Thu, 20 May 2021 12:13:52 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailnew.nyi.internal (Postfix) with ESMTP id ACA925808EB;
- Wed, 19 May 2021 22:13:49 -0400 (EDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FltZr05T5z2ydJ;
+ Thu, 20 May 2021 12:13:55 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 1498E580853;
+ Wed, 19 May 2021 22:13:54 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute2.internal (MEProxy); Wed, 19 May 2021 22:13:49 -0400
+ by compute4.internal (MEProxy); Wed, 19 May 2021 22:13:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=fm2; bh=odecAKUaHKQG4X3qJBH558YiNF
- 7tYkLnTOKSXP3atJM=; b=TBAjCkk+uY2vL+OPwD/lYfZ9Qd6hy31ihSr8xd0dER
- PAhQvk5iYF7YH9Yvo8H2rOcZGIc+JjioT2xksAA+5QM6/HRC2xe94VBjExBy/FhF
- MGqjFe0RWKq60dai30WXXqO4IsJXrc34UIvxcctz9BqHbDSLzX2pzkgILvtmvjDQ
- b2k8t2xr6ZQTQ+wb23M2rYocYszl5wjFwXC9feT0j9PDvdwFoYJE0ARQGoHitZNL
- idcfpvX5BO1Ai500+DqKTMofPg+IPjidnX6VcyeHc6T+Xt2wvZNnQ/tNzo4yHFkK
- RM8vQUUax0XWYWW4VVQYN9JDDZCmJg85nJW5ag3eHIqw==
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=fm2; bh=agM4yFIvUjmDK
+ +7w1/5Qg1pbG8oDP4ygpRUviEPVwU8=; b=d/hZn5uMTzUkWpNZJmBAGWk8ntKY2
+ T/LQMY1AQZeg+Z2CPSmFpaifYdopOB9EWW+QPf5cty/qK6njwp44nhDGXV1KpTLj
+ Cg2M+6ezxnh1rjlbuPfyk4ZMAHMDrumzr6dTNETrbDQAmNpHRTE5pPOzyR2RLd/D
+ qU8T3NLw2cYQrJHGeL2ftUeXxcI8L6nUKALUZw3m+jC8C9CsuqH/PaZSsDGWRl6A
+ GI18kWvflPHn5VF8pQFcds5na8V3YOaRUNpuczycPqGBr6efiaLlbJhTULE8BUd8
+ LERAQalNy7AENVilRHkQGOgdSrMB77gGefxd0UbvUMRmZWsyVjeZJsQdw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
- :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=odecAKUaHKQG4X3qJ
- BH558YiNF7tYkLnTOKSXP3atJM=; b=ajPVZwIRN8x1f044hZZ78SjOdzZ2dcid7
- 4O6D8HV1KWmQxN+3WPnvpC0HCqGiV4QRKIsofQhNldfU/IZJFNQ0HroscZdCsjtI
- 21SuRslEESk2tql30Hb2Ryu8Y54iI0JaOEW9y0mu9VC7oL68I/4++1XEifSKRTyi
- tAVkRR2lEJh7O5Ldk+q46JxM8DF/+yPv/k53jlg7rJflyJN8ckBrI49tZAo+AjnQ
- KH5jL39tibMDPP5TANRlf1IFKXi2HOqnuGQW/K8PCioBUD797wBgVF9ttEy0CFI3
- FW3RdwTvQNBqrP7N758PDBV/moyULfKMQ0yQRv2QDuj8tmJxuCSUw==
-X-ME-Sender: <xms:28WlYGlXskmb1XwY4GSsxAC9mvToJbTFdD70sq56mJm1_iX5Udrvlg>
- <xme:28WlYN2pOYZmMq2P-RRQGPhPnoqb3Tg46zgAtz6jwqc1G5f7wpF8J7yEFlAZwXOl8
- NKXqVI_SmSHW7u9lQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdejtddgheeiucetufdoteggodetrfdotf
+ :in-reply-to:message-id:mime-version:references:subject:to
+ :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; bh=agM4yFIvUjmDK+7w1/5Qg1pbG8oDP4ygpRUviEPVwU8=; b=C4p4WdVI
+ hIByzbaRiaU9S5kQemex08CSNX/tFqVW39IUylyrLDBh5mX86kBtJ89uyrQJJm3g
+ Fj5ZqiN/zDvnHaIVxrsv+pSzMzQ51SC4wppDOlCc9VhPAXPU+vctdvQT8uJlWoU7
+ LKFSnQ5vu7rB/V/Kcr5zgT2AwCo/o2fTLmbQbfPAYMhtbnB4t37u3xaoELzqGiV2
+ SfUj3LKp5PzsURjMOjwT4++dRdpM97pRy8m6qxhLgs8whYfbYbWx9KeresqufKHu
+ AKSFaLDu5MsPWBpNteRphRJxZkjnHBU0Ke3061fTgk6oOXHhfL8Ff1Nc41sM+eLO
+ UjHQXP+EK1xFUg==
+X-ME-Sender: <xms:4cWlYGsV8G1j-kW-xl2PTaJZYvOfu3xP8HBaUYCCVUxV15ppERh-0g>
+ <xme:4cWlYLdcEVMpN63IFOPmoUZNm5W18WtfEWPQVr6z-ALkZgSbqqqO3xxOCKIFrafBU
+ TY-iXjRplUXsonAxw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdejtddgheejucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
- dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
- ihgurdgruheqnecuggftrfgrthhtvghrnhepieetheduveelhfdvvdejleeuhfelteevhe
- ffgfeitdefgeekjeefieevgfehhefgnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghen
- ucfkphepvddtfedrheejrddvudehrdeknecuvehluhhsthgvrhfuihiivgeptdenucfrrg
- hrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:28WlYEo5Rio_SEtewHw5ZoTy2Ou0_uUJu5VAoj60hxWk-9-QXLcEWg>
- <xmx:28WlYKlMelg0fgen-9DB4jqEXMFfdYJONK8y4Z0Rbo8uu4BmGb4tXg>
- <xmx:28WlYE0-AgMrl9NNVVgJK64_JsAuy6pFlTfMd5xht_AomF0uh0eS4Q>
- <xmx:3cWlYFIIfjWE1XJLFk1Uatd3BEamHkRzhE9tFYuTqURUSbFhXtLTxA>
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeetnhgurhgv
+ ficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrghtth
+ gvrhhnpeehhfegffehvefhieejkedtvedvlefhgfeufedtgfetueevtedvffduffelleef
+ heenucffohhmrghinhepphhorhhtrdguvghvnecukfhppedvtdefrdehjedrvdduhedrke
+ enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgu
+ rhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:4cWlYBw8xRl0nUO__ztvXO053yrINyRzKYB5d4YFPZ3OZEmQ_9OJyQ>
+ <xmx:4cWlYBMsryNOxK5jAVVLOjn_SsiMHIaiUoofv4koguYM5dX7OPnMPg>
+ <xmx:4cWlYG-a9uqFCqLZuUH-RFFMW9c8e7HxqeP4_sDUaW523fS-f82lkQ>
+ <xmx:4sWlYJZ3g6Pprmw8CC4xlsRFwKld6e9BaAwRD0of5ePsz_LRl76RPw>
 Received: from mistburn.lan (203-57-215-8.dyn.iinet.net.au [203.57.215.8])
  by mail.messagingengine.com (Postfix) with ESMTPA;
- Wed, 19 May 2021 22:13:43 -0400 (EDT)
+ Wed, 19 May 2021 22:13:49 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: linux-serial@vger.kernel.org
-Subject: [PATCH v3 0/2] serial: 8250: Mitigate Tx stall risk for Aspeed VUARTs
-Date: Thu, 20 May 2021 11:43:32 +0930
-Message-Id: <20210520021334.497341-1-andrew@aj.id.au>
+Subject: [PATCH v3 1/2] serial: 8250: Add UART_BUG_TXRACE workaround for
+ Aspeed VUART
+Date: Thu, 20 May 2021 11:43:33 +0930
+Message-Id: <20210520021334.497341-2-andrew@aj.id.au>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210520021334.497341-1-andrew@aj.id.au>
+References: <20210520021334.497341-1-andrew@aj.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -95,39 +100,85 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Cc: ryan_chen@aspeedtech.com, linux-aspeed@lists.ozlabs.org,
  gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org,
  linux-kernel@vger.kernel.org, jenmin_yuan@aspeedtech.com, jirislaby@kernel.org,
+ ChiaWei Wang <chiawei_wang@aspeedtech.com>,
  linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+Aspeed Virtual UARTs directly bridge e.g. the system console UART on the
+LPC bus to the UART interface on the BMC's internal APB. As such there's
+no RS-232 signalling involved - the UART interfaces on each bus are
+directly connected as the producers and consumers of the one set of
+FIFOs.
 
-Briefly, the series works around a hardware race condition in the Tx path for
-Aspeed virtual UARTs. A write burst to THR on the APB interface may provoke a
-transfer stall where LSR[DR] on the LPC interface remains clear despite the
-presence of data in the Rx FIFO.
+The APB in the AST2600 generally runs at 100MHz while the LPC bus peaks
+at 33MHz. The difference in clock speeds exposes a race in the VUART
+design where a Tx data burst on the APB interface can result in a byte
+lost on the LPC interface. The symptom is LSR[DR] remains clear on the
+LPC interface despite data being present in its Rx FIFO, while LSR[THRE]
+remains clear on the APB interface as the host has not consumed the data
+the BMC has transmitted. In this state, the UART has stalled and no
+further data can be transmitted without manual intervention (e.g.
+resetting the FIFOs, resulting in loss of data).
 
-v3 addresses comments from Jiri on v2. v2 can be found here:
+The recommended work-around is to insert a read cycle on the APB
+interface between writes to THR.
 
-https://lore.kernel.org/lkml/20210519000704.3661773-1-andrew@aj.id.au/
-
-The documentation patch that fell out of the discussion of patch 2 of v2 can be
-found here:
-
-https://lore.kernel.org/lkml/20210520015704.489737-1-andrew@aj.id.au/T/#u
-
-Please review!
-
-Andrew
-
-Andrew Jeffery (2):
-  serial: 8250: Add UART_BUG_TXRACE workaround for Aspeed VUART
-  serial: 8250: Use BIT(x) for UART_{CAP,BUG}_*
-
- drivers/tty/serial/8250/8250.h              | 32 +++++++++++----------
+Cc: ChiaWei Wang <chiawei_wang@aspeedtech.com>
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+---
+ drivers/tty/serial/8250/8250.h              |  1 +
  drivers/tty/serial/8250/8250_aspeed_vuart.c |  1 +
- drivers/tty/serial/8250/8250_port.c         | 12 ++++++++
- 3 files changed, 30 insertions(+), 15 deletions(-)
+ drivers/tty/serial/8250/8250_port.c         | 12 ++++++++++++
+ 3 files changed, 14 insertions(+)
 
+diff --git a/drivers/tty/serial/8250/8250.h b/drivers/tty/serial/8250/8250.h
+index 52bb21205bb6..34aa2714f3c9 100644
+--- a/drivers/tty/serial/8250/8250.h
++++ b/drivers/tty/serial/8250/8250.h
+@@ -88,6 +88,7 @@ struct serial8250_config {
+ #define UART_BUG_NOMSR	(1 << 2)	/* UART has buggy MSR status bits (Au1x00) */
+ #define UART_BUG_THRE	(1 << 3)	/* UART has buggy THRE reassertion */
+ #define UART_BUG_PARITY	(1 << 4)	/* UART mishandles parity if FIFO enabled */
++#define UART_BUG_TXRACE	(1 << 5)	/* UART Tx fails to set remote DR */
+ 
+ 
+ #ifdef CONFIG_SERIAL_8250_SHARE_IRQ
+diff --git a/drivers/tty/serial/8250/8250_aspeed_vuart.c b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+index a28a394ba32a..4caab8714e2c 100644
+--- a/drivers/tty/serial/8250/8250_aspeed_vuart.c
++++ b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+@@ -440,6 +440,7 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
+ 	port.port.status = UPSTAT_SYNC_FIFO;
+ 	port.port.dev = &pdev->dev;
+ 	port.port.has_sysrq = IS_ENABLED(CONFIG_SERIAL_8250_CONSOLE);
++	port.bugs |= UART_BUG_TXRACE;
+ 
+ 	rc = sysfs_create_group(&vuart->dev->kobj, &aspeed_vuart_attr_group);
+ 	if (rc < 0)
+diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+index d45dab1ab316..fc5ab2032282 100644
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -1809,6 +1809,18 @@ void serial8250_tx_chars(struct uart_8250_port *up)
+ 	count = up->tx_loadsz;
+ 	do {
+ 		serial_out(up, UART_TX, xmit->buf[xmit->tail]);
++		if (up->bugs & UART_BUG_TXRACE) {
++			/*
++			 * The Aspeed BMC virtual UARTs have a bug where data
++			 * may get stuck in the BMC's Tx FIFO from bursts of
++			 * writes on the APB interface.
++			 *
++			 * Delay back-to-back writes by a read cycle to avoid
++			 * stalling the VUART. Read a register that won't have
++			 * side-effects and discard the result.
++			 */
++			serial_in(up, UART_SCR);
++		}
+ 		xmit->tail = (xmit->tail + 1) & (UART_XMIT_SIZE - 1);
+ 		port->icount.tx++;
+ 		if (uart_circ_empty(xmit))
 -- 
 2.30.2
 
