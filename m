@@ -1,68 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42D8B38C9D2
-	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 17:11:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 758DF38CBB4
+	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 19:14:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FmqnS1nrdz3bTh
-	for <lists+openbmc@lfdr.de>; Sat, 22 May 2021 01:11:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FmtWc2N77z303n
+	for <lists+openbmc@lfdr.de>; Sat, 22 May 2021 03:14:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=f/07+yeo;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=BV5Dv0HT;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::b29;
- helo=mail-yb1-xb29.google.com; envelope-from=nanzhou@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::334;
+ helo=mail-ot1-x334.google.com; envelope-from=tcminyard@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=f/07+yeo; dkim-atps=neutral
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com
- [IPv6:2607:f8b0:4864:20::b29])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=BV5Dv0HT; dkim-atps=neutral
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com
+ [IPv6:2607:f8b0:4864:20::334])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fmqn80NW0z303j
- for <openbmc@lists.ozlabs.org>; Sat, 22 May 2021 01:11:06 +1000 (AEST)
-Received: by mail-yb1-xb29.google.com with SMTP id w1so16600339ybt.1
- for <openbmc@lists.ozlabs.org>; Fri, 21 May 2021 08:11:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=knhVeYYDerhRXrtx/BvXkXatZPxOD/Zi/zEjtpcIZyI=;
- b=f/07+yeokuqI5W2Mvd2CwatKiwQFxL+WfFqq9Lf5a7zzcf9lqf0KOPPksrTyERHiPe
- xrbjPzOM2GaXyV3tyTfzFDrcb8XgEpBRy4oUkmMfI9iyxgwRhtzfOkl16ZkhhEC0OAuT
- lh8ylG2SD1be9TkV9jkDQL0Zeq1tMP//kRC2DrDccebx7OdtYD+e8PbtnjuLbItfr+sa
- ZUpIMksdLNOTreGqGAKbsmpNRoZjh0Adxrp/o0obf2K9pM5av/6Ohrw2HEEiqEDsIedM
- ci8lEvWpgfxMIh3phM9e9jC+j8Q8AYlHU6ByeXHuL6CclaMFgb6EiNOH0hR6QHUGsS3V
- qsRg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FmtWJ2qt0z302V;
+ Sat, 22 May 2021 03:14:19 +1000 (AEST)
+Received: by mail-ot1-x334.google.com with SMTP id
+ g7-20020a9d12870000b0290328b1342b73so10820853otg.9; 
+ Fri, 21 May 2021 10:14:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:date:from:to:cc:subject:message-id:reply-to:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=i/DEH4XPlbQY/GAcAQLF1MiUOk01m9bUndu1B0Q0p2Q=;
+ b=BV5Dv0HT4uSHK02mYT6zN0hk40iQRR5Xpdfpu4QtHAAzKCSdM4Sis8Vs4vOJRFofzy
+ /T9hgsH2rtOW3syQQdWfe0/wR2rmHaVjlErceHDQ5D0k/XbrtWnkIG4SNpREJ9u9DZrL
+ QJuoAxvF2YbjE0vJc/CdH6vAyf/MS0wTgIxgSyzEJtYpbrVTjGyOYquNtKk+nXs/FjvJ
+ WJXi4IGrYKs0/B6x8UZVFyZDpTbPpglAnp37MeUdzu4p6JtDq9pIbZDLopSyNfFp4JZk
+ b1gh7vRTPD4rbovKIpBmqj/1pKGAhKAZ2tw7JUb7ZLUlbvptkcJYCyabMlYh0By0dpLV
+ UKqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=knhVeYYDerhRXrtx/BvXkXatZPxOD/Zi/zEjtpcIZyI=;
- b=gZdxgjoRtxO9oZVrCaGliGU1vKqIFhM8S/yL4lW2LYOkH0HIPX6EP7fzGkg4MIeZiX
- f3VbJzfRFmgmppT1zCA0anQesw6QTsRSUFGK0Ihvv5qSNMFBdYuy0zFJhgaX8O603nYJ
- vwnJV8YOx8ilV3n0fPzd4pe5KMbETS2a7gMV9ZcOpAmDvZf3ccK2WSml+YGmXn7ElWRQ
- 8ASGMNCzy4gKnl3UFH9FZV/2oQUjMgIPq4p+iYY9QM/CkOw8gpS5vx6JTyDrVYbWMuYV
- 0lgtvC+3E0QYyIs+z/xfyflwEsFz3KU9nLZVpY3F8I8fwN4mz2gFe4GdYecwDgjjwA/Y
- cfqA==
-X-Gm-Message-State: AOAM531pg3UeckVz5kS2anpZYttHAC4n407SUZ/BOiyDhaeO8urgcByC
- 4uqbC8qWxtUrdh75IEZyDWN71/AUQcWptwXppTJL8A==
-X-Google-Smtp-Source: ABdhPJzTV2PH2Tx/XX7XjDkUsJqNHFJV7UC/yYpkPVG7Vy+dtafsyDsuPHnvGzDRYvU45BRS9gO3IxYg+URMKrQFzck=
-X-Received: by 2002:a25:bc41:: with SMTP id d1mr16675835ybk.67.1621609860252; 
- Fri, 21 May 2021 08:11:00 -0700 (PDT)
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :reply-to:references:mime-version:content-disposition:in-reply-to;
+ bh=i/DEH4XPlbQY/GAcAQLF1MiUOk01m9bUndu1B0Q0p2Q=;
+ b=X7Bk9z4/rTZd0s7GXhnf3n64tsvTFI6OKRPaTCaq/Ur++k1S4VgSy/c84omhUh33d+
+ JSl+gJTMWS9izCpmThbhh2kWjrEnWy+wLIUTuSIR6Fb8MdL+a4WY0JWR5y7tYCxAdOT7
+ RJoDFGdB5tPV9jreqLwSYyhRdmGZ7OgBoRDliql37XUvxVmWFh68synZCdsyy8xZqsXO
+ oxOMiyyzk0B4N/QEtMzUSk+9jiJ0Y7gY9NU2kr4IXU7CunrOqPhvjoG/K6dMnrzxsrjV
+ AVn8wzPeYI63Bm+yz0nPQCHv7p6+jUxZlEo0XbLtdQaH4mgY4G8SdvSL30UfY5jgZWGD
+ B88Q==
+X-Gm-Message-State: AOAM530j9v8yOyFzEhuEgrBMQysnGbC1c0WjNcxX48Gzpm8hz0HfmGxH
+ uIp6pASeiizZlTv32UupCQ==
+X-Google-Smtp-Source: ABdhPJzmHdxLbXoaJBp1/xmpAmOe0Q15yNBm3JriguNf2vFLBw/GS4NToO7dnR4UroPXKS2RE874yA==
+X-Received: by 2002:a9d:644f:: with SMTP id m15mr9364980otl.99.1621617255792; 
+ Fri, 21 May 2021 10:14:15 -0700 (PDT)
+Received: from serve.minyard.net ([47.184.156.158])
+ by smtp.gmail.com with ESMTPSA id n13sm1286675oov.30.2021.05.21.10.14.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 May 2021 10:14:14 -0700 (PDT)
+Received: from minyard.net (unknown
+ [IPv6:2001:470:b8f6:1b:9c8f:21cb:3961:b550])
+ by serve.minyard.net (Postfix) with ESMTPSA id A826D180105;
+ Fri, 21 May 2021 17:14:13 +0000 (UTC)
+Date: Fri, 21 May 2021 12:14:12 -0500
+From: Corey Minyard <minyard@acm.org>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: [PATCH v3 05/16] ipmi: kcs_bmc: Turn the driver data-structures
+ inside-out
+Message-ID: <20210521171412.GI2921206@minyard.net>
+References: <20210510054213.1610760-1-andrew@aj.id.au>
+ <20210510054213.1610760-6-andrew@aj.id.au>
 MIME-Version: 1.0
-References: <CAOLfGj5orNO2U3zdO6LuBGY05mXFewofqRiOUXyA=ks74LzMhg@mail.gmail.com>
- <20210521061023.4zy5s7fzycz5lppx@gmail.com>
-In-Reply-To: <20210521061023.4zy5s7fzycz5lppx@gmail.com>
-From: Nan Zhou <nanzhou@google.com>
-Date: Fri, 21 May 2021 08:10:49 -0700
-Message-ID: <CAOLfGj76F6WRRU9kS2eQ=FhM=2GAM6NAiiPiRjucVO1Nupm1ag@mail.gmail.com>
-Subject: Re: Link phosphor-hostlogger and bmcweb
-To: Artem Senichev <artemsen@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000afb23405c2d877a5"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210510054213.1610760-6-andrew@aj.id.au>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,411 +86,477 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Spencer Ku <spencer.ku@quanta.corp-partner.google.com>,
- Litzung Chen <litzung.chen@quanta.corp-partner.google.com>,
- openbmc@lists.ozlabs.org, a.amelkin@yadro.com, Ed Tanous <edtanous@google.com>,
- Richard Hanley <rhanley@google.com>, a.senichev@yadro.com,
- a.filippov@yadro.com
+Reply-To: minyard@acm.org
+Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com,
+ linux-aspeed@lists.ozlabs.org, avifishman70@gmail.com, venture@google.com,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com,
+ robh+dt@kernel.org, arnd@arndb.de, openipmi-developer@lists.sourceforge.net,
+ zweiss@equinix.com, chiawei_wang@aspeedtech.com,
+ linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000afb23405c2d877a5
-Content-Type: text/plain; charset="UTF-8"
+On Mon, May 10, 2021 at 03:12:02PM +0930, Andrew Jeffery wrote:
+> Make the KCS device drivers responsible for allocating their own memory.
+> 
+> Until now the private data for the device driver was allocated internal
+> to the private data for the chardev interface. This coupling required
+> the slightly awkward API of passing through the struct size for the
+> driver private data to the chardev constructor, and then retrieving a
+> pointer to the driver private data from the allocated chardev memory.
+> 
+> In addition to being awkward, the arrangement prevents the
+> implementation of alternative userspace interfaces as the device driver
+> private data is not independent.
+> 
+> Peel a layer off the onion and turn the data-structures inside out by
+> exploiting container_of() and embedding `struct kcs_device` in the
+> driver private data.
 
-On Thu, May 20, 2021 at 04:29:09PM -0700, Nan Zhou wrote:
+All in all a very nice cleanup.  A few nits inline.
 
-> > Hi all,
-> >
-> > In the previous thread (
-> > https://lists.ozlabs.org/pipermail/openbmc/2021-March/025234.html), we
-> > (engineers from Google and Quanta) discussed our attempt to share host
-> > serial logs via Redfish, which includes polling logs via LogService and
-> > streaming log bytes via EventService (e.g. SSE). We went with the event
-> log
-> > architecture
-> > <
-> https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md
-> >
-> > and did the implementation.
-> >
-> > We still want to reuse the phosphor-hostlogger and do some modification.
-> We
-> > believe it is better to try to reuse existing codes if possible and
-> improve
-> > them rather than creating new things that have similar functionalities
-> (in
-> > our case, it is a daemon that could collect logs and persist them).
-> I agree, reusing code is a right choice, but only when it is really
-> possible.
-> For now it looks like you want to remove most of the Hostlogger features to
-> transform it from buffer-like to stream-like service.
+> 
+> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+> Reviewed-by: Zev Weiss <zweiss@equinix.com>
+> ---
+>  drivers/char/ipmi/kcs_bmc.c           | 19 +++++++--
+>  drivers/char/ipmi/kcs_bmc.h           | 12 ++----
+>  drivers/char/ipmi/kcs_bmc_aspeed.c    | 56 +++++++++++++------------
+>  drivers/char/ipmi/kcs_bmc_cdev_ipmi.c | 60 ++++++++++++++++++---------
+>  drivers/char/ipmi/kcs_bmc_npcm7xx.c   | 37 ++++++++++-------
+>  5 files changed, 111 insertions(+), 73 deletions(-)
+> 
+> diff --git a/drivers/char/ipmi/kcs_bmc.c b/drivers/char/ipmi/kcs_bmc.c
+> index ef5c48ffe74a..83da681bf49e 100644
+> --- a/drivers/char/ipmi/kcs_bmc.c
+> +++ b/drivers/char/ipmi/kcs_bmc.c
+> @@ -44,12 +44,23 @@ int kcs_bmc_handle_event(struct kcs_bmc *kcs_bmc)
+>  }
+>  EXPORT_SYMBOL(kcs_bmc_handle_event);
+>  
+> -struct kcs_bmc *kcs_bmc_ipmi_alloc(struct device *dev, int sizeof_priv, u32 channel);
+> -struct kcs_bmc *kcs_bmc_alloc(struct device *dev, int sizeof_priv, u32 channel)
+> +int kcs_bmc_ipmi_add_device(struct kcs_bmc *kcs_bmc);
 
-Hostlogger will still consume bytes from obmc-console-server and persist
-logs in files. If the log itself has EOL, it will be splitted in the file
-as well.
-I thought that is all things we want in the Hostlogger.
+The above (and it's remove function) should be in an include file.
 
-> We want to do the following modification in phosphor-hostlogger (from the
-> > input and output point of view, just very few things will be changed)
-> >
-> > 1. One limitation of phosphor-hostlogger is that it will lose data in the
-> > memory (the ring buffer maintained by hostlogger) when BMC gets force
-> > restarted;
-> When BMC goes to reboot it stops all services, at that moment hostlogger
-> gets
-> a signal and flushes all gathered logs to a file.
+> +void kcs_bmc_add_device(struct kcs_bmc *kcs_bmc)
 
-Yes, I understand hostlogger registers a sigterm handler. But what if BMC
-lost its power before sigterm gets sent? That's what I mean by "force
-restart".
+This should return an error so the probe can be failed and cleaned up
+and so confusing message don't get printed after this in one case.
 
-> we propose to remove the ring buffer and write to the log file
-> as soon as some characters are received.
-
-I am not sure it is a good idea.
-> The host can generate a lot of logs, but we have very limited free space.
-> In
-> addition, such heavy traffic will lead to a quick breakdown of the flash
-> (most
-> available products are guaranteed to withstand around 100,000 P/E cycles
-> only).
-
-I would like to get input from Ed for this point. +Ed Tanous
-<edtanous@google.com>.
-
-> This implicitly removes the needs
-> > of the ring buffer, and the persistence triggering (host reboot, sigterm,
-> > etc) in hostlogger. We believe this keeps the same functionality but
-> saves
-> > hundreds of lines of codes in phosphor-hostlogger.
-> You are suggesting to delete the buffer, DBus watcher, log rotate. How are
-> you
-> going to keep the same functionality if you remove everything related to
-> it?
-
-Log rotation is kept. Ring buffer and DBus watcher are great in the
-original design but become unnecessary if we persist logs immediately. Do
-we miss
-anything that the previous hostlogger provides (transfer bytes from the
-unix socket to EOL-separated compressed logs)? I believe in this proposal
-we have
-less data loss, simpler codes, and make it more performant for Redfish
-integration.
-
-On Thu, May 20, 2021 at 11:10 PM Artem Senichev <artemsen@gmail.com> wrote:
-
-> On Thu, May 20, 2021 at 04:29:09PM -0700, Nan Zhou wrote:
-> > Hi all,
-> >
-> > In the previous thread (
-> > https://lists.ozlabs.org/pipermail/openbmc/2021-March/025234.html), we
-> > (engineers from Google and Quanta) discussed our attempt to share host
-> > serial logs via Redfish, which includes polling logs via LogService and
-> > streaming log bytes via EventService (e.g. SSE). We went with the event
-> log
-> > architecture
-> > <
-> https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md
-> >
-> > and did the implementation.
-> >
-> > We still want to reuse the phosphor-hostlogger and do some modification.
-> We
-> > believe it is better to try to reuse existing codes if possible and
-> improve
-> > them rather than creating new things that have similar functionalities
-> (in
-> > our case, it is a daemon that could collect logs and persist them).
->
-> I agree, reusing code is a right choice, but only when it is really
-> possible.
-> For now it looks like you want to remove most of the Hostlogger features to
-> transform it from buffer-like to stream-like service.
->
-> > We want to do the following modification in phosphor-hostlogger (from the
-> > input and output point of view, just very few things will be changed)
-> >
-> > 1. One limitation of phosphor-hostlogger is that it will lose data in the
-> > memory (the ring buffer maintained by hostlogger) when BMC gets force
-> > restarted;
->
-> When BMC goes to reboot it stops all services, at that moment hostlogger
-> gets
-> a signal and flushes all gathered logs to a file.
->
-> > we propose to remove the ring buffer and write to the log file
-> > as soon as some characters are received.
->
-> I am not sure it is a good idea.
-> The host can generate a lot of logs, but we have very limited free space.
-> In
-> addition, such heavy traffic will lead to a quick breakdown of the flash
-> (most
-> available products are guaranteed to withstand around 100,000 P/E cycles
-> only).
->
-> > This implicitly removes the needs
-> > of the ring buffer, and the persistence triggering (host reboot, sigterm,
-> > etc) in hostlogger. We believe this keeps the same functionality but
-> saves
-> > hundreds of lines of codes in phosphor-hostlogger.
->
-> You are suggesting to delete the buffer, DBus watcher, log rotate. How are
-> you
-> going to keep the same functionality if you remove everything related to
-> it?
->
-> > 2. We propose not to compress the latest log file. This saves us the
-> > overhead of doing decompression when BMCWeb just needs to retrieve the
-> most
-> > recent logs. There are still going to be log rotations in the file level.
-> > Files other than the latest log file are still going to be compressed. We
-> > can modify existing codes to achieve this or use the linux logrotate
-> > directly.
-> >
-> > Furthermore, we will add host serial logs into BMCWeb, both LogService
-> and
-> > EventService. In LogService, we will teach BMCWeb how to read the latest
-> > log file that is not compressed and the other compressed old logs, and
-> how
-> > to assemble LogEntries out of raw serial logs. We will discuss
-> EventService
-> > in future threads but the very initial idea is to setup inotify on log
-> > files and SSE to stream out new bytes to clients (like what the existing
-> > event logging is doing).
-> >
-> > As we said above, for phosphor-hostlogger, the input is still the
-> > obmc-server unix socket, and the output are still persisted log files.
-> But
-> > the functionality will get improved (less data loss), code gets
-> simplified
-> > (no ring buffer and persistence triggering), and it will become easier
-> and
-> > more performant to get BMCWeb hooked up for log streaming via Redfish.
-> >
-> > Please let us know what you think. We appreciate any feedback. Thank you
-> > very much!
-> >
-> > Sincerely,
-> > Nan
->
-> --
-> Regards,
-> Artem Senichev
-> Software Engineer, YADRO.
->
-
---000000000000afb23405c2d877a5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><span class=3D"gmail-im" style=3D"color:rgb(80,0,80)">On T=
-hu, May 20, 2021 at 04:29:09PM -0700, Nan Zhou wrote:<br></span><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
-lid rgb(204,204,204);padding-left:1ex"><span class=3D"gmail-im" style=3D"co=
-lor:rgb(80,0,80)">&gt; Hi all,<br></span><span class=3D"gmail-im" style=3D"=
-color:rgb(80,0,80)">&gt;<br></span><span class=3D"gmail-im" style=3D"color:=
-rgb(80,0,80)">&gt; In the previous thread (<br></span><span class=3D"gmail-=
-im" style=3D"color:rgb(80,0,80)">&gt;=C2=A0<a href=3D"https://lists.ozlabs.=
-org/pipermail/openbmc/2021-March/025234.html" rel=3D"noreferrer" target=3D"=
-_blank">https://lists.ozlabs.org/pipermail/openbmc/2021-March/025234.html</=
-a>), we<br></span><span class=3D"gmail-im" style=3D"color:rgb(80,0,80)">&gt=
-; (engineers from Google and Quanta) discussed our attempt to share host<br=
-></span><span class=3D"gmail-im" style=3D"color:rgb(80,0,80)">&gt; serial l=
-ogs via Redfish, which includes polling logs via LogService and<br></span><=
-span class=3D"gmail-im" style=3D"color:rgb(80,0,80)">&gt; streaming log byt=
-es via EventService (e.g. SSE). We went with the event log<br></span><span =
-class=3D"gmail-im" style=3D"color:rgb(80,0,80)">&gt; architecture<br></span=
->&gt; &lt;<a href=3D"https://github.com/openbmc/docs/blob/master/architectu=
-re/redfish-logging-in-bmcweb.md" rel=3D"noreferrer" target=3D"_blank">https=
-://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcw=
-eb.md</a>&gt;<br>&gt; and did the implementation.<br><span class=3D"gmail-i=
-m" style=3D"color:rgb(80,0,80)">&gt;<br></span><span class=3D"gmail-im" sty=
-le=3D"color:rgb(80,0,80)">&gt; We still want to reuse the phosphor-hostlogg=
-er and do some modification. We<br></span><span class=3D"gmail-im" style=3D=
-"color:rgb(80,0,80)">&gt; believe it is better to try to reuse existing cod=
-es if possible and improve<br></span><span class=3D"gmail-im" style=3D"colo=
-r:rgb(80,0,80)">&gt; them rather than creating new things that have similar=
- functionalities (in<br></span><span class=3D"gmail-im" style=3D"color:rgb(=
-80,0,80)">&gt; our case, it is a daemon that could collect logs and persist=
- them).</span><span class=3D"gmail-im" style=3D"color:rgb(80,0,80)"><br></s=
-pan>I agree, reusing code is a right choice, but only when it is really pos=
-sible.<br>For now it looks like you want to remove most of the Hostlogger f=
-eatures to<br>transform it from buffer-like to stream-like service.</blockq=
-uote><div>Hostlogger will still consume bytes from obmc-console-server and =
-persist logs in files. If the log itself has EOL, it will be splitted=C2=A0=
-in the file as well.=C2=A0</div><div>I thought that is all things we want i=
-n the Hostlogger. </div><span class=3D"gmail-im" style=3D"color:rgb(80,0,80=
-)"><br></span><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
- 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><span class=
-=3D"gmail-im" style=3D"color:rgb(80,0,80)">&gt; We want to do the following=
- modification in phosphor-hostlogger (from the<br></span><span class=3D"gma=
-il-im" style=3D"color:rgb(80,0,80)">&gt; input and output point of view, ju=
-st very few things will be changed)<br></span><span class=3D"gmail-im" styl=
-e=3D"color:rgb(80,0,80)">&gt;<br></span><span class=3D"gmail-im" style=3D"c=
-olor:rgb(80,0,80)">&gt; 1. One limitation of phosphor-hostlogger is that it=
- will lose data in the<br></span><span class=3D"gmail-im" style=3D"color:rg=
-b(80,0,80)">&gt; memory (the ring buffer maintained by hostlogger) when BMC=
- gets force<br></span><span class=3D"gmail-im" style=3D"color:rgb(80,0,80)"=
->&gt; restarted;</span><span class=3D"gmail-im" style=3D"color:rgb(80,0,80)=
-"><br></span>When BMC goes to reboot it stops all services, at that moment =
-hostlogger gets<br>a signal and flushes all gathered logs to a file.</block=
-quote><div>Yes, I understand hostlogger registers a sigterm handler. But wh=
-at if BMC lost its power before sigterm gets sent? That&#39;s what I mean b=
-y &quot;force restart&quot;.</div><span class=3D"gmail-im" style=3D"color:r=
-gb(80,0,80)"><br>&gt; we propose to remove the ring buffer and write to the=
- log file<br>&gt; as soon as some characters are received.<br><br></span><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">I am not sure it is a good =
-idea.<br>The host can generate a lot of logs, but we have very limited free=
- space. In<br>addition, such heavy traffic will lead to a quick breakdown o=
-f the flash (most<br>available products are guaranteed to withstand around =
-100,000 P/E cycles only).</blockquote><div>I would like to get input from E=
-d for this point.=C2=A0<a class=3D"gmail_plusreply" id=3D"plusReplyChip-1" =
-href=3D"mailto:edtanous@google.com" tabindex=3D"-1">+Ed Tanous</a>.=C2=A0</=
-div><span class=3D"gmail-im" style=3D"color:rgb(80,0,80)"><br></span><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex"><span class=3D"gmail-im" style=
-=3D"color:rgb(80,0,80)">&gt; This implicitly removes the needs<br></span><s=
-pan class=3D"gmail-im" style=3D"color:rgb(80,0,80)">&gt; of the ring buffer=
-, and the persistence triggering (host reboot, sigterm,<br></span><span cla=
-ss=3D"gmail-im" style=3D"color:rgb(80,0,80)">&gt; etc) in hostlogger. We be=
-lieve this keeps the same functionality but saves<br></span><span class=3D"=
-gmail-im" style=3D"color:rgb(80,0,80)">&gt; hundreds of lines of codes in p=
-hosphor-hostlogger.</span><span class=3D"gmail-im" style=3D"color:rgb(80,0,=
-80)"><br></span>You are suggesting to delete the buffer, DBus watcher, log =
-rotate. How are you<br>going to keep the same functionality if you remove e=
-verything related to it?</blockquote><div>Log rotation is kept. Ring buffer=
- and DBus watcher are great in the original design but become unnecessary i=
-f we persist logs immediately. Do we miss</div><div>anything that the previ=
-ous hostlogger=C2=A0provides (transfer bytes from the unix socket to EOL-se=
-parated compressed logs)? I believe in this proposal we have=C2=A0</div><di=
-v>less data loss, simpler codes, and make it more performant for Redfish in=
-tegration.=C2=A0</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr"=
- class=3D"gmail_attr">On Thu, May 20, 2021 at 11:10 PM Artem Senichev &lt;<=
-a href=3D"mailto:artemsen@gmail.com">artemsen@gmail.com</a>&gt; wrote:<br><=
-/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
-rder-left:1px solid rgb(204,204,204);padding-left:1ex">On Thu, May 20, 2021=
- at 04:29:09PM -0700, Nan Zhou wrote:<br>
-&gt; Hi all,<br>
-&gt; <br>
-&gt; In the previous thread (<br>
-&gt; <a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2021-March/02523=
-4.html" rel=3D"noreferrer" target=3D"_blank">https://lists.ozlabs.org/piper=
-mail/openbmc/2021-March/025234.html</a>), we<br>
-&gt; (engineers from Google and Quanta) discussed our attempt to share host=
-<br>
-&gt; serial logs via Redfish, which includes polling logs via LogService an=
-d<br>
-&gt; streaming log bytes via EventService (e.g. SSE). We went with the even=
-t log<br>
-&gt; architecture<br>
-&gt; &lt;<a href=3D"https://github.com/openbmc/docs/blob/master/architectur=
-e/redfish-logging-in-bmcweb.md" rel=3D"noreferrer" target=3D"_blank">https:=
-//github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcwe=
-b.md</a>&gt;<br>
-&gt; and did the implementation.<br>
-&gt; <br>
-&gt; We still want to reuse the phosphor-hostlogger and do some modificatio=
-n. We<br>
-&gt; believe it is better to try to reuse existing codes if possible and im=
-prove<br>
-&gt; them rather than creating new things that have similar functionalities=
- (in<br>
-&gt; our case, it is a daemon that could collect logs and persist them).<br=
->
-<br>
-I agree, reusing code is a right choice, but only when it is really possibl=
-e.<br>
-For now it looks like you want to remove most of the Hostlogger features to=
-<br>
-transform it from buffer-like to stream-like service.<br>
-<br>
-&gt; We want to do the following modification in phosphor-hostlogger (from =
-the<br>
-&gt; input and output point of view, just very few things will be changed)<=
-br>
-&gt; <br>
-&gt; 1. One limitation of phosphor-hostlogger is that it will lose data in =
-the<br>
-&gt; memory (the ring buffer maintained by hostlogger) when BMC gets force<=
-br>
-&gt; restarted;<br>
-<br>
-When BMC goes to reboot it stops all services, at that moment hostlogger ge=
-ts<br>
-a signal and flushes all gathered logs to a file.<br>
-<br>
-&gt; we propose to remove the ring buffer and write to the log file<br>
-&gt; as soon as some characters are received.<br>
-<br>
-I am not sure it is a good idea.<br>
-The host can generate a lot of logs, but we have very limited free space. I=
-n<br>
-addition, such heavy traffic will lead to a quick breakdown of the flash (m=
-ost<br>
-available products are guaranteed to withstand around 100,000 P/E cycles on=
-ly).<br>
-<br>
-&gt; This implicitly removes the needs<br>
-&gt; of the ring buffer, and the persistence triggering (host reboot, sigte=
-rm,<br>
-&gt; etc) in hostlogger. We believe this keeps the same functionality but s=
-aves<br>
-&gt; hundreds of lines of codes in phosphor-hostlogger.<br>
-<br>
-You are suggesting to delete the buffer, DBus watcher, log rotate. How are =
-you<br>
-going to keep the same functionality if you remove everything related to it=
-?<br>
-<br>
-&gt; 2. We propose not to compress the latest log file. This saves us the<b=
-r>
-&gt; overhead of doing decompression when BMCWeb just needs to retrieve the=
- most<br>
-&gt; recent logs. There are still going to be log rotations in the file lev=
-el.<br>
-&gt; Files other than the latest log file are still going to be compressed.=
- We<br>
-&gt; can modify existing codes to achieve this or use the linux logrotate<b=
-r>
-&gt; directly.<br>
-&gt; <br>
-&gt; Furthermore, we will add host serial logs into BMCWeb, both LogService=
- and<br>
-&gt; EventService. In LogService, we will teach BMCWeb how to read the late=
-st<br>
-&gt; log file that is not compressed and the other compressed old logs, and=
- how<br>
-&gt; to assemble LogEntries out of raw serial logs. We will discuss EventSe=
-rvice<br>
-&gt; in future threads but the very initial idea is to setup inotify on log=
-<br>
-&gt; files and SSE to stream out new bytes to clients (like what the existi=
-ng<br>
-&gt; event logging is doing).<br>
-&gt; <br>
-&gt; As we said above, for phosphor-hostlogger, the input is still the<br>
-&gt; obmc-server unix socket, and the output are still persisted log files.=
- But<br>
-&gt; the functionality will get improved (less data loss), code gets simpli=
-fied<br>
-&gt; (no ring buffer and persistence triggering), and it will become easier=
- and<br>
-&gt; more performant to get BMCWeb hooked up for log streaming via Redfish.=
-<br>
-&gt; <br>
-&gt; Please let us know what you think. We appreciate any feedback. Thank y=
-ou<br>
-&gt; very much!<br>
-&gt; <br>
-&gt; Sincerely,<br>
-&gt; Nan<br>
-<br>
--- <br>
-Regards,<br>
-Artem Senichev<br>
-Software Engineer, YADRO.<br>
-</blockquote></div>
-
---000000000000afb23405c2d877a5--
+>  {
+> -	return kcs_bmc_ipmi_alloc(dev, sizeof_priv, channel);
+> +	if (kcs_bmc_ipmi_add_device(kcs_bmc))
+> +		pr_warn("Failed to add device for KCS channel %d\n",
+> +			kcs_bmc->channel);
+>  }
+> -EXPORT_SYMBOL(kcs_bmc_alloc);
+> +EXPORT_SYMBOL(kcs_bmc_add_device);
+> +
+> +int kcs_bmc_ipmi_remove_device(struct kcs_bmc *kcs_bmc);
+> +void kcs_bmc_remove_device(struct kcs_bmc *kcs_bmc)
+> +{
+> +	if (kcs_bmc_ipmi_remove_device(kcs_bmc))
+> +		pr_warn("Failed to remove device for KCS channel %d\n",
+> +			kcs_bmc->channel);
+> +}
+> +EXPORT_SYMBOL(kcs_bmc_remove_device);
+>  
+>  MODULE_LICENSE("GPL v2");
+>  MODULE_AUTHOR("Haiyue Wang <haiyue.wang@linux.intel.com>");
+> diff --git a/drivers/char/ipmi/kcs_bmc.h b/drivers/char/ipmi/kcs_bmc.h
+> index febea0c8deb4..b2e6b7a7fe62 100644
+> --- a/drivers/char/ipmi/kcs_bmc.h
+> +++ b/drivers/char/ipmi/kcs_bmc.h
+> @@ -67,6 +67,8 @@ struct kcs_ioreg {
+>  };
+>  
+>  struct kcs_bmc {
+> +	struct device *dev;
+> +
+>  	spinlock_t lock;
+>  
+>  	u32 channel;
+> @@ -94,17 +96,11 @@ struct kcs_bmc {
+>  	u8 *kbuffer;
+>  
+>  	struct miscdevice miscdev;
+> -
+> -	unsigned long priv[];
+>  };
+>  
+> -static inline void *kcs_bmc_priv(struct kcs_bmc *kcs_bmc)
+> -{
+> -	return kcs_bmc->priv;
+> -}
+> -
+>  int kcs_bmc_handle_event(struct kcs_bmc *kcs_bmc);
+> -struct kcs_bmc *kcs_bmc_alloc(struct device *dev, int sizeof_priv, u32 channel);
+> +void kcs_bmc_add_device(struct kcs_bmc *kcs_bmc);
+> +void kcs_bmc_remove_device(struct kcs_bmc *kcs_bmc);
+>  
+>  u8 kcs_bmc_read_data(struct kcs_bmc *kcs_bmc);
+>  void kcs_bmc_write_data(struct kcs_bmc *kcs_bmc, u8 data);
+> diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
+> index 06628ca69750..5d433dea5714 100644
+> --- a/drivers/char/ipmi/kcs_bmc_aspeed.c
+> +++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
+> @@ -61,6 +61,8 @@
+>  #define LPC_STR4             0x11C
+>  
+>  struct aspeed_kcs_bmc {
+> +	struct kcs_bmc kcs_bmc;
+> +
+>  	struct regmap *map;
+>  };
+>  
+> @@ -69,9 +71,14 @@ struct aspeed_kcs_of_ops {
+>  	int (*get_io_address)(struct platform_device *pdev);
+>  };
+>  
+> +static inline struct aspeed_kcs_bmc *to_aspeed_kcs_bmc(struct kcs_bmc *kcs_bmc)
+> +{
+> +	return container_of(kcs_bmc, struct aspeed_kcs_bmc, kcs_bmc);
+> +}
+> +
+>  static u8 aspeed_kcs_inb(struct kcs_bmc *kcs_bmc, u32 reg)
+>  {
+> -	struct aspeed_kcs_bmc *priv = kcs_bmc_priv(kcs_bmc);
+> +	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
+>  	u32 val = 0;
+>  	int rc;
+>  
+> @@ -83,7 +90,7 @@ static u8 aspeed_kcs_inb(struct kcs_bmc *kcs_bmc, u32 reg)
+>  
+>  static void aspeed_kcs_outb(struct kcs_bmc *kcs_bmc, u32 reg, u8 data)
+>  {
+> -	struct aspeed_kcs_bmc *priv = kcs_bmc_priv(kcs_bmc);
+> +	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
+>  	int rc;
+>  
+>  	rc = regmap_write(priv->map, reg, data);
+> @@ -92,7 +99,7 @@ static void aspeed_kcs_outb(struct kcs_bmc *kcs_bmc, u32 reg, u8 data)
+>  
+>  static void aspeed_kcs_updateb(struct kcs_bmc *kcs_bmc, u32 reg, u8 mask, u8 val)
+>  {
+> -	struct aspeed_kcs_bmc *priv = kcs_bmc_priv(kcs_bmc);
+> +	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
+>  	int rc;
+>  
+>  	rc = regmap_update_bits(priv->map, reg, mask, val);
+> @@ -114,7 +121,7 @@ static void aspeed_kcs_updateb(struct kcs_bmc *kcs_bmc, u32 reg, u8 mask, u8 val
+>   */
+>  static void aspeed_kcs_set_address(struct kcs_bmc *kcs_bmc, u16 addr)
+>  {
+> -	struct aspeed_kcs_bmc *priv = kcs_bmc_priv(kcs_bmc);
+> +	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
+>  
+>  	switch (kcs_bmc->channel) {
+>  	case 1:
+> @@ -148,7 +155,7 @@ static void aspeed_kcs_set_address(struct kcs_bmc *kcs_bmc, u16 addr)
+>  
+>  static void aspeed_kcs_enable_channel(struct kcs_bmc *kcs_bmc, bool enable)
+>  {
+> -	struct aspeed_kcs_bmc *priv = kcs_bmc_priv(kcs_bmc);
+> +	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
+>  
+>  	switch (kcs_bmc->channel) {
+>  	case 1:
+> @@ -323,17 +330,16 @@ static int aspeed_kcs_of_v2_get_io_address(struct platform_device *pdev)
+>  static int aspeed_kcs_probe(struct platform_device *pdev)
+>  {
+>  	const struct aspeed_kcs_of_ops *ops;
+> -	struct device *dev = &pdev->dev;
+>  	struct aspeed_kcs_bmc *priv;
+>  	struct kcs_bmc *kcs_bmc;
+>  	struct device_node *np;
+>  	int rc, channel, addr;
+>  
+> -	np = dev->of_node->parent;
+> +	np = pdev->dev.of_node->parent;
+>  	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
+>  	    !of_device_is_compatible(np, "aspeed,ast2500-lpc-v2") &&
+>  	    !of_device_is_compatible(np, "aspeed,ast2600-lpc-v2")) {
+> -		dev_err(dev, "unsupported LPC device binding\n");
+> +		dev_err(&pdev->dev, "unsupported LPC device binding\n");
+>  		return -ENODEV;
+>  	}
+>  	ops = of_device_get_match_data(&pdev->dev);
+> @@ -344,20 +350,22 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+>  	if (channel < 0)
+>  		return channel;
+>  
+> -	kcs_bmc = kcs_bmc_alloc(&pdev->dev, sizeof(struct aspeed_kcs_bmc), channel);
+> -	if (!kcs_bmc)
+> +	addr = ops->get_io_address(pdev);
+> +	if (addr < 0)
+> +		return addr;
+> +
+> +	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+> +	if (!priv)
+>  		return -ENOMEM;
+>  
+> +	kcs_bmc = &priv->kcs_bmc;
+> +	kcs_bmc->dev = &pdev->dev;
+> +	kcs_bmc->channel = channel;
+>  	kcs_bmc->ioreg = ast_kcs_bmc_ioregs[channel - 1];
+>  	kcs_bmc->io_inputb = aspeed_kcs_inb;
+>  	kcs_bmc->io_outputb = aspeed_kcs_outb;
+>  	kcs_bmc->io_updateb = aspeed_kcs_updateb;
+>  
+> -	addr = ops->get_io_address(pdev);
+> -	if (addr < 0)
+> -		return addr;
+> -
+> -	priv = kcs_bmc_priv(kcs_bmc);
+>  	priv->map = syscon_node_to_regmap(pdev->dev.parent->of_node);
+>  	if (IS_ERR(priv->map)) {
+>  		dev_err(&pdev->dev, "Couldn't get regmap\n");
+> @@ -370,29 +378,23 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+>  	if (rc)
+>  		return rc;
+>  
+> -	dev_set_drvdata(dev, kcs_bmc);
+> +	platform_set_drvdata(pdev, priv);
+>  
+>  	aspeed_kcs_enable_channel(kcs_bmc, true);
+>  
+> -	rc = misc_register(&kcs_bmc->miscdev);
+> -	if (rc) {
+> -		dev_err(dev, "Unable to register device\n");
+> -		return rc;
+> -	}
+> +	kcs_bmc_add_device(&priv->kcs_bmc);
+>  
+> -	dev_dbg(&pdev->dev,
+> -		"Probed KCS device %d (IDR=0x%x, ODR=0x%x, STR=0x%x)\n",
+> -		kcs_bmc->channel, kcs_bmc->ioreg.idr, kcs_bmc->ioreg.odr,
+> -		kcs_bmc->ioreg.str);
+> +	dev_info(&pdev->dev, "Initialised channel %d at 0x%x\n", kcs_bmc->channel, addr);
+>  
+>  	return 0;
+>  }
+>  
+>  static int aspeed_kcs_remove(struct platform_device *pdev)
+>  {
+> -	struct kcs_bmc *kcs_bmc = dev_get_drvdata(&pdev->dev);
+> +	struct aspeed_kcs_bmc *priv = platform_get_drvdata(pdev);
+> +	struct kcs_bmc *kcs_bmc = &priv->kcs_bmc;
+>  
+> -	misc_deregister(&kcs_bmc->miscdev);
+> +	kcs_bmc_remove_device(kcs_bmc);
+>  
+>  	return 0;
+>  }
+> diff --git a/drivers/char/ipmi/kcs_bmc_cdev_ipmi.c b/drivers/char/ipmi/kcs_bmc_cdev_ipmi.c
+> index 82c77994e481..5060643bf530 100644
+> --- a/drivers/char/ipmi/kcs_bmc_cdev_ipmi.c
+> +++ b/drivers/char/ipmi/kcs_bmc_cdev_ipmi.c
+> @@ -382,7 +382,7 @@ static int kcs_bmc_ipmi_release(struct inode *inode, struct file *filp)
+>  	return 0;
+>  }
+>  
+> -static const struct file_operations kcs_bmc_fops = {
+> +static const struct file_operations kcs_bmc_ipmi_fops = {
+>  	.owner          = THIS_MODULE,
+>  	.open           = kcs_bmc_ipmi_open,
+>  	.read           = kcs_bmc_ipmi_read,
+> @@ -392,36 +392,58 @@ static const struct file_operations kcs_bmc_fops = {
+>  	.unlocked_ioctl = kcs_bmc_ipmi_ioctl,
+>  };
+>  
+> -struct kcs_bmc *kcs_bmc_ipmi_alloc(struct device *dev, int sizeof_priv, u32 channel);
+> -struct kcs_bmc *kcs_bmc_ipmi_alloc(struct device *dev, int sizeof_priv, u32 channel)
+> +int kcs_bmc_ipmi_add_device(struct kcs_bmc *kcs_bmc);
+> +int kcs_bmc_ipmi_add_device(struct kcs_bmc *kcs_bmc)
+>  {
+> -	struct kcs_bmc *kcs_bmc;
+> -
+> -	kcs_bmc = devm_kzalloc(dev, sizeof(*kcs_bmc) + sizeof_priv, GFP_KERNEL);
+> -	if (!kcs_bmc)
+> -		return NULL;
+> +	int rc;
+>  
+>  	spin_lock_init(&kcs_bmc->lock);
+> -	kcs_bmc->channel = channel;
+> -
+>  	mutex_init(&kcs_bmc->mutex);
+>  	init_waitqueue_head(&kcs_bmc->queue);
+>  
+> -	kcs_bmc->data_in = devm_kmalloc(dev, KCS_MSG_BUFSIZ, GFP_KERNEL);
+> -	kcs_bmc->data_out = devm_kmalloc(dev, KCS_MSG_BUFSIZ, GFP_KERNEL);
+> -	kcs_bmc->kbuffer = devm_kmalloc(dev, KCS_MSG_BUFSIZ, GFP_KERNEL);
+> +	kcs_bmc->data_in = devm_kmalloc(kcs_bmc->dev, KCS_MSG_BUFSIZ, GFP_KERNEL);
+> +	kcs_bmc->data_out = devm_kmalloc(kcs_bmc->dev, KCS_MSG_BUFSIZ, GFP_KERNEL);
+> +	kcs_bmc->kbuffer = devm_kmalloc(kcs_bmc->dev, KCS_MSG_BUFSIZ, GFP_KERNEL);
+>  
+>  	kcs_bmc->miscdev.minor = MISC_DYNAMIC_MINOR;
+> -	kcs_bmc->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "%s%u",
+> -					       DEVICE_NAME, channel);
+> +	kcs_bmc->miscdev.name = devm_kasprintf(kcs_bmc->dev, GFP_KERNEL, "%s%u",
+> +					       DEVICE_NAME, kcs_bmc->channel);
+>  	if (!kcs_bmc->data_in || !kcs_bmc->data_out || !kcs_bmc->kbuffer ||
+>  	    !kcs_bmc->miscdev.name)
+> -		return NULL;
+> -	kcs_bmc->miscdev.fops = &kcs_bmc_fops;
+> +		return -ENOMEM;
+>  
+> -	return kcs_bmc;
+> +	kcs_bmc->miscdev.fops = &kcs_bmc_ipmi_fops;
+> +
+> +	rc = misc_register(&kcs_bmc->miscdev);
+> +	if (rc) {
+> +		dev_err(kcs_bmc->dev, "Unable to register device: %d\n", rc);
+> +		return rc;
+> +	}
+> +
+> +	dev_info(kcs_bmc->dev, "Initialised IPMI client for channel %d", kcs_bmc->channel);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL(kcs_bmc_ipmi_add_device);
+> +
+> +int kcs_bmc_ipmi_remove_device(struct kcs_bmc *kcs_bmc);
+> +int kcs_bmc_ipmi_remove_device(struct kcs_bmc *kcs_bmc)
+> +{
+> +	misc_deregister(&kcs_bmc->miscdev);
+> +
+> +	spin_lock_irq(&kcs_bmc->lock);
+> +	kcs_bmc->running = 0;
+> +	kcs_bmc_ipmi_force_abort(kcs_bmc);
+> +	spin_unlock_irq(&kcs_bmc->lock);
+> +
+> +	devm_kfree(kcs_bmc->dev, kcs_bmc->kbuffer);
+> +	devm_kfree(kcs_bmc->dev, kcs_bmc->data_out);
+> +	devm_kfree(kcs_bmc->dev, kcs_bmc->data_in);
+> +	devm_kfree(kcs_bmc->dev, kcs_bmc);
+> +
+> +	return 0;
+>  }
+> -EXPORT_SYMBOL(kcs_bmc_ipmi_alloc);
+> +EXPORT_SYMBOL(kcs_bmc_ipmi_remove_device);
+>  
+>  MODULE_LICENSE("GPL v2");
+>  MODULE_AUTHOR("Haiyue Wang <haiyue.wang@linux.intel.com>");
+> diff --git a/drivers/char/ipmi/kcs_bmc_npcm7xx.c b/drivers/char/ipmi/kcs_bmc_npcm7xx.c
+> index 1f44aadec9e8..f7b4e866f86e 100644
+> --- a/drivers/char/ipmi/kcs_bmc_npcm7xx.c
+> +++ b/drivers/char/ipmi/kcs_bmc_npcm7xx.c
+> @@ -65,6 +65,8 @@ struct npcm7xx_kcs_reg {
+>  };
+>  
+>  struct npcm7xx_kcs_bmc {
+> +	struct kcs_bmc kcs_bmc;
+> +
+>  	struct regmap *map;
+>  
+>  	const struct npcm7xx_kcs_reg *reg;
+> @@ -76,9 +78,14 @@ static const struct npcm7xx_kcs_reg npcm7xx_kcs_reg_tbl[KCS_CHANNEL_MAX] = {
+>  	{ .sts = KCS3ST, .dob = KCS3DO, .dib = KCS3DI, .ctl = KCS3CTL, .ie = KCS3IE },
+>  };
+>  
+> +static inline struct npcm7xx_kcs_bmc *to_npcm7xx_kcs_bmc(struct kcs_bmc *kcs_bmc)
+> +{
+> +	return container_of(kcs_bmc, struct npcm7xx_kcs_bmc, kcs_bmc);
+> +}
+> +
+>  static u8 npcm7xx_kcs_inb(struct kcs_bmc *kcs_bmc, u32 reg)
+>  {
+> -	struct npcm7xx_kcs_bmc *priv = kcs_bmc_priv(kcs_bmc);
+> +	struct npcm7xx_kcs_bmc *priv = to_npcm7xx_kcs_bmc(kcs_bmc);
+>  	u32 val = 0;
+>  	int rc;
+>  
+> @@ -90,7 +97,7 @@ static u8 npcm7xx_kcs_inb(struct kcs_bmc *kcs_bmc, u32 reg)
+>  
+>  static void npcm7xx_kcs_outb(struct kcs_bmc *kcs_bmc, u32 reg, u8 data)
+>  {
+> -	struct npcm7xx_kcs_bmc *priv = kcs_bmc_priv(kcs_bmc);
+> +	struct npcm7xx_kcs_bmc *priv = to_npcm7xx_kcs_bmc(kcs_bmc);
+>  	int rc;
+>  
+>  	rc = regmap_write(priv->map, reg, data);
+> @@ -99,7 +106,7 @@ static void npcm7xx_kcs_outb(struct kcs_bmc *kcs_bmc, u32 reg, u8 data)
+>  
+>  static void npcm7xx_kcs_updateb(struct kcs_bmc *kcs_bmc, u32 reg, u8 mask, u8 data)
+>  {
+> -	struct npcm7xx_kcs_bmc *priv = kcs_bmc_priv(kcs_bmc);
+> +	struct npcm7xx_kcs_bmc *priv = to_npcm7xx_kcs_bmc(kcs_bmc);
+>  	int rc;
+>  
+>  	rc = regmap_update_bits(priv->map, reg, mask, data);
+> @@ -108,7 +115,7 @@ static void npcm7xx_kcs_updateb(struct kcs_bmc *kcs_bmc, u32 reg, u8 mask, u8 da
+>  
+>  static void npcm7xx_kcs_enable_channel(struct kcs_bmc *kcs_bmc, bool enable)
+>  {
+> -	struct npcm7xx_kcs_bmc *priv = kcs_bmc_priv(kcs_bmc);
+> +	struct npcm7xx_kcs_bmc *priv = to_npcm7xx_kcs_bmc(kcs_bmc);
+>  
+>  	regmap_update_bits(priv->map, priv->reg->ctl, KCS_CTL_IBFIE,
+>  			   enable ? KCS_CTL_IBFIE : 0);
+> @@ -155,11 +162,10 @@ static int npcm7xx_kcs_probe(struct platform_device *pdev)
+>  		return -ENODEV;
+>  	}
+>  
+> -	kcs_bmc = kcs_bmc_alloc(dev, sizeof(*priv), chan);
+> -	if (!kcs_bmc)
+> +	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+> +	if (!priv)
+>  		return -ENOMEM;
+>  
+> -	priv = kcs_bmc_priv(kcs_bmc);
+>  	priv->map = syscon_node_to_regmap(dev->parent->of_node);
+>  	if (IS_ERR(priv->map)) {
+>  		dev_err(dev, "Couldn't get regmap\n");
+> @@ -167,6 +173,9 @@ static int npcm7xx_kcs_probe(struct platform_device *pdev)
+>  	}
+>  	priv->reg = &npcm7xx_kcs_reg_tbl[chan - 1];
+>  
+> +	kcs_bmc = &priv->kcs_bmc;
+> +	kcs_bmc->dev = &pdev->dev;
+> +	kcs_bmc->channel = chan;
+>  	kcs_bmc->ioreg.idr = priv->reg->dib;
+>  	kcs_bmc->ioreg.odr = priv->reg->dob;
+>  	kcs_bmc->ioreg.str = priv->reg->sts;
+> @@ -174,31 +183,29 @@ static int npcm7xx_kcs_probe(struct platform_device *pdev)
+>  	kcs_bmc->io_outputb = npcm7xx_kcs_outb;
+>  	kcs_bmc->io_updateb = npcm7xx_kcs_updateb;
+>  
+> -	dev_set_drvdata(dev, kcs_bmc);
+> +	platform_set_drvdata(pdev, priv);
+>  
+>  	npcm7xx_kcs_enable_channel(kcs_bmc, true);
+>  	rc = npcm7xx_kcs_config_irq(kcs_bmc, pdev);
+>  	if (rc)
+>  		return rc;
+>  
+> -	rc = misc_register(&kcs_bmc->miscdev);
+> -	if (rc) {
+> -		dev_err(dev, "Unable to register device\n");
+> -		return rc;
+> -	}
+>  
+>  	pr_info("channel=%u idr=0x%x odr=0x%x str=0x%x\n",
+>  		chan,
+>  		kcs_bmc->ioreg.idr, kcs_bmc->ioreg.odr, kcs_bmc->ioreg.str);
+>  
+> +	kcs_bmc_add_device(kcs_bmc);
+> +
+>  	return 0;
+>  }
+>  
+>  static int npcm7xx_kcs_remove(struct platform_device *pdev)
+>  {
+> -	struct kcs_bmc *kcs_bmc = dev_get_drvdata(&pdev->dev);
+> +	struct npcm7xx_kcs_bmc *priv = platform_get_drvdata(pdev);
+> +	struct kcs_bmc *kcs_bmc = &priv->kcs_bmc;
+>  
+> -	misc_deregister(&kcs_bmc->miscdev);
+> +	kcs_bmc_remove_device(kcs_bmc);
+>  
+>  	return 0;
+>  }
+> -- 
+> 2.27.0
+> 
