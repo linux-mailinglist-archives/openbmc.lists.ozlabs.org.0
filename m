@@ -1,79 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B80C238BC2E
-	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 04:01:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B26AD38BC9A
+	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 04:43:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FmVFR55pyz307S
-	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 12:00:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FmWBg4gg5z3077
+	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 12:43:39 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=An1xKWU/;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=c4jF2cNe;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::632;
- helo=mail-pl1-x632.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2f;
+ helo=mail-qv1-xf2f.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=An1xKWU/; dkim-atps=neutral
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com
- [IPv6:2607:f8b0:4864:20::632])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=c4jF2cNe; dkim-atps=neutral
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com
+ [IPv6:2607:f8b0:4864:20::f2f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FmVF66HK4z2yXk;
- Fri, 21 May 2021 12:00:41 +1000 (AEST)
-Received: by mail-pl1-x632.google.com with SMTP id 69so10144734plc.5;
- Thu, 20 May 2021 19:00:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=9fB9txKIQZNMl67yv7ERq72Q+6wcnvrLhnIU26tnTf4=;
- b=An1xKWU/mWO08cY0cP24LyKkNnOv5zCCLUdnglRtraCTvQQzxVh9tTfYP1YanUjoR8
- gFtYTxBnypDtTZJxyxQ1tMDJtzdMMTs5rHApnAEd/aQWzVn+hLHmzuypSaML2xrdpRCW
- +atdTnZ2DCoPjdD9qdm1EhlEDGaoVnmocolZmRF7sErnz5ofewaQGpXASxT8QxwUiUai
- nj86+/F36GPfLpYIIDyoKPdhyetIbbr07I+lFT1YwrnBmgBe0t2Svn7GZ5BNKqRlLY2/
- CGzlvZ+aIKnYSNNGv4xYAR9uUG2Ao2Igzhd1uppZXRCZB6hTlZNwDp4EPHaQ6nKsT/a/
- loIg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FmWBM5YV3z2yXh;
+ Fri, 21 May 2021 12:43:23 +1000 (AEST)
+Received: by mail-qv1-xf2f.google.com with SMTP id ee9so9702724qvb.8;
+ Thu, 20 May 2021 19:43:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=ri3eYuWT7L+zZwKbNsPuCTbBOkIewFHwKjlwnXef214=;
+ b=c4jF2cNeItNfmRR4lGIMPTE++qZBL7sJ9VGjGZeefXTpuFfGFos+6n3rSVKssWKLwg
+ 72EX/0gzLENCO6YtjZtB0AWQGcdMOQd/asoMACXIZQynZBsRXOqDJ77xJJe8kjM/CZx6
+ pQl4J84XzIN1q+IjhnsnWuXWw2reM/pg+Pb3I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=9fB9txKIQZNMl67yv7ERq72Q+6wcnvrLhnIU26tnTf4=;
- b=BkDy8MSW83QIJyucQ2Nc+AVSUeGYCld3t6oKY2qNEL9ZgeK/s5I9y7+zzqVpYdV0qr
- OzeTsoo7cllvYRqQvX7OemmG14/8Mp4p6UKtUqqyMkw/YKzP3tXRo6dlNQhyCkLcyQb6
- A7aKKRG3vmAXNt5I57U7Fkw6u7F6vww8UgzlXpwUXvZL1i1foyTWHswAWJ37AuzgN5aO
- WHvjCIXi9VVRkbTxXKZSWHW6R/pzkkLMS7Lhy7jluEAnrGcLpriJYwgXlDNt0moOzjuM
- Rcpiu22fe/OEbx6KhC917pH0wTMwhYAPTq42WBlBSXgsjUErs06UKcNDoIXc2MBtCepg
- m+Og==
-X-Gm-Message-State: AOAM531cL9gZQ9nP2ABuFFA227+dXHYncWS/d7q2MVC/iP27r+1mV+jb
- q9hA9dZqGkUEBzM9rLi49Cs=
-X-Google-Smtp-Source: ABdhPJwBofzBAXoo5pDmXX4ye8/TsvSpB7pKcMIb3pVYhLkIdagqbQ5wvHtXHUJZRNsbTl2FgNx8tA==
-X-Received: by 2002:a17:90a:f811:: with SMTP id
- ij17mr8130069pjb.63.1621562439317; 
- Thu, 20 May 2021 19:00:39 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91 (c-73-252-146-110.hsd1.ca.comcast.net.
- [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id w74sm2869555pfd.209.2021.05.20.19.00.37
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 20 May 2021 19:00:39 -0700 (PDT)
-Date: Thu, 20 May 2021 19:00:34 -0700
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: Re: [PATCH 1/3] i2c: aspeed: avoid new registers definition of AST2600
-Message-ID: <20210521020033.GB19153@taoren-ubuntu-R90MNF91>
-References: <20210519080436.18975-1-jamin_lin@aspeedtech.com>
- <20210519080436.18975-2-jamin_lin@aspeedtech.com>
- <CACPK8XdNXiGMQZOtsfMMK+w_PSvO20XT8B9MG+rGhdjYoV4ZuQ@mail.gmail.com>
- <20210520033140.GA3656@aspeedtech.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=ri3eYuWT7L+zZwKbNsPuCTbBOkIewFHwKjlwnXef214=;
+ b=d2btCKolhSO5VQh8mIWQdj5FgkaAKqyhcLfX9/sULtJdRYmdSSpq0a2AUKKWniGEOo
+ kbp+6HgsFrTA4lrzi7HH4iVe47n6gCSRbs0CSo115E62MGKxhaU+18f04ArrkvwzwOos
+ rUGW18KoaqxC532UrBXspPFG9wkPI4bz0ntmTQPxRMeBiPun+Rq79KCUEZbqQRGrkVJD
+ yvJykcQKB8QqA5xjkuZEGBgcpIA7SVUa0jGdcOo+3u2gCsgFtd8B1nJM/SDFibWX77kD
+ Rexbga1AmaU+yjjwSgNx7HhN5YhYE5j31p9jcfgtmShdKrEKuk8dFh2L1CkXO2ojq/7x
+ bcnQ==
+X-Gm-Message-State: AOAM532juh2NbaAEUvbswgkGfeycQ7SgAIPTwkH48INoHb+r+SvcPxAV
+ 0an4XHzeKXaehHpx0wxsObzQwYu5y4VBTKlK1PA=
+X-Google-Smtp-Source: ABdhPJx0PePfwy8UUauDOX3x2o9mQhIfTFfv1e0JuFf7mc8aXj6h1jcDNLXGmDnwW78ovwiscPFSmxWexbU1fQ5DNsM=
+X-Received: by 2002:a0c:d80b:: with SMTP id h11mr9630257qvj.10.1621564997782; 
+ Thu, 20 May 2021 19:43:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210520033140.GA3656@aspeedtech.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20210506205419.26294-1-zev@bewilderbeest.net>
+ <CAFd5g46TEFLWdBN80RxGwZfoyD-70C0pP59mhrynvD5ODd2wrg@mail.gmail.com>
+In-Reply-To: <CAFd5g46TEFLWdBN80RxGwZfoyD-70C0pP59mhrynvD5ODd2wrg@mail.gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 21 May 2021 02:43:05 +0000
+Message-ID: <CACPK8XfYJjuBHSA=8gojb7YiPc9AeH5sMd08amx_=GgjEKe_eg@mail.gmail.com>
+Subject: Re: [PATCH v2] i2c: aspeed: disable additional device addresses on
+ ast2[56]xx
+To: Brendan Higgins <brendanhiggins@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,50 +72,191 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- "moderated list:ARM/ASPEED I2C DRIVER" <openbmc@lists.ozlabs.org>,
- Brendan Higgins <brendanhiggins@google.com>,
- open list <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Rayn Chen <rayn_chen@aspeedtech.com>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-arm-kernel@lists.infradead.org>,
- "open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>
+Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ Zev Weiss <zev@bewilderbeest.net>, Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jamin,
+On Fri, 7 May 2021 at 19:57, Brendan Higgins <brendanhiggins@google.com> wrote:
+>
+> On Thu, May 6, 2021 at 1:54 PM Zev Weiss <zev@bewilderbeest.net> wrote:
+> >
+> > The ast25xx and ast26xx have, respectively, two and three configurable
+> > slave device addresses to the ast24xx's one.  We only support using
+> > one at a time, but the others may come up in an indeterminate state
+> > depending on hardware/bootloader behavior, so we need to make sure we
+> > disable them so as to avoid ending up with phantom devices on the bus.
+> >
+> > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+>
+> Looks great! No concerns from me.
+>
+> Nevertheless, I am not in a position to test this at this time. Joel,
+> or Andrew could one of you (or someone else on the mailing list) test
+> this?
 
-On Thu, May 20, 2021 at 11:31:41AM +0800, Jamin Lin wrote:
-> The 05/19/2021 22:59, Joel Stanley wrote:
-> > On Wed, 19 May 2021 at 08:05, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
-> > >
-> > > The register definition between AST2600 A2 and A3 is different.
-> > > This patch avoid new registers definition of AST2600 to use
-> > > this driver. We will submit the path for the new registers
-> > > definition of AST2600.
-> > 
-> > The AST2600 v9 datasheet says that bit 2 selects between old and new
-> > register sets, and that the old register set is the default.
-> > 
-> > Has the default changed for the A3?, and the datasheet is incorrect?
-> > 
-> > Does the A3 still support the old register set?
-> > 
-> We suggest user to use the new i2c driver for AST2600 and we will sumbit
-> it. This driver is used to AST2500 and AST2400 SOCs. Change this
-> driver to check global register of i2c to avoid user build the wrong driver. 
+I tried testing this by connecting I2C1 and I2C2 (schematic numbering)
+on the AST2600A2 EVB. I got it working, but only when I read a single
+byte. There's more about that below, but it's a different issue
+unrelated to this patch.
 
-If I understand correctly, the answer implies old register set is still
-supported in A3 although aspeed suggest people using the new driver/mode?
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+Tested-by: Joel Stanley <joel@jms.id.au>
 
-Can you please share more context behind the suggestion? Such as new
-register mode has better performance? Or some known issues that were
-deteted in old mode are fixed in new register mode?
+--
+On to the bug I saw:
+
+When reading one byte, it works:
+
+root@ast2600a2:~# dd status=none
+if=/sys/bus/i2c/devices/i2c-2/2-0064/eeprom  count=1 bs=1| hexdump -C
+00000000  48                                                |H|
+
+If I try to read more than one byte:
+
+root@ast2600a2:~# dd status=none
+if=/sys/bus/i2c/devices/i2c-2/2-0064/eeprom  count=1 bs=2 | hexdump -C
+[ 1568.320096] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1568.328385] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1568.339106] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1568.347423] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1568.358112] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1568.366430] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+dd: error reading '/sys/bus/i2c/devices/i2c-2/2-0064/eeprom':
+Connection timed out
 
 
-Cheers,
+If I then go back to reading one byte, I get the error the first time
+but the data does come out:
 
-Tao
+root@ast2600a2:~# dd status=none
+if=/sys/bus/i2c/devices/i2c-2/2-0064/eeprom  count=1 bs=1 | hexdump -C
+[ 1593.306360] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1593.315191] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+00000000  48                                                |H|
+00000001
+
+Subsequent reads work as expected.
+
+With further debugging turned on, this is the log of doing a two byte read:
+
+[ 1781.027360] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000084, cmd 0xec0b0000
+[ 1781.027552] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000004, cmd 0xec0b0000
+[ 1781.027751] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000084, cmd 0xec0b0000
+[ 1781.027906] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000001, cmd 0xea250000
+[ 1781.028069] aspeed-i2c-bus 1e78a180.i2c-bus: received error
+interrupt: 0x00000008
+[ 1781.029683] aspeed-i2c-bus 1e78a180.i2c-bus: SDA hung (state
+a050000), attempting recovery
+[ 1781.029760] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000004, cmd 0xd2b10004
+[ 1781.029773] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1781.038729] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000020, cmd 0x0a050000
+[ 1781.038761] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1781.046932] aspeed-i2c-bus 1e78a100.i2c-bus: received error
+interrupt: 0x00000020
+[ 1781.047022] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000084, cmd 0xec0b0000
+[ 1781.047195] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000004, cmd 0xec0b0000
+[ 1781.047404] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000084, cmd 0xec0b0000
+[ 1781.047556] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000001, cmd 0xea250000
+[ 1781.047756] aspeed-i2c-bus 1e78a180.i2c-bus: received error
+interrupt: 0x00000008
+[ 1781.049367] aspeed-i2c-bus 1e78a180.i2c-bus: SDA hung (state
+a050000), attempting recovery
+[ 1781.049421] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000004, cmd 0xd2b10004
+[ 1781.049435] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1781.058322] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000020, cmd 0x0a050000
+[ 1781.058351] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1781.066522] aspeed-i2c-bus 1e78a100.i2c-bus: received error
+interrupt: 0x00000020
+[ 1781.066609] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000084, cmd 0xec0b0000
+[ 1781.066789] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000004, cmd 0xec0b0000
+[ 1781.066998] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000084, cmd 0xec0b0000
+[ 1781.067148] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000001, cmd 0xea250000
+[ 1781.067313] aspeed-i2c-bus 1e78a180.i2c-bus: received error
+interrupt: 0x00000008
+[ 1781.068968] aspeed-i2c-bus 1e78a180.i2c-bus: SDA hung (state
+a050000), attempting recovery
+[ 1781.069083] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000004, cmd 0xd2b10004
+[ 1781.069100] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1781.077903] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000020, cmd 0x0a050000
+[ 1781.077934] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1781.086106] aspeed-i2c-bus 1e78a100.i2c-bus: received error
+interrupt: 0x00000020
+[ 1781.086186] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000084, cmd 0xec0b0000
+[ 1781.086371] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000004, cmd 0xec0b0000
+[ 1781.086579] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000084, cmd 0xec0b0000
+[ 1781.086730] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000001, cmd 0xea250000
+[ 1781.086897] aspeed-i2c-bus 1e78a180.i2c-bus: received error
+interrupt: 0x00000008
+
+This is the result of the first single byte read after the error state:
+
+[ 1710.150555] aspeed-i2c-bus 1e78a180.i2c-bus: SDA hung (state
+a050000), attempting recovery
+[ 1710.150627] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000004, cmd 0xd2350004
+[ 1710.150646] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1710.159468] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000020, cmd 0x0a050000
+[ 1710.159500] aspeed-i2c-bus 1e78a100.i2c-bus: Expected ACK after
+processed read.
+[ 1710.167681] aspeed-i2c-bus 1e78a100.i2c-bus: received error
+interrupt: 0x00000020
+[ 1710.167793] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000084, cmd 0xec0b0000
+[ 1710.167971] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000004, cmd 0xec0b0000
+[ 1710.168178] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000084, cmd 0xec0b0000
+[ 1710.168335] aspeed-i2c-bus 1e78a100.i2c-bus: slave irq status
+0x00000002, cmd 0x0a070000
+
+This is unrelated to your change, but should be investigated by anyone
+looking at slave support on the ast2600.
+
+Lets go ahead with merging this change.
+
+
+>
+> Reviewed-by: Brendan Higgins <brendanhiggins@google.com>
