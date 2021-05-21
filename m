@@ -2,62 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A34238BB25
-	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 02:59:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E19038BB34
+	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 03:04:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FmSty4nt8z302G
-	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 10:59:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FmSzr4cLzz306s
+	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 11:04:08 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=gEX1PhKj;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=QPKFh7XF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::736;
- helo=mail-qk1-x736.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72f;
+ helo=mail-qk1-x72f.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=gEX1PhKj; dkim-atps=neutral
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com
- [IPv6:2607:f8b0:4864:20::736])
+ header.s=google header.b=QPKFh7XF; dkim-atps=neutral
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com
+ [IPv6:2607:f8b0:4864:20::72f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FmStd6Y43z2yXy
- for <openbmc@lists.ozlabs.org>; Fri, 21 May 2021 10:59:36 +1000 (AEST)
-Received: by mail-qk1-x736.google.com with SMTP id x8so18240325qkl.2
- for <openbmc@lists.ozlabs.org>; Thu, 20 May 2021 17:59:36 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FmSzY4Zj0z2xYY;
+ Fri, 21 May 2021 11:03:53 +1000 (AEST)
+Received: by mail-qk1-x72f.google.com with SMTP id 124so5915876qkh.10;
+ Thu, 20 May 2021 18:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=w/0aFTfAprVVOTOCs/KR4CC/94aej7JpddKXuVpnZ6g=;
- b=gEX1PhKjxUNcZhruCsw9euBMfZTaMTfSw09jtMO0vu65Hc39DgRYS0mBz+THLpaHuq
- m2O3HM0FkvpWu3fxirPKwP8W7nlDVG4cby1czMlBnx223XJ2jPnX6uRCcJt+X/Pqyy0o
- QWVmm7/6JmyUE5O1hu6A9N6/tWL2ym3WiFaHI=
+ :cc; bh=ftgW/ZD8hun6+efsEtYDnA9Z/1i+HqiNXuFWOiDlQFo=;
+ b=QPKFh7XF+JNfRZNGyb2vQYDAF3gVeLGE3CxuxR50/IxP9jDGhwd6wrNZ2S5UI9MLZc
+ 6bcHkedpFoUp2IJ8MYtf/hN0W2LGsDJVOqEAJbxOOwkaHwvRyMlkXZchrvJhjn/7mFrg
+ A6lIdiAz7aNseKSQyxyGK9ReNFcWd9Wzh3wZM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=w/0aFTfAprVVOTOCs/KR4CC/94aej7JpddKXuVpnZ6g=;
- b=RCO3Lah0ws7yFRuaH5GeVVqMW2+/FoZQZk0FBBv451D4Wk7I4yNf84Wq430W5YNoFb
- cn7kXWEl5lMviOf4qRZjJrL7mojOVXjHJWnTCNiGNtXHk4iWNfrM1y6ecPEb3+gChtfu
- pN/e4tEd4diA3crFdSb4U3HFg4+HQhXOAZ60uOHq0xtaAt2zaf2QRn5XFNYdkePvaAUz
- Ru7pOzAl+kdUwtQltD+OoTnz+pwxy0Ci1VfkqgP5cVqdmGi1SZZIrNkK6jIewBp4LE5l
- dAKUyVTADtqHrZOmWsbWhY/ZoMl8JTuJmQYhpRGplarVYmeujEtGx8jr9dvoxy1ldAav
- Os0w==
-X-Gm-Message-State: AOAM530PPC1xPV8XseSCCv5CYYOqHGIB1bu3dS1yKeFXfiijChWncY+A
- clODi+vXIbnAyZacNmd3jlFv+aSBXFXvtEBvgB0=
-X-Google-Smtp-Source: ABdhPJyOg85pbVP5qfGdda8bH9eLGYzaTgxUlVuD+D9zPYeernDU9rP22PyLTRyI8fLkxDMPzeS683iOIZwwY1pD25s=
-X-Received: by 2002:a05:620a:704:: with SMTP id 4mr7822674qkc.66.1621558773301; 
- Thu, 20 May 2021 17:59:33 -0700 (PDT)
+ bh=ftgW/ZD8hun6+efsEtYDnA9Z/1i+HqiNXuFWOiDlQFo=;
+ b=H5S4fiYqqaSzpNGUAHeTj4VEO/CXrxMRIF/GD2kkwzv6MnG0ZFaiC1wTYvMglEipKc
+ bE0SdQ5Ey1mkIwvz+vHbiYLE/0DdxtE2FVjGJ+q8HoDF6qnEQXfSObLmlrGVmH4+1/dr
+ uL4bWzRpIH+rhy8LJQyhHmGCBc0/yAV/r6wz6UlnrbEo4t+Q13USa+IVMULh03sY/yf7
+ 3Fid9VHudakMtgk8r9xSJ33aVavoVBidtdP7iiadTDALwee/5/WHMuHR6NLSIJYdtGJb
+ +PAOpJPnsJWFgUdkA6vIdq3Dq42XBlRhPo4tut+3Q8O/0YNw7LbjOsfZk5scWZwsbZ2G
+ tZ0A==
+X-Gm-Message-State: AOAM530D3nb8P5XRHnGwVNEkIns6yy2wyXr7SB5wDOUin9iRh7Vckd2f
+ Wa/oscnuhZurlC94psFBoTi7OUuy1rYosYq7TGQ=
+X-Google-Smtp-Source: ABdhPJyaSVhXFsyvFeOh0RKA2a79cq/wrF4SvXOaYGZXtEvafHPjqPwFM7IFU8bTSbbb0lHxfL58adnE2J7TQcDbKe0=
+X-Received: by 2002:a05:620a:704:: with SMTP id 4mr7844434qkc.66.1621559030068; 
+ Thu, 20 May 2021 18:03:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210520093949.511471-1-andrew@aj.id.au>
-In-Reply-To: <20210520093949.511471-1-andrew@aj.id.au>
+References: <20210520101346.16772-1-steven_lee@aspeedtech.com>
+ <20210520101346.16772-3-steven_lee@aspeedtech.com>
+In-Reply-To: <20210520101346.16772-3-steven_lee@aspeedtech.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 21 May 2021 00:59:20 +0000
-Message-ID: <CACPK8XeBeQjYe8LeivFt69bf8-ipccwHnigpq9jZ8B5wTKJ7Vw@mail.gmail.com>
-Subject: Re: [PATCH v2] Documentation: checkpatch: Tweak BIT() macro include
-To: Andrew Jeffery <andrew@aj.id.au>
+Date: Fri, 21 May 2021 01:03:38 +0000
+Message-ID: <CACPK8Xfw8UH-4-oVqcFFMQmfrLqDbdYuACT9Rij62SBLU0+56Q@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] ARM: dts: aspeed: ast2600evb: Add phase correction
+ for emmc controller.
+To: Steven Lee <steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -70,31 +72,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jonathan Corbet <corbet@lwn.net>, dwaipayanray1@gmail.com,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-doc@vger.kernel.org,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Joe Perches <joe@perches.com>, Lukas Bulwahn <lukas.bulwahn@gmail.com>,
- Jiri Slaby <jirislaby@kernel.org>
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
+ "open list:ASPEED SD/MMC DRIVER" <linux-mmc@vger.kernel.org>,
+ Adrian Hunter <adrian.hunter@intel.com>,
+ Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
+ open list <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Hongwei Zhang <Hongweiz@ami.com>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 20 May 2021 at 17:14, Andrew Jeffery <andrew@aj.id.au> wrote:
+On Thu, 20 May 2021 at 10:16, Steven Lee <steven_lee@aspeedtech.com> wrote:
 >
-> While include/linux/bitops.h brings in the BIT() macro, it was moved to
-> include/linux/bits.h in commit 8bd9cb51daac ("locking/atomics, asm-generic:
-> Move some macros from <linux/bitops.h> to a new <linux/bits.h> file").
+> Set MMC timing-phase register by adding the phase correction binding in the
+> device tree.
 >
-> Since that commit BIT() has moved again into include/vdso/bits.h via
-> commit 3945ff37d2f4 ("linux/bits.h: Extract common header for vDSO").
->
-> I think the move to the vDSO header can be considered an implementation
-> detail, so for now update the checkpatch documentation to recommend use
-> of include/linux/bits.h.
->
-> Cc: Jiri Slaby <jirislaby@kernel.org>
-> Acked-by: Jiri Slaby <jirislaby@kernel.org>
-> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> Acked-by: Andrew Jeffery <andrew@aj.id.au>
+
+As the aspeed maintainer:
 
 Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-...just a little bit
+I don't mind if this gets applied directly by the mmc maintainers (I
+do not anticpiate any conflicts).
+
+Cheers,
+
+Joel
