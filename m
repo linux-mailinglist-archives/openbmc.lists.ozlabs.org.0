@@ -2,76 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F06838BC02
-	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 03:52:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B80C238BC2E
+	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 04:01:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FmV3S3pzYz3070
-	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 11:52:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FmVFR55pyz307S
+	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 12:00:59 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=MGywRptR;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=An1xKWU/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1031;
- helo=mail-pj1-x1031.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::632;
+ helo=mail-pl1-x632.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=MGywRptR; dkim-atps=neutral
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
- [IPv6:2607:f8b0:4864:20::1031])
+ header.s=20161025 header.b=An1xKWU/; dkim-atps=neutral
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com
+ [IPv6:2607:f8b0:4864:20::632])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FmV391kyGz2xgL;
- Fri, 21 May 2021 11:52:04 +1000 (AEST)
-Received: by mail-pj1-x1031.google.com with SMTP id
- b13-20020a17090a8c8db029015cd97baea9so6274690pjo.0; 
- Thu, 20 May 2021 18:52:04 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FmVF66HK4z2yXk;
+ Fri, 21 May 2021 12:00:41 +1000 (AEST)
+Received: by mail-pl1-x632.google.com with SMTP id 69so10144734plc.5;
+ Thu, 20 May 2021 19:00:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to:user-agent;
- bh=TeR6dx8Rqr3ByExvzXzaPr3AoEZSg27P4QPA34TUl50=;
- b=MGywRptRl4M03Loj0uWb0Q68foEF2W7FLLb6e2Y3yaSpAS41cQJOIlc+Yodwrt14+B
- o5A8zY9VfTUFffOgbb7ZCroEftruHMd3VvG0Xksws27jXojgM5CKt9ZQ5MknLgvgetlm
- Qozs9MN+rdGEoiOix5e5xIOU3ppyzW4RuIi+A7iMMzjkpBE9NtZLzOaIAVmamQr4RsCW
- ft1FDBQy++SQwvzxEx/ipWcZ+SL7sMpanfO1ViUsK6G98HM469/Z48/lA6lPpBAdNbQw
- bFaHu86UWSMGHMRuqp5UMqyqmk9RU9qLDXzaT4bnkhcZHGFh/CR3h1Z0NlgRXQu4zGzX
- CrCA==
+ bh=9fB9txKIQZNMl67yv7ERq72Q+6wcnvrLhnIU26tnTf4=;
+ b=An1xKWU/mWO08cY0cP24LyKkNnOv5zCCLUdnglRtraCTvQQzxVh9tTfYP1YanUjoR8
+ gFtYTxBnypDtTZJxyxQ1tMDJtzdMMTs5rHApnAEd/aQWzVn+hLHmzuypSaML2xrdpRCW
+ +atdTnZ2DCoPjdD9qdm1EhlEDGaoVnmocolZmRF7sErnz5ofewaQGpXASxT8QxwUiUai
+ nj86+/F36GPfLpYIIDyoKPdhyetIbbr07I+lFT1YwrnBmgBe0t2Svn7GZ5BNKqRlLY2/
+ CGzlvZ+aIKnYSNNGv4xYAR9uUG2Ao2Igzhd1uppZXRCZB6hTlZNwDp4EPHaQ6nKsT/a/
+ loIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to:user-agent;
- bh=TeR6dx8Rqr3ByExvzXzaPr3AoEZSg27P4QPA34TUl50=;
- b=bi5Af0CQScgVvJW4J8BmgxpYxLMLU14vHT5EPDaszBaXjrw0obs3BI0l1c0GDcdOt5
- /CQ3IGVbdzkE8r8QOiuYjCn1qHZJZ2NW69a3ABoYaDBE9xBZIFnTred/g/JhEzPKwxz+
- uXpsEhy8uOiMJQ+yrwmH3zQ0sfIKRj8apfTWmrU7HZ4mdSVT/pVEhtwBshpM9hoJoEGL
- WlUUMyUH/Yz5ZNLFpPkUxQ+ktJhIbqIchPCw1c6zJR2wb4j49qPJ+5ud/WXCDYjaxGuE
- sPG1PxVhdj5N1cczgASSBsrmGp/Dmjl0GO0VAmtr3S3K69sA/FPuV0DqwKl96OkU/bu6
- FZWQ==
-X-Gm-Message-State: AOAM5313967DwC7ZkbkHdlJqg0U5qXITHLDEWKTPJniyIck25F/P/Vs5
- XVQAR736QLVHFLS0ZwvSreY=
-X-Google-Smtp-Source: ABdhPJyIynOYYSDS+EbUq2ewNtwe4ZXjkjDPNl8WBvxs05rpGvv+SWNeotnMz6g0roHINjQ+ss8nrg==
-X-Received: by 2002:a17:90a:4404:: with SMTP id
- s4mr8354235pjg.218.1621561921013; 
- Thu, 20 May 2021 18:52:01 -0700 (PDT)
+ bh=9fB9txKIQZNMl67yv7ERq72Q+6wcnvrLhnIU26tnTf4=;
+ b=BkDy8MSW83QIJyucQ2Nc+AVSUeGYCld3t6oKY2qNEL9ZgeK/s5I9y7+zzqVpYdV0qr
+ OzeTsoo7cllvYRqQvX7OemmG14/8Mp4p6UKtUqqyMkw/YKzP3tXRo6dlNQhyCkLcyQb6
+ A7aKKRG3vmAXNt5I57U7Fkw6u7F6vww8UgzlXpwUXvZL1i1foyTWHswAWJ37AuzgN5aO
+ WHvjCIXi9VVRkbTxXKZSWHW6R/pzkkLMS7Lhy7jluEAnrGcLpriJYwgXlDNt0moOzjuM
+ Rcpiu22fe/OEbx6KhC917pH0wTMwhYAPTq42WBlBSXgsjUErs06UKcNDoIXc2MBtCepg
+ m+Og==
+X-Gm-Message-State: AOAM531cL9gZQ9nP2ABuFFA227+dXHYncWS/d7q2MVC/iP27r+1mV+jb
+ q9hA9dZqGkUEBzM9rLi49Cs=
+X-Google-Smtp-Source: ABdhPJwBofzBAXoo5pDmXX4ye8/TsvSpB7pKcMIb3pVYhLkIdagqbQ5wvHtXHUJZRNsbTl2FgNx8tA==
+X-Received: by 2002:a17:90a:f811:: with SMTP id
+ ij17mr8130069pjb.63.1621562439317; 
+ Thu, 20 May 2021 19:00:39 -0700 (PDT)
 Received: from taoren-ubuntu-R90MNF91 (c-73-252-146-110.hsd1.ca.comcast.net.
  [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id u6sm2538958pjy.51.2021.05.20.18.51.59
+ by smtp.gmail.com with ESMTPSA id w74sm2869555pfd.209.2021.05.20.19.00.37
  (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 20 May 2021 18:52:00 -0700 (PDT)
-Date: Thu, 20 May 2021 18:51:53 -0700
+ Thu, 20 May 2021 19:00:39 -0700 (PDT)
+Date: Thu, 20 May 2021 19:00:34 -0700
 From: Tao Ren <rentao.bupt@gmail.com>
-To: Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH] watchdog: aspeed: fix hardware timeout calculation
-Message-ID: <20210521015153.GA19153@taoren-ubuntu-R90MNF91>
-References: <20210417034249.5978-1-rentao.bupt@gmail.com>
- <20210417042048.GA109800@roeck-us.net>
+To: Jamin Lin <jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH 1/3] i2c: aspeed: avoid new registers definition of AST2600
+Message-ID: <20210521020033.GB19153@taoren-ubuntu-R90MNF91>
+References: <20210519080436.18975-1-jamin_lin@aspeedtech.com>
+ <20210519080436.18975-2-jamin_lin@aspeedtech.com>
+ <CACPK8XdNXiGMQZOtsfMMK+w_PSvO20XT8B9MG+rGhdjYoV4ZuQ@mail.gmail.com>
+ <20210520033140.GA3656@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210417042048.GA109800@roeck-us.net>
+In-Reply-To: <20210520033140.GA3656@aspeedtech.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -84,55 +85,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-watchdog@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>, Tao Ren <taoren@fb.com>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Amithash Prasad <amithash@fb.com>, Wim Van Sebroeck <wim@linux-watchdog.org>,
- linux-arm-kernel@lists.infradead.org
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ "moderated list:ARM/ASPEED I2C DRIVER" <openbmc@lists.ozlabs.org>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ open list <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Rayn Chen <rayn_chen@aspeedtech.com>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-arm-kernel@lists.infradead.org>,
+ "open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Wim,
+Hi Jamin,
 
-Not sure if I looked at the wrong repository/branch, and looks like the
-patch is not included. Do you have any further suggestions? Or should I
-send out v2 in case it's missed?
+On Thu, May 20, 2021 at 11:31:41AM +0800, Jamin Lin wrote:
+> The 05/19/2021 22:59, Joel Stanley wrote:
+> > On Wed, 19 May 2021 at 08:05, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
+> > >
+> > > The register definition between AST2600 A2 and A3 is different.
+> > > This patch avoid new registers definition of AST2600 to use
+> > > this driver. We will submit the path for the new registers
+> > > definition of AST2600.
+> > 
+> > The AST2600 v9 datasheet says that bit 2 selects between old and new
+> > register sets, and that the old register set is the default.
+> > 
+> > Has the default changed for the A3?, and the datasheet is incorrect?
+> > 
+> > Does the A3 still support the old register set?
+> > 
+> We suggest user to use the new i2c driver for AST2600 and we will sumbit
+> it. This driver is used to AST2500 and AST2400 SOCs. Change this
+> driver to check global register of i2c to avoid user build the wrong driver. 
+
+If I understand correctly, the answer implies old register set is still
+supported in A3 although aspeed suggest people using the new driver/mode?
+
+Can you please share more context behind the suggestion? Such as new
+register mode has better performance? Or some known issues that were
+deteted in old mode are fixed in new register mode?
 
 
-Thanks,
+Cheers,
 
 Tao
-
-On Fri, Apr 16, 2021 at 09:20:48PM -0700, Guenter Roeck wrote:
-> On Fri, Apr 16, 2021 at 08:42:49PM -0700, rentao.bupt@gmail.com wrote:
-> > From: Tao Ren <rentao.bupt@gmail.com>
-> > 
-> > Fix hardware timeout calculation in aspeed_wdt_set_timeout function to
-> > ensure the reload value does not exceed the hardware limit.
-> > 
-> > Fixes: efa859f7d786 ("watchdog: Add Aspeed watchdog driver")
-> > Reported-by: Amithash Prasad <amithash@fb.com>
-> > Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> 
-> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-> 
-> > ---
-> >  drivers/watchdog/aspeed_wdt.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
-> > index 7e00960651fa..507fd815d767 100644
-> > --- a/drivers/watchdog/aspeed_wdt.c
-> > +++ b/drivers/watchdog/aspeed_wdt.c
-> > @@ -147,7 +147,7 @@ static int aspeed_wdt_set_timeout(struct watchdog_device *wdd,
-> >  
-> >  	wdd->timeout = timeout;
-> >  
-> > -	actual = min(timeout, wdd->max_hw_heartbeat_ms * 1000);
-> > +	actual = min(timeout, wdd->max_hw_heartbeat_ms / 1000);
-> >  
-> >  	writel(actual * WDT_RATE_1MHZ, wdt->base + WDT_RELOAD_VALUE);
-> >  	writel(WDT_RESTART_MAGIC, wdt->base + WDT_RESTART);
-> > -- 
-> > 2.17.1
-> > 
