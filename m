@@ -2,55 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FFF238BABA
-	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 02:13:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A34238BB25
+	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 02:59:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FmRrt41CYz3btv
-	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 10:13:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FmSty4nt8z302G
+	for <lists+openbmc@lfdr.de>; Fri, 21 May 2021 10:59:54 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=lwn.net header.i=@lwn.net header.a=rsa-sha256 header.s=20201203 header.b=iqmdk/F0;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=gEX1PhKj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=lwn.net
- (client-ip=45.79.88.28; helo=ms.lwn.net; envelope-from=corbet@lwn.net;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::736;
+ helo=mail-qk1-x736.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=lwn.net header.i=@lwn.net header.a=rsa-sha256
- header.s=20201203 header.b=iqmdk/F0; dkim-atps=neutral
-X-Greylist: delayed 498 seconds by postgrey-1.36 at boromir;
- Fri, 21 May 2021 06:36:12 AEST
-Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=gEX1PhKj; dkim-atps=neutral
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com
+ [IPv6:2607:f8b0:4864:20::736])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FmM2h4hngz300K
- for <openbmc@lists.ozlabs.org>; Fri, 21 May 2021 06:36:12 +1000 (AEST)
-Received: from localhost (unknown [IPv6:2601:281:8300:104d::5f6])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ms.lwn.net (Postfix) with ESMTPSA id 814E72F3;
- Thu, 20 May 2021 20:27:45 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 814E72F3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
- t=1621542465; bh=4Sb890MJb2ftT0eWtK0c6D8gcH4gbMVh+6xP0bEVTBU=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=iqmdk/F0zXlaOzi2qIfonlCtVp7Uo3ZYdslx8Oxhc8VWiicgjKQm4xQE1ZRDUuUzI
- tFtqZDz18WQRoqB6pV+j9C4tJkmEaK9kVwDm+SLWLA3PjJ3IPRTqwUpd8qZ/qIQZ8G
- VEUVtJGqoT7zTxMCd/gvZDTBKOzQZY3aJEWFuo6TxL8hlTCNH65N3o9EQVFDrY+byu
- YEjZRkEHxe+0534Qx9S083tTbZK/RctTIcoTTVN641pLiN+a44A7oEwE/a//+TFtQE
- EN8Dvcj8CqDReMukj2VRfwjQV2RZRQS45gjjYvicT7reR3XaMRlWnrIYe1xHLl3cf2
- nSGYaovzR4T8w==
-From: Jonathan Corbet <corbet@lwn.net>
-To: Andrew Jeffery <andrew@aj.id.au>, linux-doc@vger.kernel.org
-Subject: Re: [PATCH v2] Documentation: checkpatch: Tweak BIT() macro include
-In-Reply-To: <20210520093949.511471-1-andrew@aj.id.au>
-References: <20210520093949.511471-1-andrew@aj.id.au>
-Date: Thu, 20 May 2021 14:27:45 -0600
-Message-ID: <8735uhnoam.fsf@meer.lwn.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FmStd6Y43z2yXy
+ for <openbmc@lists.ozlabs.org>; Fri, 21 May 2021 10:59:36 +1000 (AEST)
+Received: by mail-qk1-x736.google.com with SMTP id x8so18240325qkl.2
+ for <openbmc@lists.ozlabs.org>; Thu, 20 May 2021 17:59:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=w/0aFTfAprVVOTOCs/KR4CC/94aej7JpddKXuVpnZ6g=;
+ b=gEX1PhKjxUNcZhruCsw9euBMfZTaMTfSw09jtMO0vu65Hc39DgRYS0mBz+THLpaHuq
+ m2O3HM0FkvpWu3fxirPKwP8W7nlDVG4cby1czMlBnx223XJ2jPnX6uRCcJt+X/Pqyy0o
+ QWVmm7/6JmyUE5O1hu6A9N6/tWL2ym3WiFaHI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=w/0aFTfAprVVOTOCs/KR4CC/94aej7JpddKXuVpnZ6g=;
+ b=RCO3Lah0ws7yFRuaH5GeVVqMW2+/FoZQZk0FBBv451D4Wk7I4yNf84Wq430W5YNoFb
+ cn7kXWEl5lMviOf4qRZjJrL7mojOVXjHJWnTCNiGNtXHk4iWNfrM1y6ecPEb3+gChtfu
+ pN/e4tEd4diA3crFdSb4U3HFg4+HQhXOAZ60uOHq0xtaAt2zaf2QRn5XFNYdkePvaAUz
+ Ru7pOzAl+kdUwtQltD+OoTnz+pwxy0Ci1VfkqgP5cVqdmGi1SZZIrNkK6jIewBp4LE5l
+ dAKUyVTADtqHrZOmWsbWhY/ZoMl8JTuJmQYhpRGplarVYmeujEtGx8jr9dvoxy1ldAav
+ Os0w==
+X-Gm-Message-State: AOAM530PPC1xPV8XseSCCv5CYYOqHGIB1bu3dS1yKeFXfiijChWncY+A
+ clODi+vXIbnAyZacNmd3jlFv+aSBXFXvtEBvgB0=
+X-Google-Smtp-Source: ABdhPJyOg85pbVP5qfGdda8bH9eLGYzaTgxUlVuD+D9zPYeernDU9rP22PyLTRyI8fLkxDMPzeS683iOIZwwY1pD25s=
+X-Received: by 2002:a05:620a:704:: with SMTP id 4mr7822674qkc.66.1621558773301; 
+ Thu, 20 May 2021 17:59:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Mailman-Approved-At: Fri, 21 May 2021 10:10:39 +1000
+References: <20210520093949.511471-1-andrew@aj.id.au>
+In-Reply-To: <20210520093949.511471-1-andrew@aj.id.au>
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 21 May 2021 00:59:20 +0000
+Message-ID: <CACPK8XeBeQjYe8LeivFt69bf8-ipccwHnigpq9jZ8B5wTKJ7Vw@mail.gmail.com>
+Subject: Re: [PATCH v2] Documentation: checkpatch: Tweak BIT() macro include
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,14 +70,16 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: dwaipayanray1@gmail.com, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, joe@perches.com, lukas.bulwahn@gmail.com,
+Cc: Jonathan Corbet <corbet@lwn.net>, dwaipayanray1@gmail.com,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-doc@vger.kernel.org,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Joe Perches <joe@perches.com>, Lukas Bulwahn <lukas.bulwahn@gmail.com>,
  Jiri Slaby <jirislaby@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Andrew Jeffery <andrew@aj.id.au> writes:
-
+On Thu, 20 May 2021 at 17:14, Andrew Jeffery <andrew@aj.id.au> wrote:
+>
 > While include/linux/bitops.h brings in the BIT() macro, it was moved to
 > include/linux/bits.h in commit 8bd9cb51daac ("locking/atomics, asm-generic:
 > Move some macros from <linux/bitops.h> to a new <linux/bits.h> file").
@@ -84,21 +94,7 @@ Andrew Jeffery <andrew@aj.id.au> writes:
 > Cc: Jiri Slaby <jirislaby@kernel.org>
 > Acked-by: Jiri Slaby <jirislaby@kernel.org>
 > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> ---
->  Documentation/dev-tools/checkpatch.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/dev-tools/checkpatch.rst b/Documentation/dev-tools/checkpatch.rst
-> index 51fed1bd72ec..59fcc9f627ea 100644
-> --- a/Documentation/dev-tools/checkpatch.rst
-> +++ b/Documentation/dev-tools/checkpatch.rst
-> @@ -472,7 +472,7 @@ Macros, Attributes and Symbols
->  
->    **BIT_MACRO**
->      Defines like: 1 << <digit> could be BIT(digit).
-> -    The BIT() macro is defined in include/linux/bitops.h::
-> +    The BIT() macro is defined via include/linux/bits.h::
 
-Applied, thanks.
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-jon
+...just a little bit
