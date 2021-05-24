@@ -2,81 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A50F38EDE3
-	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 17:41:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 013F438F13A
+	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 18:12:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FphK56X8dz2yxv
-	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 01:41:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Fpj0K6jKKz303F
+	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 02:12:17 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=I6ucW0gs;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=tUJPKUdu;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32a;
- helo=mail-ot1-x32a.google.com; envelope-from=tcminyard@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::230;
+ helo=mail-oi1-x230.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=I6ucW0gs; dkim-atps=neutral
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com
- [IPv6:2607:f8b0:4864:20::32a])
+ header.s=20161025 header.b=tUJPKUdu; dkim-atps=neutral
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
+ [IPv6:2607:f8b0:4864:20::230])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FphJm3KB6z2yWP;
- Tue, 25 May 2021 01:41:27 +1000 (AEST)
-Received: by mail-ot1-x32a.google.com with SMTP id
- 80-20020a9d08560000b0290333e9d2b247so15057636oty.7; 
- Mon, 24 May 2021 08:41:27 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fpj012xVpz2yhF
+ for <openbmc@lists.ozlabs.org>; Tue, 25 May 2021 02:12:00 +1000 (AEST)
+Received: by mail-oi1-x230.google.com with SMTP id j75so27473315oih.10
+ for <openbmc@lists.ozlabs.org>; Mon, 24 May 2021 09:11:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:reply-to:references
- :mime-version:content-disposition:in-reply-to;
- bh=4dcNCzYKaU8yqVyhBoUyr8CwTAgBxgmUmDbR8bnQPpc=;
- b=I6ucW0gsmv9GXh2UeJAOVE7pTQo41QoTCF0AMAzGtHj3sMngaptn5NEaWzkhPcaxQz
- 7RNNQufSi8UO76a/vJnOANF0etsn31hTUdRfA9+FBpUn7Z9OTl4SwzlxeTHDkrfYnjZk
- pGtoYzC8G77lYdzSmk1xwlGSozjA3Bg2TKak8Zeu77bZaE2wA3KGAOxophrdaWupZkn0
- oH85zl32DxLtcj3F0zUIeQSUWpbTmMb37JzyIcZT6VR113aq7HyipWxbex2eZKF+Dr8G
- wkJEa3zUY9k8zpv+As8XfFegAdkSqJYSLiuluacXvn6ETgW3ICP+DdgLb7gJXnzEG/29
- Y1Gg==
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=e4xrrpgYOaF663BLSzK80qJc3I8m6lF7uJTKGMewavI=;
+ b=tUJPKUduIb+eTeokDA0gUtGNaawPm5jxxgMZL0UCnQ1HBJ8NG06LKy7h1cKj+K0hCw
+ YVWpCAvLmIk2p7NftqBLEDfmVq3AFaa77Yc844BCNP2Ixvkp9k9Sw05ZZN5PBl9d09So
+ uxASaOI0PeZIEcocfnl1U/kBc+jIpoxYCqNSUURgXixOuLUPEX/i8GMB5PUga+jgjdWk
+ zgHD2E/2Uva13KTGKXBXS1W7/DUoyfqBRRzRefQhHI6SoQZVTc0j1wcHzjM3JtJ/UtkE
+ pk7UH+Il1CEfdWsWw1BtGOk75drQSCy1jHfgyo+sY8jx4p9WCpg8YWQNzI5EnQXP/yaW
+ v0Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :reply-to:references:mime-version:content-disposition:in-reply-to;
- bh=4dcNCzYKaU8yqVyhBoUyr8CwTAgBxgmUmDbR8bnQPpc=;
- b=lfjixc7olCY8hUI22kboXO8GFRdv8c+fD2zWhzDbts880wAp1+QsQOiV3Qj5ICiyBu
- GGQNMe8J1/h7NMop8pkFoT2NJYtbirReKN62LPJl6/9QpR6MCGx5+qjXLeJuXiVGgG5l
- iO6XqCb00emkSOc2Q/qmv480ZgiF3nTvObGRr2mIu/obCWNOP1v/KLCrn37oAxVs3DMK
- 40G6i2yfYQLSZ7CRPwFZIkOhmuHQ1flVD9oMka4y7wNnGUTY7I5vj2VtU+LKvvUK7EL0
- e3VgMACW08lXwdDsoqXqLR++IAh+1O779FAMCmfAU9IedQggBrLyOmda8nzeGqsxM80S
- OaGg==
-X-Gm-Message-State: AOAM5305ggQOd7fc0nxD6sqUbs08hqnWS1F3urrOCiQVKLo2yW+fyrTe
- GzP1g79Ir/4SmdI5jUBj0g==
-X-Google-Smtp-Source: ABdhPJx9uG7vgPNQiz9ZqMwDWzSLYJO8Mq3ppmWDr/gyp6m3yZkxHQ20XoOv2XHvWKoAk0irDjn2rQ==
-X-Received: by 2002:a05:6830:903:: with SMTP id
- v3mr19391088ott.192.1621870882919; 
- Mon, 24 May 2021 08:41:22 -0700 (PDT)
-Received: from serve.minyard.net ([47.184.156.158])
- by smtp.gmail.com with ESMTPSA id o18sm3142274otp.61.2021.05.24.08.41.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 May 2021 08:41:21 -0700 (PDT)
-Received: from minyard.net (unknown [IPv6:2001:470:b8f6:1b:8d79:38d0:810:96ad])
- by serve.minyard.net (Postfix) with ESMTPSA id C2CCE180105;
- Mon, 24 May 2021 15:41:20 +0000 (UTC)
-Date: Mon, 24 May 2021 10:41:19 -0500
-From: Corey Minyard <minyard@acm.org>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: [Openipmi-developer] [PATCH v3 05/16] ipmi: kcs_bmc: Turn the
- driver data-structures inside-out
-Message-ID: <20210524154119.GN2921206@minyard.net>
-References: <20210510054213.1610760-1-andrew@aj.id.au>
- <20210510054213.1610760-6-andrew@aj.id.au>
- <20210521171412.GI2921206@minyard.net>
- <79f3c6d1-1f74-46ec-99a0-37faf11517b6@www.fastmail.com>
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=e4xrrpgYOaF663BLSzK80qJc3I8m6lF7uJTKGMewavI=;
+ b=BwIhogELclBIM84R648xbUVs+E+Tv1WCfNBuZR10gO4ys1GbRtuFDmVvZSHw1GdZS+
+ WW3PsvuTw/CBU1MMEsNuK7yh92otyxGiugWs1oyi6goFf4Rg0h7ZRwBckqSMb/zZZDvW
+ hdMiaYiKh6bvAB8nQcA6X6o7oKNIv60+NHkxs9JoyWnf0UoGHlfldmgIFQIU3rUX+tvc
+ W0HJSR9iNzIbCpKVzgEbhbFHu4QW50DU1pa127rDjKmulXZ/5wVm9HyVz3yS3EZGnIDP
+ CNBF7xqQcJNSAp63wVjrJatGlTF5V+1Xq89GLOuBPCuYvM9fmlpGAYmRmAgEZU/6oLVB
+ a7CQ==
+X-Gm-Message-State: AOAM5302zT7nhEfCqwcDfeSNDTJh2fu2lp41ZQY/KR5uSVQ54WZYq13f
+ fBI3L7PCxTytndj6J53bNwQ=
+X-Google-Smtp-Source: ABdhPJz+eqXwCBeepHSuqKLwbbGJNaDBkZj0hOraXcYQRD/+xlruXP/RDUCJDg2aBVd7NI4dDRLATg==
+X-Received: by 2002:aca:1b15:: with SMTP id b21mr11543751oib.155.1621872716820; 
+ Mon, 24 May 2021 09:11:56 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-104-102.res.spectrum.com.
+ [72.182.104.102])
+ by smtp.gmail.com with ESMTPSA id l19sm989445otk.65.2021.05.24.09.11.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 May 2021 09:11:56 -0700 (PDT)
+Subject: Re: Quanta's CCLA Schedule A update 2021-05-24
+To: =?UTF-8?B?QnVkZHkgSHVhbmcgKOm7g+Wkqem0uyk=?= <Buddy.Huang@quantatw.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <HK0PR04MB2563DB4805E75C4AA929551C9D269@HK0PR04MB2563.apcprd04.prod.outlook.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <2df91cab-1700-1283-52b0-dd3a66615a04@gmail.com>
+Date: Mon, 24 May 2021 11:11:55 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <79f3c6d1-1f74-46ec-99a0-37faf11517b6@www.fastmail.com>
+In-Reply-To: <HK0PR04MB2563DB4805E75C4AA929551C9D269@HK0PR04MB2563.apcprd04.prod.outlook.com>
+Content-Type: text/plain; charset=big5; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,122 +85,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: minyard@acm.org
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- linux-aspeed@lists.ozlabs.org, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>,
- Rob Herring <robh+dt@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
- Benjamin Fair <benjaminfair@google.com>,
- openipmi-developer@lists.sourceforge.net, "Chia-Wei,
- Wang" <chiawei_wang@aspeedtech.com>, linux-arm-kernel@lists.infradead.org,
- Zev Weiss <zweiss@equinix.com>
+Cc: =?UTF-8?B?Q29zbW8gQ2hvdSAo5ZGo5qW35Z+5KQ==?= <Cosmo.Chou@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, May 24, 2021 at 10:23:36AM +0930, Andrew Jeffery wrote:
+On 5/23/21 11:16 PM, Buddy Huang (¶À¤ÑÂE) wrote:
+> Hi team,
 > 
-> 
-> On Sat, 22 May 2021, at 02:44, Corey Minyard wrote:
-> > On Mon, May 10, 2021 at 03:12:02PM +0930, Andrew Jeffery wrote:
-> > > Make the KCS device drivers responsible for allocating their own memory.
-> > > 
-> > > Until now the private data for the device driver was allocated internal
-> > > to the private data for the chardev interface. This coupling required
-> > > the slightly awkward API of passing through the struct size for the
-> > > driver private data to the chardev constructor, and then retrieving a
-> > > pointer to the driver private data from the allocated chardev memory.
-> > > 
-> > > In addition to being awkward, the arrangement prevents the
-> > > implementation of alternative userspace interfaces as the device driver
-> > > private data is not independent.
-> > > 
-> > > Peel a layer off the onion and turn the data-structures inside out by
-> > > exploiting container_of() and embedding `struct kcs_device` in the
-> > > driver private data.
-> > 
-> > All in all a very nice cleanup.  A few nits inline.
-> > 
-> > > 
-> > > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> > > Reviewed-by: Zev Weiss <zweiss@equinix.com>
-> > > ---
-> > >  drivers/char/ipmi/kcs_bmc.c           | 19 +++++++--
-> > >  drivers/char/ipmi/kcs_bmc.h           | 12 ++----
-> > >  drivers/char/ipmi/kcs_bmc_aspeed.c    | 56 +++++++++++++------------
-> > >  drivers/char/ipmi/kcs_bmc_cdev_ipmi.c | 60 ++++++++++++++++++---------
-> > >  drivers/char/ipmi/kcs_bmc_npcm7xx.c   | 37 ++++++++++-------
-> > >  5 files changed, 111 insertions(+), 73 deletions(-)
-> > > 
-> > > diff --git a/drivers/char/ipmi/kcs_bmc.c b/drivers/char/ipmi/kcs_bmc.c
-> > > index ef5c48ffe74a..83da681bf49e 100644
-> > > --- a/drivers/char/ipmi/kcs_bmc.c
-> > > +++ b/drivers/char/ipmi/kcs_bmc.c
-> > > @@ -44,12 +44,23 @@ int kcs_bmc_handle_event(struct kcs_bmc *kcs_bmc)
-> > >  }
-> > >  EXPORT_SYMBOL(kcs_bmc_handle_event);
-> > >  
-> > > -struct kcs_bmc *kcs_bmc_ipmi_alloc(struct device *dev, int sizeof_priv, u32 channel);
-> > > -struct kcs_bmc *kcs_bmc_alloc(struct device *dev, int sizeof_priv, u32 channel)
-> > > +int kcs_bmc_ipmi_add_device(struct kcs_bmc *kcs_bmc);
-> > 
-> > The above (and it's remove function) should be in an include file.
-> 
-> This is a short-term hack while I'm refactoring the code. It goes away 
-> in a later patch when we switch to using an ops struct.
-> 
-> I didn't move it to a header as it's an implementation detail at the 
-> end of the day. I see headers as describing a public interface, and in 
-> the bigger picture this function isn't part of the public API. But 
-> maybe it's too tricky by half. My approach here generated some 
-> discussion with Zev as well.
-> 
-> > 
-> > > +void kcs_bmc_add_device(struct kcs_bmc *kcs_bmc)
-> > 
-> > This should return an error so the probe can be failed and cleaned up
-> > and so confusing message don't get printed after this in one case.
-> 
-> Hmm. I did this because the end result of the series is that we can 
-> have multiple chardev interfaces in distinct modules exposing the one 
-> KCS device in the one kernel. If more than one of the chardev modules 
-> is configured in and one of them fails to initialise themselves with 
-> respect to the device driver I didn't think it was right to fail the 
-> probe of the device driver (and thus remove any chardev interfaces that 
-> did succeed to initialise against it).
-> 
-> But this does limit the usefulness of the device driver instance in the 
-> case that only one of the chardev interfaces is configured in and it 
-> fails to initialise.
-> 
-> So I think we need to decide on the direction before I adjust the 
-> interface here. The patches are architected around the idea of multiple 
-> chardevs being configured in to the kernel build and all are exposed at 
-> runtime.
+> Please find the attached file for updated Schedule A of CCLA from Quanta.
 
-Ok, I understand.  The host IPMI driver will attempt to start all
-interfaces, if none fail to come up it will return an error, but if any
-come up it will not return an error.  So it's a similar situation.
+Your Schedule A has been received. Thanks for keeping it updated!
 
-I stole that from something else, but I can't remember what.  I don't
-know what the best policy is, really, that was kind of a compromise and
-nobody has complained about it.
-
-I will say that the success print in aspeed_kcs_probe() needs to not
-happen if there is a failure, though.
-
--corey
+Kurt Taylor (krtaylor)
 
 > 
-> The serio subsystem does have the 'drvctl' sysfs knob that allows 
-> userspace to dictate which serio chardev interface they want to connect 
-> to a serio device driver. Maybe that's preferred over my "connect them 
-> all" strategy?
+> Sincerely,
 > 
-> Andrew
+> Buddy
 > 
-> 
-> _______________________________________________
-> Openipmi-developer mailing list
-> Openipmi-developer@lists.sourceforge.net
-> https://lists.sourceforge.net/lists/listinfo/openipmi-developer
+
