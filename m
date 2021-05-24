@@ -1,64 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1863E38DF54
-	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 04:40:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B6D938DF61
+	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 04:47:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FpLzx07GGz2yqC
-	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 12:40:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FpM7g0ZQLz306l
+	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 12:47:27 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=WbmngLmi;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=hJbVnkiQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::729;
- helo=mail-qk1-x729.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::735;
+ helo=mail-qk1-x735.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=WbmngLmi; dkim-atps=neutral
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com
- [IPv6:2607:f8b0:4864:20::729])
+ header.s=google header.b=hJbVnkiQ; dkim-atps=neutral
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com
+ [IPv6:2607:f8b0:4864:20::735])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FpLzg2ZHGz2xZs
- for <openbmc@lists.ozlabs.org>; Mon, 24 May 2021 12:40:30 +1000 (AEST)
-Received: by mail-qk1-x729.google.com with SMTP id i5so18504152qkf.12
- for <openbmc@lists.ozlabs.org>; Sun, 23 May 2021 19:40:30 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FpM7L3mlFz2xv1;
+ Mon, 24 May 2021 12:47:08 +1000 (AEST)
+Received: by mail-qk1-x735.google.com with SMTP id 76so25714359qkn.13;
+ Sun, 23 May 2021 19:47:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=VZqubIXf7k6o4Z8Az1c8QtdvjQePBlrUbZVk+Yr4pBY=;
- b=WbmngLmiXn+6EX+mu891S/mTzwKQZ+MT6Wa7S5HTREQV9m6D0uwYAUpJuE8/SSVxJN
- 5kmk4RBXYTOGYv7zZDnX8st0YLEPB3H0Hydzy9rfxDKCFrfYwMKTxvDZk4bl+OpOCi7R
- WrY6Vu8l3t25nMY2U8UEcb8G2I2ftwzD+L5hg=
+ :cc; bh=LTCPne6GXFzHJ7+D1ZybTqJ/Z3dDxDNGFw0CMhOL8Rs=;
+ b=hJbVnkiQENoyNTPSSPUoPrfPxPtOvXlxrjv+JNfihflwvPlydj1kKxcWZqjemyfqmO
+ aUt360h8r61lvw+Zdxp1bhhjHknphbjwgk0MApLTWrLxblAQ3iaCSU6c03qgSfRgqqEu
+ K4bZ43EGBSo3lDh9tEol1tHLIGs86R4KvO6Kw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=VZqubIXf7k6o4Z8Az1c8QtdvjQePBlrUbZVk+Yr4pBY=;
- b=HcNLbEtSkX9xntzTyicx4usO90pIkU1flJ9IEWHhahfVgFud1U/82d3kp6eMnnVKiU
- RXdpry5BSxsBFFDn9fFG9c9Bf4yR0bF+AjBAIUdNztLpfDALNnifOmzMZiKC2LcOSvNu
- L+ihKpSR27KNjK7bGhQ/HyE6FHnHQgCy+6Sys+9xqRRPCiWb9bl7Z8mrXnKC7CuP8xi0
- VmR+m7hpNADbD/TnaCf6nroiA5W3qvgeKmxMdzN5GVqe5G15Fn2hscjbnVVPOjQ02pa/
- 4DYpxnQkF4QfdYNL7Pt3qGFzwNw6E10I2CjFEDQfR7RY76u99CGYNK1vc8+Or08mI42X
- W9sQ==
-X-Gm-Message-State: AOAM531BZf/6K9e9LxfKXLUun8Yev/mvvUx8syHY7j3VqL/HlR46PdAY
- LgY0qvbc4BgpGcSlN7P6qWIP1PkUpBi80XMAfxE=
-X-Google-Smtp-Source: ABdhPJw7gQHHhtAxjoNx6t9faosvE/J/nLTQKvJLMkW6kmzB7LzFYzAMgMs7SNcnC9s5NgNDm89nvQubNnnHD9kfPV4=
+ bh=LTCPne6GXFzHJ7+D1ZybTqJ/Z3dDxDNGFw0CMhOL8Rs=;
+ b=k36HpLoBidD/Xssv7SemoYOnd5YEDU267zxcDI7B10hfirX4MoEX6RSp81Kh1zEFa0
+ t/xLScyM/Q2t4v47IrTBKInXrl83Uoi3GeMOPNNlzqTVKUePpi0xZMy9lPQNzKJ6lHmH
+ zHcQH1NknbXk9EJBbCDBPOLjrTnBD2rPKrV/DThPR1WwAJVvsOScXh3LvNhGANNsk+OH
+ nC7WRbZnd6krK+xBu4a0ol3I0fvyszQSv1qQpHNczBL5ZNaA1hYkkNO05yfyy/NRlgAA
+ 9k1wmZqo2T1ONLqgwLuuMUp9hedg91MtWmfmlZbZYRKu+rSE4aOkBRb2X1FZ4rWYwEnf
+ Bpmw==
+X-Gm-Message-State: AOAM532WjeA1NaGcqLh83zqIvPCb1dBa38Vw/8aTE+nAZwQal8MylIlj
+ S8Wsbh/qreTZpPYCQKnplXMFwuvHXoV8+4k7A3I=
+X-Google-Smtp-Source: ABdhPJwKrT1nqV52738s0dioZLpz1C9s9WeGGGKgsxr3NpTELBPM2mW8vXf/ydUfZHgfvf1gZWCTf6zGN0VxHJFJ+no=
 X-Received: by 2002:a05:620a:12a4:: with SMTP id
- x4mr25565107qki.487.1621824025972; 
- Sun, 23 May 2021 19:40:25 -0700 (PDT)
+ x4mr25587812qki.487.1621824425020; 
+ Sun, 23 May 2021 19:47:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210524003039.18003-1-guopingjn@gmail.com>
-In-Reply-To: <20210524003039.18003-1-guopingjn@gmail.com>
+References: <20210520101346.16772-1-steven_lee@aspeedtech.com>
+ <20210520101346.16772-2-steven_lee@aspeedtech.com>
+ <CACPK8XcSYgQKRp7C5gZ9LKekL0LCHYPDwjC49EDTEr5__T2M3Q@mail.gmail.com>
+ <20210524023526.GA2727@aspeedtech.com>
+In-Reply-To: <20210524023526.GA2727@aspeedtech.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 24 May 2021 02:40:13 +0000
-Message-ID: <CACPK8Xco+K9gvX3A4XWBMPEiN3U9jS0f==hHk_FhfeiLszQPkg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] ARM: dts: aspeed: Add Inspur NF5280M6 BMC machine
-To: guopingjn@gmail.com
+Date: Mon, 24 May 2021 02:46:52 +0000
+Message-ID: <CACPK8XewH8b5FB+6bQ9EWy--Y6x79-95MCqNmFovJhO4hS0e=A@mail.gmail.com>
+Subject: Re: [PATCH v4 1/3] ARM: dts: aspeed: ast2600evb: Add sdhci node and
+ gpio regulator for A2 evb.
+To: Steven Lee <steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,786 +75,99 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, guoping@inspur.com,
- banht@inspur.com, liuxiwei@inspur.com, wangxinglong@inspur.com
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
+ "open list:ASPEED SD/MMC DRIVER" <linux-mmc@vger.kernel.org>,
+ Adrian Hunter <adrian.hunter@intel.com>,
+ Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
+ open list <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Hongwei Zhang <Hongweiz@ami.com>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 24 May 2021 at 00:30, <guopingjn@gmail.com> wrote:
+On Mon, 24 May 2021 at 02:35, Steven Lee <steven_lee@aspeedtech.com> wrote:
 >
-> From: Ping Guo <guoping@inspur.com>
+> The 05/21/2021 09:25, Joel Stanley wrote:
+> > Hi Steven,
+> >
+> > On Thu, 20 May 2021 at 10:16, Steven Lee <steven_lee@aspeedtech.com> wrote:
+> > >
+> > > AST2600 A2(or newer) EVB has gpio regulators for toggling signal voltage
+> > > between 3.3v and 1.8v, the patch adds sdhci node and gpio regulator in the
+> > > new dts file and adds commment for describing the reference design.
+> >
+> > spelling: comment
+> >
 >
-> The Inspur NF5280M6 is an x86 platform server with an AST2500-based BMC.
-> This dts file provides a basic configuration for its OpenBMC
-> development.
+> Thanks, will correct the typo.
 >
-> Signed-off-by: George Liu <liuxiwei@inspur.com>
-> Signed-off-by: Ping Guo <guoping@inspur.com>
-> ---
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../boot/dts/aspeed-bmc-inspur-nf5280m6.dts   | 725 ++++++++++++++++++
->  2 files changed, 726 insertions(+)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
+> > I need you to justify the separate dts for the A2 EVB.
+> >
+> > What would happen if this device tree was loaded on to an A1 or A0?
+> >
 >
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 03b5424bafa8..cc2580f1e99b 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1405,6 +1405,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->         aspeed-bmc-ibm-rainier-4u.dtb \
->         aspeed-bmc-intel-s2600wf.dtb \
->         aspeed-bmc-inspur-fp5280g2.dtb \
-> +       aspeed-bmc-inspur-nf5280m6.dtb \
->         aspeed-bmc-lenovo-hr630.dtb \
->         aspeed-bmc-lenovo-hr855xg2.dtb \
->         aspeed-bmc-microsoft-olympus.dtb \
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
-> new file mode 100644
-> index 000000000000..7ea0e3ae8ffd
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
-> @@ -0,0 +1,725 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +// Copyright (c) 2021 Inspur Corporation
-> +/dts-v1/;
-> +
-> +#include "aspeed-g5.dtsi"
-> +#include <dt-bindings/gpio/aspeed-gpio.h>
-> +#include <dt-bindings/i2c/i2c.h>
-> +#include <dt-bindings/leds/leds-pca955x.h>
-> +
-> +/ {
-> +       model = "NF5280M6 BMC";
-> +       compatible = "inspur,nf5280m6-bmc", "aspeed,ast2500";
-> +
-> +       chosen {
-> +               stdout-path = &uart5;
-> +               bootargs = "console=ttyS4,115200 earlyprintk";
-> +       };
-> +
-> +       memory@80000000 {
-> +               reg = <0x80000000 0x40000000>;
-> +       };
-> +
-> +       reserved-memory {
-> +               #address-cells = <1>;
-> +               #size-cells = <1>;
-> +               ranges;
-> +
-> +               vga_memory: framebuffer@9f000000 {
-> +                       no-map;
-> +                       reg = <0x9f000000 0x01000000>; /* 16M */
-> +               };
-> +
-> +               gfx_memory: framebuffer {
-> +                       size = <0x01000000>;
-> +                       alignment = <0x01000000>;
-> +                       compatible = "shared-dma-pool";
-> +                       reusable;
-> +               };
-> +
-> +               video_engine_memory: jpegbuffer {
-> +                       size = <0x02000000>;    /* 32M */
-> +                       alignment = <0x01000000>;
-> +                       compatible = "shared-dma-pool";
-> +                       reusable;
-> +               };
-> +
-> +               flash_memory: region@98000000 {
-> +                       no-map;
-> +                       reg = <0x98000000 0x04000000>; /* 64M */
-
-Are you sure you need this? This is used by the aspeed-lpc-ctrl driver
-to map a region of the AHB into the LPC address space. This is
-normally only used by PowerPC systems.
-
-> +               };
-> +       };
-> +
-> +       leds {
-> +           compatible = "gpio-leds";
-> +
-> +               bmc_alive {
-> +                       label = "bmc_alive";
-> +                       gpios = <&gpio ASPEED_GPIO(B, 0) GPIO_ACTIVE_LOW>;
-> +                       linux,default-trigger = "timer";
-> +                       led-pattern = <1000 1000>;
-> +               };
-> +
-> +               front-fan {
-> +                       label = "front-fan";
-> +                       gpios = <&gpio ASPEED_GPIO(F,2) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +           front-psu {
-> +                       label = "front-psu";
-> +                       gpios = <&gpio ASPEED_GPIO(F,3) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +           front-syshot {
-> +                       label = "front-syshot";
-> +                       gpios = <&gpio ASPEED_GPIO(J, 3) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +               front-memory {
-> +                       label = "front-memory";
-> +                       gpios = <&gpio ASPEED_GPIO(S, 7) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +               identify {
-> +                       label = "identify";
-> +                       gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_LOW>;
-> +               };
-> +       };
-> +
-> +       iio-hwmon {
-> +               compatible = "iio-hwmon";
-> +               io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-> +                       <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
-> +                       <&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
-> +                       <&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
-> +       };
-> +};
-> +
-> +&fmc {
-> +       status = "okay";
-> +       flash@0 {
-> +               status = "okay";
-> +               m25p,fast-read;
-> +               label = "bmc";
-> +               spi-max-frequency = <50000000>;
-> +#include "openbmc-flash-layout.dtsi"
-> +       };
-> +};
-> +
-> +&spi1 {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_spi1_default>;
-> +       flash@0 {
-> +               status = "okay";
-> +               m25p,fast-read;
-> +               label = "bios";
-> +               spi-max-frequency = <100000000>;
-> +       };
-> +};
-> +
-> +&uart1 {
-> +       status = "okay";
-> +};
-> +
-> +&uart5 {
-> +       status = "okay";
-> +};
-> +
-> +&mac0 {
-> +       status = "okay";
-> +
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_rmii1_default>;
-> +       clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-> +               <&syscon ASPEED_CLK_MAC1RCLK>;
-> +       clock-names = "MACCLK", "RCLK";
-> +       use-ncsi;
-> +};
-> +
-> +&mac1 {
-> +       status = "okay";
-> +
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-> +};
-> +
-> +&gpio {
-> +       power_out {
-> +               gpios = <ASPEED_GPIO(AA, 7) GPIO_ACTIVE_LOW>;
-> +               output-low;
-> +       };
-> +};
-> +
-> +&gpio {
-> +       status = "okay";
-> +       /* Enable GPIOE0 and GPIOE2 pass-through by default */
-> +       pinctrl-names = "pass-through";
-> +       pinctrl-0 = <&pinctrl_gpie0_default
-> +                       &pinctrl_gpie2_default>;
-> +       gpio-line-names =
-> +       /*A0-A7*/       "","MAC2LINK","BMC_RESET_CPLD","","BMC_SCL9","","MAC2MDC_R","",
-> +       /*B0-B7*/       "BMC_INIT_OK","FM_SKU_ID2","FM_SPD_DDRCPU_LVLSHFT_DIS_R_N",
-> +                               "FM_CPU_MSMI_CATERR_LVT3_BMC_N","","FM_CPU0_PROCHOT_LVT3_N",
-> +                               "FM_CPU_MEM_THERMTRIP_LVT3_N","BIOS_LOAD_DEFAULT_R_N",
-> +       /*C0-C7*/       "","","","","","","","",
-> +       /*D0-D7*/       "","BMC_SD2CMD","BMC_SD2DAT0","BMC_SD2DAT1","BMC_SD2DAT2",
-> +                               "BMC_SD2DAT3","BMC_SD2DET","BMC_SD2WPT",
-> +       /*E0-E7*/       "FM_BOARD_ID0","FM_BOARD_ID1","FM_BOARD_ID2","FM_BOARD_ID3",
-> +                               "FM_BOARD_ID4","FM_BOARD_ID5","","",
-> +       /*F0-F7*/       "PSU1_PRESENT_N","PSU2_PRESENT_N","FAN_FAULT_LED_N","PSU_FAULT_LED_N",
-> +                               "BIOS_DEBUG_MODE_N","FP_LCD_RESET","FAN_TYPE_SEL",
-> +                               "RST_GLB_RST_WARN_N",
-> +       /*G0-G7*/       "IRQ_LPTM21L_ALERT_N","IRQ_PLD_ALERT_N","AC_FAIL_N","FP_LCD_PRESENT_BMC",
-> +                               "BMC_JTAG_TCK_MUX_SEL","BMC_BIOS_RESERVED","SYS_NMI_N","BMC_NMI_N",
-> +       /*H0-H7*/       "JTAG_BMC_TDI","JTAG_BMC_TDO","JTAG_BMC_TCK","JTAG_BMC_TMS","FM_BOARD_ID6",
-> +                               "FM_SKU_ID0","IRQ_SML1_PMBUS_ALERT_N","IRQ_SML0_ALERT_MUX_N",
-> +       /*I0-I7*/       "FM_CPU_ERR0_LVT3_BMC_N","FM_CPU_ERR1_LVT3_BMC_N","FM_BMC_PCH_SCI_LPC_N",
-> +                               "FM_SYS_THROTTLE_LVC3","SPI2_PCH_CS0_N","","","",
-> +       /*J0-J7*/       "FM_CPU0_SKTOCC_LVT3_N","FM_CPU1_SKTOCC_LVT3_N","","SYSHOT_FAULT_LED_N",
-> +                               "VGA_HSYNC","VGA_VSYNC","","",
-> +       /*K0-K7*/       "","","","","","","","",
-> +       /*L0-L7*/       "","","","","","","SYS_UART_TXD1","SYS_UART_RXD1",
-> +       /*M0-M7*/       "","","","","","","","",
-> +       /*N0-N7*/       "","","","","","","","",
-> +       /*O0-O7*/       "","","","","","","","",
-> +       /*P0-P7*/       "","","","","","","","",
-> +       /*Q0-Q7*/       "","","","","","","FM_PCH_BMC_THERMTRIP_N","INTRUDER_N",
-> +       /*R0-R7*/       "SPI_BMC_BOOT_CS1_R_N","FM_CPU_MEMHOT_LVC3_N",
-> +                               "DBP_CPU_PREQ_N","FM_CPU_ERR2_LVT3_BMC_N",
-> +                               "RISER_NCSI_EN_N","","LOM_NCSI_EN_N","OCP_NCSI_EN_N",
-> +       /*S0-S7*/       "BMC_XDP_PRDY_N","SIO_POWER_GOOD","BMC_PWR_DEBUG_R_N","BMC_DEBUG_EN_R_N","",
-> +                               "GPIOS5_BMC","","GPIOS7_BMC",
-> +       /*T0-T7*/       "","","","","","","","",
-> +       /*U0-U7*/       "","","","","","","","",
-> +       /*V0-V7*/       "","","","","","","","",
-> +       /*W0-W7*/       "","","","","","","","",
-> +       /*X0-X7*/       "","","","","","","","",
-> +       /*Y0-Y7*/       "","BMC_DET_UID_N","BMC_JTAG_SEL","SIO_ONCONTROL","","","","",
-> +       /*Z0-Z7*/       "XDP_PRESENT_N","DBP_SYSPWROK","BMC_JTAG_SEL","FM_SMI_ACTIVE_N","",
-> +                               "GPIOZ5","","",
-> +       /*AA0-AA7*/     "FP_BMC_SYSLED_N","PS_PWROK","RST_PLTRST_BMC_N","HDA_SDO_BMC",
-> +                               "FM_SLPS4_R_N","","POWER_BUTTON","POWER_OUT",
-> +       /*AB0-AB7*/     "RESET_OUT","RESET_BUTTON","BIOS_REFLASH","POST_COMPLETE","","","","",
-> +       /*AC0-AC7*/     "","","","","","","","";
-> +};
-> +
-> +&i2c0 {
-> +       /* FP_LCD */
-> +       status = "okay";
-> +};
-> +
-> +&i2c1 {
-> +       status = "okay";
-> +
-> +       eeprom@50 {
-> +               compatible = "atmel,24c256";
-> +               reg = <0x50>;
-> +               label = "fru";
-> +       };
-> +};
-> +
-> +&i2c2 {
-> +       status = "okay";
-> +
-> +       tmp112@48 {
-> +               compatible = "ti,tmp112";
-> +               reg = <0x48>;
-> +               label = "inlet";
-> +       };
-> +
-> +       tmp112@49 {
-> +               compatible = "ti,tmp112";
-> +               reg = <0x49>;
-> +               label = "outlet";
-> +       };
-> +
-> +       pca9548@70 {
-> +               compatible = "nxp,pca9548";
-> +               reg = <0x70>;
-> +       };
-> +};
-> +
-> +&i2c3 {
-> +       status = "okay";
-> +
-> +       pca9548@70 {
-> +               compatible = "nxp,pca9548";
-> +               reg = <0x70>;
-> +       };
-> +
-> +       pca9548@71 {
-> +               compatible = "nxp,pca9548";
-> +               reg = <0x71>;
-> +       };
-> +
-> +       pca9548@72 {
-> +               compatible = "nxp,pca9548";
-> +               reg = <0x72>;
-> +       };
-> +};
-> +
-> +&i2c4 {
-> +       /* IPMB */
-> +       status = "okay";
-> +};
-> +
-> +&i2c5 {
-> +       status = "okay";
-> +
-> +       pca9548@70 {
-> +               compatible = "nxp,pca9548";
-> +               reg = <0x70>;
-> +       };
-> +};
-> +
-> +&i2c6 {
-> +       status = "okay";
-> +
-> +       pca9548@70 {
-> +               compatible = "nxp,pca9548";
-> +               reg = <0x70>;
-> +       };
-> +};
-> +
-> +&i2c7 {
-> +       status = "okay";
-> +
-> +       adm1278@33 {
-> +               compatible = "adi,adm1293";
-> +               reg = <0x33>;
-> +       };
-> +
-> +       adm1278@32 {
-> +               compatible = "adi,adm1293";
-> +               reg = <0x32>;
-> +       };
-> +
-> +       adm1278@20 {
-> +               compatible = "adi,adm1293";
-> +               reg = <0x20>;
-> +       };
-> +};
-> +
-> +&i2c8 {
-> +       status = "okay";
-> +
-> +       pca0: pca9555@23 {
-> +               compatible = "nxp,pca9555";
-> +               reg = <0x23>;
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +
-> +               gpio-controller;
-> +               #gpio-cells = <2>;
-> +
-> +               gpio@0 {
-> +                       reg = <0>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@1 {
-> +                       reg = <1>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@2 {
-> +                       reg = <2>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@3 {
-> +                       reg = <3>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@4 {
-> +                       reg = <4>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@5 {
-> +                       reg = <5>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@6 {
-> +                       reg = <6>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +       };
-> +
-> +       pca1: pca9555@22 {
-> +               compatible = "nxp,pca9555";
-> +               reg = <0x22>;
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +
-> +               gpio-controller;
-> +               #gpio-cells = <2>;
-> +
-> +               gpio@0 {
-> +                       reg = <0>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@1 {
-> +                       reg = <1>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@2 {
-> +                       reg = <2>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@3 {
-> +                       reg = <3>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@4 {
-> +                       reg = <4>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@5 {
-> +                       reg = <5>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@6 {
-> +                       reg = <6>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@7 {
-> +                       reg = <7>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +       };
-> +
-> +       pca2: pca9555@20 {
-> +               compatible = "nxp,pca9555";
-> +               reg = <0x20>;
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +
-> +               gpio-controller;
-> +               #gpio-cells = <2>;
-> +
-> +               gpio@0 {
-> +                       reg = <0>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@1 {
-> +                       reg = <1>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@2 {
-> +                       reg = <2>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@3 {
-> +                       reg = <3>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@4 {
-> +                       reg = <4>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@5 {
-> +                       reg = <5>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@6 {
-> +                       reg = <6>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@7 {
-> +                       reg = <7>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +       };
-> +
-> +       pca3: pca9555@21 {
-> +               compatible = "nxp,pca9555";
-> +               reg = <0x21>;
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +
-> +               gpio-controller;
-> +               #gpio-cells = <2>;
-> +
-> +               gpio@0 {
-> +                       reg = <0>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@1 {
-> +                       reg = <1>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@2 {
-> +                       reg = <2>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@3 {
-> +                       reg = <3>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@4 {
-> +                       reg = <4>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@5 {
-> +                       reg = <5>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@6 {
-> +                       reg = <6>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@7 {
-> +                       reg = <7>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +       };
-> +};
-> +
-> +&i2c9 {
-> +       /* cpld */
-> +       status = "okay";
-> +};
-> +
-> +&i2c10 {
-> +       status = "okay";
-> +
-> +       pca4: pca9555@24 {
-> +               compatible = "nxp,pca9555";
-> +               reg = <0x24>;
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +
-> +               gpio-controller;
-> +               #gpio-cells = <2>;
-> +
-> +               gpio@0 {
-> +                       reg = <0>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@1 {
-> +                       reg = <1>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@2 {
-> +                       reg = <2>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@3 {
-> +                       reg = <3>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@4 {
-> +                       reg = <4>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@5 {
-> +                       reg = <5>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@6 {
-> +                       reg = <6>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@7 {
-> +                       reg = <7>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +       };
-> +
-> +       pca5: pca9555@25 {
-> +               compatible = "nxp,pca9555";
-> +               reg = <0x25>;
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +
-> +               gpio-controller;
-> +               #gpio-cells = <2>;
-> +
-> +               gpio@0 {
-> +                       reg = <0>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@1 {
-> +                       reg = <1>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@2 {
-> +                       reg = <2>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@3 {
-> +                       reg = <3>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@4 {
-> +                       reg = <4>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@5 {
-> +                       reg = <5>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@6 {
-> +                       reg = <6>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +       };
-> +};
-> +
-> +&i2c11 {
-> +       status = "okay";
-> +
-> +       power-supply@58 {
-> +               compatible = "inspur,ipsps1";
-> +               reg = <0x58>;
-> +       };
-> +
-> +       power-supply@59 {
-> +               compatible = "inspur,ipsps1";
-> +               reg = <0x59>;
-> +       };
-> +};
-> +
-> +&i2c12 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c13 {
-> +       status = "okay";
-> +};
-> +
-> +&lpc_ctrl {
-> +       status = "okay";
-> +       memory-region = <&flash_memory>;
-> +       flash = <&spi1>;
-
-As I described before, most of the time this driver is only used by
-the hiomap daemon on Power systems.
-
-> +};
-> +
-> +&gfx {
-> +       status = "okay";
-> +       memory-region = <&gfx_memory>;
-> +};
-
-This is the BMC display device. You only need to enable it if you are
-running code on the BMC to
-
-It is not related to using the BMC has a host PCIe display device.
-
-> +
-> +&pinctrl {
-> +       aspeed,external-nodes = <&gfx &lhc>;
-> +};
-> +
-> +&pwm_tacho {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
-> +               &pinctrl_pwm2_default &pinctrl_pwm3_default
-> +               &pinctrl_pwm4_default &pinctrl_pwm5_default
-> +               &pinctrl_pwm6_default &pinctrl_pwm7_default>;
-> +
-> +       fan@0 {
-> +               reg = <0x00>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
-> +       };
-> +
-> +       fan@1 {
-> +               reg = <0x01>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
-> +       };
-> +
-> +       fan@2 {
-> +               reg = <0x02>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
-> +       };
-> +
-> +       fan@3 {
-> +               reg = <0x03>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
-> +       };
-> +
-> +       fan@4 {
-> +               reg = <0x04>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x08 0x09>;
-> +       };
-> +
-> +       fan@5 {
-> +               reg = <0x05>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x0a 0x0b>;
-> +       };
-> +
-> +       fan@6 {
-> +               reg = <0x06>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x0c 0x0d>;
-> +       };
-> +
-> +       fan@7 {
-> +               reg = <0x07>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x0e 0x0f>;
-> +       };
-> +};
-> +
-> +&kcs3 {
-> +       status = "okay";
-> +       kcs_addr = <0xca2>;
-> +};
-> +
-> +&kcs4 {
-> +       status = "okay";
-> +       kcs_addr = <0xca4>;
-> +};
-> +
-> +&adc {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
-> +        &pinctrl_adc2_default &pinctrl_adc3_default &pinctrl_adc4_default
-> +        &pinctrl_adc5_default &pinctrl_adc6_default &pinctrl_adc7_default
-> +        &pinctrl_adc8_default &pinctrl_adc9_default &pinctrl_adc10_default
-> +        &pinctrl_adc11_default &pinctrl_adc12_default &pinctrl_adc13_default
-> +        &pinctrl_adc14_default &pinctrl_adc15_default>;
-> +};
-> +
-> +&vhub {
-> +       status = "okay";
-> +};
-> +
-> +&video {
-> +       status = "okay";
-> +       memory-region = <&video_engine_memory>;
-> +};
-> +
-> +&vuart {
-> +       status = "okay";
-> +};
-> --
-> 2.17.1
+> Since the clock default value(SCU210) of A1 and A0 are different to A2,
+> the following error would happen if A2 device tree was loaded on A1/A0.
 >
+> ```
+> [  133.179825] mmc1: Reset 0x4 never completed.
+> [  133.184599] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+> [  133.191786] mmc1: sdhci: Sys addr:  0x00000000 | Version:  0x00000002
+> [  133.198972] mmc1: sdhci: Blk size:  0x00007008 | Blk cnt:  0x00000001
+> [  133.206158] mmc1: sdhci: Argument:  0x00000c00 | Trn mode: 0x00000013
+> [  133.213343] mmc1: sdhci: Present:   0x01f70001 | Host ctl: 0x00000011
+> [  133.220528] mmc1: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
+> [  133.227713] mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00008007
+> [  133.234898] mmc1: sdhci: Timeout:   0x0000000b | Int stat: 0x00000000
+> [  133.242083] mmc1: sdhci: Int enab:  0x00ff0083 | Sig enab: 0x00ff0083
+> [  133.249268] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+> [  133.256453] mmc1: sdhci: Caps:      0x07f80080 | Caps_1:   0x00000007
+> [  133.263638] mmc1: sdhci: Cmd:       0x0000341a | Max curr: 0x001f0f08
+> [  133.270824] mmc1: sdhci: Resp[0]:   0x00000000 | Resp[1]:  0x01dd7f7f
+> [  133.278009] mmc1: sdhci: Resp[2]:   0x325b5900 | Resp[3]:  0x00400e00
+> [  133.285193] mmc1: sdhci: Host ctl2: 0x00000000
+> [  133.290148] mmc1: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0xbe041200
+> [  133.297332] mmc1: sdhci: ============================================
+>
+> ```
+>
+> Besides, A1/A0 EVBs don't have regulator, vmmc and vqmmc should be
+> removed from sdhci node of A1/A0 dts.
+>
+> > Would this device tree be used for the A3 (and any future revision?)
+> >
+>
+> Yes, A3 can use the A2 dts.
+>
+> > An alternative proposal: we modify the ast2600-evb.dts to support the
+> > A2 (which I assume would also support the A3).
+> >
+> > If we need a separate board file for the A0 and A1 EVB, we add a new
+> > one that supports these earlier revisions. Or we decide to only
+> > support the latest revision in mainline.
+> >
+>
+> In this patch, I add a new dts to support A2 sdhci, and include the
+> original dts since the other settings can be loaded on A2.
+> Do you mean creating a new file(e.g. aspeed-ast2600-evb-a1.dts) for A1,
+> and modifying the original aspeed-ast2600-evb.dts for supporting A2?
+
+Yes, that would be my suggestion. The aspeed-ast2600-evb-a1.dts could
+include the aspeed-ast2600-evb.dts.
+
+> If we decide to only support the latest version in mainline, users
+> should mark vmmc and vqmmc as comment and modify clk-phase manually
+> for supporting A1.
+
+If you believe there will be users of the A1 for some time, then I
+think it makes sense to support both A1 and future boards in mainline.
+
+Cheers,
+
+Joel
