@@ -1,77 +1,133 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9918D38E1F8
-	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 09:53:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42BAC38E3AE
+	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 12:06:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FpTwY3vVJz2yqC
-	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 17:53:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FpXtZ1lmmz301K
+	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 20:06:46 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=f/70JWer;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=mKIABpaQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::131;
- helo=mail-lf1-x131.google.com; envelope-from=artemsen@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=aspeedtech.com (client-ip=40.107.131.105;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=ryan_chen@aspeedtech.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=f/70JWer; dkim-atps=neutral
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com
- [IPv6:2a00:1450:4864:20::131])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
+ header.a=rsa-sha256 header.s=selector1 header.b=mKIABpaQ; 
+ dkim-atps=neutral
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1310105.outbound.protection.outlook.com [40.107.131.105])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FpTwF3SNbz2yXW
- for <openbmc@lists.ozlabs.org>; Mon, 24 May 2021 17:52:58 +1000 (AEST)
-Received: by mail-lf1-x131.google.com with SMTP id r5so39356842lfr.5
- for <openbmc@lists.ozlabs.org>; Mon, 24 May 2021 00:52:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=XmPxC0ejSqfozVpfLHERWwn46x4Tl+JebkLOqiw2Zgs=;
- b=f/70JWeroFiU72sjSWMCq4HX1I2WDA9BV4vGxlQaid8I9iCtaOpGWzndR+Jtb2RW5D
- U0ukJvF+zdkUdpdrMyfP/vKLXmAv7ve3y2HZYVGgGSBp6rQkEWy5D8QjUtXDRmJnKr0K
- iwZQlBXAmyz2hxzu665PCt/T7M9LPJWOAcUHKus00luwGPSKwwBdBFbtvZv6pPs1jUrq
- 7F8hVkKd+bmTXrzvFWUVRt5k0FetUcscezxeAXf+QUHDoe3SlLHfHIEr2fnSMWCHixvy
- VJMyI5B03dSPAl3n1h3emvn89g81Qx8YqoTAgKZGvqiXmqVzvwT70rfK0t5Ocslzw7+b
- B9Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=XmPxC0ejSqfozVpfLHERWwn46x4Tl+JebkLOqiw2Zgs=;
- b=eVh9XYzSy5FfTieYcg4L7QkzEXtrala+0rh3MImVfZCUvqe+X6O0V0drit3NHaOSd0
- GtVW2TPwLqQyZE+SG+P3XvO+29IpH/EmoSkHgY8KMVDG3DT1hxYITuT4rqMVTaL9Pnzv
- 8KqFn05pzzy3w21sgXbKzkXIxQgwtySLXHp+efM6Bzz6uRSSe9VZwwxFIQdYobsJE+Hk
- R0Qx0NkyOqKEjxpjouVvMCfL3JNdqL98NA182qL+IOdNOGHQv3mPthLEZlS4//Yh68fS
- POOrc1QgziIpD+j0lEvolP7VrxYEdg/tVc7onld+OdAjacXJlCjUj7CJCXENhSeW1Lyi
- BsoQ==
-X-Gm-Message-State: AOAM530uE9yeyyZlYgcKWyhvMspdqkhtQtANk0qdGoQ4bbnBKxSvJtv5
- T+Jd9ua4kf6Y/yql8X3v30E=
-X-Google-Smtp-Source: ABdhPJzzR06BwQ2dGnJHX+5U0bJTjxpUx6dAY1B4w4U+LF+qHVchzSPZ5ttWKN4lOlXQ5J+zPDO0ag==
-X-Received: by 2002:ac2:538b:: with SMTP id g11mr9477468lfh.172.1621842771922; 
- Mon, 24 May 2021 00:52:51 -0700 (PDT)
-Received: from gmail.com (109-252-116-140.nat.spd-mgts.ru. [109.252.116.140])
- by smtp.gmail.com with ESMTPSA id
- p13sm1640033ljg.8.2021.05.24.00.52.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 May 2021 00:52:50 -0700 (PDT)
-Date: Mon, 24 May 2021 10:52:48 +0300
-From: Artem Senichev <artemsen@gmail.com>
-To: Nan Zhou <nanzhou@google.com>
-Subject: Re: Link phosphor-hostlogger and bmcweb
-Message-ID: <20210524075248.m7mimyya42xas3nx@gmail.com>
-References: <CAOLfGj5orNO2U3zdO6LuBGY05mXFewofqRiOUXyA=ks74LzMhg@mail.gmail.com>
- <20210521061023.4zy5s7fzycz5lppx@gmail.com>
- <CAH2-KxBcfqB7ArTEg977ai1fKK_Ppwt+odwqtJgV+3GZ8szs2Q@mail.gmail.com>
- <CAOLfGj4n-RHYAq5oSRkrC-VpCFUFT2Nr3G4UeqQ8DuMbNurrNw@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FpXt8610mz2yYQ;
+ Mon, 24 May 2021 20:06:22 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=KulFYzE+YpKeODk2HXzzBItSCA/jY02TAkNKtRCel4OZqW4zllfubuHIuStkiv8YwabWFTK/yd4Wf5JxijpOK35Fc3wi9TuR9RKVSuNb0rgZcXtzhCp+s6UxxvsoH29AL/Uc9aEXi22VI7j95EcmfxDgxRSmpXooigrJR5JE8zuHo/dFQo1q/S3Y4ILxfjk5XvF7esKRnmCd/XQYTa83iifi9PsrOhPsKJZFoaDS6m67VqglNXglQJiIBn42zbWUt31H4L+kBHgVFoKWJ3iBIq6FqbRZ5h7YPX1gkRXPwrJ+6BHCyexKccHNJ4S4XiHln/RGC72pdaG4nqmIqwnDQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bgKXfjbtHrW06do2INpix45cXQhlTD+/5X9lSQ/LKOI=;
+ b=Qu5g9Y8L1PIfngCplOBwC+RiFC07yPO4gftzqMeSA8G3bV2c3+rZCNgDoufAgN46VsDEYhVike9BUtQgcmF608oY1k4Pur+7buHQ9YihDdzCQXtPuz07dyyuIn29Y6fMT4qdApTBCl+tBAyP0EBGKkvktpSuR12mMnsDiPx2Nnk74bOPYbaPM9el0x7v3OFER9VraD2bG6zpVwTI2vKVEHgQW3uFmd0ii0/L65gREQtmkAzLdsJAdTURyDgXCam8sEGlDwxwMMFqDsA7kec5Jbw22A/rryRNESgQnSIMURyj694ketb7XEvIjcjbhQVfBlufJXmpe/XJRH3MkXR2Zw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bgKXfjbtHrW06do2INpix45cXQhlTD+/5X9lSQ/LKOI=;
+ b=mKIABpaQJ9fha0ZxZ8kWPcrrOFHCg5+8W/kaIa4BNXL/d1RRkKEIE6OLELHQuqyDWxp60DORcCaaj+/S4QtIhXItQXaoq2fl1X6RA70HOJRxYqG80bZw/X3p/uHnRE/72ggapP0eZLmzA0MLfryYykEaRa+R3C+jPzoY7JKcrML0Zr/qnx4FtWQh2p1oLNyuMAx1Rrzh/FJTOXro/nsU2fH/haxysGdsAllSNi/yN5gq5Uz/fVoyZLUUJlsZyVtW5LN2rzSrSFSnA6n1Pg6ndG/4lvyxMVPebulWS/0jxp9uOm6OQ+8tlIGM1bBjhWV97p4h68QzAS07kpNh/FP8DA==
+Received: from HK0PR06MB3380.apcprd06.prod.outlook.com (2603:1096:203:82::18)
+ by HK0PR06MB2578.apcprd06.prod.outlook.com (2603:1096:203:63::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4150.26; Mon, 24 May
+ 2021 10:06:13 +0000
+Received: from HK0PR06MB3380.apcprd06.prod.outlook.com
+ ([fe80::ec25:881b:f113:93dc]) by HK0PR06MB3380.apcprd06.prod.outlook.com
+ ([fe80::ec25:881b:f113:93dc%6]) with mapi id 15.20.4150.027; Mon, 24 May 2021
+ 10:06:12 +0000
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: Quan Nguyen <quan@os.amperecomputing.com>, Corey Minyard
+ <minyard@acm.org>, Rob Herring <robh+dt@kernel.org>, Joel Stanley
+ <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>, Brendan Higgins
+ <brendanhiggins@google.com>, Benjamin Herrenschmidt
+ <benh@kernel.crashing.org>, Wolfram Sang <wsa@kernel.org>, Philipp Zabel
+ <p.zabel@pengutronix.de>, "openipmi-developer@lists.sourceforge.net"
+ <openipmi-developer@lists.sourceforge.net>, "devicetree@vger.kernel.org"
+ <devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
+ <linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>, "linux-i2c@vger.kernel.org"
+ <linux-i2c@vger.kernel.org>
+Subject: RE: [PATCH v3 5/7] i2c: aspeed: Add aspeed_set_slave_busy()
+Thread-Topic: [PATCH v3 5/7] i2c: aspeed: Add aspeed_set_slave_busy()
+Thread-Index: AQHXTIQCISnhT+/XbEiDVKSu2FVXwqryb5QA
+Date: Mon, 24 May 2021 10:06:12 +0000
+Message-ID: <HK0PR06MB3380FD2B7649CFB48BEA2D4FF2269@HK0PR06MB3380.apcprd06.prod.outlook.com>
+References: <20210519074934.20712-1-quan@os.amperecomputing.com>
+ <20210519074934.20712-6-quan@os.amperecomputing.com>
+In-Reply-To: <20210519074934.20712-6-quan@os.amperecomputing.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: os.amperecomputing.com; dkim=none (message not signed)
+ header.d=none; os.amperecomputing.com;
+ dmarc=none action=none header.from=aspeedtech.com;
+x-originating-ip: [211.20.114.70]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 15891d5d-64cb-4472-997b-08d91e9b8f7a
+x-ms-traffictypediagnostic: HK0PR06MB2578:
+x-microsoft-antispam-prvs: <HK0PR06MB2578D54E9D2E885BBACD3DA4F2269@HK0PR06MB2578.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:4125;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: xom3LaH8GLXnegelyBcJAh4PtCc2f+BAWkARviG2EF+DCzep+Qpo/TCAy9sxPAdPz4NtvVh3aFCj0S9pYi7QEGxXWD+CdEKPS1RwK2NchFrP8kfqugWrfy02RYxQNAuZKotyUJf84Hg/amK5SFeDy/FwRGKA5V4MlDQSQUPGDCqj1UdTs0ZIPOqQJYhXk521rVD4GBNnLJ248N3BCMOJRgZdzh+5CpDxcGIdiyesOUfxrNJ7CI2wXQrbTYCq1SUSny4nYM6S3nWVlHSoKedfwt7ZnOycsnC3SAIOaDp8OP9Qq5ju6P7jiPYDbAEaeECisNHpe2RthBKDS0SQrHL3Q+UlZEU4QESx7q8yWJJuUiMG234fCNunnS4lAEr/OJO2k6zc3KCr1iqa80PRrbzBMUqyejxMsm2xgv6aWQ9DJoszSO8v6t+/gr8MfwXl5RgZwVDVkl7Ij/N+7zblgTV/zdOhvIog3wNXNc4jRXbWOcZlgb95ewj80x3w91bSlu9Y4ZsCXH2RZXydKBzYSM7FLe7zBFPX9fHj1Osz2ej608fVU2cGBtRUaAQk8t0oBZxvRJSwYAfeXu+w72qIYiGPPFl12YTITLJLHotjn81rnmHQ3ujW+W8GCqAAzNFCJyFRRGnk50WFoJIjWxDjkcUbyA==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR06MB3380.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(346002)(136003)(376002)(396003)(366004)(39840400004)(64756008)(66556008)(66476007)(5660300002)(66446008)(122000001)(66946007)(38100700002)(52536014)(83380400001)(6506007)(53546011)(7696005)(8676002)(54906003)(2906002)(110136005)(9686003)(55016002)(86362001)(76116006)(316002)(186003)(7416002)(71200400001)(26005)(55236004)(8936002)(33656002)(921005)(4326008)(478600001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?PPO+fGFyzZV+5lPUa5JDaIo2Ap4ueUslNsfwg6vpaPwvlwL6gLXN55rwXiT8?=
+ =?us-ascii?Q?qtWWL67Y8wtEcaQ8ihs9cFk9oy/2en406bsm4Y3H2E37Wr51U0qac74U8jML?=
+ =?us-ascii?Q?QhQlZXT2DerybVgTyMRHjRV8eTtiwDELkwETBp5ySRyNGgWmnpDJpS4rWcK2?=
+ =?us-ascii?Q?gp1eBt5ujiQ6nPlL1xgTMDSB80hWAX+wa+JrfndZ0e2zYV9o1WSUF/Qy8B7D?=
+ =?us-ascii?Q?Lp1AjKPfQRYLmxvzD6qW6J9BupjBoYNKKV/SrzbJcLf6+xKekLuYYJTaBfEd?=
+ =?us-ascii?Q?mmgC3yq27ZmeZwQXjFgkN+IcAUXV2R3JqAUihwfAw+f245zqvl2Zn+QY2G+P?=
+ =?us-ascii?Q?AXgRTUP762ktrfipdIIAbnI4Fa6bLzbzdx3xvoRlABcd9VzTEg+TENcvyW/4?=
+ =?us-ascii?Q?TvLYm4g/YsDmPynntwNApcz2pnVpNecjYGDC0MNleitdWWCctGRh/WN+iThm?=
+ =?us-ascii?Q?4FplFFncTBo7aO0jwinjyT8B5cCgWoVn1WENdzcZH+ngZuFByfV5d3GXAn5x?=
+ =?us-ascii?Q?ONQX/8Fdl94mPmYlce8P5zoM1PKRUvka54ZbycZYhpznD0X/M87QMXxUY2Dj?=
+ =?us-ascii?Q?oteQ8DwT2fqSjMWBi1ESiyAbMDi6ybHakBwBJPDg5WvtiDXG6O2CRGYuQkx5?=
+ =?us-ascii?Q?J8RuhOGjR7OxoixLC/TBBUwU8NBZ/EtBzXIWJxjQsPqWt3UE+318E2odPS8i?=
+ =?us-ascii?Q?MN4DkCecexhacRn82WGGpK1DNmxQ9eBhLYVYOcjT9LCRFvxuGVzFqmub2KEj?=
+ =?us-ascii?Q?QDoAeYOhjz5kygkLk1CqOLMfIDToi0DdMqWFzLSUZ2co80O8FN0keQmg063T?=
+ =?us-ascii?Q?gQThjicS0RfLauTpMCIZi/lXImcun3CkrmToxpsaIttL9U+OnMg8+3lIkUH9?=
+ =?us-ascii?Q?yCgk0RZc7y4DaicLdCtcM6O3ZYWa3i3IUXrSQUlQd7ADp4quoI/f666xOE9m?=
+ =?us-ascii?Q?MyFo6qEAJRCT66W+Xr/UMLFWFTQepcWVeIfBQIdooi4u1lE+TTarKSpUqDXY?=
+ =?us-ascii?Q?Ejqg29lIPeJ/2l4uieQxFJeRzEabm2FT+spotnVmpnbcisj+BhfYtY1JwC+r?=
+ =?us-ascii?Q?THw300np5XF/NIinqlxOXVn9nEfHmgIz+rzsiJpDeju+ftgEiwa+MuCWIT9y?=
+ =?us-ascii?Q?76AG1obRAvG1Lc1KmjKrI3TqQdM0i0nZiTK2CJwAUUq8uSGck1BLjeIrFqyM?=
+ =?us-ascii?Q?yJiKksOhp5uBeYHM0KA8ZCiqL32DngxhUF0Nx9ZBg847/fkEPtkb5YV6bE1v?=
+ =?us-ascii?Q?HLnGIvWUz/pfLIJ/5nj31ldEQucTs5QXIvjYb/faMyj4yQyPjjKfWNERLRSe?=
+ =?us-ascii?Q?IOVpFNxU7SbP3lDRQUCTbXas?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLfGj4n-RHYAq5oSRkrC-VpCFUFT2Nr3G4UeqQ8DuMbNurrNw@mail.gmail.com>
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB3380.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15891d5d-64cb-4472-997b-08d91e9b8f7a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 May 2021 10:06:12.3787 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: sbBdAaZ51nKhGZs8WzKlOktVxQiWOvGlFqgQDyi+0ESoYkIoSk2Bs5LqTojL3p+p91y6Lowk4YDx5vg+RRrLt6pnUjG2KhmX/H2opbf4/EE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR06MB2578
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,248 +139,81 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Spencer Ku <spencer.ku@quanta.corp-partner.google.com>,
- Litzung Chen <litzung.chen@quanta.corp-partner.google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Alexander Amelkin <a.amelkin@yadro.com>, Ed Tanous <edtanous@google.com>,
- Richard Hanley <rhanley@google.com>, a.senichev@yadro.com,
- a.filippov@yadro.com
+Cc: Open Source Submission <patches@amperecomputing.com>,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ Phong Vo <phong@os.amperecomputing.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I'll try to convey the main idea that we tried to implement in this service.
+> -----Original Message-----
+> From: openbmc
+> <openbmc-bounces+ryan_chen=3Daspeedtech.com@lists.ozlabs.org> On Behalf
+> Of Quan Nguyen
+> Sent: Wednesday, May 19, 2021 3:50 PM
+> To: Corey Minyard <minyard@acm.org>; Rob Herring <robh+dt@kernel.org>;
+> Joel Stanley <joel@jms.id.au>; Andrew Jeffery <andrew@aj.id.au>; Brendan
+> Higgins <brendanhiggins@google.com>; Benjamin Herrenschmidt
+> <benh@kernel.crashing.org>; Wolfram Sang <wsa@kernel.org>; Philipp Zabel
+> <p.zabel@pengutronix.de>; openipmi-developer@lists.sourceforge.net;
+> devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
+> linux-aspeed@lists.ozlabs.org; linux-kernel@vger.kernel.org;
+> linux-i2c@vger.kernel.org
+> Cc: Open Source Submission <patches@amperecomputing.com>; Thang Q .
+> Nguyen <thang@os.amperecomputing.com>; Phong Vo
+> <phong@os.amperecomputing.com>; openbmc@lists.ozlabs.org
+> Subject: [PATCH v3 5/7] i2c: aspeed: Add aspeed_set_slave_busy()
+>=20
+> Slave i2c device on AST2500 received a lot of slave irq while it is busy
+> processing the response. To handle this case, adds and exports
+> aspeed_set_slave_busy() for controller to temporary stop slave irq while =
+slave
+> is handling the response, and re-enable them again when the response is r=
+eady.
+>=20
+> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+> ---
+> v3:
+>   + First introduce in v3 [Quan]
+>=20
+>  drivers/i2c/busses/i2c-aspeed.c | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+>=20
+> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-asp=
+eed.c
+> index b2e9c8f0ddf7..9926d04831a2 100644
+> --- a/drivers/i2c/busses/i2c-aspeed.c
+> +++ b/drivers/i2c/busses/i2c-aspeed.c
+> @@ -944,6 +944,26 @@ static int aspeed_i2c_init(struct aspeed_i2c_bus
+> *bus,
+>  	return 0;
+>  }
+>=20
+> +#if IS_ENABLED(CONFIG_I2C_SLAVE)
+> +void aspeed_set_slave_busy(struct i2c_adapter *adap, bool busy) {
+> +	struct aspeed_i2c_bus *bus =3D i2c_get_adapdata(adap);
+> +	unsigned long current_mask, flags;
+> +
+> +	spin_lock_irqsave(&bus->lock, flags);
+> +
+> +	current_mask =3D readl(bus->base + ASPEED_I2C_INTR_CTRL_REG);
+Hello=20
+	Where the bus->base to be remap?
 
-Hostlogger was originally designed to work with OpenPOWER systems, which
-generate a very detailed log at boot time.
-It is important to save these logs and the host console output just before
-rebooting for further investigation of incidents when hardware errors occur.
-So, we have two log files for each server session (boot log + last OS messages).
-That's why we need a D-bus watcher.
-BMC flash has around 3MiB of free RW space, this force us to use compression
-and file rotation.
+> +	if (busy)
+> +		current_mask &=3D ~(ASPEED_I2CD_INTR_RX_DONE |
+> ASPEED_I2CD_INTR_SLAVE_MATCH);
+> +	else
+> +		current_mask |=3D ASPEED_I2CD_INTR_RX_DONE |
+> ASPEED_I2CD_INTR_SLAVE_MATCH;
+> +	writel(current_mask, bus->base + ASPEED_I2C_INTR_CTRL_REG);
+> +
+> +	spin_unlock_irqrestore(&bus->lock, flags); }
+> +EXPORT_SYMBOL_GPL(aspeed_set_slave_busy);
+> +#endif
+> +
+>  static int aspeed_i2c_reset(struct aspeed_i2c_bus *bus)  {
+>  	struct platform_device *pdev =3D to_platform_device(bus->dev);
+> --
+> 2.28.0
 
-All of these features are unnecessary for "streaming" real-time log recording.
-You don't need DBus watchers, rotation can be done with native Linux utilities,
-you don't even need to split the input stream into lines.
-Just redirect obmc-console.log: `tail -f /var/log/obmc-console.log > my.log`.
-
-I understand your desire to add a new mode to the existing project instead of
-creating a new one. But there is very little in common between these modes.
-Even reading the socket will have to be done separately, since it is buffered
-for line splitting in the current implementation.
-In the end, only bb-recipe and the `main` function will remain in the common. 
-
--- 
-Regards,
-Artem Senichev
-Software Engineer, YADRO.
-
-On Fri, May 21, 2021 at 10:51:45AM -0700, Nan Zhou wrote:
-
-> >
-> > >
-> > > > we propose to remove the ring buffer and write to the log file
-> > > > as soon as some characters are received.
-> > >
-> > > I am not sure it is a good idea.
-> > > The host can generate a lot of logs, but we have very limited free space.
-> > This is a fair concern, but wouldn't the rollover limits make this not
-> > an issue?  They seem like they could be easily configured.
-> 
-> Right. Logrotate will be able to handle the rotation. Maximum size, # log
-> files, and compression can be easily configured.
-> 
-> > In
-> > > addition, such heavy traffic will lead to a quick breakdown of the flash
-> > (most
-> > > available products are guaranteed to withstand around 100,000 P/E cycles
-> > only).
-> > JFFS2 is wear leveled, and there are other BMC stacks that I know of
-> > that implement this without any ill effects to flash longevity, with
-> > that said, if Nan made the "last log on disk" feature configurable,
-> > would that alleviate your concerns?
-> 
-> We also noticed that the obmc-server itself will buffer the log a bit. Will
-> it still be a problem if we don't write a character at once but a block of
-> them?
-> And as Ed said, we can also make this feature configurable. I would imagine
-> the log buffer will remain if the "last log on disk" feature is disabled.
-> 
-> 
-> > >
-> > > > This implicitly removes the needs
-> > > > of the ring buffer, and the persistence triggering (host reboot,
-> > sigterm,
-> > > > etc) in hostlogger. We believe this keeps the same functionality but
-> > saves
-> > > > hundreds of lines of codes in phosphor-hostlogger.
-> > Difference of opinion here, I don't think this removes the need for
-> > the host reboot event;  Having each reboot post to a different log
-> > needs to be maintained, and I have to imagine that there's some sort
-> > of sigterm handler still, although it becomes a lot smaller.
-> 
-> 
-> >
-> > > You are suggesting to delete the buffer, DBus watcher, log rotate. How
-> > are you
-> > > going to keep the same functionality if you remove everything related to
-> > it?
-> > +1.  In the initial thought I didn't think we were removing any
-> > functionality with this.  I had assumed the dbus watcher would remain,
-> > and we would still have the log rotation behavior.  In reading through
-> > Nans proposal I don't think these are getting removed;  Maybe I
-> > misunderstood?
-> 
-> 
-> Yes, if we want to keep different reboot posts to a different log file, we
-> can keep part of the dbus/signal watcher.
-> 
-> On Fri, May 21, 2021 at 10:24 AM Ed Tanous <edtanous@google.com> wrote:
-> 
-> > On Thu, May 20, 2021 at 11:10 PM Artem Senichev <artemsen@gmail.com>
-> > wrote:
-> > >
-> > > On Thu, May 20, 2021 at 04:29:09PM -0700, Nan Zhou wrote:
-> > > > Hi all,
-> > > >
-> > > > In the previous thread (
-> > > > https://lists.ozlabs.org/pipermail/openbmc/2021-March/025234.html), we
-> > > > (engineers from Google and Quanta) discussed our attempt to share host
-> > > > serial logs via Redfish, which includes polling logs via LogService and
-> > > > streaming log bytes via EventService (e.g. SSE). We went with the
-> > event log
-> > > > architecture
-> > > > <
-> > https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md
-> > >
-> > > > and did the implementation.
-> > > >
-> > > > We still want to reuse the phosphor-hostlogger and do some
-> > modification. We
-> > > > believe it is better to try to reuse existing codes if possible and
-> > improve
-> > > > them rather than creating new things that have similar functionalities
-> > (in
-> > > > our case, it is a daemon that could collect logs and persist them).
-> > >
-> > > I agree, reusing code is a right choice, but only when it is really
-> > possible.
-> > > For now it looks like you want to remove most of the Hostlogger features
-> > to
-> > > transform it from buffer-like to stream-like service.
-> >
-> > I'm not quite following this statement.  Which features are getting
-> > removed?  From what I can see, he's suggesting making
-> > phosphor-hostlogger look more like a well-behaved linux logging
-> > daemon, but I don't think any features got omitted (or I'm missing
-> > something critical).
-> >
-> > >
-> > > > We want to do the following modification in phosphor-hostlogger (from
-> > the
-> > > > input and output point of view, just very few things will be changed)
-> > > >
-> > > > 1. One limitation of phosphor-hostlogger is that it will lose data in
-> > the
-> > > > memory (the ring buffer maintained by hostlogger) when BMC gets force
-> > > > restarted;
-> > >
-> > > When BMC goes to reboot it stops all services, at that moment hostlogger
-> > gets
-> > > a signal and flushes all gathered logs to a file.
-> >
-> > Only if the reboot is planned.  If the BMC loses power (which is
-> > "normal" for a bmc) there isn't time to persist to flash before the
-> > power goes down and the logs are most likely lost.
-> >
-> > >
-> > > > we propose to remove the ring buffer and write to the log file
-> > > > as soon as some characters are received.
-> > >
-> > > I am not sure it is a good idea.
-> > > The host can generate a lot of logs, but we have very limited free space.
-> >
-> > This is a fair concern, but wouldn't the rollover limits make this not
-> > an issue?  They seem like they could be easily configured.
-> >
-> > > In
-> > > addition, such heavy traffic will lead to a quick breakdown of the flash
-> > (most
-> > > available products are guaranteed to withstand around 100,000 P/E cycles
-> > only).
-> >
-> > JFFS2 is wear leveled, and there are other BMC stacks that I know of
-> > that implement this without any ill effects to flash longevity, with
-> > that said, if Nan made the "last log on disk" feature configurable,
-> > would that alleviate your concerns?
-> >
-> > >
-> > > > This implicitly removes the needs
-> > > > of the ring buffer, and the persistence triggering (host reboot,
-> > sigterm,
-> > > > etc) in hostlogger. We believe this keeps the same functionality but
-> > saves
-> > > > hundreds of lines of codes in phosphor-hostlogger.
-> >
-> > Difference of opinion here, I don't think this removes the need for
-> > the host reboot event;  Having each reboot post to a different log
-> > needs to be maintained, and I have to imagine that there's some sort
-> > of sigterm handler still, although it becomes a lot smaller.
-> >
-> > >
-> > > You are suggesting to delete the buffer, DBus watcher, log rotate. How
-> > are you
-> > > going to keep the same functionality if you remove everything related to
-> > it?
-> >
-> > +1.  In the initial thought I didn't think we were removing any
-> > functionality with this.  I had assumed the dbus watcher would remain,
-> > and we would still have the log rotation behavior.  In reading through
-> > Nans proposal I don't think these are getting removed;  Maybe I
-> > misunderstood?
-> >
-> > >
-> > > > 2. We propose not to compress the latest log file. This saves us the
-> > > > overhead of doing decompression when BMCWeb just needs to retrieve the
-> > most
-> > > > recent logs. There are still going to be log rotations in the file
-> > level.
-> > > > Files other than the latest log file are still going to be compressed.
-> > We
-> > > > can modify existing codes to achieve this or use the linux logrotate
-> > > > directly.
-> > > >
-> > > > Furthermore, we will add host serial logs into BMCWeb, both LogService
-> > and
-> > > > EventService. In LogService, we will teach BMCWeb how to read the
-> > latest
-> > > > log file that is not compressed and the other compressed old logs, and
-> > how
-> > > > to assemble LogEntries out of raw serial logs. We will discuss
-> > EventService
-> > > > in future threads but the very initial idea is to setup inotify on log
-> > > > files and SSE to stream out new bytes to clients (like what the
-> > existing
-> > > > event logging is doing).
-> > > >
-> > > > As we said above, for phosphor-hostlogger, the input is still the
-> > > > obmc-server unix socket, and the output are still persisted log files.
-> > But
-> > > > the functionality will get improved (less data loss), code gets
-> > simplified
-> > > > (no ring buffer and persistence triggering), and it will become easier
-> > and
-> > > > more performant to get BMCWeb hooked up for log streaming via Redfish.
-> > > >
-> > > > Please let us know what you think. We appreciate any feedback. Thank
-> > you
-> > > > very much!
-> > > >
-> > > > Sincerely,
-> > > > Nan
-> > >
-> > > --
-> > > Regards,
-> > > Artem Senichev
-> > > Software Engineer, YADRO.
-> >
