@@ -2,161 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DFCF38E7E4
-	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 15:42:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E0A138E876
+	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 16:12:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FpdgP07rHz306T
-	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 23:42:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FpfKm47l7z2ym4
+	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 00:12:12 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=f+/co2W6;
-	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=f+/co2W6;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=pbgNUmfp;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
- (client-ip=40.107.131.95; helo=apc01-sg2-obe.outbound.protection.outlook.com;
- envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::12a;
+ helo=mail-lf1-x12a.google.com; envelope-from=ulf.hansson@linaro.org;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=f+/co2W6; 
- dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=f+/co2W6; 
- dkim-atps=neutral
-Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-eopbgr1310095.outbound.protection.outlook.com [40.107.131.95])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
+ header.s=google header.b=pbgNUmfp; dkim-atps=neutral
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com
+ [IPv6:2a00:1450:4864:20::12a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fpdg34tmqz2yWy
- for <openbmc@lists.ozlabs.org>; Mon, 24 May 2021 23:42:04 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rs1T11EFZXFvJ56VVDHWHTHEG4MUGZGu3v72/D+OqiA=;
- b=f+/co2W6BpkjBPZaKia+aCmJQEKMndif59Dh7FL+hqRhMhx/rnv90Ysjtz2Yn9BHmPl4fyLon/qM5yDStnMVtdNNknmF+UD9oGJyVKF3QhjED/h3yXlU1YJubrDTAv1HKx4PBT9lCufiHyFpwazJBkh6FrtB3T5Rfh3WaVougPa/LZwB6/dkzL2ZbU3a14gaj/6kDnIYOrzCYyZRjyhWcZO/bm0sf0gKa8acvyGf5Cqf3l/H+3oMG1QnnBYomp2I31gbo65ZUVq+3VjZONkHaoIILLV9Reg9ta1qkD1H4MCcf3CQQY5pj01VoitO1satDaJjt2DOpNDbls6LUplG1g==
-Received: from PS1PR03CA0021.apcprd03.prod.outlook.com (2603:1096:803:3d::33)
- by TY2PR04MB3245.apcprd04.prod.outlook.com (2603:1096:404:94::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4150.27; Mon, 24 May
- 2021 13:41:56 +0000
-Received: from PU1APC01FT061.eop-APC01.prod.protection.outlook.com
- (2603:1096:803:3d:cafe::2b) by PS1PR03CA0021.outlook.office365.com
- (2603:1096:803:3d::33) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4173.12 via Frontend
- Transport; Mon, 24 May 2021 13:41:56 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.51)
- smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
- header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
- header.from=hcl.com;
-Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.245.51 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.245.51; helo=APC01-HK2-obe.outbound.protection.outlook.com;
-Received: from APC01-HK2-obe.outbound.protection.outlook.com (192.8.245.51) by
- PU1APC01FT061.mail.protection.outlook.com (10.152.253.24) with
- Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4129.25 via Frontend Transport; Mon, 24 May 2021 13:41:54 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WbGQg7WUKZXyafg54fTuSI+mcBu+XNfs0WoW80lAr7f5+l0hzRee0u1sItq7roFtNtp4l/uuFQw+oOxac5zgsT4GxYRKO8ZxSS6NqttzFJOYrIxnkJS6BAZEbDfQ12M8Y5zQ4DxQ0WtWSPVY6BLrjP+BJihF4uCmG+LjP/CIeRO34STpBzbk4sNpS9ibrwBK027At2bewdvlGZOFRMad4UGOXfWAa/+A76duDR9rJh9Fp/etwlpD706sfdS1vRI/FClzLV2vCjtmkzhsxjfVWSXG2pk1aMP8avjAIUTmeY3yjRuAC4xCXJe5atOJoDQcRSf2pksJJ7JEGRR0qYS0xQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rs1T11EFZXFvJ56VVDHWHTHEG4MUGZGu3v72/D+OqiA=;
- b=W6zTsNQaaaHfjcCzLFRhKlKBWBMsiPOQuai6LyquOnqws9lUulSnImV5zrX6aE4pmfV1RlcpLdaHXtTvgIbXRsVHBHU2SsUi9KYbLfOKZ0H6Yh6V6yGedesbXzzOZyGWnCpAGMvicLaLsE/Vi6Y/MFsMNLX3H8wLmC/YhRTUDEu8NL/Fjje0vRXVYlkoUV/WBxyUjoe1T8oXzGxsh7cFfZ2XEL+f9qqvJTqJidzAMFnxAwD5UjZPonZ+VYlHa4qU7+fnRp5RaRGCewnk9Edc9j9qCi4ae+a85Ah2j7HsvaNjGBSko1ahUP3h7/EQdvhcY13BLcJC88rD1+hbRzfAzA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
- header.d=hcl.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rs1T11EFZXFvJ56VVDHWHTHEG4MUGZGu3v72/D+OqiA=;
- b=f+/co2W6BpkjBPZaKia+aCmJQEKMndif59Dh7FL+hqRhMhx/rnv90Ysjtz2Yn9BHmPl4fyLon/qM5yDStnMVtdNNknmF+UD9oGJyVKF3QhjED/h3yXlU1YJubrDTAv1HKx4PBT9lCufiHyFpwazJBkh6FrtB3T5Rfh3WaVougPa/LZwB6/dkzL2ZbU3a14gaj/6kDnIYOrzCYyZRjyhWcZO/bm0sf0gKa8acvyGf5Cqf3l/H+3oMG1QnnBYomp2I31gbo65ZUVq+3VjZONkHaoIILLV9Reg9ta1qkD1H4MCcf3CQQY5pj01VoitO1satDaJjt2DOpNDbls6LUplG1g==
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
- SG2PR04MB2282.apcprd04.prod.outlook.com (2603:1096:4:4::16) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4150.26; Mon, 24 May 2021 13:41:51 +0000
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::d0a9:a582:66d3:29c3]) by SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::d0a9:a582:66d3:29c3%3]) with mapi id 15.20.4150.027; Mon, 24 May 2021
- 13:41:51 +0000
-From: Jayashree D <jayashree-d@hcl.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: SEL Event logs in Redfish
-Thread-Topic: SEL Event logs in Redfish
-Thread-Index: AddQoVH7WtNx+xahQeqRuW6UxLfaMg==
-Date: Mon, 24 May 2021 13:41:50 +0000
-Message-ID: <SG2PR04MB30939A6EEB04348FF51EAC5AE1269@SG2PR04MB3093.apcprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiNjZkNjExNTktOWIyMy00NTBiLThkYzUtNTQyZDU4ODYxNjkyIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX0MwbmYxZGVudDFhbCJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6ImdoaFVqWXJUenpkXC9cL00xRlJTdkptQ2JpNmJVd3grb3Z1bFhEXC94WjFRSWhUMUYxZjRLTnVoaXhwYnNHSzU3bk8ifQ==
-x-hclclassification: HCL_Cla5s_C0nf1dent1al
-Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
- signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=hcl.com;
-x-originating-ip: [106.208.137.88]
-x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: afbeeff2-d0ca-4d75-e713-08d91eb9b1de
-x-ms-traffictypediagnostic: SG2PR04MB2282:|TY2PR04MB3245:
-X-Microsoft-Antispam-PRVS: <TY2PR04MB32450CC4E92D59DCCA1BBA8BE1269@TY2PR04MB3245.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;OLM:6790;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: MZULeSYAT+EJ3Y5lBKDngZI1RxifnB5DwbAV2ApHtY6ADA+VS4UDPibT0uFeLmxoqpwJhrvGSBIi/ZGdnSjZDSCf/LjTlcEuqWh/4CRw38hova6w8bBvPnWCMLVj/LTBRqzQK5FDpohB0/6HxAQ3RytrOJLzDXcmj2OAqtVJLOULw9PTFdeCDfes6m0hNR/bgn8n5iWioEv3tS3ym6uJtIvYYe4xsRBn/ttqecaTRTfDZJtdOqNshevQl7oOt8p5zT48kDLtpFriu77YOiwi8gMFwwYoKm3FOQXgGdOoadpOXYRv/GliwwfwPEmitu2cH154j0rMVoRDCuFz+dv8X/2wM3Lbh7FqBAuzPsuG5qXkjycckYuLNdvxECrprdA2citFVVbCK58e/waj1hHIhVynvSJXx1YzBjss63o8ZeAPok2dfPfVizumr5K8GjNDFltXE6efyEREd/PVuUuMYlPkwd1pn4j3AyYLzdnsiSBQqyINsIACdphiKsUw314l2oOU0tNCvIfwTQXiRxI+C3yYiykmBqo+D3fHSkqy8/u2FJR5moPrhN7t/ZtT2vhdssTf6Y8iEo9+Q3qVyF8hxFY5c2gJw/yadBXrEdLKRt4=
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
- PTR:; CAT:NONE;
- SFS:(4636009)(396003)(346002)(366004)(376002)(39860400002)(136003)(186003)(6916009)(5660300002)(38100700002)(52536014)(6506007)(122000001)(83380400001)(7696005)(66476007)(66556008)(66446008)(64756008)(33656002)(71200400001)(2906002)(86362001)(55016002)(9686003)(8936002)(66946007)(76116006)(26005)(8676002)(316002)(478600001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?qxZPxJGAldDQJuoaV+Ff9ZYbGNT9a/z+FPz3vNgIDNWsU2woORl4A063Twlo?=
- =?us-ascii?Q?BG/1VH0y/DyL6bvktUwJ0nHum9QzWhlvy0DWcFBMEz//dVtuZtwny6FRj9xH?=
- =?us-ascii?Q?hpNbojIERr74Msko2GP8FWjdxazbxenOgb2Dyol3k4Pt67GGbANoa1K5b239?=
- =?us-ascii?Q?nBJ44vd3XsOubSqi12lE1F7x8AeNLbs1Tpeo+XhaGUCF3lCXrZn5WP/BYZPY?=
- =?us-ascii?Q?rb9VKIR8PYczoatGdeQk+4XMKhLFiMj+Aphkn4qodG1ZIq17KnFaFBgUkG6P?=
- =?us-ascii?Q?kJcgE+KkblN7brMfGLytJtlRxjTx3aG3brkI3qTPVnV0xcGeggq0hYbNqeyB?=
- =?us-ascii?Q?roZFmrCurdXHQ+FmkSsH8EzBWWaNcXrw+jQSOyIxkpuWQz1EYbCP4KLuU5ME?=
- =?us-ascii?Q?fju3dXlt6sxNJkWO43eXx26ZbS4EPmQRhivPQ8Hj4IkNKt1vJQgZXDzwC1m4?=
- =?us-ascii?Q?K2rt58gCmDDq0Ry4wTL+y+gK8ApXhdzDI3EqMoHRZmZlA9R/CSdPLMAPItoL?=
- =?us-ascii?Q?VoU85yCpMlbm7IqCA0paX+uSS0N1IWOua60q7OLFiTh1nzC+OjXvcG4gtyV4?=
- =?us-ascii?Q?6B2MkkXDxcNJdS2C34A+tSsPoU5n1JGTCDBaPR3jSZgEXzdtYw3itr7jotp/?=
- =?us-ascii?Q?yCJ6PsppQQME2t97l9v5Gskgp6cNUiWrAHLNTdiXFbJAYQFXeYxB/YHiDLDe?=
- =?us-ascii?Q?Js9wHpR6A6WLGySC8MK9oXgCudp0w8Ewi217VoEZjoZAk8mx0v/P4NhQ6NPO?=
- =?us-ascii?Q?3N8IC7t0gglYxEtW28lQBLUgZtx+JMIMQ5ikZl+nORCk5qQG5zUiBNHi6vx/?=
- =?us-ascii?Q?U6ryEygyXeSKdhKzTUdm2RQDlLGlYhpEFy7/jDTfrbmQ0omDSaURBbiTWhYq?=
- =?us-ascii?Q?9eF3S7uugaCJmFsc+vajhtEbImdQmyKfUi9BaLgStGp5d485KsMacgbX2wVV?=
- =?us-ascii?Q?T5nfQH+Dx+KAboCtVV1slo/5HkcAPIsuq6tf+JsdJl1UakjjkOGwFnhzNVVU?=
- =?us-ascii?Q?PkQT2REAhddyg+rUqbJGKBd1PrDDfZpCKutl5afHRzsHkT3EXp8KpKvUGBhk?=
- =?us-ascii?Q?0nWGf3tBTGiS6qF2srWLY/VYQIToe0FfUGa8Krqu7b/0nA2+XesCR76WFSRz?=
- =?us-ascii?Q?tdeiOrF7NQpFgLpl0ceFhbwOL7oh+uYiP1Unjkkz43SxssFrQRDucfSlFTZI?=
- =?us-ascii?Q?29AXWo1cGwZ3TkAS8lp8PfI5SRGTu+jLReOCKZ3Y7gvdFzNNGoiATPnv6N+z?=
- =?us-ascii?Q?ePO+9VT2N0lgUqY63nksJMGH2V4Zu62qVY8ZPMxjlodmbFlaix3eZ3FK9sPe?=
- =?us-ascii?Q?WBk=3D?=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_SG2PR04MB30939A6EEB04348FF51EAC5AE1269SG2PR04MB3093apcp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FpfKS6xpdz2yjJ
+ for <openbmc@lists.ozlabs.org>; Tue, 25 May 2021 00:11:54 +1000 (AEST)
+Received: by mail-lf1-x12a.google.com with SMTP id r5so40848725lfr.5
+ for <openbmc@lists.ozlabs.org>; Mon, 24 May 2021 07:11:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=/yZGsZDGj6VwJI2huNhq3QoEWnA9XjvVe/EfZq4y7IU=;
+ b=pbgNUmfpmE+TUnwYGWa4+Cr8UT5p+RNDrrQf6fokKwwro+TbWKERs2VaUCqCAqsBxA
+ I5TWFMPioWQdKlL+6MfKFR/wp6EmqQGuoA1C+6bhCqfstK6RzS/ZhkqYuPyoxo8WbNBc
+ XlsOS3fFXH+dAkql4342osYDPx8Ey7GqFptWyAYbp/ASsmyS6WraUNbATVAUcgzJWo/K
+ T6rVcFOxsVeIqWjoSbjOdE7Eb1irD5xl1pBziojPDGreqr1x00ExHeA284yUpteD6x6y
+ euIdJh+5pr5YNBBWZJPQM0Fvc9Dg+KbpX6mRFnYuB28NPTOIu37uncKP0J3Z/9GJZ8gM
+ 63ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=/yZGsZDGj6VwJI2huNhq3QoEWnA9XjvVe/EfZq4y7IU=;
+ b=PSJh0+Iu1Sbg79+dQkqrHxqRicEHKQfvfaKOcb9kuQYmf233NvTFDyyfvJlnGciCof
+ IPOyx9oHA/oFIR0GvGK/eKS1sFJrc/jTwztRZ2L53PFsrRbw+VnZVYcuF6JI3KzHz7/S
+ DOKHF3WzGeExInQ0o9iQqjME4CO0s6aHaRo6+IXXK46fhBAakYplaYc65sdwRQoC2yU9
+ iukX28/vzoFsUU81CmDRwBh6z4fIGc0XCe5//TYf3REeqlpVetK16S9QC1y49HGacbqR
+ g2chBt0lfEMpd9j2x6gKwpYKNcPTjJeeqdy3ejjtkLBPbdus2wZG6r4BRUCT/ONjCUEB
+ OVsw==
+X-Gm-Message-State: AOAM532JZC2DX2P2yxiqGW4pR2SI6x8rjY83OFjklJbQjgqAbqldLlue
+ foHxYZIxPf+8MsAllBWuEPd2jqkA/14NAQ2Oiq4TTQ==
+X-Google-Smtp-Source: ABdhPJw3DDszILd4fOwSk02DmS3LBF/6L9iWayO0ZEI9oK+oW8u6lCsJSES4QzzosVigXKy0dhQfIFXD4tnEHBmlMEw=
+X-Received: by 2002:a05:6512:49b:: with SMTP id
+ v27mr11106312lfq.29.1621865507531; 
+ Mon, 24 May 2021 07:11:47 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB2282
-X-DLP: MSGProcess
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: PU1APC01FT061.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 098ac093-3f76-4077-58da-08d91eb9af68
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: GGgUyVbl7Gy4ygOD7mhabx9MW5jMlaUnKyyLWNHm7K0aP2PEZi4uei1Qq0sMzXVOxXClxXNiCoZ4Ra4V1aSAgsY/tvroZwrfo/d4Gtb/F6rIqnrQ1ewcfXYtnQjGXfVlSxyroqpniQYpIdKSyp55OUtr7iIJAWzeGgPsZQUNqzFiygin2BrbgllkVbZfNrYzW1ymTPX5Z7ph/QLImXJziHn5uB7BPmtTHQAFvXiUsYumMSdgdjpCga1HPGncg5VgvaYauFyxuXB0dt3FURV+rGuDiJ2Cj/rwUguy2HtOzNjDqb8Hq0y2NEUJoahctbFYwtrsepNxpP4MKwR93EVzf89rc9hZsaPnXHn/qk/YrKH7tKyGeSSzwVLr+jDlA0zhNG3uRKJ4pULipDI9qVwg3GJ69G3UDMeCIogBhM5VW4ds8pkgjgmSpHNgV0dfLmTsz/NMVMHB8+f3k+OBOxVVNx5SMhYn07lV7TYJK2SkUbAVg/HybsMpT+NMbJx4a0GS6BupcQyX5sECBQR38ypC3algev/Ujk4cz7BEw1XgOXmPX/Ly2m25X4sxPDUhDctbcX1VwO3fbrFs/z0EC2YfVOglxVitDDbLARTSnvurgGmGlijGAPfYdcZ3R6oOLwIEbetEB1UhqBYj4DQArj2I5JSE7Jg1dV3YCEReyiUvYUiHK8N8Nto47NVtQUhbs6UUUMmBg5cOahH011Vtrv6jkt9eXv9KPRbfMTAwQ0vhVn4=
-X-Forefront-Antispam-Report: CIP:192.8.245.51; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-HK2-obe.outbound.protection.outlook.com;
- PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(39860400002)(136003)(396003)(376002)(346002)(36840700001)(46966006)(33656002)(478600001)(36906005)(82740400003)(55016002)(316002)(47076005)(26005)(8676002)(9686003)(8936002)(81166007)(6506007)(34020700004)(36860700001)(336012)(82310400003)(52536014)(2906002)(7696005)(6916009)(83380400001)(356005)(70206006)(5660300002)(70586007)(186003)(86362001)(36900700001);
- DIR:OUT; SFP:1102; 
-X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 May 2021 13:41:54.4957 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: afbeeff2-d0ca-4d75-e713-08d91eb9b1de
-X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.51];
- Helo=[APC01-HK2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT061.eop-APC01.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR04MB3245
+References: <20210524073308.9328-1-steven_lee@aspeedtech.com>
+ <20210524073308.9328-5-steven_lee@aspeedtech.com>
+In-Reply-To: <20210524073308.9328-5-steven_lee@aspeedtech.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Mon, 24 May 2021 16:11:08 +0200
+Message-ID: <CAPDyKFqd+ZdPVuFKf-C7ztQp_aH9HOXByq6qwykkdU9Aku3pAA@mail.gmail.com>
+Subject: Re: [PATCH v5 4/4] mmc: sdhci-of-aspeed: Configure the SDHCIs as
+ specified by the devicetree.
+To: Steven Lee <steven_lee@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -168,139 +76,121 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, ryan_chen@aspeedtech.com,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
+ linux-mmc <linux-mmc@vger.kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
+ chin-ting_kuo@aspeedtech.com, open list <linux-kernel@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, Hongweiz@ami.com,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_SG2PR04MB30939A6EEB04348FF51EAC5AE1269SG2PR04MB3093apcp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Classification: Confidential
-Hi Team,
-
-I need some clarification on SEL Logs.
-In SEL Event logs, when the error is injected manually , I can able to see =
-the error logs in "ipmitool sel list" command.
-Whether it will also reflect in Redfish API ?
-
-Could you please help me in this.
-
-Thanks,
-Jayashree
-
-::DISCLAIMER::
-________________________________
-The contents of this e-mail and any attachment(s) are confidential and inte=
-nded for the named recipient(s) only. E-mail transmission is not guaranteed=
- to be secure or error-free as information could be intercepted, corrupted,=
- lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
-smission. The e mail and its contents (with or without referred errors) sha=
-ll therefore not attach any liability on the originator or HCL or its affil=
-iates. Views or opinions, if any, presented in this email are solely those =
-of the author and may not necessarily reflect the views or opinions of HCL =
-or its affiliates. Any form of reproduction, dissemination, copying, disclo=
-sure, modification, distribution and / or publication of this message witho=
-ut the prior written consent of authorized representative of HCL is strictl=
-y prohibited. If you have received this email in error please delete it and=
- notify the sender immediately. Before opening any email and/or attachments=
-, please check them for viruses and other defects.
-________________________________
-
---_000_SG2PR04MB30939A6EEB04348FF51EAC5AE1269SG2PR04MB3093apcp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On Mon, 24 May 2021 at 09:33, Steven Lee <steven_lee@aspeedtech.com> wrote:
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
-pan style=3D"color:#B45F04">Confidential</span></b><span style=3D"font-size=
-:12.0pt"><o:p></o:p></span></p>
-<p class=3D"MsoNormal">Hi Team,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I need some clarification on SEL Logs.<o:p></o:p></p=
+> The hardware provides capability configuration registers for each SDHCI
+> in the global configuration space for the SD controller. Writes to the
+> global capability registers are mirrored to the capability registers in
+> the associated SDHCI. Configuration of the capabilities must be written
+> through the mirror registers prior to initialisation of the SDHCI.
 >
-<p class=3D"MsoNormal">In SEL Event logs, when the error is injected manual=
-ly , I can able to see the error logs in &#8220;ipmitool sel list&#8221; co=
-mmand.<o:p></o:p></p>
-<p class=3D"MsoNormal">Whether it will also reflect in Redfish API ?<o:p></=
-o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Could you please help me in this.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
-<p class=3D"MsoNormal">Jayashree<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
-<hr>
-The contents of this e-mail and any attachment(s) are confidential and inte=
-nded for the named recipient(s) only. E-mail transmission is not guaranteed=
- to be secure or error-free as information could be intercepted, corrupted,=
- lost, destroyed, arrive late or
- incomplete, or may contain viruses in transmission. The e mail and its con=
-tents (with or without referred errors) shall therefore not attach any liab=
-ility on the originator or HCL or its affiliates. Views or opinions, if any=
-, presented in this email are solely
- those of the author and may not necessarily reflect the views or opinions =
-of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
- disclosure, modification, distribution and / or publication of this messag=
-e without the prior written consent
- of authorized representative of HCL is strictly prohibited. If you have re=
-ceived this email in error please delete it and notify the sender immediate=
-ly. Before opening any email and/or attachments, please check them for viru=
-ses and other defects.<br>
-<hr>
-</font>
-</body>
-</html>
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
 
---_000_SG2PR04MB30939A6EEB04348FF51EAC5AE1269SG2PR04MB3093apcp_--
+Applied for next, thanks!
+
+Kind regards
+Uffe
+
+
+> ---
+>  drivers/mmc/host/sdhci-of-aspeed.c | 48 ++++++++++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+>
+> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
+> index d001c51074a0..65b5685f6c15 100644
+> --- a/drivers/mmc/host/sdhci-of-aspeed.c
+> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
+> @@ -31,6 +31,11 @@
+>  #define   ASPEED_SDC_S0_PHASE_OUT_EN   GENMASK(1, 0)
+>  #define   ASPEED_SDC_PHASE_MAX         31
+>
+> +/* SDIO{10,20} */
+> +#define ASPEED_SDC_CAP1_1_8V           (0 * 32 + 26)
+> +/* SDIO{14,24} */
+> +#define ASPEED_SDC_CAP2_SDR104         (1 * 32 + 1)
+> +
+>  struct aspeed_sdc {
+>         struct clk *clk;
+>         struct resource *res;
+> @@ -72,6 +77,37 @@ struct aspeed_sdhci {
+>         const struct aspeed_sdhci_phase_desc *phase_desc;
+>  };
+>
+> +/*
+> + * The function sets the mirror register for updating
+> + * capbilities of the current slot.
+> + *
+> + *   slot | capability  | caps_reg | mirror_reg
+> + *   -----|-------------|----------|------------
+> + *     0  | CAP1_1_8V   | SDIO140  |   SDIO10
+> + *     0  | CAP2_SDR104 | SDIO144  |   SDIO14
+> + *     1  | CAP1_1_8V   | SDIO240  |   SDIO20
+> + *     1  | CAP2_SDR104 | SDIO244  |   SDIO24
+> + */
+> +static void aspeed_sdc_set_slot_capability(struct sdhci_host *host, struct aspeed_sdc *sdc,
+> +                                          int capability, bool enable, u8 slot)
+> +{
+> +       u32 mirror_reg_offset;
+> +       u32 cap_val;
+> +       u8 cap_reg;
+> +
+> +       if (slot > 1)
+> +               return;
+> +
+> +       cap_reg = capability / 32;
+> +       cap_val = sdhci_readl(host, 0x40 + (cap_reg * 4));
+> +       if (enable)
+> +               cap_val |= BIT(capability % 32);
+> +       else
+> +               cap_val &= ~BIT(capability % 32);
+> +       mirror_reg_offset = ((slot + 1) * 0x10) + (cap_reg * 4);
+> +       writel(cap_val, sdc->regs + mirror_reg_offset);
+> +}
+> +
+>  static void aspeed_sdc_configure_8bit_mode(struct aspeed_sdc *sdc,
+>                                            struct aspeed_sdhci *sdhci,
+>                                            bool bus8)
+> @@ -328,6 +364,7 @@ static inline int aspeed_sdhci_calculate_slot(struct aspeed_sdhci *dev,
+>  static int aspeed_sdhci_probe(struct platform_device *pdev)
+>  {
+>         const struct aspeed_sdhci_pdata *aspeed_pdata;
+> +       struct device_node *np = pdev->dev.of_node;
+>         struct sdhci_pltfm_host *pltfm_host;
+>         struct aspeed_sdhci *dev;
+>         struct sdhci_host *host;
+> @@ -372,6 +409,17 @@ static int aspeed_sdhci_probe(struct platform_device *pdev)
+>
+>         sdhci_get_of_property(pdev);
+>
+> +       if (of_property_read_bool(np, "mmc-hs200-1_8v") ||
+> +           of_property_read_bool(np, "sd-uhs-sdr104")) {
+> +               aspeed_sdc_set_slot_capability(host, dev->parent, ASPEED_SDC_CAP1_1_8V,
+> +                                              true, slot);
+> +       }
+> +
+> +       if (of_property_read_bool(np, "sd-uhs-sdr104")) {
+> +               aspeed_sdc_set_slot_capability(host, dev->parent, ASPEED_SDC_CAP2_SDR104,
+> +                                              true, slot);
+> +       }
+> +
+>         pltfm_host->clk = devm_clk_get(&pdev->dev, NULL);
+>         if (IS_ERR(pltfm_host->clk))
+>                 return PTR_ERR(pltfm_host->clk);
+> --
+> 2.17.1
+>
