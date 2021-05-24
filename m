@@ -2,91 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04F0238DE7A
-	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 02:54:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A66938DEE1
+	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 03:28:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FpJd96vbRz2xgF
-	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 10:54:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FpKN80lnsz304J
+	for <lists+openbmc@lfdr.de>; Mon, 24 May 2021 11:28:08 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=ok68MILG;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=sPFszQIN;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ve4RXk6E;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.224;
- helo=new2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::341;
+ helo=mail-ot1-x341.google.com; envelope-from=guopingjn@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=ok68MILG; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=sPFszQIN; 
- dkim-atps=neutral
-Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
- [66.111.4.224])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ve4RXk6E; dkim-atps=neutral
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com
+ [IPv6:2607:f8b0:4864:20::341])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FpJcr6pypz2xb6;
- Mon, 24 May 2021 10:54:04 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id C31455802BD;
- Sun, 23 May 2021 20:54:02 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 23 May 2021 20:54:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=c1N+jbjenOjR/XYKJ9JrzDDr2ArT8jH
- cPPYVtFN0+8s=; b=ok68MILGrCZHwK/EEaDToidzeAy70JVtB9FjJ/pwDgHMLPY
- ovb+ac2A0hKcALq3BTdinuwCUU4tFEwGrOvVUL4mgilE0fbIeLVIYkvTSg/A3C9A
- isVLljZCWMdha3ynTPS17MuqSVPwWl+xJfQt4IZm5lrj3u6/bDh1GWIUQBVKySVd
- 7ERl6fYx9Hzwm7OyafapAf+HBqlPX9FYAxNvCWVQ9ffjN0rYZxPnzQvHDbFhf3R7
- IkCLkHtnZMQBtAnVcG+H+5GnhaCsHT3HniEb+iFzns1yaffCeyg6si9NuN84TU7r
- 3z366tuQSQtEi+GBbH7tKxItf/Q+Fdx23+XX7rw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=c1N+jb
- jenOjR/XYKJ9JrzDDr2ArT8jHcPPYVtFN0+8s=; b=sPFszQINYn+1MtITcFCPyx
- lNphgTAT0DJen+WqjLY3YH7HctWzuSJZ3zFTeSqLVuWZDYrW/idxoBb2M6LPgQEt
- ki/8+/Rk5S3eboxuGAYSLYMeGt4FwnCgkj+pOAJmlbNiPSPABGZshOSo60atWGdN
- cG0D6RtmqjLAFdmo/kORMxRpta5VgktFkB9TRMbfmX0piFWDr6uIDOQAVJbV4LjE
- DzJ46YD4tCg8RGGDBhp/tGiEQT+XdDLiX7JE1q4DwXdCPcoKSS4zY+wSpDL+idNh
- R1IVg/tHltd7L39TDpOgOOuq+WjNKHaAYxtN9BElPSGpkJQYPt1F36fzw4/0Bt1g
- ==
-X-ME-Sender: <xms:KfmqYFGXktOhUPKNJDzJOYcQ4Tzeks6lN1hunCMH1BbKURc_qdOeeQ>
- <xme:KfmqYKVP_82xbmIxz_bE2LM3yEsYweE7P_onWJwfGBmcrYdGMtiisHCAzK7IyH6hJ
- zaAN34p43ng12aQBA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdejkedgtdelucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepuddttdekueeggedvtddtueekiedutdfguedutdefieeuteefieelteet
- vddthfeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
- eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:KfmqYHJ_v5C8EG4EYW_NTn5UOzrX06fnPFbJZwnae3XD3YlkYQwJYg>
- <xmx:KfmqYLEbBUyIlB3eIXd5Hlj8oTL17cnH9n5uxKzO935D-w7tJcEf8g>
- <xmx:KfmqYLWUfTZj2bVKOVzdVzOrcjFw_MTyYmuY4pT_lvT-CSbWNEFr9g>
- <xmx:KvmqYIW307aCSiZ_4TnEnca3DgiXJQoDUWxBQVo4wWBb1GY4ECIEyg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id A081EA004B1; Sun, 23 May 2021 20:54:01 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-448-gae190416c7-fm-20210505.004-gae190416
-Mime-Version: 1.0
-Message-Id: <79f3c6d1-1f74-46ec-99a0-37faf11517b6@www.fastmail.com>
-In-Reply-To: <20210521171412.GI2921206@minyard.net>
-References: <20210510054213.1610760-1-andrew@aj.id.au>
- <20210510054213.1610760-6-andrew@aj.id.au>
- <20210521171412.GI2921206@minyard.net>
-Date: Mon, 24 May 2021 10:23:36 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Corey Minyard" <minyard@acm.org>
-Subject: =?UTF-8?Q?Re:_[PATCH_v3_05/16]_ipmi:_kcs=5Fbmc:_Turn_the_driver_data-str?=
- =?UTF-8?Q?uctures_inside-out?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FpKMs2zpBz2xgN
+ for <openbmc@lists.ozlabs.org>; Mon, 24 May 2021 11:27:50 +1000 (AEST)
+Received: by mail-ot1-x341.google.com with SMTP id
+ v19-20020a0568301413b0290304f00e3d88so23732999otp.4
+ for <openbmc@lists.ozlabs.org>; Sun, 23 May 2021 18:27:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id;
+ bh=jn5fNOxbZxR9zKEUkoKQcbBQURYKApf+KVh33NftV+I=;
+ b=ve4RXk6Em8ABYS2Kufn2Rvt00gnTKIn/ROycP5GLpol3aEV/QX/EJ4VwCD21dFJukf
+ q8Uys+RpuPofsa543QW6wRovVzFB8BnjTBWYQud7BQODoyy/yWtLvvk9vgreAy+UkK44
+ zArhHGzUVrVXPYUSy50OaQfCVRqKWIsTHg07b+ZBOL1RSp1yjmVJGM54U2EGLtrWzQNF
+ FjG+nNAf8rTQkEEV1jnIAt7WMABU4qd9N11LF10Xhm4QzzY38oECLjeVJUNDVch6a05n
+ R9oVEExCY4y2n0Qcw2aa8dx/J145TFw2g9T15opD2qzEXoUPg6Z1eh9MC509mnkqo/8z
+ k/7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=jn5fNOxbZxR9zKEUkoKQcbBQURYKApf+KVh33NftV+I=;
+ b=UXZbOYp47H7FqnCt4O9UbMfBeDU+1MdztliWDfQbB7+7+JFzV5jX9L2J0Rkb1E1gXK
+ lNWjDr4zGIPku9zbqeEpCLhrx+JzoAgUNcRcArP7X74OmLlPbS3mJEaEuv0oT/3Wdbuk
+ 6M5Y0KR4Lc7vnAjhkSe27zfMiwr9ATF0qA+AcZ1i/3JTT51IUFQ0scORlW8boHEv1iSd
+ k1mqZ5N20TEKe2hDiMqZadfmhkDLlwZeU1PJmakss/Oq45wH9PiD0VjBmz7E2qXDhVbB
+ v3iJc93/SQuqvUUt3xcoSslhYwAHy/bayapjD+8ctmkmhsW+veuEJ9TJjNXvunq0Eh0K
+ xQyg==
+X-Gm-Message-State: AOAM533iEeVxTwm1SVkMN8Q4uQVbWEzybAF8zX5OIB24WiebsN2xqSO3
+ mNwnYsbMcOK0tvjlaxLcEvJZ4eAWfNiNu4B+
+X-Google-Smtp-Source: ABdhPJx5YzkPsDwJawgHd6sKw7ge11tSrVtApZ8QkF25664AaLDd3WLCXi+oq4N4BEm8olf2rOapjQ==
+X-Received: by 2002:a9d:6153:: with SMTP id c19mr16430084otk.341.1621819667114; 
+ Sun, 23 May 2021 18:27:47 -0700 (PDT)
+Received: from localhost.localdomain ([58.56.96.29])
+ by smtp.gmail.com with ESMTPSA id 34sm2795351otf.38.2021.05.23.18.27.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 23 May 2021 18:27:46 -0700 (PDT)
+From: guopingjn@gmail.com
+To: joel@jms.id.au,
+	andrew@aj.id.au,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH 1/1] ARM: dts: aspeed: Add Inspur NF5280M6 BMC machine
+Date: Mon, 24 May 2021 09:27:35 +0800
+Message-Id: <20210524012735.23634-1-guopingjn@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,99 +76,768 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- linux-aspeed@lists.ozlabs.org, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>,
- Rob Herring <robh+dt@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
- openipmi-developer@lists.sourceforge.net, Zev Weiss <zweiss@equinix.com>,
- "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>,
- linux-arm-kernel@lists.infradead.org, Benjamin Fair <benjaminfair@google.com>
+Cc: guoping@inspur.com, liuxiwei@inspur.com, banht@inspur.com,
+ wangxinglong@inspur.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+From: Ping Guo <guoping@inspur.com>
 
+The Inspur NF5280M6 is an x86 platform server with an AST2500-based BMC.
+This dts file provides a basic configuration for its OpenBMC
+development.
 
-On Sat, 22 May 2021, at 02:44, Corey Minyard wrote:
-> On Mon, May 10, 2021 at 03:12:02PM +0930, Andrew Jeffery wrote:
-> > Make the KCS device drivers responsible for allocating their own memory.
-> > 
-> > Until now the private data for the device driver was allocated internal
-> > to the private data for the chardev interface. This coupling required
-> > the slightly awkward API of passing through the struct size for the
-> > driver private data to the chardev constructor, and then retrieving a
-> > pointer to the driver private data from the allocated chardev memory.
-> > 
-> > In addition to being awkward, the arrangement prevents the
-> > implementation of alternative userspace interfaces as the device driver
-> > private data is not independent.
-> > 
-> > Peel a layer off the onion and turn the data-structures inside out by
-> > exploiting container_of() and embedding `struct kcs_device` in the
-> > driver private data.
-> 
-> All in all a very nice cleanup.  A few nits inline.
-> 
-> > 
-> > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> > Reviewed-by: Zev Weiss <zweiss@equinix.com>
-> > ---
-> >  drivers/char/ipmi/kcs_bmc.c           | 19 +++++++--
-> >  drivers/char/ipmi/kcs_bmc.h           | 12 ++----
-> >  drivers/char/ipmi/kcs_bmc_aspeed.c    | 56 +++++++++++++------------
-> >  drivers/char/ipmi/kcs_bmc_cdev_ipmi.c | 60 ++++++++++++++++++---------
-> >  drivers/char/ipmi/kcs_bmc_npcm7xx.c   | 37 ++++++++++-------
-> >  5 files changed, 111 insertions(+), 73 deletions(-)
-> > 
-> > diff --git a/drivers/char/ipmi/kcs_bmc.c b/drivers/char/ipmi/kcs_bmc.c
-> > index ef5c48ffe74a..83da681bf49e 100644
-> > --- a/drivers/char/ipmi/kcs_bmc.c
-> > +++ b/drivers/char/ipmi/kcs_bmc.c
-> > @@ -44,12 +44,23 @@ int kcs_bmc_handle_event(struct kcs_bmc *kcs_bmc)
-> >  }
-> >  EXPORT_SYMBOL(kcs_bmc_handle_event);
-> >  
-> > -struct kcs_bmc *kcs_bmc_ipmi_alloc(struct device *dev, int sizeof_priv, u32 channel);
-> > -struct kcs_bmc *kcs_bmc_alloc(struct device *dev, int sizeof_priv, u32 channel)
-> > +int kcs_bmc_ipmi_add_device(struct kcs_bmc *kcs_bmc);
-> 
-> The above (and it's remove function) should be in an include file.
+Signed-off-by: George Liu <liuxiwei@inspur.com>
+Signed-off-by: Ping Guo <guoping@inspur.com>
+---
+ arch/arm/boot/dts/Makefile                    |   1 +
+ .../boot/dts/aspeed-bmc-inspur-nf5280m6.dts   | 725 ++++++++++++++++++
+ 2 files changed, 726 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
 
-This is a short-term hack while I'm refactoring the code. It goes away 
-in a later patch when we switch to using an ops struct.
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 03b5424bafa8..cc2580f1e99b 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1405,6 +1405,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-ibm-rainier-4u.dtb \
+ 	aspeed-bmc-intel-s2600wf.dtb \
+ 	aspeed-bmc-inspur-fp5280g2.dtb \
++	aspeed-bmc-inspur-nf5280m6.dtb \
+ 	aspeed-bmc-lenovo-hr630.dtb \
+ 	aspeed-bmc-lenovo-hr855xg2.dtb \
+ 	aspeed-bmc-microsoft-olympus.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
+new file mode 100644
+index 000000000000..7ea0e3ae8ffd
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
+@@ -0,0 +1,725 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (c) 2021 Inspur Corporation
++/dts-v1/;
++
++#include "aspeed-g5.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++#include <dt-bindings/i2c/i2c.h>
++#include <dt-bindings/leds/leds-pca955x.h>
++
++/ {
++	model = "NF5280M6 BMC";
++	compatible = "inspur,nf5280m6-bmc", "aspeed,ast2500";
++
++	chosen {
++		stdout-path = &uart5;
++		bootargs = "console=ttyS4,115200 earlyprintk";
++	};
++
++	memory@80000000 {
++		reg = <0x80000000 0x40000000>;
++	};
++
++	reserved-memory {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		ranges;
++
++		vga_memory: framebuffer@9f000000 {
++			no-map;
++			reg = <0x9f000000 0x01000000>; /* 16M */
++		};
++
++		gfx_memory: framebuffer {
++			size = <0x01000000>;
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++
++		video_engine_memory: jpegbuffer {
++			size = <0x02000000>;	/* 32M */
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++
++		flash_memory: region@98000000 {
++			no-map;
++			reg = <0x98000000 0x04000000>; /* 64M */
++		};
++	};
++
++	leds {
++	    compatible = "gpio-leds";
++
++		bmc_alive {
++			label = "bmc_alive";
++			gpios = <&gpio ASPEED_GPIO(B, 0) GPIO_ACTIVE_LOW>;
++			linux,default-trigger = "timer";
++			led-pattern = <1000 1000>;
++		};
++
++		front-fan {
++			label = "front-fan";
++			gpios = <&gpio ASPEED_GPIO(F,2) GPIO_ACTIVE_LOW>;
++		};
++
++	    front-psu {
++			label = "front-psu";
++			gpios = <&gpio ASPEED_GPIO(F,3) GPIO_ACTIVE_LOW>;
++		};
++
++	    front-syshot {
++			label = "front-syshot";
++			gpios = <&gpio ASPEED_GPIO(J, 3) GPIO_ACTIVE_LOW>;
++		};
++
++		front-memory {
++			label = "front-memory";
++			gpios = <&gpio ASPEED_GPIO(S, 7) GPIO_ACTIVE_LOW>;
++		};
++
++		identify {
++			label = "identify";
++			gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_LOW>;
++		};
++	};
++
++	iio-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
++			<&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
++			<&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
++			<&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
++	};
++};
++
++&fmc {
++	status = "okay";
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "bmc";
++		spi-max-frequency = <50000000>;
++#include "openbmc-flash-layout.dtsi"
++	};
++};
++
++&spi1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_spi1_default>;
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "bios";
++		spi-max-frequency = <100000000>;
++	};
++};
++
++&uart1 {
++	status = "okay";
++};
++
++&uart5 {
++	status = "okay";
++};
++
++&mac0 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii1_default>;
++	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
++		<&syscon ASPEED_CLK_MAC1RCLK>;
++	clock-names = "MACCLK", "RCLK";
++	use-ncsi;
++};
++
++&mac1 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
++};
++
++&gpio {
++	power_out {
++		gpios = <ASPEED_GPIO(AA, 7) GPIO_ACTIVE_LOW>;
++		output-low;
++	};
++};
++
++&gpio {
++	status = "okay";
++	/* Enable GPIOE0 and GPIOE2 pass-through by default */
++	pinctrl-names = "pass-through";
++	pinctrl-0 = <&pinctrl_gpie0_default
++			&pinctrl_gpie2_default>;
++	gpio-line-names =
++	/*A0-A7*/	"","MAC2LINK","BMC_RESET_CPLD","","BMC_SCL9","","MAC2MDC_R","",
++	/*B0-B7*/	"BMC_INIT_OK","FM_SKU_ID2","FM_SPD_DDRCPU_LVLSHFT_DIS_R_N",
++				"FM_CPU_MSMI_CATERR_LVT3_BMC_N","","FM_CPU0_PROCHOT_LVT3_N",
++				"FM_CPU_MEM_THERMTRIP_LVT3_N","BIOS_LOAD_DEFAULT_R_N",
++	/*C0-C7*/	"","","","","","","","",
++	/*D0-D7*/	"","BMC_SD2CMD","BMC_SD2DAT0","BMC_SD2DAT1","BMC_SD2DAT2",
++				"BMC_SD2DAT3","BMC_SD2DET","BMC_SD2WPT",
++	/*E0-E7*/	"FM_BOARD_ID0","FM_BOARD_ID1","FM_BOARD_ID2","FM_BOARD_ID3",
++				"FM_BOARD_ID4","FM_BOARD_ID5","","",
++	/*F0-F7*/	"PSU1_PRESENT_N","PSU2_PRESENT_N","FAN_FAULT_LED_N","PSU_FAULT_LED_N",
++				"BIOS_DEBUG_MODE_N","FP_LCD_RESET","FAN_TYPE_SEL",
++				"RST_GLB_RST_WARN_N",
++	/*G0-G7*/	"IRQ_LPTM21L_ALERT_N","IRQ_PLD_ALERT_N","AC_FAIL_N","FP_LCD_PRESENT_BMC",
++				"BMC_JTAG_TCK_MUX_SEL","BMC_BIOS_RESERVED","SYS_NMI_N","BMC_NMI_N",
++	/*H0-H7*/	"JTAG_BMC_TDI","JTAG_BMC_TDO","JTAG_BMC_TCK","JTAG_BMC_TMS","FM_BOARD_ID6",
++				"FM_SKU_ID0","IRQ_SML1_PMBUS_ALERT_N","IRQ_SML0_ALERT_MUX_N",
++	/*I0-I7*/	"FM_CPU_ERR0_LVT3_BMC_N","FM_CPU_ERR1_LVT3_BMC_N","FM_BMC_PCH_SCI_LPC_N",
++				"FM_SYS_THROTTLE_LVC3","SPI2_PCH_CS0_N","","","",
++	/*J0-J7*/	"FM_CPU0_SKTOCC_LVT3_N","FM_CPU1_SKTOCC_LVT3_N","","SYSHOT_FAULT_LED_N",
++				"VGA_HSYNC","VGA_VSYNC","","",
++	/*K0-K7*/	"","","","","","","","",
++	/*L0-L7*/	"","","","","","","SYS_UART_TXD1","SYS_UART_RXD1",
++	/*M0-M7*/	"","","","","","","","",
++	/*N0-N7*/	"","","","","","","","",
++	/*O0-O7*/	"","","","","","","","",
++	/*P0-P7*/	"","","","","","","","",
++	/*Q0-Q7*/	"","","","","","","FM_PCH_BMC_THERMTRIP_N","INTRUDER_N",
++	/*R0-R7*/	"SPI_BMC_BOOT_CS1_R_N","FM_CPU_MEMHOT_LVC3_N",
++				"DBP_CPU_PREQ_N","FM_CPU_ERR2_LVT3_BMC_N",
++				"RISER_NCSI_EN_N","","LOM_NCSI_EN_N","OCP_NCSI_EN_N",
++	/*S0-S7*/	"BMC_XDP_PRDY_N","SIO_POWER_GOOD","BMC_PWR_DEBUG_R_N","BMC_DEBUG_EN_R_N","",
++				"GPIOS5_BMC","","GPIOS7_BMC",
++	/*T0-T7*/	"","","","","","","","",
++	/*U0-U7*/	"","","","","","","","",
++	/*V0-V7*/	"","","","","","","","",
++	/*W0-W7*/	"","","","","","","","",
++	/*X0-X7*/	"","","","","","","","",
++	/*Y0-Y7*/	"","BMC_DET_UID_N","BMC_JTAG_SEL","SIO_ONCONTROL","","","","",
++	/*Z0-Z7*/	"XDP_PRESENT_N","DBP_SYSPWROK","BMC_JTAG_SEL","FM_SMI_ACTIVE_N","",
++				"GPIOZ5","","",
++	/*AA0-AA7*/	"FP_BMC_SYSLED_N","PS_PWROK","RST_PLTRST_BMC_N","HDA_SDO_BMC",
++				"FM_SLPS4_R_N","","POWER_BUTTON","POWER_OUT",
++	/*AB0-AB7*/	"RESET_OUT","RESET_BUTTON","BIOS_REFLASH","POST_COMPLETE","","","","",
++	/*AC0-AC7*/	"","","","","","","","";
++};
++
++&i2c0 {
++	/* FP_LCD */
++	status = "okay";
++};
++
++&i2c1 {
++	status = "okay";
++
++	eeprom@50 {
++		compatible = "atmel,24c256";
++		reg = <0x50>;
++		label = "fru";
++	};
++};
++
++&i2c2 {
++	status = "okay";
++
++	tmp112@48 {
++		compatible = "ti,tmp112";
++		reg = <0x48>;
++		label = "inlet";
++	};
++
++	tmp112@49 {
++		compatible = "ti,tmp112";
++		reg = <0x49>;
++		label = "outlet";
++	};
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		reg = <0x70>;
++	};
++};
++
++&i2c3 {
++	status = "okay";
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		reg = <0x70>;
++	};
++
++	pca9548@71 {
++		compatible = "nxp,pca9548";
++		reg = <0x71>;
++	};
++
++	pca9548@72 {
++		compatible = "nxp,pca9548";
++		reg = <0x72>;
++	};
++};
++
++&i2c4 {
++	/* IPMB */
++	status = "okay";
++};
++
++&i2c5 {
++	status = "okay";
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		reg = <0x70>;
++	};
++};
++
++&i2c6 {
++	status = "okay";
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		reg = <0x70>;
++	};
++};
++
++&i2c7 {
++	status = "okay";
++
++	adm1278@33 {
++		compatible = "adi,adm1293";
++		reg = <0x33>;
++	};
++
++	adm1278@32 {
++		compatible = "adi,adm1293";
++		reg = <0x32>;
++	};
++
++	adm1278@20 {
++		compatible = "adi,adm1293";
++		reg = <0x20>;
++	};
++};
++
++&i2c8 {
++	status = "okay";
++
++	pca0: pca9555@23 {
++		compatible = "nxp,pca9555";
++		reg = <0x23>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
++	pca1: pca9555@22 {
++		compatible = "nxp,pca9555";
++		reg = <0x22>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
++	pca2: pca9555@20 {
++		compatible = "nxp,pca9555";
++		reg = <0x20>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
++	pca3: pca9555@21 {
++		compatible = "nxp,pca9555";
++		reg = <0x21>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++};
++
++&i2c9 {
++	/* cpld */
++	status = "okay";
++};
++
++&i2c10 {
++	status = "okay";
++
++	pca4: pca9555@24 {
++		compatible = "nxp,pca9555";
++		reg = <0x24>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
++	pca5: pca9555@25 {
++		compatible = "nxp,pca9555";
++		reg = <0x25>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++};
++
++&i2c11 {
++	status = "okay";
++
++	power-supply@58 {
++		compatible = "inspur,ipsps1";
++		reg = <0x58>;
++	};
++
++	power-supply@59 {
++		compatible = "inspur,ipsps1";
++		reg = <0x59>;
++	};
++};
++
++&i2c12 {
++	status = "okay";
++};
++
++&i2c13 {
++	status = "okay";
++};
++
++&lpc_ctrl {
++	status = "okay";
++	memory-region = <&flash_memory>;
++	flash = <&spi1>;
++};
++
++&gfx {
++	status = "okay";
++	memory-region = <&gfx_memory>;
++};
++
++&pinctrl {
++	aspeed,external-nodes = <&gfx &lhc>;
++};
++
++&pwm_tacho {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
++		&pinctrl_pwm2_default &pinctrl_pwm3_default
++		&pinctrl_pwm4_default &pinctrl_pwm5_default
++		&pinctrl_pwm6_default &pinctrl_pwm7_default>;
++
++	fan@0 {
++		reg = <0x00>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
++	};
++
++	fan@1 {
++		reg = <0x01>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
++	};
++
++	fan@2 {
++		reg = <0x02>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
++	};
++
++	fan@3 {
++		reg = <0x03>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
++	};
++
++	fan@4 {
++		reg = <0x04>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x08 0x09>;
++	};
++
++	fan@5 {
++		reg = <0x05>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0a 0x0b>;
++	};
++
++	fan@6 {
++		reg = <0x06>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0c 0x0d>;
++	};
++
++	fan@7 {
++		reg = <0x07>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0e 0x0f>;
++	};
++};
++
++&kcs3 {
++	status = "okay";
++	kcs_addr = <0xca2>;
++};
++
++&kcs4 {
++	status = "okay";
++	kcs_addr = <0xca4>;
++};
++
++&adc {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
++	 &pinctrl_adc2_default &pinctrl_adc3_default &pinctrl_adc4_default
++	 &pinctrl_adc5_default &pinctrl_adc6_default &pinctrl_adc7_default
++	 &pinctrl_adc8_default &pinctrl_adc9_default &pinctrl_adc10_default
++	 &pinctrl_adc11_default &pinctrl_adc12_default &pinctrl_adc13_default
++	 &pinctrl_adc14_default &pinctrl_adc15_default>;
++};
++
++&vhub {
++	status = "okay";
++};
++
++&video {
++	status = "okay";
++	memory-region = <&video_engine_memory>;
++};
++
++&vuart {
++	status = "okay";
++};
+-- 
+2.17.1
 
-I didn't move it to a header as it's an implementation detail at the 
-end of the day. I see headers as describing a public interface, and in 
-the bigger picture this function isn't part of the public API. But 
-maybe it's too tricky by half. My approach here generated some 
-discussion with Zev as well.
-
-> 
-> > +void kcs_bmc_add_device(struct kcs_bmc *kcs_bmc)
-> 
-> This should return an error so the probe can be failed and cleaned up
-> and so confusing message don't get printed after this in one case.
-
-Hmm. I did this because the end result of the series is that we can 
-have multiple chardev interfaces in distinct modules exposing the one 
-KCS device in the one kernel. If more than one of the chardev modules 
-is configured in and one of them fails to initialise themselves with 
-respect to the device driver I didn't think it was right to fail the 
-probe of the device driver (and thus remove any chardev interfaces that 
-did succeed to initialise against it).
-
-But this does limit the usefulness of the device driver instance in the 
-case that only one of the chardev interfaces is configured in and it 
-fails to initialise.
-
-So I think we need to decide on the direction before I adjust the 
-interface here. The patches are architected around the idea of multiple 
-chardevs being configured in to the kernel build and all are exposed at 
-runtime.
-
-The serio subsystem does have the 'drvctl' sysfs knob that allows 
-userspace to dictate which serio chardev interface they want to connect 
-to a serio device driver. Maybe that's preferred over my "connect them 
-all" strategy?
-
-Andrew
