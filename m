@@ -2,99 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9BFD38F9AA
-	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 06:37:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1298838FA63
+	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 07:54:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fq1XW4PWSz3049
-	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 14:37:47 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=futuX7gO;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=NeMLdSOv;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Fq3DW6ynrz305w
+	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 15:54:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.221;
- helo=new1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=steven_lee@aspeedtech.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=futuX7gO; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=NeMLdSOv; 
- dkim-atps=neutral
-Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
- [66.111.4.221])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fq1XC6PmVz2yX3;
- Tue, 25 May 2021 14:37:31 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 8DF82581068;
- Tue, 25 May 2021 00:37:29 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Tue, 25 May 2021 00:37:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=zFo1oGVlR9BWzHQX/BoXdwfOJEHWy/V
- aAoNOqIJAtPQ=; b=futuX7gOOBwrT6oJVQPSupBN1R1Ob4fVnF9YYDRvvjsQUMP
- Y5HHsGOGuTh0vmwxs9NtIMkwTGElxuuAWADC14Ujy2iOBxcZWQJ1UPAFNLaGJ+gZ
- 17vy4KFu1mH1znFquCKgNEu/t4OOvKgA1o2g+ULakueirIA8UN2SOxSYDWbF0KmZ
- af2zsiYtkXjh1ruSbgtzeJdOqWhS2o2OU9Zjlx6j86EdTgGA+YeNIiFrBj0CrIqR
- ZA3LMfoQ++KK7Yddanj9/VBrqpDFJyFqtwdf6e8oh8RJ1Lb79/puVBbrAYe2ytli
- NnsjmmIewizUb5msxd0MxaQdC/8EShEAC5TAIvg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=zFo1oG
- VlR9BWzHQX/BoXdwfOJEHWy/VaAoNOqIJAtPQ=; b=NeMLdSOvPC0GVg8cTUC+v9
- NN0unXHXvIcxihEhFtLGFMQqiEKpqt9PHxr2fAvDhKfkmyt/Fckars9EPIy0phOd
- FA1DEGNzvET7uPlUxU6/4D4Q8QLpNwngQo+Ib7x+PLk/ocG1evLo8fXfQ59K4w7X
- ImnD5tRzFSzRJGjOme7BCzMUz/fxFJnCZgwoIo73V7P1oApyjCdnQWfpJCzH25Cl
- 4Y5RxL8Gtc5fmnlrmcPw9DNogptN6F5Gdv15JQVoIbzpVVieSnjuunUcHfa+REXI
- LJfP6p5MwLnps3LF6QG9VW6VJ06rtZvw4Nzmp73wWlYFEivdnBcC17sz7F8TzPXQ
- ==
-X-ME-Sender: <xms:CH-sYOD_4v8QbYfZqpFzj02pmQTjMxgoUCI9-H1D39NPv3FL-OEp_Q>
- <xme:CH-sYIhOAFAfnEUzB6_MwNLXuTItp2aKyHUO4auMoxKoclVFRBXub5hQ3MjCdBK6Q
- VZisNYOPOImxsNUQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdektddgkeefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepuddttdekueeggedvtddtueekiedutdfguedutdefieeuteefieelteet
- vddthfeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
- eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:CH-sYBn4b6NkIap0_2dg9sPDWagHjtvUVTgnpxUQwsK0yp1i7B6uzQ>
- <xmx:CH-sYMyEgtlytQYMsItyZ4J_Lrleo2-RwgSz-EuqbrAOdJV_M4y4Gw>
- <xmx:CH-sYDSXNXCoVsCGPhXLZh5HDIBTFkI1EwVnwhiEja_o9shd-T7N4g>
- <xmx:CX-sYIJewHwr4gW-amogiccRpA1IQS5dfHR3zg0Gf5hUQHOU4Wn-XQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 76510A00079; Tue, 25 May 2021 00:37:28 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-448-gae190416c7-fm-20210505.004-gae190416
-Mime-Version: 1.0
-Message-Id: <7f673953-7a90-4143-a475-444a1096e55f@www.fastmail.com>
-In-Reply-To: <20210525042736.10379-4-steven_lee@aspeedtech.com>
-References: <20210525042736.10379-1-steven_lee@aspeedtech.com>
- <20210525042736.10379-4-steven_lee@aspeedtech.com>
-Date: Tue, 25 May 2021 14:07:07 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Steven Lee" <steven_lee@aspeedtech.com>,
- "Linus Walleij" <linus.walleij@linaro.org>,
- "Rob Herring" <robh+dt@kernel.org>, "Joel Stanley" <joel@jms.id.au>,
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fq3DD32tsz2yXF;
+ Tue, 25 May 2021 15:53:45 +1000 (AEST)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 14P5eDa2028241;
+ Tue, 25 May 2021 13:40:13 +0800 (GMT-8)
+ (envelope-from steven_lee@aspeedtech.com)
+Received: from slee-VirtualBox.localdomain (192.168.100.253) by
+ TWMBX02.aspeed.com (192.168.0.24) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Tue, 25 May 2021 13:53:10 +0800
+From: Steven Lee <steven_lee@aspeedtech.com>
+To: Andrew Jeffery <andrew@aj.id.au>, Linus Walleij <linus.walleij@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
  "moderated list:ASPEED PINCTRL DRIVERS" <linux-aspeed@lists.ozlabs.org>,
  "moderated list:ASPEED PINCTRL DRIVERS" <openbmc@lists.ozlabs.org>,
  "open list:ASPEED PINCTRL DRIVERS" <linux-gpio@vger.kernel.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-arm-kernel@lists.infradead.org>, 
- "open list" <linux-kernel@vger.kernel.org>
-Subject: =?UTF-8?Q?Re:_[PATCH_v2_3/3]_pinctrl:_pinctrl-aspeed-g6:_Add_sgpio_pinct?=
- =?UTF-8?Q?rl_settings?=
+ "open list:OPEN FIRMWARE AND FLATTENED DEVICE
+ TREE BINDINGS" <devicetree@vger.kernel.org>, "moderated list:ARM/ASPEED
+ MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>, open list
+ <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3 0/3] pinctrl: pinctrl-g6: Add the 2nd sgpio
+Date: Tue, 25 May 2021 13:53:04 +0800
+Message-ID: <20210525055308.31069-1-steven_lee@aspeedtech.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
 Content-Type: text/plain
+X-Originating-IP: [192.168.100.253]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 14P5eDa2028241
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,23 +58,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Billy Tsai <billy_tsai@aspeedtech.com>,
- Ryan Chen <ryan_chen@aspeedtech.com>, Hongwei Zhang <Hongweiz@ami.com>
+Cc: billy_tsai@aspeedtech.com, ryan_chen@aspeedtech.com,
+ steven_lee@aspeedtech.com, Hongweiz@ami.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+AST2600 has 2 SGPIO master interfaces one with 128 pins and another one
+has 80 pins, it also supports 2 SGPIO slave interfaces.
+However, there is only the first sgpio master/slave interface defined in
+dtsi and pinctrl driver.
+The patch series adds the second SGPIO master and slave interfaces
+in dt-bindings, dtsi and pinctrl driver.
 
+Changes from v2:
+* Fix the typo of the commit message of the 3rd patch.
 
-On Tue, 25 May 2021, at 13:57, Steven Lee wrote:
-> AST2600 supports 2 SGPIO master interfaces and 2 SGPIO slave interfaces.
-> Current pinctrl driver only define the first sgpio master and slave
-> interfaces.
-> The sencond SGPIO master and slave interfaces should be added in
+Changes from v1:
+* Correct the function priority of multi-function pin.
+* Change the name of arguments of PIN_DECL_4.
 
-Typo here: 'second', 
+Please help to review.
 
-Regardless, this looks good to me.
+Thanks,
+Steven
 
-Thanks Steven!
+Steven Lee (3):
+  dt-bindings: pinctrl: Update enum for adding SGPM2 and SGPS2
+  ARM: dts: aspeed-g6: Add pinctrl settings
+  pinctrl: pinctrl-aspeed-g6: Add sgpio pinctrl settings
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+ .../pinctrl/aspeed,ast2600-pinctrl.yaml       | 10 ++++----
+ arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi      | 10 ++++++++
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c    | 24 +++++++++++++++----
+ drivers/pinctrl/aspeed/pinmux-aspeed.h        |  9 +++++++
+ 4 files changed, 44 insertions(+), 9 deletions(-)
+
+-- 
+2.17.1
+
