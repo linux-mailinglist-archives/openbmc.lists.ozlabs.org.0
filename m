@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0270938F98D
-	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 06:29:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A12738F990
+	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 06:29:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fq1Lb0Qk1z3bnR
-	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 14:29:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Fq1Lw0f6Hz2yxl
+	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 14:29:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
@@ -17,15 +17,15 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fq1Kd2wVlz2yX3;
- Tue, 25 May 2021 14:28:21 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fq1Kj4X7Hz301L;
+ Tue, 25 May 2021 14:28:25 +1000 (AEST)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 14P4Eifs020768;
- Tue, 25 May 2021 12:14:44 +0800 (GMT-8)
+ by twspam01.aspeedtech.com with ESMTP id 14P4EkcC020769;
+ Tue, 25 May 2021 12:14:46 +0800 (GMT-8)
  (envelope-from steven_lee@aspeedtech.com)
 Received: from slee-VirtualBox.localdomain (192.168.100.253) by
  TWMBX02.aspeed.com (192.168.0.24) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Tue, 25 May 2021 12:27:41 +0800
+ 15.0.1497.2; Tue, 25 May 2021 12:27:42 +0800
 From: Steven Lee <steven_lee@aspeedtech.com>
 To: Andrew Jeffery <andrew@aj.id.au>, Linus Walleij <linus.walleij@linaro.org>,
  Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
@@ -36,9 +36,9 @@ To: Andrew Jeffery <andrew@aj.id.au>, Linus Walleij <linus.walleij@linaro.org>,
  TREE BINDINGS" <devicetree@vger.kernel.org>, "moderated list:ARM/ASPEED
  MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>, open list
  <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 2/3] ARM: dts: aspeed-g6: Add pinctrl settings
-Date: Tue, 25 May 2021 12:27:35 +0800
-Message-ID: <20210525042736.10379-3-steven_lee@aspeedtech.com>
+Subject: [PATCH v2 3/3] pinctrl: pinctrl-aspeed-g6: Add sgpio pinctrl settings
+Date: Tue, 25 May 2021 12:27:36 +0800
+Message-ID: <20210525042736.10379-4-steven_lee@aspeedtech.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210525042736.10379-1-steven_lee@aspeedtech.com>
 References: <20210525042736.10379-1-steven_lee@aspeedtech.com>
@@ -48,7 +48,7 @@ X-Originating-IP: [192.168.100.253]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 14P4Eifs020768
+X-MAIL: twspam01.aspeedtech.com 14P4EkcC020769
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,41 +66,117 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 AST2600 supports 2 SGPIO master interfaces and 2 SGPIO slave interfaces.
-Currently, only SGPIO master 1 and SGPIO slve 1 in the pinctrl dtsi.
-SGPIO master 2 and slave 2 should be added in pinctrl dtsi as well.
+Current pinctrl driver only define the first sgpio master and slave
+interfaces.
+The sencond SGPIO master and slave interfaces should be added in
+pinctrl driver as well.
 
 Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 24 ++++++++++++++++++----
+ drivers/pinctrl/aspeed/pinmux-aspeed.h     |  9 ++++++++
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi b/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
-index 7028e21bdd98..7e90d713f5e5 100644
---- a/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
-@@ -862,11 +862,21 @@
- 		groups = "SGPM1";
- 	};
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+index 5c1a109842a7..36688793b3a0 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+@@ -46,8 +46,10 @@
+ #define SCU620		0x620 /* Disable GPIO Internal Pull-Down #4 */
+ #define SCU634		0x634 /* Disable GPIO Internal Pull-Down #5 */
+ #define SCU638		0x638 /* Disable GPIO Internal Pull-Down #6 */
++#define SCU690		0x690 /* Multi-function Pin Control #24 */
+ #define SCU694		0x694 /* Multi-function Pin Control #25 */
+ #define SCU69C		0x69C /* Multi-function Pin Control #27 */
++#define SCU6D0		0x6D0 /* Multi-function Pin Control #29 */
+ #define SCUC20		0xC20 /* PCIE configuration Setting Control */
  
-+	pinctrl_sgpm2_default: sgpm2_default {
-+		function = "SGPM2";
-+		groups = "SGPM2";
-+	};
-+
- 	pinctrl_sgps1_default: sgps1_default {
- 		function = "SGPS1";
- 		groups = "SGPS1";
- 	};
+ #define ASPEED_G6_NR_PINS 256
+@@ -81,13 +83,17 @@ FUNC_GROUP_DECL(I2C12, L26, K24);
+ #define K26 4
+ SIG_EXPR_LIST_DECL_SESG(K26, MACLINK1, MACLINK1, SIG_DESC_SET(SCU410, 4));
+ SIG_EXPR_LIST_DECL_SESG(K26, SCL13, I2C13, SIG_DESC_SET(SCU4B0, 4));
+-PIN_DECL_2(K26, GPIOA4, MACLINK1, SCL13);
++SIG_EXPR_LIST_DECL_SESG(K26, SGPS2CK, SGPS2, SIG_DESC_SET(SCU690, 4));
++SIG_EXPR_LIST_DECL_SESG(K26, SGPM2CLK, SGPM2, SIG_DESC_SET(SCU6D0, 4));
++PIN_DECL_4(K26, GPIOA4, MACLINK1, SCL13, SGPS2CK, SGPM2CLK);
+ FUNC_GROUP_DECL(MACLINK1, K26);
  
-+	pinctrl_sgps2_default: sgps2_default {
-+		function = "SGPS2";
-+		groups = "SGPS2";
-+	};
+ #define L24 5
+ SIG_EXPR_LIST_DECL_SESG(L24, MACLINK2, MACLINK2, SIG_DESC_SET(SCU410, 5));
+ SIG_EXPR_LIST_DECL_SESG(L24, SDA13, I2C13, SIG_DESC_SET(SCU4B0, 5));
+-PIN_DECL_2(L24, GPIOA5, MACLINK2, SDA13);
++SIG_EXPR_LIST_DECL_SESG(L24, SGPS2LD, SGPS2, SIG_DESC_SET(SCU690, 5));
++SIG_EXPR_LIST_DECL_SESG(L24, SGPM2LD, SGPM2, SIG_DESC_SET(SCU6D0, 5));
++PIN_DECL_4(L24, GPIOA5, MACLINK2, SDA13, SGPS2LD, SGPM2LD);
+ FUNC_GROUP_DECL(MACLINK2, L24);
+ 
+ FUNC_GROUP_DECL(I2C13, K26, L24);
+@@ -95,16 +101,22 @@ FUNC_GROUP_DECL(I2C13, K26, L24);
+ #define L23 6
+ SIG_EXPR_LIST_DECL_SESG(L23, MACLINK3, MACLINK3, SIG_DESC_SET(SCU410, 6));
+ SIG_EXPR_LIST_DECL_SESG(L23, SCL14, I2C14, SIG_DESC_SET(SCU4B0, 6));
+-PIN_DECL_2(L23, GPIOA6, MACLINK3, SCL14);
++SIG_EXPR_LIST_DECL_SESG(L23, SGPS2O, SGPS2, SIG_DESC_SET(SCU690, 6));
++SIG_EXPR_LIST_DECL_SESG(L23, SGPM2O, SGPM2, SIG_DESC_SET(SCU6D0, 6));
++PIN_DECL_4(L23, GPIOA6, MACLINK3, SCL14, SGPS2O, SGPM2O);
+ FUNC_GROUP_DECL(MACLINK3, L23);
+ 
+ #define K25 7
+ SIG_EXPR_LIST_DECL_SESG(K25, MACLINK4, MACLINK4, SIG_DESC_SET(SCU410, 7));
+ SIG_EXPR_LIST_DECL_SESG(K25, SDA14, I2C14, SIG_DESC_SET(SCU4B0, 7));
+-PIN_DECL_2(K25, GPIOA7, MACLINK4, SDA14);
++SIG_EXPR_LIST_DECL_SESG(K25, SGPS2I, SGPS2, SIG_DESC_SET(SCU690, 7));
++SIG_EXPR_LIST_DECL_SESG(K25, SGPM2I, SGPM2, SIG_DESC_SET(SCU6D0, 7));
++PIN_DECL_4(K25, GPIOA7, MACLINK4, SDA14, SGPS2I, SGPM2I);
+ FUNC_GROUP_DECL(MACLINK4, K25);
+ 
+ FUNC_GROUP_DECL(I2C14, L23, K25);
++FUNC_GROUP_DECL(SGPM2, K26, L24, L23, K25);
++FUNC_GROUP_DECL(SGPS2, K26, L24, L23, K25);
+ 
+ #define J26 8
+ SIG_EXPR_LIST_DECL_SESG(J26, SALT1, SALT1, SIG_DESC_SET(SCU410, 8));
+@@ -2060,7 +2072,9 @@ static const struct aspeed_pin_group aspeed_g6_groups[] = {
+ 	ASPEED_PINCTRL_GROUP(EMMCG4),
+ 	ASPEED_PINCTRL_GROUP(EMMCG8),
+ 	ASPEED_PINCTRL_GROUP(SGPM1),
++	ASPEED_PINCTRL_GROUP(SGPM2),
+ 	ASPEED_PINCTRL_GROUP(SGPS1),
++	ASPEED_PINCTRL_GROUP(SGPS2),
+ 	ASPEED_PINCTRL_GROUP(SIOONCTRL),
+ 	ASPEED_PINCTRL_GROUP(SIOPBI),
+ 	ASPEED_PINCTRL_GROUP(SIOPBO),
+@@ -2276,7 +2290,9 @@ static const struct aspeed_pin_function aspeed_g6_functions[] = {
+ 	ASPEED_PINCTRL_FUNC(SD1),
+ 	ASPEED_PINCTRL_FUNC(SD2),
+ 	ASPEED_PINCTRL_FUNC(SGPM1),
++	ASPEED_PINCTRL_FUNC(SGPM2),
+ 	ASPEED_PINCTRL_FUNC(SGPS1),
++	ASPEED_PINCTRL_FUNC(SGPS2),
+ 	ASPEED_PINCTRL_FUNC(SIOONCTRL),
+ 	ASPEED_PINCTRL_FUNC(SIOPBI),
+ 	ASPEED_PINCTRL_FUNC(SIOPBO),
+diff --git a/drivers/pinctrl/aspeed/pinmux-aspeed.h b/drivers/pinctrl/aspeed/pinmux-aspeed.h
+index dba5875ff276..b69ba6b360a2 100644
+--- a/drivers/pinctrl/aspeed/pinmux-aspeed.h
++++ b/drivers/pinctrl/aspeed/pinmux-aspeed.h
+@@ -730,6 +730,15 @@ struct aspeed_pin_desc {
+ 			SIG_EXPR_LIST_PTR(pin, low), \
+ 			SIG_EXPR_LIST_PTR(pin, other))
+ 
++#define PIN_DECL_4(pin, other, prio1, prio2, prio3, prio4) \
++	SIG_EXPR_LIST_DECL_SESG(pin, other, other); \
++	PIN_DECL_(pin, \
++			SIG_EXPR_LIST_PTR(pin, prio1), \
++			SIG_EXPR_LIST_PTR(pin, prio2), \
++			SIG_EXPR_LIST_PTR(pin, prio3), \
++			SIG_EXPR_LIST_PTR(pin, prio4), \
++			SIG_EXPR_LIST_PTR(pin, other))
 +
- 	pinctrl_sioonctrl_default: sioonctrl_default {
- 		function = "SIOONCTRL";
- 		groups = "SIOONCTRL";
+ #define GROUP_SYM(group) group_pins_ ## group
+ #define GROUP_DECL(group, ...) \
+ 	static const int GROUP_SYM(group)[] = { __VA_ARGS__ }
 -- 
 2.17.1
 
