@@ -2,77 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 219C838FB15
-	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 08:41:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B06D538FB2C
+	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 08:48:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fq4Hd0wbkz2yQq
-	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 16:41:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Fq4Rf540Sz3066
+	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 16:48:46 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=XgCDjnal;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ob23JTa4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12a;
- helo=mail-lf1-x12a.google.com; envelope-from=artemsen@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c44;
+ helo=mail-oo1-xc44.google.com; envelope-from=guopingjn@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=XgCDjnal; dkim-atps=neutral
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com
- [IPv6:2a00:1450:4864:20::12a])
+ header.s=20161025 header.b=ob23JTa4; dkim-atps=neutral
+Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com
+ [IPv6:2607:f8b0:4864:20::c44])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fq4HM3NZZz2y0C
- for <openbmc@lists.ozlabs.org>; Tue, 25 May 2021 16:41:34 +1000 (AEST)
-Received: by mail-lf1-x12a.google.com with SMTP id q1so1899203lfo.3
- for <openbmc@lists.ozlabs.org>; Mon, 24 May 2021 23:41:34 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fq4RK4zqYz2yQq
+ for <openbmc@lists.ozlabs.org>; Tue, 25 May 2021 16:48:27 +1000 (AEST)
+Received: by mail-oo1-xc44.google.com with SMTP id
+ s20-20020a4ae9940000b02902072d5df239so6939586ood.2
+ for <openbmc@lists.ozlabs.org>; Mon, 24 May 2021 23:48:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=OyA6DXax42g+OIo8Vc9CMQ2lSziZRwq4NpNyQ2oUOss=;
- b=XgCDjnalmdQknY+9rrlQEsdiGjj/880nmX/PIn4WZwKAIrZPsZOteNRqM+EXwbN5Ue
- 91OYviqnISetljxJSHRBpE//m3BoE9D/7DGv3hyOyDQGU2K72icBGQeYV35xZ+5aIO28
- 6iRXhFxYtX8vJDtLyoBXPPZBxkkKMwZzbnAKGPo98/tcOe2CT4IPA8NtIl2z4+I5/aZY
- Tslzc4gLsBZUSX0PDpSZDsMuMhv6SqN86qjTU4MJjJQi5+ujiJSQO54pGL0pcfWhuwiP
- 8J3/bjIJKp5MiCJAys36DJxyS/YJMn/yOSWGzIBZO6RZ1bGg1SBhWDcU36vpVqDXH0ap
- 2eFQ==
+ h=from:to:cc:subject:date:message-id;
+ bh=wW1XNlzCcS7HgE15wPYrwFBXTlJpX0AMk3himxlGRsY=;
+ b=ob23JTa4zU3d3UuBI4rHwVtwd+DtsCn3hJMiyBRd6GgVegbnTc666YRzm7/7QFB0Vx
+ NsZbfnolg1FxFRSXE+skTddOI9XloKbdpM1DcnQPf5A8ja+SAekULaFfiUSxjiRtpQRB
+ ye7adeKNRA2H2bXCO7SHEQEkJHEkXrET3y3eOA8LlQt4I/vZXlMcMUz7kxqNUGmK+V0b
+ 3USQ6FRL9Ff/EzDDjWjJwLfGU6qQsYWcq17M/P5ICVjX4oWpvyBnDWpEO3x84q0kyBN9
+ kwICGqZ0p18n07wdkgBqghKo5iE1UharGhuOplHBnmzGsjJMwWIj6UZXreJh6oXy17hM
+ q2iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=OyA6DXax42g+OIo8Vc9CMQ2lSziZRwq4NpNyQ2oUOss=;
- b=mXO0wH4fZbldHy/Kbtn4tyb1lnjAM7eikPSC7ePMPnIWbvRtn1V9G/P4M4yjv3n/xp
- S9llfJuU50HdM6byAaOa/8adMowtjhl2zCUYDFAkCWsT2lE6A5mjY6Wd3HHbLIo0Jqar
- /T5gEWD4n4Dg5gi6ynf0dmiEi2UdUCUtjTkSl9LOYti08y4wtqbygF+PA1fnqVQIIzUb
- l73RfpNGKWnd6hXL1wXmX/h3O3KRn9NzTR/7dEBhfjMeWJ9SAX9yw6Nk966gjQkY1FoH
- k0/UZfu5D8bCmBvReLKXBQAVgM+rYFeNAyIrTOlrrz8HBQgxUjV9HZ4PE4AQeZSaM/e/
- 9tTg==
-X-Gm-Message-State: AOAM5334LDR8a6tzYu+5PFU3WoiHvUzbv5pj7YTrrF/gLDSEf+weDr0T
- zFlgZ71zfUatXNA4Uhih2es=
-X-Google-Smtp-Source: ABdhPJxtsrHth9BszXNP4IzI0xY/gHABPtt6yGZNwizGfMZuNsyWiENCnw+GQU5xcPfBbTzGhjfsXQ==
-X-Received: by 2002:ac2:48b1:: with SMTP id u17mr12762443lfg.294.1621924890885; 
- Mon, 24 May 2021 23:41:30 -0700 (PDT)
-Received: from gmail.com ([109.252.116.140])
- by smtp.gmail.com with ESMTPSA id i11sm1634205lfe.211.2021.05.24.23.41.29
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=wW1XNlzCcS7HgE15wPYrwFBXTlJpX0AMk3himxlGRsY=;
+ b=d8FXYjbzZM4bkLxpXKOvTCpOshJo2D+2AYbquqREp7HUqeKUh/IkKCu9x6h6kqKC/j
+ k+4KtnsTy4wnHDfI6ODV0B14TB4OO8M6dHtYjDNPuYtMMqxpSuodT0jp3oevUpnBrXZx
+ uGkVtWpSQWuPfdzeZokNMCPB5l3N384aiNUvyi10Evaj9g7AqLQuCOTrAEbYEC67ej4S
+ qguEXgzgn/cdugELb9O20ca9ii9NfBAGyD2iuJ2EZSBWN3xm7o5y6cioD0wcSfCDfRlI
+ sidomMrQkjLbLG/q3VxNoXFyVpPEEMGB+G6hxAoj/SO3sLLQAa1Z+TWwH+otP951WUYJ
+ GG8g==
+X-Gm-Message-State: AOAM5317T78+xgK+d1Mq9PxgOnvpqjloFHLZv80KtxoCMBSPbSOTkka4
+ nfWDXJdDyqvVQI2HD03lSNw=
+X-Google-Smtp-Source: ABdhPJx43SJetZP2zGt1iAYUlfIO8uvD+yt56c2WC0bRlXsFA69i7ec3wwPVxZslUzFTk8nxC9WJKQ==
+X-Received: by 2002:a4a:83d3:: with SMTP id r19mr21073850oog.53.1621925303242; 
+ Mon, 24 May 2021 23:48:23 -0700 (PDT)
+Received: from localhost.localdomain ([60.208.111.194])
+ by smtp.gmail.com with ESMTPSA id l9sm3299816oou.43.2021.05.24.23.48.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 May 2021 23:41:30 -0700 (PDT)
-Date: Tue, 25 May 2021 09:41:27 +0300
-From: Artem Senichev <artemsen@gmail.com>
-To: Ed Tanous <edtanous@google.com>
-Subject: Re: Link phosphor-hostlogger and bmcweb
-Message-ID: <20210525064127.xfgo5dceyvzrzpy6@gmail.com>
-References: <CAOLfGj5orNO2U3zdO6LuBGY05mXFewofqRiOUXyA=ks74LzMhg@mail.gmail.com>
- <20210521061023.4zy5s7fzycz5lppx@gmail.com>
- <CAH2-KxBcfqB7ArTEg977ai1fKK_Ppwt+odwqtJgV+3GZ8szs2Q@mail.gmail.com>
- <CAOLfGj4n-RHYAq5oSRkrC-VpCFUFT2Nr3G4UeqQ8DuMbNurrNw@mail.gmail.com>
- <20210524075248.m7mimyya42xas3nx@gmail.com>
- <CAH2-KxABm3A7pdPfPbu-RY-98qs0FE8bQZwo-WO6spixU6JotA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH2-KxABm3A7pdPfPbu-RY-98qs0FE8bQZwo-WO6spixU6JotA@mail.gmail.com>
+ Mon, 24 May 2021 23:48:22 -0700 (PDT)
+From: guopingjn@gmail.com
+To: joel@jms.id.au,
+	andrew@aj.id.au,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH 1/1] ARM: dts: aspeed: Add Inspur NF5280M6 BMC machine
+Date: Tue, 25 May 2021 14:47:37 +0800
+Message-Id: <20210525064737.14750-1-guopingjn@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,301 +76,750 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Spencer Ku <spencer.ku@quanta.corp-partner.google.com>,
- Nan Zhou <nanzhou@google.com>,
- Litzung Chen <litzung.chen@quanta.corp-partner.google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Alexander Amelkin <a.amelkin@yadro.com>, Richard Hanley <rhanley@google.com>,
- a.senichev@yadro.com, a.filippov@yadro.com
+Cc: guoping@inspur.com, liuxiwei@inspur.com, banht@inspur.com,
+ wangxinglong@inspur.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Sorry guys, maybe this is a misunderstanding on my part.
+From: Ping Guo <guoping@inspur.com>
 
-I was confused with the following line in the proposal:
+The Inspur NF5280M6 is an x86 platform server with an AST2500-based BMC.
+This dts file provides a basic configuration for its OpenBMC
+development.
 
-"we propose to remove the ring buffer and write to the log file as soon
-as some characters are received. This implicitly removes the needs of
-the ring buffer, and the persistence triggering (host reboot, sigterm,
-etc) in hostlogger"
+Signed-off-by: George Liu <liuxiwei@inspur.com>
+Signed-off-by: Ping Guo <guoping@inspur.com>
+---
+ arch/arm/boot/dts/Makefile                    |   1 +
+ .../boot/dts/aspeed-bmc-inspur-nf5280m6.dts   | 707 ++++++++++++++++++
+ 2 files changed, 708 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
 
-I would like to get a more detailed description of further changes in order
-to see the whole picture of the solution. 
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 03b5424bafa8..cc2580f1e99b 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1405,6 +1405,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-ibm-rainier-4u.dtb \
+ 	aspeed-bmc-intel-s2600wf.dtb \
+ 	aspeed-bmc-inspur-fp5280g2.dtb \
++	aspeed-bmc-inspur-nf5280m6.dtb \
+ 	aspeed-bmc-lenovo-hr630.dtb \
+ 	aspeed-bmc-lenovo-hr855xg2.dtb \
+ 	aspeed-bmc-microsoft-olympus.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
+new file mode 100644
+index 000000000000..af935a43b3e1
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
+@@ -0,0 +1,707 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (c) 2021 Inspur Corporation
++/dts-v1/;
++
++#include "aspeed-g5.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++#include <dt-bindings/i2c/i2c.h>
++#include <dt-bindings/leds/leds-pca955x.h>
++
++/ {
++	model = "NF5280M6 BMC";
++	compatible = "inspur,nf5280m6-bmc", "aspeed,ast2500";
++
++	chosen {
++		stdout-path = &uart5;
++		bootargs = "console=ttyS4,115200 earlyprintk";
++	};
++
++	memory@80000000 {
++		reg = <0x80000000 0x40000000>;
++	};
++
++	reserved-memory {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		ranges;
++
++		vga_memory: framebuffer@9f000000 {
++			no-map;
++			reg = <0x9f000000 0x01000000>; /* 16M */
++		};
++
++		video_engine_memory: jpegbuffer {
++			size = <0x02000000>;	/* 32M */
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++
++	};
++
++	leds {
++	    compatible = "gpio-leds";
++
++		bmc_alive {
++			label = "bmc_alive";
++			gpios = <&gpio ASPEED_GPIO(B, 0) GPIO_ACTIVE_LOW>;
++			linux,default-trigger = "timer";
++			led-pattern = <1000 1000>;
++		};
++
++		front-fan {
++			label = "front-fan";
++			gpios = <&gpio ASPEED_GPIO(F,2) GPIO_ACTIVE_LOW>;
++		};
++
++	    front-psu {
++			label = "front-psu";
++			gpios = <&gpio ASPEED_GPIO(F,3) GPIO_ACTIVE_LOW>;
++		};
++
++	    front-syshot {
++			label = "front-syshot";
++			gpios = <&gpio ASPEED_GPIO(J, 3) GPIO_ACTIVE_LOW>;
++		};
++
++		front-memory {
++			label = "front-memory";
++			gpios = <&gpio ASPEED_GPIO(S, 7) GPIO_ACTIVE_LOW>;
++		};
++
++		identify {
++			label = "identify";
++			gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_LOW>;
++		};
++	};
++
++	iio-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
++			<&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
++			<&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
++			<&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
++	};
++};
++
++&fmc {
++	status = "okay";
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "bmc";
++		spi-max-frequency = <50000000>;
++#include "openbmc-flash-layout.dtsi"
++	};
++};
++
++&spi1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_spi1_default>;
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "bios";
++		spi-max-frequency = <100000000>;
++	};
++};
++
++&uart1 {
++	status = "okay";
++};
++
++&uart5 {
++	status = "okay";
++};
++
++&mac0 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii1_default>;
++	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
++		<&syscon ASPEED_CLK_MAC1RCLK>;
++	clock-names = "MACCLK", "RCLK";
++	use-ncsi;
++};
++
++&mac1 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
++};
++
++&gpio {
++	power_out {
++		gpios = <ASPEED_GPIO(AA, 7) GPIO_ACTIVE_LOW>;
++		output-low;
++	};
++};
++
++&gpio {
++	status = "okay";
++	/* Enable GPIOE0 and GPIOE2 pass-through by default */
++	pinctrl-names = "pass-through";
++	pinctrl-0 = <&pinctrl_gpie0_default
++			&pinctrl_gpie2_default>;
++	gpio-line-names =
++	/*A0-A7*/	"","MAC2LINK","BMC_RESET_CPLD","","BMC_SCL9","","MAC2MDC_R","",
++	/*B0-B7*/	"BMC_INIT_OK","FM_SKU_ID2","FM_SPD_DDRCPU_LVLSHFT_DIS_R_N",
++				"FM_CPU_MSMI_CATERR_LVT3_BMC_N","","FM_CPU0_PROCHOT_LVT3_N",
++				"FM_CPU_MEM_THERMTRIP_LVT3_N","BIOS_LOAD_DEFAULT_R_N",
++	/*C0-C7*/	"","","","","","","","",
++	/*D0-D7*/	"","BMC_SD2CMD","BMC_SD2DAT0","BMC_SD2DAT1","BMC_SD2DAT2",
++				"BMC_SD2DAT3","BMC_SD2DET","BMC_SD2WPT",
++	/*E0-E7*/	"FM_BOARD_ID0","FM_BOARD_ID1","FM_BOARD_ID2","FM_BOARD_ID3",
++				"FM_BOARD_ID4","FM_BOARD_ID5","","",
++	/*F0-F7*/	"PSU1_PRESENT_N","PSU2_PRESENT_N","FAN_FAULT_LED_N","PSU_FAULT_LED_N",
++				"BIOS_DEBUG_MODE_N","FP_LCD_RESET","FAN_TYPE_SEL",
++				"RST_GLB_RST_WARN_N",
++	/*G0-G7*/	"IRQ_LPTM21L_ALERT_N","IRQ_PLD_ALERT_N","AC_FAIL_N","FP_LCD_PRESENT_BMC",
++				"BMC_JTAG_TCK_MUX_SEL","BMC_BIOS_RESERVED","SYS_NMI_N","BMC_NMI_N",
++	/*H0-H7*/	"JTAG_BMC_TDI","JTAG_BMC_TDO","JTAG_BMC_TCK","JTAG_BMC_TMS","FM_BOARD_ID6",
++				"FM_SKU_ID0","IRQ_SML1_PMBUS_ALERT_N","IRQ_SML0_ALERT_MUX_N",
++	/*I0-I7*/	"FM_CPU_ERR0_LVT3_BMC_N","FM_CPU_ERR1_LVT3_BMC_N","FM_BMC_PCH_SCI_LPC_N",
++				"FM_SYS_THROTTLE_LVC3","SPI2_PCH_CS0_N","","","",
++	/*J0-J7*/	"FM_CPU0_SKTOCC_LVT3_N","FM_CPU1_SKTOCC_LVT3_N","","SYSHOT_FAULT_LED_N",
++				"VGA_HSYNC","VGA_VSYNC","","",
++	/*K0-K7*/	"","","","","","","","",
++	/*L0-L7*/	"","","","","","","SYS_UART_TXD1","SYS_UART_RXD1",
++	/*M0-M7*/	"","","","","","","","",
++	/*N0-N7*/	"","","","","","","","",
++	/*O0-O7*/	"","","","","","","","",
++	/*P0-P7*/	"","","","","","","","",
++	/*Q0-Q7*/	"","","","","","","FM_PCH_BMC_THERMTRIP_N","INTRUDER_N",
++	/*R0-R7*/	"SPI_BMC_BOOT_CS1_R_N","FM_CPU_MEMHOT_LVC3_N",
++				"DBP_CPU_PREQ_N","FM_CPU_ERR2_LVT3_BMC_N",
++				"RISER_NCSI_EN_N","","LOM_NCSI_EN_N","OCP_NCSI_EN_N",
++	/*S0-S7*/	"BMC_XDP_PRDY_N","SIO_POWER_GOOD","BMC_PWR_DEBUG_R_N","BMC_DEBUG_EN_R_N","",
++				"GPIOS5_BMC","","GPIOS7_BMC",
++	/*T0-T7*/	"","","","","","","","",
++	/*U0-U7*/	"","","","","","","","",
++	/*V0-V7*/	"","","","","","","","",
++	/*W0-W7*/	"","","","","","","","",
++	/*X0-X7*/	"","","","","","","","",
++	/*Y0-Y7*/	"","BMC_DET_UID_N","BMC_JTAG_SEL","SIO_ONCONTROL","","","","",
++	/*Z0-Z7*/	"XDP_PRESENT_N","DBP_SYSPWROK","BMC_JTAG_SEL","FM_SMI_ACTIVE_N","",
++				"GPIOZ5","","",
++	/*AA0-AA7*/	"FP_BMC_SYSLED_N","PS_PWROK","RST_PLTRST_BMC_N","HDA_SDO_BMC",
++				"FM_SLPS4_R_N","","POWER_BUTTON","POWER_OUT",
++	/*AB0-AB7*/	"RESET_OUT","RESET_BUTTON","BIOS_REFLASH","POST_COMPLETE","","","","",
++	/*AC0-AC7*/	"","","","","","","","";
++};
++
++&i2c0 {
++	/* FP_LCD */
++	status = "okay";
++};
++
++&i2c1 {
++	status = "okay";
++
++	eeprom@50 {
++		compatible = "atmel,24c256";
++		reg = <0x50>;
++		label = "fru";
++	};
++};
++
++&i2c2 {
++	status = "okay";
++
++	tmp112@48 {
++		compatible = "ti,tmp112";
++		reg = <0x48>;
++		label = "inlet";
++	};
++
++	tmp112@49 {
++		compatible = "ti,tmp112";
++		reg = <0x49>;
++		label = "outlet";
++	};
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		reg = <0x70>;
++	};
++};
++
++&i2c3 {
++	status = "okay";
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		reg = <0x70>;
++	};
++
++	pca9548@71 {
++		compatible = "nxp,pca9548";
++		reg = <0x71>;
++	};
++
++	pca9548@72 {
++		compatible = "nxp,pca9548";
++		reg = <0x72>;
++	};
++};
++
++&i2c4 {
++	/* IPMB */
++	status = "okay";
++};
++
++&i2c5 {
++	status = "okay";
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		reg = <0x70>;
++	};
++};
++
++&i2c6 {
++	status = "okay";
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		reg = <0x70>;
++	};
++};
++
++&i2c7 {
++	status = "okay";
++
++	adm1278@33 {
++		compatible = "adi,adm1293";
++		reg = <0x33>;
++	};
++
++	adm1278@32 {
++		compatible = "adi,adm1293";
++		reg = <0x32>;
++	};
++
++	adm1278@20 {
++		compatible = "adi,adm1293";
++		reg = <0x20>;
++	};
++};
++
++&i2c8 {
++	status = "okay";
++
++	pca0: pca9555@23 {
++		compatible = "nxp,pca9555";
++		reg = <0x23>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
++	pca1: pca9555@22 {
++		compatible = "nxp,pca9555";
++		reg = <0x22>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
++	pca2: pca9555@20 {
++		compatible = "nxp,pca9555";
++		reg = <0x20>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
++	pca3: pca9555@21 {
++		compatible = "nxp,pca9555";
++		reg = <0x21>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++};
++
++&i2c9 {
++	/* cpld */
++	status = "okay";
++};
++
++&i2c10 {
++	status = "okay";
++
++	pca4: pca9555@24 {
++		compatible = "nxp,pca9555";
++		reg = <0x24>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
++	pca5: pca9555@25 {
++		compatible = "nxp,pca9555";
++		reg = <0x25>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++};
++
++&i2c11 {
++	status = "okay";
++
++	power-supply@58 {
++		compatible = "inspur,ipsps1";
++		reg = <0x58>;
++	};
++
++	power-supply@59 {
++		compatible = "inspur,ipsps1";
++		reg = <0x59>;
++	};
++};
++
++&i2c12 {
++	status = "okay";
++};
++
++&i2c13 {
++	status = "okay";
++};
++
++&gfx {
++	status = "okay";
++};
++
++&pinctrl {
++	aspeed,external-nodes = <&gfx &lhc>;
++};
++
++&pwm_tacho {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
++		&pinctrl_pwm2_default &pinctrl_pwm3_default
++		&pinctrl_pwm4_default &pinctrl_pwm5_default
++		&pinctrl_pwm6_default &pinctrl_pwm7_default>;
++
++	fan@0 {
++		reg = <0x00>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
++	};
++
++	fan@1 {
++		reg = <0x01>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
++	};
++
++	fan@2 {
++		reg = <0x02>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
++	};
++
++	fan@3 {
++		reg = <0x03>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
++	};
++
++	fan@4 {
++		reg = <0x04>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x08 0x09>;
++	};
++
++	fan@5 {
++		reg = <0x05>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0a 0x0b>;
++	};
++
++	fan@6 {
++		reg = <0x06>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0c 0x0d>;
++	};
++
++	fan@7 {
++		reg = <0x07>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0e 0x0f>;
++	};
++};
++
++&kcs3 {
++	status = "okay";
++	kcs_addr = <0xca2>;
++};
++
++&kcs4 {
++	status = "okay";
++	kcs_addr = <0xca4>;
++};
++
++&adc {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
++	 &pinctrl_adc2_default &pinctrl_adc3_default &pinctrl_adc4_default
++	 &pinctrl_adc5_default &pinctrl_adc6_default &pinctrl_adc7_default
++	 &pinctrl_adc8_default &pinctrl_adc9_default &pinctrl_adc10_default
++	 &pinctrl_adc11_default &pinctrl_adc12_default &pinctrl_adc13_default
++	 &pinctrl_adc14_default &pinctrl_adc15_default>;
++};
++
++&vhub {
++	status = "okay";
++};
++
++&video {
++	status = "okay";
++	memory-region = <&video_engine_memory>;
++};
++
++&vuart {
++	status = "okay";
++};
+-- 
+2.17.1
 
---
-Regards,
-Artem Senichev
-Software Engineer, YADRO.
-
-
-On Mon, May 24, 2021 at 09:27:39AM -0700, Ed Tanous wrote:
-> On Mon, May 24, 2021 at 12:52 AM Artem Senichev <artemsen@gmail.com> wrote:
-> >
-> > I'll try to convey the main idea that we tried to implement in this service.
-> >
-> > Hostlogger was originally designed to work with OpenPOWER systems, which
-> > generate a very detailed log at boot time.
-> 
-> There are definitely other non OpenPOWER systems that have this same behavior.
-> 
-> > It is important to save these logs and the host console output just before
-> > rebooting for further investigation of incidents when hardware errors occur.
-> > So, we have two log files for each server session (boot log + last OS messages).
-> > That's why we need a D-bus watcher.
-> > BMC flash has around 3MiB of free RW space, this force us to use compression
-> > and file rotation.
-> >
-> > All of these features are unnecessary for "streaming" real-time log recording.
-> 
-> I disagree with you there.  Rotation and compression are still useful
-> in a "streaming" case.  Because of the ways the APIs are defined,
-> LogService in redfish provides both a "historical" version of past
-> logs.  It's useful to have those logs rotated and compressed.
-> 
-> > You don't need DBus watchers, rotation can be done with native Linux utilities,
-> > you don't even need to split the input stream into lines.
-> 
-> I'm not following why those now wouldn't be needed.  Redfish LogEntry
-> would separate per line, so we'd have to do the splitting somewhere.
-> There's already code to do that in hostlogger.  Wouldn't you still
-> want to separate log per boot, and have lines split between log files?
->  I'm not following why those would go away just because there's a
-> desire to poll for logs and get up to date information.
-> 
-> > Just redirect obmc-console.log: `tail -f /var/log/obmc-console.log > my.log`.
-> 
-> This doesn't solve the problem presented.  First of all, log rotation
-> and compression are still needed.  Also, it's desirable to have dbus
-> watchers and separate the logs per boot, such that they can end up
-> separated in the Redfish API.  Also, in what you presented, my.log
-> would quickly and easily overflow the available space, as there's no
-> log rotation.
-> 
-> >
-> > I understand your desire to add a new mode to the existing project instead of
-> > creating a new one. But there is very little in common between these modes.
-> 
-> I'm not following how they're all that different, see above about
-> needing very similar features.  For the sake of argument, lets say we
-> went with a totally different implementation, would it be able to live
-> in the hostlogger repo to be able to reuse code where needed?  There's
-> a lot of code that I suspect will be identical.
-> 
-> > Even reading the socket will have to be done separately, since it is buffered
-> > for line splitting in the current implementation.
-> > In the end, only bb-recipe and the `main` function will remain in the common.
-> >
-> > --
-> > Regards,
-> > Artem Senichev
-> > Software Engineer, YADRO.
-> >
-> > On Fri, May 21, 2021 at 10:51:45AM -0700, Nan Zhou wrote:
-> >
-> > > >
-> > > > >
-> > > > > > we propose to remove the ring buffer and write to the log file
-> > > > > > as soon as some characters are received.
-> > > > >
-> > > > > I am not sure it is a good idea.
-> > > > > The host can generate a lot of logs, but we have very limited free space.
-> > > > This is a fair concern, but wouldn't the rollover limits make this not
-> > > > an issue?  They seem like they could be easily configured.
-> > >
-> > > Right. Logrotate will be able to handle the rotation. Maximum size, # log
-> > > files, and compression can be easily configured.
-> > >
-> > > > In
-> > > > > addition, such heavy traffic will lead to a quick breakdown of the flash
-> > > > (most
-> > > > > available products are guaranteed to withstand around 100,000 P/E cycles
-> > > > only).
-> > > > JFFS2 is wear leveled, and there are other BMC stacks that I know of
-> > > > that implement this without any ill effects to flash longevity, with
-> > > > that said, if Nan made the "last log on disk" feature configurable,
-> > > > would that alleviate your concerns?
-> > >
-> > > We also noticed that the obmc-server itself will buffer the log a bit. Will
-> > > it still be a problem if we don't write a character at once but a block of
-> > > them?
-> > > And as Ed said, we can also make this feature configurable. I would imagine
-> > > the log buffer will remain if the "last log on disk" feature is disabled.
-> > >
-> > >
-> > > > >
-> > > > > > This implicitly removes the needs
-> > > > > > of the ring buffer, and the persistence triggering (host reboot,
-> > > > sigterm,
-> > > > > > etc) in hostlogger. We believe this keeps the same functionality but
-> > > > saves
-> > > > > > hundreds of lines of codes in phosphor-hostlogger.
-> > > > Difference of opinion here, I don't think this removes the need for
-> > > > the host reboot event;  Having each reboot post to a different log
-> > > > needs to be maintained, and I have to imagine that there's some sort
-> > > > of sigterm handler still, although it becomes a lot smaller.
-> > >
-> > >
-> > > >
-> > > > > You are suggesting to delete the buffer, DBus watcher, log rotate. How
-> > > > are you
-> > > > > going to keep the same functionality if you remove everything related to
-> > > > it?
-> > > > +1.  In the initial thought I didn't think we were removing any
-> > > > functionality with this.  I had assumed the dbus watcher would remain,
-> > > > and we would still have the log rotation behavior.  In reading through
-> > > > Nans proposal I don't think these are getting removed;  Maybe I
-> > > > misunderstood?
-> > >
-> > >
-> > > Yes, if we want to keep different reboot posts to a different log file, we
-> > > can keep part of the dbus/signal watcher.
-> > >
-> > > On Fri, May 21, 2021 at 10:24 AM Ed Tanous <edtanous@google.com> wrote:
-> > >
-> > > > On Thu, May 20, 2021 at 11:10 PM Artem Senichev <artemsen@gmail.com>
-> > > > wrote:
-> > > > >
-> > > > > On Thu, May 20, 2021 at 04:29:09PM -0700, Nan Zhou wrote:
-> > > > > > Hi all,
-> > > > > >
-> > > > > > In the previous thread (
-> > > > > > https://lists.ozlabs.org/pipermail/openbmc/2021-March/025234.html), we
-> > > > > > (engineers from Google and Quanta) discussed our attempt to share host
-> > > > > > serial logs via Redfish, which includes polling logs via LogService and
-> > > > > > streaming log bytes via EventService (e.g. SSE). We went with the
-> > > > event log
-> > > > > > architecture
-> > > > > > <
-> > > > https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md
-> > > > >
-> > > > > > and did the implementation.
-> > > > > >
-> > > > > > We still want to reuse the phosphor-hostlogger and do some
-> > > > modification. We
-> > > > > > believe it is better to try to reuse existing codes if possible and
-> > > > improve
-> > > > > > them rather than creating new things that have similar functionalities
-> > > > (in
-> > > > > > our case, it is a daemon that could collect logs and persist them).
-> > > > >
-> > > > > I agree, reusing code is a right choice, but only when it is really
-> > > > possible.
-> > > > > For now it looks like you want to remove most of the Hostlogger features
-> > > > to
-> > > > > transform it from buffer-like to stream-like service.
-> > > >
-> > > > I'm not quite following this statement.  Which features are getting
-> > > > removed?  From what I can see, he's suggesting making
-> > > > phosphor-hostlogger look more like a well-behaved linux logging
-> > > > daemon, but I don't think any features got omitted (or I'm missing
-> > > > something critical).
-> > > >
-> > > > >
-> > > > > > We want to do the following modification in phosphor-hostlogger (from
-> > > > the
-> > > > > > input and output point of view, just very few things will be changed)
-> > > > > >
-> > > > > > 1. One limitation of phosphor-hostlogger is that it will lose data in
-> > > > the
-> > > > > > memory (the ring buffer maintained by hostlogger) when BMC gets force
-> > > > > > restarted;
-> > > > >
-> > > > > When BMC goes to reboot it stops all services, at that moment hostlogger
-> > > > gets
-> > > > > a signal and flushes all gathered logs to a file.
-> > > >
-> > > > Only if the reboot is planned.  If the BMC loses power (which is
-> > > > "normal" for a bmc) there isn't time to persist to flash before the
-> > > > power goes down and the logs are most likely lost.
-> > > >
-> > > > >
-> > > > > > we propose to remove the ring buffer and write to the log file
-> > > > > > as soon as some characters are received.
-> > > > >
-> > > > > I am not sure it is a good idea.
-> > > > > The host can generate a lot of logs, but we have very limited free space.
-> > > >
-> > > > This is a fair concern, but wouldn't the rollover limits make this not
-> > > > an issue?  They seem like they could be easily configured.
-> > > >
-> > > > > In
-> > > > > addition, such heavy traffic will lead to a quick breakdown of the flash
-> > > > (most
-> > > > > available products are guaranteed to withstand around 100,000 P/E cycles
-> > > > only).
-> > > >
-> > > > JFFS2 is wear leveled, and there are other BMC stacks that I know of
-> > > > that implement this without any ill effects to flash longevity, with
-> > > > that said, if Nan made the "last log on disk" feature configurable,
-> > > > would that alleviate your concerns?
-> > > >
-> > > > >
-> > > > > > This implicitly removes the needs
-> > > > > > of the ring buffer, and the persistence triggering (host reboot,
-> > > > sigterm,
-> > > > > > etc) in hostlogger. We believe this keeps the same functionality but
-> > > > saves
-> > > > > > hundreds of lines of codes in phosphor-hostlogger.
-> > > >
-> > > > Difference of opinion here, I don't think this removes the need for
-> > > > the host reboot event;  Having each reboot post to a different log
-> > > > needs to be maintained, and I have to imagine that there's some sort
-> > > > of sigterm handler still, although it becomes a lot smaller.
-> > > >
-> > > > >
-> > > > > You are suggesting to delete the buffer, DBus watcher, log rotate. How
-> > > > are you
-> > > > > going to keep the same functionality if you remove everything related to
-> > > > it?
-> > > >
-> > > > +1.  In the initial thought I didn't think we were removing any
-> > > > functionality with this.  I had assumed the dbus watcher would remain,
-> > > > and we would still have the log rotation behavior.  In reading through
-> > > > Nans proposal I don't think these are getting removed;  Maybe I
-> > > > misunderstood?
-> > > >
-> > > > >
-> > > > > > 2. We propose not to compress the latest log file. This saves us the
-> > > > > > overhead of doing decompression when BMCWeb just needs to retrieve the
-> > > > most
-> > > > > > recent logs. There are still going to be log rotations in the file
-> > > > level.
-> > > > > > Files other than the latest log file are still going to be compressed.
-> > > > We
-> > > > > > can modify existing codes to achieve this or use the linux logrotate
-> > > > > > directly.
-> > > > > >
-> > > > > > Furthermore, we will add host serial logs into BMCWeb, both LogService
-> > > > and
-> > > > > > EventService. In LogService, we will teach BMCWeb how to read the
-> > > > latest
-> > > > > > log file that is not compressed and the other compressed old logs, and
-> > > > how
-> > > > > > to assemble LogEntries out of raw serial logs. We will discuss
-> > > > EventService
-> > > > > > in future threads but the very initial idea is to setup inotify on log
-> > > > > > files and SSE to stream out new bytes to clients (like what the
-> > > > existing
-> > > > > > event logging is doing).
-> > > > > >
-> > > > > > As we said above, for phosphor-hostlogger, the input is still the
-> > > > > > obmc-server unix socket, and the output are still persisted log files.
-> > > > But
-> > > > > > the functionality will get improved (less data loss), code gets
-> > > > simplified
-> > > > > > (no ring buffer and persistence triggering), and it will become easier
-> > > > and
-> > > > > > more performant to get BMCWeb hooked up for log streaming via Redfish.
-> > > > > >
-> > > > > > Please let us know what you think. We appreciate any feedback. Thank
-> > > > you
-> > > > > > very much!
-> > > > > >
-> > > > > > Sincerely,
-> > > > > > Nan
-> > > > >
-> > > > > --
-> > > > > Regards,
-> > > > > Artem Senichev
-> > > > > Software Engineer, YADRO.
-> > > >
