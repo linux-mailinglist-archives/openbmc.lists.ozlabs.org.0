@@ -1,50 +1,50 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F215A38F7EE
-	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 04:09:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBED938F873
+	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 05:03:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FpyF26TZMz301N
-	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 12:09:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FpzS16dJkz301k
+	for <lists+openbmc@lfdr.de>; Tue, 25 May 2021 13:03:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
  smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=jamin_lin@aspeedtech.com;
+ helo=twspam01.aspeedtech.com; envelope-from=steven_lee@aspeedtech.com;
  receiver=<UNKNOWN>)
 Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FpyDn5rZvz2yXd;
- Tue, 25 May 2021 12:08:56 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FpzRn6F9Nz2ymQ;
+ Tue, 25 May 2021 13:03:31 +1000 (AEST)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 14P1tNUP007863;
- Tue, 25 May 2021 09:55:23 +0800 (GMT-8)
- (envelope-from jamin_lin@aspeedtech.com)
+ by twspam01.aspeedtech.com with ESMTP id 14P2o1K3012766;
+ Tue, 25 May 2021 10:50:01 +0800 (GMT-8)
+ (envelope-from steven_lee@aspeedtech.com)
 Received: from aspeedtech.com (192.168.100.253) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 25 May
- 2021 10:08:20 +0800
-Date: Tue, 25 May 2021 10:08:18 +0800
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: Zev Weiss <zweiss@equinix.com>
-Subject: Re: [PATCH 1/3] i2c: aspeed: avoid new registers definition of AST2600
-Message-ID: <20210525020817.GB2489@aspeedtech.com>
-References: <20210519080436.18975-1-jamin_lin@aspeedtech.com>
- <20210519080436.18975-2-jamin_lin@aspeedtech.com>
- <YKVg2Kfbex3DYbNI@packtop> <20210524020846.GB2591@aspeedtech.com>
- <YKwXnPH0XyYLRtfa@packtop>
+ 2021 11:02:58 +0800
+Date: Tue, 25 May 2021 11:02:55 +0800
+From: Steven Lee <steven_lee@aspeedtech.com>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: [PATCH v1 3/3] pinctrl: pinctrl-aspeed-g6: Add sgpio pinctrl
+ settings
+Message-ID: <20210525030254.GA23525@aspeedtech.com>
+References: <20210524111338.16049-1-steven_lee@aspeedtech.com>
+ <20210524111338.16049-4-steven_lee@aspeedtech.com>
+ <43b00f2e-4381-4899-b561-da9a24347f8b@www.fastmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <YKwXnPH0XyYLRtfa@packtop>
+In-Reply-To: <43b00f2e-4381-4899-b561-da9a24347f8b@www.fastmail.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 X-Originating-IP: [192.168.100.253]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 14P1tNUP007863
+X-MAIL: twspam01.aspeedtech.com 14P2o1K3012766
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,104 +56,192 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "open list:OPEN FIRMWARE AND
- FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
- Andrew Jeffery <andrew@aj.id.au>, "moderated list:ARM/ASPEED I2C
- DRIVER" <openbmc@lists.ozlabs.org>, Troy Lee <troy_lee@aspeedtech.com>,
- Brendan Higgins <brendanhiggins@google.com>,
- open list <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- ChiaWei Wang <chiawei_wang@aspeedtech.com>, "moderated
- list:ARM/ASPEED MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>,
- "open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>
+Cc: "open list:OPEN FIRMWARE AND FLATTENED
+ DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>, "moderated list:ASPEED
+ PINCTRL DRIVERS" <linux-aspeed@lists.ozlabs.org>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ open list <linux-kernel@vger.kernel.org>, Hongwei Zhang <Hongweiz@ami.com>,
+ Billy Tsai <billy_tsai@aspeedtech.com>, "open list:ASPEED PINCTRL
+ DRIVERS" <linux-gpio@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ "moderated list:ASPEED
+ PINCTRL DRIVERS" <openbmc@lists.ozlabs.org>, "moderated
+ list:ARM/ASPEED MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The 05/24/2021 21:16, Zev Weiss wrote:
-> On Sun, May 23, 2021 at 09:08:47PM CDT, Jamin Lin wrote:
-> >The 05/19/2021 19:02, Zev Weiss wrote:
-> >> On Wed, May 19, 2021 at 03:04:27AM CDT, Jamin Lin wrote:
-> >> >The register definition between AST2600 A2 and A3 is different.
-> >> >This patch avoid new registers definition of AST2600 to use
-> >> >this driver. We will submit the path for the new registers
-> >> >definition of AST2600.
-> >> >
-> >> >Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> >> >---
-> >> > drivers/i2c/busses/i2c-aspeed.c | 22 ++++++++++++++++++++++
-> >> > 1 file changed, 22 insertions(+)
-> >> >
-> >> >diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-> >> >index 724bf30600d6..007309077d9f 100644
-> >> >--- a/drivers/i2c/busses/i2c-aspeed.c
-> >> >+++ b/drivers/i2c/busses/i2c-aspeed.c
-> >> >@@ -19,14 +19,20 @@
-> >> > #include <linux/irqchip/chained_irq.h>
-> >> > #include <linux/irqdomain.h>
-> >> > #include <linux/kernel.h>
-> >> >+#include <linux/mfd/syscon.h>
-> >> > #include <linux/module.h>
-> >> > #include <linux/of_address.h>
-> >> > #include <linux/of_irq.h>
-> >> > #include <linux/of_platform.h>
-> >> > #include <linux/platform_device.h>
-> >> >+#include <linux/regmap.h>
-> >> > #include <linux/reset.h>
-> >> > #include <linux/slab.h>
-> >> >
-> >> >+/* I2C Global Registers */
-> >> >+/* 0x0c : I2CG Global Control Register (AST2500)  */
-> >> >+#define ASPEED_I2CG_GLOBAL_CTRL_REG			0x0c
-> >> >+
-> >> > /* I2C Register */
-> >> > #define ASPEED_I2C_FUN_CTRL_REG				0x00
-> >> > #define ASPEED_I2C_AC_TIMING_REG1			0x04
-> >> >@@ -973,6 +979,22 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
-> >> > 	struct resource *res;
-> >> > 	int irq, ret;
-> >> >
-> >> >+	if (of_device_is_compatible(pdev->dev.of_node,
-> >> >+				    "aspeed,ast2600-i2c-bus")) {
-> >> >+		u32 global_ctrl;
-> >> >+		struct regmap *gr_regmap;
-> >> >+
-> >> >+		gr_regmap = syscon_regmap_lookup_by_compatible("aspeed,ast2600-i2c-global");
-> >> >+
-> >> >+		if (IS_ERR(gr_regmap)) {
-> >> >+			ret = PTR_ERR(gr_regmap);
-> >> >+		} else {
-> >> >+			regmap_read(gr_regmap, ASPEED_I2CG_GLOBAL_CTRL_REG, &global_ctrl);
-> >> >+			if (global_ctrl & BIT(2))
-> >> >+				return -EIO;
-> >>
-> >> A macro definition might be a bit nicer than a raw BIT(2) here I'd
-> >> think.
-> >Will modify
-> >>
-> >> Also, it seems a bit unfortunate to just bail on the device entirely if
-> >> we find this bit set (seems like a good way for a bootloader to
-> >> inadvertently DoS the kernel), though I guess poking global syscon bits
-> >> in the bus probe function might not be ideal.  Could/should we consider
-> >> some module-level init code to ensure that bit is cleared?
-> >>
-> >>
-> >We use syscon API to get the global register of i2c not the specific i2c
-> >bus.
-> >Can you describe it more detail?
+The 05/25/2021 08:54, Andrew Jeffery wrote:
+> Hi Steven,
 > 
-> Sure -- I just meant that if for whatever reason the kernel is booting
-> on a system that's had that syscon bit set to enable the new register
-> access mode (e.g. by a newer bootloader or something), it seems like
-> we'd just give up entirely on enabling any i2c busses, when as far as I
-> know there shouldn't be anything stopping us from resetting the bit back
-> to be in the state this driver needs it to be in (old register mode) and
-> then continuing along normally.
+> On Mon, 24 May 2021, at 20:43, Steven Lee wrote:
+> > AST2600 supports 2 SGPIO master interfaces and 2 SGPIO slave interfaces.
+> > Current pinctrl driver only define the first sgpio master and slave
+> > interfaces.
+> > The sencond SGPIO master and slave interfaces should be added in
+> > pinctrl driver as well.
+> > 
+> > Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> > ---
+> >  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 24 ++++++++++++++++++----
+> >  drivers/pinctrl/aspeed/pinmux-aspeed.h     |  9 ++++++++
+> >  2 files changed, 29 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c 
+> > b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+> > index 5c1a109842a7..d0e9ab9d1a9c 100644
+> > --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+> > +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+> > @@ -46,8 +46,10 @@
+> >  #define SCU620		0x620 /* Disable GPIO Internal Pull-Down #4 */
+> >  #define SCU634		0x634 /* Disable GPIO Internal Pull-Down #5 */
+> >  #define SCU638		0x638 /* Disable GPIO Internal Pull-Down #6 */
+> > +#define SCU690		0x690 /* Multi-function Pin Control #24 */
+> >  #define SCU694		0x694 /* Multi-function Pin Control #25 */
+> >  #define SCU69C		0x69C /* Multi-function Pin Control #27 */
+> > +#define SCU6D0		0x6D0 /* Multi-function Pin Control #29 */
+> >  #define SCUC20		0xC20 /* PCIE configuration Setting Control */
+> >  
+> >  #define ASPEED_G6_NR_PINS 256
+> > @@ -81,13 +83,17 @@ FUNC_GROUP_DECL(I2C12, L26, K24);
+> >  #define K26 4
+> >  SIG_EXPR_LIST_DECL_SESG(K26, MACLINK1, MACLINK1, SIG_DESC_SET(SCU410, 4));
+> >  SIG_EXPR_LIST_DECL_SESG(K26, SCL13, I2C13, SIG_DESC_SET(SCU4B0, 4));
+> > -PIN_DECL_2(K26, GPIOA4, MACLINK1, SCL13);
+> > +SIG_EXPR_LIST_DECL_SESG(K26, SGPS2CK, SGPS2, SIG_DESC_SET(SCU690, 4));
+> > +SIG_EXPR_LIST_DECL_SESG(K26, SGPM2CLK, SGPM2, SIG_DESC_SET(SCU6D0, 4));
+> > +PIN_DECL_4(K26, GPIOA4, SGPM2CLK, SGPS2CK, MACLINK1, SCL13);
 > 
+> Is this the right priority order? Looking at the Multi-Function Pin 
+> Mapping and Control table, function 1 is MACLINK1,
+> function 2 is SCL13, function 3 is SGPS2CK, and I assume function 4 
+> would be SGPM2CLK, except it's not documented in the table in v9 of the 
+> datasheet (I hope it will be documented?).
 > 
-> Zev
+> If function 1 is the highest priority (which is what all the Aspeed 
+> pinctrl drivers assume), then this should be:
+> 
+> PIN_DECL_4(K26, GPIOA4, MACLINK1, SCL13, SGPS2CK, SGPM2CLK);
+> 
+> Anyway, one of several things could be at fault here:
+> 
+> 1. I've made a wrong assumption about the priority order in how I've 
+> implemented pinctrl support for Aspeed SoCs
+> 
+> 2. The Multi-Function Pin Mapping and Control table is out of date and 
+> needs to be fixed (which it already does as it doesn't list SGPM2CLK).
+> 
+> 3. The patch needs to align with the assumptions of the Aspeed pinctrl 
+> support.
+> 
+> I don't think it's 1 as I haven't heard of any issues where we are 
+> getting incorrect behaviour because of pinmux. I don't think it's 2 as 
+> this patch makes a non-linear change to the ordering. So my hunch is
+> the issue is 3, that the patch is putting the signals in the wrong order.
+> In this case, you want the PIN_DECL_4(...) I outlined above.
+> 
 
-Thanks for your suggestion. I will submit the new i2c driver for
-AST2600.
-Jamin
+Yes, you are right. Per discussion with the designer, the priority order is
+MACLINK1 > SCL13 > SGPS2CK > SGPM2CLK
+
+We will add the information in the v10 datasheet.
+
+> >  FUNC_GROUP_DECL(MACLINK1, K26);
+> >  
+> >  #define L24 5
+> >  SIG_EXPR_LIST_DECL_SESG(L24, MACLINK2, MACLINK2, SIG_DESC_SET(SCU410, 5));
+> >  SIG_EXPR_LIST_DECL_SESG(L24, SDA13, I2C13, SIG_DESC_SET(SCU4B0, 5));
+> > -PIN_DECL_2(L24, GPIOA5, MACLINK2, SDA13);
+> > +SIG_EXPR_LIST_DECL_SESG(L24, SGPS2LD, SGPS2, SIG_DESC_SET(SCU690, 5));
+> > +SIG_EXPR_LIST_DECL_SESG(L24, SGPM2LD, SGPM2, SIG_DESC_SET(SCU6D0, 5));
+> > +PIN_DECL_4(L24, GPIOA5, SGPM2LD, SGPS2LD, MACLINK2, SDA13);
+> 
+> See above.
+> 
+
+Will change the order.
+
+> >  FUNC_GROUP_DECL(MACLINK2, L24);
+> >  
+> >  FUNC_GROUP_DECL(I2C13, K26, L24);
+> > @@ -95,16 +101,22 @@ FUNC_GROUP_DECL(I2C13, K26, L24);
+> >  #define L23 6
+> >  SIG_EXPR_LIST_DECL_SESG(L23, MACLINK3, MACLINK3, SIG_DESC_SET(SCU410, 6));
+> >  SIG_EXPR_LIST_DECL_SESG(L23, SCL14, I2C14, SIG_DESC_SET(SCU4B0, 6));
+> > -PIN_DECL_2(L23, GPIOA6, MACLINK3, SCL14);
+> > +SIG_EXPR_LIST_DECL_SESG(L23, SGPS2O, SGPS2, SIG_DESC_SET(SCU690, 6));
+> > +SIG_EXPR_LIST_DECL_SESG(L23, SGPM2O, SGPM2, SIG_DESC_SET(SCU6D0, 6));
+> > +PIN_DECL_4(L23, GPIOA6, SGPM2O, SGPS2O, MACLINK3, SCL14);
+> 
+> See above.
+> 
+
+Will change the order.
+
+> >  FUNC_GROUP_DECL(MACLINK3, L23);
+> >  
+> >  #define K25 7
+> >  SIG_EXPR_LIST_DECL_SESG(K25, MACLINK4, MACLINK4, SIG_DESC_SET(SCU410, 7));
+> >  SIG_EXPR_LIST_DECL_SESG(K25, SDA14, I2C14, SIG_DESC_SET(SCU4B0, 7));
+> > -PIN_DECL_2(K25, GPIOA7, MACLINK4, SDA14);
+> > +SIG_EXPR_LIST_DECL_SESG(K25, SGPS2I, SGPS2, SIG_DESC_SET(SCU690, 7));
+> > +SIG_EXPR_LIST_DECL_SESG(K25, SGPM2I, SGPM2, SIG_DESC_SET(SCU6D0, 7));
+> > +PIN_DECL_4(K25, GPIOA7, SGPM2I, SGPS2I, MACLINK4, SDA14);
+> 
+> See above.
+> 
+
+Will change the order.
+
+> >  FUNC_GROUP_DECL(MACLINK4, K25);
+> >  
+> >  FUNC_GROUP_DECL(I2C14, L23, K25);
+> > +FUNC_GROUP_DECL(SGPM2, K26, L24, L23, K25);
+> > +FUNC_GROUP_DECL(SGPS2, K26, L24, L23, K25);
+> >  
+> >  #define J26 8
+> >  SIG_EXPR_LIST_DECL_SESG(J26, SALT1, SALT1, SIG_DESC_SET(SCU410, 8));
+> > @@ -2060,7 +2072,9 @@ static const struct aspeed_pin_group 
+> > aspeed_g6_groups[] = {
+> >  	ASPEED_PINCTRL_GROUP(EMMCG4),
+> >  	ASPEED_PINCTRL_GROUP(EMMCG8),
+> >  	ASPEED_PINCTRL_GROUP(SGPM1),
+> > +	ASPEED_PINCTRL_GROUP(SGPM2),
+> >  	ASPEED_PINCTRL_GROUP(SGPS1),
+> > +	ASPEED_PINCTRL_GROUP(SGPS2),
+> >  	ASPEED_PINCTRL_GROUP(SIOONCTRL),
+> >  	ASPEED_PINCTRL_GROUP(SIOPBI),
+> >  	ASPEED_PINCTRL_GROUP(SIOPBO),
+> > @@ -2276,7 +2290,9 @@ static const struct aspeed_pin_function 
+> > aspeed_g6_functions[] = {
+> >  	ASPEED_PINCTRL_FUNC(SD1),
+> >  	ASPEED_PINCTRL_FUNC(SD2),
+> >  	ASPEED_PINCTRL_FUNC(SGPM1),
+> > +	ASPEED_PINCTRL_FUNC(SGPM2),
+> >  	ASPEED_PINCTRL_FUNC(SGPS1),
+> > +	ASPEED_PINCTRL_FUNC(SGPS2),
+> >  	ASPEED_PINCTRL_FUNC(SIOONCTRL),
+> >  	ASPEED_PINCTRL_FUNC(SIOPBI),
+> >  	ASPEED_PINCTRL_FUNC(SIOPBO),
+> > diff --git a/drivers/pinctrl/aspeed/pinmux-aspeed.h 
+> > b/drivers/pinctrl/aspeed/pinmux-aspeed.h
+> > index dba5875ff276..125df796af36 100644
+> > --- a/drivers/pinctrl/aspeed/pinmux-aspeed.h
+> > +++ b/drivers/pinctrl/aspeed/pinmux-aspeed.h
+> > @@ -730,6 +730,15 @@ struct aspeed_pin_desc {
+> >  			SIG_EXPR_LIST_PTR(pin, low), \
+> >  			SIG_EXPR_LIST_PTR(pin, other))
+> >  
+> > +#define PIN_DECL_4(pin, other, high, medium, low1, low2) \
+> 
+> Bit of a nit pick, but we might as well drop identifying the priorities 
+> as high, medium and low given we now have low1 and low2. Maybe 
+> something like this:
+> 
+> #define PIN_DECL_4(pin, other, prio1, prio2, prio3, prio4)
+> 
+
+Will modify the the macros.
+
+> Cheers,
+> 
+> Andrew
