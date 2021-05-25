@@ -1,93 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9211C390C90
-	for <lists+openbmc@lfdr.de>; Wed, 26 May 2021 01:00:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13B1F390CBD
+	for <lists+openbmc@lfdr.de>; Wed, 26 May 2021 01:07:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FqV0q4RTGz300Q
-	for <lists+openbmc@lfdr.de>; Wed, 26 May 2021 09:00:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FqV94127rz2yy3
+	for <lists+openbmc@lfdr.de>; Wed, 26 May 2021 09:07:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=r+Ba5JSf;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=j/tvEBgc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=Mvl0tSmi;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=LCbnZqyD;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.230;
- helo=new4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.20;
+ helo=wout4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=r+Ba5JSf; 
+ header.s=fm2 header.b=Mvl0tSmi; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=j/tvEBgc; 
+ header.a=rsa-sha256 header.s=fm2 header.b=LCbnZqyD; 
  dkim-atps=neutral
-Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
- [66.111.4.230])
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
+ [64.147.123.20])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FqV0S5g9Tz2yXW;
- Wed, 26 May 2021 09:00:07 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FqV8n6lzcz2xdM
+ for <openbmc@lists.ozlabs.org>; Wed, 26 May 2021 09:07:21 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 08757580F64;
- Tue, 25 May 2021 19:00:04 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 8771A16D3;
+ Tue, 25 May 2021 19:07:17 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Tue, 25 May 2021 19:00:04 -0400
+ by compute3.internal (MEProxy); Tue, 25 May 2021 19:07:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=k2E6Xl2OGkKHi1Co9wKE/zYBcsaaJtP
- CLHu3XoEVoQ0=; b=r+Ba5JSfHnYEVlp/TkUTUnYG03Qko6M6XZGkGlDC6YcunKf
- BHWlxaBLNmYkqWyR36EMS+hW/z3uQfM439RN4++ABiAzQDLFOAAiWudJRqpxMH6J
- lkEwppBtDbcXRzKaTCSFVxcQh8EB+kzSbOJ2EqdmCyy4PLXeT5N1CbAxRADLCIde
- er8+tAw/sdHdbJnOxoeSjdGuVqB8/VU4vGiVg8uN51zalxvra21PM5iF5CVK4Qbw
- IodHaj4AY2mY+DCsicOEWt/mTq9vWpYx+gnghHgrDkNIRoT31CkeOSs8nBTL3Rl7
- pirZlfhAYnHp+cF+29zgtjTMAb9aRshlz5O90xQ==
+ :subject:content-type:content-transfer-encoding; s=fm2; bh=WOjun
+ 4fxGjdITpde8FL93FAgzsjHz5ftF2Yrq5ld384=; b=Mvl0tSmi14OaY9xwAfcJF
+ mwDfZ0b5Wag+MysXXGtWmthl/wKYx3X4FIvIYzfWOYYAHVeY4Hn3P4FM6GxHWPEW
+ 5pK4r3RRNX6kQsHz1f+7TTUgDhscaWSNV5EacbcmMGJ3ITX7ob0nbwjZs8sU0+GL
+ nlGppo1lop9H1j+EjKyvYch9g+kHgABEo2stDPRyXH/7Q5/SGXmDRFCyvQieQVFv
+ D3op8I6j1JkQk+qZHxYIo1v97bJOB3/EBtLya6UCQdA5W+V8aSf+yjGlJoC66FF/
+ XdX9d6MXXS1aCo2+1ghtp6efOktsT+RJQ7eZ5qt22taq/X1PR3nB5UdFdVKS5OKz
+ A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=k2E6Xl
- 2OGkKHi1Co9wKE/zYBcsaaJtPCLHu3XoEVoQ0=; b=j/tvEBgcYT6NruAOEo3pmY
- NFb2EXKVliDobySmbPRtNYOyV1iIUzK1TKy4x/RWO85Ehi7yeLPyWjPT/4LqJ5kM
- tT75MNO8RJ+xkmG+WE+sT9aS42wi9qbN7S8B0X6+bEQy7+MabqEKyiwiDbcARWBS
- zU3jptQswjST6QeAGjqNYjREgPUmk8A+o5cQbIF/NyYA9eVxmV3V3XNmKNko3mWh
- lOsBOW5wpb0TdeO7+BUvROO+GKlOUgUqI3+UhDkpp0w1cux/ESh4hDeaXWzUjNwo
- t0iLJ1dmo+WjC7Tub1KqwQrTSMOQHH+fAV5IPXOiUTjvbbg7wmsV3YJE/hQAGSKw
- ==
-X-ME-Sender: <xms:coGtYGCUw_IwHteOiD36wp6XozWVtIrqrZEQR6pmnzy2hZWcm0s56g>
- <xme:coGtYAiJCmUqHCyBkbEi-cGrKurmv-_JD49TRsgimGYLHezCwQ6Q8tluCrAoXDN1H
- tiQCitaXuXEu-iTeA>
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=WOjun4fxGjdITpde8FL93FAgzsjHz5ftF2Yrq5ld3
+ 84=; b=LCbnZqyDfZ7OP4OcWaA9KJbJFNmxb2pWbAT17khoh/tnKQDx3DCOoOnPf
+ h3QFvc+MtjT9R6LgaRlionWgdjOiLb3ezV8R9t4Lblco3L7H7LZ5fC3+S0DHPRfk
+ 0CfxftyCB2lux3Ku9J2M1svZuMJoVDXX60K0jkS1B7ZMTi9VC1FPcxbMd9GSXNex
+ P/V5SOMr3QuXxOK/ns5pKx/PbDPSjUsMImoYR+x7Tqawryaz7TWWkJHs/plavSaq
+ eXZMUO9EvRjE80K2DTPjFyr5SqPifYloSkzw0ywkvVFBovCNzvMZOAeE8OOnCDLH
+ TcNqQhY1eHJuFBaRTKZdTdGST0EkQ==
+X-ME-Sender: <xms:I4OtYIOw7nYo4mxlg3skQyfwYjobgOVQ5v5NI5LJV0v_1ZIf5Rwlog>
+ <xme:I4OtYO_18LAsfH2IoJxLWPGb8Y9XzfhF5V1fJDDn8W0q3_7rNazR15x5NFMVobl23
+ FLC2DG90ZWuLZySLA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdekvddgudeiucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepkeekteekuddvffeigeetkeegudduffejfffguedvveffvdekheeivdet
- hefftefhnecuffhomhgrihhnpehlkhhmlhdrohhrghenucevlhhushhtvghrufhiiigvpe
- dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:coGtYJngWbcMwKlahILBMLZx3vkNJjDejNejGHrMeWeEqwvPh7m-9w>
- <xmx:coGtYEyD_dC7VoMgHak49JjdCvUWccHAklJzntTLHG7mlGK5DGQ41g>
- <xmx:coGtYLTzOu7698bAdzm07BYsxnElSqI1BLC96NBw9gLMSRUbnR4TMA>
- <xmx:dIGtYDYUKATlHWFKXDhHESTfJoCiGjHfn1sIw-EOM3IEM8KuwvywoQ>
+ cujfgurhepofgfggfkjghffffhvffutgfgsehtqhertderreejnecuhfhrohhmpedftehn
+ ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
+ frrghtthgvrhhnpedvgeekheegfedvhfethefhudetteegueeggfeiieegueehkedugedt
+ kefglefgheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+ hmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:I4OtYPTIQcWCXO2H7tKIHumG8ZZIO1yALhOGp38wFarks_DsQs_2Dw>
+ <xmx:I4OtYAs0YTUAoSdnrPy0mPSYDTXHRC23aF_G7JJKE8eMEZu73-M40w>
+ <xmx:I4OtYAfPjM9EklpJSMFMMP_soX4SAp6XmevV4tJVqdwupqp2OBQzOg>
+ <xmx:JYOtYMGVyLZ7RcZejJe5PV6p0sVbG4Y7xVpq8E3AC88cOIMUBN1vSw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 159C4A00079; Tue, 25 May 2021 19:00:02 -0400 (EDT)
+ id 9D440A00079; Tue, 25 May 2021 19:07:15 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-448-gae190416c7-fm-20210505.004-gae190416
 Mime-Version: 1.0
-Message-Id: <e95c5263-d50f-4316-bb93-e14449559b1b@www.fastmail.com>
-In-Reply-To: <CACPK8XfdYAcx=RX07hf1ar8A7th8G8390exvKbgh92X=ov8u2A@mail.gmail.com>
-References: <20210524073308.9328-1-steven_lee@aspeedtech.com>
- <CACPK8XcfvUQD5xwb=2Va5Sr+bmaWfJMZkh61HK1=J1qLYc84zQ@mail.gmail.com>
- <20210525094815.GA8757@aspeedtech.com>
- <CACPK8XfdYAcx=RX07hf1ar8A7th8G8390exvKbgh92X=ov8u2A@mail.gmail.com>
-Date: Wed, 26 May 2021 08:29:41 +0930
+Message-Id: <9d6af632-ce29-4b4e-b039-077913cc9e0d@www.fastmail.com>
+In-Reply-To: <3c87dea1.379a.179a29ccce3.Coremail.ouyangxuan10@163.com>
+References: <5ad9e979.1337.1799386d2c8.Coremail.ouyangxuan10@163.com>
+ <682a1194-bb2c-42c5-a4d5-1fb3a7ae750d@www.fastmail.com>
+ <3c87dea1.379a.179a29ccce3.Coremail.ouyangxuan10@163.com>
+Date: Wed, 26 May 2021 08:36:24 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>, "Steven Lee" <steven_lee@aspeedtech.com>
-Subject: =?UTF-8?Q?Re:_[PATCH_v5_0/4]_mmc:_sdhci-of-aspeed:_Support_toggling_SD_b?=
- =?UTF-8?Q?us_signal?=
-Content-Type: text/plain
+To: www <ouyangxuan10@163.com>
+Subject: =?UTF-8?Q?Re:_[openbmc-qemu]:_Add_read_mac_from_eeprom_in_uboot_by_i2c_a?=
+ =?UTF-8?Q?nd_lead_to_the_image_unable_to_start__in_QEMU=3F?=
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,73 +100,79 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
- "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
- linux-mmc <linux-mmc@vger.kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
- Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
- open list <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Hongwei Zhang <Hongweiz@ami.com>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-arm-kernel@lists.infradead.org>
+Cc: openbmc@lists.ozlabs.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Byron,
 
+I've Cc'ed the openbmc mailing list on this reply.
 
-On Tue, 25 May 2021, at 22:26, Joel Stanley wrote:
-> On Tue, 25 May 2021 at 09:48, Steven Lee <steven_lee@aspeedtech.com> wrote:
+On Tue, 25 May 2021, at 17:50, www wrote:
+>=20
+>=20
+> At 2021-05-24 08:22:58, "Andrew Jeffery" <andrew@aj.id.au> wrote:
+> >Hi Byron
 > >
-> > The 05/25/2021 15:55, Joel Stanley wrote:
-> > > When I was testing on my A2 EVB I saw this:
-> > >
-> > > [    1.436219] sdhci-aspeed 1e750100.sdhci: Requested out of range
-> > > phase tap 192 for 9 degrees of phase compensation at 1562500Hz,
-> > > clamping to tap 15
-> > > [    1.450913] sdhci-aspeed 1e750100.sdhci: Requested out of range
-> > > phase tap 963 for 45 degrees of phase compensation at 1562500Hz,
-> > > clamping to tap 15
-> > >
-> > > Do you know what is happening there?
-> > >
+> >On Sat, 22 May 2021, at 19:32, www wrote:
+> >> Hi Andrew Jeffery, Joel Stanley & C=C3=A9dric Le Goater,
+> >>=20
+> >> chip=EF=BC=9Aaspeed 2500
+> >> uboot =EF=BC=9A u-boot-2016.07  commit-id: cc6c5bef00ebbac0b37
+> >> platform: romulus
+> >>=20
+> >> I enable read mac from eeprom by i2c in uboot, and lead to  the ima=
+ge=20
+> >> unable to start  in QEMU. The startup process stops at "Starting ke=
+rnel=20
+> >> ...=E2=80=9C
+> >> I'd like to ask:
+> >> 1. How can I solve this problem? Do you have any suggestions?
 > >
-> > Per MMC spec, eMMC bus speed is set as legacy mode(0~26MHz) at startup of
-> > eMMC initializtion flow. Clock phase calculation is triggered in set_clock()
-> > and it calculates taps based on phase_deg(<9>, <225>) in the dts file and the
-> > current speed(1562500Hz), which causes the warning message you mentioned.
-> > As the phase_deg in the dts file should be calculated with 100MHz.
+> >Can you please configure your kernel with the following and re-run?
 > >
-> > https://lkml.org/lkml/2021/5/24/95
+> > CONFIG_DEBUG_LL=3Dy
+> > CONFIG_DEBUG_LL_UART_8250=3Dy
+> > CONFIG_DEBUG_UART_PHYS=3D0x1e784000
+> > CONFIG_DEBUG_UART_VIRT=3D0xf8184000
 > >
-> > But after some initialization flow, eMMC bus speed will be set to
-> > correct speed(100MHz).
-> > Clock phase calculation will be triggered again to get correct taps.
-> 
-> Thanks for the explanation. I added another debug print and I can see
-> it doing what you describe:
-> 
-> [    1.465904] sdhci-aspeed 1e750100.sdhci: Requested out of range
-> phase tap 192 for 9 degrees of phase compensation at 1562500Hz,
-> clamping to tap 15
-> [    1.480598] sdhci-aspeed 1e750100.sdhci: rate 1562500 phase 9 tap 15
-> [    1.490316] sdhci-aspeed 1e750100.sdhci: Requested out of range
-> phase tap 963 for 45 degrees of phase compensation at 1562500Hz,
-> clamping to tap 15
-> [    1.505077] sdhci-aspeed 1e750100.sdhci: rate 1562500 phase 45 tap 15
-> [    1.515059] sdhci-aspeed 1e750100.sdhci: rate 100000000 phase 9 tap 3
-> [    1.524886] sdhci-aspeed 1e750100.sdhci: rate 100000000 phase 45 tap 15
-> [    1.534904] sdhci-aspeed 1e750100.sdhci: rate 100000000 phase 9 tap 3
-> [    1.544713] sdhci-aspeed 1e750100.sdhci: rate 100000000 phase 45 tap 15
-> 
-> We should change the "out of range" message to be dev_dbg, as it is
-> expected on a normal boot.
+> I set up these four items and didn't print any information.
+> then I add "*#define DEBUG*" in the file of *arch/arm/boot/compressed/=
+head.S*,=20
+> It's just one more line printed.
 
-I would think the issue is rather that we shouldn't be applying a phase 
-correction for a bus speed that isn't what the correction was specified 
-for.
+Sorry, I failed to mention that you also need to add 'debug' and=20
+'earlyprintk' to your kernel commandline (i.e. append them to the=20
+'bootargs' u-boot environment variable) for the CONFIG_DEBUG_* bits=20
+above to be useful.
 
-Let me look at this a bit further.
+Let me know if that helps.
 
 Andrew
+
+>=20
+> thanks,
+> Byron
+>=20
+> >This allows us to see the kernel log before the UART driver is probed=
+.
+> >
+> >Also, please ask these questions on the mailing list. Other people=20=
+
+> >might have similar problems and so a public discussion will help them=
+=20
+> >too. Posting publicly can help you also, because you're relying on at=
+=20
+> >least one of the three of us to reply to you in a reasonable timefram=
+e.=20
+> >If your question is public anyone who has the skills and time can chi=
+me=20
+> >in to help you out.
+> >
+> >Andrew
+>=20
+>=20
+> =20
+>=20
+> Attachments:
+> * image.png
