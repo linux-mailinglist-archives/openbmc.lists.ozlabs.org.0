@@ -1,64 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59B82390BE4
-	for <lists+openbmc@lfdr.de>; Wed, 26 May 2021 00:03:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9211C390C90
+	for <lists+openbmc@lfdr.de>; Wed, 26 May 2021 01:00:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FqSkg5rfLz2ywx
-	for <lists+openbmc@lfdr.de>; Wed, 26 May 2021 08:03:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FqV0q4RTGz300Q
+	for <lists+openbmc@lfdr.de>; Wed, 26 May 2021 09:00:27 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=S+Ns+lOH;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=r+Ba5JSf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=j/tvEBgc;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::22d;
- helo=mail-lj1-x22d.google.com; envelope-from=jebr@google.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.230;
+ helo=new4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=S+Ns+lOH; dkim-atps=neutral
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com
- [IPv6:2a00:1450:4864:20::22d])
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=r+Ba5JSf; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=j/tvEBgc; 
+ dkim-atps=neutral
+Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
+ [66.111.4.230])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FqSkM0NGPz2xvQ
- for <openbmc@lists.ozlabs.org>; Wed, 26 May 2021 08:02:49 +1000 (AEST)
-Received: by mail-lj1-x22d.google.com with SMTP id e11so40125211ljn.13
- for <openbmc@lists.ozlabs.org>; Tue, 25 May 2021 15:02:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=h5AqLyEfVPuQ7GC2SKSYcQN9pvxWWKzNxcfchCDfTcU=;
- b=S+Ns+lOHYyoddWMpz94E5UrPR4kd1MoUfPOGd0eWDxRQ08TGHn5AlVdDe4lTt0vToR
- j1OcMFsy84jkaDv7JbpmBMcD0Mmnl7p0udzc9JxpwAzadEsAEJitDK4PCPDTGTfC3ZdQ
- zyWx28qTQ0BcRP5svazcBWEh1+XgfZh8Rw8RpzdIiz6ab/ro2hvh7gb2srEcZ0aAH0ca
- flBs0iNvasbysfehbieeiLfy4PiZX1lebswGBNStQDNs5zaS0JLASG+S5hXUycSOf/Kp
- N8uUoU+JyQR9NEZl09V9xHNkaRfSqNLkJl1KniWPvI50zHdoqpVZ5S5/5ZDZBHYoAYJD
- BAKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=h5AqLyEfVPuQ7GC2SKSYcQN9pvxWWKzNxcfchCDfTcU=;
- b=msfvbQ7Hctx/mq7FOXZhpOZmSoKM0YvovGpik1ELJEJkACSJMlyOOXDRiTTpI4XKFn
- cZRihw8F1Egl/hS8IxjEIMEOLR1PKV+kvWVYcHtiTSFAEYrp2pXLDEgkF4XUb4X02N9v
- uRZMZsiHMqZOdp0nqh3a3tjvULDUAjc6LdVs8eS2h8t3g2PWR7pN4TNx/MalruTrjRU9
- pw66ov/JStgNpLaETmTigLk4Kqzhv/Xw2iMSbykQXjwK/swzYpOvOwbjLvWQ/ViIPwl4
- FbUkfrJOjdYVFFjOdnThCJ5w0RzOgxLswH/vt/FXjRuJcKBBRGtQ9iEoJYFRCoKimV8y
- xlWw==
-X-Gm-Message-State: AOAM530oTehjfeT1ARvTqRgrGzxSP/MYroAAZJ7RyhsaJz29NvzKW5B/
- NYgNqtMKIErxZB41YonUe9euCT+4xn9lKj+xsFwwBMxlH06cvg==
-X-Google-Smtp-Source: ABdhPJzSLtFDKqzE8bgJo/15VP4bITzBIq+fCegRiiyHqe76McZNxZlAT7FrsoMZI2/tPz9Vaqc3YYjq8Pg4Karrl8k=
-X-Received: by 2002:a2e:9102:: with SMTP id m2mr22574575ljg.29.1621980164599; 
- Tue, 25 May 2021 15:02:44 -0700 (PDT)
-MIME-Version: 1.0
-From: John Broadbent <jebr@google.com>
-Date: Tue, 25 May 2021 17:02:33 -0500
-Message-ID: <CAPw1Ef8KUEAQGxJ39uP-D5yWVCtwRBH4P9FPDzjXrMGkBzsWxA@mail.gmail.com>
-Subject: bmcweb change will effect all redfish nodes
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="0000000000008b8d2505c32eafa9"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FqV0S5g9Tz2yXW;
+ Wed, 26 May 2021 09:00:07 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 08757580F64;
+ Tue, 25 May 2021 19:00:04 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Tue, 25 May 2021 19:00:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm2; bh=k2E6Xl2OGkKHi1Co9wKE/zYBcsaaJtP
+ CLHu3XoEVoQ0=; b=r+Ba5JSfHnYEVlp/TkUTUnYG03Qko6M6XZGkGlDC6YcunKf
+ BHWlxaBLNmYkqWyR36EMS+hW/z3uQfM439RN4++ABiAzQDLFOAAiWudJRqpxMH6J
+ lkEwppBtDbcXRzKaTCSFVxcQh8EB+kzSbOJ2EqdmCyy4PLXeT5N1CbAxRADLCIde
+ er8+tAw/sdHdbJnOxoeSjdGuVqB8/VU4vGiVg8uN51zalxvra21PM5iF5CVK4Qbw
+ IodHaj4AY2mY+DCsicOEWt/mTq9vWpYx+gnghHgrDkNIRoT31CkeOSs8nBTL3Rl7
+ pirZlfhAYnHp+cF+29zgtjTMAb9aRshlz5O90xQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=k2E6Xl
+ 2OGkKHi1Co9wKE/zYBcsaaJtPCLHu3XoEVoQ0=; b=j/tvEBgcYT6NruAOEo3pmY
+ NFb2EXKVliDobySmbPRtNYOyV1iIUzK1TKy4x/RWO85Ehi7yeLPyWjPT/4LqJ5kM
+ tT75MNO8RJ+xkmG+WE+sT9aS42wi9qbN7S8B0X6+bEQy7+MabqEKyiwiDbcARWBS
+ zU3jptQswjST6QeAGjqNYjREgPUmk8A+o5cQbIF/NyYA9eVxmV3V3XNmKNko3mWh
+ lOsBOW5wpb0TdeO7+BUvROO+GKlOUgUqI3+UhDkpp0w1cux/ESh4hDeaXWzUjNwo
+ t0iLJ1dmo+WjC7Tub1KqwQrTSMOQHH+fAV5IPXOiUTjvbbg7wmsV3YJE/hQAGSKw
+ ==
+X-ME-Sender: <xms:coGtYGCUw_IwHteOiD36wp6XozWVtIrqrZEQR6pmnzy2hZWcm0s56g>
+ <xme:coGtYAiJCmUqHCyBkbEi-cGrKurmv-_JD49TRsgimGYLHezCwQ6Q8tluCrAoXDN1H
+ tiQCitaXuXEu-iTeA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdekvddgudeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhepkeekteekuddvffeigeetkeegudduffejfffguedvveffvdekheeivdet
+ hefftefhnecuffhomhgrihhnpehlkhhmlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+ dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:coGtYJngWbcMwKlahILBMLZx3vkNJjDejNejGHrMeWeEqwvPh7m-9w>
+ <xmx:coGtYEyD_dC7VoMgHak49JjdCvUWccHAklJzntTLHG7mlGK5DGQ41g>
+ <xmx:coGtYLTzOu7698bAdzm07BYsxnElSqI1BLC96NBw9gLMSRUbnR4TMA>
+ <xmx:dIGtYDYUKATlHWFKXDhHESTfJoCiGjHfn1sIw-EOM3IEM8KuwvywoQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 159C4A00079; Tue, 25 May 2021 19:00:02 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-448-gae190416c7-fm-20210505.004-gae190416
+Mime-Version: 1.0
+Message-Id: <e95c5263-d50f-4316-bb93-e14449559b1b@www.fastmail.com>
+In-Reply-To: <CACPK8XfdYAcx=RX07hf1ar8A7th8G8390exvKbgh92X=ov8u2A@mail.gmail.com>
+References: <20210524073308.9328-1-steven_lee@aspeedtech.com>
+ <CACPK8XcfvUQD5xwb=2Va5Sr+bmaWfJMZkh61HK1=J1qLYc84zQ@mail.gmail.com>
+ <20210525094815.GA8757@aspeedtech.com>
+ <CACPK8XfdYAcx=RX07hf1ar8A7th8G8390exvKbgh92X=ov8u2A@mail.gmail.com>
+Date: Wed, 26 May 2021 08:29:41 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joel Stanley" <joel@jms.id.au>, "Steven Lee" <steven_lee@aspeedtech.com>
+Subject: =?UTF-8?Q?Re:_[PATCH_v5_0/4]_mmc:_sdhci-of-aspeed:_Support_toggling_SD_b?=
+ =?UTF-8?Q?us_signal?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,36 +99,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
+ "moderated list:ASPEED SD/MMC DRIVER" <openbmc@lists.ozlabs.org>,
+ linux-mmc <linux-mmc@vger.kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
+ Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
+ open list <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Hongwei Zhang <Hongweiz@ami.com>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000008b8d2505c32eafa9
-Content-Type: text/plain; charset="UTF-8"
 
-There is a large change in bmcweb that we plan to submit soon.
-It will resolve the issue 181 <https://github.com/openbmc/bmcweb/issues/181> by
-removing the node class. Before Ed,Gunnar, and I push this change, we want
-to make sure there are no outstanding concerns.
 
-https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/42083
+On Tue, 25 May 2021, at 22:26, Joel Stanley wrote:
+> On Tue, 25 May 2021 at 09:48, Steven Lee <steven_lee@aspeedtech.com> wrote:
+> >
+> > The 05/25/2021 15:55, Joel Stanley wrote:
+> > > When I was testing on my A2 EVB I saw this:
+> > >
+> > > [    1.436219] sdhci-aspeed 1e750100.sdhci: Requested out of range
+> > > phase tap 192 for 9 degrees of phase compensation at 1562500Hz,
+> > > clamping to tap 15
+> > > [    1.450913] sdhci-aspeed 1e750100.sdhci: Requested out of range
+> > > phase tap 963 for 45 degrees of phase compensation at 1562500Hz,
+> > > clamping to tap 15
+> > >
+> > > Do you know what is happening there?
+> > >
+> >
+> > Per MMC spec, eMMC bus speed is set as legacy mode(0~26MHz) at startup of
+> > eMMC initializtion flow. Clock phase calculation is triggered in set_clock()
+> > and it calculates taps based on phase_deg(<9>, <225>) in the dts file and the
+> > current speed(1562500Hz), which causes the warning message you mentioned.
+> > As the phase_deg in the dts file should be calculated with 100MHz.
+> >
+> > https://lkml.org/lkml/2021/5/24/95
+> >
+> > But after some initialization flow, eMMC bus speed will be set to
+> > correct speed(100MHz).
+> > Clock phase calculation will be triggered again to get correct taps.
+> 
+> Thanks for the explanation. I added another debug print and I can see
+> it doing what you describe:
+> 
+> [    1.465904] sdhci-aspeed 1e750100.sdhci: Requested out of range
+> phase tap 192 for 9 degrees of phase compensation at 1562500Hz,
+> clamping to tap 15
+> [    1.480598] sdhci-aspeed 1e750100.sdhci: rate 1562500 phase 9 tap 15
+> [    1.490316] sdhci-aspeed 1e750100.sdhci: Requested out of range
+> phase tap 963 for 45 degrees of phase compensation at 1562500Hz,
+> clamping to tap 15
+> [    1.505077] sdhci-aspeed 1e750100.sdhci: rate 1562500 phase 45 tap 15
+> [    1.515059] sdhci-aspeed 1e750100.sdhci: rate 100000000 phase 9 tap 3
+> [    1.524886] sdhci-aspeed 1e750100.sdhci: rate 100000000 phase 45 tap 15
+> [    1.534904] sdhci-aspeed 1e750100.sdhci: rate 100000000 phase 9 tap 3
+> [    1.544713] sdhci-aspeed 1e750100.sdhci: rate 100000000 phase 45 tap 15
+> 
+> We should change the "out of range" message to be dev_dbg, as it is
+> expected on a normal boot.
 
-Let us know if there are any concerns or questions.
+I would think the issue is rather that we shouldn't be applying a phase 
+correction for a bus speed that isn't what the correction was specified 
+for.
 
-Thank you
-John Broadbent
+Let me look at this a bit further.
 
---0000000000008b8d2505c32eafa9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">There is a large change in bmcweb that we plan to submit s=
-oon.<br><div>It will resolve the <a href=3D"https://github.com/openbmc/bmcw=
-eb/issues/181">issue 181</a>=C2=A0by removing the node class. Before Ed,Gun=
-nar, and I push this change, we want to make sure there are no outstanding=
-=C2=A0concerns.</div><div><br></div><div><a href=3D"https://gerrit.openbmc-=
-project.xyz/c/openbmc/bmcweb/+/42083">https://gerrit.openbmc-project.xyz/c/=
-openbmc/bmcweb/+/42083</a><br></div><div><br></div><div>Let us know if ther=
-e are any concerns or questions.=C2=A0</div><div><br></div><div>Thank you</=
-div><div>John Broadbent</div></div>
-
---0000000000008b8d2505c32eafa9--
+Andrew
