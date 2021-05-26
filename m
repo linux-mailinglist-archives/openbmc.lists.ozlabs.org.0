@@ -2,66 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9249F391C70
-	for <lists+openbmc@lfdr.de>; Wed, 26 May 2021 17:52:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1D74391CB3
+	for <lists+openbmc@lfdr.de>; Wed, 26 May 2021 18:08:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FqwRy4XQyz2ymD
-	for <lists+openbmc@lfdr.de>; Thu, 27 May 2021 01:51:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FqwqJ5qQQz2yxl
+	for <lists+openbmc@lfdr.de>; Thu, 27 May 2021 02:08:44 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=MSDRPuzi;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=cjTWqnwi;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::435;
- helo=mail-pf1-x435.google.com; envelope-from=wltu@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22e;
+ helo=mail-lj1-x22e.google.com; envelope-from=artemsen@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=MSDRPuzi; dkim-atps=neutral
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com
- [IPv6:2607:f8b0:4864:20::435])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=cjTWqnwi; dkim-atps=neutral
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com
+ [IPv6:2a00:1450:4864:20::22e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FqwRk1HWwz2xvb
- for <openbmc@lists.ozlabs.org>; Thu, 27 May 2021 01:51:46 +1000 (AEST)
-Received: by mail-pf1-x435.google.com with SMTP id d78so1230195pfd.10
- for <openbmc@lists.ozlabs.org>; Wed, 26 May 2021 08:51:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=qikgUAuUnKFivOh0WfK/cu8ZcRJIQJiiSksJPaRovaQ=;
- b=MSDRPuziLweDPaBen2674hgMG1rxtQRZRn8hQ7NpreOI96FXliERihM8V5JLwJH88n
- Yg1cpPpK6a03WbQEJDV3XUdZOshZHht0I4/wstJoSoA8PUvsNYUT6O/UwTL8ICDsVSef
- KfWy2tRuYrU1RHdr+/+nEqismC6R3PEco0T4bPl1yJqEY6Xqpey5yIDIEpSG/H4u7hfe
- D96hhhmDEvGgA2cewmeQnik2YJ0sUFNND+yH8a0O06mNv3HMB9pBF3bpgphUIP7sDWS6
- /QZxswAAWKpcb33AQDHk1daZFWOTTfQlwg+HZpCoMK55Lu33kkrW6UvwqBIDIBdEDvId
- /EXw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fqwq156Vnz2y6B
+ for <openbmc@lists.ozlabs.org>; Thu, 27 May 2021 02:08:28 +1000 (AEST)
+Received: by mail-lj1-x22e.google.com with SMTP id o8so2408784ljp.0
+ for <openbmc@lists.ozlabs.org>; Wed, 26 May 2021 09:08:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=U7DadwXap5+T766gn+9+KFkg5kccfOtXXK1K5Q6ReOE=;
+ b=cjTWqnwiDycSC7LJ84kW8kmec1Md+poQ988W5ttZPW+08hNII9JsjGHH0RZd4MNlKr
+ f+JgmhblXMigCCZGIoCilARKi8URyk5TjwdfyP55hdT5BKhvWEKfadmPeW09n93u6ehl
+ NGRim3PGn8n9w2AtxjDD4puZ1AXeB4n03/JNxHjtCzGmAjMi1+B/CYjJmC0cAgSTD9ML
+ c1Sqak+NBY0JWAAKjCRk9H6XxNUAJAICMp93vVSOj2HMHiozRFCUNAUft1VSFW9ncDDI
+ fNvWMgaDmgjAOed+DgHjIldUWaqdEX73AY4xeY+2qN16f1csaroiPZFQtyGZuOVgoa7m
+ gCgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=qikgUAuUnKFivOh0WfK/cu8ZcRJIQJiiSksJPaRovaQ=;
- b=bzeJO/pg9vZVMN+FN6WQ20pvG4kkbJ9uIK5yoGRhPDoijnTQLShA8t2jTlt9+WOPXU
- jWhvO+2MLy6kaNSSL+bwFSYhO9irollhyKJKeOODsmH7c4bz88zZAlwBkdIZ/g3HPq0R
- /CFJyN/L2QnSRb6aTEM8h8a358/wM1XB0/QVNdDTgohkFE0+oKxcqkk/Rg1VOzxfjFam
- cXDNYWWd7qRgurUZule3RoLZ02ewT8T46F1HCcKKCoJ7r3oYQrxamJ+0M1ZRvG4dYzPy
- vFsYd5r7zR89bdrHrqT7cAU3YN4fWwQRIWYmSithazg0W5hxSireEGCVShzqDyi3CutV
- iznA==
-X-Gm-Message-State: AOAM5305PaDis87NbbJmgODO0u/r+xCjKqQTuAH+O18Up+PGcwk+CI5F
- OmkNQEHzA68gI8NggMAlVAepsECTfrof4KP9t5Sx+tuyEymJyw==
-X-Google-Smtp-Source: ABdhPJy8nwL/kvsbtMRoaW+XORI8ewG/HvWHVFMGT79myEs0XfA0kFkpa1lIzRq1qP4i/2gSj5uin4DeHuegrifkZEE=
-X-Received: by 2002:a63:5060:: with SMTP id q32mr25711686pgl.32.1622044302173; 
- Wed, 26 May 2021 08:51:42 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=U7DadwXap5+T766gn+9+KFkg5kccfOtXXK1K5Q6ReOE=;
+ b=Lu6FPUbEEkIO5KsP6G4TF1QnH5jC7wA/t/g4ZfVbdn2gwLO5qQvl5C9SwiGauqOPeA
+ 9Er/t80mtOOL2Yi5rMpXKzpYQKs7sViKXsAXomchVMOB2vfOs2CnD9TNq2KbEav25YMu
+ YY7SOqwbNF1DoBEMp8uZWqdnD6zUJ+1HMJa0AAyfdCyl5ZLzeJzbmglsGr6BgjG0DWrB
+ ND6jBNxa1v/WwZRiu5tWQsPDVS66aJHRZvvDzvI3bqC2YWf2wJsRo30PHhhj1dVCvGdF
+ m3BF+H/Vvq3GGia7Gzv+zkc63OlabV4wDEGpadwRBjikTkG1CIa5WS2/WKIMTNY8SrPw
+ eMJw==
+X-Gm-Message-State: AOAM532br2Et5qTjPkF+23QVVpyNqcLlxxNYVTvy0yBepP9SVor0Mi+v
+ r5cn6FAxTfBGR3ZWShPHLpE=
+X-Google-Smtp-Source: ABdhPJxPBd/lv9SB7D5BHnMueFTWfAbEdKoc662pDGWm1B+KUZGn9CvuGxO+Or3mH+Jy/ihuqfVueQ==
+X-Received: by 2002:a2e:a7c7:: with SMTP id x7mr2892685ljp.46.1622045299490;
+ Wed, 26 May 2021 09:08:19 -0700 (PDT)
+Received: from gmail.com (109-252-116-140.nat.spd-mgts.ru. [109.252.116.140])
+ by smtp.gmail.com with ESMTPSA id
+ c26sm2061365lfv.63.2021.05.26.09.08.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 May 2021 09:08:18 -0700 (PDT)
+Date: Wed, 26 May 2021 19:08:16 +0300
+From: Artem Senichev <artemsen@gmail.com>
+To: Nan Zhou <nanzhou@google.com>
+Subject: Re: Link phosphor-hostlogger and bmcweb
+Message-ID: <20210526160816.pvpxzwnix3lgwaln@gmail.com>
+References: <CAOLfGj4n-RHYAq5oSRkrC-VpCFUFT2Nr3G4UeqQ8DuMbNurrNw@mail.gmail.com>
+ <20210524075248.m7mimyya42xas3nx@gmail.com>
+ <CAH2-KxABm3A7pdPfPbu-RY-98qs0FE8bQZwo-WO6spixU6JotA@mail.gmail.com>
+ <20210525064127.xfgo5dceyvzrzpy6@gmail.com>
+ <CAOLfGj6dzb6Q-BOU0AJy_thd1Gt78+and_cmU4tOUNide3Gf0w@mail.gmail.com>
+ <CAOLfGj6YympZyvXO7NCPMaHNEi9CwAS97y6_-fncDHbqv5s8Bg@mail.gmail.com>
+ <20210526061119.b7n2beqthbemsoba@gmail.com>
+ <CAOLfGj6Ep89yknFbx2qHLv9woQ80SNJQD2cwJOa7y=tE7=VyLg@mail.gmail.com>
+ <20210526085623.mhls24mmo4idu5we@gmail.com>
+ <CAOLfGj7b0TEwqAEocAo=hGobCuZUoC4Zk9X_jY8Cs7NzQgi14w@mail.gmail.com>
 MIME-Version: 1.0
-References: <20210413161238.2816187-1-wltu@google.com>
-In-Reply-To: <20210413161238.2816187-1-wltu@google.com>
-From: Willy Tu <wltu@google.com>
-Date: Wed, 26 May 2021 08:51:31 -0700
-Message-ID: <CAHwn2X=yDYN7V=ScrnREzAtCNZnAmRn8CzxOp033OR7POkTA5Q@mail.gmail.com>
-Subject: Re: [PATCH] board: ast-g4: Enable SGPIO in SCU
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000715f7805c33d9ea9"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLfGj7b0TEwqAEocAo=hGobCuZUoC4Zk9X_jY8Cs7NzQgi14w@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,141 +89,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>
+Cc: Spencer Ku <spencer.ku@quanta.corp-partner.google.com>,
+ Litzung Chen <litzung.chen@quanta.corp-partner.google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Alexander Amelkin <a.amelkin@yadro.com>, Ed Tanous <edtanous@google.com>,
+ Richard Hanley <rhanley@google.com>, a.senichev@yadro.com,
+ a.filippov@yadro.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000715f7805c33d9ea9
-Content-Type: text/plain; charset="UTF-8"
+On Wed, May 26, 2021 at 08:17:11AM -0700, Nan Zhou wrote:
+> >
+> > > > > 3. zlib_file.xpp, zlib_exception.xpp:
+> > > > > will be removed or slightly changed; we can potentially use the linux
+> > > > > logrotate which has built-in compression and file rotation (in this
+> > case
+> > > > > these compression utilities will be removed).
+> > > > > The latest log file isn't compressed any more. History log files are
+> > > > > still compressed.
+> > > > Just curious, how are you going to remove the oldest messages from the
+> > > > latest file in runtime? You are not going to rewrite the entire file on
+> > > > every input character, are you?
+> > >
+> > > The following is my current idea: we will rename the latest file to
+> > > something else and notify the writer (hostlogger) to close its old file
+> > > descriptor and open a new one (should be doable via linux logrotate and
+> > > inotify or some signal handlers, as logrotate is able to send some
+> > signals
+> > > to hostlogger if a rotation is performed). The writer keeps appending
+> > logs
+> > > most of the time using the same fd unless the latest file is rotated.
+> > This
+> > > should be better than truncating the file where the reader (BMCWeb) won't
+> > > have race conditions (it might read old snapshots but it is not a big
+> > deal
+> > > in our case).
+> > Currently we can keep the last N lines of the host's output, the oldest
+> > messages are removed. It is easy to implement with a buffer in memory.
+> > But how are you going to get rid of the old lines if you write data
+> > directly
+> > to the log file?
+> > Rotation will not help you with that (we actually don't need to store such
+> > old
+> > logs).
+> 
+> We plan to implement something similar to rotate count
+> <https://linux.die.net/man/8/logrotate> in linux logrotate. It is basically
+> like a ring buffer in the file system. We keep N log files. The latest log
+> file is in plain text and the writer keeps appending data to it. The rest
+> N-1 files are compressed.
 
-ping.
+In this case, you will keep full logs without gaps:
+```
+Host start <- log is empty, start logging
+|
+[...] <- write file, compress and rotate file
+|
+Host reboot or shut down
+```
 
-I also missed the branch for this patch, but this should be in
-the v2016.07-aspeed-openbmc u-boot branch.
+If there are too many logs, logrotate removes the oldest one and we lose the
+boot log (form host start).
 
-On Tue, Apr 13, 2021 at 9:12 AM Willy Tu <wltu@google.com> wrote:
+This is the default Hostlogger mode:
+```
+Host start <- log is empty, start logging
+|
+[line 3000] <- flush 3000 lines to the persistent file
+|
+[...] <- these logs are skipped (the last 3000 lines are in memory)
+|
+Host reboot or shut down <- flush last 3000 lines to the file
+```
 
-> Add option to enable register for SGPIO in SCU
-> for ast-g4.
->
-> Signed-off-by: Willy Tu <wltu@google.com>
-> ---
->  board/aspeed/ast-g4/Kconfig  |  4 ++++
->  board/aspeed/ast-g4/ast-g4.c | 13 +++++++++++++
->  2 files changed, 17 insertions(+)
->
-> diff --git a/board/aspeed/ast-g4/Kconfig b/board/aspeed/ast-g4/Kconfig
-> index 2bec9a733a..e78030ae34 100644
-> --- a/board/aspeed/ast-g4/Kconfig
-> +++ b/board/aspeed/ast-g4/Kconfig
-> @@ -19,4 +19,8 @@ config SYS_CONFIG_NAME
->         default "ast-g4-phy" if ASPEED_NET_PHY
->         default "ast-g4-ncsi" if ASPEED_NET_NCSI
->
-> +config ENABLE_SGPIO
-> +    tristate "Enable SGPIO in SCU"
-> +       default n
-> +
->  endif
-> diff --git a/board/aspeed/ast-g4/ast-g4.c b/board/aspeed/ast-g4/ast-g4.c
-> index 656495307b..e2463d4524 100644
-> --- a/board/aspeed/ast-g4/ast-g4.c
-> +++ b/board/aspeed/ast-g4/ast-g4.c
-> @@ -22,6 +22,19 @@ int board_init(void)
->         /* address of boot parameters */
->         gd->bd->bi_boot_params = CONFIG_SYS_SDRAM_BASE + 0x100;
->         gd->flags = 0;
-> +
-> +#ifdef CONFIG_ENABLE_SGPIO
-> +       /* Unlock SCU */
-> +       writel(SCU_PROTECT_UNLOCK, AST_SCU_BASE);
-> +
-> +       /* Enable SGPIO Master */
-> +       u32 reg = readl(AST_SCU_BASE + AST_SCU_FUN_PIN_CTRL2);
-> +       reg |= (SCU_FUN_PIN_SGPMI |
-> +                       SCU_FUN_PIN_SGPMO |
-> +                       SCU_FUN_PIN_SGPMLD |
-> +                       SCU_FUN_PIN_SGPMCK);
-> +       writel(reg, AST_SCU_BASE + AST_SCU_FUN_PIN_CTRL2);
-> +#endif
->         return 0;
->  }
->
-> --
-> 2.31.1.295.g9ea45b61b8-goog
->
->
-
---000000000000715f7805c33d9ea9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">ping.<div><br></div><div>I also missed the branch for this=
- patch, but this should be in the=C2=A0v2016.07-aspeed-openbmc u-boot branc=
-h.</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmai=
-l_attr">On Tue, Apr 13, 2021 at 9:12 AM Willy Tu &lt;<a href=3D"mailto:wltu=
-@google.com">wltu@google.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
-,204,204);padding-left:1ex">Add option to enable register for SGPIO in SCU<=
-br>
-for ast-g4.<br>
-<br>
-Signed-off-by: Willy Tu &lt;<a href=3D"mailto:wltu@google.com" target=3D"_b=
-lank">wltu@google.com</a>&gt;<br>
----<br>
-=C2=A0board/aspeed/ast-g4/Kconfig=C2=A0 |=C2=A0 4 ++++<br>
-=C2=A0board/aspeed/ast-g4/ast-g4.c | 13 +++++++++++++<br>
-=C2=A02 files changed, 17 insertions(+)<br>
-<br>
-diff --git a/board/aspeed/ast-g4/Kconfig b/board/aspeed/ast-g4/Kconfig<br>
-index 2bec9a733a..e78030ae34 100644<br>
---- a/board/aspeed/ast-g4/Kconfig<br>
-+++ b/board/aspeed/ast-g4/Kconfig<br>
-@@ -19,4 +19,8 @@ config SYS_CONFIG_NAME<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 default &quot;ast-g4-phy&quot; if ASPEED_NET_PH=
-Y<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 default &quot;ast-g4-ncsi&quot; if ASPEED_NET_N=
-CSI<br>
-<br>
-+config ENABLE_SGPIO<br>
-+=C2=A0 =C2=A0 tristate &quot;Enable SGPIO in SCU&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0default n<br>
-+<br>
-=C2=A0endif<br>
-diff --git a/board/aspeed/ast-g4/ast-g4.c b/board/aspeed/ast-g4/ast-g4.c<br=
->
-index 656495307b..e2463d4524 100644<br>
---- a/board/aspeed/ast-g4/ast-g4.c<br>
-+++ b/board/aspeed/ast-g4/ast-g4.c<br>
-@@ -22,6 +22,19 @@ int board_init(void)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* address of boot parameters */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 gd-&gt;bd-&gt;bi_boot_params =3D CONFIG_SYS_SDR=
-AM_BASE + 0x100;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 gd-&gt;flags =3D 0;<br>
-+<br>
-+#ifdef CONFIG_ENABLE_SGPIO<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0/* Unlock SCU */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0writel(SCU_PROTECT_UNLOCK, AST_SCU_BASE);<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0/* Enable SGPIO Master */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0u32 reg =3D readl(AST_SCU_BASE + AST_SCU_FUN_PI=
-N_CTRL2);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0reg |=3D (SCU_FUN_PIN_SGPMI |<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0SCU_FUN_PIN_SGPMO |<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0SCU_FUN_PIN_SGPMLD |<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0SCU_FUN_PIN_SGPMCK);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0writel(reg, AST_SCU_BASE + AST_SCU_FUN_PIN_CTRL=
-2);<br>
-+#endif<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
-=C2=A0}<br>
-<br>
---<br>
-2.31.1.295.g9ea45b61b8-goog<br>
-<br>
-</blockquote></div>
-
---000000000000715f7805c33d9ea9--
+-- 
+Regards,
+Artem Senichev
+Software Engineer, YADRO.
