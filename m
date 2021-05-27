@@ -1,57 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B768039326F
-	for <lists+openbmc@lfdr.de>; Thu, 27 May 2021 17:28:57 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F01639369B
+	for <lists+openbmc@lfdr.de>; Thu, 27 May 2021 21:47:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FrWtv5Lqgz305q
-	for <lists+openbmc@lfdr.de>; Fri, 28 May 2021 01:28:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Frdd51ZKmz300S
+	for <lists+openbmc@lfdr.de>; Fri, 28 May 2021 05:47:21 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=p9SqVy1Q;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.31; helo=mga06.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 63 seconds by postgrey-1.36 at boromir;
- Fri, 28 May 2021 01:28:41 AEST
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=p9SqVy1Q; 
+ dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FrWtd71lDz2yjL
- for <openbmc@lists.ozlabs.org>; Fri, 28 May 2021 01:28:41 +1000 (AEST)
-IronPort-SDR: bhw7ipYxcIzaW6udquvKHQrbGVUR4ZrWO60pOGBOzkblqYCf66fXvmAR/rHbdCh+uBwipmfSGG
- /G7cEtW7JEYw==
-X-IronPort-AV: E=McAfee;i="6200,9189,9997"; a="263961152"
-X-IronPort-AV: E=Sophos;i="5.82,334,1613462400"; d="scan'208";a="263961152"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2021 08:27:26 -0700
-IronPort-SDR: XYcqwtXHUciCkql71EXnYHt3dvc+G/Oivj9KYnWzusxSl66bm4LxjE5+wVcxbhttKIwKbmBGvj
- boxJs2AgnduQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.82,334,1613462400"; d="scan'208";a="548002628"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga001.fm.intel.com with ESMTP; 27 May 2021 08:27:22 -0700
-Received: from [10.212.151.81] (jmbills-MOBL.amr.corp.intel.com
- [10.212.151.81])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id B429E5807BA
- for <openbmc@lists.ozlabs.org>; Thu, 27 May 2021 08:27:22 -0700 (PDT)
-Subject: Re: Implement PCIeType Property
-To: openbmc@lists.ozlabs.org
-References: <HK0PR04MB329955B4A773802B019E1477E4239@HK0PR04MB3299.apcprd04.prod.outlook.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <7703a5cf-a967-a256-71e4-be3f2d7fa411@linux.intel.com>
-Date: Thu, 27 May 2021 08:27:22 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Frdcn6L2lz2ylk;
+ Fri, 28 May 2021 05:47:05 +1000 (AEST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 48F606124C;
+ Thu, 27 May 2021 19:47:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1622144823;
+ bh=7TxnJJnNtwAUGZlPXh3fsE0Uo6KwnuA5yZH8z0w+sjU=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=p9SqVy1QqWu0JV2zeKQ/gJlaS7FOcPgVN11Mx+qq+SpXvUCCTUU/QAo2svWSZr2Bd
+ Chdw9cls7OUGp3k6MZawfXS5M2NltR+SbS4QgBiaoDnRyvHoeNexjCzkWMkdIUc+Mb
+ vLabP1cXff/fLaFxHCFqfWA48zDMTuTruccKdpAEC5Aoo7w+WJzrygsc2L6cnKTi7j
+ KQUpOnADIsvR6JJMxJ7RjpK7azQLK6TsacwPFPSkoULJLgjvbTtzqfzVc55pYwf86F
+ OyOo8UkD+7bnaGzJj/qA9jw1eUy4LoPSThi6pcTwFByZ6XSwEl5zo64WUWWCtes17h
+ vHcJf5UnfmJBw==
+Date: Thu, 27 May 2021 21:46:59 +0200
+From: Wolfram Sang <wsa@kernel.org>
+To: Zev Weiss <zev@bewilderbeest.net>
+Subject: Re: [PATCH v2] i2c: aspeed: disable additional device addresses on
+ ast2[56]xx
+Message-ID: <YK/3M94uwuLQNwbz@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+ Zev Weiss <zev@bewilderbeest.net>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ Joel Stanley <joel@jms.id.au>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Andrew Jeffery <andrew@aj.id.au>, linux-i2c@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
+References: <20210506205419.26294-1-zev@bewilderbeest.net>
 MIME-Version: 1.0
-In-Reply-To: <HK0PR04MB329955B4A773802B019E1477E4239@HK0PR04MB3299.apcprd04.prod.outlook.com>
-Content-Type: text/plain; charset=big5; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="JB9G8qcO/AQ7ihJy"
+Content-Disposition: inline
+In-Reply-To: <20210506205419.26294-1-zev@bewilderbeest.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,39 +67,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, Brendan Higgins <brendanhiggins@google.com>,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+--JB9G8qcO/AQ7ihJy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 5/27/2021 12:09 AM, Spencer Ku (¥j¥@·ì) wrote:
-> Hi All,
->    We would like to implement PCIeInterface "PCIeType" property on both peci-pcie and bmcweb, then I find the PR which implement inventory properties like SparePartNumber, Model, PartNumber, SerialNumber for PCIe devices in bmcweb: https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/40051
-> 
-> I think we modify similar part of bmcweb, but I am not sure does it will implement "PCIeType" property in the future. So could we implement "PCIeType" property first since the PR status is WIP?
-> 
-> About the implement method, for peci-pcie part, first we use peci command to get the pointer of capability in PCI configure space. Then go through capability structure to find capability ID in 3rd capability structure. If the ID is PCI Express, then get the link speed in link status register. Finally, set the PCIeType property to D-Bus after translating (under /xyz/openbmc_project/PCIe/<str>) . >
-> And for bmcweb part, we will create PCIeInterface {"PCIeType"} level (under /redfish/v1/Systems/system/PCIeDevices/<str>/ ) and fill the info from D-bus.
-> 
-> On the other hand, we also interested about how to get PartNumber and SerialNumber information? I already try to get from FRU over I2C but I cannot mapping the info between FRU and peci-pcie, or is it can easily get by peci-pcie? Any comments and suggestions are welcome!
-peci-pcie currently can only get information that is available over PCI. 
-  If these new fields come from somewhere other than PCI, it could be 
-difficult to add them.
+On Thu, May 06, 2021 at 03:54:19PM -0500, Zev Weiss wrote:
+> The ast25xx and ast26xx have, respectively, two and three configurable
+> slave device addresses to the ast24xx's one.  We only support using
+> one at a time, but the others may come up in an indeterminate state
+> depending on hardware/bootloader behavior, so we need to make sure we
+> disable them so as to avoid ending up with phantom devices on the bus.
+>=20
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 
-If these new fields all come from the FRU, then we should already have 
-that data in other applications, so we shouldn't need to get it in a PCI 
-application.
+Applied to for-next, thanks!
 
-It may be good to discuss the design a bit for 
-https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/40051.  For 
-example, I think FruDevice already has the FRU information for the PCIe 
-devices.  Does the PCI application need to communicate with FruDevice 
-and expose the same information again in the PCIe inventory on D-Bus? 
-Or, should bmcweb directly look for the FruDevice to populate these new 
-fields?
-> 
-> Please let us know if there's any issue, thank you!
-> 
-> Sincerely,
-> Spencer Ku
-> 
+
+--JB9G8qcO/AQ7ihJy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmCv9zMACgkQFA3kzBSg
+KbYoaw/+K6TmK5yofJdaPXVDzkuK9GycZAqgbQp7fiCMVeCJi9sp4sZfOC/qJHDl
+i+d/1nqKttII/RjpHvzcQDnzXK7Mx/KaolUoQGIRRUoXI5PT2Rsc1qjOGxswicee
+ncF/nG2SKuKQoiFfEchL9/OWsKn8JysNhrGRsBpK8S2bINXajAHf/3NHSuIB8hT8
+LHdFtx+P5yRB2t7NLwGx1OTv5keCUEpzVnuzYcYdvfwUcbcLgSaybvDmkjyx/LHv
+xwFBvls6D24yd526D5kOfedxA2zZPnxfS5vYSnfL4Qsek21QSK28PuOtF4bbNHwp
+wBddF4z3Ba1ZCmXp93FsH7HmzzB9X2gnQhOaK1lyf0Qd7UL1qJXsWoN0D38VAzG8
+pvxotK7zbPcLU+9Jfu7I6p37ff64MVz66+nblGDjttSR767uic7jlL/Hgyim8V16
+HeT5nrjHjJW7jeTLsDz8UZU3xzGNmZzpRTWreNm+TBJl9Kv7gPR5j1z3Z5cQ5jf8
+MstxERJwFnMBlb1ma5PrQm7iyddy3cKyp+jKic0adN/tLwtl9mfwi/tQgEjsCw9m
+O6AcGxtfwIFeysjtgI0DjZUo+IQii/o9CcUPmFu4xsOZSsWwISFimP+LwVZDx6MM
+bgATzrQ0pKryV+AD4W8TP9XI42w2u7eSW/5NBRjkkJAZ+p5d6Bk=
+=dwZ9
+-----END PGP SIGNATURE-----
+
+--JB9G8qcO/AQ7ihJy--
