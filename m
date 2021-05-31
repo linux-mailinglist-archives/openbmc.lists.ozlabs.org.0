@@ -2,142 +2,129 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA84D3954BE
-	for <lists+openbmc@lfdr.de>; Mon, 31 May 2021 06:40:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BA4613955B0
+	for <lists+openbmc@lfdr.de>; Mon, 31 May 2021 09:02:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FtjKH0CM9z2ymZ
-	for <lists+openbmc@lfdr.de>; Mon, 31 May 2021 14:40:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FtmSQ0jVCz2ymF
+	for <lists+openbmc@lfdr.de>; Mon, 31 May 2021 17:02:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=syPd1vmJ;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=O+dDQ+a1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.243.99;
- helo=nam12-dm6-obe.outbound.protection.outlook.com;
- envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=quantatw.com (client-ip=40.107.131.122;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=spencer.ku@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=syPd1vmJ; 
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=O+dDQ+a1; 
  dkim-atps=neutral
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com
- (mail-dm6nam12on2099.outbound.protection.outlook.com [40.107.243.99])
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1310122.outbound.protection.outlook.com [40.107.131.122])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FtjJv0Q2cz2xgL;
- Mon, 31 May 2021 14:40:28 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FtmS34wF8z2yWN
+ for <openbmc@lists.ozlabs.org>; Mon, 31 May 2021 17:01:52 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LMtNGV4xNBVt8pNmuRuBy2w4h9Q5THzuLVIOVxO/6iYyXEBn/qq/Hak0RzR384qim7bBN01n9Q3wa5CpPDsecVjhwD14Ba1beKoPjQuhqlCapnro4AEY9UDD7xAeY2AsZLQpMXYjEJ6OGgy4aFTCQZrHH+rtGJ3eriodgjarkZcEJAR/K1qmvWGMOXuygFHGKm4f9iv5119JJFf9I0P0+Jxh3Pfo60giaCrOQCQeXTWHebrArjNnGO+PVFu3e8CiID4vYphIDVog4B97DSKhnRltZzAiR6gfgFkXlq9MVzMck1qiRlOqei5MReDEF+mx6fz/bZz8CcXfrXfLoht+hQ==
+ b=luKFn+ORlsaaLJ4FTx2jvoJtwZH9hneHgOgow42Pbjb+9q2q63OePd5YFe5c8FbJ4piTU4erCDRUvNg3eXcCMnMwdnlTHRpLFKY1nvvSAf73gdsk3gDIWH1w5m+zmhRm+6UklR+8A0O5NuRcUjLkPqn9wVcc9N4RGM2NffokzxNVk8GYW5s2lrABk0htsu3ymyrWoHmbtKqq5fx+a/wQeU2E81MZwWLPMR52Z1kvSx3HUa/X8WYdQ6f3AS/CGVcT5kqNm3vL8QYsfjGqlAUxM7llv3PCOcHVepONZi2CUy74FctqLvb/+vmw2PvQvHVXbey1RXRd+Z/n4WT4WQbQaQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ICqXDKhCJ1R/lWVouUO+7Pww7EbhoqngrFqn9ZECIRg=;
- b=BmnxJdQZilyo6jNbbYMZGenE0HGZmhQ55hmFGJHkH/EU24yEBnUywwzU65uUntdExCdzBTwWLctWoMygiCLG0usczAZLk4JqoqVQafVPO7b6QeeMybjAEzMxcjpGdXvwszr5p81CBS0/6MZqWWQgKVcwd6n7enzv4FHIYsf3LE1OiDETwjdmU7miwdAbg5KiqBraOkJudgniKk+16fAKMlBceuSaYHuq7SXP7bYvJGgL5n63OFJz2uUp1ZT/X4fm5sSNuonRr6L6bULVE2v59AoV4VPJ6Asr5LKKSyiCF0czFrhTV3nY816iYrG1gtPaYAW8rHX0Jni0pl4tL3xG3Q==
+ bh=E+obJS3ZX3BLP9HYvSvEcyZ/hKlZCn2LlUCt5Zr0NcQ=;
+ b=GAE8bkIeXZ0ad3tKmrN1b4br3ML99ZQ9AQmqs/p/Meb0TG4PDEf7z8yiMlghWDBFBbiZ2qw1p4R77AgGN9WWh6HKiS2Sr+VLuhbp3wqLv3NWMn4YFWx7vgOECLLojw5iMMBPqq6RdnD48ADylytakMPD/cOUzfdaikYtqC497ZePD45iiR191yLanYf2GZtL47931fpDKtqwSnmcUJ0gufQEfAyMf7GhdK+GzdQpGETYFP8SM72xk+lFabLF9kzmbNvU39nmElAkDjvc8ziZh7XyGp/6nXybfGAC9q/DR1QthY9QaJgSkGVKrga7DX106thxkhEys76Wv2Vx+BThRg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ICqXDKhCJ1R/lWVouUO+7Pww7EbhoqngrFqn9ZECIRg=;
- b=syPd1vmJhdQgdKte9QpET1OWxBlUwFRTqL69Eu6xxsIZ+z1q6YsHhzs2uF11SZ1RROzkTFb4amu9aQAz7huOE0KlxlljmWTHzMkunUaCE6fouigAA3Qv40HXpZAcvIlEiRYmTDs9CEu4660v6pF9eqXgkJ8meELVq5+qjjexTk4=
-Authentication-Results: os.amperecomputing.com; dkim=none (message not signed)
- header.d=none; os.amperecomputing.com;
- dmarc=none action=none
- header.from=os.amperecomputing.com;
-Received: from MW2PR0102MB3482.prod.exchangelabs.com (2603:10b6:302:c::32) by
- CO1PR01MB6614.prod.exchangelabs.com (2603:10b6:303:d9::6) with
- Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4173.20; Mon, 31 May 2021 04:40:19 +0000
-Received: from MW2PR0102MB3482.prod.exchangelabs.com
- ([fe80::7d5f:eca4:a33a:342e]) by MW2PR0102MB3482.prod.exchangelabs.com
- ([fe80::7d5f:eca4:a33a:342e%5]) with mapi id 15.20.4173.030; Mon, 31 May 2021
- 04:40:19 +0000
-Subject: Re: [PATCH v4 1/4] dt-bindings: mfd: Add bindings for Ampere Altra
- SMPro drivers
-From: Quan Nguyen <quan@os.amperecomputing.com>
-To: Rob Herring <robh@kernel.org>
-References: <20210422090843.4614-1-quan@os.amperecomputing.com>
- <20210422090843.4614-2-quan@os.amperecomputing.com>
- <20210430201918.GA3806853@robh.at.kernel.org>
- <52550615-ae38-d88e-a597-29dc9c71755a@os.amperecomputing.com>
- <ee17c000-6f70-84d9-f7a1-0d30b03dafab@os.amperecomputing.com>
-Message-ID: <aa5997f6-e629-e82b-ea0a-484888c0271f@os.amperecomputing.com>
-Date: Mon, 31 May 2021 11:40:07 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.10.2
-In-Reply-To: <ee17c000-6f70-84d9-f7a1-0d30b03dafab@os.amperecomputing.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [2402:800:623c:5f9b:4ce:f00e:7db8:5363]
-X-ClientProxiedBy: HK2PR02CA0128.apcprd02.prod.outlook.com
- (2603:1096:202:16::12) To MW2PR0102MB3482.prod.exchangelabs.com
- (2603:10b6:302:c::32)
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from [IPv6:2402:800:623c:5f9b:4ce:f00e:7db8:5363]
- (2402:800:623c:5f9b:4ce:f00e:7db8:5363) by
- HK2PR02CA0128.apcprd02.prod.outlook.com (2603:1096:202:16::12) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4173.20 via Frontend Transport; Mon, 31 May 2021 04:40:15 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 95e30351-d8ee-4d5e-1676-08d923ee3164
-X-MS-TrafficTypeDiagnostic: CO1PR01MB6614:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <CO1PR01MB6614C976ED4B71941794951CF23F9@CO1PR01MB6614.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: F+MMYn1rAPV7ME8yj50v/gvCs1wAe1YpSXZrVlSP0u8v4oWsMXg1Hgd8nrzp4h06n01uYDAHhlooEyzzD0FXYIfBipY/aRsdhdjHFekFNSV0yJmeO4/eqQtz3erIFwb2L3izJu2VQQIt6VpHcAWPw1g4CUmSFhh2e8A0Tpi3Rtr9yZ1eJUsqoWVAJZBPI90isNeYQYkkUOMakp133YLQm41f2V39AuPEImJ7fxSfcsCrIWuNmswbUcoHadCSGHWiVYoO6KOPDXRep+F57sAOjrZhjdw1J2PzkHIFgJYgSTmSNp9Psjr8b+3x7hO38jNTuwVZy1ywhC7n2mJk4SfsAa5bKdk1W/jknckDXem2NAS6MUh33NtEQiQJRwywz82ub5ERYDn+hnP8pzOh/5acg9w95X00Z3hB1jvKW+OM0GZFAt+cVDcveiFjA+N3hWTYVl4YQJvcQxFVEhDHRd/K1C5+3cCIJBO5SMhXnGTrqfiV6KHrslzBx1vvU2ihD05s9cshsRO1W5EMHsohJWdEq0FsA/d+0wdRZIXoFwi/sapP4Ovacq889C9f2/bDSmY12MvEx5hrZoLjE+rbO81Hx9DpO8918Pv7Z2Xs9KRh+KvUDBdhzLC1IXU0L9Ihuy4JsBOBSV+Vc5p6e3xrIs4Ex6+Xke/131/V8TtGK21FnQ2EOC6cuGEyAsXfY2oOj1rZiwJdEvtxYNcLgb5WxkPrRzzSPOA/AeaOWlb1DhlwzAPBc4t9S6kVBSxXjGoN+igcdZNsxtiQQ2V0P8l4ldA/OA4+XjRHwy6vBkfUx7uERrY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW2PR0102MB3482.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(136003)(376002)(396003)(366004)(39840400004)(346002)(66946007)(83380400001)(38100700002)(86362001)(8676002)(66476007)(54906003)(53546011)(16526019)(8936002)(66556008)(5660300002)(2616005)(966005)(7416002)(6486002)(2906002)(6666004)(478600001)(4326008)(31686004)(316002)(6916009)(52116002)(31696002)(186003)(107886003)(43740500002)(45980500001);
+ bh=E+obJS3ZX3BLP9HYvSvEcyZ/hKlZCn2LlUCt5Zr0NcQ=;
+ b=O+dDQ+a10NjUAbOQYY8WGh+KOqlPJO/4TAXuCT6GRRMHlw09gsgiQ+Wm8L9T/extPonAaN+i3IL9zHVf4K6Ra6vJPg0zLRFNGxutXPEqrQcU6qBZYxniT4G3RL0HpaZE/j2X83z7oeM5rKDfQQlGOc21+u2EhlB/i7bYnWp9PlE=
+Received: from HK0PR04MB3299.apcprd04.prod.outlook.com (2603:1096:203:8f::22)
+ by HK2PR0401MB2034.apcprd04.prod.outlook.com (2603:1096:202:3::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4173.24; Mon, 31 May
+ 2021 07:01:46 +0000
+Received: from HK0PR04MB3299.apcprd04.prod.outlook.com
+ ([fe80::58c5:e1bc:4f7:5fc0]) by HK0PR04MB3299.apcprd04.prod.outlook.com
+ ([fe80::58c5:e1bc:4f7:5fc0%6]) with mapi id 15.20.4173.029; Mon, 31 May 2021
+ 07:01:46 +0000
+From: =?big5?B?U3BlbmNlciBLdSAopWqlQLfsKQ==?= <Spencer.Ku@quantatw.com>
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "sunnsr25@in.ibm.com"
+ <sunnsr25@in.ibm.com>
+Subject: RE: Implement PCIeType Property
+Thread-Topic: Implement PCIeType Property
+Thread-Index: AddSxrrWMZyaJu7rSDuh0zFsBYRnoAARg7kAALdNhPA=
+Date: Mon, 31 May 2021 07:01:45 +0000
+Message-ID: <HK0PR04MB32993E1B8E9D1B356112B7CFE43F9@HK0PR04MB3299.apcprd04.prod.outlook.com>
+References: <HK0PR04MB329955B4A773802B019E1477E4239@HK0PR04MB3299.apcprd04.prod.outlook.com>
+ <7703a5cf-a967-a256-71e4-be3f2d7fa411@linux.intel.com>
+In-Reply-To: <7703a5cf-a967-a256-71e4-be3f2d7fa411@linux.intel.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: linux.intel.com; dkim=none (message not signed)
+ header.d=none;linux.intel.com; dmarc=none action=none
+ header.from=quantatw.com;
+x-originating-ip: [220.135.135.179]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 7c003ee0-664d-4dfb-7ac8-08d92401f43a
+x-ms-traffictypediagnostic: HK2PR0401MB2034:
+x-microsoft-antispam-prvs: <HK2PR0401MB2034A28C5B0E29EA4A2EA671E43F9@HK2PR0401MB2034.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 7qgJxXYw1sJvDc4ueb/sn/2FV0YRAhhqh/TywDNVb5LeE7oxJueo0wQb6lTMSGWI0+1y8pCFO5Ukf+NrzbRQzrYE+DF1KBF0e9MAESoGN7gppyKtmJ231dEqOZE/2ji7coqlWClRN2vVKYXZ0/5l7EKoSTVclu1FHHMLqA00jrZUoS7G2Y+5yqYAe1O1eVfe74Q/0CJMY+6tN0r0z8W8yZmgnwCzzAniwh2eaKk3qLH5IFpQ8NpFcuOA1vuD8gFnxKLz0KzIExO+oPPeymY6NHUbsUjkztFl7gLBF+xxgQxhtSkj7NDgYv+6kd5tTgCUgBWxAaAdRLbenYkucTjNWWD+lYk527RSSjdR/ZCF54vbaeQEkaIEH/+yj31ckQ6t5jRmjXhFGksjRkvuwhQSPFWNq4sodMEv56fXGizlJeFpKodrcYG3PVi91HgmHNDmZ9AT9Q6h8j0JUYnDv23O2Cga0Z12i1qJdCsUrmz4C5EXhZ3TabGpcQjrktSPx4lCTnLIjNReRyR+fHzYZT9yDX/9Xaw2X5SuuHuJHzW8jrrw7sJeH938NsHRK+TeaRgCkr35OmU90IRdPGMvKGrf5D1B4S0i7TIexnyxiONFJCIc8uzOcnGKOYiWz6fvxWlJcnE71Vqkdj12MkQstgsXfX0nokrjbWT+tr3WMcY7tu+a90g1LOMmO6AXrrO+QVu16RIdUy+glZJIy5p1zkba/g==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR04MB3299.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(6029001)(4636009)(376002)(396003)(39860400002)(346002)(366004)(136003)(7116003)(966005)(5660300002)(83380400001)(9686003)(53546011)(8676002)(316002)(6506007)(7696005)(45080400002)(2906002)(478600001)(55016002)(26005)(110136005)(33656002)(8936002)(85182001)(86362001)(52536014)(66446008)(64756008)(66556008)(66476007)(66946007)(76116006)(3480700007)(186003)(71200400001)(38100700002)(122000001);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?OGNOR2NXbWZzRFB6RUp4MS9zWUdOS24xYzhVNlhBNmVTNG8rOG9BUWc0SUJW?=
- =?utf-8?B?cUVhdFpyRnlDVkp1ci9MTFNCUXlNbStEK0xqeDQwdjc0enhmTnNYQTk0S2Jq?=
- =?utf-8?B?NEpvM1NFU3liZXdRWVFqak9WV2FlSUIyUjhtODljdTNlUW45b3VnMzdqNjQ4?=
- =?utf-8?B?c3Zmc2w4THBWbzRoU3BxZ1FQcTdsWU1xc3FXWW05dDhQVlVrRkdyTkUwT2xW?=
- =?utf-8?B?ZWRzMk5RRE9md3I1Nm1IeGhZdWNkNG50dTU5WXFUR2x6Z2ZQdkJvQXpnTFMw?=
- =?utf-8?B?TVNzcGJHSVNxVm5sb3ZSUVc2NVNNR2VMc1lNdXBLOVFIaWhLYjhYcFZjelIy?=
- =?utf-8?B?ampMdUdxMGg4QjhnMXc2b0dKLzRoYmI5NzYxV2pJL0F5NzR6OFFnblV2OTdJ?=
- =?utf-8?B?cVdRV1dmOFhGcDBTSDdPWUNoaGpnM1hsLzUwUnNCVDBxM28yZmlQeElyS0I5?=
- =?utf-8?B?WmFibFpJOU9vOWFmd2dEMkMwZlRMczRmakFQQkt0eHptL0ErQm91dCswQTFm?=
- =?utf-8?B?MDNTdjlJWkNsdmh1dWZPUE1CdCtKVzJhQUhOL2loSnAxbjFVRzFEY2N3RDFL?=
- =?utf-8?B?K2FacmwyTVNmVUt2S0tCOUppNlFVdTAreVBnUSthWVAybjdBcENFUkN3cFZz?=
- =?utf-8?B?KysydUtTSWQ0SEZqVk16SjdzNU40RHVyMDNuS3pwdzBWbFFzQkFieDRmZTJ0?=
- =?utf-8?B?NEkyK2svaUZxelhVaGdnd1ppUHBIUlZXa0NQZUlGWTErQVBHaFpBVzUvNjhy?=
- =?utf-8?B?VytITEVXV2RFcmpRMENJQUF6SEhrVDdNZGdjWVVBbzJQQS9XUFJSZDNycDkz?=
- =?utf-8?B?ZU5PTnAyNGIrdCt3TFJyY3VPQUZJV2tuT0wyOGZYRzJsWmlNWloxQVBqamFw?=
- =?utf-8?B?Rm5uME1mR1EwbmRqYXlaYXBNYkl1N05JT2tlWDk1a1VkejBRbmJTYlYxMlBY?=
- =?utf-8?B?N0tpR1Z3M1FKUFlLQWY5MDhFWlNLbm9WNUxJdFU5MlZtN2ViS0NYWG1OeGZ3?=
- =?utf-8?B?cVRpR2pWLzF2aGxoQUVxRDFkdkc5bG5GMzFFZDRNUEZ2V2I2eWhuaXV3NDBp?=
- =?utf-8?B?SDJKWUhLbGNMc0h3WnNBTDlia2Z2L2hDbHlNTXNRUVpKWFdNY3lTMFRMU3FH?=
- =?utf-8?B?Z3ZvTnBsUUhOaC95WC9KQkQwNVovd0ZEc2E2TVhEY1BuUEJrdDBoM2tiMmhx?=
- =?utf-8?B?U1dRalcwK01hOS95VWI0WkovWEdIVTF5Rzh6UytzQ0c5b0d5bVRmc3RLYksy?=
- =?utf-8?B?L2JmUURaUzFtbkgvOWVjQ2RYdExJVjMwTlVjbHFBRXdQejM5UmxCVkE2Qi9Q?=
- =?utf-8?B?bDlZbytab0JSclo4VTVPVEJZenNBTmZOV3VUK29WdXpSUFkwRnF0TFpYQnd4?=
- =?utf-8?B?Y3VzaWxiNVBsZ1BxaDYzN2FYTDQwWGNRZlJ6bXF3RDlKOVVoSHVVZjRnSEUv?=
- =?utf-8?B?QkJtTEhCb1l3cmppdFgvMzJsTmJZQTQ5MlA1NmM2d3MveWJyOTdmdndLcEZn?=
- =?utf-8?B?NEhLa2NOanFzUnJnRXRIcXYzWThtbDBvT21xeEpaR1pVSzhybWRhM2E1NjBT?=
- =?utf-8?B?TEdCRDF0MXI0ckVRSFFDWSs2dzB2UlFicFYyZEZNdzZ1TU80dk00UGJUaUtY?=
- =?utf-8?B?UTU1NmF1ZVB6MUVsWFIzcGdoVHhyVHdmNGtrRk9wNVAybERFNGNBTzNnTllT?=
- =?utf-8?B?dDk4NjFsM21IUG5xTzBaWlBDM1hva1prNG1GZTdYTS83TVhpZGxodzVWc01U?=
- =?utf-8?B?OVNXa09UbzE0UURnRVFOV1hrT1RaMEdDMlgxak16UXhMdGxNQjFISk5YR01i?=
- =?utf-8?B?VHZhamFZZXozZWt6RFM2VEs3MDBKNUJMMStpNGF2SS9vbDhNN0p4YTJ5dVZ1?=
- =?utf-8?Q?NtZjDbEF6U6TG?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 95e30351-d8ee-4d5e-1676-08d923ee3164
-X-MS-Exchange-CrossTenant-AuthSource: MW2PR0102MB3482.prod.exchangelabs.com
+x-ms-exchange-antispam-messagedata: =?big5?B?emltZVJFNE9VanowREZCZXkwb0VDN2EvclNqMjg3Q1V6R0dRTEplakJXeEVrY0pR?=
+ =?big5?B?NmpPZzRSejlqc2pOQjh3VkVJZk9ISE90UUFwb0d5bHlWUFhXdUt0NEJwdkRIOWVL?=
+ =?big5?B?dG5CeU90WkRUN0tBT3pFRVE4emYrUFdWMHF4aTFONzZ2b3luWGZrYlJBSTgrOWMv?=
+ =?big5?B?OHFlaHBzUmQ2Q3VjSkhwWEY0NjE5a2liTEQ0ZEFoeE5HTDZGbkxIdC9MRERsV2o4?=
+ =?big5?B?a2p5SDN4V0ZLZnBibGNmNk9qVmx3RVJQWHN5L2tpS1ZKOWhQa1lzWG56R1Z1RTIz?=
+ =?big5?B?bUpOT1Y4TnRqTTJvSkUrdVd4QjdhQmxVWXFTUi9PczhJM2pSVDhHeXV3YzFjazFU?=
+ =?big5?B?ZHdobkRlOG9CUGtIcXpUM0RQLzhVVHVudkRETHNHSVZZWXZaMjNNc0tvaGNnVzNq?=
+ =?big5?B?clNka0hIdDlsaHlxOFVkQUNoZXU2OWg5dEpHWTYyWEphdkdUSWs0eU4wNGhsTVhi?=
+ =?big5?B?OHN1WWgyQkt2OHEwSWw3MjQyVXJockZPR2NJMFZqYW5sZUg5ZE52YlNLTUU3Q25D?=
+ =?big5?B?MktsZVVXZWQ0aGZWeEpTd29IU2ZOTGNyKzlscFliVktyQitzWTVpa0tsb3JGS2Nj?=
+ =?big5?B?VDZQSTBDcEg5bFZBUE9obkVpVGNsUHM0bkYrUHF0aERKcVVQeWNKWi9hM0tvWndv?=
+ =?big5?B?d0hiUDNiQnNXRWpuckpLaElYZUtsSERGSVF4L0VtNUdoNU5wbTJaalZkN04yNDdF?=
+ =?big5?B?Umg0RFk0VW1mWUFNSkNrenptbFZ5RzFpOEV3THBMMzZsNnJlblJRTTlzZDFoc1k1?=
+ =?big5?B?OTRRZmwvaUhVTjQzT2cvSWI4NmhvT1k4bDdhdGYrR1dyc0RrY1ZNMi8rcVJ5OHRn?=
+ =?big5?B?YWxIdno2anB3eDI1TzM0dWtNd0REVklvSUNoYmVjZzZ0TGEzOHBIOGQ1VFBZdysv?=
+ =?big5?B?ank4Y1drWWtXK285dUpnTHVMT1FrbHFFdEFnbzZieGIwRGFDdFhQa1p5d3I1NS9E?=
+ =?big5?B?UkIwWFNkVmlmWmo2dzhoWGpuQW4wblU1QTJHRnlTaFdqNW9pVis2YUgrc0RML0cx?=
+ =?big5?B?TElsLytBSVdONzFSc3hJSmZ0cVdEbEJUNmdCWTViOHRGRHRpVWV5eGNwYjZ3bVpp?=
+ =?big5?B?TmZqNjRTS1Y3M2owMVVsM3RZVjQ5Q2o3SzROdkdPNC9FRUZyRmI1cUlEVjV4aThj?=
+ =?big5?B?RmpWSHVpbHlyVkorYjlocjY5N2NuV0h3d3UwWkhWcGkrWTB2WUQzcXJoZFZQM2NC?=
+ =?big5?B?ejI1MXhyaE1yazdyaWdOeFl5WFJhT0s3azhZTVRhMStTbkJ2OTdvMXUzK056dmlm?=
+ =?big5?B?UnFPVzlaVGZmdmM2bnBYWlNxTUQ0V2VCRGlETXRmOStFbTk2MzYzOTdoZ053M3RU?=
+ =?big5?B?dWFtQ1hicUtWTi9UWlZyajZFQ2V4b0ltWWU2a3dvblZPeUNwby8rWVNQUUtITWtO?=
+ =?big5?B?c2hYZ3N6Q0N4RVNUbmNwNFVLMzFjVXQwejJkV2QvcjZYZHVndzl1TWsvUUhXcFNl?=
+ =?big5?B?U1FlcjYrVXdGWWVab0F5Q1RIMW5kZmtvQUZydlQ2QkRIRlhjVjJLK3VFSG1IZnJG?=
+ =?big5?B?QS9Vam9YQmQ4aWkxNk5QNkhTWE4zN2c4NFVsaEdlODF5REUydjg1YUNwTmJTeVBB?=
+ =?big5?B?MkNJUGt1MHlvdzBGeVVRcE1vOHVyYWU5a0VZeWFMTEc5MkZsSENHTitvVVNZb3pZ?=
+ =?big5?Q?DlU9cuGGDLgj7B+Z7zvgfljxa9W9/vyljb17azk9orWDWwEV?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: quantatw.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 May 2021 04:40:19.1075 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wKCTPCKf7A6V3kxPNtYjhJO195sLWSyzuK7ncbN7SnKRfq4Y6LoZ0YZtB4li8nTp4sIRP9IT3KT9MOr/bmkyI2R4A8V2aBBHMM3TkL959ns=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR01MB6614
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3299.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7c003ee0-664d-4dfb-7ac8-08d92401f43a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 May 2021 07:01:45.9437 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: mAn3X97eIR236f67i/+x8ALOvVU1A8gOte43OF5G9eChz08/uBZ+LGgXW7o5twu1+KOADdF9SDb7rJc2F9BCwQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR0401MB2034
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -149,186 +136,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, linux-aspeed@lists.ozlabs.org,
- Jonathan Corbet <corbet@lwn.net>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Phong Vo <phong@os.amperecomputing.com>,
- Open Source Submission <patches@amperecomputing.com>,
- Lee Jones <lee.jones@linaro.org>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 18/05/2021 06:36, Quan Nguyen wrote:
-> On 05/05/2021 15:44, Quan Nguyen wrote:
->> On 01/05/2021 03:19, Rob Herring wrote:
->>> On Thu, Apr 22, 2021 at 04:08:40PM +0700, Quan Nguyen wrote:
->>>> Adds device tree bindings for SMPro driver found on the Mt.Jade 
->>>> hardware
->>>> reference platform with Ampere's Altra Processor family.
->>>>
->>>> The SMpro co-processor on Ampere Altra processor family is to monitor
->>>> and report various data included hwmon-related info, RAS errors, and
->>>> other miscellaneous information. This parent SMPro MFD driver creates
->>>> a single simple register map to be shared by all sub-devices and leave
->>>> all the specific to be handled by the child drivers.
->>>
->>> Again, just because you have multiple functions aka MFD, that doesn't
->>> mean you need child nodes for each function. The only thing you have
->>> in DT is a register address. Does this vary? If so, how often? How many
->>> different versions of a DT do you currently or expect to have?
->>>
->> Hi Rob,
->>
->> Thank you for your review.
->> I will try to explain what I think below and expect to receive more 
->> comments to improve these patches. And if any misundertood, please 
->> help correct me.
->>
->> The idea is to keep the SMPro MFD as a simple generic register map and 
->> expect not to change or to handle any specific in this parent device 
->> driver. This is why we see the simple_mfd_i2c fit in this case.
->>
->> And so, all the specific details will be handled in child devices 
->> driver and we expect to have child nodes for these child devices. If 
->> the child node exist we can then add any specific if necessary later.
->>
->> One case is that, each socket (ie: the Ampere Altra processor) has it 
->> own SMPro co-processor instance in form of register map and each 
->> socket could be either slave or master. Some function may not 
->> available in slave socket but exist in master socket and we simply 
->> choose not to define the child node if that function not existed.
->>
->> The other case is that if there are multi instances of the same 
->> function in one SMPro MFD register map, then each instance might need 
->> to be differentiated by using is own register address or maybe a DT 
->> property. Then we can simply add them to the node of these instance.
->>
->> For your specific questions:
->>
->> + Does this vary ?
->> yes, I think so. The register address in each child nodes may vary if 
->> the SMPro co-processor firmware change its register map layout or 
->> maybe other instances of a function added. Child device drivers are 
->> expected to handle these changes if necessary.
->>
->> + About how often ?
->> I actually can't say how often but the purpose of this SMPro register 
->> map is to provide the info to the BMC. The BMC will need more info 
->> from the host so I think changes will be unavoidable.
->>
->> Please help with your comments
->> Thank you,
->> - Quan
->>
-> Dear Rob,
-> 
-> do you have any suggestion to improve this patch?
-> 
-> - Quan
-
-Dear Rob,
-
-I'm sorry it's me again, I'm just hope you could share your thoughts on 
-the DT node for sub-devices using simple-mfd-i2c drivers.
-
-In commit 3abee4579484 ("mfd: Add simple regmap based I2C driver"), 
-there is note that "Once the register map has been successfully 
-initialised, any sub-devices represented by child nodes in Device Tree 
-will be subsequently registered".
-
-So it seems unavoidable to have DT nodes for sub-devices which uses 
-simple-mfd-i2c. I'm a bit confused if DT nodes in this case should be 
-avoided.
-
-Please see 
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/patch?id=3abee4579484c554961bb0af92a77adc0ebd791d
-
-Thank you,
-- Quan
-
-PS:
-Below is for quick reference:
-
- From 3abee4579484c554961bb0af92a77adc0ebd791d Mon Sep 17 00:00:00 2001
-From: Michael Walle <michael@walle.cc>
-Date: Mon, 14 Sep 2020 23:43:29 +0200
-Subject: mfd: Add simple regmap based I2C driver
-
-There are I2C devices which contain several different functions but
-doesn't require any special access functions. For these kind of drivers
-an I2C regmap should be enough.
-
-Create an I2C driver which creates an I2C regmap and enumerates its
-children. If a device wants to use this as its MFD core driver, it has
-to add an individual compatible string. It may provide its own regmap
-configuration.
-
-Subdevices can use dev_get_regmap() on the parent to get their regmap
-instance.
-
-Signed-off-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
----
-  drivers/mfd/Kconfig          | 12 ++++++++++
-  drivers/mfd/Makefile         |  1 +
-  drivers/mfd/simple-mfd-i2c.c | 56 
-++++++++++++++++++++++++++++++++++++++++++++
-  3 files changed, 69 insertions(+)
-  create mode 100644 drivers/mfd/simple-mfd-i2c.c
-
-diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
-index 33df0837ab415..6e1a38944d282 100644
---- a/drivers/mfd/Kconfig
-+++ b/drivers/mfd/Kconfig
-@@ -1162,6 +1162,18 @@ config MFD_SI476X_CORE
-  	  To compile this driver as a module, choose M here: the
-  	  module will be called si476x-core.
-
-+config MFD_SIMPLE_MFD_I2C
-+	tristate
-+	depends on I2C
-+	select REGMAP_I2C
-+	help
-+	  This driver creates a single register map with the intention for it
-+	  to be shared by all sub-devices.
-+
-+	  Once the register map has been successfully initialised, any
-+	  sub-devices represented by child nodes in Device Tree will be
-+	  subsequently registered.
-+
-  config MFD_SM501
-  	tristate "Silicon Motion SM501"
-  	depends on HAS_DMA
-diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
-index a60e5f835283e..78d24a3e7c9e5 100644
---- a/drivers/mfd/Makefile
-+++ b/drivers/mfd/Makefile
-@@ -264,3 +264,4 @@ obj-$(CONFIG_MFD_STMFX) 	+= stmfx.o
-  obj-$(CONFIG_MFD_KHADAS_MCU) 	+= khadas-mcu.o
-
-  obj-$(CONFIG_SGI_MFD_IOC3)	+= ioc3.o
-+obj-$(CONFIG_MFD_SIMPLE_MFD_I2C)	+= simple-mfd-i2c.o
-diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
-new file mode 100644
-index 0000000000000..28e96a246be11
---- /dev/null
-+++ b/drivers/mfd/simple-mfd-i2c.c
-@@ -0,0 +1,56 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Simple MFD - I2C
-+ *
-+ * This driver creates a single register map with the intention for it 
-to be
-+ * shared by all sub-devices.  Children can use their parent's device 
-structure
-+ * (dev.parent) in order to reference it.
-+ *
-+ * Once the register map has been successfully initialised, any sub-devices
-+ * represented by child nodes in Device Tree will be subsequently 
-registered.
-+ */
-+
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBvcGVuYm1jDQo+IDxvcGVuYm1j
+LWJvdW5jZXMrc3BlbmNlci5rdT1xdWFudGF0dy5jb21AbGlzdHMub3psYWJzLm9yZz4gT24gQmVo
+YWxmIE9mDQo+IEJpbGxzLCBKYXNvbiBNDQo+IFNlbnQ6IFRodXJzZGF5LCBNYXkgMjcsIDIwMjEg
+MTE6MjcgUE0NCj4gVG86IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0KPiBTdWJqZWN0OiBSZTog
+SW1wbGVtZW50IFBDSWVUeXBlIFByb3BlcnR5DQo+IA0KPiANCj4gDQo+IE9uIDUvMjcvMjAyMSAx
+MjowOSBBTSwgU3BlbmNlciBLdSAopWqlQLfsKSB3cm90ZToNCj4gPiBIaSBBbGwsDQo+ID4gICAg
+V2Ugd291bGQgbGlrZSB0byBpbXBsZW1lbnQgUENJZUludGVyZmFjZSAiUENJZVR5cGUiIHByb3Bl
+cnR5IG9uDQo+ID4gYm90aCBwZWNpLXBjaWUgYW5kIGJtY3dlYiwgdGhlbiBJIGZpbmQgdGhlIFBS
+IHdoaWNoIGltcGxlbWVudA0KPiA+IGludmVudG9yeSBwcm9wZXJ0aWVzIGxpa2UgU3BhcmVQYXJ0
+TnVtYmVyLCBNb2RlbCwgUGFydE51bWJlciwNCj4gPiBTZXJpYWxOdW1iZXIgZm9yIFBDSWUgZGV2
+aWNlcyBpbiBibWN3ZWI6DQo+ID4gaHR0cHM6Ly9hcGMwMS5zYWZlbGlua3MucHJvdGVjdGlvbi5v
+dXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGZ2Vycg0KPiA+DQo+IGl0Lm9wZW5ibWMtcHJv
+amVjdC54eXolMkZjJTJGb3BlbmJtYyUyRmJtY3dlYiUyRiUyQiUyRjQwMDUxJmFtcDsNCj4gZGF0
+YT0wDQo+ID4NCj4gNCU3QzAxJTdDU3BlbmNlci5LdSU0MHF1YW50YXR3LmNvbSU3Q2NiYzcxOWM1
+MDU3MDQwZjA1NDAzMDhkOTIxMg0KPiA0MjcwMiUNCj4gPg0KPiA3QzE3OWIwMzI3MDdmYzQ5NzNh
+YzczOGRlNzMxMzU2MWIyJTdDMSU3QzAlN0M2Mzc1NzcyNjE0NDYyNDc5NDkNCj4gJTdDVW5rbg0K
+PiA+DQo+IG93biU3Q1RXRnBiR1pzYjNkOGV5SldJam9pTUM0d0xqQXdNREFpTENKUUlqb2lWMmx1
+TXpJaUxDSkJUaUk2SWsxaA0KPiBhV3dpDQo+ID4NCj4gTENKWFZDSTZNbjAlM0QlN0MxMDAwJmFt
+cDtzZGF0YT1jcDF0R2ElMkZSN2ZwMnlLT0RhQjhIWDglMkJYUFMNCj4gbVZHakhqNFINCj4gPiBF
+NlhBTnN0aWMlM0QmYW1wO3Jlc2VydmVkPTANCj4gPg0KPiA+IEkgdGhpbmsgd2UgbW9kaWZ5IHNp
+bWlsYXIgcGFydCBvZiBibWN3ZWIsIGJ1dCBJIGFtIG5vdCBzdXJlIGRvZXMgaXQgd2lsbA0KPiBp
+bXBsZW1lbnQgIlBDSWVUeXBlIiBwcm9wZXJ0eSBpbiB0aGUgZnV0dXJlLiBTbyBjb3VsZCB3ZSBp
+bXBsZW1lbnQNCj4gIlBDSWVUeXBlIiBwcm9wZXJ0eSBmaXJzdCBzaW5jZSB0aGUgUFIgc3RhdHVz
+IGlzIFdJUD8NCj4gPg0KPiA+IEFib3V0IHRoZSBpbXBsZW1lbnQgbWV0aG9kLCBmb3IgcGVjaS1w
+Y2llIHBhcnQsIGZpcnN0IHdlIHVzZSBwZWNpDQo+ID4gY29tbWFuZCB0byBnZXQgdGhlIHBvaW50
+ZXIgb2YgY2FwYWJpbGl0eSBpbiBQQ0kgY29uZmlndXJlIHNwYWNlLiBUaGVuIGdvDQo+IHRocm91
+Z2ggY2FwYWJpbGl0eSBzdHJ1Y3R1cmUgdG8gZmluZCBjYXBhYmlsaXR5IElEIGluIDNyZCBjYXBh
+YmlsaXR5IHN0cnVjdHVyZS4gSWYNCj4gdGhlIElEIGlzIFBDSSBFeHByZXNzLCB0aGVuIGdldCB0
+aGUgbGluayBzcGVlZCBpbiBsaW5rIHN0YXR1cyByZWdpc3Rlci4gRmluYWxseSwgc2V0DQo+IHRo
+ZSBQQ0llVHlwZSBwcm9wZXJ0eSB0byBELUJ1cyBhZnRlciB0cmFuc2xhdGluZyAodW5kZXINCj4g
+L3h5ei9vcGVuYm1jX3Byb2plY3QvUENJZS88c3RyPikgLiA+IEFuZCBmb3IgYm1jd2ViIHBhcnQs
+IHdlIHdpbGwgY3JlYXRlDQo+IFBDSWVJbnRlcmZhY2UgeyJQQ0llVHlwZSJ9IGxldmVsICh1bmRl
+cg0KPiAvcmVkZmlzaC92MS9TeXN0ZW1zL3N5c3RlbS9QQ0llRGV2aWNlcy88c3RyPi8gKSBhbmQg
+ZmlsbCB0aGUgaW5mbyBmcm9tIEQtYnVzLg0KPiA+DQo+ID4gT24gdGhlIG90aGVyIGhhbmQsIHdl
+IGFsc28gaW50ZXJlc3RlZCBhYm91dCBob3cgdG8gZ2V0IFBhcnROdW1iZXIgYW5kDQo+IFNlcmlh
+bE51bWJlciBpbmZvcm1hdGlvbj8gSSBhbHJlYWR5IHRyeSB0byBnZXQgZnJvbSBGUlUgb3ZlciBJ
+MkMgYnV0IEkgY2Fubm90DQo+IG1hcHBpbmcgdGhlIGluZm8gYmV0d2VlbiBGUlUgYW5kIHBlY2kt
+cGNpZSwgb3IgaXMgaXQgY2FuIGVhc2lseSBnZXQgYnkNCj4gcGVjaS1wY2llPyBBbnkgY29tbWVu
+dHMgYW5kIHN1Z2dlc3Rpb25zIGFyZSB3ZWxjb21lIQ0KPiBwZWNpLXBjaWUgY3VycmVudGx5IGNh
+biBvbmx5IGdldCBpbmZvcm1hdGlvbiB0aGF0IGlzIGF2YWlsYWJsZSBvdmVyIFBDSS4NCj4gICBJ
+ZiB0aGVzZSBuZXcgZmllbGRzIGNvbWUgZnJvbSBzb21ld2hlcmUgb3RoZXIgdGhhbiBQQ0ksIGl0
+IGNvdWxkIGJlDQo+IGRpZmZpY3VsdCB0byBhZGQgdGhlbS4NCg0KSGkgSmFzb24sDQpUaGFua3Mg
+Zm9yIHlvdXIgc3VnZ2VzdGlvbnMhIFllcywgaXQgaXMgYWN0dWFsbHkgdGhlIHF1ZXN0aW9uIHdo
+YXQgSSBtZWV0LiBTaW5jZSBpdCBpcyBoYXJkIHRvIGFkZCB0aGVtIHRvZ2V0aGVyLCBJIGFtIHRy
+eSB0byBmaW5kIGlzIHRoZXJlIGEgd2F5IHRvIGdldCB0aG9zZSBkYXRhIG92ZXIgUENJLg0KDQo+
+IA0KPiBJZiB0aGVzZSBuZXcgZmllbGRzIGFsbCBjb21lIGZyb20gdGhlIEZSVSwgdGhlbiB3ZSBz
+aG91bGQgYWxyZWFkeSBoYXZlIHRoYXQNCj4gZGF0YSBpbiBvdGhlciBhcHBsaWNhdGlvbnMsIHNv
+IHdlIHNob3VsZG4ndCBuZWVkIHRvIGdldCBpdCBpbiBhIFBDSSBhcHBsaWNhdGlvbi4NCg0KSSB0
+aGluayB0aGlzIGlzIGJlY2F1c2UgcmVkZmlzaCBzY2hlbWEgZGVmaW5lZCB0aGUgcHJvcGVydHkg
+YW5kIGl0IGlzIGNvbnZlbmllbmNlIGlmIHdlIGNhbiBnZXQgUENJIGluZm9ybWF0aW9uIHRocm91
+Z2ggb25lIHJlZGZpc2ggVVJJLg0KQnV0IG9mIGNvdXJzZSBpdCBzaG91bGQgYmUgYSBmZWFzaWJs
+ZSBtZXRob2QuDQoNCj4gDQo+IEl0IG1heSBiZSBnb29kIHRvIGRpc2N1c3MgdGhlIGRlc2lnbiBh
+IGJpdCBmb3INCj4gaHR0cHM6Ly9hcGMwMS5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRsb29rLmNv
+bS8/dXJsPWh0dHBzJTNBJTJGJTJGZ2Vycml0Lm9wDQo+IGVuYm1jLXByb2plY3QueHl6JTJGYyUy
+Rm9wZW5ibWMlMkZibWN3ZWIlMkYlMkIlMkY0MDA1MSZhbXA7ZGF0YQ0KPiA9MDQlN0MwMSU3Q1Nw
+ZW5jZXIuS3UlNDBxdWFudGF0dy5jb20lN0NjYmM3MTljNTA1NzA0MGYwNTQwMzA4ZDkyDQo+IDEy
+NDI3MDIlN0MxNzliMDMyNzA3ZmM0OTczYWM3MzhkZTczMTM1NjFiMiU3QzElN0MwJTdDNjM3NTc3
+MjYxDQo+IDQ0NjI0Nzk0OSU3Q1Vua25vd24lN0NUV0ZwYkdac2IzZDhleUpXSWpvaU1DNHdMakF3
+TURBaUxDSlFJam9pVg0KPiAybHVNeklpTENKQlRpSTZJazFoYVd3aUxDSlhWQ0k2TW4wJTNEJTdD
+MTAwMCZhbXA7c2RhdGE9Y3AxdEdhJTJGUg0KPiA3ZnAyeUtPRGFCOEhYOCUyQlhQU21WR2pIajRS
+RTZYQU5zdGljJTNEJmFtcDtyZXNlcnZlZD0wLiAgRm9yDQo+IGV4YW1wbGUsIEkgdGhpbmsgRnJ1
+RGV2aWNlIGFscmVhZHkgaGFzIHRoZSBGUlUgaW5mb3JtYXRpb24gZm9yIHRoZSBQQ0llDQo+IGRl
+dmljZXMuICBEb2VzIHRoZSBQQ0kgYXBwbGljYXRpb24gbmVlZCB0byBjb21tdW5pY2F0ZSB3aXRo
+IEZydURldmljZSBhbmQNCj4gZXhwb3NlIHRoZSBzYW1lIGluZm9ybWF0aW9uIGFnYWluIGluIHRo
+ZSBQQ0llIGludmVudG9yeSBvbiBELUJ1cz8NCj4gT3IsIHNob3VsZCBibWN3ZWIgZGlyZWN0bHkg
+bG9vayBmb3IgdGhlIEZydURldmljZSB0byBwb3B1bGF0ZSB0aGVzZSBuZXcNCj4gZmllbGRzPw0K
+DQpZZXMsIEkgdGhpbmsgdGhhdCdzIHRoZSBnb29kIHBvaW50IHRvIGRpc2N1c3MgYWJvdXQgdGhl
+IGRlc2lnbi4gSSB3aWxsIHB1dCBteSBjb21tZW50IHRvIHRoZSBQUi4NCkhpIFN1bm55LCBEbyB5
+b3UgaGF2ZSBhbnkgb3BpbmlvbiBvbiB0aGlzIHRvcGljPw0KDQo+ID4NCj4gPiBQbGVhc2UgbGV0
+IHVzIGtub3cgaWYgdGhlcmUncyBhbnkgaXNzdWUsIHRoYW5rIHlvdSENCj4gPg0KPiA+IFNpbmNl
+cmVseSwNCj4gPiBTcGVuY2VyIEt1DQo+ID4NCg==
