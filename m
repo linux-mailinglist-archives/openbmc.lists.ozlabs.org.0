@@ -1,55 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8144397A67
-	for <lists+openbmc@lfdr.de>; Tue,  1 Jun 2021 21:05:32 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54178397B3B
+	for <lists+openbmc@lfdr.de>; Tue,  1 Jun 2021 22:26:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FvhSW1Rlxz303Q
-	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 05:05:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FvkG74jSfz2yss
+	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 06:26:39 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=ZDx9sTFI;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=fnwVhT0c;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=64.147.123.24;
+ helo=wout1-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm2 header.b=ZDx9sTFI; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=fnwVhT0c; 
+ dkim-atps=neutral
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FvhSH0kjXz2yYG
- for <openbmc@lists.ozlabs.org>; Wed,  2 Jun 2021 05:05:17 +1000 (AEST)
-IronPort-SDR: h0yglNcCrb3DE5/apxbAfOqfEOPcBYwHvjVVX+3vZgq7OBYtwsn8tk1UdxcWsTIrF0+Fc6s/BI
- o4JP/m4Vkjyw==
-X-IronPort-AV: E=McAfee;i="6200,9189,10002"; a="200603082"
-X-IronPort-AV: E=Sophos;i="5.83,240,1616482800"; d="scan'208";a="200603082"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jun 2021 12:05:13 -0700
-IronPort-SDR: y36ij73jjueHro478f7pL0aeytFgcbIyZfNH8cASt+Jeem20XN6tercr4NyCZ6rzZg2ZjRdSRS
- 94MqQeAProIg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.83,240,1616482800"; d="scan'208";a="411343087"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga007.fm.intel.com with ESMTP; 01 Jun 2021 12:05:13 -0700
-Received: from [10.209.114.223] (jmbills-MOBL.amr.corp.intel.com
- [10.209.114.223])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 19A7C5805EE
- for <openbmc@lists.ozlabs.org>; Tue,  1 Jun 2021 12:05:13 -0700 (PDT)
-Subject: Re: SEL Event logs in Redfish
-To: openbmc@lists.ozlabs.org
-References: <SG2PR04MB30931F4EAC5DC1D4E968631EE1229@SG2PR04MB3093.apcprd04.prod.outlook.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <85157600-4832-42bd-8f4d-87757153b732@linux.intel.com>
-Date: Tue, 1 Jun 2021 12:05:12 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FvkFp41n2z2yR8
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Jun 2021 06:26:21 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.west.internal (Postfix) with ESMTP id ED9F2EB3;
+ Tue,  1 Jun 2021 16:26:16 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute2.internal (MEProxy); Tue, 01 Jun 2021 16:26:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
+ :references:mime-version:content-type:in-reply-to; s=fm2; bh=z3p
+ 9wZdY6J4Ledut1DFZvzOkjVElsNAh85BCgCImFtY=; b=ZDx9sTFI/am/XKgZg1l
+ hpGG0qLpV/5XV/+aQq0v/LigudQOjOIgpoxAp2Yu3JioiPA9E3sUL3KfEIYGAzAa
+ IERiMseeVh9UgdPeztvlVKTeCHJ14mu03k4/zQ+f+ZBtxhWYGozRhndmcQ9MjICx
+ IOHqBu/I6C7iLAarXODU7bozPPsoiYKk1M5yJiI6Cn27NC3+/zxvC75FzDTkkAaK
+ B8K3gcXPfUVZMkT0eRLbN6CTWph0o3x1qCUd8mIR/4I3djlNywEb/8LpLUYzMV0G
+ aQNeX1tm5vdpdFKCSrOFB5YeG94Y2m77eDX0ksZ3+B8XdDxyA5wrYEZZ+bfsIrMN
+ DBQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=z3p9wZ
+ dY6J4Ledut1DFZvzOkjVElsNAh85BCgCImFtY=; b=fnwVhT0cOswqvIku+glU8l
+ 3y0ru94ukf55WVs1JOe4r7Nydwou6zEuqC/Ru3QZfeBeg+T9iJqjE7QyifzVd+hZ
+ C8sStIGg4VPPmj5GPNCKJRmB+TpllTmFR7aYNF/TRynfd/oy/mOqZs3X2NDaHySA
+ dF575EJ2Jihj+5uyzCD8LfgFTHnDYf9amb1em86eF6yMVRnBWdCv0FI6aTZ2Y/zL
+ bgMfa5Ifb0p4xqiUn0zdX1235SdSv1mFszrKTBoifPtdxn7Q5/NGpDUQS3xvuvsb
+ FUy6048qM1/kPpLAO4lu5Zhf2pFaE/ux/i89kNbvyG5ahw4dVVRVn0Jd5s0mu2dA
+ ==
+X-ME-Sender: <xms:6Je2YG8-Vvc8mggU6EhPLaWTdlz1qngh8dWKdx-1vUUG7naMx97MQg>
+ <xme:6Je2YGtrGuQ_cBErA9ozbDdIoQzsyIPitohJ1mdqwZQagyebxHguTtrwRUD2ij_tj
+ cqJjYmn6uZ2ImAUXjY>
+X-ME-Received: <xmr:6Je2YMA2xqNbTRwfiY5xcdwdFKPV6qLNEAZ6I_OaJhrZzWkeOqzdkDI1aEhu2lgFQOydz5_zLnnBTJogDHjp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdelhedgudehudcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehrrggu
+ uceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtoh
+ hmqeenucggtffrrghtthgvrhhnpeegheejgfeutdffteegfeefheeileejtdefgffhgeeu
+ hfduveejleefkeejgeeiueenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluh
+ hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghrrggulhgvhigs
+ sehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
+X-ME-Proxy: <xmx:6Je2YOc7eQ6lfaL4sRCI0im1s_tLeHsm7ngxR-Oy1aznrzubl8Egew>
+ <xmx:6Je2YLPPp9yKqdxcTrhezSxmb36rDoGRtbWeVLcbFmdQ1xGHSL21EA>
+ <xmx:6Je2YInd-OtFOwZhRWy-epQW_HvvFAf5oo28IZH_gJD_CZoEOEiQUA>
+ <xmx:6Je2YNVrm4rvYELgImhIVSXAF2JdZBNKj3ifRRYvSJsDJUYrnS-RsA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Jun 2021 16:26:15 -0400 (EDT)
+Date: Tue, 1 Jun 2021 16:26:13 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: Request for debug-trigger repository
+Message-ID: <20210601202613.7o3kplhw2z7mrdvw@thinkpad.fuzziesquirrel.com>
+References: <fb9071bf-f2ad-417b-b9a6-d0baeed67e06@www.fastmail.com>
 MIME-Version: 1.0
-In-Reply-To: <SG2PR04MB30931F4EAC5DC1D4E968631EE1229@SG2PR04MB3093.apcprd04.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <fb9071bf-f2ad-417b-b9a6-d0baeed67e06@www.fastmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,94 +97,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Tue, May 25, 2021 at 09:03:31AM +0930, Andrew Jeffery wrote:
+>Hi Brad,
+>
+>A recently merged design document[1] outlines the need for a daemon to
+>translate in-band indications from the host that the BMC is
+>unresponsive into recovery actions on the BMC.
+>
+>[1] https://github.com/openbmc/docs/blob/da726aad0d204a8c8a04d6230ea61aa15e357653/designs/bmc-service-failure-debug-and-recovery.md
+>
+>A tentative implementation of the daemon lives at:
+>
+>https://github.com/amboar/debug-trigger/
+>
+>With the design document accepted, this could live under the openbmc
+>org. Can you make a repo for it?
 
+done!
 
-On 5/28/2021 1:58 AM, Jayashree D wrote:
-> Classification: Public
-> 
-> Hi Jason,
-> 
-> In journalctl log, I found that the sensor value is crossed the threshold value.
-> But when I tried in Redfish API, I am not able to see any logs, whether anything I am missing here ?
-> Could you please provide suggestions on this .
-Unfortunately, we ran into trouble trying to persist the journal to 
-flash, so we have one additional layer where rsyslog watches for any 
-journal entries that have a "REDFISH_MESSAGE_ID" metadata and logs them 
-to '/var/log/redfish' where bmcweb pulls them for the Redfish EventLog.
-
-https://github.com/openbmc/openbmc/blob/master/meta-intel-openbmc/meta-common/recipes-extended/rsyslog/rsyslog/rsyslog.conf#L66
-
-If you have the journal event, I'd check if you have 'var/log/redfish' 
-populated with that event.  If not, you may need to add the above config 
-to rsyslog to create it and that will hopefully fix the event in Redfish.
-
-Thanks,
--Jason
-> 
-> root@tiogapass:~# journalctl | grep adc
-> Jan 01 00:13:46 tiogapass adcsensor[298]: Sensor _MB_P5V low threshold 4.52 assert: value 4.51 raw data 1337
-> 
-> curl -k -H "X-Auth-Token: $token" -X GET https://${bmc}/redfish/v1/Systems/system/LogServices/EventLog/Entries
-> {
->    "@odata.id": "/redfish/v1/Systems/system/LogServices/EventLog/Entries",
->    "@odata.type": "#LogEntryCollection.LogEntryCollection",
->    "Description": "Collection of System Event Log Entries",
->    "Members": [],
->    "Members@odata.count": 0,
->    "Name": "System Event Log Entries"
-> }
-> 
-> Thanks,
-> Jayashree
-> 
-> On 5/24/2021 8:15 AM, Bruce Mitchell wrote:
->> On 5/24/2021 06:41, Jayashree D wrote:
->>>
->>> Hi Team,
->>>
->>> I need some clarification on SEL Logs.
->>> In SEL Event logs, when the error is injected manually , I can able
->>> to see the error logs in "ipmitool sel list" command.
->>> Whether it will also reflect in Redfish API ?
-> I am mostly familiar with the journal-bases SEL logging.  In that case, phosphor-sel-logger will detect the error and log it to both IPMI SEL and Redfish at the same time:
-> https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2Fopenbmc%2Fphosphor-sel-logger%2Fblob%2Fmaster%2Finclude%2Fthreshold_event_monitor.hpp%23L272&amp;data=04%7C01%7Cjayashree-d%40hcl.com%7C1e6f287fb3d24d154be508d91f11ef7d%7C189de737c93a4f5a8b686f4ca9941912%7C0%7C0%7C637574984193449537%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&amp;sdata=8JHAtQ7FBZSDtVoM3b0MGi2OhBQDNB16j0Pko0jg7p8%3D&amp;reserved=0.
-> 
-> It may also depend on how you are manually injecting the error.
-> 
->>>
->>> Could you please help me in this.
->>>
->>> Thanks,
->>> Jayashree
->>>
->>> ::DISCLAIMER::
->>> ________________________________
->>> The contents of this e-mail and any attachment(s) are confidential
->>> and intended for the named recipient(s) only. E-mail transmission is
->>> not guaranteed to be secure or error-free as information could be
->>> intercepted, corrupted, lost, destroyed, arrive late or incomplete,
->>> or may contain viruses in transmission. The e mail and its contents
->>> (with or without referred errors) shall therefore not attach any
->>> liability on the originator or HCL or its affiliates. Views or
->>> opinions, if any, presented in this email are solely those of the
->>> author and may not necessarily reflect the views or opinions of HCL or its affiliates.
->>> Any form of reproduction, dissemination, copying, disclosure,
->>> modification, distribution and / or publication of this message
->>> without the prior written consent of authorized representative of HCL
->>> is strictly prohibited. If you have received this email in error
->>> please delete it and notify the sender immediately. Before opening
->>> any email and/or attachments, please check them for viruses and other
->>> defects.
->>> ________________________________
->>>
->>
->> Hi Jayashree,
->>
->> I suggest you connect with Jason Bills on SEL.
->>
->>
-> 
-> 
+-brad
