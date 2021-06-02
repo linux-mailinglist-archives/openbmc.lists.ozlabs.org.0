@@ -2,76 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19AE73988FA
-	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 14:08:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 033FB3989DF
+	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 14:43:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fw78M1l6mz3bnY
-	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 22:08:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Fw7xf1y4xz2ykQ
+	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 22:43:50 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=lgQKeGjR;
+	dkim=pass (2048-bit key; unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256 header.s=selector1 header.b=dSAZYRU4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.19; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=lgQKeGjR; 
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=outlook.com (client-ip=40.92.253.105;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=zhouyuanqing8@outlook.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256
+ header.s=selector1 header.b=dSAZYRU4; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fw74W4CyGz306l
- for <openbmc@lists.ozlabs.org>; Wed,  2 Jun 2021 22:04:43 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1622635470;
- bh=P4/CfhOzE9qRlABqP08JDSxbRq009BHSNhR9z95OX2w=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lgQKeGjRVV6tsRoM8dHKW++3Uf3CpH6WhKM1AT4f1qaapS9x6dn9fS/sg/wZ4uAGJ
- uLMVc9flkSrAz0qMZHFH06d1wqMUJTfpB52VIXTii3qg4tAEiDLpINRmLQ4t7RN1br
- BfDrHqc5auxijmpSZYGz0rA7bgQ5NR3HASU5B/iY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.214.247]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MFKKh-1ld5st2CCn-00FmqE; Wed, 02
- Jun 2021 14:04:30 +0200
-From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH 8/8] ARM: dts: wpcm450-supermicro-x9sci-ln4f: Add GPIO LEDs
- and buttons
-Date: Wed,  2 Jun 2021 14:03:29 +0200
-Message-Id: <20210602120329.2444672-9-j.neuschaefer@gmx.net>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210602120329.2444672-1-j.neuschaefer@gmx.net>
-References: <20210602120329.2444672-1-j.neuschaefer@gmx.net>
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-oln040092253105.outbound.protection.outlook.com [40.92.253.105])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fw7xG1brzz2yXh
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Jun 2021 22:43:29 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=N7hlqPsdccvTVrLkJf67vcga83KWHJ2mxW9U+Q6c8vu/Ld1YOFo6sG1sr3uI84g8yozBOibjYhKitg1IHND2JC2hbrDHt6KoRQ8Bs7th2PdDTd/quu2cSZs7rEec98v3DdvmutQwNQu4byVmQqwMaxYwoCB+UDz7wL+jAHN+mRk8iHLDIRqB5Rr4r1zr+q74vm3/9ngPHHGfxDXhRc+pmdnUY5OcpPaJnyxb4VbWRKsu/6FsFsCApaJ9H5mHJwirxd6IYu9UXsZPeHm0jGixibTvU59PbbnUa2vf9OK+qnk95dPYVp/FgVIdK3hYsRHGnEqZO3mEIv19mmeALKH3fg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WfHHYZzvWSv9avlcpWGOoK55npXWtrbEPL81VrHkxKw=;
+ b=hdEcN7KHLSCT/t6rrztzS8z3NVOvgqm4e9i+Q+i4ucQIyomTjr9mSma2TK6cITTcIMkCQeNjCE1VnKf4+nd5+PxR6TQbLHRhdMLYa3vijPEfv4X0vVaXlnfsKzcPbNir9q89EOjxI+iXq2nERNfLbYIUPwVbqHHntbPCEPxx00IQLEotbtxTC67VM+8PCApRwfMHY0+586joCvJlWFf+l3srMeToWCTXcnaEtLcyfStJlMuHh5VAuxKTU5pj7tzfu8qiMfIAnoswcJ49UFmNspE99H1ZVWuS63nSwEwavNKMuAg68+PeHjNvhlJGln0QZ/033vtoDjdamfmajevnsg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WfHHYZzvWSv9avlcpWGOoK55npXWtrbEPL81VrHkxKw=;
+ b=dSAZYRU4n04xmGynhJsa4hO51aCqJCMo7CbO+jYw1tRqiZnB/j/q9At9RbJQxMZ/Wpf+Y+HBTnL2wQYwiIto7gBlN/Q82wMgerEvmJqZbzQkM6tTkrcMREuf+2JIvVX+u9CKuULvuyks60nK2SBGFRiPh8uZn0nB18qsHdzTswKBKhqiwK3WI4Sv6aB1xvrWYHJuyIc03uzymwxQtH+0qo0SAzDlI3iJK6CGQIzMBdy8ns1zViXUJMPsNSCoufmqIbOkiwdwd1kPF4s0tBEKMDO+C3VXnZV0fsDY2RgVadlNYb4Vx09zrXZYXm66sSdk9YVyU5nuwOn9s68ebBa5RA==
+Received: from SGBP274CA0005.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b0::17) by
+ PU1PR01MB2090.apcprd01.prod.exchangelabs.com (2603:1096:803:1b::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4173.22; Wed, 2 Jun
+ 2021 12:43:21 +0000
+Received: from SG2APC01FT014.eop-APC01.prod.protection.outlook.com
+ (2603:1096:4:b0:cafe::8b) by SGBP274CA0005.outlook.office365.com
+ (2603:1096:4:b0::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4195.15 via Frontend
+ Transport; Wed, 2 Jun 2021 12:43:21 +0000
+Received: from ME2PR01MB5619.ausprd01.prod.outlook.com
+ (2a01:111:e400:7ebd::51) by SG2APC01FT014.mail.protection.outlook.com
+ (2a01:111:e400:7ebd::188) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4195.18 via Frontend
+ Transport; Wed, 2 Jun 2021 12:43:21 +0000
+Received: from ME2PR01MB5619.ausprd01.prod.outlook.com
+ ([fe80::80b4:ae94:72b1:f28e]) by ME2PR01MB5619.ausprd01.prod.outlook.com
+ ([fe80::80b4:ae94:72b1:f28e%7]) with mapi id 15.20.4173.030; Wed, 2 Jun 2021
+ 12:43:20 +0000
+From: =?gb2312?B?1twg1LbH5Q==?= <zhouyuanqing8@outlook.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+Subject: cannot modify the files in the overlay file system
+Thread-Topic: cannot modify the files in the overlay file system
+Thread-Index: AQHXV6uD29Fm3xLyEUW53rfibtpLwg==
+Date: Wed, 2 Jun 2021 12:43:20 +0000
+Message-ID: <ME2PR01MB56196A14C09EA4391F4C04E0FE3D9@ME2PR01MB5619.ausprd01.prod.outlook.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:38CBD1E543F00CCA9EB991C8462DA43C00F6208AA57D3CE5B09FF990A6F596FD;
+ UpperCasedChecksum:9D8A4E4057D4A87ACA18356E49E77B619F24944F84D86F2A68C122595DAD42F4;
+ SizeAsReceived:6687; Count:42
+x-tmn: [B4NkXKD0bN6RgmfIddKIDYmrBrkgRf1y]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 42
+x-eopattributedmessage: 0
+x-ms-office365-filtering-correlation-id: 72a84b7f-a680-4bcd-3338-08d925c400c5
+x-ms-traffictypediagnostic: PU1PR01MB2090:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: pT/+uDkMKcLQZ0NSBd8YJkDNz8qzt2QJFOF9dDsqI59uMqCyfTf32xA99tfuS5mXQKWFnuSbqx1vBZ0R6SIo0owRDcTgEA4LnKfaEtc3+SZmWkU9QBNuMDkw9Rt8UCNAR//2m4pziTYaW06Fscsk9YDtn85BDN3VSrHoO0umnPljNxpUrN13HcUNv/kYFVHoGK/qjNheHiDlGFssK27hwuzZS4+apLmMICyKMOX9VsrbBi802JPZ0SGEbMpd1lkh13/q04mzHjxm4W2mfnn+51quMcgr1SxG6tco6q6vwfgwUTNI7DAEldkNZ57bcAzorafObd4P8C1g/re9nNasBx0N0ged5PB70s2xiUgbWgzUFf6QJowHFBUIO5fVAJZXa6G9AEDro6ZhAwsWi13kvg==
+x-ms-exchange-antispam-messagedata: xidPHDKgGQNBGbwqkIzQ3xR9aUnniqbkcQ/BUn20rC8pRxl5uZDnw4BgZS3KYTfupWZmExoQbPvOUvVBHaWvBVDzwtgb0+SRlQB3Z4mjgCbBoc3rmtZlefrgkCeoFg4pA3cLZe/rsuhvaLInG+bjwg==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_ME2PR01MB56196A14C09EA4391F4C04E0FE3D9ME2PR01MB5619ausp_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:yAIGTz3cD7aDJ3+2ETP6l+xFmX749yXxCxe42nbjAlS00V6VR85
- 6vyW3FtqEUrdgJuACoVtyPMbP8wR1VBJCDJVkqP0qa7lv+VasFSyn7CYEUQ0s0kt9YpQw1v
- 9UPEgaqUuOwvmfl5HpUMHkdFbvMfOxaL6Idqx8PNe9m4Q/wQJblQ2Z5mdqypNAj30FiYW1k
- oXSMU/CzqHfMiNOum7H/A==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CopH+5nNWnI=:noLlRC8oYJ46PYECr24XOz
- kZcl4CxGxpi/L6w3Jp39hM5bIoo4rAa94qKCWCehQW23sFQdUKGnlsu1eW4blVOOGOIhinxqY
- eS7kYrTaVFmG5PJGrTZB3w/hxdTHsOsg3uGTDtvCJv9AfmJm/eROAh8Fi3JNkok1tK78HXBpP
- 4g5tjIHPyvijXFoO8ncloC2kgd3RD2KMHAYp8jr9KDV/7O5A+S9mcYbJIYMiGnQO9D/h3Wq2X
- XOLIgBVaVzA4d1gEPQQ400EJ2sUjyr5UMRMRJf2ySiOov3jQe+MbixFhu8a7TiWejLW9qVnIV
- 5pjmBFy0s1zoCPVoAytvlp/BO4MbRQJVsjKEUSb61aUDEqx1YJr47BrDBsvIlFNybYy7CWlQc
- 6FDdWIPJNco7PabJODHN/Ls6iJZnVlfbcTrBflVeW34fLcDG+Qav119Yn+L5GL8GTdcq9+fqc
- uc5nKx8vmV3FYfobJnB0fepFGqpKiGHuj5zX69z1WkfB+dWeQjaYL40t5I1ktjEtABx8BVZPy
- kC5sG83PgMawaPOsKcRrfzskAUmDM6d/wrKCKrEIyIsKNAVYClVNtnNJxiVG2XZXf1t40+K1G
- X1oTUJxy77uLUF3Bqf6bGFZBkJuk/5b2007gVPMDJWpJX752n3iEmzB3dgDhZSf/brNZoME0H
- 1fB9uf2lFIKOdS0uaMBfKAAdfjfbyuzS1g2PTuO9+jozDCIyQiMKITo6/81Ryl3RX5JF95x1B
- BkFQr4wkv7DGmljY8gNbt+xXZZyUcm/zaZPRTGsxfrk7t2d7h6DncJyJfti9TWY6hTkrRZC2t
- iRBjzr5RaFlHr5aVqP9FOOyudnvblXQOlxnj3JNGT2Z1evaSdrNLCth23ei7OHLLCc+w+aH5Z
- 6auUkCihSsL4SawvnbWGwi+Gl8wkfbFWlg+Kf8ZFCOGJp4jFPzJMHc+WVdJwHYI4hqsR1lrP9
- GDMtz2ZQthNcUVQ1P2T//KOxAeHrFBqGNLQesFynjYe4Lbi+ioKFv1NUj4NLACm+ejkD8enUC
- D8W4OPUlxFxprmACq0jb7CnngzyKwbtDENuoIE91ey8LMWtgEIi/tY9jj8BfOIR9GQOkCX9eQ
- 52kA1jtON+8Prtpo64ppNdK6lF5wadOqHbUZktJe2tDFPgRQpdUhE4Lqw==
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-AuthSource: SG2APC01FT014.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 72a84b7f-a680-4bcd-3338-08d925c400c5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jun 2021 12:43:20.5809 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PU1PR01MB2090
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,68 +107,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>,
- Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org,
- =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Rob Herring <robh+dt@kernel.org>, openbmc@lists.ozlabs.org
+Cc: "uperic@163.com" <uperic@163.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The Supermicro X9SCi-LN4F server mainboard has a two LEDs and a button
-under the control of the BMC. This patch makes them accessible under
-Linux running on the BMC.
+--_000_ME2PR01MB56196A14C09EA4391F4C04E0FE3D9ME2PR01MB5619ausp_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-=2D--
- .../nuvoton-wpcm450-supermicro-x9sci-ln4f.dts | 27 +++++++++++++++++++
- 1 file changed, 27 insertions(+)
+SGkgVGVhbaOsDQoNCiAgIG1vdW50IGNvbW1hbmQgaXMgZm9sbG93Og0KDQptb3VudCAtdCBvdmVy
+bGF5IG92ZXJsYXkgLW8gcmVkaXJlY3RfZGlyPW9uLGluZGV4PW9uLGxvd2VyZGlyPS9ydW4vaW5p
+dHJhbWZzL3JvL3Vzci9iaW4sdXBwZXJkaXI9L3J1bi9pbml0cmFtZnMvcncvY293MSx3b3JrZGly
+PS9ydW4vaW5pdHJhbWZzL3J3L3dvcmsxIC9ydW4vaW5pdHJhbWZzL3J3L21lcmdlZA0KDQogICBB
+ZnRlciBJIG1vdW50ZWQgdGhlIG92ZXJsYXkgZmlsZSBzeXN0ZW0gLCBJIHVzZWQgdmkgdG8gb3Bl
+biB0aGUgZmlsZSAodmkgeHh4LnNoKSBpbiB0aGUgbWVyZ2VkIGRpcmVjdG9yeSwgYW5kIHRoZW4g
+d2hlbiBJIHNhdmVkIGl0LCBpdCBwcm9tcHRlZCAiJ3h4eC5zaCBJbnZhbGlkIGFyZ3VtZW50Ii4g
+Q2FuIHlvdSBoZWxwIG1lIHNvbHZlIHRoaXMgcHJvYmxlbT8NCg0KICAgT24gbXkgc3lzdGVtLCB0
+aGlzIHByb2JsZW0gb2NjdXJzIHByb2JhYmlsaXN0aWNhbGx5IG9uIG9wZW5ibWMgMi44LjAsIGFu
+ZCB0aGUgcHJvYmFiaWxpdHkgaXMgdmVyeSBsb3c7IGJ1dCBvbiBvcGVuYm1jIDIuOS4wLCBpdCBt
+dXN0IG9jY3VyLg0KDQogICBvcGVuYm1jIHJlbGVhc2UgdmVyc2lvbiA6Mi45LjANCiAgIGtlcm5l
+bCB2ZXJzaW9uo7o1LjEwLjE0oaMNCg0KVGhhbmt5b3UuDQoNCmhhcmxleQ0K
 
-diff --git a/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts b=
-/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts
-index 83f27fbf4e939..176e22216a75e 100644
-=2D-- a/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts
-+++ b/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts
-@@ -8,6 +8,9 @@
+--_000_ME2PR01MB56196A14C09EA4391F4C04E0FE3D9ME2PR01MB5619ausp_
+Content-Type: text/html; charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
 
- #include "nuvoton-wpcm450.dtsi"
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dgb2312">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Hi Team=A3=AC</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+&nbsp; &nbsp;mount command is follow:
+<p style=3D"margin:0.0px 0.0px 0.0px 0.0px;font:12.0px 'PingFang SC'">mount=
+ -t overlay overlay -o
+<span style=3D"font:14.0px 'PingFang SC';font-kerning:none;background-color=
+:#ffffff">
+redirect_dir=3Don,index=3Don,</span>lowerdir=3D/run/initramfs/ro/usr/bin,up=
+perdir=3D/run/initramfs/rw/cow1,workdir=3D/run/initramfs/rw/work1 /run/init=
+ramfs/rw/merged<span class=3D"Apple-converted-space">&nbsp;</span></p>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+&nbsp; &nbsp;After I mounted the overlay file system , I used vi to open th=
+e file (vi xxx.sh) in the merged directory, and then when I saved it, it pr=
+ompted &quot;'xxx.sh Invalid argument&quot;. Can you help me solve this pro=
+blem?</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+&nbsp; &nbsp;On my system, this problem occurs probabilistically on openbmc=
+ 2.8.0, and the probability is very low; but on openbmc 2.9.0, it must occu=
+r.</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+&nbsp; &nbsp;openbmc release version :2.9.0</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+&nbsp; &nbsp;kernel version=A3=BA5.10.14=A1=A3</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Thankyou.</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+harley</div>
+</body>
+</html>
 
-+#include <dt-bindings/input/linux-event-codes.h>
-+#include <dt-bindings/gpio/gpio.h>
-+
- / {
- 	model =3D "Supermicro X9SCi-LN4F BMC";
- 	compatible =3D "supermicro,x9sci-ln4f-bmc", "nuvoton,wpcm450";
-@@ -20,6 +23,30 @@ memory@0 {
- 		device_type =3D "memory";
- 		reg =3D <0 0x08000000>; /* 128 MiB */
- 	};
-+
-+	gpio-keys {
-+		compatible =3D "gpio-keys";
-+
-+		uid {
-+			label =3D "UID button";
-+			linux,code =3D <KEY_HOME>;
-+			gpios =3D <&pinctrl 14 GPIO_ACTIVE_HIGH>;
-+		};
-+	};
-+
-+	gpio-leds {
-+		compatible =3D "gpio-leds";
-+
-+		uid {
-+			label =3D "UID";
-+			gpios =3D <&pinctrl 23 GPIO_ACTIVE_HIGH>;
-+		};
-+
-+		heartbeat {
-+			label =3D "heartbeat";
-+			gpios =3D <&pinctrl 20 GPIO_ACTIVE_LOW>;
-+		};
-+	};
- };
-
- &serial0 {
-=2D-
-2.30.2
-
+--_000_ME2PR01MB56196A14C09EA4391F4C04E0FE3D9ME2PR01MB5619ausp_--
