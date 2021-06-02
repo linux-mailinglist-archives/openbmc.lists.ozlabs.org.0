@@ -1,69 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D3B6398E8E
-	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 17:27:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF9CD398ED5
+	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 17:39:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FwCZ94Q5Pz2yjc
-	for <lists+openbmc@lfdr.de>; Thu,  3 Jun 2021 01:27:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FwCrS2NDYz2ymQ
+	for <lists+openbmc@lfdr.de>; Thu,  3 Jun 2021 01:39:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=uXDVV/Cm;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=SCHTYpkS;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::436;
- helo=mail-wr1-x436.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::32c;
+ helo=mail-wm1-x32c.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=uXDVV/Cm; dkim-atps=neutral
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com
- [IPv6:2a00:1450:4864:20::436])
+ header.s=20161025 header.b=SCHTYpkS; dkim-atps=neutral
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com
+ [IPv6:2a00:1450:4864:20::32c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FwCYw4MbPz2xZ9
- for <openbmc@lists.ozlabs.org>; Thu,  3 Jun 2021 01:26:58 +1000 (AEST)
-Received: by mail-wr1-x436.google.com with SMTP id q5so2749706wrm.1
- for <openbmc@lists.ozlabs.org>; Wed, 02 Jun 2021 08:26:57 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FwCrD22MCz2xZ9
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Jun 2021 01:39:21 +1000 (AEST)
+Received: by mail-wm1-x32c.google.com with SMTP id
+ t4-20020a1c77040000b029019d22d84ebdso4044487wmi.3
+ for <openbmc@lists.ozlabs.org>; Wed, 02 Jun 2021 08:39:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=UjpwoJ44AY/CxpWuOEB6bGMuxCxcgmCELHTCmdou98Q=;
- b=uXDVV/CmGXFijlJQVm/vpZfFbuyQkOHXw9tzPx1Xo9SE7+vouQ5wbF+HTxmna/9N/n
- DxruNk6eeWwcVCZrkLwX04S7og0sFlMdxrBEHne1Zk1380RLQVdaA5u6V5eS0a0OZ6d6
- ECF5Tdoexj7q6z/PK+impo4ZIsZ1NjfXKfszOuYhwW66molGq6RHaEKVLBio4vnCYzZV
- Z2CfXr+HYBOFRJJmQr/xQ3RDWvnz/6+/WdyUz54xjUOjyRzdVo/wqSStyBOdFmEld62+
- NIZie/bpCaoW0OGvwBSbHJB0rJhvjiFsDLGfDcR3brjhDiF+Yt/A9mWYggGgkf2OjgVG
- uAQQ==
+ :cc; bh=/eZldGqah8l+f6I6mkyXqoi5yFV6+EWK/YWBZkXVuFI=;
+ b=SCHTYpkSh4fRKYnv8l6ZU6YxtwWaaKzRO8mcbKAMFDTfzLKOnYEmz5vnSKSI5eECH+
+ iOLNq7Y3taQWBk/nFYiFSXnHEFS3OmC5FQuDPwWrqBk4euAzxg/YsAUTY6p9ZECJ1cO3
+ cE6MP2qHJihj9Gq8tMwUBtFaT5H5C8qfTykZIIwMrXbrZyvkwc1c8V3NLPJiTWZwuL1v
+ q6Zz47CJlV525pRe3+3iBVQaoyCbuWmQClmQ5Va4xGG/i4NYT4BHXVvNgxfpviO3Uv8K
+ bR60TqBzzOtqDf+Ixh7mTsSMjJ8Fx6+hHrvyFkYdVXD6AnDwVkI/TCuF1rbHTs+E7Gqf
+ dThw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=UjpwoJ44AY/CxpWuOEB6bGMuxCxcgmCELHTCmdou98Q=;
- b=AoBBl1/mhiyozs4eBSlYIN7zyesfvAOyREI7ZZItAW+jFpk/6PWQVZcmsS1IDxcl2X
- 25owITEam1S1P1sqbtCiMuLPNiVjyIlyYXdSNCzEoj0MPqXrDSZNAUhFp7mOhgzMEBRO
- VHGh9Ua8KLS9kpGyax50GEaIzO2FFX7tYW5nyY+QG4efheDeJQ1tcsjoWpcx7g6kIGtM
- iu6OASMRtJDTJsBxX6NATjjco7Qd1vKVaoRkMqaQozDZ3pFDUnEu2p+hvutPL7iZdmkI
- pd0rZyMQ6bV6vd8oSf5YnOJs21RBjkWFA1W+BctXWV7+frgNuQcHViAxuIYcQRQbzcwr
- Qe6g==
-X-Gm-Message-State: AOAM532VC9TjRmGPnrBEwNOpJVEdK8/ls19yXmBFKbymAZqx0swo71Pm
- or3qInhDXd3LR9pl4j0FG6dd5yciYgEiTJBHsoZOn8VmhVM=
-X-Google-Smtp-Source: ABdhPJxNO9bhdO+vn7FwUYMtgQ9mKJtp3H5xqrQld4b8+S6JtkUHfLxpty7sF2AaDk9Li6+yLgl6zFthIcK0a812vNA=
-X-Received: by 2002:a5d:64e4:: with SMTP id g4mr34149066wri.366.1622647613509; 
- Wed, 02 Jun 2021 08:26:53 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=/eZldGqah8l+f6I6mkyXqoi5yFV6+EWK/YWBZkXVuFI=;
+ b=BmAY3T758C4tN6gIOa1l2jUzJQrVvvutwDw6LoDz3WFUmyQwG9mUrfYTrXovr0F7Yt
+ rWNuqEqitGIM/zcoFI1cuUI8bdOnFj4jX8qNfFTOptHuBJNN278e3zzTgI2c8BqucjMT
+ FUs6lSLZ+AO/gWvg+vgDynZ6NL7biNQGk6wpaTX6eVLkGCf3zt7XUt+z1M97MShckcV+
+ qAUdvYegDeXGC4lg19MT7tgYLS6l5eEVj1NCpoHGyncw2ro0H5ZPoIwJXdMZSWmIataq
+ mkB+BnB3zQuNHKlZbX3abrQ9/TLDFsVR3KbQuBlB4NdueRVBbxaGeWACBy1RMgpwxa2S
+ KnJA==
+X-Gm-Message-State: AOAM530BynEhJuMG4hJJ6Qzoe4TaEMKJELnMjlp9M9BTYDZu5r0d4Q6j
+ vtxtgFUUbK+dgcoNRTYO2IBcp3OUOXOU/tUzoiBrBQ==
+X-Google-Smtp-Source: ABdhPJz76rZ6D7/eC1gqEvm2TN9VT/iEnlWT5e+jWCgydN3YoBwocvEZbLLFxgGtMx3Ywyr3P3ooMrYqSSVg2D2gacI=
+X-Received: by 2002:a05:600c:ad2:: with SMTP id
+ c18mr22081491wmr.93.1622648356931; 
+ Wed, 02 Jun 2021 08:39:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <SA1PR17MB4593FB6D4BD9F4517F3333DE96219@SA1PR17MB4593.namprd17.prod.outlook.com>
-In-Reply-To: <SA1PR17MB4593FB6D4BD9F4517F3333DE96219@SA1PR17MB4593.namprd17.prod.outlook.com>
+References: <2e3016fe-2827-891b-07e3-0437a6038514@linux.vnet.ibm.com>
+In-Reply-To: <2e3016fe-2827-891b-07e3-0437a6038514@linux.vnet.ibm.com>
 From: Ed Tanous <edtanous@google.com>
-Date: Wed, 2 Jun 2021 08:26:42 -0700
-Message-ID: <CAH2-KxD_WvQtHVAXg6etVx1hW++QMrM9B-0qvepeUetO=_WEgQ@mail.gmail.com>
-Subject: Re: FruDevice/Entity Manager vs hwmon
-To: Mahesh Kurapati <mahesh.kurapati@keysight.com>
+Date: Wed, 2 Jun 2021 08:39:05 -0700
+Message-ID: <CAH2-KxA1VyhoUznEr-W5M83ZpVSqdx2c1oR3E1XdeU9fhTHN4Q@mail.gmail.com>
+Subject: Re: Seeking your opinion on ways to report both Altitude and Pressure
+ sensors for the DPS310 as well as Temperature from dbus-sensors.
+To: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,61 +76,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Ed Tanous <ed@tanous.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, May 29, 2021 at 12:42 PM Mahesh Kurapati
-<mahesh.kurapati@keysight.com> wrote:
+On Tue, Jun 1, 2021 at 8:43 AM Bruce Mitchell
+<bruce.mitchell@linux.vnet.ibm.com> wrote:
 >
-> Hello,
+> Hello Ed,
 >
+> It has been suggest I seeking your opinion on ways to report both
+> Altitude and Pressure sensors for the DPS310 as well as Temperature from
+> dbus-sensors before going to far down the road.  Thus that is what I am
+> attempting to do in the email, others on the mailing list input is
+> desirable as well.
+
+Thanks for discussing this before getting too far along.  I haven't
+worked on any systems with physical pressure sensors, but I'm excited
+to see new things get added.
+
 >
+> As I see it, Altitude and Pressure are different in that
+>      1) Altitude is computed base off of essentially a policy
+
+I have no idea what this means.....   In what way is altitude a
+"policy"?  Can you elaborate a little?
+
+>      2) Pressures is a read measurement which is a mechanism
+>      3) Temperature is a read measurement which is also a mechanism
+
+I'm really struggling with the above to understand what you're getting
+after, so if I go down the wrong path, please forgive me.
+
+I think what you're saying is that altitude is calculated based on
+pressure + some transfer function to determine an altitude?  And that
+transfer function might be fungible depending on the platform?
+
+If I got the above right (big if) I would probably expect a new
+pressure sensor type to be added that reports a pressure sensor, then
+we'd put the transform code in something that looks a lot like CFM
+sensor (which oddly enough has a hardcoded 0 for altitude in its
+algorithm for systems without pressure sensors).  Considering how
+related a pressure sensor is to altitude, I could see putting them in
+the same application if you wanted;  It might simplify the code some.
+
+
+I think overall a better picture of what you're wanting to accomplish
+would be a good place to start, then we can iterate from there on what
+pieces we need that are new.
+
 >
-> I want to define temperature sensors, fans and PSUs for our new platform.=
-  Going through the documentation and sources,  I understand that there are=
- two approaches.  One is to define them with the same i2c path as mentioned=
- in the device tree as part of the hwmon configuration, and the other appro=
-ach is to define a json file with appropriate probe in the entity-manager/c=
-onfigurations folder so that the FruDevice and Entity Manager apps detect t=
-he devices as per the probe and create the matching dbus objects, while the=
- dbus-sensors do the instrumentation.  With entity manager approach I under=
-stand that the i2c devices are created/probed when they are detected.  My q=
-uestions is we don=E2=80=99t need the device defined in the device tree fil=
-e if I go by this approach?
-
-Correct, although you can still include them if you like.
-Entity-manager relies on the new_device sysfs interface to create
-devices as they're found.  In the past we've used runtime-generated
-device tree overlays to accomplish the same thing (something I'd like
-to see us get back to, but that's a different story).
-
-> I understand that this helps the dynamic detection of the FRU.  Also we h=
-ave LM73, and other temp sensor TMP431c that is not defined in the FruDevic=
-e record map.
-
-What record map are you referring to?  So far as I'm aware, those
-devices would exist in hwmontempsensor, not fru device.  TMP73 and
-TMP431c could be added if they have linux driver implementations.
-
->  Next question is do I need to add support for the LM73 tmp75MP431C and o=
-ther one in the FruDevice so that it gets created properly? Can I use any e=
-xisting strings/mapping for these sensors?
-
-I'm not following.  What "mappings" are you referring to?
-
->  This is not needed if I define the entries in the device tree, and integ=
-rate with hwmon I have everything needed.  I see that hwmon and FruDevice/E=
-ntity Manager/dbus-sensors provide similar functionality.  Can I have both =
-of these services running at the same time on the BMC?
-
-Hypothetically you can, but it's a bit messy, and I would recommend against=
- it.
-
-> Will it cause any conflicts?  Please help me understand.
+> Thank you!
 >
->
->
-> Thank you,
->
-> Mahesh
+> --
+> Bruce
