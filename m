@@ -2,70 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1562398E65
-	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 17:19:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D3B6398E8E
+	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 17:27:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FwCPb6W3vz306k
-	for <lists+openbmc@lfdr.de>; Thu,  3 Jun 2021 01:19:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FwCZ94Q5Pz2yjc
+	for <lists+openbmc@lfdr.de>; Thu,  3 Jun 2021 01:27:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=Omrw6MEc;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=uXDVV/Cm;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::334;
- helo=mail-wm1-x334.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::436;
+ helo=mail-wr1-x436.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=Omrw6MEc; dkim-atps=neutral
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com
- [IPv6:2a00:1450:4864:20::334])
+ header.s=20161025 header.b=uXDVV/Cm; dkim-atps=neutral
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com
+ [IPv6:2a00:1450:4864:20::436])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FwCPL4TFHz2xb2
- for <openbmc@lists.ozlabs.org>; Thu,  3 Jun 2021 01:19:34 +1000 (AEST)
-Received: by mail-wm1-x334.google.com with SMTP id f17so1552261wmf.2
- for <openbmc@lists.ozlabs.org>; Wed, 02 Jun 2021 08:19:33 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FwCYw4MbPz2xZ9
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Jun 2021 01:26:58 +1000 (AEST)
+Received: by mail-wr1-x436.google.com with SMTP id q5so2749706wrm.1
+ for <openbmc@lists.ozlabs.org>; Wed, 02 Jun 2021 08:26:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=wb890aMD7QrSQfJCebhEJ1MFeFFN55U7id/XxBcDjtA=;
- b=Omrw6MEcLYP7KxAHGKEmHmYHoY+a3RggGkMVo6FN8aym1Ggz5nOAv2MyNT0h3SV6TK
- J/9ebr+GIomFsgAZFy5F2TvfFQvhCTw8deBBZGJlxRgYku1Mf4n1egHOsYBwWroCkr9K
- 1trAOBdP8iNpL7yVW1w94iV80vXCEEuy2tNcXqBhs4oirCshtrPfvgZKO5l9unccGRCW
- jI47T+1gH7sjgNKCwbW+GXO8WtwgIalIK9SxmrOnp23j4CD/HkNGwxTxJLdzWnYyMj+r
- Z5mtnpg4nzBOEDvW3hMjYytoAb9FaN99yh7mSpubdl26VQJCLeIMb6L2g70eV2DH7yfB
- yb0w==
+ :cc:content-transfer-encoding;
+ bh=UjpwoJ44AY/CxpWuOEB6bGMuxCxcgmCELHTCmdou98Q=;
+ b=uXDVV/CmGXFijlJQVm/vpZfFbuyQkOHXw9tzPx1Xo9SE7+vouQ5wbF+HTxmna/9N/n
+ DxruNk6eeWwcVCZrkLwX04S7og0sFlMdxrBEHne1Zk1380RLQVdaA5u6V5eS0a0OZ6d6
+ ECF5Tdoexj7q6z/PK+impo4ZIsZ1NjfXKfszOuYhwW66molGq6RHaEKVLBio4vnCYzZV
+ Z2CfXr+HYBOFRJJmQr/xQ3RDWvnz/6+/WdyUz54xjUOjyRzdVo/wqSStyBOdFmEld62+
+ NIZie/bpCaoW0OGvwBSbHJB0rJhvjiFsDLGfDcR3brjhDiF+Yt/A9mWYggGgkf2OjgVG
+ uAQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=wb890aMD7QrSQfJCebhEJ1MFeFFN55U7id/XxBcDjtA=;
- b=CZL9th98cpHVeyAWABSQXWhyGNib0XaJdR4oz9ZzhS8OV3JRMabe2PrtniIKa7Mgha
- 6ECpF4q1CO2cFJeKpWFkmNQTg31N5g7lkH1jihu/1T1uRaohZMk3l5kK0yzwrBU+ScZ5
- HEqQ37WVT1H/1eEVfmORWyMaraA2ERVDldZA92pFWQlrAeUmRRzt196KvGpzwxVd9+F1
- awlCC1ERvZl/9dSBWO7Z9JkMn/jTb9rnsZ/fezSR6DJA11ajH75YEcY2aZfJOT4/GBXm
- IHqeyQ3IS1pF+3t2SsOx9Aa5bmBeYBKHmI/irDLhI8gX6/cpncGyOyXbrkbvAwCqtP8T
- vIYQ==
-X-Gm-Message-State: AOAM532orrVMpNrn56kIvEROT9ITaYQskYsjSjv14ebGVawQmvHnMzZA
- Up0pCYYL9bqdI5A0xZqTCTO8S+OEpKiXzWDg3jmflw==
-X-Google-Smtp-Source: ABdhPJwopMYk4jxnFuuV6HwAndlcUv9ZyptelWaQ0JoBZ2jua635ApOdSYOu+Ahv2jsR6bg34mO85no8k1QBBHqY3GM=
-X-Received: by 2002:a1c:453:: with SMTP id 80mr4046428wme.171.1622647170612;
- Wed, 02 Jun 2021 08:19:30 -0700 (PDT)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=UjpwoJ44AY/CxpWuOEB6bGMuxCxcgmCELHTCmdou98Q=;
+ b=AoBBl1/mhiyozs4eBSlYIN7zyesfvAOyREI7ZZItAW+jFpk/6PWQVZcmsS1IDxcl2X
+ 25owITEam1S1P1sqbtCiMuLPNiVjyIlyYXdSNCzEoj0MPqXrDSZNAUhFp7mOhgzMEBRO
+ VHGh9Ua8KLS9kpGyax50GEaIzO2FFX7tYW5nyY+QG4efheDeJQ1tcsjoWpcx7g6kIGtM
+ iu6OASMRtJDTJsBxX6NATjjco7Qd1vKVaoRkMqaQozDZ3pFDUnEu2p+hvutPL7iZdmkI
+ pd0rZyMQ6bV6vd8oSf5YnOJs21RBjkWFA1W+BctXWV7+frgNuQcHViAxuIYcQRQbzcwr
+ Qe6g==
+X-Gm-Message-State: AOAM532VC9TjRmGPnrBEwNOpJVEdK8/ls19yXmBFKbymAZqx0swo71Pm
+ or3qInhDXd3LR9pl4j0FG6dd5yciYgEiTJBHsoZOn8VmhVM=
+X-Google-Smtp-Source: ABdhPJxNO9bhdO+vn7FwUYMtgQ9mKJtp3H5xqrQld4b8+S6JtkUHfLxpty7sF2AaDk9Li6+yLgl6zFthIcK0a812vNA=
+X-Received: by 2002:a5d:64e4:: with SMTP id g4mr34149066wri.366.1622647613509; 
+ Wed, 02 Jun 2021 08:26:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <8b3c88c2-cc9f-3ebe-2e4d-61974ae27519@linux.ibm.com>
- <30dde28a-38ff-6c59-57f4-23ed3fb46130@linux.ibm.com>
- <YK+XA0umnkj1EveY@heinlein>
- <dba5a6b8-3873-422b-a36a-32b39b2d560b@linux.ibm.com>
- <84217f2a-8351-48e9-964c-de34f4496c67@www.fastmail.com>
-In-Reply-To: <84217f2a-8351-48e9-964c-de34f4496c67@www.fastmail.com>
+References: <SA1PR17MB4593FB6D4BD9F4517F3333DE96219@SA1PR17MB4593.namprd17.prod.outlook.com>
+In-Reply-To: <SA1PR17MB4593FB6D4BD9F4517F3333DE96219@SA1PR17MB4593.namprd17.prod.outlook.com>
 From: Ed Tanous <edtanous@google.com>
-Date: Wed, 2 Jun 2021 08:19:23 -0700
-Message-ID: <CAH2-KxDTVo9oB_r0w=CSMatt0Pniq-pp4=Ps9Gs8LA04mdBafA@mail.gmail.com>
-Subject: Re: Security Working Group - Wednesday May 26 - results
-To: Andrew Jeffery <andrew@aj.id.au>
+Date: Wed, 2 Jun 2021 08:26:42 -0700
+Message-ID: <CAH2-KxD_WvQtHVAXg6etVx1hW++QMrM9B-0qvepeUetO=_WEgQ@mail.gmail.com>
+Subject: Re: FruDevice/Entity Manager vs hwmon
+To: Mahesh Kurapati <mahesh.kurapati@keysight.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,39 +75,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, Joseph Reynolds <jrey@linux.ibm.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, May 27, 2021 at 8:10 PM Andrew Jeffery <andrew@aj.id.au> wrote:
+On Sat, May 29, 2021 at 12:42 PM Mahesh Kurapati
+<mahesh.kurapati@keysight.com> wrote:
+>
+> Hello,
 >
 >
 >
-> On Fri, 28 May 2021, at 00:34, Joseph Reynolds wrote:
-> > On 5/27/21 7:56 AM, Patrick Williams wrote:
-> > > On Wed, May 26, 2021 at 01:59:57PM -0500, Joseph Reynolds wrote:
-> > >> On 5/26/21 8:43 AM, Joseph Reynolds wrote:
-> > >
-> > >>> 1. Followup from last meeting re uboot, kexec, sysrq-trigger on ARM
-> > >>> architecture.
-> > >> We re-hashed the discussion, added new information, and added new concerns.
-> > > Could you paste the minutes here when you reply to these?  It is kind of
-> > > hard to have any discussion with the rest of the community when you have
-> > > 2-3 levels of indirection to get at the words.
-> >
-> > Thanks for your email!
-> >
-> > Yes, I've waffled between cut/paste of the minutes and summarizing
-> > them.  I prefer to cut/paste, so I'll do that consistently from now on.
->
-> +1, it makes it much easier for people who can't attend to provide input.
->
-> The other thing I'd like to see is attendance / attribution of
-> comments, that way I know who I need discuss particular items with.
+> I want to define temperature sensors, fans and PSUs for our new platform.=
+  Going through the documentation and sources,  I understand that there are=
+ two approaches.  One is to define them with the same i2c path as mentioned=
+ in the device tree as part of the hwmon configuration, and the other appro=
+ach is to define a json file with appropriate probe in the entity-manager/c=
+onfigurations folder so that the FruDevice and Entity Manager apps detect t=
+he devices as per the probe and create the matching dbus objects, while the=
+ dbus-sensors do the instrumentation.  With entity manager approach I under=
+stand that the i2c devices are created/probed when they are detected.  My q=
+uestions is we don=E2=80=99t need the device defined in the device tree fil=
+e if I go by this approach?
 
-+1
+Correct, although you can still include them if you like.
+Entity-manager relies on the new_device sysfs interface to create
+devices as they're found.  In the past we've used runtime-generated
+device tree overlays to accomplish the same thing (something I'd like
+to see us get back to, but that's a different story).
 
+> I understand that this helps the dynamic detection of the FRU.  Also we h=
+ave LM73, and other temp sensor TMP431c that is not defined in the FruDevic=
+e record map.
+
+What record map are you referring to?  So far as I'm aware, those
+devices would exist in hwmontempsensor, not fru device.  TMP73 and
+TMP431c could be added if they have linux driver implementations.
+
+>  Next question is do I need to add support for the LM73 tmp75MP431C and o=
+ther one in the FruDevice so that it gets created properly? Can I use any e=
+xisting strings/mapping for these sensors?
+
+I'm not following.  What "mappings" are you referring to?
+
+>  This is not needed if I define the entries in the device tree, and integ=
+rate with hwmon I have everything needed.  I see that hwmon and FruDevice/E=
+ntity Manager/dbus-sensors provide similar functionality.  Can I have both =
+of these services running at the same time on the BMC?
+
+Hypothetically you can, but it's a bit messy, and I would recommend against=
+ it.
+
+> Will it cause any conflicts?  Please help me understand.
 >
-> Cheers,
 >
-> Andrew
+>
+> Thank you,
+>
+> Mahesh
