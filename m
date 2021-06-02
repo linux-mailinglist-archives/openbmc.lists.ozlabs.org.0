@@ -2,70 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDD81398E56
-	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 17:19:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A1562398E65
+	for <lists+openbmc@lfdr.de>; Wed,  2 Jun 2021 17:19:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FwCP51JV5z303M
-	for <lists+openbmc@lfdr.de>; Thu,  3 Jun 2021 01:19:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FwCPb6W3vz306k
+	for <lists+openbmc@lfdr.de>; Thu,  3 Jun 2021 01:19:47 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=T6iC9ZLd;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=Omrw6MEc;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::32b;
- helo=mail-wm1-x32b.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::334;
+ helo=mail-wm1-x334.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=T6iC9ZLd; dkim-atps=neutral
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com
- [IPv6:2a00:1450:4864:20::32b])
+ header.s=20161025 header.b=Omrw6MEc; dkim-atps=neutral
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com
+ [IPv6:2a00:1450:4864:20::334])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FwCNp0VNbz2xZL
- for <openbmc@lists.ozlabs.org>; Thu,  3 Jun 2021 01:19:03 +1000 (AEST)
-Received: by mail-wm1-x32b.google.com with SMTP id
- n17-20020a7bc5d10000b0290169edfadac9so4018692wmk.1
- for <openbmc@lists.ozlabs.org>; Wed, 02 Jun 2021 08:19:03 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FwCPL4TFHz2xb2
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Jun 2021 01:19:34 +1000 (AEST)
+Received: by mail-wm1-x334.google.com with SMTP id f17so1552261wmf.2
+ for <openbmc@lists.ozlabs.org>; Wed, 02 Jun 2021 08:19:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=CnhCRWrQtEtdgKGFw1x5yI01TxCghr4evGyHLQOKn2c=;
- b=T6iC9ZLdHJBa5s/1BIuf4VcXrFqaJCCewzceoHPIygXZhphSf7WZKB6pfYeSKFkfH/
- W5K7maCgt34wwS/2ZKKZkfqz7VMmhPasU5Ms2KCGpAiPCOGeKw6hCJ+pZ2Pm1o8MMp6z
- sDaKZSmMBjcwjOlod0bob8gu8dZxXLCbgAeeTOaSqhZMCCVAWAvRoUzDr05i3Jz+TAK7
- 2at4Gq9BZ48TtH2sveULF2+PxTBQ3S3fh1n0V1knuIsIz8hG8oDs9yBtd2NhLSg4U4Jb
- IfHa4OvoHKfd1jQ78VH0OLZh4trKCYrmTsGOnfA72It7K4TkgNVTbYP3h9yvrOPqjAev
- igOg==
+ :cc; bh=wb890aMD7QrSQfJCebhEJ1MFeFFN55U7id/XxBcDjtA=;
+ b=Omrw6MEcLYP7KxAHGKEmHmYHoY+a3RggGkMVo6FN8aym1Ggz5nOAv2MyNT0h3SV6TK
+ J/9ebr+GIomFsgAZFy5F2TvfFQvhCTw8deBBZGJlxRgYku1Mf4n1egHOsYBwWroCkr9K
+ 1trAOBdP8iNpL7yVW1w94iV80vXCEEuy2tNcXqBhs4oirCshtrPfvgZKO5l9unccGRCW
+ jI47T+1gH7sjgNKCwbW+GXO8WtwgIalIK9SxmrOnp23j4CD/HkNGwxTxJLdzWnYyMj+r
+ Z5mtnpg4nzBOEDvW3hMjYytoAb9FaN99yh7mSpubdl26VQJCLeIMb6L2g70eV2DH7yfB
+ yb0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=CnhCRWrQtEtdgKGFw1x5yI01TxCghr4evGyHLQOKn2c=;
- b=eZQvgmcRCNwH+9g/ZRJcudUE1+9FBmgMXtF7zPaotiYDODVa3CfRjV2wTkMGCs6axS
- LKgIEedy/Nc32gvw0c0jpnaz0XZ9ENp9bfvN/zi2m04BTbZ57R+MiR5HzE6WTNXdRws1
- ZSoUztvwIAYguk6WgPs3+p4537/0Ds87sxLgtba5sSFtld4kDxzAAisMUMBPnlGz+swX
- pJCejdL7jOU41zla0WJ39K5ua8Fy1Ywosm6fQewsOtHBuv9YOdLD84OffXzQZ+IxaCl8
- v9yZdJB/UWx1Rqg1Eq08ydLDgmCoxeuP/LH+BErGaFYwcksNW1g1EMrjTbysPKZ5+x67
- zDjg==
-X-Gm-Message-State: AOAM533HzfZbMWrHN0aD2zaxRS9/MS3MlfSPuAjpqb5QarhQdcF7qWQC
- Uyy3k+2f/UFIkVkZn+Oe/VF98Ahq9xuJQBZRadxU1g==
-X-Google-Smtp-Source: ABdhPJznp3iSNPqHe+64xeTRRMo2MxP29lK0aW2Qr7mUVpEof8oVLlrgewfehAL/QrCfr4JosUt1H8YttdvjxsHnffU=
-X-Received: by 2002:a1c:7313:: with SMTP id d19mr32500914wmb.14.1622647139073; 
- Wed, 02 Jun 2021 08:18:59 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=wb890aMD7QrSQfJCebhEJ1MFeFFN55U7id/XxBcDjtA=;
+ b=CZL9th98cpHVeyAWABSQXWhyGNib0XaJdR4oz9ZzhS8OV3JRMabe2PrtniIKa7Mgha
+ 6ECpF4q1CO2cFJeKpWFkmNQTg31N5g7lkH1jihu/1T1uRaohZMk3l5kK0yzwrBU+ScZ5
+ HEqQ37WVT1H/1eEVfmORWyMaraA2ERVDldZA92pFWQlrAeUmRRzt196KvGpzwxVd9+F1
+ awlCC1ERvZl/9dSBWO7Z9JkMn/jTb9rnsZ/fezSR6DJA11ajH75YEcY2aZfJOT4/GBXm
+ IHqeyQ3IS1pF+3t2SsOx9Aa5bmBeYBKHmI/irDLhI8gX6/cpncGyOyXbrkbvAwCqtP8T
+ vIYQ==
+X-Gm-Message-State: AOAM532orrVMpNrn56kIvEROT9ITaYQskYsjSjv14ebGVawQmvHnMzZA
+ Up0pCYYL9bqdI5A0xZqTCTO8S+OEpKiXzWDg3jmflw==
+X-Google-Smtp-Source: ABdhPJwopMYk4jxnFuuV6HwAndlcUv9ZyptelWaQ0JoBZ2jua635ApOdSYOu+Ahv2jsR6bg34mO85no8k1QBBHqY3GM=
+X-Received: by 2002:a1c:453:: with SMTP id 80mr4046428wme.171.1622647170612;
+ Wed, 02 Jun 2021 08:19:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <fd2a0d0e-988c-8bab-aedd-1253ba7042ef@gmail.com>
- <YK+SUUXRcek2KzBv@heinlein> <DE99272B-68FA-4E37-9804-05EACE890184@hxcore.ol>
-In-Reply-To: <DE99272B-68FA-4E37-9804-05EACE890184@hxcore.ol>
+References: <8b3c88c2-cc9f-3ebe-2e4d-61974ae27519@linux.ibm.com>
+ <30dde28a-38ff-6c59-57f4-23ed3fb46130@linux.ibm.com>
+ <YK+XA0umnkj1EveY@heinlein>
+ <dba5a6b8-3873-422b-a36a-32b39b2d560b@linux.ibm.com>
+ <84217f2a-8351-48e9-964c-de34f4496c67@www.fastmail.com>
+In-Reply-To: <84217f2a-8351-48e9-964c-de34f4496c67@www.fastmail.com>
 From: Ed Tanous <edtanous@google.com>
-Date: Wed, 2 Jun 2021 08:18:52 -0700
-Message-ID: <CAH2-KxD+-qc1EBOU5yXJb9ijjcpmLym-g5Kjqp5gkc1Eq9vPeg@mail.gmail.com>
-Subject: Re: How to submit meta subfolder
-To: "outlook_60A7133428934D5F@outlook.com" <ckimchan17@gmail.com>
+Date: Wed, 2 Jun 2021 08:19:23 -0700
+Message-ID: <CAH2-KxDTVo9oB_r0w=CSMatt0Pniq-pp4=Ps9Gs8LA04mdBafA@mail.gmail.com>
+Subject: Re: Security Working Group - Wednesday May 26 - results
+To: Andrew Jeffery <andrew@aj.id.au>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,116 +77,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "jeff9_chan@asrockrack.com" <jeff9_chan@asrockrack.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, May 27, 2021 at 5:49 PM outlook_60A7133428934D5F@outlook.com
-<ckimchan17@gmail.com> wrote:
->
-> Hi Patrick,
->
->         Thanks for helping, I checked below document and it said:
+On Thu, May 27, 2021 at 8:10 PM Andrew Jeffery <andrew@aj.id.au> wrote:
 >
 >
 >
-> From your OpenBMC git repository, add a remote to the Gerrit server, wher=
-e 'openbmc_repo' is the current git repository you're working on, such as p=
-hosphor-state-manager, and 'openbmc.gerrit' is the name of the Host previou=
-sly added:
+> On Fri, 28 May 2021, at 00:34, Joseph Reynolds wrote:
+> > On 5/27/21 7:56 AM, Patrick Williams wrote:
+> > > On Wed, May 26, 2021 at 01:59:57PM -0500, Joseph Reynolds wrote:
+> > >> On 5/26/21 8:43 AM, Joseph Reynolds wrote:
+> > >
+> > >>> 1. Followup from last meeting re uboot, kexec, sysrq-trigger on ARM
+> > >>> architecture.
+> > >> We re-hashed the discussion, added new information, and added new concerns.
+> > > Could you paste the minutes here when you reply to these?  It is kind of
+> > > hard to have any discussion with the rest of the community when you have
+> > > 2-3 levels of indirection to get at the words.
+> >
+> > Thanks for your email!
+> >
+> > Yes, I've waffled between cut/paste of the minutes and summarizing
+> > them.  I prefer to cut/paste, so I'll do that consistently from now on.
 >
-> git remote add gerrit ssh://openbmc.gerrit/openbmc/openbmc_repo
+> +1, it makes it much easier for people who can't attend to provide input.
 >
->
->
->
->
-> https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#submitting-ch=
-anges-via-gerrit-server-to-openbmc
->
->
->
-> should I use below command to create meta layer?
->
-> git remote add gerrit ssh://openbmc.gerrit/openbmc/openbmc/meta-asrockrac=
-k
+> The other thing I'd like to see is attendance / attribution of
+> comments, that way I know who I need discuss particular items with.
 
-There is no git repo called meta-asrockrack.  To do this you need to
-submit this as a new folder to
-ssh://gerrit.openbmc-project.xyz:29418/openbmc/openbmc
++1
 
 >
+> Cheers,
 >
->
-> Jeff
->
->
->
-> =E5=AF=84=E4=BB=B6=E8=80=85: Patrick Williams
-> =E5=82=B3=E9=80=81=E6=99=82=E9=96=93: 2021=E5=B9=B45=E6=9C=8827=E6=97=A5 =
-=E4=B8=8B=E5=8D=88 08:36
-> =E6=94=B6=E4=BB=B6=E8=80=85: Jeff
-> =E5=89=AF=E6=9C=AC: openbmc@lists.ozlabs.org; jeff9_chan@asrockrack.com
-> =E4=B8=BB=E6=97=A8: Re: How to submit meta subfolder
->
->
->
-> On Thu, May 27, 2021 at 01:04:37PM +0800, Jeff wrote:
->
-> > Hi,
->
-> >
->
-> > We would like to submit meta-asrockrack as a sub folder of openbmc.
->
-> >
->
-> > I followed the steps describe in the document to add remote server:
->
-> >       git remote add gerrit ssh://openbmc.gerrit/openbmc/meta-asrockrac=
-k
->
->
->
-> Which document is this?
->
->
->
-> Previously you had to request a meta-layer repository be created but
->
-> about 4-6 months ago we moved to a model where all layer code is in the
->
-> single openbmc/openbmc repository.  We may have missed a documentation
->
-> update somewhere.
->
->
->
-> > when I tried to push it I got below error:
->
-> >      fatal: project openbmc/mata-asrockrack not found
->
-> >      fatal: Could not read from remote repository.
->
-> >
->
-> >      Please make sure you have the correct access rights
->
-> >      and the repository exists.
->
->
->
-> You'll want to set your remote to ssh://openbmc.gerrit/openbmc/openbmc
->
-> and push there.  Ideally you would have originally cloned from there and
->
-> done your work on that repository.
->
->
->
-> --
->
-> Patrick Williams
->
->
+> Andrew
