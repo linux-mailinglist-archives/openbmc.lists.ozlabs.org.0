@@ -2,73 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36650399DEC
-	for <lists+openbmc@lfdr.de>; Thu,  3 Jun 2021 11:38:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 02A1539A0F4
+	for <lists+openbmc@lfdr.de>; Thu,  3 Jun 2021 14:31:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FwgnT1tmzz306n
-	for <lists+openbmc@lfdr.de>; Thu,  3 Jun 2021 19:38:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Fwlcn5McBz2ymS
+	for <lists+openbmc@lfdr.de>; Thu,  3 Jun 2021 22:31:21 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=dd/OHsTN;
+	dkim=pass (1024-bit key; unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=DVK1a9Sw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::329;
- helo=mail-ot1-x329.google.com; envelope-from=yulei.sh@bytedance.com;
+ smtp.mailfrom=yandex-team.ru (client-ip=95.108.205.193;
+ helo=forwardcorp1o.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=dd/OHsTN; dkim-atps=neutral
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com
- [IPv6:2607:f8b0:4864:20::329])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
+ header.a=rsa-sha256 header.s=default header.b=DVK1a9Sw; 
+ dkim-atps=neutral
+X-Greylist: delayed 82 seconds by postgrey-1.36 at boromir;
+ Thu, 03 Jun 2021 22:31:03 AEST
+Received: from forwardcorp1o.mail.yandex.net (forwardcorp1o.mail.yandex.net
+ [95.108.205.193])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FwgnD2Xy6z2ysw
- for <openbmc@lists.ozlabs.org>; Thu,  3 Jun 2021 19:38:20 +1000 (AEST)
-Received: by mail-ot1-x329.google.com with SMTP id
- v19-20020a0568301413b0290304f00e3d88so5179349otp.4
- for <openbmc@lists.ozlabs.org>; Thu, 03 Jun 2021 02:38:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=24AbiQwygyCy6o78Z+/qdbTSn7dF7N3thPSlQ2yhKt0=;
- b=dd/OHsTN2+fRJ1Mo36t63LJ0pK91Gzh7KptxUV30M6wMF2suv+5/Kz7eLDlQei0Pt7
- DUZyrJNGtqlTXmA+2jGyFuf60/m/2LGDID13wp+hZz7X4mYASe4klJFSVVQUcVW6kJx5
- t/aTahuLHSbg2SRgsPpN15OILSRoXNDK34HSZ/sDLq/RAw157q4SrdJ5EmOWTlanRJZP
- B1FeODTv6dDOcXdayVGA8icHWJHtqsybTv+UTgndkQBMMUOlFkPBraEzLPeqTAV7/dBl
- 8JWEEbSmITkXWgCE9N5T8qkl1tra1pIvv2IHydDAAjEuMqtaWcsWb+e/QshbAxm8ZI0z
- 1ppw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=24AbiQwygyCy6o78Z+/qdbTSn7dF7N3thPSlQ2yhKt0=;
- b=MVrBocVQCW1AKbys4XPr/Lhx3CQUSqyQ5jQIGxuiD2ZU1MLvqqadTf6Skqx8jXJU7b
- v2mhNbkvIqFwTx/CWCtq3+J463hTNDnVmsdzQiHq+nBpLMjMUFLF+VervwVNyZggQBCn
- 3T9/UbhHnGIQGbkOc9EKtPxQhlriio1jI96ZS1Xtf61c8ZMgF8XeRqisYKHSkQ35daVn
- jp9Y5oIjgMurBHv6ktTS2PYUgWfBdvJns6dGTO7uKu/aufpf1+NG9BruuL+mrBPcW5qg
- hqaKzCwQAEEI6dOywmLi1ePOdaORITEGyLnS7DOjcfUekEIDWBRJyjkB+Ua8rl0XAzK+
- ByRA==
-X-Gm-Message-State: AOAM5309KXykwesHO1YS/Xdggj9Z+MHbRM3cPPI7MTAeeep2p+cobZ+9
- ZGTWAMU23HDeLrW/W016eMsUB0dfsmTD1IrdSVAQ+w==
-X-Google-Smtp-Source: ABdhPJz6UeyL+hRj5/I/UdRlrjTTKudpaSvaOPw4X6Y07V+aBxQrskmaWPDdAqt8ecmFt2zr2EEgO/5hY0LWz62lgSg=
-X-Received: by 2002:a05:6830:1544:: with SMTP id
- l4mr14368566otp.361.1622713096815; 
- Thu, 03 Jun 2021 02:38:16 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FwlcR2jTnz2yYG
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Jun 2021 22:31:03 +1000 (AEST)
+Received: from sas1-ec30c78b6c5b.qloud-c.yandex.net
+ (sas1-ec30c78b6c5b.qloud-c.yandex.net
+ [IPv6:2a02:6b8:c14:2704:0:640:ec30:c78b])
+ by forwardcorp1o.mail.yandex.net (Yandex) with ESMTP id 82ED62E1D4F;
+ Thu,  3 Jun 2021 15:29:30 +0300 (MSK)
+Received: from mail.yandex-team.ru (mail.yandex-team.ru
+ [2a02:6b8:0:506:4d7:55e9:8081:b993])
+ by sas1-ec30c78b6c5b.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
+ PTFo3801FeA1-TU14P9lJ; Thu, 03 Jun 2021 15:29:30 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; 
+ t=1622723370; bh=Zfnc00xlYVkAQRnLggYkvZ32HsI9Q0NJELyTbo1LxNg=;
+ h=Subject:In-Reply-To:Cc:Date:References:To:From:Message-Id;
+ b=DVK1a9SwFHcUbazoBPMEYj+2I4y2DnHzQF71tQdCMiIvUvRRqyxfZKrSq3y1d2jp4
+ NOJ5g7PQSA+T2C5xFptoiGJ73HUFzoEiITx0/y9mvwiuDJMpkbeggTpreF0uFZTaM9
+ o/ndv1K4xXpCIGcE50tDgU3RI4Bf3Ii1UCSigW70=
+Authentication-Results: sas1-ec30c78b6c5b.qloud-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+X-Yandex-Sender-Uid: 1120000000049860
+X-Yandex-Avir: 1
+Received: from sas1-b43cfc766761.qloud-c.yandex.net
+ (sas1-b43cfc766761.qloud-c.yandex.net [2a02:6b8:c14:2801:0:640:b43c:fc76])
+ by sas1-6b1512233ef6.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
+ CTFZs601siE1-CZlSzQgm
+ for <kitsok@yandex-team.ru>; Thu, 03 Jun 2021 15:29:20 +0300
+Received: by sas1-b43cfc766761.qloud-c.yandex.net with HTTP;
+ Thu, 03 Jun 2021 15:29:20 +0300
+From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
+To: Joseph Reynolds <jrey@linux.ibm.com>,
+ Timothy Pearson <tpearson@raptorengineering.com>,
+ Milton Miller II <miltonm@us.ibm.com>
+In-Reply-To: <4f9a94a5-bafb-aec8-f229-95a2fdf480c2@linux.ibm.com>
+References: <1330863731.17653022.1619203617920.JavaMail.zimbra@raptorengineeringinc.com>
+ <OF190C6605.611B68EF-ON002586C0.006D8E05-002586C3.00773A1B@notes.na.collabserv.com>
+ <405234093.18656550.1619641318362.JavaMail.zimbra@raptorengineeringinc.com>
+ <4f9a94a5-bafb-aec8-f229-95a2fdf480c2@linux.ibm.com>
+Subject: Re: OpenBMC on RCS platforms - remote media
 MIME-Version: 1.0
-References: <SG2PR04MB30931F4EAC5DC1D4E968631EE1229@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <85157600-4832-42bd-8f4d-87757153b732@linux.intel.com>
- <CAGm54UFm59ApCAV7DKdgfUGfjdok8dVs8ng6Brj0VXxMsrj=AQ@mail.gmail.com>
- <e37ada9e-3a83-dff8-06d5-6013d5572415@linux.intel.com>
-In-Reply-To: <e37ada9e-3a83-dff8-06d5-6013d5572415@linux.intel.com>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Thu, 3 Jun 2021 17:38:05 +0800
-Message-ID: <CAGm54UGYOTErO2h183KWrwpVXFVmF3CvyRjLomWvM-_JWQtB_g@mail.gmail.com>
-Subject: Re: SEL Event logs in Redfish
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Thu, 03 Jun 2021 15:29:30 +0300
+Message-Id: <184631622722606@mail.yandex-team.ru>
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset=utf-8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,41 +86,47 @@ Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Jun 3, 2021 at 1:01 AM Bills, Jason M
-<jason.m.bills@linux.intel.com> wrote:
-> >
-> > There is a limitation about the way to log SEL event to
-> > /var/log/redfish, that it only appears in redfish event logs, but not
-> > in ipmi sel.
-> When using journal-based logging, the IPMI sel events are in
-> '/var/log/ipmi_sel'.
-
-Yup, so if one need to log an event and make it appear on both SEL and
-redfish event, the same event will have to be written into both files.
-
-> >
-> > On g220a it still uses the logging service to represent the event log
-> > (see [1]), and ipmid is updated to consume the logging entries to get
-> > the SEL entries.
-> I would expect that the same logging approach would be used for both
-> IPMI SEL and Redfish.  So, either both will use journal-based logging or
-> both will use D-Bus logging. I don't know if it would work to mix them.
-
-I don't think it will work to mix them, so the BMC build will need to
-select at compile time by a config.
-
->
-> > The missing part is in bmcweb that it does not support the event log
-> > entries from DBus. We could probably add some new code to make it
-> > support consuming data from logging service, and it could be
-> > implemented under a config, so that the user could config which data
-> > source to get event log at compile time.
-> I believe that bmcweb supports Redfish event logs from D-Bus log entries
-> with this option:
-> https://github.com/openbmc/bmcweb/blob/master/meson_options.txt#L21.
-
-Good to know!
-
--- 
-BRs,
-Lei YU
+PGRpdj5IZWxsbyBhbGwhPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+PGRpdj4yOS4wNC4yMDIxLCAw
+MDoyNSwgIkpvc2VwaCBSZXlub2xkcyIgJmx0O2pyZXlAbGludXguaWJtLmNvbSZndDs6PC9kaXY+
+PGJsb2NrcXVvdGU+PHA+SXMgdGhlcmUgYW4gaW1wbGVtZW50YXRpb24/wqAgSSBkaWRuJ3QgZmlu
+ZCBvbmUgbGlzdGVkIGhlcmU6PGJyIC8+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5i
+bWMvZG9jcy9ibG9iL21hc3Rlci9mZWF0dXJlcy5tZCIgcmVsPSJub29wZW5lciBub3JlZmVycmVy
+Ij5odHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9kb2NzL2Jsb2IvbWFzdGVyL2ZlYXR1cmVzLm1k
+PC9hPjxiciAvPjxiciAvPi0gSm9zZXBoPC9wPjwvYmxvY2txdW90ZT48L2Rpdj48ZGl2PsKgPC9k
+aXY+PGRpdj5BY3R1YWxseSB0aGVyZSBpcyBhbiBpbXBsZW1lbnRhdGlvbiBidXQgaXQncyBub3Qg
+dXBzdHJlYW1lZC4gSXQncyBsb2NhdGVkIGhlcmU6PC9kaXY+PGRpdj48ZGl2PjxhIGhyZWY9Imh0
+dHBzOi8vZ2l0aHViLmNvbS9JbnRlbC1CTUMvcHJvdmluZ2dyb3VuZC90cmVlL21hc3Rlci92aXJ0
+dWFsLW1lZGlhIiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiIHRhcmdldD0iX2JsYW5rIj5odHRw
+czovL2dpdGh1Yi5jb20vSW50ZWwtQk1DL3Byb3Zpbmdncm91bmQvdHJlZS9tYXN0ZXIvdmlydHVh
+bC1tZWRpYTwvYT48L2Rpdj48ZGl2PldlIHVzZSBpdC48L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5J
+biBGZWJydWFyeSBSZWRGaXNoIEFQSSBoYW5kbGUgd2FzIGRpc2FibGVkIGluIGJtY3dlYiBieSB0
+aGlzIGNvbW1pdDo8L2Rpdj48ZGl2PjxkaXY+PGRpdj48ZGl2PmNvbW1pdCBlZmI4MDYyYzMwNjQ3
+NDk0MmJjOTRmMTVkNzQ4YjJlYjBiNThmYmI2PC9kaXY+PGRpdj5BdXRob3I6IEVkIFRhbm91cyAm
+bHQ7ZWRAdGFub3VzLm5ldCZndDs8L2Rpdj48ZGl2PkRhdGU6IMKgIFNhdCBGZWIgMjAgMTE6MDQ6
+MDEgMjAyMSAtMDgwMDwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PsKgIMKgIERpc2FibGUgbmJkIHBy
+b3h5IGZyb20gdGhlIGJ1aWxkPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+QXMgZmFyIGFzIEkgdW5k
+ZXJzdGFuZCwgYWZ0ZXIgdGhhdCBBc3luY1Jlc3AgY29tbWl0IGRpZG4ndCB0YWtlIGludG8gYWNj
+b3VudCBuYmQtcHJveHkgY29kZSAoYXMgaXQgd2FzIGRpc2FibGVkIGluIG1lc29uLmJ1aWxkIGFu
+ZCBkaWRuJ3QgZ2VuZXJhdGUgZXJyb3IgZHVyaW5nIGNvbXBpbGF0aW9uIHRlc3RzKTo8L2Rpdj48
+ZGl2PjxkaXY+PGRpdj48ZGl2PkF1dGhvcjogemhhbmdoY2gwNSAmbHQ7emhhbmdoY2gwNUBpbnNw
+dXIuY29tJmd0OzwvZGl2PjxkaXY+RGF0ZTogwqAgVGh1IEFwciAxIDExOjE4OjI0IDIwMjEgKzA4
+MDA8L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj7CoCDCoCBVc2luZyBBc3luY1Jlc3AgZXZlcnl3aGVy
+ZTwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PlNvIG5vdyBuYmQtcHJveHkgY29kZSBpbiBibWN3ZWIg
+aXMgKDEpZGlzYWJsZWQsICgyKWRvZXNuJ3QgY29tcGlsZSBkdWUgdG8gc21hbGwgZXJyb3I6PC9k
+aXY+PGRpdj48ZGl2Pi0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqBhc3luY1Jlc3AtJmd0O3JlcywgaW1hZ2VVcmwsIGluc2VydGVkLDwvZGl2Pjxk
+aXY+KyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oGFzeW5jUmVzcCwgaW1hZ2VVcmwsIGluc2VydGVkLDwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2Pkkg
+Y2FuIHBvc3QgdGhpcyBjaGFuZ2UgdG8gR2Vycml0LCBidXQgSSBkb24ndCB1bmRlcnN0YW5kLCB3
+aGF0J3MgbmV4dDogSW50ZWwgc2hvdWxkIHVwc3RyZWFtIHZpcnR1YWwtbWVkaWEgdG8gT3BlbkJN
+QyBhbmQgSSBkb24ndCBrbm93IGlmIGl0J3MgaW4gdGhlaXIgcGxhbnMuPC9kaXY+PGRpdj5PbiB0
+aGUgb3RoZXIgaGFuZCwgYXQgc29tZSBwb2ludCBvZiB0aW1lIG5iZC1wcm94eSBjb2RlIHByb2Jh
+Ymx5IHdpbGwgYmUgY29tcGxldGVseSByZW1vdmVkIGZyb20gYm1jd2ViIGFuZCB3ZSB3aWxsIGhh
+dmUgdG8gc3VwcG9ydCBpdCBpbiBvdXIgbG9jYWwgcmVwb3NpdG9yeSBhcyB3ZSB1c2UgdGhpcyBm
+dW5jdGlvbi48L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5QbGVhc2UgYWR2aXNlIHdoYXQgdG8gZG8u
+PC9kaXY+PGRpdj5UaGFuayB5b3UhPC9kaXY+PC9kaXY+PC9kaXY+PC9kaXY+PC9kaXY+PC9kaXY+
+PC9kaXY+PC9kaXY+PC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+LS3CoDwvZGl2PjxkaXY+QmVzdCBy
+ZWdhcmRzLDwvZGl2PjxkaXY+S29uc3RhbnRpbiBLbHVibmljaGtpbiw8L2Rpdj48ZGl2PmxlYWQg
+ZmlybXdhcmUgZW5naW5lZXIsPC9kaXY+PGRpdj5zZXJ2ZXIgaGFyZHdhcmUgUiZhbXA7RCBncm91
+cCw8L2Rpdj48ZGl2PllhbmRleCBNb3Njb3cgb2ZmaWNlLjwvZGl2PjxkaXY+dGVsOiArNy05MDMt
+NTEwLTMzLTMzPC9kaXY+PGRpdj7CoDwvZGl2Pg==
