@@ -1,69 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A80FD39B47C
-	for <lists+openbmc@lfdr.de>; Fri,  4 Jun 2021 10:00:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39FCC39B485
+	for <lists+openbmc@lfdr.de>; Fri,  4 Jun 2021 10:01:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FxFZD0pgPz303j
-	for <lists+openbmc@lfdr.de>; Fri,  4 Jun 2021 18:00:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FxFb82K7Hz307g
+	for <lists+openbmc@lfdr.de>; Fri,  4 Jun 2021 18:01:40 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ZROsLJZo;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ur14HaR+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::129;
- helo=mail-lf1-x129.google.com; envelope-from=linus.walleij@linaro.org;
+ smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::130;
+ helo=mail-lf1-x130.google.com; envelope-from=linus.walleij@linaro.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
- header.s=google header.b=ZROsLJZo; dkim-atps=neutral
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com
- [IPv6:2a00:1450:4864:20::129])
+ header.s=google header.b=ur14HaR+; dkim-atps=neutral
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com
+ [IPv6:2a00:1450:4864:20::130])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FxFYv4kjCz2xxq
- for <openbmc@lists.ozlabs.org>; Fri,  4 Jun 2021 18:00:34 +1000 (AEST)
-Received: by mail-lf1-x129.google.com with SMTP id r198so9395850lff.11
- for <openbmc@lists.ozlabs.org>; Fri, 04 Jun 2021 01:00:34 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FxFZq2WXXz2xfk
+ for <openbmc@lists.ozlabs.org>; Fri,  4 Jun 2021 18:01:23 +1000 (AEST)
+Received: by mail-lf1-x130.google.com with SMTP id n12so5750086lft.10
+ for <openbmc@lists.ozlabs.org>; Fri, 04 Jun 2021 01:01:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=8RCi1M3O4ld6apAZMvKosIl9PGcIJils8EaE1SIdw+M=;
- b=ZROsLJZojaK+8cIJXW+yJiIedhocgLH0CPfglNdBVbMbH3NEK283DWRExuqn1nCbjR
- CLOnPVlgm2C1fWhDm3w55zM0lsOosjqBKFw6502UR0YOsdsmn2sLKngvmMbziaCbLBW9
- jQlrHnadopQHaDyJ+XPGvtIWfAMFp2kKlG8hFiPAm397uWQtmrnAFWhqq6I8FyvVEigk
- Tcf7iWSV0QjB/XfTnELHEG09gVmhDqp6uMeNdzvg1eVZVOPDRgSu+eYVUiu1cDG1/AVH
- +X2QWyXNseUvQBo/rwAQHqyXbhNswQrh4H9rU8BzYr/GSdlT/ip3Bv8TIGmJrEhY3ZEu
- Q/3Q==
+ bh=2Bw4taStS0TYq1pg5UC4LSk9Au6BM49fh5en5WhcGhE=;
+ b=ur14HaR+Deo/iMCQLi4x+4jC05/k1wiyntjUayr32Bcbnj+5gVjebq9KEm/HJEJ8+v
+ 0p5vibE++OtpvxWXz40k9GbfxEaBflRCeigjtInQQ2bQPi0AiR6CiKvsB6goJowfAQGw
+ dOZk5wd/2I155FXqj5h4Kl8bMunugGzElqEwCf4N5NxuTlinMyetl+YLfXr4vGGqC1kI
+ QqgTKT0qtNCS/JbMQjXG1Pzdde16POOcPApsifjmoL3okk4PqYyCtlfzgd3eCfakaCph
+ Mlfhs0qfhJdK9wd7ssmMRGjuafYUtSkBwxfrEGsgrFs9gSAr5kix4/lkWHoTVI96KZ4e
+ eUcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=8RCi1M3O4ld6apAZMvKosIl9PGcIJils8EaE1SIdw+M=;
- b=a3VsF1tRVVIreBbmVc+ZIxFVuVK31fdfMCa4LOvzFh0xHawaPDu2CYuOnycJT89UQe
- kIbtltsuMCF9I0JyT8P+rQlzyx70OO+7A0Gr3elBqfoUirAZhhS5fDAY7+bAbIRY670B
- h+Y0xFgAPi8/eRvYMFPT4GpncYd2Xfi6h4Pre0qC6KuCcUUbZwgMqaab61Ujd9bhTt8r
- samSxW/mLcg8zFC4L15oWbsCQzXxguIqFpWRwHcSrzKYRiMPBHKUfDthTme7aoau9LXu
- t71asYOZTmPFBN9p1dlyT+GTDF/5HXm7zLkee8MRAUKPz3dX8UMdWE6a1ZQDisSrdNI0
- P7FA==
-X-Gm-Message-State: AOAM5306dZFThWolkzK8Kmmy5CT7m5iF1A5o4C7s+7h4ieIWRHjnnM31
- 0BNYBRR90W1yteANOVYnEZAGuT7Vx17AUOws0omWuA==
-X-Google-Smtp-Source: ABdhPJyLrDDoW78D5UpyZglYbPa7oduwWRh5tpBbor/T+yc/T2P/d9w4kpTi6SaEt+Xp/wQXSqGZWPjyAG4vD/DR0YQ=
-X-Received: by 2002:a05:6512:3241:: with SMTP id
- c1mr2038487lfr.29.1622793629670; 
- Fri, 04 Jun 2021 01:00:29 -0700 (PDT)
+ bh=2Bw4taStS0TYq1pg5UC4LSk9Au6BM49fh5en5WhcGhE=;
+ b=ZCbbg53RGBcb1f3mhzZDam4vEkyCFa6aWLswcLGn1XSze/6XFUGRw7jdZIm2oo3/8V
+ lev7zddGvfFXNyd/PcnZ9zpO/h//OC4w7iltVD3t6P94kdh+UI+NQDQRs+qir7yFh3vT
+ lPH2LKdBKHJJJEJHYI26yjTnLK4f6RzpJTPjRLWHa56UQSM0jMVvUMiqCqGS1zPmIwEl
+ QIFs6kQkChxzxAGJ9kZmTUh8loTI/xMsIzVUlVMsfZBaG+I5xjmYIzMEwYRh+taVq8ua
+ Gv/yjXaHIKxAJLGoN8zbXA4WE1eaLW/wYMAzdayAW2FXSmaBqVxlZ53FT+yOPDwNVAS+
+ SWdQ==
+X-Gm-Message-State: AOAM532TCnkGBBGZNNj+qN2o78XVXekmjwNA0V1nwv9wZmJ7w2ggqjOs
+ 64WabvK3LkEPWwmJUZgDAJn8LozmKzZvUwM1hhRcYQ==
+X-Google-Smtp-Source: ABdhPJwBqdYA3oPQgKBi2zU4QEMvIT3pto2rMxLubgXqM5I09bxsqOjHjuGSYlqFDkF4xp8cjxOitNwbigTvKyKt4U4=
+X-Received: by 2002:a19:f616:: with SMTP id x22mr1904400lfe.291.1622793678476; 
+ Fri, 04 Jun 2021 01:01:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <20210602120329.2444672-1-j.neuschaefer@gmx.net>
- <20210602120329.2444672-2-j.neuschaefer@gmx.net>
-In-Reply-To: <20210602120329.2444672-2-j.neuschaefer@gmx.net>
+ <20210602120329.2444672-4-j.neuschaefer@gmx.net>
+In-Reply-To: <20210602120329.2444672-4-j.neuschaefer@gmx.net>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Fri, 4 Jun 2021 10:00:18 +0200
-Message-ID: <CACRpkdaC8jzzE=9TSs-eRy3j3fk3=k_xhgjPXw7DW=rK=Csx0g@mail.gmail.com>
-Subject: Re: [PATCH 1/8] dt-bindings: arm/npcm: Add binding for global control
- registers (GCR)
+Date: Fri, 4 Jun 2021 10:01:07 +0200
+Message-ID: <CACRpkdY7AqcE4CMAdZHR-DfV-3ZCO3h9kYUZoZCUodLQmyyfXw@mail.gmail.com>
+Subject: Re: [PATCH 3/8] ARM: dts: wpcm450: Add global control registers (GCR)
+ node
 To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -80,40 +79,27 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
  <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>,
  linux-kernel <linux-kernel@vger.kernel.org>,
- Tali Perry <tali.perry1@gmail.com>,
  "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Benjamin Fair <benjaminfair@google.com>
+ Rob Herring <robh+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Wed, Jun 2, 2021 at 2:04 PM Jonathan Neusch=C3=A4fer
 <j.neuschaefer@gmx.net> wrote:
 
-> A nuvoton,*-gcr node is present in nuvoton-common-npcm7xx.dtsi and will
-> be added to nuvoton-wpcm450.dtsi. It is necessary for the NPCM7xx and
-> WPCM450 pinctrl drivers, and may later be used to retrieve SoC model and
-> version information.
+> The Global Control Registers (GCR) are a block of registers in Nuvoton
+> SoCs that expose misc functionality such as chip model and version
+> information or pinmux settings.
 >
-> This patch adds a binding to describe this node.
+> This patch adds a GCR node to nuvoton-wpcm450.dtsi in preparation for
+> enabling pinctrl on this SoC.
 >
 > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 
-(...)
-
-> +    gcr: gcr@800000 {
-> +      compatible =3D "nuvoton,npcm750-gcr", "syscon", "simple-mfd";
-> +      reg =3D <0x800000 0x1000>;
-> +    };
-
-gcr looks a bit idiomatic, isn't
-
-syscon:  syscon@... better?
-
-Nitpicky though and looks good to me either way:
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+As noted I would name this architecture-neutral with
+syscon@...
 
 Yours,
 Linus Walleij
