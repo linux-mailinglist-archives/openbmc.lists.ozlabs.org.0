@@ -2,132 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0EF1439D7D8
-	for <lists+openbmc@lfdr.de>; Mon,  7 Jun 2021 10:46:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D251439DD35
+	for <lists+openbmc@lfdr.de>; Mon,  7 Jun 2021 15:00:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fz6R21ZrDz3bnY
-	for <lists+openbmc@lfdr.de>; Mon,  7 Jun 2021 18:46:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FzD4Q1sDPz2yy9
+	for <lists+openbmc@lfdr.de>; Mon,  7 Jun 2021 23:00:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=cw8rnmVk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=CC03vdf9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.244.96;
- helo=nam12-mw2-obe.outbound.protection.outlook.com;
- envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=cw8rnmVk; 
- dkim-atps=neutral
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com
- (mail-mw2nam12on2096.outbound.protection.outlook.com [40.107.244.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c31;
+ helo=mail-oo1-xc31.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=CC03vdf9; dkim-atps=neutral
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com
+ [IPv6:2607:f8b0:4864:20::c31])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Fz6Qf2Vv2z2yWN
- for <openbmc@lists.ozlabs.org>; Mon,  7 Jun 2021 18:45:44 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=S1ux+1kEIb3R7iYuRvRkJh4m0hhw+suf94QMNnuvBZgo0xYtjZpFpXgqezcU9pizo7Wpwf3WMMZ7AMt3Yh54LWt46f4amfNiS33L59Q9XK4BgQcRc8WAe1ObLx/eGAaBSZ7mMO0BERD1IoZ2DjMm0qeNChjzAEF+yK+gMRP75K2AGJqbtXLhVqA09k4seA6RBav5t+EQ7PIYdXPYHKzhyEoxmddw3uqxMvmJGV+h1jqS30e19WOm7FNxOmHkvs14Hbc+p+LtxVmtatNrra4EC4/UnIwrBDFjfE5BhEtzsLTp8hp/0e2M7+z4pXxygHP9UUvAZjO9fpFbhjt/n+VoQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aGxRW9ykEOsPZGxJBiioQmmWGwU/GrtTuGjKRzLT0EY=;
- b=Hf/ZlVoKMto57TFyaliyOqzPmwO1kwRHi2RM19IfoZ6mFWp+QYODXobppmHaPUm4fpkjSPII4ZQ5ceLKefLWH52bBhvYhaMZ4t44+j4cvn1SWJol7UF9QKmRoO4savl5AmPoXc7Wi2DTPqhSKozTMMy3uD7vK0shUOCg6gIJk//W2EbvqmwoFxFzWdy5e6DEtODBcbdFmfoy+xPXoIX6vYI3vlSzpYVFO87HsJ3y7Xtc32bK7mzA27jhwzVjFzYGP5RfFsCfXPy5fBHPMKzn4TTS2iYay6gJfyNF/pZgp5qd94KfxyRO+ig6hWXo19SfXbqb0Oy+SNutW4zsZo/sxQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aGxRW9ykEOsPZGxJBiioQmmWGwU/GrtTuGjKRzLT0EY=;
- b=cw8rnmVk14Y4+M8xzt4b6Ex75hRbLwWwkppPzeIj4kw2DRtAENZWRfkdEAoxpNmPMJcTlrWXr3HN2M/4JVoWfzatNX1XRAixD/hKSFkPgfmeQh07j+tWFTEMMeOHaoExvQlxnydJ3wthIzbOHWfxOTNbE6pPZqDnz9ru0Rdm930=
-Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=os.amperecomputing.com;
-Received: from BYAPR01MB4678.prod.exchangelabs.com (2603:10b6:a03:88::27) by
- SJ0PR01MB6333.prod.exchangelabs.com (2603:10b6:a03:293::19) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4195.24; Mon, 7 Jun 2021 08:45:35 +0000
-Received: from BYAPR01MB4678.prod.exchangelabs.com
- ([fe80::1456:37cd:724f:6314]) by BYAPR01MB4678.prod.exchangelabs.com
- ([fe80::1456:37cd:724f:6314%7]) with mapi id 15.20.4195.030; Mon, 7 Jun 2021
- 08:45:35 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FzD4154Gvz2xvP
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Jun 2021 23:00:00 +1000 (AEST)
+Received: by mail-oo1-xc31.google.com with SMTP id
+ x22-20020a4a62160000b0290245cf6b7feeso4094325ooc.13
+ for <openbmc@lists.ozlabs.org>; Mon, 07 Jun 2021 05:59:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=44EP580vfmKbpNE/h/ITINNG7D7dpqU4VKekXv6Ec5M=;
+ b=CC03vdf9X1g1oGZ+mn7Y8IvDtXQwsBs4YKgRb7jyEv+kwMyQotiNIhlQp6sK+fsy36
+ 7DFlRBgCPDqdqnsBxNNTb2c6AjFOwLEG7Ei++llfQ/w26T/tTeNMr9DYq0riZsYgI56Y
+ XaoOpBR6qKvEtNABMh0pBttalcRn6QpRfSJzO1udLxkFC/I20ZwBudJbs6rLFm9/+FvO
+ U3nO/eRYMARYjV8djI3onYNdcIeWLSLpyQLituFGXlb2/E4NS8nPnKWW4DPOM1ooGZCG
+ fME7zR8jg6FEb1fptUvwXcdBpVecGYob7hG0Dv++eIA5sDMtwo8Ct6NCH5ivG11DxlU/
+ oGng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=44EP580vfmKbpNE/h/ITINNG7D7dpqU4VKekXv6Ec5M=;
+ b=Pz6lAPTvQAOzK1GMY7lndQEzmkyvpNGaL+KRqhB3GT/fa23VpPiCoHhn9Fe78dj02X
+ oS7Pk7brZ5XvchKlWdwV+EipM4sg5cHbqHoPhESvdsROL7OAMcNFFc299g8z3kFTjtBq
+ umoooj+NG6Qr3PjqryedkE7DlFgSrC++wiZWFiz478fd0xV2BoqhR4UzSF8buF98bJa2
+ Q/ncc0QZrLnUqKkZxLe5pOPjhN1tiAl/C9N/kR5YJ49vq1OGB8NPSgTDldDLFPNXI9aG
+ hLRarOZR1uYgXYsdTl2ZoiqXsPvEoM/Y/yvtZVYeDS7JtQHBjclfzsvp/9HfBNFbxeKj
+ j9OA==
+X-Gm-Message-State: AOAM532XNzPLP0PEEtec53njonqbn+3pg86mRh0tZS3NB3rowFp06xM7
+ nr9Wtl5ERA7qAuCkWnfYN2uzGQR0GM/ttA==
+X-Google-Smtp-Source: ABdhPJyW+BSoB1F9v6CvzmfOxsO/oGMutAPBSak9i7FXPsGFc2lUseqe+7Ia/JiTSTPOo0yqxux4cQ==
+X-Received: by 2002:a4a:b544:: with SMTP id s4mr13147687ooo.62.1623070795958; 
+ Mon, 07 Jun 2021 05:59:55 -0700 (PDT)
+Received: from smtpclient.apple ([2600:1700:19e0:3310:65cd:5f46:ae0e:8196])
+ by smtp.gmail.com with ESMTPSA id o4sm2064311oon.15.2021.06.07.05.59.55
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 07 Jun 2021 05:59:55 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.80.0.2.43\))
 Subject: Re: Request to create ampere-platform-mgmt and ampere-ipmi-oem repos
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <1afee506-f30e-9f2e-9614-566e58ca25c5@os.amperecomputing.com>
+Date: Mon, 7 Jun 2021 07:59:54 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <8EB56E60-53B3-4671-A64E-9F2FA73EB77E@gmail.com>
 References: <38d1440f-b3be-9147-5002-42536117e1e0@os.amperecomputing.com>
  <20210503143347.gncdsonvtqzpfmdo@thinkpad.fuzziesquirrel.com>
-From: Thang Nguyen <thang@os.amperecomputing.com>
-Message-ID: <1afee506-f30e-9f2e-9614-566e58ca25c5@os.amperecomputing.com>
-Date: Mon, 7 Jun 2021 15:45:27 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
-In-Reply-To: <20210503143347.gncdsonvtqzpfmdo@thinkpad.fuzziesquirrel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [1.53.208.114]
-X-ClientProxiedBy: HKAPR04CA0002.apcprd04.prod.outlook.com
- (2603:1096:203:d0::12) To BYAPR01MB4678.prod.exchangelabs.com
- (2603:10b6:a03:88::27)
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from HCM-FVFX4014HV2J.local (1.53.208.114) by
- HKAPR04CA0002.apcprd04.prod.outlook.com (2603:1096:203:d0::12) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4195.21 via Frontend Transport; Mon, 7 Jun 2021 08:45:33 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 9402edb7-8b4a-4978-2718-08d929909dfc
-X-MS-TrafficTypeDiagnostic: SJ0PR01MB6333:
-X-Microsoft-Antispam-PRVS: <SJ0PR01MB63335ABBA0F30875DF0D8D628D389@SJ0PR01MB6333.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1388;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: AXO8rJ+TEQ6zVxTlFkbiHJuwmCIoWts7KDjQTCxq5egiFTJZYtVwqZkbpQXYi3OUq97FtiydDcuqoD153PLnkMvdeOhFtsQfEQ8x+sSnz2/2Ggy7ORr5eNKxMT585oGOuBdTlaogWT/+yyQ4ZP48J9g6nbQVmVpqtIYyWSZBKmuywBK2Cu77inIASZmkE5AjtgWA9YHBzyUAPNyChMEwWjrtJ4yvFp+GY+zXh6LOFh2/RRI2ksueMP3cBKDPKQjL0zKNppCw6YzxR+TbXVtJBVYCK68PyQWhGqjzknH6GeemE+lfoE9Q+EfN9b6paUnhuAFQe4tqoAlCBoeweXGjk0SfabDIstjWG9cA70u4a9+cjkw3udEf2GUTa956oSCLGFwi438g2O8MdqX9/LaLHKNkiKS7zlM8L8wHZ4acgv7QxoR2Bc6VkfyJRJ1a/+4BWMBi+ypghOUxP79d4cgAxXk//G9z+n3pM9PgumI70LG/ccHMa3QTEkGUvFrdt92QR4Gcwf1Fx2wbtkWIZMiy2grOCwBR2isjgJd90mKPg8luHTC9dIgimzcsT1/LIpF/nWcAtaYjdzIh2m7/JK7/t/QtOSWZzGaDESxiKCjhFMTAxFCTL2nOgX2QLIbW/hfkOqosjBRla1yqDbGvQSwY1uwMwhIKG8VaMzt10ETiyYLPfNFfhTTnPvF0d571YsB17+EefnefeyFnjI7P5BQw0V8IaKY16KY7TC8kxEkJZC90ivVBz6ITW0F/4gEwU1bMgH/Hl4BWAGxzf5Kq+B07Uw==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR01MB4678.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(346002)(376002)(396003)(39840400004)(366004)(136003)(6512007)(6486002)(2906002)(316002)(84040400003)(31696002)(5660300002)(8676002)(8936002)(6666004)(86362001)(186003)(16526019)(478600001)(52116002)(6506007)(53546011)(4744005)(38100700002)(38350700002)(31686004)(26005)(2616005)(956004)(66946007)(66556008)(66476007)(6916009)(4326008)(36456004)(42976004)(43740500002)(45980500001);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?ODd2SFJ1a3UwRFJsencydEs3dTFKU242MVJOL2pIK0JrSUNpU0NNOXp5ck9Z?=
- =?utf-8?B?ckxEUEdkTzV0Z0JWYWtWam1WNEEya2ZsbVk0ZVIzMjZCbnM0U3ozREZRQ0gv?=
- =?utf-8?B?ZzFsTGVDVVJzM0FPeWdzcWdnVkVKeHlrdldIL2FmV0laZVBFWXJseU5lSFZV?=
- =?utf-8?B?Z3hvWG9pVXFhUGF4d0RiUU1RbEZlanRTenJHSlVjcjZZaUY4Qk8xc2lhb0g1?=
- =?utf-8?B?cEJLcmtwektQSFVOSTRWR1NrOG01cU82SU9uUmI2djJRa21sZ3p0ajliTXRM?=
- =?utf-8?B?dzNxM1ZlTEtBditCNGpORitCdjl3bnFQMWtrZnhIRXZqRVBuMlVNZlIwQXg2?=
- =?utf-8?B?ZElIckFhbWl6aCtSWE9KeUdVTExYM25NR1VHOCs0aDNNaUo2T3BWZnBFMFIx?=
- =?utf-8?B?V2lDb2FTN2YxaDU3enc5elpyOHdPdXB5T3VScm1rVHZlNDYvY3dLblZSR2p5?=
- =?utf-8?B?Y1QyRk04T3BQaGE5d0ZTT2wwaEgrUEVEVG5sMEtObG1pVk5PcGN3citKblhX?=
- =?utf-8?B?U3JUbElDNnJaTllkeUZZTEViN3VWU3ZUYlU0OGxoWGFOakxXZ1I4aGE3MzBC?=
- =?utf-8?B?ZndyWHRST2xoR0pmODBsKzh6b1RYNDZONmxYY3VEbW9wemJMQWs4TjlGTnUx?=
- =?utf-8?B?eHNFRm5iaFQreSthSEFjMzRVQlV2NUU1dWFocGhORDBJNXEyb2pUc0xZbTRa?=
- =?utf-8?B?SXpXQXNiVHRkb0pJYTFSaFhOMnA4ZSttS1RpdGJ0dWZMeU1lenliSFJ6dExQ?=
- =?utf-8?B?TmkwUlo1bHQ2Qit4eHpBVVFxeVJySnBMR1NwbFlkSjdzZFVJaFFaWTB1Znow?=
- =?utf-8?B?dkNOWmpRekpvSGtrcEFMSWx2d1NjQ1Q4dkp3NVhRMkVTMldTOVdQaHBQNld0?=
- =?utf-8?B?TVA5NXFjOVAzUXhsZ2dXU0JublFLZkVBWVAvN2Z4RGpYdURubWdpbmFBb0Nw?=
- =?utf-8?B?WlBDYTNzSHB1U3BrenFhMWg5VkZ0U2lvMjlZeC9ZZTNnQkFYcnA4Y0pDOFIr?=
- =?utf-8?B?cXdZMFhoYk96VHBmNm1wRGpMaDhVc1YrRW9BdEVXc2JBenBtSHl1Tm5PaUJw?=
- =?utf-8?B?YkY2Nk8wWTNGWUR6RWhJS0RyeUtucWpVbXRTblpNNTZyaVJ3THoxd2t0emVX?=
- =?utf-8?B?NXg0ZWM5VmZlc1pVY1dDRHNGTml3UWRvNGJTVTFDTS9oeS82WEZUa05QL0Fy?=
- =?utf-8?B?UmRKWGdlV2svb0JlWEpUS1EwTGtPL2RIZmpMalByZkdpNzRIMzZ5ZUFGaFlk?=
- =?utf-8?B?N2FEdkNUUklzL3kvVTFMV1QwZ3hLRFovbEF3b2h0N3FJOUpRRGNYTTRGR1lk?=
- =?utf-8?B?M0kzR2Y3Vit4bW1jM1B0VElORkJxbnVuME9ISy9rQTJnQXpLS2tiNTd3eEFS?=
- =?utf-8?B?WkJJSnlJTUErOWFTUktDeHJNNVd5alpkSlh5RUlDNXpDdkpPRGczS01IbW9P?=
- =?utf-8?B?WWFzZzU4WDdhTlBhVXVOOGJTYVZ1bU8yR0twWU9GaklLMWM1bmI1K2NMWXV5?=
- =?utf-8?B?RE11Vi9GZWJPdHFzam9ZN2UraXUwMkJrV3FyV21IejArVzRCRXhGQWhPTEYz?=
- =?utf-8?B?QjllNkpMZ2p1NTZra2xoMU5takJhSTdxTWo4aXNaTkVSOVczelJnKzc3VTFF?=
- =?utf-8?B?UHljQzRYQk5ZbnhPZXRXTEcyRHNvaGtaTUtjODlVWHZ0cEJkL3pibGR4YzJZ?=
- =?utf-8?B?NFh0T1V6ekpVMFdISGxSTWo5YUtIbGpvdDl5L0ZFaTlZOWljOG1xbjV4QkdZ?=
- =?utf-8?Q?CDxKUu2f4f8UPJqLRD8QU2vZNOISYoxKIcfVfNB?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9402edb7-8b4a-4978-2718-08d929909dfc
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4678.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2021 08:45:35.3902 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: t8hVor0KWiX4ldF9IrJhiulC2sywmVADQ5r/s58uvqB3Yh+W2EuWnp+pOeur+to9+G5TM3HP+TTLPb7cOpfPzFHH2ZlCqtypbtV8+uqVRfQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR01MB6333
+ <1afee506-f30e-9f2e-9614-566e58ca25c5@os.amperecomputing.com>
+To: Thang Nguyen <thang@os.amperecomputing.com>
+X-Mailer: Apple Mail (2.3654.80.0.2.43)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -139,33 +84,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On 03/05/2021 21:33, Brad Bishop wrote:
-> On Fri, Apr 16, 2021 at 09:05:36AM +0700, Thang Nguyen wrote:
->> Hi Brad,
->>
->> Can you help create 2 new repositories for Ampere specific codes:
->>
->> - ampere-platform-mgmt: contains codes for Ampere specific 
->> applications to monitor and control Ampere's Host like RAS error 
->> handling, Temp event, ...
->>
->> - ampere-ipmi-oem: contains codes for Ampere specific IPMI command 
->> support.
->
-> ampere-ipmi-oem is ready for your use.
->
-> thx - brad
 
-Hi Brad,
+> On Jun 7, 2021, at 3:45 AM, Thang Nguyen =
+<thang@os.amperecomputing.com> wrote:
+>=20
+>=20
+> On 03/05/2021 21:33, Brad Bishop wrote:
+>> On Fri, Apr 16, 2021 at 09:05:36AM +0700, Thang Nguyen wrote:
+>>> Hi Brad,
+>>>=20
+>>> Can you help create 2 new repositories for Ampere specific codes:
+>>>=20
+>>> - ampere-platform-mgmt: contains codes for Ampere specific =
+applications to monitor and control Ampere's Host like RAS error =
+handling, Temp event, ...
+>>>=20
+>>> - ampere-ipmi-oem: contains codes for Ampere specific IPMI command =
+support.
+>>=20
+>> ampere-ipmi-oem is ready for your use.
+>>=20
+>> thx - brad
+>=20
+> Hi Brad,
+>=20
+> Can you help enable CI for the ampere-ipmi-oem repo? It does not =
+trigger CI when adding new patch in gerrit.
 
-Can you help enable CI for the ampere-ipmi-oem repo? It does not trigger 
-CI when adding new patch in gerrit.
+Done
 
-
-Thx - ThangQ
+>=20
+>=20
+> Thx - ThangQ
+>=20
 
