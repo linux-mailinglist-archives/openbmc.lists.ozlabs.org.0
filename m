@@ -1,66 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27BC939EB4C
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 03:23:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 193FF39EBC4
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 04:01:26 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FzXYG0Rd0z3023
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 11:22:58 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=VhY1VL3G;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FzYPc38v9z305w
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 12:01:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::1031;
- helo=mail-pj1-x1031.google.com; envelope-from=wltu@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=VhY1VL3G; dkim-atps=neutral
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
- [IPv6:2607:f8b0:4864:20::1031])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FzXXx3k94z2yWN
- for <openbmc@lists.ozlabs.org>; Tue,  8 Jun 2021 11:22:39 +1000 (AEST)
-Received: by mail-pj1-x1031.google.com with SMTP id
- k22-20020a17090aef16b0290163512accedso900430pjz.0
- for <openbmc@lists.ozlabs.org>; Mon, 07 Jun 2021 18:22:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=DoCqT57PWogse9MEhitLfrLcui5pryRHTkU2T4zomfc=;
- b=VhY1VL3GhRKi73XB9hfRPx+w8yOwUn8NHC/yFMX/TNATb9iFCJTVijztWq9pqjwCmO
- 282TOPJDReOWswGV+ZeT4R7elldgov2cdbP9N4vA48GS6Qbr5szC63xJWv0uz+GKFREn
- EZ50FuGbXLcVNQHYW5cpOYoDKKzKgHBipneSFdJzN2C/zNU8Eq7ZnXGqYCtDRP0iuuQk
- XfrykoWhdm8XltYOOWQXRLKXbQmBkvYcGKmreELyiduTSFfvGAjBiho41cSz54dp2e2q
- /SYytvq3VSx4wqQ6HRpU8+3mIN/tP8Y6wG8UxH4w+6fs2tKTGSM+wZnjfrrBJUBvt4jm
- P4aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=DoCqT57PWogse9MEhitLfrLcui5pryRHTkU2T4zomfc=;
- b=jMvEmgZDD2ocXygff5kty5rCO4c6ay7fV/Bb5hEQZw+tmPJmL80qElceBOjjkpupUp
- BkQvKT/T22EuKyGz75eqwnTKfOEPYKt4pMmUAUgiaEBAydZjIBETRkx8FucyraFudQtS
- 8MkYOxRuLS+0l7/bZDQT05taNAc5r3+9Wbp5viHa2Atj4UmgVKJPunWiXssZtqAyQOep
- pCYAeNx16Wk24tGxnr+PrU6UCs4FNCZm1Lh4HvcKP5d1alZbTmRyF/8qCMEM/8Ja6Dhp
- yY36y5IIlI4MOxU/YU+Nk3zwuNN1oDUsLPLVuO8aP9PRX4hyxvNDNkhLUMevhTjOLAie
- PKbw==
-X-Gm-Message-State: AOAM532sUOGF5Y6Aro4dBGqkeoN+5ygxqaQ0kAd527jOmRtbwot1opQg
- fYAD76V2oqse3f9tys05Okj/Gm1vo1OyVVaqjiypiiOjhZ91Qg==
-X-Google-Smtp-Source: ABdhPJzPLUOYwYTx1pr1WJVqtw8fbM4Cdah5Vds2VZuZsfHj3yPNmdkjsv59gXBEDML+8kq7MBHN+kDGFgMMjjtmjOw=
-X-Received: by 2002:a17:90a:cf12:: with SMTP id
- h18mr22561670pju.131.1623115355072; 
- Mon, 07 Jun 2021 18:22:35 -0700 (PDT)
+ smtp.mailfrom=asrockrack.com (client-ip=43.251.60.7; helo=ms.pegatroncorp.com;
+ envelope-from=jeff9_chan@asrockrack.com; receiver=<UNKNOWN>)
+Received: from ms.pegatroncorp.com (ms5.pegatroncorp.com [43.251.60.7])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4FzYPM5NMYz2xvH
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Jun 2021 12:01:10 +1000 (AEST)
+IronPort-SDR: ifse6dMYpKxmwWens6QpB9XVdpReke8pkfR+KgBpLI5CuiCgZwc0VUwRWkpDo8hZpa8ndODPco
+ 3IUBJ5/rtKPf/bEzyMa6Jx9nBaM0Hhs9wp62UbkH5Y4iIsuHnE58WWqUjvoygV1EavQElx8I9v
+ PPtsn3ofxM9xdYNefJsucRCIiP9mxNJUGUdxiq4Dm/6zDm9nO11iTQJJFya+u8gwPvSr5jQLky
+ +J/SADMlWgQWD6BYORrsnqbmP2JToJ3BUeTWIwuV6Rk6fbMxw4Y6N8TiWg1a4t7vBlDfVNGp/W
+ OFA=
+Received: from unknown (HELO PTW-MSE-AP01.pegatroncorp.com) ([172.18.6.20])
+ by ms.pegatroncorp.com with ESMTP; 08 Jun 2021 10:01:08 +0800
+Received: from PTW-EX-MBS04.PEGA.CORP.PEGATRON
+ (ptw-ex-mbs04.pega.corp.pegatron [172.18.192.57])
+ by PTW-MSE-AP01.pegatroncorp.com with ESMTP id 158211bM060437;
+ Tue, 8 Jun 2021 10:01:01 +0800 (GMT-8)
+ (envelope-from Jeff9_Chan@asrockrack.com)
+Received: from PTW-EX-MBS11.PEGA.CORP.PEGATRON (172.18.192.66) by
+ PTW-EX-MBS04.PEGA.CORP.PEGATRON (172.18.192.57) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1847.3; Tue, 8 Jun 2021 10:01:01 +0800
+Received: from PTW-EX-MBS11.PEGA.CORP.PEGATRON ([fe80::35ca:6b59:40d1:9037])
+ by PTW-EX-MBS11.PEGA.CORP.PEGATRON ([fe80::35ca:6b59:40d1:9037%3]) with mapi
+ id 15.01.1847.012; Tue, 8 Jun 2021 10:01:01 +0800
+From: =?utf-8?B?SmVmZjkgQ2hhbijpmbPmnb7lhIlfQVNSb2NrUmFjayk=?=
+ <Jeff9_Chan@asrockrack.com>
+To: Bradley W Bishop <bradleyb@us.ibm.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: OPENBMC ASRock Rack
+Thread-Topic: OPENBMC ASRock Rack
+Thread-Index: AdY9OXpuPaiukNl5Rq6zENcUsPakygASUFgAABxnw6AAcpRYAAAlt3/wAAUnEIAAnS95QAAtf9yAPKwW60AADRa7AAA0of1ACS8FOkAAAHVfgA==
+Date: Tue, 8 Jun 2021 02:01:01 +0000
+Message-ID: <cb87a8f3a17f47e192ab5474a331807c@asrockrack.com>
+References: <dbe431da08674c61bcda091cec16b5fb@asrockrack.com>,
+ <5d74d92b8e2f47acab7da6a54f6c18ee@asrockrack.com>,
+ <fec2cbe8fd144a52915d971b4e7214bb@asrockrack.com>,
+ <58f7b059987f40b78ebdcdbd1db5d969@asrockrack.com>,
+ <8a3b99b118744df5a918b43e5520d35a@asrockrack.com>
+ <CALVHhedqJhfKD+MNofiwnKBB7sGG1wRPV4gXTdW_h=8=6=4HKw@mail.gmail.com>
+ <OF6DE94A96.B5787DB8-ON00258584.00525E62-00258584.0052E3DC@notes.na.collabserv.com>
+ <OF796A58B2.9DA64EBD-ON00258585.003E519E-00258585.003F6F0E@notes.na.collabserv.com>
+ <OF2B5AA3C5.40A65716-ON00258589.004350E5-00258589.00436A50@notes.na.collabserv.com>
+ <OF5B0F1DD8.7358EE61-ON002586BE.004FB2E2-002586BE.0050DCF8@notes.na.collabserv.com>
+ <7807e4794c844beda004d7059c74289c@asrockrack.com> 
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.194.46.159]
+Content-Type: multipart/alternative;
+ boundary="_000_cb87a8f3a17f47e192ab5474a331807casrockrackcom_"
 MIME-Version: 1.0
-From: Willy Tu <wltu@google.com>
-Date: Mon, 7 Jun 2021 18:22:23 -0700
-Message-ID: <CAHwn2Xkn5h2SJYHDriSgs2HYDv2WDMHqwOmaR5XAHaFFZjCLAg@mail.gmail.com>
-Subject: [Bmcweb/Redfish] Chassis Physical Connectivity Support on bmcweb
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="0000000000002b991c05c436fe98"
+X-MAIL: PTW-MSE-AP01.pegatroncorp.com 158211bM060437
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,116 +74,305 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jie Yang <jjy@google.com>, Ed Tanous <edtanous@google.com>,
- Derek Chan <dchanman@google.com>
+Cc: "manager@lfprojects.org" <manager@lfprojects.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000002b991c05c436fe98
-Content-Type: text/plain; charset="UTF-8"
+--_000_cb87a8f3a17f47e192ab5474a331807casrockrackcom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Hi all,
+UmUtc2VuZA0KDQpIaSBCcmFkbGV5LA0KICAgICAgICBJIGdvdCBiZWxvdyBlcnJvciB3aGVuIEkg
+dHJ5IHRvIHB1c2ggbWV0YS1hc3JvY2tyYWNrIGxheWVyIHRvIGdlcnJpdC4NCiAgICAgICAgSXMg
+dGhhdCBtZWFucyBteSBlbWFpbCBpcyBub3QgbGlzdGVkIGluIHRoZSBsaXN0Pw0KDQpUbyBzc2g6
+Ly9vcGVuYm1jLmdlcnJpdC9vcGVuYm1jL29wZW5ibWMNCiEgW3JlbW90ZSByZWplY3RlZF0gICAg
+IEhFQUQgLT4gcmVmcy9mb3IvbWFzdGVyIChjb21taXQgMWQ5OTUxYzogbm90IFNpZ25lZC1vZmYt
+YnkgYXV0aG9yL2NvbW1pdHRlci91cGxvYWRlciBpbiBtZXNzYWdlIGZvb3RlcikNCmVycm9yOiBm
+YWlsZWQgdG8gcHVzaCBzb21lIHJlZnMgdG8gJ3NzaDovL29wZW5ibWMuZ2Vycml0L29wZW5ibWMv
+b3BlbmJtYycNCg0KICAgICAgICBNeSBwcm9jZWR1cmUgaXM6DQoNCjEuICAgICAgR2l0IGNsb25l
+IG9wZW5ibWMNCg0KMi4gICAgICBBZGQgbWV0YS1hc3JvY2tyYWNrIGxheWVyDQoNCjMuICAgICAg
+Z2l0IHJlbW90ZSBhZGQgZ2Vycml0IHNzaDovL29wZW5ibWMuZ2Vycml0L29wZW5ibWMvb3BlbmJt
+Yw0KDQo0LiAgICAgIGdpdCBjb21taXQNCg0KNS4gICAgICBnaXQgcHVzaCBnZXJyaXQNCg0KTXkg
+Z2l0IGxvZzoNCmNvbW1pdCAxZDk5NTFjNTUxOGE3YmRmODhhNWRlMTZhNDFhZTJmMzM3ZTFiMmVk
+IChIRUFEIC0+IG1hc3RlcikNCkF1dGhvcjogSmVmZjlDaGFuIDxqZWZmOV9jaGFuQGFzcm9ja3Jh
+Y2suY29tPg0KRGF0ZTogICBUdWUgSnVuIDggMDk6MTU6NDQgMjAyMSArMDgwMA0KDQogICAgYWRk
+IG1ldGEtYXNyb2NrcmFjayBsYXllcg0KICAgIFNpZ25lZC1vZmYtYnk6IEplZmYgQ2hhbiA8SmVm
+ZjlfQ2hhbkBhc3JvY2tyYWNrLmNvbT4NCg0KICAgIENoYW5nZS1JZDogSTE2ODYxMzNlMDA5M2U0
+ZTAwYWRlYWRjMDY4OTcyMzk2YzhkYzRmYWINCg0KDQpiZXN0IHJlZ2FyZHMNCg0KSmVmZiBDaGFu
+DQpBU1JvY2sgSW5jLg0KVGVsOiArODg2LTItNTU1OTk2MDAgZXh0LjM4NjcwDQo=
 
-I am thinking about adding better support for Physical Connectivity between
-Boards/Chassises in bmcweb. Since Inventory.Board is treated as a chassis,
-I want to have a way to better connect the different boards with the
-existing ContainedBy/Contains.
+--_000_cb87a8f3a17f47e192ab5474a331807casrockrackcom_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-I was thinking of using xyz.openbmc_project.Association to do it. Since it
-is a list with fixed order, we can use the first chassis it finds
-for ContainedBy and the rest for Contains. For the root Chassis, it will
-have itself as the first Chassis and then just not include it.
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6eD0idXJuOnNjaGVtYXMtbWljcm9z
+b2Z0LWNvbTpvZmZpY2U6ZXhjZWwiIHhtbG5zOnA9InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206
+b2ZmaWNlOnBvd2VycG9pbnQiIHhtbG5zOmE9InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2Zm
+aWNlOmFjY2VzcyIgeG1sbnM6ZHQ9InV1aWQ6QzJGNDEwMTAtNjVCMy0xMWQxLUEyOUYtMDBBQTAw
+QzE0ODgyIiB4bWxuczpzPSJ1dWlkOkJEQzZFM0YwLTZEQTMtMTFkMS1BMkEzLTAwQUEwMEMxNDg4
+MiIgeG1sbnM6cnM9InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206cm93c2V0IiB4bWxuczp6PSIj
+Um93c2V0U2NoZW1hIiB4bWxuczpiPSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTpw
+dWJsaXNoZXIiIHhtbG5zOnNzPSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTpzcHJl
+YWRzaGVldCIgeG1sbnM6Yz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6Y29tcG9u
+ZW50OnNwcmVhZHNoZWV0IiB4bWxuczpvZGM9InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2Zm
+aWNlOm9kYyIgeG1sbnM6b2E9InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOmFjdGl2
+YXRpb24iIHhtbG5zOmh0bWw9Imh0dHA6Ly93d3cudzMub3JnL1RSL1JFQy1odG1sNDAiIHhtbG5z
+OnE9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIiB4bWxuczpydGM9
+Imh0dHA6Ly9taWNyb3NvZnQuY29tL29mZmljZW5ldC9jb25mZXJlbmNpbmciIHhtbG5zOkQ9IkRB
+VjoiIHhtbG5zOlJlcGw9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vcmVwbC8iIHhtbG5z
+Om10PSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3NoYXJlcG9pbnQvc29hcC9tZWV0aW5n
+cy8iIHhtbG5zOngyPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS9leGNlbC8y
+MDAzL3htbCIgeG1sbnM6cHBkYT0iaHR0cDovL3d3dy5wYXNzcG9ydC5jb20vTmFtZVNwYWNlLnhz
+ZCIgeG1sbnM6b2lzPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3NoYXJlcG9pbnQvc29h
+cC9vaXMvIiB4bWxuczpkaXI9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vc2hhcmVwb2lu
+dC9zb2FwL2RpcmVjdG9yeS8iIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3ht
+bGRzaWcjIiB4bWxuczpkc3A9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vc2hhcmVwb2lu
+dC9kc3AiIHhtbG5zOnVkYz0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9kYXRhL3VkYyIg
+eG1sbnM6eHNkPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6c3ViPSJo
+dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3NoYXJlcG9pbnQvc29hcC8yMDAyLzEvYWxlcnRz
+LyIgeG1sbnM6ZWM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMDQveG1sZW5jIyIgeG1sbnM6c3A9
+Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vc2hhcmVwb2ludC8iIHhtbG5zOnNwcz0iaHR0
+cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9zaGFyZXBvaW50L3NvYXAvIiB4bWxuczp4c2k9Imh0
+dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4bWxuczp1ZGNzPSJodHRw
+Oi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL2RhdGEvdWRjL3NvYXAiIHhtbG5zOnVkY3hmPSJodHRw
+Oi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL2RhdGEvdWRjL3htbGZpbGUiIHhtbG5zOnVkY3AycD0i
+aHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9kYXRhL3VkYy9wYXJ0dG9wYXJ0IiB4bWxuczp3
+Zj0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9zaGFyZXBvaW50L3NvYXAvd29ya2Zsb3cv
+IiB4bWxuczpkc3NzPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA2L2Rp
+Z3NpZy1zZXR1cCIgeG1sbnM6ZHNzaT0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9vZmZp
+Y2UvMjAwNi9kaWdzaWciIHhtbG5zOm1kc3NpPSJodHRwOi8vc2NoZW1hcy5vcGVueG1sZm9ybWF0
+cy5vcmcvcGFja2FnZS8yMDA2L2RpZ2l0YWwtc2lnbmF0dXJlIiB4bWxuczptdmVyPSJodHRwOi8v
+c2NoZW1hcy5vcGVueG1sZm9ybWF0cy5vcmcvbWFya3VwLWNvbXBhdGliaWxpdHkvMjAwNiIgeG1s
+bnM6bT0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4
+bWxuczptcmVscz0iaHR0cDovL3NjaGVtYXMub3BlbnhtbGZvcm1hdHMub3JnL3BhY2thZ2UvMjAw
+Ni9yZWxhdGlvbnNoaXBzIiB4bWxuczpzcHdwPSJodHRwOi8vbWljcm9zb2Z0LmNvbS9zaGFyZXBv
+aW50L3dlYnBhcnRwYWdlcyIgeG1sbnM6ZXgxMnQ9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5j
+b20vZXhjaGFuZ2Uvc2VydmljZXMvMjAwNi90eXBlcyIgeG1sbnM6ZXgxMm09Imh0dHA6Ly9zY2hl
+bWFzLm1pY3Jvc29mdC5jb20vZXhjaGFuZ2Uvc2VydmljZXMvMjAwNi9tZXNzYWdlcyIgeG1sbnM6
+cHB0c2w9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vc2hhcmVwb2ludC9zb2FwL1NsaWRl
+TGlicmFyeS8iIHhtbG5zOnNwc2w9Imh0dHA6Ly9taWNyb3NvZnQuY29tL3dlYnNlcnZpY2VzL1No
+YXJlUG9pbnRQb3J0YWxTZXJ2ZXIvUHVibGlzaGVkTGlua3NTZXJ2aWNlIiB4bWxuczpaPSJ1cm46
+c2NoZW1hcy1taWNyb3NvZnQtY29tOiIgeG1sbnM6dGF4PSJodHRwOi8vc2NoZW1hcy5taWNyb3Nv
+ZnQuY29tL3NoYXJlcG9pbnQvdGF4b25vbXkvc29hcC8iIHhtbG5zOnRucz0iaHR0cDovL3NjaGVt
+YXMubWljcm9zb2Z0LmNvbS9zaGFyZXBvaW50L3NvYXAvcmVjb3Jkc3JlcG9zaXRvcnkvIiB4bWxu
+czpzcHN1cD0iaHR0cDovL21pY3Jvc29mdC5jb20vd2Vic2VydmljZXMvU2hhcmVQb2ludFBvcnRh
+bFNlcnZlci9Vc2VyUHJvZmlsZVNlcnZpY2UiIHhtbG5zOm1tbD0iaHR0cDovL3d3dy53My5vcmcv
+MTk5OC9NYXRoL01hdGhNTCIgeG1sbnM6c3Q9IiYjMTsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9y
+Zy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBl
+IiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1ldGEgbmFtZT0iR2VuZXJh
+dG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNCAoZmlsdGVyZWQgbWVkaXVtKSI+DQo8c3R5
+bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWls
+eTrmlrDntLDmmI7pq5Q7DQoJcGFub3NlLTE6MiAyIDUgMCAwIDAgMCAwIDAgMDt9DQpAZm9udC1m
+YWNlDQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0xOjIgNCA1IDMgNSA0
+IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYW1icmlhOw0KCXBhbm9zZS0x
+OjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJp
+Ow0KCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1m
+YW1pbHk6IlxA5paw57Sw5piO6auUIjsNCglwYW5vc2UtMToyIDIgNSAwIDAgMCAwIDAgMCAwO30N
+Ci8qIFN0eWxlIERlZmluaXRpb25zICovDQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYu
+TXNvTm9ybWFsDQoJe21hcmdpbjowY207DQoJbWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQt
+c2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1pbHk6IuaWsOe0sOaYjumrlCIsInNlcmlmIjt9DQphOmxp
+bmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjpi
+bHVlOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KYTp2aXNpdGVkLCBzcGFuLk1zb0h5
+cGVybGlua0ZvbGxvd2VkDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjpwdXJwbGU7
+DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpwDQoJe21zby1zdHlsZS1wcmlvcml0eTo5
+OTsNCgltc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzsNCgltYXJnaW4tcmlnaHQ6MGNtOw0KCW1zby1t
+YXJnaW4tYm90dG9tLWFsdDphdXRvOw0KCW1hcmdpbi1sZWZ0OjBjbTsNCglmb250LXNpemU6MTIu
+MHB0Ow0KCWZvbnQtZmFtaWx5OiLmlrDntLDmmI7pq5QiLCJzZXJpZiI7fQ0KcC5Nc29BY2V0YXRl
+LCBsaS5Nc29BY2V0YXRlLCBkaXYuTXNvQWNldGF0ZQ0KCXttc28tc3R5bGUtcHJpb3JpdHk6OTk7
+DQoJbXNvLXN0eWxlLWxpbms6Iuiou+ino+aWueWhiuaWh+WtlyDlrZflhYMiOw0KCW1hcmdpbjow
+Y207DQoJbWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZTo5LjBwdDsNCglmb250LWZh
+bWlseToiQ2FtYnJpYSIsInNlcmlmIjt9DQpwLk1zb0xpc3RQYXJhZ3JhcGgsIGxpLk1zb0xpc3RQ
+YXJhZ3JhcGgsIGRpdi5Nc29MaXN0UGFyYWdyYXBoDQoJe21zby1zdHlsZS1wcmlvcml0eTozNDsN
+CgltYXJnaW4tdG9wOjBjbTsNCgltYXJnaW4tcmlnaHQ6MGNtOw0KCW1hcmdpbi1ib3R0b206MGNt
+Ow0KCW1hcmdpbi1sZWZ0OjI0LjBwdDsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJbXNvLXBh
+cmEtbWFyZ2luLXRvcDowY207DQoJbXNvLXBhcmEtbWFyZ2luLXJpZ2h0OjBjbTsNCgltc28tcGFy
+YS1tYXJnaW4tYm90dG9tOjBjbTsNCgltc28tcGFyYS1tYXJnaW4tbGVmdDoyLjBnZDsNCgltc28t
+cGFyYS1tYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJZm9udC1zaXplOjEyLjBwdDsNCglmb250LWZh
+bWlseToi5paw57Sw5piO6auUIiwic2VyaWYiO30NCnNwYW4uYQ0KCXttc28tc3R5bGUtbmFtZToi
+6Ki76Kej5pa55aGK5paH5a2XIOWtl+WFgyI7DQoJbXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCW1z
+by1zdHlsZS1saW5rOuiou+ino+aWueWhiuaWh+WtlzsNCglmb250LWZhbWlseToiQ2FtYnJpYSIs
+InNlcmlmIjt9DQpzcGFuLnBmcHR0aXRsZW1zbw0KCXttc28tc3R5bGUtbmFtZTpwZnB0dGl0bGVt
+c287fQ0Kc3Bhbi5wZnB0c3VidGl0bGVtc28NCgl7bXNvLXN0eWxlLW5hbWU6cGZwdHN1YnRpdGxl
+bXNvO30NCnNwYW4uRW1haWxTdHlsZTIzDQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsOw0KCWZv
+bnQtZmFtaWx5OiJDYWxpYnJpIiwic2Fucy1zZXJpZiI7DQoJY29sb3I6IzFGNDk3RDt9DQpzcGFu
+LkVtYWlsU3R5bGUyNA0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbDsNCglmb250LWZhbWlseToi
+Q2FsaWJyaSIsInNhbnMtc2VyaWYiOw0KCWNvbG9yOiMxRjQ5N0Q7fQ0Kc3Bhbi5FbWFpbFN0eWxl
+MjUNCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29uYWwtcmVwbHk7DQoJZm9udC1mYW1pbHk6IkNhbGli
+cmkiLCJzYW5zLXNlcmlmIjsNCgljb2xvcjojMUY0OTdEO30NCi5Nc29DaHBEZWZhdWx0DQoJe21z
+by1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtc2l6ZToxMC4wcHQ7fQ0KQHBhZ2UgV29y
+ZFNlY3Rpb24xDQoJe3NpemU6NjEyLjBwdCA3OTIuMHB0Ow0KCW1hcmdpbjo3Mi4wcHQgOTAuMHB0
+IDcyLjBwdCA5MC4wcHQ7fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9
+DQovKiBMaXN0IERlZmluaXRpb25zICovDQpAbGlzdCBsMA0KCXttc28tbGlzdC1pZDo3MDAzOTcx
+MzA7DQoJbXNvLWxpc3QtdHlwZTpoeWJyaWQ7DQoJbXNvLWxpc3QtdGVtcGxhdGUtaWRzOi0xMzI5
+NDM0OTgwIC0yMDQ5OTAzNjQ2IDY3Njk4NzEzIDY3Njk4NzE1IDY3Njk4NzAzIDY3Njk4NzEzIDY3
+Njk4NzE1IDY3Njk4NzAzIDY3Njk4NzEzIDY3Njk4NzE1O30NCkBsaXN0IGwwOmxldmVsMQ0KCXtt
+c28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7
+DQoJbWFyZ2luLWxlZnQ6MTguMHB0Ow0KCXRleHQtaW5kZW50Oi0xOC4wcHQ7fQ0KQGxpc3QgbDA6
+bGV2ZWwyDQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmlkZW9ncmFwaC10cmFkaXRpb25hbDsN
+Cgltc28tbGV2ZWwtdGV4dDolMuOAgTsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28t
+bGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJbWFyZ2luLWxlZnQ6NDguMHB0Ow0KCXRleHQt
+aW5kZW50Oi0yNC4wcHQ7fQ0KQGxpc3QgbDA6bGV2ZWwzDQoJe21zby1sZXZlbC1udW1iZXItZm9y
+bWF0OnJvbWFuLWxvd2VyOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1u
+dW1iZXItcG9zaXRpb246cmlnaHQ7DQoJbWFyZ2luLWxlZnQ6NzIuMHB0Ow0KCXRleHQtaW5kZW50
+Oi0yNC4wcHQ7fQ0KQGxpc3QgbDA6bGV2ZWw0DQoJe21zby1sZXZlbC10YWItc3RvcDpub25lOw0K
+CW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgltYXJnaW4tbGVmdDo5Ni4wcHQ7DQoJ
+dGV4dC1pbmRlbnQ6LTI0LjBwdDt9DQpAbGlzdCBsMDpsZXZlbDUNCgl7bXNvLWxldmVsLW51bWJl
+ci1mb3JtYXQ6aWRlb2dyYXBoLXRyYWRpdGlvbmFsOw0KCW1zby1sZXZlbC10ZXh0OiU144CBOw0K
+CW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVm
+dDsNCgltYXJnaW4tbGVmdDoxMjAuMHB0Ow0KCXRleHQtaW5kZW50Oi0yNC4wcHQ7fQ0KQGxpc3Qg
+bDA6bGV2ZWw2DQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OnJvbWFuLWxvd2VyOw0KCW1zby1s
+ZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246cmlnaHQ7DQoJ
+bWFyZ2luLWxlZnQ6MTQ0LjBwdDsNCgl0ZXh0LWluZGVudDotMjQuMHB0O30NCkBsaXN0IGwwOmxl
+dmVsNw0KCXttc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0
+aW9uOmxlZnQ7DQoJbWFyZ2luLWxlZnQ6MTY4LjBwdDsNCgl0ZXh0LWluZGVudDotMjQuMHB0O30N
+CkBsaXN0IGwwOmxldmVsOA0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDppZGVvZ3JhcGgtdHJh
+ZGl0aW9uYWw7DQoJbXNvLWxldmVsLXRleHQ6JTjjgIE7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5v
+bmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCW1hcmdpbi1sZWZ0OjE5Mi4w
+cHQ7DQoJdGV4dC1pbmRlbnQ6LTI0LjBwdDt9DQpAbGlzdCBsMDpsZXZlbDkNCgl7bXNvLWxldmVs
+LW51bWJlci1mb3JtYXQ6cm9tYW4tbG93ZXI7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJ
+bXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpyaWdodDsNCgltYXJnaW4tbGVmdDoyMTYuMHB0Ow0K
+CXRleHQtaW5kZW50Oi0yNC4wcHQ7fQ0Kb2wNCgl7bWFyZ2luLWJvdHRvbTowY207fQ0KdWwNCgl7
+bWFyZ2luLWJvdHRvbTowY207fQ0KLS0+PC9zdHlsZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4N
+CjxvOnNoYXBlZGVmYXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48
+IVtlbmRpZl0tLT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0
+PSJlZGl0Ij4NCjxvOmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5
+b3V0PjwveG1sPjwhW2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iWkgtVFciIGxpbms9
+ImJsdWUiIHZsaW5rPSJwdXJwbGUiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNs
+YXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+
+UmUtc2VuZDwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1V
+UyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssJnF1b3Q7c2Fucy1zZXJp
+ZiZxdW90Oztjb2xvcjojMUY0OTdEIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBj
+bGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZx
+dW90O0NhbGlicmkmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjojMUY0OTdEIj5I
+aSBCcmFkbGV5LDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxz
+cGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90Oywm
+cXVvdDtzYW5zLXNlcmlmJnF1b3Q7O2NvbG9yOiMxRjQ5N0QiPiZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBJIGdvdCBiZWxvdyBlcnJvciB3aGVuIEkgdHJ5IHRvIHB1
+c2ggbWV0YS1hc3JvY2tyYWNrIGxheWVyIHRvIGdlcnJpdC48bzpwPjwvbzpwPjwvc3Bhbj48L3A+
+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFt
+aWx5OiZxdW90O0NhbGlicmkmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjojMUY0
+OTdEIj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgSXMgdGhhdCBt
+ZWFucyBteSBlbWFpbCBpcyBub3QgbGlzdGVkIGluIHRoZSBsaXN0PzxvOnA+PC9vOnA+PC9zcGFu
+PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9u
+dC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90OywmcXVvdDtzYW5zLXNlcmlmJnF1b3Q7O2NvbG9y
+OiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZx
+dW90OywmcXVvdDtzYW5zLXNlcmlmJnF1b3Q7Ij5UbyBzc2g6Ly9vcGVuYm1jLmdlcnJpdC9vcGVu
+Ym1jL29wZW5ibWM8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48
+c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDss
+JnF1b3Q7c2Fucy1zZXJpZiZxdW90OyI+ISBbcmVtb3RlIHJlamVjdGVkXSZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyBIRUFEIC0mZ3Q7IHJlZnMvZm9yL21hc3RlciAoY29tbWl0IDFkOTk1MWM6IG5v
+dCBTaWduZWQtb2ZmLWJ5IGF1dGhvci9jb21taXR0ZXIvdXBsb2FkZXIgaW4gbWVzc2FnZSBmb290
+ZXIpPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFu
+Zz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LCZxdW90O3Nh
+bnMtc2VyaWYmcXVvdDsiPmVycm9yOiBmYWlsZWQgdG8gcHVzaCBzb21lIHJlZnMgdG8gJ3NzaDov
+L29wZW5ibWMuZ2Vycml0L29wZW5ibWMvb3BlbmJtYyc8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8
+cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5
+OiZxdW90O0NhbGlicmkmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjojMUY0OTdE
+Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
+biBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssJnF1
+b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjojMUY0OTdEIj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsgTXkgcHJvY2VkdXJlIGlzOjxvOnA+PC9vOnA+PC9zcGFuPjwv
+cD4NCjxwIGNsYXNzPSJNc29MaXN0UGFyYWdyYXBoIiBzdHlsZT0ibWFyZ2luLWxlZnQ6MTguMHB0
+O21zby1wYXJhLW1hcmdpbi1sZWZ0OjBnZDt0ZXh0LWluZGVudDotMTguMHB0O21zby1saXN0Omww
+IGxldmVsMSBsZm8yIj4NCjwhW2lmICFzdXBwb3J0TGlzdHNdPjxzcGFuIGxhbmc9IkVOLVVTIiBz
+dHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90OywmcXVvdDtzYW5zLXNlcmlmJnF1
+b3Q7O2NvbG9yOiMxRjQ5N0QiPjxzcGFuIHN0eWxlPSJtc28tbGlzdDpJZ25vcmUiPjEuPHNwYW4g
+c3R5bGU9ImZvbnQ6Ny4wcHQgJnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7Ij4mbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsNCjwvc3Bhbj48L3NwYW4+PC9zcGFuPjwhW2VuZGlmXT48c3Bh
+biBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssJnF1
+b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjojMUY0OTdEIj5HaXQgY2xvbmUgb3BlbmJtYzxvOnA+
+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29MaXN0UGFyYWdyYXBoIiBzdHlsZT0ibWFy
+Z2luLWxlZnQ6MTguMHB0O21zby1wYXJhLW1hcmdpbi1sZWZ0OjBnZDt0ZXh0LWluZGVudDotMTgu
+MHB0O21zby1saXN0OmwwIGxldmVsMSBsZm8yIj4NCjwhW2lmICFzdXBwb3J0TGlzdHNdPjxzcGFu
+IGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90OywmcXVv
+dDtzYW5zLXNlcmlmJnF1b3Q7O2NvbG9yOiMxRjQ5N0QiPjxzcGFuIHN0eWxlPSJtc28tbGlzdDpJ
+Z25vcmUiPjIuPHNwYW4gc3R5bGU9ImZvbnQ6Ny4wcHQgJnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1
+b3Q7Ij4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsNCjwvc3Bhbj48L3NwYW4+PC9zcGFu
+PjwhW2VuZGlmXT48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0Nh
+bGlicmkmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjojMUY0OTdEIj5BZGQgbWV0
+YS1hc3JvY2tyYWNrIGxheWVyPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb0xp
+c3RQYXJhZ3JhcGgiIHN0eWxlPSJtYXJnaW4tbGVmdDoxOC4wcHQ7bXNvLXBhcmEtbWFyZ2luLWxl
+ZnQ6MGdkO3RleHQtaW5kZW50Oi0xOC4wcHQ7bXNvLWxpc3Q6bDAgbGV2ZWwxIGxmbzIiPg0KPCFb
+aWYgIXN1cHBvcnRMaXN0c10+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTom
+cXVvdDtDYWxpYnJpJnF1b3Q7LCZxdW90O3NhbnMtc2VyaWYmcXVvdDs7Y29sb3I6IzFGNDk3RCI+
+PHNwYW4gc3R5bGU9Im1zby1saXN0Oklnbm9yZSI+My48c3BhbiBzdHlsZT0iZm9udDo3LjBwdCAm
+cXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDsiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+Ow0KPC9zcGFuPjwvc3Bhbj48L3NwYW4+PCFbZW5kaWZdPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHls
+ZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90OywmcXVvdDtzYW5zLXNlcmlmJnF1b3Q7
+O2NvbG9yOiMxRjQ5N0QiPmdpdCByZW1vdGUgYWRkIGdlcnJpdCBzc2g6Ly9vcGVuYm1jLmdlcnJp
+dC9vcGVuYm1jL29wZW5ibWM8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTGlz
+dFBhcmFncmFwaCIgc3R5bGU9Im1hcmdpbi1sZWZ0OjE4LjBwdDttc28tcGFyYS1tYXJnaW4tbGVm
+dDowZ2Q7dGV4dC1pbmRlbnQ6LTE4LjBwdDttc28tbGlzdDpsMCBsZXZlbDEgbGZvMiI+DQo8IVtp
+ZiAhc3VwcG9ydExpc3RzXT48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZx
+dW90O0NhbGlicmkmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjojMUY0OTdEIj48
+c3BhbiBzdHlsZT0ibXNvLWxpc3Q6SWdub3JlIj40LjxzcGFuIHN0eWxlPSJmb250OjcuMHB0ICZx
+dW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+DQo8L3NwYW4+PC9zcGFuPjwvc3Bhbj48IVtlbmRpZl0+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxl
+PSJmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LCZxdW90O3NhbnMtc2VyaWYmcXVvdDs7
+Y29sb3I6IzFGNDk3RCI+Z2l0IGNvbW1pdDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNz
+PSJNc29MaXN0UGFyYWdyYXBoIiBzdHlsZT0ibWFyZ2luLWxlZnQ6MTguMHB0O21zby1wYXJhLW1h
+cmdpbi1sZWZ0OjBnZDt0ZXh0LWluZGVudDotMTguMHB0O21zby1saXN0OmwwIGxldmVsMSBsZm8y
+Ij4NCjwhW2lmICFzdXBwb3J0TGlzdHNdPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1m
+YW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90OywmcXVvdDtzYW5zLXNlcmlmJnF1b3Q7O2NvbG9yOiMx
+RjQ5N0QiPjxzcGFuIHN0eWxlPSJtc28tbGlzdDpJZ25vcmUiPjUuPHNwYW4gc3R5bGU9ImZvbnQ6
+Ny4wcHQgJnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7Ij4mbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsNCjwvc3Bhbj48L3NwYW4+PC9zcGFuPjwhW2VuZGlmXT48c3BhbiBsYW5nPSJFTi1V
+UyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssJnF1b3Q7c2Fucy1zZXJp
+ZiZxdW90Oztjb2xvcjojMUY0OTdEIj5naXQgcHVzaCBnZXJyaXQ8bzpwPjwvbzpwPjwvc3Bhbj48
+L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQt
+ZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjoj
+MUY0OTdEIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+IiBzdHlsZT0ibWFyZ2luLWxlZnQ6MTguMHB0Ij48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZv
+bnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xv
+cjojMUY0OTdEIj5NeSBnaXQgbG9nOjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q2Fs
+aWJyaSZxdW90OywmcXVvdDtzYW5zLXNlcmlmJnF1b3Q7Ij5jb21taXQgMWQ5OTUxYzU1MThhN2Jk
+Zjg4YTVkZTE2YTQxYWUyZjMzN2UxYjJlZCAoSEVBRCAtJmd0OyBtYXN0ZXIpPG86cD48L286cD48
+L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxl
+PSJmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LCZxdW90O3NhbnMtc2VyaWYmcXVvdDsi
+PkF1dGhvcjogSmVmZjlDaGFuICZsdDtqZWZmOV9jaGFuQGFzcm9ja3JhY2suY29tJmd0OzxvOnA+
+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVT
+IiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90OywmcXVvdDtzYW5zLXNlcmlm
+JnF1b3Q7Ij5EYXRlOiZuYnNwOyZuYnNwOyBUdWUgSnVuIDggMDk6MTU6NDQgMjAyMSAmIzQzOzA4
+MDA8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5n
+PSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssJnF1b3Q7c2Fu
+cy1zZXJpZiZxdW90OyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDYWxp
+YnJpJnF1b3Q7LCZxdW90O3NhbnMtc2VyaWYmcXVvdDsiPiZuYnNwOyZuYnNwOyZuYnNwOyBhZGQg
+bWV0YS1hc3JvY2tyYWNrIGxheWVyPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDYWxp
+YnJpJnF1b3Q7LCZxdW90O3NhbnMtc2VyaWYmcXVvdDsiPiZuYnNwOyZuYnNwOyZuYnNwOyBTaWdu
+ZWQtb2ZmLWJ5OiBKZWZmIENoYW4gJmx0O0plZmY5X0NoYW5AYXNyb2NrcmFjay5jb20mZ3Q7PG86
+cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4t
+VVMiIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LCZxdW90O3NhbnMtc2Vy
+aWYmcXVvdDsiPiZuYnNwOyZuYnNwOyZuYnNwOw0KPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAg
+Y2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTom
+cXVvdDtDYWxpYnJpJnF1b3Q7LCZxdW90O3NhbnMtc2VyaWYmcXVvdDsiPiZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwO0NoYW5nZS1JZDogSTE2ODYxMzNlMDA5M2U0ZTAwYWRlYWRjMDY4OTcyMzk2Yzhk
+YzRmYWI8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBs
+YW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssJnF1b3Q7
+c2Fucy1zZXJpZiZxdW90Oztjb2xvcjojMUY0OTdEIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48
+L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQt
+ZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjoj
+MUY0OTdEIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQt
+ZmFtaWx5OiZxdW90O0FyaWFsJnF1b3Q7LCZxdW90O3NhbnMtc2VyaWYmcXVvdDs7Y29sb3I6Ymxh
+Y2siPmJlc3QgcmVnYXJkczxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZh
+bWlseTomcXVvdDtBcmlhbCZxdW90OywmcXVvdDtzYW5zLXNlcmlmJnF1b3Q7O2NvbG9yOmJsYWNr
+Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L2I+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
+PGI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5
+OiZxdW90O0FyaWFsJnF1b3Q7LCZxdW90O3NhbnMtc2VyaWYmcXVvdDs7Y29sb3I6YmxhY2siPkpl
+ZmYgQ2hhbjxvOnA+PC9vOnA+PC9zcGFuPjwvYj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48
+Yj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6
+JnF1b3Q7QXJpYWwmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjpibGFjayI+QVNS
+b2NrIEluYy4NCjxvOnA+PC9vOnA+PC9zcGFuPjwvYj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+Ij48Yj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1p
+bHk6JnF1b3Q7QXJpYWwmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZxdW90Oztjb2xvcjpibGFjayI+
+VGVsOiAmIzQzOzg4Ni0yLTU1NTk5NjAwIGV4dC4zODY3MDxvOnA+PC9vOnA+PC9zcGFuPjwvYj48
+L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
 
-Is this something we can work with? or do we need something more
-complicated to support chassis relationship?
-
-----
-
-Another question that is kind of related.
-I am also thinking about using Physical Location for each Chassis.
-It is already using `xyz.openbmc_project.Inventory.Decorator.LocationCode`
-as the ServiceLabel
-https://github.com/openbmc/bmcweb/blob/90e97e1d26b78d899a543831a8051dacbbdde71a/redfish-core/lib/chassis.hpp#L295-L331
-
-With that in mind, I am wondering how LocationCode is configured with
-EntityManager? Since the number of FRUs is dynamic, there is no way to tell
-which location the FRU is connected to without a mapping. I am wondering
-how that can be done with Entity Manager.
-
-I was thinking of doing something like getEntityName
-<https://github.com/openbmc/google-ipmi-sys/blob/3b1b427c1fa4bcddcab1fc003410e5fa5d7a8334/handler.cpp#L235>
-in
-IPMI OEM handler which utilizes a json file for the mapping from entity
-instance to location. This is a simple way of doing it within
-EntityManager, but I am not sure if we want to do it this way.
-
-Maybe something related?
-https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/42971
-
-Best,
-
-Willy Tu
-
---0000000000002b991c05c436fe98
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div><span style=3D"color:rgb(32,33,36);font-family:Roboto=
-,sans-serif;font-size:14px;white-space:pre-wrap;background-color:rgba(241,2=
-43,244,0.75)">Hi all,<br></span></div><div><span style=3D"color:rgb(32,33,3=
-6);font-family:Roboto,sans-serif;font-size:14px;white-space:pre-wrap;backgr=
-ound-color:rgba(241,243,244,0.75)"><br></span></div><div><span style=3D"col=
-or:rgb(32,33,36);font-family:Roboto,sans-serif;font-size:14px;white-space:p=
-re-wrap;background-color:rgba(241,243,244,0.75)">I am thinking about adding=
- better support for Physical Connectivity between Boards/Chassises in bmcwe=
-b. Since Inventory.Board is treated as a chassis, I want to have a way to b=
-etter connect the different boards with the existing ContainedBy/Contains.<=
-/span></div><div><span style=3D"color:rgb(32,33,36);font-family:Roboto,sans=
--serif;font-size:14px;white-space:pre-wrap;background-color:rgba(241,243,24=
-4,0.75)"><br></span></div><div><span style=3D"color:rgb(32,33,36);font-fami=
-ly:Roboto,sans-serif;font-size:14px;white-space:pre-wrap;background-color:r=
-gba(241,243,244,0.75)">I was thinking of using </span>xyz.openbmc_project.A=
-ssociation to do it. Since it is a list with fixed order, we can use the fi=
-rst chassis it finds for=C2=A0ContainedBy and the rest for Contains. For th=
-e root Chassis, it will have itself as the first Chassis and then just not =
-include it.</div><div><br></div><div>Is this something we can work with? or=
- do we need something more complicated to support chassis relationship?</di=
-v><div><span style=3D"color:rgb(32,33,36);font-family:Roboto,sans-serif;fon=
-t-size:14px;white-space:pre-wrap;background-color:rgba(241,243,244,0.75)"><=
-br></span></div><div><span style=3D"color:rgb(32,33,36);font-family:Roboto,=
-sans-serif;font-size:14px;white-space:pre-wrap;background-color:rgba(241,24=
-3,244,0.75)">----</span></div><div><span style=3D"color:rgb(32,33,36);font-=
-family:Roboto,sans-serif;font-size:14px;white-space:pre-wrap;background-col=
-or:rgba(241,243,244,0.75)"><br></span></div><div><span style=3D"color:rgb(3=
-2,33,36);font-family:Roboto,sans-serif;font-size:14px;white-space:pre-wrap;=
-background-color:rgba(241,243,244,0.75)">Another question that is kind of r=
-elated.</span></div><span style=3D"color:rgb(32,33,36);font-family:Roboto,s=
-ans-serif;font-size:14px;white-space:pre-wrap;background-color:rgba(241,243=
-,244,0.75)"><div>I am also thinking about using Physical Location for each =
-Chassis.</div>It is already using `xyz.openbmc_project.Inventory.Decorator.=
-LocationCode` as the ServiceLabel <a href=3D"https://github.com/openbmc/bmc=
-web/blob/90e97e1d26b78d899a543831a8051dacbbdde71a/redfish-core/lib/chassis.=
-hpp#L295-L331">https://github.com/openbmc/bmcweb/blob/90e97e1d26b78d899a543=
-831a8051dacbbdde71a/redfish-core/lib/chassis.hpp#L295-L331</a></span><br><d=
-iv><span style=3D"color:rgb(32,33,36);font-family:Roboto,sans-serif;font-si=
-ze:14px;white-space:pre-wrap;background-color:rgba(241,243,244,0.75)"><br><=
-/span></div><div><span style=3D"color:rgb(32,33,36);font-family:Roboto,sans=
--serif;font-size:14px;white-space:pre-wrap;background-color:rgba(241,243,24=
-4,0.75)">With that in mind, I am wondering how </span>LocationCode is confi=
-gured with EntityManager? Since the number of FRUs is dynamic, there is no =
-way to tell which location the FRU is connected to without a mapping. I am =
-wondering how that can be done with Entity Manager.</div><div><br></div><di=
-v>I was thinking of doing something=C2=A0like=C2=A0<a href=3D"https://githu=
-b.com/openbmc/google-ipmi-sys/blob/3b1b427c1fa4bcddcab1fc003410e5fa5d7a8334=
-/handler.cpp#L235">getEntityName</a>=C2=A0in IPMI OEM handler which utilize=
-s a json file for the mapping from entity instance to location. This is a s=
-imple way of doing it within EntityManager, but I am not sure if we want to=
- do it this way.</div><div><br></div><div>Maybe something related?</div><di=
-v><span style=3D"color:rgb(32,33,36);font-family:Roboto,sans-serif;font-siz=
-e:14px;white-space:pre-wrap;background-color:rgba(241,243,244,0.75)"><a hre=
-f=3D"https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/42971">h=
-ttps://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/42971</a><br><=
-/span></div><div><br></div><div>Best,</div><div><br></div><div>Willy Tu</di=
-v></div>
-
---0000000000002b991c05c436fe98--
+--_000_cb87a8f3a17f47e192ab5474a331807casrockrackcom_--
