@@ -1,93 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46AF039EE46
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 07:44:57 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A1EB39EE79
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 08:00:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FzfMW54cyz307F
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 15:44:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FzfjS6gfhz3021
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 16:00:28 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=dFHI9kRr;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=B2qdvS1Y;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72b;
+ helo=mail-qk1-x72b.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=dFHI9kRr; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=B2qdvS1Y; dkim-atps=neutral
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com
+ [IPv6:2607:f8b0:4864:20::72b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FzfMD08D4z2xZp
- for <openbmc@lists.ozlabs.org>; Tue,  8 Jun 2021 15:44:39 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 1585iRK2121647
- for <openbmc@lists.ozlabs.org>; Tue, 8 Jun 2021 01:44:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : cc : to :
- mime-version : content-type : message-id : subject; s=pp1;
- bh=1EXH8Btq4jFXPQclKGz45foLybM6fvhy1agC16Jabe4=;
- b=dFHI9kRrR6HE3aZMGKBwNYlnI/6LHsgF/U9alTfcHnL3RIgKW07Vi+EFoqWyRoJqygKp
- NhlLDlZIHYCMFnx8fiXKRBbiatXo+CLly/xt7Xg7LFkNlcuvH5UfYPAK3JEm4Zupm221
- e8wS/sCFnxYoeohL4P1bXYP3JZJhW1KfoDMLCHu5f55xcXwLjin9kyn2zhru3sEER1rZ
- k4RUQjA0huirakn6J+bJFhIvY/Axu9o2HLXfmV970F/YjkGQcI6uCFh87xiHTXEy8NG4
- B7GsMqCqgArXKe796948pFy+9c8L+fpimALuHg7GiHiAtsyeEa0JOF/krqvNlYLfbgBH HQ== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.82])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3922nk803u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 08 Jun 2021 01:44:37 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Tue, 8 Jun 2021 05:44:36 -0000
-Received: from us1a3-smtp02.a3.dal06.isc4sb.com (10.106.154.159)
- by smtp.notes.na.collabserv.com (10.106.227.105) with
- smtp.notes.na.collabserv.com ESMTP; Tue, 8 Jun 2021 05:44:33 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp02.a3.dal06.isc4sb.com
- with ESMTP id 2021060805443253-52530 ;
- Tue, 8 Jun 2021 05:44:32 +0000 
-Date: Tue, 8 Jun 2021 05:44:33 +0000
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: "=?ISO-2022-JP?B?SmVmZjkgQ2hhbigbJEJERD4+US0bKEJfQVNSb2NrUmFjayk=?="
- <Jeff9_Chan@asrockrack.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fzfj651H0z2xZZ
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Jun 2021 16:00:09 +1000 (AEST)
+Received: by mail-qk1-x72b.google.com with SMTP id k11so17507342qkk.1
+ for <openbmc@lists.ozlabs.org>; Mon, 07 Jun 2021 23:00:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=OkN03lRrkrF70PElm73O8ca/hU79CssARSrTENN2aR8=;
+ b=B2qdvS1YIk99XnQUdsG95quYpklBm2OGc4P0wzSX2hbwfm3mkOPtxoH9yjeMBDQ5ki
+ F+p7r3qmj6mb0yUAPtkerZrJRPnVpmJacavboOiDu9eMYlWFKy3+6nxXnTAJS1MUVzTN
+ GG8TnDg7cSallk5MLR26T6RVKLm/TW1ilTiOc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=OkN03lRrkrF70PElm73O8ca/hU79CssARSrTENN2aR8=;
+ b=YU4uoQ2bu4fHOM5QZXCOu2LcOfJY9srEXnHjVM8T5zHSpMOWSIhJu64imvoej5a1/w
+ 1Bz40KOOseiwRz0RFPjUI1ShidFljeqqfonkFGxjFQAURXnXAEbMXGfzCHC8T9f/SEI9
+ gw7TyomXxfqKAKysmWmvYSAcNsJKzW0xlMAEJSYuJm0ugBxtgmXzXKgCI16R5TsPJGwH
+ EEi909x6WgRPjv0JySfdUUOOYt8HoPb8atfgrDq1z99/SWyxVDfb7RL1CXbG/DJYMKo+
+ hi3GzoVpvNq4qujYnMjPHkkhk9Ju41zXDra42skL+9gDGu71EneKM+fwFlrcXu7X6tFy
+ ahLA==
+X-Gm-Message-State: AOAM532O2wwnfOTOBmS9sLD3oKGuJ1TO0yQYrmvw+FlsCQKANLfb4iUy
+ HZ9OwQIKgD4yiAtN0aGOQDr4oN/bwUIHKv2yswI=
+X-Google-Smtp-Source: ABdhPJxRvq+pn5hZ4KBiTyTygSX36GimAnkePYnEs/KPd+bQP82C65L7Gkhjwee7TwXkkHTDFY0BLQX0q4+UaLqFNmo=
+X-Received: by 2002:a37:b404:: with SMTP id d4mr8690805qkf.465.1623132004844; 
+ Mon, 07 Jun 2021 23:00:04 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: IBM Traveler 10.0.1.2 Build 202002141540_20 on behalf of device with
- id
- mdm...eb5, type 1300 (maas360android) and description MaaS360-MaaS360
- Mail-Android:MaaS360-MaaS360 Mail-Android/7.41 at 20210608054433326 by
- DS-7f37afc32700[SendMail]
-X-KeepSent: 3FF6FE3F:65D9CCA5-002586EE:001F8B23;
- type=4; name=$KeepSent
-X-LLNOutbound: False
-X-Disclaimed: 48871
-X-TNEFEvaluated: 1
-Content-Type: multipart/mixed;
- boundary="--_com.fiberlink.maas360.email_2233702794038480"
-x-cbid: 21060805-9463-0000-0000-000005D6B239
-X-IBM-SpamModules-Scores: BY=0.291538; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0; ST=0; TS=0; UL=0; ISC=; MB=0.018606
-X-IBM-SpamModules-Versions: BY=3.00015334; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000296; SDB=6.01557696; UDB=6.00838381; IPR=6.01330253; 
- MB=3.00037203; MTD=3.00000008; XFM=3.00000015; UTC=2021-06-08 05:44:34
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2021-03-25 10:44:38 - 6.00012377
-x-cbparentid: 21060805-9464-0000-0000-00006192B43B
-Message-Id: <OF3FF6FE3F.65D9CCA5-ON002586EE.001F8B23-1623131073226@notes.na.collabserv.com>
-X-Proofpoint-ORIG-GUID: Pzc5We1esN-HXlji4DdNOZQ3PriwxR2T
-X-Proofpoint-GUID: Pzc5We1esN-HXlji4DdNOZQ3PriwxR2T
-Subject: RE: OPENBMC ASRock Rack
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
- definitions=2021-06-08_05:2021-06-04,
- 2021-06-08 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+References: <dbe431da08674c61bcda091cec16b5fb@asrockrack.com>
+ <5d74d92b8e2f47acab7da6a54f6c18ee@asrockrack.com>
+ <fec2cbe8fd144a52915d971b4e7214bb@asrockrack.com>
+ <58f7b059987f40b78ebdcdbd1db5d969@asrockrack.com>
+ <8a3b99b118744df5a918b43e5520d35a@asrockrack.com>
+ <CALVHhedqJhfKD+MNofiwnKBB7sGG1wRPV4gXTdW_h=8=6=4HKw@mail.gmail.com>
+ <OF6DE94A96.B5787DB8-ON00258584.00525E62-00258584.0052E3DC@notes.na.collabserv.com>
+ <OF796A58B2.9DA64EBD-ON00258585.003E519E-00258585.003F6F0E@notes.na.collabserv.com>
+ <OF2B5AA3C5.40A65716-ON00258589.004350E5-00258589.00436A50@notes.na.collabserv.com>
+ <OF5B0F1DD8.7358EE61-ON002586BE.004FB2E2-002586BE.0050DCF8@notes.na.collabserv.com>
+ <7807e4794c844beda004d7059c74289c@asrockrack.com>
+ <cb87a8f3a17f47e192ab5474a331807c@asrockrack.com>
+In-Reply-To: <cb87a8f3a17f47e192ab5474a331807c@asrockrack.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 8 Jun 2021 05:59:51 +0000
+Message-ID: <CACPK8Xfi9FBjPyLdy45C=hy-e4wktLrTp3UmFhH59oaaz0yTYQ@mail.gmail.com>
+Subject: Re: OPENBMC ASRock Rack
+To: =?UTF-8?B?SmVmZjkgQ2hhbijpmbPmnb7lhIlfQVNSb2NrUmFjayk=?=
+ <Jeff9_Chan@asrockrack.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,58 +84,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: manager@lfprojects.org,
+Cc: "manager@lfprojects.org" <manager@lfprojects.org>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
  Bradley W Bishop <bradleyb@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Tue, 8 Jun 2021 at 02:01, Jeff9 Chan(=E9=99=B3=E6=9D=BE=E5=84=89_ASRockR=
+ack)
+<Jeff9_Chan@asrockrack.com> wrote:
+>
+> Re-send
 
-----_com.fiberlink.maas360.email_2233702794038480
-Content-Type: multipart/alternative;
-	 boundary="--_com.fiberlink.maas360.email_2233702794802541"
+Please use plain text email when posting to the list. This is a good
+rule to follow for all open source mailing lists.
 
+>         I got below error when I try to push meta-asrockrack layer to ger=
+rit.
+>
+>         Is that means my email is not listed in the list?
+>
+>
+>
+> To ssh://openbmc.gerrit/openbmc/openbmc
+>
+> ! [remote rejected]     HEAD -> refs/for/master (commit 1d9951c: not Sign=
+ed-off-by author/committer/uploader in message footer)
 
+Here is the error:
 
-----_com.fiberlink.maas360.email_2233702794802541
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=utf-8
+  (commit 1d9951c: not Signed-off-by author/committer/uploader in
+message footer)
 
-=0AJeff9 Chan(=E9=99=B3=E6=9D=BE=E5=84=89=5FASRockRack)" wrote:=0A=0A> Hi M=
-ilton,=0A	My user account in Github/Gerrit is Jeff9Chan, but registered CLA=
- account is 'Jeff Chan < Jeff9=5FChan@asrockrack.com>'=0A	Should I re-regis=
-ter CLA info?=0A=0A=0AMilton> you should not need to reregister.=0A=0A=0ATh=
-ere are three items here:=0A=0AYour name, which some projects like the Linu=
-x kernel require to be your legal name. This would be how you are addressed=
- in person.=C2=A0=C2=A0=C2=A0=0A=0AYour email address, where we can send em=
-ail and you will receive it=0A=0AYour GitHub account name, which we also us=
-e in the OpenBMC gerrit gerrit.openbmc-project.xyz=0A=0A=0AYour git client =
-needs your name and email but not your GitHub account name.=C2=A0=C2=A0=C2=
-=A0That's only needed to setup GitHub and to login to gerrit.=C2=A0=C2=A0=
-=C2=A0=0A=0AFor instance I sign with Milton Miller but don't need my GitHub=
- account=C2=A0=C2=A0mdmillerii=0A=0AMilton
+> commit 1d9951c5518a7bdf88a5de16a41ae2f337e1b2ed (HEAD -> master)
+>
+> Author: Jeff9Chan <jeff9_chan@asrockrack.com>
+>
+> Date:   Tue Jun 8 09:15:44 2021 +0800
+>
+>
+>
+>     add meta-asrockrack layer
+>
+>     Signed-off-by: Jeff Chan <Jeff9_Chan@asrockrack.com>
+>
+>
+>
+>     Change-Id: I1686133e0093e4e00adeadc068972396c8dc4fab
 
-----_com.fiberlink.maas360.email_2233702794802541
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=utf-8
+ I suspect Gerrit's filtering diddn't notice the s-o-b in the middle
+of your commit message. Normal style is to place it at the bottom of
+the on the line immediately above or below the change id. Try git
+commit --amend and moving it so the message looks like this:
 
-<br>Jeff9 Chan(=E9=99=B3=E6=9D=BE=E5=84=89=5FASRockRack)" wrote:<br><br>> H=
-i Milton,<br>        My user account in Github/Gerrit is Jeff9Chan, but reg=
-istered CLA account is 'Jeff Chan < Jeff9=5FChan@asrockrack.com>'<br>      =
-  Should I re-register CLA info?<br><br><br>Milton> you should not need to =
-reregister.<br><br><br>There are three items here:<br><br>Your name, which =
-some projects like the Linux kernel require to be your legal name. This wou=
-ld be how you are addressed in person.&nbsp;&nbsp;&nbsp;<br><br>Your email =
-address, where we can send email and you will receive it<br><br>Your GitHub=
- account name, which we also use in the OpenBMC gerrit gerrit.openbmc-proje=
-ct.xyz<br><br><br>Your git client needs your name and email but not your Gi=
-tHub account name.&nbsp;&nbsp;&nbsp;That's only needed to setup GitHub and =
-to login to gerrit.&nbsp;&nbsp;&nbsp;<br><br>For instance I sign with Milto=
-n Miller <miltonm@us.ibm.com> but don't need my GitHub account&nbsp;&nbsp;m=
-dmillerii<br><br>Milton
-<BR>
+Add meta-asrockrack layer
 
-----_com.fiberlink.maas360.email_2233702794802541--
+Change-Id: I1686133e0093e4e00adeadc068972396c8dc4fab
+Signed-off-by: Jeff Chan <Jeff9_Chan@asrockrack.com>
 
-----_com.fiberlink.maas360.email_2233702794038480--
+Cheers,
 
+Joel
