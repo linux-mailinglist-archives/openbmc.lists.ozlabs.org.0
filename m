@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0684739EADB
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 02:37:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FE5739EAE8
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 02:42:27 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FzWYG3VMTz3061
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 10:37:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FzWfT3tM1z305n
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 10:42:25 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=QSG4Mf75;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=GKrgIZP3;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=XXYQ0vSW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=cPT8aJ1S;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,71 +19,72 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=QSG4Mf75; 
+ header.s=fm3 header.b=XXYQ0vSW; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=GKrgIZP3; 
+ header.a=rsa-sha256 header.s=fm3 header.b=cPT8aJ1S; 
  dkim-atps=neutral
 Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
  [66.111.4.224])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FzWXp55jLz2xvH;
- Tue,  8 Jun 2021 10:37:30 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FzWf82fGhz2xvH;
+ Tue,  8 Jun 2021 10:42:08 +1000 (AEST)
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailnew.nyi.internal (Postfix) with ESMTP id 7906B5804E0;
- Mon,  7 Jun 2021 20:37:26 -0400 (EDT)
+ by mailnew.nyi.internal (Postfix) with ESMTP id A4532580521;
+ Mon,  7 Jun 2021 20:42:05 -0400 (EDT)
 Received: from imap43 ([10.202.2.93])
- by compute2.internal (MEProxy); Mon, 07 Jun 2021 20:37:26 -0400
+ by compute2.internal (MEProxy); Mon, 07 Jun 2021 20:42:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=yBCq6nwjdfe7dMAcZu21nIyfwfagBbY
- E5SfivjE0NBU=; b=QSG4Mf75bxuMOTWUpZLd9hfuWWOhffwrvIJdl565GGjCbHp
- FsU/7cSnExk40ZcBxkU4a9XkPl0iKlEToNVoHVXqwocPPeb4J2z/V4mePE6K915l
- pMDyg1rdAf6f2Gp/cne8qGMnf11FKyvOngVN9xB/8MZsA/X+ONPJT2G7Om+EnClz
- jDLcHbY9z/eYW47SNeudU3KIPsrHWjHkmxJuAFl0vrwJHmVcgQbV2dMr4f08IpRz
- Mf9n/fbCsLGUC7K5Z9FaGDcAEpMOei6t3Mo/a4SrMefdV1QZnQ2IMGvhNp0MdA0H
- 9wdtpsOJ6VhgnsBYYluf/3ajcunepAc68MfqOJw==
+ :subject:content-type; s=fm3; bh=2Dz5T6DYy+fXN4aKeq2FKpMfs4yt9Xw
+ PZiHKWRrEE4U=; b=XXYQ0vSWUlxeC3BHESxT2pAlOB0ljlZQWPP4lHXsUxOmuCj
+ DCa+8ewD5oDWY221BH10V6wRCQrWId/D6bwy69d720h0ne7bLdQoNnE1/vM/PA10
+ YvZeNbnAkz32ILq9MfhGoaNAekd2u3Pcd7ScMMEojB2TwTNa/OCorcO+N8FhgaAM
+ Ruswz67iv0rFY7kMEq9qq82BAoTEMhmzo2YNt8mIryG8FlkTwz93jZI2UIqaSO9O
+ VfvuXfjWRK/uTdb/leMhs4auC1T7Tmb2c7pojFCQX0p+Nl5UvTeFH4jsjp2lK+ra
+ Of9kjsJpAO79diPOWZkgy1BqG2YUAGEj1nH4yRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=yBCq6n
- wjdfe7dMAcZu21nIyfwfagBbYE5SfivjE0NBU=; b=GKrgIZP3/n9Xx79RGsKT1O
- VGQqsMJlMsaYa05QKQjaSamCw1Qcsq5VsqpAuqzoc9bbrVO3IyuUj3bQR8vxzriI
- 1CtRfjisuZ9kQN1eqcbwPWdm7sWd78RC9eSa6p86ZhHNZiOxzgUw+YAh7zBySiWp
- d2egvck1aaDulnz8IDLxXbSWae+Kp9KVtDSMH0pMnFzMUOafeSQ3Z9JqSWDUd3CI
- nUMc6IS1McTHctyxaOquHrq5yrlChOR1mibAZFLZeMNjaekwY2V/TrQ5Tkeb6Na4
- bxS6geXmDrFeE7/m5+DW4tBKjazd6FeBXFHHGw7b6/V9dDv3w1SXGOvmNmowayZQ
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=2Dz5T6
+ DYy+fXN4aKeq2FKpMfs4yt9XwPZiHKWRrEE4U=; b=cPT8aJ1SZs0xbE5uM9ol7Y
+ QSisSRaPx3ENK0bVSQOAHi5PZQisPyDZJpewXmXgO+3fcatiWrvk5OhPfX5FJV5c
+ 5APHksuOkS1afFKnZUEeg2ZjD+hdQJ/tClqIuX4EuqjPfXFR+fdh3Y3aoWzdh3jd
+ WpdR9jDzM5EGObI5rS8Izl/5CfCBlcDMl8xY+DYHWpwJPkOO+Ii2rGT/Vz5Ay2n7
+ zw8iL0dbNVbUKOBJWguhWmwGLXkBEmZY4xZ8GL6PhJE1LRyy950mkEPGYgv3hPJx
+ crQFSYusos45UXbIbMWuxTXZLipRv36dIhW9EYG/IpVEbho8N4bqWr8pTq1y42JQ
  ==
-X-ME-Sender: <xms:xLu-YBopTqB2dHRusQmnc8xMm339jxIG5CGsr0RNHSTc8vFFZKnKZg>
- <xme:xLu-YDr4IjKNVs8Jojt5CbuO-cmePj0V7YnUjXwnhEn23hGBuv4llzhohHv1OP1CP
- 7hDRnhjxuQq_7K82w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedtkedgvdejucetufdoteggodetrfdotf
+X-ME-Sender: <xms:2ry-YG7IM9sTYEgWWfALNuL4fgaV2r7d08Bby6GzlZqHMXubdcr6rg>
+ <xme:2ry-YP5GfUxB4GOpXK027O6oqHuvND--LIX2YOa9_ygVcaQJLWc8UVkqyQyrF13Ba
+ MAUUNPUmTm_bQK_yw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedtkedgvdekucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
- hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ grthhtvghrnhepuddttdekueeggedvtddtueekiedutdfguedutdefieeuteefieelteet
+ vddthfeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
  eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:xbu-YOMkwNwc0C9j_2CKSsL2gtGPLkPlg3RxFQ25C-9uXyy9vFEb5w>
- <xmx:xbu-YM4SG7_n6L9M0g36gv1G2hhqsAplYKawS_XdFDI2DmbtQlDaNw>
- <xmx:xbu-YA7al-d1FCGZoyUpWS-4VJlLiOKyqrvsv4fg7Tj_UwdxmO7RjQ>
- <xmx:xru-YLK4_1AZSuHhbJYGcOqzqkiPLPBPQwHt3OmPim1BWdG1lTMWXw>
+X-ME-Proxy: <xmx:2ry-YFfGp8zxCNjGS8vUdkxFBARMsfujJKA6adS_VeI8mXj8dIzrBg>
+ <xmx:2ry-YDIJuW68DzY4XqqIEI3JxnQlJ0K7DKMLSRWaKr0y6xk1yuaElg>
+ <xmx:2ry-YKKaZ3XYbMiuC3Ox6ScVZZc7B4LfY5Ks8s05tdyRTsGyGGXpfg>
+ <xmx:3by-YFaiexj72tssGHVuS-R02iaG1wrm9y4doX44vCxUYX2jD29vMQ>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id EE4F0AC0062; Mon,  7 Jun 2021 20:37:24 -0400 (EDT)
+ id 87753AC0062; Mon,  7 Jun 2021 20:42:02 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-519-g27a961944e-fm-20210531.001-g27a96194
 Mime-Version: 1.0
-Message-Id: <15bfe16d-a9a1-464b-bb23-c59ac91b41a8@www.fastmail.com>
-In-Reply-To: <YKdfP6br29Te0VZ6@packtop>
+Message-Id: <df0d31e9-c4e1-4cf0-b800-c5dadfb43420@www.fastmail.com>
+In-Reply-To: <YKdfeJJM/4LYFKe4@packtop>
 References: <20210510054213.1610760-1-andrew@aj.id.au>
- <20210510054213.1610760-12-andrew@aj.id.au> <YKdfP6br29Te0VZ6@packtop>
-Date: Tue, 08 Jun 2021 10:07:03 +0930
+ <20210510054213.1610760-15-andrew@aj.id.au> <YKdfeJJM/4LYFKe4@packtop>
+Date: Tue, 08 Jun 2021 10:11:42 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Zev Weiss" <zweiss@equinix.com>
-Subject: Re: [PATCH v3 11/16] ipmi: kcs_bmc: Add serio adaptor
+Subject: =?UTF-8?Q?Re:_[PATCH_v3_14/16]_ipmi:_kcs=5Fbmc=5Faspeed:_Implement_KCS_S?=
+ =?UTF-8?Q?erIRQ_configuration?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -114,226 +115,278 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Fri, 21 May 2021, at 16:50, Zev Weiss wrote:
-> On Mon, May 10, 2021 at 12:42:08AM CDT, Andrew Jeffery wrote:
-> >kcs_bmc_serio acts as a bridge between the KCS drivers in the IPMI
-> >subsystem and the existing userspace interfaces available through the
-> >serio subsystem. This is useful when userspace would like to make use of
-> >the BMC KCS devices for purposes that aren't IPMI.
+On Fri, 21 May 2021, at 16:51, Zev Weiss wrote:
+> On Mon, May 10, 2021 at 12:42:11AM CDT, Andrew Jeffery wrote:
+> >Apply the SerIRQ ID and level/sense behaviours from the devicetree if
+> >provided.
 > >
 > >Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 > >---
-> > drivers/char/ipmi/Kconfig         |  14 +++
-> > drivers/char/ipmi/Makefile        |   1 +
-> > drivers/char/ipmi/kcs_bmc_serio.c | 151 ++++++++++++++++++++++++++++++
-> > 3 files changed, 166 insertions(+)
-> > create mode 100644 drivers/char/ipmi/kcs_bmc_serio.c
+> > drivers/char/ipmi/kcs_bmc_aspeed.c | 182 ++++++++++++++++++++++++++++-
+> > 1 file changed, 180 insertions(+), 2 deletions(-)
 > >
-> >diff --git a/drivers/char/ipmi/Kconfig b/drivers/char/ipmi/Kconfig
-> >index bc5f81899b62..249b31197eea 100644
-> >--- a/drivers/char/ipmi/Kconfig
-> >+++ b/drivers/char/ipmi/Kconfig
-> >@@ -137,6 +137,20 @@ config IPMI_KCS_BMC_CDEV_IPMI
-> > 	  This support is also available as a module. The module will be
-> > 	  called kcs_bmc_cdev_ipmi.
+> >diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
+> >index 8a0b1e18e945..9b81806b4dcb 100644
+> >--- a/drivers/char/ipmi/kcs_bmc_aspeed.c
+> >+++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
+> >@@ -9,6 +9,7 @@
+> > #include <linux/errno.h>
+> > #include <linux/interrupt.h>
+> > #include <linux/io.h>
+> >+#include <linux/irq.h>
+> > #include <linux/mfd/syscon.h>
+> > #include <linux/module.h>
+> > #include <linux/of.h>
+> >@@ -28,6 +29,22 @@
 > >
-> >+config IPMI_KCS_BMC_SERIO
-> >+	depends on IPMI_KCS_BMC && SERIO
-> >+	tristate "SerIO adaptor for BMC KCS devices"
-> >+	help
-> >+	  Adapts the BMC KCS device for the SerIO subsystem. This allows users
-> >+	  to take advantage of userspace interfaces provided by SerIO where
-> >+	  appropriate.
+> > #define KCS_CHANNEL_MAX     4
+> >
+> >+/*
+> >+ * Field class descriptions
+> >+ *
+> >+ * LPCyE	Enable LPC channel y
+> >+ * IBFIEy	Input Buffer Full IRQ Enable for LPC channel y
+> >+ * IRQxEy	Assert SerIRQ x for LPC channel y (Deprecated, use IDyIRQX, IRQXEy)
+> >+ * IDyIRQX	Use the specified 4-bit SerIRQ for LPC channel y
+> >+ * SELyIRQX	SerIRQ polarity for LPC channel y (low: 0, high: 1)
+> >+ * IRQXEy	Assert the SerIRQ specified in IDyIRQX for LPC channel y
+> >+ */
 > >+
-> >+	  Say YES if you wish to expose KCS devices on the BMC via SerIO
-> >+	  interfaces.
+> >+#define LPC_TYIRQX_LOW       0b00
+> >+#define LPC_TYIRQX_HIGH      0b01
+> >+#define LPC_TYIRQX_RSVD      0b10
+> >+#define LPC_TYIRQX_RISING    0b11
 > >+
-> >+	  This support is also available as a module. The module will be
-> >+	  called kcs_bmc_serio.
-> >+
-> > config ASPEED_BT_IPMI_BMC
-> > 	depends on ARCH_ASPEED || COMPILE_TEST
-> > 	depends on REGMAP && REGMAP_MMIO && MFD_SYSCON
-> >diff --git a/drivers/char/ipmi/Makefile b/drivers/char/ipmi/Makefile
-> >index fcfa676afddb..84f47d18007f 100644
-> >--- a/drivers/char/ipmi/Makefile
-> >+++ b/drivers/char/ipmi/Makefile
-> >@@ -23,6 +23,7 @@ obj-$(CONFIG_IPMI_POWERNV) += ipmi_powernv.o
-> > obj-$(CONFIG_IPMI_WATCHDOG) += ipmi_watchdog.o
-> > obj-$(CONFIG_IPMI_POWEROFF) += ipmi_poweroff.o
-> > obj-$(CONFIG_IPMI_KCS_BMC) += kcs_bmc.o
-> >+obj-$(CONFIG_IPMI_KCS_BMC_SERIO) += kcs_bmc_serio.o
-> > obj-$(CONFIG_IPMI_KCS_BMC_CDEV_IPMI) += kcs_bmc_cdev_ipmi.o
-> > obj-$(CONFIG_ASPEED_BT_IPMI_BMC) += bt-bmc.o
-> > obj-$(CONFIG_ASPEED_KCS_IPMI_BMC) += kcs_bmc_aspeed.o
-> >diff --git a/drivers/char/ipmi/kcs_bmc_serio.c b/drivers/char/ipmi/kcs_bmc_serio.c
-> >new file mode 100644
-> >index 000000000000..30a2b7ab464b
-> >--- /dev/null
-> >+++ b/drivers/char/ipmi/kcs_bmc_serio.c
-> >@@ -0,0 +1,151 @@
-> >+// SPDX-License-Identifier: GPL-2.0-or-later
-> >+/* Copyright (c) 2021 IBM Corp. */
-> >+
-> >+#include <linux/delay.h>
-> >+#include <linux/device.h>
-> >+#include <linux/errno.h>
-> >+#include <linux/list.h>
-> >+#include <linux/module.h>
-> >+#include <linux/sched/signal.h>
-> >+#include <linux/serio.h>
-> >+#include <linux/slab.h>
-> >+
-> >+#include "kcs_bmc_client.h"
-> >+
-> >+struct kcs_bmc_serio {
-> >+	struct list_head entry;
-> >+
-> >+	struct kcs_bmc_client client;
-> >+	struct serio *port;
-> >+
-> >+	spinlock_t lock;
+> > #define LPC_HICR0            0x000
+> > #define     LPC_HICR0_LPC3E          BIT(7)
+> > #define     LPC_HICR0_LPC2E          BIT(6)
+> >@@ -39,6 +56,19 @@
+> > #define LPC_HICR4            0x010
+> > #define     LPC_HICR4_LADR12AS       BIT(7)
+> > #define     LPC_HICR4_KCSENBL        BIT(2)
+> >+#define LPC_SIRQCR0	     0x070
+> >+/* IRQ{12,1}E1 are deprecated as of AST2600 A3 but necessary for prior chips */
+> >+#define     LPC_SIRQCR0_IRQ12E1	     BIT(1)
+> >+#define     LPC_SIRQCR0_IRQ1E1	     BIT(0)
+> >+#define LPC_HICR5	     0x080
+> >+#define     LPC_HICR5_ID3IRQX_MASK   GENMASK(23, 20)
+> >+#define     LPC_HICR5_ID3IRQX_SHIFT  20
+> >+#define     LPC_HICR5_ID2IRQX_MASK   GENMASK(19, 16)
+> >+#define     LPC_HICR5_ID2IRQX_SHIFT  16
+> >+#define     LPC_HICR5_SEL3IRQX       BIT(15)
+> >+#define     LPC_HICR5_IRQXE3         BIT(14)
+> >+#define     LPC_HICR5_SEL2IRQX       BIT(13)
+> >+#define     LPC_HICR5_IRQXE2         BIT(12)
+> > #define LPC_LADR3H           0x014
+> > #define LPC_LADR3L           0x018
+> > #define LPC_LADR12H          0x01C
+> >@@ -55,6 +85,13 @@
+> > #define LPC_HICRB            0x100
+> > #define     LPC_HICRB_IBFIF4         BIT(1)
+> > #define     LPC_HICRB_LPC4E          BIT(0)
+> >+#define LPC_HICRC            0x104
+> >+#define     LPC_HICRC_ID4IRQX_MASK   GENMASK(7, 4)
+> >+#define     LPC_HICRC_ID4IRQX_SHIFT  4
+> >+#define     LPC_HICRC_TY4IRQX_MASK   GENMASK(3, 2)
+> >+#define     LPC_HICRC_TY4IRQX_SHIFT  2
+> >+#define     LPC_HICRC_OBF4_AUTO_CLR  BIT(1)
+> >+#define     LPC_HICRC_IRQXE4         BIT(0)
+> > #define LPC_LADR4            0x110
+> > #define LPC_IDR4             0x114
+> > #define LPC_ODR4             0x118
+> >@@ -62,11 +99,21 @@
+> >
+> > #define OBE_POLL_PERIOD	     (HZ / 2)
+> >
+> >+enum aspeed_kcs_irq_mode {
+> >+	aspeed_kcs_irq_none,
+> >+	aspeed_kcs_irq_serirq,
 > >+};
 > >+
-> >+static inline struct kcs_bmc_serio *client_to_kcs_bmc_serio(struct kcs_bmc_client *client)
+> > struct aspeed_kcs_bmc {
+> > 	struct kcs_bmc_device kcs_bmc;
+> >
+> > 	struct regmap *map;
+> >
+> >+	struct {
+> >+		enum aspeed_kcs_irq_mode mode;
+> >+		int id;
+> >+	} upstream_irq;
+> >+
+> > 	struct {
+> > 		spinlock_t lock;
+> > 		bool remove;
+> >@@ -103,6 +150,49 @@ static void aspeed_kcs_outb(struct kcs_bmc_device *kcs_bmc, u32 reg, u8 data)
+> >
+> > 	rc = regmap_write(priv->map, reg, data);
+> > 	WARN(rc != 0, "regmap_write() failed: %d\n", rc);
+> >+
+> >+	/* Trigger the upstream IRQ on ODR writes, if enabled */
+> >+
+> >+	switch (reg) {
+> >+	case LPC_ODR1:
+> >+	case LPC_ODR2:
+> >+	case LPC_ODR3:
+> >+	case LPC_ODR4:
+> >+		break;
+> >+	default:
+> >+		return;
+> >+	}
+> >+
+> >+	if (priv->upstream_irq.mode != aspeed_kcs_irq_serirq)
+> >+		return;
+> >+
+> >+	switch (kcs_bmc->channel) {
+> >+	case 1:
+> >+		switch (priv->upstream_irq.id) {
+> >+		case 12:
+> >+			regmap_update_bits(priv->map, LPC_SIRQCR0, LPC_SIRQCR0_IRQ12E1,
+> >+					   LPC_SIRQCR0_IRQ12E1);
+> >+			break;
+> >+		case 1:
+> >+			regmap_update_bits(priv->map, LPC_SIRQCR0, LPC_SIRQCR0_IRQ1E1,
+> >+					   LPC_SIRQCR0_IRQ1E1);
+> >+			break;
+> >+		default:
+> >+			break;
+> >+		}
+> >+		break;
+> >+	case 2:
+> >+		regmap_update_bits(priv->map, LPC_HICR5, LPC_HICR5_IRQXE2, LPC_HICR5_IRQXE2);
+> >+		break;
+> >+	case 3:
+> >+		regmap_update_bits(priv->map, LPC_HICR5, LPC_HICR5_IRQXE3, LPC_HICR5_IRQXE3);
+> >+		break;
+> >+	case 4:
+> >+		regmap_update_bits(priv->map, LPC_HICRC, LPC_HICRC_IRQXE4, LPC_HICRC_IRQXE4);
+> >+		break;
+> >+	default:
+> >+		break;
+> >+	}
+> > }
+> >
+> > static void aspeed_kcs_updateb(struct kcs_bmc_device *kcs_bmc, u32 reg, u8 mask, u8 val)
+> >@@ -161,6 +251,73 @@ static void aspeed_kcs_set_address(struct kcs_bmc_device *kcs_bmc, u16 addr)
+> > 	}
+> > }
+> >
+> >+static inline int aspeed_kcs_map_serirq_type(u32 dt_type)
 > >+{
-> >+	return container_of(client, struct kcs_bmc_serio, client);
+> >+	switch (dt_type) {
+> >+	case IRQ_TYPE_EDGE_RISING:
+> >+		return LPC_TYIRQX_RISING;
+> >+	case IRQ_TYPE_LEVEL_HIGH:
+> >+		return LPC_TYIRQX_HIGH;
+> >+	case IRQ_TYPE_LEVEL_LOW:
+> >+		return LPC_TYIRQX_LOW;
+> >+	default:
+> >+		return -EINVAL;
+> >+	}
 > >+}
 > >+
-> >+static irqreturn_t kcs_bmc_serio_event(struct kcs_bmc_client *client)
+> >+static int aspeed_kcs_config_upstream_irq(struct aspeed_kcs_bmc *priv, u32 id, u32 dt_type)
 > >+{
-> >+	struct kcs_bmc_serio *priv;
-> >+	u8 handled = IRQ_NONE;
-> >+	u8 status;
+> >+	unsigned int mask, val, hw_type;
 > >+
-> >+	priv = client_to_kcs_bmc_serio(client);
+> >+	if (id > 15)
+> >+		return -EINVAL;
 > >+
-> >+	spin_lock(&priv->lock);
+> >+	hw_type = aspeed_kcs_map_serirq_type(dt_type);
+> >+	if (hw_type < 0)
+> >+		return hw_type;
 > >+
-> >+	status = kcs_bmc_read_status(client->dev);
+> >+	priv->upstream_irq.mode = aspeed_kcs_irq_serirq;
+> >+	priv->upstream_irq.id = id;
 > >+
-> >+	if (status & KCS_BMC_STR_IBF)
-> >+		handled = serio_interrupt(priv->port, kcs_bmc_read_data(client->dev), 0);
-> >+
-> >+	spin_unlock(&priv->lock);
-> >+
-> >+	return handled;
-> >+}
-> >+
-> >+static const struct kcs_bmc_client_ops kcs_bmc_serio_client_ops = {
-> >+	.event = kcs_bmc_serio_event,
-> >+};
-> >+
-> >+static int kcs_bmc_serio_open(struct serio *port)
-> >+{
-> >+	struct kcs_bmc_serio *priv = port->port_data;
-> >+
-> >+	return kcs_bmc_enable_device(priv->client.dev, &priv->client);
-> >+}
-> >+
-> >+static void kcs_bmc_serio_close(struct serio *port)
-> >+{
-> >+	struct kcs_bmc_serio *priv = port->port_data;
-> >+
-> >+	kcs_bmc_disable_device(priv->client.dev, &priv->client);
-> >+}
-> >+
-> >+static DEFINE_SPINLOCK(kcs_bmc_serio_instances_lock);
-> >+static LIST_HEAD(kcs_bmc_serio_instances);
-> >+
-> >+static int kcs_bmc_serio_add_device(struct kcs_bmc_device *kcs_bmc)
-> >+{
-> >+	struct kcs_bmc_serio *priv;
-> >+	struct serio *port;
-> >+
-> >+	priv = devm_kzalloc(kcs_bmc->dev, sizeof(*priv), GFP_KERNEL);
-> >+	port = kzalloc(sizeof(*port), GFP_KERNEL);
+> >+	switch (priv->kcs_bmc.channel) {
+> >+	case 1:
+> >+		/* Needs IRQxE1 rather than (ID1IRQX, SEL1IRQX, IRQXE1) before AST2600 A3 */
 > 
-> Is there a particular reason to allocate port with a raw kzalloc()
-> instead of another devm_kzalloc()?
+> I'm struggling a bit with understanding this comment, and relating it to
+> the code -- it sounds like "we need to do things one way on A3 and
+> later, and another way on pre-A3", but then...we just break without
+> doing anything at all either way.  Can you clarify any further?
 
-Yes, because it causes pointer confusion on remove. We get the following backtrace:
+Hah! You're struggling because it doesn't make any sense, the code's gone missing :/ I'll fix that up.
 
-[   95.018845] Backtrace: 
-[   95.019162] [<802e1fb0>] (___cache_free) from [<802e31cc>] (kfree+0xc0/0x1e8)
-[   95.019658]  r10:00000081 r9:8667c000 r8:80100284 r7:81000b40 r6:a0000013 r5:80640bd4
-[   95.020032]  r4:82a5ec40
-[   95.020206] [<802e310c>] (kfree) from [<80640bd4>] (serio_release_port+0x1c/0x28)
-[   95.020571]  r7:00000000 r6:819c1540 r5:86acf480 r4:82a5ed70
-[   95.020818] [<80640bb8>] (serio_release_port) from [<80565e00>] (device_release+0x40/0xb4)
-[   95.021387] [<80565dc0>] (device_release) from [<804a0bcc>] (kobject_put+0xc8/0x210)
-[   95.021961]  r5:80c77c30 r4:82a5ed70
-[   95.022141] [<804a0b04>] (kobject_put) from [<80566078>] (put_device+0x20/0x24)
-[   95.022537]  r7:80c820cc r6:82a5ec40 r5:80c820e4 r4:82a5ed70
-[   95.023017] [<80566058>] (put_device) from [<80640a58>] (serio_destroy_port+0x12c/0x140)
-[   95.023719] [<8064092c>] (serio_destroy_port) from [<80640b3c>] (serio_unregister_port+0x34/0x44)
-[   95.024326]  r7:7f0012b4 r6:7f002024 r5:80c820e4 r4:82a5ec40
-[   95.024792] [<80640b08>] (serio_unregister_port) from [<7f0100b8>] (kcs_bmc_serio_remove_device+0x90/0xbc [kcs_bmc_serio])
-[   95.026951]  r5:8668b7c0 r4:86acf0c0
-[   95.027390] [<7f010028>] (kcs_bmc_serio_remove_device [kcs_bmc_serio]) from [<7f00048c>] (kcs_bmc_unregister_driver+0x60/0xbd4 [kcs_bmc])
-[   95.028443]  r5:7f012018 r4:8668b7c0
-[   95.028634] [<7f00042c>] (kcs_bmc_unregister_driver [kcs_bmc]) from [<7f0102c4>] (kcs_bmc_serio_exit+0x1c/0xd58 [kcs_bmc_serio])
-[   95.029165]  r7:00000081 r6:80cd0dac r5:00000000 r4:7f012040
-[   95.029397] [<7f0102a8>] (kcs_bmc_serio_exit [kcs_bmc_serio]) from [<801cbab0>] (sys_delete_module+0x140/0x280)
-[   95.029875] [<801cb970>] (sys_delete_module) from [<80100080>] (ret_fast_syscall+0x0/0x58)
+Unfortunately due to hardware/firmware limitations I wasn't able to test channel 1.
 
 > 
-> >+	if (!(priv && port))
-> >+		return -ENOMEM;
+> >+		break;
+> >+	case 2:
+> >+		if (!(hw_type == LPC_TYIRQX_LOW || hw_type == LPC_TYIRQX_HIGH))
+> >+			return -EINVAL;
 > >+
-> >+	port->id.type = SERIO_8042;
-> >+	port->open = kcs_bmc_serio_open;
-> >+	port->close = kcs_bmc_serio_close;
-> >+	port->port_data = priv;
-> >+	port->dev.parent = kcs_bmc->dev;
+> >+		mask = LPC_HICR5_SEL2IRQX | LPC_HICR5_ID2IRQX_MASK;
+> >+		val = (id << LPC_HICR5_ID2IRQX_SHIFT);
+> >+		val |= (hw_type == LPC_TYIRQX_HIGH) ? LPC_HICR5_SEL2IRQX : 0;
+> >+		regmap_update_bits(priv->map, LPC_HICR5, mask, val);
 > >+
-> >+	spin_lock_init(&priv->lock);
-> >+	priv->port = port;
-> >+	priv->client.dev = kcs_bmc;
-> >+	priv->client.ops = &kcs_bmc_serio_client_ops;
+> >+		break;
+> >+	case 3:
+> >+		if (!(hw_type == LPC_TYIRQX_LOW || hw_type == LPC_TYIRQX_HIGH))
+> >+			return -EINVAL;
 > >+
-> >+	spin_lock_irq(&kcs_bmc_serio_instances_lock);
-> >+	list_add(&priv->entry, &kcs_bmc_serio_instances);
-> >+	spin_unlock_irq(&kcs_bmc_serio_instances_lock);
+> >+		mask = LPC_HICR5_SEL3IRQX | LPC_HICR5_ID3IRQX_MASK;
+> >+		val = (id << LPC_HICR5_ID3IRQX_SHIFT);
+> >+		val |= (hw_type == LPC_TYIRQX_HIGH) ? LPC_HICR5_SEL3IRQX : 0;
+> >+		regmap_update_bits(priv->map, LPC_HICR5, mask, val);
 > >+
-> >+	serio_register_port(port);
-> >+
-> >+	dev_info(kcs_bmc->dev, "Initialised serio client for channel %d", kcs_bmc->channel);
+> >+		break;
+> >+	case 4:
+> >+		mask = LPC_HICRC_ID4IRQX_MASK | LPC_HICRC_TY4IRQX_MASK | LPC_HICRC_OBF4_AUTO_CLR;
+> >+		val = (id << LPC_HICRC_ID4IRQX_SHIFT) | (hw_type << LPC_HICRC_TY4IRQX_SHIFT);
+> >+		regmap_update_bits(priv->map, LPC_HICRC, mask, val);
+> >+		break;
+> >+	default:
+> >+		dev_warn(priv->kcs_bmc.dev,
+> >+			 "SerIRQ configuration not supported on KCS channel %d\n",
+> >+			 priv->kcs_bmc.channel);
+> >+		return -EINVAL;
+> >+	}
 > >+
 > >+	return 0;
 > >+}
 > >+
-> >+static int kcs_bmc_serio_remove_device(struct kcs_bmc_device *kcs_bmc)
-> >+{
-> >+	struct kcs_bmc_serio *priv = NULL, *pos;
+> > static void aspeed_kcs_enable_channel(struct kcs_bmc_device *kcs_bmc, bool enable)
+> > {
+> > 	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
+> >@@ -262,7 +419,7 @@ static irqreturn_t aspeed_kcs_irq(int irq, void *arg)
+> > 	return kcs_bmc_handle_event(kcs_bmc);
+> > }
+> >
+> >-static int aspeed_kcs_config_irq(struct kcs_bmc_device *kcs_bmc,
+> >+static int aspeed_kcs_config_downstream_irq(struct kcs_bmc_device *kcs_bmc,
+> > 			struct platform_device *pdev)
+> > {
+> > 	struct device *dev = &pdev->dev;
+> >@@ -366,6 +523,8 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+> > 	struct aspeed_kcs_bmc *priv;
+> > 	struct device_node *np;
+> > 	int rc, channel, addr;
+> >+	bool have_upstream_irq;
+> >+	u32 upstream_irq[2];
+> >
+> > 	np = pdev->dev.of_node->parent;
+> > 	if (!of_device_is_compatible(np, "aspeed,ast2400-lpc-v2") &&
+> >@@ -374,6 +533,7 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+> > 		dev_err(&pdev->dev, "unsupported LPC device binding\n");
+> > 		return -ENODEV;
+> > 	}
 > >+
-> >+	spin_lock_irq(&kcs_bmc_serio_instances_lock);
-> >+	list_for_each_entry(pos, &kcs_bmc_serio_instances, entry) {
-> >+		if (pos->client.dev == kcs_bmc) {
-> >+			priv = pos;
-> >+			list_del(&pos->entry);
-> >+			break;
-> >+		}
-> >+	}
-> >+	spin_unlock_irq(&kcs_bmc_serio_instances_lock);
-> >+
-> >+	if (!priv)
-> >+		return -ENODEV;
-> >+
-> >+	serio_unregister_port(priv->port);
-> >+	kcs_bmc_disable_device(kcs_bmc, &priv->client);
-> >+	devm_kfree(priv->client.dev->dev, priv);
+> > 	ops = of_device_get_match_data(&pdev->dev);
+> > 	if (!ops)
+> > 		return -EINVAL;
+> >@@ -386,6 +546,13 @@ static int aspeed_kcs_probe(struct platform_device *pdev)
+> > 	if (addr < 0)
+> > 		return addr;
+> >
+> >+	np = pdev->dev.of_node;
+> >+	rc = of_property_read_u32_array(np, "aspeed,lpc-interrupts", upstream_irq, 2);
+> >+	if ((rc && rc != -EINVAL))
 > 
-> Looks like the priv->port allocation would leak here I think?
+> I think we could probably get by with slightly fewer parens here...
 
-No, because port's released through serio_unregister_port(). It's not super obvious though, so I'll add a comment next to the kzalloc().
-
-> 
-> Also, is the asymmetry of having kcs_bmc_disable_device() here but no
-> corresponding kcs_bmc_enable_device() in kcs_bmc_serio_add_device()
-> intentional?  If so, an explanatory comment of some sort might be nice
-> to add.
-
-It's intentional to make sure the device isn't left registered as enabled in the core. kcs_bmc_enable_device() is called in the open() path.
+Yeah, not sure what happened there :)
 
 Andrew
