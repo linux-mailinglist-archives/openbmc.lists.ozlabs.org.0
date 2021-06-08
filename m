@@ -2,65 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B851139EE86
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 08:08:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C9F439EEF2
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 08:48:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Fzftl1tPdz302l
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 16:08:31 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=bTez0Nct;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FzgmV6p87z301D
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 16:48:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::82f;
- helo=mail-qt1-x82f.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=bTez0Nct; dkim-atps=neutral
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com
- [IPv6:2607:f8b0:4864:20::82f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FzftT02nMz2yWT
- for <openbmc@lists.ozlabs.org>; Tue,  8 Jun 2021 16:08:16 +1000 (AEST)
-Received: by mail-qt1-x82f.google.com with SMTP id u20so6234801qtx.1
- for <openbmc@lists.ozlabs.org>; Mon, 07 Jun 2021 23:08:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=thNwsD6YD7o2DFCIlJbwapJIqPzTG6T4COz7h9VMOzI=;
- b=bTez0NctqXdG62mJ539TtKRpKGaDXp2DIdibrzmIjuUM3vpFdYokvpd+1n9yKyVBny
- W+xxIiYaxsvyYYCy9/AO4vYgV5VV2cK20qGmXu+dVlknIpemJqfkAbpuStOVEee11Tdz
- ObWKspJCynUiVUZUJjqQ8naRQDVE738rRWm2Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=thNwsD6YD7o2DFCIlJbwapJIqPzTG6T4COz7h9VMOzI=;
- b=Semf8FHhWfYl1pv8ifgKy70ztRWjPL4apKqryjIx6vkYRtOiWrR1tCgmQRUsyv8FCn
- 6jt4lgxEoQAzDztqM0I2jzzpHugcdZC8bWtRBVAx0VGahhrEEiG8W59f4VSl1tp4XU6S
- ZmBFueQNRXzGp463B+R2RvIymsGcqzmfbJ8q9h4orSJZ6gNMI/s3/A1WagqAs02vWxh/
- FBUGmkyS6XhFSmZoSG7DAgcxxRJegmdLvq1ZNQAxR86MOtLvIeDmDjrUyA2jt+T08dQ8
- XEkZ8zd+yeMzx7MAQGKo9TK8iKxQOr38ibk24S19FJiU+/qLlW/BSH+k5acFQ6pWh3NV
- ki3g==
-X-Gm-Message-State: AOAM532tDkuqtoYpq3oszuufFoR5Wp67dFq6zohOJ2+3jnrzT9BmcseT
- xnXTmWOh606JaCXUb3udncUjeKX3iOANB3gatBk=
-X-Google-Smtp-Source: ABdhPJwVTTOknF0H1vF3gnNGRVWi1pJmxLP1PVmTMpSEQif7rTB98hH3sDrgPaqT0x3I6jpGb1+GTHYjU/+Rwfa5Ex0=
-X-Received: by 2002:ac8:4803:: with SMTP id g3mr4432330qtq.176.1623132491945; 
- Mon, 07 Jun 2021 23:08:11 -0700 (PDT)
+ smtp.mailfrom=asrockrack.com (client-ip=43.251.60.7; helo=ms.pegatroncorp.com;
+ envelope-from=jeff9_chan@asrockrack.com; receiver=<UNKNOWN>)
+Received: from ms.pegatroncorp.com (ms5.pegatroncorp.com [43.251.60.7])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4FzgmC6jCcz2xvZ
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Jun 2021 16:47:51 +1000 (AEST)
+IronPort-SDR: bfRANRC8FNClM4yWnmb7eKbkYQF42YE8ChDNH4u/ZGyBqHRq0YdcncoHxr4dM/hk9L69JJ9eok
+ j2Sd+uLXnwoQfAgxlo4CKB2W2ZVBdT26KW/BELQJJ0VgZmcE+GHdQ9oD4em+oLagFXbHgqFlqe
+ rLhMVqb2Mh7yWAhCjEgs3doiD9r8kKkM3TGoLqB9gTQ4Ia3Asc+3tJEJIXSkoLH0oGHCHHgbzU
+ QZmlqbrVQDhuG5bEy8g4iyhzdJFHI+PJU88B/S62e4TskJxHtXBERMxyWLXU0JHzNvMyTNA+WF
+ QJc=
+Received: from unknown (HELO PTW-MSE-DB01.pegatroncorp.com) ([172.18.6.20])
+ by ms.pegatroncorp.com with ESMTP; 08 Jun 2021 14:47:48 +0800
+Received: from PTW-EX-MBS04.PEGA.CORP.PEGATRON
+ (ptw-ex-mbs04.pega.corp.pegatron [172.18.192.57])
+ by PTW-MSE-DB01.pegatroncorp.com with ESMTP id 1586laRn008349;
+ Tue, 8 Jun 2021 14:47:36 +0800 (GMT-8)
+ (envelope-from Jeff9_Chan@asrockrack.com)
+Received: from PTW-EX-MBS11.PEGA.CORP.PEGATRON (172.18.192.66) by
+ PTW-EX-MBS04.PEGA.CORP.PEGATRON (172.18.192.57) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1847.3; Tue, 8 Jun 2021 14:47:37 +0800
+Received: from PTW-EX-MBS11.PEGA.CORP.PEGATRON ([fe80::35ca:6b59:40d1:9037])
+ by PTW-EX-MBS11.PEGA.CORP.PEGATRON ([fe80::35ca:6b59:40d1:9037%3]) with mapi
+ id 15.01.1847.012; Tue, 8 Jun 2021 14:47:37 +0800
+From: =?utf-8?B?SmVmZjkgQ2hhbijpmbPmnb7lhIlfQVNSb2NrUmFjayk=?=
+ <Jeff9_Chan@asrockrack.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: RE: OPENBMC ASRock Rack
+Thread-Topic: OPENBMC ASRock Rack
+Thread-Index: AdY9OXpuPaiukNl5Rq6zENcUsPakygASUFgAABxnw6AAcpRYAAAlt3/wAAUnEIAAnS95QAAtf9yAPKwW60AADRa7AAA0of1ACS8FOkAAAHVfgP//vMeA//9szMA=
+Date: Tue, 8 Jun 2021 06:47:37 +0000
+Message-ID: <6ae23bb96e4d45eabfce5dfca603eed9@asrockrack.com>
+References: <dbe431da08674c61bcda091cec16b5fb@asrockrack.com>
+ <5d74d92b8e2f47acab7da6a54f6c18ee@asrockrack.com>
+ <fec2cbe8fd144a52915d971b4e7214bb@asrockrack.com>
+ <58f7b059987f40b78ebdcdbd1db5d969@asrockrack.com>
+ <8a3b99b118744df5a918b43e5520d35a@asrockrack.com>
+ <CALVHhedqJhfKD+MNofiwnKBB7sGG1wRPV4gXTdW_h=8=6=4HKw@mail.gmail.com>
+ <OF6DE94A96.B5787DB8-ON00258584.00525E62-00258584.0052E3DC@notes.na.collabserv.com>
+ <OF796A58B2.9DA64EBD-ON00258585.003E519E-00258585.003F6F0E@notes.na.collabserv.com>
+ <OF2B5AA3C5.40A65716-ON00258589.004350E5-00258589.00436A50@notes.na.collabserv.com>
+ <OF5B0F1DD8.7358EE61-ON002586BE.004FB2E2-002586BE.0050DCF8@notes.na.collabserv.com>
+ <7807e4794c844beda004d7059c74289c@asrockrack.com>
+ <cb87a8f3a17f47e192ab5474a331807c@asrockrack.com>
+ <CACPK8Xfi9FBjPyLdy45C=hy-e4wktLrTp3UmFhH59oaaz0yTYQ@mail.gmail.com>
+In-Reply-To: <CACPK8Xfi9FBjPyLdy45C=hy-e4wktLrTp3UmFhH59oaaz0yTYQ@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.194.46.159]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <ME2PR01MB56196A14C09EA4391F4C04E0FE3D9@ME2PR01MB5619.ausprd01.prod.outlook.com>
-In-Reply-To: <ME2PR01MB56196A14C09EA4391F4C04E0FE3D9@ME2PR01MB5619.ausprd01.prod.outlook.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 8 Jun 2021 06:07:58 +0000
-Message-ID: <CACPK8XeNJjh=3b1gQ5Dv0vVcSCZEei0MSMF0BMV2proeFn6Jbw@mail.gmail.com>
-Subject: Re: cannot modify the files in the overlay file system
-To: =?UTF-8?B?5ZGoIOi/nOa4hQ==?= <zhouyuanqing8@outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MAIL: PTW-MSE-DB01.pegatroncorp.com 1586laRn008349
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,46 +76,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "uperic@163.com" <uperic@163.com>, openbmc <openbmc@lists.ozlabs.org>
+Cc: "manager@lfprojects.org" <manager@lfprojects.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Bradley W Bishop <bradleyb@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 2 Jun 2021 at 12:43, =E5=91=A8 =E8=BF=9C=E6=B8=85 <zhouyuanqing8@ou=
-tlook.com> wrote:
->
-> Hi Team=EF=BC=8C
->
->    mount command is follow:
->
-> mount -t overlay overlay -o redirect_dir=3Don,index=3Don,lowerdir=3D/run/=
-initramfs/ro/usr/bin,upperdir=3D/run/initramfs/rw/cow1,workdir=3D/run/initr=
-amfs/rw/work1 /run/initramfs/rw/merged
->
->
->    After I mounted the overlay file system , I used vi to open the file (=
-vi xxx.sh) in the merged directory, and then when I saved it, it prompted "=
-'xxx.sh Invalid argument". Can you help me solve this problem?
->
->    On my system, this problem occurs probabilistically on openbmc 2.8.0, =
-and the probability is very low; but on openbmc 2.9.0, it must occur.
->
->    openbmc release version :2.9.0
->    kernel version=EF=BC=9A5.10.14=E3=80=82
-
-This kernel has known bugs and security vulnerabilities. I suggest
-moving your kernel to the latest form dev-5.10 by cherry picking this
-commit into your openbmc tree and re-testing:
-
-git fetch origin
-git checkout 25633f1351521fd26469b21ddbe339e3f874182d --
-meta-aspeed/recipes-kernel/linux/linux-aspeed_git.bb
-git commit -sm "meta-aspeed: Update to latest kernel"
-
-See if that fixes your issue.
-
-My guess is you're using JFFS2, and you lack a fix that was included
-as of v5.10.36.
-
-Cheers,
-
-Joel
+VGhhbmtzIEpvZWwsIGl0IHdvcmtzIG5vdy4NCg0KYmVzdCByZWdhcmRzDQoNCkplZmYgQ2hhbg0K
+QVNSb2NrIEluYy4gDQpUZWw6ICs4ODYtMi01NTU5OTYwMCBleHQuMzg2NzANCg0KDQotLS0tLU9y
+aWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogSm9lbCBTdGFubGV5IFttYWlsdG86am9lbEBqbXMu
+aWQuYXVdIA0KU2VudDogVHVlc2RheSwgSnVuZSA4LCAyMDIxIDI6MDAgUE0NClRvOiBKZWZmOSBD
+aGFuKOmZs+advuWEiV9BU1JvY2tSYWNrKQ0KQ2M6IEJyYWRsZXkgVyBCaXNob3A7IG9wZW5ibWNA
+bGlzdHMub3psYWJzLm9yZzsgbWFuYWdlckBsZnByb2plY3RzLm9yZw0KU3ViamVjdDogUmU6IE9Q
+RU5CTUMgQVNSb2NrIFJhY2sNCg0KT24gVHVlLCA4IEp1biAyMDIxIGF0IDAyOjAxLCBKZWZmOSBD
+aGFuKOmZs+advuWEiV9BU1JvY2tSYWNrKQ0KPEplZmY5X0NoYW5AYXNyb2NrcmFjay5jb20+IHdy
+b3RlOg0KPg0KPiBSZS1zZW5kDQoNClBsZWFzZSB1c2UgcGxhaW4gdGV4dCBlbWFpbCB3aGVuIHBv
+c3RpbmcgdG8gdGhlIGxpc3QuIFRoaXMgaXMgYSBnb29kDQpydWxlIHRvIGZvbGxvdyBmb3IgYWxs
+IG9wZW4gc291cmNlIG1haWxpbmcgbGlzdHMuDQoNCj4gICAgICAgICBJIGdvdCBiZWxvdyBlcnJv
+ciB3aGVuIEkgdHJ5IHRvIHB1c2ggbWV0YS1hc3JvY2tyYWNrIGxheWVyIHRvIGdlcnJpdC4NCj4N
+Cj4gICAgICAgICBJcyB0aGF0IG1lYW5zIG15IGVtYWlsIGlzIG5vdCBsaXN0ZWQgaW4gdGhlIGxp
+c3Q/DQo+DQo+DQo+DQo+IFRvIHNzaDovL29wZW5ibWMuZ2Vycml0L29wZW5ibWMvb3BlbmJtYw0K
+Pg0KPiAhIFtyZW1vdGUgcmVqZWN0ZWRdICAgICBIRUFEIC0+IHJlZnMvZm9yL21hc3RlciAoY29t
+bWl0IDFkOTk1MWM6IG5vdCBTaWduZWQtb2ZmLWJ5IGF1dGhvci9jb21taXR0ZXIvdXBsb2FkZXIg
+aW4gbWVzc2FnZSBmb290ZXIpDQoNCkhlcmUgaXMgdGhlIGVycm9yOg0KDQogIChjb21taXQgMWQ5
+OTUxYzogbm90IFNpZ25lZC1vZmYtYnkgYXV0aG9yL2NvbW1pdHRlci91cGxvYWRlciBpbg0KbWVz
+c2FnZSBmb290ZXIpDQoNCj4gY29tbWl0IDFkOTk1MWM1NTE4YTdiZGY4OGE1ZGUxNmE0MWFlMmYz
+MzdlMWIyZWQgKEhFQUQgLT4gbWFzdGVyKQ0KPg0KPiBBdXRob3I6IEplZmY5Q2hhbiA8amVmZjlf
+Y2hhbkBhc3JvY2tyYWNrLmNvbT4NCj4NCj4gRGF0ZTogICBUdWUgSnVuIDggMDk6MTU6NDQgMjAy
+MSArMDgwMA0KPg0KPg0KPg0KPiAgICAgYWRkIG1ldGEtYXNyb2NrcmFjayBsYXllcg0KPg0KPiAg
+ICAgU2lnbmVkLW9mZi1ieTogSmVmZiBDaGFuIDxKZWZmOV9DaGFuQGFzcm9ja3JhY2suY29tPg0K
+Pg0KPg0KPg0KPiAgICAgQ2hhbmdlLUlkOiBJMTY4NjEzM2UwMDkzZTRlMDBhZGVhZGMwNjg5NzIz
+OTZjOGRjNGZhYg0KDQogSSBzdXNwZWN0IEdlcnJpdCdzIGZpbHRlcmluZyBkaWRkbid0IG5vdGlj
+ZSB0aGUgcy1vLWIgaW4gdGhlIG1pZGRsZQ0Kb2YgeW91ciBjb21taXQgbWVzc2FnZS4gTm9ybWFs
+IHN0eWxlIGlzIHRvIHBsYWNlIGl0IGF0IHRoZSBib3R0b20gb2YNCnRoZSBvbiB0aGUgbGluZSBp
+bW1lZGlhdGVseSBhYm92ZSBvciBiZWxvdyB0aGUgY2hhbmdlIGlkLiBUcnkgZ2l0DQpjb21taXQg
+LS1hbWVuZCBhbmQgbW92aW5nIGl0IHNvIHRoZSBtZXNzYWdlIGxvb2tzIGxpa2UgdGhpczoNCg0K
+QWRkIG1ldGEtYXNyb2NrcmFjayBsYXllcg0KDQpDaGFuZ2UtSWQ6IEkxNjg2MTMzZTAwOTNlNGUw
+MGFkZWFkYzA2ODk3MjM5NmM4ZGM0ZmFiDQpTaWduZWQtb2ZmLWJ5OiBKZWZmIENoYW4gPEplZmY5
+X0NoYW5AYXNyb2NrcmFjay5jb20+DQoNCkNoZWVycywNCg0KSm9lbA0K
