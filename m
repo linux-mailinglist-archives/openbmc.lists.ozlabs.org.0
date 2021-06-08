@@ -1,92 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBF1C39EB10
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 02:55:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27BC939EB4C
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 03:23:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FzWy01wPKz302H
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 10:55:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4FzXYG0Rd0z3023
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 11:22:58 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=RTiLK+IE;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=qao3GYVw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=VhY1VL3G;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.224;
- helo=new2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::1031;
+ helo=mail-pj1-x1031.google.com; envelope-from=wltu@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=RTiLK+IE; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=qao3GYVw; 
- dkim-atps=neutral
-Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
- [66.111.4.224])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=VhY1VL3G; dkim-atps=neutral
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
+ [IPv6:2607:f8b0:4864:20::1031])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4FzWxZ53cpz2yjJ;
- Tue,  8 Jun 2021 10:55:30 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailnew.nyi.internal (Postfix) with ESMTP id 0D74358058A;
- Mon,  7 Jun 2021 20:55:28 -0400 (EDT)
-Received: from imap43 ([10.202.2.93])
- by compute2.internal (MEProxy); Mon, 07 Jun 2021 20:55:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=S1oGl43iTjA4wirSPtURQ/6OAgOvqX3
- 4gNUW8MSgy74=; b=RTiLK+IEkumxJFWbFoHfr5tJuhxy9bjIrxTt0xgvBkYw/WI
- GOWqfva4w8Kq7zJw1Pj8LpdXn1TgFobuAwJRSSKCCSNZKRZueeP6lPoP4VI1V0jJ
- ea6Yfta2EnsVkeYmafq92BGtd541PxOlFJV+LFyjAGax1doYZKblslKSRDN8pRiC
- jgMkYYkO2UxoqMUtaIV6A/X+zMfKU3hwOHc+RMrbHEenZddvEt3py2eYm8j8uDLn
- LCqkU2SOWiKqxk9hfEl3Ral2m3wfY+YLdjgWq5EbQw5CdwjYE44UKRhl2S58Q/2K
- GEqFC7THp0JdBKx5Grm94qIe0rfFKL2QPL51ZHQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=S1oGl4
- 3iTjA4wirSPtURQ/6OAgOvqX34gNUW8MSgy74=; b=qao3GYVw3WKcjil3PpD+ji
- SoKoNwdTOu7qRoIGR87ZEBtsHAIYrR6wplRSFIOgvA6p1vZUV5aZaooVuv88s94m
- /7mELqaEIZR+2g+TAjhq/nz980Kzkf2vUMif2IQ2LlmFskcQ0YAWlFnE6eAqlPXK
- +iX9XCC1DazxFa0F2beGFhdRcdBgXrw+s3YteiOkH8zPsg7X4mli/UbPsRCfu8wn
- NQHXVuJz1gPmEQw2GBGJz8/bExTsN1rPkeJTk/bv3e3vl6kA/UzrWYCgUMH1rgkb
- GRw+PEKAzBjwrb28Tz6Q4OsYpKrM9NtnKT4TfzvPJ47iKFxKzD1nuvjsXplv2WKQ
- ==
-X-ME-Sender: <xms:_r--YL0RzLV40qbpaz7Sia1M2CRPFd-bqMIO7kJpW7X4i9EParOyLw>
- <xme:_r--YKF3BUi3ZymtEO6n853xBrg7jwRbyw9rtf9P4UEtnhivAmcBu5FJCnJZsE4Tj
- EP6WvINquN4cWurMQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedtkedgfeduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepuddttdekueeggedvtddtueekiedutdfguedutdefieeuteefieelteet
- vddthfeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
- eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:_r--YL7tmnGjhYaZQVGxGahwqX5QaMDsnm4eGQKWkMxBk_OIlNhuvQ>
- <xmx:_r--YA1am8T52ZPvZjREBvdSiNqiqw4IFe25wa0xJUI16yCxSgOu7Q>
- <xmx:_r--YOHJTM8c9_hQwivPQLOHd5iY-r7XjaB3aORdbiYC0THfvIu4JA>
- <xmx:AMC-YKE-lLoiXiPoxdtU4YUBEI3lj7x3YNAM03hOFUc_9TTgTQdh_g>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 00ED1AC0062; Mon,  7 Jun 2021 20:55:26 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-519-g27a961944e-fm-20210531.001-g27a96194
-Mime-Version: 1.0
-Message-Id: <e5487cab-2ca0-46c2-a644-46d8b3070eac@www.fastmail.com>
-In-Reply-To: <df0d31e9-c4e1-4cf0-b800-c5dadfb43420@www.fastmail.com>
-References: <20210510054213.1610760-1-andrew@aj.id.au>
- <20210510054213.1610760-15-andrew@aj.id.au> <YKdfeJJM/4LYFKe4@packtop>
- <df0d31e9-c4e1-4cf0-b800-c5dadfb43420@www.fastmail.com>
-Date: Tue, 08 Jun 2021 10:25:04 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Zev Weiss" <zweiss@equinix.com>
-Subject: =?UTF-8?Q?Re:_[PATCH_v3_14/16]_ipmi:_kcs=5Fbmc=5Faspeed:_Implement_KCS_S?=
- =?UTF-8?Q?erIRQ_configuration?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4FzXXx3k94z2yWN
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Jun 2021 11:22:39 +1000 (AEST)
+Received: by mail-pj1-x1031.google.com with SMTP id
+ k22-20020a17090aef16b0290163512accedso900430pjz.0
+ for <openbmc@lists.ozlabs.org>; Mon, 07 Jun 2021 18:22:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=DoCqT57PWogse9MEhitLfrLcui5pryRHTkU2T4zomfc=;
+ b=VhY1VL3GhRKi73XB9hfRPx+w8yOwUn8NHC/yFMX/TNATb9iFCJTVijztWq9pqjwCmO
+ 282TOPJDReOWswGV+ZeT4R7elldgov2cdbP9N4vA48GS6Qbr5szC63xJWv0uz+GKFREn
+ EZ50FuGbXLcVNQHYW5cpOYoDKKzKgHBipneSFdJzN2C/zNU8Eq7ZnXGqYCtDRP0iuuQk
+ XfrykoWhdm8XltYOOWQXRLKXbQmBkvYcGKmreELyiduTSFfvGAjBiho41cSz54dp2e2q
+ /SYytvq3VSx4wqQ6HRpU8+3mIN/tP8Y6wG8UxH4w+6fs2tKTGSM+wZnjfrrBJUBvt4jm
+ P4aQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=DoCqT57PWogse9MEhitLfrLcui5pryRHTkU2T4zomfc=;
+ b=jMvEmgZDD2ocXygff5kty5rCO4c6ay7fV/Bb5hEQZw+tmPJmL80qElceBOjjkpupUp
+ BkQvKT/T22EuKyGz75eqwnTKfOEPYKt4pMmUAUgiaEBAydZjIBETRkx8FucyraFudQtS
+ 8MkYOxRuLS+0l7/bZDQT05taNAc5r3+9Wbp5viHa2Atj4UmgVKJPunWiXssZtqAyQOep
+ pCYAeNx16Wk24tGxnr+PrU6UCs4FNCZm1Lh4HvcKP5d1alZbTmRyF/8qCMEM/8Ja6Dhp
+ yY36y5IIlI4MOxU/YU+Nk3zwuNN1oDUsLPLVuO8aP9PRX4hyxvNDNkhLUMevhTjOLAie
+ PKbw==
+X-Gm-Message-State: AOAM532sUOGF5Y6Aro4dBGqkeoN+5ygxqaQ0kAd527jOmRtbwot1opQg
+ fYAD76V2oqse3f9tys05Okj/Gm1vo1OyVVaqjiypiiOjhZ91Qg==
+X-Google-Smtp-Source: ABdhPJzPLUOYwYTx1pr1WJVqtw8fbM4Cdah5Vds2VZuZsfHj3yPNmdkjsv59gXBEDML+8kq7MBHN+kDGFgMMjjtmjOw=
+X-Received: by 2002:a17:90a:cf12:: with SMTP id
+ h18mr22561670pju.131.1623115355072; 
+ Mon, 07 Jun 2021 18:22:35 -0700 (PDT)
+MIME-Version: 1.0
+From: Willy Tu <wltu@google.com>
+Date: Mon, 7 Jun 2021 18:22:23 -0700
+Message-ID: <CAHwn2Xkn5h2SJYHDriSgs2HYDv2WDMHqwOmaR5XAHaFFZjCLAg@mail.gmail.com>
+Subject: [Bmcweb/Redfish] Chassis Physical Connectivity Support on bmcweb
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="0000000000002b991c05c436fe98"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,225 +72,116 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- Corey Minyard <minyard@acm.org>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Arnd Bergmann <arnd@arndb.de>, Benjamin Fair <benjaminfair@google.com>,
- "openipmi-developer@lists.sourceforge.net"
- <openipmi-developer@lists.sourceforge.net>, "Chia-Wei,
- Wang" <chiawei_wang@aspeedtech.com>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- Tomer Maimon <tmaimon77@gmail.com>
+Cc: Jie Yang <jjy@google.com>, Ed Tanous <edtanous@google.com>,
+ Derek Chan <dchanman@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--0000000000002b991c05c436fe98
+Content-Type: text/plain; charset="UTF-8"
 
+Hi all,
 
-On Tue, 8 Jun 2021, at 10:11, Andrew Jeffery wrote:
-> 
-> 
-> On Fri, 21 May 2021, at 16:51, Zev Weiss wrote:
-> > On Mon, May 10, 2021 at 12:42:11AM CDT, Andrew Jeffery wrote:
-> > >Apply the SerIRQ ID and level/sense behaviours from the devicetree if
-> > >provided.
-> > >
-> > >Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> > >---
-> > > drivers/char/ipmi/kcs_bmc_aspeed.c | 182 ++++++++++++++++++++++++++++-
-> > > 1 file changed, 180 insertions(+), 2 deletions(-)
-> > >
-> > >diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
-> > >index 8a0b1e18e945..9b81806b4dcb 100644
-> > >--- a/drivers/char/ipmi/kcs_bmc_aspeed.c
-> > >+++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
-> > >@@ -9,6 +9,7 @@
-> > > #include <linux/errno.h>
-> > > #include <linux/interrupt.h>
-> > > #include <linux/io.h>
-> > >+#include <linux/irq.h>
-> > > #include <linux/mfd/syscon.h>
-> > > #include <linux/module.h>
-> > > #include <linux/of.h>
-> > >@@ -28,6 +29,22 @@
-> > >
-> > > #define KCS_CHANNEL_MAX     4
-> > >
-> > >+/*
-> > >+ * Field class descriptions
-> > >+ *
-> > >+ * LPCyE	Enable LPC channel y
-> > >+ * IBFIEy	Input Buffer Full IRQ Enable for LPC channel y
-> > >+ * IRQxEy	Assert SerIRQ x for LPC channel y (Deprecated, use IDyIRQX, IRQXEy)
-> > >+ * IDyIRQX	Use the specified 4-bit SerIRQ for LPC channel y
-> > >+ * SELyIRQX	SerIRQ polarity for LPC channel y (low: 0, high: 1)
-> > >+ * IRQXEy	Assert the SerIRQ specified in IDyIRQX for LPC channel y
-> > >+ */
-> > >+
-> > >+#define LPC_TYIRQX_LOW       0b00
-> > >+#define LPC_TYIRQX_HIGH      0b01
-> > >+#define LPC_TYIRQX_RSVD      0b10
-> > >+#define LPC_TYIRQX_RISING    0b11
-> > >+
-> > > #define LPC_HICR0            0x000
-> > > #define     LPC_HICR0_LPC3E          BIT(7)
-> > > #define     LPC_HICR0_LPC2E          BIT(6)
-> > >@@ -39,6 +56,19 @@
-> > > #define LPC_HICR4            0x010
-> > > #define     LPC_HICR4_LADR12AS       BIT(7)
-> > > #define     LPC_HICR4_KCSENBL        BIT(2)
-> > >+#define LPC_SIRQCR0	     0x070
-> > >+/* IRQ{12,1}E1 are deprecated as of AST2600 A3 but necessary for prior chips */
-> > >+#define     LPC_SIRQCR0_IRQ12E1	     BIT(1)
-> > >+#define     LPC_SIRQCR0_IRQ1E1	     BIT(0)
-> > >+#define LPC_HICR5	     0x080
-> > >+#define     LPC_HICR5_ID3IRQX_MASK   GENMASK(23, 20)
-> > >+#define     LPC_HICR5_ID3IRQX_SHIFT  20
-> > >+#define     LPC_HICR5_ID2IRQX_MASK   GENMASK(19, 16)
-> > >+#define     LPC_HICR5_ID2IRQX_SHIFT  16
-> > >+#define     LPC_HICR5_SEL3IRQX       BIT(15)
-> > >+#define     LPC_HICR5_IRQXE3         BIT(14)
-> > >+#define     LPC_HICR5_SEL2IRQX       BIT(13)
-> > >+#define     LPC_HICR5_IRQXE2         BIT(12)
-> > > #define LPC_LADR3H           0x014
-> > > #define LPC_LADR3L           0x018
-> > > #define LPC_LADR12H          0x01C
-> > >@@ -55,6 +85,13 @@
-> > > #define LPC_HICRB            0x100
-> > > #define     LPC_HICRB_IBFIF4         BIT(1)
-> > > #define     LPC_HICRB_LPC4E          BIT(0)
-> > >+#define LPC_HICRC            0x104
-> > >+#define     LPC_HICRC_ID4IRQX_MASK   GENMASK(7, 4)
-> > >+#define     LPC_HICRC_ID4IRQX_SHIFT  4
-> > >+#define     LPC_HICRC_TY4IRQX_MASK   GENMASK(3, 2)
-> > >+#define     LPC_HICRC_TY4IRQX_SHIFT  2
-> > >+#define     LPC_HICRC_OBF4_AUTO_CLR  BIT(1)
-> > >+#define     LPC_HICRC_IRQXE4         BIT(0)
-> > > #define LPC_LADR4            0x110
-> > > #define LPC_IDR4             0x114
-> > > #define LPC_ODR4             0x118
-> > >@@ -62,11 +99,21 @@
-> > >
-> > > #define OBE_POLL_PERIOD	     (HZ / 2)
-> > >
-> > >+enum aspeed_kcs_irq_mode {
-> > >+	aspeed_kcs_irq_none,
-> > >+	aspeed_kcs_irq_serirq,
-> > >+};
-> > >+
-> > > struct aspeed_kcs_bmc {
-> > > 	struct kcs_bmc_device kcs_bmc;
-> > >
-> > > 	struct regmap *map;
-> > >
-> > >+	struct {
-> > >+		enum aspeed_kcs_irq_mode mode;
-> > >+		int id;
-> > >+	} upstream_irq;
-> > >+
-> > > 	struct {
-> > > 		spinlock_t lock;
-> > > 		bool remove;
-> > >@@ -103,6 +150,49 @@ static void aspeed_kcs_outb(struct kcs_bmc_device *kcs_bmc, u32 reg, u8 data)
-> > >
-> > > 	rc = regmap_write(priv->map, reg, data);
-> > > 	WARN(rc != 0, "regmap_write() failed: %d\n", rc);
-> > >+
-> > >+	/* Trigger the upstream IRQ on ODR writes, if enabled */
-> > >+
-> > >+	switch (reg) {
-> > >+	case LPC_ODR1:
-> > >+	case LPC_ODR2:
-> > >+	case LPC_ODR3:
-> > >+	case LPC_ODR4:
-> > >+		break;
-> > >+	default:
-> > >+		return;
-> > >+	}
-> > >+
-> > >+	if (priv->upstream_irq.mode != aspeed_kcs_irq_serirq)
-> > >+		return;
-> > >+
-> > >+	switch (kcs_bmc->channel) {
-> > >+	case 1:
-> > >+		switch (priv->upstream_irq.id) {
-> > >+		case 12:
-> > >+			regmap_update_bits(priv->map, LPC_SIRQCR0, LPC_SIRQCR0_IRQ12E1,
-> > >+					   LPC_SIRQCR0_IRQ12E1);
-> > >+			break;
-> > >+		case 1:
-> > >+			regmap_update_bits(priv->map, LPC_SIRQCR0, LPC_SIRQCR0_IRQ1E1,
-> > >+					   LPC_SIRQCR0_IRQ1E1);
-> > >+			break;
+I am thinking about adding better support for Physical Connectivity between
+Boards/Chassises in bmcweb. Since Inventory.Board is treated as a chassis,
+I want to have a way to better connect the different boards with the
+existing ContainedBy/Contains.
 
-This is the code supporting the comment below.
+I was thinking of using xyz.openbmc_project.Association to do it. Since it
+is a list with fixed order, we can use the first chassis it finds
+for ContainedBy and the rest for Contains. For the root Chassis, it will
+have itself as the first Chassis and then just not include it.
 
-> > >+		default:
-> > >+			break;
-> > >+		}
-> > >+		break;
-> > >+	case 2:
-> > >+		regmap_update_bits(priv->map, LPC_HICR5, LPC_HICR5_IRQXE2, LPC_HICR5_IRQXE2);
-> > >+		break;
-> > >+	case 3:
-> > >+		regmap_update_bits(priv->map, LPC_HICR5, LPC_HICR5_IRQXE3, LPC_HICR5_IRQXE3);
-> > >+		break;
-> > >+	case 4:
-> > >+		regmap_update_bits(priv->map, LPC_HICRC, LPC_HICRC_IRQXE4, LPC_HICRC_IRQXE4);
-> > >+		break;
-> > >+	default:
-> > >+		break;
-> > >+	}
-> > > }
-> > >
-> > > static void aspeed_kcs_updateb(struct kcs_bmc_device *kcs_bmc, u32 reg, u8 mask, u8 val)
-> > >@@ -161,6 +251,73 @@ static void aspeed_kcs_set_address(struct kcs_bmc_device *kcs_bmc, u16 addr)
-> > > 	}
-> > > }
-> > >
-> > >+static inline int aspeed_kcs_map_serirq_type(u32 dt_type)
-> > >+{
-> > >+	switch (dt_type) {
-> > >+	case IRQ_TYPE_EDGE_RISING:
-> > >+		return LPC_TYIRQX_RISING;
-> > >+	case IRQ_TYPE_LEVEL_HIGH:
-> > >+		return LPC_TYIRQX_HIGH;
-> > >+	case IRQ_TYPE_LEVEL_LOW:
-> > >+		return LPC_TYIRQX_LOW;
-> > >+	default:
-> > >+		return -EINVAL;
-> > >+	}
-> > >+}
-> > >+
-> > >+static int aspeed_kcs_config_upstream_irq(struct aspeed_kcs_bmc *priv, u32 id, u32 dt_type)
-> > >+{
-> > >+	unsigned int mask, val, hw_type;
-> > >+
-> > >+	if (id > 15)
-> > >+		return -EINVAL;
-> > >+
-> > >+	hw_type = aspeed_kcs_map_serirq_type(dt_type);
-> > >+	if (hw_type < 0)
-> > >+		return hw_type;
-> > >+
-> > >+	priv->upstream_irq.mode = aspeed_kcs_irq_serirq;
-> > >+	priv->upstream_irq.id = id;
-> > >+
-> > >+	switch (priv->kcs_bmc.channel) {
-> > >+	case 1:
-> > >+		/* Needs IRQxE1 rather than (ID1IRQX, SEL1IRQX, IRQXE1) before AST2600 A3 */
-> > 
-> > I'm struggling a bit with understanding this comment, and relating it to
-> > the code -- it sounds like "we need to do things one way on A3 and
-> > later, and another way on pre-A3", but then...we just break without
-> > doing anything at all either way.  Can you clarify any further?
-> 
-> Hah! You're struggling because it doesn't make any sense, the code's 
-> gone missing :/ I'll fix that up.
+Is this something we can work with? or do we need something more
+complicated to support chassis relationship?
 
-Wait, no, this is fine. I just refreshed my memory on what's happening here. This function just configures the SerIRQ - in the case of channel 1 no configuration is necessary as it only has a fixed set of IRQs that we can associate with it. To enable one of them, we just set the appropriate bit in aspeed_kcs_outb() above.
+----
 
-Andrew
+Another question that is kind of related.
+I am also thinking about using Physical Location for each Chassis.
+It is already using `xyz.openbmc_project.Inventory.Decorator.LocationCode`
+as the ServiceLabel
+https://github.com/openbmc/bmcweb/blob/90e97e1d26b78d899a543831a8051dacbbdde71a/redfish-core/lib/chassis.hpp#L295-L331
+
+With that in mind, I am wondering how LocationCode is configured with
+EntityManager? Since the number of FRUs is dynamic, there is no way to tell
+which location the FRU is connected to without a mapping. I am wondering
+how that can be done with Entity Manager.
+
+I was thinking of doing something like getEntityName
+<https://github.com/openbmc/google-ipmi-sys/blob/3b1b427c1fa4bcddcab1fc003410e5fa5d7a8334/handler.cpp#L235>
+in
+IPMI OEM handler which utilizes a json file for the mapping from entity
+instance to location. This is a simple way of doing it within
+EntityManager, but I am not sure if we want to do it this way.
+
+Maybe something related?
+https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/42971
+
+Best,
+
+Willy Tu
+
+--0000000000002b991c05c436fe98
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><span style=3D"color:rgb(32,33,36);font-family:Roboto=
+,sans-serif;font-size:14px;white-space:pre-wrap;background-color:rgba(241,2=
+43,244,0.75)">Hi all,<br></span></div><div><span style=3D"color:rgb(32,33,3=
+6);font-family:Roboto,sans-serif;font-size:14px;white-space:pre-wrap;backgr=
+ound-color:rgba(241,243,244,0.75)"><br></span></div><div><span style=3D"col=
+or:rgb(32,33,36);font-family:Roboto,sans-serif;font-size:14px;white-space:p=
+re-wrap;background-color:rgba(241,243,244,0.75)">I am thinking about adding=
+ better support for Physical Connectivity between Boards/Chassises in bmcwe=
+b. Since Inventory.Board is treated as a chassis, I want to have a way to b=
+etter connect the different boards with the existing ContainedBy/Contains.<=
+/span></div><div><span style=3D"color:rgb(32,33,36);font-family:Roboto,sans=
+-serif;font-size:14px;white-space:pre-wrap;background-color:rgba(241,243,24=
+4,0.75)"><br></span></div><div><span style=3D"color:rgb(32,33,36);font-fami=
+ly:Roboto,sans-serif;font-size:14px;white-space:pre-wrap;background-color:r=
+gba(241,243,244,0.75)">I was thinking of using </span>xyz.openbmc_project.A=
+ssociation to do it. Since it is a list with fixed order, we can use the fi=
+rst chassis it finds for=C2=A0ContainedBy and the rest for Contains. For th=
+e root Chassis, it will have itself as the first Chassis and then just not =
+include it.</div><div><br></div><div>Is this something we can work with? or=
+ do we need something more complicated to support chassis relationship?</di=
+v><div><span style=3D"color:rgb(32,33,36);font-family:Roboto,sans-serif;fon=
+t-size:14px;white-space:pre-wrap;background-color:rgba(241,243,244,0.75)"><=
+br></span></div><div><span style=3D"color:rgb(32,33,36);font-family:Roboto,=
+sans-serif;font-size:14px;white-space:pre-wrap;background-color:rgba(241,24=
+3,244,0.75)">----</span></div><div><span style=3D"color:rgb(32,33,36);font-=
+family:Roboto,sans-serif;font-size:14px;white-space:pre-wrap;background-col=
+or:rgba(241,243,244,0.75)"><br></span></div><div><span style=3D"color:rgb(3=
+2,33,36);font-family:Roboto,sans-serif;font-size:14px;white-space:pre-wrap;=
+background-color:rgba(241,243,244,0.75)">Another question that is kind of r=
+elated.</span></div><span style=3D"color:rgb(32,33,36);font-family:Roboto,s=
+ans-serif;font-size:14px;white-space:pre-wrap;background-color:rgba(241,243=
+,244,0.75)"><div>I am also thinking about using Physical Location for each =
+Chassis.</div>It is already using `xyz.openbmc_project.Inventory.Decorator.=
+LocationCode` as the ServiceLabel <a href=3D"https://github.com/openbmc/bmc=
+web/blob/90e97e1d26b78d899a543831a8051dacbbdde71a/redfish-core/lib/chassis.=
+hpp#L295-L331">https://github.com/openbmc/bmcweb/blob/90e97e1d26b78d899a543=
+831a8051dacbbdde71a/redfish-core/lib/chassis.hpp#L295-L331</a></span><br><d=
+iv><span style=3D"color:rgb(32,33,36);font-family:Roboto,sans-serif;font-si=
+ze:14px;white-space:pre-wrap;background-color:rgba(241,243,244,0.75)"><br><=
+/span></div><div><span style=3D"color:rgb(32,33,36);font-family:Roboto,sans=
+-serif;font-size:14px;white-space:pre-wrap;background-color:rgba(241,243,24=
+4,0.75)">With that in mind, I am wondering how </span>LocationCode is confi=
+gured with EntityManager? Since the number of FRUs is dynamic, there is no =
+way to tell which location the FRU is connected to without a mapping. I am =
+wondering how that can be done with Entity Manager.</div><div><br></div><di=
+v>I was thinking of doing something=C2=A0like=C2=A0<a href=3D"https://githu=
+b.com/openbmc/google-ipmi-sys/blob/3b1b427c1fa4bcddcab1fc003410e5fa5d7a8334=
+/handler.cpp#L235">getEntityName</a>=C2=A0in IPMI OEM handler which utilize=
+s a json file for the mapping from entity instance to location. This is a s=
+imple way of doing it within EntityManager, but I am not sure if we want to=
+ do it this way.</div><div><br></div><div>Maybe something related?</div><di=
+v><span style=3D"color:rgb(32,33,36);font-family:Roboto,sans-serif;font-siz=
+e:14px;white-space:pre-wrap;background-color:rgba(241,243,244,0.75)"><a hre=
+f=3D"https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/42971">h=
+ttps://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/42971</a><br><=
+/span></div><div><br></div><div>Best,</div><div><br></div><div>Willy Tu</di=
+v></div>
+
+--0000000000002b991c05c436fe98--
