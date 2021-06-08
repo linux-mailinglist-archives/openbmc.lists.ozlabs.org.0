@@ -1,70 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C9F439EEF2
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 08:48:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2323039F404
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 12:48:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4FzgmV6p87z301D
-	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 16:48:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Fzn653p5Yz3079
+	for <lists+openbmc@lfdr.de>; Tue,  8 Jun 2021 20:48:45 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=VzWccjlc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=dfNq/rDX;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=asrockrack.com (client-ip=43.251.60.7; helo=ms.pegatroncorp.com;
- envelope-from=jeff9_chan@asrockrack.com; receiver=<UNKNOWN>)
-Received: from ms.pegatroncorp.com (ms5.pegatroncorp.com [43.251.60.7])
- by lists.ozlabs.org (Postfix) with ESMTP id 4FzgmC6jCcz2xvZ
- for <openbmc@lists.ozlabs.org>; Tue,  8 Jun 2021 16:47:51 +1000 (AEST)
-IronPort-SDR: bfRANRC8FNClM4yWnmb7eKbkYQF42YE8ChDNH4u/ZGyBqHRq0YdcncoHxr4dM/hk9L69JJ9eok
- j2Sd+uLXnwoQfAgxlo4CKB2W2ZVBdT26KW/BELQJJ0VgZmcE+GHdQ9oD4em+oLagFXbHgqFlqe
- rLhMVqb2Mh7yWAhCjEgs3doiD9r8kKkM3TGoLqB9gTQ4Ia3Asc+3tJEJIXSkoLH0oGHCHHgbzU
- QZmlqbrVQDhuG5bEy8g4iyhzdJFHI+PJU88B/S62e4TskJxHtXBERMxyWLXU0JHzNvMyTNA+WF
- QJc=
-Received: from unknown (HELO PTW-MSE-DB01.pegatroncorp.com) ([172.18.6.20])
- by ms.pegatroncorp.com with ESMTP; 08 Jun 2021 14:47:48 +0800
-Received: from PTW-EX-MBS04.PEGA.CORP.PEGATRON
- (ptw-ex-mbs04.pega.corp.pegatron [172.18.192.57])
- by PTW-MSE-DB01.pegatroncorp.com with ESMTP id 1586laRn008349;
- Tue, 8 Jun 2021 14:47:36 +0800 (GMT-8)
- (envelope-from Jeff9_Chan@asrockrack.com)
-Received: from PTW-EX-MBS11.PEGA.CORP.PEGATRON (172.18.192.66) by
- PTW-EX-MBS04.PEGA.CORP.PEGATRON (172.18.192.57) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1847.3; Tue, 8 Jun 2021 14:47:37 +0800
-Received: from PTW-EX-MBS11.PEGA.CORP.PEGATRON ([fe80::35ca:6b59:40d1:9037])
- by PTW-EX-MBS11.PEGA.CORP.PEGATRON ([fe80::35ca:6b59:40d1:9037%3]) with mapi
- id 15.01.1847.012; Tue, 8 Jun 2021 14:47:37 +0800
-From: =?utf-8?B?SmVmZjkgQ2hhbijpmbPmnb7lhIlfQVNSb2NrUmFjayk=?=
- <Jeff9_Chan@asrockrack.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: RE: OPENBMC ASRock Rack
-Thread-Topic: OPENBMC ASRock Rack
-Thread-Index: AdY9OXpuPaiukNl5Rq6zENcUsPakygASUFgAABxnw6AAcpRYAAAlt3/wAAUnEIAAnS95QAAtf9yAPKwW60AADRa7AAA0of1ACS8FOkAAAHVfgP//vMeA//9szMA=
-Date: Tue, 8 Jun 2021 06:47:37 +0000
-Message-ID: <6ae23bb96e4d45eabfce5dfca603eed9@asrockrack.com>
-References: <dbe431da08674c61bcda091cec16b5fb@asrockrack.com>
- <5d74d92b8e2f47acab7da6a54f6c18ee@asrockrack.com>
- <fec2cbe8fd144a52915d971b4e7214bb@asrockrack.com>
- <58f7b059987f40b78ebdcdbd1db5d969@asrockrack.com>
- <8a3b99b118744df5a918b43e5520d35a@asrockrack.com>
- <CALVHhedqJhfKD+MNofiwnKBB7sGG1wRPV4gXTdW_h=8=6=4HKw@mail.gmail.com>
- <OF6DE94A96.B5787DB8-ON00258584.00525E62-00258584.0052E3DC@notes.na.collabserv.com>
- <OF796A58B2.9DA64EBD-ON00258585.003E519E-00258585.003F6F0E@notes.na.collabserv.com>
- <OF2B5AA3C5.40A65716-ON00258589.004350E5-00258589.00436A50@notes.na.collabserv.com>
- <OF5B0F1DD8.7358EE61-ON002586BE.004FB2E2-002586BE.0050DCF8@notes.na.collabserv.com>
- <7807e4794c844beda004d7059c74289c@asrockrack.com>
- <cb87a8f3a17f47e192ab5474a331807c@asrockrack.com>
- <CACPK8Xfi9FBjPyLdy45C=hy-e4wktLrTp3UmFhH59oaaz0yTYQ@mail.gmail.com>
-In-Reply-To: <CACPK8Xfi9FBjPyLdy45C=hy-e4wktLrTp3UmFhH59oaaz0yTYQ@mail.gmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.194.46.159]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.230;
+ helo=new4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=VzWccjlc; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=dfNq/rDX; 
+ dkim-atps=neutral
+Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
+ [66.111.4.230])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Fzn5d43ycz2y0C;
+ Tue,  8 Jun 2021 20:48:20 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailnew.nyi.internal (Postfix) with ESMTP id EF2555804DB;
+ Tue,  8 Jun 2021 06:48:15 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute5.internal (MEProxy); Tue, 08 Jun 2021 06:48:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=fm3; bh=hDFhnDxEtjMcaTbXERTDvsX/xK
+ lhpV/0Oa1YnvfSBwI=; b=VzWccjlcIu/Qm8khATcLiatSIK4IEbfYC2dsISfeeA
+ i92SLTkNHZ08w6UN2FVP4ipS79QVHJtEsiLKKbtnK38U7fvk0jcdjNCOPz/LfW/z
+ 4wlTdf2ko6wTDEcEQ+1IOtHLN046cfPgzC0YpWoaioH7zB/qO1WF57edoDzsxQ7d
+ PhyIUXwSZnZKGggJSE10w5wfRgRwg8IYg0xWk15IG6datZfVaKfOE75QIFTrgK0u
+ s6ZXWrwSN+Po9tvspuNKAQgj/Kn6U8Ly5foZoukqp8sFIYWGrn61G5rvL/DndudU
+ r2HY4+VJo8HhnCsG6slFQfThm1sxwgGD1kh29VGnJB0g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:date:from
+ :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=hDFhnDxEtjMcaTbXE
+ RTDvsX/xKlhpV/0Oa1YnvfSBwI=; b=dfNq/rDX+pHeucY114zvkey1sJz3QecR/
+ qNDIrc0HuESLEfqmxz6/EkN88sK+WySzZF89ZN3p//UakioEhSeHfGThGXNoAJl0
+ 6ZhBe84FpBUzymjf8v2CryRjT8jxOD8FEa2gNQ+lHP+HKqzh3cT4WekBFssQTsGH
+ n/8QVXgrbNs+TISI+ONjwA73IkN+dsv+pmIsojNShLKslMiWj7+5iXtjJ+Vz2QTi
+ Dj/na/T/TuBCifp1FQW9yoAIVPHvf7ogrZm+pHSjHX0FJUzg1al2hQvNnAAr2ZVD
+ bdMmGP3mpIjOKd7n6u1zP8X4nH9pKhIDCIKuVoUuk3fhuhcSuAUsA==
+X-ME-Sender: <xms:7Eq_YMPfMARrNa2FROCibgq5RnHrEtlBb2FocMegwFBR5JYti9QfvQ>
+ <xme:7Eq_YC-UklsgWrtMdjbRBz14R5pFInUbA1uE9WSJvEuEtzVNuv2IQdZf3KAZ3ynPv
+ z9DZg3QYQqnkAFvdw>
+X-ME-Received: <xmr:7Eq_YDSqPwNJ5Ctt4jD5E1-JAadRXCAExuScUfyIT88E5-J3eAiMKEk1pcrXdRY5473A8zuMqLcribwTfCXh9VtiWyVEKNH2TVM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedtledgudeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+ dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
+ ihgurdgruheqnecuggftrfgrthhtvghrnhepieetheduveelhfdvvdejleeuhfelteevhe
+ ffgfeitdefgeekjeefieevgfehhefgnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghen
+ ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurh
+ gvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:7Eq_YEuc2dnPMb_lmd1P4w3j_eyeWGje2ByH7dY0SRAw8r2kO_yK0A>
+ <xmx:7Eq_YEeyep8ncAZ4ZvMnYyDXi7VZh0avj6DitWAlrGbJR1dETLDhKw>
+ <xmx:7Eq_YI1OxI_sH4h6tQkwAV79ZUsGjlNjLX3tacOa3ZsJlXa6__zGCQ>
+ <xmx:70q_YHutjtwjwfw5PI4P_jvcQrKDgTUJ1Bl1fT6JjIOPdHVuYMs35A>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Jun 2021 06:48:06 -0400 (EDT)
+From: Andrew Jeffery <andrew@aj.id.au>
+To: openipmi-developer@lists.sourceforge.net, openbmc@lists.ozlabs.org,
+ minyard@acm.org
+Subject: [PATCH v4 00/16] ipmi: Allow raw access to KCS devices
+Date: Tue,  8 Jun 2021 20:17:41 +0930
+Message-Id: <20210608104757.582199-1-andrew@aj.id.au>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-X-MAIL: PTW-MSE-DB01.pegatroncorp.com 1586laRn008349
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,41 +93,102 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "manager@lfprojects.org" <manager@lfprojects.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Bradley W Bishop <bradleyb@us.ibm.com>
+Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com,
+ linux-aspeed@lists.ozlabs.org, KWLIU@nuvoton.com, avifishman70@gmail.com,
+ venture@google.com, chiawei_wang@aspeedtech.com, linux-kernel@vger.kernel.org,
+ tali.perry1@gmail.com, robh+dt@kernel.org, arnd@arndb.de, zweiss@equinix.com,
+ linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-VGhhbmtzIEpvZWwsIGl0IHdvcmtzIG5vdy4NCg0KYmVzdCByZWdhcmRzDQoNCkplZmYgQ2hhbg0K
-QVNSb2NrIEluYy4gDQpUZWw6ICs4ODYtMi01NTU5OTYwMCBleHQuMzg2NzANCg0KDQotLS0tLU9y
-aWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogSm9lbCBTdGFubGV5IFttYWlsdG86am9lbEBqbXMu
-aWQuYXVdIA0KU2VudDogVHVlc2RheSwgSnVuZSA4LCAyMDIxIDI6MDAgUE0NClRvOiBKZWZmOSBD
-aGFuKOmZs+advuWEiV9BU1JvY2tSYWNrKQ0KQ2M6IEJyYWRsZXkgVyBCaXNob3A7IG9wZW5ibWNA
-bGlzdHMub3psYWJzLm9yZzsgbWFuYWdlckBsZnByb2plY3RzLm9yZw0KU3ViamVjdDogUmU6IE9Q
-RU5CTUMgQVNSb2NrIFJhY2sNCg0KT24gVHVlLCA4IEp1biAyMDIxIGF0IDAyOjAxLCBKZWZmOSBD
-aGFuKOmZs+advuWEiV9BU1JvY2tSYWNrKQ0KPEplZmY5X0NoYW5AYXNyb2NrcmFjay5jb20+IHdy
-b3RlOg0KPg0KPiBSZS1zZW5kDQoNClBsZWFzZSB1c2UgcGxhaW4gdGV4dCBlbWFpbCB3aGVuIHBv
-c3RpbmcgdG8gdGhlIGxpc3QuIFRoaXMgaXMgYSBnb29kDQpydWxlIHRvIGZvbGxvdyBmb3IgYWxs
-IG9wZW4gc291cmNlIG1haWxpbmcgbGlzdHMuDQoNCj4gICAgICAgICBJIGdvdCBiZWxvdyBlcnJv
-ciB3aGVuIEkgdHJ5IHRvIHB1c2ggbWV0YS1hc3JvY2tyYWNrIGxheWVyIHRvIGdlcnJpdC4NCj4N
-Cj4gICAgICAgICBJcyB0aGF0IG1lYW5zIG15IGVtYWlsIGlzIG5vdCBsaXN0ZWQgaW4gdGhlIGxp
-c3Q/DQo+DQo+DQo+DQo+IFRvIHNzaDovL29wZW5ibWMuZ2Vycml0L29wZW5ibWMvb3BlbmJtYw0K
-Pg0KPiAhIFtyZW1vdGUgcmVqZWN0ZWRdICAgICBIRUFEIC0+IHJlZnMvZm9yL21hc3RlciAoY29t
-bWl0IDFkOTk1MWM6IG5vdCBTaWduZWQtb2ZmLWJ5IGF1dGhvci9jb21taXR0ZXIvdXBsb2FkZXIg
-aW4gbWVzc2FnZSBmb290ZXIpDQoNCkhlcmUgaXMgdGhlIGVycm9yOg0KDQogIChjb21taXQgMWQ5
-OTUxYzogbm90IFNpZ25lZC1vZmYtYnkgYXV0aG9yL2NvbW1pdHRlci91cGxvYWRlciBpbg0KbWVz
-c2FnZSBmb290ZXIpDQoNCj4gY29tbWl0IDFkOTk1MWM1NTE4YTdiZGY4OGE1ZGUxNmE0MWFlMmYz
-MzdlMWIyZWQgKEhFQUQgLT4gbWFzdGVyKQ0KPg0KPiBBdXRob3I6IEplZmY5Q2hhbiA8amVmZjlf
-Y2hhbkBhc3JvY2tyYWNrLmNvbT4NCj4NCj4gRGF0ZTogICBUdWUgSnVuIDggMDk6MTU6NDQgMjAy
-MSArMDgwMA0KPg0KPg0KPg0KPiAgICAgYWRkIG1ldGEtYXNyb2NrcmFjayBsYXllcg0KPg0KPiAg
-ICAgU2lnbmVkLW9mZi1ieTogSmVmZiBDaGFuIDxKZWZmOV9DaGFuQGFzcm9ja3JhY2suY29tPg0K
-Pg0KPg0KPg0KPiAgICAgQ2hhbmdlLUlkOiBJMTY4NjEzM2UwMDkzZTRlMDBhZGVhZGMwNjg5NzIz
-OTZjOGRjNGZhYg0KDQogSSBzdXNwZWN0IEdlcnJpdCdzIGZpbHRlcmluZyBkaWRkbid0IG5vdGlj
-ZSB0aGUgcy1vLWIgaW4gdGhlIG1pZGRsZQ0Kb2YgeW91ciBjb21taXQgbWVzc2FnZS4gTm9ybWFs
-IHN0eWxlIGlzIHRvIHBsYWNlIGl0IGF0IHRoZSBib3R0b20gb2YNCnRoZSBvbiB0aGUgbGluZSBp
-bW1lZGlhdGVseSBhYm92ZSBvciBiZWxvdyB0aGUgY2hhbmdlIGlkLiBUcnkgZ2l0DQpjb21taXQg
-LS1hbWVuZCBhbmQgbW92aW5nIGl0IHNvIHRoZSBtZXNzYWdlIGxvb2tzIGxpa2UgdGhpczoNCg0K
-QWRkIG1ldGEtYXNyb2NrcmFjayBsYXllcg0KDQpDaGFuZ2UtSWQ6IEkxNjg2MTMzZTAwOTNlNGUw
-MGFkZWFkYzA2ODk3MjM5NmM4ZGM0ZmFiDQpTaWduZWQtb2ZmLWJ5OiBKZWZmIENoYW4gPEplZmY5
-X0NoYW5AYXNyb2NrcmFjay5jb20+DQoNCkNoZWVycywNCg0KSm9lbA0K
+
+Hello,
+
+This is the 4th spin of the series refactoring the keyboard-controller-style
+device drivers in the IPMI subsystem.
+
+v3 can be found at:
+
+https://lore.kernel.org/lkml/20210510054213.1610760-1-andrew@aj.id.au/
+
+v4:
+
+* Makes kcs_bmc_add_device() return an error if no client successfully
+  initialised with respect to the binding of the device driver
+* Retains the existing single-open semantics (v3 allowed multiple-open)
+* Fixes the OBE macro for the NPCM7xx KCS driver
+* Cleans up Yoda-style masks (mask constant on the LHS rather than RHS)
+* Cleans up includes in kcs_bmc_client.h
+* Adds some comments to the SerIO adapter to clarify object lifetimes
+
+Previously:
+
+Changes in v3:
+
+* The series was rebased onto v5.13-rc1
+* v5.13-rc1 includes Chiawei's patches reworking the LPC devicetree bindings,
+  so they're no-longer required in the series.
+* After some discussion with Arnd[1] and investigating the serio subsystem,
+  I've replaced the "raw" KCS driver (patch 16/21 in v2) with a serio adaptor
+  (patch 11/16 in this series). The adaptor allows us to take advantage of the
+  existing chardevs provided by serio.
+
+[1] https://lore.kernel.org/linux-arm-kernel/37e75b07-a5c6-422f-84b3-54f2bea0b917@www.fastmail.com/
+
+Changes in v2 include:
+
+* A rebase onto v5.12-rc2
+* Incorporation of off-list feedback on SerIRQ configuration from
+  Chiawei
+* Further validation on hardware for ASPEED KCS devices 2, 3 and 4
+* Lifting the existing single-open constraint of the IPMI chardev
+* Fixes addressing Rob's feedback on the conversion of the ASPEED KCS
+  binding to dt-schema
+* Fixes addressing Rob's feedback on the new aspeed,lpc-interrupts
+  property definition for the ASPEED KCS binding
+
+Please test and review!
+
+Andrew
+
+Andrew Jeffery (16):
+  ipmi: kcs_bmc_aspeed: Use of match data to extract KCS properties
+  ipmi: kcs_bmc: Make status update atomic
+  ipmi: kcs_bmc: Rename {read,write}_{status,data}() functions
+  ipmi: kcs_bmc: Split out kcs_bmc_cdev_ipmi
+  ipmi: kcs_bmc: Turn the driver data-structures inside-out
+  ipmi: kcs_bmc: Split headers into device and client
+  ipmi: kcs_bmc: Strip private client data from struct kcs_bmc
+  ipmi: kcs_bmc: Decouple the IPMI chardev from the core
+  ipmi: kcs_bmc: Allow clients to control KCS IRQ state
+  ipmi: kcs_bmc: Enable IBF on open
+  ipmi: kcs_bmc: Add serio adaptor
+  dt-bindings: ipmi: Convert ASPEED KCS binding to schema
+  dt-bindings: ipmi: Add optional SerIRQ property to ASPEED KCS devices
+  ipmi: kcs_bmc_aspeed: Implement KCS SerIRQ configuration
+  ipmi: kcs_bmc_aspeed: Fix IBFIE typo from datasheet
+  ipmi: kcs_bmc_aspeed: Optionally apply status address
+
+ .../bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml | 106 +++
+ .../bindings/ipmi/aspeed-kcs-bmc.txt          |  33 -
+ drivers/char/ipmi/Kconfig                     |  27 +
+ drivers/char/ipmi/Makefile                    |   2 +
+ drivers/char/ipmi/kcs_bmc.c                   | 523 ++++-----------
+ drivers/char/ipmi/kcs_bmc.h                   |  92 +--
+ drivers/char/ipmi/kcs_bmc_aspeed.c            | 633 +++++++++++++-----
+ drivers/char/ipmi/kcs_bmc_cdev_ipmi.c         | 568 ++++++++++++++++
+ drivers/char/ipmi/kcs_bmc_client.h            |  45 ++
+ drivers/char/ipmi/kcs_bmc_device.h            |  22 +
+ drivers/char/ipmi/kcs_bmc_npcm7xx.c           |  92 ++-
+ drivers/char/ipmi/kcs_bmc_serio.c             | 157 +++++
+ 12 files changed, 1594 insertions(+), 706 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/ipmi/aspeed,ast2400-kcs-bmc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/ipmi/aspeed-kcs-bmc.txt
+ create mode 100644 drivers/char/ipmi/kcs_bmc_cdev_ipmi.c
+ create mode 100644 drivers/char/ipmi/kcs_bmc_client.h
+ create mode 100644 drivers/char/ipmi/kcs_bmc_device.h
+ create mode 100644 drivers/char/ipmi/kcs_bmc_serio.c
+
+-- 
+2.30.2
+
