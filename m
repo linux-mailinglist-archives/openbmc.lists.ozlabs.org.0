@@ -1,74 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B9E83A34DD
-	for <lists+openbmc@lfdr.de>; Thu, 10 Jun 2021 22:31:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8249B3A34E5
+	for <lists+openbmc@lfdr.de>; Thu, 10 Jun 2021 22:32:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G1Fxy3zDzz3btY
-	for <lists+openbmc@lfdr.de>; Fri, 11 Jun 2021 06:31:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G1Fz1703hz3bvC
+	for <lists+openbmc@lfdr.de>; Fri, 11 Jun 2021 06:32:45 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=tWFVduSx;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=bb+JAy7i;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::329;
- helo=mail-ot1-x329.google.com; envelope-from=bjwyman@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42a;
+ helo=mail-wr1-x42a.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=tWFVduSx; dkim-atps=neutral
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com
- [IPv6:2607:f8b0:4864:20::329])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=bb+JAy7i; dkim-atps=neutral
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com
+ [IPv6:2a00:1450:4864:20::42a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G1Fxg0dGBz308F;
- Fri, 11 Jun 2021 06:31:34 +1000 (AEST)
-Received: by mail-ot1-x329.google.com with SMTP id
- 102-20020a9d0eef0000b02903fccc5b733fso995124otj.4; 
- Thu, 10 Jun 2021 13:31:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=Xt0U3YUAq1iLZIuBd7Di4+UirPrgjGPkiR3BVaEs7AE=;
- b=tWFVduSxUj5xOZHeRwM0hh3+JJds7QGtnsIy0ARNtYzMkZFqUpl6NqxksrIBtbg6q8
- akntAATXTz2P4PZ9tdk0oWefyd3G+ptpGz07WD1EqTQMlhlYwVEgXtD8TQu8QFPse64C
- FVbxShPRHo/WUqZVhbOsSkrLmYnT9um6DkVgPweZYy9V0kd9CCZ0LdX6cAY0bU+NW14U
- gBD+TIKNgsnrzi4+dD310F6lPQZdaNqbobGy5iP+dzTshYjToY2l8Ey3wXqY8zgMev7g
- 2OZ3qdfYos4tjDUyKF5sj5Y0F0j0r6odPfHNRTHdbpUYMtHsiRZxDVXTC+NL5gNF9RFF
- 3ndg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G1Fyn27J5z2yWl
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Jun 2021 06:32:33 +1000 (AEST)
+Received: by mail-wr1-x42a.google.com with SMTP id m18so3684800wrv.2
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Jun 2021 13:32:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=J7FXSH1kN0fSsckk/KAnEkeeVyqFbPZavGrzSy2eX+M=;
+ b=bb+JAy7i6fObXRmmTsJXNy0zCot12CF7pArUqBwH+D1bgRP6S4GD9uYqZnNgcso85D
+ G/ldbN7VJrAvldnfuQ4GYQ9tSAmkYBV+M4ZzeFFMIS5p4WQmAocEE7A7BLJeVGsvzTah
+ WFWFqPsbJUWJniO14b56I1gDeoA1D5FZpZen0fBI9aLAE5N5ncfReL2X93022JmWY4IR
+ 82a+zkgHVj67eegDn6ed/neGA7RkwYS383H5R3NE4f9kFXi5+QPXONirujbWztHqH1m9
+ 8k5Dg/r5TQ+s+maHXO4ZwHuXek1dbmvoQwjBpAtLgEw8YRhj0M6ECycNFVHc7r6PZCDB
+ wWCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=Xt0U3YUAq1iLZIuBd7Di4+UirPrgjGPkiR3BVaEs7AE=;
- b=j4qk1bLHX3tnhx0/4rOJDKU/7uge12RP2MdbPYtYoMM41eC2e1sAkPc9W63+wHyBBr
- cPyidETRckkeaxWPu3jLML+GEDCpO0iyWTE2UGTs292LdfCxHiWqmH88+6KfbFq/C3Bo
- 4+HAy9SgEhYHED4KA1AXpeaa6hiCk1+QNgS8On537DBZug/aCglu2sAqlecO7rmPoNaU
- woYJQMz5PDVfCyk+tV2lNH/xT0GwmzGK2f7URwowXEWBdOUN1JoJL+IsmlBKuKB/9/dc
- yXYHByMyWcwzJxfM2z7JBGXSxtHep/UDJrN68af8KPulBgiIQXsbK+4uRFIENLIQfzkQ
- g8oQ==
-X-Gm-Message-State: AOAM5308q8fbyR5MxyFWlMVBtyvoKq+qpvmj6Rmr8o9CXdYlqL8ene4k
- nLRxBvBUiOirDgzRNa7I3V4=
-X-Google-Smtp-Source: ABdhPJz7/Bv78csqgtMUQ2xDH5jZWw8KWwG33NZUr2c85Mm64g1LUBsstgRcxmFi7NG+5po0gtblWQ==
-X-Received: by 2002:a05:6830:1d96:: with SMTP id
- y22mr177018oti.266.1623357088758; 
- Thu, 10 Jun 2021 13:31:28 -0700 (PDT)
-Received: from fstone04p1.aus.stglabs.ibm.com ([129.41.86.7])
- by smtp.gmail.com with ESMTPSA id q16sm805680ott.56.2021.06.10.13.31.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Jun 2021 13:31:28 -0700 (PDT)
-From: Brandon Wyman <bjwyman@gmail.com>
-To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org,
- linux-aspeed@lists.ozlabs.org
-Subject: [PATCH] ARM: dts: aspeed: Everest PSU #3 address change
-Date: Thu, 10 Jun 2021 20:29:41 +0000
-Message-Id: <20210610202940.3650554-1-bjwyman@gmail.com>
-X-Mailer: git-send-email 2.25.1
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=J7FXSH1kN0fSsckk/KAnEkeeVyqFbPZavGrzSy2eX+M=;
+ b=OIGHa1jGBwOGdXHCrsiz+sBYSBOg8SJ+dfydLWpwwwYuRXEJzKWhm/4M/GCGPZ7xCX
+ sDxcEn8vlMtk6ZLk3HQOfJ2URfEhEWxVFJlZbki65ZEtKxwEfsUxo/d4T9/YBpfRXfJG
+ 6djphnO+yKO0sQVzHO6RBFIo6nqzQM4F+hDeB9qTgCxxz9SFA5LCk8QMS3AC5ZuQj4Zk
+ s0dzp8QQQvbkYHqnpGhQ0Ho1hCNB7dAaD3R80ekenI3rDTk+4pPOEIi1wmJ+nGfr0XJW
+ gpARsEyVfALjosMcvd1xdDGZr5YKodQ/QeZ/oOo313Zb0NA2pzIeWZ5xiQRA2aviNVTm
+ tdCw==
+X-Gm-Message-State: AOAM531djV7KqM1XoxSaMj48jpznjgaIAKdk4C2n5pwFdGlyuEw47CBl
+ ex/onmQ7FuW5TUumQUQ0wWkiUa4y6h8a0x6yyYWE/A==
+X-Google-Smtp-Source: ABdhPJwfc56gUVUbwySIsobJm/e2oXRKmM2ZEk20m2HaYTYl7EHC8zcGLGoNWQA+R4sTQXmHUGACPfsZuyyzW3LCIZc=
+X-Received: by 2002:adf:e389:: with SMTP id e9mr268292wrm.424.1623357143694;
+ Thu, 10 Jun 2021 13:32:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <DF4PR8401MB0634B89E3FF275E28FB590CC8F359@DF4PR8401MB0634.NAMPRD84.PROD.OUTLOOK.COM>
+In-Reply-To: <DF4PR8401MB0634B89E3FF275E28FB590CC8F359@DF4PR8401MB0634.NAMPRD84.PROD.OUTLOOK.COM>
+From: Ed Tanous <edtanous@google.com>
+Date: Thu, 10 Jun 2021 13:32:12 -0700
+Message-ID: <CAH2-KxB5=VQ16c6Cabik6T3HRMNw-R+r8EStpLu-hpgqGtnO-g@mail.gmail.com>
+Subject: Re: RDE Enablement
+To: "Garrett, Mike (HPE Server Firmware)" <mike.garrett@hpe.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,36 +75,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "B. J. Wyman" <bjwyman@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: "B. J. Wyman" <bjwyman@gmail.com>
+On Thu, Jun 10, 2021 at 1:26 PM Garrett, Mike (HPE Server Firmware)
+<mike.garrett@hpe.com> wrote:
+>
+> Greetings,
+>
+> I'm am interested to know if there has been any organized discussion or d=
+evelopment on Redfish Device Enablement (RDE - DMTF DSP0218) for moving enc=
+oded Redfish data across PLDM/MCTP interfaces.  We are interested in promot=
+ing this standard and are willing to lead a reference implementation for Op=
+enBMC if there is not yet something in progress.  If there is something in =
+progress, can you point me at the work because I would love to see it.
 
-The third power supply had an I2C address conflict with another device
-in the system. The device will have the address changed from 6Ah to 6Dh.
+We are interested in this as well, although we are in the early stages
+of looking into it.  Ideally we'd like to have OpenBMC support add in
+cards (NICs, Accelerators, ect) that supported this functionality, and
+make that data available to the normal OpenBMC channels
+(Redfish/ipmi/ect).
 
-Signed-off-by: B. J. Wyman <bjwyman@gmail.com>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> What is the normal sequence for proposing, debating and finalizing major =
+new features?
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-index 3295c8c7c05c..480cb6604c7d 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-@@ -536,9 +536,9 @@ power-supply@69 {
- 		reg = <0x69>;
- 	};
- 
--	power-supply@6a {
-+	power-supply@6d {
- 		compatible = "ibm,cffps";
--		reg = <0x6a>;
-+		reg = <0x6d>;
- 	};
- 
- 	power-supply@6b {
--- 
-2.25.1
+The mailing list tends to be a good choice for the very early
+discussions.  https://github.com/openbmc/docs/blob/master/designs/design-te=
+mplate.md
+tends to be a more formal process if that's what you're looking for.
 
+>  Would I submit something in Gerrit for review (e.g. a markdown file for =
+the docs/designs repo?)   We could probably get something started fairly so=
+on.
+>
+> Thanks.
+>
+> Mike
