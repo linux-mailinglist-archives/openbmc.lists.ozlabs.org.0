@@ -1,110 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B46BE3A4728
-	for <lists+openbmc@lfdr.de>; Fri, 11 Jun 2021 18:57:35 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBC6C3A48B5
+	for <lists+openbmc@lfdr.de>; Fri, 11 Jun 2021 20:32:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G1n8G26mSz3c7M
-	for <lists+openbmc@lfdr.de>; Sat, 12 Jun 2021 02:57:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G1qFP2MDwz3c2K
+	for <lists+openbmc@lfdr.de>; Sat, 12 Jun 2021 04:32:09 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=mOrlZlmb;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=XVSFTYxt;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com;
- envelope-from=bruce.mitchell@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42a;
+ helo=mail-wr1-x42a.google.com; envelope-from=edtanous@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=mOrlZlmb; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=XVSFTYxt; dkim-atps=neutral
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com
+ [IPv6:2a00:1450:4864:20::42a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G1n7m03Gsz3c2P
- for <openbmc@lists.ozlabs.org>; Sat, 12 Jun 2021 02:57:07 +1000 (AEST)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 15BGtODl081854; Fri, 11 Jun 2021 12:57:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : from : to : cc
- : references : message-id : date : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=u+J0qjkBZ44xcqktVfBgFIZM2pwX+L15aykFVit64VE=;
- b=mOrlZlmb0XZ6dO/ZwbAR44MYVEkvGdXfan2jDutFdkhoTyri95YmiNiIkM/KqR9lqG+V
- ZgYdr5ErUWicJ6z2IoYv9ed7Ndga6yzSkSKr8P+DHEhcXXoVMtM+i+L/3NsTe6awo3BF
- caY4k8Dt1gf6twgXTKya1Djs3+Ts8sAaTR/CXOksG54XkoTa76OBpGMs8HZjNMvbWMxX
- lwMkQN//DwkgGNb8w6dKuGHUlyO/OpmGLh9IQ0QqTE2cHN9tYM9JekArs0j/xzRGzRWo
- /s3bqXXZCLv45XtGbkENsVDm33xYdpRntlr3KtEVjDHwefItcPirrLnblJlK+N5Egk2W Dg== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 394bse81ck-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Jun 2021 12:57:03 -0400
-Received: from m0127361.ppops.net (m0127361.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 15BGv3fx085200;
- Fri, 11 Jun 2021 12:57:03 -0400
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 394bse81c9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Jun 2021 12:57:03 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 15BGpsQT023721;
- Fri, 11 Jun 2021 16:57:03 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma04dal.us.ibm.com with ESMTP id 3900wae6wf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Jun 2021 16:57:03 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 15BGv2YE37421508
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Jun 2021 16:57:02 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B426AC066;
- Fri, 11 Jun 2021 16:57:02 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B9EEDAC064;
- Fri, 11 Jun 2021 16:57:01 +0000 (GMT)
-Received: from [9.211.61.242] (unknown [9.211.61.242])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Fri, 11 Jun 2021 16:57:01 +0000 (GMT)
-Subject: Re: Seeking your opinion on ways to report both Altitude and Pressure
- sensors for the DPS310 as well as Temperature from dbus-sensors.
-From: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <2e3016fe-2827-891b-07e3-0437a6038514@linux.vnet.ibm.com>
- <CAH2-KxA1VyhoUznEr-W5M83ZpVSqdx2c1oR3E1XdeU9fhTHN4Q@mail.gmail.com>
- <1bdf8842-2b53-0d51-40b6-6bf64f2bf315@linux.vnet.ibm.com>
- <CAH2-KxAjjefRFfirz0Gn9DTn-dCfqw_7ed2obk43wxevym3xPA@mail.gmail.com>
- <4746ede6-dea9-32c5-10e3-2fd6773e2033@linux.vnet.ibm.com>
- <CAH2-KxDD8=ipYoDtBz_gQh8nWMsu_u+JDs33ma=-gk7ZVXVuWA@mail.gmail.com>
- <7a1dcde4-25df-ceee-a481-4a2f4afcf5bf@linux.vnet.ibm.com>
-Message-ID: <651b2fb5-bad1-7bf2-4357-b50d07457f80@linux.vnet.ibm.com>
-Date: Fri, 11 Jun 2021 09:57:01 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-In-Reply-To: <7a1dcde4-25df-ceee-a481-4a2f4afcf5bf@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: kRfzyH6Ya4NZahWHEmH6olt9c_nsmzVK
-X-Proofpoint-GUID: khF6sx-Vsony4MI79ye3XwWlPt9f0A3Q
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G1qF46jzfz3bTh
+ for <openbmc@lists.ozlabs.org>; Sat, 12 Jun 2021 04:31:50 +1000 (AEST)
+Received: by mail-wr1-x42a.google.com with SMTP id o3so7026849wri.8
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Jun 2021 11:31:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=/Vc0Kr8P296sfOlL713ddGLiWE7k23XNfgfMZcrm9B0=;
+ b=XVSFTYxtjPRJmSB/DeN3gGZlHBmY4VD+RpZ9WFifG6fRoquhAje6REiIvur23sk9TI
+ cyOljaFQQXojtdH+shE3DLZsDETeagLL0/2Le+5aU6bgFQu6M5wfMgjkMwS8xACBOEC9
+ 0ISyJFuPzbEwwNdK8VEF6QFthrwQk8SEOswWGGfx+IIrAbBsLp37edGtPbXOevAceAt8
+ yGi2Ni7UNliRfHKLBE44KA6HTjWpn5KkDlxNzMfoCWtGd/d8rlH8mkQpuj4ei5a1nJK8
+ pQa5eqS4MP2XVVKvl/AeZWcJDxytHgW7lleUst9FrW9p4tANJQBIGQsNL6StZcquRnC6
+ Ttng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=/Vc0Kr8P296sfOlL713ddGLiWE7k23XNfgfMZcrm9B0=;
+ b=la2H6jsgAEKMEsBDJubpyhZw0xakwZcmNmhWeGfs07pjb0PEE2IqlGYzB66IAEXMQj
+ tyfftS2i9tNbM5OVKIxWDi3Rn+HvNL0HTXrypSIuj93QsKlj/X3zcFd+IMnmxvxy8+ag
+ XuePdOR28n1nBcb4UzcL/GJwcBwMSTMVoGDcMc+aN2W45Mg2Hm2+nGsbNzqmuDcjM2n5
+ 5n4P6oRBS3AnHrzEiJ4d58LUSivmVp39Gbymelgh7YJFIh6EVkLTmijstJkaqj4xFJZZ
+ F93t5fNgZoKfxPLSFGZrcwIBMJcVrtVPDC0L+l3gcwx1Ep+DtaIM0x+k/LZz61I0i/4O
+ OY1g==
+X-Gm-Message-State: AOAM530Kcdzju7sN/ZX51cOS87MesQMayrnEsVfg2isWLHS98TLesdKs
+ f9pZRjXDDJO5jRjR6BDL/60ZWx43QLBthL+b+RZRHA==
+X-Google-Smtp-Source: ABdhPJwz0eWhx+zIhDnOVgOyzudW8zPdInq92TMcgwhsDCKzckIqp8edRx7CVKyin/3FEq3amHjuJehCwsSpA7jbxus=
+X-Received: by 2002:adf:9ccf:: with SMTP id h15mr191786wre.217.1623436306639; 
+ Fri, 11 Jun 2021 11:31:46 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
- definitions=2021-06-11_05:2021-06-11,
- 2021-06-11 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999
- lowpriorityscore=0 bulkscore=0 adultscore=0 priorityscore=1501 mlxscore=0
- phishscore=0 clxscore=1015 malwarescore=0 impostorscore=0 suspectscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2104190000 definitions=main-2106110104
+References: <CAH2-KxABm3A7pdPfPbu-RY-98qs0FE8bQZwo-WO6spixU6JotA@mail.gmail.com>
+ <20210525064127.xfgo5dceyvzrzpy6@gmail.com>
+ <CAOLfGj6dzb6Q-BOU0AJy_thd1Gt78+and_cmU4tOUNide3Gf0w@mail.gmail.com>
+ <CAOLfGj6YympZyvXO7NCPMaHNEi9CwAS97y6_-fncDHbqv5s8Bg@mail.gmail.com>
+ <20210526061119.b7n2beqthbemsoba@gmail.com>
+ <CAOLfGj6Ep89yknFbx2qHLv9woQ80SNJQD2cwJOa7y=tE7=VyLg@mail.gmail.com>
+ <20210526085623.mhls24mmo4idu5we@gmail.com>
+ <CAOLfGj7b0TEwqAEocAo=hGobCuZUoC4Zk9X_jY8Cs7NzQgi14w@mail.gmail.com>
+ <20210526160816.pvpxzwnix3lgwaln@gmail.com>
+ <CAOLfGj6WmBxQNm_LDNfW-m5Bs5sndxwoVJ6QupwHo+cvBDL7qA@mail.gmail.com>
+ <20210526182153.xcbs5dp6sprzv7u2@gmail.com>
+ <CAOLfGj6Sn77vH-TrE-GmHrYCJ7AMHs2zr0HR_yJrES1qX_buow@mail.gmail.com>
+In-Reply-To: <CAOLfGj6Sn77vH-TrE-GmHrYCJ7AMHs2zr0HR_yJrES1qX_buow@mail.gmail.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Fri, 11 Jun 2021 11:31:35 -0700
+Message-ID: <CAH2-KxC8jkKMXmHa=9SsLBFORbHbsJ2DUTPhoCLp_0uam0q8tA@mail.gmail.com>
+Subject: Re: Link phosphor-hostlogger and bmcweb
+To: Nan Zhou <nanzhou@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,159 +84,129 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>, Ed Tanous <ed@tanous.net>
+Cc: Spencer Ku <spencer.ku@quanta.corp-partner.google.com>,
+ Litzung Chen <litzung.chen@quanta.corp-partner.google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Alexander Amelkin <a.amelkin@yadro.com>, a.senichev@yadro.com,
+ Richard Hanley <rhanley@google.com>, Artem Senichev <artemsen@gmail.com>,
+ a.filippov@yadro.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/2/2021 09:34, Bruce Mitchell wrote:
-> On 6/2/2021 09:21, Ed Tanous wrote:
->> On Wed, Jun 2, 2021 at 9:14 AM Bruce Mitchell
->> <bruce.mitchell@linux.vnet.ibm.com> wrote:
->>>
->>> On 6/2/2021 09:03, Ed Tanous wrote:
->>>> On Wed, Jun 2, 2021 at 8:58 AM Bruce Mitchell
->>>> <bruce.mitchell@linux.vnet.ibm.com> wrote:
->>>>>
->>>>> On 6/2/2021 08:39, Ed Tanous wrote:
->>>>>> On Tue, Jun 1, 2021 at 8:43 AM Bruce Mitchell
->>>>>> <bruce.mitchell@linux.vnet.ibm.com> wrote:
->>>>>>>
->>>>>>> Hello Ed,
->>>>>>>
->>>>>>> It has been suggest I seeking your opinion on ways to report both
->>>>>>> Altitude and Pressure sensors for the DPS310 as well as 
->>>>>>> Temperature from
->>>>>>> dbus-sensors before going to far down the road.  Thus that is 
->>>>>>> what I am
->>>>>>> attempting to do in the email, others on the mailing list input is
->>>>>>> desirable as well.
->>>>>>
->>>>>> Thanks for discussing this before getting too far along.  I haven't
->>>>>> worked on any systems with physical pressure sensors, but I'm excited
->>>>>> to see new things get added.
->>>>>>
->>>>>>>
->>>>>>> As I see it, Altitude and Pressure are different in that
->>>>>>>         1) Altitude is computed base off of essentially a policy
->>>>>>
->>>>>> I have no idea what this means.....   In what way is altitude a
->>>>>> "policy"?  Can you elaborate a little?
->>>>>>
->>>>>
->>>>> I view a mechanism is something like update a FLASH part with
->>>>> an image provided.
->>>>>
->>>>> I view a policy is what decides if the the update of the FLASH part
->>>>> with the specific image is allowed.
->>>>>
->>>>> I the case if Pressure and Temperature I view them as mechanism,
->>>>> merely a simple reading and possibly some well defined computations
->>>>> that are universal.
->>>>>
->>>>> With Altitude computed from Pressure there are several ways to
->>>>> compute the Altitude and they are not universal.  So I see it as
->>>>> a policy of which Pressure to Altitude model is chosen and why.
->>>>
->>>> Sounds like I interpreted your intention correctly. (I think).
->>>
->>> I believe you did.
->>>
->>>>
->>>>>
->>>>>>>         2) Pressures is a read measurement which is a mechanism
->>>>>>>         3) Temperature is a read measurement which is also a 
->>>>>>> mechanism
->>>>>>
->>>>>> I'm really struggling with the above to understand what you're 
->>>>>> getting
->>>>>> after, so if I go down the wrong path, please forgive me.
->>>>>>
->>>>>> I think what you're saying is that altitude is calculated based on
->>>>>> pressure + some transfer function to determine an altitude?  And that
->>>>>> transfer function might be fungible depending on the platform?
->>>>>>
->>>>>> If I got the above right (big if) I would probably expect a new
->>>>>> pressure sensor type to be added that reports a pressure sensor, then
->>>>>> we'd put the transform code in something that looks a lot like CFM
->>>>>> sensor (which oddly enough has a hardcoded 0 for altitude in its
->>>>>> algorithm for systems without pressure sensors).  Considering how
->>>>>> related a pressure sensor is to altitude, I could see putting them in
->>>>>> the same application if you wanted;  It might simplify the code some.
->>>>>>
->>>>>>
->>>>>> I think overall a better picture of what you're wanting to accomplish
->>>>>> would be a good place to start, then we can iterate from there on 
->>>>>> what
->>>>>> pieces we need that are new.
->>>>>
->>>>> I have Temperature, Pressure, possibly Humidity sensors all which are
->>>>> variables to different models to compute Altitude from.  I do not 
->>>>> have a
->>>>> true Altitude sensor.
->>>>
->>>> This sounds exactly like the CFM sensor, and Exit air temp sensor;
->>>> Most systems don't have exit air temp sensors, but they have input
->>>> power and individual fan speeds, which can be put into models to
->>>> determine CFM and ultimately exit air temperature.  I would expect
->>>> Altitude to do something very similar in code (although with a
->>>> completely different algorithm).
->>>>
->>>
->>> So the DPS310 has 2 sensors in it a Pressure and a Temperature sensor.
->>> Do I create a Pressure reading and a Temperature reading for the DPS310
->>> and then add Altitude to it as well?
->>>
->>> Or do I create 3 separate things,  one for each Pressure, Temperature,
->>> and Altitude?
+On Wed, May 26, 2021 at 12:21 PM Nan Zhou <nanzhou@google.com> wrote:
 >>
->> Assuming in this case "things" are intended to mean "entity manager
->> exposes records" you would create one config record for the DPS310
->> itself (which would in turn create 2 sensors).  This is one "record"
->> because physically it's one part, and can't be separated, similar to a
->> TMP421.  After that, I would create another config record for the
->> "Here's the math to combine these into an altitude".  It might just be
->> a type and a name, depending on how many inputs go into the transfer
->> function to convert pressure+temperature into an altitude.
+>> > If there are too many logs in a boot cycle, won't the current hostlogger
+>> > lose some earlier logs (boot logs) as well?
+>> That's the point!
+>> Hostlogger does not lose these logs. It writes the boot messages, then skips
+>> the middle and writes the last 3000 lines when the host shuts down.
+>> We have two log files per host session: start and end.
+>> It is too expensive to store all host output, so mid-session messages are
+>> skipped.
+>> It can be easily implemented with a buffer, but I am not sure we can achieve
+>> this with logrotate.
+>
+> Thanks for the information. I am not aware of this functionality in the current hostlogger. Are you saying it will be implemented in the future or I miss it in the current codes.
+> One of our options for log rotations is writing our own codes, I am sure we can implement the logic you mentioned above without too much effort.
+> The linux logrotate also has "prerotate scripts", we can carefully name the compressed log file and keep the oldest several ones (which have host boot logs) out of rotation.
+
+For what it's worth, I don't know if we have to use logrotate
+as-written if it's not a good fit here, but that style of writing to
+disk makes for easily tail-able logs, and has pretty well defined
+behavior for log rotation.  If we could keep the behavior (or the
+behavior + rotating on boot events), even if we didn't use logrotate
+itself, I think it would be a benefit to this.
+
+>
+>> > Or did me missing something?
+>> >
+>> > Also, we already talked about it: there's a problem that if BMC loses the
+>> > power before it sends out a signal to hostlogger, data in memory won't be
+>> > persisted.
+>> Yes, I agree that this is a problem. But there are ways to fix it without
+>> breaking the current functionality of Hostlogger.
+>> We can use rsyslog with external log server, or increase the buffer size
+>> in obmc-console-server, or use systemd-cat with logrotate.
+>> We can even add a new mode to Hostlogger that will not use the buffer, but
+>> as I said earlier, there are not many common parts.
+>
+> I guess you are arguing we need a new daemon rather than modify Hostlogger, right? +Ed Tanous here to see what his opinion is.
+
+If Nans use case is in fact totally different, and can't be handled in
+the same application I think that's ok, but I'd like to see the new
+application put in the hostlogger repo so it can share the routines
+that are common (things like finding and opening the unix socket,
+managing the reads, and the zlib integration) and to ensure that users
+find it when searching for code that solves this problem, as on the
+outset they're pretty similar, just with seemingly different rules.
+If we don't put it there, it seems like we'd have to duplicate a lot
+of code.
+
+>
+> On Wed, May 26, 2021 at 11:22 AM Artem Senichev <artemsen@gmail.com> wrote:
 >>
->> If the math to combine into an altitude isn't system specific, I could
->> be convinced that the math should go into a single record within the
->> DPS310 exposes and have that live in the daemon itself, but I don't
->> have enough detail on how these are usually deployed to know that.
+>> On Wed, May 26, 2021 at 09:20:38AM -0700, Nan Zhou wrote:
+>> > >
+>> > > > We plan to implement something similar to rotate count
+>> > > > <https://linux.die.net/man/8/logrotate> in linux logrotate. It is
+>> > > basically
+>> > > > like a ring buffer in the file system. We keep N log files. The latest
+>> > > log
+>> > > > file is in plain text and the writer keeps appending data to it. The rest
+>> > > > N-1 files are compressed.
+>> > > In this case, you will keep full logs without gaps:
+>> > > ```
+>> > > Host start <- log is empty, start logging
+>> > > |
+>> > > [...] <- write file, compress and rotate file
+>> > > |
+>> > > Host reboot or shut down
+>> > > ```
+>> > > If there are too many logs, logrotate removes the oldest one and we lose
+>> > > the
+>> > > boot log (form host start).
+>> > > This is the default Hostlogger mode:
+>> > > ```
+>> > > Host start <- log is empty, start logging
+>> > > |
+>> > > [line 3000] <- flush 3000 lines to the persistent file
+>> > > |
+>> > > [...] <- these logs are skipped (the last 3000 lines are in memory)
+>> > > |
+>> > > Host reboot or shut down <- flush last 3000 lines to the file
+>> >
+>> >
+>> > Thanks for your explanation, but I didn't get it. Are you arguing that one
+>> > can keep more logs in memory rather than on disk?
 >>
-> 
-> I prefer the the 2 record solution, it keeps the DPS310 self-contained.
-> And keeps the Altitude self-contained, to the models can evolve and 
-> change; also if every a true altitude sensor were created it would help 
-> keep better abstraction from the DPS310.
-> 
->>>
->>> Also I believe I should be looking to the CFM sensor and Exit air
->>> temperature sensor as reference examples.
->>>
->>>>>
->>>>> I am being asked to provide Altitude.
->>>>>
->>>>> Personally I believe the desired feature is how much cooling a 
->>>>> parcel of
->>>>> air per unit of time.  Thus I would think air Temperature, 
->>>>> Humidity, and
->>>>> Density (probably compute-able from Pressure, but I have not 
->>>>> checked on
->>>>> the specifics) would be the important factors.
->>>
-> 
-> Thank you Ed!
-
-I would appreciate Gerrit reviews on a small addition for the
-Nisqually Backplane entity-manager: Adds support for DPS310 Sensors
-https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/43416
-
-This is record 1 of 2, record 1 is a prerequisite for 2.
-
-Getting this merged up stream is preferable to patching
-it in downstream.
-
-Thank you.
-
--- 
-Bruce
+>> Of course not! =)
+>>
+>> > If there are too many logs in a boot cycle, won't the current hostlogger
+>> > lose some earlier logs (boot logs) as well?
+>>
+>> That's the point!
+>> Hostlogger does not lose these logs. It writes the boot messages, then skips
+>> the middle and writes the last 3000 lines when the host shuts down.
+>> We have two log files per host session: start and end.
+>> It is too expensive to store all host output, so mid-session messages are
+>> skipped.
+>> It can be easily implemented with a buffer, but I am not sure we can achieve
+>> this with logrotate.
+>>
+>> > Or did me missing something?
+>> >
+>> > Also, we already talked about it: there's a problem that if BMC loses the
+>> > power before it sends out a signal to hostlogger, data in memory won't be
+>> > persisted.
+>>
+>> Yes, I agree that this is a problem. But there are ways to fix it without
+>> breaking the current functionality of Hostlogger.
+>> We can use rsyslog with external log server, or increase the buffer size
+>> in obmc-console-server, or use systemd-cat with logrotate.
+>> We can even add a new mode to Hostlogger that will not use the buffer, but
+>> as I said earlier, there are not many common parts.
+>>
+>> --
+>> Regards,
+>> Artem Senichev
+>> Software Engineer, YADRO.
