@@ -2,73 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FE463A577D
-	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 12:06:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DE0873A57AE
+	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 12:27:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G2qxS6y82z301C
-	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 20:06:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G2rNn3C4hz2ymb
+	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 20:27:05 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=NxjIvQSc;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=VoOw6l/G;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1033;
- helo=mail-pj1-x1033.google.com; envelope-from=andy.shevchenko@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=NxjIvQSc; dkim-atps=neutral
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com
- [IPv6:2607:f8b0:4864:20::1033])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.15.18; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=VoOw6l/G; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G2qxB1VhSz2yRJ
- for <openbmc@lists.ozlabs.org>; Sun, 13 Jun 2021 20:06:36 +1000 (AEST)
-Received: by mail-pj1-x1033.google.com with SMTP id
- o10-20020a17090aac0ab029016e92770073so2522053pjq.5
- for <openbmc@lists.ozlabs.org>; Sun, 13 Jun 2021 03:06:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=dmdhVPXKoyiUaz/UceIGPTISFReWjVbR2rEWBrtoQCw=;
- b=NxjIvQScwkUpIMuR4wM1STfFJqTO/L9Ii2gEjfu97ZCVjUJ+/8jvX5jAya7aWesdL4
- YIkPKVyxLR0mXeQegdROBKDqnV/T2tSQv/o6WF/rvxW2UB6/sDRT6gmuJBVIIqtbRQZr
- RII9iOGRvQDQPr5iycrIrFy/vLLMuT6KQfVH1vDAdKACfLGXvIMRpZQ4Dgv6kghV4sDO
- wZivgvsNvJZZjNwsFXZTUVVVJ5jR3+wdHWE5Qf882t3M54q7PvkMKZkob8Kty2obISU/
- zbkuH5IVG2o12rkszy113co1/eB2d1OVl96VfwjTjymWlZ0e7jNlYoiTrKd4MGE1P+nq
- 7BsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=dmdhVPXKoyiUaz/UceIGPTISFReWjVbR2rEWBrtoQCw=;
- b=jR3oipO1rteFoX/xGNBMSCrgOShG99L7i4v0lSV1nacEcZAMY/FodYoCYJf8wTywPX
- iFcvFAPuoFSUgc6AgDhJnkeAvML3aCGCGbuFGA5qNpkKfU2XkaTnta33Q0sBTTkcWAoR
- HeX+Z+m1TU2Fr2HSjImVUctokvPfuIz1RIfPeKfwzZ+Nk7+ZIDl0UmCv/5rC8pL2LvSI
- ErNFS9ehf6R+8GrtrQy499+emF6QeGQTtSWBXY4iesQzGjrGpkyXjeB91zMTjytGJpRq
- 4iqycGqw9EtggMbWRul8hoCSq7IOBqZQQv2vNM8U9diuUaUgm0CrPhf3tDKBq86vxO2o
- X0Jg==
-X-Gm-Message-State: AOAM530XsQPs1NLP681va31O5eIi1e8B0F30MmGTR3vcwjlpBjDWkCZE
- Vrb49pM9tcYaATzfqxx5ek4hrJUisrEPxQZGhFM=
-X-Google-Smtp-Source: ABdhPJw+csIyisxCvQnicRcCuZFcFFbK0WZBj7GREsXw4jVsdK9NKeXC9g9iPo1rxyW16nk7M2r0Sas5hn3Vvb3DbhM=
-X-Received: by 2002:a17:90a:af90:: with SMTP id
- w16mr2545061pjq.129.1623578792162; 
- Sun, 13 Jun 2021 03:06:32 -0700 (PDT)
-MIME-Version: 1.0
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G2rNW2kxsz2y0C
+ for <openbmc@lists.ozlabs.org>; Sun, 13 Jun 2021 20:26:49 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1623580000;
+ bh=d4E+kciTQxcNlP5jSRxQvEg4hYKuus+UUXiR7+u147Y=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=VoOw6l/GPeE4xqQYgqKWY8Bhm9f8AvkOEF3NOV+91A7EbzSDuUzmXS/xgT0rQol79
+ BTN5TRo1X+olvtPeeNv/42/4HZUPGSaUUZ9FQlpYlNAOwCaC1iT1WOuozKCzjsLkBZ
+ QKJ08Ik4yNeJAt2zToNTJjsSZxiUrlhyz2LGWcEg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([37.201.214.247]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MuDc7-1l2BRt00Fh-00uXXE; Sun, 13
+ Jun 2021 12:26:40 +0200
+Date: Sun, 13 Jun 2021 12:26:37 +0200
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH 5/8] pinctrl: nuvoton: Add driver for WPCM450
+Message-ID: <YMXdXY+R4e1m3nbx@latitude>
 References: <20210602120329.2444672-1-j.neuschaefer@gmx.net>
  <20210602120329.2444672-6-j.neuschaefer@gmx.net>
- <CAHp75Vci1DSFu-tpgwQZfuVycqHYmhGhLDDCOH_dX8HKvqpY_A@mail.gmail.com>
- <YMVBTp4VaSilFi0H@latitude>
-In-Reply-To: <YMVBTp4VaSilFi0H@latitude>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Sun, 13 Jun 2021 13:06:15 +0300
-Message-ID: <CAHp75Vd9FEGuaVbRUK67uzRoeQSXQUGAhXExHgJvkDd585kxwA@mail.gmail.com>
-Subject: Re: [PATCH 5/8] pinctrl: nuvoton: Add driver for WPCM450
-To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <CACRpkdb=8e=D9JdwxA+oPGj80WnsV86apuECBp1m-Edd+hKPFQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="4WYBDV7PX24WFKS5"
+Content-Disposition: inline
+In-Reply-To: <CACRpkdb=8e=D9JdwxA+oPGj80WnsV86apuECBp1m-Edd+hKPFQ@mail.gmail.com>
+X-Provags-ID: V03:K1:xDElZdTm30JePFgpUqRFCJry4/CcaELo2vki50JqN2GNP87eerU
+ CMUVtFIPMZGLEOQbIvRb95mh6xRKsRABGWfRRbbQlcGPhIJgQGFoUFejPN/tdKVmWQHgk6k
+ gqZ9jb68naPqkOBiXEEOtEUFW9TvqgXl4HxQJF3wvOzabaT6luNXXLdEjcHhjUQStYeGP7z
+ JY5L4qE6BR7xAxAwd7YwQ==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:VGEL0/EOpvk=:68gPD6XLLZrtbjYwkbMxMV
+ mlZVE+YdS7bUos8wvhGhURtz+RplzvBxj6MlqXOyyP9kR7GP/aY+EYT0OWuUqWQnNsMkfnivh
+ zi/SlvHOieewSVa1GckASeMQEWuqOl5OYNLouVngLeVh4OIgCsCzYSZf/RbAH0kB7K0A4Rgho
+ Ndz/iMOxeDppWUTGyz5sS17uabzwihpiJvUDk3zzmeGimRf+3ix+NyU2lkWkfo+Fz2Aox9yVc
+ mRXKR4bXoJkPkNMJlxLJDcj/c8JBKAJe8NrySFH2tH+5tqYF/7k2J+yL5aOj8K+iALXYENTYv
+ VtC4pHnxzaYm2mvz2IN2WfR3ssK0U03SXhRso7SOi6wjNs+HtCf3zXNnwwWeFFTNT0XfFeM0l
+ tidBDwldtWQQv7AnJNQMrvMxPieUQl2XObvR7x0STZ8mtSTed2PRUBS7dSa07AsG62ZZXwpsv
+ AdkKGJx9Lo7PzVuA1nA+MWRUEU2mUZovM+FMQbb3wDKFOVZbx17k+ahVJZhC5Bh9CgYEz2gOS
+ qi8Oyb7D2NPrn0ReFXyihj+TRJzSrCC3h8il4BXkTrQnnzH+v0YURwc41rC6ODZYJFY5pXJbf
+ J15JXuVxAXRdDJInq7EZL/GkVm19gxQjYBwF3tA7prew5xkvAz696WQEf90gW8gPVXLg6gnC2
+ oDFscLsaSvs8PToLzfm4VTBzzMN8P/dAttNogf+XGrvq6JRJT26WGuz0CGtLE6oAbTpeKnArj
+ +nOedFkoot0Jz8YuK1ZHbmGXdgJxjhhxx8CeNHc9XeYMt5TJZOk5QfVFi5nfO753tJvKe0xxm
+ sWU7iIuJWHHEyma3PxbsLq+8STnAvVfbkoWgiLkx/EkzYBbMhBEMhQVeAVWEVqyXlVaDj8m/E
+ wHXTTuqJ4k8V/60nRP04PHq0yl2IgQYneExpg92FAE59snWUNAPZJGWUYEclbrPpNxNqFw3ib
+ /oc/1b5PPwIsOVmN1gW/lNXKxxf0/VHA0dhtYPXfBCEYKyrRhBjLjOVzAGKuXMyfQp2OwqhjW
+ EHulGUolczcl8DTTJEV7y5UxbL/UnA9i+2y7QdkDxiljkd0SQmqae8jd8UhtIeuSyB+Y+Gik/
+ PQS4KIrPf40xZdmZQM6KhdbBtqaCWfpKAZFtK1i/oBActOIRWM1Q/OdZA==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,151 +83,127 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ linux-kernel <linux-kernel@vger.kernel.org>,
  "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+ Rob Herring <robh+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sun, Jun 13, 2021 at 2:20 AM Jonathan Neusch=C3=A4fer
-<j.neuschaefer@gmx.net> wrote:
-> On Wed, Jun 02, 2021 at 03:50:39PM +0300, Andy Shevchenko wrote:
-> > On Wed, Jun 2, 2021 at 3:05 PM Jonathan Neusch=C3=A4fer
-> > <j.neuschaefer@gmx.net> wrote:
 
-...
+--4WYBDV7PX24WFKS5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > > +       help
-> > > +         Say Y here to enable pin controller and GPIO support
-> > > +         for the Nuvoton WPCM450 SoC.
+On Fri, Jun 04, 2021 at 11:31:07AM +0200, Linus Walleij wrote:
+> Hi Jonathan!
+>=20
+> thanks for your patch!
+>=20
+> On Wed, Jun 2, 2021 at 2:04 PM Jonathan Neusch=C3=A4fer
+> <j.neuschaefer@gmx.net> wrote:
 > >
-> > >From this help it's not clear why user should or shouldn't enable it.
-> > Please, elaborate (and hence fix checkpatch warning).
->
-> I'll try something like this, but I'm open for better ideas:
->
->         help
->           Say Y or M here to enable pin controller and GPIO support for
->           the Nuvoton WPCM450 SoC. This is strongly recommended when
->           building a kernel that will run on this chip.
->
->           If this driver is compiled as a module, it will be named
->           pinctrl-wpcm450.
-
-This looks good enough.
-
-> I could mention some examples of functionality enabled by this driver:
-> LEDs, host power control, Ethernet.
->
-> (LEDs and host power control use GPIOs, at least on the Supermicro X9
->  board I've been using. Ethernet MDIO must be enabled through the
->  pinctrl driver, unless the bootloader has done so already; on my board
->  the bootloader doesn't do this.)
-
-...
-
-> > > +static int wpcm450_gpio_get_direction(struct gpio_chip *chip,
-> > > +                                     unsigned int offset)
-> > > +{
-> > > +       struct wpcm450_pinctrl *pctrl =3D gpiochip_get_data(chip);
-> > > +       const struct wpcm450_port *port =3D to_port(offset);
-> > > +       unsigned long flags;
-> > > +       u32 cfg0;
-> > > +       int dir;
-> > > +
-> > > +       spin_lock_irqsave(&pctrl->lock, flags);
-> > > +       if (port->cfg0) {
-> > > +               cfg0 =3D ioread32(pctrl->gpio_base + port->cfg0);
+> > This driver is heavily based on the one for NPCM7xx, because the WPCM450
+> > is a predecessor of those SoCs.
 > >
-> > > +               dir =3D !(cfg0 & port_mask(port, offset));
-> > > +       } else {
-> > > +               /* If cfg0 is unavailable, the GPIO is always an inpu=
-t */
-> > > +               dir =3D 1;
-> > > +       }
+> > The biggest difference is in how the GPIO controller works. In the
+> > WPCM450, the GPIO registers are not organized in multiple banks, but
+> > rather placed continually into the same register block, and the driver
+> > reflects this.
+>=20
+> This is unfortunate because now you can't use GPIO_GENERIC anymore.
+>=20
+> > Some functionality implemented in the hardware was (for now) left unused
+> > in the driver, specifically blinking and pull-up/down.
 > >
-> > Why above is under spin lock?
-> > Same question for all other similar places in different functions, if a=
-ny.
->
-> My intention was to protect the ioread32. But given that it's just a
-> single MMIO read, this might be unnecessary.
+> > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+>=20
+> (...)
+>=20
+> > +config PINCTRL_WPCM450
+> > +       bool "Pinctrl and GPIO driver for Nuvoton WPCM450"
+> > +       depends on (ARCH_WPCM450 || COMPILE_TEST) && OF
+> > +       select PINMUX
+> > +       select PINCONF
+> > +       select GENERIC_PINCONF
+> > +       select GPIOLIB
+> > +       select GPIO_GENERIC
+>=20
+> You are not using GPIO_GENERIC
 
-Sometimes it's necessary and I'm not talking about it. (I put blank
-lines around the code I was commenting on)
+I'll remove the this line (depending on the outcome of the rest of the
+discussion).
 
-So, What I meant above is to get something like this
+>=20
+> > +struct wpcm450_port {
+> > +       /* Range of GPIOs in this port */
+> > +       u8 base;
+> > +       u8 length;
+> > +
+> > +       /* Register offsets (0 =3D register doesn't exist in this port)=
+ */
+> > +       u8 cfg0, cfg1, cfg2;
+> > +       u8 blink;
+> > +       u8 dataout, datain;
+> > +};
+>=20
+> If you used to have "GPIO banks" and you now have
+> "GPIO ports" what is the difference? Why can't these ports
+> just be individula gpio_chip:s with their own device tree
+> nodes inside the pin controller node?
 
-if (port->cfg0) {
-  spin lock
-  ...
-  spin unlock
-} else {
-  ...
-}
+The naming difference is a fairly arbitrary choice by me.
 
-or equivalent ideas.
+The real difference is in how the GPIO registers are laid out.
+On NPCM7xx, there are blocks of registers at +0, +0x1000, +0x2000,
+etc., and within a block, the registers have the same offsets.
+On WPCM450, the registers are all mushed together as tightly as
+possible[1], so that (a) the ports/banks don't start at nice addresses,
+and (b) the register layout can't be predicted from the offset of the
+first register in a port (because not all ports have all registers).
 
-> > > +       spin_unlock_irqrestore(&pctrl->lock, flags);
-> > > +       return dir;
-> > > +}
+> If you split it up then you can go back to using
+> GPIO_GENERIC with bgpio_init() again which is a
+> big win.
+>=20
+> All you seem to be doing is setting consecutive
+> bits in a register by offset, which is what GPIO_GENERIC
+> is for, just that it assumes offset is always from zero.
+> If you split it into individual gpio_chips per register
+> then you get this nice separation and code reuse.
 
-...
+Indeed, if I keep the wpcm450_ports table but use it to call bgpio_init()
+with the right register addresses, I think bgpio_init() can work.
 
-> > > +static int wpcm450_gpio_direction_output(struct gpio_chip *chip,
-> > > +                                        unsigned int offset, int val=
-ue)
-> > > +{
-> > > +       struct wpcm450_pinctrl *pctrl =3D gpiochip_get_data(chip);
-> > > +       const struct wpcm450_port *port =3D to_port(offset);
-> > > +       unsigned long flags;
-> > > +       u32 dataout, cfg0;
-> >
-> > > +       int ret =3D 0;
-> >
-> > Redundant. Can do it without it.
-> >
-> > > +       spin_lock_irqsave(&pctrl->lock, flags);
-> > > +       if (port->cfg0) {
-> >
-> > > +       } else {
-> > > +               ret =3D -EINVAL;
-> > > +       }
-> > > +       spin_unlock_irqrestore(&pctrl->lock, flags);
-> > > +       return ret;
-> > > +}
->
-> I'll refactor it to return -EINVAL early.
 
-Here a similar approach can be used.
+Thanks,
+Jonathan Neusch=C3=A4fer
 
-...
 
-> > What about the GPIO library API that does some additional stuff?
->
-> I don't know which gpiolib function would be appropriate here, sorry.
+[1]: https://github.com/neuschaefer/wpcm450/wiki/GPIOs-and-pinmux#gpio
 
-When you leave those request and release callbacks untouched the GPIO
-library will assign default ones. You may see what they do.
+--4WYBDV7PX24WFKS5
+Content-Type: application/pgp-signature; name="signature.asc"
 
-...
+-----BEGIN PGP SIGNATURE-----
 
-> > > +       if (!of_find_property(np, "gpio-controller", NULL))
-> > > +               return -ENODEV;
-> >
-> > Dead code?
->
-> The point here was to check if the node is marked as a GPIO controller,
-> with the boolean property "gpio-controller" (so device_property_read_bool
-> would probably be more appropriate).
->
-> However, since the gpio-controller property is already defined as
-> required in the DT binding, I'm not sure it's worth checking here.
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmDF3TEACgkQCDBEmo7z
+X9uaQRAAgPgT9cAFmkTos1fzl8wauxYh9+aWU8XP1j3aKFa3dkNRBwqe6dKfp8lm
+VeyK7U9Tl0V5nunMa26tnD2/emiP4DYSqwUlC6YdItePWflbl7XEm3M56MWQU6eQ
+Y6QkMEKrKU8CoRvjA/kBGrsgzCdR0NgNqmhnONuGZuqUJqsOsRkDfYwjHGdybHb7
+1WVTLzDW6wsWFmLjKUkxxYCFaxN9EAFpYY00Bb7SD/x+bFhW1GY0rwBuMXKltITN
+iQAnpYvj5GZpYZYmXtIlEoGvXj7U2ScPtNQNojE6cPL/pu7In4Mi6GdkO+OYzmb0
+bsod4VMccwurLUuF2TdVmLb8L/8CGfGgPuq2EpRrnX4pTLvReZrFRPiku0mioFjH
+hPre6tpLtqSA3AXF+R0S6Y8vF6800iFMTwgJx5tqATSHkjpVZTv1VlFQnynHF2mA
+XXr3RDdeXa2zcQbm/0uEs5rpFN/4xmMUVvNjvlHgdTEBchLMYn0Ua1bwDHIcnoal
+ozd8VH5Paq/vJms8wlJUM2sdqrgYDef1++IH5JYifaZ1NVCUfYHlAsIbgT9swsQa
+NjKui87mkPU+Xox2/Aaq3oigOjyg+1LXtz9v5aikhhROkHHSTom7oe0CjZg4/Uf+
+j6ISpEZRPBac67UiKJuNYfApbZIFg/4s7ZAECQNgtWDJWPEnlts=
+=OZD3
+-----END PGP SIGNATURE-----
 
-Exactly my point.
-
---=20
-With Best Regards,
-Andy Shevchenko
+--4WYBDV7PX24WFKS5--
