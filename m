@@ -1,78 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DA483A5742
-	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 11:23:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43D9F3A576F
+	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 11:53:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G2pzP6tzVz3018
-	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 19:23:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G2qfF5cZKz2yyC
+	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 19:53:41 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=eRvjSB0i;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=PBD7O8uJ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.21; helo=mout.gmx.net;
+ (client-ip=212.227.15.18; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=eRvjSB0i; 
+ header.s=badeba3b8450 header.b=PBD7O8uJ; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G2pz91lVzz2yXh
- for <openbmc@lists.ozlabs.org>; Sun, 13 Jun 2021 19:23:16 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G2qdy6sKJz2yhm
+ for <openbmc@lists.ozlabs.org>; Sun, 13 Jun 2021 19:53:24 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1623576186;
- bh=okNCnhz8ZcJc8WTr8+XvkczOnp6GsFLk6kg/e2sFsg8=;
+ s=badeba3b8450; t=1623577992;
+ bh=0kpyZbGSx5JAM84EgmJkbBps8ECGSxZ3E65rk8u8364=;
  h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=eRvjSB0iWPWP66dr02za6lhNEELH+HFGuVB2iXxnZG2rIqunvxVi8KTAT8OEtqZEI
- D4aw0k/OgsYKFPzfysV/gJtavawYqeUk2KSuCKv/29bK0BIPTxCp+u1rpbUkFKcrdB
- IjQgSkqMadz5C+ko4A2Ctx1TceV7rknehg3mChwk=
+ b=PBD7O8uJm09k1iRvPDbQAvQGOQr+wC6zAdKun87vrGvv+uz6Ljapvdt0rzOjytdNc
+ q8amxIPNn+Hs4RfMzdZfS4/AXiDI6QF5JlQgkCPnBYYQDaixYbTTBHmsSOBGXa1GhL
+ ofyekc/TChbdzf+UM0umPfZj6U19u2OZkn8m6NwU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.214.247]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N95eJ-1lDmE12cUh-016APA; Sun, 13
- Jun 2021 11:23:06 +0200
-Date: Sun, 13 Jun 2021 11:23:04 +0200
+Received: from longitude ([37.201.214.247]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIwzA-1ldSa22OOg-00KNPF; Sun, 13
+ Jun 2021 11:53:12 +0200
+Date: Sun, 13 Jun 2021 11:53:11 +0200
 From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH 3/8] ARM: dts: wpcm450: Add global control registers
- (GCR) node
-Message-ID: <YMXOeBWu31LC+23X@latitude>
+Subject: Re: [PATCH 4/8] dt-bindings: pinctrl: Add Nuvoton WPCM450
+Message-ID: <YMXVh9FiW9SOWUCV@latitude>
 References: <20210602120329.2444672-1-j.neuschaefer@gmx.net>
- <20210602120329.2444672-4-j.neuschaefer@gmx.net>
- <CACRpkdY7AqcE4CMAdZHR-DfV-3ZCO3h9kYUZoZCUodLQmyyfXw@mail.gmail.com>
+ <20210602120329.2444672-5-j.neuschaefer@gmx.net>
+ <CACRpkdY6c750Dnh2H_6uEhOHJv-kLd_OpHqnuDKu4DQezZ2C_w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="e6m2u25cBZWWEgkD"
+ protocol="application/pgp-signature"; boundary="eeAjEw1TF8Acq/Ni"
 Content-Disposition: inline
-In-Reply-To: <CACRpkdY7AqcE4CMAdZHR-DfV-3ZCO3h9kYUZoZCUodLQmyyfXw@mail.gmail.com>
-X-Provags-ID: V03:K1:7dJQb3p8adrc+g8Un5qHDgxFkFzatiPk/BDCWczj+T39aSmdeul
- r3ibglWBNORKNbCUZZI39cr2UkhymiYhva5qwHtDbc+DB31IN/o1cyV/hLLrBZLLkR8HrJ4
- SBn0WN7jiVPwfNuACbNi8Rl1YkNm7cvUqwJ0BXhEr1WTChESP9D+WR5NMX2UngBSGLRLSMD
- 58MA08VMhfSEvKX0EHE1w==
+In-Reply-To: <CACRpkdY6c750Dnh2H_6uEhOHJv-kLd_OpHqnuDKu4DQezZ2C_w@mail.gmail.com>
+X-Provags-ID: V03:K1:w8V/EC+bd+jIcKisoLQPcYP8Xx/SbGdpKgtGNr0oSPFe3hawrXI
+ iSrPtnSEMlCzm5mVFspA4U+O1CTWaHqkmAXIoOtPt8rLVnTzl6FWFPAZS3z9SG78tyOT4rB
+ j6rmhY8MrcimQUUTe+nC24mL0aAfEczemru/r23KKf+XuKqzUZnxDYjFb9xukRy0LPcgrPF
+ /vTHpr2b2H2geeEDl3zEg==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8WwyLXGQffA=:LDai38MS5FyP7r2snIsCT9
- v18Fc7ffHbAdpyb4Rwqe6rNLKW25A9JUYOript0Q0WgZ52JOJOx2ytvxxeIuNg8oCM6C3H9bF
- 5AlgItw5/M/GraEM/fh7SFCBposrFRh+W5V70T0HeKgQSm6Xor3Jr/8qwE3L84NXDFlhecuqV
- fj6ymLSr4aKKhC3LFd/tzK6oyZYLrWpfoSXLg8bDSyP4pG1J/fZLWBktfK3Q6ztcphwHFK2x/
- Gw0VnFXQK/BTN4B5cnmarTgAKXOCbzqCNFbkJ+DJ7c2f0xBTFm3IatJbx1cUZ9XdIwIotLqP7
- JwAZIEC4WNJ1kbze3vGtsgmedJZl5vuWLN0h5Tv7MwvI/cSvlu2SiOmEhmc2bPN6Cc3a88/t4
- 19okC490OZ/tMYVII9GlpTIDyVcKqOdq6fphyKEDhTwY9UP52sfDvnBrL++QdGL8ugvcXFWMQ
- 1M5oOJFBturcje4LontH3HROBIMhfiBh7jmtOJLsRK2Dj1lyQfm0za52/14jAb3MWQa9OeSXp
- Bq1pqFsusu8RJs4b8F63qbs2o8EGj7RhjOvMTUELdsGtGCUwRhfY7TpOwbHL4h/qIxgL15pVa
- fjiF8Lns0xggXFm04WHA/wOKYvmofP7SWCvSTlAuSdlXZaXaR/rHNgoDXEENC5KqKGJxMdvvN
- fBjSzmStzNT5FtxGUhlEQyfy9MT2j6pd8Kzn0jqci2WXOErW7uXjJrN4uteIPVGv10MM7CtM/
- WvEvS9xNRxH+46CvPRC/fF4lBTRPjS8TEw3q40ZgY5+pdLd9BMhvzU5u35/7KoBpdcrjVvYUg
- S1x0OhnDvWtON8Rmk5yEBHeX+/Vst2p2xK4ZI+QiBb2DlmJYGx30bTBVBpMzDMI3aNvJPhtat
- cNEC6fPENScb2haC7WTPWHcp6Bm5MVgx658KfOcRpXB11O1IYFI27NQRLHKbJjN8ZjPok1omw
- CjJ0yO24THU+8sDNUrvZtbLaFb+1aBvynlPUfFWbU7LaQDUFYXxLXojcki3mMn7Tfuv5xg3W/
- YkaktY7cVYqzbTpxO7X7sR0T65uLxOc2I1EeCtQEzgRVWlg4pPSs+fAAv3RG78IkxoRYPt7vI
- X6m2bD4QK8Oa2IQOWwbIDm+KRHaM9ddHePFI/mWkOWTbnhc2mLNwNPAQw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:JT47csGo7bg=:CtSzEQvlfbTQAHx/iqp8yl
+ i2vMKWSa7NVsTQbkQ3cNOHXp650+6/M6HWiFjDk3nVEUSUNKWBudPMln/9Y8wCksTrin00/HE
+ FxC1iQRhTF7YUzIEtN/GHLseFDU10YLTMqccQSUI/kko+QASoFbrmZVhb67A5LN8iH6s9mtVo
+ avTUkcNkTh3EFF4QA83RGeXQNML/cVKs+IU3GmZtBUWY+cWf+YeHhTaXESWTh1OWQf5ENkaoS
+ 9c2naFSZyPz3BLCnE/k4pWzHYtMsB3BpstNE+gOQoq/M6jKlW6849LNPOBEp8LaXe8XXKJ9zM
+ CMsnf8ZtPk0ObhRKGeCPK/6QLG2EFulgXzck8TWYF9+Od2xRNaEeChEuJMr6e/irzoFV4lMjX
+ E0xhD/zYloucj2Z7c4hoLI5SZIeqUAo03zY7WWM8zybhg0qJefMsCq59XCNwge7aah8b71b3m
+ qIj27SQjh/gxj+QtAV6SPfOwoyqOHl/om8Mbts8lId3622T+OCSvk9Rve7Dwx0Zz47y6Bmzy3
+ b3+SCw2ezf0ZJqMOHDlZLkeaXu83KmOXcXEOTskXlzNbsbHsdvj4b90oeb4X4rOvfCccVqwRm
+ GV6OYCwiAgtBL9G2o9yK53B1jqHFW3kj1lG2mJXLmt6SnN7pAFJiKn+Q5ZfKv/SCQEs5ZNPls
+ keLee2WLO4JQxX34x9WNJm4nDcQmwfa46q2I71oymE02Vmm0oRrF2YWpFdrMoh8QPLLDZmDuj
+ KBRneQ/vFZdapH+iPqFVXCpR7bobOUUq9BPbCubcTCj68PncbUeOArtHppU/LsihwkAoY3ZTI
+ CDad6WsekDiOZLy1OA6HK6ipFFdCotoagLrkh/pz2q5YUamT1mvzjdcc7intVQnxXpZjkz/wY
+ wMgVH5GHSkR13Vh/ZlhUlKxd3dqOuRpzJHaaXrePwjNT2mEXOHXzqLNdOf3nTVNBTbdPVKM0e
+ pBYX3Cq/BicifeO1at15h4bklrxZMa5VytBmhrxBFeSjqbp1KZBaU4UrQZKkVwQdAQc5VFV6U
+ dkhEvKj+EkK36wFR/Zubc+5fyhpfw1wY5bipaR+iO1cBVhixpU+UnZUs84rXz10FRa/pk6eSG
+ 6TsVOscYKH9/7VQ6b9Hx7BjPeQEt1kXh9qu4cb/S9b8SGwB3YGOPSI1yg==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,50 +94,132 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---e6m2u25cBZWWEgkD
+--eeAjEw1TF8Acq/Ni
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 04, 2021 at 10:01:07AM +0200, Linus Walleij wrote:
+On Fri, Jun 04, 2021 at 11:35:48AM +0200, Linus Walleij wrote:
+> Hi Jonathan!
+>=20
+> thanks for your patch!
+
+Hi again!
+
 > On Wed, Jun 2, 2021 at 2:04 PM Jonathan Neusch=C3=A4fer
 > <j.neuschaefer@gmx.net> wrote:
 >=20
-> > The Global Control Registers (GCR) are a block of registers in Nuvoton
-> > SoCs that expose misc functionality such as chip model and version
-> > information or pinmux settings.
-> >
-> > This patch adds a GCR node to nuvoton-wpcm450.dtsi in preparation for
-> > enabling pinctrl on this SoC.
-> >
-> > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> > +  interrupts: true
 >=20
-> As noted I would name this architecture-neutral with
-> syscon@...
+> maxitems 4 right?
 
-Will do.
+Yes.
+
+> Make an enum:
+>=20
+> interrupts:
+>   - description: what IRQ0 is for
+>   - description: what IRQ1 is for
+>   - description: what IRQ2 is for
+>   - description: what IRQ3 is for
+>=20
+> And describe how these interrupts are used.
+
+Good point.
+
+- IRQ0 is for events (interrupts) from GPIOs  0 to  3.
+- IRQ1 is for events (interrupts) from GPIOs  4 to 11.
+- IRQ2 is for events (interrupts) from GPIOs 12 to 15.
+- IRQ3 is for events (interrupts) from GPIOs 24 to 25.
+
+> Because I am suspicious that they actually correspond to 4 different
+> GPIO blocks, which should then be their own nodes.
+
+Unfortunately, It's not that simple. The GPIO ports (as defined by the
+groups of registers that do GPIO direction/input/output) are organised
+like this:
+
+- GPIO port 0 starts at GPIO   0 and is 16 GPIOs long.
+- GPIO port 1 starts at GPIO  16 and is 16 GPIOs long.
+- GPIO port 2 starts at GPIO  32 and is 16 GPIOs long.
+- GPIO port 3 starts at GPIO  48 and is 16 GPIOs long.
+- GPIO port 4 starts at GPIO  64 and is 16 GPIOs long.
+- GPIO port 5 starts at GPIO  80 and is 16 GPIOs long.
+- GPIO port 6 starts at GPIO  96 and is 18 GPIOs long.
+- GPIO port 7 starts at GPIO 114 and is 14 GPIOs long.
+
+(They didn't even make it so that each one has 16 GPIOs...)
+
+As you can see, only a few GPIOs are connected to interrupt logic; most
+of them are in port 0, and the remaining two are in port 1.
+
+Forthermore, the GPIO ports don't all have the same set of registers, so
+that the register layout of each can't be predicted by the offset of the
+first register.
+
+>=20
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/irq.h>
+> > +    #include <dt-bindings/gpio/gpio.h>
+> > +    pinctrl: pinctrl@b8003000 {
+> > +      compatible =3D "nuvoton,wpcm450-pinctrl";
+> > +      reg =3D <0xb8003000 0x1000>;
+> > +      gpio-controller;
+> > +      #gpio-cells =3D <2>;
+> > +      interrupts =3D <2 IRQ_TYPE_LEVEL_HIGH
+> > +                    3 IRQ_TYPE_LEVEL_HIGH
+> > +                    4 IRQ_TYPE_LEVEL_HIGH
+> > +                    5 IRQ_TYPE_LEVEL_HIGH>;
+>=20
+> So these.
+>=20
+> > +      rmii2 {
+> > +        groups =3D "rmii2";
+> > +        function =3D "rmii2";
+> > +      };
+> > +
+> > +      pinctrl_uid: uid {
+> > +        pins =3D "gpio14";
+> > +        input-debounce =3D <1>;
+> > +      };
+>=20
+> I challenge you here and encourage you to put a node for each
+> GPIO "port":
+>=20
+>   port0: gpio@0 {
+>  ....
+>   };
+>   port1: gpio@1 {
+>  ....
+>   };
+
+Hmm, well, if the unit addresses simply go from 0 to 7, rather than
+encoding offsets, this could work. But it won't help much with the IRQ
+problem.
 
 
+Thanks,
 Jonathan Neusch=C3=A4fer
 
---e6m2u25cBZWWEgkD
+--eeAjEw1TF8Acq/Ni
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmDFzngACgkQCDBEmo7z
-X9t6JQ//chcN7SkKZs+e33NvgLaS4erJo3PPq7tgIrSyot+fc9+JClf7/gK3sdxw
-Y4LJaOFI+Ueg6nrQXayFFni61GC1DEMtCoLQbgWsR8G91H5HHA5gBXmWu/9GKNTE
-ctuNCII0PKszX/jB3hMDP4rQ0szMZNjWQShbtOMgBUMvMarOtXzJBNb4Pblh3GYI
-DODgdRfIMIQZDPRUpVq2OwamCpD3sX4QUY9XGSJtm9uj3unvVzCroDmzZuf0FnYq
-USgZCEsFnpTtq87+TMUw/mO5LEK4vD4H5tZ7GYguVpiwJr8fW8qzY1xxkFgM4rmb
-qK9vH+bot2jkKwn4xIpK528YOnBAuo5zF+VcIu+y9KPWDOCEZH7+qb/mKyXUv2Sm
-vS2+LPkXc0YjVvSCR7p6wWwvsS3djpBIVkVA8y3Dj5TiJhih/yJd+UVr9SlaEB8y
-u7RWu9Whbhz6wPpEBHE6sn7bhT7ArM3ZKqMvvv3eKOI3osqaol/vnHRFch5qNaMC
-Anz4TCT7h3NpFtXodAfbel/Czznhl06EN8EWp0HaCWz+0aV4plR0K4le0wNdnfW7
-nlgy/cD2SozTC1+048iR8pv8SHQEVxBEb9eFtTsMIWWhoYxH/mscuR7NFtYPDc1I
-GtQXVYzAlftsfU6QMY/3zZwlrcAJt6L+xqkeQGJQyetHCLFlSco=
-=flg7
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmDF1WYACgkQCDBEmo7z
+X9vvgg/+NjP0ej1MKT9aUcOcF5Vp77+zynVdqbXduGemb16BNYTXsULObigZyQqe
+5LJshwRpK5jRZNRIdWDscndY+rzg0vwjlcG0lF75a4Ol/bWs/uI/d7sIaZPO13s7
+zfCWLw240N1NkNFDcK449Z1OrQ7nAkn6BEeJrZ1TTBHV6GyTGqD7WZGMRCA9Kcag
+xFwjRNWEhxeuxaQklbm1PADy8qt4WBk7z4yt+SGZmJYZyHloAFJOsHVIiOlxSYQH
+DWoFc9ydsK6jK+Rxdo8Xsgt7G2Ei2u/tBly1og5iR9gWh2abA3pO2xLIm9QDud9+
+hIwPjzH/XAUbqVFy6fGmOM+qif1Uvs2rAcybx5ewRQRFhA7mQeOd3Wfv+DW05QXG
+OKHBR0fGeqqE4gHBTscy5eftpmToIczYwFP+oZx8uIksReJ3IQv3SS5s9JjHFoe/
+Yy06P8rm06jqvt+cZeSEg55yLe95IZvVMZxbbGNhRXF80afMExfVLBx6YJaSI8cz
+7aHmTlDTG1HyLdCTLrDBDB8pP+fke/FN+uBiJucEg+jzz64qQheW30DyKjlSMP+W
+QCx3k9eTBl5AzPqvpEfQwMcyZpMdMFpwg3Dm/kulKU/zIwI4nu1Ef1+5aTz8T+Ze
+oRnm+9VQmzSV0W2HC24PxJrtbmpTbID1XRN/95gZfl0K17OFuZQ=
+=negl
 -----END PGP SIGNATURE-----
 
---e6m2u25cBZWWEgkD--
+--eeAjEw1TF8Acq/Ni--
