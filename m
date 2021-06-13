@@ -1,78 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DEF13A573E
-	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 11:20:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DA483A5742
+	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 11:23:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G2pwH6pxqz3066
-	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 19:20:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G2pzP6tzVz3018
+	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 19:23:29 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=bxtIl+Jw;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=eRvjSB0i;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.20; helo=mout.gmx.net;
+ (client-ip=212.227.17.21; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=bxtIl+Jw; 
+ header.s=badeba3b8450 header.b=eRvjSB0i; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G2pvy5LyZz2yQw
- for <openbmc@lists.ozlabs.org>; Sun, 13 Jun 2021 19:20:28 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G2pz91lVzz2yXh
+ for <openbmc@lists.ozlabs.org>; Sun, 13 Jun 2021 19:23:16 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1623576015;
- bh=4aeYiabSX0nj7F62pRc9fqIhD9O/lda/PM4X2/aALEE=;
+ s=badeba3b8450; t=1623576186;
+ bh=okNCnhz8ZcJc8WTr8+XvkczOnp6GsFLk6kg/e2sFsg8=;
  h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=bxtIl+Jwm8MDim7+aGMLnj9IuHOdm6ToFc0kfoVdM1kEI29zH509VhMB0nJ5S4One
- 27eG51HJZIs9OZu1s2SN0fmBL4GCsXVEfVE4LVRhRZCDpIPxzeO9OBJnYUHW0FBUtM
- EZwggSXzXUHpyfCq+N/iX1D23jSqak9jU+FL+C5o=
+ b=eRvjSB0iWPWP66dr02za6lhNEELH+HFGuVB2iXxnZG2rIqunvxVi8KTAT8OEtqZEI
+ D4aw0k/OgsYKFPzfysV/gJtavawYqeUk2KSuCKv/29bK0BIPTxCp+u1rpbUkFKcrdB
+ IjQgSkqMadz5C+ko4A2Ctx1TceV7rknehg3mChwk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.214.247]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MwfWU-1l8W0517BS-00y8wI; Sun, 13
- Jun 2021 11:20:15 +0200
-Date: Sun, 13 Jun 2021 11:20:12 +0200
+Received: from longitude ([37.201.214.247]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N95eJ-1lDmE12cUh-016APA; Sun, 13
+ Jun 2021 11:23:06 +0200
+Date: Sun, 13 Jun 2021 11:23:04 +0200
 From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH 1/8] dt-bindings: arm/npcm: Add binding for global
- control registers (GCR)
-Message-ID: <YMXNzHv3Fvr+X/XY@latitude>
+Subject: Re: [PATCH 3/8] ARM: dts: wpcm450: Add global control registers
+ (GCR) node
+Message-ID: <YMXOeBWu31LC+23X@latitude>
 References: <20210602120329.2444672-1-j.neuschaefer@gmx.net>
- <20210602120329.2444672-2-j.neuschaefer@gmx.net>
- <CACRpkdaC8jzzE=9TSs-eRy3j3fk3=k_xhgjPXw7DW=rK=Csx0g@mail.gmail.com>
+ <20210602120329.2444672-4-j.neuschaefer@gmx.net>
+ <CACRpkdY7AqcE4CMAdZHR-DfV-3ZCO3h9kYUZoZCUodLQmyyfXw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="8X9q+WG9BCh5yl+O"
+ protocol="application/pgp-signature"; boundary="e6m2u25cBZWWEgkD"
 Content-Disposition: inline
-In-Reply-To: <CACRpkdaC8jzzE=9TSs-eRy3j3fk3=k_xhgjPXw7DW=rK=Csx0g@mail.gmail.com>
-X-Provags-ID: V03:K1:gKrhXXiECnwjKoe6Mb7YC+Nz/AqQK7EUnsB+yuLGUoAFaX2oU89
- bERQOcRQudZ0FrVyunZiyldjS/NBYv583TKA7hkR6cPAllbhZaqjPqtsKPGsopoBZxrtdDv
- 6C+BOLGAyG4k1Wq/a6OuB19E0jhWqMvBlFLTJE93Rq0jNRZnYaWAKAAenlPYj2Fx/oZR3CS
- qMF6Iw3RdvwOxuANQVcvQ==
+In-Reply-To: <CACRpkdY7AqcE4CMAdZHR-DfV-3ZCO3h9kYUZoZCUodLQmyyfXw@mail.gmail.com>
+X-Provags-ID: V03:K1:7dJQb3p8adrc+g8Un5qHDgxFkFzatiPk/BDCWczj+T39aSmdeul
+ r3ibglWBNORKNbCUZZI39cr2UkhymiYhva5qwHtDbc+DB31IN/o1cyV/hLLrBZLLkR8HrJ4
+ SBn0WN7jiVPwfNuACbNi8Rl1YkNm7cvUqwJ0BXhEr1WTChESP9D+WR5NMX2UngBSGLRLSMD
+ 58MA08VMhfSEvKX0EHE1w==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:hmIBtzr6924=:4izV/eysmc+dyImPz1M5hZ
- 6mE0WuB+pNcgf+DB7uNBKIJCDFaK7xwcl07K2Zkl6zke+1rU1R3DD8n18Xo7do9MDz1X3EmwU
- Jxb2kdZRd5XYOxgBi96eFM9sfzrdEov7uJ1T+TIUXHXHpfOcWPpO1vS2tQ2C1gObkUHUhiI25
- wVdI1KkluSka50dV3dpAVgbR/Y6rl+N9OtaWLhQAfE542v1el3irqXkw39N89McY8iYHGc7cS
- kYf5mq/s+x3xsCXQTv3om4vyifTxWsQJ3HXPynK/k9NwqBFqbHqx077q6MwQJ51sxfCdvR5Md
- +z6HiM/plcv5dmgQOOKYh+o5VCdMCMWX7l3Ve/ylJTeBjIN+mCq7V3N5sJQ86wwABJf7sGuEC
- dL+cg07ziMeqOVMcSbBiwjr70f7bXyXrEk3q8HgDNrdDnzGelvq5DFJYXRkiSsFXLSiN83rXk
- DduNDCTSRaQEMi1jlqQtyu7Im3yEjkQKpGIyPAisMPSvJctyxp3mt8UIo2UADSSvAMljBP518
- PcHfKnaY+EqHOAsTXvn59CrG+7rAsFKgV1CICMgkgd4tdZr6PyMgvl2odUBQhNwcNx2uGZKoc
- rdPoxuuVeW7uCbj4NL6OD2oMl+q7tUIAh9cP+Wg4Esx1tHLAnSdgH70YTQYJ3Raqlv0LybTPK
- FCGpR4bVS78icgEK9rbVW3n7zsxaUIiL4sUlVVaeaJbfRnXvl8WO8JH500kjOIqtlg5nm0qJ3
- x3OyzbwuqTouSVodz4mZoJIKoMYu6XAHS0O+LDFzxOHPLu6/O3Da7XsaXVEUxRD/9sQ5XDroB
- cRMjgb03rHPKfP0L8JYRjot1I5JWQDjBR8Fj2V9U+HurA1Duls9wpMi6VaTnY6iNDoYFGp2rw
- cAgnZurZAqFdso12csuhfcbK/7Jz89nikSqqkT27WPcmRaAkuchXYE/6dHDjlCwgYMtTBYiVG
- CFLPxkunAcfM5EymUvApCtSMXX3uD5b1nRobZBQy5vKY3aCOIxYBNPtFBhhgRHQcT0NCgXMhd
- RsUd+fdHUcAlOhgGyYZ2AbZ87+OzwIOCGYnjSEctdPjzCX66w2o5Hat6Bxb3Mj1ed11DQDSve
- R80fYBFY0+1vxiBBeCOwLI8xmqVqAF4DD/yzC+8PX/5lLdxnjC0rJ9IBQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:8WwyLXGQffA=:LDai38MS5FyP7r2snIsCT9
+ v18Fc7ffHbAdpyb4Rwqe6rNLKW25A9JUYOript0Q0WgZ52JOJOx2ytvxxeIuNg8oCM6C3H9bF
+ 5AlgItw5/M/GraEM/fh7SFCBposrFRh+W5V70T0HeKgQSm6Xor3Jr/8qwE3L84NXDFlhecuqV
+ fj6ymLSr4aKKhC3LFd/tzK6oyZYLrWpfoSXLg8bDSyP4pG1J/fZLWBktfK3Q6ztcphwHFK2x/
+ Gw0VnFXQK/BTN4B5cnmarTgAKXOCbzqCNFbkJ+DJ7c2f0xBTFm3IatJbx1cUZ9XdIwIotLqP7
+ JwAZIEC4WNJ1kbze3vGtsgmedJZl5vuWLN0h5Tv7MwvI/cSvlu2SiOmEhmc2bPN6Cc3a88/t4
+ 19okC490OZ/tMYVII9GlpTIDyVcKqOdq6fphyKEDhTwY9UP52sfDvnBrL++QdGL8ugvcXFWMQ
+ 1M5oOJFBturcje4LontH3HROBIMhfiBh7jmtOJLsRK2Dj1lyQfm0za52/14jAb3MWQa9OeSXp
+ Bq1pqFsusu8RJs4b8F63qbs2o8EGj7RhjOvMTUELdsGtGCUwRhfY7TpOwbHL4h/qIxgL15pVa
+ fjiF8Lns0xggXFm04WHA/wOKYvmofP7SWCvSTlAuSdlXZaXaR/rHNgoDXEENC5KqKGJxMdvvN
+ fBjSzmStzNT5FtxGUhlEQyfy9MT2j6pd8Kzn0jqci2WXOErW7uXjJrN4uteIPVGv10MM7CtM/
+ WvEvS9xNRxH+46CvPRC/fF4lBTRPjS8TEw3q40ZgY5+pdLd9BMhvzU5u35/7KoBpdcrjVvYUg
+ S1x0OhnDvWtON8Rmk5yEBHeX+/Vst2p2xK4ZI+QiBb2DlmJYGx30bTBVBpMzDMI3aNvJPhtat
+ cNEC6fPENScb2haC7WTPWHcp6Bm5MVgx658KfOcRpXB11O1IYFI27NQRLHKbJjN8ZjPok1omw
+ CjJ0yO24THU+8sDNUrvZtbLaFb+1aBvynlPUfFWbU7LaQDUFYXxLXojcki3mMn7Tfuv5xg3W/
+ YkaktY7cVYqzbTpxO7X7sR0T65uLxOc2I1EeCtQEzgRVWlg4pPSs+fAAv3RG78IkxoRYPt7vI
+ X6m2bD4QK8Oa2IQOWwbIDm+KRHaM9ddHePFI/mWkOWTbnhc2mLNwNPAQw==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,75 +86,59 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
  <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>,
  Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
  linux-kernel <linux-kernel@vger.kernel.org>,
  "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Tali Perry <tali.perry1@gmail.com>,
- Benjamin Fair <benjaminfair@google.com>
+ Rob Herring <robh+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---8X9q+WG9BCh5yl+O
+--e6m2u25cBZWWEgkD
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 04, 2021 at 10:00:18AM +0200, Linus Walleij wrote:
+On Fri, Jun 04, 2021 at 10:01:07AM +0200, Linus Walleij wrote:
 > On Wed, Jun 2, 2021 at 2:04 PM Jonathan Neusch=C3=A4fer
 > <j.neuschaefer@gmx.net> wrote:
 >=20
-> > A nuvoton,*-gcr node is present in nuvoton-common-npcm7xx.dtsi and will
-> > be added to nuvoton-wpcm450.dtsi. It is necessary for the NPCM7xx and
-> > WPCM450 pinctrl drivers, and may later be used to retrieve SoC model and
-> > version information.
+> > The Global Control Registers (GCR) are a block of registers in Nuvoton
+> > SoCs that expose misc functionality such as chip model and version
+> > information or pinmux settings.
 > >
-> > This patch adds a binding to describe this node.
+> > This patch adds a GCR node to nuvoton-wpcm450.dtsi in preparation for
+> > enabling pinctrl on this SoC.
 > >
 > > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 >=20
-> (...)
->=20
-> > +    gcr: gcr@800000 {
-> > +      compatible =3D "nuvoton,npcm750-gcr", "syscon", "simple-mfd";
-> > +      reg =3D <0x800000 0x1000>;
-> > +    };
->=20
-> gcr looks a bit idiomatic, isn't
->=20
-> syscon:  syscon@... better?
+> As noted I would name this architecture-neutral with
+> syscon@...
 
-I think I'll go with syscon@..., because it's the right generic name,
-but gcr for the label, matching current usage.
-
-> Nitpicky though and looks good to me either way:
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-
-Thanks!
+Will do.
 
 
 Jonathan Neusch=C3=A4fer
 
---8X9q+WG9BCh5yl+O
+--e6m2u25cBZWWEgkD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmDFzaEACgkQCDBEmo7z
-X9tLtw//VMgWu2B/K3UESUNI1pfH+CK6F7TOG0Yq4L1wJKPrWvwZ67SkjbITSMNb
-GmkRx16/lrWhOT99XX0/ZxgKxQyEXj1FSJfOM9bs8XhmlLNvVtjdL1TkLEDTX5ll
-ZnR4tymLwStGv9pCvmcGKLFYui3vb0PQ/SiieXzK4xryMvTrxUtvA5amNgf2Vulv
-LTu0QK+G4qFE17tlH0m885njuM6XEdMFHDXhye/uKWY41/7Il0h4mM2WGi/bUZAP
-1AnRx+m8uDkz9ckl2fTrnJowwSJHB2Ql22JvRX/hjMNZsqyvlNZPEIMrLHIpXLaR
-KePUhrtN7PpKYBStaHRvtgcx1xTOVDTRri9OWzjjuXSBYVq5yVp/kYruyGTmCO8G
-UQcUhZskqj2jXIa04OFjc84o2rBl2+Yj2OIxJvpx2UY2aVkZE3b1YVVRPZiyijZ4
-XR3odEmCMna6F6ew6NbGZi5UV9RhCqFcI+AKh7LtI5KbydUw7sWLjq5FV4yYXzsG
-/V/gBCt/i/nRuMjJp5QQtMRc38v16hgAdyHNj1nrIf73VodraYelzanIUnE4MJkv
-c4VcIbDufvnGXvKyLvoCWB6cYvBOQNtsVAfXuFluieV46cYLgVTZiwtNjkw0igwv
-Jp7lODEYkyPb5c1v3cAdJin5rv1FZlV2C38aBuHloZLfN6qK910=
-=aXV9
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmDFzngACgkQCDBEmo7z
+X9t6JQ//chcN7SkKZs+e33NvgLaS4erJo3PPq7tgIrSyot+fc9+JClf7/gK3sdxw
+Y4LJaOFI+Ueg6nrQXayFFni61GC1DEMtCoLQbgWsR8G91H5HHA5gBXmWu/9GKNTE
+ctuNCII0PKszX/jB3hMDP4rQ0szMZNjWQShbtOMgBUMvMarOtXzJBNb4Pblh3GYI
+DODgdRfIMIQZDPRUpVq2OwamCpD3sX4QUY9XGSJtm9uj3unvVzCroDmzZuf0FnYq
+USgZCEsFnpTtq87+TMUw/mO5LEK4vD4H5tZ7GYguVpiwJr8fW8qzY1xxkFgM4rmb
+qK9vH+bot2jkKwn4xIpK528YOnBAuo5zF+VcIu+y9KPWDOCEZH7+qb/mKyXUv2Sm
+vS2+LPkXc0YjVvSCR7p6wWwvsS3djpBIVkVA8y3Dj5TiJhih/yJd+UVr9SlaEB8y
+u7RWu9Whbhz6wPpEBHE6sn7bhT7ArM3ZKqMvvv3eKOI3osqaol/vnHRFch5qNaMC
+Anz4TCT7h3NpFtXodAfbel/Czznhl06EN8EWp0HaCWz+0aV4plR0K4le0wNdnfW7
+nlgy/cD2SozTC1+048iR8pv8SHQEVxBEb9eFtTsMIWWhoYxH/mscuR7NFtYPDc1I
+GtQXVYzAlftsfU6QMY/3zZwlrcAJt6L+xqkeQGJQyetHCLFlSco=
+=flg7
 -----END PGP SIGNATURE-----
 
---8X9q+WG9BCh5yl+O--
+--e6m2u25cBZWWEgkD--
