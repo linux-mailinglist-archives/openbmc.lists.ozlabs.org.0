@@ -2,78 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90C713A5A20
-	for <lists+openbmc@lfdr.de>; Sun, 13 Jun 2021 21:09:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C9393A5CDB
+	for <lists+openbmc@lfdr.de>; Mon, 14 Jun 2021 08:19:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G33z40zDdz301q
-	for <lists+openbmc@lfdr.de>; Mon, 14 Jun 2021 05:09:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G3LrG6phhz3018
+	for <lists+openbmc@lfdr.de>; Mon, 14 Jun 2021 16:19:10 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=k3fDP0+X;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ZwGQdDii;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.19; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=k3fDP0+X; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2b;
+ helo=mail-io1-xd2b.google.com; envelope-from=artemsen@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ZwGQdDii; dkim-atps=neutral
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com
+ [IPv6:2607:f8b0:4864:20::d2b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G33yj2MrDz2xZh
- for <openbmc@lists.ozlabs.org>; Mon, 14 Jun 2021 05:08:43 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1623611313;
- bh=i0Mw312qLzd6b/+QxKnjdD1a41SqoAdt39SqpcwjESM=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=k3fDP0+XpJ0mERPxpnrG1w4s1YiAnW2OJHaGqTrZFiafF61ZUc3Mb28kCXYp1dudr
- bAHXOTS7BwLWqyCvWeHRv4+1fQnkj7sy0haeBZzA9S+kntPdbnxuBvI9PS2E6hmX2I
- QmU52zd24m9W7TQc75DsALLLg7ioO3b/PewDtWNQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.214.247]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MAwbz-1m3p4C0JBp-00BNuS; Sun, 13
- Jun 2021 21:08:33 +0200
-Date: Sun, 13 Jun 2021 21:08:31 +0200
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-Subject: Re: [PATCH 5/8] pinctrl: nuvoton: Add driver for WPCM450
-Message-ID: <YMZXr2py6Esl6U2H@latitude>
-References: <20210602120329.2444672-1-j.neuschaefer@gmx.net>
- <20210602120329.2444672-6-j.neuschaefer@gmx.net>
- <CAHp75Vci1DSFu-tpgwQZfuVycqHYmhGhLDDCOH_dX8HKvqpY_A@mail.gmail.com>
- <YMVBTp4VaSilFi0H@latitude>
- <CAHp75Vd9FEGuaVbRUK67uzRoeQSXQUGAhXExHgJvkDd585kxwA@mail.gmail.com>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G3Lqx6bztz2xvH
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Jun 2021 16:18:53 +1000 (AEST)
+Received: by mail-io1-xd2b.google.com with SMTP id h5so1719103iok.5
+ for <openbmc@lists.ozlabs.org>; Sun, 13 Jun 2021 23:18:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=JqbNUsI2BWstDxXImrYeCAHAtkiFFj5z3SpyFBNObVo=;
+ b=ZwGQdDiiQT7XzUE+sFOgImKrju3S77EbdWB+vkmRm2uLK3ksEmKI9waAJTvflkHPFU
+ l5wLL6oIJTR/cUAuh4+N0FIYAtzAp28wFnqBvHwOd3RPDTSfLW1wUoCLsTfi7VvqWFpv
+ HRvnOo20fZ4yIHaI4OmTP0mSOBy3fEsROaU1aSGqP8g407HablGxUMbgSMUbjMzK9k3w
+ bHYdx/74FsluGtjH3HvG9Ra1bIot49XBcs9nejVk2m2y+sm3+CSVz9dam+47bG1bPLlG
+ fslLjX1/Tc4AXcTO4n7+gf4FDPHKRGz7t85V5W36GHNH5PqSVoz7k3vnucPLJyLYSmJq
+ Snxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=JqbNUsI2BWstDxXImrYeCAHAtkiFFj5z3SpyFBNObVo=;
+ b=DgS8PeZnkX0RjJUY2a4UXXBZFXSqeu1MWjICn35ntQnaKEnzw2v+B05JgHOGMEX7hr
+ ubj1bE0wOEDMRs40kJJTCUGDQSQNhsGQvBZsrXT2MCqW9rjJeDjhIEXu2dpvebSqZ6Ml
+ M5msTzwr36iW6Rj6R8glBY+B4Q+/0NavqRE/7C+tRz8mfbpv0dWnzBxIiBpnJtcWSchm
+ QzRTYDVhGXAo3Loe8XFJRxOWIE635qkUd0WNNeyGoq4YNaZ0RjujToECQ65o+ixd4PAN
+ GTVwEQ5r9cGKTgDSE9Av4aHnuE0hQyKanqK+G1RJ2Q6ZA46g0+ZN9ZXV7q7VWOFbTsY1
+ 233A==
+X-Gm-Message-State: AOAM530Yq/RCEzplCzBNoKFnX6aorKVp/haWpF210WXp4Ely+Xkn5VyZ
+ CvnqdU1CdnuJGvFklvW2HtZTcHPAcBoZH/yf748=
+X-Google-Smtp-Source: ABdhPJxK9wDMrXbf1Tq19BjVoKn4JXvQQwqGC6HtUkBHnkTlleC7K45pcppWgoEYFG0lAIEmY+jLZnK7qk1sy8hgRmE=
+X-Received: by 2002:a5d:914a:: with SMTP id y10mr13358206ioq.156.1623651529107; 
+ Sun, 13 Jun 2021 23:18:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="DDWQ4B6GayNZj/6h"
-Content-Disposition: inline
-In-Reply-To: <CAHp75Vd9FEGuaVbRUK67uzRoeQSXQUGAhXExHgJvkDd585kxwA@mail.gmail.com>
-X-Provags-ID: V03:K1:A8u/VWr25EDlAyw608pKKSgF/NtZTMvqE/N1Z3Urcwvncdvbduf
- 6eRNbWtHYlzu/P5hI5btrI5pUpLQSbi1ZvxWYSdrSghBHsazLyWZz9ook1S6+W+mod85F8F
- eQZfTco9qvnJ8qprx0Er5AAzyUO5lc6X4SA6MDwV18TTsx0tgCdETok13P7fhv+j5dbvmkg
- EF0tp9vH6FhTiSrjI67zQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8Pz1L6EfyZ4=:ZL9mTNEevabQLNS05PDY6H
- YxgmMcwv7IdkwzBM25O1MRvBPq5TGlgYwM2badHy1olhwMDt7QS7hJ366/0EY/5KnF4WLyLUp
- hTzxA4SzAnnzsfiMp9MHHQLtTovhYqRNp0ikih/1jW8E/Nof4Kr5BWlb4HJomiDmCcyq3ikXk
- PFLYLjcIJsmbxZh+ItSBPVJxJGQ8oob2AGizZYUpFOmDAWvVI3MHN2Wqa1ZEtg3nSY/jBBTTr
- Ab40FLZV9Pm3c+xDRBDzc061iXiOoK0aiQslCoE5WlF0MfkJizjWCu3hU4aTMuOzpn9XO6h/x
- ImrBce34AnDbKsIB0xPcRz/850LmX1poLaJ1bkHKsIpTHoSI962n1fMmRuEXtZh7c4YmkQOyI
- uEyOwNZfjLkfgQWNHEgKUa0CKTCkLBIDVnQTI+jn45aXJQ5NgSy6y+CYmBbmrRoDluhWCtYPh
- gXKlheBe5S7VCjp7DU5vekV3Ng6/6os5Z5gDrh+Sxop9moO+GyF4VgBMpXcw2VxcsZTm/l+1H
- 4PuNnmM/yEca4OvqIKNYZJbNcOaoCb63jIajMwdfPwV58tSFrLZ/rVJ6bjjrOblpQHcpOLhuI
- ZyDIQHeiY+HrDho+V4w8WOM0XsoGd11yBvMIuk3kz0Uz4pJA06wX9emQ4tqI8FATAc/1phpPD
- JvgcCsPH2HBXgSlL51bzX8el7+mEvd2/r9XCrAGzdsSRNMgCa9mVGmxyX0KCPY5Orn4hA1a26
- ZmcLTa8lswkcId7GXTojDmSeUQiTRCJpW4d44uLrboguOq0lAC9K+fCDOfXetFinIILYT35eJ
- 6o0NIbBAVpGgyRtgnA7QvXz7AuYghWF7M1J+JJmK4e4QcLAlSo2sVQIfbcdGG0N0RjVSfOjXb
- Gw1XCklntsN6NLH+JyExBPi90FJeeonrKHPUkrZInoL8gA/51a5AFYQRUBzywMJKB4MzXFuzO
- wDflyye5exIuhPmXKVOKo/t+GOBoMgkL7sB99UBBqSgSmCYTkIUdgZp8GFVkbNaXw9vSmOPNb
- voEaLyi30bN3MAWiJIcXu4tKy4MvcPIbY5sFLB/tvqA56LXQZEyDkcRhNF6aPpwBZ5E420Xap
- kpzHi0/f1yNPQeXVUzXQ/qU/r5jS9Z+HnQ4n/eRgIkaaA9s81BamG+DTg==
+References: <CAH2-KxABm3A7pdPfPbu-RY-98qs0FE8bQZwo-WO6spixU6JotA@mail.gmail.com>
+ <20210525064127.xfgo5dceyvzrzpy6@gmail.com>
+ <CAOLfGj6dzb6Q-BOU0AJy_thd1Gt78+and_cmU4tOUNide3Gf0w@mail.gmail.com>
+ <CAOLfGj6YympZyvXO7NCPMaHNEi9CwAS97y6_-fncDHbqv5s8Bg@mail.gmail.com>
+ <20210526061119.b7n2beqthbemsoba@gmail.com>
+ <CAOLfGj6Ep89yknFbx2qHLv9woQ80SNJQD2cwJOa7y=tE7=VyLg@mail.gmail.com>
+ <20210526085623.mhls24mmo4idu5we@gmail.com>
+ <CAOLfGj7b0TEwqAEocAo=hGobCuZUoC4Zk9X_jY8Cs7NzQgi14w@mail.gmail.com>
+ <20210526160816.pvpxzwnix3lgwaln@gmail.com>
+ <CAOLfGj6WmBxQNm_LDNfW-m5Bs5sndxwoVJ6QupwHo+cvBDL7qA@mail.gmail.com>
+ <20210526182153.xcbs5dp6sprzv7u2@gmail.com>
+ <CAOLfGj6Sn77vH-TrE-GmHrYCJ7AMHs2zr0HR_yJrES1qX_buow@mail.gmail.com>
+ <CAH2-KxC8jkKMXmHa=9SsLBFORbHbsJ2DUTPhoCLp_0uam0q8tA@mail.gmail.com>
+ <CAOLfGj7d=VmXrXXd09nW==1Th5OCiP0nyfWbUbYDssRJ94Os-g@mail.gmail.com>
+In-Reply-To: <CAOLfGj7d=VmXrXXd09nW==1Th5OCiP0nyfWbUbYDssRJ94Os-g@mail.gmail.com>
+From: Artem Senichev <artemsen@gmail.com>
+Date: Mon, 14 Jun 2021 09:18:37 +0300
+Message-ID: <CAHsrh9L4d96C5_8=QVmujdf71iALnQdCk=zzJ3Hb=Spey5NZxA@mail.gmail.com>
+Subject: Re: Link phosphor-hostlogger and bmcweb
+To: Nan Zhou <nanzhou@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,125 +88,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
+Cc: Spencer Ku <spencer.ku@quanta.corp-partner.google.com>,
+ Litzung Chen <litzung.chen@quanta.corp-partner.google.com>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Linus Walleij <linus.walleij@linaro.org>
+ Alexander Amelkin <a.amelkin@yadro.com>, Ed Tanous <edtanous@google.com>,
+ Richard Hanley <rhanley@google.com>, a.senichev@yadro.com,
+ a.filippov@yadro.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Sat, Jun 12, 2021 at 12:07 AM Nan Zhou <nanzhou@google.com> wrote:
+>>
+>> >
+>> >> > Or did me missing something?
+>> >> >
+>> >> > Also, we already talked about it: there's a problem that if BMC los=
+es the
+>> >> > power before it sends out a signal to hostlogger, data in memory wo=
+n't be
+>> >> > persisted.
+>> >> Yes, I agree that this is a problem. But there are ways to fix it wit=
+hout
+>> >> breaking the current functionality of Hostlogger.
+>> >> We can use rsyslog with external log server, or increase the buffer s=
+ize
+>> >> in obmc-console-server, or use systemd-cat with logrotate.
+>> >> We can even add a new mode to Hostlogger that will not use the buffer=
+, but
+>> >> as I said earlier, there are not many common parts.
+>> >
+>> > I guess you are arguing we need a new daemon rather than modify Hostlo=
+gger, right? +Ed Tanous here to see what his opinion is.
+>> If Nans use case is in fact totally different, and can't be handled in
+>> the same application I think that's ok, but I'd like to see the new
+>> application put in the hostlogger repo so it can share the routines
+>> that are common (things like finding and opening the unix socket,
+>> managing the reads, and the zlib integration) and to ensure that users
+>> find it when searching for code that solves this problem, as on the
+>> outset they're pretty similar, just with seemingly different rules.
+>> If we don't put it there, it seems like we'd have to duplicate a lot
+>> of code.
+>
+> Thanks a lot for the previous discussion. Following up on this, is it acc=
+eptable if we add a new application (it will be a new binary + a new system=
+d service config) in the hostlogger repo to support the stream application?=
+ We can add options to control whether to turn on this new stream applicati=
+on. In this way, existing applications stay unchanged. As Ed said, we could=
+ use codes that deal with unix sockets and reads. It should also make sense=
+ that console codes are put together in the same place.
+>
+> Please let us know what you think. Your confirmation will be very valuabl=
+e and will unblock our development.
 
---DDWQ4B6GayNZj/6h
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I still don't see a reason to have two different applications in one
+repository, but let's try.
+I believe that the common part with socket opening/reading (about 100
+lines of code) is nothing compared to the complexity of supporting
+such sophisticated configuration in meson and bb files.
 
-On Sun, Jun 13, 2021 at 01:06:15PM +0300, Andy Shevchenko wrote:
-> On Sun, Jun 13, 2021 at 2:20 AM Jonathan Neusch=C3=A4fer <j.neuschaefer@g=
-mx.net> wrote:
-> > On Wed, Jun 02, 2021 at 03:50:39PM +0300, Andy Shevchenko wrote:
-> > > On Wed, Jun 2, 2021 at 3:05 PM Jonathan Neusch=C3=A4fer <j.neuschaefe=
-r@gmx.net> wrote:
-[...]
-> > > > +static int wpcm450_gpio_get_direction(struct gpio_chip *chip,
-> > > > +                                     unsigned int offset)
-> > > > +{
-> > > > +       struct wpcm450_pinctrl *pctrl =3D gpiochip_get_data(chip);
-> > > > +       const struct wpcm450_port *port =3D to_port(offset);
-> > > > +       unsigned long flags;
-> > > > +       u32 cfg0;
-> > > > +       int dir;
-> > > > +
-> > > > +       spin_lock_irqsave(&pctrl->lock, flags);
-> > > > +       if (port->cfg0) {
-> > > > +               cfg0 =3D ioread32(pctrl->gpio_base + port->cfg0);
-> > >
-> > > > +               dir =3D !(cfg0 & port_mask(port, offset));
-> > > > +       } else {
-> > > > +               /* If cfg0 is unavailable, the GPIO is always an in=
-put */
-> > > > +               dir =3D 1;
-> > > > +       }
-> > >
-> > > Why above is under spin lock?
-> > > Same question for all other similar places in different functions, if=
- any.
-> >
-> > My intention was to protect the ioread32. But given that it's just a
-> > single MMIO read, this might be unnecessary.
->=20
-> Sometimes it's necessary and I'm not talking about it. (I put blank
-> lines around the code I was commenting on)
->=20
-> So, What I meant above is to get something like this
->=20
-> if (port->cfg0) {
->   spin lock
->   ...
->   spin unlock
-> } else {
->   ...
-> }
->=20
-> or equivalent ideas.
-
-Ah, in other words: Narrowing the scope of the lock as far as possible.
-I'll keep it in mind for v2.
-
-
-> > > What about the GPIO library API that does some additional stuff?
-> >
-> > I don't know which gpiolib function would be appropriate here, sorry.
->=20
-> When you leave those request and release callbacks untouched the GPIO
-> library will assign default ones. You may see what they do.
-
-Ah, I see. I'll look into it.
-
-
-> ...
->=20
-> > > > +       if (!of_find_property(np, "gpio-controller", NULL))
-> > > > +               return -ENODEV;
-> > >
-> > > Dead code?
-> >
-> > The point here was to check if the node is marked as a GPIO controller,
-> > with the boolean property "gpio-controller" (so device_property_read_bo=
-ol
-> > would probably be more appropriate).
-> >
-> > However, since the gpio-controller property is already defined as
-> > required in the DT binding, I'm not sure it's worth checking here.
->=20
-> Exactly my point.
-
-Alright.
-
-
-Thanks,
-Jonthan Neusch=C3=A4fer
-
---DDWQ4B6GayNZj/6h
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmDGV4kACgkQCDBEmo7z
-X9s1ew/+MOmEBq0/62YYJrwtuBhjOqWUWoye5bwkJbFzS6rYDMgNnT/xc3UOBkeV
-4zL+GbDPdPwAToGEJABiz/7NdQcm95awPJP2Dif9zvNYPMrLXe19NEc+PhG33lZB
-9JL2XPefl58H3Xm7qrmx4roFA85rAuKJT9lu4UwdY382J3gJFupP2EcHFXDFpqqv
-lB6zGHdlrrsNRKjPsQ1C22B7hNBgcY8vKCurkeTgrPmn37QVipCkZMyrLat99FLi
-AUtdYRJcg1hwQD8RhGwyp9H0jbBDlbUWBhJr4JKd53mIElmB4K2J8krBVHccED1C
-iXNeRsgdjidJfz3vXLNh1vwdF0s0+4ScmtWmNvEPz2pJPx19Sh+UJFFni/P7KetC
-+fQUHyLvJnEi9EBwH2F/PnSS9jJKLAoDLD6hbaE9l5d9EhxJjHrlSU2Po6nRkUt4
-LTCyXqZ4sTPwUHQP0pWzi+sceflrjMTrRSY5itLr0cBCTvaqN7R9/kWuPHoaGLWO
-l5T6bsIKIXsrd3jHdbf/kyT2TGjBAi+0YAJMh156vxlm/zQbiGsGPVNDgW+1ghgV
-knmavClhOvzkqCKXWgUWfIMuJn9mF1bYSgQFNBvVkz5hTExzJyUAhSKXhKAqCOaA
-guOUkGM3kjpE1O2Z8mKaeXM0ZJmP6Y6m9eti9pFq0nV7CKr9a/U=
-=cSu3
------END PGP SIGNATURE-----
-
---DDWQ4B6GayNZj/6h--
+--
+Best regards,
+Artem Senichev
