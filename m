@@ -1,48 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACD363A98A8
-	for <lists+openbmc@lfdr.de>; Wed, 16 Jun 2021 13:04:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19BD93A9BB2
+	for <lists+openbmc@lfdr.de>; Wed, 16 Jun 2021 15:08:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G4j4P0mhfz30Ff
-	for <lists+openbmc@lfdr.de>; Wed, 16 Jun 2021 21:04:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G4lqy4y37z3bVD
+	for <lists+openbmc@lfdr.de>; Wed, 16 Jun 2021 23:08:46 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=HFaPoVh1;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.alibaba.com (client-ip=115.124.30.56;
- helo=out30-56.freemail.mail.aliyun.com;
- envelope-from=guoheyi@linux.alibaba.com; receiver=<UNKNOWN>)
-Received: from out30-56.freemail.mail.aliyun.com
- (out30-56.freemail.mail.aliyun.com [115.124.30.56])
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::236;
+ helo=mail-oi1-x236.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=HFaPoVh1; dkim-atps=neutral
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com
+ [IPv6:2607:f8b0:4864:20::236])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G4j484rDXz2ymV
- for <openbmc@lists.ozlabs.org>; Wed, 16 Jun 2021 21:04:07 +1000 (AEST)
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R971e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e04420; MF=guoheyi@linux.alibaba.com;
- NM=1; PH=DS; RN=9; SR=0; TI=SMTPD_---0UcblN9K_1623841429; 
-Received: from B-G4TALVDL-1650.local(mailfrom:guoheyi@linux.alibaba.com
- fp:SMTPD_---0UcblN9K_1623841429) by smtp.aliyun-inc.com(127.0.0.1);
- Wed, 16 Jun 2021 19:03:50 +0800
-Subject: Re: [Phishing Risk] [External] Re: Does it make sense to create a
- centralized fan control module?
-To: John Wang <wangzhiqiang.bj@bytedance.com>
-References: <f8e08249-d0e4-d632-c76b-495b8ce968d2@linux.alibaba.com>
- <3c72ee05-ec56-96ca-55da-6517307cd6a7@linux.alibaba.com>
- <71dfdfc0-1eff-efb6-094c-de71f6f8cc87@linux.alibaba.com>
- <CAH0XSJupSg54T_6qpPPHHBjHcR5OFZ3+VcaGEaP+PR+6F5ny1g@mail.gmail.com>
-From: Heyi Guo <guoheyi@linux.alibaba.com>
-Message-ID: <57aab765-1475-a7db-6918-08c31724d915@linux.alibaba.com>
-Date: Wed, 16 Jun 2021 19:03:49 +0800
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G4lqf6FtLz2xvZ
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Jun 2021 23:08:29 +1000 (AEST)
+Received: by mail-oi1-x236.google.com with SMTP id x196so2443546oif.10
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Jun 2021 06:08:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=ZCPj98NtI3w2bfLA/1Ln5oPu3F5F4rh6+J6E1GBHNVk=;
+ b=HFaPoVh1icbOhCFUkEhqyA94z6Buh8xKMvZDHcW6LkYnTTIUbGIhgZjQFh0F0oR/fd
+ IRipCWNX/+g1Yse1GFGR22IS/6B8Uxb6NezE3ypHy/SohMWrSMvmNpHh0cIZh0xXTmsl
+ OThTt+lvVxPinS4iBiD9Js0HCMo1qRKTI9br0+gVK6zKMdF9+XesNdTJQft8qp6gjqmB
+ E5M1y5B2/472EqkFFbuRWvsP7/qZoTbt5WJrY0bB2k3HI3U/NHndBDqmk/4cawfOoku+
+ ABKPbDvYt1yOZsoj6Mk/DUS5YplzQalyHml6NH8TW1SDoTuIfXRZF546oGYa85Qqa4+C
+ 0CXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=ZCPj98NtI3w2bfLA/1Ln5oPu3F5F4rh6+J6E1GBHNVk=;
+ b=csGT/3hbnMRtzlsGB4VO4FZDvfZ/9zYh8guc9f3YVzRsPEzo3X5n7/vB1OgRyzUehl
+ QYvLsJziR7VwW0EITv79oNB2qyx1EbHdFVfAhD38AXhQEeBYdcaf42RVa+86xTcYIcN9
+ 1r3/3fGmclpQsXgdafVcL4wVoaTmKvb7BtciIh6+2r3AL2YT4Ig32OPfUt5ePvg+WRLL
+ MW1Sxth8P7+aXf7AbJc7BW3BO/bvV5FoBuXTeZ6aLZ60ruYB2jNNndvDlPIz/1HvJ4AP
+ ofwcezLml52gxccoxLjsArPzii8WAV+rEmcYVi9ubJx77NdOlJZl0vEgVlpnjN4YAd4c
+ DozA==
+X-Gm-Message-State: AOAM532dcjLsEorUIrgVoSkAr3FXjw6nAoyJo4YivX2QznxdVXiWY8to
+ vnCuzDiYRHgYAZp4JgocbTuVMmaFN2npyg==
+X-Google-Smtp-Source: ABdhPJyFK9NhChRCInHXtVBab+vqQ5yv7Si8wjj1ruI1kevhC7/pxapaQcKM2Uv64EcoFhgX9z30Iw==
+X-Received: by 2002:a54:4802:: with SMTP id j2mr7144857oij.125.1623848900512; 
+ Wed, 16 Jun 2021 06:08:20 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-104-102.res.spectrum.com.
+ [72.182.104.102])
+ by smtp.gmail.com with ESMTPSA id l8sm456525ooo.13.2021.06.16.06.08.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Jun 2021 06:08:19 -0700 (PDT)
+Subject: Re: [SecurityworkGroup] Security response team - bug database needed
+To: Joseph Reynolds <jrey@linux.ibm.com>, openbmc <openbmc@lists.ozlabs.org>
+References: <5961cc98-ef84-f38b-e606-35f94c94c511@linux.ibm.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <982fc651-53ca-f5b8-825b-881579433569@gmail.com>
+Date: Wed, 16 Jun 2021 08:08:18 -0500
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
+ Gecko/20100101 Thunderbird/78.10.2
 MIME-Version: 1.0
-In-Reply-To: <CAH0XSJupSg54T_6qpPPHHBjHcR5OFZ3+VcaGEaP+PR+6F5ny1g@mail.gmail.com>
+In-Reply-To: <5961cc98-ef84-f38b-e606-35f94c94c511@linux.ibm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,90 +84,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Zhikui Ren <zhikui.ren@intel.com>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Vernon Mauery <vernon.mauery@linux.intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>,
- Josh Lehan <krellan@google.com>, Ed Tanous <edtanous@google.com>,
- Patrick Venture <venture@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi John,
+On 6/9/21 7:15 PM, Joseph Reynolds wrote:
+> This is a followup to a discussion in the security working group meeting 
+> held 2021-06-09 agenda item 11.
+> 
+> 
+> The security response team has difficulty tracking reported security 
+> vulnerabilities to closure and writing CVEs in a timely manner.  Having 
+> a confidential bug tracker would help.
+> Per Dick, the UEFI team uses bugzilla and has a restructured corner for 
+> the security response team: anyone can write a bug, but only security 
+> response team members can see it.
+> What are the best practices? How do we get a bug tracker which only 
+> OpenBMC security response team members can read?
 
-Thanks for your reply. Please see my comments inline.
+If I read this correctly, you are requesting a Bugzilla instance be 
+stood up to track security issues? Since we have no community project 
+budget to fund any type of hosting, nor any community interest to fund a 
+trust/budget, this would have to be a donated service. Maybe a 
+participating company would be willing to host and care for this service?
 
-On 2021/6/16 上午10:49, John Wang wrote:
-> On Wed, Jun 16, 2021 at 10:02 AM Heyi Guo <guoheyi@linux.alibaba.com> wrote:
->> Hi All,
->>
->> Any comments for my questions at the top of this thread?
->>
->> Thanks,
->>
->> Heyi
->>
->>
->> On 2021/6/11 上午9:23, Heyi Guo wrote:
->>> Please ignore my early emails; only this one is the final version. I
->>> must have misused some shortcut key to send the unfinished versions
->>> while I wanted to save it locally...
->>>
->>> Sorry for the noise.
->>>
->>> Heyi
->>>
->>> On 2021/6/11 上午9:14, Heyi Guo wrote:
->>>> Hi All,
->>>>
->>>> Right now fan related data like tacho and PWM is fetched in
->>>> dbus-sensors, and published to d-bus as sensor data, while fan
->>>> control is made in another module like pid-control, which can fetch
->>>> data and set value via d-bus.
->>>>
->>>> In some common sense, we may think about putting all fan related work
->>>> into one single module (which may be based on pid-control), i.e. it
->>>> can read tacho and PWM from hardware directly, calculate the required
-> As I understand it, if you just want to bypass dbus and read pwm/tach
-> directly you can refer to this.
-> https://github.com/openbmc/openbmc/blob/master/meta-quanta/meta-gsj/recipes-phosphor/fans/phosphor-pid-control/config-2ssd.json#L6-L7
+Alternatively, can the response team use a service that we already have? 
+Just thinking, I have no details, but maybe a new Github group/repo?
 
-Do you suggest to use sysfs interface to access pwm/tach? However, we 
-are using a I2C centralized fan controller and we don't have 
-corresponding kernel driver for it. We propose to access this device by 
-using /dev/i2c-<bus> interface directly in user mode.
+Kurt Taylor (krtaylor)
 
+> 
+> Joseph
+> 
 
->
->>>> PWM by some algorithm like PID, and then write to PWM hardware
->>>> directly; the data will also be published to d-bus for other modules
->>>> to consume, like fansensor from dbus-sensors.
->>>>
->>>> Does it make sense to do that? Or is there any reason for the current
->>>> design?
-> I don't know why it's designed this way, but are you experiencing any problems?
-Not really.
-> According to our past experience, pid-control reads/writes pwm/tach
-> quite smoothly,
-> but pid-control has some trouble reading the temperature of some
-> sensors via dbus.(eg psusensors).
-> That's another topic...
-
-As I mentioned above, there is no sysfs interface for fan pwm/tach on 
-our platform. We can only rely on dbus interfaces if using the upstream 
-phosphor-pid-control. Then we think about centralizing all fan related 
-hardware access into one module (like pid-control), but not sure if 
-there's any problem for this idea.
-
-Thanks,
-
-Heyi
-
->
->>>> I'm new to OpenBMC and some of my understanding may be totally wrong.
->>>>
->>>> Looking forward to your expert advice.
->>>>
->>>> Thanks,
->>>>
->>>> Heyi
