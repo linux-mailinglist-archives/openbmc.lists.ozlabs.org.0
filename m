@@ -1,71 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B36893AC0F7
-	for <lists+openbmc@lfdr.de>; Fri, 18 Jun 2021 04:48:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1A4F3AC0F8
+	for <lists+openbmc@lfdr.de>; Fri, 18 Jun 2021 04:48:50 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G5jzH2rn1z3byf
-	for <lists+openbmc@lfdr.de>; Fri, 18 Jun 2021 12:48:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G5jzj3MMpz3bt8
+	for <lists+openbmc@lfdr.de>; Fri, 18 Jun 2021 12:48:49 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=LjpFp3oM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ebuUmPo/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42d;
- helo=mail-pf1-x42d.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52d;
+ helo=mail-pg1-x52d.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=LjpFp3oM; dkim-atps=neutral
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com
- [IPv6:2607:f8b0:4864:20::42d])
+ header.s=20161025 header.b=ebuUmPo/; dkim-atps=neutral
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com
+ [IPv6:2607:f8b0:4864:20::52d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G5jyy556Dz304R
- for <openbmc@lists.ozlabs.org>; Fri, 18 Jun 2021 12:48:09 +1000 (AEST)
-Received: by mail-pf1-x42d.google.com with SMTP id h12so6576350pfe.2
- for <openbmc@lists.ozlabs.org>; Thu, 17 Jun 2021 19:48:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G5jz05Zsgz304R
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Jun 2021 12:48:12 +1000 (AEST)
+Received: by mail-pg1-x52d.google.com with SMTP id q15so6540340pgg.12
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Jun 2021 19:48:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=yNYmF7PqO31q32/niUOwyYFP21tAwYfkbKqtJbmz7Y8=;
- b=LjpFp3oMIZQ9bEMonQjO/TMZD7XrLoGGHe8qtIghQ6iKWAujjNvF21EoBcwn3ZfPni
- WANpF4EWtDoHkmQ/SUsPZLOYsObAiNKRc0sLzrihYSRYI2wdUDfHRZJFfNJDFK7TfJ/X
- fVdc29LTVQP+BZOSRSIVqhAdbhAghXP9G31nR/JmWrnZzngDIqw6W/QIuHfxRribOfd5
- P6EHJyN3d/TgdwDHLFwxO2g/BigrsaXjprP2HlbB3v+rzLoqOGJhcUHia2SApA+E4vtz
- O6rANB71rCsj9UuEik9MWYFRQBKKfA2Z78Nzsx5mYMOwYz6q7W3oGxu+1HzlACKaUAj0
- IBbA==
+ h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=J43ySVp80LALXvNjt8wktsjdaOK3qPz1jempH6uk6uY=;
+ b=ebuUmPo/c6/sdsLAsRvStYp2csR4mM3d7TvkZGC7BINqrHO5wdpc+WNKKtnDmzBTs2
+ i+E2jkX1BK3araxyZsMviJFdTMx3FfODL+9QvwWpRzh0E4y+bCYO2VWspHcAlYL4U0oY
+ nZWCUPb4J9n1ts0VGHOgb/y2B/baInQgZebLVKpGWO0q6KM9jPq/ZkizZ/v7mwsI6lwN
+ UhAxOUlsRW6RS8OYHEvxDzVWZT2Ja4U3tFXxNx8qzyIGyb2TfFl2idU1VFJfkEwaT/LM
+ 2wiDyWq3fAkyqVheLEPaqWwDWjcNrmf1A3Ary4Yl7Vz9aJ8NZElLwQiYhAZ9lJ18trL6
+ dQ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=yNYmF7PqO31q32/niUOwyYFP21tAwYfkbKqtJbmz7Y8=;
- b=twbG1hCv6jmP1aJ+fwNXgMFtw+iRZcQyGOWCyPkU+5bH5+PUatecHHoNOfQve8MFdd
- lXHEHIFnQZMNVOO3F8iTmUxI+oQNrWmUNUR7vmV+JRThuCkl0CEGAn2ZSiIlpjkDUzRJ
- /TMnLJgDsIqVe2co/4tr+42pt7XFkFeKNO3orwD65UUS4dTwcCmvcUdhXpYJg8YI3WMZ
- fOT0r1tJ3wA9oEWbvjprEAe7B+7aoS+DtLtpPLDJi0h7WbijO9+n4jzZt19Fd7lFKsAi
- vKKTGQ9ZLZ3n7bypq7QmkiP0yXUUATfcFvcHrSb+5kBUB9W5j8sLgPI9w5SEO0wBCR+e
- LmgA==
-X-Gm-Message-State: AOAM5337TYzopKlBBVV2nx/Xo6kGcZ7Fk89oai+++KBInTS/dO/kTcWN
- dipLDzIayiH1rfamhskL0Jsj2Ab8fSI=
-X-Google-Smtp-Source: ABdhPJxwGTH6bdUHPxXJ4chdKud+WrcyKG88bl2lJoMzEMQBBHp73khwkJ7xmt/7XF149SwUyj0tyQ==
-X-Received: by 2002:a62:7e8a:0:b029:2f8:183:8aa2 with SMTP id
- z132-20020a627e8a0000b02902f801838aa2mr2798394pfc.58.1623984486300; 
- Thu, 17 Jun 2021 19:48:06 -0700 (PDT)
+ :in-reply-to:references:mime-version:content-transfer-encoding;
+ bh=J43ySVp80LALXvNjt8wktsjdaOK3qPz1jempH6uk6uY=;
+ b=dPfunu9HdrQuJgHVyK40B+93e+oNN7fmDuwBDCCz6kqLNBI65a2zFSv3YnckAqxDxs
+ 2drPmfVnYMbYljwYJwtDEyBJN/Hhsz/WlvMlBUdNNit5BhCyV+fAFox/WqU9Zz/P3Wd3
+ CLjDryo8OO0FqG1N7uM/ZSxP+jslMprc2QhOTB6dVdl8jZtzkno5ZNmVIt0rMDnS+lwH
+ 2e8WL9nJtyn1gB9AWFvf3uT5RhM0VHRMpA5eUw7JuVLIOB8yy+Gyda1Qm4gofCrNHCvw
+ lKQ3+ojI04Pykou7LjxzKbvppCU5f1Pugz706J+xES+xcPdSKJH8hf3iJriCpL77/TQK
+ o4LA==
+X-Gm-Message-State: AOAM531z88g3hrq+bnFl14f37xTRoXJddesPj4xZTlqri9u7aC2l8cTh
+ i4vTvM0xjAWaX+Uc07c8ZBIuG9zBGTQ=
+X-Google-Smtp-Source: ABdhPJwXFZvZT36/xkix/o5rwjiZA+1ZinEKOhxki6B849s1dc+728ca4aQXnzOBaarpqpd1Gd/ZNw==
+X-Received: by 2002:a63:4c09:: with SMTP id z9mr7795827pga.283.1623984489303; 
+ Thu, 17 Jun 2021 19:48:09 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id t62sm6425224pfc.189.2021.06.17.19.48.03
+ by smtp.gmail.com with ESMTPSA id t62sm6425224pfc.189.2021.06.17.19.48.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Jun 2021 19:48:05 -0700 (PDT)
+ Thu, 17 Jun 2021 19:48:08 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
  Adriana Kobylak <anoo@us.ibm.com>
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 0/2] Store default u-boot env in
-Date: Fri, 18 Jun 2021 12:17:56 +0930
-Message-Id: <20210618024758.892642-1-joel@jms.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 1/2] Makefile: Conditionally
+ add defaultenv_h to envtools target
+Date: Fri, 18 Jun 2021 12:17:57 +0930
+Message-Id: <20210618024758.892642-2-joel@jms.id.au>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210618024758.892642-1-joel@jms.id.au>
+References: <20210618024758.892642-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -83,32 +85,32 @@ Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This patch adds the u-boot environment to the u-boot binary, and a build
-fix for the new configuration that I have also sent upstream.
+When building the envtools target with CONFIG_USE_DEFAULT_ENV_FILE=y,
+the tools require generated/defaultenv_autogenerated.h.
 
-We currently rely on the default environment being populated in the
-image. This has the downside that if something corrupts the environment,
-the system won't know how to boot itself.
+ In file included from tools/env/fw_env.c:126:
+ include/env_default.h:115:10: fatal error: generated/defaultenv_autogenerated.h: No such file or directory
+   115 | #include "generated/defaultenv_autogenerated.h"
+       |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ast2600_openbmc_mmc.txt is copied from
-meta-aspeed/recipes-bsp/u-boot/files/u-boot-env-ast2600.txt.
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
-The downside of this approach is we would need to keep the files in
-sync, or change the yocto tooling so the in-flash environment is
-generated from this copy.
-
-Please respond with your thoughts on this approach.
-
-Joel Stanley (2):
-  Makefile: Conditionally add defaultenv_h to envtools target
-  ast2600: Add environment for booting from mmc
-
- Makefile                                   | 2 ++
- board/aspeed/ast2600_openbmc_mmc.txt       | 9 +++++++++
- configs/ast2600_openbmc_spl_emmc_defconfig | 2 ++
- 3 files changed, 13 insertions(+)
- create mode 100644 board/aspeed/ast2600_openbmc_mmc.txt
-
+diff --git a/Makefile b/Makefile
+index be0d9ea5c5bc..e1fa881b2aa4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1581,6 +1581,8 @@ endif
+ 
+ ifeq ($(CONFIG_USE_DEFAULT_ENV_FILE),y)
+ prepare1: $(defaultenv_h)
++
++envtools: $(defaultenv_h)
+ endif
+ 
+ archprepare: prepare1 scripts_basic
 -- 
 2.32.0
 
