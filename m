@@ -2,93 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAF7F3ACF7B
-	for <lists+openbmc@lfdr.de>; Fri, 18 Jun 2021 17:52:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E39FA3ACF90
+	for <lists+openbmc@lfdr.de>; Fri, 18 Jun 2021 17:56:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G63Ml2v7cz3bxp
-	for <lists+openbmc@lfdr.de>; Sat, 19 Jun 2021 01:52:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G63T14s6Hz3byd
+	for <lists+openbmc@lfdr.de>; Sat, 19 Jun 2021 01:56:53 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=CV1Ej41d;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=i+GmdQdn;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
  helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=CV1Ej41d; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.s=pp1 header.b=i+GmdQdn; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G63MQ3HVlz304T
- for <openbmc@lists.ozlabs.org>; Sat, 19 Jun 2021 01:52:01 +1000 (AEST)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 15IFXbAN190005; Fri, 18 Jun 2021 11:51:55 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G63Sl2VQmz3076
+ for <openbmc@lists.ozlabs.org>; Sat, 19 Jun 2021 01:56:39 +1000 (AEST)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 15IFXH87076241; Fri, 18 Jun 2021 11:56:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : message-id :
- content-type : subject : date : in-reply-to : cc : to : references :
- mime-version; s=pp1; bh=hRqVdMLNbvboYkBiHuHxvqTS09wFetwuxzC7frWCnAw=;
- b=CV1Ej41djsYy9g7ODd0OM2uujdATi+2AALyc8RqS8On0eDTZmLc2+k2VvxfbMVMVJXYe
- MI/XK8bzTde/8QkkyZI5ul/BbSZoRhQICYeH9+B0nWU2UAzhxrnc0Tq+axcgHmBKrhty
- D/b1UG91bIHO2jujvhUlEZ1uEAUgIFFGf9RLfdBT4lLkmL9Ts2YQfnUAs/FnXjrvJwpA
- S0/21BDF7XN3j2hGu45ossdKtdG3JIIaR3IjqrnD433jGb8BHTreEATGrFET31qGOH3Y
- KP3MvDrEzDYuKFhUZ1aaC3plYwja7DGfthC0qYdaEZwgRjwabnvRQSkCguQXw4+6wxcg Lg== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0b-001b2d01.pphosted.com with ESMTP id 398x2q0un5-1
+ content-type : mime-version : subject : date : in-reply-to : cc : to :
+ references; s=pp1; bh=mDOq4C6RxnBMtg4/HyjffkMmyycH3X7VVqeDUPdNkP8=;
+ b=i+GmdQdn81uVJ7YGUbNNU0HURm/e/GdS77yjsXsN9VAtQmHRvG/yFPrc7j9F+FK3AQCv
+ Ign/6p7uD55z7SluZKxlu7daojLD0TwkyFmk/inbkebiu3nipEgOJcNn9p8baDYlrN44
+ NYOVrAq3ipmkH8GIKjHBody/4LdIdfQc6h6hMdtrBCFh3+zV7YmAXcbqTc0cSM+2mUfA
+ FyABE+r3nfCfVeZiBSJHw+XluF04I6ph8QETvUh6bYx/MXldIjZF0Pj7SLSNG3jVMBJK
+ /NsIc/MKT91lln1I1flyYXqka9Hg4nEDCfYAItBjTSi8tFyoerbjX+qTz9MVwSXiqHsg kg== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 398wxy1de4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Jun 2021 11:51:55 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 15IFhxUc005841;
- Fri, 18 Jun 2021 15:51:54 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma03dal.us.ibm.com with ESMTP id 394mjapwhy-1
+ Fri, 18 Jun 2021 11:56:32 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 15IFqPto024276;
+ Fri, 18 Jun 2021 15:56:31 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma04dal.us.ibm.com with ESMTP id 3980b9qekn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 18 Jun 2021 15:51:54 +0000
+ Fri, 18 Jun 2021 15:56:31 +0000
 Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
  [9.57.199.108])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 15IFprQC36962614
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 15IFuUj834603346
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 18 Jun 2021 15:51:53 GMT
+ Fri, 18 Jun 2021 15:56:30 GMT
 Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C0622B205F;
- Fri, 18 Jun 2021 15:51:53 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5825FB2064;
+ Fri, 18 Jun 2021 15:56:30 +0000 (GMT)
 Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 55F5CB2064;
- Fri, 18 Jun 2021 15:51:53 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C5FB3B205F;
+ Fri, 18 Jun 2021 15:56:29 +0000 (GMT)
 Received: from smtpclient.apple (unknown [9.160.178.31])
  by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
- Fri, 18 Jun 2021 15:51:53 +0000 (GMT)
+ Fri, 18 Jun 2021 15:56:29 +0000 (GMT)
 From: Adriana Kobylak <anoo@linux.ibm.com>
-Message-Id: <BC54E54F-CE3D-4DF9-8ABE-FB222EFA1BF7@linux.ibm.com>
+Message-Id: <0F554355-BB64-4136-83BA-A226AFD09AE7@linux.ibm.com>
 Content-Type: multipart/alternative;
- boundary="Apple-Mail=_6F9B9D1B-47B8-4FD0-9FD0-61CD73F646A3"
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 2/2] ast2600: Add
- environment for booting from mmc
-Date: Fri, 18 Jun 2021 10:51:52 -0500
-In-Reply-To: <20210618024758.892642-3-joel@jms.id.au>
-To: Joel Stanley <joel@jms.id.au>
+ boundary="Apple-Mail=_EC7E3084-775A-4BAD-BE70-E24AC9158BA3"
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 0/2] Store default u-boot
+ env in
+Date: Fri, 18 Jun 2021 10:56:28 -0500
+In-Reply-To: <d83a94d5-4e3e-4560-94d2-ea6f19b9e864@www.fastmail.com>
+To: Andrew Jeffery <andrew@aj.id.au>
 References: <20210618024758.892642-1-joel@jms.id.au>
- <20210618024758.892642-3-joel@jms.id.au>
+ <d83a94d5-4e3e-4560-94d2-ea6f19b9e864@www.fastmail.com>
 X-Mailer: Apple Mail (2.3654.100.0.2.22)
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: k3w-5zZ8QrRnx8FYhh6Y-idInzWlL7sO
-X-Proofpoint-ORIG-GUID: k3w-5zZ8QrRnx8FYhh6Y-idInzWlL7sO
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
-MIME-Version: 1.0
+X-Proofpoint-GUID: Vbq6XXE7NusOSmhiZovKr1yFoLOXoUyx
+X-Proofpoint-ORIG-GUID: Vbq6XXE7NusOSmhiZovKr1yFoLOXoUyx
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
  definitions=2021-06-18_07:2021-06-18,
  2021-06-18 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0
- lowpriorityscore=0 mlxlogscore=999 priorityscore=1501 malwarescore=0
- phishscore=0 bulkscore=0 clxscore=1011 mlxscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ clxscore=1015 bulkscore=0
+ spamscore=0 mlxscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 phishscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2104190000 definitions=main-2106180091
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -101,143 +100,151 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, OpenBMC <openbmc@lists.ozlabs.org>,
- Adriana Kobylak <anoo@us.ibm.com>, Eddie James <eajames@linux.ibm.com>
+Cc: OpenBMC <openbmc@lists.ozlabs.org>, Adriana Kobylak <anoo@us.ibm.com>,
+ Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---Apple-Mail=_6F9B9D1B-47B8-4FD0-9FD0-61CD73F646A3
-Content-Type: text/plain;
-	charset=us-ascii
+--Apple-Mail=_EC7E3084-775A-4BAD-BE70-E24AC9158BA3
 Content-Transfer-Encoding: quoted-printable
-
-Thanks Joel! There are some improvements to the boot command proposed here:=
- https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/41778 <https://gerr=
-it.openbmc-project.xyz/c/openbmc/openbmc/+/41778>
-Maybe we pick those changes up in this initial commit so the two environmen=
-t files are in sync? Otherwise we can submit a follow-up patch latest to up=
-date this .txt file.
+Content-Type: text/plain;
+	charset=utf-8
 
 
-> On Jun 17, 2021, at 9:47 PM, Joel Stanley <joel@jms.id.au> wrote:
+
+> On Jun 17, 2021, at 11:12 PM, Andrew Jeffery <andrew@aj.id.au> wrote:
 >=20
-> This adds the default environment from the OpenBMC project.
 >=20
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-
-Reviewed-by: Adriana Kobylak <anoo@us.ibm.com>
-
-> ---
-> board/aspeed/ast2600_openbmc_mmc.txt       | 9 +++++++++
-> configs/ast2600_openbmc_spl_emmc_defconfig | 2 ++
-> 2 files changed, 11 insertions(+)
-> create mode 100644 board/aspeed/ast2600_openbmc_mmc.txt
 >=20
-> diff --git a/board/aspeed/ast2600_openbmc_mmc.txt b/board/aspeed/ast2600_=
-openbmc_mmc.txt
-> new file mode 100644
-> index 000000000000..47a474c92d70
-> --- /dev/null
-> +++ b/board/aspeed/ast2600_openbmc_mmc.txt
-> @@ -0,0 +1,9 @@
-> +bootargs=3Dconsole=3DttyS4,115200n8
-> +boota=3Dsetenv bootpart 2; setenv rootfs rofs-a; run setmmcargs; ext4loa=
-d mmc 0:${bootpart} ${loadaddr} fitImage && bootm; echo Error loading kerne=
-l FIT image
-> +bootb=3Dsetenv bootpart 3; setenv rootfs rofs-b; run setmmcargs; ext4loa=
-d mmc 0:${bootpart} ${loadaddr} fitImage && bootm; echo Error loading kerne=
-l FIT image
-> +bootcmd=3Dif test "${bootside}" =3D "b"; then run bootb; run boota; else=
- run boota; run bootb; fi
-> +bootdelay=3D2
-> +bootside=3Da
-> +loadaddr=3D0x83000000
-> +rootfs=3Drofs-a
-> +setmmcargs=3Dsetenv bootargs ${bootargs} rootwait root=3DPARTLABEL=3D${r=
-ootfs}
-> diff --git a/configs/ast2600_openbmc_spl_emmc_defconfig b/configs/ast2600=
-_openbmc_spl_emmc_defconfig
-> index c5d03721c97a..344a4d8f9c96 100644
-> --- a/configs/ast2600_openbmc_spl_emmc_defconfig
-> +++ b/configs/ast2600_openbmc_spl_emmc_defconfig
-> @@ -83,6 +83,8 @@ CONFIG_CMD_MTDPARTS=3Dy
-> # CONFIG_SPL_EFI_PARTITION is not set
-> CONFIG_SPL_OF_CONTROL=3Dy
-> CONFIG_ENV_IS_IN_MMC=3Dy
-> +CONFIG_USE_DEFAULT_ENV_FILE=3Dy
-> +CONFIG_DEFAULT_ENV_FILE=3D"board/aspeed/ast2600_openbmc_mmc.txt"
-> CONFIG_NET_RANDOM_ETHADDR=3Dy
-> CONFIG_SPL_DM=3Dy
-> CONFIG_REGMAP=3Dy
-> --=20
-> 2.32.0
+> On Fri, 18 Jun 2021, at 12:17, Joel Stanley wrote:
+>> This patch adds the u-boot environment to the u-boot binary, and a =
+build
+>> fix for the new configuration that I have also sent upstream.
+>>=20
+>> We currently rely on the default environment being populated in the
+>> image. This has the downside that if something corrupts the =
+environment,
+>> the system won't know how to boot itself.
+>>=20
+>> The ast2600_openbmc_mmc.txt is copied from
+>> meta-aspeed/recipes-bsp/u-boot/files/u-boot-env-ast2600.txt.
+>>=20
+>> The downside of this approach is we would need to keep the files in
+>> sync, or change the yocto tooling so the in-flash environment is
+>> generated from this copy.
 >=20
+> I think we just go ahead with your approach here until such time that =
+we get sick of having to manually fix things up. When we get sick of it =
+we figure out how we want to solve the synchronisation problem. What you =
+have here is at least a step in the right direction.
+
+Agree we should get this change in, maintaining two files is a small =
+price for being able to boot the BMC if the environment gets corrupted.
+The u=E2=80=94boot recipe u-boot-aspeed-sdk_2019.04.bb is the one that =
+installs the txt file into the environment partition, so I=E2=80=99d =
+think it could grab the txt file from the u-boot source code instead. =
+I=E2=80=99ll look at that after the u-boot changes are merged.
 
 
---Apple-Mail=_6F9B9D1B-47B8-4FD0-9FD0-61CD73F646A3
+>=20
+> Andrew
+
+
+--Apple-Mail=_EC7E3084-775A-4BAD-BE70-E24AC9158BA3
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/html;
-	charset=us-ascii
+	charset=utf-8
 
 <html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dus-ascii"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" =
-class=3D""><div>Thanks Joel! There are some improvements to the boot =
-command proposed here:&nbsp;<a =
-href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/41778" =
-class=3D"">https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/41778</a=
-></div><div>Maybe we pick those changes up in this initial commit so the =
-two environment files are in sync? Otherwise we can submit a follow-up =
-patch latest to update this .txt file.</div><div><br =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><br =
+class=3D""><div><br class=3D""><blockquote type=3D"cite" class=3D""><div =
+class=3D"">On Jun 17, 2021, at 11:12 PM, Andrew Jeffery &lt;<a =
+href=3D"mailto:andrew@aj.id.au" class=3D"">andrew@aj.id.au</a>&gt; =
+wrote:</div><br class=3D"Apple-interchange-newline"><div class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: AvenirNext-Regular; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+AvenirNext-Regular; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: AvenirNext-Regular; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">On Fri, 18 Jun 2021, at 12:17, Joel Stanley wrote:</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: AvenirNext-Regular; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><blockquote type=3D"cite" style=3D"font-family: =
+AvenirNext-Regular; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D"">This patch adds the u-boot =
+environment to the u-boot binary, and a build<br class=3D"">fix for the =
+new configuration that I have also sent upstream.<br class=3D""><br =
+class=3D"">We currently rely on the default environment being populated =
+in the<br class=3D"">image. This has the downside that if something =
+corrupts the environment,<br class=3D"">the system won't know how to =
+boot itself.<br class=3D""><br class=3D"">The ast2600_openbmc_mmc.txt is =
+copied from<br =
+class=3D"">meta-aspeed/recipes-bsp/u-boot/files/u-boot-env-ast2600.txt.<br=
+ class=3D""><br class=3D"">The downside of this approach is we would =
+need to keep the files in<br class=3D"">sync, or change the yocto =
+tooling so the in-flash environment is<br class=3D"">generated from this =
+copy.<br class=3D""></blockquote><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: AvenirNext-Regular; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: AvenirNext-Regular; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">I think we just go ahead with your approach here until such =
+time that we get sick of having to manually fix things up. When we get =
+sick of it we figure out how we want to solve the synchronisation =
+problem. What you have here is at least a step in the right =
+direction.</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+AvenirNext-Regular; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""></div></blockquote><div><br =
+class=3D""></div>Agree we should get this change in, maintaining two =
+files is a small price for being able to boot the BMC if the environment =
+gets corrupted.</div><div>The u=E2=80=94boot =
+recipe&nbsp;u-boot-aspeed-sdk_2019.04.bb is the one that installs the =
+txt file into the environment partition, so I=E2=80=99d think it could =
+grab the txt file from the u-boot source code instead. I=E2=80=99ll look =
+at that after the u-boot changes are merged.</div><div><br =
 class=3D""></div><div><br class=3D""><blockquote type=3D"cite" =
-class=3D""><div class=3D"">On Jun 17, 2021, at 9:47 PM, Joel Stanley =
-&lt;<a href=3D"mailto:joel@jms.id.au" class=3D"">joel@jms.id.au</a>&gt; =
-wrote:</div><br class=3D"Apple-interchange-newline"><div class=3D""><div =
-class=3D"">This adds the default environment from the OpenBMC =
-project.<br class=3D""><br class=3D"">Signed-off-by: Joel Stanley &lt;<a =
-href=3D"mailto:joel@jms.id.au" class=3D"">joel@jms.id.au</a>&gt;<br =
-class=3D""></div></div></blockquote><div><br =
-class=3D""></div><div>Reviewed-by:&nbsp;Adriana Kobylak &lt;<a =
-href=3D"mailto:anoo@us.ibm.com" =
-class=3D"">anoo@us.ibm.com</a>&gt;</div><br class=3D""><blockquote =
-type=3D"cite" class=3D""><div class=3D""><div class=3D"">---<br =
-class=3D""> board/aspeed/ast2600_openbmc_mmc.txt =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 9 +++++++++<br class=3D""> =
-configs/ast2600_openbmc_spl_emmc_defconfig | 2 ++<br class=3D""> 2 files =
-changed, 11 insertions(+)<br class=3D""> create mode 100644 =
-board/aspeed/ast2600_openbmc_mmc.txt<br class=3D""><br class=3D"">diff =
---git a/board/aspeed/ast2600_openbmc_mmc.txt =
-b/board/aspeed/ast2600_openbmc_mmc.txt<br class=3D"">new file mode =
-100644<br class=3D"">index 000000000000..47a474c92d70<br class=3D"">--- =
-/dev/null<br class=3D"">+++ b/board/aspeed/ast2600_openbmc_mmc.txt<br =
-class=3D"">@@ -0,0 +1,9 @@<br =
-class=3D"">+bootargs=3Dconsole=3DttyS4,115200n8<br =
-class=3D"">+boota=3Dsetenv bootpart 2; setenv rootfs rofs-a; run =
-setmmcargs; ext4load mmc 0:${bootpart} ${loadaddr} fitImage &amp;&amp; =
-bootm; echo Error loading kernel FIT image<br class=3D"">+bootb=3Dsetenv =
-bootpart 3; setenv rootfs rofs-b; run setmmcargs; ext4load mmc =
-0:${bootpart} ${loadaddr} fitImage &amp;&amp; bootm; echo Error loading =
-kernel FIT image<br class=3D"">+bootcmd=3Dif test "${bootside}" =3D "b"; =
-then run bootb; run boota; else run boota; run bootb; fi<br =
-class=3D"">+bootdelay=3D2<br class=3D"">+bootside=3Da<br =
-class=3D"">+loadaddr=3D0x83000000<br class=3D"">+rootfs=3Drofs-a<br =
-class=3D"">+setmmcargs=3Dsetenv bootargs ${bootargs} rootwait =
-root=3DPARTLABEL=3D${rootfs}<br class=3D"">diff --git =
-a/configs/ast2600_openbmc_spl_emmc_defconfig =
-b/configs/ast2600_openbmc_spl_emmc_defconfig<br class=3D"">index =
-c5d03721c97a..344a4d8f9c96 100644<br class=3D"">--- =
-a/configs/ast2600_openbmc_spl_emmc_defconfig<br class=3D"">+++ =
-b/configs/ast2600_openbmc_spl_emmc_defconfig<br class=3D"">@@ -83,6 =
-+83,8 @@ CONFIG_CMD_MTDPARTS=3Dy<br class=3D""> # =
-CONFIG_SPL_EFI_PARTITION is not set<br class=3D""> =
-CONFIG_SPL_OF_CONTROL=3Dy<br class=3D""> CONFIG_ENV_IS_IN_MMC=3Dy<br =
-class=3D"">+CONFIG_USE_DEFAULT_ENV_FILE=3Dy<br =
-class=3D"">+CONFIG_DEFAULT_ENV_FILE=3D"board/aspeed/ast2600_openbmc_mmc.tx=
-t"<br class=3D""> CONFIG_NET_RANDOM_ETHADDR=3Dy<br class=3D""> =
-CONFIG_SPL_DM=3Dy<br class=3D""> CONFIG_REGMAP=3Dy<br class=3D"">-- <br =
-class=3D"">2.32.0<br class=3D""><br =
-class=3D""></div></div></blockquote></div><br class=3D""></body></html>=
+class=3D""><div class=3D""><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: AvenirNext-Regular; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: AvenirNext-Regular; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">Andrew</span></div></blockquote></div><br =
+class=3D""></body></html>=
 
---Apple-Mail=_6F9B9D1B-47B8-4FD0-9FD0-61CD73F646A3--
+--Apple-Mail=_EC7E3084-775A-4BAD-BE70-E24AC9158BA3--
 
