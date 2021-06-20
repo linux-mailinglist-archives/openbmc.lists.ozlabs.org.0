@@ -1,77 +1,45 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6430B3AD95D
-	for <lists+openbmc@lfdr.de>; Sat, 19 Jun 2021 12:17:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3658E3ADDC9
+	for <lists+openbmc@lfdr.de>; Sun, 20 Jun 2021 10:49:34 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G6Wtx1NNcz306J
-	for <lists+openbmc@lfdr.de>; Sat, 19 Jun 2021 20:17:29 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=JUfgaKxx;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G75v02LfMz3bv4
+	for <lists+openbmc@lfdr.de>; Sun, 20 Jun 2021 18:49:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.22; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=JUfgaKxx; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.alibaba.com (client-ip=115.124.30.133;
+ helo=out30-133.freemail.mail.aliyun.com;
+ envelope-from=guoheyi@linux.alibaba.com; receiver=<UNKNOWN>)
+Received: from out30-133.freemail.mail.aliyun.com
+ (out30-133.freemail.mail.aliyun.com [115.124.30.133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G6Wth1mNlz2yWy
- for <openbmc@lists.ozlabs.org>; Sat, 19 Jun 2021 20:17:15 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1624097824;
- bh=pUWqg54W1aADz7YDfDz1OgtQ7oXBYT2s7PJeI3X1NW4=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=JUfgaKxxGBrGh3bibpkb4jw9Ul3cu88f/87nLiHJS/q7DWEW+VpaKdAqR++NI45lT
- C2VO+U6lYJ05BhQtV+5YXtf73oDB9VopMyWzKppztQo19JftxzjpYpGVguajqR/UCA
- AttW9xLRW7Jp1HdllAY2sXV2NrC+b5Llyf3qLSgs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.214.247]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mv2xU-1l3XuK0AEq-00qyG7; Sat, 19
- Jun 2021 12:17:04 +0200
-Date: Sat, 19 Jun 2021 12:17:03 +0200
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH 4/8] dt-bindings: pinctrl: Add Nuvoton WPCM450
-Message-ID: <YM3EH6Cu2GsLjd3O@latitude>
-References: <20210602120329.2444672-1-j.neuschaefer@gmx.net>
- <20210602120329.2444672-5-j.neuschaefer@gmx.net>
- <20210615234558.GA1684841@robh.at.kernel.org>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G75tn0zMsz2yjS
+ for <openbmc@lists.ozlabs.org>; Sun, 20 Jun 2021 18:49:18 +1000 (AEST)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R821e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e01424; MF=guoheyi@linux.alibaba.com;
+ NM=1; PH=DS; RN=2; SR=0; TI=SMTPD_---0Ud-x2bY_1624178945; 
+Received: from B-G4TALVDL-1650.local(mailfrom:guoheyi@linux.alibaba.com
+ fp:SMTPD_---0Ud-x2bY_1624178945) by smtp.aliyun-inc.com(127.0.0.1);
+ Sun, 20 Jun 2021 16:49:05 +0800
+Subject: Re: Does it make sense to create a centralized fan control module?
+To: Ed Tanous <edtanous@google.com>
+References: <f8e08249-d0e4-d632-c76b-495b8ce968d2@linux.alibaba.com>
+ <CAH2-KxBJkBA1G6J5iMJ8nPEaX6qbO0qQGQ4ujhZ-TrZPjAS7oQ@mail.gmail.com>
+From: Heyi Guo <guoheyi@linux.alibaba.com>
+Message-ID: <2badabf6-1b45-f32d-856d-fe4023577ca7@linux.alibaba.com>
+Date: Sun, 20 Jun 2021 16:48:59 +0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Gfvb67XozB+au/Ks"
-Content-Disposition: inline
-In-Reply-To: <20210615234558.GA1684841@robh.at.kernel.org>
-X-Provags-ID: V03:K1:ySRazohGAFjgQt775MkM8h6zUwRgArurfbV/FAqh42AIuk3U7yW
- Fb0ralSgR/vtJr2LlzMViqSG1CVldpEBTBY5/Hhr+FLFydjBZ35nFLyFp+mAJjFeTEu+0qd
- vEK9EiqAzA4/dvJ89IjiUbyAc1fQ0RbbXP6Jkv6neBGGiHlSlk1u1DxuuSGZTJIfvbP6q7k
- TLYslpMhHMGkyftuFjEjA==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:R+G/zDXiB5Y=:mzD+Gg1RkHyUMfjgSFULEN
- Lhcsp/UOYvEBlDu+62yqP4w+2VgOoz+vxp34vqKIbNfhrp88s6PtTL7iG+EeLGYv0Q5N2Ts9N
- 4NOg2lb7vnA4+nfxQvU2fIn/GkDQ5v/F0d8PENZkAdcR0CwrEzMqNuFCL5llLRsNCiZgcwwu8
- ve+rmpy9fC/n3QT8hdl/rV4M+OiEBXHdxx/DbFxCVzUFvb8wayw3xGsSEbdQQlL0rf4Az3J4a
- 8iDDAaDiK8TH8yNC6h9r2chJu56Vty29g0NFYIZUIx1mgRn/F7NdPPdFGgUGR1zMTpiKPs4lP
- O4fjqKbPX5MWw885tDEV2HhsqvjpSZK20/BUx86/qFJ70nexOABvn70s6CXngpASr0hMfhY8G
- wWNusDA3oGslqWvu4/sBFcpwzdcpZ22oKyTyIAbjDjcBEl6xG2ThRuNzKmjTaesOY7XqoI7iW
- 9V/AyVmS2QXJ3iVZDK62XOeuzSEXe3jmpABpnK4xZcUmOatDAiipiTUdfs3lPDPf5gctvwMSb
- RXklePKMy4H0kW7uX1Z8BV+fmgfm9UW+Y+QxKRDOoruVLaPsnKnohxKTRZUShecS+sxy6U+jH
- 6OW8DF8i7p6ON9EcR3KIp1GrYeQLYiLlzyuhGmbHRJirBoVMU64vT4DBmdW2NKkJ8dFzSX/0V
- hZ8lhfwZaakvHB8NCabO2Ovzt8ffWLNj995r7yqbI1nCnvv2YTLU/CdM9SwsJ5IAmbtNHw4uH
- uiU4MoiDH700XKqNDwMstmhQb1eNFm8qZ+OfTCLmpLRMR3CuKPL8zBqvb+P8u2PlfcUewZbI9
- otua6hLfA5nhlKdKATBmaxmo79GCqjjYCgQYttDDfEzLSyAOPPYTikEawc7+lTTH3VOmko06h
- KMsoUm9tsyb5/jRO9gVxirgZ671lfzXnThUuOX9esFevbGKI2PKOZASwRwxO/2i4dOaCdX4XA
- 1J+A5Y1/Z8HG6OzAMtA7bEq2sGL2QnTyPBajykRINY5Pgd7SC81qJgXgYQdQ4gWJR8AcxSR9N
- D2HMGhSksUE0ti7fRsFgyeGzkd4X8R/6NryvGpwj0kM0libxAxOW9iceuXmIyPixNgiu1ps/p
- iEcQ/jdEcJEUUL9htl/Ir0s7DWkezcdkw+Ubcy84ifNf7AltMObULh0zA==
+In-Reply-To: <CAH2-KxBJkBA1G6J5iMJ8nPEaX6qbO0qQGQ4ujhZ-TrZPjAS7oQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,111 +51,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- openbmc@lists.ozlabs.org,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- Linus Walleij <linus.walleij@linaro.org>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Thanks for your comments; that sounds reasonable.
 
---Gfvb67XozB+au/Ks
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Heyi
 
-On Tue, Jun 15, 2021 at 05:45:58PM -0600, Rob Herring wrote:
-> On Wed, Jun 02, 2021 at 02:03:25PM +0200, Jonathan Neusch=C3=A4fer wrote:
-> > This binding is heavily based on the one for NPCM7xx, because the
-> > hardware is similar. One notable difference is that there are no
-> > sub-nodes for GPIO banks, because the GPIO registers are arranged
-> > differently.
-> >=20
-> > Certain pins support blink patterns in hardware. This is currently not
-> > modelled in the DT binding.
-> >=20
-> > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-> > ---
-[...]
-> > +properties:
-> > +  compatible:
-> > +    const: "nuvoton,wpcm450-pinctrl"
->=20
-> Don't need quotes.
-
-Ok, I'll remove them.
-
->=20
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  gpio-controller: true
-> > +
-> > +  '#gpio-cells':
-> > +    const: 2
-> > +
-> > +  interrupt-controller: true
-> > +
-> > +  "#interrupt-cells":
-> > +    const: 2
-
-and I just noticed the inconsistency in quotes here. I'll fix it.
-
-> > +
-> > +  interrupts: true
-> > +
-> > +patternProperties:
-> > +  # There are two kinds of subnodes:
-> > +  # 1. a pinmux node configures pin muxing for a group of pins (e.g. r=
-mii2)
-> > +  # 2. a pinctrl node configures properties of a single pin
-> > +  "^.*$":
-> > +    if:
-> > +      type: object
-> > +    then:
->=20
-> Don't do this hack for new bindings. Pick a node name pattern you can=20
-> match on.
-
-Ok.
-
->=20
-> > +      allOf:
-> > +        - $ref: pincfg-node.yaml#
-> > +        - $ref: pinmux-node.yaml#
-> > +      properties:
-[...]
-> > +        phandle: true
->=20
-> Needing this should be fixed now.
-
-Ok, I'll drop it.
-
-
-
-Thanks,
-Jonathan Neusch=C3=A4fer
-
---Gfvb67XozB+au/Ks
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmDNxB4ACgkQCDBEmo7z
-X9tBKw/9E2aL/JEYtxWOl9pHdUKEQ1dWghDn5bM+5blODa9NL2r2wE7ZqdSyMxwc
-g20MY053o4XwFt0S/ctzDonBtbhktpJLUaJAM6eXplC1atSdR0IGGGA7bNnCrQ0t
-G9vXW8attJAK1+1eINYK3HLLehSw5zRtkY7iO7XacCf+mAEplRtvh5GPyPj7VNt3
-vSdwEzdaM/uW/7wtkAbzUqtBG1zCSqCTtXn5Bd96yCVwBWPlyDEsecRTCqiDo3HG
-qCcME+UuzM4T70fy1heABFX2HeRehVvJ5f1pyZWsBAQB/XIA4SL8IFr4T3DXJwxn
-9mwdU6+NAGisGBqBowy9OZZ8KFUUXB7xNtr01SVLB/+LUYSG9XD1uM+Xq9c6LMsY
-0xS1Pqyv7BRA7LQzZkztclciHdtKbTCa0XLZ22xMd2V9xh/y1IeVFuraP4zExy24
-7LCX0XTK7Qy2lnpZMablJ9aAqK2syoC94/xSGXtvuROP57itM/FxdQ/wfYFKtbxQ
-eUcm/ifS2Bhg83U63SAKjLzBt+igIAMAlH8GmQL+eGfBapXJeUEeW6YBXoB+vb4u
-c0WPFbdKY6b/zuG60ZdnELqPEk92A1oBBPznlrUhtdALkBxLUaQSvd9pdNYCgsjm
-if4OeP/aKBz0tfhZOb+QFKMjhlAuewPosV8UQYGqH0uSxxoAe2M=
-=eRq1
------END PGP SIGNATURE-----
-
---Gfvb67XozB+au/Ks--
+On 2021/6/17 上午12:26, Ed Tanous wrote:
+> On Thu, Jun 10, 2021 at 6:19 PM Heyi Guo <guoheyi@linux.alibaba.com> wrote:
+>
+>> Hi All,
+>>
+>> Right now fan related data like tacho and PWM is fetched in
+>> dbus-sensors, and published to d-bus as sensor data, while fan control
+>> is made in another module like pid-control, which can fetch data and set
+>> value via d-bus.
+>>
+>> In some common sense, we may think about putting all fan related work
+>> into one single module (which may be based on pid-control), i.e. it can
+>> read tacho and PWM from hardware directly, calculate the required PWM by
+>> some algorithm like PID, and then write to PWM hardware directly; the
+>> data will also be published to d-bus for other modules to consume, like
+>> fansensor from dbus-sensors.
+>>
+> To some extent, this design revolves around flexibility.  Fans aren't
+> necessarily tacho devices, and sensors aren't necessarily hwmon devices, so
+> dbus is used as an abstraction to be able to make them all look the same.
+> For example, an NCSI NIC might have both a temperature and a fan that
+> phosphor-pid-control might want to control, but we don't want
+> phosphor-pid-control to take a dependency on NCSI.  While we could put all
+> code for all possible sensor types into one daemon, that opens us up to the
+> possibility that crashes could take down all of fan and thermal control,
+> including the failsafe behavior.  That would be an issue.
+>
+> It might be possible to handle these issues in a single daemon, but I
+> haven't really seen a design that covered all the cases;  Most
+> implementations tend to take the simple approach (hwmon sensor + tacho
+> device) and ignore the more complex setups.
+>
+>
+>> Does it make sense to do that? Or is there any reason for the current
+>> design?
+>>
+>> I'm new to OpenBMC and some of my understanding may be totally wrong.
+>>
+>> Looking forward to your expert advice.
+>>
+>> Thanks,
+>>
+>> Heyi
+>>
+>>
