@@ -2,69 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 401A33AE729
-	for <lists+openbmc@lfdr.de>; Mon, 21 Jun 2021 12:30:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B5833AE8E7
+	for <lists+openbmc@lfdr.de>; Mon, 21 Jun 2021 14:18:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G7m5B0N54z307n
-	for <lists+openbmc@lfdr.de>; Mon, 21 Jun 2021 20:30:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G7pTQ0hKLz2yYV
+	for <lists+openbmc@lfdr.de>; Mon, 21 Jun 2021 22:18:18 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=Hg+kAnMu;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=d3E2RnvR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2a;
- helo=mail-vs1-xe2a.google.com; envelope-from=deepak.kodihalli.83@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::32b;
+ helo=mail-wm1-x32b.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Hg+kAnMu; dkim-atps=neutral
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com
- [IPv6:2607:f8b0:4864:20::e2a])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=d3E2RnvR; dkim-atps=neutral
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com
+ [IPv6:2a00:1450:4864:20::32b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G7m4s4tvgz2yYV
- for <openbmc@lists.ozlabs.org>; Mon, 21 Jun 2021 20:30:20 +1000 (AEST)
-Received: by mail-vs1-xe2a.google.com with SMTP id v12so368021vsg.10
- for <openbmc@lists.ozlabs.org>; Mon, 21 Jun 2021 03:30:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G7pT84pSYz2yY7
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Jun 2021 22:18:02 +1000 (AEST)
+Received: by mail-wm1-x32b.google.com with SMTP id m3so10356344wms.4
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Jun 2021 05:18:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=qsjeLkPbrpKOhBzWGz9UmbOpkACf8WChv6WOAPdkMkc=;
- b=Hg+kAnMu3QnxV4UmVyfYOZgIFl/QL2d+Iycqlf7J9ymuboieEoK848f18PyOit7tSt
- XdscR0kz76w9xZjCSIpegczQ7d/e1ZWGELGcCL2UDGS1IxF8BA+jnHEi36AF+3/tPf4n
- ioqUPmnrU79mhuHjvOUbciWjL1aagql+OTu8FzOJsLiWaLie28N5gvL2fzfiY7U3oHwJ
- LSL53IUJ+EtytLQKPrSWKGTNclk+C6XngIf0g7eYLbtNlGlsB4P21fVC7IcTYTBQmBDX
- sgU9FW0F7KkV6Brm9jFRb/OYOyz8mPvC9WDKBBIZwHJRimMZV++LDBy+0LlX9Dq+Tuag
- g9vQ==
+ :cc; bh=tlG1B8mJ0Q/PG8U3mu178DGLMGbQRKySSvaoejZUuuY=;
+ b=d3E2RnvRg0cxvbcqPkc/p9hk/Tvy4QNDaezf2o3ZnT7SHklDRfwV7+flZWE1tWSDib
+ tJgD0xCE6cShDdf4anSgO+Nj+nnsvGRpc6JgzDRpMTCGYVa+2XpNX3+AjkOcynwz1R5l
+ yqkBK81j1KgAfplEcBVJF3vE5xZ5yf6iAGUkZ9XrVtU/Ei1niS5ijI7OTOBmvpJ1PY5S
+ 4HAkS/MU+Ug6BGpuguDUdlcoQGcCNAmPWckNcK8KAddGYdxL17qLXKEFmryIqcWsMIHv
+ qtid3X8iA/N5wAWqVqWkAQe0L0kOFfghPNXIKMcVAgGytxNTzHFgra0hKm0pOQDiDMaq
+ BNAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=qsjeLkPbrpKOhBzWGz9UmbOpkACf8WChv6WOAPdkMkc=;
- b=g5yy/MwCWLtvc7Qk2uPVraL1QzWh4I9eMNGq5aE2LwlrQ3t1qbnvlh7KCDXXsPDc7N
- FhvRRYaa5EhFtbbIvRmvYQw6UZF7Q4C29nx4Hw8WVHmiO5C34pds9Zz2BNIA0mKZikzQ
- zdUiBKUyRPDn4yjjoFTXmJYD/ZoAVIOXUPttJYIHymo3LtLmvnNo2/kVwSaNyCNe4bko
- y6nwqMYIUUwPORqPR1wT9SGDevQpTwHQmWNhnYXjsKBeXeIRFCvIQHucrQwIV7GYs6O6
- ME8U86hv29VjwD/yz+UADcRAYYYnP9tZOScqrW3bv04ClPBrFD4/FCmi4/CjMa27I5fP
- VjnQ==
-X-Gm-Message-State: AOAM530mZu0Aura1p4P+XjFJb48zDaAX+XjM/MlEgcsvcoCRaIFxIOtn
- fnAYTdHi3xeixAdzEUQxlhlJQyvlVZyX7gMqs4w=
-X-Google-Smtp-Source: ABdhPJy4Je0Tc+KG/aNHdpIG7xvnTJjRraUeWhLgj0/o8cKNSWaZBUnTN1fUhd2OBAXB1fVXwgHVfNoHc0w9MFKUqUw=
-X-Received: by 2002:a67:f3c1:: with SMTP id j1mr3272422vsn.43.1624271416265;
- Mon, 21 Jun 2021 03:30:16 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=tlG1B8mJ0Q/PG8U3mu178DGLMGbQRKySSvaoejZUuuY=;
+ b=siecHI3d7m7ixHDRz3osTiz4Yvq4sDIjZFljNM177ChHYfDD2eyqbIW7PozMXIgpLy
+ 3PD+pxG5MSTQhOzP3nGNSz+c2+hT5Pf2ZXiiVUW0frUFH+bt53Kg4ocv4erAFvkKOxOO
+ HFKe6D8a7E33+cRiGXD60BK5K8U/Uru6m+WyYKDtK+KODMQxRo0LEvs4mC2uQkSgZkvv
+ tO4K20q5M1B2YfMBT/WijeNRDVQ00kvrxpal4iT4UbnPnZIgnLyAB6a2fdLoSyZZwpQk
+ xeNZ8gUF0/iTrNqdhA9rrFZJnwPLjFt4wWoufRd9Hli/WgBZl7JKYcUGDL5550VZAcEE
+ o74w==
+X-Gm-Message-State: AOAM531gX2NEyTpjnFGe/qDsrinT5PO6YcJk8q0NrKorDWD1u79X29hh
+ RA8ORB+wMUOC2HX6k9TWpYIF6SylyRFyWrZImfsLiw==
+X-Google-Smtp-Source: ABdhPJwaM8kgwx/XsUntGYlbx7MydmBdPpChWItctynEGF7RQrRXwx+t/TJR4629oMXe0Gt0YjOks6txAzbLIj/L9qo=
+X-Received: by 2002:a05:600c:4e88:: with SMTP id
+ f8mr27026104wmq.14.1624277875254; 
+ Mon, 21 Jun 2021 05:17:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <HK0PR04MB29649E3C07F77FD2FA2B3223FD0A9@HK0PR04MB2964.apcprd04.prod.outlook.com>
- <HK0PR04MB2964EBAACD7025A165BB68C1FD0A9@HK0PR04MB2964.apcprd04.prod.outlook.com>
-In-Reply-To: <HK0PR04MB2964EBAACD7025A165BB68C1FD0A9@HK0PR04MB2964.apcprd04.prod.outlook.com>
-From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
-Date: Mon, 21 Jun 2021 16:00:05 +0530
-Message-ID: <CAM=TmwXsDhDFTCaHCwyAjnAJSggWjWLgeaCz9qN0BCwsDKRfWQ@mail.gmail.com>
+In-Reply-To: <HK0PR04MB29649E3C07F77FD2FA2B3223FD0A9@HK0PR04MB2964.apcprd04.prod.outlook.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Mon, 21 Jun 2021 05:17:44 -0700
+Message-ID: <CAH2-KxBoi-OBBGG8Rvo612RfosB+5Q9-Xa+ddqVWbSPNi1bBFg@mail.gmail.com>
 Subject: Re: Adding dependent service as Entity-manager to Ipmb-fru-service
 To: Kumar Thangavel <thangavel.k@hcl.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/alternative; boundary="000000000000c5d85805c545a978"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,50 +79,49 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Kumar,
+--000000000000c5d85805c545a978
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 21, 2021 at 3:02 PM Kumar Thangavel <thangavel.k@hcl.com> wrote=
+On Mon, Jun 21, 2021 at 2:28 AM Kumar Thangavel <thangavel.k@hcl.com> wrote=
 :
->
-> Classification: Public
->
-> Changing classification as Public.
->
->
->
-> From: Kumar Thangavel
-> Sent: Monday, June 21, 2021 2:58 PM
-> To: openbmc@lists.ozlabs.org
-> Cc: Ed Tanous <ed@tanous.net>; Patrick Williams <patrick@stwcx.xyz>; Velu=
-mani T-ERS,HCLTech <velumanit@hcl.com>
-> Subject: Adding dependent service as Entity-manager to Ipmb-fru-service
->
->
->
-> Classification: Confidential
+
+> Classification: *Confidential*
 >
 > Hi All,
 >
 >
 >
->            Ipmb-fru-device deamon trying to read some dbus objects from e=
-ntity-manager to get the ipmb bus details. Entity-manager daemon initially =
-taking some time to load all the dbus objects. But Ipmb-fru-device deamon s=
-tarts at system startup.
+>            Ipmb-fru-device deamon trying to read some dbus objects from
+> entity-manager to get the ipmb bus details. Entity-manager daemon initial=
+ly
+> taking some time to load all the dbus objects. But Ipmb-fru-device deamon
+> starts at system startup.
 >
 >
 >
 >            Since, Entity-manager deamon initially taking some time to loa=
-d all the dbus objects, ipmb-fru-device getting the below error.
+d
+> all the dbus objects, ipmb-fru-device getting the below error.
 >
 >
 >
->           Error :
+>           *Error* :
 >
->           =E2=80=9Cipmb-fru-device[345]:   what():  sd_bus_call: org.free=
-desktop.DBus.Error.UnknownObject: Unknown object '/xyz/openbmc_project/inve=
-ntory/system/board/Yosemite_V2_Baseboard/IpmbBus1'.=E2=80=9D
+>           =E2=80=9Cipmb-fru-device[345]:   what():  sd_bus_call:
+> org.freedesktop.DBus.Error.UnknownObject: Unknown object
+> '/xyz/openbmc_project/inventory/system/board/Yosemite_V2_Baseboard/IpmbBu=
+s1'.=E2=80=9D
 >
+
+The easiest way to explain this would be to just point you at code.  Every
+dbus-sensor daemon handles this race condition;  I'd recommend looking at
+the code in the relevant main(), and see how it does it.  If you have
+trouble understanding it, feel free to message back here with specific line
+numbers and questions and we should hopefully be able to get you sorted out=
+.
+
+
 >
 >
 >          When we restart EM deamon once, this error got resolved.
@@ -132,23 +129,156 @@ ntory/system/board/Yosemite_V2_Baseboard/IpmbBus1'.=E2=80=9D
 >
 >
 >          I tried to add EM service as dependent service to Ipmb-fru-devic=
-e service. Added EM service in =E2=80=9CWants=E2=80=9D, =E2=80=9CAfter=E2=
-=80=9D fields in Ipmb-fru-service service.
+e
+> service. Added EM service in =E2=80=9CWants=E2=80=9D, =E2=80=9CAfter=E2=
+=80=9D fields in Ipmb-fru-service
+> service.
 >
 >
 >
 >          But, still EM deamon taking some time load all the dbus objects.
 >
+
+This is intentional.  Because of the way hardware gets detected, new
+devices or different configurations could be loaded at any time.  Some
+devices aren't detected until the host OS boots for example, so we can't
+hold the service startup to wait for the entire system to be detected.
+
+
 >
 >
->          So, Could you please let us know to how to add the EM as depende=
-nt service. Or Please let us know if any other approach.
+>          So, Could you please let us know to how to add the EM as
+> dependent service. Or Please let us know if any other approach.
+>
+>
+>
+> Thanks,
+>
+> Kumar.
+> ::DISCLAIMER::
+> ------------------------------
+> The contents of this e-mail and any attachment(s) are confidential and
+> intended for the named recipient(s) only. E-mail transmission is not
+> guaranteed to be secure or error-free as information could be intercepted=
+,
+> corrupted, lost, destroyed, arrive late or incomplete, or may contain
+> viruses in transmission. The e mail and its contents (with or without
+> referred errors) shall therefore not attach any liability on the originat=
+or
+> or HCL or its affiliates. Views or opinions, if any, presented in this
+> email are solely those of the author and may not necessarily reflect the
+> views or opinions of HCL or its affiliates. Any form of reproduction,
+> dissemination, copying, disclosure, modification, distribution and / or
+> publication of this message without the prior written consent of authoriz=
+ed
+> representative of HCL is strictly prohibited. If you have received this
+> email in error please delete it and notify the sender immediately. Before
+> opening any email and/or attachments, please check them for viruses and
+> other defects.
+> ------------------------------
+>
 
-Isn't this supposed to be the other way around? A FRU daemon reads
-EEPROMs (or other means) and hosts raw FRU information on D-Bus, and
-then EM can add known D-Bus interfaces based on that. Either way, you
-may not need a dependency if you go by standard D-Bus signals
-(InterfacesAdded/PropertiesChanged).
+--000000000000c5d85805c545a978
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Regards,
-Deepak
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 21, 2021 at 2:28 AM Kumar=
+ Thangavel &lt;<a href=3D"mailto:thangavel.k@hcl.com">thangavel.k@hcl.com</=
+a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+
+
+
+
+
+<div lang=3D"EN-US">
+<div class=3D"gmail-m_-884049030016977109WordSection1">
+<p class=3D"MsoNormal" style=3D"margin-bottom:12pt">Classification: <b><spa=
+n style=3D"color:rgb(180,95,4)">Confidential</span></b><span style=3D"font-=
+size:12pt"><u></u><u></u></span></p>
+<p class=3D"MsoNormal">Hi All,<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 Ipmb-fru-device deamon trying to read some dbus objects from enti=
+ty-manager to get the ipmb bus details. Entity-manager daemon initially tak=
+ing some time to load all the dbus objects. But Ipmb-fru-device deamon star=
+ts at system
+ startup.<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 Since, Entity-manager deamon initially taking some time to load a=
+ll the dbus objects, ipmb-fru-device getting the below error.
+<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 <b>Error</b> :<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 =E2=80=9Cipmb-fru-device[345]:=C2=A0=C2=A0 what():=C2=A0 sd_bus_call: o=
+rg.freedesktop.DBus.Error.UnknownObject: Unknown object &#39;/xyz/openbmc_p=
+roject/inventory/system/board/Yosemite_V2_Baseboard/IpmbBus1&#39;.=E2=80=9D=
+</p></div></div></blockquote><div><br></div><div>The easiest way to explain=
+ this would be to just point you at code.=C2=A0 Every dbus-sensor daemon ha=
+ndles this race condition;=C2=A0 I&#39;d recommend looking at the code in t=
+he relevant main(), and see how it does it.=C2=A0 If you have trouble under=
+standing it, feel free to message back here with specific line numbers and =
+questions and we should hopefully be able to get you sorted out.</div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div lang=3D"=
+EN-US"><div class=3D"gmail-m_-884049030016977109WordSection1"><p class=3D"M=
+soNormal"><u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Whe=
+n we restart EM deamon once, this error got resolved.=C2=A0
+<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 I t=
+ried to add EM service as dependent service to Ipmb-fru-device service. Add=
+ed EM service in =E2=80=9CWants=E2=80=9D, =E2=80=9CAfter=E2=80=9D fields in=
+ Ipmb-fru-service service.
+<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 But=
+, still EM deamon taking some time load all the dbus objects.</p></div></di=
+v></blockquote><div><br></div><div>This is intentional.=C2=A0 Because of th=
+e way hardware gets detected, new devices or different configurations could=
+ be loaded at any time.=C2=A0 Some devices aren&#39;t detected until the ho=
+st OS boots for example, so we can&#39;t hold the service startup to wait f=
+or the entire system to be detected.</div><div>=C2=A0</div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex"><div lang=3D"EN-US"><div class=3D"gmail-m=
+_-884049030016977109WordSection1"><p class=3D"MsoNormal">
+<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 So,=
+ Could you please let us know to how to add the EM as dependent service. Or=
+ Please let us know if any other approach.<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Thanks,<u></u><u></u></p>
+<p class=3D"MsoNormal">Kumar.<u></u><u></u></p>
+</div>
+<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
+<hr>
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or
+ incomplete, or may contain viruses in transmission. The e mail and its con=
+tents (with or without referred errors) shall therefore not attach any liab=
+ility on the originator or HCL or its affiliates. Views or opinions, if any=
+, presented in this email are solely
+ those of the author and may not necessarily reflect the views or opinions =
+of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
+ disclosure, modification, distribution and / or publication of this messag=
+e without the prior written consent
+ of authorized representative of HCL is strictly prohibited. If you have re=
+ceived this email in error please delete it and notify the sender immediate=
+ly. Before opening any email and/or attachments, please check them for viru=
+ses and other defects.<br>
+<hr>
+</font>
+</div>
+
+</blockquote></div></div>
+
+--000000000000c5d85805c545a978--
