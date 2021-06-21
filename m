@@ -1,45 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3658E3ADDC9
-	for <lists+openbmc@lfdr.de>; Sun, 20 Jun 2021 10:49:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1625E3AE308
+	for <lists+openbmc@lfdr.de>; Mon, 21 Jun 2021 08:18:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G75v02LfMz3bv4
-	for <lists+openbmc@lfdr.de>; Sun, 20 Jun 2021 18:49:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G7fTm5lWzz3066
+	for <lists+openbmc@lfdr.de>; Mon, 21 Jun 2021 16:18:04 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Dj2pfkd8;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.alibaba.com (client-ip=115.124.30.133;
- helo=out30-133.freemail.mail.aliyun.com;
- envelope-from=guoheyi@linux.alibaba.com; receiver=<UNKNOWN>)
-Received: from out30-133.freemail.mail.aliyun.com
- (out30-133.freemail.mail.aliyun.com [115.124.30.133])
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::730;
+ helo=mail-qk1-x730.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=Dj2pfkd8; dkim-atps=neutral
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com
+ [IPv6:2607:f8b0:4864:20::730])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G75tn0zMsz2yjS
- for <openbmc@lists.ozlabs.org>; Sun, 20 Jun 2021 18:49:18 +1000 (AEST)
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R821e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e01424; MF=guoheyi@linux.alibaba.com;
- NM=1; PH=DS; RN=2; SR=0; TI=SMTPD_---0Ud-x2bY_1624178945; 
-Received: from B-G4TALVDL-1650.local(mailfrom:guoheyi@linux.alibaba.com
- fp:SMTPD_---0Ud-x2bY_1624178945) by smtp.aliyun-inc.com(127.0.0.1);
- Sun, 20 Jun 2021 16:49:05 +0800
-Subject: Re: Does it make sense to create a centralized fan control module?
-To: Ed Tanous <edtanous@google.com>
-References: <f8e08249-d0e4-d632-c76b-495b8ce968d2@linux.alibaba.com>
- <CAH2-KxBJkBA1G6J5iMJ8nPEaX6qbO0qQGQ4ujhZ-TrZPjAS7oQ@mail.gmail.com>
-From: Heyi Guo <guoheyi@linux.alibaba.com>
-Message-ID: <2badabf6-1b45-f32d-856d-fe4023577ca7@linux.alibaba.com>
-Date: Sun, 20 Jun 2021 16:48:59 +0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G7fTR2Dq8z2yhr
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Jun 2021 16:17:45 +1000 (AEST)
+Received: by mail-qk1-x730.google.com with SMTP id w21so13852351qkb.9
+ for <openbmc@lists.ozlabs.org>; Sun, 20 Jun 2021 23:17:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=yrlsYr9zBUctDOcfSWl3eF/Fi1Fb2YRf5onTOBAAuzI=;
+ b=Dj2pfkd8JIlsPYIvzwSRrFNJrhIxS7CtXkBPdWnCN8rF1iEbk2prq2I6OGtRJrKArL
+ cHsXmJqn9Sxfg/PvR8+UYD9v5/cyKtuaTU+5krrWXDw0Qq5JYI2aXJcoT49q7B2anQKc
+ 4W8JsuF/3VcRjzDUxi4lylwJ4Pf22T4wrVh+k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=yrlsYr9zBUctDOcfSWl3eF/Fi1Fb2YRf5onTOBAAuzI=;
+ b=UcjAmgZt2Gp333DQfmh28fRkVRmhP1wCCmlMUzX/+IaENNbG3BVyWA4docGZiXYOYj
+ 4BUm1heW1HQLfIVNM+rNENxGjLTL8ogs1G7WyHzG+6eIwesWAm+7vI8Ki5pz8uggaA3j
+ tGgaBlSBMQ86GfflGdoNYX71lGsaVYE2e/l33phRxcIJiASU8Zm16xyiLnpB4TQnnrl7
+ 0pYOOh7VePZ2hhLGVtBWXxNOrZCID64PIQn3oThQe39qJ14Wd6bUbOVwYN3TpvEy+2eT
+ EpXScm1fhEsqdfoBnlFyyzprBLHHoeoVCoARs4pH5hncGCwrkapRRc8q+jg08YlKrzSq
+ 7cSw==
+X-Gm-Message-State: AOAM530ZUFpqWkWiLt4PXT7WVGNl2QePs+Z0aIF6fQ4YnqeZjMDLluc9
+ bd93E796Hb6Pzs+QwafyzcExmWbN8/elAjC4ZrQ=
+X-Google-Smtp-Source: ABdhPJzDWRZJ9+m2XadIvrZF8J6Yj9TEtDC7pOxxu1lx3AbGwqC8aA99HSS6IfFToqIXIS9fIyT8543rCAUULrh/L+A=
+X-Received: by 2002:a05:620a:2099:: with SMTP id
+ e25mr21401430qka.487.1624256259231; 
+ Sun, 20 Jun 2021 23:17:39 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAH2-KxBJkBA1G6J5iMJ8nPEaX6qbO0qQGQ4ujhZ-TrZPjAS7oQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <20210618024758.892642-1-joel@jms.id.au>
+ <20210618024758.892642-3-joel@jms.id.au>
+ <CAGm54UFSRvCGNuqxoyKjFtM8CjLKxxprJcY+DjXjBOqaF-mJmg@mail.gmail.com>
+In-Reply-To: <CAGm54UFSRvCGNuqxoyKjFtM8CjLKxxprJcY+DjXjBOqaF-mJmg@mail.gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 21 Jun 2021 06:17:27 +0000
+Message-ID: <CACPK8XcC+bYV-KY0ueTZ8dczPs4Ty+j+K0RDT+Ud8NZZ01MHSw@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 2/2] ast2600: Add
+ environment for booting from mmc
+To: Lei Yu <yulei.sh@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,56 +74,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: Andrew Jeffery <andrew@aj.id.au>, openbmc <openbmc@lists.ozlabs.org>,
+ Adriana Kobylak <anoo@us.ibm.com>, Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks for your comments; that sounds reasonable.
+On Fri, 18 Jun 2021 at 03:12, Lei Yu <yulei.sh@bytedance.com> wrote:
+>
+> On Fri, Jun 18, 2021 at 10:49 AM Joel Stanley <joel@jms.id.au> wrote:
+> >
+> > This adds the default environment from the OpenBMC project.
 
-Heyi
+> > +CONFIG_DEFAULT_ENV_FILE="board/aspeed/ast2600_openbmc_mmc.txt"
+>
+> This is good, we hit an issue before that is related to the default
+> env not in the flash.
+> Could you kindly help to make the same change for other configs?
+> E.g. for ast2500/ast2600 evb config.
 
-On 2021/6/17 上午12:26, Ed Tanous wrote:
-> On Thu, Jun 10, 2021 at 6:19 PM Heyi Guo <guoheyi@linux.alibaba.com> wrote:
->
->> Hi All,
->>
->> Right now fan related data like tacho and PWM is fetched in
->> dbus-sensors, and published to d-bus as sensor data, while fan control
->> is made in another module like pid-control, which can fetch data and set
->> value via d-bus.
->>
->> In some common sense, we may think about putting all fan related work
->> into one single module (which may be based on pid-control), i.e. it can
->> read tacho and PWM from hardware directly, calculate the required PWM by
->> some algorithm like PID, and then write to PWM hardware directly; the
->> data will also be published to d-bus for other modules to consume, like
->> fansensor from dbus-sensors.
->>
-> To some extent, this design revolves around flexibility.  Fans aren't
-> necessarily tacho devices, and sensors aren't necessarily hwmon devices, so
-> dbus is used as an abstraction to be able to make them all look the same.
-> For example, an NCSI NIC might have both a temperature and a fan that
-> phosphor-pid-control might want to control, but we don't want
-> phosphor-pid-control to take a dependency on NCSI.  While we could put all
-> code for all possible sensor types into one daemon, that opens us up to the
-> possibility that crashes could take down all of fan and thermal control,
-> including the failsafe behavior.  That would be an issue.
->
-> It might be possible to handle these issues in a single daemon, but I
-> haven't really seen a design that covered all the cases;  Most
-> implementations tend to take the simple approach (hwmon sensor + tacho
-> device) and ignore the more complex setups.
->
->
->> Does it make sense to do that? Or is there any reason for the current
->> design?
->>
->> I'm new to OpenBMC and some of my understanding may be totally wrong.
->>
->> Looking forward to your expert advice.
->>
->> Thanks,
->>
->> Heyi
->>
->>
+That's a good idea.
+
+Do you use the mmc or nor flash to boot the ast2600 evb?
+
+For the ast2500, the existing built-in config should work, as long as
+it's pointing to the correct flash offset. If it's not, then we can
+either update the existing bootcmd, or add a .txt with the desired
+config.
