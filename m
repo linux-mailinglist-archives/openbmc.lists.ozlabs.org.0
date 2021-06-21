@@ -1,163 +1,168 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1248B3AE609
-	for <lists+openbmc@lfdr.de>; Mon, 21 Jun 2021 11:28:37 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F59E3AE613
+	for <lists+openbmc@lfdr.de>; Mon, 21 Jun 2021 11:32:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G7kjb5Bwsz306m
-	for <lists+openbmc@lfdr.de>; Mon, 21 Jun 2021 19:28:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G7knk6QR5z2yXd
+	for <lists+openbmc@lfdr.de>; Mon, 21 Jun 2021 19:32:10 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=StHUn5le;
-	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=StHUn5le;
+	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=BcGzVORo;
+	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=BcGzVORo;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
- (client-ip=40.107.130.133; helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ spf=permerror (SPF Permanent Error: Void lookup limit
+ of 2 exceeded) smtp.mailfrom=hcl.com (client-ip=2a01:111:f400:febd::71e;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
  envelope-from=thangavel.k@hcl.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=StHUn5le; 
+ header.s=selector2 header.b=BcGzVORo; 
  dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=StHUn5le; 
+ header.a=rsa-sha256 header.s=selector2 header.b=BcGzVORo; 
  dkim-atps=neutral
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-eopbgr1300133.outbound.protection.outlook.com [40.107.130.133])
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-sg2apc01on071e.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:febd::71e])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G7kjF5KGhz2yWG
- for <openbmc@lists.ozlabs.org>; Mon, 21 Jun 2021 19:28:15 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G7knP1wcdz2y6B
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Jun 2021 19:31:51 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vZfBOGq2DzcN9GjxzZl21SzVMqTpWO+lQ3QpiwB73eI=;
- b=StHUn5lebMtZYp0vZHNJqMkRqJWHVXGygLgnuRSRvWMvlD3HBqxbiW5PRifiYm5Cwm7/Ox++ZMDdJwpqygJ1QemuGdyJ/gYbnJGtN70qgqYp30JyxjV+Jw9DV46qy66/v0hN9LdhaoTAvxEE4fpNsgBFtv+jqAWkeCmeVRXJkgsQJvIuxUc1oggaTMGVvv+hIaRy8qDfbYMY4i6UN1RkajGrlZlwp9pZG6ZPAEpZF4GK3W/HcDWpDlkvw6n604/nu834JwL9nDBshQlpIGajp2E7l9bUKF5Jql6eX6hG7odT2MMjN3fm2+4HMqitZcKjauhbqEjnB5g2kDt2rZnabw==
-Received: from PS2PR01CA0024.apcprd01.prod.exchangelabs.com
- (2603:1096:300:2d::36) by SG2PR04MB3724.apcprd04.prod.outlook.com
- (2603:1096:4:9a::18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.19; Mon, 21 Jun
- 2021 09:28:08 +0000
-Received: from PU1APC01FT053.eop-APC01.prod.protection.outlook.com
- (2603:1096:300:2d:cafe::2d) by PS2PR01CA0024.outlook.office365.com
- (2603:1096:300:2d::36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.16 via Frontend
- Transport; Mon, 21 Jun 2021 09:28:08 +0000
+ bh=Sxw4CTwe7mwzkG0A5w8NVQ0ACH0SQhThK027ZW8nLLY=;
+ b=BcGzVORo4/567eYB51vZupoubkLNd55mw8Yws8z2RANf8YOxCHhpPbVs0lpnv+f1LaScIQkS/TitHEy+0z3bCNvxn/KfqoXhgVMGQQV8PjLipjqOvIFyrVHgD22iP0V0PhqkMFaOj99EQwJlJK+e5bc1aSaXsFsJHSBDKhu6y81EyetJg2B3hABCiH1tCRnjiSlDrsOZf0HIWIANsfdFLApP2PVor92mY15623gLJUMGomuL/CL3/Bw/nKnUnG7gcThl4F6cWeQSP/QeBvrJCCL6OV2vwK+Q2sPobEjePulM2nt/sYSuVMWGAMxN5vNsaas00vNTdx1veFiWE+5E/Q==
+Received: from PS2PR04CA0004.apcprd04.prod.outlook.com (2603:1096:300:55::16)
+ by SI2PR04MB4601.apcprd04.prod.outlook.com (2603:1096:4:126::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.16; Mon, 21 Jun
+ 2021 09:31:44 +0000
+Received: from HK2APC01FT106.eop-APC01.prod.protection.outlook.com
+ (2603:1096:300:55:cafe::2a) by PS2PR04CA0004.outlook.office365.com
+ (2603:1096:300:55::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.18 via Frontend
+ Transport; Mon, 21 Jun 2021 09:31:44 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.54)
  smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
  header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
  header.from=hcl.com;
 Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
  192.8.245.54 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.245.54; helo=APC01-SG2-obe.outbound.protection.outlook.com;
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (192.8.245.54) by
- PU1APC01FT053.mail.protection.outlook.com (10.152.253.128) with
+ client-ip=192.8.245.54; helo=APC01-HK2-obe.outbound.protection.outlook.com;
+Received: from APC01-HK2-obe.outbound.protection.outlook.com (192.8.245.54) by
+ HK2APC01FT106.mail.protection.outlook.com (10.152.249.181) with
  Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4242.16 via Frontend Transport; Mon, 21 Jun 2021 09:28:05 +0000
+ 15.20.4242.16 via Frontend Transport; Mon, 21 Jun 2021 09:31:43 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=m6bTIF+4WAu7B/3kqZcrzBbJ1uT4V21CxmWa6x9b0TkIyYmZndMu8bW5EZ1v2J/7Y7SBpCYVf/00dOWLeyWYXIx9Rhg+ageJWIS5bYqjB/q5hchOhEobDBemUqe/BLnWzEjNDaxDC0h9Pb3yrMrM16v9GCkZXC3Fy7ygXfqwoY4HXdoVJigRXJuci3MatU4f8KYYX7sgDRv1a4j5AdSXX2YZWv1LNJ2naYqC0qEtBPdFhdwMGNMMGhba71ORFSOAksXBW5roplJDbl8zmTcKuOl/ouKa91FQWg+O+VkhaBrCc0doXZ/rF/1EfwZBn3takm/z4tiWAXqbQafyXASYTg==
+ b=geBbqjakfUSCGCsG5WtWiQWge6S6T/G6fEW/4l+8xaIeD1svf5zZ18lxkPSV4hfkGcMNfKkI1MWUaY2aOpDk+eQTHGCAiR8EnBJcH1Ls+fX5A0TLVUdLP5P3x59T/JZhNDlidHtltHyLv3f3BN/jSxvSrsThdQMuIvABoxkJIGrT9bpkdxWHV6zm/8+JIA2E3bo2Ze5mggRSaoZWFBiK7sdv2hI4j7bV4Oi+tCtWDqz5rFuNaq2XhLIHrw46zodUA4VCD5S1YFJsu6ab/09+BtxEiiDDpOhlvNJJTND/5uC1caVqwHvDHfchDy27VZS10MSNlKtSlHZO+B9vlhcA0Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vZfBOGq2DzcN9GjxzZl21SzVMqTpWO+lQ3QpiwB73eI=;
- b=ofa6zidpckiy4D0+1paZ7msumenJkjfscgLRBQBsoC1TLY0Qx5QGhpllvSpoRr4qt0sZtcXoJ9pN5FZ282xoz3S+SmGm6xPoUii03E6XgO6TsOoUdgQU7St6bMiOQpZlw3Kd7oU3bT2+Iq65lV7HzvK3BCXYldFVKrHeMXDBNPQezBYeBD+xA+FIDAC6jhdedkbWIjVGFfnZN5bFzECO1Bj+NxBS/+ENmWQC1AeoXPa43i9ALow3h8GQmyxt/BM9e4g8qNeR9Xdf2ygag+aI5BBE9ykinVNyiLtGqPGw3myxWFy2zZoXbf8Z6eib0wD6zaOBwvQp1vwxfAdQTFvXDg==
+ bh=Sxw4CTwe7mwzkG0A5w8NVQ0ACH0SQhThK027ZW8nLLY=;
+ b=dFQXwM5HzYSP0oTbMF7Wzgkcvqwx0fnbveLJut9MTyukQMibJtP/Zyzbz5S4rUPN9BbPdbCHjBSMOIBrPlbkn191SJvJJwk+IjP/9NmxPZcVzGoidhu38xxwDDyCocIpUInZxKufJyji2eV1W+rrRDY6o16LevVijzOu8xtlXtR4qz7d6y1vEgCRrqfmy0COQV8MQAZBMa0xnIO7RBaiXEChGvHmaE5eKUsgHMtKUEKfMrSmY3x0g0rsqWyV6O3jy3FPb1hSr/Tjf+m+wjeFUXKP7ynP9aqBI7SIyuK7GqucBGbh71bRlHBJT2VF/9xhVEDf+p/85brseFasnxnA9Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
  header.d=hcl.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vZfBOGq2DzcN9GjxzZl21SzVMqTpWO+lQ3QpiwB73eI=;
- b=StHUn5lebMtZYp0vZHNJqMkRqJWHVXGygLgnuRSRvWMvlD3HBqxbiW5PRifiYm5Cwm7/Ox++ZMDdJwpqygJ1QemuGdyJ/gYbnJGtN70qgqYp30JyxjV+Jw9DV46qy66/v0hN9LdhaoTAvxEE4fpNsgBFtv+jqAWkeCmeVRXJkgsQJvIuxUc1oggaTMGVvv+hIaRy8qDfbYMY4i6UN1RkajGrlZlwp9pZG6ZPAEpZF4GK3W/HcDWpDlkvw6n604/nu834JwL9nDBshQlpIGajp2E7l9bUKF5Jql6eX6hG7odT2MMjN3fm2+4HMqitZcKjauhbqEjnB5g2kDt2rZnabw==
+ bh=Sxw4CTwe7mwzkG0A5w8NVQ0ACH0SQhThK027ZW8nLLY=;
+ b=BcGzVORo4/567eYB51vZupoubkLNd55mw8Yws8z2RANf8YOxCHhpPbVs0lpnv+f1LaScIQkS/TitHEy+0z3bCNvxn/KfqoXhgVMGQQV8PjLipjqOvIFyrVHgD22iP0V0PhqkMFaOj99EQwJlJK+e5bc1aSaXsFsJHSBDKhu6y81EyetJg2B3hABCiH1tCRnjiSlDrsOZf0HIWIANsfdFLApP2PVor92mY15623gLJUMGomuL/CL3/Bw/nKnUnG7gcThl4F6cWeQSP/QeBvrJCCL6OV2vwK+Q2sPobEjePulM2nt/sYSuVMWGAMxN5vNsaas00vNTdx1veFiWE+5E/Q==
 Received: from HK0PR04MB2964.apcprd04.prod.outlook.com (2603:1096:203:5d::15)
- by HK0PR04MB2627.apcprd04.prod.outlook.com (2603:1096:203:65::13)
+ by HK2PR0401MB2162.apcprd04.prod.outlook.com (2603:1096:202:7::23)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.22; Mon, 21 Jun
- 2021 09:28:03 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.19; Mon, 21 Jun
+ 2021 09:31:41 +0000
 Received: from HK0PR04MB2964.apcprd04.prod.outlook.com
  ([fe80::2c97:c270:68a3:2fb2]) by HK0PR04MB2964.apcprd04.prod.outlook.com
  ([fe80::2c97:c270:68a3:2fb2%4]) with mapi id 15.20.4150.035; Mon, 21 Jun 2021
- 09:28:03 +0000
+ 09:31:41 +0000
 From: Kumar Thangavel <thangavel.k@hcl.com>
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Adding dependent service as Entity-manager to Ipmb-fru-service
+Subject: RE: Adding dependent service as Entity-manager to Ipmb-fru-service
 Thread-Topic: Adding dependent service as Entity-manager to Ipmb-fru-service
-Thread-Index: Addmc/ZZ5PCR+QoITnuDoPAFw/NnXQ==
-Date: Mon, 21 Jun 2021 09:28:03 +0000
-Message-ID: <HK0PR04MB29649E3C07F77FD2FA2B3223FD0A9@HK0PR04MB2964.apcprd04.prod.outlook.com>
+Thread-Index: Addmc/ZZ5PCR+QoITnuDoPAFw/NnXQADGpsA
+Date: Mon, 21 Jun 2021 09:31:41 +0000
+Message-ID: <HK0PR04MB2964EBAACD7025A165BB68C1FD0A9@HK0PR04MB2964.apcprd04.prod.outlook.com>
+References: <HK0PR04MB29649E3C07F77FD2FA2B3223FD0A9@HK0PR04MB2964.apcprd04.prod.outlook.com>
+In-Reply-To: <HK0PR04MB29649E3C07F77FD2FA2B3223FD0A9@HK0PR04MB2964.apcprd04.prod.outlook.com>
 Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-hclclassification: HCL_Cla5s_C0nf1dent1al
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiMmQwMDk5NWQtOTJkYi00OTY2LTk3NDctZDBiY2VlYzg0YjhjIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX0MwbmYxZGVudDFhbCJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6Im5vYlg2ekZ5cTNaVk84OVk0VFFyR3pxbVNIZkdQK0tKNDhvYUJzWnRkME9FSnc3VE1ac0xjVStHMmpwWnhaT3kifQ==
+x-hclclassification: HCL_Cla5s_Publ1c
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiMmQwMDk5NWQtOTJkYi00OTY2LTk3NDctZDBiY2VlYzg0YjhjIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX1B1YmwxYyJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6IjV0YVJIZTFXVnZvMVVIY1h2V0VPNWp2eUVuV2RQNlhcL0d6OEtZa21KVnF2bjMrRVNCdlE5eWtBOGZIbDFpc2VaIn0=
+x-hcl_cla5s_d6: True
 Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
  signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
  header.from=hcl.com;
 x-originating-ip: [106.211.243.235]
 x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: ab558d67-e0e6-4a38-c91a-08d93496e05a
-x-ms-traffictypediagnostic: HK0PR04MB2627:|SG2PR04MB3724:
+X-MS-Office365-Filtering-Correlation-Id: 13e6f4e8-474b-4fa4-2414-08d934976241
+x-ms-traffictypediagnostic: HK2PR0401MB2162:|SI2PR04MB4601:
 x-ms-exchange-transport-forked: True
-X-Microsoft-Antispam-PRVS: <SG2PR04MB37240575A5B2425A365A8AA0FD0A9@SG2PR04MB3724.apcprd04.prod.outlook.com>
+X-Microsoft-Antispam-PRVS: <SI2PR04MB4601452DE590F36FFA75F7D8FD0A9@SI2PR04MB4601.apcprd04.prod.outlook.com>
 x-ms-oob-tlc-oobclassifiers: OLM:10000;OLM:8273;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: KB1psAXYi/5Ma6BXmPDwtPO/hBtJm6+VY54HHJWrz3LwYmfEj2Ct7N/Cc1ZvBD6u0l3fhBH4Qc1f2p4AnmFXyKlW9wDyhZsq+e5QeZKaagWISCNTj4lpLU+dLQM1vIv5a7yE2lfSFVgtDoaWHExM1amL6NfaODEgy4g4dDD7X2SN3fi/DbM4INTiLHmWLgqS0A9l8487aga3bq1RvuXH4f5f6+uI3m0Vr1V1crkD4Y+Th/a9G+OpkcIgMPXRAc4FOo6tGg+DEB5/PzrggOg64UB24uo6o0+Gp0OHkcwn0WiE7fIfK9vUAI2Iyl28gpYTed4NprWn5385IGs3YObA4GSkUpEMUKn2zZJTPMX1rSopgMRRpP5hgh8O4gLGfXF7A2GhLGsBatvHZqOW9Ggn0ZsO+1FZhL6dRapGoWt6YY3Uo9es2rnGEcT5sabk/SfYxdfqxVwn2r2kpkVuf9SiIRjiSxsEklbf0TKswQl+1Ziq+2l+ZgwMOc9pt2U+wrdlGS5zRW5I4JOTOnpsWb4woBGtxjtmEMo92nwXoOb2fsdhXuaBdZIlRXBcXDSxmBY70vpleyV87QpsL29HAiwWn4bsM40uAAGk41dFQMlnWhM=
+X-Microsoft-Antispam-Message-Info-Original: 40n1tHYLYVh50p3dWlpqwR1HKQr8hscPHyoGKVIdqC9xPy/emGt7QJjJ9vm6G+EMNaXkApLn03KBKbDyxFVZj8qwM9k4j5Xeiipcb1bYXqE4b0ovvX9Tl9Qi4eSUlI2ZAIYFnEtMY6z/JFns6WJl0y6qdNjgCsZAHcg3QvkMEFlgIqorRtl6yv6M5v7Fr3fEKtMjdlwwfdjg716dHKpe0L6xVZK/Nd63EJspAylwx0R/TplBlOmuynjt9PoNuL+EZpIqFkzIEh4Ru6Bk2JZgZR1uPED6goVM6y66JwkriQswVVilvAc4Fpic93QXNnuCX54D6CCXkYBvkvtT/+M4946l8oTCtMmv8km56MGR/E69gVTmqpkXITq9D+Rh7YsBr2U1BOqkwwaXBK5rMn3u3eymUIh0EsyxyJBad4q/WhXwscSmQN2gjq5a5NtLiW9v8WexqKRIdow5Ka2MU4PLmL31i50TjXgZQ5tc9BPuMPDC8O+LzLVFULMDtcrAjKlJgu0LQyDXj/5saRkyLj5yApRStqAx1/HCT++w1fvG0kxREwHS9jiIVoK6OSvqfAmtImW6yTJPEu+HtOuUi72UleG0pWEo0K5Ao4Sls9JSVjo=
 X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
  SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:HK0PR04MB2964.apcprd04.prod.outlook.com;
  PTR:; CAT:NONE;
- SFS:(4636009)(376002)(396003)(39860400002)(346002)(136003)(366004)(186003)(26005)(55236004)(6506007)(8676002)(8936002)(6916009)(86362001)(2906002)(54906003)(316002)(7696005)(122000001)(33656002)(71200400001)(38100700002)(66946007)(52536014)(55016002)(66446008)(76116006)(66476007)(478600001)(9686003)(66556008)(5660300002)(83380400001)(4326008)(64756008);
+ SFS:(4636009)(39860400002)(346002)(366004)(396003)(136003)(376002)(8936002)(9686003)(4326008)(76116006)(478600001)(38100700002)(186003)(53546011)(55016002)(26005)(122000001)(8676002)(6506007)(6916009)(83380400001)(71200400001)(5660300002)(33656002)(52536014)(2940100002)(86362001)(55236004)(2906002)(66556008)(66476007)(64756008)(66446008)(7696005)(54906003)(66946007)(316002);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?uUVa7F1VMg/uAO3Gy9vp/5mV8Iuujkz11vE4kwbM6Dj5biggm0WVInoxP2tE?=
- =?us-ascii?Q?t7+41m3JihJkP4zcGpcIcQ5cRBUdxt18lnFcAe8f6IgZIe5ZRiMHd2ySj6yV?=
- =?us-ascii?Q?OpkEg/s27LD5ahlH5bHg8m+mgzXXsc8cCnrndm41tBVHHxbN8uuH7IK5+yVT?=
- =?us-ascii?Q?qU+pHg9+EjXclGePpNdNGLBjWIL0BM2Z3CD1aOrcCv8KRfueoJ8E5Lct4lxH?=
- =?us-ascii?Q?g1CfgSkFMNdy6CfZcG/WoiOEyVIbUYuPOFxl+7Gz5xmvWz1zyytGam1BO8sM?=
- =?us-ascii?Q?eADy2iSxwaP9jDoFyj+Do3dcXV0kFUUiuomZoCvZ+5kRvzB/PoFvw+yyPTQX?=
- =?us-ascii?Q?BNmpg/bgmKPp/TZkdBq7xEeL7CHOncQS/jthQFu3jPefhtbENTAyEDeAclUl?=
- =?us-ascii?Q?p5sFzIRA1Cr0CGJQriG7qt2o8dGfuJIV+fDbnKPz3ZBU/vrmy/EGdsKFrRSb?=
- =?us-ascii?Q?LETew4e63iLUqK0wwq73NU1Ldvn3NEN13lY9ce9lYGVyi/UYdYW4fIYDrjRA?=
- =?us-ascii?Q?kQseXaWHEIYmXgckXTwZPYKFID79agg5cn6IOoguXcMGHRSdwrCppOOUVr4/?=
- =?us-ascii?Q?ScmsTt0c/yHg0PyxX9MjyRY+ZVjCvTp6fdoxoDa3o/p09WJlv0XNr8NNA0sY?=
- =?us-ascii?Q?QLDXDpcWEPuql6iTEwmRZ8gN6TKxk8ZGrAygGm8Om/saZKSp9HZZdaxFwC4u?=
- =?us-ascii?Q?5xwRE4abmZBv/dpS6PWgFC0kc3x8CsuH2dMFMRhRDJvoukl6rlCiUjrV5t0X?=
- =?us-ascii?Q?F8VIittNdORL2kcYM9fk5+zUylv3W8lAo8PuryOOpdZc4gqqZ+Ta6wTmaLxC?=
- =?us-ascii?Q?Ny/GWBn+RseIFZ9xCceoWeTJDsoxuCGfVcbaQvzjye/mAw0kFUIhKHykV8sn?=
- =?us-ascii?Q?4eSuhAIfH36Y+Tyi0tqGiupHEEnGSJlc25UdzHxLw6Fh7KNDU+3D9QBKCVSe?=
- =?us-ascii?Q?HPoFoJj8bEIfhJsoPLRwD7LZXGxUxAy54TDdsshs/IPxrK7DIL0YG4pTfq8K?=
- =?us-ascii?Q?hIWWir4zwLBEugmrIKwEZ+LGzfqIOiFpw9+hvSJFrGbE2No1Mu234YnOUT2z?=
- =?us-ascii?Q?I0JjuKjXQa/XyNr1Fz1hjBWDRUYtkWpX/RBCYkEi5f7REf9Uc+2539nqPWSB?=
- =?us-ascii?Q?OZlDBM0Wpe+mbIC5O7/v7STU39H9fok1THqMHTywu3dgoBJZ4kk6AubZ+Hoz?=
- =?us-ascii?Q?ZxaphiCDFDgI/nV2+Yn4MkJcn5pEKsEFSBj1wWi71eAgw9X3VBgUFZMFTjS/?=
- =?us-ascii?Q?V9+tfITH+4BuF+6Vj22LF/1pf0W6NKH2e2OxF26nRvSGyEsPBA6qzosCylKe?=
- =?us-ascii?Q?pMeSOyqHzPy9lGg7x1uNmt6X?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?oyrsCiPJXdSYfs8483pCDFFcTpBO47iHoPJpSTb/DpirgZEnAgo4a+U41q03?=
+ =?us-ascii?Q?snsLwGKHXiDNSU17UcxU06/CaRSB8FVA0qdqsMO55Uj2fm+qLvV/W4kiN/Vg?=
+ =?us-ascii?Q?ugcU1YaiXFyQsGItVVYVh2T5m+qHuCi5WPKd9usw7ukBQjLUedOisR6EOfHr?=
+ =?us-ascii?Q?1XQUZK3kdJ+oycEHvQYxqY5lNTxDCcNiQeUIie4fFF//6XH3U4JxAxsk5SBU?=
+ =?us-ascii?Q?7l/bR+A4FWWW0h6R5gyzfwWy+R6bOf/dw2hO5Xb+r6F6WuXjC77EpEnMGvF9?=
+ =?us-ascii?Q?whXXeYz5QnXy3NZxyD75l//oriMvmBFIwZIzh2Lb1Km9CIOWMqh4wPFMB5T2?=
+ =?us-ascii?Q?8mie41/tMtKb/GFslKqAegzwoH7oczGPZjN7OLyW28ksP+ph6flptsko5cMF?=
+ =?us-ascii?Q?cdzmK7ae5gwsWCLa7qRr5pAsM04SP5g+ZNJwKxMaszkMD2EugFTaCrYkzYuf?=
+ =?us-ascii?Q?EV6qSB8OIKjEg9t5fKCMlfsNGgdOlqXGgl+jrgDvPKhdahrEnvTJ7/9yC89e?=
+ =?us-ascii?Q?IZQRLxKU7qOcqsJG337wftnNbKThEwtxBavMwECXI15ub4Ge3LsgVLUrZnkB?=
+ =?us-ascii?Q?qJh7v0pj15WafQw5NZZiBenpca8i2GU/WCeQi1zpdGVR++1oiPTKcSquGTcS?=
+ =?us-ascii?Q?w1VX6tx3olTzXt0xoIJltZGm2kb+YsXGAohhq45+tw678TxRATRmnTjbHkio?=
+ =?us-ascii?Q?lgcIzaUzot7yPlLyYIs35pgt09YZ/UJ47Vvn87Q65TNm34eFnTQzlFZn+o2u?=
+ =?us-ascii?Q?YC5PscNAwDQjZzvCDUjdUsXC+pF8trJyxIsVhJFlKaXcL6DcoNTag5eYgNp2?=
+ =?us-ascii?Q?X0ZXwVtZ0OjWmzQ/SliJTUI9u2EY6r9u2RfVyBQlPrI0A+2o3z8ONnr+JfLC?=
+ =?us-ascii?Q?FoKoz567FoQ8nvHnHkGbwv0KMKRyfUAagYd5K9KJEvExzc063tgBAXKG6eLQ?=
+ =?us-ascii?Q?4RPgK9jQFNrOwNsiG/6UonYwIiFYQXsYcGX40iwFuaVbfrVbwdCtrX9RzvFq?=
+ =?us-ascii?Q?bYasPspG07AmLvU+b2op3Zj9osUQkYJQa/BWxvq0Vn0fxNf8YCcU+eDSxwwf?=
+ =?us-ascii?Q?+YoG/cPsBpefs50BSwqyyR7lEfM3/DMyckn34yPlPbkrWbipnpnQheMHHMjQ?=
+ =?us-ascii?Q?MJqLd3hKPjJ/mSTIq3DIVrb2tdExBz/EOCaKEPssdUTCGNuPlWPWyLDcCn1O?=
+ =?us-ascii?Q?OW3SgLjJkOBESyc/6yUcy22IayPEkZpPIWT2SJ+RrtygDVZgHUZ/4BsEwGvN?=
+ =?us-ascii?Q?CgHDoESmE1sDzmn4D3D/YrXI2dIsUlJhFV0hFLUEHOsqFBb+LyMGjeqhQtoL?=
+ =?us-ascii?Q?pGqxt5LJ/HzcAB4MqHpCRcbg?=
 Content-Type: multipart/alternative;
- boundary="_000_HK0PR04MB29649E3C07F77FD2FA2B3223FD0A9HK0PR04MB2964apcp_"
+ boundary="_000_HK0PR04MB2964EBAACD7025A165BB68C1FD0A9HK0PR04MB2964apcp_"
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR04MB2627
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR0401MB2162
 X-DLP: MSGProcess
 X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: PU1APC01FT053.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 8709aeed-a3df-4f1c-e1cb-08d93496de91
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: HK2APC01FT106.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: c65513e3-ff8a-4436-632a-08d934976092
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: omZ/AJBpy+2KfoAWx0xcQZ3a6HaN09iXPwDi0O9vlxm4L5bKJj5RMA0Yt1nliwdCxI11IQsE1LE4xImUWd9/vRFh/Ff6UQyiFkCUNuzr3nvPZm/Zc5550YOE2ydNzsHfrlmfSTjjuLwa8d40KxBnJgzq72EkViWjifc5SBlsOdX1QfrzGQnbgwgXLUf81DjvHgslK95duz5AWmI3K4Cl47CH7Px829mcbMgmD1GsezrDulrKfnkdMkVnU2WQlscslcHHU50re2JSy8JX8TRTrFgJp5VuTobTJk18oh8zGxjW4THOQ1l/XVaZ6ONtO/nEyGtBFyvGPES5iAEOvKNndCvWAKZ4q0dKF+1p9/EVWSmaR5QBKwKRKQwj1c3/Ao/mPcLBngyL64FRfR0axF6JgiWw9BBXtjDHP9eeFQG2iPgCm0t7Z/wA5ozf3e3FRLMB6tXQOgCp5EZsoRVVmtpxHQ2U6Q0NXuSn28+Eu/gqpVkO4JuQnnu73ZYfNkbJZA50G/lqGTiJmb23jSwEJwkZ9WqARAaWCuceRAbQkXrV6pOSlb3j/UOsnwUI3Boqyajo7uAYhZRAZwjGDVhGuazr6QM5aplip5E+yLc3LWkRTwP9y+B3Cb2T1DLPUfhtz05pT6fq+tgdhYK6TU/WRFSVjOPj7kRvmA0+zOOwUZ1hk03b8vHt21NBbgzff5Rz4j5L
+X-Microsoft-Antispam-Message-Info: FCozxjKB7gO3VCQnmg8Uwg3TRVogGgn1FvH/KEmNukmHA/QEEkA94bIj25SAXyeYp32dHQO/WDg4dcetkq8KESnwe2yYHOnaankR8j/TN/FCnOQh3m8cye19Th5dF1GwS52Nlu4J2a5ws333tzvk7INSKGH2NQ+KenxeVFEQf4nmDSuZG5X9s6VqP3AD55Kplni7yMg9D934bZ5gFpQCCDR4d9fcqikVq+oXUIbfx/KyhNfIXK+z1lhXcWwd1FJtvriO0uptYbZNEGf9XYOzV9RlaXHKQm0JeSVlFksUrTXhhHBPwpLf1Jzh8lp0NfbocmpPxdUZIkdpDdBTqs/QTdw7LmFmZel8A+/prn/j/zh6i5xkca+PML+upaTmU9UV/ZDq9WySc20sO17vriQsCj7ilbul+tstl/ur4z1f0Hd9Xm3EFeJlVqphBdNU4mdyXWmcjRsn1KyFeVW7jg6UNJXLRgb+2GFVBFb0XFsbPBOaO05qR3ir9NKuqdTOSsAmTSs2aRkqHPuQrMGxg9IYqpYJUSZU26crXYsUUJWVc6uJdAs+ggtLfCbf+qYMh8S9lsEzbkMH8NNsVwU/uSR5kWeYw25SEcDXRkEJElCxNTm3OQIzMSJuc5pznWhxVkKMwB8TMZhp/ybLtF5u6Uo2dGiubFKqrwGiLbwea+PneNKDQw6OdC2m/Uf3ytSlvuxf
 X-Forefront-Antispam-Report: CIP:192.8.245.54; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-SG2-obe.outbound.protection.outlook.com;
+ IPV:NLI; SFV:NSPM; H:APC01-HK2-obe.outbound.protection.outlook.com;
  PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(39860400002)(136003)(346002)(376002)(396003)(46966006)(36840700001)(83380400001)(356005)(33656002)(6506007)(70586007)(316002)(478600001)(6916009)(336012)(26005)(52536014)(8676002)(47076005)(5660300002)(55236004)(86362001)(4326008)(7696005)(8936002)(9686003)(36860700001)(54906003)(55016002)(186003)(82740400003)(2906002)(81166007)(36906005)(70206006)(82310400003)(36900700001);
+ SFS:(4636009)(346002)(136003)(376002)(39860400002)(396003)(36840700001)(46966006)(2940100002)(336012)(82740400003)(36860700001)(82310400003)(33656002)(81166007)(54906003)(6916009)(4326008)(5660300002)(47076005)(36906005)(316002)(356005)(9686003)(70586007)(7696005)(86362001)(2906002)(8676002)(478600001)(55016002)(55236004)(186003)(6506007)(52536014)(53546011)(8936002)(83380400001)(26005)(70206006)(36900700001);
  DIR:OUT; SFP:1102; 
 X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jun 2021 09:28:05.7303 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ab558d67-e0e6-4a38-c91a-08d93496e05a
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jun 2021 09:31:43.7660 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 13e6f4e8-474b-4fa4-2414-08d934976241
 X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.54];
- Helo=[APC01-SG2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT053.eop-APC01.prod.protection.outlook.com
+ Helo=[APC01-HK2-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: HK2APC01FT106.eop-APC01.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB3724
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR04MB4601
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -174,9 +179,19 @@ Cc: Ed Tanous <ed@tanous.net>, "Velumani
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_HK0PR04MB29649E3C07F77FD2FA2B3223FD0A9HK0PR04MB2964apcp_
+--_000_HK0PR04MB2964EBAACD7025A165BB68C1FD0A9HK0PR04MB2964apcp_
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
+
+Classification: Public
+Changing classification as Public.
+
+From: Kumar Thangavel
+Sent: Monday, June 21, 2021 2:58 PM
+To: openbmc@lists.ozlabs.org
+Cc: Ed Tanous <ed@tanous.net>; Patrick Williams <patrick@stwcx.xyz>; Veluma=
+ni T-ERS,HCLTech <velumanit@hcl.com>
+Subject: Adding dependent service as Entity-manager to Ipmb-fru-service
 
 Classification: Confidential
 Hi All,
@@ -225,7 +240,7 @@ y prohibited. If you have received this email in error please delete it and=
 , please check them for viruses and other defects.
 ________________________________
 
---_000_HK0PR04MB29649E3C07F77FD2FA2B3223FD0A9HK0PR04MB2964apcp_
+--_000_HK0PR04MB2964EBAACD7025A165BB68C1FD0A9HK0PR04MB2964apcp_
 Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
@@ -262,13 +277,25 @@ a:visited, span.MsoHyperlinkFollowed
 	{mso-style-priority:99;
 	color:#954F72;
 	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
+span.EmailStyle18
+	{mso-style-type:personal;
 	font-family:"Calibri",sans-serif;
 	color:windowtext;}
+span.EmailStyle19
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:#1F497D;}
 .MsoChpDefault
 	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
+	font-size:10.0pt;}
 @page WordSection1
 	{size:8.5in 11.0in;
 	margin:1.0in 1.0in 1.0in 1.0in;}
@@ -283,6 +310,29 @@ div.WordSection1
 </head>
 <body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
 <div class=3D"WordSection1">
+<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
+pan style=3D"color:green">Public</span></b><span style=3D"font-size:12.0pt"=
+><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:#1F497D">Changing classificatio=
+n as Public.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:#1F497D"><o:p>&nbsp;</o:p></spa=
+n></p>
+<div>
+<div style=3D"border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0in =
+0in 0in">
+<p class=3D"MsoNormal"><a name=3D"_____replyseparator"></a><b>From:</b> Kum=
+ar Thangavel
+<br>
+<b>Sent:</b> Monday, June 21, 2021 2:58 PM<br>
+<b>To:</b> openbmc@lists.ozlabs.org<br>
+<b>Cc:</b> Ed Tanous &lt;ed@tanous.net&gt;; Patrick Williams &lt;patrick@st=
+wcx.xyz&gt;; Velumani T-ERS,HCLTech &lt;velumanit@hcl.com&gt;<br>
+<b>Subject:</b> Adding dependent service as Entity-manager to Ipmb-fru-serv=
+ice<o:p></o:p></p>
+</div>
+</div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
 <p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
 pan style=3D"color:#B45F04">Confidential</span></b><span style=3D"font-size=
 :12.0pt"><o:p></o:p></span></p>
@@ -352,4 +402,4 @@ ses and other defects.<br>
 </body>
 </html>
 
---_000_HK0PR04MB29649E3C07F77FD2FA2B3223FD0A9HK0PR04MB2964apcp_--
+--_000_HK0PR04MB2964EBAACD7025A165BB68C1FD0A9HK0PR04MB2964apcp_--
