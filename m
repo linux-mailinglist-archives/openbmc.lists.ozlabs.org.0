@@ -2,53 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 989BA3AFA51
-	for <lists+openbmc@lfdr.de>; Tue, 22 Jun 2021 02:49:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B0C323B054F
+	for <lists+openbmc@lfdr.de>; Tue, 22 Jun 2021 14:56:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G878Y2swqz3083
-	for <lists+openbmc@lfdr.de>; Tue, 22 Jun 2021 10:49:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G8RGT3YYTz30L4
+	for <lists+openbmc@lfdr.de>; Tue, 22 Jun 2021 22:56:01 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=RfizE3Fm;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::731;
+ helo=mail-qk1-x731.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=RfizE3Fm; dkim-atps=neutral
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com
+ [IPv6:2607:f8b0:4864:20::731])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G878L2GpMz2yWn
- for <openbmc@lists.ozlabs.org>; Tue, 22 Jun 2021 10:49:33 +1000 (AEST)
-IronPort-SDR: Pd2OALRACGoFlxqMVK/KM7gnKBOhEXdN5UBQLw6nRPaOI4LY1PSC2l3IBeI1hJb4rGzbhY0ReH
- Peott2RS25XA==
-X-IronPort-AV: E=McAfee;i="6200,9189,10022"; a="186650459"
-X-IronPort-AV: E=Sophos;i="5.83,290,1616482800"; d="scan'208";a="186650459"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jun 2021 17:49:29 -0700
-IronPort-SDR: E60lyvm13ihBjMSsUHG5Ks9xdDgtBiJ7kZN3mbvy8veK7jmpFSeJjQLs0BaywXpxD/C2vnd0tJ
- k/+vglNz0s3A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.83,290,1616482800"; d="scan'208";a="556437487"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga001.fm.intel.com with ESMTP; 21 Jun 2021 17:49:29 -0700
-Received: from [10.212.255.136] (jmbills-MOBL.amr.corp.intel.com
- [10.212.255.136])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 429B65808BA
- for <openbmc@lists.ozlabs.org>; Mon, 21 Jun 2021 17:49:29 -0700 (PDT)
-Subject: Re: Are redfish event logs persistent across reboot?
-To: openbmc@lists.ozlabs.org
-References: <SG2PR02MB2796FB3D6D6A8C7E7E478878850E9@SG2PR02MB2796.apcprd02.prod.outlook.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <106950ac-8977-a84b-3178-577e519f62c2@linux.intel.com>
-Date: Mon, 21 Jun 2021 18:49:28 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G8RGC4Hs6z304j
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Jun 2021 22:55:46 +1000 (AEST)
+Received: by mail-qk1-x731.google.com with SMTP id c23so3604198qkc.10
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Jun 2021 05:55:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=EQT+jb/cezkeIQ0brD4G6hPZVgUvJHrJEstySOuyTFc=;
+ b=RfizE3Fm/1Fh6wd2u26tedNrU8y//ZfJaNrRKDZ2whpIXV5SNISdNq4s/lumZxPQtO
+ ZvTug9KOrM1hQqIGuPlpsKNK3zGozlOTLZDXWq29ck5KobtVQVEuunnfDTBaOE84hHwP
+ N0UesaGwz9WytFB2HELRFzgsJWWiHml12WDYo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=EQT+jb/cezkeIQ0brD4G6hPZVgUvJHrJEstySOuyTFc=;
+ b=LsXBKSCJE51nAEvEy2GZI/hSwp2f0w3gGRAksCmqMOo7e9xc8KSOvrdkakhARH1X/D
+ IMPw8bq7hNf0OIjQNev9X3+0Qd5fGk9XsC03DhL94AaEd1aM+/5oDaWOIQE/ACmakW4a
+ 6KnHBdf/hgx8RHWBPt4MExDqI2cg1+9KBmtnuLSVjlVyiOzuCS6DcUWvwKOIlrdw4yYP
+ ECEgrcv5wbzI3XAtc7J8Ry01cFjGY4XMDyGCHMKidQtTje1uLe6bPA7C2DNGsj97D91n
+ WEO1DrkxxGH5mTW2Mk6mbm0cSBqkN9Q9ixagBJtyNLD0X9yO9E4e2J6kACGSBrwdNenK
+ q9Gw==
+X-Gm-Message-State: AOAM533fCnt6aGY7YKK2h+UdJIfsD/lPPnwf3GVT1xm9fIVzihcsZosV
+ xz3APrl18zakU3YH8fAwy1EhTM+4PaYjm3CWVAE=
+X-Google-Smtp-Source: ABdhPJyrLJFNUy6PqW8fCOiJznLCbeuAiEj6TLaQ2TCyCBpKKu+ZKKBLELkN0EDgj8mljV+gFg842gF8+0ecfOAMWJY=
+X-Received: by 2002:ae9:f401:: with SMTP id y1mr3955520qkl.273.1624366540951; 
+ Tue, 22 Jun 2021 05:55:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <SG2PR02MB2796FB3D6D6A8C7E7E478878850E9@SG2PR02MB2796.apcprd02.prod.outlook.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210618151436.2266046-1-anoo@linux.ibm.com>
+In-Reply-To: <20210618151436.2266046-1-anoo@linux.ibm.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 22 Jun 2021 12:55:28 +0000
+Message-ID: <CACPK8XfoqoebdX48ORPO=go0XZQC8XU4DvADZ1r+31k_oy=z1A@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] configs: aspeed-common:
+ Add redundant env for mmc
+To: Adriana Kobylak <anoo@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,32 +71,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Adriana Kobylak <anoo@us.ibm.com>, Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Fri, 18 Jun 2021 at 15:14, Adriana Kobylak <anoo@linux.ibm.com> wrote:
+>
+> From: Adriana Kobylak <anoo@us.ibm.com>
+>
+> If the env is in MMC, specify the location of the redundant environment.
+> Per the ast2600_openbmc_spl_emmc_defconfig, the environment is located
+> at byte offset 0x5000 in the user data partition, and is sized at
+> 0x10000. The redundant environment follows it immediately and is the
+> same size.
+>
+> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+> Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
+> ---
+>  include/configs/aspeed-common.h | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/include/configs/aspeed-common.h b/include/configs/aspeed-common.h
+> index 8f404570b1..59449d36d0 100644
+> --- a/include/configs/aspeed-common.h
+> +++ b/include/configs/aspeed-common.h
+> @@ -83,6 +83,7 @@
+>  #ifdef CONFIG_ENV_IS_IN_MMC
+>  #define CONFIG_SYS_MMC_ENV_DEV         0
+>  #define CONFIG_SYS_MMC_ENV_PART                0
+> +#define CONFIG_ENV_OFFSET_REDUND       0x15000
+
+Would it make more sense to write it like this:
+
+#define CONFIG_ENV_OFFSET_REDUND (CONFIG_ENV_OFFSET + CONFIG_ENV_SIZE)
 
 
-On 6/16/2021 9:22 PM, Udupa.Ashwini ISV wrote:
-> Hi,
-> 
-> Are redfish event logs(/var/log/redfish) persistent across reboot?
-This depends on how your filesystem is mounted.
-
-We used to directly mount /var to our non-volatile flash partitions but 
-because of another feature requirement we now mount /var as an overlay 
-on /tmp:
-https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-phosphor/preinit-mounts/preinit-mounts/init#L76
-
-Then we have another service that periodically rsyncs the /tmp overlay 
-into the non-volatile flash partition to persist the redfish logs:
-https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-core/nv-sync/nv-sync/nv-syncd
-> 
-> Currently, I see that old logs are lost after reboot and 
-> /var/log/redfish is newly written.
-> 
-> Is this the current design?
-> 
-> Regards,
-> 
-> Ashwini
-> 
+>  #endif
+>
+>  #endif /* __ASPEED_COMMON_CONFIG_H */
+> --
+> 2.25.1
+>
