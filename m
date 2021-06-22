@@ -2,163 +2,165 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDB693B0B4E
-	for <lists+openbmc@lfdr.de>; Tue, 22 Jun 2021 19:19:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D4D543B0B57
+	for <lists+openbmc@lfdr.de>; Tue, 22 Jun 2021 19:21:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G8Y6F5RZKz30Dr
-	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 03:19:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G8Y8q4BFwz308c
+	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 03:21:31 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=dXJFf9nj;
-	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=dXJFf9nj;
+	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=CHnKVQtK;
+	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=CHnKVQtK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
- (client-ip=40.107.130.104; helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ spf=permerror (SPF Permanent Error: Void lookup limit
+ of 2 exceeded) smtp.mailfrom=hcl.com (client-ip=2a01:111:f400:febe::72e;
+ helo=apc01-pu1-obe.outbound.protection.outlook.com;
  envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=dXJFf9nj; 
+ header.s=selector2 header.b=CHnKVQtK; 
  dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=dXJFf9nj; 
+ header.a=rsa-sha256 header.s=selector2 header.b=CHnKVQtK; 
  dkim-atps=neutral
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-eopbgr1300104.outbound.protection.outlook.com [40.107.130.104])
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-pu1apc01on072e.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:febe::72e])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G8Y5r402Vz2yjB
- for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 03:18:53 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G8Y8W17gHz2xZB
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 03:21:13 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=97kfwVpWvEGAuQFfPji+b037HWYGrm9NGAGflUHcmWg=;
- b=dXJFf9nj8R/5K30TDZsU2lrfLn/+a0jMmv2mkxS7p2vGFE1FMIF7tc17GeEZSk/z+NnjljOxg8j4Gp3AnSGJTu3rY7tNLSw6E9I26Ggf1IzocdwdAp2FXWVKx0/fLTpYdCF0PQU0C1UasRPlZ3rAUnwhmHllmN57ZjYGW6KZFjbM7eO2JxVjfsko/sQSAQ2J6lJMG/5wVpEGlUzdZ7TQQ89K+zsGqnxUTj8z8mbCUpY0RGhmh6aLZF21gYORarHzOYvqYA/lozbZYuaGAs/vYNJXaPLtpbPDxmpictcMhijx20rPIdDln0CCaIMagW74TSKyPwnN2eHL7Jq+zv8ecQ==
-Received: from PU1PR01CA0048.apcprd01.prod.exchangelabs.com
- (2603:1096:803:16::36) by KL1PR0401MB4933.apcprd04.prod.outlook.com
- (2603:1096:820:88::8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.16; Tue, 22 Jun
- 2021 17:18:46 +0000
-Received: from PU1APC01FT049.eop-APC01.prod.protection.outlook.com
- (2603:1096:803:16:cafe::99) by PU1PR01CA0048.outlook.office365.com
- (2603:1096:803:16::36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.16 via Frontend
- Transport; Tue, 22 Jun 2021 17:18:46 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.54)
+ bh=0iHrrvvifUqmTDCFK6v8i1fJAlNo/oJPd08uZV9jDE4=;
+ b=CHnKVQtK4FrN1K/ke7IzdPrgtx9fXJNKxbAO3bJQ2mG37dRPhv4DQsHC47qqJVuvL2JsZ8thsEdCdE1mW2dT6vj/1HS9swf4Hm0dqdlkGwwEvEHbXGdVbfbrPxyEi5YLv6IjCrKeuyU0y7rvQZ8WLMY4uqH82oMfnXSonQNOcs3VK+ApPXzfN9SPRyWzUQ8ywIZg/adAwbvmLFDbdWVGRuAMn2puBTfrIrOLN3ZSlYvYdcR97kyMTWN6a3hoq431eexJ/LQO7PJcsfNNnS+fxJecVJqBS4P4wHpsKEnnf+1OLyCvwKgqWU4ZrvkWcaz5AtMLThWa47xd0hDslfwjog==
+Received: from HK2PR06CA0017.apcprd06.prod.outlook.com (2603:1096:202:2e::29)
+ by TY2PR04MB2877.apcprd04.prod.outlook.com (2603:1096:404:3c::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.22; Tue, 22 Jun
+ 2021 17:21:05 +0000
+Received: from HK2APC01FT006.eop-APC01.prod.protection.outlook.com
+ (2603:1096:202:2e:cafe::55) by HK2PR06CA0017.outlook.office365.com
+ (2603:1096:202:2e::29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4264.18 via Frontend
+ Transport; Tue, 22 Jun 2021 17:21:05 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.195.56)
  smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
  header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
  header.from=hcl.com;
 Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.245.54 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.245.54; helo=APC01-PU1-obe.outbound.protection.outlook.com;
-Received: from APC01-PU1-obe.outbound.protection.outlook.com (192.8.245.54) by
- PU1APC01FT049.mail.protection.outlook.com (10.152.253.9) with
+ 192.8.195.56 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.195.56; helo=APC01-PU1-obe.outbound.protection.outlook.com;
+Received: from APC01-PU1-obe.outbound.protection.outlook.com (192.8.195.56) by
+ HK2APC01FT006.mail.protection.outlook.com (10.152.248.74) with
  Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4242.16 via Frontend Transport; Tue, 22 Jun 2021 17:18:44 +0000
+ 15.20.4242.16 via Frontend Transport; Tue, 22 Jun 2021 17:21:04 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=l7oG2lX9dOmrrOh89hZ/4M9KlbVmG51MiEAnPINAH+KpvWvXgt6ZYoP5rlbosSlLYLuR5tGIi7DE1VYg3AKDeh6TNB/dHJARhSuEiBzhiCK90o57lF/MzQS0kpq2uIfMIcGje9XV2NKSVFLf9qu9gOBercmz7k4Mzfwt+hWXvE/W46T3sAWKziINzUCJxFN5k5cnz07s+UOjVuCvz/GjXrkBa5TQyCh0JrHeercSuyjmAupf0NaOC+Gh8Kl2UTp3YLGS8CXE6YgeTya/vUzi4XSnYwkpXTuyaRudz4dwAYHNr87Xpm85mBUiX6DNeAXwqg71+V4w5HANsgnfGMf3Ng==
+ b=YssKmaWvPkUCic8nk8qNfW+sgm3QXmQiouMteEF+d1hBg4/UZOjHhczY7AoZXZwZC5ayFD4CAr9/oT1NU0knupC0e0vtnmoknmMMLE5qmyUNIBpBgRzFouvGrpn6ZJw3OHX3k4NjUXm7eLb1QOcFre+LWPPxal70Js7tiGxZ+mFET7/KbcLavX3Ifm+z2okYyc8C3o0zNmXv+7uA42a8pNuzVk4QKgz7vw4dKzU5YVSrRwGYIybLQEUggzRwa4/2SfVzi/LNygPJJJewD1s1oJJsgDFimBIWdhQp8tKTuj815a/T+Q6UmlnA3Fsa4yV1jr82TiHfJaocrVxD6pKbvA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=97kfwVpWvEGAuQFfPji+b037HWYGrm9NGAGflUHcmWg=;
- b=GuT5SygBzsrGlgYyUU6guj7VeusnoRKcqEOvFj59BWxDEccTs7EBg+W8+LUQCAXh0oL2gW6MERLuVrm06Tk4qhK0K4zHeKzI0HBONU9xD7BWFGxhAhV1ryLyuYQCx+bBbP1qAaquZ6/qyL/hqxhybmNteK0A6qWu/zEh2gexFC6ocaqmfDQGeO7FsN1KmZsmErkO0JTnQq7RJghmyYsJjqmLYDUBKMIrrjr6t5NsRVwJiqlZxZWOwV8OyTsaB9RY1tZkcYac9SrmbTQ9lu9BnWQvUNvkp5/IK8+b4RIreREUqWbUED/Y8yKn+0BW/xMX6/N0x7GH4igIy/HW4Rpocw==
+ bh=0iHrrvvifUqmTDCFK6v8i1fJAlNo/oJPd08uZV9jDE4=;
+ b=NwyIFVy2SWr7XC3RurHez97oE/rgjDiWAbiRsjThuSBTU7Z4x83XTWN1IrbnWf38iMFEDtmP2duk0J9zMQvgtQciD4/RJK8SPFa/7CLg07nxq9jSPmCgKPUpl8V9PXGSIuzANMqZuISIk/0tcwRmM7Xrv3gKOU+I5Oxj+NdMb+muyfGixQc2ZsZTXMLgCFyt1H+5A9N4ODRMOgN9Ir1fA158WFDgs3UJC0MO+Z+pYm0+BCxujfVnXwtctdN+lRm3XK/705pCPMx2hoWiNdjSWi/zNRszJqgr0nWypoh/6dfaBxkUDYCHCQDUCYKWxFOEx/X7NlvA2dX4QJxNj7enYw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
  header.d=hcl.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=97kfwVpWvEGAuQFfPji+b037HWYGrm9NGAGflUHcmWg=;
- b=dXJFf9nj8R/5K30TDZsU2lrfLn/+a0jMmv2mkxS7p2vGFE1FMIF7tc17GeEZSk/z+NnjljOxg8j4Gp3AnSGJTu3rY7tNLSw6E9I26Ggf1IzocdwdAp2FXWVKx0/fLTpYdCF0PQU0C1UasRPlZ3rAUnwhmHllmN57ZjYGW6KZFjbM7eO2JxVjfsko/sQSAQ2J6lJMG/5wVpEGlUzdZ7TQQ89K+zsGqnxUTj8z8mbCUpY0RGhmh6aLZF21gYORarHzOYvqYA/lozbZYuaGAs/vYNJXaPLtpbPDxmpictcMhijx20rPIdDln0CCaIMagW74TSKyPwnN2eHL7Jq+zv8ecQ==
+ bh=0iHrrvvifUqmTDCFK6v8i1fJAlNo/oJPd08uZV9jDE4=;
+ b=CHnKVQtK4FrN1K/ke7IzdPrgtx9fXJNKxbAO3bJQ2mG37dRPhv4DQsHC47qqJVuvL2JsZ8thsEdCdE1mW2dT6vj/1HS9swf4Hm0dqdlkGwwEvEHbXGdVbfbrPxyEi5YLv6IjCrKeuyU0y7rvQZ8WLMY4uqH82oMfnXSonQNOcs3VK+ApPXzfN9SPRyWzUQ8ywIZg/adAwbvmLFDbdWVGRuAMn2puBTfrIrOLN3ZSlYvYdcR97kyMTWN6a3hoq431eexJ/LQO7PJcsfNNnS+fxJecVJqBS4P4wHpsKEnnf+1OLyCvwKgqWU4ZrvkWcaz5AtMLThWa47xd0hDslfwjog==
 Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
  SG2PR0401MB2159.apcprd04.prod.outlook.com (2603:1096:3:4::22) with
  Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4242.19; Tue, 22 Jun 2021 17:18:41 +0000
+ 15.20.4242.19; Tue, 22 Jun 2021 17:21:01 +0000
 Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
  ([fe80::d93a:6771:3a9b:d411]) by SG2PR04MB3093.apcprd04.prod.outlook.com
  ([fe80::d93a:6771:3a9b:d411%7]) with mapi id 15.20.4219.025; Tue, 22 Jun 2021
- 17:18:41 +0000
+ 17:21:01 +0000
 From: Jayashree D <jayashree-d@hcl.com>
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Rsyslog using Redfish
-Thread-Topic: Rsyslog using Redfish
-Thread-Index: AddnfrgX+SaI3p2qRYyZExRTaER9hg==
-Date: Tue, 22 Jun 2021 17:18:41 +0000
-Message-ID: <SG2PR04MB3093DD642B1D80C03EFBAF91E1099@SG2PR04MB3093.apcprd04.prod.outlook.com>
+Subject: SDR sensor implementation query
+Thread-Topic: SDR sensor implementation query
+Thread-Index: AddniihthhcI0wJVSX62mHUtKfy5Rw==
+Date: Tue, 22 Jun 2021 17:21:01 +0000
+Message-ID: <SG2PR04MB30932F39EFCE1A165A5F9A94E1099@SG2PR04MB3093.apcprd04.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiOTNhYmNmNWUtODQ4Ni00NDUxLWIyOTMtZThjOTU5YTIxOTc4IiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX1B1YmwxYyJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6IlJLNlZjZlQ1VWlEOUFRR3lSdEEyR3V3QkN3bDdsQVFNNUpzNjhCTngwWXFjR3lpcFJiK3JUYTVFd1d5NlJMMHQifQ==
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiNjllNmVjZGMtZGZkZS00MjdjLWE2YjctM2E4NGM2NTE3NzYxIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX1B1YmwxYyJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6IlwvQ2pETVdnRlhoeW50REIwYnNwZnhFcG5cL1p6MDZ3dVp3QUFBZzE3R3lzak1JXC83YTdzSklVUmxNQzlWUlEySzAifQ==
 x-hclclassification: HCL_Cla5s_Publ1c
 Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
  signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
  header.from=hcl.com;
 x-originating-ip: [2401:4900:2353:949f:a54a:fe9f:8eaf:a527]
 x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: f40bd302-6a8d-498d-388a-08d935a1ca6a
-x-ms-traffictypediagnostic: SG2PR0401MB2159:|KL1PR0401MB4933:
+X-MS-Office365-Filtering-Correlation-Id: eb2f39ce-8d6c-474f-a335-08d935a21dc5
+x-ms-traffictypediagnostic: SG2PR0401MB2159:|TY2PR04MB2877:
 x-ms-exchange-transport-forked: True
-X-Microsoft-Antispam-PRVS: <KL1PR0401MB493329882A8E9BAB1D6E9A19E1099@KL1PR0401MB4933.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7691;OLM:6790;
+X-Microsoft-Antispam-PRVS: <TY2PR04MB287770B1B6056B0FF9B5E703E1099@TY2PR04MB2877.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;OLM:7691;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: JSG9IN73Q2h4OUkNbWfR3/ti+Ylxg+cFSb5l0MeLIGEzrn9uHwN1D8p2zKhUrC8sIq8bdjSYldz4Pc8MGRz0194MESMuJNCOOdSQtriekTTySEXo00LZI/1l9kzlsdukJH/amgfAuIMK7xq9+5NBy+SFa3qoFNJ3KfDg6kq//4AJHw/0AVAMsASIKOmNnRFJ2gbIUyoN1EjzqMA0RrAzbYYGTN83DLR+YCggY9/Kcjlqc//vCWkmySCLxg2mrmZgT6rUNdOaLqaKFG2SpL56uXWLsFCIRIIQ91s1mBf2bP/MbZ/EoPkDyZ2E66AUaqAFBnKMuLkdFKjecEfaxCa0GA008NlJUHrJUQNo3LoPUGfRMdMzgVBpCk8sR842p/6OIA4SunwM5J0pE3Q5m0Dn0git355bI7dOP240/I1pOHnFTKsw3+85qcpCiRkfUnKzHMa6FYL8FFLlql65EZVol7VqDK0fu4fqcG0jIH2C3aefePiPrreT5/gUoPXFAtUMHbyE9gFuEfsHHtY72sluuc8POmI1G58E+oWojnF6xWVOkuGuI2MuSkRg8OSVOMReC2hukCsT3EoxfLBOezTlsPWh5if91j3XbVDX6QvTNx5i56jcnyML5ooyeuEmEr0qqghJbN1RLKpRjZlAbvgTHhr2mVwhIjqnM5vFCcfS87y/cvDQW1JQq1w5DZVigMjwdTFp3Sm3ZmQcwjX4mQZDNQ==
+X-Microsoft-Antispam-Message-Info-Original: Wf2t0yzJrTiApBGpafs/yGHOtnOgo9DXzfo4WqQbDn7IfekXDZsRDNJYMj8fok863zWuLfDfAOIfeLYnJQHP+JoufALvF4yGqTDJb/EnvLjSkrt+5jyhlIVKHQnvPTJrn32/pjc0tpDGtKnStasyuR/6GL0OEs8m1ZtWyOCWxhsEUOj3tUtPSYlQZlsPrE+7qSVVEkKffYj/0jtUo0Gt4GSuheXhJMsWU8K5pbkPAGM6z37HwKLHwlw7bCX6Qey020Ht/Pb7bOC8ylAuW3CiicLgD8VueGMJNrjfvnewkz50uLUxj5YXhtV95MUtXMc1rne3zaj1CxN6bVi5o20XhshV1SgkaufCvHLMp15/rHk2vACWzdYFhkTQ6vjXfYspwz6+sMHor9rP2UzA2nE5oQU2Qbttw/VZ8e7wp2ZT2dAhbF1R4t0rFw9lAW2Mt682irgCcWzxAY0lsPM30iHf1P16iQPKkJI5dRm9rC/ny0G6Yz8ZMbsQlvpRVdgVJrENa5i2DqRLvYWroI8yjina9cPaF+bn0X52qdLvH1F3uird41DLNIw+lECUWod24EFcDF32fcoaDiKZ80mJyadAjGy10Y3xkDkr2ew1acTaV8g=
 X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
  SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
  PTR:; CAT:NONE;
- SFS:(4636009)(346002)(39860400002)(376002)(366004)(396003)(136003)(52536014)(5660300002)(966005)(3480700007)(478600001)(316002)(6916009)(7116003)(66946007)(66556008)(66476007)(76116006)(66446008)(54906003)(64756008)(4326008)(86362001)(9686003)(6506007)(8936002)(7696005)(33656002)(122000001)(38100700002)(55016002)(83380400001)(186003)(2906002)(8676002)(166002)(71200400001);
+ SFS:(4636009)(346002)(39860400002)(376002)(366004)(396003)(136003)(52536014)(5660300002)(3480700007)(478600001)(316002)(6916009)(66946007)(66556008)(66476007)(76116006)(66446008)(64756008)(4326008)(86362001)(9686003)(6506007)(8936002)(7696005)(33656002)(122000001)(38100700002)(55016002)(83380400001)(186003)(2906002)(8676002)(71200400001);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?RGAZeRjDvVU5c4ggug1omtLmIo/NMm8oqQmgQqiY1fGzGMZRGQ7wFWSrOflD?=
- =?us-ascii?Q?ikSkCOdpbTaEWxV7IbW4czoUMrsPp84A5wUbusO0XOWrcSvTeNKRrimd5r/7?=
- =?us-ascii?Q?W4a1muxs9bW189IfNA0uKfohGokTskZHGw7HFhJ2P9gRzbGPUYzaAVsgp6WY?=
- =?us-ascii?Q?646N6dv7+fYbtSiMTh5GWeq+6Q4RhFnoTAIi9C/eqOVitrFj24ke7pSdsg5+?=
- =?us-ascii?Q?hGsytnuYlFsqODbOm1Ma6dtXvXK+QclfNg4mqqoutJo+zVdY6XaukDluVX83?=
- =?us-ascii?Q?nUhh1qtMfDGa9MAGBT0NyWbTcWYmZnI1lmB65jYZ9YHNDxcNwsDzwFZe513j?=
- =?us-ascii?Q?SWU/Ql3PRsKZkZH50aKOcdEjd9fohKlBTsl1A2mKtqKX/Z7GkB0ZjHX9WmaD?=
- =?us-ascii?Q?CkNz+XeWsQmbnQkU68oB30xIq3qyv8XDBfSkbRpHakQqDxEHMLqS6aglVFtZ?=
- =?us-ascii?Q?AJPIOAuwgrB6h/f9R+6j8Bb9fTomolMaLFwFCh6cGsR0m05nqGLZcQFOUnuD?=
- =?us-ascii?Q?qKxjDL5BOsuFOI/S3BPIXoN5frPg20SiBLfh2ztp40YK9uXiGBSzaEi9FvIl?=
- =?us-ascii?Q?S7Za/Sxer7WGPMU7poGVFtquoTf2lcRaD87OuDgDTyRqcZQ/QjuBtiZUICNw?=
- =?us-ascii?Q?wXyczCVmr4UpfJNTyp0KK9HRaERIdfRl9q53j7JWNYflqBD5onZHDYGfeQoB?=
- =?us-ascii?Q?jVkQENFhua+BhobJcE8g9S3ytQ0imv4IN3GCBSsv35VT7N+ZsVovSIfwNqcR?=
- =?us-ascii?Q?VFLd0x0r7JlfGVwUTV7EsltW5/Vg3piF4BASuX3Mr4RS9fKB9aQc0vVN2eVo?=
- =?us-ascii?Q?ivGYzSc56W1d8U4M1Unx6PvBaVx2n3uhfjanYaEhUDBURTdlpvghDgJ4NygR?=
- =?us-ascii?Q?rad/E2bQSDnUPn+wh808KeyuldXcQdIuGR+broI5nLdmZzNMakw40Y7WJuY+?=
- =?us-ascii?Q?vnu/5vNYd1Qbc/l8g/ow33OR382N+EJiexR5LpHeHzeFlxOMGVdcqDaDPZBC?=
- =?us-ascii?Q?fMcdMck1s36B3eh3iVm60vi9F5AXi+AmMWlwn8EIhY82N70XgiZb96r7pO7e?=
- =?us-ascii?Q?7Cx49AMZBmogLbFhMjVWb6OADfQVsGyPOaJFtZyNKs16iykkpYpmPqMcvneI?=
- =?us-ascii?Q?bu6etqZjpUqAdgNugUtmg/bRMcLkCvwnxd96bhbuGf9azMBLTmUCfV5yCfVV?=
- =?us-ascii?Q?ibw49MQLch9v3hBpbJ2TrbJurp0815iuUjy5MEvmWbZmdv3L2Vo0hyIlDRvl?=
- =?us-ascii?Q?1w14HyZk2b5DMVR5cWgmZkyoDyqertFgQ3OaRwamEYbvqlh5NhIGooZZBVMy?=
- =?us-ascii?Q?2VOsTEc3FI5yzsDpX6yGdaSKuMTzVKdWcHQU9CHukUnG0cimHhoqLHt/HNr6?=
- =?us-ascii?Q?e4AE5EVDj4LQW7TQtVoC9z2ziqXD?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?sgoX6eawlXiDl42XyjMVzXmfB/BmbhwJinACq1Tm1wwQ3zhiv4vLpVHEop7R?=
+ =?us-ascii?Q?bfIzaQN3n7F/AsvOEz0qzzvqPmuRXPAscp+4pI3ZsxxjdIIp3jRFx967BjGC?=
+ =?us-ascii?Q?Xj8HrA5MnyL2uYd22uonEB4FJfSt3HJkkwkiNyInK8nhiGsm5nQR/2kU0T7y?=
+ =?us-ascii?Q?U9SnDoMbhIbmSBQ7gB+Ciob3pRayiboOXklYnnrMrvhcmRV4rog6ttE02SYc?=
+ =?us-ascii?Q?1vNwmzmtc9/SJEeOheY3H9AzLNc6tc1zVlOf2CZMfP9ZdApivvCbB74x9iBD?=
+ =?us-ascii?Q?jUEZMmXbVhslcamFNS/XWc2ycSCPq/6y9dYRuIqgQ6ta+1MIuaBG5wP0hKCq?=
+ =?us-ascii?Q?V6MpMCqQctQeKQIYpj9qRkfRCqaYij1yC09/0ifYnyzTlk9FxsEgSkQCeJFi?=
+ =?us-ascii?Q?5BUuBN6HlbB0hMhkA7WyGg+1d5KRDH6l7+d+vmZqWqOu+DjBvYudQMAtj/LP?=
+ =?us-ascii?Q?n465cRo2e529C3QjdMNSN5wuMjIT0QdWgUIzN2b97/RkKNP++c7eQO6TP7Ds?=
+ =?us-ascii?Q?jLUYt79VedXYrWYm10jl+7HiBQKZTzy/mcbJZLNJvoiY3GG7a3bT1eDpTj98?=
+ =?us-ascii?Q?P5U0cOsCm6TwhnjuhmWzoeGdT7Ge97bumxo1p7JmKXMKfHNgxEwki3o10BT8?=
+ =?us-ascii?Q?7VzwDukWNiyopGCpmXGK4mEBP8DwnV6QbLyQgpM7E+KimDQ3WItZivXfk6qt?=
+ =?us-ascii?Q?ani6Iwcafe9FlI0XioxSuwMPD/YLy7e+eyKYiUUuG8EeJzhqyiszxSZApmJP?=
+ =?us-ascii?Q?JZoX76hu/JfwWX/bfMfEUJEsZwB3I5kX7ZrQPziaPxy1i3MCnTwDhkImGdqU?=
+ =?us-ascii?Q?p2kAYct02vDBtoi8zgbKOts2kl1QDfdZx1XW2bhU4v1pAC/hjABgXAu1wZkw?=
+ =?us-ascii?Q?S0VNlnXVW6E+xhHjaQAmfYo9fPYF10HQhDMt9UhFlwm5S59SQr09/nWZMbnf?=
+ =?us-ascii?Q?dk62W7v5Z6kKlOER295LMm2G/lv4A7aElKLxr2C+ldnRaIn7FKqYeK7/qQVr?=
+ =?us-ascii?Q?2WCykegyf3PYjqVosY+3Z5Yb+ckLwUmU0IZoXYvWHdT7a5Kl2UXCEfUlVf5B?=
+ =?us-ascii?Q?mRCyvJCUkd+ICR8Hhk99wM/nNiIshi5E5Y6gUFeZGvRGq+gNwtm1DXJiJAb+?=
+ =?us-ascii?Q?lig5RglBJnj6WfT8iZPpvl1dEytJRZrf2FNzJVMViFRakNYRUlT7bdV8yN+y?=
+ =?us-ascii?Q?XkPrb+ZtV5dLYfq3jIQYxwubI66JEzHm6n+YF4XN/ZUsqgXAzwZLjHfNiL+W?=
+ =?us-ascii?Q?kkhTkGfkIzpXnK1bO2xauh/Xlt4oxmD8RJqvttgX+8toFs+Lmqow2pEZ+omr?=
+ =?us-ascii?Q?oA0vEObi3xgIABfQtTuviM+KTdvp7r6Rw2OQKReUFqa5g3IFr4FRh/DA5341?=
+ =?us-ascii?Q?wlRUJw0tvGNdgybChoJnRhTY8INg?=
 Content-Type: multipart/alternative;
- boundary="_000_SG2PR04MB3093DD642B1D80C03EFBAF91E1099SG2PR04MB3093apcp_"
+ boundary="_000_SG2PR04MB30932F39EFCE1A165A5F9A94E1099SG2PR04MB3093apcp_"
 MIME-Version: 1.0
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR0401MB2159
 X-DLP: MSGProcess
 X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: PU1APC01FT049.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: c40fc92c-eee7-443c-1858-08d935a1c83d
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: HK2APC01FT006.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 8fcb08b5-d9ad-4d3a-310a-08d935a21b81
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: bTHbFHywhh5Do5XCkplODkiyly2700lCDQFnVvjXUoUr6+R26UQwNhel09srqmSLIIR6wrxmSL5qy/aJA6w/WxXuJtd3W4rl1vJQ9A7UGpS70qYCFSb7cJOG8XFIZy8uHg05fe6qWp78vNc17XolXZmmeB49dFoybQ/ek1wP6NaLbp5jftSqYNUIAaGETq6ajvylREC0bSKC3AW6lCpJOAgo+cjt+BbQJou4fLJu3dkP3e0CLW3BIwAF9vu2ohJZJKMsFbbfWOFyDnJvWVtqaMcrH1Y6DU7UmVc0jbvI/rz7E/tqdo4EnB2TZv4ZCnBWHPooBG849aUtE/ShQCRe8zIzAavvEH3OOxXocLMRxrayzh2Phx6rlOQmOrVnzXyLmWtTzC5UcUjdwprn1JEdcXVnk68cVETVKUuYp3SL3Izn4cS19/kldxTmcxTaM0syeH341vfGblJAe5mTWSCNP5Uk1a3SCdWzbYg7IJpYdFAsOANL+4wigyv7EYGf/cLKA8xun4Du886UrPB55DxKTIOS8/7YcH11uEfIjokse68SYgLSnNXDT3o4V4axS6YGchvkc7YrXiTuBpHpkYrepxU1vY30PlsDLER7nouOpy6DYcIvi3hmWj5RssDCYARImvojGGsEoqdfLeTewCghC+W7jia3tmYiX6uahEKaCql71fapOu+LjzEPhOZ0q4Kt1pA3mmVScUJVB6QOT/VuIZCyPz7LGG6eE1E7MWiG/iCg1VT6+4vTHeONEy9zSiGsSKR69HdQ7KiZcpoOqncpIwwzrXqPymQPY8ND4GNCxbNJhYzMWZJO3kKwGvPNMHbGGJViFdkL1nYMqusZxDmd7tP2TaVPTXSBZc19JTwvzD4=
-X-Forefront-Antispam-Report: CIP:192.8.245.54; CTRY:IN; LANG:en; SCL:1; SRV:;
+X-Microsoft-Antispam-Message-Info: SZ4ZACy59fsRZEtgAkDiddhXACsrSd5sS1ZXW+B2cKPZnGzemsQBOsBjgtUDZuh2ORoIEWEq+orc0IT7vGqTqXSQSuBz0L6+TsBu1MrQAV1BrNwYhF7sv1pjGUu+G7XniZ3c9ZhvPSxumQIttVArHXQvp6u4ExlyBz5y/e0ovlpv+Pr6jpaw1Eu9D2ma5ZBtFLLrLi1LlVO+UHNSZB0FzgagGDlYYdrEdU4lHnBFUSAj11FH6DvlbovCasILinUnU7AcK6vvySQcWm9BIL2K9vVIh0muQJANyEyONDRnL5aoRJgfH3TmciNcUAgci2YF+Tmtd9R5Qyr6LwGxtkoNqc0qdBfG//FRw6xlbfJ2aVrvGa/YYrvzWKXvGgpa82tOeu6ugonaQ8cxP4NMeUe0nTJfgKL0OK2VhjMmkSYF/sYKpsdYGhqBe1GMvzRwW52xKhyfCFWHYMXhyjluLiqOQ7OuBfgneESS81Lrc5TuL4TT/oyrDOEwu0FtiMa1N5DA7wqE/hpBHFVVeOCE22B0216M5FbkKX3Vpw+B9aSRQA+hRCWOC3wqFaPFxnhksB34q+XSwmn0WDxqYSMjEIlbvJlbuFRcoI0dlLyH7sXgcosHJAo93fzwTp5iQO5l2zEZHE8IQj1VJNQ3SrN1sY72S/ySq4nfKSWyvdyFmEFmy8SnMbws606h/q8dPIdlZFhm
+X-Forefront-Antispam-Report: CIP:192.8.195.56; CTRY:IN; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:APC01-PU1-obe.outbound.protection.outlook.com;
  PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(396003)(376002)(39860400002)(136003)(346002)(46966006)(36840700001)(70206006)(7116003)(36906005)(82740400003)(356005)(9686003)(81166007)(26005)(5660300002)(8676002)(54906003)(8936002)(336012)(3480700007)(47076005)(70586007)(55016002)(6506007)(186003)(36860700001)(4326008)(316002)(966005)(52536014)(2906002)(478600001)(166002)(6916009)(86362001)(83380400001)(82310400003)(33656002)(7696005)(36900700001);
+ SFS:(4636009)(136003)(39860400002)(396003)(346002)(376002)(36840700001)(46966006)(36906005)(8676002)(356005)(6916009)(4326008)(8936002)(478600001)(52536014)(5660300002)(2906002)(316002)(36860700001)(47076005)(86362001)(83380400001)(6506007)(33656002)(70206006)(55016002)(81166007)(3480700007)(336012)(82310400003)(70586007)(186003)(82740400003)(7696005)(9686003)(26005)(36900700001);
  DIR:OUT; SFP:1102; 
 X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2021 17:18:44.3855 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f40bd302-6a8d-498d-388a-08d935a1ca6a
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2021 17:21:04.1366 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: eb2f39ce-8d6c-474f-a335-08d935a21dc5
 X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.54];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.195.56];
  Helo=[APC01-PU1-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT049.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: HK2APC01FT006.eop-APC01.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR0401MB4933
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR04MB2877
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -170,32 +172,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
- "benjaminfair@google.com" <benjaminfair@google.com>
+Cc: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_SG2PR04MB3093DD642B1D80C03EFBAF91E1099SG2PR04MB3093apcp_
+--_000_SG2PR04MB30932F39EFCE1A165A5F9A94E1099SG2PR04MB3093apcp_
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
 Classification: Public
+Hi Team,
 
-Hi Ben,
+I am working on SDR sensors, where sensors details can be read from the hos=
+t and displayed in dbus path.
 
-I submitted the below patch in gerrit regarding rsyslog for my platform.
-meta-facebook: Add rsyslog for yosemitev2. (Ife76252d) * Gerrit Code Review=
- (openbmc-project.xyz)<https://gerrit.openbmc-project.xyz/c/openbmc/openbmc=
-/+/44122>
+1.      From entity manager configuration file, "bus" type will be get from=
+ the entity manager.
 
-Also, there are few patches in gerrit for rsyslog which you have submitted.
-https://gerrit.openbmc-project.xyz/q/topic:%22rsyslog-refactor%22+(status:o=
-pen%20OR%20status:merged)
-Whether these patches will be enough to store the event logs in redfish ?
-or any other changes needs to be done for my platform.
+2.      Based on the "bus", we can get the SDR info and record count of the=
+ sensor for each bus using IPMB SendRequest.
+
+3.      Also, SDR command for Reservation ID will also be received from Res=
+erve SDR cmd using IPMB SendRequest..
+
+4.      After getting the record count and reservation ID, packet will be f=
+ramed to get the full information of each sensor like sensor name, type, un=
+it, threshold values, sensor number using IPMB SendRequest..
+
+5.      Then the data will processed and mapped to dbus path.
+
+6.      Again, for next bus it will continue from step 2.
+
+This implementation is based on line by line execution and also from previo=
+us output.
+
+It has 4 dbus method call, whether this approach can be implemented in asyn=
+c_method_call() ?
+
+Could you please share your suggestions on this.
+
+
 
 Thanks,
-Jayashree
+
+Jayashree.
+
 ::DISCLAIMER::
 ________________________________
 The contents of this e-mail and any attachment(s) are confidential and inte=
@@ -214,7 +235,7 @@ y prohibited. If you have received this email in error please delete it and=
 , please check them for viruses and other defects.
 ________________________________
 
---_000_SG2PR04MB3093DD642B1D80C03EFBAF91E1099SG2PR04MB3093apcp_
+--_000_SG2PR04MB30932F39EFCE1A165A5F9A94E1099SG2PR04MB3093apcp_
 Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
@@ -234,9 +255,6 @@ xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
 @font-face
 	{font-family:Calibri;
 	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"Segoe UI";
-	panose-1:2 11 5 2 4 2 4 2 2 3;}
 /* Style Definitions */
 p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin:0in;
@@ -251,17 +269,78 @@ a:visited, span.MsoHyperlinkFollowed
 	{mso-style-priority:99;
 	color:#954F72;
 	text-decoration:underline;}
+p
+	{mso-style-priority:99;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
 span.EmailStyle17
 	{mso-style-type:personal-compose;
 	font-family:"Calibri",sans-serif;
 	color:windowtext;}
 .MsoChpDefault
-	{mso-style-type:export-only;}
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
 @page WordSection1
 	{size:8.5in 11.0in;
 	margin:1.0in 1.0in 1.0in 1.0in;}
 div.WordSection1
 	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:195899434;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1080509262 67698703 67698713 67698715 67698703 6769=
+8713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
 --></style><!--[if gte mso 9]><xml>
 <o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
 </xml><![endif]--><!--[if gte mso 9]><xml>
@@ -274,31 +353,63 @@ div.WordSection1
 <p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
 pan style=3D"color:green">Public</span></b><span style=3D"font-size:12.0pt"=
 ><o:p></o:p></span></p>
+<p class=3D"MsoNormal">Hi Team,<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Hi Ben,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I submitted the below patch in gerrit regarding rsys=
-log for my platform.<o:p></o:p></p>
-<p class=3D"MsoNormal"><a href=3D"https://gerrit.openbmc-project.xyz/c/open=
-bmc/openbmc/+/44122">meta-facebook: Add rsyslog for yosemitev2. (Ife76252d)=
- &middot; Gerrit Code Review (openbmc-project.xyz)</a><o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Also, there are few patches in gerrit for rsyslog wh=
-ich you have submitted.
+<p class=3D"MsoNormal">I am working on SDR sensors, where sensors details c=
+an be read from the host and displayed in dbus path.
 <o:p></o:p></p>
-<p class=3D"MsoNormal"><a href=3D"https://gerrit.openbmc-project.xyz/q/topi=
-c:%22rsyslog-refactor%22+(status:open%20OR%20status:merged)"><span style=3D=
-"font-size:10.5pt;font-family:&quot;Segoe UI&quot;,sans-serif;border:none w=
-indowtext 1.0pt;padding:0in">https://gerrit.openbmc-project.xyz/q/topic:%22=
-rsyslog-refactor%22+(status:open%20OR%20status:merged)</span></a><o:p></o:p=
-></p>
-<p class=3D"MsoNormal">Whether these patches will be enough to store the ev=
-ent logs in redfish ?<o:p></o:p></p>
-<p class=3D"MsoNormal">or any other changes needs to be done for my platfor=
-m.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
-<p class=3D"MsoNormal">Jayashree<o:p></o:p></p>
+<p style=3D"margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;ver=
+tical-align:baseline">
+<![if !supportLists]><span style=3D"border:none windowtext 1.0pt;padding:0i=
+n"><span style=3D"mso-list:Ignore">1.<span style=3D"font:7.0pt &quot;Times =
+New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style=3D"border:none windowtext 1.0pt;=
+padding:0in">From entity manager configuration file, &#8220;bus&#8221; type=
+ will be get from the entity manager.
+<o:p></o:p></span></p>
+<p style=3D"margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;ver=
+tical-align:baseline">
+<![if !supportLists]><span style=3D"mso-list:Ignore">2.<span style=3D"font:=
+7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Based on the &#8220;bus&#8221;, we can get the SDR =
+info and record count of the sensor for each bus using IPMB SendRequest.<o:=
+p></o:p></p>
+<p style=3D"margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;ver=
+tical-align:baseline">
+<![if !supportLists]><span style=3D"mso-list:Ignore">3.<span style=3D"font:=
+7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Also, SDR command for Reservation ID will also be r=
+eceived from Reserve SDR cmd using IPMB SendRequest..<o:p></o:p></p>
+<p style=3D"margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;ver=
+tical-align:baseline">
+<![if !supportLists]><span style=3D"mso-list:Ignore">4.<span style=3D"font:=
+7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>After getting the record count and reservation ID, =
+packet will be framed to get the full information of each sensor like senso=
+r name, type, unit, threshold values, sensor number using IPMB SendRequest.=
+.<o:p></o:p></p>
+<p style=3D"margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;ver=
+tical-align:baseline">
+<![if !supportLists]><span style=3D"mso-list:Ignore">5.<span style=3D"font:=
+7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Then the data will processed and mapped to dbus pat=
+h.<o:p></o:p></p>
+<p style=3D"margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;ver=
+tical-align:baseline">
+<![if !supportLists]><span style=3D"mso-list:Ignore">6.<span style=3D"font:=
+7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Again, for next bus it will continue from step 2.<o=
+:p></o:p></p>
+<p style=3D"vertical-align:baseline">This implementation is based on line b=
+y line execution and also from previous output.
+<o:p></o:p></p>
+<p style=3D"vertical-align:baseline">It has 4 dbus method call, whether thi=
+s approach can be implemented in async_method_call() ?<o:p></o:p></p>
+<p style=3D"vertical-align:baseline">Could you please share your suggestion=
+s on this.<o:p></o:p></p>
+<p style=3D"vertical-align:baseline"><o:p>&nbsp;</o:p></p>
+<p style=3D"vertical-align:baseline">Thanks,<o:p></o:p></p>
+<p style=3D"vertical-align:baseline">Jayashree.<o:p></o:p></p>
 </div>
 <font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
 <hr>
@@ -323,4 +434,4 @@ ses and other defects.<br>
 </body>
 </html>
 
---_000_SG2PR04MB3093DD642B1D80C03EFBAF91E1099SG2PR04MB3093apcp_--
+--_000_SG2PR04MB30932F39EFCE1A165A5F9A94E1099SG2PR04MB3093apcp_--
