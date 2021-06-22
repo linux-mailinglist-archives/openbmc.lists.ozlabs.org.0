@@ -2,71 +2,163 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86B223B0AA4
-	for <lists+openbmc@lfdr.de>; Tue, 22 Jun 2021 18:50:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EDB693B0B4E
+	for <lists+openbmc@lfdr.de>; Tue, 22 Jun 2021 19:19:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G8XSk2mb9z3093
-	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 02:50:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G8Y6F5RZKz30Dr
+	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 03:19:17 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=VngV1eQj;
+	dkim=pass (2048-bit key; unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=dXJFf9nj;
+	dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256 header.s=selector2 header.b=dXJFf9nj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=VngV1eQj; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
+ (client-ip=40.107.130.104; helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
+ header.s=selector2 header.b=dXJFf9nj; 
+ dkim=pass (2048-bit key) header.d=HCL.COM header.i=@HCL.COM
+ header.a=rsa-sha256 header.s=selector2 header.b=dXJFf9nj; 
+ dkim-atps=neutral
+Received: from APC01-HK2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1300104.outbound.protection.outlook.com [40.107.130.104])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G8XSK1K7qz2y08
- for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 02:49:52 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 298614289A
- for <openbmc@lists.ozlabs.org>; Tue, 22 Jun 2021 16:49:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1624380587; x=1626194988; bh=TsLEEVImhuoP2WjSAct2AElqZ
- W3pcumTJXocjtj1Z7I=; b=VngV1eQjClM9Ievn/Plp6ja1/YRw3sXHZzD/O37hQ
- bsEUGrD28RK4VUDWAnDj5WzKpGYSDLdOCsi42FnQlS1O4crAv0McZlecehp2741I
- diINkd2l7yKhIDbRCqWWsrHe8uHTgioxba5EPjL+S8Y4dShZHvtMdtP9IqgX2cKx
- E8=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id L6wFCL5AnMwG for <openbmc@lists.ozlabs.org>;
- Tue, 22 Jun 2021 19:49:47 +0300 (MSK)
-Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
- [172.17.100.103])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 29BAE4280B
- for <openbmc@lists.ozlabs.org>; Tue, 22 Jun 2021 19:49:47 +0300 (MSK)
-Received: from [10.199.0.46] (10.199.0.46) by T-EXCH-03.corp.yadro.com
- (172.17.100.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 22
- Jun 2021 19:49:47 +0300
-Message-ID: <6765c368a06573526a45e9044a43fdad362f0da8.camel@yadro.com>
-Subject: Re: Boot Source Override feature problems
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: <openbmc@lists.ozlabs.org>
-Date: Tue, 22 Jun 2021 19:49:45 +0300
-In-Reply-To: <CACSj6VVsVDxrG3Mm_vdoGUkf3Mjp6P5WghexU_hEtJ-zX9SL=Q@mail.gmail.com>
-References: <CACSj6VWqBGCFSSkO4-g=hBx1KBv0CP7iOHQw=Onz256fHpc0RQ@mail.gmail.com>
- <CAM=TmwXU5mjG9n8ubqHgZjGb6MN9_cdz0-ef2cezaB9m-5+wjg@mail.gmail.com>
- <CACSj6VVsVDxrG3Mm_vdoGUkf3Mjp6P5WghexU_hEtJ-zX9SL=Q@mail.gmail.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.1 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G8Y5r402Vz2yjB
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 03:18:53 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=97kfwVpWvEGAuQFfPji+b037HWYGrm9NGAGflUHcmWg=;
+ b=dXJFf9nj8R/5K30TDZsU2lrfLn/+a0jMmv2mkxS7p2vGFE1FMIF7tc17GeEZSk/z+NnjljOxg8j4Gp3AnSGJTu3rY7tNLSw6E9I26Ggf1IzocdwdAp2FXWVKx0/fLTpYdCF0PQU0C1UasRPlZ3rAUnwhmHllmN57ZjYGW6KZFjbM7eO2JxVjfsko/sQSAQ2J6lJMG/5wVpEGlUzdZ7TQQ89K+zsGqnxUTj8z8mbCUpY0RGhmh6aLZF21gYORarHzOYvqYA/lozbZYuaGAs/vYNJXaPLtpbPDxmpictcMhijx20rPIdDln0CCaIMagW74TSKyPwnN2eHL7Jq+zv8ecQ==
+Received: from PU1PR01CA0048.apcprd01.prod.exchangelabs.com
+ (2603:1096:803:16::36) by KL1PR0401MB4933.apcprd04.prod.outlook.com
+ (2603:1096:820:88::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.16; Tue, 22 Jun
+ 2021 17:18:46 +0000
+Received: from PU1APC01FT049.eop-APC01.prod.protection.outlook.com
+ (2603:1096:803:16:cafe::99) by PU1PR01CA0048.outlook.office365.com
+ (2603:1096:803:16::36) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.16 via Frontend
+ Transport; Tue, 22 Jun 2021 17:18:46 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.54)
+ smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
+ header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
+ header.from=hcl.com;
+Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
+ 192.8.245.54 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.245.54; helo=APC01-PU1-obe.outbound.protection.outlook.com;
+Received: from APC01-PU1-obe.outbound.protection.outlook.com (192.8.245.54) by
+ PU1APC01FT049.mail.protection.outlook.com (10.152.253.9) with
+ Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4242.16 via Frontend Transport; Tue, 22 Jun 2021 17:18:44 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=l7oG2lX9dOmrrOh89hZ/4M9KlbVmG51MiEAnPINAH+KpvWvXgt6ZYoP5rlbosSlLYLuR5tGIi7DE1VYg3AKDeh6TNB/dHJARhSuEiBzhiCK90o57lF/MzQS0kpq2uIfMIcGje9XV2NKSVFLf9qu9gOBercmz7k4Mzfwt+hWXvE/W46T3sAWKziINzUCJxFN5k5cnz07s+UOjVuCvz/GjXrkBa5TQyCh0JrHeercSuyjmAupf0NaOC+Gh8Kl2UTp3YLGS8CXE6YgeTya/vUzi4XSnYwkpXTuyaRudz4dwAYHNr87Xpm85mBUiX6DNeAXwqg71+V4w5HANsgnfGMf3Ng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=97kfwVpWvEGAuQFfPji+b037HWYGrm9NGAGflUHcmWg=;
+ b=GuT5SygBzsrGlgYyUU6guj7VeusnoRKcqEOvFj59BWxDEccTs7EBg+W8+LUQCAXh0oL2gW6MERLuVrm06Tk4qhK0K4zHeKzI0HBONU9xD7BWFGxhAhV1ryLyuYQCx+bBbP1qAaquZ6/qyL/hqxhybmNteK0A6qWu/zEh2gexFC6ocaqmfDQGeO7FsN1KmZsmErkO0JTnQq7RJghmyYsJjqmLYDUBKMIrrjr6t5NsRVwJiqlZxZWOwV8OyTsaB9RY1tZkcYac9SrmbTQ9lu9BnWQvUNvkp5/IK8+b4RIreREUqWbUED/Y8yKn+0BW/xMX6/N0x7GH4igIy/HW4Rpocw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
+ header.d=hcl.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=97kfwVpWvEGAuQFfPji+b037HWYGrm9NGAGflUHcmWg=;
+ b=dXJFf9nj8R/5K30TDZsU2lrfLn/+a0jMmv2mkxS7p2vGFE1FMIF7tc17GeEZSk/z+NnjljOxg8j4Gp3AnSGJTu3rY7tNLSw6E9I26Ggf1IzocdwdAp2FXWVKx0/fLTpYdCF0PQU0C1UasRPlZ3rAUnwhmHllmN57ZjYGW6KZFjbM7eO2JxVjfsko/sQSAQ2J6lJMG/5wVpEGlUzdZ7TQQ89K+zsGqnxUTj8z8mbCUpY0RGhmh6aLZF21gYORarHzOYvqYA/lozbZYuaGAs/vYNJXaPLtpbPDxmpictcMhijx20rPIdDln0CCaIMagW74TSKyPwnN2eHL7Jq+zv8ecQ==
+Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
+ SG2PR0401MB2159.apcprd04.prod.outlook.com (2603:1096:3:4::22) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4242.19; Tue, 22 Jun 2021 17:18:41 +0000
+Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
+ ([fe80::d93a:6771:3a9b:d411]) by SG2PR04MB3093.apcprd04.prod.outlook.com
+ ([fe80::d93a:6771:3a9b:d411%7]) with mapi id 15.20.4219.025; Tue, 22 Jun 2021
+ 17:18:41 +0000
+From: Jayashree D <jayashree-d@hcl.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Rsyslog using Redfish
+Thread-Topic: Rsyslog using Redfish
+Thread-Index: AddnfrgX+SaI3p2qRYyZExRTaER9hg==
+Date: Tue, 22 Jun 2021 17:18:41 +0000
+Message-ID: <SG2PR04MB3093DD642B1D80C03EFBAF91E1099@SG2PR04MB3093.apcprd04.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiOTNhYmNmNWUtODQ4Ni00NDUxLWIyOTMtZThjOTU5YTIxOTc4IiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX1B1YmwxYyJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6IlJLNlZjZlQ1VWlEOUFRR3lSdEEyR3V3QkN3bDdsQVFNNUpzNjhCTngwWXFjR3lpcFJiK3JUYTVFd1d5NlJMMHQifQ==
+x-hclclassification: HCL_Cla5s_Publ1c
+Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
+ signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=hcl.com;
+x-originating-ip: [2401:4900:2353:949f:a54a:fe9f:8eaf:a527]
+x-ms-publictraffictype: Email
+X-MS-Office365-Filtering-Correlation-Id: f40bd302-6a8d-498d-388a-08d935a1ca6a
+x-ms-traffictypediagnostic: SG2PR0401MB2159:|KL1PR0401MB4933:
+x-ms-exchange-transport-forked: True
+X-Microsoft-Antispam-PRVS: <KL1PR0401MB493329882A8E9BAB1D6E9A19E1099@KL1PR0401MB4933.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7691;OLM:6790;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original: JSG9IN73Q2h4OUkNbWfR3/ti+Ylxg+cFSb5l0MeLIGEzrn9uHwN1D8p2zKhUrC8sIq8bdjSYldz4Pc8MGRz0194MESMuJNCOOdSQtriekTTySEXo00LZI/1l9kzlsdukJH/amgfAuIMK7xq9+5NBy+SFa3qoFNJ3KfDg6kq//4AJHw/0AVAMsASIKOmNnRFJ2gbIUyoN1EjzqMA0RrAzbYYGTN83DLR+YCggY9/Kcjlqc//vCWkmySCLxg2mrmZgT6rUNdOaLqaKFG2SpL56uXWLsFCIRIIQ91s1mBf2bP/MbZ/EoPkDyZ2E66AUaqAFBnKMuLkdFKjecEfaxCa0GA008NlJUHrJUQNo3LoPUGfRMdMzgVBpCk8sR842p/6OIA4SunwM5J0pE3Q5m0Dn0git355bI7dOP240/I1pOHnFTKsw3+85qcpCiRkfUnKzHMa6FYL8FFLlql65EZVol7VqDK0fu4fqcG0jIH2C3aefePiPrreT5/gUoPXFAtUMHbyE9gFuEfsHHtY72sluuc8POmI1G58E+oWojnF6xWVOkuGuI2MuSkRg8OSVOMReC2hukCsT3EoxfLBOezTlsPWh5if91j3XbVDX6QvTNx5i56jcnyML5ooyeuEmEr0qqghJbN1RLKpRjZlAbvgTHhr2mVwhIjqnM5vFCcfS87y/cvDQW1JQq1w5DZVigMjwdTFp3Sm3ZmQcwjX4mQZDNQ==
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
+ SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
+ PTR:; CAT:NONE;
+ SFS:(4636009)(346002)(39860400002)(376002)(366004)(396003)(136003)(52536014)(5660300002)(966005)(3480700007)(478600001)(316002)(6916009)(7116003)(66946007)(66556008)(66476007)(76116006)(66446008)(54906003)(64756008)(4326008)(86362001)(9686003)(6506007)(8936002)(7696005)(33656002)(122000001)(38100700002)(55016002)(83380400001)(186003)(2906002)(8676002)(166002)(71200400001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?RGAZeRjDvVU5c4ggug1omtLmIo/NMm8oqQmgQqiY1fGzGMZRGQ7wFWSrOflD?=
+ =?us-ascii?Q?ikSkCOdpbTaEWxV7IbW4czoUMrsPp84A5wUbusO0XOWrcSvTeNKRrimd5r/7?=
+ =?us-ascii?Q?W4a1muxs9bW189IfNA0uKfohGokTskZHGw7HFhJ2P9gRzbGPUYzaAVsgp6WY?=
+ =?us-ascii?Q?646N6dv7+fYbtSiMTh5GWeq+6Q4RhFnoTAIi9C/eqOVitrFj24ke7pSdsg5+?=
+ =?us-ascii?Q?hGsytnuYlFsqODbOm1Ma6dtXvXK+QclfNg4mqqoutJo+zVdY6XaukDluVX83?=
+ =?us-ascii?Q?nUhh1qtMfDGa9MAGBT0NyWbTcWYmZnI1lmB65jYZ9YHNDxcNwsDzwFZe513j?=
+ =?us-ascii?Q?SWU/Ql3PRsKZkZH50aKOcdEjd9fohKlBTsl1A2mKtqKX/Z7GkB0ZjHX9WmaD?=
+ =?us-ascii?Q?CkNz+XeWsQmbnQkU68oB30xIq3qyv8XDBfSkbRpHakQqDxEHMLqS6aglVFtZ?=
+ =?us-ascii?Q?AJPIOAuwgrB6h/f9R+6j8Bb9fTomolMaLFwFCh6cGsR0m05nqGLZcQFOUnuD?=
+ =?us-ascii?Q?qKxjDL5BOsuFOI/S3BPIXoN5frPg20SiBLfh2ztp40YK9uXiGBSzaEi9FvIl?=
+ =?us-ascii?Q?S7Za/Sxer7WGPMU7poGVFtquoTf2lcRaD87OuDgDTyRqcZQ/QjuBtiZUICNw?=
+ =?us-ascii?Q?wXyczCVmr4UpfJNTyp0KK9HRaERIdfRl9q53j7JWNYflqBD5onZHDYGfeQoB?=
+ =?us-ascii?Q?jVkQENFhua+BhobJcE8g9S3ytQ0imv4IN3GCBSsv35VT7N+ZsVovSIfwNqcR?=
+ =?us-ascii?Q?VFLd0x0r7JlfGVwUTV7EsltW5/Vg3piF4BASuX3Mr4RS9fKB9aQc0vVN2eVo?=
+ =?us-ascii?Q?ivGYzSc56W1d8U4M1Unx6PvBaVx2n3uhfjanYaEhUDBURTdlpvghDgJ4NygR?=
+ =?us-ascii?Q?rad/E2bQSDnUPn+wh808KeyuldXcQdIuGR+broI5nLdmZzNMakw40Y7WJuY+?=
+ =?us-ascii?Q?vnu/5vNYd1Qbc/l8g/ow33OR382N+EJiexR5LpHeHzeFlxOMGVdcqDaDPZBC?=
+ =?us-ascii?Q?fMcdMck1s36B3eh3iVm60vi9F5AXi+AmMWlwn8EIhY82N70XgiZb96r7pO7e?=
+ =?us-ascii?Q?7Cx49AMZBmogLbFhMjVWb6OADfQVsGyPOaJFtZyNKs16iykkpYpmPqMcvneI?=
+ =?us-ascii?Q?bu6etqZjpUqAdgNugUtmg/bRMcLkCvwnxd96bhbuGf9azMBLTmUCfV5yCfVV?=
+ =?us-ascii?Q?ibw49MQLch9v3hBpbJ2TrbJurp0815iuUjy5MEvmWbZmdv3L2Vo0hyIlDRvl?=
+ =?us-ascii?Q?1w14HyZk2b5DMVR5cWgmZkyoDyqertFgQ3OaRwamEYbvqlh5NhIGooZZBVMy?=
+ =?us-ascii?Q?2VOsTEc3FI5yzsDpX6yGdaSKuMTzVKdWcHQU9CHukUnG0cimHhoqLHt/HNr6?=
+ =?us-ascii?Q?e4AE5EVDj4LQW7TQtVoC9z2ziqXD?=
+Content-Type: multipart/alternative;
+ boundary="_000_SG2PR04MB3093DD642B1D80C03EFBAF91E1099SG2PR04MB3093apcp_"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.0.46]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-03.corp.yadro.com (172.17.100.103)
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR0401MB2159
+X-DLP: MSGProcess
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: PU1APC01FT049.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: c40fc92c-eee7-443c-1858-08d935a1c83d
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: bTHbFHywhh5Do5XCkplODkiyly2700lCDQFnVvjXUoUr6+R26UQwNhel09srqmSLIIR6wrxmSL5qy/aJA6w/WxXuJtd3W4rl1vJQ9A7UGpS70qYCFSb7cJOG8XFIZy8uHg05fe6qWp78vNc17XolXZmmeB49dFoybQ/ek1wP6NaLbp5jftSqYNUIAaGETq6ajvylREC0bSKC3AW6lCpJOAgo+cjt+BbQJou4fLJu3dkP3e0CLW3BIwAF9vu2ohJZJKMsFbbfWOFyDnJvWVtqaMcrH1Y6DU7UmVc0jbvI/rz7E/tqdo4EnB2TZv4ZCnBWHPooBG849aUtE/ShQCRe8zIzAavvEH3OOxXocLMRxrayzh2Phx6rlOQmOrVnzXyLmWtTzC5UcUjdwprn1JEdcXVnk68cVETVKUuYp3SL3Izn4cS19/kldxTmcxTaM0syeH341vfGblJAe5mTWSCNP5Uk1a3SCdWzbYg7IJpYdFAsOANL+4wigyv7EYGf/cLKA8xun4Du886UrPB55DxKTIOS8/7YcH11uEfIjokse68SYgLSnNXDT3o4V4axS6YGchvkc7YrXiTuBpHpkYrepxU1vY30PlsDLER7nouOpy6DYcIvi3hmWj5RssDCYARImvojGGsEoqdfLeTewCghC+W7jia3tmYiX6uahEKaCql71fapOu+LjzEPhOZ0q4Kt1pA3mmVScUJVB6QOT/VuIZCyPz7LGG6eE1E7MWiG/iCg1VT6+4vTHeONEy9zSiGsSKR69HdQ7KiZcpoOqncpIwwzrXqPymQPY8ND4GNCxbNJhYzMWZJO3kKwGvPNMHbGGJViFdkL1nYMqusZxDmd7tP2TaVPTXSBZc19JTwvzD4=
+X-Forefront-Antispam-Report: CIP:192.8.245.54; CTRY:IN; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:APC01-PU1-obe.outbound.protection.outlook.com;
+ PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(4636009)(396003)(376002)(39860400002)(136003)(346002)(46966006)(36840700001)(70206006)(7116003)(36906005)(82740400003)(356005)(9686003)(81166007)(26005)(5660300002)(8676002)(54906003)(8936002)(336012)(3480700007)(47076005)(70586007)(55016002)(6506007)(186003)(36860700001)(4326008)(316002)(966005)(52536014)(2906002)(478600001)(166002)(6916009)(86362001)(83380400001)(82310400003)(33656002)(7696005)(36900700001);
+ DIR:OUT; SFP:1102; 
+X-OriginatorOrg: HCL.COM
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2021 17:18:44.3855 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f40bd302-6a8d-498d-388a-08d935a1ca6a
+X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.54];
+ Helo=[APC01-PU1-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT049.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR0401MB4933
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,268 +170,157 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
+ "benjaminfair@google.com" <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I'm curious, why you decide to keep
-/xyz/openbmc_project/control/host0/boot/one_time: Enable
-?
+--_000_SG2PR04MB3093DD642B1D80C03EFBAF91E1099SG2PR04MB3093apcp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-As I understood your inputs, the 'one_time->Enable' was your initial
-problem.
-Now you cut off ability to have separate sets of parameters for one-
-time and permanent overrides but still have this weird 'one_time' node.
-Can you elaborate more what use-case do you solve?
-From the initial letter I got that the problem was with always enabled
-switch - I believe it is possibly to fix this by managing state of
-Enabled property, isn't it?
+Classification: Public
 
-On Mon, 2021-06-21 at 18:59 +0300, Konstantin Aladyshev wrote:
-> I've redesigned the boot source override feature.
-> 
-> Now it is stored as:
-> ```
-> /xyz/openbmc_project/control/host0/boot:
->      - Interface: xyz.openbmc_project.Control.Boot.Source
->      - Interface: xyz.openbmc_project.Control.Boot.Mode
->      - Interface: xyz.openbmc_project.Control.Boot.Type
->      - Interface: xyz.openbmc_project.Object.Enable
-> /xyz/openbmc_project/control/host0/boot/one_time:
->      - Interface: xyz.openbmc_project.Object.Enable
-> ```
-> This would solve all of the problems with the current realization.
-> 
-> I've created several commits under one topic in gerrit to the
-> proposed change.
-> First the `phosphor-settings-manager` commit itself:
-> 44226: phosphor-settings-manager: redesign boot setting override
-> feature |
-> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/44226
-> improvements:
-> - now there is no doubling interfaces for
-> BootSource/BootMode/BootType
-> - boot override is clearly disabled by default
-> - one_time is disabled by default
-> 
-> Then I've posed a changes for phosphor-host-ipmid:
-> 44231: Support new boot override setting design |
-> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/44231
-> improvements:
-> - code simplification
-> - now it is possible to set boot flag as invalid, which wasn't
-> possible before
-> - now it is possible to report boot flag as invalid
-> 
-> And bmcweb:
-> 44272: Support new boot override setting design |
-> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/44272
-> improvements:
-> - significant code simplification!
-> - no there is no weird interdependency between
-> BootSource/BootMode/BootType
-> - all the boot parameters now can be set independently
-> 
-> And finally I've created a commit for a
-> 44225: Support all parameter combinations in Redfish boot tests |
-> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-test-automation/+/44225
-> improvements:
-> - you can see that now `Disabled` state is not decoded as weird
-> `Options apply to all future boots`, but as `Boot Flag Invalid`
-> - now it is possible to add all of the combination of tests
-> 
-> Best regards,
-> Konstantin Aladyshev
-> 
-> On Fri, Jun 11, 2021 at 3:17 PM Deepak Kodihalli
-> <deepak.kodihalli.83@gmail.com> wrote:
-> > 
-> > Hi!
-> > 
-> > On Thu, May 27, 2021 at 2:21 AM Konstantin Aladyshev
-> > <aladyshev22@gmail.com> wrote:
-> > > 
-> > > Hello!
-> > > I've merged almost all of my patchsets for the EFI/Legacy support
-> > > in
-> > > the Boot Override feature (only bmcweb patchset is left
-> > > https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/40970) and
-> > > I
-> > > want to return to the discussion about the current implementation
-> > > of
-> > > the Boot Override feature in OpenBMC.
-> > > 
-> > > First, here are implementation details from IPMI and Redfish
-> > > specs for
-> > > this feature:
-> > > 
-> > > IPMI specification (Document Revision 1.1 October 1, 2013)
-> > > ```
-> > > IPMI:
-> > > 1b - enabled/disabled
-> > > 1b - one-time/permanent
-> > > 1b - EFI/Legacy
-> > > 4b - BDS (boot device selector)
-> > >   0000b = No override
-> > >   0001b = Force PXE
-> > >   0010b = Force boot from default Hard-drive
-> > >   0011b = Force boot from default Hard-drive, request Safe Mode
-> > >   0100b = Force boot from default Diagnostic Partition
-> > >   0101b = Force boot from default CD/DVD
-> > >   0110b = Force boot into BIOS Setup
-> > >   0111b = Force boot from remotely connected (redirected)
-> > > Floppy/primary removable media
-> > >   1001b = Force boot from primary remote media
-> > >   1000b = Force boot from remotely connected (redirected) CD/DVD
-> > >   1010b = reserved
-> > >   1011b = Force boot from remotely connected (redirected) Hard
-> > > Drive
-> > >   1100-1110b = Reserved
-> > >   1111b = Force boot from Floppy/primary removable media
-> > > ```
-> > > Redfish specification (DSP2046 2021.1 Redfish Resource and Schema
-> > > Guide 18 May 2021)
-> > > ```
-> > > BootSourceOverrideEnabled - Continuous/Disabled/Once
-> > > BootSourceOverrideMode - Legacy/UEFI
-> > > BootSourceOverrideTarget -
-> > >   BiosSetup = Boot to the BIOS setup utility.
-> > >   Cd = Boot from the CD or DVD.
-> > >   Diags = Boot to the manufacturer's diagnostics program.
-> > >   Floppy = Boot from the floppy disk drive.
-> > >   Hdd = Boot from a hard drive.
-> > >   None = Boot from the normal boot device.
-> > >   Pxe = Boot from the Pre-Boot EXecution (PXE) environment.
-> > >   RemoteDrive (v1.2+) = Boot from a remote drive, such as an
-> > > iSCSI target.
-> > >   SDCard (v1.1+) = Boot from an SD card.
-> > >   UefiBootNext (v1.5+) = Boot to the UEFI device that the
-> > > BootNext
-> > > property specifies.
-> > >   UefiHttp (v1.1+) = Boot from a UEFI HTTP network location.
-> > >   UefiShell = Boot to the UEFI Shell.
-> > >   UefiTarget = Boot to the UEFI device specified in the
-> > > UefiTargetBootSourceOverride property.
-> > >   Usb = Boot from a system BIOS-specified USB device.
-> > >   Utilities = Boot to the manufacturer's utilities program or
-> > > programs
-> > > ```
-> > > 
-> > > In the OpenBMC the current Dbus interfaces for the Boot Override
-> > > feature are:
-> > > ```
-> > > /xyz/openbmc_project/control/host0/boot:
-> > >     - Interface: xyz.openbmc_project.Control.Boot.Source
-> > >     - Interface: xyz.openbmc_project.Control.Boot.Mode
-> > >     - Interface: xyz.openbmc_project.Control.Boot.Type
-> > > /xyz/openbmc_project/control/host0/boot/one_time:
-> > >     - Interface: xyz.openbmc_project.Control.Boot.Source
-> > >     - Interface: xyz.openbmc_project.Control.Boot.Mode
-> > >     - Interface: xyz.openbmc_project.Control.Boot.Type
-> > >     - Interface: xyz.openbmc_project.Object.Enable
-> > > ```
-> > > It works this way:
-> > > - when `xyz.openbmc_project.Object.Enable` property under
-> > > `/xyz/openbmc_project/control/host0/boot/one_time` is set to
-> > > `true` we
-> > > use Boot.Source/Mode/Type under
-> > > `/xyz/openbmc_project/control/host0/boot/one_time` for the
-> > > override
-> > > feature.
-> > > - when `xyz.openbmc_project.Object.Enable` property under
-> > > `/xyz/openbmc_project/control/host0/boot/one_time` is set to
-> > > `false`
-> > > we use Boot.Source/Mode/Type under
-> > > `/xyz/openbmc_project/control/host0/boot` for the override
-> > > feature.
-> > > 
-> > > I don't really get why we split Override Source to `Boot.Source`
-> > > and
-> > > `Boot.Mode`, but this is the question for another time.
-> > > 
-> > > Right now I want to discuss the main problem with this
-> > > approach... it
-> > > is that OVERRIDE IS ALWAYS ENABLED. This
-> > > `xyz.openbmc_project.Object.Enable` property only indicates if we
-> > > should use permanent or one-time override.
-> > > 
-> > > I guess no one have noticed it since but by default override
-> > > target
-> > > (`Boot.Source`) is set to something like "None". So no one have
-> > > experienced any difficulties. Override is enabled, but it says
-> > > boot
-> > > default.
-> > > 
-> > > Proof that IPMI valid flag is always enabled:
-> > > ```uint1_t validFlag = 1;```
-> > > https://github.com/openbmc/phosphor-host-ipmid/blob/e76a61a2f7c19ed07e2bfe98533d82bc23692fc1/chassishandler.cpp#L1861
-> > > 
-> > > `bmcweb` deals with this issue a little bit different (hello
-> > > inconsistency!), it performs weird logic to decide if it should
-> > > set
-> > > `BootSourceOverrideEnabled` to `Disabled`.
-> > > https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/systems.hpp#L951
-> > > Which would get even weirder when support for EFI/Legacy selector
-> > > would be merged:
-> > > https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/40970/10/redfish-core/lib/systems.hpp#929
-> > > 
-> > > So as you can see, the current approach is kinda buggy, ipmid
-> > > always
-> > > reports override as valid, bmcweb reports override as disabled
-> > > when
-> > > you write `BootSourceOverrideTarget = None`.
-> > > 
-> > > This all is already a problem, but when we add Legacy/EFI
-> > > selector
-> > > support, things are getting really messy.
-> > > ipmid can no longer always say that override is valid, since it
-> > > would
-> > > be overriding boot either to EFI or Legacy.
-> > > bmcweb now can report that override is disabled only when
-> > > `BootSourceOverrideTarget = None` and `BootSourceOverrideMode =
-> > > EFI`.
-> > > Weird, yeah? We write that we want override to `None/EFI`, but
-> > > read
-> > > that override is `Disabled`. Weird and obviously wrong.
-> > > 
-> > > How to overcome all of this?
-> > > To be honest I don't see any use in splitting Boot Override
-> > > feature in
-> > > two Dbus objects under `/xyz/openbmc_project/control/host0/boot`
-> > > and
-> > > `/xyz/openbmc_project/control/host0/boot/one_time`, since we
-> > > don't
-> > > need to fallback to permanent override after one-time override.
-> > > 
-> > > So I think the problem can be solved if we would have something
-> > > like
-> > > this on Dbus to represent Boot Override feature:
-> > > ```
-> > > /xyz/openbmc_project/control/host0/boot:
-> > >     - Interface: xyz.openbmc_project.Control.Boot.Source
-> > >     - Interface: xyz.openbmc_project.Control.Boot.Mode
-> > >     - Interface: xyz.openbmc_project.Control.Boot.Type
-> > >     - Interface: xyz.openbmc_project.Control.Boot.Permanent #
-> > > true/false
-> > >     - Interface: xyz.openbmc_project.Object.Enable
-> > > ```
-> > > I don't know if we can reuse any of the current interfaces for
-> > > the
-> > > `xyz.openbmc_project.Control.Boot.Permanent` feature, but I think
-> > > something like these interfaces are what we need. With
-> > > `Boot.Permanent` we can drop `one-time` object, and with
-> > > `Object.Enable` we can solve all the aforementioned problems.
-> > 
-> > Sorry for the late response! I think this works. The two different
-> > D-Bus objects were trying to achieve the same thing (as
-> > Boot.Permanent
-> > true/false), but as you noted they probably both needed an
-> > Object.Enable interface. Boot.Permanent does seem simpler.
-> > 
-> > Thanks,
-> > Deepak
+Hi Ben,
 
--- 
-Best regards,
-Andrei Kartashev
+I submitted the below patch in gerrit regarding rsyslog for my platform.
+meta-facebook: Add rsyslog for yosemitev2. (Ife76252d) * Gerrit Code Review=
+ (openbmc-project.xyz)<https://gerrit.openbmc-project.xyz/c/openbmc/openbmc=
+/+/44122>
 
+Also, there are few patches in gerrit for rsyslog which you have submitted.
+https://gerrit.openbmc-project.xyz/q/topic:%22rsyslog-refactor%22+(status:o=
+pen%20OR%20status:merged)
+Whether these patches will be enough to store the event logs in redfish ?
+or any other changes needs to be done for my platform.
 
+Thanks,
+Jayashree
+::DISCLAIMER::
+________________________________
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
+smission. The e mail and its contents (with or without referred errors) sha=
+ll therefore not attach any liability on the originator or HCL or its affil=
+iates. Views or opinions, if any, presented in this email are solely those =
+of the author and may not necessarily reflect the views or opinions of HCL =
+or its affiliates. Any form of reproduction, dissemination, copying, disclo=
+sure, modification, distribution and / or publication of this message witho=
+ut the prior written consent of authorized representative of HCL is strictl=
+y prohibited. If you have received this email in error please delete it and=
+ notify the sender immediately. Before opening any email and/or attachments=
+, please check them for viruses and other defects.
+________________________________
+
+--_000_SG2PR04MB3093DD642B1D80C03EFBAF91E1099SG2PR04MB3093apcp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Segoe UI";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
+pan style=3D"color:green">Public</span></b><span style=3D"font-size:12.0pt"=
+><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Hi Ben,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I submitted the below patch in gerrit regarding rsys=
+log for my platform.<o:p></o:p></p>
+<p class=3D"MsoNormal"><a href=3D"https://gerrit.openbmc-project.xyz/c/open=
+bmc/openbmc/+/44122">meta-facebook: Add rsyslog for yosemitev2. (Ife76252d)=
+ &middot; Gerrit Code Review (openbmc-project.xyz)</a><o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Also, there are few patches in gerrit for rsyslog wh=
+ich you have submitted.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><a href=3D"https://gerrit.openbmc-project.xyz/q/topi=
+c:%22rsyslog-refactor%22+(status:open%20OR%20status:merged)"><span style=3D=
+"font-size:10.5pt;font-family:&quot;Segoe UI&quot;,sans-serif;border:none w=
+indowtext 1.0pt;padding:0in">https://gerrit.openbmc-project.xyz/q/topic:%22=
+rsyslog-refactor%22+(status:open%20OR%20status:merged)</span></a><o:p></o:p=
+></p>
+<p class=3D"MsoNormal">Whether these patches will be enough to store the ev=
+ent logs in redfish ?<o:p></o:p></p>
+<p class=3D"MsoNormal">or any other changes needs to be done for my platfor=
+m.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
+<p class=3D"MsoNormal">Jayashree<o:p></o:p></p>
+</div>
+<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
+<hr>
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or
+ incomplete, or may contain viruses in transmission. The e mail and its con=
+tents (with or without referred errors) shall therefore not attach any liab=
+ility on the originator or HCL or its affiliates. Views or opinions, if any=
+, presented in this email are solely
+ those of the author and may not necessarily reflect the views or opinions =
+of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
+ disclosure, modification, distribution and / or publication of this messag=
+e without the prior written consent
+ of authorized representative of HCL is strictly prohibited. If you have re=
+ceived this email in error please delete it and notify the sender immediate=
+ly. Before opening any email and/or attachments, please check them for viru=
+ses and other defects.<br>
+<hr>
+</font>
+</body>
+</html>
+
+--_000_SG2PR04MB3093DD642B1D80C03EFBAF91E1099SG2PR04MB3093apcp_--
