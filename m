@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AE343B1254
-	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 05:40:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C64D3B1256
+	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 05:41:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G8pvV2w1Dz3bsk
-	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 13:40:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G8pvx6Py3z3bt2
+	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 13:41:17 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=GVcyu69q;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=PudS5yAq;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=JNLS301s;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=OQ1/VLVE;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,47 +19,47 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=GVcyu69q; 
+ header.s=fm3 header.b=JNLS301s; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=PudS5yAq; 
+ header.a=rsa-sha256 header.s=fm3 header.b=OQ1/VLVE; 
  dkim-atps=neutral
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
  [64.147.123.19])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G8psd2dXcz3098
- for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 13:39:17 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G8psg6gSfz307m
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 13:39:19 +1000 (AEST)
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
- by mailout.west.internal (Postfix) with ESMTP id BAEAFEC8;
- Tue, 22 Jun 2021 23:39:14 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 51C9AEC4;
+ Tue, 22 Jun 2021 23:39:17 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute6.internal (MEProxy); Tue, 22 Jun 2021 23:39:14 -0400
+ by compute6.internal (MEProxy); Tue, 22 Jun 2021 23:39:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=3/zXr0MFCoTlv
- 4MVeFTVcgwaIENgH4z2YG9XCFzoO4w=; b=GVcyu69qOvno4ZoxEgZpEflu1CkuH
- KH3ZPiejjAcXbLEHGqVEgir7Q8N3IOy038cG0SS0u/fKI9DhD3rVLalcUwNpJANe
- UB0fSaMbvO6j4fQ1LV4OO5D7Yd3hCrjTqgWx9Si+wd3hcUD38gI29EdGjJ2g26oA
- wPZKwgDn+iQgz5Vguj7WCrMWbLg56rU2hpe37x39xejaStljv4OZPQmBfX8CJGUr
- Aft+Zp46aqfB6id5yz30F2Akwq2pcI2ohn0TE3J3rUzG9tasSu8donkSGFwiQUK2
- UxwKRrt0oRAq3bxR1C4WMiSU4RFDEHYqhf6F4qcsMGb4rXcphrx9r5J8g==
+ :mime-version:content-transfer-encoding; s=fm3; bh=nywLGSt2lhgne
+ 7YWWpdBw4RgY5fP4s/yT7U9JbKKIxI=; b=JNLS301sLTLVzNxfmW8oiFLiTTYdh
+ D4n+FtZIsburH1B0NYyDLfLlKSS7kmdFmJ3dkI9hV5aWGyGnAe3PNCBLbjN1RB1b
+ J76OBaon1Kt7yvQGnGQTjwIIhkeL3j3OCCH1WFLKEDd/SSGcwtIX0nh1DABdW9B9
+ Nh8NWf69dh949wuXUwRU+1iSB2f2ljT1TT/1JS7JLLowu9MqbJdY6mbnB2LqrSnK
+ 2F6AqBd+xba/ooWezY8c7x7TalaRRTa4+3OqjUdI/23B04YE66BKLNYFYJhv1V6g
+ FJR+tLziH2EdfpkX5kXVZvmacrkEaK0IfHFcHyASqAbNyK1S++Ur8DlDA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=3/zXr0MFCoTlv4MVeFTVcgwaIENgH4z2YG9XCFzoO4w=; b=PudS5yAq
- IDnw4WyRbRwqOTACL0cCUC0x6lrHoth5ko5/zqPr35VOyMpqwBh4dRNfGBk0OsJz
- +9HgpXyYDeU2ZRNcMZeSnnCVhCqRZGJGbNtNbNn3TnzBpnHZcQ8WcHyHJeG6NmVp
- FZdi3SE4LYxHrImnge5oC1OfN5C175w8I265j7XwGrurCIQx5ATrY375Yr7HeAMV
- Y5yr3SVyXjUQmJOyckfpI32PIs1H9FIxHVpTksdVjTGUA8tDYjC200aDh9m6Z70e
- lheDfIhdKaERBPphTyM8hPVhujbCtvC66oSuflnFeB2LkbH9R+2r27QKRqKAH+b7
- Y4dWyYswBEavqw==
-X-ME-Sender: <xms:4qzSYHXvHEHhfQcI4V3LSh-wxleAtAvW5r2ZusPCl9Qy6umzgc2hww>
- <xme:4qzSYPkuRzaexDFflnKqA62xDRtAoP94psCA6pXOO_V5xbVx4hEuntsNYvk9-Z-XK
- Sny8h-smWkx7Z-MUA>
-X-ME-Received: <xmr:4qzSYDYOb0MT0cr7Y6Q4Cxzql3Lm1HDu6LEOPw6T2hNvqD8DSwwswNuaOMfsYTjt00g3pP66QEYCZ32JMbEceUIJf-XUnCFy2AaJXMNNgC0tC1Nc_dKxbogyTHtIG9urEY9oFLxluCE0qQ>
+ fm3; bh=nywLGSt2lhgne7YWWpdBw4RgY5fP4s/yT7U9JbKKIxI=; b=OQ1/VLVE
+ 2lIs2LGhxRWLunNDOODYSv+7loTVJERvEy/32Gx9c++b1HJ+OLtET/BD4sviN9dc
+ JIlcgXhMaVLQwepVO5qrvLXjYp91DAAm7vi1saCDNbYjTPvjPsnmthVADHlW/p8X
+ obCU787lquJRpIF3Eo/iv7a9HgzWOO5hk7LPqd2gCntqkyQJHP8qInVJ/TX7ZYNd
+ bzVpBVB556V1YazdLkTPte6BM0PcOU6rBtG05sjdjJERcFJBBH6QnrJqpRjCfsIM
+ auYsShgV52I2ZFfoVCGHUr+G55IK76GHQmbdZKAt9FaXXbiK5TtLIu0IZ6G2vlYQ
+ kRp7/4U/Bi8uyg==
+X-ME-Sender: <xms:5KzSYNaLZ87dLpPXgwLhlNWbewR6KcHivb23iX906gTjIA0s8fWU8w>
+ <xme:5KzSYEbq9q593SUi3JmbI5SaOFfCEdVfwq0h3ExhixhwHAOvgCzeHl-zAoDuaaK6v
+ 7qF_amqZ7ragP-xaQ>
+X-ME-Received: <xmr:5KzSYP_7hPmbDsSkMEZSKTrhvPddf2EMGuAMqK6G1G0gp8vSxXJ6PRNymjNrs7-OlQ_t72PcwBBLFHvcnItsA95q0JIuZBsuQLrl_1_dlu7pRnb8GLHkUFwjiUWu-atqbPU0_kWr7WCZFw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeegvddgieehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
@@ -67,18 +67,18 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeegvddgieehucetufdoteggod
  jhdrihgurdgruheqnecuggftrfgrthhtvghrnhepjefgvdevheetkeevgeegleelgfelte
  etjeffleffvdduudevieffgeetleevhfetnecuvehluhhsthgvrhfuihiivgeptdenucfr
  rghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:4qzSYCX9uK9cxlrjYyMax68RsClfV2xuhd9X1BiX4s_5OP6ywDXUAg>
- <xmx:4qzSYBnLkrU6RJCmZozs0ApyDHR2cwq7YB5XYokDYgAKeimPVAt-kQ>
- <xmx:4qzSYPeL65vkTE9LXZu9o_orTPxS3iEIAQY6t8I6RkxVB4tNqG_zaQ>
- <xmx:4qzSYAt8P2u8znd_AtXoxiryzxMkRZD812AvBvjBBhy6RHIimhRLGg>
+X-ME-Proxy: <xmx:5KzSYLrR_W2Tvevxee3rY13SZwsK9z80UNIphqZFLFzz5UDbkjzRJg>
+ <xmx:5KzSYIosO79dSGQp2R8lbqSDZB-A3smyRy1q-VQPMWtdkzj3Ck5o0g>
+ <xmx:5KzSYBSPVNJ8dekjUgnC4rwr11haUczEkqUc-Wyby6RRruXwEkkFkg>
+ <xmx:5KzSYPT5z7cGChNTZ4rCAIJGPCYMyqG_UQ5UyE8G_sPfgKrfZUL00w>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jun 2021 23:39:12 -0400 (EDT)
+ 22 Jun 2021 23:39:15 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.10 v2 3/7] ARM: configs: Enable IPMI KCS raw
- chardev
-Date: Wed, 23 Jun 2021 13:08:50 +0930
-Message-Id: <20210623033854.587464-4-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.10 v2 4/7] ARM: dts: p10bmc: Drop the openbmc,
+ mctp-lpc node
+Date: Wed, 23 Jun 2021 13:08:51 +0930
+Message-Id: <20210623033854.587464-5-andrew@aj.id.au>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210623033854.587464-1-andrew@aj.id.au>
 References: <20210623033854.587464-1-andrew@aj.id.au>
@@ -99,25 +99,69 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The raw KCS chardev is used by libmctp's vendor-defined LPC binding.
+The MCTP LPC driver was loaded by hacking up the compatible in the
+devicetree node for KCS 4. With the introduction of the raw KCS driver
+this hack is no-longer required. Use the regular compatible string for
+KCS 4 and configure the appropriate SerIRQ.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- arch/arm/configs/aspeed_g5_defconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 11 ++++++-----
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 11 ++++++-----
+ 2 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm/configs/aspeed_g5_defconfig b/arch/arm/configs/aspeed_g5_defconfig
-index cefbec257bd8..045d383ce5ce 100644
---- a/arch/arm/configs/aspeed_g5_defconfig
-+++ b/arch/arm/configs/aspeed_g5_defconfig
-@@ -180,6 +180,7 @@ CONFIG_SERIAL_8250_DW=y
- CONFIG_SERIAL_OF_PLATFORM=y
- CONFIG_ASPEED_KCS_IPMI_BMC=y
- CONFIG_IPMI_KCS_BMC_SERIO=y
-+CONFIG_IPMI_KCS_BMC_CDEV_RAW=y
- CONFIG_ASPEED_BT_IPMI_BMC=y
- CONFIG_HW_RANDOM=y
- CONFIG_HW_RANDOM_TIMERIOMEM=y
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+index 1c9e4ff5388b..d899c9620286 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+@@ -4049,11 +4049,6 @@ &lpc_ctrl {
+ 	memory-region = <&flash_memory>;
+ };
+ 
+-&kcs4 {
+-	compatible = "openbmc,mctp-lpc";
+-	status = "okay";
+-};
+-
+ &mac2 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+@@ -4092,3 +4087,9 @@ &xdma {
+ 	status = "okay";
+ 	memory-region = <&vga_memory>;
+ };
++
++&kcs4 {
++	status = "okay";
++	aspeed,lpc-io-reg = <0xca2>;
++	aspeed,lpc-interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
++};
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 73e94be5424b..9ea3864651d6 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -1717,11 +1717,6 @@ &lpc_ctrl {
+ 	memory-region = <&flash_memory>;
+ };
+ 
+-&kcs4 {
+-	compatible = "openbmc,mctp-lpc";
+-	status = "okay";
+-};
+-
+ &mac2 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+@@ -1784,3 +1779,9 @@ &xdma {
+ 	status = "okay";
+ 	memory-region = <&vga_memory>;
+ };
++
++&kcs4 {
++	status = "okay";
++	aspeed,lpc-io-reg = <0xca2>;
++	aspeed,lpc-interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
++};
 -- 
 2.30.2
 
