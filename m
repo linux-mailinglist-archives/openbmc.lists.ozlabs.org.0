@@ -1,65 +1,95 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05BA83B13FA
-	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 08:32:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8D1B3B1B77
+	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 15:45:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G8tjT5kvjz3073
-	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 16:32:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G94K643w5z307X
+	for <lists+openbmc@lfdr.de>; Wed, 23 Jun 2021 23:45:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=aATIkR9i;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=PxCJsyKe;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::631;
- helo=mail-ej1-x631.google.com; envelope-from=ratankgupta31@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=aATIkR9i; dkim-atps=neutral
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com
- [IPv6:2a00:1450:4864:20::631])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=PxCJsyKe; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G8tjD1btnz2yXW
- for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 16:32:13 +1000 (AEST)
-Received: by mail-ej1-x631.google.com with SMTP id nd37so2260113ejc.3
- for <openbmc@lists.ozlabs.org>; Tue, 22 Jun 2021 23:32:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=LIWiKlrEp/sh2abESUDZberN6GGhD3s9rlYMfsnLOGU=;
- b=aATIkR9i9kqgQwNqdTY7MbPkoZUXamlUarpGM0fFxvaXjotdTnNuQufeV5sh4qUuh3
- k2M+4mATTTTCf1nY3s7FyW28g8hRSxzfzbNBhosblvvhVGafHNFrjUo0v+Pvyw0vzh9D
- u8ocBRPQFlb8AQMYzPfKdRgY36yZkXWUeIwM8QFcDtzAdHhh+4zzfA3iylLXgs09H3zf
- CwLnKtzsLFhErYY2QSoQSbGVDvzPjCF1I31hz9y2aUdEN/+y7/joM37GiAwa9BTUIC7f
- LOCYiYRtqv7x6+hc2+2pbVcdcrbzbzhAtPLHdd3PtPZ8Nw4H6kTYmhNrXWyvLUhMLixc
- +gWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=LIWiKlrEp/sh2abESUDZberN6GGhD3s9rlYMfsnLOGU=;
- b=uOAq4zlLXmzGy1zBx8HhSv7U+Tg3qP41PzfBlrPcR2OfGkmtG29AqPCLu10HWlXhtv
- pcwEvWA6rtVGhEAIRI7nyw4Jwlv3mbNr34XtfXS+YHWT3uH3dMYZ0sId3CfWEjxTOIax
- /CXVxuU33AFGu3Ag8zeMiMqrmhRnWJVR+6yIyaRskacB+PtSoW85VEiqRlXYyrKtfsPa
- bkDoCKRqu4qUd8xEv4PfQ8wlZCzlTK1ck0D5fcLK/4nxsk3lc2LpWNVa7FGTdAdWIEcB
- pONLZMQfWCK5cI06QgLix9iQb1KpV/xHCilW31XYGkJumIEAjPRuZv2N6eizhGCQndHb
- f83Q==
-X-Gm-Message-State: AOAM531mwFy9liZdrmyzLHLWY2yrEQCh10uuJ9UYOI/73enMbtcW6Fxt
- 5+sMfOIIJkDFXwZSbko9BnGVFWQ7IKcOi0tmA4dz67SCsfU=
-X-Google-Smtp-Source: ABdhPJyBCszhhlIW9zCfPpUsGHIwW5eV2OrkYNON4uMafhWNNCffW26093G7XjEMMuk4hpjyF5PEpmWI2XdI7bIrwtI=
-X-Received: by 2002:a17:906:b0cb:: with SMTP id
- bk11mr8447442ejb.310.1624429927196; 
- Tue, 22 Jun 2021 23:32:07 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G94Jq4Xgkz2yyC
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 23:45:14 +1000 (AEST)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 15NDYEWC125432
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 09:45:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=to : from : subject :
+ message-id : date : content-type : content-transfer-encoding :
+ mime-version; s=pp1; bh=J6o+dSyJ5tL3/hpyXJqZcjdTZjS/ejall5Da6AEqZ8w=;
+ b=PxCJsyKeOg8dgzT3uSO3ooGKfJfL0U+tl89EmydlT7T7AuAagDDoTY20S1BhEa8Bjx/e
+ 3H2DH5rIs0r7u1E0CAo3Qj9yqqOalDEtKYeyS8bv/VhT5w9kIWEi14kRIndymsKWtBts
+ s5EDDn6Kjq1ZST1k8AmS3BMc7E3tKj5CuCXeODjnB+hGYJhwn9f0Nc0C1W9Lds3Ey3Ch
+ wC3w1RTRpQJRyzfX/11gKLHf3uayK7OQ6jMxJX57/bX0Bf8VsXn+9rjMZFktFoXy76Ko
+ ap6esz4SJP2S4w1ipWJ7c/y7msR3wl0mhp3mcb/fGMZjGXWFLcCWB20Ui+CnnZmOHnn6 nQ== 
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 39c5a8t38g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 09:45:10 -0400
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 15NDc2SV028846
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 13:45:09 GMT
+Received: from b03cxnp07028.gho.boulder.ibm.com
+ (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
+ by ppma01wdc.us.ibm.com with ESMTP id 3998790n0c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 13:45:09 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 15NDj85n26673570
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 13:45:08 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 22BE66A051
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 13:45:08 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D63586A04F
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 13:45:07 +0000 (GMT)
+Received: from demeter.local (unknown [9.160.51.100])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 13:45:07 +0000 (GMT)
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday June 23
+Message-ID: <aca638a3-bc8b-10b6-d902-3092ec43eb89@linux.ibm.com>
+Date: Wed, 23 Jun 2021 08:45:06 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: grFtRMMGHaSwMpm42Ir5W0AqNKtnrvEx
+X-Proofpoint-ORIG-GUID: grFtRMMGHaSwMpm42Ir5W0AqNKtnrvEx
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-From: Ratan Gupta <ratankgupta31@gmail.com>
-Date: Wed, 23 Jun 2021 12:01:56 +0530
-Message-ID: <CAMhqiMpbgutVgmQXBuDBRe2NUCg0280H34cwJcbcOcUMDNUsKA@mail.gmail.com>
-Subject: SELinux support
-To: openbmc@lists.ozlabs.org, rnouse@google.com, rli11@lenovo.com
-Content-Type: multipart/alternative; boundary="000000000000c5ed2105c5691078"
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-06-23_06:2021-06-23,
+ 2021-06-23 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0
+ mlxscore=0 impostorscore=0 mlxlogscore=615 suspectscore=0 malwarescore=0
+ phishscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104190000 definitions=main-2106230078
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,85 +104,23 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000c5ed2105c5691078
-Content-Type: text/plain; charset="UTF-8"
+This is a reminder of the OpenBMC Security Working Group meeting 
+scheduled for this Wednesday June 23 at 10:00am PDT.
 
-Hi Team,
+We'll discuss the following items on the agenda 
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
+and anything else that comes up:
 
-I was working on supporting selinux on openbmc stack, I was able to create
-the image with selinux.
-root@test:~# sestatus
-SELinux status:                 enabled
-SELinuxfs mount:                /sys/fs/selinux
-SELinux root directory:         /etc/selinux
-Loaded policy name:             mls (also tried targeted and minimum)
-Current mode:                   permissive
-Mode from config file:          permissive
-Policy MLS status:              enabled
-Policy deny_unknown status:     allowed
-Memory protection checking:     actual (secure)
-Max kernel policy version:      33
+1. Gerrit review BMCWeb “Automate PrivilegeRegistry to code” 
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/43939 
+<https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/43939>.
 
-While I am creating the selinux user, I am getting the following error from
-the libsemanage.
-root@abc:~# useradd -G wheel -Z sysadm_u test_se
 
-[libsemanage]: Error while renaming /var/lib/selinux/minimum/active to
-/var/lib/selinux/minimum/previous.
-Cannot commit SELinux transaction
-useradd: warning: the user name test_se to sysadm_u SELinux user mapping
-failed.
+The July 6 meeting is tentatively cancelled, unless someone want to run it.
 
-During building of the selinux :  I have used the refpolicy as minimum and
-added the selinux package (selinux-minimal) in the openbmc image
-(
-http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-security/refpolicy/refpolicy-minimum_git.bb
-)
-(
-http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-security/packagegroups/packagegroup-selinux-minimal.bb
-)
 
-Did anybody try creating the selinux user?
-I have seen that Anton and Ivan were working on that, Did you also face
-this issue? If not, Can you suggest what I am missing?
+Access, agenda and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group 
+<https://github.com/openbmc/openbmc/wiki/Security-working-group>
 
-Regards
-Ratan Gupta
-
---000000000000c5ed2105c5691078
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Team,<br><br>I was working on supporting selinux on ope=
-nbmc stack, I was able to create the image with selinux.<br>root@test:~# se=
-status<br>SELinux status: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 enabled<br>SELinuxfs mount: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0/sys/fs/selinux<br>SELinux root directory: =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 /etc/selinux<br>Loaded policy name: =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 mls (also tried targeted and minimum)<br>Current mode: =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 permissive<b=
-r>Mode from config file: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0permissive<br>Po=
-licy MLS status: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0enabled<br=
->Policy deny_unknown status: =C2=A0 =C2=A0 allowed<br>Memory protection che=
-cking: =C2=A0 =C2=A0 actual (secure)<br>Max kernel policy version: =C2=A0 =
-=C2=A0 =C2=A033<br><br>While I am creating the selinux user, I am getting t=
-he following error from the libsemanage.<br>root@abc:~# useradd -G wheel -Z=
- sysadm_u test_se =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<br><br>[libsemanage]: Error while=
- renaming /var/lib/selinux/minimum/active to /var/lib/selinux/minimum/previ=
-ous.<br>Cannot commit SELinux transaction<br>useradd: warning: the user nam=
-e test_se to sysadm_u SELinux user mapping failed.<br><br>During building o=
-f the selinux : =C2=A0I have used the refpolicy as minimum and added the se=
-linux package (selinux-minimal) in the openbmc image<br>(<a href=3D"http://=
-git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-security/refpo=
-licy/refpolicy-minimum_git.bb">http://git.yoctoproject.org/cgit/cgit.cgi/me=
-ta-selinux/tree/recipes-security/refpolicy/refpolicy-minimum_git.bb</a>)<br=
->(<a href=3D"http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/tree/re=
-cipes-security/packagegroups/packagegroup-selinux-minimal.bb">http://git.yo=
-ctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-security/packagegrou=
-ps/packagegroup-selinux-minimal.bb</a>)<br><br>Did anybody try creating the=
- selinux user?<br>I have seen that Anton and Ivan were working on that, Did=
- you also face this issue? If not, Can you suggest what I am missing?<br><b=
-r>Regards<br>Ratan Gupta</div>
-
---000000000000c5ed2105c5691078--
+- Joseph
