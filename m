@@ -2,76 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60A7E3B3506
-	for <lists+openbmc@lfdr.de>; Thu, 24 Jun 2021 19:50:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E81423B3528
+	for <lists+openbmc@lfdr.de>; Thu, 24 Jun 2021 20:02:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G9njJ104Rz3091
-	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 03:50:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G9nyq4phfz3btv
+	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 04:02:11 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=j46HZGuN;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=fQpRjSL2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d31;
- helo=mail-io1-xd31.google.com; envelope-from=bjwyman@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d36;
+ helo=mail-io1-xd36.google.com; envelope-from=bjwyman@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=j46HZGuN; dkim-atps=neutral
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com
- [IPv6:2607:f8b0:4864:20::d31])
+ header.s=20161025 header.b=fQpRjSL2; dkim-atps=neutral
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
+ [IPv6:2607:f8b0:4864:20::d36])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G9nhx2L17z306r
- for <openbmc@lists.ozlabs.org>; Fri, 25 Jun 2021 03:50:08 +1000 (AEST)
-Received: by mail-io1-xd31.google.com with SMTP id g22so9367542iom.1
- for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 10:50:07 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G9nyS6JR5z307k;
+ Fri, 25 Jun 2021 04:01:50 +1000 (AEST)
+Received: by mail-io1-xd36.google.com with SMTP id f10so9368738iok.6;
+ Thu, 24 Jun 2021 11:01:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language;
- bh=vIvp5jhVhiKjRxYQVD8HMzblb2G6Xvdh3OJm349TqgA=;
- b=j46HZGuN/FqzntP8mZvKF0GY5DZ3gIQnpzvYTqgr1inXZfYJLep7ARhWZlKzOZBYhW
- pI5xAkl5xZUVTiqdp8ZAIRcgp1XM5XCFTX8DasXBTQ84zXPkJsTvMPjZpGCrrHoJlm+3
- afZRom5OYj8p+397vqE1OOSxKfmTxpe5YqEm+1zBAI3R4yRd6iOBa9KER/1VAhj0OkhE
- R8AbcAtqyTEIqS9EGF6r5DbidarB9Z5+UlNsnrR2JKUvo5dG1en0kxRleFVyod1H09rv
- 7PJybufYnNCHHTVx/ABhf0gxwnFo4MqxGsSyNZyCrYXoPs9C0WHYTxAe5/kvkQVQFCHi
- 8RNA==
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=rhWDqKm/Z6fGnJdlKRNiulGkwn/9re9++vjaZyOdWG0=;
+ b=fQpRjSL2khmMSQ07fSPAWaO2T7dWD8/bqmqqoN2MESvDxswARLmO+CVGNrLOEQv8X0
+ UXdMhCzFMaDiQqxut6/6hII0DidLQLLXQVzQlDV9GOx+Kf3NGF058FYSESlybtHOG2zh
+ x+OuIfO7KFAlyegffNW54R0pTUmuYO18v2TAcrJaWBEsmfPKxFQoSq+2Zu6TdXvap+xm
+ BPs35yeRwszxKzqzxJnJWuKS8rXACpEjIzTlNKWY+1arB8XOl1z82kiy+g+EYFUAVPCD
+ cFFqOT10xGhRKxVHN7+jOg0SlV4Srz/v8brkaNokBPqb6KBofjTrrQYI0oL21o8x8r4l
+ 4pbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language;
- bh=vIvp5jhVhiKjRxYQVD8HMzblb2G6Xvdh3OJm349TqgA=;
- b=oq3bgpMPdgIiomQgu+pZC60NFPwtTdU2XfomzrSIByEb/na8T9WvBkz4KVEAmL/dlC
- KJ5BlRPTBXE3sCpK/B+o5XE9K4N6PZPqglvRSIpxi20XL8P1Dow/QR96DrivvzJp8x/v
- s7EOn9PTYN9Cfc8tTGlSR58kBUTBCcYOr96kjfKrglw/nHs/h+mhR7XkRQLdnffbkhB7
- PTE1WmmRhPluwmcFsU2LsK9IWyNmeD9XcORamdAl8WLnnd1DweGJaeGAuwb/VCsbFxBt
- /UXL1kHXUhZMTkwdm8ISaqNBYYKXN9e6nN9KBX1IlStkXSspFsqbmhNTw1ceyYJ5eehz
- oJrQ==
-X-Gm-Message-State: AOAM5309/0NVZaIy5LEfjkrz1M4Yn/ao7bou0sXE9YwXfmO5rP6nVEx5
- VimP5aqd/tSecSwvLJ4HMoU=
-X-Google-Smtp-Source: ABdhPJzxJOvLEOeOXhMMFGKgfn67K4BcoKpalQNuJDzd6w9s7ZfA/hnd+xT5riN4NwgnO6Z1CEM7Zg==
-X-Received: by 2002:a6b:3b16:: with SMTP id i22mr5079292ioa.36.1624557003783; 
- Thu, 24 Jun 2021 10:50:03 -0700 (PDT)
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=rhWDqKm/Z6fGnJdlKRNiulGkwn/9re9++vjaZyOdWG0=;
+ b=m8Q2gdcfdz9wSNrL1da0uhyfvoXuB/se0hNRjdkjsfdHlshkddb7cRWf7aMXll2uD/
+ Jus/6AFoIxr3CGiXc6J5TFedC1k04hgFSOm+hb2hi/RH1pMSBOAQJk3awaL7/wY9/szm
+ ozElJA6d+MDY+fjmEZM8GcOe5lJ0/bVk9zY5mkIlsV7YLZtM5LIOgNWgJsrqW1wv1xmW
+ 7b4+6LLpOV6TKAZK5F/IM7OCzUNFNhfrOfDrp6PrqVxAcIK+LhTKu9sNRF1QPYAoNy5p
+ TD3hUA/xrtDvnGkIIQrG2Gkca0/J//gsdBBClQvshXXMDonfaeyjSMdFZFEgsffH2mON
+ rTGQ==
+X-Gm-Message-State: AOAM530FKnZ6fNM4nA2kWXLLzcOVVqxnRwGBZXooWcfb3BquV7CxEfvI
+ 3967iliLjYf6lrwUkTet1BCzfPi5zk4qBw==
+X-Google-Smtp-Source: ABdhPJzn59XtvV7GH04OGHTki2LP3Ap+yvKG4p8DnZ533MbUg9MAN78Bhls8WvWzO1XcN6JJEoD2MA==
+X-Received: by 2002:a02:cba8:: with SMTP id v8mr5755923jap.111.1624557706014; 
+ Thu, 24 Jun 2021 11:01:46 -0700 (PDT)
 Received: from [192.168.4.31] (199-48-94-117.rochmnaa.metronetinc.net.
  [199.48.94.117])
- by smtp.gmail.com with ESMTPSA id n17sm2246861ilt.16.2021.06.24.10.50.02
+ by smtp.gmail.com with ESMTPSA id h26sm1692843ioh.34.2021.06.24.11.01.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jun 2021 10:50:03 -0700 (PDT)
-Subject: Re: [Phosphor-power] psu-ng: Add method to get PSU conf from D-Bus.
-To: Chanh Nguyen OS <chanh@os.amperecomputing.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <SN6PR01MB4973940AAE8F62B61613C2BB95089@SN6PR01MB4973.prod.exchangelabs.com>
+ Thu, 24 Jun 2021 11:01:45 -0700 (PDT)
+Subject: Re: [PATCH] ARM: dts: aspeed: Rainier remove PSU gpio-keys
+To: Andrew Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>,
+ openbmc@lists.ozlabs.org, linux-aspeed@lists.ozlabs.org
+References: <20210623230401.3050076-1-bjwyman@gmail.com>
+ <7365c20e-541c-4e32-a907-0519534117ae@www.fastmail.com>
 From: Brandon Wyman <bjwyman@gmail.com>
-Message-ID: <7a434ef2-c15d-be17-e443-2eedf5fc3ed4@gmail.com>
-Date: Thu, 24 Jun 2021 12:50:02 -0500
+Message-ID: <c6f3dea3-b602-84a3-e06b-550672c3b6b8@gmail.com>
+Date: Thu, 24 Jun 2021 13:01:45 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <SN6PR01MB4973940AAE8F62B61613C2BB95089@SN6PR01MB4973.prod.exchangelabs.com>
-Content-Type: multipart/alternative;
- boundary="------------D39B40108939505B6677D16F"
+In-Reply-To: <7365c20e-541c-4e32-a907-0519534117ae@www.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -84,156 +86,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "spinler@us.ibm.com" <spinler@us.ibm.com>,
- Thang Nguyen <thangqn@amperecomputing.com>,
- "shawnmm@us.ibm.com" <shawnmm@us.ibm.com>, Phong Vo <pvo@amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------D39B40108939505B6677D16F
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
 
-
-On 2021-06-23 04:11, Chanh Nguyen OS wrote:
-> Hi B. J. Wyman,
+On 2021-06-23 18:08, Andrew Jeffery wrote:
 >
-> I'm using the psu-ng to monitor the PSU. I used the 
-> */pmbus/*(https://github.com/openbmc/linux/blob/dev-5.10/Documentation/hwmon/pmbus.rst 
-> <https://github.com/openbmc/linux/blob/dev-5.10/Documentation/hwmon/pmbus.rst>) 
-> driver to support hardware monitoring for the PSU, don't use the 
-> */ibm-cffps/*driver 
-> (https://github.com/openbmc/linux/blob/dev-5.10/Documentation/hwmon/ibm-cffps.rst 
-> <https://github.com/openbmc/linux/blob/dev-5.10/Documentation/hwmon/ibm-cffps.rst>)
+> On Thu, 24 Jun 2021, at 08:34, Brandon Wyman wrote:
+>> From: "B. J. Wyman" <bjwyman@gmail.com>
+>>
+>> Remove the gpio-keys entries for the power supply presence lines from
+>> the Rainier device tree. The user space applications are going to change
+>> from using libevdev to libgpiod.
+>>
+> Have they already added support for libgpiod? We should support both at
+> least while we're switching over.
+There is a change, hopefully nearing the end of review, that will 
+support both.
 >
-> I don't clear why we fix to use the *IBMCFFPSInterface 
-> (https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-power/+/38138/10/phosphor-power-supply/psu_manager.cpp#16 
-> <https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-power/+/38138/10/phosphor-power-supply/psu_manager.cpp#16>)* ?
-
-Yeah, that was sort of a short-sighted updated. That probably should 
-have been something configurable:
-
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-power/+/43018/8/phosphor-power-supply/power_supply.cpp#30
-
-
-That is used to get the power supply information off of D-Bus, hopefully 
-populated by the entity-manager service.
-
-https://github.com/openbmc/entity-manager/blob/master/schemas/IBM.json
-
-https://github.com/openbmc/entity-manager/blob/master/configurations/Nisqually.json
-
-
-This should *NOT* be IBM specific, but I had some kind of blinders on 
-when I wrote this.
-
->
-> Thanks,
-> Chanh Nguyen
->
-
---------------D39B40108939505B6677D16F
-Content-Type: text/html; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;
-      charset=windows-1252">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 2021-06-23 04:11, Chanh Nguyen OS
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:SN6PR01MB4973940AAE8F62B61613C2BB95089@SN6PR01MB4973.prod.exchangelabs.com">
-      <meta http-equiv="Content-Type" content="text/html;
-        charset=windows-1252">
-      <style type="text/css" style="display:none;">P {margin-top:0;margin-bottom:0;}</style>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        Hi <span style="color: rgb(33, 33, 33); font-family:
-          var(--header-font-family); font-size: var(--font-size-h3);
-          font-weight: var(--font-weight-h3);">B. J. Wyman,</span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <span style="color: rgb(33, 33, 33); font-family:
-          var(--header-font-family); font-size: var(--font-size-h3);
-          font-weight: var(--font-weight-h3);"><br>
-        </span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <span style="color: rgb(33, 33, 33); font-family:
-          var(--header-font-family); font-size: var(--font-size-h3);
-          font-weight: var(--font-weight-h3);">I'm using the psu-ng to
-          monitor the PSU. I used the
-        </span><span style="color: rgb(33, 33, 33); font-family:
-          var(--header-font-family); font-size: var(--font-size-h3);"><b><i>pmbus</i></b></span><span
-          style="color: rgb(33, 33, 33); font-family:
-          var(--header-font-family); font-size: var(--font-size-h3);"><span
-            style="font-weight: var(--font-weight-h3);"> (</span><a
-href="https://github.com/openbmc/linux/blob/dev-5.10/Documentation/hwmon/pmbus.rst"
-            id="LPlnk" style="font-weight: var(--font-weight-h3);"
-            moz-do-not-send="true">https://github.com/openbmc/linux/blob/dev-5.10/Documentation/hwmon/pmbus.rst</a><span
-            style="font-weight: var(--font-weight-h3);">) driver to </span><span
-            style="color: rgb(36, 41, 46); font-family: -apple-system,
-            system-ui, &quot;Segoe UI&quot;, Helvetica, Arial,
-            sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI
-            Emoji&quot;; background-color: rgb(255, 255, 255); display:
-            inline !important;"><span style="font-weight:
-              var(--font-weight-h3);">support hardware monitoring for
-              the PSU, don't use the </span><b><i>ibm-cffps</i></b><span
-              style="font-weight: var(--font-weight-h3);"> driver (</span><a
-href="https://github.com/openbmc/linux/blob/dev-5.10/Documentation/hwmon/ibm-cffps.rst"
-              id="LPlnk396586" style="font-weight:
-              var(--font-weight-h3);" moz-do-not-send="true">https://github.com/openbmc/linux/blob/dev-5.10/Documentation/hwmon/ibm-cffps.rst</a><span
-              style="font-weight: var(--font-weight-h3);">)</span></span></span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        I don't clear why we fix to use the <b>IBMCFFPSInterface (<a
-href="https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-power/+/38138/10/phosphor-power-supply/psu_manager.cpp#16"
-            id="LPlnk923907" moz-do-not-send="true">https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-power/+/38138/10/phosphor-power-supply/psu_manager.cpp#16</a>)</b> ?</div>
-    </blockquote>
-    <p>Yeah, that was sort of a short-sighted updated. That probably
-      should have been something configurable:</p>
-    <p><a class="moz-txt-link-freetext" href="https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-power/+/43018/8/phosphor-power-supply/power_supply.cpp#30">https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-power/+/43018/8/phosphor-power-supply/power_supply.cpp#30</a></p>
-    <p><br>
-    </p>
-    <p>That is used to get the power supply information off of D-Bus,
-      hopefully populated by the entity-manager service.</p>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/entity-manager/blob/master/schemas/IBM.json">https://github.com/openbmc/entity-manager/blob/master/schemas/IBM.json</a><br>
-    </p>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/entity-manager/blob/master/configurations/Nisqually.json">https://github.com/openbmc/entity-manager/blob/master/configurations/Nisqually.json</a></p>
-    <p><br>
-    </p>
-    <p>This should *NOT* be IBM specific, but I had some kind of
-      blinders on when I wrote this.<br>
-    </p>
-    <blockquote type="cite"
-cite="mid:SN6PR01MB4973940AAE8F62B61613C2BB95089@SN6PR01MB4973.prod.exchangelabs.com">
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        Thanks,</div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        Chanh Nguyen</div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------D39B40108939505B6677D16F--
+> Andrew
