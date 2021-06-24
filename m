@@ -1,63 +1,98 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A64C3B23EC
-	for <lists+openbmc@lfdr.de>; Thu, 24 Jun 2021 01:21:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 963813B254E
+	for <lists+openbmc@lfdr.de>; Thu, 24 Jun 2021 05:12:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G9K5v6NlSz308m
-	for <lists+openbmc@lfdr.de>; Thu, 24 Jun 2021 09:21:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G9QDM30mtz306q
+	for <lists+openbmc@lfdr.de>; Thu, 24 Jun 2021 13:12:35 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256 header.s=protonmail header.b=fmMa+9UL;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=jB7/M1C/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=protonmail.com (client-ip=185.70.43.27;
- helo=mail-4327.protonmail.ch; envelope-from=joseiciano@protonmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256
- header.s=protonmail header.b=fmMa+9UL; 
- dkim-atps=neutral
-X-Greylist: delayed 579 seconds by postgrey-1.36 at boromir;
- Thu, 24 Jun 2021 09:21:21 AEST
-Received: from mail-4327.protonmail.ch (mail-4327.protonmail.ch [185.70.43.27])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=jB7/M1C/; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G9K5Y2gjPz2yQw
- for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 09:21:18 +1000 (AEST)
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com
- [188.165.51.139])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail-4321.protonmail.ch (Postfix) with ESMTPS id 4G9JtK1Xy4z4xLYs
- for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 23:11:37 +0000 (UTC)
-Authentication-Results: mail-4321.protonmail.ch;
- dkim=pass (1024-bit key) header.d=protonmail.com header.i=@protonmail.com
- header.b="fmMa+9UL"
-Date: Wed, 23 Jun 2021 23:11:20 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=protonmail; t=1624489882;
- bh=UrqPwnuX7ksJJjjTv5Tv352JtKexJ0OE4ENrqqTZ6fQ=;
- h=Date:To:From:Reply-To:Subject:From;
- b=fmMa+9UL7WPgmcLzvLA6SwW/iDtpTRDDZ5AnvvdLO9koRGn+BypOe4WNvkZSBSWim
- mvu13qfX4CgUEiGuqJK/IERGJsVwLBEWPH0Y1c2+t72fDIhHCqwzRdBoKTk65QD6Mc
- KfKYydEvJKHZGqhMQuGcTPH5zBkeMSfj33o7GJNg=
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-From: Jose Iciano <joseiciano@protonmail.com>
-Subject: OBMC Internship Project: Per-Build Code Coverage
-Message-ID: <j0Xsa-QSakVpNHNMmS5t8hcNK4621EqlZCTVLrm3qNVd49IKiXNGb-cXp5lWpco_TNksh3sphW1HNZt2UN2W7DJop2-LQxmthxnAkC9fy1E=@protonmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G9QD236rsz2yyC
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 13:12:17 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 15O33tF5160252
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 23:12:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : from : to :
+ references : message-id : date : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=oqxF/uLb0o29HMC+97+iStrTqM78DWxc61V64cMFjMM=;
+ b=jB7/M1C/ai6VGWwURpZ/l64pi+8Owp1awsKTTL6vuydbh4N+O97OT6RlSx/Ny9zQLKR4
+ io0PyBMt88iS79Jrx/6V+CBbR2UeoP7b2caJTbDEa6CW8GBNhTLHUuWW0Sdd7anHIPs3
+ OOc4+4/Q1cLxv8Qe5tZoS9JEJU0I5nb1VCpGG+B5DNxfjfh5StCC004kjH8L+e9gAx9U
+ HC7ZnHdrOFLY5fzXUspeBGwoCbaDPXtg22nPhdkgGX70poSsZxUkKMKQXZU6cna89MoZ
+ Mshn1czY0aKMc64rYXiYCyOpIjDXM2+a8nziD+EcMfvAmLZx1yIp5dus6rWAdUKSAaSE QQ== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 39cg7ca6vs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Jun 2021 23:12:13 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 15O38VkX032743
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 03:12:12 GMT
+Received: from b03cxnp07028.gho.boulder.ibm.com
+ (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
+ by ppma02wdc.us.ibm.com with ESMTP id 399879we8b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 03:12:12 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 15O3CBdD16974132
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 03:12:11 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CCFCA78064
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 03:12:11 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8AB407805F
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 03:12:11 +0000 (GMT)
+Received: from demeter.local (unknown [9.160.86.39])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 03:12:11 +0000 (GMT)
+Subject: Re: Security Working Group meeting - Wednesday June 23 - results
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+References: <aca638a3-bc8b-10b6-d902-3092ec43eb89@linux.ibm.com>
+Message-ID: <f04d3797-7a1d-ce08-d6b9-96470af800b7@linux.ibm.com>
+Date: Wed, 23 Jun 2021 22:12:10 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
+In-Reply-To: <aca638a3-bc8b-10b6-d902-3092ec43eb89@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: eBRB19jCNQYs5wLJXUHNOvBT-eHCLROL
+X-Proofpoint-GUID: eBRB19jCNQYs5wLJXUHNOvBT-eHCLROL
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_D0zHKEZ5bmQlupslAYerk8Vmy96ZNVS359wlHFDCTbI"
-X-Spam-Status: No, score=0.8 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE,
- PDS_OTHER_BAD_TLD shortcircuit=no autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
- mailout.protonmail.ch
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-06-23_14:2021-06-23,
+ 2021-06-23 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 phishscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2104190000
+ definitions=main-2106240016
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,164 +104,106 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: Jose Iciano <joseiciano@protonmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+On 6/23/21 8:45 AM, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday June 23 at 10:00am PDT.
+>
+> We'll discuss the following items on the agenda 
+> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
+> and anything else that comes up:
+>
 
---b1_D0zHKEZ5bmQlupslAYerk8Vmy96ZNVS359wlHFDCTbI
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+Attended:
 
-SGVsbG8sCgpNeSBuYW1lIGlzIEpvc2UgSWNpYW5vIGFuZCBJIGN1cnJlbnRseSB3b3JraW5nIG9u
-IGFuIGltcGxlbWVudGF0aW9uIG9mIHBlci1idWlsZCBjb2RlIGNvdmVyYWdlIGZvciBPQk1DIGFz
-IHBhcnQgYXMgYW4gaW50ZXJuc2hpcCBwcm9qZWN0LiBUaGUgZHJhZnQgb2YgdGhlIGN1cnJlbnQg
-c3lzdGVtJ3MgZGVzY3JpcHRpb24gd2lsbCBiZSBhdmFpbGFibGUgYXQgdGhlIGVuZCBvZiB0aGUg
-ZW1haWwuIEN1cnJlbnRseSwgSSBoYXZlIGJlZW4gYWJsZSB0byBkZXZlbG9wIHRoZSByZXF1aXJl
-ZCBmdW5jdGlvbnMgYW5kIGFtIGdldHRpbmcgdGhlbSBjaGVja2VkIGJ5IGNvZGUgcmV2aWV3cyBv
-biBHZXJyaXQuCgpEcmFmdCBvZiB0aGUgQ3VycmVudCBTeXN0ZW06IGh0dHBzOi8vZ2Vycml0Lm9w
-ZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL2RvY3MvKy80NDQwOS8xL2NvZGUtY292ZXJhZ2Uu
-bWQKCk1hY2hpbmUgUGVyLUJ1aWxkIENvZGUgQ292ZXJhZ2UKClRoZSBmb2xsb3dpbmcgcmVwb3J0
-IGRldGFpbHMgdGhlIGNvZGUgY292ZXJhZ2Ugc3lzdGVtIGltcGxlbWVudGVkIGZvciBPcGVuQk1D
-IGJ1aWxkcy4KCk9wZW5CTUMgY3VycmVudGx5IHJlbGllcyBvbiBhIG1hbnVhbCBzeXN0ZW0gZm9y
-IGRldGFpbGluZyBjb2RlIGNvdmVyYWdlIG9mIGFueSByZXBvc2l0b3JpZXMgdXNlZCBmb3IgaW1h
-Z2UgYnVpbGRpbmcuIFdpdGggZWFjaCBtYWNoaW5lLCB0aGVyZSBpcyBhIHJlcG8gY29tYmluYXRp
-b24gdW5pcXVlIHRvIGl0LiBUaGlzIG1lYW5zIHRoYXQgY3VycmVudGx5LCBpZiBvbmUgd2FudHMg
-dG8gdmlldyB0aGUgc3RhdHVzIGFuZCBjaGFuZ2VzIG9mIHRob3NlIHJlcG9zaXRvcmllcywgdGhl
-eSB3b3VsZCBoYXZlIHRvIG1hbnVhbGx5IGNsb25lIGl0IGFuZCBydW4gdW5pdCB0ZXN0cyBvbiB0
-aGUgY29ycmVjdCB2ZXJzaW9uLiBUaGlzIHN5c3RlbSBhdXRvbWF0ZXMgdGhlIHByb2Nlc3MgYW5k
-IGFsbG93cyB0aGUgYWdncmVnYXRpb24gb2YgY29kZSBjb3ZlcmFnZSBmb3IgdGhlIHNlbGVjdGVk
-IGJ1aWxkLgoKVGhpcyBwcm9jZXNzIGlzIGRvbmUgdGhyb3VnaCBhIG1vZGlmaWVkIHZlcnNpb24g
-b2YgT0JNQ+KAmXMgYGdldF91bml0X3Rlc3RfcmVwb3J0LnB5YCBzY3JpcHQsIGFkZGluZyBwZXIt
-YnVpbGQgY2FwYWJpbGl0aWVzIGFuZCBpbXByb3ZpbmcgbGNvdiBkYXRhIGdlbmVyYXRpb24uCgpS
-dW5uaW5nIEZpbGVzCgpTdGFydCBieSBjcmVhdGluZyBhIHJlcG9zaXRvcnkgZm9yIENJIGFuZCBD
-SSBzY3JpcHRzIHRvIGJlIHN0b3JlZC4KCmBgYApta2RpciBjaV90ZXN0X2FyZWEKY2QgY2lfdGVz
-dF9hcmVhCmdpdCBjbG9uZSBbaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy1idWls
-ZC1zY3JpcHRzLmdpdF0oaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy1idWlsZC1z
-Y3JpcHRzLmdpdCkKYGBgCgpUbyBydW4gd2l0aCBzcGVjaWZpZWQgLCBpbWFnZSBjb25maWcgZmls
-ZXMgaGF2ZSB0byBiZSBtb2RpZmllZCB0byBpbmhlcml0IHRoZSBuZXcgZmlsZS4KYGBgCiR7QlVJ
-TERESVJ9L2NvbmYvbG9jYWwuY29uZgpgYGAKCkFkZApgYGAKSU5IRVJJVCArPSDigJxidWlsZGhp
-c3RvcnnigJ0KQlVJTERISVNUT1JZX0NPTU1JVCA9IOKAnDHigJ0KYGBgCgpSdW4gdGhlIGZvbGxv
-d2luZyBjb21tYW5kIHRvIHJ1biB3aXRob3V0IGEgc3BlY2lmaWVkIHVybF9maWxlIG9yIGJ1aWxk
-aGlzdG9yeSBwYXRoLgoKYGBgCnB5dGhvbjMgb3BlbmJtYy1idWlsZC1zY3JpcHRzL3NjcmlwdHMv
-Z2V0X3VuaXRfdGVzdF9yZXBvcnQgPHRhcmdldF9kaXI+CmBgYAoKUnVubmluZyB3aXRoIGEgYnVp
-bGRoaXN0b3J5IHBhdGgKCmBgYApweXRob24zIG9wZW5ibWMtYnVpbGQtc2NyaXB0cy9zY3JpcHRz
-L2dldF91bml0X3Rlc3RfcmVwb3J0IDx0YXJnZXRfZGlyPiAtYnVpbGRfaGlzdG9yeSA8YnVpbGRf
-aGlzdG9yeV9wYXRoPgpgYGAKClNvdXJjZSBGaWxlIGFuZCBSZXZpc2lvbiBHZW5lcmF0aW9uCgpU
-aGUgZmlsZSBgY29kZV9jb3ZlcmFnZS5zaGAgZ2VuZXJhdGVzIGEgcmVwb3NpdG9yaWVzLnR4dCBm
-aWxlLCB3aGljaCBzdG9yZXMgdGhlIHNyY191cmwgYW5kIHNyY19yZXYgb2YgcmVwb3NpdG9yaWVz
-IHVzZWQgZHVyaW5nIGltYWdlIGNyZWF0aW9uLiBUaGUgZm9ybWF0IGlzIHN0b3JlZCBpbiB0aGUg
-Zm9sbG93aW5nIGZvcm1hdDoKCmBgYAo8c3JjX3VybD4gPHNyY19yZXY+CmBgYAoKVGhlIHJlc3Vs
-dGluZyBmaWxlIGlzIGludGVuZGVkIHRvIGJlIHVzZWQgZm9yIGFueSBhdXRvbWF0ZWQgdGVzdCBz
-dWl0ZSBydW5uZXIsIHN1Y2ggYXMgT0JNQ+KAmXMgYGdldF91bml0X3Rlc3RfcmVwb3J0LnB5YOKA
-mXMgdXJsX2ZpbGUgcGFyYW1ldGVyLgoKQXV0b21hdGVkIFRlc3QgQ2FzZXMKClRlc3QgY2FzZSBp
-cyBhdXRvbWF0ZWQgdGhyb3VnaCB0aGUgdXNlIG9mIGBnZXRfdW5pdF90ZXN0X3JlcG9ydC5weWAs
-IHdoaWNoIHRha2VzIGNhcmUgb2YgY2xvbmluZyB0aGUgc3BlY2lmaWMgcmVwb3NpdG9yaWVzIGFu
-ZCBydW5uaW5nIHVuaXQgdGVzdHMgb24gaXQuIFRoaXMgZmlsZSB3YXMgcHJlLWV4aXN0aW5nIGlu
-IHRoZSBjb2RlYmFzZSwgYnV0IHdhcyBzbGlnaHRseSBtb2RpZmllZCB0byB3b3JrIHdpdGggdGhl
-IG5ldyBmaWxlcywgYXMgd2VsbCBhcyBpbXBsZW1lbnRpbmcgb3B0aW9uYWwgc291cmNlIHJldmlz
-aW9uLgoKT3B0aW9uYWwgcGFyYW1ldGVycyB3ZXJlIG1vZGlmaWVkIHRvIGFsbG93IGZvciBtb3Jl
-IHZhcmlhYmxlcy4gVGhlIGV4dHJhIHBhcmFtZXRlcnMgYWRkZWQgd2VyZQoKYGBgCi1idWlsZF9o
-aXN0b3J5IC0gUGF0aCB0byBidWlsZGhpc3RvcnkgdGhhdCB3YXMgY3JlYXRlZCBkdXJpbmcgaW1h
-Z2UgZ2VuZXJhdGlvbi4KYGBgCgpMQ09WIEFnZ3JlZ2F0aW9uCgpMQ09WIGRhdGEgaXMgZnJlZWx5
-IGF2YWlsYWJsZSBhZnRlciBydW5uaW5nIHRoZSBgZ2V0X3VuaXRfdGVzdF9yZXBvcnQucHlgIHNj
-cmlwdC4gYGNvZGVfY292ZXJhZ2UucHlgIHdvcmtzIGJ5IHRha2luZyBhbGwgdGhlIGF2YWlsYWJs
-ZSBkYXRhIGFuZCBhZ2dyZWdhdGluZyBpdCBpbnRvIGFuIGVhc3kgdG8gYWNjZXNzIGZpbGUuIFRo
-aXMgc2ltcGxpZmllcyB0aGUgcHJvY2VzcyBvZiBsY292IGFuYWx5c2lzLCBhcyB0aGUgbmVjZXNz
-YXJ5IGRhdGEvZmlsZXMgY2FuIGJlIGZvdW5kIGZyb20gb25lIHNpbXBsaWZpZWQgZmlsZS4KCkNv
-ZGVfY292ZXJhZ2UucHkgd29ya3MgYnkgdGFraW5nIGluIHRoZSBwYXRoIG9mIGRpcmVjdG9yaWVz
-IGxlYWRpbmcgdG8gYDxyZXBvPi9idWlsZC88Y292ZXJhZ2VyZXBvcnRfcGF0aD4vaW5kZXguaHRt
-bC5gIEl0IHNpZnRzIHRocm91Z2ggZWFjaCBmaWxlIGFuZCByZWFkcyB0aGUgcmVzdWx0aW5nIGxj
-b3YgZGF0YSBmcm9tIHRoZSBpbmRleC5odG1sIGZpbGUu
-
---b1_D0zHKEZ5bmQlupslAYerk8Vmy96ZNVS359wlHFDCTbI
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
-
-PGRpdj5IZWxsbyw8YnI+PGJyPk15IG5hbWUgaXMgSm9zZSBJY2lhbm8gYW5kIEkgY3VycmVudGx5
-IHdvcmtpbmcgb24gYW4gaW1wbGVtZW50YXRpb24gb2YgcGVyLWJ1aWxkIGNvZGUgY292ZXJhZ2Ug
-Zm9yIE9CTUMgYXMgcGFydCBhcyBhbiBpbnRlcm5zaGlwIHByb2plY3QuIFRoZSBkcmFmdCBvZiB0
-aGUgY3VycmVudCBzeXN0ZW0ncyBkZXNjcmlwdGlvbiB3aWxsIGJlIGF2YWlsYWJsZSBhdCB0aGUg
-ZW5kIG9mIHRoZSBlbWFpbC4gQ3VycmVudGx5LCBJIGhhdmUgYmVlbiBhYmxlIHRvIGRldmVsb3Ag
-dGhlIHJlcXVpcmVkIGZ1bmN0aW9ucyBhbmQgYW0gZ2V0dGluZyB0aGVtIGNoZWNrZWQgYnkgY29k
-ZSByZXZpZXdzIG9uIEdlcnJpdC4mbmJzcDs8YnI+PGI+PGJyPkRyYWZ0IG9mIHRoZSBDdXJyZW50
-IFN5c3RlbTombmJzcDs8L2I+PGEgaHJlZj0iaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0
-Lnh5ei9jL29wZW5ibWMvZG9jcy8rLzQ0NDA5LzEvY29kZS1jb3ZlcmFnZS5tZCI+aHR0cHM6Ly9n
-ZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMvZG9jcy8rLzQ0NDA5LzEvY29kZS1j
-b3ZlcmFnZS5tZDwvYT48YnI+PGI+PGJyPk1hY2hpbmUgUGVyLUJ1aWxkIENvZGUgQ292ZXJhZ2U8
-L2I+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5UaGUgZm9sbG93aW5nIHJlcG9ydCBkZXRhaWxz
-IHRoZSBjb2RlIGNvdmVyYWdlIHN5c3RlbSBpbXBsZW1lbnRlZCBmb3IgT3BlbkJNQyBidWlsZHMu
-PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+T3BlbkJNQyBjdXJyZW50bHkgcmVsaWVzIG9u
-IGEgbWFudWFsIHN5c3RlbSBmb3IgZGV0YWlsaW5nIGNvZGUgY292ZXJhZ2Ugb2YgYW55IHJlcG9z
-aXRvcmllcyB1c2VkIGZvciBpbWFnZSBidWlsZGluZy4gV2l0aCBlYWNoIG1hY2hpbmUsIHRoZXJl
-IGlzIGEgcmVwbyBjb21iaW5hdGlvbiB1bmlxdWUgdG8gaXQuIFRoaXMgbWVhbnMgdGhhdCBjdXJy
-ZW50bHksIGlmIG9uZSB3YW50cyB0byB2aWV3IHRoZSBzdGF0dXMgYW5kIGNoYW5nZXMgb2YgdGhv
-c2UgcmVwb3NpdG9yaWVzLCB0aGV5IHdvdWxkIGhhdmUgdG8gbWFudWFsbHkgY2xvbmUgaXQgYW5k
-IHJ1biB1bml0IHRlc3RzIG9uIHRoZSBjb3JyZWN0IHZlcnNpb24uIFRoaXMgc3lzdGVtIGF1dG9t
-YXRlcyB0aGUgcHJvY2VzcyBhbmQgYWxsb3dzIHRoZSBhZ2dyZWdhdGlvbiBvZiBjb2RlIGNvdmVy
-YWdlIGZvciB0aGUgc2VsZWN0ZWQgYnVpbGQuPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+
-VGhpcyBwcm9jZXNzIGlzIGRvbmUgdGhyb3VnaCBhIG1vZGlmaWVkIHZlcnNpb24gb2YgT0JNQ+KA
-mXMgYGdldF91bml0X3Rlc3RfcmVwb3J0LnB5YCBzY3JpcHQsIGFkZGluZyBwZXItYnVpbGQgY2Fw
-YWJpbGl0aWVzIGFuZCBpbXByb3ZpbmcgbGNvdiBkYXRhIGdlbmVyYXRpb24uPGJyPjwvZGl2Pjxk
-aXY+PGJyPjwvZGl2PjxkaXY+PGI+UnVubmluZyBGaWxlczwvYj48YnI+PC9kaXY+PGRpdj48YnI+
-PC9kaXY+PGRpdj5TdGFydCBieSBjcmVhdGluZyBhIHJlcG9zaXRvcnkgZm9yIENJIGFuZCBDSSBz
-Y3JpcHRzIHRvIGJlIHN0b3JlZC48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5gYGA8YnI+
-PC9kaXY+PGRpdj5ta2RpciBjaV90ZXN0X2FyZWE8YnI+PC9kaXY+PGRpdj5jZCBjaV90ZXN0X2Fy
-ZWE8YnI+PC9kaXY+PGRpdj5naXQgY2xvbmUgWzxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9v
-cGVuYm1jL29wZW5ibWMtYnVpbGQtc2NyaXB0cy5naXRdKGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVu
-Ym1jL29wZW5ibWMtYnVpbGQtc2NyaXB0cy5naXQpIj5odHRwczovL2dpdGh1Yi5jb20vb3BlbmJt
-Yy9vcGVuYm1jLWJ1aWxkLXNjcmlwdHMuZ2l0XShodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9v
-cGVuYm1jLWJ1aWxkLXNjcmlwdHMuZ2l0KTwvYT48YnI+PC9kaXY+PGRpdj5gYGA8YnI+PC9kaXY+
-PGRpdj48YnI+PC9kaXY+PGRpdj5UbyBydW4gd2l0aCBzcGVjaWZpZWQgLCBpbWFnZSBjb25maWcg
-ZmlsZXMgaGF2ZSB0byBiZSBtb2RpZmllZCB0byBpbmhlcml0IHRoZSBuZXcgZmlsZS48YnI+PC9k
-aXY+PGRpdj5gYGA8YnI+PC9kaXY+PGRpdj4ke0JVSUxERElSfS9jb25mL2xvY2FsLmNvbmY8YnI+
-PC9kaXY+PGRpdj5gYGA8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5BZGQ8YnI+PC9kaXY+
-PGRpdj5gYGA8YnI+PC9kaXY+PGRpdj5JTkhFUklUICs9IOKAnGJ1aWxkaGlzdG9yeeKAnTxicj48
-L2Rpdj48ZGl2PkJVSUxESElTVE9SWV9DT01NSVQgPSDigJwx4oCdPGJyPjwvZGl2PjxkaXY+YGBg
-PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+UnVuIHRoZSBmb2xsb3dpbmcgY29tbWFuZCB0
-byBydW4gd2l0aG91dCBhIHNwZWNpZmllZCB1cmxfZmlsZSBvciBidWlsZGhpc3RvcnkgcGF0aC48
-YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5gYGA8YnI+PC9kaXY+PGRpdj5weXRob24zIG9w
-ZW5ibWMtYnVpbGQtc2NyaXB0cy9zY3JpcHRzL2dldF91bml0X3Rlc3RfcmVwb3J0ICZsdDt0YXJn
-ZXRfZGlyJmd0Ozxicj48L2Rpdj48ZGl2PmBgYDxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2
-PlJ1bm5pbmcgd2l0aCBhIGJ1aWxkaGlzdG9yeSBwYXRoPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2
-PjxkaXY+YGBgPGJyPjwvZGl2PjxkaXY+cHl0aG9uMyBvcGVuYm1jLWJ1aWxkLXNjcmlwdHMvc2Ny
-aXB0cy9nZXRfdW5pdF90ZXN0X3JlcG9ydCAmbHQ7dGFyZ2V0X2RpciZndDsgLWJ1aWxkX2hpc3Rv
-cnkgJmx0O2J1aWxkX2hpc3RvcnlfcGF0aCZndDs8YnI+PC9kaXY+PGRpdj5gYGA8YnI+PC9kaXY+
-PGRpdj48YnI+PC9kaXY+PGRpdj48Yj5Tb3VyY2UgRmlsZSBhbmQgUmV2aXNpb24gR2VuZXJhdGlv
-bjwvYj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5UaGUgZmlsZSBgY29kZV9jb3ZlcmFn
-ZS5zaGAgZ2VuZXJhdGVzIGEgcmVwb3NpdG9yaWVzLnR4dCBmaWxlLCB3aGljaCBzdG9yZXMgdGhl
-IHNyY191cmwgYW5kIHNyY19yZXYgb2YgcmVwb3NpdG9yaWVzIHVzZWQgZHVyaW5nIGltYWdlIGNy
-ZWF0aW9uLiBUaGUgZm9ybWF0IGlzIHN0b3JlZCBpbiB0aGUgZm9sbG93aW5nIGZvcm1hdDo8YnI+
-PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5gYGA8YnI+PC9kaXY+PGRpdj4mbHQ7c3JjX3VybCZn
-dDsgJmx0O3NyY19yZXYmZ3Q7PGJyPjwvZGl2PjxkaXY+YGBgPGJyPjwvZGl2PjxkaXY+PGJyPjwv
-ZGl2PjxkaXY+VGhlIHJlc3VsdGluZyBmaWxlIGlzIGludGVuZGVkIHRvIGJlIHVzZWQgZm9yIGFu
-eSBhdXRvbWF0ZWQgdGVzdCBzdWl0ZSBydW5uZXIsIHN1Y2ggYXMgT0JNQ+KAmXMgYGdldF91bml0
-X3Rlc3RfcmVwb3J0LnB5YOKAmXMgdXJsX2ZpbGUgcGFyYW1ldGVyLjxicj48L2Rpdj48ZGl2Pjxi
-cj48L2Rpdj48ZGl2PjxiPkF1dG9tYXRlZCBUZXN0IENhc2VzPC9iPjxicj48L2Rpdj48ZGl2Pjxi
-cj48L2Rpdj48ZGl2PlRlc3QgY2FzZSBpcyBhdXRvbWF0ZWQgdGhyb3VnaCB0aGUgdXNlIG9mIGBn
-ZXRfdW5pdF90ZXN0X3JlcG9ydC5weWAsIHdoaWNoIHRha2VzIGNhcmUgb2YgY2xvbmluZyB0aGUg
-c3BlY2lmaWMgcmVwb3NpdG9yaWVzIGFuZCBydW5uaW5nIHVuaXQgdGVzdHMgb24gaXQuIFRoaXMg
-ZmlsZSB3YXMgcHJlLWV4aXN0aW5nIGluIHRoZSBjb2RlYmFzZSwgYnV0IHdhcyBzbGlnaHRseSBt
-b2RpZmllZCB0byB3b3JrIHdpdGggdGhlIG5ldyBmaWxlcywgYXMgd2VsbCBhcyBpbXBsZW1lbnRp
-bmcgb3B0aW9uYWwgc291cmNlIHJldmlzaW9uLjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2
-Pk9wdGlvbmFsIHBhcmFtZXRlcnMgd2VyZSBtb2RpZmllZCB0byBhbGxvdyBmb3IgbW9yZSB2YXJp
-YWJsZXMuIFRoZSBleHRyYSBwYXJhbWV0ZXJzIGFkZGVkIHdlcmU8YnI+PC9kaXY+PGRpdj48YnI+
-PC9kaXY+PGRpdj5gYGA8YnI+PC9kaXY+PGRpdj4tYnVpbGRfaGlzdG9yeSAtIFBhdGggdG8gYnVp
-bGRoaXN0b3J5IHRoYXQgd2FzIGNyZWF0ZWQgZHVyaW5nIGltYWdlIGdlbmVyYXRpb24uPGJyPjwv
-ZGl2PjxkaXY+YGBgPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGI+TENPViBBZ2dyZWdh
-dGlvbjwvYj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5MQ09WIGRhdGEgaXMgZnJlZWx5
-IGF2YWlsYWJsZSBhZnRlciBydW5uaW5nIHRoZSBgZ2V0X3VuaXRfdGVzdF9yZXBvcnQucHlgIHNj
-cmlwdC4gYGNvZGVfY292ZXJhZ2UucHlgIHdvcmtzIGJ5IHRha2luZyBhbGwgdGhlIGF2YWlsYWJs
-ZSBkYXRhIGFuZCBhZ2dyZWdhdGluZyBpdCBpbnRvIGFuIGVhc3kgdG8gYWNjZXNzIGZpbGUuIFRo
-aXMgc2ltcGxpZmllcyB0aGUgcHJvY2VzcyBvZiBsY292IGFuYWx5c2lzLCBhcyB0aGUgbmVjZXNz
-YXJ5IGRhdGEvZmlsZXMgY2FuIGJlIGZvdW5kIGZyb20gb25lIHNpbXBsaWZpZWQgZmlsZS48YnI+
-PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5Db2RlX2NvdmVyYWdlLnB5IHdvcmtzIGJ5IHRha2lu
-ZyBpbiB0aGUgcGF0aCBvZiBkaXJlY3RvcmllcyBsZWFkaW5nIHRvIGAmbHQ7cmVwbyZndDsvYnVp
-bGQvJmx0O2NvdmVyYWdlcmVwb3J0X3BhdGgmZ3Q7L2luZGV4Lmh0bWwuYCBJdCBzaWZ0cyB0aHJv
-dWdoIGVhY2ggZmlsZSBhbmQgcmVhZHMgdGhlIHJlc3VsdGluZyBsY292IGRhdGEgZnJvbSB0aGUg
-aW5kZXguaHRtbCBmaWxlLjxicj48L2Rpdj4=
+Joseph Reynolds, Andrei Yadro, James Mihm, Bruce Mitchell, Chris Engel, 
+Daniil Engranov, Dhananjay Phadke, Jiang Zhang.
 
 
---b1_D0zHKEZ5bmQlupslAYerk8Vmy96ZNVS359wlHFDCTbI--
+
+We switched the order of topics from the original agenda.
+
+Note the July 7 meeting is tentatively cancelled unless someone hosts 
+and runs it.
+
+BONUS ITEM:
+
+1 How can the security response team track items reported to openbmc?
+
+DISCUSSION:
+
+Urgency?  The security response team is not losing track of issues, but 
+is having difficulty keeping focus on issues.  Will create a spreadsheet 
+of currently open issues and email it to the private email list.
+
+We want a database to track issues (see ideas below).
+
+The database needs to be secure.  Meaning (a) a secure database which 
+has an active security community, (b) hosted on a secure system, (c) 
+handled by a trusted admin.
+
+Options for secure database:
+
+ 1.
+
+    Redmine
+
+ 2.
+
+    Github based?  Does github have a solution?  TODO: Joseph to look at
+    a private issues database.
+
+ 3.
+
+    Bugzilla?  Note UEFI uses bugzilla with a “security attribute”
+
+
+Idea: Set up a secure bug database on a server donated to OpenBMC.  
+TODO: Joseph talk to AndrewG
+
+TODO Joseph to ask for help from the Linux Foundation.
+
+
+> 1. Gerrit review BMCWeb “Automate PrivilegeRegistry to code” 
+> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/43939 
+> <https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/43939>.
+>
+Gerrit review BMCWeb “Automate PrivilegeRegistry to code” 
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/43939 
+<https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/43939>.
+
+DISCUSSION:
+
+Item 1:
+
+Yes, the consensus is: please separate the tools to (A) download the new 
+privilegeRegistry JSON file, and (B) transform a Redfish 
+PrivilegeRegistry into the privilege_registry.hpp header file.  The tool 
+(B) to transform a Redfish PrivilegeRegistry into the 
+privilege_registry.hpp header file should run when the image is being 
+built, that is, during bmcweb build-time.
+
+
+Item 2: Joseph brought up the Redfish spec DSP0266 and described how the 
+Redfish operation to privilege mapping worked, and described privilege 
+overrides.  The consensus was: the way BMCWeb currently handles property 
+overrides and subordinate overrides seems okay.  And: having separate 
+follow-on commits to change which privileges are required seems like the 
+right approach.
+
+
+- Joseph
+
+>
+> The July 6 meeting is tentatively cancelled, unless someone want to 
+> run it.
+>
+>
+> Access, agenda and notes are in the wiki:
+> https://github.com/openbmc/openbmc/wiki/Security-working-group 
+> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
+>
+> - Joseph
 
