@@ -2,79 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E81423B3528
-	for <lists+openbmc@lfdr.de>; Thu, 24 Jun 2021 20:02:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 630D23B37FB
+	for <lists+openbmc@lfdr.de>; Thu, 24 Jun 2021 22:38:39 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G9nyq4phfz3btv
-	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 04:02:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4G9sRL0zC9z3bvX
+	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 06:38:38 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=fQpRjSL2;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=RwDkdXd1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d36;
- helo=mail-io1-xd36.google.com; envelope-from=bjwyman@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2d;
+ helo=mail-yb1-xb2d.google.com; envelope-from=priyankapillai1206@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=fQpRjSL2; dkim-atps=neutral
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
- [IPv6:2607:f8b0:4864:20::d36])
+ header.s=20161025 header.b=RwDkdXd1; dkim-atps=neutral
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com
+ [IPv6:2607:f8b0:4864:20::b2d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G9nyS6JR5z307k;
- Fri, 25 Jun 2021 04:01:50 +1000 (AEST)
-Received: by mail-io1-xd36.google.com with SMTP id f10so9368738iok.6;
- Thu, 24 Jun 2021 11:01:49 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4G9sR46vXSz3093
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Jun 2021 06:38:22 +1000 (AEST)
+Received: by mail-yb1-xb2d.google.com with SMTP id s129so1225472ybf.3
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 13:38:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-transfer-encoding:content-language;
- bh=rhWDqKm/Z6fGnJdlKRNiulGkwn/9re9++vjaZyOdWG0=;
- b=fQpRjSL2khmMSQ07fSPAWaO2T7dWD8/bqmqqoN2MESvDxswARLmO+CVGNrLOEQv8X0
- UXdMhCzFMaDiQqxut6/6hII0DidLQLLXQVzQlDV9GOx+Kf3NGF058FYSESlybtHOG2zh
- x+OuIfO7KFAlyegffNW54R0pTUmuYO18v2TAcrJaWBEsmfPKxFQoSq+2Zu6TdXvap+xm
- BPs35yeRwszxKzqzxJnJWuKS8rXACpEjIzTlNKWY+1arB8XOl1z82kiy+g+EYFUAVPCD
- cFFqOT10xGhRKxVHN7+jOg0SlV4Srz/v8brkaNokBPqb6KBofjTrrQYI0oL21o8x8r4l
- 4pbg==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=IklKpZPeclNgIkVhJcSl++4STeWcr3H4PTVMR/s+eX8=;
+ b=RwDkdXd1eNfNdSDSpTWvn2b0d835xFuFAj9FdU/dZvkemHBIE8co1v6epKEfouLoSW
+ S/Wi2D0IaSWJwVbj1xZwD1B+lM3dOJchKEuU/SWryQJQDSLPs15os8WK+imivYnrW2u/
+ ueGFyZkkl6QZ89U+zu7wnnhpuUwDTmvIpxkVflkPAKII06FcSEh4l6ZTa/XR69sKiAAt
+ AjPIgb4ZRvr1Y7+UPLs4TgrJPcn6CkZuWRQA6l0mVTPP5WkLtMLwyfmS/z4l1qbMVGSy
+ 5Mv997Kuj1H7FN83MaIwjoAEawIv+OX5Himnp2esG3xP60AvOV12tqcJ5zxwlo1lWL58
+ wzqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=rhWDqKm/Z6fGnJdlKRNiulGkwn/9re9++vjaZyOdWG0=;
- b=m8Q2gdcfdz9wSNrL1da0uhyfvoXuB/se0hNRjdkjsfdHlshkddb7cRWf7aMXll2uD/
- Jus/6AFoIxr3CGiXc6J5TFedC1k04hgFSOm+hb2hi/RH1pMSBOAQJk3awaL7/wY9/szm
- ozElJA6d+MDY+fjmEZM8GcOe5lJ0/bVk9zY5mkIlsV7YLZtM5LIOgNWgJsrqW1wv1xmW
- 7b4+6LLpOV6TKAZK5F/IM7OCzUNFNhfrOfDrp6PrqVxAcIK+LhTKu9sNRF1QPYAoNy5p
- TD3hUA/xrtDvnGkIIQrG2Gkca0/J//gsdBBClQvshXXMDonfaeyjSMdFZFEgsffH2mON
- rTGQ==
-X-Gm-Message-State: AOAM530FKnZ6fNM4nA2kWXLLzcOVVqxnRwGBZXooWcfb3BquV7CxEfvI
- 3967iliLjYf6lrwUkTet1BCzfPi5zk4qBw==
-X-Google-Smtp-Source: ABdhPJzn59XtvV7GH04OGHTki2LP3Ap+yvKG4p8DnZ533MbUg9MAN78Bhls8WvWzO1XcN6JJEoD2MA==
-X-Received: by 2002:a02:cba8:: with SMTP id v8mr5755923jap.111.1624557706014; 
- Thu, 24 Jun 2021 11:01:46 -0700 (PDT)
-Received: from [192.168.4.31] (199-48-94-117.rochmnaa.metronetinc.net.
- [199.48.94.117])
- by smtp.gmail.com with ESMTPSA id h26sm1692843ioh.34.2021.06.24.11.01.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jun 2021 11:01:45 -0700 (PDT)
-Subject: Re: [PATCH] ARM: dts: aspeed: Rainier remove PSU gpio-keys
-To: Andrew Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>,
- openbmc@lists.ozlabs.org, linux-aspeed@lists.ozlabs.org
-References: <20210623230401.3050076-1-bjwyman@gmail.com>
- <7365c20e-541c-4e32-a907-0519534117ae@www.fastmail.com>
-From: Brandon Wyman <bjwyman@gmail.com>
-Message-ID: <c6f3dea3-b602-84a3-e06b-550672c3b6b8@gmail.com>
-Date: Thu, 24 Jun 2021 13:01:45 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=IklKpZPeclNgIkVhJcSl++4STeWcr3H4PTVMR/s+eX8=;
+ b=P2QoSSvm+2ghvyJjdGKRj+ARcq6mAbOtumJFrNu1BaO+KzpC+V6aBWmtf21NRsyWGl
+ GX7xpgnIBlttjIAVxocresJT2hJgD9JSLIdFSf51OWzNOl/E2clDgmgHut1WYqLag6VW
+ EN7VGazotKWsDD6TmUILN+wYyw2VY/J/h5gtFZO78nrXEPy48+cP2t/VcsMfvILLosOC
+ P/vUuDSSgwalbOd9bQWc1VOn0zOJnOotRFBACgbri4jXiI89L0V75wVeVFVLf0HyJtVM
+ KXsNmBW/rXs1YH92VuSMyMpvRFyrHT+06spOJx2vs2cSaXhOwdosoEeIm1NwbbaU34wu
+ BIxA==
+X-Gm-Message-State: AOAM531uHY/C09HtKqSzLzwPIT5AQMHpoFyOVpb+PoQVgWeOGWhZ0LCp
+ LEWstZ4h9kU1RPI1NzIkme9PGuMddiVfQzbnJ3qQ0Qd1wRJHfw==
+X-Google-Smtp-Source: ABdhPJxLWMLqGZobqw5u1io/rusq/ZHolW8Lc33lZGqw++K4iZlFC6/dtCponX+JFHl0lQaA8KvknQBQ0HAW8NJ+oJU=
+X-Received: by 2002:a25:2b45:: with SMTP id r66mr8076491ybr.390.1624567098328; 
+ Thu, 24 Jun 2021 13:38:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <7365c20e-541c-4e32-a907-0519534117ae@www.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+From: Priyanka Pillai <priyankapillai1206@gmail.com>
+Date: Fri, 25 Jun 2021 02:08:07 +0530
+Message-ID: <CAJCnuYkhk_C1eaS=nUPZ4ZwtC+joWuBoOUWoh2E8chMG5Wb6Jg@mail.gmail.com>
+Subject: Requesting feedback on in-progress GUI designs (Bios settings)
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000cf4cb005c5890072"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,19 +73,36 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000cf4cb005c5890072
+Content-Type: text/plain; charset="UTF-8"
 
-On 2021-06-23 18:08, Andrew Jeffery wrote:
->
-> On Thu, 24 Jun 2021, at 08:34, Brandon Wyman wrote:
->> From: "B. J. Wyman" <bjwyman@gmail.com>
->>
->> Remove the gpio-keys entries for the power supply presence lines from
->> the Rainier device tree. The user space applications are going to change
->> from using libevdev to libgpiod.
->>
-> Have they already added support for libgpiod? We should support both at
-> least while we're switching over.
-There is a change, hopefully nearing the end of review, that will 
-support both.
->
-> Andrew
+Hello,
+
+Requesting feedback on the new design of *Bios Settings - Logical Memory
+Block Size, System Memory Page Setup, I/O adapter enlarged capacity*
+screens in the WebUI:
+https://github.com/openbmc/webui-vue/issues/69
+
+Regards,
+Priyanka Pillai
+User Experience Designer | IBM iX, Bangalore
+
+--000000000000cf4cb005c5890072
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hello,</div><div><br></div><div>Requesting feedback o=
+n the new design of <i>Bios Settings - Logical Memory Block Size, System Me=
+mory Page Setup, I/O adapter enlarged capacity</i>  screens in the WebUI:<b=
+r><a href=3D"https://github.com/openbmc/webui-vue/issues/69">https://github=
+.com/openbmc/webui-vue/issues/69</a></div><div><br></div><div>Regards,<br><=
+/div><div><div dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div=
+ dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Priyan=
+ka Pillai<br><div style=3D"font-size:12.72px"><span style=3D"color:rgb(102,=
+102,102)"><span style=3D"background-color:rgb(255,255,255)"><span style=3D"=
+font-family:tahoma,sans-serif;font-size:small">User Experience Designer | I=
+BM iX, Bangalore</span></span></span></div><div style=3D"font-size:12.72px"=
+><br></div></div></div></div></div></div></div></div></div></div></div></di=
+v></div>
+
+--000000000000cf4cb005c5890072--
