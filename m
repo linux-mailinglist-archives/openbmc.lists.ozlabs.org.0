@@ -1,64 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 630D23B37FB
-	for <lists+openbmc@lfdr.de>; Thu, 24 Jun 2021 22:38:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FD053B3BD5
+	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 06:54:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4G9sRL0zC9z3bvX
-	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 06:38:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GB4Rj6rhtz3bt1
+	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 14:54:41 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=RwDkdXd1;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=SP8qnEk+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2d;
- helo=mail-yb1-xb2d.google.com; envelope-from=priyankapillai1206@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::32e;
+ helo=mail-wm1-x32e.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=RwDkdXd1; dkim-atps=neutral
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com
- [IPv6:2607:f8b0:4864:20::b2d])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=SP8qnEk+; dkim-atps=neutral
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com
+ [IPv6:2a00:1450:4864:20::32e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4G9sR46vXSz3093
- for <openbmc@lists.ozlabs.org>; Fri, 25 Jun 2021 06:38:22 +1000 (AEST)
-Received: by mail-yb1-xb2d.google.com with SMTP id s129so1225472ybf.3
- for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 13:38:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=IklKpZPeclNgIkVhJcSl++4STeWcr3H4PTVMR/s+eX8=;
- b=RwDkdXd1eNfNdSDSpTWvn2b0d835xFuFAj9FdU/dZvkemHBIE8co1v6epKEfouLoSW
- S/Wi2D0IaSWJwVbj1xZwD1B+lM3dOJchKEuU/SWryQJQDSLPs15os8WK+imivYnrW2u/
- ueGFyZkkl6QZ89U+zu7wnnhpuUwDTmvIpxkVflkPAKII06FcSEh4l6ZTa/XR69sKiAAt
- AjPIgb4ZRvr1Y7+UPLs4TgrJPcn6CkZuWRQA6l0mVTPP5WkLtMLwyfmS/z4l1qbMVGSy
- 5Mv997Kuj1H7FN83MaIwjoAEawIv+OX5Himnp2esG3xP60AvOV12tqcJ5zxwlo1lWL58
- wzqQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GB4RT1CPjz2xVt
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Jun 2021 14:54:28 +1000 (AEST)
+Received: by mail-wm1-x32e.google.com with SMTP id
+ j11-20020a05600c1c0bb02901e23d4c0977so6989123wms.0
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Jun 2021 21:54:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=LYjGH4GErXBdyu5ORO1PpE1TCtcUIFQiWAbRUuls0oY=;
+ b=SP8qnEk+trBN4zLJUEO13hPw1JP556sLnKngL6/qEUZIF/k0OQMYeDCeF2qKDpCehK
+ Vm7KTbjRiz7YqXoOTIEo6lJPSNifYt1B6UpMPFaVtobO6aEIfy9fh1k1fBQjKjX6DxSq
+ urIJeOAFzRAfkqrLs9XaI/G4cv5/rRLnpOT02Jf/FGja4IlIlBl1Oow/36ElVoURJWnO
+ TJc6AAyhwUcy57OKZ0Ra/Psi6+ONh4NKfmWNzOhhHRTUZSaRus63EXnAxk67N0OE51q1
+ 2qoEINtCMQVojMxoiuzMcVgpd8OUrrtT2CnOhuoSsrIzvnFNDl/lny9r6u4RLIG5R0v/
+ /EJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=IklKpZPeclNgIkVhJcSl++4STeWcr3H4PTVMR/s+eX8=;
- b=P2QoSSvm+2ghvyJjdGKRj+ARcq6mAbOtumJFrNu1BaO+KzpC+V6aBWmtf21NRsyWGl
- GX7xpgnIBlttjIAVxocresJT2hJgD9JSLIdFSf51OWzNOl/E2clDgmgHut1WYqLag6VW
- EN7VGazotKWsDD6TmUILN+wYyw2VY/J/h5gtFZO78nrXEPy48+cP2t/VcsMfvILLosOC
- P/vUuDSSgwalbOd9bQWc1VOn0zOJnOotRFBACgbri4jXiI89L0V75wVeVFVLf0HyJtVM
- KXsNmBW/rXs1YH92VuSMyMpvRFyrHT+06spOJx2vs2cSaXhOwdosoEeIm1NwbbaU34wu
- BIxA==
-X-Gm-Message-State: AOAM531uHY/C09HtKqSzLzwPIT5AQMHpoFyOVpb+PoQVgWeOGWhZ0LCp
- LEWstZ4h9kU1RPI1NzIkme9PGuMddiVfQzbnJ3qQ0Qd1wRJHfw==
-X-Google-Smtp-Source: ABdhPJxLWMLqGZobqw5u1io/rusq/ZHolW8Lc33lZGqw++K4iZlFC6/dtCponX+JFHl0lQaA8KvknQBQ0HAW8NJ+oJU=
-X-Received: by 2002:a25:2b45:: with SMTP id r66mr8076491ybr.390.1624567098328; 
- Thu, 24 Jun 2021 13:38:18 -0700 (PDT)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=LYjGH4GErXBdyu5ORO1PpE1TCtcUIFQiWAbRUuls0oY=;
+ b=alZiphAn+QVb3pnUqfTy+cPMRZFU/qT5Imyk24B3+yrkLWbSds1X7rs9ndom7944Wa
+ gnhyPbtarqm4yIeg3clZ5JpULZaqY3GPPbWBKnHgkpmwqA3rW9W69hTveDk5MJZ3Ut6K
+ iwCvFESCB06PLxwypfR3X8QQB0+vth+aXr4f6W4DnhM+JzdEpCMULPNeqZ+V6TTXex6g
+ WUk5Fv0MTS3CtlZRrApAqFFFDb7hWgmUEYAF2P2cy8yPnRbMONVLDPKbgq7IFVJ0/oj4
+ 3eV6hRF/J1QQsChJKp+hDiuXLOFrzjEO3aAW8eyrwXD2FZVpb0GJikufXD5R6E1nrJ8t
+ oxIA==
+X-Gm-Message-State: AOAM530uDjwm0LcA/0Tn46aIG5Wv52sMJJ8+vMiRr1swMSo+kPhwW9XA
+ 9C24Ual8x8I49y1iTbwQkbq+aXrhBGg/BSOiHz1TRA==
+X-Google-Smtp-Source: ABdhPJwwq6eJZb7d2yVyY9H6/KCkJPkVWd0i+obtACpD9G/G6pI1mNDRDGfMKlBUyNREyKZkcKe+kA/i3e1zH3swpK4=
+X-Received: by 2002:a1c:5405:: with SMTP id i5mr8080294wmb.93.1624596861612;
+ Thu, 24 Jun 2021 21:54:21 -0700 (PDT)
 MIME-Version: 1.0
-From: Priyanka Pillai <priyankapillai1206@gmail.com>
-Date: Fri, 25 Jun 2021 02:08:07 +0530
-Message-ID: <CAJCnuYkhk_C1eaS=nUPZ4ZwtC+joWuBoOUWoh2E8chMG5Wb6Jg@mail.gmail.com>
-Subject: Requesting feedback on in-progress GUI designs (Bios settings)
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000cf4cb005c5890072"
+References: <SG2PR04MB30932F39EFCE1A165A5F9A94E1099@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <SG2PR04MB3093E0EC673F8D5AEEEB7613E1079@SG2PR04MB3093.apcprd04.prod.outlook.com>
+In-Reply-To: <SG2PR04MB3093E0EC673F8D5AEEEB7613E1079@SG2PR04MB3093.apcprd04.prod.outlook.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Thu, 24 Jun 2021 21:54:10 -0700
+Message-ID: <CAH2-KxD_m2UNn0mmbV998queZr5_HUmjhZCXKJFKJRQhX8Y2Yg@mail.gmail.com>
+Subject: Re: SDR sensor implementation query
+To: Jayashree D <jayashree-d@hcl.com>
+Content-Type: multipart/alternative; boundary="000000000000d7479205c58fee4b"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,39 +75,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Velumani T-ERS,
+ HCLTech" <velumanit@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000cf4cb005c5890072
+--000000000000d7479205c58fee4b
 Content-Type: text/plain; charset="UTF-8"
 
-Hello,
+On Thu, Jun 24, 2021 at 10:13 AM Jayashree D <jayashree-d@hcl.com> wrote:
 
-Requesting feedback on the new design of *Bios Settings - Logical Memory
-Block Size, System Memory Page Setup, I/O adapter enlarged capacity*
-screens in the WebUI:
-https://github.com/openbmc/webui-vue/issues/69
+> It has 4 dbus method call, whether this approach can be implemented in
+> async_method_call() ?
+>
 
-Regards,
-Priyanka Pillai
-User Experience Designer | IBM iX, Bangalore
+Yes, there are significantly more complex flows than this implemented in
+other places using async_method_call.
 
---000000000000cf4cb005c5890072
+
+> Could you please share your suggestions on this.
+>
+
+My suggestion would be to look around at other code that does this already
+and use that as an example to build your code.
+
+--000000000000d7479205c58fee4b
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>Hello,</div><div><br></div><div>Requesting feedback o=
-n the new design of <i>Bios Settings - Logical Memory Block Size, System Me=
-mory Page Setup, I/O adapter enlarged capacity</i>  screens in the WebUI:<b=
-r><a href=3D"https://github.com/openbmc/webui-vue/issues/69">https://github=
-.com/openbmc/webui-vue/issues/69</a></div><div><br></div><div>Regards,<br><=
-/div><div><div dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div=
- dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Priyan=
-ka Pillai<br><div style=3D"font-size:12.72px"><span style=3D"color:rgb(102,=
-102,102)"><span style=3D"background-color:rgb(255,255,255)"><span style=3D"=
-font-family:tahoma,sans-serif;font-size:small">User Experience Designer | I=
-BM iX, Bangalore</span></span></span></div><div style=3D"font-size:12.72px"=
-><br></div></div></div></div></div></div></div></div></div></div></div></di=
-v></div>
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><div class=3D"gmail_quote"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 24, 2021 at 10:13 AM Jayashre=
+e D &lt;<a href=3D"mailto:jayashree-d@hcl.com">jayashree-d@hcl.com</a>&gt; =
+wrote:</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div lang=3D"=
+EN-US"><div class=3D"gmail-m_1769879613617180375WordSection1">
+<p style=3D"vertical-align:baseline">It has 4 dbus method call, whether thi=
+s approach can be implemented in async_method_call() ?</p></div></div></blo=
+ckquote><div><br></div><div>Yes, there are significantly=C2=A0more complex =
+flows than this implemented in other places using async_method_call.</div><=
+div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div lang=
+=3D"EN-US"><div class=3D"gmail-m_1769879613617180375WordSection1"><p style=
+=3D"vertical-align:baseline"><u></u><u></u></p>
+<p style=3D"vertical-align:baseline">Could you please share your suggestion=
+s on this.</p></div></div></blockquote><div><br></div><div>My suggestion wo=
+uld be to look around at other code that does this already and use that as =
+an example to build your code.=C2=A0</div></div></div>
 
---000000000000cf4cb005c5890072--
+--000000000000d7479205c58fee4b--
