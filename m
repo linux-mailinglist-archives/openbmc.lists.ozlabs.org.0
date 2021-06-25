@@ -2,81 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E69D53B3C85
-	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 08:11:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 582C33B3DBA
+	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 09:41:11 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GB67n5XPrz3bvQ
-	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 16:11:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GB87p1N6rz3c79
+	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 17:41:10 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=A7w4iBn7;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Q5K7HNpy;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=sOmZYSIj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1042;
+ helo=mail-pj1-x1042.google.com; envelope-from=liuxiwei1013@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=A7w4iBn7; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=Q5K7HNpy; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=sOmZYSIj; dkim-atps=neutral
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com
+ [IPv6:2607:f8b0:4864:20::1042])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GB67J2MZCz302K;
- Fri, 25 Jun 2021 16:10:35 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 9A56F5C0136;
- Fri, 25 Jun 2021 02:10:30 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Fri, 25 Jun 2021 02:10:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=fm3; bh=LUduNXh8afYXbZaxuU0n9BSi4R
- cIQyqyuYJqZGn4aX4=; b=A7w4iBn7/mLLqz57kL7lTTwksg0IDY0v6ZkbuqPMvz
- ZQS6WHcPu2pvenIJMpdCRd3fwsR/eLdkPJJhkp66B7fnOM5niS5FQZWs2SmpNbuq
- lwiatYzxCkHVzpYchDeN9dXmWdcbPknMR9xRO51xQBAvE08T3EnMLmXp2Isty6ty
- mSwbeladtcJkyeQdEAlSw2fyZswXSE0uPghTx6o6bbVhyWQKiOhEH+LOItT/9DiJ
- xexvHTz4kPon+bfuXIpmMu1qdNg7rROm6I7M5RYLmWki52Egqck8jma5BZJc91Le
- BdX6vh7Tg9WyuT0w6iW3KF9hjHN/sIxRoVovxCUQKJoA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=LUduNXh8afYXbZaxu
- U0n9BSi4RcIQyqyuYJqZGn4aX4=; b=Q5K7HNpydhuqt3xq/2HoSb8JAyO1BVkRj
- 8vOfbllhHjDDEd3PeNjNrvik/6yFaWnrhlasXCZ6pfUyg7C1Yacp8ZX7VHOmyl8X
- q05WiDF9LwMh0uSmhrzgE4DASLWil7C6618qyLdH21IFBmlzwrDIdUi6tjX4pJLK
- fcBkWkd7nSoUtD1p5wrKM5+Untm8F/V2qYPFYr0t9IzPEIXT4rqMNiePZFjw9/rp
- 0qbCc7SG9MYgmQYIKtudB1v6Yq0/cMBhjC+fdwACysN6hm1aWbpzvi3AFzMQvEJV
- eL7ykRu1sUhzeipk23RiJTWA04KLLsrLtjA+Ki+R3jScJKbjMq2Jw==
-X-ME-Sender: <xms:VXPVYEYaYNDXcXN5gEboqhIaL-qf4pW2_NMr9wZ6AOP-HWUZm8cigA>
- <xme:VXPVYPYvBEWYCj8GhPsv-lWQck6rdD_DDQqyT5D7otVHHj33XQTU_e_u7k5hHehM7
- 5BuvCosAuX6i2CNrw>
-X-ME-Received: <xmr:VXPVYO_HB6hePwbBJ5lqMOk6OIiUt1SRRwpri6xb3RQbLIGM8wuvmmWdkikdpmjPgzBmMkP85ln5uWT5r1W3lt7CBqx46ajz3NQZsdsPYDMzkAJp6cQ3A03BaLlgyEJ78dFUMQI2usFU8Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeegiedguddtiecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertd
- ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
- rdhiugdrrghuqeenucggtffrrghtthgvrhhnpeekhfeiffejveefveehtdeiiefhfedvje
- elvddvtdehffetudejtefhueeuleeftdenucevlhhushhtvghrufhiiigvpedtnecurfgr
- rhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:VXPVYOpGKGDsj-ny5DcIJwp6pc36kAGNibwSOHIhQRaQkg0JVEHmog>
- <xmx:VXPVYPox2Kge905tLt-o4kQxBUtW3_EGZJlMtmcydTDQCABgVy4Z0A>
- <xmx:VXPVYMR_UoDv1kQRUNq1qD8AhMDdnm0dNHcbGiBx92e_uYIupChymA>
- <xmx:VnPVYAAkG84Dwse1LP-Cfax3AKsqfFzLDT8b7kZhwK0EDPRmOhvEaw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Jun 2021 02:10:26 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GB87X5CfWz308C;
+ Fri, 25 Jun 2021 17:40:56 +1000 (AEST)
+Received: by mail-pj1-x1042.google.com with SMTP id
+ g6-20020a17090adac6b029015d1a9a6f1aso6842681pjx.1; 
+ Fri, 25 Jun 2021 00:40:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=ak4It9MsAaf8gTmUjfk7OqroHrSMpNp6aLewzuoe870=;
+ b=sOmZYSIjpQlknoMSJkaw5PkOMVn1PdkStlQALfl22r7uD5yYITQze8FqovvDJ23Nxi
+ Cdlj7qH0jy3dVrmotZ1HHX1M8h7D7Vj01NhRqZfJ422QDc5LjO/t19ks4xQO+Uk9kBwk
+ 5UlQl/RSWpOTiHaBz3RkkAifYPN3xwxNK8sg4YFFz9DlNrptvKui8k8XD7cLiHJo5M4+
+ fsQRnqrL5xem26YnKWVmLcOQV4451ieEoeF8gzZqKPipg1cGsjApOGyyHi0739fjgWcY
+ fyfY5KRznnALDGyy9Re9/5DAs476IOF3BmZf5SsSM4BBsyIklNMPAAbfkRI/89M7z0JL
+ ZE+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=ak4It9MsAaf8gTmUjfk7OqroHrSMpNp6aLewzuoe870=;
+ b=svbkwUXQ3gM4SMQdncX/w3P7E6gElh3I+5xT+PEL+bUiLY8onNH7YXS7iRdAdaEJdT
+ 3tPhmMkpPVpc/0FLSmy8ewldtkl+HcaCOU5aMAMJLb+Xvu1Hq4tOkP4PjeSL6cFFRogZ
+ zRFq2wLjhZOlejJaPeVfkymUVlPwlhzNUYA4O4/kyx7acJbNMhZPx9Vrb3JlQWE86uc6
+ 8R7jw0vDgUY6eDfzGThztl4f6+eIccNy9bG3c3NUGlaLWSbmxbQDg9l2r/W2QTLdXOo6
+ n3TetFteeU7obkx4VL2xWA5BmnQmOJr8GbEAmm7dz/FuE5olqGf/twV1pm5nS8l1ULn9
+ 3MTA==
+X-Gm-Message-State: AOAM531/cmTfj2qe/n6QIU9c2wJt+gQnxp32AkS4ocgwGh29mt74DToa
+ L04fetV+5UWNb20AuEjrscP39e4GFmCAjw==
+X-Google-Smtp-Source: ABdhPJzrpfKopSv073SsVvH6mdLIBivdk+tfVAvdFG0tEDC3YKj7V33SFsdfZwVAiQxCQHCqvlx4Uw==
+X-Received: by 2002:a17:90a:a790:: with SMTP id
+ f16mr20048620pjq.176.1624606852228; 
+ Fri, 25 Jun 2021 00:40:52 -0700 (PDT)
+Received: from localhost (95.169.4.245.16clouds.com. [95.169.4.245])
+ by smtp.gmail.com with ESMTPSA id q66sm4683605pja.34.2021.06.25.00.40.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Jun 2021 00:40:51 -0700 (PDT)
+From: George Liu <liuxiwei1013@gmail.com>
+X-Google-Original-From: George Liu <liuxiwei@inspur.com>
 To: linux-aspeed@lists.ozlabs.org
-Subject: [PATCH] ARM: dts: tacoma: Add phase corrections for eMMC
-Date: Fri, 25 Jun 2021 15:40:17 +0930
-Message-Id: <20210625061017.1149942-1-andrew@aj.id.au>
+Subject: [PATCH v1] ARM: dts: fp5280g2: Add KCS node for LPC MCTP
+Date: Fri, 25 Jun 2021 15:40:31 +0800
+Message-Id: <20210625074031.32576-1-liuxiwei@inspur.com>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -93,33 +82,31 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
  linux-kernel@vger.kernel.org, robh+dt@kernel.org,
- linux-arm-kernel@lists.infradead.org
+ George Liu <liuxiwei@inspur.com>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The degree values were reversed out from the magic tap values of 7 (in)
-and 15 + inversion (out) initially suggested by Aspeed.
-
-With the patch tacoma survives several gigabytes of reads and writes
-using dd while without it locks up randomly during the boot process.
-
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+Signed-off-by: George Liu <liuxiwei@inspur.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-index c1478d2db602..670080bb80eb 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-@@ -189,6 +189,7 @@ &emmc_controller {
- 
- &emmc {
- 	status = "okay";
-+	clk-phase-mmc-hs200 = <36>, <270>;
+diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
+index 1752f3250e44..66c0542b2694 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
+@@ -300,6 +300,11 @@ &lpc_ctrl {
+ 	flash = <&spi1>;
  };
  
- &fsim0 {
++&kcs4 {
++	compatible = "openbmc,mctp-lpc";
++	status = "okay";
++};
++
+ &mac0 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
 -- 
 2.30.2
 
