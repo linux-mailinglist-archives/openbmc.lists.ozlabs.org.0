@@ -2,73 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 582C33B3DBA
-	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 09:41:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D2903B463E
+	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 17:02:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GB87p1N6rz3c79
-	for <lists+openbmc@lfdr.de>; Fri, 25 Jun 2021 17:41:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GBKxD2bXtz3btf
+	for <lists+openbmc@lfdr.de>; Sat, 26 Jun 2021 01:02:40 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=sOmZYSIj;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Q8YzMdka;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1042;
- helo=mail-pj1-x1042.google.com; envelope-from=liuxiwei1013@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=sOmZYSIj; dkim-atps=neutral
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com
- [IPv6:2607:f8b0:4864:20::1042])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=Q8YzMdka; 
+ dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GB87X5CfWz308C;
- Fri, 25 Jun 2021 17:40:56 +1000 (AEST)
-Received: by mail-pj1-x1042.google.com with SMTP id
- g6-20020a17090adac6b029015d1a9a6f1aso6842681pjx.1; 
- Fri, 25 Jun 2021 00:40:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=ak4It9MsAaf8gTmUjfk7OqroHrSMpNp6aLewzuoe870=;
- b=sOmZYSIjpQlknoMSJkaw5PkOMVn1PdkStlQALfl22r7uD5yYITQze8FqovvDJ23Nxi
- Cdlj7qH0jy3dVrmotZ1HHX1M8h7D7Vj01NhRqZfJ422QDc5LjO/t19ks4xQO+Uk9kBwk
- 5UlQl/RSWpOTiHaBz3RkkAifYPN3xwxNK8sg4YFFz9DlNrptvKui8k8XD7cLiHJo5M4+
- fsQRnqrL5xem26YnKWVmLcOQV4451ieEoeF8gzZqKPipg1cGsjApOGyyHi0739fjgWcY
- fyfY5KRznnALDGyy9Re9/5DAs476IOF3BmZf5SsSM4BBsyIklNMPAAbfkRI/89M7z0JL
- ZE+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=ak4It9MsAaf8gTmUjfk7OqroHrSMpNp6aLewzuoe870=;
- b=svbkwUXQ3gM4SMQdncX/w3P7E6gElh3I+5xT+PEL+bUiLY8onNH7YXS7iRdAdaEJdT
- 3tPhmMkpPVpc/0FLSmy8ewldtkl+HcaCOU5aMAMJLb+Xvu1Hq4tOkP4PjeSL6cFFRogZ
- zRFq2wLjhZOlejJaPeVfkymUVlPwlhzNUYA4O4/kyx7acJbNMhZPx9Vrb3JlQWE86uc6
- 8R7jw0vDgUY6eDfzGThztl4f6+eIccNy9bG3c3NUGlaLWSbmxbQDg9l2r/W2QTLdXOo6
- n3TetFteeU7obkx4VL2xWA5BmnQmOJr8GbEAmm7dz/FuE5olqGf/twV1pm5nS8l1ULn9
- 3MTA==
-X-Gm-Message-State: AOAM531/cmTfj2qe/n6QIU9c2wJt+gQnxp32AkS4ocgwGh29mt74DToa
- L04fetV+5UWNb20AuEjrscP39e4GFmCAjw==
-X-Google-Smtp-Source: ABdhPJzrpfKopSv073SsVvH6mdLIBivdk+tfVAvdFG0tEDC3YKj7V33SFsdfZwVAiQxCQHCqvlx4Uw==
-X-Received: by 2002:a17:90a:a790:: with SMTP id
- f16mr20048620pjq.176.1624606852228; 
- Fri, 25 Jun 2021 00:40:52 -0700 (PDT)
-Received: from localhost (95.169.4.245.16clouds.com. [95.169.4.245])
- by smtp.gmail.com with ESMTPSA id q66sm4683605pja.34.2021.06.25.00.40.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jun 2021 00:40:51 -0700 (PDT)
-From: George Liu <liuxiwei1013@gmail.com>
-X-Google-Original-From: George Liu <liuxiwei@inspur.com>
-To: linux-aspeed@lists.ozlabs.org
-Subject: [PATCH v1] ARM: dts: fp5280g2: Add KCS node for LPC MCTP
-Date: Fri, 25 Jun 2021 15:40:31 +0800
-Message-Id: <20210625074031.32576-1-liuxiwei@inspur.com>
-X-Mailer: git-send-email 2.30.2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GBKwy0MLDz303M;
+ Sat, 26 Jun 2021 01:02:25 +1000 (AEST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3EEA56197B;
+ Fri, 25 Jun 2021 15:02:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1624633341;
+ bh=+nC2189eKCU6T28/hcgTvLONm44gotEpXOHRDCHlrOs=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Q8YzMdkakrr+6yUHSuakRSX6dve5Mt0T++6DuB0We2J28fogIsOo9FQ11MXaOVy2u
+ rMUydL3PCwwARSXaHl8pAA7iOIwtiBSx/3lJhrsDlT18J00aw03AkGPXCKWYYHn22c
+ 6x8x0KYIP+Rb18j/gcfQtkoTocm2zRF7nf/1glRBNHgDJwkOlZmOLG0/9g7w4UqlKO
+ wxMSaeyFhVjQpGqSdpoLNLurW/2P4e4IEX8KG1GvlUu9S74GoSaRbFQEfYfYZfuzLG
+ FaVEaVw+r0cBBB+ROFDPC6JXDaskPV1CI5+PhiaB1ieS6y8YtbbfDjtSzEy+ObKl92
+ v37ZiTceM2Ppw==
+Date: Fri, 25 Jun 2021 17:02:19 +0200
+From: Wolfram Sang <wsa@kernel.org>
+To: Quan Nguyen <quan@os.amperecomputing.com>
+Subject: Re: [PATCH v3 1/7] i2c: i2c-core-smbus: Expose PEC calculate
+ function for generic use
+Message-ID: <YNXv+2SpsTLStsIE@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+ Quan Nguyen <quan@os.amperecomputing.com>,
+ Corey Minyard <minyard@acm.org>, Rob Herring <robh+dt@kernel.org>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ openipmi-developer@lists.sourceforge.net,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ linux-i2c@vger.kernel.org,
+ Open Source Submission <patches@amperecomputing.com>,
+ Phong Vo <phong@os.amperecomputing.com>,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ openbmc@lists.ozlabs.org
+References: <20210519074934.20712-1-quan@os.amperecomputing.com>
+ <20210519074934.20712-2-quan@os.amperecomputing.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="+2nERxd5au+gK8PN"
+Content-Disposition: inline
+In-Reply-To: <20210519074934.20712-2-quan@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,33 +75,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, robh+dt@kernel.org,
- George Liu <liuxiwei@inspur.com>, linux-arm-kernel@lists.infradead.org
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ Corey Minyard <minyard@acm.org>, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ Brendan Higgins <brendanhiggins@google.com>, linux-kernel@vger.kernel.org,
+ Phong Vo <phong@os.amperecomputing.com>, Rob Herring <robh+dt@kernel.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ openipmi-developer@lists.sourceforge.net,
+ Open Source Submission <patches@amperecomputing.com>,
+ linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Signed-off-by: George Liu <liuxiwei@inspur.com>
----
- arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-index 1752f3250e44..66c0542b2694 100644
---- a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-@@ -300,6 +300,11 @@ &lpc_ctrl {
- 	flash = <&spi1>;
- };
- 
-+&kcs4 {
-+	compatible = "openbmc,mctp-lpc";
-+	status = "okay";
-+};
-+
- &mac0 {
- 	status = "okay";
- 	pinctrl-names = "default";
--- 
-2.30.2
+--+2nERxd5au+gK8PN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, May 19, 2021 at 02:49:28PM +0700, Quan Nguyen wrote:
+> Expose the PEC calculation i2c_smbus_pec() for generic use.
+>=20
+> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+
+You are the second one who wanted this exported. I agree it makes sense
+for slave drivers. So, I'll skip the required user because two are in
+flight. Applied to for-next, thanks!
+
+
+--+2nERxd5au+gK8PN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmDV7/oACgkQFA3kzBSg
+KbZ8xg//dLfzMR1eQtBMxT1tUHLNopwRIXCsraVBzK+s0nbpuIDwP7mxiTLlLnQ9
+vp/mzzur/NvhOqJ7uBrc1tPIyo6fcNtH9sq1S1hGQcV6kFR/fZ920TvGo/uE1AvN
+GHU8vUz2TBjYvctu9fiBIYecfDB0KAkYPHTV6zpANUn2CnifvIdBJ7E38IVUk5n/
+b0cZEsjj1HV7Hnp+GHw5CPsHYOV3LP9Nlbu+z++AzcYhhbEXxUEFaiMUS4LQ58Px
+idn6ndXW8L5r69OH7Y+YR2EvEKm4rwqs21rnh0Iql1U+eQVYrL9cafa1/uXdah3r
+OKWrcFEhyomnHAI8QQ1aK6fIyDB9ms93asIwhKdy9oKO7ZDTXH5gsUvE35L+mhoZ
+tv5IiOfNoI6stXCotmaqAWXIP5/B/ucuyEMiA5Dyjfa+uutIHgT+l4tGvchnpe3T
+jKbmr7SlGW410XhyVc+No8zD0yug7YpC6IQ+AEWHMsSXR4dIU87ZTxcGRXZKeKv5
+agJ5M0eRWRKjJpatkK/7mOumtaIcnT4jyGfXiwKOlsS8XIYzeq6WsT08EpVXQIKR
+eQVYbm3Y1d8rI3AYts1le1VqEv69PShYBXuvbm4FG9H6fKkAVX9i2dLGwiS8GiWM
+lskRRpMa6GpsLn0t+uurUWkgXzK+c06NBejGsWTs9nq5s41Y1bU=
+=X8AV
+-----END PGP SIGNATURE-----
+
+--+2nERxd5au+gK8PN--
