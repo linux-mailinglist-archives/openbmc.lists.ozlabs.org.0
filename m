@@ -1,67 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3B513B5B85
-	for <lists+openbmc@lfdr.de>; Mon, 28 Jun 2021 11:42:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85BF43B5C86
+	for <lists+openbmc@lfdr.de>; Mon, 28 Jun 2021 12:35:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GD2hk3zFvz30Hh
-	for <lists+openbmc@lfdr.de>; Mon, 28 Jun 2021 19:42:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GD3s63MK6z30Hk
+	for <lists+openbmc@lfdr.de>; Mon, 28 Jun 2021 20:35:06 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=eKrzh3Lz;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=P8xmtN6G;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::32e;
- helo=mail-ot1-x32e.google.com; envelope-from=yulei.sh@bytedance.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=eKrzh3Lz; dkim-atps=neutral
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com
- [IPv6:2607:f8b0:4864:20::32e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=i.kononenko@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=P8xmtN6G; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GD2hQ51PZz30B2
- for <openbmc@lists.ozlabs.org>; Mon, 28 Jun 2021 19:42:28 +1000 (AEST)
-Received: by mail-ot1-x32e.google.com with SMTP id
- v5-20020a0568301bc5b029045c06b14f83so18105319ota.13
- for <openbmc@lists.ozlabs.org>; Mon, 28 Jun 2021 02:42:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to;
- bh=09Ybf+zNUEIiJjwDqTv9wiEwvK3qLEbSiHl8kpoaKgs=;
- b=eKrzh3Lz1bwUmkZ9nyRWy5+NSsn3mk8FlwmUgikAnvjwgocOS8BBhzO11z42GpBzbz
- priO0BJZQA2OLHxIYrdvaYh22v7qBDITHgO+CVFBS8LCBdez9zkA70PXAKxQmaR5xzLI
- h1jfOiZpbnbIV/1B6pD8yqM75dqXBLV+5IJ3709hxCXbCmgJntcdXlmz5nbZ/sBXCpWD
- Ki2LYXqNjgOowDivOZXCsM0ddMLjpv5fE1ZJO/09z75vHpjCioff1Vn2uB29Hjq/CKCR
- D68JW7oyS75QyX3f8okHQEFi2tyyATUSQBktozoUsKETdU3dwebrRhy0PBi8SB/MIRef
- qxLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=09Ybf+zNUEIiJjwDqTv9wiEwvK3qLEbSiHl8kpoaKgs=;
- b=sbVIYJ/l/GiZy0u2iHB2CcqkTmoU60BLrz4SWmQD78sXx9VrgNaCdErZeWHVWEDIvL
- TpLq58PXNsrcPQzMOsa6X4pbSKAH47Zqy/wBtFj7KzzL8t4pndL3CyV0ACnBUAA/sPJ0
- m8qv5uJ5dueOBTseZz4TxxJetZw735Eq2eT7mkw2cexf1tTyLSZxnllGilC2lq/vHscQ
- ATC7jy7tshKoIq0qHnmTdXerDfhHuTN0tsA67j9NMcfIjU/6UyL/HH69R9wibQCY1tno
- /dv6kLyUSQkmnqiwPdKvvqOlZtG2H4GLzvg3yvwzAYYoIIOsxluF2/dglVg5ChXXo8aE
- fydg==
-X-Gm-Message-State: AOAM530+bQuxUcQyKoazNHf9qqgdnneYxw863b6F2HAl2+zBEDSjH7sE
- FXrCZToVS+tqgtZSRtO+fh2MJKpcPRSoKPSKIQh/3dnMcEJDKS/E
-X-Google-Smtp-Source: ABdhPJw14zBEK8T467lDARH1hqg+dyL4d4IEPImtP5T9nfcKMwuS2cYBto+iz5fK96g6r5flnWvekssYWuo++Pj9LJQ=
-X-Received: by 2002:a9d:6081:: with SMTP id m1mr20233786otj.226.1624873344880; 
- Mon, 28 Jun 2021 02:42:24 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GD3rn4X0lz2xfL
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Jun 2021 20:34:49 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id AD8BD412DD;
+ Mon, 28 Jun 2021 10:34:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:content-language:content-type
+ :content-type:in-reply-to:mime-version:user-agent:date:date
+ :message-id:from:from:references:subject:subject:received
+ :received:received; s=mta-01; t=1624876485; x=1626690886; bh=h6J
+ FlH/Jsd3hyI2eHMPt7WEF6GPQzhUy1Er1mZznFN0=; b=P8xmtN6G6PTjOl+AvDK
+ L4mQgD0nXIHo2fhF2xMiE886ukY4W5Ud+PdprTA853/K2rut4X8HQbL132x1aUC7
+ IJfPij0O9fF9snQhD1rIKPg5hqUZn76uSA4vxTDkTqVOGUtT/m9ta6DX93ExG2oR
+ qf67hty2aYcCalVLCzVwWkM4=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 6OTlD2IuWZds; Mon, 28 Jun 2021 13:34:45 +0300 (MSK)
+Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
+ [172.17.100.103])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id A753141259;
+ Mon, 28 Jun 2021 13:34:44 +0300 (MSK)
+Received: from [10.199.0.61] (10.199.0.61) by T-EXCH-03.corp.yadro.com
+ (172.17.100.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 28
+ Jun 2021 13:34:43 +0300
+Subject: Re: [PATCH 5/6] FMS: Add the SCSI Get Configuration command.
+To: Christoph Hellwig <hch@infradead.org>
+References: <20210626211820.107310-1-i.kononenko@yadro.com>
+ <20210626211820.107310-6-i.kononenko@yadro.com>
+ <YNmcNvqvTFNCrMl9@infradead.org>
+From: i.kononenko <i.kononenko@yadro.com>
+Message-ID: <2eb28492-f604-9c26-06a2-57817ad28f52@yadro.com>
+Date: Mon, 28 Jun 2021 13:34:42 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Mon, 28 Jun 2021 17:42:14 +0800
-Message-ID: <CAGm54UHdTyPh0hGiatA44whg2PdRzJFg0gBnVHA4moYRr=aT=g@mail.gmail.com>
-Subject: ipmi sel log revisited
-To: openbmc <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <YNmcNvqvTFNCrMl9@infradead.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.199.0.61]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-03.corp.yadro.com (172.17.100.103)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,74 +78,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Jens Axboe <axboe@kernel.dk>, Felipe Balbi <balbi@kernel.org>,
+ linux-scsi@vger.kernel.org, "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ "James E.J. Bottomley" <jejb@linux.ibm.com>, linux-usb@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org,
+ openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This email is to describe the current status and issues related ipmi
-sel log in OpenBMC, and propose a possible solution.
 
-# Background
-There are two backends of the ipmi sel log:
-* The logging entry on DBus
-* The ipmi_sel log stored in "/var/log/ipmi_sel"
 
-The configuration option `SEL_LOGGER_SEND_TO_LOGGING_SERVICE` in
-phosphor-sel-logger is used to control which way to use.
+On 28.06.2021 12:53, Christoph Hellwig wrote:
+> What is FMS?  And why do only patches 5 and 6 show up on the list?
+> And why does this mix changes to the SCSI layer, libata, usb-gadget and
+> the CDROM UAPI in a single patch?
+> 
 
-## The logging entry on DBus
-The logging entries on DBus in /xyz/openbmc_project/logging/entry/
-will be parsed and converted to IPMI sel logs.
-This includes two types of logs:
-* The logging entries with a CALLOUT path in the associations.
-* The logging entries with SEL metadata[1] in the "AdditionalData".
-For the both logging entries, the ipmid will parse the entry and
-convert it to a SEL entry.
+It looks like my 'git email-send' has appended up the separate respondents
+for each PATCH of the patchset. It is my first experience publishing 
+patches for the community. Sorry, I will be careful in the future.
 
-## The ipmi_sel log stored in "/var/log/ipmi_sel"
-The log is sent to the journal log with specific MESSAGE_ID and properties.
-rsyslog filters such logs and save the "/var/log/ipmi_sel" [2]
+Several patches have already been reviewed, and these need to be improved.
+I will prepare the new version of the patchset and will publish it with 
+the appropriate list of respondents for each one.
 
-## Comparison
-Both methods have pros and cons:
-
-| Method        | Pros                              | Cons
-                 |
-| ------        | ----                              | ----
-                 |
-| Logging entry | Use DBus data model               | Complicate and
-slow to parse      |
-|               | Support both ipmi sel and redfish |
-                 |
-|               |                                   |
-                 |
-| ipmi_sel      | Easy and quick to parse           | Data is
-separated from DBus       |
-|               |                                   | ipmi sel and
-redfish is separated |
-
-# The proposed solution
-The openbmc usually uses the DBus as the data model and all the
-services consume data from DBus, and the upstream phosphor-host-ipmid
-already supports the logging entries, the proposal is to re-use the
-logging entry on DBus as the data source, and improve the cons: to
-make it faster to parse in ipmid.
-
-The idea is:
-1. On BMC startup, let ipmid parse all the logging entries in the
-background and generate the SEL entries in RAM;
-2. Use a match to get a callback on logging entries' add/delete
-events, and update the SEL entries in RAM when a logging entry is
-added or deleted;
-3. Use the SEL entries in RAM directly when `ipmi sel list|elist` is called.
-
-This way improves `ipmitool sel list` speed and possibly resolve the
-issue of the current logging entry model.
-
-Comments are welcome.
-
-[1]: https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Logging/SEL.metadata.yaml
-[2]: https://github.com/openbmc/openbmc/blob/master/meta-intel-openbmc/meta-common/recipes-extended/rsyslog/rsyslog/rsyslog.conf
+From your letter, I noticed the commit messages also need to improve and
+should be more clear. The descriptions will be updated either.
 
 -- 
-BRs,
-Lei YU
+Best regards,
+
+Igor Kononenko
