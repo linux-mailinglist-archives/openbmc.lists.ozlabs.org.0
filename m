@@ -1,76 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D71E13B69F8
-	for <lists+openbmc@lfdr.de>; Mon, 28 Jun 2021 23:03:21 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA1C03B6A02
+	for <lists+openbmc@lfdr.de>; Mon, 28 Jun 2021 23:10:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GDKnz5MwPz3bV6
-	for <lists+openbmc@lfdr.de>; Tue, 29 Jun 2021 07:03:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GDKxz4t3bz3bZ6
+	for <lists+openbmc@lfdr.de>; Tue, 29 Jun 2021 07:10:15 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=YUE58mMW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=RvAxawXt;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=pxvb2kWs;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32b;
- helo=mail-ot1-x32b.google.com; envelope-from=proclivis@gmail.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=YUE58mMW; dkim-atps=neutral
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com
- [IPv6:2607:f8b0:4864:20::32b])
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm2 header.b=RvAxawXt; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=pxvb2kWs; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GDKng6MZgz301K
- for <openbmc@lists.ozlabs.org>; Tue, 29 Jun 2021 07:03:01 +1000 (AEST)
-Received: by mail-ot1-x32b.google.com with SMTP id
- 7-20020a9d0d070000b0290439abcef697so20298030oti.2
- for <openbmc@lists.ozlabs.org>; Mon, 28 Jun 2021 14:03:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=content-transfer-encoding:from:mime-version:subject:date:message-id
- :references:cc:in-reply-to:to;
- bh=qSWG2QiRJZoj9VV3y4lDjcpRar+CMwuyiYHA/RIFYIk=;
- b=YUE58mMWES4EVgQmenvepKEVvwkmKqB11bBQV+mMJo4P8peT0nW+EuenB2XLawPEpN
- 5cY3NXO1yjxbFt3NZZGaAwVQBvbIzKUVGTsvGbFcCka0jvWfWPxDdPcCD6tozbDNb6LP
- zu6jD5Bhddh3lwOPcJFvNf754U9qAfR5QpdTDxelkbMtfodOCJYUxAO3L4JWu3q1mRkB
- CKsOclbVAUdGAYr/9A8Srdk4HFOXOVGuIXlTzocHe4q4RD0Yk+1nH+qnhvCAUVMmssQk
- bJysGU1VY1RJdhq48r0uL+dIPVgkEu7Tvcr11goPLT/KXLlqjiDPHQYdBHPi2C32b7IW
- ULHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:content-transfer-encoding:from:mime-version
- :subject:date:message-id:references:cc:in-reply-to:to;
- bh=qSWG2QiRJZoj9VV3y4lDjcpRar+CMwuyiYHA/RIFYIk=;
- b=X3zY8EmVzL+nr0PT2k5Y4cdInHE7qwbA5t4VEGTpdA8ETFnxRrd3gDXXx0s7ssqps1
- dd6RxJu0Oj/cQ5jfi/5Embl9yG2CfHmjy8ZSm1TLHRFhkxLbk/wpwetdbJO8y+40N/zW
- BzG7grg0WlCLrrmxMVRFR4R4oanGPX8C0NpzxIx87LeZNb5mnQjoz1PyrvfhzyZkGjHL
- euuMtrzlS7EjMXme2Qn2UV+qc5YTZl+i6PlfXipRlrMrr5SbAYJfEroexwf/eb0sFYxm
- svBd/NtdqmnI/8xTa6VZ5fcBmFMo6OxLX63n05XQ7w7+fkBB3Xh6d7h85PQ2ZTPwTyVP
- Ok0g==
-X-Gm-Message-State: AOAM531jKZhTiYKcwO0arIKJ/avq88UbC6ODriZYQuxM8CvgBaIbO3EJ
- H0tO4mCMzPPwFIDK2Afa5ol6e62lf30=
-X-Google-Smtp-Source: ABdhPJy2HfSChyS9JBB8DZbelJHin6ZlvgQlLxqcKwVmgVJ36wVRRV2yANGcBK+m2W99lTdA3OHXCg==
-X-Received: by 2002:a05:6830:1be6:: with SMTP id
- k6mr1312158otb.219.1624914178597; 
- Mon, 28 Jun 2021 14:02:58 -0700 (PDT)
-Received: from smtpclient.apple ([2600:100e:b000:1875:9053:bada:25d7:85f2])
- by smtp.gmail.com with ESMTPSA id v42sm3616723ott.70.2021.06.28.14.02.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jun 2021 14:02:58 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Mike <proclivis@gmail.com>
-Mime-Version: 1.0 (1.0)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GDKxf4lpYz30B2
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Jun 2021 07:09:58 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id 645E15C01E5;
+ Mon, 28 Jun 2021 17:09:55 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute5.internal (MEProxy); Mon, 28 Jun 2021 17:09:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
+ :references:mime-version:content-type:in-reply-to; s=fm2; bh=Lgw
+ /u3WpcgXE+dCh5ABxjMm4mJ6B3NNtLKcY06Xm2LE=; b=RvAxawXtOScNaZSoeo2
+ zNlq59kttKXf8auXvNJ7SAGoKpXK+HNfivCfZg5lQjuhCMNizJQwfMFsJ+uZbD6W
+ p+WeIspCrxvV4e5xuKNvbxLCu3JVkSQn0nqB3AxcmJdOmBqNuZeU11DQeCsi8NWA
+ 7/NlimuKa+f5kt148rZOH+zyZHUEJ+w0qHwcEpU6jJg3eXT6Lj8VaLcdWRj8J0d6
+ dVCjIH3lD2l8iKq1QLc6W4U7D84Gt6iBjjcIONkXnEbvTaBcLgf40Fwo4CmjnMNY
+ xc0lRtw8DqHxtJMLGvZz05OGLm5zHjVJpGWdBET66ynrFhbq41YIz//ME0pcenJQ
+ ZQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Lgw/u3
+ WpcgXE+dCh5ABxjMm4mJ6B3NNtLKcY06Xm2LE=; b=pxvb2kWs6vqm3bJuyJZu5l
+ j0rgrD/HEelfa9PzS1qJuFP+WUL5e6uuTEceOCKXZTqPk8cdbdRyoFPobucYjdYd
+ 2t2tk5+GZhsXSv/2qzW7MhgjgTujgc2A6TpXH0c62vqdSuFww8F8IgBgGou9Ok8l
+ iT+ATjGPtwrIdirc6gEERmrqRqScvrOZ9dCkVrnd3ukKWF3a0/C0p2p0p67RG63E
+ udA1rphE+KVMzuUCHPjU55VchvRRMrRbw73bKuUhj9V+UbNgn4Fge8r93aFfT3tE
+ EbyxrtkLXNCa3KlV1Nb8QsQWOKxA2Es6idNHdGsjBTcpQuNrU+gCACNLu+715inw
+ ==
+X-ME-Sender: <xms:ojraYHrHL3jjbC04ZN0wyeIfVuV1KxJ2FxDJ8oXY_pTCaDzM7IGmqA>
+ <xme:ojraYBqn_RGeGEL7S5LUB1GZ8fWYvGAkeolZ12yJZVtg8EeZES680ml31lEWMnztx
+ KKWeHPiHOrEvBsQJRQ>
+X-ME-Received: <xmr:ojraYEPaeRzNNz9YH58Zal46QjpGgB23uGQoeF-z4gzPpdRUTia7PZuNTynbejbT9sK8dl4u21KOf8du8n8A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeehgedgudehiecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehrrggu
+ uceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtoh
+ hmqeenucggtffrrghtthgvrhhnpeeffffhfeehgedutddvtdeuiefhudeifeekfeeifeek
+ fedufeeuvedulefgkefffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+ grihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:ojraYK6MoS7_zUzioXuPRZ47jJkI-QfskrEVKfABePa_yclgVprEJw>
+ <xmx:ojraYG7-2M_j5xpWdiqSy11OGJMlSv3g8J7YzRgimL1Lk_NDJJ6MOw>
+ <xmx:ojraYCjFSeYwW3MmsJgb9KNTBv5QB976k46NCKmGuFy--pHqw0p9Ow>
+ <xmx:ozraYIS-4P5VQzaHtz1KiAson2bgnM2C16qFxz0tVry0uMuEFvma4Q>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Jun 2021 17:09:54 -0400 (EDT)
+Date: Mon, 28 Jun 2021 17:09:51 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Mike <proclivis@gmail.com>
 Subject: Re: Inclusive Naming
-Date: Mon, 28 Jun 2021 15:02:57 -0600
-Message-Id: <53876421-2E01-4546-BBE5-B724568C4F0D@gmail.com>
+Message-ID: <20210628210951.cpvmajlpayk2n73p@thinkpad.fuzziesquirrel.com>
 References: <20210628193850.gylhta7melpevjju@thinkpad.fuzziesquirrel.com>
-In-Reply-To: <20210628193850.gylhta7melpevjju@thinkpad.fuzziesquirrel.com>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-X-Mailer: iPhone Mail (18F72)
+ <53876421-2E01-4546-BBE5-B724568C4F0D@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <53876421-2E01-4546-BBE5-B724568C4F0D@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,36 +97,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Sagar Dharia <Sagar.Dharia@microsoft.com>,
- Samer El-Haj-Mahmoud <Samer.El-Haj-Mahmoud@arm.com>
+Cc: Samer El-Haj-Mahmoud <Samer.El-Haj-Mahmoud@arm.com>,
+ openbmc@lists.ozlabs.org, Sagar Dharia <Sagar.Dharia@microsoft.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Brad,
-
-The SMBus/PMBus technical committee is changing the master/slave terms, but h=
-ad not yet voted on the change.
-
-Let me know if care and I can get a draft to you for review.
+On Mon, Jun 28, 2021 at 03:02:57PM -0600, Mike wrote:
+>Brad,
+>
+>The SMBus/PMBus technical committee is changing the master/slave terms, but had not yet voted on the change.
+>
+>Let me know if care and I can get a draft to you for review.
+>
+>Mike
 
 Mike
 
-Sent from my iPhone
+Yes please, if it isn't too much trouble.
 
-> On Jun 28, 2021, at 1:46 PM, Brad Bishop <bradleyb@fuzziesquirrel.com> wro=
-te:
->=20
-> =EF=BB=BFHi everyone
->=20
-> I would like to highlight this addition to our documentation:
->=20
-> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/44522
->=20
-> Please review, and if you have any questions or concerns please voice them=
- in the gerrit review, or you can simply reply to this note.  Your
-> TSC intends to wait a few weeks for feedback, evaluate whatever feedback i=
-s received, and go from there.
->=20
-> Thanks
->=20
-> -brad
+Thanks!
+
+-brad
