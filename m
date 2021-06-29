@@ -2,58 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D92103B6CF7
-	for <lists+openbmc@lfdr.de>; Tue, 29 Jun 2021 05:26:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 595CA3B6EE0
+	for <lists+openbmc@lfdr.de>; Tue, 29 Jun 2021 09:36:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GDVHh5GTlz30CX
-	for <lists+openbmc@lfdr.de>; Tue, 29 Jun 2021 13:26:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GDbrJ1YYDz30NG
+	for <lists+openbmc@lfdr.de>; Tue, 29 Jun 2021 17:36:16 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=P67bAxKg;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=MpfgRZnj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=casper.srs.infradead.org (client-ip=2001:8b0:10b:1236::1;
- helo=casper.infradead.org;
- envelope-from=batv+84229f094fc34bd52d83+6518+infradead.org+hch@casper.srs.infradead.org;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::531;
+ helo=mail-pg1-x531.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- secure) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256
- header.s=casper.20170209 header.b=P67bAxKg; 
- dkim-atps=neutral
-Received: from casper.infradead.org (casper.infradead.org
- [IPv6:2001:8b0:10b:1236::1])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=MpfgRZnj; dkim-atps=neutral
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com
+ [IPv6:2607:f8b0:4864:20::531])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GD31K3p73z30CT
- for <openbmc@lists.ozlabs.org>; Mon, 28 Jun 2021 19:57:07 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=qIbUFExBlJI5QA1nU2WzaI4H72pC0gc6gNk0xgR+rKc=; b=P67bAxKgnCNb4it+mmUn9RXFur
- 8YhmJ0KuWIUz8sQi0gHjJGwVa9pFqfA+MrWJqN52N2IHhHOWPsBb3AKXG1toUqLubnxKCJGQpaohm
- wE4bdavEkuw68XocSlav0FoQ4eXqz+O9efzE/WBB0lB2LKWsBA3p1IfQgCJXy7ulG9nFwTK8EINRC
- Qa1HlsRv0V1LxdbLyRkLFeamdOfxBD8w0Xb+wO5oFxxcaEgI0Qj3sdMADAJALRZioq6BFr7R1ZKVL
- rOtpCQw20ssWCvqk2ZoD3qa3ugxA75tY9epUZuPCZjRg2tF03LdvGXuwBubvStyTJ87fYdkyLDoLD
- O+yN5pvA==;
-Received: from hch by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat
- Linux)) id 1lxnxm-002ntY-LZ; Mon, 28 Jun 2021 09:54:15 +0000
-Date: Mon, 28 Jun 2021 10:53:58 +0100
-From: Christoph Hellwig <hch@infradead.org>
-To: Igor Kononenko <i.kononenko@yadro.com>
-Subject: Re: [PATCH 5/6] FMS: Add the SCSI Get Configuration command.
-Message-ID: <YNmcNvqvTFNCrMl9@infradead.org>
-References: <20210626211820.107310-1-i.kononenko@yadro.com>
- <20210626211820.107310-6-i.kononenko@yadro.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GDbqY38tTz301K
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Jun 2021 17:35:35 +1000 (AEST)
+Received: by mail-pg1-x531.google.com with SMTP id m2so17712018pgk.7
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Jun 2021 00:35:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=GPohnix/AWfuANCmybGcGLnwHn0R6vbvbRLb2EBgVIQ=;
+ b=MpfgRZnj0Ecdf1g8IgJrXAmzeRyLh7BScaivUCbeSAdjo4ASi/y6CfJ/kskb2fY1vS
+ BQFpmet5ehON3Kz8jg+GgpUPrHUxj9Urv961cTWNoTAwlSg1a9Rqexv1xJx1A6raVsqa
+ /T4Gw7MYkGgJeW02yv9XuXsLTxViOuG2uXKw1ofr4lHy06RMVsQ5rSZ9r4R/v+lT1tt+
+ QyK0A2VlE7FWGAC5d8xasCWJPqiSj8jSpB2JlaOiuXRdaacmYAQJCv7R9DI4DybT68b4
+ UNVuw/ohU8C/ZgqhZ13nzBWFU4MWKV5+yGzhfTZvjPEQuVzX+BFQTokIzQGHKQyAMkFa
+ 9NbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=GPohnix/AWfuANCmybGcGLnwHn0R6vbvbRLb2EBgVIQ=;
+ b=fV++x63ct2fhHYLTIPddL/LmLX3ogqTT9upR42RX4MVKnRDWtPT89ykBEmoAIGcwuJ
+ O5c2omscqTaHVJd6eaNa71Cf2n3PYnhcKi1DxBtHs6rolW6xfaozvhNNwSlTmh/cOFSW
+ C7gIgB1ENAanDc26af4d+1kCSE9aQTKpSsgUy1Ws4m83vuYJ8reBk5mJ+uZJhzg3QCNz
+ Yb1lfVqxTfLuNNki++U7T6GoK6ZgyQQQFG7Y/ineROGdY86KcUmdKilwQtxjvkO9L3wq
+ M+sn6hNtj3SIAL0Us9OTFaH27VgqyG8IBi6ioidpxycDHajs0gArtXFlgEGm+naYz/9J
+ B4gg==
+X-Gm-Message-State: AOAM532/XRNEpR7Ynwa+wWxyver1Lw2G8gWJpoxCo5oEfLkYZLsR0Vdi
+ 9LyWBjLdjLZogR1FOkhPQQo=
+X-Google-Smtp-Source: ABdhPJx+LTFCzsVa0UxzZ0SaWWI2z5WbNynTVJrO7BmqfceFO8dKA5Hfq8OpNF9FxXNWjW8lK6chjQ==
+X-Received: by 2002:a63:27c2:: with SMTP id
+ n185mr27051258pgn.178.1624952130418; 
+ Tue, 29 Jun 2021 00:35:30 -0700 (PDT)
+Received: from localhost.localdomain ([45.124.203.14])
+ by smtp.gmail.com with ESMTPSA id p8sm17622438pfw.135.2021.06.29.00.35.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Jun 2021 00:35:29 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: [PATCH linux dev-5.10 0/2] soc: aspeed: Reenable devices
+Date: Tue, 29 Jun 2021 17:05:18 +0930
+Message-Id: <20210629073520.318514-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210626211820.107310-6-i.kononenko@yadro.com>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-X-Mailman-Approved-At: Tue, 29 Jun 2021 13:25:54 +1000
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,15 +78,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jens Axboe <axboe@kernel.dk>, Felipe Balbi <balbi@kernel.org>,
- linux-scsi@vger.kernel.org, "Martin K. Petersen" <martin.petersen@oracle.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "James E.J. Bottomley" <jejb@linux.ibm.com>, linux-usb@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-ide@vger.kernel.org,
- openbmc@lists.ozlabs.org
+Cc: openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-What is FMS?  And why do only patches 5 and 6 show up on the list?
-And why does this mix changes to the SCSI layer, libata, usb-gadget and
-the CDROM UAPI in a single patch?
+The latest u-boot SDK (00.04.00) contained changes that disable some
+devices using the 'debug' register in the SCU. This re-enables the
+devices in their respective drivers by clearing the disable bit.
+
+With these changes a rainier host boots to standby with the latest
+u-boot on the BMC.
+
+The first patch could go upstream once tested. The second needs to be
+folded into the xdma driver when it is next submitted.
+
+Joel Stanley (2):
+  soc: aspeed: Re-enable FWH2AHB on AST2600
+  soc: aspeed: Re-enable XDMA on AST2600
+
+ drivers/soc/aspeed/aspeed-lpc-ctrl.c | 29 ++++++++++++++++++++++------
+ drivers/soc/aspeed/aspeed-xdma.c     | 10 +++++++++-
+ 2 files changed, 32 insertions(+), 7 deletions(-)
+
+-- 
+2.32.0
+
