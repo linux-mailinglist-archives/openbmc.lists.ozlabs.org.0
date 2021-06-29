@@ -1,74 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAFB33B6EE1
-	for <lists+openbmc@lfdr.de>; Tue, 29 Jun 2021 09:36:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC5733B7764
+	for <lists+openbmc@lfdr.de>; Tue, 29 Jun 2021 19:48:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GDbrh5Klsz30Mp
-	for <lists+openbmc@lfdr.de>; Tue, 29 Jun 2021 17:36:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GDsQb36T1z2yZC
+	for <lists+openbmc@lfdr.de>; Wed, 30 Jun 2021 03:48:23 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=RC+C/m7D;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=P5ZFg6vQ;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=JcksOzg1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62b;
- helo=mail-pl1-x62b.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=RC+C/m7D; dkim-atps=neutral
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com
- [IPv6:2607:f8b0:4864:20::62b])
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm2 header.b=P5ZFg6vQ; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=JcksOzg1; 
+ dkim-atps=neutral
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GDbqc14Zsz301K
- for <openbmc@lists.ozlabs.org>; Tue, 29 Jun 2021 17:35:40 +1000 (AEST)
-Received: by mail-pl1-x62b.google.com with SMTP id i4so10409179plt.12
- for <openbmc@lists.ozlabs.org>; Tue, 29 Jun 2021 00:35:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=72tAzKiXHsnKwCj0vbDyfWUkIt613OcwIIbNzSDrl1c=;
- b=RC+C/m7DPCMdAZFl9P6nt/Z7639t5kbr3+ZRIyH6/8nCRyCIADEeeTDdK/L9lvVqvJ
- ySi/6Tz0C1KDeInUVDFNoHm2XekkIqH3+6opFFV8OFAo+IoOg2n73wUcAHI+scE8WO15
- 44SNIC61pFYGj0yvJXoQQAaueql1F/p3NTReFMJeDGT2XVCEzapg3SlPbNlhCPscEtTw
- Qcg1lN5JkJvDXbUUN2vgyiovtEN6+tZpx/2CFRihjWrFV8qlJ5Em++FyK5HMN/1kYham
- Qbr7TzzodQ/cY8daXUovTZpyRx1vMLEkFKEwNIOlvDUOZbUuAa2DpvR50PHBQFkl0Gku
- A/Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=72tAzKiXHsnKwCj0vbDyfWUkIt613OcwIIbNzSDrl1c=;
- b=uZp4uap550VF0RdnGrcCZzPaq9ulMsQD/BYLdE9/k+uTyWSIjRYOoM1IPbEvv22iw6
- se+rT9k92PKhWvGSbwb6WyjGy1eGfGZIu9DiViajNZ9r8vQL+I2iDIofIqH4eY8BYOVX
- p5hUl3XB20nbDOcuKDnYpXFXTPM1LKuW7xiiiIYVXtGEVi1ZPdDf/CcQW6FA5n7ui4wa
- xv6RHqzXrCZB/DoMUD3yMdy1k0yZgtNQlqMxWzc7ziT/wYAOW0cBHpxcKtrgqXyhbXcB
- NkIczL+ss1ywpFE+Rufv67boEFFAREa/oXTcCw5Hf5RPJyzXTa23RoNZUnrntHLaNim7
- +R3A==
-X-Gm-Message-State: AOAM531SbqjRpX6hw6UOqhXy4ZD60rPh7NhIKmq5VqpXmLkDMNgkULQp
- TrXNWiTldjL37d9UWKK3WAE=
-X-Google-Smtp-Source: ABdhPJznWfm1AfJlskJltsFbzqZTwvevTX1VhGQwZM166vpAVRlJSJrgCpswZN9BuPB4l53q7+l6Ew==
-X-Received: by 2002:a17:90a:fe10:: with SMTP id
- ck16mr29896pjb.202.1624952137604; 
- Tue, 29 Jun 2021 00:35:37 -0700 (PDT)
-Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id p8sm17622438pfw.135.2021.06.29.00.35.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jun 2021 00:35:36 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH linux dev-5.10 2/2] soc: aspeed: Re-enable XDMA on AST2600
-Date: Tue, 29 Jun 2021 17:05:20 +0930
-Message-Id: <20210629073520.318514-3-joel@jms.id.au>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210629073520.318514-1-joel@jms.id.au>
-References: <20210629073520.318514-1-joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GDsQF5fQNz2yLd
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Jun 2021 03:48:04 +1000 (AEST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailout.nyi.internal (Postfix) with ESMTP id 208825C035E;
+ Tue, 29 Jun 2021 13:48:01 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute1.internal (MEProxy); Tue, 29 Jun 2021 13:48:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
+ :references:mime-version:content-type:in-reply-to; s=fm2; bh=pvb
+ hP3E37tVVbJqDLTVosCOSvDetI8qx8Hhi85B1SDM=; b=P5ZFg6vQS2Nsmh1iOin
+ dzYA9NRcVLxauEfnHG0SK0HbOidR9ZTOqzlts8gqD2P384900SL1rOXSe1xBrE9l
+ A2onpVw0bgNUtySTi8xAnhtr650D8P87HAcwBHXErKCjiQ2jXK+gYP4GWeu7aSFI
+ qs2aLSrYS1t4d9sdM4f/J9bg3w0SOXdOWHjglsUfmtjhOstnZQaNM3eAViC9+D3e
+ S6yKglkl3hY1w/wvxUBENakaH6XwGagMvE7ioN+sAXU2A5JxlVasJmT5i01xNp9E
+ jFhRQLtK5kOigYgUyyNAlJe4BP5QWbStJcp9ka7FglqqRBI+l4yG8JCvbd2iX35U
+ oQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=pvbhP3
+ E37tVVbJqDLTVosCOSvDetI8qx8Hhi85B1SDM=; b=JcksOzg17HavzYRddMdVBj
+ TenTYdUr2g4x9nOdjN1BZ/ZhtM7borkVVCx4LMBhW18I+38ue+nwHUJEsmI6AHxh
+ CvoJPPa74anpFf1mFY8eitXNsR2kxhDVK8c8AdF1U7q7frwCYillB1EuxKcP0JI1
+ eZy3KAEz3lHpaxgjM8BHaaHff0CXCuZ8stMCxnf8NC5VnLI5Ub90MuYn/W6yd6FJ
+ dg441ZMQMntONJTj0mSCtXzfXSMFx5e9GA4XjGK4Sqh3xUsorW9dATTqxUBycM2A
+ JVm+WGj4EWk6IbbxgLotERX+EypQFWVbe+Z0U5ehgJZegVh0RtfUcjE0EdVzABZg
+ ==
+X-ME-Sender: <xms:0FzbYPLc5muoSpPlsOx-cu8_cG0ukUWF6PGkyYjio-SHJXSIC1Juow>
+ <xme:0FzbYDKb2y7wNdNLSOPv6eC0k6joNKdLNjufmzh3_jPzomIghtBqW9KKRLZo5ninB
+ W049roqRPj9b46sJy0>
+X-ME-Received: <xmr:0FzbYHtYaKZWuome0nOHE60o5iUDVIXFGjxt8ujwu-h4-_uktin1qNPy1opQiAlBYME9SMuDItLx9R_iIARF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeeitddgkedvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesthdtredttddt
+ vdenucfhrhhomhepuehrrgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiih
+ gvshhquhhirhhrvghlrdgtohhmqeenucggtffrrghtthgvrhhnpeekkeeliedthfdvtdeg
+ ueehvddvkeeivddujefhhfevhfdujeeugeefffeltdejtdenucffohhmrghinhepohhpvg
+ hnsghmtgdqphhrohhjvggtthdrgiihiienucevlhhushhtvghrufhiiigvpedtnecurfgr
+ rhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvg
+ hlrdgtohhm
+X-ME-Proxy: <xmx:0FzbYIaaMxqFBHi2VuOr9MHQnwB5Xx9iqKr1NFZjtUC4JCZp5j3w5g>
+ <xmx:0FzbYGbzmGhX2yFeyDoSE3tp8FXegPBx5YUbmgXrU7IlniE7SncS2g>
+ <xmx:0FzbYMDiu0pyr2dx2w4qqpZzQTisC08HYwwSmmNo9I5zq2bH76E-WQ>
+ <xmx:0VzbYPDpe5lbRvRDcI9by2TdTR0qhRCUXGFuBxT6GVBktNXTZrPOIA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Jun 2021 13:48:00 -0400 (EDT)
+Date: Tue, 29 Jun 2021 13:47:58 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Ramesh I I1 <rameshi1@in.ibm.com>
+Subject: Re: Request for a new repository to enable Hardware Isolation (Guard)
+Message-ID: <20210629174758.l7qzm4wrleyjq43n@thinkpad.fuzziesquirrel.com>
+References: <OF85E3AFDB.E325A182-ON002586FF.00573D13-002586FF.00574B3B@notes.na.collabserv.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <OF85E3AFDB.E325A182-ON002586FF.00573D13-002586FF.00574B3B@notes.na.collabserv.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,54 +98,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Recent builds of the vendor u-boot tree disable features of the
-BMC that may allow unwanted access if not correctly configured. This
-includes the PCIe DMA (XDMA) functionality.
+On Fri, Jun 25, 2021 at 03:53:28PM +0000, Ramesh I I1 wrote:
+>Hi All, 
+>
+> 
+>
+>Recently a design document [https://gerrit.openbmc-project.xyz/c/openbmc/docs/+
+>/27804] merged to enable the hardware isolation (guard) and it requires a new
+>daemon
 
-The bit to "un-disable" it is in the SCU. It does not appear to matter
-when it is cleared, as long as it is cleared before attempting a
-transfer.
+[snip]
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- drivers/soc/aspeed/aspeed-xdma.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+>If New repository means phosphor-hw-isolation (with extension) or
+>openpower-hw-isolation?
 
-diff --git a/drivers/soc/aspeed/aspeed-xdma.c b/drivers/soc/aspeed/aspeed-xdma.c
-index e6b4744bda64..48cfe30c90ad 100644
---- a/drivers/soc/aspeed/aspeed-xdma.c
-+++ b/drivers/soc/aspeed/aspeed-xdma.c
-@@ -34,6 +34,9 @@
- #define SCU_AST2600_MISC_CTRL			0x0c0
- #define  SCU_AST2600_MISC_CTRL_XDMA_BMC		 BIT(8)
- 
-+#define SCU_AST2600_DEBUG_CTRL			0x0c8
-+#define  DEBUG_CTRL_XDMA_DISABLE	 	 BIT(2)
-+
- #define SCU_AST2500_PCIE_CONF			0x180
- #define SCU_AST2600_PCIE_CONF			0xc20
- #define  SCU_PCIE_CONF_VGA_EN			 BIT(0)
-@@ -831,10 +834,15 @@ static int aspeed_xdma_init_scu(struct aspeed_xdma *ctx, struct device *dev)
- 		regmap_update_bits(scu, ctx->chip->scu_pcie_conf, bmc | vga,
- 				   selection);
- 
--		if (ctx->chip->scu_misc_ctrl)
-+		if (ctx->chip->scu_misc_ctrl) {
- 			regmap_update_bits(scu, ctx->chip->scu_misc_ctrl,
- 					   SCU_AST2600_MISC_CTRL_XDMA_BMC,
- 					   SCU_AST2600_MISC_CTRL_XDMA_BMC);
-+
-+			/* Allow XDMA to be used on AST2600 */
-+			regmap_update_bits(scu, SCU_AST2600_DEBUG_CTRL,
-+					   DEBUG_CTRL_XDMA_DISABLE, 0);
-+		}
- 	} else {
- 		dev_warn(dev, "Unable to configure PCIe: %ld; continuing.\n",
- 			 PTR_ERR(scu));
--- 
-2.32.0
+Hi Ramesh.  I'm guessing a little but this isolating of hardware is 
+limited to POWER systems and even if it weren't, the implementation of 
+it would very likely highly architecture specific.  Therefore, the 
+common parts would be the end user interfaces and given that, I suggest 
+you have an openpower-hw-isolation implementation of some optional xyz 
+dbus interfaces to connect to the external BMC interfaces.
 
+thx -brad
