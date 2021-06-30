@@ -2,71 +2,95 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 816C33B77EF
-	for <lists+openbmc@lfdr.de>; Tue, 29 Jun 2021 20:37:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 04F903B7B40
+	for <lists+openbmc@lfdr.de>; Wed, 30 Jun 2021 03:29:58 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GDtWX2v4Nz2yPG
-	for <lists+openbmc@lfdr.de>; Wed, 30 Jun 2021 04:37:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GF3g76Lk0z3022
+	for <lists+openbmc@lfdr.de>; Wed, 30 Jun 2021 11:29:55 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=FEAe0B+w;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=RwURcsUt;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2a00:1450:4864:20::133; helo=mail-lf1-x133.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=FEAe0B+w; dkim-atps=neutral
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com
- [IPv6:2a00:1450:4864:20::133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=RwURcsUt; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GDtWH6zjsz2yNP
- for <openbmc@lists.ozlabs.org>; Wed, 30 Jun 2021 04:37:29 +1000 (AEST)
-Received: by mail-lf1-x133.google.com with SMTP id k10so16598lfv.13
- for <openbmc@lists.ozlabs.org>; Tue, 29 Jun 2021 11:37:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=E584y//GWbM4zDAyb0U18cdvtbDSCLDRmQg3TN25KyQ=;
- b=FEAe0B+wb1l81Q+Oj2cSKso0+jTocDi4egh/jtaaNSjSVt3kt+Ja/nW3Pn6HEj0r9U
- uAuw0Z3pgWiwU+nam34FA2ge+jn4zW8w9MypddFwebT+5pRRgd27IDrkxEtS4jFeqG47
- HgATPUdxrmLaH4MLamiKbauASmFMevAai87PCJSLhKgmGqnH4LJIATGralMv/FQPdd9j
- jaXHOQRbREMlhYlR+UazGmgu28RRS5JxGrymj6O7bVROVpTPSVnCgWknwPPMVsLiWtc7
- Jtqd1GbenwWRnjHTg9U3uZtu9XQC1fpqXIDYTey10at/92rSFkL2VUW2vzm8/cQBMdJe
- ePnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=E584y//GWbM4zDAyb0U18cdvtbDSCLDRmQg3TN25KyQ=;
- b=REEMi380OriU15fn4YgOgn1HY+OLImq9Ch6l7Gf01iypGeOslSWzjV0YpSNOiPRZwq
- O5SF00ExbCkrQtqMMYQVGygziX0gIRVWmtkgrNJJp3yBnriUTO46AF06Nq1ylTQQhrEV
- OAPZEcs0CYyLkVh07MEMnXSbuOc0gJuKi/0CAZYCRxuUFJulb0X25+G2cIXyjwJeCujv
- tQ1Qa8CyG+lh8+xLrX/1hOIaDUkLlTRJus+jRYd6nXAESb+jWSl0P8Vl9ejyTQXdrFbV
- HQj8mOQka7WTTQzfxo6ddgchjnqYpi3eKOqFM4M/P2bgVeDinQSOgGC5xTEeMJxw5M4w
- Azeg==
-X-Gm-Message-State: AOAM5331k+HfaxvECAFUvJlx6+lhio/SG56haO7cyzjlhlyNd027GoYT
- NAtCRBfpwV4vGTXPAZOzTbBs5d5LsMLH2b1x3LL4Wg==
-X-Google-Smtp-Source: ABdhPJwaROIMmER1tguN3ZJ7llfztH3hYpqHz6i1fS+p+S3xv6JRtmnqBJ/IrryeBfOJWr7NN22tDdSOlWztPJGVOQI=
-X-Received: by 2002:a05:6512:2013:: with SMTP id
- a19mr22171264lfb.504.1624991839315; 
- Tue, 29 Jun 2021 11:37:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <OF85E3AFDB.E325A182-ON002586FF.00573D13-002586FF.00574B3B@notes.na.collabserv.com>
-In-Reply-To: <OF85E3AFDB.E325A182-ON002586FF.00573D13-002586FF.00574B3B@notes.na.collabserv.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Tue, 29 Jun 2021 11:37:07 -0700
-Message-ID: <CACWQX80GeK1ov+81DcMb+3Ygz8FqCPkZY+_VMVAkjg-KocJYeQ@mail.gmail.com>
-Subject: Re: Request for a new repository to enable Hardware Isolation (Guard)
-To: Ramesh I I1 <rameshi1@in.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GF3fq74M7z2xy4
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Jun 2021 11:29:39 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 15U14Hbn048544; Tue, 29 Jun 2021 21:29:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ mime-version : content-transfer-encoding; s=pp1;
+ bh=ekXCOItgoKQyPjyhBVAipIbWHfhh60rQkHFgYwr7BlI=;
+ b=RwURcsUtuYKl3r0QQ4bVZY503SFg1p67/lBR8A6O3TXGazgu4z0XGXOtkVCLMMgFlbvY
+ z1nFW7mnqvILOBdjM0MECr73LJEDAQWUKRwPYXN/twvFPdTbN3XxxA0oKJzSR6LhNtMh
+ 8aFb+f7D2ODeFVdQ76fsFbMgm+2cCkHwktSv+dVTrkDXZdgeOZNruqLJCFSq536guSlo
+ e+Wrb2BCuF+fwzWJJ1tG4HqIqyxQdN85udSNFVf2R5FQ/RrJV7m37KVnuIIq57Gg/KfI
+ 8GLdilAKCSDMrDv65Gi9pfS4eutiOOsK8/0d5dD+TrCnj/9/e8Dwl2muUNu2/dGUu+/5 Tg== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 39g9nf74tc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Jun 2021 21:29:32 -0400
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 15U1SMB4018718;
+ Wed, 30 Jun 2021 01:29:31 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma05wdc.us.ibm.com with ESMTP id 39duvc915d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 30 Jun 2021 01:29:31 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 15U1TUuN27722084
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 30 Jun 2021 01:29:30 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AC08ABE059;
+ Wed, 30 Jun 2021 01:29:30 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 70D62BE054;
+ Wed, 30 Jun 2021 01:29:30 +0000 (GMT)
+Received: from v0005c16 (unknown [9.211.115.220])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed, 30 Jun 2021 01:29:30 +0000 (GMT)
+Message-ID: <5318bae8415b9fa28f6b2ad79703aab0beaa18d5.camel@linux.ibm.com>
+Subject: Re: [PATCH linux dev-5.10 2/2] soc: aspeed: Re-enable XDMA on AST2600
+From: Eddie James <eajames@linux.ibm.com>
+To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>
+Date: Tue, 29 Jun 2021 20:29:29 -0500
+In-Reply-To: <20210629073520.318514-3-joel@jms.id.au>
+References: <20210629073520.318514-1-joel@jms.id.au>
+ <20210629073520.318514-3-joel@jms.id.au>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Mailer: Evolution 3.28.5 (3.28.5-16.el8) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 5AftZMzAX5u7RCokSJwYzHifxQSjpatM
+X-Proofpoint-GUID: 5AftZMzAX5u7RCokSJwYzHifxQSjpatM
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-06-29_14:2021-06-29,
+ 2021-06-29 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=999 bulkscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 spamscore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104190000 definitions=main-2106300005
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,172 +102,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jun 25, 2021 at 8:54 AM Ramesh I I1 <rameshi1@in.ibm.com> wrote:
->
-> Hi All,
->
->
->
-> Recently a design document [https://gerrit.openbmc-project.xyz/c/openbmc/=
-docs/+/27804] merged to enable the hardware isolation (guard) and it requir=
-es a new daemon inside BMC to implement below dbus interfaces.
->
->
->
-> DBus Interfaces:
->
-> - https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+=
-/43532
->
-> - https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+=
-/43533
->
-> - https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+=
-/44229
->
->
->
-> The above dbus interface implementation will be host architecture-specifi=
-c because of the below reasons.
->
->
->
-> - The daemon will create a record (a format used in the OpenPOWER project=
- for isolating hardware) into a partition (which is accessible between BMC =
-and host applications in OpenPOWER based systems) and the daemon will creat=
-e a dbus entry for the same record.
->
->
->
-> - Similarly, the OpenPOWER based host applications will create a record i=
-nto a partition and the daemon will create a dbus entry for the same record=
-.
+On Tue, 2021-06-29 at 17:05 +0930, Joel Stanley wrote:
+> Recent builds of the vendor u-boot tree disable features of the
+> BMC that may allow unwanted access if not correctly configured. This
+> includes the PCIe DMA (XDMA) functionality.
+> 
+> The bit to "un-disable" it is in the SCU. It does not appear to
+> matter
+> when it is cleared, as long as it is cleared before attempting a
+> transfer.
 
-So the record storage and ownership will be owned by both the
-OpenPOWER host applications and the BMC guard daemon?  In a scenario
-where the BMC was managing the given devices, how would that work?
-Hypothetically if this were used to implement something like FRB from
-the BMC (like other BMC stacks do) how would that work?
+Thanks!
 
->
->
->
-> The end goal is, exchanging the isolated hardware details from internal i=
-nterfaces (dbus entry) to external interfaces (redfish log entry).
->
->
->
-> I had two thoughts about the dbus implementation.
->
->
->
-> Option1:
->
->
->
-> "New generic daemon" with an extension like how phosphor-logging or phosp=
-hor-debug-collector or pldm providing a way to add OEM code.
->
->  - Default case nothing will be there, because we (IBM) are not providing=
- any support through standard host interfaces to isolate hardware.
->
->  - The extension will have OEM-specific implementation.
->
->
->
-> Option2:
->
-> "New OEM daemon" so, implementation will be OEM specific and platform can=
- get from them respective bitbake meta-layer.
->
->
+Reviewed-by: Eddie James <eajames@linux.ibm.com>
 
-From my perspective, I would have thought this would be more
-distributed;  Each application that wants to implement a "guard"
-feature, would expose that through its interfaces, and leave the
-implementation details completely to whatever the application itself
-wanted to do.  Creating an empty base implementation and expecting
-everything that wants to implement this API to extend OEM seems like
-it would require a lot of code and a lot of repos.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>  drivers/soc/aspeed/aspeed-xdma.c | 10 +++++++++-
+>  1 file changed, 9 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/aspeed/aspeed-xdma.c
+> b/drivers/soc/aspeed/aspeed-xdma.c
+> index e6b4744bda64..48cfe30c90ad 100644
+> --- a/drivers/soc/aspeed/aspeed-xdma.c
+> +++ b/drivers/soc/aspeed/aspeed-xdma.c
+> @@ -34,6 +34,9 @@
+>  #define SCU_AST2600_MISC_CTRL			0x0c0
+>  #define  SCU_AST2600_MISC_CTRL_XDMA_BMC		 BIT(8)
+>  
+> +#define SCU_AST2600_DEBUG_CTRL			0x0c8
+> +#define  DEBUG_CTRL_XDMA_DISABLE	 	 BIT(2)
+> +
+>  #define SCU_AST2500_PCIE_CONF			0x180
+>  #define SCU_AST2600_PCIE_CONF			0xc20
+>  #define  SCU_PCIE_CONF_VGA_EN			 BIT(0)
+> @@ -831,10 +834,15 @@ static int aspeed_xdma_init_scu(struct
+> aspeed_xdma *ctx, struct device *dev)
+>  		regmap_update_bits(scu, ctx->chip->scu_pcie_conf, bmc |
+> vga,
+>  				   selection);
+>  
+> -		if (ctx->chip->scu_misc_ctrl)
+> +		if (ctx->chip->scu_misc_ctrl) {
+>  			regmap_update_bits(scu, ctx->chip-
+> >scu_misc_ctrl,
+>  					   SCU_AST2600_MISC_CTRL_XDMA_B
+> MC,
+>  					   SCU_AST2600_MISC_CTRL_XDMA_B
+> MC);
+> +
+> +			/* Allow XDMA to be used on AST2600 */
+> +			regmap_update_bits(scu, SCU_AST2600_DEBUG_CTRL,
+> +					   DEBUG_CTRL_XDMA_DISABLE, 0);
+> +		}
+>  	} else {
+>  		dev_warn(dev, "Unable to configure PCIe: %ld;
+> continuing.\n",
+>  			 PTR_ERR(scu));
 
->
-> For Option1, I am wondering about the following scenario.
->
-> - If the BMC application (bmcweb) using a generic internal interface (dbu=
-s) but, the implementation is OEM specific then, the different system platf=
-orms will get a response like "Interface/ObjectPath Not Found" so, the resp=
-ective redfish URI (which will be used to do create|list) will fail, right?
-
-If this goes in line with other times we've solved this problem,
-bmcweb will call the mapper, and ask it "give me all resources of type
-CPU".  Then a subsequent call will be made to determine "for this cpu
-dbus path, tell me which daemon implements hardware isolation".  If
-the second call fails with not found, generally bmcweb will either
-return 404, or fail to populate the property in the Redfish tree
-depending on whether you're at collection level or resource level.
-
->
-> - I also heard like the openBMC community nowadays not encouraging the ex=
-tension approach into a generic repository for some reason unless there is =
-a valid reason.
-
-From my perspective, these OEM extension mechanisms lead to a lack of
-discussion and community effort on finding a generic solution.  In
-some cases, they might be easier, but personally I think they're worse
-for the project overall, even if they do let developers get features
-done very quickly.
-
->
->
->
-> For Option2,
->
-> - I think bmcweb providing a configuration option (ibm-management-console=
-) to use IBM implementation so the new OEM daemon interfaces can be used as=
- OEM code inside the bmcweb so, that we can avoid the above problem from an=
- external interface user perspective for different system platforms.
-
-If you want to put everything within the ibm/v1 tree, feel free, but
-make sure you read up on the discussions about the resources that are
-there that happened in the past.  ibm/v1 is separate from the redfish
-tree, and has some consequences because of that.  With that said, I'm
-a little surprised these are OEM records.  I would've assumed that
-these guard records would largely just be controlling the "Status"
-record on the Redfish tree, and allowing it to be PATCHed to disabled.
-Is that what you were thinking?
-
->
->
->
-> The question is, Where I can implement the new daemon? New repository or =
-any other existing repository?
-
-We discussed this in the TOF forum, and there were some concerns about
-creating a new repository with a new maintainer, and there was a
-desire for some sort of co-maintainership model with someone in good
-standing in the community, so Ramesh can build up his standing.  Is
-anyone else willing to help here?
-
->
->
->
-> If New repository means phosphor-hw-isolation (with extension) or openpow=
-er-hw-isolation?
->
->
->
-> Any different thoughts or suggestions on the above proposal?
->
->
-> Regards,
-> Ramesh I
-> OpenBMC Developer
-> Slack: @rameshi1
-> Discord:  @Ramesh I
-> E-mail: rameshi1@in.ibm.com
->
->
