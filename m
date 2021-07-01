@@ -2,93 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F15833B938A
-	for <lists+openbmc@lfdr.de>; Thu,  1 Jul 2021 16:43:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A6453B94AD
+	for <lists+openbmc@lfdr.de>; Thu,  1 Jul 2021 18:29:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GG1D060CRz307n
-	for <lists+openbmc@lfdr.de>; Fri,  2 Jul 2021 00:43:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GG3Z81wBTz3bW0
+	for <lists+openbmc@lfdr.de>; Fri,  2 Jul 2021 02:29:04 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=WJ/U6jWU;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=Do849kF3;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=WJ/U6jWU; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=Do849kF3; dkim-atps=neutral
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com
+ [IPv6:2a00:1450:4864:20::12b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GG1Cm11p7z2yxm
- for <openbmc@lists.ozlabs.org>; Fri,  2 Jul 2021 00:42:59 +1000 (AEST)
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 161EYvWP112460
- for <openbmc@lists.ozlabs.org>; Thu, 1 Jul 2021 10:42:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : subject : to :
- message-id : date : content-type : content-transfer-encoding :
- mime-version; s=pp1; bh=18ZC0jlOjoI7FK8+5oQ87R8Cn6JD/UPxJQkzuBhnP8g=;
- b=WJ/U6jWUWTrTbKL8Z4vO+slSy2IMhDm8EFfxeest+CfEB5H+TsQkL03PlGcFKV8094pd
- VG+SUnecM3mmZVohn8z1ag2b7ujha5YGnPYnUhPRA7sxZjUnErBn5svcQeqyJJ7y9oxA
- bSpxRuoupTPWLO7BGnz8jHWFuwn90hykZzOiUc0WDuz2Z7vHmeA2ITF/1mqxkxHly87o
- iwQKftGo4NjZK+EVtNyLS76HG7fLDcTulpnwaOEuZ/ACMyoA5stIaXILQbq8pv4KpTk7
- RkYueduDpvuO+JDkCTz8Ftiwm0dAnDS7Kk3Jt/ajv6s8B988nhmZ+1xhvQm4Wd/URL+q 0A== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0b-001b2d01.pphosted.com with ESMTP id 39hdyfuq5r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 01 Jul 2021 10:42:56 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 161EcqjQ032255
- for <openbmc@lists.ozlabs.org>; Thu, 1 Jul 2021 14:42:56 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma03dal.us.ibm.com with ESMTP id 39h1y693e9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 01 Jul 2021 14:42:56 +0000
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
- [9.57.199.109])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 161Egtop34865460
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Thu, 1 Jul 2021 14:42:55 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3A12A112067
- for <openbmc@lists.ozlabs.org>; Thu,  1 Jul 2021 14:42:55 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F8DB112069
- for <openbmc@lists.ozlabs.org>; Thu,  1 Jul 2021 14:42:55 +0000 (GMT)
-Received: from demeter.local (unknown [9.160.12.130])
- by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Thu,  1 Jul 2021 14:42:54 +0000 (GMT)
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Update phosphor-defaults with stronger root password hash algorithm
-To: openbmc <openbmc@lists.ozlabs.org>
-Message-ID: <34f5b89a-3919-e214-a744-4277fba0bbbb@linux.ibm.com>
-Date: Thu, 1 Jul 2021 09:42:54 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.1
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: LCh4fGZXWjNFZjjwO99zYt2iQiGIPQjk
-X-Proofpoint-ORIG-GUID: LCh4fGZXWjNFZjjwO99zYt2iQiGIPQjk
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GG3Yq5pf3z301s
+ for <openbmc@lists.ozlabs.org>; Fri,  2 Jul 2021 02:28:45 +1000 (AEST)
+Received: by mail-lf1-x12b.google.com with SMTP id u13so12919106lfk.2
+ for <openbmc@lists.ozlabs.org>; Thu, 01 Jul 2021 09:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=q43R0lr/+z1lJkpOJLZU9uT0yHMcWRVqAxi4bM9A93I=;
+ b=Do849kF3J0w+HzaBD3qobG5GPRCNiao2COFeYJMeLuMrnjrIPIuQtLt5QWg4nrvYCX
+ neli1iA/ed55mhuV6IRdwJ5k9zpeJTtsdQk3oBCUuTeXkSTfouV2rbxgibmpK+Vy6uE4
+ YzHe5IdgaCPRfNN9k7GbWTcSyuZ3X3xRtA3J9/Sa4szAUxGQeSv2Wp+3k0VlumJBSR8+
+ ZzTYqb55VM/8gg7V6m02TwzLLMSdwTWJmTieJpk1aB3jhzoQwqSBcRneXuKUHqA8iuam
+ 5K+1oTdR07FYHoy3CzfEcpc2vJciHczldEnJ7+JGxIDaZaOYvz5urbzSe4DgzQSc1WL5
+ AS7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=q43R0lr/+z1lJkpOJLZU9uT0yHMcWRVqAxi4bM9A93I=;
+ b=DrECx7D4KBVlw9E0qstEW923BcRBW5xFxn8xvMdYix8nnHNirJYwwyJaq25nE8W6Fw
+ uLRQv6BHQzljSDXxAbJu8EEf8BEwWjU62zWgPoMuntL1uQxbW5uJpwnl7amaPbYd2NuC
+ S6pSnFrrJmUc+xEbmvX2Rv8JcAkATvG0krMrLpFTW6n6TzfIwhKFzCTn/8QigMIAUrd2
+ /tUnmccXuGhONMBuHAiV1HBxJDo80eaPpBU1Gkuf8YCPOBw5uz8Y9m7/vymx5kL5gx3b
+ rL6f4oqx8qvQNhDJwpvi9jqk+wjxKI//Vzfc5J/uUP4RGL7NoXh/5iqqi6O9MTqKzaeb
+ Cm7w==
+X-Gm-Message-State: AOAM5320lIlSj1kNjf/oOAv/YKHCAe+zNl+7gMj08ihwr1KjCbDhl/+t
+ Axz85ZGjyRLtdYUN6tTYdXiAK9DbygSD5L7vF1UyNA==
+X-Google-Smtp-Source: ABdhPJyf4da9NxUx/SP+eeZU5G6AJhT91EOcT0Vu0qJfOjJvGcjdgwanl/wvWkQWoc1+6tkk2doH60OlvleIXLFRPqc=
+X-Received: by 2002:ac2:551b:: with SMTP id j27mr337367lfk.459.1625156921296; 
+ Thu, 01 Jul 2021 09:28:41 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-07-01_08:2021-07-01,
- 2021-07-01 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 adultscore=0
- mlxscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 impostorscore=0
- clxscore=1015 phishscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2104190000
- definitions=main-2107010088
+References: <B6A810CD-9610-4AFE-8921-EF490734C17D@fb.com>
+In-Reply-To: <B6A810CD-9610-4AFE-8921-EF490734C17D@fb.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Thu, 1 Jul 2021 09:28:30 -0700
+Message-ID: <CACWQX82x5OPNu8SSbP1dK5=3rNRo0tqJYN2eW61qDurTOFFkgA@mail.gmail.com>
+Subject: Re: Bmcweb redfish multiple host support
+To: Naveen Moses S <naveenmoses@fb.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,62 +77,81 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "gmills@linux.vnet.ibm.com" <gmills@linux.vnet.ibm.com>,
+ "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-OpenBMC Community,
+On Thu, Jul 1, 2021 at 9:10 AM Naveen Moses S <naveenmoses@fb.com> wrote:
+>
+> Hello All,
+>
+> I need your suggestion on implementing support for  multiple computer sys=
+tems or hosts under redfish implementation of BMCWEB.
+>
+> Redfish schema supports multiple computer systems under  redfish path "/r=
+edfish/v1/Systems/"
+>
+> Currently in bmcweb redfish core Computer systems path are is configured =
+for as singlehost
+>
+> The redfish path computer system is given below
+> "/redfish/v1/Systems/system=E2=80=9D
+>
+> In case of multiple hosts can we use the following format.
+>
+> "/redfish/v1/Systems/system1=E2=80=9D
+> "/redfish/v1/Systems/system2=E2=80=9D
+> "/redfish/v1/Systems/system3=E2=80=9D
+> "/redfish/v1/Systems/system4=E2=80=9D
+>
+> these paths should be populated based on the number of available hosts/co=
+mputer systems
+>
+> Possible options to identify the host count are as given below:
+> 1.pass the OBMC_HOST_INSTANCES as a macro definition to bmcweb
 
-Testing the [libpam_1.5.1 changes][] revealed a limitation with the old 
-MD5 hash algorithm used to encode OpenBMC's root password.  The fix is 
-to change phosphor-defaults to use an acceptable hash algorithm such as 
-SHA-512.  We can keep the same password so our testing tools continue to 
-work.  Details are below.  I plan to push a fix for this.
+Please don't do this.  In general we only use configure options for
+things that cannot be dynamically discovered on dbus or via the
+mapper, or where different implementations of things exist that meet
+the same API (like log service).  I don't think multi-host falls into
+either of those categories, as it can be seen on dbus.
 
-- Joseph
+> 2.Query dbus objects which has individual instance available for each hos=
+t using object mapper.
 
+This would far and above be my preference, as it's similar to how the
+rest of the bmcweb URIs function.
 
-Details:
+>
+> Is there any other alternate way available for identifying host instances=
+ at runtime under bmcweb?
+>
+>
+> if we use the above format then can we change the computer system for sin=
+gle host
+>
+> as given below
+>
+> "/redfish/v1/Systems/system0=E2=80=9D
 
-OpenBMC provisions the BMC firmware image with the root account password 
-in a form which is no longer acceptable to Linux-PAM version 1.5.1.
+I would much prefer these are just based on the dbus path names
+instead of trying to explicitly pick a name.  That keeps bmcweb
+consistent with other resources, and systems that only implement a
+single host can choose to keep the same odata.id (system) if they
+want.
 
-Specifically, [phosphor-defaults.inc][] sets the password hash into 
-/etc/shadow as "\$1\$UGMqyqdG\$FZiylVFmRRfl9Z0Ue8G7e/", where $1 
-indicates the old weak MD5 hash algorithm.  Ref: [wikipedia passwd 
-entry][].  Beginning around PAM version 1.5.1, when you log in, the 
-[pam_unix.so module][] authenticates okay but requires the password to 
-be changed.  (For example, you'll get a message like "You are required 
-to change your password immediately (administrator enforced)."  This 
-behavior is undesirable for the OpenBMC project defaults, and is not 
-tolerated by the project's current continuous integration tools.)  Note 
-the new password is stored using the SHA-512 algorithm.   Thanks to Noah 
-Brewer for debugging this issue.
+>
+> Code reference : https://github.com/openbmc/bmcweb/blob/master/redfish-co=
+re/lib/systems.hpp
+>
+> method : requestRoutesSystemsCollection
+>
+>
+>
+> Thanks
 
-This has an easy fix: use the same password with an updated hash 
-algorithm.  Specifically, update the password hash supplied in 
-phosphor-defaults.inc to use the same password as before but encoded 
-with the SHA-512 algorithm.  An acceptable hash can be provided by the 
-`openssl passwd -6 0penBmc` command.  This change ought to be 
-transparent, forward and backward compatible.  This change is also a 
-prerequisite for going to libpam_1.5.1 (presuming you don't want to 
-force users to change their password the first time they login).
+Looking forward to seeing the patches.  Thanks for looking into this.
 
-Note various meta-layers use this same old hash string in 
-conf/local.conf.sample files. They should consider updating to match the 
-new value.
-
-Closely related: the [Replace deprecated Linux-PAM modules][] gerrit review.
-
-References:
-[libpam_1.5.1 changes]: 
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/41294
-[phosphor-defaults.inc]: 
-https://github.com/openbmc/openbmc/blob/1a977b269ed437bebb9ae7810e3157746ec9174d/meta-phosphor/conf/distro/include/phosphor-defaults.inc#L245 
-
-[wikipedia passwd entry]: https://en.wikipedia.org/wiki/Passwd
-[pam_unix.so module]: 
-https://github.com/linux-pam/linux-pam/tree/master/modules/pam_unix
-[Replace deprecated Linux-PAM modules]: 
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/41357
-
-
+-Ed
