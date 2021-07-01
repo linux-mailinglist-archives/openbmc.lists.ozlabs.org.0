@@ -1,88 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C6823B8CCD
-	for <lists+openbmc@lfdr.de>; Thu,  1 Jul 2021 06:07:25 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 784D33B8D3A
+	for <lists+openbmc@lfdr.de>; Thu,  1 Jul 2021 06:52:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GFl6M1HsCz302c
-	for <lists+openbmc@lfdr.de>; Thu,  1 Jul 2021 14:07:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GFm6G2V0Lz309G
+	for <lists+openbmc@lfdr.de>; Thu,  1 Jul 2021 14:52:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=G1QmCccE;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=I2TR+xMO;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=LOzGuoG/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72e;
+ helo=mail-qk1-x72e.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=G1QmCccE; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=I2TR+xMO; 
- dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=LOzGuoG/; dkim-atps=neutral
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com
+ [IPv6:2607:f8b0:4864:20::72e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GFl5z66pFz2yMc;
- Thu,  1 Jul 2021 14:07:03 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailout.nyi.internal (Postfix) with ESMTP id 6EF0A5C00DD;
- Thu,  1 Jul 2021 00:06:59 -0400 (EDT)
-Received: from imap43 ([10.202.2.93])
- by compute2.internal (MEProxy); Thu, 01 Jul 2021 00:06:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=b9llwkSwjZo8KM7Yex+xrFxAOW2zg3o
- RBtRbdMGHqB0=; b=G1QmCccEFko3Xu2jq2tb/saj0i5QzxnbX6jUzhTsNUzj4h/
- ZToqGqm5mmrSbPG3k+LU/mHbbyAnkHY6yIHfefBGyknH88D8Gu84tmiQdN6VgVrk
- yvYhx3WWEgFA7rBrzpHLvIXTab/CNYqXBml3nNEt7S2mbwQGvUTADbqMOPFwLyjW
- 7aAaX7We+vNKtOtQHIooJzqLUJqnIKXjciiCi3wIf9vV1Qi6dzCmpItsxuINdnW3
- eoQQO2NAir0lREGVldgV94R6WK7QvqRTAaoNAULAzV0TwtcfZG+MyLtZJ4F5Mu44
- oznjqkz8esEx9bRlvbYplTQbeUdvvV5hC8nULDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=b9llwk
- SwjZo8KM7Yex+xrFxAOW2zg3oRBtRbdMGHqB0=; b=I2TR+xMOnwQB1eU3SjoVpf
- oy3/8x+qgRH9S5aduLYIW8Uu1hKwpQtDyHf6pGsFG3JLvQqz0hAolly/uAowU9Ju
- C6DaWUDGZwyltHRIwQtzNkZfUgtd4rNxkcN51X51yfyoojxXRfIHPAsvLoyId3fa
- /nPdpWFZsSDGrahvaSjQxIuNceVTqkX3/pS6nxD+5Jm7iUGRSqCXvjcNoaUBzB6E
- 190Z5YwoeqwBVNddCBnWOhmxp0RhWwZ6Xv7MhQt90YIS0mjSNVA+gRIbl241mmHg
- HhLLdaCUEgQR2j2easdMex2tNiFRwBbmmfERNeXRgEXs/cGsuuLhop7RH3dHEY1Q
- ==
-X-ME-Sender: <xms:Yj_dYKwI1X9tYlP5GkSGHRFvT_gDCFeicnwVwGbKI8_u8aEwwoGIPQ>
- <xme:Yj_dYGRVBUIsPzWynZCuctEWy-Vg_wcqHViJQYSVVVI4p7aDNlQPCkHkb29NN42Hx
- 5gb9m50pqFbI42Jvg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeeihedgjeejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtsehttd
- ertderredtnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgv
- fiesrghjrdhiugdrrghuqeenucggtffrrghtthgvrhhnpeehhfefkefgkeduveehffehie
- ehudejfeejveejfedugfefuedtuedvhefhveeuffenucevlhhushhtvghrufhiiigvpedt
- necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:Yj_dYMWLjU76N8iIO-7NevctuakLljdDF3tGDlZjHVnHLR2EYWxp8w>
- <xmx:Yj_dYAjtVpLkSeO2xbaKoo78odtTyvidVMKmiydpN2epiWOucudSFg>
- <xmx:Yj_dYMDgmxcC9-MRBjxGONi4e21P5iPeXn1zjaOMKR9NRuvrOSnxoA>
- <xmx:Yz_dYL5PkTb1vFg7bplBh1Q22ZeoIsU02XA12YYSFTvJOQkocEb2Tw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 24DB7AC0073; Thu,  1 Jul 2021 00:06:58 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-530-gd0c265785f-fm-20210616.002-gd0c26578
-Mime-Version: 1.0
-Message-Id: <8c808410-6444-46a3-8779-29ba1453a5ca@www.fastmail.com>
-In-Reply-To: <20210625074031.32576-1-liuxiwei@inspur.com>
-References: <20210625074031.32576-1-liuxiwei@inspur.com>
-Date: Thu, 01 Jul 2021 13:36:37 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "George Liu" <liuxiwei1013@gmail.com>, linux-aspeed@lists.ozlabs.org
-Subject: Re: [PATCH v1] ARM: dts: fp5280g2: Add KCS node for LPC MCTP
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GFm5z61tYz2xjY
+ for <openbmc@lists.ozlabs.org>; Thu,  1 Jul 2021 14:52:05 +1000 (AEST)
+Received: by mail-qk1-x72e.google.com with SMTP id j184so4857216qkd.6
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Jun 2021 21:52:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=FrORV5/FYPNvLoxTExoagky5N5nsduK4UOJwRVHZTyM=;
+ b=LOzGuoG/f7iYmmV6DDmKvRIJgbLsLTksZSAhulpINqOESe6YDHifHhew98tkKvFOiQ
+ C8Rm0CttZCbFDxVwKLLMVqy/EqX4qLJKr/rWALbGOv3dXZaF64gd+iXaUvzsf656jwel
+ DDos2LxgRHiCck94eizoI49V4uhqqBYaiBx40=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=FrORV5/FYPNvLoxTExoagky5N5nsduK4UOJwRVHZTyM=;
+ b=sMfG/pbwCYqwTYyNGBx+catIQA1U+bXyG06VEJ52LLlGf/vqc0AT+kgMbuIvLZUfB3
+ BqUDzz9cJ/CQNsUmQ3t0HgxoFab3h7N3XfBcmjt5sJgiVpIsCLnocCZTdzbgf9DZm0bj
+ cgG1rZStotgZ6Ty80tfjrMOhhW5X1rlNF4nBQ602FdPhUXzSYULxCDDqVnMr8nPupEAW
+ +B3HkGZJqOXsPzvXrNpcsy7fAmXPhsh9YWnPZwI6DLP+O6W0QYiTB6jIOwnG9fDJU+Pw
+ v7u9IWN2YmEhYom+wZYkelpBffgM4n/rkjOuRF9XTKpBI4UO/CmZD5QIchlbSbQvycQT
+ 3JEw==
+X-Gm-Message-State: AOAM532oMxpIlW2CtgryLsNWF1AC/sKxR1FL8c5RgjjyjM6zaJnNQoTu
+ WpMqh5zY9GL3aweIQ2Zspj2EhLeHfv3Q71Yya74=
+X-Google-Smtp-Source: ABdhPJyozJegBSXcusA+5J+DoL76RxVJ/abAgxOI3r4cBMIpmRo6YjF+7hcQ9NuQ5Uy7NrjNFSeyfPlMuBmfBZBxRMY=
+X-Received: by 2002:a37:6645:: with SMTP id a66mr39267091qkc.273.1625115122227; 
+ Wed, 30 Jun 2021 21:52:02 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210701024206.GH8018@packtop>
+In-Reply-To: <20210701024206.GH8018@packtop>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 1 Jul 2021 04:51:49 +0000
+Message-ID: <CACPK8Xfa6_LoMi23F5YRSvdcD8fF6GA=WQkDCw9Z-Jf8EkoTWg@mail.gmail.com>
+Subject: Re: U-boot version selection
+To: Zev Weiss <zweiss@equinix.com>,
+ =?UTF-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,37 +71,90 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- George Liu <liuxiwei@inspur.com>, linux-arm-kernel@lists.infradead.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi George,
+egacOn Thu, 1 Jul 2021 at 02:48, Zev Weiss <zweiss@equinix.com> wrote:
+>
+> Hi,
+>
+> I recently found myself needing to make some tweaks to u-boot to
+> accommodate a new board I'm targeting with a larger flash part, but in
+> going to do so I remembered that I'm currently using u-boot v2016.7,
+> whereas new development is strongly encouraged to use v2019.04 [1].
+>
+> As far as I know that happened entirely by default (i.e. I didn't go out
+> of my way to use the older version), so I hunted around a bit for how to
+> override that to use the newer one, but wasn't able to find anything
+> obvious.  What's the recommended way to go about switching that for my
+> board?
 
-On Fri, 25 Jun 2021, at 17:10, George Liu wrote:
-> Signed-off-by: George Liu <liuxiwei@inspur.com>
-> ---
->  arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts 
-> b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> index 1752f3250e44..66c0542b2694 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> @@ -300,6 +300,11 @@ &lpc_ctrl {
->  	flash = <&spi1>;
->  };
->  
-> +&kcs4 {
-> +	compatible = "openbmc,mctp-lpc";
-> +	status = "okay";
-> +};
+You can see Lei's change to use the newer tree here:
 
-This was a gross hack that we carried for a bit, it never went or was 
-intended to go upstream. Please just use the standard KCS bindings.
+ https://github.com/openbmc/openbmc/commit/1aa72efd0f54
 
-Cheers,
+UBOOT_DEVICETREE = "ast2500-evb"
+UBOOT_MACHINE = "evb-ast2500_defconfig"
 
-Andrew
+PREFERRED_PROVIDER_u-boot = "u-boot-aspeed-sdk"
+PREFERRED_PROVIDER_u-boot-fw-utils = "u-boot-fw-utils-aspeed-sdk"
+PREFERRED_PROVIDER_virtual/bootloader = "u-boot-aspeed-sdk"
+
+The important change is to point it to a valid defconfig for the new
+tree, to specify the u-boot device tree to use, and to change some
+yocto PROVIDER variables to use the "u-boot-aspeed-sdk" variant.
+
+Currently there's only one machine defined in the u-boot tree, for the
+evb. We will need a new machine defined if your system uses NCSI for
+networking.
+
+We could use a common configuration for NCSI and non-NCSI (direct
+attached PHY) systems, except for one bug. The NCSI layer as it is
+currently implemented will cause the networking layer to attempt to
+initalise NCSI, even if your device tree says you have no NCSI
+devices. We will need to make a code change to fix this.
+
+The offending code snippet is in net/net.c:
+
++       if (protocol != NCSI && !ncsi_active()) {
++               printf("%s: configuring NCSI first\n", __func__);
++               if (net_loop(NCSI) < 0)
++                       return ret;
++               eth_init_state_only();
++               goto restart;
++       }
+
+The fix would be to add a new test to ncsi_active that returns "true"
+if there are no ncsi capable devices in the system.
+
+It would make sense to rename the function too, but the core of the
+change is to ensure we don't require ncsi to be active if it's not
+being used.
+
+> And do we want to consider changing the default to the newer branch?
+
+Yes! I think this would be a great idea. Ideally we would have people
+switch over to using the new tree, but this is unlikely to happen.
+Best would be to make it the default so new machines opt for the newer
+tree, and legacy machines can use the outdated tree.
+
+This would require us to add something like the following to all of
+the legacy aspeed machines:
+
+PREFERRED_PROVIDER_u-boot = "u-boot-aspeed"
+PREFERRED_PROVIDER_u-boot-fw-utils = "u-boot-fw-utils-aspeed"
+PREFERRED_PROVIDER_virtual/bootloader = "u-boot-aspeed"
+
+Once that is done, we could change the following in meta-aspeed:
+
+--- a/meta-aspeed/conf/machine/include/aspeed.inc
++++ b/meta-aspeed/conf/machine/include/aspeed.inc
+@@ -1,7 +1,7 @@
+ PREFERRED_PROVIDER_virtual/kernel ?= "linux-aspeed"
+-PREFERRED_PROVIDER_virtual/bootloader ?= "u-boot-aspeed"
+-PREFERRED_PROVIDER_u-boot ?= "u-boot-aspeed"
+-PREFERRED_PROVIDER_u-boot-fw-utils ?= "u-boot-fw-utils-aspeed"
++PREFERRED_PROVIDER_virtual/bootloader ?= "u-boot-aspeed-sdk"
++PREFERRED_PROVIDER_u-boot ?= "u-boot-aspeed-sdk"
++PREFERRED_PROVIDER_u-boot-fw-utils ?= "u-boot-fw-utils-aspeed-sdk"
