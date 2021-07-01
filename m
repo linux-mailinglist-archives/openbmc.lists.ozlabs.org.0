@@ -1,54 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D5743B906C
-	for <lists+openbmc@lfdr.de>; Thu,  1 Jul 2021 12:17:59 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F15833B938A
+	for <lists+openbmc@lfdr.de>; Thu,  1 Jul 2021 16:43:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GFvKx1zfDz3083
-	for <lists+openbmc@lfdr.de>; Thu,  1 Jul 2021 20:17:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GG1D060CRz307n
+	for <lists+openbmc@lfdr.de>; Fri,  2 Jul 2021 00:43:12 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=mnpKf4z5;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=WJ/U6jWU;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=126.com
- (client-ip=220.181.15.40; helo=m1540.mail.126.com;
- envelope-from=gj1104487038@126.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256
- header.s=s110527 header.b=mnpKf4z5; dkim-atps=neutral
-X-Greylist: delayed 1861 seconds by postgrey-1.36 at boromir;
- Thu, 01 Jul 2021 20:17:39 AEST
-Received: from m1540.mail.126.com (m1540.mail.126.com [220.181.15.40])
- by lists.ozlabs.org (Postfix) with ESMTP id 4GFvKb6y1lz2yxV
- for <openbmc@lists.ozlabs.org>; Thu,  1 Jul 2021 20:17:35 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=aJzdZ
- 8xLHDDYo826GNHTs3ekMeZwrVWdruub1RLA9GI=; b=mnpKf4z5FJYt28hbIpOVJ
- sLQR/Ykmq/5p6NP+8bPsAieg2Q/r0Pxw3OJU0wmohCjuRE7hYgbuXxafcVbKOZER
- cMgjqUmZpJkxwbo3gmrf6zbc64rHhVF+l1/IznJCuk7xHJ8+4lQqhMUalNz8tlaq
- Vr7vq5UkOm5XtS4WIpaYjA=
-Received: from gj1104487038$126.com ( [60.208.111.194] ) by
- ajax-webmail-wmsvr40 (Coremail) ; Thu, 1 Jul 2021 17:46:10 +0800 (CST)
-X-Originating-IP: [60.208.111.194]
-Date: Thu, 1 Jul 2021 17:46:10 +0800 (CST)
-From: JillGuo  <gj1104487038@126.com>
-To: openbmc@lists.ozlabs.org, spinler@us.ibm.com, bradleyb@fuzziesquirrel.com
-Subject: power supply monitor
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
- Copyright (c) 2002-2021 www.mailtech.cn 126com
-X-CM-CTRLDATA: POW2gGZvb3Rlcl9odG09MjU5Nzo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_66876_1438602273.1625132770479"
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=WJ/U6jWU; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GG1Cm11p7z2yxm
+ for <openbmc@lists.ozlabs.org>; Fri,  2 Jul 2021 00:42:59 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 161EYvWP112460
+ for <openbmc@lists.ozlabs.org>; Thu, 1 Jul 2021 10:42:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : subject : to :
+ message-id : date : content-type : content-transfer-encoding :
+ mime-version; s=pp1; bh=18ZC0jlOjoI7FK8+5oQ87R8Cn6JD/UPxJQkzuBhnP8g=;
+ b=WJ/U6jWUWTrTbKL8Z4vO+slSy2IMhDm8EFfxeest+CfEB5H+TsQkL03PlGcFKV8094pd
+ VG+SUnecM3mmZVohn8z1ag2b7ujha5YGnPYnUhPRA7sxZjUnErBn5svcQeqyJJ7y9oxA
+ bSpxRuoupTPWLO7BGnz8jHWFuwn90hykZzOiUc0WDuz2Z7vHmeA2ITF/1mqxkxHly87o
+ iwQKftGo4NjZK+EVtNyLS76HG7fLDcTulpnwaOEuZ/ACMyoA5stIaXILQbq8pv4KpTk7
+ RkYueduDpvuO+JDkCTz8Ftiwm0dAnDS7Kk3Jt/ajv6s8B988nhmZ+1xhvQm4Wd/URL+q 0A== 
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 39hdyfuq5r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 01 Jul 2021 10:42:56 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 161EcqjQ032255
+ for <openbmc@lists.ozlabs.org>; Thu, 1 Jul 2021 14:42:56 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma03dal.us.ibm.com with ESMTP id 39h1y693e9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 01 Jul 2021 14:42:56 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 161Egtop34865460
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Thu, 1 Jul 2021 14:42:55 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3A12A112067
+ for <openbmc@lists.ozlabs.org>; Thu,  1 Jul 2021 14:42:55 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0F8DB112069
+ for <openbmc@lists.ozlabs.org>; Thu,  1 Jul 2021 14:42:55 +0000 (GMT)
+Received: from demeter.local (unknown [9.160.12.130])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Thu,  1 Jul 2021 14:42:54 +0000 (GMT)
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Update phosphor-defaults with stronger root password hash algorithm
+To: openbmc <openbmc@lists.ozlabs.org>
+Message-ID: <34f5b89a-3919-e214-a744-4277fba0bbbb@linux.ibm.com>
+Date: Thu, 1 Jul 2021 09:42:54 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: LCh4fGZXWjNFZjjwO99zYt2iQiGIPQjk
+X-Proofpoint-ORIG-GUID: LCh4fGZXWjNFZjjwO99zYt2iQiGIPQjk
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Message-ID: <434583c0.47b5.17a617624b0.Coremail.gj1104487038@126.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: KMqowABH0gnjjt1gn0xRAQ--.36999W
-X-CM-SenderInfo: ljmriiiuuyliity6ij2wof0z/1tbiFwPCDFpEBos3sgAAsM
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-07-01_08:2021-07-01,
+ 2021-07-01 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 adultscore=0
+ mlxscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 impostorscore=0
+ clxscore=1015 phishscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2104190000
+ definitions=main-2107010088
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,74 +103,59 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_66876_1438602273.1625132770479
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+OpenBMC Community,
 
-SSByZWNlbnRseSBhZGFwdGVkICBwb3dlciBzdXBwbHkgbW9uaXRvcmluZywgYW5kIG15IHN5c3Rl
-bSBpcyBJbnRlbCBwbGF0Zm9ybS4gSSBmb3VuZCBTVEFUVVNfV09SRCBhbmQgb3RoZXIgaW5mb3Jt
-YXRpb24gY2FuIGJlIG9idGFpbmVkIGJ5IHBvd2VyLXN1cHBseSBvZiBwaG9zcGhvci1wb3dlciAo
-aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItcG93ZXIvdHJlZS9tYXN0ZXIvcG93
-ZXItc3VwcGx5KS4gSG93ZXZlciwgSW50ZWwgcGxhdGZvcm0gZG9lc24ndCB1c2UgcGhvc3Bob3It
-aW52ZW50b3J5LW1hbmFnZXIuIEkgd2FudCB0byBrbm93IGlmIHBvd2VyLXN1cHBseSBpcyBhcHBs
-aWNhYmxlIHRvIGVudGl0eS1tYW5hZ2VyLiBJZiBpdCBpcyBhcHBsaWNhYmxlLCB3aGF0IHNob3Vs
-ZCBiZSBkb25lPwoKCkkgYW0gYWxzbyBjb25mdXNlZCB0aGF0IHBob3NwaG9yLWludmVudG9yeS1t
-YW5hZ2VyIChodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1pbnZlbnRvcnktbWFu
-YWdlcikgYW5kIGVudGl0eS1tYW5hZ2VyIChodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9lbnRp
-dHktbWFuYWdlcikgaGF2ZSB0aGUgc2FtZSBwYXRoIC94eXovb3BlbmJtY19wcm9qZWN0L2ludmVu
-dG9yeS4gV2hldGhlciBpdCBjYW4gZXhpc3QgaW4gYW4gaW1hZ2UgYXQgdGhlIHNhbWUgdGltZSwg
-YW5kIHdoZXRoZXIgdGhlcmUgd2lsbCBiZSBjb25mbGljdC4KCgoKQWxsIHN1Z2dlc3Rpb25zIGFy
-ZSB3ZWxjb21lLCB0aGFua3MuCgpKaWxsIEd1bwoKMjAyMS83LzEKCgo=
-------=_Part_66876_1438602273.1625132770479
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+Testing the [libpam_1.5.1 changes][] revealed a limitation with the old 
+MD5 hash algorithm used to encode OpenBMC's root password.  The fix is 
+to change phosphor-defaults to use an acceptable hash algorithm such as 
+SHA-512.  We can keep the same password so our testing tools continue to 
+work.  Details are below.  I plan to push a fix for this.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OjEuNztjb2xvcjojMDAw
-MDAwO2ZvbnQtc2l6ZToxNHB4O2ZvbnQtZmFtaWx5OkFyaWFsIj48ZGl2IHN0eWxlPSJtYXJnaW46
-MDsiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTogJnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7
-OyBmb250LXNpemU6IDIwcHg7IGxpbmUtaGVpZ2h0OiAyZW07Ij5JPC9zcGFuPjxzcGFuIHN0eWxl
-PSJmb250LWZhbWlseTogJnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7OyBmb250LXNpemU6IDIw
-cHg7IGxpbmUtaGVpZ2h0OiAyZW07IiBjbGFzcz0iIj4gcmVjZW50bHkgYWQ8L3NwYW4+PHNwYW4g
-c3R5bGU9ImZvbnQtZmFtaWx5OiAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7IGZvbnQtc2l6
-ZTogMjBweDsgbGluZS1oZWlnaHQ6IDJlbTsiPmFwdGVkJm5ic3A7IHBvd2VyIHN1cHBseSBtb25p
-dG9yaW5nLCBhbmQgbXkgc3lzdGVtIGlzIEludGVsIHBsYXRmb3JtLiBJIGZvdW5kIFNUQVRVU19X
-T1JEIGFuZCBvdGhlciBpbmZvcm1hdGlvbiBjYW4gYmUgb2J0YWluZWQgYnkgcG93ZXItc3VwcGx5
-IG9mIHBob3NwaG9yLXBvd2VyICg8L3NwYW4+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29w
-ZW5ibWMvcGhvc3Bob3ItcG93ZXIvdHJlZS9tYXN0ZXIvcG93ZXItc3VwcGx5Ij48Zm9udCBmYWNl
-PSJUaW1lcyBOZXcgUm9tYW4iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6IDIwcHg7IGxpbmUtaGVp
-Z2h0OiAyZW07Ij5odHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1wb3dlci90cmVl
-L21hc3Rlci9wb3dlci1zdXBwbHk8L3NwYW4+PC9mb250PjwvYT48c3BhbiBzdHlsZT0iZm9udC1m
-YW1pbHk6ICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OzsgZm9udC1zaXplOiAyMHB4OyBsaW5l
-LWhlaWdodDogMmVtOyI+KS4gSG93ZXZlciwgSW50ZWwgcGxhdGZvcm0gZG9lc24ndCB1c2UgcGhv
-c3Bob3ItaW52ZW50b3J5LW1hbmFnZXIuIEkgd2FudCB0byBrbm93IGlmIHBvd2VyLXN1cHBseSBp
-cyBhcHBsaWNhYmxlIHRvIGVudGl0eS1tYW5hZ2VyLiBJZiBpdCBpcyBhcHBsaWNhYmxlLCB3aGF0
-IHNob3VsZCBiZSBkb25lPzwvc3Bhbj48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPjxzcGFu
-IHN0eWxlPSJmb250LWZhbWlseTogJnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7OyBmb250LXNp
-emU6IDIwcHg7IGxpbmUtaGVpZ2h0OiAyZW07Ij48YnI+PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9
-Im1hcmdpbjowOyI+PHNwYW4gc3R5bGU9ImxpbmUtaGVpZ2h0OiAyZW07Ij48c3BhbiBzdHlsZT0i
-bGluZS1oZWlnaHQ6IDEuNWVtOyBmb250LWZhbWlseTogJnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1
-b3Q7OyBmb250LXNpemU6IDIwcHg7Ij5JIGFtIGFsc28gY29uZnVzZWQgdGhhdCBwaG9zcGhvci1p
-bnZlbnRvcnktbWFuYWdlciAoPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhv
-c3Bob3ItaW52ZW50b3J5LW1hbmFnZXIiPmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3Nw
-aG9yLWludmVudG9yeS1tYW5hZ2VyPC9hPikgYW5kIGVudGl0eS1tYW5hZ2VyICg8YSBocmVmPSJo
-dHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9lbnRpdHktbWFuYWdlciI+aHR0cHM6Ly9naXRodWIu
-Y29tL29wZW5ibWMvZW50aXR5LW1hbmFnZXI8L2E+KSBoYXZlIHRoZSBzYW1lIHBhdGggL3h5ei9v
-cGVuYm1jX3Byb2plY3QvaW52ZW50b3J5LiZuYnNwOzwvc3Bhbj48c3BhbiBzdHlsZT0ibGluZS1o
-ZWlnaHQ6IDEuNWVtOyBmb250LWZhbWlseTogJnF1b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7OyBm
-b250LXNpemU6IDIwcHg7Ij5XaGV0aGVyIGl0IGNhbiBleGlzdCBpbiBhbiBpbWFnZSBhdCB0aGUg
-c2FtZSB0aW1lLCBhbmQgd2hldGhlciB0aGVyZSB3aWxsIGJlIGNvbmZsaWN0Ljwvc3Bhbj48L3Nw
-YW4+PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij48YnI+PC9kaXY+PHAgc3R5bGU9Im1hcmdp
-bjowOyI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVv
-dDs7IGZvbnQtc2l6ZTogMjBweDsgbGluZS1oZWlnaHQ6IDJlbTsiPkFsbCBzdWdnZXN0aW9ucyBh
-cmUgd2VsY29tZSwgdGhhbmtzLjwvc3Bhbj48L3A+PHAgc3R5bGU9Im1hcmdpbjowOyI+PHNwYW4g
-c3R5bGU9ImZvbnQtZmFtaWx5OiAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDs7IGZvbnQtc2l6
-ZTogMjBweDsgbGluZS1oZWlnaHQ6IDJlbTsiPkppbGwgR3VvPC9zcGFuPjwvcD48cCBzdHlsZT0i
-bWFyZ2luOjA7Ij48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6ICZxdW90O1RpbWVzIE5ldyBSb21h
-biZxdW90OzsgZm9udC1zaXplOiAyMHB4OyBsaW5lLWhlaWdodDogMmVtOyI+MjAyMS83LzE8L3Nw
-YW4+PC9wPjxwIHN0eWxlPSJtYXJnaW46MDsiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTogJnF1
-b3Q7VGltZXMgTmV3IFJvbWFuJnF1b3Q7OyBmb250LXNpemU6IDIwcHg7IGxpbmUtaGVpZ2h0OiAy
-ZW07Ij48YnI+PC9zcGFuPjwvcD48L2Rpdj48L2Rpdj48YnI+PGJyPjxzcGFuIHRpdGxlPSJuZXRl
-YXNlZm9vdGVyIj48cD4mbmJzcDs8L3A+PC9zcGFuPg==
-------=_Part_66876_1438602273.1625132770479--
+- Joseph
+
+
+Details:
+
+OpenBMC provisions the BMC firmware image with the root account password 
+in a form which is no longer acceptable to Linux-PAM version 1.5.1.
+
+Specifically, [phosphor-defaults.inc][] sets the password hash into 
+/etc/shadow as "\$1\$UGMqyqdG\$FZiylVFmRRfl9Z0Ue8G7e/", where $1 
+indicates the old weak MD5 hash algorithm.  Ref: [wikipedia passwd 
+entry][].  Beginning around PAM version 1.5.1, when you log in, the 
+[pam_unix.so module][] authenticates okay but requires the password to 
+be changed.  (For example, you'll get a message like "You are required 
+to change your password immediately (administrator enforced)."  This 
+behavior is undesirable for the OpenBMC project defaults, and is not 
+tolerated by the project's current continuous integration tools.)  Note 
+the new password is stored using the SHA-512 algorithm.   Thanks to Noah 
+Brewer for debugging this issue.
+
+This has an easy fix: use the same password with an updated hash 
+algorithm.  Specifically, update the password hash supplied in 
+phosphor-defaults.inc to use the same password as before but encoded 
+with the SHA-512 algorithm.  An acceptable hash can be provided by the 
+`openssl passwd -6 0penBmc` command.  This change ought to be 
+transparent, forward and backward compatible.  This change is also a 
+prerequisite for going to libpam_1.5.1 (presuming you don't want to 
+force users to change their password the first time they login).
+
+Note various meta-layers use this same old hash string in 
+conf/local.conf.sample files. They should consider updating to match the 
+new value.
+
+Closely related: the [Replace deprecated Linux-PAM modules][] gerrit review.
+
+References:
+[libpam_1.5.1 changes]: 
+https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/41294
+[phosphor-defaults.inc]: 
+https://github.com/openbmc/openbmc/blob/1a977b269ed437bebb9ae7810e3157746ec9174d/meta-phosphor/conf/distro/include/phosphor-defaults.inc#L245 
+
+[wikipedia passwd entry]: https://en.wikipedia.org/wiki/Passwd
+[pam_unix.so module]: 
+https://github.com/linux-pam/linux-pam/tree/master/modules/pam_unix
+[Replace deprecated Linux-PAM modules]: 
+https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/41357
+
 
