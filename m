@@ -2,13 +2,13 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 300923BAFC7
-	for <lists+openbmc@lfdr.de>; Mon,  5 Jul 2021 01:06:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E1EB13BB009
+	for <lists+openbmc@lfdr.de>; Mon,  5 Jul 2021 01:07:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GJ4F20pSyz308M
-	for <lists+openbmc@lfdr.de>; Mon,  5 Jul 2021 09:06:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GJ4Gx6RCzz3bwL
+	for <lists+openbmc@lfdr.de>; Mon,  5 Jul 2021 09:07:53 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=stK+WvId;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=TozFmyfW;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -17,35 +17,35 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  envelope-from=sashal@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=stK+WvId; 
+ header.s=k20201202 header.b=TozFmyfW; 
  dkim-atps=neutral
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GJ4DK01qyz3bXV;
- Mon,  5 Jul 2021 09:05:36 +1000 (AEST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 98B9161283;
- Sun,  4 Jul 2021 23:05:33 +0000 (UTC)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GJ4GS096Hz3cgp;
+ Mon,  5 Jul 2021 09:07:28 +1000 (AEST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id BF7C361935;
+ Sun,  4 Jul 2021 23:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1625439934;
- bh=g9qfdaST5Xg4hE7mjON8bksK/iUulk9ir5gSDX6PlSQ=;
+ s=k20201202; t=1625440045;
+ bh=Pq4EhHKMvQqR0dTi44tWCX6DB7KbvPxZSq5FW7Mm8F4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=stK+WvIdpe0Iiat6uBMwOAGvASdKTq4SyEoEOxHocMXLRjhbkbZN2JVrUvZDDH3NC
- UYiuxskOsTUZp5xm4pGPURboWVzNuEBMdCey6bi/jipweKi5EbrMln+iAgxCT85Nej
- yNF5D2iRHy+p/W8d3/82E4cgrEkoxscpOYqeRwlQdsEJrU3uZdPH1UceohBawdbst5
- yO90zs9wxgYPlxGTNZ+lKuj5Kl9mZRN28321BWZIvkPcST28fz0dLCgYyQre3IqoZ/
- Sj6VUMKE8ZbIFTtZ7AMC1du4feuwSg0a9W+4VdKPSEhvPKumvQq4s1aTWkJKuU/bqu
- ZhCx3SV3t+/tw==
+ b=TozFmyfW+HlqpdYMHUQXU5fBiHUpGUq3ifL+xrc6BY4/TEemhzD8NXXSuL7r78wYG
+ 3ikhF4qlTx3vTwowK8S36+P4y2zUtamjgwp+JSdV+vCFpfN5cwld9DEagjCVxbL5Et
+ 9MtrmuKPpzpIWGnFGsJ/Gxgzln5U16ccy5MTriI0bXFZyjW/kA+1kDEUqT8a016ozy
+ TVA+SnEUbfjE8NeZBXmAUpsClWKK1LoqYJp4rgnozd6VU3MzlP2KI3ttk7p0Ixx+eM
+ wfJkwoGM5Gd/Afl20JIllNLM+AuGnXvB5jyKWDyfLGABUjRfglJpO6uTs1drAxbrsS
+ 00/98P9NJMzKg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.13 54/85] mmc: sdhci-of-aspeed: Turn down a phase
+Subject: [PATCH AUTOSEL 5.12 51/80] mmc: sdhci-of-aspeed: Turn down a phase
  correction warning
-Date: Sun,  4 Jul 2021 19:03:49 -0400
-Message-Id: <20210704230420.1488358-54-sashal@kernel.org>
+Date: Sun,  4 Jul 2021 19:05:47 -0400
+Message-Id: <20210704230616.1489200-51-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210704230420.1488358-1-sashal@kernel.org>
-References: <20210704230420.1488358-1-sashal@kernel.org>
+In-Reply-To: <20210704230616.1489200-1-sashal@kernel.org>
+References: <20210704230616.1489200-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -93,7 +93,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index d001c51074a0..e4665a438ec5 100644
+index 7d8692e90996..b6ac2af199b8 100644
 --- a/drivers/mmc/host/sdhci-of-aspeed.c
 +++ b/drivers/mmc/host/sdhci-of-aspeed.c
 @@ -150,7 +150,7 @@ static int aspeed_sdhci_phase_to_tap(struct device *dev, unsigned long rate_hz,
