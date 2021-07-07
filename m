@@ -1,101 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E2203BE8E8
-	for <lists+openbmc@lfdr.de>; Wed,  7 Jul 2021 15:39:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D61E83BEB22
+	for <lists+openbmc@lfdr.de>; Wed,  7 Jul 2021 17:42:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GKgW56prfz3bXw
-	for <lists+openbmc@lfdr.de>; Wed,  7 Jul 2021 23:38:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GKkFH5nj8z30BX
+	for <lists+openbmc@lfdr.de>; Thu,  8 Jul 2021 01:42:11 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=apx7PD/W;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=up1EwqxR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2a00:1450:4864:20::129; helo=mail-lf1-x129.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=apx7PD/W; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=up1EwqxR; dkim-atps=neutral
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com
+ [IPv6:2a00:1450:4864:20::129])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GKgVn3Cjnz2yQF
- for <openbmc@lists.ozlabs.org>; Wed,  7 Jul 2021 23:38:40 +1000 (AEST)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 167DX9GI016840
- for <openbmc@lists.ozlabs.org>; Wed, 7 Jul 2021 09:38:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : in-reply-to :
- from : to : date : message-id : content-transfer-encoding : content-type :
- mime-version : references; s=pp1;
- bh=BSWDyO+Djm343iJBb7JaEW6lNuea8W4WBSfpX8fyBHY=;
- b=apx7PD/WtervK+Xk7yyws1VXAMyJtVU6BPHt2SqG4YgXr92kdrubmdRrVTdRk9Dq+xlw
- BrdVFfdNqV2nXJzWXHUbEuV4leF4cCmyYlnveM/FGCE4kYHEhJ/DIJHlZrLfJntrj8xq
- B8Wcg1yE3Va7pE1ar0cEEM9FSAmTVNqI3azyuJTTjeS7FCzE44qJlhFrUNdFhfA9ED0r
- wDNi0UZCtuYq+wZaiuxsFurgMUUcOvNDcx/7mpY01djZleQmnxlNYjRxxYUrjyqmtNCG
- OfHDc/5aWnZZFFs0bM6k63+GKl60LdQEFS/x3Z5IRudlV9CKGw3cU60BAmCYrphL+xUP Mg== 
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 39nc7xa2e4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 07 Jul 2021 09:38:35 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 167DXwLC012931
- for <openbmc@lists.ozlabs.org>; Wed, 7 Jul 2021 13:38:35 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma04dal.us.ibm.com with ESMTP id 39jfhd22v4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 07 Jul 2021 13:38:35 +0000
-Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
- [9.57.199.106])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 167DcYBc38011354
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 7 Jul 2021 13:38:34 GMT
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2717328059
- for <openbmc@lists.ozlabs.org>; Wed,  7 Jul 2021 13:38:34 +0000 (GMT)
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0861D28064
- for <openbmc@lists.ozlabs.org>; Wed,  7 Jul 2021 13:38:34 +0000 (GMT)
-Received: from mww0151.wdc07m.mail.ibm.com (unknown [9.208.70.162])
- by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed,  7 Jul 2021 13:38:33 +0000 (GMT)
-Subject: Cancelled: GUI Design Work Group - Wednesday,
- 7/7/21 at 10:00 AM Central
-In-Reply-To: <OF7717BEC1.0F210BFD-ON002586A8.007A0BC0-002586A8.007A0BC5@notes.na.collabserv.com>
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: openbmc@lists.ozlabs.org
-Date: Wed, 7 Jul 2021 13:38:32 +0000
-Message-ID: <OFC6DD5317.D6705021-ON0025870B.004AC608-0025870B.004AF060@ibm.com>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
-Sensitivity: 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GKkF03GBRz2yhl
+ for <openbmc@lists.ozlabs.org>; Thu,  8 Jul 2021 01:41:54 +1000 (AEST)
+Received: by mail-lf1-x129.google.com with SMTP id p21so4754741lfj.13
+ for <openbmc@lists.ozlabs.org>; Wed, 07 Jul 2021 08:41:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=Aw7ZBhAIbqB5J4QvRhgJmRrvCixbwbU2FviXELH1fec=;
+ b=up1EwqxRdEuz5oPJLlJICed4qHwyErUH2mtj6jTA4VAO7aiNkf0UNFOBnetYBcfy8n
+ mUBlLFbhBEvc2Pt0F9GaC2WIu4huoovmGde+0XeldSUytVHPsdKeyDSvbiBRoAu07ShT
+ fXoqVgmztTtrt1KiQnPZF1gMdwXrNbRwpDQ3EMA++aDpuheoGJordh/5sQN+V2/g6qlb
+ F5yy8oxvzQj3Nv99XceFlNOlLXRGwJM2GdDKtX7B+GLw19JnYNKVvw736T3/zsogLi8V
+ gC+R0ze0oa10CDDXkel1ytBCROrPz5NxvDB5ydUQUPHYZ26Sk6Q6GP+7savkS3ajaNet
+ 52LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=Aw7ZBhAIbqB5J4QvRhgJmRrvCixbwbU2FviXELH1fec=;
+ b=tgI2GFaKfZR7w4ilFGAyVkaDq44fTf2lOwl5Ze2aW6atD+tepGfdmEZaNbii7aSDZf
+ K2j62bxbG79m/CtTFaRFqKflZX65m+y8rQunUJuE9oCB6DETKEkWKoCTHAkqqbBwRAyX
+ Nt7RFXblY+Cn42K/YtaBWOvx97ayny5etho9uBUT9xHWrasmZPp4EmUSJ5nBT3caiwVq
+ iOBoUbKG4YoF2Q9rnNH22AxWvxoKjVR63rYsLVjPPdflsHscJfqS8GRMintOVhF//8qJ
+ Mo1xY4gCj35lJWH92RtkRgLk0l/usBwJl1yJQcwENzh/a8T352ihqvAV+RgS0/kBFe04
+ 8KEw==
+X-Gm-Message-State: AOAM530k6+nzAEezh6HCHO+iNbHOkde4HYeNOvrnTjKyKp63+gtMbcd9
+ M7hFFBpSGwpK8483aRdoFyPVIjJwCdrJ+6VJE7gdjQ==
+X-Google-Smtp-Source: ABdhPJwHHFRWv+jMTjGs+f3Bcfxkrif2vnBKzr6hIHlGoiEFY3RCa2Wv7/5yyslPcir53MMr0IWGrluW6DqALgPv6sY=
+X-Received: by 2002:ac2:4187:: with SMTP id z7mr18916620lfh.574.1625672509597; 
+ Wed, 07 Jul 2021 08:41:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <OF7717BEC1.0F210BFD-ON002586A8.007A0BC0-002586A8.007A0BC5@notes.na.collabserv.com>
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Mailer: Lotus Domino Web Server Release 11.0.1FP2HF97   July 2, 2021
-X-MIMETrack: Serialize by http on MWW0151/01/M/IBM at 07/07/2021 13:38:32,
- Serialize complete at 07/07/2021 13:38:32
-X-Disclaimed: 29643
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: CoH6Y_xgd7JsyH74bw6SVyqxy3OLPKpU
-X-Proofpoint-ORIG-GUID: CoH6Y_xgd7JsyH74bw6SVyqxy3OLPKpU
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-07-07_06:2021-07-06,
- 2021-07-07 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1011
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 mlxlogscore=660
- phishscore=0 spamscore=0 suspectscore=0 impostorscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2104190000 definitions=main-2107070081
+References: <B6A810CD-9610-4AFE-8921-EF490734C17D@fb.com>
+ <CACWQX82x5OPNu8SSbP1dK5=3rNRo0tqJYN2eW61qDurTOFFkgA@mail.gmail.com>
+ <E80ED6F3-9FFE-4037-A417-5C890F86F69C@fb.com>
+In-Reply-To: <E80ED6F3-9FFE-4037-A417-5C890F86F69C@fb.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Wed, 7 Jul 2021 08:41:38 -0700
+Message-ID: <CACWQX82d9NqHatq4of=LrQoP6hfLvbMuZs948ydrThj1J1uhCg@mail.gmail.com>
+Subject: Re: Bmcweb redfish multiple host support
+To: Naveen Moses S <naveenmoses@fb.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,23 +79,119 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "gmills@linux.vnet.ibm.com" <gmills@linux.vnet.ibm.com>,
+ "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Tahoma, =
-Geneva, sans-serif;font-size:10pt" ><div dir=3D"ltr" >I apologize for the l=
-ate notice, but the GUI Design Work Group will be cancelled today. See you =
-all on the 21st.</div>
-<div dir=3D"ltr" ><div>&nbsp;</div>
-<div><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr"=
- ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><=
-div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div=
- dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div di=
-r=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=
-=3D"ltr" ><div><div dir=3D"ltr" ><div>Thank you!</div>
-<div>&nbsp;</div>
-<div>Derick Montague</div>
-<div>Design Lead<br>IBM Cognitive Systems User Experience</div></div></div>=
-</div></div></div></div></div></div></div></div></div></div></div></div></d=
-iv></div></div></div></div></div></div></div></div></div></div></div><BR>
-<BR>
+On Tue, Jul 6, 2021 at 10:00 PM Naveen Moses S <naveenmoses@fb.com> wrote:
+>
+> Hi Ed,
+>
+> Thanks for your insights. we will work on it accordingly.
+>
+> If possible could you also clarify  the following :
+>
+> In redfish, /redfish/v1/Systems/system is used to store host/server relat=
+ed information.
+> For LogServices, journal based logs are stored under the below path.
+> /redfish/v1/Systems/system/LogServices/EventLog/Entries
+> But few logs like sensor & FRU logs are related to BMC, which is displayi=
+ng under system path. Could you please clarify why these logs are stored un=
+der this system path.
+
+Because this path was analogous to the SEL log, and that part didn't
+really matter at the time when there was only a single host;  It
+likely could be improved, although maintaining backward compatibility
+is going to be difficult.
+
+> Whether can we take this under different path.
+
+I'd need more details on what you're thinking here before I can render
+an opinion.
+
+>
+> Thanks
+>
+> On 01-Jul-2021, at 9:58 PM, Ed Tanous <ed@tanous.net> wrote:
+>
+> On Thu, Jul 1, 2021 at 9:10 AM Naveen Moses S <naveenmoses@fb.com> wrote:
+>
+>
+> Hello All,
+>
+> I need your suggestion on implementing support for  multiple computer sys=
+tems or hosts under redfish implementation of BMCWEB.
+>
+> Redfish schema supports multiple computer systems under  redfish path "/r=
+edfish/v1/Systems/"
+>
+> Currently in bmcweb redfish core Computer systems path are is configured =
+for as singlehost
+>
+> The redfish path computer system is given below
+> "/redfish/v1/Systems/system=E2=80=9D
+>
+> In case of multiple hosts can we use the following format.
+>
+> "/redfish/v1/Systems/system1=E2=80=9D
+> "/redfish/v1/Systems/system2=E2=80=9D
+> "/redfish/v1/Systems/system3=E2=80=9D
+> "/redfish/v1/Systems/system4=E2=80=9D
+>
+> these paths should be populated based on the number of available hosts/co=
+mputer systems
+>
+> Possible options to identify the host count are as given below:
+> 1.pass the OBMC_HOST_INSTANCES as a macro definition to bmcweb
+>
+>
+> Please don't do this.  In general we only use configure options for
+> things that cannot be dynamically discovered on dbus or via the
+> mapper, or where different implementations of things exist that meet
+> the same API (like log service).  I don't think multi-host falls into
+> either of those categories, as it can be seen on dbus.
+>
+> 2.Query dbus objects which has individual instance available for each hos=
+t using object mapper.
+>
+>
+> This would far and above be my preference, as it's similar to how the
+> rest of the bmcweb URIs function.
+>
+>
+> Is there any other alternate way available for identifying host instances=
+ at runtime under bmcweb?
+>
+>
+> if we use the above format then can we change the computer system for sin=
+gle host
+>
+> as given below
+>
+> "/redfish/v1/Systems/system0=E2=80=9D
+>
+>
+> I would much prefer these are just based on the dbus path names
+> instead of trying to explicitly pick a name.  That keeps bmcweb
+> consistent with other resources, and systems that only implement a
+> single host can choose to keep the same odata.id (system) if they
+> want.
+>
+>
+> Code reference : https://github.com/openbmc/bmcweb/blob/master/redfish-co=
+re/lib/systems.hpp
+>
+> method : requestRoutesSystemsCollection
+>
+>
+>
+> Thanks
+>
+>
+> Looking forward to seeing the patches.  Thanks for looking into this.
+>
+> -Ed
+>
+>
