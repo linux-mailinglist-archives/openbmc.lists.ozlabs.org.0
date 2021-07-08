@@ -1,73 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D61E83BEB22
-	for <lists+openbmc@lfdr.de>; Wed,  7 Jul 2021 17:42:13 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB2583BF3A8
+	for <lists+openbmc@lfdr.de>; Thu,  8 Jul 2021 03:50:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GKkFH5nj8z30BX
-	for <lists+openbmc@lfdr.de>; Thu,  8 Jul 2021 01:42:11 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=up1EwqxR;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GKzkZ46R0z30H2
+	for <lists+openbmc@lfdr.de>; Thu,  8 Jul 2021 11:49:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2a00:1450:4864:20::129; helo=mail-lf1-x129.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=up1EwqxR; dkim-atps=neutral
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com
- [IPv6:2a00:1450:4864:20::129])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GKkF03GBRz2yhl
- for <openbmc@lists.ozlabs.org>; Thu,  8 Jul 2021 01:41:54 +1000 (AEST)
-Received: by mail-lf1-x129.google.com with SMTP id p21so4754741lfj.13
- for <openbmc@lists.ozlabs.org>; Wed, 07 Jul 2021 08:41:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=Aw7ZBhAIbqB5J4QvRhgJmRrvCixbwbU2FviXELH1fec=;
- b=up1EwqxRdEuz5oPJLlJICed4qHwyErUH2mtj6jTA4VAO7aiNkf0UNFOBnetYBcfy8n
- mUBlLFbhBEvc2Pt0F9GaC2WIu4huoovmGde+0XeldSUytVHPsdKeyDSvbiBRoAu07ShT
- fXoqVgmztTtrt1KiQnPZF1gMdwXrNbRwpDQ3EMA++aDpuheoGJordh/5sQN+V2/g6qlb
- F5yy8oxvzQj3Nv99XceFlNOlLXRGwJM2GdDKtX7B+GLw19JnYNKVvw736T3/zsogLi8V
- gC+R0ze0oa10CDDXkel1ytBCROrPz5NxvDB5ydUQUPHYZ26Sk6Q6GP+7savkS3ajaNet
- 52LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=Aw7ZBhAIbqB5J4QvRhgJmRrvCixbwbU2FviXELH1fec=;
- b=tgI2GFaKfZR7w4ilFGAyVkaDq44fTf2lOwl5Ze2aW6atD+tepGfdmEZaNbii7aSDZf
- K2j62bxbG79m/CtTFaRFqKflZX65m+y8rQunUJuE9oCB6DETKEkWKoCTHAkqqbBwRAyX
- Nt7RFXblY+Cn42K/YtaBWOvx97ayny5etho9uBUT9xHWrasmZPp4EmUSJ5nBT3caiwVq
- iOBoUbKG4YoF2Q9rnNH22AxWvxoKjVR63rYsLVjPPdflsHscJfqS8GRMintOVhF//8qJ
- Mo1xY4gCj35lJWH92RtkRgLk0l/usBwJl1yJQcwENzh/a8T352ihqvAV+RgS0/kBFe04
- 8KEw==
-X-Gm-Message-State: AOAM530k6+nzAEezh6HCHO+iNbHOkde4HYeNOvrnTjKyKp63+gtMbcd9
- M7hFFBpSGwpK8483aRdoFyPVIjJwCdrJ+6VJE7gdjQ==
-X-Google-Smtp-Source: ABdhPJwHHFRWv+jMTjGs+f3Bcfxkrif2vnBKzr6hIHlGoiEFY3RCa2Wv7/5yyslPcir53MMr0IWGrluW6DqALgPv6sY=
-X-Received: by 2002:ac2:4187:: with SMTP id z7mr18916620lfh.574.1625672509597; 
- Wed, 07 Jul 2021 08:41:49 -0700 (PDT)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=asrockrack.com (client-ip=43.251.60.7; helo=ms.pegatroncorp.com;
+ envelope-from=jeff9_chan@asrockrack.com; receiver=<UNKNOWN>)
+Received: from ms.pegatroncorp.com (ms.pegatroncorp.com [43.251.60.7])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4GKzkK424Lz2yxF
+ for <openbmc@lists.ozlabs.org>; Thu,  8 Jul 2021 11:49:39 +1000 (AEST)
+IronPort-SDR: 9XuW5LVBpADztbcwqd8exkqvfs7XGTKtEkS6vAmwGjoBgpslQ7BQFiPucDL5lDCJrSxblywN9A
+ YRCTia8A48oweuM7mbvz1FanuNMpTYQi7lExex3v6VakTM3Sl5++lyqbHSrXdJcmPG3sTsEVLh
+ R34OAZpHKvHE1rRTs/Q5I7ciRV51Od96XU/n93gVLpgPp9MIRXx+NFbB+AZnVnSyj3TK7pEoxW
+ rb8RTgDAb4DSmYdQlKjbMdYIXf6aD8J4ZFVdtn9hlA3vYURYdp6ZvyhNuwMVYEzwB5mfy0Zem/
+ onc=
+Received: from unknown (HELO PTW-MSE-AP01.pegatroncorp.com) ([172.18.6.20])
+ by ms.pegatroncorp.com with ESMTP; 08 Jul 2021 09:49:35 +0800
+Received: from PTW-EX-MBS11.PEGA.CORP.PEGATRON
+ (ptw-ex-mbs11.pega.corp.pegatron [172.18.192.66])
+ by PTW-MSE-AP01.pegatroncorp.com with ESMTP id 1681nMW1079410;
+ Thu, 8 Jul 2021 09:49:22 +0800 (GMT-8)
+ (envelope-from Jeff9_Chan@asrockrack.com)
+Received: from PTW-EX-MBS11.PEGA.CORP.PEGATRON (172.18.192.66) by
+ PTW-EX-MBS11.PEGA.CORP.PEGATRON (172.18.192.66) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1847.3; Thu, 8 Jul 2021 09:49:23 +0800
+Received: from PTW-EX-MBS11.PEGA.CORP.PEGATRON ([fe80::35ca:6b59:40d1:9037])
+ by PTW-EX-MBS11.PEGA.CORP.PEGATRON ([fe80::35ca:6b59:40d1:9037%3]) with mapi
+ id 15.01.1847.012; Thu, 8 Jul 2021 09:49:23 +0800
+From: =?utf-8?B?SmVmZjkgQ2hhbijpmbPmnb7lhIlfQVNSb2NrUmFjayk=?=
+ <Jeff9_Chan@asrockrack.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: RE: OPENBMC ASRock Rack
+Thread-Topic: OPENBMC ASRock Rack
+Thread-Index: AdY9OXpuPaiukNl5Rq6zENcUsPakygASUFgAABxnw6AAcpRYAAAlt3/wAAUnEIAAnS95QAAtf9yAPKwW60AADRa7AAA0of1ACS8FOkAAAHVfgP//vMeA//9szMD/0AeBkA==
+Date: Thu, 8 Jul 2021 01:49:23 +0000
+Message-ID: <b3df546e778b456dac24cbb170e66bb1@asrockrack.com>
+References: <dbe431da08674c61bcda091cec16b5fb@asrockrack.com>
+ <5d74d92b8e2f47acab7da6a54f6c18ee@asrockrack.com>
+ <fec2cbe8fd144a52915d971b4e7214bb@asrockrack.com>
+ <58f7b059987f40b78ebdcdbd1db5d969@asrockrack.com>
+ <8a3b99b118744df5a918b43e5520d35a@asrockrack.com>
+ <CALVHhedqJhfKD+MNofiwnKBB7sGG1wRPV4gXTdW_h=8=6=4HKw@mail.gmail.com>
+ <OF6DE94A96.B5787DB8-ON00258584.00525E62-00258584.0052E3DC@notes.na.collabserv.com>
+ <OF796A58B2.9DA64EBD-ON00258585.003E519E-00258585.003F6F0E@notes.na.collabserv.com>
+ <OF2B5AA3C5.40A65716-ON00258589.004350E5-00258589.00436A50@notes.na.collabserv.com>
+ <OF5B0F1DD8.7358EE61-ON002586BE.004FB2E2-002586BE.0050DCF8@notes.na.collabserv.com>
+ <7807e4794c844beda004d7059c74289c@asrockrack.com>
+ <cb87a8f3a17f47e192ab5474a331807c@asrockrack.com>
+ <CACPK8Xfi9FBjPyLdy45C=hy-e4wktLrTp3UmFhH59oaaz0yTYQ@mail.gmail.com> 
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.194.46.159]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <B6A810CD-9610-4AFE-8921-EF490734C17D@fb.com>
- <CACWQX82x5OPNu8SSbP1dK5=3rNRo0tqJYN2eW61qDurTOFFkgA@mail.gmail.com>
- <E80ED6F3-9FFE-4037-A417-5C890F86F69C@fb.com>
-In-Reply-To: <E80ED6F3-9FFE-4037-A417-5C890F86F69C@fb.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Wed, 7 Jul 2021 08:41:38 -0700
-Message-ID: <CACWQX82d9NqHatq4of=LrQoP6hfLvbMuZs948ydrThj1J1uhCg@mail.gmail.com>
-Subject: Re: Bmcweb redfish multiple host support
-To: Naveen Moses S <naveenmoses@fb.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MAIL: PTW-MSE-AP01.pegatroncorp.com 1681nMW1079410
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,119 +75,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "gmills@linux.vnet.ibm.com" <gmills@linux.vnet.ibm.com>,
- "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>
+Cc: "manager@lfprojects.org" <manager@lfprojects.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Bradley W Bishop <bradleyb@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jul 6, 2021 at 10:00 PM Naveen Moses S <naveenmoses@fb.com> wrote:
->
-> Hi Ed,
->
-> Thanks for your insights. we will work on it accordingly.
->
-> If possible could you also clarify  the following :
->
-> In redfish, /redfish/v1/Systems/system is used to store host/server relat=
-ed information.
-> For LogServices, journal based logs are stored under the below path.
-> /redfish/v1/Systems/system/LogServices/EventLog/Entries
-> But few logs like sensor & FRU logs are related to BMC, which is displayi=
-ng under system path. Could you please clarify why these logs are stored un=
-der this system path.
-
-Because this path was analogous to the SEL log, and that part didn't
-really matter at the time when there was only a single host;  It
-likely could be improved, although maintaining backward compatibility
-is going to be difficult.
-
-> Whether can we take this under different path.
-
-I'd need more details on what you're thinking here before I can render
-an opinion.
-
->
-> Thanks
->
-> On 01-Jul-2021, at 9:58 PM, Ed Tanous <ed@tanous.net> wrote:
->
-> On Thu, Jul 1, 2021 at 9:10 AM Naveen Moses S <naveenmoses@fb.com> wrote:
->
->
-> Hello All,
->
-> I need your suggestion on implementing support for  multiple computer sys=
-tems or hosts under redfish implementation of BMCWEB.
->
-> Redfish schema supports multiple computer systems under  redfish path "/r=
-edfish/v1/Systems/"
->
-> Currently in bmcweb redfish core Computer systems path are is configured =
-for as singlehost
->
-> The redfish path computer system is given below
-> "/redfish/v1/Systems/system=E2=80=9D
->
-> In case of multiple hosts can we use the following format.
->
-> "/redfish/v1/Systems/system1=E2=80=9D
-> "/redfish/v1/Systems/system2=E2=80=9D
-> "/redfish/v1/Systems/system3=E2=80=9D
-> "/redfish/v1/Systems/system4=E2=80=9D
->
-> these paths should be populated based on the number of available hosts/co=
-mputer systems
->
-> Possible options to identify the host count are as given below:
-> 1.pass the OBMC_HOST_INSTANCES as a macro definition to bmcweb
->
->
-> Please don't do this.  In general we only use configure options for
-> things that cannot be dynamically discovered on dbus or via the
-> mapper, or where different implementations of things exist that meet
-> the same API (like log service).  I don't think multi-host falls into
-> either of those categories, as it can be seen on dbus.
->
-> 2.Query dbus objects which has individual instance available for each hos=
-t using object mapper.
->
->
-> This would far and above be my preference, as it's similar to how the
-> rest of the bmcweb URIs function.
->
->
-> Is there any other alternate way available for identifying host instances=
- at runtime under bmcweb?
->
->
-> if we use the above format then can we change the computer system for sin=
-gle host
->
-> as given below
->
-> "/redfish/v1/Systems/system0=E2=80=9D
->
->
-> I would much prefer these are just based on the dbus path names
-> instead of trying to explicitly pick a name.  That keeps bmcweb
-> consistent with other resources, and systems that only implement a
-> single host can choose to keep the same odata.id (system) if they
-> want.
->
->
-> Code reference : https://github.com/openbmc/bmcweb/blob/master/redfish-co=
-re/lib/systems.hpp
->
-> method : requestRoutesSystemsCollection
->
->
->
-> Thanks
->
->
-> Looking forward to seeing the patches.  Thanks for looking into this.
->
-> -Ed
->
->
+SGksDQoJSXQgaGFzIGJlZW4gYSB3aGlsZSBhZnRlciB1cGxvYWRpbmcgYXNyb2NrcmFjayBsYXll
+ciwgbG9va3MgbGlrZSBubyBvbmUgaXMgcmV2aWV3aW5nIGl0LCB3aGF0J3MgdGhlIG5leHQgc3Rl
+cCBmb3IgbWU/DQoNCmh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1j
+L29wZW5ibWMvKy80Mzg1MA0KDQoNCmJlc3QgcmVnYXJkcw0KDQpKZWZmIENoYW4NCkFTUm9jayBJ
+bmMuIA0KVGVsOiArODg2LTItNTU1OTk2MDAgZXh0LjM4NjcwDQoNCg0KLS0tLS1PcmlnaW5hbCBN
+ZXNzYWdlLS0tLS0NCkZyb206IEplZmY5IENoYW4o6Zmz5p2+5YSJX0FTUm9ja1JhY2spIA0KU2Vu
+dDogVHVlc2RheSwgSnVuZSA4LCAyMDIxIDI6NDggUE0NClRvOiAnSm9lbCBTdGFubGV5Jw0KQ2M6
+IEJyYWRsZXkgVyBCaXNob3A7IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzsgbWFuYWdlckBsZnBy
+b2plY3RzLm9yZw0KU3ViamVjdDogUkU6IE9QRU5CTUMgQVNSb2NrIFJhY2sNCg0KVGhhbmtzIEpv
+ZWwsIGl0IHdvcmtzIG5vdy4NCg0KYmVzdCByZWdhcmRzDQoNCkplZmYgQ2hhbg0KQVNSb2NrIElu
+Yy4gDQpUZWw6ICs4ODYtMi01NTU5OTYwMCBleHQuMzg2NzANCg0KDQotLS0tLU9yaWdpbmFsIE1l
+c3NhZ2UtLS0tLQ0KRnJvbTogSm9lbCBTdGFubGV5IFttYWlsdG86am9lbEBqbXMuaWQuYXVdIA0K
+U2VudDogVHVlc2RheSwgSnVuZSA4LCAyMDIxIDI6MDAgUE0NClRvOiBKZWZmOSBDaGFuKOmZs+ad
+vuWEiV9BU1JvY2tSYWNrKQ0KQ2M6IEJyYWRsZXkgVyBCaXNob3A7IG9wZW5ibWNAbGlzdHMub3ps
+YWJzLm9yZzsgbWFuYWdlckBsZnByb2plY3RzLm9yZw0KU3ViamVjdDogUmU6IE9QRU5CTUMgQVNS
+b2NrIFJhY2sNCg0KT24gVHVlLCA4IEp1biAyMDIxIGF0IDAyOjAxLCBKZWZmOSBDaGFuKOmZs+ad
+vuWEiV9BU1JvY2tSYWNrKQ0KPEplZmY5X0NoYW5AYXNyb2NrcmFjay5jb20+IHdyb3RlOg0KPg0K
+PiBSZS1zZW5kDQoNClBsZWFzZSB1c2UgcGxhaW4gdGV4dCBlbWFpbCB3aGVuIHBvc3RpbmcgdG8g
+dGhlIGxpc3QuIFRoaXMgaXMgYSBnb29kDQpydWxlIHRvIGZvbGxvdyBmb3IgYWxsIG9wZW4gc291
+cmNlIG1haWxpbmcgbGlzdHMuDQoNCj4gICAgICAgICBJIGdvdCBiZWxvdyBlcnJvciB3aGVuIEkg
+dHJ5IHRvIHB1c2ggbWV0YS1hc3JvY2tyYWNrIGxheWVyIHRvIGdlcnJpdC4NCj4NCj4gICAgICAg
+ICBJcyB0aGF0IG1lYW5zIG15IGVtYWlsIGlzIG5vdCBsaXN0ZWQgaW4gdGhlIGxpc3Q/DQo+DQo+
+DQo+DQo+IFRvIHNzaDovL29wZW5ibWMuZ2Vycml0L29wZW5ibWMvb3BlbmJtYw0KPg0KPiAhIFty
+ZW1vdGUgcmVqZWN0ZWRdICAgICBIRUFEIC0+IHJlZnMvZm9yL21hc3RlciAoY29tbWl0IDFkOTk1
+MWM6IG5vdCBTaWduZWQtb2ZmLWJ5IGF1dGhvci9jb21taXR0ZXIvdXBsb2FkZXIgaW4gbWVzc2Fn
+ZSBmb290ZXIpDQoNCkhlcmUgaXMgdGhlIGVycm9yOg0KDQogIChjb21taXQgMWQ5OTUxYzogbm90
+IFNpZ25lZC1vZmYtYnkgYXV0aG9yL2NvbW1pdHRlci91cGxvYWRlciBpbg0KbWVzc2FnZSBmb290
+ZXIpDQoNCj4gY29tbWl0IDFkOTk1MWM1NTE4YTdiZGY4OGE1ZGUxNmE0MWFlMmYzMzdlMWIyZWQg
+KEhFQUQgLT4gbWFzdGVyKQ0KPg0KPiBBdXRob3I6IEplZmY5Q2hhbiA8amVmZjlfY2hhbkBhc3Jv
+Y2tyYWNrLmNvbT4NCj4NCj4gRGF0ZTogICBUdWUgSnVuIDggMDk6MTU6NDQgMjAyMSArMDgwMA0K
+Pg0KPg0KPg0KPiAgICAgYWRkIG1ldGEtYXNyb2NrcmFjayBsYXllcg0KPg0KPiAgICAgU2lnbmVk
+LW9mZi1ieTogSmVmZiBDaGFuIDxKZWZmOV9DaGFuQGFzcm9ja3JhY2suY29tPg0KPg0KPg0KPg0K
+PiAgICAgQ2hhbmdlLUlkOiBJMTY4NjEzM2UwMDkzZTRlMDBhZGVhZGMwNjg5NzIzOTZjOGRjNGZh
+Yg0KDQogSSBzdXNwZWN0IEdlcnJpdCdzIGZpbHRlcmluZyBkaWRkbid0IG5vdGljZSB0aGUgcy1v
+LWIgaW4gdGhlIG1pZGRsZQ0Kb2YgeW91ciBjb21taXQgbWVzc2FnZS4gTm9ybWFsIHN0eWxlIGlz
+IHRvIHBsYWNlIGl0IGF0IHRoZSBib3R0b20gb2YNCnRoZSBvbiB0aGUgbGluZSBpbW1lZGlhdGVs
+eSBhYm92ZSBvciBiZWxvdyB0aGUgY2hhbmdlIGlkLiBUcnkgZ2l0DQpjb21taXQgLS1hbWVuZCBh
+bmQgbW92aW5nIGl0IHNvIHRoZSBtZXNzYWdlIGxvb2tzIGxpa2UgdGhpczoNCg0KQWRkIG1ldGEt
+YXNyb2NrcmFjayBsYXllcg0KDQpDaGFuZ2UtSWQ6IEkxNjg2MTMzZTAwOTNlNGUwMGFkZWFkYzA2
+ODk3MjM5NmM4ZGM0ZmFiDQpTaWduZWQtb2ZmLWJ5OiBKZWZmIENoYW4gPEplZmY5X0NoYW5AYXNy
+b2NrcmFjay5jb20+DQoNCkNoZWVycywNCg0KSm9lbA0K
