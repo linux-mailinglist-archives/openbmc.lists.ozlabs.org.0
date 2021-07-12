@@ -1,69 +1,98 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2480D3C5BAA
-	for <lists+openbmc@lfdr.de>; Mon, 12 Jul 2021 14:08:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A20B83C63CC
+	for <lists+openbmc@lfdr.de>; Mon, 12 Jul 2021 21:33:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GNjGM0nL8z304L
-	for <lists+openbmc@lfdr.de>; Mon, 12 Jul 2021 22:08:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GNv7V1zVsz30Bl
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 05:33:10 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=hQhaZgFb;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=LvSdQUvs;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::a2e;
- helo=mail-vk1-xa2e.google.com; envelope-from=deepak.kodihalli.83@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=hQhaZgFb; dkim-atps=neutral
-Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com
- [IPv6:2607:f8b0:4864:20::a2e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=LvSdQUvs; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GNjG51KYHz2yNk
- for <openbmc@lists.ozlabs.org>; Mon, 12 Jul 2021 22:08:12 +1000 (AEST)
-Received: by mail-vk1-xa2e.google.com with SMTP id i42so3927912vkr.11
- for <openbmc@lists.ozlabs.org>; Mon, 12 Jul 2021 05:08:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=LfEdSsQw/h9NediJVc2lbR3t3W7KFS04BkEDU2a5sKs=;
- b=hQhaZgFbeL5YVu3s+dyJz/j4sviZBEyd0jm08qc0T49ypAP52AiOdZcGWE8X3UWfcU
- Qz/DA25lRhrouagyYLbxLZ3OIgtJ2GIU4hdxqu6c8RDrdC0m5bXJX+Dgvnd45xenp2wV
- 2BsLKBPR4FD2P56JTLbSexAMhJKGpXENUrI0kG3Fnz50saEDaSJds7eJ7Mk9QnAJfFCd
- VIWiB467c5t+MNsCp1CsEq3TA5gTvsDyxvPNsA0opPVmxZM/8vEveGWeVzfqvUZZ+sxx
- loBxwGAy+qKC6t+3AqJdQGZBK67cqsQa+xhfLs2tLMx6JoN7LIwFK0t8LyZX6ZTbnqBf
- wemA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=LfEdSsQw/h9NediJVc2lbR3t3W7KFS04BkEDU2a5sKs=;
- b=ZgwqWOdugyzpmz8wltJlQ8Ob6YGpwnU5IiEi0615sCUtnLR/UehSVEHEhM3Gk3wM/Z
- zPmgj36XXZY/vvssZvzfdly2LItuZqZAds5uLtQyhzkyIt/oIkTgmrdv5Qn6zJNK9bnk
- feDWpDtKEqWjhqoCkeYfg4pVY28Y7kbWoncVrjAwVtwhFflSoTrRGByV2ZTsanFNoYxm
- DT4Jxvx2nU7SvkNtdvLrCI4Vbn3d5Ey2Xk3u30RvJ2Olcg0bHGVrRKNliv9w5dXbKUH1
- 6QiBt9RJd3PBeqYmLN5KWMzHZJROqj3bVmdt5oO+SyzZDQvLpvMmFXVj1056mz4aPvbl
- 2oig==
-X-Gm-Message-State: AOAM530GfvFfHmBPbgFUJWs6vnHfZr38SuPnJvTKSBAlkPtMqzPyjOLY
- Pq+YVruwSHNxxUzPBI+3Hu/G4DSb+v22otZ+m68=
-X-Google-Smtp-Source: ABdhPJxY7kqo/4c7jL7hx7Nx+JmDb0kH2pkn82L1GxXiw33UDtG+epCpqV0voXxG3UcwzFQ08MpMMnJB8rUcPytmXLQ=
-X-Received: by 2002:a05:6122:786:: with SMTP id
- k6mr39630031vkr.19.1626091688572; 
- Mon, 12 Jul 2021 05:08:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAM=TmwX7VjvmaE0dMDvVfdOJ0dRCjXDu2-TcoUdGFSMsLWm81g@mail.gmail.com>
- <YObkiUGRFzvqRGkX@heinlein>
-In-Reply-To: <YObkiUGRFzvqRGkX@heinlein>
-From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
-Date: Mon, 12 Jul 2021 17:37:57 +0530
-Message-ID: <CAM=TmwWV_UpaV5Ui1ZNzAWpUHRyKhNfmrf6JuxUvom_Zi2ZuMQ@mail.gmail.com>
-Subject: Re: Standard FW update package structure - use PLDM?
-To: Patrick Williams <patrick@stwcx.xyz>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GNv793p8Vz2yXX
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Jul 2021 05:32:52 +1000 (AEST)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 16CJ3Ta0173460; Mon, 12 Jul 2021 15:32:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=QvtW3FBa9tE1mwfOAdgXsMj45z9JyERAMcNsH2N1onA=;
+ b=LvSdQUvsVa+CwHlDDoHFhzeCqQg2WB318Jr44xnCAAg3YPb5bx3nfgZNSAqdrcCprNsk
+ 54MaC7pkhex8ad0pdh0YKRBsWafXgfEjhvvFsVBweA3AHewrl6FLm0qM3uQqoFFdRArT
+ 5Iu/L5KGSaDJIrVkHf6uNBfyzW+kQ7hH53PFGe+vZ99Ralg8ggk1JGcmj5Bn+UY4ap7j
+ CxTjt16MelCNb8DUlFrlgcAHeW4hHy2a0npdtpZQmZDGXWU9xgT+D6CkCHlI6gfmHKfA
+ 8XvWn+4XDPZ0mZaJCyi6kNFRcxJcftbP0s4uRZ5GH5RHujETvoE0JspovH/K6Xgol196 oA== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 39qs65c008-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 12 Jul 2021 15:32:46 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16CJWNtD013401;
+ Mon, 12 Jul 2021 19:32:45 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma02wdc.us.ibm.com with ESMTP id 39q36addyt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 12 Jul 2021 19:32:45 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 16CJWiM113566422
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 12 Jul 2021 19:32:44 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E6EBBE059;
+ Mon, 12 Jul 2021 19:32:44 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1F653BE054;
+ Mon, 12 Jul 2021 19:32:44 +0000 (GMT)
+Received: from v0005c16 (unknown [9.211.69.66])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon, 12 Jul 2021 19:32:43 +0000 (GMT)
+Message-ID: <84e7fbd7e65a6ee363763d8155c47d74ed24f9e0.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 2/3] net/ncsi: add NCSI Intel OEM command to keep PHY up
+From: Eddie James <eajames@linux.ibm.com>
+To: Joel Stanley <joel@jms.id.au>, Ivan Mikhaylov <i.mikhaylov@yadro.com>
+Date: Mon, 12 Jul 2021 14:32:43 -0500
+In-Reply-To: <CACPK8Xff9c-_9A_tfZ4UBjucUgRmy8iOOdzcV5dg8VUCOB29AQ@mail.gmail.com>
+References: <20210708122754.555846-1-i.mikhaylov@yadro.com>
+ <20210708122754.555846-3-i.mikhaylov@yadro.com>
+ <CACPK8Xff9c-_9A_tfZ4UBjucUgRmy8iOOdzcV5dg8VUCOB29AQ@mail.gmail.com>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-16.el8) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: ULXN2HCrschaqxdNXlTeVKiKBPTP-wVY
+X-Proofpoint-GUID: ULXN2HCrschaqxdNXlTeVKiKBPTP-wVY
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-07-12_10:2021-07-12,
+ 2021-07-12 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 phishscore=0
+ adultscore=0 spamscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999
+ clxscore=1011 impostorscore=0 suspectscore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104190000 definitions=main-2107120135
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,68 +104,169 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Networking <netdev@vger.kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Jakub Kicinski <kuba@kernel.org>, Samuel Mendoza-Jonas <sam@mendozajonas.com>,
+ "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Patrick,
+On Mon, 2021-07-12 at 10:01 +0000, Joel Stanley wrote:
+> On Thu, 8 Jul 2021 at 12:27, Ivan Mikhaylov <i.mikhaylov@yadro.com>
+> wrote:
+> > This allows to keep PHY link up and prevents any channel resets
+> > during
+> > the host load.
+> > 
+> > It is KEEP_PHY_LINK_UP option(Veto bit) in i210 datasheet which
+> > block PHY reset and power state changes.
+> 
+> How about using runtime configuration over using kconfig for this, so
+> the same kernel config can be used on different machines. Something
+> device tree based?
+> 
+> Another option is to use the netlink handler to send the OEM command
+> from userspace. Eddie has worked on this for an IBM machine, and I've
+> asked him to post those changes. I would prefer the kernel option
+> though.
 
-On Thu, Jul 8, 2021 at 5:12 PM Patrick Williams <patrick@stwcx.xyz> wrote:
-
-> I haven't read this spec, but it sounds like the PLDM spec is similarly
-> aligned with a Compatible concept in that PCIe IDs and/or IANA
-> identifiers can be used.  On the surface it seems to me like we could
-> create our existing Software.Version objects using a PLDM-format image
-> and derive the new Compatible objects from these identifiers.
-
-Right, I had something similar in mind.
-
-> > - How does this fit with PLDM?
-> >
-> > Instead of the VersionPurpose based approach, how about using the PLDM
-> > FW update package structure as the standard to target devices and to
-> > associate devices with versions, even for non-PLDM devices? This means
-> > FW images uploaded to the BMC will be packaged in the PLDM FW update
-> > format. I don't think this is a violation of the PLDM FW update spec
-> > (also checking with PMCI WG). For non-PLDM devices, this means using
-> > just the package structure, not PLDM commands.
->
-> I don't see anything wrong on the surface with enhancing our
-> `ImageManager` concept[2] implementation to support PLDM-format also.
-> Should this code go into phosphor-bmc-code-mgmt though rather than become
-> intrinsic to PLDM?  It seems to me like the `ItemUpdater` for PLDM
-> devices is the only part that needs to be in the PLDM codebase.
-
-I envisioned the PLDM codebase to act both as ImageManager and
-ItemUpdater. Phosphor-bmc-code-mgmt could still implement image
-signature verification.
-
-> I do have questions on how PLDM handles digital signatures and image
-> verification.  I suspect that it would be insufficient for many users
-> such that we wouldn't want it to be the primary image packaging method.
-> Fundamentally, my feeling of insufficiency is around vendor-provided
-> images:
->
->     If I have a FooCorp NIC installed in my system, which supports PLDM
->     update, and FooCorp releases a new image on their website, do I:
->
->         a. Want my user to be able to download FooCorp's image and
->            install it directly using their PLDM update file?
->         b. Want my user to only install an image that I've qualified
->            on in our configuration and additionally signed with *my* keys?
->
-> For some vendors (a) is their designed answer and for some (b) is.
-> Allowing the BMC to take a raw PLDM update image and directly send it
-> to the NIC satisfies (a).  Using the OpenBMC signed tarball scheme
-> satisfies (b), since the BMC will reject the tarball if it isn't signed
-> with keys already trusted by the system and the NIC will reject the
-> embedded PLDM image if it wasn't signed with FooCorp's keys trusted by
-> the hardware.
-
-The OpenBMC signed tarball scheme could still be used and it could
-contain a PLDM format FW package? My intent with the PLDM format was
-to solve the 'Compatible Devices' problem, and specifically for a case
-where the device may actually not support PLDM messages for FW update.
+For reference that is here: 
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-networkd/+/36592
 
 Thanks,
-Deepak
+Eddie
+
+> 
+> 
+> > Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+> > ---
+> >  net/ncsi/Kconfig       |  6 ++++++
+> >  net/ncsi/internal.h    |  5 +++++
+> >  net/ncsi/ncsi-manage.c | 45
+> > ++++++++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 56 insertions(+)
+> > 
+> > diff --git a/net/ncsi/Kconfig b/net/ncsi/Kconfig
+> > index 93309081f5a4..ea1dd32b6b1f 100644
+> > --- a/net/ncsi/Kconfig
+> > +++ b/net/ncsi/Kconfig
+> > @@ -17,3 +17,9 @@ config NCSI_OEM_CMD_GET_MAC
+> >         help
+> >           This allows to get MAC address from NCSI firmware and set
+> > them back to
+> >                 controller.
+> > +config NCSI_OEM_CMD_KEEP_PHY
+> > +       bool "Keep PHY Link up"
+> > +       depends on NET_NCSI
+> > +       help
+> > +         This allows to keep PHY link up and prevents any channel
+> > resets during
+> > +         the host load.
+> > diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
+> > index cbbb0de4750a..0b6cfd3b31e0 100644
+> > --- a/net/ncsi/internal.h
+> > +++ b/net/ncsi/internal.h
+> > @@ -78,6 +78,9 @@ enum {
+> >  /* OEM Vendor Manufacture ID */
+> >  #define NCSI_OEM_MFR_MLX_ID             0x8119
+> >  #define NCSI_OEM_MFR_BCM_ID             0x113d
+> > +#define NCSI_OEM_MFR_INTEL_ID           0x157
+> > +/* Intel specific OEM command */
+> > +#define NCSI_OEM_INTEL_CMD_KEEP_PHY     0x20   /* CMD ID for Keep
+> > PHY up */
+> >  /* Broadcom specific OEM Command */
+> >  #define NCSI_OEM_BCM_CMD_GMA            0x01   /* CMD ID for Get
+> > MAC */
+> >  /* Mellanox specific OEM Command */
+> > @@ -86,6 +89,7 @@ enum {
+> >  #define NCSI_OEM_MLX_CMD_SMAF           0x01   /* CMD ID for Set
+> > MC Affinity */
+> >  #define NCSI_OEM_MLX_CMD_SMAF_PARAM     0x07   /* Parameter for
+> > SMAF         */
+> >  /* OEM Command payload lengths*/
+> > +#define NCSI_OEM_INTEL_CMD_KEEP_PHY_LEN 7
+> >  #define NCSI_OEM_BCM_CMD_GMA_LEN        12
+> >  #define NCSI_OEM_MLX_CMD_GMA_LEN        8
+> >  #define NCSI_OEM_MLX_CMD_SMAF_LEN        60
+> > @@ -271,6 +275,7 @@ enum {
+> >         ncsi_dev_state_probe_mlx_gma,
+> >         ncsi_dev_state_probe_mlx_smaf,
+> >         ncsi_dev_state_probe_cis,
+> > +       ncsi_dev_state_probe_keep_phy,
+> >         ncsi_dev_state_probe_gvi,
+> >         ncsi_dev_state_probe_gc,
+> >         ncsi_dev_state_probe_gls,
+> > diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
+> > index 42b54a3da2e6..89c7742cd72e 100644
+> > --- a/net/ncsi/ncsi-manage.c
+> > +++ b/net/ncsi/ncsi-manage.c
+> > @@ -689,6 +689,35 @@ static int set_one_vid(struct ncsi_dev_priv
+> > *ndp, struct ncsi_channel *nc,
+> >         return 0;
+> >  }
+> > 
+> > +#if IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY)
+> > +
+> > +static int ncsi_oem_keep_phy_intel(struct ncsi_cmd_arg *nca)
+> > +{
+> > +       unsigned char data[NCSI_OEM_INTEL_CMD_KEEP_PHY_LEN];
+> > +       int ret = 0;
+> > +
+> > +       nca->payload = NCSI_OEM_INTEL_CMD_KEEP_PHY_LEN;
+> > +
+> > +       memset(data, 0, NCSI_OEM_INTEL_CMD_KEEP_PHY_LEN);
+> > +       *(unsigned int *)data = ntohl((__force
+> > __be32)NCSI_OEM_MFR_INTEL_ID);
+> > +
+> > +       data[4] = NCSI_OEM_INTEL_CMD_KEEP_PHY;
+> > +
+> > +       /* PHY Link up attribute */
+> > +       data[6] = 0x1;
+> > +
+> > +       nca->data = data;
+> > +
+> > +       ret = ncsi_xmit_cmd(nca);
+> > +       if (ret)
+> > +               netdev_err(nca->ndp->ndev.dev,
+> > +                          "NCSI: Failed to transmit cmd 0x%x
+> > during configure\n",
+> > +                          nca->type);
+> > +       return ret;
+> > +}
+> > +
+> > +#endif
+> > +
+> >  #if IS_ENABLED(CONFIG_NCSI_OEM_CMD_GET_MAC)
+> > 
+> >  /* NCSI OEM Command APIs */
+> > @@ -1391,8 +1420,24 @@ static void ncsi_probe_channel(struct
+> > ncsi_dev_priv *ndp)
+> >                                 goto error;
+> >                 }
+> > 
+> > +               nd->state = ncsi_dev_state_probe_gvi;
+> > +               if (IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY))
+> > +                       nd->state = ncsi_dev_state_probe_keep_phy;
+> > +               break;
+> > +#if IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY)
+> > +       case ncsi_dev_state_probe_keep_phy:
+> > +               ndp->pending_req_num = 1;
+> > +
+> > +               nca.type = NCSI_PKT_CMD_OEM;
+> > +               nca.package = ndp->active_package->id;
+> > +               nca.channel = 0;
+> > +               ret = ncsi_oem_keep_phy_intel(&nca);
+> > +               if (ret)
+> > +                       goto error;
+> > +
+> >                 nd->state = ncsi_dev_state_probe_gvi;
+> >                 break;
+> > +#endif /* CONFIG_NCSI_OEM_CMD_KEEP_PHY */
+> >         case ncsi_dev_state_probe_gvi:
+> >         case ncsi_dev_state_probe_gc:
+> >         case ncsi_dev_state_probe_gls:
+> > --
+> > 2.31.1
+> > 
+
