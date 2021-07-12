@@ -1,39 +1,43 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FC6E3C6608
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 00:08:44 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF8563C6623
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 00:11:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GNyZy1Szcz2ymS
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 08:08:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GNydb5nCCz3bWS
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 08:10:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.65; helo=mga03.intel.com;
+ smtp.mailfrom=intel.com (client-ip=134.134.136.100; helo=mga07.intel.com;
  envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+X-Greylist: delayed 123 seconds by postgrey-1.36 at boromir;
+ Tue, 13 Jul 2021 08:10:39 AEST
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GNyZj0KBfz2yM6;
- Tue, 13 Jul 2021 08:08:22 +1000 (AEST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10043"; a="210104969"
-X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="210104969"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Jul 2021 15:07:15 -0700
-X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="492295335"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GNydC5mMrz30GN;
+ Tue, 13 Jul 2021 08:10:39 +1000 (AEST)
+X-IronPort-AV: E=McAfee;i="6200,9189,10043"; a="273894343"
+X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="273894343"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+ by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jul 2021 15:07:33 -0700
+X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="464367464"
 Received: from jzloch-mobl1.ger.corp.intel.com (HELO localhost)
  ([10.249.136.11])
- by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Jul 2021 15:07:10 -0700
+ by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jul 2021 15:07:27 -0700
 From: Iwona Winiarska <iwona.winiarska@intel.com>
 To: linux-kernel@vger.kernel.org,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH 00/14] Introduce PECI subsystem
-Date: Tue, 13 Jul 2021 00:04:33 +0200
-Message-Id: <20210712220447.957418-1-iwona.winiarska@intel.com>
+Subject: [PATCH 01/14] x86/cpu: Move intel-family to arch-independent headers
+Date: Tue, 13 Jul 2021 00:04:34 +0200
+Message-Id: <20210712220447.957418-2-iwona.winiarska@intel.com>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210712220447.957418-1-iwona.winiarska@intel.com>
+References: <20210712220447.957418-1-iwona.winiarska@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -64,142 +68,348 @@ Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Note: All changes to arch/x86 are contained within patches 01-02.
+Baseboard management controllers (BMC) often run Linux but are usually
+implemented with non-X86 processors. They can use PECI to access package
+config space (PCS) registers on the host CPU and since some information,
+e.g. figuring out the core count, can be obtained using different
+registers on different CPU generations, they need to decode the family
+and model.
 
-The Platform Environment Control Interface (PECI) is a communication
-interface between Intel processors and management controllers (e.g.
-Baseboard Management Controller, BMC).
+Move the data from arch/x86/include/asm/intel-family.h into a new file
+include/linux/x86/intel-family.h so that it can be used by other
+architectures.
 
-This series adds a PECI subsystem and introduces drivers which run in
-the Linux instance on the management controller (not the main Intel
-processor) and is intended to be used by the OpenBMC [1], a Linux
-distribution for BMC devices.
-The information exposed over PECI (like processor and DIMM
-temperature) refers to the Intel processor and can be consumed by
-daemons running on the BMC to, for example, display the processor
-temperature in its web interface.
+Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+---
+To limit tree-wide changes and help people that were expecting
+intel-family defines in arch/x86 to find it more easily without going
+through git history, we're not removing the original header
+completely, we're keeping it as a "stub" that includes the new one.
+If there is a consensus that the tree-wide option is better,
+we can choose this approach.
 
-The PECI bus is collection of code that provides interface support
-between PECI devices (that actually represent processors) and PECI
-controllers (such as the "peci-aspeed" controller) that allow to
-access physical PECI interface. PECI devices are bound to PECI
-drivers that provides access to PECI services. This series introduces
-a generic "peci-cpu" driver that exposes hardware monitoring "cputemp"
-and "dimmtemp" using the auxiliary bus.
-
-Exposing "raw" PECI to userspace, either to write userspace drivers or
-for debug/testing purpose was left out of this series to encourage
-writing kernel drivers instead, but may be pursued in the future.
-
-Introducing PECI to upstream Linux was already attempted before [2].
-Since it's been over a year since last revision, and the series
-changed quite a bit in the meantime, I've decided to start from v1.
-
-I would also like to give credit to everyone who helped me with
-different aspects of preliminary review:
-- Pierre-Louis Bossart,
-- Tony Luck, 
-- Andy Shevchenko,
-- Dave Hansen.
-
-[1] https://github.com/openbmc/openbmc
-[2] https://lore.kernel.org/openbmc/20191211194624.2872-1-jae.hyun.yoo@linux.intel.com/
-
-Iwona Winiarska (12):
-  x86/cpu: Move intel-family to arch-independent headers
-  x86/cpu: Extract cpuid helpers to arch-independent
-  dt-bindings: Add generic bindings for PECI
-  dt-bindings: Add bindings for peci-aspeed
-  ARM: dts: aspeed: Add PECI controller nodes
-  peci: Add core infrastructure
-  peci: Add device detection
-  peci: Add support for PECI device drivers
-  peci: Add peci-cpu driver
-  hwmon: peci: Add cputemp driver
-  hwmon: peci: Add dimmtemp driver
-  docs: Add PECI documentation
-
-Jae Hyun Yoo (2):
-  peci: Add peci-aspeed controller driver
-  docs: hwmon: Document PECI drivers
-
- .../devicetree/bindings/peci/peci-aspeed.yaml | 111 ++++
- .../bindings/peci/peci-controller.yaml        |  28 +
- Documentation/hwmon/index.rst                 |   2 +
- Documentation/hwmon/peci-cputemp.rst          |  93 ++++
- Documentation/hwmon/peci-dimmtemp.rst         |  58 ++
- Documentation/index.rst                       |   1 +
- Documentation/peci/index.rst                  |  16 +
- Documentation/peci/peci.rst                   |  48 ++
- MAINTAINERS                                   |  32 ++
- arch/arm/boot/dts/aspeed-g4.dtsi              |  14 +
- arch/arm/boot/dts/aspeed-g5.dtsi              |  14 +
- arch/arm/boot/dts/aspeed-g6.dtsi              |  14 +
- arch/x86/Kconfig                              |   1 +
- arch/x86/include/asm/cpu.h                    |   3 -
- arch/x86/include/asm/intel-family.h           | 141 +----
- arch/x86/include/asm/microcode.h              |   2 +-
- arch/x86/kvm/cpuid.h                          |   3 +-
- arch/x86/lib/Makefile                         |   2 +-
- drivers/Kconfig                               |   3 +
- drivers/Makefile                              |   1 +
- drivers/edac/mce_amd.c                        |   3 +-
- drivers/hwmon/Kconfig                         |   2 +
- drivers/hwmon/Makefile                        |   1 +
- drivers/hwmon/peci/Kconfig                    |  31 ++
- drivers/hwmon/peci/Makefile                   |   7 +
- drivers/hwmon/peci/common.h                   |  46 ++
- drivers/hwmon/peci/cputemp.c                  | 503 +++++++++++++++++
- drivers/hwmon/peci/dimmtemp.c                 | 508 ++++++++++++++++++
- drivers/peci/Kconfig                          |  36 ++
- drivers/peci/Makefile                         |  10 +
- drivers/peci/controller/Kconfig               |  12 +
- drivers/peci/controller/Makefile              |   3 +
- drivers/peci/controller/peci-aspeed.c         | 501 +++++++++++++++++
- drivers/peci/core.c                           | 224 ++++++++
- drivers/peci/cpu.c                            | 347 ++++++++++++
- drivers/peci/device.c                         | 211 ++++++++
- drivers/peci/internal.h                       | 137 +++++
- drivers/peci/request.c                        | 502 +++++++++++++++++
- drivers/peci/sysfs.c                          |  82 +++
- include/linux/peci-cpu.h                      |  38 ++
- include/linux/peci.h                          |  93 ++++
- include/linux/x86/cpu.h                       |   9 +
- include/linux/x86/intel-family.h              | 146 +++++
- lib/Kconfig                                   |   5 +
- lib/Makefile                                  |   2 +
- lib/x86/Makefile                              |   3 +
- {arch/x86/lib => lib/x86}/cpu.c               |   2 +-
- 47 files changed, 3902 insertions(+), 149 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/peci/peci-aspeed.yaml
- create mode 100644 Documentation/devicetree/bindings/peci/peci-controller.yaml
- create mode 100644 Documentation/hwmon/peci-cputemp.rst
- create mode 100644 Documentation/hwmon/peci-dimmtemp.rst
- create mode 100644 Documentation/peci/index.rst
- create mode 100644 Documentation/peci/peci.rst
- create mode 100644 drivers/hwmon/peci/Kconfig
- create mode 100644 drivers/hwmon/peci/Makefile
- create mode 100644 drivers/hwmon/peci/common.h
- create mode 100644 drivers/hwmon/peci/cputemp.c
- create mode 100644 drivers/hwmon/peci/dimmtemp.c
- create mode 100644 drivers/peci/Kconfig
- create mode 100644 drivers/peci/Makefile
- create mode 100644 drivers/peci/controller/Kconfig
- create mode 100644 drivers/peci/controller/Makefile
- create mode 100644 drivers/peci/controller/peci-aspeed.c
- create mode 100644 drivers/peci/core.c
- create mode 100644 drivers/peci/cpu.c
- create mode 100644 drivers/peci/device.c
- create mode 100644 drivers/peci/internal.h
- create mode 100644 drivers/peci/request.c
- create mode 100644 drivers/peci/sysfs.c
- create mode 100644 include/linux/peci-cpu.h
- create mode 100644 include/linux/peci.h
- create mode 100644 include/linux/x86/cpu.h
+ MAINTAINERS                         |   1 +
+ arch/x86/include/asm/intel-family.h | 141 +--------------------------
+ include/linux/x86/intel-family.h    | 146 ++++++++++++++++++++++++++++
+ 3 files changed, 148 insertions(+), 140 deletions(-)
  create mode 100644 include/linux/x86/intel-family.h
- create mode 100644 lib/x86/Makefile
- rename {arch/x86/lib => lib/x86}/cpu.c (95%)
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a61f4f3b78a9..ec5987a00800 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -9240,6 +9240,7 @@ M:	x86@kernel.org
+ L:	linux-kernel@vger.kernel.org
+ S:	Supported
+ F:	arch/x86/include/asm/intel-family.h
++F:	include/linux/x86/intel-family.h
+ 
+ INTEL DRM DRIVERS (excluding Poulsbo, Moorestown and derivative chipsets)
+ M:	Jani Nikula <jani.nikula@linux.intel.com>
+diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
+index 27158436f322..0d4fe1b4e1f6 100644
+--- a/arch/x86/include/asm/intel-family.h
++++ b/arch/x86/include/asm/intel-family.h
+@@ -2,145 +2,6 @@
+ #ifndef _ASM_X86_INTEL_FAMILY_H
+ #define _ASM_X86_INTEL_FAMILY_H
+ 
+-/*
+- * "Big Core" Processors (Branded as Core, Xeon, etc...)
+- *
+- * While adding a new CPUID for a new microarchitecture, add a new
+- * group to keep logically sorted out in chronological order. Within
+- * that group keep the CPUID for the variants sorted by model number.
+- *
+- * The defined symbol names have the following form:
+- *	INTEL_FAM6{OPTFAMILY}_{MICROARCH}{OPTDIFF}
+- * where:
+- * OPTFAMILY	Describes the family of CPUs that this belongs to. Default
+- *		is assumed to be "_CORE" (and should be omitted). Other values
+- *		currently in use are _ATOM and _XEON_PHI
+- * MICROARCH	Is the code name for the micro-architecture for this core.
+- *		N.B. Not the platform name.
+- * OPTDIFF	If needed, a short string to differentiate by market segment.
+- *
+- *		Common OPTDIFFs:
+- *
+- *			- regular client parts
+- *		_L	- regular mobile parts
+- *		_G	- parts with extra graphics on
+- *		_X	- regular server parts
+- *		_D	- micro server parts
+- *
+- *		Historical OPTDIFFs:
+- *
+- *		_EP	- 2 socket server parts
+- *		_EX	- 4+ socket server parts
+- *
+- * The #define line may optionally include a comment including platform or core
+- * names. An exception is made for skylake/kabylake where steppings seem to have gotten
+- * their own names :-(
+- */
+-
+-/* Wildcard match for FAM6 so X86_MATCH_INTEL_FAM6_MODEL(ANY) works */
+-#define INTEL_FAM6_ANY			X86_MODEL_ANY
+-
+-#define INTEL_FAM6_CORE_YONAH		0x0E
+-
+-#define INTEL_FAM6_CORE2_MEROM		0x0F
+-#define INTEL_FAM6_CORE2_MEROM_L	0x16
+-#define INTEL_FAM6_CORE2_PENRYN		0x17
+-#define INTEL_FAM6_CORE2_DUNNINGTON	0x1D
+-
+-#define INTEL_FAM6_NEHALEM		0x1E
+-#define INTEL_FAM6_NEHALEM_G		0x1F /* Auburndale / Havendale */
+-#define INTEL_FAM6_NEHALEM_EP		0x1A
+-#define INTEL_FAM6_NEHALEM_EX		0x2E
+-
+-#define INTEL_FAM6_WESTMERE		0x25
+-#define INTEL_FAM6_WESTMERE_EP		0x2C
+-#define INTEL_FAM6_WESTMERE_EX		0x2F
+-
+-#define INTEL_FAM6_SANDYBRIDGE		0x2A
+-#define INTEL_FAM6_SANDYBRIDGE_X	0x2D
+-#define INTEL_FAM6_IVYBRIDGE		0x3A
+-#define INTEL_FAM6_IVYBRIDGE_X		0x3E
+-
+-#define INTEL_FAM6_HASWELL		0x3C
+-#define INTEL_FAM6_HASWELL_X		0x3F
+-#define INTEL_FAM6_HASWELL_L		0x45
+-#define INTEL_FAM6_HASWELL_G		0x46
+-
+-#define INTEL_FAM6_BROADWELL		0x3D
+-#define INTEL_FAM6_BROADWELL_G		0x47
+-#define INTEL_FAM6_BROADWELL_X		0x4F
+-#define INTEL_FAM6_BROADWELL_D		0x56
+-
+-#define INTEL_FAM6_SKYLAKE_L		0x4E	/* Sky Lake             */
+-#define INTEL_FAM6_SKYLAKE		0x5E	/* Sky Lake             */
+-#define INTEL_FAM6_SKYLAKE_X		0x55	/* Sky Lake             */
+-/*                 CASCADELAKE_X	0x55	   Sky Lake -- s: 7     */
+-/*                 COOPERLAKE_X		0x55	   Sky Lake -- s: 11    */
+-
+-#define INTEL_FAM6_KABYLAKE_L		0x8E	/* Sky Lake             */
+-/*                 AMBERLAKE_L		0x8E	   Sky Lake -- s: 9     */
+-/*                 COFFEELAKE_L		0x8E	   Sky Lake -- s: 10    */
+-/*                 WHISKEYLAKE_L	0x8E       Sky Lake -- s: 11,12 */
+-
+-#define INTEL_FAM6_KABYLAKE		0x9E	/* Sky Lake             */
+-/*                 COFFEELAKE		0x9E	   Sky Lake -- s: 10-13 */
+-
+-#define INTEL_FAM6_COMETLAKE		0xA5	/* Sky Lake             */
+-#define INTEL_FAM6_COMETLAKE_L		0xA6	/* Sky Lake             */
+-
+-#define INTEL_FAM6_CANNONLAKE_L		0x66	/* Palm Cove */
+-
+-#define INTEL_FAM6_ICELAKE_X		0x6A	/* Sunny Cove */
+-#define INTEL_FAM6_ICELAKE_D		0x6C	/* Sunny Cove */
+-#define INTEL_FAM6_ICELAKE		0x7D	/* Sunny Cove */
+-#define INTEL_FAM6_ICELAKE_L		0x7E	/* Sunny Cove */
+-#define INTEL_FAM6_ICELAKE_NNPI		0x9D	/* Sunny Cove */
+-
+-#define INTEL_FAM6_LAKEFIELD		0x8A	/* Sunny Cove / Tremont */
+-
+-#define INTEL_FAM6_ROCKETLAKE		0xA7	/* Cypress Cove */
+-
+-#define INTEL_FAM6_TIGERLAKE_L		0x8C	/* Willow Cove */
+-#define INTEL_FAM6_TIGERLAKE		0x8D	/* Willow Cove */
+-
+-#define INTEL_FAM6_SAPPHIRERAPIDS_X	0x8F	/* Golden Cove */
+-
+-#define INTEL_FAM6_ALDERLAKE		0x97	/* Golden Cove / Gracemont */
+-#define INTEL_FAM6_ALDERLAKE_L		0x9A	/* Golden Cove / Gracemont */
+-
+-/* "Small Core" Processors (Atom) */
+-
+-#define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
+-#define INTEL_FAM6_ATOM_BONNELL_MID	0x26 /* Silverthorne, Lincroft */
+-
+-#define INTEL_FAM6_ATOM_SALTWELL	0x36 /* Cedarview */
+-#define INTEL_FAM6_ATOM_SALTWELL_MID	0x27 /* Penwell */
+-#define INTEL_FAM6_ATOM_SALTWELL_TABLET	0x35 /* Cloverview */
+-
+-#define INTEL_FAM6_ATOM_SILVERMONT	0x37 /* Bay Trail, Valleyview */
+-#define INTEL_FAM6_ATOM_SILVERMONT_D	0x4D /* Avaton, Rangely */
+-#define INTEL_FAM6_ATOM_SILVERMONT_MID	0x4A /* Merriefield */
+-
+-#define INTEL_FAM6_ATOM_AIRMONT		0x4C /* Cherry Trail, Braswell */
+-#define INTEL_FAM6_ATOM_AIRMONT_MID	0x5A /* Moorefield */
+-#define INTEL_FAM6_ATOM_AIRMONT_NP	0x75 /* Lightning Mountain */
+-
+-#define INTEL_FAM6_ATOM_GOLDMONT	0x5C /* Apollo Lake */
+-#define INTEL_FAM6_ATOM_GOLDMONT_D	0x5F /* Denverton */
+-
+-/* Note: the micro-architecture is "Goldmont Plus" */
+-#define INTEL_FAM6_ATOM_GOLDMONT_PLUS	0x7A /* Gemini Lake */
+-
+-#define INTEL_FAM6_ATOM_TREMONT_D	0x86 /* Jacobsville */
+-#define INTEL_FAM6_ATOM_TREMONT		0x96 /* Elkhart Lake */
+-#define INTEL_FAM6_ATOM_TREMONT_L	0x9C /* Jasper Lake */
+-
+-/* Xeon Phi */
+-
+-#define INTEL_FAM6_XEON_PHI_KNL		0x57 /* Knights Landing */
+-#define INTEL_FAM6_XEON_PHI_KNM		0x85 /* Knights Mill */
+-
+-/* Family 5 */
+-#define INTEL_FAM5_QUARK_X1000		0x09 /* Quark X1000 SoC */
++#include <linux/x86/intel-family.h>
+ 
+ #endif /* _ASM_X86_INTEL_FAMILY_H */
+diff --git a/include/linux/x86/intel-family.h b/include/linux/x86/intel-family.h
+new file mode 100644
+index 000000000000..ae4b075c1ab9
+--- /dev/null
++++ b/include/linux/x86/intel-family.h
+@@ -0,0 +1,146 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_X86_INTEL_FAMILY_H
++#define _LINUX_X86_INTEL_FAMILY_H
++
++/*
++ * "Big Core" Processors (Branded as Core, Xeon, etc...)
++ *
++ * While adding a new CPUID for a new microarchitecture, add a new
++ * group to keep logically sorted out in chronological order. Within
++ * that group keep the CPUID for the variants sorted by model number.
++ *
++ * The defined symbol names have the following form:
++ *	INTEL_FAM6{OPTFAMILY}_{MICROARCH}{OPTDIFF}
++ * where:
++ * OPTFAMILY	Describes the family of CPUs that this belongs to. Default
++ *		is assumed to be "_CORE" (and should be omitted). Other values
++ *		currently in use are _ATOM and _XEON_PHI
++ * MICROARCH	Is the code name for the micro-architecture for this core.
++ *		N.B. Not the platform name.
++ * OPTDIFF	If needed, a short string to differentiate by market segment.
++ *
++ *		Common OPTDIFFs:
++ *
++ *			- regular client parts
++ *		_L	- regular mobile parts
++ *		_G	- parts with extra graphics on
++ *		_X	- regular server parts
++ *		_D	- micro server parts
++ *
++ *		Historical OPTDIFFs:
++ *
++ *		_EP	- 2 socket server parts
++ *		_EX	- 4+ socket server parts
++ *
++ * The #define line may optionally include a comment including platform or core
++ * names. An exception is made for skylake/kabylake where steppings seem to have gotten
++ * their own names :-(
++ */
++
++/* Wildcard match for FAM6 so X86_MATCH_INTEL_FAM6_MODEL(ANY) works */
++#define INTEL_FAM6_ANY			X86_MODEL_ANY
++
++#define INTEL_FAM6_CORE_YONAH		0x0E
++
++#define INTEL_FAM6_CORE2_MEROM		0x0F
++#define INTEL_FAM6_CORE2_MEROM_L	0x16
++#define INTEL_FAM6_CORE2_PENRYN		0x17
++#define INTEL_FAM6_CORE2_DUNNINGTON	0x1D
++
++#define INTEL_FAM6_NEHALEM		0x1E
++#define INTEL_FAM6_NEHALEM_G		0x1F /* Auburndale / Havendale */
++#define INTEL_FAM6_NEHALEM_EP		0x1A
++#define INTEL_FAM6_NEHALEM_EX		0x2E
++
++#define INTEL_FAM6_WESTMERE		0x25
++#define INTEL_FAM6_WESTMERE_EP		0x2C
++#define INTEL_FAM6_WESTMERE_EX		0x2F
++
++#define INTEL_FAM6_SANDYBRIDGE		0x2A
++#define INTEL_FAM6_SANDYBRIDGE_X	0x2D
++#define INTEL_FAM6_IVYBRIDGE		0x3A
++#define INTEL_FAM6_IVYBRIDGE_X		0x3E
++
++#define INTEL_FAM6_HASWELL		0x3C
++#define INTEL_FAM6_HASWELL_X		0x3F
++#define INTEL_FAM6_HASWELL_L		0x45
++#define INTEL_FAM6_HASWELL_G		0x46
++
++#define INTEL_FAM6_BROADWELL		0x3D
++#define INTEL_FAM6_BROADWELL_G		0x47
++#define INTEL_FAM6_BROADWELL_X		0x4F
++#define INTEL_FAM6_BROADWELL_D		0x56
++
++#define INTEL_FAM6_SKYLAKE_L		0x4E	/* Sky Lake             */
++#define INTEL_FAM6_SKYLAKE		0x5E	/* Sky Lake             */
++#define INTEL_FAM6_SKYLAKE_X		0x55	/* Sky Lake             */
++/*                 CASCADELAKE_X	0x55	   Sky Lake -- s: 7     */
++/*                 COOPERLAKE_X		0x55	   Sky Lake -- s: 11    */
++
++#define INTEL_FAM6_KABYLAKE_L		0x8E	/* Sky Lake             */
++/*                 AMBERLAKE_L		0x8E	   Sky Lake -- s: 9     */
++/*                 COFFEELAKE_L		0x8E	   Sky Lake -- s: 10    */
++/*                 WHISKEYLAKE_L	0x8E       Sky Lake -- s: 11,12 */
++
++#define INTEL_FAM6_KABYLAKE		0x9E	/* Sky Lake             */
++/*                 COFFEELAKE		0x9E	   Sky Lake -- s: 10-13 */
++
++#define INTEL_FAM6_COMETLAKE		0xA5	/* Sky Lake             */
++#define INTEL_FAM6_COMETLAKE_L		0xA6	/* Sky Lake             */
++
++#define INTEL_FAM6_CANNONLAKE_L		0x66	/* Palm Cove */
++
++#define INTEL_FAM6_ICELAKE_X		0x6A	/* Sunny Cove */
++#define INTEL_FAM6_ICELAKE_D		0x6C	/* Sunny Cove */
++#define INTEL_FAM6_ICELAKE		0x7D	/* Sunny Cove */
++#define INTEL_FAM6_ICELAKE_L		0x7E	/* Sunny Cove */
++#define INTEL_FAM6_ICELAKE_NNPI		0x9D	/* Sunny Cove */
++
++#define INTEL_FAM6_LAKEFIELD		0x8A	/* Sunny Cove / Tremont */
++
++#define INTEL_FAM6_ROCKETLAKE		0xA7	/* Cypress Cove */
++
++#define INTEL_FAM6_TIGERLAKE_L		0x8C	/* Willow Cove */
++#define INTEL_FAM6_TIGERLAKE		0x8D	/* Willow Cove */
++
++#define INTEL_FAM6_SAPPHIRERAPIDS_X	0x8F	/* Golden Cove */
++
++#define INTEL_FAM6_ALDERLAKE		0x97	/* Golden Cove / Gracemont */
++#define INTEL_FAM6_ALDERLAKE_L		0x9A	/* Golden Cove / Gracemont */
++
++/* "Small Core" Processors (Atom) */
++
++#define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
++#define INTEL_FAM6_ATOM_BONNELL_MID	0x26 /* Silverthorne, Lincroft */
++
++#define INTEL_FAM6_ATOM_SALTWELL	0x36 /* Cedarview */
++#define INTEL_FAM6_ATOM_SALTWELL_MID	0x27 /* Penwell */
++#define INTEL_FAM6_ATOM_SALTWELL_TABLET	0x35 /* Cloverview */
++
++#define INTEL_FAM6_ATOM_SILVERMONT	0x37 /* Bay Trail, Valleyview */
++#define INTEL_FAM6_ATOM_SILVERMONT_D	0x4D /* Avaton, Rangely */
++#define INTEL_FAM6_ATOM_SILVERMONT_MID	0x4A /* Merriefield */
++
++#define INTEL_FAM6_ATOM_AIRMONT		0x4C /* Cherry Trail, Braswell */
++#define INTEL_FAM6_ATOM_AIRMONT_MID	0x5A /* Moorefield */
++#define INTEL_FAM6_ATOM_AIRMONT_NP	0x75 /* Lightning Mountain */
++
++#define INTEL_FAM6_ATOM_GOLDMONT	0x5C /* Apollo Lake */
++#define INTEL_FAM6_ATOM_GOLDMONT_D	0x5F /* Denverton */
++
++/* Note: the micro-architecture is "Goldmont Plus" */
++#define INTEL_FAM6_ATOM_GOLDMONT_PLUS	0x7A /* Gemini Lake */
++
++#define INTEL_FAM6_ATOM_TREMONT_D	0x86 /* Jacobsville */
++#define INTEL_FAM6_ATOM_TREMONT		0x96 /* Elkhart Lake */
++#define INTEL_FAM6_ATOM_TREMONT_L	0x9C /* Jasper Lake */
++
++/* Xeon Phi */
++
++#define INTEL_FAM6_XEON_PHI_KNL		0x57 /* Knights Landing */
++#define INTEL_FAM6_XEON_PHI_KNM		0x85 /* Knights Mill */
++
++/* Family 5 */
++#define INTEL_FAM5_QUARK_X1000		0x09 /* Quark X1000 SoC */
++
++#endif /* _LINUX_X86_INTEL_FAMILY_H */
 -- 
 2.31.1
 
