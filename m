@@ -2,37 +2,37 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7660E3C660A
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 00:09:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A9E53C6611
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 00:09:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GNybP2yJSz3bW3
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 08:09:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GNyc33yhvz3bXj
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 08:09:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.151; helo=mga17.intel.com;
+ smtp.mailfrom=intel.com (client-ip=134.134.136.126; helo=mga18.intel.com;
  envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GNyb66xZpz306j;
- Tue, 13 Jul 2021 08:08:50 +1000 (AEST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10043"; a="190442371"
-X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="190442371"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GNybK2ghVz30Cb;
+ Tue, 13 Jul 2021 08:09:00 +1000 (AEST)
+X-IronPort-AV: E=McAfee;i="6200,9189,10043"; a="197334781"
+X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="197334781"
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Jul 2021 15:07:47 -0700
-X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="464369773"
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jul 2021 15:07:58 -0700
+X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="464371996"
 Received: from jzloch-mobl1.ger.corp.intel.com (HELO localhost)
  ([10.249.136.11])
  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Jul 2021 15:07:41 -0700
+ 12 Jul 2021 15:07:53 -0700
 From: Iwona Winiarska <iwona.winiarska@intel.com>
 To: linux-kernel@vger.kernel.org,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH 02/14] x86/cpu: Extract cpuid helpers to arch-independent
-Date: Tue, 13 Jul 2021 00:04:35 +0200
-Message-Id: <20210712220447.957418-3-iwona.winiarska@intel.com>
+Subject: [PATCH 03/14] dt-bindings: Add generic bindings for PECI
+Date: Tue, 13 Jul 2021 00:04:36 +0200
+Message-Id: <20210712220447.957418-4-iwona.winiarska@intel.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210712220447.957418-1-iwona.winiarska@intel.com>
 References: <20210712220447.957418-1-iwona.winiarska@intel.com>
@@ -66,198 +66,48 @@ Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Baseboard management controllers (BMC) often run Linux but are usually
-implemented with non-X86 processors. They can use PECI to access package
-config space (PCS) registers on the host CPU and since some information,
-e.g. figuring out the core count, can be obtained using different
-registers on different CPU generations, they need to decode the family
-and model.
-
-The format of Package Identifier PCS register that describes CPUID
-information has the same layout as CPUID_1.EAX, so let's allow to reuse
-cpuid helpers by making it available for other architectures as well.
+Add device tree bindings for the PECI controller.
 
 Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
 ---
- MAINTAINERS                      | 2 ++
- arch/x86/Kconfig                 | 1 +
- arch/x86/include/asm/cpu.h       | 3 ---
- arch/x86/include/asm/microcode.h | 2 +-
- arch/x86/kvm/cpuid.h             | 3 ++-
- arch/x86/lib/Makefile            | 2 +-
- drivers/edac/mce_amd.c           | 3 +--
- include/linux/x86/cpu.h          | 9 +++++++++
- lib/Kconfig                      | 5 +++++
- lib/Makefile                     | 2 ++
- lib/x86/Makefile                 | 3 +++
- {arch/x86/lib => lib/x86}/cpu.c  | 2 +-
- 12 files changed, 28 insertions(+), 9 deletions(-)
- create mode 100644 include/linux/x86/cpu.h
- create mode 100644 lib/x86/Makefile
- rename {arch/x86/lib => lib/x86}/cpu.c (95%)
+ .../bindings/peci/peci-controller.yaml        | 28 +++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/peci/peci-controller.yaml
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ec5987a00800..6f77aaca2a30 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20081,6 +20081,8 @@ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git x86/core
- F:	Documentation/devicetree/bindings/x86/
- F:	Documentation/x86/
- F:	arch/x86/
-+F:	include/linux/x86/
-+F:	lib/x86/
- 
- X86 ENTRY CODE
- M:	Andy Lutomirski <luto@kernel.org>
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 49270655e827..750f9b896e4f 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -141,6 +141,7 @@ config X86
- 	select GENERIC_IRQ_PROBE
- 	select GENERIC_IRQ_RESERVATION_MODE
- 	select GENERIC_IRQ_SHOW
-+	select GENERIC_LIB_X86
- 	select GENERIC_PENDING_IRQ		if SMP
- 	select GENERIC_PTDUMP
- 	select GENERIC_SMP_IDLE_THREAD
-diff --git a/arch/x86/include/asm/cpu.h b/arch/x86/include/asm/cpu.h
-index 33d41e350c79..2a663a05a795 100644
---- a/arch/x86/include/asm/cpu.h
-+++ b/arch/x86/include/asm/cpu.h
-@@ -37,9 +37,6 @@ extern int _debug_hotplug_cpu(int cpu, int action);
- 
- int mwait_usable(const struct cpuinfo_x86 *);
- 
--unsigned int x86_family(unsigned int sig);
--unsigned int x86_model(unsigned int sig);
--unsigned int x86_stepping(unsigned int sig);
- #ifdef CONFIG_CPU_SUP_INTEL
- extern void __init sld_setup(struct cpuinfo_x86 *c);
- extern void switch_to_sld(unsigned long tifn);
-diff --git a/arch/x86/include/asm/microcode.h b/arch/x86/include/asm/microcode.h
-index ab45a220fac4..4b0eabf63b98 100644
---- a/arch/x86/include/asm/microcode.h
-+++ b/arch/x86/include/asm/microcode.h
-@@ -2,9 +2,9 @@
- #ifndef _ASM_X86_MICROCODE_H
- #define _ASM_X86_MICROCODE_H
- 
--#include <asm/cpu.h>
- #include <linux/earlycpio.h>
- #include <linux/initrd.h>
-+#include <linux/x86/cpu.h>
- 
- struct ucode_patch {
- 	struct list_head plist;
-diff --git a/arch/x86/kvm/cpuid.h b/arch/x86/kvm/cpuid.h
-index c99edfff7f82..bf070d2a2175 100644
---- a/arch/x86/kvm/cpuid.h
-+++ b/arch/x86/kvm/cpuid.h
-@@ -4,10 +4,11 @@
- 
- #include "x86.h"
- #include "reverse_cpuid.h"
--#include <asm/cpu.h>
- #include <asm/processor.h>
- #include <uapi/asm/kvm_para.h>
- 
-+#include <linux/x86/cpu.h>
-+
- extern u32 kvm_cpu_caps[NR_KVM_CPU_CAPS] __read_mostly;
- void kvm_set_cpu_caps(void);
- 
-diff --git a/arch/x86/lib/Makefile b/arch/x86/lib/Makefile
-index bad4dee4f0e4..fd73c1b72c3e 100644
---- a/arch/x86/lib/Makefile
-+++ b/arch/x86/lib/Makefile
-@@ -41,7 +41,7 @@ clean-files := inat-tables.c
- 
- obj-$(CONFIG_SMP) += msr-smp.o cache-smp.o
- 
--lib-y := delay.o misc.o cmdline.o cpu.o
-+lib-y := delay.o misc.o cmdline.o
- lib-y += usercopy_$(BITS).o usercopy.o getuser.o putuser.o
- lib-y += memcpy_$(BITS).o
- lib-$(CONFIG_ARCH_HAS_COPY_MC) += copy_mc.o copy_mc_64.o
-diff --git a/drivers/edac/mce_amd.c b/drivers/edac/mce_amd.c
-index 27d56920b469..f545f5fad02c 100644
---- a/drivers/edac/mce_amd.c
-+++ b/drivers/edac/mce_amd.c
-@@ -1,8 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- #include <linux/module.h>
- #include <linux/slab.h>
--
--#include <asm/cpu.h>
-+#include <linux/x86/cpu.h>
- 
- #include "mce_amd.h"
- 
-diff --git a/include/linux/x86/cpu.h b/include/linux/x86/cpu.h
+diff --git a/Documentation/devicetree/bindings/peci/peci-controller.yaml b/Documentation/devicetree/bindings/peci/peci-controller.yaml
 new file mode 100644
-index 000000000000..5f383d47886d
+index 000000000000..54ae8fc333d3
 --- /dev/null
-+++ b/include/linux/x86/cpu.h
-@@ -0,0 +1,9 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+#ifndef _LINUX_X86_CPU_H
-+#define _LINUX_X86_CPU_H
++++ b/Documentation/devicetree/bindings/peci/peci-controller.yaml
+@@ -0,0 +1,28 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/peci/peci-controller.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+unsigned int x86_family(unsigned int sig);
-+unsigned int x86_model(unsigned int sig);
-+unsigned int x86_stepping(unsigned int sig);
++title: Generic Device Tree Bindings for PECI
 +
-+#endif /* _LINUX_X86_CPU_H */
-diff --git a/lib/Kconfig b/lib/Kconfig
-index d241fe476fda..cc28bc1f2d84 100644
---- a/lib/Kconfig
-+++ b/lib/Kconfig
-@@ -718,3 +718,8 @@ config PLDMFW
- 
- config ASN1_ENCODER
-        tristate
++maintainers:
++  - Iwona Winiarska <iwona.winiarska@intel.com>
 +
-+config GENERIC_LIB_X86
-+	bool
-+	depends on X86
-+	default n
-diff --git a/lib/Makefile b/lib/Makefile
-index 5efd1b435a37..befbd9413432 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -360,3 +360,5 @@ obj-$(CONFIG_CMDLINE_KUNIT_TEST) += cmdline_kunit.o
- obj-$(CONFIG_SLUB_KUNIT_TEST) += slub_kunit.o
- 
- obj-$(CONFIG_GENERIC_LIB_DEVMEM_IS_ALLOWED) += devmem_is_allowed.o
++description: |
++  PECI (Platform Environment Control Interface) is an interface that provides a
++  communication channel from Intel processors and chipset components to external
++  monitoring or control devices.
 +
-+obj-$(CONFIG_GENERIC_LIB_X86) += x86/
-diff --git a/lib/x86/Makefile b/lib/x86/Makefile
-new file mode 100644
-index 000000000000..342024c272fc
---- /dev/null
-+++ b/lib/x86/Makefile
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0-only
++properties:
++  $nodename:
++    pattern: "^peci-controller(@.*)?$"
 +
-+obj-y := cpu.o
-diff --git a/arch/x86/lib/cpu.c b/lib/x86/cpu.c
-similarity index 95%
-rename from arch/x86/lib/cpu.c
-rename to lib/x86/cpu.c
-index 7ad68917a51e..17af59a2fddf 100644
---- a/arch/x86/lib/cpu.c
-+++ b/lib/x86/cpu.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- #include <linux/types.h>
- #include <linux/export.h>
--#include <asm/cpu.h>
-+#include <linux/x86/cpu.h>
- 
- unsigned int x86_family(unsigned int sig)
- {
++additionalProperties: true
++
++examples:
++  - |
++    peci-controller@1e78b000 {
++      reg = <0x1e78b000 0x100>;
++    };
++...
 -- 
 2.31.1
 
