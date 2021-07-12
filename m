@@ -2,39 +2,37 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF8563C6623
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 00:11:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7660E3C660A
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 00:09:07 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GNydb5nCCz3bWS
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 08:10:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GNybP2yJSz3bW3
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 08:09:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.100; helo=mga07.intel.com;
+ smtp.mailfrom=intel.com (client-ip=192.55.52.151; helo=mga17.intel.com;
  envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 123 seconds by postgrey-1.36 at boromir;
- Tue, 13 Jul 2021 08:10:39 AEST
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GNydC5mMrz30GN;
- Tue, 13 Jul 2021 08:10:39 +1000 (AEST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10043"; a="273894343"
-X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="273894343"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GNyb66xZpz306j;
+ Tue, 13 Jul 2021 08:08:50 +1000 (AEST)
+X-IronPort-AV: E=McAfee;i="6200,9189,10043"; a="190442371"
+X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="190442371"
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
- by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Jul 2021 15:07:33 -0700
-X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="464367464"
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jul 2021 15:07:47 -0700
+X-IronPort-AV: E=Sophos;i="5.84,235,1620716400"; d="scan'208";a="464369773"
 Received: from jzloch-mobl1.ger.corp.intel.com (HELO localhost)
  ([10.249.136.11])
  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Jul 2021 15:07:27 -0700
+ 12 Jul 2021 15:07:41 -0700
 From: Iwona Winiarska <iwona.winiarska@intel.com>
 To: linux-kernel@vger.kernel.org,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH 01/14] x86/cpu: Move intel-family to arch-independent headers
-Date: Tue, 13 Jul 2021 00:04:34 +0200
-Message-Id: <20210712220447.957418-2-iwona.winiarska@intel.com>
+Subject: [PATCH 02/14] x86/cpu: Extract cpuid helpers to arch-independent
+Date: Tue, 13 Jul 2021 00:04:35 +0200
+Message-Id: <20210712220447.957418-3-iwona.winiarska@intel.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210712220447.957418-1-iwona.winiarska@intel.com>
 References: <20210712220447.957418-1-iwona.winiarska@intel.com>
@@ -75,341 +73,191 @@ e.g. figuring out the core count, can be obtained using different
 registers on different CPU generations, they need to decode the family
 and model.
 
-Move the data from arch/x86/include/asm/intel-family.h into a new file
-include/linux/x86/intel-family.h so that it can be used by other
-architectures.
+The format of Package Identifier PCS register that describes CPUID
+information has the same layout as CPUID_1.EAX, so let's allow to reuse
+cpuid helpers by making it available for other architectures as well.
 
 Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 ---
-To limit tree-wide changes and help people that were expecting
-intel-family defines in arch/x86 to find it more easily without going
-through git history, we're not removing the original header
-completely, we're keeping it as a "stub" that includes the new one.
-If there is a consensus that the tree-wide option is better,
-we can choose this approach.
-
- MAINTAINERS                         |   1 +
- arch/x86/include/asm/intel-family.h | 141 +--------------------------
- include/linux/x86/intel-family.h    | 146 ++++++++++++++++++++++++++++
- 3 files changed, 148 insertions(+), 140 deletions(-)
- create mode 100644 include/linux/x86/intel-family.h
+ MAINTAINERS                      | 2 ++
+ arch/x86/Kconfig                 | 1 +
+ arch/x86/include/asm/cpu.h       | 3 ---
+ arch/x86/include/asm/microcode.h | 2 +-
+ arch/x86/kvm/cpuid.h             | 3 ++-
+ arch/x86/lib/Makefile            | 2 +-
+ drivers/edac/mce_amd.c           | 3 +--
+ include/linux/x86/cpu.h          | 9 +++++++++
+ lib/Kconfig                      | 5 +++++
+ lib/Makefile                     | 2 ++
+ lib/x86/Makefile                 | 3 +++
+ {arch/x86/lib => lib/x86}/cpu.c  | 2 +-
+ 12 files changed, 28 insertions(+), 9 deletions(-)
+ create mode 100644 include/linux/x86/cpu.h
+ create mode 100644 lib/x86/Makefile
+ rename {arch/x86/lib => lib/x86}/cpu.c (95%)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index a61f4f3b78a9..ec5987a00800 100644
+index ec5987a00800..6f77aaca2a30 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -9240,6 +9240,7 @@ M:	x86@kernel.org
- L:	linux-kernel@vger.kernel.org
- S:	Supported
- F:	arch/x86/include/asm/intel-family.h
-+F:	include/linux/x86/intel-family.h
+@@ -20081,6 +20081,8 @@ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git x86/core
+ F:	Documentation/devicetree/bindings/x86/
+ F:	Documentation/x86/
+ F:	arch/x86/
++F:	include/linux/x86/
++F:	lib/x86/
  
- INTEL DRM DRIVERS (excluding Poulsbo, Moorestown and derivative chipsets)
- M:	Jani Nikula <jani.nikula@linux.intel.com>
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 27158436f322..0d4fe1b4e1f6 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -2,145 +2,6 @@
- #ifndef _ASM_X86_INTEL_FAMILY_H
- #define _ASM_X86_INTEL_FAMILY_H
+ X86 ENTRY CODE
+ M:	Andy Lutomirski <luto@kernel.org>
+diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+index 49270655e827..750f9b896e4f 100644
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -141,6 +141,7 @@ config X86
+ 	select GENERIC_IRQ_PROBE
+ 	select GENERIC_IRQ_RESERVATION_MODE
+ 	select GENERIC_IRQ_SHOW
++	select GENERIC_LIB_X86
+ 	select GENERIC_PENDING_IRQ		if SMP
+ 	select GENERIC_PTDUMP
+ 	select GENERIC_SMP_IDLE_THREAD
+diff --git a/arch/x86/include/asm/cpu.h b/arch/x86/include/asm/cpu.h
+index 33d41e350c79..2a663a05a795 100644
+--- a/arch/x86/include/asm/cpu.h
++++ b/arch/x86/include/asm/cpu.h
+@@ -37,9 +37,6 @@ extern int _debug_hotplug_cpu(int cpu, int action);
  
--/*
-- * "Big Core" Processors (Branded as Core, Xeon, etc...)
-- *
-- * While adding a new CPUID for a new microarchitecture, add a new
-- * group to keep logically sorted out in chronological order. Within
-- * that group keep the CPUID for the variants sorted by model number.
-- *
-- * The defined symbol names have the following form:
-- *	INTEL_FAM6{OPTFAMILY}_{MICROARCH}{OPTDIFF}
-- * where:
-- * OPTFAMILY	Describes the family of CPUs that this belongs to. Default
-- *		is assumed to be "_CORE" (and should be omitted). Other values
-- *		currently in use are _ATOM and _XEON_PHI
-- * MICROARCH	Is the code name for the micro-architecture for this core.
-- *		N.B. Not the platform name.
-- * OPTDIFF	If needed, a short string to differentiate by market segment.
-- *
-- *		Common OPTDIFFs:
-- *
-- *			- regular client parts
-- *		_L	- regular mobile parts
-- *		_G	- parts with extra graphics on
-- *		_X	- regular server parts
-- *		_D	- micro server parts
-- *
-- *		Historical OPTDIFFs:
-- *
-- *		_EP	- 2 socket server parts
-- *		_EX	- 4+ socket server parts
-- *
-- * The #define line may optionally include a comment including platform or core
-- * names. An exception is made for skylake/kabylake where steppings seem to have gotten
-- * their own names :-(
-- */
--
--/* Wildcard match for FAM6 so X86_MATCH_INTEL_FAM6_MODEL(ANY) works */
--#define INTEL_FAM6_ANY			X86_MODEL_ANY
--
--#define INTEL_FAM6_CORE_YONAH		0x0E
--
--#define INTEL_FAM6_CORE2_MEROM		0x0F
--#define INTEL_FAM6_CORE2_MEROM_L	0x16
--#define INTEL_FAM6_CORE2_PENRYN		0x17
--#define INTEL_FAM6_CORE2_DUNNINGTON	0x1D
--
--#define INTEL_FAM6_NEHALEM		0x1E
--#define INTEL_FAM6_NEHALEM_G		0x1F /* Auburndale / Havendale */
--#define INTEL_FAM6_NEHALEM_EP		0x1A
--#define INTEL_FAM6_NEHALEM_EX		0x2E
--
--#define INTEL_FAM6_WESTMERE		0x25
--#define INTEL_FAM6_WESTMERE_EP		0x2C
--#define INTEL_FAM6_WESTMERE_EX		0x2F
--
--#define INTEL_FAM6_SANDYBRIDGE		0x2A
--#define INTEL_FAM6_SANDYBRIDGE_X	0x2D
--#define INTEL_FAM6_IVYBRIDGE		0x3A
--#define INTEL_FAM6_IVYBRIDGE_X		0x3E
--
--#define INTEL_FAM6_HASWELL		0x3C
--#define INTEL_FAM6_HASWELL_X		0x3F
--#define INTEL_FAM6_HASWELL_L		0x45
--#define INTEL_FAM6_HASWELL_G		0x46
--
--#define INTEL_FAM6_BROADWELL		0x3D
--#define INTEL_FAM6_BROADWELL_G		0x47
--#define INTEL_FAM6_BROADWELL_X		0x4F
--#define INTEL_FAM6_BROADWELL_D		0x56
--
--#define INTEL_FAM6_SKYLAKE_L		0x4E	/* Sky Lake             */
--#define INTEL_FAM6_SKYLAKE		0x5E	/* Sky Lake             */
--#define INTEL_FAM6_SKYLAKE_X		0x55	/* Sky Lake             */
--/*                 CASCADELAKE_X	0x55	   Sky Lake -- s: 7     */
--/*                 COOPERLAKE_X		0x55	   Sky Lake -- s: 11    */
--
--#define INTEL_FAM6_KABYLAKE_L		0x8E	/* Sky Lake             */
--/*                 AMBERLAKE_L		0x8E	   Sky Lake -- s: 9     */
--/*                 COFFEELAKE_L		0x8E	   Sky Lake -- s: 10    */
--/*                 WHISKEYLAKE_L	0x8E       Sky Lake -- s: 11,12 */
--
--#define INTEL_FAM6_KABYLAKE		0x9E	/* Sky Lake             */
--/*                 COFFEELAKE		0x9E	   Sky Lake -- s: 10-13 */
--
--#define INTEL_FAM6_COMETLAKE		0xA5	/* Sky Lake             */
--#define INTEL_FAM6_COMETLAKE_L		0xA6	/* Sky Lake             */
--
--#define INTEL_FAM6_CANNONLAKE_L		0x66	/* Palm Cove */
--
--#define INTEL_FAM6_ICELAKE_X		0x6A	/* Sunny Cove */
--#define INTEL_FAM6_ICELAKE_D		0x6C	/* Sunny Cove */
--#define INTEL_FAM6_ICELAKE		0x7D	/* Sunny Cove */
--#define INTEL_FAM6_ICELAKE_L		0x7E	/* Sunny Cove */
--#define INTEL_FAM6_ICELAKE_NNPI		0x9D	/* Sunny Cove */
--
--#define INTEL_FAM6_LAKEFIELD		0x8A	/* Sunny Cove / Tremont */
--
--#define INTEL_FAM6_ROCKETLAKE		0xA7	/* Cypress Cove */
--
--#define INTEL_FAM6_TIGERLAKE_L		0x8C	/* Willow Cove */
--#define INTEL_FAM6_TIGERLAKE		0x8D	/* Willow Cove */
--
--#define INTEL_FAM6_SAPPHIRERAPIDS_X	0x8F	/* Golden Cove */
--
--#define INTEL_FAM6_ALDERLAKE		0x97	/* Golden Cove / Gracemont */
--#define INTEL_FAM6_ALDERLAKE_L		0x9A	/* Golden Cove / Gracemont */
--
--/* "Small Core" Processors (Atom) */
--
--#define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
--#define INTEL_FAM6_ATOM_BONNELL_MID	0x26 /* Silverthorne, Lincroft */
--
--#define INTEL_FAM6_ATOM_SALTWELL	0x36 /* Cedarview */
--#define INTEL_FAM6_ATOM_SALTWELL_MID	0x27 /* Penwell */
--#define INTEL_FAM6_ATOM_SALTWELL_TABLET	0x35 /* Cloverview */
--
--#define INTEL_FAM6_ATOM_SILVERMONT	0x37 /* Bay Trail, Valleyview */
--#define INTEL_FAM6_ATOM_SILVERMONT_D	0x4D /* Avaton, Rangely */
--#define INTEL_FAM6_ATOM_SILVERMONT_MID	0x4A /* Merriefield */
--
--#define INTEL_FAM6_ATOM_AIRMONT		0x4C /* Cherry Trail, Braswell */
--#define INTEL_FAM6_ATOM_AIRMONT_MID	0x5A /* Moorefield */
--#define INTEL_FAM6_ATOM_AIRMONT_NP	0x75 /* Lightning Mountain */
--
--#define INTEL_FAM6_ATOM_GOLDMONT	0x5C /* Apollo Lake */
--#define INTEL_FAM6_ATOM_GOLDMONT_D	0x5F /* Denverton */
--
--/* Note: the micro-architecture is "Goldmont Plus" */
--#define INTEL_FAM6_ATOM_GOLDMONT_PLUS	0x7A /* Gemini Lake */
--
--#define INTEL_FAM6_ATOM_TREMONT_D	0x86 /* Jacobsville */
--#define INTEL_FAM6_ATOM_TREMONT		0x96 /* Elkhart Lake */
--#define INTEL_FAM6_ATOM_TREMONT_L	0x9C /* Jasper Lake */
--
--/* Xeon Phi */
--
--#define INTEL_FAM6_XEON_PHI_KNL		0x57 /* Knights Landing */
--#define INTEL_FAM6_XEON_PHI_KNM		0x85 /* Knights Mill */
--
--/* Family 5 */
--#define INTEL_FAM5_QUARK_X1000		0x09 /* Quark X1000 SoC */
-+#include <linux/x86/intel-family.h>
+ int mwait_usable(const struct cpuinfo_x86 *);
  
- #endif /* _ASM_X86_INTEL_FAMILY_H */
-diff --git a/include/linux/x86/intel-family.h b/include/linux/x86/intel-family.h
+-unsigned int x86_family(unsigned int sig);
+-unsigned int x86_model(unsigned int sig);
+-unsigned int x86_stepping(unsigned int sig);
+ #ifdef CONFIG_CPU_SUP_INTEL
+ extern void __init sld_setup(struct cpuinfo_x86 *c);
+ extern void switch_to_sld(unsigned long tifn);
+diff --git a/arch/x86/include/asm/microcode.h b/arch/x86/include/asm/microcode.h
+index ab45a220fac4..4b0eabf63b98 100644
+--- a/arch/x86/include/asm/microcode.h
++++ b/arch/x86/include/asm/microcode.h
+@@ -2,9 +2,9 @@
+ #ifndef _ASM_X86_MICROCODE_H
+ #define _ASM_X86_MICROCODE_H
+ 
+-#include <asm/cpu.h>
+ #include <linux/earlycpio.h>
+ #include <linux/initrd.h>
++#include <linux/x86/cpu.h>
+ 
+ struct ucode_patch {
+ 	struct list_head plist;
+diff --git a/arch/x86/kvm/cpuid.h b/arch/x86/kvm/cpuid.h
+index c99edfff7f82..bf070d2a2175 100644
+--- a/arch/x86/kvm/cpuid.h
++++ b/arch/x86/kvm/cpuid.h
+@@ -4,10 +4,11 @@
+ 
+ #include "x86.h"
+ #include "reverse_cpuid.h"
+-#include <asm/cpu.h>
+ #include <asm/processor.h>
+ #include <uapi/asm/kvm_para.h>
+ 
++#include <linux/x86/cpu.h>
++
+ extern u32 kvm_cpu_caps[NR_KVM_CPU_CAPS] __read_mostly;
+ void kvm_set_cpu_caps(void);
+ 
+diff --git a/arch/x86/lib/Makefile b/arch/x86/lib/Makefile
+index bad4dee4f0e4..fd73c1b72c3e 100644
+--- a/arch/x86/lib/Makefile
++++ b/arch/x86/lib/Makefile
+@@ -41,7 +41,7 @@ clean-files := inat-tables.c
+ 
+ obj-$(CONFIG_SMP) += msr-smp.o cache-smp.o
+ 
+-lib-y := delay.o misc.o cmdline.o cpu.o
++lib-y := delay.o misc.o cmdline.o
+ lib-y += usercopy_$(BITS).o usercopy.o getuser.o putuser.o
+ lib-y += memcpy_$(BITS).o
+ lib-$(CONFIG_ARCH_HAS_COPY_MC) += copy_mc.o copy_mc_64.o
+diff --git a/drivers/edac/mce_amd.c b/drivers/edac/mce_amd.c
+index 27d56920b469..f545f5fad02c 100644
+--- a/drivers/edac/mce_amd.c
++++ b/drivers/edac/mce_amd.c
+@@ -1,8 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ #include <linux/module.h>
+ #include <linux/slab.h>
+-
+-#include <asm/cpu.h>
++#include <linux/x86/cpu.h>
+ 
+ #include "mce_amd.h"
+ 
+diff --git a/include/linux/x86/cpu.h b/include/linux/x86/cpu.h
 new file mode 100644
-index 000000000000..ae4b075c1ab9
+index 000000000000..5f383d47886d
 --- /dev/null
-+++ b/include/linux/x86/intel-family.h
-@@ -0,0 +1,146 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _LINUX_X86_INTEL_FAMILY_H
-+#define _LINUX_X86_INTEL_FAMILY_H
++++ b/include/linux/x86/cpu.h
+@@ -0,0 +1,9 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef _LINUX_X86_CPU_H
++#define _LINUX_X86_CPU_H
 +
-+/*
-+ * "Big Core" Processors (Branded as Core, Xeon, etc...)
-+ *
-+ * While adding a new CPUID for a new microarchitecture, add a new
-+ * group to keep logically sorted out in chronological order. Within
-+ * that group keep the CPUID for the variants sorted by model number.
-+ *
-+ * The defined symbol names have the following form:
-+ *	INTEL_FAM6{OPTFAMILY}_{MICROARCH}{OPTDIFF}
-+ * where:
-+ * OPTFAMILY	Describes the family of CPUs that this belongs to. Default
-+ *		is assumed to be "_CORE" (and should be omitted). Other values
-+ *		currently in use are _ATOM and _XEON_PHI
-+ * MICROARCH	Is the code name for the micro-architecture for this core.
-+ *		N.B. Not the platform name.
-+ * OPTDIFF	If needed, a short string to differentiate by market segment.
-+ *
-+ *		Common OPTDIFFs:
-+ *
-+ *			- regular client parts
-+ *		_L	- regular mobile parts
-+ *		_G	- parts with extra graphics on
-+ *		_X	- regular server parts
-+ *		_D	- micro server parts
-+ *
-+ *		Historical OPTDIFFs:
-+ *
-+ *		_EP	- 2 socket server parts
-+ *		_EX	- 4+ socket server parts
-+ *
-+ * The #define line may optionally include a comment including platform or core
-+ * names. An exception is made for skylake/kabylake where steppings seem to have gotten
-+ * their own names :-(
-+ */
++unsigned int x86_family(unsigned int sig);
++unsigned int x86_model(unsigned int sig);
++unsigned int x86_stepping(unsigned int sig);
 +
-+/* Wildcard match for FAM6 so X86_MATCH_INTEL_FAM6_MODEL(ANY) works */
-+#define INTEL_FAM6_ANY			X86_MODEL_ANY
++#endif /* _LINUX_X86_CPU_H */
+diff --git a/lib/Kconfig b/lib/Kconfig
+index d241fe476fda..cc28bc1f2d84 100644
+--- a/lib/Kconfig
++++ b/lib/Kconfig
+@@ -718,3 +718,8 @@ config PLDMFW
+ 
+ config ASN1_ENCODER
+        tristate
 +
-+#define INTEL_FAM6_CORE_YONAH		0x0E
++config GENERIC_LIB_X86
++	bool
++	depends on X86
++	default n
+diff --git a/lib/Makefile b/lib/Makefile
+index 5efd1b435a37..befbd9413432 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -360,3 +360,5 @@ obj-$(CONFIG_CMDLINE_KUNIT_TEST) += cmdline_kunit.o
+ obj-$(CONFIG_SLUB_KUNIT_TEST) += slub_kunit.o
+ 
+ obj-$(CONFIG_GENERIC_LIB_DEVMEM_IS_ALLOWED) += devmem_is_allowed.o
 +
-+#define INTEL_FAM6_CORE2_MEROM		0x0F
-+#define INTEL_FAM6_CORE2_MEROM_L	0x16
-+#define INTEL_FAM6_CORE2_PENRYN		0x17
-+#define INTEL_FAM6_CORE2_DUNNINGTON	0x1D
++obj-$(CONFIG_GENERIC_LIB_X86) += x86/
+diff --git a/lib/x86/Makefile b/lib/x86/Makefile
+new file mode 100644
+index 000000000000..342024c272fc
+--- /dev/null
++++ b/lib/x86/Makefile
+@@ -0,0 +1,3 @@
++# SPDX-License-Identifier: GPL-2.0-only
 +
-+#define INTEL_FAM6_NEHALEM		0x1E
-+#define INTEL_FAM6_NEHALEM_G		0x1F /* Auburndale / Havendale */
-+#define INTEL_FAM6_NEHALEM_EP		0x1A
-+#define INTEL_FAM6_NEHALEM_EX		0x2E
-+
-+#define INTEL_FAM6_WESTMERE		0x25
-+#define INTEL_FAM6_WESTMERE_EP		0x2C
-+#define INTEL_FAM6_WESTMERE_EX		0x2F
-+
-+#define INTEL_FAM6_SANDYBRIDGE		0x2A
-+#define INTEL_FAM6_SANDYBRIDGE_X	0x2D
-+#define INTEL_FAM6_IVYBRIDGE		0x3A
-+#define INTEL_FAM6_IVYBRIDGE_X		0x3E
-+
-+#define INTEL_FAM6_HASWELL		0x3C
-+#define INTEL_FAM6_HASWELL_X		0x3F
-+#define INTEL_FAM6_HASWELL_L		0x45
-+#define INTEL_FAM6_HASWELL_G		0x46
-+
-+#define INTEL_FAM6_BROADWELL		0x3D
-+#define INTEL_FAM6_BROADWELL_G		0x47
-+#define INTEL_FAM6_BROADWELL_X		0x4F
-+#define INTEL_FAM6_BROADWELL_D		0x56
-+
-+#define INTEL_FAM6_SKYLAKE_L		0x4E	/* Sky Lake             */
-+#define INTEL_FAM6_SKYLAKE		0x5E	/* Sky Lake             */
-+#define INTEL_FAM6_SKYLAKE_X		0x55	/* Sky Lake             */
-+/*                 CASCADELAKE_X	0x55	   Sky Lake -- s: 7     */
-+/*                 COOPERLAKE_X		0x55	   Sky Lake -- s: 11    */
-+
-+#define INTEL_FAM6_KABYLAKE_L		0x8E	/* Sky Lake             */
-+/*                 AMBERLAKE_L		0x8E	   Sky Lake -- s: 9     */
-+/*                 COFFEELAKE_L		0x8E	   Sky Lake -- s: 10    */
-+/*                 WHISKEYLAKE_L	0x8E       Sky Lake -- s: 11,12 */
-+
-+#define INTEL_FAM6_KABYLAKE		0x9E	/* Sky Lake             */
-+/*                 COFFEELAKE		0x9E	   Sky Lake -- s: 10-13 */
-+
-+#define INTEL_FAM6_COMETLAKE		0xA5	/* Sky Lake             */
-+#define INTEL_FAM6_COMETLAKE_L		0xA6	/* Sky Lake             */
-+
-+#define INTEL_FAM6_CANNONLAKE_L		0x66	/* Palm Cove */
-+
-+#define INTEL_FAM6_ICELAKE_X		0x6A	/* Sunny Cove */
-+#define INTEL_FAM6_ICELAKE_D		0x6C	/* Sunny Cove */
-+#define INTEL_FAM6_ICELAKE		0x7D	/* Sunny Cove */
-+#define INTEL_FAM6_ICELAKE_L		0x7E	/* Sunny Cove */
-+#define INTEL_FAM6_ICELAKE_NNPI		0x9D	/* Sunny Cove */
-+
-+#define INTEL_FAM6_LAKEFIELD		0x8A	/* Sunny Cove / Tremont */
-+
-+#define INTEL_FAM6_ROCKETLAKE		0xA7	/* Cypress Cove */
-+
-+#define INTEL_FAM6_TIGERLAKE_L		0x8C	/* Willow Cove */
-+#define INTEL_FAM6_TIGERLAKE		0x8D	/* Willow Cove */
-+
-+#define INTEL_FAM6_SAPPHIRERAPIDS_X	0x8F	/* Golden Cove */
-+
-+#define INTEL_FAM6_ALDERLAKE		0x97	/* Golden Cove / Gracemont */
-+#define INTEL_FAM6_ALDERLAKE_L		0x9A	/* Golden Cove / Gracemont */
-+
-+/* "Small Core" Processors (Atom) */
-+
-+#define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
-+#define INTEL_FAM6_ATOM_BONNELL_MID	0x26 /* Silverthorne, Lincroft */
-+
-+#define INTEL_FAM6_ATOM_SALTWELL	0x36 /* Cedarview */
-+#define INTEL_FAM6_ATOM_SALTWELL_MID	0x27 /* Penwell */
-+#define INTEL_FAM6_ATOM_SALTWELL_TABLET	0x35 /* Cloverview */
-+
-+#define INTEL_FAM6_ATOM_SILVERMONT	0x37 /* Bay Trail, Valleyview */
-+#define INTEL_FAM6_ATOM_SILVERMONT_D	0x4D /* Avaton, Rangely */
-+#define INTEL_FAM6_ATOM_SILVERMONT_MID	0x4A /* Merriefield */
-+
-+#define INTEL_FAM6_ATOM_AIRMONT		0x4C /* Cherry Trail, Braswell */
-+#define INTEL_FAM6_ATOM_AIRMONT_MID	0x5A /* Moorefield */
-+#define INTEL_FAM6_ATOM_AIRMONT_NP	0x75 /* Lightning Mountain */
-+
-+#define INTEL_FAM6_ATOM_GOLDMONT	0x5C /* Apollo Lake */
-+#define INTEL_FAM6_ATOM_GOLDMONT_D	0x5F /* Denverton */
-+
-+/* Note: the micro-architecture is "Goldmont Plus" */
-+#define INTEL_FAM6_ATOM_GOLDMONT_PLUS	0x7A /* Gemini Lake */
-+
-+#define INTEL_FAM6_ATOM_TREMONT_D	0x86 /* Jacobsville */
-+#define INTEL_FAM6_ATOM_TREMONT		0x96 /* Elkhart Lake */
-+#define INTEL_FAM6_ATOM_TREMONT_L	0x9C /* Jasper Lake */
-+
-+/* Xeon Phi */
-+
-+#define INTEL_FAM6_XEON_PHI_KNL		0x57 /* Knights Landing */
-+#define INTEL_FAM6_XEON_PHI_KNM		0x85 /* Knights Mill */
-+
-+/* Family 5 */
-+#define INTEL_FAM5_QUARK_X1000		0x09 /* Quark X1000 SoC */
-+
-+#endif /* _LINUX_X86_INTEL_FAMILY_H */
++obj-y := cpu.o
+diff --git a/arch/x86/lib/cpu.c b/lib/x86/cpu.c
+similarity index 95%
+rename from arch/x86/lib/cpu.c
+rename to lib/x86/cpu.c
+index 7ad68917a51e..17af59a2fddf 100644
+--- a/arch/x86/lib/cpu.c
++++ b/lib/x86/cpu.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ #include <linux/types.h>
+ #include <linux/export.h>
+-#include <asm/cpu.h>
++#include <linux/x86/cpu.h>
+ 
+ unsigned int x86_family(unsigned int sig)
+ {
 -- 
 2.31.1
 
