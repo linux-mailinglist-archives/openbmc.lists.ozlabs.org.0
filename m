@@ -2,78 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60EDB3C6FF3
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 13:48:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A1D63C732E
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 17:28:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GPJmp2bbdz30GN
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 21:48:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GPPg0105pz30HW
+	for <lists+openbmc@lfdr.de>; Wed, 14 Jul 2021 01:28:44 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ntmsM/15;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=Suu3dkaA;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c43;
- helo=mail-oo1-xc43.google.com; envelope-from=guopingjn@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22e;
+ helo=mail-oi1-x22e.google.com; envelope-from=groeck7@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=ntmsM/15; dkim-atps=neutral
-Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com
- [IPv6:2607:f8b0:4864:20::c43])
+ header.s=20161025 header.b=Suu3dkaA; dkim-atps=neutral
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com
+ [IPv6:2607:f8b0:4864:20::22e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GPJmS4y1Bz3036
- for <openbmc@lists.ozlabs.org>; Tue, 13 Jul 2021 21:48:06 +1000 (AEST)
-Received: by mail-oo1-xc43.google.com with SMTP id
- 68-20020a4a00470000b0290258a7ff4058so5311969ooh.10
- for <openbmc@lists.ozlabs.org>; Tue, 13 Jul 2021 04:48:06 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GPPff0Bmtz2yj0;
+ Wed, 14 Jul 2021 01:28:25 +1000 (AEST)
+Received: by mail-oi1-x22e.google.com with SMTP id w194so5660798oie.5;
+ Tue, 13 Jul 2021 08:28:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:from:to:cc:references:message-id:date:user-agent
- :mime-version:in-reply-to:content-transfer-encoding:content-language;
- bh=xOdlQlkVgqicNwP/OxbdTvXxsmqeKdBO6slHUh+NJh4=;
- b=ntmsM/15h1nRMMzBolObooHWd7qPnbzYJHUAYyj0FYvwbaK1NCG3up5+Wv3f/1Cuiy
- jheu5cReRwp7x5vgOW6gIcnlHEaRj3M7CdVqlLR9jKflFYYOxmKkQ1V6uAtHzVjF9ZP8
- MiN+XOSl5IAEJlUmZEmaxDkwCqUbcC8Havg6tgwu9rprf2X0iPJqF9OUZ+W9HNICCx6v
- tLEZzn1wpTHmpqnO2sCem9yUgJW1HXPkTtqcCjly/TfHtq5gYAv5Me4sLOu1+H9VErHE
- P6f0DXWbnbvL+6BqEXPHYhXVHAoUF+3YXVY2iNKT4qAeGs5udARdMdi19gYM/VkukuM6
- oO9g==
+ h=sender:subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=TxwcAPSn60tW7JB/iXZqgc9ZY9KO7n7lZVH+omYXMjo=;
+ b=Suu3dkaAPeLV3aoKIV00r3HCZbE6vpyrpmO3LMe3oY2xXd3qxGtZzFHUglOY6zctAo
+ ZFlPkWIdBQ7U/f5kFLAwQuNamxi89mRliOCN2PJkDXDg++SI/tLGS4A0yLXqaBmmDF9m
+ foBwggtrKKtUlius7LPbWetuGUVd5N3uxMlypX0JIpTIzVSk62ncy0YfxSNdCghuSatl
+ 6/D+qfNdRsTQueTKFMx5vlwSSxOyFGDvGA5eZV6ZVONG60iTZ0WUSi73edsJqQT9r2IC
+ 3UZ6Mr2YKmjKu/paWeVr2wd//gUo2g5+lBFYtqE4mWaQZQm8y6OnJHjKFuiQzgUnYZZE
+ RYmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:from:to:cc:references:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=xOdlQlkVgqicNwP/OxbdTvXxsmqeKdBO6slHUh+NJh4=;
- b=UMFtiIdjWcPVuuFAL69VM4dTkJfcA/lyB1lOKoG92GEiAtF1kWS0DxTlncyHPEcTxq
- oHRylvstAZPdK8PUlhchhYoHmcgDIlFlqOVV1ZUitG1eT7sJz5xNbGAxALPk0ckxvX2w
- aA2m397parYAqrQOZ5pzsiWbkkSyf5AAoNLk0jElILQnhoEex88/KUG+1m8uVhxbSg8R
- Z1qKYJFkZror3udfZImA1id2PLKfGiUnB7QwMJ/qByfbHejAJC3lj0u7/sYH7w/odNBF
- kSm/z0/d70X2VxOS+jUMd9Rlg828lOTepEUZC+79aAgqhS8k4E8pVIo3nkGY3ydMf1Su
- rYoQ==
-X-Gm-Message-State: AOAM5327a5J+gnco7Qbw+Cd4DqCNLnPSb9s8EmfG6wmPH7/msRdNkGrt
- uOc+jzZnPXvB0x0ZtaML/Us=
-X-Google-Smtp-Source: ABdhPJwi1BQXTWTOpdNWt1Es+IXYxV6u8MNDtQBkHnNIkRTQ6DAjWiD4rYmkMYdEnh+iGplJepXkdQ==
-X-Received: by 2002:a4a:8f93:: with SMTP id c19mr3217125ooj.31.1626176882769; 
- Tue, 13 Jul 2021 04:48:02 -0700 (PDT)
-Received: from ?IPv6:2408:8414:880:2e78:4ca2:be58:aa17:2bb1?
- ([2408:8414:880:2e78:4ca2:be58:aa17:2bb1])
- by smtp.gmail.com with ESMTPSA id x129sm1333538oia.26.2021.07.13.04.47.58
+ h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
+ :date:user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=TxwcAPSn60tW7JB/iXZqgc9ZY9KO7n7lZVH+omYXMjo=;
+ b=SO+Wv3vdxmqhMt10nH/jqJ23B440ggE6Vh1zzgsWlZe1W4c1ToiUeJ1a9YnRgRvkPO
+ GcS/3CKq4vHnwFanGNBoZbphJLfWGuQixcycuCWLd5tnyO3KmVQo1DT63NaxfZxJW42c
+ x4lOnEtRYmMuS38qDCMV1Amkp9EyhQgrE3dDtHF0lmPuL0Xqu/F3p3xGtr+cRX/J2QyV
+ DAgzIQ5+PL0Djc+R9WWQR7BKXH/VMOUPsCV0LKj45pXDJTvAvSpDAahGG1atHXYv6Twl
+ T0TN6D8nl9hIh7iFetPk+Gncy/ZxDmahfyL7snHq5iyVOFHm1q8Eyo7y6OQuLJA091EO
+ Vtew==
+X-Gm-Message-State: AOAM530tikspW9z+s3qy5f3OSKCmlYVq8ggG271pk8+31F3z+L4Rnjaa
+ 3GOQlBNOeA2Mk1tN/Bnde70=
+X-Google-Smtp-Source: ABdhPJy0m/hUfgfzaDXgopiCH6q3OLHEFcFJPuCrAtfGzmh6A66q0BslrWHZrssQTIW1eJMAccDzhg==
+X-Received: by 2002:aca:3dc4:: with SMTP id k187mr3674130oia.147.1626190100664; 
+ Tue, 13 Jul 2021 08:28:20 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ l17sm558469ota.20.2021.07.13.08.28.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Jul 2021 04:48:02 -0700 (PDT)
-Subject: Re: [PATCH v4 1/1] ARM: dts: aspeed: Add Inspur NF5280M6 BMC machine
-From: Ping Guo <guopingjn@gmail.com>
-To: joel@jms.id.au, andrew@aj.id.au, openbmc@lists.ozlabs.org
-References: <20210526092206.22760-1-guopingjn@gmail.com>
-Message-ID: <0d8faa93-cab3-97a2-bc6d-b1359879f744@gmail.com>
-Date: Tue, 13 Jul 2021 19:47:57 +0800
+ Tue, 13 Jul 2021 08:28:20 -0700 (PDT)
+Subject: Re: [PATCH v5 3/4] hwmon: smpro: Add Ampere's Altra smpro-hwmon driver
+To: Quan Nguyen <quan@os.amperecomputing.com>, Joel Stanley <joel@jms.id.au>, 
+ Andrew Jeffery <andrew@aj.id.au>, Jean Delvare <jdelvare@suse.com>,
+ Rob Herring <robh+dt@kernel.org>, Lee Jones <lee.jones@linaro.org>,
+ Jonathan Corbet <corbet@lwn.net>, linux-hwmon@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org
+References: <20210713060031.31568-1-quan@os.amperecomputing.com>
+ <20210713060031.31568-4-quan@os.amperecomputing.com>
+From: Guenter Roeck <linux@roeck-us.net>
+Message-ID: <7c16c294-ad96-8b68-df35-1201cc627d3d@roeck-us.net>
+Date: Tue, 13 Jul 2021 08:28:17 -0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20210526092206.22760-1-guopingjn@gmail.com>
+In-Reply-To: <20210713060031.31568-4-quan@os.amperecomputing.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,752 +91,564 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: guoping@inspur.com, liuxiwei@inspur.com, banht@inspur.com,
- wangxinglong@inspur.com
+Cc: Open Source Submission <patches@amperecomputing.com>,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Joel,
+On 7/12/21 11:00 PM, Quan Nguyen wrote:
+> This commit adds support for Ampere SMpro hwmon driver. This driver
+> supports accessing various CPU sensors provided by the SMpro co-processor
+> including temperature, power, voltages, and current.
+> 
+> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
 
-Thanks for your reviews before.
+For my reference:
 
-I want to konw wherther this patch could be merged or there are still 
-problems to fix before that.
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-Please help review this patch again.Thank you!
-
-On 5/26/21 5:22 PM, guopingjn@gmail.com wrote:
-> From: Ping Guo <guoping@inspur.com>
->
-> The Inspur NF5280M6 is an x86 platform server with an AST2500-based BMC.
-> This dts file provides a basic configuration for its OpenBMC
-> development.
->
-> Signed-off-by: George Liu <liuxiwei@inspur.com>
-> Signed-off-by: Ping Guo <guoping@inspur.com>
 > ---
-> changelog:
-> v4:
-> -Remove invalid gpios_property
-> -Remove unused GFX device node
-> -Update KCS binding to the newer style
-> v3:
-> -Remove unnecessary lpc_ctrl node
-> -Remove unnecessary gfx_memory,flash_memory
-> v2:
-> -Remove unavailable uart-clock-high-speed property
->
->   arch/arm/boot/dts/Makefile                    |   1 +
->   .../boot/dts/aspeed-bmc-inspur-nf5280m6.dts   | 691 ++++++++++++++++++
->   2 files changed, 692 insertions(+)
->   create mode 100644 arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
->
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 03b5424bafa8..cc2580f1e99b 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1405,6 +1405,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->   	aspeed-bmc-ibm-rainier-4u.dtb \
->   	aspeed-bmc-intel-s2600wf.dtb \
->   	aspeed-bmc-inspur-fp5280g2.dtb \
-> +	aspeed-bmc-inspur-nf5280m6.dtb \
->   	aspeed-bmc-lenovo-hr630.dtb \
->   	aspeed-bmc-lenovo-hr855xg2.dtb \
->   	aspeed-bmc-microsoft-olympus.dtb \
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
+> Changes in v5:
+>    + Drop ManufacturerID checking when probe as it was checked during
+>    smpro-mfd probing [Quan]
+>    + Drop the use of register offset [Quan]
+>    + Removed the use of compatible string as it is instantiated by
+>    smpro-mfd driver [Quan]
+>    + Thanks Guenter for the Reviewed-by in last version, but it was
+>    not added because there's some changes in this version. Really
+>    appreciate if you could help again, thank you.
+> 
+> Changes in v4:
+>    + Returned regmap_read() error code [Guenter]
+> 
+> Changes in v3:
+>    + Handled negative temperature value [Guenter]
+>    + Returned -ENODEV if Manufacturer ID is wrong [Guenter]
+>    + Refactored smpro_read_string() and smpro_temp_read() [Guenter]
+>    + Removed smpro_write() function [Guenter]
+>    + Added minor refactor changes [Quan]
+> 
+> Changes in v2:
+>    + Removed "virtual" sensors [Guenter]
+>    + Reported SOC_TDP as "Socket TDP" using max attributes [Guenter]
+>    + Corrected return error code when host is turn off [Guenter]
+>    + Reported MEM HOT Threshold for all DIMMs as temp*_crit [Guenter]
+>    + Removed license info as SPDX-License-Identifier existed [Guenter]
+>    + Added is_visible() support [Guenter]
+>    + Used HWMON_CHANNEL_INFO() macro and LABEL attributes [Guenter]
+>    + Made is_valid_id() return boolean [Guenter]
+>    + Returned -EPROBE_DEFER when smpro reg inaccessible [Guenter]
+>    + Removed unnecessary error message when dev register fail [Guenter]
+>    + Removed Socket TDP sensor [Quan]
+>    + Included sensor type and channel in labels [Quan]
+>    + Refactorized code to fix checkpatch.pl --strict complaint [Quan]
+> 
+>   drivers/hwmon/Kconfig       |   8 +
+>   drivers/hwmon/Makefile      |   1 +
+>   drivers/hwmon/smpro-hwmon.c | 463 ++++++++++++++++++++++++++++++++++++
+>   3 files changed, 472 insertions(+)
+>   create mode 100644 drivers/hwmon/smpro-hwmon.c
+> 
+> diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+> index e3675377bc5d..903c5ef79a5a 100644
+> --- a/drivers/hwmon/Kconfig
+> +++ b/drivers/hwmon/Kconfig
+> @@ -67,6 +67,14 @@ config SENSORS_ABITUGURU3
+>   	  This driver can also be built as a module. If so, the module
+>   	  will be called abituguru3.
+>   
+> +config SENSORS_SMPRO
+> +	tristate "Ampere's Altra SMpro hardware monitoring driver"
+> +	depends on MFD_SMPRO
+> +	help
+> +	  If you say yes here you get support for the thermal, voltage,
+> +	  current and power sensors of Ampere's Altra processor family SoC
+> +	  with SMpro co-processor.
+> +
+>   config SENSORS_AD7314
+>   	tristate "Analog Devices AD7314 and compatibles"
+>   	depends on SPI
+> diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
+> index d712c61c1f5e..9de5cd9911b0 100644
+> --- a/drivers/hwmon/Makefile
+> +++ b/drivers/hwmon/Makefile
+> @@ -175,6 +175,7 @@ obj-$(CONFIG_SENSORS_SHT4x)	+= sht4x.o
+>   obj-$(CONFIG_SENSORS_SHTC1)	+= shtc1.o
+>   obj-$(CONFIG_SENSORS_SIS5595)	+= sis5595.o
+>   obj-$(CONFIG_SENSORS_SMM665)	+= smm665.o
+> +obj-$(CONFIG_SENSORS_SMPRO)	+= smpro-hwmon.o
+>   obj-$(CONFIG_SENSORS_SMSC47B397)+= smsc47b397.o
+>   obj-$(CONFIG_SENSORS_SMSC47M1)	+= smsc47m1.o
+>   obj-$(CONFIG_SENSORS_SMSC47M192)+= smsc47m192.o
+> diff --git a/drivers/hwmon/smpro-hwmon.c b/drivers/hwmon/smpro-hwmon.c
 > new file mode 100644
-> index 000000000000..43eb3f476914
+> index 000000000000..b01ceea33ddd
 > --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-inspur-nf5280m6.dts
-> @@ -0,0 +1,691 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +// Copyright (c) 2021 Inspur Corporation
-> +/dts-v1/;
+> +++ b/drivers/hwmon/smpro-hwmon.c
+> @@ -0,0 +1,463 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Ampere Computing SoC's SMPro Hardware Monitoring Driver
+> + *
+> + * Copyright (c) 2021, Ampere Computing LLC
+> + */
+> +#include <linux/bitfield.h>
+> +#include <linux/bitops.h>
+> +#include <linux/hwmon.h>
+> +#include <linux/hwmon-sysfs.h>
+> +#include <linux/kernel.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/property.h>
+> +#include <linux/regmap.h>
 > +
-> +#include "aspeed-g5.dtsi"
-> +#include <dt-bindings/gpio/aspeed-gpio.h>
-> +#include <dt-bindings/i2c/i2c.h>
-> +#include <dt-bindings/leds/leds-pca955x.h>
+> +/* Logical Power Sensor Registers */
+> +#define SOC_TEMP		0x10
+> +#define SOC_VRD_TEMP		0x11
+> +#define DIMM_VRD_TEMP		0x12
+> +#define CORE_VRD_TEMP		0x13
+> +#define CH0_DIMM_TEMP		0x14
+> +#define CH1_DIMM_TEMP		0x15
+> +#define CH2_DIMM_TEMP		0x16
+> +#define CH3_DIMM_TEMP		0x17
+> +#define CH4_DIMM_TEMP		0x18
+> +#define CH5_DIMM_TEMP		0x19
+> +#define CH6_DIMM_TEMP		0x1A
+> +#define CH7_DIMM_TEMP		0x1B
+> +#define RCA_VRD_TEMP		0x1C
 > +
-> +/ {
-> +	model = "NF5280M6 BMC";
-> +	compatible = "inspur,nf5280m6-bmc", "aspeed,ast2500";
+> +#define CORE_VRD_PWR		0x20
+> +#define SOC_PWR			0x21
+> +#define DIMM_VRD1_PWR		0x22
+> +#define DIMM_VRD2_PWR		0x23
+> +#define CORE_VRD_PWR_MW		0x26
+> +#define SOC_PWR_MW		0x27
+> +#define DIMM_VRD1_PWR_MW	0x28
+> +#define DIMM_VRD2_PWR_MW	0x29
+> +#define RCA_VRD_PWR		0x2A
+> +#define RCA_VRD_PWR_MW		0x2B
 > +
-> +	chosen {
-> +		stdout-path = &uart5;
-> +		bootargs = "console=ttyS4,115200 earlyprintk";
-> +	};
+> +#define MEM_HOT_THRESHOLD	0x32
+> +#define SOC_VR_HOT_THRESHOLD	0x33
+> +#define CORE_VRD_VOLT		0x34
+> +#define SOC_VRD_VOLT		0x35
+> +#define DIMM_VRD1_VOLT		0x36
+> +#define DIMM_VRD2_VOLT		0x37
+> +#define RCA_VRD_VOLT		0x38
 > +
-> +	memory@80000000 {
-> +		reg = <0x80000000 0x40000000>;
-> +	};
+> +#define CORE_VRD_CURR		0x39
+> +#define SOC_VRD_CURR		0x3A
+> +#define DIMM_VRD1_CURR		0x3B
+> +#define DIMM_VRD2_CURR		0x3C
+> +#define RCA_VRD_CURR		0x3D
 > +
-> +	reserved-memory {
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-> +
-> +		vga_memory: framebuffer@9f000000 {
-> +			no-map;
-> +			reg = <0x9f000000 0x01000000>; /* 16M */
-> +		};
-> +
-> +		video_engine_memory: jpegbuffer {
-> +			size = <0x02000000>;	/* 32M */
-> +			alignment = <0x01000000>;
-> +			compatible = "shared-dma-pool";
-> +			reusable;
-> +		};
-> +	};
-> +
-> +	leds {
-> +	    compatible = "gpio-leds";
-> +
-> +		bmc_alive {
-> +			label = "bmc_alive";
-> +			gpios = <&gpio ASPEED_GPIO(B, 0) GPIO_ACTIVE_LOW>;
-> +			linux,default-trigger = "timer";
-> +			led-pattern = <1000 1000>;
-> +		};
-> +
-> +		front-fan {
-> +			label = "front-fan";
-> +			gpios = <&gpio ASPEED_GPIO(F,2) GPIO_ACTIVE_LOW>;
-> +		};
-> +
-> +	    front-psu {
-> +			label = "front-psu";
-> +			gpios = <&gpio ASPEED_GPIO(F,3) GPIO_ACTIVE_LOW>;
-> +		};
-> +
-> +	    front-syshot {
-> +			label = "front-syshot";
-> +			gpios = <&gpio ASPEED_GPIO(J, 3) GPIO_ACTIVE_LOW>;
-> +		};
-> +
-> +		front-memory {
-> +			label = "front-memory";
-> +			gpios = <&gpio ASPEED_GPIO(S, 7) GPIO_ACTIVE_LOW>;
-> +		};
-> +
-> +		identify {
-> +			label = "identify";
-> +			gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_LOW>;
-> +		};
-> +	};
-> +
-> +	iio-hwmon {
-> +		compatible = "iio-hwmon";
-> +		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-> +			<&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
-> +			<&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
-> +			<&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
-> +	};
+> +struct smpro_hwmon {
+> +	struct regmap *regmap;
 > +};
 > +
-> +&fmc {
-> +	status = "okay";
-> +	flash@0 {
-> +		status = "okay";
-> +		m25p,fast-read;
-> +		label = "bmc";
-> +		spi-max-frequency = <50000000>;
-> +#include "openbmc-flash-layout.dtsi"
-> +	};
+> +struct smpro_sensor {
+> +	const u8 reg;
+> +	const u8 reg_ext;
+> +	const char *label;
 > +};
 > +
-> +&spi1 {
-> +	status = "okay";
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_spi1_default>;
-> +	flash@0 {
-> +		status = "okay";
-> +		m25p,fast-read;
-> +		label = "bios";
-> +		spi-max-frequency = <100000000>;
-> +	};
+> +static const struct smpro_sensor temperature[] = {
+> +	{
+> +		.reg = SOC_TEMP,
+> +		.label = "temp1 SoC"
+> +	},
+> +	{
+> +		.reg = SOC_VRD_TEMP,
+> +		.reg_ext = SOC_VR_HOT_THRESHOLD,
+> +		.label = "temp2 SoC VRD"
+> +	},
+> +	{
+> +		.reg = DIMM_VRD_TEMP,
+> +		.label = "temp3 DIMM VRD"
+> +	},
+> +	{
+> +		.reg = CORE_VRD_TEMP,
+> +		.label = "temp4 CORE VRD"
+> +	},
+> +	{
+> +		.reg = CH0_DIMM_TEMP,
+> +		.reg_ext = MEM_HOT_THRESHOLD,
+> +		.label = "temp5 CH0 DIMM"
+> +	},
+> +	{
+> +		.reg = CH1_DIMM_TEMP,
+> +		.reg_ext = MEM_HOT_THRESHOLD,
+> +		.label = "temp6 CH1 DIMM"
+> +	},
+> +	{
+> +		.reg = CH2_DIMM_TEMP,
+> +		.reg_ext = MEM_HOT_THRESHOLD,
+> +		.label = "temp7 CH2 DIMM"
+> +	},
+> +	{
+> +		.reg = CH3_DIMM_TEMP,
+> +		.reg_ext = MEM_HOT_THRESHOLD,
+> +		.label = "temp8 CH3 DIMM"
+> +	},
+> +	{
+> +		.reg = CH4_DIMM_TEMP,
+> +		.reg_ext = MEM_HOT_THRESHOLD,
+> +		.label = "temp9 CH4 DIMM"
+> +	},
+> +	{
+> +		.reg = CH5_DIMM_TEMP,
+> +		.reg_ext = MEM_HOT_THRESHOLD,
+> +		.label = "temp10 CH5 DIMM"
+> +	},
+> +	{
+> +		.reg = CH6_DIMM_TEMP,
+> +		.reg_ext = MEM_HOT_THRESHOLD,
+> +		.label = "temp11 CH6 DIMM"
+> +	},
+> +	{
+> +		.reg = CH7_DIMM_TEMP,
+> +		.reg_ext = MEM_HOT_THRESHOLD,
+> +		.label = "temp12 CH7 DIMM"
+> +	},
+> +	{
+> +		.reg = RCA_VRD_TEMP,
+> +		.label = "temp13 RCA VRD"
+> +	},
 > +};
 > +
-> +&uart1 {
-> +	status = "okay";
+> +static const struct smpro_sensor voltage[] = {
+> +	{
+> +		.reg = CORE_VRD_VOLT,
+> +		.label = "vout0 CORE VRD"
+> +	},
+> +	{
+> +		.reg = SOC_VRD_VOLT,
+> +		.label = "vout1 SoC VRD"
+> +	},
+> +	{
+> +		.reg = DIMM_VRD1_VOLT,
+> +		.label = "vout2 DIMM VRD1"
+> +	},
+> +	{
+> +		.reg = DIMM_VRD2_VOLT,
+> +		.label = "vout3 DIMM VRD2"
+> +	},
+> +	{
+> +		.reg = RCA_VRD_VOLT,
+> +		.label = "vout4 RCA VRD"
+> +	},
 > +};
 > +
-> +&uart5 {
-> +	status = "okay";
+> +static const struct smpro_sensor curr_sensor[] = {
+> +	{
+> +		.reg = CORE_VRD_CURR,
+> +		.label = "iout1 CORE VRD"
+> +	},
+> +	{
+> +		.reg = SOC_VRD_CURR,
+> +		.label = "iout2 SoC VRD"
+> +	},
+> +	{
+> +		.reg = DIMM_VRD1_CURR,
+> +		.label = "iout3 DIMM VRD1"
+> +	},
+> +	{
+> +		.reg = DIMM_VRD2_CURR,
+> +		.label = "iout4 DIMM VRD2"
+> +	},
+> +	{
+> +		.reg = RCA_VRD_CURR,
+> +		.label = "iout5 RCA VRD"
+> +	},
 > +};
 > +
-> +&mac0 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_rmii1_default>;
-> +	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-> +		<&syscon ASPEED_CLK_MAC1RCLK>;
-> +	clock-names = "MACCLK", "RCLK";
-> +	use-ncsi;
+> +static const struct smpro_sensor power[] = {
+> +	{
+> +		.reg = CORE_VRD_PWR,
+> +		.reg_ext = CORE_VRD_PWR_MW,
+> +		.label = "power1 CORE VRD"
+> +	},
+> +	{
+> +		.reg = SOC_PWR,
+> +		.reg_ext = SOC_PWR_MW,
+> +		.label = "power2 SoC"
+> +	},
+> +	{
+> +		.reg = DIMM_VRD1_PWR,
+> +		.reg_ext = DIMM_VRD1_PWR_MW,
+> +		.label = "power3 DIMM VRD1"
+> +	},
+> +	{
+> +		.reg = DIMM_VRD2_PWR,
+> +		.reg_ext = DIMM_VRD2_PWR_MW,
+> +		.label = "power4 DIMM VRD2"
+> +	},
+> +	{
+> +		.reg = RCA_VRD_PWR,
+> +		.reg_ext = RCA_VRD_PWR_MW,
+> +		.label = "power5 RCA VRD"
+> +	},
 > +};
 > +
-> +&mac1 {
-> +	status = "okay";
+> +static int smpro_read_temp(struct device *dev, u32 attr, int channel, long *val)
+> +{
+> +	struct smpro_hwmon *hwmon = dev_get_drvdata(dev);
+> +	unsigned int value;
+> +	int ret;
 > +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
+> +	switch (attr) {
+> +	case hwmon_temp_input:
+> +		ret = regmap_read(hwmon->regmap, temperature[channel].reg, &value);
+> +		if (ret)
+> +			return ret;
+> +		break;
+> +	case hwmon_temp_crit:
+> +		ret = regmap_read(hwmon->regmap, temperature[channel].reg_ext, &value);
+> +		if (ret)
+> +			return ret;
+> +		break;
+> +	default:
+> +		return -EOPNOTSUPP;
+> +	}
+> +
+> +	*val = sign_extend32(value, 8) * 1000;
+> +	return 0;
+> +}
+> +
+> +static int smpro_read_in(struct device *dev, u32 attr, int channel, long *val)
+> +{
+> +	struct smpro_hwmon *hwmon = dev_get_drvdata(dev);
+> +	unsigned int value;
+> +	int ret;
+> +
+> +	switch (attr) {
+> +	case hwmon_in_input:
+> +		ret = regmap_read(hwmon->regmap, voltage[channel].reg, &value);
+> +		if (ret < 0)
+> +			return ret;
+> +		/* 15-bit value in 1mV */
+> +		*val = value & 0x7fff;
+> +		return 0;
+> +	default:
+> +		return -EOPNOTSUPP;
+> +	}
+> +}
+> +
+> +static int smpro_read_curr(struct device *dev, u32 attr, int channel, long *val)
+> +{
+> +	struct smpro_hwmon *hwmon = dev_get_drvdata(dev);
+> +	unsigned int value;
+> +	int ret;
+> +
+> +	switch (attr) {
+> +	case hwmon_curr_input:
+> +		ret = regmap_read(hwmon->regmap, curr_sensor[channel].reg, &value);
+> +		if (ret < 0)
+> +			return ret;
+> +		/* Scale reported by the hardware is 1mA */
+> +		*val = value & 0x7fff;
+> +		return 0;
+> +	default:
+> +		return -EOPNOTSUPP;
+> +	}
+> +}
+> +
+> +static int smpro_read_power(struct device *dev, u32 attr, int channel, long *val_pwr)
+> +{
+> +	struct smpro_hwmon *hwmon = dev_get_drvdata(dev);
+> +	unsigned int val = 0, val_mw = 0;
+> +	int ret;
+> +
+> +	switch (attr) {
+> +	case hwmon_power_input:
+> +		ret = regmap_read(hwmon->regmap, power[channel].reg, &val);
+> +		if (ret)
+> +			return ret;
+> +
+> +		ret = regmap_read(hwmon->regmap, power[channel].reg_ext, &val_mw);
+> +		if (ret)
+> +			return ret;
+> +
+> +		*val_pwr = val * 1000000 + val_mw * 1000;
+> +		return 0;
+> +
+> +	default:
+> +		return -EOPNOTSUPP;
+> +	}
+> +}
+> +
+> +static int smpro_read(struct device *dev, enum hwmon_sensor_types type,
+> +		      u32 attr, int channel, long *val)
+> +{
+> +	switch (type) {
+> +	case hwmon_temp:
+> +		return smpro_read_temp(dev, attr, channel, val);
+> +	case hwmon_in:
+> +		return smpro_read_in(dev, attr, channel, val);
+> +	case hwmon_power:
+> +		return smpro_read_power(dev, attr, channel, val);
+> +	case hwmon_curr:
+> +		return smpro_read_curr(dev, attr, channel, val);
+> +	default:
+> +		return -EOPNOTSUPP;
+> +	}
+> +}
+> +
+> +static int smpro_read_string(struct device *dev, enum hwmon_sensor_types type,
+> +			     u32 attr, int channel, const char **str)
+> +{
+> +	switch (type) {
+> +	case hwmon_temp:
+> +		switch (attr) {
+> +		case hwmon_temp_label:
+> +			*str = temperature[channel].label;
+> +			return 0;
+> +		default:
+> +			break;
+> +		}
+> +		break;
+> +
+> +	case hwmon_in:
+> +		switch (attr) {
+> +		case hwmon_in_label:
+> +			*str = voltage[channel].label;
+> +			return 0;
+> +		default:
+> +			break;
+> +		}
+> +		break;
+> +
+> +	case hwmon_curr:
+> +		switch (attr) {
+> +		case hwmon_curr_label:
+> +			*str = curr_sensor[channel].label;
+> +			return 0;
+> +		default:
+> +			break;
+> +		}
+> +		break;
+> +
+> +	case hwmon_power:
+> +		switch (attr) {
+> +		case hwmon_power_label:
+> +			*str = power[channel].label;
+> +			return 0;
+> +		default:
+> +			break;
+> +		}
+> +		break;
+> +	default:
+> +		break;
+> +	}
+> +
+> +	return -EOPNOTSUPP;
+> +}
+> +
+> +static umode_t smpro_is_visible(const void *data, enum hwmon_sensor_types type,
+> +				u32 attr, int channel)
+> +{
+> +	const struct smpro_hwmon *hwmon = data;
+> +	unsigned int value;
+> +	int ret;
+> +
+> +	switch (type) {
+> +	case hwmon_temp:
+> +		switch (attr) {
+> +		case hwmon_temp_input:
+> +		case hwmon_temp_label:
+> +		case hwmon_temp_crit:
+> +			ret = regmap_read(hwmon->regmap, temperature[channel].reg, &value);
+> +			if (ret || value == 0xFFFF)
+> +				return 0;
+> +		break;
+> +		}
+> +	default:
+> +		break;
+> +	}
+> +
+> +	return 0444;
+> +}
+> +
+> +static const struct hwmon_channel_info *smpro_info[] = {
+> +	HWMON_CHANNEL_INFO(temp,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
+> +			   HWMON_T_INPUT | HWMON_T_LABEL),
+> +	HWMON_CHANNEL_INFO(in,
+> +			   HWMON_I_INPUT | HWMON_I_LABEL,
+> +			   HWMON_I_INPUT | HWMON_I_LABEL,
+> +			   HWMON_I_INPUT | HWMON_I_LABEL,
+> +			   HWMON_I_INPUT | HWMON_I_LABEL,
+> +			   HWMON_I_INPUT | HWMON_I_LABEL),
+> +	HWMON_CHANNEL_INFO(power,
+> +			   HWMON_P_INPUT | HWMON_P_LABEL,
+> +			   HWMON_P_INPUT | HWMON_P_LABEL,
+> +			   HWMON_P_INPUT | HWMON_P_LABEL,
+> +			   HWMON_P_INPUT | HWMON_P_LABEL,
+> +			   HWMON_P_INPUT | HWMON_P_LABEL),
+> +	HWMON_CHANNEL_INFO(curr,
+> +			   HWMON_C_INPUT | HWMON_C_LABEL,
+> +			   HWMON_C_INPUT | HWMON_C_LABEL,
+> +			   HWMON_C_INPUT | HWMON_C_LABEL,
+> +			   HWMON_C_INPUT | HWMON_C_LABEL,
+> +			   HWMON_C_INPUT | HWMON_C_LABEL),
+> +	NULL
 > +};
 > +
-> +&gpio {
-> +	status = "okay";
-> +	/* Enable GPIOE0 and GPIOE2 pass-through by default */
-> +	pinctrl-names = "pass-through";
-> +	pinctrl-0 = <&pinctrl_gpie0_default
-> +			&pinctrl_gpie2_default>;
-> +	gpio-line-names =
-> +	/*A0-A7*/	"","MAC2LINK","BMC_RESET_CPLD","","BMC_SCL9","","MAC2MDC_R","",
-> +	/*B0-B7*/	"BMC_INIT_OK","FM_SKU_ID2","FM_SPD_DDRCPU_LVLSHFT_DIS_R_N",
-> +				"FM_CPU_MSMI_CATERR_LVT3_BMC_N","","FM_CPU0_PROCHOT_LVT3_N",
-> +				"FM_CPU_MEM_THERMTRIP_LVT3_N","BIOS_LOAD_DEFAULT_R_N",
-> +	/*C0-C7*/	"","","","","","","","",
-> +	/*D0-D7*/	"","BMC_SD2CMD","BMC_SD2DAT0","BMC_SD2DAT1","BMC_SD2DAT2",
-> +				"BMC_SD2DAT3","BMC_SD2DET","BMC_SD2WPT",
-> +	/*E0-E7*/	"FM_BOARD_ID0","FM_BOARD_ID1","FM_BOARD_ID2","FM_BOARD_ID3",
-> +				"FM_BOARD_ID4","FM_BOARD_ID5","","",
-> +	/*F0-F7*/	"PSU1_PRESENT_N","PSU2_PRESENT_N","FAN_FAULT_LED_N","PSU_FAULT_LED_N",
-> +				"BIOS_DEBUG_MODE_N","FP_LCD_RESET","FAN_TYPE_SEL",
-> +				"RST_GLB_RST_WARN_N",
-> +	/*G0-G7*/	"IRQ_LPTM21L_ALERT_N","IRQ_PLD_ALERT_N","AC_FAIL_N","FP_LCD_PRESENT_BMC",
-> +				"BMC_JTAG_TCK_MUX_SEL","BMC_BIOS_RESERVED","SYS_NMI_N","BMC_NMI_N",
-> +	/*H0-H7*/	"JTAG_BMC_TDI","JTAG_BMC_TDO","JTAG_BMC_TCK","JTAG_BMC_TMS","FM_BOARD_ID6",
-> +				"FM_SKU_ID0","IRQ_SML1_PMBUS_ALERT_N","IRQ_SML0_ALERT_MUX_N",
-> +	/*I0-I7*/	"FM_CPU_ERR0_LVT3_BMC_N","FM_CPU_ERR1_LVT3_BMC_N","FM_BMC_PCH_SCI_LPC_N",
-> +				"FM_SYS_THROTTLE_LVC3","SPI2_PCH_CS0_N","","","",
-> +	/*J0-J7*/	"FM_CPU0_SKTOCC_LVT3_N","FM_CPU1_SKTOCC_LVT3_N","","SYSHOT_FAULT_LED_N",
-> +				"VGA_HSYNC","VGA_VSYNC","","",
-> +	/*K0-K7*/	"","","","","","","","",
-> +	/*L0-L7*/	"","","","","","","SYS_UART_TXD1","SYS_UART_RXD1",
-> +	/*M0-M7*/	"","","","","","","","",
-> +	/*N0-N7*/	"","","","","","","","",
-> +	/*O0-O7*/	"","","","","","","","",
-> +	/*P0-P7*/	"","","","","","","","",
-> +	/*Q0-Q7*/	"","","","","","","FM_PCH_BMC_THERMTRIP_N","INTRUDER_N",
-> +	/*R0-R7*/	"SPI_BMC_BOOT_CS1_R_N","FM_CPU_MEMHOT_LVC3_N",
-> +				"DBP_CPU_PREQ_N","FM_CPU_ERR2_LVT3_BMC_N",
-> +				"RISER_NCSI_EN_N","","LOM_NCSI_EN_N","OCP_NCSI_EN_N",
-> +	/*S0-S7*/	"BMC_XDP_PRDY_N","SIO_POWER_GOOD","BMC_PWR_DEBUG_R_N","BMC_DEBUG_EN_R_N","",
-> +				"GPIOS5_BMC","","GPIOS7_BMC",
-> +	/*T0-T7*/	"","","","","","","","",
-> +	/*U0-U7*/	"","","","","","","","",
-> +	/*V0-V7*/	"","","","","","","","",
-> +	/*W0-W7*/	"","","","","","","","",
-> +	/*X0-X7*/	"","","","","","","","",
-> +	/*Y0-Y7*/	"","BMC_DET_UID_N","BMC_JTAG_SEL","SIO_ONCONTROL","","","","",
-> +	/*Z0-Z7*/	"XDP_PRESENT_N","DBP_SYSPWROK","BMC_JTAG_SEL","FM_SMI_ACTIVE_N","",
-> +				"GPIOZ5","","",
-> +	/*AA0-AA7*/	"FP_BMC_SYSLED_N","PS_PWROK","RST_PLTRST_BMC_N","HDA_SDO_BMC",
-> +				"FM_SLPS4_R_N","","POWER_BUTTON","POWER_OUT",
-> +	/*AB0-AB7*/	"RESET_OUT","RESET_BUTTON","BIOS_REFLASH","POST_COMPLETE","","","","",
-> +	/*AC0-AC7*/	"","","","","","","","";
+> +static const struct hwmon_ops smpro_hwmon_ops = {
+> +	.is_visible = smpro_is_visible,
+> +	.read = smpro_read,
+> +	.read_string = smpro_read_string,
 > +};
 > +
-> +&i2c0 {
-> +	/* FP_LCD */
-> +	status = "okay";
+> +static const struct hwmon_chip_info smpro_chip_info = {
+> +	.ops = &smpro_hwmon_ops,
+> +	.info = smpro_info,
 > +};
 > +
-> +&i2c1 {
-> +	status = "okay";
+> +static int smpro_hwmon_probe(struct platform_device *pdev)
+> +{
+> +	struct smpro_hwmon *hwmon;
+> +	struct device *hwmon_dev;
 > +
-> +	eeprom@50 {
-> +		compatible = "atmel,24c256";
-> +		reg = <0x50>;
-> +		label = "fru";
-> +	};
+> +	hwmon = devm_kzalloc(&pdev->dev, sizeof(struct smpro_hwmon), GFP_KERNEL);
+> +	if (!hwmon)
+> +		return -ENOMEM;
+> +
+> +	hwmon->regmap = dev_get_regmap(pdev->dev.parent, NULL);
+> +	if (!hwmon->regmap)
+> +		return -ENODEV;
+> +
+> +	hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev, "smpro_hwmon",
+> +							 hwmon, &smpro_chip_info, NULL);
+> +
+> +	return PTR_ERR_OR_ZERO(hwmon_dev);
+> +}
+> +
+> +static struct platform_driver smpro_hwmon_driver = {
+> +	.probe		= smpro_hwmon_probe,
+> +	.driver = {
+> +		.name	= "smpro-hwmon",
+> +	},
 > +};
 > +
-> +&i2c2 {
-> +	status = "okay";
-> +
-> +	tmp112@48 {
-> +		compatible = "ti,tmp112";
-> +		reg = <0x48>;
-> +		label = "inlet";
-> +	};
-> +
-> +	tmp112@49 {
-> +		compatible = "ti,tmp112";
-> +		reg = <0x49>;
-> +		label = "outlet";
-> +	};
-> +
-> +	pca9548@70 {
-> +		compatible = "nxp,pca9548";
-> +		reg = <0x70>;
-> +	};
-> +};
-> +
-> +&i2c3 {
-> +	status = "okay";
-> +
-> +	pca9548@70 {
-> +		compatible = "nxp,pca9548";
-> +		reg = <0x70>;
-> +	};
-> +
-> +	pca9548@71 {
-> +		compatible = "nxp,pca9548";
-> +		reg = <0x71>;
-> +	};
-> +
-> +	pca9548@72 {
-> +		compatible = "nxp,pca9548";
-> +		reg = <0x72>;
-> +	};
-> +};
-> +
-> +&i2c4 {
-> +	/* IPMB */
-> +	status = "okay";
-> +};
-> +
-> +&i2c5 {
-> +	status = "okay";
-> +
-> +	pca9548@70 {
-> +		compatible = "nxp,pca9548";
-> +		reg = <0x70>;
-> +	};
-> +};
-> +
-> +&i2c6 {
-> +	status = "okay";
-> +
-> +	pca9548@70 {
-> +		compatible = "nxp,pca9548";
-> +		reg = <0x70>;
-> +	};
-> +};
-> +
-> +&i2c7 {
-> +	status = "okay";
-> +
-> +	adm1278@33 {
-> +		compatible = "adi,adm1293";
-> +		reg = <0x33>;
-> +	};
-> +
-> +	adm1278@32 {
-> +		compatible = "adi,adm1293";
-> +		reg = <0x32>;
-> +	};
-> +
-> +	adm1278@20 {
-> +		compatible = "adi,adm1293";
-> +		reg = <0x20>;
-> +	};
-> +};
-> +
-> +&i2c8 {
-> +	status = "okay";
-> +
-> +	pca0: pca9555@23 {
-> +		compatible = "nxp,pca9555";
-> +		reg = <0x23>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +
-> +		gpio@0 {
-> +			reg = <0>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@1 {
-> +			reg = <1>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@2 {
-> +			reg = <2>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@3 {
-> +			reg = <3>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@4 {
-> +			reg = <4>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@5 {
-> +			reg = <5>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@6 {
-> +			reg = <6>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +	};
-> +
-> +	pca1: pca9555@22 {
-> +		compatible = "nxp,pca9555";
-> +		reg = <0x22>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +
-> +		gpio@0 {
-> +			reg = <0>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@1 {
-> +			reg = <1>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@2 {
-> +			reg = <2>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@3 {
-> +			reg = <3>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@4 {
-> +			reg = <4>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@5 {
-> +			reg = <5>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@6 {
-> +			reg = <6>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@7 {
-> +			reg = <7>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +	};
-> +
-> +	pca2: pca9555@20 {
-> +		compatible = "nxp,pca9555";
-> +		reg = <0x20>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +
-> +		gpio@0 {
-> +			reg = <0>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@1 {
-> +			reg = <1>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@2 {
-> +			reg = <2>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@3 {
-> +			reg = <3>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@4 {
-> +			reg = <4>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@5 {
-> +			reg = <5>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@6 {
-> +			reg = <6>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@7 {
-> +			reg = <7>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +	};
-> +
-> +	pca3: pca9555@21 {
-> +		compatible = "nxp,pca9555";
-> +		reg = <0x21>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +
-> +		gpio@0 {
-> +			reg = <0>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@1 {
-> +			reg = <1>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@2 {
-> +			reg = <2>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@3 {
-> +			reg = <3>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@4 {
-> +			reg = <4>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@5 {
-> +			reg = <5>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@6 {
-> +			reg = <6>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@7 {
-> +			reg = <7>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +	};
-> +};
-> +
-> +&i2c9 {
-> +	/* cpld */
-> +	status = "okay";
-> +};
-> +
-> +&i2c10 {
-> +	status = "okay";
-> +
-> +	pca4: pca9555@24 {
-> +		compatible = "nxp,pca9555";
-> +		reg = <0x24>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +
-> +		gpio@0 {
-> +			reg = <0>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@1 {
-> +			reg = <1>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@2 {
-> +			reg = <2>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@3 {
-> +			reg = <3>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@4 {
-> +			reg = <4>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@5 {
-> +			reg = <5>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@6 {
-> +			reg = <6>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@7 {
-> +			reg = <7>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +	};
-> +
-> +	pca5: pca9555@25 {
-> +		compatible = "nxp,pca9555";
-> +		reg = <0x25>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +
-> +		gpio@0 {
-> +			reg = <0>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@1 {
-> +			reg = <1>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@2 {
-> +			reg = <2>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@3 {
-> +			reg = <3>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@4 {
-> +			reg = <4>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@5 {
-> +			reg = <5>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +
-> +		gpio@6 {
-> +			reg = <6>;
-> +			type = <PCA955X_TYPE_GPIO>;
-> +		};
-> +	};
-> +};
-> +
-> +&i2c11 {
-> +	status = "okay";
-> +
-> +	power-supply@58 {
-> +		compatible = "inspur,ipsps1";
-> +		reg = <0x58>;
-> +	};
-> +
-> +	power-supply@59 {
-> +		compatible = "inspur,ipsps1";
-> +		reg = <0x59>;
-> +	};
-> +};
-> +
-> +&i2c12 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c13 {
-> +	status = "okay";
-> +};
-> +
-> +&pwm_tacho {
-> +	status = "okay";
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
-> +		&pinctrl_pwm2_default &pinctrl_pwm3_default
-> +		&pinctrl_pwm4_default &pinctrl_pwm5_default
-> +		&pinctrl_pwm6_default &pinctrl_pwm7_default>;
-> +
-> +	fan@0 {
-> +		reg = <0x00>;
-> +		aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
-> +	};
-> +
-> +	fan@1 {
-> +		reg = <0x01>;
-> +		aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
-> +	};
-> +
-> +	fan@2 {
-> +		reg = <0x02>;
-> +		aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
-> +	};
-> +
-> +	fan@3 {
-> +		reg = <0x03>;
-> +		aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
-> +	};
-> +
-> +	fan@4 {
-> +		reg = <0x04>;
-> +		aspeed,fan-tach-ch = /bits/ 8 <0x08 0x09>;
-> +	};
-> +
-> +	fan@5 {
-> +		reg = <0x05>;
-> +		aspeed,fan-tach-ch = /bits/ 8 <0x0a 0x0b>;
-> +	};
-> +
-> +	fan@6 {
-> +		reg = <0x06>;
-> +		aspeed,fan-tach-ch = /bits/ 8 <0x0c 0x0d>;
-> +	};
-> +
-> +	fan@7 {
-> +		reg = <0x07>;
-> +		aspeed,fan-tach-ch = /bits/ 8 <0x0e 0x0f>;
-> +	};
-> +};
-> +
-> +&kcs3 {
-> +	status = "okay";
-> +	aspeed,lpc-io-reg = <0xca2>;
-> +};
-> +
-> +&kcs4 {
-> +	status = "okay";
-> +	aspeed,lpc-io-reg = <0xca4>;
-> +};
-> +
-> +&adc {
-> +	status = "okay";
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
-> +	 &pinctrl_adc2_default &pinctrl_adc3_default &pinctrl_adc4_default
-> +	 &pinctrl_adc5_default &pinctrl_adc6_default &pinctrl_adc7_default
-> +	 &pinctrl_adc8_default &pinctrl_adc9_default &pinctrl_adc10_default
-> +	 &pinctrl_adc11_default &pinctrl_adc12_default &pinctrl_adc13_default
-> +	 &pinctrl_adc14_default &pinctrl_adc15_default>;
-> +};
-> +
-> +&vhub {
-> +	status = "okay";
-> +};
-> +
-> +&video {
-> +	status = "okay";
-> +	memory-region = <&video_engine_memory>;
-> +};
-> +
-> +&vuart {
-> +	status = "okay";
-> +};
+> +module_platform_driver(smpro_hwmon_driver);
+> +
+> +MODULE_AUTHOR("Thu Nguyen <thu@os.amperecomputing.com>");
+> +MODULE_AUTHOR("Quan Nguyen <quan@os.amperecomputing.com>");
+> +MODULE_DESCRIPTION("Ampere Altra SMPro hwmon driver");
+> +MODULE_LICENSE("GPL v2");
+> 
+
