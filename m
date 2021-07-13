@@ -2,13 +2,13 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E02E03C6A30
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 08:02:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 744D23C6A32
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 08:03:03 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GP95k5Vl5z3bXX
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 16:02:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GP96F27wyz3bWc
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jul 2021 16:03:01 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=YBSdATJx;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=EQ/RlqHn;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,21 +18,21 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=YBSdATJx; 
+ header.a=rsa-sha256 header.s=selector2 header.b=EQ/RlqHn; 
  dkim-atps=neutral
 Received: from NAM04-DM6-obe.outbound.protection.outlook.com
  (mail-dm6nam08on2124.outbound.protection.outlook.com [40.107.102.124])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GP94K6GZZz2yY0;
- Tue, 13 Jul 2021 16:01:21 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GP94L2tKPz3036;
+ Tue, 13 Jul 2021 16:01:22 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hzEnahfJ9FjIyZVHBF2Izo+fYXR8t7f85avTap70sRU3VEuErSk2z876ovdvmuR7yNwk5fZUPSr0NTi0yJApeg0rgF9Vr/pXApk6TbF8V5FU1fgVfHK1JQ/gVMkvndCYk1mQYE/A/Bwixyj7RJGDpGjauMVqw8qZ1MKacvS/KpkymT8GWitLarvAHmo+H/37DWXEZcoEh1emOeMftduwMnVcfR6d8S4fMmKfrPCUqrbKkTs9svMxC5LIi+Ncw5gSMt39GuQ6LYH4c9HXHfdvsGRg6W+Uk3Lc04SYE0GChDZYJpzdC/doDSGwD8kacOCMwAdQLNP5d+k3uLXswGbMiA==
+ b=I7c8HkSUOMDbu3u0Ab6F2DeqOKtfMOVCnwQIkY8YOCww/M22fc6RQ9Z3RG2tQKhtgtCKg8W8L19x5a+nfTUkl/jHcKHaHbA8gL6LvdXo+SbbLQPgbntxFaxEO3ZqZ5z0xHqqagwOzKDhBxvR0VAysGsbwObO4TzReMMRG1e1uvo/pEswx9HDl2EU1YTspWLvtKnYKuqGLGRGSnN/IDJRuuhMvJLC2MF63Zh9kR2L+XPtFb+LmO1OzdiV+XitQOei922xBY0r3hIJdtQO+nWQmUGjXbC7WNHnDPa/lWpY07K0Cf06gfDdO5B4gyWjX5OpzZPq/SvVb5yDHCIslJFwBg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jdVT7SozrMy879stD8RvHLl7U6n+4sHk3ZrdKW0WzzU=;
- b=MoAjaj9BiTTlkufPZOdkwdJXT9oZrr+B5K0rclRcGKU+JB1EMLRbYumH9tCwt6UBu+zdrVzyLhG/Xot11zw3Ob9apLP+nfTi1JaNQiq2VEDG7T5aCH3fc1yPsPxRYMgVCjQdXrT8hMNhjAuLe4gRQUdlDTPlsxIYK9QnOrFXrEeSU2zt8xkeuDoXqurgWQFNU0NHmKTUYPQR0l6DJOtn2DFBedCsVuvq8ZwWeWgqlCSLQRC5EB62+f/GRZfKLzL4OsMtnP7na3mDCwPOoCxbBUOmjJ17GLP8kVEsnGgt7d+ZPhK04EKO/buLXB+SRXUdcNhsvAu50EbDVUXsXw3Blg==
+ bh=RIlu4DeF4kqtom/eXIT7XoBEdgyX1aEz1LW7tPRDBVc=;
+ b=gFeqWqv240r2K8hJcb8S/vzD2aNaobnFnQckYK+YZTucghvz1r9mjzo2jh3nQu6M+HI6C4Xp6udn8YixGZURRwd8n1HaLC8wV6O3Y6mrA/ud1TsOF0IMIrU+WvdfDgGvYRUz0hz2pS/0rcGsRqd+ThDyvomATK3UXs87yMF5P05xwfpdOc4g7nklKJjDto0hHXTKJSvQondqARmx6mly8fqG9T2SOTBEOgT5kRwQkzoxib+5ESyPbgfP9X5mwCtyoPsTS08/ucaf1hXt5zVyZxVE52NXfqmayFcK+vgN0pdmZiSb9rCu+20LNwbV8QGNJml01Gvsy0+NoqXcJ1fPnQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -40,8 +40,8 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jdVT7SozrMy879stD8RvHLl7U6n+4sHk3ZrdKW0WzzU=;
- b=YBSdATJx96PfnoQEFllraPPHjOdef8NmTo9/XvqfCRToVF+RZ5YyZ0sHOMgpZ2oNx8CF4TsadHB1LyQRpQl7Uh7fAivHH3dTkp+lLmpALdeR1G8/ekjLqbOkAyoCLf38AEdlsUtNHhv9u9S1oggfCTrMl6hNCyTCcaYWZZ38IBY=
+ bh=RIlu4DeF4kqtom/eXIT7XoBEdgyX1aEz1LW7tPRDBVc=;
+ b=EQ/RlqHn+yeR025Y25KzkBzKMflIOOPfvizF6NwslffkuvSd6rad0KciRMeoyo/Fke6dEgZx/VByr3MQ7WGOVKalXBWmsiLYivPur5NDQNqvdyEQxDMMFguUMK0ycEgZXwkB6aZ9qFu72MXlA2z5sBEhqbBRqKjIFeTX7yauzqM=
 Authentication-Results: jms.id.au; dkim=none (message not signed)
  header.d=none;jms.id.au; dmarc=none action=none
  header.from=os.amperecomputing.com;
@@ -49,11 +49,11 @@ Received: from MW2PR0102MB3482.prod.exchangelabs.com (2603:10b6:302:c::32) by
  MWHPR01MB2592.prod.exchangelabs.com (2603:10b6:300:3e::20) with
  Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4308.20; Tue, 13 Jul 2021 06:01:04 +0000
+ 15.20.4308.20; Tue, 13 Jul 2021 06:01:08 +0000
 Received: from MW2PR0102MB3482.prod.exchangelabs.com
  ([fe80::452a:24fb:12cb:9d7e]) by MW2PR0102MB3482.prod.exchangelabs.com
  ([fe80::452a:24fb:12cb:9d7e%5]) with mapi id 15.20.4308.027; Tue, 13 Jul 2021
- 06:01:04 +0000
+ 06:01:08 +0000
 From: Quan Nguyen <quan@os.amperecomputing.com>
 To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
  Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
@@ -62,9 +62,9 @@ To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-doc@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
  openbmc@lists.ozlabs.org
-Subject: [PATCH v5 2/4] mfd: smpro-mfd: Adds Ampere's Altra SMpro MFD driver
-Date: Tue, 13 Jul 2021 13:00:29 +0700
-Message-Id: <20210713060031.31568-3-quan@os.amperecomputing.com>
+Subject: [PATCH v5 3/4] hwmon: smpro: Add Ampere's Altra smpro-hwmon driver
+Date: Tue, 13 Jul 2021 13:00:30 +0700
+Message-Id: <20210713060031.31568-4-quan@os.amperecomputing.com>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20210713060031.31568-1-quan@os.amperecomputing.com>
 References: <20210713060031.31568-1-quan@os.amperecomputing.com>
@@ -78,53 +78,53 @@ X-MS-Exchange-MessageSentRepresentingType: 1
 Received: from hcm-sw-17.amperecomputing.com (118.69.219.201) by
  HK2PR03CA0052.apcprd03.prod.outlook.com (2603:1096:202:17::22) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4331.10 via Frontend Transport; Tue, 13 Jul 2021 06:01:01 +0000
+ 15.20.4331.10 via Frontend Transport; Tue, 13 Jul 2021 06:01:05 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: d593d9da-4508-46b8-5882-08d945c3995e
+X-MS-Office365-Filtering-Correlation-Id: 07803524-da78-410e-a5f9-08d945c39bc0
 X-MS-TrafficTypeDiagnostic: MWHPR01MB2592:
 X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <MWHPR01MB259238B6B78E78A53BCD8F29F2149@MWHPR01MB2592.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:751;
+X-Microsoft-Antispam-PRVS: <MWHPR01MB2592174C088DD9B31C3E3A11F2149@MWHPR01MB2592.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: FjG7unxrNZiVBL9vG5T4XdEQ+YuKVVpEJKK9vwYQ/5cxGotudcSuxQaokK95SEp63GwwVZ5XxMe9xCYp5pSS7oEtQhdWHw83284uNhgadrFHlukAjLh3Qkb1VjqyNWjQ562+XDIlpurvBFd1iAVo1k+3uZVzMOHxCKkCae2KojhVKGobSeKWDHonrPYn8e8qcOa/P3AGoHY+W7Vr4W9wi6ZvJJ20gnGGSQ/dJI46VhBpWubxZrCJ0RoqH3E1YsPxc04xhzLNcVWbRYVt+ZzXjairj2zBQqblmkhGcU6i88680paNjAe7HcFr1l5qEovkWUOz5nr0eBB7jeDDfOi+wYYcIIm4OMWEbtm6bpIZjShbnCJcmzw3Nx6myEZ7y1HuVZrwTzDG+YAEqAgYud31jXRIlDxaQ9QNGh3NntsGggLtLP+5PA4QWWjWa9baCDWIsYdvKWF9BVQyfc3VWSxRNwUTa89dOjCxGp4FMxKY5x5uyfMxKKZIscIW4QkHjOADJ9KQrwKxZNts9DG1v0OIBDs9tSxVrcBCTAEWd7mWIvpgkIGzfSupPxoD4EKpyL4PRR6r9U++gZcESP9j3eye5kZbaPgdpufL7twohSjtsl4U2XIner6X0QnIPlzr8oqO/q05NTtpa8h0E3fB8IJt3kV5Iaj2sXbQkmicBGWjjsHcuq1oGNFiDSdJUxBoFTbUCboqaIAYXn0Je0+UIJJvhzA89btmIeIgyMKbah5mDZY=
+X-Microsoft-Antispam-Message-Info: wz7kKy4tQuHr6P6KOLC+9afdeNsVukZe10xM8QVRBiRJUNAlOzuX71a0227ANo89+Yk47tcsCAh4wTJvpZTUKIN0ImJMhRJ1VtsT6M7IxRYtZHVrTQcMtTcsf+H3H8NzLkDgA846vNZz6dsKvz/A3ZqDCvp6cCZjlycZm58E4eXwpJoRkSzZWqdquxn+7UTk9GZHvr7Npd+sh37kdCJkBaiwY0FwvySTlCEhBkc7u4Ud49ytiohwWCsYJgOkJhgfFSFxg50zEDUCuzJGnQZlcwqu5IY9/mEv4GZsam3Rch1DXUQEPHCSWkhT/FT2+Amh9TIRUUpiWXwBvObi71RAg6KwZbpkVFDux0UGLIW40hUOdA3Re60Pb06QwACJkYrookp4nKfArlJaKXVEVrGOxERmOA+g7tFzNx0vL54fij517Ncnq3NgPZFFuKdVyswUNLUIuE/gIPb9cSoDoQs3reEZ1LyKDsWO+GuV5XtUUtRKxONWTVVTGw3+AUQMns994WtUPzTOEds5aaeq0WLz1YOjchXn2F1qQ7hEfB+bnqiHNhtw5xB9T9gtztObJqW853pZ0ZVcLkLrFPL8i6QGBrOEk91jsUyhYKdkw5BD3oqk7dHyI0JOc8zZJwHr7p8DvkN1L2FecANAgPhQx1RiiobfBdYiaHEHMK4tm1GQ+hXaqNAcb5W3Qorvm5Ll4M6u3u4URkwfQRmEarAHcyMAufWwtUcDEARkJMjndz1h+Ko=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:MW2PR0102MB3482.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(346002)(39850400004)(376002)(136003)(396003)(366004)(2616005)(86362001)(110136005)(956004)(316002)(5660300002)(107886003)(66946007)(54906003)(66556008)(66476007)(4326008)(478600001)(38100700002)(38350700002)(6666004)(921005)(6512007)(52116002)(6506007)(83380400001)(26005)(2906002)(8676002)(7416002)(8936002)(186003)(1076003)(6486002);
+ SFS:(4636009)(346002)(39850400004)(376002)(136003)(396003)(366004)(2616005)(86362001)(110136005)(956004)(316002)(5660300002)(30864003)(107886003)(66946007)(54906003)(66556008)(66476007)(4326008)(478600001)(38100700002)(38350700002)(6666004)(921005)(6512007)(52116002)(6506007)(83380400001)(26005)(2906002)(8676002)(7416002)(8936002)(186003)(1076003)(6486002);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?4CshMkAO02ox0e9SExgmsipfuXpgwVKjMVUomL31qkaIWCv/FvHbBzCzfpGE?=
- =?us-ascii?Q?89lnNT9v6uQ3TMwBeJz6h62mZzKdgpOBF2P5iIvv67iEMdYCUw7Uz+6akjm0?=
- =?us-ascii?Q?DNfifFf4YufFZRcX0gFoTK8LBruWCiqHofBDt2gYBoylmH0PiV1BxJ2qna0D?=
- =?us-ascii?Q?O6sC4Qj9s1hQ6iRgYHsi3/BlDWOgED3MVRHHIMhzCl+da5bAAdXed3oCi0Ex?=
- =?us-ascii?Q?yLebUr8Zdp2dIKJCYe8AwARSBJwiij39rSDZUIulox6bHeIxIzoy5gbJqced?=
- =?us-ascii?Q?mXFY1kv9xd6XvvQczQssqW+fkBmMrRrHpvGPyuM0B0dJrzq7J5e1npbYLyJY?=
- =?us-ascii?Q?dPDLvLVVkNlfaZBFY1Lyr+OHHuzuB5PejnzuBhpbYMapPn/S1Dc9w7aSOPJx?=
- =?us-ascii?Q?MoVyEJCJo8PktBUY2+VwSByapdBMQcpR1P+Fhk2mVnQDj9JfGpsH8xTsiCnG?=
- =?us-ascii?Q?VZmcHe7YlsEmkC9wdiS+VZq/bSVQimiGxt4cv3q3IbZrvzUhFu1hpQxncH7F?=
- =?us-ascii?Q?giD9j9cbwQFv8DXM1H8eWyaqlj8b9MsWvPPSO/IfemfXK8wpfpRnHWQA3Yxf?=
- =?us-ascii?Q?U5MmL6V+1aXwao/H1vU5/Gemmqr6qflHfSzZG8mr57Ff0FPUcfq181I1bS1q?=
- =?us-ascii?Q?zjFhBzeJqDRZBUeccUOw4wmFVP4mdReTMTu+J79hv79aX/WdjED5q0ahPmo/?=
- =?us-ascii?Q?nO1w29CnkPPTx+fjJ0vmlXNMTh12/B3wSZGTODa0PYkSLEE6YYlObORefxnD?=
- =?us-ascii?Q?F486fdEH7Wql1Gn7nZVg7qgqpZGd96NqT1TqK1dRjp7QHRjX4fGVCKGj4DPH?=
- =?us-ascii?Q?VRqJLfOvJCPFRrCuGNlt4M5fyMFkkU7KQkEZrwJMoMJUcaVmGVMR3B4wZlAn?=
- =?us-ascii?Q?dxOYHwN8XbEpNqkPeu4/43yWmu/lLywTdHwxkZvDcOas+rdF2t1HYJ/Ciu5m?=
- =?us-ascii?Q?bIMP84X5OAqzo5PH62U9Bmqx8aVxOjfjzgDbngmn7JgNQVYN4nWV5/eo0Zlk?=
- =?us-ascii?Q?sgj//j9g8xwivSJ7v2v3URla7EPxItOy1Sfds+xTR73vBCFwIO71Y/PQtrbI?=
- =?us-ascii?Q?d43V7rButbZoPMb4dqPWoH2aAmL4Oywk6RETOY0Oy3ZfzZeUrxM6jOhMdaS6?=
- =?us-ascii?Q?4buqDpWHpg7BirmqiZeW+Nt2NupCoNwecNDZqaka2W4tT0t4rryBGEThaa+q?=
- =?us-ascii?Q?wpoR7DDYab4V6vK+4mleTmFGvqjMRGFCaFMvahV05p4JAEdYFRtBXMqBDsmj?=
- =?us-ascii?Q?iSX3MqT+E5NbV2OewCNMefX/Uwhz/hNlHTKMAHCN2IX82vtjHtVzvKUuMmW0?=
- =?us-ascii?Q?iNKwFarEiTMn3JSOcy1Myyge?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?iV6jz2zYed5LtbVcLQyevdhNvZers2D6Gd6rkLi6xtgyv5wO/IT8xjoxAk9A?=
+ =?us-ascii?Q?9VCZdjtb+tixw6tOVI2+t45Od/ZtCeYbHdQYqYVrlm2i9cMbMj8W36pWa+Bf?=
+ =?us-ascii?Q?bsFmlzcpY5RHXzbfoRxpqkZCAH2sq/e7NHKlLITOJpu4R3cuGS1l6jIncWd/?=
+ =?us-ascii?Q?41gHicDrvFYeFZG5IAaA6krZwBQqbosJ82zq4fPfnQIiZlm9CiPctBMD6rOP?=
+ =?us-ascii?Q?FnQKhUc0Xpt6NBr82x7ra9DCtHxf99rsWPW1vZnNcNd2TQy0jrh/yq1ZOlqm?=
+ =?us-ascii?Q?ShNn7zHXNkHK8dVbSrqa26QO7f69LMZ98EZkD8d6QXhST4B4XHpnyIrbUCwd?=
+ =?us-ascii?Q?3rp5Zam2G1IHELFC+CxnVsBb5GcoAvWiUwOUx6hC2Iss+b93ckAeeLBNUG1f?=
+ =?us-ascii?Q?eJHTFDsMVggagw4gI9J9/Z6drWJpipMimGdRSIJBhq7/h2P0b1WYi9j7IY+F?=
+ =?us-ascii?Q?qGvk/rQALGm5+k182Jw37h3j1Y0OMrWpfNUbevhi0UBMl0hgLvokUrPGahH1?=
+ =?us-ascii?Q?/PJe+9cQwfPfgrBKgn9FRuhkz66n4S3JSbFCmatQN5IiABs2rqF/VbGw2PbP?=
+ =?us-ascii?Q?TKCRTbFYVWO+5zObQeHWSrKZYaluKQXNpa7DZQ4ANzwywItG/Y7ZAvhMtAqW?=
+ =?us-ascii?Q?+w5AH9qp9PC517/XvGN6r+bcey2IQw3uM7UBn2YNsuZKn9j6dWNzFDo506yb?=
+ =?us-ascii?Q?fDQY/O5b8QEhPmgEbp4RRTjZ1Ig0FKQnjhQU4Ou2Sd11n7DjzDP6zR2hjiCx?=
+ =?us-ascii?Q?c0GCN9LOz9A/UcWS9p+6Lj7Q+00ZcHpx3fPo7sPy4ngwU1pyozeuDtzAT7W1?=
+ =?us-ascii?Q?bVOcQFKBCMhheTuU5rYdRUwImOYO3wrMNv6oIVDIC52KsMMl/+4Fb3EUNZmP?=
+ =?us-ascii?Q?fnclvUwIXaba+JfNZxXJwl+L/SsqdNWtxZLg6Ok3k3lB+gCV8Sldo9+8IL5d?=
+ =?us-ascii?Q?FM4vIq5D4RUMwE1HGMwt8kCuKm8qaovBlOzBlygRR9DrEdySAGA3IoIr3w9U?=
+ =?us-ascii?Q?/iMYvaEeEoXfKvfG5ZCPHwbjMXF0vSZiadyPAr4Uz2xfzzAH2c4p9yKZRBru?=
+ =?us-ascii?Q?B1Mjdmgd2kXEZOq6SI/vulPFkTwAL/evHWu0k381rAzPTmKTI6JuCmRi/MBZ?=
+ =?us-ascii?Q?kkeak8H6oezAzwa3sbB1j2y0BFKNF2ZFcXmg92ZC6vIwZaQ397Ku+z1SYUTj?=
+ =?us-ascii?Q?8rf4n15w68ma5gkWbqMAPhMrzFs6B6XjzO6m+GgJ3zL6jaNU3QG7VilJRTIW?=
+ =?us-ascii?Q?6G4kOrbYNAJBRRk6qpKmr+51Cq2C+42ZXZbLtwzxqmWvgc4CNxuJ0Y312CRd?=
+ =?us-ascii?Q?0jxXsev0/x8Il8E82zrm9Tgi?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d593d9da-4508-46b8-5882-08d945c3995e
+X-MS-Exchange-CrossTenant-Network-Message-Id: 07803524-da78-410e-a5f9-08d945c39bc0
 X-MS-Exchange-CrossTenant-AuthSource: MW2PR0102MB3482.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2021 06:01:04.7589 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2021 06:01:08.6647 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: m71O/7rhP/UI0ATFG7me9eWp8/6bJvt6g2oSCeJWAcPnuiFLTn89DZ4XmJaQ5RkDQZuwVAgbpkbmDHzSPG6fEf57fm0EE12GGJhHODExPr0=
+X-MS-Exchange-CrossTenant-UserPrincipalName: H54LqFG+OoX3ZWjNXI2mZfQL6rrTRlInUaS8KpAE6677MZWkjPIlC/XO/NQtqVUP/LXE81j6dCv9NtRUOQmOqE3goEE0TNivzW6Hi2f/6eM=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR01MB2592
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -143,147 +143,552 @@ Cc: Open Source Submission <patches@amperecomputing.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Adds Multi-function devices driver for SMpro co-processor found on the
-Mt.Jade hardware reference platform with Ampere's Altra processor family.
+This commit adds support for Ampere SMpro hwmon driver. This driver
+supports accessing various CPU sensors provided by the SMpro co-processor
+including temperature, power, voltages, and current.
 
 Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
 ---
-Changes in v5: 
-  + Dropped the use of simple-mfd-i2c driver [Quan]
-  + Introduced drivers/mfd/smpro-mfd.c driver to instantiate
-  sub-devices. This is to avoid DT nodes without resource issue [Quan]
-  + Revised commit message [Quan]
+Changes in v5:
+  + Drop ManufacturerID checking when probe as it was checked during
+  smpro-mfd probing [Quan]
+  + Drop the use of register offset [Quan]
+  + Removed the use of compatible string as it is instantiated by
+  smpro-mfd driver [Quan]
+  + Thanks Guenter for the Reviewed-by in last version, but it was
+  not added because there's some changes in this version. Really
+  appreciate if you could help again, thank you.
 
 Changes in v4:
-  + Add "depends on I2C" to fix build issue found by kernel test
-  robot [Guenter]
+  + Returned regmap_read() error code [Guenter]
 
 Changes in v3:
-  + None
+  + Handled negative temperature value [Guenter]
+  + Returned -ENODEV if Manufacturer ID is wrong [Guenter]
+  + Refactored smpro_read_string() and smpro_temp_read() [Guenter]
+  + Removed smpro_write() function [Guenter]
+  + Added minor refactor changes [Quan]
 
 Changes in v2:
-  + Used 'struct of_device_id's .data attribute [Lee Jones]
+  + Removed "virtual" sensors [Guenter]
+  + Reported SOC_TDP as "Socket TDP" using max attributes [Guenter]
+  + Corrected return error code when host is turn off [Guenter]
+  + Reported MEM HOT Threshold for all DIMMs as temp*_crit [Guenter]
+  + Removed license info as SPDX-License-Identifier existed [Guenter]
+  + Added is_visible() support [Guenter]
+  + Used HWMON_CHANNEL_INFO() macro and LABEL attributes [Guenter]
+  + Made is_valid_id() return boolean [Guenter]
+  + Returned -EPROBE_DEFER when smpro reg inaccessible [Guenter]
+  + Removed unnecessary error message when dev register fail [Guenter]
+  + Removed Socket TDP sensor [Quan]
+  + Included sensor type and channel in labels [Quan]
+  + Refactorized code to fix checkpatch.pl --strict complaint [Quan]
 
- drivers/mfd/Kconfig     | 12 +++++++
- drivers/mfd/Makefile    |  1 +
- drivers/mfd/smpro-mfd.c | 74 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 87 insertions(+)
- create mode 100644 drivers/mfd/smpro-mfd.c
+ drivers/hwmon/Kconfig       |   8 +
+ drivers/hwmon/Makefile      |   1 +
+ drivers/hwmon/smpro-hwmon.c | 463 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 472 insertions(+)
+ create mode 100644 drivers/hwmon/smpro-hwmon.c
 
-diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
-index 6a3fd2d75f96..25e502cca32f 100644
---- a/drivers/mfd/Kconfig
-+++ b/drivers/mfd/Kconfig
-@@ -77,6 +77,18 @@ config MFD_AS3711
- 	help
- 	  Support for the AS3711 PMIC from AMS
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index e3675377bc5d..903c5ef79a5a 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -67,6 +67,14 @@ config SENSORS_ABITUGURU3
+ 	  This driver can also be built as a module. If so, the module
+ 	  will be called abituguru3.
  
-+config MFD_SMPRO
-+	tristate "Ampere Computing MFD SMpro core driver"
-+	depends on I2C
-+	select MFD_CORE
-+	select REGMAP_I2C
++config SENSORS_SMPRO
++	tristate "Ampere's Altra SMpro hardware monitoring driver"
++	depends on MFD_SMPRO
 +	help
-+	  Say yes here to enable SMpro driver support for Ampere's Altra
-+	  processor family.
++	  If you say yes here you get support for the thermal, voltage,
++	  current and power sensors of Ampere's Altra processor family SoC
++	  with SMpro co-processor.
 +
-+	  Ampere's Altra SMpro exposes an I2C regmap interface that can
-+	  be accessed by child devices.
-+
- config MFD_AS3722
- 	tristate "ams AS3722 Power Management IC"
- 	select MFD_CORE
-diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
-index 8116c19d5fd4..046fd36de85a 100644
---- a/drivers/mfd/Makefile
-+++ b/drivers/mfd/Makefile
-@@ -268,6 +268,7 @@ obj-$(CONFIG_MFD_QCOM_PM8008)	+= qcom-pm8008.o
- 
- obj-$(CONFIG_SGI_MFD_IOC3)	+= ioc3.o
- obj-$(CONFIG_MFD_SIMPLE_MFD_I2C)	+= simple-mfd-i2c.o
-+obj-$(CONFIG_MFD_SMPRO)		+= smpro-mfd.o
- obj-$(CONFIG_MFD_INTEL_M10_BMC)   += intel-m10-bmc.o
- 
- obj-$(CONFIG_MFD_ATC260X)	+= atc260x-core.o
-diff --git a/drivers/mfd/smpro-mfd.c b/drivers/mfd/smpro-mfd.c
+ config SENSORS_AD7314
+ 	tristate "Analog Devices AD7314 and compatibles"
+ 	depends on SPI
+diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
+index d712c61c1f5e..9de5cd9911b0 100644
+--- a/drivers/hwmon/Makefile
++++ b/drivers/hwmon/Makefile
+@@ -175,6 +175,7 @@ obj-$(CONFIG_SENSORS_SHT4x)	+= sht4x.o
+ obj-$(CONFIG_SENSORS_SHTC1)	+= shtc1.o
+ obj-$(CONFIG_SENSORS_SIS5595)	+= sis5595.o
+ obj-$(CONFIG_SENSORS_SMM665)	+= smm665.o
++obj-$(CONFIG_SENSORS_SMPRO)	+= smpro-hwmon.o
+ obj-$(CONFIG_SENSORS_SMSC47B397)+= smsc47b397.o
+ obj-$(CONFIG_SENSORS_SMSC47M1)	+= smsc47m1.o
+ obj-$(CONFIG_SENSORS_SMSC47M192)+= smsc47m192.o
+diff --git a/drivers/hwmon/smpro-hwmon.c b/drivers/hwmon/smpro-hwmon.c
 new file mode 100644
-index 000000000000..b0cd3c248507
+index 000000000000..b01ceea33ddd
 --- /dev/null
-+++ b/drivers/mfd/smpro-mfd.c
-@@ -0,0 +1,74 @@
-+// SPDX-License-Identifier: GPL-2.0-only
++++ b/drivers/hwmon/smpro-hwmon.c
+@@ -0,0 +1,463 @@
++// SPDX-License-Identifier: GPL-2.0+
 +/*
-+ * Ampere Altra Family SMPro MFD - I2C
++ * Ampere Computing SoC's SMPro Hardware Monitoring Driver
 + *
 + * Copyright (c) 2021, Ampere Computing LLC
-+ *
-+ * Author: Quan Nguyen <quan@os.amperecomputing..com>
 + */
-+
-+#include <linux/i2c.h>
++#include <linux/bitfield.h>
++#include <linux/bitops.h>
++#include <linux/hwmon.h>
++#include <linux/hwmon-sysfs.h>
 +#include <linux/kernel.h>
++#include <linux/mod_devicetable.h>
 +#include <linux/module.h>
-+#include <linux/of_platform.h>
-+#include <linux/mfd/core.h>
++#include <linux/platform_device.h>
++#include <linux/property.h>
 +#include <linux/regmap.h>
 +
-+/* Identification Registers */
-+#define MANUFACTURER_ID_REG     0x02
-+#define AMPERE_MANUFACTURER_ID  0xCD3A
++/* Logical Power Sensor Registers */
++#define SOC_TEMP		0x10
++#define SOC_VRD_TEMP		0x11
++#define DIMM_VRD_TEMP		0x12
++#define CORE_VRD_TEMP		0x13
++#define CH0_DIMM_TEMP		0x14
++#define CH1_DIMM_TEMP		0x15
++#define CH2_DIMM_TEMP		0x16
++#define CH3_DIMM_TEMP		0x17
++#define CH4_DIMM_TEMP		0x18
++#define CH5_DIMM_TEMP		0x19
++#define CH6_DIMM_TEMP		0x1A
++#define CH7_DIMM_TEMP		0x1B
++#define RCA_VRD_TEMP		0x1C
 +
-+static const struct regmap_config simple_word_regmap_config = {
-+	.reg_bits = 8,
-+	.val_bits = 16,
-+};
++#define CORE_VRD_PWR		0x20
++#define SOC_PWR			0x21
++#define DIMM_VRD1_PWR		0x22
++#define DIMM_VRD2_PWR		0x23
++#define CORE_VRD_PWR_MW		0x26
++#define SOC_PWR_MW		0x27
++#define DIMM_VRD1_PWR_MW	0x28
++#define DIMM_VRD2_PWR_MW	0x29
++#define RCA_VRD_PWR		0x2A
++#define RCA_VRD_PWR_MW		0x2B
 +
-+static const struct mfd_cell smpro_devs[] = {
-+	MFD_CELL_NAME("smpro-hwmon"),
-+};
++#define MEM_HOT_THRESHOLD	0x32
++#define SOC_VR_HOT_THRESHOLD	0x33
++#define CORE_VRD_VOLT		0x34
++#define SOC_VRD_VOLT		0x35
++#define DIMM_VRD1_VOLT		0x36
++#define DIMM_VRD2_VOLT		0x37
++#define RCA_VRD_VOLT		0x38
 +
-+static int smpro_mfd_probe(struct i2c_client *i2c)
-+{
-+	const struct regmap_config *config;
++#define CORE_VRD_CURR		0x39
++#define SOC_VRD_CURR		0x3A
++#define DIMM_VRD1_CURR		0x3B
++#define DIMM_VRD2_CURR		0x3C
++#define RCA_VRD_CURR		0x3D
++
++struct smpro_hwmon {
 +	struct regmap *regmap;
-+	unsigned int val;
-+	int ret;
-+
-+	config = device_get_match_data(&i2c->dev);
-+	if (!config)
-+		config = &simple_word_regmap_config;
-+
-+	regmap = devm_regmap_init_i2c(i2c, config);
-+	if (IS_ERR(regmap))
-+		return PTR_ERR(regmap);
-+
-+	/* Check for valid ID */
-+	ret = regmap_read(regmap, MANUFACTURER_ID_REG, &val);
-+	if (ret)
-+		return ret;
-+
-+	if (val != AMPERE_MANUFACTURER_ID)
-+		return -ENODEV;
-+
-+	return devm_mfd_add_devices(&i2c->dev, PLATFORM_DEVID_AUTO,
-+				    smpro_devs, ARRAY_SIZE(smpro_devs), NULL, 0, NULL);
-+}
-+
-+static const struct of_device_id smpro_mfd_of_match[] = {
-+	{ .compatible = "ampere,smpro", .data = &simple_word_regmap_config },
-+	{}
 +};
-+MODULE_DEVICE_TABLE(of, smpro_mfd_of_match);
 +
-+static struct i2c_driver smpro_mfd_driver = {
-+	.probe_new = smpro_mfd_probe,
-+	.driver = {
-+		.name = "smpro-mfd-i2c",
-+		.of_match_table = smpro_mfd_of_match,
++struct smpro_sensor {
++	const u8 reg;
++	const u8 reg_ext;
++	const char *label;
++};
++
++static const struct smpro_sensor temperature[] = {
++	{
++		.reg = SOC_TEMP,
++		.label = "temp1 SoC"
++	},
++	{
++		.reg = SOC_VRD_TEMP,
++		.reg_ext = SOC_VR_HOT_THRESHOLD,
++		.label = "temp2 SoC VRD"
++	},
++	{
++		.reg = DIMM_VRD_TEMP,
++		.label = "temp3 DIMM VRD"
++	},
++	{
++		.reg = CORE_VRD_TEMP,
++		.label = "temp4 CORE VRD"
++	},
++	{
++		.reg = CH0_DIMM_TEMP,
++		.reg_ext = MEM_HOT_THRESHOLD,
++		.label = "temp5 CH0 DIMM"
++	},
++	{
++		.reg = CH1_DIMM_TEMP,
++		.reg_ext = MEM_HOT_THRESHOLD,
++		.label = "temp6 CH1 DIMM"
++	},
++	{
++		.reg = CH2_DIMM_TEMP,
++		.reg_ext = MEM_HOT_THRESHOLD,
++		.label = "temp7 CH2 DIMM"
++	},
++	{
++		.reg = CH3_DIMM_TEMP,
++		.reg_ext = MEM_HOT_THRESHOLD,
++		.label = "temp8 CH3 DIMM"
++	},
++	{
++		.reg = CH4_DIMM_TEMP,
++		.reg_ext = MEM_HOT_THRESHOLD,
++		.label = "temp9 CH4 DIMM"
++	},
++	{
++		.reg = CH5_DIMM_TEMP,
++		.reg_ext = MEM_HOT_THRESHOLD,
++		.label = "temp10 CH5 DIMM"
++	},
++	{
++		.reg = CH6_DIMM_TEMP,
++		.reg_ext = MEM_HOT_THRESHOLD,
++		.label = "temp11 CH6 DIMM"
++	},
++	{
++		.reg = CH7_DIMM_TEMP,
++		.reg_ext = MEM_HOT_THRESHOLD,
++		.label = "temp12 CH7 DIMM"
++	},
++	{
++		.reg = RCA_VRD_TEMP,
++		.label = "temp13 RCA VRD"
 +	},
 +};
-+module_i2c_driver(smpro_mfd_driver);
 +
++static const struct smpro_sensor voltage[] = {
++	{
++		.reg = CORE_VRD_VOLT,
++		.label = "vout0 CORE VRD"
++	},
++	{
++		.reg = SOC_VRD_VOLT,
++		.label = "vout1 SoC VRD"
++	},
++	{
++		.reg = DIMM_VRD1_VOLT,
++		.label = "vout2 DIMM VRD1"
++	},
++	{
++		.reg = DIMM_VRD2_VOLT,
++		.label = "vout3 DIMM VRD2"
++	},
++	{
++		.reg = RCA_VRD_VOLT,
++		.label = "vout4 RCA VRD"
++	},
++};
++
++static const struct smpro_sensor curr_sensor[] = {
++	{
++		.reg = CORE_VRD_CURR,
++		.label = "iout1 CORE VRD"
++	},
++	{
++		.reg = SOC_VRD_CURR,
++		.label = "iout2 SoC VRD"
++	},
++	{
++		.reg = DIMM_VRD1_CURR,
++		.label = "iout3 DIMM VRD1"
++	},
++	{
++		.reg = DIMM_VRD2_CURR,
++		.label = "iout4 DIMM VRD2"
++	},
++	{
++		.reg = RCA_VRD_CURR,
++		.label = "iout5 RCA VRD"
++	},
++};
++
++static const struct smpro_sensor power[] = {
++	{
++		.reg = CORE_VRD_PWR,
++		.reg_ext = CORE_VRD_PWR_MW,
++		.label = "power1 CORE VRD"
++	},
++	{
++		.reg = SOC_PWR,
++		.reg_ext = SOC_PWR_MW,
++		.label = "power2 SoC"
++	},
++	{
++		.reg = DIMM_VRD1_PWR,
++		.reg_ext = DIMM_VRD1_PWR_MW,
++		.label = "power3 DIMM VRD1"
++	},
++	{
++		.reg = DIMM_VRD2_PWR,
++		.reg_ext = DIMM_VRD2_PWR_MW,
++		.label = "power4 DIMM VRD2"
++	},
++	{
++		.reg = RCA_VRD_PWR,
++		.reg_ext = RCA_VRD_PWR_MW,
++		.label = "power5 RCA VRD"
++	},
++};
++
++static int smpro_read_temp(struct device *dev, u32 attr, int channel, long *val)
++{
++	struct smpro_hwmon *hwmon = dev_get_drvdata(dev);
++	unsigned int value;
++	int ret;
++
++	switch (attr) {
++	case hwmon_temp_input:
++		ret = regmap_read(hwmon->regmap, temperature[channel].reg, &value);
++		if (ret)
++			return ret;
++		break;
++	case hwmon_temp_crit:
++		ret = regmap_read(hwmon->regmap, temperature[channel].reg_ext, &value);
++		if (ret)
++			return ret;
++		break;
++	default:
++		return -EOPNOTSUPP;
++	}
++
++	*val = sign_extend32(value, 8) * 1000;
++	return 0;
++}
++
++static int smpro_read_in(struct device *dev, u32 attr, int channel, long *val)
++{
++	struct smpro_hwmon *hwmon = dev_get_drvdata(dev);
++	unsigned int value;
++	int ret;
++
++	switch (attr) {
++	case hwmon_in_input:
++		ret = regmap_read(hwmon->regmap, voltage[channel].reg, &value);
++		if (ret < 0)
++			return ret;
++		/* 15-bit value in 1mV */
++		*val = value & 0x7fff;
++		return 0;
++	default:
++		return -EOPNOTSUPP;
++	}
++}
++
++static int smpro_read_curr(struct device *dev, u32 attr, int channel, long *val)
++{
++	struct smpro_hwmon *hwmon = dev_get_drvdata(dev);
++	unsigned int value;
++	int ret;
++
++	switch (attr) {
++	case hwmon_curr_input:
++		ret = regmap_read(hwmon->regmap, curr_sensor[channel].reg, &value);
++		if (ret < 0)
++			return ret;
++		/* Scale reported by the hardware is 1mA */
++		*val = value & 0x7fff;
++		return 0;
++	default:
++		return -EOPNOTSUPP;
++	}
++}
++
++static int smpro_read_power(struct device *dev, u32 attr, int channel, long *val_pwr)
++{
++	struct smpro_hwmon *hwmon = dev_get_drvdata(dev);
++	unsigned int val = 0, val_mw = 0;
++	int ret;
++
++	switch (attr) {
++	case hwmon_power_input:
++		ret = regmap_read(hwmon->regmap, power[channel].reg, &val);
++		if (ret)
++			return ret;
++
++		ret = regmap_read(hwmon->regmap, power[channel].reg_ext, &val_mw);
++		if (ret)
++			return ret;
++
++		*val_pwr = val * 1000000 + val_mw * 1000;
++		return 0;
++
++	default:
++		return -EOPNOTSUPP;
++	}
++}
++
++static int smpro_read(struct device *dev, enum hwmon_sensor_types type,
++		      u32 attr, int channel, long *val)
++{
++	switch (type) {
++	case hwmon_temp:
++		return smpro_read_temp(dev, attr, channel, val);
++	case hwmon_in:
++		return smpro_read_in(dev, attr, channel, val);
++	case hwmon_power:
++		return smpro_read_power(dev, attr, channel, val);
++	case hwmon_curr:
++		return smpro_read_curr(dev, attr, channel, val);
++	default:
++		return -EOPNOTSUPP;
++	}
++}
++
++static int smpro_read_string(struct device *dev, enum hwmon_sensor_types type,
++			     u32 attr, int channel, const char **str)
++{
++	switch (type) {
++	case hwmon_temp:
++		switch (attr) {
++		case hwmon_temp_label:
++			*str = temperature[channel].label;
++			return 0;
++		default:
++			break;
++		}
++		break;
++
++	case hwmon_in:
++		switch (attr) {
++		case hwmon_in_label:
++			*str = voltage[channel].label;
++			return 0;
++		default:
++			break;
++		}
++		break;
++
++	case hwmon_curr:
++		switch (attr) {
++		case hwmon_curr_label:
++			*str = curr_sensor[channel].label;
++			return 0;
++		default:
++			break;
++		}
++		break;
++
++	case hwmon_power:
++		switch (attr) {
++		case hwmon_power_label:
++			*str = power[channel].label;
++			return 0;
++		default:
++			break;
++		}
++		break;
++	default:
++		break;
++	}
++
++	return -EOPNOTSUPP;
++}
++
++static umode_t smpro_is_visible(const void *data, enum hwmon_sensor_types type,
++				u32 attr, int channel)
++{
++	const struct smpro_hwmon *hwmon = data;
++	unsigned int value;
++	int ret;
++
++	switch (type) {
++	case hwmon_temp:
++		switch (attr) {
++		case hwmon_temp_input:
++		case hwmon_temp_label:
++		case hwmon_temp_crit:
++			ret = regmap_read(hwmon->regmap, temperature[channel].reg, &value);
++			if (ret || value == 0xFFFF)
++				return 0;
++		break;
++		}
++	default:
++		break;
++	}
++
++	return 0444;
++}
++
++static const struct hwmon_channel_info *smpro_info[] = {
++	HWMON_CHANNEL_INFO(temp,
++			   HWMON_T_INPUT | HWMON_T_LABEL,
++			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
++			   HWMON_T_INPUT | HWMON_T_LABEL,
++			   HWMON_T_INPUT | HWMON_T_LABEL,
++			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
++			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
++			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
++			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
++			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
++			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
++			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
++			   HWMON_T_INPUT | HWMON_T_LABEL | HWMON_T_CRIT,
++			   HWMON_T_INPUT | HWMON_T_LABEL),
++	HWMON_CHANNEL_INFO(in,
++			   HWMON_I_INPUT | HWMON_I_LABEL,
++			   HWMON_I_INPUT | HWMON_I_LABEL,
++			   HWMON_I_INPUT | HWMON_I_LABEL,
++			   HWMON_I_INPUT | HWMON_I_LABEL,
++			   HWMON_I_INPUT | HWMON_I_LABEL),
++	HWMON_CHANNEL_INFO(power,
++			   HWMON_P_INPUT | HWMON_P_LABEL,
++			   HWMON_P_INPUT | HWMON_P_LABEL,
++			   HWMON_P_INPUT | HWMON_P_LABEL,
++			   HWMON_P_INPUT | HWMON_P_LABEL,
++			   HWMON_P_INPUT | HWMON_P_LABEL),
++	HWMON_CHANNEL_INFO(curr,
++			   HWMON_C_INPUT | HWMON_C_LABEL,
++			   HWMON_C_INPUT | HWMON_C_LABEL,
++			   HWMON_C_INPUT | HWMON_C_LABEL,
++			   HWMON_C_INPUT | HWMON_C_LABEL,
++			   HWMON_C_INPUT | HWMON_C_LABEL),
++	NULL
++};
++
++static const struct hwmon_ops smpro_hwmon_ops = {
++	.is_visible = smpro_is_visible,
++	.read = smpro_read,
++	.read_string = smpro_read_string,
++};
++
++static const struct hwmon_chip_info smpro_chip_info = {
++	.ops = &smpro_hwmon_ops,
++	.info = smpro_info,
++};
++
++static int smpro_hwmon_probe(struct platform_device *pdev)
++{
++	struct smpro_hwmon *hwmon;
++	struct device *hwmon_dev;
++
++	hwmon = devm_kzalloc(&pdev->dev, sizeof(struct smpro_hwmon), GFP_KERNEL);
++	if (!hwmon)
++		return -ENOMEM;
++
++	hwmon->regmap = dev_get_regmap(pdev->dev.parent, NULL);
++	if (!hwmon->regmap)
++		return -ENODEV;
++
++	hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev, "smpro_hwmon",
++							 hwmon, &smpro_chip_info, NULL);
++
++	return PTR_ERR_OR_ZERO(hwmon_dev);
++}
++
++static struct platform_driver smpro_hwmon_driver = {
++	.probe		= smpro_hwmon_probe,
++	.driver = {
++		.name	= "smpro-hwmon",
++	},
++};
++
++module_platform_driver(smpro_hwmon_driver);
++
++MODULE_AUTHOR("Thu Nguyen <thu@os.amperecomputing.com>");
 +MODULE_AUTHOR("Quan Nguyen <quan@os.amperecomputing.com>");
-+MODULE_DESCRIPTION("SMPRO MFD - I2C driver");
++MODULE_DESCRIPTION("Ampere Altra SMPro hwmon driver");
 +MODULE_LICENSE("GPL v2");
 -- 
 2.28.0
