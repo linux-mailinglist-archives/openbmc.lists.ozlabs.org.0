@@ -1,103 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DB613C879C
-	for <lists+openbmc@lfdr.de>; Wed, 14 Jul 2021 17:31:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC2C83C935F
+	for <lists+openbmc@lfdr.de>; Wed, 14 Jul 2021 23:49:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GQ1h30gZgz307Z
-	for <lists+openbmc@lfdr.de>; Thu, 15 Jul 2021 01:31:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GQB3G47dpz3bYg
+	for <lists+openbmc@lfdr.de>; Thu, 15 Jul 2021 07:48:58 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=iB+ayEas;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=tzSBo0fT;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32a;
+ helo=mail-ot1-x32a.google.com; envelope-from=blisaac91@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=iB+ayEas; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=tzSBo0fT; dkim-atps=neutral
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com
+ [IPv6:2607:f8b0:4864:20::32a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GQ1gk6qPqz2yMx
- for <openbmc@lists.ozlabs.org>; Thu, 15 Jul 2021 01:31:29 +1000 (AEST)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 16EF4Tqj032534
- for <openbmc@lists.ozlabs.org>; Wed, 14 Jul 2021 11:31:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : from : to
- : cc : date : message-id : content-type : references :
- content-transfer-encoding : mime-version : subject; s=pp1;
- bh=TUuUZsUeZD5Lo1RH+q69U5mYOPjwkJsAsvTtcQKk8fQ=;
- b=iB+ayEasY0fI45plkxlIgL3ogK+i56DicsXPQD7LBiS2hHVtzTeQE/99k5gO8lsH/R4X
- rx5dtuzqE26bGneTI8OoiOE5PWY23tetsNjxzPxvHO+lUekZDdMxuplRnVtvRsbgZeaM
- l/7NDOY1gEBa5TMSFAwExjIV0h7jQirmN6DlUK09nFEyE+KKqqrCxr7SIgHuDmJti0y0
- 2oosunfy5mxEuAyEF1miCcpz9usfVmLA5YMi8x2W7EpPa0MoDRjcz+Hm17xDMFbF0p91
- M1GanlLJVLyFXp7wqu+Tds2faqLaVx2NWcgUj9FJlhWLcJ69jqEjLL6Z9RKD6Xxq+guH BQ== 
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0b-001b2d01.pphosted.com with ESMTP id 39sdy6hmtx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 14 Jul 2021 11:31:26 -0400
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16EFBamo003089
- for <openbmc@lists.ozlabs.org>; Wed, 14 Jul 2021 15:31:25 GMT
-Received: from b03cxnp07027.gho.boulder.ibm.com
- (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
- by ppma01wdc.us.ibm.com with ESMTP id 39q36cfw20-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 14 Jul 2021 15:31:25 +0000
-Received: from b03ledav003.gho.boulder.ibm.com
- (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 16EFVOBG21692860
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Jul 2021 15:31:24 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8C4256A069;
- Wed, 14 Jul 2021 15:31:24 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7EBA26A067;
- Wed, 14 Jul 2021 15:31:24 +0000 (GMT)
-Received: from mww0332.dal12m.mail.ibm.com (unknown [9.208.69.80])
- by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Wed, 14 Jul 2021 15:31:24 +0000 (GMT)
-In-Reply-To: <20210714130837.3609-1-bentyner@linux.ibm.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: Ben Tyner <bentyner@linux.ibm.com>
-Date: Wed, 14 Jul 2021 15:31:22 +0000
-Message-ID: <OF32AECC21.91513A97-ON00258712.0054F99F-00258712.0055452A@ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <20210714130837.3609-1-bentyner@linux.ibm.com>
-X-Mailer: Lotus Domino Web Server Release 11.0.1FP2HF97   July 2, 2021
-X-MIMETrack: Serialize by http on MWW0332/03/M/IBM at 07/14/2021 15:31:22,
- Serialize complete at 07/14/2021 15:31:22
-X-Disclaimed: 22371
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: YrBDm2Ds3BQ7FcVLB8UeyP86kJVlhFQS
-X-Proofpoint-GUID: YrBDm2Ds3BQ7FcVLB8UeyP86kJVlhFQS
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GQB2S2zLKz3064
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Jul 2021 07:48:14 +1000 (AEST)
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 75-20020a9d08510000b02904acfe6bcccaso4025454oty.12
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Jul 2021 14:48:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=dndl2nyQTadFAO64rFcOihD/pyVKnS4d3A/507WV3y8=;
+ b=tzSBo0fT+ipxEg9uUSxlqPXABfWHXBzvRgB0l32Ky8dmeeFEEtR6SFbXlM+CCH4Snk
+ kPk/t/gjDYx75ybofG9XaMp//YAnNODRzwNYsFEa8+tuBOoqZhN/SXd2sSPLfpORd+kT
+ YC/H0yMnM/vgl0L7y4CXiQYzVst96ed8UD1L6nN6ighs8STRlFXaS7cnZU2bDhBXgriv
+ FZDYsJwPExUSBUDLYjZdWzVIYMG4VPpoVvK09ZKoVXGYFikJTVgHJQ8jxud4V6PMEmjD
+ /uW9u1XX8YvX+nBDkVZ5RXkirxGP4UZNcqqgSK5cKW5JPqlrTkdE05rtlEpscgT8n6bi
+ 0BvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=dndl2nyQTadFAO64rFcOihD/pyVKnS4d3A/507WV3y8=;
+ b=JkJir6nsMG/Q+rDt/59ub6an/tccVLtCVK8ZQO94iJDbRIFwwXsUc1l26pwBdI3fsX
+ vrr+rynjUHzB4qUyRVodvEeomdCX24bw1uiuj4q/jwxvfbB7BvI7lDNdjqzPalik3T8G
+ twi6j5tTufgtR0UcrWspWE7z9ww68b4BzXx7CKJ6jr61IU1kZa8+e6GNp2HpbHzeXhRn
+ fWhzfQW7QekcoPZu61jms34vG3Qc4dHhn3LCD/Ngo0TJOhaTzjMCatimJHHJDRjylwa2
+ 62kKZ5aakfCqUqH5Od5LRlhc+uzA0qbv+4sUT10OjHetS38zodQklrCUiAOuPE+1nEUn
+ 1DKA==
+X-Gm-Message-State: AOAM531cgzZ6wK981JbeKD+79SLSSool0BjE0dLu8RD/jh+Qi4fd0YDf
+ YT4tNFIpAYPoBUOja0Zf9Ao=
+X-Google-Smtp-Source: ABdhPJx/BCEvKY8ya9qr975EEn6uD46kkL1aJuGSBKj53YUXevm2GgxdvBtQ+6U8zlUa5Dv1lU4qew==
+X-Received: by 2002:a9d:1911:: with SMTP id j17mr251735ota.70.1626299291235;
+ Wed, 14 Jul 2021 14:48:11 -0700 (PDT)
+Received: from fstone06p1.aus.stglabs.ibm.com ([129.41.86.6])
+ by smtp.gmail.com with ESMTPSA id n6sm720899oia.58.2021.07.14.14.48.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Jul 2021 14:48:10 -0700 (PDT)
+From: Isaac Kurth <blisaac91@gmail.com>
+To: isaac.kurth@ibm.com, Joel Stanley <joel@jms.id.au>,
+ openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.10] ARM: dts: rainier: Add 'factory-reset-toggle'
+ as GPIOF6
+Date: Wed, 14 Jul 2021 16:47:41 -0500
+Message-Id: <20210714214741.1547052-1-blisaac91@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Subject: Re: [PATCH docs:designs:device-tree-gpio-naming] Add
- vrm-fault-standby pin name
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-07-14_07:2021-07-14,
- 2021-07-14 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- phishscore=0 mlxscore=0 bulkscore=0 malwarescore=0 adultscore=0
- impostorscore=0 suspectscore=0 mlxlogscore=999 lowpriorityscore=0
- clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2104190000 definitions=main-2107140090
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,31 +80,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Ben Tyner <Ben.Tyner@ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On July 14, 2021, Ben Tyner wrote:
->Pin vrm-fault-standby indicates that the voltage regulator for
->standby
->voltage reported a fault condition.
->
->Signed-off-by: Ben Tyner <ben.tyner@ibm.com>
->---
-> designs/device-tree-gpio-naming.md | 1 +
-> 1 file changed, 1 insertion(+)
+From: Isaac Kurth <isaac.kurth@ibm.com>
 
-Thanks Ben
+The state of this GPIO determines whether a factory reset has been
+requested. If a physical switch is used, it can be high or low. During boot,
+the software checks and records the state of this switch. If it is different
+than the previous recorded state, then the read-write portions of memory are
+reformatted.
 
-Most OpenBMC sub-projects use our gerrit system.  The exception is upstream=
-=20
-projects where we use whatever upstream uses (eg patches for u-boot and
-Linux kernel, pull requests for systemd).
+Signed-off-by: Isaac Kurth <isaac.kurth@ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-For details please see CONTRIBUTING.md in the docs repository.
- https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#submitting-cha=
-nges-via-gerrit-server-to-openbmc
-
-
-milton
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 728855c5cb90..81be3a563e6a 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -231,7 +231,7 @@ &gpio0 {
+ 	/*C0-C7*/	"","","","","","","","",
+ 	/*D0-D7*/	"","","","","","","","",
+ 	/*E0-E7*/	"","","","","","","","",
+-	/*F0-F7*/	"","","","","","","","",
++	/*F0-F7*/	"","","","","","","factory-reset-toggle","",
+ 	/*G0-G7*/	"","","","","","","","",
+ 	/*H0-H7*/	"","bmc-ingraham0","rear-enc-id0","rear-enc-fault0","","","","",
+ 	/*I0-I7*/	"","","","","","","","",
+-- 
+2.25.1
 
