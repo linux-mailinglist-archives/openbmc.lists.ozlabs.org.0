@@ -2,94 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADCD63C7A62
-	for <lists+openbmc@lfdr.de>; Wed, 14 Jul 2021 02:04:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B31F33C7A8F
+	for <lists+openbmc@lfdr.de>; Wed, 14 Jul 2021 02:23:22 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GPd5y4lJwz30G7
-	for <lists+openbmc@lfdr.de>; Wed, 14 Jul 2021 10:04:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GPdWr4nNXz3000
+	for <lists+openbmc@lfdr.de>; Wed, 14 Jul 2021 10:23:20 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=CGJ7cJ10;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=Rak05a1a;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=pZQE7dr0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=bentyner@linux.ibm.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=CGJ7cJ10; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=Rak05a1a; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=pZQE7dr0; 
+ dkim-atps=neutral
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GPVMD5KYcz2yj1
- for <openbmc@lists.ozlabs.org>; Wed, 14 Jul 2021 05:00:24 +1000 (AEST)
-Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 16DIXc5C111517
- for <openbmc@lists.ozlabs.org>; Tue, 13 Jul 2021 15:00:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=lk85c+zJI//ry9RinrNw4TJXtgBz4icb8QF6T30NrWs=;
- b=CGJ7cJ10J5ICIV9pfKVWvhcaz8unt9/hCGayJhzf0knqRLSbRxGHQiBABjRtJo5/sGPj
- LRWyd9SjoBfeDBsaKiTevzs+IQA2PMWMNYFc/3pnueJK9TgvB2HPAAUd60CP9kOlqZEm
- jwoGIFPD8+Lkq2q1zQqrWfOoU5dZonHyO507ka9tDu/hBGOGrJPS01yaTvH+W9ipu9HY
- UqzswckG8gFQ281f3t0ydOQqBYMstigLYVGjDbmFztur5DhVbT6tpgBoDWYifTgYjT2r
- bcUt4oQUlGfU1G1kbJE6zrqEwrWNqtwk3vHNHtEwXaR3ofuGrypdm87haBLAiWGEWZp/ lQ== 
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 39sc8j9y29-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 13 Jul 2021 15:00:22 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16DIufHS030641
- for <openbmc@lists.ozlabs.org>; Tue, 13 Jul 2021 19:00:21 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma04dal.us.ibm.com with ESMTP id 39q36c29u1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 13 Jul 2021 19:00:21 +0000
-Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
- [9.57.199.106])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 16DJ0Kh026673590
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Jul 2021 19:00:20 GMT
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0ECC528068;
- Tue, 13 Jul 2021 19:00:20 +0000 (GMT)
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D284928059;
- Tue, 13 Jul 2021 19:00:19 +0000 (GMT)
-Received: from xubuntu.austin.rr.com (unknown [9.77.159.195])
- by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue, 13 Jul 2021 19:00:19 +0000 (GMT)
-From: Ben Tyner <bentyner@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.10 3/3] ARM: dts: everest: Define name for gpio
- line B6
-Date: Tue, 13 Jul 2021 14:00:14 -0500
-Message-Id: <20210713190014.8142-3-bentyner@linux.ibm.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210713190014.8142-1-bentyner@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GPdWW2nY3z2yMy
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Jul 2021 10:23:02 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id E36A85C017D;
+ Tue, 13 Jul 2021 20:22:58 -0400 (EDT)
+Received: from imap43 ([10.202.2.93])
+ by compute2.internal (MEProxy); Tue, 13 Jul 2021 20:22:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=BHNK3EjVt+LSq0feZv2TlcwEpgmZvp8
+ XAzd0uLajTWM=; b=Rak05a1aF6mDTsiYFvoY6NxAckco0VN18xJjtu72dns8crT
+ tPBxtZND0hLcMrHAUKT8hSqLj6C9RRjGNW42rfejXA3u43BhZOvWhDQxBhu6IwSM
+ y9U6qkLAxbTWZgPswvmt32LCNSo0ZOpejJ5gPMiSYg/Lr2zhjPNHdPq3p2QJut60
+ r6YsJgz9WYR9Ra9bTbTYSKl7P6lurjmyS6FUq17EMRn3RAKlVu6ghVbU4Qj8T4wx
+ WQdrppKr0iBPpDu05uCqIIHBo1wlNXWYplsc68wsvAF0bo1+7uJAR48P29tbrzKL
+ ABMKG1AJFhgV88oN6Ef0AjUrQEaKgtH5GB1tcoA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=BHNK3E
+ jVt+LSq0feZv2TlcwEpgmZvp8XAzd0uLajTWM=; b=pZQE7dr0DIfeF6z9GjOyat
+ j+G4/p6zR0WCOrGw4G87cLeCPCASSqOL5pelC9xD8iGik3/0kBi+QFrEqjVvBxum
+ WPe1VrWwa5IsPaKasVpQRqWp1xLm6o5mAtHKmUDB660VYJqKptJuskSpY6w//Thb
+ OZZgNNYcsH6P97ff1r0H42jni9KTWptv8u0vtSYpC61h//Afo6ClE66liNV5mISs
+ 1wXV0pfnsq2s8RbeGLTCoLiFbiHzoFJSlkZJVrDDImfIW1XegFG5/rrBVM4NjkTr
+ o94tnhcGtLSmkLEBelJXeQBd4PrNtfmA9eMpGPpbpa5oy+ptkQfJcheMCmnj+69g
+ ==
+X-ME-Sender: <xms:Yi7uYEd_JQo9rJfiQFNNoee34johfaCTYuntbWz-3JJTRnIYTmytig>
+ <xme:Yi7uYGMXuzEVCsZ5YFgYe9Ucag7am7ezzEeTCoDpOaPwOURxWgez4QxM-3mFwZmTY
+ HpljVH8c8JyVODYbA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudejgddviecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpeetveegudfggeefhfdutdfgffeggedvteelfeejffevleegffegteevveev
+ tdfhudenucffohhmrghinhepghhithhhuhgsrdgtohhmpdguvghvihgtvgdqthhrvggvqd
+ hgphhiohdqnhgrmhhinhhgrdhmugenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+ mhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:Yi7uYFg_UKSBihhciDVvpRPWYxZGFcuqjItCmL67TpDyR706er3S6A>
+ <xmx:Yi7uYJ90FwlzFqmJADConmdu3pvY0zRKrvYScU1XVZwGElQ8KUbaYg>
+ <xmx:Yi7uYAtGm5Jl7-LWnwOWeNP6xFik8p546fEvS9WjBNjlC5bYfqbNHA>
+ <xmx:Yi7uYG3vtP31dzBuZkANw4G1kjk1iNW22iLJLUW51lYj6OgTJ47uOg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 11143AC081B; Tue, 13 Jul 2021 20:22:58 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-533-gf73e617b8a-fm-20210712.002-gf73e617b
+Mime-Version: 1.0
+Message-Id: <18bebfb2-b5f3-4c5f-b359-eee92a3aaefa@www.fastmail.com>
+In-Reply-To: <20210713190014.8142-2-bentyner@linux.ibm.com>
 References: <20210713190014.8142-1-bentyner@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: DdCZXq2SH54XfN98yA1HUjfsCOqqVS1I
-X-Proofpoint-ORIG-GUID: DdCZXq2SH54XfN98yA1HUjfsCOqqVS1I
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-07-13_10:2021-07-13,
- 2021-07-13 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 phishscore=0
- adultscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
- mlxlogscore=985 spamscore=0 suspectscore=0 impostorscore=0 clxscore=1015
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2104190000 definitions=main-2107130117
-X-Mailman-Approved-At: Wed, 14 Jul 2021 10:03:01 +1000
+ <20210713190014.8142-2-bentyner@linux.ibm.com>
+Date: Wed, 14 Jul 2021 09:52:37 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: bentyner <bentyner@linux.ibm.com>, openbmc@lists.ozlabs.org
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.10_2/3]_ARM:_dts:_everest:_Define_name_?=
+ =?UTF-8?Q?for_gpio_line_Q2?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,28 +102,23 @@ Cc: Ben Tyner <ben.tyner@ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Ben Tyner <ben.tyner@ibm.com>
 
-gpio-line-names B6 set to checkstop
 
-Signed-off-by: Ben Tyner <ben.tyner@ibm.com>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, 14 Jul 2021, at 04:30, Ben Tyner wrote:
+> From: Ben Tyner <ben.tyner@ibm.com>
+> 
+> gpio-line-names Q2 set to vrm-fault-standby
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-index 3a6ea412a6b0..0be7a9861eef 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-@@ -236,7 +236,7 @@ led-pcieslot-power {
- &gpio0 {
- 	gpio-line-names =
- 	/*A0-A7*/	"","","","","","","","",
--	/*B0-B7*/	"USERSPACE_RSTIND_BUFF","","","","","","","",
-+	/*B0-B7*/	"USERSPACE_RSTIND_BUFF","","","","","","checkstop","",
- 	/*C0-C7*/	"","","","","","","","",
- 	/*D0-D7*/	"","","","","","","","",
- 	/*E0-E7*/	"","","","","","","","",
--- 
-2.25.1
+We're trying to get a grip on GPIO names that might be generally useful 
+in this document:
 
+https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md
+
+I don't see vrm-fault-standby listed there.
+
+Can you send a patch for the document? I'd like to see that merged 
+before we pick up this (and the other) dts changes.
+
+Cheers,
+
+Andrew
