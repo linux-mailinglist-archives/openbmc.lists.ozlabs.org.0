@@ -2,158 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBEEB3CA496
-	for <lists+openbmc@lfdr.de>; Thu, 15 Jul 2021 19:35:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AF99F3CA4B2
+	for <lists+openbmc@lfdr.de>; Thu, 15 Jul 2021 19:45:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GQhN34pHwz308f
-	for <lists+openbmc@lfdr.de>; Fri, 16 Jul 2021 03:35:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GQhcK3yzsz302g
+	for <lists+openbmc@lfdr.de>; Fri, 16 Jul 2021 03:45:53 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com header.b=OCfOgN6L;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=bUcXYo7t;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com
- header.b=OCfOgN6L; dkim-atps=neutral
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32e;
+ helo=mail-ot1-x32e.google.com; envelope-from=groeck7@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=bUcXYo7t; dkim-atps=neutral
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com
+ [IPv6:2607:f8b0:4864:20::32e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GQhMd1DRHz2xbB;
- Fri, 16 Jul 2021 03:34:47 +1000 (AEST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10046"; a="207574163"
-X-IronPort-AV: E=Sophos;i="5.84,243,1620716400"; d="scan'208";a="207574163"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2021 10:33:38 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.84,243,1620716400"; d="scan'208";a="494657741"
-Received: from orsmsx605.amr.corp.intel.com ([10.22.229.18])
- by orsmga001.jf.intel.com with ESMTP; 15 Jul 2021 10:33:38 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX605.amr.corp.intel.com (10.22.229.18) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.4; Thu, 15 Jul 2021 10:33:37 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10; Thu, 15 Jul 2021 10:33:37 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10 via Frontend Transport; Thu, 15 Jul 2021 10:33:37 -0700
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (104.47.51.45) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2242.10; Thu, 15 Jul 2021 10:33:37 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AX7yv0b2X9Lp9i9R7/mAfXa0bFQoQ66kOxnWrCYZVi/SaOn+QBst68ofes8liI/C/8SJqt5QsKjZiR+XBnQ50OFHaiZpzRZyrr8z7lAZyjk8D4FSkzrPk9j9ifAgSQwGHWCb994GKESnFBXhRHSCob3A3JJPGpXHr/ccJmE11DdPg2dx3gHy/dCv7kAtkonOAT448WRQ4Y5+ykNOnp9248OWr9d+/laNkNOWtpq+y+KJNVlJV4y5wxsU5LgBK2yDGlLlFemPGSSGW9ZimyAy27LTSmRlVb9do9hroe7rrVwK5PTPZJclSQuwPydq0NhglvWYaYjTCtNq5YD9Wz+uYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=m1t4SkmLxOpasfA4XMOLpRUdG9TkbZ7sNQQgv/zU40M=;
- b=NqOn3ZQJN/2u/bnRyUGER7Jl09z0TQRsSOxz5JtAChiW9oqAkd6+pp+ISRTsDAQqXGFwpM+rRUTs4dtlnb6zHlSP46cV7HO+hdC+bctH4jiDsbRE57AFP5huZ2ZDZ/icucnd05aoxU4OBN76jlibep5pHtYV71ZiGF11cgcJLqfw9Syk3TUBPh5OvJgOyWr3RlP+52e5Gmo7HJNmlLWf0tnhbRb4XHkmZ8qwBZjAh/Ns/Lsojm+zYfHVQl1Fm4Uae19rsTt9TMO+Ix89C9GB+Gn/3x06GfqJSqY/omUolZTxjD/R5VNb4WYuoKMAr3OsL7ktPVnl2IBIzYXtAOqlQw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=m1t4SkmLxOpasfA4XMOLpRUdG9TkbZ7sNQQgv/zU40M=;
- b=OCfOgN6LAZWM864iQkRNYPIsnc0y0nN0K69Vi/4y3r+bZonbEYHf80OTP94OoEw3/VHY4dPUpyQLjuFe1kFIcW0C9EQMXQCFmzi1bgoXyzCkQz5ASYxgosr1RcB4gnCAUXhrrz5aYCET6M6akFT5R1ahR/UIhPZMEF7Luw+fs4o=
-Received: from SN6PR11MB2589.namprd11.prod.outlook.com (2603:10b6:805:53::12)
- by SN6PR11MB2703.namprd11.prod.outlook.com (2603:10b6:805:59::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4308.23; Thu, 15 Jul
- 2021 17:33:34 +0000
-Received: from SN6PR11MB2589.namprd11.prod.outlook.com
- ([fe80::357a:ba5:ee4f:d5f1]) by SN6PR11MB2589.namprd11.prod.outlook.com
- ([fe80::357a:ba5:ee4f:d5f1%7]) with mapi id 15.20.4331.022; Thu, 15 Jul 2021
- 17:33:34 +0000
-From: "Winiarska, Iwona" <iwona.winiarska@intel.com>
-To: "Williams, Dan J" <dan.j.williams@intel.com>, "gregkh@linuxfoundation.org"
- <gregkh@linuxfoundation.org>, "linux-kernel@vger.kernel.org"
- <linux-kernel@vger.kernel.org>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: Re: [PATCH 00/14] Introduce PECI subsystem
-Thread-Topic: [PATCH 00/14] Introduce PECI subsystem
-Thread-Index: AQHXd2pJyx4ckFPI00SFj5EUUUvouqtCsiSAgAGeGIA=
-Date: Thu, 15 Jul 2021 17:33:34 +0000
-Message-ID: <fe9a5191e401b38325aaff11365b5970034d26cc.camel@intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GQhbx6x3Zz2xvL;
+ Fri, 16 Jul 2021 03:45:33 +1000 (AEST)
+Received: by mail-ot1-x32e.google.com with SMTP id
+ v32-20020a0568300920b02904b90fde9029so7015243ott.7; 
+ Thu, 15 Jul 2021 10:45:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=5pm/vGNm6HR/ZlGn8wzSicJm3udUgAH8l7zQoarCAB8=;
+ b=bUcXYo7tzmzj5Ee3JOX/IQiavcAaLEq9u43vNNSKcCNfqXwU15IMZmqlkaF00s0td+
+ UqqqKZPmIMvKdB4MdigknqsAA/kjA3i7YxmgCdShScP5MJNNStUKfTL5NywH9sucnt/t
+ jCTHgjiBrf000Et5QM/vSEQbDcHx90fduRZsDLGxQtVyHAPzHmgq1nKo2dG4aVdtTaFL
+ LVcfGKAe7oVVK7uQfV4xMFNBaltjApHv1SxektNaicuD8eh88KP6LsGSKZuL9JUBxbeF
+ /5bMCOKH2CHzK2fBIIggAhRuJKRNTnlY4pX2tdy2GD+bqW8ucf65XB7p1T0mC0EnwBFW
+ hr/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :references:mime-version:content-disposition:in-reply-to;
+ bh=5pm/vGNm6HR/ZlGn8wzSicJm3udUgAH8l7zQoarCAB8=;
+ b=i1OeHnsaowK7PEn+b7vdWHGHFQNamBpQcGU5eB67+SQnQ2MPDiQG8Qz1cheZTnZSNK
+ vBmhKKv36KUzvJNTGR9ZIS7ymnTHTK2YWrmKcxg8WbHNaO3qcfEGwSTS0X2bXnOlQGzd
+ eZy/7SeoR3jinQ3f/+NErZ6yp8BqExot+6gjkpIaJ2ad27qbJBQCUB8Zk2Ldk2T4uthr
+ oEpuK7Ro2UkoIGCaaBRmLTxbiEW2kDOfO0RNHhA3MNcYUBeTvvPEKC5h8lrEbQ/6gsAd
+ sfyYHMIBnl+C6/oVMxv1rlvkj1BaYYp2zIF0x74LTqpe66PoVeeuLme3oFfKShG5k3Yx
+ ZV/g==
+X-Gm-Message-State: AOAM532T5SaqaVYad3H1cYqz2KTBqO0T2ed33j5b7UZpAEdnbQVuzhFH
+ ZosFmLZfjNX5kSTJPuuHTjE=
+X-Google-Smtp-Source: ABdhPJx0++C8x38QHQqEE7cl6WMOUcfqAFmNISIuB2UFRxXP0talRuDtF6z4/YEqx8NxrzsSKVoPfg==
+X-Received: by 2002:a9d:2d83:: with SMTP id g3mr4734299otb.228.1626371130020; 
+ Thu, 15 Jul 2021 10:45:30 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ v203sm1383141oib.37.2021.07.15.10.45.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Jul 2021 10:45:29 -0700 (PDT)
+Date: Thu, 15 Jul 2021 10:45:27 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Iwona Winiarska <iwona.winiarska@intel.com>
+Subject: Re: [PATCH 11/14] hwmon: peci: Add cputemp driver
+Message-ID: <20210715174527.GA3012477@roeck-us.net>
 References: <20210712220447.957418-1-iwona.winiarska@intel.com>
- <3b9cfe5f728c40c473a22070029c8790b452daf4.camel@intel.com>
-In-Reply-To: <3b9cfe5f728c40c473a22070029c8790b452daf4.camel@intel.com>
-Accept-Language: en-US, pl-PL
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.38.4 (3.38.4-1.fc33) 
-authentication-results: intel.com; dkim=none (message not signed)
- header.d=none;intel.com; dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 7b0fb5dd-7c5b-4f74-c72e-08d947b6abfe
-x-ms-traffictypediagnostic: SN6PR11MB2703:
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr,ExtFwd
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <SN6PR11MB2703F4395CAC7B6EF24B9438EC129@SN6PR11MB2703.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 7FAvEqcgLPuPokvMHHM0s/fGrXzDZa0tPQAPYPDEOM5ei9Xk6s3aLoWTYhiyRLG/YWRJmk52++XbYvCOuMfvfudfx0geeNQkG519YH3BrJP0KT3OSei7Ag4upDrDtdVVEzBGBEmOz2s/KxAsC409G5LNBWvsGgEXyqSqBK2f41lmZM7i7Pcs0tH+37zr4U0XNCm23GjFFuZWcDRla3air3Sd0B3xlCNI42LQdBknW+0b/n9LSTcwM/r/ynF0++bT84gsl21zO2AJYSeoRNqWgQcP6YF+N5eq8fgHaVC9fkHNMiPLEfUIEU4WT0lu9oAcJ1GUiInxPJsX+A9mNSArjnVmaFLaWExl85UKQ8Nz2PlCR+q8j5/t1mfC2Ey0CWI2ArlcAECr1cTR+ITdz8RSUpPP1HEkoHW3/l6IoIL4uRoWsO3vbI7K2coieaB+2l05MxWNVhmtPJ80K4njI9+Xa+vU/o2xaBbnJZjYuKAZ7OY9/u5rap4Rbp+OuuKMCyRPKMMImGN2VZz9hVX06RszjRL44E04wZiUxa+B8YMu2rh2gUddA7sgnNtG2IS0lp0B5fiQ0++BFSLJcVhf0j3hN92mFjrlwqDC147xR1/ZW079dSvGOXbEM+MObfnFGWewpeV9V1vcyxA2WJP2L1ZdCfuRFpuCo2WrRDpazA7TsiRgOGuJLyJoD5d5BoHhsWLzyZO2gnUcN84V1Gv+TBNa1zI28fczCDRO43VHJM/WFxkFeDF0O+P+N7/UCZPGVC7wWsqZKLS6JnPnGj0XXFRi65nCCgIT0Mdl5FmhOTOfjHF2nN5yIRuEAf+dbd42cVV3bPxiWd+sjJUbEO99991xEw==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SN6PR11MB2589.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(346002)(136003)(396003)(366004)(39860400002)(376002)(86362001)(5660300002)(66476007)(478600001)(966005)(6512007)(66556008)(64756008)(6506007)(2616005)(83380400001)(26005)(2906002)(66946007)(38100700002)(76116006)(186003)(8676002)(4326008)(36756003)(91956017)(66446008)(8936002)(6486002)(7416002)(54906003)(122000001)(316002)(71200400001)(110136005)(38070700004);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bHB4MlZWeHVjRUNUT054VGUzU3dkTmEvbUlVODhEdkV5cVRPaUxKY2R1OGNY?=
- =?utf-8?B?OE1NVElBOFFZbEZDMjQ5NFAxWFp1K2t4Rk5vdmRDWmR1OFR1QzllOUtaZ3dZ?=
- =?utf-8?B?TjIxYm5FMWMxVUlOSlhQN05PNk5sL2NMYW5mQmM5QndWTVlaMUpVY1VsSUtR?=
- =?utf-8?B?dVZTYXhUT1VRQ2F4T2dTL05ZTmZMMi9JRXhkYnhZZ2VxdFp0OEJ4RGdTR3Fj?=
- =?utf-8?B?aitFY0JpK2RKck9BVk5VcGJOUjgwdWl5bGt1ay9PZWs3Y05YZVFFZmgzVnFs?=
- =?utf-8?B?TzdWSkh3REtTQ1ZuYnNUb3VnenluNlZDcGhZd1VLaUlVejB1d1E1bGJBbGJP?=
- =?utf-8?B?WFp4K0NOZnRMbS9vMFRRa3BDUy9jck14TEczR1ZIdTdjSVR1d1hsRTJxUXpN?=
- =?utf-8?B?UVBuOHhNTC9CckJxcE9pWFZlUmJhK2FRYjA2OVE4c3NuYThpR0dKOXd6UHNp?=
- =?utf-8?B?Umx0eGkvZG5qNXFoazRaaHcvRlBWTGNxMGpqangzTUtsSEFvWG5FcDZic1Zm?=
- =?utf-8?B?TGZrZkY2OXA3SVM5L3NaYksrMkJBS2s2aHhjMExkQVpDTnpUV1AyYU9xbnhX?=
- =?utf-8?B?L0Yzcm42Y3IzcU1Fc3M3STl6QXNDV09vMnB3OUdBMGRIelhwNGlSeXBJc3FF?=
- =?utf-8?B?SkxJSnlmdksyNU15N2MyWnpaWUMwRUJrYlFiYnY3TTBmak92c3hhekNFZTZh?=
- =?utf-8?B?SzFzYlRxYTV4cDBMb3hyN29Jcjc3bXYxUmhzSVhRejIvUkFiV0dLOWpPdWFJ?=
- =?utf-8?B?U1JxWmpQQ0NMY1N1TWZZKytDYTAvTVFza0dBdmh4M21QWEgyUm1EMlBPd1lN?=
- =?utf-8?B?bjRsV0ErUWpvSU96MnpqbXR1ZWQyd0xTZ3AxMTJkN0dPdk1ENjlyVzNncnZY?=
- =?utf-8?B?bVVoVXM0NXI2VHA1V1JZRXg1MzVqVlRzeEtvNTk5Q1diRWZ0cng4UWFTd0c1?=
- =?utf-8?B?ODMzcHJ4clBucTMzVTRHc1R3RnltYis3RkpYaHJldXJWK2dRLzk5TWRnaGY5?=
- =?utf-8?B?ODNWU2hNeGEzYUUrVjFNNHZ4dktwV3dRMkxiUDdER1ZrOGtzYzlrcm9JemFD?=
- =?utf-8?B?VDVwb0NKa1NSeSs4TThmbXhINUZkemFCMFF2VjlPZ0F5Z05rU05uWmJsRDAw?=
- =?utf-8?B?N3d0NHF3b0VFUS9sV3RHVS8zTWZMM3BwZkNEKzBCeDI0SzNKeFVZN29rVmpF?=
- =?utf-8?B?d2MvR3BxK0lOeWQxQWNSQ3ZnUTh4VU4xMjRUUENmSVNNcmE4RGtMWmZUTjRh?=
- =?utf-8?B?MlRRZCtLL1VCRnZ0T0x2Qjd5bHFQOFkzekRsN3NmZVhNelhhT3R3VXhtMnhk?=
- =?utf-8?B?bEQ5RGRjWHZPTmxvSlBrNU5CaDhabEcvRTZwZFBzZis2WXAwcWd2ZXJCQzY1?=
- =?utf-8?B?eit2ZGQvcTRPUVlVeWhkejZMU0FGZW42NExBOWRFdGpiVU5MZktiQlRLQzM2?=
- =?utf-8?B?QzdIcFAzQXB2QjhEcXJvemVYQytia2NTRkg4STVLZHhHMndzVzhZL1M4UzVZ?=
- =?utf-8?B?ZmF6NDR1RjBIQWpibUl6ZG9hT1hMcjVIT01qcDNCeFYxRkRENzExclZoditR?=
- =?utf-8?B?UEs2dU1YbWk5YThZK1NVL2pqNGFTTk8raE9Kc3FxOGF2aVBYWGdDbGZjNllT?=
- =?utf-8?B?RXVzRWo2c0U1SDBzZGpUd1U0K0JCUUo4aEwyZWtIMWlGeDAvT29lcGwyM2dn?=
- =?utf-8?B?dEpXc2IxK2RzckZYQTlEdjFuYnExaUhxSFBOc2dVZXE3S25VdkdxbGRveEJX?=
- =?utf-8?B?UmN2YUhGZG1CYisvQVlMNWZnTFU2bkRZQ1NnZXJaR1lLSjZ3NHVsSDN4bTVY?=
- =?utf-8?B?OWx0TlNra2Z2L0loZmo3QT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <21CDD1749A5ACE45A2C2D748E66E40E5@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ <20210712220447.957418-12-iwona.winiarska@intel.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SN6PR11MB2589.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7b0fb5dd-7c5b-4f74-c72e-08d947b6abfe
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jul 2021 17:33:34.3537 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: OrcGSTlBzjeGpV3+TX9DpIDOte98g+9G2fbuhE6fRqwJu3hV9m+o4eABAhSy/PThU8ofonFZLtefNttCr+ZlCYHoEtoPhsf4eKl8HSUt3ak=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR11MB2703
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210712220447.957418-12-iwona.winiarska@intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -165,189 +82,722 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
- "jae.hyun.yoo@linux.intel.com" <jae.hyun.yoo@linux.intel.com>,
- "mchehab@kernel.org" <mchehab@kernel.org>, "corbet@lwn.net" <corbet@lwn.net>,
- "x86@kernel.org" <x86@kernel.org>,
- "pierre-louis.bossart@linux.intel.com" <pierre-louis.bossart@linux.intel.com>,
- "mingo@redhat.com" <mingo@redhat.com>,
- "linux@roeck-us.net" <linux@roeck-us.net>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "jdelvare@suse.com" <jdelvare@suse.com>,
- "robh+dt@kernel.org" <robh+dt@kernel.org>, "bp@alien8.de" <bp@alien8.de>,
- "Lutomirski, Andy" <luto@kernel.org>,
- "tglx@linutronix.de" <tglx@linutronix.de>,
- "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>, "Luck,
- Tony" <tony.luck@intel.com>, "andrew@aj.id.au" <andrew@aj.id.au>,
- "yazen.ghannam@amd.com" <yazen.ghannam@amd.com>
+Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Jonathan Corbet <corbet@lwn.net>, openbmc@lists.ozlabs.org, x86@kernel.org,
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+ Ingo Molnar <mingo@redhat.com>, devicetree@vger.kernel.org,
+ Jean Delvare <jdelvare@suse.com>, Rob Herring <robh+dt@kernel.org>,
+ Borislav Petkov <bp@alien8.de>, Andy Lutomirski <luto@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
+ Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-kernel@vger.kernel.org,
+ Yazen Ghannam <yazen.ghannam@amd.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T24gV2VkLCAyMDIxLTA3LTE0IGF0IDE2OjUxICswMDAwLCBXaWxsaWFtcywgRGFuIEogd3JvdGU6
-DQo+IE9uIFR1ZSwgMjAyMS0wNy0xMyBhdCAwMDowNCArMDIwMCwgSXdvbmEgV2luaWFyc2thIHdy
-b3RlOg0KPiA+IE5vdGU6IEFsbCBjaGFuZ2VzIHRvIGFyY2gveDg2IGFyZSBjb250YWluZWQgd2l0
-aGluIHBhdGNoZXMgMDEtMDIuDQo+IA0KPiBIaSBJd29uYSwNCj4gDQo+IE9uZSBtZXRhIHF1ZXN0
-aW9uIGZpcnN0LCB3aG8gaXMgdGhpcyBzdWJtaXNzaW9uICJUbzoiPyBJcyB0aGVyZSBhbg0KPiBl
-eGlzdGluZyB1cHN0cmVhbSBtYWludGFpbmVyIHBhdGggZm9yIE9wZW5CTUMgY2hhbmdlcz8gQXJl
-IHlvdQ0KPiBleHBlY3RpbmcgY29udHJpYnV0aW9ucyB0byB0aGlzIHN1YnN5c3RlbSBmcm9tIG90
-aGVycz8gV2hpbGUgR3JlZw0KPiBzb21ldGltZXMgZW5kcyB1cCBhcyBkZWZhdWx0IG1haW50YWlu
-ZXIgZm9yIG5ldyBzdHVmZiwgSSB3b25kZXIgaWYNCj4gc29tZW9uZSBmcm9tIHRoZSBPcGVuQk1D
-IGNvbW1udWl0eSBzaG91bGQgc3RlcCB1cCB0byBmaWxsIHRoaXMgcm9sZT8NCj4gDQoNClRoZSBp
-bnRlbnRpb24gd2FzIHRvIGRpcmVjdCBpdCB0byBHcmVnLCBidXQgSSBndWVzcyBJIGRpZG4ndCBl
-eHByZXNzDQp0aGF0IHRocm91Z2ggdGhlIG1haWwgaGVhZGVycy4NCkkgYW0gZXhwZWN0aW5nIGNv
-bnRyaWJ1dGlvbnMgLSBmb3IgZXhhbXBsZSB0aGVyZSBpcyBhdCBsZWFzdCBvbmUgb3RoZXINCm1h
-am9yIEJNQyB2ZW5kb3Igd2hpY2ggYWxzbyBzaGlwcyBQRUNJIGNvbnRyb2xsZXJzLg0KDQpGcm9t
-IG15IHBlcnNwZWN0aXZlLCB0aGUgcGllY2VzIHRoYXQgbWFrZSB1cCBhIEJNQyBhcmUgcHJldHR5
-IGxvb3NlbHkNCmNvbm5lY3RlZCAoYXQgbGVhc3QgZnJvbSB0aGUga2VybmVsIHBlcnNwZWN0aXZl
-IC0gc2NhdHRlcmVkIGFsbCBvdmVyDQp0aGUga2VybmVsIHRyZWUpLCBzbyBJIGRvbid0IHNlZSBo
-b3cgdGhhdCB3b3VsZCB3b3JrIGluIHByYWN0aWNlLg0KDQpUaGFua3MNCi1Jd29uYQ0KDQoNCj4g
-PiANCj4gPiBUaGUgUGxhdGZvcm0gRW52aXJvbm1lbnQgQ29udHJvbCBJbnRlcmZhY2UgKFBFQ0kp
-IGlzIGEgY29tbXVuaWNhdGlvbg0KPiA+IGludGVyZmFjZSBiZXR3ZWVuIEludGVsIHByb2Nlc3Nv
-cnMgYW5kIG1hbmFnZW1lbnQgY29udHJvbGxlcnMgKGUuZy4NCj4gPiBCYXNlYm9hcmQgTWFuYWdl
-bWVudCBDb250cm9sbGVyLCBCTUMpLg0KPiA+IA0KPiA+IFRoaXMgc2VyaWVzIGFkZHMgYSBQRUNJ
-IHN1YnN5c3RlbSBhbmQgaW50cm9kdWNlcyBkcml2ZXJzIHdoaWNoIHJ1biBpbg0KPiA+IHRoZSBM
-aW51eCBpbnN0YW5jZSBvbiB0aGUgbWFuYWdlbWVudCBjb250cm9sbGVyIChub3QgdGhlIG1haW4g
-SW50ZWwNCj4gPiBwcm9jZXNzb3IpIGFuZCBpcyBpbnRlbmRlZCB0byBiZSB1c2VkIGJ5IHRoZSBP
-cGVuQk1DIFsxXSwgYSBMaW51eA0KPiA+IGRpc3RyaWJ1dGlvbiBmb3IgQk1DIGRldmljZXMuDQo+
-ID4gVGhlIGluZm9ybWF0aW9uIGV4cG9zZWQgb3ZlciBQRUNJIChsaWtlIHByb2Nlc3NvciBhbmQg
-RElNTQ0KPiA+IHRlbXBlcmF0dXJlKSByZWZlcnMgdG8gdGhlIEludGVsIHByb2Nlc3NvciBhbmQg
-Y2FuIGJlIGNvbnN1bWVkIGJ5DQo+ID4gZGFlbW9ucyBydW5uaW5nIG9uIHRoZSBCTUMgdG8sIGZv
-ciBleGFtcGxlLCBkaXNwbGF5IHRoZSBwcm9jZXNzb3INCj4gPiB0ZW1wZXJhdHVyZSBpbiBpdHMg
-d2ViIGludGVyZmFjZS4NCj4gPiANCj4gPiBUaGUgUEVDSSBidXMgaXMgY29sbGVjdGlvbiBvZiBj
-b2RlIHRoYXQgcHJvdmlkZXMgaW50ZXJmYWNlIHN1cHBvcnQNCj4gPiBiZXR3ZWVuIFBFQ0kgZGV2
-aWNlcyAodGhhdCBhY3R1YWxseSByZXByZXNlbnQgcHJvY2Vzc29ycykgYW5kIFBFQ0kNCj4gPiBj
-b250cm9sbGVycyAoc3VjaCBhcyB0aGUgInBlY2ktYXNwZWVkIiBjb250cm9sbGVyKSB0aGF0IGFs
-bG93IHRvDQo+ID4gYWNjZXNzIHBoeXNpY2FsIFBFQ0kgaW50ZXJmYWNlLiBQRUNJIGRldmljZXMg
-YXJlIGJvdW5kIHRvIFBFQ0kNCj4gPiBkcml2ZXJzIHRoYXQgcHJvdmlkZXMgYWNjZXNzIHRvIFBF
-Q0kgc2VydmljZXMuIFRoaXMgc2VyaWVzIGludHJvZHVjZXMNCj4gPiBhIGdlbmVyaWMgInBlY2kt
-Y3B1IiBkcml2ZXIgdGhhdCBleHBvc2VzIGhhcmR3YXJlIG1vbml0b3JpbmcNCj4gPiAiY3B1dGVt
-cCINCj4gPiBhbmQgImRpbW10ZW1wIiB1c2luZyB0aGUgYXV4aWxpYXJ5IGJ1cy4NCj4gPiANCj4g
-PiBFeHBvc2luZyAicmF3IiBQRUNJIHRvIHVzZXJzcGFjZSwgZWl0aGVyIHRvIHdyaXRlIHVzZXJz
-cGFjZSBkcml2ZXJzDQo+ID4gb3INCj4gPiBmb3IgZGVidWcvdGVzdGluZyBwdXJwb3NlIHdhcyBs
-ZWZ0IG91dCBvZiB0aGlzIHNlcmllcyB0byBlbmNvdXJhZ2UNCj4gPiB3cml0aW5nIGtlcm5lbCBk
-cml2ZXJzIGluc3RlYWQsIGJ1dCBtYXkgYmUgcHVyc3VlZCBpbiB0aGUgZnV0dXJlLg0KPiA+IA0K
-PiA+IEludHJvZHVjaW5nIFBFQ0kgdG8gdXBzdHJlYW0gTGludXggd2FzIGFscmVhZHkgYXR0ZW1w
-dGVkIGJlZm9yZSBbMl0uDQo+ID4gU2luY2UgaXQncyBiZWVuIG92ZXIgYSB5ZWFyIHNpbmNlIGxh
-c3QgcmV2aXNpb24sIGFuZCB0aGUgc2VyaWVzDQo+ID4gY2hhbmdlZCBxdWl0ZSBhIGJpdCBpbiB0
-aGUgbWVhbnRpbWUsIEkndmUgZGVjaWRlZCB0byBzdGFydCBmcm9tIHYxLg0KPiA+IA0KPiA+IEkg
-d291bGQgYWxzbyBsaWtlIHRvIGdpdmUgY3JlZGl0IHRvIGV2ZXJ5b25lIHdobyBoZWxwZWQgbWUg
-d2l0aA0KPiA+IGRpZmZlcmVudCBhc3BlY3RzIG9mIHByZWxpbWluYXJ5IHJldmlldzoNCj4gPiAt
-IFBpZXJyZS1Mb3VpcyBCb3NzYXJ0LA0KPiA+IC0gVG9ueSBMdWNrLCANCj4gPiAtIEFuZHkgU2hl
-dmNoZW5rbywNCj4gPiAtIERhdmUgSGFuc2VuLg0KPiA+IA0KPiA+IFsxXSBodHRwczovL2dpdGh1
-Yi5jb20vb3BlbmJtYy9vcGVuYm1jDQo+ID4gWzJdIA0KPiA+IGh0dHBzOi8vbG9yZS5rZXJuZWwu
-b3JnL29wZW5ibWMvMjAxOTEyMTExOTQ2MjQuMjg3Mi0xLWphZS5oeXVuLnlvb0BsaW51eC5pbnRl
-bC5jb20vDQo+ID4gDQo+ID4gSXdvbmEgV2luaWFyc2thICgxMik6DQo+ID4gwqAgeDg2L2NwdTog
-TW92ZSBpbnRlbC1mYW1pbHkgdG8gYXJjaC1pbmRlcGVuZGVudCBoZWFkZXJzDQo+ID4gwqAgeDg2
-L2NwdTogRXh0cmFjdCBjcHVpZCBoZWxwZXJzIHRvIGFyY2gtaW5kZXBlbmRlbnQNCj4gPiDCoCBk
-dC1iaW5kaW5nczogQWRkIGdlbmVyaWMgYmluZGluZ3MgZm9yIFBFQ0kNCj4gPiDCoCBkdC1iaW5k
-aW5nczogQWRkIGJpbmRpbmdzIGZvciBwZWNpLWFzcGVlZA0KPiA+IMKgIEFSTTogZHRzOiBhc3Bl
-ZWQ6IEFkZCBQRUNJIGNvbnRyb2xsZXIgbm9kZXMNCj4gPiDCoCBwZWNpOiBBZGQgY29yZSBpbmZy
-YXN0cnVjdHVyZQ0KPiA+IMKgIHBlY2k6IEFkZCBkZXZpY2UgZGV0ZWN0aW9uDQo+ID4gwqAgcGVj
-aTogQWRkIHN1cHBvcnQgZm9yIFBFQ0kgZGV2aWNlIGRyaXZlcnMNCj4gPiDCoCBwZWNpOiBBZGQg
-cGVjaS1jcHUgZHJpdmVyDQo+ID4gwqAgaHdtb246IHBlY2k6IEFkZCBjcHV0ZW1wIGRyaXZlcg0K
-PiA+IMKgIGh3bW9uOiBwZWNpOiBBZGQgZGltbXRlbXAgZHJpdmVyDQo+ID4gwqAgZG9jczogQWRk
-IFBFQ0kgZG9jdW1lbnRhdGlvbg0KPiA+IA0KPiA+IEphZSBIeXVuIFlvbyAoMik6DQo+ID4gwqAg
-cGVjaTogQWRkIHBlY2ktYXNwZWVkIGNvbnRyb2xsZXIgZHJpdmVyDQo+ID4gwqAgZG9jczogaHdt
-b246IERvY3VtZW50IFBFQ0kgZHJpdmVycw0KPiA+IA0KPiA+IMKgLi4uL2RldmljZXRyZWUvYmlu
-ZGluZ3MvcGVjaS9wZWNpLWFzcGVlZC55YW1sIHwgMTExICsrKysNCj4gPiDCoC4uLi9iaW5kaW5n
-cy9wZWNpL3BlY2ktY29udHJvbGxlci55YW1swqDCoMKgwqDCoMKgwqAgfMKgIDI4ICsNCj4gPiDC
-oERvY3VtZW50YXRpb24vaHdtb24vaW5kZXgucnN0wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgfMKgwqAgMiArDQo+ID4gwqBEb2N1bWVudGF0aW9uL2h3bW9uL3BlY2ktY3B1dGVtcC5y
-c3TCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDkzICsrKysNCj4gPiDCoERvY3VtZW50YXRpb24vaHdt
-b24vcGVjaS1kaW1tdGVtcC5yc3TCoMKgwqDCoMKgwqDCoMKgIHzCoCA1OCArKw0KPiA+IMKgRG9j
-dW1lbnRhdGlvbi9pbmRleC5yc3TCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCB8wqDCoCAxICsNCj4gPiDCoERvY3VtZW50YXRpb24vcGVjaS9pbmRleC5yc3TCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxNiArDQo+ID4gwqBEb2N1bWVudGF0
-aW9uL3BlY2kvcGVjaS5yc3TCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKg
-IDQ4ICsrDQo+ID4gwqBNQUlOVEFJTkVSU8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAzMiArKw0KPiA+IMKgYXJj
-aC9hcm0vYm9vdC9kdHMvYXNwZWVkLWc0LmR0c2nCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8
-wqAgMTQgKw0KPiA+IMKgYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkLWc1LmR0c2nCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCB8wqAgMTQgKw0KPiA+IMKgYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVk
-LWc2LmR0c2nCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMTQgKw0KPiA+IMKgYXJjaC94
-ODYvS2NvbmZpZ8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgfMKgwqAgMSArDQo+ID4gwqBhcmNoL3g4Ni9pbmNsdWRlL2FzbS9jcHUuaMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDMgLQ0KPiA+IMKgYXJj
-aC94ODYvaW5jbHVkZS9hc20vaW50ZWwtZmFtaWx5LmjCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDE0
-MSArLS0tLQ0KPiA+IMKgYXJjaC94ODYvaW5jbHVkZS9hc20vbWljcm9jb2RlLmjCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCB8wqDCoCAyICstDQo+ID4gwqBhcmNoL3g4Ni9rdm0vY3B1aWQuaMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDMg
-Ky0NCj4gPiDCoGFyY2gveDg2L2xpYi9NYWtlZmlsZcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCAyICstDQo+ID4gwqBkcml2ZXJzL0tjb25maWfC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgfMKgwqAgMyArDQo+ID4gwqBkcml2ZXJzL01ha2VmaWxlwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCAxICsNCj4gPiDCoGRy
-aXZlcnMvZWRhYy9tY2VfYW1kLmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIHzCoMKgIDMgKy0NCj4gPiDCoGRyaXZlcnMvaHdtb24vS2NvbmZpZ8KgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCAyICsNCj4gPiDC
-oGRyaXZlcnMvaHdtb24vTWFrZWZpbGXCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgIHzCoMKgIDEgKw0KPiA+IMKgZHJpdmVycy9od21vbi9wZWNpL0tjb25maWfC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMzEgKysNCj4gPiDCoGRy
-aXZlcnMvaHdtb24vcGVjaS9NYWtlZmlsZcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCB8wqDCoCA3ICsNCj4gPiDCoGRyaXZlcnMvaHdtb24vcGVjaS9jb21tb24uaMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgNDYgKysNCj4gPiDCoGRyaXZlcnMvaHdt
-b24vcGVjaS9jcHV0ZW1wLmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgNTAz
-DQo+ID4gKysrKysrKysrKysrKysrKysNCj4gPiDCoGRyaXZlcnMvaHdtb24vcGVjaS9kaW1tdGVt
-cC5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCA1MDgNCj4gPiArKysrKysrKysr
-KysrKysrKysNCj4gPiDCoGRyaXZlcnMvcGVjaS9LY29uZmlnwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDM2ICsrDQo+ID4gwqBkcml2ZXJzL3Bl
-Y2kvTWFrZWZpbGXCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgfMKgIDEwICsNCj4gPiDCoGRyaXZlcnMvcGVjaS9jb250cm9sbGVyL0tjb25maWfCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxMiArDQo+ID4gwqBkcml2ZXJzL3BlY2kvY29udHJv
-bGxlci9NYWtlZmlsZcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDMgKw0KPiA+IMKg
-ZHJpdmVycy9wZWNpL2NvbnRyb2xsZXIvcGVjaS1hc3BlZWQuY8KgwqDCoMKgwqDCoMKgwqAgfCA1
-MDENCj4gPiArKysrKysrKysrKysrKysrKw0KPiA+IMKgZHJpdmVycy9wZWNpL2NvcmUuY8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCAyMjQgKysr
-KysrKysNCj4gPiDCoGRyaXZlcnMvcGVjaS9jcHUuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDM0NyArKysrKysrKysrKysNCj4gPiDCoGRy
-aXZlcnMvcGVjaS9kZXZpY2UuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCB8IDIxMSArKysrKysrKw0KPiA+IMKgZHJpdmVycy9wZWNpL2ludGVybmFsLmjC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDEzNyArKysrKw0K
-PiA+IMKgZHJpdmVycy9wZWNpL3JlcXVlc3QuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqAgfCA1MDINCj4gPiArKysrKysrKysrKysrKysrKw0KPiA+IMKgZHJp
-dmVycy9wZWNpL3N5c2ZzLmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCB8wqAgODIgKysrDQo+ID4gwqBpbmNsdWRlL2xpbnV4L3BlY2ktY3B1LmjCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDM4ICsrDQo+ID4gwqBp
-bmNsdWRlL2xpbnV4L3BlY2kuaMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgIHzCoCA5MyArKysrDQo+ID4gwqBpbmNsdWRlL2xpbnV4L3g4Ni9jcHUuaMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDkgKw0KPiA+
-IMKgaW5jbHVkZS9saW51eC94ODYvaW50ZWwtZmFtaWx5LmjCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCB8IDE0NiArKysrKw0KPiA+IMKgbGliL0tjb25maWfCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCA1ICsN
-Cj4gPiDCoGxpYi9NYWtlZmlsZcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCAyICsNCj4gPiDCoGxpYi94ODYvTWFr
-ZWZpbGXCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgIHzCoMKgIDMgKw0KPiA+IMKge2FyY2gveDg2L2xpYiA9PiBsaWIveDg2fS9jcHUuY8Kg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAgMiArLQ0KPiA+IMKgNDcgZmlsZXMgY2hh
-bmdlZCwgMzkwMiBpbnNlcnRpb25zKCspLCAxNDkgZGVsZXRpb25zKC0pDQo+ID4gwqBjcmVhdGUg
-bW9kZSAxMDA2NDQgRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3BlY2kvcGVjaS0N
-Cj4gPiBhc3BlZWQueWFtbA0KPiA+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IERvY3VtZW50YXRpb24v
-ZGV2aWNldHJlZS9iaW5kaW5ncy9wZWNpL3BlY2ktDQo+ID4gY29udHJvbGxlci55YW1sDQo+ID4g
-wqBjcmVhdGUgbW9kZSAxMDA2NDQgRG9jdW1lbnRhdGlvbi9od21vbi9wZWNpLWNwdXRlbXAucnN0
-DQo+ID4gwqBjcmVhdGUgbW9kZSAxMDA2NDQgRG9jdW1lbnRhdGlvbi9od21vbi9wZWNpLWRpbW10
-ZW1wLnJzdA0KPiA+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IERvY3VtZW50YXRpb24vcGVjaS9pbmRl
-eC5yc3QNCj4gPiDCoGNyZWF0ZSBtb2RlIDEwMDY0NCBEb2N1bWVudGF0aW9uL3BlY2kvcGVjaS5y
-c3QNCj4gPiDCoGNyZWF0ZSBtb2RlIDEwMDY0NCBkcml2ZXJzL2h3bW9uL3BlY2kvS2NvbmZpZw0K
-PiA+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IGRyaXZlcnMvaHdtb24vcGVjaS9NYWtlZmlsZQ0KPiA+
-IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IGRyaXZlcnMvaHdtb24vcGVjaS9jb21tb24uaA0KPiA+IMKg
-Y3JlYXRlIG1vZGUgMTAwNjQ0IGRyaXZlcnMvaHdtb24vcGVjaS9jcHV0ZW1wLmMNCj4gPiDCoGNy
-ZWF0ZSBtb2RlIDEwMDY0NCBkcml2ZXJzL2h3bW9uL3BlY2kvZGltbXRlbXAuYw0KPiA+IMKgY3Jl
-YXRlIG1vZGUgMTAwNjQ0IGRyaXZlcnMvcGVjaS9LY29uZmlnDQo+ID4gwqBjcmVhdGUgbW9kZSAx
-MDA2NDQgZHJpdmVycy9wZWNpL01ha2VmaWxlDQo+ID4gwqBjcmVhdGUgbW9kZSAxMDA2NDQgZHJp
-dmVycy9wZWNpL2NvbnRyb2xsZXIvS2NvbmZpZw0KPiA+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IGRy
-aXZlcnMvcGVjaS9jb250cm9sbGVyL01ha2VmaWxlDQo+ID4gwqBjcmVhdGUgbW9kZSAxMDA2NDQg
-ZHJpdmVycy9wZWNpL2NvbnRyb2xsZXIvcGVjaS1hc3BlZWQuYw0KPiA+IMKgY3JlYXRlIG1vZGUg
-MTAwNjQ0IGRyaXZlcnMvcGVjaS9jb3JlLmMNCj4gPiDCoGNyZWF0ZSBtb2RlIDEwMDY0NCBkcml2
-ZXJzL3BlY2kvY3B1LmMNCj4gPiDCoGNyZWF0ZSBtb2RlIDEwMDY0NCBkcml2ZXJzL3BlY2kvZGV2
-aWNlLmMNCj4gPiDCoGNyZWF0ZSBtb2RlIDEwMDY0NCBkcml2ZXJzL3BlY2kvaW50ZXJuYWwuaA0K
-PiA+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IGRyaXZlcnMvcGVjaS9yZXF1ZXN0LmMNCj4gPiDCoGNy
-ZWF0ZSBtb2RlIDEwMDY0NCBkcml2ZXJzL3BlY2kvc3lzZnMuYw0KPiA+IMKgY3JlYXRlIG1vZGUg
-MTAwNjQ0IGluY2x1ZGUvbGludXgvcGVjaS1jcHUuaA0KPiA+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0
-IGluY2x1ZGUvbGludXgvcGVjaS5oDQo+ID4gwqBjcmVhdGUgbW9kZSAxMDA2NDQgaW5jbHVkZS9s
-aW51eC94ODYvY3B1LmgNCj4gPiDCoGNyZWF0ZSBtb2RlIDEwMDY0NCBpbmNsdWRlL2xpbnV4L3g4
-Ni9pbnRlbC1mYW1pbHkuaA0KPiA+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IGxpYi94ODYvTWFrZWZp
-bGUNCj4gPiDCoHJlbmFtZSB7YXJjaC94ODYvbGliID0+IGxpYi94ODZ9L2NwdS5jICg5NSUpDQo+
-ID4gDQo+IA0KDQo=
+On Tue, Jul 13, 2021 at 12:04:44AM +0200, Iwona Winiarska wrote:
+> Add peci-cputemp driver for Digital Thermal Sensor (DTS) thermal
+> readings of the processor package and processor cores that are
+> accessible via the PECI interface.
+> 
+> The main use case for the driver (and PECI interface) is out-of-band
+> management, where we're able to obtain the DTS readings from an external
+> entity connected with PECI, e.g. BMC on server platforms.
+> 
+> Co-developed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
+> Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+
+Note: Due to lack of revision information, this review does not take
+any previous discussions into account, and it may miss critical information.
+For a final review I'll have to compare the code against earlier versions
+to determine if there are any relevant changes and if all comments
+have been addressed. This may take some time.
+
+> ---
+>  MAINTAINERS                  |   7 +
+>  drivers/hwmon/Kconfig        |   2 +
+>  drivers/hwmon/Makefile       |   1 +
+>  drivers/hwmon/peci/Kconfig   |  18 ++
+>  drivers/hwmon/peci/Makefile  |   5 +
+>  drivers/hwmon/peci/common.h  |  46 ++++
+>  drivers/hwmon/peci/cputemp.c | 503 +++++++++++++++++++++++++++++++++++
+>  7 files changed, 582 insertions(+)
+>  create mode 100644 drivers/hwmon/peci/Kconfig
+>  create mode 100644 drivers/hwmon/peci/Makefile
+>  create mode 100644 drivers/hwmon/peci/common.h
+>  create mode 100644 drivers/hwmon/peci/cputemp.c
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index f47b5f634293..35ba9e3646bd 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -14504,6 +14504,13 @@ L:	platform-driver-x86@vger.kernel.org
+>  S:	Maintained
+>  F:	drivers/platform/x86/peaq-wmi.c
+>  
+> +PECI HARDWARE MONITORING DRIVERS
+> +M:	Iwona Winiarska <iwona.winiarska@intel.com>
+> +R:	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> +L:	linux-hwmon@vger.kernel.org
+> +S:	Supported
+> +F:	drivers/hwmon/peci/
+> +
+>  PECI SUBSYSTEM
+>  M:	Iwona Winiarska <iwona.winiarska@intel.com>
+>  R:	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+> index e3675377bc5d..61c0e3404415 100644
+> --- a/drivers/hwmon/Kconfig
+> +++ b/drivers/hwmon/Kconfig
+> @@ -1507,6 +1507,8 @@ config SENSORS_PCF8591
+>  	  These devices are hard to detect and rarely found on mainstream
+>  	  hardware. If unsure, say N.
+>  
+> +source "drivers/hwmon/peci/Kconfig"
+> +
+>  source "drivers/hwmon/pmbus/Kconfig"
+>  
+>  config SENSORS_PWM_FAN
+> diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
+> index d712c61c1f5e..f52331f212ed 100644
+> --- a/drivers/hwmon/Makefile
+> +++ b/drivers/hwmon/Makefile
+> @@ -202,6 +202,7 @@ obj-$(CONFIG_SENSORS_WM8350)	+= wm8350-hwmon.o
+>  obj-$(CONFIG_SENSORS_XGENE)	+= xgene-hwmon.o
+>  
+>  obj-$(CONFIG_SENSORS_OCC)	+= occ/
+> +obj-$(CONFIG_SENSORS_PECI)	+= peci/
+>  obj-$(CONFIG_PMBUS)		+= pmbus/
+>  
+>  ccflags-$(CONFIG_HWMON_DEBUG_CHIP) := -DDEBUG
+> diff --git a/drivers/hwmon/peci/Kconfig b/drivers/hwmon/peci/Kconfig
+> new file mode 100644
+> index 000000000000..e10eed68d70a
+> --- /dev/null
+> +++ b/drivers/hwmon/peci/Kconfig
+> @@ -0,0 +1,18 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +
+> +config SENSORS_PECI_CPUTEMP
+> +	tristate "PECI CPU temperature monitoring client"
+> +	depends on PECI
+> +	select SENSORS_PECI
+> +	select PECI_CPU
+> +	help
+> +	  If you say yes here you get support for the generic Intel PECI
+> +	  cputemp driver which provides Digital Thermal Sensor (DTS) thermal
+> +	  readings of the CPU package and CPU cores that are accessible via
+> +	  the processor PECI interface.
+> +
+> +	  This driver can also be built as a module. If so, the module
+> +	  will be called peci-cputemp.
+> +
+> +config SENSORS_PECI
+> +	tristate
+> diff --git a/drivers/hwmon/peci/Makefile b/drivers/hwmon/peci/Makefile
+> new file mode 100644
+> index 000000000000..e8a0ada5ab1f
+> --- /dev/null
+> +++ b/drivers/hwmon/peci/Makefile
+> @@ -0,0 +1,5 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +
+> +peci-cputemp-y := cputemp.o
+> +
+> +obj-$(CONFIG_SENSORS_PECI_CPUTEMP)	+= peci-cputemp.o
+> diff --git a/drivers/hwmon/peci/common.h b/drivers/hwmon/peci/common.h
+> new file mode 100644
+> index 000000000000..54580c100d06
+> --- /dev/null
+> +++ b/drivers/hwmon/peci/common.h
+> @@ -0,0 +1,46 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/* Copyright (c) 2021 Intel Corporation */
+> +
+> +#include <linux/types.h>
+> +
+> +#ifndef __PECI_HWMON_COMMON_H
+> +#define __PECI_HWMON_COMMON_H
+> +
+> +#define UPDATE_INTERVAL_DEFAULT		HZ
+> +
+> +/**
+> + * struct peci_sensor_data - PECI sensor information
+> + * @valid: flag to indicate the sensor value is valid
+> + * @value: sensor value in milli units
+> + * @last_updated: time of the last update in jiffies
+> + */
+> +struct peci_sensor_data {
+> +	unsigned int valid;
+
+Please use bool.
+
+> +	s32 value;
+> +	unsigned long last_updated;
+> +};
+> +
+> +/**
+> + * peci_sensor_need_update() - check whether sensor update is needed or not
+> + * @sensor: pointer to sensor data struct
+> + *
+> + * Return: true if update is needed, false if not.
+> + */
+> +
+> +static inline bool peci_sensor_need_update(struct peci_sensor_data *sensor)
+> +{
+> +	return !sensor->valid ||
+> +	       time_after(jiffies, sensor->last_updated + UPDATE_INTERVAL_DEFAULT);
+
+
+Since there is no other update interval, _DEFAULT does not have any value.
+Please drop. Also, please select a prefix such as PECI_.
+
+> +}
+> +
+> +/**
+> + * peci_sensor_mark_updated() - mark the sensor is updated
+> + * @sensor: pointer to sensor data struct
+> + */
+> +static inline void peci_sensor_mark_updated(struct peci_sensor_data *sensor)
+> +{
+> +	sensor->valid = 1;
+
+		= true;
+
+> +	sensor->last_updated = jiffies;
+> +}
+> +
+> +#endif /* __PECI_HWMON_COMMON_H */
+> diff --git a/drivers/hwmon/peci/cputemp.c b/drivers/hwmon/peci/cputemp.c
+> new file mode 100644
+> index 000000000000..56a526471687
+> --- /dev/null
+> +++ b/drivers/hwmon/peci/cputemp.c
+> @@ -0,0 +1,503 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +// Copyright (c) 2018-2021 Intel Corporation
+> +
+> +#include <linux/auxiliary_bus.h>
+> +#include <linux/bitfield.h>
+> +#include <linux/bitops.h>
+> +#include <linux/hwmon.h>
+> +#include <linux/jiffies.h>
+> +#include <linux/module.h>
+> +#include <linux/peci.h>
+> +#include <linux/peci-cpu.h>
+> +#include <linux/units.h>
+> +#include <linux/x86/intel-family.h>
+> +
+> +#include "common.h"
+> +
+> +#define CORE_NUMS_MAX		64
+> +
+> +#define DEFAULT_CHANNEL_NUMS	5
+> +#define CORETEMP_CHANNEL_NUMS	CORE_NUMS_MAX
+> +#define CPUTEMP_CHANNEL_NUMS	(DEFAULT_CHANNEL_NUMS + CORETEMP_CHANNEL_NUMS)
+> +
+> +#define TEMP_TARGET_FAN_TEMP_MASK	GENMASK(15, 8)
+> +#define TEMP_TARGET_REF_TEMP_MASK	GENMASK(23, 16)
+> +#define TEMP_TARGET_TJ_OFFSET_MASK	GENMASK(29, 24)
+> +
+> +#define DTS_MARGIN_MASK		GENMASK(15, 0)
+> +#define PCS_MODULE_TEMP_MASK	GENMASK(15, 0)
+> +
+> +#define DTS_FIXED_POINT_FRACTION	64
+> +
+> +struct resolved_cores_reg {
+> +	u8 bus;
+> +	u8 dev;
+> +	u8 func;
+> +	u8 offset;
+> +};
+> +
+> +struct cpu_info {
+> +	struct resolved_cores_reg *reg;
+> +	u8 min_peci_revision;
+> +};
+> +
+> +struct peci_cputemp {
+> +	struct peci_device *peci_dev;
+> +	struct device *dev;
+> +	const char *name;
+> +	const struct cpu_info *gen_info;
+> +	struct {
+> +		struct peci_sensor_data die;
+> +		struct peci_sensor_data dts;
+> +		struct peci_sensor_data tcontrol;
+> +		struct peci_sensor_data tthrottle;
+> +		struct peci_sensor_data tjmax;
+> +		struct peci_sensor_data core[CORETEMP_CHANNEL_NUMS];
+> +	} temp;
+> +	const char **coretemp_label;
+> +	DECLARE_BITMAP(core_mask, CORE_NUMS_MAX);
+> +};
+> +
+> +enum cputemp_channels {
+> +	channel_die,
+> +	channel_dts,
+> +	channel_tcontrol,
+> +	channel_tthrottle,
+> +	channel_tjmax,
+> +	channel_core,
+> +};
+> +
+> +static const char *cputemp_label[DEFAULT_CHANNEL_NUMS] = {
+> +	"Die",
+> +	"DTS",
+> +	"Tcontrol",
+> +	"Tthrottle",
+> +	"Tjmax",
+> +};
+> +
+> +static int get_temp_targets(struct peci_cputemp *priv)
+> +{
+> +	s32 tthrottle_offset, tcontrol_margin;
+> +	u32 pcs;
+> +	int ret;
+> +
+> +	/*
+> +	 * Just use only the tcontrol marker to determine if target values need
+> +	 * update.
+> +	 */
+> +	if (!peci_sensor_need_update(&priv->temp.tcontrol))
+> +		return 0;
+> +
+True for the entire code: Please explain how this avoids race conditions
+without locking between the condition check here and the call to
+peci_sensor_mark_updated() below. The explanation needs to be added
+as comment into the code for later reference.
+
+> +	ret = peci_pcs_read(priv->peci_dev, PECI_PCS_TEMP_TARGET, 0, &pcs);
+> +	if (ret)
+> +		return ret;
+> +
+> +	priv->temp.tjmax.value = FIELD_GET(TEMP_TARGET_REF_TEMP_MASK, pcs) * MILLIDEGREE_PER_DEGREE;
+> +
+> +	tcontrol_margin = FIELD_GET(TEMP_TARGET_FAN_TEMP_MASK, pcs);
+> +	tcontrol_margin = sign_extend32(tcontrol_margin, 7) * MILLIDEGREE_PER_DEGREE;
+> +	priv->temp.tcontrol.value = priv->temp.tjmax.value - tcontrol_margin;
+> +
+> +	tthrottle_offset = FIELD_GET(TEMP_TARGET_TJ_OFFSET_MASK, pcs) * MILLIDEGREE_PER_DEGREE;
+> +	priv->temp.tthrottle.value = priv->temp.tjmax.value - tthrottle_offset;
+> +
+> +	peci_sensor_mark_updated(&priv->temp.tcontrol);
+> +
+> +	return 0;
+> +}
+> +
+> +/*
+> + * Processors return a value of DTS reading in S10.6 fixed point format
+> + * (sign, 10 bits signed integer value, 6 bits fractional).
+> + * Error codes:
+> + *   0x8000: General sensor error
+> + *   0x8001: Reserved
+> + *   0x8002: Underflow on reading value
+> + *   0x8003-0x81ff: Reserved
+> + */
+> +static bool dts_valid(s32 val)
+> +{
+> +	return val < 0x8000 || val > 0x81ff;
+> +}
+> +
+> +static s32 dts_to_millidegree(s32 val)
+> +{
+> +	return sign_extend32(val, 15) * MILLIDEGREE_PER_DEGREE / DTS_FIXED_POINT_FRACTION;
+> +}
+> +
+> +static int get_die_temp(struct peci_cputemp *priv)
+> +{
+> +	s16 temp;
+> +	int ret;
+> +
+> +	if (!peci_sensor_need_update(&priv->temp.die))
+> +		return 0;
+> +
+> +	ret = peci_temp_read(priv->peci_dev, &temp);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (!dts_valid(temp))
+> +		return -EIO;
+> +
+> +	/* Note that the tjmax should be available before calling it */
+> +	priv->temp.die.value = priv->temp.tjmax.value + dts_to_millidegree(temp);
+> +
+> +	peci_sensor_mark_updated(&priv->temp.die);
+> +
+> +	return 0;
+> +}
+> +
+> +static int get_dts(struct peci_cputemp *priv)
+> +{
+> +	s32 dts_margin;
+> +	u32 pcs;
+> +	int ret;
+> +
+> +	if (!peci_sensor_need_update(&priv->temp.dts))
+> +		return 0;
+> +
+> +	ret = peci_pcs_read(priv->peci_dev, PECI_PCS_THERMAL_MARGIN, 0, &pcs);
+> +	if (ret)
+> +		return ret;
+> +
+> +	dts_margin = FIELD_GET(DTS_MARGIN_MASK, pcs);
+> +	if (!dts_valid(dts_margin))
+> +		return -EIO;
+> +
+> +	/* Note that the tcontrol should be available before calling it */
+> +	priv->temp.dts.value = priv->temp.tcontrol.value - dts_to_millidegree(dts_margin);
+> +
+> +	peci_sensor_mark_updated(&priv->temp.dts);
+> +
+> +	return 0;
+> +}
+> +
+> +static int get_core_temp(struct peci_cputemp *priv, int core_index)
+> +{
+> +	s32 core_dts_margin;
+> +	u32 pcs;
+> +	int ret;
+> +
+> +	if (!peci_sensor_need_update(&priv->temp.core[core_index]))
+> +		return 0;
+> +
+> +	ret = peci_pcs_read(priv->peci_dev, PECI_PCS_MODULE_TEMP, core_index, &pcs);
+> +	if (ret)
+> +		return ret;
+> +
+> +	core_dts_margin = FIELD_GET(PCS_MODULE_TEMP_MASK, pcs);
+> +	if (!dts_valid(core_dts_margin))
+> +		return -EIO;
+> +
+> +	/* Note that the tjmax should be available before calling it */
+> +	priv->temp.core[core_index].value =
+> +		priv->temp.tjmax.value + dts_to_millidegree(core_dts_margin);
+> +
+> +	peci_sensor_mark_updated(&priv->temp.core[core_index]);
+> +
+> +	return 0;
+> +}
+> +
+> +static int cputemp_read_string(struct device *dev, enum hwmon_sensor_types type,
+> +			       u32 attr, int channel, const char **str)
+> +{
+> +	struct peci_cputemp *priv = dev_get_drvdata(dev);
+> +
+> +	if (attr != hwmon_temp_label)
+> +		return -EOPNOTSUPP;
+> +
+> +	*str = channel < channel_core ?
+> +		cputemp_label[channel] : priv->coretemp_label[channel - channel_core];
+> +
+> +	return 0;
+> +}
+> +
+> +static int cputemp_read(struct device *dev, enum hwmon_sensor_types type,
+> +			u32 attr, int channel, long *val)
+> +{
+> +	struct peci_cputemp *priv = dev_get_drvdata(dev);
+> +	int ret, core_index;
+> +
+> +	ret = get_temp_targets(priv);
+> +	if (ret)
+> +		return ret;
+> +
+> +	switch (attr) {
+> +	case hwmon_temp_input:
+> +		switch (channel) {
+> +		case channel_die:
+> +			ret = get_die_temp(priv);
+> +			if (ret)
+> +				return ret;
+> +
+> +			*val = priv->temp.die.value;
+> +			break;
+> +		case channel_dts:
+> +			ret = get_dts(priv);
+> +			if (ret)
+> +				return ret;
+> +
+> +			*val = priv->temp.dts.value;
+> +			break;
+> +		case channel_tcontrol:
+> +			*val = priv->temp.tcontrol.value;
+> +			break;
+> +		case channel_tthrottle:
+> +			*val = priv->temp.tthrottle.value;
+> +			break;
+> +		case channel_tjmax:
+> +			*val = priv->temp.tjmax.value;
+> +			break;
+> +		default:
+> +			core_index = channel - channel_core;
+> +			ret = get_core_temp(priv, core_index);
+> +			if (ret)
+> +				return ret;
+> +
+> +			*val = priv->temp.core[core_index].value;
+> +			break;
+> +		}
+> +		break;
+> +	case hwmon_temp_max:
+> +		*val = priv->temp.tcontrol.value;
+> +		break;
+> +	case hwmon_temp_crit:
+> +		*val = priv->temp.tjmax.value;
+> +		break;
+> +	case hwmon_temp_crit_hyst:
+> +		*val = priv->temp.tjmax.value - priv->temp.tcontrol.value;
+> +		break;
+> +	default:
+> +		return -EOPNOTSUPP;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static umode_t cputemp_is_visible(const void *data, enum hwmon_sensor_types type,
+> +				  u32 attr, int channel)
+> +{
+> +	const struct peci_cputemp *priv = data;
+> +
+> +	if (channel > CPUTEMP_CHANNEL_NUMS)
+> +		return 0;
+> +
+> +	if (channel < channel_core)
+> +		return 0444;
+> +
+> +	if (test_bit(channel - channel_core, priv->core_mask))
+> +		return 0444;
+> +
+> +	return 0;
+> +}
+> +
+> +static int init_core_mask(struct peci_cputemp *priv)
+> +{
+> +	struct peci_device *peci_dev = priv->peci_dev;
+> +	struct resolved_cores_reg *reg = priv->gen_info->reg;
+> +	u64 core_mask;
+> +	u32 data;
+> +	int ret;
+> +
+> +	/* Get the RESOLVED_CORES register value */
+> +	switch (peci_dev->info.model) {
+> +	case INTEL_FAM6_ICELAKE_X:
+> +	case INTEL_FAM6_ICELAKE_D:
+> +		ret = peci_ep_pci_local_read(peci_dev, 0, reg->bus, reg->dev,
+> +					     reg->func, reg->offset + 4, &data);
+> +		if (ret)
+> +			return ret;
+> +
+> +		core_mask = (u64)data << 32;
+> +
+> +		ret = peci_ep_pci_local_read(peci_dev, 0, reg->bus, reg->dev,
+> +					     reg->func, reg->offset, &data);
+> +		if (ret)
+> +			return ret;
+> +
+> +		core_mask |= data;
+> +
+> +		break;
+> +	default:
+> +		ret = peci_pci_local_read(peci_dev, reg->bus, reg->dev,
+> +					  reg->func, reg->offset, &data);
+> +		if (ret)
+> +			return ret;
+> +
+> +		core_mask = data;
+> +
+> +		break;
+> +	}
+> +
+> +	if (!core_mask)
+> +		return -EIO;
+> +
+> +	bitmap_from_u64(priv->core_mask, core_mask);
+> +
+> +	return 0;
+> +}
+> +
+> +static int create_temp_label(struct peci_cputemp *priv)
+> +{
+> +	unsigned long core_max = find_last_bit(priv->core_mask, CORE_NUMS_MAX);
+> +	int i;
+> +
+> +	priv->coretemp_label = devm_kzalloc(priv->dev, core_max * sizeof(char *), GFP_KERNEL);
+> +	if (!priv->coretemp_label)
+> +		return -ENOMEM;
+> +
+> +	for_each_set_bit(i, priv->core_mask, CORE_NUMS_MAX) {
+> +		priv->coretemp_label[i] = devm_kasprintf(priv->dev, GFP_KERNEL, "Core %d", i);
+> +		if (!priv->coretemp_label[i])
+> +			return -ENOMEM;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static void check_resolved_cores(struct peci_cputemp *priv)
+> +{
+> +	int ret;
+> +
+> +	ret = init_core_mask(priv);
+> +	if (ret)
+> +		return;
+> +
+> +	ret = create_temp_label(priv);
+> +	if (ret)
+> +		bitmap_zero(priv->core_mask, CORE_NUMS_MAX);
+
+This needs a comment explaining why it is ok to ignore the above errors.
+
+I understand it is because the non-core data will still be available.
+Yet, it still needs to be explained so others don't need to examine
+the code to figure out the reason.
+
+> +}
+> +
+> +static const struct hwmon_ops peci_cputemp_ops = {
+> +	.is_visible = cputemp_is_visible,
+> +	.read_string = cputemp_read_string,
+> +	.read = cputemp_read,
+> +};
+> +
+> +static const u32 peci_cputemp_temp_channel_config[] = {
+> +	/* Die temperature */
+> +	HWMON_T_LABEL | HWMON_T_INPUT | HWMON_T_MAX | HWMON_T_CRIT | HWMON_T_CRIT_HYST,
+> +	/* DTS margin */
+> +	HWMON_T_LABEL | HWMON_T_INPUT | HWMON_T_MAX | HWMON_T_CRIT | HWMON_T_CRIT_HYST,
+> +	/* Tcontrol temperature */
+> +	HWMON_T_LABEL | HWMON_T_INPUT | HWMON_T_CRIT,
+> +	/* Tthrottle temperature */
+> +	HWMON_T_LABEL | HWMON_T_INPUT,
+> +	/* Tjmax temperature */
+> +	HWMON_T_LABEL | HWMON_T_INPUT,
+> +	/* Core temperature - for all core channels */
+> +	[channel_core ... CPUTEMP_CHANNEL_NUMS - 1] = HWMON_T_LABEL | HWMON_T_INPUT,
+> +	0
+> +};
+> +
+> +static const struct hwmon_channel_info peci_cputemp_temp_channel = {
+> +	.type = hwmon_temp,
+> +	.config = peci_cputemp_temp_channel_config,
+> +};
+> +
+> +static const struct hwmon_channel_info *peci_cputemp_info[] = {
+> +	&peci_cputemp_temp_channel,
+> +	NULL
+> +};
+> +
+> +static const struct hwmon_chip_info peci_cputemp_chip_info = {
+> +	.ops = &peci_cputemp_ops,
+> +	.info = peci_cputemp_info,
+> +};
+> +
+> +static int peci_cputemp_probe(struct auxiliary_device *adev,
+> +			      const struct auxiliary_device_id *id)
+> +{
+> +	struct device *dev = &adev->dev;
+> +	struct peci_device *peci_dev = to_peci_device(dev->parent);
+> +	struct peci_cputemp *priv;
+> +	struct device *hwmon_dev;
+> +
+> +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+> +	if (!priv)
+> +		return -ENOMEM;
+> +
+> +	priv->name = devm_kasprintf(dev, GFP_KERNEL, "peci_cputemp.cpu%d",
+> +				    peci_dev->info.socket_id);
+> +	if (!priv->name)
+> +		return -ENOMEM;
+> +
+> +	dev_set_drvdata(dev, priv);
+
+What is this used for ?
+
+> +	priv->dev = dev;
+> +	priv->peci_dev = peci_dev;
+> +	priv->gen_info = (const struct cpu_info *)id->driver_data;
+> +
+> +	check_resolved_cores(priv);
+> +
+> +	hwmon_dev = devm_hwmon_device_register_with_info(priv->dev, priv->name,
+> +							 priv, &peci_cputemp_chip_info, NULL);
+> +
+> +	return PTR_ERR_OR_ZERO(hwmon_dev);
+> +}
+> +
+> +static struct resolved_cores_reg resolved_cores_reg_hsx = {
+> +	.bus = 1,
+> +	.dev = 30,
+> +	.func = 3,
+> +	.offset = 0xb4,
+> +};
+> +
+> +static struct resolved_cores_reg resolved_cores_reg_icx = {
+> +	.bus = 14,
+> +	.dev = 30,
+> +	.func = 3,
+> +	.offset = 0xd0,
+> +};
+
+Please explain those magic numbers.
+
+> +
+> +static const struct cpu_info cpu_hsx = {
+> +	.reg		= &resolved_cores_reg_hsx,
+> +	.min_peci_revision = 0x30,
+> +};
+> +
+> +static const struct cpu_info cpu_icx = {
+> +	.reg		= &resolved_cores_reg_icx,
+> +	.min_peci_revision = 0x40,
+> +};
+> +
+> +static const struct auxiliary_device_id peci_cputemp_ids[] = {
+> +	{
+> +		.name = "peci_cpu.cputemp.hsx",
+> +		.driver_data = (kernel_ulong_t)&cpu_hsx,
+> +	},
+> +	{
+> +		.name = "peci_cpu.cputemp.bdx",
+> +		.driver_data = (kernel_ulong_t)&cpu_hsx,
+> +	},
+> +	{
+> +		.name = "peci_cpu.cputemp.bdxd",
+> +		.driver_data = (kernel_ulong_t)&cpu_hsx,
+> +	},
+> +	{
+> +		.name = "peci_cpu.cputemp.skx",
+> +		.driver_data = (kernel_ulong_t)&cpu_hsx,
+> +	},
+> +	{
+> +		.name = "peci_cpu.cputemp.icx",
+> +		.driver_data = (kernel_ulong_t)&cpu_icx,
+> +	},
+> +	{
+> +		.name = "peci_cpu.cputemp.icxd",
+> +		.driver_data = (kernel_ulong_t)&cpu_icx,
+> +	},
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(auxiliary, peci_cputemp_ids);
+> +
+> +static struct auxiliary_driver peci_cputemp_driver = {
+> +	.probe		= peci_cputemp_probe,
+> +	.id_table	= peci_cputemp_ids,
+> +};
+> +
+> +module_auxiliary_driver(peci_cputemp_driver);
+> +
+> +MODULE_AUTHOR("Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>");
+> +MODULE_AUTHOR("Iwona Winiarska <iwona.winiarska@intel.com>");
+> +MODULE_DESCRIPTION("PECI cputemp driver");
+> +MODULE_LICENSE("GPL");
+> +MODULE_IMPORT_NS(PECI_CPU);
