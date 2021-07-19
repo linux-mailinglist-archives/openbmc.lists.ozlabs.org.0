@@ -1,80 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D546B3CEDD6
-	for <lists+openbmc@lfdr.de>; Mon, 19 Jul 2021 22:35:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D0FC3CEDDA
+	for <lists+openbmc@lfdr.de>; Mon, 19 Jul 2021 22:37:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GTDB854mqz3bTq
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jul 2021 06:35:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GTDDB42P6z30KF
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jul 2021 06:37:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=Pm8yu2gf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ipVGO4c4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c31;
- helo=mail-oo1-xc31.google.com; envelope-from=groeck7@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32c;
+ helo=mail-ot1-x32c.google.com; envelope-from=groeck7@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Pm8yu2gf; dkim-atps=neutral
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com
- [IPv6:2607:f8b0:4864:20::c31])
+ header.s=20161025 header.b=ipVGO4c4; dkim-atps=neutral
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com
+ [IPv6:2607:f8b0:4864:20::32c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GTD9q1w0pz2yMN;
- Tue, 20 Jul 2021 06:35:10 +1000 (AEST)
-Received: by mail-oo1-xc31.google.com with SMTP id
- e203-20020a4a55d40000b029025f4693434bso4793635oob.3; 
- Mon, 19 Jul 2021 13:35:10 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GTDCv1Lw9z2xZ3;
+ Tue, 20 Jul 2021 06:36:59 +1000 (AEST)
+Received: by mail-ot1-x32c.google.com with SMTP id
+ h24-20020a9d64180000b029036edcf8f9a6so19523214otl.3; 
+ Mon, 19 Jul 2021 13:36:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:content-transfer-encoding:in-reply-to;
- bh=CnGPA9k5jAnGBAAGW5ixT1QhP02OGDK8n1UCPbob07o=;
- b=Pm8yu2gf+hlzn+55X/bDKWMa8As3RwFoGStNgel0D8Uyvvd6jzhTIZYZw3geqPdIMW
- ZGlCrHwftraox+L/LeqzJvUMCpNHt+6NdgbMimP7fHKtZmEPFZxNaQTJe2TJGLgtfuTt
- sU/kZaer8jaN1pvWRGZOp+Fq2Ao5s/uYzPIDq+B+z7G8AZ3PF+ZRcLD1ZpxqHh8pB+sr
- GS5ln6fsrSftTJgfVgGsDJ9lzNwNWOf6MCxDdZND26fB/bUWgxmNeRrsBFX3/YEvXZaX
- ZqWaEyAPqhsKiW4zMEpVrS24BS8QJQ3gyYVBSom/VGzLmg0eNYO3c3kKyb2UmOhSU8DD
- cEPg==
+ h=sender:subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=gZG5QTTbDUE4xpcECJviTidl2M8zGKRu7+yQIhUAxE0=;
+ b=ipVGO4c4liPqEMay7hoj0UwxzhbsBPyLKAF89ouSZnKBB0PD1DTQxrG/RohTohqo3g
+ QMB3soOnsExwThBV++plqG9FrC3fxsk55RqM101mt5XVyhsTTFFpQQn/wLdtLkhyBMG+
+ sro9B68FzsmIpqha1L4om8Cl1EK3X7PfLrE/aMEaZB7SxUrAMLUHq0eooTswj9kawI+v
+ EmVnK1Jp1XIfpkYNq1LFJaahLmD/Z9//f9hMZ5elywLtmjD3GrtfWp4zZbv86YNRTYUX
+ esPKOKty0B+sjpO9og3ocFM2peuAa/KlOLUuAmYYIdRqaGr3de9nj82srw+GRpKPZ+Sa
+ 48BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition
- :content-transfer-encoding:in-reply-to;
- bh=CnGPA9k5jAnGBAAGW5ixT1QhP02OGDK8n1UCPbob07o=;
- b=ViusMyjvG6mvhIWrHXCVry/Nsc2gvkC+xU/di7yszic9nx4sLeFH3JzDtF4AOFO8W1
- yiCZup8JkXQfmdZoH7YaCMKnCObg6uJgwgsnpePfNfvoZ76Q8WFZKbxWVVWaujJt7bEN
- sqSklqiw8KZAJHqcsMokESJie0FtME/Z015AI6QbWjn0gczegs2PbdNbNVgQHJLHAsir
- zFKWn8v6rsqebsy0gRPMqfYQHTzMTi9bLsR030gan/dXsTESr4f7HDh6kl8mwRCd24Di
- 3K36WHEcLvI/dY8pGAHDSNienvDBU3TAwIqUMkYJnnkb1gWMhnZOfbx7x9rOceb9CHJo
- aQAQ==
-X-Gm-Message-State: AOAM532ahMEryYYuliWCUrOTKX2rRR2VfyLCUQarfJEVeUbkwxmcSL0n
- h6fyab8Y5G0Y7cg/LyKKFDY=
-X-Google-Smtp-Source: ABdhPJwC+ITNhkPvbxptB2sPYgUDu+tCWQlgRApn/ULuEKeLsTUiChZ4F19JQXpgRQm3lOpfzE1hRQ==
-X-Received: by 2002:a4a:5dc6:: with SMTP id w189mr18755739ooa.1.1626726906873; 
- Mon, 19 Jul 2021 13:35:06 -0700 (PDT)
+ h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
+ :date:user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=gZG5QTTbDUE4xpcECJviTidl2M8zGKRu7+yQIhUAxE0=;
+ b=Ry4M7rOYnjQiFZOCzsmF2+rTlJgHj7zJmEHfdDZX/Z/aOhqD4PGWWsarALeuoxEh1G
+ hfkKssAvvL9VWHnLCKuLD4oCr0/bC8GIgXN2Tx1xmIU9C0M0MvUBV8VdsjB5+kP5ouv1
+ IKh06/LlXlEDbfBDg6LH5GqlpjmqDW6m6UxJtxSefmVsRe+WOYPBhyHksJbiq9jbpnEY
+ 8Z9+/GRSUj7nbQDm2awdeXq8SZsWNsKFdpWsnV8GVQUGMnwNgHsP1bC9GkBNWBDNeI4g
+ xipZrwBdzQejX15zlGbwN9lqIVJKWZwUs/PJhjmTYmUz0bGCM4RYAIkONsOYct1HOFj/
+ 5nvw==
+X-Gm-Message-State: AOAM532aKSCYdxkwEDDE6GQh12u00Crv9bHcZc4kcstFdBNVPOoe2sF4
+ qD6nhr96eMxUGtNsh7/voEI=
+X-Google-Smtp-Source: ABdhPJx/RqTfz2fkHBeIMZhhtif5abFutFlPhflj+Vm5+DywSKD6zjDbYm2Wbb/+jfEkdU8NwJ9DWw==
+X-Received: by 2002:a05:6830:23a7:: with SMTP id
+ m7mr1407802ots.17.1626727015480; 
+ Mon, 19 Jul 2021 13:36:55 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- j10sm3084117oog.47.2021.07.19.13.35.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Jul 2021 13:35:06 -0700 (PDT)
-Date: Mon, 19 Jul 2021 13:35:04 -0700
-From: Guenter Roeck <linux@roeck-us.net>
+ c11sm3828659otm.37.2021.07.19.13.36.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Jul 2021 13:36:55 -0700 (PDT)
+Subject: Re: [PATCH 12/14] hwmon: peci: Add dimmtemp driver
 To: "Winiarska, Iwona" <iwona.winiarska@intel.com>
-Subject: Re: [PATCH 11/14] hwmon: peci: Add cputemp driver
-Message-ID: <20210719203504.GA2277987@roeck-us.net>
 References: <20210712220447.957418-1-iwona.winiarska@intel.com>
- <20210712220447.957418-12-iwona.winiarska@intel.com>
- <20210715174527.GA3012477@roeck-us.net>
- <66b4a0285ffada1855eb099011bed27b2750b3cc.camel@intel.com>
+ <20210712220447.957418-13-iwona.winiarska@intel.com>
+ <20210715175602.GA3043224@roeck-us.net>
+ <282c092ec55034bde13c23b90516c2d543f0400d.camel@intel.com>
+From: Guenter Roeck <linux@roeck-us.net>
+Message-ID: <25c9c595-de7f-5229-cec8-ab28e9e3ac49@roeck-us.net>
+Date: Mon, 19 Jul 2021 13:36:52 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <282c092ec55034bde13c23b90516c2d543f0400d.camel@intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <66b4a0285ffada1855eb099011bed27b2750b3cc.camel@intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,7 +92,8 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
  "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
  "jae.hyun.yoo@linux.intel.com" <jae.hyun.yoo@linux.intel.com>,
- "mchehab@kernel.org" <mchehab@kernel.org>, "corbet@lwn.net" <corbet@lwn.net>,
+ "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+ "corbet@lwn.net" <corbet@lwn.net>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
  "x86@kernel.org" <x86@kernel.org>,
  "pierre-louis.bossart@linux.intel.com" <pierre-louis.bossart@linux.intel.com>,
@@ -99,7 +103,7 @@ Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
  "robh+dt@kernel.org" <robh+dt@kernel.org>, "bp@alien8.de" <bp@alien8.de>,
  "Lutomirski, Andy" <luto@kernel.org>,
  "tglx@linutronix.de" <tglx@linutronix.de>,
- "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+ "mchehab@kernel.org" <mchehab@kernel.org>,
  "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
  "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>, "Luck,
  Tony" <tony.luck@intel.com>, "andrew@aj.id.au" <andrew@aj.id.au>,
@@ -109,548 +113,642 @@ Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jul 19, 2021 at 08:12:54PM +0000, Winiarska, Iwona wrote:
-
-> > > +static const char *cputemp_label[DEFAULT_CHANNEL_NUMS] = {
-> > > +       "Die",
-> > > +       "DTS",
-> > > +       "Tcontrol",
-> > > +       "Tthrottle",
-> > > +       "Tjmax",
-> > > +};
-> > > +
-> > > +static int get_temp_targets(struct peci_cputemp *priv)
-> > > +{
-> > > +       s32 tthrottle_offset, tcontrol_margin;
-> > > +       u32 pcs;
-> > > +       int ret;
-> > > +
-> > > +       /*
-> > > +        * Just use only the tcontrol marker to determine if target values
-> > > need
-> > > +        * update.
-> > > +        */
-> > > +       if (!peci_sensor_need_update(&priv->temp.tcontrol))
-> > > +               return 0;
-> > > +
-> > True for the entire code: Please explain how this avoids race conditions
-> > without locking between the condition check here and the call to
-> > peci_sensor_mark_updated() below. The explanation needs to be added
-> > as comment into the code for later reference.
-> > 
+On 7/19/21 1:31 PM, Winiarska, Iwona wrote:
+> On Thu, 2021-07-15 at 10:56 -0700, Guenter Roeck wrote:
+>> On Tue, Jul 13, 2021 at 12:04:45AM +0200, Iwona Winiarska wrote:
+>>> Add peci-dimmtemp driver for Digital Thermal Sensor (DTS) thermal
+>>> readings of DIMMs that are accessible via the processor PECI interface.
+>>>
+>>> The main use case for the driver (and PECI interface) is out-of-band
+>>> management, where we're able to obtain the DTS readings from an external
+>>> entity connected with PECI, e.g. BMC on server platforms.
+>>>
+>>> Co-developed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>>> Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
+>>> Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+>>> ---
+>>>  Â drivers/hwmon/peci/KconfigÂ Â Â  |Â  13 +
+>>>  Â drivers/hwmon/peci/MakefileÂ Â  |Â Â  2 +
+>>>  Â drivers/hwmon/peci/dimmtemp.c | 508 ++++++++++++++++++++++++++++++++++
+>>>  Â 3 files changed, 523 insertions(+)
+>>>  Â create mode 100644 drivers/hwmon/peci/dimmtemp.c
+>>>
+>>> diff --git a/drivers/hwmon/peci/Kconfig b/drivers/hwmon/peci/Kconfig
+>>> index e10eed68d70a..f2d57efa508b 100644
+>>> --- a/drivers/hwmon/peci/Kconfig
+>>> +++ b/drivers/hwmon/peci/Kconfig
+>>> @@ -14,5 +14,18 @@ config SENSORS_PECI_CPUTEMP
+>>>  Â Â Â Â Â Â Â Â Â  This driver can also be built as a module. If so, the module
+>>>  Â Â Â Â Â Â Â Â Â  will be called peci-cputemp.
+>>>   
+>>> +config SENSORS_PECI_DIMMTEMP
+>>> +Â Â Â Â Â Â Â tristate "PECI DIMM temperature monitoring client"
+>>> +Â Â Â Â Â Â Â depends on PECI
+>>> +Â Â Â Â Â Â Â select SENSORS_PECI
+>>> +Â Â Â Â Â Â Â select PECI_CPU
+>>> +Â Â Â Â Â Â Â help
+>>> +Â Â Â Â Â Â Â Â  If you say yes here you get support for the generic Intel PECI hwmon
+>>> +Â Â Â Â Â Â Â Â  driver which provides Digital Thermal Sensor (DTS) thermal readings
+>>> of
+>>> +Â Â Â Â Â Â Â Â  DIMM components that are accessible via the processor PECI
+>>> interface.
+>>> +
+>>> +Â Â Â Â Â Â Â Â  This driver can also be built as a module. If so, the module
+>>> +Â Â Â Â Â Â Â Â  will be called peci-dimmtemp.
+>>> +
+>>>  Â config SENSORS_PECI
+>>>  Â Â Â Â Â Â Â Â tristate
+>>> diff --git a/drivers/hwmon/peci/Makefile b/drivers/hwmon/peci/Makefile
+>>> index e8a0ada5ab1f..191cfa0227f3 100644
+>>> --- a/drivers/hwmon/peci/Makefile
+>>> +++ b/drivers/hwmon/peci/Makefile
+>>> @@ -1,5 +1,7 @@
+>>>  Â # SPDX-License-Identifier: GPL-2.0-only
+>>>   
+>>>  Â peci-cputemp-y := cputemp.o
+>>> +peci-dimmtemp-y := dimmtemp.o
+>>>   
+>>>  Â obj-$(CONFIG_SENSORS_PECI_CPUTEMP)Â Â Â Â Â += peci-cputemp.o
+>>> +obj-$(CONFIG_SENSORS_PECI_DIMMTEMP)Â Â Â Â += peci-dimmtemp.o
+>>> diff --git a/drivers/hwmon/peci/dimmtemp.c b/drivers/hwmon/peci/dimmtemp.c
+>>> new file mode 100644
+>>> index 000000000000..2fcb8607137a
+>>> --- /dev/null
+>>> +++ b/drivers/hwmon/peci/dimmtemp.c
+>>> @@ -0,0 +1,508 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +// Copyright (c) 2018-2021 Intel Corporation
+>>> +
+>>> +#include <linux/auxiliary_bus.h>
+>>> +#include <linux/bitfield.h>
+>>> +#include <linux/bitops.h>
+>>> +#include <linux/hwmon.h>
+>>> +#include <linux/jiffies.h>
+>>> +#include <linux/module.h>
+>>> +#include <linux/peci.h>
+>>> +#include <linux/peci-cpu.h>
+>>> +#include <linux/units.h>
+>>> +#include <linux/workqueue.h>
+>>> +#include <linux/x86/intel-family.h>
+>>> +
+>>> +#include "common.h"
+>>> +
+>>> +#define DIMM_MASK_CHECK_DELAY_JIFFIESÂ Â msecs_to_jiffies(5000)
+>>> +#define DIMM_MASK_CHECK_RETRY_MAXÂ Â Â Â Â Â 60 /* 60 x 5 secs = 5 minutes */
+>>> +
+>>> +/* Max number of channel ranks and DIMM index per channel */
+>>> +#define CHAN_RANK_MAX_ON_HSXÂ Â Â 8
+>>> +#define DIMM_IDX_MAX_ON_HSXÂ Â Â Â 3
+>>> +#define CHAN_RANK_MAX_ON_BDXÂ Â Â 4
+>>> +#define DIMM_IDX_MAX_ON_BDXÂ Â Â Â 3
+>>> +#define CHAN_RANK_MAX_ON_BDXDÂ Â 2
+>>> +#define DIMM_IDX_MAX_ON_BDXDÂ Â Â 2
+>>> +#define CHAN_RANK_MAX_ON_SKXÂ Â Â 6
+>>> +#define DIMM_IDX_MAX_ON_SKXÂ Â Â Â 2
+>>> +#define CHAN_RANK_MAX_ON_ICXÂ Â Â 8
+>>> +#define DIMM_IDX_MAX_ON_ICXÂ Â Â Â 2
+>>> +#define CHAN_RANK_MAX_ON_ICXDÂ Â 4
+>>> +#define DIMM_IDX_MAX_ON_ICXDÂ Â Â 2
+>>> +
+>>> +#define CHAN_RANK_MAXÂ Â Â Â Â Â Â Â Â Â CHAN_RANK_MAX_ON_HSX
+>>> +#define DIMM_IDX_MAXÂ Â Â Â Â Â Â Â Â Â Â DIMM_IDX_MAX_ON_HSX
+>>> +#define DIMM_NUMS_MAXÂ Â Â Â Â Â Â Â Â Â (CHAN_RANK_MAX * DIMM_IDX_MAX)
+>>> +
+>>> +#define CPU_SEG_MASKÂ Â Â Â Â Â Â Â Â Â Â GENMASK(23, 16)
+>>> +#define GET_CPU_SEG(x)Â Â Â Â Â Â Â Â Â (((x) & CPU_SEG_MASK) >> 16)
+>>> +#define CPU_BUS_MASKÂ Â Â Â Â Â Â Â Â Â Â GENMASK(7, 0)
+>>> +#define GET_CPU_BUS(x)Â Â Â Â Â Â Â Â Â ((x) & CPU_BUS_MASK)
+>>> +
+>>> +#define DIMM_TEMP_MAXÂ Â Â Â Â Â Â Â Â Â GENMASK(15, 8)
+>>> +#define DIMM_TEMP_CRITÂ Â Â Â Â Â Â Â Â GENMASK(23, 16)
+>>> +#define GET_TEMP_MAX(x)Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â (((x) & DIMM_TEMP_MAX) >> 8)
+>>> +#define GET_TEMP_CRIT(x)Â Â Â Â Â Â Â (((x) & DIMM_TEMP_CRIT) >> 16)
+>>> +
+>>> +struct dimm_info {
+>>> +Â Â Â Â Â Â Â int chan_rank_max;
+>>> +Â Â Â Â Â Â Â int dimm_idx_max;
+>>> +Â Â Â Â Â Â Â u8 min_peci_revision;
+>>> +};
+>>> +
+>>> +struct peci_dimmtemp {
+>>> +Â Â Â Â Â Â Â struct peci_device *peci_dev;
+>>> +Â Â Â Â Â Â Â struct device *dev;
+>>> +Â Â Â Â Â Â Â const char *name;
+>>> +Â Â Â Â Â Â Â const struct dimm_info *gen_info;
+>>> +Â Â Â Â Â Â Â struct delayed_work detect_work;
+>>> +Â Â Â Â Â Â Â struct peci_sensor_data temp[DIMM_NUMS_MAX];
+>>> +Â Â Â Â Â Â Â long temp_max[DIMM_NUMS_MAX];
+>>> +Â Â Â Â Â Â Â long temp_crit[DIMM_NUMS_MAX];
+>>> +Â Â Â Â Â Â Â int retry_count;
+>>> +Â Â Â Â Â Â Â char **dimmtemp_label;
+>>> +Â Â Â Â Â Â Â DECLARE_BITMAP(dimm_mask, DIMM_NUMS_MAX);
+>>> +};
+>>> +
+>>> +static u8 __dimm_temp(u32 reg, int dimm_order)
+>>> +{
+>>> +Â Â Â Â Â Â Â return (reg >> (dimm_order * 8)) & 0xff;
+>>> +}
+>>> +
+>>> +static int get_dimm_temp(struct peci_dimmtemp *priv, int dimm_no)
+>>> +{
+>>> +Â Â Â Â Â Â Â int dimm_order = dimm_no % priv->gen_info->dimm_idx_max;
+>>> +Â Â Â Â Â Â Â int chan_rank = dimm_no / priv->gen_info->dimm_idx_max;
+>>> +Â Â Â Â Â Â Â struct peci_device *peci_dev = priv->peci_dev;
+>>> +Â Â Â Â Â Â Â u8 cpu_seg, cpu_bus, dev, func;
+>>> +Â Â Â Â Â Â Â u64 offset;
+>>> +Â Â Â Â Â Â Â u32 data;
+>>> +Â Â Â Â Â Â Â u16 reg;
+>>> +Â Â Â Â Â Â Â int ret;
+>>> +
+>>> +Â Â Â Â Â Â Â if (!peci_sensor_need_update(&priv->temp[dimm_no]))
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return 0;
+>>> +
+>>> +Â Â Â Â Â Â Â ret = peci_pcs_read(peci_dev, PECI_PCS_DDR_DIMM_TEMP, chan_rank,
+>>> &data);
+>>> +Â Â Â Â Â Â Â if (ret)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return ret;
+>>> +
+>>
+>> Similar to the cpu driver, the lack of mutex protection needs to be explained.
+>>
 > 
-> You're right, there is a race here that may cause PECI command to be triggered
-> more than once. It doesn't have any impact on correctness though.
-
-That is only correct if multiple read operations of PECI_PCS_TEMP_TARGET
-always return the same value. If so, reading those values multiple times
-would not make sense. Instead, the values could be read once and cached.
-If PECI_PCS_TEMP_TARGET can return different values each time it is called,
-the lack of mutex protection could result in inconsistent values for
-priv->temp.tjmax.value, priv->temp.tcontrol.value, and
-priv->temp.tthrottle.value.
-
-So either this needs a mutex, or the code should be changed to read the
-static values only once.
-
-You could instead add a comment stating that multiple unprotected reads
-are redundant because the returned data is static, that parallel reads
-are thus not racy, and that a mutex is therefore not needed, but I won't
-accept such code.
-
-> I could add a comment explaining that, but I guess just adding a mutex to avoid
-> the race makes more sense. 
+> Sure, it will be consistent for the two drivers.
 > 
-> > > +       ret = peci_pcs_read(priv->peci_dev, PECI_PCS_TEMP_TARGET, 0, &pcs);
-> > > +       if (ret)
-> > > +               return ret;
-> > > +
-> > > +       priv->temp.tjmax.value = FIELD_GET(TEMP_TARGET_REF_TEMP_MASK, pcs) *
-> > > MILLIDEGREE_PER_DEGREE;
-> > > +
-> > > +       tcontrol_margin = FIELD_GET(TEMP_TARGET_FAN_TEMP_MASK, pcs);
-> > > +       tcontrol_margin = sign_extend32(tcontrol_margin, 7) *
-> > > MILLIDEGREE_PER_DEGREE;
-> > > +       priv->temp.tcontrol.value = priv->temp.tjmax.value - tcontrol_margin;
-> > > +
-> > > +       tthrottle_offset = FIELD_GET(TEMP_TARGET_TJ_OFFSET_MASK, pcs) *
-> > > MILLIDEGREE_PER_DEGREE;
-> > > +       priv->temp.tthrottle.value = priv->temp.tjmax.value -
-> > > tthrottle_offset;
-> > > +
-> > > +       peci_sensor_mark_updated(&priv->temp.tcontrol);
-> > > +
-> > > +       return 0;
-> > > +}
-> > > +
-> > > +/*
-> > > + * Processors return a value of DTS reading in S10.6 fixed point format
-> > > + * (sign, 10 bits signed integer value, 6 bits fractional).
-> > > + * Error codes:
-> > > + *   0x8000: General sensor error
-> > > + *   0x8001: Reserved
-> > > + *   0x8002: Underflow on reading value
-> > > + *   0x8003-0x81ff: Reserved
-> > > + */
-> > > +static bool dts_valid(s32 val)
-> > > +{
-> > > +       return val < 0x8000 || val > 0x81ff;
-> > > +}
-> > > +
-> > > +static s32 dts_to_millidegree(s32 val)
-> > > +{
-> > > +       return sign_extend32(val, 15) * MILLIDEGREE_PER_DEGREE /
-> > > DTS_FIXED_POINT_FRACTION;
-> > > +}
-> > > +
-> > > +static int get_die_temp(struct peci_cputemp *priv)
-> > > +{
-> > > +       s16 temp;
-> > > +       int ret;
-> > > +
-> > > +       if (!peci_sensor_need_update(&priv->temp.die))
-> > > +               return 0;
-> > > +
-> > > +       ret = peci_temp_read(priv->peci_dev, &temp);
-> > > +       if (ret)
-> > > +               return ret;
-> > > +
-> > > +       if (!dts_valid(temp))
-> > > +               return -EIO;
-> > > +
-> > > +       /* Note that the tjmax should be available before calling it */
-> > > +       priv->temp.die.value = priv->temp.tjmax.value +
-> > > dts_to_millidegree(temp);
-> > > +
-> > > +       peci_sensor_mark_updated(&priv->temp.die);
-
-The same is true here: Either the value returned from peci_temp_read()
-is static (which seems unlikely), or there is a race between reading
-the temperature, storing it in priv->temp.die.value, and setting the
-update flag. With the current code, there is no guarantee that the
-stored value is the value that was read by the thread that sets the
-updated flag. One could argue that it doesn't really matter because it
-is irrelevant which thread stores the temperature and which thread sets
-the updated flag, but that is really bad coding style, and I won't
-accept it.
-
-This is true for all code which reads a value from the chip, stores
-it locally, and then sets the updated flag.
-
-> > > +
-> > > +       return 0;
-> > > +}
-> > > +
-> > > +static int get_dts(struct peci_cputemp *priv)
-> > > +{
-> > > +       s32 dts_margin;
-> > > +       u32 pcs;
-> > > +       int ret;
-> > > +
-> > > +       if (!peci_sensor_need_update(&priv->temp.dts))
-> > > +               return 0;
-> > > +
-> > > +       ret = peci_pcs_read(priv->peci_dev, PECI_PCS_THERMAL_MARGIN, 0, &pcs);
-> > > +       if (ret)
-> > > +               return ret;
-> > > +
-> > > +       dts_margin = FIELD_GET(DTS_MARGIN_MASK, pcs);
-> > > +       if (!dts_valid(dts_margin))
-> > > +               return -EIO;
-> > > +
-> > > +       /* Note that the tcontrol should be available before calling it */
-> > > +       priv->temp.dts.value = priv->temp.tcontrol.value -
-> > > dts_to_millidegree(dts_margin);
-> > > +
-> > > +       peci_sensor_mark_updated(&priv->temp.dts);
-> > > +
-> > > +       return 0;
-> > > +}
-> > > +
-> > > +static int get_core_temp(struct peci_cputemp *priv, int core_index)
-> > > +{
-> > > +       s32 core_dts_margin;
-> > > +       u32 pcs;
-> > > +       int ret;
-> > > +
-> > > +       if (!peci_sensor_need_update(&priv->temp.core[core_index]))
-> > > +               return 0;
-> > > +
-> > > +       ret = peci_pcs_read(priv->peci_dev, PECI_PCS_MODULE_TEMP, core_index,
-> > > &pcs);
-> > > +       if (ret)
-> > > +               return ret;
-> > > +
-> > > +       core_dts_margin = FIELD_GET(PCS_MODULE_TEMP_MASK, pcs);
-> > > +       if (!dts_valid(core_dts_margin))
-> > > +               return -EIO;
-> > > +
-> > > +       /* Note that the tjmax should be available before calling it */
-> > > +       priv->temp.core[core_index].value =
-> > > +               priv->temp.tjmax.value + dts_to_millidegree(core_dts_margin);
-> > > +
-> > > +       peci_sensor_mark_updated(&priv->temp.core[core_index]);
-> > > +
-> > > +       return 0;
-> > > +}
-> > > +
-> > > +static int cputemp_read_string(struct device *dev, enum hwmon_sensor_types
-> > > type,
-> > > +                              u32 attr, int channel, const char **str)
-> > > +{
-> > > +       struct peci_cputemp *priv = dev_get_drvdata(dev);
-> > > +
-> > > +       if (attr != hwmon_temp_label)
-> > > +               return -EOPNOTSUPP;
-> > > +
-> > > +       *str = channel < channel_core ?
-> > > +               cputemp_label[channel] : priv->coretemp_label[channel -
-> > > channel_core];
-> > > +
-> > > +       return 0;
-> > > +}
-> > > +
-> > > +static int cputemp_read(struct device *dev, enum hwmon_sensor_types type,
-> > > +                       u32 attr, int channel, long *val)
-> > > +{
-> > > +       struct peci_cputemp *priv = dev_get_drvdata(dev);
-> > > +       int ret, core_index;
-> > > +
-> > > +       ret = get_temp_targets(priv);
-> > > +       if (ret)
-> > > +               return ret;
-> > > +
-> > > +       switch (attr) {
-> > > +       case hwmon_temp_input:
-> > > +               switch (channel) {
-> > > +               case channel_die:
-> > > +                       ret = get_die_temp(priv);
-> > > +                       if (ret)
-> > > +                               return ret;
-> > > +
-> > > +                       *val = priv->temp.die.value;
-> > > +                       break;
-> > > +               case channel_dts:
-> > > +                       ret = get_dts(priv);
-> > > +                       if (ret)
-> > > +                               return ret;
-> > > +
-> > > +                       *val = priv->temp.dts.value;
-> > > +                       break;
-> > > +               case channel_tcontrol:
-> > > +                       *val = priv->temp.tcontrol.value;
-> > > +                       break;
-> > > +               case channel_tthrottle:
-> > > +                       *val = priv->temp.tthrottle.value;
-> > > +                       break;
-> > > +               case channel_tjmax:
-> > > +                       *val = priv->temp.tjmax.value;
-> > > +                       break;
-> > > +               default:
-> > > +                       core_index = channel - channel_core;
-> > > +                       ret = get_core_temp(priv, core_index);
-> > > +                       if (ret)
-> > > +                               return ret;
-> > > +
-> > > +                       *val = priv->temp.core[core_index].value;
-> > > +                       break;
-> > > +               }
-> > > +               break;
-> > > +       case hwmon_temp_max:
-> > > +               *val = priv->temp.tcontrol.value;
-> > > +               break;
-> > > +       case hwmon_temp_crit:
-> > > +               *val = priv->temp.tjmax.value;
-> > > +               break;
-> > > +       case hwmon_temp_crit_hyst:
-> > > +               *val = priv->temp.tjmax.value - priv->temp.tcontrol.value;
-> > > +               break;
-> > > +       default:
-> > > +               return -EOPNOTSUPP;
-> > > +       }
-> > > +
-> > > +       return 0;
-> > > +}
-> > > +
-> > > +static umode_t cputemp_is_visible(const void *data, enum hwmon_sensor_types
-> > > type,
-> > > +                                 u32 attr, int channel)
-> > > +{
-> > > +       const struct peci_cputemp *priv = data;
-> > > +
-> > > +       if (channel > CPUTEMP_CHANNEL_NUMS)
-> > > +               return 0;
-> > > +
-> > > +       if (channel < channel_core)
-> > > +               return 0444;
-> > > +
-> > > +       if (test_bit(channel - channel_core, priv->core_mask))
-> > > +               return 0444;
-> > > +
-> > > +       return 0;
-> > > +}
-> > > +
-> > > +static int init_core_mask(struct peci_cputemp *priv)
-> > > +{
-> > > +       struct peci_device *peci_dev = priv->peci_dev;
-> > > +       struct resolved_cores_reg *reg = priv->gen_info->reg;
-> > > +       u64 core_mask;
-> > > +       u32 data;
-> > > +       int ret;
-> > > +
-> > > +       /* Get the RESOLVED_CORES register value */
-> > > +       switch (peci_dev->info.model) {
-> > > +       case INTEL_FAM6_ICELAKE_X:
-> > > +       case INTEL_FAM6_ICELAKE_D:
-> > > +               ret = peci_ep_pci_local_read(peci_dev, 0, reg->bus, reg->dev,
-> > > +                                            reg->func, reg->offset + 4,
-> > > &data);
-> > > +               if (ret)
-> > > +                       return ret;
-> > > +
-> > > +               core_mask = (u64)data << 32;
-> > > +
-> > > +               ret = peci_ep_pci_local_read(peci_dev, 0, reg->bus, reg->dev,
-> > > +                                            reg->func, reg->offset, &data);
-> > > +               if (ret)
-> > > +                       return ret;
-> > > +
-> > > +               core_mask |= data;
-> > > +
-> > > +               break;
-> > > +       default:
-> > > +               ret = peci_pci_local_read(peci_dev, reg->bus, reg->dev,
-> > > +                                         reg->func, reg->offset, &data);
-> > > +               if (ret)
-> > > +                       return ret;
-> > > +
-> > > +               core_mask = data;
-> > > +
-> > > +               break;
-> > > +       }
-> > > +
-> > > +       if (!core_mask)
-> > > +               return -EIO;
-> > > +
-> > > +       bitmap_from_u64(priv->core_mask, core_mask);
-> > > +
-> > > +       return 0;
-> > > +}
-> > > +
-> > > +static int create_temp_label(struct peci_cputemp *priv)
-> > > +{
-> > > +       unsigned long core_max = find_last_bit(priv->core_mask,
-> > > CORE_NUMS_MAX);
-> > > +       int i;
-> > > +
-> > > +       priv->coretemp_label = devm_kzalloc(priv->dev, core_max * sizeof(char
-> > > *), GFP_KERNEL);
-> > > +       if (!priv->coretemp_label)
-> > > +               return -ENOMEM;
-> > > +
-> > > +       for_each_set_bit(i, priv->core_mask, CORE_NUMS_MAX) {
-> > > +               priv->coretemp_label[i] = devm_kasprintf(priv->dev,
-> > > GFP_KERNEL, "Core %d", i);
-> > > +               if (!priv->coretemp_label[i])
-> > > +                       return -ENOMEM;
-> > > +       }
-> > > +
-> > > +       return 0;
-> > > +}
-> > > +
-> > > +static void check_resolved_cores(struct peci_cputemp *priv)
-> > > +{
-> > > +       int ret;
-> > > +
-> > > +       ret = init_core_mask(priv);
-> > > +       if (ret)
-> > > +               return;
-> > > +
-> > > +       ret = create_temp_label(priv);
-> > > +       if (ret)
-> > > +               bitmap_zero(priv->core_mask, CORE_NUMS_MAX);
-> > 
-> > This needs a comment explaining why it is ok to ignore the above errors.
-> > 
-> > I understand it is because the non-core data will still be available.
-> > Yet, it still needs to be explained so others don't need to examine
-> > the code to figure out the reason.
-> > 
+>>> +Â Â Â Â Â Â Â priv->temp[dimm_no].value = __dimm_temp(data, dimm_order) *
+>>> MILLIDEGREE_PER_DEGREE;
+>>> +
+>>> +Â Â Â Â Â Â Â switch (peci_dev->info.model) {
+>>> +Â Â Â Â Â Â Â case INTEL_FAM6_ICELAKE_X:
+>>> +Â Â Â Â Â Â Â case INTEL_FAM6_ICELAKE_D:
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â ret = peci_ep_pci_local_read(peci_dev, 0, 13, 0, 2, 0xd4,
+>>> &data);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (ret || !(data & BIT(31)))
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â break; /* Use default or previous value */
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â ret = peci_ep_pci_local_read(peci_dev, 0, 13, 0, 2, 0xd0,
+>>> &data);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (ret)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â break; /* Use default or previous value */
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â cpu_seg = GET_CPU_SEG(data);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â cpu_bus = GET_CPU_BUS(data);
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â /*
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 26, Offset 224e0: IMC 0 channel 0 -> rank 0
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 26, Offset 264e0: IMC 0 channel 1 -> rank 1
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 27, Offset 224e0: IMC 1 channel 0 -> rank 2
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 27, Offset 264e0: IMC 1 channel 1 -> rank 3
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 28, Offset 224e0: IMC 2 channel 0 -> rank 4
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 28, Offset 264e0: IMC 2 channel 1 -> rank 5
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 29, Offset 224e0: IMC 3 channel 0 -> rank 6
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 29, Offset 264e0: IMC 3 channel 1 -> rank 7
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  */
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â dev = 0x1a + chan_rank / 2;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â offset = 0x224e0 + dimm_order * 4;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (chan_rank % 2)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â offset += 0x4000;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â ret = peci_mmio_read(peci_dev, 0, cpu_seg, cpu_bus, dev, 0,
+>>> offset, &data);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (ret)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return ret;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â priv->temp_max[dimm_no] = GET_TEMP_MAX(data) *
+>>> MILLIDEGREE_PER_DEGREE;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â priv->temp_crit[dimm_no] = GET_TEMP_CRIT(data) *
+>>> MILLIDEGREE_PER_DEGREE;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â break;
+>>> +Â Â Â Â Â Â Â case INTEL_FAM6_SKYLAKE_X:
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â /*
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 10, Function 2: IMC 0 channel 0 -> rank 0
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 10, Function 6: IMC 0 channel 1 -> rank 1
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 11, Function 2: IMC 0 channel 2 -> rank 2
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 12, Function 2: IMC 1 channel 0 -> rank 3
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 12, Function 6: IMC 1 channel 1 -> rank 4
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 13, Function 2: IMC 1 channel 2 -> rank 5
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  */
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â dev = 10 + chan_rank / 3 * 2 + (chan_rank % 3 == 2 ? 1 : 0);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â func = chan_rank % 3 == 1 ? 6 : 2;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â reg = 0x120 + dimm_order * 4;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â ret = peci_pci_local_read(peci_dev, 2, dev, func, reg, &data);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (ret)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return ret;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â priv->temp_max[dimm_no] = GET_TEMP_MAX(data) *
+>>> MILLIDEGREE_PER_DEGREE;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â priv->temp_crit[dimm_no] = GET_TEMP_CRIT(data) *
+>>> MILLIDEGREE_PER_DEGREE;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â break;
+>>> +Â Â Â Â Â Â Â case INTEL_FAM6_BROADWELL_D:
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â /*
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 10, Function 2: IMC 0 channel 0 -> rank 0
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 10, Function 6: IMC 0 channel 1 -> rank 1
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 12, Function 2: IMC 1 channel 0 -> rank 2
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 12, Function 6: IMC 1 channel 1 -> rank 3
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  */
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â dev = 10 + chan_rank / 2 * 2;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â func = (chan_rank % 2) ? 6 : 2;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â reg = 0x120 + dimm_order * 4;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â ret = peci_pci_local_read(peci_dev, 2, dev, func, reg, &data);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (ret)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return ret;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â priv->temp_max[dimm_no] = GET_TEMP_MAX(data) *
+>>> MILLIDEGREE_PER_DEGREE;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â priv->temp_crit[dimm_no] = GET_TEMP_CRIT(data) *
+>>> MILLIDEGREE_PER_DEGREE;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â break;
+>>> +Â Â Â Â Â Â Â case INTEL_FAM6_HASWELL_X:
+>>> +Â Â Â Â Â Â Â case INTEL_FAM6_BROADWELL_X:
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â /*
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 20, Function 0: IMC 0 channel 0 -> rank 0
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 20, Function 1: IMC 0 channel 1 -> rank 1
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 21, Function 0: IMC 0 channel 2 -> rank 2
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 21, Function 1: IMC 0 channel 3 -> rank 3
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 23, Function 0: IMC 1 channel 0 -> rank 4
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 23, Function 1: IMC 1 channel 1 -> rank 5
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 24, Function 0: IMC 1 channel 2 -> rank 6
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Device 24, Function 1: IMC 1 channel 3 -> rank 7
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  */
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â dev = 20 + chan_rank / 2 + chan_rank / 4;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â func = chan_rank % 2;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â reg = 0x120 + dimm_order * 4;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â ret = peci_pci_local_read(peci_dev, 1, dev, func, reg, &data);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (ret)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return ret;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â priv->temp_max[dimm_no] = GET_TEMP_MAX(data) *
+>>> MILLIDEGREE_PER_DEGREE;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â priv->temp_crit[dimm_no] = GET_TEMP_CRIT(data) *
+>>> MILLIDEGREE_PER_DEGREE;
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â break;
+>>> +Â Â Â Â Â Â Â default:
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return -EOPNOTSUPP;
+>>> +Â Â Â Â Â Â Â }
+>>> +
+>>> +Â Â Â Â Â Â Â peci_sensor_mark_updated(&priv->temp[dimm_no]);
+>>> +
+>>> +Â Â Â Â Â Â Â return 0;
+>>> +}
+>>> +
+>>> +static int dimmtemp_read_string(struct device *dev,
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â enum hwmon_sensor_types type,
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â u32 attr, int channel, const char **str)
+>>> +{
+>>> +Â Â Â Â Â Â Â struct peci_dimmtemp *priv = dev_get_drvdata(dev);
+>>> +
+>>> +Â Â Â Â Â Â Â if (attr != hwmon_temp_label)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return -EOPNOTSUPP;
+>>> +
+>>> +Â Â Â Â Â Â Â *str = (const char *)priv->dimmtemp_label[channel];
+>>> +
+>>> +Â Â Â Â Â Â Â return 0;
+>>> +}
+>>> +
+>>> +static int dimmtemp_read(struct device *dev, enum hwmon_sensor_types type,
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  u32 attr, int channel, long *val)
+>>> +{
+>>> +Â Â Â Â Â Â Â struct peci_dimmtemp *priv = dev_get_drvdata(dev);
+>>> +Â Â Â Â Â Â Â int ret;
+>>> +
+>>> +Â Â Â Â Â Â Â ret = get_dimm_temp(priv, channel);
+>>> +Â Â Â Â Â Â Â if (ret)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return ret;
+>>> +
+>>> +Â Â Â Â Â Â Â switch (attr) {
+>>> +Â Â Â Â Â Â Â case hwmon_temp_input:
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â *val = priv->temp[channel].value;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â break;
+>>> +Â Â Â Â Â Â Â case hwmon_temp_max:
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â *val = priv->temp_max[channel];
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â break;
+>>> +Â Â Â Â Â Â Â case hwmon_temp_crit:
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â *val = priv->temp_crit[channel];
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â break;
+>>> +Â Â Â Â Â Â Â default:
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return -EOPNOTSUPP;
+>>> +Â Â Â Â Â Â Â }
+>>> +
+>>> +Â Â Â Â Â Â Â return 0;
+>>> +}
+>>> +
+>>> +static umode_t dimmtemp_is_visible(const void *data, enum hwmon_sensor_types
+>>> type,
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  u32 attr, int channel)
+>>> +{
+>>> +Â Â Â Â Â Â Â const struct peci_dimmtemp *priv = data;
+>>> +
+>>> +Â Â Â Â Â Â Â if (test_bit(channel, priv->dimm_mask))
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return 0444;
+>>> +
+>>> +Â Â Â Â Â Â Â return 0;
+>>> +}
+>>> +
+>>> +static const struct hwmon_ops peci_dimmtemp_ops = {
+>>> +Â Â Â Â Â Â Â .is_visible = dimmtemp_is_visible,
+>>> +Â Â Â Â Â Â Â .read_string = dimmtemp_read_string,
+>>> +Â Â Â Â Â Â Â .read = dimmtemp_read,
+>>> +};
+>>> +
+>>> +static int check_populated_dimms(struct peci_dimmtemp *priv)
+>>> +{
+>>> +Â Â Â Â Â Â Â int chan_rank_max = priv->gen_info->chan_rank_max;
+>>> +Â Â Â Â Â Â Â int dimm_idx_max = priv->gen_info->dimm_idx_max;
+>>> +Â Â Â Â Â Â Â int chan_rank, dimm_idx, ret;
+>>> +Â Â Â Â Â Â Â u64 dimm_mask = 0;
+>>> +Â Â Â Â Â Â Â u32 pcs;
+>>> +
+>>> +Â Â Â Â Â Â Â for (chan_rank = 0; chan_rank < chan_rank_max; chan_rank++) {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â ret = peci_pcs_read(priv->peci_dev, PECI_PCS_DDR_DIMM_TEMP,
+>>> chan_rank, &pcs);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (ret) {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â /*
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * Overall, we expect either success or -EINVAL in
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * order to determine whether DIMM is populated or
+>>> not.
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * For anything else - we fall back to defering the
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  * detection to be performed at a later point in time.
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  */
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (ret == -EINVAL)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â continue;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â else
+>>
+>> else after continue is unnecessary.
+>>
 > 
-> Right - I'll add a:
-> /*
->  * Failure to resolve cores is non-critical, we're still able to
->  * provide other sensor data.
->  */
+> Ok.
 > 
-> > > +}
-> > > +
-> > > +static const struct hwmon_ops peci_cputemp_ops = {
-> > > +       .is_visible = cputemp_is_visible,
-> > > +       .read_string = cputemp_read_string,
-> > > +       .read = cputemp_read,
-> > > +};
-> > > +
-> > > +static const u32 peci_cputemp_temp_channel_config[] = {
-> > > +       /* Die temperature */
-> > > +       HWMON_T_LABEL | HWMON_T_INPUT | HWMON_T_MAX | HWMON_T_CRIT |
-> > > HWMON_T_CRIT_HYST,
-> > > +       /* DTS margin */
-> > > +       HWMON_T_LABEL | HWMON_T_INPUT | HWMON_T_MAX | HWMON_T_CRIT |
-> > > HWMON_T_CRIT_HYST,
-> > > +       /* Tcontrol temperature */
-> > > +       HWMON_T_LABEL | HWMON_T_INPUT | HWMON_T_CRIT,
-> > > +       /* Tthrottle temperature */
-> > > +       HWMON_T_LABEL | HWMON_T_INPUT,
-> > > +       /* Tjmax temperature */
-> > > +       HWMON_T_LABEL | HWMON_T_INPUT,
-> > > +       /* Core temperature - for all core channels */
-> > > +       [channel_core ... CPUTEMP_CHANNEL_NUMS - 1] = HWMON_T_LABEL |
-> > > HWMON_T_INPUT,
-> > > +       0
-> > > +};
-> > > +
-> > > +static const struct hwmon_channel_info peci_cputemp_temp_channel = {
-> > > +       .type = hwmon_temp,
-> > > +       .config = peci_cputemp_temp_channel_config,
-> > > +};
-> > > +
-> > > +static const struct hwmon_channel_info *peci_cputemp_info[] = {
-> > > +       &peci_cputemp_temp_channel,
-> > > +       NULL
-> > > +};
-> > > +
-> > > +static const struct hwmon_chip_info peci_cputemp_chip_info = {
-> > > +       .ops = &peci_cputemp_ops,
-> > > +       .info = peci_cputemp_info,
-> > > +};
-> > > +
-> > > +static int peci_cputemp_probe(struct auxiliary_device *adev,
-> > > +                             const struct auxiliary_device_id *id)
-> > > +{
-> > > +       struct device *dev = &adev->dev;
-> > > +       struct peci_device *peci_dev = to_peci_device(dev->parent);
-> > > +       struct peci_cputemp *priv;
-> > > +       struct device *hwmon_dev;
-> > > +
-> > > +       priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-> > > +       if (!priv)
-> > > +               return -ENOMEM;
-> > > +
-> > > +       priv->name = devm_kasprintf(dev, GFP_KERNEL, "peci_cputemp.cpu%d",
-> > > +                                   peci_dev->info.socket_id);
-> > > +       if (!priv->name)
-> > > +               return -ENOMEM;
-> > > +
-> > > +       dev_set_drvdata(dev, priv);
-> > 
-> > What is this used for ?
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return -EAGAIN;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â }
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â for (dimm_idx = 0; dimm_idx < dimm_idx_max; dimm_idx++)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (__dimm_temp(pcs, dimm_idx))
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â dimm_mask |= BIT(chan_rank * dimm_idx_max +
+>>> dimm_idx);
+>>> +Â Â Â Â Â Â Â }
+>>> +Â Â Â Â Â Â Â /*
+>>> +Â Â Â Â Â Â Â  * It's possible that memory training is not done yet. In this case we
+>>> +Â Â Â Â Â Â Â  * defer the detection to be performed at a later point in time.
+>>> +Â Â Â Â Â Â Â  */
+>>> +Â Â Â Â Â Â Â if (!dimm_mask)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return -EAGAIN;
+>>> +
+>>> +Â Â Â Â Â Â Â dev_dbg(priv->dev, "Scanned populated DIMMs: %#llx\n", dimm_mask);
+>>> +
+>>> +Â Â Â Â Â Â Â bitmap_from_u64(priv->dimm_mask, dimm_mask);
+>>> +
+>>> +Â Â Â Â Â Â Â return 0;
+>>> +}
+>>> +
+>>> +static int create_dimm_temp_label(struct peci_dimmtemp *priv, int chan)
+>>> +{
+>>> +Â Â Â Â Â Â Â int rank = chan / priv->gen_info->dimm_idx_max;
+>>> +Â Â Â Â Â Â Â int idx = chan % priv->gen_info->dimm_idx_max;
+>>> +
+>>> +Â Â Â Â Â Â Â priv->dimmtemp_label[chan] = devm_kasprintf(priv->dev, GFP_KERNEL,
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  "DIMM %c%d", 'A' + rank,
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  idx + 1);
+>>> +Â Â Â Â Â Â Â if (!priv->dimmtemp_label[chan])
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return -ENOMEM;
+>>> +
+>>> +Â Â Â Â Â Â Â return 0;
+>>> +}
+>>> +
+>>> +static const u32 peci_dimmtemp_temp_channel_config[] = {
+>>> +Â Â Â Â Â Â Â [0 ... DIMM_NUMS_MAX - 1] = HWMON_T_LABEL | HWMON_T_INPUT |
+>>> HWMON_T_MAX | HWMON_T_CRIT,
+>>> +Â Â Â Â Â Â Â 0
+>>> +};
+>>> +
+>>> +static const struct hwmon_channel_info peci_dimmtemp_temp_channel = {
+>>> +Â Â Â Â Â Â Â .type = hwmon_temp,
+>>> +Â Â Â Â Â Â Â .config = peci_dimmtemp_temp_channel_config,
+>>> +};
+>>> +
+>>> +static const struct hwmon_channel_info *peci_dimmtemp_temp_info[] = {
+>>> +Â Â Â Â Â Â Â &peci_dimmtemp_temp_channel,
+>>> +Â Â Â Â Â Â Â NULL
+>>> +};
+>>> +
+>>> +static const struct hwmon_chip_info peci_dimmtemp_chip_info = {
+>>> +Â Â Â Â Â Â Â .ops = &peci_dimmtemp_ops,
+>>> +Â Â Â Â Â Â Â .info = peci_dimmtemp_temp_info,
+>>> +};
+>>> +
+>>> +static int create_dimm_temp_info(struct peci_dimmtemp *priv)
+>>> +{
+>>> +Â Â Â Â Â Â Â int ret, i, channels;
+>>> +Â Â Â Â Â Â Â struct device *dev;
+>>> +
+>>> +Â Â Â Â Â Â Â ret = check_populated_dimms(priv);
+>>> +Â Â Â Â Â Â Â if (ret == -EAGAIN) {
+>>
+>> The only error returned by check_populated_dimms() is -EAGAIN. Checking for
+>> specifically this error here suggests that there may be other (ignored)
+>> errors. The reader has to examine check_populated_dimms() to find out
+>> that -EAGAIN is indeed the only possible error. To avoid confusion, please
+>> only check for ret here.
+>>
 > 
-> Our sensors are per-device. We need this to access the corresponding priv in
-> cputemp_read_string() and cputemp_read().
+> Makes sense.
 > 
-
-The parameter to both cputemp_read_string() and cputemp_read() is the
-pointer to the hwmon device, not the pointer to the auxiliary device.
-It has its driver data set to 'priv' from the parameter passed to
-devm_hwmon_device_register_with_info().
-
-> > 
-> > > +       priv->dev = dev;
-> > > +       priv->peci_dev = peci_dev;
-> > > +       priv->gen_info = (const struct cpu_info *)id->driver_data;
-> > > +
-> > > +       check_resolved_cores(priv);
-> > > +
-> > > +       hwmon_dev = devm_hwmon_device_register_with_info(priv->dev, priv-
-> > > >name,
-> > > +                                                        priv,
-> > > &peci_cputemp_chip_info, NULL);
-> > > +
-> > > +       return PTR_ERR_OR_ZERO(hwmon_dev);
-> > > +}
-> > > +
-> > > +static struct resolved_cores_reg resolved_cores_reg_hsx = {
-> > > +       .bus = 1,
-> > > +       .dev = 30,
-> > > +       .func = 3,
-> > > +       .offset = 0xb4,
-> > > +};
-> > > +
-> > > +static struct resolved_cores_reg resolved_cores_reg_icx = {
-> > > +       .bus = 14,
-> > > +       .dev = 30,
-> > > +       .func = 3,
-> > > +       .offset = 0xd0,
-> > > +};
-> > 
-> > Please explain those magic numbers.
-> > 
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (priv->retry_count < DIMM_MASK_CHECK_RETRY_MAX) {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â schedule_delayed_work(&priv->detect_work,
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  DIMM_MASK_CHECK_DELAY_JIFFIES);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â priv->retry_count++;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â dev_dbg(priv->dev, "Deferred populating DIMM temp
+>>> info\n");
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return ret;
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â }
+>>> +
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â dev_info(priv->dev, "Timeout populating DIMM temp info\n");
+>>
+>> If this returns an error, the message needs to be dev_err().
+>>
 > 
-> Those magic numbers refer to BDF (bus, device, function) and offset of the PCI
-> config register (RESOLVED_CORES_CFG) that can be accessed via PECI to read
-> resolved cores configuration.
-> Unfortunately, the values are just platform-specific magic numbers.
-> Do you think this should be explained with an additional comment?
+> We need to check each CPU, but it's completely legal that only one processor in
+> the systems has populated DIMMs.
+> I'd prefer to keep dev_info() or maybe even downgrade it to dev_dbg().
 > 
 
-Yes, please.
-
-Guenter
+If this is not an error, there should be no message....
 
 > Thank you
 > -Iwona
 > 
-> > > +
-> > > +static const struct cpu_info cpu_hsx = {
-> > > +       .reg            = &resolved_cores_reg_hsx,
-> > > +       .min_peci_revision = 0x30,
-> > > +};
-> > > +
-> > > +static const struct cpu_info cpu_icx = {
-> > > +       .reg            = &resolved_cores_reg_icx,
-> > > +       .min_peci_revision = 0x40,
-> > > +};
-> > > +
-> > > +static const struct auxiliary_device_id peci_cputemp_ids[] = {
-> > > +       {
-> > > +               .name = "peci_cpu.cputemp.hsx",
-> > > +               .driver_data = (kernel_ulong_t)&cpu_hsx,
-> > > +       },
-> > > +       {
-> > > +               .name = "peci_cpu.cputemp.bdx",
-> > > +               .driver_data = (kernel_ulong_t)&cpu_hsx,
-> > > +       },
-> > > +       {
-> > > +               .name = "peci_cpu.cputemp.bdxd",
-> > > +               .driver_data = (kernel_ulong_t)&cpu_hsx,
-> > > +       },
-> > > +       {
-> > > +               .name = "peci_cpu.cputemp.skx",
-> > > +               .driver_data = (kernel_ulong_t)&cpu_hsx,
-> > > +       },
-> > > +       {
-> > > +               .name = "peci_cpu.cputemp.icx",
-> > > +               .driver_data = (kernel_ulong_t)&cpu_icx,
-> > > +       },
-> > > +       {
-> > > +               .name = "peci_cpu.cputemp.icxd",
-> > > +               .driver_data = (kernel_ulong_t)&cpu_icx,
-> > > +       },
-> > > +       { }
-> > > +};
-> > > +MODULE_DEVICE_TABLE(auxiliary, peci_cputemp_ids);
-> > > +
-> > > +static struct auxiliary_driver peci_cputemp_driver = {
-> > > +       .probe          = peci_cputemp_probe,
-> > > +       .id_table       = peci_cputemp_ids,
-> > > +};
-> > > +
-> > > +module_auxiliary_driver(peci_cputemp_driver);
-> > > +
-> > > +MODULE_AUTHOR("Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>");
-> > > +MODULE_AUTHOR("Iwona Winiarska <iwona.winiarska@intel.com>");
-> > > +MODULE_DESCRIPTION("PECI cputemp driver");
-> > > +MODULE_LICENSE("GPL");
-> > > +MODULE_IMPORT_NS(PECI_CPU);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return -ETIMEDOUT;
+
+and no error either.
+
+Guenter
+
+>>> +Â Â Â Â Â Â Â }
+>>> +
+>>> +Â Â Â Â Â Â Â channels = priv->gen_info->chan_rank_max * priv->gen_info-
+>>>> dimm_idx_max;
+>>> +
+>>> +Â Â Â Â Â Â Â priv->dimmtemp_label = devm_kzalloc(priv->dev, channels * sizeof(char
+>>> *), GFP_KERNEL);
+>>> +Â Â Â Â Â Â Â if (!priv->dimmtemp_label)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return -ENOMEM;
+>>> +
+>>> +Â Â Â Â Â Â Â for_each_set_bit(i, priv->dimm_mask, DIMM_NUMS_MAX) {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â ret = create_dimm_temp_label(priv, i);
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â if (ret)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return ret;
+>>> +Â Â Â Â Â Â Â }
+>>> +
+>>> +Â Â Â Â Â Â Â dev = devm_hwmon_device_register_with_info(priv->dev, priv->name,
+>>> priv,
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  &peci_dimmtemp_chip_info,
+>>> NULL);
+>>> +Â Â Â Â Â Â Â if (IS_ERR(dev)) {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â dev_err(priv->dev, "Failed to register hwmon device\n");
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return PTR_ERR(dev);
+>>> +Â Â Â Â Â Â Â }
+>>> +
+>>> +Â Â Â Â Â Â Â dev_dbg(priv->dev, "%s: sensor '%s'\n", dev_name(dev), priv->name);
+>>> +
+>>> +Â Â Â Â Â Â Â return 0;
+>>> +}
+>>> +
+>>> +static void create_dimm_temp_info_delayed(struct work_struct *work)
+>>> +{
+>>> +Â Â Â Â Â Â Â struct peci_dimmtemp *priv = container_of(to_delayed_work(work),
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  struct peci_dimmtemp,
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  detect_work);
+>>> +Â Â Â Â Â Â Â int ret;
+>>> +
+>>> +Â Â Â Â Â Â Â ret = create_dimm_temp_info(priv);
+>>> +Â Â Â Â Â Â Â if (ret && ret != -EAGAIN)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â dev_dbg(priv->dev, "Failed to populate DIMM temp info\n");
+>>> +}
+>>> +
+>>> +static int peci_dimmtemp_probe(struct auxiliary_device *adev, const struct
+>>> auxiliary_device_id *id)
+>>> +{
+>>> +Â Â Â Â Â Â Â struct device *dev = &adev->dev;
+>>> +Â Â Â Â Â Â Â struct peci_device *peci_dev = to_peci_device(dev->parent);
+>>> +Â Â Â Â Â Â Â struct peci_dimmtemp *priv;
+>>> +Â Â Â Â Â Â Â int ret;
+>>> +
+>>> +Â Â Â Â Â Â Â priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+>>> +Â Â Â Â Â Â Â if (!priv)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return -ENOMEM;
+>>> +
+>>> +Â Â Â Â Â Â Â priv->name = devm_kasprintf(dev, GFP_KERNEL, "peci_dimmtemp.cpu%d",
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  peci_dev->info.socket_id);
+>>> +Â Â Â Â Â Â Â if (!priv->name)
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return -ENOMEM;
+>>> +
+>>> +Â Â Â Â Â Â Â dev_set_drvdata(dev, priv);
+>>> +Â Â Â Â Â Â Â priv->dev = dev;
+>>> +Â Â Â Â Â Â Â priv->peci_dev = peci_dev;
+>>> +Â Â Â Â Â Â Â priv->gen_info = (const struct dimm_info *)id->driver_data;
+>>> +
+>>> +Â Â Â Â Â Â Â INIT_DELAYED_WORK(&priv->detect_work, create_dimm_temp_info_delayed);
+>>> +
+>>> +Â Â Â Â Â Â Â ret = create_dimm_temp_info(priv);
+>>> +Â Â Â Â Â Â Â if (ret && ret != -EAGAIN) {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â dev_dbg(dev, "Failed to populate DIMM temp info\n");
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â return ret;
+>>> +Â Â Â Â Â Â Â }
+>>> +
+>>> +Â Â Â Â Â Â Â return 0;
+>>> +}
+>>> +
+>>> +static void peci_dimmtemp_remove(struct auxiliary_device *adev)
+>>> +{
+>>> +Â Â Â Â Â Â Â struct peci_dimmtemp *priv = dev_get_drvdata(&adev->dev);
+>>> +
+>>> +Â Â Â Â Â Â Â cancel_delayed_work_sync(&priv->detect_work);
+>>> +}
+>>> +
+>>> +static const struct dimm_info dimm_hsx = {
+>>> +Â Â Â Â Â Â Â .chan_rank_maxÂ Â = CHAN_RANK_MAX_ON_HSX,
+>>> +Â Â Â Â Â Â Â .dimm_idx_maxÂ Â Â = DIMM_IDX_MAX_ON_HSX,
+>>> +Â Â Â Â Â Â Â .min_peci_revision = 0x30,
+>>> +};
+>>> +
+>>> +static const struct dimm_info dimm_bdx = {
+>>> +Â Â Â Â Â Â Â .chan_rank_maxÂ Â = CHAN_RANK_MAX_ON_BDX,
+>>> +Â Â Â Â Â Â Â .dimm_idx_maxÂ Â Â = DIMM_IDX_MAX_ON_BDX,
+>>> +Â Â Â Â Â Â Â .min_peci_revision = 0x30,
+>>> +};
+>>> +
+>>> +static const struct dimm_info dimm_bdxd = {
+>>> +Â Â Â Â Â Â Â .chan_rank_maxÂ Â = CHAN_RANK_MAX_ON_BDXD,
+>>> +Â Â Â Â Â Â Â .dimm_idx_maxÂ Â Â = DIMM_IDX_MAX_ON_BDXD,
+>>> +Â Â Â Â Â Â Â .min_peci_revision = 0x30,
+>>> +};
+>>> +
+>>> +static const struct dimm_info dimm_skx = {
+>>> +Â Â Â Â Â Â Â .chan_rank_maxÂ Â = CHAN_RANK_MAX_ON_SKX,
+>>> +Â Â Â Â Â Â Â .dimm_idx_maxÂ Â Â = DIMM_IDX_MAX_ON_SKX,
+>>> +Â Â Â Â Â Â Â .min_peci_revision = 0x30,
+>>> +};
+>>> +
+>>> +static const struct dimm_info dimm_icx = {
+>>> +Â Â Â Â Â Â Â .chan_rank_maxÂ Â = CHAN_RANK_MAX_ON_ICX,
+>>> +Â Â Â Â Â Â Â .dimm_idx_maxÂ Â Â = DIMM_IDX_MAX_ON_ICX,
+>>> +Â Â Â Â Â Â Â .min_peci_revision = 0x40,
+>>> +};
+>>> +
+>>> +static const struct dimm_info dimm_icxd = {
+>>> +Â Â Â Â Â Â Â .chan_rank_maxÂ Â = CHAN_RANK_MAX_ON_ICXD,
+>>> +Â Â Â Â Â Â Â .dimm_idx_maxÂ Â Â = DIMM_IDX_MAX_ON_ICXD,
+>>> +Â Â Â Â Â Â Â .min_peci_revision = 0x40,
+>>> +};
+>>> +
+>>> +static const struct auxiliary_device_id peci_dimmtemp_ids[] = {
+>>> +Â Â Â Â Â Â Â {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .name = "peci_cpu.dimmtemp.hsx",
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .driver_data = (kernel_ulong_t)&dimm_hsx,
+>>> +Â Â Â Â Â Â Â },
+>>> +Â Â Â Â Â Â Â {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .name = "peci_cpu.dimmtemp.bdx",
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .driver_data = (kernel_ulong_t)&dimm_bdx,
+>>> +Â Â Â Â Â Â Â },
+>>> +Â Â Â Â Â Â Â {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .name = "peci_cpu.dimmtemp.bdxd",
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .driver_data = (kernel_ulong_t)&dimm_bdxd,
+>>> +Â Â Â Â Â Â Â },
+>>> +Â Â Â Â Â Â Â {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .name = "peci_cpu.dimmtemp.skx",
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .driver_data = (kernel_ulong_t)&dimm_skx,
+>>> +Â Â Â Â Â Â Â },
+>>> +Â Â Â Â Â Â Â {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .name = "peci_cpu.dimmtemp.icx",
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .driver_data = (kernel_ulong_t)&dimm_icx,
+>>> +Â Â Â Â Â Â Â },
+>>> +Â Â Â Â Â Â Â {
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .name = "peci_cpu.dimmtemp.icxd",
+>>> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â .driver_data = (kernel_ulong_t)&dimm_icxd,
+>>> +Â Â Â Â Â Â Â },
+>>> +Â Â Â Â Â Â Â { }
+>>> +};
+>>> +MODULE_DEVICE_TABLE(auxiliary, peci_dimmtemp_ids);
+>>> +
+>>> +static struct auxiliary_driver peci_dimmtemp_driver = {
+>>> +Â Â Â Â Â Â Â .probeÂ Â Â Â Â Â Â Â Â Â = peci_dimmtemp_probe,
+>>> +Â Â Â Â Â Â Â .removeÂ Â Â Â Â Â Â Â Â = peci_dimmtemp_remove,
+>>> +Â Â Â Â Â Â Â .id_tableÂ Â Â Â Â Â Â = peci_dimmtemp_ids,
+>>> +};
+>>> +
+>>> +module_auxiliary_driver(peci_dimmtemp_driver);
+>>> +
+>>> +MODULE_AUTHOR("Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>");
+>>> +MODULE_AUTHOR("Iwona Winiarska <iwona.winiarska@intel.com>");
+>>> +MODULE_DESCRIPTION("PECI dimmtemp driver");
+>>> +MODULE_LICENSE("GPL");
+>>> +MODULE_IMPORT_NS(PECI_CPU);
 > 
+
