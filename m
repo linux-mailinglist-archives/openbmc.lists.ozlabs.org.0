@@ -2,72 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BCF53CCBBC
-	for <lists+openbmc@lfdr.de>; Mon, 19 Jul 2021 02:18:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F50A3CCBC0
+	for <lists+openbmc@lfdr.de>; Mon, 19 Jul 2021 02:19:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GSj9s0M1yz308b
-	for <lists+openbmc@lfdr.de>; Mon, 19 Jul 2021 10:18:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GSjBn1Bt4z30JW
+	for <lists+openbmc@lfdr.de>; Mon, 19 Jul 2021 10:19:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=k3hAZ7iq;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=qi5842c9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1032;
- helo=mail-pj1-x1032.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::629;
+ helo=mail-pl1-x629.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=k3hAZ7iq; dkim-atps=neutral
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com
- [IPv6:2607:f8b0:4864:20::1032])
+ header.s=20161025 header.b=qi5842c9; dkim-atps=neutral
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com
+ [IPv6:2607:f8b0:4864:20::629])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GSj925Kb0z2xv9;
- Mon, 19 Jul 2021 10:17:41 +1000 (AEST)
-Received: by mail-pj1-x1032.google.com with SMTP id
- h6-20020a17090a6486b029017613554465so1212744pjj.4; 
- Sun, 18 Jul 2021 17:17:41 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GSj933k53z2yYS;
+ Mon, 19 Jul 2021 10:17:43 +1000 (AEST)
+Received: by mail-pl1-x629.google.com with SMTP id j3so8691948plx.7;
+ Sun, 18 Jul 2021 17:17:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=BHNRWvNe8lxqEgkTN+Pq/ZUg7iyzUjJYcM1nQZBO3r0=;
- b=k3hAZ7iqpFgkMGOAGroPjCxgHstNs+5xyNCahw7Xj3c+jAavEmpZ0wCwZmIeoxI7qd
- Juvgbbkg+ATLTkqJiw6rEf4mXqjq0C446LPSKpVvgGEMdFnoKcV0Q+2xFxBzAaif25eS
- ppkybrMSDj96k/gHhQG5I0Ee6Vo++IQJ2Xvm+5tUDFbCiLQIyoPhoBssAJ4GogxBJrDj
- aotH3459/JHkWa4g7h8wrXpOWRUEUWYLgOof12xgQe75SDnZr/ZFre9ZrYe4TzRZDpBz
- f//HWZCtpI053N9OEVkaCddVZOyC8F8EEGxoCJePGE5qkCWv35/mveosI1XwHny2oo8e
- qXtw==
+ bh=E1IaT57PqM3OxdaVHeeIsBbVs6K+CAA7tBM2PO+uVXc=;
+ b=qi5842c9wgexH7nMKcHR9lMnIDvGqx8RaC9r5vuX1qTgthOVXY6Lfy/3izEF2MFvii
+ +Na1zJgOVTD/STx3mYGRYJVEFnumtNB5KlfEzswwI5mMgq4Fs79t8v4oFhnd6w1/eafY
+ 3XjZJ3Qv3GsfXHXUcaTXdpd/BR4qTpAS+I79wHZoGrxs558u8/jtRmH5H5omJpD82dam
+ aveObl+lB2cYtxuNDsolZZ8KMBhNW+Om/FJgfzyzAvGhwbyOZIMAMTYpap/KQ2JYm8Gp
+ sdWc6W4X9o95K3BReg73+bpymik1mipXXjFmQjPiilSm9JYAQX8FE/sWLzcGDNSz4O/6
+ G13Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=BHNRWvNe8lxqEgkTN+Pq/ZUg7iyzUjJYcM1nQZBO3r0=;
- b=OV4ZeLpPrp6GBHYMLK+0+txGSlwZBUwm8PA4lSLihhwHNHrZ6+R0RgzGeFh+/nQ8s0
- dOE0DL8VeqEIrT+2/NrmwVdN5C4tJyi6UtX+dvFh5D/Yp/uGen4U8r99bsMwpOfx4wB/
- JreMgJqU7lc/Qlg1+IzPkq2kn8FFFGP5/RJYtJci3TLLm4e2qIW8htreKldC16G4AkHu
- Lg2h7YA6gfEhyVjXtQBiO86Q2ZbU+4A7KHcOpV0WR/KAR/OnVcSOnNf3YXvhRxdnjMnj
- 9ccZk5um6R/uMb/LuxR87tCoXVl0cdlbiW+manjMVYS/e3rpTi2/y14hxc1vWww5VBNx
- nqpg==
-X-Gm-Message-State: AOAM533iMNPxakcJsGhzBpHK+McfVyfyKb24h8KYX8Sb65HBMdJ+YpMR
- 1OXiwzhfMhcqfEpw6MgBiIw=
-X-Google-Smtp-Source: ABdhPJyDbFhNMaG8afSEbgfqPufO9cEJD4fReUGCqFjKkqqzCPigl143R1J2U8F0abL2KLgCinfzzQ==
-X-Received: by 2002:a17:90a:9ac:: with SMTP id
- 41mr27060197pjo.97.1626653859124; 
- Sun, 18 Jul 2021 17:17:39 -0700 (PDT)
+ bh=E1IaT57PqM3OxdaVHeeIsBbVs6K+CAA7tBM2PO+uVXc=;
+ b=kOyA7tIcNbkWdmYLyHAMw9Ueb6k3BUmOzRXp5XcHr+/u4/+9yHOwB8azq+c/Lt7IPQ
+ 4PWA3XhwFlqg0hVQn5V8UhBMGNKhLZ4Ss204UMJyW8yo7BqyFunh2XrAQehwXMqEz82O
+ IVtcwNTAXXa4ZyYeOAnDDAntxBsEN0PivJ0lBZaGHxW2FZsLDta6cS//Brw3BdPBipGg
+ uFBlstw4UtG7vZpNXyTDU+gV9FGMHBmNz2EXVdly9cDHAM+pR0gIGQMQUuEukxsMKKFY
+ vF2QfzqgPq+Gailyuw7zJyc7UdN/rRMsdEOVUzdZf5KzD5OM4htV28nW9GQVIWd1locK
+ X+4w==
+X-Gm-Message-State: AOAM5315c8vsl7a7u2ytM9RI1PewvrTvOA/q2OVK/N2/mpj9Ppwm5UTE
+ V0iiBFeCFNDW58eOwS0tw/4=
+X-Google-Smtp-Source: ABdhPJxji3hKmRx2pHRZDVVI/50pg9imIvz4sULf1nzAhYLK7ZAK6pCSpUgK1OLvvIv+qpuhXSr6Cg==
+X-Received: by 2002:a17:903:404d:b029:129:b048:528b with SMTP id
+ n13-20020a170903404db0290129b048528bmr17314870pla.65.1626653860533; 
+ Sun, 18 Jul 2021 17:17:40 -0700 (PDT)
 Received: from taoren-ubuntu-R90MNF91.thefacebook.com
  (c-73-252-146-110.hsd1.ca.comcast.net. [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id x7sm1059847pfn.70.2021.07.18.17.17.38
+ by smtp.gmail.com with ESMTPSA id x7sm1059847pfn.70.2021.07.18.17.17.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jul 2021 17:17:38 -0700 (PDT)
+ Sun, 18 Jul 2021 17:17:40 -0700 (PDT)
 From: rentao.bupt@gmail.com
 To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
  Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
  linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: [PATCH 2/4] ARM: dts: aspeed: wedge40: Remove redundant ADC device
-Date: Sun, 18 Jul 2021 17:17:22 -0700
-Message-Id: <20210719001724.6410-3-rentao.bupt@gmail.com>
+Subject: [PATCH 3/4] ARM: dts: aspeed: galaxy100: Remove redundant ADC device
+Date: Sun, 18 Jul 2021 17:17:23 -0700
+Message-Id: <20210719001724.6410-4-rentao.bupt@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210719001724.6410-1-rentao.bupt@gmail.com>
 References: <20210719001724.6410-1-rentao.bupt@gmail.com>
@@ -88,29 +87,26 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tao Ren <rentao.bupt@gmail.com>
 
-Remove ADC device from wedge40 device tree because the device is already
-enabled in "ast2400-facebook-netbmc-common.dtsi".
+Remove ADC device from galaxy100 device tree because the device is
+already enabled in "ast2400-facebook-netbmc-common.dtsi".
 
 Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts | 4 ----
+ arch/arm/boot/dts/aspeed-bmc-facebook-galaxy100.dts | 4 ----
  1 file changed, 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
-index 2dcfeae3c92a..6624855d8ebd 100644
---- a/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
-@@ -23,10 +23,6 @@
- 	status = "disabled";
+diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-galaxy100.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-galaxy100.dts
+index dcf213472749..60e875ac2461 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-facebook-galaxy100.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-galaxy100.dts
+@@ -51,7 +51,3 @@
+ &vhub {
+ 	status = "okay";
  };
- 
+-
 -&adc {
 -	status = "okay";
 -};
--
- &pwm_tacho {
- 	status = "okay";
- 	pinctrl-names = "default";
 -- 
 2.17.1
 
