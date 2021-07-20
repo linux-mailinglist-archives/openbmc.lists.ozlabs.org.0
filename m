@@ -1,60 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FCFC3CFA3D
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jul 2021 15:13:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A0353CFA33
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jul 2021 15:12:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GTfKb71bcz30Jw
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jul 2021 23:13:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GTfJh0nfjz30CT
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jul 2021 23:12:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Dlu6Q+yS;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=ksN3YhX+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=Dlu6Q+yS; 
- dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=ksN3YhX+; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GTfKL0dYrz2xxg
- for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 23:13:10 +1000 (AEST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 66AFB61106;
- Tue, 20 Jul 2021 13:13:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1626786787;
- bh=al7tI0KVVLdEI4uEKfWFTCtxVhUgyhsr1HgYUh500/8=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Dlu6Q+ySyWZD/KOuzvnza5z39lV+sx/aVol9fNomcLzbau6nuEWQ4LKJ8WvHxRgFM
- iAfLf4SxCoqV2s7L19ynzMrcOk4oPJzPfAK9bNwIEPMaotlhMhcqt9EyA4phEjyoA4
- g5s1Qtgj9z53VBqvMQVhCRoQ6TmP7anJTwRknLd7W0o34WL4x5E3Aoa/Kv+PwkKXZz
- hGW5yFzBGaDaAt48sLWTDNdN4hOwbJtfcHay+2TbXIKgMLJU4McVc2ddm4VvL1Nq2p
- xSZSInGNJkpO77wcCmuWjyTqBeAdZUqVrenD8uEXl/dEIHR0q1Pn4wnd6JuFTjX6nx
- gc2SAuESGV84g==
-Date: Tue, 20 Jul 2021 14:13:03 +0100
-From: Mark Brown <broonie@kernel.org>
-To: David Laight <David.Laight@ACULAB.COM>
-Subject: Re: [PATCH 1/2] spi: fsi: Reduce max transfer size to 8 bytes
-Message-ID: <20210720131303.GB5042@sirena.org.uk>
-References: <20210716133915.14697-1-eajames@linux.ibm.com>
- <20210716133915.14697-2-eajames@linux.ibm.com>
- <20210716171936.GB4137@sirena.org.uk>
- <81a40f8690d297ebfb6697dbea63279bcf2f24fa.camel@linux.ibm.com>
- <20210719152010.GB4174@sirena.org.uk>
- <d2e07f0beda57ffeaa31e8cf5bf28edfbd982e58.camel@linux.ibm.com>
- <0a637d7704df4303abe783215080578d@AcuMS.aculab.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GTfJP07hfz2yY7
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 23:12:20 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 9A1F049E66;
+ Tue, 20 Jul 2021 13:12:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1626786733; x=1628601134; bh=LuLCNzNGfwt8kUnjnEU2g04t0
+ RI3nJrdJh13nMXTK8A=; b=ksN3YhX+Fg/zsZANJD6UiHWdKmjSTDlGAtQ1dP0L7
+ XIdazaxIRVXB9IZscT2IzpjYCmzlkzRi7z1JEgo6pWS3ukKCkII9+TWs/lvGN8+h
+ Slo1iNCgYOP6BnV/6P3vfynPyoCnZ7AmR3An2VabO5s2iqqmx6ElXWBglVmM95+V
+ UY=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id DrbFyumWL7I5; Tue, 20 Jul 2021 16:12:13 +0300 (MSK)
+Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
+ [172.17.100.104])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id D81FA49E35;
+ Tue, 20 Jul 2021 16:12:09 +0300 (MSK)
+Received: from [10.199.0.81] (10.199.0.81) by T-EXCH-04.corp.yadro.com
+ (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 20
+ Jul 2021 16:12:09 +0300
+Message-ID: <b1da28a76c249637d6f094b046d851c7622e71d4.camel@yadro.com>
+Subject: Re: [PATCH v2 3/3] net/ncsi: add dummy response handler for Intel
+ boards
+From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+To: Paul Fertser <fercerpav@gmail.com>
+Date: Tue, 20 Jul 2021 16:21:31 +0300
+In-Reply-To: <20210720094113.GA4789@home.paul.comp>
+References: <20210708122754.555846-1-i.mikhaylov@yadro.com>
+ <20210708122754.555846-4-i.mikhaylov@yadro.com>
+ <20210720094113.GA4789@home.paul.comp>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="aM3YZ0Iwxop3KEKx"
-Content-Disposition: inline
-In-Reply-To: <0a637d7704df4303abe783215080578d@AcuMS.aculab.com>
-X-Cookie: Revenge is a meal best served cold.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.199.0.81]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,51 +78,228 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- 'Eddie James' <eajames@linux.ibm.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
- "robh+dt@kernel.org" <robh+dt@kernel.org>
+Cc: netdev@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
+ Samuel Mendoza-Jonas <sam@mendozajonas.com>,
+ "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Tue, 2021-07-20 at 12:41 +0300, Paul Fertser wrote:
+> Hello,
+> 
+> On Thu, Jul 08, 2021 at 03:27:54PM +0300, Ivan Mikhaylov wrote:
+> > Add the dummy response handler for Intel boards to prevent incorrect
+> > handling of OEM commands.
+> 
+> It would be much nicer if it wasn't dummy but provide means of
+> obtaining the MAC properly, in a similar way to the other supported
+> network cards.
+> 
+> I have a patch I can share but not ready to send for proper mainlining
+> due to time constraints. Feel free to take it over and send as part of
+> your patch series.
+> 
+> From 6c717bbb75442c83bd11b37b7644f9ce187ee7e9 Mon Sep 17 00:00:00 2001
+> From: Brad Ho <Brad_Ho@phoenix.com>
+> Date: Thu, 25 Feb 2021 00:53:03 -0800
+> Subject: [PATCH] Add get MAC address through NCSI command to get INTEL i210
+>  MAC address
+> 
+> Signed-off-by: Brad Ho <Brad_Ho@phoenix.com>
+> Signed-off-by: Paul Fertser <fercerpav@gmail.com>
+> ---
+>  net/ncsi/internal.h    |  5 ++++
+>  net/ncsi/ncsi-manage.c | 25 ++++++++++++++++-
+>  net/ncsi/ncsi-pkt.h    |  6 ++++
+>  net/ncsi/ncsi-rsp.c    | 62 +++++++++++++++++++++++++++++++++++++++++-
+>  4 files changed, 96 insertions(+), 2 deletions(-)
+> 
+> diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
+> index e37102546be6..8a6a8127156b 100644
+> --- a/net/ncsi/internal.h
+> +++ b/net/ncsi/internal.h
+> @@ -78,6 +78,7 @@ enum {
+>  /* OEM Vendor Manufacture ID */
+>  #define NCSI_OEM_MFR_MLX_ID             0x8119
+>  #define NCSI_OEM_MFR_BCM_ID             0x113d
+> +#define NCSI_OEM_MFR_INTEL_ID           0x0157
+>  /* Broadcom specific OEM Command */
+>  #define NCSI_OEM_BCM_CMD_GMA            0x01   /* CMD ID for Get MAC */
+>  /* Mellanox specific OEM Command */
+> @@ -85,16 +86,20 @@ enum {
+>  #define NCSI_OEM_MLX_CMD_GMA_PARAM      0x1b   /* Parameter for GMA  */
+>  #define NCSI_OEM_MLX_CMD_SMAF           0x01   /* CMD ID for Set MC Affinity
+> */
+>  #define NCSI_OEM_MLX_CMD_SMAF_PARAM     0x07   /* Parameter for SMAF        
+> */
+> +/* Intel specific OEM Command */
+> +#define NCSI_OEM_INTEL_CMD_GMA          0x06   /* CMD ID for Get MAC */
+>  /* OEM Command payload lengths*/
+>  #define NCSI_OEM_BCM_CMD_GMA_LEN        12
+>  #define NCSI_OEM_MLX_CMD_GMA_LEN        8
+>  #define NCSI_OEM_MLX_CMD_SMAF_LEN        60
+> +#define NCSI_OEM_INTEL_CMD_GMA_LEN      5
+>  /* Offset in OEM request */
+>  #define MLX_SMAF_MAC_ADDR_OFFSET         8     /* Offset for MAC in SMAF   
+> */
+>  #define MLX_SMAF_MED_SUPPORT_OFFSET      14    /* Offset for medium in SMAF
+> */
+>  /* Mac address offset in OEM response */
+>  #define BCM_MAC_ADDR_OFFSET             28
+>  #define MLX_MAC_ADDR_OFFSET             8
+> +#define INTEL_MAC_ADDR_OFFSET           1
+>  
+>  
+>  struct ncsi_channel_version {
+> diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
+> index 1f387be7827b..fb25ae22ea3d 100644
+> --- a/net/ncsi/ncsi-manage.c
+> +++ b/net/ncsi/ncsi-manage.c
+> @@ -760,13 +760,36 @@ static int ncsi_oem_smaf_mlx(struct ncsi_cmd_arg *nca)
+>         return ret;
+>  }
+>  
+> +static int ncsi_oem_gma_handler_intel(struct ncsi_cmd_arg *nca)
+> +{
+> +       unsigned char data[NCSI_OEM_INTEL_CMD_GMA_LEN];
+> +       int ret = 0;
+> +
+> +       nca->payload = NCSI_OEM_INTEL_CMD_GMA_LEN;
+> +
+> +       memset(data, 0, NCSI_OEM_INTEL_CMD_GMA_LEN);
+> +       *(unsigned int *)data = ntohl(NCSI_OEM_MFR_INTEL_ID);
+> +       data[4] = NCSI_OEM_INTEL_CMD_GMA;
+> +
+> +       nca->data = data;
+> +
+> +       ret = ncsi_xmit_cmd(nca);
+> +       if (ret)
+> +               netdev_err(nca->ndp->ndev.dev,
+> +                          "NCSI: Failed to transmit cmd 0x%x during
+> configure\n",
+> +                          nca->type);
+> +
+> +       return ret;
+> +}
+> +
+>  /* OEM Command handlers initialization */
+>  static struct ncsi_oem_gma_handler {
+>         unsigned int    mfr_id;
+>         int             (*handler)(struct ncsi_cmd_arg *nca);
+>  } ncsi_oem_gma_handlers[] = {
+>         { NCSI_OEM_MFR_BCM_ID, ncsi_oem_gma_handler_bcm },
+> -       { NCSI_OEM_MFR_MLX_ID, ncsi_oem_gma_handler_mlx }
+> +       { NCSI_OEM_MFR_MLX_ID, ncsi_oem_gma_handler_mlx },
+> +       { NCSI_OEM_MFR_INTEL_ID, ncsi_oem_gma_handler_intel }
+>  };
+>  
+>  static int ncsi_gma_handler(struct ncsi_cmd_arg *nca, unsigned int mf_id)
+> diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
+> index 80938b338fee..ba66c7dc3a21 100644
+> --- a/net/ncsi/ncsi-pkt.h
+> +++ b/net/ncsi/ncsi-pkt.h
+> @@ -178,6 +178,12 @@ struct ncsi_rsp_oem_bcm_pkt {
+>         unsigned char           data[];      /* Cmd specific Data */
+>  };
+>  
+> +/* Intel Response Data */
+> +struct ncsi_rsp_oem_intel_pkt {
+> +       unsigned char           cmd;         /* OEM Command ID    */
+> +       unsigned char           data[];      /* Cmd specific Data */
+> +};
+> +
+>  /* Get Link Status */
+>  struct ncsi_rsp_gls_pkt {
+>         struct ncsi_rsp_pkt_hdr rsp;        /* Response header   */
+> diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
+> index a94bb59793f0..b36c22ec4c3f 100644
+> --- a/net/ncsi/ncsi-rsp.c
+> +++ b/net/ncsi/ncsi-rsp.c
+> @@ -699,12 +699,72 @@ static int ncsi_rsp_handler_oem_bcm(struct ncsi_request
+> *nr)
+>         return 0;
+>  }
+>  
+> +/* Response handler for Intel command Get Mac Address */
+> +static int ncsi_rsp_handler_oem_intel_gma(struct ncsi_request *nr)
+> +{
+> +       struct ncsi_dev_priv *ndp = nr->ndp;
+> +       struct net_device *ndev = ndp->ndev.dev;
+> +       const struct net_device_ops *ops = ndev->netdev_ops;
+> +       struct ncsi_rsp_oem_pkt *rsp;
+> +       struct sockaddr saddr;
+> +       int ret = 0;
+> +
+> +       /* Get the response header */
+> +       rsp = (struct ncsi_rsp_oem_pkt *)skb_network_header(nr->rsp);
+> +
+> +       saddr.sa_family = ndev->type;
+> +       ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
+> +       memcpy(saddr.sa_data, &rsp->data[INTEL_MAC_ADDR_OFFSET], ETH_ALEN);
+> +       /* Increase mac address by 1 for BMC's address */
+> +       eth_addr_inc((u8 *)saddr.sa_data);
+> +       if (!is_valid_ether_addr((const u8 *)saddr.sa_data))
+> +               return -ENXIO;
+> +
+> +       /* Set the flag for GMA command which should only be called once */
+> +       ndp->gma_flag = 1;
+> +
+> +       ret = ops->ndo_set_mac_address(ndev, &saddr);
+> +       if (ret < 0)
+> +               netdev_warn(ndev, "NCSI: 'Writing mac address to device
+> failed\n");
+> +
+> +       return ret;
+> +}
+> +
+> +/* Response handler for Intel card */
+> +static int ncsi_rsp_handler_oem_intel(struct ncsi_request *nr)
+> +{
+> +       struct ncsi_rsp_oem_intel_pkt *intel;
+> +       struct ncsi_rsp_oem_pkt *rsp;
+> +
+> +       /* Get the response header */
+> +       rsp = (struct ncsi_rsp_oem_pkt *)skb_network_header(nr->rsp);
+> +       intel = (struct ncsi_rsp_oem_intel_pkt *)(rsp->data);
+> +
+> +#if 0 //For debug use
+> +    #define NCSI_INTEL_GMA_LEN 6
+> +    int i = 0;
+> +
+> +    printk("[Error] %s, %d, intel->cmd = %x\n", __func__, __LINE__, intel-
+> >cmd);
+> +    for(i ; i < NCSI_INTEL_GMA_LEN; i++)
+> +    {
+> +        printk("[Error] %s, %d, rsp->data[%d] = %x\n", __func__, __LINE__, i,
+> rsp->data[i]);
+> +        printk("[Error] %s, %d, intel_rsp->data[%d] = %x\n", __func__,
+> __LINE__, i, intel->data[i]);
+> +    }
+> +#endif
+> +    
+> +       if (intel->cmd == NCSI_OEM_INTEL_CMD_GMA)
+> +               return ncsi_rsp_handler_oem_intel_gma(nr);
+> +
+> +       return 0;
+> +}
+> +
+>  static struct ncsi_rsp_oem_handler {
+>         unsigned int    mfr_id;
+>         int             (*handler)(struct ncsi_request *nr);
+>  } ncsi_rsp_oem_handlers[] = {
+>         { NCSI_OEM_MFR_MLX_ID, ncsi_rsp_handler_oem_mlx },
+> -       { NCSI_OEM_MFR_BCM_ID, ncsi_rsp_handler_oem_bcm }
+> +       { NCSI_OEM_MFR_BCM_ID, ncsi_rsp_handler_oem_bcm },
+> +       { NCSI_OEM_MFR_INTEL_ID, ncsi_rsp_handler_oem_intel }
+>  };
+>  
+>  /* Response handler for OEM command */
+> 
 
---aM3YZ0Iwxop3KEKx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Paul, I know about 'get mac address' and it was in my todo list. You can put it
+before or after this patch series whenever you want, it doesn't interfere with
+this one. Anyways, thanks for sharing it.
 
-On Tue, Jul 20, 2021 at 01:04:38PM +0000, David Laight wrote:
+Thanks.
 
-> Having said that, you might want a loop in the driver so that
-> application requests for longer transfers are implemented
-> with multiple hardware requests.
-
-No, that's something that should be and indeed is done in the core -
-this isn't the only hardware out there with some kind of restriction on
-length.
-
-> I do also wonder why there is support in the main kernel sources
-> for hardware that doesn't actually exist.
-
-We encourage vendors to get support for their devices upstream prior to
-hardware availability so that users are able to run upstream when they
-get access to hardware, this means users aren't forced to run out of
-tree code needlessly and greatly eases deployment.
-
---aM3YZ0Iwxop3KEKx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmD2y94ACgkQJNaLcl1U
-h9CU5wf/TxYsQY9aTbblj5w4EVv8uLKbvy6PBj1SnrM4wfytzyTYihrRE6uCLTAS
-Nn9FkI1moqB5RREdDHk4HKQOiZQ2SD5FZn9jM5VV74hMRgyU70vk6DcgobQVYS2h
-YE23Evtq4wcxvTHbPHhZcYYj8NcoUbsbabuGB8smW5DU0qP8uVe8T1bTPcnBWE6g
-fXVdzjeRDykoTPTariCs1V02ZdqORUtSJF1TXJPaI2tLTqPEoBNPJzx2fgocdB7D
-jK1YKiTQV/TI+GED/c9cbvs+QW/uhBcJ7WVvqHrDcg8JnpRwVPp0K/x61vX0VeLq
-AN8yydmcf/WWsUCHBc1fwemQYA4WBQ==
-=Dkpn
------END PGP SIGNATURE-----
-
---aM3YZ0Iwxop3KEKx--
