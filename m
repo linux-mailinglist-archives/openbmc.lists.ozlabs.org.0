@@ -2,83 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D77E3CFBD5
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jul 2021 16:16:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4945F3CFEFE
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jul 2021 18:14:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GTgkW3zNlz3bWM
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 00:16:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GTkLG2q2zz3bbj
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 02:14:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=YvVakOre;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=Iyu5a6I9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::130;
- helo=mail-lf1-x130.google.com; envelope-from=fercerpav@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::231;
+ helo=mail-oi1-x231.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=YvVakOre; dkim-atps=neutral
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com
- [IPv6:2a00:1450:4864:20::130])
+ header.s=20161025 header.b=Iyu5a6I9; dkim-atps=neutral
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com
+ [IPv6:2607:f8b0:4864:20::231])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GTgkD63xBz2xfF
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 00:16:20 +1000 (AEST)
-Received: by mail-lf1-x130.google.com with SMTP id i5so36043695lfe.2
- for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 07:16:20 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GTkL12NKtz3076
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 02:14:00 +1000 (AEST)
+Received: by mail-oi1-x231.google.com with SMTP id r80so11288423oie.13
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 09:14:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=jTVBIBA0omypH2FRgKNKE6Qelif7GcHlqISFRiezRVk=;
- b=YvVakOre3y2udFxIyMgAmHOWsU8OUb44tgzp478SYH416Z6U6CbQt1m6fjJYHkvSFN
- k+l48gpQYsxhlbHXI2FQmuYdGXRScLsZKXP0sfGbXDQy9U8d1kO47Ls3Tpy8/bA8KYj9
- ZK9gcADyx523yaINdbRSAXTzxVIV5Lu2vLMmAEJ9X640NZN1omkuC5hJDoVUSYzUiUQq
- FV1OvbyAAcBwsK20s5u5bHKZgeoxXGdiE9kvz4ecl4UNPxa/FEWHUwAKdv7KD0l9rerZ
- 8rtoM/3mrUYsAmx3rGx+3Sn+oPJ0rcW2YiGFjmtqB7IXx1vrzC27Zib/SQMhGjmIg/fx
- JTew==
+ h=from:subject:to:message-id:date:user-agent:mime-version
+ :content-language:content-transfer-encoding;
+ bh=X+4enYZMJlHBFDJXVaXb4RYgTmZphe7X5eT5Llhne8A=;
+ b=Iyu5a6I9N4mpkShSFsW981cuOuCvqHLozo/YEzrmcJs9SMlZXvYS8MrhH9+iJ//WF3
+ Fd5ppuAP5ruhYD5T5+NB0O8Sd8Z76z9LKlbRGnJramwkYyZ+iigwHJo9VVGCugvpnbtz
+ nGv+FSJu/zFqp4pg2SKZNdECGj8nEg0Wyn701By01EPi/gEuqKUafoo7khCvGBNYWvFs
+ sCnZrWmSOrAosdats2UsvrTgd6dSbW9hO5xYhsKR/TVpP94RoOtLnik5z+ztmTmqhONR
+ mBMHyPPdOxyc1TQ0R2DOkw4Z3YB/WME5HwnCpKXWoBi4MXk0+p5NZA++hv3gZXs2g/F+
+ Oozg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=jTVBIBA0omypH2FRgKNKE6Qelif7GcHlqISFRiezRVk=;
- b=PzLZsxGiaBsH2cMNcWCCyh0fH4yzyJwT9UMhRLIQxXEeEo/U6xZ5bjQQrFhMUmVdTf
- sX0ZZRdXaFvecAbbx9S5cDb8r8ahvc4EVD96DoADeGigzj0H0Ku5L21BuCM1HpyAs1kT
- r+k4EgiOn5OUekLbObX7iWLkAcYdWZQKY50m1iMqozfwpL2uGVaLMzZVeOJSY1fEKKHq
- iXNtRlP9WiDfqh3mjqEgNuQQAl8U2gebdGMHrFtGiRrqaPX1S4s6sqh8n9ouBj1HBXhQ
- BnDmQBUgImpdErl7eUfwsRPwzDA6SvMJMoFpuDNlumVXDk7JhUlVO1EuGGhfMunAYC3R
- JiYg==
-X-Gm-Message-State: AOAM533Sy+/rAZ78XbWloLwYjYXwf3tQqdPItX3XUbrRse1SpEvE0G+d
- 136IZoNx0EtiV7U//Bfe5n4=
-X-Google-Smtp-Source: ABdhPJwelGJqbCgP7Ts7t+OT1UumfY0ywBCQVlebohtkI6Yx54qPHDZizuxJ4h3RkHVSBGLec5wDLg==
-X-Received: by 2002:ac2:4d4e:: with SMTP id 14mr11167710lfp.290.1626790577484; 
- Tue, 20 Jul 2021 07:16:17 -0700 (PDT)
-Received: from home.paul.comp (paulfertser.info.
- [2001:470:26:54b:226:9eff:fe70:80c2])
- by smtp.gmail.com with ESMTPSA id t24sm2461669ljj.97.2021.07.20.07.16.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Jul 2021 07:16:16 -0700 (PDT)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
- by home.paul.comp (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTP id
- 16KEGEO3005281; Tue, 20 Jul 2021 17:16:15 +0300
-Received: (from paul@localhost)
- by home.paul.comp (8.15.2/8.15.2/Submit) id 16KEGBSb005280;
- Tue, 20 Jul 2021 17:16:11 +0300
-Date: Tue, 20 Jul 2021 17:16:11 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-Subject: Re: [PATCH v2 0/3] net/ncsi: Add NCSI Intel OEM command to keep PHY
- link up
-Message-ID: <20210720141611.GI875@home.paul.comp>
-References: <20210708122754.555846-1-i.mikhaylov@yadro.com>
- <20210720095320.GB4789@home.paul.comp>
- <10902992a9dfb5b1b4f1d7a9e17ff0e7b121b50b.camel@yadro.com>
+ h=x-gm-message-state:from:subject:to:message-id:date:user-agent
+ :mime-version:content-language:content-transfer-encoding;
+ bh=X+4enYZMJlHBFDJXVaXb4RYgTmZphe7X5eT5Llhne8A=;
+ b=O/5IAqW/7pUmiGlxv/hv/Gbn+KkMmbW7L+83uZic+5wvsMB7B6eEIDDvG2sGbUAo5U
+ NLmFxvx+pc6U3OzQkDX2MIboumJmD2PmTt/BRZ0bzCE27fj9xFNaXh0J4KuH0WwESnF8
+ KuRHVsD9ltzba45ycCES9D/rmE4V1hp/V0O70HsoILfs+PwgzA7vMnHp4JYdFlEIVSky
+ c07LMtC/NQvkm+Ud62S/5ZZgbGXH/yvUWJTW3v6a8rdpDWx3pBaWMaeo7/SCbMjuQsNi
+ Dn6+R7AeGbFJAFd/FMswNXthVB2vu/jQ0WEH1kSsyGge0bEuyyPtWEwucTTlYyAiD6hj
+ OrLg==
+X-Gm-Message-State: AOAM5334KrL1dPaB4xvGqvW8XGelF0M0PBg+X42PQf6HjdL5cn2TxWeP
+ rRyl/r+2nk4E8CkUIndFU/Q2JxCnugIXkQ==
+X-Google-Smtp-Source: ABdhPJxNeMeSu7blSnE6AAW2G8z83pdbS0mKqNX1PMoF+MWbqqH4GjdgOkQLOZ4TNDCo+z0wogquhw==
+X-Received: by 2002:aca:ab16:: with SMTP id u22mr2873080oie.177.1626797636422; 
+ Tue, 20 Jul 2021 09:13:56 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-104-102.res.spectrum.com.
+ [72.182.104.102])
+ by smtp.gmail.com with ESMTPSA id e29sm4430647oiy.53.2021.07.20.09.13.55
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Jul 2021 09:13:56 -0700 (PDT)
+From: krtaylor <kurt.r.taylor@gmail.com>
+Subject: My role as Community Manager
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Message-ID: <f6de1ac8-5842-f43d-c47e-14c05464cae1@gmail.com>
+Date: Tue, 20 Jul 2021 11:13:55 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <10902992a9dfb5b1b4f1d7a9e17ff0e7b121b50b.camel@yadro.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,63 +82,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: netdev@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
- Samuel Mendoza-Jonas <sam@mendozajonas.com>,
- "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jul 20, 2021 at 05:00:40PM +0300, Ivan Mikhaylov wrote:
-> > While the host is booted up and fully functional it assumes it has
-> > full proper control of network cards, and sometimes it really needs to
-> > reset them to e.g. recover from crashed firmware. The PHY resets might
-> > also make sense in certain cases, and so in general having this "link
-> > up" bit set all the time might be breaking assumptions.
-> 
-> Paul, what kind of assumption it would break?
+FYI, I'm not sure who knows, but I have been on a part-time leave of 
+absence working half days while I went back to college and completed my 
+second degree. I am reaching the end of my time with IBM and therefore, 
+with the duties as Community Manager for OpenBMC. I wouldn't mind 
+continuing this role, but don't currently have plans to do so with 
+another company.
 
-The host OS drivers assume they can fully control PCIe network
-cards. Doing anything (including inhibiting PHY resets) behind its
-back might break assumptions the driver authors had. This bit in
-question certainly makes the card behave in an unusual way, so no
-wonder Intel didn't enable it by default.
+I believe that I have all the responsibilities somewhat backfilled so 
+there shouldn't be any impact to the project. Brad will of course still 
+be able to handle CLA process and requests for legal/copyright/license 
+assistance. The monthly metrics gatering will be done by Reed Frandsen, 
+and the metric tools are available in my github repo. I have talked with 
+him about my plans to enhance these metrics to present a more complete 
+view of project contributions.
 
-I do not claim I know for a fact it's problematic but it doesn't feel
-like "the right thing" so some edge cases might expose issues.
+I also acted as an interface into the Linux Foundation, but Brad and the 
+TSC have also been copied on those activities, including the discussions 
+on using LF services for hosting gerrit, jenkins, email, better website, 
+etc. I will also hand off the access to our simple wordpress account on 
+OpenBMC.org to Brad.
 
-> Joel proposed it as DTS option which may help at runtime.
+I did not get to finish the CLA/Developer acl automation that I had 
+planned, but the beginnings are in place. The idea was to get CLA 
+Schedule A's in txt form so that they could be managed by the companies 
+themselves via a simple gerrit push. Developers could then be 
+programmatically added and removed from other testing/company 
+lists/groups as needed for simplified project processes.
 
-Sorry, I'm not following. If BMC is fully booted it's able to
-configure NC-SI appropriately by a userspace action coordinated with
-other BMC tasks. If BMC is not yet ready then we can't communicate
-with it via Ethernet anyway. So I can't see when exactly is it going
-to be helpful.
+So, July 30th will "officially" be my last day with IBM and OpenBMC. You 
+all know my email address, and of course I will continue to answer any 
+requests for help as best as I can. Please contact me privately for any 
+questions/comments on this transition.
 
-> Some of those commands should be applied after channel probe as I
-> think including phy reset control.
+If I don't get to chat with you individually, please know that I have 
+enjoyed working with all of you. I wish you all continued success with 
+OpenBMC.
 
-Do you have any other commands in mind? So far I assumed we're
-discussing just the one to mask PHY resets.
-
-> > Ivan, so far I have an impression that the user-space solution would
-> > be much easier, flexible and manageable and that there's no need for
-> > this command to be in Linux at all.
-> 
-> You may not have such things on your image with suitable env which you can rely
-> on. There is smaf for mellanox which is done in the same way for example.
-
-I can hardly imagine why an OS running on BMC would be using this code
-in question and appropriate DT configuration but not having the right
-means in userspace to control it. What would be the usecase?
-
-If the network subsystem maintainers think this is a good idea, all
-things considered, I'm fine with it. I210 losing link exactly at the
-time when you need it (to enter the UEFI interactive menu) is
-super-annoying, so probably any fix is better than none :)
-
-Thank you for discussion.
-
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+Kurt Taylor (krtaylor)
