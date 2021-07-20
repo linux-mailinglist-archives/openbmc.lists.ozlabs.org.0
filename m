@@ -1,63 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB6363D0049
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jul 2021 19:32:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9C643D04C3
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 00:46:20 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GTm4h5KPBz3bdS
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 03:32:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GTv2f5R1Qz3bTL
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 08:46:18 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=J55gqhdM;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aculab.com (client-ip=185.58.85.151;
- helo=eu-smtp-delivery-151.mimecast.com; envelope-from=david.laight@aculab.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
-Received: from eu-smtp-delivery-151.mimecast.com
- (eu-smtp-delivery-151.mimecast.com [185.58.85.151])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=J55gqhdM; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GTm4R4XPRz2yXf
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 03:32:21 +1000 (AEST)
-Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) (Using
- TLS) by relay.mimecast.com with ESMTP id
- uk-mta-206-GSzzkNyhNdi0mB4cT-gXiQ-1; Tue, 20 Jul 2021 18:32:15 +0100
-X-MC-Unique: GSzzkNyhNdi0mB4cT-gXiQ-1
-Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) by
- AcuMS.aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) with Microsoft SMTP
- Server (TLS) id 15.0.1497.23; Tue, 20 Jul 2021 18:32:14 +0100
-Received: from AcuMS.Aculab.com ([fe80::994c:f5c2:35d6:9b65]) by
- AcuMS.aculab.com ([fe80::994c:f5c2:35d6:9b65%12]) with mapi id
- 15.00.1497.023; Tue, 20 Jul 2021 18:32:14 +0100
-From: David Laight <David.Laight@ACULAB.COM>
-To: 'Mark Brown' <broonie@kernel.org>
-Subject: RE: [PATCH 1/2] spi: fsi: Reduce max transfer size to 8 bytes
-Thread-Topic: [PATCH 1/2] spi: fsi: Reduce max transfer size to 8 bytes
-Thread-Index: AQHXfL3Ikg6avb1lOkyp/qlhiL4746tL1OlQ///yyICAAFhm4A==
-Date: Tue, 20 Jul 2021 17:32:13 +0000
-Message-ID: <018ee235eabd420bb32f6acf57dfe121@AcuMS.aculab.com>
-References: <20210716133915.14697-1-eajames@linux.ibm.com>
- <20210716133915.14697-2-eajames@linux.ibm.com>
- <20210716171936.GB4137@sirena.org.uk>
- <81a40f8690d297ebfb6697dbea63279bcf2f24fa.camel@linux.ibm.com>
- <20210719152010.GB4174@sirena.org.uk>
- <d2e07f0beda57ffeaa31e8cf5bf28edfbd982e58.camel@linux.ibm.com>
- <0a637d7704df4303abe783215080578d@AcuMS.aculab.com>
- <20210720131303.GB5042@sirena.org.uk>
-In-Reply-To: <20210720131303.GB5042@sirena.org.uk>
-Accept-Language: en-GB, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.202.205.107]
-MIME-Version: 1.0
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: aculab.com
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GTv2J3rd4z2yPC
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 08:45:59 +1000 (AEST)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 16KMjQJ2075815
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 18:45:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=to : from : subject :
+ message-id : date : content-type : content-transfer-encoding :
+ mime-version; s=pp1; bh=2r/2PBLi3pmFjYjMz4w7thBhr3qkrjcJA9Fra2gYMuE=;
+ b=J55gqhdMmmRSiuKp/rWltb1v6HP0wsKkviMe/ZYoaNtNnU5T1O7nXkV8hw61mXGss2IW
+ j6NlvVdtRV/FwYZONObwVpeZUOQ4PR2HZIIwbu2xiwUfeOYM6MiEB/w7CD3BqVi0jDZB
+ 2N/WVJmWCuwxYeOB1dnBWg0NjhFEuxeyrSXW+9thGUw01N8kLYeNDvwE5Zij0T2roPmF
+ kIlZDZWzmsWyfcNa/7Z8JT1Q5lrKb54LwXfcTPRG1ZcBZv0W7KAgA01EdgmHHPeTi8fK
+ Oqd2tqNXQGWVwuqkmYyOZgtWdW7Jt6rXO/vA3wtUaqhOp/9YE6t/v5W8R9Nspy1oCYRp 0g== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 39x7j9005c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 18:45:56 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16KMfScr003616
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 22:45:56 GMT
+Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
+ [9.57.198.27]) by ppma02dal.us.ibm.com with ESMTP id 39vuk5na5t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 22:45:55 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 16KMjtQk53150164
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 22:45:55 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F029A112065
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 22:45:54 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BC24D112063
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 22:45:54 +0000 (GMT)
+Received: from demeter.local (unknown [9.160.56.107])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Jul 2021 22:45:54 +0000 (GMT)
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday July 21
+Message-ID: <cd15ec44-5c29-096b-187d-f3c05680f8a2@linux.ibm.com>
+Date: Tue, 20 Jul 2021 17:45:53 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: AmYxwz58q-SsirBdLgXtTVfnnwqoRXeI
+X-Proofpoint-GUID: AmYxwz58q-SsirBdLgXtTVfnnwqoRXeI
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-07-20_14:2021-07-19,
+ 2021-07-20 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0
+ priorityscore=1501 impostorscore=0 adultscore=0 mlxscore=0 spamscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 mlxlogscore=764 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104190000 definitions=main-2107200140
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,43 +100,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- 'Eddie James' <eajames@linux.ibm.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
- "robh+dt@kernel.org" <robh+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Mark Brown
-> Sent: 20 July 2021 14:13
->=20
-> On Tue, Jul 20, 2021 at 01:04:38PM +0000, David Laight wrote:
->=20
-> > Having said that, you might want a loop in the driver so that
-> > application requests for longer transfers are implemented
-> > with multiple hardware requests.
->=20
-> No, that's something that should be and indeed is done in the core -
-> this isn't the only hardware out there with some kind of restriction on
-> length.
+This is a reminder of the OpenBMC Security Working Group meeting 
+scheduled for this Wednesday July 21 at 10:00am PDT.
 
-Ah, ok, there is another loop before any 'users'.
-> > I do also wonder why there is support in the main kernel sources
-> > for hardware that doesn't actually exist.
->=20
-> We encourage vendors to get support for their devices upstream prior to
-> hardware availability so that users are able to run upstream when they
-> get access to hardware, this means users aren't forced to run out of
-> tree code needlessly and greatly eases deployment.
+We'll discuss the following items on the agenda 
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
+and anything else that comes up:
 
-This one just seemed a bit premature.
+ 1.
 
-=09David
+    See Google’s “unified vulnerability schema for open source”
+    https://security.googleblog.com/2021/06/announcing-unified-vulnerability-schema.html?m=1
+    <https://security.googleblog.com/2021/06/announcing-unified-vulnerability-schema.html?m=1>
 
--
-Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1=
-PT, UK
-Registration No: 1397386 (Wales)
+ 2.
 
+    Email: Update phosphor-defaults with stronger root password hash
+    algorithm -
+    https://lore.kernel.org/openbmc/34f5b89a-3919-e214-a744-4277fba0bbbb@linux.ibm.com/T/#u
+    <https://lore.kernel.org/openbmc/34f5b89a-3919-e214-a744-4277fba0bbbb@linux.ibm.com/T/#u>
+
+
+
+
+
+
+Access, agenda and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group 
+<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+
+- Joseph
