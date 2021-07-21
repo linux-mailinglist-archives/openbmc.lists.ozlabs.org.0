@@ -2,96 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B9133D0FC6
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 15:41:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 827833D1101
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 16:17:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GVGvw6SQpz30BH
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 23:41:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GVHj61zRBz3bNr
+	for <lists+openbmc@lfdr.de>; Thu, 22 Jul 2021 00:17:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=hO9td72A;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=TCG+rAiO;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42c;
+ helo=mail-wr1-x42c.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=hO9td72A; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=TCG+rAiO; dkim-atps=neutral
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com
+ [IPv6:2a00:1450:4864:20::42c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GVGvf3F2Kz2yRT;
- Wed, 21 Jul 2021 23:41:34 +1000 (AEST)
-Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 16LDWq0i138992; Wed, 21 Jul 2021 09:41:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- mime-version : content-transfer-encoding; s=pp1;
- bh=5tfzKCPK20zh/0tlMtLLaUhtAC6OBisxnQ9Ig6KzjqA=;
- b=hO9td72A2MwybKbpL1gmKTPv4JdpbQ1flrWQg9JhmcDX04SAOvrEAWmb4I2/rY3Tj8vS
- lwQnDYd4dK9jYE/IRtHBZqmUml2R3HG+mVY0sTCA29CITPt5/H8aeXYICWb45zGD+J3R
- habnYIIfF8aEqbG5Xenebm+Mko1SiAcNaj37zoxiifBEwK+uns8TNz3IXVv0sEDDZcjz
- Y47hOli2bdnEoc50j4Ns3tSoPTAXBewasHa/WYl0rZRWpVC+/gneoyISOLNYh47czGbZ
- 7r14HrwNMMXz+GbP77NxfRrJhHQAEjAv6V9aVqbspmiUsis57HQDh7o93Kiu9mwOIj1D Cw== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 39xm9agubd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Jul 2021 09:41:30 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16LDYBOx007114;
- Wed, 21 Jul 2021 13:41:29 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma05wdc.us.ibm.com with ESMTP id 39upuc5s1x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Jul 2021 13:41:29 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 16LDfSdg33948080
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 21 Jul 2021 13:41:28 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8113AAC06B;
- Wed, 21 Jul 2021 13:41:28 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C16B0AC069;
- Wed, 21 Jul 2021 13:41:27 +0000 (GMT)
-Received: from v0005c16 (unknown [9.211.68.240])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Wed, 21 Jul 2021 13:41:27 +0000 (GMT)
-Message-ID: <455d75f7f21d8561df68eaa052f6cb0245b96c36.camel@linux.ibm.com>
-Subject: Re: [PATCH 2/3] hwmon: (occ) Remove sequence numbering and checksum
- calculation
-From: Eddie James <eajames@linux.ibm.com>
-To: Joel Stanley <joel@jms.id.au>
-Date: Wed, 21 Jul 2021 08:41:27 -0500
-In-Reply-To: <CACPK8XcgF7i+b8P1AUDRYtWZeMDwG7Mjw74pFpVKVx6ZdJJKzw@mail.gmail.com>
-References: <20210716151850.28973-1-eajames@linux.ibm.com>
- <20210716151850.28973-3-eajames@linux.ibm.com>
- <CACPK8XcgF7i+b8P1AUDRYtWZeMDwG7Mjw74pFpVKVx6ZdJJKzw@mail.gmail.com>
-Organization: IBM
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GVHhr4CTHz2yRT
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Jul 2021 00:17:14 +1000 (AEST)
+Received: by mail-wr1-x42c.google.com with SMTP id l7so2377493wrv.7
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 07:17:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=syG5zAZQlFHU3ezPvPm138s/Pjs0050NC54oU3uUdCU=;
+ b=TCG+rAiOykMzvhHHScnzmVwf6uLbOTA7xdCJR3epZfUNf8ypjTp+JE3R7wiJYF3/19
+ E/iHzj8O2B1Lo63hFMBfES7gawNbPT6/ztfExB9bNUKJfYSRgq2oH0bGBy7HVpizHgBc
+ HsRPSdTr+cgVFcjqjsDyTnrQMSSLEOtsfs6oSMXfL8y9zFjOf6K+O95dCZAGk26HOLQM
+ oSrt+qtvy5YXs/Mb1lOgGp9SSqONsZVka2a/1iv13/fkHY6oDJKb/OmRv1vWlwbob+EM
+ 7YFNxPLnH7524TRg6PIHAjJYoUoK7aNw9L80/VXuqa6psZtz9Cagr2PKWxf6WylTfs6X
+ Rizg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=syG5zAZQlFHU3ezPvPm138s/Pjs0050NC54oU3uUdCU=;
+ b=Qu2KfsyNHn0mnY70gRIJM9tEVtEuUUU6mr/EzMcEvNCNr+yb0VaRKWp/HEyVZnImvO
+ OB30nzHZclcI6Em45ex3cqN2YOeIpEthmH2x6TEvmskQqGh15opGCj+UWQ27uwQ+AiL/
+ pNWJD5WryNlyi46UtCEOrGBvtbeJfHXCxh2o17bjvB8N6CZurwL8/4+q20OISL0qB23o
+ 6NB8rz/CoBgc81F00cbMMMz9HXkhh9bkg06g2YylkLZ7b2TLKU7tn1jLIZ004ifF/xq4
+ iLL/CIAfej8veyDw3WrMoljSEH1Roca3PvVqHDW4miMNSN2vTP1oLrt8OtiWIMk6cqzr
+ ZSNQ==
+X-Gm-Message-State: AOAM5309/PeKslcAXYKR8cAIXgxhs/QFRyJQWRzkE4JFqjmOIDcEzmwb
+ QsXlY978pIKBtSxDjmeHyUUj86h7GxiY2uhdC1bW/g==
+X-Google-Smtp-Source: ABdhPJyeIhZNnV/vWOehZEFteEWJtNC5PZgwJE0duPla5B0bKOxekHn1H3HygwCGeYP4YiL3FOx1Bb/6r4HhPnZPvx4=
+X-Received: by 2002:adf:e902:: with SMTP id f2mr42782352wrm.424.1626877028319; 
+ Wed, 21 Jul 2021 07:17:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <DF4PR8401MB0634B89E3FF275E28FB590CC8F359@DF4PR8401MB0634.NAMPRD84.PROD.OUTLOOK.COM>
+ <CAH2-KxB5=VQ16c6Cabik6T3HRMNw-R+r8EStpLu-hpgqGtnO-g@mail.gmail.com>
+ <DF4PR8401MB063429AA13146432E80B43DB8F359@DF4PR8401MB0634.NAMPRD84.PROD.OUTLOOK.COM>
+In-Reply-To: <DF4PR8401MB063429AA13146432E80B43DB8F359@DF4PR8401MB0634.NAMPRD84.PROD.OUTLOOK.COM>
+From: Ed Tanous <edtanous@google.com>
+Date: Wed, 21 Jul 2021 07:16:56 -0700
+Message-ID: <CAH2-KxCRnJOaQ=7ry5Sg2B8E4UyePckA4=1Q+-eFP8htnVor5A@mail.gmail.com>
+Subject: Re: RDE Enablement
+To: "Garrett, Mike (HPE Server Firmware)" <mike.garrett@hpe.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-16.el8) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ZJE2W32vgqBCiC9D3ehSMqIr94559YXO
-X-Proofpoint-ORIG-GUID: ZJE2W32vgqBCiC9D3ehSMqIr94559YXO
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-07-21_08:2021-07-21,
- 2021-07-21 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999
- impostorscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 phishscore=0 malwarescore=0 spamscore=0
- clxscore=1015 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2104190000 definitions=main-2107210078
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,101 +77,90 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Guenter Roeck <linux@roeck-us.net>, linux-fsi@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 2021-07-21 at 02:43 +0000, Joel Stanley wrote:
-> On Fri, 16 Jul 2021 at 15:19, Eddie James <eajames@linux.ibm.com>
-> wrote:
-> > Checksumming of the request and sequence numbering is now done in
-> > the
-> > OCC interface driver in order to keep unique sequence numbers. So
-> > remove those in the hwmon driver.
-> > 
-> > Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> > ---
-> >  drivers/hwmon/occ/common.c | 30 ++++++++++++------------------
-> >  drivers/hwmon/occ/common.h |  3 +--
-> >  drivers/hwmon/occ/p8_i2c.c | 15 +++++++++------
-> >  drivers/hwmon/occ/p9_sbe.c |  4 ++--
-> >  4 files changed, 24 insertions(+), 28 deletions(-)
-> > 
-> > diff --git a/drivers/hwmon/occ/common.c
-> > b/drivers/hwmon/occ/common.c
-> > index 0d68a78be980..fc298268c89e 100644
-> > --- a/drivers/hwmon/occ/common.c
-> > +++ b/drivers/hwmon/occ/common.c
-> > @@ -132,22 +132,20 @@ struct extended_sensor {
-> >  static int occ_poll(struct occ *occ)
-> >  {
-> >         int rc;
-> > -       u16 checksum = occ->poll_cmd_data + occ->seq_no + 1;
-> > -       u8 cmd[8];
-> > +       u8 cmd[7];
-> 
-> The shortening of the command seems unrelated?
-> 
-> If you leave it at 8 then you avoid the special casing below. Is
-> there
-> any downside to sending the extra 0 byte at the end?
+On Thu, Jun 10, 2021 at 1:59 PM Garrett, Mike (HPE Server Firmware)
+<mike.garrett@hpe.com> wrote:
+>
+> Great!  We are interested in RDE becoming ubiquitous on adapter cards so =
+that Redfish configuration of storage and networking doesn't have to includ=
+e adapter specific code.  A good success metric would be the ability to cre=
+ate a storage logical volume using nothing but standard Redfish operations.=
+  In pursuit of this, a solid open source OpenBMC implementation seems like=
+ a good way to put RDE on the right footing.
+>
+> My initial thoughts would be to build an RDE systemd service on top of th=
+e existing pldmd service and have an upper interface into the standard dbus=
+ interfaces for inventory, status, and configuration.
 
-Yes, it would break the checksumming unfortunately. The checksum is
-calculated and added at the last two bytes, so if you send more than
-your command actually is, the checksum will be in the wrong spot.
-> 
-> >         struct occ_poll_response_header *header;
-> > 
-> >         /* big endian */
-> > -       cmd[0] = occ->seq_no++;         /* sequence number */
-> > +       cmd[0] = 0;                     /* sequence number */
-> >         cmd[1] = 0;                     /* cmd type */
-> >         cmd[2] = 0;                     /* data length msb */
-> >         cmd[3] = 1;                     /* data length lsb */
-> >         cmd[4] = occ->poll_cmd_data;    /* data */
-> > -       cmd[5] = checksum >> 8;         /* checksum msb */
-> > -       cmd[6] = checksum & 0xFF;       /* checksum lsb */
-> > -       cmd[7] = 0;
-> > +       cmd[5] = 0;                     /* checksum msb */
-> > +       cmd[6] = 0;                     /* checksum lsb */
-> > --- a/drivers/hwmon/occ/p8_i2c.c> +++ b/drivers/hwmon/occ/p8_i2c.c
-> > @@ -97,18 +97,21 @@ static int p8_i2c_occ_putscom_u32(struct
-> > i2c_client *client, u32 address,
-> >  }
-> > 
-> >  static int p8_i2c_occ_putscom_be(struct i2c_client *client, u32
-> > address,
-> > -                                u8 *data)
-> > +                                u8 *data, size_t len)
-> >  {
-> > -       __be32 data0, data1;
-> > +       __be32 data0 = 0, data1 = 0;
-> > 
-> > -       memcpy(&data0, data, 4);
-> > -       memcpy(&data1, data + 4, 4);
-> > +       memcpy(&data0, data, min(len, 4UL));
-> 
-> The UL here seems unnecessary (and dropping it should fix your 0day
-> bot warnings).
+Way late here:
 
-Yea, I think I just need min_t
+This is one part that I've wondered about quite a bit:  How do we keep
+the existing PLDM things viable, without duplicating all of the
+Redfish code between them?  What component owns the "source of truth"
+for the Redfish tree?  In addition, how do we shuttle redfish-specific
+data between the various applications that now need them?  Going
+through dbus would imply that we either write a redfish specific
+interface, kind of like we did for IPMI/IPMB, or we have 1:1 with dbus
+interfaces to redfish interface, which seems unlikely.
 
-Thanks for the review!
-Eddie
+>  However, I suspect there's some additional dbus work needed to join RDE =
+to bmcweb because there will be a need to dynamically change the Redfish mo=
+del and support things like Actions.
 
-> 
-> But I think it would be simpler to go back to a fixed length of 8.
-> 
-> > +       if (len > 4UL) {
-> > +               len -= 4;
-> > +               memcpy(&data1, data + 4, min(len, 4UL));
-> > +       }
-> > 
-> >         return p8_i2c_occ_putscom_u32(client, address,
-> > be32_to_cpu(data0),
-> >                                       be32_to_cpu(data1));
-> >  }
+Yep, this would likely involve some changes to make the router
+modifiable at runtime to add and remove the appropriate routes as
+devices are detected.
 
+
+>  A requirement for this to work would be the ability to discover PLDM dev=
+ices and assign IDs (MCTP EID) in order to interrogate them for RDE capabil=
+ities.  It is unclear to me that the current PLDM and MCTP code handles dis=
+covery or if it assumes devices.
+>
+> Happy to hear from folks about the best way to get this started.
+>
+> Mike
+>
+> -----Original Message-----
+> From: openbmc <openbmc-bounces+mike.garrett=3Dhpe.com@lists.ozlabs.org> O=
+n Behalf Of Ed Tanous
+> Sent: Thursday, June 10, 2021 3:32 PM
+> To: Garrett, Mike (HPE Server Firmware) <mike.garrett@hpe.com>
+> Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+> Subject: Re: RDE Enablement
+>
+> On Thu, Jun 10, 2021 at 1:26 PM Garrett, Mike (HPE Server Firmware) <mike=
+.garrett@hpe.com> wrote:
+> >
+> > Greetings,
+> >
+> > I'm am interested to know if there has been any organized discussion or=
+ development on Redfish Device Enablement (RDE - DMTF DSP0218) for moving e=
+ncoded Redfish data across PLDM/MCTP interfaces.  We are interested in prom=
+oting this standard and are willing to lead a reference implementation for =
+OpenBMC if there is not yet something in progress.  If there is something i=
+n progress, can you point me at the work because I would love to see it.
+>
+> We are interested in this as well, although we are in the early stages of=
+ looking into it.  Ideally we'd like to have OpenBMC support add in cards (=
+NICs, Accelerators, ect) that supported this functionality, and make that d=
+ata available to the normal OpenBMC channels (Redfish/ipmi/ect).
+>
+> >
+> > What is the normal sequence for proposing, debating and finalizing majo=
+r new features?
+>
+> The mailing list tends to be a good choice for the very early discussions=
+.  https://github.com/openbmc/docs/blob/master/designs/design-template.md
+> tends to be a more formal process if that's what you're looking for.
+>
+> >  Would I submit something in Gerrit for review (e.g. a markdown file fo=
+r the docs/designs repo?)   We could probably get something started fairly =
+soon.
+> >
+> > Thanks.
+> >
+> > Mike
