@@ -1,70 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 290DC3D0AA4
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 10:34:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AD563D0F84
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 15:29:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GV85j0fzVz3bTk
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 18:34:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GVGdN1ZsXz30Mk
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 23:29:12 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=jZuaEjTW;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=FwPLJVaS;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::929;
- helo=mail-ua1-x929.google.com; envelope-from=deepak.kodihalli.83@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=jZuaEjTW; dkim-atps=neutral
-Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com
- [IPv6:2607:f8b0:4864:20::929])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=FwPLJVaS; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GV85M2QGcz2yLK
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 18:34:30 +1000 (AEST)
-Received: by mail-ua1-x929.google.com with SMTP id q20so582761uaa.3
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 01:34:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=HhruggTJ3zmTCsjRJjj3nx5lPnpAt/JCYoXR85LrOpU=;
- b=jZuaEjTWv+S+SiJP8bLoIRkzOXv0ddRIlOdghKGVG3r/PetsUYnUwZ7dTADETB3vsU
- RXHXDgJT95puCrW8II9MNyUoRq3AtITdOdsAWb24jc7LNAu84crbSDiv+Hv3chp6ISiz
- gNyXUy8Eqnu3JH+0h/fI4Z3Ved8WtRJDMUSz8V9APoPOpygJVv0Dt0gVHVpCxPgWkH2W
- iFilNL5WeKAH3xC5ZroubKvlGNhRa4ZJbfPbnIFYyheJFCfscWa0f5SXDjdnGX7Fe6sF
- AWZ/eXxnT460YRynFV3hqnfCWZy4uAlKrphNHQlT2UwuALWyjPAstAcNU5XdMQOUVeGJ
- 7oFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=HhruggTJ3zmTCsjRJjj3nx5lPnpAt/JCYoXR85LrOpU=;
- b=jGbmIZvvirfrqUWERuDRybdavN096IXqaNw1Cl4nQ4DHk0L3gX7bBpIlluBIBae/FY
- PTulYyf9xemqyn9o5oe0ytX4U2tHag9Yor5TF2JoR83ilv5nJofoyw4xKkDR3SpJt7CX
- J/FKhs6RIkWvjIWIzchTHcXYLt3u17bLDHAQPmjJIGXbjB2DFxMHao+LVdhQony8k4Ag
- 43gUasCpbKNEvHBN/Z3OM1ZulnQfbAm4HfzbCHruJl6kxhZ/hCBsMKyM71fKB+Wt9ORF
- 3D7MnjFsO/DPPXcDQo+ONHVYYYxqBwfARsGcxskMmV4ibe5/7PJd5XtfLWNQrlpDZ3Yl
- jVlA==
-X-Gm-Message-State: AOAM533xOGs8Mp+k5b7tKk6UTPZq5oWYHnsFNerlU/1pnsK67byHFWOF
- 9XK8T8+BiBlMibelwDLe1c7xw1YwRRZDRfHVMlw=
-X-Google-Smtp-Source: ABdhPJyfM9PlMw65YAHr1YZSVSzomvrjAldQkLW8FHpBgL8BnOsGVtmdgILYsYYCdY95KtO7OFkDhjpBNGkeOznOx+g=
-X-Received: by 2002:ab0:59a3:: with SMTP id g32mr35415648uad.34.1626856465063; 
- Wed, 21 Jul 2021 01:34:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <DF4PR8401MB0634B89E3FF275E28FB590CC8F359@DF4PR8401MB0634.NAMPRD84.PROD.OUTLOOK.COM>
- <CAH2-KxB5=VQ16c6Cabik6T3HRMNw-R+r8EStpLu-hpgqGtnO-g@mail.gmail.com>
-In-Reply-To: <CAH2-KxB5=VQ16c6Cabik6T3HRMNw-R+r8EStpLu-hpgqGtnO-g@mail.gmail.com>
-From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
-Date: Wed, 21 Jul 2021 14:04:14 +0530
-Message-ID: <CAM=TmwWJ58RaUhjW9axXdyPDSsePG0zQsnxh-FKSj4C5nZG0Kg@mail.gmail.com>
-Subject: Re: RDE Enablement
-To: Ed Tanous <edtanous@google.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GVGd31wTwz2yM5;
+ Wed, 21 Jul 2021 23:28:54 +1000 (AEST)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 16LD4SVg188787; Wed, 21 Jul 2021 09:28:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ mime-version : content-transfer-encoding; s=pp1;
+ bh=1/UqFbGMruDo3Q0vGuZwQjLuoMkBdQ71Br6XNAeVCaQ=;
+ b=FwPLJVaStv0j9I+wdLUA/VQPmHLN4jGnfyjE4JCKPJFvAwKFpRfE9Afsg9EOswQ4VzBi
+ APV/ndDSowzA3VlROOXNX/FUdQ3ChlB1eBuVsbJb9yroLnJtVVs7perwefkiHgV3+Z8G
+ ogklqScJ9RGJ/nbO9wyHButKY3+7FPFHN5uKwjYJuGbN8qCcyynMJoFEHAQHenO3yJp/
+ bqnxffnIKBNvsnQlGxUMTkvjg+2nxLFAtgmrg3GUX2NgFMrtDNzqhRtukWM5P1lXqnfW
+ 9HDL2cmOy1JIJ1v4zWD8uSZJ/zFWtRGTyodEY9zFlc5jzdurlLDVA817eR66nGrN+lKy +g== 
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 39xja3byf3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 21 Jul 2021 09:28:51 -0400
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16LDHVKL020260;
+ Wed, 21 Jul 2021 13:28:50 GMT
+Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
+ [9.57.198.28]) by ppma03wdc.us.ibm.com with ESMTP id 39vqdvc540-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 21 Jul 2021 13:28:50 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 16LDRok130147048
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 21 Jul 2021 13:27:50 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0E359124053;
+ Wed, 21 Jul 2021 13:27:50 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4C99D124062;
+ Wed, 21 Jul 2021 13:27:49 +0000 (GMT)
+Received: from v0005c16 (unknown [9.211.68.240])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed, 21 Jul 2021 13:27:49 +0000 (GMT)
+Message-ID: <b482a658da7d6488e8b84c20db2efbe098052814.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/3] fsi: occ: Force sequence numbering per OCC
+From: Eddie James <eajames@linux.ibm.com>
+To: Joel Stanley <joel@jms.id.au>
+Date: Wed, 21 Jul 2021 08:27:48 -0500
+In-Reply-To: <CACPK8XcBHGsFu0VoNPutC8HYbLcf0WV-KWNixCdGXxWsf1PDVg@mail.gmail.com>
+References: <20210716151850.28973-1-eajames@linux.ibm.com>
+ <20210716151850.28973-2-eajames@linux.ibm.com>
+ <CACPK8XcBHGsFu0VoNPutC8HYbLcf0WV-KWNixCdGXxWsf1PDVg@mail.gmail.com>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Mailer: Evolution 3.28.5 (3.28.5-16.el8) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 4fvz68dvuIAlPOY2zffvQDIwk87o7CjD
+X-Proofpoint-ORIG-GUID: 4fvz68dvuIAlPOY2zffvQDIwk87o7CjD
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-07-21_08:2021-07-21,
+ 2021-07-21 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxscore=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 adultscore=0
+ mlxlogscore=999 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104190000 definitions=main-2107210075
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,52 +102,88 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Garrett, Mike \(HPE Server Firmware\)" <mike.garrett@hpe.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Guenter Roeck <linux@roeck-us.net>, linux-fsi@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi All,
+On Wed, 2021-07-21 at 02:37 +0000, Joel Stanley wrote:
+> On Fri, 16 Jul 2021 at 15:19, Eddie James <eajames@linux.ibm.com>
+> wrote:
+> > Set and increment the sequence number during the submit operation.
+> > This prevents sequence number conflicts between different users of
+> > the interface. A sequence number conflict may result in a user
+> > getting an OCC response meant for a different command. Since the
+> > sequence number is now modified, the checksum must be calculated
+> > and
+> > set before submitting the command.
+> > 
+> > Signed-off-by: Eddie James <eajames@linux.ibm.com>
+> 
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> 
+> > @@ -479,11 +483,26 @@ int fsi_occ_submit(struct device *dev, const
+> > void *request, size_t req_len,
+> >                 return -EINVAL;
+> >         }
+> > 
+> > +       /* Checksum the request, ignoring first byte (sequence
+> > number). */
+> > +       for (i = 1; i < req_len - 2; ++i)
+> > +               checksum += byte_request[i];
+> > +
+> 
+> This could go below, after you've got the sequence number, so the
+> checksumming all happens in the same spot?
 
-On Fri, Jun 11, 2021 at 2:02 AM Ed Tanous <edtanous@google.com> wrote:
->
-> On Thu, Jun 10, 2021 at 1:26 PM Garrett, Mike (HPE Server Firmware)
-> <mike.garrett@hpe.com> wrote:
-> >
-> > Greetings,
-> >
-> > I'm am interested to know if there has been any organized discussion or=
- development on Redfish Device Enablement (RDE - DMTF DSP0218) for moving e=
-ncoded Redfish data across PLDM/MCTP interfaces.  We are interested in prom=
-oting this standard and are willing to lead a reference implementation for =
-OpenBMC if there is not yet something in progress.  If there is something i=
-n progress, can you point me at the work because I would love to see it.
->
-> We are interested in this as well, although we are in the early stages
-> of looking into it.  Ideally we'd like to have OpenBMC support add in
-> cards (NICs, Accelerators, ect) that supported this functionality, and
-> make that data available to the normal OpenBMC channels
-> (Redfish/ipmi/ect).
+It definitely could, I had the idea to do the checksumming outside the
+mutex in case it took a long time? Probably not worth it though.
 
-I had a couple of questions on RDE, and I wonder if this has crossed
-your mind as you started looking at RDE, or if this is
-misunderstanding on my part:
+> 
+> The driver has become a bit of a maze, I can't tell how you're
+> deciding what goes in fsi_occ_submit vs occ_write vs occ_putsram. If
+> oyu have some ideas on how to simplify it then I would welcome those
+> changes.
 
-1) I understand the problem RDE tries to solve in terms of avoiding
-having device-specific knowledge/code on the BMC, but doesn't PLDM
-also solve a similar problem? For example, if a device supported PLDM
-Type 2 (and other PLDM specs such as the one for FRU, etc), the BMC
-could convert PLDM to Redfish. I understand this may not be as
-convenient as RDE but it still solves the device-specific code
-problem, PLDM being a standard protocol as well. Am I missing
-something here? Is it just that RDE is more convenient than PLDM to
-Redfish conversion, or is there more to it - for example, PLDM
-can't/isn't intended to be converted to Redfish, in an
-effective/lossless way?
+Well, it doesn't really matter in fsi_occ_submit vs occ_putsram, as the
+latter is only called in the former. occ_write wouldn't be used by the
+hwmon interface, which is why we're moving some of that to
+fsi_occ_submit, to have more in common. Agree it could probably be
+organized better but I don't immediately have a good idea how to do
+that.
 
-2) Is RDE specific to a class of devices? Some of the documents I see
-stress on I/O adapters. Would be it odd to implement RDE on devices
-like Accelerators, CPU, etc?
+Thanks for the review!
+Eddie
 
-Thanks,
-Deepak
+> 
+> 
+> 
+> >         mutex_lock(&occ->occ_lock);
+> > 
+> > -       /* Extract the seq_no from the command (first byte) */
+> > -       seq_no = *(const u8 *)request;
+> > -       rc = occ_putsram(occ, request, req_len);
+> > +       /*
+> > +        * Get a sequence number and update the counter. Avoid a
+> > sequence
+> > +        * number of 0 which would pass the response check below
+> > even if the
+> > +        * OCC response is uninitialized. Any sequence number the
+> > user is
+> > +        * trying to send is overwritten since this function is the
+> > only common
+> > +        * interface to the OCC and therefore the only place we can
+> > guarantee
+> > +        * unique sequence numbers.
+> > +        */
+> > +       seq_no = occ->sequence_number++;
+> > +       if (!occ->sequence_number)
+> > +               occ->sequence_number = 1;
+> > +       checksum += seq_no;
+> > +
+> > +       rc = occ_putsram(occ, request, req_len, seq_no, checksum);
+> >         if (rc)
+> >                 goto done;
+
