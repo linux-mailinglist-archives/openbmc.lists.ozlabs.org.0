@@ -2,97 +2,94 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A712A3D1740
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 21:49:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 39AF03D18A4
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jul 2021 23:06:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GVR4D41xnz3bVJ
-	for <lists+openbmc@lfdr.de>; Thu, 22 Jul 2021 05:49:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GVSn20K1Dz304h
+	for <lists+openbmc@lfdr.de>; Thu, 22 Jul 2021 07:06:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=b7oKM/yM;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=oBQeKZhp;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=N14/69PO;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=b7oKM/yM; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=oBQeKZhp; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=N14/69PO; 
+ dkim-atps=neutral
+X-Greylist: delayed 326 seconds by postgrey-1.36 at boromir;
+ Thu, 22 Jul 2021 07:06:11 AEST
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GVR3y6C19z2yXM
- for <openbmc@lists.ozlabs.org>; Thu, 22 Jul 2021 05:49:18 +1000 (AEST)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 16LJXgS0122771
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 15:49:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : from : to :
- references : message-id : date : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=s9X1U9jIKXtXKhZp6WxnJNeNO6VBcAFrKOKh6oupGqk=;
- b=b7oKM/yMYkAd50P2EliSuIhoG22kSa+tJ7dw8L3d2WUyDpoOqa9zT5onxBr/bXBvmAk7
- KPQZiEq3RnNqsaXZorlsgiRcKqCYmsajqQGi+YYY1H8pMVLxiV0hXDLJqSk1NT382InY
- FSGkgGCzCkhdYoveDO2xF6yNAYu6RpVzxvkiSk5fGsqe8O0uDorjowb3QtG86rOPJDci
- Sd2BOU/I7cG1yney2WNR9tMC9PUXz8QggDHOcGCEThT7H0abZUIhW4W23a5Iz16rlXA8
- ut3xfVOe71usbnBiuM/bx4M3e8g9XEcdSG9xeNAHHVIjxbn9PYEufaktU9WK4szvkVN2 FA== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 39xn8g96by-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 15:49:15 -0400
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16LJlZEL019742
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 19:49:14 GMT
-Received: from b03cxnp08027.gho.boulder.ibm.com
- (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
- by ppma02dal.us.ibm.com with ESMTP id 39vuk6t0qe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 19:49:14 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 16LJnDkt15401318
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 19:49:13 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7967E7805E
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 19:49:13 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 11E977806B
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 19:49:12 +0000 (GMT)
-Received: from demeter.local (unknown [9.160.7.191])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 21 Jul 2021 19:49:12 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GVSmg0xcHz2yWN
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Jul 2021 07:06:10 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 0DBA7320096B;
+ Wed, 21 Jul 2021 17:00:37 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Wed, 21 Jul 2021 17:00:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=18dREPc8xZObpHg/OR2u77adAfY
+ +KcMZlkllpOXne2Q=; b=oBQeKZhpdOTffsJb8+R0HN+MWu4PWx3RIs/QAvplN2N
+ rQjfePDb8XHamdyMWsThK8UGFTXzNliOJgCZ0OzO0p3r013gPzASaAtXPK+1hKFu
+ i57VeJNJThgpXyvZhpa7VrelT86425on7Ns/nwOZcxP2/rBwyRsPgDf6eVhxKYEP
+ pIFT0BXv6BkQvaBDoxGUHd8mU6bfndD3Xuo9YjZ2lFGXG75PEWQesJ5WCAui38lf
+ LV77+JXaAfp1v6SmFJqPl5jZWsUvGTBZIwwEfSrxgqLkemOMEQeAe2/a8JwfUvM3
+ nl/HBvg8rQPoCafT7u9DXiOfn/CSl/esntbt6mfTblQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=18dREP
+ c8xZObpHg/OR2u77adAfY+KcMZlkllpOXne2Q=; b=N14/69POum4ZsH6j9/8C2J
+ mzP79YxPbRk+5EIWpkSPTu43pEta4RjzkYAfIg6n+IdQ2juGw/jyGDZB0b0ABQ9Q
+ MMMXj9FsvjjyW1JeLWwfIRqpH93A6hkBZfxN65p3nmiieoPln1Z5fJoIo0bsE4VR
+ JuxlaKesqWAlXEPEA5C18KdhXgkCttpjKvGIcyKZk2WbmapkaXaKAF5WNeixlJUs
+ JEdFQCuKMVEs1ONiKH9STNKvKe827fm+p2kMSq2gtgxhbmOaNzJtvYD++46YVFHB
+ BhFqzou3OYX+kMJc18zVNpbWSAz7pxp6EhzpNNMJbEI9X/wNObuoqe8nkByva+5g
+ ==
+X-ME-Sender: <xms:9Yr4YKuJB0wmjG8PmhzbSCGtCxIoYEvFIsv7188as7M3xG-oCChEZQ>
+ <xme:9Yr4YPdbf6A5ud6CLNxEce5bgwDbNCJLW8Rcs09cXK55niT33vA-7Q7UyT5E1Xoam
+ Z0rOHty69ZD_hfQ-Jg>
+X-ME-Received: <xmr:9Yr4YFxq7rMdL8wgcj5Wrrc71S5Rq2oKMszvcXoVe5BB5nQgwFJeqNxpKpL6AuhZ24nmSZ6Vf48PPiF1g7iKNKa-OT4tbPBUhhBwA2vbexZ9Gw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrfeeggddufeeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ udenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheptdejueegudetffeljeeuiedvjefh
+ uefggeettddvhfevveeuveffteevleejvdegnecuffhomhgrihhnpehgihhthhhusgdrtg
+ homhdpohgsmhgtqdhsvggtuhhrihhthidqrhgvshhpohhnshgvqdhtvggrmhdrmhgunecu
+ vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrih
+ gtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:9Yr4YFNdxen2XEQsRW5BZq71Ow5NB_OzvzPQ8zNzLLcU8ogZsSf8lg>
+ <xmx:9Yr4YK8SqRmlLqcvF_cR5DTxkzPv37IycWIRM8GjWfSr_VJN0owQ_Q>
+ <xmx:9Yr4YNXKAFCpfXYQ8iSrJ5717LpOwgRvRUESrUo6UVuI1ESJGM14cQ>
+ <xmx:9Yr4YPH2Y_HVjyiFgfhBFj57x8f9fLDeCozcnCkhdn3riSZCWRF_4Q>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Jul 2021 17:00:36 -0400 (EDT)
+Date: Wed, 21 Jul 2021 16:00:35 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Joseph Reynolds <jrey@linux.ibm.com>
 Subject: Re: Security Working Group meeting - Wednesday July 21 - results
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
+Message-ID: <YPiK8xqFPJFZDa1+@heinlein>
 References: <cd15ec44-5c29-096b-187d-f3c05680f8a2@linux.ibm.com>
-Message-ID: <b4456eee-79c2-6704-ae6f-63cd7485ae9d@linux.ibm.com>
-Date: Wed, 21 Jul 2021 14:49:11 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.1
-In-Reply-To: <cd15ec44-5c29-096b-187d-f3c05680f8a2@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: lJE3v04BJhxmYLjTQYSUkiFLGqUM__9Q
-X-Proofpoint-ORIG-GUID: lJE3v04BJhxmYLjTQYSUkiFLGqUM__9Q
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ <b4456eee-79c2-6704-ae6f-63cd7485ae9d@linux.ibm.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-07-21_10:2021-07-21,
- 2021-07-21 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- mlxlogscore=999 malwarescore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 impostorscore=0 spamscore=0 adultscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2104190000 definitions=main-2107210115
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="BBw18UxwDJaDb010"
+Content-Disposition: inline
+In-Reply-To: <b4456eee-79c2-6704-ae6f-63cd7485ae9d@linux.ibm.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,139 +101,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 7/20/21 5:45 PM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday July 21 at 10:00am PDT.
->
-> We'll discuss the following items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
-> and anything else that comes up:
->
 
-Attended: James Mihm, Sorya Intel, Dhananjay Phadke, Dick Wilkins, Jiang 
-Zhang, Joseph Reynolds, mbhavsar, guptar (Ratan Gupta)
+--BBw18UxwDJaDb010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Bonus item 0: What support fore sOpenBMC have for mTLS client
+On Wed, Jul 21, 2021 at 02:49:11PM -0500, Joseph Reynolds wrote:
+> On 7/20/21 5:45 PM, Joseph Reynolds wrote:
 
-DISCUSSION: See the Redfish APIs referenced below.  Redfish doesn’t 
-support mTLS, but BMCWeb does support mTLS.  Is there a supported 
-interface for the BMC admin to upload an mTLS client cert to the BMC?
+> 5 What is happening with getting a private database to track=20
+> vulnerability submissions?=A0 This would be used by the OpenBMC security=
+=20
+> response team=20
+> https://github.com/openbmc/docs/blob/master/security/obmc-security-respon=
+se-team.md=20
+> <https://github.com/openbmc/docs/blob/master/security/obmc-security-respo=
+nse-team.md>to=20
+> record security vulnerabilities which were reported to OpenBMC and not=20
+> yet fixed or publicly disclosed.=A0 Only members of the OpenBMC security=
+=20
+> response team would have access (read/write access).
+>=20
+> DISCUSSION:
+>=20
+> Surya plans to set up bugzilla.
+>=20
+> Contact Andrew Geissler in his role as OpenBMC community infrastructure=
+=20
+> if you need a server.
 
-References:
+I've mentioned this before that we do not need to set up a bugzilla and tha=
+t it
+is a waste of time to manage a bugzilla instance.  We can create unlimited
+private repositories in our github org.  We just need Brad to create one for
+security discussions and add the people that are currently part of the secu=
+rity
+ML to an ACL for access.
 
-  *
+--=20
+Patrick Williams
 
-    https://github.com/openbmc/openbmc/wiki/Configuration-guide#bmcweb
-    <https://github.com/openbmc/openbmc/wiki/Configuration-guide#bmcweb>(mTLS)
+--BBw18UxwDJaDb010
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  *
+-----BEGIN PGP SIGNATURE-----
 
-    https://github.com/openbmc/openbmc/wiki/Configuration-guide#site-identity-certificate
-    <https://github.com/openbmc/openbmc/wiki/Configuration-guide#site-identity-certificate>
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmD4ivEACgkQqwNHzC0A
+wRn9tA//ZxHR8Jv6trnHa/lXz4qolc5wNHDwjK7gNXRXTNs4SW9u2xOGEtFD1fNn
+ZXYkOwBncftlJF1r/ahCh7Q8DqypF8iSlGn6JOUnrM4oFfTrEZa3xVYfozczP84o
+0ErzXxguTK3cLxLf8VByGO8reFon2jXtQcxMfFGJhtisS1xUQxSx1igEOSmyy96X
+RcsnxhvxeB8p4mqwVJJL9laXODKVBH87P6xuuhi5SQplsjBUXC9Uo8M/YeBpwB1w
+ifBSz2rD74xs6++6kHdWlm7XxcP9ZGm+1+MqhFrbyS3aFkYBFOaAWfuSyOsTY60L
+1lDnmTSYr31Z1w1uhcZHLVELPNg+XH5UI5Qln5ibbo3whLpkPSKjgR5Fj7+FBsJG
+dG/kHuT64FVpQSLLVCFcf/hFRhFGlOYYMKrx/aFs0MnXTBPGwfId6Sv3mR2BIEeG
+JyEoSKt+SiX2/VoKZMsRdJQcsbLx9eNDA5NpKIm03/5hxwEJNmEPxJ0CLh28qPtU
+09u8dZTmjkUrtbiVwOCtGuVc8SKEzaKi2pi5FELvN09WADH6VIY178szyqbQDZKG
+4PPjEvmqShcJLqMxsB2gJo8KbGIpk15wyaaCaWlwLgjLrQ5A6fh6zVqgMynuFASU
+Cn3LBd/yyq4uqXMtngbZHZQJcg4MpEeRGKJ2+GxYfJ+Zi1Ow4jg=
+=Lapd
+-----END PGP SIGNATURE-----
 
-> 1. See Google’s “unified vulnerability schema for open source”
-> https://security.googleblog.com/2021/06/announcing-unified-vulnerability-schema.html?m=1
-> <https://security.googleblog.com/2021/06/announcing-unified-vulnerability-schema.html?m=1>
-
-DISCUSSION:
-
-This was included for awareness only, not to propose using this schema.
-
-This seems similar to the forms needed to create CVEs such as here: 
-https://cveform.mitre.org/ <https://cveform.mitre.org/>
-
-OpenBMC’s current guidelines for collecting this kind of information are 
-here: 
-https://github.com/openbmc/docs/blob/master/security/obmc-security-response-team-guidelines.md 
-<https://github.com/openbmc/docs/blob/master/security/obmc-security-response-team-guidelines.md>
-
-Related discussion: Should OpenBMC consider becoming CNA?  See previous 
-effort here: https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/15621 
-<https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/15621>(“Proposed 
-answers to DWF CNA Registration Form”)
-
-
-
-> 2. Email: Update phosphor-defaults with stronger root password hash
->   algorithm -
-> https://lore.kernel.org/openbmc/34f5b89a-3919-e214-a744-4277fba0bbbb@linux.ibm.com/T/#u
-> <https://lore.kernel.org/openbmc/34f5b89a-3919-e214-a744-4277fba0bbbb@linux.ibm.com/T/#u>
-
-2 Email: Update phosphor-defaults with stronger root password hash 
-algorithm - 
-https://lore.kernel.org/openbmc/34f5b89a-3919-e214-a744-4277fba0bbbb@linux.ibm.com/T/#u 
-<https://lore.kernel.org/openbmc/34f5b89a-3919-e214-a744-4277fba0bbbb@linux.ibm.com/T/#u>
-
-DISCUSSION:
-
-The group agreed to change the project’s default root password hash, 
-while leaving the cleartext password the same.  TODO: Joseph will 
-propose the change via a gerrit review.
-
-
-
-Topics added after the meeting started:
-
-3 What is the status of the OpenBMC BMC secure boot function?  Who is 
-working on it?
-
-DISCUSSION:
-
-ASpeed AST2600 BMC secure boot using AST2600 hardware without TPM and 
-without any special hardware (other than pullup resistors).  Interest in 
-avoiding Cerberus.
-
-See also Design 
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/26169 
-<https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/26169>
-
-
-Two ways to validate uboot: via AST2600 hardware, via Cerberus
-
-Once uboot is running, use uboot to validate the FIT image, kernel, etc.
-
-
-4 What is happening with the Intel Hack-a-thon 2?
-
-DISCUSSION: Creating CVEs.
-
-
-5 What is happening with getting a private database to track 
-vulnerability submissions?  This would be used by the OpenBMC security 
-response team 
-https://github.com/openbmc/docs/blob/master/security/obmc-security-response-team.md 
-<https://github.com/openbmc/docs/blob/master/security/obmc-security-response-team.md>to 
-record security vulnerabilities which were reported to OpenBMC and not 
-yet fixed or publicly disclosed.  Only members of the OpenBMC security 
-response team would have access (read/write access).
-
-DISCUSSION:
-
-Surya plans to set up bugzilla.
-
-Contact Andrew Geissler in his role as OpenBMC community infrastructure 
-if you need a server.
-
-
-6 What is happening with deploying AppArmor?
-
-DISCUSSION:
-
-Nobody was tracking it closely enough to answer.  Anton had been working 
-on it.  See reviews under 
-https://gerrit.openbmc-project.xyz/q/owner:rnouse%2540google.com 
-<https://gerrit.openbmc-project.xyz/q/owner:rnouse%2540google.com>
-
-
-
->
->
-> Access, agenda and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group 
-> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
->
-> - Joseph
-
+--BBw18UxwDJaDb010--
