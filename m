@@ -2,56 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F26C3D1A69
-	for <lists+openbmc@lfdr.de>; Thu, 22 Jul 2021 01:29:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D2FA63D232C
+	for <lists+openbmc@lfdr.de>; Thu, 22 Jul 2021 14:13:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GVWxR17vpz30Mp
-	for <lists+openbmc@lfdr.de>; Thu, 22 Jul 2021 09:28:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GVrvX5JGXz30GW
+	for <lists+openbmc@lfdr.de>; Thu, 22 Jul 2021 22:13:28 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=ozlabs.org header.i=@ozlabs.org header.a=rsa-sha256 header.s=201707 header.b=FA5Ym+Gs;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ThhtbQuM;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=ozlabs.org (client-ip=2401:3900:2:1::2; helo=ozlabs.org;
- envelope-from=jk@ozlabs.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1035;
+ helo=mail-pj1-x1035.google.com; envelope-from=tyler.sabdon@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- secure) header.d=ozlabs.org header.i=@ozlabs.org header.a=rsa-sha256
- header.s=201707 header.b=FA5Ym+Gs; dkim-atps=neutral
-Received: from ozlabs.org (ozlabs.org [IPv6:2401:3900:2:1::2])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ThhtbQuM; dkim-atps=neutral
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com
+ [IPv6:2607:f8b0:4864:20::1035])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GVWx23CdJz2yLK;
- Thu, 22 Jul 2021 09:28:38 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
- SHA256) (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4GVWwx0lfNz9sV8;
- Thu, 22 Jul 2021 09:28:32 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
- t=1626910114; bh=GoKHY31AUl/WmIbrWvstEpC6nwWnu/aYYQ5eVh88pmQ=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
- b=FA5Ym+Gs70MifbuFfkuM8sCA6mPXNMq4AZgTsP743W2eJikolBaegABYpt7ziNCX0
- YpbZ741z/evpIlqL0SNxLPw0AS5PEC0fMzizB5sG4pk7CscPu4KzNFlHg1OHNrKZwo
- wkOPAxugW5aO8km38+a3cmYqrWg5x5Da6PW4D9IHTXK0qi46nu/zj+Eg6OtIo7yQeR
- hOB+s8+o5p9RGW7ebPM2LQ/Qt305lDSU6dZ4v5aV6gUSCyVklP9F+G9wHbnK+pD+x8
- oDIXfKB6LbMNExnTOnUJCeyIPs0tXjbw4k8UR1Jj7/LBdpIh+7w23MeXjc573Os2zg
- VNwEbve7Xomag==
-Message-ID: <de6a55a881eae463014af0fe165b60a378773d1d.camel@ozlabs.org>
-Subject: Re: [PATCH 3/3] fsi: occ: Add dynamic debug to dump command and
- response
-From: Jeremy Kerr <jk@ozlabs.org>
-To: Eddie James <eajames@linux.ibm.com>, linux-kernel@vger.kernel.org
-Date: Thu, 22 Jul 2021 07:28:27 +0800
-In-Reply-To: <20210716151850.28973-4-eajames@linux.ibm.com>
-References: <20210716151850.28973-1-eajames@linux.ibm.com>
- <20210716151850.28973-4-eajames@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.3-1 
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GVrvG45cHz2ydk
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Jul 2021 22:13:13 +1000 (AEST)
+Received: by mail-pj1-x1035.google.com with SMTP id
+ x13-20020a17090a46cdb0290175cf22899cso5209624pjg.2
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Jul 2021 05:13:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=Hh/Kxi0YFVSp4hkqTwPgNOMnEcQ976pyX1uEiOwqoAU=;
+ b=ThhtbQuMyo6QeoUaMsmBFdvj8q+oobJTqLbJlyT8x/VpfmMOAgYOSv4kZHlsAj491E
+ 7gKGutjTC6qdMUInauzRmm/yAQi2DlubB96eYdBD9DmflNjg2kFDexR+dbHcYH2Guv6R
+ 37dmsP9fdQzyqheAlyy1f4cEI0I4bX9fk54L1mBHYDIwJrxl/sa6yub5Day5MQDskwqi
+ RHVO/rtvSzpBELgvS4xY91wqEGDNjMtx/AArMSPLVnhpm5n0ND3PYjHvBo79ilLY8v4I
+ DCSh/ajWWDVLk26LLIkirvDEgStg2g+XF7xbhAMeGZDWeNjesOGkx59arxqObmt46WeG
+ lfew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=Hh/Kxi0YFVSp4hkqTwPgNOMnEcQ976pyX1uEiOwqoAU=;
+ b=dmnpBxpPuditI6mWeu3l6zv2EBI4y4EUZjlFAm4LMLLrpLQnM21zYUbneWyj5WafJh
+ 3gJwLjmhPz8Ev+DC+pIZmCLptAZzC+tsdGbJ8xncyXLm7/D2s0E+vrbA1M7OV0K7FI2E
+ VD3VeGgofF1a7lkk/82P4eUgBxT0MUOhobjkCjPxDab6WEAxs+pEDrq6NvD4TLK5sFFJ
+ IHIhNTBXp8Bd8SJmuvEMQeEQLxaRyRKp/p90Me76XTM7DwbQFRHH39alleolByQchMg+
+ a79N9Qq9trhlk/Etx+MABX4wkdGQU1C4gna5b4X3esmJ8/5zd24gRhpqqvpPbI4BPlOY
+ stuw==
+X-Gm-Message-State: AOAM533KYoZE8sXnJ8uzEHb+KPRaJiKblzrnl4x5H5YHrssFcfPYN16K
+ SDa8VY9bF28mLffl7jyA6hsfFjoadcTt8Q==
+X-Google-Smtp-Source: ABdhPJxgRb2K0z7bviL9s6+xlwfsSu5CEtcsuzJLSJ2S6DuGAdKwS4h8jILIV0GEbIyL4VXIcMcwew==
+X-Received: by 2002:a17:902:e052:b029:12b:491f:4eb6 with SMTP id
+ x18-20020a170902e052b029012b491f4eb6mr31689000plx.81.1626955986047; 
+ Thu, 22 Jul 2021 05:13:06 -0700 (PDT)
+Received: from [192.168.0.6] (1-160-4-131.dynamic-ip.hinet.net. [1.160.4.131])
+ by smtp.gmail.com with ESMTPSA id
+ u24sm31352325pfm.200.2021.07.22.05.13.05
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 22 Jul 2021 05:13:05 -0700 (PDT)
+From: Deng Tyler <tyler.sabdon@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.7\))
+Subject: bus method call error process
+Message-Id: <1710A383-17B7-4B49-9468-A78B1A3D9C9A@gmail.com>
+Date: Thu, 22 Jul 2021 20:13:02 +0800
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+X-Mailer: Apple Mail (2.3608.120.23.2.7)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,24 +82,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, jdelvare@suse.com, openbmc@lists.ozlabs.org,
- linux@roeck-us.net, linux-fsi@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Eddie,
+Hi all:
+    I create my bus service and try to use bus method call to get some =
+property from other bus service. But I encounter a bus call issue that =
+my service suspended if I try to make a method call with a non active =
+service. For example:
+=E2=80=A6
+method =3D bus.new_method_call(=E2=80=9Cnon-active service=E2=80=9D, =
+obj, interface, method);
+reply =3D bus.call(method);
+#service suspended here=E2=80=A6
+if(reply)=E2=80=A6.
+=E2=80=A6
 
-> Use the dynamic branching capability of the dynamic debug subsystem
-> to dump the command and response with the correct OCC device name.
+Could someone help to give a hint??
+Thanks.
 
-Would this be better done with a tracepoint? Given it's a fairly
-well-defined pair of events, and there's data to dump in both cases.
-
-We have a couple of existing tracepoionts in the core code if that
-helps...
-
-Cheers,
-
-
-Jeremy
 
