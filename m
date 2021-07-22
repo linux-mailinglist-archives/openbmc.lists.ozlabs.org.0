@@ -1,67 +1,104 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4F883D24C7
-	for <lists+openbmc@lfdr.de>; Thu, 22 Jul 2021 15:43:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E3D63D2606
+	for <lists+openbmc@lfdr.de>; Thu, 22 Jul 2021 16:43:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GVtv95BsBz30JS
-	for <lists+openbmc@lfdr.de>; Thu, 22 Jul 2021 23:43:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GVwDc296rz30CR
+	for <lists+openbmc@lfdr.de>; Fri, 23 Jul 2021 00:43:28 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=cJp2XBKl;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=F0zLYDL2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102c;
- helo=mail-pj1-x102c.google.com; envelope-from=parishrutb@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=cJp2XBKl; dkim-atps=neutral
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com
- [IPv6:2607:f8b0:4864:20::102c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=F0zLYDL2; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GVttV4tBFz2yhk
- for <openbmc@lists.ozlabs.org>; Thu, 22 Jul 2021 23:42:41 +1000 (AEST)
-Received: by mail-pj1-x102c.google.com with SMTP id
- p4-20020a17090a9304b029016f3020d867so5588827pjo.3
- for <openbmc@lists.ozlabs.org>; Thu, 22 Jul 2021 06:42:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=Q4SJi83fMMCFWAu0KnhyJl20JVy2XeQZ7HOhvgI8mAk=;
- b=cJp2XBKlK6eXjHRUy2ij33EkzFgPPP/J3jLGP8ZxLbUReA7gQV5D0MDTdN2QE0PKbl
- gPXYhSvLLy5nLwJEqrDVuIGUZ/oMGhktFEb5oTmlPFTNq0sDeQKWvOjbXYd0n5fYjV9R
- KizMTDGayVISEyxEV+yMNJ3NDQ2oOSoS/UcRgBlPL9cJKGV3K0oi0VktoN6kDUEJAlpS
- 5WFukF6M+E3F+My89zEBOxbsXxUs+UyOCHV7JfwccAZi/TzrNrhlfBgB218VezaXeTHZ
- /wRuffIOHZiSIXbTyNND8wfYut1Yls7Xc86+SeG28YzRpna2yHmm2NgFZJFIRee+7/K5
- a5gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Q4SJi83fMMCFWAu0KnhyJl20JVy2XeQZ7HOhvgI8mAk=;
- b=Q8S+LD+wXcHf66QM54TEok2c+rKhGs3bLtJuBb+vKR1eBW+5ovOTS0atIouGAFq3i9
- T/mOa+93r7hdXU+2/Z9lvtPIenq/YDqC3FosFmAuO3V3ybgENegI6/lkzNyXQWuTnvVY
- VoAa3+LHFuWLp4b0+6Qn84zfEI/8xaZpYASwGkulkik+oLEHGxSI5fHIPdmG3QUiRmhW
- aTd4JQQT1jyKTBzlONl1qlmYHrI9EWDnkZHiNkpNRnUd6cY16SirKqVJ2JeVjhhc2nyw
- 8HNX1NROWnxNLxuR7CaF56OvjkG8qvngrCOEpfi7YHVrVWaHHdLWhY7UMZpxrYxZD+59
- AyMA==
-X-Gm-Message-State: AOAM532ypJrbKELK1fvDhbtnI2OgqE4Au1Gc7pfbBreDsePYla573bXG
- 1MYLwuudJBZOunGURdsIu9Vj5oTwvUDakbrNH6KA3rUcM1w=
-X-Google-Smtp-Source: ABdhPJxukoUkEeyNzJoL7UgEnuSpuZqrEsM42ofsBem8btPAdCzaNM+C8h0wvfSCwauizHMXbKhaY27rnUSQhDecilI=
-X-Received: by 2002:a17:90a:474f:: with SMTP id
- y15mr40969613pjg.2.1626961358297; 
- Thu, 22 Jul 2021 06:42:38 -0700 (PDT)
-MIME-Version: 1.0
-From: Parishrut Bhatia <parishrutb@gmail.com>
-Date: Thu, 22 Jul 2021 19:12:25 +0530
-Message-ID: <CA+FKyEU1L-CSB9N=8ure=qiUJcZEsrCXJ_4cFTUVeOLdGSOCKw@mail.gmail.com>
-Subject: Requesting feedback on in-progress GUI designs (Server overview and
- header content)
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000d31e8505c7b6759b"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GVwDG0bRKz2yWN
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Jul 2021 00:43:09 +1000 (AEST)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 16MEWhuW000686; Thu, 22 Jul 2021 10:43:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=content-type :
+ mime-version : subject : from : in-reply-to : date : cc :
+ content-transfer-encoding : message-id : references : to; s=pp1;
+ bh=LcFmo9c6y3v+uKq3VYBILhgRnDw2BNnJ2WH/oQA0z6k=;
+ b=F0zLYDL2FMP3f3abHB14npWs9Ubrl1Z8qotF8751PDcDRt+BrbmJOOICWq1FYgNSvdlp
+ gv6ojKoc6bT3avCEjY9I588ExZWevgbwv1gYnrCo1CrhguJQs2a+rkDJsKTuRxwVKp9O
+ kBNbd0J3q0uJIBhXkcNHbKkjL8WrhxYlj3EM5JnnjKcJ5nv1XARxKDlTKg78kuts1BoO
+ yHLhARKb/olPImI4yVNTHUA/YHvblH45+tetyZ+qFREdAnKDOAMnFgm3+dwqY1wRwq9Y
+ dadq4w94MKAB6ynF9H0ZxDJk4FwTPqiHF5Pe5EX9Mj8hlUjMavwINm6DvanK/StHAYgW xg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 39ya97gxgk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Jul 2021 10:43:04 -0400
+Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 16MEWiT4000847;
+ Thu, 22 Jul 2021 10:43:03 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 39ya97gxfb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Jul 2021 10:43:03 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16MEbbD4027007;
+ Thu, 22 Jul 2021 14:43:01 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma02dal.us.ibm.com with ESMTP id 39vuk7tbyp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Jul 2021 14:43:01 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 16MEh0UB37552406
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 Jul 2021 14:43:00 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 17515C605D;
+ Thu, 22 Jul 2021 14:43:00 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 50184C606C;
+ Thu, 22 Jul 2021 14:42:59 +0000 (GMT)
+Received: from smtpclient.apple (unknown [9.160.95.46])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Thu, 22 Jul 2021 14:42:59 +0000 (GMT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Re: [PATCH linux dev-5.10] ARM: dts: rainier: Add
+ 'factory-reset-toggle' as GPIOF6
+From: Adriana Kobylak <anoo@linux.ibm.com>
+In-Reply-To: <20210714214741.1547052-1-blisaac91@gmail.com>
+Date: Thu, 22 Jul 2021 09:42:57 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <8A669E1A-81B3-40E6-BD0C-342D1566EEC8@linux.ibm.com>
+References: <20210714214741.1547052-1-blisaac91@gmail.com>
+To: Isaac Kurth <blisaac91@gmail.com>, mspinler@linux.ibm.com,
+ Andrew Geissler <geissonator@gmail.com>, Joel Stanley <joel@jms.id.au>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: P0KyNtTg3VxnxPXxM16RY0MxrVzvjIEn
+X-Proofpoint-ORIG-GUID: AGTP1S0D6gnsyOdDRoStbd43ZwkSogf8
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-07-22_09:2021-07-22,
+ 2021-07-22 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0
+ adultscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 phishscore=0
+ suspectscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104190000 definitions=main-2107220097
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,49 +110,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: isaac.kurth@ibm.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d31e8505c7b6759b
-Content-Type: text/plain; charset="UTF-8"
 
-Hello,
 
-Requesting feedback on the current iteration for Server overview and header
-content.
-https://github.com/openbmc/webui-vue/issues/71
+> On Jul 14, 2021, at 4:47 PM, Isaac Kurth <blisaac91@gmail.com> wrote:
+>=20
+> From: Isaac Kurth <isaac.kurth@ibm.com>
+>=20
+> The state of this GPIO determines whether a factory reset has been
+> requested. If a physical switch is used, it can be high or low. During =
+boot,
+> the software checks and records the state of this switch. If it is =
+different
+> than the previous recorded state, then the read-write portions of =
+memory are
+> reformatted.
+>=20
+> Signed-off-by: Isaac Kurth <isaac.kurth@ibm.com>
 
-Regards
-*Parishrut Bhatia*
-User Experience Designer | IBM iX, Bangalore
-+91 9811 930 069
+Reviewed-by: Adriana Kobylak <anoo@us.ibm.com>
 
-*"Everyone wants to go to heaven, but no one wants to die."*
+> ---
+> arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts =
+b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> index 728855c5cb90..81be3a563e6a 100644
+> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> @@ -231,7 +231,7 @@ &gpio0 {
+> 	/*C0-C7*/	"","","","","","","","",
+> 	/*D0-D7*/	"","","","","","","","",
+> 	/*E0-E7*/	"","","","","","","","",
+> -	/*F0-F7*/	"","","","","","","","",
+> +	/*F0-F7*/	"","","","","","","factory-reset-toggle","",
+> 	/*G0-G7*/	"","","","","","","","",
+> 	/*H0-H7*/	=
+"","bmc-ingraham0","rear-enc-id0","rear-enc-fault0","","","","",
+> 	/*I0-I7*/	"","","","","","","","",
+> --=20
+> 2.25.1
+>=20
 
---000000000000d31e8505c7b6759b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hello,</div><div><br></div><div>Requesting feedback o=
-n the current iteration for Server overview and header content.</div><div><=
-a href=3D"https://github.com/openbmc/webui-vue/issues/71">https://github.co=
-m/openbmc/webui-vue/issues/71</a></div><div><br></div><div>Regards<br></div=
-><div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_si=
-gnature"><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div>=
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><span style=3D"backgroun=
-d-color:rgb(255,255,255)"><font style=3D"font-size:12.72px" face=3D"tahoma,=
- sans-serif"><b>Parishrut Bhatia</b></font></span><div style=3D"font-size:1=
-2.72px"><span style=3D"color:rgb(102,102,102)"><span style=3D"background-co=
-lor:rgb(255,255,255)"><span style=3D"font-family:tahoma,sans-serif;font-siz=
-e:small">User Experience Designer | IBM iX, Bangalore</span></span></span><=
-/div><div style=3D"font-size:12.72px"><span style=3D"color:rgb(102,102,102)=
-"><span style=3D"background-color:rgb(255,255,255)"><span style=3D"font-fam=
-ily:tahoma,sans-serif;font-size:12.72px">+91 9811 930 069</span></span></sp=
-an></div><div style=3D"font-size:12.72px"><span style=3D"background-color:r=
-gb(255,255,255)"><br></span></div><div style=3D"font-size:12.72px"><i><span=
- style=3D"color:rgb(102,102,102)"><span style=3D"background-color:rgb(255,2=
-55,255)">&quot;Everyone wants to go to heaven, but no one wants to die.&quo=
-t;</span></span></i><br></div><div style=3D"font-size:12.72px"><br><br></di=
-v></div></div></div></div></div></div></div></div></div></div></div></div>
-
---000000000000d31e8505c7b6759b--
