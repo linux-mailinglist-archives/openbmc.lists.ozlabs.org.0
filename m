@@ -2,52 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79BB83D3254
-	for <lists+openbmc@lfdr.de>; Fri, 23 Jul 2021 05:49:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 262DF3D325E
+	for <lists+openbmc@lfdr.de>; Fri, 23 Jul 2021 05:54:35 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GWFgm2mD8z30CQ
-	for <lists+openbmc@lfdr.de>; Fri, 23 Jul 2021 13:49:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GWFnP04tQz30G2
+	for <lists+openbmc@lfdr.de>; Fri, 23 Jul 2021 13:54:33 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=QdogLg15;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=V4GRmNXw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=wlzJeUfc;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=infradead.org
- (client-ip=2001:8b0:10b:1236::1; helo=casper.infradead.org;
- envelope-from=rdunlap@infradead.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- secure) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256
- header.s=casper.20170209 header.b=QdogLg15; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=V4GRmNXw; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=wlzJeUfc; 
  dkim-atps=neutral
-Received: from casper.infradead.org (casper.infradead.org
- [IPv6:2001:8b0:10b:1236::1])
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GWFgL07m5z2yNw;
- Fri, 23 Jul 2021 13:49:13 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:MIME-Version:
- Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
- Content-Description:In-Reply-To:References;
- bh=ftxXD+615Sr9nOCpiYUCXYRWxt8w1W0jBYcrbNw9gUM=; b=QdogLg15yH+3jnjlnYrKRd6Dqm
- X6eWDuihL7IX278H+wtGKb5i13JqkZGCgeqGtvviF++bp6ieuUcjLFh6p0vTCwQR5iS0Ubpx9p/nv
- yhgcUmMbi8TLkWRfnKPr0Rfw+OFV56nf8hRlvJphzjSS/LpSP9sB9Ret5jRU7RF9xTAb5CJA8NmrB
- BwjuvxE3wcr0mh+kKqxMp+VcrH4MrkqgfhnlX952yGWHfDcX892InBS7Nlpb8rBSWFfXIqE0QFDR2
- vjtF1I+tnGe/nigtOazk6qkqj0anqn4IbeQDXqMs/2Cj3EH+oFx+pEVGTMGPSFVBgiqnD/4OsbFLz
- czN3gNXg==;
-Received: from [2601:1c0:6280:3f0::a22f] (helo=smtpauth.infradead.org)
- by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1m6mB2-00AxAt-TO; Fri, 23 Jul 2021 03:48:47 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: 
-Subject: [PATCH] pinctrl: aspeed: placate kernel-doc warnings
-Date: Thu, 22 Jul 2021 20:48:40 -0700
-Message-Id: <20210723034840.8752-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.26.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GWFn04YF0z2yMS;
+ Fri, 23 Jul 2021 13:54:12 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id 9DF345C010A;
+ Thu, 22 Jul 2021 23:54:08 -0400 (EDT)
+Received: from imap43 ([10.202.2.93])
+ by compute2.internal (MEProxy); Thu, 22 Jul 2021 23:54:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=xS4UlT8eqZ4HbXnlKo2wRx3nOGUU1G6
+ jbgGMu/4vs7E=; b=V4GRmNXw9KxItI2mclr4P+n+y8MA8ohHFIEiZXjKM2s3p75
+ SQKSig8Osajim9/1m1is7b7WKEowNmgNGdqV4axk/2Z4tp4lLv073ibqngaPYfjG
+ e4V2alR9GeZWg8F858x2mkhFJbyUZUBRar742VlCjimn5OnUrlQ9kiqEYFU3LreP
+ IbrwbzbeiPyn/xnCnQ0Aetp1TWWelym9wg4u8qMn/COQSapHyvZ2ST/TCEysF6jg
+ gH6yo72CdhGhghz6ajk6cNovHk8undf0uakPhoCAZC8VUsOjzwM4q1lScOv1umeD
+ 3KZQtz39m1Van/ZIvjE/ee6G6VFMM2k5SBj/sZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=xS4UlT
+ 8eqZ4HbXnlKo2wRx3nOGUU1G6jbgGMu/4vs7E=; b=wlzJeUfcOGgr90bxzOb/YU
+ p0eO2F92UQrQECl7mHnTMLE7Y46Peyugd3oFmRgywd01jdXcyc3BeR/i/Ey49FXP
+ gxglJqNgD9w10hsDOZ4cLTNcIskESK/ScJYvjhOlYTj/1RRE3Sq+SuQZM1Q3Q0Ce
+ akc5G5li/9elJ0wxUPRHiPeJDpeF/0aq6Epk5MjDzS5M5bdBL5sBhV9ZXMnKiOr5
+ pSVLJiL7mIL188VRrhXAQgjKsQNUEj4NJZzVI4i1esoIdjodm8aOmd2ySvS8t/Gu
+ v2/Cmuk/8u1loz4t4snAqERgcVausfEK3Bomvymokj4i7EnzDywm2DGgI5v9USGw
+ ==
+X-ME-Sender: <xms:Xz36YFf46-PrPSbgtq7O3vj62FfOVuectW20CypNFeNX1Jy7gl-nBQ>
+ <xme:Xz36YDMDwbY8Mzp-kyMu8e_v-j3IFEIcTI09R_4vy00RMmqTc6l7aqGeLwLxSsE0T
+ ERqjkk4KBH4pCDHgA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrfeejgdejvdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
+ veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:Xz36YOiGcl1e3MCA7GD69oDL-9tnudc9JNoEvs_AwEjy0v0e3iwzAQ>
+ <xmx:Xz36YO9Mu4E1ZGuLuI_3sMV6oyYzbeEi0b-p9IjOvTyj_gF1_XkZ6w>
+ <xmx:Xz36YBtAdu4XkqW2JPx9viqc8oIkT33cJbhrGvhfi7E3bCvg0Xtm8w>
+ <xmx:YD36YLLBSgtUbo_evZVcsicStpYcLR8BwnZrIr-5ufCXutjdwkWmDA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 8EBF3AC0DD0; Thu, 22 Jul 2021 23:54:07 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-540-g21c5be8f1e-fm-20210722.001-g21c5be8f
+Mime-Version: 1.0
+Message-Id: <d6beadd3-cd57-40ec-aee7-0dc9d8209461@www.fastmail.com>
+In-Reply-To: <20210723034840.8752-1-rdunlap@infradead.org>
+References: <20210723034840.8752-1-rdunlap@infradead.org>
+Date: Fri, 23 Jul 2021 13:23:46 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Randy Dunlap" <rdunlap@infradead.org>
+Subject: Re: [PATCH] pinctrl: aspeed: placate kernel-doc warnings
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,58 +95,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kernel test robot <lkp@intel.com>, linux-aspeed@lists.ozlabs.org,
- Aditya Srivastava <yashsri421@gmail.com>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org, Randy Dunlap <rdunlap@infradead.org>,
+Cc: kbuild test robot <lkp@intel.com>, linux-aspeed@lists.ozlabs.org,
+ Aditya Srivastava <yashsri421@gmail.com>, openbmc@lists.ozlabs.org,
  linux-gpio@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Eliminate kernel-doc warnings in drivers/pinctrl/aspeed by using
-proper kernel-doc notation.
 
-Fixes these kernel-doc warnings:
 
-drivers/pinctrl/aspeed/pinmux-aspeed.c:61: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
-    * Query the enabled or disabled state for a mux function's signal on a pin
-drivers/pinctrl/aspeed/pinctrl-aspeed.c:135: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
-    * Search for the signal expression needed to enable the pin's signal for the
+On Fri, 23 Jul 2021, at 13:18, Randy Dunlap wrote:
+> Eliminate kernel-doc warnings in drivers/pinctrl/aspeed by using
+> proper kernel-doc notation.
+> 
+> Fixes these kernel-doc warnings:
+> 
+> drivers/pinctrl/aspeed/pinmux-aspeed.c:61: warning: This comment starts 
+> with '/**', but isn't a kernel-doc comment. Refer 
+> Documentation/doc-guide/kernel-doc.rst
+>     * Query the enabled or disabled state for a mux function's signal 
+> on a pin
+> drivers/pinctrl/aspeed/pinctrl-aspeed.c:135: warning: This comment 
+> starts with '/**', but isn't a kernel-doc comment. Refer 
+> Documentation/doc-guide/kernel-doc.rst
+>     * Search for the signal expression needed to enable the pin's 
+> signal for the
+> 
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Cc: Aditya Srivastava <yashsri421@gmail.com>
-Cc: Andrew Jeffery <andrew@aj.id.au>
-Cc: linux-aspeed@lists.ozlabs.org
-Cc: openbmc@lists.ozlabs.org
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: linux-gpio@vger.kernel.org
----
- drivers/pinctrl/aspeed/pinctrl-aspeed.c |    4 ++--
- drivers/pinctrl/aspeed/pinmux-aspeed.c  |    3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
-
---- linux-next-20210722.orig/drivers/pinctrl/aspeed/pinmux-aspeed.c
-+++ linux-next-20210722/drivers/pinctrl/aspeed/pinmux-aspeed.c
-@@ -59,7 +59,8 @@ int aspeed_sig_desc_eval(const struct as
- }
- 
- /**
-- * Query the enabled or disabled state for a mux function's signal on a pin
-+ * aspeed_sig_expr_eval - Query the enabled or disabled state for a
-+ * mux function's signal on a pin
-  *
-  * @ctx: The driver context for the pinctrl IP
-  * @expr: An expression controlling the signal for a mux function on a pin
---- linux-next-20210722.orig/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-+++ linux-next-20210722/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-@@ -133,8 +133,8 @@ static int aspeed_disable_sig(struct asp
- }
- 
- /**
-- * Search for the signal expression needed to enable the pin's signal for the
-- * requested function.
-+ * aspeed_find_expr_by_name - Search for the signal expression needed to
-+ * enable the pin's signal for the requested function.
-  *
-  * @exprs: List of signal expressions (haystack)
-  * @name: The name of the requested function (needle)
+Acked-by: Andrew Jeffery <andrew@aj.id.au>
