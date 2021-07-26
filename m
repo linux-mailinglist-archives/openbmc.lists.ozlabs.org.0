@@ -2,83 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBFC83D5C30
-	for <lists+openbmc@lfdr.de>; Mon, 26 Jul 2021 16:53:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D0A5B3D638C
+	for <lists+openbmc@lfdr.de>; Mon, 26 Jul 2021 18:42:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GYNG15Fc5z307x
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 00:53:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GYQhd5R3Nz3004
+	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 02:42:57 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=LV8JowaB;
+	dkim=pass (1024-bit key; unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=vrbEbaj6;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12a;
- helo=mail-lf1-x12a.google.com; envelope-from=fercerpav@gmail.com;
+ smtp.mailfrom=yandex-team.ru (client-ip=2a02:6b8:0:1a2d::193;
+ helo=forwardcorp1o.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=LV8JowaB; dkim-atps=neutral
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com
- [IPv6:2a00:1450:4864:20::12a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
+ header.a=rsa-sha256 header.s=default header.b=vrbEbaj6; 
+ dkim-atps=neutral
+X-Greylist: delayed 7940 seconds by postgrey-1.36 at boromir;
+ Tue, 27 Jul 2021 02:42:40 AEST
+Received: from forwardcorp1o.mail.yandex.net (forwardcorp1o.mail.yandex.net
+ [IPv6:2a02:6b8:0:1a2d::193])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GYNFk23Jlz2yxP
- for <openbmc@lists.ozlabs.org>; Tue, 27 Jul 2021 00:52:57 +1000 (AEST)
-Received: by mail-lf1-x12a.google.com with SMTP id z2so16002777lft.1
- for <openbmc@lists.ozlabs.org>; Mon, 26 Jul 2021 07:52:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=DfxheQCIJCkcTH/YXFNMpkYed/y3ZV374BigRlEb7Sc=;
- b=LV8JowaBllbBQhHr7tdZaDLBdpT/MqPZvCdnpEL1nJVvkYYM6helS5kshnaU5h28S/
- zMMwyrqF8lAXIXgmqKDeYQZgdVZjm69iBYU6LbVSvFCOsLbgQ08uvw8mXtf8CTqvd+Mz
- PBB1NBnLo2XQfnEhEs1mAvABGFIBSwzPiZKXAIvRREs2G8ptJ7AAxSef7Zo4e+qDrApF
- 593qfxsMY46ry72/rdfKcLYloMk7qVz1sEjuoBUxLuKavvq4zPt/E0ojYeWy/P2c3XSR
- Z61ElJJt91MaxOsIftdGpR4jGC4lI5E5h50XTnoG2v7uRg2xYHm+rpOFwxFcsCza6fbm
- UNBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=DfxheQCIJCkcTH/YXFNMpkYed/y3ZV374BigRlEb7Sc=;
- b=gFd9oMFgHZxRCUnc67Gp0L7xZ2q8H12PNcJGhSHVBf/7dK89nB6UBkYXx7GIBfc9R9
- 9gyEA+pX5JLM7K6BOoY+3F8q75l7SSn0sERI315Yf51mDoP0gfr+Fg+xdqzysws9UP1n
- 3R8i2bg+S5E4rh1mC2MurBB8/aqUD7u1DnZZr0pE9GLD90TYT9kYChZC53tXg414jsNo
- zhcVL1bH7U3ViVbYRfN5eUPELKAAj04/Okyaa9rIWwV/kYuBQ2crq8XwQmOH+sQt1zfW
- 4YPDKp8UNzQKHv1omhY9L7Wt28p7sueSgwujjalr1Q969D1nZRwdI8+uw78nL0LO86iK
- +JTg==
-X-Gm-Message-State: AOAM533i0UInQ3Bk1Z/GZmZKLwi4TCoXoSRsiSnvpYQoPmffrQoMuyks
- 9l4DvPjcgSDX9VqwVHPKafE=
-X-Google-Smtp-Source: ABdhPJydTvbLYFDn4n0XMIWAEhsjos3vivKY7LHpTkPww27AJmzaJ7/IFGe6XAwZGys/oQJDARlg5A==
-X-Received: by 2002:ac2:58e1:: with SMTP id v1mr12933046lfo.616.1627311171145; 
- Mon, 26 Jul 2021 07:52:51 -0700 (PDT)
-Received: from home.paul.comp (paulfertser.info.
- [2001:470:26:54b:226:9eff:fe70:80c2])
- by smtp.gmail.com with ESMTPSA id z23sm20703lfg.153.2021.07.26.07.52.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jul 2021 07:52:50 -0700 (PDT)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
- by home.paul.comp (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTP id
- 16QEqlYd004696; Mon, 26 Jul 2021 17:52:48 +0300
-Received: (from paul@localhost)
- by home.paul.comp (8.15.2/8.15.2/Submit) id 16QEqlLk004695;
- Mon, 26 Jul 2021 17:52:47 +0300
-Date: Mon, 26 Jul 2021 17:52:46 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-Subject: Re: Serial Over Lan (SOL) no login prompt on Linux IRQ mode
-Message-ID: <20210726145246.GL875@home.paul.comp>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GYQhJ4vdLz2yx9
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Jul 2021 02:42:36 +1000 (AEST)
+Received: from iva8-c5ee4261001e.qloud-c.yandex.net
+ (iva8-c5ee4261001e.qloud-c.yandex.net
+ [IPv6:2a02:6b8:c0c:a8a6:0:640:c5ee:4261])
+ by forwardcorp1o.mail.yandex.net (Yandex) with ESMTP id 63DE32E1929;
+ Mon, 26 Jul 2021 19:42:22 +0300 (MSK)
+Received: from mail.yandex-team.ru (mail.yandex-team.ru [37.140.129.137])
+ by iva8-c5ee4261001e.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
+ HghB2700h8c1-gM04jjeY; Mon, 26 Jul 2021 19:42:22 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; 
+ t=1627317742; bh=EcxToYr1ROtWsCZURGT6OJCnKAsFZiGbjBpARyGY2G0=;
+ h=Subject:In-Reply-To:Cc:Date:References:To:From:Message-Id;
+ b=vrbEbaj6wzjbrN5lYxkzRR+WWcGYXD9Ez+Pao7KnS4UMyb2jEDVR27aroKMGnVyPM
+ ZYBAsy4fgjyG20KQFdPr4FsbztOYtfn1r25XBD/OjdbBEOxEHXWpmwVHUuRyDYUqin
+ 4u1nR+Oc7Oq8AObSUq6xMK+eR9oUQrVZdoLWEnMA=
+Authentication-Results: iva8-c5ee4261001e.qloud-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+X-Yandex-Sender-Uid: 1120000000049860
+X-Yandex-Avir: 1
+Received: from sas1-bf93f9015d57.qloud-c.yandex.net
+ (sas1-bf93f9015d57.qloud-c.yandex.net [2a02:6b8:c08:8889:0:640:bf93:f901])
+ by sas1-ec30c78b6c5b.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
+ 3ghI640xe8c1-OnxDqaNI
+ for <kitsok@yandex-team.ru>; Mon, 26 Jul 2021 19:42:12 +0300
+Received: by sas1-bf93f9015d57.qloud-c.yandex.net with HTTP;
+ Mon, 26 Jul 2021 19:42:12 +0300
+From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
+To: Paul Fertser <fercerpav@gmail.com>
+In-Reply-To: <20210726145246.GL875@home.paul.comp>
 References: <CAE33tLEsCJtr9VPYj57ZcOe5iWD6282WmrMTr-Hp96Y3rkBzAA@mail.gmail.com>
  <000001d5bc87$f6fe3780$e4faa680$@linux.intel.com>
  <CAE33tLHvjuwFwCsSdohvYPHgs-f-8sDWMsNdAhzgQbs3=o7_tQ@mail.gmail.com>
- <429111627309901@mail.yandex-team.ru>
+ <429111627309901@mail.yandex-team.ru> <20210726145246.GL875@home.paul.comp>
+Subject: Re: Serial Over Lan (SOL) no login prompt on Linux IRQ mode
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <429111627309901@mail.yandex-team.ru>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Mon, 26 Jul 2021 19:42:22 +0300
+Message-Id: <435311627317580@mail.yandex-team.ru>
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset=utf-8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,208 +83,211 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Konstantin,
-
-On Mon, Jul 26, 2021 at 05:36:51PM +0300, Konstantin Klubnichkin wrote:
-> I'm digging into AST2500 datasheet for last couple of days but can't find what
-> may cause this behavior.
-
-My attempts at understanding this failed too, apparently the aspeed
-documentation is incomplete or incorrect. So we have to use the
-following patch from Phoenix (guess you'll see what it's doing right
-away after spending so much time reading the datasheet ;) ):
-
-From 6d7afdfeb67288ff67864a25de2d4fa783f18336 Mon Sep 17 00:00:00 2001
-From: Patrick Voelker <patrick_voelker@phoenix.com>
-Date: Wed, 21 Apr 2021 02:14:01 +0000
-Subject: [PATCH] * Fix host serial routing and SOL so that it doesn't
- interfere with IRQ driven console in host Linux boot.
-
----
- ...Fix-Host-UART-Routing-For-Better-SOL.patch | 63 +++++++++++++++++++
- .../recipes-bsp/u-boot/u-boot-%.bbappend      |  1 +
- .../0109-Added-UART3-For-Better-SOL.patch     | 33 ++++++++++
- .../linux/linux-aspeed_%.bbappend             |  1 +
- .../0000-Attach-Console-To-ttyS2.patch        | 12 ++++
- .../console/obmc-console/obmc-console.conf    |  4 +-
- .../console/obmc-console_%.bbappend           |  3 +
- 7 files changed, 114 insertions(+), 3 deletions(-)
- create mode 100644 meta-phoenix/meta-ptec-tp/recipes-bsp/u-boot/files/0009-Fix-Host-UART-Routing-For-Better-SOL.patch
- create mode 100644 meta-phoenix/meta-ptec-tp/recipes-kernel/linux/linux-aspeed/0109-Added-UART3-For-Better-SOL.patch
- create mode 100644 meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console/0000-Attach-Console-To-ttyS2.patch
-
-diff --git a/meta-phoenix/meta-ptec-tp/recipes-bsp/u-boot/files/0009-Fix-Host-UART-Routing-For-Better-SOL.patch b/meta-phoenix/meta-ptec-tp/recipes-bsp/u-boot/files/0009-Fix-Host-UART-Routing-For-Better-SOL.patch
-new file mode 100644
-index 000000000000..13e359bef26c
---- /dev/null
-+++ b/meta-phoenix/meta-ptec-tp/recipes-bsp/u-boot/files/0009-Fix-Host-UART-Routing-For-Better-SOL.patch
-@@ -0,0 +1,63 @@
-+diff --git a/arch/arm/include/asm/arch-aspeed/ast_scu.h b/arch/arm/include/asm/arch-aspeed/ast_scu.h
-+index 8fc7c3c934..32c6fbf10a 100755
-+--- a/arch/arm/include/asm/arch-aspeed/ast_scu.h
-++++ b/arch/arm/include/asm/arch-aspeed/ast_scu.h
-+@@ -53,11 +53,22 @@
-+ 
-+ /* HICRA Bits */
-+ #define HICRA_I01_OFFSET    (0)
-+-#define HICRA_UART3_OFFSET  (22)
-+ #define HICRA_I01_MASK      (7 << HICRA_I01_OFFSET)
-+-#define HICRA_UART3_MASK    (7 << HICRA_UART3_OFFSET)
-+ #define HICRA_UART3_TO_IO1  (2 << HICRA_I01_OFFSET)
-++#define HICRA_UART4_TO_IO1  (3 << HICRA_I01_OFFSET)
-++
-++#define HICRA_UART1_OFFSET  (16)
-++#define HICRA_UART1_MASK    (7 << HICRA_UART1_OFFSET)
-++#define HICRA_UART3_TO_UART1  (5 << HICRA_UART1_OFFSET)
-++
-++#define HICRA_UART3_OFFSET  (22)
-++#define HICRA_UART3_MASK    (7 << HICRA_UART3_OFFSET)
-+ #define HICRA_IO1_TO_UART3  (2 << HICRA_UART3_OFFSET)
-++#define HICRA_UART1_TO_UART3  (5 << HICRA_UART3_OFFSET)
-++
-++#define HICRA_UART4_OFFSET  (25)
-++#define HICRA_UART4_MASK    (7 << HICRA_UART4_OFFSET)
-++#define HICRA_IO1_TO_UART4  (1 << HICRA_UART4_OFFSET)
-+ 
-+ /* HICRB Bits */
-+ #define HICRB_EN80HSGIO (1 << 13)       /* Enable 80hSGIO */
-+diff --git a/board/aspeed/ast-g5/ast-g5.c b/board/aspeed/ast-g5/ast-g5.c
-+index cc47d7a73f..99dba8582a 100755
-+--- a/board/aspeed/ast-g5/ast-g5.c
-++++ b/board/aspeed/ast-g5/ast-g5.c
-+@@ -73,12 +73,25 @@ void redirect_host_uart( void )
-+ {
-+     uint32_t reg = 0x00;
-+ 
-+-    /* Redirect UART3 (/dev/ttyS2) to IO1 (and vice-versa) */
-+-    reg = readl(AST_LPC_BASE + HICRA);
-++    /* Redirect UART4 (/dev/ttyS3) to IO1 (and vice-versa)
-++        And also redirect UART1 to UART3 (ttyS0 and ttyS2) to eachother (and vice-versa) */
-++
-++    // UART4 to IO1
-+     reg &= ~HICRA_I01_MASK;
-+-    reg |= HICRA_UART3_TO_IO1;
-++    reg |= HICRA_UART4_TO_IO1;
-++
-++    // IO1 to UART4
-++    reg &= ~HICRA_UART4_MASK;
-++    reg |= HICRA_IO1_TO_UART4;
-++
-++    // UART1 to UART3
-+     reg &= ~HICRA_UART3_MASK;
-+-    reg |= HICRA_IO1_TO_UART3;
-++    reg |= HICRA_UART1_TO_UART3;
-++
-++    // UART3 to UART1
-++    reg &= ~HICRA_UART1_MASK;
-++    reg |= HICRA_UART3_TO_UART1;
-++
-+ 	writel(reg, AST_LPC_BASE + HICRA);
-+ }
-+ 
-diff --git a/meta-phoenix/meta-ptec-tp/recipes-bsp/u-boot/u-boot-%.bbappend b/meta-phoenix/meta-ptec-tp/recipes-bsp/u-boot/u-boot-%.bbappend
-index d98545d99a10..6a6bb5102b15 100755
---- a/meta-phoenix/meta-ptec-tp/recipes-bsp/u-boot/u-boot-%.bbappend
-+++ b/meta-phoenix/meta-ptec-tp/recipes-bsp/u-boot/u-boot-%.bbappend
-@@ -7,6 +7,7 @@ SRC_URI_append_aspeed += " \
-     file://0005-enable-passthrough-in-uboot.patch \
-     file://0007-Fix-GIP-141-enable-port-80h-post-code-display-on-the-7-segment-LEDs.patch \
-     file://0008-Add-Host-UART-Routing.patch \
-+    file://0009-Fix-Host-UART-Routing-For-Better-SOL.patch \
-     "
- 
- SRC_URI_remove = ""
-diff --git a/meta-phoenix/meta-ptec-tp/recipes-kernel/linux/linux-aspeed/0109-Added-UART3-For-Better-SOL.patch b/meta-phoenix/meta-ptec-tp/recipes-kernel/linux/linux-aspeed/0109-Added-UART3-For-Better-SOL.patch
-new file mode 100644
-index 000000000000..767af2a937db
---- /dev/null
-+++ b/meta-phoenix/meta-ptec-tp/recipes-kernel/linux/linux-aspeed/0109-Added-UART3-For-Better-SOL.patch
-@@ -0,0 +1,33 @@
-+diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-+index 77233d360142..39786a59ae47 100644
-+--- a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-+@@ -162,7 +162,7 @@
-+ };
-+ 
-+ &uart1 {
-+-	// Host Console
-++	// Host In Console
-+ 	status = "okay";
-+ 	pinctrl-names = "default";
-+ 	pinctrl-0 = <&pinctrl_txd1_default
-+@@ -170,12 +170,17 @@
-+ };
-+ 
-+ &uart2 {
-+-	// SoL Host Console
-++	// Not used
-+ 	status = "okay";
-+ };
-+ 
-+ &uart3 {
-+-	// SoL BMC Console
-++	// SoL Console
-++	status = "okay";
-++};
-++
-++&uart4 {
-++	// Host Out Console
-+ 	status = "okay";
-+ };
-+ 
-diff --git a/meta-phoenix/meta-ptec-tp/recipes-kernel/linux/linux-aspeed_%.bbappend b/meta-phoenix/meta-ptec-tp/recipes-kernel/linux/linux-aspeed_%.bbappend
-index 4f927b7e64d3..981a4924b526 100755
---- a/meta-phoenix/meta-ptec-tp/recipes-kernel/linux/linux-aspeed_%.bbappend
-+++ b/meta-phoenix/meta-ptec-tp/recipes-kernel/linux/linux-aspeed_%.bbappend
-@@ -30,4 +30,5 @@ SRC_URI += " \
- 	file://0106-Add-get-MAC-address-through-NCSI-command-to-get-INTEL-MAC-address.patch \
- 	file://0107-Fix-get-MAC-address-from-mlx-card-increment-1.patch \
- 	file://0108-Adjust-SIRQ-Polarity.patch \
-+	file://0109-Added-UART3-For-Better-SOL.patch \
- 	"
-diff --git a/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console/0000-Attach-Console-To-ttyS2.patch b/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console/0000-Attach-Console-To-ttyS2.patch
-new file mode 100644
-index 000000000000..2967cc1f3758
---- /dev/null
-+++ b/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console/0000-Attach-Console-To-ttyS2.patch
-@@ -0,0 +1,12 @@
-+diff --git a/conf/obmc-console@.service.in b/conf/obmc-console@.service.in
-+index c6cd1b4..7bf1de6 100644
-+--- a/conf/obmc-console@.service.in
-++++ b/conf/obmc-console@.service.in
-+@@ -4,6 +4,6 @@ ConditionPathExists=/etc/obmc-console/server.%i.conf
-+ 
-+ [Service]
-+ # Instance ID is the VUART basename
-+-ExecStart=/usr/sbin/obmc-console-server --config /etc/obmc-console/server.%i.conf %i
-++ExecStart=/usr/sbin/obmc-console-server --config /etc/obmc-console/server.%i.conf ttyS2
-+ SyslogIdentifier=%i-console-server
-+ Restart=always
-diff --git a/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console/obmc-console.conf b/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console/obmc-console.conf
-index c5faabc0ab6d..8491f53653ec 100644
---- a/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console/obmc-console.conf
-+++ b/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console/obmc-console.conf
-@@ -1,5 +1,3 @@
- baud = 115200
--lpc-address = 0x3f8
--sirq = 4
--local-tty = ttyS2
-+local-tty = ttyS3
- local-tty-baud = 115200
-diff --git a/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console_%.bbappend b/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console_%.bbappend
-index 50d7d4f0f160..53ee6d7124f3 100644
---- a/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console_%.bbappend
-+++ b/meta-phoenix/meta-ptec-tp/recipes-phosphor/console/obmc-console_%.bbappend
-@@ -1,2 +1,5 @@
- FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
- OBMC_CONSOLE_HOST_TTY = "ttyS2"
-+
-+SRC_URI += " file://0000-Attach-Console-To-ttyS2.patch \
-+	   "
--- 
-2.17.1
-
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+PGRpdj5IZWxsbyBQYXVsLDwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PlRoYW5rIHlvdSBmb3IgdGhp
+cyBwYXRjaCwgSSd2ZSB0cmllZCB0aGlzIChVQVJUMSAmbHQ7LSZndDtVQVJUMyByb3V0aW5nKSwg
+YnV0IHRoaXMganVzdCBkb2Vzbid0IHdvcmsgb24gbXkgaGFyZHdhcmUsIGV2ZW4gUE9TVCBpcyBu
+b3QgYXZhaWxhYmxlLjwvZGl2PjxkaXY+UHJvYmFibHkgb25seSB3YXkgaXMgdG8gYXNrIEFzcGVl
+ZHRlY2ggc3VwcG9ydCB0byBjbGFyaWZ5IHRoaXMuPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+VGhh
+bmsgeW91ITwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PjI2LjA3LjIwMjEsIDE3OjUyLCAiUGF1bCBG
+ZXJ0c2VyIiAmbHQ7ZmVyY2VycGF2QGdtYWlsLmNvbSZndDs6PC9kaXY+PGJsb2NrcXVvdGU+PHA+
+SGkgS29uc3RhbnRpbiw8YnIgLz48YnIgLz5PbiBNb24sIEp1bCAyNiwgMjAyMSBhdCAwNTozNjo1
+MVBNICswMzAwLCBLb25zdGFudGluIEtsdWJuaWNoa2luIHdyb3RlOjwvcD48YmxvY2txdW90ZT7C
+oEknbSBkaWdnaW5nIGludG8gQVNUMjUwMCBkYXRhc2hlZXQgZm9yIGxhc3QgY291cGxlIG9mIGRh
+eXMgYnV0IGNhbid0IGZpbmQgd2hhdDxiciAvPsKgbWF5IGNhdXNlIHRoaXMgYmVoYXZpb3IuPC9i
+bG9ja3F1b3RlPjxwPjxiciAvPk15IGF0dGVtcHRzIGF0IHVuZGVyc3RhbmRpbmcgdGhpcyBmYWls
+ZWQgdG9vLCBhcHBhcmVudGx5IHRoZSBhc3BlZWQ8YnIgLz5kb2N1bWVudGF0aW9uIGlzIGluY29t
+cGxldGUgb3IgaW5jb3JyZWN0LiBTbyB3ZSBoYXZlIHRvIHVzZSB0aGU8YnIgLz5mb2xsb3dpbmcg
+cGF0Y2ggZnJvbSBQaG9lbml4IChndWVzcyB5b3UnbGwgc2VlIHdoYXQgaXQncyBkb2luZyByaWdo
+dDxiciAvPmF3YXkgYWZ0ZXIgc3BlbmRpbmcgc28gbXVjaCB0aW1lIHJlYWRpbmcgdGhlIGRhdGFz
+aGVldCA7KSApOjxiciAvPjxiciAvPkZyb20gNmQ3YWZkZmViNjcyODhmZjY3ODY0YTI1ZGUyZDRm
+YTc4M2YxODMzNiBNb24gU2VwIDE3IDAwOjAwOjAwIDIwMDE8YnIgLz5Gcm9tOiBQYXRyaWNrIFZv
+ZWxrZXIgJmx0OzxhIGhyZWY9Im1haWx0bzpwYXRyaWNrX3ZvZWxrZXJAcGhvZW5peC5jb20iIHJl
+bD0ibm9vcGVuZXIgbm9yZWZlcnJlciI+cGF0cmlja192b2Vsa2VyQHBob2VuaXguY29tPC9hPiZn
+dDs8YnIgLz5EYXRlOiBXZWQsIDIxIEFwciAyMDIxIDAyOjE0OjAxICswMDAwPGJyIC8+U3ViamVj
+dDogW1BBVENIXSAqIEZpeCBob3N0IHNlcmlhbCByb3V0aW5nIGFuZCBTT0wgc28gdGhhdCBpdCBk
+b2Vzbid0PGJyIC8+wqBpbnRlcmZlcmUgd2l0aCBJUlEgZHJpdmVuIGNvbnNvbGUgaW4gaG9zdCBM
+aW51eCBib290LjxiciAvPjxiciAvPi0tLTxiciAvPsKgLi4uRml4LUhvc3QtVUFSVC1Sb3V0aW5n
+LUZvci1CZXR0ZXItU09MLnBhdGNoIHwgNjMgKysrKysrKysrKysrKysrKysrKzxiciAvPsKgLi4u
+L3JlY2lwZXMtYnNwL3UtYm9vdC91LWJvb3QtJS5iYmFwcGVuZCB8IDEgKzxiciAvPsKgLi4uLzAx
+MDktQWRkZWQtVUFSVDMtRm9yLUJldHRlci1TT0wucGF0Y2ggfCAzMyArKysrKysrKysrPGJyIC8+
+wqAuLi4vbGludXgvbGludXgtYXNwZWVkXyUuYmJhcHBlbmQgfCAxICs8YnIgLz7CoC4uLi8wMDAw
+LUF0dGFjaC1Db25zb2xlLVRvLXR0eVMyLnBhdGNoIHwgMTIgKysrKzxiciAvPsKgLi4uL2NvbnNv
+bGUvb2JtYy1jb25zb2xlL29ibWMtY29uc29sZS5jb25mIHwgNCArLTxiciAvPsKgLi4uL2NvbnNv
+bGUvb2JtYy1jb25zb2xlXyUuYmJhcHBlbmQgfCAzICs8YnIgLz7CoDcgZmlsZXMgY2hhbmdlZCwg
+MTE0IGluc2VydGlvbnMoKyksIDMgZGVsZXRpb25zKC0pPGJyIC8+wqBjcmVhdGUgbW9kZSAxMDA2
+NDQgbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLWJzcC91LWJvb3QvZmlsZXMvMDAw
+OS1GaXgtSG9zdC1VQVJULVJvdXRpbmctRm9yLUJldHRlci1TT0wucGF0Y2g8YnIgLz7CoGNyZWF0
+ZSBtb2RlIDEwMDY0NCBtZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMta2VybmVsL2xp
+bnV4L2xpbnV4LWFzcGVlZC8wMTA5LUFkZGVkLVVBUlQzLUZvci1CZXR0ZXItU09MLnBhdGNoPGJy
+IC8+wqBjcmVhdGUgbW9kZSAxMDA2NDQgbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVz
+LXBob3NwaG9yL2NvbnNvbGUvb2JtYy1jb25zb2xlLzAwMDAtQXR0YWNoLUNvbnNvbGUtVG8tdHR5
+UzIucGF0Y2g8YnIgLz48YnIgLz5kaWZmIC0tZ2l0IGEvbWV0YS1waG9lbml4L21ldGEtcHRlYy10
+cC9yZWNpcGVzLWJzcC91LWJvb3QvZmlsZXMvMDAwOS1GaXgtSG9zdC1VQVJULVJvdXRpbmctRm9y
+LUJldHRlci1TT0wucGF0Y2ggYi9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMtYnNw
+L3UtYm9vdC9maWxlcy8wMDA5LUZpeC1Ib3N0LVVBUlQtUm91dGluZy1Gb3ItQmV0dGVyLVNPTC5w
+YXRjaDxiciAvPm5ldyBmaWxlIG1vZGUgMTAwNjQ0PGJyIC8+aW5kZXggMDAwMDAwMDAwMDAwLi4x
+M2UzNTliZWYyNmM8YnIgLz4tLS0gL2Rldi9udWxsPGJyIC8+KysrIGIvbWV0YS1waG9lbml4L21l
+dGEtcHRlYy10cC9yZWNpcGVzLWJzcC91LWJvb3QvZmlsZXMvMDAwOS1GaXgtSG9zdC1VQVJULVJv
+dXRpbmctRm9yLUJldHRlci1TT0wucGF0Y2g8YnIgLz5AQCAtMCwwICsxLDYzIEBAPGJyIC8+K2Rp
+ZmYgLS1naXQgYS9hcmNoL2FybS9pbmNsdWRlL2FzbS9hcmNoLWFzcGVlZC9hc3Rfc2N1LmggYi9h
+cmNoL2FybS9pbmNsdWRlL2FzbS9hcmNoLWFzcGVlZC9hc3Rfc2N1Lmg8YnIgLz4raW5kZXggOGZj
+N2MzYzkzNC4uMzJjNmZiZjEwYSAxMDA3NTU8YnIgLz4rLS0tIGEvYXJjaC9hcm0vaW5jbHVkZS9h
+c20vYXJjaC1hc3BlZWQvYXN0X3NjdS5oPGJyIC8+KysrKyBiL2FyY2gvYXJtL2luY2x1ZGUvYXNt
+L2FyY2gtYXNwZWVkL2FzdF9zY3UuaDxiciAvPitAQCAtNTMsMTEgKzUzLDIyIEBAPGJyIC8+Kzxi
+ciAvPisgLyogSElDUkEgQml0cyAqLzxiciAvPisgI2RlZmluZSBISUNSQV9JMDFfT0ZGU0VUICgw
+KTxiciAvPistI2RlZmluZSBISUNSQV9VQVJUM19PRkZTRVQgKDIyKTxiciAvPisgI2RlZmluZSBI
+SUNSQV9JMDFfTUFTSyAoNyAmbHQ7Jmx0OyBISUNSQV9JMDFfT0ZGU0VUKTxiciAvPistI2RlZmlu
+ZSBISUNSQV9VQVJUM19NQVNLICg3ICZsdDsmbHQ7IEhJQ1JBX1VBUlQzX09GRlNFVCk8YnIgLz4r
+ICNkZWZpbmUgSElDUkFfVUFSVDNfVE9fSU8xICgyICZsdDsmbHQ7IEhJQ1JBX0kwMV9PRkZTRVQp
+PGJyIC8+KysjZGVmaW5lIEhJQ1JBX1VBUlQ0X1RPX0lPMSAoMyAmbHQ7Jmx0OyBISUNSQV9JMDFf
+T0ZGU0VUKTxiciAvPisrPGJyIC8+KysjZGVmaW5lIEhJQ1JBX1VBUlQxX09GRlNFVCAoMTYpPGJy
+IC8+KysjZGVmaW5lIEhJQ1JBX1VBUlQxX01BU0sgKDcgJmx0OyZsdDsgSElDUkFfVUFSVDFfT0ZG
+U0VUKTxiciAvPisrI2RlZmluZSBISUNSQV9VQVJUM19UT19VQVJUMSAoNSAmbHQ7Jmx0OyBISUNS
+QV9VQVJUMV9PRkZTRVQpPGJyIC8+Kys8YnIgLz4rKyNkZWZpbmUgSElDUkFfVUFSVDNfT0ZGU0VU
+ICgyMik8YnIgLz4rKyNkZWZpbmUgSElDUkFfVUFSVDNfTUFTSyAoNyAmbHQ7Jmx0OyBISUNSQV9V
+QVJUM19PRkZTRVQpPGJyIC8+KyAjZGVmaW5lIEhJQ1JBX0lPMV9UT19VQVJUMyAoMiAmbHQ7Jmx0
+OyBISUNSQV9VQVJUM19PRkZTRVQpPGJyIC8+KysjZGVmaW5lIEhJQ1JBX1VBUlQxX1RPX1VBUlQz
+ICg1ICZsdDsmbHQ7IEhJQ1JBX1VBUlQzX09GRlNFVCk8YnIgLz4rKzxiciAvPisrI2RlZmluZSBI
+SUNSQV9VQVJUNF9PRkZTRVQgKDI1KTxiciAvPisrI2RlZmluZSBISUNSQV9VQVJUNF9NQVNLICg3
+ICZsdDsmbHQ7IEhJQ1JBX1VBUlQ0X09GRlNFVCk8YnIgLz4rKyNkZWZpbmUgSElDUkFfSU8xX1RP
+X1VBUlQ0ICgxICZsdDsmbHQ7IEhJQ1JBX1VBUlQ0X09GRlNFVCk8YnIgLz4rPGJyIC8+KyAvKiBI
+SUNSQiBCaXRzICovPGJyIC8+KyAjZGVmaW5lIEhJQ1JCX0VOODBIU0dJTyAoMSAmbHQ7Jmx0OyAx
+MykgLyogRW5hYmxlIDgwaFNHSU8gKi88YnIgLz4rZGlmZiAtLWdpdCBhL2JvYXJkL2FzcGVlZC9h
+c3QtZzUvYXN0LWc1LmMgYi9ib2FyZC9hc3BlZWQvYXN0LWc1L2FzdC1nNS5jPGJyIC8+K2luZGV4
+IGNjNDdkN2E3M2YuLjk5ZGJhODU4MmEgMTAwNzU1PGJyIC8+Ky0tLSBhL2JvYXJkL2FzcGVlZC9h
+c3QtZzUvYXN0LWc1LmM8YnIgLz4rKysrIGIvYm9hcmQvYXNwZWVkL2FzdC1nNS9hc3QtZzUuYzxi
+ciAvPitAQCAtNzMsMTIgKzczLDI1IEBAIHZvaWQgcmVkaXJlY3RfaG9zdF91YXJ0KCB2b2lkICk8
+YnIgLz4rIHs8IS0tIC0tPjxiciAvPisgdWludDMyX3QgcmVnID0gMHgwMDs8YnIgLz4rPGJyIC8+
+Ky0gLyogUmVkaXJlY3QgVUFSVDMgKC9kZXYvdHR5UzIpIHRvIElPMSAoYW5kIHZpY2UtdmVyc2Ep
+ICovPGJyIC8+Ky0gcmVnID0gcmVhZGwoQVNUX0xQQ19CQVNFICsgSElDUkEpOzxiciAvPisrIC8q
+IFJlZGlyZWN0IFVBUlQ0ICgvZGV2L3R0eVMzKSB0byBJTzEgKGFuZCB2aWNlLXZlcnNhKTxiciAv
+PisrIEFuZCBhbHNvIHJlZGlyZWN0IFVBUlQxIHRvIFVBUlQzICh0dHlTMCBhbmQgdHR5UzIpIHRv
+IGVhY2hvdGhlciAoYW5kIHZpY2UtdmVyc2EpICovPGJyIC8+Kys8YnIgLz4rKyAvLyBVQVJUNCB0
+byBJTzE8YnIgLz4rIHJlZyAmYW1wOz0gfkhJQ1JBX0kwMV9NQVNLOzxiciAvPistIHJlZyB8PSBI
+SUNSQV9VQVJUM19UT19JTzE7PGJyIC8+KysgcmVnIHw9IEhJQ1JBX1VBUlQ0X1RPX0lPMTs8YnIg
+Lz4rKzxiciAvPisrIC8vIElPMSB0byBVQVJUNDxiciAvPisrIHJlZyAmYW1wOz0gfkhJQ1JBX1VB
+UlQ0X01BU0s7PGJyIC8+KysgcmVnIHw9IEhJQ1JBX0lPMV9UT19VQVJUNDs8YnIgLz4rKzxiciAv
+PisrIC8vIFVBUlQxIHRvIFVBUlQzPGJyIC8+KyByZWcgJmFtcDs9IH5ISUNSQV9VQVJUM19NQVNL
+OzxiciAvPistIHJlZyB8PSBISUNSQV9JTzFfVE9fVUFSVDM7PGJyIC8+KysgcmVnIHw9IEhJQ1JB
+X1VBUlQxX1RPX1VBUlQzOzxiciAvPisrPGJyIC8+KysgLy8gVUFSVDMgdG8gVUFSVDE8YnIgLz4r
+KyByZWcgJmFtcDs9IH5ISUNSQV9VQVJUMV9NQVNLOzxiciAvPisrIHJlZyB8PSBISUNSQV9VQVJU
+M19UT19VQVJUMTs8YnIgLz4rKzxiciAvPisgd3JpdGVsKHJlZywgQVNUX0xQQ19CQVNFICsgSElD
+UkEpOzxiciAvPisgfTxiciAvPis8YnIgLz5kaWZmIC0tZ2l0IGEvbWV0YS1waG9lbml4L21ldGEt
+cHRlYy10cC9yZWNpcGVzLWJzcC91LWJvb3QvdS1ib290LSUuYmJhcHBlbmQgYi9tZXRhLXBob2Vu
+aXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMtYnNwL3UtYm9vdC91LWJvb3QtJS5iYmFwcGVuZDxiciAv
+PmluZGV4IGQ5ODU0NWQ5OWExMC4uNmE2YmI1MTAyYjE1IDEwMDc1NTxiciAvPi0tLSBhL21ldGEt
+cGhvZW5peC9tZXRhLXB0ZWMtdHAvcmVjaXBlcy1ic3AvdS1ib290L3UtYm9vdC0lLmJiYXBwZW5k
+PGJyIC8+KysrIGIvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLWJzcC91LWJvb3Qv
+dS1ib290LSUuYmJhcHBlbmQ8YnIgLz5AQCAtNyw2ICs3LDcgQEAgU1JDX1VSSV9hcHBlbmRfYXNw
+ZWVkICs9ICIgXDxiciAvPsKgwqDCoMKgwqA8YSBocmVmPSJmaWxlOi8vMDAwNS1lbmFibGUtcGFz
+c3Rocm91Z2gtaW4tdWJvb3QucGF0Y2giIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciI+ZmlsZTov
+LzAwMDUtZW5hYmxlLXBhc3N0aHJvdWdoLWluLXVib290LnBhdGNoPC9hPiBcPGJyIC8+wqDCoMKg
+wqDCoDxhIGhyZWY9Imh0dHA6Ly9maWxlLy8wMDA3LUZpeC1HSVAtMTQxLWVuYWJsZS1wb3J0LTgw
+aC1wb3N0LWNvZGUtZGlzcGxheS1vbi10aGUtNy1zZWdtZW50LUxFRHMucGF0Y2giIHJlbD0ibm9v
+cGVuZXIgbm9yZWZlcnJlciI+ZmlsZTovLzAwMDctRml4LUdJUC0xNDEtZW5hYmxlLXBvcnQtODBo
+LXBvc3QtY29kZS1kaXNwbGF5LW9uLXRoZS03LXNlZ21lbnQtTEVEcy5wYXRjaDwvYT4gXDxiciAv
+PsKgwqDCoMKgwqA8YSBocmVmPSJmaWxlOi8vMDAwOC1hZGQtaG9zdC11YXJ0LXJvdXRpbmcucGF0
+Y2giIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciI+ZmlsZTovLzAwMDgtQWRkLUhvc3QtVUFSVC1S
+b3V0aW5nLnBhdGNoPC9hPiBcPGJyIC8+KyA8YSBocmVmPSJmaWxlOi8vMDAwOS1maXgtaG9zdC11
+YXJ0LXJvdXRpbmctZm9yLWJldHRlci1zb2wucGF0Y2giIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJl
+ciI+ZmlsZTovLzAwMDktRml4LUhvc3QtVUFSVC1Sb3V0aW5nLUZvci1CZXR0ZXItU09MLnBhdGNo
+PC9hPiBcPGJyIC8+wqDCoMKgwqDCoCI8YnIgLz7CoDxiciAvPsKgU1JDX1VSSV9yZW1vdmUgPSAi
+IjxiciAvPmRpZmYgLS1naXQgYS9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMta2Vy
+bmVsL2xpbnV4L2xpbnV4LWFzcGVlZC8wMTA5LUFkZGVkLVVBUlQzLUZvci1CZXR0ZXItU09MLnBh
+dGNoIGIvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLWtlcm5lbC9saW51eC9saW51
+eC1hc3BlZWQvMDEwOS1BZGRlZC1VQVJUMy1Gb3ItQmV0dGVyLVNPTC5wYXRjaDxiciAvPm5ldyBm
+aWxlIG1vZGUgMTAwNjQ0PGJyIC8+aW5kZXggMDAwMDAwMDAwMDAwLi43NjdhZjJhOTM3ZGI8YnIg
+Lz4tLS0gL2Rldi9udWxsPGJyIC8+KysrIGIvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNp
+cGVzLWtlcm5lbC9saW51eC9saW51eC1hc3BlZWQvMDEwOS1BZGRlZC1VQVJUMy1Gb3ItQmV0dGVy
+LVNPTC5wYXRjaDxiciAvPkBAIC0wLDAgKzEsMzMgQEA8YnIgLz4rZGlmZiAtLWdpdCBhL2FyY2gv
+YXJtL2Jvb3QvZHRzL2FzcGVlZC1ibWMtZmFjZWJvb2stdGlvZ2FwYXNzLmR0cyBiL2FyY2gvYXJt
+L2Jvb3QvZHRzL2FzcGVlZC1ibWMtZmFjZWJvb2stdGlvZ2FwYXNzLmR0czxiciAvPitpbmRleCA3
+NzIzM2QzNjAxNDIuLjM5Nzg2YTU5YWU0NyAxMDA2NDQ8YnIgLz4rLS0tIGEvYXJjaC9hcm0vYm9v
+dC9kdHMvYXNwZWVkLWJtYy1mYWNlYm9vay10aW9nYXBhc3MuZHRzPGJyIC8+KysrKyBiL2FyY2gv
+YXJtL2Jvb3QvZHRzL2FzcGVlZC1ibWMtZmFjZWJvb2stdGlvZ2FwYXNzLmR0czxiciAvPitAQCAt
+MTYyLDcgKzE2Miw3IEBAPGJyIC8+KyB9OzxiciAvPis8YnIgLz4rICZhbXA7dWFydDEgezwhLS0g
+LS0+PGJyIC8+Ky0gLy8gSG9zdCBDb25zb2xlPGJyIC8+KysgLy8gSG9zdCBJbiBDb25zb2xlPGJy
+IC8+KyBzdGF0dXMgPSAib2theSI7PGJyIC8+KyBwaW5jdHJsLW5hbWVzID0gImRlZmF1bHQiOzxi
+ciAvPisgcGluY3RybC0wID0gJmx0OyZhbXA7cGluY3RybF90eGQxX2RlZmF1bHQ8YnIgLz4rQEAg
+LTE3MCwxMiArMTcwLDE3IEBAPGJyIC8+KyB9OzxiciAvPis8YnIgLz4rICZhbXA7dWFydDIgezwh
+LS0gLS0+PGJyIC8+Ky0gLy8gU29MIEhvc3QgQ29uc29sZTxiciAvPisrIC8vIE5vdCB1c2VkPGJy
+IC8+KyBzdGF0dXMgPSAib2theSI7PGJyIC8+KyB9OzxiciAvPis8YnIgLz4rICZhbXA7dWFydDMg
+ezwhLS0gLS0+PGJyIC8+Ky0gLy8gU29MIEJNQyBDb25zb2xlPGJyIC8+KysgLy8gU29MIENvbnNv
+bGU8YnIgLz4rKyBzdGF0dXMgPSAib2theSI7PGJyIC8+Kyt9OzxiciAvPisrPGJyIC8+KysmYW1w
+O3VhcnQ0IHs8IS0tIC0tPjxiciAvPisrIC8vIEhvc3QgT3V0IENvbnNvbGU8YnIgLz4rIHN0YXR1
+cyA9ICJva2F5Ijs8YnIgLz4rIH07PGJyIC8+KzxiciAvPmRpZmYgLS1naXQgYS9tZXRhLXBob2Vu
+aXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMta2VybmVsL2xpbnV4L2xpbnV4LWFzcGVlZF8lLmJiYXBw
+ZW5kIGIvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLWtlcm5lbC9saW51eC9saW51
+eC1hc3BlZWRfJS5iYmFwcGVuZDxiciAvPmluZGV4IDRmOTI3YjdlNjRkMy4uOTgxYTQ5MjRiNTI2
+IDEwMDc1NTxiciAvPi0tLSBhL21ldGEtcGhvZW5peC9tZXRhLXB0ZWMtdHAvcmVjaXBlcy1rZXJu
+ZWwvbGludXgvbGludXgtYXNwZWVkXyUuYmJhcHBlbmQ8YnIgLz4rKysgYi9tZXRhLXBob2VuaXgv
+bWV0YS1wdGVjLXRwL3JlY2lwZXMta2VybmVsL2xpbnV4L2xpbnV4LWFzcGVlZF8lLmJiYXBwZW5k
+PGJyIC8+QEAgLTMwLDQgKzMwLDUgQEAgU1JDX1VSSSArPSAiIFw8YnIgLz7CoMKgwqDCoMKgwqDC
+oMKgwqA8YSBocmVmPSJodHRwOi8vZmlsZS8vMDEwNi1BZGQtZ2V0LU1BQy1hZGRyZXNzLXRocm91
+Z2gtTkNTSS1jb21tYW5kLXRvLWdldC1JTlRFTC1NQUMtYWRkcmVzcy5wYXRjaCIgcmVsPSJub29w
+ZW5lciBub3JlZmVycmVyIj5maWxlOi8vMDEwNi1BZGQtZ2V0LU1BQy1hZGRyZXNzLXRocm91Z2gt
+TkNTSS1jb21tYW5kLXRvLWdldC1JTlRFTC1NQUMtYWRkcmVzcy5wYXRjaDwvYT4gXDxiciAvPsKg
+wqDCoMKgwqDCoMKgwqDCoDxhIGhyZWY9ImZpbGU6Ly8wMTA3LWZpeC1nZXQtbWFjLWFkZHJlc3Mt
+ZnJvbS1tbHgtY2FyZC1pbmNyZW1lbnQtMS5wYXRjaCIgcmVsPSJub29wZW5lciBub3JlZmVycmVy
+Ij5maWxlOi8vMDEwNy1GaXgtZ2V0LU1BQy1hZGRyZXNzLWZyb20tbWx4LWNhcmQtaW5jcmVtZW50
+LTEucGF0Y2g8L2E+IFw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqA8YSBocmVmPSJmaWxlOi8vMDEw
+OC1hZGp1c3Qtc2lycS1wb2xhcml0eS5wYXRjaCIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIj5m
+aWxlOi8vMDEwOC1BZGp1c3QtU0lSUS1Qb2xhcml0eS5wYXRjaDwvYT4gXDxiciAvPisgPGEgaHJl
+Zj0iZmlsZTovLzAxMDktYWRkZWQtdWFydDMtZm9yLWJldHRlci1zb2wucGF0Y2giIHJlbD0ibm9v
+cGVuZXIgbm9yZWZlcnJlciI+ZmlsZTovLzAxMDktQWRkZWQtVUFSVDMtRm9yLUJldHRlci1TT0wu
+cGF0Y2g8L2E+IFw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqAiPGJyIC8+ZGlmZiAtLWdpdCBhL21l
+dGEtcGhvZW5peC9tZXRhLXB0ZWMtdHAvcmVjaXBlcy1waG9zcGhvci9jb25zb2xlL29ibWMtY29u
+c29sZS8wMDAwLUF0dGFjaC1Db25zb2xlLVRvLXR0eVMyLnBhdGNoIGIvbWV0YS1waG9lbml4L21l
+dGEtcHRlYy10cC9yZWNpcGVzLXBob3NwaG9yL2NvbnNvbGUvb2JtYy1jb25zb2xlLzAwMDAtQXR0
+YWNoLUNvbnNvbGUtVG8tdHR5UzIucGF0Y2g8YnIgLz5uZXcgZmlsZSBtb2RlIDEwMDY0NDxiciAv
+PmluZGV4IDAwMDAwMDAwMDAwMC4uMjk2N2NjMWYzNzU4PGJyIC8+LS0tIC9kZXYvbnVsbDxiciAv
+PisrKyBiL21ldGEtcGhvZW5peC9tZXRhLXB0ZWMtdHAvcmVjaXBlcy1waG9zcGhvci9jb25zb2xl
+L29ibWMtY29uc29sZS8wMDAwLUF0dGFjaC1Db25zb2xlLVRvLXR0eVMyLnBhdGNoPGJyIC8+QEAg
+LTAsMCArMSwxMiBAQDxiciAvPitkaWZmIC0tZ2l0IGEvY29uZi88YSBocmVmPSJtYWlsdG86b2Jt
+Yy1jb25zb2xlQC5zZXJ2aWNlLmluIiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiPm9ibWMtY29u
+c29sZUAuc2VydmljZS5pbjwvYT4gYi9jb25mLzxhIGhyZWY9Im1haWx0bzpvYm1jLWNvbnNvbGVA
+LnNlcnZpY2UuaW4iIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciI+b2JtYy1jb25zb2xlQC5zZXJ2
+aWNlLmluPC9hPjxiciAvPitpbmRleCBjNmNkMWI0Li43YmYxZGU2IDEwMDY0NDxiciAvPistLS0g
+YS9jb25mLzxhIGhyZWY9Im1haWx0bzpvYm1jLWNvbnNvbGVALnNlcnZpY2UuaW4iIHJlbD0ibm9v
+cGVuZXIgbm9yZWZlcnJlciI+b2JtYy1jb25zb2xlQC5zZXJ2aWNlLmluPC9hPjxiciAvPisrKysg
+Yi9jb25mLzxhIGhyZWY9Im1haWx0bzpvYm1jLWNvbnNvbGVALnNlcnZpY2UuaW4iIHJlbD0ibm9v
+cGVuZXIgbm9yZWZlcnJlciI+b2JtYy1jb25zb2xlQC5zZXJ2aWNlLmluPC9hPjxiciAvPitAQCAt
+NCw2ICs0LDYgQEAgQ29uZGl0aW9uUGF0aEV4aXN0cz0vZXRjL29ibWMtY29uc29sZS9zZXJ2ZXIu
+JWkuY29uZjxiciAvPis8YnIgLz4rIFtTZXJ2aWNlXTxiciAvPisgIyBJbnN0YW5jZSBJRCBpcyB0
+aGUgVlVBUlQgYmFzZW5hbWU8YnIgLz4rLUV4ZWNTdGFydD0vdXNyL3NiaW4vb2JtYy1jb25zb2xl
+LXNlcnZlciAtLWNvbmZpZyAvZXRjL29ibWMtY29uc29sZS9zZXJ2ZXIuJWkuY29uZiAlaTxiciAv
+PisrRXhlY1N0YXJ0PS91c3Ivc2Jpbi9vYm1jLWNvbnNvbGUtc2VydmVyIC0tY29uZmlnIC9ldGMv
+b2JtYy1jb25zb2xlL3NlcnZlci4laS5jb25mIHR0eVMyPGJyIC8+KyBTeXNsb2dJZGVudGlmaWVy
+PSVpLWNvbnNvbGUtc2VydmVyPGJyIC8+KyBSZXN0YXJ0PWFsd2F5czxiciAvPmRpZmYgLS1naXQg
+YS9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMtcGhvc3Bob3IvY29uc29sZS9vYm1j
+LWNvbnNvbGUvb2JtYy1jb25zb2xlLmNvbmYgYi9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3Jl
+Y2lwZXMtcGhvc3Bob3IvY29uc29sZS9vYm1jLWNvbnNvbGUvb2JtYy1jb25zb2xlLmNvbmY8YnIg
+Lz5pbmRleCBjNWZhYWJjMGFiNmQuLjg0OTFmNTM2NTNlYyAxMDA2NDQ8YnIgLz4tLS0gYS9tZXRh
+LXBob2VuaXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMtcGhvc3Bob3IvY29uc29sZS9vYm1jLWNvbnNv
+bGUvb2JtYy1jb25zb2xlLmNvbmY8YnIgLz4rKysgYi9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRw
+L3JlY2lwZXMtcGhvc3Bob3IvY29uc29sZS9vYm1jLWNvbnNvbGUvb2JtYy1jb25zb2xlLmNvbmY8
+YnIgLz5AQCAtMSw1ICsxLDMgQEA8YnIgLz7CoGJhdWQgPSAxMTUyMDA8YnIgLz4tbHBjLWFkZHJl
+c3MgPSAweDNmODxiciAvPi1zaXJxID0gNDxiciAvPi1sb2NhbC10dHkgPSB0dHlTMjxiciAvPits
+b2NhbC10dHkgPSB0dHlTMzxiciAvPsKgbG9jYWwtdHR5LWJhdWQgPSAxMTUyMDA8YnIgLz5kaWZm
+IC0tZ2l0IGEvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLXBob3NwaG9yL2NvbnNv
+bGUvb2JtYy1jb25zb2xlXyUuYmJhcHBlbmQgYi9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3Jl
+Y2lwZXMtcGhvc3Bob3IvY29uc29sZS9vYm1jLWNvbnNvbGVfJS5iYmFwcGVuZDxiciAvPmluZGV4
+IDUwZDdkNGYwZjE2MC4uNTNlZTZkNzEyNGYzIDEwMDY0NDxiciAvPi0tLSBhL21ldGEtcGhvZW5p
+eC9tZXRhLXB0ZWMtdHAvcmVjaXBlcy1waG9zcGhvci9jb25zb2xlL29ibWMtY29uc29sZV8lLmJi
+YXBwZW5kPGJyIC8+KysrIGIvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLXBob3Nw
+aG9yL2NvbnNvbGUvb2JtYy1jb25zb2xlXyUuYmJhcHBlbmQ8YnIgLz5AQCAtMSwyICsxLDUgQEA8
+YnIgLz7CoEZJTEVTRVhUUkFQQVRIU19wcmVwZW5kIDo9ICIke1RISVNESVJ9LyR7UE59OiI8YnIg
+Lz7CoE9CTUNfQ09OU09MRV9IT1NUX1RUWSA9ICJ0dHlTMiI8YnIgLz4rPGJyIC8+K1NSQ19VUkkg
+Kz0gIiA8YSBocmVmPSJmaWxlOi8vMDAwMC1hdHRhY2gtY29uc29sZS10by10dHlzMi5wYXRjaCIg
+cmVsPSJub29wZW5lciBub3JlZmVycmVyIj5maWxlOi8vMDAwMC1BdHRhY2gtQ29uc29sZS1Uby10
+dHlTMi5wYXRjaDwvYT4gXDxiciAvPisgIjwvcD4tLTxiciAvPjIuMTcuMTxiciAvPjxiciAvPi0t
+PGJyIC8+QmUgZnJlZSwgdXNlIGZyZWUgKDxhIGhyZWY9Imh0dHA6Ly93d3cuZ251Lm9yZy9waGls
+b3NvcGh5L2ZyZWUtc3cuaHRtbCIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIj5odHRwOi8vd3d3
+LmdudS5vcmcvcGhpbG9zb3BoeS9mcmVlLXN3Lmh0bWw8L2E+KSBzb2Z0d2FyZSE8YnIgLz48YSBo
+cmVmPSJtYWlsdG86ZmVyY2VycGF2QGdtYWlsLmNvbSIgcmVsPSJub29wZW5lciBub3JlZmVycmVy
+Ij5tYWlsdG86ZmVyY2VycGF2QGdtYWlsLmNvbTwvYT48L2Jsb2NrcXVvdGU+PGRpdj7CoDwvZGl2
+PjxkaXY+wqA8L2Rpdj48ZGl2Pi0twqA8L2Rpdj48ZGl2PkJlc3QgcmVnYXJkcyw8L2Rpdj48ZGl2
+PktvbnN0YW50aW4gS2x1Ym5pY2hraW4sPC9kaXY+PGRpdj5sZWFkIGZpcm13YXJlIGVuZ2luZWVy
+LDwvZGl2PjxkaXY+c2VydmVyIGhhcmR3YXJlIFImYW1wO0QgZ3JvdXAsPC9kaXY+PGRpdj5ZYW5k
+ZXggTW9zY293IG9mZmljZS48L2Rpdj48ZGl2PnRlbDogKzctOTAzLTUxMC0zMy0zMzwvZGl2Pjxk
+aXY+wqA8L2Rpdj4=
