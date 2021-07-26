@@ -1,73 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0A5B3D638C
-	for <lists+openbmc@lfdr.de>; Mon, 26 Jul 2021 18:42:59 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C05273D64D8
+	for <lists+openbmc@lfdr.de>; Mon, 26 Jul 2021 18:50:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GYQhd5R3Nz3004
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 02:42:57 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=vrbEbaj6;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GYQs15YyFz30Fx
+	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 02:50:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yandex-team.ru (client-ip=2a02:6b8:0:1a2d::193;
- helo=forwardcorp1o.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
- header.a=rsa-sha256 header.s=default header.b=vrbEbaj6; 
- dkim-atps=neutral
-X-Greylist: delayed 7940 seconds by postgrey-1.36 at boromir;
- Tue, 27 Jul 2021 02:42:40 AEST
-Received: from forwardcorp1o.mail.yandex.net (forwardcorp1o.mail.yandex.net
- [IPv6:2a02:6b8:0:1a2d::193])
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+X-Greylist: delayed 124 seconds by postgrey-1.36 at boromir;
+ Tue, 27 Jul 2021 02:50:00 AEST
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GYQhJ4vdLz2yx9
- for <openbmc@lists.ozlabs.org>; Tue, 27 Jul 2021 02:42:36 +1000 (AEST)
-Received: from iva8-c5ee4261001e.qloud-c.yandex.net
- (iva8-c5ee4261001e.qloud-c.yandex.net
- [IPv6:2a02:6b8:c0c:a8a6:0:640:c5ee:4261])
- by forwardcorp1o.mail.yandex.net (Yandex) with ESMTP id 63DE32E1929;
- Mon, 26 Jul 2021 19:42:22 +0300 (MSK)
-Received: from mail.yandex-team.ru (mail.yandex-team.ru [37.140.129.137])
- by iva8-c5ee4261001e.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
- HghB2700h8c1-gM04jjeY; Mon, 26 Jul 2021 19:42:22 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; 
- t=1627317742; bh=EcxToYr1ROtWsCZURGT6OJCnKAsFZiGbjBpARyGY2G0=;
- h=Subject:In-Reply-To:Cc:Date:References:To:From:Message-Id;
- b=vrbEbaj6wzjbrN5lYxkzRR+WWcGYXD9Ez+Pao7KnS4UMyb2jEDVR27aroKMGnVyPM
- ZYBAsy4fgjyG20KQFdPr4FsbztOYtfn1r25XBD/OjdbBEOxEHXWpmwVHUuRyDYUqin
- 4u1nR+Oc7Oq8AObSUq6xMK+eR9oUQrVZdoLWEnMA=
-Authentication-Results: iva8-c5ee4261001e.qloud-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-X-Yandex-Sender-Uid: 1120000000049860
-X-Yandex-Avir: 1
-Received: from sas1-bf93f9015d57.qloud-c.yandex.net
- (sas1-bf93f9015d57.qloud-c.yandex.net [2a02:6b8:c08:8889:0:640:bf93:f901])
- by sas1-ec30c78b6c5b.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
- 3ghI640xe8c1-OnxDqaNI
- for <kitsok@yandex-team.ru>; Mon, 26 Jul 2021 19:42:12 +0300
-Received: by sas1-bf93f9015d57.qloud-c.yandex.net with HTTP;
- Mon, 26 Jul 2021 19:42:12 +0300
-From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-To: Paul Fertser <fercerpav@gmail.com>
-In-Reply-To: <20210726145246.GL875@home.paul.comp>
-References: <CAE33tLEsCJtr9VPYj57ZcOe5iWD6282WmrMTr-Hp96Y3rkBzAA@mail.gmail.com>
- <000001d5bc87$f6fe3780$e4faa680$@linux.intel.com>
- <CAE33tLHvjuwFwCsSdohvYPHgs-f-8sDWMsNdAhzgQbs3=o7_tQ@mail.gmail.com>
- <429111627309901@mail.yandex-team.ru> <20210726145246.GL875@home.paul.comp>
-Subject: Re: Serial Over Lan (SOL) no login prompt on Linux IRQ mode
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GYQrm0LYKz303L
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Jul 2021 02:49:59 +1000 (AEST)
+X-IronPort-AV: E=McAfee;i="6200,9189,10057"; a="273359366"
+X-IronPort-AV: E=Sophos;i="5.84,270,1620716400"; d="scan'208";a="273359366"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jul 2021 09:46:49 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.84,270,1620716400"; d="scan'208";a="516167270"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga002.fm.intel.com with ESMTP; 26 Jul 2021 09:46:49 -0700
+Received: from [10.212.219.165] (jmbills-MOBL.amr.corp.intel.com
+ [10.212.219.165])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 45A55580808
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Jul 2021 09:46:49 -0700 (PDT)
+Subject: =?UTF-8?B?UmU6IOWbnuimhjogW3g4Ni1wb3dlci1jb250cm9sXTogcHJlc3MgdGhl?=
+ =?UTF-8?Q?_power_button_for_a_long_time_that_can=27t_force_turn_off_system_?=
+ =?UTF-8?Q?power?=
+To: openbmc@lists.ozlabs.org
+References: <DM6PR08MB55145CD3DC0AD96D30B70771DCE59@DM6PR08MB5514.namprd08.prod.outlook.com>
+ <8fcc9529-0f7b-df46-aa28-1569d254eb20@linux.intel.com>
+ <DM6PR08MB551464D29CE9BD91FFE1B20ADCE69@DM6PR08MB5514.namprd08.prod.outlook.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <b133d936-c788-1800-7b72-e197b69387cc@linux.intel.com>
+Date: Mon, 26 Jul 2021 10:46:48 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Mon, 26 Jul 2021 19:42:22 +0300
-Message-Id: <435311627317580@mail.yandex-team.ru>
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
+In-Reply-To: <DM6PR08MB551464D29CE9BD91FFE1B20ADCE69@DM6PR08MB5514.namprd08.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,215 +63,161 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGRpdj5IZWxsbyBQYXVsLDwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PlRoYW5rIHlvdSBmb3IgdGhp
-cyBwYXRjaCwgSSd2ZSB0cmllZCB0aGlzIChVQVJUMSAmbHQ7LSZndDtVQVJUMyByb3V0aW5nKSwg
-YnV0IHRoaXMganVzdCBkb2Vzbid0IHdvcmsgb24gbXkgaGFyZHdhcmUsIGV2ZW4gUE9TVCBpcyBu
-b3QgYXZhaWxhYmxlLjwvZGl2PjxkaXY+UHJvYmFibHkgb25seSB3YXkgaXMgdG8gYXNrIEFzcGVl
-ZHRlY2ggc3VwcG9ydCB0byBjbGFyaWZ5IHRoaXMuPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+VGhh
-bmsgeW91ITwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PjI2LjA3LjIwMjEsIDE3OjUyLCAiUGF1bCBG
-ZXJ0c2VyIiAmbHQ7ZmVyY2VycGF2QGdtYWlsLmNvbSZndDs6PC9kaXY+PGJsb2NrcXVvdGU+PHA+
-SGkgS29uc3RhbnRpbiw8YnIgLz48YnIgLz5PbiBNb24sIEp1bCAyNiwgMjAyMSBhdCAwNTozNjo1
-MVBNICswMzAwLCBLb25zdGFudGluIEtsdWJuaWNoa2luIHdyb3RlOjwvcD48YmxvY2txdW90ZT7C
-oEknbSBkaWdnaW5nIGludG8gQVNUMjUwMCBkYXRhc2hlZXQgZm9yIGxhc3QgY291cGxlIG9mIGRh
-eXMgYnV0IGNhbid0IGZpbmQgd2hhdDxiciAvPsKgbWF5IGNhdXNlIHRoaXMgYmVoYXZpb3IuPC9i
-bG9ja3F1b3RlPjxwPjxiciAvPk15IGF0dGVtcHRzIGF0IHVuZGVyc3RhbmRpbmcgdGhpcyBmYWls
-ZWQgdG9vLCBhcHBhcmVudGx5IHRoZSBhc3BlZWQ8YnIgLz5kb2N1bWVudGF0aW9uIGlzIGluY29t
-cGxldGUgb3IgaW5jb3JyZWN0LiBTbyB3ZSBoYXZlIHRvIHVzZSB0aGU8YnIgLz5mb2xsb3dpbmcg
-cGF0Y2ggZnJvbSBQaG9lbml4IChndWVzcyB5b3UnbGwgc2VlIHdoYXQgaXQncyBkb2luZyByaWdo
-dDxiciAvPmF3YXkgYWZ0ZXIgc3BlbmRpbmcgc28gbXVjaCB0aW1lIHJlYWRpbmcgdGhlIGRhdGFz
-aGVldCA7KSApOjxiciAvPjxiciAvPkZyb20gNmQ3YWZkZmViNjcyODhmZjY3ODY0YTI1ZGUyZDRm
-YTc4M2YxODMzNiBNb24gU2VwIDE3IDAwOjAwOjAwIDIwMDE8YnIgLz5Gcm9tOiBQYXRyaWNrIFZv
-ZWxrZXIgJmx0OzxhIGhyZWY9Im1haWx0bzpwYXRyaWNrX3ZvZWxrZXJAcGhvZW5peC5jb20iIHJl
-bD0ibm9vcGVuZXIgbm9yZWZlcnJlciI+cGF0cmlja192b2Vsa2VyQHBob2VuaXguY29tPC9hPiZn
-dDs8YnIgLz5EYXRlOiBXZWQsIDIxIEFwciAyMDIxIDAyOjE0OjAxICswMDAwPGJyIC8+U3ViamVj
-dDogW1BBVENIXSAqIEZpeCBob3N0IHNlcmlhbCByb3V0aW5nIGFuZCBTT0wgc28gdGhhdCBpdCBk
-b2Vzbid0PGJyIC8+wqBpbnRlcmZlcmUgd2l0aCBJUlEgZHJpdmVuIGNvbnNvbGUgaW4gaG9zdCBM
-aW51eCBib290LjxiciAvPjxiciAvPi0tLTxiciAvPsKgLi4uRml4LUhvc3QtVUFSVC1Sb3V0aW5n
-LUZvci1CZXR0ZXItU09MLnBhdGNoIHwgNjMgKysrKysrKysrKysrKysrKysrKzxiciAvPsKgLi4u
-L3JlY2lwZXMtYnNwL3UtYm9vdC91LWJvb3QtJS5iYmFwcGVuZCB8IDEgKzxiciAvPsKgLi4uLzAx
-MDktQWRkZWQtVUFSVDMtRm9yLUJldHRlci1TT0wucGF0Y2ggfCAzMyArKysrKysrKysrPGJyIC8+
-wqAuLi4vbGludXgvbGludXgtYXNwZWVkXyUuYmJhcHBlbmQgfCAxICs8YnIgLz7CoC4uLi8wMDAw
-LUF0dGFjaC1Db25zb2xlLVRvLXR0eVMyLnBhdGNoIHwgMTIgKysrKzxiciAvPsKgLi4uL2NvbnNv
-bGUvb2JtYy1jb25zb2xlL29ibWMtY29uc29sZS5jb25mIHwgNCArLTxiciAvPsKgLi4uL2NvbnNv
-bGUvb2JtYy1jb25zb2xlXyUuYmJhcHBlbmQgfCAzICs8YnIgLz7CoDcgZmlsZXMgY2hhbmdlZCwg
-MTE0IGluc2VydGlvbnMoKyksIDMgZGVsZXRpb25zKC0pPGJyIC8+wqBjcmVhdGUgbW9kZSAxMDA2
-NDQgbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLWJzcC91LWJvb3QvZmlsZXMvMDAw
-OS1GaXgtSG9zdC1VQVJULVJvdXRpbmctRm9yLUJldHRlci1TT0wucGF0Y2g8YnIgLz7CoGNyZWF0
-ZSBtb2RlIDEwMDY0NCBtZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMta2VybmVsL2xp
-bnV4L2xpbnV4LWFzcGVlZC8wMTA5LUFkZGVkLVVBUlQzLUZvci1CZXR0ZXItU09MLnBhdGNoPGJy
-IC8+wqBjcmVhdGUgbW9kZSAxMDA2NDQgbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVz
-LXBob3NwaG9yL2NvbnNvbGUvb2JtYy1jb25zb2xlLzAwMDAtQXR0YWNoLUNvbnNvbGUtVG8tdHR5
-UzIucGF0Y2g8YnIgLz48YnIgLz5kaWZmIC0tZ2l0IGEvbWV0YS1waG9lbml4L21ldGEtcHRlYy10
-cC9yZWNpcGVzLWJzcC91LWJvb3QvZmlsZXMvMDAwOS1GaXgtSG9zdC1VQVJULVJvdXRpbmctRm9y
-LUJldHRlci1TT0wucGF0Y2ggYi9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMtYnNw
-L3UtYm9vdC9maWxlcy8wMDA5LUZpeC1Ib3N0LVVBUlQtUm91dGluZy1Gb3ItQmV0dGVyLVNPTC5w
-YXRjaDxiciAvPm5ldyBmaWxlIG1vZGUgMTAwNjQ0PGJyIC8+aW5kZXggMDAwMDAwMDAwMDAwLi4x
-M2UzNTliZWYyNmM8YnIgLz4tLS0gL2Rldi9udWxsPGJyIC8+KysrIGIvbWV0YS1waG9lbml4L21l
-dGEtcHRlYy10cC9yZWNpcGVzLWJzcC91LWJvb3QvZmlsZXMvMDAwOS1GaXgtSG9zdC1VQVJULVJv
-dXRpbmctRm9yLUJldHRlci1TT0wucGF0Y2g8YnIgLz5AQCAtMCwwICsxLDYzIEBAPGJyIC8+K2Rp
-ZmYgLS1naXQgYS9hcmNoL2FybS9pbmNsdWRlL2FzbS9hcmNoLWFzcGVlZC9hc3Rfc2N1LmggYi9h
-cmNoL2FybS9pbmNsdWRlL2FzbS9hcmNoLWFzcGVlZC9hc3Rfc2N1Lmg8YnIgLz4raW5kZXggOGZj
-N2MzYzkzNC4uMzJjNmZiZjEwYSAxMDA3NTU8YnIgLz4rLS0tIGEvYXJjaC9hcm0vaW5jbHVkZS9h
-c20vYXJjaC1hc3BlZWQvYXN0X3NjdS5oPGJyIC8+KysrKyBiL2FyY2gvYXJtL2luY2x1ZGUvYXNt
-L2FyY2gtYXNwZWVkL2FzdF9zY3UuaDxiciAvPitAQCAtNTMsMTEgKzUzLDIyIEBAPGJyIC8+Kzxi
-ciAvPisgLyogSElDUkEgQml0cyAqLzxiciAvPisgI2RlZmluZSBISUNSQV9JMDFfT0ZGU0VUICgw
-KTxiciAvPistI2RlZmluZSBISUNSQV9VQVJUM19PRkZTRVQgKDIyKTxiciAvPisgI2RlZmluZSBI
-SUNSQV9JMDFfTUFTSyAoNyAmbHQ7Jmx0OyBISUNSQV9JMDFfT0ZGU0VUKTxiciAvPistI2RlZmlu
-ZSBISUNSQV9VQVJUM19NQVNLICg3ICZsdDsmbHQ7IEhJQ1JBX1VBUlQzX09GRlNFVCk8YnIgLz4r
-ICNkZWZpbmUgSElDUkFfVUFSVDNfVE9fSU8xICgyICZsdDsmbHQ7IEhJQ1JBX0kwMV9PRkZTRVQp
-PGJyIC8+KysjZGVmaW5lIEhJQ1JBX1VBUlQ0X1RPX0lPMSAoMyAmbHQ7Jmx0OyBISUNSQV9JMDFf
-T0ZGU0VUKTxiciAvPisrPGJyIC8+KysjZGVmaW5lIEhJQ1JBX1VBUlQxX09GRlNFVCAoMTYpPGJy
-IC8+KysjZGVmaW5lIEhJQ1JBX1VBUlQxX01BU0sgKDcgJmx0OyZsdDsgSElDUkFfVUFSVDFfT0ZG
-U0VUKTxiciAvPisrI2RlZmluZSBISUNSQV9VQVJUM19UT19VQVJUMSAoNSAmbHQ7Jmx0OyBISUNS
-QV9VQVJUMV9PRkZTRVQpPGJyIC8+Kys8YnIgLz4rKyNkZWZpbmUgSElDUkFfVUFSVDNfT0ZGU0VU
-ICgyMik8YnIgLz4rKyNkZWZpbmUgSElDUkFfVUFSVDNfTUFTSyAoNyAmbHQ7Jmx0OyBISUNSQV9V
-QVJUM19PRkZTRVQpPGJyIC8+KyAjZGVmaW5lIEhJQ1JBX0lPMV9UT19VQVJUMyAoMiAmbHQ7Jmx0
-OyBISUNSQV9VQVJUM19PRkZTRVQpPGJyIC8+KysjZGVmaW5lIEhJQ1JBX1VBUlQxX1RPX1VBUlQz
-ICg1ICZsdDsmbHQ7IEhJQ1JBX1VBUlQzX09GRlNFVCk8YnIgLz4rKzxiciAvPisrI2RlZmluZSBI
-SUNSQV9VQVJUNF9PRkZTRVQgKDI1KTxiciAvPisrI2RlZmluZSBISUNSQV9VQVJUNF9NQVNLICg3
-ICZsdDsmbHQ7IEhJQ1JBX1VBUlQ0X09GRlNFVCk8YnIgLz4rKyNkZWZpbmUgSElDUkFfSU8xX1RP
-X1VBUlQ0ICgxICZsdDsmbHQ7IEhJQ1JBX1VBUlQ0X09GRlNFVCk8YnIgLz4rPGJyIC8+KyAvKiBI
-SUNSQiBCaXRzICovPGJyIC8+KyAjZGVmaW5lIEhJQ1JCX0VOODBIU0dJTyAoMSAmbHQ7Jmx0OyAx
-MykgLyogRW5hYmxlIDgwaFNHSU8gKi88YnIgLz4rZGlmZiAtLWdpdCBhL2JvYXJkL2FzcGVlZC9h
-c3QtZzUvYXN0LWc1LmMgYi9ib2FyZC9hc3BlZWQvYXN0LWc1L2FzdC1nNS5jPGJyIC8+K2luZGV4
-IGNjNDdkN2E3M2YuLjk5ZGJhODU4MmEgMTAwNzU1PGJyIC8+Ky0tLSBhL2JvYXJkL2FzcGVlZC9h
-c3QtZzUvYXN0LWc1LmM8YnIgLz4rKysrIGIvYm9hcmQvYXNwZWVkL2FzdC1nNS9hc3QtZzUuYzxi
-ciAvPitAQCAtNzMsMTIgKzczLDI1IEBAIHZvaWQgcmVkaXJlY3RfaG9zdF91YXJ0KCB2b2lkICk8
-YnIgLz4rIHs8IS0tIC0tPjxiciAvPisgdWludDMyX3QgcmVnID0gMHgwMDs8YnIgLz4rPGJyIC8+
-Ky0gLyogUmVkaXJlY3QgVUFSVDMgKC9kZXYvdHR5UzIpIHRvIElPMSAoYW5kIHZpY2UtdmVyc2Ep
-ICovPGJyIC8+Ky0gcmVnID0gcmVhZGwoQVNUX0xQQ19CQVNFICsgSElDUkEpOzxiciAvPisrIC8q
-IFJlZGlyZWN0IFVBUlQ0ICgvZGV2L3R0eVMzKSB0byBJTzEgKGFuZCB2aWNlLXZlcnNhKTxiciAv
-PisrIEFuZCBhbHNvIHJlZGlyZWN0IFVBUlQxIHRvIFVBUlQzICh0dHlTMCBhbmQgdHR5UzIpIHRv
-IGVhY2hvdGhlciAoYW5kIHZpY2UtdmVyc2EpICovPGJyIC8+Kys8YnIgLz4rKyAvLyBVQVJUNCB0
-byBJTzE8YnIgLz4rIHJlZyAmYW1wOz0gfkhJQ1JBX0kwMV9NQVNLOzxiciAvPistIHJlZyB8PSBI
-SUNSQV9VQVJUM19UT19JTzE7PGJyIC8+KysgcmVnIHw9IEhJQ1JBX1VBUlQ0X1RPX0lPMTs8YnIg
-Lz4rKzxiciAvPisrIC8vIElPMSB0byBVQVJUNDxiciAvPisrIHJlZyAmYW1wOz0gfkhJQ1JBX1VB
-UlQ0X01BU0s7PGJyIC8+KysgcmVnIHw9IEhJQ1JBX0lPMV9UT19VQVJUNDs8YnIgLz4rKzxiciAv
-PisrIC8vIFVBUlQxIHRvIFVBUlQzPGJyIC8+KyByZWcgJmFtcDs9IH5ISUNSQV9VQVJUM19NQVNL
-OzxiciAvPistIHJlZyB8PSBISUNSQV9JTzFfVE9fVUFSVDM7PGJyIC8+KysgcmVnIHw9IEhJQ1JB
-X1VBUlQxX1RPX1VBUlQzOzxiciAvPisrPGJyIC8+KysgLy8gVUFSVDMgdG8gVUFSVDE8YnIgLz4r
-KyByZWcgJmFtcDs9IH5ISUNSQV9VQVJUMV9NQVNLOzxiciAvPisrIHJlZyB8PSBISUNSQV9VQVJU
-M19UT19VQVJUMTs8YnIgLz4rKzxiciAvPisgd3JpdGVsKHJlZywgQVNUX0xQQ19CQVNFICsgSElD
-UkEpOzxiciAvPisgfTxiciAvPis8YnIgLz5kaWZmIC0tZ2l0IGEvbWV0YS1waG9lbml4L21ldGEt
-cHRlYy10cC9yZWNpcGVzLWJzcC91LWJvb3QvdS1ib290LSUuYmJhcHBlbmQgYi9tZXRhLXBob2Vu
-aXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMtYnNwL3UtYm9vdC91LWJvb3QtJS5iYmFwcGVuZDxiciAv
-PmluZGV4IGQ5ODU0NWQ5OWExMC4uNmE2YmI1MTAyYjE1IDEwMDc1NTxiciAvPi0tLSBhL21ldGEt
-cGhvZW5peC9tZXRhLXB0ZWMtdHAvcmVjaXBlcy1ic3AvdS1ib290L3UtYm9vdC0lLmJiYXBwZW5k
-PGJyIC8+KysrIGIvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLWJzcC91LWJvb3Qv
-dS1ib290LSUuYmJhcHBlbmQ8YnIgLz5AQCAtNyw2ICs3LDcgQEAgU1JDX1VSSV9hcHBlbmRfYXNw
-ZWVkICs9ICIgXDxiciAvPsKgwqDCoMKgwqA8YSBocmVmPSJmaWxlOi8vMDAwNS1lbmFibGUtcGFz
-c3Rocm91Z2gtaW4tdWJvb3QucGF0Y2giIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciI+ZmlsZTov
-LzAwMDUtZW5hYmxlLXBhc3N0aHJvdWdoLWluLXVib290LnBhdGNoPC9hPiBcPGJyIC8+wqDCoMKg
-wqDCoDxhIGhyZWY9Imh0dHA6Ly9maWxlLy8wMDA3LUZpeC1HSVAtMTQxLWVuYWJsZS1wb3J0LTgw
-aC1wb3N0LWNvZGUtZGlzcGxheS1vbi10aGUtNy1zZWdtZW50LUxFRHMucGF0Y2giIHJlbD0ibm9v
-cGVuZXIgbm9yZWZlcnJlciI+ZmlsZTovLzAwMDctRml4LUdJUC0xNDEtZW5hYmxlLXBvcnQtODBo
-LXBvc3QtY29kZS1kaXNwbGF5LW9uLXRoZS03LXNlZ21lbnQtTEVEcy5wYXRjaDwvYT4gXDxiciAv
-PsKgwqDCoMKgwqA8YSBocmVmPSJmaWxlOi8vMDAwOC1hZGQtaG9zdC11YXJ0LXJvdXRpbmcucGF0
-Y2giIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciI+ZmlsZTovLzAwMDgtQWRkLUhvc3QtVUFSVC1S
-b3V0aW5nLnBhdGNoPC9hPiBcPGJyIC8+KyA8YSBocmVmPSJmaWxlOi8vMDAwOS1maXgtaG9zdC11
-YXJ0LXJvdXRpbmctZm9yLWJldHRlci1zb2wucGF0Y2giIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJl
-ciI+ZmlsZTovLzAwMDktRml4LUhvc3QtVUFSVC1Sb3V0aW5nLUZvci1CZXR0ZXItU09MLnBhdGNo
-PC9hPiBcPGJyIC8+wqDCoMKgwqDCoCI8YnIgLz7CoDxiciAvPsKgU1JDX1VSSV9yZW1vdmUgPSAi
-IjxiciAvPmRpZmYgLS1naXQgYS9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMta2Vy
-bmVsL2xpbnV4L2xpbnV4LWFzcGVlZC8wMTA5LUFkZGVkLVVBUlQzLUZvci1CZXR0ZXItU09MLnBh
-dGNoIGIvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLWtlcm5lbC9saW51eC9saW51
-eC1hc3BlZWQvMDEwOS1BZGRlZC1VQVJUMy1Gb3ItQmV0dGVyLVNPTC5wYXRjaDxiciAvPm5ldyBm
-aWxlIG1vZGUgMTAwNjQ0PGJyIC8+aW5kZXggMDAwMDAwMDAwMDAwLi43NjdhZjJhOTM3ZGI8YnIg
-Lz4tLS0gL2Rldi9udWxsPGJyIC8+KysrIGIvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNp
-cGVzLWtlcm5lbC9saW51eC9saW51eC1hc3BlZWQvMDEwOS1BZGRlZC1VQVJUMy1Gb3ItQmV0dGVy
-LVNPTC5wYXRjaDxiciAvPkBAIC0wLDAgKzEsMzMgQEA8YnIgLz4rZGlmZiAtLWdpdCBhL2FyY2gv
-YXJtL2Jvb3QvZHRzL2FzcGVlZC1ibWMtZmFjZWJvb2stdGlvZ2FwYXNzLmR0cyBiL2FyY2gvYXJt
-L2Jvb3QvZHRzL2FzcGVlZC1ibWMtZmFjZWJvb2stdGlvZ2FwYXNzLmR0czxiciAvPitpbmRleCA3
-NzIzM2QzNjAxNDIuLjM5Nzg2YTU5YWU0NyAxMDA2NDQ8YnIgLz4rLS0tIGEvYXJjaC9hcm0vYm9v
-dC9kdHMvYXNwZWVkLWJtYy1mYWNlYm9vay10aW9nYXBhc3MuZHRzPGJyIC8+KysrKyBiL2FyY2gv
-YXJtL2Jvb3QvZHRzL2FzcGVlZC1ibWMtZmFjZWJvb2stdGlvZ2FwYXNzLmR0czxiciAvPitAQCAt
-MTYyLDcgKzE2Miw3IEBAPGJyIC8+KyB9OzxiciAvPis8YnIgLz4rICZhbXA7dWFydDEgezwhLS0g
-LS0+PGJyIC8+Ky0gLy8gSG9zdCBDb25zb2xlPGJyIC8+KysgLy8gSG9zdCBJbiBDb25zb2xlPGJy
-IC8+KyBzdGF0dXMgPSAib2theSI7PGJyIC8+KyBwaW5jdHJsLW5hbWVzID0gImRlZmF1bHQiOzxi
-ciAvPisgcGluY3RybC0wID0gJmx0OyZhbXA7cGluY3RybF90eGQxX2RlZmF1bHQ8YnIgLz4rQEAg
-LTE3MCwxMiArMTcwLDE3IEBAPGJyIC8+KyB9OzxiciAvPis8YnIgLz4rICZhbXA7dWFydDIgezwh
-LS0gLS0+PGJyIC8+Ky0gLy8gU29MIEhvc3QgQ29uc29sZTxiciAvPisrIC8vIE5vdCB1c2VkPGJy
-IC8+KyBzdGF0dXMgPSAib2theSI7PGJyIC8+KyB9OzxiciAvPis8YnIgLz4rICZhbXA7dWFydDMg
-ezwhLS0gLS0+PGJyIC8+Ky0gLy8gU29MIEJNQyBDb25zb2xlPGJyIC8+KysgLy8gU29MIENvbnNv
-bGU8YnIgLz4rKyBzdGF0dXMgPSAib2theSI7PGJyIC8+Kyt9OzxiciAvPisrPGJyIC8+KysmYW1w
-O3VhcnQ0IHs8IS0tIC0tPjxiciAvPisrIC8vIEhvc3QgT3V0IENvbnNvbGU8YnIgLz4rIHN0YXR1
-cyA9ICJva2F5Ijs8YnIgLz4rIH07PGJyIC8+KzxiciAvPmRpZmYgLS1naXQgYS9tZXRhLXBob2Vu
-aXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMta2VybmVsL2xpbnV4L2xpbnV4LWFzcGVlZF8lLmJiYXBw
-ZW5kIGIvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLWtlcm5lbC9saW51eC9saW51
-eC1hc3BlZWRfJS5iYmFwcGVuZDxiciAvPmluZGV4IDRmOTI3YjdlNjRkMy4uOTgxYTQ5MjRiNTI2
-IDEwMDc1NTxiciAvPi0tLSBhL21ldGEtcGhvZW5peC9tZXRhLXB0ZWMtdHAvcmVjaXBlcy1rZXJu
-ZWwvbGludXgvbGludXgtYXNwZWVkXyUuYmJhcHBlbmQ8YnIgLz4rKysgYi9tZXRhLXBob2VuaXgv
-bWV0YS1wdGVjLXRwL3JlY2lwZXMta2VybmVsL2xpbnV4L2xpbnV4LWFzcGVlZF8lLmJiYXBwZW5k
-PGJyIC8+QEAgLTMwLDQgKzMwLDUgQEAgU1JDX1VSSSArPSAiIFw8YnIgLz7CoMKgwqDCoMKgwqDC
-oMKgwqA8YSBocmVmPSJodHRwOi8vZmlsZS8vMDEwNi1BZGQtZ2V0LU1BQy1hZGRyZXNzLXRocm91
-Z2gtTkNTSS1jb21tYW5kLXRvLWdldC1JTlRFTC1NQUMtYWRkcmVzcy5wYXRjaCIgcmVsPSJub29w
-ZW5lciBub3JlZmVycmVyIj5maWxlOi8vMDEwNi1BZGQtZ2V0LU1BQy1hZGRyZXNzLXRocm91Z2gt
-TkNTSS1jb21tYW5kLXRvLWdldC1JTlRFTC1NQUMtYWRkcmVzcy5wYXRjaDwvYT4gXDxiciAvPsKg
-wqDCoMKgwqDCoMKgwqDCoDxhIGhyZWY9ImZpbGU6Ly8wMTA3LWZpeC1nZXQtbWFjLWFkZHJlc3Mt
-ZnJvbS1tbHgtY2FyZC1pbmNyZW1lbnQtMS5wYXRjaCIgcmVsPSJub29wZW5lciBub3JlZmVycmVy
-Ij5maWxlOi8vMDEwNy1GaXgtZ2V0LU1BQy1hZGRyZXNzLWZyb20tbWx4LWNhcmQtaW5jcmVtZW50
-LTEucGF0Y2g8L2E+IFw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqA8YSBocmVmPSJmaWxlOi8vMDEw
-OC1hZGp1c3Qtc2lycS1wb2xhcml0eS5wYXRjaCIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIj5m
-aWxlOi8vMDEwOC1BZGp1c3QtU0lSUS1Qb2xhcml0eS5wYXRjaDwvYT4gXDxiciAvPisgPGEgaHJl
-Zj0iZmlsZTovLzAxMDktYWRkZWQtdWFydDMtZm9yLWJldHRlci1zb2wucGF0Y2giIHJlbD0ibm9v
-cGVuZXIgbm9yZWZlcnJlciI+ZmlsZTovLzAxMDktQWRkZWQtVUFSVDMtRm9yLUJldHRlci1TT0wu
-cGF0Y2g8L2E+IFw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqAiPGJyIC8+ZGlmZiAtLWdpdCBhL21l
-dGEtcGhvZW5peC9tZXRhLXB0ZWMtdHAvcmVjaXBlcy1waG9zcGhvci9jb25zb2xlL29ibWMtY29u
-c29sZS8wMDAwLUF0dGFjaC1Db25zb2xlLVRvLXR0eVMyLnBhdGNoIGIvbWV0YS1waG9lbml4L21l
-dGEtcHRlYy10cC9yZWNpcGVzLXBob3NwaG9yL2NvbnNvbGUvb2JtYy1jb25zb2xlLzAwMDAtQXR0
-YWNoLUNvbnNvbGUtVG8tdHR5UzIucGF0Y2g8YnIgLz5uZXcgZmlsZSBtb2RlIDEwMDY0NDxiciAv
-PmluZGV4IDAwMDAwMDAwMDAwMC4uMjk2N2NjMWYzNzU4PGJyIC8+LS0tIC9kZXYvbnVsbDxiciAv
-PisrKyBiL21ldGEtcGhvZW5peC9tZXRhLXB0ZWMtdHAvcmVjaXBlcy1waG9zcGhvci9jb25zb2xl
-L29ibWMtY29uc29sZS8wMDAwLUF0dGFjaC1Db25zb2xlLVRvLXR0eVMyLnBhdGNoPGJyIC8+QEAg
-LTAsMCArMSwxMiBAQDxiciAvPitkaWZmIC0tZ2l0IGEvY29uZi88YSBocmVmPSJtYWlsdG86b2Jt
-Yy1jb25zb2xlQC5zZXJ2aWNlLmluIiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiPm9ibWMtY29u
-c29sZUAuc2VydmljZS5pbjwvYT4gYi9jb25mLzxhIGhyZWY9Im1haWx0bzpvYm1jLWNvbnNvbGVA
-LnNlcnZpY2UuaW4iIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciI+b2JtYy1jb25zb2xlQC5zZXJ2
-aWNlLmluPC9hPjxiciAvPitpbmRleCBjNmNkMWI0Li43YmYxZGU2IDEwMDY0NDxiciAvPistLS0g
-YS9jb25mLzxhIGhyZWY9Im1haWx0bzpvYm1jLWNvbnNvbGVALnNlcnZpY2UuaW4iIHJlbD0ibm9v
-cGVuZXIgbm9yZWZlcnJlciI+b2JtYy1jb25zb2xlQC5zZXJ2aWNlLmluPC9hPjxiciAvPisrKysg
-Yi9jb25mLzxhIGhyZWY9Im1haWx0bzpvYm1jLWNvbnNvbGVALnNlcnZpY2UuaW4iIHJlbD0ibm9v
-cGVuZXIgbm9yZWZlcnJlciI+b2JtYy1jb25zb2xlQC5zZXJ2aWNlLmluPC9hPjxiciAvPitAQCAt
-NCw2ICs0LDYgQEAgQ29uZGl0aW9uUGF0aEV4aXN0cz0vZXRjL29ibWMtY29uc29sZS9zZXJ2ZXIu
-JWkuY29uZjxiciAvPis8YnIgLz4rIFtTZXJ2aWNlXTxiciAvPisgIyBJbnN0YW5jZSBJRCBpcyB0
-aGUgVlVBUlQgYmFzZW5hbWU8YnIgLz4rLUV4ZWNTdGFydD0vdXNyL3NiaW4vb2JtYy1jb25zb2xl
-LXNlcnZlciAtLWNvbmZpZyAvZXRjL29ibWMtY29uc29sZS9zZXJ2ZXIuJWkuY29uZiAlaTxiciAv
-PisrRXhlY1N0YXJ0PS91c3Ivc2Jpbi9vYm1jLWNvbnNvbGUtc2VydmVyIC0tY29uZmlnIC9ldGMv
-b2JtYy1jb25zb2xlL3NlcnZlci4laS5jb25mIHR0eVMyPGJyIC8+KyBTeXNsb2dJZGVudGlmaWVy
-PSVpLWNvbnNvbGUtc2VydmVyPGJyIC8+KyBSZXN0YXJ0PWFsd2F5czxiciAvPmRpZmYgLS1naXQg
-YS9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMtcGhvc3Bob3IvY29uc29sZS9vYm1j
-LWNvbnNvbGUvb2JtYy1jb25zb2xlLmNvbmYgYi9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3Jl
-Y2lwZXMtcGhvc3Bob3IvY29uc29sZS9vYm1jLWNvbnNvbGUvb2JtYy1jb25zb2xlLmNvbmY8YnIg
-Lz5pbmRleCBjNWZhYWJjMGFiNmQuLjg0OTFmNTM2NTNlYyAxMDA2NDQ8YnIgLz4tLS0gYS9tZXRh
-LXBob2VuaXgvbWV0YS1wdGVjLXRwL3JlY2lwZXMtcGhvc3Bob3IvY29uc29sZS9vYm1jLWNvbnNv
-bGUvb2JtYy1jb25zb2xlLmNvbmY8YnIgLz4rKysgYi9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRw
-L3JlY2lwZXMtcGhvc3Bob3IvY29uc29sZS9vYm1jLWNvbnNvbGUvb2JtYy1jb25zb2xlLmNvbmY8
-YnIgLz5AQCAtMSw1ICsxLDMgQEA8YnIgLz7CoGJhdWQgPSAxMTUyMDA8YnIgLz4tbHBjLWFkZHJl
-c3MgPSAweDNmODxiciAvPi1zaXJxID0gNDxiciAvPi1sb2NhbC10dHkgPSB0dHlTMjxiciAvPits
-b2NhbC10dHkgPSB0dHlTMzxiciAvPsKgbG9jYWwtdHR5LWJhdWQgPSAxMTUyMDA8YnIgLz5kaWZm
-IC0tZ2l0IGEvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLXBob3NwaG9yL2NvbnNv
-bGUvb2JtYy1jb25zb2xlXyUuYmJhcHBlbmQgYi9tZXRhLXBob2VuaXgvbWV0YS1wdGVjLXRwL3Jl
-Y2lwZXMtcGhvc3Bob3IvY29uc29sZS9vYm1jLWNvbnNvbGVfJS5iYmFwcGVuZDxiciAvPmluZGV4
-IDUwZDdkNGYwZjE2MC4uNTNlZTZkNzEyNGYzIDEwMDY0NDxiciAvPi0tLSBhL21ldGEtcGhvZW5p
-eC9tZXRhLXB0ZWMtdHAvcmVjaXBlcy1waG9zcGhvci9jb25zb2xlL29ibWMtY29uc29sZV8lLmJi
-YXBwZW5kPGJyIC8+KysrIGIvbWV0YS1waG9lbml4L21ldGEtcHRlYy10cC9yZWNpcGVzLXBob3Nw
-aG9yL2NvbnNvbGUvb2JtYy1jb25zb2xlXyUuYmJhcHBlbmQ8YnIgLz5AQCAtMSwyICsxLDUgQEA8
-YnIgLz7CoEZJTEVTRVhUUkFQQVRIU19wcmVwZW5kIDo9ICIke1RISVNESVJ9LyR7UE59OiI8YnIg
-Lz7CoE9CTUNfQ09OU09MRV9IT1NUX1RUWSA9ICJ0dHlTMiI8YnIgLz4rPGJyIC8+K1NSQ19VUkkg
-Kz0gIiA8YSBocmVmPSJmaWxlOi8vMDAwMC1hdHRhY2gtY29uc29sZS10by10dHlzMi5wYXRjaCIg
-cmVsPSJub29wZW5lciBub3JlZmVycmVyIj5maWxlOi8vMDAwMC1BdHRhY2gtQ29uc29sZS1Uby10
-dHlTMi5wYXRjaDwvYT4gXDxiciAvPisgIjwvcD4tLTxiciAvPjIuMTcuMTxiciAvPjxiciAvPi0t
-PGJyIC8+QmUgZnJlZSwgdXNlIGZyZWUgKDxhIGhyZWY9Imh0dHA6Ly93d3cuZ251Lm9yZy9waGls
-b3NvcGh5L2ZyZWUtc3cuaHRtbCIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIj5odHRwOi8vd3d3
-LmdudS5vcmcvcGhpbG9zb3BoeS9mcmVlLXN3Lmh0bWw8L2E+KSBzb2Z0d2FyZSE8YnIgLz48YSBo
-cmVmPSJtYWlsdG86ZmVyY2VycGF2QGdtYWlsLmNvbSIgcmVsPSJub29wZW5lciBub3JlZmVycmVy
-Ij5tYWlsdG86ZmVyY2VycGF2QGdtYWlsLmNvbTwvYT48L2Jsb2NrcXVvdGU+PGRpdj7CoDwvZGl2
-PjxkaXY+wqA8L2Rpdj48ZGl2Pi0twqA8L2Rpdj48ZGl2PkJlc3QgcmVnYXJkcyw8L2Rpdj48ZGl2
-PktvbnN0YW50aW4gS2x1Ym5pY2hraW4sPC9kaXY+PGRpdj5sZWFkIGZpcm13YXJlIGVuZ2luZWVy
-LDwvZGl2PjxkaXY+c2VydmVyIGhhcmR3YXJlIFImYW1wO0QgZ3JvdXAsPC9kaXY+PGRpdj5ZYW5k
-ZXggTW9zY293IG9mZmljZS48L2Rpdj48ZGl2PnRlbDogKzctOTAzLTUxMC0zMy0zMzwvZGl2Pjxk
-aXY+wqA8L2Rpdj4=
+
+
+On 7/23/2021 9:04 PM, Chris Chen (TPI) wrote:
+> Hi Jason,
+> 
+> Thanks for your prompt reply.
+> 
+> The system stays on, because I can hear the fan in PSU is still running 
+> and CPU heatsink is hot, besides, the log would show "Graceful power-off 
+> timer completed" and "Host0: Moving to "On" state" after 5 minutes. Here 
+> are all logs of the power-control for your reference. Hope this can 
+> provide more details.
+The BMC depends on PS_PWROK de-asserting to know that the system has 
+shut down.  If the Graceful power-off timer is expiring, it means that 
+the BMC didn't see PS_PWROK de-assert.
+
+Holding the power button should cause the power button override forced 
+shutdown in hardware.  It sounds like this isn't happening correctly on 
+your system.  I'd suggest reaching out to your Intel representative to 
+get help investigating what is happening in the hardware to prevent the 
+power button override from fully shutting down the system.
+
+> 
+> =====
+> root@hudsonbay-obmc:~# journalctl | grep -e "power-control" -e "power 
+> control" -e "Power Control"
+> Jul 24 10:36:06 hudsonbay-obmc systemd[1]: Starting Intel Power Control...
+> Jul 24 10:36:09 hudsonbay-obmc power-control[198]: Start Chassis power 
+> control service...
+> Jul 24 10:36:09 hudsonbay-obmc systemd[1]: Started Intel Power Control.
+> Jul 24 10:36:09 hudsonbay-obmc power-control[198]: NMI_OUT set to 0
+> Jul 24 10:36:09 hudsonbay-obmc power-control[198]: POWER_OUT set to 1
+> Jul 24 10:36:09 hudsonbay-obmc power-control[198]: RESET_OUT set to 1
+> Jul 24 10:36:09 hudsonbay-obmc power-control[198]: NMI Source Property 
+> Monitor
+> Jul 24 10:36:09 hudsonbay-obmc power-control[198]: Initializing power state.
+> Jul 24 10:36:09 hudsonbay-obmc power-control[198]: Host0: Moving to "On" 
+> state
+> Jul 24 10:36:09 hudsonbay-obmc power-control[198]: POH timer started
+> Jul 24 10:36:38 hudsonbay-obmc power-control[198]: powerStateOn: POST 
+> Complete assert event received
+> Jul 24 10:36:38 hudsonbay-obmc power-control[198]: No action taken.
+> Jul 24 10:36:41 hudsonbay-obmc power-control[198]: powerStateOn: POST 
+> Complete de-assert event received
+> Jul 24 10:36:41 hudsonbay-obmc power-control[198]: Host0: Moving to 
+> "Check for Warm Reset" state
+> Jul 24 10:36:41 hudsonbay-obmc power-control[198]: Warm reset check 
+> timer started
+> Jul 24 10:36:41 hudsonbay-obmc power-control[198]: RestartCause set to 
+> xyz.openbmc_project.State.Host.RestartCause.SoftReset
+> Jul 24 10:36:41 hudsonbay-obmc power-control[198]: Host system DC power 
+> is off
+> Jul 24 10:36:41 hudsonbay-obmc power-control[198]: POH timer canceled
+> Jul 24 10:36:41 hudsonbay-obmc power-control[198]: failed to reset 
+> ACBoot property
+> Jul 24 10:36:42 hudsonbay-obmc power-control[198]: Warm reset check 
+> timer completed
+> Jul 24 10:36:42 hudsonbay-obmc power-control[198]: 
+> powerStateCheckForWarmReset: warm reset detected event received
+> Jul 24 10:36:42 hudsonbay-obmc power-control[198]: Host0: Moving to "On" 
+> state
+> Jul 24 10:36:42 hudsonbay-obmc power-control[198]: POH timer started
+> Jul 24 10:36:42 hudsonbay-obmc power-control[198]: Host system DC power 
+> is on
+> Jul 24 10:38:16 hudsonbay-obmc power-control[198]: powerStateOn: POST 
+> Complete assert event received
+> Jul 24 10:38:16 hudsonbay-obmc power-control[198]: No action taken.
+> Jul 24 10:38:34 hudsonbay-obmc power-control[198]: PowerControl: power 
+> button pressed
+> Jul 24 10:38:34 hudsonbay-obmc power-control[198]: powerStateOn: power 
+> button pressed event received
+> Jul 24 10:38:34 hudsonbay-obmc power-control[198]: Host0: Moving to 
+> "Graceful Transition to Off" state
+> Jul 24 10:38:34 hudsonbay-obmc power-control[198]: Graceful power-off 
+> timer started
+> Jul 24 10:43:34 hudsonbay-obmc power-control[198]: Graceful power-off 
+> timer completed
+> Jul 24 10:43:34 hudsonbay-obmc power-control[198]: 
+> powerStateGracefulTransitionToOff: graceful power-off timer expired 
+> event received
+> Jul 24 10:43:34 hudsonbay-obmc power-control[198]: Host0: Moving to "On" 
+> state
+> =====
+> 
+> Thanks.
+> 
+> Regards,
+> Chris Chen
+> 
+> ------------------------------------------------------------------------
+> *寄件者:* openbmc <openbmc- 
+> bounces+chris.chen3=flex.com@lists.ozlabs.org> 代表 Bills, Jason M 
+> <jason.m.bills@linux.intel.com>
+> *寄件日期:* 2021年7月24日 上午 04:36
+> *收件者:* openbmc@lists.ozlabs.org <openbmc@lists.ozlabs.org>
+> *主旨:* Re: [x86-power-control]: press the power button for a long time 
+> that can't force turn off system power
+> 
+> 
+> On 7/23/2021 4:28 AM, Chris Chen (TPI) wrote:
+>> Hi all,
+>> 
+>> I am working on an ast2600 with Intel CPU.
+>> The system power currently is able to turn on during Phosphor OpenBMC 
+>> boot up after I completed works following:
+>> 
+>>  1. enable ACPI in u-boot
+>>  2. set GPIOP0 ~ P3 pass-through in u-boot
+>>  3. porting ESPI driver from AST SDK v6.01 to linux-aspeed repository
+>>  4. add "&gpio0" with gpio-line-names which has POWER_BUTTON, POWER_OUT,
+>>     SIO_S3, SIO_S5, etc. defintion in the dts, I think the
+>>     "x86-power-control" repository required these.
+>>  5. append "x86-power-control" and "intel-ipmi-oem" repositories to image
+>> 
+>> However, I always only got the following logs when I pressed the power 
+>> button for a long time (> 4s).
+>> =====
+>> power-control[263]: PowerControl: power button pressed
+>> power-control[263]: powerStateOn: power button pressed event received
+>> power-control[263]: Host0: Moving to "Graceful Transition to Off" state
+>> power-control[263]: Graceful power-off timer started
+>> =====
+>> 
+>> It doesn't occur "SIO_ONCONTROL value changed: 1 -> SIO power good 
+>> de-assert event received", etc. operations and then to turn off the power.
+>> 
+>> Can anyone do me a favor to give me some clues for what I was wrong?
+> Hi Chris,
+> 
+> Holding the power button should force a hardware shutdown.  The BMC only
+> monitors this flow and doesn't participate.
+> 
+> Did your system shut down correctly and you just not see the logs in
+> BMC?  Or, did the system stay on?
+> 
+> Thanks,
+> -Jason
+>> 
+>> 
+>> Thank you in advance for your help.
+>> 
+>> Regards,
+>> Chris Chen
+>> 
+>> Legal Disclaimer :
+>> The information contained in this message may be privileged and 
+>> confidential.
+>> It is intended to be read only by the individual or entity to whom it is 
+>> addressed
+>> or by their designee. If the reader of this message is not the intended 
+>> recipient,
+>> you are on notice that any distribution of this message, in any form,
+>> is strictly prohibited. If you have received this message in error,
+>> please immediately notify the sender and delete or destroy any copy of 
+>> this message!
