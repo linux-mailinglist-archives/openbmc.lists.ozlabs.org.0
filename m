@@ -2,85 +2,108 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87D1C3D64D9
-	for <lists+openbmc@lfdr.de>; Mon, 26 Jul 2021 18:52:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 09C3F3D660E
+	for <lists+openbmc@lfdr.de>; Mon, 26 Jul 2021 19:53:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GYQvG2VFHz306s
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 02:52:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GYSGP65JQz30DC
+	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 03:53:49 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=dpYpXPih;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=e2922tLX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::136;
- helo=mail-lf1-x136.google.com; envelope-from=fercerpav@gmail.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=sandhya.koteshwara@ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=dpYpXPih; dkim-atps=neutral
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com
- [IPv6:2a00:1450:4864:20::136])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=e2922tLX; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GYQtz4DGnz303M
- for <openbmc@lists.ozlabs.org>; Tue, 27 Jul 2021 02:51:54 +1000 (AEST)
-Received: by mail-lf1-x136.google.com with SMTP id a26so16563366lfr.11
- for <openbmc@lists.ozlabs.org>; Mon, 26 Jul 2021 09:51:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=8hc1TYlfOdRan3sOM5L0MtctJmt6xD/JMuDQ45ElqgY=;
- b=dpYpXPihULze+vALtbeXKuO4HjyhX0yd5GJWNiU9o7TOMVbY3HzD2HqAm89KfySUUx
- RpNVg7hnkOBnRbD6ZFZqhTmB5d395ba44eAlJ0qRmSQs68FUAu9yFI8KdqvknhJ9yAae
- IMWjRMM3JsmNGiYJYknPhVJSoi77nAO1dlbOKP1Ia3P+d+HHKLHofJ7b3OZglNZmF/Jv
- f8XgRBtWAFK4oNveQuJDw2SwuGXt2NYkwObHbG4v6CC+ExVcer0vZZGpwZCXIH/7dN/m
- lnP2scPbUufmkNstnG/GcIrQy4mR1Q55RD58pBs531SZ54SQBxUzgrPcmx4jDu8E3/wy
- 4dCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=8hc1TYlfOdRan3sOM5L0MtctJmt6xD/JMuDQ45ElqgY=;
- b=QFXThJt97JT97B2c9qek7ySAcvhK3kH2H/rwNqVuloIAJJwJfR+GQmCScTpmz4TMZ1
- px789CYKdisttMCPLOVoTn/rrsstxStYMRtYdPdiLdguP/w+QUSrwQA+4gefg676L1Hk
- dXj6BzMe4GpcNJWfBW2CObjfkZAdg5y1g/t/be0L72SBFsc/+AqIOkvkZU3kIlwKijZh
- ASM0FaY2uVyfhqMdgqWkIBerjYIoZ4zS7mUZd3xPhpIOFzlY3dIyIzrJN3/zyyGt8p/e
- mUq4Sh6DiHrAmv2ptghwDDRnC+QdZ4GFYtQ6RJP0dCUU6cxQqGSRFPh5/W+HnZrtoRw6
- PT7A==
-X-Gm-Message-State: AOAM531+chW/6A0B4VS6MDhlmO3y0AjZwDWuwjODDuUZRTXwCZbcevBV
- /x2yby991/+/40x6pfVGNVQ=
-X-Google-Smtp-Source: ABdhPJwJ6mOCkSzHnWWL3YCvw8gNJyjCj2Ba0fIlmkMSKyGGyB7JJ0q/oA3nN0Hade4MysgDKheMzg==
-X-Received: by 2002:ac2:547b:: with SMTP id e27mr14155931lfn.200.1627318308963; 
- Mon, 26 Jul 2021 09:51:48 -0700 (PDT)
-Received: from home.paul.comp (paulfertser.info.
- [2001:470:26:54b:226:9eff:fe70:80c2])
- by smtp.gmail.com with ESMTPSA id f1sm50623lfs.44.2021.07.26.09.51.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jul 2021 09:51:48 -0700 (PDT)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
- by home.paul.comp (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTP id
- 16QGpjq6004839; Mon, 26 Jul 2021 19:51:46 +0300
-Received: (from paul@localhost)
- by home.paul.comp (8.15.2/8.15.2/Submit) id 16QGpinX004838;
- Mon, 26 Jul 2021 19:51:44 +0300
-Date: Mon, 26 Jul 2021 19:51:44 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-Subject: Re: Serial Over Lan (SOL) no login prompt on Linux IRQ mode
-Message-ID: <20210726165144.GN875@home.paul.comp>
-References: <CAE33tLEsCJtr9VPYj57ZcOe5iWD6282WmrMTr-Hp96Y3rkBzAA@mail.gmail.com>
- <000001d5bc87$f6fe3780$e4faa680$@linux.intel.com>
- <CAE33tLHvjuwFwCsSdohvYPHgs-f-8sDWMsNdAhzgQbs3=o7_tQ@mail.gmail.com>
- <429111627309901@mail.yandex-team.ru>
- <20210726145246.GL875@home.paul.comp>
- <435311627317580@mail.yandex-team.ru>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GYSG21Mh3z304J
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Jul 2021 03:53:29 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 16QHhfOJ164725; Mon, 26 Jul 2021 13:53:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=in-reply-to : from : to
+ : cc : date : message-id : content-transfer-encoding : content-type :
+ mime-version : references : subject; s=pp1;
+ bh=Tbthnb3m6dnWa/PBx22K4rN2xZlMilbPkZ4XeOJSwRQ=;
+ b=e2922tLXkzG41pXf8ynL6JgZncgq9dpSr6d8aOq4quq2xuHaumyorkk0Rya02sOn142c
+ ISoIbhFMzuriA7RyDjYcNr1zma6rPFTUv0H2cm5eykjVaUy/qFCqZUbF/Zup6CMsSVSE
+ BA4xJ+Uuxn8ihAyhsFdbwL24NFTDtgL/s+6T7PVBWdVCOGc7m1iNlR7IrfSbjV9GCgy5
+ VXxSZ2u4dFNCrwZv+5ysee2VrQmCeJSLp28qqeehJBgXWnC86IcgOh6tFYEjlvLzQmPq
+ OQsdKQ0Q6RDZZJjlsJqCCkj2tHsy8FkO+TpZstjtPFDR4JhQraLV8Jqas4OnBNMBmUT/ Mg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3a21q186y0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Jul 2021 13:53:21 -0400
+Received: from m0098399.ppops.net (m0098399.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 16QHiPhp170114;
+ Mon, 26 Jul 2021 13:53:21 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3a21q186xs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Jul 2021 13:53:20 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16QHlJG3003268;
+ Mon, 26 Jul 2021 17:53:20 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma02dal.us.ibm.com with ESMTP id 3a0agc0d4p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Jul 2021 17:53:20 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 16QHrHRl39387624
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 26 Jul 2021 17:53:18 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C941FC6066;
+ Mon, 26 Jul 2021 17:53:17 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B4AC5C6062;
+ Mon, 26 Jul 2021 17:53:17 +0000 (GMT)
+Received: from mww0112.dal12m.mail.ibm.com (unknown [9.208.70.64])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Mon, 26 Jul 2021 17:53:17 +0000 (GMT)
+In-Reply-To: <20210623060742.22158-1-troy_lee@aspeedtech.com>
+From: "Sandhya Koteshwara" <Sandhya.Koteshwara@ibm.com>
+To: troy_lee@aspeedtech.com
+Date: Mon, 26 Jul 2021 17:53:15 +0000
+Message-ID: <OF021B0527.BA142969-ON0025871E.005B6D39-0025871E.0062427C@ibm.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+Sensitivity: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <435311627317580@mail.yandex-team.ru>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: 
+Importance: Normal
+X-Priority: 3 (Normal)
+X-Mailer: Lotus Domino Web Server Release 11.0.1FP2HF97   July 2, 2021
+X-MIMETrack: Serialize by http on MWW0112/03/M/IBM at 07/26/2021 17:53:15,
+ Serialize complete at 07/26/2021 17:53:15
+X-KeepSent: 021B0527:BA142969-0025871E:005B6D39; name=$KeepSent; type=4
+X-Disclaimed: 21315
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Q0Xk1qSJoe2xoL3HEehNPKlMlVL_xwN1
+X-Proofpoint-ORIG-GUID: c4ykTu-c688UjkWZezafDOkf-IvGirL0
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v1 1/2] ast2600: spl: Fixes
+ boot from RAM device
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-07-26_10:2021-07-26,
+ 2021-07-26 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ clxscore=1011 malwarescore=0 spamscore=0 adultscore=0 mlxlogscore=999
+ impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104190000 definitions=main-2107260102
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,38 +115,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: leetroy@gmail.com, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jul 26, 2021 at 07:42:22PM +0300, Konstantin Klubnichkin wrote:
-> Thank you for this patch, I've tried this (UART1 <->UART3 routing), but this
-> just doesn't work on my hardware, even POST is not available.
-> Probably only way is to ask Aspeedtech support to clarify this.
-
-What's your hardware? On our board we have LPC connection between
-AST2500 and Lewisburg PCH. If your UEFI is configuring SIRQ in
-Continuous mode (should be default I guess) then you might also want
-this (even though VUART wouldn't be used with the configuration used
-by the patch I've sent earlier):
-
-+diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-+index fffdb2b67c08..77233d360142 100644
-+--- a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-+@@ -157,6 +157,7 @@
-+ 
-+ &vuart {
-+       // VUART Host Console
-++      aspeed,sirq-polarity-sense = <&syscon 0x70 25>;
-+       status = "okay";
-+ };
-+ 
-
-I suggest you try these two patches verbatim, this whole remapping
-business is tricky so probably you've missed something in your earlier
-tests.
-
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
+elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" style=3D"font-family=
+:Arial, Helvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" style=3D"fo=
+nt-family:Arial, Helvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" st=
+yle=3D"font-family:Arial, Helvetica, sans-serif;font-size:10pt" ><div dir=
+=3D"ltr" >Hi Troy, Joel,</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >I am looking to use these patches to secure boot OpenBMC =
+from flash on the AST2600 evaluation board. Is there a relevant UBOOT=5FMAC=
+HINE configuration file I can use?</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >I am currently porting configuration for secure boot from=
+ the ast2600=5Fopenbmc=5Fspl=5Femmc=5Fdefconfig to the ast2600=5Fopenbmc=5F=
+spl=5Fdefconfig. I was only able to get the u-boot-spl to verify u-boot but=
+ kernel verification fails.</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >Thanks,</div>
+<div dir=3D"ltr" >Sandhya</div>
+<blockquote data-history-content-modified=3D"1" dir=3D"ltr" style=3D"border=
+-left:solid #aaaaaa 2px; margin-left:5px; padding-left:5px; direction:ltr; =
+margin-right:0px" >----- Original message -----<br>From: Troy Lee &lt;troy=
+=5Flee@aspeedtech.com&gt;<br>Sent by: "openbmc" &lt;openbmc-bounces+sandhya=
+.koteshwara=3Dibm.com@lists.ozlabs.org&gt;<br>To: &lt;leetroy@gmail.com&gt;=
+, &lt;openbmc@lists.ozlabs.org&gt;, &lt;joel@jms.id.au&gt;<br>Cc:<br>Subjec=
+t: [EXTERNAL] [PATCH u-boot v2019.04-aspeed-openbmc v1 1/2] ast2600: spl: F=
+ixes boot from RAM device<br>Date: Wed, Jun 23, 2021 2:08 AM<br>&nbsp;
+<div><font size=3D"2" face=3D"Default Monospace,Courier New,Courier,monospa=
+ce" >Reporting a BOOT=5FDEVICE=5FRAM can leverage common/spl/spl=5Fram.c<br=
+>to bring up u-boot.bin by memory offset 0x00010000.<br><br>Fixes: 13dd0b0f=
+7273 ("ast2600: spl: Support common boot loader features")<br>Signed-off-by=
+: Troy Lee &lt;troy=5Flee@aspeedtech.com&gt;<br>---<br>&nbsp;arch/arm/mach-=
+aspeed/ast2600/spl.c | 2 +-<br>&nbsp;1 file changed, 1 insertion(+), 1 dele=
+tion(-)<br><br>diff --git a/arch/arm/mach-aspeed/ast2600/spl.c b/arch/arm/m=
+ach-aspeed/ast2600/spl.c<br>index 778b326755..c759a7575d 100644<br>--- a/ar=
+ch/arm/mach-aspeed/ast2600/spl.c<br>+++ b/arch/arm/mach-aspeed/ast2600/spl.=
+c<br>@@ -66,7 +66,7 @@ u32 spl=5Fboot=5Fdevice(void)<br>&nbsp; case AST=5FB=
+OOTMODE=5FEMMC:<br>&nbsp; return BOOT=5FDEVICE=5FMMC1;<br>&nbsp; case AST=
+=5FBOOTMODE=5FSPI:<br>- return BOOT=5FDEVICE=5FSPI;<br>+ return BOOT=5FDEVI=
+CE=5FRAM;<br>&nbsp; case AST=5FBOOTMODE=5FUART:<br>&nbsp; return BOOT=5FDEV=
+ICE=5FUART;<br>&nbsp; }<br>--<br>2.17.1</font><br>&nbsp;</div></blockquote>
+<div dir=3D"ltr" >&nbsp;</div></div></div></div></div><BR>
+<BR>
