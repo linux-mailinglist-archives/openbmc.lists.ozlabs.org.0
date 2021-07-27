@@ -1,88 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85F563D7205
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 11:30:44 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACCB63D7456
+	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 13:26:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GYs3Q3j5Gz30F8
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 19:30:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GYvcs46dqz30BH
+	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 21:26:21 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=r37BXuBm;
+	dkim=pass (1024-bit key; secure) header.d=elsoft.ch header.i=@elsoft.ch header.a=rsa-sha256 header.s=sel2011a header.b=eESr91Ma;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::135;
- helo=mail-lf1-x135.google.com; envelope-from=fercerpav@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=r37BXuBm; dkim-atps=neutral
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com
- [IPv6:2a00:1450:4864:20::135])
+ smtp.mailfrom=elsoft.ch (client-ip=212.243.197.30; helo=mail.hostpark.net;
+ envelope-from=d.mueller@elsoft.ch; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=elsoft.ch header.i=@elsoft.ch header.a=rsa-sha256
+ header.s=sel2011a header.b=eESr91Ma; dkim-atps=neutral
+X-Greylist: delayed 556 seconds by postgrey-1.36 at boromir;
+ Tue, 27 Jul 2021 21:26:05 AEST
+Received: from mail.hostpark.net (mail.hostpark.net [212.243.197.30])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GYs3546mgz309F
- for <openbmc@lists.ozlabs.org>; Tue, 27 Jul 2021 19:30:24 +1000 (AEST)
-Received: by mail-lf1-x135.google.com with SMTP id r17so20548977lfe.2
- for <openbmc@lists.ozlabs.org>; Tue, 27 Jul 2021 02:30:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=S0gAukOTkYpPjolE1yK/WePF77gVxUMCVrFCdBP7mNU=;
- b=r37BXuBmqkZmwH805r8vA5Y66fKL7VAApDciWI7uwdi+oweXet/LkZT+iU0cszWsW6
- Coy/dthvSiXsb3RJdBQ3WhmVvajrbGey47MyhUo41dMQifwM+DPNyTXUenborRmtm7Dc
- Nzk9O60Xf9wVWBkHU0t+0rYeaht4CO+FjXxjUhZWkS/FVCFeFwJVbqwXVFvzoZ2EHGo1
- TAj+/UuZBrdcmi7jtztGWq1ZFxKDkVCSTndGKJSogvc/uhDR8jToDnR6Fv5fBvffgbdH
- 5/E6FOldvoA7VN2kfKnDLQ0LjBEfGOyuR8v684g27U6+/h/WpuX8A3nL3Z6OOAFgMqRt
- xc3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=S0gAukOTkYpPjolE1yK/WePF77gVxUMCVrFCdBP7mNU=;
- b=hSy6D9KaNPfxP6OXXQEXGLshvHjda0Bp/Wniyar09+L79bE3GrkNWG1rj9g0PsW76J
- Y3LXmerhhRlLBBhCeneiYWrjHePt3fpW3Y27/fUkfB+vvEfPrBxSI7lBh39rWDN8tmyK
- +KmKAc1eg3ZdXm+TPasruo+x1dkeWHGS3N+qVuBlXo+xUG5SB+3zu2ZwkbA3MEe9Muwy
- DOTP5U2/w3NaUmboxiFkowvdgrZo40I6z0Yubo+VZdCDdm0UygmqppnqFzqYRCAIuXdH
- KdyRKEYTF2eZ6eOhqWWIso1QvzeQQrjprMNHKYsinfEmbHX022eWNTKgehHVciuXveHk
- 6dPA==
-X-Gm-Message-State: AOAM5321tgq4BT+vY/Me40ZecbIGWSwIJQxGIxsWQ4oOhmp9Zam1IH4S
- 1M+3iBEh/fS50xDWL8QvpxM=
-X-Google-Smtp-Source: ABdhPJzXeo2Wz8Ph8YX7KDLjs+SoazEFrWBzUjLwAWAISfdm2TpIHPGxeHP8dpM11KaRVMphelcIIg==
-X-Received: by 2002:ac2:4310:: with SMTP id l16mr15888204lfh.481.1627378219395; 
- Tue, 27 Jul 2021 02:30:19 -0700 (PDT)
-Received: from home.paul.comp (paulfertser.info.
- [2001:470:26:54b:226:9eff:fe70:80c2])
- by smtp.gmail.com with ESMTPSA id r9sm221403ljc.62.2021.07.27.02.30.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jul 2021 02:30:18 -0700 (PDT)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
- by home.paul.comp (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTP id
- 16R9UGLw007390; Tue, 27 Jul 2021 12:30:17 +0300
-Received: (from paul@localhost)
- by home.paul.comp (8.15.2/8.15.2/Submit) id 16R9UFnv007389;
- Tue, 27 Jul 2021 12:30:15 +0300
-Date: Tue, 27 Jul 2021 12:30:15 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-Subject: Re: Serial Over Lan (SOL) no login prompt on Linux IRQ mode
-Message-ID: <20210727093015.GQ875@home.paul.comp>
-References: <CAE33tLEsCJtr9VPYj57ZcOe5iWD6282WmrMTr-Hp96Y3rkBzAA@mail.gmail.com>
- <000001d5bc87$f6fe3780$e4faa680$@linux.intel.com>
- <CAE33tLHvjuwFwCsSdohvYPHgs-f-8sDWMsNdAhzgQbs3=o7_tQ@mail.gmail.com>
- <429111627309901@mail.yandex-team.ru>
- <20210726145246.GL875@home.paul.comp>
- <435311627317580@mail.yandex-team.ru>
- <20210726165144.GN875@home.paul.comp>
- <477521627375667@mail.yandex-team.ru>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GYvcY11nHz2yXs;
+ Tue, 27 Jul 2021 21:26:04 +1000 (AEST)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.hostpark.net (Postfix) with ESMTP id C000A163CB;
+ Tue, 27 Jul 2021 13:16:42 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=elsoft.ch; h=
+ content-transfer-encoding:content-type:content-type:in-reply-to
+ :mime-version:user-agent:date:date:message-id:organization:from
+ :from:references:subject:subject:received:received; s=sel2011a;
+ t=1627384600; bh=nnN5lZfFj9MppOjkb9i1D7D+MJTulP6KsKyauxX4sGo=; b=
+ eESr91MaPfXJrnskyOyzLqbm1XhuG04+D86JOWAVA9IL+sGz+lm0QWKyU4w/uMqN
+ UtKagNjJkDUuFIxWMwQ4LjBgm83pypHT4iXjnISq80yy/DmbNIiNBbLiJjvo2pto
+ ATTm0dxI5+bH/WdJaLzFKkDefW0DncAPjodyFFWUTSk=
+X-Virus-Scanned: by Hostpark/NetZone Mailprotection at hostpark.net
+Received: from mail.hostpark.net ([127.0.0.1])
+ by localhost (mail1.hostpark.net [127.0.0.1]) (amavisd-new, port 10224)
+ with ESMTP id b9k2yq6cDK1n; Tue, 27 Jul 2021 13:16:40 +0200 (CEST)
+Received: from customer (localhost [127.0.0.1])
+ by mail.hostpark.net (Postfix) with ESMTPA id 3348E164A0;
+ Tue, 27 Jul 2021 13:16:40 +0200 (CEST)
+Subject: Re: [PATCH 10/14] peci: Add peci-cpu driver
+To: Iwona Winiarska <iwona.winiarska@intel.com>,
+ linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
+References: <20210712220447.957418-1-iwona.winiarska@intel.com>
+ <20210712220447.957418-11-iwona.winiarska@intel.com>
+From: =?UTF-8?Q?David_M=c3=bcller_=28ELSOFT_AG=29?= <d.mueller@elsoft.ch>
+Openpgp: preference=signencrypt
+Organization: ELSOFT AG
+Message-ID: <26dbd0d3-c326-96a5-2ec7-4fc3387865e9@elsoft.ch>
+Date: Tue, 27 Jul 2021 13:16:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:52.0) Gecko/20100101 Firefox/52.0
+ SeaMonkey/2.49.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <477521627375667@mail.yandex-team.ru>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20210712220447.957418-11-iwona.winiarska@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,35 +71,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+ x86@kernel.org, Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+ Ingo Molnar <mingo@redhat.com>, Guenter Roeck <linux@roeck-us.net>,
+ devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
+ Rob Herring <robh+dt@kernel.org>, Borislav Petkov <bp@alien8.de>,
+ Andy Lutomirski <luto@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
+ Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Yazen Ghannam <yazen.ghannam@amd.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jul 27, 2021 at 11:53:57AM +0300, Konstantin Klubnichkin wrote:
-> SIRQ polarity is something I didn't try, will do it. And yes, SIRQ bit is zero,
-> but all other bits are also zero in that register, that confuses me.
+Iwona Winiarska wrote:
 
-I was also able to manually export the SIRQ pin via sysfs and when
-manually toggling it the host was seeing UART interrupts and getting
-data to and from VUART. That lead nowhere though, so we resorted to
-hardware routing in ast2500 between "real UARTs".
+> +static const struct peci_device_id peci_cpu_device_ids[] = {
+> +	{ /* Haswell Xeon */
+> +		.family	= 6,
+> +		.model	= INTEL_FAM6_HASWELL_X,
+> +		.data	= "hsx",
+> +	},
+> +	{ /* Broadwell Xeon */
+> +		.family	= 6,
+> +		.model	= INTEL_FAM6_BROADWELL_X,
+> +		.data	= "bdx",
+> +	},
+> +	{ /* Broadwell Xeon D */
+> +		.family	= 6,
+> +		.model	= INTEL_FAM6_BROADWELL_D,
+> +		.data	= "skxd",
 
-> Instead I configure UART routing by direct writing to registers via /dev/mem
-> (yes, I know that it's a bad practive, but it's development).
-
-Should work the same.
-
-> With the routing I have absolutely no data in BMC UARTs neither during POST nor
-> is OS.
-> What I'm missing is how that routing works. Is it on-crystal or UART need to be
-> routed to SoC pins thus TX/RX are connected via pins?
-
-With the configuration as shown the host is sending data to and from
-"COM1" (0x3f8,4) and any program on BMC is able to interact with it
-via /dev/ttyS2, without any additional hardware connections, all
-purely in software, the routing happens inside aspeed. Do not forget
-to enable ttyS2 in your board's DTS. VUART is not involved at all.
-
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+I think this should read "bdxd" as "skxd" does not exist in the
+cputemp/dimmtemp drivers.
