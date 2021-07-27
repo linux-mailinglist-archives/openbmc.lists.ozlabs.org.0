@@ -2,69 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 954953D6CD4
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 05:33:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 345C33D6CD7
+	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 05:34:44 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GYj7l3vQcz30L2
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 13:33:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GYj8d2GZfz3bZ4
+	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 13:34:41 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=X6t5Cd7N;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=TmuRNCK6;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::636;
- helo=mail-pl1-x636.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1031;
+ helo=mail-pj1-x1031.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=X6t5Cd7N; dkim-atps=neutral
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com
- [IPv6:2607:f8b0:4864:20::636])
+ header.s=20161025 header.b=TmuRNCK6; dkim-atps=neutral
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
+ [IPv6:2607:f8b0:4864:20::1031])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GYj7Q2Dtjz2yyt;
- Tue, 27 Jul 2021 13:33:37 +1000 (AEST)
-Received: by mail-pl1-x636.google.com with SMTP id t21so14068043plr.13;
- Mon, 26 Jul 2021 20:33:37 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GYj7T0w3Vz2xvc;
+ Tue, 27 Jul 2021 13:33:40 +1000 (AEST)
+Received: by mail-pj1-x1031.google.com with SMTP id
+ e2-20020a17090a4a02b029016f3020d867so2990151pjh.3; 
+ Mon, 26 Jul 2021 20:33:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=sgogXb1SnR/+7JQk31e50axmieq/LTndC4H+WEUwDIw=;
- b=X6t5Cd7NfOGCRbIAFIr3P9GYdw0wu5JRbP6NAYNMt2RPW04bFrn4al2wU1ZT779jZu
- 42xhpYW/Xn2mOH5hcVjXJbNaT1jmxr+QbPrWpgZxZUqoYRbi/vUxEmSJr3xxFFT5ZvOh
- iM03F/PXyoL1GGU+UFySIDioBfYXCEwOfZMu367ZtO89tds0xDj2dkDlO5A2IKHayb8A
- W027MTD7MxLEeksSCq2wLo8hVOobuRkYNL2450pqpfAatQnphxwA1BrhTiRKCUR4JVE1
- ej2cH9FczsKOU6worj6A7hV8F1cIKKZGZ0YHYE69aucpBmNqP92mSfPYuvVGmNExci2V
- /dog==
+ bh=qOL68tjGXBWZUtM6TEQ+vHsPqA+ZyHl0bEMzbX1MytQ=;
+ b=TmuRNCK6tDuk+6L/gDbostE1q2l1pQbexZxt9/tVFilOVlqmzRNG2ZvTLAUhO9y4Ah
+ ED/d+jPdjvUvioUCsQNLWVt4AeeBr5Z52TK18ncEVEN5cjaH6A6dJuPg3CTBZLpHXNV4
+ QbHwBXNg0/UsvWzIDjMy1ZgbkKa9y1LO+OYYon7bNII4ji6C2MsiINyw7PUsDpPtWxNz
+ Ovcnu0+S3FMUEzWU9DR+Lqkqrc/O0lsyU6CdyjpUf85wznj7h4UGtvTG+4eApb9oD+qH
+ Kh8d2faLoIZOre+LM8g28LSl+COtQ2sBMy472fI1U16rwZ0vIHrDDYaraeovYKjlCZpY
+ uB+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=sgogXb1SnR/+7JQk31e50axmieq/LTndC4H+WEUwDIw=;
- b=UI7nwCVLd3VC0mh2Lv3YnssKOJ/xUKRoAQIoj2taFmMNpp1S7OmbVqio170BT+ZgpK
- lO4IXH6V7cWCznGqDxR1Xyp9k6F8pmIQ1XkVMuGyH9HzYAoa7HjKoXtMM0TfCc3tO9EA
- ToGfxSbdW52Nx+LuCN9p2zkv9QzBFJhgDs/7kT2Jo+1IH9CbAGK0E4HMqjgVG0MF6Yg+
- Po56WT9jMmqy7CROb0sRXaQS83RR2gl6vVtMebJT7eIA51U4yBACHdWYdSEtbT4pr+VU
- uYqYq+4s6iUenunZ3abQpW/uLlYXT7pLspncLhQcWdnb8ZT4ClqXP9/6hQQMk60YwRmz
- dk3g==
-X-Gm-Message-State: AOAM531BiJT2Y8GGVzbye3/Y04klPyFi2tuMg2Fz+oRpM0LAgeXxFG76
- wsAHca1CnnEGpl1fdE0zNVQmNM6RQOc=
-X-Google-Smtp-Source: ABdhPJx5l2G6QtAdpW4Jl6gRF8PJvSae7WXoRyi/MOc+INvwcgnB6mIMwiMbQq8WDcsKw98VJx3Q0Q==
-X-Received: by 2002:a17:90b:3653:: with SMTP id
- nh19mr2117160pjb.169.1627356814893; 
- Mon, 26 Jul 2021 20:33:34 -0700 (PDT)
+ bh=qOL68tjGXBWZUtM6TEQ+vHsPqA+ZyHl0bEMzbX1MytQ=;
+ b=bh+FTG3t4Y+RftySEvPgW4SVC55uq0bnxrdGn7r8JFx/1zDrSesMReH5/PgANvGuZx
+ u0+h3x/RM6FS86tTIVkuO0MSbkPDmQzvfbS6OmCcAnycIZWYauQLIOev9tTwpjIa1ssM
+ bPPaAPf6OeKLUoil2lb5OkOjfh+xv5QO7sQYGLNTI2GX4XdO1pGkJxGqt9Kd2jKK+sMn
+ tE0ftCR6CwuQCpuiG8jVB4gxtn1Vhqd26W+boShfhJxORMXR44D5VzNV0DgvKAxPnG6u
+ 36wO4aiNNtckSWOzCtj6RYaAPUWHLZj8Fn5zmjROIopLbW/DGxk0yjbYPpQFGICsJg96
+ QuaA==
+X-Gm-Message-State: AOAM531FE2YJTH0uPmEO/YlVWRmcqHNOqvTKMV6L7KCJ9EDRC+XXiJDL
+ qJvHChGWXxXQStzc/Y+8HyQMR5oYxCk=
+X-Google-Smtp-Source: ABdhPJzdGk9WD94Uuhh2J2EKF3olnE354fTv7+8mcMzsHhMYZxC0qXFcg36oTmHG3jjyHqrrPAspeg==
+X-Received: by 2002:a17:90b:215:: with SMTP id
+ fy21mr7846770pjb.203.1627356818140; 
+ Mon, 26 Jul 2021 20:33:38 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.18])
- by smtp.gmail.com with ESMTPSA id s193sm1528351pfc.183.2021.07.26.20.33.32
+ by smtp.gmail.com with ESMTPSA id s193sm1528351pfc.183.2021.07.26.20.33.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jul 2021 20:33:34 -0700 (PDT)
+ Mon, 26 Jul 2021 20:33:37 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org,
 	andrew@aj.id.au
-Subject: [PATCH 1/2] ARM: dts: rainier, everest: Add TPM reset GPIO
-Date: Tue, 27 Jul 2021 13:03:18 +0930
-Message-Id: <20210727033319.473152-2-joel@jms.id.au>
+Subject: [PATCH 2/2] ARM: dts: aspeed: tacoma: Add TPM reset GPIO
+Date: Tue, 27 Jul 2021 13:03:19 +0930
+Message-Id: <20210727033319.473152-3-joel@jms.id.au>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210727033319.473152-1-joel@jms.id.au>
 References: <20210727033319.473152-1-joel@jms.id.au>
@@ -85,44 +86,28 @@ Cc: linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The GPIO is used to place the BMC-connected TPM in reset. This state is
-latched until the BMC is next reset, blocking access to the TPM for that
-boot.
+The GPIO is used to place the BMC-connected TPM in reset.
 
-On both machines this net is called TPM_RESET_LATCH_B.
+The net is called BMC_TPM_RST_N on Tacoma.
 
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 2 +-
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-index aa24cac8e5be..4536cd538af9 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-@@ -253,7 +253,7 @@ &gpio0 {
- 	/*O0-O7*/	"","","","","","","","",
- 	/*P0-P7*/	"","","","","led-pcieslot-power","","","",
- 	/*Q0-Q7*/	"","","","","","","","",
--	/*R0-R7*/	"","","","","","I2C_FLASH_MICRO_N","","",
-+	/*R0-R7*/	"bmc-tpm-reset","","","","","I2C_FLASH_MICRO_N","","",
+diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+index e33153dcaea8..e39f310d55eb 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+@@ -126,7 +126,7 @@ &gpio0 {
+ 	/*M0-M7*/	"","","","","","","","",
+ 	/*N0-N7*/	"","","","","","","","",
+ 	/*O0-O7*/	"led-rear-power","led-rear-id","","usb-power","","","","",
+-	/*P0-P7*/	"","","","","","","","",
++	/*P0-P7*/	"","","","","","bmc-tpm-reset","","",
+ 	/*Q0-Q7*/	"cfam-reset","","","","","","","fsi-routing",
+ 	/*R0-R7*/	"","","","","","","","",
  	/*S0-S7*/	"","","","","","","","",
- 	/*T0-T7*/	"","","","","","","","",
- 	/*U0-U7*/	"","","","","","","","",
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 481d0ee1f85f..06b3d1573780 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -271,7 +271,7 @@ &gpio0 {
- 	/*O0-O7*/	"","","","usb-power","","","","",
- 	/*P0-P7*/	"","","","","pcieslot-power","","","",
- 	/*Q0-Q7*/	"cfam-reset","","","","","","","",
--	/*R0-R7*/	"","","","","","","","",
-+	/*R0-R7*/	"bmc-tpm-reset","","","","","","","",
- 	/*S0-S7*/	"presence-ps0","presence-ps1","presence-ps2","presence-ps3",
- 				"","","","",
- 	/*T0-T7*/	"","","","","","","","",
 -- 
 2.32.0
 
