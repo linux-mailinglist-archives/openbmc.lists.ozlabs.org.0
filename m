@@ -2,13 +2,13 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D90AB3D81D7
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 23:34:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 918373D8383
+	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 00:59:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GZ96w5MLhz3bW0
-	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 07:34:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GZC0R3gC6z2yNJ
+	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 08:59:19 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=equinixinc.onmicrosoft.com header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-equinixinc-onmicrosoft-com header.b=GPUJANE3;
+	dkim=pass (1024-bit key; unprotected) header.d=equinixinc.onmicrosoft.com header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-equinixinc-onmicrosoft-com header.b=AHDI+OYH;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,56 +19,56 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=equinixinc.onmicrosoft.com
  header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-equinixinc-onmicrosoft-com header.b=GPUJANE3; 
+ header.s=selector2-equinixinc-onmicrosoft-com header.b=AHDI+OYH; 
  dkim-atps=neutral
 Received: from mx0b-00268f01.pphosted.com (mx0b-00268f01.pphosted.com
  [148.163.159.192])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GZ96W1CxYz3022;
- Wed, 28 Jul 2021 07:34:26 +1000 (AEST)
-Received: from pps.filterd (m0165120.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GZC044kQ3z2yX6;
+ Wed, 28 Jul 2021 08:58:59 +1000 (AEST)
+Received: from pps.filterd (m0165121.ppops.net [127.0.0.1])
  by mx0b-00268f01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 16RLIQqq024439; Tue, 27 Jul 2021 21:34:01 GMT
-Received: from nam10-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam10lp2101.outbound.protection.outlook.com [104.47.55.101])
- by mx0b-00268f01.pphosted.com with ESMTP id 3a2nx1h0yr-1
+ 16RMsFHf028496; Tue, 27 Jul 2021 22:58:11 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10lp2102.outbound.protection.outlook.com [104.47.58.102])
+ by mx0b-00268f01.pphosted.com with ESMTP id 3a2nwus7gj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Jul 2021 21:34:01 +0000
+ Tue, 27 Jul 2021 22:58:10 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MQaIdCCcdLPZaLUE92giClZiMg3+ADzsgTzZ/Wj8Do8dtkRzzYPaygepc/GooEZ9Z1StpLYkolF7cQWlC2/o94YI0WFvWuLotfKv4aADhYIuw64XHvtegTmlpSnkDRO18223PumMW+B7McqWpa3nB2pZgNMaSJ8KawLsp4uqg6AF78PuMp2BAPDyuulBkufThyOm6ABMXZAvVg4WSNjVkJoWl5BOJg6SXxYAfhLSNv0UnWaAYb6V5INknPioRMJ0q6Hd4n9KCIbY1ENARSTpagqFSM5zrZ5S+ZsJSRRI3P01aiXb6yDIOK5EFLmoRj5xW9r933QJ+YTpUTBrQehqSQ==
+ b=DU2XufI/do1/ZKC32cCSA5nOp6kKXkIRUeicjjklil1ScQT4t/w5rXm0E8rszCYTlHkytekgPU49LfX3Kj4cJ9zq8KicUN3pemx70MvMAYb1UmjKiPPw5qYxNtgMIVJc6IZ9t2Kz8s+Q8QA0V+6ps/wcv17jD5nuIniBysIID6UsHGbtex3v9b9GmpPANmkkCkd4pEikdq+Ljs201v/Dcc46F2McjwIS6V8mXf6rdWS5Msme95qmVTKatm//GnUn1jRB9tBVr3+b2QvH6QuVQBlSnCofhFYUSCjqNcBkcmZqqlOPuUhlg7ui9ohavzeV70sdGqFuSpAPLazkOk0KQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qF2OoXYqWO6N8AfSbOmg47wZq/CvydCttx2T8ByIxq4=;
- b=nnsWpuxNuM2DltmXpvQmGHrW9wj4iELWSJAHAEEBmLUKTUqlMMXOr0GVNcOKaOv3w7SImx3//ZMEaBX5oxAVyWZcW2+yA1SXoEkJtBHLkS5htbG1MFy0cGgrln4mlbRaLXAK4m/uQ/aqGz5eRxgZmLvERDhJ5iFuJFE64tBYRcHi4dVCwZw3YV8gRI4Mc4y8fepzaQ/cbGrZVPI3pdKhQCDaMgITY9dMLj8t5sI7KbOBDxNvdoDbPfOvile+mTKisuZAOXLpnnov/YgrAJ7/X9owT6HRUwO+pInr4/5ptJQCNXPzC6vm0eKe3o9tcTDCShfvCARBH/eL46p/UXel7A==
+ bh=aC0phhDDegkSrWPEI7SGs2TirsIHR0Rto/d7m+MIlSk=;
+ b=HdpPevVnXD7ripg4cZcZ3PM/eQnNxVZfWtd72/Y+K0fdz4B0JbPKnEZmUaYlq/K/znDkDB7gJ4njvEMu44q0HRiuv7FRJS2xHLpHrAmIp5V7qnxLq4yo9N5PznfjL6CH/QlpKMEigu/Y4VCLqUhXb3GGnVa3JUOn5D+8dDGk9O7yV344b5CrVLYyYHTWt7dR4CFd2s7SUhMTe6Izg5v+EqnhyMC3WAySu8e8YylcLIRcA0BEOZbQYPvk6Sn6w9byrWdPZdpZ2tPeR1HyyFVOHlVlWzIRD8oIQfWecImOWCTFgcS2AardunlwhALpKvHIoQ4N+O/9MEolHlzmbO7HaA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
  dkim=pass header.d=equinix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=equinixinc.onmicrosoft.com; s=selector2-equinixinc-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qF2OoXYqWO6N8AfSbOmg47wZq/CvydCttx2T8ByIxq4=;
- b=GPUJANE3w+D52cvbu8tijdpHZYZ6IDe8P1DyaULnX6UTUPt7OSDXzyON2zOtLX/o3SJzMh3Fl4n07Xx5EjIl8q/4wqgCRwjhcOCBDarj31uWNiXBh/WFuFwY+w6DdH8ESRCC+9awlVUZT8uYm8bpK1F1UP7iV6JU63MpJzSPgZY=
+ bh=aC0phhDDegkSrWPEI7SGs2TirsIHR0Rto/d7m+MIlSk=;
+ b=AHDI+OYH2SYhyq9+Fpyr92khm50DsZ3Pt9DE5qkaMdz30kXXcOVmXr0FSRrL6ctbyBDucY6VaV1MV+JPcW8aHyW1uWMZZrPFIu9yWzAIuXbtW0lvx5+SvPFzoLFirp96RLhwlJpck8T5uSY4GgTzCG9bi6AtSyXs1OuwiTcKxf4=
 Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
- by DM8PR04MB7991.namprd04.prod.outlook.com (2603:10b6:5:314::11) with
+ by DM8PR04MB7781.namprd04.prod.outlook.com (2603:10b6:8:33::22) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4352.26; Tue, 27 Jul
- 2021 21:33:58 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4352.28; Tue, 27 Jul
+ 2021 22:58:09 +0000
 Received: from DM8PR04MB8007.namprd04.prod.outlook.com
  ([fe80::953d:f9ec:b2cc:ca2b]) by DM8PR04MB8007.namprd04.prod.outlook.com
  ([fe80::953d:f9ec:b2cc:ca2b%5]) with mapi id 15.20.4373.018; Tue, 27 Jul 2021
- 21:33:58 +0000
+ 22:58:09 +0000
 From: Zev Weiss <zweiss@equinix.com>
 To: Iwona Winiarska <iwona.winiarska@intel.com>
-Subject: Re: [PATCH 10/14] peci: Add peci-cpu driver
-Thread-Topic: [PATCH 10/14] peci: Add peci-cpu driver
-Thread-Index: AQHXgy8bT7LpuKFkwkuGK081TNbcfg==
-Date: Tue, 27 Jul 2021 21:33:58 +0000
-Message-ID: <20210727213357.GT8018@packtop>
+Subject: Re: [PATCH 13/14] docs: hwmon: Document PECI drivers
+Thread-Topic: [PATCH 13/14] docs: hwmon: Document PECI drivers
+Thread-Index: AQHXgzrekgBvAebmGEm7GzBex72boQ==
+Date: Tue, 27 Jul 2021 22:58:08 +0000
+Message-ID: <20210727225808.GU8018@packtop>
 References: <20210712220447.957418-1-iwona.winiarska@intel.com>
- <20210712220447.957418-11-iwona.winiarska@intel.com>
-In-Reply-To: <20210712220447.957418-11-iwona.winiarska@intel.com>
+ <20210712220447.957418-14-iwona.winiarska@intel.com>
+In-Reply-To: <20210712220447.957418-14-iwona.winiarska@intel.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -76,68 +76,68 @@ X-MS-TNEF-Correlator:
 authentication-results: intel.com; dkim=none (message not signed)
  header.d=none;intel.com; dmarc=none action=none header.from=equinix.com;
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 437425c0-8173-42b0-46d2-08d951463e51
-x-ms-traffictypediagnostic: DM8PR04MB7991:
-x-microsoft-antispam-prvs: <DM8PR04MB7991831474544B581A1A231BC3E99@DM8PR04MB7991.namprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:1303;
+x-ms-office365-filtering-correlation-id: 0bba6f10-afe4-4ab8-75e8-08d9515200bb
+x-ms-traffictypediagnostic: DM8PR04MB7781:
+x-microsoft-antispam-prvs: <DM8PR04MB778175FB39490C7A30F4AB4CC3E99@DM8PR04MB7781.namprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: KKND7K91ol1JMXjo3H+0n08tbz6ueSsPr1GX4edec24oMeS6Is5MZ9NT1Qh+DHUjWwJuAcZd4jPsVYgI8/9DE0wS0YOlgn4JjBLKuaLfK3IGd2OaaGeTf88zoSLixT1YEAVgS1kQ5fPkzR79AVe4hW7Ya/jopZZbapkPfA+gWaeAmYhHVWc9DSINc92ea0Uw9eB+qHhL0qfZA8P5Q/icgXKDXVbCRlZ8e+8YEFkxEGKRCvSnGDqL2H/VOuIexn3H4mkrG867l8kNGwO2Hmo7TAmCLiGG/GC5gJXrB5fkKz5yMe20lk29KurBgbIDqm/ylNWCIS75ZHeFliEVKXZvxRktQvWwFgWSCS5H70T6a3dZk1XwFl7w20RZJ0293JXNhWXq5hSml6SPr/nLPwE3kW4Deyv3yal61NC7YUchVv3+Srj+ea/tsIo1LfsstkksUGumM3qQZAQAdWfkxmiLX7B6Ih7+k1X9VeVPo1nOy9qUiiF93XQoj4RS1PwlYMMVc9epH/7qfZ4jHej3JN8GtjZSsZRNe6/TgpOW+T7kvZ6s+/7UPSCtM0uT0DVWmCCgm7c4VJW5JdjkgdelJEMsEzHF0ypEb4gtXA7shU2aknTfihZ08gsVHJFqY5gHV8YZhW1vmQ77uGKZgsGH8SUkxiIvMsC4cfVBTBklJF48ePzuGcjnqos4MokydD29lZCm3qnD8nW9E2V1IuiYwv4Rbw==
+x-microsoft-antispam-message-info: l7/94EGyOHMo0Sbsj4Qqf/RkoGWiN7Lcro/G2+kdMMVPsBqUIM7P9sxRN22CKqP3UaYPp/d7mgzEmPTqt80FS/KpAp5gCPT3WvfZ7VE1N7QYO5RKcl2qNJbhlEYIWD5CHDUZK/Z5OBaPKq6TfVxsivJCZJENQQTLXT82L36kcYNSyWfY4IsJRNDLNMcGPThqBQIOmMkrlnU0psMSs6BPc2mR+C3cGbFtrOTi8tOjgoxnklSIxHF+S/C39T6dPUFcC9AiG+W+N+HGAzfgPU4Y6Dd3vYOmqKxCrVEaxq/lqquNGs/udBpExNB7hAdDyR6hoKw4Se7MqwZb+Ui3/f/ZUrF3FBQ9S/nhh/MGDfORkhdQ9g5N9P3jpLJi2OfSP/GhBvUeQAioW+iCmXU+Le4KxFvXIKUz11NGON69tcIT9TijdNfRPv7x/ufDVyigSM8HmR1GCysS3m9jfC7VSaxLe7I8Vqes6+zb5aRmBrzaSkAY2J+aHKytF9LUCReg6igqgCFAtmW2e1TwMh3uvf6lrB28I0R8Ru/sVmxvG+1Bk2pzzboxTWhej2msneWCPcP5U5CTOsB4+a045tty6tozxYunwaGxSZh92emmA1UNxXxJgFkyus81dmrCKrDLXurVqTsYeBbc1G93705AaaRx/uYzlCMVgOPUuXA6cyZSvw115KD3VB1jXJDaixfE+y3NWke1azOJU4XCnrPj7prn9UTMWTFzzuk5u2y0liq+IVVbdRHfmXedfEvJLkJK2JX4FN26u1s7G5KdPEn128lU8pAFbBQ6hNt4/e2eijYIaqedcC9YK/pL0rYEHNCF5Va8ORVmyjcGgVGncoLR8ASLCg==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DM8PR04MB8007.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(7916004)(396003)(366004)(376002)(136003)(346002)(39860400002)(4326008)(2906002)(1076003)(33656002)(33716001)(478600001)(316002)(66556008)(66476007)(66946007)(122000001)(38070700005)(7416002)(6486002)(83380400001)(38100700002)(86362001)(6916009)(26005)(30864003)(6512007)(6506007)(66446008)(64756008)(76116006)(9686003)(186003)(8936002)(54906003)(5660300002)(71200400001)(8676002)(559001)(579004);
+ SFS:(4636009)(7916004)(346002)(376002)(366004)(136003)(396003)(39860400002)(83380400001)(86362001)(7416002)(71200400001)(478600001)(966005)(33716001)(38100700002)(64756008)(6916009)(76116006)(8676002)(5660300002)(54906003)(38070700005)(19273905006)(2906002)(91956017)(66476007)(4326008)(316002)(1076003)(186003)(66946007)(8936002)(6512007)(6486002)(6506007)(9686003)(26005)(122000001)(66556008)(66446008)(33656002)(562404015)(563064011);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?BaAPZUknFzPwpRKM4cUML+R1Lrgsxuc2dhfFkmPNSFPGKEJsPk/OrizN0/Xu?=
- =?us-ascii?Q?lJEyISxMnAMBesRFAy9XMVyuIWl9aaUooejyxcf2HxXKfuN/ulPKM68gtRpU?=
- =?us-ascii?Q?Ljbb41B5nT9x9fx9ljpgp2c014gNsjxaJKSX6di7ny1jCideXIetEn0LMkUm?=
- =?us-ascii?Q?p73GcOcKHeF2l4TsC1GMjdrga+ersYdXx3YMW6vNqlcpoZ6SdMYb5fg9OPfy?=
- =?us-ascii?Q?DOqlbPTRbDKJIyfsqHFDMShj2nK5skAo6WxZfpgYI9ocdFVoOFCvPxvpj/mH?=
- =?us-ascii?Q?uKTOmbN6esYENc7RrCGW2osnrBlGd8wCKlLDunuQ8FKtdih32pJ+PQeabFEU?=
- =?us-ascii?Q?c7VG7kbponovaVnIbAOHWijLjHSG/T+Fd/LBJLuLRmuVkiq4q0DLAkw1ghiZ?=
- =?us-ascii?Q?rOYZBgV2ymjBTg7z+2vkwDh2iJFoD1llFCbN1CsJOsE+essAfUSeyxyHgat9?=
- =?us-ascii?Q?XWl0DIzCJQzK9YvNv/wOIlmGSPdJdVxjnsDbFc8ZK5Vk/c+i9O9bZxvk9KQ1?=
- =?us-ascii?Q?ZqYwEE6L3mPWTPojQiUb6QemidjNIckiT/rIOebE0W97oNrLcSNSM6WDHb3A?=
- =?us-ascii?Q?NvqARLgQNo8Qkfi00R9bfSqKXDl7zAIx7PKtKylCr5V4AvG1OnZGmltjkj1+?=
- =?us-ascii?Q?S9awZ4rVmnAevCsIO/DZEQysaNMB7yGqOSkEvgFy/CjE+SSLCRZTliiboU5m?=
- =?us-ascii?Q?jVMzYMIP5+fDeBpfTTefEan/Q8ubmAZEM9oTzKDnt/Wpyx4aw5fvNPgWdBM7?=
- =?us-ascii?Q?V9s8jC+MJMxxjTt4VZB11Gdtx35VcTB90K5DRlNFf1BUBs2+aOFevxqe90XS?=
- =?us-ascii?Q?9/Zbp7Q2WPPt8iJSFg7LtFP5gMSLgq9wCYnrIvkNyK9iD9DToj80MYQ0YCws?=
- =?us-ascii?Q?eNjgRPJHMp8cRCtwu+Yv1bW2N25kUVR6QMP+EnIZk3qenV+QWa/bLcO0taVv?=
- =?us-ascii?Q?Mk8uXqZ5+UQ0iGloVL1muiDqDrrt5Z1Q7UIZz3zaQnDJdn5ekQGC89vHDZFe?=
- =?us-ascii?Q?XSBEnG4QKk95Lzzu+bphfh/4Fznnkos8m6QxBX1DHCUITsu5WObZ8wMvlrGj?=
- =?us-ascii?Q?8gczdmU9GQgcXM2cqul9Fd90diE8K22Ya94hUqcTEyx7hpKNZPkW9qgW4mNn?=
- =?us-ascii?Q?WSCxpBSC3MmBTmdKMmlhW/4z2pDnUptwYHjjiR+2jq7iSCkW9nPtDdlmWhC/?=
- =?us-ascii?Q?fgXpyeArNSnV6yzLDlaoUhDMmQkOsNcQeQPTRmKGBptRqjjOsOh7zg3fz5q5?=
- =?us-ascii?Q?MA5vo+fM0JY+OKRU7yq3HHnE5LU2y9wgPIFydWxsVey2Cz5YhSeKkG1JvGIo?=
- =?us-ascii?Q?X568pnr7jwzUT4XrvfXyOf3o?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?U1YfAFhb52Ge7HW1Xo78LDQVWimqYO8c0Ojq8PJlHWvhdhT7WcBpolvs1YeD?=
+ =?us-ascii?Q?AXOh6+ujcIOfvJUSxvZAIFHREvcpegkBozeZiez3Y0bI21HrPR1oxZ1UvaIz?=
+ =?us-ascii?Q?C4zJJpIMIUJIgMSsIquS6HVrk2lwXNqyuKjbsWohbkXcTDWuIlftRMzD7Wme?=
+ =?us-ascii?Q?C9AMnZl3zWfwe2SNVEGJ/IRkjHozsbfBerY7sq9D3oeYCbYOOeZl64M7dgVW?=
+ =?us-ascii?Q?OnLp4FCn0CvanyY0R06A81JtAx2+72R9B7VlBb8OadwNiB0RqlmRjeKCMejC?=
+ =?us-ascii?Q?54t6iM6g/zrGfE82VDwWAqH62MO4LzjA+1uMqlk5XuqkiN6Nmo/wtqPB6IFK?=
+ =?us-ascii?Q?XdxN8ZoFGPWGV6b7QJKpTKFRpCjXqr0Ic9KkjxZqW3F+ndCEY7I/rQAjwxO5?=
+ =?us-ascii?Q?iQOAPXH0fsHy7Wxm6bdg8YqBliH4PCYE/pQZAcUpf5GqygNnsmXbiYmnxVVk?=
+ =?us-ascii?Q?BPDDPzMDHHDnn29wQo69GrGc7EdPCVV5YVW+GZuTSL4ZPlhX7mGarJ4mWOiC?=
+ =?us-ascii?Q?whpue+OlUUHaB1KUaETIGaUsZ9P3FL+oD32rJVL/R1WO7uk/+Zk6lI8l4bh2?=
+ =?us-ascii?Q?MVGYSR1eUx8t3MEZw3NbqejWpdmdPIAVoZUoanToTSZPdL9J1KY+IpgzVEN8?=
+ =?us-ascii?Q?u2gJWvOWkVkmXobwPNupYXoTMCxgcUe1zwVkPIaxcrvQwk3+Oq5yBWXlca2S?=
+ =?us-ascii?Q?8pNzUN8GhX98w7gZ7xzlAN3rCkFEX/vNqIOVKNtrUouDI8mBttG9r1CYSjrs?=
+ =?us-ascii?Q?HYMOeyInTwZkXJnHb2w3zl99P/Kd7LxaHQVGf2m2xYZbhHW3QzmhzIGhTVQn?=
+ =?us-ascii?Q?C+tGj4smGBZ4Pv6h7GUda36WErFDOYmlNqek693aQ1JQvmpQu7+zqF+ZBk+P?=
+ =?us-ascii?Q?lCjbUUFhLqWnOSYB5Eobq4jjNw0kIfRPNxzEBFP37G5uXHNZzxfqmvEuN8w1?=
+ =?us-ascii?Q?o1ghlqYUEHzZ3c8oy/WaSwO1zXXND2UJv1k/CD2rVYS25vNZVBWndrob5e+j?=
+ =?us-ascii?Q?rXVD+K4DEbkS5h2x8s6Jxm9BHlDZ8X/07YGVh4fwOHtUR1JP+ccxzicCSOd2?=
+ =?us-ascii?Q?8vlMLsLS811G3qpzuSgEu++Wu9RDmKr7EfQ3FXrOnWaBXl1ABKbCgNGIAwIZ?=
+ =?us-ascii?Q?rw9oZaBDP58BQVZRSXkrrD7Fstb3bhrUwwcsiiJ1of1mT4fMkldJVywemu55?=
+ =?us-ascii?Q?lAGGyDGB1a9+lksX4TOSeluhJGRLEh6G6AQ8627CGs7wCFFGFzTMQac8NC5F?=
+ =?us-ascii?Q?/UC/mYSWMb1MqXdd5Pe6kMDTtoQ2o08vOmhDbUK0o6+WsWgUiAMQ5Om2adzr?=
+ =?us-ascii?Q?1RUwANFa7h1a5vM4+5D6vomI?=
 x-ms-exchange-transport-forked: True
 Content-Type: text/plain; charset="us-ascii"
-Content-ID: <9CB3559842728A48990282C8FDBB914D@namprd04.prod.outlook.com>
+Content-ID: <90875CD98B22454EAF3ADDC38406D3ED@namprd04.prod.outlook.com>
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: equinix.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 437425c0-8173-42b0-46d2-08d951463e51
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Jul 2021 21:33:58.4003 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0bba6f10-afe4-4ab8-75e8-08d9515200bb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Jul 2021 22:58:09.0034 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: iUdwr9MN7+NitPopPNasl63bWA+qVIKUUNwgsA0nfUu5Fnius7MHmLYndz6Kswl8x1IXxc2XXG7hPEWuZlME1g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR04MB7991
-X-Proofpoint-GUID: gYpCZlPe4TI0gexcuRJhxPP-hWTFem3y
-X-Proofpoint-ORIG-GUID: gYpCZlPe4TI0gexcuRJhxPP-hWTFem3y
+X-MS-Exchange-CrossTenant-userprincipalname: z6crMN5QNyu2R3rCXzdfZhA5Dov98p9Nysq5JP2i2N6av8cP42nY2xwBl+azLuJ6PfLNxUMa5tSdUevjJsdmNA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR04MB7781
+X-Proofpoint-GUID: c073w2vP-sLS6ZjpMDN2HWids-UCRkWz
+X-Proofpoint-ORIG-GUID: c073w2vP-sLS6ZjpMDN2HWids-UCRkWz
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
  definitions=2021-07-27_14:2021-07-27,
  2021-07-27 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0
- mlxscore=0 phishscore=0 mlxlogscore=999 suspectscore=0 clxscore=1015
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2107140000 definitions=main-2107270125
+ phishscore=0 mlxlogscore=999
+ impostorscore=0 adultscore=0 spamscore=0 lowpriorityscore=0 mlxscore=0
+ clxscore=1015 bulkscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2107140000
+ definitions=main-2107270132
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -171,877 +171,255 @@ Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jul 12, 2021 at 05:04:43PM CDT, Iwona Winiarska wrote:
->PECI is an interface that may be used by different types of devices.
->Here we're adding a peci-cpu driver compatible with Intel processors.
->The driver is responsible for handling auxiliary devices that can
->subsequently be used by other drivers (e.g. hwmons).
+On Mon, Jul 12, 2021 at 05:04:46PM CDT, Iwona Winiarska wrote:
+>From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 >
+>Add documentation for peci-cputemp driver that provides DTS thermal
+>readings for CPU packages and CPU cores and peci-dimmtemp driver that
+>provides DTS thermal readings for DIMMs.
+>
+>Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>Co-developed-by: Iwona Winiarska <iwona.winiarska@intel.com>
 >Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
 >Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 >---
-> MAINTAINERS              |   1 +
-> drivers/peci/Kconfig     |  15 ++
-> drivers/peci/Makefile    |   2 +
-> drivers/peci/cpu.c       | 347 +++++++++++++++++++++++++++++++++++++++
-> drivers/peci/device.c    |   1 +
-> drivers/peci/internal.h  |  27 +++
-> drivers/peci/request.c   | 211 ++++++++++++++++++++++++
-> include/linux/peci-cpu.h |  38 +++++
-> include/linux/peci.h     |   8 -
-> 9 files changed, 642 insertions(+), 8 deletions(-)
-> create mode 100644 drivers/peci/cpu.c
-> create mode 100644 include/linux/peci-cpu.h
+> Documentation/hwmon/index.rst         |  2 +
+> Documentation/hwmon/peci-cputemp.rst  | 93 +++++++++++++++++++++++++++
+> Documentation/hwmon/peci-dimmtemp.rst | 58 +++++++++++++++++
+> MAINTAINERS                           |  2 +
+> 4 files changed, 155 insertions(+)
+> create mode 100644 Documentation/hwmon/peci-cputemp.rst
+> create mode 100644 Documentation/hwmon/peci-dimmtemp.rst
 >
+>diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
+>index bc01601ea81a..cc76b5b3f791 100644
+>--- a/Documentation/hwmon/index.rst
+>+++ b/Documentation/hwmon/index.rst
+>@@ -154,6 +154,8 @@ Hardware Monitoring Kernel Drivers
+>    pcf8591
+>    pim4328
+>    pm6764tr
+>+   peci-cputemp
+>+   peci-dimmtemp
+>    pmbus
+>    powr1220
+>    pxe1610
+>diff --git a/Documentation/hwmon/peci-cputemp.rst b/Documentation/hwmon/pe=
+ci-cputemp.rst
+>new file mode 100644
+>index 000000000000..d3a218ba810a
+>--- /dev/null
+>+++ b/Documentation/hwmon/peci-cputemp.rst
+>@@ -0,0 +1,93 @@
+>+.. SPDX-License-Identifier: GPL-2.0-only
+>+
+>+Kernel driver peci-cputemp
+>+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+>+
+>+Supported chips:
+>+	One of Intel server CPUs listed below which is connected to a PECI bus.
+>+		* Intel Xeon E5/E7 v3 server processors
+>+			Intel Xeon E5-14xx v3 family
+>+			Intel Xeon E5-24xx v3 family
+>+			Intel Xeon E5-16xx v3 family
+>+			Intel Xeon E5-26xx v3 family
+>+			Intel Xeon E5-46xx v3 family
+>+			Intel Xeon E7-48xx v3 family
+>+			Intel Xeon E7-88xx v3 family
+>+		* Intel Xeon E5/E7 v4 server processors
+>+			Intel Xeon E5-16xx v4 family
+>+			Intel Xeon E5-26xx v4 family
+>+			Intel Xeon E5-46xx v4 family
+>+			Intel Xeon E7-48xx v4 family
+>+			Intel Xeon E7-88xx v4 family
+>+		* Intel Xeon Scalable server processors
+>+			Intel Xeon D family
+>+			Intel Xeon Bronze family
+>+			Intel Xeon Silver family
+>+			Intel Xeon Gold family
+>+			Intel Xeon Platinum family
+>+
+>+	Datasheet: Available from http://www.intel.com/design/literature.htm
+>+
+>+Author: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>+
+>+Description
+>+-----------
+>+
+>+This driver implements a generic PECI hwmon feature which provides Digita=
+l
+>+Thermal Sensor (DTS) thermal readings of the CPU package and CPU cores th=
+at are
+>+accessible via the processor PECI interface.
+>+
+>+All temperature values are given in millidegree Celsius and will be measu=
+rable
+>+only when the target CPU is powered on.
+>+
+>+Sysfs interface
+>+-------------------
+>+
+>+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+>+temp1_label		"Die"
+>+temp1_input		Provides current die temperature of the CPU package.
+>+temp1_max		Provides thermal control temperature of the CPU package
+>+			which is also known as Tcontrol.
+>+temp1_crit		Provides shutdown temperature of the CPU package which
+>+			is also known as the maximum processor junction
+>+			temperature, Tjmax or Tprochot.
+>+temp1_crit_hyst		Provides the hysteresis value from Tcontrol to Tjmax of
+>+			the CPU package.
+>+
+>+temp2_label		"DTS"
+>+temp2_input		Provides current DTS temperature of the CPU package.
+
+Would this be a good place to note the slightly counter-intuitive nature
+of DTS readings?  i.e. add something along the lines of "The DTS sensor
+produces a delta relative to Tjmax, so negative values are normal and
+values approaching zero are hot."  (In my experience people who aren't
+already familiar with it tend to think something's wrong when a CPU
+temperature reading shows -50C.)
+
+>+temp2_max		Provides thermal control temperature of the CPU package
+>+			which is also known as Tcontrol.
+>+temp2_crit		Provides shutdown temperature of the CPU package which
+>+			is also known as the maximum processor junction
+>+			temperature, Tjmax or Tprochot.
+>+temp2_crit_hyst		Provides the hysteresis value from Tcontrol to Tjmax of
+>+			the CPU package.
+>+
+>+temp3_label		"Tcontrol"
+>+temp3_input		Provides current Tcontrol temperature of the CPU
+>+			package which is also known as Fan Temperature target.
+>+			Indicates the relative value from thermal monitor trip
+>+			temperature at which fans should be engaged.
+>+temp3_crit		Provides Tcontrol critical value of the CPU package
+>+			which is same to Tjmax.
+>+
+>+temp4_label		"Tthrottle"
+>+temp4_input		Provides current Tthrottle temperature of the CPU
+>+			package. Used for throttling temperature. If this value
+>+			is allowed and lower than Tjmax - the throttle will
+>+			occur and reported at lower than Tjmax.
+>+
+>+temp5_label		"Tjmax"
+>+temp5_input		Provides the maximum junction temperature, Tjmax of the
+>+			CPU package.
+>+
+>+temp[6-N]_label		Provides string "Core X", where X is resolved core
+>+			number.
+>+temp[6-N]_input		Provides current temperature of each core.
+>+temp[6-N]_max		Provides thermal control temperature of the core.
+>+temp[6-N]_crit		Provides shutdown temperature of the core.
+>+temp[6-N]_crit_hyst	Provides the hysteresis value from Tcontrol to Tjmax =
+of
+>+			the core.
+
+I only see *_label and *_input for the per-core temperature sensors, no
+*_max, *_crit, or *_crit_hyst.
+
+>+
+>+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+>diff --git a/Documentation/hwmon/peci-dimmtemp.rst b/Documentation/hwmon/p=
+eci-dimmtemp.rst
+>new file mode 100644
+>index 000000000000..1778d9317e43
+>--- /dev/null
+>+++ b/Documentation/hwmon/peci-dimmtemp.rst
+>@@ -0,0 +1,58 @@
+>+.. SPDX-License-Identifier: GPL-2.0
+>+
+>+Kernel driver peci-dimmtemp
+>+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
+>+
+>+Supported chips:
+>+	One of Intel server CPUs listed below which is connected to a PECI bus.
+>+		* Intel Xeon E5/E7 v3 server processors
+>+			Intel Xeon E5-14xx v3 family
+>+			Intel Xeon E5-24xx v3 family
+>+			Intel Xeon E5-16xx v3 family
+>+			Intel Xeon E5-26xx v3 family
+>+			Intel Xeon E5-46xx v3 family
+>+			Intel Xeon E7-48xx v3 family
+>+			Intel Xeon E7-88xx v3 family
+>+		* Intel Xeon E5/E7 v4 server processors
+>+			Intel Xeon E5-16xx v4 family
+>+			Intel Xeon E5-26xx v4 family
+>+			Intel Xeon E5-46xx v4 family
+>+			Intel Xeon E7-48xx v4 family
+>+			Intel Xeon E7-88xx v4 family
+>+		* Intel Xeon Scalable server processors
+>+			Intel Xeon D family
+>+			Intel Xeon Bronze family
+>+			Intel Xeon Silver family
+>+			Intel Xeon Gold family
+>+			Intel Xeon Platinum family
+>+
+>+	Datasheet: Available from http://www.intel.com/design/literature.htm
+>+
+>+Author: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>+
+>+Description
+>+-----------
+>+
+>+This driver implements a generic PECI hwmon feature which provides Digita=
+l
+>+Thermal Sensor (DTS) thermal readings of DIMM components that are accessi=
+ble
+>+via the processor PECI interface.
+
+I had thought "DTS" referred to a fairly specific sensor in the CPU; is
+the same term also used for DIMM temp sensors or is the mention of it
+here a copy/paste error?
+
+>+
+>+All temperature values are given in millidegree Celsius and will be measu=
+rable
+>+only when the target CPU is powered on.
+>+
+>+Sysfs interface
+>+-------------------
+>+
+>+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+>+
+>+temp[N]_label		Provides string "DIMM CI", where C is DIMM channel and
+>+			I is DIMM index of the populated DIMM.
+>+temp[N]_input		Provides current temperature of the populated DIMM.
+>+temp[N]_max		Provides thermal control temperature of the DIMM.
+>+temp[N]_crit		Provides shutdown temperature of the DIMM.
+>+
+>+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+>+
+>+Note:
+>+	DIMM temperature attributes will appear when the client CPU's BIOS
+>+	completes memory training and testing.
 >diff --git a/MAINTAINERS b/MAINTAINERS
->index 4ba874afa2fa..f47b5f634293 100644
+>index 35ba9e3646bd..d16da127bbdc 100644
 >--- a/MAINTAINERS
 >+++ b/MAINTAINERS
->@@ -14511,6 +14511,7 @@ L:	openbmc@lists.ozlabs.org (moderated for non-sub=
-scribers)
+>@@ -14509,6 +14509,8 @@ M:	Iwona Winiarska <iwona.winiarska@intel.com>
+> R:	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> L:	linux-hwmon@vger.kernel.org
 > S:	Supported
-> F:	Documentation/devicetree/bindings/peci/
-> F:	drivers/peci/
->+F:	include/linux/peci-cpu.h
-> F:	include/linux/peci.h
+>+F:	Documentation/hwmon/peci-cputemp.rst
+>+F:	Documentation/hwmon/peci-dimmtemp.rst
+> F:	drivers/hwmon/peci/
 >
-> PENSANDO ETHERNET DRIVERS
->diff --git a/drivers/peci/Kconfig b/drivers/peci/Kconfig
->index 27c31535843c..9e17e06fda90 100644
->--- a/drivers/peci/Kconfig
->+++ b/drivers/peci/Kconfig
->@@ -16,6 +16,21 @@ menuconfig PECI
->
-> if PECI
->
->+config PECI_CPU
->+	tristate "PECI CPU"
->+	select AUXILIARY_BUS
->+	help
->+	  This option enables peci-cpu driver for Intel processors. It is
->+	  responsible for creating auxiliary devices that can subsequently
->+	  be used by other drivers in order to perform various
->+	  functionalities such as e.g. temperature monitoring.
->+
->+	  Additional drivers must be enabled in order to use the functionality
->+	  of the device.
->+
->+	  This driver can also be built as a module. If so, the module
->+	  will be called peci-cpu.
->+
-> source "drivers/peci/controller/Kconfig"
->
-> endif # PECI
->diff --git a/drivers/peci/Makefile b/drivers/peci/Makefile
->index 917f689e147a..7de18137e738 100644
->--- a/drivers/peci/Makefile
->+++ b/drivers/peci/Makefile
->@@ -3,6 +3,8 @@
-> # Core functionality
-> peci-y :=3D core.o request.o device.o sysfs.o
-> obj-$(CONFIG_PECI) +=3D peci.o
->+peci-cpu-y :=3D cpu.o
->+obj-$(CONFIG_PECI_CPU) +=3D peci-cpu.o
->
-> # Hardware specific bus drivers
-> obj-y +=3D controller/
->diff --git a/drivers/peci/cpu.c b/drivers/peci/cpu.c
->new file mode 100644
->index 000000000000..8d130a9a71ad
->--- /dev/null
->+++ b/drivers/peci/cpu.c
->@@ -0,0 +1,347 @@
->+// SPDX-License-Identifier: GPL-2.0-only
->+// Copyright (c) 2021 Intel Corporation
->+
->+#include <linux/auxiliary_bus.h>
->+#include <linux/module.h>
->+#include <linux/peci.h>
->+#include <linux/peci-cpu.h>
->+#include <linux/slab.h>
->+#include <linux/x86/intel-family.h>
->+
->+#include "internal.h"
->+
->+/**
->+ * peci_temp_read() - read the maximum die temperature from PECI target d=
-evice
->+ * @device: PECI device to which request is going to be sent
->+ * @temp_raw: where to store the read temperature
->+ *
->+ * It uses GetTemp PECI command.
->+ *
->+ * Return: 0 if succeeded, other values in case errors.
->+ */
->+int peci_temp_read(struct peci_device *device, s16 *temp_raw)
->+{
->+	struct peci_request *req;
->+
->+	req =3D peci_get_temp(device);
->+	if (IS_ERR(req))
->+		return PTR_ERR(req);
->+
->+	*temp_raw =3D peci_request_data_temp(req);
->+
->+	peci_request_free(req);
->+
->+	return 0;
->+}
->+EXPORT_SYMBOL_NS_GPL(peci_temp_read, PECI_CPU);
->+
->+/**
->+ * peci_pcs_read() - read PCS register
->+ * @device: PECI device to which request is going to be sent
->+ * @index: PCS index
->+ * @param: PCS parameter
->+ * @data: where to store the read data
->+ *
->+ * It uses RdPkgConfig PECI command.
->+ *
->+ * Return: 0 if succeeded, other values in case errors.
->+ */
->+int peci_pcs_read(struct peci_device *device, u8 index, u16 param, u32 *d=
-ata)
->+{
->+	struct peci_request *req;
->+	int ret;
->+
->+	req =3D peci_pkg_cfg_readl(device, index, param);
->+	if (IS_ERR(req))
->+		return PTR_ERR(req);
->+
->+	ret =3D peci_request_status(req);
->+	if (ret)
->+		goto out_req_free;
->+
->+	*data =3D peci_request_data_readl(req);
->+out_req_free:
-
-As in patch 9, this control flow could be rewritten as just
-
-	if (!ret)
-		*data =3D peci_request_data_readl(req);
-
-and avoid the goto.
-
->+	peci_request_free(req);
->+
->+	return ret;
->+}
->+EXPORT_SYMBOL_NS_GPL(peci_pcs_read, PECI_CPU);
->+
->+/**
->+ * peci_pci_local_read() - read 32-bit memory location using raw address
->+ * @device: PECI device to which request is going to be sent
->+ * @bus: bus
->+ * @dev: device
->+ * @func: function
->+ * @reg: register
->+ * @data: where to store the read data
->+ *
->+ * It uses RdPCIConfigLocal PECI command.
->+ *
->+ * Return: 0 if succeeded, other values in case errors.
->+ */
->+int peci_pci_local_read(struct peci_device *device, u8 bus, u8 dev, u8 fu=
-nc,
->+			u16 reg, u32 *data)
->+{
->+	struct peci_request *req;
->+	int ret;
->+
->+	req =3D peci_pci_cfg_local_readl(device, bus, dev, func, reg);
->+	if (IS_ERR(req))
->+		return PTR_ERR(req);
->+
->+	ret =3D peci_request_status(req);
->+	if (ret)
->+		goto out_req_free;
->+
->+	*data =3D peci_request_data_readl(req);
->+out_req_free:
->+	peci_request_free(req);
->+
->+	return ret;
->+}
->+EXPORT_SYMBOL_NS_GPL(peci_pci_local_read, PECI_CPU);
->+
->+/**
->+ * peci_ep_pci_local_read() - read 32-bit memory location using raw addre=
-ss
->+ * @device: PECI device to which request is going to be sent
->+ * @seg: PCI segment
->+ * @bus: bus
->+ * @dev: device
->+ * @func: function
->+ * @reg: register
->+ * @data: where to store the read data
->+ *
->+ * Like &peci_pci_local_read, but it uses RdEndpointConfig PECI command.
->+ *
->+ * Return: 0 if succeeded, other values in case errors.
->+ */
->+int peci_ep_pci_local_read(struct peci_device *device, u8 seg,
->+			   u8 bus, u8 dev, u8 func, u16 reg, u32 *data)
->+{
->+	struct peci_request *req;
->+	int ret;
->+
->+	req =3D peci_ep_pci_cfg_local_readl(device, seg, bus, dev, func, reg);
->+	if (IS_ERR(req))
->+		return PTR_ERR(req);
->+
->+	ret =3D peci_request_status(req);
->+	if (ret)
->+		goto out_req_free;
->+
->+	*data =3D peci_request_data_readl(req);
->+out_req_free:
->+	peci_request_free(req);
->+
->+	return ret;
->+}
->+EXPORT_SYMBOL_NS_GPL(peci_ep_pci_local_read, PECI_CPU);
->+
->+/**
->+ * peci_mmio_read() - read 32-bit memory location using 64-bit bar offset=
- address
->+ * @device: PECI device to which request is going to be sent
->+ * @bar: PCI bar
->+ * @seg: PCI segment
->+ * @bus: bus
->+ * @dev: device
->+ * @func: function
->+ * @address: 64-bit MMIO address
->+ * @data: where to store the read data
->+ *
->+ * It uses RdEndpointConfig PECI command.
->+ *
->+ * Return: 0 if succeeded, other values in case errors.
->+ */
->+int peci_mmio_read(struct peci_device *device, u8 bar, u8 seg,
->+		   u8 bus, u8 dev, u8 func, u64 address, u32 *data)
->+{
->+	struct peci_request *req;
->+	int ret;
->+
->+	req =3D peci_ep_mmio64_readl(device, bar, seg, bus, dev, func, address);
->+	if (IS_ERR(req))
->+		return PTR_ERR(req);
->+
->+	ret =3D peci_request_status(req);
->+	if (ret)
->+		goto out_req_free;
->+
->+	*data =3D peci_request_data_readl(req);
->+out_req_free:
->+	peci_request_free(req);
->+
->+	return ret;
->+}
->+EXPORT_SYMBOL_NS_GPL(peci_mmio_read, PECI_CPU);
->+
->+struct peci_cpu {
->+	struct peci_device *device;
->+	const struct peci_device_id *id;
->+	struct auxiliary_device **aux_devices;
-
-Given that the size for this allocation is a compile-time constant,
-should we just inline this as 'struct auxiliary_device
-*aux_devices[ARRAY_SIZE(type)]' and avoid some kmalloc work in
-peci_cpu_add_adevices()?
-
->+};
->+
->+static const char * const type[] =3D {
-
-A slightly more descriptive name might be good -- maybe something like
-'peci_adevice_types'?
-
->+	"cputemp",
->+	"dimmtemp",
->+};
->+
->+static void adev_release(struct device *dev)
->+{
->+	struct auxiliary_device *adev =3D to_auxiliary_dev(dev);
->+
->+	kfree(adev->name);
->+	kfree(adev);
->+}
->+
->+static struct auxiliary_device *add_adev(struct peci_cpu *priv, int idx)
->+{
->+	struct peci_controller *controller =3D priv->device->controller;
->+	struct auxiliary_device *adev;
->+	const char *name;
->+	int ret;
->+
->+	adev =3D kzalloc(sizeof(*adev), GFP_KERNEL);
->+	if (!adev)
->+		return ERR_PTR(-ENOMEM);
->+
->+	name =3D kasprintf(GFP_KERNEL, "%s.%s", type[idx], (const char *)priv->i=
-d->data);
->+	if (!name) {
->+		ret =3D -ENOMEM;
->+		goto free_adev;
->+	}
->+
->+	adev->name =3D name;
->+	adev->dev.parent =3D &priv->device->dev;
->+	adev->dev.release =3D adev_release;
->+	adev->id =3D (controller->id << 16) | (priv->device->addr);
->+
->+	ret =3D auxiliary_device_init(adev);
->+	if (ret)
->+		goto free_name;
->+
->+	ret =3D auxiliary_device_add(adev);
->+	if (ret) {
->+		auxiliary_device_uninit(adev);
->+		return ERR_PTR(ret);
->+	}
->+
->+	return adev;
->+
->+free_name:
->+	kfree(name);
->+free_adev:
->+	kfree(adev);
->+	return ERR_PTR(ret);
->+}
->+
->+static void del_adev(struct auxiliary_device *adev)
->+{
->+	auxiliary_device_delete(adev);
->+	auxiliary_device_uninit(adev);
->+}
->+
->+static int peci_cpu_add_adevices(struct peci_cpu *priv)
->+{
->+	struct device *dev =3D &priv->device->dev;
->+	struct auxiliary_device *adev;
->+	int i;
->+
->+	priv->aux_devices =3D devm_kcalloc(dev, ARRAY_SIZE(type),
->+					 sizeof(*priv->aux_devices),
->+					 GFP_KERNEL);
->+	if (!priv->aux_devices)
->+		return -ENOMEM;
->+
->+	for (i =3D 0; i < ARRAY_SIZE(type); i++) {
->+		adev =3D add_adev(priv, i);
->+		if (IS_ERR(adev)) {
->+			dev_warn(dev, "Failed to add PECI auxiliary: %s, ret =3D %ld\n",
->+				 type[i], PTR_ERR(adev));
->+			continue;
->+		}
->+
->+		priv->aux_devices[i] =3D adev;
->+	}
->+	return 0;
->+}
->+
->+static int
->+peci_cpu_probe(struct peci_device *device, const struct peci_device_id *i=
-d)
->+{
->+	struct device *dev =3D &device->dev;
->+	struct peci_cpu *priv;
->+
->+	priv =3D devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
->+	if (!priv)
->+		return -ENOMEM;
->+
->+	dev_set_drvdata(dev, priv);
->+	priv->device =3D device;
->+	priv->id =3D id;
->+
->+	return peci_cpu_add_adevices(priv);
->+}
->+
->+static void peci_cpu_remove(struct peci_device *device)
->+{
->+	struct peci_cpu *priv =3D dev_get_drvdata(&device->dev);
->+	int i;
->+
->+	for (i =3D 0; i < ARRAY_SIZE(type); i++) {
->+		struct auxiliary_device *adev =3D priv->aux_devices[i];
->+
->+		if (adev)
->+			del_adev(adev);
->+	}
->+}
->+
->+static const struct peci_device_id peci_cpu_device_ids[] =3D {
->+	{ /* Haswell Xeon */
->+		.family	=3D 6,
->+		.model	=3D INTEL_FAM6_HASWELL_X,
->+		.data	=3D "hsx",
->+	},
->+	{ /* Broadwell Xeon */
->+		.family	=3D 6,
->+		.model	=3D INTEL_FAM6_BROADWELL_X,
->+		.data	=3D "bdx",
->+	},
->+	{ /* Broadwell Xeon D */
->+		.family	=3D 6,
->+		.model	=3D INTEL_FAM6_BROADWELL_D,
->+		.data	=3D "skxd",
->+	},
->+	{ /* Skylake Xeon */
->+		.family	=3D 6,
->+		.model	=3D INTEL_FAM6_SKYLAKE_X,
->+		.data	=3D "skx",
->+	},
->+	{ /* Icelake Xeon */
->+		.family	=3D 6,
->+		.model	=3D INTEL_FAM6_ICELAKE_X,
->+		.data	=3D "icx",
->+	},
->+	{ /* Icelake Xeon D */
->+		.family	=3D 6,
->+		.model	=3D INTEL_FAM6_ICELAKE_D,
->+		.data	=3D "icxd",
->+	},
->+	{ }
->+};
->+MODULE_DEVICE_TABLE(peci, peci_cpu_device_ids);
->+
->+static struct peci_driver peci_cpu_driver =3D {
->+	.probe		=3D peci_cpu_probe,
->+	.remove		=3D peci_cpu_remove,
->+	.id_table	=3D peci_cpu_device_ids,
->+	.driver		=3D {
->+		.name		=3D "peci-cpu",
->+	},
->+};
->+module_peci_driver(peci_cpu_driver);
->+
->+MODULE_AUTHOR("Iwona Winiarska <iwona.winiarska@intel.com>");
->+MODULE_DESCRIPTION("PECI CPU driver");
->+MODULE_LICENSE("GPL");
->+MODULE_IMPORT_NS(PECI);
->diff --git a/drivers/peci/device.c b/drivers/peci/device.c
->index 8c4bd1ebbc29..c278c9ea166c 100644
->--- a/drivers/peci/device.c
->+++ b/drivers/peci/device.c
->@@ -3,6 +3,7 @@
->
-> #include <linux/bitfield.h>
-> #include <linux/peci.h>
->+#include <linux/peci-cpu.h>
-> #include <linux/slab.h>
-> #include <linux/x86/cpu.h>
->
->diff --git a/drivers/peci/internal.h b/drivers/peci/internal.h
->index c891c93e077a..1d39483a8acf 100644
->--- a/drivers/peci/internal.h
->+++ b/drivers/peci/internal.h
->@@ -21,6 +21,7 @@ void peci_request_free(struct peci_request *req);
->
-> int peci_request_status(struct peci_request *req);
-> u64 peci_request_data_dib(struct peci_request *req);
->+s16 peci_request_data_temp(struct peci_request *req);
->
-> u8 peci_request_data_readb(struct peci_request *req);
-> u16 peci_request_data_readw(struct peci_request *req);
->@@ -35,6 +36,32 @@ struct peci_request *peci_pkg_cfg_readw(struct peci_dev=
-ice *device, u8 index, u1
-> struct peci_request *peci_pkg_cfg_readl(struct peci_device *device, u8 in=
-dex, u16 param);
-> struct peci_request *peci_pkg_cfg_readq(struct peci_device *device, u8 in=
-dex, u16 param);
->
->+struct peci_request *peci_pci_cfg_local_readb(struct peci_device *device,
->+					      u8 bus, u8 dev, u8 func, u16 reg);
->+struct peci_request *peci_pci_cfg_local_readw(struct peci_device *device,
->+					      u8 bus, u8 dev, u8 func, u16 reg);
->+struct peci_request *peci_pci_cfg_local_readl(struct peci_device *device,
->+					      u8 bus, u8 dev, u8 func, u16 reg);
->+
->+struct peci_request *peci_ep_pci_cfg_local_readb(struct peci_device *devi=
-ce, u8 seg,
->+						 u8 bus, u8 dev, u8 func, u16 reg);
->+struct peci_request *peci_ep_pci_cfg_local_readw(struct peci_device *devi=
-ce, u8 seg,
->+						 u8 bus, u8 dev, u8 func, u16 reg);
->+struct peci_request *peci_ep_pci_cfg_local_readl(struct peci_device *devi=
-ce, u8 seg,
->+						 u8 bus, u8 dev, u8 func, u16 reg);
->+
->+struct peci_request *peci_ep_pci_cfg_readb(struct peci_device *device, u8=
- seg,
->+					   u8 bus, u8 dev, u8 func, u16 reg);
->+struct peci_request *peci_ep_pci_cfg_readw(struct peci_device *device, u8=
- seg,
->+					   u8 bus, u8 dev, u8 func, u16 reg);
->+struct peci_request *peci_ep_pci_cfg_readl(struct peci_device *device, u8=
- seg,
->+					   u8 bus, u8 dev, u8 func, u16 reg);
->+
->+struct peci_request *peci_ep_mmio32_readl(struct peci_device *device, u8 =
-bar, u8 seg,
->+					  u8 bus, u8 dev, u8 func, u64 offset);
->+
->+struct peci_request *peci_ep_mmio64_readl(struct peci_device *device, u8 =
-bar, u8 seg,
->+					  u8 bus, u8 dev, u8 func, u64 offset);
-> /**
->  * struct peci_device_id - PECI device data to match
->  * @data: pointer to driver private data specific to device
->diff --git a/drivers/peci/request.c b/drivers/peci/request.c
->index 48354455b554..c5d39f7e8142 100644
->--- a/drivers/peci/request.c
->+++ b/drivers/peci/request.c
->@@ -3,6 +3,7 @@
->
-> #include <linux/bug.h>
-> #include <linux/export.h>
->+#include <linux/pci.h>
-> #include <linux/peci.h>
-> #include <linux/slab.h>
-> #include <linux/types.h>
->@@ -15,6 +16,10 @@
-> #define  PECI_GET_DIB_WR_LEN		1
-> #define  PECI_GET_DIB_RD_LEN		8
->
->+#define PECI_GET_TEMP_CMD		0x01
->+#define  PECI_GET_TEMP_WR_LEN		1
->+#define  PECI_GET_TEMP_RD_LEN		2
->+
-> #define PECI_RDPKGCFG_CMD		0xa1
-> #define  PECI_RDPKGCFG_WRITE_LEN	5
-> #define  PECI_RDPKGCFG_READ_LEN_BASE	1
->@@ -22,6 +27,44 @@
-> #define  PECI_WRPKGCFG_WRITE_LEN_BASE	6
-> #define  PECI_WRPKGCFG_READ_LEN		1
->
->+#define PECI_RDIAMSR_CMD		0xb1
->+#define  PECI_RDIAMSR_WRITE_LEN		5
->+#define  PECI_RDIAMSR_READ_LEN		9
->+#define PECI_WRIAMSR_CMD		0xb5
->+#define PECI_RDIAMSREX_CMD		0xd1
->+#define  PECI_RDIAMSREX_WRITE_LEN	6
->+#define  PECI_RDIAMSREX_READ_LEN	9
->+
->+#define PECI_RDPCICFG_CMD		0x61
->+#define  PECI_RDPCICFG_WRITE_LEN	6
->+#define  PECI_RDPCICFG_READ_LEN		5
->+#define  PECI_RDPCICFG_READ_LEN_MAX	24
->+#define PECI_WRPCICFG_CMD		0x65
->+
->+#define PECI_RDPCICFGLOCAL_CMD			0xe1
->+#define  PECI_RDPCICFGLOCAL_WRITE_LEN		5
->+#define  PECI_RDPCICFGLOCAL_READ_LEN_BASE	1
->+#define PECI_WRPCICFGLOCAL_CMD			0xe5
->+#define  PECI_WRPCICFGLOCAL_WRITE_LEN_BASE	6
->+#define  PECI_WRPCICFGLOCAL_READ_LEN		1
->+
->+#define PECI_ENDPTCFG_TYPE_LOCAL_PCI		0x03
->+#define PECI_ENDPTCFG_TYPE_PCI			0x04
->+#define PECI_ENDPTCFG_TYPE_MMIO			0x05
->+#define PECI_ENDPTCFG_ADDR_TYPE_PCI		0x04
->+#define PECI_ENDPTCFG_ADDR_TYPE_MMIO_D		0x05
->+#define PECI_ENDPTCFG_ADDR_TYPE_MMIO_Q		0x06
->+#define PECI_RDENDPTCFG_CMD			0xc1
->+#define  PECI_RDENDPTCFG_PCI_WRITE_LEN		12
->+#define  PECI_RDENDPTCFG_MMIO_D_WRITE_LEN	14
->+#define  PECI_RDENDPTCFG_MMIO_Q_WRITE_LEN	18
->+#define  PECI_RDENDPTCFG_READ_LEN_BASE		1
->+#define PECI_WRENDPTCFG_CMD			0xc5
->+#define  PECI_WRENDPTCFG_PCI_WRITE_LEN_BASE	13
->+#define  PECI_WRENDPTCFG_MMIO_D_WRITE_LEN_BASE	15
->+#define  PECI_WRENDPTCFG_MMIO_Q_WRITE_LEN_BASE	19
->+#define  PECI_WRENDPTCFG_READ_LEN		1
->+
-> /* Device Specific Completion Code (CC) Definition */
-> #define PECI_CC_SUCCESS				0x40
-> #define PECI_CC_NEED_RETRY			0x80
->@@ -223,6 +266,27 @@ struct peci_request *peci_get_dib(struct peci_device =
-*device)
-> }
-> EXPORT_SYMBOL_NS_GPL(peci_get_dib, PECI);
->
->+struct peci_request *peci_get_temp(struct peci_device *device)
->+{
->+	struct peci_request *req;
->+	int ret;
->+
->+	req =3D peci_request_alloc(device, PECI_GET_TEMP_WR_LEN, PECI_GET_TEMP_R=
-D_LEN);
->+	if (!req)
->+		return ERR_PTR(-ENOMEM);
->+
->+	req->tx.buf[0] =3D PECI_GET_TEMP_CMD;
->+
->+	ret =3D peci_request_xfer(req);
->+	if (ret) {
->+		peci_request_free(req);
->+		return ERR_PTR(ret);
->+	}
->+
->+	return req;
->+}
->+EXPORT_SYMBOL_NS_GPL(peci_get_temp, PECI);
->+
-> static struct peci_request *
-> __pkg_cfg_read(struct peci_device *device, u8 index, u16 param, u8 len)
-> {
->@@ -248,6 +312,108 @@ __pkg_cfg_read(struct peci_device *device, u8 index,=
- u16 param, u8 len)
-> 	return req;
-> }
->
->+static u32 __get_pci_addr(u8 bus, u8 dev, u8 func, u16 reg)
->+{
->+	return reg | PCI_DEVID(bus, PCI_DEVFN(dev, func)) << 12;
->+}
->+
->+static struct peci_request *
->+__pci_cfg_local_read(struct peci_device *device, u8 bus, u8 dev, u8 func,=
- u16 reg, u8 len)
->+{
->+	struct peci_request *req;
->+	u32 pci_addr;
->+	int ret;
->+
->+	req =3D peci_request_alloc(device, PECI_RDPCICFGLOCAL_WRITE_LEN,
->+				 PECI_RDPCICFGLOCAL_READ_LEN_BASE + len);
->+	if (!req)
->+		return ERR_PTR(-ENOMEM);
->+
->+	pci_addr =3D __get_pci_addr(bus, dev, func, reg);
->+
->+	req->tx.buf[0] =3D PECI_RDPCICFGLOCAL_CMD;
->+	req->tx.buf[1] =3D 0;
->+	put_unaligned_le24(pci_addr, &req->tx.buf[2]);
->+
->+	ret =3D peci_request_xfer_retry(req);
->+	if (ret) {
->+		peci_request_free(req);
->+		return ERR_PTR(ret);
->+	}
->+
->+	return req;
->+}
->+
->+static struct peci_request *
->+__ep_pci_cfg_read(struct peci_device *device, u8 msg_type, u8 seg,
->+		  u8 bus, u8 dev, u8 func, u16 reg, u8 len)
->+{
->+	struct peci_request *req;
->+	u32 pci_addr;
->+	int ret;
->+
->+	req =3D peci_request_alloc(device, PECI_RDENDPTCFG_PCI_WRITE_LEN,
->+				 PECI_RDENDPTCFG_READ_LEN_BASE + len);
->+	if (!req)
->+		return ERR_PTR(-ENOMEM);
->+
->+	pci_addr =3D __get_pci_addr(bus, dev, func, reg);
->+
->+	req->tx.buf[0] =3D PECI_RDENDPTCFG_CMD;
->+	req->tx.buf[1] =3D 0;
->+	req->tx.buf[2] =3D msg_type;
->+	req->tx.buf[3] =3D 0;
->+	req->tx.buf[4] =3D 0;
->+	req->tx.buf[5] =3D 0;
->+	req->tx.buf[6] =3D PECI_ENDPTCFG_ADDR_TYPE_PCI;
->+	req->tx.buf[7] =3D seg; /* PCI Segment */
->+	put_unaligned_le32(pci_addr, &req->tx.buf[8]);
->+
->+	ret =3D peci_request_xfer_retry(req);
->+	if (ret) {
->+		peci_request_free(req);
->+		return ERR_PTR(ret);
->+	}
->+
->+	return req;
->+}
->+
->+static struct peci_request *
->+__ep_mmio_read(struct peci_device *device, u8 bar, u8 addr_type, u8 seg,
->+	       u8 bus, u8 dev, u8 func, u64 offset, u8 tx_len, u8 len)
->+{
->+	struct peci_request *req;
->+	int ret;
->+
->+	req =3D peci_request_alloc(device, tx_len, PECI_RDENDPTCFG_READ_LEN_BASE=
- + len);
->+	if (!req)
->+		return ERR_PTR(-ENOMEM);
->+
->+	req->tx.buf[0] =3D PECI_RDENDPTCFG_CMD;
->+	req->tx.buf[1] =3D 0;
->+	req->tx.buf[2] =3D PECI_ENDPTCFG_TYPE_MMIO;
->+	req->tx.buf[3] =3D 0; /* Endpoint ID */
->+	req->tx.buf[4] =3D 0; /* Reserved */
->+	req->tx.buf[5] =3D bar;
->+	req->tx.buf[6] =3D addr_type;
->+	req->tx.buf[7] =3D seg; /* PCI Segment */
->+	req->tx.buf[8] =3D PCI_DEVFN(dev, func);
->+	req->tx.buf[9] =3D bus; /* PCI Bus */
->+
->+	if (addr_type =3D=3D PECI_ENDPTCFG_ADDR_TYPE_MMIO_D)
->+		put_unaligned_le32(offset, &req->tx.buf[10]);
->+	else
->+		put_unaligned_le64(offset, &req->tx.buf[10]);
->+
->+	ret =3D peci_request_xfer_retry(req);
->+	if (ret) {
->+		peci_request_free(req);
->+		return ERR_PTR(ret);
->+	}
->+
->+	return req;
->+}
->+
-> u8 peci_request_data_readb(struct peci_request *req)
-> {
-> 	return req->rx.buf[1];
->@@ -278,6 +444,12 @@ u64 peci_request_data_dib(struct peci_request *req)
-> }
-> EXPORT_SYMBOL_NS_GPL(peci_request_data_dib, PECI);
->
->+s16 peci_request_data_temp(struct peci_request *req)
->+{
->+	return get_unaligned_le16(&req->rx.buf[0]);
->+}
->+EXPORT_SYMBOL_NS_GPL(peci_request_data_temp, PECI);
->+
-> #define __read_pkg_config(x, type) \
-> struct peci_request *peci_pkg_cfg_##x(struct peci_device *device, u8 inde=
-x, u16 param) \
-> { \
->@@ -289,3 +461,42 @@ __read_pkg_config(readb, u8);
-> __read_pkg_config(readw, u16);
-> __read_pkg_config(readl, u32);
-> __read_pkg_config(readq, u64);
->+
->+#define __read_pci_config_local(x, type) \
->+struct peci_request * \
->+peci_pci_cfg_local_##x(struct peci_device *device, u8 bus, u8 dev, u8 fun=
-c, u16 reg) \
->+{ \
->+	return __pci_cfg_local_read(device, bus, dev, func, reg, sizeof(type)); =
-\
->+} \
-
-As with peci_pkg_cfg_*() in patch 9, it seems like this could relieve
-callers of some busy-work by returning a status int and writing the data
-to a 'type*' pointer instead of returning a struct peci_request*.
-
->+EXPORT_SYMBOL_NS_GPL(peci_pci_cfg_local_##x, PECI)
->+
->+__read_pci_config_local(readb, u8);
->+__read_pci_config_local(readw, u16);
->+__read_pci_config_local(readl, u32);
->+
->+#define __read_ep_pci_config(x, msg_type, type) \
->+struct peci_request * \
->+peci_ep_pci_cfg_##x(struct peci_device *device, u8 seg, u8 bus, u8 dev, u=
-8 func, u16 reg) \
->+{ \
->+	return __ep_pci_cfg_read(device, msg_type, seg, bus, dev, func, reg, siz=
-eof(type)); \
->+} \
-
-Likewise here.
-
->+EXPORT_SYMBOL_NS_GPL(peci_ep_pci_cfg_##x, PECI)
->+
->+__read_ep_pci_config(local_readb, PECI_ENDPTCFG_TYPE_LOCAL_PCI, u8);
->+__read_ep_pci_config(local_readw, PECI_ENDPTCFG_TYPE_LOCAL_PCI, u16);
->+__read_ep_pci_config(local_readl, PECI_ENDPTCFG_TYPE_LOCAL_PCI, u32);
->+__read_ep_pci_config(readb, PECI_ENDPTCFG_TYPE_PCI, u8);
->+__read_ep_pci_config(readw, PECI_ENDPTCFG_TYPE_PCI, u16);
->+__read_ep_pci_config(readl, PECI_ENDPTCFG_TYPE_PCI, u32);
->+
->+#define __read_ep_mmio(x, y, addr_type, type1, type2) \
->+struct peci_request *peci_ep_mmio##y##_##x(struct peci_device *device, u8=
- bar, u8 seg, \
->+					   u8 bus, u8 dev, u8 func, u64 offset) \
->+{ \
->+	return __ep_mmio_read(device, bar, addr_type, seg, bus, dev, func, \
->+			      offset, 10 + sizeof(type1), sizeof(type2)); \
->+} \
-
-And here (I think).
-
-Also, the '10 +' looks a bit magical/mysterious.  Could that be
-clarified a bit with a macro or something?
-
->+EXPORT_SYMBOL_NS_GPL(peci_ep_mmio##y##_##x, PECI)
->+
->+__read_ep_mmio(readl, 32, PECI_ENDPTCFG_ADDR_TYPE_MMIO_D, u32, u32);
->+__read_ep_mmio(readl, 64, PECI_ENDPTCFG_ADDR_TYPE_MMIO_Q, u64, u32);
->diff --git a/include/linux/peci-cpu.h b/include/linux/peci-cpu.h
->new file mode 100644
->index 000000000000..d1b307ec2429
->--- /dev/null
->+++ b/include/linux/peci-cpu.h
->@@ -0,0 +1,38 @@
->+/* SPDX-License-Identifier: GPL-2.0-only */
->+/* Copyright (c) 2021 Intel Corporation */
->+
->+#ifndef __LINUX_PECI_CPU_H
->+#define __LINUX_PECI_CPU_H
->+
->+#include <linux/types.h>
->+
->+#define PECI_PCS_PKG_ID			0  /* Package Identifier Read */
->+#define  PECI_PKG_ID_CPU_ID		0x0000  /* CPUID Info */
->+#define  PECI_PKG_ID_PLATFORM_ID	0x0001  /* Platform ID */
->+#define  PECI_PKG_ID_DEVICE_ID		0x0002  /* Uncore Device ID */
->+#define  PECI_PKG_ID_MAX_THREAD_ID	0x0003  /* Max Thread ID */
->+#define  PECI_PKG_ID_MICROCODE_REV	0x0004  /* CPU Microcode Update Revisi=
-on */
->+#define  PECI_PKG_ID_MCA_ERROR_LOG	0x0005  /* Machine Check Status */
->+#define PECI_PCS_MODULE_TEMP		9  /* Per Core DTS Temperature Read */
->+#define PECI_PCS_THERMAL_MARGIN		10 /* DTS thermal margin */
->+#define PECI_PCS_DDR_DIMM_TEMP		14 /* DDR DIMM Temperature */
->+#define PECI_PCS_TEMP_TARGET		16 /* Temperature Target Read */
->+#define PECI_PCS_TDP_UNITS		30 /* Units for power/energy registers */
->+
->+struct peci_device;
->+
->+int peci_temp_read(struct peci_device *device, s16 *temp_raw);
->+
->+int peci_pcs_read(struct peci_device *device, u8 index,
->+		  u16 param, u32 *data);
->+
->+int peci_pci_local_read(struct peci_device *device, u8 bus, u8 dev,
->+			u8 func, u16 reg, u32 *data);
->+
->+int peci_ep_pci_local_read(struct peci_device *device, u8 seg,
->+			   u8 bus, u8 dev, u8 func, u16 reg, u32 *data);
->+
->+int peci_mmio_read(struct peci_device *device, u8 bar, u8 seg,
->+		   u8 bus, u8 dev, u8 func, u64 address, u32 *data);
->+
->+#endif /* __LINUX_PECI_CPU_H */
->diff --git a/include/linux/peci.h b/include/linux/peci.h
->index f9f37b874011..31f9e628fd11 100644
->--- a/include/linux/peci.h
->+++ b/include/linux/peci.h
->@@ -9,14 +9,6 @@
-> #include <linux/mutex.h>
-> #include <linux/types.h>
->
->-#define PECI_PCS_PKG_ID			0  /* Package Identifier Read */
->-#define  PECI_PKG_ID_CPU_ID		0x0000  /* CPUID Info */
->-#define  PECI_PKG_ID_PLATFORM_ID	0x0001  /* Platform ID */
->-#define  PECI_PKG_ID_DEVICE_ID		0x0002  /* Uncore Device ID */
->-#define  PECI_PKG_ID_MAX_THREAD_ID	0x0003  /* Max Thread ID */
->-#define  PECI_PKG_ID_MICROCODE_REV	0x0004  /* CPU Microcode Update Revisi=
-on */
->-#define  PECI_PKG_ID_MCA_ERROR_LOG	0x0005  /* Machine Check Status */
->-
-> struct peci_request;
->
-> /**
+> PECI SUBSYSTEM
 >--=20
 >2.31.1
 >=
