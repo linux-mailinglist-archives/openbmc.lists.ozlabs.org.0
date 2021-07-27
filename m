@@ -2,69 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B6753D6BEA
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 04:23:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B90F3D6CD6
+	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 05:34:22 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GYgZ36r4vz30DR
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 12:23:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GYj8D0jXJz3bYJ
+	for <lists+openbmc@lfdr.de>; Tue, 27 Jul 2021 13:34:20 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=EO2pEbvA;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=Na/XNAhO;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c32;
- helo=mail-oo1-xc32.google.com; envelope-from=leetroy@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::635;
+ helo=mail-pl1-x635.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=EO2pEbvA; dkim-atps=neutral
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com
- [IPv6:2607:f8b0:4864:20::c32])
+ header.s=20161025 header.b=Na/XNAhO; dkim-atps=neutral
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com
+ [IPv6:2607:f8b0:4864:20::635])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GYgYm4ffXz2ymS
- for <openbmc@lists.ozlabs.org>; Tue, 27 Jul 2021 12:22:51 +1000 (AEST)
-Received: by mail-oo1-xc32.google.com with SMTP id
- h7-20020a4ab4470000b0290263c143bcb2so2742875ooo.7
- for <openbmc@lists.ozlabs.org>; Mon, 26 Jul 2021 19:22:51 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GYj7Q28NTz2xvc;
+ Tue, 27 Jul 2021 13:33:37 +1000 (AEST)
+Received: by mail-pl1-x635.google.com with SMTP id c11so14141267plg.11;
+ Mon, 26 Jul 2021 20:33:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=JxdWaRrIXnMrkVtGFeOTacCATVx/vii++9LdFXeVvKk=;
- b=EO2pEbvALZLfzwEhTaoml6+neI3gximuUQvJ4evdLorQxlv4YJ/YWlTPOWRJP+gq6d
- bi0d2vJuzCTwD6alGxutu5DAKn2eC0hN5Q+3q+F6wrDRhR3ei7l99uGHZ1PxNMcci8CD
- f1lIhnrxvlJnF6vh1weNuKLdHrWbiBJFqWVZvyvh1ENKI3Uvgo27oupzTAXmhevlZUOA
- m7+AAJ5EBrno/EtYIq3+22VRgHWQu0GE+/69wHc8v5mA75qqrU9tBKc06Obojhw6TCG/
- oz+uj7iVrAXqBb8aG2PhMTnn9AbSK3i4MH87ANMgYPky81n39G2/BYlJ11P/H0ovRLbU
- vH6A==
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=zRV39UkS2vNdaNCZM7bm7pzubH4EyQigeZjHSOfFrv0=;
+ b=Na/XNAhOCzW+w2XPuKwo7S99feRZg+tPXcLZ5omcPU8TDn2cEoESYLNk+bo4MYkvkM
+ hFJa4yVqelUjRK00K7iWz0JPUIlvWaWKI2MuqPGnKg7drEEfpCD74dGe/wa/SExUYPgC
+ dEvmnw0s8lrkSHbu7wIxcw7rH1drZ6BcPM8NAzmJhOCJRgrze9dlADd0/uBZOFNt0sl5
+ OQuaR+cFNca8epWtK7HlFZ5jXlXJp5YEHeSLADVCB1eglw451PObaChDhytwfCRRJhX0
+ 8kpUTFMYkfUneD1a1o2148h3hdjUG8K1UnYyguu3PqLQ52gcdTZdQUtIfUEmeMujnM9b
+ oWSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=JxdWaRrIXnMrkVtGFeOTacCATVx/vii++9LdFXeVvKk=;
- b=QKGyhkSXPiv+rp2QEk1/pdiUdMyCjka4kLbWhCd6VvEqaw0WuhztNs1yWuOqdpMATA
- F4xbUYqPnmes1D7VkDM/fryO5tfzjk4nOlJwn6Jkw80YEqeDUuSH3iYGGt0z/GJI+Egw
- fgbDgT6gFh50S529lep9LlifyIIU1p693Vzk6B2EQfjbB3Xb84S27XVfXkLiNEnr3UuC
- uiGpDcCmTE9xqCRc0tOyD5+r04e2lXpebCAV5Mo3qfauDher8GP0QpmSgcmjIvpBsGG4
- miWS1iTRCkDj4UeTO/qrxhi5CVHiL5w1OeYYY07SZqL9j9bWcWqNronxh0YSBVmlMQr+
- hAmw==
-X-Gm-Message-State: AOAM530DKpDHL2AhKYvfY7Z6G3at+LFmFYPRSUprT2SOW3SBapp7crys
- bjEgTDt31Vy6b/Y/PkZ7Y+iHVl2irQs1CuP+Ud0=
-X-Google-Smtp-Source: ABdhPJw6owOwTnKtkAyFVZfgKk+G0oTDRJRbHcZIh9xqEaJATCkRFTn5U+73z1VCdgBG2FTaiqU6TL5B2U4Utqd4m5k=
-X-Received: by 2002:a4a:9783:: with SMTP id w3mr12125412ooi.80.1627352568368; 
- Mon, 26 Jul 2021 19:22:48 -0700 (PDT)
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=zRV39UkS2vNdaNCZM7bm7pzubH4EyQigeZjHSOfFrv0=;
+ b=BARHt+PRi4TRGFmV3uIxcQ28fxA4TeEDuPCp3JlmhZvlP9fGKEgj2z0gJUYYs0EWIt
+ GU/nShpRLW8ERMC7WdZGQsgQ1TIg2u09iHcs55j8mKg2ITPA5QuCJk47bToeC/pzemMI
+ rYxpIav4wtIICOl9P3kB+KGwzlVNp2url0u52DDXpW9RK4n8INxLXwzdHhdoQbo+uCzg
+ F/KY1aGDRmpjC1caC7Q/bzVSRvodaD/f9CAPvgNfj6FltLGRVLnU7Nd0ksUciSJWIO3w
+ RkZOvhVtzFWOqWNU6Px276aWjBZjhdITbC3f2Lg6/4lHPdXEVv7FhE4L6MET75qJBGR7
+ q/FQ==
+X-Gm-Message-State: AOAM530NPeQXZfA0KUQoER/Kx1bL8ZUSTCDR4+SCKsnuZfCKZqVgqNdh
+ qtTk7Wa0hUa+P7FrF4h3ShPYVCekfK8=
+X-Google-Smtp-Source: ABdhPJwgc3J6FfE1EajwCPVtLDVBM0ynFtuxj42KnF4m/YA4Z7ar1vmPTzI/UNuI4D73FDqPaEDP7g==
+X-Received: by 2002:aa7:88d4:0:b029:329:ab58:ffc3 with SMTP id
+ k20-20020aa788d40000b0290329ab58ffc3mr21132491pff.23.1627356811422; 
+ Mon, 26 Jul 2021 20:33:31 -0700 (PDT)
+Received: from localhost.localdomain ([45.124.203.18])
+ by smtp.gmail.com with ESMTPSA id s193sm1528351pfc.183.2021.07.26.20.33.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Jul 2021 20:33:30 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org,
+	andrew@aj.id.au
+Subject: [PATCH 0/2] ARM: dts: aspeed: Add TPM GPIO names
+Date: Tue, 27 Jul 2021 13:03:17 +0930
+Message-Id: <20210727033319.473152-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-References: <20210623060742.22158-1-troy_lee@aspeedtech.com>
- <OF021B0527.BA142969-ON0025871E.005B6D39-0025871E.0062427C@ibm.com>
-In-Reply-To: <OF021B0527.BA142969-ON0025871E.005B6D39-0025871E.0062427C@ibm.com>
-From: Troy Lee <leetroy@gmail.com>
-Date: Tue, 27 Jul 2021 10:22:39 +0800
-Message-ID: <CAN9Jwz3_oPzCsCXRCM+YfrJ_N79dG1UwdEsGac9hAMS53j3-Bg@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v1 1/2] ast2600: spl: Fixes
- boot from RAM device
-To: Sandhya Koteshwara <Sandhya.Koteshwara@ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,68 +79,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Troy Lee <troy_lee@aspeedtech.com>
+Cc: linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Sandhya,
+These patches add GPIO line names for the TPM reset signals in the p10
+bmc designs. The lines are documented in the tacoma, ingram and tola
+schematics.
 
-The AST2600 hardware hash and crypto engine (HACE) can only exame data
-in DRAM, please make sure you copy the kernel fit-image into dram
-first.
+Joel Stanley (2):
+  ARM: dts: rainier, everest: Add TPM reset GPIO
+  ARM: dts: aspeed: tacoma: Add TPM reset GPIO
 
-Thanks,
-Troy Lee
---
-Yu-Ting Lee (Troy Lee) <LeeTroy@gmail.com>
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 2 +-
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 2 +-
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-On Tue, Jul 27, 2021 at 1:53 AM Sandhya Koteshwara
-<Sandhya.Koteshwara@ibm.com> wrote:
->
-> Hi Troy, Joel,
->
-> I am looking to use these patches to secure boot OpenBMC from flash on the AST2600 evaluation board. Is there a relevant UBOOT_MACHINE configuration file I can use?
->
-> I am currently porting configuration for secure boot from the ast2600_openbmc_spl_emmc_defconfig to the ast2600_openbmc_spl_defconfig. I was only able to get the u-boot-spl to verify u-boot but kernel verification fails.
->
-> Thanks,
-> Sandhya
->
-> ----- Original message -----
-> From: Troy Lee <troy_lee@aspeedtech.com>
-> Sent by: "openbmc" <openbmc-bounces+sandhya.koteshwara=ibm.com@lists.ozlabs.org>
-> To: <leetroy@gmail.com>, <openbmc@lists.ozlabs.org>, <joel@jms.id.au>
-> Cc:
-> Subject: [EXTERNAL] [PATCH u-boot v2019.04-aspeed-openbmc v1 1/2] ast2600: spl: Fixes boot from RAM device
-> Date: Wed, Jun 23, 2021 2:08 AM
->
-> Reporting a BOOT_DEVICE_RAM can leverage common/spl/spl_ram.c
-> to bring up u-boot.bin by memory offset 0x00010000.
->
-> Fixes: 13dd0b0f7273 ("ast2600: spl: Support common boot loader features")
-> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-> ---
->  arch/arm/mach-aspeed/ast2600/spl.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm/mach-aspeed/ast2600/spl.c b/arch/arm/mach-aspeed/ast2600/spl.c
-> index 778b326755..c759a7575d 100644
-> --- a/arch/arm/mach-aspeed/ast2600/spl.c
-> +++ b/arch/arm/mach-aspeed/ast2600/spl.c
-> @@ -66,7 +66,7 @@ u32 spl_boot_device(void)
->   case AST_BOOTMODE_EMMC:
->   return BOOT_DEVICE_MMC1;
->   case AST_BOOTMODE_SPI:
-> - return BOOT_DEVICE_SPI;
-> + return BOOT_DEVICE_RAM;
->   case AST_BOOTMODE_UART:
->   return BOOT_DEVICE_UART;
->   }
-> --
-> 2.17.1
->
->
->
->
->
+-- 
+2.32.0
+
