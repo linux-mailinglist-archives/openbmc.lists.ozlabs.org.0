@@ -1,91 +1,107 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10C033D87D8
-	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 08:25:43 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64F383D9733
+	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 23:04:22 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GZNvS6SF0z30GG
-	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 16:25:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GZmPJ2WrNz307m
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 07:04:20 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=i8uKxObj;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=IZ6obNLt;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Oerk9T/g;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=sandhya.koteshwara@ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=i8uKxObj; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=IZ6obNLt; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=Oerk9T/g; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GZNv66zYHz300b
- for <openbmc@lists.ozlabs.org>; Wed, 28 Jul 2021 16:25:22 +1000 (AEST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
- by mailout.nyi.internal (Postfix) with ESMTP id 0BA855C013E;
- Wed, 28 Jul 2021 02:25:20 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute1.internal (MEProxy); Wed, 28 Jul 2021 02:25:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=+01I+XBSZfuwy9ZAGL988jRcxro
- /HLPgmFme4734QqI=; b=i8uKxObjEnj3XXV5q4HPclqmdTjvvILMq812rWV9oqk
- 3h6eDIcLCTxzpcFfhCeugj0gl0ayKYi6xTtMpYLuY5LZXz4sndz4382dmxWqWW+G
- YFCcs6UA35ALIzdFn5gCjsrGwKj1MzDrSP38tM/JupIdy3UJg2syWLgrAQsSxjUs
- sr7d0ECGMc3lcGQwDvVI0w66zMI003kaM1bdutFABUEQWoXBvClIehbqMRDaPLJu
- G8rd5154U7UsyhEA/qnwSXr6yWYrrJ/T5dcvvVZFyR1LZplu5p3eK+g5q813gC6c
- 9K+k5CWTW4Bphwu4aCUxyak6zsfSVf5e4LWuZMtV/eQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=+01I+X
- BSZfuwy9ZAGL988jRcxro/HLPgmFme4734QqI=; b=IZ6obNLtPEQFckWc0v8KlL
- SCq1dQQQ/PehTZ4zZmbNp2TeUa+Y0rKG6MXMlXCq+QBr2Fnw9KoFxAT3waUiz9aZ
- uZnyt3aokhrgcoOsFXzp3G0qAGSbx8ZCAUyrMRFxK073/Eqbw04LJUrwNndKg7v/
- l3QqvPz3v2FYT3d4ykSq4zN/mVsRJcKcNiNqGgZycXxdj/Vqs+ys3e7bPOWwby+i
- JYFKP78+baNyFO6ftNEZwlSAxpdx4hmrnNQ/x8nJuhWgv2z6Rr/4CWFTOSlKXigk
- MQL4IK1sp7PuOmLtH4adJvmbLdpRfT7Lj3QNMzsxvkiV5g26ecFN1MJ3c+4lY3hQ
- ==
-X-ME-Sender: <xms:T_gAYTiJxxciFAbdus6EFN4r9ifNqqP2HVOAoZWXfQQp-BeJOQwLzg>
- <xme:T_gAYQDZ07wS6kvyMh437jinCqyKLtH8_KtWimRgQBmLc5s56wkFQjC_5z9YPV3i4
- ykqQZ71xrK8k0hCdfc>
-X-ME-Received: <xmr:T_gAYTG9ib7kGtH51amBj269xO1XxFsIXkH_CrNRNt5L3JXuXHsXRWzK3i3REYhGMzkLTIIuijMFQqCbclhI7W4ptcZBg0HWeABDu3ZtPL7X2Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrgeekgdelfecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
- fefgtdehhfektdelffevkefgueffhedtieenucevlhhushhtvghrufhiiigvpedtnecurf
- grrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:T_gAYQQArwyjc5Ps1mVKabApG4b2Ii84rFGOp6Z44Z0OuvQEenQ1QA>
- <xmx:T_gAYQxeeljo0qkpeZa9VOG0Px6UDSdnNPmwWYhJMxRx3d9sebhCpA>
- <xmx:T_gAYW5vjzi91V8o08gfoX-M_iScCd87sp8_q0JpuZis_zaBYZLkTw>
- <xmx:UPgAYWbvpAvSy982qcSARjEtsZ-tM41ovwR9tY1OTnUgZsYd9QFZuQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 Jul 2021 02:25:19 -0400 (EDT)
-Date: Wed, 28 Jul 2021 01:25:17 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: `phosphor-logging` APIs (RFC)
-Message-ID: <YQD4TWus75QQjH3U@heinlein>
-References: <YQBrbuQFz4JihBAE@heinlein>
- <41a334dd-56c4-44d0-b8f4-7ecdf5bfa5de@www.fastmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GZmNz3gwTz307m
+ for <openbmc@lists.ozlabs.org>; Thu, 29 Jul 2021 07:04:03 +1000 (AEST)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 16SK3eUr112265; Wed, 28 Jul 2021 17:03:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=in-reply-to : from : to
+ : cc : date : message-id : content-transfer-encoding : content-type :
+ mime-version : references : subject; s=pp1;
+ bh=8E9U812dQzCE+LBo7Vx6Ne26Fa1eMMpf3tghJzkHndE=;
+ b=Oerk9T/g86QR2GU587aLTdlTC5rC60aVN1z+sGkU44WXgj7ODCtBggp0pYx1UeC0iSbS
+ 4UdIZaSKuACAdL1KjmiHYW4I1qVN85tjMnkfCfnb2SM0K3rmAJ8DdrKvhTRHKJfYRWaR
+ MPyUJTXAZtKhTdbbblKhl4zNhWlnk87PF1gICRcZhaSb872dC0F88ORJ4VMMx47NG3us
+ xoRcFof6Kn5V/KTZT6FOaSpH0hb5rYNdupX0wT7WTjt6z2EwRSGKzAflq/Ar5fgA5IqO
+ fuBXfLUSuts47SOETqbXBB0KGXtJb/2o7JgZhkyRgJlAFdkUd+d56WQJM785j/zr2bGN Uw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3a3dnf23sj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 28 Jul 2021 17:03:55 -0400
+Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 16SKr3Xb176827;
+ Wed, 28 Jul 2021 17:03:55 -0400
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3a3dnf23sa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 28 Jul 2021 17:03:55 -0400
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16SKjfnK022477;
+ Wed, 28 Jul 2021 21:03:54 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma05wdc.us.ibm.com with ESMTP id 3a2363u091-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 28 Jul 2021 21:03:54 +0000
+Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
+ [9.57.199.106])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 16SL3siF41550332
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 28 Jul 2021 21:03:54 GMT
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E0B522805E;
+ Wed, 28 Jul 2021 21:03:53 +0000 (GMT)
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C259728067;
+ Wed, 28 Jul 2021 21:03:53 +0000 (GMT)
+Received: from mww0111.wdc07m.mail.ibm.com (unknown [9.208.69.238])
+ by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Wed, 28 Jul 2021 21:03:53 +0000 (GMT)
+In-Reply-To: <CAN9Jwz3_oPzCsCXRCM+YfrJ_N79dG1UwdEsGac9hAMS53j3-Bg@mail.gmail.com>
+From: "Sandhya Koteshwara" <Sandhya.Koteshwara@ibm.com>
+To: leetroy@gmail.com
+Date: Wed, 28 Jul 2021 21:03:51 +0000
+Message-ID: <OFED926017.E719BFC6-ON00258720.0072B671-00258720.0073B5D4@ibm.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+Sensitivity: 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="kTDBvpcOD7qrp4oi"
-Content-Disposition: inline
-In-Reply-To: <41a334dd-56c4-44d0-b8f4-7ecdf5bfa5de@www.fastmail.com>
+References: 
+Importance: Normal
+X-Priority: 3 (Normal)
+X-Mailer: Lotus Domino Web Server Release 11.0.1FP2HF97   July 2, 2021
+X-MIMETrack: Serialize by http on MWW0111/01/M/IBM at 07/28/2021 21:03:51,
+ Serialize complete at 07/28/2021 21:03:51
+X-Disclaimed: 60427
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: hFwTWn-hWEjC0xjjZzy0ulxuPHr-zhzh
+X-Proofpoint-GUID: uubbCkX-FlUDcGIiMHO9bHtXGksl2jX2
+Subject: RE: [PATCH u-boot v2019.04-aspeed-openbmc v1 1/2] ast2600: spl: Fixes
+ boot from RAM device
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-07-28_10:2021-07-27,
+ 2021-07-28 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ malwarescore=0 mlxlogscore=999 spamscore=0 bulkscore=0 suspectscore=0
+ phishscore=0 mlxscore=0 impostorscore=0 adultscore=0 priorityscore=1501
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2107140000 definitions=main-2107280113
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,64 +113,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, troy_lee@aspeedtech.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---kTDBvpcOD7qrp4oi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Jul 28, 2021 at 03:22:43PM +0930, Andrew Jeffery wrote:
-> On Wed, 28 Jul 2021, at 05:54, Patrick Williams wrote:
- >     - Source location data is invalid (issue openbmc/openbmc#2207).
->=20
-> I think you wanted openbmc/openbmc#2297 there, but yes!
-
-Indeed, that's the issue I meant to refer to.  Seems I mentioned it correct=
-ly in
-the commit.
-
-> >     - Useful data is missing from `journalctl` resulting in people work=
-ing
-> >       around it by generating strings with `fmt` et.al.
->=20
-> Sounds promising! Reading the proposal it seems like you're appending=20
-> certain bits of structured data to the message. I think it would be=20
-> nice if the data could be interpolated into arbitrary positions and not=
-=20
-> just appended (note, I'm not asking for interpolation of arbitrary=20
-> variables here unlike what can be achieved with raw use of fmt, only=20
-> those captured via the structured logging).
-
-Can you give me a concrete example of what you mean by this?  I'm not
-understanding.
-
-> Andrew
-
---=20
-Patrick Williams
-
---kTDBvpcOD7qrp4oi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmEA+EsACgkQqwNHzC0A
-wRkeXw/+PGLCPeVhMzp5ZYFEIAxxY/gM50RN575+BtnJsf9i0Uplv0ggwiuJm7Go
-dPAQQltkFvSOsTsYGWcInJHemcn7ILLt+xDsmTOcZajWtkQOUG0FiGCFj4kshkST
-Xlb26RysujZCtGCQ1yhHrsfPul09q1oFLiALhrmZD1nYXhlj5Ve0SfvSRLQuw3mx
-nAl7DEjdbLtjAY/uXQ2QTXunuirNdTZs9MIZYeUH7mANAwiLbB/ZWKz+OF0gLayk
-vrzLvYf+Vzxhq1vhq4x+ESYepWJ+UEdCSVjckt7II2G1SA1pMIhx6zunEXZl9sqP
-AmOeFdHE7i8PFpYNjW6xvmtcaqEcDbDjpc6nvassl/GEuAq7u0Oaw4axgJCnhMes
-KMD62De3U4u+PBTile2xpdXxf90NyR6bK5fcvHBCrH43trvaFSzOt+OxxJ7ybZyH
-MpzdnOH6wZeP5jPrvOVUI1qGxlq3zgoS6sRVHcQxxW2GkU/H0CeAKf+wIDsfQft+
-jIwvU9NETvWTAjBV4oTG47dE0qcf24raoRrUVzD1SDP+H5Q2h4A3sCypSx3CjcmZ
-qI20TNcUnms2sBCoMrlIzU6tRXjT9wwpxRrEp3GFOGpEZdtep9eoJLUGpv90ALGC
-sikiGQfO3bokHgSdkCpt94jLpzPYARtR8td5BxZ/72S9QrsclvQ=
-=awPf
------END PGP SIGNATURE-----
-
---kTDBvpcOD7qrp4oi--
+<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
+elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" style=3D"font-family=
+:Arial, Helvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" >Thanks Tro=
+y. I got secure booting of the complete chain after copying to DRAM.</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >Also for u-boot verification I had to add "u-boot,dm-pre-=
+reloc;" to the ast2600-evb.dts file to enable the hace engine to be availab=
+le before u-boot is relocated.</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >Thanks,<br>Sandhya</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<blockquote data-history-content-modified=3D"1" dir=3D"ltr" style=3D"border=
+-left:solid #aaaaaa 2px; margin-left:5px; padding-left:5px; direction:ltr; =
+margin-right:0px" >----- Original message -----<br>From: "Troy Lee" &lt;lee=
+troy@gmail.com&gt;<br>Sent by: "openbmc" &lt;openbmc-bounces+sandhya.kotesh=
+wara=3Dibm.com@lists.ozlabs.org&gt;<br>To: "Sandhya Koteshwara" &lt;Sandhya=
+.Koteshwara@ibm.com&gt;<br>Cc: "OpenBMC Maillist" &lt;openbmc@lists.ozlabs.=
+org&gt;, "Troy Lee" &lt;troy=5Flee@aspeedtech.com&gt;<br>Subject: [EXTERNAL=
+] Re: [PATCH u-boot v2019.04-aspeed-openbmc v1 1/2] ast2600: spl: Fixes boo=
+t from RAM device<br>Date: Mon, Jul 26, 2021 10:23 PM<br>&nbsp;
+<div><font size=3D"2" face=3D"Default Monospace,Courier New,Courier,monospa=
+ce" >Hi Sandhya,<br><br>The AST2600 hardware hash and crypto engine (HACE) =
+can only exame data<br>in DRAM, please make sure you copy the kernel fit-im=
+age into dram<br>first.<br><br>Thanks,<br>Troy Lee<br>--<br>Yu-Ting Lee (Tr=
+oy Lee) &lt;LeeTroy@gmail.com&gt;<br><br>On Tue, Jul 27, 2021 at 1:53 AM Sa=
+ndhya Koteshwara<br>&lt;Sandhya.Koteshwara@ibm.com&gt; wrote:<br>&gt;<br>&g=
+t; Hi Troy, Joel,<br>&gt;<br>&gt; I am looking to use these patches to secu=
+re boot OpenBMC from flash on the AST2600 evaluation board. Is there a rele=
+vant UBOOT=5FMACHINE configuration file I can use?<br>&gt;<br>&gt; I am cur=
+rently porting configuration for secure boot from the ast2600=5Fopenbmc=5Fs=
+pl=5Femmc=5Fdefconfig to the ast2600=5Fopenbmc=5Fspl=5Fdefconfig. I was onl=
+y able to get the u-boot-spl to verify u-boot but kernel verification fails=
+.<br>&gt;<br>&gt; Thanks,<br>&gt; Sandhya<br>&gt;<br>&gt; ----- Original me=
+ssage -----<br>&gt; From: Troy Lee &lt;troy=5Flee@aspeedtech.com&gt;<br>&gt=
+; Sent by: "openbmc" &lt;openbmc-bounces+sandhya.koteshwara=3Dibm.com@lists=
+.ozlabs.org&gt;<br>&gt; To: &lt;leetroy@gmail.com&gt;, &lt;openbmc@lists.oz=
+labs.org&gt;, &lt;joel@jms.id.au&gt;<br>&gt; Cc:<br>&gt; Subject: [EXTERNAL=
+] [PATCH u-boot v2019.04-aspeed-openbmc v1 1/2] ast2600: spl: Fixes boot fr=
+om RAM device<br>&gt; Date: Wed, Jun 23, 2021 2:08 AM<br>&gt;<br>&gt; Repor=
+ting a BOOT=5FDEVICE=5FRAM can leverage common/spl/spl=5Fram.c<br>&gt; to b=
+ring up u-boot.bin by memory offset 0x00010000.<br>&gt;<br>&gt; Fixes: 13dd=
+0b0f7273 ("ast2600: spl: Support common boot loader features")<br>&gt; Sign=
+ed-off-by: Troy Lee &lt;troy=5Flee@aspeedtech.com&gt;<br>&gt; ---<br>&gt; &=
+nbsp;arch/arm/mach-aspeed/ast2600/spl.c | 2 +-<br>&gt; &nbsp;1 file changed=
+, 1 insertion(+), 1 deletion(-)<br>&gt;<br>&gt; diff --git a/arch/arm/mach-=
+aspeed/ast2600/spl.c b/arch/arm/mach-aspeed/ast2600/spl.c<br>&gt; index 778=
+b326755..c759a7575d 100644<br>&gt; --- a/arch/arm/mach-aspeed/ast2600/spl.c=
+<br>&gt; +++ b/arch/arm/mach-aspeed/ast2600/spl.c<br>&gt; @@ -66,7 +66,7 @@=
+ u32 spl=5Fboot=5Fdevice(void)<br>&gt; &nbsp; case AST=5FBOOTMODE=5FEMMC:<b=
+r>&gt; &nbsp; return BOOT=5FDEVICE=5FMMC1;<br>&gt; &nbsp; case AST=5FBOOTMO=
+DE=5FSPI:<br>&gt; - return BOOT=5FDEVICE=5FSPI;<br>&gt; + return BOOT=5FDEV=
+ICE=5FRAM;<br>&gt; &nbsp; case AST=5FBOOTMODE=5FUART:<br>&gt; &nbsp; return=
+ BOOT=5FDEVICE=5FUART;<br>&gt; &nbsp; }<br>&gt; --<br>&gt; 2.17.1<br>&gt;<b=
+r>&gt;<br>&gt;<br>&gt;<br>&gt;</font></div></blockquote>
+<div dir=3D"ltr" >&nbsp;</div></div></div><BR>
+<BR>
