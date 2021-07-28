@@ -2,106 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64F383D9733
-	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 23:04:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D0BD23D98FD
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 00:42:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GZmPJ2WrNz307m
-	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 07:04:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GZpZR5lNJz30PK
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 08:42:23 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Oerk9T/g;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ijl2ObOh;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=sandhya.koteshwara@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::831;
+ helo=mail-qt1-x831.google.com; envelope-from=bjwyman@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Oerk9T/g; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ijl2ObOh; dkim-atps=neutral
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com
+ [IPv6:2607:f8b0:4864:20::831])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GZmNz3gwTz307m
- for <openbmc@lists.ozlabs.org>; Thu, 29 Jul 2021 07:04:03 +1000 (AEST)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 16SK3eUr112265; Wed, 28 Jul 2021 17:03:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : from : to
- : cc : date : message-id : content-transfer-encoding : content-type :
- mime-version : references : subject; s=pp1;
- bh=8E9U812dQzCE+LBo7Vx6Ne26Fa1eMMpf3tghJzkHndE=;
- b=Oerk9T/g86QR2GU587aLTdlTC5rC60aVN1z+sGkU44WXgj7ODCtBggp0pYx1UeC0iSbS
- 4UdIZaSKuACAdL1KjmiHYW4I1qVN85tjMnkfCfnb2SM0K3rmAJ8DdrKvhTRHKJfYRWaR
- MPyUJTXAZtKhTdbbblKhl4zNhWlnk87PF1gICRcZhaSb872dC0F88ORJ4VMMx47NG3us
- xoRcFof6Kn5V/KTZT6FOaSpH0hb5rYNdupX0wT7WTjt6z2EwRSGKzAflq/Ar5fgA5IqO
- fuBXfLUSuts47SOETqbXBB0KGXtJb/2o7JgZhkyRgJlAFdkUd+d56WQJM785j/zr2bGN Uw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3a3dnf23sj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 Jul 2021 17:03:55 -0400
-Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 16SKr3Xb176827;
- Wed, 28 Jul 2021 17:03:55 -0400
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3a3dnf23sa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 Jul 2021 17:03:55 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 16SKjfnK022477;
- Wed, 28 Jul 2021 21:03:54 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma05wdc.us.ibm.com with ESMTP id 3a2363u091-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 Jul 2021 21:03:54 +0000
-Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
- [9.57.199.106])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 16SL3siF41550332
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 Jul 2021 21:03:54 GMT
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E0B522805E;
- Wed, 28 Jul 2021 21:03:53 +0000 (GMT)
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C259728067;
- Wed, 28 Jul 2021 21:03:53 +0000 (GMT)
-Received: from mww0111.wdc07m.mail.ibm.com (unknown [9.208.69.238])
- by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTPS;
- Wed, 28 Jul 2021 21:03:53 +0000 (GMT)
-In-Reply-To: <CAN9Jwz3_oPzCsCXRCM+YfrJ_N79dG1UwdEsGac9hAMS53j3-Bg@mail.gmail.com>
-From: "Sandhya Koteshwara" <Sandhya.Koteshwara@ibm.com>
-To: leetroy@gmail.com
-Date: Wed, 28 Jul 2021 21:03:51 +0000
-Message-ID: <OFED926017.E719BFC6-ON00258720.0072B671-00258720.0073B5D4@ibm.com>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
-Sensitivity: 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GZpZ60XYsz2yM3
+ for <openbmc@lists.ozlabs.org>; Thu, 29 Jul 2021 08:42:03 +1000 (AEST)
+Received: by mail-qt1-x831.google.com with SMTP id a19so2586827qtx.1
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Jul 2021 15:42:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=Lo6hJcKFoOWYBZDIf76dR7Ki7GsgeuexsbCvJNO4vMw=;
+ b=ijl2ObOh8q3fsDwVG6VXe2+FaZvZ8bSlsu54YntjpMDRxWU3USvH88HwEma8gSvuCL
+ nBECTfLcG2r9bmA9iFOzLRsu6+qocLm5hsVe0YkWrKKfZTkzaYZMCyhPfBYc5MSm/Xbk
+ hd7zX31XSHvcmGD8Ltd+gDjCkVaTvvuAP8QUgDNsHLjdva4rz0wvUp5eLpw8pnooOs3C
+ eHTm5d/SxCJppKzW/4pjOVuucuePEqrZcep637yjbXIIvKVtZtIXlOEDTVuwT6fm5B13
+ kOfX8k2TaZ7hZdRh46J2bdS4BGg+VWEpzpXxxUAHHWkSUsfdDKxxZZFPz159ZmXADKQ6
+ i+3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=Lo6hJcKFoOWYBZDIf76dR7Ki7GsgeuexsbCvJNO4vMw=;
+ b=AnSYTbKy3MtyLVPC6SGqa4V4MKJ6EPTFtv/DxcF/FD3rsMMYzbYvTSiFSfPw5c9jV7
+ RGwbhTDkO25LvYE/jl+vfoKjuQNrUm4EGE2pNmch5wRaXX9cwjc4fww3LJexBwGDh5Pl
+ 5r7mplGdBBjIT3tp17dootbeBlvuiwxxgjFv1y3jPKAdVPEUzLfj5qVMtG1qe4ipdZr/
+ 3k3B5ErMS5a24Nx/9+wmmsWSSh89IPVlbUB+SJqU3xecIVNlW5R4jgjx8f+8cxw6dbxr
+ kQshhvH3jZDV1yNL+dZXfLQx98PDFW5D3FDhBiwQ7fCHPifxoOcmjUMnWG0jGA1btPFU
+ Cd/g==
+X-Gm-Message-State: AOAM532SyC9tZYLilw0Y3A/tbMZ8GAR9MICt52i5T3T1DmBBX6BfGBIC
+ mFvN4GMrP31AEikqveIaQbE=
+X-Google-Smtp-Source: ABdhPJx2vFHhf1ktZr9V68JrQiQ8eh4jMSsWuU7O5laqLi7ZQ9dRsiGF/++ftGz8nbKzPIzXHyUF3g==
+X-Received: by 2002:ac8:7d52:: with SMTP id h18mr1692658qtb.179.1627512120031; 
+ Wed, 28 Jul 2021 15:42:00 -0700 (PDT)
+Received: from fstone04p1.aus.stglabs.ibm.com ([129.41.86.7])
+ by smtp.gmail.com with ESMTPSA id u11sm730297qkk.72.2021.07.28.15.41.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Jul 2021 15:41:59 -0700 (PDT)
+From: Brandon Wyman <bjwyman@gmail.com>
+To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org,
+ Guenter Roeck <linux@roeck-us.net>, Jean Delvare <jdelvare@suse.com>,
+ linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Eddie James <eajames@linux.ibm.com>
+Subject: [PATCH] hwmon: (pmbus/ibm-cffps) Fix write bits for LED control
+Date: Wed, 28 Jul 2021 22:41:40 +0000
+Message-Id: <20210728224140.3672294-1-bjwyman@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: 
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Mailer: Lotus Domino Web Server Release 11.0.1FP2HF97   July 2, 2021
-X-MIMETrack: Serialize by http on MWW0111/01/M/IBM at 07/28/2021 21:03:51,
- Serialize complete at 07/28/2021 21:03:51
-X-Disclaimed: 60427
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: hFwTWn-hWEjC0xjjZzy0ulxuPHr-zhzh
-X-Proofpoint-GUID: uubbCkX-FlUDcGIiMHO9bHtXGksl2jX2
-Subject: RE: [PATCH u-boot v2019.04-aspeed-openbmc v1 1/2] ast2600: spl: Fixes
- boot from RAM device
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-07-28_10:2021-07-27,
- 2021-07-28 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- malwarescore=0 mlxlogscore=999 spamscore=0 bulkscore=0 suspectscore=0
- phishscore=0 mlxscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2107140000 definitions=main-2107280113
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,63 +80,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, troy_lee@aspeedtech.com
+Cc: "B. J. Wyman" <bjwyman@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
-elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" style=3D"font-family=
-:Arial, Helvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" >Thanks Tro=
-y. I got secure booting of the complete chain after copying to DRAM.</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >Also for u-boot verification I had to add "u-boot,dm-pre-=
-reloc;" to the ast2600-evb.dts file to enable the hace engine to be availab=
-le before u-boot is relocated.</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >Thanks,<br>Sandhya</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<blockquote data-history-content-modified=3D"1" dir=3D"ltr" style=3D"border=
--left:solid #aaaaaa 2px; margin-left:5px; padding-left:5px; direction:ltr; =
-margin-right:0px" >----- Original message -----<br>From: "Troy Lee" &lt;lee=
-troy@gmail.com&gt;<br>Sent by: "openbmc" &lt;openbmc-bounces+sandhya.kotesh=
-wara=3Dibm.com@lists.ozlabs.org&gt;<br>To: "Sandhya Koteshwara" &lt;Sandhya=
-.Koteshwara@ibm.com&gt;<br>Cc: "OpenBMC Maillist" &lt;openbmc@lists.ozlabs.=
-org&gt;, "Troy Lee" &lt;troy=5Flee@aspeedtech.com&gt;<br>Subject: [EXTERNAL=
-] Re: [PATCH u-boot v2019.04-aspeed-openbmc v1 1/2] ast2600: spl: Fixes boo=
-t from RAM device<br>Date: Mon, Jul 26, 2021 10:23 PM<br>&nbsp;
-<div><font size=3D"2" face=3D"Default Monospace,Courier New,Courier,monospa=
-ce" >Hi Sandhya,<br><br>The AST2600 hardware hash and crypto engine (HACE) =
-can only exame data<br>in DRAM, please make sure you copy the kernel fit-im=
-age into dram<br>first.<br><br>Thanks,<br>Troy Lee<br>--<br>Yu-Ting Lee (Tr=
-oy Lee) &lt;LeeTroy@gmail.com&gt;<br><br>On Tue, Jul 27, 2021 at 1:53 AM Sa=
-ndhya Koteshwara<br>&lt;Sandhya.Koteshwara@ibm.com&gt; wrote:<br>&gt;<br>&g=
-t; Hi Troy, Joel,<br>&gt;<br>&gt; I am looking to use these patches to secu=
-re boot OpenBMC from flash on the AST2600 evaluation board. Is there a rele=
-vant UBOOT=5FMACHINE configuration file I can use?<br>&gt;<br>&gt; I am cur=
-rently porting configuration for secure boot from the ast2600=5Fopenbmc=5Fs=
-pl=5Femmc=5Fdefconfig to the ast2600=5Fopenbmc=5Fspl=5Fdefconfig. I was onl=
-y able to get the u-boot-spl to verify u-boot but kernel verification fails=
-.<br>&gt;<br>&gt; Thanks,<br>&gt; Sandhya<br>&gt;<br>&gt; ----- Original me=
-ssage -----<br>&gt; From: Troy Lee &lt;troy=5Flee@aspeedtech.com&gt;<br>&gt=
-; Sent by: "openbmc" &lt;openbmc-bounces+sandhya.koteshwara=3Dibm.com@lists=
-.ozlabs.org&gt;<br>&gt; To: &lt;leetroy@gmail.com&gt;, &lt;openbmc@lists.oz=
-labs.org&gt;, &lt;joel@jms.id.au&gt;<br>&gt; Cc:<br>&gt; Subject: [EXTERNAL=
-] [PATCH u-boot v2019.04-aspeed-openbmc v1 1/2] ast2600: spl: Fixes boot fr=
-om RAM device<br>&gt; Date: Wed, Jun 23, 2021 2:08 AM<br>&gt;<br>&gt; Repor=
-ting a BOOT=5FDEVICE=5FRAM can leverage common/spl/spl=5Fram.c<br>&gt; to b=
-ring up u-boot.bin by memory offset 0x00010000.<br>&gt;<br>&gt; Fixes: 13dd=
-0b0f7273 ("ast2600: spl: Support common boot loader features")<br>&gt; Sign=
-ed-off-by: Troy Lee &lt;troy=5Flee@aspeedtech.com&gt;<br>&gt; ---<br>&gt; &=
-nbsp;arch/arm/mach-aspeed/ast2600/spl.c | 2 +-<br>&gt; &nbsp;1 file changed=
-, 1 insertion(+), 1 deletion(-)<br>&gt;<br>&gt; diff --git a/arch/arm/mach-=
-aspeed/ast2600/spl.c b/arch/arm/mach-aspeed/ast2600/spl.c<br>&gt; index 778=
-b326755..c759a7575d 100644<br>&gt; --- a/arch/arm/mach-aspeed/ast2600/spl.c=
-<br>&gt; +++ b/arch/arm/mach-aspeed/ast2600/spl.c<br>&gt; @@ -66,7 +66,7 @@=
- u32 spl=5Fboot=5Fdevice(void)<br>&gt; &nbsp; case AST=5FBOOTMODE=5FEMMC:<b=
-r>&gt; &nbsp; return BOOT=5FDEVICE=5FMMC1;<br>&gt; &nbsp; case AST=5FBOOTMO=
-DE=5FSPI:<br>&gt; - return BOOT=5FDEVICE=5FSPI;<br>&gt; + return BOOT=5FDEV=
-ICE=5FRAM;<br>&gt; &nbsp; case AST=5FBOOTMODE=5FUART:<br>&gt; &nbsp; return=
- BOOT=5FDEVICE=5FUART;<br>&gt; &nbsp; }<br>&gt; --<br>&gt; 2.17.1<br>&gt;<b=
-r>&gt;<br>&gt;<br>&gt;<br>&gt;</font></div></blockquote>
-<div dir=3D"ltr" >&nbsp;</div></div></div><BR>
-<BR>
+From: "B. J. Wyman" <bjwyman@gmail.com>
+
+When doing a PMBus write for the LED control on the IBM Common Form
+Factor Power Supplies (ibm-cffps), the DAh command requires that bit 7
+be low and bit 6 be high in order to indicate that you are truly
+attempting to do a write.
+
+Signed-off-by: B. J. Wyman <bjwyman@gmail.com>
+---
+ drivers/hwmon/pmbus/ibm-cffps.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/hwmon/pmbus/ibm-cffps.c b/drivers/hwmon/pmbus/ibm-cffps.c
+index 5668d8305b78..df712ce4b164 100644
+--- a/drivers/hwmon/pmbus/ibm-cffps.c
++++ b/drivers/hwmon/pmbus/ibm-cffps.c
+@@ -50,9 +50,9 @@
+ #define CFFPS_MFR_VAUX_FAULT			BIT(6)
+ #define CFFPS_MFR_CURRENT_SHARE_WARNING		BIT(7)
+ 
+-#define CFFPS_LED_BLINK				BIT(0)
+-#define CFFPS_LED_ON				BIT(1)
+-#define CFFPS_LED_OFF				BIT(2)
++#define CFFPS_LED_BLINK				(BIT(0) | BIT(6))
++#define CFFPS_LED_ON				(BIT(1) | BIT(6))
++#define CFFPS_LED_OFF				(BIT(2) | BIT(6))
+ #define CFFPS_BLINK_RATE_MS			250
+ 
+ enum {
+-- 
+2.25.1
+
