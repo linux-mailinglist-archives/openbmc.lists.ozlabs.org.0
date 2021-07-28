@@ -2,71 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD8BC3D99A1
-	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 01:40:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DFF73D99A3
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 01:40:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GZqrt49V7z3ckw
-	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 09:39:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GZqsQ6Lvgz2xYv
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 09:40:26 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=IyUhE5fS;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=b/ncV0g/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62d;
- helo=mail-pl1-x62d.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1029;
+ helo=mail-pj1-x1029.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=IyUhE5fS; dkim-atps=neutral
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com
- [IPv6:2607:f8b0:4864:20::62d])
+ header.s=20161025 header.b=b/ncV0g/; dkim-atps=neutral
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com
+ [IPv6:2607:f8b0:4864:20::1029])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GZqps6Ndfz30Lq;
- Thu, 29 Jul 2021 09:38:13 +1000 (AEST)
-Received: by mail-pl1-x62d.google.com with SMTP id e21so4692406pla.5;
- Wed, 28 Jul 2021 16:38:13 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GZqpv1XFgz3bT4;
+ Thu, 29 Jul 2021 09:38:15 +1000 (AEST)
+Received: by mail-pj1-x1029.google.com with SMTP id
+ o44-20020a17090a0a2fb0290176ca3e5a2fso6496600pjo.1; 
+ Wed, 28 Jul 2021 16:38:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=7qZeV1KbPR+zTekJvay/fjDlNWVODTnYpm5ftXBSiX8=;
- b=IyUhE5fSGwRAG9W+5YvkHW3pAmotmuv5i9TjRMHrkNhwFjt4h598ibvpPvAuKF4t+N
- WMSV30dFQsLp6YVJuCqmShLtMPPIY+Xxd4t/15JM35xDda8DwQ8qr6P0dwucUPFlU/Ay
- IlIiw0JhS1vsshJOlUv320e4YNGFSQMDpu9KJzNLFYV0d6HqxsebKZDQG70/gjjSWCyd
- Kii0EdL4wtmz7pHKCEFjBgQsszFIB5NyapZ+NMvrQJvO9Y+1r3Gm6C5VRTm6jaqnSai0
- iXJ7qahUhOyAdLrxnVoxAaqKGgyFmwRE/T13SMsLcl39BxMxlpts7OK3pLqSdafkWBS/
- +VtQ==
+ bh=0ETDYI5aHUgNJ2eLOQXZCBAH75JlK7MVAdtoFHhJjoM=;
+ b=b/ncV0g/VGQkAQblMXRu2wF+lOapWyRaOGZfWesgh5mjUJJ/0W2W5mwo7RtYHMSjmy
+ GYOdL1XDE+ZQCXxYSWlII+soXyH7Ax4RxIemDPQkce3xQVRPYLXH5l/11UgW8usLthk7
+ TnpxMlREH9JcECqREViS0j0E52dQhhAxGmqC3GGDcPfSlAAFwNs8pzS2NXi4iRYER4JT
+ yJ6/QTh09lxzqBiFNGr+jto1DwMYux3/xDvJxP5Zk7Vh6sEpk7isOd3PtUONvWkivkga
+ J+eA94+mhyYN21mYwI0VtuKwOH7dJj9rV68l5wolPBbPO8pQIbftr2QYtURrBWFe2tfC
+ aUEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=7qZeV1KbPR+zTekJvay/fjDlNWVODTnYpm5ftXBSiX8=;
- b=EX+7qnE9g/tnjFcS2je2sGeSQyq+jvl34ZzfKgvOJ+BH9oG0YnvszWS0IcRa74v7Yw
- Oc6fhIf+eULN9nzRrrZDcht/R0LEkKKXNnOaknNfowjEiVuiOMoxLputMpUNAHnfOeDZ
- 1eGb5T7N73x65tVW7pBX+osvP2o2nR0hbQN3oLWNZVmz9Qa6k9tAwAcruIK4vpnqf8EP
- GaaFQPBcY+VbSgmQQzkgcgjLH8p2ad2TeMLAUXjZLm5Nyg/a0EN2szJknIBkqIspX7r/
- ugTV34Eumi9aJCx8aUC2LCp4Ic3UGC7vHj8NKAzFn4aWlhT4fB+Jr81cdSof+8Jj7YTD
- ZE3Q==
-X-Gm-Message-State: AOAM533xc//9GTkOVTUjEzklVul9ZFjxRgxk4mg7k/T0yJsFsqm87mi3
- CZTnKGoNwkxYoYkTNTiZTH0=
-X-Google-Smtp-Source: ABdhPJwcMn/fgxsxjEYYHVzW+ZoMRGDs1Z6xZ6DQxuzs+2MTBgYzXw2OP1qbCtmnqAf62iJ4EQdDLQ==
-X-Received: by 2002:a17:90a:de16:: with SMTP id
- m22mr11968739pjv.38.1627515490942; 
- Wed, 28 Jul 2021 16:38:10 -0700 (PDT)
+ bh=0ETDYI5aHUgNJ2eLOQXZCBAH75JlK7MVAdtoFHhJjoM=;
+ b=qd7K9VoNo9znZRq2bVCvsaTY+EF/Vz5FaMKEGtu5dSIAxg9fLSk8Ad5DuJcNAeH79c
+ 6H1oveUJkbKUesbOrVywBA2cXlGJ7ih02FinVr2AT/flQUdoQk4FSUUicNZ15YIl4lZY
+ 038wlz2M/CRZd0N7xQbejWqIHx9AaDZhWOktfLMhHueZzHnTtq6MhTDlMRNcJNQ2hgl7
+ xzeh3QLrRnkTXtKSwAgIUFXHWU9yvpLMzP2PWB9AgWZ/s7Xt+663NVwEfxB232ksWnPi
+ rb/KlYI4RKKXvwHnHQxh+nzZAqwokUToONJqiGmJXmEwjA4QW6MttRD66CqC87rQ7Y87
+ haGw==
+X-Gm-Message-State: AOAM530YNwSyU01vFrQSi8j3izLmGXifJXRz9bkCMPXhT10iliVHYMAq
+ 2z0W/c8aXH+8DNLBtHsQBhl7aN0NlN+J5MVzSvU=
+X-Google-Smtp-Source: ABdhPJw03dLTz832OaFzA+9LsFftD1vUOzPJmzKQumy4x0kKUdSlQeavafXKqffBR+YNxc2OiZ69Rg==
+X-Received: by 2002:a17:90a:c89:: with SMTP id
+ v9mr2220628pja.175.1627515492388; 
+ Wed, 28 Jul 2021 16:38:12 -0700 (PDT)
 Received: from taoren-ubuntu-R90MNF91.thefacebook.com
  (c-73-252-146-110.hsd1.ca.comcast.net. [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id k37sm1038671pgm.84.2021.07.28.16.38.09
+ by smtp.gmail.com with ESMTPSA id k37sm1038671pgm.84.2021.07.28.16.38.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jul 2021 16:38:10 -0700 (PDT)
+ Wed, 28 Jul 2021 16:38:12 -0700 (PDT)
 From: rentao.bupt@gmail.com
 To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
  Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
  linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: [PATCH 4/6] ARM: dts: aspeed: Add Facebook Cloudripper (AST2600) BMC
-Date: Wed, 28 Jul 2021 16:37:53 -0700
-Message-Id: <20210728233755.17963-5-rentao.bupt@gmail.com>
+Subject: [PATCH 5/6] ARM: dts: aspeed: Add Facebook Elbert (AST2600) BMC
+Date: Wed, 28 Jul 2021 16:37:54 -0700
+Message-Id: <20210728233755.17963-6-rentao.bupt@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210728233755.17963-1-rentao.bupt@gmail.com>
 References: <20210728233755.17963-1-rentao.bupt@gmail.com>
@@ -87,49 +88,52 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tao Ren <rentao.bupt@gmail.com>
 
-Add initial version of device tree for Facebook Cloudripper (AST2600) BMC.
+Add initial version of device tree for Facebook Elbert (AST2600) BMC.
 
 Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
 ---
  arch/arm/boot/dts/Makefile                    |   1 +
- .../dts/aspeed-bmc-facebook-cloudripper.dts   | 564 ++++++++++++++++++
- 2 files changed, 565 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-cloudripper.dts
+ .../boot/dts/aspeed-bmc-facebook-elbert.dts   | 185 ++++++++++++++++++
+ 2 files changed, 186 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-elbert.dts
 
 diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 90aed2c2959a..74c760038f28 100644
+index 74c760038f28..7cbb982a7c8b 100644
 --- a/arch/arm/boot/dts/Makefile
 +++ b/arch/arm/boot/dts/Makefile
-@@ -1409,6 +1409,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-arm-stardragon4800-rep2.dtb \
- 	aspeed-bmc-asrock-e3c246d4i.dtb \
+@@ -1411,6 +1411,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
  	aspeed-bmc-bytedance-g220a.dtb \
-+	aspeed-bmc-facebook-cloudripper.dtb \
+ 	aspeed-bmc-facebook-cloudripper.dtb \
  	aspeed-bmc-facebook-cmm.dtb \
++	aspeed-bmc-facebook-elbert.dtb \
  	aspeed-bmc-facebook-galaxy100.dtb \
  	aspeed-bmc-facebook-minipack.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-cloudripper.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-cloudripper.dts
+ 	aspeed-bmc-facebook-tiogapass.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-elbert.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-elbert.dts
 new file mode 100644
-index 000000000000..1a9808ba8107
+index 000000000000..27b43fe099f1
 --- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-cloudripper.dts
-@@ -0,0 +1,564 @@
++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-elbert.dts
+@@ -0,0 +1,185 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +// Copyright (c) 2020 Facebook Inc.
 +
 +/dts-v1/;
 +
-+#include <dt-bindings/leds/common.h>
 +#include "ast2600-facebook-netbmc-common.dtsi"
 +
 +/ {
-+	model = "Facebook Cloudripper BMC";
-+	compatible = "facebook,cloudripper-bmc", "aspeed,ast2600";
++	model = "Facebook Elbert BMC";
++	compatible = "facebook,elbert-bmc", "aspeed,ast2600";
 +
 +	aliases {
++		serial0 = &uart5;
++		serial1 = &uart1;
++		serial2 = &uart2;
++		serial3 = &uart3;
++
 +		/*
-+		 * PCA9548 (1-0070) provides 8 channels connecting to
-+		 * SMB (Switch Main Board).
++		 * 8 child channels of PCA9548 2-0075.
 +		 */
 +		i2c16 = &imux16;
 +		i2c17 = &imux17;
@@ -141,8 +145,7 @@ index 000000000000..1a9808ba8107
 +		i2c23 = &imux23;
 +
 +		/*
-+		 * PCA9548 (2-0070) provides 8 channels connecting to
-+		 * SCM (System Controller Module).
++		 * 8 child channels of PCA9548 5-0075.
 +		 */
 +		i2c24 = &imux24;
 +		i2c25 = &imux25;
@@ -152,127 +155,38 @@ index 000000000000..1a9808ba8107
 +		i2c29 = &imux29;
 +		i2c30 = &imux30;
 +		i2c31 = &imux31;
++	};
 +
-+		/*
-+		 * PCA9548 (3-0070) provides 8 channels connecting to
-+		 * SMB (Switch Main Board).
-+		 */
-+		i2c32 = &imux32;
-+		i2c33 = &imux33;
-+		i2c34 = &imux34;
-+		i2c35 = &imux35;
-+		i2c36 = &imux36;
-+		i2c37 = &imux37;
-+		i2c38 = &imux38;
-+		i2c39 = &imux39;
-+
-+		/*
-+		 * PCA9548 (8-0070) provides 8 channels connecting to
-+		 * PDB (Power Delivery Board).
-+		 */
-+		i2c40 = &imux40;
-+		i2c41 = &imux41;
-+		i2c42 = &imux42;
-+		i2c43 = &imux43;
-+		i2c44 = &imux44;
-+		i2c45 = &imux45;
-+		i2c46 = &imux46;
-+		i2c47 = &imux47;
-+
-+		/*
-+		 * PCA9548 (15-0076) provides 8 channels connecting to
-+		 * FCM (Fan Controller Module).
-+		 */
-+		i2c48 = &imux48;
-+		i2c49 = &imux49;
-+		i2c50 = &imux50;
-+		i2c51 = &imux51;
-+		i2c52 = &imux52;
-+		i2c53 = &imux53;
-+		i2c54 = &imux54;
-+		i2c55 = &imux55;
++	chosen {
++		stdout-path = &uart5;
 +	};
 +
 +	spi_gpio: spi-gpio {
-+		num-chipselects = <2>;
-+		cs-gpios = <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE_LOW>,
-+			   <&gpio0 ASPEED_GPIO(X, 1) GPIO_ACTIVE_HIGH>;
-+
-+		eeprom@1 {
-+			compatible = "atmel,at93c46d";
-+			spi-max-frequency = <250000>;
-+			data-size = <16>;
-+			spi-cs-high;
-+			reg = <1>;
-+		};
++		num-chipselects = <1>;
++		cs-gpios = <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE_LOW>;
 +	};
 +};
 +
-+&spi1 {
-+	status = "okay";
-+
-+	/*
-+	 * Customize spi1 flash memory size to 16MB (maximum flash size on
-+	 * the bus) to save vmalloc space.
-+	 */
-+	reg = < 0x1e630000 0xc4
-+		0x30000000 0x1000000 >;
-+
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "spi1.0";
-+		spi-max-frequency = <5000000>;
-+
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			flash1@0 {
-+				reg = <0x0 0x1000000>;
-+				label = "system-flash";
-+			};
-+		};
-+	};
-+};
-+
-+&ehci1 {
++&lpc_ctrl {
 +	status = "okay";
 +};
 +
-+&mdio1 {
++&kcs2 {
 +	status = "okay";
++	aspeed,lpc-io-reg = <0xca8>;
 +};
 +
-+&mdio3 {
++&kcs3 {
 +	status = "okay";
-+
-+	ethphy1: ethernet-phy@13 {
-+		compatible = "ethernet-phy-ieee802.3-c22";
-+		reg = <0x0d>;
-+	};
++	aspeed,lpc-io-reg = <0xca2>;
 +};
 +
-+&mac3 {
-+	phy-handle = <&ethphy1>;
-+};
-+
-+&i2c0 {
-+	multi-master;
-+	bus-frequency = <1000000>;
-+};
-+
-+&i2c1 {
-+	/*
-+	 * PCA9548 (1-0070) provides 8 channels connecting to SMB (Switch
-+	 * Main Board).
-+	 */
-+	i2c-switch@70 {
++&i2c2 {
++	i2c-switch@75 {
 +		compatible = "nxp,pca9548";
 +		#address-cells = <1>;
 +		#size-cells = <0>;
-+		reg = <0x70>;
++		reg = <0x75>;
 +		i2c-mux-idle-disconnect;
 +
 +		imux16: i2c@0 {
@@ -325,16 +239,12 @@ index 000000000000..1a9808ba8107
 +	};
 +};
 +
-+&i2c2 {
-+	/*
-+	 * PCA9548 (2-0070) provides 8 channels connecting to SCM (System
-+	 * Controller Module).
-+	 */
-+	i2c-switch@70 {
++&i2c5 {
++	i2c-switch@75 {
 +		compatible = "nxp,pca9548";
 +		#address-cells = <1>;
 +		#size-cells = <0>;
-+		reg = <0x70>;
++		reg = <0x75>;
 +		i2c-mux-idle-disconnect;
 +
 +		imux24: i2c@0 {
@@ -387,296 +297,8 @@ index 000000000000..1a9808ba8107
 +	};
 +};
 +
-+&i2c3 {
-+	/*
-+	 * PCA9548 (3-0070) provides 8 channels connecting to SMB (Switch
-+	 * Main Board).
-+	 */
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+		i2c-mux-idle-disconnect;
-+
-+		imux32: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		imux33: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		imux34: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		imux35: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		imux36: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		imux37: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		imux38: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		imux39: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+	};
-+};
-+
-+&i2c6 {
-+	lp5012@14 {
-+		compatible = "ti,lp5012";
-+		reg = <0x14>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		multi-led@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+			color = <LED_COLOR_ID_MULTI>;
-+			function = LED_FUNCTION_ACTIVITY;
-+			label = "sys";
-+
-+			led@0 {
-+				reg = <0>;
-+				color = <LED_COLOR_ID_RED>;
-+			};
-+
-+			led@1 {
-+				reg = <1>;
-+				color = <LED_COLOR_ID_BLUE>;
-+			};
-+
-+			led@2 {
-+				reg = <2>;
-+				color = <LED_COLOR_ID_GREEN>;
-+			};
-+		};
-+
-+		multi-led@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+			color = <LED_COLOR_ID_MULTI>;
-+			function = LED_FUNCTION_ACTIVITY;
-+			label = "fan";
-+
-+			led@0 {
-+				reg = <0>;
-+				color = <LED_COLOR_ID_RED>;
-+			};
-+
-+			led@1 {
-+				reg = <1>;
-+				color = <LED_COLOR_ID_BLUE>;
-+			};
-+
-+			led@2 {
-+				reg = <2>;
-+				color = <LED_COLOR_ID_GREEN>;
-+			};
-+		};
-+
-+		multi-led@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+			color = <LED_COLOR_ID_MULTI>;
-+			function = LED_FUNCTION_ACTIVITY;
-+			label = "psu";
-+
-+			led@0 {
-+				reg = <0>;
-+				color = <LED_COLOR_ID_RED>;
-+			};
-+
-+			led@1 {
-+				reg = <1>;
-+				color = <LED_COLOR_ID_BLUE>;
-+			};
-+
-+			led@2 {
-+				reg = <2>;
-+				color = <LED_COLOR_ID_GREEN>;
-+			};
-+		};
-+
-+		multi-led@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+			color = <LED_COLOR_ID_MULTI>;
-+			function = LED_FUNCTION_ACTIVITY;
-+			label = "scm";
-+
-+			led@0 {
-+				reg = <0>;
-+				color = <LED_COLOR_ID_RED>;
-+			};
-+
-+			led@1 {
-+				reg = <1>;
-+				color = <LED_COLOR_ID_BLUE>;
-+			};
-+
-+			led@2 {
-+				reg = <2>;
-+				color = <LED_COLOR_ID_GREEN>;
-+			};
-+		};
-+	};
-+};
-+
-+&i2c8 {
-+	/*
-+	 * PCA9548 (8-0070) provides 8 channels connecting to PDB (Power
-+	 * Delivery Board).
-+	 */
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+		i2c-mux-idle-disconnect;
-+
-+		imux40: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		imux41: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		imux42: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		imux43: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		imux44: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		imux45: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		imux46: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		imux47: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+
-+	};
-+};
-+
-+&i2c15 {
-+	/*
-+	 * PCA9548 (15-0076) provides 8 channels connecting to FCM (Fan
-+	 * Controller Module).
-+	 */
-+	i2c-switch@76 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x76>;
-+		i2c-mux-idle-disconnect;
-+
-+		imux48: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		imux49: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		imux50: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		imux51: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		imux52: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		imux53: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		imux54: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		imux55: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+	};
++&i2c11 {
++	status = "okay";
 +};
 -- 
 2.17.1
