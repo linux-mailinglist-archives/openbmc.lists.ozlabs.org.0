@@ -2,81 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FF4E3D9958
-	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 01:15:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C3E713D9986
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 01:35:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GZqJS1gGzz30QN
-	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 09:15:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GZql6534kz3bWt
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 09:34:58 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=XrVW7J1c;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=LvJHs9j3;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZiJrGkGb;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::833;
- helo=mail-qt1-x833.google.com; envelope-from=groeck7@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=XrVW7J1c; dkim-atps=neutral
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com
- [IPv6:2607:f8b0:4864:20::833])
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=LvJHs9j3; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=ZiJrGkGb; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GZqJ46VlWz308Q
- for <openbmc@lists.ozlabs.org>; Thu, 29 Jul 2021 09:14:59 +1000 (AEST)
-Received: by mail-qt1-x833.google.com with SMTP id h27so2611055qtu.9
- for <openbmc@lists.ozlabs.org>; Wed, 28 Jul 2021 16:14:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:subject:to:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=ND6P2qhhxVzhXD27q/VZREJKfmBf1qojaMwKs8f07mY=;
- b=XrVW7J1cTd9w1mlMMY0ZbiDmfgJPrbRoiE5iN0tvZifsBRQoPA9by/jMhpCCik3TYr
- xa3fRxfMPqrcQ3aAepboMRM79Nu64PNMUvxFQICiSsCknyoZwRVdxbT3avV093nctP90
- RhAaT1C09DbBZ65GUtThHuhlwA3lGjMfZeracGWwuqsxx/qCyE58mlDFTQHYGgxQhISH
- KCD3fG/ZwDD5E/HUm1is++QZqhwPKao0+CbZAR1T1ErQ0ngntBoOl9SdCd1EmFWqEcPU
- bEhGWd24erECabie5RS/YrqFLs+38zxQPitLpYibuFCRWqiP9jfp4oRWvMODK1qbTc+X
- 3wfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:subject:to:references:from:message-id
- :date:user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=ND6P2qhhxVzhXD27q/VZREJKfmBf1qojaMwKs8f07mY=;
- b=FZSAG1V63AXzWSuHQx/TjZk8N1tzPqy/gC3dNmEJ+MocwEx8PXGsjp7seC+UN/7lz+
- ZGgvhi/p+rkCw0qBKnux3ZXBci7gPabYBETAbufNJGOZrD9+YbaiLGTIevEn86I+U2Hr
- 2uN7yPi5wsaw5Jt9GWMPXp3SgulXRp4WBPpeg1pzdzuOSM0ykqiAeKyGs3j+C4Z3jNFk
- NCLmgno0l6mAAUUxsKUGir+GUhJzDVVZsta6fRbQx0yiUSmXOwn8bsHy5M2WL8WylwXP
- GOgS51UrIaM27TJEgUrJ8V7mv1EN6jiOWiItsbKolTdugfaeonJC/5Ij9OEnXBdr4YaL
- Zv5g==
-X-Gm-Message-State: AOAM532mfWzhEJirkTTTchw5ZzlEGV9BOmeM7r5VVSM/LyTuShmk/1rb
- 6IKUNEA8LuGTurZDK9ltqlo=
-X-Google-Smtp-Source: ABdhPJyo/28Q4MOpP2UJ3HddkSLkEDjlP/piWCl1SaA7cTIgZlN/rTxKx4Pf/otDtkSxYIZR9xEbIA==
-X-Received: by 2002:a05:622a:283:: with SMTP id
- z3mr1855229qtw.312.1627514094886; 
- Wed, 28 Jul 2021 16:14:54 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- a5sm764298qkf.88.2021.07.28.16.14.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Jul 2021 16:14:54 -0700 (PDT)
-Subject: Re: [PATCH] hwmon: (pmbus/ibm-cffps) Fix write bits for LED control
-To: Brandon Wyman <bjwyman@gmail.com>, Joel Stanley <joel@jms.id.au>,
- openbmc@lists.ozlabs.org, Jean Delvare <jdelvare@suse.com>,
- linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
- Eddie James <eajames@linux.ibm.com>
-References: <20210728224140.3672294-1-bjwyman@gmail.com>
-From: Guenter Roeck <linux@roeck-us.net>
-Message-ID: <2517b3a8-6549-3ee6-76d3-6545a38cf6ea@roeck-us.net>
-Date: Wed, 28 Jul 2021 16:14:52 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <20210728224140.3672294-1-bjwyman@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GZqkm2V1Tz300C
+ for <openbmc@lists.ozlabs.org>; Thu, 29 Jul 2021 09:34:39 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id 194495C00D1;
+ Wed, 28 Jul 2021 19:34:36 -0400 (EDT)
+Received: from imap43 ([10.202.2.93])
+ by compute2.internal (MEProxy); Wed, 28 Jul 2021 19:34:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=iBkK3EV98psI9DcP+ydy/PRXql01JcK
+ FfTJrtYIxJ68=; b=LvJHs9j3exMzAEpT5kAHYqmvPHHRYFm5iHN1FRXfY9Vo+wd
+ bygEnfkJEsI7j5/iH89uboopi7s3NZBnMBF8STPdNjy1e3aJcU576L/hWU+5WFil
+ c2VrUwYHGDrAB9JEJ+d6PR1ob6/P22N9rx5P8o6gr+nfzSdx9cYA2x3KH41FUPpb
+ LsPfmjfGGp5FxxCRwTPZPhDzABldNIH57AQGNu5Fc6aDJqDJqjjEF7jYCh5EEWiQ
+ QS/t+ADLsFw0B5K0Qgy0zNXe4XBKC8c4vsUDBiy/P7MBM2Et/YToP7iwYd/i1P6x
+ nE2T2VONQfj0crX388VNlP00qIX5ijEfKDxqOkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=iBkK3E
+ V98psI9DcP+ydy/PRXql01JcKFfTJrtYIxJ68=; b=ZiJrGkGbYMfXPcK/MP05XQ
+ ud/aiUK/pPz9NDmdypZ2M+R9jBAxyFMiCtIP1Flh2h22ZGtjm62kNyP7NHZ+iOno
+ 6QIPM8pX3n94mfCNS0ScO6XRYCpxTWSK96II3L7GY51jJGtGL44y/hjMvH9ZCx1N
+ END3Alqt5ZCE6p8ZLIRaLCQ2raqTvn86HIYvH+vE+tMrLpj49+YxhN2hnymEOdyO
+ ub1RTwfiA22AAfQW4FLqH50buERSVcwxGzf22UnnfG3waPIgODXhZuI+5OQW1vX5
+ GSlLVP7KuyboqiwXiJfYbCccXPgBqeBmrMfVW2Cm9iQRzqbY1AWmgqnnPobS8+Mg
+ ==
+X-ME-Sender: <xms:i-kBYR5talA0uwlI_Ox37-JorU6Mzy8YLcdElJOMMmjCqEk-qHzY_A>
+ <xme:i-kBYe6F975O-s0ObBGIERJ5DKtRY79J-7Dw0Iz5lu317g3MG_YLgUN_HH7Kce8DQ
+ 38n5ofQwtwFTN674A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrhedtgdduiecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculddvfedmnecujfgurhepofgfggfkjghffffhvffutgesthdtredtreer
+ tdenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjh
+ drihgurdgruheqnecuggftrfgrthhtvghrnhepvdetjeejjeevhffgfedvudejffduteeu
+ gfeigfegkeevheeuffdtveetvdegtddunecuffhomhgrihhnpehophgvnhgsmhgtqdhprh
+ hojhgvtghtrdighiiipdhsthhruhgtthhurhgvugdqlhhoghhgihhnghdrmhgunecuvehl
+ uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
+ grjhdrihgurdgruh
+X-ME-Proxy: <xmx:i-kBYYcygISkzMAwiJzGqEqvMW-AEyq_TBiAKN0nrnTLqJLorGJJpQ>
+ <xmx:i-kBYaI5UoNOAhHSXo8nKH715q4Btu14p46PTrT2CECeOYlb5c2CBA>
+ <xmx:i-kBYVLaZaPhLFFegrJrCeni-8DvsUH3SLu8PEnFda60xMwfdTu03w>
+ <xmx:jOkBYYlIQffhOWdWLyuqSMWtHz6zO2mhGnGsUu4ieIGCHWOARsnusg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 2545FAC0DD0; Wed, 28 Jul 2021 19:34:35 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-545-g7a4eea542e-fm-20210727.001-g7a4eea54
+Mime-Version: 1.0
+Message-Id: <e1b41c2e-bcad-4282-a3b9-8f5344cab056@www.fastmail.com>
+In-Reply-To: <YQD4TWus75QQjH3U@heinlein>
+References: <YQBrbuQFz4JihBAE@heinlein>
+ <41a334dd-56c4-44d0-b8f4-7ecdf5bfa5de@www.fastmail.com>
+ <YQD4TWus75QQjH3U@heinlein>
+Date: Thu, 29 Jul 2021 09:04:14 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Patrick Williams" <patrick@stwcx.xyz>
+Subject: Re: `phosphor-logging` APIs (RFC)
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,43 +99,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 7/28/21 3:41 PM, Brandon Wyman wrote:
-> From: "B. J. Wyman" <bjwyman@gmail.com>
+On Wed, 28 Jul 2021, at 15:55, Patrick Williams wrote:
+> On Wed, Jul 28, 2021 at 03:22:43PM +0930, Andrew Jeffery wrote:
+> > On Wed, 28 Jul 2021, at 05:54, Patrick Williams wrote:
 > 
-> When doing a PMBus write for the LED control on the IBM Common Form
-> Factor Power Supplies (ibm-cffps), the DAh command requires that bit 7
-> be low and bit 6 be high in order to indicate that you are truly
-> attempting to do a write.
+> > >     - Useful data is missing from `journalctl` resulting in people working
+> > >       around it by generating strings with `fmt` et.al.
+> > 
+> > Sounds promising! Reading the proposal it seems like you're appending 
+> > certain bits of structured data to the message. I think it would be 
+> > nice if the data could be interpolated into arbitrary positions and not 
+> > just appended (note, I'm not asking for interpolation of arbitrary 
+> > variables here unlike what can be achieved with raw use of fmt, only 
+> > those captured via the structured logging).
 > 
-> Signed-off-by: B. J. Wyman <bjwyman@gmail.com>
+> Can you give me a concrete example of what you mean by this?  I'm not
+> understanding.
 
-Please be consistent and use "Brandon Wyman".
+I've left a comment on the patch:
 
-Guenter
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-logging/+/45310/1/docs/structured-logging.md#60
 
-> ---
->   drivers/hwmon/pmbus/ibm-cffps.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/hwmon/pmbus/ibm-cffps.c b/drivers/hwmon/pmbus/ibm-cffps.c
-> index 5668d8305b78..df712ce4b164 100644
-> --- a/drivers/hwmon/pmbus/ibm-cffps.c
-> +++ b/drivers/hwmon/pmbus/ibm-cffps.c
-> @@ -50,9 +50,9 @@
->   #define CFFPS_MFR_VAUX_FAULT			BIT(6)
->   #define CFFPS_MFR_CURRENT_SHARE_WARNING		BIT(7)
->   
-> -#define CFFPS_LED_BLINK				BIT(0)
-> -#define CFFPS_LED_ON				BIT(1)
-> -#define CFFPS_LED_OFF				BIT(2)
-> +#define CFFPS_LED_BLINK				(BIT(0) | BIT(6))
-> +#define CFFPS_LED_ON				(BIT(1) | BIT(6))
-> +#define CFFPS_LED_OFF				(BIT(2) | BIT(6))
->   #define CFFPS_BLINK_RATE_MS			250
->   
->   enum {
-> 
+But duplicating that here, how I'd like to use the API and what I'd 
+like to see in the resulting journal message is:
 
+```
+value = "xyz.openbmc_project.EntityManager";
+lg2::error("Error talking to {ENTITY} error code is {ERRNO}", "ENTITY", value, "ERRNO", 2);
+```
+
+The lg2 implementation renders the values into the format string and 
+forwards the result as MESSAGE to the journal, along with the 
+structured values (ENTITY and ERRNO in the example).
+
+```
+$ journalctl -b
+...
+Nov 25 13:13:09 bmc fansensor[3006]: Error talking to xyz.openbmc_project.EntityManager error code is 2
+...
+```
+
+Better yet would be if we could just forward the format string and 
+journalctl renders this at invocation time, but we'd need to work with 
+upstream on that.
+
+Andrew
