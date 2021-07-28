@@ -2,79 +2,133 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8DF93D84DD
-	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 02:49:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DECF53D859A
+	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 03:47:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GZFRZ4Nzqz30Hp
-	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 10:49:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GZGk269qHz3bWh
+	for <lists+openbmc@lfdr.de>; Wed, 28 Jul 2021 11:47:06 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=XxXcSAvH;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=PF/sYk+/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2c;
- helo=mail-qv1-xf2c.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=aspeedtech.com (client-ip=40.107.131.132;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=luke_chen@aspeedtech.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=XxXcSAvH; dkim-atps=neutral
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com
- [IPv6:2607:f8b0:4864:20::f2c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
+ header.a=rsa-sha256 header.s=selector1 header.b=PF/sYk+/; 
+ dkim-atps=neutral
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1310132.outbound.protection.outlook.com [40.107.131.132])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GZFRB1pdyz303F;
- Wed, 28 Jul 2021 10:49:09 +1000 (AEST)
-Received: by mail-qv1-xf2c.google.com with SMTP id d3so702295qvq.6;
- Tue, 27 Jul 2021 17:49:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=ZYSkWz7X4lVExOiPJYIDBIKS/NtBt7O7x8a39WZcw3A=;
- b=XxXcSAvHMJhwvcJMawngDxrodFcL2rVGZxd02Jy4gc0VItkwXCY/5wc4zKof87q1rI
- gC6R9QO9JRWd148OyM03HUlx2p3Arz6gF4XjTLOV9Co3CGT7YwRJ4S0sybasvynrgGMk
- a2UujeghF0Y4ziZ6k1DGo/AM8u5215eD0xqdm5zpEq94N0uZiymbgBWhxxM7CLwnUdWp
- N/EfXnHNN87tcsaJ0T/wyc8cAtalWSB/du8b1rjoiQbvQU4ff2kZRRYWQ0S7ChP6AkmM
- RgkvMwreh14PxMO23goH1W/q+DjP0Ot4yRjO6CuVKDe5YojCjSC0XbAjOYgoERHmbbln
- zsCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
- :date:user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=ZYSkWz7X4lVExOiPJYIDBIKS/NtBt7O7x8a39WZcw3A=;
- b=iP1auB8VpmYUIL4FAQnK3sVwysH957MWpQCnQRfCGwLLY3E1XUfcQeRbg6r2u7+yHm
- pibsDoq/sqNnHQBDzwuO3h31Gcih/Zoj9vYrOX3lccCnuPgkg0F3EjUueoSty6hJ43Mv
- 0+u0OyxOi8+shqmdu46tdeoGfTw+6oGJgVRcoHrsyk4qbOLA9MXz88uwqe1inBeWZcF4
- QEx8ZFxjZi5k6zlxGDw+vZF2HBVkEFwLe+M/eJEM7NRTJ7RdXPV2pQz+p0BkO+3qQXso
- /uf/FY3+1avD7RgSE6yNZkAw0rUm6qmLm7DizXPyhidZ6ztsZM68KJZvl6yd2HoM+EwX
- RdWg==
-X-Gm-Message-State: AOAM5304M0HQ9jAxmANykSyQrk6XtSIKwkrqKSvIjKd3XMKH9TNTrfph
- NYWSUd8BxCJ8OQU3fRLFFQ8=
-X-Google-Smtp-Source: ABdhPJxdzeFGwi00dHcakpdAEHj91b5POB/NtMklO+oyPvYZZZaVzb+xSa7UDkJ1O5U7s1PTVATRaQ==
-X-Received: by 2002:ad4:58cb:: with SMTP id dh11mr8742794qvb.29.1627433345679; 
- Tue, 27 Jul 2021 17:49:05 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- f11sm2191098qtp.85.2021.07.27.17.49.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Jul 2021 17:49:05 -0700 (PDT)
-Subject: Re: [PATCH 13/14] docs: hwmon: Document PECI drivers
-To: Zev Weiss <zweiss@equinix.com>, Iwona Winiarska <iwona.winiarska@intel.com>
-References: <20210712220447.957418-1-iwona.winiarska@intel.com>
- <20210712220447.957418-14-iwona.winiarska@intel.com>
- <20210727225808.GU8018@packtop>
-From: Guenter Roeck <linux@roeck-us.net>
-Message-ID: <0521a076-9772-532f-2eab-8870464ca211@roeck-us.net>
-Date: Tue, 27 Jul 2021 17:49:01 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GZGjd3cyKz2ysv
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Jul 2021 11:46:43 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=oYQ4OG/KN4jJKKmTQE1DHwbPPOap6PJRrvyuJnxjTJlPuPFl8aBUY06WSKGnDMsF8Uk7zvFB36uHb+LNpQSO2BvbELPrRcuQo4s+p3I14OKdZOluKivDzXPd2hSPzniF65YCMuWaT6HVHwtA7QAXJWg3u7srod4tClOqAUKCaks1eySksnCHtmSX6T9CKHFnvo59Q+HCC6cmTXcQQifcdmX+inaTtr3MhrWR+mWIJqIPTEazpCzJfIQ6kF2KE5fmTjayei3HjsymT7/XeYfo5EWy+BCcLqi0cFSlhUYTqlE0g1ER7vnAFOIpzw14MOSEDqpiuknhx0Q125P/VEAQcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=u0thbTaYIPCaMZC4iYC0IhQPL/WDUoM3YPt4xW0GJts=;
+ b=MDKJvg2/shtqGEFm7UF2nTbVtODoN1mVINweGAqrZI1gYjUetUZLlCkwQyGkK9j+QWU9BH5L+91mqqwPULxap6EtR2stKwvrtdcqsgTfYZPvjBXg+zblDF9gmzWDtldDwYQw5KGm1PHnUrUSC4N18JSE7KYuWZBDOtPOh/x6F4R9FFh9DYmcKnN0tZVUYDPoo9CICFa8N47vzW8pXV1SLFOE8Csp3rQP1p+wXKb8wAOkXzoGsVvqTXutAPLWTy3lwH9v72g9jpoOaIchqEI/vHiw481JC2jCuHiJGe6dcv7Mg1UgbWgU0Pzz+JeJ7d2QCGRbCx4Pqn0UAl6Sm2q+VQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=u0thbTaYIPCaMZC4iYC0IhQPL/WDUoM3YPt4xW0GJts=;
+ b=PF/sYk+/d76/96lfKUSEu4+OcEF9+DlEMmUZpmRwkzO95+z0w6+btjghp9azkPUZWZmE7Z4cFc52xfEoqp6hjYOG/RO7xZXRsdnfOpSoV8/HOOC6mHbpXTDYYl3cuQvbnVliJRbz1Tp9Jlqrug8uWKdbrBxwnrKA4fDXrhhSmPbW5tM3ZZ09mvkgjLWlFSVdFF+FdBf8MNRhUIwdtjdbfuDcycZyrxVw2N/dEO6s0/2fvOZQJuiKGdciLfiPOwK6H/aM2nULkanCS8OcaPzxXuije0oYGUsjPMh4SCrejHQ5ToMj4k9z95nGGsmzxz9C01bAMLfvfMe4sfAf2Qe61g==
+Received: from HK0PR06MB2321.apcprd06.prod.outlook.com (2603:1096:203:49::11)
+ by HK2PR0601MB1969.apcprd06.prod.outlook.com (2603:1096:202:6::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4352.29; Wed, 28 Jul
+ 2021 01:46:24 +0000
+Received: from HK0PR06MB2321.apcprd06.prod.outlook.com
+ ([fe80::10d4:b8ce:9878:23bc]) by HK0PR06MB2321.apcprd06.prod.outlook.com
+ ([fe80::10d4:b8ce:9878:23bc%5]) with mapi id 15.20.4373.018; Wed, 28 Jul 2021
+ 01:46:24 +0000
+From: Luke Chen <luke_chen@aspeedtech.com>
+To: krtaylor <kurt.r.taylor@gmail.com>, "bradleyb@fuzziesquirrel.com"
+ <bradleyb@fuzziesquirrel.com>
+Subject: RE: Signed CLA from ASPEED
+Thread-Topic: Signed CLA from ASPEED
+Thread-Index: AdSF/BDVNQADm2VBRuejwbddN04pK6tWXgwg2qORTID//0LOwA==
+Date: Wed, 28 Jul 2021 01:46:24 +0000
+Message-ID: <HK0PR06MB2321A8B7BED54402A7FB7DD7E1EA9@HK0PR06MB2321.apcprd06.prod.outlook.com>
+References: <623110cb8acb4bbc99c43c47b37f5457@TWMBX01.aspeed.com>
+ <9C742B6B-8604-4EC1-9AE8-98844ACB557D@fuzziesquirrel.com>
+ <HK0PR06MB23218108A08BC07208A93909E1FF0@HK0PR06MB2321.apcprd06.prod.outlook.com>
+ <CAN9Jwz375dV0fFbBaE_SK6Cw8t0pyC-j-fPFuK5tm_EATWoFmA@mail.gmail.com>
+ <HK0PR06MB23215E570FE7381C47EEA024E1E99@HK0PR06MB2321.apcprd06.prod.outlook.com>
+ <791d8a3c-3bcc-8310-69ab-6b7917bdf30c@gmail.com>
+In-Reply-To: <791d8a3c-3bcc-8310-69ab-6b7917bdf30c@gmail.com>
+Accept-Language: en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 67ce00cb-a3cc-49a3-a906-08d951698252
+x-ms-traffictypediagnostic: HK2PR0601MB1969:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <HK2PR0601MB19696C98ADD6DC86B800B051E1EA9@HK2PR0601MB1969.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: y8OXttxj/zWoZcRMO1RNelOge/gzXCBz1xJeJRxzlCbu6tMDar+ayTEfkum35O/0tTIbi9pvVXdxg2dFeh9zRXXS3+6R3cC2kp8Eb4rUHdTnryRIqyEXpJBPST5sD4N2KnFWcj/RKsZ6BMoFKFm392l2WdhW5ypkye6JysriU+iM2vvews/zHg33iRXm2zkKuo3Uhfa+sDppshDGku7Nwb2lfMYg7aeQliaQmAoFWDvPRxiXTndl2WY9nGdne1qB/j9RuP0U1mJztt8+gTmdT+8rS11T9SCnnNayrb7Hq8PJK7c2Q1rKrc/nqD+eNEfLuJB9CrbJmEuEvErWC82i1ik0Ey7LeWd1CHHjG17iFZ6nJwgOY4P3g2Vz080NJoz1miPoH4ASiG9vEcDeKPFKy3cOoXDKQ2TUB2CAzuPJoZSAN1Pu8H2tG5y62vfpvUMNmdJSeK6NP1rRHeLdCablyJ+FGVtL1+x+TpD6WkVDsNNrpDj5W6u5yEhSckEqz1Xfiv2dJZjxDsH1pC6hz9ZQ6Uiv505wbd65cRN6qRMdjsJrAMP2DDIwFHGI2rYwvuQnCmeTbb7eTBNo7KwDsPMedWKPf/Ly9whb3JULZsiiiqN/vqg8kRVbrE8P47cQmhXWZjFRE6IyiawCnU1Vq1te3qI2uz25v0E70xERrXttWAY9Wv+U91NcDxbThsAf0R3mueCXmYroi7iNpMymjT/oKg==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR06MB2321.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(39830400003)(366004)(376002)(136003)(396003)(346002)(3480700007)(122000001)(38100700002)(33656002)(316002)(38070700005)(76116006)(26005)(2906002)(52536014)(5660300002)(55016002)(9686003)(8936002)(7696005)(83380400001)(478600001)(66946007)(66556008)(53546011)(6506007)(71200400001)(66446008)(110136005)(66476007)(64756008)(4326008)(54906003)(8676002)(86362001)(107886003)(186003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WUwrVTRwc1lITkkzL3FGOUM2OFN5SndZOVcycm5DaTV4RGh1MlE5eEpTNDJm?=
+ =?utf-8?B?QStTVkxVTUlXRGJBTDJtMEhXTGljRFFtQ2MrMlNiY3NIL0hqZ2xTQXFVQ0hX?=
+ =?utf-8?B?ODdkZVNMN1FuaHVEQnNMUmRYSUJMVVVUc3I4Ri9TajRpcGhSM1c1RVM5WkV5?=
+ =?utf-8?B?dU95aWwzVmRyQ3ZZVllac3RkUUNlcGd1d3A3bFlhK2I1TzN4bkhGZy9CZmQy?=
+ =?utf-8?B?eGxqM0UwRDNzbTJ6K0FicnFtcnR5MUIrVzVnd242dGtPWERHdnVta3RCYnUw?=
+ =?utf-8?B?eEk0RE5nYVZIM2s1aGg1T09BSGxaSDFYd1E3aFdXTS9SN2NkMzJoQ29nUnk4?=
+ =?utf-8?B?SGI3R2NXWis2d2xVeDExalNGdVAvS3FqaEtsZmxXMWhtTjEyNXpBbWdRR3Bk?=
+ =?utf-8?B?ZEdlR3drNS9UN0hnUkRVU2FEMktDaFZKT3RBeUdoMUhlWmM1OVZONXdibm9j?=
+ =?utf-8?B?c0lPTTNZcUhFKzZUQUtEUFN0TTdaMmJkQ1RoQVgxRDg1UVFPaGdRUWd6dmVu?=
+ =?utf-8?B?VG5qcjg3TnJCYmlaa0dyczVpZ1NxN0xvRUN4YVFGYU9JMG1rSFpmaXpORUsw?=
+ =?utf-8?B?WldXZ29MOW9kQnc1cGVSRjJoUnZPc29seW5CbUF0T21veDIyWS9uMk16QzAy?=
+ =?utf-8?B?SUJ0N0ZuSGF5MVlSSU1xR3Z5VTNzYVhwWURmYUlUMTJXOERuc0ZpdGU3ME5C?=
+ =?utf-8?B?SER5OHVrcC9ZYThhRlZId1dYVkpmNDRhMWJSSXpUU1VidE5oNFJGbXpKcFNP?=
+ =?utf-8?B?S3N0MkREd3pRcjJmVVE4ZTJnMmh2NUk0bE14NlNOUkIwc2VNbFBEbUV1UWdx?=
+ =?utf-8?B?ME95bElmTGZuZVdWSnpnK0g3WHluQlc0YTJHWGh6UXB3ZVNSTFYyaFF0aEFW?=
+ =?utf-8?B?Sm4vcTJJUU9JV2JiSFNmbFVhL3BESWMrT1JBS2JGR0N0aHdoSXVVSzBJWnUw?=
+ =?utf-8?B?SEQ1cVQ5SWh0L2VyTnJNbXhydk5ZLy9KV2tCZmMrbVNBQUkxZEMxbWkwSmQz?=
+ =?utf-8?B?TGRqVlIyZ0hUaFN3UjVDWk02dklFYkdoUkpzWHFmL2FqZFZVOVRjNVpWdFlr?=
+ =?utf-8?B?bXh3cUVLR1Q5aktMTTJlK2wxeHZjM211NkJXTjRZWWhTbkhiSGZ3MHBIQjkw?=
+ =?utf-8?B?Y1lkaklUeGduRGRoZWRIdVdrM1BMR0U0NThTY2RSa0Z3dnBUNXJiVWJ1Y2RZ?=
+ =?utf-8?B?V0ZITmRyMC9HSE9xOFlERWk0Nmc4eXd6bG1Wbk1jWUhsWXBxeURwZ3VEeEVR?=
+ =?utf-8?B?WG1IYkxsQ3EyRm9ub09iR3lVa3Z1dXVuM21vTW9YZjVlU2hHMnhuTGFnQ09R?=
+ =?utf-8?B?NzFIeWRmTjBhb2ZtN2RGalZMc1VQbzBSOGxKalo5K0U3MnovTUkrWmVNUzYv?=
+ =?utf-8?B?b3dJMEVVNCtRWGlhTTFZL3N0aEhPNTNzK3VkNnp0WXJaZHVZU21WWlBGalUr?=
+ =?utf-8?B?Mmw3YWErQUcrOTcvS3FkNGY5VW1zdGlqcTg3VHpmT1NyclNUWjVtSDltMTk5?=
+ =?utf-8?B?R2llM3JLemZ0ZWNTYnhUcmhpeW1jRGlDOVlyM1RvdWxqenF0WC85U3BmWGZW?=
+ =?utf-8?B?QU91d2F6MlNNYmUxRFVJSjBjWS9JRk8zV0N0Q2VDSTdseXBiWGRmTEdWMGs2?=
+ =?utf-8?B?SU4rVTlxUG94MnArT0NtTVMxQmNGaE93RDhlVFluN2NJLzQ5ZEtKR2M3cSti?=
+ =?utf-8?B?NzQ5dDY3dGIwc0l1UWZNNFJrNlJJSWg5dU50Q04rYXp5dWhuMEROb0lsaXdn?=
+ =?utf-8?Q?ngMKhyTxrZEeEYAI56/Wtt0ys9CKg8btXrP5kRk?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <20210727225808.GU8018@packtop>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB2321.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 67ce00cb-a3cc-49a3-a906-08d951698252
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Jul 2021 01:46:24.7528 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: nIaEPCMSCwHiWTgZ49KXzJLi7qAL43GWbsa3fmLKeQ75k9DCO6pNvrVmfoU2onn0LYmMc4V65icy2wYm1WDVFvG7KKOztq3bGynEgZ8AU6o=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR0601MB1969
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,264 +140,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+Cc: "manager@lfprojects.org" <manager@lfprojects.org>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "x86@kernel.org" <x86@kernel.org>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
- Ingo Molnar <mingo@redhat.com>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- Jean Delvare <jdelvare@suse.com>, Rob Herring <robh+dt@kernel.org>,
- Borislav Petkov <bp@alien8.de>, Andy Lutomirski <luto@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
- Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Yazen Ghannam <yazen.ghannam@amd.com>
+ Troy Lee <troy_lee@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 7/27/21 3:58 PM, Zev Weiss wrote:
-> On Mon, Jul 12, 2021 at 05:04:46PM CDT, Iwona Winiarska wrote:
->> From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->>
->> Add documentation for peci-cputemp driver that provides DTS thermal
->> readings for CPU packages and CPU cores and peci-dimmtemp driver that
->> provides DTS thermal readings for DIMMs.
->>
->> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->> Co-developed-by: Iwona Winiarska <iwona.winiarska@intel.com>
->> Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
->> Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
->> ---
->> Documentation/hwmon/index.rst         |  2 +
->> Documentation/hwmon/peci-cputemp.rst  | 93 +++++++++++++++++++++++++++
->> Documentation/hwmon/peci-dimmtemp.rst | 58 +++++++++++++++++
->> MAINTAINERS                           |  2 +
->> 4 files changed, 155 insertions(+)
->> create mode 100644 Documentation/hwmon/peci-cputemp.rst
->> create mode 100644 Documentation/hwmon/peci-dimmtemp.rst
->>
->> diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
->> index bc01601ea81a..cc76b5b3f791 100644
->> --- a/Documentation/hwmon/index.rst
->> +++ b/Documentation/hwmon/index.rst
->> @@ -154,6 +154,8 @@ Hardware Monitoring Kernel Drivers
->>     pcf8591
->>     pim4328
->>     pm6764tr
->> +   peci-cputemp
->> +   peci-dimmtemp
->>     pmbus
->>     powr1220
->>     pxe1610
->> diff --git a/Documentation/hwmon/peci-cputemp.rst b/Documentation/hwmon/peci-cputemp.rst
->> new file mode 100644
->> index 000000000000..d3a218ba810a
->> --- /dev/null
->> +++ b/Documentation/hwmon/peci-cputemp.rst
->> @@ -0,0 +1,93 @@
->> +.. SPDX-License-Identifier: GPL-2.0-only
->> +
->> +Kernel driver peci-cputemp
->> +==========================
->> +
->> +Supported chips:
->> +	One of Intel server CPUs listed below which is connected to a PECI bus.
->> +		* Intel Xeon E5/E7 v3 server processors
->> +			Intel Xeon E5-14xx v3 family
->> +			Intel Xeon E5-24xx v3 family
->> +			Intel Xeon E5-16xx v3 family
->> +			Intel Xeon E5-26xx v3 family
->> +			Intel Xeon E5-46xx v3 family
->> +			Intel Xeon E7-48xx v3 family
->> +			Intel Xeon E7-88xx v3 family
->> +		* Intel Xeon E5/E7 v4 server processors
->> +			Intel Xeon E5-16xx v4 family
->> +			Intel Xeon E5-26xx v4 family
->> +			Intel Xeon E5-46xx v4 family
->> +			Intel Xeon E7-48xx v4 family
->> +			Intel Xeon E7-88xx v4 family
->> +		* Intel Xeon Scalable server processors
->> +			Intel Xeon D family
->> +			Intel Xeon Bronze family
->> +			Intel Xeon Silver family
->> +			Intel Xeon Gold family
->> +			Intel Xeon Platinum family
->> +
->> +	Datasheet: Available from http://www.intel.com/design/literature.htm
->> +
->> +Author: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->> +
->> +Description
->> +-----------
->> +
->> +This driver implements a generic PECI hwmon feature which provides Digital
->> +Thermal Sensor (DTS) thermal readings of the CPU package and CPU cores that are
->> +accessible via the processor PECI interface.
->> +
->> +All temperature values are given in millidegree Celsius and will be measurable
->> +only when the target CPU is powered on.
->> +
->> +Sysfs interface
->> +-------------------
->> +
->> +======================= =======================================================
->> +temp1_label		"Die"
->> +temp1_input		Provides current die temperature of the CPU package.
->> +temp1_max		Provides thermal control temperature of the CPU package
->> +			which is also known as Tcontrol.
->> +temp1_crit		Provides shutdown temperature of the CPU package which
->> +			is also known as the maximum processor junction
->> +			temperature, Tjmax or Tprochot.
->> +temp1_crit_hyst		Provides the hysteresis value from Tcontrol to Tjmax of
->> +			the CPU package.
->> +
->> +temp2_label		"DTS"
->> +temp2_input		Provides current DTS temperature of the CPU package.
-> 
-> Would this be a good place to note the slightly counter-intuitive nature
-> of DTS readings?  i.e. add something along the lines of "The DTS sensor
-> produces a delta relative to Tjmax, so negative values are normal and
-> values approaching zero are hot."  (In my experience people who aren't
-> already familiar with it tend to think something's wrong when a CPU
-> temperature reading shows -50C.)
-> 
-
-All attributes shall follow the ABI, and the driver must translate reported
-values to degrees C. If those sensors do not follow the ABI and report something
-else, I won't accept the driver.
-
-Guenter
-
->> +temp2_max		Provides thermal control temperature of the CPU package
->> +			which is also known as Tcontrol.
->> +temp2_crit		Provides shutdown temperature of the CPU package which
->> +			is also known as the maximum processor junction
->> +			temperature, Tjmax or Tprochot.
->> +temp2_crit_hyst		Provides the hysteresis value from Tcontrol to Tjmax of
->> +			the CPU package.
->> +
->> +temp3_label		"Tcontrol"
->> +temp3_input		Provides current Tcontrol temperature of the CPU
->> +			package which is also known as Fan Temperature target.
->> +			Indicates the relative value from thermal monitor trip
->> +			temperature at which fans should be engaged.
->> +temp3_crit		Provides Tcontrol critical value of the CPU package
->> +			which is same to Tjmax.
->> +
->> +temp4_label		"Tthrottle"
->> +temp4_input		Provides current Tthrottle temperature of the CPU
->> +			package. Used for throttling temperature. If this value
->> +			is allowed and lower than Tjmax - the throttle will
->> +			occur and reported at lower than Tjmax.
->> +
->> +temp5_label		"Tjmax"
->> +temp5_input		Provides the maximum junction temperature, Tjmax of the
->> +			CPU package.
->> +
->> +temp[6-N]_label		Provides string "Core X", where X is resolved core
->> +			number.
->> +temp[6-N]_input		Provides current temperature of each core.
->> +temp[6-N]_max		Provides thermal control temperature of the core.
->> +temp[6-N]_crit		Provides shutdown temperature of the core.
->> +temp[6-N]_crit_hyst	Provides the hysteresis value from Tcontrol to Tjmax of
->> +			the core.
-> 
-> I only see *_label and *_input for the per-core temperature sensors, no
-> *_max, *_crit, or *_crit_hyst.
-> 
->> +
->> +======================= =======================================================
->> diff --git a/Documentation/hwmon/peci-dimmtemp.rst b/Documentation/hwmon/peci-dimmtemp.rst
->> new file mode 100644
->> index 000000000000..1778d9317e43
->> --- /dev/null
->> +++ b/Documentation/hwmon/peci-dimmtemp.rst
->> @@ -0,0 +1,58 @@
->> +.. SPDX-License-Identifier: GPL-2.0
->> +
->> +Kernel driver peci-dimmtemp
->> +===========================
->> +
->> +Supported chips:
->> +	One of Intel server CPUs listed below which is connected to a PECI bus.
->> +		* Intel Xeon E5/E7 v3 server processors
->> +			Intel Xeon E5-14xx v3 family
->> +			Intel Xeon E5-24xx v3 family
->> +			Intel Xeon E5-16xx v3 family
->> +			Intel Xeon E5-26xx v3 family
->> +			Intel Xeon E5-46xx v3 family
->> +			Intel Xeon E7-48xx v3 family
->> +			Intel Xeon E7-88xx v3 family
->> +		* Intel Xeon E5/E7 v4 server processors
->> +			Intel Xeon E5-16xx v4 family
->> +			Intel Xeon E5-26xx v4 family
->> +			Intel Xeon E5-46xx v4 family
->> +			Intel Xeon E7-48xx v4 family
->> +			Intel Xeon E7-88xx v4 family
->> +		* Intel Xeon Scalable server processors
->> +			Intel Xeon D family
->> +			Intel Xeon Bronze family
->> +			Intel Xeon Silver family
->> +			Intel Xeon Gold family
->> +			Intel Xeon Platinum family
->> +
->> +	Datasheet: Available from http://www.intel.com/design/literature.htm
->> +
->> +Author: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->> +
->> +Description
->> +-----------
->> +
->> +This driver implements a generic PECI hwmon feature which provides Digital
->> +Thermal Sensor (DTS) thermal readings of DIMM components that are accessible
->> +via the processor PECI interface.
-> 
-> I had thought "DTS" referred to a fairly specific sensor in the CPU; is
-> the same term also used for DIMM temp sensors or is the mention of it
-> here a copy/paste error?
-> 
->> +
->> +All temperature values are given in millidegree Celsius and will be measurable
->> +only when the target CPU is powered on.
->> +
->> +Sysfs interface
->> +-------------------
->> +
->> +======================= =======================================================
->> +
->> +temp[N]_label		Provides string "DIMM CI", where C is DIMM channel and
->> +			I is DIMM index of the populated DIMM.
->> +temp[N]_input		Provides current temperature of the populated DIMM.
->> +temp[N]_max		Provides thermal control temperature of the DIMM.
->> +temp[N]_crit		Provides shutdown temperature of the DIMM.
->> +
->> +======================= =======================================================
->> +
->> +Note:
->> +	DIMM temperature attributes will appear when the client CPU's BIOS
->> +	completes memory training and testing.
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 35ba9e3646bd..d16da127bbdc 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -14509,6 +14509,8 @@ M:	Iwona Winiarska <iwona.winiarska@intel.com>
->> R:	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->> L:	linux-hwmon@vger.kernel.org
->> S:	Supported
->> +F:	Documentation/hwmon/peci-cputemp.rst
->> +F:	Documentation/hwmon/peci-dimmtemp.rst
->> F:	drivers/hwmon/peci/
->>
->> PECI SUBSYSTEM
->> -- 
->> 2.31.1
->>
-> 
-
+SGkgS3VydA0KDQpUaGFuayB5b3UgdmVyeSBtdWNoIQ0KDQoNCkJlc3Qgd2lzaGVzDQoNCkx1a2Ug
+Q2hlbg0KKE8pIDogKzg4Ni0zLTU3NTExODUNCihNKSA6ICs4ODYtOTM1LTU5Mi04OTINCjRGLCBO
+by4xLFNlYy4gMyxHb25nZGFvIDV0aCBSb2FkLCBFYXN0IERpc3QuLA0KSHNpbmNodSBDaXR5LCAz
+MDA2OSxUYWl3YW4sUi5PLkMuDQoNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206
+IGtydGF5bG9yIDxrdXJ0LnIudGF5bG9yQGdtYWlsLmNvbT4gDQpTZW50OiBUdWVzZGF5LCBKdWx5
+IDI3LCAyMDIxIDEwOjI5IFBNDQpUbzogTHVrZSBDaGVuIDxsdWtlX2NoZW5AYXNwZWVkdGVjaC5j
+b20+OyBicmFkbGV5YkBmdXp6aWVzcXVpcnJlbC5jb20NCkNjOiBtYW5hZ2VyQGxmcHJvamVjdHMu
+b3JnOyBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc7IFRyb3kgTGVlIDx0cm95X2xlZUBhc3BlZWR0
+ZWNoLmNvbT4NClN1YmplY3Q6IFJlOiBTaWduZWQgQ0xBIGZyb20gQVNQRUVEDQoNCk9uIDcvMjcv
+MjEgMTo0MyBBTSwgTHVrZSBDaGVuIHdyb3RlOg0KPiBIaSBNYW5hZ2VyLCBCcmFkDQo+IA0KPiBJ
+IHdvdWxkIGxpa2UgdG8gdXBkYXRlIENDTEEsIEkgYWRkZWQgMiBtb3JlIHRlYW0gbWVtYmVycyBp
+bnRvIHRoZSBDQ0xBLg0KPiBTdGV2ZW4gTGVlLCBzdGV2ZW5fbGVlQGFzcGVlZHRlY2guY29tDQo+
+IEphbWluIExpbiwgamFtaW5fbGluQGFzcGVlZHRlY2guY29tDQo+IA0KPiBQbGVhc2UgcmVmZXIg
+dG8gdGhlIGF0dGFjaGVkIHNpZ25lZCBDQ0xBLg0KPiBBbmQgcGxlYXNlIGhlbHAgdG8gYXBwcm92
+ZSBpdCwgdGhhbmtzLg0KDQpIaSBMdWtlLCB5b3VyIENDTEEgaGFzIGJlZW4gYWNjZXB0ZWQuIFRo
+YW5rcyBmb3Iga2VlcGluZyBpdCB1cGRhdGVkIQ0KDQpLdXJ0IFRheWxvciAoa3J0YXlsb3IpDQoN
+Cj4gDQo+IA0KPiBCZXN0IHdpc2hlcw0KPiANCj4gTHVrZSBDaGVuDQo+IChPKSA6ICs4ODYtMy01
+NzUxMTg1DQo+IChNKSA6ICs4ODYtOTM1LTU5Mi04OTINCj4gNEYsIE5vLjEsU2VjLiAzLEdvbmdk
+YW8gNXRoIFJvYWQsIEVhc3QgRGlzdC4sIEhzaW5jaHUgQ2l0eSwgDQo+IDMwMDY5LFRhaXdhbixS
+Lk8uQy4NCj4gDQo+IA0KPiANCj4gLS0tLS0tLS0tLSBGb3J3YXJkZWQgbWVzc2FnZSAtLS0tLS0t
+LS0NCj4gRnJvbTogTHVrZSBDaGVuIDxsdWtlX2NoZW5AYXNwZWVkdGVjaC5jb20+DQo+IERhdGU6
+IE1vbiwgTm92IDIzLCAyMDIwIGF0IDEwOjE2IEFNDQo+IFN1YmplY3Q6IFJFOiBTaWduZWQgQ0xB
+IGZyb20gQVNQRUVEDQo+IFRvOiBCcmFkIEJpc2hvcCA8YnJhZGxleWJAZnV6emllc3F1aXJyZWwu
+Y29tPg0KPiBDYzogbWFuYWdlckBsZnByb2plY3RzLm9yZyA8bWFuYWdlckBsZnByb2plY3RzLm9y
+Zz4sIA0KPiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9y
+Zz4NCj4gDQo+IA0KPiBIaSBCcmFkDQo+IEkgd291bGQgbGlrZSB0byB1cGRhdGUgQ0NMQS4NCj4g
+DQo+IEFTUEVFRCBtb3ZlZCB0byBuZXcgb2ZmaWNlLCBzbyBJIGNoYW5nZWQgdGhlIG9mZmljZSBh
+ZGRyZXNzIGluIHRoaXMgQ0NMQS4NCj4gQW5kIEkgYWxzbyBhZGRlZCBhIGZldyBBU1BFRUQgdGVh
+bSBtZW1iZXJzIGluIHRoZSBsaXN0Lg0KPiBJIGFtIGFsc28gYXR0YWNoaW5nIHRoZSBkb2MgZmls
+ZSwgc28gaXQgaXMgZWFzeSBmb3IgeW91IHRvIGNvcHktcGFzdGUgdGhlIGVtYWlsIGFkZHJlc3Nl
+cyBvZiBteSB0ZWFtIG1lbWJlcnMuDQo+IA0KPiBQbGVhc2UgaGVscCB0byBhcHByb3ZlIGl0LCB0
+aGFua3MuDQo+IA0KPiANCj4gQmVzdCB3aXNoZXMNCj4gDQo+IEx1a2UgQ2hlbg0KPiAoTykgOiAr
+ODg2LTMtNTc1MTE4NQ0KPiAoTSkgOiArODg2LTkzNS01OTItODkyDQo+IDRGLCBOby4xLFNlYy4g
+MyxHb25nZGFvIDV0aCBSb2FkLCBFYXN0IERpc3QuLCBIc2luY2h1IENpdHksIDMwMDY5LFRhaXdh
+bixSLk8uQy4NCj4gDQo+IA0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBv
+cGVuYm1jIA0KPiA8b3BlbmJtYy1ib3VuY2VzK2x1a2VfY2hlbj1hc3BlZWR0ZWNoLmNvbUBsaXN0
+cy5vemxhYnMub3JnPg0KPiBPbiBCZWhhbGYgT2YgQnJhZCBCaXNob3ANCj4gU2VudDogV2VkbmVz
+ZGF5LCBOb3ZlbWJlciAyOCwgMjAxOCA5OjMyIFBNDQo+IFRvOiBMdWtlIENoZW4gPGx1a2VfY2hl
+bkBhc3BlZWR0ZWNoLmNvbT4NCj4gQ2M6IG1hbmFnZXJAbGZwcm9qZWN0cy5vcmc7IG9wZW5ibWNA
+bGlzdHMub3psYWJzLm9yZw0KPiBTdWJqZWN0OiBSZTogU2lnbmVkIENMQSBmcm9tIEFTUEVFRA0K
+PiANCj4gDQo+IA0KPj4gT24gTm92IDI2LCAyMDE4LCBhdCA5OjU0IFBNLCBMdWtlIENoZW4gPGx1
+a2VfY2hlbkBhc3BlZWR0ZWNoLmNvbT4gd3JvdGU6DQo+Pg0KPj4gSGkgU2lyDQo+PiBIZXJlIGlz
+IHRoZSBzaWduZWQgQ0xBIGZyb20gQVNQRUVELg0KPj4gUGxlYXNlIGhlbHAgdG8gYXBwcm92ZSBp
+dCwgdGhhbmtzLg0KPiANCj4gVGhhbmtzIEx1a2UhICBDQ0xBIGFjY2VwdGVkLg0KPiANCj4gLWJy
+YWQNCj4gDQoNCg==
