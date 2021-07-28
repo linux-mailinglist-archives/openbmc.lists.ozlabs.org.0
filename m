@@ -2,92 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3E713D9986
-	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 01:35:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7816E3D999C
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 01:38:50 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GZql6534kz3bWt
-	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 09:34:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GZqqX2pFSz3bdj
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 09:38:48 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=LvJHs9j3;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZiJrGkGb;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=DHHzoOVX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62e;
+ helo=mail-pl1-x62e.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=LvJHs9j3; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=ZiJrGkGb; 
- dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=DHHzoOVX; dkim-atps=neutral
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com
+ [IPv6:2607:f8b0:4864:20::62e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GZqkm2V1Tz300C
- for <openbmc@lists.ozlabs.org>; Thu, 29 Jul 2021 09:34:39 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailout.nyi.internal (Postfix) with ESMTP id 194495C00D1;
- Wed, 28 Jul 2021 19:34:36 -0400 (EDT)
-Received: from imap43 ([10.202.2.93])
- by compute2.internal (MEProxy); Wed, 28 Jul 2021 19:34:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=iBkK3EV98psI9DcP+ydy/PRXql01JcK
- FfTJrtYIxJ68=; b=LvJHs9j3exMzAEpT5kAHYqmvPHHRYFm5iHN1FRXfY9Vo+wd
- bygEnfkJEsI7j5/iH89uboopi7s3NZBnMBF8STPdNjy1e3aJcU576L/hWU+5WFil
- c2VrUwYHGDrAB9JEJ+d6PR1ob6/P22N9rx5P8o6gr+nfzSdx9cYA2x3KH41FUPpb
- LsPfmjfGGp5FxxCRwTPZPhDzABldNIH57AQGNu5Fc6aDJqDJqjjEF7jYCh5EEWiQ
- QS/t+ADLsFw0B5K0Qgy0zNXe4XBKC8c4vsUDBiy/P7MBM2Et/YToP7iwYd/i1P6x
- nE2T2VONQfj0crX388VNlP00qIX5ijEfKDxqOkw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=iBkK3E
- V98psI9DcP+ydy/PRXql01JcKFfTJrtYIxJ68=; b=ZiJrGkGbYMfXPcK/MP05XQ
- ud/aiUK/pPz9NDmdypZ2M+R9jBAxyFMiCtIP1Flh2h22ZGtjm62kNyP7NHZ+iOno
- 6QIPM8pX3n94mfCNS0ScO6XRYCpxTWSK96II3L7GY51jJGtGL44y/hjMvH9ZCx1N
- END3Alqt5ZCE6p8ZLIRaLCQ2raqTvn86HIYvH+vE+tMrLpj49+YxhN2hnymEOdyO
- ub1RTwfiA22AAfQW4FLqH50buERSVcwxGzf22UnnfG3waPIgODXhZuI+5OQW1vX5
- GSlLVP7KuyboqiwXiJfYbCccXPgBqeBmrMfVW2Cm9iQRzqbY1AWmgqnnPobS8+Mg
- ==
-X-ME-Sender: <xms:i-kBYR5talA0uwlI_Ox37-JorU6Mzy8YLcdElJOMMmjCqEk-qHzY_A>
- <xme:i-kBYe6F975O-s0ObBGIERJ5DKtRY79J-7Dw0Iz5lu317g3MG_YLgUN_HH7Kce8DQ
- 38n5ofQwtwFTN674A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrhedtgdduiecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculddvfedmnecujfgurhepofgfggfkjghffffhvffutgesthdtredtreer
- tdenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjh
- drihgurdgruheqnecuggftrfgrthhtvghrnhepvdetjeejjeevhffgfedvudejffduteeu
- gfeigfegkeevheeuffdtveetvdegtddunecuffhomhgrihhnpehophgvnhgsmhgtqdhprh
- hojhgvtghtrdighiiipdhsthhruhgtthhurhgvugdqlhhoghhgihhnghdrmhgunecuvehl
- uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
- grjhdrihgurdgruh
-X-ME-Proxy: <xmx:i-kBYYcygISkzMAwiJzGqEqvMW-AEyq_TBiAKN0nrnTLqJLorGJJpQ>
- <xmx:i-kBYaI5UoNOAhHSXo8nKH715q4Btu14p46PTrT2CECeOYlb5c2CBA>
- <xmx:i-kBYVLaZaPhLFFegrJrCeni-8DvsUH3SLu8PEnFda60xMwfdTu03w>
- <xmx:jOkBYYlIQffhOWdWLyuqSMWtHz6zO2mhGnGsUu4ieIGCHWOARsnusg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 2545FAC0DD0; Wed, 28 Jul 2021 19:34:35 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-545-g7a4eea542e-fm-20210727.001-g7a4eea54
-Mime-Version: 1.0
-Message-Id: <e1b41c2e-bcad-4282-a3b9-8f5344cab056@www.fastmail.com>
-In-Reply-To: <YQD4TWus75QQjH3U@heinlein>
-References: <YQBrbuQFz4JihBAE@heinlein>
- <41a334dd-56c4-44d0-b8f4-7ecdf5bfa5de@www.fastmail.com>
- <YQD4TWus75QQjH3U@heinlein>
-Date: Thu, 29 Jul 2021 09:04:14 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Patrick Williams" <patrick@stwcx.xyz>
-Subject: Re: `phosphor-logging` APIs (RFC)
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GZqpn456Qz3068;
+ Thu, 29 Jul 2021 09:38:08 +1000 (AEST)
+Received: by mail-pl1-x62e.google.com with SMTP id c16so4679701plh.7;
+ Wed, 28 Jul 2021 16:38:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id;
+ bh=SfhM5hIjH4I2dOHB9xgS2+AKrC0SvF1WxH5UJ+fSmRk=;
+ b=DHHzoOVXCFpB2m+umRRgHMk+kFAqECOeEl5r1oi4ckNWeivoGTI7aAz4oGGAr7LbAT
+ E7qu8ZeZbpQrwKhiWLnhQ1L1yuaQIOi8WRfuTLsaIy6fB9UIvwKSwt23RSmGoTV6Pgx2
+ s/RSqrrUd52uFOZqAd6r9JzRVBiZN56m+Rfnu9DeysgNaBeGA/2A1fEFymHivV3rXEY5
+ JVRLMeGgcP5ZS/orWw5L5LIJuVshEUGfmJdntab/jA/1lP1hYGdt2cWyjahQ3df0O5OA
+ ZcYaWK9r5Y5oozvErh9m0J8eHzKdduGjWSanUXVITeN031HEknOZGVUasXewZ8DwS7dm
+ YAEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=SfhM5hIjH4I2dOHB9xgS2+AKrC0SvF1WxH5UJ+fSmRk=;
+ b=tBSmpfVzwqJ6FoTmvhgAYIgEFZ2c0OtNymr6EFcnA217DjtDpBU/VtJZ8BH4qORR9c
+ i1+V2ehmkaIOxyXvuIXI4WUaitF019Eqhg6B4Na9B6Rfbi5eI6SCM15PE60nzqdL8h+b
+ Y3ua/xbg59QR0/Ci+BXlJvC/7p+m2hk0fs9hhfKTMmBmvgCdzj77AOV7K7BJb7y0KBZJ
+ lqON49XijpuzejZFfi+KvqY8SOyJZammOLAMj6l7Dq1wl6HPu/wpH/J0z/Gm3qAzozXE
+ P8VG4zuv9P+CoAumOlXL+T4FbCN9IURQehx74Ib0dQHuZTXBMZDrifSQFG2JvqBO+Mvi
+ 8ceg==
+X-Gm-Message-State: AOAM531nli9PXzCq7KggpL5rf0zr/S+y/RWKGhXYTVf93fBI69FtbQfl
+ Wj1/KObDAalgmuTIxlJCmTY=
+X-Google-Smtp-Source: ABdhPJw9M4Lxsn7ys7mPlyLWaO6vlx6TfaLR1km4tFwmfpcL1zh55ty79nFEMvIxyek5uv8z6iI/9A==
+X-Received: by 2002:a17:902:8bc4:b029:12b:8470:e29e with SMTP id
+ r4-20020a1709028bc4b029012b8470e29emr2080316plo.2.1627515485326; 
+ Wed, 28 Jul 2021 16:38:05 -0700 (PDT)
+Received: from taoren-ubuntu-R90MNF91.thefacebook.com
+ (c-73-252-146-110.hsd1.ca.comcast.net. [73.252.146.110])
+ by smtp.gmail.com with ESMTPSA id k37sm1038671pgm.84.2021.07.28.16.38.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Jul 2021 16:38:04 -0700 (PDT)
+From: rentao.bupt@gmail.com
+To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
+Subject: [PATCH 0/6] ARM: dts: Add Facebook AST2600 BMCs
+Date: Wed, 28 Jul 2021 16:37:49 -0700
+Message-Id: <20210728233755.17963-1-rentao.bupt@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,52 +78,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
+Cc: Tao Ren <rentao.bupt@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 28 Jul 2021, at 15:55, Patrick Williams wrote:
-> On Wed, Jul 28, 2021 at 03:22:43PM +0930, Andrew Jeffery wrote:
-> > On Wed, 28 Jul 2021, at 05:54, Patrick Williams wrote:
-> 
-> > >     - Useful data is missing from `journalctl` resulting in people working
-> > >       around it by generating strings with `fmt` et.al.
-> > 
-> > Sounds promising! Reading the proposal it seems like you're appending 
-> > certain bits of structured data to the message. I think it would be 
-> > nice if the data could be interpolated into arbitrary positions and not 
-> > just appended (note, I'm not asking for interpolation of arbitrary 
-> > variables here unlike what can be achieved with raw use of fmt, only 
-> > those captured via the structured logging).
-> 
-> Can you give me a concrete example of what you mean by this?  I'm not
-> understanding.
+From: Tao Ren <rentao.bupt@gmail.com>
 
-I've left a comment on the patch:
+The patch series introuces 3 new Facebook AST2600 Network BMC platforms.
 
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-logging/+/45310/1/docs/structured-logging.md#60
+Patch #1 adds dtsi file to describe the fixed flash layout of 128MB mtd
+device. The flash layout is used by all the 3 AST2600 BMC as well as
+Wedge400 (AST2500).
 
-But duplicating that here, how I'd like to use the API and what I'd 
-like to see in the resulting journal message is:
+Patch #2 simplies Wedge400 dts by including the flash layout dtsi.
 
-```
-value = "xyz.openbmc_project.EntityManager";
-lg2::error("Error talking to {ENTITY} error code is {ERRNO}", "ENTITY", value, "ERRNO", 2);
-```
+Patch #3 adds common dtsi which is included by all the new Facebook
+AST2600 Network BMC platforms.
 
-The lg2 implementation renders the values into the format string and 
-forwards the result as MESSAGE to the journal, along with the 
-structured values (ENTITY and ERRNO in the example).
+Patch #4 adds the device tree for Facebook Cloudripper (AST2600) BMC.
 
-```
-$ journalctl -b
-...
-Nov 25 13:13:09 bmc fansensor[3006]: Error talking to xyz.openbmc_project.EntityManager error code is 2
-...
-```
+Patch #5 adds the device tree for Facebook Elbert (AST2600) BMC.
 
-Better yet would be if we could just forward the format string and 
-journalctl renders this at invocation time, but we'd need to work with 
-upstream on that.
+Patch #6 adds the device tree for Facebook Fuji (AST2600) BMC.
 
-Andrew
+Tao Ren (6):
+  ARM: dts: Add Facebook BMC 128MB flash layout
+  ARM: dts: aspeed: wedge400: Use common flash layout
+  ARM: dts: aspeed: Common dtsi for Facebook AST2600 Network BMCs
+  ARM: dts: aspeed: Add Facebook Cloudripper (AST2600) BMC
+  ARM: dts: aspeed: Add Facebook Elbert (AST2600) BMC
+  ARM: dts: aspeed: Add Facebook Fuji (AST2600) BMC
+
+ arch/arm/boot/dts/Makefile                    |    3 +
+ .../dts/aspeed-bmc-facebook-cloudripper.dts   |  564 ++++++++
+ .../boot/dts/aspeed-bmc-facebook-elbert.dts   |  185 +++
+ .../arm/boot/dts/aspeed-bmc-facebook-fuji.dts | 1276 +++++++++++++++++
+ .../boot/dts/aspeed-bmc-facebook-wedge400.dts |   48 +-
+ .../dts/ast2600-facebook-netbmc-common.dtsi   |  176 +++
+ .../dts/facebook-bmc-flash-layout-128.dtsi    |   60 +
+ 7 files changed, 2265 insertions(+), 47 deletions(-)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-cloudripper.dts
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-elbert.dts
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-fuji.dts
+ create mode 100644 arch/arm/boot/dts/ast2600-facebook-netbmc-common.dtsi
+ create mode 100644 arch/arm/boot/dts/facebook-bmc-flash-layout-128.dtsi
+
+-- 
+2.17.1
+
