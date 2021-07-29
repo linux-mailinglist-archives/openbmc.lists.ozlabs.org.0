@@ -1,83 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F45C3DA79D
-	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 17:29:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id E102B3DA87F
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 18:09:11 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GbDwt0MMJz3cRX
-	for <lists+openbmc@lfdr.de>; Fri, 30 Jul 2021 01:29:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GbFpF685Qz3cLr
+	for <lists+openbmc@lfdr.de>; Fri, 30 Jul 2021 02:09:09 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=r1r8MxWR;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20150623.gappssmtp.com header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=106Y/izi;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22c;
- helo=mail-lj1-x22c.google.com; envelope-from=fercerpav@gmail.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=r1r8MxWR; dkim-atps=neutral
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com
- [IPv6:2a00:1450:4864:20::22c])
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=106Y/izi; dkim-atps=neutral
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
+ [IPv6:2a00:1450:4864:20::22a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GbDwY14Y1z2yXc
- for <openbmc@lists.ozlabs.org>; Fri, 30 Jul 2021 01:29:31 +1000 (AEST)
-Received: by mail-lj1-x22c.google.com with SMTP id n6so8024943ljp.9
- for <openbmc@lists.ozlabs.org>; Thu, 29 Jul 2021 08:29:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=DKxZHQ4xt1SYS8tKvlyQod8Qp2Bgi6y5gJozKgKATKM=;
- b=r1r8MxWRyT+ewMTYcjGRK7sJseHJTXwVssbXw3ua4VMC1NzF+vzGP4jSGa4ZGaeA57
- INQ2aaTevzeCrZmnfgB8F0715ItFm4vaKc4MAyc58EnHA6f8gRw8fe1tu/ynRZaAH4mF
- mXq/oNmwurt+XDAual3MKZx0lMR/hB6B6E66NNWQnGs09F/1Ap3rq4EvLQXhrP5QK/ma
- p3gX2Irns2n97yfB0zG62YIBeCp3mxDjxG6KGPV/0pANON8bD2hR0/GnAxYc3MvtI19T
- clB3brbr/PAVSK2z2encZfoA6uJZ8SYbObAkuYtAqXvN/dUtKsfk4h+DEY123NixvPhQ
- lCUg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GbFnx0nTpz3cH0
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Jul 2021 02:08:50 +1000 (AEST)
+Received: by mail-lj1-x22a.google.com with SMTP id l17so8239931ljn.2
+ for <openbmc@lists.ozlabs.org>; Thu, 29 Jul 2021 09:08:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=qKiEefiJ99dCWPIT/G6i8IL9FZUY+X9vSDXAitnrJTU=;
+ b=106Y/izilI42P29vqJATEDpJTVo0i4gSo1SHlnn8GuB7VjcE7pgvbiVscPBu9UWz2q
+ gRCsjG2LUSEDplA7vGGqbxXowxpiig21WqnwNwpZexYuKipyBLSjSAPrlsafzoS3j4D9
+ qQVRGczd7GttUfK/Y+u+DCA6ikAQ+9nJn1234Q6OV/E95lwa6H1/8JWcQMBgNU9YQrvu
+ aJMlxxGyx4+eBVtV1SMek6PDsxfP/H2A+DgI1gqvavgsZfgtMav8g1CMxmscoGr/U31l
+ AGK1ZXlqZJyqx9ONwMU14AqTgjUNjvCB77Voj0Aq5KlGcv7NFLOizgJxrgLN+bveVz4N
+ 0GCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=DKxZHQ4xt1SYS8tKvlyQod8Qp2Bgi6y5gJozKgKATKM=;
- b=aaZTD1RHzHMZbeKjvMMBZ8Y8Z74SIg4tSEIu/9rVVrntWBiKDlNRkpHSPN4QHsi/rg
- rqhQEWDG4LGwszavciE9zw6DBOUIINx15m3TCh58Iy2HY5MkwmVzpRiRgI6+YR3M24sB
- gJb+ZJYXfKjeMIKQmFI2Is5A1c/dy2eB3Yh/2P0BCop9KvFjv4j9czKRvKq5J2ozxYYw
- Cdp9TLaNKRptJ4sMeA6ts1Cyvi/aP0d+SWLP2e4u0io4Y7xdHf0c158ZeKJ8DjRwpDv7
- LnN1eonn5sS2/xtd/JjutvD692oNLoT8h6C48NL8vV1tOWiZ2wWeE0zl+CS5hYEoyTHO
- qRbA==
-X-Gm-Message-State: AOAM530YC9Mfl34B32mEivGjTiT3zhgOjgN8KGHCJDGs50qj0cOsIHaX
- 5N0hNb/GIjbfQRG9Ur4xLE0=
-X-Google-Smtp-Source: ABdhPJx98RT7X5JGJpSG7VrpLTfBeVeNa6lGj/rK9r6YR/V8GYRSFc8oV2L2Pma29RbiOd49F8wgew==
-X-Received: by 2002:a2e:bd81:: with SMTP id o1mr3332108ljq.504.1627572566449; 
- Thu, 29 Jul 2021 08:29:26 -0700 (PDT)
-Received: from home.paul.comp (paulfertser.info.
- [2001:470:26:54b:226:9eff:fe70:80c2])
- by smtp.gmail.com with ESMTPSA id f14sm177409ljk.42.2021.07.29.08.29.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jul 2021 08:29:25 -0700 (PDT)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
- by home.paul.comp (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTP id
- 16TFTMKs014287; Thu, 29 Jul 2021 18:29:23 +0300
-Received: (from paul@localhost)
- by home.paul.comp (8.15.2/8.15.2/Submit) id 16TFTJH9014286;
- Thu, 29 Jul 2021 18:29:19 +0300
-Date: Thu, 29 Jul 2021 18:29:19 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: Ed Tanous <ed@tanous.net>
-Subject: Re: Redfish requests for dbus-sensors data are needlessly slow -
- analysis
-Message-ID: <20210729152919.GX875@home.paul.comp>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=qKiEefiJ99dCWPIT/G6i8IL9FZUY+X9vSDXAitnrJTU=;
+ b=tdQCYdOYptNE+suA4DypSvbXYS3JtQU3IXn+fGxmL+AuIMp7LhHYE91vD1rGSJd7Vd
+ CbFrS5hdtU8bP5uDHmBsrNykqWeNyDsDlhIrMkqQr+MaUenM7JnGgYJ4KAkEIndXy179
+ Kh2UvO3+0WQHwcqUMZgrV+Se6/no9wPHzNHTX6kV2YmmftJ1u1Qj2Q9WW5+shLIOhhw5
+ wcuZ593RXoRFoSo2J0Wx06J9Lbi0dLskFqhGTXaiUZeYagc9GyRfO4n3tzdim3RgaOIP
+ gDk/TD1jQWLIo+QUqNIVscTOtQF135AmJzHxBE9MLrAiiBQir8ubM43GcSxC5Y4skdFe
+ FS8w==
+X-Gm-Message-State: AOAM531gPe2GVouRpH4OMObdYFauiXIbKaxl8jczQYtFQpdAa+cZqVQl
+ UwfGru+oHTXwiO6wBn/ykONl+DNbyT9CyXjj+jNMJQ==
+X-Google-Smtp-Source: ABdhPJyjJ8NpQbR6zAB15e0CShMb0d2LTZhni/9eYyyi0ddXyg2Jveo1Dia3DNoyOD60U6Pbl7g6NSkMx9ZcA4+TliE=
+X-Received: by 2002:a2e:9852:: with SMTP id e18mr3533574ljj.6.1627574921856;
+ Thu, 29 Jul 2021 09:08:41 -0700 (PDT)
+MIME-Version: 1.0
 References: <20210729094640.GT875@home.paul.comp>
  <CACWQX81MBkR3JVRDGbJJMzgGgb3E03HfZTtKu_c0m51g4hXtoA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACWQX81MBkR3JVRDGbJJMzgGgb3E03HfZTtKu_c0m51g4hXtoA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+ <20210729152919.GX875@home.paul.comp>
+In-Reply-To: <20210729152919.GX875@home.paul.comp>
+From: Ed Tanous <ed@tanous.net>
+Date: Thu, 29 Jul 2021 09:08:30 -0700
+Message-ID: <CACWQX809PpP5MtikAYUm=tZhBBVZcJ78XdbHB6Ex=Y9z6EOu4g@mail.gmail.com>
+Subject: Re: Redfish requests for dbus-sensors data are needlessly slow -
+ analysis
+To: Paul Fertser <fercerpav@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,63 +89,131 @@ Cc: Zhikui Ren <zhikui.ren@intel.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Ed,
-
-Thank you for the reply.
-
-On Thu, Jul 29, 2021 at 07:53:38AM -0700, Ed Tanous wrote:
-> On Thu, Jul 29, 2021 at 2:46 AM Paul Fertser <fercerpav@gmail.com> wrote:
-> > Here follows my naive exploratory patch. It works for the sensors
-> > we're interested in (unless they appear after the first Redfish
-> > request made to bmcweb as the cache for the expensive D-Bus calls is
-> > never invalidated). It doesn't handle complex inventory associations.
-> 
-> The "unless" is kind of important here.  Sensors can show up or be
-> removed at any time, especially on an entity-manager enabled system.
-
-So bmcweb can subscribe to the signals from entity-manager and
-invalidate the caches just in case if any EM event registered.
-
-> As a general rule, bmcweb has avoided having a cache at all.  There
-> have been several attempts at adding one, but most failed because of
-> the same thing you found: cache invalidation is hard.
-
-Even if it's just dropped on any ObjectMapper or EntityManager signal?
-
-> If we're going to implement a cache, I'd really like to see it done
-> at a higher level (somewhere in the connection class) and done more
-> generically than this is here, which would ensure that all endpoints
-> are sped up, not just sensors.  With that said, if this really
-> solves the problem and solves it well, I can't very well ignore it.
-
-But is it really a problem? I'm still not sure; probably it's just
-that we invented a weird usecase not worth optimising for? Have the
-others faced it and do they consider it to be a problem?
-
-> > I would be willing to work on doing the right thing but for that I'm
-> > lacking the understanding of the complete picture involved in handling
-> > all types of sensors and interfaces, so I'm kindly asking for your
-> > help with it.
+On Thu, Jul 29, 2021 at 8:29 AM Paul Fertser <fercerpav@gmail.com> wrote:
+>
+> Hello Ed,
+>
+> Thank you for the reply.
+>
+> On Thu, Jul 29, 2021 at 07:53:38AM -0700, Ed Tanous wrote:
+> > On Thu, Jul 29, 2021 at 2:46 AM Paul Fertser <fercerpav@gmail.com> wrote:
+> > > Here follows my naive exploratory patch. It works for the sensors
+> > > we're interested in (unless they appear after the first Redfish
+> > > request made to bmcweb as the cache for the expensive D-Bus calls is
+> > > never invalidated). It doesn't handle complex inventory associations.
 > >
-> > diff --git a/redfish-core/lib/sensors.hpp b/redfish-core/lib/sensors.hpp
-> 
-> Can you please submit the below to gerrit as a WIP instead.  There's
-> much better tooling there for reviewing and testing patches.  I can
-> review it more there.
+> > The "unless" is kind of important here.  Sensors can show up or be
+> > removed at any time, especially on an entity-manager enabled system.
+>
+> So bmcweb can subscribe to the signals from entity-manager and
+> invalidate the caches just in case if any EM event registered.
 
-Sure, will do. I didn't mean to offer it as a solution, it's just to
-prove my understanding of where the bottlenecks are was about correct.
+You have to monitor signals from all connections.  bmcweb doesn't only
+run against entity-manager.  FWIW, what you described is essentially
+entirely what the mapper does;   Handling all the race conditions, add
+events, remove events, with and without object manager support was
+non-trivial, and this is why Andrews attempt tries to put it into a
+library so we don't lose that code.
 
-My real point is that apparently bmcweb is (in some cases) requesting
-way too much data in way too many calls, using only a tiny fraction of
-the obtained values in the end. That's why I made that lengthy
-description of how data for a single sensor is obtained. Caching can
-hide this to a degree, but shouldn't the root cause be fixed as well?
-Does bmcweb really _need_ to do all the calls mentioned? I think the
-fact it performs two identical D-Bus calls in a row gives a clear "no"
-answer. After reading my outline of the process can you tell that's
-exactly the way the OpenBMC D-Bus API is designed to be used?
+None of this is to say "don't try".... please, give it an attempt and
+let's see if we can tease something good out here, but just understand
+that there are race conditions there.
 
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+>
+> > As a general rule, bmcweb has avoided having a cache at all.  There
+> > have been several attempts at adding one, but most failed because of
+> > the same thing you found: cache invalidation is hard.
+>
+> Even if it's just dropped on any ObjectMapper or EntityManager signal?
+
+Those aren't the only signals you need to monitor.  If you're
+interested in going down this route, I'd start by looking at the
+mapper implementation.  You'd also have to handle connections,
+disconnections, and other stuff.  At some point, what you've done
+starts to look a lot like the mapper.
+
+>
+> > If we're going to implement a cache, I'd really like to see it done
+> > at a higher level (somewhere in the connection class) and done more
+> > generically than this is here, which would ensure that all endpoints
+> > are sped up, not just sensors.  With that said, if this really
+> > solves the problem and solves it well, I can't very well ignore it.
+>
+> But is it really a problem? I'm still not sure; probably it's just
+> that we invented a weird usecase not worth optimising for? Have the
+> others faced it and do they consider it to be a problem?
+
+It's for sure a problem, although your 4 second response times sound
+worse than most.  On an ast2500 I've normally seen a 700ms (ish)
+response time, but depending on how many sensors you have, and how
+fast the backends are for each one, I could easily see it getting up
+there pretty easily.
+
+Just one thing to double check;  You don't have any custom sensor
+daemons running on your system do you?  Ideally everything should be
+implementing object manager.  If it doesn't, the code paths to build
+the sensor schema has to take the very slow path (ie calling Get on
+each property individually).
+
+>
+> > > I would be willing to work on doing the right thing but for that I'm
+> > > lacking the understanding of the complete picture involved in handling
+> > > all types of sensors and interfaces, so I'm kindly asking for your
+> > > help with it.
+> > >
+> > > diff --git a/redfish-core/lib/sensors.hpp b/redfish-core/lib/sensors.hpp
+> >
+> > Can you please submit the below to gerrit as a WIP instead.  There's
+> > much better tooling there for reviewing and testing patches.  I can
+> > review it more there.
+>
+> Sure, will do. I didn't mean to offer it as a solution, it's just to
+> prove my understanding of where the bottlenecks are was about correct.
+>
+> My real point is that apparently bmcweb is (in some cases) requesting
+> way too much data in way too many calls, using only a tiny fraction of
+> the obtained values in the end. That's why I made that lengthy
+> description of how data for a single sensor is obtained. Caching can
+> hide this to a degree, but shouldn't the root cause be fixed as well?
+
+Yes, we should come at it from both angles, because a cache will still
+have to invalidate quite a bit, and nobody likes a bimodal
+distribution of response times.  The next thing on my personal list is
+to get a new version of GetSubtree added to the mapper, that accepts a
+list of optional interfaces as well as required.  I talked about this
+a while back on discord.  This might clean up a couple of the extra
+calls in the sensor code, but the primary target was inventory
+initially.
+
+In a perfect world where software is easy and architectures are
+beautiful, ideally I'd like to see most redfish calls go:
+Call mapper once with a list of interfaces;  Find all connections and
+objects that implement this interface.
+Loop over connections, calling GetManagedObjects on each to read in
+the data and write directly to redfish tree.
+Send response
+
+> Does bmcweb really _need_ to do all the calls mentioned? I think the
+> fact it performs two identical D-Bus calls in a row gives a clear "no"
+> answer.
+
+You are almost certainly right, two identical calls is wasteful, and
+we should clean that up if we can.  I'm certain there's probably
+several speedups to be gained by someone understanding the sensor code
+and optimizing it a little.
+
+> After reading my outline of the process can you tell that's
+> exactly the way the OpenBMC D-Bus API is designed to be used?
+
+I'm not sure I quite follow this question.  The sensor code you're
+looking at evolved significantly over time into the behemoth you see
+today.  It quite likely has several anti-patterns and duplicated calls
+that can be consolidated, but that didn't really show up in the
+individual diffs as features were added.  I'm really happy someone has
+gone through the full flow.  Ideally we can start cleaning up the
+obvious stuff (duplicated calls, ect) in some patchsets.
+
+>
+> --
+> Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
+> mailto:fercerpav@gmail.com
