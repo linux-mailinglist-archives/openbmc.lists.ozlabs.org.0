@@ -1,157 +1,146 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 098283DAE13
-	for <lists+openbmc@lfdr.de>; Thu, 29 Jul 2021 23:19:02 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E039E3DAFD1
+	for <lists+openbmc@lfdr.de>; Fri, 30 Jul 2021 01:23:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GbNgl6z9Kz3cQM
-	for <lists+openbmc@lfdr.de>; Fri, 30 Jul 2021 07:18:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GbRQq504Bz3cQb
+	for <lists+openbmc@lfdr.de>; Fri, 30 Jul 2021 09:22:59 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com header.b=f1fLL8C5;
+	dkim=pass (1024-bit key; unprotected) header.d=equinixinc.onmicrosoft.com header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-equinixinc-onmicrosoft-com header.b=LtKXcA/D;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=equinix.com (client-ip=148.163.148.236;
+ helo=mx0a-00268f01.pphosted.com;
+ envelope-from=prvs=9844c65846=zweiss@equinix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com
- header.b=f1fLL8C5; dkim-atps=neutral
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ unprotected) header.d=equinixinc.onmicrosoft.com
+ header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-equinixinc-onmicrosoft-com header.b=LtKXcA/D; 
+ dkim-atps=neutral
+Received: from mx0a-00268f01.pphosted.com (mx0a-00268f01.pphosted.com
+ [148.163.148.236])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GbNg73svnz30Dq;
- Fri, 30 Jul 2021 07:18:20 +1000 (AEST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10060"; a="200191202"
-X-IronPort-AV: E=Sophos;i="5.84,279,1620716400"; d="scan'208";a="200191202"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jul 2021 14:17:12 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.84,279,1620716400"; d="scan'208";a="567367444"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
- by orsmga004.jf.intel.com with ESMTP; 29 Jul 2021 14:17:12 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10; Thu, 29 Jul 2021 14:17:12 -0700
-Received: from orsmsx608.amr.corp.intel.com (10.22.229.21) by
- ORSMSX610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10; Thu, 29 Jul 2021 14:17:11 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx608.amr.corp.intel.com (10.22.229.21) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10 via Frontend Transport; Thu, 29 Jul 2021 14:17:11 -0700
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.108)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2242.10; Thu, 29 Jul 2021 14:17:10 -0700
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GbRQN37TCz3bmj;
+ Fri, 30 Jul 2021 09:22:34 +1000 (AEST)
+Received: from pps.filterd (m0165118.ppops.net [127.0.0.1])
+ by mx0a-00268f01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 16TNIvNP017080; Thu, 29 Jul 2021 23:22:10 GMT
+Received: from nam11-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam11lp2176.outbound.protection.outlook.com [104.47.58.176])
+ by mx0a-00268f01.pphosted.com with ESMTP id 3a3tahar06-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Jul 2021 23:22:09 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=iLD2p8wzGihLNYDQdfWyu5UvkY2X+gKviza5knN/52F95tP4Q27CNTHer566v+OfX53E4IA3bxRAnuUPnSWDCZBIJNMlaSxl8nqB5WJ5Pm+1S4Ul7jpVgB2GpoQueJW6fyaksdhjm4xBvtVPYpdffwqLjn5klGrikv0G9vmE43gzAGwZsYMccr07dIGsNDny1F/9pyBaHK0G/v8MkI4VKLSIJbE8+lh92L+/Sm6cbR4nSPbgVSZ0zct/suWbyMNeLfYxI6+K3RKtmjfzBw7/hFsG7VysQCVJvGaFjZYEk0KSWnVSXgHMnOaV45s7S0X1NHWeE0S73AQT7y6vE4aD5Q==
+ b=iQ/WTtrGKv17L9/7ymtvTvs3fMx3yvZp6kOWmEYSMpMWJgQjuESYngAvExObz2enU4b4DNPUv7KZoH0vBlo1xw8y8wFfiliNo32tgpiujzBdXbuZr6RzWP+5Q5IGdF0Pdym/TGjhNE4cg6XokAyP8zLkCfdyOVLKyV4rFgTgXqJWV2x1xUogae88+5oOhHYS855I111/q1Hs27GnoeImNG1HwAfHBV9a/QGmoGu5fxp8Rl+t7Eh7gTtw5e+aSOzbHJIHxFHJIyhuXQRO/sm++m59p/YSUvQ3SaY7fch//1MghbOhQ+k9uVgTrM7ocOI4N86/X6d5P4uEn19mgnnU0A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rLZluyCGgYPAhhAn1fY/+d3qPj8w15m19lShz+70zvg=;
- b=B3IIy09shLpm0mHzmY5a0b8eHnpNS7Ox+/jorBS+TiXuR3Znvjoe8qraPz/w7TziApmcjxcRVHsRF6A5nBmnHrl5xV8rTsRmJW6acpKRmk9uAvg6syDctzYbWF63Z3C4v0IkB172nPmjjroxlFFjbOOyz4j/du1YvbopK8DLAbBqNywLFiNY1c21670b3ju9VFDg38wSxB8mV+5jSPFdMxFBqEFki0J3ekBUpNcVnSC77rfbSfdzZzwzgULfGlU2ALpjphhBYBhLubkIkdBpOBbs9gVrmqpChlTVwWC9UegeLqM/vgBFlbjzwKfhtpmHCc7S5jDO+6DeYBn0pdGRLw==
+ bh=YHRFV2Xc+3TF3j0b2+QRHRqrReuwcQDuUEPR4rxnZDg=;
+ b=eOsxreHA52ASNedXKC3axt7l3VS5g0ZQV6V+eCOrYg7oGNmleIwk8OjcUEVELrN6d9PMgLfX9oFaYQW2GYf5jKZtxIW47n0z5eFRHsdalROkx/d1jjOInIL1/eLNWCyCftPJp1hgWscTF3QVEO6hPcH/Rz48Le/Nr7OZyDiuNxbewzkS4C+fylRwJ7D0MX/ZQjJMrZFK18MGaDdkU8M0qK+UZSJU/03sRuLV4+rzLOCG0dCWqTpvrcMFeHQ7cIJdvRQCK1PbZfWkIcUsVERWi22+Wr1I2otN2sEpnnvgIcK/gtWm5+57BBfhWJ72Ee1vpYXK8OUz0/fDEPfPYIToWA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
- s=selector2-intel-onmicrosoft-com;
+ smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
+ dkim=pass header.d=equinix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=equinixinc.onmicrosoft.com; s=selector2-equinixinc-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rLZluyCGgYPAhhAn1fY/+d3qPj8w15m19lShz+70zvg=;
- b=f1fLL8C5QQeDnyJs0csRdeIwvf5x3UnRtq0vB05JYrCv5xDLIkQg5lhM5PJDufeFJE9j7NcOPvkH/ye06adjxadR1ZEuEpy84i/1eZ8hGmE45th0JeiPpX0AF1rf9vp/J12FuJqt/XbGDKPXHU+8UqrLf6xL6gtFOsp8Oj6sh1M=
-Received: from SN6PR11MB2589.namprd11.prod.outlook.com (2603:10b6:805:53::12)
- by SN6PR11MB3133.namprd11.prod.outlook.com (2603:10b6:805:d2::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4373.17; Thu, 29 Jul
- 2021 21:17:06 +0000
-Received: from SN6PR11MB2589.namprd11.prod.outlook.com
- ([fe80::6e:364a:dc09:3d35]) by SN6PR11MB2589.namprd11.prod.outlook.com
- ([fe80::6e:364a:dc09:3d35%5]) with mapi id 15.20.4373.021; Thu, 29 Jul 2021
- 21:17:06 +0000
-From: "Winiarska, Iwona" <iwona.winiarska@intel.com>
-To: "zweiss@equinix.com" <zweiss@equinix.com>
+ bh=YHRFV2Xc+3TF3j0b2+QRHRqrReuwcQDuUEPR4rxnZDg=;
+ b=LtKXcA/DLuJDvUOqoxKl6fdo3+p/0TwzUpdxzxjnbxPsIQ/aKQfvOBfZXMUJHTsQw6+9j8rzV7i9M+RCZaXN++HpC6l/4bJk9OOPH8hyG1OERtbWVcVbFJd7B4zIC9cyPyt7epJoxb3HbP9QIPlNMvgJG4ZOMVFf+jFfuIkU/iQ=
+Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
+ by DM8PR04MB7895.namprd04.prod.outlook.com (2603:10b6:8:39::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4373.21; Thu, 29 Jul
+ 2021 23:22:06 +0000
+Received: from DM8PR04MB8007.namprd04.prod.outlook.com
+ ([fe80::953d:f9ec:b2cc:ca2b]) by DM8PR04MB8007.namprd04.prod.outlook.com
+ ([fe80::953d:f9ec:b2cc:ca2b%5]) with mapi id 15.20.4373.021; Thu, 29 Jul 2021
+ 23:22:06 +0000
+From: Zev Weiss <zweiss@equinix.com>
+To: "Winiarska, Iwona" <iwona.winiarska@intel.com>
 Subject: Re: [PATCH 09/14] peci: Add support for PECI device drivers
 Thread-Topic: [PATCH 09/14] peci: Add support for PECI device drivers
-Thread-Index: AQHXd2q8DON5fF1eD0ing5D46+2CZatXWA6AgAM3RYA=
-Date: Thu, 29 Jul 2021 21:17:06 +0000
-Message-ID: <79f5b6ed4942ddeb66beea03907a58495376ccef.camel@intel.com>
+Thread-Index: AQHXgyNyOfnUTEQoM0K8bE1+mPB05atad+MAgAAi7IA=
+Date: Thu, 29 Jul 2021 23:22:06 +0000
+Message-ID: <20210729232205.GX8018@packtop>
 References: <20210712220447.957418-1-iwona.winiarska@intel.com>
  <20210712220447.957418-10-iwona.winiarska@intel.com>
  <20210727201028.GS8018@packtop>
-In-Reply-To: <20210727201028.GS8018@packtop>
-Accept-Language: en-US, pl-PL
+ <79f5b6ed4942ddeb66beea03907a58495376ccef.camel@intel.com>
+In-Reply-To: <79f5b6ed4942ddeb66beea03907a58495376ccef.camel@intel.com>
+Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.40.3 (3.40.3-1.fc34) 
-authentication-results: equinix.com; dkim=none (message not signed)
- header.d=none;equinix.com; dmarc=none action=none header.from=intel.com;
+authentication-results: intel.com; dkim=none (message not signed)
+ header.d=none;intel.com; dmarc=none action=none header.from=equinix.com;
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: bef53142-fcff-4cbe-6ae7-08d952d637e9
-x-ms-traffictypediagnostic: SN6PR11MB3133:
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <SN6PR11MB3133398D517DB499700C7450ECEB9@SN6PR11MB3133.namprd11.prod.outlook.com>
+x-ms-office365-filtering-correlation-id: 497ae37b-902a-439c-775a-08d952e7ae51
+x-ms-traffictypediagnostic: DM8PR04MB7895:
+x-microsoft-antispam-prvs: <DM8PR04MB7895A7CDFC1A9EFC4D2CE147C3EB9@DM8PR04MB7895.namprd04.prod.outlook.com>
 x-ms-oob-tlc-oobclassifiers: OLM:10000;
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: vkzxLcKo7QjLiLLbzwxu9AkUA51TfsKdPrJ25v6XWCmmc2xypaLpZ6HqrSnPcWVwVWmeGKsj0L4aKkN6KHp6W+naorEbI+SMFGR768/aCxy0Z2KxidDElG63eph2jzFB21yGX17TKdg03NUDRfsAfLD1wb/gQ0tCouGgvUKeOlXKhh819j17247ZRXwT6/uMmim7WMR7zFe5bC/rgaRPj/uKkkIKDpqCBOSXChyKVgDfBxobW4CKMZbw24MBO3BDCG8aywWznE61K8x6qE+xy2Oks2BXc7gIackTg7rS9vHLz129/aya+/RGjv976YC//Ie+uUCKTLuKkDhghak14JoU7mSwdSlg6dh7+m1jhKf6o7uRBKUkxWDuVEASZtuqwumusPp4dkJrgc6Zw4RhH83VTHwxwRU+E4RTm037K5mEAkIBC/FUEjBUwXguuwOIo4Hm08EWBkLiWBUOT+gbwWlRtSLKGZRSuJhVyfzE0F9lOmv8jH696WSu8tApaE6FpCntH/pWDI65YITB2BNFbYEzcjMhYRbXdhczJ5htc5eaX89wxEFSdocEakENIO3qKDnJB4UsKdH5KPuSfVNXtob2kRrfo4BynQisljGT7OkwG0iRpxRyw3c/YjKl8uRI9b6w0b6GaoqwTNLJiu17dPhejZ2urFyl41kbNQrk/GbUOz7r0+q0XZpS1hrwUrVLu9Ba6Xh6OzNzQC8LPEyJhg==
+x-microsoft-antispam-message-info: 8UhPevwxQbaREsJGAzVrVpIjPfavfc8wkLRmMRWzaFI3yZbf3yvA9T7xJ27sd0EhRP0uzofj4oastFIbpBI9GK+VPJiZ9Jr9b98DO/8QKUn/X1lG1hxnEqylhFySBzSsC5pfeDzOIyZ4hiGWmIAJjAWwbQAdmK+0B+OlTl2tJ42qF69ymcyuwC+tEXeKwXT9CtHLKx+EiAgAfJzZQCesawPkh46MYBgev5jXspkeeV8fTOGfKXqEEAdymOUuNKUVahF+n1L1rAILw72OLAfG4GqQybT/2/UtIhSPVqallJk0fJ6zHkYeu2RAzyqCVRiK8FN/eY0btQCFGRnXtMVRsZFz+ajyn6JsOVC/RrRx4btpj7SEBwJhZGhc4pfEO714JepJXcXFkQT6IfxOUoF5N0i1YtQkHi5nnILhaZQzB/6IUhWqV/jjeihNWztR+IC33skTqqOlt+6SvP4MCpuY/h19Zn5FLhOFVKQ/f9bqXGP4CCDRGcC+aNaxzCy3fRX0IGJwA6PaX9ULypa139CmNwijKEsqLxpciG/aT9kAMYDUsW9ScDdtLSQ0c4b70GvgNsI6m8oVK7uyWZvyu2TrmzkdQcZ5Lwkklif19rOBASvPTTf26J8GtkSw1GN0V6GFN01ANEUj5/H/h0ZPhc2q/KrqGiEdaAspSCeyTyGjxopfizT34ymHQ5ZD63MPBjiHz8+R0QmL6bqcSgNVqIqcIg==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SN6PR11MB2589.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(6486002)(122000001)(38100700002)(6506007)(6916009)(86362001)(71200400001)(2616005)(508600001)(26005)(6512007)(36756003)(91956017)(30864003)(54906003)(76116006)(66946007)(4326008)(64756008)(316002)(186003)(66476007)(8936002)(2906002)(5660300002)(38070700005)(66556008)(66446008)(83380400001)(8676002)(7416002)(579004)(559001);
+ IPV:NLI; SFV:NSPM; H:DM8PR04MB8007.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(7916004)(136003)(346002)(396003)(366004)(376002)(39860400002)(7416002)(6506007)(6486002)(8676002)(4326008)(71200400001)(30864003)(26005)(9686003)(83380400001)(38070700005)(122000001)(6512007)(1076003)(38100700002)(64756008)(6916009)(76116006)(66476007)(54906003)(66556008)(33716001)(66946007)(66446008)(91956017)(2906002)(86362001)(478600001)(316002)(8936002)(186003)(33656002)(5660300002)(559001)(579004);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VE1uV0t4a0huYjBFMFdHMDN3SkpwdlN3Sk92NkZuaTVhSVE4TFNBRVlqUU9K?=
- =?utf-8?B?TjR2K09TNmVtRklLRno4UmhZVjFrbFcyMnBNaVhOR0E4eU43ZE1pM2ZKSkVs?=
- =?utf-8?B?eGVBZjNxVFJzK3I1eURYVFdRMXNoVHV0U3JxcVhEdDgzVDBidXZsQUo1ZzdM?=
- =?utf-8?B?elpFdzZPaU5DMU5tcnM4NUlGUVFwUDR3M0hnQVI4YXFPaUF3eVJsQThaSDdw?=
- =?utf-8?B?ZmIzZlA5UDFpWFNJdE1BaHlGa1JPUzhvc3Nic2hLc2RzTWVsKzJXTzl2UGpR?=
- =?utf-8?B?S3FPL3dwb1Zvbk8xdndPZ05JY0c5d1lWZEFBY0twR3VheXZRMUpEUkd6cXJC?=
- =?utf-8?B?SVlocVdlT0lTYWZIVzRBMDNBd2c2cEJySUhtVXhtdmJtcTIrMlIwSlN3MTJH?=
- =?utf-8?B?a0wvNWV0dStwMkVRL1FMVXFaVTEvR3BWL1JFME5TNTNmd0U3UzlIbGZWa20z?=
- =?utf-8?B?akhHNjZlTDV3VDlPRmptR0hUeW5zM0t3ZGlZVXgwQ25tUWtlRWxJQ3pmaHlK?=
- =?utf-8?B?R1JuK25ZZFZLUDN0bFNtaHRXTkhxb0VMZzExbjJjZmhXRE9qVjFsS2xXNDND?=
- =?utf-8?B?Vk9FbzZ4QXN1SWZVaDdXTHU0RnhDQWFWT2duSTVNUDY1Ukkrc3BFcUk0Um85?=
- =?utf-8?B?WWpLT241QU01c1IrTmY5aUFhR2VzdU5ZTndjbTNOZ2hDWHlQZVlOak1DcUg5?=
- =?utf-8?B?eEljS2Z1OHVXeGtHUWR0UmxFY3g5SnhkdGpWZGRtcEYzZmQwbU45YmlEQjI2?=
- =?utf-8?B?Y0U5TktCS0VaUXFacXdWTVh3MlkwcVhudkEzNGdmNkFnSmZGdmd1VGRCWDEz?=
- =?utf-8?B?Zm9hMTY1b0U5TlN3eGg1TTVHNFZXcjBjbmJlMyt5blg4UmxFYm5sNjlPYS9S?=
- =?utf-8?B?bVBud3F3Ly9OMWp2eGNzanErUWpXOXMrUlpMZkZqalBXZFN4VmNScXNodkdt?=
- =?utf-8?B?VGVrdmJRbmdkdUdzRzh5bkphU3BSeUd4dnpseEJnWHJhRlgyMEk4OWhtdkdF?=
- =?utf-8?B?dlEvRzdsZkttbUJTR1doRUtMTmNuUWU3ckZQRWFKSDZOQ245eUFwQXQ1ZXh0?=
- =?utf-8?B?ZktlZG1sbGE2VHM3Mzd5LzBtWnhwQkxKTW9PSWFwMER6RzZYUTE5dVA4MWVX?=
- =?utf-8?B?ZWdUakxwNXd2cEl6dTVuOThNVDFDSUp3OGpFeHJqZUhkM0ZrQTVDcUVmaFli?=
- =?utf-8?B?emZXWUt2M1ViR2wvcDNEbDVOMWk1dzVGZ3hhZzNsOTdPaHlidjF5WnpPTlVk?=
- =?utf-8?B?OWNwb3RxQkRSaWZCN1BuUThoRUVpTlhjeGNXMi9zdHFMR3h3ZHdYWVRHZ3Vy?=
- =?utf-8?B?SmhMcnFIdU5oYnNsSm0rSitMUks0N21ROHpIQTg1WDcwNERDcjc1cnBiRkFx?=
- =?utf-8?B?MEdDSTl1UWI1V2l2YjFiZEtSZndDYWUwM1pYT3AyL2dONE9vT3AxSEF4SVor?=
- =?utf-8?B?WGV0ek9zTGt5M01RZzFaM1Vqckg0UG9ocDJLT3h3d1hYc3dRWFp5WFhFTjZk?=
- =?utf-8?B?Zmt1SWFIS1p2azBJeC9WMGhMU1cyaTg2ZzFUSThEMXo3bUd3eU5nd0dkdk1s?=
- =?utf-8?B?WHpsUmpMK3VvRi8yQ3paUS9lRnJCaVY5dFd0a1prU2Y1V2Vtai9LTnk1Q25F?=
- =?utf-8?B?MU5PMCtETE1QOVZLL09SYldEK1lvb1Y3cm5aNXorWkJnT083ZVVJRW5XZVR6?=
- =?utf-8?B?SmtjTmRnL090bWZZRXpqN2N0RkxqTlJCRUZ4M01XWC9yQktQaVlCU2pBT2tB?=
- =?utf-8?B?NkN6RkVQRjc5SElRRStUYjdET3FBUjA4cHJoVEdlZFpZWTBoOG9icXlSRzB1?=
- =?utf-8?B?Y01ibThhSERXcHo4Vm5TQT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <82B98605FA54AD429245747F7FC2758C@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?v6BKSIh0G8iZTzZzmmL2kcD4ei+alT0xdajD3/HPLeFJvaFTIA8B6Z6Bz0?=
+ =?iso-8859-1?Q?eWYgAGH1nUg/PwUlrWJH68MFB6hEMp7+xOWfxCmZOo4GfyY0XE04QrB+yy?=
+ =?iso-8859-1?Q?eKmXuYt3yigVvC9nB+O05UY3MSz5+xsTPKaw4oVA4r4pDrlP6rqb4SVzTH?=
+ =?iso-8859-1?Q?PhkOjbE04ZoLXOQIAjqlOb65NKJGVoO/qGcj91NbqEoSEg9nqmMKz0SfB5?=
+ =?iso-8859-1?Q?T4oYTHFdg9xj2h19jzLkoetmJDQrfmK4xzojYitS0qDLUeAYMIJt+y/DtT?=
+ =?iso-8859-1?Q?g9ocvOCZGaLC00X9xNP1Qr+wHhRxdwF1GtAOhecMq9O+nKOhtJn+BjlNSt?=
+ =?iso-8859-1?Q?qMigumYfwPOjvy2VC1Aerj+wJcuV+DIu/lsfuBlZ9EqP+1ryom0kft6Y9E?=
+ =?iso-8859-1?Q?BHwZv3vKGwncJl42yWdyVbUopPZk53eHsBrv2oOP/v9PxxfD9l2mQ8UCbf?=
+ =?iso-8859-1?Q?g0ubVDhpfprYAT5ZXwc4Coholk5BXB/GDU3oU21Lgab86wZk0Gi1I69SmJ?=
+ =?iso-8859-1?Q?zS1w87QgEJIGuWW6bTWtdsFSu7vv61tP5xBcnoz3LyGxlozl2Y87F82yiJ?=
+ =?iso-8859-1?Q?MshFWx3X8lop9MdDrSKHKxtVWi/+S+GsVzYViGTe96cSpRS3eB+G8VGfPx?=
+ =?iso-8859-1?Q?XLSUU6py+FsMWklLN7OimScp7l/iCX+ePX/F85RllPHI9sck7XWTfiG+wh?=
+ =?iso-8859-1?Q?2envhAmPEnXiA/T8/fQWbPKlcFHG4uzZAGfg1hpU02Kuo1Hux5YaEE5DMg?=
+ =?iso-8859-1?Q?fDamjQkwki6NgtSDtGN2AOrSoSO87ClmebyRKC7p4TPpRKLcYM2rF0VWhA?=
+ =?iso-8859-1?Q?a3Q95uPY6kbgUL0u9R66Fr3Cov0Milw+EbLcUAGo8/rnftnYxMLbuhbSrx?=
+ =?iso-8859-1?Q?NAROvVfpc8xQ9eerJbfG3zTlBkQI4D+vP6s0AHveZlZxaNBlW9CGweUyOa?=
+ =?iso-8859-1?Q?qvzY6Rpg6JUE/B/Amq9EajRPWaELPlGoTTmQy//is2w8XLuGN/mqARtpxS?=
+ =?iso-8859-1?Q?BKH7GbsB4VYJ6FBnLhqD+bTenFWDcYcfPbkTuGrJN8LgrlO/KyBX73I+bp?=
+ =?iso-8859-1?Q?KV/dQM51QVHiqpXGUoxB9CLMbB5Fwz23yYbRY7SwRof0xcTZg1NMuQRpwc?=
+ =?iso-8859-1?Q?J3W3NBfa4ht/NBwnH5wmF54IVd4d48meR1ogdI3BSqtHjBCIQKfcBZQCfg?=
+ =?iso-8859-1?Q?7dqJJJddOIRD9dsDmoMqLhux7CNbHgl+RJYlkYOtmeznyDognFEMuyJ/XE?=
+ =?iso-8859-1?Q?i7UAb0aqVT2bz6+ZuLjXRxlHl/PWyMIIcB33EFafvrxSCgLqMzOE8cndhP?=
+ =?iso-8859-1?Q?EFmNARgudvzL4Tv0JBu36ca1rMiBWtXZxV5lQf3muUmSPDVM0ys77EJBYH?=
+ =?iso-8859-1?Q?GcJwF7qA0X?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-ID: <02591BECE4481A40BC28A8AB54D82AF0@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
+X-OriginatorOrg: equinix.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SN6PR11MB2589.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bef53142-fcff-4cbe-6ae7-08d952d637e9
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jul 2021 21:17:06.3099 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 497ae37b-902a-439c-775a-08d952e7ae51
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jul 2021 23:22:06.4426 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: hh2zfOEFu4QWKve7xl+N9iC7//pIZSRZOBKoK62wyqeQ7WwuDv73bn61+cyPy7d/bDAhZNn0NkwgiBtCCWhpd0abf0jheg0NuNU/tbqvon8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR11MB3133
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-userprincipalname: uNUQBOSbwbmmUDr0weWBqkm6iiOltnhrNmO41dOH/R+EFC/KC5c4qZ1Hals3LTzXoJOlBXXm9J6hoNDE6C45Fg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR04MB7895
+X-Proofpoint-GUID: mArqezjknYM9iaazq-GpM9_9U9gjCA53
+X-Proofpoint-ORIG-GUID: mArqezjknYM9iaazq-GpM9_9U9gjCA53
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-07-29_17:2021-07-29,
+ 2021-07-29 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxlogscore=999
+ malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
+ priorityscore=1501 mlxscore=0 bulkscore=0 phishscore=0 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2107140000 definitions=main-2107290141
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -187,492 +176,854 @@ Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T24gVHVlLCAyMDIxLTA3LTI3IGF0IDIwOjEwICswMDAwLCBaZXYgV2Vpc3Mgd3JvdGU6Cj4gT24g
-TW9uLCBKdWwgMTIsIDIwMjEgYXQgMDU6MDQ6NDJQTSBDRFQsIEl3b25hIFdpbmlhcnNrYSB3cm90
-ZToKPiA+IEhlcmUgd2UncmUgYWRkaW5nIHN1cHBvcnQgZm9yIFBFQ0kgZGV2aWNlIGRyaXZlcnMs
-IHdoaWNoIHVubGlrZSBQRUNJCj4gPiBjb250cm9sbGVyIGRyaXZlcnMgYXJlIGFjdHVhbGx5IGFi
-bGUgdG8gcHJvdmlkZSBmdW5jdGlvbmFsaXRpZXMgdG8KPiA+IHVzZXJzcGFjZS4KPiA+IAo+ID4g
-V2UncmUgYWxzbyBleHRlbmRpbmcgcGVjaV9yZXF1ZXN0IEFQSSB0byBhbGxvdyBxdWVyeWluZyBt
-b3JlIGRldGFpbHMKPiA+IGFib3V0IFBFQ0kgZGV2aWNlIChlLmcuIG1vZGVsL2ZhbWlseSksIHRo
-YXQncyBnb2luZyB0byBiZSB1c2VkIHRvIGZpbmQKPiA+IGEgY29tcGF0aWJsZSBwZWNpX2RyaXZl
-ci4KPiA+IAo+ID4gU2lnbmVkLW9mZi1ieTogSXdvbmEgV2luaWFyc2thIDxpd29uYS53aW5pYXJz
-a2FAaW50ZWwuY29tPgo+ID4gUmV2aWV3ZWQtYnk6IFBpZXJyZS1Mb3VpcyBCb3NzYXJ0IDxwaWVy
-cmUtbG91aXMuYm9zc2FydEBsaW51eC5pbnRlbC5jb20+Cj4gPiAtLS0KPiA+IGRyaXZlcnMvcGVj
-aS9LY29uZmlnwqDCoMKgIHzCoMKgIDEgKwo+ID4gZHJpdmVycy9wZWNpL2NvcmUuY8KgwqDCoMKg
-IHzCoCA0OSArKysrKysrKysKPiA+IGRyaXZlcnMvcGVjaS9kZXZpY2UuY8KgwqAgfMKgIDk5ICsr
-KysrKysrKysrKysrKysrKwo+ID4gZHJpdmVycy9wZWNpL2ludGVybmFsLmggfMKgIDc1ICsrKysr
-KysrKysrKysrCj4gPiBkcml2ZXJzL3BlY2kvcmVxdWVzdC5jwqAgfCAyMTcgKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKwo+ID4gaW5jbHVkZS9saW51eC9wZWNpLmjCoMKg
-wqAgfMKgIDE5ICsrKysKPiA+IGxpYi9LY29uZmlnwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzC
-oMKgIDIgKy0KPiA+IDcgZmlsZXMgY2hhbmdlZCwgNDYxIGluc2VydGlvbnMoKyksIDEgZGVsZXRp
-b24oLSkKPiA+IAo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvcGVjaS9LY29uZmlnIGIvZHJpdmVy
-cy9wZWNpL0tjb25maWcKPiA+IGluZGV4IDBkMGVlODAwOTcxMy4uMjdjMzE1MzU4NDNjIDEwMDY0
-NAo+ID4gLS0tIGEvZHJpdmVycy9wZWNpL0tjb25maWcKPiA+ICsrKyBiL2RyaXZlcnMvcGVjaS9L
-Y29uZmlnCj4gPiBAQCAtMiw2ICsyLDcgQEAKPiA+IAo+ID4gbWVudWNvbmZpZyBQRUNJCj4gPiDC
-oMKgwqDCoMKgwqDCoMKgdHJpc3RhdGUgIlBFQ0kgc3VwcG9ydCIKPiA+ICvCoMKgwqDCoMKgwqDC
-oHNlbGVjdCBHRU5FUklDX0xJQl9YODYKPiA+IMKgwqDCoMKgwqDCoMKgwqBoZWxwCj4gPiDCoMKg
-wqDCoMKgwqDCoMKgwqAgVGhlIFBsYXRmb3JtIEVudmlyb25tZW50IENvbnRyb2wgSW50ZXJmYWNl
-IChQRUNJKSBpcyBhbiBpbnRlcmZhY2UKPiA+IMKgwqDCoMKgwqDCoMKgwqDCoCB0aGF0IHByb3Zp
-ZGVzIGEgY29tbXVuaWNhdGlvbiBjaGFubmVsIHRvIEludGVsIHByb2Nlc3NvcnMgYW5kCj4gPiBk
-aWZmIC0tZ2l0IGEvZHJpdmVycy9wZWNpL2NvcmUuYyBiL2RyaXZlcnMvcGVjaS9jb3JlLmMKPiA+
-IGluZGV4IGFlN2E5NTcyY2RmMy4uOTQ0MjZiN2YyNjE4IDEwMDY0NAo+ID4gLS0tIGEvZHJpdmVy
-cy9wZWNpL2NvcmUuYwo+ID4gKysrIGIvZHJpdmVycy9wZWNpL2NvcmUuYwo+ID4gQEAgLTE0Myw4
-ICsxNDMsNTcgQEAgdm9pZCBwZWNpX2NvbnRyb2xsZXJfcmVtb3ZlKHN0cnVjdCBwZWNpX2NvbnRy
-b2xsZXIKPiA+ICpjb250cm9sbGVyKQo+ID4gfQo+ID4gRVhQT1JUX1NZTUJPTF9OU19HUEwocGVj
-aV9jb250cm9sbGVyX3JlbW92ZSwgUEVDSSk7Cj4gPiAKPiA+ICtzdGF0aWMgY29uc3Qgc3RydWN0
-IHBlY2lfZGV2aWNlX2lkICoKPiA+ICtwZWNpX2J1c19tYXRjaF9kZXZpY2VfaWQoY29uc3Qgc3Ry
-dWN0IHBlY2lfZGV2aWNlX2lkICppZCwgc3RydWN0Cj4gPiBwZWNpX2RldmljZSAqZGV2aWNlKQo+
-ID4gK3sKPiA+ICvCoMKgwqDCoMKgwqDCoHdoaWxlIChpZC0+ZmFtaWx5ICE9IDApIHsKPiA+ICvC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpZiAoaWQtPmZhbWlseSA9PSBkZXZpY2UtPmlu
-Zm8uZmFtaWx5ICYmCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlk
-LT5tb2RlbCA9PSBkZXZpY2UtPmluZm8ubW9kZWwpCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHJldHVybiBpZDsKPiA+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqBpZCsrOwo+ID4gK8KgwqDCoMKgwqDCoMKgfQo+ID4gKwo+ID4gK8KgwqDC
-oMKgwqDCoMKgcmV0dXJuIE5VTEw7Cj4gPiArfQo+ID4gKwo+ID4gK3N0YXRpYyBpbnQgcGVjaV9i
-dXNfZGV2aWNlX21hdGNoKHN0cnVjdCBkZXZpY2UgKmRldiwgc3RydWN0IGRldmljZV9kcml2ZXIK
-PiA+ICpkcnYpCj4gPiArewo+ID4gK8KgwqDCoMKgwqDCoMKgc3RydWN0IHBlY2lfZGV2aWNlICpk
-ZXZpY2UgPSB0b19wZWNpX2RldmljZShkZXYpOwo+ID4gK8KgwqDCoMKgwqDCoMKgc3RydWN0IHBl
-Y2lfZHJpdmVyICpwZWNpX2RydiA9IHRvX3BlY2lfZHJpdmVyKGRydik7Cj4gPiArCj4gPiArwqDC
-oMKgwqDCoMKgwqBpZiAoZGV2LT50eXBlICE9ICZwZWNpX2RldmljZV90eXBlKQo+ID4gK8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHJldHVybiAwOwo+ID4gKwo+ID4gK8KgwqDCoMKgwqDC
-oMKgaWYgKHBlY2lfYnVzX21hdGNoX2RldmljZV9pZChwZWNpX2Rydi0+aWRfdGFibGUsIGRldmlj
-ZSkpCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmV0dXJuIDE7Cj4gPiArCj4g
-PiArwqDCoMKgwqDCoMKgwqByZXR1cm4gMDsKPiA+ICt9Cj4gPiArCj4gPiArc3RhdGljIGludCBw
-ZWNpX2J1c19kZXZpY2VfcHJvYmUoc3RydWN0IGRldmljZSAqZGV2KQo+ID4gK3sKPiA+ICvCoMKg
-wqDCoMKgwqDCoHN0cnVjdCBwZWNpX2RldmljZSAqZGV2aWNlID0gdG9fcGVjaV9kZXZpY2UoZGV2
-KTsKPiA+ICvCoMKgwqDCoMKgwqDCoHN0cnVjdCBwZWNpX2RyaXZlciAqZHJpdmVyID0gdG9fcGVj
-aV9kcml2ZXIoZGV2LT5kcml2ZXIpOwo+ID4gKwo+ID4gK8KgwqDCoMKgwqDCoMKgcmV0dXJuIGRy
-aXZlci0+cHJvYmUoZGV2aWNlLCBwZWNpX2J1c19tYXRjaF9kZXZpY2VfaWQoZHJpdmVyLQo+ID4g
-PmlkX3RhYmxlLCBkZXZpY2UpKTsKPiA+ICt9Cj4gPiArCj4gPiArc3RhdGljIGludCBwZWNpX2J1
-c19kZXZpY2VfcmVtb3ZlKHN0cnVjdCBkZXZpY2UgKmRldikKPiA+ICt7Cj4gPiArwqDCoMKgwqDC
-oMKgwqBzdHJ1Y3QgcGVjaV9kZXZpY2UgKmRldmljZSA9IHRvX3BlY2lfZGV2aWNlKGRldik7Cj4g
-PiArwqDCoMKgwqDCoMKgwqBzdHJ1Y3QgcGVjaV9kcml2ZXIgKmRyaXZlciA9IHRvX3BlY2lfZHJp
-dmVyKGRldi0+ZHJpdmVyKTsKPiA+ICsKPiA+ICvCoMKgwqDCoMKgwqDCoGlmIChkcml2ZXItPnJl
-bW92ZSkKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBkcml2ZXItPnJlbW92ZShk
-ZXZpY2UpOwo+ID4gKwo+ID4gK8KgwqDCoMKgwqDCoMKgcmV0dXJuIDA7Cj4gPiArfQo+ID4gKwo+
-ID4gc3RydWN0IGJ1c190eXBlIHBlY2lfYnVzX3R5cGUgPSB7Cj4gPiDCoMKgwqDCoMKgwqDCoMKg
-Lm5hbWXCoMKgwqDCoMKgwqDCoMKgwqDCoMKgPSAicGVjaSIsCj4gPiArwqDCoMKgwqDCoMKgwqAu
-bWF0Y2jCoMKgwqDCoMKgwqDCoMKgwqDCoD0gcGVjaV9idXNfZGV2aWNlX21hdGNoLAo+ID4gK8Kg
-wqDCoMKgwqDCoMKgLnByb2JlwqDCoMKgwqDCoMKgwqDCoMKgwqA9IHBlY2lfYnVzX2RldmljZV9w
-cm9iZSwKPiA+ICvCoMKgwqDCoMKgwqDCoC5yZW1vdmXCoMKgwqDCoMKgwqDCoMKgwqA9IHBlY2lf
-YnVzX2RldmljZV9yZW1vdmUsCj4gPiDCoMKgwqDCoMKgwqDCoMKgLmJ1c19ncm91cHPCoMKgwqDC
-oMKgPSBwZWNpX2J1c19ncm91cHMsCj4gPiB9Owo+ID4gCj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVy
-cy9wZWNpL2RldmljZS5jIGIvZHJpdmVycy9wZWNpL2RldmljZS5jCj4gPiBpbmRleCAxMTI0ODYy
-MjExZTIuLjhjNGJkMWViYmMyOSAxMDA2NDQKPiA+IC0tLSBhL2RyaXZlcnMvcGVjaS9kZXZpY2Uu
-Ywo+ID4gKysrIGIvZHJpdmVycy9wZWNpL2RldmljZS5jCj4gPiBAQCAtMSwxMSArMSw3OSBAQAo+
-ID4gLy8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAtb25seQo+ID4gLy8gQ29weXJp
-Z2h0IChjKSAyMDE4LTIwMjEgSW50ZWwgQ29ycG9yYXRpb24KPiA+IAo+ID4gKyNpbmNsdWRlIDxs
-aW51eC9iaXRmaWVsZC5oPgo+ID4gI2luY2x1ZGUgPGxpbnV4L3BlY2kuaD4KPiA+ICNpbmNsdWRl
-IDxsaW51eC9zbGFiLmg+Cj4gPiArI2luY2x1ZGUgPGxpbnV4L3g4Ni9jcHUuaD4KPiA+IAo+ID4g
-I2luY2x1ZGUgImludGVybmFsLmgiCj4gPiAKPiA+ICsjZGVmaW5lIFJFVklTSU9OX05VTV9NQVNL
-IEdFTk1BU0soMTUsIDgpCj4gPiArc3RhdGljIGludCBwZWNpX2dldF9yZXZpc2lvbihzdHJ1Y3Qg
-cGVjaV9kZXZpY2UgKmRldmljZSwgdTggKnJldmlzaW9uKQo+ID4gK3sKPiA+ICvCoMKgwqDCoMKg
-wqDCoHN0cnVjdCBwZWNpX3JlcXVlc3QgKnJlcTsKPiA+ICvCoMKgwqDCoMKgwqDCoHU2NCBkaWI7
-Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKgwqByZXEgPSBwZWNpX2dldF9kaWIoZGV2aWNlKTsKPiA+
-ICvCoMKgwqDCoMKgwqDCoGlmIChJU19FUlIocmVxKSkKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqByZXR1cm4gUFRSX0VSUihyZXEpOwo+ID4gKwo+ID4gK8KgwqDCoMKgwqDCoMKg
-ZGliID0gcGVjaV9yZXF1ZXN0X2RhdGFfZGliKHJlcSk7Cj4gPiArwqDCoMKgwqDCoMKgwqBpZiAo
-ZGliID09IDApIHsKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBwZWNpX3JlcXVl
-c3RfZnJlZShyZXEpOwo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHJldHVybiAt
-RUlPOwo+IAo+IEFueSBwYXJ0aWN1bGFyIHJlYXNvbiB0byBjaGVjayBmb3IgemVybyBzcGVjaWZp
-Y2FsbHkgaGVyZT/CoCBJdCBsb29rcwo+IGxpa2UgdGhhdCB3b3VsZCBiZSBhIGNhc2Ugd2hlcmUg
-dGhlIGhvc3QgQ1BVIHJlc3BvbmRzIGFuZCBldmVyeXRoaW5nJ3MKPiBvdGhlcndpc2UgZmluZSwg
-YnV0IHRoZSBob3N0IGp1c3QgaGFwcGVuZWQgdG8gc2VuZCBiYWNrIGEgYnVuY2ggb2YgemVyb3MK
-PiBmb3Igd2hhdGV2ZXIgcmVhc29uIC0tIHdoaWNoIG1heSBub3QgYmUgYSB2YWxpZCBQRUNJIHJl
-dmlzaW9uIG51bWJlciwKPiBidXQgaWYgaXQgc2VudCBiYWNrIGEgYnVuY2ggb2YgMHhmZiBieXRl
-cyBpbnN0ZWFkIHdvdWxkbid0IHRoYXQgYmUKPiBlcXVhbGx5IGludmFsaWQ/CgpUaGUgcmVzcG9u
-c2Ugd2l0aCBhbGwgMCdzIGlzIHBvc3NpYmxlIChhbmQgZGVmaW5lZCkgaW4gY2VydGFpbiBkZXZp
-Y2Ugc3RhdGVzLiBJZgp0aGF0IGhhcHBlbnMgLSB3ZSBkb24ndCB3YW50IHRvIGNvbnRpbnVlIGFk
-ZGluZyB0aGUgZGV2aWNlICh3aXRoICJpbnZhbGlkIgpyZXZpc2lvbiAwKSwgd2UganVzdCB3YW50
-IHRvIHJldHVybiBlcnJvci4KCj4gCj4gQWxzbywgZ2l2ZW4gdGhhdCB0aGUgZG9jcyAodGhlIG9u
-ZXMgSSBoYXZlLCBhdCBsZWFzdCkgZGVzY3JpYmUgdGhlIERJQgo+IGFzIGEgY29sbGVjdGlvbiBv
-ZiBpbmRpdmlkdWFsIGJ5dGVzLCBkZWFsaW5nIHdpdGggaXQgYXMgYSBjb21iaW5lZCB1NjQKPiBz
-ZWVtcyBhIGJpdCBjb25mdXNpbmcgdG8gbWUgLS0gY291bGQgd2UganVzdCByZXR1cm4gcmVxLT5y
-eC5idWZbMV0KPiBpbnN0ZWFkPwoKR2V0RElCIHJldHVybnMgOC1ieXRlIHJlc3BvbnNlLCB3aGlj
-aCBpcyB3aHkgd2UncmUgdHJlYXRpbmcgaXQgaW4gdGhpcyB3YXkKKHNpbWlsYXIgdG8gb3RoZXIg
-Y29tbWFuZHMpLiBXZSdyZSBwdWxsaW5nIG91dCB0aGUgd2hvbGUgcmVzcG9uc2UgYW5kIHVzZQpG
-SUVMRF9HRVQgdG8gb2J0YWluIHRoZSBkYXRhIHdlIG5lZWQuCgo+IAo+ID4gK8KgwqDCoMKgwqDC
-oMKgfQo+ID4gKwo+ID4gK8KgwqDCoMKgwqDCoMKgKnJldmlzaW9uID0gRklFTERfR0VUKFJFVklT
-SU9OX05VTV9NQVNLLCBkaWIpOwo+ID4gKwo+ID4gK8KgwqDCoMKgwqDCoMKgcGVjaV9yZXF1ZXN0
-X2ZyZWUocmVxKTsKPiA+ICsKPiA+ICvCoMKgwqDCoMKgwqDCoHJldHVybiAwOwo+ID4gK30KPiA+
-ICsKPiA+ICtzdGF0aWMgaW50IHBlY2lfZ2V0X2NwdV9pZChzdHJ1Y3QgcGVjaV9kZXZpY2UgKmRl
-dmljZSwgdTMyICpjcHVfaWQpCj4gPiArewo+ID4gK8KgwqDCoMKgwqDCoMKgc3RydWN0IHBlY2lf
-cmVxdWVzdCAqcmVxOwo+ID4gK8KgwqDCoMKgwqDCoMKgaW50IHJldDsKPiA+ICsKPiA+ICvCoMKg
-wqDCoMKgwqDCoHJlcSA9IHBlY2lfcGtnX2NmZ19yZWFkbChkZXZpY2UsIFBFQ0lfUENTX1BLR19J
-RCwKPiA+IFBFQ0lfUEtHX0lEX0NQVV9JRCk7Cj4gPiArwqDCoMKgwqDCoMKgwqBpZiAoSVNfRVJS
-KHJlcSkpCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmV0dXJuIFBUUl9FUlIo
-cmVxKTsKPiA+ICsKPiA+ICvCoMKgwqDCoMKgwqDCoHJldCA9IHBlY2lfcmVxdWVzdF9zdGF0dXMo
-cmVxKTsKPiA+ICvCoMKgwqDCoMKgwqDCoGlmIChyZXQpCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgZ290byBvdXRfcmVxX2ZyZWU7Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKgwqAq
-Y3B1X2lkID0gcGVjaV9yZXF1ZXN0X2RhdGFfcmVhZGwocmVxKTsKPiA+ICtvdXRfcmVxX2ZyZWU6
-Cj4gCj4gQXMgc3VnZ2VzdGVkIG9uIHBhdGNoICM4LCBJIHRoaW5rIGl0IG1pZ2h0IGJlIGNsZWFu
-ZXIgdG8gc3RhY2stYWxsb2NhdGUKPiBzdHJ1Y3QgcGVjaV9yZXF1ZXN0LCB3aGljaCB3b3VsZCBv
-YnZpYXRlIHRoZSBuZWVkIGZvciBleHBsaWNpdCBmcmVlCj4gY2FsbHMgaW4gZnVuY3Rpb25zIGxp
-a2UgdGhpcyBhbmQgaGVuY2UgbWlnaHQgc2ltcGxpZnkgaXQgYXdheSBlbnRpcmVseSwKPiBidXQg
-aWYgdGhpcyBkb2VzIHJlbWFpbiBsaWtlIHRoaXMgd2UgY291bGQganVzdCBkbwo+IAo+IMKgwqDC
-oMKgwqDCoMKgwqBpZiAoIXJldCkKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCpj
-cHVfaWQgPSBwZWNpX3JlcXVlc3RfZGF0YV9yZWFkbChyZXEpOwo+IAo+IGluc3RlYWQgb2YgdXNp
-bmcgYSBnb3RvIHRvIHNraXAgYSBzaW5nbGUgbGluZS4KClBsZWFzZSwgc2VlIG15IHJlc3BvbnNl
-IG9uIHBhdGNoIDguCgpJIHdvdWxkIHByZWZlciB0byBvcGVyYXRlIG9uIGFsbG9jYXRlZCBvYmpl
-Y3RzIHJhdGhlciB0aGFuIG9uIGxvY2FsIHZhcmlhYmxlcyBpbgpjYXNlIG9mIHBlY2kgcmVxdWVz
-dHMuCgo+IAo+ID4gK8KgwqDCoMKgwqDCoMKgcGVjaV9yZXF1ZXN0X2ZyZWUocmVxKTsKPiA+ICsK
-PiA+ICvCoMKgwqDCoMKgwqDCoHJldHVybiByZXQ7Cj4gPiArfQo+ID4gKwo+ID4gK3N0YXRpYyBp
-bnQgcGVjaV9kZXZpY2VfaW5mb19pbml0KHN0cnVjdCBwZWNpX2RldmljZSAqZGV2aWNlKQo+ID4g
-K3sKPiA+ICvCoMKgwqDCoMKgwqDCoHU4IHJldmlzaW9uOwo+ID4gK8KgwqDCoMKgwqDCoMKgdTMy
-IGNwdV9pZDsKPiA+ICvCoMKgwqDCoMKgwqDCoGludCByZXQ7Cj4gPiArCj4gPiArwqDCoMKgwqDC
-oMKgwqByZXQgPSBwZWNpX2dldF9jcHVfaWQoZGV2aWNlLCAmY3B1X2lkKTsKPiA+ICvCoMKgwqDC
-oMKgwqDCoGlmIChyZXQpCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmV0dXJu
-IHJldDsKPiA+ICsKPiA+ICvCoMKgwqDCoMKgwqDCoGRldmljZS0+aW5mby5mYW1pbHkgPSB4ODZf
-ZmFtaWx5KGNwdV9pZCk7Cj4gPiArwqDCoMKgwqDCoMKgwqBkZXZpY2UtPmluZm8ubW9kZWwgPSB4
-ODZfbW9kZWwoY3B1X2lkKTsKPiA+ICsKPiA+ICvCoMKgwqDCoMKgwqDCoHJldCA9IHBlY2lfZ2V0
-X3JldmlzaW9uKGRldmljZSwgJnJldmlzaW9uKTsKPiA+ICvCoMKgwqDCoMKgwqDCoGlmIChyZXQp
-Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmV0dXJuIHJldDsKPiA+ICvCoMKg
-wqDCoMKgwqDCoGRldmljZS0+aW5mby5wZWNpX3JldmlzaW9uID0gcmV2aXNpb247Cj4gPiArCj4g
-PiArwqDCoMKgwqDCoMKgwqBkZXZpY2UtPmluZm8uc29ja2V0X2lkID0gZGV2aWNlLT5hZGRyIC0g
-UEVDSV9CQVNFX0FERFI7Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKgwqByZXR1cm4gMDsKPiA+ICt9
-Cj4gPiArCj4gPiBzdGF0aWMgaW50IHBlY2lfZGV0ZWN0KHN0cnVjdCBwZWNpX2NvbnRyb2xsZXIg
-KmNvbnRyb2xsZXIsIHU4IGFkZHIpCj4gPiB7Cj4gPiDCoMKgwqDCoMKgwqDCoMKgc3RydWN0IHBl
-Y2lfcmVxdWVzdCAqcmVxOwo+ID4gQEAgLTc1LDYgKzE0MywxMCBAQCBpbnQgcGVjaV9kZXZpY2Vf
-Y3JlYXRlKHN0cnVjdCBwZWNpX2NvbnRyb2xsZXIKPiA+ICpjb250cm9sbGVyLCB1OCBhZGRyKQo+
-ID4gwqDCoMKgwqDCoMKgwqDCoGRldmljZS0+ZGV2LmJ1cyA9ICZwZWNpX2J1c190eXBlOwo+ID4g
-wqDCoMKgwqDCoMKgwqDCoGRldmljZS0+ZGV2LnR5cGUgPSAmcGVjaV9kZXZpY2VfdHlwZTsKPiA+
-IAo+ID4gK8KgwqDCoMKgwqDCoMKgcmV0ID0gcGVjaV9kZXZpY2VfaW5mb19pbml0KGRldmljZSk7
-Cj4gPiArwqDCoMKgwqDCoMKgwqBpZiAocmV0KQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoGdvdG8gZXJyX2ZyZWU7Cj4gPiArCj4gPiDCoMKgwqDCoMKgwqDCoMKgcmV0ID0gZGV2
-X3NldF9uYW1lKCZkZXZpY2UtPmRldiwgIiVkLSUwMngiLCBjb250cm9sbGVyLT5pZCwgZGV2aWNl
-LQo+ID4gPmFkZHIpOwo+ID4gwqDCoMKgwqDCoMKgwqDCoGlmIChyZXQpCj4gPiDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoGdvdG8gZXJyX2ZyZWU7Cj4gPiBAQCAtOTgsNiArMTcwLDMz
-IEBAIHZvaWQgcGVjaV9kZXZpY2VfZGVzdHJveShzdHJ1Y3QgcGVjaV9kZXZpY2UgKmRldmljZSkK
-PiA+IMKgwqDCoMKgwqDCoMKgwqBkZXZpY2VfdW5yZWdpc3RlcigmZGV2aWNlLT5kZXYpOwo+ID4g
-fQo+ID4gCj4gPiAraW50IF9fcGVjaV9kcml2ZXJfcmVnaXN0ZXIoc3RydWN0IHBlY2lfZHJpdmVy
-ICpkcml2ZXIsIHN0cnVjdCBtb2R1bGUKPiA+ICpvd25lciwKPiA+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjb25zdCBjaGFyICptb2RfbmFtZSkK
-PiA+ICt7Cj4gPiArwqDCoMKgwqDCoMKgwqBkcml2ZXItPmRyaXZlci5idXMgPSAmcGVjaV9idXNf
-dHlwZTsKPiA+ICvCoMKgwqDCoMKgwqDCoGRyaXZlci0+ZHJpdmVyLm93bmVyID0gb3duZXI7Cj4g
-PiArwqDCoMKgwqDCoMKgwqBkcml2ZXItPmRyaXZlci5tb2RfbmFtZSA9IG1vZF9uYW1lOwo+ID4g
-Kwo+ID4gK8KgwqDCoMKgwqDCoMKgaWYgKCFkcml2ZXItPnByb2JlKSB7Cj4gPiArwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgcHJfZXJyKCJwZWNpOiB0cnlpbmcgdG8gcmVnaXN0ZXIgZHJp
-dmVyIHdpdGhvdXQgcHJvYmUKPiA+IGNhbGxiYWNrXG4iKTsKPiA+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqByZXR1cm4gLUVJTlZBTDsKPiA+ICvCoMKgwqDCoMKgwqDCoH0KPiA+ICsK
-PiA+ICvCoMKgwqDCoMKgwqDCoGlmICghZHJpdmVyLT5pZF90YWJsZSkgewo+ID4gK8KgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoHByX2VycigicGVjaTogdHJ5aW5nIHRvIHJlZ2lzdGVyIGRy
-aXZlciB3aXRob3V0IGRldmljZSBpZAo+ID4gdGFibGVcbiIpOwo+ID4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoHJldHVybiAtRUlOVkFMOwo+ID4gK8KgwqDCoMKgwqDCoMKgfQo+ID4g
-Kwo+ID4gK8KgwqDCoMKgwqDCoMKgcmV0dXJuIGRyaXZlcl9yZWdpc3RlcigmZHJpdmVyLT5kcml2
-ZXIpOwo+ID4gK30KPiA+ICtFWFBPUlRfU1lNQk9MX05TX0dQTChfX3BlY2lfZHJpdmVyX3JlZ2lz
-dGVyLCBQRUNJKTsKPiA+ICsKPiA+ICt2b2lkIHBlY2lfZHJpdmVyX3VucmVnaXN0ZXIoc3RydWN0
-IHBlY2lfZHJpdmVyICpkcml2ZXIpCj4gPiArewo+ID4gK8KgwqDCoMKgwqDCoMKgZHJpdmVyX3Vu
-cmVnaXN0ZXIoJmRyaXZlci0+ZHJpdmVyKTsKPiA+ICt9Cj4gPiArRVhQT1JUX1NZTUJPTF9OU19H
-UEwocGVjaV9kcml2ZXJfdW5yZWdpc3RlciwgUEVDSSk7Cj4gPiArCj4gPiBzdGF0aWMgdm9pZCBw
-ZWNpX2RldmljZV9yZWxlYXNlKHN0cnVjdCBkZXZpY2UgKmRldikKPiA+IHsKPiA+IMKgwqDCoMKg
-wqDCoMKgwqBzdHJ1Y3QgcGVjaV9kZXZpY2UgKmRldmljZSA9IHRvX3BlY2lfZGV2aWNlKGRldik7
-Cj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9wZWNpL2ludGVybmFsLmggYi9kcml2ZXJzL3BlY2kv
-aW50ZXJuYWwuaAo+ID4gaW5kZXggNmIxMzlhZGFmNmI4Li5jODkxYzkzZTA3N2EgMTAwNjQ0Cj4g
-PiAtLS0gYS9kcml2ZXJzL3BlY2kvaW50ZXJuYWwuaAo+ID4gKysrIGIvZHJpdmVycy9wZWNpL2lu
-dGVybmFsLmgKPiA+IEBAIC0xOSw2ICsxOSwzNCBAQCBzdHJ1Y3QgcGVjaV9yZXF1ZXN0Owo+ID4g
-c3RydWN0IHBlY2lfcmVxdWVzdCAqcGVjaV9yZXF1ZXN0X2FsbG9jKHN0cnVjdCBwZWNpX2Rldmlj
-ZSAqZGV2aWNlLCB1OAo+ID4gdHhfbGVuLCB1OCByeF9sZW4pOwo+ID4gdm9pZCBwZWNpX3JlcXVl
-c3RfZnJlZShzdHJ1Y3QgcGVjaV9yZXF1ZXN0ICpyZXEpOwo+ID4gCj4gPiAraW50IHBlY2lfcmVx
-dWVzdF9zdGF0dXMoc3RydWN0IHBlY2lfcmVxdWVzdCAqcmVxKTsKPiA+ICt1NjQgcGVjaV9yZXF1
-ZXN0X2RhdGFfZGliKHN0cnVjdCBwZWNpX3JlcXVlc3QgKnJlcSk7Cj4gPiArCj4gPiArdTggcGVj
-aV9yZXF1ZXN0X2RhdGFfcmVhZGIoc3RydWN0IHBlY2lfcmVxdWVzdCAqcmVxKTsKPiA+ICt1MTYg
-cGVjaV9yZXF1ZXN0X2RhdGFfcmVhZHcoc3RydWN0IHBlY2lfcmVxdWVzdCAqcmVxKTsKPiA+ICt1
-MzIgcGVjaV9yZXF1ZXN0X2RhdGFfcmVhZGwoc3RydWN0IHBlY2lfcmVxdWVzdCAqcmVxKTsKPiA+
-ICt1NjQgcGVjaV9yZXF1ZXN0X2RhdGFfcmVhZHEoc3RydWN0IHBlY2lfcmVxdWVzdCAqcmVxKTsK
-PiA+ICsKPiA+ICtzdHJ1Y3QgcGVjaV9yZXF1ZXN0ICpwZWNpX2dldF9kaWIoc3RydWN0IHBlY2lf
-ZGV2aWNlICpkZXZpY2UpOwo+ID4gK3N0cnVjdCBwZWNpX3JlcXVlc3QgKnBlY2lfZ2V0X3RlbXAo
-c3RydWN0IHBlY2lfZGV2aWNlICpkZXZpY2UpOwo+ID4gKwo+ID4gK3N0cnVjdCBwZWNpX3JlcXVl
-c3QgKnBlY2lfcGtnX2NmZ19yZWFkYihzdHJ1Y3QgcGVjaV9kZXZpY2UgKmRldmljZSwgdTgKPiA+
-IGluZGV4LCB1MTYgcGFyYW0pOwo+ID4gK3N0cnVjdCBwZWNpX3JlcXVlc3QgKnBlY2lfcGtnX2Nm
-Z19yZWFkdyhzdHJ1Y3QgcGVjaV9kZXZpY2UgKmRldmljZSwgdTgKPiA+IGluZGV4LCB1MTYgcGFy
-YW0pOwo+ID4gK3N0cnVjdCBwZWNpX3JlcXVlc3QgKnBlY2lfcGtnX2NmZ19yZWFkbChzdHJ1Y3Qg
-cGVjaV9kZXZpY2UgKmRldmljZSwgdTgKPiA+IGluZGV4LCB1MTYgcGFyYW0pOwo+ID4gK3N0cnVj
-dCBwZWNpX3JlcXVlc3QgKnBlY2lfcGtnX2NmZ19yZWFkcShzdHJ1Y3QgcGVjaV9kZXZpY2UgKmRl
-dmljZSwgdTgKPiA+IGluZGV4LCB1MTYgcGFyYW0pOwo+ID4gKwo+ID4gKy8qKgo+ID4gKyAqIHN0
-cnVjdCBwZWNpX2RldmljZV9pZCAtIFBFQ0kgZGV2aWNlIGRhdGEgdG8gbWF0Y2gKPiA+ICsgKiBA
-ZGF0YTogcG9pbnRlciB0byBkcml2ZXIgcHJpdmF0ZSBkYXRhIHNwZWNpZmljIHRvIGRldmljZQo+
-ID4gKyAqIEBmYW1pbHk6IGRldmljZSBmYW1pbHkKPiA+ICsgKiBAbW9kZWw6IGRldmljZSBtb2Rl
-bAo+ID4gKyAqLwo+ID4gK3N0cnVjdCBwZWNpX2RldmljZV9pZCB7Cj4gPiArwqDCoMKgwqDCoMKg
-wqBjb25zdCB2b2lkICpkYXRhOwo+ID4gK8KgwqDCoMKgwqDCoMKgdTE2IGZhbWlseTsKPiA+ICvC
-oMKgwqDCoMKgwqDCoHU4IG1vZGVsOwo+ID4gK307Cj4gPiArCj4gPiBleHRlcm4gc3RydWN0IGRl
-dmljZV90eXBlIHBlY2lfZGV2aWNlX3R5cGU7Cj4gPiBleHRlcm4gY29uc3Qgc3RydWN0IGF0dHJp
-YnV0ZV9ncm91cCAqcGVjaV9kZXZpY2VfZ3JvdXBzW107Cj4gPiAKPiA+IEBAIC0yOCw2ICs1Niw1
-MyBAQCB2b2lkIHBlY2lfZGV2aWNlX2Rlc3Ryb3koc3RydWN0IHBlY2lfZGV2aWNlICpkZXZpY2Up
-Owo+ID4gZXh0ZXJuIHN0cnVjdCBidXNfdHlwZSBwZWNpX2J1c190eXBlOwo+ID4gZXh0ZXJuIGNv
-bnN0IHN0cnVjdCBhdHRyaWJ1dGVfZ3JvdXAgKnBlY2lfYnVzX2dyb3Vwc1tdOwo+ID4gCj4gPiAr
-LyoqCj4gPiArICogc3RydWN0IHBlY2lfZHJpdmVyIC0gUEVDSSBkcml2ZXIKPiA+ICsgKiBAZHJp
-dmVyOiBpbmhlcml0IGRldmljZSBkcml2ZXIKPiA+ICsgKiBAcHJvYmU6IHByb2JlIGNhbGxiYWNr
-Cj4gPiArICogQHJlbW92ZTogcmVtb3ZlIGNhbGxiYWNrCj4gPiArICogQGlkX3RhYmxlOiBQRUNJ
-IGRldmljZSBtYXRjaCB0YWJsZSB0byBkZWNpZGUgd2hpY2ggZGV2aWNlIHRvIGJpbmQKPiA+ICsg
-Ki8KPiA+ICtzdHJ1Y3QgcGVjaV9kcml2ZXIgewo+ID4gK8KgwqDCoMKgwqDCoMKgc3RydWN0IGRl
-dmljZV9kcml2ZXIgZHJpdmVyOwo+ID4gK8KgwqDCoMKgwqDCoMKgaW50ICgqcHJvYmUpKHN0cnVj
-dCBwZWNpX2RldmljZSAqZGV2aWNlLCBjb25zdCBzdHJ1Y3QgcGVjaV9kZXZpY2VfaWQKPiA+ICpp
-ZCk7Cj4gPiArwqDCoMKgwqDCoMKgwqB2b2lkICgqcmVtb3ZlKShzdHJ1Y3QgcGVjaV9kZXZpY2Ug
-KmRldmljZSk7Cj4gPiArwqDCoMKgwqDCoMKgwqBjb25zdCBzdHJ1Y3QgcGVjaV9kZXZpY2VfaWQg
-KmlkX3RhYmxlOwo+ID4gK307Cj4gPiArCj4gPiArc3RhdGljIGlubGluZSBzdHJ1Y3QgcGVjaV9k
-cml2ZXIgKnRvX3BlY2lfZHJpdmVyKHN0cnVjdCBkZXZpY2VfZHJpdmVyICpkKQo+ID4gK3sKPiA+
-ICvCoMKgwqDCoMKgwqDCoHJldHVybiBjb250YWluZXJfb2YoZCwgc3RydWN0IHBlY2lfZHJpdmVy
-LCBkcml2ZXIpOwo+ID4gK30KPiA+ICsKPiA+ICtpbnQgX19wZWNpX2RyaXZlcl9yZWdpc3Rlcihz
-dHJ1Y3QgcGVjaV9kcml2ZXIgKmRyaXZlciwgc3RydWN0IG1vZHVsZQo+ID4gKm93bmVyLAo+ID4g
-K8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNvbnN0
-IGNoYXIgKm1vZF9uYW1lKTsKPiA+ICsvKioKPiA+ICsgKiBwZWNpX2RyaXZlcl9yZWdpc3Rlcigp
-IC0gcmVnaXN0ZXIgUEVDSSBkcml2ZXIKPiA+ICsgKiBAZHJpdmVyOiB0aGUgZHJpdmVyIHRvIGJl
-IHJlZ2lzdGVyZWQKPiA+ICsgKiBAb3duZXI6IG93bmVyIG1vZHVsZSBvZiB0aGUgZHJpdmVyIGJl
-aW5nIHJlZ2lzdGVyZWQKPiA+ICsgKiBAbW9kX25hbWU6IG1vZHVsZSBuYW1lIHN0cmluZwo+ID4g
-KyAqCj4gPiArICogUEVDSSBkcml2ZXJzIHRoYXQgZG9uJ3QgbmVlZCB0byBkbyBhbnl0aGluZyBz
-cGVjaWFsIGluIG1vZHVsZSBpbml0Cj4gPiBzaG91bGQKPiA+ICsgKiB1c2UgdGhlIGNvbnZlbmll
-bmNlICJtb2R1bGVfcGVjaV9kcml2ZXIiIG1hY3JvIGluc3RlYWQKPiA+ICsgKgo+ID4gKyAqIFJl
-dHVybjogemVybyBvbiBzdWNjZXNzLCBlbHNlIGEgbmVnYXRpdmUgZXJyb3IgY29kZS4KPiA+ICsg
-Ki8KPiA+ICsjZGVmaW5lIHBlY2lfZHJpdmVyX3JlZ2lzdGVyKGRyaXZlcikgXAo+ID4gK8KgwqDC
-oMKgwqDCoMKgX19wZWNpX2RyaXZlcl9yZWdpc3Rlcihkcml2ZXIsIFRISVNfTU9EVUxFLCBLQlVJ
-TERfTU9ETkFNRSkKPiA+ICt2b2lkIHBlY2lfZHJpdmVyX3VucmVnaXN0ZXIoc3RydWN0IHBlY2lf
-ZHJpdmVyICpkcml2ZXIpOwo+ID4gKwo+ID4gKy8qKgo+ID4gKyAqIG1vZHVsZV9wZWNpX2RyaXZl
-cigpIC0gSGVscGVyIG1hY3JvIGZvciByZWdpc3RlcmluZyBhIG1vZHVsYXIgUEVDSQo+ID4gZHJp
-dmVyCj4gPiArICogQF9fcGVjaV9kcml2ZXI6IHBlY2lfZHJpdmVyIHN0cnVjdAo+ID4gKyAqCj4g
-PiArICogSGVscGVyIG1hY3JvIGZvciBQRUNJIGRyaXZlcnMgd2hpY2ggZG8gbm90IGRvIGFueXRo
-aW5nIHNwZWNpYWwgaW4gbW9kdWxlCj4gPiArICogaW5pdC9leGl0LiBUaGlzIGVsaW1pbmF0ZXMg
-YSBsb3Qgb2YgYm9pbGVycGxhdGUuIEVhY2ggbW9kdWxlIG1heSBvbmx5Cj4gPiArICogdXNlIHRo
-aXMgbWFjcm8gb25jZSwgYW5kIGNhbGxpbmcgaXQgcmVwbGFjZXMgbW9kdWxlX2luaXQoKSBhbmQK
-PiA+IG1vZHVsZV9leGl0KCkKPiA+ICsgKi8KPiA+ICsjZGVmaW5lIG1vZHVsZV9wZWNpX2RyaXZl
-cihfX3BlY2lfZHJpdmVyKSBcCj4gPiArwqDCoMKgwqDCoMKgwqBtb2R1bGVfZHJpdmVyKF9fcGVj
-aV9kcml2ZXIsIHBlY2lfZHJpdmVyX3JlZ2lzdGVyLAo+ID4gcGVjaV9kcml2ZXJfdW5yZWdpc3Rl
-cikKPiA+ICsKPiA+IGV4dGVybiBzdHJ1Y3QgZGV2aWNlX3R5cGUgcGVjaV9jb250cm9sbGVyX3R5
-cGU7Cj4gPiAKPiA+IGludCBwZWNpX2NvbnRyb2xsZXJfc2Nhbl9kZXZpY2VzKHN0cnVjdCBwZWNp
-X2NvbnRyb2xsZXIgKmNvbnRyb2xsZXIpOwo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvcGVjaS9y
-ZXF1ZXN0LmMgYi9kcml2ZXJzL3BlY2kvcmVxdWVzdC5jCj4gPiBpbmRleCA3OGNlZTUxZGZhZTEu
-LjQ4MzU0NDU1YjU1NCAxMDA2NDQKPiA+IC0tLSBhL2RyaXZlcnMvcGVjaS9yZXF1ZXN0LmMKPiA+
-ICsrKyBiL2RyaXZlcnMvcGVjaS9yZXF1ZXN0LmMKPiA+IEBAIC0xLDEzICsxLDE0MiBAQAo+ID4g
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAtb25seQo+ID4gLy8gQ29weXJpZ2h0
-IChjKSAyMDIxIEludGVsIENvcnBvcmF0aW9uCj4gPiAKPiA+ICsjaW5jbHVkZSA8bGludXgvYnVn
-Lmg+Cj4gPiAjaW5jbHVkZSA8bGludXgvZXhwb3J0Lmg+Cj4gPiAjaW5jbHVkZSA8bGludXgvcGVj
-aS5oPgo+ID4gI2luY2x1ZGUgPGxpbnV4L3NsYWIuaD4KPiA+ICNpbmNsdWRlIDxsaW51eC90eXBl
-cy5oPgo+ID4gCj4gPiArI2luY2x1ZGUgPGFzbS91bmFsaWduZWQuaD4KPiA+ICsKPiA+ICNpbmNs
-dWRlICJpbnRlcm5hbC5oIgo+ID4gCj4gPiArI2RlZmluZSBQRUNJX0dFVF9ESUJfQ01EwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgMHhmNwo+ID4gKyNkZWZpbmXCoCBQRUNJX0dFVF9ESUJf
-V1JfTEVOwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDEKPiA+ICsjZGVmaW5lwqAgUEVDSV9HRVRfRElC
-X1JEX0xFTsKgwqDCoMKgwqDCoMKgwqDCoMKgwqA4Cj4gPiArCj4gPiArI2RlZmluZSBQRUNJX1JE
-UEtHQ0ZHX0NNRMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAweGExCj4gPiArI2RlZmluZcKg
-IFBFQ0lfUkRQS0dDRkdfV1JJVEVfTEVOwqDCoMKgwqDCoMKgwqA1Cj4gPiArI2RlZmluZcKgIFBF
-Q0lfUkRQS0dDRkdfUkVBRF9MRU5fQkFTRcKgwqDCoDEKPiA+ICsjZGVmaW5lIFBFQ0lfV1JQS0dD
-RkdfQ01EwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDB4YTUKPiA+ICsjZGVmaW5lwqAgUEVD
-SV9XUlBLR0NGR19XUklURV9MRU5fQkFTRcKgwqA2Cj4gPiArI2RlZmluZcKgIFBFQ0lfV1JQS0dD
-RkdfUkVBRF9MRU7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDEKPiA+ICsKPiA+ICsv
-KiBEZXZpY2UgU3BlY2lmaWMgQ29tcGxldGlvbiBDb2RlIChDQykgRGVmaW5pdGlvbiAqLwo+ID4g
-KyNkZWZpbmUgUEVDSV9DQ19TVUNDRVNTwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDB4NDAKPiA+ICsjZGVmaW5lIFBFQ0lfQ0Nf
-TkVFRF9SRVRSWcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDB4ODAK
-PiA+ICsjZGVmaW5lIFBFQ0lfQ0NfT1VUX09GX1JFU09VUkNFwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgMHg4MQo+ID4gKyNkZWZpbmUgUEVDSV9DQ19VTkFW
-QUlMX1JFU09VUkNFwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgMHg4Mgo+ID4gKyNkZWZp
-bmUgUEVDSV9DQ19JTlZBTElEX1JFUcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAweDkwCj4gPiArI2RlZmluZSBQRUNJX0NDX01DQV9FUlJPUsKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgMHg5MQo+ID4gKyNkZWZpbmUgUEVDSV9DQ19DQVRB
-U1RST1BISUNfTUNBX0VSUk9SwqDCoMKgwqDCoMKgwqDCoMKgMHg5Mwo+ID4gKyNkZWZpbmUgUEVD
-SV9DQ19GQVRBTF9NQ0FfRVJST1LCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAweDk0Cj4gPiArI2RlZmluZSBQRUNJX0NDX1BBUklUWV9FUlJfR1BTQl9PUl9Q
-TVNCwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAweDk4Cj4gPiArI2RlZmluZSBQRUNJ
-X0NDX1BBUklUWV9FUlJfR1BTQl9PUl9QTVNCX0lFUlLCoMKgwqAweDlCCj4gPiArI2RlZmluZSBQ
-RUNJX0NDX1BBUklUWV9FUlJfR1BTQl9PUl9QTVNCX01DQcKgwqDCoMKgMHg5Qwo+ID4gKwo+ID4g
-KyNkZWZpbmUgUEVDSV9SRVRSWV9CSVTCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-QklUKDApCj4gPiArCj4gPiArI2RlZmluZSBQRUNJX1JFVFJZX1RJTUVPVVTCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoG1zZWNzX3RvX2ppZmZpZXMoNzAwKQo+ID4gKyNkZWZpbmUgUEVDSV9SRVRS
-WV9JTlRFUlZBTF9NSU7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoG1zZWNzX3RvX2pp
-ZmZpZXMoMSkKPiA+ICsjZGVmaW5lIFBFQ0lfUkVUUllfSU5URVJWQUxfTUFYwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqBtc2Vjc190b19qaWZmaWVzKDEyOCkKPiA+ICsKPiA+ICtzdGF0
-aWMgdTggcGVjaV9yZXF1ZXN0X2RhdGFfY2Moc3RydWN0IHBlY2lfcmVxdWVzdCAqcmVxKQo+ID4g
-K3sKPiA+ICvCoMKgwqDCoMKgwqDCoHJldHVybiByZXEtPnJ4LmJ1ZlswXTsKPiA+ICt9Cj4gPiAr
-Cj4gPiArLyoqCj4gPiArICogcGVjaV9yZXF1ZXN0X3N0YXR1cygpIC0gcmV0dXJuIC1lcnJubyBi
-YXNlZCBvbiBQRUNJIGNvbXBsZXRpb24gY29kZQo+ID4gKyAqIEByZXE6IHRoZSBQRUNJIHJlcXVl
-c3QgdGhhdCBjb250YWlucyByZXNwb25zZSBkYXRhIHdpdGggY29tcGxldGlvbiBjb2RlCj4gPiAr
-ICoKPiA+ICsgKiBJdCBjYW4ndCBiZSB1c2VkIGZvciBQaW5nKCksIEdldERJQigpIGFuZCBHZXRU
-ZW1wKCkgLSBmb3IgdGhvc2UgY29tbWFuZHMKPiA+IHdlCj4gPiArICogZG9uJ3QgZXhwZWN0IGNv
-bXBsZXRpb24gY29kZSBpbiB0aGUgcmVzcG9uc2UuCj4gPiArICoKPiA+ICsgKiBSZXR1cm46IC1l
-cnJubwo+ID4gKyAqLwo+ID4gK2ludCBwZWNpX3JlcXVlc3Rfc3RhdHVzKHN0cnVjdCBwZWNpX3Jl
-cXVlc3QgKnJlcSkKPiA+ICt7Cj4gPiArwqDCoMKgwqDCoMKgwqB1OCBjYyA9IHBlY2lfcmVxdWVz
-dF9kYXRhX2NjKHJlcSk7Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKgwqBpZiAoY2MgIT0gUEVDSV9D
-Q19TVUNDRVNTKQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGRldl9kYmcoJnJl
-cS0+ZGV2aWNlLT5kZXYsICJyZXQ6ICUjMDJ4XG4iLCBjYyk7Cj4gPiArCj4gPiArwqDCoMKgwqDC
-oMKgwqBzd2l0Y2ggKGNjKSB7Cj4gPiArwqDCoMKgwqDCoMKgwqBjYXNlIFBFQ0lfQ0NfU1VDQ0VT
-UzoKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqByZXR1cm4gMDsKPiA+ICvCoMKg
-wqDCoMKgwqDCoGNhc2UgUEVDSV9DQ19ORUVEX1JFVFJZOgo+ID4gK8KgwqDCoMKgwqDCoMKgY2Fz
-ZSBQRUNJX0NDX09VVF9PRl9SRVNPVVJDRToKPiA+ICvCoMKgwqDCoMKgwqDCoGNhc2UgUEVDSV9D
-Q19VTkFWQUlMX1JFU09VUkNFOgo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHJl
-dHVybiAtRUFHQUlOOwo+ID4gK8KgwqDCoMKgwqDCoMKgY2FzZSBQRUNJX0NDX0lOVkFMSURfUkVR
-Ogo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHJldHVybiAtRUlOVkFMOwo+ID4g
-K8KgwqDCoMKgwqDCoMKgY2FzZSBQRUNJX0NDX01DQV9FUlJPUjoKPiA+ICvCoMKgwqDCoMKgwqDC
-oGNhc2UgUEVDSV9DQ19DQVRBU1RST1BISUNfTUNBX0VSUk9SOgo+ID4gK8KgwqDCoMKgwqDCoMKg
-Y2FzZSBQRUNJX0NDX0ZBVEFMX01DQV9FUlJPUjoKPiA+ICvCoMKgwqDCoMKgwqDCoGNhc2UgUEVD
-SV9DQ19QQVJJVFlfRVJSX0dQU0JfT1JfUE1TQjoKPiA+ICvCoMKgwqDCoMKgwqDCoGNhc2UgUEVD
-SV9DQ19QQVJJVFlfRVJSX0dQU0JfT1JfUE1TQl9JRVJSOgo+ID4gK8KgwqDCoMKgwqDCoMKgY2Fz
-ZSBQRUNJX0NDX1BBUklUWV9FUlJfR1BTQl9PUl9QTVNCX01DQToKPiA+ICvCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqByZXR1cm4gLUVJTzsKPiA+ICvCoMKgwqDCoMKgwqDCoH0KPiA+ICsK
-PiA+ICvCoMKgwqDCoMKgwqDCoFdBUk5fT05DRSgxLCAiVW5rbm93biBQRUNJIGNvbXBsZXRpb24g
-Y29kZTogJSMwMnhcbiIsIGNjKTsKPiA+ICsKPiA+ICvCoMKgwqDCoMKgwqDCoHJldHVybiAtRUlP
-Owo+ID4gK30KPiA+ICtFWFBPUlRfU1lNQk9MX05TX0dQTChwZWNpX3JlcXVlc3Rfc3RhdHVzLCBQ
-RUNJKTsKPiA+ICsKPiA+ICtzdGF0aWMgaW50IHBlY2lfcmVxdWVzdF94ZmVyKHN0cnVjdCBwZWNp
-X3JlcXVlc3QgKnJlcSkKPiA+ICt7Cj4gPiArwqDCoMKgwqDCoMKgwqBzdHJ1Y3QgcGVjaV9kZXZp
-Y2UgKmRldmljZSA9IHJlcS0+ZGV2aWNlOwo+ID4gK8KgwqDCoMKgwqDCoMKgc3RydWN0IHBlY2lf
-Y29udHJvbGxlciAqY29udHJvbGxlciA9IGRldmljZS0+Y29udHJvbGxlcjsKPiA+ICvCoMKgwqDC
-oMKgwqDCoGludCByZXQ7Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKgwqBtdXRleF9sb2NrKCZjb250
-cm9sbGVyLT5idXNfbG9jayk7Cj4gPiArwqDCoMKgwqDCoMKgwqByZXQgPSBjb250cm9sbGVyLT54
-ZmVyKGNvbnRyb2xsZXIsIGRldmljZS0+YWRkciwgcmVxKTsKPiA+ICvCoMKgwqDCoMKgwqDCoG11
-dGV4X3VubG9jaygmY29udHJvbGxlci0+YnVzX2xvY2spOwo+ID4gKwo+ID4gK8KgwqDCoMKgwqDC
-oMKgcmV0dXJuIHJldDsKPiA+ICt9Cj4gPiArCj4gPiArc3RhdGljIGludCBwZWNpX3JlcXVlc3Rf
-eGZlcl9yZXRyeShzdHJ1Y3QgcGVjaV9yZXF1ZXN0ICpyZXEpCj4gPiArewo+ID4gK8KgwqDCoMKg
-wqDCoMKgbG9uZyB3YWl0X2ludGVydmFsID0gUEVDSV9SRVRSWV9JTlRFUlZBTF9NSU47Cj4gPiAr
-wqDCoMKgwqDCoMKgwqBzdHJ1Y3QgcGVjaV9kZXZpY2UgKmRldmljZSA9IHJlcS0+ZGV2aWNlOwo+
-ID4gK8KgwqDCoMKgwqDCoMKgc3RydWN0IHBlY2lfY29udHJvbGxlciAqY29udHJvbGxlciA9IGRl
-dmljZS0+Y29udHJvbGxlcjsKPiA+ICvCoMKgwqDCoMKgwqDCoHVuc2lnbmVkIGxvbmcgc3RhcnQg
-PSBqaWZmaWVzOwo+ID4gK8KgwqDCoMKgwqDCoMKgaW50IHJldDsKPiA+ICsKPiA+ICvCoMKgwqDC
-oMKgwqDCoC8qIERvbid0IHRyeSB0byB1c2UgaXQgZm9yIHBpbmcgKi8KPiA+ICvCoMKgwqDCoMKg
-wqDCoGlmIChXQVJOX09OKCFyZXEtPnJ4LmJ1ZikpCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgcmV0dXJuIDA7Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKgwqBkbyB7Cj4gPiArwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmV0ID0gcGVjaV9yZXF1ZXN0X3hmZXIocmVxKTsK
-PiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpZiAocmV0KSB7Cj4gPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGRldl9kYmcoJmNvbnRyb2xs
-ZXItPmRldiwgInhmZXIgZXJyb3I6ICVkXG4iLCByZXQpOwo+ID4gK8KgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqByZXR1cm4gcmV0Owo+ID4gK8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoH0KPiA+ICsKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqBpZiAocGVjaV9yZXF1ZXN0X3N0YXR1cyhyZXEpICE9IC1FQUdBSU4pCj4gPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHJldHVybiAwOwo+ID4gKwo+
-ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoC8qIFNldCB0aGUgcmV0cnkgYml0IHRv
-IGluZGljYXRlIGEgcmV0cnkgYXR0ZW1wdCAqLwo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoHJlcS0+dHguYnVmWzFdIHw9IFBFQ0lfUkVUUllfQklUOwo+ID4gKwo+ID4gK8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGlmIChzY2hlZHVsZV90aW1lb3V0X2ludGVycnVwdGli
-bGUod2FpdF9pbnRlcnZhbCkpCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoHJldHVybiAtRVJFU1RBUlRTWVM7Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgd2FpdF9pbnRlcnZhbCAqPSAyOwo+ID4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoGlmICh3YWl0X2ludGVydmFsID4gUEVDSV9SRVRSWV9JTlRFUlZBTF9N
-QVgpCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHdh
-aXRfaW50ZXJ2YWwgPSBQRUNJX1JFVFJZX0lOVEVSVkFMX01BWDsKPiAKPiB3YWl0X2ludGVydmFs
-ID0gbWluKHdhaXRfaW50ZXJ2YWwgKiAyLCBQRUNJX1JFVFJZX0lOVEVSVkFMX01BWCkgPwoKQWNr
-LgoKPiAKPiA+ICvCoMKgwqDCoMKgwqDCoH0gd2hpbGUgKHRpbWVfYmVmb3JlKGppZmZpZXMsIHN0
-YXJ0ICsgUEVDSV9SRVRSWV9USU1FT1VUKSk7Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKgwqBkZXZf
-ZGJnKCZjb250cm9sbGVyLT5kZXYsICJyZXF1ZXN0IHRpbWVkIG91dFxuIik7Cj4gPiArCj4gPiAr
-wqDCoMKgwqDCoMKgwqByZXR1cm4gLUVUSU1FRE9VVDsKPiA+ICt9Cj4gPiArCj4gPiAvKioKPiA+
-IMKgKiBwZWNpX3JlcXVlc3RfYWxsb2MoKSAtIGFsbG9jYXRlICZzdHJ1Y3QgcGVjaV9yZXF1ZXN0
-IHdpdGggYnVmZmVycyB3aXRoCj4gPiBnaXZlbiBsZW5ndGhzCj4gPiDCoCogQGRldmljZTogUEVD
-SSBkZXZpY2UgdG8gd2hpY2ggcmVxdWVzdCBpcyBnb2luZyB0byBiZSBzZW50Cj4gPiBAQCAtNzIs
-MyArMjAxLDkxIEBAIHZvaWQgcGVjaV9yZXF1ZXN0X2ZyZWUoc3RydWN0IHBlY2lfcmVxdWVzdCAq
-cmVxKQo+ID4gwqDCoMKgwqDCoMKgwqDCoGtmcmVlKHJlcSk7Cj4gPiB9Cj4gPiBFWFBPUlRfU1lN
-Qk9MX05TX0dQTChwZWNpX3JlcXVlc3RfZnJlZSwgUEVDSSk7Cj4gPiArCj4gPiArc3RydWN0IHBl
-Y2lfcmVxdWVzdCAqcGVjaV9nZXRfZGliKHN0cnVjdCBwZWNpX2RldmljZSAqZGV2aWNlKQo+ID4g
-K3sKPiA+ICvCoMKgwqDCoMKgwqDCoHN0cnVjdCBwZWNpX3JlcXVlc3QgKnJlcTsKPiA+ICvCoMKg
-wqDCoMKgwqDCoGludCByZXQ7Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKgwqByZXEgPSBwZWNpX3Jl
-cXVlc3RfYWxsb2MoZGV2aWNlLCBQRUNJX0dFVF9ESUJfV1JfTEVOLAo+ID4gUEVDSV9HRVRfRElC
-X1JEX0xFTik7Cj4gPiArwqDCoMKgwqDCoMKgwqBpZiAoIXJlcSkKPiA+ICvCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqByZXR1cm4gRVJSX1BUUigtRU5PTUVNKTsKPiA+ICsKPiA+ICvCoMKg
-wqDCoMKgwqDCoHJlcS0+dHguYnVmWzBdID0gUEVDSV9HRVRfRElCX0NNRDsKPiA+ICsKPiA+ICvC
-oMKgwqDCoMKgwqDCoHJldCA9IHBlY2lfcmVxdWVzdF94ZmVyKHJlcSk7Cj4gPiArwqDCoMKgwqDC
-oMKgwqBpZiAocmV0KSB7Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcGVjaV9y
-ZXF1ZXN0X2ZyZWUocmVxKTsKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqByZXR1
-cm4gRVJSX1BUUihyZXQpOwo+ID4gK8KgwqDCoMKgwqDCoMKgfQo+ID4gKwo+ID4gK8KgwqDCoMKg
-wqDCoMKgcmV0dXJuIHJlcTsKPiA+ICt9Cj4gPiArRVhQT1JUX1NZTUJPTF9OU19HUEwocGVjaV9n
-ZXRfZGliLCBQRUNJKTsKPiA+ICsKPiA+ICtzdGF0aWMgc3RydWN0IHBlY2lfcmVxdWVzdCAqCj4g
-PiArX19wa2dfY2ZnX3JlYWQoc3RydWN0IHBlY2lfZGV2aWNlICpkZXZpY2UsIHU4IGluZGV4LCB1
-MTYgcGFyYW0sIHU4IGxlbikKPiA+ICt7Cj4gPiArwqDCoMKgwqDCoMKgwqBzdHJ1Y3QgcGVjaV9y
-ZXF1ZXN0ICpyZXE7Cj4gPiArwqDCoMKgwqDCoMKgwqBpbnQgcmV0Owo+ID4gKwo+ID4gK8KgwqDC
-oMKgwqDCoMKgcmVxID0gcGVjaV9yZXF1ZXN0X2FsbG9jKGRldmljZSwgUEVDSV9SRFBLR0NGR19X
-UklURV9MRU4sCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgUEVDSV9SRFBLR0NGR19SRUFEX0xFTl9CQVNFICsgbGVuKTsK
-PiA+ICvCoMKgwqDCoMKgwqDCoGlmICghcmVxKQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoHJldHVybiBFUlJfUFRSKC1FTk9NRU0pOwo+ID4gKwo+ID4gK8KgwqDCoMKgwqDCoMKg
-cmVxLT50eC5idWZbMF0gPSBQRUNJX1JEUEtHQ0ZHX0NNRDsKPiA+ICvCoMKgwqDCoMKgwqDCoHJl
-cS0+dHguYnVmWzFdID0gMDsKPiA+ICvCoMKgwqDCoMKgwqDCoHJlcS0+dHguYnVmWzJdID0gaW5k
-ZXg7Cj4gPiArwqDCoMKgwqDCoMKgwqBwdXRfdW5hbGlnbmVkX2xlMTYocGFyYW0sICZyZXEtPnR4
-LmJ1ZlszXSk7Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKgwqByZXQgPSBwZWNpX3JlcXVlc3RfeGZl
-cl9yZXRyeShyZXEpOwo+ID4gK8KgwqDCoMKgwqDCoMKgaWYgKHJldCkgewo+ID4gK8KgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoHBlY2lfcmVxdWVzdF9mcmVlKHJlcSk7Cj4gPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmV0dXJuIEVSUl9QVFIocmV0KTsKPiA+ICvCoMKgwqDC
-oMKgwqDCoH0KPiA+ICsKPiA+ICvCoMKgwqDCoMKgwqDCoHJldHVybiByZXE7Cj4gPiArfQo+ID4g
-Kwo+ID4gK3U4IHBlY2lfcmVxdWVzdF9kYXRhX3JlYWRiKHN0cnVjdCBwZWNpX3JlcXVlc3QgKnJl
-cSkKPiA+ICt7Cj4gPiArwqDCoMKgwqDCoMKgwqByZXR1cm4gcmVxLT5yeC5idWZbMV07Cj4gPiAr
-fQo+ID4gK0VYUE9SVF9TWU1CT0xfTlNfR1BMKHBlY2lfcmVxdWVzdF9kYXRhX3JlYWRiLCBQRUNJ
-KTsKPiA+ICsKPiA+ICt1MTYgcGVjaV9yZXF1ZXN0X2RhdGFfcmVhZHcoc3RydWN0IHBlY2lfcmVx
-dWVzdCAqcmVxKQo+ID4gK3sKPiA+ICvCoMKgwqDCoMKgwqDCoHJldHVybiBnZXRfdW5hbGlnbmVk
-X2xlMTYoJnJlcS0+cnguYnVmWzFdKTsKPiA+ICt9Cj4gPiArRVhQT1JUX1NZTUJPTF9OU19HUEwo
-cGVjaV9yZXF1ZXN0X2RhdGFfcmVhZHcsIFBFQ0kpOwo+ID4gKwo+ID4gK3UzMiBwZWNpX3JlcXVl
-c3RfZGF0YV9yZWFkbChzdHJ1Y3QgcGVjaV9yZXF1ZXN0ICpyZXEpCj4gPiArewo+ID4gK8KgwqDC
-oMKgwqDCoMKgcmV0dXJuIGdldF91bmFsaWduZWRfbGUzMigmcmVxLT5yeC5idWZbMV0pOwo+ID4g
-K30KPiA+ICtFWFBPUlRfU1lNQk9MX05TX0dQTChwZWNpX3JlcXVlc3RfZGF0YV9yZWFkbCwgUEVD
-SSk7Cj4gPiArCj4gPiArdTY0IHBlY2lfcmVxdWVzdF9kYXRhX3JlYWRxKHN0cnVjdCBwZWNpX3Jl
-cXVlc3QgKnJlcSkKPiA+ICt7Cj4gPiArwqDCoMKgwqDCoMKgwqByZXR1cm4gZ2V0X3VuYWxpZ25l
-ZF9sZTY0KCZyZXEtPnJ4LmJ1ZlsxXSk7Cj4gPiArfQo+ID4gK0VYUE9SVF9TWU1CT0xfTlNfR1BM
-KHBlY2lfcmVxdWVzdF9kYXRhX3JlYWRxLCBQRUNJKTsKPiA+ICsKPiA+ICt1NjQgcGVjaV9yZXF1
-ZXN0X2RhdGFfZGliKHN0cnVjdCBwZWNpX3JlcXVlc3QgKnJlcSkKPiA+ICt7Cj4gPiArwqDCoMKg
-wqDCoMKgwqByZXR1cm4gZ2V0X3VuYWxpZ25lZF9sZTY0KCZyZXEtPnJ4LmJ1ZlswXSk7Cj4gPiAr
-fQo+ID4gK0VYUE9SVF9TWU1CT0xfTlNfR1BMKHBlY2lfcmVxdWVzdF9kYXRhX2RpYiwgUEVDSSk7
-Cj4gPiArCj4gPiArI2RlZmluZSBfX3JlYWRfcGtnX2NvbmZpZyh4LCB0eXBlKSBcCj4gPiArc3Ry
-dWN0IHBlY2lfcmVxdWVzdCAqcGVjaV9wa2dfY2ZnXyMjeChzdHJ1Y3QgcGVjaV9kZXZpY2UgKmRl
-dmljZSwgdTggaW5kZXgsCj4gPiB1MTYgcGFyYW0pIFwKPiA+ICt7IFwKPiA+ICvCoMKgwqDCoMKg
-wqDCoHJldHVybiBfX3BrZ19jZmdfcmVhZChkZXZpY2UsIGluZGV4LCBwYXJhbSwgc2l6ZW9mKHR5
-cGUpKTsgXAo+ID4gK30gXAo+IAo+IElzIHRoZXJlIGEgcmVhc29uIGZvciB0aGlzIHBhcnRpY3Vs
-YXIgQVBJP8KgIEknZCB0aGluayBhIG1vcmUgbmF0dXJhbCBvbmUKPiB0aGF0IHdvdWxkIG9mZmxv
-YWQgYSBiaXQgb2YgYm9pbGVycGxhdGUgZnJvbSBjYWxsZXJzIHdvdWxkIGxvb2sgbW9yZSBsaWtl
-Cj4gCj4gaW50IHBlY2lfcGtnX2NmZ18jI3goc3RydWN0IHBlY2lfZGV2aWNlICpkZXZpY2UsIHU4
-IGluZGV4LCB1MTYgcGFyYW0sIHR5cGUKPiAqb3V0cCksCj4gCj4gcmV0dXJuaW5nIHBlY2lfcmVx
-dWVzdF9zdGF0dXMoKSBhbmQgd3JpdGluZyB0aGUgcmVxdWVzdGVkIGRhdGEgdG8gKm91dHAKPiBp
-ZiB0aGF0IHN0YXR1cyBpcyB6ZXJvLgoKV2UgcHJvdmlkZSBhIGNvbnNpc3RlbnQgbG93ZXItbGV2
-ZWwgQVBJIGZvciAiaW50ZXJuYWwiIHVzYWdlIChmb3IgY29kZSBpbgpkcml2ZXJzL3BlY2kpLCBv
-cGVyYXRpbmcgb24gcmVxdWVzdHMgYW5kIGFsbG93aW5nIGFjY2VzcyB0byBmdWxsIHJlcXVlc3Qs
-CmluY2x1ZGluZyBjb21wbGV0aW9uIGNvZGUsIGV0Yy4KVGhlbiAtIHdlIHdyYXAgdGhhdCB3aXRo
-ICJleHRlcm5hbCIgQVBJIChlLmcuIGluY2x1ZGUvbGludXgvcGVjaS1jcHUuaCkgd2hpY2ggaXMK
-dGhlICJtb3JlIG5hdHVyYWwiIG9uZSAtIGl0IHB1bGxzIG91dCB0aGUgbmVjZXNzYXJ5IGRhdGEg
-ZnJvbSByZXF1ZXN0cywgZGVhbHMKd2l0aCBlcnJvciBoYW5kbGluZyBpbiBhbiBhcHByb3ByaWF0
-ZSB3YXkgY29udmVydGluZyBjb21wbGV0aW9uIGNvZGVzIHRvIGVycm5vCnZhbHVlcyAoYWJzdHJh
-Y3RpbmcgYXdheSB0aGUgUEVDSS1zcGVjaWZpYyBkZXRhaWxzKS4KCj4gCj4gPiArRVhQT1JUX1NZ
-TUJPTF9OU19HUEwocGVjaV9wa2dfY2ZnXyMjeCwgUEVDSSkKPiA+ICsKPiA+ICtfX3JlYWRfcGtn
-X2NvbmZpZyhyZWFkYiwgdTgpOwo+ID4gK19fcmVhZF9wa2dfY29uZmlnKHJlYWR3LCB1MTYpOwo+
-ID4gK19fcmVhZF9wa2dfY29uZmlnKHJlYWRsLCB1MzIpOwo+ID4gK19fcmVhZF9wa2dfY29uZmln
-KHJlYWRxLCB1NjQpOwo+ID4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvbGludXgvcGVjaS5oIGIvaW5j
-bHVkZS9saW51eC9wZWNpLmgKPiA+IGluZGV4IGNkZjMwMDgzMjFmZC4uZjlmMzdiODc0MDExIDEw
-MDY0NAo+ID4gLS0tIGEvaW5jbHVkZS9saW51eC9wZWNpLmgKPiA+ICsrKyBiL2luY2x1ZGUvbGlu
-dXgvcGVjaS5oCj4gPiBAQCAtOSw2ICs5LDE0IEBACj4gPiAjaW5jbHVkZSA8bGludXgvbXV0ZXgu
-aD4KPiA+ICNpbmNsdWRlIDxsaW51eC90eXBlcy5oPgo+ID4gCj4gPiArI2RlZmluZSBQRUNJX1BD
-U19QS0dfSUTCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAw
-wqAgLyogUGFja2FnZSBJZGVudGlmaWVyCj4gPiBSZWFkICovCj4gPiArI2RlZmluZcKgIFBFQ0lf
-UEtHX0lEX0NQVV9JRMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDB4MDAwMMKgIC8qIENQVUlEIElu
-Zm8gKi8KPiA+ICsjZGVmaW5lwqAgUEVDSV9QS0dfSURfUExBVEZPUk1fSUTCoMKgwqDCoMKgwqDC
-oDB4MDAwMcKgIC8qIFBsYXRmb3JtIElEICovCj4gPiArI2RlZmluZcKgIFBFQ0lfUEtHX0lEX0RF
-VklDRV9JRMKgwqDCoMKgwqDCoMKgwqDCoDB4MDAwMsKgIC8qIFVuY29yZSBEZXZpY2UgSUQgKi8K
-PiA+ICsjZGVmaW5lwqAgUEVDSV9QS0dfSURfTUFYX1RIUkVBRF9JRMKgwqDCoMKgwqAweDAwMDPC
-oCAvKiBNYXggVGhyZWFkIElEICovCj4gPiArI2RlZmluZcKgIFBFQ0lfUEtHX0lEX01JQ1JPQ09E
-RV9SRVbCoMKgwqDCoMKgMHgwMDA0wqAgLyogQ1BVIE1pY3JvY29kZSBVcGRhdGUKPiA+IFJldmlz
-aW9uICovCj4gPiArI2RlZmluZcKgIFBFQ0lfUEtHX0lEX01DQV9FUlJPUl9MT0fCoMKgwqDCoMKg
-MHgwMDA1wqAgLyogTWFjaGluZSBDaGVjayBTdGF0dXMgKi8KPiA+ICsKPiA+IHN0cnVjdCBwZWNp
-X3JlcXVlc3Q7Cj4gPiAKPiA+IC8qKgo+ID4gQEAgLTQxLDYgKzQ5LDExIEBAIHN0YXRpYyBpbmxp
-bmUgc3RydWN0IHBlY2lfY29udHJvbGxlcgo+ID4gKnRvX3BlY2lfY29udHJvbGxlcih2b2lkICpk
-KQo+ID4gwqAqIHN0cnVjdCBwZWNpX2RldmljZSAtIFBFQ0kgZGV2aWNlCj4gPiDCoCogQGRldjog
-ZGV2aWNlIG9iamVjdCB0byByZWdpc3RlciBQRUNJIGRldmljZSB0byB0aGUgZGV2aWNlIG1vZGVs
-Cj4gPiDCoCogQGNvbnRyb2xsZXI6IG1hbmFnZXMgdGhlIGJ1cyBzZWdtZW50IGhvc3RpbmcgdGhp
-cyBQRUNJIGRldmljZQo+ID4gKyAqIEBpbmZvOiBQRUNJIGRldmljZSBjaGFyYWN0ZXJpc3RpY3MK
-PiA+ICsgKiBAaW5mby5mYW1pbHk6IGRldmljZSBmYW1pbHkKPiA+ICsgKiBAaW5mby5tb2RlbDog
-ZGV2aWNlIG1vZGVsCj4gPiArICogQGluZm8ucGVjaV9yZXZpc2lvbjogUEVDSSByZXZpc2lvbiBz
-dXBwb3J0ZWQgYnkgdGhlIFBFQ0kgZGV2aWNlCj4gPiArICogQGluZm8uc29ja2V0X2lkOiB0aGUg
-c29ja2V0IElEIHJlcHJlc2VudGVkIGJ5IHRoZSBQRUNJIGRldmljZQo+ID4gwqAqIEBhZGRyOiBh
-ZGRyZXNzIHVzZWQgb24gdGhlIFBFQ0kgYnVzIGNvbm5lY3RlZCB0byB0aGUgcGFyZW50IGNvbnRy
-b2xsZXIKPiA+IMKgKgo+ID4gwqAqIEEgcGVjaV9kZXZpY2UgaWRlbnRpZmllcyBhIHNpbmdsZSBk
-ZXZpY2UgKGkuZS4gQ1BVKSBjb25uZWN0ZWQgdG8gYSBQRUNJCj4gPiBidXMuCj4gPiBAQCAtNTAs
-NiArNjMsMTIgQEAgc3RhdGljIGlubGluZSBzdHJ1Y3QgcGVjaV9jb250cm9sbGVyCj4gPiAqdG9f
-cGVjaV9jb250cm9sbGVyKHZvaWQgKmQpCj4gPiBzdHJ1Y3QgcGVjaV9kZXZpY2Ugewo+ID4gwqDC
-oMKgwqDCoMKgwqDCoHN0cnVjdCBkZXZpY2UgZGV2Owo+ID4gwqDCoMKgwqDCoMKgwqDCoHN0cnVj
-dCBwZWNpX2NvbnRyb2xsZXIgKmNvbnRyb2xsZXI7Cj4gPiArwqDCoMKgwqDCoMKgwqBzdHJ1Y3Qg
-ewo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHUxNiBmYW1pbHk7Cj4gPiArwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgdTggbW9kZWw7Cj4gPiArwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgdTggcGVjaV9yZXZpc2lvbjsKPiAKPiBUaGlzIGZpZWxkIGdldHMgc2V0
-IGJ1dCBkb2Vzbid0IHNlZW0gdG8gZW5kIHVwIHVzZWQgYW55d2hlcmU7IGlzIGl0Cj4gdXNlZnVs
-PwoKVGhlIGlkZWEgd2FzIHRvIGhhdmUgbWVjaGFuaXNtIHRvIHZhbGlkYXRlIHRoZSByZXZpc2lv
-biBudW1iZXIgcmV0cmlldmVkIHZpYQpHZXRESUIgd2l0aCByZXZpc2lvbiBleHBlY3RlZCBieSB0
-aGUgZHJpdmVyIChzaW5jZSBpdCB1c2VzIGNvbW1hbmRzIHRoYXQgYXJlClBFQ0kgcmV2aXNpb24g
-ZGVwZW5kZW50KSwgYW5kIHdhcm4gaWYgdGhlcmUncyBhIG1pc21hdGNoLgpJdCBzZWVtcyBJIGRy
-b3BwZWQgdGhlICJ2YWxpZGF0ZSBhbmQgd2FybiIgcGFydCB3aGVuIGRvaW5nIHRoZSBzcGxpdCBv
-biB0aGUKc2VyaWVzLiBHb29kIGNhdGNoIC0gSSdsbCBmaXggdGhpcyBpbiB2Mi4KClRoYW5rcwot
-SXdvbmEKCj4gCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgdTggc29ja2V0X2lk
-Owo+ID4gK8KgwqDCoMKgwqDCoMKgfSBpbmZvOwo+ID4gwqDCoMKgwqDCoMKgwqDCoHU4IGFkZHI7
-Cj4gPiB9Owo+ID4gCj4gPiBkaWZmIC0tZ2l0IGEvbGliL0tjb25maWcgYi9saWIvS2NvbmZpZwo+
-ID4gaW5kZXggY2MyOGJjMWYyZDg0Li5hNzRlNmMwZmE3NWMgMTAwNjQ0Cj4gPiAtLS0gYS9saWIv
-S2NvbmZpZwo+ID4gKysrIGIvbGliL0tjb25maWcKPiA+IEBAIC03MjEsNSArNzIxLDUgQEAgY29u
-ZmlnIEFTTjFfRU5DT0RFUgo+ID4gCj4gPiBjb25maWcgR0VORVJJQ19MSUJfWDg2Cj4gPiDCoMKg
-wqDCoMKgwqDCoMKgYm9vbAo+ID4gLcKgwqDCoMKgwqDCoMKgZGVwZW5kcyBvbiBYODYKPiA+ICvC
-oMKgwqDCoMKgwqDCoGRlcGVuZHMgb24gWDg2IHx8IFBFQ0kKPiA+IMKgwqDCoMKgwqDCoMKgwqBk
-ZWZhdWx0IG4KPiA+IC0tIAo+ID4gMi4zMS4xCgo=
+On Thu, Jul 29, 2021 at 04:17:06PM CDT, Winiarska, Iwona wrote:
+>On Tue, 2021-07-27 at 20:10 +0000, Zev Weiss wrote:
+>> On Mon, Jul 12, 2021 at 05:04:42PM CDT, Iwona Winiarska wrote:
+>> > Here we're adding support for PECI device drivers, which unlike PECI
+>> > controller drivers are actually able to provide functionalities to
+>> > userspace.
+>> >
+>> > We're also extending peci_request API to allow querying more details
+>> > about PECI device (e.g. model/family), that's going to be used to find
+>> > a compatible peci_driver.
+>> >
+>> > Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
+>> > Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.co=
+m>
+>> > ---
+>> > drivers/peci/Kconfig=A0=A0=A0 |=A0=A0 1 +
+>> > drivers/peci/core.c=A0=A0=A0=A0 |=A0 49 +++++++++
+>> > drivers/peci/device.c=A0=A0 |=A0 99 ++++++++++++++++++
+>> > drivers/peci/internal.h |=A0 75 ++++++++++++++
+>> > drivers/peci/request.c=A0 | 217 ++++++++++++++++++++++++++++++++++++++=
+++
+>> > include/linux/peci.h=A0=A0=A0 |=A0 19 ++++
+>> > lib/Kconfig=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 |=A0=A0 2 +-
+>> > 7 files changed, 461 insertions(+), 1 deletion(-)
+>> >
+>> > diff --git a/drivers/peci/Kconfig b/drivers/peci/Kconfig
+>> > index 0d0ee8009713..27c31535843c 100644
+>> > --- a/drivers/peci/Kconfig
+>> > +++ b/drivers/peci/Kconfig
+>> > @@ -2,6 +2,7 @@
+>> >
+>> > menuconfig PECI
+>> > =A0=A0=A0=A0=A0=A0=A0=A0tristate "PECI support"
+>> > +=A0=A0=A0=A0=A0=A0=A0select GENERIC_LIB_X86
+>> > =A0=A0=A0=A0=A0=A0=A0=A0help
+>> > =A0=A0=A0=A0=A0=A0=A0=A0=A0 The Platform Environment Control Interface=
+ (PECI) is an interface
+>> > =A0=A0=A0=A0=A0=A0=A0=A0=A0 that provides a communication channel to I=
+ntel processors and
+>> > diff --git a/drivers/peci/core.c b/drivers/peci/core.c
+>> > index ae7a9572cdf3..94426b7f2618 100644
+>> > --- a/drivers/peci/core.c
+>> > +++ b/drivers/peci/core.c
+>> > @@ -143,8 +143,57 @@ void peci_controller_remove(struct peci_controlle=
+r
+>> > *controller)
+>> > }
+>> > EXPORT_SYMBOL_NS_GPL(peci_controller_remove, PECI);
+>> >
+>> > +static const struct peci_device_id *
+>> > +peci_bus_match_device_id(const struct peci_device_id *id, struct
+>> > peci_device *device)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0while (id->family !=3D 0) {
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0if (id->family =3D=3D de=
+vice->info.family &&
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 id->model =3D=
+=3D device->info.model)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+return id;
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0id++;
+>> > +=A0=A0=A0=A0=A0=A0=A0}
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return NULL;
+>> > +}
+>> > +
+>> > +static int peci_bus_device_match(struct device *dev, struct device_dr=
+iver
+>> > *drv)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_device *device =3D to_peci_device(de=
+v);
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_driver *peci_drv =3D to_peci_driver(=
+drv);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0if (dev->type !=3D &peci_device_type)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return 0;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0if (peci_bus_match_device_id(peci_drv->id_table,=
+ device))
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return 1;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return 0;
+>> > +}
+>> > +
+>> > +static int peci_bus_device_probe(struct device *dev)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_device *device =3D to_peci_device(de=
+v);
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_driver *driver =3D to_peci_driver(de=
+v->driver);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return driver->probe(device, peci_bus_match_devi=
+ce_id(driver-
+>> > >id_table, device));
+>> > +}
+>> > +
+>> > +static int peci_bus_device_remove(struct device *dev)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_device *device =3D to_peci_device(de=
+v);
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_driver *driver =3D to_peci_driver(de=
+v->driver);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0if (driver->remove)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0driver->remove(device);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return 0;
+>> > +}
+>> > +
+>> > struct bus_type peci_bus_type =3D {
+>> > =A0=A0=A0=A0=A0=A0=A0=A0.name=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=3D "pec=
+i",
+>> > +=A0=A0=A0=A0=A0=A0=A0.match=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=3D peci_bus=
+_device_match,
+>> > +=A0=A0=A0=A0=A0=A0=A0.probe=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=3D peci_bus=
+_device_probe,
+>> > +=A0=A0=A0=A0=A0=A0=A0.remove=A0=A0=A0=A0=A0=A0=A0=A0=A0=3D peci_bus_d=
+evice_remove,
+>> > =A0=A0=A0=A0=A0=A0=A0=A0.bus_groups=A0=A0=A0=A0=A0=3D peci_bus_groups,
+>> > };
+>> >
+>> > diff --git a/drivers/peci/device.c b/drivers/peci/device.c
+>> > index 1124862211e2..8c4bd1ebbc29 100644
+>> > --- a/drivers/peci/device.c
+>> > +++ b/drivers/peci/device.c
+>> > @@ -1,11 +1,79 @@
+>> > // SPDX-License-Identifier: GPL-2.0-only
+>> > // Copyright (c) 2018-2021 Intel Corporation
+>> >
+>> > +#include <linux/bitfield.h>
+>> > #include <linux/peci.h>
+>> > #include <linux/slab.h>
+>> > +#include <linux/x86/cpu.h>
+>> >
+>> > #include "internal.h"
+>> >
+>> > +#define REVISION_NUM_MASK GENMASK(15, 8)
+>> > +static int peci_get_revision(struct peci_device *device, u8 *revision=
+)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_request *req;
+>> > +=A0=A0=A0=A0=A0=A0=A0u64 dib;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0req =3D peci_get_dib(device);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (IS_ERR(req))
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return PTR_ERR(req);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0dib =3D peci_request_data_dib(req);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (dib =3D=3D 0) {
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0peci_request_free(req);
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return -EIO;
+>>
+>> Any particular reason to check for zero specifically here?=A0 It looks
+>> like that would be a case where the host CPU responds and everything's
+>> otherwise fine, but the host just happened to send back a bunch of zeros
+>> for whatever reason -- which may not be a valid PECI revision number,
+>> but if it sent back a bunch of 0xff bytes instead wouldn't that be
+>> equally invalid?
+>
+>The response with all 0's is possible (and defined) in certain device stat=
+es. If
+>that happens - we don't want to continue adding the device (with "invalid"
+>revision 0), we just want to return error.
+>
+
+Okay, that's reasonable -- maybe worth a brief comment though.
+
+>>
+>> Also, given that the docs (the ones I have, at least) describe the DIB
+>> as a collection of individual bytes, dealing with it as a combined u64
+>> seems a bit confusing to me -- could we just return req->rx.buf[1]
+>> instead?
+>
+>GetDIB returns 8-byte response, which is why we're treating it in this way
+>(similar to other commands). We're pulling out the whole response and use
+>FIELD_GET to obtain the data we need.
+>
+
+Sure -- but since the 8 bytes that GetDIB retrieves are a device info
+byte, a revision number byte, and six reserved bytes (at least as of the
+documentation I have access to), I'm not sure why we want to pack that
+all up into a u64 only to unpack a single byte from it a moment later
+with FIELD_GET(), when we've already got it in a convenient
+array-of-bytes form (req->rx.buf).  I could understand wanting a u64 if
+the 8 bytes were all a single value, or if it had sub-fields that
+spanned byte boundaries in awkward ways or something, but given the
+format of the response data a byte array seems like the most natural way
+of dealing with it.
+
+I suppose it facilitates an easy zero check, but that could also be
+written as !memchr_inv(req->rx.buf, 0, 8) in the non-u64 case.
+
+>>
+>> > +=A0=A0=A0=A0=A0=A0=A0}
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0*revision =3D FIELD_GET(REVISION_NUM_MASK, dib);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0peci_request_free(req);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return 0;
+>> > +}
+>> > +
+>> > +static int peci_get_cpu_id(struct peci_device *device, u32 *cpu_id)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_request *req;
+>> > +=A0=A0=A0=A0=A0=A0=A0int ret;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0req =3D peci_pkg_cfg_readl(device, PECI_PCS_PKG_=
+ID,
+>> > PECI_PKG_ID_CPU_ID);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (IS_ERR(req))
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return PTR_ERR(req);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0ret =3D peci_request_status(req);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (ret)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0goto out_req_free;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0*cpu_id =3D peci_request_data_readl(req);
+>> > +out_req_free:
+>>
+>> As suggested on patch #8, I think it might be cleaner to stack-allocate
+>> struct peci_request, which would obviate the need for explicit free
+>> calls in functions like this and hence might simplify it away entirely,
+>> but if this does remain like this we could just do
+>>
+>> =A0=A0=A0=A0=A0=A0=A0=A0if (!ret)
+>> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0*cpu_id =3D peci_request=
+_data_readl(req);
+>>
+>> instead of using a goto to skip a single line.
+>
+>Please, see my response on patch 8.
+>
+>I would prefer to operate on allocated objects rather than on local variab=
+les in
+>case of peci requests.
+>
+>>
+>> > +=A0=A0=A0=A0=A0=A0=A0peci_request_free(req);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return ret;
+>> > +}
+>> > +
+>> > +static int peci_device_info_init(struct peci_device *device)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0u8 revision;
+>> > +=A0=A0=A0=A0=A0=A0=A0u32 cpu_id;
+>> > +=A0=A0=A0=A0=A0=A0=A0int ret;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0ret =3D peci_get_cpu_id(device, &cpu_id);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (ret)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return ret;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0device->info.family =3D x86_family(cpu_id);
+>> > +=A0=A0=A0=A0=A0=A0=A0device->info.model =3D x86_model(cpu_id);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0ret =3D peci_get_revision(device, &revision);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (ret)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return ret;
+>> > +=A0=A0=A0=A0=A0=A0=A0device->info.peci_revision =3D revision;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0device->info.socket_id =3D device->addr - PECI_B=
+ASE_ADDR;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return 0;
+>> > +}
+>> > +
+>> > static int peci_detect(struct peci_controller *controller, u8 addr)
+>> > {
+>> > =A0=A0=A0=A0=A0=A0=A0=A0struct peci_request *req;
+>> > @@ -75,6 +143,10 @@ int peci_device_create(struct peci_controller
+>> > *controller, u8 addr)
+>> > =A0=A0=A0=A0=A0=A0=A0=A0device->dev.bus =3D &peci_bus_type;
+>> > =A0=A0=A0=A0=A0=A0=A0=A0device->dev.type =3D &peci_device_type;
+>> >
+>> > +=A0=A0=A0=A0=A0=A0=A0ret =3D peci_device_info_init(device);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (ret)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0goto err_free;
+>> > +
+>> > =A0=A0=A0=A0=A0=A0=A0=A0ret =3D dev_set_name(&device->dev, "%d-%02x", =
+controller->id, device-
+>> > >addr);
+>> > =A0=A0=A0=A0=A0=A0=A0=A0if (ret)
+>> > =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0goto err_free;
+>> > @@ -98,6 +170,33 @@ void peci_device_destroy(struct peci_device *devic=
+e)
+>> > =A0=A0=A0=A0=A0=A0=A0=A0device_unregister(&device->dev);
+>> > }
+>> >
+>> > +int __peci_driver_register(struct peci_driver *driver, struct module
+>> > *owner,
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0 const char *mod_name)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0driver->driver.bus =3D &peci_bus_type;
+>> > +=A0=A0=A0=A0=A0=A0=A0driver->driver.owner =3D owner;
+>> > +=A0=A0=A0=A0=A0=A0=A0driver->driver.mod_name =3D mod_name;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0if (!driver->probe) {
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0pr_err("peci: trying to =
+register driver without probe
+>> > callback\n");
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return -EINVAL;
+>> > +=A0=A0=A0=A0=A0=A0=A0}
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0if (!driver->id_table) {
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0pr_err("peci: trying to =
+register driver without device id
+>> > table\n");
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return -EINVAL;
+>> > +=A0=A0=A0=A0=A0=A0=A0}
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return driver_register(&driver->driver);
+>> > +}
+>> > +EXPORT_SYMBOL_NS_GPL(__peci_driver_register, PECI);
+>> > +
+>> > +void peci_driver_unregister(struct peci_driver *driver)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0driver_unregister(&driver->driver);
+>> > +}
+>> > +EXPORT_SYMBOL_NS_GPL(peci_driver_unregister, PECI);
+>> > +
+>> > static void peci_device_release(struct device *dev)
+>> > {
+>> > =A0=A0=A0=A0=A0=A0=A0=A0struct peci_device *device =3D to_peci_device(=
+dev);
+>> > diff --git a/drivers/peci/internal.h b/drivers/peci/internal.h
+>> > index 6b139adaf6b8..c891c93e077a 100644
+>> > --- a/drivers/peci/internal.h
+>> > +++ b/drivers/peci/internal.h
+>> > @@ -19,6 +19,34 @@ struct peci_request;
+>> > struct peci_request *peci_request_alloc(struct peci_device *device, u8
+>> > tx_len, u8 rx_len);
+>> > void peci_request_free(struct peci_request *req);
+>> >
+>> > +int peci_request_status(struct peci_request *req);
+>> > +u64 peci_request_data_dib(struct peci_request *req);
+>> > +
+>> > +u8 peci_request_data_readb(struct peci_request *req);
+>> > +u16 peci_request_data_readw(struct peci_request *req);
+>> > +u32 peci_request_data_readl(struct peci_request *req);
+>> > +u64 peci_request_data_readq(struct peci_request *req);
+>> > +
+>> > +struct peci_request *peci_get_dib(struct peci_device *device);
+>> > +struct peci_request *peci_get_temp(struct peci_device *device);
+>> > +
+>> > +struct peci_request *peci_pkg_cfg_readb(struct peci_device *device, u=
+8
+>> > index, u16 param);
+>> > +struct peci_request *peci_pkg_cfg_readw(struct peci_device *device, u=
+8
+>> > index, u16 param);
+>> > +struct peci_request *peci_pkg_cfg_readl(struct peci_device *device, u=
+8
+>> > index, u16 param);
+>> > +struct peci_request *peci_pkg_cfg_readq(struct peci_device *device, u=
+8
+>> > index, u16 param);
+>> > +
+>> > +/**
+>> > + * struct peci_device_id - PECI device data to match
+>> > + * @data: pointer to driver private data specific to device
+>> > + * @family: device family
+>> > + * @model: device model
+>> > + */
+>> > +struct peci_device_id {
+>> > +=A0=A0=A0=A0=A0=A0=A0const void *data;
+>> > +=A0=A0=A0=A0=A0=A0=A0u16 family;
+>> > +=A0=A0=A0=A0=A0=A0=A0u8 model;
+>> > +};
+>> > +
+>> > extern struct device_type peci_device_type;
+>> > extern const struct attribute_group *peci_device_groups[];
+>> >
+>> > @@ -28,6 +56,53 @@ void peci_device_destroy(struct peci_device *device=
+);
+>> > extern struct bus_type peci_bus_type;
+>> > extern const struct attribute_group *peci_bus_groups[];
+>> >
+>> > +/**
+>> > + * struct peci_driver - PECI driver
+>> > + * @driver: inherit device driver
+>> > + * @probe: probe callback
+>> > + * @remove: remove callback
+>> > + * @id_table: PECI device match table to decide which device to bind
+>> > + */
+>> > +struct peci_driver {
+>> > +=A0=A0=A0=A0=A0=A0=A0struct device_driver driver;
+>> > +=A0=A0=A0=A0=A0=A0=A0int (*probe)(struct peci_device *device, const s=
+truct peci_device_id
+>> > *id);
+>> > +=A0=A0=A0=A0=A0=A0=A0void (*remove)(struct peci_device *device);
+>> > +=A0=A0=A0=A0=A0=A0=A0const struct peci_device_id *id_table;
+>> > +};
+>> > +
+>> > +static inline struct peci_driver *to_peci_driver(struct device_driver=
+ *d)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0return container_of(d, struct peci_driver, drive=
+r);
+>> > +}
+>> > +
+>> > +int __peci_driver_register(struct peci_driver *driver, struct module
+>> > *owner,
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0 const char *mod_name);
+>> > +/**
+>> > + * peci_driver_register() - register PECI driver
+>> > + * @driver: the driver to be registered
+>> > + * @owner: owner module of the driver being registered
+>> > + * @mod_name: module name string
+>> > + *
+>> > + * PECI drivers that don't need to do anything special in module init
+>> > should
+>> > + * use the convenience "module_peci_driver" macro instead
+>> > + *
+>> > + * Return: zero on success, else a negative error code.
+>> > + */
+>> > +#define peci_driver_register(driver) \
+>> > +=A0=A0=A0=A0=A0=A0=A0__peci_driver_register(driver, THIS_MODULE, KBUI=
+LD_MODNAME)
+>> > +void peci_driver_unregister(struct peci_driver *driver);
+>> > +
+>> > +/**
+>> > + * module_peci_driver() - Helper macro for registering a modular PECI
+>> > driver
+>> > + * @__peci_driver: peci_driver struct
+>> > + *
+>> > + * Helper macro for PECI drivers which do not do anything special in =
+module
+>> > + * init/exit. This eliminates a lot of boilerplate. Each module may o=
+nly
+>> > + * use this macro once, and calling it replaces module_init() and
+>> > module_exit()
+>> > + */
+>> > +#define module_peci_driver(__peci_driver) \
+>> > +=A0=A0=A0=A0=A0=A0=A0module_driver(__peci_driver, peci_driver_registe=
+r,
+>> > peci_driver_unregister)
+>> > +
+>> > extern struct device_type peci_controller_type;
+>> >
+>> > int peci_controller_scan_devices(struct peci_controller *controller);
+>> > diff --git a/drivers/peci/request.c b/drivers/peci/request.c
+>> > index 78cee51dfae1..48354455b554 100644
+>> > --- a/drivers/peci/request.c
+>> > +++ b/drivers/peci/request.c
+>> > @@ -1,13 +1,142 @@
+>> > // SPDX-License-Identifier: GPL-2.0-only
+>> > // Copyright (c) 2021 Intel Corporation
+>> >
+>> > +#include <linux/bug.h>
+>> > #include <linux/export.h>
+>> > #include <linux/peci.h>
+>> > #include <linux/slab.h>
+>> > #include <linux/types.h>
+>> >
+>> > +#include <asm/unaligned.h>
+>> > +
+>> > #include "internal.h"
+>> >
+>> > +#define PECI_GET_DIB_CMD=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+0xf7
+>> > +#define=A0 PECI_GET_DIB_WR_LEN=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A01
+>> > +#define=A0 PECI_GET_DIB_RD_LEN=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A08
+>> > +
+>> > +#define PECI_RDPKGCFG_CMD=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A00x=
+a1
+>> > +#define=A0 PECI_RDPKGCFG_WRITE_LEN=A0=A0=A0=A0=A0=A0=A05
+>> > +#define=A0 PECI_RDPKGCFG_READ_LEN_BASE=A0=A0=A01
+>> > +#define PECI_WRPKGCFG_CMD=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A00x=
+a5
+>> > +#define=A0 PECI_WRPKGCFG_WRITE_LEN_BASE=A0=A06
+>> > +#define=A0 PECI_WRPKGCFG_READ_LEN=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A01
+>> > +
+>> > +/* Device Specific Completion Code (CC) Definition */
+>> > +#define PECI_CC_SUCCESS=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A00x40
+>> > +#define PECI_CC_NEED_RETRY=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A00x80
+>> > +#define PECI_CC_OUT_OF_RESOURCE=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A00x81
+>> > +#define PECI_CC_UNAVAIL_RESOURCE=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A00x82
+>> > +#define PECI_CC_INVALID_REQ=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A00x90
+>> > +#define PECI_CC_MCA_ERROR=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A00x91
+>> > +#define PECI_CC_CATASTROPHIC_MCA_ERROR=A0=A0=A0=A0=A0=A0=A0=A0=A00x93
+>> > +#define PECI_CC_FATAL_MCA_ERROR=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A00x94
+>> > +#define PECI_CC_PARITY_ERR_GPSB_OR_PMSB=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A00x98
+>> > +#define PECI_CC_PARITY_ERR_GPSB_OR_PMSB_IERR=A0=A0=A00x9B
+>> > +#define PECI_CC_PARITY_ERR_GPSB_OR_PMSB_MCA=A0=A0=A0=A00x9C
+>> > +
+>> > +#define PECI_RETRY_BIT=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0BIT(0)
+>> > +
+>> > +#define PECI_RETRY_TIMEOUT=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0msec=
+s_to_jiffies(700)
+>> > +#define PECI_RETRY_INTERVAL_MIN=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0msecs_to_jiffies(1)
+>> > +#define PECI_RETRY_INTERVAL_MAX=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0msecs_to_jiffies(128)
+>> > +
+>> > +static u8 peci_request_data_cc(struct peci_request *req)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0return req->rx.buf[0];
+>> > +}
+>> > +
+>> > +/**
+>> > + * peci_request_status() - return -errno based on PECI completion cod=
+e
+>> > + * @req: the PECI request that contains response data with completion=
+ code
+>> > + *
+>> > + * It can't be used for Ping(), GetDIB() and GetTemp() - for those co=
+mmands
+>> > we
+>> > + * don't expect completion code in the response.
+>> > + *
+>> > + * Return: -errno
+>> > + */
+>> > +int peci_request_status(struct peci_request *req)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0u8 cc =3D peci_request_data_cc(req);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0if (cc !=3D PECI_CC_SUCCESS)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0dev_dbg(&req->device->de=
+v, "ret: %#02x\n", cc);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0switch (cc) {
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_SUCCESS:
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return 0;
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_NEED_RETRY:
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_OUT_OF_RESOURCE:
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_UNAVAIL_RESOURCE:
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return -EAGAIN;
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_INVALID_REQ:
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return -EINVAL;
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_MCA_ERROR:
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_CATASTROPHIC_MCA_ERROR:
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_FATAL_MCA_ERROR:
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_PARITY_ERR_GPSB_OR_PMSB:
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_PARITY_ERR_GPSB_OR_PMSB_IERR:
+>> > +=A0=A0=A0=A0=A0=A0=A0case PECI_CC_PARITY_ERR_GPSB_OR_PMSB_MCA:
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return -EIO;
+>> > +=A0=A0=A0=A0=A0=A0=A0}
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0WARN_ONCE(1, "Unknown PECI completion code: %#02=
+x\n", cc);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return -EIO;
+>> > +}
+>> > +EXPORT_SYMBOL_NS_GPL(peci_request_status, PECI);
+>> > +
+>> > +static int peci_request_xfer(struct peci_request *req)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_device *device =3D req->device;
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_controller *controller =3D device->c=
+ontroller;
+>> > +=A0=A0=A0=A0=A0=A0=A0int ret;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0mutex_lock(&controller->bus_lock);
+>> > +=A0=A0=A0=A0=A0=A0=A0ret =3D controller->xfer(controller, device->add=
+r, req);
+>> > +=A0=A0=A0=A0=A0=A0=A0mutex_unlock(&controller->bus_lock);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return ret;
+>> > +}
+>> > +
+>> > +static int peci_request_xfer_retry(struct peci_request *req)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0long wait_interval =3D PECI_RETRY_INTERVAL_MIN;
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_device *device =3D req->device;
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_controller *controller =3D device->c=
+ontroller;
+>> > +=A0=A0=A0=A0=A0=A0=A0unsigned long start =3D jiffies;
+>> > +=A0=A0=A0=A0=A0=A0=A0int ret;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0/* Don't try to use it for ping */
+>> > +=A0=A0=A0=A0=A0=A0=A0if (WARN_ON(!req->rx.buf))
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return 0;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0do {
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0ret =3D peci_request_xfe=
+r(req);
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0if (ret) {
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+dev_dbg(&controller->dev, "xfer error: %d\n", ret);
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+return ret;
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0}
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0if (peci_request_status(=
+req) !=3D -EAGAIN)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+return 0;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0/* Set the retry bit to =
+indicate a retry attempt */
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0req->tx.buf[1] |=3D PECI=
+_RETRY_BIT;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0if (schedule_timeout_int=
+erruptible(wait_interval))
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+return -ERESTARTSYS;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0wait_interval *=3D 2;
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0if (wait_interval > PECI=
+_RETRY_INTERVAL_MAX)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+wait_interval =3D PECI_RETRY_INTERVAL_MAX;
+>>
+>> wait_interval =3D min(wait_interval * 2, PECI_RETRY_INTERVAL_MAX) ?
+>
+>Ack.
+>
+>>
+>> > +=A0=A0=A0=A0=A0=A0=A0} while (time_before(jiffies, start + PECI_RETRY=
+_TIMEOUT));
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0dev_dbg(&controller->dev, "request timed out\n")=
+;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return -ETIMEDOUT;
+>> > +}
+>> > +
+>> > /**
+>> > =A0* peci_request_alloc() - allocate &struct peci_request with buffers=
+ with
+>> > given lengths
+>> > =A0* @device: PECI device to which request is going to be sent
+>> > @@ -72,3 +201,91 @@ void peci_request_free(struct peci_request *req)
+>> > =A0=A0=A0=A0=A0=A0=A0=A0kfree(req);
+>> > }
+>> > EXPORT_SYMBOL_NS_GPL(peci_request_free, PECI);
+>> > +
+>> > +struct peci_request *peci_get_dib(struct peci_device *device)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_request *req;
+>> > +=A0=A0=A0=A0=A0=A0=A0int ret;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0req =3D peci_request_alloc(device, PECI_GET_DIB_=
+WR_LEN,
+>> > PECI_GET_DIB_RD_LEN);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (!req)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return ERR_PTR(-ENOMEM);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0req->tx.buf[0] =3D PECI_GET_DIB_CMD;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0ret =3D peci_request_xfer(req);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (ret) {
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0peci_request_free(req);
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return ERR_PTR(ret);
+>> > +=A0=A0=A0=A0=A0=A0=A0}
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return req;
+>> > +}
+>> > +EXPORT_SYMBOL_NS_GPL(peci_get_dib, PECI);
+>> > +
+>> > +static struct peci_request *
+>> > +__pkg_cfg_read(struct peci_device *device, u8 index, u16 param, u8 le=
+n)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0struct peci_request *req;
+>> > +=A0=A0=A0=A0=A0=A0=A0int ret;
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0req =3D peci_request_alloc(device, PECI_RDPKGCFG=
+_WRITE_LEN,
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0 PECI_RDPKGCFG_READ_LEN_BASE + len);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (!req)
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return ERR_PTR(-ENOMEM);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0req->tx.buf[0] =3D PECI_RDPKGCFG_CMD;
+>> > +=A0=A0=A0=A0=A0=A0=A0req->tx.buf[1] =3D 0;
+>> > +=A0=A0=A0=A0=A0=A0=A0req->tx.buf[2] =3D index;
+>> > +=A0=A0=A0=A0=A0=A0=A0put_unaligned_le16(param, &req->tx.buf[3]);
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0ret =3D peci_request_xfer_retry(req);
+>> > +=A0=A0=A0=A0=A0=A0=A0if (ret) {
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0peci_request_free(req);
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0return ERR_PTR(ret);
+>> > +=A0=A0=A0=A0=A0=A0=A0}
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0return req;
+>> > +}
+>> > +
+>> > +u8 peci_request_data_readb(struct peci_request *req)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0return req->rx.buf[1];
+>> > +}
+>> > +EXPORT_SYMBOL_NS_GPL(peci_request_data_readb, PECI);
+>> > +
+>> > +u16 peci_request_data_readw(struct peci_request *req)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0return get_unaligned_le16(&req->rx.buf[1]);
+>> > +}
+>> > +EXPORT_SYMBOL_NS_GPL(peci_request_data_readw, PECI);
+>> > +
+>> > +u32 peci_request_data_readl(struct peci_request *req)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0return get_unaligned_le32(&req->rx.buf[1]);
+>> > +}
+>> > +EXPORT_SYMBOL_NS_GPL(peci_request_data_readl, PECI);
+>> > +
+>> > +u64 peci_request_data_readq(struct peci_request *req)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0return get_unaligned_le64(&req->rx.buf[1]);
+>> > +}
+>> > +EXPORT_SYMBOL_NS_GPL(peci_request_data_readq, PECI);
+>> > +
+>> > +u64 peci_request_data_dib(struct peci_request *req)
+>> > +{
+>> > +=A0=A0=A0=A0=A0=A0=A0return get_unaligned_le64(&req->rx.buf[0]);
+>> > +}
+>> > +EXPORT_SYMBOL_NS_GPL(peci_request_data_dib, PECI);
+>> > +
+>> > +#define __read_pkg_config(x, type) \
+>> > +struct peci_request *peci_pkg_cfg_##x(struct peci_device *device, u8 =
+index,
+>> > u16 param) \
+>> > +{ \
+>> > +=A0=A0=A0=A0=A0=A0=A0return __pkg_cfg_read(device, index, param, size=
+of(type)); \
+>> > +} \
+>>
+>> Is there a reason for this particular API?=A0 I'd think a more natural o=
+ne
+>> that would offload a bit of boilerplate from callers would look more lik=
+e
+>>
+>> int peci_pkg_cfg_##x(struct peci_device *device, u8 index, u16 param, ty=
+pe
+>> *outp),
+>>
+>> returning peci_request_status() and writing the requested data to *outp
+>> if that status is zero.
+>
+>We provide a consistent lower-level API for "internal" usage (for code in
+>drivers/peci), operating on requests and allowing access to full request,
+>including completion code, etc.
+>Then - we wrap that with "external" API (e.g. include/linux/peci-cpu.h) wh=
+ich is
+>the "more natural" one - it pulls out the necessary data from requests, de=
+als
+>with error handling in an appropriate way converting completion codes to e=
+rrno
+>values (abstracting away the PECI-specific details).
+>
+>>
+>> > +EXPORT_SYMBOL_NS_GPL(peci_pkg_cfg_##x, PECI)
+>> > +
+>> > +__read_pkg_config(readb, u8);
+>> > +__read_pkg_config(readw, u16);
+>> > +__read_pkg_config(readl, u32);
+>> > +__read_pkg_config(readq, u64);
+>> > diff --git a/include/linux/peci.h b/include/linux/peci.h
+>> > index cdf3008321fd..f9f37b874011 100644
+>> > --- a/include/linux/peci.h
+>> > +++ b/include/linux/peci.h
+>> > @@ -9,6 +9,14 @@
+>> > #include <linux/mutex.h>
+>> > #include <linux/types.h>
+>> >
+>> > +#define PECI_PCS_PKG_ID=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A00=A0 /* Package Identifier
+>> > Read */
+>> > +#define=A0 PECI_PKG_ID_CPU_ID=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A00x00=
+00=A0 /* CPUID Info */
+>> > +#define=A0 PECI_PKG_ID_PLATFORM_ID=A0=A0=A0=A0=A0=A0=A00x0001=A0 /* P=
+latform ID */
+>> > +#define=A0 PECI_PKG_ID_DEVICE_ID=A0=A0=A0=A0=A0=A0=A0=A0=A00x0002=A0 =
+/* Uncore Device ID */
+>> > +#define=A0 PECI_PKG_ID_MAX_THREAD_ID=A0=A0=A0=A0=A00x0003=A0 /* Max T=
+hread ID */
+>> > +#define=A0 PECI_PKG_ID_MICROCODE_REV=A0=A0=A0=A0=A00x0004=A0 /* CPU M=
+icrocode Update
+>> > Revision */
+>> > +#define=A0 PECI_PKG_ID_MCA_ERROR_LOG=A0=A0=A0=A0=A00x0005=A0 /* Machi=
+ne Check Status */
+>> > +
+>> > struct peci_request;
+>> >
+>> > /**
+>> > @@ -41,6 +49,11 @@ static inline struct peci_controller
+>> > *to_peci_controller(void *d)
+>> > =A0* struct peci_device - PECI device
+>> > =A0* @dev: device object to register PECI device to the device model
+>> > =A0* @controller: manages the bus segment hosting this PECI device
+>> > + * @info: PECI device characteristics
+>> > + * @info.family: device family
+>> > + * @info.model: device model
+>> > + * @info.peci_revision: PECI revision supported by the PECI device
+>> > + * @info.socket_id: the socket ID represented by the PECI device
+>> > =A0* @addr: address used on the PECI bus connected to the parent contr=
+oller
+>> > =A0*
+>> > =A0* A peci_device identifies a single device (i.e. CPU) connected to =
+a PECI
+>> > bus.
+>> > @@ -50,6 +63,12 @@ static inline struct peci_controller
+>> > *to_peci_controller(void *d)
+>> > struct peci_device {
+>> > =A0=A0=A0=A0=A0=A0=A0=A0struct device dev;
+>> > =A0=A0=A0=A0=A0=A0=A0=A0struct peci_controller *controller;
+>> > +=A0=A0=A0=A0=A0=A0=A0struct {
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0u16 family;
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0u8 model;
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0u8 peci_revision;
+>>
+>> This field gets set but doesn't seem to end up used anywhere; is it
+>> useful?
+>
+>The idea was to have mechanism to validate the revision number retrieved v=
+ia
+>GetDIB with revision expected by the driver (since it uses commands that a=
+re
+>PECI revision dependent), and warn if there's a mismatch.
+>It seems I dropped the "validate and warn" part when doing the split on th=
+e
+>series. Good catch - I'll fix this in v2.
+>
+>Thanks
+>-Iwona
+>
+>>
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0u8 socket_id;
+>> > +=A0=A0=A0=A0=A0=A0=A0} info;
+>> > =A0=A0=A0=A0=A0=A0=A0=A0u8 addr;
+>> > };
+>> >
+>> > diff --git a/lib/Kconfig b/lib/Kconfig
+>> > index cc28bc1f2d84..a74e6c0fa75c 100644
+>> > --- a/lib/Kconfig
+>> > +++ b/lib/Kconfig
+>> > @@ -721,5 +721,5 @@ config ASN1_ENCODER
+>> >
+>> > config GENERIC_LIB_X86
+>> > =A0=A0=A0=A0=A0=A0=A0=A0bool
+>> > -=A0=A0=A0=A0=A0=A0=A0depends on X86
+>> > +=A0=A0=A0=A0=A0=A0=A0depends on X86 || PECI
+>> > =A0=A0=A0=A0=A0=A0=A0=A0default n
+>> > --
+>> > 2.31.1
+>=
