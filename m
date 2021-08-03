@@ -2,37 +2,37 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28E3D3DF8D7
-	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 02:19:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 528BB3DF8D8
+	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 02:19:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GfXRD0Mlgz3bW7
-	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 10:19:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GfXRZ1cCmz3cWP
+	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 10:19:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.65; helo=mga03.intel.com;
+ smtp.mailfrom=intel.com (client-ip=192.55.52.115; helo=mga14.intel.com;
  envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GfCWG4lY6z2yNZ;
- Tue,  3 Aug 2021 21:36:26 +1000 (AEST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10064"; a="213692604"
-X-IronPort-AV: E=Sophos;i="5.84,291,1620716400"; d="scan'208";a="213692604"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Aug 2021 04:35:24 -0700
-X-IronPort-AV: E=Sophos;i="5.84,291,1620716400"; d="scan'208";a="441135155"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GfCWT2JJMz2xxg;
+ Tue,  3 Aug 2021 21:36:36 +1000 (AEST)
+X-IronPort-AV: E=McAfee;i="6200,9189,10064"; a="213387936"
+X-IronPort-AV: E=Sophos;i="5.84,291,1620716400"; d="scan'208";a="213387936"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Aug 2021 04:35:34 -0700
+X-IronPort-AV: E=Sophos;i="5.84,291,1620716400"; d="scan'208";a="670394085"
 Received: from jdanieck-mobl1.ger.corp.intel.com (HELO localhost)
  ([10.249.128.99])
- by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Aug 2021 04:35:17 -0700
+ by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Aug 2021 04:35:28 -0700
 From: Iwona Winiarska <iwona.winiarska@intel.com>
 To: linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH v2 08/15] peci: Add device detection
-Date: Tue,  3 Aug 2021 13:31:27 +0200
-Message-Id: <20210803113134.2262882-9-iwona.winiarska@intel.com>
+Subject: [PATCH v2 09/15] peci: Add sysfs interface for PECI bus
+Date: Tue,  3 Aug 2021 13:31:28 +0200
+Message-Id: <20210803113134.2262882-10-iwona.winiarska@intel.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210803113134.2262882-1-iwona.winiarska@intel.com>
 References: <20210803113134.2262882-1-iwona.winiarska@intel.com>
@@ -69,301 +69,216 @@ Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Since PECI devices are discoverable, we can dynamically detect devices
-that are actually available in the system.
+PECI devices may not be discoverable at the time when PECI controller is
+being added (e.g. BMC can boot up when the Host system is still in S5).
+Since we currently don't have the capabilities to figure out the Host
+system state inside the PECI subsystem itself, we have to rely on
+userspace to do it for us.
 
-This change complements the earlier implementation by rescanning PECI
-bus to detect available devices. For this purpose, it also introduces the
-minimal API for PECI requests.
+In the future, PECI subsystem may be expanded with mechanisms that allow
+us to avoid depending on userspace interaction (e.g. CPU presence could
+be detected using GPIO, and the information on whether it's discoverable
+could be obtained over IPMI).
+Unfortunately, those methods may ultimately not be available (support
+will vary from platform to platform), which means that we still need
+platform independent method triggered by userspace.
 
 Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 ---
- drivers/peci/Makefile   |   2 +-
- drivers/peci/core.c     |  33 ++++++++++++
- drivers/peci/device.c   | 114 ++++++++++++++++++++++++++++++++++++++++
- drivers/peci/internal.h |  14 +++++
- drivers/peci/request.c  |  50 ++++++++++++++++++
- 5 files changed, 212 insertions(+), 1 deletion(-)
- create mode 100644 drivers/peci/device.c
- create mode 100644 drivers/peci/request.c
+ Documentation/ABI/testing/sysfs-bus-peci | 16 +++++
+ drivers/peci/Makefile                    |  2 +-
+ drivers/peci/core.c                      |  3 +-
+ drivers/peci/device.c                    |  1 +
+ drivers/peci/internal.h                  |  5 ++
+ drivers/peci/sysfs.c                     | 82 ++++++++++++++++++++++++
+ 6 files changed, 107 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-peci
+ create mode 100644 drivers/peci/sysfs.c
 
+diff --git a/Documentation/ABI/testing/sysfs-bus-peci b/Documentation/ABI/testing/sysfs-bus-peci
+new file mode 100644
+index 000000000000..56c2b2216bbd
+--- /dev/null
++++ b/Documentation/ABI/testing/sysfs-bus-peci
+@@ -0,0 +1,16 @@
++What:		/sys/bus/peci/rescan
++Date:		July 2021
++KernelVersion:	5.15
++Contact:	Iwona Winiarska <iwona.winiarska@intel.com>
++Description:
++		Writing a non-zero value to this attribute will
++		initiate scan for PECI devices on all PECI controllers
++		in the system.
++
++What:		/sys/bus/peci/devices/<controller_id>-<device_addr>/remove
++Date:		July 2021
++KernelVersion:	5.15
++Contact:	Iwona Winiarska <iwona.winiarska@intel.com>
++Description:
++		Writing a non-zero value to this attribute will
++		remove the PECI device and any of its children.
 diff --git a/drivers/peci/Makefile b/drivers/peci/Makefile
-index 926d8df15cbd..c5f9d3fe21bb 100644
+index c5f9d3fe21bb..917f689e147a 100644
 --- a/drivers/peci/Makefile
 +++ b/drivers/peci/Makefile
 @@ -1,7 +1,7 @@
  # SPDX-License-Identifier: GPL-2.0-only
  
  # Core functionality
--peci-y := core.o
-+peci-y := core.o request.o device.o
+-peci-y := core.o request.o device.o
++peci-y := core.o request.o device.o sysfs.o
  obj-$(CONFIG_PECI) += peci.o
  
  # Hardware specific bus drivers
 diff --git a/drivers/peci/core.c b/drivers/peci/core.c
-index 7b3938af0396..d143f1a7fe98 100644
+index d143f1a7fe98..c473acb3c2a0 100644
 --- a/drivers/peci/core.c
 +++ b/drivers/peci/core.c
-@@ -34,6 +34,20 @@ struct device_type peci_controller_type = {
+@@ -34,7 +34,7 @@ struct device_type peci_controller_type = {
  	.release	= peci_controller_dev_release,
  };
  
-+static int peci_controller_scan_devices(struct peci_controller *controller)
-+{
-+	int ret;
-+	u8 addr;
-+
-+	for (addr = PECI_BASE_ADDR; addr < PECI_BASE_ADDR + PECI_DEVICE_NUM_MAX; addr++) {
-+		ret = peci_device_create(controller, addr);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
-+}
-+
- static struct peci_controller *peci_controller_alloc(struct device *dev,
- 						     struct peci_controller_ops *ops)
+-static int peci_controller_scan_devices(struct peci_controller *controller)
++int peci_controller_scan_devices(struct peci_controller *controller)
  {
-@@ -76,10 +90,23 @@ static struct peci_controller *peci_controller_alloc(struct device *dev,
- 	return ERR_PTR(ret);
- }
+ 	int ret;
+ 	u8 addr;
+@@ -159,6 +159,7 @@ EXPORT_SYMBOL_NS_GPL(devm_peci_controller_add, PECI);
  
-+static int unregister_child(struct device *dev, void *dummy)
-+{
-+	peci_device_destroy(to_peci_device(dev));
-+
-+	return 0;
-+}
-+
- static void unregister_controller(void *_controller)
- {
- 	struct peci_controller *controller = _controller;
+ struct bus_type peci_bus_type = {
+ 	.name		= "peci",
++	.bus_groups	= peci_bus_groups,
+ };
  
-+	/*
-+	 * Detach any active PECI devices. This can't fail, thus we do not
-+	 * check the returned value.
-+	 */
-+	device_for_each_child_reverse(&controller->dev, NULL, unregister_child);
-+
- 	device_unregister(&controller->dev);
- }
- 
-@@ -115,6 +142,12 @@ struct peci_controller *devm_peci_controller_add(struct device *dev,
- 	if (ret)
- 		return ERR_PTR(ret);
- 
-+	/*
-+	 * Ignoring retval since failures during scan are non-critical for
-+	 * controller itself.
-+	 */
-+	peci_controller_scan_devices(controller);
-+
- 	return controller;
- 
- err:
+ static int __init peci_init(void)
 diff --git a/drivers/peci/device.c b/drivers/peci/device.c
-new file mode 100644
-index 000000000000..32811248997b
---- /dev/null
+index 32811248997b..d77d9dabd51e 100644
+--- a/drivers/peci/device.c
 +++ b/drivers/peci/device.c
-@@ -0,0 +1,114 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+// Copyright (c) 2018-2021 Intel Corporation
-+
-+#include <linux/peci.h>
-+#include <linux/slab.h>
-+
-+#include "internal.h"
-+
-+static int peci_detect(struct peci_controller *controller, u8 addr)
-+{
-+	struct peci_request *req;
-+	int ret;
-+
-+	/*
-+	 * PECI Ping is a command encoded by tx_len = 0, rx_len = 0.
-+	 * We expect correct Write FCS if the device at the target address
-+	 * is able to respond.
-+	 */
-+	req = peci_request_alloc(NULL, 0, 0);
-+	if (!req)
-+		return -ENOMEM;
-+
-+	mutex_lock(&controller->bus_lock);
-+	ret = controller->ops->xfer(controller, addr, req);
-+	mutex_unlock(&controller->bus_lock);
-+
-+	peci_request_free(req);
-+
-+	return ret;
-+}
-+
-+static bool peci_addr_valid(u8 addr)
-+{
-+	return addr >= PECI_BASE_ADDR && addr < PECI_BASE_ADDR + PECI_DEVICE_NUM_MAX;
-+}
-+
-+static int peci_dev_exists(struct device *dev, void *data)
-+{
-+	struct peci_device *device = to_peci_device(dev);
-+	u8 *addr = data;
-+
-+	if (device->addr == *addr)
-+		return -EBUSY;
-+
-+	return 0;
-+}
-+
-+int peci_device_create(struct peci_controller *controller, u8 addr)
-+{
-+	struct peci_device *device;
-+	int ret;
-+
-+	if (WARN_ON(!peci_addr_valid(addr)))
-+		return -EINVAL;
-+
-+	/* Check if we have already detected this device before. */
-+	ret = device_for_each_child(&controller->dev, &addr, peci_dev_exists);
-+	if (ret)
-+		return 0;
-+
-+	ret = peci_detect(controller, addr);
-+	if (ret) {
-+		/*
-+		 * Device not present or host state doesn't allow successful
-+		 * detection at this time.
-+		 */
-+		if (ret == -EIO || ret == -ETIMEDOUT)
-+			return 0;
-+
-+		return ret;
-+	}
-+
-+	device = kzalloc(sizeof(*device), GFP_KERNEL);
-+	if (!device)
-+		return -ENOMEM;
-+
-+	device->addr = addr;
-+	device->dev.parent = &controller->dev;
-+	device->dev.bus = &peci_bus_type;
-+	device->dev.type = &peci_device_type;
-+
-+	ret = dev_set_name(&device->dev, "%d-%02x", controller->id, device->addr);
-+	if (ret)
-+		goto err_free;
-+
-+	ret = device_register(&device->dev);
-+	if (ret)
-+		goto err_put;
-+
-+	return 0;
-+
-+err_put:
-+	put_device(&device->dev);
-+err_free:
-+	kfree(device);
-+
-+	return ret;
-+}
-+
-+void peci_device_destroy(struct peci_device *device)
-+{
-+	device_unregister(&device->dev);
-+}
-+
-+static void peci_device_release(struct device *dev)
-+{
-+	struct peci_device *device = to_peci_device(dev);
-+
-+	kfree(device);
-+}
-+
-+struct device_type peci_device_type = {
-+	.release	= peci_device_release,
-+};
+@@ -110,5 +110,6 @@ static void peci_device_release(struct device *dev)
+ }
+ 
+ struct device_type peci_device_type = {
++	.groups		= peci_device_groups,
+ 	.release	= peci_device_release,
+ };
 diff --git a/drivers/peci/internal.h b/drivers/peci/internal.h
-index 918dea745a86..57d11a902c5d 100644
+index 57d11a902c5d..978e12c8e1d3 100644
 --- a/drivers/peci/internal.h
 +++ b/drivers/peci/internal.h
-@@ -8,6 +8,20 @@
+@@ -8,6 +8,7 @@
  #include <linux/types.h>
  
  struct peci_controller;
-+struct peci_device;
-+struct peci_request;
-+
-+/* PECI CPU address range 0x30-0x37 */
-+#define PECI_BASE_ADDR		0x30
-+#define PECI_DEVICE_NUM_MAX	8
-+
-+struct peci_request *peci_request_alloc(struct peci_device *device, u8 tx_len, u8 rx_len);
-+void peci_request_free(struct peci_request *req);
-+
-+extern struct device_type peci_device_type;
-+
-+int peci_device_create(struct peci_controller *controller, u8 addr);
-+void peci_device_destroy(struct peci_device *device);
++struct attribute_group;
+ struct peci_device;
+ struct peci_request;
+ 
+@@ -19,12 +20,16 @@ struct peci_request *peci_request_alloc(struct peci_device *device, u8 tx_len, u
+ void peci_request_free(struct peci_request *req);
+ 
+ extern struct device_type peci_device_type;
++extern const struct attribute_group *peci_device_groups[];
+ 
+ int peci_device_create(struct peci_controller *controller, u8 addr);
+ void peci_device_destroy(struct peci_device *device);
  
  extern struct bus_type peci_bus_type;
++extern const struct attribute_group *peci_bus_groups[];
  
-diff --git a/drivers/peci/request.c b/drivers/peci/request.c
+ extern struct device_type peci_controller_type;
+ 
++int peci_controller_scan_devices(struct peci_controller *controller);
++
+ #endif /* __PECI_INTERNAL_H */
+diff --git a/drivers/peci/sysfs.c b/drivers/peci/sysfs.c
 new file mode 100644
-index 000000000000..81b567bc7b87
+index 000000000000..db9ef05776e3
 --- /dev/null
-+++ b/drivers/peci/request.c
-@@ -0,0 +1,50 @@
++++ b/drivers/peci/sysfs.c
+@@ -0,0 +1,82 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +// Copyright (c) 2021 Intel Corporation
 +
-+#include <linux/export.h>
++#include <linux/device.h>
++#include <linux/kernel.h>
 +#include <linux/peci.h>
-+#include <linux/slab.h>
-+#include <linux/types.h>
 +
 +#include "internal.h"
 +
-+/**
-+ * peci_request_alloc() - allocate &struct peci_requests
-+ * @device: PECI device to which request is going to be sent
-+ * @tx_len: TX length
-+ * @rx_len: RX length
-+ *
-+ * Return: A pointer to a newly allocated &struct peci_request on success or NULL otherwise.
-+ */
-+struct peci_request *peci_request_alloc(struct peci_device *device, u8 tx_len, u8 rx_len)
++static int rescan_controller(struct device *dev, void *data)
 +{
-+	struct peci_request *req;
++	if (dev->type != &peci_controller_type)
++		return 0;
 +
-+	if (WARN_ON_ONCE(tx_len > PECI_REQUEST_MAX_BUF_SIZE || rx_len > PECI_REQUEST_MAX_BUF_SIZE))
-+		return NULL;
-+	/*
-+	 * PECI controllers that we are using now don't support DMA, this
-+	 * should be converted to DMA API once support for controllers that do
-+	 * allow it is added to avoid an extra copy.
-+	 */
-+	req = kzalloc(sizeof(*req), GFP_KERNEL);
-+	if (!req)
-+		return NULL;
-+
-+	req->device = device;
-+	req->tx.len = tx_len;
-+	req->rx.len = rx_len;
-+
-+	return req;
++	return peci_controller_scan_devices(to_peci_controller(dev));
 +}
-+EXPORT_SYMBOL_NS_GPL(peci_request_alloc, PECI);
 +
-+/**
-+ * peci_request_free() - free peci_request
-+ * @req: the PECI request to be freed
-+ */
-+void peci_request_free(struct peci_request *req)
++static ssize_t rescan_store(struct bus_type *bus, const char *buf, size_t count)
 +{
-+	kfree(req);
++	bool res;
++	int ret;
++
++	ret = kstrtobool(buf, &res);
++	if (ret)
++		return ret;
++
++	if (!res)
++		return count;
++
++	ret = bus_for_each_dev(&peci_bus_type, NULL, NULL, rescan_controller);
++	if (ret)
++		return ret;
++
++	return count;
 +}
-+EXPORT_SYMBOL_NS_GPL(peci_request_free, PECI);
++static BUS_ATTR_WO(rescan);
++
++static struct attribute *peci_bus_attrs[] = {
++	&bus_attr_rescan.attr,
++	NULL
++};
++
++static const struct attribute_group peci_bus_group = {
++	.attrs = peci_bus_attrs,
++};
++
++const struct attribute_group *peci_bus_groups[] = {
++	&peci_bus_group,
++	NULL
++};
++
++static ssize_t remove_store(struct device *dev, struct device_attribute *attr,
++			    const char *buf, size_t count)
++{
++	struct peci_device *device = to_peci_device(dev);
++	bool res;
++	int ret;
++
++	ret = kstrtobool(buf, &res);
++	if (ret)
++		return ret;
++
++	if (res && device_remove_file_self(dev, attr))
++		peci_device_destroy(device);
++
++	return count;
++}
++static DEVICE_ATTR_IGNORE_LOCKDEP(remove, 0200, NULL, remove_store);
++
++static struct attribute *peci_device_attrs[] = {
++	&dev_attr_remove.attr,
++	NULL
++};
++
++static const struct attribute_group peci_device_group = {
++	.attrs = peci_device_attrs,
++};
++
++const struct attribute_group *peci_device_groups[] = {
++	&peci_device_group,
++	NULL
++};
 -- 
 2.31.1
 
