@@ -2,37 +2,37 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 868C93DF8D5
-	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 02:18:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A6C983DF8D6
+	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 02:18:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GfXQW2v8Wz3cX6
-	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 10:18:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GfXQs44mSz3cLv
+	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 10:18:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.31; helo=mga06.intel.com;
+ smtp.mailfrom=intel.com (client-ip=134.134.136.126; helo=mga18.intel.com;
  envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GfCVy08qQz2xxg;
- Tue,  3 Aug 2021 21:36:09 +1000 (AEST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10064"; a="274716377"
-X-IronPort-AV: E=Sophos;i="5.84,291,1620716400"; d="scan'208";a="274716377"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
- by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Aug 2021 04:35:03 -0700
-X-IronPort-AV: E=Sophos;i="5.84,291,1620716400"; d="scan'208";a="667152600"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GfCW26LPMz30B2;
+ Tue,  3 Aug 2021 21:36:14 +1000 (AEST)
+X-IronPort-AV: E=McAfee;i="6200,9189,10064"; a="200851879"
+X-IronPort-AV: E=Sophos;i="5.84,291,1620716400"; d="scan'208";a="200851879"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Aug 2021 04:35:12 -0700
+X-IronPort-AV: E=Sophos;i="5.84,291,1620716400"; d="scan'208";a="584700560"
 Received: from jdanieck-mobl1.ger.corp.intel.com (HELO localhost)
  ([10.249.128.99])
- by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Aug 2021 04:34:53 -0700
+ by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Aug 2021 04:35:05 -0700
 From: Iwona Winiarska <iwona.winiarska@intel.com>
 To: linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH v2 06/15] peci: Add core infrastructure
-Date: Tue,  3 Aug 2021 13:31:25 +0200
-Message-Id: <20210803113134.2262882-7-iwona.winiarska@intel.com>
+Subject: [PATCH v2 07/15] peci: Add peci-aspeed controller driver
+Date: Tue,  3 Aug 2021 13:31:26 +0200
+Message-Id: <20210803113134.2262882-8-iwona.winiarska@intel.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210803113134.2262882-1-iwona.winiarska@intel.com>
 References: <20210803113134.2262882-1-iwona.winiarska@intel.com>
@@ -57,11 +57,10 @@ Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
  Jonathan Corbet <corbet@lwn.net>, x86@kernel.org,
  Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
  Ingo Molnar <mingo@redhat.com>, Guenter Roeck <linux@roeck-us.net>,
- Jason M Bills <jason.m.bills@linux.intel.com>, devicetree@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
- Rob Herring <robh+dt@kernel.org>, Borislav Petkov <bp@alien8.de>,
- Iwona Winiarska <iwona.winiarska@intel.com>, Andy Lutomirski <luto@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>,
+ devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
+ Arnd Bergmann <arnd@arndb.de>, Rob Herring <robh+dt@kernel.org>,
+ Borislav Petkov <bp@alien8.de>, Iwona Winiarska <iwona.winiarska@intel.com>,
+ Andy Lutomirski <luto@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
  Mauro Carvalho Chehab <mchehab@kernel.org>,
  linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
  Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
@@ -70,400 +69,554 @@ Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Intel processors provide access for various services designed to support
-processor and DRAM thermal management, platform manageability and
-processor interface tuning and diagnostics.
-Those services are available via the Platform Environment Control
-Interface (PECI) that provides a communication channel between the
-processor and the Baseboard Management Controller (BMC) or other
-platform management device.
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 
-This change introduces PECI subsystem by adding the initial core module
-and API for controller drivers.
+ASPEED AST24xx/AST25xx/AST26xx SoCs supports the PECI electrical
+interface (a.k.a PECI wire).
 
-Co-developed-by: Jason M Bills <jason.m.bills@linux.intel.com>
-Signed-off-by: Jason M Bills <jason.m.bills@linux.intel.com>
-Co-developed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Co-developed-by: Iwona Winiarska <iwona.winiarska@intel.com>
 Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
 Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 ---
- MAINTAINERS             |   9 +++
- drivers/Kconfig         |   3 +
- drivers/Makefile        |   1 +
- drivers/peci/Kconfig    |  15 ++++
- drivers/peci/Makefile   |   5 ++
- drivers/peci/core.c     | 155 ++++++++++++++++++++++++++++++++++++++++
- drivers/peci/internal.h |  16 +++++
- include/linux/peci.h    |  99 +++++++++++++++++++++++++
- 8 files changed, 303 insertions(+)
- create mode 100644 drivers/peci/Kconfig
- create mode 100644 drivers/peci/Makefile
- create mode 100644 drivers/peci/core.c
- create mode 100644 drivers/peci/internal.h
- create mode 100644 include/linux/peci.h
+ MAINTAINERS                           |   9 +
+ drivers/peci/Kconfig                  |   6 +
+ drivers/peci/Makefile                 |   3 +
+ drivers/peci/controller/Kconfig       |  16 +
+ drivers/peci/controller/Makefile      |   3 +
+ drivers/peci/controller/peci-aspeed.c | 445 ++++++++++++++++++++++++++
+ 6 files changed, 482 insertions(+)
+ create mode 100644 drivers/peci/controller/Kconfig
+ create mode 100644 drivers/peci/controller/Makefile
+ create mode 100644 drivers/peci/controller/peci-aspeed.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 7cdab7229651..d411974aaa5e 100644
+index d411974aaa5e..6e9d53ff68ab 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -14503,6 +14503,15 @@ L:	platform-driver-x86@vger.kernel.org
- S:	Maintained
- F:	drivers/platform/x86/peaq-wmi.c
+@@ -2866,6 +2866,15 @@ S:	Maintained
+ F:	Documentation/hwmon/asc7621.rst
+ F:	drivers/hwmon/asc7621.c
  
-+PECI SUBSYSTEM
++ASPEED PECI CONTROLLER
 +M:	Iwona Winiarska <iwona.winiarska@intel.com>
-+R:	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
++M:	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
++L:	linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
 +L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
 +S:	Supported
-+F:	Documentation/devicetree/bindings/peci/
-+F:	drivers/peci/
-+F:	include/linux/peci.h
++F:	Documentation/devicetree/bindings/peci/peci-aspeed.yaml
++F:	drivers/peci/controller/peci-aspeed.c
 +
- PENSANDO ETHERNET DRIVERS
- M:	Shannon Nelson <snelson@pensando.io>
- M:	drivers@pensando.io
-diff --git a/drivers/Kconfig b/drivers/Kconfig
-index 8bad63417a50..f472b3d972b3 100644
---- a/drivers/Kconfig
-+++ b/drivers/Kconfig
-@@ -236,4 +236,7 @@ source "drivers/interconnect/Kconfig"
- source "drivers/counter/Kconfig"
- 
- source "drivers/most/Kconfig"
-+
-+source "drivers/peci/Kconfig"
-+
- endmenu
-diff --git a/drivers/Makefile b/drivers/Makefile
-index 27c018bdf4de..8d96f0c3dde5 100644
---- a/drivers/Makefile
-+++ b/drivers/Makefile
-@@ -189,3 +189,4 @@ obj-$(CONFIG_GNSS)		+= gnss/
- obj-$(CONFIG_INTERCONNECT)	+= interconnect/
- obj-$(CONFIG_COUNTER)		+= counter/
- obj-$(CONFIG_MOST)		+= most/
-+obj-$(CONFIG_PECI)		+= peci/
+ ASPEED PINCTRL DRIVERS
+ M:	Andrew Jeffery <andrew@aj.id.au>
+ L:	linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
 diff --git a/drivers/peci/Kconfig b/drivers/peci/Kconfig
-new file mode 100644
-index 000000000000..71a4ad81225a
---- /dev/null
+index 71a4ad81225a..99279df97a78 100644
+--- a/drivers/peci/Kconfig
 +++ b/drivers/peci/Kconfig
-@@ -0,0 +1,15 @@
-+# SPDX-License-Identifier: GPL-2.0-only
+@@ -13,3 +13,9 @@ menuconfig PECI
+ 
+ 	  This support is also available as a module. If so, the module
+ 	  will be called peci.
 +
-+menuconfig PECI
-+	tristate "PECI support"
-+	help
-+	  The Platform Environment Control Interface (PECI) is an interface
-+	  that provides a communication channel to Intel processors and
-+	  chipset components from external monitoring or control devices.
++if PECI
 +
-+	  If you are building a Baseboard Management Controller (BMC) kernel
-+	  for Intel platform say Y here and also to the specific driver for
-+	  your adapter(s) below. If unsure say N.
++source "drivers/peci/controller/Kconfig"
 +
-+	  This support is also available as a module. If so, the module
-+	  will be called peci.
++endif # PECI
 diff --git a/drivers/peci/Makefile b/drivers/peci/Makefile
-new file mode 100644
-index 000000000000..e789a354e842
---- /dev/null
+index e789a354e842..926d8df15cbd 100644
+--- a/drivers/peci/Makefile
 +++ b/drivers/peci/Makefile
-@@ -0,0 +1,5 @@
+@@ -3,3 +3,6 @@
+ # Core functionality
+ peci-y := core.o
+ obj-$(CONFIG_PECI) += peci.o
++
++# Hardware specific bus drivers
++obj-y += controller/
+diff --git a/drivers/peci/controller/Kconfig b/drivers/peci/controller/Kconfig
+new file mode 100644
+index 000000000000..6d48df08db1c
+--- /dev/null
++++ b/drivers/peci/controller/Kconfig
+@@ -0,0 +1,16 @@
 +# SPDX-License-Identifier: GPL-2.0-only
 +
-+# Core functionality
-+peci-y := core.o
-+obj-$(CONFIG_PECI) += peci.o
-diff --git a/drivers/peci/core.c b/drivers/peci/core.c
++config PECI_ASPEED
++	tristate "ASPEED PECI support"
++	depends on ARCH_ASPEED || COMPILE_TEST
++	depends on OF
++	depends on HAS_IOMEM
++	help
++	  This option enables PECI controller driver for ASPEED AST2400,
++	  AST2500 and AST2600 SoCs.
++
++	  Say Y here if your system runs on ASPEED SoC and you are using it
++	  as BMC for Intel platform.
++
++	  This driver can also be built as a module. If so, the module will
++	  be called peci-aspeed.
+diff --git a/drivers/peci/controller/Makefile b/drivers/peci/controller/Makefile
 new file mode 100644
-index 000000000000..7b3938af0396
+index 000000000000..022c28ef1bf0
 --- /dev/null
-+++ b/drivers/peci/core.c
-@@ -0,0 +1,155 @@
++++ b/drivers/peci/controller/Makefile
+@@ -0,0 +1,3 @@
++# SPDX-License-Identifier: GPL-2.0-only
++
++obj-$(CONFIG_PECI_ASPEED)	+= peci-aspeed.o
+diff --git a/drivers/peci/controller/peci-aspeed.c b/drivers/peci/controller/peci-aspeed.c
+new file mode 100644
+index 000000000000..1d708c983749
+--- /dev/null
++++ b/drivers/peci/controller/peci-aspeed.c
+@@ -0,0 +1,445 @@
 +// SPDX-License-Identifier: GPL-2.0-only
++// Copyright (C) 2012-2017 ASPEED Technology Inc.
 +// Copyright (c) 2018-2021 Intel Corporation
 +
-+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-+
-+#include <linux/bug.h>
-+#include <linux/device.h>
-+#include <linux/export.h>
-+#include <linux/idr.h>
++#include <linux/bitfield.h>
++#include <linux/clk.h>
++#include <linux/delay.h>
++#include <linux/interrupt.h>
++#include <linux/io.h>
++#include <linux/iopoll.h>
++#include <linux/jiffies.h>
 +#include <linux/module.h>
 +#include <linux/of.h>
 +#include <linux/peci.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/property.h>
-+#include <linux/slab.h>
++#include <linux/platform_device.h>
++#include <linux/reset.h>
 +
-+#include "internal.h"
++#include <asm/unaligned.h>
 +
-+static DEFINE_IDA(peci_controller_ida);
++/* ASPEED PECI Registers */
++/* Control Register */
++#define ASPEED_PECI_CTRL			0x00
++#define   ASPEED_PECI_CTRL_SAMPLING_MASK	GENMASK(19, 16)
++#define   ASPEED_PECI_CTRL_RD_MODE_MASK		GENMASK(13, 12)
++#define     ASPEED_PECI_CTRL_RD_MODE_DBG	BIT(13)
++#define     ASPEED_PECI_CTRL_RD_MODE_COUNT	BIT(12)
++#define   ASPEED_PECI_CTRL_CLK_SOURCE		BIT(11)
++#define   ASPEED_PECI_CTRL_CLK_DIV_MASK		GENMASK(10, 8)
++#define   ASPEED_PECI_CTRL_INVERT_OUT		BIT(7)
++#define   ASPEED_PECI_CTRL_INVERT_IN		BIT(6)
++#define   ASPEED_PECI_CTRL_BUS_CONTENTION_EN	BIT(5)
++#define   ASPEED_PECI_CTRL_PECI_EN		BIT(4)
++#define   ASPEED_PECI_CTRL_PECI_CLK_EN		BIT(0)
 +
-+static void peci_controller_dev_release(struct device *dev)
-+{
-+	struct peci_controller *controller = to_peci_controller(dev);
++/* Timing Negotiation Register */
++#define ASPEED_PECI_TIMING_NEGOTIATION		0x04
++#define   ASPEED_PECI_T_NEGO_MSG_MASK		GENMASK(15, 8)
++#define   ASPEED_PECI_T_NEGO_ADDR_MASK		GENMASK(7, 0)
 +
-+	pm_runtime_disable(&controller->dev);
++/* Command Register */
++#define ASPEED_PECI_CMD				0x08
++#define   ASPEED_PECI_CMD_PIN_MONITORING	BIT(31)
++#define   ASPEED_PECI_CMD_STS_MASK		GENMASK(27, 24)
++#define     ASPEED_PECI_CMD_STS_ADDR_T_NEGO	0x3
++#define   ASPEED_PECI_CMD_IDLE_MASK		\
++	  (ASPEED_PECI_CMD_STS_MASK | ASPEED_PECI_CMD_PIN_MONITORING)
++#define   ASPEED_PECI_CMD_FIRE			BIT(0)
 +
-+	mutex_destroy(&controller->bus_lock);
-+	ida_free(&peci_controller_ida, controller->id);
-+	fwnode_handle_put(controller->dev.fwnode);
-+	kfree(controller);
-+}
++/* Read/Write Length Register */
++#define ASPEED_PECI_RW_LENGTH			0x0c
++#define   ASPEED_PECI_AW_FCS_EN			BIT(31)
++#define   ASPEED_PECI_RD_LEN_MASK		GENMASK(23, 16)
++#define   ASPEED_PECI_WR_LEN_MASK		GENMASK(15, 8)
++#define   ASPEED_PECI_TARGET_ADDR_MASK		GENMASK(7, 0)
 +
-+struct device_type peci_controller_type = {
-+	.release	= peci_controller_dev_release,
++/* Expected FCS Data Register */
++#define ASPEED_PECI_EXPECTED_FCS		0x10
++#define   ASPEED_PECI_EXPECTED_RD_FCS_MASK	GENMASK(23, 16)
++#define   ASPEED_PECI_EXPECTED_AW_FCS_AUTO_MASK	GENMASK(15, 8)
++#define   ASPEED_PECI_EXPECTED_WR_FCS_MASK	GENMASK(7, 0)
++
++/* Captured FCS Data Register */
++#define ASPEED_PECI_CAPTURED_FCS		0x14
++#define   ASPEED_PECI_CAPTURED_RD_FCS_MASK	GENMASK(23, 16)
++#define   ASPEED_PECI_CAPTURED_WR_FCS_MASK	GENMASK(7, 0)
++
++/* Interrupt Register */
++#define ASPEED_PECI_INT_CTRL			0x18
++#define   ASPEED_PECI_TIMING_NEGO_SEL_MASK	GENMASK(31, 30)
++#define     ASPEED_PECI_1ST_BIT_OF_ADDR_NEGO	0
++#define     ASPEED_PECI_2ND_BIT_OF_ADDR_NEGO	1
++#define     ASPEED_PECI_MESSAGE_NEGO		2
++#define   ASPEED_PECI_INT_MASK			GENMASK(4, 0)
++#define     ASPEED_PECI_INT_BUS_TIMEOUT		BIT(4)
++#define     ASPEED_PECI_INT_BUS_CONTENTION	BIT(3)
++#define     ASPEED_PECI_INT_WR_FCS_BAD		BIT(2)
++#define     ASPEED_PECI_INT_WR_FCS_ABORT	BIT(1)
++#define     ASPEED_PECI_INT_CMD_DONE		BIT(0)
++
++/* Interrupt Status Register */
++#define ASPEED_PECI_INT_STS			0x1c
++#define   ASPEED_PECI_INT_TIMING_RESULT_MASK	GENMASK(29, 16)
++	  /* bits[4..0]: Same bit fields in the 'Interrupt Register' */
++
++/* Rx/Tx Data Buffer Registers */
++#define ASPEED_PECI_WR_DATA0			0x20
++#define ASPEED_PECI_WR_DATA1			0x24
++#define ASPEED_PECI_WR_DATA2			0x28
++#define ASPEED_PECI_WR_DATA3			0x2c
++#define ASPEED_PECI_RD_DATA0			0x30
++#define ASPEED_PECI_RD_DATA1			0x34
++#define ASPEED_PECI_RD_DATA2			0x38
++#define ASPEED_PECI_RD_DATA3			0x3c
++#define ASPEED_PECI_WR_DATA4			0x40
++#define ASPEED_PECI_WR_DATA5			0x44
++#define ASPEED_PECI_WR_DATA6			0x48
++#define ASPEED_PECI_WR_DATA7			0x4c
++#define ASPEED_PECI_RD_DATA4			0x50
++#define ASPEED_PECI_RD_DATA5			0x54
++#define ASPEED_PECI_RD_DATA6			0x58
++#define ASPEED_PECI_RD_DATA7			0x5c
++#define   ASPEED_PECI_DATA_BUF_SIZE_MAX		32
++
++/* Timing Negotiation */
++#define ASPEED_PECI_RD_SAMPLING_POINT_DEFAULT	8
++#define ASPEED_PECI_RD_SAMPLING_POINT_MAX	(BIT(4) - 1)
++#define ASPEED_PECI_CLK_DIV_DEFAULT		0
++#define ASPEED_PECI_CLK_DIV_MAX			(BIT(3) - 1)
++#define ASPEED_PECI_MSG_TIMING_DEFAULT		1
++#define ASPEED_PECI_MSG_TIMING_MAX		(BIT(8) - 1)
++#define ASPEED_PECI_ADDR_TIMING_DEFAULT		1
++#define ASPEED_PECI_ADDR_TIMING_MAX		(BIT(8) - 1)
++
++/* Timeout */
++#define ASPEED_PECI_IDLE_CHECK_TIMEOUT_US	(50 * USEC_PER_MSEC)
++#define ASPEED_PECI_IDLE_CHECK_INTERVAL_US	(10 * USEC_PER_MSEC)
++#define ASPEED_PECI_CMD_TIMEOUT_MS_DEFAULT	(1000)
++#define ASPEED_PECI_CMD_TIMEOUT_MS_MAX		(1000)
++
++struct aspeed_peci {
++	struct peci_controller *controller;
++	struct device *dev;
++	void __iomem *base;
++	struct clk *clk;
++	struct reset_control *rst;
++	int irq;
++	spinlock_t lock; /* to sync completion status handling */
++	struct completion xfer_complete;
++	u32 status;
++	u32 cmd_timeout_ms;
++	u32 msg_timing;
++	u32 addr_timing;
++	u32 rd_sampling_point;
++	u32 clk_div;
 +};
 +
-+static struct peci_controller *peci_controller_alloc(struct device *dev,
-+						     struct peci_controller_ops *ops)
++static void aspeed_peci_init_regs(struct aspeed_peci *priv)
 +{
-+	struct fwnode_handle *node = fwnode_handle_get(dev_fwnode(dev));
-+	struct peci_controller *controller;
++	u32 val;
++
++	val = FIELD_PREP(ASPEED_PECI_CTRL_CLK_DIV_MASK, ASPEED_PECI_CLK_DIV_DEFAULT);
++	val |= ASPEED_PECI_CTRL_PECI_CLK_EN;
++	writel(val, priv->base + ASPEED_PECI_CTRL);
++	/*
++	 * Timing negotiation period setting.
++	 * The unit of the programmed value is 4 times of PECI clock period.
++	 */
++	val = FIELD_PREP(ASPEED_PECI_T_NEGO_MSG_MASK, priv->msg_timing);
++	val |= FIELD_PREP(ASPEED_PECI_T_NEGO_ADDR_MASK, priv->addr_timing);
++	writel(val, priv->base + ASPEED_PECI_TIMING_NEGOTIATION);
++
++	/* Clear interrupts */
++	val = readl(priv->base + ASPEED_PECI_INT_STS) | ASPEED_PECI_INT_MASK;
++	writel(val, priv->base + ASPEED_PECI_INT_STS);
++
++	/* Set timing negotiation mode and enable interrupts */
++	val = FIELD_PREP(ASPEED_PECI_TIMING_NEGO_SEL_MASK, ASPEED_PECI_1ST_BIT_OF_ADDR_NEGO);
++	val |= ASPEED_PECI_INT_MASK;
++	writel(val, priv->base + ASPEED_PECI_INT_CTRL);
++
++	val = FIELD_PREP(ASPEED_PECI_CTRL_SAMPLING_MASK, priv->rd_sampling_point);
++	val |= FIELD_PREP(ASPEED_PECI_CTRL_CLK_DIV_MASK, priv->clk_div);
++	val |= ASPEED_PECI_CTRL_PECI_EN;
++	val |= ASPEED_PECI_CTRL_PECI_CLK_EN;
++	writel(val, priv->base + ASPEED_PECI_CTRL);
++}
++
++static inline int aspeed_peci_check_idle(struct aspeed_peci *priv)
++{
++	u32 cmd_sts = readl(priv->base + ASPEED_PECI_CMD);
++
++	if (FIELD_GET(ASPEED_PECI_CMD_STS_MASK, cmd_sts) == ASPEED_PECI_CMD_STS_ADDR_T_NEGO)
++		aspeed_peci_init_regs(priv);
++
++	return readl_poll_timeout(priv->base + ASPEED_PECI_CMD,
++				  cmd_sts,
++				  !(cmd_sts & ASPEED_PECI_CMD_IDLE_MASK),
++				  ASPEED_PECI_IDLE_CHECK_INTERVAL_US,
++				  ASPEED_PECI_IDLE_CHECK_TIMEOUT_US);
++}
++
++static int aspeed_peci_xfer(struct peci_controller *controller,
++			    u8 addr, struct peci_request *req)
++{
++	struct aspeed_peci *priv = dev_get_drvdata(controller->dev.parent);
++	unsigned long flags, timeout = msecs_to_jiffies(priv->cmd_timeout_ms);
++	u32 peci_head;
 +	int ret;
 +
-+	if (!ops->xfer)
-+		return ERR_PTR(-EINVAL);
++	if (req->tx.len > ASPEED_PECI_DATA_BUF_SIZE_MAX ||
++	    req->rx.len > ASPEED_PECI_DATA_BUF_SIZE_MAX)
++		return -EINVAL;
 +
-+	controller = kzalloc(sizeof(*controller), GFP_KERNEL);
-+	if (!controller)
-+		return ERR_PTR(-ENOMEM);
++	/* Check command sts and bus idle state */
++	ret = aspeed_peci_check_idle(priv);
++	if (ret)
++		return ret; /* -ETIMEDOUT */
 +
-+	ret = ida_alloc_max(&peci_controller_ida, U8_MAX, GFP_KERNEL);
++	spin_lock_irqsave(&priv->lock, flags);
++	reinit_completion(&priv->xfer_complete);
++
++	peci_head = FIELD_PREP(ASPEED_PECI_TARGET_ADDR_MASK, addr) |
++		    FIELD_PREP(ASPEED_PECI_WR_LEN_MASK, req->tx.len) |
++		    FIELD_PREP(ASPEED_PECI_RD_LEN_MASK, req->rx.len);
++
++	writel(peci_head, priv->base + ASPEED_PECI_RW_LENGTH);
++
++	memcpy_toio(priv->base + ASPEED_PECI_WR_DATA0, req->tx.buf, min_t(u8, req->tx.len, 16));
++	if (req->tx.len > 16)
++		memcpy_toio(priv->base + ASPEED_PECI_WR_DATA4, req->tx.buf + 16,
++			    req->tx.len - 16);
++
++	dev_dbg(priv->dev, "HEAD : 0x%08x\n", peci_head);
++	print_hex_dump_bytes("TX : ", DUMP_PREFIX_NONE, req->tx.buf, req->tx.len);
++
++	priv->status = 0;
++	writel(ASPEED_PECI_CMD_FIRE, priv->base + ASPEED_PECI_CMD);
++	spin_unlock_irqrestore(&priv->lock, flags);
++
++	ret = wait_for_completion_interruptible_timeout(&priv->xfer_complete, timeout);
 +	if (ret < 0)
-+		goto err;
-+	controller->id = ret;
-+
-+	controller->ops = ops;
-+
-+	controller->dev.parent = dev;
-+	controller->dev.bus = &peci_bus_type;
-+	controller->dev.type = &peci_controller_type;
-+	controller->dev.fwnode = node;
-+	controller->dev.of_node = to_of_node(node);
-+
-+	device_initialize(&controller->dev);
-+
-+	mutex_init(&controller->bus_lock);
-+
-+	pm_runtime_no_callbacks(&controller->dev);
-+	pm_suspend_ignore_children(&controller->dev, true);
-+	pm_runtime_enable(&controller->dev);
-+
-+	return controller;
-+
-+err:
-+	kfree(controller);
-+	return ERR_PTR(ret);
-+}
-+
-+static void unregister_controller(void *_controller)
-+{
-+	struct peci_controller *controller = _controller;
-+
-+	device_unregister(&controller->dev);
-+}
-+
-+/**
-+ * devm_peci_controller_add() - add PECI controller
-+ * @dev: device for devm operations
-+ * @ops: pointer to controller specific methods
-+ *
-+ * In final stage of its probe(), peci_controller driver calls
-+ * devm_peci_controller_add() to register itself with the PECI bus.
-+ *
-+ * Return: Pointer to the newly allocated controller or ERR_PTR() in case of failure.
-+ */
-+struct peci_controller *devm_peci_controller_add(struct device *dev,
-+						 struct peci_controller_ops *ops)
-+{
-+	struct peci_controller *controller;
-+	int ret;
-+
-+	controller = peci_controller_alloc(dev, ops);
-+	if (IS_ERR(controller))
-+		return controller;
-+
-+	ret = dev_set_name(&controller->dev, "peci-%d", controller->id);
-+	if (ret)
-+		goto err;
-+
-+	ret = device_add(&controller->dev);
-+	if (ret)
-+		goto err;
-+
-+	ret = devm_add_action_or_reset(dev, unregister_controller, controller);
-+	if (ret)
-+		return ERR_PTR(ret);
-+
-+	return controller;
-+
-+err:
-+	put_device(&controller->dev);
-+
-+	return ERR_PTR(ret);
-+}
-+EXPORT_SYMBOL_NS_GPL(devm_peci_controller_add, PECI);
-+
-+struct bus_type peci_bus_type = {
-+	.name		= "peci",
-+};
-+
-+static int __init peci_init(void)
-+{
-+	int ret;
-+
-+	ret = bus_register(&peci_bus_type);
-+	if (ret < 0) {
-+		pr_err("failed to register PECI bus type!\n");
 +		return ret;
++
++	if (ret == 0) {
++		dev_dbg(priv->dev, "Timeout waiting for a response!\n");
++		return -ETIMEDOUT;
 +	}
++
++	spin_lock_irqsave(&priv->lock, flags);
++
++	writel(0, priv->base + ASPEED_PECI_CMD);
++
++	if (priv->status != ASPEED_PECI_INT_CMD_DONE) {
++		spin_unlock_irqrestore(&priv->lock, flags);
++		dev_dbg(priv->dev, "No valid response!\n");
++		return -EIO;
++	}
++
++	spin_unlock_irqrestore(&priv->lock, flags);
++
++	memcpy_fromio(req->rx.buf, priv->base + ASPEED_PECI_RD_DATA0, min_t(u8, req->rx.len, 16));
++	if (req->rx.len > 16)
++		memcpy_fromio(req->rx.buf + 16, priv->base + ASPEED_PECI_RD_DATA4,
++			      req->rx.len - 16);
++
++	print_hex_dump_bytes("RX : ", DUMP_PREFIX_NONE, req->rx.buf, req->rx.len);
 +
 +	return 0;
 +}
-+module_init(peci_init);
 +
-+static void __exit peci_exit(void)
++static irqreturn_t aspeed_peci_irq_handler(int irq, void *arg)
 +{
-+	bus_unregister(&peci_bus_type);
-+}
-+module_exit(peci_exit);
++	struct aspeed_peci *priv = arg;
++	u32 status;
 +
-+MODULE_AUTHOR("Jason M Bills <jason.m.bills@linux.intel.com>");
++	spin_lock(&priv->lock);
++	status = readl(priv->base + ASPEED_PECI_INT_STS);
++	writel(status, priv->base + ASPEED_PECI_INT_STS);
++	priv->status |= (status & ASPEED_PECI_INT_MASK);
++
++	/*
++	 * In most cases, interrupt bits will be set one by one but also note
++	 * that multiple interrupt bits could be set at the same time.
++	 */
++	if (status & ASPEED_PECI_INT_BUS_TIMEOUT)
++		dev_dbg_ratelimited(priv->dev, "ASPEED_PECI_INT_BUS_TIMEOUT\n");
++
++	if (status & ASPEED_PECI_INT_BUS_CONTENTION)
++		dev_dbg_ratelimited(priv->dev, "ASPEED_PECI_INT_BUS_CONTENTION\n");
++
++	if (status & ASPEED_PECI_INT_WR_FCS_BAD)
++		dev_dbg_ratelimited(priv->dev, "ASPEED_PECI_INT_WR_FCS_BAD\n");
++
++	if (status & ASPEED_PECI_INT_WR_FCS_ABORT)
++		dev_dbg_ratelimited(priv->dev, "ASPEED_PECI_INT_WR_FCS_ABORT\n");
++
++	/*
++	 * All commands should be ended up with a ASPEED_PECI_INT_CMD_DONE bit
++	 * set even in an error case.
++	 */
++	if (status & ASPEED_PECI_INT_CMD_DONE)
++		complete(&priv->xfer_complete);
++
++	spin_unlock(&priv->lock);
++
++	return IRQ_HANDLED;
++}
++
++static void aspeed_peci_property_sanitize(struct device *dev, const char *propname,
++					  u32 min, u32 max, u32 default_val, u32 *propval)
++{
++	u32 val;
++	int ret;
++
++	ret = device_property_read_u32(dev, propname, &val);
++	if (ret) {
++		val = default_val;
++	} else if (val > max || val < min) {
++		dev_warn(dev, "Invalid %s: %u, falling back to: %u\n",
++			 propname, val, default_val);
++
++		val = default_val;
++	}
++
++	*propval = val;
++}
++
++static void aspeed_peci_property_setup(struct aspeed_peci *priv)
++{
++	aspeed_peci_property_sanitize(priv->dev, "aspeed,clock-divider",
++				      0, ASPEED_PECI_CLK_DIV_MAX,
++				      ASPEED_PECI_CLK_DIV_DEFAULT, &priv->clk_div);
++	aspeed_peci_property_sanitize(priv->dev, "aspeed,msg-timing",
++				      0, ASPEED_PECI_MSG_TIMING_MAX,
++				      ASPEED_PECI_MSG_TIMING_DEFAULT, &priv->msg_timing);
++	aspeed_peci_property_sanitize(priv->dev, "aspeed,addr-timing",
++				      0, ASPEED_PECI_ADDR_TIMING_MAX,
++				      ASPEED_PECI_ADDR_TIMING_DEFAULT, &priv->addr_timing);
++	aspeed_peci_property_sanitize(priv->dev, "aspeed,rd-sampling-point",
++				      0, ASPEED_PECI_RD_SAMPLING_POINT_MAX,
++				      ASPEED_PECI_RD_SAMPLING_POINT_DEFAULT,
++				      &priv->rd_sampling_point);
++	aspeed_peci_property_sanitize(priv->dev, "cmd-timeout-ms",
++				      1, ASPEED_PECI_CMD_TIMEOUT_MS_MAX,
++				      ASPEED_PECI_CMD_TIMEOUT_MS_DEFAULT, &priv->cmd_timeout_ms);
++}
++
++static struct peci_controller_ops aspeed_ops = {
++	.xfer = aspeed_peci_xfer,
++};
++
++static void aspeed_peci_reset_control_release(void *data)
++{
++	reset_control_assert(data);
++}
++
++int aspeed_peci_reset_control_deassert(struct device *dev, struct reset_control *rst)
++{
++	int ret;
++
++	ret = reset_control_deassert(rst);
++	if (ret)
++		return ret;
++
++	return devm_add_action_or_reset(dev, aspeed_peci_reset_control_release, rst);
++}
++
++static void aspeed_peci_clk_release(void *data)
++{
++	clk_disable_unprepare(data);
++}
++
++static int aspeed_peci_clk_enable(struct device *dev, struct clk *clk)
++{
++	int ret;
++
++	ret = clk_prepare_enable(clk);
++	if (ret)
++		return ret;
++
++	return devm_add_action_or_reset(dev, aspeed_peci_clk_release, clk);
++}
++
++static int aspeed_peci_probe(struct platform_device *pdev)
++{
++	struct peci_controller *controller;
++	struct aspeed_peci *priv;
++	int ret;
++
++	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
++	if (!priv)
++		return -ENOMEM;
++
++	priv->dev = &pdev->dev;
++	dev_set_drvdata(priv->dev, priv);
++
++	priv->base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(priv->base))
++		return PTR_ERR(priv->base);
++
++	priv->irq = platform_get_irq(pdev, 0);
++	if (!priv->irq)
++		return priv->irq;
++
++	ret = devm_request_irq(&pdev->dev, priv->irq, aspeed_peci_irq_handler,
++			       0, "peci-aspeed", priv);
++	if (ret)
++		return ret;
++
++	init_completion(&priv->xfer_complete);
++	spin_lock_init(&priv->lock);
++
++	priv->rst = devm_reset_control_get(&pdev->dev, NULL);
++	if (IS_ERR(priv->rst))
++		return dev_err_probe(priv->dev, PTR_ERR(priv->rst),
++				     "failed to get reset control\n");
++
++	ret = aspeed_peci_reset_control_deassert(priv->dev, priv->rst);
++	if (ret)
++		return dev_err_probe(priv->dev, ret, "cannot deassert reset control\n");
++
++	priv->clk = devm_clk_get(priv->dev, NULL);
++	if (IS_ERR(priv->clk))
++		return dev_err_probe(priv->dev, PTR_ERR(priv->clk), "failed to get clk\n");
++
++	ret = aspeed_peci_clk_enable(priv->dev, priv->clk);
++	if (ret)
++		return dev_err_probe(priv->dev, ret, "failed to enable clock\n");
++
++	aspeed_peci_property_setup(priv);
++
++	aspeed_peci_init_regs(priv);
++
++	controller = devm_peci_controller_add(priv->dev, &aspeed_ops);
++	if (IS_ERR(controller))
++		return dev_err_probe(priv->dev, PTR_ERR(controller),
++				     "failed to add aspeed peci controller\n");
++
++	priv->controller = controller;
++
++	return 0;
++}
++
++static const struct of_device_id aspeed_peci_of_table[] = {
++	{ .compatible = "aspeed,ast2400-peci", },
++	{ .compatible = "aspeed,ast2500-peci", },
++	{ .compatible = "aspeed,ast2600-peci", },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, aspeed_peci_of_table);
++
++static struct platform_driver aspeed_peci_driver = {
++	.probe  = aspeed_peci_probe,
++	.driver = {
++		.name           = "peci-aspeed",
++		.of_match_table = aspeed_peci_of_table,
++	},
++};
++module_platform_driver(aspeed_peci_driver);
++
++MODULE_AUTHOR("Ryan Chen <ryan_chen@aspeedtech.com>");
 +MODULE_AUTHOR("Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>");
-+MODULE_AUTHOR("Iwona Winiarska <iwona.winiarska@intel.com>");
-+MODULE_DESCRIPTION("PECI bus core module");
++MODULE_DESCRIPTION("ASPEED PECI driver");
 +MODULE_LICENSE("GPL");
-diff --git a/drivers/peci/internal.h b/drivers/peci/internal.h
-new file mode 100644
-index 000000000000..918dea745a86
---- /dev/null
-+++ b/drivers/peci/internal.h
-@@ -0,0 +1,16 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/* Copyright (c) 2018-2021 Intel Corporation */
-+
-+#ifndef __PECI_INTERNAL_H
-+#define __PECI_INTERNAL_H
-+
-+#include <linux/device.h>
-+#include <linux/types.h>
-+
-+struct peci_controller;
-+
-+extern struct bus_type peci_bus_type;
-+
-+extern struct device_type peci_controller_type;
-+
-+#endif /* __PECI_INTERNAL_H */
-diff --git a/include/linux/peci.h b/include/linux/peci.h
-new file mode 100644
-index 000000000000..26e0a4e73b50
---- /dev/null
-+++ b/include/linux/peci.h
-@@ -0,0 +1,99 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/* Copyright (c) 2018-2021 Intel Corporation */
-+
-+#ifndef __LINUX_PECI_H
-+#define __LINUX_PECI_H
-+
-+#include <linux/device.h>
-+#include <linux/kernel.h>
-+#include <linux/mutex.h>
-+#include <linux/types.h>
-+
-+/*
-+ * Currently we don't support any PECI command over 32 bytes.
-+ */
-+#define PECI_REQUEST_MAX_BUF_SIZE 32
-+
-+struct peci_controller;
-+struct peci_request;
-+
-+/**
-+ * struct peci_controller_ops - PECI controller specific methods
-+ * @xfer: PECI transfer function
-+ *
-+ * PECI controllers may have different hardware interfaces - the drivers
-+ * implementing PECI controllers can use this structure to abstract away those
-+ * differences by exposing a common interface for PECI core.
-+ */
-+struct peci_controller_ops {
-+	int (*xfer)(struct peci_controller *controller, u8 addr, struct peci_request *req);
-+};
-+
-+/**
-+ * struct peci_controller - PECI controller
-+ * @dev: device object to register PECI controller to the device model
-+ * @ops: pointer to device specific controller operations
-+ * @bus_lock: lock used to protect multiple callers
-+ * @id: PECI controller ID
-+ *
-+ * PECI controllers usually connect to their drivers using non-PECI bus,
-+ * such as the platform bus.
-+ * Each PECI controller can communicate with one or more PECI devices.
-+ */
-+struct peci_controller {
-+	struct device dev;
-+	struct peci_controller_ops *ops;
-+	struct mutex bus_lock; /* held for the duration of xfer */
-+	u8 id;
-+};
-+
-+struct peci_controller *devm_peci_controller_add(struct device *parent,
-+						 struct peci_controller_ops *ops);
-+
-+static inline struct peci_controller *to_peci_controller(void *d)
-+{
-+	return container_of(d, struct peci_controller, dev);
-+}
-+
-+/**
-+ * struct peci_device - PECI device
-+ * @dev: device object to register PECI device to the device model
-+ * @controller: manages the bus segment hosting this PECI device
-+ * @addr: address used on the PECI bus connected to the parent controller
-+ *
-+ * A peci_device identifies a single device (i.e. CPU) connected to a PECI bus.
-+ * The behaviour exposed to the rest of the system is defined by the PECI driver
-+ * managing the device.
-+ */
-+struct peci_device {
-+	struct device dev;
-+	u8 addr;
-+};
-+
-+static inline struct peci_device *to_peci_device(struct device *d)
-+{
-+	return container_of(d, struct peci_device, dev);
-+}
-+
-+/**
-+ * struct peci_request - PECI request
-+ * @device: PECI device to which the request is sent
-+ * @tx: TX buffer specific data
-+ * @tx.buf: TX buffer
-+ * @tx.len: transfer data length in bytes
-+ * @rx: RX buffer specific data
-+ * @rx.buf: RX buffer
-+ * @rx.len: received data length in bytes
-+ *
-+ * A peci_request represents a request issued by PECI originator (TX) and
-+ * a response received from PECI responder (RX).
-+ */
-+struct peci_request {
-+	struct peci_device *device;
-+	struct {
-+		u8 buf[PECI_REQUEST_MAX_BUF_SIZE];
-+		u8 len;
-+	} rx, tx;
-+};
-+
-+#endif /* __LINUX_PECI_H */
++MODULE_IMPORT_NS(PECI);
 -- 
 2.31.1
 
