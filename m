@@ -1,72 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8B443DF009
-	for <lists+openbmc@lfdr.de>; Tue,  3 Aug 2021 16:18:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18CD63DF04C
+	for <lists+openbmc@lfdr.de>; Tue,  3 Aug 2021 16:29:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GfH6249nLz3bVw
-	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 00:18:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GfHM90K67z30HR
+	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 00:29:41 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=Qx9xbH6e;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=lyCUo5rR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yandex-team.ru (client-ip=95.108.205.193;
- helo=forwardcorp1o.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::135;
+ helo=mail-lf1-x135.google.com; envelope-from=fercerpav@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
- header.a=rsa-sha256 header.s=default header.b=Qx9xbH6e; 
- dkim-atps=neutral
-Received: from forwardcorp1o.mail.yandex.net (forwardcorp1o.mail.yandex.net
- [95.108.205.193])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=lyCUo5rR; dkim-atps=neutral
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com
+ [IPv6:2a00:1450:4864:20::135])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GfH5j0wJnz2yND
- for <openbmc@lists.ozlabs.org>; Wed,  4 Aug 2021 00:17:58 +1000 (AEST)
-Received: from vla1-fdfb804fb3f3.qloud-c.yandex.net
- (vla1-fdfb804fb3f3.qloud-c.yandex.net
- [IPv6:2a02:6b8:c0d:3199:0:640:fdfb:804f])
- by forwardcorp1o.mail.yandex.net (Yandex) with ESMTP id 3E80D2E1976;
- Tue,  3 Aug 2021 17:17:52 +0300 (MSK)
-Received: from mail.yandex-team.ru (mail.yandex-team.ru
- [2a02:6b8:0:506:4a65:eeff:fe1b:f0b1])
- by vla1-fdfb804fb3f3.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
- mHKex10xjmI1-Hqx8V0oU; Tue, 03 Aug 2021 17:17:52 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; 
- t=1628000272; bh=mYz4Hl+gF9jO7yigkJQ64746JtZ6F6kC7be0fOPN/D4=;
- h=Subject:In-Reply-To:Cc:Date:References:To:From:Message-Id;
- b=Qx9xbH6eswVPZCKwDHxd86jdF2KeT6Cev2cXckirBqHTQY1K9O8QrBIoP6Ip2eB9v
- COh183JiHc2RUeyD5WQA77lNrrk91mLzYAehJxBRII06MsMtghiCyATlf8hOZMtGdC
- wKFE1bELB79J3LnCeKwp5boTAufFSnB/SiOoG7uk=
-Authentication-Results: vla1-fdfb804fb3f3.qloud-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-X-Yandex-Sender-Uid: 1120000000049860
-X-Yandex-Avir: 1
-Received: from iva4-92c901fae84c.qloud-c.yandex.net
- (iva4-92c901fae84c.qloud-c.yandex.net [2a02:6b8:c0c:150a:0:640:92c9:1fa])
- by iva8-c5ee4261001e.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
- fHK8H200Z8c1-H2bsdQqD
- for <kitsok@yandex-team.ru>; Tue, 03 Aug 2021 17:17:42 +0300
-Received: by iva4-92c901fae84c.qloud-c.yandex.net with HTTP;
- Tue, 03 Aug 2021 17:17:42 +0300
-From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-To: Paul Fertser <fercerpav@gmail.com>
-In-Reply-To: <20210803133707.GO875@home.paul.comp>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GfHLs0RYPz301q
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Aug 2021 00:29:24 +1000 (AEST)
+Received: by mail-lf1-x135.google.com with SMTP id a26so39995194lfr.11
+ for <openbmc@lists.ozlabs.org>; Tue, 03 Aug 2021 07:29:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=bEUj5pdRKviSMU2wAmJRXJmbWfFkZj1Fe7wcJ8eBh00=;
+ b=lyCUo5rRtTvlNMw48UossO69TlKJyiRUrVfmk6DI62c/j+URywsQR4G3F+yWuazAh9
+ M9bKdI5y/XVdicL02jvqhe+hghN7jb6bMBwzisZHVGeStbMccxpybh06elv9jD4Nkryt
+ y18R5OG1IR+k367QUX/00vr1EC87EvOA+cjj/XHw5p7BhtikA4lkAtZ/OVfpfTPpozMm
+ ErlYSAbLsR8xO73/NPtnOgMXGVSTPbi/8UcA34G03NdePJvVZs16zKcMl5cvCyFEtCTN
+ NCEhZK09PiY1aA0vZxjKwgQMdRLeWlbqFQPwPcy6yr24eDs8hbEvaRyqeNPVWzQoyl/T
+ 8iGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=bEUj5pdRKviSMU2wAmJRXJmbWfFkZj1Fe7wcJ8eBh00=;
+ b=ImNpZEUwsGDVpZdeCpvPyhHJV/vyJT7eeFHaPTXlQRbbGbFABWWQlWr4KhHJxtGDjE
+ PcMXjIlcNQ2jhPlo0b9IMNHy/lDZ4JIpa4I99Z12hjZcg4U8o+DkW3UXAXTkoxGeO0m5
+ KcKM2W3pYCA4zWUHMCdzHAzRU7MTY5DmCvSm7M8JOyK8Wkm3VHFkWvy3upnNZFq+8T00
+ iudWAr4fo5mJ0e+NiF+IqD00GDZP7mtm4oh+PUU+5rDv46LXT9RoR1tUb0T6xRWpZDRo
+ SHRoA4Hq6Lll/jxBSKKBuASu850dnkTtC55HkeoH7H7kZc5YqA0qPWqlIdiZKWolC+AH
+ Pnkg==
+X-Gm-Message-State: AOAM530TasuO82TyoDttEGfjnKC0xeihYsJCg7K0XgHu5qlP2T6HffxJ
+ 8vK3iOegn79ZUMCbihsid7HEcOyh3NI30w==
+X-Google-Smtp-Source: ABdhPJy3iiJhdb7GiyybvteE+xDiHFlU3qGAkUXe6YUc297dzR5/yClWrPNSIbB3mmz0i4K9URH0zA==
+X-Received: by 2002:ac2:5e7a:: with SMTP id a26mr16720696lfr.446.1628000960355; 
+ Tue, 03 Aug 2021 07:29:20 -0700 (PDT)
+Received: from home.paul.comp (paulfertser.info.
+ [2001:470:26:54b:226:9eff:fe70:80c2])
+ by smtp.gmail.com with ESMTPSA id f2sm1109151ljq.131.2021.08.03.07.29.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Aug 2021 07:29:19 -0700 (PDT)
+Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
+ by home.paul.comp (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTP id
+ 173ETGOw004548; Tue, 3 Aug 2021 17:29:17 +0300
+Received: (from paul@localhost)
+ by home.paul.comp (8.15.2/8.15.2/Submit) id 173ETG3W004547;
+ Tue, 3 Aug 2021 17:29:16 +0300
+Date: Tue, 3 Aug 2021 17:29:15 +0300
+From: Paul Fertser <fercerpav@gmail.com>
+To: Konstantin Klubnichkin <kitsok@yandex-team.ru>
+Subject: Re: Installing Windows Server 2019 from a remotely mounted ISO
+Message-ID: <20210803142915.GP875@home.paul.comp>
 References: <60926e52-9d00-2b20-e8ac-7fd515ddac78@yadro.com>
  <CAH2KKeaBMhU3XDADDE0ieqRRhNBiF57-9rUi+Go-SSJCGG-GBA@mail.gmail.com>
  <3c0b0dc3-a31d-dcfb-608b-53436074397b@linux.intel.com>
- <34751627996896@mail.yandex-team.ru> <20210803133707.GO875@home.paul.comp>
-Subject: Re: Installing Windows Server 2019 from a remotely mounted ISO
+ <34751627996896@mail.yandex-team.ru>
+ <20210803133707.GO875@home.paul.comp>
+ <1341627999924@mail.yandex-team.ru>
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Tue, 03 Aug 2021 17:17:52 +0300
-Message-Id: <1341627999924@mail.yandex-team.ru>
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1341627999924@mail.yandex-team.ru>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,42 +98,19 @@ Cc: openbmc <openbmc@lists.ozlabs.org>, Alexander Amelkin <a.amelkin@yadro.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGRpdj5IZWxsbyBQYXVsLDwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PjAzLjA4LjIwMjEsIDE2OjM3
-LCAiUGF1bCBGZXJ0c2VyIiAmbHQ7ZmVyY2VycGF2QGdtYWlsLmNvbSZndDs6PC9kaXY+PGJsb2Nr
-cXVvdGU+PHA+SGkgS29uc3RhbnRpbiw8YnIgLz48YnIgLz5PbiBUdWUsIEF1ZyAwMywgMjAyMSBh
-dCAwNDoyNjo1MlBNICswMzAwLCBLb25zdGFudGluIEtsdWJuaWNoa2luIHdyb3RlOjwvcD48Ymxv
-Y2txdW90ZT7CoEl0J3MgYWJvdXQgT3B0aW9uIDIgKHByZXBhcmluZyBpbWFnZSBvbiBMaW51eCku
-PGJyIC8+wqBUaGUgc2VxdWVuY2UgaW4gdGhlIGluc3RydWN0aW9uIGlzOjxiciAvPsKgMS4gQ3Jl
-YXRlIGVtcHR5IGltYWdlIHVzaW5nIGRkOzxiciAvPsKgMi4gQ3JlYXRlIHBhcnRpdGlvbiB0YWJs
-ZSBvbiBpdCB3aXRoIEZBVDMyIHBhcnRpdGlvbjs8YnIgLz7CoDMuIEZvcm1hdCBpbWFnZSB0byBG
-QVQzMiBmaWxlc3lzdGVtOzxiciAvPsKgNC4gUHJlcGFyZSBmaWxlcyBmcm9tIFdpbmRvd3MgRFZE
-OzxiciAvPsKgNS4gTW91bnQgaW1hZ2UgdG8gc29tZSBkaXJlY3Rvcnk7PGJyIC8+wqA2LiBDb3B5
-IGZpbGVzIHRvIHRoYXQgZGlyZWN0b3J5OzxiciAvPsKgNy4gVW5tb3VudCBpbWFnZS48YnIgLz7C
-oMKgPGJyIC8+wqBJIGNhbid0IGdldCB3aHkgdG8gY3JlYXRlIHBhcnRpdGlvbiB0YWJsZSBvbiB0
-aGUgaW1hZ2Uoc3RlcCAyKSBpZiB0aGUgbmV4dCBzdGVwPGJyIC8+wqAoZm9ybWF0dGluZyBpbWFn
-ZSB3aXRoIG1rZnMudmZhdCwgc3RlcCAzKSBkZXN0cm95cyBpdD88L2Jsb2NrcXVvdGU+PHA+PGJy
-IC8+TG9va3MgbGlrZSBhIHR5cG8sIHMvaW1hZ2UvcGFydGl0aW9uLy48L3A+PC9ibG9ja3F1b3Rl
-PjxkaXY+PGJyIC8+SSBkb24ndCB0aGluayBzbyBhcyBmb3JtYXR0aW5nIHBhcnRpdGlvbiB3b3Vs
-ZCByZXF1aXJlIHBsYXkgd2l0aCBsb3NldHVwIGFuZCBwcm9iYWJseSBzb21lIGJvb3QgbG9hZGVy
-IGluc3RhbGxhdGlvbiBvbnRvIHRoZSBpbWFnZS48L2Rpdj48YmxvY2txdW90ZT48cD48YnIgLz5U
-aGF0IHNhaWQsIGJvb3Rpbmcgd2luZG93cyBpbnN0YWxsZXIgc2hvdWxkbid0IGJlIGFueXRoaW5n
-IHNwZWNpYWw8YnIgLz53aXRoIFVFRkksIGJhc2ljYWxseSB5b3UgY3JlYXRlIEdQVCwgRUZJIFN5
-c3RlbSBwYXJ0aXRpb24gb24gaXQsIHB1dDxiciAvPnRoZSB3aW5kb3dzIEVGSSBsb2FkZXIgdGhl
-cmUgd2l0aCB0aGUgcmlnaHQgbmFtZSBwbHVzIHNvbWUgZmlsZXMgaXQ8YnIgLz5uZWVkcywgYW5k
-IHRoZW4gY29weSBldmVyeXRoaW5nIGVsc2UgdG8gTlRGUyBwYXJ0aXRpb24uPGJyIC8+PGJyIC8+
-VGhpcyBzaG91bGQgZXhwbGFpbiBpdCB3aXRoIGVub3VnaCBkZXRhaWxzOjxiciAvPjxiciAvPjxh
-IGhyZWY9Imh0dHBzOi8vdGVjaGJpdC5jYS8yMDE5LzAyL2NyZWF0aW5nLWEtYm9vdGFibGUtd2lu
-ZG93cy0xMC11ZWZpLXVzYi1kcml2ZS11c2luZy1saW51eC8iIHJlbD0ibm9vcGVuZXIgbm9yZWZl
-cnJlciI+aHR0cHM6Ly90ZWNoYml0LmNhLzIwMTkvMDIvY3JlYXRpbmctYS1ib290YWJsZS13aW5k
-b3dzLTEwLXVlZmktdXNiLWRyaXZlLXVzaW5nLWxpbnV4LzwvYT48L3A+PC9ibG9ja3F1b3RlPjxk
-aXY+PGJyIC8+R29vZCBhcnRpY2xlLCB0aGFuayB5b3UhPC9kaXY+PGJsb2NrcXVvdGU+PHA+PGJy
-IC8+SFRIPC9wPi0tPGJyIC8+QmUgZnJlZSwgdXNlIGZyZWUgKDxhIGhyZWY9Imh0dHA6Ly93d3cu
-Z251Lm9yZy9waGlsb3NvcGh5L2ZyZWUtc3cuaHRtbCIgcmVsPSJub29wZW5lciBub3JlZmVycmVy
-Ij5odHRwOi8vd3d3LmdudS5vcmcvcGhpbG9zb3BoeS9mcmVlLXN3Lmh0bWw8L2E+KSBzb2Z0d2Fy
-ZSE8YnIgLz48YSBocmVmPSJtYWlsdG86ZmVyY2VycGF2QGdtYWlsLmNvbSIgcmVsPSJub29wZW5l
-ciBub3JlZmVycmVyIj5tYWlsdG86ZmVyY2VycGF2QGdtYWlsLmNvbTwvYT48L2Jsb2NrcXVvdGU+
-PGRpdj7CoDwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2Pi0twqA8L2Rpdj48ZGl2PkJlc3QgcmVnYXJk
-cyw8L2Rpdj48ZGl2PktvbnN0YW50aW4gS2x1Ym5pY2hraW4sPC9kaXY+PGRpdj5sZWFkIGZpcm13
-YXJlIGVuZ2luZWVyLDwvZGl2PjxkaXY+c2VydmVyIGhhcmR3YXJlIFImYW1wO0QgZ3JvdXAsPC9k
-aXY+PGRpdj5ZYW5kZXggTW9zY293IG9mZmljZS48L2Rpdj48ZGl2PnRlbDogKzctOTAzLTUxMC0z
-My0zMzwvZGl2PjxkaXY+wqA8L2Rpdj4=
+On Tue, Aug 03, 2021 at 05:17:52PM +0300, Konstantin Klubnichkin wrote:
+>   Looks like a typo, s/image/partition/.
+> 
+> I don't think so as formatting partition would require play with losetup and
+> probably some boot loader installation onto the image.
+
+kpartx creates appropriate loop devices automatically, so if your
+image has a partition table you can easily get the suitable loop
+devices to run mkfs.vfat on them, then mount it etc.
+
+For UEFI bootloader installation on removable media is just copying a
+file to a FAT32 partition, nothing fancy.
+
+-- 
+Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
+mailto:fercerpav@gmail.com
