@@ -2,75 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EB823DDC0F
-	for <lists+openbmc@lfdr.de>; Mon,  2 Aug 2021 17:13:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D02C3DE390
+	for <lists+openbmc@lfdr.de>; Tue,  3 Aug 2021 02:28:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GdhMy14TXz3bXH
-	for <lists+openbmc@lfdr.de>; Tue,  3 Aug 2021 01:13:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GdwhG33xmz30Dd
+	for <lists+openbmc@lfdr.de>; Tue,  3 Aug 2021 10:28:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=wBKF+mvv;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=bZewiS8S;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=EXf/UiqT;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yandex-team.ru (client-ip=2a02:6b8:0:1619::183;
- helo=forwardcorp1j.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
- header.a=rsa-sha256 header.s=default header.b=wBKF+mvv; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=bZewiS8S; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=EXf/UiqT; 
  dkim-atps=neutral
-Received: from forwardcorp1j.mail.yandex.net (forwardcorp1j.mail.yandex.net
- [IPv6:2a02:6b8:0:1619::183])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GdhMb2c0Cz3060
- for <openbmc@lists.ozlabs.org>; Tue,  3 Aug 2021 01:12:55 +1000 (AEST)
-Received: from iva8-c5ee4261001e.qloud-c.yandex.net
- (iva8-c5ee4261001e.qloud-c.yandex.net
- [IPv6:2a02:6b8:c0c:a8a6:0:640:c5ee:4261])
- by forwardcorp1j.mail.yandex.net (Yandex) with ESMTP id 3C1122E0E47;
- Mon,  2 Aug 2021 18:12:46 +0300 (MSK)
-Received: from mail.yandex-team.ru (mail.yandex-team.ru
- [2a02:6b8:0:506:4a65:eeff:fe1b:f0b1])
- by iva8-c5ee4261001e.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
- fCKpho0xCqM1-Ckx0KDlb; Mon, 02 Aug 2021 18:12:46 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; 
- t=1627917166; bh=/HJ1AJy7kpxlvK8X/xw/ktpWkNY23FJXbst/ksrhMok=;
- h=Subject:In-Reply-To:Cc:Date:References:To:From:Message-Id;
- b=wBKF+mvvy1X7DEy2BUeodaGRkW9odaRu58pfeliwNapP1MEvBAxtsWEMEt5TiUhZR
- sGpvVYkTQxi9ZeF5PyOW3V14AvgDy53bdTLDUzXkGWda+kjhfsWivhH7yLhYqeTfJw
- IBsFDiC1HoeHpgiakbJnnIsI5Xh2mslMIplb8c64=
-Authentication-Results: iva8-c5ee4261001e.qloud-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-X-Yandex-Sender-Uid: 1120000000049860
-X-Yandex-Avir: 1
-Received: from sas1-b43cfc766761.qloud-c.yandex.net
- (sas1-b43cfc766761.qloud-c.yandex.net [2a02:6b8:c14:2801:0:640:b43c:fc76])
- by sas1-6b1512233ef6.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
- UCKukY0x8mI1-4BvzieOg
- for <kitsok@yandex-team.ru>; Mon, 02 Aug 2021 18:12:36 +0300
-Received: by sas1-b43cfc766761.qloud-c.yandex.net with HTTP;
- Mon, 02 Aug 2021 18:12:36 +0300
-From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-To: Paul Fertser <fercerpav@gmail.com>
-In-Reply-To: <20210727093015.GQ875@home.paul.comp>
-References: <CAE33tLEsCJtr9VPYj57ZcOe5iWD6282WmrMTr-Hp96Y3rkBzAA@mail.gmail.com>
- <000001d5bc87$f6fe3780$e4faa680$@linux.intel.com>
- <CAE33tLHvjuwFwCsSdohvYPHgs-f-8sDWMsNdAhzgQbs3=o7_tQ@mail.gmail.com>
- <429111627309901@mail.yandex-team.ru>
- <20210726145246.GL875@home.paul.comp>
- <435311627317580@mail.yandex-team.ru>
- <20210726165144.GN875@home.paul.comp>
- <477521627375667@mail.yandex-team.ru> <20210727093015.GQ875@home.paul.comp>
-Subject: Re: Serial Over Lan (SOL) no login prompt on Linux IRQ mode [SOLVED]
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Gdwgt6JQdz2ydS
+ for <openbmc@lists.ozlabs.org>; Tue,  3 Aug 2021 10:27:54 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id 23C8B5C0056;
+ Mon,  2 Aug 2021 20:27:50 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute2.internal (MEProxy); Mon, 02 Aug 2021 20:27:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=kAS7Zjo76WfE/8vJss3ydl4N+Qa
+ lx0eUBUhMQgPGlxs=; b=bZewiS8SvMWoarsjg+6BfH/TxwIWwkyJueY8HmfpocM
+ 28oRXa2G5APe0ePbF+HJtgvJZm+HYQyPKRynwe5/FRSguk8aS3xba3rQh3aLmh6K
+ 8SFCKWjGnSwqLGJQRZaU5GeYA59YBPDuD+bM1m2py5Vbu5IJWePBpE/0G6gwTIhd
+ udPMAqYjf5wrQoo+QGfjwX0gmkALl10y8x0eELtGpPWyzfRO7lgnOInpOG08l8D7
+ If55b1uYOyrNNi6TbCPmBJyK1HiH+P/niQqkqUfmvwWCIcgP3sXIHEFqYiZXu8z3
+ iCMa45fGYyhijkh1w7Bwkp4AneSDca5J8EkkhB+KLjw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=kAS7Zj
+ o76WfE/8vJss3ydl4N+Qalx0eUBUhMQgPGlxs=; b=EXf/UiqTOrMR26tsF/+kHY
+ zY9rBfHLmx5mbNruaTzN0iQ5GVg/AoiHd7IxspOhE1dxZeTE957PUfepINee0/G/
+ 5adfllVffUgl4gCHPbHFFbDL+2sGPfxd+W6iIpWabRQ2QXOmsNNr7FZP4SQ8a5fW
+ lL88OyOKvA1mad9rU4YOUtOQFgsnVo6Zi6G2CX/D7A7KDgeIeuHo3/agpP5LW8YV
+ AKK79oOP612rSkJlFXcHK899GOHDSbFyiKIpj5HJ3wm14ZYdNBOmRfzuq5AR4v3y
+ A4ea3C3SXRiT/sN/eV2S8LIZMKmAdTtUrC3Bs9rf+NvLUjBX/lElTUH1NzkUEIDg
+ ==
+X-ME-Sender: <xms:hY0IYYTEvLtJoRuwaKn7ytcD0TIuFM_FxI-OnrscekaMzvIrPuE8lA>
+ <xme:hY0IYVxglHG1o3KklkCQtOZaCp2ZmhO00-v_jx7ok_3iLVFBTfRmGqwIx-A0Oz7fH
+ 9vLNmmbpMsm-J79Qbw>
+X-ME-Received: <xmr:hY0IYV0H8D7EBTgn_95uUfwCyQKZ0hy8yguH4o4062o2KuMD-h9Tby6dZyD1u30Oi9eJqvxVhpky22A2G2W5vNyoCYGufmllEuGBp-FgFQRgjg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieefgddvhecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
+ fefgtdehhfektdelffevkefgueffhedtieenucevlhhushhtvghrufhiiigvpedtnecurf
+ grrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:hY0IYcAccCeMBccqX-7_iC0Z-Sv9LhDPWsn-_dLOS4rwSfdXvnejEQ>
+ <xmx:hY0IYRiC1MHcasKGqdtJIuuTR8exacIzSlLWq0frlT6jpAdZRgFepQ>
+ <xmx:hY0IYYqQY7PfTKlXyrvurZ5KCmiudNxgyeOZ8wATkFqmBHBu8UH_vA>
+ <xmx:ho0IYRLTQS2ZUrX4hkdVlGNJ2rglJaS_boJX5P0ss1qLhvi6F0vbzQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Aug 2021 20:27:49 -0400 (EDT)
+Date: Mon, 2 Aug 2021 19:27:47 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: `phosphor-logging` APIs (RFC)
+Message-ID: <YQiNg9cxRgNe4sFV@heinlein>
+References: <YQBrbuQFz4JihBAE@heinlein>
+ <41a334dd-56c4-44d0-b8f4-7ecdf5bfa5de@www.fastmail.com>
+ <YQD4TWus75QQjH3U@heinlein>
+ <e1b41c2e-bcad-4282-a3b9-8f5344cab056@www.fastmail.com>
+ <YQIYE4yH7IcGIrjd@heinlein>
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Mon, 02 Aug 2021 18:12:46 +0300
-Message-Id: <45151627916979@mail.yandex-team.ru>
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="ziiCildB6JiLxD+m"
+Content-Disposition: inline
+In-Reply-To: <YQIYE4yH7IcGIrjd@heinlein>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,50 +100,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGRpdj5IZWxsbyBQYXVsLDwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PklmIFVBUlQgaXMgZGlzYWJs
-ZWQgaW4gRFRTLCBpdHMnIGNsb2NrIGlzIGRpc2FibGVkIGluIFNDVTBDIChDbG9jayBzdG9wIGNv
-bnRyb2wgcmVnaXN0ZXIpLjwvZGl2PjxkaXY+QWZ0ZXIgZW5hYmxpbmcgY2xvY2tzLCBldmVyeXRo
-aW5nIHdvcmtzIGZpbmUgd2l0aCBVQVJUIHJvdXRpbmcuPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+
-VGhhbmsgeW91ITwvZGl2PjxkaXY+UC5TLiBTbyByb290IGNhdXNlIG9mIG15IHBhaW5zIHdpdGgg
-U09MIGlzIGdsb2JhbCB3b3JtaW5nIGFzIHByb2JhYmx5IHRoZSByZWFzb24gdG8gZGlzYWJsZSBV
-QVJUIGNsb2NrIGlzIHRvIHNhdmUgcG93ZXIuPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+MjcuMDcu
-MjAyMSwgMTI6MzAsICJQYXVsIEZlcnRzZXIiICZsdDtmZXJjZXJwYXZAZ21haWwuY29tJmd0Ozo8
-L2Rpdj48YmxvY2txdW90ZT48cD5PbiBUdWUsIEp1bCAyNywgMjAyMSBhdCAxMTo1Mzo1N0FNICsw
-MzAwLCBLb25zdGFudGluIEtsdWJuaWNoa2luIHdyb3RlOjwvcD48YmxvY2txdW90ZT7CoFNJUlEg
-cG9sYXJpdHkgaXMgc29tZXRoaW5nIEkgZGlkbid0IHRyeSwgd2lsbCBkbyBpdC4gQW5kIHllcywg
-U0lSUSBiaXQgaXMgemVybyw8YnIgLz7CoGJ1dCBhbGwgb3RoZXIgYml0cyBhcmUgYWxzbyB6ZXJv
-IGluIHRoYXQgcmVnaXN0ZXIsIHRoYXQgY29uZnVzZXMgbWUuPC9ibG9ja3F1b3RlPjxwPjxiciAv
-Pkkgd2FzIGFsc28gYWJsZSB0byBtYW51YWxseSBleHBvcnQgdGhlIFNJUlEgcGluIHZpYSBzeXNm
-cyBhbmQgd2hlbjxiciAvPm1hbnVhbGx5IHRvZ2dsaW5nIGl0IHRoZSBob3N0IHdhcyBzZWVpbmcg
-VUFSVCBpbnRlcnJ1cHRzIGFuZCBnZXR0aW5nPGJyIC8+ZGF0YSB0byBhbmQgZnJvbSBWVUFSVC4g
-VGhhdCBsZWFkIG5vd2hlcmUgdGhvdWdoLCBzbyB3ZSByZXNvcnRlZCB0bzxiciAvPmhhcmR3YXJl
-IHJvdXRpbmcgaW4gYXN0MjUwMCBiZXR3ZWVuICJyZWFsIFVBUlRzIi48YnIgLz7CoDwvcD48Ymxv
-Y2txdW90ZT7CoEluc3RlYWQgSSBjb25maWd1cmUgVUFSVCByb3V0aW5nIGJ5IGRpcmVjdCB3cml0
-aW5nIHRvIHJlZ2lzdGVycyB2aWEgL2Rldi9tZW08YnIgLz7CoCh5ZXMsIEkga25vdyB0aGF0IGl0
-J3MgYSBiYWQgcHJhY3RpdmUsIGJ1dCBpdCdzIGRldmVsb3BtZW50KS48L2Jsb2NrcXVvdGU+PHA+
-PGJyIC8+U2hvdWxkIHdvcmsgdGhlIHNhbWUuPGJyIC8+wqA8L3A+PGJsb2NrcXVvdGU+wqBXaXRo
-IHRoZSByb3V0aW5nIEkgaGF2ZSBhYnNvbHV0ZWx5IG5vIGRhdGEgaW4gQk1DIFVBUlRzIG5laXRo
-ZXIgZHVyaW5nIFBPU1Qgbm9yPGJyIC8+wqBpcyBPUy48YnIgLz7CoFdoYXQgSSdtIG1pc3Npbmcg
-aXMgaG93IHRoYXQgcm91dGluZyB3b3Jrcy4gSXMgaXQgb24tY3J5c3RhbCBvciBVQVJUIG5lZWQg
-dG8gYmU8YnIgLz7CoHJvdXRlZCB0byBTb0MgcGlucyB0aHVzIFRYL1JYIGFyZSBjb25uZWN0ZWQg
-dmlhIHBpbnM/PC9ibG9ja3F1b3RlPjxwPjxiciAvPldpdGggdGhlIGNvbmZpZ3VyYXRpb24gYXMg
-c2hvd24gdGhlIGhvc3QgaXMgc2VuZGluZyBkYXRhIHRvIGFuZCBmcm9tPGJyIC8+IkNPTTEiICgw
-eDNmOCw0KSBhbmQgYW55IHByb2dyYW0gb24gQk1DIGlzIGFibGUgdG8gaW50ZXJhY3Qgd2l0aCBp
-dDxiciAvPnZpYSAvZGV2L3R0eVMyLCB3aXRob3V0IGFueSBhZGRpdGlvbmFsIGhhcmR3YXJlIGNv
-bm5lY3Rpb25zLCBhbGw8YnIgLz5wdXJlbHkgaW4gc29mdHdhcmUsIHRoZSByb3V0aW5nIGhhcHBl
-bnMgaW5zaWRlIGFzcGVlZC4gRG8gbm90IGZvcmdldDxiciAvPnRvIGVuYWJsZSB0dHlTMiBpbiB5
-b3VyIGJvYXJkJ3MgRFRTLiBWVUFSVCBpcyBub3QgaW52b2x2ZWQgYXQgYWxsLjxiciAvPsKgPC9w
-Pi0tPGJyIC8+QmUgZnJlZSwgdXNlIGZyZWUgKDxhIGhyZWY9Imh0dHA6Ly93d3cuZ251Lm9yZy9w
-aGlsb3NvcGh5L2ZyZWUtc3cuaHRtbCIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIj5odHRwOi8v
-d3d3LmdudS5vcmcvcGhpbG9zb3BoeS9mcmVlLXN3Lmh0bWw8L2E+KSBzb2Z0d2FyZSE8YnIgLz48
-YSBocmVmPSJtYWlsdG86ZmVyY2VycGF2QGdtYWlsLmNvbSIgcmVsPSJub29wZW5lciBub3JlZmVy
-cmVyIj5tYWlsdG86ZmVyY2VycGF2QGdtYWlsLmNvbTwvYT48L2Jsb2NrcXVvdGU+PGRpdj7CoDwv
-ZGl2PjxkaXY+wqA8L2Rpdj48ZGl2Pi0twqA8L2Rpdj48ZGl2PkJlc3QgcmVnYXJkcyw8L2Rpdj48
-ZGl2PktvbnN0YW50aW4gS2x1Ym5pY2hraW4sPC9kaXY+PGRpdj5sZWFkIGZpcm13YXJlIGVuZ2lu
-ZWVyLDwvZGl2PjxkaXY+c2VydmVyIGhhcmR3YXJlIFImYW1wO0QgZ3JvdXAsPC9kaXY+PGRpdj5Z
-YW5kZXggTW9zY293IG9mZmljZS48L2Rpdj48ZGl2PnRlbDogKzctOTAzLTUxMC0zMy0zMzwvZGl2
-PjxkaXY+wqA8L2Rpdj4=
+
+--ziiCildB6JiLxD+m
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jul 28, 2021 at 09:53:07PM -0500, Patrick Williams wrote:
+>=20
+>   error("Hit {ERROR} during {STAGE}.", "ERROR", "bad foobar", "STAGE",
+>         "baz-grae", "EXTRA", 123);
+>=20
+
+I have implemented this formatting handling, since more people seemed to wa=
+nt
+it, and also added compile-time confirmation that the keys match
+systemd-journald requirements.  Patch sequence is all updated to resolve any
+outstanding review comments.
+
+--=20
+Patrick Williams
+
+--ziiCildB6JiLxD+m
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmEIjYIACgkQqwNHzC0A
+wRm1tA//YRIRYXKrKmfTJJlSy2mkcWa2X8L7XuzSUz2UTuCzgolBp890v39lONOb
+QZod50G8stpTZRUhTPsj24XJE+rYvFWiamRns7auk0GNddUhqGAdePaQzEiEeMI5
+HijCQY56/Ltu05jtNXm4Nj/NFyU+pPifldECJc9Dp6SFzn8ydzMlFB+m+pivp8n/
+zcNJr0kTjW9vZ33xqdwwnRFtea9ZnphvUzhhDzka7t9liXywArQX6WiS2wDLg+Iu
+TB0TIG0zojE4ofie2AUnE8e2IyBB7YHxSkU6FdrSVz5DhRHFUy6Wc3TDjycvkRQ4
+4aJ3VSHJpQetnLzL4O8k/bsG7cEKIhLBcsoayXjX3xCXjnm0rUWNipauaFF4lJYU
+fg3nkb9Tx72flarZDXZWh6GmoZFv0/2zHJeqeQj+vxeCsQ4vhgNGbN2/48Ptzpju
+Js9wzfIVHLchYb6fnrE7qCLgSlIMKUvdWX5KAE6vKzizOpJKmFsGND1Ud9kwmWwK
+WsTyPuwL7BSLF5oulDnrFfHVHC+2SrtpgWeTvbEq9rhnx415EHsDDJmyqYg+Tj1V
+D5Y13w9gyrqZKfySwSUBgR2uTK/49RNbKVyySVNmYmZEpbAWgnSf5VJ6Vr5Z0lqU
+zWxl5+FEoL9FXm5TrUqC/9256D3qA55cPLrQm3uAtUZUg8OsU8g=
+=z4g8
+-----END PGP SIGNATURE-----
+
+--ziiCildB6JiLxD+m--
