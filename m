@@ -2,43 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C41913DF8E0
-	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 02:21:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC85D3DEC7D
+	for <lists+openbmc@lfdr.de>; Tue,  3 Aug 2021 13:43:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GfXTp4TyTz3dWh
-	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 10:21:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GfCg73yXyz30FS
+	for <lists+openbmc@lfdr.de>; Tue,  3 Aug 2021 21:43:15 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=HGcNQF7v;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=n8ZWmvhe;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.31; helo=mga06.intel.com;
- envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.21;
+ helo=wout5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=HGcNQF7v; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=n8ZWmvhe; 
+ dkim-atps=neutral
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GfCb9185gz2yXt;
- Tue,  3 Aug 2021 21:39:48 +1000 (AEST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10064"; a="274717328"
-X-IronPort-AV: E=Sophos;i="5.84,291,1620716400"; d="scan'208";a="274717328"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Aug 2021 04:38:46 -0700
-X-IronPort-AV: E=Sophos;i="5.84,291,1620716400"; d="scan'208";a="670395217"
-Received: from jdanieck-mobl1.ger.corp.intel.com (HELO localhost)
- ([10.249.128.99])
- by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Aug 2021 04:38:40 -0700
-From: Iwona Winiarska <iwona.winiarska@intel.com>
-To: linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH v2 15/15] docs: Add PECI documentation
-Date: Tue,  3 Aug 2021 13:31:34 +0200
-Message-Id: <20210803113134.2262882-16-iwona.winiarska@intel.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210803113134.2262882-1-iwona.winiarska@intel.com>
-References: <20210803113134.2262882-1-iwona.winiarska@intel.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Wed, 04 Aug 2021 10:16:27 +1000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GfCfn51Fcz2yYd
+ for <openbmc@lists.ozlabs.org>; Tue,  3 Aug 2021 21:42:56 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.west.internal (Postfix) with ESMTP id 0AF1C3200907;
+ Tue,  3 Aug 2021 07:42:52 -0400 (EDT)
+Received: from imap43 ([10.202.2.93])
+ by compute2.internal (MEProxy); Tue, 03 Aug 2021 07:42:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type:content-transfer-encoding; s=fm3; bh=XUiRw
+ JMFY/QZs3l0M0PNontFvLyl4whFW8FvaHG6aus=; b=HGcNQF7vG6Ii7eO3VT17e
+ t/GDWFngdcmjpYFAlV+K95HOxIaYH7bXmVU0MKcZSdb1BC0+uAJTNeT6u2apX+qB
+ aZVAdUxMw8a2EfcQ8o5//Z92G3GFqsUihdf2ll8rc7eujF6Txtt8xuvZRW9czllv
+ SUb96Rm8zk+BSXV+9VYzY+9Yz/l4iQs+qnsbJvOQ9NbhLLuKmtmksNHNOPALaiZR
+ H7tiBOrGgia3WocHdjUGg/qQp4h7EeLiYlfM4cJAu7Rld8/Q2AY52uDHabt+O1Nq
+ 9iAl8cWZvHWD4Wo+QKlq9fQeL8pLQKyK2FTbKAdiwt9AdY/fWpum7l6QcGjIW5Ib
+ A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; bh=XUiRwJMFY/QZs3l0M0PNontFvLyl4whFW8FvaHG6a
+ us=; b=n8ZWmvheapq72oETcTyvEMxwTxr2UkZ0hLA/g8pluO04qnTMgJUybT5Fe
+ CIbTvVkedbpEwnUyi4KWI25mF3nnQl2QAMxL2hBWzfU63suWHi7/CDuxRLehChZg
+ C6p5TtAgE7qW+pQj0dcr428qBt7k2UhmFiXtAOQ5FE8a073JOgUKM4wec+HlRMnC
+ 0U/aaV77YZtn5CnWB0FtZB7FDiMI3HLrsqOSKemDZWnB5VS2a6ykCTv+LRBSMFaV
+ 2r2o1HVCQcPF28O2wqcoejEy1Ak93DTwvY/Qg0vQraJetg3o/geLLJx41ek2Vedu
+ AWk9DGNeOlCDkpQ4fohGZigqk2XoQ==
+X-ME-Sender: <xms:uysJYVfXR4ViKzjjE2A8PsvVOcd3ZQJXbWmFP9dANjw-sFlDd9r8Bg>
+ <xme:uysJYTP2OIlR5NvUL83v2G5WP88P66IBqCmGSwrCrh0OLafFkJSs6Ey9S5xQYJvg8
+ 42DfY_4GAOOHhncgQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieeggdegudcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgfgsehtqh
+ ertderreejnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgv
+ fiesrghjrdhiugdrrghuqeenucggtffrrghtthgvrhhnpedvgeekheegfedvhfethefhud
+ etteegueeggfeiieegueehkedugedtkefglefgheenucevlhhushhtvghrufhiiigvpedt
+ necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:uysJYej91sJCJsKpIygMvt-dNL87ZECBCh6P2BwMPi8ifeKugWKzfQ>
+ <xmx:uysJYe_3a6R0v1DhNgFQ_lH66Yq8VCG0RO-cBoNsMuYiNTa8JRBeHQ>
+ <xmx:uysJYRsPURHq_AgJZCKTR-TCp8Mt2FRROm5RL1v2eI2yRaAR6WC-CA>
+ <xmx:vCsJYW6cZMMjI02j4QcgDPFrexaLsm_VSZjyTG4TTJPFV3DtkGIlww>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id D921BAC0DD0; Tue,  3 Aug 2021 07:42:51 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-548-g3a0b1fef7b-fm-20210802.001-g3a0b1fef
+Mime-Version: 1.0
+Message-Id: <8bb488fe-a2a0-4fca-b751-ab20db1f4578@www.fastmail.com>
+In-Reply-To: <C552EA2E-A750-4E7C-A3ED-8C1B05B7228C@gmail.com>
+References: <E8EC142E-B62A-432D-AAAA-661528534DAC@gmail.com>
+ <C552EA2E-A750-4E7C-A3ED-8C1B05B7228C@gmail.com>
+Date: Tue, 03 Aug 2021 21:12:31 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: =?UTF-8?Q?=E5=90=B3=E7=A7=89=E6=98=8C?= <wh800805@gmail.com>,
+ openbmc@lists.ozlabs.org
+Subject: Re: Module develop issue
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -50,140 +98,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
- Dan Williams <dan.j.williams@intel.com>, Zev Weiss <zweiss@equinix.com>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Jonathan Corbet <corbet@lwn.net>, x86@kernel.org,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
- Ingo Molnar <mingo@redhat.com>, Guenter Roeck <linux@roeck-us.net>,
- devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- Arnd Bergmann <arnd@arndb.de>, Rob Herring <robh+dt@kernel.org>,
- Borislav Petkov <bp@alien8.de>, Iwona Winiarska <iwona.winiarska@intel.com>,
- Andy Lutomirski <luto@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
- Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
- Randy Dunlap <rdunlap@infradead.org>, Yazen Ghannam <yazen.ghannam@amd.com>,
- Olof Johansson <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add a brief overview of PECI and PECI wire interface.
-The documentation also contains kernel-doc for PECI subsystem internals
-and PECI CPU Driver API.
 
-Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
----
- Documentation/index.rst      |  1 +
- Documentation/peci/index.rst | 16 ++++++++++++
- Documentation/peci/peci.rst  | 48 ++++++++++++++++++++++++++++++++++++
- MAINTAINERS                  |  1 +
- 4 files changed, 66 insertions(+)
- create mode 100644 Documentation/peci/index.rst
- create mode 100644 Documentation/peci/peci.rst
 
-diff --git a/Documentation/index.rst b/Documentation/index.rst
-index 54ce34fd6fbd..7671f2cd474f 100644
---- a/Documentation/index.rst
-+++ b/Documentation/index.rst
-@@ -137,6 +137,7 @@ needed).
-    misc-devices/index
-    scheduler/index
-    mhi/index
-+   peci/index
- 
- Architecture-agnostic documentation
- -----------------------------------
-diff --git a/Documentation/peci/index.rst b/Documentation/peci/index.rst
-new file mode 100644
-index 000000000000..989de10416e7
---- /dev/null
-+++ b/Documentation/peci/index.rst
-@@ -0,0 +1,16 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
-+
-+====================
-+Linux PECI Subsystem
-+====================
-+
-+.. toctree::
-+
-+   peci
-+
-+.. only::  subproject and html
-+
-+   Indices
-+   =======
-+
-+   * :ref:`genindex`
-diff --git a/Documentation/peci/peci.rst b/Documentation/peci/peci.rst
-new file mode 100644
-index 000000000000..a12c8e10c4a9
---- /dev/null
-+++ b/Documentation/peci/peci.rst
-@@ -0,0 +1,48 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
-+
-+========
-+Overview
-+========
-+
-+The Platform Environment Control Interface (PECI) is a communication
-+interface between Intel processor and management controllers
-+(e.g. Baseboard Management Controller, BMC).
-+PECI provides services that allow the management controller to
-+configure, monitor and debug platform by accessing various registers.
-+It defines a dedicated command protocol, where the management
-+controller is acting as a PECI originator and the processor - as
-+a PECI responder.
-+PECI can be used in both single processor and multiple-processor based
-+systems.
-+
-+NOTE:
-+Intel PECI specification is not released as a dedicated document,
-+instead it is a part of External Design Specification (EDS) for given
-+Intel CPU. External Design Specifications are usually not publicly
-+available.
-+
-+PECI Wire
-+---------
-+
-+PECI Wire interface uses a single wire for self-clocking and data
-+transfer. It does not require any additional control lines - the
-+physical layer is a self-clocked one-wire bus signal that begins each
-+bit with a driven, rising edge from an idle near zero volts. The
-+duration of the signal driven high allows to determine whether the bit
-+value is logic '0' or logic '1'. PECI Wire also includes variable data
-+rate established with every message.
-+
-+For PECI Wire, each processor package will utilize unique, fixed
-+addresses within a defined range and that address should
-+have a fixed relationship with the processor socket ID - if one of the
-+processors is removed, it does not affect addresses of remaining
-+processors.
-+
-+PECI subsystem internals
-+------------------------
-+
-+.. kernel-doc:: include/linux/peci.h
-+
-+PECI CPU Driver API
-+-------------------
-+.. kernel-doc:: include/linux/peci-cpu.h
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4861a214d9fe..c50d4d0005e3 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -14527,6 +14527,7 @@ R:	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
- L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
- S:	Supported
- F:	Documentation/devicetree/bindings/peci/
-+F:	Documentation/peci/
- F:	drivers/peci/
- F:	include/linux/peci-cpu.h
- F:	include/linux/peci.h
--- 
-2.31.1
+On Mon, 2 Aug 2021, at 19:31, =E5=90=B3=E7=A7=89=E6=98=8C wrote:
+> Hi teams
+>=20
+> Today, I try to install SDK, I can build and run "hello world=E2=80=9D=
+, but I=20
+> still can=E2=80=99t build the hello-mod module.
+> Please give me some suggestions. Many thanks!
 
+I'm not aware of anyone else in the OpenBMC community developing kernel=20=
+
+modules this way, which might be why you haven't got many responses.
+
+My approach is just to work on the kernel directly (i.e. clone the=20
+kernel sources and add your code to the appropriate locations). Is this=20=
+
+something that you can try?
+
+Andrew
