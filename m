@@ -1,82 +1,146 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E4883E0AB4
-	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 01:03:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B048B3E06FA
+	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 19:53:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Gg6hy31KWz3cHR
-	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 09:02:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GfzqX4TRNz3cSv
+	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 03:53:12 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=GvZ1SBNr;
+	dkim=pass (1024-bit key; unprotected) header.d=equinixinc.onmicrosoft.com header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-equinixinc-onmicrosoft-com header.b=kynWtDcZ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22d;
- helo=mail-oi1-x22d.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=GvZ1SBNr; dkim-atps=neutral
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com
- [IPv6:2607:f8b0:4864:20::22d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=equinix.com (client-ip=148.163.148.236;
+ helo=mx0a-00268f01.pphosted.com;
+ envelope-from=prvs=9850d0504e=zweiss@equinix.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=equinixinc.onmicrosoft.com
+ header.i=@equinixinc.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-equinixinc-onmicrosoft-com header.b=kynWtDcZ; 
+ dkim-atps=neutral
+Received: from mx0a-00268f01.pphosted.com (mx0a-00268f01.pphosted.com
+ [148.163.148.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GfzP30TR3z3bmB;
- Thu,  5 Aug 2021 03:33:42 +1000 (AEST)
-Received: by mail-oi1-x22d.google.com with SMTP id n16so3744473oij.2;
- Wed, 04 Aug 2021 10:33:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:to:cc:references:from:subject:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=boQtfMOkZY9hdjBQivOx+8/FvLGtf9v8PYVfUON6vUQ=;
- b=GvZ1SBNr2DcgJSQTR+uzl4H3+WJD0SNH7HsHspqb1BuouaZcwWSbrOHZ+5+HQweU3Q
- SMGyUIijwEnz1zocHU2f3X51iEnbnHYb6QNZS6+L/bmhDL0udvq2jZEDzJH7QCPZfg6i
- TSj6sC7jX/J/xEmLLGkIcmArcjjT5iYMeGXdZ/mc0ExqIXdG//pYUjIRR4bvfgwI0qHT
- T/d6z23Qsjstwvy5CdR74maXQ0BkfvtzjvpFPE2vVilXNhN3ERNBCO9oxlBk/9Cx8lR8
- ilnua+8hAP85QWI+qlaF3Mk4b7tWWscPH5SgzvMC6B8M/2AuGqyrdFUJrgrxe+Nzu0WV
- G/vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:to:cc:references:from:subject:message-id
- :date:user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=boQtfMOkZY9hdjBQivOx+8/FvLGtf9v8PYVfUON6vUQ=;
- b=RVvqTScJ4T+WkJk/+HNlzXjJEtxBC2u91dScxEL5fHPZO7orouqXEMbxjU/TKgjK3q
- 9e+9+aVXwODZZEouI7yVNWAIAFwF/ejnudK0qUkqovrtDHsHch6QjUWxBBM0zaok/Mw3
- BgvgK+av4p7naN8S/skli5DDk8yPQJ9p1wM0d4z+PdS6DEgm/DgkwWAtfeNsK1oCaciZ
- J73Wq83q6pdpBeZS+yfUZZd/8V0VvrHvDDysB5pcssyPSXVCYoLDHBjjCrrz0WMitWZn
- zpLHxpk0h78e5sCqFlHzQlytcnK+LWxSoQczzunjn3IZ2/8Lxomy5v5dVsF/mcpvHEHu
- tYsg==
-X-Gm-Message-State: AOAM531SlhBxzxsaOjfcmMI6kWiQlv3GxzqNjaNFGTtGFG1QfLT/j3ou
- Nwwj2K0nOzsvguo3E+fNKxk=
-X-Google-Smtp-Source: ABdhPJzPmtomHiFQRHu0Frnwj19U5U9ieIGCtt/9GmfJnQQrdsF77jcXTd2yPxviTb/mGRTxwKZmwA==
-X-Received: by 2002:aca:39c6:: with SMTP id g189mr2259435oia.47.1628098419381; 
- Wed, 04 Aug 2021 10:33:39 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- c21sm560538oiw.16.2021.08.04.10.33.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Aug 2021 10:33:38 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Gfzq64npfz30CG;
+ Thu,  5 Aug 2021 03:52:49 +1000 (AEST)
+Received: from pps.filterd (m0165118.ppops.net [127.0.0.1])
+ by mx0a-00268f01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 174HhfRj002759; Wed, 4 Aug 2021 17:52:07 GMT
+Received: from nam10-bn7-obe.outbound.protection.outlook.com
+ (mail-bn7nam10lp2105.outbound.protection.outlook.com [104.47.70.105])
+ by mx0a-00268f01.pphosted.com with ESMTP id 3a7udk9454-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Aug 2021 17:52:06 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=hKZMvRk/S96gv5bnAtxx0MXpQHcHeanxDzuWkebzLCOlrlxLR74/g3zpsnkrOcua7G3IJe1brM+zxTsP3t5jJyJ/dzYh12P0CcGZjm3Tl44/q+hndXsLdDyyyJwFx8a0mlNnDM0ED9i9gD9xUwdhAhmdn3w0GJKbTStcFsfxwOt6v2Tzgpsga+bgGvF/CnsxSd1sVVkfK7WPxlsGpvgUnsMcvOzs5qaWpzdk/WSv0Rbmwv02ecnzvPkMbMib5zUZqJbQ8C/1OGJkgreb5/lc7up1os/qIqJPrf1GVaecRUTyxVy6hgorvhzr3/Uoys6nuYYT2OO+yrSh8cwZLBQS5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ws0T8edmFGEpvJbTFRLM3IuSe+htfm3KZxzvmMyRa4A=;
+ b=c5Jbr6COpvDkLpyB2K6X9P7TfMvLGp6IEI7r6R+nXyrk7wO3xcJPEJrY2hsb0Uxw0kp4oTb6p0+BThY8Yk3a/7kiudRuA22tGCRGAZTor+nqqxao92sragjSmwqSmmtLyDlQmlTiA7pNio11AoMBQUno1PVbo8xPEAJYrq4L6PVi2Ucd/+NKJTwEwBlrC7Sif6tYLoyT+9G7rqkIhnD9NZEmfqdWOnQYwHDajkTVPX34w9a+4Tws+s8xyPzqRXaKC0z8ieEqVaieHNfRCdv6hPNfEOe1yXC/Bl8GkoNdaIJOUwx/+ftikimOMvxeMHGCd+pGpxktX69oXO4J/bq0ow==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
+ dkim=pass header.d=equinix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=equinixinc.onmicrosoft.com; s=selector2-equinixinc-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ws0T8edmFGEpvJbTFRLM3IuSe+htfm3KZxzvmMyRa4A=;
+ b=kynWtDcZaHbvZIRGwnZwnz4Hv+NfyO162H6gjk9jA7b/5YkhnecwQXSUUc7mpXSbvcYM82ABb40NNEPktRIHqfgdzHJ02GBkMH5NP2dEWb9m47toCaef1fkWw5kqTAAdk7KHZNvszLw7dUyzkdl1tYhnBkT7DyCkec0kmNwm4A0=
+Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
+ by DM8PR04MB7861.namprd04.prod.outlook.com (2603:10b6:8:24::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4373.21; Wed, 4 Aug
+ 2021 17:52:04 +0000
+Received: from DM8PR04MB8007.namprd04.prod.outlook.com
+ ([fe80::953d:f9ec:b2cc:ca2b]) by DM8PR04MB8007.namprd04.prod.outlook.com
+ ([fe80::953d:f9ec:b2cc:ca2b%5]) with mapi id 15.20.4373.026; Wed, 4 Aug 2021
+ 17:52:04 +0000
+From: Zev Weiss <zweiss@equinix.com>
 To: "Winiarska, Iwona" <iwona.winiarska@intel.com>
-References: <20210803113134.2262882-1-iwona.winiarska@intel.com>
- <20210803113134.2262882-14-iwona.winiarska@intel.com>
- <20210803153937.GA337938@roeck-us.net>
- <a576f7075625a476c613b5feb2c4c7033d6c0375.camel@intel.com>
-From: Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH v2 13/15] hwmon: peci: Add dimmtemp driver
-Message-ID: <ff8f8b20-33af-08a0-6036-03429bf69730@roeck-us.net>
-Date: Wed, 4 Aug 2021 10:33:35 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <a576f7075625a476c613b5feb2c4c7033d6c0375.camel@intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Subject: Re: [PATCH 13/14] docs: hwmon: Document PECI drivers
+Thread-Topic: [PATCH 13/14] docs: hwmon: Document PECI drivers
+Thread-Index: AQHXgzrekgBvAebmGEm7GzBex72boatgHxcAgAONUIA=
+Date: Wed, 4 Aug 2021 17:52:04 +0000
+Message-ID: <20210804175203.GY8018@packtop>
+References: <20210712220447.957418-1-iwona.winiarska@intel.com>
+ <20210712220447.957418-14-iwona.winiarska@intel.com>
+ <20210727225808.GU8018@packtop>
+ <ea5621698508a800cea59b5533f8845b9f0befc6.camel@intel.com>
+In-Reply-To: <ea5621698508a800cea59b5533f8845b9f0befc6.camel@intel.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Thu, 05 Aug 2021 09:01:42 +1000
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: intel.com; dkim=none (message not signed)
+ header.d=none;intel.com; dmarc=none action=none header.from=equinix.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 32988136-f44c-4741-f0c2-08d9577091f9
+x-ms-traffictypediagnostic: DM8PR04MB7861:
+x-microsoft-antispam-prvs: <DM8PR04MB78615EF9FA4953BDF5E703C2C3F19@DM8PR04MB7861.namprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:5236;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: sPJ3r3i0D2yimqvA+xPs+umPt5ieR6qIhB7EIcjbphFCPgbpuu5TfsetSHjUy8H7NiuiCZ2p2AYNdT+rDDrADodfhZj3/PX3ktE5iZxRQjwifCIaT+8ucW+y7Amj/9Neo1E+DVJUPDMOAW3fvmzoXJ0MSdgRZbmp23Z/nvQnMqsHzBgfrLllFqqDLhc6Kx9lkmgBTZhBkJZXJNnkCcuOtNbDhZ6k4H1oVhoBhVwac4a8GRHthAh4/fruLJf4DnIUPBbgponl6GfKrzR5R4Aukt1FSjx/f30XJe9hJfJ3rnRQ5tx0IcU+Ic8UKvP9/Hky/TEFiWOkPHCRGVrF8EvmfHF/IWNzatFsFJvXnXJ2OsXocrN9QTA9TRrt136AYJOUpe5BPnWi/Td0uK70TPRMmOnvtU105mXeAtomR+CNSnjSdUOAG82KH/nVDHXHDbA2mhSXr3Fm6xoZ7/1Zi2SIe/MCmbrOdVNzf+YBu859/0K299PAN1rUYhAC7ALS5dSQ+5iWylCDnHBGyF0ao8999ctzkLLmBFDKMQZVeJ1zOTpH+uSSN5ByUHdYDToVNorOaPxsRkuRB6r6TD611y5Kw8vedafxDKM5RC8cQdrEeVKejgDvB0yCwedBNYK3RRQGedKR393TPLCWphrjxrDUa4j964DwPNrDdvy8VMc9rKRETRbvkfOJbHuM5qAe4FF3a9fJfqHx67bNjrkHbevQosC7t88Na/8b/N/JCmrIHqVrREVPMsu03LVk4ZFAQYEuuiCoqY2chjb2hq6fexeqPW1XwOy6PmVkF+NXIuHwopjLBN6q4dsrMCBeGoJWhOa6UB8IWFF9FT3dwXRYtp4cPg==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM8PR04MB8007.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(7916004)(4636009)(39860400002)(346002)(376002)(366004)(396003)(136003)(2906002)(86362001)(186003)(6916009)(83380400001)(54906003)(66446008)(19273905006)(38070700005)(33716001)(6512007)(122000001)(8676002)(478600001)(71200400001)(66946007)(9686003)(1076003)(8936002)(26005)(33656002)(6506007)(76116006)(316002)(966005)(6486002)(38100700002)(66556008)(5660300002)(4326008)(64756008)(7416002)(66476007)(562404015)(563064011);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?H+l03xqj2XBsD2ZBpGvYnmCK/9vjwZ6LWX3TqK7g1YkpTqgZyklRQdj4Rs?=
+ =?iso-8859-1?Q?4Owx8z7d41cEV0ZgYizNbpJpyllqwhG0PzF8en91cknrbdcMFS4xIg5XT7?=
+ =?iso-8859-1?Q?gu9W1Co/uAV/vtwSKi6H/vIc2Khc9kPAZwJnFOWeLLJ85Y8kMVJQ3pj0Zg?=
+ =?iso-8859-1?Q?5iz41Rw1/RRhrcACMRo+Ywng5VvICrQEux/Uh0HEybWxvRBn8Rcwxe6xv2?=
+ =?iso-8859-1?Q?I2bNiyD/+e2sPRHI+BUYSYPmrSy/PbgPxiixl7dcXiWXrVkwh9C0fV8v58?=
+ =?iso-8859-1?Q?DQ1sxzR9Rx9fYp7rzlWeIJEM7x+tcpAPBTfCF/jgbZF5v5GlOrzJ8hSr0c?=
+ =?iso-8859-1?Q?1rNv4OGOSW/VJchirsP0ztCaQ81D4204H7vg8jD0i6cqZvhnjbZDFV9g12?=
+ =?iso-8859-1?Q?hptjOo/FTNN5TPLnLOGC7tIuDsmilp0PbNab2mmziJfITmrgf1Tumeeq9c?=
+ =?iso-8859-1?Q?bSX/6TUyaCeiQ5irMDSd6r9yeiHLnV0CJtkj3d9G8IUOYiDFGhun1ALFrX?=
+ =?iso-8859-1?Q?wCZJ0uoi1DLifHEtMV9S7eFhvxFWII8AodmLkGCt3nijLaMrxt+jUFLV9D?=
+ =?iso-8859-1?Q?e4N1el+YR3cVMEKYenIVMWSNa9/7HrNGiCxyVOxZddHSMwV0Wf/dMEeEUe?=
+ =?iso-8859-1?Q?BUvSKa5pKscRBFYgBshYwEKBq6SWazC+/Zf1gau1uELtDSbcfiV/frB8s2?=
+ =?iso-8859-1?Q?/T38dG0ooQa+GwbGiAkchZDhP1RoVHHY/5+/ih4LeeH7RF8Er7zVpncU3x?=
+ =?iso-8859-1?Q?e9Ohd9xybhqBlL3sXyVgziVbePqJh7UNL6/FScrUjdxXsftILJMTaflTkb?=
+ =?iso-8859-1?Q?1DNWAh3TUqTGGtZ1AlbH+AjgqcVX6ZcAqSDGoPfWFsLsA3aimfOLmrAxls?=
+ =?iso-8859-1?Q?n8pWFm9/qttyN/g38h3yUPzAsH6SpNd3wGiqSCpEBlf0dccO/NomFTrUKd?=
+ =?iso-8859-1?Q?nZY4o2f8As0yzv6jE1Goje+fCGk6vdNK40UZBzoQKgl1iIRCjj8rL7OsPE?=
+ =?iso-8859-1?Q?ZRcTXEYsTwezgU2ojFzBWjBy+u6FtS+bqpfkkXoTOUH81V2+wWK7LYQFJP?=
+ =?iso-8859-1?Q?MgzzTYdAwUDhd6f2lW8w5QgaiEZOz6nFHGeXCVFy5UQTDEAN4jqlCyAs8P?=
+ =?iso-8859-1?Q?The20AusjzfP/wY6fjTY74/U7caPYUwIEIQRdxay3itDYDKj130p3yLDMv?=
+ =?iso-8859-1?Q?w8iNbQLbIwUAfCK3QuKtvpjyk6mh2SxrdgFn8tons9ZGMB5iUDE8U+0z46?=
+ =?iso-8859-1?Q?hL1I4Xw529bs/TBOAxaZ+2EgdnF2ya9us3DiOf5Fg7yd8BUtyyvg01Ww/y?=
+ =?iso-8859-1?Q?6eXRcfH6xi5GaLurUDg8Uw2BFkS3T1EN7c4voPjKY7sbBkfUq4RhK4mTHk?=
+ =?iso-8859-1?Q?vKpM1JlGPU?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-ID: <9167364B135B50499B7439DCD8A4F974@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: equinix.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 32988136-f44c-4741-f0c2-08d9577091f9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Aug 2021 17:52:04.5381 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: F7h22H3T7VbbSThpLYtXRj6dEuVS2J2r7Jw0s0A5tlkdEI5TnojMObBLgxsDGv/FrzWxiSeEJcKExfEgDmJ22g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR04MB7861
+X-Proofpoint-ORIG-GUID: -X-8wQYwAVmFKde3JMJQRmkmrGP5rzKa
+X-Proofpoint-GUID: -X-8wQYwAVmFKde3JMJQRmkmrGP5rzKa
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-08-04_05:2021-08-04,
+ 2021-08-04 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ mlxlogscore=999 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ adultscore=0 bulkscore=0 mlxscore=0 malwarescore=0 spamscore=0
+ clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2107140000 definitions=main-2108040103
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,363 +153,208 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>, "Williams,
- Dan J" <dan.j.williams@intel.com>, "zweiss@equinix.com" <zweiss@equinix.com>,
+ "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
  "jae.hyun.yoo@linux.intel.com" <jae.hyun.yoo@linux.intel.com>,
- "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
- "corbet@lwn.net" <corbet@lwn.net>,
+ "mchehab@kernel.org" <mchehab@kernel.org>, "corbet@lwn.net" <corbet@lwn.net>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
  "x86@kernel.org" <x86@kernel.org>,
  "pierre-louis.bossart@linux.intel.com" <pierre-louis.bossart@linux.intel.com>,
  "mingo@redhat.com" <mingo@redhat.com>,
+ "linux@roeck-us.net" <linux@roeck-us.net>,
  "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "jdelvare@suse.com" <jdelvare@suse.com>, "arnd@arndb.de" <arnd@arndb.de>,
+ "jdelvare@suse.com" <jdelvare@suse.com>,
  "robh+dt@kernel.org" <robh+dt@kernel.org>, "bp@alien8.de" <bp@alien8.de>,
  "Lutomirski, Andy" <luto@kernel.org>,
  "tglx@linutronix.de" <tglx@linutronix.de>,
- "mchehab@kernel.org" <mchehab@kernel.org>,
+ "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
  "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
  "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>, "Luck,
  Tony" <tony.luck@intel.com>, "andrew@aj.id.au" <andrew@aj.id.au>,
  "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
- "rdunlap@infradead.org" <rdunlap@infradead.org>,
  "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "yazen.ghannam@amd.com" <yazen.ghannam@amd.com>,
- "olof@lixom.net" <olof@lixom.net>
+ "yazen.ghannam@amd.com" <yazen.ghannam@amd.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/4/21 3:46 AM, Winiarska, Iwona wrote:
-> On Tue, 2021-08-03 at 08:39 -0700, Guenter Roeck wrote:
->> On Tue, Aug 03, 2021 at 01:31:32PM +0200, Iwona Winiarska wrote:
->>> Add peci-dimmtemp driver for Temperature Sensor on DIMM readings that
->>> are accessible via the processor PECI interface.
->>>
->>> The main use case for the driver (and PECI interface) is out-of-band
->>> management, where we're able to obtain thermal readings from an external
->>> entity connected with PECI, e.g. BMC on server platforms.
->>>
->>> Co-developed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->>> Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
->>> Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
->>> ---
->>> Note that the timeout was completely removed - we're going to probe
->>> for detected DIMMs every 5 seconds until we reach "stable" state of
->>> either getting correct DIMM data or getting all -EINVAL (which
->>> suggest that the CPU doesn't have any DIMMs).
->>>
->>>   drivers/hwmon/peci/Kconfig    |  13 +
->>>   drivers/hwmon/peci/Makefile   |   2 +
->>>   drivers/hwmon/peci/dimmtemp.c | 614 ++++++++++++++++++++++++++++++++++
->>>   3 files changed, 629 insertions(+)
->>>   create mode 100644 drivers/hwmon/peci/dimmtemp.c
->>>
->>> diff --git a/drivers/hwmon/peci/Kconfig b/drivers/hwmon/peci/Kconfig
->>> index e10eed68d70a..9d32a57badfe 100644
->>> --- a/drivers/hwmon/peci/Kconfig
->>> +++ b/drivers/hwmon/peci/Kconfig
->>> @@ -14,5 +14,18 @@ config SENSORS_PECI_CPUTEMP
->>>            This driver can also be built as a module. If so, the module
->>>            will be called peci-cputemp.
->>>   
->>> +config SENSORS_PECI_DIMMTEMP
->>> +       tristate "PECI DIMM temperature monitoring client"
->>> +       depends on PECI
->>> +       select SENSORS_PECI
->>> +       select PECI_CPU
->>> +       help
->>> +         If you say yes here you get support for the generic Intel PECI
->>> hwmon
->>> +         driver which provides Temperature Sensor on DIMM readings that are
->>> +         accessible via the processor PECI interface.
->>> +
->>> +         This driver can also be built as a module. If so, the module
->>> +         will be called peci-dimmtemp.
->>> +
->>>   config SENSORS_PECI
->>>          tristate
->>> diff --git a/drivers/hwmon/peci/Makefile b/drivers/hwmon/peci/Makefile
->>> index e8a0ada5ab1f..191cfa0227f3 100644
->>> --- a/drivers/hwmon/peci/Makefile
->>> +++ b/drivers/hwmon/peci/Makefile
->>> @@ -1,5 +1,7 @@
->>>   # SPDX-License-Identifier: GPL-2.0-only
->>>   
->>>   peci-cputemp-y := cputemp.o
->>> +peci-dimmtemp-y := dimmtemp.o
->>>   
->>>   obj-$(CONFIG_SENSORS_PECI_CPUTEMP)     += peci-cputemp.o
->>> +obj-$(CONFIG_SENSORS_PECI_DIMMTEMP)    += peci-dimmtemp.o
->>> diff --git a/drivers/hwmon/peci/dimmtemp.c b/drivers/hwmon/peci/dimmtemp.c
->>> new file mode 100644
->>> index 000000000000..6264c29bb6c0
->>> --- /dev/null
->>> +++ b/drivers/hwmon/peci/dimmtemp.c
->>> @@ -0,0 +1,614 @@
->>> +// SPDX-License-Identifier: GPL-2.0-only
->>> +// Copyright (c) 2018-2021 Intel Corporation
->>> +
->>> +#include <linux/auxiliary_bus.h>
->>> +#include <linux/bitfield.h>
->>> +#include <linux/bitops.h>
->>> +#include <linux/hwmon.h>
->>> +#include <linux/jiffies.h>
->>> +#include <linux/module.h>
->>> +#include <linux/peci.h>
->>> +#include <linux/peci-cpu.h>
->>> +#include <linux/units.h>
->>> +#include <linux/workqueue.h>
->>> +#include <linux/x86/intel-family.h>
->>> +
->>> +#include "common.h"
->>> +
->>> +#define DIMM_MASK_CHECK_DELAY_JIFFIES  msecs_to_jiffies(5000)
->>> +
->>> +/* Max number of channel ranks and DIMM index per channel */
->>> +#define CHAN_RANK_MAX_ON_HSX   8
->>> +#define DIMM_IDX_MAX_ON_HSX    3
->>> +#define CHAN_RANK_MAX_ON_BDX   4
->>> +#define DIMM_IDX_MAX_ON_BDX    3
->>> +#define CHAN_RANK_MAX_ON_BDXD  2
->>> +#define DIMM_IDX_MAX_ON_BDXD   2
->>> +#define CHAN_RANK_MAX_ON_SKX   6
->>> +#define DIMM_IDX_MAX_ON_SKX    2
->>> +#define CHAN_RANK_MAX_ON_ICX   8
->>> +#define DIMM_IDX_MAX_ON_ICX    2
->>> +#define CHAN_RANK_MAX_ON_ICXD  4
->>> +#define DIMM_IDX_MAX_ON_ICXD   2
->>> +
->>> +#define CHAN_RANK_MAX          CHAN_RANK_MAX_ON_HSX
->>> +#define DIMM_IDX_MAX           DIMM_IDX_MAX_ON_HSX
->>> +#define DIMM_NUMS_MAX          (CHAN_RANK_MAX * DIMM_IDX_MAX)
->>> +
->>> +#define CPU_SEG_MASK           GENMASK(23, 16)
->>> +#define GET_CPU_SEG(x)         (((x) & CPU_SEG_MASK) >> 16)
->>> +#define CPU_BUS_MASK           GENMASK(7, 0)
->>> +#define GET_CPU_BUS(x)         ((x) & CPU_BUS_MASK)
->>> +
->>> +#define DIMM_TEMP_MAX          GENMASK(15, 8)
->>> +#define DIMM_TEMP_CRIT         GENMASK(23, 16)
->>> +#define GET_TEMP_MAX(x)                (((x) & DIMM_TEMP_MAX) >> 8)
->>> +#define GET_TEMP_CRIT(x)       (((x) & DIMM_TEMP_CRIT) >> 16)
->>> +
->>> +struct peci_dimmtemp;
->>> +
->>> +struct dimm_info {
->>> +       int chan_rank_max;
->>> +       int dimm_idx_max;
->>> +       u8 min_peci_revision;
->>> +       int (*read_thresholds)(struct peci_dimmtemp *priv, int dimm_order,
->>> +                              int chan_rank, u32 *data);
->>> +};
->>> +
->>> +struct peci_dimm_thresholds {
->>> +       long temp_max;
->>> +       long temp_crit;
->>> +       struct peci_sensor_state state;
->>> +};
->>> +
->>> +enum peci_dimm_threshold_type {
->>> +       temp_max_type,
->>> +       temp_crit_type,
->>> +};
->>> +
->>> +struct peci_dimmtemp {
->>> +       struct peci_device *peci_dev;
->>> +       struct device *dev;
->>> +       const char *name;
->>> +       const struct dimm_info *gen_info;
->>> +       struct delayed_work detect_work;
->>> +       struct {
->>> +               struct peci_sensor_data temp;
->>> +               struct peci_dimm_thresholds thresholds;
->>> +       } dimm[DIMM_NUMS_MAX];
->>> +       char **dimmtemp_label;
->>> +       DECLARE_BITMAP(dimm_mask, DIMM_NUMS_MAX);
->>> +};
->>> +
->>> +static u8 __dimm_temp(u32 reg, int dimm_order)
->>> +{
->>> +       return (reg >> (dimm_order * 8)) & 0xff;
->>> +}
->>> +
->>> +static int get_dimm_temp(struct peci_dimmtemp *priv, int dimm_no, long
->>> *val)
->>> +{
->>> +       int dimm_order = dimm_no % priv->gen_info->dimm_idx_max;
->>> +       int chan_rank = dimm_no / priv->gen_info->dimm_idx_max;
->>> +       u32 data;
->>> +       int ret;
+On Mon, Aug 02, 2021 at 06:37:30AM CDT, Winiarska, Iwona wrote:
+>On Tue, 2021-07-27 at 22:58 +0000, Zev Weiss wrote:
+>> On Mon, Jul 12, 2021 at 05:04:46PM CDT, Iwona Winiarska wrote:
+>> > From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>> >
+>> > Add documentation for peci-cputemp driver that provides DTS thermal
+>> > readings for CPU packages and CPU cores and peci-dimmtemp driver that
+>> > provides DTS thermal readings for DIMMs.
+>> >
+>> > Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>> > Co-developed-by: Iwona Winiarska <iwona.winiarska@intel.com>
+>> > Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
+>> > Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.co=
+m>
+>> > ---
+>> > Documentation/hwmon/index.rst=A0=A0=A0=A0=A0=A0=A0=A0 |=A0 2 +
+>> > Documentation/hwmon/peci-cputemp.rst=A0 | 93 +++++++++++++++++++++++++=
+++
+>> > Documentation/hwmon/peci-dimmtemp.rst | 58 +++++++++++++++++
+>> > MAINTAINERS=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0 |=A0 2 +
+>> > 4 files changed, 155 insertions(+)
+>> > create mode 100644 Documentation/hwmon/peci-cputemp.rst
+>> > create mode 100644 Documentation/hwmon/peci-dimmtemp.rst
+>> >
+>> > diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index=
+.rst
+>> > index bc01601ea81a..cc76b5b3f791 100644
+>> > --- a/Documentation/hwmon/index.rst
+>> > +++ b/Documentation/hwmon/index.rst
+>> > @@ -154,6 +154,8 @@ Hardware Monitoring Kernel Drivers
+>> > =A0=A0 pcf8591
+>> > =A0=A0 pim4328
+>> > =A0=A0 pm6764tr
+>> > +=A0=A0 peci-cputemp
+>> > +=A0=A0 peci-dimmtemp
+>> > =A0=A0 pmbus
+>> > =A0=A0 powr1220
+>> > =A0=A0 pxe1610
+>> > diff --git a/Documentation/hwmon/peci-cputemp.rst
+>> > b/Documentation/hwmon/peci-cputemp.rst
+>> > new file mode 100644
+>> > index 000000000000..d3a218ba810a
+>> > --- /dev/null
+>> > +++ b/Documentation/hwmon/peci-cputemp.rst
+>> > @@ -0,0 +1,93 @@
+>> > +.. SPDX-License-Identifier: GPL-2.0-only
+>> > +
+>> > +Kernel driver peci-cputemp
+>> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
+>> > +
+>> > +Supported chips:
+>> > +=A0=A0=A0=A0=A0=A0=A0One of Intel server CPUs listed below which is c=
+onnected to a PECI
+>> > bus.
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0* Intel Xeon E5/E7 v3 se=
+rver processors
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E5-14xx v3 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E5-24xx v3 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E5-16xx v3 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E5-26xx v3 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E5-46xx v3 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E7-48xx v3 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E7-88xx v3 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0* Intel Xeon E5/E7 v4 se=
+rver processors
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E5-16xx v4 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E5-26xx v4 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E5-46xx v4 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E7-48xx v4 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon E7-88xx v4 family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0* Intel Xeon Scalable se=
+rver processors
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon D family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon Bronze family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon Silver family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon Gold family
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+Intel Xeon Platinum family
+>> > +
+>> > +=A0=A0=A0=A0=A0=A0=A0Datasheet: Available from http://www.intel.com/d=
+esign/literature.htm
+>> > +
+>> > +Author: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>> > +
+>> > +Description
+>> > +-----------
+>> > +
+>> > +This driver implements a generic PECI hwmon feature which provides Di=
+gital
+>> > +Thermal Sensor (DTS) thermal readings of the CPU package and CPU core=
+s that
+>> > are
+>> > +accessible via the processor PECI interface.
+>> > +
+>> > +All temperature values are given in millidegree Celsius and will be
+>> > measurable
+>> > +only when the target CPU is powered on.
+>> > +
+>> > +Sysfs interface
+>> > +-------------------
+>> > +
+>> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D
+>> > +temp1_label=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0"Die"
+>> > +temp1_input=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0Provides current die t=
+emperature of the CPU package.
+>> > +temp1_max=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0Provides thermal c=
+ontrol temperature of the CPU
+>> > package
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+which is also known as Tcontrol.
+>> > +temp1_crit=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0Provides shutdown te=
+mperature of the CPU package
+>> > which
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+is also known as the maximum processor junction
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+temperature, Tjmax or Tprochot.
+>> > +temp1_crit_hyst=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0Provid=
+es the hysteresis value from Tcontrol
+>> > to Tjmax of
+>> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+the CPU package.
+>> > +
+>> > +temp2_label=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0"DTS"
+>> > +temp2_input=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0Provides current DTS t=
+emperature of the CPU package.
 >>
->>          int ret = 0;
->>
->>> +
->>> +       mutex_lock(&priv->dimm[dimm_no].temp.state.lock);
->>> +       if (!peci_sensor_need_update(&priv->dimm[dimm_no].temp.state))
->>> +               goto skip_update;
->>> +
->>> +       ret = peci_pcs_read(priv->peci_dev, PECI_PCS_DDR_DIMM_TEMP,
->>> chan_rank, &data);
->>> +       if (ret) {
->>> +               mutex_unlock(&priv->dimm[dimm_no].temp.state.lock);
->>> +               return ret;
->>> +       }
->>
->>          if (ret)
->>                  goto unlock;
->>
->>> +
->>> +       priv->dimm[dimm_no].temp.value = __dimm_temp(data, dimm_order) *
->>> MILLIDEGREE_PER_DEGREE;
->>> +
->>> +       peci_sensor_mark_updated(&priv->dimm[dimm_no].temp.state);
->>> +
->>> +skip_update:
->>> +       *val = priv->dimm[dimm_no].temp.value;
->>
->> unlock:
->>> +       mutex_unlock(&priv->dimm[dimm_no].temp.state.lock);
->>> +       return 0;
->>
->>          return ret;
-> 
-> Ack.
-> 
->>
->>> +}
->>> +
->>> +static int update_thresholds(struct peci_dimmtemp *priv, int dimm_no)
->>> +{
->>> +       int dimm_order = dimm_no % priv->gen_info->dimm_idx_max;
->>> +       int chan_rank = dimm_no / priv->gen_info->dimm_idx_max;
->>> +       u32 data;
->>> +       int ret;
->>> +
->>> +       if (!peci_sensor_need_update(&priv->dimm[dimm_no].thresholds.state))
->>> +               return 0;
->>> +
->>> +       ret = priv->gen_info->read_thresholds(priv, dimm_order, chan_rank,
->>> &data);
->>> +       if (ret == -ENODATA) /* Use default or previous value */
->>> +               return 0;
->>> +       if (ret)
->>> +               return ret;
->>> +
->>> +       priv->dimm[dimm_no].thresholds.temp_max = GET_TEMP_MAX(data) *
->>> MILLIDEGREE_PER_DEGREE;
->>> +       priv->dimm[dimm_no].thresholds.temp_crit = GET_TEMP_CRIT(data) *
->>> MILLIDEGREE_PER_DEGREE;
->>> +
->>> +       peci_sensor_mark_updated(&priv->dimm[dimm_no].thresholds.state);
->>> +
->>> +       return 0;
->>> +}
->>> +
->>> +static int get_dimm_thresholds(struct peci_dimmtemp *priv, enum
->>> peci_dimm_threshold_type type,
->>> +                              int dimm_no, long *val)
->>> +{
->>> +       int ret;
->>> +
->>> +       mutex_lock(&priv->dimm[dimm_no].thresholds.state.lock);
->>> +       ret = update_thresholds(priv, dimm_no);
->>> +       if (ret)
->>> +               goto unlock;
->>> +
->>> +       switch (type) {
->>> +       case temp_max_type:
->>> +               *val = priv->dimm[dimm_no].thresholds.temp_max;
->>> +               break;
->>> +       case temp_crit_type:
->>> +               *val = priv->dimm[dimm_no].thresholds.temp_crit;
->>> +               break;
->>> +       default:
->>> +               ret = -EOPNOTSUPP;
->>> +               break;
->>> +       }
->>> +unlock:
->>> +       mutex_unlock(&priv->dimm[dimm_no].thresholds.state.lock);
->>> +
->>> +       return ret;
->>> +}
->>> +
->>> +static int dimmtemp_read_string(struct device *dev,
->>> +                               enum hwmon_sensor_types type,
->>> +                               u32 attr, int channel, const char **str)
->>> +{
->>> +       struct peci_dimmtemp *priv = dev_get_drvdata(dev);
->>> +
->>> +       if (attr != hwmon_temp_label)
->>> +               return -EOPNOTSUPP;
->>> +
->>> +       *str = (const char *)priv->dimmtemp_label[channel];
->>> +
->>> +       return 0;
->>> +}
->>> +
->>> +static int dimmtemp_read(struct device *dev, enum hwmon_sensor_types type,
->>> +                        u32 attr, int channel, long *val)
->>> +{
->>> +       struct peci_dimmtemp *priv = dev_get_drvdata(dev);
->>> +
->>> +       switch (attr) {
->>> +       case hwmon_temp_input:
->>> +               return get_dimm_temp(priv, channel, val);
->>> +       case hwmon_temp_max:
->>> +               return get_dimm_thresholds(priv, temp_max_type, channel,
->>> val);
->>> +       case hwmon_temp_crit:
->>> +               return get_dimm_thresholds(priv, temp_crit_type, channel,
->>> val);
->>> +       default:
->>> +               break;
->>> +       }
->>> +
->>> +       return -EOPNOTSUPP;
->>> +}
->>> +
->>> +static umode_t dimmtemp_is_visible(const void *data, enum
->>> hwmon_sensor_types type,
->>> +                                  u32 attr, int channel)
->>> +{
->>> +       const struct peci_dimmtemp *priv = data;
->>> +
->>> +       if (test_bit(channel, priv->dimm_mask))
->>> +               return 0444;
->>> +
->>> +       return 0;
->>> +}
->>> +
->>> +static const struct hwmon_ops peci_dimmtemp_ops = {
->>> +       .is_visible = dimmtemp_is_visible,
->>> +       .read_string = dimmtemp_read_string,
->>> +       .read = dimmtemp_read,
->>> +};
->>> +
->>> +static int check_populated_dimms(struct peci_dimmtemp *priv)
->>> +{
->>> +       int chan_rank_max = priv->gen_info->chan_rank_max;
->>> +       int dimm_idx_max = priv->gen_info->dimm_idx_max;
->>> +       u32 chan_rank_empty = 0;
->>> +       u64 dimm_mask = 0;
->>> +       int chan_rank, dimm_idx, ret;
->>> +       u32 pcs;
->>> +
->>> +       BUILD_BUG_ON(CHAN_RANK_MAX > 32);
->>> +       BUILD_BUG_ON(DIMM_NUMS_MAX > 64);
->>
->> I don't immediately see the value of those build bugs. What happens if
->> CHAN_RANK_MAX > 32 or DIMM_NUMS_MAX > 64 ? Where do those limits come
->> from ?
-> 
-> Supported HW doesn't come near the limit for now - it's just an "artificial"
-> limit imposed by variables we're using (u64 for dimm_mask and u32 for
-> chan_rank_empty).
-> 
+>> Would this be a good place to note the slightly counter-intuitive nature
+>> of DTS readings?=A0 i.e. add something along the lines of "The DTS senso=
+r
+>> produces a delta relative to Tjmax, so negative values are normal and
+>> values approaching zero are hot."=A0 (In my experience people who aren't
+>> already familiar with it tend to think something's wrong when a CPU
+>> temperature reading shows -50C.)
+>
+>I believe that what you're referring to is a result of "GetTemp", and we'r=
+e
+>using it to calculate "Die" sensor values (temp1).
+>The sensor value is absolute - we don't expose "raw" thermal sensor value
+>(delta) anywhere.
+>
+>DTS sensor is exposing temperature value scaled to fit DTS 2.0 thermal pro=
+file:
+>https://www.intel.com/content/www/us/en/processors/xeon/scalable/xeon-scal=
+able-thermal-guide.html
+>(section 5.2.3.2)
+>
+>Similar to "Die" sensor - it's also exposed in absolute form.
+>
+>I'll try to change description to avoid confusion.
+>
 
-Please use a value derived from the size of those variables for the check
-to clarify and explain the constraints.
+When I tested the patch series by applying it to my OpenBMC kernel, the
+temp2_input sysfs file produced negative numbers (as has been the case
+with previous iterations of the PECI patchset).  Is that expected?  From
+what Guenter has said it sounds like that's going to need to change so
+that the temperature readings are all in "normal" millidegrees C
+(that is, relative to the freezing point of water).
 
-Thanks,
-Guenter
+
+Zev
