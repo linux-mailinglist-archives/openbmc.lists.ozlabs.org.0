@@ -2,136 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FBEA3DF9F1
-	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 05:18:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 869E53DF9F9
+	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 05:23:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GfcQ22mgtz3bhb
-	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 13:18:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GfcWZ3lVPz3cHB
+	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 13:23:06 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=HIrJ+qGn;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=ryNmzvXB;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=d112iogE;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=40.107.131.95;
- helo=apc01-sg2-obe.outbound.protection.outlook.com;
- envelope-from=troy_lee@aspeedtech.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
- header.a=rsa-sha256 header.s=selector1 header.b=HIrJ+qGn; 
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=ryNmzvXB; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=d112iogE; 
  dkim-atps=neutral
-Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-eopbgr1310095.outbound.protection.outlook.com [40.107.131.95])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GfcPg1xRBz30CZ
- for <openbmc@lists.ozlabs.org>; Wed,  4 Aug 2021 13:17:57 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ef6vOZrDqKa+mQFSIHwEj8VICPqgjS/xXNdLDzoZjOk92xnOd+TYiCW9SL7A+jAuoAmQ6kC4yS7p3ki3qLw3HeklItSYXjgmO/FTKHSPQqen75503RJwp472PnKDA1zY8DA3jD90UvtxvVdDhn0yPDO6+ZSNA2N7NwTS7m9zD6c9NHE7ZuU2jVulJylq+tUY+Hux3eUU0XVsSGlpzhZxEDRufO/zUm6YsosyaRmr3q+bmm3SHytxiOFk8xlhtiL35N0ORmsS3schCi1XvnzaZijZFm0eduiAntGnl6oIl41E40PcLuF6xZgdg73hvNB70WgI+fqShbpGQoQU9LqHRg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nbE31b7rUkCPxc4gG+ZRcwIkOEWgjdWxG3/kSuHa/rE=;
- b=LBU9oLKazTvl0EkmYeFwX1zFYMDe1pXMaIyH/CLtof9fGX+QSr6Avs7j/fSUTK41PWpoWQo8vsx5UvkTS06Lj0ZHoqeDUER+nFz4aLL6Pg/Os70rR517+cWatSAjCwdrzbZqBAH+Mo4vR/0MgTJmolRSZwBt8YKo6Hsc04rjpfB3ZTCsimzjZCp4necOD926kSFacV7Z69h1RpLs6XDiCQ9ulU90YPx8e38GXlyTkwvC195ONQTw3pb1D307YX1dcJ+sgGGaEZ1uuApaOmfpM9eRiyFtBIkQlHuc6qZ9Yz6wHWCTFQj/UG+q9eG69ypXvUsarYck+69QkNyBFZHwAg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nbE31b7rUkCPxc4gG+ZRcwIkOEWgjdWxG3/kSuHa/rE=;
- b=HIrJ+qGn60749AIfpCqlCWyB0Pcaf6R9Qb8RpB9XndHsEW4fCgKIrm7L8nm9u1xNmfJaFJZ/WzdC2Kfg+QRz1rSOVN1ysgqDO+zq6LmuTAo6Yu5Fk/jq2UGw2kXKLn5oqyd8ElhTDVHqlwGK/JCr0A0ThjyDvBbbt3qNuRgloxLrFdIUQbRrOtJE92p9DniCZ7Lw+Zo6o8jgYVsFMdaijzUk0ReT99ueN42+If7JrSnvycHq3y+V9xCeFtiibcC+5UQ38TQrboe+xpy4tVAgklETCxgi2EP+06aQdHETuhF95QWYNSa5h9AMYwFr86qpir808r4tMaknyZvHMsMwZQ==
-Received: from HK0PR06MB2145.apcprd06.prod.outlook.com (2603:1096:203:4b::20)
- by HK0PR06MB3812.apcprd06.prod.outlook.com (2603:1096:203:ad::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4394.15; Wed, 4 Aug
- 2021 03:17:40 +0000
-Received: from HK0PR06MB2145.apcprd06.prod.outlook.com
- ([fe80::70d5:73da:ac03:9781]) by HK0PR06MB2145.apcprd06.prod.outlook.com
- ([fe80::70d5:73da:ac03:9781%5]) with mapi id 15.20.4394.016; Wed, 4 Aug 2021
- 03:17:40 +0000
-From: Troy Lee <troy_lee@aspeedtech.com>
-To: i.kononenko <i.kononenko@yadro.com>, Konstantin Klubnichkin
- <kitsok@yandex-team.ru>
-Subject: RE: Installing Windows Server 2019 from a remotely mounted ISO
-Thread-Topic: Installing Windows Server 2019 from a remotely mounted ISO
-Thread-Index: AQHXiGtK3vPDJyYWhEy2Lm3M4BUfvKthzOaAgAAYtYCAAAUxAIAAqZJQgAAGuACAABE0kA==
-Date: Wed, 4 Aug 2021 03:17:39 +0000
-Message-ID: <HK0PR06MB2145B61C2FC95F66C75BD5148AF19@HK0PR06MB2145.apcprd06.prod.outlook.com>
-References: <60926e52-9d00-2b20-e8ac-7fd515ddac78@yadro.com>
- <CAH2KKeaBMhU3XDADDE0ieqRRhNBiF57-9rUi+Go-SSJCGG-GBA@mail.gmail.com>
- <3c0b0dc3-a31d-dcfb-608b-53436074397b@linux.intel.com>
- <34751627996896@mail.yandex-team.ru>
- <df77021c-a86b-1a03-9960-acdf6c324600@yadro.com>
- <6631628004052@mail.yandex-team.ru>
- <4354431a-0db6-fb9f-bc21-5ef34eba8852@yadro.com>
- <HK0PR06MB214515C746802AB15880B80F8AF19@HK0PR06MB2145.apcprd06.prod.outlook.com>
- <835cf3cc-c91a-3194-0f87-52ae197c3949@yadro.com>
-In-Reply-To: <835cf3cc-c91a-3194-0f87-52ae197c3949@yadro.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: yadro.com; dkim=none (message not signed)
- header.d=none;yadro.com; dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 06f037bf-cb19-4554-b67d-08d956f66aa3
-x-ms-traffictypediagnostic: HK0PR06MB3812:
-x-microsoft-antispam-prvs: <HK0PR06MB38128E8F7915F7C99797A6038AF19@HK0PR06MB3812.apcprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5797;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: pHqqgtd3UrO99pV1cmkkl+gUDbaLd04mp3w5qkqR9xU6ktJseVe0CpVR7PUvHInQZ9cvY6pA+sg/B+tilo6Pw0qm9M4P3nDl1rt0bUS7LN8K10/Ay+PM8zLCvzWeTZsGA43V7ko2uHSsKGVVzBEKHbPrCLkjG1WcxQJdx9ZCiPLbBALVwv50DautxhpNC/Pbk9GvK9lIlBkWJaXn2yW3638LTqnEe9IqPObegMFPXu5RPkywHqmC6eY3Va5V4Uym4HFmKO4BqDN8tgX60J65tJ7w3hBD/iqam3gzOIkBSoGjmt7XLEbB6wX1lF+UyIYChIFp+/dsLE8SADKtokhO5IZuoMpuHi+f+ihRco3pJk3FsHCfnQiSNp37uIKim1vjwQbiqBX/IYBjRxwqYNLSGu4uCD7wVtGovLagycgrKtA9h4D7FPVbEOqpfUmzOG9pEtpxzU0xqlWqB0rr+Ce16qy5v1pz4iPMHTREHtX4Yu44WoRdMXo3LTdzDydlHPp3fxJsRImEVftI76rCcoeN9h7WM0VS3Xb74xlMnDp0UHbJbyG4nhPA719BlZ8g+dHFO6qhCF9N0ge/xL+8TLLkQsap+KohCV6CNixF0rUCdLDQsk+Kdb5P7FceuDQ0S89rRLmKCuiELkMeeMHJ0OyPXes7hRUMssRJXAoCiqHMPx7PEhNBMerZyVKMKNmKqRU4wcRmEH2cNervALobH1bb0qo5a3Ew91mb5uh8iLTYTTZd7dHUOYMnet3iPijWfi+vcfcccMMjuqS3YjURzi82tJoDhFK/Hf2UgBM6mg+p2hM=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:HK0PR06MB2145.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(39840400004)(346002)(396003)(376002)(136003)(366004)(83380400001)(316002)(86362001)(966005)(55016002)(33656002)(52536014)(9686003)(478600001)(186003)(8936002)(2906002)(26005)(110136005)(38100700002)(8676002)(5660300002)(6506007)(71200400001)(53546011)(4326008)(76116006)(7696005)(66556008)(64756008)(66446008)(66476007)(38070700005)(122000001)(66946007);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VUJyME1oc1dpM1J2V1Z6QWJlVkxHREN1OURqL21oSzh4WU9rZEw4dmc3WVd5?=
- =?utf-8?B?U0NVNDhEUFJLeUg5aFIwL0IvYzNSS0p3UXVTWDJIYTlOTWlLV3UySE9VNVhv?=
- =?utf-8?B?dkdwbU9GVERnZEhrQmNzRis3WnZ3Nys4TThVZXZXOUIxYTdWNzVoTHBHWUJD?=
- =?utf-8?B?YmdyR2RtN2JOcmJtZWo5bGg1REs2RkRrT2lwTldoZUs3c2M1anVTRHc5MUZ2?=
- =?utf-8?B?b0p2eUpqelNlWlRFSzBnNUV2N0taNDFEby9xcnNSNFdBaDlTbFVVY0RvNjVz?=
- =?utf-8?B?VmE2bjYyMEhlRWlRMEVLaFhSMFc5cnJNOE5hTDVGVmFSbDMzYUcvdlBRdHVw?=
- =?utf-8?B?aHl1MDdxamM1TyszOXNJQjdvQTlPTWhYOWNyajJ0cHVLamJXRlZyNEIxN0FC?=
- =?utf-8?B?QngwcVdpekYyRHJVWmZIUDJ1ejRIbXhxVElnMERObmtjd3Z4ZU9OM3dRZWRq?=
- =?utf-8?B?aVJmZnU5QysyODNSZTl6bnR0V292OGpIVmZPdGhEY21BSVRIRTZZSnhDdjAy?=
- =?utf-8?B?M0lCVUlaUXpCVnJ1dkxVV2RVTEZFdFpicys1ZGU3Zzd0c0NCOVI0dnh3b2M2?=
- =?utf-8?B?bytZSFRMOFBPZ2FncUR5YVdtdEpuRkRBWHAxMUFMdkVodkdNU1lEQnpEM1Jn?=
- =?utf-8?B?Ymt1bVpucldFRmZSMW8yM0c1VEVoVkJQNFNZUmtFYUxGZFM4MzJ0a3BLSmw2?=
- =?utf-8?B?NXpSYm10eUpuMjh1Y0F3bjVvUHNWclAxbVVZbzN3UkJxUW52K0o2cmZKbUdp?=
- =?utf-8?B?RGRtY0Q2YzJhNWo3dkNaTUhIS0VlWjU4MnF3d0MremUvMHY4TklpS3ZUU285?=
- =?utf-8?B?VkQyemZlZEFYcy8zclJvUHFsam8zNTVEYUtzeXRnamVZemQxdzY3STNiUzlN?=
- =?utf-8?B?a0ExSlNyS2ZuRkQ4bEIxOENpd01tSGZqY0NSclk5NjlWd2dYZyt4K0hZWFFm?=
- =?utf-8?B?cVN6NFFSRGViVzI5emFRVEVnUWJTeXFtT0hpRjc4UWJnbXJoVEJEYTA2bVhp?=
- =?utf-8?B?b2N0RitBTkEyQXBqUkpaT2RHaDg0eFkrRDNLQTRsSEJ0aExISEpZdC9lZjJV?=
- =?utf-8?B?VTBxWmd1Z3V6UEJoMFFOME9CM09JNlUzOTRkeFBycHpNcjExNkJia2FkR3pK?=
- =?utf-8?B?ZlZVaHJYY0NYY0pteHE0b2Myck9UYkFIU1FaYjFNWkYrTDRkV09IQlY2TGZ3?=
- =?utf-8?B?b3V5SStQcXJIaEdzNWRPRlZDNkk5VjU2MllRcDNsc01oZ1J0RXZIY3YweE0w?=
- =?utf-8?B?L3BQMUJyRG93b05uT3VXZURJR3VkazNqODBNRkhoNE9sTnBVaDVsNnFmMnoz?=
- =?utf-8?B?cWtySllBeTZ2ZEd3c284SE9FN1JuSlhuWDVqQmdTc2RrUGZMbG9WeExtU3Ev?=
- =?utf-8?B?b3VHYkNSOU9PTTZHZEtTNnN6bHhCVUFFd3hNak8yUlVUd2hSZ0FhTEZuTm5n?=
- =?utf-8?B?Q0xGQytXd1dlYmxndVpzcDFNRVFjVW5hbzJwWVlFcUZJREJHMi8rY2tlOWRi?=
- =?utf-8?B?TndxaEx2SjFsQXd4NzdqdVBQbzlPUUNTN25LYnQ3RVpIL0FKSmdjaGpKWGN6?=
- =?utf-8?B?SGRJYWNENEU3REhOZ3ZvY0I2UmszWHZDYnZVbUU3Tm8rSW9mODhWOGRmTlV4?=
- =?utf-8?B?RzNyc1JYdmd6bkplVnNIQkcwVTN5OUdnSmdsQU9leklSZmU4SWR0YlBTVnlK?=
- =?utf-8?B?VmpuMGNhWDBXVXBMdlBGS003WWxmeXV5TmpCeW1RenJQa0cxNjFDV1U0Wnp5?=
- =?utf-8?Q?gHMFAQjkRbDAWoqcdKsAB0O2a4xhTal0Xl1fSb6?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GfcWJ3qcqz30HW
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Aug 2021 13:22:52 +1000 (AEST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+ by mailout.nyi.internal (Postfix) with ESMTP id 2EAF25C0058;
+ Tue,  3 Aug 2021 23:22:50 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute6.internal (MEProxy); Tue, 03 Aug 2021 23:22:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=rCDN6OnCQvtfrmXdE4eCYySLT7v
+ OKoVblEdD1K7Pk2A=; b=ryNmzvXB21j5Q3VPzCdRgUGJnDWSA4d2R3PVuWVq2Kh
+ Asef8VRgnddgGchzpLNZ373u+gHE2SQrHkdnHpMYivzEG8nGGVW4TPmcjF39lyd7
+ e0JW9Zi/16MTiifFEfIhasCWg6B1c4Zg+kb3tHDZk+j1B0WOyygg2TP5iR+KuB3p
+ ulnalenOuir+jsKZBoKde/g/ctBYIfc9upJG8+ljAbjEgAg+C/AVPgW1J19PQ4Kv
+ f1X9YTHpz3r5BGtMaUJs7nFEnlHYbd3+Fb3b4k+Kw9NxFHSaie+w9koac5dBKyUH
+ UFFjRx+PUHYpujSB+J1VxFa+WkZu5U5iwlhgdQLuSnQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=rCDN6O
+ nCQvtfrmXdE4eCYySLT7vOKoVblEdD1K7Pk2A=; b=d112iogEiQNrz2Y3fwK3yK
+ Yn8aCeKOG2suDbZly42kgYitOWb8AueewiYkz9KQbA6KGb7lrgIpribCtcHg3dkC
+ v1izfj4Y4ORwtCM0bA8aXe9DUo7KrZ5VmgRXYDtzoFRLq0d81Sa9G+Hb1dWeJ7eS
+ 7slW6fJ0Z1YCnpgfk5lCUXz/2GfKh7Hx1QOLlSFO9Uz0T8SLs90YIqP6bBNg4x2+
+ JhMreGyQHAoZLgUmBx9RbqbH8jiHgwuwjIWlToVnIMrjEIYJ89xLJzw9cJyK6YnC
+ fySw6QtdCtHCja624dKd3Oum6SjAQq4OUppONM46V83IqkIdVQSf6iK3G9ukVzNA
+ ==
+X-ME-Sender: <xms:CQgKYQggXIHPHlSbaYAT_a1blK8SFoHBRv30ZKMmAyZyPtRJSN5PYA>
+ <xme:CQgKYZDvVphevKbw5RCP093OMtfS8bYmbYt0JhtnARwKs17wM6Cva_DqZIQljjLCz
+ lbT7Ijk6GYtasNVsNs>
+X-ME-Received: <xmr:CQgKYYG4X6gzyvaernryrAuk1ClHqASV5ZUy3EqH687CGqs0s1DIPKqKWW4RlWBdaxaYqQFR25dL48rDJ2ocQToGQx727428Klgjsh4sQqp5QQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieehgdeihecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenog
+ fuuhhsphgvtghtffhomhgrihhnucdlgeelmdenfghrlhcuvffnffculdefhedmnecujfgu
+ rhepfffhvffukfhfgggtuggjsehgtdorredttddvnecuhfhrohhmpefrrghtrhhitghkuc
+ ghihhllhhirghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrght
+ thgvrhhnpeeggeevleevgffgueeltefgvdegtdfhjeffvdeuueeuvdfgleelkeffkeetje
+ eiteenucffohhmrghinhepghhoohhglhgvrdgtohhmpdhophgvnhgsmhgtqdhprhhojhgv
+ tghtrdighiiipdihuhgsihgtohdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+ grrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:CQgKYRThVOpObZtWnE1oHbs9T22B7__Kdb9eOSADZGZSZtiGEhYc4A>
+ <xmx:CQgKYdyRDxtHKMfGYQGXAT4wXmm-CzaAiCeSU2WFjOddFT9qw9h60g>
+ <xmx:CQgKYf5eY0Ju6bgx_e-lVXRAQVJhZpC_SoPGL4TOMWbp4GkMtu65DQ>
+ <xmx:CggKYbYE4RmrEz1G6fqv9PBecyNOZPsnLJ55xY2VxBQEG9kKrpkaTQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Aug 2021 23:22:49 -0400 (EDT)
+Date: Tue, 3 Aug 2021 22:22:47 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Re: Security Working Group meeting - Wednesday August 4
+Message-ID: <YQoIBwTVJZcqTEMU@heinlein>
+References: <89b3524f-a1b3-513c-fc6a-1d888e479238@linux.ibm.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB2145.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 06f037bf-cb19-4554-b67d-08d956f66aa3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Aug 2021 03:17:39.9454 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: zSiEesn3idIgrk8SYgq52lQnyLkso/tue5KLuMK+WuKV+HVmd5SNHuVEfAjqzzDITQ+w3vhZMFXwBg8WF4v6MA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR06MB3812
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="gD+/D1+Sw8wbMOdl"
+Content-Disposition: inline
+In-Reply-To: <89b3524f-a1b3-513c-fc6a-1d888e479238@linux.ibm.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -143,38 +98,81 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgSWdvciwNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBpLmtvbm9u
-ZW5rbyA8aS5rb25vbmVua29AeWFkcm8uY29tPg0KPiBTZW50OiBXZWRuZXNkYXksIEF1Z3VzdCA0
-LCAyMDIxIDEwOjExIEFNDQo+IFRvOiBUcm95IExlZSA8dHJveV9sZWVAYXNwZWVkdGVjaC5jb20+
-OyBLb25zdGFudGluIEtsdWJuaWNoa2luDQo+IDxraXRzb2tAeWFuZGV4LXRlYW0ucnU+DQo+IENj
-OiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNCj4gU3ViamVjdDogUmU6IEluc3RhbGxpbmcgV2lu
-ZG93cyBTZXJ2ZXIgMjAxOSBmcm9tIGEgcmVtb3RlbHkgbW91bnRlZCBJU08NCj4gDQo+IEhlbGxv
-IFRyb3ksDQo+IA0KPiBPbiAwNC4wOC4yMDIxIDA0OjUwLCBUcm95IExlZSB3cm90ZToNCj4gPiBI
-aSBJZ29yLA0KPiA+DQo+ID4gQ3VycmVudGx5LCB0aGUgcmVtb3RlIHZpcnR1YWwgbWVkaWEgZW11
-bGF0ZSB0aGUgZ2FkZ2V0IGRyaXZlciBhcyB1c2INCj4gdGh1bWIgZHJpdmUgaW5zdGVhZCBvZiBj
-ZC1yb20uDQo+ID4gUGxlYXNlIGhhdmUgYSBsb29rIG9uIG15IHBhdGNoOg0KPiA+IGh0dHBzOi8v
-Z2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL29wZW5ibWMvKy80Mjk4Ng0KPiBQ
-bGVhc2Ugbm90ZSwgdGhlIHBob3NwaG9yLW1pc2M6dXNiLWN0cmwgaGF2ZSBhIHdheSB0byBzcGVj
-aWZ5IG1vZGUNCj4gdXNifHVzYi1yb3xoZGR8ZHZkIHdoaWNoIGlzIHVzZWZ1bCB0byBwaWNrIGJl
-dHdlZW4gYm90aCB1c2Igb3IgY2Qtcm9tDQo+IGRldmljZXMuIFBsZWFzZSwgcmVmZXIgdG8gdGhl
-IGNoYW5nZXMgWzFdLg0KPiANClRoaXMgbG9va3MgdmVyeSB1c2VmdWwsIGdvb2QgaW5mb3JtYXRp
-b24gdG8ga25vdy4gDQpEbyBmcm9udGVuZCAod2ViLXZ1ZS9waG9zcGhvci13ZWJ1aSkgYW5kIGJh
-Y2tlbmQgKGJtY3dlYikgc3VwcG9ydCBpdCBhbHJlYWR5Pw0KDQo+IFRoZSBpbXBsZW1lbnRhdGlv
-biBvZiB1c2ItZ2FkZ2V0Om1hc3Mtc3RvcmFnZSBoYXMgYSBtYW55IGxpbWl0YXRpb25zDQo+IGFi
-b3V0IGNkLXJvbToNCj4gICogSW1hZ2Ugc2l6ZSBzaG91bGQgbm90IGJlIHNpZ25pZmljYW50IHRo
-ZW4gMi4xR2IsDQo+ICAqIFN1cHBvcnRzIG9ubHkgQ0QtUk9NIHByb2ZpbGUNCj4gVGhhdCBkb2Vz
-IGZvbGxvd2luZyB0byBmYWlsdXJlIG9mIGluc3RhbGxpbmcgV2luZG93cy1saWtlIE9TLCBiZWNh
-dXNlIHdpdGhvdXQNCj4gYSBudW1iZXIgb2YgRFZELVJPTSBwcm9maWxlJ3MgZmVhdHVyZXMgYW5k
-IGNvcnJlY3QgU0NTSS1jb21tYW5kDQo+IGhhbmRsaW5nKFRPQy9BVElQL1BNQSkgYSBXaW5kb3dz
-IE9TIGNhbid0IGxvYWQgYXBwcm9wcmlhdGUNCj4gVURGLWRyaXZlcihpc28tMTMzNDYpIGFuZCB3
-aWxsIHN0dWNrcy4NCj4gDQo+IFN1bW1hcnkgdGhlIG1lbnRpb25lZCBpbiB0aGUgY3VycmVudCBz
-dWJqZWN0IHBhdGNoc2V0IHNob3VsZCBzb2x2ZSB0aGUNCj4gZGVzY3JpYmVkIGlzc3VlLg0KPiAN
-CkknbGwgZ2l2ZSBpdCBhIHRyeSwgdGhpcyBtaWdodCBhbHNvIHNvbHZlIG91ciB2aXJ0dWFsIG1l
-ZGlhIHN0cmVzcyBpc3N1ZXMuDQoNCj4gPg0KPiA+IFRoYW5rcywNCj4gPiBUcm95IExlZQ0KPiAN
-Cj4gTGlua3M6DQo+ICogaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5i
-bWMvcGhvc3Bob3ItbWlzYy8rLzM2NDk5DQo+IA0KPiANCj4gLS0NCj4gQmVzdCByZWdhcmRzLA0K
-PiANCj4gSWdvciBLb25vbmVua28NCg0KVGhhbmtzLA0KVHJveSBMZWUNCg==
+
+--gD+/D1+Sw8wbMOdl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Aug 03, 2021 at 05:57:52PM -0500, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting=20
+> scheduled for this Wednesday August 4 at 10:00am PDT.
+>=20
+> We'll discuss the following items on the agenda=20
+> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxs=
+DUWmAOI/edit>,=20
+> and anything else that comes up:
+>=20
+>  1. (Joseph): IBM ACF design (2FA authentication for the special IBM
+>     service account) is in review -
+>     https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/45201
+>     <https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/45201>
+
+I still feel like the "Alternatives considered" are pretty weak in this
+document.  Rather than paint broad brushes ("Other were considered.  They w=
+ere
+not suitable.") I think you should enumerate _which_ alternatives were
+considered and _why_ they don't fit the problem at hand.
+
+```
+- Takes four parameters: machine serial number, expiration date, password, =
+and
+  private key.
+- Algorithm:
+   - Hashes the password.
+   - Creates the ACF from the hashed password, serial number, and expiratio=
+n date.
+   - Digitally signs the ACF using the private key.
+   - Returns the ACF to the caller.
+```
+
+This sounds a lot like U2F.  The "4 parameters" are the challenge, IBM's key
+signing server is the U2F device, and PAM is the "Relying Party".  There are
+already PAM modules for some aspects of U2F and the token you need to excha=
+nge
+is reasonably short (my Yubikey output is 33 characters).
+
+https://developers.yubico.com/U2F/Protocol_details/Overview.html
+
+The nice aspect if you can reuse portions of the U2F protocol is that you g=
+o a
+long way towards enabling others to add more typical 2FA like Yubikeys.
+
+--=20
+Patrick Williams
+
+--gD+/D1+Sw8wbMOdl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmEKCAUACgkQqwNHzC0A
+wRm27g//SaHv02ZhO9xGOrIm8WBoRkT/2P5iKt2LE0wUF0+HS0UB7kUo8qJJWinB
+2jEvqKWcAl0dmeMcPbDx7iH5wXOT4q8Kq8OPl/ICAqeWQqB+/qQ/84FeusqA9Zm0
+EjiCUafGQ20kk1IqpWM8XbmzebtTckVHJ7ZE7m8odVRb/DmTJJyiJCKyOr4HeLgE
+QUo6VeuXFLZPpaO8VKsGe7bmVMYJoY6L1HdOaMAh4baSleQeBtQnjvP0Y0UmDEPx
+3oJZy+EeYGmfxHWxU88RMELn1yzhmwRykbc47o8RJomQxcpRBMGPvK7JEjejs9+H
+HVaC7PPQ9nd+cpCjOrJrxr9RuOm0QK5/t0uhyWclZg9ewhLEs9IVEtwwNVD2Meti
+xlyuePWYGY0iTy20g5VyACo/9NrxBEqdFOnh9eaaAOFhyKTU4pDGaD0tZsokhG5C
+tFva3LtlOPwkNbCRI1YDWFVhGpP6eJF7ZZ2oOIPehOlwBKePTK8VdyeR+v8FNZQx
+nyXmV3EGlcgTsO17Hkd8rfkACQ4KT9Hu9WC8hhoO0IwlRYi9TTt0M0VhbS6k31AU
+0e7oWgUta6kMkG4YLPhaTm0oka+e5XF2E1NALrmDH/ulGjEeUbTpEC/R6gxYY4fH
+XFtEm/3M99hIO7wEwfQhWCbHDzdqEsVhNHyGWev7sj+2z88KyAM=
+=2Gy4
+-----END PGP SIGNATURE-----
+
+--gD+/D1+Sw8wbMOdl--
