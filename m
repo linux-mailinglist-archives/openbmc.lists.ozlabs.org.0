@@ -1,98 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E96063E0975
-	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 22:40:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 973933E099C
+	for <lists+openbmc@lfdr.de>; Wed,  4 Aug 2021 22:49:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Gg3XF62K3z3cSJ
-	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 06:40:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Gg3kx3Gc9z3cVp
+	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 06:49:29 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=VOi/28SA;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=M4ZGowzl;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=O4jvd1Lc;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=VOi/28SA; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=M4ZGowzl; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=O4jvd1Lc; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Gg3Wt03YCz30R3
- for <openbmc@lists.ozlabs.org>; Thu,  5 Aug 2021 06:39:53 +1000 (AEST)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 174KZNoN119683; Wed, 4 Aug 2021 16:39:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=PeY4MA6P4WbT72uHpViBpvUf1kEenXwyFvsb2OL6U2I=;
- b=VOi/28SASbix4Xdlno+tcW6eCTRKbw7+ldRihTdFMD41FTNpfDZiociTpOViITxPJ6Tc
- RnD4XvWjk1OqaeeYPq6dco4y9Lq6hE8HI95fuSVF9mc3NeDNKfNp4LjC55nPi9zaE9UR
- 8SmlaVpEcdIud/dymKff436YuZqeHvfVEh48l2xOYKPmHKeVUUiXSvMyl87qMOny7enm
- A8lv0XRazNDrRPJNRZFfYcwX3Bz91xLAtyRpCOh1qIkvoYX9dq/2n65j91dYiBbZduK2
- G6WbdNBLB7P/KZWHA0AkKbOFLBlD8LlEhEJbYIN/16rQWsl9zjiE5Xk9IuEJhelFANOf fg== 
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3a7pejdabv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Aug 2021 16:39:47 -0400
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 174KcBuC031974;
- Wed, 4 Aug 2021 20:39:46 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma01wdc.us.ibm.com with ESMTP id 3a4x5dssw5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Aug 2021 20:39:46 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 174Kdkfu31588684
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 4 Aug 2021 20:39:46 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5B882124055;
- Wed,  4 Aug 2021 20:39:46 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F05A512405B;
- Wed,  4 Aug 2021 20:39:45 +0000 (GMT)
-Received: from demeter.local (unknown [9.160.63.222])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS;
- Wed,  4 Aug 2021 20:39:45 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Gg3kg1XBWz2xKY
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Aug 2021 06:49:15 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id A18735C00F8;
+ Wed,  4 Aug 2021 16:49:12 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute5.internal (MEProxy); Wed, 04 Aug 2021 16:49:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=umohwW3T4RKtDtVMiJnVKFW9q6Y
+ iCvJqiT4QAn335Rw=; b=M4ZGowzlnqM9yq4VpNh94aLUYSMlyAGJ6+AmFq0UY7h
+ l6c1HsRhI/bTu002EJdgqKo7FawMdGxh+XRNZKPKzrwqxyY7nsKXOJlIkS5bLZA4
+ d9yLwyYHJFpekQQzIrQooHLvRqibIGuIDMhXpc4ZCBohckJ3lJgF3gOmyRsdnY1d
+ h9fa6cHbDW8FXrdiSIn/dpTNDcq7zGtv//r7D/HI9IPFQpcPPd5tCmHzCSLBkE7a
+ aerLAzG9NKu4d8S/Fm7k/6j5oDsWIhGNybZMlgCdvQ0B8ERyWslN5GSRjtTUxT5h
+ lHghmJ3pUPATBmgx+/rsFCceRbZ4Oc94ADNooooydlw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=umohwW
+ 3T4RKtDtVMiJnVKFW9q6YiCvJqiT4QAn335Rw=; b=O4jvd1Lcz36nc45KBjHql6
+ F6XmrYvIilCVYAkVOKe/WBKZ9IP08Qq8bgfKINlRuX9cQhZU57l2kXzDRhg6YxLg
+ j8k48iJ2ZHv83qkiAhI/Nz56qZzV3YlfxsPnHsLThADsH1vxYkbAdzYV5lELs7v4
+ fj5GcODI8Q8BZKA24sIKBQdv4F69z66laEBBSVHEIQiv0SbCfgrhNsFb8zrLDuzI
+ Wb2XcqeGCBIaLit2ifuere0tu8eetv6PthkYDkvlx0RGJgKQAU6eww6/H9uw+yvJ
+ JZQV1iGnG9Z8veEXhdjEsKBRkVJetec7r9uoJ4VChQKMifJ6aQDxNSA0QvsTsH8Q
+ ==
+X-ME-Sender: <xms:R_0KYeuKAGedRCthVEh_IhnJo7Ohu9jJDo8DjYMoHOdY0hg9kQanXA>
+ <xme:R_0KYTdkpHr1LF89bMeujb4ilOlR_GHTcemXd2MhWW0DnG-M8YQmyq1Z-MbjwFvee
+ QZinZovi9zLq-VeugQ>
+X-ME-Received: <xmr:R_0KYZxtHPZaOjNyPNkmzGQBHTDCLp8JoK8ZigZwhGv5VSOF3hndGuEV4yN2bY0sad-wAOKt6UaU3xdFeiwr1cqoJCOUjg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieejgddufeegucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ jeenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepvdejleeuveehfffgieekjefhvdfh
+ tdelkedvtdfgfeduheeukedtvdettdfgieetnecuffhomhgrihhnpehkvghrnhgvlhdroh
+ hrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
+ rghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:R_0KYZM_SO1kJuYcoAQ3Fj7umOX-ri44Hh2j4ef9zIF_kUxUnsjX6Q>
+ <xmx:R_0KYe_nqELzUKNMr9AZhSAP_Mw8XB6Nqg6KzlJBAhPkgvEv71YPlw>
+ <xmx:R_0KYRUXhrU_BHwl3392WCbFBCQUtHfvgFNUSlffA18j178L2ME9Zg>
+ <xmx:SP0KYUmKYg4CJb-uWnK2fXaTeMUmTs7y07DCkDWlVYSAXrQbjwMJmw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Aug 2021 16:49:11 -0400 (EDT)
+Date: Wed, 4 Aug 2021 15:49:09 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Joseph Reynolds <jrey@linux.ibm.com>
 Subject: Re: Security Working Group meeting - Wednesday August 4 - results
-To: Patrick Williams <patrick@stwcx.xyz>
+Message-ID: <YQr9RWolIR7witlQ@heinlein>
 References: <89b3524f-a1b3-513c-fc6a-1d888e479238@linux.ibm.com>
  <638695c3-c0ac-1249-d3d1-fe2cf439432e@linux.ibm.com>
  <YQr0E+NP+7QKIrf1@heinlein>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <1fb3f67c-84d1-a84b-c44f-a9c2774cfd9b@linux.ibm.com>
-Date: Wed, 4 Aug 2021 15:39:45 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.1
-In-Reply-To: <YQr0E+NP+7QKIrf1@heinlein>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: QgKgCREfj9Kel-oCBvMxukZySnVpCK2N
-X-Proofpoint-GUID: QgKgCREfj9Kel-oCBvMxukZySnVpCK2N
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ <1fb3f67c-84d1-a84b-c44f-a9c2774cfd9b@linux.ibm.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-08-04_07:2021-08-04,
- 2021-08-04 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1011
- priorityscore=1501 lowpriorityscore=0 phishscore=0 mlxscore=0 spamscore=0
- suspectscore=0 impostorscore=0 mlxlogscore=999 adultscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2107140000
- definitions=main-2108040126
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="K5GLTasvb6OUsPA+"
+Content-Disposition: inline
+In-Reply-To: <1fb3f67c-84d1-a84b-c44f-a9c2774cfd9b@linux.ibm.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,26 +104,72 @@ Cc: openbmc@lists.ozlabs.org, Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/4/21 3:09 PM, Patrick Williams wrote:
-> On Wed, Aug 04, 2021 at 01:47:31PM -0500, Joseph Reynolds wrote:
->   
->> 4 Surya set up a bugzilla within Intel and will administer it.  Demo’d
->> the database. We briefly examined the database fields and agreed it
->> looks like a good start.
->>
-> Once again I'll ask ***WHY***??!?
->
-> https://lore.kernel.org/openbmc/YNzsE1ipYQR7yfDq@heinlein/
-> https://lore.kernel.org/openbmc/YPiK8xqFPJFZDa1+@heinlein/
->
-> Can we please create a private Github repository and be done with this topic?
 
-I don't have any insight into how to resolve this question.
+--K5GLTasvb6OUsPA+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- From today's meeting: using bugzilla has advantages over github issues:
-- lets us define the fields we need: fix commitID, CVSS score, etc.
-- has desirable access controls, specifically acess by the security 
-respone tram plus we can add access for the problem submitter and the 
-problem fixer
+On Wed, Aug 04, 2021 at 03:39:45PM -0500, Joseph Reynolds wrote:
+> On 8/4/21 3:09 PM, Patrick Williams wrote:
+> > On Wed, Aug 04, 2021 at 01:47:31PM -0500, Joseph Reynolds wrote:
+> >  =20
+> >> 4 Surya set up a bugzilla within Intel and will administer it.=C2=A0 D=
+emo=E2=80=99d
+> >> the database. We briefly examined the database fields and agreed it
+> >> looks like a good start.
+> >>
+> > Once again I'll ask ***WHY***??!?
+> >
+> > https://lore.kernel.org/openbmc/YNzsE1ipYQR7yfDq@heinlein/
+> > https://lore.kernel.org/openbmc/YPiK8xqFPJFZDa1+@heinlein/
+> >
+> > Can we please create a private Github repository and be done with this =
+topic?
+>=20
+> I don't have any insight into how to resolve this question.
+>=20
+>  From today's meeting: using bugzilla has advantages over github issues:
+> - lets us define the fields we need: fix commitID, CVSS score, etc.
 
-- Joseph
+These are pretty minor when you could just add a comment template with this
+information.
+
+> - has desirable access controls, specifically acess by the security=20
+> respone tram plus we can add access for the problem submitter and the=20
+> problem fixer
+
+So does Github.
+
+----
+
+I really don't think that some subset of the community should go off on the=
+ir
+own bug tracking system.  This is a waste of time to maintain and just furt=
+her
+segments this "Security Team" off in their own bubble.
+
+--=20
+Patrick Williams
+
+--K5GLTasvb6OUsPA+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmEK/UQACgkQqwNHzC0A
+wRnA3Q/8DfsR/LEhm8kWyZb9eA8wZzk8/P4OP5jmDA8t/VRVh8DZ5WIMFPQntE7P
+T+8ZAr7xZb4ZU2HSwoFm1MzN1Y5vKVb7MejknwqPgtBklebUiR9yAZaPQI/ggXk2
+io9S10/u9BxGZ7Q5iVsc7NXineEhiaRmjyiOusYB5e2Z0oCpWAU/ThU4s90OoI1r
+Rz9jK69I2WhSrkApIuLErPKSpNx65LmFq71ZbhkgaaVfg+esIrn2L9RoAc4rAjkA
+5L9A6fvxCP/sB20BqgQ8GsAFrLcDN9vFD7l0eUuA2yHyOVBJGaDhdgMhpS4Qzlei
+/THymT+28UEmkWLUSryOT0T43D9FQNrlvV6pBqMIZlvXQ9j+O/AQ3i9vi/69DCdx
+ldADzWvTl9YGBAZ5PKHnGV15HjGc9huQnMNQWNUDnT3+A2BfolGTOTU1h2Oj6Mab
+GTocpxlVzMkgAbtRjPRNFsVG6+2JUQCBA2wGIK8RUr2FsEhjnRrxDzDTqbsRw6Yj
+1wUAwNRkjbCnr/+PdNthmMKY/w+RAKfmSLsu/MOflty+kZKn8sda+LA2b82K3RvX
+5F9CZ5F6M3wKkH8wqWtAIepjKYGnnKmstPbpI39pY9YdvKuBowLkh1Xy4Rt7bv2o
+mSj0I01jFRFnNvWYhLKUqSCAAMc7+ezt5x6Q2teMYAzKzNElcKQ=
+=YvzM
+-----END PGP SIGNATURE-----
+
+--K5GLTasvb6OUsPA+--
