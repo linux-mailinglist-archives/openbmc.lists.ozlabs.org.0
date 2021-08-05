@@ -2,69 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14D163E0C66
-	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 04:17:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B89C3E0C8C
+	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 04:57:07 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GgC1m0B36z3cQg
-	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 12:17:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GgCv52rkzz3cLG
+	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 12:57:05 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=B/uPjSmx;
+	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=pdrDrZx9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72b;
- helo=mail-qk1-x72b.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=126.com
+ (client-ip=220.181.15.24; helo=m1524.mail.126.com;
+ envelope-from=guilin1985@126.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=B/uPjSmx; dkim-atps=neutral
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com
- [IPv6:2607:f8b0:4864:20::72b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GgC1Q59lnz303D;
- Thu,  5 Aug 2021 12:17:29 +1000 (AEST)
-Received: by mail-qk1-x72b.google.com with SMTP id t3so3548917qkg.11;
- Wed, 04 Aug 2021 19:17:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=rkGOSVQF9TOhjzyiUoCJV05ZbHNx5GT+bf4KeZ6f2IA=;
- b=B/uPjSmx60H4ihwfZ8wtzF6CYCbTEPVmk4keYAeCgxiUr7EbcO/Xr18Udj7qjH5pDi
- +hLao+j9kUFgzdXaH/y6DvRYXsBXnRnMH9bAa2Mo3Heh8Xn1tVLhLpaZSygh2NrmMsQB
- KSa+jXTwJWa9pcw6CjXCG92kKr9d5tF9FPV/Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=rkGOSVQF9TOhjzyiUoCJV05ZbHNx5GT+bf4KeZ6f2IA=;
- b=KHG0JtZvBzclzNtB9Jp8qF869Uemk+ykCdBI8JaKld+txmYmL28ixUs7FGmLIZ1dpp
- CpGf6uKh94tXq0y/3GNssWsWLqfmU/SJwjAxXF/MsW87mBY85hPsFYfEOgZi5NnzwbSU
- wxPr0xx8vSSCiVxUyfkPD0/+bne5gtCJ6v1+GayGY4eVQ10X8UFlRHD+8QrZ0cyfKQQk
- 0lyyRLtjw/c4bQlxKhJkEU2GYkUl78zyV2Ro3qilIbls4/ac2PAT0n4llo0QG76BfyC3
- iNpQ9NNeh68Rpv/dSNXpiXK4r9lfGchswRURpipN2HuRMyuCc6A9akHjmU8t4tIRKB74
- vwVQ==
-X-Gm-Message-State: AOAM532F3XKFbRPf1+VauA5h9ZuP4nsfyZc4lTWJXSeG3s5oJCNHdfIC
- wyb7luEgXHzD4feqzcu+Ld/myWG91AaMa8VN2LI=
-X-Google-Smtp-Source: ABdhPJysI08p+xS1rb4jB6N4wAriNvzo2kltaAaQt1+UjwLYcRVjKGA2lAJPptqP1gzrQhP151sLslPnoPHg6ECB8Y8=
-X-Received: by 2002:a05:620a:893:: with SMTP id
- b19mr2511179qka.487.1628129845723; 
- Wed, 04 Aug 2021 19:17:25 -0700 (PDT)
+ unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256
+ header.s=s110527 header.b=pdrDrZx9; dkim-atps=neutral
+X-Greylist: delayed 1866 seconds by postgrey-1.36 at boromir;
+ Thu, 05 Aug 2021 12:56:50 AEST
+Received: from m1524.mail.126.com (m1524.mail.126.com [220.181.15.24])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4GgCtp2BZVz307n
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Aug 2021 12:56:49 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=B+PB3
+ hvUvGWegtoGe8E6FoDnnRR1bL/AsjbADR7oOdI=; b=pdrDrZx9XWlNWRm7RD8Bb
+ JzCmdqBCLW1WRJpq2UF9X8SusiN0lRGcUoM9vtZr5IV3FFBL4ML1oVjgSz97KFde
+ FCfKOZsd59jKPzv8A3Tgxz5pfuHJ5QOOgRpE+KOp3g47VWyoZqC3O2+m46Bp0VQg
+ ip4z4T8Re4+Zsjw1eOn270=
+Received: from guilin1985$126.com ( [171.223.209.246] ) by
+ ajax-webmail-wmsvr24 (Coremail) ; Thu, 5 Aug 2021 10:25:22 +0800 (CST)
+X-Originating-IP: [171.223.209.246]
+Date: Thu, 5 Aug 2021 10:25:22 +0800 (CST)
+From: =?GBK?B?sKK58A==?= <guilin1985@126.com>
+To: "i.kononenko" <i.kononenko@yadro.com>
+Subject: Re:Re: Installing Windows Server 2019 from a remotely mounted ISO
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
+ Copyright (c) 2002-2021 www.mailtech.cn 126com
+In-Reply-To: <20848306-700c-d089-3f39-1f9e51832a90@yadro.com>
+References: <60926e52-9d00-2b20-e8ac-7fd515ddac78@yadro.com>
+ <CAH2KKeaBMhU3XDADDE0ieqRRhNBiF57-9rUi+Go-SSJCGG-GBA@mail.gmail.com>
+ <3c0b0dc3-a31d-dcfb-608b-53436074397b@linux.intel.com>
+ <34751627996896@mail.yandex-team.ru>
+ <df77021c-a86b-1a03-9960-acdf6c324600@yadro.com>
+ <6631628004052@mail.yandex-team.ru>
+ <4354431a-0db6-fb9f-bc21-5ef34eba8852@yadro.com>
+ <HK0PR06MB214515C746802AB15880B80F8AF19@HK0PR06MB2145.apcprd06.prod.outlook.com>
+ <835cf3cc-c91a-3194-0f87-52ae197c3949@yadro.com>
+ <HK0PR06MB2145B61C2FC95F66C75BD5148AF19@HK0PR06MB2145.apcprd06.prod.outlook.com>
+ <20848306-700c-d089-3f39-1f9e51832a90@yadro.com>
+X-CM-CTRLDATA: Yf5Z2mZvb3Rlcl9odG09MzY1Mzo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_16852_219672491.1628130322133"
 MIME-Version: 1.0
-References: <20210728233755.17963-1-rentao.bupt@gmail.com>
- <20210728233755.17963-7-rentao.bupt@gmail.com>
- <CACPK8XemZkV7nK_b4883DN+dJKhL=tXfqK6=DpHQe=fZRu_ETQ@mail.gmail.com>
- <20210805011951.GA28444@taoren-ubuntu-R90MNF91>
- <CACPK8XcwsOa5NzsUZeiv5qdWV5H6HBa7WK+cwbnqayP4zhoNkg@mail.gmail.com>
- <20210805020946.GA29371@taoren-ubuntu-R90MNF91>
-In-Reply-To: <20210805020946.GA29371@taoren-ubuntu-R90MNF91>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 5 Aug 2021 02:17:13 +0000
-Message-ID: <CACPK8XfewBvd4BLgkgkC0DBzVk5pmV4ZTVaVt=otrKfqJ6m5Lg@mail.gmail.com>
-Subject: Re: [PATCH 6/6] ARM: dts: aspeed: Add Facebook Fuji (AST2600) BMC
-To: Tao Ren <rentao.bupt@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <2f296b4f.120a.17b142126d5.Coremail.guilin1985@126.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: GMqowABHJEATTAthXqA5AQ--.37084W
+X-CM-SenderInfo: xjxlzxrqrzmka6rslhhfrp/1tbizhPlh18RNR7QsgAAs4
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,69 +72,133 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Troy Lee <troy_lee@aspeedtech.com>,
+ Konstantin Klubnichkin <kitsok@yandex-team.ru>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 5 Aug 2021 at 02:09, Tao Ren <rentao.bupt@gmail.com> wrote:
->
-> On Thu, Aug 05, 2021 at 01:37:29AM +0000, Joel Stanley wrote:
-> > On Thu, 5 Aug 2021 at 01:20, Tao Ren <rentao.bupt@gmail.com> wrote:
-> > > > > +&ehci1 {
-> > > > > +       status = "okay";
-> > > > > +};
-> > > >
-> > > > Have you verified that USB works with mainline? I've had reports of it
-> > > > working on 5.8 but it seems to have regressed as of v5.10.
-> > >
-> > > It stopped working on ASPEED since commit 280a9045bb18 ("ehci: fix EHCI
-> > > host controller initialization sequence"): ehci_handshake() returns
-> > > error because HCHalted bit EHCI24[12] stays at 1.
-> > >
-> > > I have a dirty hack in my tree (ignoring the halt bit) and it "works" on
-> > > AST2500 and AST2600. Let me send an email to openbmc and aspeed email
-> > > groups to see if anyone has more context.
-> >
-> > We discovered the same, except in my testing it wasn't actually
-> > "working" on my EVB. I have a A3 EVB on my desk and when plugging in a
-> > USB key nothing happened.
->
-> We have a non-removable USB device on Fuji (AST2600) BMC and it can be
-> enumerated successfully (after applying the hack). Let me vist the lab
-> and plug a USB key to CMM (AST2500) BMC sometime next week. Will collect
-> results and send out email then.
+------=_Part_16852_219672491.1628130322133
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Thanks!
+CgpUaGF0IGlzIGtlcm5lbCBub3Qgc3VwcG9ydCB1ZGYgdHlwZSBJU0+jrG1heWJlIHlvdSBjYW4g
+dXNlIHNvZnR3YXJlICJVbHRyYUlTTyIgIGNoYW5nZSAgdWRmIElTTyB0byBjZGZzIElTTywgb3Ig
+bW9kaWZ5IHlvdSBrZXJuZWwgc291cmNlIHRvIHN1cHBvcnQgdWRmIHR5cGUgSVNPoaMKU28sIEkg
+bW9kaWZ5IGxvY2FsIGtlcm5lbCBzb3VyY2UgdG8gc3VwcG9ydCB1ZGYgdHlwZSBJU08uCkJ5IHRo
+ZSB3YXkganNuYmQncyBzdGF0ZSBhbHNvIG5lZWQgdG8gY2hhbmdlICAiZWNobyAxID4gZnVuY3Rp
+b25zL21hc3Nfc3RvcmFnZS51c2IwL2x1bi4wL2Nkcm9tIgoKCgoKCkF0IDIwMjEtMDgtMDQgMTk6
+NDA6MTksICJpLmtvbm9uZW5rbyIgPGkua29ub25lbmtvQHlhZHJvLmNvbT4gd3JvdGU6Cj5Ucm95
+LAo+Cj5PbiAwNC4wOC4yMDIxIDA2OjE3LCBUcm95IExlZSB3cm90ZToKPj4gSGkgSWdvciwKPj4g
+Cj4+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQo+Pj4gRnJvbTogaS5rb25vbmVua28gPGku
+a29ub25lbmtvQHlhZHJvLmNvbT4KPj4+IFNlbnQ6IFdlZG5lc2RheSwgQXVndXN0IDQsIDIwMjEg
+MTA6MTEgQU0KPj4+IFRvOiBUcm95IExlZSA8dHJveV9sZWVAYXNwZWVkdGVjaC5jb20+OyBLb25z
+dGFudGluIEtsdWJuaWNoa2luCj4+PiA8a2l0c29rQHlhbmRleC10ZWFtLnJ1Pgo+Pj4gQ2M6IG9w
+ZW5ibWNAbGlzdHMub3psYWJzLm9yZwo+Pj4gU3ViamVjdDogUmU6IEluc3RhbGxpbmcgV2luZG93
+cyBTZXJ2ZXIgMjAxOSBmcm9tIGEgcmVtb3RlbHkgbW91bnRlZCBJU08KPj4+Cj4+PiBIZWxsbyBU
+cm95LAo+Pj4KPj4+IE9uIDA0LjA4LjIwMjEgMDQ6NTAsIFRyb3kgTGVlIHdyb3RlOgo+Pj4+IEhp
+IElnb3IsCj4+Pj4KPj4+PiBDdXJyZW50bHksIHRoZSByZW1vdGUgdmlydHVhbCBtZWRpYSBlbXVs
+YXRlIHRoZSBnYWRnZXQgZHJpdmVyIGFzIHVzYgo+Pj4gdGh1bWIgZHJpdmUgaW5zdGVhZCBvZiBj
+ZC1yb20uCj4+Pj4gUGxlYXNlIGhhdmUgYSBsb29rIG9uIG15IHBhdGNoOgo+Pj4+IGh0dHBzOi8v
+Z2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL29wZW5ibWMvKy80Mjk4Ngo+Pj4g
+UGxlYXNlIG5vdGUsIHRoZSBwaG9zcGhvci1taXNjOnVzYi1jdHJsIGhhdmUgYSB3YXkgdG8gc3Bl
+Y2lmeSBtb2RlCj4+PiB1c2J8dXNiLXJvfGhkZHxkdmQgd2hpY2ggaXMgdXNlZnVsIHRvIHBpY2sg
+YmV0d2VlbiBib3RoIHVzYiBvciBjZC1yb20KPj4+IGRldmljZXMuIFBsZWFzZSwgcmVmZXIgdG8g
+dGhlIGNoYW5nZXMgWzFdLgo+Pj4KPj4gVGhpcyBsb29rcyB2ZXJ5IHVzZWZ1bCwgZ29vZCBpbmZv
+cm1hdGlvbiB0byBrbm93LiAKPj4gRG8gZnJvbnRlbmQgKHdlYi12dWUvcGhvc3Bob3Itd2VidWkp
+IGFuZCBiYWNrZW5kIChibWN3ZWIpIHN1cHBvcnQgaXQgYWxyZWFkeT8KPgo+QUZBSUssIHRoZSBi
+bWN3ZWIgYW5kIFdlYlVJIGRvbid0IHN1cHBvcnQgdG8gc3BlY2lmeSBWaXJ0dWFsIE1lZGlhIHR5
+cGUsIAo+YnV0IEkgaGF2ZSBhIG51bWJlciBvZiBwYXRjaGVzIHRoYXQgYnJpbmcgc3VjaCBmZWF0
+dXJlcyBidXQgdGhlcmUgYXJlIG5vdCAKPnB1Ymxpc2hlZCB5ZXQuCj4KPkluIHRoZSBwYXN0LCBJ
+IGhhdmUgcHVibGlzaGVkIGEgYm1jd2ViIHBhdGNoIGZvciBzdXBwb3J0cyBWTSBtb2RlIGZvciB0
+aGUgbmJkLXByb3h5LAo+YnV0IHRoZSBjaGFuZ2Ugd2FzIG5vdCBmcmFtZWQgcHJvcGVybHkgYW5k
+IGhhcyBiZWVuIGFiYW5kb25lZCBbMV0uCj4KPj4gCj4+PiBUaGUgaW1wbGVtZW50YXRpb24gb2Yg
+dXNiLWdhZGdldDptYXNzLXN0b3JhZ2UgaGFzIGEgbWFueSBsaW1pdGF0aW9ucwo+Pj4gYWJvdXQg
+Y2Qtcm9tOgo+Pj4gICogSW1hZ2Ugc2l6ZSBzaG91bGQgbm90IGJlIHNpZ25pZmljYW50IHRoZW4g
+Mi4xR2IsCj4+PiAgKiBTdXBwb3J0cyBvbmx5IENELVJPTSBwcm9maWxlCj4+PiBUaGF0IGRvZXMg
+Zm9sbG93aW5nIHRvIGZhaWx1cmUgb2YgaW5zdGFsbGluZyBXaW5kb3dzLWxpa2UgT1MsIGJlY2F1
+c2Ugd2l0aG91dAo+Pj4gYSBudW1iZXIgb2YgRFZELVJPTSBwcm9maWxlJ3MgZmVhdHVyZXMgYW5k
+IGNvcnJlY3QgU0NTSS1jb21tYW5kCj4+PiBoYW5kbGluZyhUT0MvQVRJUC9QTUEpIGEgV2luZG93
+cyBPUyBjYW4ndCBsb2FkIGFwcHJvcHJpYXRlCj4+PiBVREYtZHJpdmVyKGlzby0xMzM0NikgYW5k
+IHdpbGwgc3R1Y2tzLgo+Pj4KPj4+IFN1bW1hcnkgdGhlIG1lbnRpb25lZCBpbiB0aGUgY3VycmVu
+dCBzdWJqZWN0IHBhdGNoc2V0IHNob3VsZCBzb2x2ZSB0aGUKPj4+IGRlc2NyaWJlZCBpc3N1ZS4K
+Pj4+Cj4+IEknbGwgZ2l2ZSBpdCBhIHRyeSwgdGhpcyBtaWdodCBhbHNvIHNvbHZlIG91ciB2aXJ0
+dWFsIG1lZGlhIHN0cmVzcyBpc3N1ZXMuCj4+IAo+Pj4+Cj4+Pj4gVGhhbmtzLAo+Pj4+IFRyb3kg
+TGVlCj4+Pgo+Pj4gTGlua3M6Cj4+PiAqIGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54
+eXovYy9vcGVuYm1jL3Bob3NwaG9yLW1pc2MvKy8zNjQ5OQo+Pj4KPj4+Cj4+PiAtLQo+Pj4gQmVz
+dCByZWdhcmRzLAo+Pj4KPj4+IElnb3IgS29ub25lbmtvCj4+IAo+PiBUaGFua3MsCj4+IFRyb3kg
+TGVlCj4+IAo+Cj5MaW5rczoKPjEgLSBodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6
+L2Mvb3BlbmJtYy9ibWN3ZWIvKy8zNjQ3NQo+LS0gCj5CZXN0IHJlZ2FyZHMsCj4KPklnb3IgS29u
+b25lbmtvCg==
+------=_Part_16852_219672491.1628130322133
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-> > > status is set in ast2600 common dtsi, but let me set it here to avoid
-> > > confusion. Will update pinmux in v2. Thanks.
-> >
-> > Are you looking at mainline? I think it's disabled by default there:
-> >
-> > https://elixir.bootlin.com/linux/latest/source/arch/arm/boot/dts/aspeed-g6.dtsi#L246
->
-> Sorry for the confusion, Joel. I mean the device is enabled in
-> "ast2600-facebook-netbmc-common.dtsi" (patch #3 in the series). Do we
-> still need to set status to "okay" explicitly in platform dts (to avoid
-> confusion)?
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPjxicj48L2Rpdj48ZGl2
+IHN0eWxlPSJtYXJnaW46IDA7Ij5UaGF0IGlzIGtlcm5lbCBub3Qgc3VwcG9ydCB1ZGYgdHlwZSBJ
+U0+jrG1heWJlIHlvdSBjYW4gdXNlIHNvZnR3YXJlICJVbHRyYUlTTyImbmJzcDsgY2hhbmdlJm5i
+c3A7IHVkZiBJU08gdG8gY2RmcyBJU08sIG9yIG1vZGlmeSB5b3Uga2VybmVsIHNvdXJjZSB0byBz
+dXBwb3J0IHVkZiB0eXBlIElTT6GjPC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOiAwOyI+PHNwYW4g
+c3R5bGU9ImZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+U28sIEkgbW9kaWZ5
+IGxvY2FsIGtlcm5lbCBzb3VyY2UgdG8gc3VwcG9ydCB1ZGYgdHlwZSBJU08uPC9zcGFuPjwvZGl2
+PjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPkJ5IHRoZSB3YXkganNuYmQncyBzdGF0ZSBhbHNvIG5l
+ZWQgdG8gY2hhbmdlJm5ic3A7ICJlY2hvIDEgJmd0OyBmdW5jdGlvbnMvbWFzc19zdG9yYWdlLnVz
+YjAvbHVuLjAvY2Ryb20iPC9kaXY+PGRpdiBzdHlsZT0icG9zaXRpb246cmVsYXRpdmU7em9vbTox
+Ij48L2Rpdj48ZGl2IGlkPSJkaXZOZXRlYXNlTWFpbENhcmQiPjwvZGl2PjxwIHN0eWxlPSJtYXJn
+aW46IDA7Ij48YnI+PC9wPjxwcmU+PGJyPkF0IDIwMjEtMDgtMDQgMTk6NDA6MTksICJpLmtvbm9u
+ZW5rbyIgJmx0O2kua29ub25lbmtvQHlhZHJvLmNvbSZndDsgd3JvdGU6CiZndDtUcm95LAomZ3Q7
+CiZndDtPbiAwNC4wOC4yMDIxIDA2OjE3LCBUcm95IExlZSB3cm90ZToKJmd0OyZndDsgSGkgSWdv
+ciwKJmd0OyZndDsgCiZndDsmZ3Q7Jmd0OyAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQomZ3Q7
+Jmd0OyZndDsgRnJvbTogaS5rb25vbmVua28gJmx0O2kua29ub25lbmtvQHlhZHJvLmNvbSZndDsK
+Jmd0OyZndDsmZ3Q7IFNlbnQ6IFdlZG5lc2RheSwgQXVndXN0IDQsIDIwMjEgMTA6MTEgQU0KJmd0
+OyZndDsmZ3Q7IFRvOiBUcm95IExlZSAmbHQ7dHJveV9sZWVAYXNwZWVkdGVjaC5jb20mZ3Q7OyBL
+b25zdGFudGluIEtsdWJuaWNoa2luCiZndDsmZ3Q7Jmd0OyAmbHQ7a2l0c29rQHlhbmRleC10ZWFt
+LnJ1Jmd0OwomZ3Q7Jmd0OyZndDsgQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZwomZ3Q7Jmd0
+OyZndDsgU3ViamVjdDogUmU6IEluc3RhbGxpbmcgV2luZG93cyBTZXJ2ZXIgMjAxOSBmcm9tIGEg
+cmVtb3RlbHkgbW91bnRlZCBJU08KJmd0OyZndDsmZ3Q7CiZndDsmZ3Q7Jmd0OyBIZWxsbyBUcm95
+LAomZ3Q7Jmd0OyZndDsKJmd0OyZndDsmZ3Q7IE9uIDA0LjA4LjIwMjEgMDQ6NTAsIFRyb3kgTGVl
+IHdyb3RlOgomZ3Q7Jmd0OyZndDsmZ3Q7IEhpIElnb3IsCiZndDsmZ3Q7Jmd0OyZndDsKJmd0OyZn
+dDsmZ3Q7Jmd0OyBDdXJyZW50bHksIHRoZSByZW1vdGUgdmlydHVhbCBtZWRpYSBlbXVsYXRlIHRo
+ZSBnYWRnZXQgZHJpdmVyIGFzIHVzYgomZ3Q7Jmd0OyZndDsgdGh1bWIgZHJpdmUgaW5zdGVhZCBv
+ZiBjZC1yb20uCiZndDsmZ3Q7Jmd0OyZndDsgUGxlYXNlIGhhdmUgYSBsb29rIG9uIG15IHBhdGNo
+OgomZ3Q7Jmd0OyZndDsmZ3Q7IGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9v
+cGVuYm1jL29wZW5ibWMvKy80Mjk4NgomZ3Q7Jmd0OyZndDsgUGxlYXNlIG5vdGUsIHRoZSBwaG9z
+cGhvci1taXNjOnVzYi1jdHJsIGhhdmUgYSB3YXkgdG8gc3BlY2lmeSBtb2RlCiZndDsmZ3Q7Jmd0
+OyB1c2J8dXNiLXJvfGhkZHxkdmQgd2hpY2ggaXMgdXNlZnVsIHRvIHBpY2sgYmV0d2VlbiBib3Ro
+IHVzYiBvciBjZC1yb20KJmd0OyZndDsmZ3Q7IGRldmljZXMuIFBsZWFzZSwgcmVmZXIgdG8gdGhl
+IGNoYW5nZXMgWzFdLgomZ3Q7Jmd0OyZndDsKJmd0OyZndDsgVGhpcyBsb29rcyB2ZXJ5IHVzZWZ1
+bCwgZ29vZCBpbmZvcm1hdGlvbiB0byBrbm93LiAKJmd0OyZndDsgRG8gZnJvbnRlbmQgKHdlYi12
+dWUvcGhvc3Bob3Itd2VidWkpIGFuZCBiYWNrZW5kIChibWN3ZWIpIHN1cHBvcnQgaXQgYWxyZWFk
+eT8KJmd0OwomZ3Q7QUZBSUssIHRoZSBibWN3ZWIgYW5kIFdlYlVJIGRvbid0IHN1cHBvcnQgdG8g
+c3BlY2lmeSBWaXJ0dWFsIE1lZGlhIHR5cGUsIAomZ3Q7YnV0IEkgaGF2ZSBhIG51bWJlciBvZiBw
+YXRjaGVzIHRoYXQgYnJpbmcgc3VjaCBmZWF0dXJlcyBidXQgdGhlcmUgYXJlIG5vdCAKJmd0O3B1
+Ymxpc2hlZCB5ZXQuCiZndDsKJmd0O0luIHRoZSBwYXN0LCBJIGhhdmUgcHVibGlzaGVkIGEgYm1j
+d2ViIHBhdGNoIGZvciBzdXBwb3J0cyBWTSBtb2RlIGZvciB0aGUgbmJkLXByb3h5LAomZ3Q7YnV0
+IHRoZSBjaGFuZ2Ugd2FzIG5vdCBmcmFtZWQgcHJvcGVybHkgYW5kIGhhcyBiZWVuIGFiYW5kb25l
+ZCBbMV0uCiZndDsKJmd0OyZndDsgCiZndDsmZ3Q7Jmd0OyBUaGUgaW1wbGVtZW50YXRpb24gb2Yg
+dXNiLWdhZGdldDptYXNzLXN0b3JhZ2UgaGFzIGEgbWFueSBsaW1pdGF0aW9ucwomZ3Q7Jmd0OyZn
+dDsgYWJvdXQgY2Qtcm9tOgomZ3Q7Jmd0OyZndDsgICogSW1hZ2Ugc2l6ZSBzaG91bGQgbm90IGJl
+IHNpZ25pZmljYW50IHRoZW4gMi4xR2IsCiZndDsmZ3Q7Jmd0OyAgKiBTdXBwb3J0cyBvbmx5IENE
+LVJPTSBwcm9maWxlCiZndDsmZ3Q7Jmd0OyBUaGF0IGRvZXMgZm9sbG93aW5nIHRvIGZhaWx1cmUg
+b2YgaW5zdGFsbGluZyBXaW5kb3dzLWxpa2UgT1MsIGJlY2F1c2Ugd2l0aG91dAomZ3Q7Jmd0OyZn
+dDsgYSBudW1iZXIgb2YgRFZELVJPTSBwcm9maWxlJ3MgZmVhdHVyZXMgYW5kIGNvcnJlY3QgU0NT
+SS1jb21tYW5kCiZndDsmZ3Q7Jmd0OyBoYW5kbGluZyhUT0MvQVRJUC9QTUEpIGEgV2luZG93cyBP
+UyBjYW4ndCBsb2FkIGFwcHJvcHJpYXRlCiZndDsmZ3Q7Jmd0OyBVREYtZHJpdmVyKGlzby0xMzM0
+NikgYW5kIHdpbGwgc3R1Y2tzLgomZ3Q7Jmd0OyZndDsKJmd0OyZndDsmZ3Q7IFN1bW1hcnkgdGhl
+IG1lbnRpb25lZCBpbiB0aGUgY3VycmVudCBzdWJqZWN0IHBhdGNoc2V0IHNob3VsZCBzb2x2ZSB0
+aGUKJmd0OyZndDsmZ3Q7IGRlc2NyaWJlZCBpc3N1ZS4KJmd0OyZndDsmZ3Q7CiZndDsmZ3Q7IEkn
+bGwgZ2l2ZSBpdCBhIHRyeSwgdGhpcyBtaWdodCBhbHNvIHNvbHZlIG91ciB2aXJ0dWFsIG1lZGlh
+IHN0cmVzcyBpc3N1ZXMuCiZndDsmZ3Q7IAomZ3Q7Jmd0OyZndDsmZ3Q7CiZndDsmZ3Q7Jmd0OyZn
+dDsgVGhhbmtzLAomZ3Q7Jmd0OyZndDsmZ3Q7IFRyb3kgTGVlCiZndDsmZ3Q7Jmd0OwomZ3Q7Jmd0
+OyZndDsgTGlua3M6CiZndDsmZ3Q7Jmd0OyAqIGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVj
+dC54eXovYy9vcGVuYm1jL3Bob3NwaG9yLW1pc2MvKy8zNjQ5OQomZ3Q7Jmd0OyZndDsKJmd0OyZn
+dDsmZ3Q7CiZndDsmZ3Q7Jmd0OyAtLQomZ3Q7Jmd0OyZndDsgQmVzdCByZWdhcmRzLAomZ3Q7Jmd0
+OyZndDsKJmd0OyZndDsmZ3Q7IElnb3IgS29ub25lbmtvCiZndDsmZ3Q7IAomZ3Q7Jmd0OyBUaGFu
+a3MsCiZndDsmZ3Q7IFRyb3kgTGVlCiZndDsmZ3Q7IAomZ3Q7CiZndDtMaW5rczoKJmd0OzEgLSBo
+dHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9ibWN3ZWIvKy8zNjQ3
+NQomZ3Q7LS0gCiZndDtCZXN0IHJlZ2FyZHMsCiZndDsKJmd0O0lnb3IgS29ub25lbmtvCjwvcHJl
+PjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48
+L3NwYW4+
+------=_Part_16852_219672491.1628130322133--
 
-I see, thanks for explaining. It's a downside of the device tree
-bindings for the ethernet device.
-
-Given you will be the one working with the board, I think it's up to
-you how you lay it out. You could choose to add a comment to the
-platform dts, or put the hunk you currently have in the common.dtsi in
-the platform.
-
->
-> &mac3 {
->         status = "okay";
->         phy-mode = "rgmii";
->         pinctrl-names = "default";
->         pinctrl-0 = <&pinctrl_rgmii4_default>;
-> };
