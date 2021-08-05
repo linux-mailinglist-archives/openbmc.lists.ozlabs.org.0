@@ -2,65 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B89C3E0C8C
-	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 04:57:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FF2D3E0C8A
+	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 04:56:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GgCv52rkzz3cLG
-	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 12:57:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GgCtZ02qcz3cHr
+	for <lists+openbmc@lfdr.de>; Thu,  5 Aug 2021 12:56:38 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=pdrDrZx9;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=F+pLi/CG;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=126.com
- (client-ip=220.181.15.24; helo=m1524.mail.126.com;
- envelope-from=guilin1985@126.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256
- header.s=s110527 header.b=pdrDrZx9; dkim-atps=neutral
-X-Greylist: delayed 1866 seconds by postgrey-1.36 at boromir;
- Thu, 05 Aug 2021 12:56:50 AEST
-Received: from m1524.mail.126.com (m1524.mail.126.com [220.181.15.24])
- by lists.ozlabs.org (Postfix) with ESMTP id 4GgCtp2BZVz307n
- for <openbmc@lists.ozlabs.org>; Thu,  5 Aug 2021 12:56:49 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=B+PB3
- hvUvGWegtoGe8E6FoDnnRR1bL/AsjbADR7oOdI=; b=pdrDrZx9XWlNWRm7RD8Bb
- JzCmdqBCLW1WRJpq2UF9X8SusiN0lRGcUoM9vtZr5IV3FFBL4ML1oVjgSz97KFde
- FCfKOZsd59jKPzv8A3Tgxz5pfuHJ5QOOgRpE+KOp3g47VWyoZqC3O2+m46Bp0VQg
- ip4z4T8Re4+Zsjw1eOn270=
-Received: from guilin1985$126.com ( [171.223.209.246] ) by
- ajax-webmail-wmsvr24 (Coremail) ; Thu, 5 Aug 2021 10:25:22 +0800 (CST)
-X-Originating-IP: [171.223.209.246]
-Date: Thu, 5 Aug 2021 10:25:22 +0800 (CST)
-From: =?GBK?B?sKK58A==?= <guilin1985@126.com>
-To: "i.kononenko" <i.kononenko@yadro.com>
-Subject: Re:Re: Installing Windows Server 2019 from a remotely mounted ISO
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
- Copyright (c) 2002-2021 www.mailtech.cn 126com
-In-Reply-To: <20848306-700c-d089-3f39-1f9e51832a90@yadro.com>
-References: <60926e52-9d00-2b20-e8ac-7fd515ddac78@yadro.com>
- <CAH2KKeaBMhU3XDADDE0ieqRRhNBiF57-9rUi+Go-SSJCGG-GBA@mail.gmail.com>
- <3c0b0dc3-a31d-dcfb-608b-53436074397b@linux.intel.com>
- <34751627996896@mail.yandex-team.ru>
- <df77021c-a86b-1a03-9960-acdf6c324600@yadro.com>
- <6631628004052@mail.yandex-team.ru>
- <4354431a-0db6-fb9f-bc21-5ef34eba8852@yadro.com>
- <HK0PR06MB214515C746802AB15880B80F8AF19@HK0PR06MB2145.apcprd06.prod.outlook.com>
- <835cf3cc-c91a-3194-0f87-52ae197c3949@yadro.com>
- <HK0PR06MB2145B61C2FC95F66C75BD5148AF19@HK0PR06MB2145.apcprd06.prod.outlook.com>
- <20848306-700c-d089-3f39-1f9e51832a90@yadro.com>
-X-CM-CTRLDATA: Yf5Z2mZvb3Rlcl9odG09MzY1Mzo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_16852_219672491.1628130322133"
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::533;
+ helo=mail-ed1-x533.google.com; envelope-from=ratankgupta31@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=F+pLi/CG; dkim-atps=neutral
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com
+ [IPv6:2a00:1450:4864:20::533])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GgCtG6QJXz307n
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Aug 2021 12:56:21 +1000 (AEST)
+Received: by mail-ed1-x533.google.com with SMTP id y7so6241436eda.5
+ for <openbmc@lists.ozlabs.org>; Wed, 04 Aug 2021 19:56:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=KjEyAh3l/IF2KnfL+UMQHShYNY9CQhLkgEvF74kXY5M=;
+ b=F+pLi/CG8EkQxPixLXbVbrKyH74UAJPTIB5X23fiWooiVgYzHN6NDGYA1szGFPiU5t
+ k9pbqIuM/CLvNETl67dcjA5Db5d5yVxHtgp17nswD6YUQWDHDG9gRrfevjgkw8pFAuw8
+ QfsTVT5k9C0eEfF7syGTcrSc3Gur9V2JnmQT7gnot21ST1x/iDuD8jOPsf2QIYprWN5R
+ r8SOLPxqA/FUeEz57NFdQa9zdcaXQKwpZcG3zKRl/C7cffd2qXf+1H3q40LcVJVhH7bn
+ 7f1yocsVO2r5nvz3JWRuYiM+c0vlVlxl529CptSn6EV+b3BsTcxQU8YzgY5OVucQoA4H
+ qpmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=KjEyAh3l/IF2KnfL+UMQHShYNY9CQhLkgEvF74kXY5M=;
+ b=PN2u8N/XWzeUgjyo5uk0UeIYsyaokTilIBRcNX76hsHWFXRc3YB8SUtnNonU/VrLG0
+ ilsOm/r8ro5MawqsexO6U4ErHLQmKI+UoDbznboNHIVitBLiyj8HG7eywSqltAnNJDBm
+ PsIIKglVUfVzEfcA+fl1GYtoV2sJ7r8dIs4rq3YbFncPqfSYyyu+bFmsTpaONxUC2mmw
+ E94pMBgimdMJszlhn449nMd9RwJ7fIKp4388N/M55bQoAC5voTiNk99f8g1UiRyXcHxu
+ yvNGXiKBtxNFglIqswij1+GT6irI5D/t+WjJlSknc5rKcDyeO5ozDxTNWG92kct3Ux/I
+ 9Osg==
+X-Gm-Message-State: AOAM531RDxA1zeJSiLbT/XLyNGxiLHtlLZ8fxr11mU4674KkfBeuygmw
+ d697waOJ1bAyB5Pkp1wXzvsRP5rDJcj3/hTwf1/R1d7nLh4=
+X-Google-Smtp-Source: ABdhPJxB4VwQQlr3d2hPi7xhawYqy135750p12IZsPMLfyCsBa6G33lFO+WP65aqETitcGvs/0Iu2/t3VSwVRHJCTMQ=
+X-Received: by 2002:a05:6402:124e:: with SMTP id
+ l14mr3673255edw.356.1628132175135; 
+ Wed, 04 Aug 2021 19:56:15 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <2f296b4f.120a.17b142126d5.Coremail.guilin1985@126.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: GMqowABHJEATTAthXqA5AQ--.37084W
-X-CM-SenderInfo: xjxlzxrqrzmka6rslhhfrp/1tbizhPlh18RNR7QsgAAs4
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+References: <CAMhqiMrcS2Yr6B3TBTAyB4BE_FPbU_waoJScQmYCBMnCpv5ZAw@mail.gmail.com>
+ <CAMhqiMofyc2mGBYYJUXftj2kbQzmZt=q0pwyk2KPoSVxrHVKBQ@mail.gmail.com>
+In-Reply-To: <CAMhqiMofyc2mGBYYJUXftj2kbQzmZt=q0pwyk2KPoSVxrHVKBQ@mail.gmail.com>
+From: Ratan Gupta <ratankgupta31@gmail.com>
+Date: Thu, 5 Aug 2021 08:26:03 +0530
+Message-ID: <CAMhqiMr+b_=bJ=JwuSZUa8eooYVfcEoM7crAgKNH9v6cb2PWOw@mail.gmail.com>
+Subject: Re: apparmor support
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000f2473c05c8c70fa5"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,133 +75,139 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Troy Lee <troy_lee@aspeedtech.com>,
- Konstantin Klubnichkin <kitsok@yandex-team.ru>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_16852_219672491.1628130322133
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+--000000000000f2473c05c8c70fa5
+Content-Type: text/plain; charset="UTF-8"
 
-CgpUaGF0IGlzIGtlcm5lbCBub3Qgc3VwcG9ydCB1ZGYgdHlwZSBJU0+jrG1heWJlIHlvdSBjYW4g
-dXNlIHNvZnR3YXJlICJVbHRyYUlTTyIgIGNoYW5nZSAgdWRmIElTTyB0byBjZGZzIElTTywgb3Ig
-bW9kaWZ5IHlvdSBrZXJuZWwgc291cmNlIHRvIHN1cHBvcnQgdWRmIHR5cGUgSVNPoaMKU28sIEkg
-bW9kaWZ5IGxvY2FsIGtlcm5lbCBzb3VyY2UgdG8gc3VwcG9ydCB1ZGYgdHlwZSBJU08uCkJ5IHRo
-ZSB3YXkganNuYmQncyBzdGF0ZSBhbHNvIG5lZWQgdG8gY2hhbmdlICAiZWNobyAxID4gZnVuY3Rp
-b25zL21hc3Nfc3RvcmFnZS51c2IwL2x1bi4wL2Nkcm9tIgoKCgoKCkF0IDIwMjEtMDgtMDQgMTk6
-NDA6MTksICJpLmtvbm9uZW5rbyIgPGkua29ub25lbmtvQHlhZHJvLmNvbT4gd3JvdGU6Cj5Ucm95
-LAo+Cj5PbiAwNC4wOC4yMDIxIDA2OjE3LCBUcm95IExlZSB3cm90ZToKPj4gSGkgSWdvciwKPj4g
-Cj4+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQo+Pj4gRnJvbTogaS5rb25vbmVua28gPGku
-a29ub25lbmtvQHlhZHJvLmNvbT4KPj4+IFNlbnQ6IFdlZG5lc2RheSwgQXVndXN0IDQsIDIwMjEg
-MTA6MTEgQU0KPj4+IFRvOiBUcm95IExlZSA8dHJveV9sZWVAYXNwZWVkdGVjaC5jb20+OyBLb25z
-dGFudGluIEtsdWJuaWNoa2luCj4+PiA8a2l0c29rQHlhbmRleC10ZWFtLnJ1Pgo+Pj4gQ2M6IG9w
-ZW5ibWNAbGlzdHMub3psYWJzLm9yZwo+Pj4gU3ViamVjdDogUmU6IEluc3RhbGxpbmcgV2luZG93
-cyBTZXJ2ZXIgMjAxOSBmcm9tIGEgcmVtb3RlbHkgbW91bnRlZCBJU08KPj4+Cj4+PiBIZWxsbyBU
-cm95LAo+Pj4KPj4+IE9uIDA0LjA4LjIwMjEgMDQ6NTAsIFRyb3kgTGVlIHdyb3RlOgo+Pj4+IEhp
-IElnb3IsCj4+Pj4KPj4+PiBDdXJyZW50bHksIHRoZSByZW1vdGUgdmlydHVhbCBtZWRpYSBlbXVs
-YXRlIHRoZSBnYWRnZXQgZHJpdmVyIGFzIHVzYgo+Pj4gdGh1bWIgZHJpdmUgaW5zdGVhZCBvZiBj
-ZC1yb20uCj4+Pj4gUGxlYXNlIGhhdmUgYSBsb29rIG9uIG15IHBhdGNoOgo+Pj4+IGh0dHBzOi8v
-Z2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL29wZW5ibWMvKy80Mjk4Ngo+Pj4g
-UGxlYXNlIG5vdGUsIHRoZSBwaG9zcGhvci1taXNjOnVzYi1jdHJsIGhhdmUgYSB3YXkgdG8gc3Bl
-Y2lmeSBtb2RlCj4+PiB1c2J8dXNiLXJvfGhkZHxkdmQgd2hpY2ggaXMgdXNlZnVsIHRvIHBpY2sg
-YmV0d2VlbiBib3RoIHVzYiBvciBjZC1yb20KPj4+IGRldmljZXMuIFBsZWFzZSwgcmVmZXIgdG8g
-dGhlIGNoYW5nZXMgWzFdLgo+Pj4KPj4gVGhpcyBsb29rcyB2ZXJ5IHVzZWZ1bCwgZ29vZCBpbmZv
-cm1hdGlvbiB0byBrbm93LiAKPj4gRG8gZnJvbnRlbmQgKHdlYi12dWUvcGhvc3Bob3Itd2VidWkp
-IGFuZCBiYWNrZW5kIChibWN3ZWIpIHN1cHBvcnQgaXQgYWxyZWFkeT8KPgo+QUZBSUssIHRoZSBi
-bWN3ZWIgYW5kIFdlYlVJIGRvbid0IHN1cHBvcnQgdG8gc3BlY2lmeSBWaXJ0dWFsIE1lZGlhIHR5
-cGUsIAo+YnV0IEkgaGF2ZSBhIG51bWJlciBvZiBwYXRjaGVzIHRoYXQgYnJpbmcgc3VjaCBmZWF0
-dXJlcyBidXQgdGhlcmUgYXJlIG5vdCAKPnB1Ymxpc2hlZCB5ZXQuCj4KPkluIHRoZSBwYXN0LCBJ
-IGhhdmUgcHVibGlzaGVkIGEgYm1jd2ViIHBhdGNoIGZvciBzdXBwb3J0cyBWTSBtb2RlIGZvciB0
-aGUgbmJkLXByb3h5LAo+YnV0IHRoZSBjaGFuZ2Ugd2FzIG5vdCBmcmFtZWQgcHJvcGVybHkgYW5k
-IGhhcyBiZWVuIGFiYW5kb25lZCBbMV0uCj4KPj4gCj4+PiBUaGUgaW1wbGVtZW50YXRpb24gb2Yg
-dXNiLWdhZGdldDptYXNzLXN0b3JhZ2UgaGFzIGEgbWFueSBsaW1pdGF0aW9ucwo+Pj4gYWJvdXQg
-Y2Qtcm9tOgo+Pj4gICogSW1hZ2Ugc2l6ZSBzaG91bGQgbm90IGJlIHNpZ25pZmljYW50IHRoZW4g
-Mi4xR2IsCj4+PiAgKiBTdXBwb3J0cyBvbmx5IENELVJPTSBwcm9maWxlCj4+PiBUaGF0IGRvZXMg
-Zm9sbG93aW5nIHRvIGZhaWx1cmUgb2YgaW5zdGFsbGluZyBXaW5kb3dzLWxpa2UgT1MsIGJlY2F1
-c2Ugd2l0aG91dAo+Pj4gYSBudW1iZXIgb2YgRFZELVJPTSBwcm9maWxlJ3MgZmVhdHVyZXMgYW5k
-IGNvcnJlY3QgU0NTSS1jb21tYW5kCj4+PiBoYW5kbGluZyhUT0MvQVRJUC9QTUEpIGEgV2luZG93
-cyBPUyBjYW4ndCBsb2FkIGFwcHJvcHJpYXRlCj4+PiBVREYtZHJpdmVyKGlzby0xMzM0NikgYW5k
-IHdpbGwgc3R1Y2tzLgo+Pj4KPj4+IFN1bW1hcnkgdGhlIG1lbnRpb25lZCBpbiB0aGUgY3VycmVu
-dCBzdWJqZWN0IHBhdGNoc2V0IHNob3VsZCBzb2x2ZSB0aGUKPj4+IGRlc2NyaWJlZCBpc3N1ZS4K
-Pj4+Cj4+IEknbGwgZ2l2ZSBpdCBhIHRyeSwgdGhpcyBtaWdodCBhbHNvIHNvbHZlIG91ciB2aXJ0
-dWFsIG1lZGlhIHN0cmVzcyBpc3N1ZXMuCj4+IAo+Pj4+Cj4+Pj4gVGhhbmtzLAo+Pj4+IFRyb3kg
-TGVlCj4+Pgo+Pj4gTGlua3M6Cj4+PiAqIGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54
-eXovYy9vcGVuYm1jL3Bob3NwaG9yLW1pc2MvKy8zNjQ5OQo+Pj4KPj4+Cj4+PiAtLQo+Pj4gQmVz
-dCByZWdhcmRzLAo+Pj4KPj4+IElnb3IgS29ub25lbmtvCj4+IAo+PiBUaGFua3MsCj4+IFRyb3kg
-TGVlCj4+IAo+Cj5MaW5rczoKPjEgLSBodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6
-L2Mvb3BlbmJtYy9ibWN3ZWIvKy8zNjQ3NQo+LS0gCj5CZXN0IHJlZ2FyZHMsCj4KPklnb3IgS29u
-b25lbmtvCg==
-------=_Part_16852_219672491.1628130322133
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+Hi Team,
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPjxicj48L2Rpdj48ZGl2
-IHN0eWxlPSJtYXJnaW46IDA7Ij5UaGF0IGlzIGtlcm5lbCBub3Qgc3VwcG9ydCB1ZGYgdHlwZSBJ
-U0+jrG1heWJlIHlvdSBjYW4gdXNlIHNvZnR3YXJlICJVbHRyYUlTTyImbmJzcDsgY2hhbmdlJm5i
-c3A7IHVkZiBJU08gdG8gY2RmcyBJU08sIG9yIG1vZGlmeSB5b3Uga2VybmVsIHNvdXJjZSB0byBz
-dXBwb3J0IHVkZiB0eXBlIElTT6GjPC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOiAwOyI+PHNwYW4g
-c3R5bGU9ImZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+U28sIEkgbW9kaWZ5
-IGxvY2FsIGtlcm5lbCBzb3VyY2UgdG8gc3VwcG9ydCB1ZGYgdHlwZSBJU08uPC9zcGFuPjwvZGl2
-PjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPkJ5IHRoZSB3YXkganNuYmQncyBzdGF0ZSBhbHNvIG5l
-ZWQgdG8gY2hhbmdlJm5ic3A7ICJlY2hvIDEgJmd0OyBmdW5jdGlvbnMvbWFzc19zdG9yYWdlLnVz
-YjAvbHVuLjAvY2Ryb20iPC9kaXY+PGRpdiBzdHlsZT0icG9zaXRpb246cmVsYXRpdmU7em9vbTox
-Ij48L2Rpdj48ZGl2IGlkPSJkaXZOZXRlYXNlTWFpbENhcmQiPjwvZGl2PjxwIHN0eWxlPSJtYXJn
-aW46IDA7Ij48YnI+PC9wPjxwcmU+PGJyPkF0IDIwMjEtMDgtMDQgMTk6NDA6MTksICJpLmtvbm9u
-ZW5rbyIgJmx0O2kua29ub25lbmtvQHlhZHJvLmNvbSZndDsgd3JvdGU6CiZndDtUcm95LAomZ3Q7
-CiZndDtPbiAwNC4wOC4yMDIxIDA2OjE3LCBUcm95IExlZSB3cm90ZToKJmd0OyZndDsgSGkgSWdv
-ciwKJmd0OyZndDsgCiZndDsmZ3Q7Jmd0OyAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQomZ3Q7
-Jmd0OyZndDsgRnJvbTogaS5rb25vbmVua28gJmx0O2kua29ub25lbmtvQHlhZHJvLmNvbSZndDsK
-Jmd0OyZndDsmZ3Q7IFNlbnQ6IFdlZG5lc2RheSwgQXVndXN0IDQsIDIwMjEgMTA6MTEgQU0KJmd0
-OyZndDsmZ3Q7IFRvOiBUcm95IExlZSAmbHQ7dHJveV9sZWVAYXNwZWVkdGVjaC5jb20mZ3Q7OyBL
-b25zdGFudGluIEtsdWJuaWNoa2luCiZndDsmZ3Q7Jmd0OyAmbHQ7a2l0c29rQHlhbmRleC10ZWFt
-LnJ1Jmd0OwomZ3Q7Jmd0OyZndDsgQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZwomZ3Q7Jmd0
-OyZndDsgU3ViamVjdDogUmU6IEluc3RhbGxpbmcgV2luZG93cyBTZXJ2ZXIgMjAxOSBmcm9tIGEg
-cmVtb3RlbHkgbW91bnRlZCBJU08KJmd0OyZndDsmZ3Q7CiZndDsmZ3Q7Jmd0OyBIZWxsbyBUcm95
-LAomZ3Q7Jmd0OyZndDsKJmd0OyZndDsmZ3Q7IE9uIDA0LjA4LjIwMjEgMDQ6NTAsIFRyb3kgTGVl
-IHdyb3RlOgomZ3Q7Jmd0OyZndDsmZ3Q7IEhpIElnb3IsCiZndDsmZ3Q7Jmd0OyZndDsKJmd0OyZn
-dDsmZ3Q7Jmd0OyBDdXJyZW50bHksIHRoZSByZW1vdGUgdmlydHVhbCBtZWRpYSBlbXVsYXRlIHRo
-ZSBnYWRnZXQgZHJpdmVyIGFzIHVzYgomZ3Q7Jmd0OyZndDsgdGh1bWIgZHJpdmUgaW5zdGVhZCBv
-ZiBjZC1yb20uCiZndDsmZ3Q7Jmd0OyZndDsgUGxlYXNlIGhhdmUgYSBsb29rIG9uIG15IHBhdGNo
-OgomZ3Q7Jmd0OyZndDsmZ3Q7IGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9v
-cGVuYm1jL29wZW5ibWMvKy80Mjk4NgomZ3Q7Jmd0OyZndDsgUGxlYXNlIG5vdGUsIHRoZSBwaG9z
-cGhvci1taXNjOnVzYi1jdHJsIGhhdmUgYSB3YXkgdG8gc3BlY2lmeSBtb2RlCiZndDsmZ3Q7Jmd0
-OyB1c2J8dXNiLXJvfGhkZHxkdmQgd2hpY2ggaXMgdXNlZnVsIHRvIHBpY2sgYmV0d2VlbiBib3Ro
-IHVzYiBvciBjZC1yb20KJmd0OyZndDsmZ3Q7IGRldmljZXMuIFBsZWFzZSwgcmVmZXIgdG8gdGhl
-IGNoYW5nZXMgWzFdLgomZ3Q7Jmd0OyZndDsKJmd0OyZndDsgVGhpcyBsb29rcyB2ZXJ5IHVzZWZ1
-bCwgZ29vZCBpbmZvcm1hdGlvbiB0byBrbm93LiAKJmd0OyZndDsgRG8gZnJvbnRlbmQgKHdlYi12
-dWUvcGhvc3Bob3Itd2VidWkpIGFuZCBiYWNrZW5kIChibWN3ZWIpIHN1cHBvcnQgaXQgYWxyZWFk
-eT8KJmd0OwomZ3Q7QUZBSUssIHRoZSBibWN3ZWIgYW5kIFdlYlVJIGRvbid0IHN1cHBvcnQgdG8g
-c3BlY2lmeSBWaXJ0dWFsIE1lZGlhIHR5cGUsIAomZ3Q7YnV0IEkgaGF2ZSBhIG51bWJlciBvZiBw
-YXRjaGVzIHRoYXQgYnJpbmcgc3VjaCBmZWF0dXJlcyBidXQgdGhlcmUgYXJlIG5vdCAKJmd0O3B1
-Ymxpc2hlZCB5ZXQuCiZndDsKJmd0O0luIHRoZSBwYXN0LCBJIGhhdmUgcHVibGlzaGVkIGEgYm1j
-d2ViIHBhdGNoIGZvciBzdXBwb3J0cyBWTSBtb2RlIGZvciB0aGUgbmJkLXByb3h5LAomZ3Q7YnV0
-IHRoZSBjaGFuZ2Ugd2FzIG5vdCBmcmFtZWQgcHJvcGVybHkgYW5kIGhhcyBiZWVuIGFiYW5kb25l
-ZCBbMV0uCiZndDsKJmd0OyZndDsgCiZndDsmZ3Q7Jmd0OyBUaGUgaW1wbGVtZW50YXRpb24gb2Yg
-dXNiLWdhZGdldDptYXNzLXN0b3JhZ2UgaGFzIGEgbWFueSBsaW1pdGF0aW9ucwomZ3Q7Jmd0OyZn
-dDsgYWJvdXQgY2Qtcm9tOgomZ3Q7Jmd0OyZndDsgICogSW1hZ2Ugc2l6ZSBzaG91bGQgbm90IGJl
-IHNpZ25pZmljYW50IHRoZW4gMi4xR2IsCiZndDsmZ3Q7Jmd0OyAgKiBTdXBwb3J0cyBvbmx5IENE
-LVJPTSBwcm9maWxlCiZndDsmZ3Q7Jmd0OyBUaGF0IGRvZXMgZm9sbG93aW5nIHRvIGZhaWx1cmUg
-b2YgaW5zdGFsbGluZyBXaW5kb3dzLWxpa2UgT1MsIGJlY2F1c2Ugd2l0aG91dAomZ3Q7Jmd0OyZn
-dDsgYSBudW1iZXIgb2YgRFZELVJPTSBwcm9maWxlJ3MgZmVhdHVyZXMgYW5kIGNvcnJlY3QgU0NT
-SS1jb21tYW5kCiZndDsmZ3Q7Jmd0OyBoYW5kbGluZyhUT0MvQVRJUC9QTUEpIGEgV2luZG93cyBP
-UyBjYW4ndCBsb2FkIGFwcHJvcHJpYXRlCiZndDsmZ3Q7Jmd0OyBVREYtZHJpdmVyKGlzby0xMzM0
-NikgYW5kIHdpbGwgc3R1Y2tzLgomZ3Q7Jmd0OyZndDsKJmd0OyZndDsmZ3Q7IFN1bW1hcnkgdGhl
-IG1lbnRpb25lZCBpbiB0aGUgY3VycmVudCBzdWJqZWN0IHBhdGNoc2V0IHNob3VsZCBzb2x2ZSB0
-aGUKJmd0OyZndDsmZ3Q7IGRlc2NyaWJlZCBpc3N1ZS4KJmd0OyZndDsmZ3Q7CiZndDsmZ3Q7IEkn
-bGwgZ2l2ZSBpdCBhIHRyeSwgdGhpcyBtaWdodCBhbHNvIHNvbHZlIG91ciB2aXJ0dWFsIG1lZGlh
-IHN0cmVzcyBpc3N1ZXMuCiZndDsmZ3Q7IAomZ3Q7Jmd0OyZndDsmZ3Q7CiZndDsmZ3Q7Jmd0OyZn
-dDsgVGhhbmtzLAomZ3Q7Jmd0OyZndDsmZ3Q7IFRyb3kgTGVlCiZndDsmZ3Q7Jmd0OwomZ3Q7Jmd0
-OyZndDsgTGlua3M6CiZndDsmZ3Q7Jmd0OyAqIGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVj
-dC54eXovYy9vcGVuYm1jL3Bob3NwaG9yLW1pc2MvKy8zNjQ5OQomZ3Q7Jmd0OyZndDsKJmd0OyZn
-dDsmZ3Q7CiZndDsmZ3Q7Jmd0OyAtLQomZ3Q7Jmd0OyZndDsgQmVzdCByZWdhcmRzLAomZ3Q7Jmd0
-OyZndDsKJmd0OyZndDsmZ3Q7IElnb3IgS29ub25lbmtvCiZndDsmZ3Q7IAomZ3Q7Jmd0OyBUaGFu
-a3MsCiZndDsmZ3Q7IFRyb3kgTGVlCiZndDsmZ3Q7IAomZ3Q7CiZndDtMaW5rczoKJmd0OzEgLSBo
-dHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9ibWN3ZWIvKy8zNjQ3
-NQomZ3Q7LS0gCiZndDtCZXN0IHJlZ2FyZHMsCiZndDsKJmd0O0lnb3IgS29ub25lbmtvCjwvcHJl
-PjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48
-L3NwYW4+
-------=_Part_16852_219672491.1628130322133--
+Does anybody have any experience in writing the apparmor profile and
+confine some of the openbmc application? I pulled the apparmor in the
+openbmc image but it is not confining the openbmc application.Confining the
+application on ubuntu works fine but that is not true with openbmc.
 
+I am chasing this issue with apparmor team through
+https://gitlab.com/apparmor/apparmor/-/issues/183
+
+Ratan
+
+On Tue, Jul 27, 2021 at 1:27 PM Ratan Gupta <ratankgupta31@gmail.com> wrote:
+
+> Ignore my previous email, I got the issue that CONFIG_SECURITY should have
+> been enabled also(That is a dependency)
+>
+> https://github.com/openbmc/linux/blob/1519240139a91e3dbc97d8f79de29a22a3328257/security/apparmor/Kconfig#L4
+>
+> On Tue, Jul 27, 2021 at 11:42 AM Ratan Gupta <ratankgupta31@gmail.com>
+> wrote:
+>
+>> Hi All,
+>>
+>> I was trying to pull apparmor in openbmc, all the user space application
+>> got pulled however I was unable to build the kernel with apparmor support.
+>>
+>> I made the following kernel configuration to include the apparmor(
+>> https://github.com/openbmc/linux/blob/dev-5.10/Documentation/admin-guide/LSM/apparmor.rst
+>> )
+>>
+>> CONFIG_SECURITYFS=y
+>> CONFIG_SECURITY_NETWORK=y
+>> CONFIG_SECURITY_PATH=y
+>> CONFIG_SECURITY_APPARMOR=y
+>> CONFIG_DEFAULT_SECURITY="apparmor"
+>> CONFIG_SECURITY_APPARMOR_BOOTPARAM_VALUE=1
+>> CONFIG_AUDIT=y
+>>
+>>
+>> In the build tree, kernel is not picking the above config parameters and
+>> I was getting the following logs in the config_build_log which suggest that
+>> kernel doesn't like these config.
+>>
+>> tmp/work-shared/hgx/kernel-source/.kernel-meta/cfg/merge_config_build.log
+>>
+>> Value requested for CONFIG_SECURITY_PATH not in final .config
+>> Requested value:  CONFIG_SECURITY_PATH=y
+>> CONFIG_SECURITY_PATH=y
+>> Actual value:
+>>
+>> Value requested for CONFIG_SECURITY_APPARMOR not in final .config
+>> Requested value:  CONFIG_SECURITY_APPARMOR=y
+>> CONFIG_SECURITY_APPARMOR=y
+>> Actual value:
+>>
+>> Value requested for CONFIG_DEFAULT_SECURITY not in final .config
+>> Requested value:  CONFIG_DEFAULT_SECURITY="apparmor"
+>> CONFIG_DEFAULT_SECURITY="apparmor"
+>> Actual value:
+>>
+>> Value requested for CONFIG_SECURITY_APPARMOR_BOOTPARAM_VALUE not in final
+>> .config
+>> Requested value:  CONFIG_SECURITY_APPARMOR_BOOTPARAM_VALUE=1
+>> CONFIG_SECURITY_APPARMOR_BOOTPARAM_VALUE=1
+>> Actual value:
+>>
+>> Can somebody suggest me what I am missing here?
+>>
+>> Ratan Gupta
+>>
+>
+
+--000000000000f2473c05c8c70fa5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Team,<div><br></div><div>Does anybody have any experien=
+ce=C2=A0in writing the apparmor profile and confine some of the openbmc app=
+lication? I pulled the apparmor in the openbmc image but it is not confinin=
+g=C2=A0the openbmc application.Confining the application on ubuntu works fi=
+ne but that is not true with openbmc.</div><div><br></div><div>I am chasing=
+ this issue with apparmor team through=C2=A0<a href=3D"https://gitlab.com/a=
+pparmor/apparmor/-/issues/183">https://gitlab.com/apparmor/apparmor/-/issue=
+s/183</a></div><div><br></div><div>Ratan</div></div><br><div class=3D"gmail=
+_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jul 27, 2021 at 1:27 =
+PM Ratan Gupta &lt;<a href=3D"mailto:ratankgupta31@gmail.com">ratankgupta31=
+@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex"><div dir=3D"ltr">Ignore my previous email, I got the issue that =
+CONFIG_SECURITY should=C2=A0have been enabled also(That is a dependency)<di=
+v><span style=3D"font-size:12pt;font-family:Calibri,sans-serif;color:rgb(0,=
+32,96)"><a href=3D"https://github.com/openbmc/linux/blob/1519240139a91e3dbc=
+97d8f79de29a22a3328257/security/apparmor/Kconfig#L4" style=3D"color:rgb(5,9=
+9,193)" target=3D"_blank">https://github.com/openbmc/linux/blob/1519240139a=
+91e3dbc97d8f79de29a22a3328257/security/apparmor/Kconfig#L4</a></span></div>=
+</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=
+On Tue, Jul 27, 2021 at 11:42 AM Ratan Gupta &lt;<a href=3D"mailto:ratankgu=
+pta31@gmail.com" target=3D"_blank">ratankgupta31@gmail.com</a>&gt; wrote:<b=
+r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">=
+Hi All,<br><br>I was trying to pull apparmor in openbmc, all the user space=
+ application got pulled however I was unable to build the kernel with appar=
+mor support.<br><br>I made the following kernel configuration to include th=
+e apparmor( <a href=3D"https://github.com/openbmc/linux/blob/dev-5.10/Docum=
+entation/admin-guide/LSM/apparmor.rst" target=3D"_blank">https://github.com=
+/openbmc/linux/blob/dev-5.10/Documentation/admin-guide/LSM/apparmor.rst</a>=
+)<br><br>CONFIG_SECURITYFS=3Dy<br>CONFIG_SECURITY_NETWORK=3Dy<br>CONFIG_SEC=
+URITY_PATH=3Dy<br>CONFIG_SECURITY_APPARMOR=3Dy<br>CONFIG_DEFAULT_SECURITY=
+=3D&quot;apparmor&quot;<br>CONFIG_SECURITY_APPARMOR_BOOTPARAM_VALUE=3D1<br>=
+CONFIG_AUDIT=3Dy<br><br><br>In the build tree, kernel is not picking the ab=
+ove config parameters and I was getting the following logs in the config_bu=
+ild_log which suggest that kernel doesn&#39;t like these config.<br><br>tmp=
+/work-shared/hgx/kernel-source/.kernel-meta/cfg/merge_config_build.log<br><=
+br>Value requested for CONFIG_SECURITY_PATH not in final .config<br>Request=
+ed value: =C2=A0CONFIG_SECURITY_PATH=3Dy<br>CONFIG_SECURITY_PATH=3Dy<br>Act=
+ual value:<br><br>Value requested for CONFIG_SECURITY_APPARMOR not in final=
+ .config<br>Requested value: =C2=A0CONFIG_SECURITY_APPARMOR=3Dy<br>CONFIG_S=
+ECURITY_APPARMOR=3Dy<br>Actual value:<br><br>Value requested for CONFIG_DEF=
+AULT_SECURITY not in final .config<br>Requested value: =C2=A0CONFIG_DEFAULT=
+_SECURITY=3D&quot;apparmor&quot;<br>CONFIG_DEFAULT_SECURITY=3D&quot;apparmo=
+r&quot;<br>Actual value:<br><br>Value requested for CONFIG_SECURITY_APPARMO=
+R_BOOTPARAM_VALUE not in final .config<br>Requested value: =C2=A0CONFIG_SEC=
+URITY_APPARMOR_BOOTPARAM_VALUE=3D1<br>CONFIG_SECURITY_APPARMOR_BOOTPARAM_VA=
+LUE=3D1<br>Actual value:<br><br>Can somebody suggest me what I am missing h=
+ere?<br><br>Ratan Gupta<br></div>
+</blockquote></div>
+</blockquote></div>
+
+--000000000000f2473c05c8c70fa5--
