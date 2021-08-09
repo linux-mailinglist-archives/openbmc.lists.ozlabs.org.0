@@ -1,66 +1,45 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA4263E3F27
-	for <lists+openbmc@lfdr.de>; Mon,  9 Aug 2021 06:56:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C78C3E4016
+	for <lists+openbmc@lfdr.de>; Mon,  9 Aug 2021 08:34:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GjkNN6MCkz30CK
-	for <lists+openbmc@lfdr.de>; Mon,  9 Aug 2021 14:57:40 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=agF8HiU+;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GjmWW1K1Tz309L
+	for <lists+openbmc@lfdr.de>; Mon,  9 Aug 2021 16:33:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2e;
- helo=mail-vs1-xe2e.google.com; envelope-from=deepak.kodihalli.83@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=agF8HiU+; dkim-atps=neutral
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com
- [IPv6:2607:f8b0:4864:20::e2e])
+ smtp.mailfrom=linux.alibaba.com (client-ip=115.124.30.130;
+ helo=out30-130.freemail.mail.aliyun.com;
+ envelope-from=guoheyi@linux.alibaba.com; receiver=<UNKNOWN>)
+Received: from out30-130.freemail.mail.aliyun.com
+ (out30-130.freemail.mail.aliyun.com [115.124.30.130])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GjkN11CWCz2ydJ
- for <openbmc@lists.ozlabs.org>; Mon,  9 Aug 2021 14:57:20 +1000 (AEST)
-Received: by mail-vs1-xe2e.google.com with SMTP id a1so9289900vsd.12
- for <openbmc@lists.ozlabs.org>; Sun, 08 Aug 2021 21:56:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=4SEQx+WDJ9A/y+dYuJxHfALBLw0lDSAhO94c7OnN/5E=;
- b=agF8HiU+UeaPOjdh8/cr/3qmx1v2yL1on6zl7j4U09T/AtjdBJ2h0XJOl/xUJ8IDR9
- h6I0UkurhKevhv9+G837qSXEwUDrdv/tO9YWyfbACIYWs2v3zsrnih6s9NxCiY7ogdKD
- VlNNsFjD3pqbjFfHMbMDLd+d5kdhCwU1U29mOzrkK2Sy2vmeSUOy7lF1URmyjaz0p7oz
- pNgv+R1AxxXluKr/pi0bt6AqdPeSJRZwFaAQ5imoMlv5oskZQkBfd+6wSizCSq7cOheW
- itB7Rz2PYC1pyxxjuzUXN9Y93Ldi9hpM4KsxEX+IndhbJHM5sba9sdLs/xlxCqk+dTtP
- Sr3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=4SEQx+WDJ9A/y+dYuJxHfALBLw0lDSAhO94c7OnN/5E=;
- b=nycYUY5ZBCTvVBWhFLMRrhakL+otCc2VzlN20zEvNMFiimm23+x1ozZw/5AZwUPW6W
- MVWnpwm7KGvCYoKg4/cH7XK8vQixvsk33gwBBdiKBwZPAhD8nPSrM8LuMGM6TukBKdO8
- hlyRja5dbhU/mIUJfHYPxPH2E8SqVXCQ1XOb1tvXkXUXqEwjDoi/55MJwX5sbjAoPrNO
- W4DbEMzcYP3YIHgIy7Db+UerOxiV8SrXdHnTuFqXjWQeKfBCi4PZGyRIrJu+DNAJXnqe
- fjHNEYJMeNsW7kTqnPklrziSFm6iSK1kDlEGzBsLBt3ZbgccuBf5MdZoZpNeN27LGA01
- jEFA==
-X-Gm-Message-State: AOAM5331/48yTlWBL1LMcfnwIKu9UNulraoVhfFomDCPK9NmjJE8D2cL
- wAqUqymXhIFVwDgsNV40PtScYiTsehS10/l1sw2ePP93Daw=
-X-Google-Smtp-Source: ABdhPJyD5Dq6onAg8WGvFAz7YtQckOPPmcDJwN5jwH5CC5U5Kjn7UrEpMSonZzQLoet67hh1khzWnZpZNkh1XGNv6cs=
-X-Received: by 2002:a05:6102:2084:: with SMTP id
- h4mr6529554vsr.18.1628484967042; 
- Sun, 08 Aug 2021 21:56:07 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GjmWD6xMxz2xvf
+ for <openbmc@lists.ozlabs.org>; Mon,  9 Aug 2021 16:33:42 +1000 (AEST)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e04394; MF=guoheyi@linux.alibaba.com;
+ NM=1; PH=DS; RN=10; SR=0; TI=SMTPD_---0UiOF6xs_1628490804; 
+Received: from B-G4TALVDL-1650.local(mailfrom:guoheyi@linux.alibaba.com
+ fp:SMTPD_---0UiOF6xs_1628490804) by smtp.aliyun-inc.com(127.0.0.1);
+ Mon, 09 Aug 2021 14:33:25 +0800
+Subject: Re: Question about NVMe MCTP in dbus-sensors
+To: Andrew Jeffery <andrew@aj.id.au>, openbmc <openbmc@lists.ozlabs.org>
+References: <6fa87e93-863e-94a6-651f-8d6126557553@linux.alibaba.com>
+ <863f7fca-7088-450e-a855-92261ba56b9d@www.fastmail.com>
+From: Heyi Guo <guoheyi@linux.alibaba.com>
+Message-ID: <f5ec563f-6bbc-9eca-1ee0-77e2c04c4ec9@linux.alibaba.com>
+Date: Mon, 9 Aug 2021 14:33:24 +0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.12.0
 MIME-Version: 1.0
-From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
-Date: Mon, 9 Aug 2021 10:25:56 +0530
-Message-ID: <CAM=TmwU57zhc_k7KAKc56wTf=mihD4uWxBd8qPS+-22ZKER94w@mail.gmail.com>
-Subject: ast2600-evb qemu and usb-net
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>, andrew@aj.id.au,
- joel@jms.id.au
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <863f7fca-7088-450e-a855-92261ba56b9d@www.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,30 +51,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Zhikui Ren <zhikui.ren@intel.com>,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, "Winiarska,
+ Iwona" <iwona.winiarska@intel.com>,
+ Vernon Mauery <vernon.mauery@linux.intel.com>, Ed Tanous <ed@tanous.net>,
+ "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ "sumanth.bhat@linux.intel.com" <sumanth.bhat@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi All,
+Hi Andrew,
 
-I am trying to launch the ast2600-evb machine on QEMU by passing a a
-usb-net device:
-qemu-system-arm -machine ast2600-evb  -drive file=<bmc
-image>,if=mtd,bus=0,unit=0,snapshot=on -nographic  -nic
-user,hostname=qemu -device usb-net,netdev=net0 -netdev
-socket,id=net0,listen=:1234
 
-I downloaded the QEMU binary from
-https://github.com/openbmc/docs/blob/master/development/dev-environment.md#download-and-start-qemu-session.
-The intent is to have two such QEMU instances talking over emulated
-usb-net (the other instance would do a connect on the netdev socket).
-I get the following error when I run the command above:
-qemu-system-arm: -device usb-net,netdev=net0: Warning: speed mismatch
-trying to attach usb device "QEMU USB Network Interface" (full speed)
-to bus "usb-bus.1", port "1" (high speed)
+On 2021/8/6 下午1:42, Andrew Jeffery wrote:
+> Hello Heyi!
+>
+> On Fri, 6 Aug 2021, at 14:47, Heyi Guo wrote:
+>> Hi,
+>>
+>> We can see that NVMe sensors in dbus-sensors relies on MCTP to get
+>> hardware information. It is using libmctp interfaces to initialize MCTP
+>> and SMBus.
+> To be clear, it's using a fork of libmctp that implements an SMBus
+> binding via a fork of the kernel that exposes a I2C API that isn't
+> upstream.
 
-I'm guessing this is the lack of usb support/initialization in
-hw/arm/aspeed* in the QEMU tree. Has anyone else tried this with
-ast2600-evb?
+Could you point out where I can find these forks, including libmctp and 
+kernel? So that we can do some initial test with the current 
+implementation of NVMeSensor in dbus-sensors.
 
 Thanks,
-Deepak
+
+Heyi
+
+
+>
+> For the SMBus binding to be merged in upstream libmctp I'd like to see
+> the necessary kernel interfaces merged into the upstream kernel tree,
+> but I don't expect that's going to happen any time soon. More on why
+> below.
+>
+> As an aside you may be interested in this patch which allows nvmesensor
+> to use the basic management command to fetch temperature data:
+>
+> https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/43665
+>
+>> However I don't find the code or component who is responsible
+>> as a bus owner, to discover endpoints, manager EID and update routing
+>> table. Isn't necessary for a central component to do such things?
+> It's not strictly necessary in that it's valid for systems to be
+> completely defined in terms of static endpoints. Doing so isn't covered
+> by the MCTP spec, and it's also pretty limiting, but it is enough in
+> some circumstances.
+>
+>> Will
+>> there be access conflict if non-NVMe devices (MCTP capable) are also
+>> connected to the same SMBus？
+> No.
+>
+>> We also found another implementation from Intel:
+>> https://github.com/Intel-BMC/pmci. It implements mctpd to provide MCTP
+>> message transfer interfaces on D-Bus, while PLDM, NVME-MI and others can
+>> rely on the D-Bus interfaces instead of libmctp.
+> This is a direction Intel chose to go however it's not the direction
+> that upstream OpenBMC will be using. The use of a pure userspace
+> solution such as libmctp went far enough to expose the need for a
+> kernel-based solution. We will shortly have that, thanks to the efforts
+> of Jeremy and Matt at Code Construct:
+>
+> https://lore.kernel.org/netdev/20210729022053.134453-1-jk@codeconstruct.com.au/
+>
+> This series is now in net-next, and Matt and Jeremy have also been
+> developing the in-kernel hardware binding support and necessary
+> userspace components[1].
+>
+> [1] https://github.com/CodeConstruct/mctp
+>
+> You can read more about the application of the socket syscalls here:
+>
+> https://lore.kernel.org/netdev/20210729022053.134453-16-jk@codeconstruct.com.au/
+>
+> and here:
+>
+> https://github.com/openbmc/docs/blob/master/designs/mctp/mctp-kernel.md
+>
+> Once we have AF_MCTP in the OpenBMC kernel tree with some binding
+> implementations we'll be switching the userspace applications over to
+> use it.
+>
+> Hope that helps!
+>
+> Andrew
