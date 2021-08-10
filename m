@@ -1,60 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AF8A3E59D5
-	for <lists+openbmc@lfdr.de>; Tue, 10 Aug 2021 14:24:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52EF03E5BA5
+	for <lists+openbmc@lfdr.de>; Tue, 10 Aug 2021 15:30:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GkXFT1vlcz3bTW
-	for <lists+openbmc@lfdr.de>; Tue, 10 Aug 2021 22:24:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GkYk91RkLz30Kl
+	for <lists+openbmc@lfdr.de>; Tue, 10 Aug 2021 23:30:57 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=i5U4cbLj;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=188.165.49.213;
- helo=5.mo548.mail-out.ovh.net; envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-X-Greylist: delayed 13173 seconds by postgrey-1.36 at boromir;
- Tue, 10 Aug 2021 22:24:12 AEST
-Received: from 5.mo548.mail-out.ovh.net (5.mo548.mail-out.ovh.net
- [188.165.49.213])
+ smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::236;
+ helo=mail-lj1-x236.google.com; envelope-from=linus.walleij@linaro.org;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
+ header.s=google header.b=i5U4cbLj; dkim-atps=neutral
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com
+ [IPv6:2a00:1450:4864:20::236])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GkXF83q85z301s
- for <openbmc@lists.ozlabs.org>; Tue, 10 Aug 2021 22:24:10 +1000 (AEST)
-Received: from mxplan5.mail.ovh.net (unknown [10.108.1.237])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 7B19D203DA;
- Tue, 10 Aug 2021 08:44:32 +0000 (UTC)
-Received: from kaod.org (37.59.142.105) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2308.14; Tue, 10 Aug
- 2021 10:44:31 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-105G006a6049110-6e5f-437b-aaeb-60ad878cd368,
- 8F36BE46FB8773C29BD4C9A30C998E4B5B7B2B54) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 90.89.73.13
-Subject: Re: ast2600-evb qemu and usb-net
-To: Joel Stanley <joel@jms.id.au>, Deepak Kodihalli
- <deepak.kodihalli.83@gmail.com>
-References: <CAM=TmwU57zhc_k7KAKc56wTf=mihD4uWxBd8qPS+-22ZKER94w@mail.gmail.com>
- <CACPK8XdcNq7_N9FKB9zOrknwkR2JQN2btL=qa2JBR14aMe2tMw@mail.gmail.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-Message-ID: <c60975ed-8af1-3c8a-a6f4-6dcb3c853fc0@kaod.org>
-Date: Tue, 10 Aug 2021 10:44:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GkYjk0t8Yz2yLS
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Aug 2021 23:30:32 +1000 (AEST)
+Received: by mail-lj1-x236.google.com with SMTP id h2so16899538lji.6
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Aug 2021 06:30:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=e3k641rwlK4MjDsfjkE7+BTpqeUM8sPvABevxA/pIVM=;
+ b=i5U4cbLjrYhQspm4zofa6nrbEwE0/197GBiQ6/qBUZCcNpjHttwNIVdfDw2yGu6SKb
+ bUNC0n+XD7MXNIcuUMKiNA54afRKgRX6j2CUSuVx37b05Glig/CrWA4A3K16uozbX6iM
+ VpWWBJgTyJMwuL4oQLzXAo3DJykGzLWwM4DyG8oDqJ/oi40S9ieTYDqd1LhKawuHYX97
+ MrRad2Upe+VZyel12NVI6iypzQ7Ll25dmRvd0phOLHwA4Uv3/yFYnVxaUVHmTBVOCekr
+ l+DVQlzPS6tEyY/XlcONbOPQopwaz5/JL6XD6YWy1cn0xzHjtxcRXZZznLnO+P7SNDuX
+ 7nGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=e3k641rwlK4MjDsfjkE7+BTpqeUM8sPvABevxA/pIVM=;
+ b=CZMca0UYPX8XOgd5xdxGBC+2eXNt1ybMePpRahS+kez0TajbZdRcGz7U3sFmQQPox0
+ DgZB0gM0y9LGkmZ5zf+uzGl98yvSza2pKjI5OUHVpoTFIFLLuoGHjhwfFNMg/sCckbHG
+ LR7I2zNedeX4ak+zxHRxcslnoQblYC4E/vdnGLAjv8eZIcClHQKTlQdWelOZ2VKq6Du6
+ n8OV1lfSyrEBswn5HWUusb02elwOUmoY/0U1vzXv2zNWXUDDVoMolw61YQKkH32s24+K
+ CMBKDVJBd2pPw3mi9krJiiKzCnJkPGChkVXpu/sq9d2KNUDU9cwgiq3xIgyQ5r4oqrO4
+ bh6w==
+X-Gm-Message-State: AOAM5309DMWSq2ga+0uM14xCMkmgAn/JO+5ZSzAmf+tOdlQ1aRAMy5mL
+ 4vdy6wAzv0VWjk85cyIx1MhDvURG8AUE6Xg8nPMxPQ==
+X-Google-Smtp-Source: ABdhPJwQMqlYA/iD2LkwYjMyrISm/5VpD00G3ZreRxQPNQedZ6skQPLl6AsFHnOZAHKoQ0C63+sliSuUdCJf7E7plto=
+X-Received: by 2002:a2e:888f:: with SMTP id k15mr19654778lji.326.1628602224614; 
+ Tue, 10 Aug 2021 06:30:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACPK8XdcNq7_N9FKB9zOrknwkR2JQN2btL=qa2JBR14aMe2tMw@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: d7c79122-3407-4272-858c-c435fac12760
-X-Ovh-Tracer-Id: 4354699365347134432
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvtddrjeelgddtkecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefuvfhfhffkffgfgggjtgfgihesthejredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeejieeitdekueevffehvdfhteehuefgteeiueduvdeljefgfeefhffhfeegjedtjeenucffohhmrghinhepghhithhhuhgsrdgtohhmpdguvghvqdgvnhhvihhrohhnmhgvnhhtrdhmugenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddruddtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphdqohhuthdphhgvlhhopehmgihplhgrnhehrdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhrtghpthhtohepjhhovghlsehjmhhsrdhiugdrrghu
+References: <20210723034840.8752-1-rdunlap@infradead.org>
+In-Reply-To: <20210723034840.8752-1-rdunlap@infradead.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 10 Aug 2021 15:30:13 +0200
+Message-ID: <CACRpkdaXWhKNdmWSsoYZnZi_umfvSv7mZvg1JgkG=-k0JGoUTw@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: aspeed: placate kernel-doc warnings
+To: Randy Dunlap <rdunlap@infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,63 +73,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: kernel test robot <lkp@intel.com>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ Aditya Srivastava <yashsri421@gmail.com>, Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/10/21 4:31 AM, Joel Stanley wrote:
-> On Mon, 9 Aug 2021 at 04:56, Deepak Kodihalli
-> <deepak.kodihalli.83@gmail.com> wrote:
->>
->> Hi All,
->>
->> I am trying to launch the ast2600-evb machine on QEMU by passing a a
->> usb-net device:
->> qemu-system-arm -machine ast2600-evb  -drive file=<bmc
->> image>,if=mtd,bus=0,unit=0,snapshot=on -nographic  -nic
->> user,hostname=qemu -device usb-net,netdev=net0 -netdev
->> socket,id=net0,listen=:1234
->>
->> I downloaded the QEMU binary from
->> https://github.com/openbmc/docs/blob/master/development/dev-environment.md#download-and-start-qemu-session.
-> 
-> This is unrelated to your question, but that qemu is built from an
-> outdated branch. I would recommend using mainline qemu instead.
-> 
-> We also have a qemu tree that Cedric maintains at
-> https://github.com/legoater/qemu. The aspeed-6.1 (and soon aspeed-6.2)
-> have changes that we have not yet merged to mainline.
-> 
->> I get the following error when I run the command above:
->> qemu-system-arm: -device usb-net,netdev=net0: Warning: speed mismatch
->> trying to attach usb device "QEMU USB Network Interface" (full speed)
->> to bus "usb-bus.1", port "1" (high speed)
-> 
-> As the error message says, you're attempting to attach a full speed
-> (USB 1.1) device to a high speed (USB 2.0) bus.
-> 
-> This is where I get a bit confused by USB. I thought that the
-> controller supported both full and high speed (that's what the data
-> sheet says).
->> The chip also has a USB 1.1 controller (UCHI) hasn't been enabled for
-> the ast2600. There's also no qemu model hooked up.
+On Fri, Jul 23, 2021 at 5:49 AM Randy Dunlap <rdunlap@infradead.org> wrote:
 
-It shouldn't be too complex to add. We might need a SysBus version of
-the UHCI model.
+> Eliminate kernel-doc warnings in drivers/pinctrl/aspeed by using
+> proper kernel-doc notation.
+>
+> Fixes these kernel-doc warnings:
+>
+> drivers/pinctrl/aspeed/pinmux-aspeed.c:61: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
+>     * Query the enabled or disabled state for a mux function's signal on a pin
+> drivers/pinctrl/aspeed/pinctrl-aspeed.c:135: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
+>     * Search for the signal expression needed to enable the pin's signal for the
+>
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Cc: Aditya Srivastava <yashsri421@gmail.com>
+> Cc: Andrew Jeffery <andrew@aj.id.au>
+> Cc: linux-aspeed@lists.ozlabs.org
+> Cc: openbmc@lists.ozlabs.org
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: linux-gpio@vger.kernel.org
 
->> The intent is to have two such QEMU instances talking over emulated
->> usb-net (the other instance would do a connect on the netdev socket).
+Patch applied.
 
-I would setup a libvirt bridge on the host and run with : 
-
- qemu-system-arm -M ast2600-evb \
-    -net nic,macaddr=<mac>,netdev=net0 \
-    -netdev bridge,id=net0,helper=/usr/libexec/qemu-bridge-helper,br=virbr0  \
-    -drive file=<file>,format=raw,if=mtd \
-    -serial mon:stdio 
-
-It's also perfectly possible to run a pool of Aspeed machines as VMs 
-under libvirt.
-
-C.
+Yours,
+Linus Walleij
