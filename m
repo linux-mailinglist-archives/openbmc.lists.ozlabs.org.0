@@ -1,69 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEAD43E8992
-	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 06:55:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 171D03E8F5D
+	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 13:19:35 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GkyFJ2hJhz30gd
-	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 14:55:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Gl6m50N3wz30Jx
+	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 21:19:33 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20161025 header.b=Gai2yVwv;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=WuETSQKG;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::1033;
- helo=mail-pj1-x1033.google.com; envelope-from=wltu@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::636;
+ helo=mail-ej1-x636.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=Gai2yVwv; dkim-atps=neutral
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com
- [IPv6:2607:f8b0:4864:20::1033])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=WuETSQKG; dkim-atps=neutral
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com
+ [IPv6:2a00:1450:4864:20::636])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GkyDr2Rwgz2yMM
- for <openbmc@lists.ozlabs.org>; Wed, 11 Aug 2021 14:55:23 +1000 (AEST)
-Received: by mail-pj1-x1033.google.com with SMTP id
- m24-20020a17090a7f98b0290178b1a81700so2721263pjl.4
- for <openbmc@lists.ozlabs.org>; Tue, 10 Aug 2021 21:55:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=8oF8tZVS3pGDVKt+bf6yt6BZ8KjxO6fQKJJWkjvH2yU=;
- b=Gai2yVwvJmX2Oo5QmswglfiJvUe4jo+OxSqja4qn2CiiaCraGD3SdgmkkWyGJeyUbZ
- uaiFb6LfBG58UhvufYOHHQLzExeX/SNpauHNhB05WOMlGKWDBX+YUJrF91HhShcxijPv
- ViNcbDe2aKJNIBc9LRUVJw4yQz3u90TwY9hMNZGY3QKV6YSoOGsTbwxIDg2zdGfS7jDU
- pr02fBDFsHM1shx2OJ+qGHxK7UO4UlMQD7LKQxyueOghsUTzE37H3yE7eAgxS4xsyXFP
- z19r3OakUUb/uHq33coCHM6pDOEuE41en0lYlNz5qu99aGxyOt0orOzjZym0mMnVxKDu
- H8PA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Gl6lh1Xzmz2yfZ
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Aug 2021 21:19:11 +1000 (AEST)
+Received: by mail-ej1-x636.google.com with SMTP id o23so3573448ejc.3
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Aug 2021 04:19:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=zwhFxBm8OWTlmEtb9W6K3U/lQzmUWEYcx7rII8A3l0s=;
+ b=WuETSQKGiLHz5uueD81aQ5tsup8MUcXJS/z/AhWI4QD4dIGwSAM8r9RUFPtKXVBGsA
+ eMlTeBvF83j33QZpTaz3mNB46TXrjMpz/eiLtOGnC2+52I/yBkF6uFCEnQY+1Kp7luvh
+ WZQoJZAN3eoQyF0WxudODzGBbD5123KQqrRpamYQBHM1dc6lxM8VeHf+5RwJPeBJYp/W
+ c/6x8H/M/Pli0F5hWvoiLGnqu1w8wGkfnyGNeXbICU2EC2XF/oV9jgEi75o1bUkUwpWI
+ bPTClTI4NT2aGxFlYTXU9WJap3qdZObs25grQK+fCzlsvwM2ujhvZ12JdDM7AB7ssXs5
+ X2hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=8oF8tZVS3pGDVKt+bf6yt6BZ8KjxO6fQKJJWkjvH2yU=;
- b=JmX4IqyTywXkMn3KnBF6mTpGiQDdPBlY8NJOA1cCl9MRIz1TbHHRi4+3cqe7mZTq6F
- oyVOQA64sj+ZeyUDROFrw70BtgZt6v1kW50xPUNgIBs26SN0d13XDh939dO32q0dvHj6
- qDs5EejMCWuCmjUfoIRth4XbbnrqmpDqDHg5xYoIjWYHWbAdsbrYyGS3nw0fGkkWksKi
- txVdzdseKOo95k4Jy0MQAM9+b9+E5+G3cOiWUQHBmL7Ie6h3ofX5EdMOqLBEKZZvdfJa
- TrHqk0VdXiH5HXckgMLS1DbBTmTE2Vr+zhwCEdAAZM/HDYfZa6qSePfW6CtcVkaWwRfw
- Ceiw==
-X-Gm-Message-State: AOAM531CIchvgIU3Ib18Vg2X8ZNXpwFa/XVKavyrAWMm+22JX+06idkx
- CwBLR5ZCQJZQ8VZjPjWU8A9PAIuRCRkgcsh8EfvjMLulvIq3AP61
-X-Google-Smtp-Source: ABdhPJwpmQoch+WjklIinoqMrGX8urSW/eMeVY27M0RVZnPdnE5wswEvRZmlgTAgs6q7Ek/naYRdsBq3cQXCc+y2Y9g=
-X-Received: by 2002:aa7:8097:0:b029:3cd:b205:cfe9 with SMTP id
- v23-20020aa780970000b02903cdb205cfe9mr8129255pff.1.1628657717280; Tue, 10 Aug
- 2021 21:55:17 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=zwhFxBm8OWTlmEtb9W6K3U/lQzmUWEYcx7rII8A3l0s=;
+ b=XJPhYdyv3eLcBTfXMAsT97xvinnvhACg0txhz8W72L2Bk8yFxad/B0ujo8Q/qBjqcw
+ mnFsBFMmFyieALLN4GXD4OcDjV5MvU471z0BC3isquSCEZ4nkxNv3hEgbcPoYiVup7nt
+ vrtdunDqAJSQJjWsQbkaJzbCUWW3Z28PD1io58/MoTIgE03RSjXyhKl5dCn3Ar0AsbU5
+ bn6WcshaHYTrqBRarxH/bDFmfHuU9c9WI7MaXyHGcozDrmS1kUf1N0CrX0PYsv1w+6Vd
+ 12bXLeDo9rBTnrERT1I4HmSXT7PU18vk5WBTXkWn6xtr/iMJocjzCxNm3nAC/8k0C4QH
+ D+JQ==
+X-Gm-Message-State: AOAM532w7YMNLOnUz2DsuiNhaGf1csmtCVf3SSzLcT1lAnWfLcmD1N8U
+ uN/iT210dHxftENkxHOVvh6GawuK60212L8KsChjcDnwElw=
+X-Google-Smtp-Source: ABdhPJxKsESoauOf1oObGz3xdYdLvQdgKCE3PhLM74M9PV78MIfNEvNswPrAvjWVUohFthYpiXlWcCB1ONgeI9fGDu4=
+X-Received: by 2002:a17:907:6297:: with SMTP id
+ nd23mr3062303ejc.62.1628680744220; 
+ Wed, 11 Aug 2021 04:19:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHwn2X=uDqvQiH05+zSpZiuF-t6iHYpucXXSLDJjn4TfZ0iOUA@mail.gmail.com>
-In-Reply-To: <CAHwn2X=uDqvQiH05+zSpZiuF-t6iHYpucXXSLDJjn4TfZ0iOUA@mail.gmail.com>
-From: Willy Tu <wltu@google.com>
-Date: Tue, 10 Aug 2021 21:55:06 -0700
-Message-ID: <CAHwn2X=gfL7h54JqR8xF3X2eQnK3JkFqDGLB+rLEH94c6mvspA@mail.gmail.com>
-Subject: Re: [phosphor-sel-logger] Watchdog Event Monitor Usage
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000b3aa5805c9416cce"
+From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
+Date: Wed, 11 Aug 2021 16:51:00 +0530
+Message-ID: <CAA7TbcveKrAFSODfKKJ_q1yaPEZgvn06mBO2tXe7h=Xr6jZHLw@mail.gmail.com>
+Subject: Creating Hard Shutdown interfaces/alarm for NIC Sensor
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000363d2e05c946c9de"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,80 +71,142 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Bills, Jason M" <jason.m.bills@linux.intel.com>, Charles.Hsu@quantatw.com,
- William Kennington <wak@google.com>
+Cc: Zhikui Ren <zhikui.ren@intel.com>,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Ed Tanous <ed@tanous.net>, Jayashree D <jayashree-d@hcl.com>,
+ Amithash Prasad <amithash@fb.com>, velumanit@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b3aa5805c9416cce
+--000000000000363d2e05c946c9de
 Content-Type: text/plain; charset="UTF-8"
 
-Just a friendly ping on this topic.
+Hi All,
 
-If no one has any concern, then I will replace it.
 
-Adding `Charles.Hsu@quantatw.com` since he added this feature.
 
-On Mon, Aug 9, 2021 at 1:38 PM Willy Tu <wltu@google.com> wrote:
+         We have an use case of NIC sensor value goes above 120 (upper non
+recoverable), need to shutdown the slots.
 
-> Hi all,
->
-> I am writing this to see if anyone is using the Watchdog Event Monitor
-> option in phosphor-sel-logger.
->
-> Option: `log-watchdog`
->
-> I have made a few changes to `phosphor-watchdog` that sends out Timeout
-> signals during timeout events.
->
-> See https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-watchdog/+/44749
->
-> I am thinking of replacing the existing watchdog event to check that
-> signal instead or checking for the `Enabled` property change.
->
-> See
-> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-sel-logger/+/45622
->
-> I think the existing change is wrong, since changing the `Enabled`
-> property does not necessary mean the watchdog event got triggered.
->
-> So I am wondering if anyone needs the watchdog event monitor? or if I can
-> replace it.
->
-> Best,
->
-> Willy Tu
->
 
---000000000000b3aa5805c9416cce
+
+         Critical and Warning interfaces and alarm created based on the
+sensor threshold Severity value. Please refer the below code.
+
+
+https://github.com/openbmc/dbus-sensors/blob/master/src/Thresholds.cpp#L116
+
+
+
+         For NIC sensor, planning to create soft and hard shutdown
+interfaces and alarm based on severity value in hwmonTempSensor.
+
+
+
+         Already we have Severity 0  for Warning and Severity 1 for
+Critical.
+
+         We can have Severity 2 for Softshutdown and Severity 3 for
+Hardshutdown.
+
+
+
+         So, Based on the Severity value, the soft and hard shutdown alarm
+will set as true.
+
+         Then the sensor-monitor application would take the action based on
+the soft/hard shutdown alarm.
+
+
+         Could you please provide your suggestions on this.
+
+
+
+Thanks,
+
+Kumar.
+
+--000000000000363d2e05c946c9de
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Just a friendly ping on this topic.<div><br></div><div>If =
-no one has any concern, then I will replace it.</div><div><br></div><div>Ad=
-ding `<a href=3D"mailto:Charles.Hsu@quantatw.com">Charles.Hsu@quantatw.com<=
-/a>` since he added this feature.</div></div><br><div class=3D"gmail_quote"=
-><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 9, 2021 at 1:38 PM Willy=
- Tu &lt;<a href=3D"mailto:wltu@google.com">wltu@google.com</a>&gt; wrote:<b=
-r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">=
-Hi all,<br><div><br></div><div>I am writing this to see if anyone is using =
-the Watchdog Event Monitor option in phosphor-sel-logger.</div><div><br></d=
-iv><div>Option: `log-watchdog`</div><div><br></div><div>I have made a few c=
-hanges to `phosphor-watchdog` that sends out Timeout signals during timeout=
- events.</div><div><br></div><div>See=C2=A0<a href=3D"https://gerrit.openbm=
-c-project.xyz/c/openbmc/phosphor-watchdog/+/44749" target=3D"_blank">https:=
-//gerrit.openbmc-project.xyz/c/openbmc/phosphor-watchdog/+/44749</a><br></d=
-iv><div><br></div><div>I am thinking of replacing the existing watchdog eve=
-nt to check that signal instead or checking for the `Enabled` property chan=
-ge.</div><div><br></div><div>See=C2=A0<a href=3D"https://gerrit.openbmc-pro=
-ject.xyz/c/openbmc/phosphor-sel-logger/+/45622" target=3D"_blank">https://g=
-errit.openbmc-project.xyz/c/openbmc/phosphor-sel-logger/+/45622</a></div><d=
-iv><br></div><div>I think the existing change is wrong, since changing the =
-`Enabled` property does not=C2=A0necessary mean the watchdog event got trig=
-gered.</div><div><br></div><div>So I am wondering if anyone needs the watch=
-dog event monitor? or if I can replace it.</div><div><br></div><div>Best,</=
-div><div><br></div><div>Willy Tu</div></div>
-</blockquote></div>
+<div dir=3D"ltr"><p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;fo=
+nt-size:11pt;font-family:Calibri,sans-serif">Hi All,</p>
 
---000000000000b3aa5805c9416cce--
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 We have an
+use case of NIC sensor value goes above 120 (upper non recoverable), need t=
+o shutdown
+the slots.</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 Critical and
+Warning interfaces and alarm created based on the sensor threshold Severity
+value. Please refer the below code.</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 <a href=3D"https://github.com/openbmc/dbus-sensors/blob/master/src/Thre=
+sholds.cpp#L116" style=3D"color:rgb(5,99,193)">https://github.com/openbmc/d=
+bus-sensors/blob/master/src/Thresholds.cpp#L116</a></p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 For NIC sensor,
+planning to create soft and hard shutdown interfaces and alarm based on sev=
+erity
+value in hwmonTempSensor.</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0 </p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 Already we
+have Severity 0 =C2=A0for Warning and Severity
+1 for Critical. </p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 We can have
+Severity 2 for Softshutdown and Severity 3 for Hardshutdown.</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 So, Based on
+the Severity value, the soft and hard shutdown alarm will set as true. </p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 Then the
+sensor-monitor application would take the action based on the soft/hard
+shutdown alarm. </p><p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt=
+;font-size:11pt;font-family:Calibri,sans-serif"><br></p><p class=3D"MsoNorm=
+al" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font-family:Calibri,san=
+s-serif">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Could you please provide your su=
+ggestions on this.</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">=C2=A0</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">Thanks,</p>
+
+<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
+-family:Calibri,sans-serif">Kumar.</p></div>
+
+--000000000000363d2e05c946c9de--
