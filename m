@@ -1,92 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE49D3E8607
-	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 00:23:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14CC43E87A5
+	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 03:24:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GknY257Sxz30M6
-	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 08:23:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GksYg04t5z30GY
+	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 11:24:39 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=q/GOZvvT;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=J5YrKgJ0;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=sNQbhKZP;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2d;
+ helo=mail-io1-xd2d.google.com; envelope-from=patelabhishek9893@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=q/GOZvvT; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=J5YrKgJ0; 
- dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=sNQbhKZP; dkim-atps=neutral
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com
+ [IPv6:2607:f8b0:4864:20::d2d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GknXX0vmHz2yRK
- for <openbmc@lists.ozlabs.org>; Wed, 11 Aug 2021 08:23:22 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 488585C00E7
- for <openbmc@lists.ozlabs.org>; Tue, 10 Aug 2021 18:23:18 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Tue, 10 Aug 2021 18:23:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=f+JyImExpPRWrO0yZy4oMp7AgBi
- RvH7dCe6jeC51Y2Y=; b=q/GOZvvTAmS+B56rbpXn0TMeKsN1nwASpw/h87h6ViU
- OOsucJ7nBWBpoASBC6rfD3ZPxNw1Qi7dXezNed6F/dnWTF12uyrRa6TltHz79Pfh
- c6GJLq7WaE4VM/FpSDCBIjl4wh8IX/dDUklMhgYfdceozYqTXBNcpm6DLT8PPBMA
- +YZQNAP6FLgfRx5ezhjdtH0FLT/NyZzZNL7XmqVnLqhl6VrGqrQKaLbF8cctp//n
- oNRQQc81Oek4P2N/nRbpn9b9YaHY4mPc/F1sXCDeqe0BQSJb4er50xKihgDGGXDq
- sr84mG/QDbXC5t/Kul5YwaSFTlNT4JEFnzLSrsyDwdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=f+JyIm
- ExpPRWrO0yZy4oMp7AgBiRvH7dCe6jeC51Y2Y=; b=J5YrKgJ0QzGqdk97+QvXRW
- X/MNPndXfWJSP+hxUV4vkjDCUNonI/Pnj8YKwJYEr1y8WppmNs9vTOPOSf6V+FcM
- YBZhIBGzgG39PYUYcfyiC21TeXjudNiqIxjQz1qtgV3+jBicgCJnYvPpmx66UfJb
- LuzWSZKT/ONzuO+24KBuRXgPcMGiRso7fJPs0KYy/BunojGNF/uHdeL1c+TTlfAb
- 572v89UzO2q1oM+VNdCCbjliz8+lPyAAaDXgwDOu/hYBofqg/dXDuXtpYThW5UEw
- 14KrLi1jz8LpbUYIRrikwHBQojb27gkgvaP8tst7AkRmd2IZfKxbgwHVWpkNJvcA
- ==
-X-ME-Sender: <xms:VfwSYbUX_AJKCQtc87cOLdcBrfGS80-YqXkMayyUwXJBckRpJvuKUw>
- <xme:VfwSYTnSdNsvWjinWPj3pcsd4ltYNSzVV4i0oSsQKcFGe8k4v_akIWH1QdHjC5euH
- VB3t71hw4Hpbk9e3as>
-X-ME-Received: <xmr:VfwSYXYQiZcWEFjp-fsAoGeWvr0NW3COHiJtbCH_fvnEOU7JgVpqawkgvLWE8mYpBUq8xBbvZxBhPhMzeMX6HK0R0lBL1pw2Oc7F3tq7NGGxkA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrkedtgddtjecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeduudefleeuhefhleehjeejgfeujeeh
- hfdtledufeehkeduudevkeeiuddugfegkeenucffohhmrghinhepohhpvghnsghmtgdqph
- hrohhjvggtthdrgiihiienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
- ihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:VfwSYWVy0W8nHpHTydOpNqi7sffIK6Lg1yzuWSKFgVh8l84BayPMaQ>
- <xmx:VfwSYVk3VBDYL151nFXfXdkatSGbXymNkuAl444IDKLbBL758fQVhA>
- <xmx:VfwSYTcjiFL0hbio3EidN-Pv9GtIm6IC5nednv5ufJaTUtBkU-2Ugg>
- <xmx:VvwSYTSzoRFTz11pbKvPm1pLfAtrYprQGZuTuJMDPRJpeSmrno9oPA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Tue, 10 Aug 2021 18:23:17 -0400 (EDT)
-Date: Tue, 10 Aug 2021 17:23:15 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Re: Yocto override syntax change.
-Message-ID: <YRL8U4+7i23utzRl@heinlein>
-References: <YQ1FD5q8KbhbXVBK@heinlein>
- <YQ8tJueJyk+fXr39@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GksM23mcSz2xv2
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Aug 2021 11:15:25 +1000 (AEST)
+Received: by mail-io1-xd2d.google.com with SMTP id e186so1472620iof.12
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Aug 2021 18:15:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:subject:to:message-id:date:user-agent:mime-version
+ :content-transfer-encoding:content-language;
+ bh=VZZqBSijd+oEOpukegvg0JerCRsGgJ+Fh1PeLRc4Jm0=;
+ b=sNQbhKZPTBR+6JInJG2t7hWQDltRnigPG8xeEPJh+ndYCG1HNOSs2bgZ3+pBc8MkDA
+ KTbDu/Samk/9yZ4PUuXfcse/js6+gWOyV7Mop8Q0G0qGxVNipgNEBIL0gQ71w3HRKK6j
+ lCCeQ5nAOa+q0bywxCmSYg0THzXKppOmj444bSYOdvKvC+rhm+zebrYxxRlvCDQsVgV4
+ UMDSrBc1rT7wfNSFkhqenrQcYmXjLkgi/R+YhvRYXNU0PBoT7mbq6E7m1st339htSO3S
+ lsTC2VYVnj4+VvEGzygVOTPoqEsyBe1M6QpQtUvgNu6lMMVyoR/34LjxlweGMLsDCFhn
+ YJlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:subject:to:message-id:date:user-agent
+ :mime-version:content-transfer-encoding:content-language;
+ bh=VZZqBSijd+oEOpukegvg0JerCRsGgJ+Fh1PeLRc4Jm0=;
+ b=kMSehGQ9naedgtN1VhqdRcQClTMK7gme6gfVvgkyvf38YfMXGVfn0f9jOnhzhgydsY
+ uEE4gku7cKKu2Mg1X8vPhcCAVL3xhTfU2OrTOpm+6GEBhflaQfGDvYfk3nRdR9vFYOHl
+ eNpzg/SPPH928qXW3Rf3l8230EB01lb5s7DThvPEtYQZLVmLFVG8bVgi6/tEhFtWGdkU
+ ecjsHh3LnYytxOZMjZR8QdsRcT0+Ea0J045Wo4wXF0gugFUOPYTX51bStiL7n1censGP
+ l6tMcH5EAtr2sMTlYtcAsu5gUEMcRd3PdhwW/Obe1c32rzdBJY8eXbBDMeVP464rohbL
+ t7eA==
+X-Gm-Message-State: AOAM5328OtR7pX0LwHdHG0NIcvBTy1vWP8Dqc0UZKt9Wy8RNPDUJt7Oj
+ 1E9nfOq4+hyZgOsMdPrUCdvkXDcDIr9vJQ==
+X-Google-Smtp-Source: ABdhPJzUZw+pFpufz8drIArVNkQ0e++OrCWcmseSajVcC4exVdbiMGTAHk6fPKJD9oUp3VddFtsVTw==
+X-Received: by 2002:a6b:6e06:: with SMTP id d6mr177017ioh.114.1628644522124;
+ Tue, 10 Aug 2021 18:15:22 -0700 (PDT)
+Received: from [10.0.0.9] (c-98-206-201-135.hsd1.il.comcast.net.
+ [98.206.201.135])
+ by smtp.gmail.com with ESMTPSA id j20sm10635047ila.14.2021.08.10.18.15.21
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Aug 2021 18:15:21 -0700 (PDT)
+From: Abhishek Patel <patelabhishek9893@gmail.com>
+Subject: bmcweb - Redfish - Fix Privilege
+To: openbmc@lists.ozlabs.org
+Message-ID: <ac7dbcbb-535e-7079-bc30-5ea2130151d4@gmail.com>
+Date: Tue, 10 Aug 2021 20:15:21 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="1g7uLraVukopFwik"
-Content-Disposition: inline
-In-Reply-To: <YQ8tJueJyk+fXr39@heinlein>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Mailman-Approved-At: Wed, 11 Aug 2021 11:24:18 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,53 +86,42 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---1g7uLraVukopFwik
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-I have the meta-layer fixes for aspeed, evb, phosphor, and facebook
-merged now and I think a few other companies have either merged their fixes=
- or
-are close.
-
-There are a few open commits in this seqeuence, but it should serve as a go=
-od
-base for further testing.  You may cherry-pick your commit onto this one for
-local testing, but please don't push updates to it to Gerrit.
-
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/45767
-
-It looks like we need some minor fixes to meta-openpower/meta-ibm in order =
-to
-get the bulk of the CI systems passing.  We also need someone to do
-meta-nuvoton, which I don't think has been started, for a few others.
-
-Feel free to add me to review on your meta changes (and add that
-'override-syntax' topic) and I'll give them a quick review.
-
---=20
-Patrick Williams
-
---1g7uLraVukopFwik
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmES/FEACgkQqwNHzC0A
-wRnNbw/+LZ7nzUBNGfjTMbleFlBPwlZo+m2ZLKKtu2kDATYj7LcosQ08kSm+3fik
-K4QMYcd7rfS96/JK3XXCOv26uLxY7OSxRl05GggrPmHrZfd3pR2WCl5mid/djl8e
-F6QkhyiqOywRCJMeePvV6DMnjGVoi3BDzw49ja+A8jsPq5HgjvJAI4zqBBEUxwB1
-sMcKm8tufZEmqT0WuIKsSZcb0xQwQ21R70CQ8m4gmou0n1h8qkeeM/4QQwVIs6WV
-UeF9PlD8QqAwI3yDU1UQoBKXyuSg8WF3d25U04ClpeI7nCTpKp1dUPUs9faGFb51
-+o0GE7UgtryD1qlQ79jJDxq66bKc+U92d15R6tq13O8Hg0wjQ2j4FZiQvHKsxaUj
-1HpWE+WsB4yG5u/efNp9iq7Cqq6FrrmcNkIsWYX1/MXUAxc7T6dH5NF/69QckQRV
-2wPlVexFAh0nXqIJ94QrbTgaQO9veMdAm671+dzLXIy3p9zHDb+sIxN8ogin3Vp1
-ZQFpt2rRKc+eKmo+ZDhfgFI/UoKIGY/vU6VG2PA6yOaBq0h7ZRjVFW3bdE98vleX
-rJzcUFzyz0z2OSaXj7SN3mSBLUjPa7Bb7J1O/TDHLcFvgquuytgrwYKa7reiGM6C
-5Y48ZOb8bbj3g906S9FGC4nCSmcsmh6OsBcxWdbcUIJRvqpbgQo=
-=rdKT
------END PGP SIGNATURE-----
-
---1g7uLraVukopFwik--
+Redfish defines a PrivilegeRegistry 
+(https://redfish.dmtf.org/registries/Redfish_1.1.0_PrivilegeRegistry.json 
+<https://redfish.dmtf.org/registries/Redfish_1.1.0_PrivilegeRegistry.json>). 
+This Privilege Registry defines which privilege(s) are needed to access 
+the URI. There was work here by Ed to have bmcweb automatically use this 
+PrivilegeRegistry, 
+https://github.com/openbmc/bmcweb/commit/ed3982131dcef2b499da36e674d2d21b2289ef29 
+<https://github.com/openbmc/bmcweb/commit/ed3982131dcef2b499da36e674d2d21b2289ef29>. 
+The commits below change bmcweb to match the PrivilegeRegistry. They 
+include two breaking Operator role changes (3 and 4).
+1) Fix Log_services privileges
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/45125 
+<https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/45125>
+This change allows Admin, Operator, and Readonly users to access 
+Crashdump data and related entries. Before this change, only an admin 
+role user could access Crashdump data and related entries (LogService, 
+LogEntryCollection, and LogEntry). Operator users only had access to log 
+entries(LogEntry).
+2) Fix BIOS privileges
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/45470 
+<https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/45470>
+This change allows Admin and operator users to Reset bios. Before this 
+change, only an admin role user had that privilege.
+*Note:* Above 1) and 2) changes are backward compatible because that 
+change does not restrict any original user from access.
+3) Fix certificate_service privileges
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/45470 
+<https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/45470>
+This change allows only Admin users to Generate CSR certificates and 
+restrict Operator users.
+4) Fix Ethernet privileges
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/45469 
+<https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/45469>
+This change allows only Admin users to post, patch, and delete on VLAN 
+Network Interface Collection and restrict Operator users. Same for the 
+EthernetInterfaces patch method.
+*Note:* Above 3) and 4) change are *not* *backward compatible* because 
+it restricts Operator user from its ability. Does this break anyone? Is 
+anyone opposed to these changes?
