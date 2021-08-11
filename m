@@ -2,64 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 171D03E8F5D
-	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 13:19:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F2C33E94C8
+	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 17:43:03 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Gl6m50N3wz30Jx
-	for <lists+openbmc@lfdr.de>; Wed, 11 Aug 2021 21:19:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GlDc501xVz30Kh
+	for <lists+openbmc@lfdr.de>; Thu, 12 Aug 2021 01:43:01 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=WuETSQKG;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=pS3afWO7;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::636;
- helo=mail-ej1-x636.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=WuETSQKG; dkim-atps=neutral
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com
- [IPv6:2a00:1450:4864:20::636])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=pS3afWO7; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Gl6lh1Xzmz2yfZ
- for <openbmc@lists.ozlabs.org>; Wed, 11 Aug 2021 21:19:11 +1000 (AEST)
-Received: by mail-ej1-x636.google.com with SMTP id o23so3573448ejc.3
- for <openbmc@lists.ozlabs.org>; Wed, 11 Aug 2021 04:19:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=zwhFxBm8OWTlmEtb9W6K3U/lQzmUWEYcx7rII8A3l0s=;
- b=WuETSQKGiLHz5uueD81aQ5tsup8MUcXJS/z/AhWI4QD4dIGwSAM8r9RUFPtKXVBGsA
- eMlTeBvF83j33QZpTaz3mNB46TXrjMpz/eiLtOGnC2+52I/yBkF6uFCEnQY+1Kp7luvh
- WZQoJZAN3eoQyF0WxudODzGBbD5123KQqrRpamYQBHM1dc6lxM8VeHf+5RwJPeBJYp/W
- c/6x8H/M/Pli0F5hWvoiLGnqu1w8wGkfnyGNeXbICU2EC2XF/oV9jgEi75o1bUkUwpWI
- bPTClTI4NT2aGxFlYTXU9WJap3qdZObs25grQK+fCzlsvwM2ujhvZ12JdDM7AB7ssXs5
- X2hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=zwhFxBm8OWTlmEtb9W6K3U/lQzmUWEYcx7rII8A3l0s=;
- b=XJPhYdyv3eLcBTfXMAsT97xvinnvhACg0txhz8W72L2Bk8yFxad/B0ujo8Q/qBjqcw
- mnFsBFMmFyieALLN4GXD4OcDjV5MvU471z0BC3isquSCEZ4nkxNv3hEgbcPoYiVup7nt
- vrtdunDqAJSQJjWsQbkaJzbCUWW3Z28PD1io58/MoTIgE03RSjXyhKl5dCn3Ar0AsbU5
- bn6WcshaHYTrqBRarxH/bDFmfHuU9c9WI7MaXyHGcozDrmS1kUf1N0CrX0PYsv1w+6Vd
- 12bXLeDo9rBTnrERT1I4HmSXT7PU18vk5WBTXkWn6xtr/iMJocjzCxNm3nAC/8k0C4QH
- D+JQ==
-X-Gm-Message-State: AOAM532w7YMNLOnUz2DsuiNhaGf1csmtCVf3SSzLcT1lAnWfLcmD1N8U
- uN/iT210dHxftENkxHOVvh6GawuK60212L8KsChjcDnwElw=
-X-Google-Smtp-Source: ABdhPJxKsESoauOf1oObGz3xdYdLvQdgKCE3PhLM74M9PV78MIfNEvNswPrAvjWVUohFthYpiXlWcCB1ONgeI9fGDu4=
-X-Received: by 2002:a17:907:6297:: with SMTP id
- nd23mr3062303ejc.62.1628680744220; 
- Wed, 11 Aug 2021 04:19:04 -0700 (PDT)
-MIME-Version: 1.0
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Wed, 11 Aug 2021 16:51:00 +0530
-Message-ID: <CAA7TbcveKrAFSODfKKJ_q1yaPEZgvn06mBO2tXe7h=Xr6jZHLw@mail.gmail.com>
-Subject: Creating Hard Shutdown interfaces/alarm for NIC Sensor
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GlDbj33k6z2xZm
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Aug 2021 01:42:41 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 17BFXAFJ053403; Wed, 11 Aug 2021 11:42:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=dnEaOIK3ucRqUYCzLRwopHFD5VYA+pniZrM9y/QQHYk=;
+ b=pS3afWO7Y7nANDCmt5G3yCxIjKhrpe8IUnnc9QU4qqj9bmCjQIUF770EB8784XG9d1HG
+ K72X9aUw0vK8r8M0ivrO7OUj/kyKdpn3p4fotNavfmAp+PfOUjpIpPi8VH7jKMEccTK1
+ WjcbZUmTejUzR/1ygFU6199AKWaPgDV780hUVrxZYmNOhko88QDeBGvvl8KBw4DdMIfl
+ RhaGMW4bkocJu7OHCxUyHDRUU0Zrl0bVOJHFf11jT4AebWLMHo8WMlQ1VxzOklkIR8HC
+ IM67M32ZCv6R/fkDF3LiJMw67hzvLRxMc8bWLHJxFhlvBxY8lQC/ewKMl+Rx2XomfMFP lg== 
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3abvtepf2k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Aug 2021 11:42:37 -0400
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 17BFZ5C3013346;
+ Wed, 11 Aug 2021 15:42:35 GMT
+Received: from b03cxnp07028.gho.boulder.ibm.com
+ (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
+ by ppma04wdc.us.ibm.com with ESMTP id 3a9htden79-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Aug 2021 15:42:35 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 17BFgY3546530942
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 11 Aug 2021 15:42:34 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 29F9E6A063;
+ Wed, 11 Aug 2021 15:42:34 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F26B86A05F;
+ Wed, 11 Aug 2021 15:42:33 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.42.251])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed, 11 Aug 2021 15:42:33 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
 To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000363d2e05c946c9de"
+Subject: [PATCH linux dev-5.10 00/14] Rainier and Everest system fixes
+Date: Wed, 11 Aug 2021 10:42:18 -0500
+Message-Id: <20210811154232.12649-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: JH_FBxaul32w0XSRA41dTKzy-1k24kvm
+X-Proofpoint-ORIG-GUID: JH_FBxaul32w0XSRA41dTKzy-1k24kvm
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-08-11_05:2021-08-11,
+ 2021-08-11 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015
+ mlxscore=0 malwarescore=0 bulkscore=0 suspectscore=0 impostorscore=0
+ phishscore=0 mlxlogscore=723 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2107140000 definitions=main-2108110104
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,142 +96,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Zhikui Ren <zhikui.ren@intel.com>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Andrew Jeffery <andrew@aj.id.au>,
- Ed Tanous <ed@tanous.net>, Jayashree D <jayashree-d@hcl.com>,
- Amithash Prasad <amithash@fb.com>, velumanit@hcl.com
+Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000363d2e05c946c9de
-Content-Type: text/plain; charset="UTF-8"
+This is a series of patches that fixes up Rainier and Everest systems.
+Some of them are considered workarounds, and are not ready for upstream
+linux. Others are simply support for older system hardware that doesn't
+need to go to the mainline tree.
 
-Hi All,
+Andrew Geissler (1):
+  fsi: run clock at 100MHz
 
+Andrew Jeffery (6):
+  i2c: Allow throttling of transfers to client devices
+  pmbus: (ucd9000) Throttle SMBus transfers to avoid poor behaviour
+  ucd9000: Add a throttle delay attribute in debugfs
+  pmbus: (core) Add a one-shot retry in pmbus_set_page()
+  pmbus: (max31785) Add a local pmbus_set_page() implementation
+  pmbus: (max31785) Retry enabling fans after writing MFR_FAN_CONFIG
 
+Eddie James (7):
+  ARM: dts: aspeed: Rainier: Add fan controller properties
+  ARM: dts: aspeed: Everest: Add fan controller properties
+  ARM: dts: aspeed: Rainier 4U: Delete fan dual-tach properties
+  ARM: dts: aspeed: Add Rainier 2U and 4U device trees for pass 1
+    hardware
+  fsi: sbefifo: Increase command timeouts to 30 seconds
+  fsi: occ: Add dynamic debug to dump command and response
+  fsi: sbefifo: Use interruptible mutex locking
 
-         We have an use case of NIC sensor value goes above 120 (upper non
-recoverable), need to shutdown the slots.
+ arch/arm/boot/dts/Makefile                    |   2 +
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts  |  28 +++
+ .../boot/dts/aspeed-bmc-ibm-rainier-4u-p1.dts |  94 ++++++++++
+ .../boot/dts/aspeed-bmc-ibm-rainier-4u.dts    |  24 +++
+ .../boot/dts/aspeed-bmc-ibm-rainier-p1.dts    |  94 ++++++++++
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts  |  42 +++++
+ drivers/fsi/fsi-master-aspeed.c               |   3 +-
+ drivers/fsi/fsi-occ.c                         |  44 +++++
+ drivers/fsi/fsi-sbefifo.c                     |  18 +-
+ drivers/hwmon/pmbus/max31785.c                |  55 ++++--
+ drivers/hwmon/pmbus/pmbus_core.c              |  31 ++--
+ drivers/hwmon/pmbus/ucd9000.c                 |  39 ++++
+ drivers/i2c/i2c-core-base.c                   |   8 +-
+ drivers/i2c/i2c-core-smbus.c                  | 169 +++++++++++++++---
+ drivers/i2c/i2c-core.h                        |  21 +++
+ include/linux/i2c.h                           |   5 +
+ 16 files changed, 618 insertions(+), 59 deletions(-)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u-p1.dts
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-ibm-rainier-p1.dts
 
+-- 
+2.27.0
 
-
-         Critical and Warning interfaces and alarm created based on the
-sensor threshold Severity value. Please refer the below code.
-
-
-https://github.com/openbmc/dbus-sensors/blob/master/src/Thresholds.cpp#L116
-
-
-
-         For NIC sensor, planning to create soft and hard shutdown
-interfaces and alarm based on severity value in hwmonTempSensor.
-
-
-
-         Already we have Severity 0  for Warning and Severity 1 for
-Critical.
-
-         We can have Severity 2 for Softshutdown and Severity 3 for
-Hardshutdown.
-
-
-
-         So, Based on the Severity value, the soft and hard shutdown alarm
-will set as true.
-
-         Then the sensor-monitor application would take the action based on
-the soft/hard shutdown alarm.
-
-
-         Could you please provide your suggestions on this.
-
-
-
-Thanks,
-
-Kumar.
-
---000000000000363d2e05c946c9de
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;fo=
-nt-size:11pt;font-family:Calibri,sans-serif">Hi All,</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 We have an
-use case of NIC sensor value goes above 120 (upper non recoverable), need t=
-o shutdown
-the slots.</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 Critical and
-Warning interfaces and alarm created based on the sensor threshold Severity
-value. Please refer the below code.</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 <a href=3D"https://github.com/openbmc/dbus-sensors/blob/master/src/Thre=
-sholds.cpp#L116" style=3D"color:rgb(5,99,193)">https://github.com/openbmc/d=
-bus-sensors/blob/master/src/Thresholds.cpp#L116</a></p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 For NIC sensor,
-planning to create soft and hard shutdown interfaces and alarm based on sev=
-erity
-value in hwmonTempSensor.</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0 </p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 Already we
-have Severity 0 =C2=A0for Warning and Severity
-1 for Critical. </p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 We can have
-Severity 2 for Softshutdown and Severity 3 for Hardshutdown.</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 So, Based on
-the Severity value, the soft and hard shutdown alarm will set as true. </p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 Then the
-sensor-monitor application would take the action based on the soft/hard
-shutdown alarm. </p><p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt=
-;font-size:11pt;font-family:Calibri,sans-serif"><br></p><p class=3D"MsoNorm=
-al" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font-family:Calibri,san=
-s-serif">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Could you please provide your su=
-ggestions on this.</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">Thanks,</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">Kumar.</p></div>
-
---000000000000363d2e05c946c9de--
