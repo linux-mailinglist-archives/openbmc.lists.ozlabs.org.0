@@ -1,65 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D892F3EB571
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 14:26:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F1683EB791
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 17:19:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GmN8Y5sjTz3bYg
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 22:26:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GmRzR1zxFz3cLj
+	for <lists+openbmc@lfdr.de>; Sat, 14 Aug 2021 01:18:59 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=H2f+dNOw;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=EbfPbkWC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::229;
- helo=mail-oi1-x229.google.com; envelope-from=sharad.openbmc@gmail.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch
+ (client-ip=185.16.172.187; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=H2f+dNOw; dkim-atps=neutral
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com
- [IPv6:2607:f8b0:4864:20::229])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256
+ header.s=20171124 header.b=EbfPbkWC; dkim-atps=neutral
+X-Greylist: delayed 1930 seconds by postgrey-1.36 at boromir;
+ Sat, 14 Aug 2021 01:18:30 AEST
+Received: from vps0.lunn.ch (vps0.lunn.ch [185.16.172.187])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GmN884YD6z30Gt
- for <openbmc@lists.ozlabs.org>; Fri, 13 Aug 2021 22:26:14 +1000 (AEST)
-Received: by mail-oi1-x229.google.com with SMTP id bi32so15730188oib.2
- for <openbmc@lists.ozlabs.org>; Fri, 13 Aug 2021 05:26:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=Uc9FOdwN9p7Mz/N8J0bh07QRc5lcJUTHJbQK2k4kpXk=;
- b=H2f+dNOwD7WUqwnjTL+cZoO1ojG8mr0WxGW7xawuT8KOGl+0tZGAjn8lzYmgGJ8lEF
- 86gO/qNzcltDoOctYuOQ8GH+AS/yJO6ag5eJksgR5eXZUkuFeVJYIS1nu0IhhfopaNce
- pVTJbDCqSdOqVyNle7SiW4h4A8/vCotiW9lOWZVg+lx4fLApqCXQK14aS0zaMBj3keBW
- m38t0e+VEUCTgaVxdPZpjw4KvWQqqD0Eg63w0kt1Z0cXwXEex9OHu1ztNBKDFu6gNSkh
- QJjHaofeEEWHk8AfUsfzThuQ6GNA8eH8gpwp4H7FchXr0hlTFAup8YezTk6WS7uPyMN/
- 1i8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Uc9FOdwN9p7Mz/N8J0bh07QRc5lcJUTHJbQK2k4kpXk=;
- b=MkQoiV/b0qJWxi5IL+X5rAJlBQvK5ZoJNXors1Pu5TJ0V0yWtfvZuNfLPjznXpH/K/
- 5Gh0ULBycYTs/FNb8H0IhIdjoM2a98TCcNDrZmb1pYtA7gQi+tYNsvv4vQjG1zDfPuPM
- xDziv8ha9id9wY/aDVXCZ9BY8Nfd5h/C2j0v7Gnm4Vl2UTaB1fvLrPA9c4RMKPoylYUH
- 7PS7iwo7FYs3gTzt6Hag1dyRTYfSYVrSw18+U/v/f5VtUlKSO0oqX8W12ksWHoxIUi39
- nkxc+C+hQSdtiDfy5MgISG4Ay+q2zWU3d9p7v6NX1C5efvrZKY70fWJPzr1H1r00x83F
- hiqQ==
-X-Gm-Message-State: AOAM533JR8EiS2Nt2rLIPO9mkfibbx9d5s+iHqhp1XQpSTyZJHYE9Kav
- kB15BuRyrVg0wz+qrmRsxEoRUVh1NIiBvS1GHG2Hi9BzyEE=
-X-Google-Smtp-Source: ABdhPJyBXdKEBG1xBhYSAT/vkyC+zDyRZunSarWgbD2nDkdXJHGdb4gKGQ2YNdBqCldAKPKu5UQ3nHeBPlDifr6ks/Y=
-X-Received: by 2002:a05:6808:1798:: with SMTP id
- bg24mr1926984oib.6.1628857570650; 
- Fri, 13 Aug 2021 05:26:10 -0700 (PDT)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GmRyt2Hs8z3bW8;
+ Sat, 14 Aug 2021 01:18:30 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+ s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+ Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+ Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+ bh=38IBKVZVPTV/8WbCeQGQRU16Bwkgg1bsJyoAG5N1EVM=; b=EbfPbkWC+9PSeZNWrM8Tt5/V1z
+ KJ8x52VMBSgil//JYcbD96Ksen36PdaS2wSWoNjqqMthtxBttm2q/AwP2vLV0fxfj91517AGuReAj
+ O2LdYoGoVInOMtHs3+4aYQZMJwF39qcijVsG6bRUExyRzVdqkOZ9s047SciVEiLpUwzs=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+ (envelope-from <andrew@lunn.ch>)
+ id 1mEYRa-00HVga-GS; Fri, 13 Aug 2021 16:45:58 +0200
+Date: Fri, 13 Aug 2021 16:45:58 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Tao Ren <rentao.bupt@gmail.com>
+Subject: Re: [PATCH v2 4/6] ARM: dts: aspeed: Add Facebook Cloudripper
+ (AST2600) BMC
+Message-ID: <YRaFpq1LvRzMYr/A@lunn.ch>
+References: <20210805222818.8391-1-rentao.bupt@gmail.com>
+ <20210805222818.8391-5-rentao.bupt@gmail.com>
+ <CACPK8XcV5On2D4D+SXnfw1M0owwfCL4Su19jOEA7yWpq+T3jLw@mail.gmail.com>
+ <20210813034016.GA21895@taoren-ubuntu-R90MNF91>
 MIME-Version: 1.0
-From: sharad yadav <sharad.openbmc@gmail.com>
-Date: Fri, 13 Aug 2021 17:55:59 +0530
-Message-ID: <CA+H48BQTCfxfZ4M-Ph5Zy-=RBfNgnXb8xDcT0HSaDbgjRe07tg@mail.gmail.com>
-Subject: Looking for qemu tree for 'qemu-system-arm' jenkins build
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000e36dbb05c96ff49d"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210813034016.GA21895@taoren-ubuntu-R90MNF91>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,38 +63,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000e36dbb05c96ff49d
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Aug 12, 2021 at 08:40:17PM -0700, Tao Ren wrote:
+> On Fri, Aug 13, 2021 at 01:29:17AM +0000, Joel Stanley wrote:
+> > On Thu, 5 Aug 2021 at 22:28, <rentao.bupt@gmail.com> wrote:
+> > > +&mdio1 {
+> > > +       status = "okay";
+> > 
+> > You're enabling this but it looks like it's unused?
+> 
+> Thanks Joel for the careful review. The MDIO controller is not paired
+> with BMC MAC; instead, it's connected to the MDC/MDIO interface of the
+> on-board switch (whose ports are connected to BMC, Host and front panel
+> management port).
 
-Hi All,
+What switch is it? Is there a DSA driver for it? drivers/net/dsa/*
+Ideally you want Linux to be controlling the switch, in the standard
+linux way.
 
-I am looking for the qemu tree from where
-https://jenkins.openbmc.org/job/latest-qemu-x86/lastSuccessfulBuild/artifact/qemu/build/qemu-system-arm
-is
-being built.
-It will be a great help if someone can point me to the qemu repo and branch
-being used for jenkins build.
-
-Thanks,
-Sharad
-
---000000000000e36dbb05c96ff49d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi All,<div><br></div><div>I am looking for the qemu tree =
-from where=C2=A0<a target=3D"_blank" class=3D"gmail-c-link" href=3D"https:/=
-/jenkins.openbmc.org/job/latest-qemu-x86/lastSuccessfulBuild/artifact/qemu/=
-build/qemu-system-arm" rel=3D"noopener noreferrer" aria-describedby=3D"sk-t=
-ooltip-4204" style=3D"box-sizing:inherit;color:inherit;font-family:Monaco,M=
-enlo,Consolas,&quot;Courier New&quot;,monospace;font-size:12px;font-variant=
--ligatures:none;white-space:pre-wrap">https://jenkins.openbmc.org/job/lates=
-t-qemu-x86/lastSuccessfulBuild/artifact/qemu/build/qemu-system-arm</a>=C2=
-=A0is being built.</div><div>It will be a great help if someone can point m=
-e to the qemu repo and branch being used for jenkins build.</div><div><br><=
-/div><div>Thanks,</div><div>Sharad</div></div>
-
---000000000000e36dbb05c96ff49d--
+     Andrew
