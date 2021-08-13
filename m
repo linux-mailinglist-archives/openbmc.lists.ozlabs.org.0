@@ -2,106 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C14DA3EAED6
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 05:22:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D2AB23EAEFD
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 05:40:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Gm84p4LzTz3bWc
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 13:22:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Gm8Ty53y3z3bW6
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 13:40:54 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=RWvm2ZYf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ls+y9PAB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102a;
+ helo=mail-pj1-x102a.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=RWvm2ZYf; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ls+y9PAB; dkim-atps=neutral
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
+ [IPv6:2607:f8b0:4864:20::102a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Gm84K3WGGz302W
- for <openbmc@lists.ozlabs.org>; Fri, 13 Aug 2021 13:22:09 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 17D3KESM013006; Thu, 12 Aug 2021 23:22:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date : from
- : to : content-type : mime-version : subject; s=pp1;
- bh=QeUtU9NfwMGP9pu++vCJAFss9Bt3BOV4tiTYQywpDrc=;
- b=RWvm2ZYf2n3dwewN5o+4PxXE9PsR76M2+8Msod1jsr6iPSF6IDY0lRIG81tRAHVCB4/7
- fx14aBtZb9TRi2BGsbrIE8G6CNXvDc5Knq4I01ctfDxPRgIROSDwxO9xLvrej1/3xYuI
- Mx7IhIWB/mAx/7npF+2WMAD9ggP83Hq02bUFNZFc4QXHiV5VJGh+yTeZetzHvYBWoRcE
- opZbKRgUZrebTe5HVF2sQyHb5TGXQ2sf/dkv7caI08gu8yXDG+ki00DPth9+4pxMo1WZ
- 3zZSixSb3tiZFDA4IYOouxaZar81qwGb3W0lBmdUINA0Ehoc3RFiSxYdknWbsxlyY0Is HA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3ad1kxrm28-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Aug 2021 23:22:01 -0400
-Received: from m0098399.ppops.net (m0098399.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 17D3KJcs013393;
- Thu, 12 Aug 2021 23:22:01 -0400
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3ad1kxrm1x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Aug 2021 23:22:00 -0400
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 17D3HDdt030473;
- Fri, 13 Aug 2021 03:21:59 GMT
-Received: from b03cxnp08026.gho.boulder.ibm.com
- (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
- by ppma04wdc.us.ibm.com with ESMTP id 3a9htf9hta-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Aug 2021 03:21:59 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 17D3LxJK11272698
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Aug 2021 03:21:59 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E693C78064;
- Fri, 13 Aug 2021 03:21:58 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D08757805E;
- Fri, 13 Aug 2021 03:21:58 +0000 (GMT)
-Received: from mww0332.dal12m.mail.ibm.com (unknown [9.208.69.80])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Fri, 13 Aug 2021 03:21:58 +0000 (GMT)
-Message-ID: <OFA5154048.C3010138-ON00258730.00127D40-1628824917257@ibm.com>
-Date: Fri, 13 Aug 2021 03:21:57 +0000
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: "George Liu" <liuxiwei1013@gmail.com>, "OpenBMC Maillist"
- <openbmc@lists.ozlabs.org>, "Brad Bishop" <bradleyb@fuzziesquirrel.com>
-Content-Type: multipart/mixed;
- boundary="--_com.fiberlink.maas360.email_117045249993360"
-X-MIMETrack: Itemize by traveler on TWW2041/03/G/IBM(Release 11.0.1FP2HF97 |
- July 2, 2021) at 08/13/2021 03:21:56
-X-Mailer: Traveler 11.0.1.1 Build 202005211639_30 on server tww2041/03/G/IBM on
- behalf of device with id mdm...eb5, type 1300 (maas360android) and
- description MaaS360-MaaS360 Mail-Android:MaaS360-MaaS360 Mail-Android/7.50
- at 20210813032157425 by DS-7ff9b08bc700[SendMail]
-X-KeepSent: A5154048:C3010138-00258730:00127D40; name=$KeepSent; type=4
-X-Disclaimed: 44515
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: _tscxI53T5ErKH_pyjipvR_BlXQQYl7V
-X-Proofpoint-ORIG-GUID: OEyAu8slntRhwQ6IOR_FqWQvKj0PBnT7
-X-Proofpoint-UnRewURL: 4 URL's were un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Gm8TS1KVmz2yNq;
+ Fri, 13 Aug 2021 13:40:27 +1000 (AEST)
+Received: by mail-pj1-x102a.google.com with SMTP id
+ u13-20020a17090abb0db0290177e1d9b3f7so18757147pjr.1; 
+ Thu, 12 Aug 2021 20:40:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=ORlrD9sl2aYo7jcRja/hxhONlCSeq5JNCCwjrBnwxHg=;
+ b=ls+y9PABiM7r2XhDF6NpqmapOhuDd3WDTmTnpnP3+eOcE/KB0PBGnOMGCTwiWmCxZU
+ zRtrd/D/KjHERYC7MTD8uRVfXzG2Z3HMizrjPVThbvc0Jn4mv8A/w1u2/0UmT+VeoOy4
+ 3QbaSEy+9SrswsB+SIEssE3V2Wai5hML/bWmUvsTYU/Exi+Oz3uilkjwqQ/pvR+VGy+L
+ xEJTN4AxgeY/0UlnLApejq8ai34l4SANvij0fRnaR5wI4+AygGI1FTzF80JVv7ieaASI
+ zWnHrO72pTJmD0O/WVdun7wGDUdBEF/Kctn2zoaQFwPrsJQ5o/mXLKr6pOmXC/e9NwQF
+ kXjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=ORlrD9sl2aYo7jcRja/hxhONlCSeq5JNCCwjrBnwxHg=;
+ b=jwD1sN4WMQejdWqw5p2h7yFTlhzdrwRZwqaC8DG8NQ2tfM5JT9/LC8q5EY4PNyEFhb
+ ZwTmLRxQJ6Twr/r5TlvjMI1awyB2XYM4gHGaj8JR0OF4IrXu6KVTdzX6sCno0jByziqy
+ ad7jb0EErwOj01X8IvX5is9WIDCU5c5F+eLFyHxOuL3BCftfEf7w1IaTdJEF7MCnFlfz
+ CEeSoAf0nHzmu/cBTfooJN13e8F/N9EMorI+QIue6QNAleCPesCSrQx3bOTYFV/DET4v
+ AOYV4NVdcHzzsRkyq9v7hX1sqGsOX0wfrPSY3FbuG5ostwypOQ0D4hCVZ7yug3Ze82pM
+ VEEg==
+X-Gm-Message-State: AOAM533g6Yc9sltfkhnzshJj44ZenEltdeSuPF/Ucu5B6K7Tm1/U5yKD
+ fOaz8VoQ9UbCnF3E8WLAk1I=
+X-Google-Smtp-Source: ABdhPJzhTgI45W86irveIUKBOUgK67+9nGpu3ltrKHOvKGT9EQFFV8uNZpi8CRMREa+QzJyTRGOSyg==
+X-Received: by 2002:a17:902:8f90:b029:12d:1b48:efd8 with SMTP id
+ z16-20020a1709028f90b029012d1b48efd8mr352319plo.23.1628826023485; 
+ Thu, 12 Aug 2021 20:40:23 -0700 (PDT)
+Received: from taoren-ubuntu-R90MNF91 (c-73-92-48-112.hsd1.ca.comcast.net.
+ [73.92.48.112])
+ by smtp.gmail.com with ESMTPSA id z24sm236977pjq.43.2021.08.12.20.40.22
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Thu, 12 Aug 2021 20:40:23 -0700 (PDT)
+Date: Thu, 12 Aug 2021 20:40:17 -0700
+From: Tao Ren <rentao.bupt@gmail.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH v2 4/6] ARM: dts: aspeed: Add Facebook Cloudripper
+ (AST2600) BMC
+Message-ID: <20210813034016.GA21895@taoren-ubuntu-R90MNF91>
+References: <20210805222818.8391-1-rentao.bupt@gmail.com>
+ <20210805222818.8391-5-rentao.bupt@gmail.com>
+ <CACPK8XcV5On2D4D+SXnfw1M0owwfCL4Su19jOEA7yWpq+T3jLw@mail.gmail.com>
 MIME-Version: 1.0
-Subject: Re:  Request new repo for Audit function
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-08-12_06:2021-08-12,
- 2021-08-12 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- malwarescore=0 mlxlogscore=999 mlxscore=0 adultscore=0 lowpriorityscore=0
- priorityscore=1501 suspectscore=0 clxscore=1011 phishscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2107140000 definitions=main-2108130017
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACPK8XcV5On2D4D+SXnfw1M0owwfCL4Su19jOEA7yWpq+T3jLw@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,86 +86,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Fri, Aug 13, 2021 at 01:29:17AM +0000, Joel Stanley wrote:
+> On Thu, 5 Aug 2021 at 22:28, <rentao.bupt@gmail.com> wrote:
+> > +&mdio1 {
+> > +       status = "okay";
+> 
+> You're enabling this but it looks like it's unused?
 
-----_com.fiberlink.maas360.email_117045249993360
-Content-Type: multipart/alternative;
-	 boundary="--_com.fiberlink.maas360.email_117045250791801"
+Thanks Joel for the careful review. The MDIO controller is not paired
+with BMC MAC; instead, it's connected to the MDC/MDIO interface of the
+on-board switch (whose ports are connected to BMC, Host and front panel
+management port).
 
-
-
-----_com.fiberlink.maas360.email_117045250791801
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-
-Reply below
-
--------- Original Message --------
-From: George Liu=20
-Date: Thu, August 12, 2021 7:52 PM -0500
+In other word, the MDIO controller is used, but we do need some user
+space scripts to control the controller. What's your suggestion? For
+example, should I add some comments to explain the purpose?
 
 
-Hi Brad:
+Cheers,
 
-We have a requirement to implement an Audit function, I found that
-there is a design doc[1], but there is no code to implement it.
+Tao
 
-Could you create a new repo for Audit function?
-eg: phosphor-audit
-
-[1]: https://github.com/openbmc/docs/blob/master/designs/phosphor-audit.md
-
-thx - George Liu
-
--------- End of Original Message --------
-
-Hi George.
-
-
-Please update the design with consideration for inclusive naming[2] before =
-submitting code for it, as it uses depreciated terminology in it's external=
- control interface.
-
-I see this design was merged almost 2 years ago before this policy was in p=
-lace but as you said it hasn't been exposed by the community yet so we won'=
-t need to maintain compatibility with prior implementations.
-
-
-[2] https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#inclusive-n=
-aming
-
-Thanks,
-Milton
-
-
-----_com.fiberlink.maas360.email_117045250791801
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-<br>Reply below<br><br>-------- Original Message --------<br>From: George L=
-iu <liuxiwei1013@gmail.com><br>Date: Thu, August 12, 2021 7:52 PM -0500<br>=
-<br><br>Hi Brad:<br><br>We have a requirement to implement an Audit functio=
-n, I found that<br>there is a design doc[1], but there is no code to implem=
-ent it.<br><br>Could you create a new repo for Audit function?<br>eg: phosp=
-hor-audit<br><br>[1]: <a href=3D"https://github.com/openbmc/docs/blob/maste=
-r/designs/phosphor-audit.md" target=3D"_blank">https://github.com/openbmc/d=
-ocs/blob/master/designs/phosphor-audit.md</a><br><br>thx - George Liu<br><b=
-r>-------- End of Original Message --------<br><br>Hi George.<br><br><br>Pl=
-ease update the design with consideration for inclusive naming[2] before su=
-bmitting code for it, as it uses depreciated terminology in it's external c=
-ontrol interface.<br><br>I see this design was merged almost 2 years ago be=
-fore this policy was in place but as you said it hasn't been exposed by the=
- community yet so we won't need to maintain compatibility with prior implem=
-entations.<br><br><br> [2] <a href=3D"https://github.com/openbmc/docs/blob/=
-master/CONTRIBUTING.md#inclusive-naming" target=3D"_blank">https://github.c=
-om/openbmc/docs/blob/master/CONTRIBUTING.md#inclusive-naming</a><br><br>Tha=
-nks,<br>Milton<br><BR>
-<BR>
-
-----_com.fiberlink.maas360.email_117045250791801--
-
-----_com.fiberlink.maas360.email_117045249993360--
-
+> 
+> > +};
+> > +
+> > +&mdio3 {
+> > +       status = "okay";
+> > +
+> > +       ethphy1: ethernet-phy@13 {
+> > +               compatible = "ethernet-phy-ieee802.3-c22";
+> > +               reg = <0x0d>;
+> > +       };
+> > +};
+> > +
+> > +&mac3 {
+> > +       status = "okay";
+> > +       phy-mode = "rgmii";
+> > +       phy-handle = <&ethphy1>;
+> > +       pinctrl-names = "default";
+> > +       pinctrl-0 = <&pinctrl_rgmii4_default>;
+> > +};
