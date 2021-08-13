@@ -1,64 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 527E03EAE01
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 02:52:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70E683EAE29
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 03:30:03 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Gm4lL0md1z30C4
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 10:52:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Gm5Zx2YtMz30G2
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 11:30:01 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=iK3rN+pt;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=XgmjOaNQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::741;
- helo=mail-qk1-x741.google.com; envelope-from=liuxiwei1013@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f32;
+ helo=mail-qv1-xf32.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=iK3rN+pt; dkim-atps=neutral
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com
- [IPv6:2607:f8b0:4864:20::741])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=XgmjOaNQ; dkim-atps=neutral
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com
+ [IPv6:2607:f8b0:4864:20::f32])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Gm4kv3M26z3081
- for <openbmc@lists.ozlabs.org>; Fri, 13 Aug 2021 10:51:50 +1000 (AEST)
-Received: by mail-qk1-x741.google.com with SMTP id t3so8947311qkg.11
- for <openbmc@lists.ozlabs.org>; Thu, 12 Aug 2021 17:51:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=yO2bLZB9g0wjp3KDvmshxHOrFdm8h5AWV/bbp2iaAvA=;
- b=iK3rN+ptPmHHN+0cORTZb2AffXlzePfY6IbdamekFigk3A9KdqmHKw/KoPxyKTXkox
- GbFYEdBkNZq/B2aL90AQXstwuJVRxSkFNGG+cvOWYMo7Q6Rhlra0waWxPV4Pt791V06J
- wPmQeRjmvfdcL0JHNn8Wato3GMpQh0VXkRqyhpo7MbFe39xyX2ojGcKRRTnZ/qLA8/L/
- uSphDieh5sjHkqymHSLrCr2nJp88M7aJVol/ydliFwkYcy9p0U/edJIMKwW28erl8djI
- Vm63BdcGh070iWs4PiHfga8EALNPrAZDAAN0wlKb22xLGR22fXrWvQ9pI6Zaab1rADMR
- bxTA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Gm5ZP4wfdz302V;
+ Fri, 13 Aug 2021 11:29:32 +1000 (AEST)
+Received: by mail-qv1-xf32.google.com with SMTP id kl2so4350436qvb.11;
+ Thu, 12 Aug 2021 18:29:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=d7y1hw5LdhKxpKxA/yXBN3ZJJ9yKaaGgYxkF16tEOMQ=;
+ b=XgmjOaNQhbcCpvEmbZ5/zeX1bIUCgsvOXXufJ2DPyPwiVEcOXqrSKm7FQ6EHIiZPyf
+ oLeOmGXFO5wc15/y2C90t9Vq9dPWNQ1zd0kaJv433461YrWvDUAzi2BBUezZlhb5C9cK
+ XEDHQ5hrZEWfa+AOsbVJMlsxxBhsgTXh6Acys=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=yO2bLZB9g0wjp3KDvmshxHOrFdm8h5AWV/bbp2iaAvA=;
- b=VoElddO3cCFL48lcz8eBKhl48XRXOKfrqBLO+kN5kgZ23FqvC99vJ1PXbA/YzJNH/T
- JZf3BJXO1h6sld9MM07BCmz87AXA1i8n9LsUtWFbOthVdBSOOjMaBmb3Bl3pLPc0psOa
- +FQe2EFvY9W/dy0xXdmnkAdHRjeJJk1Kajzfk3rix7z5VMGAp8uI5Mh2yu/FHlhzk4YZ
- Aw30Gbw4+rnDYMYewJ57ougBj5ORIyvkG8NstjKDI6UXR2SMiydfwGP4LiDdLjY2cIVm
- meGxu88zAkMaJa7WT2+VodVrK9dVzzQvgJLnQjUILzirQAguO68BOfYMUDshXQxpCvbJ
- gxWg==
-X-Gm-Message-State: AOAM531IrUsBB79Gvql2fStnDniUU4THbWtKDhUZ7qSBNjtMzIz3kXCH
- 6UrtmcaeZhJdAmn0jt7D0bMr8O0p0mM3nShImKEloFfdHZw=
-X-Google-Smtp-Source: ABdhPJxQ+V0TLsG981+SaajM4Nps7UuZdGO/xoy0boFt9Mh6FSRRXnQhPIRsvDG3CVgfvK1iLT3p1WqGybWRXgR+oxY=
-X-Received: by 2002:a37:a482:: with SMTP id n124mr7433389qke.175.1628815902921; 
- Thu, 12 Aug 2021 17:51:42 -0700 (PDT)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=d7y1hw5LdhKxpKxA/yXBN3ZJJ9yKaaGgYxkF16tEOMQ=;
+ b=h3pnMYFUrI+aDNF2LiRo545cDCLXCpMDYnThL7iKAggohVpo4WsYzhJNKk5RkMoJq3
+ JLXazrQZoWS7GG2dJtoCHffOqKIwwoAAne9Ie5yJ3H2E7LqP3Ok5+V7fdTR+5Kk0mLw/
+ n2YLb/S2hgt14oD4UGXV6CwBMuVAyoz0lyNfsBBVssfIJ0P4NYinCMWHuYlGEfLoSNG9
+ 4W+rysNsOA/UKBbdYZn4f/8D2YQ+aIrxKc/jHz978taej/5Mxij7+wWHmcY9gN+U130u
+ EkR9gFWYAwLXpwEj2JDL1tog/X3x3dKTyCQMPjSxTaPAMO/yaCE/NZ8fAgvl2LaklHdC
+ YrYw==
+X-Gm-Message-State: AOAM531nZacOxaK8fDNPSkMzXVmBjaLdIti9GLRYF83cw1ks5DKE7+df
+ eTfLl3U22WzTF0S3fy7sLQ42Y/4bbCX0BHNHCjc=
+X-Google-Smtp-Source: ABdhPJwhFLUqMIHIWOI/nCQlWmPOcdMRcHIRqjb8rAdMkprVxUulQ0uUl0tMgKhaIcL2vd8J9M1zxJmLtEpFhq9AfOM=
+X-Received: by 2002:a0c:e6a4:: with SMTP id j4mr107833qvn.16.1628818169431;
+ Thu, 12 Aug 2021 18:29:29 -0700 (PDT)
 MIME-Version: 1.0
-From: George Liu <liuxiwei1013@gmail.com>
-Date: Fri, 13 Aug 2021 08:51:32 +0800
-Message-ID: <CANFuQ7AOMpqhpa_Upn5toNeSDzZK_TADbc4ikqjbZBjmrMoBSA@mail.gmail.com>
-Subject: Request new repo for Audit function
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
+References: <20210805222818.8391-1-rentao.bupt@gmail.com>
+ <20210805222818.8391-5-rentao.bupt@gmail.com>
+In-Reply-To: <20210805222818.8391-5-rentao.bupt@gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 13 Aug 2021 01:29:17 +0000
+Message-ID: <CACPK8XcV5On2D4D+SXnfw1M0owwfCL4Su19jOEA7yWpq+T3jLw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/6] ARM: dts: aspeed: Add Facebook Cloudripper
+ (AST2600) BMC
+To: Tao Ren <rentao.bupt@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,17 +72,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Brad:
+On Thu, 5 Aug 2021 at 22:28, <rentao.bupt@gmail.com> wrote:
+> +&mdio1 {
+> +       status = "okay";
 
-We have a requirement to implement an Audit function, I found that
-there is a design doc[1], but there is no code to implement it.
+You're enabling this but it looks like it's unused?
 
-Could you create a new repo for Audit function?
-eg: phosphor-audit
-
-[1]: https://github.com/openbmc/docs/blob/master/designs/phosphor-audit.md
-
-thx - George Liu
+> +};
+> +
+> +&mdio3 {
+> +       status = "okay";
+> +
+> +       ethphy1: ethernet-phy@13 {
+> +               compatible = "ethernet-phy-ieee802.3-c22";
+> +               reg = <0x0d>;
+> +       };
+> +};
+> +
+> +&mac3 {
+> +       status = "okay";
+> +       phy-mode = "rgmii";
+> +       phy-handle = <&ethphy1>;
+> +       pinctrl-names = "default";
+> +       pinctrl-0 = <&pinctrl_rgmii4_default>;
+> +};
