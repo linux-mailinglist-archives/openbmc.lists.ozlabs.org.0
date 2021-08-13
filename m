@@ -1,80 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 041D33EAFFD
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 08:25:13 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C297A3EB2AC
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 10:32:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GmD7V6BxZz30Lv
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 16:25:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GmGyR5FxVz3bWJ
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 18:32:31 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=XSCXFQhS;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=HT7zTylb;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102f;
- helo=mail-pj1-x102f.google.com; envelope-from=rentao.bupt@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=XSCXFQhS; dkim-atps=neutral
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com
- [IPv6:2607:f8b0:4864:20::102f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=HT7zTylb; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GmD736WKSz2xgN;
- Fri, 13 Aug 2021 16:24:45 +1000 (AEST)
-Received: by mail-pj1-x102f.google.com with SMTP id
- n13-20020a17090a4e0d00b0017946980d8dso281686pjh.5; 
- Thu, 12 Aug 2021 23:24:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=NQOgsa59p3OqAoKwO2wbmemr8LIvk6W1Ex9qIpv1D+8=;
- b=XSCXFQhSWV7wnRv57pbuYofo7JuIdaxxRNPHMw/xEfbe6NmKM6ykVQdgYUBklVGXPt
- rKfSyNKxoD29KTu5xqVebvxgmj+HQIl2JkmioID0fJg/LzUNPvhIXG3Vcop3nFkuj14I
- FGY3Kbp96asKLB5ByhIos71CS14z4hsdaJ4VUTenxmYD3kvEgp+NFBhyD62R7+MDP5Eh
- kc5BpCXKg5uoxoPF87mD53VtYGw/nk/dtYu/9aS09wyJh1wWFYwDpv7WObJGyxYfjYb0
- KFQc89cK+uSTT0QzyBh73WoCtc5MWPanA8P+1T2arRjN6gIb0+zsOloGRsV6Wg9K8jFx
- 9OWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=NQOgsa59p3OqAoKwO2wbmemr8LIvk6W1Ex9qIpv1D+8=;
- b=sE5W9MvpfIVy3NHByHcZb6evwNRBZH96bgxSO75PJfbtwvZx86ybOPNzpKlAhFyKCg
- ye8dzpkzocMnosod0MheCdwvlm1CcVgVgTLbhsXWat9VeENpQ7SmTcfkG/QVMz29JUoL
- zk/sxKtNg8HSMBt6lvP7ouaWKDFeRwjX75eaScwFhNzfXi04JDCuitQ2FQi02jYdjZPI
- +uSw9pjgM7QSfmD0JykAWUqRo1gXARsgpzFfuNInmi+ZP3KodOjq8vuPj5iei7RJB8x7
- 6UbePBT4LSQ8AMUbH/hoKV8jU5I3RmK0FlGh9BbLEaWp9cIW+MXYE2SnjH1LDqX8C8ME
- Br6w==
-X-Gm-Message-State: AOAM531opD/mFWYQmvfsDYxstmVfIWgh9KUiZej5Ls4wbddR8LEtBOz7
- /JtABPsi3nY3lly1Sc5Sopc=
-X-Google-Smtp-Source: ABdhPJxsJUWbeaU62Wj9coO/fud1cjIRqM6Z84ZOc4FvCf3W9tPAlNR+vMa1GvVoUW+NjYXNOmbNdA==
-X-Received: by 2002:a05:6a00:aca:b029:392:9c79:3a39 with SMTP id
- c10-20020a056a000acab02903929c793a39mr931084pfl.57.1628835882167; 
- Thu, 12 Aug 2021 23:24:42 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91 (c-73-92-48-112.hsd1.ca.comcast.net.
- [73.92.48.112])
- by smtp.gmail.com with ESMTPSA id b7sm790956pfl.195.2021.08.12.23.24.41
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 12 Aug 2021 23:24:42 -0700 (PDT)
-Date: Thu, 12 Aug 2021 23:24:35 -0700
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: Re: [PATCH] ARM: dts: aspeed: minipack: Update flash partition table
-Message-ID: <20210813062435.GA24497@taoren-ubuntu-R90MNF91>
-References: <20210720002704.7390-1-rentao.bupt@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GmGxJ6WBHz3cVY
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Aug 2021 18:31:32 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 7101E41239;
+ Fri, 13 Aug 2021 08:31:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1628843484; x=1630657885; bh=VgcawP/KlNxWs1HGqoUAeNajt
+ 2f2s7cTl6Fkjlx6Vsk=; b=HT7zTylb7Hi263eQDARaLUB4CMO8RjMyCiu1Cpkg5
+ Q8C8+G6Utm1jVOWbdJwR5RxpknoEDAE4Q/uXYrQSoNbfk1HzieuLfcYJZl1WvESI
+ OPhJy42VDvHZomwfkRvMk3gMqGYFTO0SY04GUHZONG0o7X5rwXWX1KHZm/Hrsno7
+ /M=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id mmgd99wIKiRb; Fri, 13 Aug 2021 11:31:24 +0300 (MSK)
+Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
+ [172.17.100.104])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 3092149720;
+ Fri, 13 Aug 2021 11:31:24 +0300 (MSK)
+Received: from [10.199.0.67] (10.199.0.67) by T-EXCH-04.corp.yadro.com
+ (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Fri, 13
+ Aug 2021 11:31:23 +0300
+Message-ID: <916fc23f02ec749ecccf70dff356daa400026b28.camel@yadro.com>
+Subject: Re: Request new repo for Audit function
+From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+To: George Liu <liuxiwei1013@gmail.com>, Milton Miller II <miltonm@us.ibm.com>
+Date: Fri, 13 Aug 2021 11:41:32 +0300
+In-Reply-To: <CANFuQ7D+ihCTnQHuyzatLsu8RBa8gLe0iDed18EAM_sy3aPNYQ@mail.gmail.com>
+References: <OFA5154048.C3010138-ON00258730.00127D40-1628824917257@ibm.com>
+ <CANFuQ7D+ihCTnQHuyzatLsu8RBa8gLe0iDed18EAM_sy3aPNYQ@mail.gmail.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210720002704.7390-1-rentao.bupt@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.199.0.67]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,58 +76,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Joel,
-
-Looks like the patch is not included in "dt-for-v5.15". Any comments? Or
-should I send v2 if the email was not delivered?
-
-
-Cheers,
-
-Tao
-
-On Mon, Jul 19, 2021 at 05:27:04PM -0700, rentao.bupt@gmail.com wrote:
-> From: Tao Ren <rentao.bupt@gmail.com>
+On Fri, 2021-08-13 at 14:09 +0800, George Liu wrote:
+> On Fri, Aug 13, 2021 at 11:22 AM Milton Miller II <miltonm@us.ibm.com> wrote:
+> > 
+> > 
+> > Reply below
+> > 
+> > -------- Original Message --------
+> > From: George Liu
+> > Date: Thu, August 12, 2021 7:52 PM -0500
+> > 
+> > 
+> > Hi Brad:
+> > 
+> > We have a requirement to implement an Audit function, I found that
+> > there is a design doc[1], but there is no code to implement it.
+> > 
+> > Could you create a new repo for Audit function?
+> > eg: phosphor-audit
+> > 
+> > [1]: https://github.com/openbmc/docs/blob/master/designs/phosphor-audit.md
+> > 
+> > thx - George Liu
+> > 
+> > -------- End of Original Message --------
+> > 
+> > Hi George.
+> > 
+> > 
+> > Please update the design with consideration for inclusive naming[2] before
+> > submitting code for it, as it uses depreciated terminology in it's external
+> > control interface.
+> > 
+> > I see this design was merged almost 2 years ago before this policy was in
+> > place but as you said it hasn't been exposed by the community yet so we won't
+> > need to maintain compatibility with prior implementations.
 > 
-> Update firmware flash "data0" partition size from 4MB to 8MB for larger
-> persistent storage on minipack BMC.
+> Thanks for your advice.
+> I will read and update this design doc ASAP :)
 > 
-> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> ---
->  arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts
-> index 9eb23e874f19..230d16cd9967 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts
-> @@ -265,19 +265,19 @@
->  		};
->  
->  		/*
-> -		 * FIT image: 59.5 MB.
-> +		 * FIT image: 55.5 MB.
->  		 */
->  		fit@80000 {
-> -			reg = <0x80000 0x3b80000>;
-> +			reg = <0x80000 0x3780000>;
->  			label = "fit";
->  		};
->  
->  		/*
-> -		 * "data0" partition (4MB) is reserved for persistent
-> +		 * "data0" partition (8MB) is reserved for persistent
->  		 * data store.
->  		 */
->  		data0@3800000 {
-> -			reg = <0x3c00000 0x400000>;
-> +			reg = <0x3800000 0x800000>;
->  			label = "data0";
->  		};
->  
-> -- 
-> 2.17.1
-> 
+> > 
+> > 
+> > [2] 
+> > https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#inclusive-naming
+> > 
+> > Thanks,
+> > Milton
+> > 
+> > 
+
+George, there is answer about same question in this thread
+https://lists.ozlabs.org/pipermail/openbmc/2020-March/020839.html .
+Should be part of phosphor-logging.
+
+Thanks.
+
