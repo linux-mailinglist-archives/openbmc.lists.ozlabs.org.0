@@ -2,79 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2AB23EAEFD
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 05:40:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 162493EAF1F
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 06:14:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Gm8Ty53y3z3bW6
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 13:40:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Gm9DH6Rr3z30Lw
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 14:14:07 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=ls+y9PAB;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=lE2ubq/U;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102a;
- helo=mail-pj1-x102a.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72d;
+ helo=mail-qk1-x72d.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=ls+y9PAB; dkim-atps=neutral
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
- [IPv6:2607:f8b0:4864:20::102a])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=lE2ubq/U; dkim-atps=neutral
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com
+ [IPv6:2607:f8b0:4864:20::72d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Gm8TS1KVmz2yNq;
- Fri, 13 Aug 2021 13:40:27 +1000 (AEST)
-Received: by mail-pj1-x102a.google.com with SMTP id
- u13-20020a17090abb0db0290177e1d9b3f7so18757147pjr.1; 
- Thu, 12 Aug 2021 20:40:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=ORlrD9sl2aYo7jcRja/hxhONlCSeq5JNCCwjrBnwxHg=;
- b=ls+y9PABiM7r2XhDF6NpqmapOhuDd3WDTmTnpnP3+eOcE/KB0PBGnOMGCTwiWmCxZU
- zRtrd/D/KjHERYC7MTD8uRVfXzG2Z3HMizrjPVThbvc0Jn4mv8A/w1u2/0UmT+VeoOy4
- 3QbaSEy+9SrswsB+SIEssE3V2Wai5hML/bWmUvsTYU/Exi+Oz3uilkjwqQ/pvR+VGy+L
- xEJTN4AxgeY/0UlnLApejq8ai34l4SANvij0fRnaR5wI4+AygGI1FTzF80JVv7ieaASI
- zWnHrO72pTJmD0O/WVdun7wGDUdBEF/Kctn2zoaQFwPrsJQ5o/mXLKr6pOmXC/e9NwQF
- kXjA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Gm9Cn0zSyz2yXb;
+ Fri, 13 Aug 2021 14:13:38 +1000 (AEST)
+Received: by mail-qk1-x72d.google.com with SMTP id o123so4063410qkf.12;
+ Thu, 12 Aug 2021 21:13:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=JATj7FlSMDAm89anL9O14/wxabM+bn6u6NhVI8X8ONE=;
+ b=lE2ubq/U0m3V2snJ8bMvBWCXNeU5Fw0Wv9eyUHk8DAwHTQanm5wFxiTPjKtAaxALCh
+ /IVN/OSLvUl2tOs4mrRp5Rc8s+zZ9grirEMWhuj/m0+9FtTCe1nzFnhWoLeElj7/SrXq
+ rCcNYIYx/BALAuUVm46dOIlYQ7dGqN/gBk43U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=ORlrD9sl2aYo7jcRja/hxhONlCSeq5JNCCwjrBnwxHg=;
- b=jwD1sN4WMQejdWqw5p2h7yFTlhzdrwRZwqaC8DG8NQ2tfM5JT9/LC8q5EY4PNyEFhb
- ZwTmLRxQJ6Twr/r5TlvjMI1awyB2XYM4gHGaj8JR0OF4IrXu6KVTdzX6sCno0jByziqy
- ad7jb0EErwOj01X8IvX5is9WIDCU5c5F+eLFyHxOuL3BCftfEf7w1IaTdJEF7MCnFlfz
- CEeSoAf0nHzmu/cBTfooJN13e8F/N9EMorI+QIue6QNAleCPesCSrQx3bOTYFV/DET4v
- AOYV4NVdcHzzsRkyq9v7hX1sqGsOX0wfrPSY3FbuG5ostwypOQ0D4hCVZ7yug3Ze82pM
- VEEg==
-X-Gm-Message-State: AOAM533g6Yc9sltfkhnzshJj44ZenEltdeSuPF/Ucu5B6K7Tm1/U5yKD
- fOaz8VoQ9UbCnF3E8WLAk1I=
-X-Google-Smtp-Source: ABdhPJzhTgI45W86irveIUKBOUgK67+9nGpu3ltrKHOvKGT9EQFFV8uNZpi8CRMREa+QzJyTRGOSyg==
-X-Received: by 2002:a17:902:8f90:b029:12d:1b48:efd8 with SMTP id
- z16-20020a1709028f90b029012d1b48efd8mr352319plo.23.1628826023485; 
- Thu, 12 Aug 2021 20:40:23 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91 (c-73-92-48-112.hsd1.ca.comcast.net.
- [73.92.48.112])
- by smtp.gmail.com with ESMTPSA id z24sm236977pjq.43.2021.08.12.20.40.22
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 12 Aug 2021 20:40:23 -0700 (PDT)
-Date: Thu, 12 Aug 2021 20:40:17 -0700
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH v2 4/6] ARM: dts: aspeed: Add Facebook Cloudripper
- (AST2600) BMC
-Message-ID: <20210813034016.GA21895@taoren-ubuntu-R90MNF91>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=JATj7FlSMDAm89anL9O14/wxabM+bn6u6NhVI8X8ONE=;
+ b=A63qw1RZRlhgtl1JApgEVoh0lkDrvuJo6xJLvpgrP98TTCxzD5voSqulYzImD5KIiA
+ DWudcbOslQ01VEd4+A1vVibTyTQO3nHJRBvg8c0/SIYW50j4h7tBiW1JASB38hGDnoIU
+ hZwm1Oe5kLYPTcXlnuf4NRBSvfqzvhfBpEslAF9zJf6ZquGCTgJSXRWnv8M0EgMVFWE/
+ u8N5GvIoayqizzQZg630+jD+VEUzyzea879uatohX/cVIFHutaM8B8xcpZkANo4LRqsb
+ DuySrEi+p6cyvISOz/8yvYpaBgWcdHRF7p6WQmjeCc0TuSAOHBvNIifoWIepgE4sjXkP
+ Z3uw==
+X-Gm-Message-State: AOAM533SuM9GJi6U2XuVyk1K/3QAvH3I5uMNpgJOuNw/GnVB3o47VNDR
+ lbDUV9DJk0H/2GYLKtZ/Ir+fCYRo1I6AvCJMfrc=
+X-Google-Smtp-Source: ABdhPJwZqoAo49DMKYzjDkSgFAuPBY+tIL4xnl8wvv+rWSUBDeXDtc0ndYWLTCbIfTwEdimJshNoOAUSSoZGjVZlzR0=
+X-Received: by 2002:a05:620a:19a8:: with SMTP id
+ bm40mr293306qkb.66.1628828015291; 
+ Thu, 12 Aug 2021 21:13:35 -0700 (PDT)
+MIME-Version: 1.0
 References: <20210805222818.8391-1-rentao.bupt@gmail.com>
  <20210805222818.8391-5-rentao.bupt@gmail.com>
  <CACPK8XcV5On2D4D+SXnfw1M0owwfCL4Su19jOEA7yWpq+T3jLw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACPK8XcV5On2D4D+SXnfw1M0owwfCL4Su19jOEA7yWpq+T3jLw@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+ <20210813034016.GA21895@taoren-ubuntu-R90MNF91>
+In-Reply-To: <20210813034016.GA21895@taoren-ubuntu-R90MNF91>
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 13 Aug 2021 04:13:23 +0000
+Message-ID: <CACPK8XeoV8DqDNYFgK97r-Q0DebNjrmgUTydKSYmGt+3x=-vOQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/6] ARM: dts: aspeed: Add Facebook Cloudripper
+ (AST2600) BMC
+To: Tao Ren <rentao.bupt@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,43 +84,30 @@ Cc: devicetree <devicetree@vger.kernel.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Aug 13, 2021 at 01:29:17AM +0000, Joel Stanley wrote:
-> On Thu, 5 Aug 2021 at 22:28, <rentao.bupt@gmail.com> wrote:
-> > +&mdio1 {
-> > +       status = "okay";
-> 
-> You're enabling this but it looks like it's unused?
+On Fri, 13 Aug 2021 at 03:40, Tao Ren <rentao.bupt@gmail.com> wrote:
+>
+> On Fri, Aug 13, 2021 at 01:29:17AM +0000, Joel Stanley wrote:
+> > On Thu, 5 Aug 2021 at 22:28, <rentao.bupt@gmail.com> wrote:
+> > > +&mdio1 {
+> > > +       status = "okay";
+> >
+> > You're enabling this but it looks like it's unused?
+>
+> Thanks Joel for the careful review. The MDIO controller is not paired
+> with BMC MAC; instead, it's connected to the MDC/MDIO interface of the
+> on-board switch (whose ports are connected to BMC, Host and front panel
+> management port).
 
-Thanks Joel for the careful review. The MDIO controller is not paired
-with BMC MAC; instead, it's connected to the MDC/MDIO interface of the
-on-board switch (whose ports are connected to BMC, Host and front panel
-management port).
+I see!
 
-In other word, the MDIO controller is used, but we do need some user
-space scripts to control the controller. What's your suggestion? For
-example, should I add some comments to explain the purpose?
+>
+> In other word, the MDIO controller is used, but we do need some user
+> space scripts to control the controller. What's your suggestion? For
+> example, should I add some comments to explain the purpose?
 
+Yes, that would make sense.
 
-Cheers,
+I've applied your patch, so if you want to add comments please send a
+diff against this tree:
 
-Tao
-
-> 
-> > +};
-> > +
-> > +&mdio3 {
-> > +       status = "okay";
-> > +
-> > +       ethphy1: ethernet-phy@13 {
-> > +               compatible = "ethernet-phy-ieee802.3-c22";
-> > +               reg = <0x0d>;
-> > +       };
-> > +};
-> > +
-> > +&mac3 {
-> > +       status = "okay";
-> > +       phy-mode = "rgmii";
-> > +       phy-handle = <&ethphy1>;
-> > +       pinctrl-names = "default";
-> > +       pinctrl-0 = <&pinctrl_rgmii4_default>;
-> > +};
+https://git.kernel.org/pub/scm/linux/kernel/git/joel/bmc.git/log/?h=dt-for-v5.15
