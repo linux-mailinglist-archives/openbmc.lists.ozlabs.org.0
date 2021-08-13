@@ -1,67 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80FEB3EAFE1
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 08:10:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C41C83EAFF5
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 08:19:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GmCpB3Kw8z30Ng
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 16:10:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GmD164SQHz3bXm
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 16:19:38 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=AB5REYf0;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=uZvcZZqI;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f43;
- helo=mail-qv1-xf43.google.com; envelope-from=liuxiwei1013@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1031;
+ helo=mail-pj1-x1031.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=AB5REYf0; dkim-atps=neutral
-Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com
- [IPv6:2607:f8b0:4864:20::f43])
+ header.s=20161025 header.b=uZvcZZqI; dkim-atps=neutral
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
+ [IPv6:2607:f8b0:4864:20::1031])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GmCnq6vYDz30B4
- for <openbmc@lists.ozlabs.org>; Fri, 13 Aug 2021 16:09:51 +1000 (AEST)
-Received: by mail-qv1-xf43.google.com with SMTP id db14so4647989qvb.10
- for <openbmc@lists.ozlabs.org>; Thu, 12 Aug 2021 23:09:51 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GmD0g293Jz30DC;
+ Fri, 13 Aug 2021 16:19:13 +1000 (AEST)
+Received: by mail-pj1-x1031.google.com with SMTP id oa17so13874390pjb.1;
+ Thu, 12 Aug 2021 23:19:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=fFQFoQ/FWFQ+YtYA3T8/QYmEvBfr4LHrj3JCNYiESJk=;
- b=AB5REYf0iVq/rdpAzyRhspBhYTqHV9KgSsKVQQ8JnLQ0J/8MC6OknNQzEeU8SW7ZCX
- ngfe46d2gU7iOeslQ7kdLFfRFpqTNyKDWvRUoeWpUp5rGFvFnem9OlY4rJjVOuWCoxoM
- lr9QXzaeepXwzAD8oD5VhzLkAwK/yotYIP3BoXXcTjRWk2Ye4rXdZPTxzemaYqWZqM09
- dvEK0AUV/5cvdic/K1+N4eiE3i+WK042bFY7P8uMf3oSbTa0mSJ7Xji3L4N479H9lVRH
- XADy5izh5U6o5xd5xZH1syl9709VneQv598sMoPPd3mOHXAJyaCImgU9ph0cYzw+vGLg
- Qzyw==
+ h=from:to:cc:subject:date:message-id;
+ bh=4kXF8rjOaeUla0M3rXpxWrQcPuqS5qE0SGdfEVWI3rM=;
+ b=uZvcZZqIFNj0oDqsoh2+Z3ZzkR7lRij4WGZUrHX0lYsxzbb4EBVP8bKG0BiC8ygjq1
+ Adp+InWlnHZS6RdBUnehs469ZSr5pudW7hxw7lamtm0TUcs3OrFTVy3fsAzYNd9FXKQ/
+ M56bfvRMRULEu9HhXdtfaY4E/ajsWLcwRlBRcclajQB3iOkCo2aMT+p08YeSwpUkBSYx
+ VYA6on8qRoL+ovuErmO+p0+jBxp0Sh4Gqsqec7DOhp9XOMB/dIDOx543fib9cjADRvmm
+ 33re47tEnRLsqYEqaWbD8iWsqzAR+b+IBRbZwJSss3u5VFzSC/3l9WXWFhm47OWE8vmE
+ 7veQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=fFQFoQ/FWFQ+YtYA3T8/QYmEvBfr4LHrj3JCNYiESJk=;
- b=eDh27Lh+Ekm85ZddFw9TLEdS4COqRGpaYMqDCcmIfY3veSyJPJNBVz4teV1SI44MLm
- oCB16FyUT4EOjecBur71B0wYJrhTxhAqDZn+zEUURT7+X/U10fVTeED6b7unZuDUmeKx
- 6hT9xFGHC/HmQ4xYqfWUQYjEazr8EpM0lT1kgTSeRH0sP3phdfm7nKHu7Na9jGU7ixc2
- ljCPRZjeT/HMNVGxaYLyoLOLGOMTxyYlnuUbvdot8fmFDWoKKZUKWhOJZYw+/SML8NRk
- A09X+6bsEnyXnReEZeCo29/aQOHq1lxKiD+PT54KsDRiy2NBO6Ol4xTxz0cNRdKflu7h
- RAMA==
-X-Gm-Message-State: AOAM530FlgSmIC0HjP37UsdJajX8R7uOs8GmvfIxE/mSInVz+HtUTY+H
- QvPcyXOebsA1CT504YGdDeCAzaMkT7ZVfm+4aRQ=
-X-Google-Smtp-Source: ABdhPJwnifi0M0TG3wLDk2Jei1Ag3YQkYT8X2Jn/W2W1u4kRrRI+wi87id7e3Wo7KQGwRY26MQp1lZYpuOLrJTPiT8c=
-X-Received: by 2002:a0c:be85:: with SMTP id n5mr1108859qvi.59.1628834988526;
- Thu, 12 Aug 2021 23:09:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <OFA5154048.C3010138-ON00258730.00127D40-1628824917257@ibm.com>
-In-Reply-To: <OFA5154048.C3010138-ON00258730.00127D40-1628824917257@ibm.com>
-From: George Liu <liuxiwei1013@gmail.com>
-Date: Fri, 13 Aug 2021 14:09:37 +0800
-Message-ID: <CANFuQ7D+ihCTnQHuyzatLsu8RBa8gLe0iDed18EAM_sy3aPNYQ@mail.gmail.com>
-Subject: Re: Request new repo for Audit function
-To: Milton Miller II <miltonm@us.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=4kXF8rjOaeUla0M3rXpxWrQcPuqS5qE0SGdfEVWI3rM=;
+ b=MIlvsKDzra0EEwFFyPByR2AHX3sM5S2CO30+lPlQSehMQvM0mDXDznARYqzO7zzv92
+ ++aICcX2O32mCwBiuM+7JBGPagJBRZE33UzsLJpLnNPxZIJbycwyLY1iblhkJ6YdWFta
+ lFGuPx5005L+MIxC0Yn8udWZjmoHgY8OVzTWBGJ1MHRhMsiLFlgEJQFvwCRxCnw/C9P7
+ vMdbrJELxd/S87MzgOuupYAJBmPLZwb7/wRQeEsrrSzuEw8UmF9xTJKPL6AfZIgRBGH2
+ v/vCZBko+QCoS2XyChtedtOe4AybHs97NNC12RxLjX8/sY/Xi59ZcvTloQHzTRKAhdxt
+ 02xg==
+X-Gm-Message-State: AOAM532BNFBAxCuyMyrHwALL3YdmyB1Bmc5Jc7M+DVv3qsp1zHwRaYTI
+ ECojGQGs9+oWhe+6VJpDq2A=
+X-Google-Smtp-Source: ABdhPJxH82ZJV9xD4x1exd/C7JijJWwsA0z4BAdmdDdiEerjGXqcQmOLUV7Y6pZUmASz/wyXv71Q9g==
+X-Received: by 2002:aa7:870e:0:b029:3c2:f326:468b with SMTP id
+ b14-20020aa7870e0000b02903c2f326468bmr999709pfo.53.1628835549694; 
+ Thu, 12 Aug 2021 23:19:09 -0700 (PDT)
+Received: from taoren-ubuntu-R90MNF91.thefacebook.com
+ (c-73-92-48-112.hsd1.ca.comcast.net. [73.92.48.112])
+ by smtp.gmail.com with ESMTPSA id f9sm733196pjq.36.2021.08.12.23.19.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Aug 2021 23:19:09 -0700 (PDT)
+From: rentao.bupt@gmail.com
+To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
+Subject: [PATCH] ARM: dts: aspeed: cloudripper: Add comments for "mdio1"
+Date: Thu, 12 Aug 2021 23:19:00 -0700
+Message-Id: <20210813061900.24539-1-rentao.bupt@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,50 +78,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
+Cc: Tao Ren <rentao.bupt@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Aug 13, 2021 at 11:22 AM Milton Miller II <miltonm@us.ibm.com> wrote:
->
->
-> Reply below
->
-> -------- Original Message --------
-> From: George Liu
-> Date: Thu, August 12, 2021 7:52 PM -0500
->
->
-> Hi Brad:
->
-> We have a requirement to implement an Audit function, I found that
-> there is a design doc[1], but there is no code to implement it.
->
-> Could you create a new repo for Audit function?
-> eg: phosphor-audit
->
-> [1]: https://github.com/openbmc/docs/blob/master/designs/phosphor-audit.md
->
-> thx - George Liu
->
-> -------- End of Original Message --------
->
-> Hi George.
->
->
-> Please update the design with consideration for inclusive naming[2] before submitting code for it, as it uses depreciated terminology in it's external control interface.
->
-> I see this design was merged almost 2 years ago before this policy was in place but as you said it hasn't been exposed by the community yet so we won't need to maintain compatibility with prior implementations.
+From: Tao Ren <rentao.bupt@gmail.com>
 
-Thanks for your advice.
-I will read and update this design doc ASAP :)
+Add some comments to explain the purpose of "mdio1" controller: it's
+connected to the MDC/MDIO interface of the on-board management switch.
 
->
->
-> [2] https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#inclusive-naming
->
-> Thanks,
-> Milton
->
->
+Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-facebook-cloudripper.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-cloudripper.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-cloudripper.dts
+index 01ec3ce0a29d..9c6271a17ae8 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-facebook-cloudripper.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-cloudripper.dts
+@@ -96,6 +96,11 @@
+ 	status = "okay";
+ };
+ 
++/*
++ * "mdio1" is connected to the MDC/MDIO interface of the on-board
++ * management switch (whose ports are connected to BMC, Host and front
++ * panel ethernet port).
++ */
+ &mdio1 {
+ 	status = "okay";
+ };
+-- 
+2.17.1
+
