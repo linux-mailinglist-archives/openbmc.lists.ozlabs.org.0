@@ -1,70 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B62FA3EB33B
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 11:14:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D892F3EB571
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 14:26:39 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GmHvF426Wz302V
-	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 19:14:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GmN8Y5sjTz3bYg
+	for <lists+openbmc@lfdr.de>; Fri, 13 Aug 2021 22:26:37 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=qkxw1h4v;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=H2f+dNOw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f44;
- helo=mail-qv1-xf44.google.com; envelope-from=liuxiwei1013@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::229;
+ helo=mail-oi1-x229.google.com; envelope-from=sharad.openbmc@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=qkxw1h4v; dkim-atps=neutral
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com
- [IPv6:2607:f8b0:4864:20::f44])
+ header.s=20161025 header.b=H2f+dNOw; dkim-atps=neutral
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com
+ [IPv6:2607:f8b0:4864:20::229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GmHtn6nqtz2yxP
- for <openbmc@lists.ozlabs.org>; Fri, 13 Aug 2021 19:14:24 +1000 (AEST)
-Received: by mail-qv1-xf44.google.com with SMTP id bl13so4844421qvb.5
- for <openbmc@lists.ozlabs.org>; Fri, 13 Aug 2021 02:14:24 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GmN884YD6z30Gt
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Aug 2021 22:26:14 +1000 (AEST)
+Received: by mail-oi1-x229.google.com with SMTP id bi32so15730188oib.2
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Aug 2021 05:26:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=NUNjenaFw3r/7T8HezUSZlsy+QZfgG1auKnxQ8X834g=;
- b=qkxw1h4vgZJAEcIwLPCDaEHRndd4nlguYpZe+l7PuS9FxTefEXyvphvjWKZuLW1RXG
- qziDvIzOvhbIBkzp/tVhnF1aKZP5A0s9PLFX6FaMTNe/kP+8j1cB8Nb84m19uiV9KMSd
- BYj4QPsmbpRCnL7WPkrP0ZTBp+j6UL4vg8XSbWGDit3ROgETy+t+/d7o/VCbrtG5FoFj
- voXFqJEt0px9dbpD9uCNXSFvBIpDcOsee1n4eQS62yaqTiy5UWR4zpEZdChgvv0iZHF0
- m+5786iY9mPEUamCro9WTctReI2h26xMt+rTXkHusuoe4HQ7wUNBzdHA9slp67AGO8+h
- tkgg==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Uc9FOdwN9p7Mz/N8J0bh07QRc5lcJUTHJbQK2k4kpXk=;
+ b=H2f+dNOwD7WUqwnjTL+cZoO1ojG8mr0WxGW7xawuT8KOGl+0tZGAjn8lzYmgGJ8lEF
+ 86gO/qNzcltDoOctYuOQ8GH+AS/yJO6ag5eJksgR5eXZUkuFeVJYIS1nu0IhhfopaNce
+ pVTJbDCqSdOqVyNle7SiW4h4A8/vCotiW9lOWZVg+lx4fLApqCXQK14aS0zaMBj3keBW
+ m38t0e+VEUCTgaVxdPZpjw4KvWQqqD0Eg63w0kt1Z0cXwXEex9OHu1ztNBKDFu6gNSkh
+ QJjHaofeEEWHk8AfUsfzThuQ6GNA8eH8gpwp4H7FchXr0hlTFAup8YezTk6WS7uPyMN/
+ 1i8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=NUNjenaFw3r/7T8HezUSZlsy+QZfgG1auKnxQ8X834g=;
- b=D+KxpepRXcf/9fZnsJ39VHb482AZp0wXwkn1Ark8Ta3C4dz8FfxUGv9LayDfiOAquW
- GUW58Bk8MiktjUBZ5I8lUV1HhS2PwGNQM0kgbzb07P58rfZieCXCZ1Ak+f+iaZcNHYy4
- 89hJ1x2TcZMsw/OYbj4hTUQg5IIAPv8gdJATajnvrvPLRYPNn47TRYXsVNxHzEYBCxgc
- j3LtFNRvSOZb/2PEokOn1tUOxoWBhtMdQRkX3D85FekUfQy2D6FCW0/8y5US6KO29Fzg
- aGCO5F1t5jNMKuV33VSKDE9DxX60+YfeCxU9NbsovLWojGwjS0eB7SsEPlSsVBohfVma
- IIgg==
-X-Gm-Message-State: AOAM532BY/7MOLjVDYYyWBJc0TjE3zUUbLHW10Kl4gNBCN+/IddHh0iQ
- DBDukoBrxgKP3zdq44rgHKZKm4VTLEdlaBv5UmY=
-X-Google-Smtp-Source: ABdhPJzFYVkHUBX5V1zMLcUl4Mc/VPqmeHj2l5qJD7iUaswS8BXL3txBlwwkWRAmUDrRfTGbZuGrskl2z3dlRs4JMA4=
-X-Received: by 2002:a05:6214:18ec:: with SMTP id
- ep12mr1692351qvb.51.1628846061000; 
- Fri, 13 Aug 2021 02:14:21 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Uc9FOdwN9p7Mz/N8J0bh07QRc5lcJUTHJbQK2k4kpXk=;
+ b=MkQoiV/b0qJWxi5IL+X5rAJlBQvK5ZoJNXors1Pu5TJ0V0yWtfvZuNfLPjznXpH/K/
+ 5Gh0ULBycYTs/FNb8H0IhIdjoM2a98TCcNDrZmb1pYtA7gQi+tYNsvv4vQjG1zDfPuPM
+ xDziv8ha9id9wY/aDVXCZ9BY8Nfd5h/C2j0v7Gnm4Vl2UTaB1fvLrPA9c4RMKPoylYUH
+ 7PS7iwo7FYs3gTzt6Hag1dyRTYfSYVrSw18+U/v/f5VtUlKSO0oqX8W12ksWHoxIUi39
+ nkxc+C+hQSdtiDfy5MgISG4Ay+q2zWU3d9p7v6NX1C5efvrZKY70fWJPzr1H1r00x83F
+ hiqQ==
+X-Gm-Message-State: AOAM533JR8EiS2Nt2rLIPO9mkfibbx9d5s+iHqhp1XQpSTyZJHYE9Kav
+ kB15BuRyrVg0wz+qrmRsxEoRUVh1NIiBvS1GHG2Hi9BzyEE=
+X-Google-Smtp-Source: ABdhPJyBXdKEBG1xBhYSAT/vkyC+zDyRZunSarWgbD2nDkdXJHGdb4gKGQ2YNdBqCldAKPKu5UQ3nHeBPlDifr6ks/Y=
+X-Received: by 2002:a05:6808:1798:: with SMTP id
+ bg24mr1926984oib.6.1628857570650; 
+ Fri, 13 Aug 2021 05:26:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <OFA5154048.C3010138-ON00258730.00127D40-1628824917257@ibm.com>
- <CANFuQ7D+ihCTnQHuyzatLsu8RBa8gLe0iDed18EAM_sy3aPNYQ@mail.gmail.com>
- <916fc23f02ec749ecccf70dff356daa400026b28.camel@yadro.com>
-In-Reply-To: <916fc23f02ec749ecccf70dff356daa400026b28.camel@yadro.com>
-From: George Liu <liuxiwei1013@gmail.com>
-Date: Fri, 13 Aug 2021 17:14:10 +0800
-Message-ID: <CANFuQ7BXy1s6SKLLgwah5p2EpX7_yBK4CUOHxi4J+LQ6r2OuCw@mail.gmail.com>
-Subject: Re: Request new repo for Audit function
-To: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-Content-Type: text/plain; charset="UTF-8"
+From: sharad yadav <sharad.openbmc@gmail.com>
+Date: Fri, 13 Aug 2021 17:55:59 +0530
+Message-ID: <CA+H48BQTCfxfZ4M-Ph5Zy-=RBfNgnXb8xDcT0HSaDbgjRe07tg@mail.gmail.com>
+Subject: Looking for qemu tree for 'qemu-system-arm' jenkins build
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000e36dbb05c96ff49d"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,68 +71,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Aug 13, 2021 at 4:31 PM Ivan Mikhaylov <i.mikhaylov@yadro.com> wrote:
->
-> On Fri, 2021-08-13 at 14:09 +0800, George Liu wrote:
-> > On Fri, Aug 13, 2021 at 11:22 AM Milton Miller II <miltonm@us.ibm.com> wrote:
-> > >
-> > >
-> > > Reply below
-> > >
-> > > -------- Original Message --------
-> > > From: George Liu
-> > > Date: Thu, August 12, 2021 7:52 PM -0500
-> > >
-> > >
-> > > Hi Brad:
-> > >
-> > > We have a requirement to implement an Audit function, I found that
-> > > there is a design doc[1], but there is no code to implement it.
-> > >
-> > > Could you create a new repo for Audit function?
-> > > eg: phosphor-audit
-> > >
-> > > [1]: https://github.com/openbmc/docs/blob/master/designs/phosphor-audit.md
-> > >
-> > > thx - George Liu
-> > >
-> > > -------- End of Original Message --------
-> > >
-> > > Hi George.
-> > >
-> > >
-> > > Please update the design with consideration for inclusive naming[2] before
-> > > submitting code for it, as it uses depreciated terminology in it's external
-> > > control interface.
-> > >
-> > > I see this design was merged almost 2 years ago before this policy was in
-> > > place but as you said it hasn't been exposed by the community yet so we won't
-> > > need to maintain compatibility with prior implementations.
-> >
-> > Thanks for your advice.
-> > I will read and update this design doc ASAP :)
-> >
-> > >
-> > >
-> > > [2]
-> > > https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#inclusive-naming
-> > >
-> > > Thanks,
-> > > Milton
-> > >
-> > >
->
-> George, there is answer about same question in this thread
-> https://lists.ozlabs.org/pipermail/openbmc/2020-March/020839.html .
-> Should be part of phosphor-logging.
+--000000000000e36dbb05c96ff49d
+Content-Type: text/plain; charset="UTF-8"
 
-Okay, Let me check, thanks so much
+Hi All,
 
->
-> Thanks.
->
+I am looking for the qemu tree from where
+https://jenkins.openbmc.org/job/latest-qemu-x86/lastSuccessfulBuild/artifact/qemu/build/qemu-system-arm
+is
+being built.
+It will be a great help if someone can point me to the qemu repo and branch
+being used for jenkins build.
+
+Thanks,
+Sharad
+
+--000000000000e36dbb05c96ff49d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi All,<div><br></div><div>I am looking for the qemu tree =
+from where=C2=A0<a target=3D"_blank" class=3D"gmail-c-link" href=3D"https:/=
+/jenkins.openbmc.org/job/latest-qemu-x86/lastSuccessfulBuild/artifact/qemu/=
+build/qemu-system-arm" rel=3D"noopener noreferrer" aria-describedby=3D"sk-t=
+ooltip-4204" style=3D"box-sizing:inherit;color:inherit;font-family:Monaco,M=
+enlo,Consolas,&quot;Courier New&quot;,monospace;font-size:12px;font-variant=
+-ligatures:none;white-space:pre-wrap">https://jenkins.openbmc.org/job/lates=
+t-qemu-x86/lastSuccessfulBuild/artifact/qemu/build/qemu-system-arm</a>=C2=
+=A0is being built.</div><div>It will be a great help if someone can point m=
+e to the qemu repo and branch being used for jenkins build.</div><div><br><=
+/div><div>Thanks,</div><div>Sharad</div></div>
+
+--000000000000e36dbb05c96ff49d--
