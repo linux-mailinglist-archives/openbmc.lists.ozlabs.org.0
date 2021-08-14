@@ -1,57 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FA243EC389
-	for <lists+openbmc@lfdr.de>; Sat, 14 Aug 2021 17:27:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8C433EC5D9
+	for <lists+openbmc@lfdr.de>; Sun, 15 Aug 2021 00:42:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Gn46x1D1vz30J3
-	for <lists+openbmc@lfdr.de>; Sun, 15 Aug 2021 01:27:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GnFn85NjTz30FX
+	for <lists+openbmc@lfdr.de>; Sun, 15 Aug 2021 08:42:52 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=ZptVl3md;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=IfzL7SZd;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch
- (client-ip=185.16.172.187; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12f;
+ helo=mail-lf1-x12f.google.com; envelope-from=fercerpav@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256
- header.s=20171124 header.b=ZptVl3md; dkim-atps=neutral
-Received: from vps0.lunn.ch (vps0.lunn.ch [185.16.172.187])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=IfzL7SZd; dkim-atps=neutral
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
+ [IPv6:2a00:1450:4864:20::12f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Gn46S2yJKz30B2;
- Sun, 15 Aug 2021 01:27:11 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
- s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
- Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
- Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
- bh=k5oaY0yxV1bCHw1gaOjIPXieerYTHQ1q9Of4rT8QusE=; b=ZptVl3mdz5xew2/cEvmLXeaPEx
- kfWsMX17M/uIERuvvQsegMfyaHuAX+EZ0mziXAYD6MRw/qUSF8wXGeHQfxqFrdwsOxsuBRizEhpky
- n27x1Z+yZTYummSjmDQhYN0vbxL9ccLr1+BQa7sGLKWPIJaRaI0VJuxGiCR0Z4OWZYio=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
- (envelope-from <andrew@lunn.ch>)
- id 1mEvYl-0004x1-9S; Sat, 14 Aug 2021 17:26:55 +0200
-Date: Sat, 14 Aug 2021 17:26:55 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Tao Ren <rentao.bupt@gmail.com>
-Subject: Re: [PATCH v2 4/6] ARM: dts: aspeed: Add Facebook Cloudripper
- (AST2600) BMC
-Message-ID: <YRfgv5OknMluW7jj@lunn.ch>
-References: <20210805222818.8391-1-rentao.bupt@gmail.com>
- <20210805222818.8391-5-rentao.bupt@gmail.com>
- <CACPK8XcV5On2D4D+SXnfw1M0owwfCL4Su19jOEA7yWpq+T3jLw@mail.gmail.com>
- <20210813034016.GA21895@taoren-ubuntu-R90MNF91>
- <YRaFpq1LvRzMYr/A@lunn.ch>
- <20210814052228.GA1298@taoren-ubuntu-R90MNF91>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GnFmh3Sgdz307n
+ for <openbmc@lists.ozlabs.org>; Sun, 15 Aug 2021 08:42:27 +1000 (AEST)
+Received: by mail-lf1-x12f.google.com with SMTP id p38so27080998lfa.0
+ for <openbmc@lists.ozlabs.org>; Sat, 14 Aug 2021 15:42:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=bKqY2ODulb1XJEskPNVxqR6YJVPe7PXRasqK0cTAlPw=;
+ b=IfzL7SZdV9M3O8SuXZsUZPgiFgvNUj1w3FZXDHvTQfoV31EirOgqC7z6DHs2xGXt+M
+ QNwHX5mgFK6PnSrprJ/jZZo6Mf5DgiBvkMiRzl7VmD3oJnEu5405COmfi7MbGO0pBCPD
+ 9HoM7FII/IBjp/rJUlkUBFDKc9ou7d2RpPoGT9lMds26qjZwVaQIOMDd642EzSyXsDO3
+ 3gdJlA++QLmr2zYPkXhoFisvs8NjtD0Ei4UgHfi560mwxCt/Ia7X5qGkiskAEoDzOtcR
+ 1mMvFdikTWA0JeEi8RZMXp1XFDeqXd0CA7So/qqCU0JqjRVJoEeZiC6Ts1kXxbaipEfZ
+ c/ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=bKqY2ODulb1XJEskPNVxqR6YJVPe7PXRasqK0cTAlPw=;
+ b=QLnJH1oXx61xS4Yush6EHiMPt6RP66R0CSTmNzQpdRtTnlU+bvwnxOBY/hBqTxZs+i
+ qq+jC2pibKZsowmKtkltzVSzJGP3tg5ibGDhxir4PJ3kYdT5Tyh8Lj4WZUM1+FQCbfOS
+ f2qbHPAO944vv4yM36AAuErYvGKVBvSjHmHVQI6ImDI4bv3Yw1A5Wcl+D0P++PCaZa/L
+ LEtNB1X9zZBhH5ynF4fi7awWf8Vdm1qXYlJI/+koXemLds2xkPrXXBLFW47bOqbkt3dG
+ L2v4JeUYxQPbIvXaJZjzfRlFqzWTJa46mODJ7/9cUBnAsATWRjSg0AlClYp6IZn9yiXs
+ 1yIA==
+X-Gm-Message-State: AOAM532OOSHYTfVRQuqHjmn9HgknBpYN2su5zVverryofUfKcO3DVK5W
+ d67LBy9njLRY8GPD0YIIQ2E=
+X-Google-Smtp-Source: ABdhPJy3XK7chN4zWmy3RKYxYeip8yvnowvQOoN0H/oc6dg/vrLJIx+Jz2irz7qf2h0uQ9lcYlSwdQ==
+X-Received: by 2002:ac2:4e16:: with SMTP id e22mr6301838lfr.134.1628980939715; 
+ Sat, 14 Aug 2021 15:42:19 -0700 (PDT)
+Received: from home.paul.comp (paulfertser.info.
+ [2001:470:26:54b:226:9eff:fe70:80c2])
+ by smtp.gmail.com with ESMTPSA id w6sm518097lfk.163.2021.08.14.15.42.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 14 Aug 2021 15:42:19 -0700 (PDT)
+Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
+ by home.paul.comp (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTP id
+ 17EMgG8j008711; Sun, 15 Aug 2021 01:42:17 +0300
+Received: (from paul@localhost)
+ by home.paul.comp (8.15.2/8.15.2/Submit) id 17EMgFoZ008710;
+ Sun, 15 Aug 2021 01:42:15 +0300
+Date: Sun, 15 Aug 2021 01:42:15 +0300
+From: Paul Fertser <fercerpav@gmail.com>
+To: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+Subject: Re: [PATCH 0/2] rtc: pch-rtc: add Intel Series PCH built-in
+ read-only RTC
+Message-ID: <20210814224215.GX15173@home.paul.comp>
+References: <20210810154436.125678-1-i.mikhaylov@yadro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210814052228.GA1298@taoren-ubuntu-R90MNF91>
+In-Reply-To: <20210810154436.125678-1-i.mikhaylov@yadro.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,23 +88,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: Alessandro Zummo <a.zummo@towertech.it>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> Thanks for jumping in. We are using BCM5389 and the MDIO bus is used to
-> access BCM5389 MDC/MDIO interface in Pseudo-PHY mode.
-> 
-> I didn't know drivers/net/dsa, but let me check out the drivers and see
-> if it works in the Cloudripper environment.
+On Tue, Aug 10, 2021 at 06:44:34PM +0300, Ivan Mikhaylov wrote:
+> Add RTC driver with dt binding tree document. Also this driver adds one sysfs
+> attribute for host power control which I think is odd for RTC driver.
+> Need I cut it off and use I2C_SLAVE_FORCE? I2C_SLAVE_FORCE is not good
+> way too from my point of view. Is there any better approach?
 
-The b53 driver knows about this switch, so please make use of that
-driver. See Documentation/devicetree/bindings/net/dsa/brcm,b53.yaml
-for how you describe it in DT.
+Reading the C620 datasheet I see this interface also allows other
+commands (wake up, watchdog feeding, reboot etc.) and reading statuses
+(e.g Intruder Detect, POWER_OK_BAD).
 
-    Andrew
+I think if there's any plan to use anything other but RTC via this
+interface then the driver should be registered as an MFD.
+
+-- 
+Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
+mailto:fercerpav@gmail.com
