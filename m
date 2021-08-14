@@ -2,45 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBD763EBEAD
-	for <lists+openbmc@lfdr.de>; Sat, 14 Aug 2021 01:24:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E1CA93EC0A4
+	for <lists+openbmc@lfdr.de>; Sat, 14 Aug 2021 07:23:07 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Gmflg57YDz3cR3
-	for <lists+openbmc@lfdr.de>; Sat, 14 Aug 2021 09:24:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GmpjP5HShz3cMZ
+	for <lists+openbmc@lfdr.de>; Sat, 14 Aug 2021 15:23:05 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=OQqyGWEn;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.151; helo=mga17.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102f;
+ helo=mail-pj1-x102f.google.com; envelope-from=rentao.bupt@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=OQqyGWEn; dkim-atps=neutral
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com
+ [IPv6:2607:f8b0:4864:20::102f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GmflL5szRz30Ls
- for <openbmc@lists.ozlabs.org>; Sat, 14 Aug 2021 09:24:13 +1000 (AEST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10075"; a="195913940"
-X-IronPort-AV: E=Sophos;i="5.84,320,1620716400"; d="scan'208";a="195913940"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Aug 2021 16:23:08 -0700
-X-IronPort-AV: E=Sophos;i="5.84,320,1620716400"; d="scan'208";a="677698182"
-Received: from yoojae-mobl.amr.corp.intel.com (HELO [10.212.221.73])
- ([10.212.221.73])
- by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Aug 2021 16:23:08 -0700
-Subject: Re: AST2500 video engine for KVM trips BMC watchdog
-To: Eddie James <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-References: <2a3bac9bb3c85791a0b2d988020917f7609a7097.camel@linux.ibm.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <762ddbcb-a47e-7eaa-24b3-9267e3d214b4@linux.intel.com>
-Date: Fri, 13 Aug 2021 16:22:56 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Gmphv3dh9z2ymS;
+ Sat, 14 Aug 2021 15:22:38 +1000 (AEST)
+Received: by mail-pj1-x102f.google.com with SMTP id
+ hv22-20020a17090ae416b0290178c579e424so19057054pjb.3; 
+ Fri, 13 Aug 2021 22:22:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=qUlgCGK8+0KVcRwvfAdukdAi2gP9bLhzHb2DkcgfzQY=;
+ b=OQqyGWEnIPLyf3mXTtyAaEWzqjlcyCUdbsTZsFKYqa8gAZOSlHOHrA++SGAjDCM22p
+ anVJ+uBmvz9kl/eeKRiNY53lZBTvP4HgO021aS2HzrnH0XB3vWa/khh3xHM367OVTYRE
+ 8CpdEsiV5Duh5fXigEio/fXfI1uyps2jzP4LWgQQU3ckEhDYLd6enyJJUkooyVLbdsAa
+ 69I0VwvlzYUdSkA9d/D5fqBq4F9eCUXJ6GlF8wWTLjY31rZseLDIaNp+yh+hbwzbdTGK
+ Sh40dkDnJUbxJaTx6hsdpIhjI9TlMVFj2aWH0qJ5ZO+A9bWGoaT0ufqA25AHNn39HLpW
+ SpTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=qUlgCGK8+0KVcRwvfAdukdAi2gP9bLhzHb2DkcgfzQY=;
+ b=jhsBL88NSXbqqzV2aEEaHHfE63kR39O0ogQCZT8EH50f1KpT7xVNex1btFTOPMQz8Z
+ hlb+41HKmlJRqOHNDAlRYa4sQhoXXtR6zhQFMcnP3swR61ip35d1gA1cp30yp6M+h0/j
+ VRt799hzDrir3XaU2pGfLR5PdnD7YGvv0r/yi0sZi3O/QkEnHQrJFPsY8N+vgLirgt96
+ NYTBwnhrrIr+GROcUuGG1QjPBYRUb7jZEcSwkIIhTLvcX9AR5B/r7TXMBMurZHu8mLUi
+ 9RvKyMalB8GHW1jxDwFE480ks6xwP1ufMciyG/HM1Lbz0o6zKW3qHKb8uayqh57LPNQ4
+ 9qfA==
+X-Gm-Message-State: AOAM532/MdmghEhLhQIFYLo7ZY977hbxPCkacSPsXWUmw0K9B8qg5qqp
+ iMm4kLKJ0PZQadfknUNff1Q=
+X-Google-Smtp-Source: ABdhPJwD5gIcmIVuMlWVrreOkxKSMiaVBIuW/nBKpzkRSs0ejSmabXcCcl3mKEjdXsaLElfILCT8Bg==
+X-Received: by 2002:a65:608f:: with SMTP id t15mr5420277pgu.452.1628918556102; 
+ Fri, 13 Aug 2021 22:22:36 -0700 (PDT)
+Received: from taoren-ubuntu-R90MNF91 (c-73-92-48-112.hsd1.ca.comcast.net.
+ [73.92.48.112])
+ by smtp.gmail.com with ESMTPSA id b3sm4102861pfi.179.2021.08.13.22.22.34
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Fri, 13 Aug 2021 22:22:35 -0700 (PDT)
+Date: Fri, 13 Aug 2021 22:22:29 -0700
+From: Tao Ren <rentao.bupt@gmail.com>
+To: Andrew Lunn <andrew@lunn.ch>
+Subject: Re: [PATCH v2 4/6] ARM: dts: aspeed: Add Facebook Cloudripper
+ (AST2600) BMC
+Message-ID: <20210814052228.GA1298@taoren-ubuntu-R90MNF91>
+References: <20210805222818.8391-1-rentao.bupt@gmail.com>
+ <20210805222818.8391-5-rentao.bupt@gmail.com>
+ <CACPK8XcV5On2D4D+SXnfw1M0owwfCL4Su19jOEA7yWpq+T3jLw@mail.gmail.com>
+ <20210813034016.GA21895@taoren-ubuntu-R90MNF91>
+ <YRaFpq1LvRzMYr/A@lunn.ch>
 MIME-Version: 1.0
-In-Reply-To: <2a3bac9bb3c85791a0b2d988020917f7609a7097.camel@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YRaFpq1LvRzMYr/A@lunn.ch>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -52,106 +87,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Eddie,
+Hi Andrew,
 
-On 8/13/2021 1:37 PM, Eddie James wrote:
-> I'm trying to solve a problem when the screensaver on the host is
-> activated. It seems to continually trigger the mode detection interrupt
-> on the BMC. In combination with the user-space application continually
-> trying to determine the resolution, it trips the BMC kernel watchdog
-> and resets the system. Here are the logs I've captured:
+On Fri, Aug 13, 2021 at 04:45:58PM +0200, Andrew Lunn wrote:
+> On Thu, Aug 12, 2021 at 08:40:17PM -0700, Tao Ren wrote:
+> > On Fri, Aug 13, 2021 at 01:29:17AM +0000, Joel Stanley wrote:
+> > > On Thu, 5 Aug 2021 at 22:28, <rentao.bupt@gmail.com> wrote:
+> > > > +&mdio1 {
+> > > > +       status = "okay";
+> > > 
+> > > You're enabling this but it looks like it's unused?
+> > 
+> > Thanks Joel for the careful review. The MDIO controller is not paired
+> > with BMC MAC; instead, it's connected to the MDC/MDIO interface of the
+> > on-board switch (whose ports are connected to BMC, Host and front panel
+> > management port).
 > 
-> [ 2049.076692] aspeed-video 1e700000.video: Resolution changed;
-> resetting
-> [ 2050.091133] aspeed-video 1e700000.video: Timed out; first mode
-> detect
-> [ 2051.121593] aspeed-video 1e700000.video: Timed out when stopping
-> streaming
-> [ 2052.121203] aspeed-video 1e700000.video: Timed out; first mode
-> detect
-> [ 2052.393164] aspeed-video 1e700000.video: Got resolution: 1024x768
-> [ 2052.399561] aspeed-video 1e700000.video: Max compressed size: 80000
-> [ 2053.343096] aspeed-video 1e700000.video: Resolution changed;
-> resetting
-> [ 2053.350151] aspeed-video 1e700000.video: Engine busy; don't start
-> frame
-> [ 2054.361159] aspeed-video 1e700000.video: Timed out; first mode
-> detect
-> [ 2054.609677] aspeed-video 1e700000.video: Got resolution: 1024x768
-> [ 2054.615983] aspeed-video 1e700000.video: Max compressed size: 80000
-> [ 2055.409583] aspeed-video 1e700000.video: Resolution changed;
-> resetting
-> [ 2055.432802] aspeed-video 1e700000.video: No signal; don't start
-> frame
-> [ 2056.421155] aspeed-video 1e700000.video: Timed out; first mode
-> detect
-> [ 2056.676215] aspeed-video 1e700000.video: Got resolution: 1024x768
-> [ 2056.682516] aspeed-video 1e700000.video: Max compressed size: 80000
-> [ 2057.459454] aspeed-video 1e700000.video: Resolution changed;
-> resetting
-> [ 2057.480919] aspeed-video 1e700000.video: No signal; don't start
-> frame
-> [ 2058.471187] aspeed-video 1e700000.video: Timed out; first mode
-> detect
-> [ 2058.726108] aspeed-video 1e700000.video: Got resolution: 1024x768
-> [ 2058.732382] aspeed-video 1e700000.video: Max compressed size: 80000
-> [ 2059.526704] aspeed-video 1e700000.video: Resolution changed;
-> resetting
-> [ 2059.548747] aspeed-video 1e700000.video: No signal; don't start
-> frame
-> [ 2060.541146] aspeed-video 1e700000.video: Timed out; first mode
-> detect
-> [ 2060.792620] aspeed-video 1e700000.video: Got resolution: 1024x768
-> [ 2060.798801] aspeed-video 1e700000.video: Max compressed size: 80000
-> [ 2061.592870] aspeed-video 1e700000.video: Resolution changed;
-> resetting
-> [ 2061.615523] aspeed-video 1e700000.video: No signal; don't start
-> frame
-> [ 2062.611126] aspeed-video 1e700000.video: Timed out; first mode
-> detect
-> [ 2062.859185] aspeed-video 1e700000.video: Got resolution: 1024x768
-> [ 2062.865483] aspeed-video 1e700000.video: Max compressed size: 80000
-> [ 2063.659056] aspeed-video 1e700000.video: Resolution changed;
-> resetting
-> [ 2063.680423] aspeed-video 1e700000.video: No signal; don't start
-> frame
-> [ 2064.671148] aspeed-video 1e700000.video: Timed out; first mode
-> detect
-> [ 2064.925696] aspeed-video 1e700000.video: Got resolution: 1024x768
-> [ 2064.931949] aspeed-video 1e700000.video: Max compressed size: 80000
-> [ 2065.708903] aspeed-video 1e700000.video: Resolution changed;
-> resetting
-> [ 2065.716196] aspeed-video 1e700000.video: Engine busy; don't start
-> frame
-> [ 2066.721161] aspeed-video 1e700000.video: Timed out; first mode
-> detect
-> [ 2066.975563] aspeed-video 1e700000.video: Got resolution: 1024x768
-> [ 2066.981842] aspeed-video 1e700000.video: Max compressed size: 80000
-> [ 2067.758808] aspeed-video 1e700000.video: Resolution changed;
-> resetting
-> [ 2067.766511] aspeed-video 1e700000.video: Engine busy; don't start
-> frame
-> [ 2068.771128] aspeed-video 1e700000.video: Timed out; first mode
-> detect
-> [ 2069.025462] aspeed-video 1e700000.video: Got resolution: 1024x768
-> [ 2069.031803] aspeed-video 1e700000.video: Max compressed size: 80000
-> [ 2069.808665] aspeed-video 1e700000.video: Resolution changed;
-> resetting
+> What switch is it? Is there a DSA driver for it? drivers/net/dsa/*
+> Ideally you want Linux to be controlling the switch, in the standard
+> linux way.
 > 
-> Jae, or anyone else, do you have any ideas to solve this? I'm surprised
-> it's enough to stop pinging the watchdog, but that is what happens...
+>      Andrew
 
-Does it mean that this issue blocks watchdog feeding in BMC kernel?
-Can you please share more detail information about the host OS, current
-resolution, reproduction steps and etc.?
+Thanks for jumping in. We are using BCM5389 and the MDIO bus is used to
+access BCM5389 MDC/MDIO interface in Pseudo-PHY mode.
+
+I didn't know drivers/net/dsa, but let me check out the drivers and see
+if it works in the Cloudripper environment.
+
 
 Thanks,
-Jae
 
-> 
-> Thanks,
-> Eddie
-> 
+Tao
