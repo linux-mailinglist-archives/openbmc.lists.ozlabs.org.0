@@ -1,68 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A190F3EDA49
-	for <lists+openbmc@lfdr.de>; Mon, 16 Aug 2021 17:56:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1375D3EDD65
+	for <lists+openbmc@lfdr.de>; Mon, 16 Aug 2021 20:55:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GpJgK3pWTz3bWy
-	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 01:56:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GpNds4NC2z304F
+	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 04:55:29 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=qoKFFpsE;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=eUCLIA4f;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=K/pch+QT;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::630;
- helo=mail-ej1-x630.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=qoKFFpsE; dkim-atps=neutral
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com
- [IPv6:2a00:1450:4864:20::630])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=eUCLIA4f; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=K/pch+QT; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GpJfw2Y0Yz2yRS
- for <openbmc@lists.ozlabs.org>; Tue, 17 Aug 2021 01:56:07 +1000 (AEST)
-Received: by mail-ej1-x630.google.com with SMTP id b15so32588927ejg.10
- for <openbmc@lists.ozlabs.org>; Mon, 16 Aug 2021 08:56:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=039DumGXtdpO4nwZvr5T9gFGt8vBfKZ+LMUnhTCly0k=;
- b=qoKFFpsEnbdtlwKmeS5xp3+Rt84gowO8QmYUIuEL9Ms7UpbMiJjT+ajGfilnokORzw
- zbN0LM8bkGak9wcRStMIHmWpmFySpgdtuoQ+lEBVpSXbxce8gDbEY8slnp/7806V4nM7
- 3lDl+6TD92jO7DoEi4e3/aktFE8qCGoPwhqFO7takq1dFMqOm87MviN9hhjlQxAxi6uR
- smdpDtbmHMmbBZdc4OKJjjiPbpxJZ5PgsKYCmPC7gvOYZK/lZ/FF7nSXXQe5qXDAzZtv
- jn1bSFXVNK7vATRRyHjwzcjzdWlN65C21Mz9I1IrBgVTuyHaNwan9lfNbRZq1NYoFBef
- VPFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=039DumGXtdpO4nwZvr5T9gFGt8vBfKZ+LMUnhTCly0k=;
- b=VOTG/DUAho48F8OnW9wKggDq30HankwWsmXTYW8rwZQdqYjQi1YcwM0LEhbpYPj8zl
- DQRkr1qKy4aD1pDlqQZ2H/8yPSaMrukgwUQYQaAQLxXrSlLZzV0rgh/GOsiUovyvcVSA
- KuKj+kfuKpOY3uQEfUl+iIvIWtkZgOwJ/vKt/RgpByYpxCHF5ztPmao/H2BqEIz0FBGv
- FNEyDpTHtnaqa6i2htyrryh6b2SK8Lsm11MTCSgdvWGkuXh2LUp1UvzEI+y0z8BfMuym
- oT2REf8Bqj9v1aGLu5tLYSj3o82qcxc2hlGr550KRbEjC8SkYqORGnbktJhl/cC50exz
- +XdA==
-X-Gm-Message-State: AOAM533Wn2Q9f+HhSSBkGx72vIGOn+H6EvpSPuLEyUsfTu81h2LzZHoM
- 7hnsP1B75O/TH9fkQqqfICSyse+oFuK2Vgwi9S6THZng
-X-Google-Smtp-Source: ABdhPJy2zxPMcukcPF3q+LBxzqFdKBsGwGOfpWo2ZIC5rqVy/KS/XMVIsjtOiErdh0esjV/t9WHedmQOMaS8LZF9Rg4=
-X-Received: by 2002:a17:906:491a:: with SMTP id
- b26mr16897601ejq.25.1629129361129; 
- Mon, 16 Aug 2021 08:56:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAA7TbcveKrAFSODfKKJ_q1yaPEZgvn06mBO2tXe7h=Xr6jZHLw@mail.gmail.com>
-In-Reply-To: <CAA7TbcveKrAFSODfKKJ_q1yaPEZgvn06mBO2tXe7h=Xr6jZHLw@mail.gmail.com>
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Mon, 16 Aug 2021 21:27:58 +0530
-Message-ID: <CAA7TbcsaM_nFeA1q=Eq6zsW1gH_73HXSCmtsc=3O0hi2s8QGfA@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GpNdL0XdTz2yX8
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Aug 2021 04:55:00 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id 744605C0127;
+ Mon, 16 Aug 2021 14:54:56 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute5.internal (MEProxy); Mon, 16 Aug 2021 14:54:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=fXz+9QCGLEVo3tTeq8ct5RwE3f8
+ IOsJQR9610BscJu0=; b=eUCLIA4fQiXPkEKyoAB4bs5xZvBqnnvRXr8Q/822Mof
+ J6l/tR4CzoHlLN35AqdoUuAyhQVCyNUtuRo57hwBMRhQVl7uV+Jlk9e9T0mYx9Hv
+ osBjjeXXAh1u3Th5O/EAiuCxG6jpK7RLFbfMtimfdq1AmJfaGKWbFWmlKMKV84FA
+ T+pfTNnFkyFovdTd+SbqLKRpYmDRL1eBKOEFS9NyKYdCH36/7oI07S6eiWxmhuup
+ jT+0Anf/2nVOXlUi+PZzHgZaxp1F8Yo5m3WON1XWkJerzjE9IQg31kM8Oo/Y8v6N
+ ToRAYrJGtD7VluN1TWxMIyNGwICxBB0OdY+SKXR52bA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=fXz+9Q
+ CGLEVo3tTeq8ct5RwE3f8IOsJQR9610BscJu0=; b=K/pch+QTm3uDqnOq/UdlDs
+ fZlfxAZYQPpJnQmF20rMH7cdEWzi0jbisI36v3K3jmcP+bYLOCdkNRDQEmUz8eNn
+ w85VsGFkJNJRk3s7ddAYfAL/LzYzfClx8lCsXidPg08VqgRMR3EnBV79Y38dTAUm
+ E0ibWe1JUqGPC4TavAuYd2Y7xn+et3h2yeZSZHI3UT81UdHFTioilg3mtmjnZI0F
+ 3BF0u/EQ5c9M9WmhVujeeDdEsN3/BAcY0K/b/2b1tWfpuMp3p6DkOoCjHwQXBn6O
+ qUgRd/2nFXFqwfd/6W0VbLMaxqJ/knRMtAMupQRqSbm2mGcGVvuXIVbU5woFMRfQ
+ ==
+X-ME-Sender: <xms:frQaYfjW4NYAnq7VPI_OOugzCsQ8TQ4maAUsW-d5RBsDeNB2eDkkVw>
+ <xme:frQaYcBzdAOI8BQc6TRU0xsdsF5LmV3FmAZtzL_qfxJxg8ULykVoqN6hc-gVAjfsG
+ a30GhcUFL6JUneIhZ8>
+X-ME-Received: <xmr:frQaYfEg9ESEprU2_DRixD23DTRVBM0K9MYQGt7h9NTu5lgb8HGWqj5qW5ZRDY5SV6Ka2Hxhr2k5NGYUuT5mKmwsMEEubmwgTHM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrledugdduvdelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+ geefgfdthefhkedtleffveekgfeuffehtdeinecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:frQaYcT4mVLMHZoSLtULBj7N0tAkQ5u2yZI4hzWs8SSc2pjY6or2MQ>
+ <xmx:frQaYczHAgoftQuNKJAoQWx3DeFXIJNoDalDhjveL9fnpMzW7fXM3w>
+ <xmx:frQaYS72plvHKLP2FfIYJLxV4lpPzdJjdRJ0lpPnLEDr3FrIEZCwRA>
+ <xmx:gLQaYbknIe9cZV7_uKpJPnn2P0ank1rLLFWSMTsO8LIW9KaekCasJQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Aug 2021 14:54:54 -0400 (EDT)
+Date: Mon, 16 Aug 2021 13:54:53 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
 Subject: Re: Creating Hard Shutdown interfaces/alarm for NIC Sensor
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000dd01dc05c9af3c50"
+Message-ID: <YRq0fULpBC1hJwhw@heinlein>
+References: <CAA7TbcveKrAFSODfKKJ_q1yaPEZgvn06mBO2tXe7h=Xr6jZHLw@mail.gmail.com>
+ <CAA7TbcsaM_nFeA1q=Eq6zsW1gH_73HXSCmtsc=3O0hi2s8QGfA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="6lZc4zPzHur0njO5"
+Content-Disposition: inline
+In-Reply-To: <CAA7TbcsaM_nFeA1q=Eq6zsW1gH_73HXSCmtsc=3O0hi2s8QGfA@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,159 +99,53 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: Zhikui Ren <zhikui.ren@intel.com>,
  Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Andrew Jeffery <andrew@aj.id.au>,
- Ed Tanous <ed@tanous.net>, Jayashree D <jayashree-d@hcl.com>,
- Amithash Prasad <amithash@fb.com>, velumanit@hcl.com
+ openbmc@lists.ozlabs.org, Ed Tanous <ed@tanous.net>,
+ Jayashree D <jayashree-d@hcl.com>, Amithash Prasad <amithash@fb.com>,
+ velumanit@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000dd01dc05c9af3c50
-Content-Type: text/plain; charset="UTF-8"
 
-Hi All,
-
-        Gentle Reminder.  Any suggestions/idea on this.
-
-Thanks,
-Kumar
-
-On Wed, Aug 11, 2021 at 4:51 PM Kumar Thangavel <
-kumarthangavel.hcl@gmail.com> wrote:
-
-> Hi All,
->
->
->
->          We have an use case of NIC sensor value goes above 120 (upper non
-> recoverable), need to shutdown the slots.
->
->
->
->          Critical and Warning interfaces and alarm created based on the
-> sensor threshold Severity value. Please refer the below code.
->
->
-> https://github.com/openbmc/dbus-sensors/blob/master/src/Thresholds.cpp#L116
->
->
->
->          For NIC sensor, planning to create soft and hard shutdown
-> interfaces and alarm based on severity value in hwmonTempSensor.
->
->
->
->          Already we have Severity 0  for Warning and Severity 1 for
-> Critical.
->
->          We can have Severity 2 for Softshutdown and Severity 3 for
-> Hardshutdown.
->
->
->
->          So, Based on the Severity value, the soft and hard shutdown alarm
-> will set as true.
->
->          Then the sensor-monitor application would take the action based
-> on the soft/hard shutdown alarm.
->
->
->          Could you please provide your suggestions on this.
->
->
->
-> Thanks,
->
-> Kumar.
->
-
---000000000000dd01dc05c9af3c50
-Content-Type: text/html; charset="UTF-8"
+--6lZc4zPzHur0njO5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi All,<div><br></div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 Gen=
-tle Reminder.=C2=A0 Any suggestions/idea on this.</div><div><br></div><div>=
-Thanks,</div><div>Kumar</div></div><br><div class=3D"gmail_quote"><div dir=
-=3D"ltr" class=3D"gmail_attr">On Wed, Aug 11, 2021 at 4:51 PM Kumar Thangav=
-el &lt;<a href=3D"mailto:kumarthangavel.hcl@gmail.com">kumarthangavel.hcl@g=
-mail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex"><div dir=3D"ltr"><p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0=
-001pt;font-size:11pt;font-family:Calibri,sans-serif">Hi All,</p>
+On Mon, Aug 16, 2021 at 09:27:58PM +0530, Kumar Thangavel wrote:
+>         Gentle Reminder.  Any suggestions/idea on this.
 
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0</p>
+Hi Kumar,
 
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 We have an
-use case of NIC sensor value goes above 120 (upper non recoverable), need t=
-o shutdown
-the slots.</p>
+Can you frame your original email with a question?
 
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
+I'm not versed in the details here enough to know what you're underlying
+concern is.  When I read the email I see mostly a list of "facts".
 
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 Critical and
-Warning interfaces and alarm created based on the sensor threshold Severity
-value. Please refer the below code.</p>
+I suspect others are similarly not responding because they don't know what =
+you
+want to know or where your doubts are.
 
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 <a href=3D"https://github.com/openbmc/dbus-sensors/blob/master/src/Thre=
-sholds.cpp#L116" style=3D"color:rgb(5,99,193)" target=3D"_blank">https://gi=
-thub.com/openbmc/dbus-sensors/blob/master/src/Thresholds.cpp#L116</a></p>
+--=20
+Patrick Williams
 
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
+--6lZc4zPzHur0njO5
+Content-Type: application/pgp-signature; name="signature.asc"
 
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 For NIC sensor,
-planning to create soft and hard shutdown interfaces and alarm based on sev=
-erity
-value in hwmonTempSensor.</p>
+-----BEGIN PGP SIGNATURE-----
 
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0 </p>
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmEatHsACgkQqwNHzC0A
+wRnd+xAAkMD6cDsgg7fbJ9S+OqJXLb/guSkFI/cFxAgvYsBukDOPc9ah5mPg82mc
+QKjNumM5Hqb+/586KrPzq/rkLG0gyDZSPlD/Zx81gVAJ44CDhxB5jY+sTBSUfdCw
+MSmOn+skLnhs1b+8egG4Nld+aJXpaqa8vL0NQPWl4CAu52pplRKzky50IWXzaqIZ
+g9K8c0XoWhRdxa0ozeWaILwen8b6/ZHZJPbsqQqRJZjbbKnP3Ngb/AuOmi43LoEM
+rEm0pslpM7T8qcKJxyNuGEfTVj3JtwCwJGKmAUkAJ/UXypYBxZzSvReRkliErZU2
+PwFUtUC51H3Z11WaWY2MoPGiTJNqPvFPV0XA8iv6hi4NONHBgVDv90NBzTEHmA3Z
+PUl3o2GtHjoHFvczm/oMTSIBAoKM1cSthpagU9Z6w6xpUJsjkQ/vEySlmJgnY4Bb
+Tso34/e9aYcKAOufN0yhfhYL3LlW+gXxVYlCYsr+CEFnF87nJSvneBb3Wp0WN50W
+zSQTLHeJpGgLoVDfLDUsyEUZQIGuR3wowQiE+9ZIAk2akw/urBzSCPA0e7xSW71I
+PssmdMcmYeLAGyc2L+2lkM3uaLr3SWdgnKxsGhGO+jnju6q3BXUR6Lji+zbUii5Y
+lA69CT87QX8+miDdgowezU4ysSaJpNyT/sOulInWyBmi7JKGUF8=
+=JJ3K
+-----END PGP SIGNATURE-----
 
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 Already we
-have Severity 0 =C2=A0for Warning and Severity
-1 for Critical. </p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 We can have
-Severity 2 for Softshutdown and Severity 3 for Hardshutdown.</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 So, Based on
-the Severity value, the soft and hard shutdown alarm will set as true. </p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 Then the
-sensor-monitor application would take the action based on the soft/hard
-shutdown alarm. </p><p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt=
-;font-size:11pt;font-family:Calibri,sans-serif"><br></p><p class=3D"MsoNorm=
-al" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font-family:Calibri,san=
-s-serif">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Could you please provide your su=
-ggestions on this.</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">Thanks,</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">Kumar.</p></div>
-</blockquote></div>
-
---000000000000dd01dc05c9af3c50--
+--6lZc4zPzHur0njO5--
