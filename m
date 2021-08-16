@@ -1,43 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E46B63EE0F6
-	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 02:33:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4CA13EE0F9
+	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 02:34:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GpX8945Nbz30N8
-	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 10:33:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GpX8k5XtNz30RV
+	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 10:34:14 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=FH1hPc91;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bootlin.com (client-ip=217.70.178.240;
- helo=mslow1.mail.gandi.net; envelope-from=alexandre.belloni@bootlin.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2f;
+ helo=mail-yb1-xb2f.google.com; envelope-from=newb2.d.c.2013@gmail.com;
  receiver=<UNKNOWN>)
-X-Greylist: delayed 1431 seconds by postgrey-1.36 at boromir;
- Sun, 15 Aug 2021 09:46:41 AEST
-Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [217.70.178.240])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GnHBn6Cdwz308G
- for <openbmc@lists.ozlabs.org>; Sun, 15 Aug 2021 09:46:39 +1000 (AEST)
-Received: from relay4-d.mail.gandi.net (unknown [217.70.183.196])
- by mslow1.mail.gandi.net (Postfix) with ESMTP id 7A197C31F3
- for <openbmc@lists.ozlabs.org>; Sat, 14 Aug 2021 23:22:45 +0000 (UTC)
-Received: (Authenticated sender: alexandre.belloni@bootlin.com)
- by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id E15C8E0005;
- Sat, 14 Aug 2021 23:22:15 +0000 (UTC)
-Date: Sun, 15 Aug 2021 01:22:15 +0200
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Paul Fertser <fercerpav@gmail.com>
-Subject: Re: [PATCH 0/2] rtc: pch-rtc: add Intel Series PCH built-in
- read-only RTC
-Message-ID: <YRhQJ4kdyu1Xs1Rb@piout.net>
-References: <20210810154436.125678-1-i.mikhaylov@yadro.com>
- <20210814224215.GX15173@home.paul.comp>
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=FH1hPc91; dkim-atps=neutral
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com
+ [IPv6:2607:f8b0:4864:20::b2f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Gp4Sd6rHkz2yNx
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Aug 2021 16:46:25 +1000 (AEST)
+Received: by mail-yb1-xb2f.google.com with SMTP id z5so30914716ybj.2
+ for <openbmc@lists.ozlabs.org>; Sun, 15 Aug 2021 23:46:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Su41F6TrclJiiOEFWHNbetKdVN6Hx66kc0g+Ikk5Im4=;
+ b=FH1hPc91q5ECPKUc42wZgAl3ATbpqALUrGqGi+dI74UgyvrNsc1QrO5M4vFLr6I0hh
+ aQmGOAKY7l7j8wvL8MYnfaV8Z98AaR1XnGrc8We7/ZOdJ763hAIcN1Ht+cjwIKIQStOX
+ QCgFLSpXU1v+dQgxEYjhb6RzRl9ddcvel8E1h6uXQ1MX9EiV2Uauy0UeJl+nafIAz34W
+ GUv1YpD1ACScvVCPzqValkh6FJNGeFOy8OkBhYAXejfe9O/qL4PIYbnreqR86F7Rn98X
+ uIsK9BNzKuFdPW0WjZPuYSssHFjHTJ8JxbqzxIk3nudfwM51EQkZEtsadU7O4MOnVcyz
+ Ld6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Su41F6TrclJiiOEFWHNbetKdVN6Hx66kc0g+Ikk5Im4=;
+ b=b0Kbg/2U55n2Bd+HylRh5/bUhS4n4YNWklfDaT6DftiLlfueR+WLCB3fr6lh36YBt+
+ KUpgx8ys/9z7fd4ZkBW1SjSXbG+SJr3FqK24DfOwvwtC9N3CHf9exDg8UO3NAxi+MQqF
+ Cdg6ISUOhj0/jAK0T5WidqU6lLajHgsuu8MmY2S50H22hIz9eNYZx+oVw9HnjLyZJbhE
+ lvVHF9pfYm/fc6GPp1LLY5Jj6sjcCok3eZ9YxnsuHiT7EC8idBnn8Cx3Z0JWfaZmTy5l
+ k6B8tOJpOlnnSJ/R9mFZqJo8DBpHmPPFylRGRN9SbUTcb38Yv5/ICuczZqf0VhuVu2zt
+ PGSg==
+X-Gm-Message-State: AOAM5326Z8cohGWJ18o7HfT2gdQJJVPvX3DnrZe+8OMPABdyUF3OFzLr
+ gOCIa33WtuqRD+MRH+wkTCxBXmet2BC41RgtcnZxTxhOzL6Row==
+X-Google-Smtp-Source: ABdhPJxrTcFutLTiY4t1IBuacMqgT/C9vEx2RdUKAmGK4w5L+jPBZJHM/Q/0G1epucTGWtVh4ffv7ANxyNW+PXjMizk=
+X-Received: by 2002:a25:bb08:: with SMTP id z8mr19077256ybg.167.1629096380207; 
+ Sun, 15 Aug 2021 23:46:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210814224215.GX15173@home.paul.comp>
+From: Figo Chen <newb2.d.c.2013@gmail.com>
+Date: Mon, 16 Aug 2021 14:46:09 +0800
+Message-ID: <CAK2KAUCFQSHq9zu3JaJ6gG_VYTywUJXydWPcuZ0nHuEDtdQJDw@mail.gmail.com>
+Subject: Apply the account for OpenBMC contribute
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000000c161305c9a78f59"
 X-Mailman-Approved-At: Tue, 17 Aug 2021 10:32:43 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -50,35 +71,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ivan Mikhaylov <i.mikhaylov@yadro.com>,
- Alessandro Zummo <a.zummo@towertech.it>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 15/08/2021 01:42:15+0300, Paul Fertser wrote:
-> On Tue, Aug 10, 2021 at 06:44:34PM +0300, Ivan Mikhaylov wrote:
-> > Add RTC driver with dt binding tree document. Also this driver adds one sysfs
-> > attribute for host power control which I think is odd for RTC driver.
-> > Need I cut it off and use I2C_SLAVE_FORCE? I2C_SLAVE_FORCE is not good
-> > way too from my point of view. Is there any better approach?
-> 
-> Reading the C620 datasheet I see this interface also allows other
-> commands (wake up, watchdog feeding, reboot etc.) and reading statuses
-> (e.g Intruder Detect, POWER_OK_BAD).
-> 
-> I think if there's any plan to use anything other but RTC via this
-> interface then the driver should be registered as an MFD.
-> 
+--0000000000000c161305c9a78f59
+Content-Type: text/plain; charset="UTF-8"
 
-This is not the current thinking, if everything is integrated, then
-there is no issue registering a watchdog from the RTC driver. I'll let
-you check with Lee...
+Dear Sir,
 
-However, I'm not sure what is the correct interface for poweroff/reboot
-control.
+May I have an account to join the OpenBMC git to contribute ?
 
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+Thanks,
+Newb.d.c
+
+--0000000000000c161305c9a78f59
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="ltr">Dear Sir,<div><br></div><div>May I have an account to join the OpenBMC git to contribute ?</div><div><br></div><div>Thanks,</div><div>Newb.d.c</div></div>
+
+--0000000000000c161305c9a78f59--
