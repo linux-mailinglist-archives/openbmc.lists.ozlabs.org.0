@@ -1,81 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A14733EE0A6
-	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 02:02:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E04FA3EE0B0
+	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 02:04:35 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GpWST45Fsz3bX0
-	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 10:02:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GpWVT5HHfz2yLQ
+	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 10:04:33 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=gpANUohh;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=H/LgA0e0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634;
- helo=mail-pl1-x634.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62e;
+ helo=mail-pl1-x62e.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=gpANUohh; dkim-atps=neutral
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com
- [IPv6:2607:f8b0:4864:20::634])
+ header.s=20161025 header.b=H/LgA0e0; dkim-atps=neutral
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com
+ [IPv6:2607:f8b0:4864:20::62e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GpWRZ626Vz303t;
- Tue, 17 Aug 2021 10:02:01 +1000 (AEST)
-Received: by mail-pl1-x634.google.com with SMTP id c4so6416437plh.7;
- Mon, 16 Aug 2021 17:02:01 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GpWV26bb0z2xZS;
+ Tue, 17 Aug 2021 10:04:10 +1000 (AEST)
+Received: by mail-pl1-x62e.google.com with SMTP id e15so22598288plh.8;
+ Mon, 16 Aug 2021 17:04:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to:user-agent;
- bh=78YHZHnJSjDKWg8zjTZj0BCLoUOSU1vHhIJ7lXSskDk=;
- b=gpANUohhW5ovntoe5a6jBaIVPw2LBbR7fbbt73KQZgAs0ckFkkw2W2WCF4C6rjRWoJ
- N72su3YB9tQUFR13DjKz5C0qPCcZ5XGFvTFE6ZKpXS69a8JeSeJjhZuVwMwmDjukcfYx
- eECKeiwLw5dIpPKYIndQMOzcfWVr6sKOweM9DOo9jA7Rz/mojP0HPvcch+W3U+IdShot
- nhkg09h/sO6GvsJwxHVTY2Nf96gNxxfHJUGKWF//3YCcND23x4WHW9pFC50LNrRNFjQA
- jS9wqjaPWHsiBhySp6/pOHJOLJMDb4sjJFHXSzXe8G/tzlk6tIsgUNVPdWmNhs5/PbbV
- llAA==
+ bh=8OcYoQrjOQIm/iOfn/qGg5WXk6OnAW5qFwcrs/rMErI=;
+ b=H/LgA0e0aRuTUYHHg7c8649E/r5biZOpoBg7KtUO38aR75LQrqKye4P6cMEfwu1L7W
+ SBx12BW7i+wEh9nBFnKidZ2L3P1aKg7lWLx8Bj0H8InXsT2eCkjIpyrCXiUeehllATnV
+ pTmPzGF7O9Y8nNyeoan4jkhMCmJI8Ld60Dxdc2LBRmaxonfZjkz1EM+gHGfbbwzu+nbC
+ eBt7HfmcSqtsWnPjC8XebqAigfK/YsYZDA+22jz1RmFyCVT1s4s0x/cMVib3WZCupllg
+ hCBAvki+G4wr4ttmBMf1CllKVXOmRDE1x2yYK6Xi1cwOhzCxgd96e1YAljeFBr7qzYwu
+ wLCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to:user-agent;
- bh=78YHZHnJSjDKWg8zjTZj0BCLoUOSU1vHhIJ7lXSskDk=;
- b=YhGRc4YxIzzv3UBXivMizEU/mrkGhYi+DB/Jndxc2Dg1OXe3wZ8lXF+d4qwgVUkHSq
- IkSsg8AT6jGvzslP27TlZ51/hyYDK8+M1ko8TJE/Pm1J/PJqZmCHg8tI+wJEWv3hy7LM
- yIn4TnR0thenauEEaPKQtiQC1sEVMsZSmVjwNu+sLGFNlTbSrGcGErndgQ2ueNF3caOs
- OpRj3KDPhRzaBFKvYO7rHRQmRZs+aEhNeOMxtko2yVX+ie/gaeFZ70IyV0OiruIo1RF/
- K0oIhwj6XLWta4DI8jEQkJku4gIQE59iRnpFMNtGabzUA9RtKRnk9t4MI8iS/SYsU4qp
- gogg==
-X-Gm-Message-State: AOAM532fWCqjS6tbNV9fNdTwH+hRoTyIgoSML/GVJCGFh7OIgMdWnC7E
- IVsLOrTmj4BQX9LEppqzxvE=
-X-Google-Smtp-Source: ABdhPJz8QcDhSLV5QJ2of0M+kIIloIKlQbjPLtgWVbRmX9qZFVxr85khXu2QMr15qvlR6/rQmhhl9Q==
-X-Received: by 2002:a17:90a:e88:: with SMTP id 8mr489071pjx.108.1629158516781; 
- Mon, 16 Aug 2021 17:01:56 -0700 (PDT)
+ bh=8OcYoQrjOQIm/iOfn/qGg5WXk6OnAW5qFwcrs/rMErI=;
+ b=rFRaD9TVKmDW+ipzufrBVVIrXmoakwKb5AI1vx9nqVeUxPAD5iUJJg7tYZ7y5G10PO
+ 4hUord5rMO/h7y00BtKf+MNXWshDROu3x435DgFWeSpYz0k2BsXxDYd6EvSWZtHd7RYk
+ rrkTWSkl7zCrnBp8r7OVLThWpEWqDmn+mqHrhBZZG/1zcD20zHWBXB7PtHAoSB3rjsh3
+ A0YBqsqoAA+OovnGHzEAZ7Fr5BRRj8ZPkcRVhOCgcka3uJAiA3rCoge4RgpGO5carhV5
+ 3EoNIddGeW1d9OCHhtrS66jeYT8UKiBdTjhlqL97v5fAWGCzEDiMmMAliAepWGIcTagW
+ VKtQ==
+X-Gm-Message-State: AOAM533DPEdYGoA2QydZfSGCYhCB3Ajj9YZ7avv6W6cyrJBd1ihLbHQ+
+ GmuIVSLeDeBISqxBaGzFf5Y=
+X-Google-Smtp-Source: ABdhPJwtLYKDhsKinpch6hw0rT/vGFaK/Jdkg0IXrY1PiIgMwHhRyJEkvRLLKb+Bsf7366YwpdXaRA==
+X-Received: by 2002:a62:6242:0:b029:3c6:5a66:c8f2 with SMTP id
+ w63-20020a6262420000b02903c65a66c8f2mr667349pfb.59.1629158647726; 
+ Mon, 16 Aug 2021 17:04:07 -0700 (PDT)
 Received: from taoren-ubuntu-R90MNF91 (c-73-92-48-112.hsd1.ca.comcast.net.
  [73.92.48.112])
- by smtp.gmail.com with ESMTPSA id k22sm260946pff.154.2021.08.16.17.01.55
+ by smtp.gmail.com with ESMTPSA id u190sm282154pfb.95.2021.08.16.17.04.06
  (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Mon, 16 Aug 2021 17:01:56 -0700 (PDT)
-Date: Mon, 16 Aug 2021 17:01:49 -0700
+ Mon, 16 Aug 2021 17:04:07 -0700 (PDT)
+Date: Mon, 16 Aug 2021 17:04:04 -0700
 From: Tao Ren <rentao.bupt@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>
-Subject: Re: [PATCH v2 4/6] ARM: dts: aspeed: Add Facebook Cloudripper
- (AST2600) BMC
-Message-ID: <20210817000148.GA7547@taoren-ubuntu-R90MNF91>
-References: <20210805222818.8391-1-rentao.bupt@gmail.com>
- <20210805222818.8391-5-rentao.bupt@gmail.com>
- <CACPK8XcV5On2D4D+SXnfw1M0owwfCL4Su19jOEA7yWpq+T3jLw@mail.gmail.com>
- <20210813034016.GA21895@taoren-ubuntu-R90MNF91>
- <YRaFpq1LvRzMYr/A@lunn.ch>
- <20210814052228.GA1298@taoren-ubuntu-R90MNF91>
- <YRfgv5OknMluW7jj@lunn.ch>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH] ARM: dts: aspeed: minipack: Update flash partition table
+Message-ID: <20210817000403.GB7547@taoren-ubuntu-R90MNF91>
+References: <20210720002704.7390-1-rentao.bupt@gmail.com>
+ <20210813062435.GA24497@taoren-ubuntu-R90MNF91>
+ <CACPK8XcAqU3KASespqS3dPterpzyqD4wYH=qOS8Ok2yUrB_F+Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YRfgv5OknMluW7jj@lunn.ch>
+In-Reply-To: <CACPK8XcAqU3KASespqS3dPterpzyqD4wYH=qOS8Ok2yUrB_F+Q@mail.gmail.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -97,23 +93,22 @@ Cc: devicetree <devicetree@vger.kernel.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, Aug 14, 2021 at 05:26:55PM +0200, Andrew Lunn wrote:
-> > Thanks for jumping in. We are using BCM5389 and the MDIO bus is used to
-> > access BCM5389 MDC/MDIO interface in Pseudo-PHY mode.
-> > 
-> > I didn't know drivers/net/dsa, but let me check out the drivers and see
-> > if it works in the Cloudripper environment.
+On Mon, Aug 16, 2021 at 02:11:40AM +0000, Joel Stanley wrote:
+> On Fri, 13 Aug 2021 at 06:24, Tao Ren <rentao.bupt@gmail.com> wrote:
+> >
+> > Hi Joel,
+> >
+> > Looks like the patch is not included in "dt-for-v5.15". Any comments? Or
+> > should I send v2 if the email was not delivered?
 > 
-> The b53 driver knows about this switch, so please make use of that
-> driver. See Documentation/devicetree/bindings/net/dsa/brcm,b53.yaml
-> for how you describe it in DT.
+> I had missed it. It's now applied for 5.15.
 > 
->     Andrew
+> Cheers,
+> 
+> Joel
 
-Thank you Andrew for looking into it. I will update dts and send out
-followup patch after validation (perhaps after v5.15 merge window).
+Thank you Joel.
 
-
-Thanks,
+Cheers,
 
 Tao
