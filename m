@@ -2,97 +2,129 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA70F3EE405
-	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 03:58:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 490073EE47B
+	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 04:38:09 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GpZ1p574jz308V
-	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 11:58:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GpZvg0dZpz30DY
+	for <lists+openbmc@lfdr.de>; Tue, 17 Aug 2021 12:38:07 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=aMO8BNFz;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rpDy+Mqy;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=y2/NE5l6;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=aspeedtech.com (client-ip=40.107.131.95;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=chiawei_wang@aspeedtech.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=aMO8BNFz; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=rpDy+Mqy; 
+ unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
+ header.a=rsa-sha256 header.s=selector1 header.b=y2/NE5l6; 
  dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1310095.outbound.protection.outlook.com [40.107.131.95])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GpZ1J6jG0z2yNW
- for <openbmc@lists.ozlabs.org>; Tue, 17 Aug 2021 11:57:56 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailout.nyi.internal (Postfix) with ESMTP id E52E55C0198;
- Mon, 16 Aug 2021 21:57:52 -0400 (EDT)
-Received: from imap43 ([10.202.2.93])
- by compute2.internal (MEProxy); Mon, 16 Aug 2021 21:57:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm3; bh=EKu+Nrdu9HXNoO4kSyCE4FwogxMv9D6
- Hpv4jt+hCIYU=; b=aMO8BNFzXcUXGQlnTHPBo0wm3ZmTfcGsgrZj4lMrIPurt1u
- dk+W1Gh3CgdAfZbTnTCXiW2feo0Ommaeht3vpX6EiT9kflx0auYZrB3DMyIS6JLP
- 7K/hqNKAkZ45PMGtH5fcxeksLWgC0gNrjEgW/EXyMn1GIjyRwiLLI/4V+3WqZmvL
- iknFLzpRjpE4f52cULVJ/EChHaPcfN57YxKZptoDpELz4BAk4LS2OBGkv8RcqLnv
- 0gQZP4LMI058FyIP2cZu7bmL/dDum9QJlVvjhtqkjzqS8N2HFi2iYOvCzKIyuPgR
- OBT6c0M5q1T04cyfm3M1utMNNYFlPQeG+lTnL2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=EKu+Nr
- du9HXNoO4kSyCE4FwogxMv9D6Hpv4jt+hCIYU=; b=rpDy+Mqy/SH4NWmYmvd2Fe
- BGn7x118JWhMO2Psef8VP9+EkDBjRtIJ0hgBw+aV2pZL4YukYz1iHPNhSUAm029e
- mHqLx/8pfpvDTgNYmWGIT0ijzkkZJBFE2rf+jUtBcTFyEgNTXrDKi/nQ4+gfzZI6
- eR+2EsJagmbQcIHdTp0TR69IwtLvhV8lmO/eS6MPxLeIwRIFWg6yF6d2fosXnp2C
- MH4PkPyeT3otMyA42Y0EQy69/6VPLK12leFnrHr4NcyVbKJ6yNSVkKtQD/8wT9gH
- ihE9Vjo4JjR3UePNAk6vwaIMCT6Mcfj9C1WZObIFRuSlxtbW3BPuQ9fU6T0NPgzQ
- ==
-X-ME-Sender: <xms:oBcbYa4EtpK4aJE7rqW0qFGWeTUoJffJ7WuSG9H9c-pmw24PZbXGDQ>
- <xme:oBcbYT5uEnxV4i5wrmwa5bQ96JVWbgOExMPh0CK9H8rKhm-RWfOMV7xLCcVZvKi23
- JzN30k-rN_5CWfb9w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrledvgdehvdcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpedutddtkeeugeegvddttdeukeeiuddtgfeuuddtfeeiueetfeeileettedv
- tdfhieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:oBcbYZf8bL_X67o72QbG2a3PCGRNUMneQRZS9wLxOMV2DQTjf0TRxA>
- <xmx:oBcbYXKibn7ZJKV40Ia7LQiBtUDF8JZd8po8yPui1zZajVHtqplGVA>
- <xmx:oBcbYeJaaRTcrE9bQZiGPaf5LUGUdit4rkfmvwYuF92gXnfjQ5bpzA>
- <xmx:oBcbYYx1DtGqukxZ4rNmxtmEwAK19M_DnGBMk9q0koWA6KYenmnp0g>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id F2860AC0E77; Mon, 16 Aug 2021 21:57:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-1118-g75eff666e5-fm-20210816.002-g75eff666
-Mime-Version: 1.0
-Message-Id: <aef11e4c-0b18-47a3-8116-36db990b998c@www.fastmail.com>
-In-Reply-To: <DM6PR08MB551444C4EAB80473CB576740DCFD9@DM6PR08MB5514.namprd08.prod.outlook.com>
-References: <DM6PR08MB55145CD3DC0AD96D30B70771DCE59@DM6PR08MB5514.namprd08.prod.outlook.com>
- <8fcc9529-0f7b-df46-aa28-1569d254eb20@linux.intel.com>
- <DM6PR08MB551464D29CE9BD91FFE1B20ADCE69@DM6PR08MB5514.namprd08.prod.outlook.com>
- <b133d936-c788-1800-7b72-e197b69387cc@linux.intel.com>
- <DM6PR08MB55145A59C44D48FFD5B70C26DCFD9@DM6PR08MB5514.namprd08.prod.outlook.com>
- <878c1c79-662f-468d-82d1-a890a8aeab2e@www.fastmail.com>
- <DM6PR08MB551444C4EAB80473CB576740DCFD9@DM6PR08MB5514.namprd08.prod.outlook.com>
-Date: Tue, 17 Aug 2021 11:27:31 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Chris Chen (TPI)" <Chris.Chen3@flex.com>,
- "Bills, Jason M" <jason.m.bills@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: =?UTF-8?Q?Re:_[x86-power-control]:_press_the_power_button_for_a_long_tim?=
- =?UTF-8?Q?e_that_can't_force_turn_off_system_power?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GpZv31Drzz2yQy;
+ Tue, 17 Aug 2021 12:37:33 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZcEsgstLELNM5x3RDOF50vI2ppsbRil0rRHdz3t+qqsLFMGD0FY1kftuxnVHX7V4vZrdpmvf7+FFl7e51f1MhE2++w+kivDGm1eqCRlc9B5znqFSyXWfP+W7kpeLe6tAna+VnNHdbR2tqQlYxs5BDG5X/9XbLgY0C5IvFImCmED+0/2gaFtLdETLdVWun5mZ/BNku2R76Jv0uFj+yA+5lGagxvscX8V9qc0/07/4FJhzOEk9oaEu3aloy+7WmVYGPRdKRtoXVr7okwfMMPfHmW1gglICcN3aS+Y48NzU3lCU+b3B/N59EnmCNRK/06toCiQmdsw8LL6bSD9BggN3gA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=D4CA9wvLSV6qAqV1a7KpXaVkYKzdYvpLIiiqP0P2ibA=;
+ b=aZx0FZ5gYSphGuIPIbYfoGMQFfaKu4BiWH/fU2UE+r8fORpdKl1dF8pb2SMGMUIxrHuG84slT544hRnblaHDtxXKioV/goyCA1CUECivX3cOlm/pBv2dn2FwQm82PBIWZh9/YlaXh8TIyM4SgqmapTum3BCiUoVPKJUTJTbchchgI2yCsOpU0dgAdfOOBOU6Es7iBCO8KNvw2tVJUsIPRCk26wCXs39qOpclyQ7y6nOdEUlchN9l5mdeqo3cv26n81Mf5nl6n34KEbjZMAZdCwKKD/gpNa8sbqfjsLYnkrNTHZ5sKZKo1afijrS+/nGkWGfaVbsxzMs2+QXgyi08PA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=D4CA9wvLSV6qAqV1a7KpXaVkYKzdYvpLIiiqP0P2ibA=;
+ b=y2/NE5l638bA50QN3UBGW1HlygSHoZf/r9xQH4aypQDgrluAyzDHOrywN+djO6g0Z16Dfx8NiDxZo2d5CftXObo/7o9ya7UFkIY49BYe0q1vHXqy6QHeMlvSlzgqrzFoJLytI2x+sGczReSck1lka2o9F73/3YZN6awlvADAGglCFJn91R7K+3J8r5oakYh6iJftjgfUCAFr8Ebf3AyqnmjALfPFGiDIj2ne9joRN4kcHx28R4kkSeHU6KqWUPaRPE1kNWGsJh4FUVNbhjDLwBVJ4rLfuTI4RLy1/jTg24xuWeRmZJPRrh8JL3cxvFLU04sH1nZP2f4/NDqGHMFvww==
+Received: from HK0PR06MB3779.apcprd06.prod.outlook.com (2603:1096:203:b8::10)
+ by HK0PR06MB2609.apcprd06.prod.outlook.com (2603:1096:203:5c::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4415.14; Tue, 17 Aug
+ 2021 02:37:13 +0000
+Received: from HK0PR06MB3779.apcprd06.prod.outlook.com
+ ([fe80::3012:25b6:3003:f065]) by HK0PR06MB3779.apcprd06.prod.outlook.com
+ ([fe80::3012:25b6:3003:f065%7]) with mapi id 15.20.4415.024; Tue, 17 Aug 2021
+ 02:37:13 +0000
+From: ChiaWei Wang <chiawei_wang@aspeedtech.com>
+To: Dan Carpenter <dan.carpenter@oracle.com>, "kbuild@lists.01.org"
+ <kbuild@lists.01.org>, "robh+dt@kernel.org" <robh+dt@kernel.org>,
+ "joel@jms.id.au" <joel@jms.id.au>, "andrew@aj.id.au" <andrew@aj.id.au>,
+ "cyrilbur@gmail.com" <cyrilbur@gmail.com>, "devicetree@vger.kernel.org"
+ <devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
+ <linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: [PATCH 1/2] soc: aspeed: Add LPC mailbox support
+Thread-Topic: [PATCH 1/2] soc: aspeed: Add LPC mailbox support
+Thread-Index: AQHXkAbuYQV5hUkRrk6mm7VMl+/1kat15ZCAgAEbqYA=
+Date: Tue, 17 Aug 2021 02:37:13 +0000
+Message-ID: <HK0PR06MB3779008AC59C277899C95D1291FE9@HK0PR06MB3779.apcprd06.prod.outlook.com>
+References: <20210813054758.13189-2-chiawei_wang@aspeedtech.com>
+ <202108160813.GOZ1P4Y8-lkp@intel.com>
+In-Reply-To: <202108160813.GOZ1P4Y8-lkp@intel.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: oracle.com; dkim=none (message not signed)
+ header.d=none;oracle.com; dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 4e0fd7d7-b289-450b-ea81-08d96127ebc6
+x-ms-traffictypediagnostic: HK0PR06MB2609:
+x-microsoft-antispam-prvs: <HK0PR06MB2609FAF34132513528EC725391FE9@HK0PR06MB2609.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:5516;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: M2dhejlGjLGlQuRVKOC+1sZxqR3aa8gNKyhWVM9lprESV/Y6sGJyB6A1vSIPiXiRrkn9jatSKj6uvf/BRck1hSQi0J1IDDitDk6a2HN0l/vd5JAnXV7218N6WAo/GPfC4pXVKKonJyiuSnnfWvhhbrayidinO7+965oiKTTAHm6trbBRYQ7TxkhHg/V4mz+LsX2ylDJG+xpq1ZkpPkGsyHNoAozjYAbVf6ult2VswVHkNOTkHLepat324epopZHzstQJI071ZTCP1yjtd6EuNaeUnSW8WRtpKOleg3kpS6qYrxJYELBxfip/Q2417WTEr1zFMxYRK50U2H8WBcj1dvteO+JvbLxv/6nzXSEBrotssza9dC9ALkxJZlFl0rLzbx25tfpZslyyfddFOU4jid9TfWnkjYrFCl9kZOjUfLjeSeqoE4gUpTxNBRGmkzDm37wC/IJWtuJK8yscZvDdmL2oHc9QJ/omvYgPtT6ACquLLmXxIFXeFdIftmLS7VgMYM4RgtsascvZnU0pqVfRjdoEdPPIFgsk5Y/VxzF/ZLQ3coaeibB1FkrmYBn/G/loELAtQeefb7Cm42L2uosb7oReSuPIPZpaS2sekZSOZt1ut5dPL9tER4o6ddqmD7IHwEeILxgtj/mTOPXYMkUvNGvSkl835D+RF8ScAWHMyKwfwuQ07pCcfJH0xADh3PzmFnAx8ShlVrtGQHA7+2OZZCF0XRt5JNgRnPwmnKJvxHCILZ9B7lNsZT4eFCyFwu+i7in2SVbWKXt6sBbkeIXCTLHkY8wWqWQyCzOAKvASTIMgWKU4iG10g4v6HGXw26Dd
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR06MB3779.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(136003)(376002)(396003)(39840400004)(366004)(346002)(966005)(54906003)(110136005)(316002)(76116006)(15650500001)(7416002)(38100700002)(4326008)(122000001)(5660300002)(52536014)(478600001)(66476007)(38070700005)(66946007)(66556008)(64756008)(66446008)(8676002)(9686003)(921005)(8936002)(6506007)(71200400001)(83380400001)(86362001)(26005)(186003)(2906002)(33656002)(7696005)(55016002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Rvv1fx+rxSjSdeoV0RKEn0CvbXcis8B7l2HDxsgUgc9Z0IlSdcACoEM//xVb?=
+ =?us-ascii?Q?2HUDn5Wj7m2wTn5y29aEnkb+iTGPQk/9x9WXKo2NQztBZuvau4JCczfx4+aP?=
+ =?us-ascii?Q?CYmyOn5rD/RT657hMzo2tXXDLRf7rNZ824VRW9BXfmnbpyKmKrqpKpIUbtkE?=
+ =?us-ascii?Q?X9Hk/jZfJzOTvxjFV8vTWdbRd47RpENu/CbgkYBrsBBPXSBzlgBPxFDE7C0R?=
+ =?us-ascii?Q?5BDwU0bI4F+bqSuROh9PwFRBB9S/ttM168vn0qZG8uwTXN9gOJS7EGrbMh0k?=
+ =?us-ascii?Q?XwSs0+/HMAQaFn93Xrxx7UIHNlzIYcxH3o5sENSJ4X41mVAijGhr5c1E8rMi?=
+ =?us-ascii?Q?d7EBfSFQIy0edmT9wupt+IcyjCbRC8UDSDrC3pxZ0nr/+jX5g+3oG08ZlBf9?=
+ =?us-ascii?Q?a+XnkozhPAJHfK2OCmNHbkUO6VpvVHpOvXLdIyZLwh3pT8FUn7zx6K7LzYn0?=
+ =?us-ascii?Q?mixnB++YQMQRTuTEJSTNokqtKktCZja/iuo1mZNwPCHzn5eDlZGySW+0WrPI?=
+ =?us-ascii?Q?6e7MDq9TsyuW/j7zoIaYxwI0DUgTscobcdIGUHScDLGdmvPf/OX5s7a01AY7?=
+ =?us-ascii?Q?dlr6wV0dInk0hW72e3thc7G8UBPasolOC35CBvIv7XZtrompP983CajfWYAr?=
+ =?us-ascii?Q?KVw5rQFriMQvOXw5qv6VfuORxZgVS3W3/kmJYnCbsWqFD5U7pPZMztlIpRKZ?=
+ =?us-ascii?Q?EJjIm/pRay5KuHkUB8m4S/rVOLRZy/VAfsgBqE2uiiqKzzziEpHgytyChoIc?=
+ =?us-ascii?Q?olVj99gnU2WqmJGBEM73dL0eXtCAw0FeTN3XmQGRFMhTybleWjQQ6dwAcf/E?=
+ =?us-ascii?Q?lChHX1+vDbRDN3jhGTF0vO5E6GL6E95QDfZLKBLhKxIHjzorEQkL+1rBY4oM?=
+ =?us-ascii?Q?TtD4UONgXOfZkiPt8h2/ZdKcKqrbMrn5zA+5+nBLhPFE/geXUtg1K9A+wp+S?=
+ =?us-ascii?Q?UTPwkHZpoO6/IzkYVfczTj2xUaFzSEeSK+dzqQINvmcIc6lnrJoi6pPHkR/y?=
+ =?us-ascii?Q?fcIJb5Q9LInQ++84epHn8ll2uM15yvXGyLpdQ1HmY+9V5HaIx8UN7xXo922u?=
+ =?us-ascii?Q?R+Fj+F5gBlM8nvDUZrjrtLSCcIfQs1TNwRTXul6zH/ljUNBgz59WGc9Y0Y+t?=
+ =?us-ascii?Q?rpkhNG11yFgj3pJhnXACgL3QlvrwoI3Nfc0AL+Y0QhbohvBXO04zry8oXT4g?=
+ =?us-ascii?Q?NNOt5egc0NdmeATfhpK1DqU539cfHOFoo8nnckfeZDCXDOTzT7/8t4QlrMPB?=
+ =?us-ascii?Q?P5+Kp0FX0J+7f+P5RbfXwpldVHq8cHz5ihVldLurNU2enyMwZicjlR4h9DzT?=
+ =?us-ascii?Q?kNWyIeteEmBvT+bOplG1V52C?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB3779.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4e0fd7d7-b289-450b-ea81-08d96127ebc6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Aug 2021 02:37:13.5457 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: zdfIDiJoMDRf3KTnNslhpIcpJKfmMILUK/xmLR/QeAqzsOroXwI5x9PmS0oCMfB4MNVycESbj7XhYQPQk/Oe4ojIZvtKTE1NaEbXT93XROE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR06MB2609
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,88 +136,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "kbuild-all@lists.01.org" <kbuild-all@lists.01.org>,
+ "lkp@intel.com" <lkp@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 16 Aug 2021, at 20:15, Chris Chen (TPI) wrote:
->  Hi Andrew,
-> 
-> Thanks for your hint (CONFIG_DEBUG_PINCTRL=y) that let me see where the 
-> passthrough setting was disabled.
-> ======
-> [   11.631044] aspeed-g6-pinctrl 1e6e2000.syscon:pinctrl: request pin 
-> 120 (AB22) for 1e780000.gpio:120 
-> [   11.631064] Muxing pin 120 for GPIO
-> [   11.631071] Disabling signal PWM8 for PWM8
-> [   11.631087] Want SCU41C[0x01000000]=0x1, got 0x0 from 0x000000C0
-> [   11.631094] Disabling signal THRUIN0 for THRU0
-> [   11.631102] Want SCU4BC[0x01000000]=0x1, got 0x1 from 0x0F000000
-> [   11.631118] Want SCU4BC[0x01000000]=0x0, got 0x0 from 0x0E000000
-> [   11.631124] Enabling signal GPIOP0 for GPIOP0
-> ======
-> 
-> But something strange is the logs seems from "x86-power-control" 
-> package because it would not appear after I commented out partial code 
-> as below in the package.
-> Could you or others tell me why, please? I mean did I miss any 
-> configurations or code changes or anything when using the 
-> "x86-power-control" package?
-> 
-> #if 0 //Added by Chris for testing 
->     // Request POWER_BUTTON GPIO events
->     if (!powerButtonName.empty())
->     {
->         if (!requestGPIOEvents(powerButtonName, powerButtonHandler,
->                                powerButtonLine, powerButtonEvent))
->         {
->             return -1;
->         }
->     }
->     else
->     {
->         phosphor::logging::log<phosphor::logging::level::ERR>(
->             "powerButton name should be configured from json config file");
->         return -1;
->     }
-> #endif //Added by Chris for testing
+Hi Dan,
 
-Requesting the pin as GPIO removes the pass-through mux configuration.
+> -----Original Message-----
+> From: Dan Carpenter <dan.carpenter@oracle.com>
+> Sent: Monday, August 16, 2021 5:41 PM
+>=20
+> Hi Chia-Wei,
+>=20
+> url:
+> https://github.com/0day-ci/linux/commits/Chia-Wei-Wang/aspeed-Add-LPC-m
+> ailbox-support/20210813-134908
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/joel/aspeed.git
+> for-next
+> config: openrisc-randconfig-m031-20210816 (attached as .config)
+> compiler: or1k-linux-gcc (GCC) 11.2.0
+>=20
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+>=20
+> smatch warnings:
+> drivers/soc/aspeed/aspeed-lpc-mbox.c:230 aspeed_mbox_ioctl() warn: maybe
+> return -EFAULT instead of the bytes remaining?
+>=20
+> vim +230 drivers/soc/aspeed/aspeed-lpc-mbox.c
+>=20
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  214  static long
+> aspeed_mbox_ioctl(struct file *file, unsigned int cmd,
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  215
+> unsigned long param)
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  216  {
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  217  	struct aspeed_mbox
+> *mbox =3D file_mbox(file);
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  218  	const struct
+> aspeed_mbox_model *model =3D mbox->model;
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  219  	struct
+> aspeed_mbox_ioctl_data data;
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  220  	long ret;
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  221
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  222  	switch (cmd) {
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  223  	case
+> ASPEED_MBOX_IOCTL_GET_SIZE:
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  224  		data.data =3D
+> model->dr_num;
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  225  		ret =3D
+> copy_to_user((void __user *)param, &data, sizeof(data));
+>=20
+> This should be:
+>=20
+> 	if (copy_to_user((void __user *)param, &data, sizeof(data)))
+> 		return -EFAULT;
 
-If you want the pass-through behaviour when you obtain the pin as a 
-GPIO then you need to also do that in software by requesting the GPIOP1 
-pin and setting it to the state of the GPIOP0 pin when GPIOP0 changes.
+Will be fixed in v2 patch. Thanks for the review.
 
-This is a limitation of the kernel, though I'm open to ideas on how to 
-avoid it.
+Regards,
+Chiawei
 
-Separately, I encourage you to encourage the author of the kernel patch 
-that added pass-through support to send their changes upstream.
+>=20
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  226  		break;
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  227  	default:
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  228  		ret =3D -ENOTTY;
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  229  	}
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13 @230  	return ret;
+> 72c5a69dc779f5 Chia-Wei Wang 2021-08-13  231  }
+>=20
+> ---
+> 0-DAY CI Kernel Test Service, Intel Corporation
+> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 
-> 
-> Another, last time I forgot to say that I have tried to use "devmem 
-> 0x1e6e24BC 32 0x0F000000" to set passthrough back manually and the 
-> power button works fine. This is why I think the passthrough was gone 
-> after the system booting up.
-
-I think it's possible to sense the input pin state even in the 
-pass-through configuration, but at the point where you request the GPIO 
-via pinctrl we've lost the intent of the request and the mux 
-configuration mustn't assume any particular mode of use. As such it 
-disables the pass-through mode and puts GPIOP0 in regular GPIO mode.
-
-> Legal Disclaimer :
-> The information contained in this message may be privileged and 
-> confidential. 
-> It is intended to be read only by the individual or entity to whom it 
-> is addressed 
-> or by their designee. If the reader of this message is not the intended 
-> recipient, 
-> you are on notice that any distribution of this message, in any form, 
-> is strictly prohibited. If you have received this message in error, 
-> please immediately notify the sender and delete or destroy any copy of 
-> this message!
-
-On a separate note, please don't include these disclaimers on mail sent 
-to the mailing list.
-
-Andrew
