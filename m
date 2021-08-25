@@ -1,71 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E549C3F6D5C
-	for <lists+openbmc@lfdr.de>; Wed, 25 Aug 2021 04:15:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D1653F6F71
+	for <lists+openbmc@lfdr.de>; Wed, 25 Aug 2021 08:24:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GvV1F6yD5z2yJS
-	for <lists+openbmc@lfdr.de>; Wed, 25 Aug 2021 12:14:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GvbY12PnKz2yQ4
+	for <lists+openbmc@lfdr.de>; Wed, 25 Aug 2021 16:24:21 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=PHELEcFG;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20161025 header.b=kEf3UAMt;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::c35;
- helo=mail-oo1-xc35.google.com; envelope-from=yulei.sh@bytedance.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62b;
+ helo=mail-pl1-x62b.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=PHELEcFG; dkim-atps=neutral
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com
- [IPv6:2607:f8b0:4864:20::c35])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=kEf3UAMt; dkim-atps=neutral
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com
+ [IPv6:2607:f8b0:4864:20::62b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GvV0p1gT9z2xgN
- for <openbmc@lists.ozlabs.org>; Wed, 25 Aug 2021 12:14:31 +1000 (AEST)
-Received: by mail-oo1-xc35.google.com with SMTP id
- z1-20020a4a2241000000b0028e8dfb83b4so4336103ooe.13
- for <openbmc@lists.ozlabs.org>; Tue, 24 Aug 2021 19:14:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=EqCJDw6pwwqcA3u963UfsU6r31LKcgwNEuHo0x3pVt4=;
- b=PHELEcFGD+KCRb+ykFErfan7cTCGvFBynYZyiUM07izhx1J9Dq48E13dItIRSbzf9x
- mmKfAhGY3hJVqpeCLG7FVGeNzdNi/MugPEQFQqpNWcXzD6B7Ab7VXgW/PicyapTAAyF9
- DdnTKClFljT2/ZCX45WzsUVpEA8I0CaevOmLhY9joRwuYZR/jJ3VAevFyest4vAK3eSn
- 1BXS9KeFieeeVlpfVRdUeYDe1U9Gk9y+zjK+V0TAaeOjhnkDK4SIrWetY4U0kHnQKIZc
- mFJsFVl8X5oia0wgoD0RwQRu2rVd3CtAVyWR9pr6G5fcbfdN+wNY830dyECo+EuBM7UE
- CX4g==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GvbXb0W31z2yJQ
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Aug 2021 16:23:58 +1000 (AEST)
+Received: by mail-pl1-x62b.google.com with SMTP id b9so9331896plx.2
+ for <openbmc@lists.ozlabs.org>; Tue, 24 Aug 2021 23:23:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+ :user-agent; bh=8rEpmpUB9HZ9tdCEthuallWAetQyae2U1dox3AYtuTY=;
+ b=kEf3UAMtlWIon1S3APXc4Gz5STyWPxfMHxDDMQ5WHjYlCVKzJGpf8hz4tYA52y4RCd
+ 3BWq/W4G6Secjl3fV2cwg8YeAbReK8zAwJ41MvFedo2dY4H0/dgzBsWy3c7+a7WkGq1b
+ Rfr9M6vJRKnU9ckfN+8GDkRbbyjRM037Tw0rJ/YD+SUKsW6SR9Is6MccQQ6MQWAKZkgt
+ lLRyx02gUoLjKAm8B0mYsH0Nd7GKlyH4RPALTJFRN9rtZrUM+bpnCv0BpGPfKfr9839f
+ JZVT4V76iaApBnw8jtoPF8spKZcaOatK6HHKSxxR41FJIshbXt28YHWUM0NnQR+Z79Qu
+ Tauw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=EqCJDw6pwwqcA3u963UfsU6r31LKcgwNEuHo0x3pVt4=;
- b=eGYhei+VRiyX80VRxpJHZQ0GABVYX/t3A4E0XGr+hkbGOVLDA3bx5k2NRlusJ11yDK
- Yqsn6Ldq3WXNRoGqQqRdQNiuNnVHghPE7yazfKO1PwMIqGwfc6ENKq/MZGgIkp6/+Kwm
- HsKCyNK2HVjwz07jpz5cdPnX0z2ESik3w9awupNMUQMf824Xd0AXnWTN5DsU1B3nB29E
- NOYA1YcP3/bQHEHVShCZkCmlsJBfyPwVSbDL9gff21fnyXqbnk5VSe2m59CIExr0hUTR
- VUIUytIgTI7nE63XJYyXErNBUfVMO7QtucO6E5GbzPaaKIBy7EtOXkAP88lKj557CI5S
- 7ZRw==
-X-Gm-Message-State: AOAM531CbXNJSmgZLpB9nEo8l0E476p//bqUXFFo/9nQITlpVfbgSu2u
- tHxIftAaEI5kQw9S0ky6rzN18c7KSrqVxWRm0ph/CQ==
-X-Google-Smtp-Source: ABdhPJwGdyLaOrvtYRVGttPSukOVCRVyx+hg8mPlVBNhC/K0UG/FYc5Wa1O4T8axKx/aN0mDFUp1YoufiSBg5dsuJnI=
-X-Received: by 2002:a4a:754b:: with SMTP id g11mr32762267oof.10.1629857667201; 
- Tue, 24 Aug 2021 19:14:27 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+ :content-disposition:user-agent;
+ bh=8rEpmpUB9HZ9tdCEthuallWAetQyae2U1dox3AYtuTY=;
+ b=Yfzg7ZV1jz0O7KxNqvQ1hdAPRqLl7F7l71JzSN7IuOPyhx81mCT7cd+0KiEM/9zGjz
+ uIJc3YNO3FzqJ95h1/VWy3yrAJsIo4ehdtVTixWBEfHG2SpzRCzv1GcOEyVOi+qMypJB
+ ksjQddFaq5FDdIooMV7VHrseGAnBlPy3yxXJGVskNU9DfjWovLKSnql0OLrKCbuiAIof
+ k0j85vmc9MzJHIGBQffXC0ae6krpORRz8dDPBdGpDQAK5RSAPz+RBSjMSiitTVW4Fqsq
+ Epuj3VyicNA+IGCoh8nH1R4whCq7c+1cag/sH+c8UQjUM2V5L93SOQjnjRCnYHc8D5M8
+ +pgw==
+X-Gm-Message-State: AOAM533bpNbhkqN1eTUXIE7gsjQoUAefWuMzv71Bx6IAbn0lE6BsO/P3
+ 8yskD3E9olNew1FO3QkSaua87sBlk4cvog==
+X-Google-Smtp-Source: ABdhPJzJaNQrW1XyybLbT1UKkN9+YmnUs6duPGTaH7UFcFw850PN8VW9lreyTdTRFaAsbwzyp7G9JQ==
+X-Received: by 2002:a17:90a:2dc7:: with SMTP id
+ q7mr8901922pjm.231.1629872636270; 
+ Tue, 24 Aug 2021 23:23:56 -0700 (PDT)
+Received: from taoren-ubuntu-R90MNF91 (c-73-92-48-112.hsd1.ca.comcast.net.
+ [73.92.48.112])
+ by smtp.gmail.com with ESMTPSA id q3sm25196473pgf.18.2021.08.24.23.23.55
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Tue, 24 Aug 2021 23:23:55 -0700 (PDT)
+Date: Tue, 24 Aug 2021 23:23:49 -0700
+From: Tao Ren <rentao.bupt@gmail.com>
+To: openbmc@lists.ozlabs.org
+Subject: ASPEED EHCI error: "controller refused to start: -110"
+Message-ID: <20210825062348.GA18567@taoren-ubuntu-R90MNF91>
 MIME-Version: 1.0
-References: <20210617220229.7352-1-zev@bewilderbeest.net>
-In-Reply-To: <20210617220229.7352-1-zev@bewilderbeest.net>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Wed, 25 Aug 2021 10:14:16 +0800
-Message-ID: <CAGm54UEvQG9_AiL_o9R3ZVpF4oT0Te7DC+oHLWsNGrwVuCfJJw@mail.gmail.com>
-Subject: Re: [Phishing Risk] [External] [PATCH v3] media: aspeed-video: ignore
- interrupts that aren't enabled
-To: Zev Weiss <zev@bewilderbeest.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,63 +79,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-aspeed@lists.ozlabs.org>, openbmc <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>, open list <linux-kernel@vger.kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-arm-kernel@lists.infradead.org>, linux-media@vger.kernel.org
+Cc: andrew@aj.id.au, ryan_chen@aspeedtech.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jun 18, 2021 at 6:02 AM Zev Weiss <zev@bewilderbeest.net> wrote:
->
-> As partially addressed in commit 65d270acb2d6 ("media: aspeed: clear
-> garbage interrupts"), the ASpeed video engine sometimes asserts
-> interrupts that the driver hasn't enabled.  In addition to the
-> CAPTURE_COMPLETE and FRAME_COMPLETE interrupts dealt with in that
-> patch, COMP_READY has also been observed.  Instead of playing
-> whack-a-mole with each one individually, we can instead just blanket
-> ignore everything we haven't explicitly enabled.
->
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> ---
->
-> Changes since v2 [1]:
->  - minor commit message improvements
->
-> Changes since v1 [0]:
->  - dropped error message
->  - switched to a blanket-ignore approach as suggested by Ryan
->
-> [0] https://lore.kernel.org/linux-arm-kernel/20201215024542.18888-1-zev@bewilderbeest.net/
-> [1] https://lore.kernel.org/openbmc/20210506234048.3214-1-zev@bewilderbeest.net/
->
->  drivers/media/platform/aspeed-video.c | 16 ++++++----------
->  1 file changed, 6 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-> index 7bb6babdcade..77611c296a25 100644
-> --- a/drivers/media/platform/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed-video.c
-> @@ -563,6 +563,12 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
->         struct aspeed_video *video = arg;
->         u32 sts = aspeed_video_read(video, VE_INTERRUPT_STATUS);
->
-> +       /*
-> +        * Hardware sometimes asserts interrupts that we haven't actually
-> +        * enabled; ignore them if so.
-> +        */
-> +       sts &= aspeed_video_read(video, VE_INTERRUPT_CTRL);
-> +
+Hi,
 
-Without the patch, the driver gets an unhandled IRQ in a few hours
-after the KVM page is opened.
-This patch is tested on Bytedance's OpenBMC system and the issue has
-not been reproduced anymore.
+I started to see below EHCI probe failure on my AST2500 and AST2600 BMC
+platforms since commit 280a9045bb18 ("ehci: fix EHCI host controller
+initialization sequence"):
 
-Tested-by: Lei YU <yulei.sh@bytedance.com>
+> ehci-platform 1e6a3000.usb: USB 2.0, controller refused to start: -110
 
--- 
-BRs,
-Lei YU
+The error happens because USBSTS.HCHalted stays at 1. But if I ignore the
+error at probe time, the downstream USB devices can still be enumerated
+without problems (even though USBSTS.HCHalted is still 1).
+
+My questions are: why USBSTS.HCHalted stays at 1 on ASPEED platforms? Do
+we need extra configuration at EHCI probe time for ASPEED SoC?
+
+CC Ryan @ASPEED for more comments.
+
+
+Cheers,
+
+Tao
