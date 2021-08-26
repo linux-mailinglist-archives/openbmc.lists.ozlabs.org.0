@@ -1,68 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E847E3F8144
-	for <lists+openbmc@lfdr.de>; Thu, 26 Aug 2021 05:48:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C94683F8249
+	for <lists+openbmc@lfdr.de>; Thu, 26 Aug 2021 08:17:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Gw8215Lhfz2yQ3
-	for <lists+openbmc@lfdr.de>; Thu, 26 Aug 2021 13:47:53 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=g+2jIsui;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4GwCLR4psQz2yPL
+	for <lists+openbmc@lfdr.de>; Thu, 26 Aug 2021 16:17:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72a;
- helo=mail-qk1-x72a.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=chiawei_wang@aspeedtech.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=g+2jIsui; dkim-atps=neutral
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com
- [IPv6:2607:f8b0:4864:20::72a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Gw81c72wYz2xrt
- for <openbmc@lists.ozlabs.org>; Thu, 26 Aug 2021 13:47:30 +1000 (AEST)
-Received: by mail-qk1-x72a.google.com with SMTP id t4so1893124qkb.9
- for <openbmc@lists.ozlabs.org>; Wed, 25 Aug 2021 20:47:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=yPT/mZcPX82ieNWuNHuD8GBDndFHTlJwy2QIecW8pM8=;
- b=g+2jIsui8Ff6EZx9KB7PSQrrcveYt2awc6FWhYVWuEmL9nrMK5RIRLWCc1sA6odwUR
- KSCtYYSS6evTMQ0S2+r25c4sm+Fm2b2Ugj68wFQyfj/GHkXq8jqLH4Bhznj9QPpIijyC
- LRDpQ/MuX33o2LbibYWT+Bsc98ndUjjDwcSbQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=yPT/mZcPX82ieNWuNHuD8GBDndFHTlJwy2QIecW8pM8=;
- b=PSO9oWwNsi7OGVKhwGPZPWs7Tkn/18F3RTxoh+0/LgIwNhgE9XTNDmOzqyfUu3tYQ9
- g5ss79Svk3W6E449IYWTbq93LsA2Y7nfKKRn2JzpsxHeijAzahT4XiQDOQNXc8lTMPyq
- DDjMbaRM7LUzZGj6hnDfxZjOqE+3VNkYy/b1No9ai+w7YlHCjMYgcJ31fk05ZlJ1MgXG
- 9HaiM/akWtGDhkOONUzpcqsU6LldB5xBe+Gx7546+l1fRnNYdQF8fNxHxO+8BZtem7wS
- d7EhIk2zHTOUgDT3+ANCK1kweB/W4UxsgTRgNmNHMOklpOwbNqLLsPofMmlV5rxfSiB5
- HiJw==
-X-Gm-Message-State: AOAM531e1SLGK2e6tdWf3l6ChFGxpM14mEj+2Wq1DFiduscvfJ3MVqQN
- UTy38EL2UASpuT9NV5llP7atdnWk45QWyY16EI4=
-X-Google-Smtp-Source: ABdhPJyakvOO6BgPz+H1UoiNEd4FLr2FB1vNJt3huWiqt0rSswoEfL3yMdUatVEfdtGBETdxphonvfyyTx1GVx9gox0=
-X-Received: by 2002:a37:6197:: with SMTP id v145mr1779950qkb.487.1629949647489; 
- Wed, 25 Aug 2021 20:47:27 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4GwCL94kfXz2xvc;
+ Thu, 26 Aug 2021 16:17:03 +1000 (AEST)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 17Q5vjo0058460;
+ Thu, 26 Aug 2021 13:57:45 +0800 (GMT-8)
+ (envelope-from chiawei_wang@aspeedtech.com)
+Received: from ChiaWeiWang-PC.aspeed.com (192.168.2.66) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
+ Thu, 26 Aug 2021 14:16:25 +0800
+From: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
+To: <joel@jms.id.au>, <robh+dt@kernel.org>, <andrew@aj.id.au>,
+ <linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>,
+ <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3 0/4] arm: aspeed: Add eSPI support
+Date: Thu, 26 Aug 2021 14:16:19 +0800
+Message-ID: <20210826061623.6352-1-chiawei_wang@aspeedtech.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-References: <aab1dd3f9c034bc3a1eef34306149833@inventec.com>
- <CACPK8Xf7iYijTAfcDUOH3bs-gGdM9Yton4isuuLc2w-mosapig@mail.gmail.com>
- <89f94a107b4f48328f865c5d40a15a23@inventec.com>
-In-Reply-To: <89f94a107b4f48328f865c5d40a15a23@inventec.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 26 Aug 2021 03:47:15 +0000
-Message-ID: <CACPK8XfvpZB-88+4ZHt1THmGc1c93prOv_eZmN5DwtXLcCVFog@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: aspeed: Adding Inventec Transformers BMC
-To: =?UTF-8?B?TGluLlRvbW15U0Mg5p6X5LiW5qy9IFRBTw==?= <Lin.TommySC@inventec.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Originating-IP: [192.168.2.66]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 17Q5vjo0058460
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,29 +53,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?B?WWUuVmljIOiRieWuh+a4hSBUQU8=?= <ye.vic@inventec.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "Mohammed.Habeeb ISV" <mohammed.habeeb@inventec.com>,
- =?UTF-8?B?S3VvLk1hcmNlbCDpg63lo6vlvrcgSVNW?= <kuo.marcel@inventec.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 26 Aug 2021 at 02:18, Lin.TommySC =E6=9E=97=E4=B8=96=E6=AC=BD TAO
-<Lin.TommySC@inventec.com> wrote:
->
-> Hi Joel,
->
-> Sorry for my typo. I mean it seems that git-send-email command supports o=
-nly SMTP. And our mail server supports only POP and IMAP. So do you accept =
-that I resend my mail with inline diff patch?
+This patch series add the driver support for the eSPI controller
+of Aspeed 5/6th generation SoCs. This controller is a slave device
+communicating with a master over Enhanced Serial Peripheral Interface (eSPI).
+It supports all of the 4 eSPI channels, namely peripheral, virtual wire,
+out-of-band, and flash, and operates at max frequency of 66MHz.
 
-The problem with pasting the patch into your email client is it often
-modifies the whitespace, causing the patch to be corrupt. You can try
-though.
+v3:
+ - remove the redundant patch "clk: aspeed: Add eSPI reset bit"
+ - fix missing header inclusion reported by test bot
+ - fix dt-bindings error reported by yamllint
 
-A common workaround is to use a different address for your open source
-work, such as a gmail.com account.
+v2:
+ - remove irqchip implementation
+ - merge per-channel drivers into single one to avoid the racing issue
+   among eSPI handshake process and driver probing.
 
-Cheers,
+Chia-Wei Wang (4):
+  dt-bindings: aspeed: Add eSPI controller
+  MAINTAINER: Add ASPEED eSPI driver entry
+  soc: aspeed: Add eSPI driver
+  ARM: dts: aspeed: Add eSPI node
 
-Joel
+ .../devicetree/bindings/soc/aspeed/espi.yaml  | 157 +++++
+ MAINTAINERS                                   |   9 +
+ arch/arm/boot/dts/aspeed-g6.dtsi              |  17 +
+ drivers/soc/aspeed/Kconfig                    |  11 +
+ drivers/soc/aspeed/Makefile                   |   1 +
+ drivers/soc/aspeed/aspeed-espi-ctrl.c         | 205 ++++++
+ drivers/soc/aspeed/aspeed-espi-ctrl.h         | 304 +++++++++
+ drivers/soc/aspeed/aspeed-espi-flash.h        | 380 +++++++++++
+ drivers/soc/aspeed/aspeed-espi-ioc.h          | 153 +++++
+ drivers/soc/aspeed/aspeed-espi-oob.h          | 611 ++++++++++++++++++
+ drivers/soc/aspeed/aspeed-espi-perif.h        | 539 +++++++++++++++
+ drivers/soc/aspeed/aspeed-espi-vw.h           | 142 ++++
+ 12 files changed, 2529 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/soc/aspeed/espi.yaml
+ create mode 100644 drivers/soc/aspeed/aspeed-espi-ctrl.c
+ create mode 100644 drivers/soc/aspeed/aspeed-espi-ctrl.h
+ create mode 100644 drivers/soc/aspeed/aspeed-espi-flash.h
+ create mode 100644 drivers/soc/aspeed/aspeed-espi-ioc.h
+ create mode 100644 drivers/soc/aspeed/aspeed-espi-oob.h
+ create mode 100644 drivers/soc/aspeed/aspeed-espi-perif.h
+ create mode 100644 drivers/soc/aspeed/aspeed-espi-vw.h
+
+-- 
+2.17.1
+
