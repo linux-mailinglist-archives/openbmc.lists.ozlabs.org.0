@@ -1,69 +1,104 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41B963FBAA2
-	for <lists+openbmc@lfdr.de>; Mon, 30 Aug 2021 19:08:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DA1A3FBD50
+	for <lists+openbmc@lfdr.de>; Mon, 30 Aug 2021 22:12:07 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4GyxcL1NVWz2yLJ
-	for <lists+openbmc@lfdr.de>; Tue, 31 Aug 2021 03:08:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Gz1gn0nQRz2yNZ
+	for <lists+openbmc@lfdr.de>; Tue, 31 Aug 2021 06:12:05 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=NwsKxXes;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=UMm4gkkr;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=NwsKxXes; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=UMm4gkkr; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4GyxbF24g1z2xsl
- for <openbmc@lists.ozlabs.org>; Tue, 31 Aug 2021 03:07:53 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 1E6284CF4A;
- Mon, 30 Aug 2021 17:07:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-type:content-type:content-transfer-encoding:mime-version
- :references:in-reply-to:x-mailer:message-id:date:date:subject
- :subject:from:from:received:received:received; s=mta-01; t=
- 1630343265; x=1632157666; bh=2h047rfaOj1MGJZrxOPxoaksc1Dn2qfXP4g
- y91MuslI=; b=NwsKxXesdy592Icr9XUG2Mo8SPjDrBoNIoaPB4Smgc0473/3bRP
- 7OZucCj47p6jJEjrEHMr4VEMKx4Xqj8NK76O+VpOVFu8kGPgmlkxy1pqbQff8fQk
- rNl0sissXXhHryUpi/AK5/OFgiWqSaUpoS7BV6OItBuX+qaidZ4vxH94=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id EuhzAMjsnGTg; Mon, 30 Aug 2021 20:07:45 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 8453E4CF28;
- Mon, 30 Aug 2021 20:07:45 +0300 (MSK)
-Received: from fedora.mshome.net (10.199.0.170) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 30
- Aug 2021 20:07:39 +0300
-From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-To: "David S . Miller" <davem@davemloft.net>, Jakub Kicinski
- <kuba@kernel.org>, Samuel Mendoza-Jonas <sam@mendozajonas.com>
-Subject: [PATCH 1/1] net/ncsi: add get MAC address command to get Intel i210
- MAC address
-Date: Mon, 30 Aug 2021 20:18:06 +0300
-Message-ID: <20210830171806.119857-2-i.mikhaylov@yadro.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210830171806.119857-1-i.mikhaylov@yadro.com>
-References: <20210830171806.119857-1-i.mikhaylov@yadro.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.199.0.170]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Gz1gD3CKlz2xtp
+ for <openbmc@lists.ozlabs.org>; Tue, 31 Aug 2021 06:11:35 +1000 (AEST)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 17UK4Jgj105651; Mon, 30 Aug 2021 16:11:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ mime-version : content-transfer-encoding; s=pp1;
+ bh=2SyooZdnHtual5yJhGdNvkAyvDBMpvx8pxskmvf6M+U=;
+ b=UMm4gkkrzcaHetrWw4XbE/f6J52+SpWFqEB6xlcDkooRK6T2hz/54wbC+awxcSzxzLiL
+ YUMAnO+2aiGM8UAeMholRsrMewomNtvwrG12DrHXWIkOWO6pEkEqG8WilbCTcGKFo9EP
+ ahe7dGnz1KM+O9WL1p7FX/DQb/Bo19pjUOvg2sfNudQ6Z9/AAOJkGZOKVYXJjG1zDYGH
+ tThugHK/W0qm/PzQOj8WX1M5G0EJK9euSEPSNuy43XgoHTrVEaXegcV5xB0ZKRjvp/qQ
+ QcpwX7EYP9IunMKY6/dmTrxGrL5kcy73Dwv+h6jJMOOZHXGTQ1WMuwQRWByszamFx40j EQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3as5hrguk8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Aug 2021 16:11:31 -0400
+Received: from m0098416.ppops.net (m0098416.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 17UK4aQe106361;
+ Mon, 30 Aug 2021 16:11:31 -0400
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3as5hrgujw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Aug 2021 16:11:31 -0400
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 17UK8Z63031850;
+ Mon, 30 Aug 2021 20:11:30 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma04wdc.us.ibm.com with ESMTP id 3aqcsb26r7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 30 Aug 2021 20:11:30 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 17UKBU8338732068
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 30 Aug 2021 20:11:30 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 24735AC067;
+ Mon, 30 Aug 2021 20:11:30 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7D4E5AC060;
+ Mon, 30 Aug 2021 20:11:29 +0000 (GMT)
+Received: from v0005c16 (unknown [9.211.63.17])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon, 30 Aug 2021 20:11:29 +0000 (GMT)
+Message-ID: <e329beeb2b8efa272d2660fcd253ad5c98a37c50.camel@linux.ibm.com>
+Subject: Re: [PATCH] hwmon: (pmbus/ibm-cffps) Do not swap max_power_out
+From: Eddie James <eajames@linux.ibm.com>
+To: Guenter Roeck <linux@roeck-us.net>, Brandon Wyman <bjwyman@gmail.com>
+Date: Mon, 30 Aug 2021 15:11:28 -0500
+In-Reply-To: <e5916b33-8898-a483-bc69-49a08913672c@roeck-us.net>
+References: <20210827230433.3596370-1-bjwyman@gmail.com>
+ <20210828155250.GA820265@roeck-us.net>
+ <e9de99d88fb9e2e34552806fa47efa488332325c.camel@linux.ibm.com>
+ <e5916b33-8898-a483-bc69-49a08913672c@roeck-us.net>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-16.el8) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: isaSGdNhacGxV1YlKhVVV-pytyaO5nOc
+X-Proofpoint-ORIG-GUID: epsEedaVHFX0rV-W5EMsIbXXO0Q-3Kzy
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-08-30_06:2021-08-30,
+ 2021-08-30 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 malwarescore=0
+ bulkscore=0 mlxscore=0 mlxlogscore=999 phishscore=0 spamscore=0
+ suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2107140000 definitions=main-2108300128
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,167 +110,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Brad Ho <Brad_Ho@phoenix.com>, Paul Fertser <fercerpav@gmail.com>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
- Ivan Mikhaylov <i.mikhaylov@yadro.com>
+Cc: linux-hwmon@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Jean Delvare <jdelvare@suse.com>, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This patch adds OEM Intel GMA command and response handler for it.
+On Mon, 2021-08-30 at 08:34 -0700, Guenter Roeck wrote:
+> On 8/30/21 6:50 AM, Eddie James wrote:
+> > On Sat, 2021-08-28 at 08:52 -0700, Guenter Roeck wrote:
+> > > On Fri, Aug 27, 2021 at 11:04:33PM +0000, Brandon Wyman wrote:
+> > > > The bytes for max_power_out from the ibm-cffps devices do not
+> > > > need
+> > > > to be
+> > > > swapped.
+> > > > 
+> > > > Signed-off-by: Brandon Wyman <bjwyman@gmail.com>
+> > > 
+> > > Eddie, can you confirm this ?
+> > 
+> > This can't be true for all the power supplies supported by this
+> > driver,
+> > no. I think we need to check the version first. Brandon, I tested
+> > this
+> > on witherspoon (which is psu version 1) and get 3148 watts. If it's
+> > not
+> > swapped, that would be 19468 watts...
+> > 
+> 
+> Hmm. Eddie, can you also have a look at commit 9fed8fa99334 ("hwmon:
+> (pmbus/ibm-cffps) Fix write bits for LED control") ?
+> We need to make sure that it doesn't mess up some versions of this
+> PS.
 
-Signed-off-by: Brad Ho <Brad_Ho@phoenix.com>
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
----
- net/ncsi/internal.h    |  3 +++
- net/ncsi/ncsi-manage.c | 25 ++++++++++++++++++++++++-
- net/ncsi/ncsi-pkt.h    |  6 ++++++
- net/ncsi/ncsi-rsp.c    | 42 ++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 75 insertions(+), 1 deletion(-)
+That one looks correct to me. I believe older PSUs didn't enforce this
+so I didn't catch it, but I do see that the older specifications
+mention setting bit 6 to "allow write".
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index 0b6cfd3b31e0..03757e76bb6b 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -80,6 +80,7 @@ enum {
- #define NCSI_OEM_MFR_BCM_ID             0x113d
- #define NCSI_OEM_MFR_INTEL_ID           0x157
- /* Intel specific OEM command */
-+#define NCSI_OEM_INTEL_CMD_GMA          0x06   /* CMD ID for Get MAC */
- #define NCSI_OEM_INTEL_CMD_KEEP_PHY     0x20   /* CMD ID for Keep PHY up */
- /* Broadcom specific OEM Command */
- #define NCSI_OEM_BCM_CMD_GMA            0x01   /* CMD ID for Get MAC */
-@@ -89,6 +90,7 @@ enum {
- #define NCSI_OEM_MLX_CMD_SMAF           0x01   /* CMD ID for Set MC Affinity */
- #define NCSI_OEM_MLX_CMD_SMAF_PARAM     0x07   /* Parameter for SMAF         */
- /* OEM Command payload lengths*/
-+#define NCSI_OEM_INTEL_CMD_GMA_LEN      5
- #define NCSI_OEM_INTEL_CMD_KEEP_PHY_LEN 7
- #define NCSI_OEM_BCM_CMD_GMA_LEN        12
- #define NCSI_OEM_MLX_CMD_GMA_LEN        8
-@@ -99,6 +101,7 @@ enum {
- /* Mac address offset in OEM response */
- #define BCM_MAC_ADDR_OFFSET             28
- #define MLX_MAC_ADDR_OFFSET             8
-+#define INTEL_MAC_ADDR_OFFSET           1
- 
- 
- struct ncsi_channel_version {
-diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
-index 89c7742cd72e..7121ce2a47c0 100644
---- a/net/ncsi/ncsi-manage.c
-+++ b/net/ncsi/ncsi-manage.c
-@@ -795,13 +795,36 @@ static int ncsi_oem_smaf_mlx(struct ncsi_cmd_arg *nca)
- 	return ret;
- }
- 
-+static int ncsi_oem_gma_handler_intel(struct ncsi_cmd_arg *nca)
-+{
-+	unsigned char data[NCSI_OEM_INTEL_CMD_GMA_LEN];
-+	int ret = 0;
-+
-+	nca->payload = NCSI_OEM_INTEL_CMD_GMA_LEN;
-+
-+	memset(data, 0, NCSI_OEM_INTEL_CMD_GMA_LEN);
-+	*(unsigned int *)data = ntohl((__force __be32)NCSI_OEM_MFR_INTEL_ID);
-+	data[4] = NCSI_OEM_INTEL_CMD_GMA;
-+
-+	nca->data = data;
-+
-+	ret = ncsi_xmit_cmd(nca);
-+	if (ret)
-+		netdev_err(nca->ndp->ndev.dev,
-+			   "NCSI: Failed to transmit cmd 0x%x during configure\n",
-+			   nca->type);
-+
-+	return ret;
-+}
-+
- /* OEM Command handlers initialization */
- static struct ncsi_oem_gma_handler {
- 	unsigned int	mfr_id;
- 	int		(*handler)(struct ncsi_cmd_arg *nca);
- } ncsi_oem_gma_handlers[] = {
- 	{ NCSI_OEM_MFR_BCM_ID, ncsi_oem_gma_handler_bcm },
--	{ NCSI_OEM_MFR_MLX_ID, ncsi_oem_gma_handler_mlx }
-+	{ NCSI_OEM_MFR_MLX_ID, ncsi_oem_gma_handler_mlx },
-+	{ NCSI_OEM_MFR_INTEL_ID, ncsi_oem_gma_handler_intel }
- };
- 
- static int ncsi_gma_handler(struct ncsi_cmd_arg *nca, unsigned int mf_id)
-diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
-index 80938b338fee..ba66c7dc3a21 100644
---- a/net/ncsi/ncsi-pkt.h
-+++ b/net/ncsi/ncsi-pkt.h
-@@ -178,6 +178,12 @@ struct ncsi_rsp_oem_bcm_pkt {
- 	unsigned char           data[];      /* Cmd specific Data */
- };
- 
-+/* Intel Response Data */
-+struct ncsi_rsp_oem_intel_pkt {
-+	unsigned char           cmd;         /* OEM Command ID    */
-+	unsigned char           data[];      /* Cmd specific Data */
-+};
-+
- /* Get Link Status */
- struct ncsi_rsp_gls_pkt {
- 	struct ncsi_rsp_pkt_hdr rsp;        /* Response header   */
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index d48374894817..6447a09932f5 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -699,9 +699,51 @@ static int ncsi_rsp_handler_oem_bcm(struct ncsi_request *nr)
- 	return 0;
- }
- 
-+/* Response handler for Intel command Get Mac Address */
-+static int ncsi_rsp_handler_oem_intel_gma(struct ncsi_request *nr)
-+{
-+	struct ncsi_dev_priv *ndp = nr->ndp;
-+	struct net_device *ndev = ndp->ndev.dev;
-+	const struct net_device_ops *ops = ndev->netdev_ops;
-+	struct ncsi_rsp_oem_pkt *rsp;
-+	struct sockaddr saddr;
-+	int ret = 0;
-+
-+	/* Get the response header */
-+	rsp = (struct ncsi_rsp_oem_pkt *)skb_network_header(nr->rsp);
-+
-+	saddr.sa_family = ndev->type;
-+	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
-+	memcpy(saddr.sa_data, &rsp->data[INTEL_MAC_ADDR_OFFSET], ETH_ALEN);
-+	/* Increase mac address by 1 for BMC's address */
-+	eth_addr_inc((u8 *)saddr.sa_data);
-+	if (!is_valid_ether_addr((const u8 *)saddr.sa_data))
-+		return -ENXIO;
-+
-+	/* Set the flag for GMA command which should only be called once */
-+	ndp->gma_flag = 1;
-+
-+	ret = ops->ndo_set_mac_address(ndev, &saddr);
-+	if (ret < 0)
-+		netdev_warn(ndev,
-+			    "NCSI: 'Writing mac address to device failed\n");
-+
-+	return ret;
-+}
-+
- /* Response handler for Intel card */
- static int ncsi_rsp_handler_oem_intel(struct ncsi_request *nr)
- {
-+	struct ncsi_rsp_oem_intel_pkt *intel;
-+	struct ncsi_rsp_oem_pkt *rsp;
-+
-+	/* Get the response header */
-+	rsp = (struct ncsi_rsp_oem_pkt *)skb_network_header(nr->rsp);
-+	intel = (struct ncsi_rsp_oem_intel_pkt *)(rsp->data);
-+
-+	if (intel->cmd == NCSI_OEM_INTEL_CMD_GMA)
-+		return ncsi_rsp_handler_oem_intel_gma(nr);
-+
- 	return 0;
- }
- 
--- 
-2.31.1
+Thanks,
+Eddie
+
+> 
+> Thanks,
+> Guenter
 
