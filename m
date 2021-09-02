@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE1843FEFFC
-	for <lists+openbmc@lfdr.de>; Thu,  2 Sep 2021 17:19:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 03EB83FF052
+	for <lists+openbmc@lfdr.de>; Thu,  2 Sep 2021 17:37:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H0l2y54vvz2yJd
-	for <lists+openbmc@lfdr.de>; Fri,  3 Sep 2021 01:19:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H0lQy6HTLz2yK3
+	for <lists+openbmc@lfdr.de>; Fri,  3 Sep 2021 01:36:58 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=oJyLNMwh;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KM0C7ddF;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=npJdoRq8;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=UiAD0I15;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,69 +19,68 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=oJyLNMwh; 
+ header.s=fm2 header.b=npJdoRq8; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=KM0C7ddF; 
+ header.a=rsa-sha256 header.s=fm3 header.b=UiAD0I15; 
  dkim-atps=neutral
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
  [64.147.123.24])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H0l2R1C7Zz2yHP
- for <openbmc@lists.ozlabs.org>; Fri,  3 Sep 2021 01:19:10 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 9938532009A5
- for <openbmc@lists.ozlabs.org>; Thu,  2 Sep 2021 11:19:06 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Thu, 02 Sep 2021 11:19:06 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H0lQV328Bz2xfP
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Sep 2021 01:36:34 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.west.internal (Postfix) with ESMTP id 75E983200930
+ for <openbmc@lists.ozlabs.org>; Thu,  2 Sep 2021 11:36:32 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute5.internal (MEProxy); Thu, 02 Sep 2021 11:36:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:subject:message-id:mime-version:content-type; s=
- fm2; bh=lwaJqc1OeRJ+fVNL/0gRryfJsfE+KZYwKs3ed7+ToyA=; b=oJyLNMwh
- XS+WrZIXa3JSjt+BePZqaLaVOxaJlUkwsLaDzB2elksRLAle91hNq7Puf0qDwihq
- 0ZVPOl+zoW/XTErPOpjTSbdIpqEZcGdwvzLVWKDWwK4RlqVCDC68d1jXXuOVe79M
- ROEHO7N1ay2nfukMILjNcWBA5FvOkej5T34p6sMVf0O+2WluMKkcD3CGL7K/jl92
- uRGGHyhw6arrTwycG7qwuJcoT7dyPFU73HnYO/dIhCM6xmPRtJ+AW2WHazk/Msh+
- MK5a7UtMdEJY2oebBcfMWoW0/TDBd+k8WUW4fbH13T7LDCZhliWP9WCmX68u/jIm
- IkZdYv1u3K4z5w==
+ fm2; bh=V3DMt5i0Ts5krKVg+O0OrfSi6sm8odW13HUAmbR6H8Y=; b=npJdoRq8
+ YYqYinS7CKFwqyS1Y5yMgGsTjuwMQTZMAO6AZTcTId8leJUaFLJBa36lCaV44AOe
+ g2xh7BskdJsNHzJ6m5CSg5vIcJ/mSeEEhgwIKopjZTjj1bOiH+l7VXaGWl8NrS68
+ UXa26PY8yiHXNqvsSbR3KocfizAz64MT77Belg2s/OpTY41CYKOiMAse/7II870q
+ 9phuzcF1+sCzzY9GtzU/tXtVdLFv3Rs7zTtL9Jz3/R+KGiLXYcxbivocx3v25sso
+ 0Ld6z1Khj+BHs4nKfcCnYQKaI7Y9Uw4K5oL1O549/MXTzGr55mL9y9pgdZwdYRa7
+ hNPokJ97YDafCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=content-type:date:from:message-id
  :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; bh=lwaJqc1OeRJ+fVNL/0gRryfJsfE+K
- ZYwKs3ed7+ToyA=; b=KM0C7ddFF6Hwb4AWMutCiCb+nag/7GqLcv++4EuO0lg7L
- QVP1QDLKtLUjmNYhKISkf/aaPhdxj6pPhNmiOsFYTA+K/DWsj+unX85R/Xy5TZno
- qDlrt4AP82kec93ccxxDl4dYNTq6MAI9ZlkE+Vpvqx45RZf5w4h4TRiO5gGURLLb
- 9+C5jHjvCZrWfUOBKqiEDrARTg+aGJAZqETC2v+ZHy/2BWZYRHZmJYMOyo5ZXGzE
- lXDR9ogTRo6xOzwnuiOOxgl2Dv5+0+nXwrYt1zvi8UTzwBVYjSbiCDYl+RmvOOUr
- LdqmqCizdqecZ731EvQOp29TDz8V+NhyCD3CjorPw==
-X-ME-Sender: <xms:aeswYb7azz9DhRTSp82WnU07w8So1E6B34OjrADMIhJRBD3Qm6_s1A>
- <xme:aeswYQ7zJJ03uPiHLBevW6zkbpzr2VsB4YaRtziCgwxuGsbPb0y-uly_YCtx6F6_n
- rBY8UrJ9ipNmrtAne0>
-X-ME-Received: <xmr:aeswYSdpYkdzVdG51-zosgRowxAgwh2vpmsCgsKSOLeZlaCkOZxLQ2aEMCW3uLVefjA44-YbKaRWhzYsAQKtCPCfMW2jqSU3__2ihw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddvhedgkeekucetufdoteggodetrfdotf
+ :x-me-sender:x-sasl-enc; s=fm3; bh=V3DMt5i0Ts5krKVg+O0OrfSi6sm8o
+ dW13HUAmbR6H8Y=; b=UiAD0I15Wd72/AkHiBxYW/YCQyGuOaOGuRa+AA4bvz14W
+ F+Us5BN+Jz3Wo4h4GFiCiXJ5hTi7FR1icliLqs0nOjgKNrcj3bDdJX1W2cLESEHD
+ Bklt4j9RBmpvRLCAeaDChnRdaDqDwr+ckr/azGa4BL1IuAJPGO0ec5WgHZQYbO3f
+ qWD7o0S/jbKpB3pFkxuSZn7eJ26Nc+Tnxk1GTu8NCKmOORx8U+wY73Z6FMb+dbFE
+ 40wQsUT/wxb7JRTFExLBwU4ieuQ3FQpWoj4/ikXiPJnSZ2cQ3rafcMJtKbDcWdlx
+ ZXypVkVoWkpZOIbR08v5HdUrDQf+7I/JT7emxucbw==
+X-ME-Sender: <xms:fu8wYS6hoiQ7Ux-rI1y22Uzj-_1OK1qRQhxLNb3bplB-6wdrzzH3jw>
+ <xme:fu8wYb4QbHg88aJVRfkx-f1a93ZxHGALlHU03zP5bVdle-H1CeYYoRo_3s3cIwge-
+ OP9JktUN0inwn-NLrw>
+X-ME-Received: <xmr:fu8wYRctlofO2DGxHHMjcCg2E_cBQiaJmWILw3L46W3PJ_X52KXIyayIa5SnVKzB4an7KgYdiC6v-jcRrIe8xonFdaNj6anDLeWWSQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddvhedgledtucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkgggtugesghdtreertddtvden
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkgggtugesghdtreertddtvden
  ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
- gtgidrgiihiieqnecuggftrfgrthhtvghrnhepgfekveevjeevffevhfektefffedtjeel
- heevteetjeduieetvefhieekgfejveehnecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
- enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
- rhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:aeswYcI7N9aU0oS2RD41WDpfefJlOwLbn04MgxkQffoP0OMaAzWpDg>
- <xmx:aeswYfKBUGSOlNKIh8I-8lowZk4dWo_e3zpYX2vVd4_V7GzZ6cVtQw>
- <xmx:aeswYVxcBTOdJ1sXbnD7zwCYzYVsR2m108PDftKiAgJufvUtNuTQTQ>
- <xmx:auswYak5g3fTFZx0Q09LUS2djCMEupEPjaduXguRXkqmhcCtLT9qDg>
+ gtgidrgiihiieqnecuggftrfgrthhtvghrnhepjeffueelheelvdefveejueffjeejveeu
+ veehtdduffdtgeelkedvtdevveetgfetnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+ hrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:fu8wYfJIi2_g1IVoCRQaF_6hooXxLG_TVtcsPRAwO8up0CXsBwPOIA>
+ <xmx:fu8wYWI_M_nKrhe5VLWziEtSeufMhwdjeWGVM5-SXATjcqdMJjwI7w>
+ <xmx:fu8wYQylAhGe0q5D8Q3286fs14DcPVqGTY3I9iDXVBrg8EbTrD2vtg>
+ <xmx:gO8wYVldjoEvk2yPb-i0wRFqjvCfaLYQ2mUw59sjNSlAItTuaC3rfw>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Thu, 2 Sep 2021 11:19:05 -0400 (EDT)
-Date: Thu, 2 Sep 2021 10:19:03 -0500
+ <openbmc@lists.ozlabs.org>; Thu, 2 Sep 2021 11:36:30 -0400 (EDT)
+Date: Thu, 2 Sep 2021 10:36:28 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
 To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: `phosphor-loggin` APIs
-Message-ID: <YTDrZ9k78VM1GDB8@heinlein>
+Subject: sdbusplus exception type SdBusError
+Message-ID: <YTDvfIn4Z05mGdCx@heinlein>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="Nu2mfBlDKXR4AH7o"
+ protocol="application/pgp-signature"; boundary="GCqrf7nYJ0pmeOv8"
 Content-Disposition: inline
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -98,61 +97,94 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---Nu2mfBlDKXR4AH7o
+--GCqrf7nYJ0pmeOv8
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 Hello,
 
-I wanted to make sure everyone was aware the that phosphor-logging `lg2` AP=
-Is
-are now merged.  I've ported a few repositories to use them as samples you =
-can
-use for reference:
-    - phosphor-virtual-sensor
-    - phosphor-bmc-code-mgmt
-    - dbus-sensors (in review)
+I am going to start on some changes to sdbusplus which make it so that some
+errors which previously threw an 'SdBusError' now throw a more specialized =
+type.
 
-I'd certainly appreciate if people want to help do a conversion on any
-repository using the original phosphor-logging API.
+In the process of getting started on this I'm observing a few existing issu=
+es
+across the codebase.
 
-These were talked about originally here:
-    https://lore.kernel.org/openbmc/YQBrbuQFz4JihBAE@heinlein/
+   1. Many repositories were catching 'SdBusError'.  This type was always
+      intended to be internal to sdbusplus (in fact, it inherits from an er=
+ror
+      called 'internal_error').  Quite likely, by catching this exception, =
+you
+      are missing other exceptions that sdbusplus can throw.  Certainly you=
+ are
+      missing exceptions that sdbusplus will start throwing with my upcoming
+      changes.
 
-If you are doing conversions, you should find that the logging calls are mo=
-re
-succinct and you should not need additional calls like `string.c_str()` or
-`exception.what()`.  The lg2 APIs automatically convert most basic types.  =
-If
-you are finding you are having to make data manipulation calls in this
-conversion process I'd like to know about it so we can make the API easier =
-for
-everyone.
+   2. I see a handful of repositories *throwing* SdBusErrors.  Again, this =
+was
+      intended to be an internal exception to sdbusplus itself and not a ge=
+neric
+      exception type that any arbitrary string could be wrapped with.  I'm =
+going
+      to leave this alone for the time being, but in the future it is quite
+      likely that I'll force a compile break with this.  If you need to thr=
+ow
+      something that is of type sdbusplus::exception::exception and can't f=
+igure
+      out what is better, please reach out to me with some context.
 
-Catch me on email or Discord with questions.
+   3. Along the lines of #2, *some* of the cases where an SdBusError is thr=
+own
+      is entirely invalid error path handling and your application is _GOIN=
+G_
+      _TO_ _CRASH_ whenever you have a dbus client that pushes you down the=
+se
+      paths!  Almost all of these I see are using the ASIO bindings.  In ma=
+ny
+      cases the ASIO bindings *DO NOT* catch any exceptions and magically t=
+urn
+      them into sd_bus_error's.  By throwing an exception, you're not makin=
+g an
+      error return to the calling client, but instead blowing through all o=
+f the
+      sd_bus C code with your C++ exception and putting your application in=
+to an
+      invalid state.  At a minimum you are leaking memory.
+
+*(3): the phosphor-dbus-interface bindings *DO* turn exceptions into
+      sd_bus_error responses but typically this requires you to throw a PDI
+      error type.
+
+I have put up a large number of commits to fix #1, so if all you are doing =
+is
+catching SdBusError you probably have no change necessary.  If you see a=20
+`catch (SdBusError&)` being added to the codebase, know it is probably wron=
+g and
+should be fixed in review.
 
 --=20
 Patrick Williams
 
---Nu2mfBlDKXR4AH7o
+--GCqrf7nYJ0pmeOv8
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmEw62UACgkQqwNHzC0A
-wRmcMg//Z6tGf/ngPx1YlTT/GzsuCUk/vXjBJ3jczTvt+IwO8YjrpQ6OjVmXmCdV
-A7kyemxPYXRwix0r5ZC53H3SUoAHGU9qkaHoEJ/Phq7l9owG9kr//I019za3LAIO
-CeRI+vOuol8IQeIB7/+JBHDTYmDey53wSq6ovE2SZPjyZijjSvOGfdCnS8kC0rmY
-Rc+mD7s1HGOEGT9wu4CvnjsHUlyFdmDiZnldyAIqmqdcgS2qwSdUjKh2HC10OA0c
-x8rLNehKo4DAeEjGPc3zig631M0vC7mvDWnqGOWcy/4IYLY8nESJRgYGGx1vaeuN
-247zLOeumPdGk1qKpidRvZDmEdP47Lk4YswG/f60KYtRQWbVJ4pmABMagwf3QLeA
-8iec/1iPGdaFWos2By7hBA0YOHdhAP3BqLpyHiYtaPnP5CCTwEeQ1acXset1NshN
-JvwxEZoZ65ectoknLx1Smn4da/JTb6vq/qy1Od3aWTKEX3EttyhAsfMcBx0QtCy8
-X9gAF/eJdREI/HGlLszmK3S/GbbeBLjoBzgH7Kl4wS/B6V6wTrsgxtHYQAnDY9S7
-GUL9htjVfgtQOmTJCMa/8Vhk/6JUWqoDak2XzLLl3zgcdF9FGYS65U2PIbX+8fcR
-ZpOTj32z3GnhkPOYxk4YigukcrujM5/wzprTX6ueajvslTM6vtY=
-=906q
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmEw73sACgkQqwNHzC0A
+wRlMCg//ep2r61r6Wss70DMIam4NOW94bPX+kSKhYOqEqduV+Z3cKXO7eAGFYXie
+K4Cf0E+htlLQeC7s5SHByVrsqtRPMTpXGmu8fjHBm+RtxBUGHSUIfcqY5RIuT1B2
+mruyG6FQ3NWirQAgVkkf2AwIgr6oiwXBOdjvXw2JG2AeILphwWcv0fS+4JIFFF3y
+fiLBrbxr/+YSENwXENUSAFuiuaXtlgDaVJJtYG1vW0DpGPQMSzXGfaA/k+RHu3+8
+9lcnpGH1Qa9Ri1G06pqN3jMpFirFKcnLaj0OqxVvasHAe8iqw5liQgCHzdaqfG6c
+XYEz91fy8LjfLpjEFHlXyqKlztCY8mjIb+n99CucV8NhiqjE4evW10uX0PUSd7lK
+ZOi8mzarRYmvMl/uQzD5FEbg4PjV9hVpAKFysiOKqIiP7RxUHgrqL8rE6T828qM4
++AbOIJXyQZsZuLcMdL1SNCvIhX4T3r26hzZnYZ0ZBj3X+OGKRJEEH39Ju3aFk5la
+UQh01CeOvs3AQqjXVcHxKXF91dH0ZbQ3tBz/em6icetzc4oai7rrtczCiClMRoZN
+hCu3G2GXEkgctu4+f9RoPM7fz4xDG/9oQv64X7TT4uG25EEqjwgoJIwcPJqucbzb
+4JHXnZrwNMkGFFg5p5EwKl9DK89ilEphOCqNe6uEYsymnlT1URo=
+=lxyV
 -----END PGP SIGNATURE-----
 
---Nu2mfBlDKXR4AH7o--
+--GCqrf7nYJ0pmeOv8--
