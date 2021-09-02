@@ -2,70 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CE363FEFDA
-	for <lists+openbmc@lfdr.de>; Thu,  2 Sep 2021 17:07:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE1843FEFFC
+	for <lists+openbmc@lfdr.de>; Thu,  2 Sep 2021 17:19:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H0kmt1HYYz2yJd
-	for <lists+openbmc@lfdr.de>; Fri,  3 Sep 2021 01:07:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H0l2y54vvz2yJd
+	for <lists+openbmc@lfdr.de>; Fri,  3 Sep 2021 01:19:38 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=gQtz9/zJ;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=oJyLNMwh;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=KM0C7ddF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=gQtz9/zJ; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.24;
+ helo=wout1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=oJyLNMwh; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=KM0C7ddF; 
+ dkim-atps=neutral
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H0kmR2V1Mz2xb6
- for <openbmc@lists.ozlabs.org>; Fri,  3 Sep 2021 01:07:03 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 73FA84D048;
- Thu,  2 Sep 2021 15:06:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1630595213; x=1632409614; bh=ohzBaHIQJi6XFUgN9Za1egaft
- OTNkTgtCcHs5jiUnuQ=; b=gQtz9/zJnfSt09MuRU5JcwnKjSFT6mVvhBq7fgvNz
- UbDk8kUZe14HQjDrWd4O89wzdHWNB1YFYeDKJKngHTkTcAD7ACwINPMvJABlAlNG
- SkqPEX1lrL6yzUMYItAaFWjW25SLPsNR/Y6OdQxhXZyIckIJbceXS81lmp6VZIfg
- FY=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id he5YG7Tih9hI; Thu,  2 Sep 2021 18:06:53 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 5E25A4D01B;
- Thu,  2 Sep 2021 18:06:51 +0300 (MSK)
-Received: from [10.199.0.231] (10.199.0.231) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 2 Sep
- 2021 18:06:50 +0300
-Message-ID: <cb9dedaf242264f76eca18e94934703300be5a7e.camel@yadro.com>
-Subject: Re:  [PATCH 1/1] net/ncsi: add get MAC address command to get Intel
- i210 MAC address
-From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-To: Milton Miller II <miltonm@us.ibm.com>
-Date: Thu, 2 Sep 2021 18:17:30 +0300
-In-Reply-To: <OF2487FB9E.ECED277D-ON00258741.006BEF89-00258744.001FE4C0@ibm.com>
-References: <20210830171806.119857-2-i.mikhaylov@yadro.com>
- <OF2487FB9E.ECED277D-ON00258741.006BEF89-00258744.001FE4C0@ibm.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H0l2R1C7Zz2yHP
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Sep 2021 01:19:10 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 9938532009A5
+ for <openbmc@lists.ozlabs.org>; Thu,  2 Sep 2021 11:19:06 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute3.internal (MEProxy); Thu, 02 Sep 2021 11:19:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:subject:message-id:mime-version:content-type; s=
+ fm2; bh=lwaJqc1OeRJ+fVNL/0gRryfJsfE+KZYwKs3ed7+ToyA=; b=oJyLNMwh
+ XS+WrZIXa3JSjt+BePZqaLaVOxaJlUkwsLaDzB2elksRLAle91hNq7Puf0qDwihq
+ 0ZVPOl+zoW/XTErPOpjTSbdIpqEZcGdwvzLVWKDWwK4RlqVCDC68d1jXXuOVe79M
+ ROEHO7N1ay2nfukMILjNcWBA5FvOkej5T34p6sMVf0O+2WluMKkcD3CGL7K/jl92
+ uRGGHyhw6arrTwycG7qwuJcoT7dyPFU73HnYO/dIhCM6xmPRtJ+AW2WHazk/Msh+
+ MK5a7UtMdEJY2oebBcfMWoW0/TDBd+k8WUW4fbH13T7LDCZhliWP9WCmX68u/jIm
+ IkZdYv1u3K4z5w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:message-id
+ :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; bh=lwaJqc1OeRJ+fVNL/0gRryfJsfE+K
+ ZYwKs3ed7+ToyA=; b=KM0C7ddFF6Hwb4AWMutCiCb+nag/7GqLcv++4EuO0lg7L
+ QVP1QDLKtLUjmNYhKISkf/aaPhdxj6pPhNmiOsFYTA+K/DWsj+unX85R/Xy5TZno
+ qDlrt4AP82kec93ccxxDl4dYNTq6MAI9ZlkE+Vpvqx45RZf5w4h4TRiO5gGURLLb
+ 9+C5jHjvCZrWfUOBKqiEDrARTg+aGJAZqETC2v+ZHy/2BWZYRHZmJYMOyo5ZXGzE
+ lXDR9ogTRo6xOzwnuiOOxgl2Dv5+0+nXwrYt1zvi8UTzwBVYjSbiCDYl+RmvOOUr
+ LdqmqCizdqecZ731EvQOp29TDz8V+NhyCD3CjorPw==
+X-ME-Sender: <xms:aeswYb7azz9DhRTSp82WnU07w8So1E6B34OjrADMIhJRBD3Qm6_s1A>
+ <xme:aeswYQ7zJJ03uPiHLBevW6zkbpzr2VsB4YaRtziCgwxuGsbPb0y-uly_YCtx6F6_n
+ rBY8UrJ9ipNmrtAne0>
+X-ME-Received: <xmr:aeswYSdpYkdzVdG51-zosgRowxAgwh2vpmsCgsKSOLeZlaCkOZxLQ2aEMCW3uLVefjA44-YbKaRWhzYsAQKtCPCfMW2jqSU3__2ihw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddvhedgkeekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkgggtugesghdtreertddtvden
+ ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
+ gtgidrgiihiieqnecuggftrfgrthhtvghrnhepgfekveevjeevffevhfektefffedtjeel
+ heevteetjeduieetvefhieekgfejveehnecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+ enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
+ rhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:aeswYcI7N9aU0oS2RD41WDpfefJlOwLbn04MgxkQffoP0OMaAzWpDg>
+ <xmx:aeswYfKBUGSOlNKIh8I-8lowZk4dWo_e3zpYX2vVd4_V7GzZ6cVtQw>
+ <xmx:aeswYVxcBTOdJ1sXbnD7zwCYzYVsR2m108PDftKiAgJufvUtNuTQTQ>
+ <xmx:auswYak5g3fTFZx0Q09LUS2djCMEupEPjaduXguRXkqmhcCtLT9qDg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Thu, 2 Sep 2021 11:19:05 -0400 (EDT)
+Date: Thu, 2 Sep 2021 10:19:03 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+Subject: `phosphor-loggin` APIs
+Message-ID: <YTDrZ9k78VM1GDB8@heinlein>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.0.231]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="Nu2mfBlDKXR4AH7o"
+Content-Disposition: inline
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,82 +94,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Brad Ho <Brad_Ho@phoenix.com>,
- Paul Fertser <fercerpav@gmail.com>, netdev@vger.kernel.org,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Jakub Kicinski <kuba@kernel.org>, Samuel Mendoza-Jonas <sam@mendozajonas.com>,
- "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 2021-09-02 at 05:48 +0000, Milton Miller II wrote:
-> On August 30, 2021, Ivan Mikhaylov" <i.mikhaylov@yadro.com> wrote:
-> > This patch adds OEM Intel GMA command and response handler for it.
-> > 
-> > /* Get Link Status */
-> > struct ncsi_rsp_gls_pkt {
-> >         struct ncsi_rsp_pkt_hdr rsp;        /* Response header   */
-> > diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-> > index d48374894817..6447a09932f5 100644
-> > --- a/net/ncsi/ncsi-rsp.c
-> > +++ b/net/ncsi/ncsi-rsp.c
-> > @@ -699,9 +699,51 @@ static int ncsi_rsp_handler_oem_bcm(struct
-> > ncsi_request *nr)
-> >         return 0;
-> > }
-> > 
-> > +/* Response handler for Intel command Get Mac Address */
-> > +static int ncsi_rsp_handler_oem_intel_gma(struct ncsi_request *nr)
-> > +{
-> > +       struct ncsi_dev_priv *ndp = nr->ndp;
-> > +       struct net_device *ndev = ndp->ndev.dev;
-> > +       const struct net_device_ops *ops = ndev->netdev_ops;
-> > +       struct ncsi_rsp_oem_pkt *rsp;
-> > +       struct sockaddr saddr;
-> > +       int ret = 0;
-> > +
-> > +       /* Get the response header */
-> > +       rsp = (struct ncsi_rsp_oem_pkt *)skb_network_header(nr->rsp);
-> > +
-> > +       saddr.sa_family = ndev->type;
-> > +       ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
-> > +       memcpy(saddr.sa_data, &rsp->data[INTEL_MAC_ADDR_OFFSET], ETH_ALEN);
-> > +       /* Increase mac address by 1 for BMC's address */
-> > +       eth_addr_inc((u8 *)saddr.sa_data);
-> > +       if (!is_valid_ether_addr((const u8 *)saddr.sa_data))
-> > +               return -ENXIO;
-> 
-> The Intel GMA retireves the MAC address of the host, and the datasheet
-> anticipates the BMC will "share" the MAC by stealing specific TCP and 
-> UDP port traffic destined to the host.
-> 
-> This "add one" allocation of the MAC is therefore a policy, and one that 
-> is beyond the data sheet.
-> 
-> While this +1 policy may work for some OEM boards, there are other boards 
-> where the MAC address assigned to the BMC does not follow this pattern, 
-> but instead the MAC is stored in some platform dependent location obtained 
-> in a platform specific manner.
-> 
-> I suggest this BMC = ether_addr_inc(GMA) be opt in via a device tree
-> property.  
-> 
-> as it appears it would be generic to more than one vendor.
-> 
-> Unfortunately, we missed this when we added the broadcom and mellanox
-> handlers.
-> 
-> 
-> 
 
-Milton,
+--Nu2mfBlDKXR4AH7o
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-maybe something like "mac_addr_inc" or "ncsi,mac_addr_inc"? Also those 3(intel,
-mellanox, broadcom) functions even with handlers similar to each other, they
-could be unified on idea, difference in addresses, payload lengths, ids only as
-I see. Joel proposed in the past about dts option for Intel OEM keep_phy option,
-maybe that's the right time to reorganize all OEM related parts to fit in one
-direction with dts options for ethernet interface without Kconfig options?
+Hello,
 
-Thanks.
+I wanted to make sure everyone was aware the that phosphor-logging `lg2` AP=
+Is
+are now merged.  I've ported a few repositories to use them as samples you =
+can
+use for reference:
+    - phosphor-virtual-sensor
+    - phosphor-bmc-code-mgmt
+    - dbus-sensors (in review)
 
+I'd certainly appreciate if people want to help do a conversion on any
+repository using the original phosphor-logging API.
+
+These were talked about originally here:
+    https://lore.kernel.org/openbmc/YQBrbuQFz4JihBAE@heinlein/
+
+If you are doing conversions, you should find that the logging calls are mo=
+re
+succinct and you should not need additional calls like `string.c_str()` or
+`exception.what()`.  The lg2 APIs automatically convert most basic types.  =
+If
+you are finding you are having to make data manipulation calls in this
+conversion process I'd like to know about it so we can make the API easier =
+for
+everyone.
+
+Catch me on email or Discord with questions.
+
+--=20
+Patrick Williams
+
+--Nu2mfBlDKXR4AH7o
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmEw62UACgkQqwNHzC0A
+wRmcMg//Z6tGf/ngPx1YlTT/GzsuCUk/vXjBJ3jczTvt+IwO8YjrpQ6OjVmXmCdV
+A7kyemxPYXRwix0r5ZC53H3SUoAHGU9qkaHoEJ/Phq7l9owG9kr//I019za3LAIO
+CeRI+vOuol8IQeIB7/+JBHDTYmDey53wSq6ovE2SZPjyZijjSvOGfdCnS8kC0rmY
+Rc+mD7s1HGOEGT9wu4CvnjsHUlyFdmDiZnldyAIqmqdcgS2qwSdUjKh2HC10OA0c
+x8rLNehKo4DAeEjGPc3zig631M0vC7mvDWnqGOWcy/4IYLY8nESJRgYGGx1vaeuN
+247zLOeumPdGk1qKpidRvZDmEdP47Lk4YswG/f60KYtRQWbVJ4pmABMagwf3QLeA
+8iec/1iPGdaFWos2By7hBA0YOHdhAP3BqLpyHiYtaPnP5CCTwEeQ1acXset1NshN
+JvwxEZoZ65ectoknLx1Smn4da/JTb6vq/qy1Od3aWTKEX3EttyhAsfMcBx0QtCy8
+X9gAF/eJdREI/HGlLszmK3S/GbbeBLjoBzgH7Kl4wS/B6V6wTrsgxtHYQAnDY9S7
+GUL9htjVfgtQOmTJCMa/8Vhk/6JUWqoDak2XzLLl3zgcdF9FGYS65U2PIbX+8fcR
+ZpOTj32z3GnhkPOYxk4YigukcrujM5/wzprTX6ueajvslTM6vtY=
+=906q
+-----END PGP SIGNATURE-----
+
+--Nu2mfBlDKXR4AH7o--
