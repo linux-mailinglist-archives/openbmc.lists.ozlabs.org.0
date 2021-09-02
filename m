@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 254D33FE79B
-	for <lists+openbmc@lfdr.de>; Thu,  2 Sep 2021 04:22:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 02B4F3FE796
+	for <lists+openbmc@lfdr.de>; Thu,  2 Sep 2021 04:21:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H0PpJ0fh3z2ypR
-	for <lists+openbmc@lfdr.de>; Thu,  2 Sep 2021 12:22:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H0PnN6crTz2ypP
+	for <lists+openbmc@lfdr.de>; Thu,  2 Sep 2021 12:21:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,10 +17,10 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H0Pm40MzNz2yPX;
- Thu,  2 Sep 2021 12:20:35 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H0Plp5rZYz2yMP;
+ Thu,  2 Sep 2021 12:20:22 +1000 (AEST)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 1821xBgu068911;
+ by twspam01.aspeedtech.com with ESMTP id 1821xBgv068911;
  Thu, 2 Sep 2021 09:59:11 +0800 (GMT-8)
  (envelope-from chiawei_wang@aspeedtech.com)
 Received: from ChiaWeiWang-PC.aspeed.com (192.168.2.66) by TWMBX02.aspeed.com
@@ -32,9 +32,9 @@ To: <robh+dt@kernel.org>, <joel@jms.id.au>, <andrew@aj.id.au>,
  <linux-arm-kernel@lists.infradead.org>,
  <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
  <openbmc@lists.ozlabs.org>
-Subject: [PATCH v2 2/3] soc: aspeed: Add LPC UART routing support
-Date: Thu, 2 Sep 2021 10:18:15 +0800
-Message-ID: <20210902021817.17506-3-chiawei_wang@aspeedtech.com>
+Subject: [PATCH v2 2/3] soc: aspeed: Add UART routing support
+Date: Thu, 2 Sep 2021 10:18:16 +0800
+Message-ID: <20210902021817.17506-4-chiawei_wang@aspeedtech.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210902021817.17506-1-chiawei_wang@aspeedtech.com>
 References: <20210902021817.17506-1-chiawei_wang@aspeedtech.com>
@@ -44,7 +44,7 @@ X-Originating-IP: [192.168.2.66]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 1821xBgu068911
+X-MAIL: twspam01.aspeedtech.com 1821xBgv068911
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,12 +59,12 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add driver support for the LPC UART routing control. Users can perform
-runtime configuration of the RX muxes among the UART controllers and the
-UART IO pins.
+Add driver support for the UART routing control. Users can perform
+runtime configuration of the RX muxes among the UART controllers and
+the UART IO pins.
 
-A sysfs interface is also exported for the convenience of routing paths
-check and configuration.
+The sysfs interface is also exported for the convenience of routing paths
+check and update.
 
 Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
 ---
