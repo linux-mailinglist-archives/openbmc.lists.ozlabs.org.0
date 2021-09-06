@@ -1,72 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C9DC401994
-	for <lists+openbmc@lfdr.de>; Mon,  6 Sep 2021 12:16:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE3CC401ABE
+	for <lists+openbmc@lfdr.de>; Mon,  6 Sep 2021 13:47:58 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H34750JG5z2xvf
-	for <lists+openbmc@lfdr.de>; Mon,  6 Sep 2021 20:16:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H368r3xRhz2yNN
+	for <lists+openbmc@lfdr.de>; Mon,  6 Sep 2021 21:47:56 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=ubepSxtA;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=DP9qLeF/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2c;
+ helo=mail-qv1-xf2c.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=ubepSxtA; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=DP9qLeF/; dkim-atps=neutral
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com
+ [IPv6:2607:f8b0:4864:20::f2c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H346g14JNz2xWm
- for <openbmc@lists.ozlabs.org>; Mon,  6 Sep 2021 20:15:54 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id AED924CA86;
- Mon,  6 Sep 2021 10:15:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1630923348; x=1632737749; bh=eNAwOYwjThBOBHwNtK4BqbF0Z
- njF/8C69bpsIRK2UcE=; b=ubepSxtAn4vBdJTh6DUIqs0tQ/0lz9wlkDyh9h8nd
- Z6vuDSHewnymJYHO5fJljCcR5/S0MfMLo8XtMFOStsN0Gl5KF9oXuQHBjO/Tx8jd
- lhg0U34M5/EibVTrj7+12KfT5pERFrOUgnZNjoE/qoKzxCF0lg1wZKBeZ+Lp+ElO
- sA=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5eF3QQUpF6ji; Mon,  6 Sep 2021 13:15:48 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 183F546169;
- Mon,  6 Sep 2021 13:15:47 +0300 (MSK)
-Received: from [10.199.0.39] (10.199.0.39) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 6 Sep
- 2021 13:15:47 +0300
-Message-ID: <6605257f36d729f8e4c57387209cb0df1b4a1ffd.camel@yadro.com>
-Subject: Re: =?UTF-8?Q?=E5=9B=9E=E8=A6=86=3A?= [phosphor-host-ipmid]
- Questions about IPMI (OEM) command development
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: "Chris Chen (TPI)" <Chris.Chen3@flex.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Date: Mon, 6 Sep 2021 13:15:46 +0300
-In-Reply-To: <DM6PR08MB55145854126B411F1A9AFE29DCD29@DM6PR08MB5514.namprd08.prod.outlook.com>
-References: <DM6PR08MB5514D818A3029FA77BFB523BDCCE9@DM6PR08MB5514.namprd08.prod.outlook.com>
- <DM6PR08MB55145854126B411F1A9AFE29DCD29@DM6PR08MB5514.namprd08.prod.outlook.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.1 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H368L6Z62z2yHV;
+ Mon,  6 Sep 2021 21:47:30 +1000 (AEST)
+Received: by mail-qv1-xf2c.google.com with SMTP id a5so3844601qvq.0;
+ Mon, 06 Sep 2021 04:47:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=ydkSeattX7pqtmLuoMARpH6s/V85guG4/Y69kcyoKjI=;
+ b=DP9qLeF/ReuP+/BRT604rMJmBYUser8C7kY0DRQwQSMF57xyB43PcaW+L7jArum/3z
+ YfbhrnPDs2trWpYG8QQ0trqcIEOWSI+JAlaQtyo7TozwxxB8MpRiyvxwfgRfcH3D00K6
+ FW8SxuXScr8jrkSt8P469DkDgLJAojMkby6lg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=ydkSeattX7pqtmLuoMARpH6s/V85guG4/Y69kcyoKjI=;
+ b=WQ1i5dxgDO2jnT5OGVa4Nj89xKKKkukfsV4V3s2H37W7Hmqj6CLnf8CO81zA4Has0g
+ WvIwzDqJdPXTKLrngzH/9vDWHWJ3nN4LHWXZxdkOTcvtwWso7VHS37kp5uoYkVt3D3en
+ ftendU2NgQRIBdjihg4TLFFIivuvrKXE4OICptCnilevN79YAATka/t0E7FHUVCNWdz8
+ 1PRlcQZzx2NIeQWXNnpjA91o109PkOhqSD4KwVnvw90OCQHXu/lfPNeSvv6NouB49BzQ
+ E7lHvpBHqCpjdetk4d6XOdrcL/lYAznSKVvEpD1QPUErX3PbOY731ePY0k9EHY905izY
+ hbVQ==
+X-Gm-Message-State: AOAM5307FMoHliPvlMyTmWDFCneTyZ/Bg8zMgE39dgd5NsFJVcYvlh8d
+ HCZ2QTiv/LAFQgXKefERpUZdhd27CuIW6uoQaWs=
+X-Google-Smtp-Source: ABdhPJxPQH0wBMCr0pExnt7qJRixTkXQl+3Qg1d8UOcjWp23ojc7rVeaEtT0MVyZnZngr+ytTVe6IXgeNlYpnps2dW0=
+X-Received: by 2002:ad4:5cc2:: with SMTP id iu2mr11555814qvb.41.1630928846389; 
+ Mon, 06 Sep 2021 04:47:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.0.39]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+References: <20210617220229.7352-1-zev@bewilderbeest.net>
+ <46edf81d60a38747f7d2511f840253a1c6867652.camel@linux.ibm.com>
+ <HK0PR06MB338081E134AA6F43ECBCBA4DF2D29@HK0PR06MB3380.apcprd06.prod.outlook.com>
+In-Reply-To: <HK0PR06MB338081E134AA6F43ECBCBA4DF2D29@HK0PR06MB3380.apcprd06.prod.outlook.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 6 Sep 2021 11:47:14 +0000
+Message-ID: <CACPK8XfE6zB9BWYq7e8WbXkPFp2Cicwv2x2dc8h6jNaR2qZV0g@mail.gmail.com>
+Subject: Re: [PATCH v3] media: aspeed-video: ignore interrupts that aren't
+ enabled
+To: Mauro Carvalho Chehab <mchehab@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,99 +73,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Ryan Chen <ryan_chen@aspeedtech.com>, Zev Weiss <zev@bewilderbeest.net>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Eddie James <eajames@linux.ibm.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+ "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+Hi Mauro,
 
-I don't represent Intel, but have some considerations about this topic:
-1) Try to not reuse intel-ipmi-oem. Much better solution would be to
-create your own xxx-ipmi-oem package and implement only methods you
-really need.
-2) Better way would be to implement required logic in phosphor-host-
-ipmid and submit changes there. I didn't investigate this yet since we
-also pull intel-ipmi-oem to our project, but I believe, it should not
-be too difficult. Don't repeat our mistakes ).
-3) There is priority argument which you can use to determine handler
-call order.
-4) Most functions there are specific for Intel servers, so the useless
-even is you use Intel CPUs but your own platform.
-5) Use "journalctl -t ipmid -o pretty-json" or something like this. But
-now it is recommended to use new syntax:
-https://github.com/openbmc/phosphor-logging/blob/master/docs/structured-logging.md
+On Mon, 6 Sept 2021 at 10:10, Ryan Chen <ryan_chen@aspeedtech.com> wrote:
+> > Subject: Re: [PATCH v3] media: aspeed-video: ignore interrupts that aren't
+> > enabled
+> >
+> > On Thu, 2021-06-17 at 17:02 -0500, Zev Weiss wrote:
+> > > As partially addressed in commit 65d270acb2d6 ("media: aspeed: clear
+> > > garbage interrupts"), the ASpeed video engine sometimes asserts
+> > > interrupts that the driver hasn't enabled.  In addition to the
+> > > CAPTURE_COMPLETE and FRAME_COMPLETE interrupts dealt with in that
+> > > patch, COMP_READY has also been observed.  Instead of playing
+> > > whack-a-mole with each one individually, we can instead just blanket
+> > > ignore everything we haven't explicitly enabled.
+> >
+> > Suspect this will fix an intermittent problem on AST2500 with screensaver.
+> > Change looks good, thanks!
+> >
+> > Reviewed-by: Eddie James <eajames@linux.ibm.com>
+> >
+> Reviewed-by: Ryan Chen <ryan_chen@aspeedtech.com>
+> > >
+> > > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 
+I notice this wasn't merged in the pull request you sent for v5.15.
+Would you be able to ensure it makes it in the next pull request you
+send?
 
-On Mon, 2021-09-06 at 09:40 +0000, Chris Chen (TPI) wrote:
-> Hi all,
-> 
-> I guess this mail was got overwhelmed by bunches of emails, so please
-> let me resend it and hope someone could help me. Another, I add one
-> more question marked #5 below.
-> 
-> Thank you.
-> 
-> Regards,
-> Chris Chen
-> 
-> 寄件者: openbmc <openbmc-bounces+chris.chen3=flex.com@lists.ozlabs.org> 代表
-> Chris Chen (TPI) <Chris.Chen3@flex.com>
-> 寄件日期: 2021年9月2日 下午 06:34
-> 收件者: openbmc@lists.ozlabs.org <openbmc@lists.ozlabs.org>
-> 主旨: [phosphor-host-ipmid] Questions about IPMI (OEM) command
-> development 
-> Hi all,
-> 
-> I have studied "phosphor-host-ipmid" package for a couple of weeks and
-> got understanding that it has implemented some mandatory and optional
-> commands already. And I also knew that I'm able to leverage "intel-
-> ipmi-oem" package to get more command handlers. But there're some
-> questions raised in my mind, I hope someone could give me some
-> suggestions.
->    1. What's the normal development procedure in case I want to make
-> our own OEM commands? I mean do you guys encourage me to create a new
-> "xxx-ipmi-oem" package or to leverage "intel-ipmi-oem" and then add our
-> own commands in it?
->    2. I for now added "intel-ipmi-oem" package only for using its
-> "<Chassis>:<Set Front Panel Enables>" command because I figured out the
-> same command in the "phosphor-host-ipmid" is not able to match the d-
-> bus interface in the "x86-power-control". I'm not sure if I will need
-> other commands in the "intel-ipmi-oem", but what if I don't need other
-> commands, how to remove them? to use the whitelist mechanism?
->    3. Is it okay to add more than 1 xxx-ipmi-ome packages? If yes, how
-> to manage the whitelist between these 2 OEM packages?
->    4. Am I able to use "intel-ipmi-oem" on a platform that is using AMD
-> CPU?
->    5. How to print the "entry("SENDER=%s", sender.c_str())" parts? I
-> mean I for now can print out "Set up ipmi context" string after
-> following the instruction listed in
-> "https://github.com/openbmc/openbmc/wiki/Debugging-OpenBMC#enabling-application-debug
-> ", but I don't see "SENDER=" when I executed "journalctl -t ipmid"
-> command.
->    6.    1. log<level::DEBUG>("Set up ipmi
-> context",entry("SENDER=%s",sender.c_str()),                     
-> entry("NETFN=0x%X", netFn),entry("LUN=0x%X", lun),                     
-> entry("CMD=0x%X", cmd),entry("CHANNEL=%u", channel),                   
->   entry("USERID=%u", userId),                     
-> entry("SESSIONID=0x%X", sessionId),                     
-> entry("PRIVILEGE=%u",static_cast<uint8_t>(privilege)),                 
->     entry("RQSA=%x", rqSA));
-> Thank you.
-> 
-> Regards,
-> Chris Chen
-> Legal Disclaimer :
-> The information contained in this message may be privileged and
-> confidential. 
-> It is intended to be read only by the individual or entity to whom it
-> is addressed
-> or by their designee. If the reader of this message is not the intended
-> recipient,
-> is strictly prohibited. If you have received this message in error, 
-> please immediately notify the sender and delete or destroy any copy of
-> this message!
+It can have some fixes tags too:
 
--- 
-Best regards,
-Andrei Kartashev
+Fixes: 65d270acb2d6 ("media: aspeed: clear garbage interrupts")
+Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
+Acked-by: Joel Stanley <joel@jms.id.au>
 
+Cheers,
 
+Joel
+
+> > > ---
+> > >
+> > > Changes since v2 [1]:
+> > >  - minor commit message improvements
+> > >
+> > > Changes since v1 [0]:
+> > >  - dropped error message
+> > >  - switched to a blanket-ignore approach as suggested by Ryan
+> > >
+> > > [0]
+> > > https://lore.kernel.org/linux-arm-kernel/20201215024542.18888-1-zev@be
+> > > wilderbeest.net/
+> > > [1]
+> > >
+> > https://lore.kernel.org/openbmc/20210506234048.3214-1-zev@bewilderbees
+> > > t.net/
+> > >
+> > >  drivers/media/platform/aspeed-video.c | 16 ++++++----------
+> > >  1 file changed, 6 insertions(+), 10 deletions(-)
+> > >
+> > > diff --git a/drivers/media/platform/aspeed-video.c
+> > > b/drivers/media/platform/aspeed-video.c
+> > > index 7bb6babdcade..77611c296a25 100644
+> > > --- a/drivers/media/platform/aspeed-video.c
+> > > +++ b/drivers/media/platform/aspeed-video.c
+> > > @@ -563,6 +563,12 @@ static irqreturn_t aspeed_video_irq(int irq, void
+> > > *arg)
+> > >     struct aspeed_video *video = arg;
+> > >     u32 sts = aspeed_video_read(video, VE_INTERRUPT_STATUS);
+> > >
+> > > +   /*
+> > > +    * Hardware sometimes asserts interrupts that we haven't
+> > > actually
+> > > +    * enabled; ignore them if so.
+> > > +    */
+> > > +   sts &= aspeed_video_read(video, VE_INTERRUPT_CTRL);
+> > > +
+> > >     /*
+> > >      * Resolution changed or signal was lost; reset the engine and
+> > >      * re-initialize
+> > > @@ -629,16 +635,6 @@ static irqreturn_t aspeed_video_irq(int irq, void
+> > > *arg)
+> > >                     aspeed_video_start_frame(video);
+> > >     }
+> > >
+> > > -   /*
+> > > -    * CAPTURE_COMPLETE and FRAME_COMPLETE interrupts come even
+> > > when these
+> > > -    * are disabled in the VE_INTERRUPT_CTRL register so clear them
+> > > to
+> > > -    * prevent unnecessary interrupt calls.
+> > > -    */
+> > > -   if (sts & VE_INTERRUPT_CAPTURE_COMPLETE)
+> > > -           sts &= ~VE_INTERRUPT_CAPTURE_COMPLETE;
+> > > -   if (sts & VE_INTERRUPT_FRAME_COMPLETE)
+> > > -           sts &= ~VE_INTERRUPT_FRAME_COMPLETE;
+> > > -
+> > >     return sts ? IRQ_NONE : IRQ_HANDLED;  }
+> > >
+>
