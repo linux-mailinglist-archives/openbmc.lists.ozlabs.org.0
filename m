@@ -2,63 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81514402E84
-	for <lists+openbmc@lfdr.de>; Tue,  7 Sep 2021 20:46:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 30661402E8A
+	for <lists+openbmc@lfdr.de>; Tue,  7 Sep 2021 20:47:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H3vPV301Kz2yJj
-	for <lists+openbmc@lfdr.de>; Wed,  8 Sep 2021 04:46:38 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=BDjzOzoB;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H3vQF0vRmz2yPX
+	for <lists+openbmc@lfdr.de>; Wed,  8 Sep 2021 04:47:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2a;
- helo=mail-io1-xd2a.google.com; envelope-from=johnwedig@google.com;
+ smtp.mailfrom=gmail.com (client-ip=209.85.167.175;
+ helo=mail-oi1-f175.google.com; envelope-from=robherring2@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=BDjzOzoB; dkim-atps=neutral
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
- [IPv6:2607:f8b0:4864:20::d2a])
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com
+ [209.85.167.175])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H3vP43BFgz2xYL
- for <openbmc@lists.ozlabs.org>; Wed,  8 Sep 2021 04:46:14 +1000 (AEST)
-Received: by mail-io1-xd2a.google.com with SMTP id q3so14234515iot.3
- for <openbmc@lists.ozlabs.org>; Tue, 07 Sep 2021 11:46:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=XB9doDq+YPFLrhfmlvy8ZgtfKobw7s1CSd++l8IV+6M=;
- b=BDjzOzoB7GqJr72yeVoKRyzmQXkW8eH9NwGeH0OyBUX5SXa430ATBrOrMz3KhYeYxt
- kgshRAQFDvSanp/EGZlyQ6qSS58NZPHcbYME6HZbanLbWfTCcCk2DKFVu8N9dpge4J/j
- WrO91kW5OVGrWVyxu/NLiVXKprP+TmF+U5CvgzDIcIRV7DOo/olQkztD9Q+v0gKPgsSY
- JxVAhlZKHY6DUiLRtjEY4g7iy4qlH8nzLfECo9lgWApP1iAukBHjIb2pR7rH/W6zwcMQ
- NT9R6y6gCw0R1U80FueoUyds4BcssqZFi6TitFs47Oamf3W+gk5OX1jNvhsgmFE4jwxS
- CRTQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H3vPy4wxtz2xtV;
+ Wed,  8 Sep 2021 04:47:02 +1000 (AEST)
+Received: by mail-oi1-f175.google.com with SMTP id n27so214525oij.0;
+ Tue, 07 Sep 2021 11:47:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=XB9doDq+YPFLrhfmlvy8ZgtfKobw7s1CSd++l8IV+6M=;
- b=oZm/UGGZj93RmbDFMVVTDHy4d23nuVU49v7i7XUDfy191oeVAqQ0im/+YcRb4hDz0z
- r2xIHjpK9b3YVnWRyKm5bJSjyeGe5jjdKO2u96ZJETI06HuQtKgcDBcuN8ODTq6Pu5zN
- s5beibyhj68sZ9c3x77KPC6tldqKvn7AnzTcK47i3nlbVVEqNjgXavD9Tx5LR0LJ0aJ8
- JjbpDjv+kaRtKd2//EVGGce+lBnJSmrS859Nx/F6X4RdIGetraNutl2svewQWOu76YVt
- HoBdm2oqSN2lJ67eIqWKxtvyynZq9zO8TwMcw8q9Vg6IMrnQpQBDw/AllvPQr8jGzgOT
- hy1w==
-X-Gm-Message-State: AOAM532qRw6cfqJ0o2mLuRXqPxOhBQckHcgETITw37ool//pYegeZ/kL
- u+5vMzfdUQ7kqs6yjJS3Oow8IllTwlGXkJ1T1NjaVoJ11t4MvQ==
-X-Google-Smtp-Source: ABdhPJxIapUWaAwHwrdUP7JwXU9IhiTxVkuHM8hXNo7k3fLo/SQwaLvEAGuNlCjeJZaAAcACh037Jr9lRjv/TIc5UP0=
-X-Received: by 2002:a02:1dc9:: with SMTP id 192mr17097482jaj.92.1631040369194; 
- Tue, 07 Sep 2021 11:46:09 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=39RQTTYF/amkcltUtDp9LhMGXFZN1q3yD/uvIqsnXMk=;
+ b=NK+Z/E7ePr9UtcGuaCcrqhnSUZd9ayLOfbqQMQ6NGtXeFMaLcmAchFkUbljocnsIpN
+ vIpl+ZV3Zs/cqVSkhEVQrn50Epsp1UE5cpUPP+opJC47INgTvmuZ4s2rxNpsYepASWLz
+ uS6FvXxXtTA+xAkxtTUzw8OW+VnXowKXxxLSrjRYOZY2a0gnfeQJ1Fvtf84vevoZqwKi
+ NUUI/uA1Jzjuljlghs6mnlxfI5IUwXPj7yH/tiKdXbcF3IFBaOafL4boNxy+z1AiIp4b
+ y+5ze+ZdsvqmJ0y/TDOQce2JR60uuFIHQh+oxs7t/jomp1B7ERZjrB7r22jfm6veMj1K
+ 0IvA==
+X-Gm-Message-State: AOAM532ftGDC03NH1tdZWo13qEHPPDklBX7IYw4TvyeB47YjD8fDa8y/
+ 7wNkPzhjRRBV/v+4Ei8BsQ==
+X-Google-Smtp-Source: ABdhPJyVUR3P16ERRVW6NSwGEUXMlTh132UXxmCNpEOyGRal5QtTecpj1eeGoYCTESeb/H0aRtjnAA==
+X-Received: by 2002:aca:5f09:: with SMTP id t9mr3985991oib.157.1631040418971; 
+ Tue, 07 Sep 2021 11:46:58 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net.
+ [66.90.148.213])
+ by smtp.gmail.com with ESMTPSA id i1sm2384905ooo.15.2021.09.07.11.46.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Sep 2021 11:46:58 -0700 (PDT)
+Received: (nullmailer pid 136986 invoked by uid 1000);
+ Tue, 07 Sep 2021 18:46:55 -0000
+Date: Tue, 7 Sep 2021 13:46:55 -0500
+From: Rob Herring <robh@kernel.org>
+To: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
+Subject: Re: [PATCH v2 1/3] dt-bindings: aspeed-lpc: Add UART routing
+ compatible string
+Message-ID: <YTezn1TDatYs2FMd@robh.at.kernel.org>
+References: <20210902021817.17506-1-chiawei_wang@aspeedtech.com>
+ <20210902021817.17506-2-chiawei_wang@aspeedtech.com>
 MIME-Version: 1.0
-From: John Wedig <johnwedig@google.com>
-Date: Tue, 7 Sep 2021 11:45:53 -0700
-Message-ID: <CACejXs+ZrNNbB4b-oMe_Yh1zoxaEWjyLNcVoRDuMKskdF22Qmg@mail.gmail.com>
-Subject: Design proposal: Encrypted storage management daemon
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000d2597105cb6c2df6"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210902021817.17506-2-chiawei_wang@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,46 +68,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, andrew@aj.id.au,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, lee.jones@linaro.org,
+ linux-arm-kernel@lists.infradead.org, osk@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d2597105cb6c2df6
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Sep 02, 2021 at 10:18:14AM +0800, Chia-Wei Wang wrote:
+> Add the compatible string and the device tree description for the
+> Aspeed AST25xx/AST26xx UART routing control.
+> 
+> Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
+> ---
+>  .../devicetree/bindings/mfd/aspeed-lpc.txt    | 22 +++++++++++++++++++
+>  1 file changed, 22 insertions(+)
 
-Hi everyone,
+Either convert aspeed-lpc.txt to DT schema or make this a separate 
+schema doc.
 
-I have a new design proposal that I'm looking for feedback on:
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/46573
-
-It's a new daemon that will manage an encrypted eMMC device. The idea is to
-encapsulate the security functionality and represent the encrypted eMMC as
-an object on D-Bus, which would have the following methods:
-
-   - Create a new encrypted filesystem on the device
-   - Wipe the device
-   - Lock
-   - Unlock
-   - Change the password
-
-If you have any input or questions, please let me know.
-
-Thank you,
-John
-
---000000000000d2597105cb6c2df6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi everyone,<div><br></div><div>I have a new design propos=
-al that I&#39;m looking for feedback on:=C2=A0<a href=3D"https://gerrit.ope=
-nbmc-project.xyz/c/openbmc/docs/+/46573">https://gerrit.openbmc-project.xyz=
-/c/openbmc/docs/+/46573</a></div><div><br></div><div>It&#39;s a new daemon =
-that will=C2=A0manage an encrypted eMMC device. The idea is to encapsulate =
-the security functionality and represent the encrypted eMMC as an object on=
- D-Bus, which would have the following methods:</div><div><ul><li>Create a =
-new encrypted filesystem on the device</li><li>Wipe the device</li><li>Lock=
-</li><li>Unlock</li><li>Change the password</li></ul><div>If you have any i=
-nput or questions, please let me know.</div></div><div><br></div><div>Thank=
-=C2=A0you,</div><div>John</div><div><br></div></div>
-
---000000000000d2597105cb6c2df6--
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+> index 936aa108eab4..45d44f812e5e 100644
+> --- a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+> +++ b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+> @@ -155,3 +155,25 @@ lpc_reset: reset-controller@98 {
+>          reg = <0x98 0x4>;
+>          #reset-cells = <1>;
+>  };
+> +
+> +UART routing control
+> +--------------------
+> +
+> +The UART routing control manages the RX muxes among the UART controllers
+> +and the I/O pins. This is typicall used for the Serial-Over-Lan (SOL)
+> +service.
+> +
+> +Required properties:
+> +
+> + - compatible:		One of:
+> +			"aspeed,ast2500-uart-routing";
+> +			"aspeed,ast2600-uart-routing";
+> +
+> + - reg:			offset and length of the IP in the LPC memory region
+> +
+> +Example:
+> +
+> +uart_routing: uart-routing@98 {
+> +	compatible = "aspeed,ast2600-uart-routing";
+> +	reg = <0x98 0x8>;
+> +};
+> -- 
+> 2.17.1
+> 
+> 
