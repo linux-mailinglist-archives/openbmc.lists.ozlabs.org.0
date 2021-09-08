@@ -2,101 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8700F403EDE
-	for <lists+openbmc@lfdr.de>; Wed,  8 Sep 2021 20:09:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 912364040E1
+	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 00:11:05 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H4VX02nYlz2yJl
-	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 04:09:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H4btv2kQBz2xrp
+	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 08:11:03 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=cyEb+/8S;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Tp8Cb4ZD;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=bruce.mitchell@linux.vnet.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=cyEb+/8S; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.s=pp1 header.b=Tp8Cb4ZD; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H4VWV1nKZz2xvN
- for <openbmc@lists.ozlabs.org>; Thu,  9 Sep 2021 04:08:53 +1000 (AEST)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 188I3Ti7075543; Wed, 8 Sep 2021 14:08:46 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H4btN4WBqz2xY9
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Sep 2021 08:10:35 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 188M4X3K144818; Wed, 8 Sep 2021 18:10:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : from : to
- : cc : date : message-id : content-transfer-encoding : content-type :
- mime-version : references : subject; s=pp1;
- bh=iqVpuBtbluPILGTSBsLjd4FyeMnWUfgZ84HLd7yGTtA=;
- b=cyEb+/8S7Rqb0JWXkoXctYE19KyZOXbDucYnVDEH/l2J4koYmGfA3a6wzm+FFaXJC+ON
- RAxo5VKuICWRIQg2FtZiWHWdQIKPoiVoGF89Bdh/ia3M9YoitFL9U7fEQ8Jo4FaT/Sl4
- lbAEiJ14pkBnUv61IGKpRVaWW44BBFt+G9JoT+iYMWy9H6mDcuJ+c5cV1JwzjLfy+PJn
- xPjBA2MXNeeCK38uBdYSDijdpd5LnqkwWecMIR6e8+VdCwXBsSSXMjzzusAkL4gYFk93
- 5nQrln9/qjJ5jsIc/T/5wH/s2vfLxhhwc36dtpkDovTHVVFdhQNGEsIn+4fSJadGS8rU ZQ== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3axxm36vf5-1
+ h=to : from : subject : cc
+ : message-id : date : content-type : content-transfer-encoding :
+ mime-version; s=pp1; bh=b9x3oRh8MZw+fajwDTUTnPibc6ayG4FOeIE6rifl6eg=;
+ b=Tp8Cb4ZDQA3JKTBVyxcbT4b/OJC443C8POd2PQrcj16k4UlRTl/DZzaffbQGJqg9N1Vf
+ iedXYzRr/759VxaO1nXrhpSDI8RBwIb8heVTgrhqUZG5YV4YhUEzPfLh0B8Vgs53FGA6
+ RbiUlFrq6p7cqrIiJwOG36ptAg2U9gnO/Kv3kJgXfMyogpgHpC+ZJ8490KC1e3FQkLy5
+ +6fqvV/wgxxGAGRqxIzvmqDdB3R8zV/S77gRWR4OmlW3wXJZB00lzeufQIf47sNrsFFV
+ zpC+BnZGyKken93R71UW79KgS44CsaYPGFQl62t7gVGxOflyF2pb83ZQhS57ysIsD8zM PQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3axuwjrge5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Sep 2021 14:08:46 -0400
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 188I8111029002;
- Wed, 8 Sep 2021 18:08:45 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma02dal.us.ibm.com with ESMTP id 3axcnj8gp0-1
+ Wed, 08 Sep 2021 18:10:32 -0400
+Received: from m0098410.ppops.net (m0098410.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 188M69qL004771;
+ Wed, 8 Sep 2021 18:10:32 -0400
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3axuwjrgdv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Sep 2021 18:08:45 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 188I8hNH44040656
+ Wed, 08 Sep 2021 18:10:32 -0400
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 188M7PXD012160;
+ Wed, 8 Sep 2021 22:10:31 GMT
+Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
+ [9.57.198.26]) by ppma03wdc.us.ibm.com with ESMTP id 3axcnpp8g7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Sep 2021 22:10:31 +0000
+Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
+ [9.57.199.110])
+ by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 188MAUmk10748516
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 8 Sep 2021 18:08:43 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8E50C7805F;
- Wed,  8 Sep 2021 18:08:43 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 85C4D7805C;
- Wed,  8 Sep 2021 18:08:43 +0000 (GMT)
-Received: from mww0332.dal12m.mail.ibm.com (unknown [9.208.69.80])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Wed,  8 Sep 2021 18:08:43 +0000 (GMT)
-In-Reply-To: <DM6PR11MB4410B4A178CF1DC94978349894D49@DM6PR11MB4410.namprd11.prod.outlook.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: "Ren, Zhikui" <zhikui.ren@intel.com>
-Date: Wed, 8 Sep 2021 18:08:41 +0000
-Message-ID: <OFB24DE87E.E2015B33-ON0025874A.0062F370-0025874A.0063AC5E@ibm.com>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <DM6PR11MB4410B4A178CF1DC94978349894D49@DM6PR11MB4410.namprd11.prod.outlook.com>,
- <DM6PR11MB4410B40F9D7DC46B72B0C87594CE9@DM6PR11MB4410.namprd11.prod.outlook.com>
- <YTFJHVW+bYoa1vIT@heinlein>
-X-Mailer: Lotus Domino Web Server Release 11.0.1FP2HF97   July 2, 2021
-X-MIMETrack: Serialize by http on MWW0332/03/M/IBM at 09/08/2021 18:08:41,
- Serialize complete at 09/08/2021 18:08:41
-X-Disclaimed: 27247
+ Wed, 8 Sep 2021 22:10:30 GMT
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8AA36AE075;
+ Wed,  8 Sep 2021 22:10:30 +0000 (GMT)
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 20F94AE06D;
+ Wed,  8 Sep 2021 22:10:30 +0000 (GMT)
+Received: from [9.163.8.88] (unknown [9.163.8.88])
+ by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed,  8 Sep 2021 22:10:29 +0000 (GMT)
+To: linux-iio@vger.kernel.org
+From: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
+Subject: Looking for clarification on sysfs IIO devices, do _raw devices
+ require both _offset and _scale?
+Message-ID: <cc74f30f-9ab8-45ce-1f44-8e55c3f9c5ce@linux.vnet.ibm.com>
+Date: Wed, 8 Sep 2021 15:10:29 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: I5SYzYxB-NdicaptDo1QlF-xTGS-V6oU
-X-Proofpoint-ORIG-GUID: I5SYzYxB-NdicaptDo1QlF-xTGS-V6oU
-Subject: RE: beep code manager  for openbmc
+X-Proofpoint-GUID: vZVx-s3ktMXmxkZ-ANW_G8woawIqPiAD
+X-Proofpoint-ORIG-GUID: D_yOftcodq6APUje3OThdH2xvvos9gAf
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-09-08_06:2021-09-07,
+ definitions=2021-09-08_09:2021-09-07,
  2021-09-08 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 priorityscore=1501
- adultscore=0 malwarescore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
- mlxlogscore=999 clxscore=1011 phishscore=0 spamscore=0 suspectscore=0
+ suspectscore=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1011 mlxscore=0 mlxlogscore=999
+ phishscore=0 impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2109030001
- definitions=main-2109080113
+ definitions=main-2109080137
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,64 +108,42 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
+ Ed Tanous <ed@tanous.net>, Ed Tanous <edtanous@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Ren, Zhikuui wrote:
->Patrick Williams wrote:>>On Thu, Sep 02, 2021 at 08:15:21PM +0000, Ren, Zh=
-ikui wrote:
->>> Hi All,
->>>
->>> Beepcode manager is a stand-alone beep code service should be
->created to
->>manage the beeper hardware, and provide D-Bus methods to expose the
->>beeper function globally, all other services can use the beeper
->hardware by
->>calling the beep methods.
->>>
->>> This package has been included in our distribution. Now we would
->like  to
->>upstream it and make it available to the community.
->>>
->>>
->>> Since it is now a very light service that only have one source
->file and a service
->>file. I am wondering whether this service can go to an existing
->repository.
->>> If not, we would like to request a new repository for it.
->>>
+In reference to:
+https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-bus-iio
 
-My thought is perhaps with our progress code logging and 7-segment=20
-post code display in phosphor-host-postd ?
+I have Temperature, Pressure, and Humidity IIO sensors.
+IIO _raw devices look like this on sysfs:
+   this happens to be a SI7020 type device with 2 sensors
+     /sys/bus/iio/devices/iio:device0/in_humidityrelative_offset
+     /sys/bus/iio/devices/iio:device0/in_humidityrelative_raw
+     /sys/bus/iio/devices/iio:device0/in_humidityrelative_scale
+     /sys/bus/iio/devices/iio:device0/in_temp_offset
+     /sys/bus/iio/devices/iio:device0/in_temp_raw
+     /sys/bus/iio/devices/iio:device0/in_temp_scale
 
-I could see several of the events mentioned be triggered by writing=20
-a post code, and there are already a few separate programs in that=20
-repository, one to record codes and one to display on some 7-segment=20
-led hardware.  The phosphor-post-code-manager which records the=20
-history is in its own repository (before the desire to combine them).
+Other IIO _input devices look like this on sysfs:
+   this happens to be a DPS310 device with 2 sensors
+      /sys/bus/iio/devices/iio:device1/in_temp_input
+      /sys/bus/iio/devices/iio:device1/in_pressure_input
 
-I'm certianally open to other suggestions just thought I'd plant a=20
-seed for discussion.
+As I read it if the IIO device was an _input type on sysfs,
+just read it (and possibly scale it for units).
 
->>> Thanks,>>> Zhikui
->>>
+But if the IIO device was a _raw type on sysfs my understanding
+is that it must be accompanied by a _offset and a _scale for
+at least temperature, pressure, humidity, voltage, and current
+sensors.
+Is that correct?
 
-[various other discussions on interfaces , making the beep codes=20
-configurable , etc]
-
->[Ren, Zhikui] To summarize, I think the following steps can be taken:>1. F=
-ind an existing home or create a new one for Beep code manager
->2. Upstream existing code as initial check in
->3. create phosphor-dbus-interfaces for it=20
->4. update to use phosphor-dbus-interface
->5. further improvements including the two discussed above
->
->Any comments/feedback?=20
->
->Thanks,
->Zhikui
-
-milton
+Further for any IIO device that is a _raw type on sysfs is it
+required to be accompanied by a _offset and a _scale as well?
 
 
+Thank you!
+
+-- 
+Bruce
