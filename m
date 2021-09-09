@@ -2,104 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C14B5405807
-	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 15:49:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C3D22405A50
+	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 17:43:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H50kD5QhNz2yKN
-	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 23:49:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H53F15RKQz2yMD
+	for <lists+openbmc@lfdr.de>; Fri, 10 Sep 2021 01:43:17 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=n7w+t2kF;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bxjf2YSB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com;
- envelope-from=bruce.mitchell@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32f;
+ helo=mail-ot1-x32f.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=n7w+t2kF; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=bxjf2YSB; dkim-atps=neutral
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
+ [IPv6:2607:f8b0:4864:20::32f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H50jg4YdMz2xrX
- for <openbmc@lists.ozlabs.org>; Thu,  9 Sep 2021 23:49:27 +1000 (AEST)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 189DWhkx065648; Thu, 9 Sep 2021 09:49:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=YOADUv/wRxpcFSdNFbl1N5SS8ZlACAZ0KlTyLm4aDps=;
- b=n7w+t2kFOfaLxKEtctq/oQ0c5vHnWtUd6fnRpZFPXof/hmmR40e4vYuqVI0/lszcUhps
- axcCzpIy1Xu3vGvKK4d+bSEaNg/crwlxshGKVOl2ylvqazd5DM+aBtmIKMcUtjWmFTyX
- s4ZslOJxA4Ob2bLlya6TMKGX4ymIDgF1Ml/XBRsF8cFCYs2CgFqt+pTZgQdVRu/CWMrk
- 65FF90PTvwyQdQVOXPMRZRQnzDCYf4OyjY++unGdKbbp4Lz/YsFBJ3JWtpUwUDcfD9Zt
- 2Pn1p/oKyGJ+dJPK63EWdOQMJfAzGGj0NQaTy73NREtlO8FJV/h7DzE8jJiVrd5TDNR/ Rw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3aygjvd0rd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Sep 2021 09:49:21 -0400
-Received: from m0098417.ppops.net (m0098417.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 189DXCZ6067716;
- Thu, 9 Sep 2021 09:49:21 -0400
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3aygjvd0r5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Sep 2021 09:49:21 -0400
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 189DhQZD003673;
- Thu, 9 Sep 2021 13:49:20 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma04wdc.us.ibm.com with ESMTP id 3axcnr5as3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Sep 2021 13:49:20 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 189DnKje43909514
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Sep 2021 13:49:20 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EC73AAE0A4;
- Thu,  9 Sep 2021 13:49:19 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69537AE097;
- Thu,  9 Sep 2021 13:49:19 +0000 (GMT)
-Received: from [9.163.8.88] (unknown [9.163.8.88])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
- Thu,  9 Sep 2021 13:49:19 +0000 (GMT)
-Subject: Re: Looking for clarification on sysfs IIO devices, do _raw devices
- require both _offset and _scale?
-To: Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
-References: <cc74f30f-9ab8-45ce-1f44-8e55c3f9c5ce@linux.vnet.ibm.com>
- <5c79425f-6e88-36b6-cdfe-4080738d039f@metafoo.de>
-From: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
-Message-ID: <b9f78f37-fbb6-ea68-48c1-917cf42ca57f@linux.vnet.ibm.com>
-Date: Thu, 9 Sep 2021 06:49:19 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
-In-Reply-To: <5c79425f-6e88-36b6-cdfe-4080738d039f@metafoo.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Lr1GrOcjFNSdsgCM1r13fjtaz44hDdli
-X-Proofpoint-ORIG-GUID: boH-cdt_nHT8P33EbzGCirfKyTQ5Vcfg
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
-MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-09-09_04:2021-09-09,
- 2021-09-09 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- malwarescore=0 bulkscore=0 phishscore=0 spamscore=0 suspectscore=0
- adultscore=0 clxscore=1011 priorityscore=1501 mlxscore=0 mlxlogscore=999
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2109030001 definitions=main-2109090083
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H53DX1Qw3z2xsg
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Sep 2021 01:42:51 +1000 (AEST)
+Received: by mail-ot1-x32f.google.com with SMTP id
+ v33-20020a0568300921b0290517cd06302dso3001901ott.13
+ for <openbmc@lists.ozlabs.org>; Thu, 09 Sep 2021 08:42:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=cqZG+sYYGf1XHLL3D9eLMQw35mY33Z7al/DfaBauYpM=;
+ b=bxjf2YSBM6ZcEcIfH3lmTVPcCABR6LU7yG/3MIX2QbZZOlA12N58x8kb1L3Jvxo/Av
+ 2lx99rij126BQwuMVa7ZN/TXpE63+xBsuD9vBLMohULQwiGxcx06ltDDsjdCFa+6FeSO
+ OtQG2Qb4IzHfbuJqFyz88S5npzOVQSbmQP/1YJ32CcIW1AJ3DXm26jv5xu7XzIkq3ZiF
+ mo4qTGfiAV+wX9oiXh0QfnVtc8gVCwJPZ+I1QArqu0HhXQ5529LP1V22cjqDXr+M84VT
+ AkZYzMdjocdjVRt3Z51DC0k7kZqxKSikxs2z5EQ3KUlpmbupiWjNyd9CrTNVe6KjNg79
+ OSGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=cqZG+sYYGf1XHLL3D9eLMQw35mY33Z7al/DfaBauYpM=;
+ b=is5UUmzMdN4dcRXJ3ST05VKkuQkBcgYldZ9M56DoXiQtwjL6dlxDgjqI6Kdu+0S+7H
+ 9Q2CaeXI1sBEPngpjToAgjy+DAS1I6ojk5E8tDpiCcDfPUwqC0XkjGR2LkZLFZdR83Ct
+ L4g/0B7N/V3wNyIGhu2koMC7OCCMz7B4UZdX99u/sbKW+MYw6Oq03WhLYxU1gLVdHB7G
+ ftvXz1zlOkz6YDAw7SZyR0uMBBAI7zW/3q/nHJNU8FczxbKmXXAq8M79dTcv38XiKtN5
+ Pterd6SlBYFI0SNYJPMftr+kbRBT5xXpk8IZRU3u5an/u/gGRZ03O3hliPAM8aHU/K/I
+ b98w==
+X-Gm-Message-State: AOAM532Lcw4ckdbSXIL/Dza8PFXYG1Bb2o/y2atjTqn9kOtoLaOJr+jB
+ MxzA1zTElmrw3crQN2+z8TmZtPNp0KpEWA==
+X-Google-Smtp-Source: ABdhPJxW96be9Z1T3zT4qrWSnWgD76agDLA1qmS4cxH44WP2L2XsZEOqIDMDkAJXwCQlvm2iLtYqZA==
+X-Received: by 2002:a9d:4e06:: with SMTP id p6mr396993otf.261.1631202167690;
+ Thu, 09 Sep 2021 08:42:47 -0700 (PDT)
+Received: from smtpclient.apple ([2600:1700:19e0:3310:4c3f:74f6:fd38:417e])
+ by smtp.gmail.com with ESMTPSA id a13sm473892ooi.3.2021.09.09.08.42.47
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 09 Sep 2021 08:42:47 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: Implement OEM mechanism to handle
+ xyz.openbmc_project.Condition.HostFirmware interface
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <3909e9e3-0a58-e542-a004-89278438997d@amperemail.onmicrosoft.com>
+Date: Thu, 9 Sep 2021 10:42:46 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <07A6A378-47F6-4805-ABFD-D216F4D4C8FE@gmail.com>
+References: <53e204da-0c8b-d161-a065-a6195550d7f7@amperemail.onmicrosoft.com>
+ <3909e9e3-0a58-e542-a004-89278438997d@amperemail.onmicrosoft.com>
+To: Thang Nguyen <thang@amperemail.onmicrosoft.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,68 +84,124 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Ed Tanous <ed@tanous.net>, Ed Tanous <edtanous@google.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/9/2021 00:12, Lars-Peter Clausen wrote:
-> On 9/9/21 12:10 AM, Bruce Mitchell wrote:
->> In reference to:
->> https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-bus-iio
->>
->> I have Temperature, Pressure, and Humidity IIO sensors.
->> IIO _raw devices look like this on sysfs:
->>   this happens to be a SI7020 type device with 2 sensors
->>     /sys/bus/iio/devices/iio:device0/in_humidityrelative_offset
->>     /sys/bus/iio/devices/iio:device0/in_humidityrelative_raw
->>     /sys/bus/iio/devices/iio:device0/in_humidityrelative_scale
->>     /sys/bus/iio/devices/iio:device0/in_temp_offset
->>     /sys/bus/iio/devices/iio:device0/in_temp_raw
->>     /sys/bus/iio/devices/iio:device0/in_temp_scale
->>
->> Other IIO _input devices look like this on sysfs:
->>   this happens to be a DPS310 device with 2 sensors
->>      /sys/bus/iio/devices/iio:device1/in_temp_input
->>      /sys/bus/iio/devices/iio:device1/in_pressure_input
->>
->> As I read it if the IIO device was an _input type on sysfs,
->> just read it (and possibly scale it for units).
->>
->> But if the IIO device was a _raw type on sysfs my understanding
->> is that it must be accompanied by a _offset and a _scale for
->> at least temperature, pressure, humidity, voltage, and current
->> sensors.
->> Is that correct?
->>
->> Further for any IIO device that is a _raw type on sysfs is it
->> required to be accompanied by a _offset and a _scale as well?
-> 
+
+
+> On Sep 8, 2021, at 8:54 PM, Thang Nguyen =
+<thang@amperemail.onmicrosoft.com> wrote:
+>=20
 > Hi,
-> 
-> That sounds about right.
-> 
-> The _input name is historically and comes from hwmon framework. It means 
-> that the data has been processed by the kernel driver and converted to 
-> the right SI units for the channel type. This is usually used for sensor 
-> that have a non-linear transfer function. `raw` on the other hand means 
-> the data is just as it is reported by the hardware. The reason for this 
-> is that conversion to SI units is often not lossless, since we have 
-> finite precision. So it is up to the application to decide whether it 
-> wants to work on the raw data or how it wants to round the converted data.
-> 
-> `input` attributes never have scale and offset since they are already in 
-> the right unit. For raw scale and offset are optional. If scale does not 
-> exist assume it is 1, if offset does not exist assume it is 0. You'll 
-> rarely see a device with raw attributes without scale, but there are 
-> quite a few without offset.
-> 
-> - Lars
-> 
-> 
+>=20
+> Let me explain more detail about our cases:
+>=20
+> - Our system uses a GPIO called FW_BOOT_OK to detect if the Host is =
+currently ON or OFF. The Host firmware set this GPIO when the first core =
+initialized.
+>=20
+> - We have no problem in Host State with power control. But the problem =
+is in the case of BMC rebooted while the Host is ON.
+>=20
+> - Before the commit =
+https://github.com/openbmc/phosphor-state-manager/commit/0d1c3f1f9329c8536=
+77f0581287afef83eeea0f0, phosphor-reset-host-check@.service  is used to =
+check and update Host State in case of BMC rebooted. But after that =
+commit, the service file was removed. This makes no target service to =
+update the Host State and the host check is fail at =
+https://github.com/openbmc/phosphor-state-manager/blob/0a675215d6a6d2eb13e=
+030ba0f618a4691de58d4/host_check.cpp#L109.
+>=20
+> We would like to ask for your idea on how should we implement for the =
+Host check when BMC is rebooted?
 
-Thank you Lars!
+Hi Thang. Yeah, the reason for moving the logic directly into =
+phosphor-host-state
+is we had a window where the host state would say off (default) even =
+when the
+host was actually on. The other service would run and update it to the =
+correct
+value but there was a window where external clients would see an =
+incorrect
+state. So since we don=E2=80=99t want to report an invalid state, I =
+needed the logic=20
+within the app itself on startup.
 
--- 
-Bruce
+I think you=E2=80=99re on the right path here. The design is to =
+implement the
+xyz.openbmc_project.Condition.HostFirmware object and support the read
+of the CurrentFirmwareCondition property. Based on your GPIO state, =
+you=E2=80=99d
+respond accordingly to the read. That way the state-manager code will =
+just
+work as-is.
+
+On where to put this code=E2=80=A6 So far we=E2=80=99ve put it in the =
+area that is doing the logic,
+like PLDM and IPMI. Since this is really just a GPIO read, I=E2=80=99m =
+not sure the best
+place. I=E2=80=99d be interested if anyone on the list has some =
+thoughts. Could host it
+outside of openbmc and just pull in via a recipe.
+
+I=E2=80=99d entertain a subdirectory in phosphor-state-manager with this =
+small
+app (to host the interface you=E2=80=99ll want a c++ app) and service to =
+run it.
+We could just enable it via a meson/compile flag. It seems like it could
+be fairly generic and something that other system owners could utilize.
+
+Please take a look at =
+https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-namin=
+g.md
+We=E2=80=99d want the GPIO utilized here to have a standard name so =
+others
+could potentially make use of this logic.
+
+Andrew
+
+>=20
+>=20
+> Thanks,
+>=20
+> Thang Q. Nguyen
+>=20
+> On 08/09/2021 20:19, Thu Nguyen wrote:
+>> Dear Geissonator,
+>>=20
+>>=20
+>> After commit =
+https://github.com/openbmc/phosphor-state-manager/commit/0d1c3f1f9329c8536=
+77f0581287afef83eeea0f0
+>>=20
+>> when BMC boots up, phosphor-host-state directly checks  the host =
+state thru interface xyz.openbmc_project.Condition.HostFirmware.
+>>=20
+>> It does not check the existing of /run/openbmc/host@%d-on as before.
+>>=20
+>>=20
+>> I plan to implement "oem mechanism" to handle the interface =
+xyz.openbmc_project.Condition.HostFirmware.
+>>=20
+>> Which will use the GPIO interface to update the host state. I =
+researched the code handle this interface in phosphor-host-ipmi and =
+pldm.
+>>=20
+>> I wonder which repo should I upstream the code? Currently, we don't =
+have any OEM repo in github to upstream the code.
+>>=20
+>> Do you have any idea to handle interface in bash scripts?
+>>=20
+>>=20
+>> Regards.
+>>=20
+>> Thu Nguyen.
+>>=20
+>>=20
+>>=20
+>>=20
+>>=20
+>>=20
+>>=20
 
