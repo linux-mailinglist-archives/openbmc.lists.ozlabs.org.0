@@ -1,52 +1,134 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDD41404342
-	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 03:53:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D353140435E
+	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 03:55:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H4hq24mq2z2yLJ
-	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 11:53:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H4htP4lG8z2xtf
+	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 11:55:57 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=uAk80pYO;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158;
- helo=codeconstruct.com.au; envelope-from=jk@codeconstruct.com.au;
- receiver=<UNKNOWN>)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.220.104;
+ helo=nam11-co1-obe.outbound.protection.outlook.com;
+ envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
+ header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector1-amperemail-onmicrosoft-com header.b=uAk80pYO; 
+ dkim-atps=neutral
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2104.outbound.protection.outlook.com [40.107.220.104])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H4hpk3MSkz2xXm;
- Thu,  9 Sep 2021 11:52:46 +1000 (AEST)
-Received: from [172.16.66.38] (unknown [49.255.141.98])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 03D262012C;
- Thu,  9 Sep 2021 09:52:44 +0800 (AWST)
-Message-ID: <9fa4ae962c185e0e4f07f0299356969c17ae5ea5.camel@codeconstruct.com.au>
-Subject: Re: [PATCH v4 3/4] soc: aspeed: Add eSPI driver
-From: Jeremy Kerr <jk@codeconstruct.com.au>
-To: ChiaWei Wang <chiawei_wang@aspeedtech.com>, "robh+dt@kernel.org"
- <robh+dt@kernel.org>, "joel@jms.id.au" <joel@jms.id.au>, "andrew@aj.id.au"
- <andrew@aj.id.au>, "linux-aspeed@lists.ozlabs.org"
- <linux-aspeed@lists.ozlabs.org>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>, "devicetree@vger.kernel.org"
- <devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
- <linux-kernel@vger.kernel.org>
-Date: Thu, 09 Sep 2021 09:52:43 +0800
-In-Reply-To: <HK0PR06MB377924CFCBFE9BD40E1C4A5D91D49@HK0PR06MB3779.apcprd06.prod.outlook.com>
-References: <20210901033015.910-1-chiawei_wang@aspeedtech.com>
- <20210901033015.910-4-chiawei_wang@aspeedtech.com>
- <20c13b9bb023091758cac3a07fb4037b7d796578.camel@codeconstruct.com.au>
- <HK0PR06MB37792273A075533C2570002391CE9@HK0PR06MB3779.apcprd06.prod.outlook.com>
- <513cb05f8d83d08a5c1e491dc0a9b6784195e7dd.camel@codeconstruct.com.au>
- <HK0PR06MB37799C48533B084CF864E49D91D29@HK0PR06MB3779.apcprd06.prod.outlook.com>
- <6593206c0bc90186f255c6ea86339576576f70dc.camel@codeconstruct.com.au>
- <HK0PR06MB377924CFCBFE9BD40E1C4A5D91D49@HK0PR06MB3779.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.3-1 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H4hss3k3Wz2xYX
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Sep 2021 11:55:27 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=j4VIArBQUrksoFc+xKO/t80x5GJqUErVbfS4zBkwoctbmR3Hb44uiP19E3YquqsCpdjxpPqZUGouHcPeSbaBuevpxqJYpUliwL1q8QH4mLPPtDMSDilv8T+8pG4tY/+cCNW+TQ8/ImaE0GCe/OS7Pjv/exaLCrKSehQNgg4R3yO0QcdTJRTeewMhgzchTl+igTQyHbt/RSZDcH5BBK71r7TW8BtXeTq5qRgXFNoLgc1sjARzInkpMyS+ASTqQ/y+jgjBOcpIucj86lrtjZNEmf1k6w3MEp3A/gS3wRXTSo399bO0fEZRCLPYS1Oersu5+A3kvyraWq7x8Tr+9P/x2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version; 
+ bh=2TKVV9FjS741x9jxKgpy9N0L1ADgpB1DvhCuzhjweqQ=;
+ b=DqCTcddmhB/v4cLFVIWmhc5sG6u8qPD63zFJXJ7/lHsq8Am8IzkBM2bjjFFGAM1i39ZwdS8JvA29cehSOFNF+DL+bRL/PgIchV0S3dxu6WQ1NKedpdlscX1JOGPQkbcINOWuDO+VO/Jokto39ito5U2ZHMwy+0p2Q50zllDPLZtgVz9z/ORMFR8Z6UirK8G/huXc4Mn+iIQlv2tQVKGFyLylL3P/WhqYALm0XkRJRUkjhR1fe5t8vBord7VDfxo+qThMQTRd4Bhqx0QYxZsaJkGj2VbhZlAOWj/KyKSscYTheuRYKmvdpeo6v2g0d654Ezuo/2tTFRKGBanixnvDmA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2TKVV9FjS741x9jxKgpy9N0L1ADgpB1DvhCuzhjweqQ=;
+ b=uAk80pYOHCRxZqUfZtd44ce4MJ8vhtp0IjaSbPh+8KmUkuj8q+eP2ndgzW7P8PBd+b7bI7ICvg7l88w2N4rpiHgE0HuaVvgBSaQoAKzYhloxs4CYzIp1g1Gr/Q6Z77PKuhJenIpI9qTZYGBR5DePKQEvPn4Ur1E/97FSWptTbpk=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=amperemail.onmicrosoft.com;
+Received: from BYAPR01MB4678.prod.exchangelabs.com (2603:10b6:a03:88::27) by
+ BYAPR01MB5445.prod.exchangelabs.com (2603:10b6:a03:11f::12) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4478.22; Thu, 9 Sep 2021 01:55:08 +0000
+Received: from BYAPR01MB4678.prod.exchangelabs.com
+ ([fe80::545:38ca:33b2:afdc]) by BYAPR01MB4678.prod.exchangelabs.com
+ ([fe80::545:38ca:33b2:afdc%6]) with mapi id 15.20.4478.026; Thu, 9 Sep 2021
+ 01:55:08 +0000
+Subject: Re: Implement OEM mechanism to handle
+ xyz.openbmc_project.Condition.HostFirmware interface
+To: openbmc@lists.ozlabs.org
+References: <53e204da-0c8b-d161-a065-a6195550d7f7@amperemail.onmicrosoft.com>
+From: Thang Nguyen <thang@amperemail.onmicrosoft.com>
+Message-ID: <3909e9e3-0a58-e542-a004-89278438997d@amperemail.onmicrosoft.com>
+Date: Thu, 9 Sep 2021 08:54:59 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
+In-Reply-To: <53e204da-0c8b-d161-a065-a6195550d7f7@amperemail.onmicrosoft.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-ClientProxiedBy: SGBP274CA0019.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b0::31)
+ To BYAPR01MB4678.prod.exchangelabs.com
+ (2603:10b6:a03:88::27)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Received: from HCM-FVFX4014HV2J.local (113.23.111.132) by
+ SGBP274CA0019.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b0::31) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4500.14 via Frontend Transport; Thu, 9 Sep 2021 01:55:06 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 7fd80671-c174-44d7-1913-08d97334d9d8
+X-MS-TrafficTypeDiagnostic: BYAPR01MB5445:
+X-Microsoft-Antispam-PRVS: <BYAPR01MB5445FD9A145FAD5D07966D058DD59@BYAPR01MB5445.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8273;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Jjlg+TrDgDFz3jp929N8DMoFdXKMeZ+2VG3la5/gPH88hUyw0u8KGNsxwIFpBzh3Wmlzrbe9EUAxSx/kMjQsS1Vw5YW0V2AAcsAx0pDnHc3A36hefWtsfXQJH/hGnFKVa5j12FFx6yZWfSGaBN8/VkTroG3NoKwX4spQsZ5tmum254i1VfF5BxkCswyxRJoYbrZOurK4kFyQy2rC3Jv0TTlCscW+fqXbncpEl92ilwIrs3Pl+qR8j58Y47a/7toz3X4xRupNQAUgxmcSP+RBrIMXObTcnRXJTJTQzMDGONd9yF3fUsKH9Lcoxf+pkzto1mwbqapXjknA5fLa6tesX/ttsbU7t867U7NwEzlD0pktYogKpZWAQzpIJbSe22Qwllvjw4/ZuFRDNLTlktHLNN71FW2I0XQiwriuqA3WaouLkuBC7H6cf/DWknxELsty052qU5zsP0Afi2y0dNdNSaTHlczF7uzmwUsQMNyhmtadvSYUBEsJ9ZA3Vr2NYLfzvNqzKfNT8+S37uw6vVdwDMmXZn9hyrQFJl+KI6TbNrkQQZftalZ2z9HMNDPNNDmY9g9Rmcc7OyLhZQjjmrsohWinaLzoR9LgMVbAk8aIfMdaaXvHltkTsrWSJMrBvxp1l5eZhn/OpGKtRtGaRtbaUurK1yP0lilqQyZ+hy2KljyiNvJtLE9iBdPEpHJfnXJwbssmgv2aU6ud1al2sFTaPtYtudvk9fpu+PM8Vo94aw7mtJnt05R06/zI7XSjojWE4FyVCR1X6kVfvy5/3o7P12CejHgK12WDXxTsLPFAbHKFbAwNkgWBQE1H2L/NaSlpoguzQPUYmYLma+FplGTB7tFx7Pz9P2kmtjPlKvV+2Ge9snikOBGvTBrw37aTnRrk
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BYAPR01MB4678.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(366004)(346002)(396003)(136003)(376002)(39850400004)(66946007)(6486002)(83170400001)(186003)(6916009)(53546011)(38100700002)(6506007)(966005)(316002)(26005)(31686004)(2906002)(2616005)(42882007)(52116002)(956004)(83380400001)(66556008)(66476007)(478600001)(8676002)(6512007)(8936002)(6666004)(31696002)(38350700002)(5660300002)(43740500002)(45980500001);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dytKTDNLUHZab1RkOWh5MkozZURVOVQvcWJFRjBHSHljaGlUY0xWeXJpVzlw?=
+ =?utf-8?B?NmxTVnlNSHdvTm1sWE52V1pJZ0tBMnQzazI4Sk9MZ01GQzJNMkJ2dWpvZWND?=
+ =?utf-8?B?OHkrc29NZkwxSzQraEkxbnRlTFh3cHV1QkFmei9CWnlYdDMwN3drTmFEdmVG?=
+ =?utf-8?B?Z2JYRFY5R3IvZmwzY21XSFBObFhrVlo3clhKV2tFMFJMN2puUDh5NU8vVHNr?=
+ =?utf-8?B?YmpxZ2dMT29ZeXFxWWJyWGNad1MyNlVsKys3UXpvSFQ0bmZ3NkIyd1NLQUs3?=
+ =?utf-8?B?eXlYZWQ3THcxTDBJUnBSRjlrOTVnRUdOM2YzcTJUdjEwaGtQTmE3SXo2L29u?=
+ =?utf-8?B?Q3RrNVpNYmNQbkZIUk1TdFpoQkZuOVo4TzZCUzRSdkwyTlZ1aXU5YW9ZSlNU?=
+ =?utf-8?B?K2liT1NlemtxOWFxY1NHemd0bVZTWXFuSmhCMGxoVElhdHEvY0Eya1NZR25j?=
+ =?utf-8?B?bFpkNy9UZWxTT3AveXZ2QnNKNTIzdkZTaFhWd2laaE1CeGJYaWtwOCs3L3Np?=
+ =?utf-8?B?M0wxTUZLWTlYcDBqNElNNEpiT2w0SjJaUnlZaUE1ck1rMWt2NGRTYXJNR01t?=
+ =?utf-8?B?c1ZzWlVmYWNPUHdENG5Ja2pxeGtTOWdYRE9yY21wdFZZaFlIOHNMeDA3emhw?=
+ =?utf-8?B?Nlg5d3UwWVhxQ0Y2SFlwZWdRTDJlMGdPMHEwYWhRdWIrSjVzcVhRK0U2czR4?=
+ =?utf-8?B?Wk4yUFFjeTBTTHJieVpoU1JYMmJZY3VLZjl5WXJYTnhpL2tXYUpsem80SjhU?=
+ =?utf-8?B?R2JocTd2aHZTb0VRenZSQ3BVQit5a2ZyV01ES0plbUtwZnA3aENjQ2U0TlRE?=
+ =?utf-8?B?NTdhTnJhSDhOUE9RcFI4SXBzdHVwT2ZuRmRPRlpZNmtGSkFWY256SUF4S3lM?=
+ =?utf-8?B?Y0s3SjdEYktwVUNVTEUrM3NhN1hJMWViMERlMlRVRUp1NEFVQStHbGE0eE1R?=
+ =?utf-8?B?RTc3RndjVVBxVzV3UUNmbWg3L2UxWFBDSFJBNWdWS0dUd2c0U0hFdFhhYndp?=
+ =?utf-8?B?Z0lUSFBQZHB3citMMzdZckx6R1U1alk2bHUxZk9uRTl1QWxBNnlVdER6TFJB?=
+ =?utf-8?B?a3pnSjV6TzlCMVJ6R2tOZEZ3UG1hY3ZaeEx2bnBjQmpkdG5admFDaFlMREkw?=
+ =?utf-8?B?dDMwQjRGYXhNR0tZUHN4V2YzWUkrbGp4elh5L3pFK1gwNENqdkpvRkdYZVdu?=
+ =?utf-8?B?L2tOYm96d0h2NkIweTFVbHVTYSs1c2lDYVlsZDBQSVpEYW1EUmNJUlRsOTY5?=
+ =?utf-8?B?TzVDUTNJYWgxVW04QXU0cXN5QUtjTVo0Y1Q1dTZTZmhSQ3pVVkxhT0VUYmZn?=
+ =?utf-8?B?VlVkOUFINDkyS2tCT3JFRVR6c3FoRUtJSEV2Y0RUR2FpMGl2NXNreEZ5RWJi?=
+ =?utf-8?B?cFAwQmFqVjJwR1Z0am1KbW9PYkZZWHc4bmhzT3NNRmRNcysyWjMwZnN2Wjk2?=
+ =?utf-8?B?T0hLaEZ1b0lZUURJYVhYQlBrKzRJTTQ0cC80cy91ZERVOTZSVjV3UlRtZ25x?=
+ =?utf-8?B?UkdhaWVOem9DUG4yWUtvYkpUL1JRd2dmNmhzclR0MWZ3S0pOUVpVTjI1MGdy?=
+ =?utf-8?B?VGhzRktMVCtMUmZLSGVTNWRWdHRFeGhaUnhHVktZSFlXU1lFYU5PU2kzK3dm?=
+ =?utf-8?B?T0FBSTUyenQrSWJEOU44cC9GclVVSzBjK09FM2EvV09jM2kvVUxJSXRkK25j?=
+ =?utf-8?B?cVJFbVhqbkhwUTROS012Z3B1L0FXQ3E5bnFxVnVldlh6UzBBQmNqdjB5bnQw?=
+ =?utf-8?Q?2JG6/JNSR0buplvmHzHZC1DrGdVuE12MlIXRQ//?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7fd80671-c174-44d7-1913-08d97334d9d8
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4678.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Sep 2021 01:55:08.1276 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2yFiItF0zqnCss6R3kVNnznk1q4N5dlOmN1Cigv/GYfK44WdX1DCj9iQvPmkoQfr5HTmXGso9dLJgsNEm7F4J+yLwxOPPN1rDJIBzjMQfulHCa7XzP0Bk/IhtVo4Rbe+
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB5445
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,85 +140,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Morris Mao <morris_mao@aspeedtech.com>,
- Ryan Chen <ryan_chen@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Chiawei,
+Hi,
 
-> Yes, there is security concern using HW mode.
-> Our designer is considering to remove the HW mode support in the next
-> generation of Aspeed SoCs.
-> So far we haven't encountered a scenario demanding HW mode.
+Let me explain more detail about our cases:
 
-Great to hear :) can we unconditionally set ESPI000[9] in the driver
-then?
+- Our system uses a GPIO called FW_BOOT_OK to detect if the Host is 
+currently ON or OFF. The Host firmware set this GPIO when the first core 
+initialized.
 
-> > With than in mind, if we're disabling hardware mode - what does the
-> > direction control setting effect when we're in software mode
-> > (ESPICTRL[9] == 1)? Does it even matter?
-> 
-> Yes, the direction matters even in SW mode.
-> When the direction is 'master-to-slave' and the GPIO value is updated
-> by the Host through PUT_VW, a VW interrupt is trigger to notify BMC.
-> For the 'slave-to-master' GPIO, a alert is generated to notify the
-> Host to issue GET_VW for the GPIO value updated by the BMC by
-> ESPI09C.
+- We have no problem in Host State with power control. But the problem 
+is in the case of BMC rebooted while the Host is ON.
 
-OK, but the datasheet mentions that ESPICFG804 is only applicable when
-ESPI000[9] = 0, or is that not the case?
+- Before the commit 
+https://github.com/openbmc/phosphor-state-manager/commit/0d1c3f1f9329c853677f0581287afef83eeea0f0, 
+phosphor-reset-host-check@.service  is used to check and update Host 
+State in case of BMC rebooted. But after that commit, the service file 
+was removed. This makes no target service to update the Host State and 
+the host check is fail at 
+https://github.com/openbmc/phosphor-state-manager/blob/0a675215d6a6d2eb13e030ba0f618a4691de58d4/host_check.cpp#L109.
 
-But based on what you've said: yes, it sounds like the generic gpiodev
-parts won't be useful for this.
-
-> > Separate from this: I'm also proposing that we represent the system
-> > event VWs
-> > as gpiodevs as well.
-> > 
-> > > A raw packet, primitive interface should have better flexibility
-> > > to
-> > > manage MCTP packets over the OOB channel.
-> > 
-> > OK, let me phrase this differently: can the OOB channel be used for
-> > anything other than SMBus messaging? Is it useful to provide an
-> > interface that isn't a standard SMBus/i2c device?
-> 
-> Yes, the PCH spec. also defines two additional packet format for an
-> eSPI slave to retrieve PCH Temperature Data and RTC time.
-> It should be trivial to prepare a byte buffer in that format and send
-> it through the raw packet interface.
-
-OK, understood.
-
-> > If you need custom uapi definitions for this driver, that might be
-> > okay, but it's going to be more work for you (to define an interface
-> > that can be supported long-term), rather than using standard
-> > infrastructure that already exists.
-> 
-> Thus I suggested that we can refer to the IPMI KCS BMC driver, which
-> supports the selection of different user interfaces, RAW or IPMI.
-
-Yep, but the KCS "raw" register set is standardised as part of the IPMI
-spec too, which helps to define a stable user API. We don't have that in
-this case.
-
-Overall though, if you want to start with the "low-level" API, then
-introduce "enhanced" functionality - like an actual SMBus driver -
-alongside that, then that sounds like an OK approach.
-
-> If IOCTL is considered to be not user friendly or magic code
-> polluting, file-based read/write on the miscdevice node is also an
-> option.
-
-It's not really my decision to make, but a read/write event interface
-would seem to be more consistent to me. Is there an obvious event format
-that would be common across all channels, perhaps? We'd probably also
-need a poll too - to make use of incoming events, like master-to-slave
-VW changes, perhaps?
-
-Cheers,
+We would like to ask for your idea on how should we implement for the 
+Host check when BMC is rebooted?
 
 
-Jeremy
+Thanks,
 
+Thang Q. Nguyen
+
+On 08/09/2021 20:19, Thu Nguyen wrote:
+> Dear Geissonator,
+>
+>
+> After commit 
+> https://github.com/openbmc/phosphor-state-manager/commit/0d1c3f1f9329c853677f0581287afef83eeea0f0
+>
+> when BMC boots up, phosphor-host-state directly checks  the host state 
+> thru interface xyz.openbmc_project.Condition.HostFirmware.
+>
+> It does not check the existing of /run/openbmc/host@%d-on as before.
+>
+>
+> I plan to implement "oem mechanism" to handle the interface 
+> xyz.openbmc_project.Condition.HostFirmware.
+>
+> Which will use the GPIO interface to update the host state. I 
+> researched the code handle this interface in phosphor-host-ipmi and pldm.
+>
+> I wonder which repo should I upstream the code? Currently, we don't 
+> have any OEM repo in github to upstream the code.
+>
+> Do you have any idea to handle interface in bash scripts?
+>
+>
+> Regards.
+>
+> Thu Nguyen.
+>
+>
+>
+>
+>
+>
+>
