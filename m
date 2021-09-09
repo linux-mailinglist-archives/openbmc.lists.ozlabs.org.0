@@ -1,101 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 912364040E1
-	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 00:11:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDD41404342
+	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 03:53:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H4btv2kQBz2xrp
-	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 08:11:03 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Tp8Cb4ZD;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H4hq24mq2z2yLJ
+	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 11:53:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com;
- envelope-from=bruce.mitchell@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Tp8Cb4ZD; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158;
+ helo=codeconstruct.com.au; envelope-from=jk@codeconstruct.com.au;
+ receiver=<UNKNOWN>)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H4btN4WBqz2xY9
- for <openbmc@lists.ozlabs.org>; Thu,  9 Sep 2021 08:10:35 +1000 (AEST)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 188M4X3K144818; Wed, 8 Sep 2021 18:10:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=to : from : subject : cc
- : message-id : date : content-type : content-transfer-encoding :
- mime-version; s=pp1; bh=b9x3oRh8MZw+fajwDTUTnPibc6ayG4FOeIE6rifl6eg=;
- b=Tp8Cb4ZDQA3JKTBVyxcbT4b/OJC443C8POd2PQrcj16k4UlRTl/DZzaffbQGJqg9N1Vf
- iedXYzRr/759VxaO1nXrhpSDI8RBwIb8heVTgrhqUZG5YV4YhUEzPfLh0B8Vgs53FGA6
- RbiUlFrq6p7cqrIiJwOG36ptAg2U9gnO/Kv3kJgXfMyogpgHpC+ZJ8490KC1e3FQkLy5
- +6fqvV/wgxxGAGRqxIzvmqDdB3R8zV/S77gRWR4OmlW3wXJZB00lzeufQIf47sNrsFFV
- zpC+BnZGyKken93R71UW79KgS44CsaYPGFQl62t7gVGxOflyF2pb83ZQhS57ysIsD8zM PQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3axuwjrge5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Sep 2021 18:10:32 -0400
-Received: from m0098410.ppops.net (m0098410.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 188M69qL004771;
- Wed, 8 Sep 2021 18:10:32 -0400
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3axuwjrgdv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Sep 2021 18:10:32 -0400
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 188M7PXD012160;
- Wed, 8 Sep 2021 22:10:31 GMT
-Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
- [9.57.198.26]) by ppma03wdc.us.ibm.com with ESMTP id 3axcnpp8g7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Sep 2021 22:10:31 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 188MAUmk10748516
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 8 Sep 2021 22:10:30 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8AA36AE075;
- Wed,  8 Sep 2021 22:10:30 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 20F94AE06D;
- Wed,  8 Sep 2021 22:10:30 +0000 (GMT)
-Received: from [9.163.8.88] (unknown [9.163.8.88])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
- Wed,  8 Sep 2021 22:10:29 +0000 (GMT)
-To: linux-iio@vger.kernel.org
-From: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
-Subject: Looking for clarification on sysfs IIO devices, do _raw devices
- require both _offset and _scale?
-Message-ID: <cc74f30f-9ab8-45ce-1f44-8e55c3f9c5ce@linux.vnet.ibm.com>
-Date: Wed, 8 Sep 2021 15:10:29 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: vZVx-s3ktMXmxkZ-ANW_G8woawIqPiAD
-X-Proofpoint-ORIG-GUID: D_yOftcodq6APUje3OThdH2xvvos9gAf
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H4hpk3MSkz2xXm;
+ Thu,  9 Sep 2021 11:52:46 +1000 (AEST)
+Received: from [172.16.66.38] (unknown [49.255.141.98])
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 03D262012C;
+ Thu,  9 Sep 2021 09:52:44 +0800 (AWST)
+Message-ID: <9fa4ae962c185e0e4f07f0299356969c17ae5ea5.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v4 3/4] soc: aspeed: Add eSPI driver
+From: Jeremy Kerr <jk@codeconstruct.com.au>
+To: ChiaWei Wang <chiawei_wang@aspeedtech.com>, "robh+dt@kernel.org"
+ <robh+dt@kernel.org>, "joel@jms.id.au" <joel@jms.id.au>, "andrew@aj.id.au"
+ <andrew@aj.id.au>, "linux-aspeed@lists.ozlabs.org"
+ <linux-aspeed@lists.ozlabs.org>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>, "devicetree@vger.kernel.org"
+ <devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>
+Date: Thu, 09 Sep 2021 09:52:43 +0800
+In-Reply-To: <HK0PR06MB377924CFCBFE9BD40E1C4A5D91D49@HK0PR06MB3779.apcprd06.prod.outlook.com>
+References: <20210901033015.910-1-chiawei_wang@aspeedtech.com>
+ <20210901033015.910-4-chiawei_wang@aspeedtech.com>
+ <20c13b9bb023091758cac3a07fb4037b7d796578.camel@codeconstruct.com.au>
+ <HK0PR06MB37792273A075533C2570002391CE9@HK0PR06MB3779.apcprd06.prod.outlook.com>
+ <513cb05f8d83d08a5c1e491dc0a9b6784195e7dd.camel@codeconstruct.com.au>
+ <HK0PR06MB37799C48533B084CF864E49D91D29@HK0PR06MB3779.apcprd06.prod.outlook.com>
+ <6593206c0bc90186f255c6ea86339576576f70dc.camel@codeconstruct.com.au>
+ <HK0PR06MB377924CFCBFE9BD40E1C4A5D91D49@HK0PR06MB3779.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.3-1 
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-09-08_09:2021-09-07,
- 2021-09-08 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0
- lowpriorityscore=0 bulkscore=0 clxscore=1011 mlxscore=0 mlxlogscore=999
- phishscore=0 impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2109030001
- definitions=main-2109080137
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,43 +58,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Ed Tanous <ed@tanous.net>, Ed Tanous <edtanous@google.com>
+Cc: Morris Mao <morris_mao@aspeedtech.com>,
+ Ryan Chen <ryan_chen@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In reference to:
-https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-bus-iio
+Hi Chiawei,
 
-I have Temperature, Pressure, and Humidity IIO sensors.
-IIO _raw devices look like this on sysfs:
-   this happens to be a SI7020 type device with 2 sensors
-     /sys/bus/iio/devices/iio:device0/in_humidityrelative_offset
-     /sys/bus/iio/devices/iio:device0/in_humidityrelative_raw
-     /sys/bus/iio/devices/iio:device0/in_humidityrelative_scale
-     /sys/bus/iio/devices/iio:device0/in_temp_offset
-     /sys/bus/iio/devices/iio:device0/in_temp_raw
-     /sys/bus/iio/devices/iio:device0/in_temp_scale
+> Yes, there is security concern using HW mode.
+> Our designer is considering to remove the HW mode support in the next
+> generation of Aspeed SoCs.
+> So far we haven't encountered a scenario demanding HW mode.
 
-Other IIO _input devices look like this on sysfs:
-   this happens to be a DPS310 device with 2 sensors
-      /sys/bus/iio/devices/iio:device1/in_temp_input
-      /sys/bus/iio/devices/iio:device1/in_pressure_input
+Great to hear :) can we unconditionally set ESPI000[9] in the driver
+then?
 
-As I read it if the IIO device was an _input type on sysfs,
-just read it (and possibly scale it for units).
+> > With than in mind, if we're disabling hardware mode - what does the
+> > direction control setting effect when we're in software mode
+> > (ESPICTRL[9] == 1)? Does it even matter?
+> 
+> Yes, the direction matters even in SW mode.
+> When the direction is 'master-to-slave' and the GPIO value is updated
+> by the Host through PUT_VW, a VW interrupt is trigger to notify BMC.
+> For the 'slave-to-master' GPIO, a alert is generated to notify the
+> Host to issue GET_VW for the GPIO value updated by the BMC by
+> ESPI09C.
 
-But if the IIO device was a _raw type on sysfs my understanding
-is that it must be accompanied by a _offset and a _scale for
-at least temperature, pressure, humidity, voltage, and current
-sensors.
-Is that correct?
+OK, but the datasheet mentions that ESPICFG804 is only applicable when
+ESPI000[9] = 0, or is that not the case?
 
-Further for any IIO device that is a _raw type on sysfs is it
-required to be accompanied by a _offset and a _scale as well?
+But based on what you've said: yes, it sounds like the generic gpiodev
+parts won't be useful for this.
+
+> > Separate from this: I'm also proposing that we represent the system
+> > event VWs
+> > as gpiodevs as well.
+> > 
+> > > A raw packet, primitive interface should have better flexibility
+> > > to
+> > > manage MCTP packets over the OOB channel.
+> > 
+> > OK, let me phrase this differently: can the OOB channel be used for
+> > anything other than SMBus messaging? Is it useful to provide an
+> > interface that isn't a standard SMBus/i2c device?
+> 
+> Yes, the PCH spec. also defines two additional packet format for an
+> eSPI slave to retrieve PCH Temperature Data and RTC time.
+> It should be trivial to prepare a byte buffer in that format and send
+> it through the raw packet interface.
+
+OK, understood.
+
+> > If you need custom uapi definitions for this driver, that might be
+> > okay, but it's going to be more work for you (to define an interface
+> > that can be supported long-term), rather than using standard
+> > infrastructure that already exists.
+> 
+> Thus I suggested that we can refer to the IPMI KCS BMC driver, which
+> supports the selection of different user interfaces, RAW or IPMI.
+
+Yep, but the KCS "raw" register set is standardised as part of the IPMI
+spec too, which helps to define a stable user API. We don't have that in
+this case.
+
+Overall though, if you want to start with the "low-level" API, then
+introduce "enhanced" functionality - like an actual SMBus driver -
+alongside that, then that sounds like an OK approach.
+
+> If IOCTL is considered to be not user friendly or magic code
+> polluting, file-based read/write on the miscdevice node is also an
+> option.
+
+It's not really my decision to make, but a read/write event interface
+would seem to be more consistent to me. Is there an obvious event format
+that would be common across all channels, perhaps? We'd probably also
+need a poll too - to make use of incoming events, like master-to-slave
+VW changes, perhaps?
+
+Cheers,
 
 
-Thank you!
+Jeremy
 
--- 
-Bruce
