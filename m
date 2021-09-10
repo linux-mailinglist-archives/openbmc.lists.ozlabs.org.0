@@ -2,45 +2,122 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46ACD405DF1
-	for <lists+openbmc@lfdr.de>; Thu,  9 Sep 2021 22:16:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F03A40654C
+	for <lists+openbmc@lfdr.de>; Fri, 10 Sep 2021 03:39:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H59JX0s7Gz2yNf
-	for <lists+openbmc@lfdr.de>; Fri, 10 Sep 2021 06:16:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H5JTF6vbqz2yPS
+	for <lists+openbmc@lfdr.de>; Fri, 10 Sep 2021 11:39:45 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=nK/u9Sr4;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.100; helo=mga07.intel.com;
- envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aspeedtech.com (client-ip=40.107.130.111;
+ helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ envelope-from=chiawei_wang@aspeedtech.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
+ header.a=rsa-sha256 header.s=selector1 header.b=nK/u9Sr4; 
+ dkim-atps=neutral
+Received: from APC01-HK2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1300111.outbound.protection.outlook.com [40.107.130.111])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H59JB72JVz2xXP
- for <openbmc@lists.ozlabs.org>; Fri, 10 Sep 2021 06:16:25 +1000 (AEST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10102"; a="284600639"
-X-IronPort-AV: E=Sophos;i="5.85,281,1624345200"; d="scan'208";a="284600639"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2021 13:15:17 -0700
-X-IronPort-AV: E=Sophos;i="5.85,281,1624345200"; d="scan'208";a="479821177"
-Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
- ([10.7.150.62])
- by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2021 13:15:17 -0700
-Date: Thu, 9 Sep 2021 13:15:16 -0700
-From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: "Chris Chen (TPI)" <Chris.Chen3@flex.com>
-Subject: Re: =?utf-8?B?5Zue6KaGOiBbcGhvc3Bob3ItaG9z?= =?utf-8?Q?t-ipmid=5D?=
- Questions about IPMI (OEM) command development
-Message-ID: <20210909201516.GA6614@mauery.jf.intel.com>
-References: <DM6PR08MB5514D818A3029FA77BFB523BDCCE9@DM6PR08MB5514.namprd08.prod.outlook.com>
- <DM6PR08MB55145854126B411F1A9AFE29DCD29@DM6PR08MB5514.namprd08.prod.outlook.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H5JSZ48Cbz2yNp;
+ Fri, 10 Sep 2021 11:39:07 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HpBTaB9O7m2U+V4magvgNAbnB4WnZ04bqXz1JsbGlOwlk/bOMHyoDvJTLu0x2JRrzOVfZExACpLsOstFbiQ1IMwst+997OomU2HDdbDtg7tEmfw7jt6A/WC5I4XRRFyWo3OqdS/snxi/IrUFm2XwGXj4feDBBefS8o7+3gzPTRo3PSJl/Ee2jAvNOhOG7nO9IlncvS8ez2NiqVTGgEVZliAqGBaVl8k795D+QU/8Ya+MLnU1kZZFUcR2S7flmqJ8T61R7ByARa6/E/tky6F08pm7QmmxCiEcvDLzZez2eWd6s64cLRNGESgUEpBXtuo4ugOOCv18QRVz5cbaLDK4DA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version; 
+ bh=OJ5UhXj4twMkluN7cIOzQ46DBkCj2/Iq8A1kaDcBzDI=;
+ b=WRVZxd3fRJgz1sEvTwVozI5zf3Pb2pcPrifApBFCaMo55to343oRMFygD1umWcgJCQBiD40RQVSDZ0GeLdDClRxxRb39nqOGSGFQKAOg7UFy1x5a8E2hTbFyfpa1UqB3JoM4hY4BAX2TLNow0UymvUb3KmhxI3/TaUdRz+neioRbZ84qtDcVvZlVcjLxRcfrHTWLi9QLnMeytHTxt0ez0hOltFZ+CynjdIsQu6TOL/O+iqsop/TFdRIpcjNSwCpUsyVmXSFYkCAqXQbeuUglHHRDlEud+5LugSwli9ZutOXgebJy/DBTysC7DApiv8ebaa+djfeRQu/NgNo0puqhUQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OJ5UhXj4twMkluN7cIOzQ46DBkCj2/Iq8A1kaDcBzDI=;
+ b=nK/u9Sr48oSePlnar/Ac24NYrTMaC+rn5FDco54DoQUMSna2WD5WDehJx4MdWqoOinFZjAkLfBWwbW81XOuIj1bGI40sXuSlcXotZwoZjYBzAdJS0MgauJ8xtdiZaScTFUFBsP1/ET1H6QCvtLVGma8Pt82HuTG3K6+z0K4+5cK3DyKfftr5RvsBQPWCE8P5KfpK73ArC8T8xkwRsP0qprIKrNMKzGBCvfe9k7OKXldZJhdxxwvQYf5GrjevS3QIjlJmvkdtdFKmsOkonDEIEvpvYTX1MPB89g9qUz/Al15jjL5URUG4RZDKiu1pBqDrqmzNCxuloEzifbfFvbwRTQ==
+Received: from HK0PR06MB3779.apcprd06.prod.outlook.com (2603:1096:203:b8::10)
+ by HK2PR06MB3553.apcprd06.prod.outlook.com (2603:1096:202:31::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4500.14; Fri, 10 Sep
+ 2021 01:38:46 +0000
+Received: from HK0PR06MB3779.apcprd06.prod.outlook.com
+ ([fe80::4c26:6668:f551:3a62]) by HK0PR06MB3779.apcprd06.prod.outlook.com
+ ([fe80::4c26:6668:f551:3a62%3]) with mapi id 15.20.4457.026; Fri, 10 Sep 2021
+ 01:38:45 +0000
+From: ChiaWei Wang <chiawei_wang@aspeedtech.com>
+To: Rob Herring <robh@kernel.org>
+Subject: RE: [PATCH v3 1/3] dt-bindings: aspeed: Add UART routing controller
+Thread-Topic: [PATCH v3 1/3] dt-bindings: aspeed: Add UART routing controller
+Thread-Index: AQHXpWWkyhyvOPma00qLCHgaz2i9raubotKAgADZLHA=
+Date: Fri, 10 Sep 2021 01:38:45 +0000
+Message-ID: <HK0PR06MB3779990AF1A5BF5300DC9B0E91D69@HK0PR06MB3779.apcprd06.prod.outlook.com>
+References: <20210909102907.32037-1-chiawei_wang@aspeedtech.com>
+ <20210909102907.32037-2-chiawei_wang@aspeedtech.com>
+ <1631190773.304300.200343.nullmailer@robh.at.kernel.org>
+In-Reply-To: <1631190773.304300.200343.nullmailer@robh.at.kernel.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: kernel.org; dkim=none (message not signed)
+ header.d=none;kernel.org; dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: d2411d1b-d20e-4781-11c6-08d973fbbad9
+x-ms-traffictypediagnostic: HK2PR06MB3553:
+x-microsoft-antispam-prvs: <HK2PR06MB3553192BC7A74FE7032B2B6891D69@HK2PR06MB3553.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: JLVZ5lMzVN7S0+N2ifT5Tjc7YqeGXIqerRWq0f+Wefg+50TZth5zR2sWrFcVISfIjyusUnUNP3tOg1sPZkoZiNGK7NnHjE6eigwEoJEjC1KTupYaJnyTw4par7lqJCq2IB27n+mSI4d2O03pMHSIPqalJsblj/VhH+Pj6Qk7WwcqoJjvSKsYUvcyN2vTOx4A3eHiCODrVMtDu4IKLR2FDY/CiK+75MxRejffn6zgi9HKKWhCDmS9OEjX4rEqIG6ZFEywT0pnfdEB3PKJWo1EWRAGwN0Wq6qx4i85JMXbxs/OHAxp529Mz7ZgF0iTxpzs2a22dcJ1ZXJnfr4gQ9obkfvPPUviDy6tX+OYexcnt0dKuaHy4jJ5kvupb3fZX1/gSKvIzuClq1GNYpgHv6QaAJjT8nkNVS4GWXXc1xvD2tvs7cYkSS9mD6Nvg60p0GAl1zrR6edy5ErwNkob1vVj72ICkF1ligup9JZ8r88H3BIdnrvouWs5drUkFGICPxnir71Jg0McTppOUcwrRFwxgG0zzGlWfR3q/Khu/+xBygG9AeaNiMHe+tJX7OF7i73wxGOgi8KQVRvhlByNqKbX+w0KCqh9IDvkJWfa9JFJSPzMj44CwtMZ2PZ1dfK0+c/M54mAkQKUEr4KvIOdDs+vMQunUTbHQsrEb1lyTkOJelU0mXpm37EgK3q9Dx3vm97oaYc86hnFLboGk93xYZLN/t7TSXxzqaMcIWr/sFzQQBAxEBL4nBkqQ4eModfEasdd/H6Y4GDCkRTE0q9jdVC67Agjg3iv62Oens0IvhycD+U=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR06MB3779.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(366004)(396003)(39840400004)(136003)(376002)(346002)(54906003)(52536014)(6506007)(66556008)(83380400001)(26005)(66476007)(64756008)(8676002)(66446008)(8936002)(186003)(7416002)(71200400001)(66946007)(76116006)(9686003)(38100700002)(122000001)(38070700005)(86362001)(33656002)(55016002)(7696005)(6916009)(478600001)(966005)(316002)(5660300002)(4326008)(2906002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?N2F2lC3RloQtoIo5KZQM43EDDq87WsdKKjvG23v7nAOCVI1R2US1jJhahfnD?=
+ =?us-ascii?Q?4y8YMAkZTpaPSD0jn0zh0HOPY4R7JMqFjm4e7Ktd4uRFrtBAkqzBxvBBRjX/?=
+ =?us-ascii?Q?KTtbI5AQEIDd5UYVdZFqXihNuVjVaOt1G5Vk9mibc5NmWg86DhzBXJbbak63?=
+ =?us-ascii?Q?sQDC+didOJSD/w1/IjKKL+W+bc1BKgVThnduMmqmSh6JfSW0nGxr3N4GCo+B?=
+ =?us-ascii?Q?zl7PP4/RzOgfhyT36fB4cMSxROQYwo0ewAa9FJ4DC5EXcWFGoeNiWD7jhqdM?=
+ =?us-ascii?Q?PGUDKu/oXDXFMmmKED/T16kTJ2wTjvIcMsL8YppwxVuMxCgpSEVEd/w6OTWp?=
+ =?us-ascii?Q?TA9Hytii+OQmtaAuWxPQeh0/y0O0l69GU9HN+4+9VFnSsAgCf1k61f5rMkXc?=
+ =?us-ascii?Q?SCkQvvkN93fyB+AGdaQAXDz+VIV0gSPxDhMhmaP96kRueyMspE1GdOTGOjcO?=
+ =?us-ascii?Q?76+mibuKMmXdUI75e9Zqi4HZM7H0mWrtKnsKo80Bu7/RxSJRYFnM1yPF1QUt?=
+ =?us-ascii?Q?ZiFWxjnzkP9a6QcFCZCjECZX0vPsUnEdEmtRj2c2I6xtWAG0ZTCcjt2sKHzt?=
+ =?us-ascii?Q?q58nrAGhvse+wCT7NYZIUmMzH3eVYM8Nzp0lxFFpZkCpwP9va6eS91pklaKj?=
+ =?us-ascii?Q?EYDSzqm+eDO1yERxQ7a2NY83rsotXuisyOSkhDtju/P1quLCwBI4nJkGVu0r?=
+ =?us-ascii?Q?p5oeUQxRRQSaHetNHe9XKKQ+7R//tBDmxSyg3tFL0SzBwWNuaoMSmYcTve6c?=
+ =?us-ascii?Q?GIsMsZzoEQFjDaot71Oj9kzs5c0vvJ5LIVt4pXIEd2qJOsiyz/rm4Zm8z7n1?=
+ =?us-ascii?Q?ydsjU5XjjBQWhs0xfkp1T+wLbDzFq7EGPbwgzfZTMPrSJwyf4qoSIZVOMqrB?=
+ =?us-ascii?Q?xcQG4dKLbgA8qwV19CWlJlUYlaPvCVXTuNSQUJiDhSWKSHkQx5dbK4bCMEL/?=
+ =?us-ascii?Q?1SBINsOWAEozdrpxW1UUHZWHEa1lxb+4r8O9qJ0QeHFotebK0w5VpRw3BT5A?=
+ =?us-ascii?Q?/LkfiDC2JUo8rVqP90DYmCsytabDwLVT2AR2u9CD4IhjsIybGgNNv5ULp6ap?=
+ =?us-ascii?Q?OLqmSxEOaJA4hRafWrSkyS08NLWLlriT77zhSjPcqlLIOYx+fb/2pjhFpydo?=
+ =?us-ascii?Q?HuDUnUm8OUKN2ksa3cICzFXJhrT0ovaq6qoVXZpRSlU5wu73HbvIjaGg96Hm?=
+ =?us-ascii?Q?rpw4IMTJWkNgnH0t8Hr0gnIzW+EfolTgBI7CFXK1HQa564nVQcKEB1Zf8Ryp?=
+ =?us-ascii?Q?uzV0mXGDyW/wl2RpJnjl+oAZ/y9gGjVkpz5yVaMI3TwiT1swZ2BYH5S53jpn?=
+ =?us-ascii?Q?OY4HcUeBZZOtCSO8i+n4Xmux?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <DM6PR08MB55145854126B411F1A9AFE29DCD29@DM6PR08MB5514.namprd08.prod.outlook.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB3779.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d2411d1b-d20e-4781-11c6-08d973fbbad9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Sep 2021 01:38:45.5551 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: VR3gEucS5JN1QgJUcNVEDs18JQooOg7ztny+5jQWZ83m7SSD4obru4jNLManzHdyI3B0fZwdfjJ4vlNmNntXCEHNbIvYnZ+RkkRfEYb9Nt4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR06MB3553
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -52,87 +129,70 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "andrew@aj.id.au" <andrew@aj.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "yulei.sh@bytedance.com" <yulei.sh@bytedance.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "robh+dt@kernel.org" <robh+dt@kernel.org>, "osk@google.com" <osk@google.com>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 06-Sep-2021 09:40 AM, Chris Chen (TPI) wrote:
->Hi all,
->
->I guess this mail was got overwhelmed by bunches of emails, so please let me resend it and hope someone could help me. Another, I add one more question marked #5 below.
+Hi Rob,
 
-Thanks for being persistent :)
+> From: Rob Herring <robh@kernel.org>
+> Sent: Thursday, September 9, 2021 8:33 PM
+>=20
+> On Thu, 09 Sep 2021 18:29:05 +0800, Chia-Wei Wang wrote:
+> > Add dt-bindings for Aspeed UART routing controller.
+> >
+> > Signed-off-by: Oskar Senft <osk@google.com>
+> > Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
+> > ---
+> >  .../bindings/soc/aspeed/uart-routing.yaml     | 70
+> +++++++++++++++++++
+> >  1 file changed, 70 insertions(+)
+> >  create mode 100644
+> > Documentation/devicetree/bindings/soc/aspeed/uart-routing.yaml
+> >
+>=20
+> My bot found errors running 'make DT_CHECKER_FLAGS=3D-m
+> dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>=20
+> yamllint warnings/errors:
+>=20
+> dtschema/dtc warnings/errors:
+> Documentation/devicetree/bindings/soc/aspeed/uart-routing.example.dt.yaml=
+:
+> 0:0: /example-0/lpc@1e789000: failed to match any schema with compatible:
+> ['aspeed,ast2600-lpc-v2', 'simple-mfd', 'syscon']
 
->
->Hi all,
->
->I have studied "phosphor-host-ipmid" package for a couple of weeks and got understanding that it has implemented some mandatory and optional commands already. And I also knew that I'm able to leverage "intel-ipmi-oem" package to get more command handlers. But there're some questions raised in my mind, I hope someone could give me some suggestions.
->
->  1.  What's the normal development procedure in case I want to make our own OEM commands? I mean do you guys encourage me to create a new "xxx-ipmi-oem" package or to leverage "intel-ipmi-oem" and then add our own commands in it?
+The "aspeed,ast2600-lpc-v2" compatible string is described in the .txt file=
+ 'aspeed-lpc.txt'.
+Do we have to firstly convert the text file into YAML one to resolve this d=
+ependency issue?
 
-First some common language:
-1) xxx-ipmi-oem is an IPMI provider library. It doesn't need to be 
-called xxx-ipmi-oem, but that is just a convenient naming convention.
-2) whitelist (prefer allowlist) is one kind of filter. Filters are 
-registered like command handlers, with a priority. Filters can do more 
-than just block or allow the commands coming in. The filter is passed 
-the request and can do anything it wants before passing it on. Logging, 
-mangling, blocking, etc.
+Regards,
+Chiawei
 
-It depends on a lot of things. Maybe yes, create a new repo? More 
-discussion below.
+>=20
+> doc reference errors (make refcheckdocs):
+>=20
+> See https://patchwork.ozlabs.org/patch/1526149
+>=20
+> This check can fail if there are any dependencies. The base for a patch s=
+eries is
+> generally the most recent rc1.
+>=20
+> If you already ran 'make dt_binding_check' and didn't see the above error=
+(s),
+> then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+>=20
+> pip3 install dtschema --upgrade
+>=20
+> Please check and re-submit.
 
->  2.  I for now added "intel-ipmi-oem" package only for using its "<Chassis>:<Set Front Panel Enables>" command because I figured out the same command in the "phosphor-host-ipmid" is not able to match the d-bus interface in the "x86-power-control". I'm not sure if I will need other commands in the "intel-ipmi-oem", but what if I don't need other commands, how to remove them? to use the whitelist mechanism?
-
-There is not a method to remove them, but you can filter them as you 
-suggested. Also, if you want to add a different implementation (from a 
-different IPMI provider library) at a higher priority, only the higher 
-priority implementation will be used.
-
->  3.  Is it okay to add more than 1 xxx-ipmi-ome packages? If yes, how to manage the whitelist between these 2 OEM packages?
-
-You can have as many IPMI provider libraries on the BMC as needed.
-
-The filtering mechanism does not discriminate between the provider, it 
-is used at execution time when a command comes in. Every command is 
-passed to each filter 
-
->  4.  Am I able to use "intel-ipmi-oem" on a platform that is using AMD CPU?
-
-IANAL, but, yes. It is open source and the license does not make that 
-restriction. It might look kind of weird though :)
-
-If you like all the IPMI functions implemented by the intel-ipmi-oem, it 
-is fine to use it as is. If there are things you want to change, there 
-are different ways to go about it.
-
-Here are a couple of scenarios with some options:
-1) You like the behavior of an IPMI provider library, but want some 
-changes. Talk with the owner and see if you can come to some consensus 
-that works for everyone. This is the most opensource, 
-community-building, good-will behavior of all. Submit a change and see 
-if you can get it merged.
-
-2) You like all the IPMI commands in an IPMI provider library except for 
-one or two. If you want to own the work to keep a patch up to date, it 
-is possible to just add a bbappend and a patch to modify the code prior 
-to building. This is okay, but maybe not as ideal. It may end up with a 
-smaller image size than adding a new provider library to overload the 
-command implementation.
-
-3) You like all the IPMI commands in an IPMI provider library except for 
-one or two. You can create a new IPMI provider library for your 
-organization that can filter out and/or provide overloads for any 
-existing implementation of IPMI commands from any number of other IPMI 
-providers.
-
-4) You only like some bits of another IPMI provider. You may be best off 
-to just copy those bits into a new IPMI provider library of your own, 
-add your own other OEM commands and/or implementations and carry on.
-
-Really, none of the 'solutions' are ideal, but we are trying to make 
-trade-offs here that allow individual contributing organizations freedom 
-to implement OEM commands as they wish without any one organization 
-being a gatekeeper.
-
---Vernon
