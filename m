@@ -2,97 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2E8C407228
-	for <lists+openbmc@lfdr.de>; Fri, 10 Sep 2021 21:54:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DAA7407324
+	for <lists+openbmc@lfdr.de>; Fri, 10 Sep 2021 23:57:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H5mmx5HQlz2yg6
-	for <lists+openbmc@lfdr.de>; Sat, 11 Sep 2021 05:54:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H5qVS1k3Qz2ymZ
+	for <lists+openbmc@lfdr.de>; Sat, 11 Sep 2021 07:57:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=C8bSWO4W;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=C3pZfeNw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::330;
+ helo=mail-ot1-x330.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=C8bSWO4W; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=C3pZfeNw; dkim-atps=neutral
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com
+ [IPv6:2607:f8b0:4864:20::330])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H5mmS6G8yz2yPS;
- Sat, 11 Sep 2021 05:54:31 +1000 (AEST)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
- 18AJWodq026449; Fri, 10 Sep 2021 15:54:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=/ByGxRxg9XuoL0ppwX2mQ5lVHpqrilpdM6mbmT+sKHY=;
- b=C8bSWO4WOIHHQnnWSrHuAG+oOrd2yRs6k/XzyvS8KGnz1XH0IWvniW9g9xlGdvZ3W66q
- 5guqJJggq3y5+6oAUJKPmRyvIvk42YFkzpVbAXvOk0cH8L16pGFO+db1YoS1D5msLH4M
- If5GEWL06qo1acsONY4uMV62Q6ZGRc77VeaPDfC5yBvbp3SopyyxYWVKZkJVyLv3E6+3
- 6cqBD8zVBtiT2hPhpfpTUPedFs93qE7+OvGs0Qr/5NjgwUUF3C2PMOZq63fiMsvLxen6
- Kor4h1238aBCGwjRo/2GzTqceQlhaIVUpoGfWpHmEgB+EfI2MT45ll8tGRSjzUt9DDiY lw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3b04s1v1ka-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Sep 2021 15:54:23 -0400
-Received: from m0098417.ppops.net (m0098417.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 18AJZjKJ036146;
- Fri, 10 Sep 2021 15:54:23 -0400
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3b04s1v1k6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Sep 2021 15:54:23 -0400
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 18AJbcT1029277;
- Fri, 10 Sep 2021 19:54:22 GMT
-Received: from b03cxnp08026.gho.boulder.ibm.com
- (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
- by ppma03wdc.us.ibm.com with ESMTP id 3axcnr4tsh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Sep 2021 19:54:22 +0000
-Received: from b03ledav001.gho.boulder.ibm.com
- (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
- by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 18AJsKXH26542552
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Sep 2021 19:54:20 GMT
-Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A4FA26E058;
- Fri, 10 Sep 2021 19:54:20 +0000 (GMT)
-Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 55F266E052;
- Fri, 10 Sep 2021 19:54:20 +0000 (GMT)
-Received: from fstone01p1.aus.stglabs.ibm.com (unknown [9.3.116.196])
- by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTP;
- Fri, 10 Sep 2021 19:54:20 +0000 (GMT)
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: joel@jms.id.au, linux-arm-kernel@lists.infradead.org,
- linux-aspeed@lists.ozlabs.org
-Subject: [PATCH v2] ARM: dts: aspeed: rainier: Add N_MODE_VREF gpio
-Date: Fri, 10 Sep 2021 19:54:17 +0000
-Message-Id: <20210910195417.2838841-1-anoo@linux.ibm.com>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: kvZMz66oaRi9U5CcGODnl8u1OycCKS2B
-X-Proofpoint-ORIG-GUID: ZnPfP3ip2j1sZJG9L6_zv4t4URZ-xLFS
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
- definitions=2021-09-10_07:2021-09-09,
- 2021-09-10 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 malwarescore=0 spamscore=0 mlxscore=0 phishscore=0
- suspectscore=0 clxscore=1015 bulkscore=0 adultscore=0 lowpriorityscore=0
- mlxlogscore=975 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2109030001 definitions=main-2109100112
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H5qTy6nDCz2xX8
+ for <openbmc@lists.ozlabs.org>; Sat, 11 Sep 2021 07:57:09 +1000 (AEST)
+Received: by mail-ot1-x330.google.com with SMTP id
+ m7-20020a9d4c87000000b0051875f56b95so4190849otf.6
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Sep 2021 14:57:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=leXi6ACkoZoKuFLRi0FKLuCV3THsDNu8YrLrsa+D0tw=;
+ b=C3pZfeNwYELPnl1KWYGNrfeHHhIirqles73HQlDwuwPk9VjumkyBFKvuCdpcZzXCGH
+ 4XzMI06rq5NRhiMLAvMvpBOIIQqaHFd5mUmTakI+yVdl1XvrxvRHy1fk+7/GAPiQbZ/a
+ dWjjQan3wsdDwKxSSdE5dOvEY9CKIGOs9sb0gGDJMmufRfg/z7oX+Uja086dfNfx3VEJ
+ 7i1/hbNb1uyCRSj/oxzdmB6fcziNqr8Hs8jRJ6S+ZObLcEzNvFu195OBBX0wJDbAwTYA
+ ZFbnPMmTpRYEyvsq2eSG+q2LbYyp+UbVcohAQaGvrgUjxe0rQ1UbEP2yEsR94UrdVZix
+ 2sxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=leXi6ACkoZoKuFLRi0FKLuCV3THsDNu8YrLrsa+D0tw=;
+ b=dvsGJ7A2kgi9jmnJAAx4FBFP1yxAwUVpDnonBdTbMBGWUHi7umEHWs6/VuiIudTYQL
+ LSNHlAU06xh+v13/kdThH2olMxbr2mDcUYLr9pkaOz1qn4tsryPUs1FE8g8ze/p+CQvS
+ 8st7gn+K4xyowk1d6Bbgtm0/OiJSr47B1+xr/Of3j2EeJOsSQFHoUnSSPt2FXj7Ijb4f
+ O441y2KJj7VY6Voj62IAFFcKdHpINfYYZeNVShzK5gDPYe3oxObFlhKGvv92BNMcbvjR
+ moNdwACpwhvhtgXQXanvgHyKyxN2ySqv6qlyJx8RAm6bJcxbXHVj7TWCFEsXaT/4G/KX
+ Zxkg==
+X-Gm-Message-State: AOAM531I53z8uMKH3oRG6BOZFfqVwGnDWJz6EuVt0vIkPnTc9Zz8C1Dy
+ xx/lZ+o8gVeGt54m/xDu/wDwP4AutVwbHg==
+X-Google-Smtp-Source: ABdhPJwYlHc622mVzteB6kvLQfSqdGgW65WXojyg1QJjhbkgVQr2zTe/yvNgkXZBCCmVgr1fNGmjyQ==
+X-Received: by 2002:a05:6830:1443:: with SMTP id
+ w3mr6552086otp.49.1631311026699; 
+ Fri, 10 Sep 2021 14:57:06 -0700 (PDT)
+Received: from smtpclient.apple ([2600:1700:19e0:3310:6978:52f4:4775:56af])
+ by smtp.gmail.com with ESMTPSA id q5sm1405259ooa.1.2021.09.10.14.57.05
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 10 Sep 2021 14:57:05 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: Implement OEM mechanism to handle
+ xyz.openbmc_project.Condition.HostFirmware interface
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <5429fce9-d715-51a1-5e8d-61b3bd434a23@amperemail.onmicrosoft.com>
+Date: Fri, 10 Sep 2021 16:57:04 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9990E419-23C1-4288-9D1A-07A1AA40C502@gmail.com>
+References: <53e204da-0c8b-d161-a065-a6195550d7f7@amperemail.onmicrosoft.com>
+ <3909e9e3-0a58-e542-a004-89278438997d@amperemail.onmicrosoft.com>
+ <07A6A378-47F6-4805-ABFD-D216F4D4C8FE@gmail.com>
+ <5429fce9-d715-51a1-5e8d-61b3bd434a23@amperemail.onmicrosoft.com>
+To: Thu Nguyen <thu@amperemail.onmicrosoft.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,143 +87,210 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: spinler@us.ibm.com, derekh@us.ibm.com, openbmc@lists.ozlabs.org,
- Adriana Kobylak <anoo@us.ibm.com>, bjwyman@gmail.com, shawnmm@us.ibm.com
+Cc: openbmc@lists.ozlabs.org, Thang Nguyen <thang@amperemail.onmicrosoft.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Adriana Kobylak <anoo@us.ibm.com>
 
-The N_MODE_VREF gpio is designed to be used to specify how many power
-supplies the system should have (2 or 4).  If enough power supplies fail
-so that the system no longer has redundancy (no longer n+1), the
-hardware will signal to the Onboard Chip Controller that the system may
-be oversubscribed, and performance may need to be reduced so the system
-can maintain it's powered on state. This gpio is on a 9552, populate all
-the gpios on that chip for completeness.
 
-Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
----
+> On Sep 10, 2021, at 6:34 AM, Thu Nguyen =
+<thu@amperemail.onmicrosoft.com> wrote:
+>=20
+> Hi Andrew,
+>=20
+>=20
+> Please see my comments:
+>=20
+>=20
+> Thanks.
+>=20
+> Thu Nguyen.
+>=20
+> On 09/09/2021 22:42, Andrew Geissler wrote:
+>>=20
+>>> On Sep 8, 2021, at 8:54 PM, Thang Nguyen =
+<thang@amperemail.onmicrosoft.com> wrote:
+>>>=20
+>>> Hi,
+>>>=20
+>>> Let me explain more detail about our cases:
+>>>=20
+>>> - Our system uses a GPIO called FW_BOOT_OK to detect if the Host is =
+currently ON or OFF. The Host firmware set this GPIO when the first core =
+initialized.
+>>>=20
+>>> - We have no problem in Host State with power control. But the =
+problem is in the case of BMC rebooted while the Host is ON.
+>>>=20
+>>> - Before the commit =
+https://github.com/openbmc/phosphor-state-manager/commit/0d1c3f1f9329c8536=
+77f0581287afef83eeea0f0, phosphor-reset-host-check@.service  is used to =
+check and update Host State in case of BMC rebooted. But after that =
+commit, the service file was removed. This makes no target service to =
+update the Host State and the host check is fail at =
+https://github.com/openbmc/phosphor-state-manager/blob/0a675215d6a6d2eb13e=
+030ba0f618a4691de58d4/host_check.cpp#L109.
+>>>=20
+>>> We would like to ask for your idea on how should we implement for =
+the Host check when BMC is rebooted?
+>> Hi Thang. Yeah, the reason for moving the logic directly into =
+phosphor-host-state
+>> is we had a window where the host state would say off (default) even =
+when the
+>> host was actually on. The other service would run and update it to =
+the correct
+>> value but there was a window where external clients would see an =
+incorrect
+>> state. So since we don=E2=80=99t want to report an invalid state, I =
+needed the logic
+>> within the app itself on startup.
+>>=20
+>> I think you=E2=80=99re on the right path here. The design is to =
+implement the
+>> xyz.openbmc_project.Condition.HostFirmware object and support the =
+read
+>> of the CurrentFirmwareCondition property. Based on your GPIO state, =
+you=E2=80=99d
+>> respond accordingly to the read. That way the state-manager code will =
+just
+>> work as-is.
+>>=20
+>> On where to put this code=E2=80=A6 So far we=E2=80=99ve put it in the =
+area that is doing the logic,
+>> like PLDM and IPMI. Since this is really just a GPIO read, I=E2=80=99m =
+not sure the best
+>> place. I=E2=80=99d be interested if anyone on the list has some =
+thoughts. Could host it
+>> outside of openbmc and just pull in via a recipe.
+>>=20
+>> I=E2=80=99d entertain a subdirectory in phosphor-state-manager with =
+this small
+>> app (to host the interface you=E2=80=99ll want a c++ app) and service =
+to run it.
+>> We could just enable it via a meson/compile flag. It seems like it =
+could
+>> be fairly generic and something that other system owners could =
+utilize.
+>=20
+> So you mean we can add the code in subdirectory in =
+phosphor-state-manager code.
 
-v2: Update commit message.
+Yes
 
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 103 +++++++++++++++++++
- 1 file changed, 103 insertions(+)
+> And the code have to generic enough to be reused in others systems and =
+should include compile flag to enable/disable it.
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 6fd3ddf97a21..d5eea86dc260 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -1502,6 +1502,109 @@ eeprom@51 {
- 		reg = <0x51>;
- 	};
- 
-+	pca_pres3: pca9552@60 {
-+		compatible = "nxp,pca9552";
-+		reg = <0x60>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+
-+		gpio-line-names =
-+			"",
-+			"APSS_RESET_N",
-+			"", "", "", "",
-+			"P10_DCM0_PRES",
-+			"P10_DCM1_PRES",
-+			"", "",
-+			"N_MODE_CPU_N",
-+			"",
-+			"PRESENT_VRM_DCM0_N",
-+			"PRESENT_VRM_DCM1_N",
-+			"N_MODE_VREF",
-+			"";
-+
-+		gpio@0 {
-+			reg = <0>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@1 {
-+			reg = <1>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@2 {
-+			reg = <2>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@3 {
-+			reg = <3>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@4 {
-+			reg = <4>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@5 {
-+			reg = <5>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@6 {
-+			reg = <6>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@7 {
-+			reg = <7>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@8 {
-+			reg = <8>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@9 {
-+			reg = <9>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@10 {
-+			reg = <10>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@11 {
-+			reg = <11>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@12 {
-+			reg = <12>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@13 {
-+			reg = <13>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@14 {
-+			reg = <14>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@15 {
-+			reg = <15>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+	};
-+
- 	pca_pres2: pca9552@61 {
- 		compatible = "nxp,pca9552";
- 		reg = <0x61>;
--- 
-2.25.1
+Yes. We=E2=80=99ll just treat it as a sub-package within the =
+state-manager bitbake recipe
+and users can pull it in if they want it.
+
+>=20
+> This code will response the host state base on the GPIO pins status.
+>=20
+>>=20
+>> Please take a look at =
+https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-namin=
+g.md
+>> We=E2=80=99d want the GPIO utilized here to have a standard name so =
+others
+>> could potentially make use of this logic.
+>=20
+> In the specs, I don't see any sections mention about the host GPIOs.
+
+I was hoping you could name the GPIO=E2=80=99s in the dts so they could =
+be generic
+and then others who want to make use of your function could just use the
+same names in their dts.
+
+So you=E2=80=99d make a proposed change to that document. A new =E2=80=9CH=
+ost Status=E2=80=9D
+section. Something like host0-status, host1-status, =E2=80=A6
+
+Then ideally we could avoid the need for the json file below and the =
+code
+just looks for the GPIO=E2=80=99s using libgpiod. Although if they =
+really can have
+different polarities, that may be an issue.
+
+>=20
+> So I think I will use the GPIO configuration file host_gpios.json with =
+below format.
+>=20
+> {
+>   "host_state":{
+>     "host_0":[
+>       {
+>         "KEY": 48,
+>         "Polarity": "High"
+>       },
+>       {
+>         "KEY": 49,
+>         "Polarity": "Low"
+>       }
+>     ],
+>     "host_1":[
+>       {
+>         "KEY": 202,
+>         "Polarity": "Low"
+>       },
+>       {
+>         "KEY": 203,
+>         "Polarity": "High"
+>       }
+>     ]
+>   }
+> }
+>=20
+> The host_state fields will contain the GPIO settings to verify the =
+running state of the hosts.
+>=20
+> I will support multi-host setting. For each host, I will also support =
+identify the host state thru one or some GPIO pin status.
+>=20
+>>=20
+>> Andrew
+>>=20
+>>>=20
+>>> Thanks,
+>>>=20
+>>> Thang Q. Nguyen
+>>>=20
+>>> On 08/09/2021 20:19, Thu Nguyen wrote:
+>>>> Dear Geissonator,
+>>>>=20
+>>>>=20
+>>>> After commit =
+https://github.com/openbmc/phosphor-state-manager/commit/0d1c3f1f9329c8536=
+77f0581287afef83eeea0f0
+>>>>=20
+>>>> when BMC boots up, phosphor-host-state directly checks  the host =
+state thru interface xyz.openbmc_project.Condition.HostFirmware.
+>>>>=20
+>>>> It does not check the existing of /run/openbmc/host@%d-on as =
+before.
+>>>>=20
+>>>>=20
+>>>> I plan to implement "oem mechanism" to handle the interface =
+xyz.openbmc_project.Condition.HostFirmware.
+>>>>=20
+>>>> Which will use the GPIO interface to update the host state. I =
+researched the code handle this interface in phosphor-host-ipmi and =
+pldm.
+>>>>=20
+>>>> I wonder which repo should I upstream the code? Currently, we don't =
+have any OEM repo in github to upstream the code.
+>>>>=20
+>>>> Do you have any idea to handle interface in bash scripts?
+>>>>=20
+>>>>=20
+>>>> Regards.
+>>>>=20
+>>>> Thu Nguyen.
+>>>>=20
+>>>>=20
+>>>>=20
+>>>>=20
+>>>>=20
+>>>>=20
+>>>>=20
 
