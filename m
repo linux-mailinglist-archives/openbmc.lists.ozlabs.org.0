@@ -2,68 +2,97 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BBD3406B31
-	for <lists+openbmc@lfdr.de>; Fri, 10 Sep 2021 14:10:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BC877406D3D
+	for <lists+openbmc@lfdr.de>; Fri, 10 Sep 2021 16:00:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H5ZSy6wqgz2yTr
-	for <lists+openbmc@lfdr.de>; Fri, 10 Sep 2021 22:10:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H5cvb5CDqz2yS1
+	for <lists+openbmc@lfdr.de>; Sat, 11 Sep 2021 00:00:11 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=LB7KMoiv;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=TYYZ2gC8;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=LB7KMoiv; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=TYYZ2gC8; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H5ZSW6SDHz2yLk
- for <openbmc@lists.ozlabs.org>; Fri, 10 Sep 2021 22:10:03 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id D00284CF61;
- Fri, 10 Sep 2021 12:09:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:user-agent:date:date:mime-version
- :content-type:content-type:organization:references:in-reply-to
- :from:from:subject:subject:message-id:received:received
- :received; s=mta-01; t=1631275796; x=1633090197; bh=W1hZq0ePMG2/
- Oj+PapVA2PGwDdhIFBGBX+2dnuSoRTk=; b=LB7KMoivGN8x2qtiR+LaQYGvosNP
- FWvlXNjJ3SrhUqcQwSeAbXm9gc1PrR0I+xwTLwLyeCB20EGqUOcdFhU+IJgQbXR7
- pKoB8IVq8AqiVDLHVZK9gz85mzWjOiD7VfxqUsLjGx25kEdwHJ+27a4nlQQWmNWM
- zPO6tVmzgAlEDSs=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 76nroQoTYHaq; Fri, 10 Sep 2021 15:09:56 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id E60E34CF60;
- Fri, 10 Sep 2021 15:09:56 +0300 (MSK)
-Received: from [10.199.0.180] (10.199.0.180) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Fri, 10
- Sep 2021 15:09:56 +0300
-Message-ID: <435cf6e388bf47385ba0c35c48a225beb3450262.camel@yadro.com>
-Subject: Re: How I can read fru information about cpu and dimm ?
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: Alexander Raih <61a91bc@gmail.com>, <openbmc@lists.ozlabs.org>
-In-Reply-To: <CAMqwjCDjaGDyRutmoqBM1zDK10VOWzkY82vQ6atUhqv1AsWa9g@mail.gmail.com>
-References: <CAMqwjCDjaGDyRutmoqBM1zDK10VOWzkY82vQ6atUhqv1AsWa9g@mail.gmail.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H5cv82309z2yPc;
+ Fri, 10 Sep 2021 23:59:47 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 18ADXrG0099631; Fri, 10 Sep 2021 09:59:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=N013+iQ2QnjSCpHSRohusviGJONKRqz0649US0mtxoA=;
+ b=TYYZ2gC8LWMyUntGyfk6JqNDr42jvfE7t+DEtSFNa+xomtPRKdqcYSbX/Dg02XVHuoSv
+ 34FBcHN/DaeTVb84adgGglkV0mAOvweAOHArnlYZKTTAfNoD+WVX3iqkPo/7Yef82AVP
+ ogAcgf/r4+qecS/GuS/rD3QmYjD6JVMzhqbOnMjmj0GfzZOhp5FbivHGgWgiggRBLF7y
+ 9vtL01Oy0W+vaeUz72FjNy4DpQW9nN3QAbmtHId5EoSAZyi6vtrWpM7kiRvBbYc0TT1/
+ 3+SGSBuZgnz3OxLlie+LO5wONbsO0hNFMW2Mb63ccR4Pfc0HwinY733aSd4HslapZX+l tw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3b03fnq8xq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 10 Sep 2021 09:59:39 -0400
+Received: from m0098414.ppops.net (m0098414.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 18ADY8J2100623;
+ Fri, 10 Sep 2021 09:59:39 -0400
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3b03fnq8xk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 10 Sep 2021 09:59:39 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 18ADgIVb000934;
+ Fri, 10 Sep 2021 13:59:38 GMT
+Received: from b03cxnp08027.gho.boulder.ibm.com
+ (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
+ by ppma04dal.us.ibm.com with ESMTP id 3axcnkybp5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 10 Sep 2021 13:59:38 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 18ADxaEE16187696
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 10 Sep 2021 13:59:36 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F100EBE077;
+ Fri, 10 Sep 2021 13:59:35 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A53B7BE054;
+ Fri, 10 Sep 2021 13:59:35 +0000 (GMT)
+Received: from fstone01p1.aus.stglabs.ibm.com (unknown [9.3.116.196])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Fri, 10 Sep 2021 13:59:35 +0000 (GMT)
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: joel@jms.id.au, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org
+Subject: [PATCH] ARM: dts: aspeed: rainier: Add N_MODE_VREF gpio
+Date: Fri, 10 Sep 2021 13:59:30 +0000
+Message-Id: <20210910135930.2094695-1-anoo@linux.ibm.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Date: Fri, 10 Sep 2021 15:09:42 +0300
-User-Agent: Evolution 3.40.1 
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.0.180]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: CZrPHhfhSDbAXcXhJ5uMOfFIxm0B978o
+X-Proofpoint-ORIG-GUID: U3WpyzxH8nPOEM5DgD7O4BlNPDoJa3X0
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.790
+ definitions=2021-09-10_04:2021-09-09,
+ 2021-09-10 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1011
+ phishscore=0 lowpriorityscore=0 mlxscore=0 spamscore=0 impostorscore=0
+ mlxlogscore=830 adultscore=0 priorityscore=1501 bulkscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2109030001
+ definitions=main-2109100079
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,34 +104,136 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: spinler@us.ibm.com, derekh@us.ibm.com, openbmc@lists.ozlabs.org,
+ Adriana Kobylak <anoo@us.ibm.com>, bjwyman@gmail.com, shawnmm@us.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Alexander,
+From: Adriana Kobylak <anoo@us.ibm.com>
 
-We can't tell you how to work with your hardware without any knowledge
-about it's design.
+The N_MODE_VREF gpio is designed to be used to notify the Onboard Chip
+Controller how many power supplies the system should have (2 or 4). This
+gpio is on a 9552, populate all the gpios on that chip for completeness.
 
-Typically, CPU have no any EEPROM to read information from it. DIMMs
-have special I2C channel, called SPD, but generally it is not connected
-to BMC. I guess, you need to use some communication with the host to
-request this information. But all this is common suggestion, you need
-to know your hardware.
+Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 103 +++++++++++++++++++
+ 1 file changed, 103 insertions(+)
 
-On Fri, 2021-09-10 at 13:10 +0300, Alexander Raih wrote:
-> Hi guys, I am beginner in openbmc, cat you tell me a question.
-> In device tree I describe eeprom on i2c bus. I read this eeprom file
-> in fs and this file contained information only about
-> mainboard(vendor,model,s/n,p/n).  Please tell me how can I get fru
-> information about cpu, dimms ??
-> 
-> p.s. On another i2c bus I have 2 devices with addresses 0x70 0x71. I
-> think that it is mux pca9545 and on the one on channel of this mux
-> locate eeprom. 
-> 
-
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 6fd3ddf97a21..d5eea86dc260 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -1502,6 +1502,109 @@ eeprom@51 {
+ 		reg = <0x51>;
+ 	};
+ 
++	pca_pres3: pca9552@60 {
++		compatible = "nxp,pca9552";
++		reg = <0x60>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio-line-names =
++			"",
++			"APSS_RESET_N",
++			"", "", "", "",
++			"P10_DCM0_PRES",
++			"P10_DCM1_PRES",
++			"", "",
++			"N_MODE_CPU_N",
++			"",
++			"PRESENT_VRM_DCM0_N",
++			"PRESENT_VRM_DCM1_N",
++			"N_MODE_VREF",
++			"";
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@8 {
++			reg = <8>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@9 {
++			reg = <9>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@10 {
++			reg = <10>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@11 {
++			reg = <11>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@12 {
++			reg = <12>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@13 {
++			reg = <13>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@14 {
++			reg = <14>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@15 {
++			reg = <15>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
+ 	pca_pres2: pca9552@61 {
+ 		compatible = "nxp,pca9552";
+ 		reg = <0x61>;
 -- 
-Best regards,
-Andrei Kartashev
-
+2.25.1
 
