@@ -1,154 +1,144 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4499F407329
-	for <lists+openbmc@lfdr.de>; Sat, 11 Sep 2021 00:00:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04D934074CB
+	for <lists+openbmc@lfdr.de>; Sat, 11 Sep 2021 05:09:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H5qYl19DYz2ybK
-	for <lists+openbmc@lfdr.de>; Sat, 11 Sep 2021 08:00:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H5yPv5tk7z2yZp
+	for <lists+openbmc@lfdr.de>; Sat, 11 Sep 2021 13:09:07 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=dQfj9Nmh;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=LRR9K/Hy;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=equinix.com (client-ip=148.163.148.236;
- helo=mx0a-00268f01.pphosted.com;
- envelope-from=prvs=088761d2b9=zweiss@equinix.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256
- header.s=pps202002 header.b=dQfj9Nmh; 
+ smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7e88::72c;
+ helo=nam10-dm6-obe.outbound.protection.outlook.com;
+ envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
+ header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector1-amperemail-onmicrosoft-com header.b=LRR9K/Hy; 
  dkim-atps=neutral
-Received: from mx0a-00268f01.pphosted.com (mx0a-00268f01.pphosted.com
- [148.163.148.236])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10on2072c.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:7e88::72c])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H5qYF55P8z2yX8
- for <openbmc@lists.ozlabs.org>; Sat, 11 Sep 2021 08:00:00 +1000 (AEST)
-Received: from pps.filterd (m0105196.ppops.net [127.0.0.1])
- by mx0a-00268f01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 18ALDUJa031229; 
- Fri, 10 Sep 2021 21:59:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com;
- h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-id : content-transfer-encoding : mime-version; s=pps202002;
- bh=0OwI/4+ddbQ+J43iTtcvOkaIddlk5u1Q/X015097uB8=;
- b=dQfj9NmhZzmnuDI5zVyAUnQpLXk/XnCSe4jnZAb2YhVDQ51IbLnbFf2o3g61VznRiMgv
- tkyZUhfUuofNx2yXOY836Kvs8/m+cXIevyUeNb1Ps62b+AVztQPt/2kxV7WOs4mNtdqF
- xoRUpVRV7KlWJjTXFvaURJ/ZCrzvEtxj5U0UB22BsuXwCCAf9t9EnWSc76nC5NtFY4ed
- 6eA5nMrHw8L2CXEMS8md3kzfGI5BbTAY1j33+L2FLXGO2iqMGpe3jGw+SFdoNDQJFhJ9
- VjeUE5bKJ5VJLSwSwIssM/kty2lDnAhmvgJ1W19+7GuuRxGU/GcYV0PiaSDX5K4L4V0p 5g== 
-Received: from nam10-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam10lp2107.outbound.protection.outlook.com [104.47.58.107])
- by mx0a-00268f01.pphosted.com with ESMTP id 3b0bjc0qtr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Sep 2021 21:59:48 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H5yPM6f1jz2xY1
+ for <openbmc@lists.ozlabs.org>; Sat, 11 Sep 2021 13:08:37 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UyHxDF06jK1fv1SPL9KRYDFJVnjnC9Ct9/YRVfEuy6Byq6Oh3PSbtUP+7WbBJddzf/r9qPsD3T8qEdRYXx4/pq2DVLpps4wNBRYTbTE5aQbJgcFsYyyn5Rfk0c/l0K+Q36rWd1klTcozZDaeXO+TW2XdhvY2TTPJXN/BFHY4KC3fDRWqABbCGxSMTFtsulaVY9iXo4qCvnuYRELQxCjDCdP6YYtXmPduBm9JI3vv8GQIwPhD8Tsx0Mps8CH2oNeGGwffJpxuNTL9ZVOschHPLzJBrFLfsz14eUb2R6okRPyNE1FUKxz2hwTCjx/xKS23orYDSyckatKZtAW2+dp06A==
+ b=fOfiedIlzZItL2pYs9IPyOe2qL4CvZ0NVD9O9CxaryHUTL42sYwrXgF7cYeSuRXhzsRXctqOa/Yk8cSUNZfHsIsqnGqRNWRdN6PUXujB+IU0VMxoE9CJwR2ZdUkKaY7dNUwfimiv5d9dI7x1o0yDGGrTjioxIf72u7Xh85uG+D9eSC8rsUoqRmgLBk71dBmTumw5ouOUMX8ofcj8isqrYT9PDt14eTkhDSHoVkniOFcrSE7MQY8RrTbINJph6i3jOVvZXgdYuLsVqTsJox1pvbNdN6KPvAIxfm2shVLpXZzvqdFSRKeIqIpGFl9tk4GkTeyWoXdfFveqPMsaKbauig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version; 
- bh=0OwI/4+ddbQ+J43iTtcvOkaIddlk5u1Q/X015097uB8=;
- b=UkaAy59EplnMX6Zy6ZQknK0D3u1xKJedJw2Dk1bZvnvPfa00nRfz7LbpZbR4SH7QWtgz/QlUnPqgL3RJpzGoOuoHkZ0ljBUgrLwks/UBYuRiEVsDreTxDgezsrkH251nQwzOZR0c/TIlhTqSDZcISkEpCVPMVm0hQ2vu6HtAH7FVUVlafNlmCrRztj34/anh/dB33AWQo4hzGShfdyIgqxV0ZLdHCTlNXoq+lO+yYZR1hl/1FJm6o84Tf5X9yDoIdGpQ+80XFp10auAJbxGvgQYbu1j4AcoAsEnyDnL0zhDbOPGFXbWNqKdKvQH+Zcsbj4Q95G6mktkgzKjBmmPOfA==
+ bh=uv5SaqkpvzrT2F7o8vzA5M8bm2U1l3gzDK25Q507P6s=;
+ b=ZOdVifwqPKfDRWbYQ6zcZewFkl4hRFcGQcdetQgQNR7wSAqR1gEs+KAJWEDuOzzknDnOTL+lF+pgmINvhSITmltB+z2XzBUeYSFjsnaIi02/ztD/N5BloOkEms1XjmCPLrCsE1k0U+zwonWFfhpRwmuYuJQq78+EwgUPrIVEjkkdYqmOGtpuUB+FmG15LUXmPi4uBxY8DuCRRWEJGV9lekpQU+ah5VMbmHi9MsojtweuIVys3OGRg6pCRsXe+tH6GSTJSoGyoGg6wHxhUAVUEKvF//5fVocgaP3Zhlrkl24IpyqaCdVvCttTL3Ea90z+K2nd6MthHwQbrK5wua3Lmg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
- dkim=pass header.d=equinix.com; arc=none
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
- by DM8PR04MB7992.namprd04.prod.outlook.com (2603:10b6:8:7::17) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4500.14; Fri, 10 Sep 2021 21:59:47 +0000
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::8049:f2d5:9bed:efa0]) by DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::8049:f2d5:9bed:efa0%6]) with mapi id 15.20.4500.017; Fri, 10 Sep 2021
- 21:59:46 +0000
-From: Zev Weiss <zweiss@equinix.com>
-To: Jeremy Kerr <jk@codeconstruct.com.au>
-Subject: Re: [PATCH RFC] Specifying default-disabled devices
-Thread-Topic: [PATCH RFC] Specifying default-disabled devices
-Thread-Index: AQHXpo8qZtITUnASC0CJomxE9mdraw==
-Date: Fri, 10 Sep 2021 21:59:46 +0000
-Message-ID: <20210910215945.GI17315@packtop>
-References: <20210910022433.GD17315@packtop>
- <71375410db4f03bd19c820f97f3a23418b56ecc0.camel@codeconstruct.com.au>
- <20210910034958.GE17315@packtop>
- <1df72fd584f9c54544f9d5fafcd6232e3079ee49.camel@codeconstruct.com.au>
- <20210910052835.GF17315@packtop>
- <857e71679c7d1a421f6cc50896ac7927fe49cd74.camel@codeconstruct.com.au>
- <20210910083542.GH17315@packtop>
- <a2c3598e977a6283a9e65f3f29a74fe55d12ca20.camel@codeconstruct.com.au>
-In-Reply-To: <a2c3598e977a6283a9e65f3f29a74fe55d12ca20.camel@codeconstruct.com.au>
-Accept-Language: en-US
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uv5SaqkpvzrT2F7o8vzA5M8bm2U1l3gzDK25Q507P6s=;
+ b=LRR9K/HyZBYKvGRzkPOidnHgG5YzRBXEPMoGMH8KnXW2FAcHaovn+HzMpCPGnWsD0RKOeY5ntn6qYQb0/SdutG5Gk8SE3ZNieCfML72J+fgFIWmukMEpt4pUF6OX0JIjwLGMGyLMqqFW9dDS335PIAXKnhlfV4GkXceLasCj6Xg=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=amperemail.onmicrosoft.com;
+Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
+ DM6PR01MB4554.prod.exchangelabs.com (2603:10b6:5:7e::31) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4500.17; Sat, 11 Sep 2021 03:08:13 +0000
+Received: from DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::bc35:5371:a238:b08b]) by DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::bc35:5371:a238:b08b%3]) with mapi id 15.20.4500.017; Sat, 11 Sep 2021
+ 03:08:07 +0000
+Subject: Re: Implement OEM mechanism to handle
+ xyz.openbmc_project.Condition.HostFirmware interface
+To: Andrew Geissler <geissonator@gmail.com>
+References: <53e204da-0c8b-d161-a065-a6195550d7f7@amperemail.onmicrosoft.com>
+ <3909e9e3-0a58-e542-a004-89278438997d@amperemail.onmicrosoft.com>
+ <07A6A378-47F6-4805-ABFD-D216F4D4C8FE@gmail.com>
+ <5429fce9-d715-51a1-5e8d-61b3bd434a23@amperemail.onmicrosoft.com>
+ <9990E419-23C1-4288-9D1A-07A1AA40C502@gmail.com>
+From: Thu Nguyen <thu@amperemail.onmicrosoft.com>
+Message-ID: <2c0e3f43-f861-8300-7743-03ba47be0955@amperemail.onmicrosoft.com>
+Date: Sat, 11 Sep 2021 10:07:58 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
+In-Reply-To: <9990E419-23C1-4288-9D1A-07A1AA40C502@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: codeconstruct.com.au; dkim=none (message not signed)
- header.d=none;codeconstruct.com.au; dmarc=none action=none
- header.from=equinix.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: f0a8393d-bb75-4456-1dff-08d974a64d7e
-x-ms-traffictypediagnostic: DM8PR04MB7992:
-x-microsoft-antispam-prvs: <DM8PR04MB7992C344E0F9500D3510EA8AC3D69@DM8PR04MB7992.namprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: z4WiUFRB0yTJjNLAhu9+2IzH6MtDxtmNUjXhW4vo6biAz3ChpYlQXNrhnfOaMiK9fojL6HPffoSVvym88ZdM8oYHQnM+N8N4m0QEOx4nVJtg4C0tfv9NROPY7llUugprhNtKFqWS7iiZMQPyDKXdjHU4HrSMaofWhwwv7zqT4DoGb/W54iRyZ7Re6ZgZfkA9VfNYj4STIGr4MQqQFukPbTYhZ3bmEYjp0T5RBGG55BYR4xpetKozWeEkybqe6mFLyQnlTiYQ7Iv3xYWi1lyPyPFF3IQ45MJElp8TRXthg/974Zqej7BFJ8eCZk6o6brJiDeu83W74AL+wncR+lcXCU7+4wuYN8BXtPWsmTpwQm4dGjCgBN3jTyLKJdg2x4sZQPmGfhYESdrfUyUqvEehS1uXsvR/mwFU7MI88Hckm1GpNrIo4UDCCAQ9TbdIGfOFo9QNEcraz2vwu0UspT582yxzDCV+gjKjIhrjfPu/XvUUmraCUehL3feudghHz4RP6f1IdEvJIDAMiu1ZR/tzhDlr1ccki0hZ0yJ4tMawwoGgpB8YiAVqbjLFsUFQFx35QNWz+c/3Lj6uNcL6Cjougzd0OLsBD/bRCa858N2Llivc+b0dKvhqb9zd4efvenqCPIGigIExu2NQHVpsQeCV+xjZOUm3G0L8LSqdDjls79p2/K00GRD9hOiC4dAK3u0xLgDb51zSatt66PYneJLR2w==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM8PR04MB8007.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(7916004)(4636009)(396003)(39860400002)(136003)(346002)(376002)(366004)(316002)(86362001)(6486002)(6916009)(54906003)(38100700002)(83380400001)(38070700005)(6512007)(9686003)(478600001)(91956017)(122000001)(33716001)(4326008)(2906002)(8936002)(6506007)(76116006)(66946007)(64756008)(66446008)(71200400001)(186003)(8676002)(1076003)(66476007)(66556008)(5660300002)(33656002)(26005);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?NoFZMfIFi2QuYztHrPoe1PO3hZDI4KMJ5RK8px/BfYK9qBp3iriz2A8qEU?=
- =?iso-8859-1?Q?popqOHBUS1Yz17wco1qIh9IvloOw4XH79RaqiP0wqtSRGv9aq+1FQkHCds?=
- =?iso-8859-1?Q?eWTyuU+j/Uq4cXm9NlzzEF1WOdATXnJeHv9dMRHZlyZicVEAA+xZLPXNeN?=
- =?iso-8859-1?Q?uCezH3XZtrDaXlO6idReZF1j4m7Ss+VFl8+4jSb3hQUWr2rZ4iNE3fCWoH?=
- =?iso-8859-1?Q?is7aeuWwU9gP60t1tC+IPnUnJtJOYBku+vIUvZ754/j3+TM/hcOgfa2X6G?=
- =?iso-8859-1?Q?hAjiFS55QQVndq1ux2CHMRhfipiGRG+3Eg0qnYKIzF8eZ/k24CRSO58LYp?=
- =?iso-8859-1?Q?kaO6GiVaIVg5loXTa7IrEjXgqfIXaNx1r5QZ99zmh7u374cRwM4MCXG1Tg?=
- =?iso-8859-1?Q?rmihnDkk3EXAlVcVH8NrcHk+vUfd8PTv4VP5JvrP870DP5PY5GtCKLGw9u?=
- =?iso-8859-1?Q?DSu4IyxgisMT5p+Ja+fhec1hdHhs1inVlKOAerNIVzUAFWGi9hyh6JI/R/?=
- =?iso-8859-1?Q?GGl5F88W+GaxidxPlkCtuNlc9hPcwtLRldFLDAP92Ikoi9QEdARdmntA0s?=
- =?iso-8859-1?Q?W+QPpk81oerFdVOTNGksNqINTD+M/suwxsIvRe8NXK78U8eUt+HQ1lre2z?=
- =?iso-8859-1?Q?YJcr7gPRxs98Pdd+cw8bOOGJAJhvo917PbE+gYAiwanAQjhtknJmhl6Zb/?=
- =?iso-8859-1?Q?VzkJIE5xdvh8mP0YUoJ9MJV6w3F/HSLxCr3IaiLNn7T0DpUOp1J+O4BWNT?=
- =?iso-8859-1?Q?qMTsxuxO7+nAHAGsY3uDdha1bOKj1XBlKfbzWWQ8hHEbbuJlaSDHJ6Ohe4?=
- =?iso-8859-1?Q?sT9B8nKU2YLjbHyfvhfvTLhUrrVve44Puw39VAp5TL0399pMmU4CzZwdGf?=
- =?iso-8859-1?Q?TSp3sLbClS2El67Ny0p70zdkS03ijJEY/0fVWqap0/1uOxyJb9fszCn5YU?=
- =?iso-8859-1?Q?KjVRgwwrPYTYgRHqBW60ZnnFwWNTOSa5mkjgvTmf5DF+dUpOmVyEC7n9xu?=
- =?iso-8859-1?Q?d38FxLk69wUOdA6XVSxa8i4ilNaVrS3p+qrrp9QRrwv1OSAx0mru70hr1K?=
- =?iso-8859-1?Q?fqhEcvi6I1GkK1W5kcws4MosQrhZ2D4/0mSR3+HFyzKaeeDKA8CijuuD+d?=
- =?iso-8859-1?Q?GUuqIMxX3i6vQm/tDvg9g/kmmzIxuw4kgKsLERc8Cj23Q7/FTT97DboiUB?=
- =?iso-8859-1?Q?KThNqjaxUfgZtZFxqP6KhG8iBmcXWKf6GqWQ64uxxUCdRUkOD/DGOVlVF7?=
- =?iso-8859-1?Q?ScxWOfJmpTY3YqGL/9sWOzqAmTV50vjjJVRAweWblFfMQiTDYS/DT3ZQrS?=
- =?iso-8859-1?Q?ROmpbqlbxC477Jlo+/o8Zc6WTmnkyPhjt9BC/Dtg9oJ5dQFYJfAvQwIUuU?=
- =?iso-8859-1?Q?afuSyOyHC+J/vWPLTO87bMR1AyN7bpxg=3D=3D?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-ID: <89D13B994F6A6844999FA8CE2C204A4F@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: SG2PR01CA0156.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:8f::36) To DM6PR01MB5145.prod.exchangelabs.com
+ (2603:10b6:5:56::16)
 MIME-Version: 1.0
-X-OriginatorOrg: equinix.com
+Received: from [IPv6:2402:800:6344:7414:dc8e:9ff7:86d5:d863]
+ (2402:800:6344:7414:dc8e:9ff7:86d5:d863) by
+ SG2PR01CA0156.apcprd01.prod.exchangelabs.com (2603:1096:4:8f::36) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4500.14 via Frontend
+ Transport; Sat, 11 Sep 2021 03:08:05 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: ce64e670-4303-47dc-0a2d-08d974d160da
+X-MS-TrafficTypeDiagnostic: DM6PR01MB4554:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <DM6PR01MB4554F287BA48887BDECAAF2A90D79@DM6PR01MB4554.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8273;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: z4qMZQNcQmzu3CwPMAD0qJGE67Q8WOu5vcWS6T9U8mLbhp5BDVmQI+5tHNmq/3h/bX2xKojxR22s8uVtfrbF0LrxCsdjMk5katXaIA+Q7cRNbcFb5GuzIVaxCfV2u62T4uchFTSPMK09qGxnurWBxXGnDQm3L2x1RbBMotuLE15916Te7lFczDOLGYaSKT5MgYkWcMYEVp/NyvGDjAEOzNjDRxOw8L5z7U7ja9At2QSZblXQo6xnUVmqCcGR7kmzT1EYNJUeZ2bV/2CigmrJMfrItP0OusBU9NvFrlf/G/5h5VCW8Gp9MeEOyXjrYLG1Ao9VhJ8wgvVZQCfi1bLAR8eKO6eZy7YsFIIvh8tcaKI1g86mZySqBFlAF3PaeEH2wSQKrPg23Ivjb1SwjMgeoUOXrAvXWQYnWoZZwYWitdgaCm0d2imp103F2DiaAOLqDpVxtYsbHJtHPUHZjU8+5UeUA2zohYeAIaoeoKj6/4WVMIPof3d5LV3SS0B0iN9D/8byWfIPbT8qge2FAVHoy8HoaGR9o32MXwn2uS6/W0aU7ANn0tzKaHAc99Q4Q0jNJD4Njfb55mkQqjvwHeXLS4jCmZRdCZZoSQUAcXaEeQAlPQf/2bckHcYI05RwTn3/JdLoF6e1F18bo6bamLg3G9wA/fqBUIlHpIcnKyiX4XZe7QgOC9u9ntvV37nBQXAplB0meeyu48A1SMvNhKYCQLVOMvvsFH6+bQ9qQOfzi7+bw6ayfAbhnNXZb4/xcx9RpxQRtD8ZKMzct6KiSRuJGfftRAG2XelQ3c+m7eS68ViuHX03dyw/pXEwddTQqnKA0hsxzhh7PZ8zUVAoaT+KBw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(39850400004)(366004)(136003)(396003)(346002)(376002)(52116002)(5660300002)(42882007)(83170400001)(8676002)(478600001)(66476007)(66946007)(6666004)(6486002)(4326008)(31686004)(186003)(6916009)(31696002)(53546011)(66556008)(83380400001)(2616005)(38100700002)(8936002)(316002)(966005)(2906002)(43740500002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aDN1VG9LQTh0cUlld2RqVEdvaFNjb2lzcmxhMzBxRGhITDM1ckk4ODdQZzZD?=
+ =?utf-8?B?TzNGK1JiODdoZ042V2l6Yi9uemtDQ092MEE0UE5nMVlTeUN2L1Q1K3BiVzVm?=
+ =?utf-8?B?NVBJNXkvRDkzYlE2UDRqUXdJQlhYaFNuN3V6VmJxYWl0aFQwT01JbGgyejZW?=
+ =?utf-8?B?OG5kbnhGQUliODNrVWJGb3R1UWxWR0E4MEppR2RuWUw1cEFUUEludHZLcnBw?=
+ =?utf-8?B?YXZyUVJGNmVJeFh2MEhvQWw2MHNqSmRXZjBPeXJlR29Qa09ZV1hzeTE0bXgv?=
+ =?utf-8?B?dlcvRUpncUoxYlNndElwRHVvbDM4M01NYTgvSTRTem5mTWFtb1Z5dkVhSlVU?=
+ =?utf-8?B?YnhNWFA2VEZrOE9UM1BOZ2tJOWVvWW9iMUV4c1pweHBKeXdRYjFkLy9wT3pl?=
+ =?utf-8?B?K3pQOHJCQXRKc0l4a25rWktEbUJhb3NBOVQ0VDFWYVUvalJpL1pONWV0ZXlN?=
+ =?utf-8?B?QjBFVTg4c29uckM5eUQyN3lFelRpV0REQXl6TWw0Y0RPOTNDR2kzZks3NjJu?=
+ =?utf-8?B?NmRsam1tcFZiU0ZZdnlRNWxPYUdKbHllTHkzV1QrS3IzSmU0K2wvU1gyR3Ra?=
+ =?utf-8?B?SWtTY0xqOVNKUllrYThPWHF6WlZGZWVTWmxEeTJWenp2OGk3R2x4UzA0WHpC?=
+ =?utf-8?B?eml6VXR5VnFuVURWZHRqRm05MGxoR2FwNjJWWTVwZGpybVNXek9tWW43Syty?=
+ =?utf-8?B?dnhKdnk1dE4wVEk1cVNLT2oyaGg3M3YyTmlCWmZsVzFsZWFDbFFWd2RUcTZS?=
+ =?utf-8?B?U0RMVjlUeU43SUV0eEplMW9LMG1udU9tRlBOYitTM0JJbVpYd2VPQkFFSTB5?=
+ =?utf-8?B?WmxVS2lubHJjQnB1Sk1TcHk1bTNzMUxrZ0NBeVp5L2ZyVnRseTVHWks4bU1P?=
+ =?utf-8?B?eGhDajV5QlVtVU1BRXN1ZC9kR1l2N3NlY2RJR29JM2RaOHJFbUZ6cEltc0VK?=
+ =?utf-8?B?ZFJuWFNXTHhnMHZUbldMbmROMlVvNFAzMjY5WG02Y3oxbE9vMHJkaDZLK0t2?=
+ =?utf-8?B?TG9sZE9BL1RIbTBDbGR2c0dia1FNTStTRGhTamxBU0FENDI1UXdTQmN1Qlhj?=
+ =?utf-8?B?Vm1EaG9kTWxKY2pGVVpYQ3NSR0NPTzAyMG9hZCtpbVFvK3BmU0hCdnU2ZFFv?=
+ =?utf-8?B?L0R4aElWbERGcWwrWWNUTVN1RCtpekd0WU1vT0M5VzIvczlsSmFnb1VBODJa?=
+ =?utf-8?B?c04zT3dXSkdINTFKSkJsN0xqUzlSblUyclRHMTJDelp5ZlpydlJlbmI3WEs0?=
+ =?utf-8?B?RHgwZCtrMVVCbzVFS3V2QlB1UzJEak1Eb3BRajVoNERzc05nVlJ0dGgvOHo3?=
+ =?utf-8?B?cXF1YWt3MTM4d0hLYm51bHlWc1FodDZBbER6L0JHOGN4Z3ZWdlJZY0N5S1Jk?=
+ =?utf-8?B?bENQYWh4WXVuRWNtV0tXSHhjMHpkeENOZkRMMWJ4VWhMOHEyVmRidzk3Mmhu?=
+ =?utf-8?B?R3AzeXQxaVpMaFlkb1pwbHd2emhOMll3aitkOEFmNEkwRnNsQmRuWmhTR0hj?=
+ =?utf-8?B?MjlHN1pwSzJFWU1PbmwydE5WOVZOU1l5T1ltYmo5VnF3RnJJd3Z0aDJSc21L?=
+ =?utf-8?B?bWwxcXlWTWIrVU5oZTh3WUd2WEUzZEs5Njk1NWNIVGlINC92ay9wRmxwRmxq?=
+ =?utf-8?B?dXFhd2ZFM1J5aUNTNzVFc3ppbzBHL0NmQm9BZ2JBbU02MVpZamI0YkRXcHFm?=
+ =?utf-8?B?VU5qdEFFTVVhS01rZXBvR0R3MTVQL01FQlVnemxJNGRndDR1M1hWamNlaTh6?=
+ =?utf-8?B?WFZ1bGozSFZtVjJrR2Q0M0RFQ001Mi9aYU4rcjNienMvNHdSSjBhbHVBenN2?=
+ =?utf-8?B?VUp3NkR0QkVKS1hCM25hV1VWYTlpSmVpYkhLZEk4aERpdVYwaGhNSW9rUmM0?=
+ =?utf-8?Q?Ps0A248wj4bgv?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ce64e670-4303-47dc-0a2d-08d974d160da
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f0a8393d-bb75-4456-1dff-08d974a64d7e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Sep 2021 21:59:46.1815 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: VB5J2lO7xiRR0RplthLFyrqPEWJXYP0vtKZNb91ysGVS01HpUt17HeVzYDkr5pK1zrkpjbiCDUDy06aTDN01KQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR04MB7992
-X-Proofpoint-GUID: 4qNsNDOKCXPLuT2z3R8JSqwvGYAM8kwK
-X-Proofpoint-ORIG-GUID: 4qNsNDOKCXPLuT2z3R8JSqwvGYAM8kwK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.391,FMLib:17.0.607.475
- definitions=2021-09-10_08,2021-09-09_01,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- impostorscore=0 mlxlogscore=999 lowpriorityscore=0 suspectscore=0
- clxscore=1015 spamscore=0 priorityscore=1501 mlxscore=0 adultscore=0
- phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2109030001 definitions=main-2109100120
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2021 03:08:07.2764 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: mHhWLRipUfOthR0p6/TdEgKmNQ10XdCrTrivh1pGQxf9QuQtPmn4xt/9b1YxELEihtV1Y20YWVl95a61SSvIu0N2DUParV3pQJ+6gLSKdJU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB4554
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -160,82 +150,168 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>
+Cc: openbmc@lists.ozlabs.org, Thang Nguyen <thang@amperemail.onmicrosoft.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Sep 10, 2021 at 02:08:40AM PDT, Jeremy Kerr wrote:
->Hi Zev,
->
->> Sorry, which semantics exactly do you mean we might not want to
->> change? It sounded like Oliver thought that interpretation of
->> "reserved" should be viable, modulo some possible bus-specific
->> caveats...
->
->At the moment (as you've noticed), status =3D "reserved" does not
->instantiate the device. For what you're proposing here, we'd need to
->change that: "reserved" would instantiate the device, but suppress the
->probe. I'm not sure what might break if were were to make that change.
->
+Hi Andrew,
 
-Any particular possible breakage outside of the possibility of busses
-that might poke things independently of driver attachment as Oliver
-noted?  That aside, if nothing's actually touching the hardware I'd
-think the only real difference would be consuming a small amount of
-additional memory.
+Please see my comments.
 
->> Well, I'm aiming to be able to use a dts fragment looking something
->> like (on an ast2500):
+Thanks.
+
+Thu Nguyen.
+
+On 11/09/2021 04:57, Andrew Geissler wrote:
+>
+>> On Sep 10, 2021, at 6:34 AM, Thu Nguyen <thu@amperemail.onmicrosoft.com> wrote:
 >>
->> =A0 &spi1 {
->> =A0=A0=A0=A0=A0=A0=A0=A0status =3D "reserved";
->> =A0=A0=A0=A0=A0=A0=A0=A0pinctrl-names =3D "default";
->> =A0=A0=A0=A0=A0=A0=A0=A0pinctrl-0 =3D <&pinctrl_spi1_default>;
->> =A0=A0=A0=A0=A0=A0=A0=A0flash@0 {
->> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0status =3D "okay";
->> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0label =3D "bios";
->> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0m25p,fast-read;
->> =A0=A0=A0=A0=A0=A0=A0=A0};
->> =A0 };
+>> Hi Andrew,
+>>
+>>
+>> Please see my comments:
+>>
+>>
+>> Thanks.
+>>
+>> Thu Nguyen.
+>>
+>> On 09/09/2021 22:42, Andrew Geissler wrote:
+>>>> On Sep 8, 2021, at 8:54 PM, Thang Nguyen <thang@amperemail.onmicrosoft.com> wrote:
+>>>>
+>>>> Hi,
+>>>>
+>>>> Let me explain more detail about our cases:
+>>>>
+>>>> - Our system uses a GPIO called FW_BOOT_OK to detect if the Host is currently ON or OFF. The Host firmware set this GPIO when the first core initialized.
+>>>>
+>>>> - We have no problem in Host State with power control. But the problem is in the case of BMC rebooted while the Host is ON.
+>>>>
+>>>> - Before the commit https://github.com/openbmc/phosphor-state-manager/commit/0d1c3f1f9329c853677f0581287afef83eeea0f0, phosphor-reset-host-check@.service  is used to check and update Host State in case of BMC rebooted. But after that commit, the service file was removed. This makes no target service to update the Host State and the host check is fail at https://github.com/openbmc/phosphor-state-manager/blob/0a675215d6a6d2eb13e030ba0f618a4691de58d4/host_check.cpp#L109.
+>>>>
+>>>> We would like to ask for your idea on how should we implement for the Host check when BMC is rebooted?
+>>> Hi Thang. Yeah, the reason for moving the logic directly into phosphor-host-state
+>>> is we had a window where the host state would say off (default) even when the
+>>> host was actually on. The other service would run and update it to the correct
+>>> value but there was a window where external clients would see an incorrect
+>>> state. So since we don’t want to report an invalid state, I needed the logic
+>>> within the app itself on startup.
+>>>
+>>> I think you’re on the right path here. The design is to implement the
+>>> xyz.openbmc_project.Condition.HostFirmware object and support the read
+>>> of the CurrentFirmwareCondition property. Based on your GPIO state, you’d
+>>> respond accordingly to the read. That way the state-manager code will just
+>>> work as-is.
+>>>
+>>> On where to put this code… So far we’ve put it in the area that is doing the logic,
+>>> like PLDM and IPMI. Since this is really just a GPIO read, I’m not sure the best
+>>> place. I’d be interested if anyone on the list has some thoughts. Could host it
+>>> outside of openbmc and just pull in via a recipe.
+>>>
+>>> I’d entertain a subdirectory in phosphor-state-manager with this small
+>>> app (to host the interface you’ll want a c++ app) and service to run it.
+>>> We could just enable it via a meson/compile flag. It seems like it could
+>>> be fairly generic and something that other system owners could utilize.
+>> So you mean we can add the code in subdirectory in phosphor-state-manager code.
+> Yes
 >
->[do you want just the flash node to be reserved, or the entire
->controller? I assume the controller is always available...]
+>> And the code have to generic enough to be reused in others systems and should include compile flag to enable/disable it.
+> Yes. We’ll just treat it as a sub-package within the state-manager bitbake recipe
+> and users can pull it in if they want it.
 >
+>> This code will response the host state base on the GPIO pins status.
+>>
+>>> Please take a look at https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md
+>>> We’d want the GPIO utilized here to have a standard name so others
+>>> could potentially make use of this logic.
+>> In the specs, I don't see any sections mention about the host GPIOs.
+> I was hoping you could name the GPIO’s in the dts so they could be generic
+> and then others who want to make use of your function could just use the
+> same names in their dts.
+>
+> So you’d make a proposed change to that document. A new “Host Status”
+> section. Something like host0-status, host1-status, …
 
-The flash node would make more sense, but thus far with my noautobind
-argument I've been doing it at the spi1 controller level because I don't
-know of a way to do the runtime attach/detach of individual flash
-devices behind the controller (the analog of doing the driver bind via
-sysfs), and from a glance at the aspeed-smc driver it doesn't look like
-there is one (the aspeed_smc_setup_flash() call in the controller's
-probe path seems to be the only path to instantiating any child
-devices).
+If we use the dts definition, we will be limited by the number of GPIO 
+pins which are used to
 
->> ...but I'm wondering about your mention of "rather than instantiating
->> entirely from userspace" -- is there some mechanism for
->> runtime-materializing a device ex nihilo that I've remained
->> (embarrassingly) unaware of?
->
->It depends on the bus; we can instantiate (and bind) i2c devices with
->something like:
->
-> # echo tmp75 0x50 > /sys/bus/i2c/devices/i2c-7/new_device
->         ^    ^
->	 |    i2c addr
->	 |
->	 i2c device id
->
->- which requires no DT node at all.
->
->But on a quick check, it looks like there's no equivalent facility for
->SPI (which makes sense, as there's likely to be additional platform data
->required for most devices..)
->
+identify the host state and also their polarities.
 
-Ah, right -- I've poked at that particular one for various i2c devices
-before, but yeah, it's not quite so easy in the SPI case unfortunately.
+Because the GPIOs polarities are depended on the platform which designed 
+by hardware team.
 
+We can't ask them to fix the GPIOs polarities, I think.
 
-Zev
+>
+> Then ideally we could avoid the need for the json file below and the code
+> just looks for the GPIO’s using libgpiod. Although if they really can have
+> different polarities, that may be an issue.
+>
+Yes. That is why I suggest the GPIOs setting.
+>> So I think I will use the GPIO configuration file host_gpios.json with below format.
+>>
+>> {
+>>    "host_state":{
+>>      "host_0":[
+>>        {
+>>          "KEY": 48,
+>>          "Polarity": "High"
+>>        },
+>>        {
+>>          "KEY": 49,
+>>          "Polarity": "Low"
+>>        }
+>>      ],
+>>      "host_1":[
+>>        {
+>>          "KEY": 202,
+>>          "Polarity": "Low"
+>>        },
+>>        {
+>>          "KEY": 203,
+>>          "Polarity": "High"
+>>        }
+>>      ]
+>>    }
+>> }
+>>
+>> The host_state fields will contain the GPIO settings to verify the running state of the hosts.
+>>
+>> I will support multi-host setting. For each host, I will also support identify the host state thru one or some GPIO pin status.
+>>
+>>> Andrew
+>>>
+>>>> Thanks,
+>>>>
+>>>> Thang Q. Nguyen
+>>>>
+>>>> On 08/09/2021 20:19, Thu Nguyen wrote:
+>>>>> Dear Geissonator,
+>>>>>
+>>>>>
+>>>>> After commit https://github.com/openbmc/phosphor-state-manager/commit/0d1c3f1f9329c853677f0581287afef83eeea0f0
+>>>>>
+>>>>> when BMC boots up, phosphor-host-state directly checks  the host state thru interface xyz.openbmc_project.Condition.HostFirmware.
+>>>>>
+>>>>> It does not check the existing of /run/openbmc/host@%d-on as before.
+>>>>>
+>>>>>
+>>>>> I plan to implement "oem mechanism" to handle the interface xyz.openbmc_project.Condition.HostFirmware.
+>>>>>
+>>>>> Which will use the GPIO interface to update the host state. I researched the code handle this interface in phosphor-host-ipmi and pldm.
+>>>>>
+>>>>> I wonder which repo should I upstream the code? Currently, we don't have any OEM repo in github to upstream the code.
+>>>>>
+>>>>> Do you have any idea to handle interface in bash scripts?
+>>>>>
+>>>>>
+>>>>> Regards.
+>>>>>
+>>>>> Thu Nguyen.
+>>>>>
+>>>>>
+>>>>>
+>>>>>
+>>>>>
+>>>>>
+>>>>>
