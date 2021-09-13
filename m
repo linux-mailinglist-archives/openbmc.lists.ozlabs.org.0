@@ -1,49 +1,44 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A881408477
-	for <lists+openbmc@lfdr.de>; Mon, 13 Sep 2021 08:05:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47B8140895D
+	for <lists+openbmc@lfdr.de>; Mon, 13 Sep 2021 12:49:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H7GD33VVSz2yKG
-	for <lists+openbmc@lfdr.de>; Mon, 13 Sep 2021 16:05:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H7NXM0tb4z2yXc
+	for <lists+openbmc@lfdr.de>; Mon, 13 Sep 2021 20:49:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=chiawei_wang@aspeedtech.com;
- receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=linux.alibaba.com (client-ip=115.124.30.131;
+ helo=out30-131.freemail.mail.aliyun.com;
+ envelope-from=guoheyi@linux.alibaba.com; receiver=<UNKNOWN>)
+Received: from out30-131.freemail.mail.aliyun.com
+ (out30-131.freemail.mail.aliyun.com [115.124.30.131])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H7G9r3c5fz2xrr;
- Mon, 13 Sep 2021 16:03:12 +1000 (AEST)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 18D5gg93094965;
- Mon, 13 Sep 2021 13:42:45 +0800 (GMT-8)
- (envelope-from chiawei_wang@aspeedtech.com)
-Received: from ChiaWeiWang-PC.aspeed.com (192.168.2.66) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
- Mon, 13 Sep 2021 14:02:27 +0800
-From: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-To: <joel@jms.id.au>, <andrew@aj.id.au>, <robh+dt@kernel.org>,
- <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <openbmc@lists.ozlabs.org>
-Subject: [PATCH v4 4/4] ARM: dts: aspeed: Add uart routing to device tree
-Date: Mon, 13 Sep 2021 14:02:31 +0800
-Message-ID: <20210913060231.15619-5-chiawei_wang@aspeedtech.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210913060231.15619-1-chiawei_wang@aspeedtech.com>
-References: <20210913060231.15619-1-chiawei_wang@aspeedtech.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H7NX54cVYz2yHb
+ for <openbmc@lists.ozlabs.org>; Mon, 13 Sep 2021 20:49:21 +1000 (AEST)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R921e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e04407; MF=guoheyi@linux.alibaba.com;
+ NM=1; PH=DS; RN=4; SR=0; TI=SMTPD_---0UoD6fDJ_1631530142; 
+Received: from B-G4TALVDL-1650.local(mailfrom:guoheyi@linux.alibaba.com
+ fp:SMTPD_---0UoD6fDJ_1631530142) by smtp.aliyun-inc.com(127.0.0.1);
+ Mon, 13 Sep 2021 18:49:03 +0800
+To: Vernon Mauery <vernon.mauery@linux.intel.com>,
+ Tom Joseph <rushtotom@gmail.com>,
+ "Puli, Apparao" <apparao.puli@linux.intel.com>
+From: Heyi Guo <guoheyi@linux.alibaba.com>
+Subject: [Question] How can we use underscore "_" in sensor name?
+Message-ID: <3a702375-de87-985d-d096-7f187d293459@linux.alibaba.com>
+Date: Mon, 13 Sep 2021 18:49:02 +0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [192.168.2.66]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 18D5gg93094965
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,72 +50,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: yulei.sh@bytedance.com, osk@google.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add LPC uart routing to the device tree for Aspeed SoCs.
+Hi all,
 
-Signed-off-by: Oskar Senft <osk@google.com>
-Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-Tested-by: Lei YU <yulei.sh@bytedance.com>
----
- arch/arm/boot/dts/aspeed-g4.dtsi | 6 ++++++
- arch/arm/boot/dts/aspeed-g5.dtsi | 6 ++++++
- arch/arm/boot/dts/aspeed-g6.dtsi | 6 ++++++
- 3 files changed, 18 insertions(+)
+Can we use underscore "_" in IPMI sensor names? Now we see that "_" in 
+sensor names will be replaced with space in the code, even if we really 
+use "_" for sensor names in json configuration files.
 
-diff --git a/arch/arm/boot/dts/aspeed-g4.dtsi b/arch/arm/boot/dts/aspeed-g4.dtsi
-index c5aeb3cf3a09..b313a1cf5f73 100644
---- a/arch/arm/boot/dts/aspeed-g4.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g4.dtsi
-@@ -383,6 +383,12 @@
- 					interrupts = <8>;
- 					status = "disabled";
- 				};
-+
-+				uart_routing: uart-routing@9c {
-+					compatible = "aspeed,ast2400-uart-routing";
-+					reg = <0x9c 0x4>;
-+					status = "disabled";
-+				};
- 			};
- 
- 			uart2: serial@1e78d000 {
-diff --git a/arch/arm/boot/dts/aspeed-g5.dtsi b/arch/arm/boot/dts/aspeed-g5.dtsi
-index 73ca1ec6fc24..c7049454c7cb 100644
---- a/arch/arm/boot/dts/aspeed-g5.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g5.dtsi
-@@ -491,6 +491,12 @@
- 					#reset-cells = <1>;
- 				};
- 
-+				uart_routing: uart-routing@9c {
-+					compatible = "aspeed,ast2500-uart-routing";
-+					reg = <0x9c 0x4>;
-+					status = "disabled";
-+				};
-+
- 				lhc: lhc@a0 {
- 					compatible = "aspeed,ast2500-lhc";
- 					reg = <0xa0 0x24 0xc8 0x8>;
-diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
-index 1b47be1704f8..cdc59c5d86fe 100644
---- a/arch/arm/boot/dts/aspeed-g6.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g6.dtsi
-@@ -551,6 +551,12 @@
- 					#reset-cells = <1>;
- 				};
- 
-+				uart_routing: uart-routing@98 {
-+					compatible = "aspeed,ast2600-uart-routing";
-+					reg = <0x98 0x8>;
-+					status = "disabled";
-+				};
-+
- 				ibt: ibt@140 {
- 					compatible = "aspeed,ast2600-ibt-bmc";
- 					reg = <0x140 0x18>;
--- 
-2.17.1
+The background is that we used underscore "_" in sensor names in legacy 
+BMC, and all the OOB software uses such names to get sensor data. 
+Therefore we want to make it compatible for switching to OpenBMC.
+
+Is there any way to achieve this?
+
+Thanks,
+
+Heyi
 
