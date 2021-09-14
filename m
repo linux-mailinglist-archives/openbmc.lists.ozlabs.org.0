@@ -1,69 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0576240AA04
-	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 10:56:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B64B40AD92
+	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 14:27:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H7xzT6QSTz2yK3
-	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 18:56:37 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JPSceBsm;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H82fm2M77z2yn1
+	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 22:27:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::844;
- helo=mail-qt1-x844.google.com; envelope-from=liuxiwei1013@gmail.com;
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=JPSceBsm; dkim-atps=neutral
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com
- [IPv6:2607:f8b0:4864:20::844])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H7xyy4Fmrz2xMF;
- Tue, 14 Sep 2021 18:56:09 +1000 (AEST)
-Received: by mail-qt1-x844.google.com with SMTP id x5so10695491qtq.13;
- Tue, 14 Sep 2021 01:56:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=jmC8BFtcIlu9tQDDEKEhJinzoMTwWxx2bKO3/mR5MTk=;
- b=JPSceBsmY+QUXryhoZVm4DgV8iWoUmwYcm18FTyzDrk/eV5SFl9eUANl11xbIdpeLo
- gtwHfP4cONJSlsxSLTw8FmABzzJeGsIulJ8YrNvKUzr50G2ZajaCLMz8T7yCj/f03oHY
- tqZsivBj1WD5sd+t7ujW3drsfawHE2PLbsQXbwY28NXxvWyXw/8vC20IqCjNcC/VG7PP
- PBaiNWXyfgcPyfA90eo27E29zCd72LrvwSpJVmjl8CHEcd8ZYW1b4oxqGZW79v8G/feL
- WRqirc2Rp4Lc55pyP60D0D/mgZqsRGBNAAVL13jpvLZEVnTpzQ+RFGgV0/4m+LwkCLjB
- czSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=jmC8BFtcIlu9tQDDEKEhJinzoMTwWxx2bKO3/mR5MTk=;
- b=OYxvn1ij8D5D4kB981UKdjSSkqyCR0I9TdrIgvnd36j2Sjj6HeQehONGD9gJv+CftT
- 19ynMqC9Vz7G9AjOd3DbYt+dCG9ASrl14wa3QLNtvsytjbxYo8WRHu8bC7znuJcNkuaS
- xRLxG2H4YUtHP6qt4movyY5qoVQhG3SUa/5ASCu314LiWP2/V5tcIBU5O9ZvkBYSfRKZ
- t7qBUfplY0Ov5G0+FwcFg+ZSEuOhOHikgLvIugRaDTvbxFuYzrPS9ND4PeiaPkZSrqu5
- qn4Vy8F6snLNkqJUmpv5GSjIJSE8mUWnVKW40e3ZqYVMeshmuPlyTIkYPqG1QBG495b6
- HLmg==
-X-Gm-Message-State: AOAM532U/rwnCRR0zBI5Hsp91xko9BNnYENVIr7rPQtT6WsU4trdXpbY
- SCGB44MsVr8R1vKR4q3/qod0r9TmSBSislBj220=
-X-Google-Smtp-Source: ABdhPJyMESNiGETQ+IsMCvvHJh6G9CiPmXvtgztSYZvFfT9hrfiEN26fn2I7eW7z6QdmoFTMJpHOtPRP78t81PX+xvQ=
-X-Received: by 2002:ac8:4156:: with SMTP id e22mr3638684qtm.308.1631609766079; 
- Tue, 14 Sep 2021 01:56:06 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H7zBS67G2z2xXm;
+ Tue, 14 Sep 2021 19:51:08 +1000 (AEST)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 18E9Uefk047557;
+ Tue, 14 Sep 2021 17:30:40 +0800 (GMT-8)
+ (envelope-from jammy_huang@aspeedtech.com)
+Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
+ Tue, 14 Sep 2021 17:50:30 +0800
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
+ <andrew@aj.id.au>, <linux-media@vger.kernel.org>,
+ <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH resend] media: aspeed: refine to avoid full jpeg update
+Date: Tue, 14 Sep 2021 17:49:20 +0800
+Message-ID: <20210914094919.3506-1-jammy_huang@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20210819055227.140980-1-liuxiwei@inspur.com>
- <CANFuQ7A5jLXftmfLn_W93MuDF8heL88BPQRL_rkYk+bj0_Db0w@mail.gmail.com>
- <CACPK8XfbJbU8zPzTri3o+zbSf82iUuGUXmFL5TwsdPHKLnTNTQ@mail.gmail.com>
-In-Reply-To: <CACPK8XfbJbU8zPzTri3o+zbSf82iUuGUXmFL5TwsdPHKLnTNTQ@mail.gmail.com>
-From: George Liu <liuxiwei1013@gmail.com>
-Date: Tue, 14 Sep 2021 16:55:55 +0800
-Message-ID: <CANFuQ7A6xbM571ds+aq-QUmLxUZ-FUjKukPqGV-irt8X_j=fkw@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: fp5280g2: Enable KCS 3 for MCTP binding
-To: Joel Stanley <joel@jms.id.au>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [192.168.2.115]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 18E9Uefk047557
+X-Mailman-Approved-At: Tue, 14 Sep 2021 22:27:15 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,61 +55,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Rob Herring <robh+dt@kernel.org>, George Liu <liuxiwei@inspur.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>
+Cc: BMC-SW@aspeedtech.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks!
+The switch of jpeg 420/444 subsampling will update full jpeg header for
+aspeed now.
 
-On Tue, Sep 14, 2021 at 4:45 PM Joel Stanley <joel@jms.id.au> wrote:
->
-> On Tue, 14 Sept 2021 at 08:16, George Liu <liuxiwei1013@gmail.com> wrote:
-> >
-> > Hey Joel:
-> > do you have any comments at this patch?
-> >
-> > Thx -- George Liu
-> >
-> > On Thu, Aug 19, 2021 at 1:52 PM George Liu <liuxiwei1013@gmail.com> wrote:
-> > >
-> > > Signed-off-by: George Liu <liuxiwei@inspur.com>
->
-> It looks okay to me.
->
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
->
-> I have applied it for 5.16.
->
-> > > ---
-> > >  arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts | 7 +++++++
-> > >  1 file changed, 7 insertions(+)
-> > >
-> > > diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> > > index 1752f3250e44..d0c3acbf6c8c 100644
-> > > --- a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> > > +++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> > > @@ -3,6 +3,7 @@
-> > >  #include "aspeed-g5.dtsi"
-> > >  #include <dt-bindings/gpio/aspeed-gpio.h>
-> > >  #include <dt-bindings/leds/leds-pca955x.h>
-> > > +#include <dt-bindings/interrupt-controller/irq.h>
-> > >
-> > >  / {
-> > >         model = "FP5280G2 BMC";
-> > > @@ -902,4 +903,10 @@ fan@7 {
-> > >
-> > >  };
-> > >
-> > > +&kcs3 {
-> > > +       status = "okay";
-> > > +       aspeed,lpc-io-reg = <0xca2>;
-> > > +       aspeed,lpc-interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-> > > +};
-> > > +
-> > >  #include "ibm-power9-dual.dtsi"
-> > > --
-> > > 2.30.2
-> > >
+Just update the 420/444 subsampling part of jpeg header is fine.
+
+Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+---
+ resend the patch becuase cc-list isn't complete.
+
+ drivers/media/platform/aspeed-video.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+index 3c90f3f3cf14..8b3939b8052d 100644
+--- a/drivers/media/platform/aspeed-video.c
++++ b/drivers/media/platform/aspeed-video.c
+@@ -401,6 +401,21 @@ static void aspeed_video_init_jpeg_table(u32 *table, bool yuv420)
+ 	}
+ }
+ 
++// just update jpeg dct table per 420/444
++static void aspeed_video_update_jpeg_table(u32 *table, bool yuv420)
++{
++	int i;
++	unsigned int base;
++
++	for (i = 0; i < ASPEED_VIDEO_JPEG_NUM_QUALITIES; i++) {
++		base = 256 * i;	/* AST HW requires this header spacing */
++		base += ASPEED_VIDEO_JPEG_HEADER_SIZE +
++			ASPEED_VIDEO_JPEG_DCT_SIZE;
++
++		table[base + 2] = (yuv420) ? 0x00220103 : 0x00110103;
++	}
++}
++
+ static void aspeed_video_update(struct aspeed_video *video, u32 reg, u32 clear,
+ 				u32 bits)
+ {
+@@ -1274,7 +1289,7 @@ static void aspeed_video_update_jpeg_quality(struct aspeed_video *video)
+ static void aspeed_video_update_subsampling(struct aspeed_video *video)
+ {
+ 	if (video->jpeg.virt)
+-		aspeed_video_init_jpeg_table(video->jpeg.virt, video->yuv420);
++		aspeed_video_update_jpeg_table(video->jpeg.virt, video->yuv420);
+ 
+ 	if (video->yuv420)
+ 		aspeed_video_update(video, VE_SEQ_CTRL, 0, VE_SEQ_CTRL_YUV420);
+-- 
+2.25.1
+
