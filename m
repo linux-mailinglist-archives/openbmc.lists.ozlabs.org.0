@@ -2,59 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4146240ADAF
-	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 14:28:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D311B40B728
+	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 20:49:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H82h918xDz2yLN
-	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 22:28:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H8C704jP5z2yQB
+	for <lists+openbmc@lfdr.de>; Wed, 15 Sep 2021 04:49:00 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=AUAizugV;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=IC9O26PR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=robh+dt@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=AUAizugV; 
- dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=IC9O26PR; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H82gk53q7z2xrS;
- Tue, 14 Sep 2021 22:28:18 +1000 (AEST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5DFCF6113B;
- Tue, 14 Sep 2021 12:28:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1631622496;
- bh=KT5ep9K5oHPlf5qlK9bQ69cTC75IHh4Vyp7pNBmq2fA=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=AUAizugV18Ufo0GaDfMyTSjKUezZ5c6uLdcg4f5Z8AGsjvED2JRzUEBPZAhLoRL5H
- fFLFkIaX3JeVgbKDcGA+wZLCM9oxmNRc92P+sby4MD5H7zJOMcgnHEFX1dRWVOSWqX
- sNSAP4juJtuHbwkhBHnclmJo4lbWhxXm67lum+yZJdHaNGuaHXisqPsnk8Xuo/9lxC
- IQnb6V+APRqGZVTAExrxMEKTi71ZgWv4KlrxIQ6s9wPM9i1lOzqGB9BPBZiaoJHvzu
- ban1uY4BcWE0r36uGTEBhxbZbfK8WdBa17nFihQLzk9pxGIXB7ZBW3epl88qzrYJND
- QFLs+6IThKzCA==
-Received: by mail-ed1-f52.google.com with SMTP id c22so18197990edn.12;
- Tue, 14 Sep 2021 05:28:16 -0700 (PDT)
-X-Gm-Message-State: AOAM530JmmrxeaJ8HUoHngBWTPQvgfV6CqK/xlLb+w7jTmyGg4B41rIw
- BZ/WaRkrONXdwz3rO2+iM1ZDMhwYuQB2802tjw==
-X-Google-Smtp-Source: ABdhPJytxCF6xzQ4OivyB+j0dZOQu/8MIbrRVs4+HSha9lJy7gCSxtdeC4zicGrmLhzwRTV8vQD4voa3E22Fj5k0XLw=
-X-Received: by 2002:aa7:ca45:: with SMTP id j5mr7862765edt.6.1631622494836;
- Tue, 14 Sep 2021 05:28:14 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H8C6W4wPLz2yKQ
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Sep 2021 04:48:34 +1000 (AEST)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.0.43) with SMTP id 18EGhX95028857
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Sep 2021 14:48:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=to : from : subject :
+ message-id : date : content-type : content-transfer-encoding :
+ mime-version; s=pp1; bh=462tuzZLSL9aevcG0IaPbo/luJZC4wIv3+42xlyeAGg=;
+ b=IC9O26PRvHcTbYyFURHNWlAKhfpLqRoYUVMB5iWo1WVRl1qqcWIPK8rDwTlisrSHbQ+J
+ oidIwSUIPWS8AqZ8DsWQJ3CfZ3x5b7sxDs3p6V5aCA47lH3G8NZN0Yity/4aMoe5t/Wu
+ qy6buguiamPXnlkxuBiiTtuqS8CP55P3KeB7YkmsrM/L2I9pG0PuGf3MaGXghSAXBsYj
+ IoWFvY/lB5k7VhccJTnVEXhNB0YxdStAL5uJ/BOouP8f51IIOl0vIYx4Ce31GM9X1wQZ
+ q9R/vLYVVlo1zUt5iZZeKL5srJMvYsyrXNN19Vfe7gARXd7YZDz/2PbWIkjDv2lJ1/WP 6w== 
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3b2ygt31vx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Sep 2021 14:48:30 -0400
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 18EIlQNt015605
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Sep 2021 18:48:30 GMT
+Received: from b03cxnp07028.gho.boulder.ibm.com
+ (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
+ by ppma03wdc.us.ibm.com with ESMTP id 3b0m3b00bu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Sep 2021 18:48:30 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 18EImTT250397684
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Sep 2021 18:48:29 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2BDB47805C
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Sep 2021 18:48:29 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E850478078
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Sep 2021 18:48:28 +0000 (GMT)
+Received: from demeter.local (unknown [9.160.139.66])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Sep 2021 18:48:28 +0000 (GMT)
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday September 15
+Message-ID: <6bf4d910-f484-f5c9-6c3a-679d7c78ce1b@linux.ibm.com>
+Date: Tue, 14 Sep 2021 13:48:27 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: glXRtbBy9DjLVa_9VhxrVx9NsK3X4YmS
+X-Proofpoint-GUID: glXRtbBy9DjLVa_9VhxrVx9NsK3X4YmS
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <20210913060231.15619-1-chiawei_wang@aspeedtech.com>
- <20210913060231.15619-2-chiawei_wang@aspeedtech.com>
-In-Reply-To: <20210913060231.15619-2-chiawei_wang@aspeedtech.com>
-From: Rob Herring <robh+dt@kernel.org>
-Date: Tue, 14 Sep 2021 07:28:03 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLr-fpgXPLU3XHy9T5hUNbf-mBqeh1Sads=tXWx3LkkhQ@mail.gmail.com>
-Message-ID: <CAL_JsqLr-fpgXPLU3XHy9T5hUNbf-mBqeh1Sads=tXWx3LkkhQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] dt-bindings: mfd: aspeed-lpc: Convert to YAML
- schema
-To: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.182.1,Aquarius:18.0.687,Hydra:6.0.235,FMLib:17.0.607.475
+ definitions=2020-10-13_15,2020-10-13_02,2020-04-07_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 mlxlogscore=749
+ bulkscore=0 lowpriorityscore=0 adultscore=0 spamscore=0 malwarescore=0
+ clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2109030001 definitions=main-2109140092
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,267 +100,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- yulei.sh@bytedance.com,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
- Oskar Senft <osk@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Sep 13, 2021 at 1:02 AM Chia-Wei Wang
-<chiawei_wang@aspeedtech.com> wrote:
->
-> Convert the bindings of Aspeed LPC from text file into YAML schema.
->
-> Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-> ---
->  .../devicetree/bindings/mfd/aspeed-lpc.txt    | 157 ---------------
->  .../devicetree/bindings/mfd/aspeed-lpc.yaml   | 187 ++++++++++++++++++
->  2 files changed, 187 insertions(+), 157 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
->  create mode 100644 Documentation/devicetree/bindings/mfd/aspeed-lpc.yaml
->
-> diff --git a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> deleted file mode 100644
-> index 936aa108eab4..000000000000
-> --- a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> +++ /dev/null
-> @@ -1,157 +0,0 @@
-> -======================================================================
-> -Device tree bindings for the Aspeed Low Pin Count (LPC) Bus Controller
-> -======================================================================
-> -
-> -The LPC bus is a means to bridge a host CPU to a number of low-bandwidth
-> -peripheral devices, replacing the use of the ISA bus in the age of PCI[0]. The
-> -primary use case of the Aspeed LPC controller is as a slave on the bus
-> -(typically in a Baseboard Management Controller SoC), but under certain
-> -conditions it can also take the role of bus master.
-> -
-> -The LPC controller is represented as a multi-function device to account for the
-> -mix of functionality, which includes, but is not limited to:
-> -
-> -* An IPMI Block Transfer[2] Controller
-> -
-> -* An LPC Host Controller: Manages LPC functions such as host vs slave mode, the
-> -  physical properties of some LPC pins, configuration of serial IRQs, and
-> -  APB-to-LPC bridging amonst other functions.
-> -
-> -* An LPC Host Interface Controller: Manages functions exposed to the host such
-> -  as LPC firmware hub cycles, configuration of the LPC-to-AHB mapping, UART
-> -  management and bus snoop configuration.
-> -
-> -* A set of SuperIO[3] scratch registers: Enables implementation of e.g. custom
-> -  hardware management protocols for handover between the host and baseboard
-> -  management controller.
-> -
-> -Additionally the state of the LPC controller influences the pinmux
-> -configuration, therefore the host portion of the controller is exposed as a
-> -syscon as a means to arbitrate access.
-> -
-> -[0] http://www.intel.com/design/chipsets/industry/25128901.pdf
-> -[1] https://www.renesas.com/en-sg/doc/products/mpumcu/001/rej09b0078_h8s2168.pdf?key=7c88837454702128622bee53acbda8f4
-> -[2] https://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/ipmi-second-gen-interface-spec-v2-rev1-1.pdf
-> -[3] https://en.wikipedia.org/wiki/Super_I/O
-> -
-> -Required properties
-> -===================
-> -
-> -- compatible:  One of:
-> -               "aspeed,ast2400-lpc-v2", "simple-mfd", "syscon"
-> -               "aspeed,ast2500-lpc-v2", "simple-mfd", "syscon"
-> -               "aspeed,ast2600-lpc-v2", "simple-mfd", "syscon"
-> -
-> -- reg:         contains the physical address and length values of the Aspeed
-> -                LPC memory region.
-> -
-> -- #address-cells: <1>
-> -- #size-cells: <1>
-> -- ranges:      Maps 0 to the physical address and length of the LPC memory
-> -                region
-> -
-> -Example:
-> -
-> -lpc: lpc@1e789000 {
-> -       compatible = "aspeed,ast2500-lpc-v2", "simple-mfd", "syscon";
-> -       reg = <0x1e789000 0x1000>;
-> -
-> -       #address-cells = <1>;
-> -       #size-cells = <1>;
-> -       ranges = <0x0 0x1e789000 0x1000>;
-> -
-> -       lpc_snoop: lpc-snoop@0 {
-> -               compatible = "aspeed,ast2600-lpc-snoop";
-> -               reg = <0x0 0x80>;
-> -               interrupts = <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>;
-> -               snoop-ports = <0x80>;
-> -       };
-> -};
-> -
-> -
-> -LPC Host Interface Controller
-> --------------------
-> -
-> -The LPC Host Interface Controller manages functions exposed to the host such as
-> -LPC firmware hub cycles, configuration of the LPC-to-AHB mapping, UART
-> -management and bus snoop configuration.
-> -
-> -Required properties:
-> -
-> -- compatible:  One of:
-> -               "aspeed,ast2400-lpc-ctrl";
-> -               "aspeed,ast2500-lpc-ctrl";
-> -               "aspeed,ast2600-lpc-ctrl";
-> -
-> -- reg:         contains offset/length values of the host interface controller
-> -               memory regions
-> -
-> -- clocks:      contains a phandle to the syscon node describing the clocks.
-> -               There should then be one cell representing the clock to use
-> -
-> -Optional properties:
-> -
-> -- memory-region: A phandle to a reserved_memory region to be used for the LPC
-> -               to AHB mapping
-> -
-> -- flash:       A phandle to the SPI flash controller containing the flash to
-> -               be exposed over the LPC to AHB mapping
-> -
-> -Example:
-> -
-> -lpc_ctrl: lpc-ctrl@80 {
-> -       compatible = "aspeed,ast2500-lpc-ctrl";
-> -       reg = <0x80 0x80>;
-> -       clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
-> -       memory-region = <&flash_memory>;
-> -       flash = <&spi>;
-> -};
-> -
-> -LPC Host Controller
-> --------------------
-> -
-> -The Aspeed LPC Host Controller configures the Low Pin Count (LPC) bus behaviour
-> -between the host and the baseboard management controller. The registers exist
-> -in the "host" portion of the Aspeed LPC controller, which must be the parent of
-> -the LPC host controller node.
-> -
-> -Required properties:
-> -
-> -- compatible:  One of:
-> -               "aspeed,ast2400-lhc";
-> -               "aspeed,ast2500-lhc";
-> -               "aspeed,ast2600-lhc";
-> -
-> -- reg:         contains offset/length values of the LHC memory regions. In the
-> -               AST2400 and AST2500 there are two regions.
-> -
-> -Example:
-> -
-> -lhc: lhc@a0 {
-> -       compatible = "aspeed,ast2500-lhc";
-> -       reg = <0xa0 0x24 0xc8 0x8>;
-> -};
-> -
-> -LPC reset control
-> ------------------
-> -
-> -The UARTs present in the ASPEED SoC can have their resets tied to the reset
-> -state of the LPC bus. Some systems may chose to modify this configuration.
-> -
-> -Required properties:
-> -
-> - - compatible:         One of:
-> -                       "aspeed,ast2600-lpc-reset";
-> -                       "aspeed,ast2500-lpc-reset";
-> -                       "aspeed,ast2400-lpc-reset";
-> -
-> - - reg:                        offset and length of the IP in the LHC memory region
-> - - #reset-controller   indicates the number of reset cells expected
-> -
-> -Example:
-> -
-> -lpc_reset: reset-controller@98 {
-> -        compatible = "aspeed,ast2500-lpc-reset";
-> -        reg = <0x98 0x4>;
-> -        #reset-cells = <1>;
-> -};
-> diff --git a/Documentation/devicetree/bindings/mfd/aspeed-lpc.yaml b/Documentation/devicetree/bindings/mfd/aspeed-lpc.yaml
-> new file mode 100644
-> index 000000000000..4e3862cf2a4b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mfd/aspeed-lpc.yaml
-> @@ -0,0 +1,187 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +# # Copyright (c) 2021 Aspeed Tehchnology Inc.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/mfd/aspeed-lpc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Aspeed Low Pin Count (LPC) Bus Controller
-> +
-> +maintainers:
-> +  - Andrew Jeffery <andrew@aj.id.au>
-> +  - Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-> +
-> +description:
-> +  The LPC bus is a means to bridge a host CPU to a number of low-bandwidth
-> +  peripheral devices, replacing the use of the ISA bus in the age of PCI[0]. The
-> +  primary use case of the Aspeed LPC controller is as a slave on the bus
-> +  (typically in a Baseboard Management Controller SoC), but under certain
-> +  conditions it can also take the role of bus master.
-> +
-> +  The LPC controller is represented as a multi-function device to account for the
-> +  mix of functionality, which includes, but is not limited to
-> +
-> +  * An IPMI Block Transfer[2] Controller
-> +
-> +  * An LPC Host Interface Controller manages functions exposed to the host such
-> +    as LPC firmware hub cycles, configuration of the LPC-to-AHB mapping, UART
-> +    management and bus snoop configuration.
-> +
-> +  * A set of SuperIO[3] scratch registers enableing implementation of e.g. custom
-> +    hardware management protocols for handover between the host and baseboard
-> +    management controller.
-> +
-> +  Additionally the state of the LPC controller influences the pinmux
-> +  configuration, therefore the host portion of the controller is exposed as a
-> +  syscon as a means to arbitrate access.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - aspeed,ast2400-lpc-v2
-> +          - aspeed,ast2500-lpc-v2
-> +          - aspeed,ast2600-lpc-v2
-> +      - const: simple-mfd
-> +      - const: syscon
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 1
-> +
-> +  ranges: true
-> +
-> +patternProperties:
-> +  "^lpc-ctrl@[0-9a-f]+$":
-> +    type: object
-> +
-> +    description:
-> +      The LPC Host Interface Controller manages functions exposed to the host such as
-> +      LPC firmware hub cycles, configuration of the LPC-to-AHB mapping, UART management
-> +      and bus snoop configuration.
-> +
-> +    properties:
-> +      comptabile:
+This is a reminder of the OpenBMC Security Working Group meeting 
+scheduled for this Wednesday September 15 at 10:00am PDT.
 
-typo here. This is the source of your warnings.
+We'll discuss the following items on the agenda 
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
+and anything else that comes up:
 
-Rob
+1. (gerrit review) Encrypted eMMC design - 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/46573 
+<https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/46573>
+
+
+2. (email) Reminder that configuration matters. 
+https://lore.kernel.org/openbmc/6593206c0bc90186f255c6ea86339576576f70dc.camel@codeconstruct.com.au/ 
+<https://lore.kernel.org/openbmc/6593206c0bc90186f255c6ea86339576576f70dc.camel@codeconstruct.com.au/>Discusses 
+AST2500 default register configuration (ESPICTRL[9] = 0) which allows 
+the host to have full control over the GPIOs.
+
+More?
+
+
+Access, agenda and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group 
+<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+
+- Joseph
