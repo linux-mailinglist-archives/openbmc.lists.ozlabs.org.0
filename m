@@ -2,63 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 495E440A99B
-	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 10:49:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 46E1940A9BB
+	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 10:51:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H7xqf16n9z2xYd
-	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 18:49:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H7xt50jGZz2xYR
+	for <lists+openbmc@lfdr.de>; Tue, 14 Sep 2021 18:51:57 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=c5tPyY+f;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=IZYYGsij;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f36;
- helo=mail-qv1-xf36.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=c5tPyY+f; dkim-atps=neutral
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com
- [IPv6:2607:f8b0:4864:20::f36])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=IZYYGsij; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H7xqC1Vc9z2xYL;
- Tue, 14 Sep 2021 18:49:27 +1000 (AEST)
-Received: by mail-qv1-xf36.google.com with SMTP id jo30so2942889qvb.3;
- Tue, 14 Sep 2021 01:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=kZbfoEVulrDx1Gl910iornRBFREc6lBaGxEiImtHPGA=;
- b=c5tPyY+fKzhyRWLi59c3P1kuVz+l1lwjCZXF+vLWeNOF6KTW742ARrsJ3Df2Ns25kk
- iP5NXmlb5XvtMY4kcv/go7Tj1YQLybdlraZr88WdBGtSQ0IKDgCKtKTQ8j5b+ljNKWYp
- Kyfbr1TAFb3Lgtz0HGt/0vjH6e3z4UoNdi4iY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=kZbfoEVulrDx1Gl910iornRBFREc6lBaGxEiImtHPGA=;
- b=KHrpIhJYxqnFGkq0MihCFQYgkWXhTES0TGFw/vOQ4UCh3AyhqQQYjpn2uMRMPZH8oX
- j0S6Z+nIqT4jP3QqC/2A8jV+SPc5epP0y3C16OeuUYtUP6eTD8RRvDrtxwvNXiJ8nBuL
- Ptzvp6DDsFTHvW/A8XR9Df2R9oe/A5BQYViePqsLuVv7TrR3iEgU2t46yFS+NiEYTycv
- py7wszWlAi71ch3xIYp6QRuhfZNfnhLJhzqtGs8Z/Y6XseXS7P8tSbka87y/YG2POfVX
- psmrFgkJCIWdk72qq8LNZxPq4SNomNMFRPhxXtNrW2mw+oZaI7FSdkZUxt0cFZZRrz5F
- 8e5Q==
-X-Gm-Message-State: AOAM533N3BGPZEQWFTdfuzDgqUOyYv3AGW0VdVuPfFecbeNShND9ih09
- kI4yA1SWYkZe+3dRj+ASLJoXSiFiT/RSeF62BPF/jB0V84E=
-X-Google-Smtp-Source: ABdhPJxaZwn5Ez8Pe62lyucUiHQWWy3KKIefn4dH2Md0iaC6mYB/VzAanRaac5LTghEnKuQvccj6MFfoYay9CMmFl2Q=
-X-Received: by 2002:ad4:522c:: with SMTP id r12mr4008625qvq.17.1631609363775; 
- Tue, 14 Sep 2021 01:49:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210910195417.2838841-1-anoo@linux.ibm.com>
-In-Reply-To: <20210910195417.2838841-1-anoo@linux.ibm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 14 Sep 2021 08:49:11 +0000
-Message-ID: <CACPK8XfjF+aiEMLocscMEOw8ebKoT2MK8djvv4voyFOBjumXRg@mail.gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: aspeed: rainier: Add N_MODE_VREF gpio
-To: Adriana Kobylak <anoo@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H7xsf5rsxz2xlG
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Sep 2021 18:51:34 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 2A57741D34;
+ Tue, 14 Sep 2021 08:51:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1631609489; x=1633423890; bh=aXoPXotgLofqNYWHFMN7ACIHs
+ tX5+cV5iiK5lc+HOsY=; b=IZYYGsijraUuSw6n7JdQFfiI1ktq9Lp/dDCzHFWdV
+ bFpYJpiycagxw6RgOGkyuTr7VR/zTxn3PT1DQMXV0zsTU63SqVhyGRphBHd3sw2b
+ AkMnlJ59g6Kgv1oEXTmSI7LwCifSGd5zN2fnB79WjBp6npqUYhOuGaQWpND2WjNG
+ 04=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id ypvUbK6BQ5pr; Tue, 14 Sep 2021 11:51:29 +0300 (MSK)
+Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
+ [172.17.100.104])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id E979C41D24;
+ Tue, 14 Sep 2021 11:51:29 +0300 (MSK)
+Received: from [10.199.0.6] (10.199.0.6) by T-EXCH-04.corp.yadro.com
+ (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 14
+ Sep 2021 11:51:29 +0300
+Message-ID: <9ab79bcd06ad6b6cf574a8455247a767df8731ac.camel@yadro.com>
+Subject: Re: Read smbios2 file failed
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: Thang Nguyen <thang@amperemail.onmicrosoft.com>, <openbmc@lists.ozlabs.org>
+Date: Tue, 14 Sep 2021 11:51:28 +0300
+In-Reply-To: <5f94cf85-6ded-3520-8ad2-592fade91e81@amperemail.onmicrosoft.com>
+References: <CAMqwjCAaHrv0SgA_1hDEjjnX1fur6ijmCJCrn1gTPbr5Z2-ONw@mail.gmail.com>
+ <d190054863c8112a66baad2f50dda7c6bdc45717.camel@yadro.com>
+ <5f94cf85-6ded-3520-8ad2-592fade91e81@amperemail.onmicrosoft.com>
+Organization: YADRO
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.1 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.199.0.6]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,154 +77,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Matt Spinler <spinler@us.ibm.com>, Derek Howard <derekh@us.ibm.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Adriana Kobylak <anoo@us.ibm.com>,
- Brandon Wyman <bjwyman@gmail.com>, shawnmm@us.ibm.com,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 10 Sept 2021 at 19:54, Adriana Kobylak <anoo@linux.ibm.com> wrote:
->
-> From: Adriana Kobylak <anoo@us.ibm.com>
->
-> The N_MODE_VREF gpio is designed to be used to specify how many power
-> supplies the system should have (2 or 4).  If enough power supplies fail
-> so that the system no longer has redundancy (no longer n+1), the
-> hardware will signal to the Onboard Chip Controller that the system may
-> be oversubscribed, and performance may need to be reduced so the system
-> can maintain it's powered on state. This gpio is on a 9552, populate all
-> the gpios on that chip for completeness.
->
-> Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
-> ---
->
-> v2: Update commit message.
->
->  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 103 +++++++++++++++++++
->  1 file changed, 103 insertions(+)
->
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> index 6fd3ddf97a21..d5eea86dc260 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> @@ -1502,6 +1502,109 @@ eeprom@51 {
->                 reg = <0x51>;
->         };
->
-> +       pca_pres3: pca9552@60 {
-> +               compatible = "nxp,pca9552";
-> +               reg = <0x60>;
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +               gpio-controller;
-> +               #gpio-cells = <2>;
-> +
-> +               gpio-line-names =
-> +                       "",
-> +                       "APSS_RESET_N",
-> +                       "", "", "", "",
-> +                       "P10_DCM0_PRES",
-> +                       "P10_DCM1_PRES",
-> +                       "", "",
-> +                       "N_MODE_CPU_N",
-> +                       "",
-> +                       "PRESENT_VRM_DCM0_N",
-> +                       "PRESENT_VRM_DCM1_N",
-> +                       "N_MODE_VREF",
+No, it is not same as "dmidecode --dump-bin". 
 
-Should any (all?) of these names be documented?
+On Tue, 2021-09-14 at 13:46 +0700, Thang Nguyen wrote:
+> 
+> On 13/09/2021 23:56, Andrei Kartashev wrote:
+> > You need to somehow deliver smbios data image to BMC. This means,
+> > your
+> > BIOS should implementat some logic to transfer this data.
+> > For BMC side see example here:
+> > https://github.com/openbmc/intel-ipmi-oem/blob/master/src/smbiosmdrv2handler.cpp
+> 
+> Hi Andrei,
+> 
+> What is the format of smbios data to transfer to BMC? Is it the same 
+> content of "dmidecode --dump-bin" command from Host Linux? or
+> anything 
+> special in formatting the content to send?
+> 
+> > On Mon, 2021-09-13 at 17:40 +0300, Alexander Raih wrote:
+> > > Hi guys, I am beginner in openbmc
+> > > I build openbmc with smbios-mdr repository and I have error:
+> > > 
+> > > Read data from flash error - Open MDRV2 table file failure
+> > > 
+> > > There isnt file in /var/lib/smbios/smbios2
+> > > 
+> > > How I can resolve this problem?
+> > > Help me please!!!
 
-https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md
+-- 
+Best regards,
+Andrei Kartashev
 
 
-> +                       "";
-> +
-> +               gpio@0 {
-> +                       reg = <0>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@1 {
-> +                       reg = <1>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@2 {
-> +                       reg = <2>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@3 {
-> +                       reg = <3>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@4 {
-> +                       reg = <4>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@5 {
-> +                       reg = <5>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@6 {
-> +                       reg = <6>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@7 {
-> +                       reg = <7>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@8 {
-> +                       reg = <8>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@9 {
-> +                       reg = <9>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@10 {
-> +                       reg = <10>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@11 {
-> +                       reg = <11>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@12 {
-> +                       reg = <12>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@13 {
-> +                       reg = <13>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@14 {
-> +                       reg = <14>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@15 {
-> +                       reg = <15>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +       };
-> +
->         pca_pres2: pca9552@61 {
->                 compatible = "nxp,pca9552";
->                 reg = <0x61>;
-> --
-> 2.25.1
->
