@@ -2,73 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9500040C183
-	for <lists+openbmc@lfdr.de>; Wed, 15 Sep 2021 10:17:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2B1F40C264
+	for <lists+openbmc@lfdr.de>; Wed, 15 Sep 2021 11:08:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H8Y3Z3VJcz2yJt
-	for <lists+openbmc@lfdr.de>; Wed, 15 Sep 2021 18:17:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H8ZC26F3lz2yLJ
+	for <lists+openbmc@lfdr.de>; Wed, 15 Sep 2021 19:08:46 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=TEtXcn8g;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256 header.s=20150623 header.b=r6zcFl5T;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=TEtXcn8g; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::331;
+ helo=mail-ot1-x331.google.com; envelope-from=yulei.sh@bytedance.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=bytedance-com.20150623.gappssmtp.com
+ header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=r6zcFl5T; dkim-atps=neutral
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com
+ [IPv6:2607:f8b0:4864:20::331])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H8Y362fKsz2yHj
- for <openbmc@lists.ozlabs.org>; Wed, 15 Sep 2021 18:16:50 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id DA99942747;
- Wed, 15 Sep 2021 08:16:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1631693805; x=1633508206; bh=NT9fBHmj3Q1CKD+8QnlOuZ9Ak
- CUCXPujpQvvkVZaqS0=; b=TEtXcn8g3WVl+y0BqnpcMSwqND3Bwi6JPOWCPR4vC
- yyD/CCWrQ/c25u9G/ly/JZ3ZXF/gT0blCZpSns9XUr5EdeEFxNh8BoPhRw46B0AR
- +jFvrEEbOIwu56mha2fgAkfUkGk1TKb/Qg3DFqf/m+W8u6TiZ/8Fl93hvaFBfGmF
- 0s=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 1uew8zX3oheH; Wed, 15 Sep 2021 11:16:45 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 475D8425F3;
- Wed, 15 Sep 2021 11:16:45 +0300 (MSK)
-Received: from [10.199.0.6] (10.199.0.6) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 15
- Sep 2021 11:16:44 +0300
-Message-ID: <4bda1bb5f09395003c95c645518f34828105b160.camel@yadro.com>
-Subject: Re: Read smbios2 file failed
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: Thang Nguyen <thang@amperemail.onmicrosoft.com>, openbmc
- <openbmc@lists.ozlabs.org>
-Date: Wed, 15 Sep 2021 11:16:43 +0300
-In-Reply-To: <d93fc722-2a24-0921-56ee-b9968edbd6a6@amperemail.onmicrosoft.com>
-References: <CAMqwjCAaHrv0SgA_1hDEjjnX1fur6ijmCJCrn1gTPbr5Z2-ONw@mail.gmail.com>
- <d190054863c8112a66baad2f50dda7c6bdc45717.camel@yadro.com>
- <5f94cf85-6ded-3520-8ad2-592fade91e81@amperemail.onmicrosoft.com>
- <9ab79bcd06ad6b6cf574a8455247a767df8731ac.camel@yadro.com>
- <d93fc722-2a24-0921-56ee-b9968edbd6a6@amperemail.onmicrosoft.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.1 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H8ZBZ2lFfz2yHX
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Sep 2021 19:08:20 +1000 (AEST)
+Received: by mail-ot1-x331.google.com with SMTP id
+ i3-20020a056830210300b0051af5666070so2656671otc.4
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Sep 2021 02:08:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=6pTLC9vfIuZvAxJOPO5vgEPMh9EWupSNKtF9jPIKRsA=;
+ b=r6zcFl5TIJmFPLt5/93MOPGWia1GLZ1KejH2Pjt3A7L9RA4OlVU06AYXTNrpmN6xa2
+ i2azCVdiH0d36p4pKgBcVkgK8CzNLzXz+Msqn80V1teQF8t2OYEyeUHScssdG/Q+1F2h
+ 7tpY0VmC4pRNVtg9vMPBV1EnpkShz67aHWF4V+8xjKgbrrcn6nxNqkmyWkPKt4P/zzoV
+ Ji+dXdlkiPN6m1fJY53n0Eyq/XgB8FdvkkNtHcb/WrtIT6iFCM6Agn46ITdlb7fzmCJg
+ JHU87zvcy0X8nkJFvGTJkn9ZhDvfnaKQCMLKzyILjYdtmr0oA9DYGfEGTcUohaIjfwhL
+ pZcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=6pTLC9vfIuZvAxJOPO5vgEPMh9EWupSNKtF9jPIKRsA=;
+ b=nye8Iy78UZjwWkIsuPXJvO7ZE0CYeIgLDzeae3IjM30miK/QEfrEL5GKurYFuCtYmN
+ nfQW5/209iRt4O3x4rOvbeFCVwKAjVvMds/H0TdNDMJuSVBnMcTb5Padx/kGnhsfiggA
+ 9tt2anuW84/WZ6gKN/MqwhsKDom4yodoPmD0YgaDA4fWkmRqSu+HwG+Ur0noZkVB36X4
+ p8aw68s2+XSKSQh3ogI39fa2c1JNcq+BOzb1QZUUhfavhXNOD3jNC+80TPrlswMzfgnd
+ j2uXOwIVaOvVyeBm8N0GpZOoNSZtsd7r5sh1MHf1oBn3nGnKh5riL+Dy9/vfYKHXxK8D
+ fkCw==
+X-Gm-Message-State: AOAM532CpUuogYxH04MOU2tIb1BKIC+ocKieKd2I4/KZ0wf5o+wdNjKG
+ 78pQao1RcZ5C3/uet6CWPNRqVzbV1IVcSmyM1fNRwt95Kz3PysNy
+X-Google-Smtp-Source: ABdhPJxUUXfCsYrXf7Sady5z6vUPwJWAiFA2595neB6L1wc+yGL6YRFqcZC14mV4wnMSmLf+oxa9vUxAERc13jrDfds=
+X-Received: by 2002:a9d:5a81:: with SMTP id w1mr17612174oth.307.1631696897664; 
+ Wed, 15 Sep 2021 02:08:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.0.6]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+References: <CAGm54UHdTyPh0hGiatA44whg2PdRzJFg0gBnVHA4moYRr=aT=g@mail.gmail.com>
+In-Reply-To: <CAGm54UHdTyPh0hGiatA44whg2PdRzJFg0gBnVHA4moYRr=aT=g@mail.gmail.com>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Wed, 15 Sep 2021 17:08:06 +0800
+Message-ID: <CAGm54UE5gb+S0WWYGbbr0Nsif6tJ2j+-U1awrAeyJbrj=kf0oQ@mail.gmail.com>
+Subject: Re: ipmi sel log revisited
+To: openbmc <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,60 +79,72 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I don't know what is format of "dmidecode --dump-bin", but if it just
-raw dump of smbios then you only need to add mdr header.
+On Mon, Jun 28, 2021 at 5:42 PM Lei Yu <yulei.sh@bytedance.com> wrote:
+>
+> This email is to describe the current status and issues related ipmi
+> sel log in OpenBMC, and propose a possible solution.
+>
+> # Background
+> There are two backends of the ipmi sel log:
+> * The logging entry on DBus
+> * The ipmi_sel log stored in "/var/log/ipmi_sel"
+>
+> The configuration option `SEL_LOGGER_SEND_TO_LOGGING_SERVICE` in
+> phosphor-sel-logger is used to control which way to use.
+>
+> ## The logging entry on DBus
+> The logging entries on DBus in /xyz/openbmc_project/logging/entry/
+> will be parsed and converted to IPMI sel logs.
+> This includes two types of logs:
+> * The logging entries with a CALLOUT path in the associations.
+> * The logging entries with SEL metadata[1] in the "AdditionalData".
+> For the both logging entries, the ipmid will parse the entry and
+> convert it to a SEL entry.
+>
+> ## The ipmi_sel log stored in "/var/log/ipmi_sel"
+> The log is sent to the journal log with specific MESSAGE_ID and properties.
+> rsyslog filters such logs and save the "/var/log/ipmi_sel" [2]
+>
+> ## Comparison
+> Both methods have pros and cons:
+>
+> | Method        | Pros                              | Cons
+>                  |
+> | ------        | ----                              | ----
+>                  |
+> | Logging entry | Use DBus data model               | Complicate and
+> slow to parse      |
+> |               | Support both ipmi sel and redfish |
+>                  |
+> |               |                                   |
+>                  |
+> | ipmi_sel      | Easy and quick to parse           | Data is
+> separated from DBus       |
+> |               |                                   | ipmi sel and
+> redfish is separated |
+>
+> # The proposed solution
+> The openbmc usually uses the DBus as the data model and all the
+> services consume data from DBus, and the upstream phosphor-host-ipmid
+> already supports the logging entries, the proposal is to re-use the
+> logging entry on DBus as the data source, and improve the cons: to
+> make it faster to parse in ipmid.
+>
+> The idea is:
+> 1. On BMC startup, let ipmid parse all the logging entries in the
+> background and generate the SEL entries in RAM;
+> 2. Use a match to get a callback on logging entries' add/delete
+> events, and update the SEL entries in RAM when a logging entry is
+> added or deleted;
+> 3. Use the SEL entries in RAM directly when `ipmi sel list|elist` is called.
+>
+> This way improves `ipmitool sel list` speed and possibly resolve the
+> issue of the current logging entry model.
 
-See answer for the same question here:
-https://lists.ozlabs.org/pipermail/openbmc/2021-July/026882.html
-
-On Wed, 2021-09-15 at 12:41 +0700, Thang Nguyen wrote:
-> Hi Andrei,
-> 
-> I see output of "dmidecode --dump-bin" follows SMBIOS specification.
-> As
-> the data for smbios-mdr does not follow this, do you know about the 
-> document or any information I can reference to prepare data to send
-> to
-> BMC??
-> 
-> 
-> Best Regards,
-> 
-> Thang Q. Nguyen
-> 
-> On 14/09/2021 15:51, Andrei Kartashev wrote:
-> > No, it is not same as "dmidecode --dump-bin".
-> > 
-> > On Tue, 2021-09-14 at 13:46 +0700, Thang Nguyen wrote:
-> > > On 13/09/2021 23:56, Andrei Kartashev wrote:
-> > > > You need to somehow deliver smbios data image to BMC. This
-> > > > means,
-> > > > your
-> > > > BIOS should implementat some logic to transfer this data.
-> > > > For BMC side see example here:
-> > > > https://github.com/openbmc/intel-ipmi-oem/blob/master/src/smbiosmdrv2handler.cpp
-> > > Hi Andrei,
-> > > 
-> > > What is the format of smbios data to transfer to BMC? Is it the
-> > > same
-> > > content of "dmidecode --dump-bin" command from Host Linux? or
-> > > anything
-> > > special in formatting the content to send?
-> > > 
-> > > > On Mon, 2021-09-13 at 17:40 +0300, Alexander Raih wrote:
-> > > > > Hi guys, I am beginner in openbmc
-> > > > > I build openbmc with smbios-mdr repository and I have error:
-> > > > > 
-> > > > > Read data from flash error - Open MDRV2 table file failure
-> > > > > 
-> > > > > There isnt file in /var/lib/smbios/smbios2
-> > > > > 
-> > > > > How I can resolve this problem?
-> > > > > Help me please!!!
+The above idea is now implemented by the below series of patches.
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/46893
 
 
 -- 
-Best regards,
-Andrei Kartashev
-
-
+BRs,
+Lei YU
