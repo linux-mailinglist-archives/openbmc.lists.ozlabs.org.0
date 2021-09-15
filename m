@@ -1,110 +1,136 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC24040BF41
-	for <lists+openbmc@lfdr.de>; Wed, 15 Sep 2021 07:16:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09D7140BF63
+	for <lists+openbmc@lfdr.de>; Wed, 15 Sep 2021 07:42:53 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H8T2k3mJgz2yPF
-	for <lists+openbmc@lfdr.de>; Wed, 15 Sep 2021 15:16:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H8TdQ6ZfSz2yMV
+	for <lists+openbmc@lfdr.de>; Wed, 15 Sep 2021 15:42:50 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=q9RBw4LQ;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=Rhjxax4x;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=q9RBw4LQ; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.93.108;
+ helo=nam10-dm6-obe.outbound.protection.outlook.com;
+ envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
+ header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector1-amperemail-onmicrosoft-com header.b=Rhjxax4x; 
+ dkim-atps=neutral
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10on2108.outbound.protection.outlook.com [40.107.93.108])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H8T2D5JVsz2xfD;
- Wed, 15 Sep 2021 15:15:48 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.0.43) with SMTP id 18F4902b015663;
- Wed, 15 Sep 2021 01:15:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : from : to
- : cc : date : message-id : content-type : references :
- content-transfer-encoding : mime-version : subject; s=pp1;
- bh=Lwbb8UGYJDSEgVuH4lgjwxdPROtoRslUADg/Rdt9hRc=;
- b=q9RBw4LQ+xOgtSAHRR3CB1SdzvhZP+nW8YGC002+fa50JKTJ0i9jBMOfZJmvD2Ah0ERW
- aDTFmel/mKJTjCSojkXYHho3oLonGp0Hogo3RAXLKLGd36Z479P44TJY2ZUWQksKcfau
- uhiPszTgh4/Nofk/eoiEl9PUlAl2hjPDxh9vpZWFKHt/FmsJ3W6zCwDNDeUubAXbdSH9
- 4PHbW7MgS3cgr1zSgwN5wCBOEPMRB3zo5hU+2G+VwLCKFLrBRi7MRguHoQviRYNqVUvu
- xNPZ6ZQkdRukKdRKzhF8AyXuAZQHswV5+8ptlMU4gkqk6gw5cM8h0d3QU6t4FNvZC3Cx QQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3b36bfvr8f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Sep 2021 01:15:35 -0400
-Received: from m0098399.ppops.net (m0098399.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 18F58UZe015089;
- Wed, 15 Sep 2021 01:15:35 -0400
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3b36bfvr84-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Sep 2021 01:15:35 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 18F5DM1R021953;
- Wed, 15 Sep 2021 05:15:34 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma03dal.us.ibm.com with ESMTP id 3b0m3bke8a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Sep 2021 05:15:34 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 18F5FX2C35914204
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 Sep 2021 05:15:33 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6B60B124058;
- Wed, 15 Sep 2021 05:15:33 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4AFCA124054;
- Wed, 15 Sep 2021 05:15:33 +0000 (GMT)
-Received: from mww0331.wdc07m.mail.ibm.com (unknown [9.208.69.64])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS;
- Wed, 15 Sep 2021 05:15:33 +0000 (GMT)
-In-Reply-To: <CACPK8Xd9MK6oZ=Ac85EkKn7vPvEfqjMKSk=73_R=_16US+6gHQ@mail.gmail.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: "Joel Stanley" <joel@jms.id.au>
-Date: Wed, 15 Sep 2021 05:15:30 +0000
-Message-ID: <OFC8E57D8E.A167EBF7-ON00258751.001786E9-00258751.001CE2C3@ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <CACPK8Xd9MK6oZ=Ac85EkKn7vPvEfqjMKSk=73_R=_16US+6gHQ@mail.gmail.com>,
- <20210910195417.2838841-1-anoo@linux.ibm.com>
- <CACPK8XfjF+aiEMLocscMEOw8ebKoT2MK8djvv4voyFOBjumXRg@mail.gmail.com>
- <23EB5226-63A1-45AF-A50E-2A9D6DABFC08@linux.ibm.com>
-X-Mailer: Lotus Domino Web Server Release 11.0.1FP2HF114   September 2, 2021
-X-MIMETrack: Serialize by http on MWW0331/01/M/IBM at 09/15/2021 05:15:30,
- Serialize complete at 09/15/2021 05:15:30
-X-Disclaimed: 2455
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: VjdCal0I5C901PWruGh7ydri4LCmTTIO
-X-Proofpoint-ORIG-GUID: bNebpK7CmIprl9wX74g_3Nw_I9P_MqZT
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H8Tct5BlFz2xsm
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Sep 2021 15:42:20 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VO42WIq1kE1twlWNRwdYS9fEgNuF0O/qRw/y0T0UrDOa8FqkAbUS5TE2ktkB0FZBbsNV0+ezE/7IQocRPKztFuIOV5+V54bMEnzbr/NTj6kuApSoBHUZE/WwKzPEvVcDHzwLxrCxVunHfzHwjnvOXZGqbpL2rvGGw4ZO1PJg1ey7UbGUw91XehUpNnAmwSuFQAbZdkDKBepZ8eg0Nu1vs8Ji/2CagL4n9My6iyUgETJ4uH0rat0WiFsIj0U4Dg/yoiMDleuwGwtEjNLbQteyLVDMBJJ6fHw4jBv/E8ZMmV/hGwUfIRLhLDl+WhQb5ERIoZeEQMf49+uYlt4S4/62sA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version; 
+ bh=G9CbziZfeZa17GGdnj+DOFgRlgrxbtFnQ48TycJpo2E=;
+ b=ZP/+W8/jHrXY/KAKAaUDd1zFuEXUuJUJbI7i1DYnCaxzkbzUBQRO9ojek5C9rquSdB3T9+RUVfVA05Z6k9oSe10NDUOrd1VfGJAePIYK3M64T5zkvnp3cNOCMDNDLPs60MhgG6iREvizBfeq9zUsXjJU/8VI1Q9nUe0H1hz2vljvbYjqvS82XKsYNec7gy/HMSEgqtm7Bkhxng/0s/e60lyW/3pJfDnJsG2vMb8wcsX01rmUbEBKH9atuWsiyoi/BXZWpFcfLPl7MdNzjTjjNFaynvKyTD7CrpfcN+lNeV64aaXZQ90oHDZlK2T20nkfiOBBztU7UvOmVK4NmTfpOw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=G9CbziZfeZa17GGdnj+DOFgRlgrxbtFnQ48TycJpo2E=;
+ b=Rhjxax4x23Cvbtl01hrKiSqGK/VY/9D9R8CVdDdnFjDrdKIvkvkN1UmtqYeFIfJDNJsdG3Sw5iuPk9dfTfIpsFYg4dA4UIz11Iwp/UPRscrBfagrJgK60/8Bzy7ehTNdeadtzbAyOmeBF1QPyA7SR8nkrjNRHRijofutaYZHP9M=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=amperemail.onmicrosoft.com;
+Received: from BYAPR01MB4678.prod.exchangelabs.com (2603:10b6:a03:88::27) by
+ BY3PR01MB6772.prod.exchangelabs.com (2603:10b6:a03:366::24) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4523.14; Wed, 15 Sep 2021 05:42:00 +0000
+Received: from BYAPR01MB4678.prod.exchangelabs.com
+ ([fe80::545:38ca:33b2:afdc]) by BYAPR01MB4678.prod.exchangelabs.com
+ ([fe80::545:38ca:33b2:afdc%6]) with mapi id 15.20.4478.026; Wed, 15 Sep 2021
+ 05:42:00 +0000
+Subject: Re: Read smbios2 file failed
+To: Andrei Kartashev <a.kartashev@yadro.com>, openbmc@lists.ozlabs.org
+References: <CAMqwjCAaHrv0SgA_1hDEjjnX1fur6ijmCJCrn1gTPbr5Z2-ONw@mail.gmail.com>
+ <d190054863c8112a66baad2f50dda7c6bdc45717.camel@yadro.com>
+ <5f94cf85-6ded-3520-8ad2-592fade91e81@amperemail.onmicrosoft.com>
+ <9ab79bcd06ad6b6cf574a8455247a767df8731ac.camel@yadro.com>
+From: Thang Nguyen <thang@amperemail.onmicrosoft.com>
+Message-ID: <d93fc722-2a24-0921-56ee-b9968edbd6a6@amperemail.onmicrosoft.com>
+Date: Wed, 15 Sep 2021 12:41:52 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
+In-Reply-To: <9ab79bcd06ad6b6cf574a8455247a767df8731ac.camel@yadro.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-ClientProxiedBy: HK2PR04CA0066.apcprd04.prod.outlook.com
+ (2603:1096:202:14::34) To BYAPR01MB4678.prod.exchangelabs.com
+ (2603:10b6:a03:88::27)
 MIME-Version: 1.0
-Subject: RE: [PATCH v2] ARM: dts: aspeed: rainier: Add N_MODE_VREF gpio
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.687,Hydra:6.0.235,FMLib:17.0.607.475
- definitions=2020-10-13_15,2020-10-13_02,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- phishscore=0 bulkscore=0 mlxscore=0 clxscore=1011 impostorscore=0
- adultscore=0 suspectscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2109030001 definitions=main-2109140132
+Received: from HCM-FVFX4014HV2J.local (42.116.120.79) by
+ HK2PR04CA0066.apcprd04.prod.outlook.com (2603:1096:202:14::34) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4523.14 via Frontend Transport; Wed, 15 Sep 2021 05:41:58 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 74a54a3e-2ca5-41ab-3f7f-08d9780b89a0
+X-MS-TrafficTypeDiagnostic: BY3PR01MB6772:
+X-Microsoft-Antispam-PRVS: <BY3PR01MB6772AB634658EC9C5A76A93F8DDB9@BY3PR01MB6772.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: QF95C58ndQPJJmSvOV2sAoy93f6PxQflW5HDiBWCS9VMCK15t2LLWcxiprAMJ28JoXSktTEnVilbd0JXRb0flDiGYFXmuRo0Ut4IJoe74tDGyakWzoo3Hm1whrp9aqpdfz6nVi55AuvQaUMzHxgIbKK3PRU+QpYXZzj+GEdV48ENBtXNIPPuyrTKDbnCw14ECDNgUPygSAj3bK4cizgLEvzmy+fOj9MvfT0gpl2uT0pYKmDdmi44AdsegblbjRxDmIkn9fdoYPrCUbPXtKwPXM+cRiS+bfLDZqq680O+GAT/lcTvr56uBjNMX9ghrX3q9G7fyr+2JhbKqMAu1DLD3JX70fbturLsrbfRGFiXW7l8Qcm68F8uyviypbR0q3et80clNX/o9ihdFJK2v4nf3J1B2nexRjl9vge6KkjNIQuB4T5wMTXz7nXzDg9/KWvbMhqy5q1/rUFH+4yIkHHxJAlvNrCBSq18z2uCXj9kMhsVcJ7wHvrz8J4967mU6LZGNy9VDwFgZxFmS0yb3Qhkptr9Q5tBOelH6UisqBzQsjcAW3HjJXTpPrFQwpQyaZmh/Dwqqf0dxZ1n/H3jBckKU7UpAGRS84BGXN1P+ko+zL5cv2f4BeFxfv2zcSPmlg7DVfh2ZXIwg86IfsbvkCVbRDbPXbGpnX1dQ998IlDEg3U8paJR11LLdTlxs2tjOwU2NP+z6vVLRFUaJtNgG0HuARDUsetTpDWpezOFSsSBYlsfzCxqK1kxRneSvunuIe/IBz4D3EtDtCTok4QaqVrYrqnObxrtcmTv06hVTu4fFaCZ8ojDB/DxqlFeR2er4eaIsGf6l2F8lhIksBea/tMW0J9dr8bgKFwS7aY3aLKlNe0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BYAPR01MB4678.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(346002)(366004)(39850400004)(376002)(136003)(396003)(6486002)(42882007)(2616005)(52116002)(956004)(966005)(6666004)(31686004)(6512007)(5660300002)(186003)(316002)(38100700002)(66556008)(26005)(66946007)(38350700002)(53546011)(66476007)(83380400001)(478600001)(31696002)(83170400001)(6506007)(8936002)(2906002)(8676002)(43740500002)(45980500001);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dEdodEQzY2dkMS9STWRzQXRFcWdxOVZ4emZ6ellVRWV2OUYyRjc4cC9BL2ZF?=
+ =?utf-8?B?MmhTelZkeXlTYVRWOTJPQ0VvVmJOOUZKSTRva24yUEpSMkpRSjVrUkU3bnIx?=
+ =?utf-8?B?VTh5aCt0ZGZYMDRISDlsdVR2ZmZMR1VjOWZrbldOdy85YVJoR3B6Y0FaaWwr?=
+ =?utf-8?B?VDRIU1ppTTE1cDJyelJtYW82aXRYR3dTcXJVUjU2aEJnbWkwcldrNW14UmxS?=
+ =?utf-8?B?RUUwczNML3JNMFpoY2IvbUIxZ0JkWTlRbmp2d2pwUUpmNkNvTXRXdStubHE5?=
+ =?utf-8?B?STFhd0I3Q1dKUitHaWJjL3JTN3EwNVlnQkxvdWRoVUFURUhPbWo0bWd0aS9L?=
+ =?utf-8?B?Uk5YWlZCUHdKOEt2aXRVOFhxbjU1VWNIb1Q4L2tybW1uNzFsY0U1WWRLbko1?=
+ =?utf-8?B?ZHNjQWNKQ2kwWThMV2RDelR4SFlXZU5mTWttZ2Z2K2pJV1ZPa05DSUJKZ3VT?=
+ =?utf-8?B?NzN4amZpMGJZQndDbnRDTVFQYXk2cXA1UDlhbHRWR3JmSURLcVd3WXhOaVRw?=
+ =?utf-8?B?TjJVazdvSHBzRU45a25VSjZXbDVuWG00citMbzMrSkR6d3lJb3ZFNVVvc1hq?=
+ =?utf-8?B?NUw3QnhBbjZoZTZaeUZzZ0hzMlVoQlZTczNVSHl2dVI4T1I0bWttMDRmVGVY?=
+ =?utf-8?B?WEdxY0tReGJUajI0RGhRLzZPT0tBYzdhU0hWaEFua3dzdnIyOStvOCt5MzND?=
+ =?utf-8?B?T1cvWFc0Y1g4UjVVdFUwNE1GUjhIU2pRbWFSNFFuS294NFhYbXNjZTM2TXJI?=
+ =?utf-8?B?RmZPTjVicmRTWDhEbWxUTHk3cVhSZGJiV2dJUGYrL1Z2TE5QRkZ0YzJBcDFB?=
+ =?utf-8?B?VDJpZnhtQzBoZWgybXRRSGZ3U0hXN0Z2NmhiSW1iRnZuM0FhMVhTVGE4eXov?=
+ =?utf-8?B?S2lYekJraURFcHZLUVA0aDliai9vTUxrWHNOYVFTTUo1Y2llQmFDdE1tOW5j?=
+ =?utf-8?B?YXNRaFgzL2s3WHAzMjZZaG9pN0haRm1iR2ZhYlJ5MlZxa1pTTjJ4allRaEM3?=
+ =?utf-8?B?eWtCc3VNRkdqeWtDV2I4cnRPaU5EK1hVQzAyWEVid3F6cHVUeTBRQ2FBR21F?=
+ =?utf-8?B?dnhPNUs2MXpmOEZUNmV4cE51WHZPS2tzYTdjcG9DV2IvYld6U1YwN2tvektZ?=
+ =?utf-8?B?VWlqT0l2alBIOTFxZXFoNkVHTFFpN3Fwb3pSTkY3OHFlaysreGE2WjdUNWVT?=
+ =?utf-8?B?UEkydU9BWDJoQ0dnVVpDZDNTVUVzZXBTZFcwZm03NGtaL0xoVHIydURZbDdj?=
+ =?utf-8?B?QlFGOTZHSUordndvTW9UMUtwcG8vbGpld3h3dFRBTHVNUXIyLzdyTk9JMlVO?=
+ =?utf-8?B?WHczWHZjQXp3ZjdFT3RRanZyb2Y0U1p1NDlYVnBRc2ZFZjRQdVU3dWo5Vkhy?=
+ =?utf-8?B?MWJEd0tpUDVxY1ppaUxjN1h1Vk5zSnFmU1VPOWJXV21SYXFFSWp4VlRlRVJs?=
+ =?utf-8?B?N0Fuc2Fkd3BnNUVuN3ZLM1BreGtmTmlpY29ZUEVCclR5dzhZK0YyOUFqdkRB?=
+ =?utf-8?B?MDgyMVlMbGw4TC90V2h4S2lyMDhEUnErNGVOUWwrR0Q4WU9HRWsyYS81MUkv?=
+ =?utf-8?B?ZHViY2MxRGUyd3hmVUtjYWszam9jcXVIVFBaYTFMZDBueXJJdzBQU1p2VE9G?=
+ =?utf-8?B?cDJHYldDYTNKQVBNWHhqVmREcWsyY2FNZnRtZkxsQWNJcWluVmNueGNwSzh0?=
+ =?utf-8?B?NDhyNzc4aXhLaGMvWWkxUkQ5cmRweHdKQXptYUl2bTgyZ1RjT04rUSsxWll3?=
+ =?utf-8?Q?JlBjuteVzIjGw/jzxFd7k2WHLb5Rl8OSvO0W/GN?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 74a54a3e-2ca5-41ab-3f7f-08d9780b89a0
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4678.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2021 05:42:00.0698 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sRvMnUIbP81GsKeqyANi4N92TsSG+cAg9uaNk2sxTEyJS1xLw6V63jKB/lUmLOOrGTR710EicVvxpqtsdaTo1JfWMwWPGlL+FMt5BxmN7IIRzNcWSEJQ1js8zAWnHqEL
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY3PR01MB6772
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,128 +142,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Matt Spinler <spinler@us.ibm.com>, Derek Howard <derekh@us.ibm.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- Adriana Kobylak <anoo@us.ibm.com>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>, Brandon
- Wyman <bjwyman@gmail.com>, Shawn McCarney <shawnmm@us.ibm.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On September 14, 2021, Joel Stanley wrote:
->On Tue, 14 Sept 2021 at 20:46, Adriana Kobylak <anoo@linux.ibm.com>
->wrote:
->> > On Sep 14, 2021, at 3:49 AM, Joel Stanley <joel@jms.id.au> wrote:
->> > On Fri, 10 Sept 2021 at 19:54, Adriana Kobylak
->> > <anoo@linux.ibm.com> wrote:
->> >>
->> >> From: Adriana Kobylak <anoo@us.ibm.com>
->> >>
->> >> The N_MODE_VREF gpio is designed to be used to specify how many
->> >> power
->> >> supplies the system should have (2 or 4).  If enough power
->> >> supplies fail
->> >> so that the system no longer has redundancy (no longer n+1), the
->> >> hardware will signal to the Onboard Chip Controller that the
->> >> system may
->> >> be oversubscribed, and performance may need to be reduced so the
->> >> system
->> >> can maintain it's powered on state. This gpio is on a 9552,
->> >> populate all
->> >> the gpios on that chip for completeness.
->> >>
->> >> Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
->> >> ---
->> >>
->> >> v2: Update commit message.
->> >>
->> >> arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 103
->+++++++++++++++++++
->> >> 1 file changed, 103 insertions(+)
->> >>
->> >> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->> >> index 6fd3ddf97a21..d5eea86dc260 100644
->> >> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->> >> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->> >> @@ -1502,6 +1502,109 @@ eeprom@51 {
->> >>                reg =3D <0x51>;
->> >>        };
->> >>
->> >> +       pca_pres3: pca9552@60 {
->> >> +               compatible =3D "nxp,pca9552";
->> >> +               reg =3D <0x60>;
->> >> +               #address-cells =3D <1>;
->> >> +               #size-cells =3D <0>;
->> >> +               gpio-controller;
->> >> +               #gpio-cells =3D <2>;
->> >> +
->> >> +               gpio-line-names =3D
->> >> +                       "",
->> >> +                       "APSS_RESET_N",
->> >> +                       "", "", "", "",
->> >> +                       "P10_DCM0_PRES",
->> >> +                       "P10_DCM1_PRES",
->> >> +                       "", "",
->> >> +                       "N_MODE_CPU_N",
->> >> +                       "",
->> >> +                       "PRESENT_VRM_DCM0_N",
->> >> +                       "PRESENT_VRM_DCM1_N",
->> >> +                       "N_MODE_VREF",
->> >
->> > Should any (all?) of these names be documented?
->> >
->> >
->INVALID URI REMOVED
->mc_docs_blob_master_designs_device-2Dtree-2Dgpio-2Dnaming.md&d=3DDwIFaQ
->&c=3Djf_iaSHvJObTbx-siA1ZOg&r=3Dbvv7AJEECoRKBU02rcu4F5DWd-EwX8As2xrXeO9ZS
->o4&m=3DJzmffOJA0hX_vgi3n0P-A6l60imZToV7q1U2W2h6xt4&s=3D14_ACuQWMp-IFlhLQa
->ejLVBN8XVgDnn1_l6336-FBG8&e=3D=20
+Hi Andrei,
+
+I see output of "dmidecode --dump-bin" follows SMBIOS specification. As 
+the data for smbios-mdr does not follow this, do you know about the 
+document or any information I can reference to prepare data to send to BMC??
+
+
+Best Regards,
+
+Thang Q. Nguyen
+
+On 14/09/2021 15:51, Andrei Kartashev wrote:
+> No, it is not same as "dmidecode --dump-bin".
+>
+> On Tue, 2021-09-14 at 13:46 +0700, Thang Nguyen wrote:
+>> On 13/09/2021 23:56, Andrei Kartashev wrote:
+>>> You need to somehow deliver smbios data image to BMC. This means,
+>>> your
+>>> BIOS should implementat some logic to transfer this data.
+>>> For BMC side see example here:
+>>> https://github.com/openbmc/intel-ipmi-oem/blob/master/src/smbiosmdrv2handler.cpp
+>> Hi Andrei,
 >>
->> Not sure. Seems the openbmc doc is documenting the gpios for
->> gpiochip0 only?
-
->AIUI the document is for GPIOs that are exposed to userspace.
->
->It doesn't matter where they're coming from. If they are going to be
->used by a libgpio application, they need to have names, and the names
->should be documented where possible.
->
-
-I agree which gpiochip is just a board wiring consideration and has=20
-no bearing on the documentation.
-
-However, in the introductory sections in the document clearly says=20
-the purpose is to establish naming for common (function) GPIOs, and
-the justification is by using consistent names across machines code=20
-will be able to be reused with little to no configuration.  In=20
-addition it mentions "common" GPIOs must be added to the document in=20
-the future.  So an evaluation should be made to the likelihood that=20
-such code reuse can be anticipated.
-
-Most of the names added in this patch are presence detect signals used
-to cross check VPD is read into inventory.   I'd expect any such uses to
-be configured in an inventory config file listing the name and where the
-FRU appears in the Dbus or Redfish model.  I'd argue the names for any=20
-such gpio would be beyond the present document scope.
-
-The one mentioned in the changelog, N_MODE_VREF, is intended to=20
-be relayed to the OCC, basically a power management controller in
-common in POWER processor chips.  I can see an argument to list this,
-but feel it would be in the OpenPOWER specific section unless the=20
-activation method is exposed in some method that would be common=20
-to other chipsets.
-
->...documented in the openbmc design
->doc, such as SLOT6_PRSNT_EN_RSVD, SLOT11_EXPANDER_PRSNT_N, etc.
->
->They should be fixed, if possible.
-
-The scope is clearly use reusable names going forward.  The technical
-debt from past naming can be brought down as new uses are added but
-we are not renaming every GPIO in every existing platform, and we don't
-have the review bandwidth to agree on common names should be added for
-all existing signals.
-
-milton
+>> What is the format of smbios data to transfer to BMC? Is it the same
+>> content of "dmidecode --dump-bin" command from Host Linux? or
+>> anything
+>> special in formatting the content to send?
+>>
+>>> On Mon, 2021-09-13 at 17:40 +0300, Alexander Raih wrote:
+>>>> Hi guys, I am beginner in openbmc
+>>>> I build openbmc with smbios-mdr repository and I have error:
+>>>>
+>>>> Read data from flash error - Open MDRV2 table file failure
+>>>>
+>>>> There isnt file in /var/lib/smbios/smbios2
+>>>>
+>>>> How I can resolve this problem?
+>>>> Help me please!!!
