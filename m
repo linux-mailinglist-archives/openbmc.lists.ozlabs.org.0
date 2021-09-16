@@ -2,64 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9460840D3BD
-	for <lists+openbmc@lfdr.de>; Thu, 16 Sep 2021 09:24:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 123ED40D62B
+	for <lists+openbmc@lfdr.de>; Thu, 16 Sep 2021 11:26:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4H97rd3ZVdz2yQH
-	for <lists+openbmc@lfdr.de>; Thu, 16 Sep 2021 17:24:49 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=gJzhRltE;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4H9BY006drz2ypb
+	for <lists+openbmc@lfdr.de>; Thu, 16 Sep 2021 19:26:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::841;
- helo=mail-qt1-x841.google.com; envelope-from=liuxiwei1013@gmail.com;
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=chiawei_wang@aspeedtech.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=gJzhRltE; dkim-atps=neutral
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
- [IPv6:2607:f8b0:4864:20::841])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4H97r85QbCz303H
- for <openbmc@lists.ozlabs.org>; Thu, 16 Sep 2021 17:24:24 +1000 (AEST)
-Received: by mail-qt1-x841.google.com with SMTP id m9so4754711qtk.4
- for <openbmc@lists.ozlabs.org>; Thu, 16 Sep 2021 00:24:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=ctNQIpDjgwd3Ue7XW2ujnXhaC2PkUVTOTI69TMKCMPQ=;
- b=gJzhRltE48sqXdI/DU4GcjDorVOkm2nMIuQrW+Llad3MkYbz2J5o0kmKCh0Jutatlh
- H0HrvoJuDweSFPrDwf1zH368ldxvk1rT5lCNgo0FTl6l99iS2qFYsk7V9Y25SFMzYNI7
- qUgjeY0pZiHLZfNdTE3aMG4K2jieeRePym5BqYetJHmE8Ce3aleenWzFYqCUzRiHeqUH
- OoBRq7DW4FwK7++sQErgp4dDzhcOCeOz7kyQhMfo9j6JxKjbieYat5PNXo9DirfyQUn1
- ZuDDNaa8ZQUBO8va4e0cpeDJzzfU31HaU8PxpEXgrJ3j2UP9dNAG9LYYhch3aGtqyaHk
- jnIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=ctNQIpDjgwd3Ue7XW2ujnXhaC2PkUVTOTI69TMKCMPQ=;
- b=rAC8vSwvoqlxfGsBL9CgiDnGrM/XcQctnJz3gaVfzALisob8Py43eOZcVIFfQGoK62
- k+WFaja0aK8+0DBdJlLYsNggVl+6z4gOb6LA5haKegla07J5uCeA/tGL4jCPPEkMzp9j
- KRNEcIsCEZGc60aW4RKF2Jrc68UBcSNaazXj54gTtiYTSCKzQ3tGvsRDk0VIkJWj7Jrh
- 3K0LB6EIsn+hX05/ra7Scs/shgsMLU6X2B5C9N2SmZ0Cd8gJ1l5dPgINrkzoX+XnhEzt
- SEPuAC/JAx9gVU+K08s8LAkQF0vw3ihfn6rijdeR1v3OO6pwebPNoIoJBFYJjMG1LWRq
- OFDw==
-X-Gm-Message-State: AOAM5304V4km4AL/7LcJJ3hIGQ+QmzInWRUydZiEiBE55eE80xX+LGVl
- CkKSmcSckrAQD2puSxLIEHSsxPjC8K1buA5giJaXF0qLGas=
-X-Google-Smtp-Source: ABdhPJyhtrd1nZmgmCqEhiQt5eF+6Ygz0hagEj06dCQp9R4T74aRMjAATMRaRIgjV6XPwpgP3r4VT5Iyr2RrshmoBwg=
-X-Received: by 2002:ac8:4156:: with SMTP id e22mr3726545qtm.308.1631777060876; 
- Thu, 16 Sep 2021 00:24:20 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4H9BX92xphz2xfG;
+ Thu, 16 Sep 2021 19:25:42 +1000 (AEST)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 18G95Fm4009659;
+ Thu, 16 Sep 2021 17:05:15 +0800 (GMT-8)
+ (envelope-from chiawei_wang@aspeedtech.com)
+Received: from ChiaWeiWang-PC.aspeed.com (192.168.2.66) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
+ Thu, 16 Sep 2021 17:25:12 +0800
+From: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
+To: <robh+dt@kernel.org>, <joel@jms.id.au>, <andrew@aj.id.au>,
+ <linux-arm-kernel@lists.infradead.org>,
+ <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <openbmc@lists.ozlabs.org>
+Subject: [PATCH v5 0/4] arm: aspeed: Add UART routing support
+Date: Thu, 16 Sep 2021 17:25:11 +0800
+Message-ID: <20210916092515.10553-1-chiawei_wang@aspeedtech.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-From: George Liu <liuxiwei1013@gmail.com>
-Date: Thu, 16 Sep 2021 15:24:09 +0800
-Message-ID: <CANFuQ7BWedK3LNh4vy8uVN3Jk8GaG-GJ1BwMHDzpTv+kgzxc+Q@mail.gmail.com>
-Subject: Question regarding phosphor-dbus-monitor repo
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [192.168.2.66]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 18G95Fm4009659
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,44 +53,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Devender Rao <devenrao@in.ibm.com>
+Cc: yulei.sh@bytedance.com, osk@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hey everyone:
+Add UART routing driver and the device tree nodes.
 
-I am learning phosphor-dbus-monitor recently, It is used to monitor
-the attribute value or objectPath of D-Bus, and then execute the
-corresponding callback method, and the premise is that needs to
-configure in the YAML file.
+v5:
+ - Fix typo in YAML file to solve the compatible string not found error
 
-The current default configuration has the realization of `OCC` and
-`snmp`, and I have also seen the realization of other functions in the
-ibm openbmc repo(eg: Fan, PowerSupply, etc).
+v4:
+ - Convert aspeed-lpc bindings to YAML schema to resolve dependecy issues
 
-I have the following doubts:
-1. Today the architecture of openBmc is gradually discarding YAML
-files right (because I think it requires templates and py paarsing to
-support).
-2. I think we can migrate the functions of this repo to the
-corresponding repo (eg: the configuration of OCC can be migrated to
-openpower-occ-control, and the configuration of snmp can be migrated
-to phosphor-snmp).
-3. Adapting to these YAML is a complicated process, and I suspect that
-the original design idea was to aggregate all D-Bus monitoring into
-this repo, but it does not currently achieve this goal (maybe my
-understanding is wrong).
-4. At present, most repos use D-Bus to monitor certain attributes,
-objectPaths, etc, but they have not done YAML file adaptation in this
-repo, but implemented in their respective repos (eg: PLDM,
-phosphor-led-manager).
+v3:
+ - Add individual bindings in YAML
+ - Add support for AST24xx (AST25xx shares the same design)
+ - Add more explanation for the sysfs ABI
 
-So, my thoughts is: If we transplant `OCC` & `snmp` and other
-functions to their respective repos one day in the future, can this
-repo be discarded?
-Sorry, I am not sure if the maintainer has other plans, or there are
-other advantages to using this repo? Maybe I missed something.
+v2:
+ - Add dt-bindings
+ - Add ABI documents for the exported sysfs interface
+ - Revise driver implementation suggested by Joel
 
-Looking forward to your reply :)
 
-Thx - George Liu
+Chia-Wei Wang (4):
+  dt-bindings: mfd: aspeed-lpc: Convert to YAML schema
+  dt-bindings: aspeed: Add UART routing controller
+  soc: aspeed: Add UART routing support
+  ARM: dts: aspeed: Add uart routing to device tree
+
+ .../testing/sysfs-driver-aspeed-uart-routing  |  15 +
+ .../devicetree/bindings/mfd/aspeed-lpc.txt    | 157 -----
+ .../devicetree/bindings/mfd/aspeed-lpc.yaml   | 191 ++++++
+ .../bindings/soc/aspeed/uart-routing.yaml     |  70 ++
+ arch/arm/boot/dts/aspeed-g4.dtsi              |   6 +
+ arch/arm/boot/dts/aspeed-g5.dtsi              |   6 +
+ arch/arm/boot/dts/aspeed-g6.dtsi              |   6 +
+ drivers/soc/aspeed/Kconfig                    |  10 +
+ drivers/soc/aspeed/Makefile                   |   9 +-
+ drivers/soc/aspeed/aspeed-uart-routing.c      | 603 ++++++++++++++++++
+ 10 files changed, 912 insertions(+), 161 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-driver-aspeed-uart-routing
+ delete mode 100644 Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+ create mode 100644 Documentation/devicetree/bindings/mfd/aspeed-lpc.yaml
+ create mode 100644 Documentation/devicetree/bindings/soc/aspeed/uart-routing.yaml
+ create mode 100644 drivers/soc/aspeed/aspeed-uart-routing.c
+
+-- 
+2.17.1
+
