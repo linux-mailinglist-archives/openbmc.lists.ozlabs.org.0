@@ -1,64 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 925CA413EA1
-	for <lists+openbmc@lfdr.de>; Wed, 22 Sep 2021 02:25:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 745C7413F5C
+	for <lists+openbmc@lfdr.de>; Wed, 22 Sep 2021 04:22:05 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HDfFy2X55z2ynb
-	for <lists+openbmc@lfdr.de>; Wed, 22 Sep 2021 10:25:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HDhrW2wKpz2yQM
+	for <lists+openbmc@lfdr.de>; Wed, 22 Sep 2021 12:22:03 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Bd+uSGdZ;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=kHeChmf2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::834;
- helo=mail-qt1-x834.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::730;
+ helo=mail-qk1-x730.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Bd+uSGdZ; dkim-atps=neutral
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com
- [IPv6:2607:f8b0:4864:20::834])
+ header.s=google header.b=kHeChmf2; dkim-atps=neutral
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com
+ [IPv6:2607:f8b0:4864:20::730])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HDfFY0PKGz2xtQ
- for <openbmc@lists.ozlabs.org>; Wed, 22 Sep 2021 10:25:03 +1000 (AEST)
-Received: by mail-qt1-x834.google.com with SMTP id w17so1085131qta.9
- for <openbmc@lists.ozlabs.org>; Tue, 21 Sep 2021 17:25:02 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HDhr46K4sz2yQ0
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Sep 2021 12:21:38 +1000 (AEST)
+Received: by mail-qk1-x730.google.com with SMTP id a10so4148397qka.12
+ for <openbmc@lists.ozlabs.org>; Tue, 21 Sep 2021 19:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=CaogP/yXlrk2pCDy0PVaSQzfWJAT0OGevV+3Ma2rybg=;
- b=Bd+uSGdZzVaDPT/O4e9Af07kwHABCookaPeQlkkMT31O/V7J3SYkfd4qdWzHtUrt1Z
- Mbmi4Ibwp3Iyfw+X9UCj8O+zUNwWzeJMHt+WO80abgjetsgfYdYJUc5d1jK6vDtOIgoE
- x+XM8nZNKhODd6fhccENDOF7mOPE4y8xluALs=
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=yYVyMf9PC9MYUcmIqBYdizVZAaEl8T1WDxR4uwnrpIo=;
+ b=kHeChmf2dtk7zAsSgDIaYX8Ohy/Qt040hJkMdNU+NtRcilkwciL7FALmhQgWuE4vuA
+ hZKuATQHLbkNpHVPNnEKhPAwSdUV3LZrgWt+fE7IA6WUzx1UVJD2/z84A59grGNy7mhT
+ G6e7tBpjlWPnvktm2IkgofBCv/ZDbn3s4l6mQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=CaogP/yXlrk2pCDy0PVaSQzfWJAT0OGevV+3Ma2rybg=;
- b=d+BSX84/+ti9+5NLTRnTReQZnrdY+sRCxTjs2OqH/PCdCHGO5Mi4sY4JVrXdyPFmnj
- rz0s2YR594oUz4/lyz8VOMWFYCXpkP/RWx4xuG65adOvi9hiz5vRAK2UiI0PCd8LDOqj
- zd1u7IkuxAeYjPahOQJwnQa5g2BLzktqg6mWI/Eu512uxvLX7qsv6kg9RU9PlZtdrpdb
- VGkXSq7h/zyrSXXX+qlgHzmNVO8n21rzMVZi4wNbfBoKQmF4iZkOfA7TaGIRfIRrmks4
- SPir91+uxcVLoH0fg5PGgC3scYkG6vYJLYwF8GdjhrrkdACdNq8ZSyVTsAzR6AUJZPQz
- WKfQ==
-X-Gm-Message-State: AOAM532tfWHKcBtZALvvPnrkDMGeH/KGLP0SpKs+ZCeBJQas4NpwyXE1
- wp8me9AamCJwarY3zV2VS72D3UZMvWABT5pi8hSY6yYF
-X-Google-Smtp-Source: ABdhPJxS5Qm49bIc47/Cr2+qwxxJs3jXAw+ZDSX6rMrtFpTlNv3HJAzFsPqbiRVfnbEqvt7gzVKjQgHE+qaQuweW1H8=
-X-Received: by 2002:a05:622a:45:: with SMTP id
- y5mr17245174qtw.145.1632270298460; 
- Tue, 21 Sep 2021 17:24:58 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=yYVyMf9PC9MYUcmIqBYdizVZAaEl8T1WDxR4uwnrpIo=;
+ b=KuQ9ZV6KWZPN3pIIq3BPmYam/k0+0o10kHJE/dwOSEBio7M6HT55l6JgwrojDKE6xG
+ rbQS8MaOpUy75SNvN+sKYwL0JLVt3Zwo37k/BXA5AeJghAxADpR2ZSL2JtEL8aSYix6N
+ p+pujWvc7+goS2p+KgRPbbliwKwOlChcnf7fDws09njAkHO/RVmoLdDrkTl63XSl3NFT
+ 4zYCzjZZdZ7rAKZ9vf6ZUfCCy124KwykGPMqEviJUYUWlG1WrVBL34bjOIXjlUts707E
+ fWXoFJP7scaPdhegGJmPIvMYSOo/8wNzMtPi+lVu8l+ryB+MHqgtxtDvYIWHYQgxracR
+ Iswg==
+X-Gm-Message-State: AOAM531MZjPpLkMxRGJ+xknH34oLnxOp7s49s2/9FjqPZkeZ0rzZA2ZH
+ Z3TClbFHyeveSBtMTS4VBfB2TfLjBKa9ldFDaac=
+X-Google-Smtp-Source: ABdhPJxHk2Bge4TqWLGp9Pa0EuYWtcDnN4rkijxAgkoLqH2YBTjuZQ2fL6T0Ig+xBhR3on9vBB22DYtS/+V/tX7AF9E=
+X-Received: by 2002:a05:620a:1aa6:: with SMTP id
+ bl38mr32572017qkb.36.1632277295211; 
+ Tue, 21 Sep 2021 19:21:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <CACPK8XdMu_xc+3dp7T57azkMp==1W5xpt6t=bSZWiNaA7vDJ2A@mail.gmail.com>
-In-Reply-To: <CACPK8XdMu_xc+3dp7T57azkMp==1W5xpt6t=bSZWiNaA7vDJ2A@mail.gmail.com>
+References: <20210916212140.33915-1-eajames@linux.ibm.com>
+In-Reply-To: <20210916212140.33915-1-eajames@linux.ibm.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 22 Sep 2021 00:24:46 +0000
-Message-ID: <CACPK8Xeu_3y4Mnsk-_rzWRQsx0nY=0cuqkM4FGoz_sbhOZ3BCQ@mail.gmail.com>
-Subject: Re: Kernel moving to Linux v5.14
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Date: Wed, 22 Sep 2021 02:21:21 +0000
+Message-ID: <CACPK8XcEgP-jk11_n1Jbusa2Z-bOB4_zQZyGNiOCEWrbnph6+Q@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.10 0/7] leds: Support retaining state for the
+ PCA955x
+To: Eddie James <eajames@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,26 +72,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 14 Sept 2021 at 02:11, Joel Stanley <joel@jms.id.au> wrote:
+On Thu, 16 Sept 2021 at 21:21, Eddie James <eajames@linux.ibm.com> wrote:
 >
-> The openbmc kernel will move to a 5.14 based tree for Aspeed and
-> Nuvoton machines.
+> This series implements the ability to retain the state of the LEDs
+> controlled by the PCA955x across system reboots. This includes a
+> change to the LED core driver to respect the retain-state-shutdown
+> device tree property. It also cleans up the PCA955x driver, adds the
+> ability to query the hardware LED brightness, switches the I2C probe
+> function to probe_new, and uses more core functionality for parsing
+> the fwnode.
 >
->     linux-openbmc: Move to Linux v5.14
+> This series has been applied to linux-next.
 >
->     This moves the OpeNBMC kernel to a v5.14 base. There are 78 patches in
->     the tree, plus a the MCTP core and device tree changes that were merged
->     in v5.15 which have been backported.
+> Eddie James (7):
+>   dt-bindings: leds: Add retain-state-shutdown boolean
+>   leds: leds-core: Implement the retain-state-shutdown property
+>   leds: pca955x: Clean up code formatting
+>   leds: pca955x: Add brightness_get function
+>   leds: pca955x: Implement the default-state property
+>   leds: pca955x: Let the core process the fwnode
+>   leds: pca955x: Switch to i2c probe_new
+
+Thanks, applied.
+
 >
-> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/46847
-
-This has now been merged. Thank you to those who reviewed the change.
-
-Please address future kernel changes to the dev-5.14 tree.
-
-Cheers,
-
-Joel
+>  .../devicetree/bindings/leds/common.yaml      |   6 +
+>  drivers/leds/led-class.c                      |  10 +-
+>  drivers/leds/leds-pca955x.c                   | 232 +++++++++++++-----
+>  3 files changed, 182 insertions(+), 66 deletions(-)
+>
+> --
+> 2.27.0
+>
