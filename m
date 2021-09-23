@@ -2,70 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66C574153F9
-	for <lists+openbmc@lfdr.de>; Thu, 23 Sep 2021 01:36:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A0C85415461
+	for <lists+openbmc@lfdr.de>; Thu, 23 Sep 2021 02:02:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HFF6W2TfHz2ypP
-	for <lists+openbmc@lfdr.de>; Thu, 23 Sep 2021 09:36:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HFFjY49dmz2yw1
+	for <lists+openbmc@lfdr.de>; Thu, 23 Sep 2021 10:02:57 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=l4+0/HAU;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=axUK3TKi;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::134;
- helo=mail-lf1-x134.google.com; envelope-from=osk@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2a;
+ helo=mail-qv1-xf2a.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=l4+0/HAU; dkim-atps=neutral
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com
- [IPv6:2a00:1450:4864:20::134])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=axUK3TKi; dkim-atps=neutral
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com
+ [IPv6:2607:f8b0:4864:20::f2a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HFF662JJqz2yPc
- for <openbmc@lists.ozlabs.org>; Thu, 23 Sep 2021 09:35:39 +1000 (AEST)
-Received: by mail-lf1-x134.google.com with SMTP id i4so18705481lfv.4
- for <openbmc@lists.ozlabs.org>; Wed, 22 Sep 2021 16:35:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HFFj60p4tz2xvf;
+ Thu, 23 Sep 2021 10:02:33 +1000 (AEST)
+Received: by mail-qv1-xf2a.google.com with SMTP id a13so3130027qvo.9;
+ Wed, 22 Sep 2021 17:02:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=rixsYlvlugfN8qtBIEzNU6o0U91ks3DJwFiiH6pM/hA=;
- b=l4+0/HAUeBJuIilDdniMmTUt/wS0ZLOWZ/eeOx45ELCEDAyT3HwigG67W2QT5NwZj8
- mbg+Iwh1uGFUpKTmfnkB1D3M1qt2ne8BPgczonB3kGkeN43CjyUx2PaiTGCu3KzNa44B
- SYCshjcR6qu+PyUnrkoFqExgrqBfbGygEgv4dPFOPHReonNFq/3J9o9karld/Gwos3RY
- eUDNgyNbtYOu7WxoREjIkaeSiG8+BCSidgKWQNVZwWDHEib6j4C4EtIHBDVtXgo50NBm
- HWz1DWCprGIJ0SPv9fMTnSQeN3mAsdvYwvEhhQYtcWalCM5yPYkit8Tf7ZLm+ny1vDbn
- LZNw==
+ :cc; bh=6za8hvNiMknZJLAQShJVN9k8ISMwqJs16dYb7Dbhy5I=;
+ b=axUK3TKinPUn6A14DlJ5l75sUiHUS4zA4aiWlQb2xZNI7d/ZObmdqIZAwSJF6Qcx3X
+ Bxveue63eavt8VkKBEHVhr5BP/mpZ4LxgbBBPS+If5Unl9y8AL15Fby7WugMV7wAbGrh
+ 53pH+8O1hJDpwkBoww1i77rp+yHIn34Ss/oGc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=rixsYlvlugfN8qtBIEzNU6o0U91ks3DJwFiiH6pM/hA=;
- b=wIE44EQSFZ5OUNcWXcAENx2yYG4prU/rRbZbYjT7bcLmtcbN7Bx3lPtlee/LIPgNYV
- UAJP9vwE2QYyyeimBekH54nok0TZLfCY6myuziHdMajWI85MiY2mmNS1LrcahoJm3f10
- 3qk4dpxx5d9135UDOk3Kfd9Yk1eFhbRG2+4W4Xiwp+vZinvQ4UvRVd2XH6pN/FIB2Zw+
- T5O295s6Ew73d346KuNqaQbIbuFQKnHpKCkuD/cEmeQOVgMUAvBxBJcq4E/vS90HPHMW
- x2hZjuO29h1aI37zO+rCOsL7eqoeqHAgjBQa7b9V/2QOVs3x/Em0l5csQRI8vK0TRfdQ
- xGtQ==
-X-Gm-Message-State: AOAM532m1CAQvF535J/ES/cE+KaNPZKAnu/5S8II5xoHAx/9gcBOt6QU
- 9vcNrsqIzlCQBQRW00uy3nfAwheOY1Gq3/RXZvbuVQ==
-X-Google-Smtp-Source: ABdhPJweJVgsoUd1VCz1iPGVAbta0xNoqu10preE7CS5h0igQ08YNQrDZ3RKmfEm7ek5obbhtE1gQdZE/1VLhs0krnU=
-X-Received: by 2002:a05:6512:3e1e:: with SMTP id
- i30mr1415500lfv.273.1632353731578; 
- Wed, 22 Sep 2021 16:35:31 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=6za8hvNiMknZJLAQShJVN9k8ISMwqJs16dYb7Dbhy5I=;
+ b=z9CGWLTz3qeC8YyRl9LJN42TIC0neH6sAz1XMOxt8rCldmWer4X5FE3kuhwhq5n5ON
+ OC2YaK/5JtTECAaEFSDr67TdLKl9+dEbGUKEUa6SWVU1K7omOlx/K5vuqtIGL94cNy0o
+ 3PkTwM9i9cnVmZI0etV8l2pGAGrm+68YEI8NPRRhKJgE4nk1+q96/p1GuiXdh1SaoWS/
+ qz80hq4bQ/sPuRrG0Z1haAYdTr9ixDySmkkEgTkmjwfxve809g8eOAQBhSXx3aj6icBC
+ YvGLHkBER/ACy+0GxOhDjklpJlUEAGxtoq3NSKBYOxnVm/dN0r2CSmuWgKU4Guwg6LLb
+ kAdw==
+X-Gm-Message-State: AOAM531auzNPUlVRwAxWCuhOcg51zwCtn9rj5flyZSZshVTYvh8QgOGk
+ g+6v8kUPWKNzXmdSJT/j5iW7YtpjpVM5nS/QpXs=
+X-Google-Smtp-Source: ABdhPJwXwTQ1XjK5fncsWgEeP1jfN7ZYA6DFOZN7Q3GRnYZd8PBPLFUInicZnO0NAukPfyU/GXMHGGR33J3eFlRlg9s=
+X-Received: by 2002:ad4:54c6:: with SMTP id j6mr1959081qvx.17.1632355349480;
+ Wed, 22 Sep 2021 17:02:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAH2-KxDe6hR1V-Lz1k8cdD11jEquy4UhR4LfLhg37E5EG42EJg@mail.gmail.com>
- <67dbec1b-8598-8814-e85e-848b2eb123cf@yadro.com>
-In-Reply-To: <67dbec1b-8598-8814-e85e-848b2eb123cf@yadro.com>
-From: Oskar Senft <osk@google.com>
-Date: Wed, 22 Sep 2021 19:35:15 -0400
-Message-ID: <CABoTLcRGjXV_QBnAv6J0+cZL9ahjjzLBai2ANJ-YkzYOi_aYJA@mail.gmail.com>
-Subject: Re: New test for patches in openbmc/openbmc
-To: Alexander Amelkin <a.amelkin@yadro.com>
+References: <20210922103116.30652-1-chin-ting_kuo@aspeedtech.com>
+ <20210922103116.30652-2-chin-ting_kuo@aspeedtech.com>
+In-Reply-To: <20210922103116.30652-2-chin-ting_kuo@aspeedtech.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 23 Sep 2021 00:02:17 +0000
+Message-ID: <CACPK8XeeEeQb52ZHYaN49r_Vso-xUHamDyrA+bFvP4_ESQs9dA@mail.gmail.com>
+Subject: Re: [PATCH 01/10] clk: aspeed: ast2600: Porting sdhci clock source
+To: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,190 +71,178 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: devicetree <devicetree@vger.kernel.org>, linux-clk@vger.kernel.org,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, BMC-SW <BMC-SW@aspeedtech.com>,
+ Stephen Boyd <sboyd@kernel.org>, Steven Lee <steven_lee@aspeedtech.com>,
+ Michael Turquette <mturquette@baylibre.com>,
+ linux-mmc <linux-mmc@vger.kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Andrew Jeffery <andrew@aj.id.au>, Rob Herring <robh+dt@kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Alexander
+On Wed, 22 Sept 2021 at 10:31, Chin-Ting Kuo
+<chin-ting_kuo@aspeedtech.com> wrote:
+>
+> - There are two clock sources used to generate
+>   SD/SDIO clock, APLL clock and HCLK (200MHz).
+>   User can select which clock source should be used
+>   by configuring SCU310[8].
+> - The SD/SDIO clock divider selection table SCU310[30:28]
+>   is different between AST2600-A1 and AST2600-A2/A3.
+>   For AST2600-A1, 200MHz SD/SDIO clock cannot be
+>   gotten by the dividers in SCU310[30:28] if APLL
+>   is not the multiple of 200MHz and HCLK is 200MHz.
+>   For AST2600-A2/A3, a new divider, "1", is added and
+>   200MHz SD/SDIO clock can be obtained by adopting HCLK
+>   as clock source and setting SCU310[30:28] to 3b'111.
+>
+> Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+> ---
+>  drivers/clk/clk-ast2600.c | 69 ++++++++++++++++++++++++++++++++++-----
+>  1 file changed, 61 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/clk/clk-ast2600.c b/drivers/clk/clk-ast2600.c
+> index bc3be5f3eae1..a6778c18274a 100644
+> --- a/drivers/clk/clk-ast2600.c
+> +++ b/drivers/clk/clk-ast2600.c
+> @@ -168,6 +168,30 @@ static const struct clk_div_table ast2600_div_table[] = {
+>         { 0 }
+>  };
+>
+> +static const struct clk_div_table ast2600_sd_div_a1_table[] = {
 
-While I can understand your position, I think there's a bigger picture
-to consider. In my understanding Open Source works by individual /
-independent contributors providing their use cases, knowledge and
-experience by means of designs and source code to the world. Since
-there are many individuals trying to do different things and some
-people (maintainers) being the gatekeepers for what can be submitted,
-it of course often gets to a point where not everyone agrees.
+Let's put the revision next to the ast2600 like the other tables:
 
-Trust me, I've been there. I had many occasions where I needed a new
-feature or a fix to satisfy project requirements and timelines and was
-not able to upstream it in the given time. I sometimes gave up, often
-found a different, "better" solution and many times worked with the
-community to find a solution that would be accepted upstream.
+ast2600_a1_sd_div_table
 
-While I agree that deadlines and requirements do not always allow to
-go the "everything upstream immediately" route, my experience has
-shown me that forks or patches are ultimately costing more than using
-clean upstream code, in particular if a device is to be supported for
-years through new versions of the upstream code.
+> +       { 0x0, 2 },
+> +       { 0x1, 4 },
+> +       { 0x2, 6 },
+> +       { 0x3, 8 },
+> +       { 0x4, 10 },
+> +       { 0x5, 12 },
+> +       { 0x6, 14 },
+> +       { 0x7, 16 },
+> +       { 0 }
+> +};
+> +
+> +static const struct clk_div_table ast2600_sd_div_a2_table[] = {
 
-As an example, we've been using an i2c sensor chip that needs to be
-configured at runtime. Upstream support for that was (still is)
-missing. The patch to do that specifically for us was 1 line -
-literally. However, it's incredibly difficult to discover and
-understand this one line years later. Together with hwmon maintainers
-I've spent the last 2 weeks designing and implementing various
-versions of a generic solution that we hope can be used for other
-hwmon drivers. I understand that I'm in a fortunate position so I can
-spend that time. But I still need to justify to my manager and myself
-why it's worth it, which I believe I can.
+For naming; can I propose we omit the revision for the A2/A3+ case? So
+this one would be called:
 
-In my experience, having patches checked in is just that - a temporary
-patch - not a solution. From Oxford's dictionary: "to patch: treat
-someone's injuries or repair the damage to something, especially
-hastily" (I know there's also a definition of the noun in the realm of
-computing).
+ast2600_sd_div_table
 
-So while I agree that not allowing patches is actually making things
-harder for some in the short term, I truly believe that it's going to
-make things better for everyone in the long term.
+> +       { 0x0, 2 },
+> +       { 0x1, 4 },
+> +       { 0x2, 6 },
+> +       { 0x3, 8 },
+> +       { 0x4, 10 },
+> +       { 0x5, 12 },
+> +       { 0x6, 14 },
+> +       { 0x7, 1 },
+> +       { 0 }
+> +};
+> +
+>  /* For hpll/dpll/epll/mpll */
+>  static struct clk_hw *ast2600_calc_pll(const char *name, u32 val)
+>  {
+> @@ -424,6 +448,11 @@ static const char *const emmc_extclk_parent_names[] = {
+>         "mpll",
+>  };
+>
+> +static const char *const sd_extclk_parent_names[] = {
+> +       "hclk",
+> +       "apll",
+> +};
+> +
+>  static const char * const vclk_parent_names[] = {
+>         "dpll",
+>         "d1pll",
+> @@ -523,18 +552,42 @@ static int aspeed_g6_clk_probe(struct platform_device *pdev)
+>                 return PTR_ERR(hw);
+>         aspeed_g6_clk_data->hws[ASPEED_CLK_EMMC] = hw;
+>
+> -       /* SD/SDIO clock divider and gate */
+> -       hw = clk_hw_register_gate(dev, "sd_extclk_gate", "hpll", 0,
+> -                       scu_g6_base + ASPEED_G6_CLK_SELECTION4, 31, 0,
+> -                       &aspeed_g6_clk_lock);
+> +       clk_hw_register_fixed_rate(NULL, "hclk", NULL, 0, 200000000);
+> +
+> +       regmap_read(map, 0x310, &val);
 
-Oskar.
+Use the #defines for the register number.
 
-On Wed, Sep 22, 2021 at 5:03 AM Alexander Amelkin <a.amelkin@yadro.com> wro=
-te:
+> +       hw = clk_hw_register_mux(dev, "sd_extclk_mux",
+> +                                sd_extclk_parent_names,
+> +                                ARRAY_SIZE(sd_extclk_parent_names), 0,
+> +                                scu_g6_base + ASPEED_G6_CLK_SELECTION4, 8, 1,
+> +                                0, &aspeed_g6_clk_lock);
+>         if (IS_ERR(hw))
+>                 return PTR_ERR(hw);
+> -       hw = clk_hw_register_divider_table(dev, "sd_extclk", "sd_extclk_gate",
+> -                       0, scu_g6_base + ASPEED_G6_CLK_SELECTION4, 28, 3, 0,
+> -                       ast2600_div_table,
+> -                       &aspeed_g6_clk_lock);
+> +
+> +       hw = clk_hw_register_gate(dev, "sd_extclk_gate", "sd_extclk_mux",
+> +                                 0, scu_g6_base + ASPEED_G6_CLK_SELECTION4,
+> +                                 31, 0, &aspeed_g6_clk_lock);
+>         if (IS_ERR(hw))
+>                 return PTR_ERR(hw);
+> +
+> +       regmap_read(map, 0x14, &val);
+> +       /* AST2600-A2/A3 clock divisor is different from AST2600-A1 */
+> +       if (((val & GENMASK(23, 16)) >> 16) >= 2) {
+
+I've got a little patch that I recommend you base your series on (feel
+free to include it in your series when posting v2 to make it
+self-contained):
+
+https://lore.kernel.org/all/20210922235449.213631-1-joel@jms.id.au/
+
+With this one you can do:
+
+const struct clk_div_table* table;
+
+ if (soc_rev >= 2)
+   table = ast2600_sd_div_table;
+else
+   table = ast2600_a1_sd_div_table;
+
+Then you don't need to duplicate the registration for each case:
+
+               hw = clk_hw_register_divider_table(dev, "sd_extclk",
+"sd_extclk_gate",
+                                       0, scu_g6_base +
+ASPEED_G6_CLK_SELECTION4, 28, 3, 0,
+                                       table,
+                                       &aspeed_g6_clk_lock);
+               if (IS_ERR(hw))
+                       return PTR_ERR(hw);
+
+> +               /* AST2600-A2/A3 */
+> +               hw = clk_hw_register_divider_table(dev, "sd_extclk", "sd_extclk_gate",
+> +                                       0, scu_g6_base + ASPEED_G6_CLK_SELECTION4, 28, 3, 0,
+> +                                       ast2600_sd_div_a2_table,
+> +                                       &aspeed_g6_clk_lock);
+> +               if (IS_ERR(hw))
+> +                       return PTR_ERR(hw);
+> +       } else {
+> +               /* AST2600-A1 */
+> +               hw = clk_hw_register_divider_table(dev, "sd_extclk", "sd_extclk_gate",
+> +                                       0, scu_g6_base + ASPEED_G6_CLK_SELECTION4, 28, 3, 0,
+> +                                       ast2600_sd_div_a1_table,
+> +                                       &aspeed_g6_clk_lock);
+> +               if (IS_ERR(hw))
+> +                       return PTR_ERR(hw);
+> +       }
+>         aspeed_g6_clk_data->hws[ASPEED_CLK_SDIO] = hw;
 >
-> Hi Ed!
+>         /* MAC1/2 RMII 50MHz RCLK */
+> --
+> 2.17.1
 >
-> Most patches you listed (at least those for YADRO) are
-> platform specific and no repository will accept them for
-> a general audience.
->
-> No vendor, I'm confident, is willing to spend endless time
-> persuading maintainers to include vendor-specific or
-> platform-specific patches into their repositories.
->
-> For instance,
-> meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0002-Add-support-for-=
-boot-initiator-mailbox.patch
-> is there because our customers demand this feature and we failed
-> proving to openbmc maintainers that this is a needed feature
-> and not a "security threat" or something. We honestly tried for months.
->
-> On the other hand,
-> meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0004-aspeed-add-bmc-posit=
-ion-support.patch
-> is strictly hardware-specific and is not needed as is for other
-> vendors or platforms, and we don't have time to make it a
-> generic solution. If we ever do have that time, we will surely
-> push the developed generic solution to the appropriate
-> repository.
->
-> What you propose now will force vendors to move farther away
-> from upstream and create their own forks of openbmc where
-> they will not even try to upstream their changes and will just drift
-> farther and farther away.
->
-> Is that what you really pursue or did I get your idea wrong?
-> So far it looks to me like a destructive decision.
->
-> WBR, Alexander.
->
-> 22.09.2021 01:35, Ed Tanous =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
-> > A few new features have been merged into CI that will now disallow
-> > .patch files within most meta layers.  This is due to a significant
-> > number of them popping up in both reviews and in the repo itself,
-> > despite having documented rules to the contrary.  The hope here is to
-> > better codify our rules, and give very quick response to submitters
-> > about the right procedure so we can encourage getting patches in
-> > faster, and keep machines buildable against master.  As the patches
-> > state, meta-phosphor is still allowed to contain patch files as an
-> > escape hatch, if the community decides it's required.
-> >
-> > The patchsets in question are here:
-> > https://gerrit.openbmc-project.xyz/q/repotest
-> >
-> > And add some ability for us to make more of these expectations for
-> > meta layers codified in the future.
-> >
-> > The script itself is here:
-> > https://github.com/openbmc/openbmc/blob/master/meta-phosphor/scripts/ru=
-n-repotest.sh
-> > and is runnable on any tree prior to submitting to CI.  We currently
-> > have the following patches in meta layers.
-> >
-> > meta-amd/meta-ethanolx/recipes-x86/chassis/x86-power-control/0001-Amd-p=
-ower-control-modifications-for-EthanolX.patch
-> > meta-ampere/meta-common/recipes-devtools/mtd/mtd-utils/0001-flashcp-sup=
-port-offset-option.patch
-> > meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0001-aspeed-scu-=
-Switch-PWM-pin-to-GPIO-input-mode.patch
-> > meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0002-aspeed-Disa=
-ble-internal-PD-resistors-for-GPIOs.patch
-> > meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0003-aspeed-supp=
-ort-passing-system-reset-status-to-kernel.patch
-> > meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0004-aspeed-add-=
-gpio-support.patch
-> > meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0005-aspeed-Enab=
-le-SPI-master-mode.patch
-> > meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0006-aspeed-supp=
-ort-Mt.Jade-platform-init.patch
-> > meta-aspeed/recipes-bsp/u-boot/files/default-gcc.patch
-> > meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0001-byteda=
-nce-g220a-Enable-ipmb.patch
-> > meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0003-misc-a=
-speed-Add-Aspeed-UART-routing-control-driver.patch
-> > meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0004-ARM-dt=
-s-aspeed-Add-uart-routing-node.patch
-> > meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0005-ARM-dt=
-s-aspeed-Enable-g220a-uart-route.patch
-> > meta-bytedance/meta-g220a/recipes-phosphor/ipmi/phosphor-node-manager-p=
-roxy/0001-Remove-Total_Power-sensor.patch
-> > meta-facebook/meta-bletchley/recipes-bsp/u-boot/u-boot-aspeed-sdk/0001-=
-u-boot-ast2600-57600-baudrate-for-bletchley.patch
-> > meta-facebook/meta-tiogapass/recipes-bsp/u-boot/u-boot-aspeed/0001-conf=
-igs-ast-common-use-57600-baud-rate-to-match-Tiog.patch
-> > meta-facebook/meta-yosemitev2/recipes-bsp/u-boot/u-boot-aspeed/0001-boa=
-rd-aspeed-Add-Mux-for-yosemitev2.patch
-> > meta-facebook/meta-yosemitev2/recipes-bsp/u-boot/u-boot-aspeed/0002-spl=
--host-console-handle.patch
-> > meta-google/dynamic-layers/nuvoton-layer/recipes-bsp/images/npcm7xx-igp=
-s/0001-Set-FIU0_DRD_CFG-and-FIU_Clk_divider-for-gbmc-hoth.patch
-> > meta-google/recipes-extended/libconfig/files/0001-conf2struct-Use-the-r=
-ight-perl.patch
-> > meta-google/recipes-extended/libconfig/files/0001-makefile-Add-missing-=
-LDFLAGS.patch
-> > meta-google/recipes-phosphor/initrdscripts/obmc-phosphor-initfs/rwfs-cl=
-ean-dev.patch
-> > meta-ingrasys/meta-zaius/recipes-bsp/u-boot/u-boot-aspeed/0001-board-as=
-peed-Add-reset_phy-for-Zaius.patch
-> > meta-nuvoton/recipes-bsp/images/npcm7xx-igps/0001-Adjust-paths-for-use-=
-with-Bitbake.patch
-> > meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0001-Add-system-reset-s=
-tatus-support.patch
-> > meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0002-config-ast-common-=
-set-fieldmode-to-true.patch
-> > meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0003-aspeed-add-gpio-su=
-pport.patch
-> > meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0004-aspeed-add-bmc-pos=
-ition-support.patch
-> > meta-yadro/meta-nicole/recipes-kernel/linux/linux-aspeed/0001-Add-NCSI-=
-channel-selector.patch
-> > meta-yadro/meta-nicole/recipes-phosphor/host/op-proc-control/0001-Stop-=
-and-send-SRESET-for-one-thread-only.patch
-> > meta-yadro/recipes-phosphor/dbus/phosphor-dbus-interfaces/0001-Add-boot=
--initiator-mailbox-interface.patch
-> > meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0001-Add-support-fo=
-r-persistent-only-settings.patch
-> > meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0002-Add-support-fo=
-r-boot-initiator-mailbox.patch
-> > meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0003-Fix-version-pa=
-rsing-update-AUX-revision-info.patch
-> >
-> > If you are a maintainer of these meta layers, please work to get these
-> > patches submitted to the correct repositories using their prefered
-> > review (email for linux/u-boot, gerrit for phosphor repos).
-> >
-> > Thanks,
-> >
-> > -Ed
