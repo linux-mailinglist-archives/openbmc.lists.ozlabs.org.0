@@ -1,69 +1,131 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12C4B415590
-	for <lists+openbmc@lfdr.de>; Thu, 23 Sep 2021 04:50:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17CDB41583D
+	for <lists+openbmc@lfdr.de>; Thu, 23 Sep 2021 08:32:05 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HFKQc64tQz2ypL
-	for <lists+openbmc@lfdr.de>; Thu, 23 Sep 2021 12:50:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HFQLW0LDNz2yQ4
+	for <lists+openbmc@lfdr.de>; Thu, 23 Sep 2021 16:32:03 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=qPYRCrH1;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=CglgP+3o;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::12c;
- helo=mail-lf1-x12c.google.com; envelope-from=jebr@google.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=aspeedtech.com (client-ip=40.107.130.111;
+ helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ envelope-from=chin-ting_kuo@aspeedtech.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=qPYRCrH1; dkim-atps=neutral
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com
- [IPv6:2a00:1450:4864:20::12c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
+ header.a=rsa-sha256 header.s=selector1 header.b=CglgP+3o; 
+ dkim-atps=neutral
+Received: from APC01-HK2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1300111.outbound.protection.outlook.com [40.107.130.111])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HFKQ91VLXz2yJ8
- for <openbmc@lists.ozlabs.org>; Thu, 23 Sep 2021 12:49:51 +1000 (AEST)
-Received: by mail-lf1-x12c.google.com with SMTP id t10so20423749lfd.8
- for <openbmc@lists.ozlabs.org>; Wed, 22 Sep 2021 19:49:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=uPoswZzwZIeVZwEKB6TldfyFS4V41ejOcTMja4bNb9M=;
- b=qPYRCrH15qijNppwaiuXGFFkNfAIAL9AXd6VmYrzmR1xr4lvn4r1ue0GVA3cgP1lJK
- wP03AOO0rhu/ziOzZG4k0EmpjgoRwMoG0FbOxyEEqtKGERDJxvbcpW2kYQV5VwUVGmNl
- NamcusparrVc36ry15o8+h1JceMCoC/pf6kXOZmf1aq1DAKaLdYgD4dwK1hSD+Cc6jY/
- EY5d5YcBDxI1VoszXOCtCRT/k8hhSS7OrxyYqAYM0OWDSCb1iSXCaG90oFkvWLKpo6Fz
- FyvT3qs/R6tPKgtuuwSPBe20WucUmvCo0hbTESWIYuD2xVYcY0ICBpSrBVcS2w4pwpoc
- 0sxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=uPoswZzwZIeVZwEKB6TldfyFS4V41ejOcTMja4bNb9M=;
- b=cUrFR2Kn860Syc7o6EtKreXgaAdGsXFosNXTJn+zhWgAFuRK99datzRLLp1em4wK5P
- 0z4hVEIRST9tijx6INyjm1BrT3MBMREBbna0x6+Q9J/v5qhN3jATbkYPS6YX/WujPgC4
- cBLz3GcGNQYYnuaaw/iuE2UkIffmvozhdXBhqM48MyozIOBP6aZ9Buj/gYQeTF8Tujpx
- 6OnX59hfp75gBQkY+UTD7NwgpMOtM81W3EPYmJc5A8PSlh+1UN/7Dv+C2gkX3ydlwFuU
- xUUjr50Ju3W/U4+U9INN2EXpDS04pVvwPMW6b6NvSyEBaUSX+f6tx1VlK0F/nFhuxg6Z
- r8VA==
-X-Gm-Message-State: AOAM533ZO/L7x53qaCISYiGUANwLQ9bSbM0IjWDa7m2bKsx6pt0ofGUv
- gdOIjIbaOlj/fvf1YTQq/OCqLnmFCDuAHIj2jVKwZA==
-X-Google-Smtp-Source: ABdhPJyG4kDiekuHZyT62dJAtnFTsnObCawIaG9fUP9yFvOKdYr7PAF0vTP1AOKerC65uNxEb+Fe0wnhR0dwJIU8DXI=
-X-Received: by 2002:a2e:7f0f:: with SMTP id a15mr2780813ljd.54.1632365382726; 
- Wed, 22 Sep 2021 19:49:42 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HFP0k3wlQz2yLg;
+ Thu, 23 Sep 2021 15:31:29 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UWLCUSX4xH9d3rFQPlYaboMxO8OvJymluOys9RTHNI+0HETfA8XLd1hzKBHCc9DjV/SjJaUW9f303n/dupEcueWH73k9w+aG+6qbola7JhOCL+eiSNUbNcjgjX/J5U63xiwJA0D1CDMz+KVjZoCESBf6kg7X2uaOQVGyTkyj1B487PRRNYXgHGFUWoo1oXd36CsCSAbuiwhQ5XMHTb1mE5FBZEZ+oZ1o9zOPx1hztUDLMPtqISEVdo/Me5GAcpEwF7JV3yr08vU9u3rWUWvhsC4vyotCK2gvoEntcDlEQnawZRs1wbIWnxJMDZa2+MbqvlL406mtVFIFsgBZ56xK3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version; 
+ bh=u9g/48q06aL3pjrArsxxaJRuvH/rvaFWQJT5cGIUWEw=;
+ b=evRSA4pok1JSA0wZzV7+QYV4mFJwRMFprrpo7r4UkslU/m3STNJzOzq/2nmK0FIYevOYNl9s9vbNID7O1tLzgj+TzTN/PfnHBTPfgs7RsDzjxYp3y6fJrjpMdZB3BL/KzWGrBNan9tQ5lNeRyBgDlSy+lzmA+TaxQiwFTqyETK7ovo4lQflHmqNRqzys9gCGAOye/PQXaFLxCs1mcdagOmWO5RUAYHdXKtYU5NRArvNjznIuEVCyoBWO1ETXHSvCYkEG75qrlyMLJ7C9Cdg2sb9kW1GO0cgt+KQcd6Q15GghTsJoQZjirt/Io1gSIW+Eq21W8JJRZG4zVYLcOOP+nQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=u9g/48q06aL3pjrArsxxaJRuvH/rvaFWQJT5cGIUWEw=;
+ b=CglgP+3ozHEIUizeZ/O+vgDblVR3eMxIgNhW9y/H4ZSeSY1nal+z0ob9ffyIWVEbgS/VKGSzxcc3u3xi339rGqf+McokezpJP4ix+89zy2V5z2CMOJbfQVAbgOQtblfmQqDkTIl2nA5yZIwfMIzSmKviPBy+BLJihsRtz5J7EYzj7oiEQql5a+m4BRzRr4JnzzjhYesgDIv3S4VpTET4d5TgfhLJ3/7kxFzlZL11RpyiwTW52QTNpJz3XGNRbgzCJZAqF5dMrWgEopzl6Mj0DauWtLXoE8mA5xIIOuxUka2I2Ggnlf8L96GIOLQ+YuAXMmr2b4kij99+ODuW5BL71g==
+Received: from HK0PR06MB2786.apcprd06.prod.outlook.com (2603:1096:203:5b::22)
+ by HK2PR0601MB2033.apcprd06.prod.outlook.com (2603:1096:202:8::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4523.16; Thu, 23 Sep
+ 2021 05:31:08 +0000
+Received: from HK0PR06MB2786.apcprd06.prod.outlook.com
+ ([fe80::ddf1:e9d4:c209:8ab8]) by HK0PR06MB2786.apcprd06.prod.outlook.com
+ ([fe80::ddf1:e9d4:c209:8ab8%7]) with mapi id 15.20.4523.021; Thu, 23 Sep 2021
+ 05:31:08 +0000
+From: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: RE: [PATCH 01/10] clk: aspeed: ast2600: Porting sdhci clock source
+Thread-Topic: [PATCH 01/10] clk: aspeed: ast2600: Porting sdhci clock source
+Thread-Index: AQHXr50B2Joa/cUtbEObI5DULpTJPKuwvVCAgABAw5A=
+Date: Thu, 23 Sep 2021 05:31:08 +0000
+Message-ID: <HK0PR06MB2786CF9338751160A3BA55CFB2A39@HK0PR06MB2786.apcprd06.prod.outlook.com>
+References: <20210922103116.30652-1-chin-ting_kuo@aspeedtech.com>
+ <20210922103116.30652-2-chin-ting_kuo@aspeedtech.com>
+ <CACPK8XeeEeQb52ZHYaN49r_Vso-xUHamDyrA+bFvP4_ESQs9dA@mail.gmail.com>
+In-Reply-To: <CACPK8XeeEeQb52ZHYaN49r_Vso-xUHamDyrA+bFvP4_ESQs9dA@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: jms.id.au; dkim=none (message not signed)
+ header.d=none;jms.id.au; dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: a58d964d-1414-425c-53ad-08d97e5358e3
+x-ms-traffictypediagnostic: HK2PR0601MB2033:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <HK2PR0601MB2033E58F53695F03BBA977CDB2A39@HK2PR0601MB2033.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ho/LEbrk39U+PC+/HapA7L0sHHIMhwr8ypLVGzDTel/8tEi08HcU74RfE41YvQeZ/yVYPVFTPSVMtmoj18r7mBnh0B0pzwaUHQsjHvEnHwlf71F185dDq2FmS6aWe4RRLkPE0wHuslc6g3l67RJQgjIEgdxWqlexC0YSsWRAsjswVLGMWVPeFW6ZmW9GNWfnpJ0HXJ3gFK5awnLjyO2wn6L7X1ZfCO8VhaO3U2Mkgdr1vYBBTEWtaG3AXPVok0GI7+fOnf4EiTVgcYDemqBao1YvzIPYm8GKJdo7GE3aYCc2rw/r0OH97br4tU2G0Wx0oNVkUi3UJJOKNUbifUtX6MhEEgX7hZCmyyhzHsH398lDBqJzcWXEKsFDo8I73vr1/gxjWm1fhbCPx0ahdIIKdRppDIFf7kPE6IOlGtlKBu5SBKwM7HxInlMQKaGBcxvlMB5sSP8Ko/DRG6Pd6MIKVgId0o5DfyfQqeqrfbQxj9Gwsfk77EFBc83cLVXdWPm/rwR0GqU1HyCCERl7PWRw2z8uZhCzgdSxyngUWf95XMeldsuEmAzmshZ7hHSmZVtdreeVhcAlyQji1bWm7ipKtMnxZhOLyO+7DRJDL+z2hlLEARXvqAOn8RuFjy/WuUU+NC5c5z+avq1mB2beFhwHZowQcuO9cgvRLeAhC4nxtZVdJI3GdFppqekaUv+NtxIYdnI58Rw1kj+cHgFaCGGli4g3IVBKMNnOkmTijoXGp1EgrNUjbaz4EZZsCpAl+VTuY0yi/G6+Yi/O8Lc7jh3jiFSjJABnQfZcE90N0c2uC/A=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR06MB2786.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(136003)(39850400004)(376002)(396003)(346002)(366004)(38070700005)(966005)(2906002)(33656002)(7416002)(5660300002)(8676002)(8936002)(508600001)(4326008)(26005)(107886003)(76116006)(64756008)(9686003)(86362001)(55016002)(66476007)(66556008)(66446008)(83380400001)(52536014)(6506007)(53546011)(71200400001)(66946007)(6916009)(186003)(7696005)(122000001)(38100700002)(54906003)(316002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZllIemQvNkdVNkZvVlg0M0tEOXBOcUdxNnRtWVYrNlNVWnBXM3d4cXRUZkJn?=
+ =?utf-8?B?Q3BsY0hjMGVxTmgyRGlZU082czFiTi9FeEVxR2JURFFwMHFzRzhFbmRjZGdU?=
+ =?utf-8?B?Rk9udnFQSkFBQzB4TlQ1VTE4Zy9FY012c3N6M0l5YlZQRjJzTkxNZ1FXbGRV?=
+ =?utf-8?B?MEx3YmpqVk5jUGcvUXVhK3BYZTc0NVN0QlJSTUlTNno3NkFsNkszcjR1QVBI?=
+ =?utf-8?B?OWV4Q2d4aHN6SkZxZ09hVEJnV1BEeFJaTXRET2hKTlh1RWhuN1ZZVGpUZVJJ?=
+ =?utf-8?B?YjVJbzlhbmtrQ2g1WTd5ZnNESlQwZDFRenR2bi9HcHVFUEdDTTZZTTJmY0Ev?=
+ =?utf-8?B?UjNndlVFZytHeGsvQjI0V3Q5enpIekl6TTdnUjFYK3Rqb0pST1gwaHNWdDkw?=
+ =?utf-8?B?bXlLbnBEMXArejZ2MytiSXZ5K1pHdWhxYkdzRUVhaXNoYm8wdi9DVXVnT1Zo?=
+ =?utf-8?B?UlE4WlNMc2xjelc2RFJuWnE3SHRLc3RGeHgzL3pxVlZpU3ZEdXdjRWlpN0Ja?=
+ =?utf-8?B?Rk1YTTEyU2NKY21ueXYwWWxmRnVBcVdhaVpNOVlRYkpLem9yQWVCc0Zadk9I?=
+ =?utf-8?B?bkZrU3lHd1dXd1F5NFMvS0J3aWhncGdnNTk2TlJ5aXludlpMZkJiSzR2bVpI?=
+ =?utf-8?B?SVJ1c0pGQnUrTVFnRjRqQkJlRUExMVQzV0hsVnRydTBIVWdyZ0d4eHhWN0lR?=
+ =?utf-8?B?RXR1ODhtaW9rd21aT1R5emJyM3pqSUdrTnBxN0RmUlEwUXJFRTBtQ044amFk?=
+ =?utf-8?B?alJiamVRemI4aUlYTEVQNGo4TzQyRlZTb2lTQ0ROdWd4U0J5cFZ1STBPV3NE?=
+ =?utf-8?B?c3hjMGlJbUtPSk5EQlpiMTJQYkZtQVBVOVcwbWd5b0hkeFRDMTJORXo1OXZN?=
+ =?utf-8?B?Y3ljRldDTUd2S2RBYWk3eTR5WmZKRE5sT0RzaVY0WloyZFRlN3FwZnJzQkVx?=
+ =?utf-8?B?cW5iR1dGVWZQVXdVSkE4bHFEd1FNOXF5ZGtuQjNOZTJVQkdVU2hWVkowOG5p?=
+ =?utf-8?B?N2VBVGkvU1RSTVh6aHl4dlVhdkpHUlpBRmQ1eTNLRHFGSGdkZWVndGpvTit4?=
+ =?utf-8?B?NG1VQmNzWmI1aFVhMmpSYlFsaitDZ0xTWWo0NS9IaUU5aHBycStUa1ZiZE1q?=
+ =?utf-8?B?VytWUzdqTEx2Q0g5K2FKd0c3NHQ5TUJnYm1IUjVEMjNRUzBzcXhBdDlqSFFi?=
+ =?utf-8?B?QUdrWXBMa0czUzhuYkt5OFl3bXZTUUdZMENMb290alVqa2g0dm1kVEpKcjdS?=
+ =?utf-8?B?cWJLSXIxcUcrVnhjelUzZnlHL0pjdVdldVFxTURKbnNlQjYzaXpNTDI4eEtk?=
+ =?utf-8?B?NlhzendPN21ucXd3OG5qQjEyQStpcVQ4VkNKbVZzS2hUWndHd092VEpLSlU0?=
+ =?utf-8?B?eG1GYTNxQkgyQUhUbm0xYkJLb1FGR3YrR0lram1sQWE2Vk5kUW5PMnlRZVp4?=
+ =?utf-8?B?eFRmd1ZoR0hXM0hyTEw2YlJqR213VHNhRk14WWl4cnpBVFdyK256bGlVMVBw?=
+ =?utf-8?B?eVVMYWhYejV0OWF3WUdmUzBSbzd1aUJFa1luVlhKdzIxaytMaVhFNUFNWHVl?=
+ =?utf-8?B?OEc3Vm5oQ25XZFllcVlDOFFQVDhTY21BQ1kzVzJyak1GL1pZNmVhRXF5SDFG?=
+ =?utf-8?B?RlRmVi9wbjZhRFRwYk0wRlgxY25jbUlGWDNqbG05OTFwc0ppMlJ2RjdkczlL?=
+ =?utf-8?B?VWF3Wk5HdWE5andRUjRLRVNpYWxBNmFUMEE3ekk1TnBqVGxQU0RWQW1lQWF6?=
+ =?utf-8?Q?GwJq9BJErr2Db20EM4hYJC70Z0wuQUiKs/g2mId?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAH2-KxDe6hR1V-Lz1k8cdD11jEquy4UhR4LfLhg37E5EG42EJg@mail.gmail.com>
- <67dbec1b-8598-8814-e85e-848b2eb123cf@yadro.com>
- <CABoTLcRGjXV_QBnAv6J0+cZL9ahjjzLBai2ANJ-YkzYOi_aYJA@mail.gmail.com>
-In-Reply-To: <CABoTLcRGjXV_QBnAv6J0+cZL9ahjjzLBai2ANJ-YkzYOi_aYJA@mail.gmail.com>
-From: John Broadbent <jebr@google.com>
-Date: Wed, 22 Sep 2021 19:49:31 -0700
-Message-ID: <CAPw1Ef92SizTkeZtjno12yA0SUUrJEHmENk0YxpxtYszPJ62Ug@mail.gmail.com>
-Subject: Re: New test for patches in openbmc/openbmc
-To: Oskar Senft <osk@google.com>
-Content-Type: multipart/alternative; boundary="000000000000c8bccc05cca0aed0"
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB2786.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a58d964d-1414-425c-53ad-08d97e5358e3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Sep 2021 05:31:08.7184 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: wKAn2Em9pppMIo2Z0l8lVb9kOpHkYFfBV8viQR8wlp8Pymf31Fj3oCYWEEKL63B455d4KV4kqowZEKfHlY6j/Pfgft038Kp72Cvr/TeZ/pA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR0601MB2033
+X-Mailman-Approved-At: Thu, 23 Sep 2021 16:31:39 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,488 +137,137 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>, Alexander Amelkin <a.amelkin@yadro.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: devicetree <devicetree@vger.kernel.org>,
+ "linux-clk@vger.kernel.org" <linux-clk@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, BMC-SW <BMC-SW@aspeedtech.com>,
+ Stephen Boyd <sboyd@kernel.org>, Steven Lee <steven_lee@aspeedtech.com>,
+ Michael Turquette <mturquette@baylibre.com>,
+ linux-mmc <linux-mmc@vger.kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Andrew Jeffery <andrew@aj.id.au>, Rob Herring <robh+dt@kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000c8bccc05cca0aed0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-I am concerned this change will encourage both patches in private layers,
-and forks of the entire project.
-
-Oskar is right, patches should be temporary fixes, but I have worked
-around, and some organizations never clean up their "temporary fixes".
-Their engineers move from one fire to the next. I suppose, I would
-prefer to see .patch files in openbmc meta layers rather than have the same
-.patch file pushed to a private layer, or worse a fork of openbmc.
-
-Where can I get some more context on why .patch files are disallowed from
-open bmc meta layers?
-
-I genuinely appreciate all their effort and hard work
-the maintainer put in. They have always guided the community in the
-right direction, but some more context for this decision might be helpful
-for new people, such as myself.
-
-Thank you
-John Broadbent
-
-On Wed, Sep 22, 2021 at 4:36 PM Oskar Senft <osk@google.com> wrote:
-
-> Hi Alexander
->
-> While I can understand your position, I think there's a bigger picture
-> to consider. In my understanding Open Source works by individual /
-> independent contributors providing their use cases, knowledge and
-> experience by means of designs and source code to the world. Since
-> there are many individuals trying to do different things and some
-> people (maintainers) being the gatekeepers for what can be submitted,
-> it of course often gets to a point where not everyone agrees.
->
-> Trust me, I've been there. I had many occasions where I needed a new
-> feature or a fix to satisfy project requirements and timelines and was
-> not able to upstream it in the given time. I sometimes gave up, often
-> found a different, "better" solution and many times worked with the
-> community to find a solution that would be accepted upstream.
->
-> While I agree that deadlines and requirements do not always allow to
-> go the "everything upstream immediately" route, my experience has
-> shown me that forks or patches are ultimately costing more than using
-> clean upstream code, in particular if a device is to be supported for
-> years through new versions of the upstream code.
->
-> As an example, we've been using an i2c sensor chip that needs to be
-> configured at runtime. Upstream support for that was (still is)
-> missing. The patch to do that specifically for us was 1 line -
-> literally. However, it's incredibly difficult to discover and
-> understand this one line years later. Together with hwmon maintainers
-> I've spent the last 2 weeks designing and implementing various
-> versions of a generic solution that we hope can be used for other
-> hwmon drivers. I understand that I'm in a fortunate position so I can
-> spend that time. But I still need to justify to my manager and myself
-> why it's worth it, which I believe I can.
->
-> In my experience, having patches checked in is just that - a temporary
-> patch - not a solution. From Oxford's dictionary: "to patch: treat
-> someone's injuries or repair the damage to something, especially
-> hastily" (I know there's also a definition of the noun in the realm of
-> computing).
->
-> So while I agree that not allowing patches is actually making things
-> harder for some in the short term, I truly believe that it's going to
-> make things better for everyone in the long term.
->
-> Oskar.
->
-> On Wed, Sep 22, 2021 at 5:03 AM Alexander Amelkin <a.amelkin@yadro.com>
-> wrote:
-> >
-> > Hi Ed!
-> >
-> > Most patches you listed (at least those for YADRO) are
-> > platform specific and no repository will accept them for
-> > a general audience.
-> >
-> > No vendor, I'm confident, is willing to spend endless time
-> > persuading maintainers to include vendor-specific or
-> > platform-specific patches into their repositories.
-> >
-> > For instance,
-> >
-> meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0002-Add-support-for-=
-boot-initiator-mailbox.patch
-> > is there because our customers demand this feature and we failed
-> > proving to openbmc maintainers that this is a needed feature
-> > and not a "security threat" or something. We honestly tried for months.
-> >
-> > On the other hand,
-> >
-> meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0004-aspeed-add-bmc-posit=
-ion-support.patch
-> > is strictly hardware-specific and is not needed as is for other
-> > vendors or platforms, and we don't have time to make it a
-> > generic solution. If we ever do have that time, we will surely
-> > push the developed generic solution to the appropriate
-> > repository.
-> >
-> > What you propose now will force vendors to move farther away
-> > from upstream and create their own forks of openbmc where
-> > they will not even try to upstream their changes and will just drift
-> > farther and farther away.
-> >
-> > Is that what you really pursue or did I get your idea wrong?
-> > So far it looks to me like a destructive decision.
-> >
-> > WBR, Alexander.
-> >
-> > 22.09.2021 01:35, Ed Tanous =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
-> > > A few new features have been merged into CI that will now disallow
-> > > .patch files within most meta layers.  This is due to a significant
-> > > number of them popping up in both reviews and in the repo itself,
-> > > despite having documented rules to the contrary.  The hope here is to
-> > > better codify our rules, and give very quick response to submitters
-> > > about the right procedure so we can encourage getting patches in
-> > > faster, and keep machines buildable against master.  As the patches
-> > > state, meta-phosphor is still allowed to contain patch files as an
-> > > escape hatch, if the community decides it's required.
-> > >
-> > > The patchsets in question are here:
-> > > https://gerrit.openbmc-project.xyz/q/repotest
-> > >
-> > > And add some ability for us to make more of these expectations for
-> > > meta layers codified in the future.
-> > >
-> > > The script itself is here:
-> > >
-> https://github.com/openbmc/openbmc/blob/master/meta-phosphor/scripts/run-=
-repotest.sh
-> > > and is runnable on any tree prior to submitting to CI.  We currently
-> > > have the following patches in meta layers.
-> > >
-> > >
-> meta-amd/meta-ethanolx/recipes-x86/chassis/x86-power-control/0001-Amd-pow=
-er-control-modifications-for-EthanolX.patch
-> > >
-> meta-ampere/meta-common/recipes-devtools/mtd/mtd-utils/0001-flashcp-suppo=
-rt-offset-option.patch
-> > >
-> meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0001-aspeed-scu-Sw=
-itch-PWM-pin-to-GPIO-input-mode.patch
-> > >
-> meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0002-aspeed-Disabl=
-e-internal-PD-resistors-for-GPIOs.patch
-> > >
-> meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0003-aspeed-suppor=
-t-passing-system-reset-status-to-kernel.patch
-> > >
-> meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0004-aspeed-add-gp=
-io-support.patch
-> > >
-> meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0005-aspeed-Enable=
--SPI-master-mode.patch
-> > >
-> meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0006-aspeed-suppor=
-t-Mt.Jade-platform-init.patch
-> > > meta-aspeed/recipes-bsp/u-boot/files/default-gcc.patch
-> > >
-> meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0001-bytedanc=
-e-g220a-Enable-ipmb.patch
-> > >
-> meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0003-misc-asp=
-eed-Add-Aspeed-UART-routing-control-driver.patch
-> > >
-> meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0004-ARM-dts-=
-aspeed-Add-uart-routing-node.patch
-> > >
-> meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0005-ARM-dts-=
-aspeed-Enable-g220a-uart-route.patch
-> > >
-> meta-bytedance/meta-g220a/recipes-phosphor/ipmi/phosphor-node-manager-pro=
-xy/0001-Remove-Total_Power-sensor.patch
-> > >
-> meta-facebook/meta-bletchley/recipes-bsp/u-boot/u-boot-aspeed-sdk/0001-u-=
-boot-ast2600-57600-baudrate-for-bletchley.patch
-> > >
-> meta-facebook/meta-tiogapass/recipes-bsp/u-boot/u-boot-aspeed/0001-config=
-s-ast-common-use-57600-baud-rate-to-match-Tiog.patch
-> > >
-> meta-facebook/meta-yosemitev2/recipes-bsp/u-boot/u-boot-aspeed/0001-board=
--aspeed-Add-Mux-for-yosemitev2.patch
-> > >
-> meta-facebook/meta-yosemitev2/recipes-bsp/u-boot/u-boot-aspeed/0002-spl-h=
-ost-console-handle.patch
-> > >
-> meta-google/dynamic-layers/nuvoton-layer/recipes-bsp/images/npcm7xx-igps/=
-0001-Set-FIU0_DRD_CFG-and-FIU_Clk_divider-for-gbmc-hoth.patch
-> > >
-> meta-google/recipes-extended/libconfig/files/0001-conf2struct-Use-the-rig=
-ht-perl.patch
-> > >
-> meta-google/recipes-extended/libconfig/files/0001-makefile-Add-missing-LD=
-FLAGS.patch
-> > >
-> meta-google/recipes-phosphor/initrdscripts/obmc-phosphor-initfs/rwfs-clea=
-n-dev.patch
-> > >
-> meta-ingrasys/meta-zaius/recipes-bsp/u-boot/u-boot-aspeed/0001-board-aspe=
-ed-Add-reset_phy-for-Zaius.patch
-> > >
-> meta-nuvoton/recipes-bsp/images/npcm7xx-igps/0001-Adjust-paths-for-use-wi=
-th-Bitbake.patch
-> > >
-> meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0001-Add-system-reset-sta=
-tus-support.patch
-> > >
-> meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0002-config-ast-common-se=
-t-fieldmode-to-true.patch
-> > >
-> meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0003-aspeed-add-gpio-supp=
-ort.patch
-> > >
-> meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0004-aspeed-add-bmc-posit=
-ion-support.patch
-> > >
-> meta-yadro/meta-nicole/recipes-kernel/linux/linux-aspeed/0001-Add-NCSI-ch=
-annel-selector.patch
-> > >
-> meta-yadro/meta-nicole/recipes-phosphor/host/op-proc-control/0001-Stop-an=
-d-send-SRESET-for-one-thread-only.patch
-> > >
-> meta-yadro/recipes-phosphor/dbus/phosphor-dbus-interfaces/0001-Add-boot-i=
-nitiator-mailbox-interface.patch
-> > >
-> meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0001-Add-support-for-=
-persistent-only-settings.patch
-> > >
-> meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0002-Add-support-for-=
-boot-initiator-mailbox.patch
-> > >
-> meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0003-Fix-version-pars=
-ing-update-AUX-revision-info.patch
-> > >
-> > > If you are a maintainer of these meta layers, please work to get thes=
-e
-> > > patches submitted to the correct repositories using their prefered
-> > > review (email for linux/u-boot, gerrit for phosphor repos).
-> > >
-> > > Thanks,
-> > >
-> > > -Ed
->
-
---000000000000c8bccc05cca0aed0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>I am concerned this change will encourage both patche=
-s=C2=A0in private layers, and forks of the entire project.</div><div><br></=
-div><div>Oskar is right, patches should be temporary=C2=A0fixes, but I have=
- worked around, and some organizations=C2=A0never clean up their &quot;temp=
-orary fixes&quot;. Their engineers move from one fire to the next. I suppos=
-e, I would prefer=C2=A0to see .patch files in openbmc meta layers rather th=
-an have the same .patch file pushed to a private layer, or worse a fork of =
-openbmc.</div><div><br></div><div>Where can I get some more=C2=A0context on=
- why .patch files are disallowed from open bmc meta layers?</div><div><br><=
-/div><div>I genuinely appreciate=C2=A0all their effort and hard=C2=A0work t=
-he=C2=A0maintainer=C2=A0put=C2=A0in. They have always guided the community=
-=C2=A0in the right=C2=A0direction, but some more context for this decision =
-might be helpful for new people, such as myself.=C2=A0</div><div><br></div>=
-<div>Thank you</div><div>John Broadbent</div></div><br><div class=3D"gmail_=
-quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Sep 22, 2021 at 4:36 P=
-M Oskar Senft &lt;<a href=3D"mailto:osk@google.com">osk@google.com</a>&gt; =
-wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Alexan=
-der<br>
-<br>
-While I can understand your position, I think there&#39;s a bigger picture<=
-br>
-to consider. In my understanding Open Source works by individual /<br>
-independent contributors providing their use cases, knowledge and<br>
-experience by means of designs and source code to the world. Since<br>
-there are many individuals trying to do different things and some<br>
-people (maintainers) being the gatekeepers for what can be submitted,<br>
-it of course often gets to a point where not everyone agrees.<br>
-<br>
-Trust me, I&#39;ve been there. I had many occasions where I needed a new<br=
->
-feature or a fix to satisfy project requirements and timelines and was<br>
-not able to upstream it in the given time. I sometimes gave up, often<br>
-found a different, &quot;better&quot; solution and many times worked with t=
-he<br>
-community to find a solution that would be accepted upstream.<br>
-<br>
-While I agree that deadlines and requirements do not always allow to<br>
-go the &quot;everything upstream immediately&quot; route, my experience has=
-<br>
-shown me that forks or patches are ultimately costing more than using<br>
-clean upstream code, in particular if a device is to be supported for<br>
-years through new versions of the upstream code.<br>
-<br>
-As an example, we&#39;ve been using an i2c sensor chip that needs to be<br>
-configured at runtime. Upstream support for that was (still is)<br>
-missing. The patch to do that specifically for us was 1 line -<br>
-literally. However, it&#39;s incredibly difficult to discover and<br>
-understand this one line years later. Together with hwmon maintainers<br>
-I&#39;ve spent the last 2 weeks designing and implementing various<br>
-versions of a generic solution that we hope can be used for other<br>
-hwmon drivers. I understand that I&#39;m in a fortunate position so I can<b=
-r>
-spend that time. But I still need to justify to my manager and myself<br>
-why it&#39;s worth it, which I believe I can.<br>
-<br>
-In my experience, having patches checked in is just that - a temporary<br>
-patch - not a solution. From Oxford&#39;s dictionary: &quot;to patch: treat=
-<br>
-someone&#39;s injuries or repair the damage to something, especially<br>
-hastily&quot; (I know there&#39;s also a definition of the noun in the real=
-m of<br>
-computing).<br>
-<br>
-So while I agree that not allowing patches is actually making things<br>
-harder for some in the short term, I truly believe that it&#39;s going to<b=
-r>
-make things better for everyone in the long term.<br>
-<br>
-Oskar.<br>
-<br>
-On Wed, Sep 22, 2021 at 5:03 AM Alexander Amelkin &lt;<a href=3D"mailto:a.a=
-melkin@yadro.com" target=3D"_blank">a.amelkin@yadro.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Hi Ed!<br>
-&gt;<br>
-&gt; Most patches you listed (at least those for YADRO) are<br>
-&gt; platform specific and no repository will accept them for<br>
-&gt; a general audience.<br>
-&gt;<br>
-&gt; No vendor, I&#39;m confident, is willing to spend endless time<br>
-&gt; persuading maintainers to include vendor-specific or<br>
-&gt; platform-specific patches into their repositories.<br>
-&gt;<br>
-&gt; For instance,<br>
-&gt; meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0002-Add-support-f=
-or-boot-initiator-mailbox.patch<br>
-&gt; is there because our customers demand this feature and we failed<br>
-&gt; proving to openbmc maintainers that this is a needed feature<br>
-&gt; and not a &quot;security threat&quot; or something. We honestly tried =
-for months.<br>
-&gt;<br>
-&gt; On the other hand,<br>
-&gt; meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0004-aspeed-add-bmc-po=
-sition-support.patch<br>
-&gt; is strictly hardware-specific and is not needed as is for other<br>
-&gt; vendors or platforms, and we don&#39;t have time to make it a<br>
-&gt; generic solution. If we ever do have that time, we will surely<br>
-&gt; push the developed generic solution to the appropriate<br>
-&gt; repository.<br>
-&gt;<br>
-&gt; What you propose now will force vendors to move farther away<br>
-&gt; from upstream and create their own forks of openbmc where<br>
-&gt; they will not even try to upstream their changes and will just drift<b=
-r>
-&gt; farther and farther away.<br>
-&gt;<br>
-&gt; Is that what you really pursue or did I get your idea wrong?<br>
-&gt; So far it looks to me like a destructive decision.<br>
-&gt;<br>
-&gt; WBR, Alexander.<br>
-&gt;<br>
-&gt; 22.09.2021 01:35, Ed Tanous =D0=BF=D0=B8=D1=88=D0=B5=D1=82:<br>
-&gt; &gt; A few new features have been merged into CI that will now disallo=
-w<br>
-&gt; &gt; .patch files within most meta layers.=C2=A0 This is due to a sign=
-ificant<br>
-&gt; &gt; number of them popping up in both reviews and in the repo itself,=
-<br>
-&gt; &gt; despite having documented rules to the contrary.=C2=A0 The hope h=
-ere is to<br>
-&gt; &gt; better codify our rules, and give very quick response to submitte=
-rs<br>
-&gt; &gt; about the right procedure so we can encourage getting patches in<=
-br>
-&gt; &gt; faster, and keep machines buildable against master.=C2=A0 As the =
-patches<br>
-&gt; &gt; state, meta-phosphor is still allowed to contain patch files as a=
-n<br>
-&gt; &gt; escape hatch, if the community decides it&#39;s required.<br>
-&gt; &gt;<br>
-&gt; &gt; The patchsets in question are here:<br>
-&gt; &gt; <a href=3D"https://gerrit.openbmc-project.xyz/q/repotest" rel=3D"=
-noreferrer" target=3D"_blank">https://gerrit.openbmc-project.xyz/q/repotest=
-</a><br>
-&gt; &gt;<br>
-&gt; &gt; And add some ability for us to make more of these expectations fo=
-r<br>
-&gt; &gt; meta layers codified in the future.<br>
-&gt; &gt;<br>
-&gt; &gt; The script itself is here:<br>
-&gt; &gt; <a href=3D"https://github.com/openbmc/openbmc/blob/master/meta-ph=
-osphor/scripts/run-repotest.sh" rel=3D"noreferrer" target=3D"_blank">https:=
-//github.com/openbmc/openbmc/blob/master/meta-phosphor/scripts/run-repotest=
-.sh</a><br>
-&gt; &gt; and is runnable on any tree prior to submitting to CI.=C2=A0 We c=
-urrently<br>
-&gt; &gt; have the following patches in meta layers.<br>
-&gt; &gt;<br>
-&gt; &gt; meta-amd/meta-ethanolx/recipes-x86/chassis/x86-power-control/0001=
--Amd-power-control-modifications-for-EthanolX.patch<br>
-&gt; &gt; meta-ampere/meta-common/recipes-devtools/mtd/mtd-utils/0001-flash=
-cp-support-offset-option.patch<br>
-&gt; &gt; meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0001-aspee=
-d-scu-Switch-PWM-pin-to-GPIO-input-mode.patch<br>
-&gt; &gt; meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0002-aspee=
-d-Disable-internal-PD-resistors-for-GPIOs.patch<br>
-&gt; &gt; meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0003-aspee=
-d-support-passing-system-reset-status-to-kernel.patch<br>
-&gt; &gt; meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0004-aspee=
-d-add-gpio-support.patch<br>
-&gt; &gt; meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0005-aspee=
-d-Enable-SPI-master-mode.patch<br>
-&gt; &gt; meta-ampere/meta-jade/recipes-bsp/u-boot/u-boot-aspeed/0006-aspee=
-d-support-Mt.Jade-platform-init.patch<br>
-&gt; &gt; meta-aspeed/recipes-bsp/u-boot/files/default-gcc.patch<br>
-&gt; &gt; meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0001-=
-bytedance-g220a-Enable-ipmb.patch<br>
-&gt; &gt; meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0003-=
-misc-aspeed-Add-Aspeed-UART-routing-control-driver.patch<br>
-&gt; &gt; meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0004-=
-ARM-dts-aspeed-Add-uart-routing-node.patch<br>
-&gt; &gt; meta-bytedance/meta-g220a/recipes-kernel/linux/linux-aspeed/0005-=
-ARM-dts-aspeed-Enable-g220a-uart-route.patch<br>
-&gt; &gt; meta-bytedance/meta-g220a/recipes-phosphor/ipmi/phosphor-node-man=
-ager-proxy/0001-Remove-Total_Power-sensor.patch<br>
-&gt; &gt; meta-facebook/meta-bletchley/recipes-bsp/u-boot/u-boot-aspeed-sdk=
-/0001-u-boot-ast2600-57600-baudrate-for-bletchley.patch<br>
-&gt; &gt; meta-facebook/meta-tiogapass/recipes-bsp/u-boot/u-boot-aspeed/000=
-1-configs-ast-common-use-57600-baud-rate-to-match-Tiog.patch<br>
-&gt; &gt; meta-facebook/meta-yosemitev2/recipes-bsp/u-boot/u-boot-aspeed/00=
-01-board-aspeed-Add-Mux-for-yosemitev2.patch<br>
-&gt; &gt; meta-facebook/meta-yosemitev2/recipes-bsp/u-boot/u-boot-aspeed/00=
-02-spl-host-console-handle.patch<br>
-&gt; &gt; meta-google/dynamic-layers/nuvoton-layer/recipes-bsp/images/npcm7=
-xx-igps/0001-Set-FIU0_DRD_CFG-and-FIU_Clk_divider-for-gbmc-hoth.patch<br>
-&gt; &gt; meta-google/recipes-extended/libconfig/files/0001-conf2struct-Use=
--the-right-perl.patch<br>
-&gt; &gt; meta-google/recipes-extended/libconfig/files/0001-makefile-Add-mi=
-ssing-LDFLAGS.patch<br>
-&gt; &gt; meta-google/recipes-phosphor/initrdscripts/obmc-phosphor-initfs/r=
-wfs-clean-dev.patch<br>
-&gt; &gt; meta-ingrasys/meta-zaius/recipes-bsp/u-boot/u-boot-aspeed/0001-bo=
-ard-aspeed-Add-reset_phy-for-Zaius.patch<br>
-&gt; &gt; meta-nuvoton/recipes-bsp/images/npcm7xx-igps/0001-Adjust-paths-fo=
-r-use-with-Bitbake.patch<br>
-&gt; &gt; meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0001-Add-system-r=
-eset-status-support.patch<br>
-&gt; &gt; meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0002-config-ast-c=
-ommon-set-fieldmode-to-true.patch<br>
-&gt; &gt; meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0003-aspeed-add-g=
-pio-support.patch<br>
-&gt; &gt; meta-yadro/meta-nicole/recipes-bsp/u-boot/files/0004-aspeed-add-b=
-mc-position-support.patch<br>
-&gt; &gt; meta-yadro/meta-nicole/recipes-kernel/linux/linux-aspeed/0001-Add=
--NCSI-channel-selector.patch<br>
-&gt; &gt; meta-yadro/meta-nicole/recipes-phosphor/host/op-proc-control/0001=
--Stop-and-send-SRESET-for-one-thread-only.patch<br>
-&gt; &gt; meta-yadro/recipes-phosphor/dbus/phosphor-dbus-interfaces/0001-Ad=
-d-boot-initiator-mailbox-interface.patch<br>
-&gt; &gt; meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0001-Add-supp=
-ort-for-persistent-only-settings.patch<br>
-&gt; &gt; meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0002-Add-supp=
-ort-for-boot-initiator-mailbox.patch<br>
-&gt; &gt; meta-yadro/recipes-phosphor/ipmi/phosphor-ipmi-host/0003-Fix-vers=
-ion-parsing-update-AUX-revision-info.patch<br>
-&gt; &gt;<br>
-&gt; &gt; If you are a maintainer of these meta layers, please work to get =
-these<br>
-&gt; &gt; patches submitted to the correct repositories using their prefere=
-d<br>
-&gt; &gt; review (email for linux/u-boot, gerrit for phosphor repos).<br>
-&gt; &gt;<br>
-&gt; &gt; Thanks,<br>
-&gt; &gt;<br>
-&gt; &gt; -Ed<br>
-</blockquote></div>
-
---000000000000c8bccc05cca0aed0--
+SGkgSm9lbCwNCg0KVGhhbmtzIGZvciB0aGUgcmV2aWV3Lg0KDQo+IC0tLS0tT3JpZ2luYWwgTWVz
+c2FnZS0tLS0tDQo+IEZyb206IEpvZWwgU3RhbmxleSA8am9lbEBqbXMuaWQuYXU+DQo+IFNlbnQ6
+IFRodXJzZGF5LCBTZXB0ZW1iZXIgMjMsIDIwMjEgODowMiBBTQ0KPiBUbzogQ2hpbi1UaW5nIEt1
+byA8Y2hpbi10aW5nX2t1b0Bhc3BlZWR0ZWNoLmNvbT4NCj4gU3ViamVjdDogUmU6IFtQQVRDSCAw
+MS8xMF0gY2xrOiBhc3BlZWQ6IGFzdDI2MDA6IFBvcnRpbmcgc2RoY2kgY2xvY2sgc291cmNlDQo+
+IA0KPiBPbiBXZWQsIDIyIFNlcHQgMjAyMSBhdCAxMDozMSwgQ2hpbi1UaW5nIEt1bw0KPiA8Y2hp
+bi10aW5nX2t1b0Bhc3BlZWR0ZWNoLmNvbT4gd3JvdGU6DQo+ID4NCj4gPiAtIFRoZXJlIGFyZSB0
+d28gY2xvY2sgc291cmNlcyB1c2VkIHRvIGdlbmVyYXRlDQo+ID4gICBTRC9TRElPIGNsb2NrLCBB
+UExMIGNsb2NrIGFuZCBIQ0xLICgyMDBNSHopLg0KPiA+ICAgVXNlciBjYW4gc2VsZWN0IHdoaWNo
+IGNsb2NrIHNvdXJjZSBzaG91bGQgYmUgdXNlZA0KPiA+ICAgYnkgY29uZmlndXJpbmcgU0NVMzEw
+WzhdLg0KPiA+IC0gVGhlIFNEL1NESU8gY2xvY2sgZGl2aWRlciBzZWxlY3Rpb24gdGFibGUgU0NV
+MzEwWzMwOjI4XQ0KPiA+ICAgaXMgZGlmZmVyZW50IGJldHdlZW4gQVNUMjYwMC1BMSBhbmQgQVNU
+MjYwMC1BMi9BMy4NCj4gPiAgIEZvciBBU1QyNjAwLUExLCAyMDBNSHogU0QvU0RJTyBjbG9jayBj
+YW5ub3QgYmUNCj4gPiAgIGdvdHRlbiBieSB0aGUgZGl2aWRlcnMgaW4gU0NVMzEwWzMwOjI4XSBp
+ZiBBUExMDQo+ID4gICBpcyBub3QgdGhlIG11bHRpcGxlIG9mIDIwME1IeiBhbmQgSENMSyBpcyAy
+MDBNSHouDQo+ID4gICBGb3IgQVNUMjYwMC1BMi9BMywgYSBuZXcgZGl2aWRlciwgIjEiLCBpcyBh
+ZGRlZCBhbmQNCj4gPiAgIDIwME1IeiBTRC9TRElPIGNsb2NrIGNhbiBiZSBvYnRhaW5lZCBieSBh
+ZG9wdGluZyBIQ0xLDQo+ID4gICBhcyBjbG9jayBzb3VyY2UgYW5kIHNldHRpbmcgU0NVMzEwWzMw
+OjI4XSB0byAzYicxMTEuDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBDaGluLVRpbmcgS3VvIDxj
+aGluLXRpbmdfa3VvQGFzcGVlZHRlY2guY29tPg0KPiA+IC0tLQ0KPiA+ICBkcml2ZXJzL2Nsay9j
+bGstYXN0MjYwMC5jIHwgNjkNCj4gPiArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+LS0tLS0NCj4gPiAgMSBmaWxlIGNoYW5nZWQsIDYxIGluc2VydGlvbnMoKyksIDggZGVsZXRpb25z
+KC0pDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9jbGsvY2xrLWFzdDI2MDAuYyBiL2Ry
+aXZlcnMvY2xrL2Nsay1hc3QyNjAwLmMNCj4gPiBpbmRleCBiYzNiZTVmM2VhZTEuLmE2Nzc4YzE4
+Mjc0YSAxMDA2NDQNCj4gPiAtLS0gYS9kcml2ZXJzL2Nsay9jbGstYXN0MjYwMC5jDQo+ID4gKysr
+IGIvZHJpdmVycy9jbGsvY2xrLWFzdDI2MDAuYw0KPiA+IEBAIC0xNjgsNiArMTY4LDMwIEBAIHN0
+YXRpYyBjb25zdCBzdHJ1Y3QgY2xrX2Rpdl90YWJsZSBhc3QyNjAwX2Rpdl90YWJsZVtdDQo+ID0g
+ew0KPiA+ICAgICAgICAgeyAwIH0NCj4gPiAgfTsNCj4gPg0KPiA+ICtzdGF0aWMgY29uc3Qgc3Ry
+dWN0IGNsa19kaXZfdGFibGUgYXN0MjYwMF9zZF9kaXZfYTFfdGFibGVbXSA9IHsNCj4gDQo+IExl
+dCdzIHB1dCB0aGUgcmV2aXNpb24gbmV4dCB0byB0aGUgYXN0MjYwMCBsaWtlIHRoZSBvdGhlciB0
+YWJsZXM6DQo+IA0KPiBhc3QyNjAwX2ExX3NkX2Rpdl90YWJsZQ0KPiANCj4gPiArICAgICAgIHsg
+MHgwLCAyIH0sDQo+ID4gKyAgICAgICB7IDB4MSwgNCB9LA0KPiA+ICsgICAgICAgeyAweDIsIDYg
+fSwNCj4gPiArICAgICAgIHsgMHgzLCA4IH0sDQo+ID4gKyAgICAgICB7IDB4NCwgMTAgfSwNCj4g
+PiArICAgICAgIHsgMHg1LCAxMiB9LA0KPiA+ICsgICAgICAgeyAweDYsIDE0IH0sDQo+ID4gKyAg
+ICAgICB7IDB4NywgMTYgfSwNCj4gPiArICAgICAgIHsgMCB9DQo+ID4gK307DQo+ID4gKw0KPiA+
+ICtzdGF0aWMgY29uc3Qgc3RydWN0IGNsa19kaXZfdGFibGUgYXN0MjYwMF9zZF9kaXZfYTJfdGFi
+bGVbXSA9IHsNCj4gDQoNCk9rYXksIHRoaXMgd2lsbCBiZSB1cGRhdGVkIGluIHRoZSBuZXh0IHBh
+dGNoIHZlcnNpb24uDQoNCj4gRm9yIG5hbWluZzsgY2FuIEkgcHJvcG9zZSB3ZSBvbWl0IHRoZSBy
+ZXZpc2lvbiBmb3IgdGhlIEEyL0EzKyBjYXNlPyBTbyB0aGlzDQo+IG9uZSB3b3VsZCBiZSBjYWxs
+ZWQ6DQo+IA0KPiBhc3QyNjAwX3NkX2Rpdl90YWJsZQ0KPiANCg0KT2theSwgdGhpcyB3aWxsIGFs
+c28gYmUgdXBkYXRlZCBpbiB0aGUgbmV4dCBwYXRjaCB2ZXJzaW9uLg0KDQo+ID4gKyAgICAgICB7
+IDB4MCwgMiB9LA0KPiA+ICsgICAgICAgeyAweDEsIDQgfSwNCj4gPiArICAgICAgIHsgMHgyLCA2
+IH0sDQo+ID4gKyAgICAgICB7IDB4MywgOCB9LA0KPiA+ICsgICAgICAgeyAweDQsIDEwIH0sDQo+
+ID4gKyAgICAgICB7IDB4NSwgMTIgfSwNCj4gPiArICAgICAgIHsgMHg2LCAxNCB9LA0KPiA+ICsg
+ICAgICAgeyAweDcsIDEgfSwNCj4gPiArICAgICAgIHsgMCB9DQo+ID4gK307DQo+ID4gKw0KPiA+
+ICAvKiBGb3IgaHBsbC9kcGxsL2VwbGwvbXBsbCAqLw0KPiA+ICBzdGF0aWMgc3RydWN0IGNsa19o
+dyAqYXN0MjYwMF9jYWxjX3BsbChjb25zdCBjaGFyICpuYW1lLCB1MzIgdmFsKSAgew0KPiA+IEBA
+IC00MjQsNiArNDQ4LDExIEBAIHN0YXRpYyBjb25zdCBjaGFyICpjb25zdA0KPiBlbW1jX2V4dGNs
+a19wYXJlbnRfbmFtZXNbXSA9IHsNCj4gPiAgICAgICAgICJtcGxsIiwNCj4gPiAgfTsNCj4gPg0K
+PiA+ICtzdGF0aWMgY29uc3QgY2hhciAqY29uc3Qgc2RfZXh0Y2xrX3BhcmVudF9uYW1lc1tdID0g
+ew0KPiA+ICsgICAgICAgImhjbGsiLA0KPiA+ICsgICAgICAgImFwbGwiLA0KPiA+ICt9Ow0KPiA+
+ICsNCj4gPiAgc3RhdGljIGNvbnN0IGNoYXIgKiBjb25zdCB2Y2xrX3BhcmVudF9uYW1lc1tdID0g
+ew0KPiA+ICAgICAgICAgImRwbGwiLA0KPiA+ICAgICAgICAgImQxcGxsIiwNCj4gPiBAQCAtNTIz
+LDE4ICs1NTIsNDIgQEAgc3RhdGljIGludCBhc3BlZWRfZzZfY2xrX3Byb2JlKHN0cnVjdA0KPiBw
+bGF0Zm9ybV9kZXZpY2UgKnBkZXYpDQo+ID4gICAgICAgICAgICAgICAgIHJldHVybiBQVFJfRVJS
+KGh3KTsNCj4gPiAgICAgICAgIGFzcGVlZF9nNl9jbGtfZGF0YS0+aHdzW0FTUEVFRF9DTEtfRU1N
+Q10gPSBodzsNCj4gPg0KPiA+IC0gICAgICAgLyogU0QvU0RJTyBjbG9jayBkaXZpZGVyIGFuZCBn
+YXRlICovDQo+ID4gLSAgICAgICBodyA9IGNsa19od19yZWdpc3Rlcl9nYXRlKGRldiwgInNkX2V4
+dGNsa19nYXRlIiwgImhwbGwiLCAwLA0KPiA+IC0gICAgICAgICAgICAgICAgICAgICAgIHNjdV9n
+Nl9iYXNlICsgQVNQRUVEX0c2X0NMS19TRUxFQ1RJT040LA0KPiAzMSwgMCwNCj4gPiAtICAgICAg
+ICAgICAgICAgICAgICAgICAmYXNwZWVkX2c2X2Nsa19sb2NrKTsNCj4gPiArICAgICAgIGNsa19o
+d19yZWdpc3Rlcl9maXhlZF9yYXRlKE5VTEwsICJoY2xrIiwgTlVMTCwgMCwgMjAwMDAwMDAwKTsN
+Cj4gPiArDQo+ID4gKyAgICAgICByZWdtYXBfcmVhZChtYXAsIDB4MzEwLCAmdmFsKTsNCj4gDQo+
+IFVzZSB0aGUgI2RlZmluZXMgZm9yIHRoZSByZWdpc3RlciBudW1iZXIuDQoNCk9rYXkuDQoNCj4g
+DQo+ID4gKyAgICAgICBodyA9IGNsa19od19yZWdpc3Rlcl9tdXgoZGV2LCAic2RfZXh0Y2xrX211
+eCIsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc2RfZXh0Y2xrX3BhcmVu
+dF9uYW1lcywNCj4gPiArDQo+IEFSUkFZX1NJWkUoc2RfZXh0Y2xrX3BhcmVudF9uYW1lcyksIDAs
+DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc2N1X2c2X2Jhc2UgKw0KPiBB
+U1BFRURfRzZfQ0xLX1NFTEVDVElPTjQsIDgsIDEsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgMCwgJmFzcGVlZF9nNl9jbGtfbG9jayk7DQo+ID4gICAgICAgICBpZiAoSVNf
+RVJSKGh3KSkNCj4gPiAgICAgICAgICAgICAgICAgcmV0dXJuIFBUUl9FUlIoaHcpOw0KPiA+IC0g
+ICAgICAgaHcgPSBjbGtfaHdfcmVnaXN0ZXJfZGl2aWRlcl90YWJsZShkZXYsICJzZF9leHRjbGsi
+LA0KPiAic2RfZXh0Y2xrX2dhdGUiLA0KPiA+IC0gICAgICAgICAgICAgICAgICAgICAgIDAsIHNj
+dV9nNl9iYXNlICsgQVNQRUVEX0c2X0NMS19TRUxFQ1RJT040LA0KPiAyOCwgMywgMCwNCj4gPiAt
+ICAgICAgICAgICAgICAgICAgICAgICBhc3QyNjAwX2Rpdl90YWJsZSwNCj4gPiAtICAgICAgICAg
+ICAgICAgICAgICAgICAmYXNwZWVkX2c2X2Nsa19sb2NrKTsNCj4gPiArDQo+ID4gKyAgICAgICBo
+dyA9IGNsa19od19yZWdpc3Rlcl9nYXRlKGRldiwgInNkX2V4dGNsa19nYXRlIiwgInNkX2V4dGNs
+a19tdXgiLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLCBzY3VfZzZf
+YmFzZSArDQo+IEFTUEVFRF9HNl9DTEtfU0VMRUNUSU9ONCwNCj4gPiArICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgMzEsIDAsICZhc3BlZWRfZzZfY2xrX2xvY2spOw0KPiA+ICAgICAg
+ICAgaWYgKElTX0VSUihodykpDQo+ID4gICAgICAgICAgICAgICAgIHJldHVybiBQVFJfRVJSKGh3
+KTsNCj4gPiArDQo+ID4gKyAgICAgICByZWdtYXBfcmVhZChtYXAsIDB4MTQsICZ2YWwpOw0KPiA+
+ICsgICAgICAgLyogQVNUMjYwMC1BMi9BMyBjbG9jayBkaXZpc29yIGlzIGRpZmZlcmVudCBmcm9t
+IEFTVDI2MDAtQTEgKi8NCj4gPiArICAgICAgIGlmICgoKHZhbCAmIEdFTk1BU0soMjMsIDE2KSkg
+Pj4gMTYpID49IDIpIHsNCj4gDQo+IEkndmUgZ290IGEgbGl0dGxlIHBhdGNoIHRoYXQgSSByZWNv
+bW1lbmQgeW91IGJhc2UgeW91ciBzZXJpZXMgb24gKGZlZWwgZnJlZSB0bw0KPiBpbmNsdWRlIGl0
+IGluIHlvdXIgc2VyaWVzIHdoZW4gcG9zdGluZyB2MiB0byBtYWtlIGl0DQo+IHNlbGYtY29udGFp
+bmVkKToNCj4gDQo+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2FsbC8yMDIxMDkyMjIzNTQ0OS4y
+MTM2MzEtMS1qb2VsQGptcy5pZC5hdS8NCj4gDQo+IFdpdGggdGhpcyBvbmUgeW91IGNhbiBkbzoN
+Cj4gDQo+IGNvbnN0IHN0cnVjdCBjbGtfZGl2X3RhYmxlKiB0YWJsZTsNCj4gDQo+ICBpZiAoc29j
+X3JldiA+PSAyKQ0KPiAgICB0YWJsZSA9IGFzdDI2MDBfc2RfZGl2X3RhYmxlOw0KPiBlbHNlDQo+
+ICAgIHRhYmxlID0gYXN0MjYwMF9hMV9zZF9kaXZfdGFibGU7DQo+IA0KPiBUaGVuIHlvdSBkb24n
+dCBuZWVkIHRvIGR1cGxpY2F0ZSB0aGUgcmVnaXN0cmF0aW9uIGZvciBlYWNoIGNhc2U6DQo+IA0K
+PiAgICAgICAgICAgICAgICBodyA9IGNsa19od19yZWdpc3Rlcl9kaXZpZGVyX3RhYmxlKGRldiwg
+InNkX2V4dGNsayIsDQo+ICJzZF9leHRjbGtfZ2F0ZSIsDQo+ICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIDAsIHNjdV9nNl9iYXNlICsNCj4gQVNQRUVEX0c2X0NMS19TRUxF
+Q1RJT040LCAyOCwgMywgMCwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgdGFibGUsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICZhc3Bl
+ZWRfZzZfY2xrX2xvY2spOw0KPiAgICAgICAgICAgICAgICBpZiAoSVNfRVJSKGh3KSkNCj4gICAg
+ICAgICAgICAgICAgICAgICAgICByZXR1cm4gUFRSX0VSUihodyk7DQo+IA0KDQpPa2F5LCBJIHdp
+bGwgaW5jbHVkZSB5b3VyIHBhdGNoIGludG8gdGhpcyBwYXRjaCBzZXJpZXMgd2hlbiBwb3N0aW5n
+IHYyLg0KDQo+ID4gKyAgICAgICAgICAgICAgIC8qIEFTVDI2MDAtQTIvQTMgKi8NCj4gPiArICAg
+ICAgICAgICAgICAgaHcgPSBjbGtfaHdfcmVnaXN0ZXJfZGl2aWRlcl90YWJsZShkZXYsICJzZF9l
+eHRjbGsiLA0KPiAic2RfZXh0Y2xrX2dhdGUiLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAwLCBzY3VfZzZfYmFzZSArDQo+IEFTUEVFRF9HNl9DTEtfU0VMRUNU
+SU9ONCwgMjgsIDMsIDAsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIGFzdDI2MDBfc2RfZGl2X2EyX3RhYmxlLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAmYXNwZWVkX2c2X2Nsa19sb2NrKTsNCj4gPiArICAgICAgICAgICAg
+ICAgaWYgKElTX0VSUihodykpDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgcmV0dXJuIFBU
+Ul9FUlIoaHcpOw0KPiA+ICsgICAgICAgfSBlbHNlIHsNCj4gPiArICAgICAgICAgICAgICAgLyog
+QVNUMjYwMC1BMSAqLw0KPiA+ICsgICAgICAgICAgICAgICBodyA9IGNsa19od19yZWdpc3Rlcl9k
+aXZpZGVyX3RhYmxlKGRldiwgInNkX2V4dGNsayIsDQo+ICJzZF9leHRjbGtfZ2F0ZSIsDQo+ID4g
+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAsIHNjdV9nNl9iYXNlICsN
+Cj4gQVNQRUVEX0c2X0NMS19TRUxFQ1RJT040LCAyOCwgMywgMCwNCj4gPiArICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgYXN0MjYwMF9zZF9kaXZfYTFfdGFibGUsDQo+ID4g
+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICZhc3BlZWRfZzZfY2xrX2xv
+Y2spOw0KPiA+ICsgICAgICAgICAgICAgICBpZiAoSVNfRVJSKGh3KSkNCj4gPiArICAgICAgICAg
+ICAgICAgICAgICAgICByZXR1cm4gUFRSX0VSUihodyk7DQo+ID4gKyAgICAgICB9DQo+ID4gICAg
+ICAgICBhc3BlZWRfZzZfY2xrX2RhdGEtPmh3c1tBU1BFRURfQ0xLX1NESU9dID0gaHc7DQo+ID4N
+Cj4gPiAgICAgICAgIC8qIE1BQzEvMiBSTUlJIDUwTUh6IFJDTEsgKi8NCj4gPiAtLQ0KPiA+IDIu
+MTcuMQ0KPiA+DQo=
