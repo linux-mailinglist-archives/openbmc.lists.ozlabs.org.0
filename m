@@ -2,139 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A60D1418E06
-	for <lists+openbmc@lfdr.de>; Mon, 27 Sep 2021 05:48:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BD934198D8
+	for <lists+openbmc@lfdr.de>; Mon, 27 Sep 2021 18:26:03 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HHpWt44dmz2yMD
-	for <lists+openbmc@lfdr.de>; Mon, 27 Sep 2021 13:48:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HJ7L127dlz2yPW
+	for <lists+openbmc@lfdr.de>; Tue, 28 Sep 2021 02:26:01 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=JGRmh9Sr;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=J29bfbhU;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DH681pit;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.100.99;
- helo=nam04-bn8-obe.outbound.protection.outlook.com;
- envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=JGRmh9Sr; 
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm3 header.b=J29bfbhU; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=DH681pit; 
  dkim-atps=neutral
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam08on2099.outbound.protection.outlook.com [40.107.100.99])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HHpWJ6PJkz2xY9;
- Mon, 27 Sep 2021 13:47:54 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=By1lqdUmyYH8rqA9+YlTmn1MXzMBsF2Ra/t+pguDXyvk8XT2+CcgCpe+dKyPqlVWcV5FJcT2alTfud2zJpYEkotTeM7aTig2Ey0lIYamR1QAiKsuJmgOP2tZAYPGOrWPl6VX8HQEOLJoE6gyyaZOgvWDpBXVsPNKNVjlOnddCxQnlmr62Mydl84zOzSCcwhvqo0DF7R6S+4wrDZMUNzSQqyRef1Qw/WM2BEsNHOOppTM/5QrhsV+YNopHsO3gc4HLdPI5YybU80+rNsnFL9cxyhuonx+5ykzmmTr6U5owzn6Z9xPmxU3bdD0CElfNUWRIiXdDqyhDPre2EJPK/dd7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version; 
- bh=NINdeaaWYFdE/0HR5rKd102V1HkNd9gID5pR/mdt864=;
- b=QLMX7O4+56VArIfzk4XTJMi/n/xdCwuZlmR6pG5KOIobwU6xHRV9jFOHxrtdtRDFX5GY1IIUQsJDaQ9Yb38C7O8umppfkyVZhMDS8rlgm7bZhwT19hziAprDTRYL18KC79FsTrcbZEkSnzzjTNcSF5r8rUzpkmJoLF9SqvWxoXazyLSAfwL8RITb9Jib5EQLUPnCu+p/S8F2JCz9PvorN/DrrHIfDJO4CMVng3q55i4i/qoN5ziCpWwvLZgqhja+8XB4lgScCsrSVuv7ZUXfzIcvXd6uIyBetHaSnzhNInzoZ1RgNUiuw52Xl1fKK22+/3/ManfEy1KfqEGT3LO0aA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NINdeaaWYFdE/0HR5rKd102V1HkNd9gID5pR/mdt864=;
- b=JGRmh9SrN+GLogtU0Mwj4xVRiephmhhwd73gVG2lnGhmxfLRBmRVU6r99UIsUKduLjJNCRhtikJy3IJoS3cQu8C9Zm8dgn6jwEM4qxNrcIzUd8QvOniG/fvahHMaJbblTXfXrwf2ImOLwdK49m4LGlHeQMFYEBA7aQNgUBLasM8=
-Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=os.amperecomputing.com;
-Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
- BYAPR01MB4774.prod.exchangelabs.com (2603:10b6:a03:88::19) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4544.14; Mon, 27 Sep 2021 03:47:36 +0000
-Received: from SJ0PR01MB7282.prod.exchangelabs.com
- ([fe80::f14d:21a9:9ebf:2924]) by SJ0PR01MB7282.prod.exchangelabs.com
- ([fe80::f14d:21a9:9ebf:2924%9]) with mapi id 15.20.4544.021; Mon, 27 Sep 2021
- 03:47:36 +0000
-Subject: Re: [PATCH v1] ARM: dts: aspeed: mtjade: Add some gpios
-From: Quan Nguyen <quan@os.amperecomputing.com>
-To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org
-References: <20210917082945.19111-1-quan@os.amperecomputing.com>
-Message-ID: <96f3eda9-bb90-35c5-a6d8-870212046dff@os.amperecomputing.com>
-Date: Mon, 27 Sep 2021 10:47:25 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
-In-Reply-To: <20210917082945.19111-1-quan@os.amperecomputing.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: HKAPR03CA0022.apcprd03.prod.outlook.com
- (2603:1096:203:c9::9) To SJ0PR01MB7282.prod.exchangelabs.com
- (2603:10b6:a03:3f2::24)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HJ7KX1HDxz2xXS
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Sep 2021 02:25:35 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 6D6855C00E3
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Sep 2021 12:25:30 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute3.internal (MEProxy); Mon, 27 Sep 2021 12:25:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:subject:message-id:references
+ :mime-version:content-type:content-transfer-encoding
+ :in-reply-to; s=fm3; bh=wGHhBLCO7pMRNaDLUx9FqyUHJbn74MqCaKFa+3fs
+ kcY=; b=J29bfbhUN01k17yybhpYz/edwSK467GmHhE/6kgB0mKR0GbXjUV4Tpet
+ Msal/FxJ9CDZG9iYHDlVjJJLjPDwPwUDSn52n7JvlZ6T3eBs0Q0VHD4OxyfNSxxa
+ iXFmVRFq0oD1j+PhwDp/jGEZOcUd3ME+9loP0x5DkthFtGR2rL2DeIkq6tlSKdnz
+ mS0OoQRNpFjIDzXRzF0+UfwZypJBVyoU5ClnpPPAQ5qlsjkVop1ZdMMLjP08aUGH
+ QsuNp3903T7YJlAnW8eyEzBPYuF5CwEu3bAFBT+YlZrBVqX4L+WePZeS/jqYpZJQ
+ Dy0eA/Q/WRgYCDnY8aLBmaQdY3/zuA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; bh=wGHhBLCO7pMRNaDLUx9FqyUHJbn74MqCaKFa+3fsk
+ cY=; b=DH681pitByl/I0pyWnYeqtBaLz5UmTa2ZdGr0ismuqeE6QfwwjJNz0Y0d
+ JdRIodFeTbeCv39IV48t1ThL4u+m+/nvN18GMBRUk1DIsYvi34B0BMRkPN2qP/2r
+ ZIgIc/3E4ub2UkLxcB4Mj+hRIgUwWyPm75ypjQawP5UmlfpTbXqcz4GdyOMkCMuf
+ h1r/Pzh8mLg5040FwCzkVUkKzM4DfpTyt2KGx9UjYk4TBhaRpdnrqZenKbFGKHUm
+ dFR/Jq4O37a+tczBX4QJVlMme7nmw1473Vk+E8F1iLqHcCE3JyqRd8SGganZlaqy
+ LU/CsEYtos5eSvTCQhytw+jLH5eWA==
+X-ME-Sender: <xms:evBRYfqvPwANQwpLDO5X0sbAQK4duhvVP60H8veWg_Ytp5xAcwhqUg>
+ <xme:evBRYZqlpqE82ydwQ8_Yeci52rXa715Q6sVCOZG1mpNjyToLxLLt4T_GHh1ecvWDT
+ M5pOHGuhDliOCpJmpY>
+X-ME-Received: <xmr:evBRYcM2FboseNSwWWaOdEL_FX6E6ufppMJEL2QKLC_t_cetEgw2efUK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudejkedgleelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggugfgjsehtke
+ ertddttdejnecuhfhrohhmpeeurhgrugcuuehishhhohhpuceosghrrggulhgvhigssehf
+ uhiiiihivghsqhhuihhrrhgvlhdrtghomheqnecuggftrfgrthhtvghrnhephfejueelie
+ eufeffheefiedvveeiveeihefgkeelteelkeeiffegfeffudeugfevnecuffhomhgrihhn
+ pehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+ grihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:evBRYS7v4iRN12gK41cTA6cZbapU87GIQgie4FkxpvJkW3sZD08cmg>
+ <xmx:evBRYe7uLjbPfs4nnp6oGC9_ouAWmYHRNkuLrkxPtyQmhvU7PQcEXw>
+ <xmx:evBRYagr9GRW6b8X3v0Sz8v11Pb-HMP8UwzehkeuQ6ad0qTxHqaSrg>
+ <xmx:evBRYbUxXFy7UUwSxbxnUL8HTA2nFlES92_Aui9qXce8OEzzxMhABw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Mon, 27 Sep 2021 12:25:29 -0400 (EDT)
+Date: Mon, 27 Sep 2021 12:25:28 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: openbmc@lists.ozlabs.org
+Subject: Re: Call for volunteers
+Message-ID: <20210927162528.tfh6igwuwef7rsk7@cheese>
+References: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
 MIME-Version: 1.0
-Received: from [IPv6:2402:800:623c:d199:293e:d08e:271c:5ade]
- (2402:800:623c:d199:293e:d08e:271c:5ade) by
- HKAPR03CA0022.apcprd03.prod.outlook.com (2603:1096:203:c9::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4566.9 via Frontend Transport; Mon, 27 Sep 2021 03:47:32 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 52722d80-976b-472a-f7b1-08d981698af7
-X-MS-TrafficTypeDiagnostic: BYAPR01MB4774:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <BYAPR01MB47740C3080DAD2067298863FF2A79@BYAPR01MB4774.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:785;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: qBkOQjx8eJHRs+0x3NpoB5nV0bav5eMu/N2hfUyIDisUBk5dMF1kY6nz8NrbMx1OlT4P8x0u4qsaWgQz8Zw1XriRkYVQlSgFNhQsy4NTa0AXzGK2quFEMbTFAtPgt4ytVi71EY3ICodPjzPvxNPhWqjm5FxynSDYUoGWLoFpOweZKRPfOheUBJLZ2cLK+1/faDDBaUqJL2BeJ/ojSVwPU7Pt6Qi8wWs1bUo6dXDY9Ahh7ZLk4HAi6oKUOtxu8lpVZul1SCQezbIYGCVqS5wU9Rm8mqIXGjLv5PdnYHX2QjQl7SMsGeO1jlY+B1ZhSu4JNF/UeliOm+MY0Skz1ubyuu0uJO9F7b95cy0wDFhwB1y3dEglnekRS7araSGDNC8FJQusNw/M9BRanCMCEow4tcdAXkEV/vSay3jYCzZrKbb29nM7NR4Fjc1BbGhJN25o+4T2f9P+9cnPO6VOzuEeCyLQFjD3u/Mc7qD71Omga1C4XdvfvTK+PkgIZaOTj3xmD5ES90phBXJWGkjAQFNi+xK0qzEHfMx19YMGFrrt+u1xfG81BXyxY/lXVbsFdQEiKBCWq/xh+rb+4u8zsdZ4E5bGpjhal1thzRR0OF/bzD298kUgVFmHtUshirtGLjdBN3zMKBPUzNf4pwKkelBg40bE4YXikv4WpplaU/yXrOdPqb6/rilfJpERoqyLloj2lTTf5V4Y+KvvBGN0rx8FAIQQpHVOXKeO2rfjewLyFmk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR01MB7282.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(83380400001)(508600001)(53546011)(316002)(186003)(52116002)(6666004)(31696002)(5660300002)(66946007)(110136005)(54906003)(31686004)(8676002)(66476007)(66556008)(8936002)(38100700002)(6486002)(2906002)(2616005)(86362001)(4326008)(45980500001)(43740500002);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WnpIL2sxM0xOVTRraHRBbTZIUUN1UkZZZnNDdURjMk03c1VxWktJd05rN3Ra?=
- =?utf-8?B?ZGJDQjFOQm5IY3NIQk53cEhuWWcxbXZHQU8zOHVsWWp2Yk1LZWR3WFp4Sm5v?=
- =?utf-8?B?RGh0cGlTYlUySlV5d0JMUWFVVWs3T0VKNHorRHdjMXVBNEkyV0pnKzZTYUJB?=
- =?utf-8?B?dUZnM2gyWU1QU1NyaUFtUW5nMjlxQ1hYOW9yb2dZZzhyRHJuakwzZHVyWDcw?=
- =?utf-8?B?NzFZaTNaN3ZBYUMzWmduQXI2eFZjVGlkclRXUWdyOFhRV3hobEVOZ1A3cURn?=
- =?utf-8?B?K1BQbXd3dEpJWW5MQURzdFBHQklQQVJ3QXlydzd5dmJ5YndQTTRzMkdhWE5j?=
- =?utf-8?B?WTVmeWVRQjV4bE9ROG5oVDFTZDlhSlNIRDZLUldKc2QwUnlhcnBwaUxlanpI?=
- =?utf-8?B?blRhUkdxZzRCNFhnRWh6ekthVklVbjQ1bVVWNFRLZG8xN0dISG5WdjU0ZVRo?=
- =?utf-8?B?eHhzcGQ0dlBERDJiVU15RFNtK2lzWUxBTGRsTVlTeUN2c2xxTU9vd0gyNk5N?=
- =?utf-8?B?dGZ4TExKS1FIeVVqeGVLZXJHQVU3bWoyZUtRUlp1Q2VTN2NLMUtmN3d3dmpI?=
- =?utf-8?B?Q1FDa3R4eWRXcElSa0lEeUxSNndkR3p0dlpGMFdWaE9nTXVrVXM3UlFzdUN5?=
- =?utf-8?B?MFhheWxIbHRHUXRWbnpxNEJBZlUxUUIrMlZsQnBpcXhuTHpyV0diVlFzaDRm?=
- =?utf-8?B?UXpVZG9BTGJqMVdDZFlFUzdwV3NCK2Z4Mll6eFlhSGJXNjY4MDFPNGhIalYy?=
- =?utf-8?B?ZGI5RjVESm8wd2Q3VWN2NTNsMGNabWQ0WForL01uV1RiT0hzd1lFUDRiQUpD?=
- =?utf-8?B?UzcyRHgxUUF0SHc1RjdCY0JaSU15UXFtSDZRNlBORzhpa0NJcnNCMmszS1Nu?=
- =?utf-8?B?eWxhS1pybWo1ZURxbUdESEJGYlZlRXc0ckJHM2FyTUpFZTBxa25BUVZkbDlm?=
- =?utf-8?B?aUlXTzAydzhKT284Tmc4V1lJbDNvWm5CT1hUQTJRU1NOMHd2U2pUYXlDbUxZ?=
- =?utf-8?B?WllnaGpWdmp2WWJsUTVFeTRmbnFSM29QU0RFc1FBMDRMbEVIVDlrbHJhUlhR?=
- =?utf-8?B?NkdJRmlCYXJITGlWVkhOenoxUjNuazgvbUtYTjJGVFhnanlReE83bXp2VTRI?=
- =?utf-8?B?M1FYamJNVC9lVzRsUUx6WWtzQVpueWZhWHRRNXJFNUU5TGowMENYUmttREdD?=
- =?utf-8?B?NWN6eElrVTNLOUJ6alZBcDJJMHRaM3Jycld4SWFKbjd6RFMxZDh2KzRaN3lI?=
- =?utf-8?B?WWIzYmJ1WjRlNDZVazhGK21DcjBQZVV0SmZ5NFVoSmlYVjJuVmhNYnFNZU1M?=
- =?utf-8?B?eElTMjNtS0lTTDJQK3B4enJGbEV2VjN6emhXVi9ENWZNdjhsT291My9XRVo4?=
- =?utf-8?B?QUZ2Y2JlRzBCN2FnM2h3Qm9LcC9IeExETnphdVJFcStaUSs1NUJmeDl6R0Jw?=
- =?utf-8?B?TVIrZC9Dd1RwdWNsZ09lNG5qV0IxcnZXTDBvN3FuMW15YTFaSkZucU9zdzlR?=
- =?utf-8?B?WjBSVC9oQXdYTEIrQTdLNmlZajdaY0lPWDZDSEx0OEpvM3BqaEFYbk15NDJW?=
- =?utf-8?B?OTZpZktzYzgwQkhaSlJsSG5PSjhQaFY3TzVzZit1MnMxd2QyTHJJRmlERUZr?=
- =?utf-8?B?bnBTUHdCblBZYm43YlpncGlGUkt4dU5nU3YrMXZVN3BSMWVLaEZwQmtyMHNB?=
- =?utf-8?B?TG01aEZYcHZkT29uL05zSkhhT2xaRTIvN3BxbG9FeU1UTEhKeXdSaHVCSXJ5?=
- =?utf-8?B?S01JbDNPSk1zTG9tQ3ZEbkUxTEw4M1A0TGZGWHNnRG5vT24zRjBSNmZjZnRa?=
- =?utf-8?B?VkJhdExQcHBUNWtOaFFDbFVuTnV3UUxTUnZsQmdPMXA0N3RGL0FKbHFaVVBz?=
- =?utf-8?Q?4dQR/X+Qm9s25?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 52722d80-976b-472a-f7b1-08d981698af7
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Sep 2021 03:47:35.6335 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: A4lb9ejQmrKnwvLiq/J//oN4S0rQGjtetKMg+yYtiscejpATdOH+XAv46tb5/OKsTCXPq51+V5RUNcJsmPGJqAlj2czgXarWWRPKGa0TUXE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB4774
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -146,75 +97,200 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Open Source Submission <patches@amperecomputing.com>,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Phong Vo <phong@os.amperecomputing.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Mon, Jan 11, 2021 at 04:09:19PM -0600, Brad Bishop wrote:
+>Hello OpenBMC-ers!
+>
+>Your TSC has been aware of the problem of fragmentation in our project for some
+>time.  Fragmentation is a loose term - for the purposes of this note consider
+>it to be any time contributor efforts in the community are duplicated without
+>thought given to maintenance and/or compatibility.
+>
+>To begin to address this issue the TSC is looking for volunteers to serve on a
+>"repository review forum" to which the TSC will initially delegate its
+>authority in the areas of:
+>- new repository creation
+>- placement of contributed new function into existing repositories
+>
+>The TSC fully expects the scope of this forum to quickly grow into the role of
+>a traditional TSC providing frequent, technical oversight to project
+>contributors.  The current TSC will continue to serve the project in terms of
+>governance, advocacy and industry exposure - and likely get a rename (OpenBMC
+>Board? or OpenBMC Steering Committee?) in the process.
+>
+>The new forum would meet periodically or at the demand of other forum members
+>to:
+>- raise the forums combined awareness of new function under development
+>  (information exchange)
+>- build a consensus within the forum on where the function should exist
+>- inform the function contributor and the rest of the community of the decision
+>
+>A successful forum would be a forum that can simultaneously encourage the
+>contribution of new and innovative solutions to existing problems without
+>introducing complexity to the project as a whole.
+>
+>A successful forum member will have previously demonstrated a breadth of
+>understanding of the upstream OpenBMC codebase through:
+>- frequent participation in peer review, the mailing list, IRC, and Discord.
+>- submission of high quality designs and code to upstream OpenBMC
+>  (github.com/openbmc)
+>- a history of working with and guiding less experienced OpenBMC developers
+>  in a timely manner, enabling them to come up to speed quickly.
+>
+>If you are interested in serving the project in this manner, please reply to
+>submit yourself as a candidate.
+>
+>-brad, on the behalf of the OpenBMC TSC
 
-+cc:openbmc email list
+Hi all
 
--Quan
+Myself, the volunteers that responded, and the TSC have been working for the
+last few months to prepare a charter that outlines how this new workgroup will
+operate and I'm happy to report that the workgroup is now online and
+operational.  I've appended the workgroup charter for your reading, you can
+also find it in the docs repository.
 
-On 17/09/2021 15:29, Quan Nguyen wrote:
-> Add S0_SCP_AUTH_FAIL, S1_SCP_AUTH_FAIL gpios to indicates firmware
-> authentication fail on each socket.
-> 
-> Add gpio RTC_BAT_SEN_EN to enable RTC battery adc sensor.
-> 
-> Add BMC_I2C4_O_EN gpio to go high at boot to enable access to I2C4 bus.
-> 
-> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-> Signed-off-by: Thang Nguyen <thang@os.amperecomputing.com>
-> ---
->   .../arm/boot/dts/aspeed-bmc-ampere-mtjade.dts | 21 ++++++++++++++++++-
->   1 file changed, 20 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts b/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts
-> index 57b0c45a2298..3515d55bd312 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts
-> @@ -86,6 +86,18 @@ S0_cpu_fault {
->   			linux,code = <ASPEED_GPIO(J, 1)>;
->   		};
->   
-> +		S0_scp_auth_fail {
-> +			label = "S0_SCP_AUTH_FAIL";
-> +			gpios = <&gpio ASPEED_GPIO(J, 2) GPIO_ACTIVE_LOW>;
-> +			linux,code = <ASPEED_GPIO(J, 2)>;
-> +		};
-> +
-> +		S1_scp_auth_fail {
-> +			label = "S1_SCP_AUTH_FAIL";
-> +			gpios = <&gpio ASPEED_GPIO(Z, 5) GPIO_ACTIVE_LOW>;
-> +			linux,code = <ASPEED_GPIO(Z, 5)>;
-> +		};
-> +
->   		S1_overtemp {
->   			label = "S1_OVERTEMP";
->   			gpios = <&gpio ASPEED_GPIO(Z, 6) GPIO_ACTIVE_LOW>;
-> @@ -590,7 +602,7 @@ &gpio {
->   	/*Q0-Q7*/	"","","","","","UID_BUTTON","","",
->   	/*R0-R7*/	"","","BMC_EXT_HIGHTEMP_L","OCP_AUX_PWREN",
->   			"OCP_MAIN_PWREN","RESET_BUTTON","","",
-> -	/*S0-S7*/	"","","","","","","","",
-> +	/*S0-S7*/	"","","","","RTC_BAT_SEN_EN","","","",
->   	/*T0-T7*/	"","","","","","","","",
->   	/*U0-U7*/	"","","","","","","","",
->   	/*V0-V7*/	"","","","","","","","",
-> @@ -604,4 +616,11 @@ &gpio {
->   			"S1_BMC_DDR_ADR","","","","",
->   	/*AC0-AC7*/	"SYS_PWR_GD","","","","","BMC_READY","SLAVE_PRESENT_L",
->   			"BMC_OCP_PG";
-> +
-> +	i2c4_o_en {
-> +		gpio-hog;
-> +		gpios = <ASPEED_GPIO(Y, 2) GPIO_ACTIVE_HIGH>;
-> +		output-high;
-> +		line-name = "BMC_I2C4_O_EN";
-> +	};
->   };
-> 
+After you read the charter you will likely wonder what the role of the TSC is,
+and that isn't documented in the charter so I will discuss it briefly here.
+There are several types of open source governance models - a commonly used
+model splits project leadership between a board of governors and a TSC.  A
+board typically oversees project finances, handles personal and legal issues,
+arbitrates or settles complaints and disputes, oversees the use of project
+trademarks or other "community" assets, and most importantly is accountable for
+the overall success and growth of the entire project and its community.  Many
+of these apply to OpenBMC.  With the introduction of the new workgroup
+(Technical Oversight Forum or "TOF"), OpenBMC effectively moves to this kind of
+split governance model.  Since we are using non-standard and confusing
+descriptions for these different leadership groups, I've included this little
+decoder ring to help illustrate:
 
+| Leadership Role | Typical Project | OpenBMC |
+| ---             | ---             | ---     |
+| General         | Board           | TSC     |
+| Technical       | TSC             | TOF     |
+
+In the longer term, my goal is to see these different teams formalized in the
+OpenBMC project charter and we can use the standard descriptions, board for our
+TSC, and TSC for our TOF.
+
+thx - Brad
+
+-------------
+# OpenBMC Technical Oversight Forum (TOF)
+This is a working document and subject to change.
+
+The OpenBMC TOF or Technical Oversight Forum represents the technical
+leadership of the OpenBMC project.
+
+The TOF handles the processes around accepting new features into OpenBMC,
+creating new subprojects (git repositories), approving subproject maintainers,
+handling and enforcement of subproject maintainer issues, and many other
+technical leadership concerns related to OpenBMC.  This source of this document
+is in the OpenBMC documentation repository (https://github.com/openbmc/docs).
+The TOF updates and maintains this document, using the process documented
+within, and it can be considered authoritative unless directly overridden by
+the TSC. 
+
+## Working Principles
+- Decision making is a spectrum between building broad consensus, in which
+   everyone has agreement, and providing guidance quickly, even when there are
+   strongly differing view-points.  This group should intend to work towards
+   broad consensus, with a balance towards moving forward when there is minor
+   disagreement.
+- Members within this forum are representatives of the development community as
+   a whole and not as representatives for the entities they are employed by.  As
+   such, decisions should be made based on merits of the decision at hand and
+   not on impacts to various member entities.
+- Encouraging progress, experimentation, and decision making within the project
+   is the core purpose of the TOF and not to create processes and barriers to
+   development.  Velocity should be favored over perfection, except as a
+   rationale for ignoring well-reasoned issues.
+
+## Role and responsibilities
+Issues the TOF handle include:
+- Approval of new bitbake meta layers.
+- Approval of new subprojects.
+- Supervising subproject maintainers.
+- Resolving subproject maintainer disputes.
+- Guidance and oversight of the technical direction of OpenBMC.
+
+## Current members
+- Brad Bishop - radsquirrel
+- Andrei Kartashev - Alatar
+- Deepak Kodihalli - dkodihal
+- Ed Tanous - edtanous
+- Richard Thomaiyar - rthomaiy
+- Patrick Williams - stwcx
+- Lei Yu - LeiYU
+
+The TOF shall have a minimum of 5 and maximum of 9 members at any given time.
+
+The chair rotates month to month.
+
+Chair responsibilities:
+- Preparing the agenda.
+- Taking meeting minutes.
+- Documenting decisions on GitHub.
+
+Members are elected by community contributors yearly.  The voting process will
+be determined by the TOF at a later date and updated in this document.  TOF
+candidates should have a breadth of knowledge about the OpenBMC project. Ideal
+candidates will also have a public history of fostering collaboration between
+teams.
+
+Resignation of TOF members will be handled as an empty/reduced seat until the
+next voting session.
+
+## Github issues
+The TOF tracks any ongoing decisions using GitHub issues (link to repo goes
+here). Issues can be opened by anyone, including TOF members themselves. Issues
+can be requests for process or technical changes, or solicitations for the
+opinion of the TOF. When an issue is opened the TOF will respond to a proposal
+or a solicitation, or add it to the next TOF meeting agenda for TOF discussion.
+
+Once an issue has a proposal, TOF members have 8 days to vote on the proposal
+in one of three ways: for, against, or “needs discussion”*.  After 8 days, if
+the proposal has at least three votes for and no other votes, the proposal is
+approved.  Alternatively, if the proposal has at least three votes against and
+no other votes, the proposal is rejected and closed.  Any other vote count
+results in the issue being put on the next TOF meeting agenda.   To ensure
+proposals do not stagnate, if the initial 8 days elapses and the minimum number
+of votes has not been met, the proposal is extended by an additional 6 days and
+then put onto the next TOF meeting agenda after 2 weeks.
+
+Issue vote indicators by reacting to the top post:
+  - For - 👍 (`:+1:`) 
+  - Against - 👎 (`:-1:`) 
+  - Needs discussion - 👀 (`:eyes:`)
+
+## Meetings
+The TOF meets bi-weekly. Any requests for consideration by the TOF should be
+submitted via a GitHub issue using the process documented earlier in this
+document.
+
+Meetings require a quorum of the TOF to be present; quorum is defined as:
+
+| Active TOF membership | Quorum |
+| ---                   | ---    |
+| 5                     | 4      |
+| 6                     | 5      |
+| 7                     | 5      |
+| 8                     | 5      |
+| 9                     | 6      |
+
+During the meeting, the TOF discusses proposals under dispute and votes on
+them. A proposal is rejected if it does not reach majority approval or there is
+more than one dissenting vote.
+
+It is the responsibility of the TOF chairperson to make a public record of the
+decisions of the meeting.
+
+## Discord channel
+The TOF has a private Discord channel for forum member coordination and, in
+rare situations, potentially sensitive topics.  Sensitive topics would be
+topics having security or privacy concerns, such as those involving actions of
+an individual developer.  The TOF chairperson is responsible for coordinating
+the public posting of any information or decisions that do not need to remain
+private, using the same process as public issues.
