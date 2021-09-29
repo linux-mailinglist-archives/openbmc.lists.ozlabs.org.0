@@ -1,48 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACF4F41C13A
-	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 11:02:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74C6641C404
+	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 13:59:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HK9Pb4brWz2ynK
-	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 19:02:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HKFKs2fF0z2xXy
+	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 21:59:45 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=PVbY/dJx;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=IXaperT3;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=PVbY/dJx; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=IXaperT3; 
+ dkim-atps=neutral
+X-Greylist: delayed 419 seconds by postgrey-1.36 at boromir;
+ Wed, 29 Sep 2021 21:55:51 AEST
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HK9PG4Gv0z2xr1;
- Wed, 29 Sep 2021 19:02:24 +1000 (AEST)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 18T8f6v8036259;
- Wed, 29 Sep 2021 16:41:06 +0800 (GMT-8)
- (envelope-from jammy_huang@aspeedtech.com)
-Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
- Wed, 29 Sep 2021 17:01:52 +0800
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
- <andrew@aj.id.au>, <linux-media@vger.kernel.org>,
- <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2] media: aspeed: add debugfs
-Date: Wed, 29 Sep 2021 17:00:25 +0800
-Message-ID: <20210929090024.8499-1-jammy_huang@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HKFFM6pz6z2yxx
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Sep 2021 21:55:51 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 48D5A5C0102;
+ Wed, 29 Sep 2021 07:48:42 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute3.internal (MEProxy); Wed, 29 Sep 2021 07:48:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=RNSme47IMvyXqv7BNvAT7L+G+z0
+ 8D9PXNQOsE+gyTi0=; b=PVbY/dJxBAwpPm6Hxzey+utSth8flE4cwcqsbUV9ZdZ
+ hGHK1LgZPhp46/sGbE4Llojgf9riaQkNO/i3chD2d1UM4EmQzyd5agtDN6/4UVqg
+ +prvsb+cl+3homxsCxNGCUgZRXWbWwzA0LF3fL/S35csvwiZpRGFsBfe8eUAatIF
+ 9qJiuCduvvt7FOzSEG54x2V5ph8ZBOFIlxHL1x5irAt3w0tyXRnc4XAsU6VQpS4m
+ lkcWAPIJKnNGicMAaRGDOf2kESnGUH1rB848EAJrDSqPDAmPhjUP7o4N2F8OzMJR
+ MC75OqQ7BtOMyDnC+NYM2+yN1b/w9Jt7aeFwOPmU4Rw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=RNSme4
+ 7IMvyXqv7BNvAT7L+G+z08D9PXNQOsE+gyTi0=; b=IXaperT3/sTFHaXaBznq2w
+ VCGxg1o4N8GE5PFQYM1Vg54xBFfUEyEjO+MnKN+QJfkztw9HXOmiLW8l5dlkDZ4B
+ mRrgrCA5k/Au6L0ai0p9vDqCK3UStiJjXNFgpbyokW/2smmKLw6NgUBWJ4iiu42b
+ M8YvdNOYAKRu5YNQeqsyNnyHSUvfgp3J3fWf3RDDmmRj9XOwfEmoXdxJvg2RF5Xr
+ UOnWQof6porSaUSDHu45lhZcpfMldwO7Sbb1d2CXq48mD7iUTedThWMwNVAzt93G
+ pTUIKFXZU+apFgAdMvZLORrkqtOpiORcXtr0V/YlQcU9To1yiqvb5sp7CcgIgjUQ
+ ==
+X-ME-Sender: <xms:mVJUYTLB9N2CE9aiKR-VsQ9Q5xaYsSK5NQsy8HC5ZXhEGmAqk8TleQ>
+ <xme:mVJUYXJK1yTjJE4uLc7LC7bLyMhVKA6XCHnfAx-5liHxqzsdSArouDZfbQaa0ll67
+ pVjIcoK368iV933PUE>
+X-ME-Received: <xmr:mVJUYbt2BZFbG3zDvDZ8nrKxDf2_cKhlwxWYck3pkXeM6o6X9MvmE99pNSGPKgiL7nLUHoB4O5BoT0JSyOt-vKIfc3bHbo3bjGVL_7ODXjPSOg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudekvddggedvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtroertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepfeeikedvjeejheetgeeggeefgeff
+ teeugfegtddvudeggfeugfefjedvuedvveevnecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:mVJUYcb7RovCrFVD9eRmwTjehXbzUxoWkpqrpDbv6iWHeJuufudwNQ>
+ <xmx:mVJUYabbOB6O4wsKpIWZpJz-pKI3FE4NF2R58nLYXwoUAHU4SWNm1Q>
+ <xmx:mVJUYQBGe-UXQkrk2up87_LO1dXKdkdg0oT2tjvvQQrFGJiMVCAYow>
+ <xmx:mlJUYfPWvDr0iwVtORfvZcHlQhCyq5bbDWObMWbQp9-2RQ21g3f1TQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 29 Sep 2021 07:48:41 -0400 (EDT)
+Date: Wed, 29 Sep 2021 06:48:40 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Kumar Thangavel <thangavel.k@hcl.com>
+Subject: Re: EEPROM Validation issue in Fru Device.
+Message-ID: <YVRSmInJszjpBTsY@heinlein>
+References: <PS2PR04MB3589B9346947C693802AE1F7FDA99@PS2PR04MB3589.apcprd04.prod.outlook.com>
+ <PS2PR04MB3589C40CCE3B07C5A2B79A3AFDA99@PS2PR04MB3589.apcprd04.prod.outlook.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.2.115]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 18T8f6v8036259
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="jivuflkApA9amPp/"
+Content-Disposition: inline
+In-Reply-To: <PS2PR04MB3589C40CCE3B07C5A2B79A3AFDA99@PS2PR04MB3589.apcprd04.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,214 +99,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW@aspeedtech.com
+Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ Vernon Mauery <vernon.mauery@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Ed Tanous <ed@tanous.net>, Amithash Prasad <amithash@fb.com>, "Velumani T-ERS,
+ HCLTech" <velumanit@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-To show video real-time information as below:
 
-Caputre:
-  Signal              : Unlock
-  Width               : 1920
-  Height              : 1080
-  FRC                 : 30
+--jivuflkApA9amPp/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Performance:
-  Frame#              : 0
-  Frame Duration      :
-    Now               : 0
-    Min               : 0
-    Max               : 0
-  FPS(ms)             : 0
+On Wed, Sep 29, 2021 at 05:53:33AM +0000, Kumar Thangavel wrote:
+>=20
+> 1.       How the function isDevice16Bit Validated for 16 bit device ?
 
-Change-Id: I483740c4df6db07a9261c18440472a0356512bb7
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
----
- drivers/media/platform/aspeed-video.c | 101 ++++++++++++++++++++++++++
- 1 file changed, 101 insertions(+)
+My understanding is that Vijay wrote this originally when he wrote the Tiog=
+apass
+port.  You should be able to confirm if it works there.
 
-diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index 8b3939b8052d..c5c413844441 100644
---- a/drivers/media/platform/aspeed-video.c
-+++ b/drivers/media/platform/aspeed-video.c
-@@ -21,6 +21,8 @@
- #include <linux/videodev2.h>
- #include <linux/wait.h>
- #include <linux/workqueue.h>
-+#include <linux/debugfs.h>
-+#include <linux/ktime.h>
- #include <media/v4l2-ctrls.h>
- #include <media/v4l2-dev.h>
- #include <media/v4l2-device.h>
-@@ -203,6 +205,14 @@ struct aspeed_video_buffer {
- 	struct list_head link;
- };
- 
-+struct aspeed_video_perf {
-+	ktime_t last_sample;
-+	u32 totaltime;
-+	u32 duration;
-+	u32 duration_min;
-+	u32 duration_max;
-+};
-+
- #define to_aspeed_video_buffer(x) \
- 	container_of((x), struct aspeed_video_buffer, vb)
- 
-@@ -241,6 +251,8 @@ struct aspeed_video {
- 	unsigned int frame_left;
- 	unsigned int frame_right;
- 	unsigned int frame_top;
-+
-+	struct aspeed_video_perf perf;
- };
- 
- #define to_aspeed_video(x) container_of((x), struct aspeed_video, v4l2_dev)
-@@ -444,6 +456,16 @@ static void aspeed_video_write(struct aspeed_video *video, u32 reg, u32 val)
- 		readl(video->base + reg));
- }
- 
-+static void update_perf(struct aspeed_video_perf *p)
-+{
-+	p->duration =
-+		ktime_to_ms(ktime_sub(ktime_get(),  p->last_sample));
-+	p->totaltime += p->duration;
-+
-+	p->duration_max = max(p->duration, p->duration_max);
-+	p->duration_min = min(p->duration, p->duration_min);
-+}
-+
- static int aspeed_video_start_frame(struct aspeed_video *video)
- {
- 	dma_addr_t addr;
-@@ -482,6 +504,8 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
- 	aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
- 			    VE_INTERRUPT_COMP_COMPLETE);
- 
-+	video->perf.last_sample = ktime_get();
-+
- 	aspeed_video_update(video, VE_SEQ_CTRL, 0,
- 			    VE_SEQ_CTRL_TRIG_CAPTURE | VE_SEQ_CTRL_TRIG_COMP);
- 
-@@ -600,6 +624,8 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
- 		u32 frame_size = aspeed_video_read(video,
- 						   VE_JPEG_COMP_SIZE_READ_BACK);
- 
-+		update_perf(&video->perf);
-+
- 		spin_lock(&video->lock);
- 		clear_bit(VIDEO_FRAME_INPRG, &video->flags);
- 		buf = list_first_entry_or_null(&video->buffers,
-@@ -760,6 +786,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
- 	det->width = MIN_WIDTH;
- 	det->height = MIN_HEIGHT;
- 	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
-+	memset(&video->perf, 0, sizeof(video->perf));
- 
- 	do {
- 		if (tries) {
-@@ -1450,6 +1477,8 @@ static int aspeed_video_start_streaming(struct vb2_queue *q,
- 	struct aspeed_video *video = vb2_get_drv_priv(q);
- 
- 	video->sequence = 0;
-+	video->perf.duration_max = 0;
-+	video->perf.duration_min = 0xffffffff;
- 
- 	rc = aspeed_video_start_frame(video);
- 	if (rc) {
-@@ -1517,6 +1546,72 @@ static const struct vb2_ops aspeed_video_vb2_ops = {
- 	.buf_queue =  aspeed_video_buf_queue,
- };
- 
-+#ifdef CONFIG_DEBUG_FS
-+static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
-+{
-+	struct aspeed_video *v = s->private;
-+
-+	seq_puts(s, "\n");
-+
-+	seq_printf(s, "  %-20s:\t%s\n", "Signal",
-+		   v->v4l2_input_status ? "Unlock" : "Lock");
-+	seq_printf(s, "  %-20s:\t%d\n", "Width", v->pix_fmt.width);
-+	seq_printf(s, "  %-20s:\t%d\n", "Height", v->pix_fmt.height);
-+	seq_printf(s, "  %-20s:\t%d\n", "FRC", v->frame_rate);
-+
-+	seq_puts(s, "\n");
-+
-+	seq_puts(s, "Performance:\n");
-+	seq_printf(s, "  %-20s:\t%d\n", "Frame#", v->sequence);
-+	seq_printf(s, "  %-20s:\n", "Frame Duration");
-+	seq_printf(s, "    %-18s:\t%d\n", "Now", v->perf.duration);
-+	seq_printf(s, "    %-18s:\t%d\n", "Min", v->perf.duration_min);
-+	seq_printf(s, "    %-18s:\t%d\n", "Max", v->perf.duration_max);
-+	seq_printf(s, "  %-20s:\t%d\n", "FPS(ms)", 1000/(v->perf.totaltime/v->sequence));
-+
-+
-+	return 0;
-+}
-+
-+int aspeed_video_proc_open(struct inode *inode, struct file *file)
-+{
-+	return single_open(file, aspeed_video_debugfs_show, inode->i_private);
-+}
-+
-+static struct file_operations aspeed_video_debugfs_ops = {
-+	.owner   = THIS_MODULE,
-+	.open    = aspeed_video_proc_open,
-+	.read    = seq_read,
-+	.llseek  = seq_lseek,
-+	.release = single_release,
-+};
-+
-+static struct dentry *debugfs_entry;
-+
-+static void aspeed_video_debugfs_remove(struct aspeed_video *video)
-+{
-+	debugfs_remove_recursive(debugfs_entry);
-+	debugfs_entry = NULL;
-+}
-+
-+static int aspeed_video_debugfs_create(struct aspeed_video *video)
-+{
-+	debugfs_entry = debugfs_create_file(DEVICE_NAME, 0444, NULL,
-+						   video,
-+						   &aspeed_video_debugfs_ops);
-+	if (!debugfs_entry)
-+		aspeed_video_debugfs_remove(video);
-+
-+	return debugfs_entry == NULL ? -EIO : 0;
-+}
-+#else
-+static void aspeed_video_debugfs_remove(struct aspeed_video *video) { }
-+static int aspeed_video_debugfs_create(struct aspeed_video *video)
-+{
-+	return 0;
-+}
-+#endif /* CONFIG_DEBUG_FS */
-+
- static int aspeed_video_setup_video(struct aspeed_video *video)
- {
- 	const u64 mask = ~(BIT(V4L2_JPEG_CHROMA_SUBSAMPLING_444) |
-@@ -1708,6 +1803,10 @@ static int aspeed_video_probe(struct platform_device *pdev)
- 		return rc;
- 	}
- 
-+	rc = aspeed_video_debugfs_create(video);
-+	if (rc)
-+		dev_err(video->dev, "debugfs create failed\n");
-+
- 	return 0;
- }
- 
-@@ -1719,6 +1818,8 @@ static int aspeed_video_remove(struct platform_device *pdev)
- 
- 	aspeed_video_off(video);
- 
-+	aspeed_video_debugfs_remove(video);
-+
- 	clk_unprepare(video->vclk);
- 	clk_unprepare(video->eclk);
- 
--- 
-2.25.1
+>=20
+> 2.       Is my validation and analysis is correct ?
 
+Other people have complained (on Discord) that this current code doesn't wo=
+rk
+for all eeproms.  If you have something that works better and doesn't break
+Tiogapass support, I would expect it to be accepted as a change in fru-devi=
+ce.
+
+--=20
+Patrick Williams
+
+--jivuflkApA9amPp/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmFUUpYACgkQqwNHzC0A
+wRkFKBAAhAsBzdXxK/R3LnnePHyCKrU5tMmv4gMht+0rweG0BIEIkKauYZ2ONIAn
+f4vyTurm40mc5jR2GnvceyE0+eEVH+Cfw2D0WGzz+nQMHeIAaCgHKX8kyviRUNUG
+w01NKhiNbRwRGkNtQIXEKYs3xxW1zjlBR4nOvBCCtT8sYaXFKDkVmAsR7KnipnHo
+QwHE+r4j8zz/NL2PPiksKHzMMeud9AYYsfP83GYmSBxEas0ywmUx/xWGRtjcwP68
+bDUZwZQkk5WraRfH2QOUwzdcRpLXFbRkPR1KDcC0LyBDzZ1eBIOZG4vQFStm32sY
+a6Q7ERH0yEXpR5w5CpbYaiSNV3ou1ghxaVWcvbKmuAwLqVv+Boh5u5/3zZ7HjCxu
+MRGWx6CH0e8i2xYS0/V/t3KlcgwJWcPjoNNASPTNJfBK2iulDfzmXSzG7Fg894Q4
+hVgTxoc5foNyB/9sWzpwYLtCCxgZaiIrGY1dkyic9MrfkLGo1jB2VfmwQxd+on6s
+w6xPTiIGDASLtLlLOvFrS53xJFRuxbcR0Zlk2C/H+LagTJF5WFnN8WLAi8fXqn5p
+l0EHm4PalXnAtMJmuLQrOU0JaYHRWPU2VnPcOPmWk+hPqflDGg/2V0AdbKuNbhCd
+maA6EuvNRFnSlvZNK3HqDmPvetos3xlixtQAqoqM3hgcRkixEVs=
+=8ZH1
+-----END PGP SIGNATURE-----
+
+--jivuflkApA9amPp/--
