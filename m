@@ -1,14 +1,14 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AB5D41C3F1
-	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 13:56:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C926A41C3F8
+	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 13:57:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HKFFV1ffJz305W
-	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 21:55:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HKFHG5Hllz2ypW
+	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 21:57:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=TPHBvzSo;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=HH/p5S6h;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,34 +18,35 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=TPHBvzSo; 
+ header.a=rsa-sha256 header.s=thorn header.b=HH/p5S6h; 
  dkim-atps=neutral
 Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
  [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HKFCl3Zzwz2yPK;
- Wed, 29 Sep 2021 21:54:27 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HKFCp3CdTz2ybM;
+ Wed, 29 Sep 2021 21:54:30 +1000 (AEST)
 Received: from hatter.bewilderbeest.net (71-212-29-146.tukw.qwest.net
  [71.212.29.146])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 5AD49C20;
- Wed, 29 Sep 2021 04:54:25 -0700 (PDT)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 716C3C53;
+ Wed, 29 Sep 2021 04:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1632916465;
- bh=gWhuqV+M1Tlbi05phPKIzczuXxjec79mm6Htp3ec2Fc=;
+ s=thorn; t=1632916468;
+ bh=R1j5OVnuaawARx/Lb+7fwJs4wNisTGf3IZegQlGAoXI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=TPHBvzSoAHCSQnD3bL2UL4TNhvWQeplNlEAzdi66LW/EUSsZHaD8j+grZQ+lI2rPL
- eCkgGN+VYhA8AV5DkC4Shr4g/Hu70PSi+JCPV/MV1HNEtnkphvooWRgWmWSiRA5E23
- 67EO2AZnjt3cdiI2zXmGhZBitG81BlaRm1fHmeno=
+ b=HH/p5S6hIH7hSeX9tW5puYJY+vGYxS34mcVMsTAgDy7++ub7A3jZ4QaCh0Eprp3qU
+ joAq/DCFX+t1h2e2LUCYdtsPSrw36FErbV1vTgKxuFPuOS5/FWOYOPbNqSy+g1SbyW
+ K8eZWPDr/29Fh6fJAd5JWm0QFX+Rh9FinrBtpD+Y=
 From: Zev Weiss <zev@bewilderbeest.net>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH 3/6] mtd: spi-nor: aspeed: Refactor registration/unregistration
-Date: Wed, 29 Sep 2021 04:54:05 -0700
-Message-Id: <20210929115409.21254-4-zev@bewilderbeest.net>
+Subject: [PATCH 4/6] mtd: spi-nor: aspeed: Allow attaching & detaching chips
+ at runtime
+Date: Wed, 29 Sep 2021 04:54:06 -0700
+Message-Id: <20210929115409.21254-5-zev@bewilderbeest.net>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20210929115409.21254-1-zev@bewilderbeest.net>
 References: <20210929115409.21254-1-zev@bewilderbeest.net>
@@ -66,165 +67,204 @@ Cc: Vignesh Raghavendra <vigneshr@ti.com>, Zev Weiss <zev@bewilderbeest.net>,
  Tudor Ambarus <tudor.ambarus@microchip.com>, Andrew Jeffery <andrew@aj.id.au>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-kernel@vger.kernel.org,
  Richard Weinberger <richard@nod.at>, Michael Walle <michael@walle.cc>,
- linux-mtd@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Jeremy Kerr <jk@codeconstruct.com.au>, linux-aspeed@lists.ozlabs.org,
- Pratyush Yadav <p.yadav@ti.com>, linux-arm-kernel@lists.infradead.org
+ linux-mtd@lists.infradead.org, Miquel Raynal <miquel.raynal@bootlin.com>,
+ Jeremy Kerr <jk@codeconstruct.com.au>, Pratyush Yadav <p.yadav@ti.com>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-We now have separate functions for registering and unregistering
-individual flash chips, instead of the entire controller.  This is a
-preparatory step for allowing userspace to request that a specific
-chip be attached or detached at runtime.
+There are now two new sysfs attributes, attach_chip and detach_chip,
+into which a chip select number can be written to attach or detach the
+corresponding chip.
 
 Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 ---
- drivers/mtd/spi-nor/controllers/aspeed-smc.c | 73 ++++++++++++--------
- 1 file changed, 45 insertions(+), 28 deletions(-)
+ .../ABI/stable/sysfs-driver-aspeed-smc        |  17 +++
+ drivers/mtd/spi-nor/controllers/aspeed-smc.c  | 101 +++++++++++++++++-
+ 2 files changed, 115 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/ABI/stable/sysfs-driver-aspeed-smc
 
+diff --git a/Documentation/ABI/stable/sysfs-driver-aspeed-smc b/Documentation/ABI/stable/sysfs-driver-aspeed-smc
+new file mode 100644
+index 000000000000..871b4d65ccb2
+--- /dev/null
++++ b/Documentation/ABI/stable/sysfs-driver-aspeed-smc
+@@ -0,0 +1,17 @@
++What:		/sys/bus/platform/drivers/aspeed-smc/*/attach_chip
++Date:		September 2021
++Contact:	Zev Weiss <zev@bewilderbeest.net>
++Description:	A chip select number may be written into this file to
++		request that the corresponding chip be attached by the
++		driver.
++Users:		OpenBMC.  Proposed changes should be mailed to
++		openbmc@lists.ozlabs.org
++
++What:		/sys/bus/platform/drivers/aspeed-smc/*/detach_chip
++Date:		September 2021
++Contact:	Zev Weiss <zev@bewilderbeest.net>
++Description:	A chip select number may be written into this file to
++		request that the corresponding chip be detached by the
++		driver.
++Users:		OpenBMC.  Proposed changes should be mailed to
++		openbmc@lists.ozlabs.org
 diff --git a/drivers/mtd/spi-nor/controllers/aspeed-smc.c b/drivers/mtd/spi-nor/controllers/aspeed-smc.c
-index 7225870e8b18..3c153104a905 100644
+index 3c153104a905..da49192a8220 100644
 --- a/drivers/mtd/spi-nor/controllers/aspeed-smc.c
 +++ b/drivers/mtd/spi-nor/controllers/aspeed-smc.c
-@@ -107,9 +107,10 @@ struct aspeed_smc_controller {
- 	const struct aspeed_smc_info *info;	/* type info of controller */
- 	void __iomem *regs;			/* controller registers */
- 	void __iomem *ahb_base;			/* per-chip windows resource */
-+	struct resource *ahb_res;		/* resource for AHB address space */
- 	u32 ahb_window_size;			/* full mapping window size */
+@@ -91,6 +91,7 @@ struct aspeed_smc_controller;
  
--	struct aspeed_smc_chip *chips[];	/* pointers to attached chips */
-+	struct aspeed_smc_chip *chips[];	/* pointers to connected chips */
- };
+ struct aspeed_smc_chip {
+ 	int cs;
++	bool attached;
+ 	struct aspeed_smc_controller *controller;
+ 	void __iomem *ctl;			/* control register */
+ 	void __iomem *ahb_base;			/* base of chip window */
+@@ -402,7 +403,15 @@ static ssize_t aspeed_smc_write_user(struct spi_nor *nor, loff_t to,
  
- /*
-@@ -399,15 +400,24 @@ static ssize_t aspeed_smc_write_user(struct spi_nor *nor, loff_t to,
- 	return len;
+ static int aspeed_smc_unregister_chip(struct aspeed_smc_chip *chip)
+ {
+-	return mtd_device_unregister(&chip->nor.mtd);
++	int ret = -ENOENT;
++	mutex_lock(&chip->controller->mutex);
++	if (chip->attached) {
++		ret = mtd_device_unregister(&chip->nor.mtd);
++		if (!ret)
++			chip->attached = false;
++	}
++	mutex_unlock(&chip->controller->mutex);
++	return ret;
  }
  
-+static int aspeed_smc_unregister_chip(struct aspeed_smc_chip *chip)
-+{
-+	return mtd_device_unregister(&chip->nor.mtd);
-+}
-+
  static int aspeed_smc_unregister(struct aspeed_smc_controller *controller)
- {
- 	struct aspeed_smc_chip *chip;
--	int n;
-+	int n, ret;
+@@ -412,7 +421,7 @@ static int aspeed_smc_unregister(struct aspeed_smc_controller *controller)
  
  	for (n = 0; n < controller->info->nce; n++) {
  		chip = controller->chips[n];
--		if (chip)
--			mtd_device_unregister(&chip->nor.mtd);
-+		if (chip) {
-+			ret = aspeed_smc_unregister_chip(chip);
-+			if (ret)
-+				dev_warn(controller->dev, "failed to unregister CS%d: %d\n",
-+				         n, ret);
-+		}
- 	}
- 
- 	return 0;
-@@ -756,14 +766,39 @@ static const struct spi_nor_controller_ops aspeed_smc_controller_ops = {
- 	.write = aspeed_smc_write_user,
- };
- 
--static int aspeed_smc_setup_flash(struct aspeed_smc_controller *controller,
--				  struct device_node *np, struct resource *r)
-+static int aspeed_smc_register_chip(struct aspeed_smc_chip *chip)
- {
--	const struct spi_nor_hwcaps hwcaps = {
-+	static const struct spi_nor_hwcaps hwcaps = {
- 		.mask = SNOR_HWCAPS_READ |
- 			SNOR_HWCAPS_READ_FAST |
- 			SNOR_HWCAPS_PP,
+-		if (chip) {
++		if (chip && chip->attached) {
+ 			ret = aspeed_smc_unregister_chip(chip);
+ 			if (ret)
+ 				dev_warn(controller->dev, "failed to unregister CS%d: %d\n",
+@@ -775,6 +784,13 @@ static int aspeed_smc_register_chip(struct aspeed_smc_chip *chip)
  	};
-+	int ret;
+ 	int ret;
+ 
++	mutex_lock(&chip->controller->mutex);
 +
-+	ret = aspeed_smc_chip_setup_init(chip, chip->controller->ahb_res);
++	if (chip->attached) {
++		ret = -EEXIST;
++		goto out;
++	}
++
+ 	ret = aspeed_smc_chip_setup_init(chip, chip->controller->ahb_res);
+ 	if (ret)
+ 		goto out;
+@@ -792,7 +808,12 @@ static int aspeed_smc_register_chip(struct aspeed_smc_chip *chip)
+ 		goto out;
+ 
+ 	ret = mtd_device_register(&chip->nor.mtd, NULL, 0);
 +	if (ret)
 +		goto out;
 +
-+	/*
-+	 * TODO: Add support for Dual and Quad SPI protocols attach when board
-+	 * support is present as determined by of property.
-+	 */
-+	ret = spi_nor_scan(&chip->nor, NULL, &hwcaps);
-+	if (ret)
-+		goto out;
-+
-+	ret = aspeed_smc_chip_setup_finish(chip);
-+	if (ret)
-+		goto out;
-+
-+	ret = mtd_device_register(&chip->nor.mtd, NULL, 0);
-+out:
-+	return ret;
++	chip->attached = true;
+ out:
++	mutex_unlock(&chip->controller->mutex);
+ 	return ret;
+ }
+ 
+@@ -865,6 +886,72 @@ static int aspeed_smc_setup_flash(struct aspeed_smc_controller *controller,
+ 	return ret;
+ }
+ 
++static inline struct aspeed_smc_controller *to_aspeed_smc_controller(struct device *dev)
++{
++	struct platform_device *pdev = container_of(dev, struct platform_device, dev);
++	return platform_get_drvdata(pdev);
 +}
 +
-+static int aspeed_smc_setup_flash(struct aspeed_smc_controller *controller,
-+				  struct device_node *np, struct resource *r)
++static ssize_t attach_chip_store(struct device *dev, struct device_attribute *attr,
++                                 const char *buf, size_t count)
 +{
- 	const struct aspeed_smc_info *info = controller->info;
- 	struct device *dev = controller->dev;
- 	struct device_node *child;
-@@ -773,7 +808,6 @@ static int aspeed_smc_setup_flash(struct aspeed_smc_controller *controller,
- 	for_each_available_child_of_node(np, child) {
- 		struct aspeed_smc_chip *chip;
- 		struct spi_nor *nor;
--		struct mtd_info *mtd;
++	unsigned long cs;
++	struct aspeed_smc_controller *controller;
++	struct aspeed_smc_chip *chip;
++	ssize_t ret = kstrtoul(buf, 0, &cs);
++	if (ret)
++		return ret;
++
++	controller = to_aspeed_smc_controller(dev);
++	if (cs >= controller->info->nce)
++		return -EINVAL;
++
++	chip = controller->chips[cs];
++
++	if (!chip)
++		return -ENODEV;
++
++	ret = aspeed_smc_register_chip(chip);
++
++	return ret ? ret : count;
++}
++static DEVICE_ATTR_WO(attach_chip);
++
++static ssize_t detach_chip_store(struct device *dev, struct device_attribute *attr,
++                                 const char *buf, size_t count)
++{
++	unsigned long cs;
++	struct aspeed_smc_controller *controller;
++	struct aspeed_smc_chip *chip;
++	ssize_t ret = kstrtoul(buf, 0, &cs);
++	if (ret)
++		return ret;
++
++	controller = to_aspeed_smc_controller(dev);
++	if (cs >= controller->info->nce)
++		return -EINVAL;
++
++	chip = controller->chips[cs];
++
++	if (!chip)
++		return -ENODEV;
++
++	ret = aspeed_smc_unregister_chip(chip);
++
++	return ret ? ret : count;
++}
++static DEVICE_ATTR_WO(detach_chip);
++
++static struct attribute *aspeed_smc_sysfs_attrs[] = {
++	&dev_attr_attach_chip.attr,
++	&dev_attr_detach_chip.attr,
++	NULL,
++};
++
++static const struct attribute_group aspeed_smc_sysfs_attr_group = {
++	.attrs = aspeed_smc_sysfs_attrs,
++};
++
+ static int aspeed_smc_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+@@ -905,8 +992,16 @@ static int aspeed_smc_probe(struct platform_device *pdev)
+ 	controller->ahb_window_size = resource_size(res);
  
- 		/* This driver does not support NAND or NOR flash devices. */
- 		if (!of_device_is_compatible(child, "jedec,spi-nor"))
-@@ -810,35 +844,17 @@ static int aspeed_smc_setup_flash(struct aspeed_smc_controller *controller,
- 		chip->cs = cs;
+ 	ret = aspeed_smc_setup_flash(controller, np, res);
+-	if (ret)
++	if (ret) {
+ 		dev_err(dev, "Aspeed SMC probe failed %d\n", ret);
++		return ret;
++	}
++
++	ret = devm_device_add_group(dev, &aspeed_smc_sysfs_attr_group);
++	if (ret) {
++		dev_err(dev, "Failed to create sysfs files\n");
++		aspeed_smc_unregister(controller);
++	}
  
- 		nor = &chip->nor;
--		mtd = &nor->mtd;
- 
- 		nor->dev = dev;
- 		nor->priv = chip;
- 		spi_nor_set_flash_node(nor, child);
- 		nor->controller_ops = &aspeed_smc_controller_ops;
- 
--		ret = aspeed_smc_chip_setup_init(chip, r);
--		if (ret)
--			break;
--
--		/*
--		 * TODO: Add support for Dual and Quad SPI protocols
--		 * attach when board support is present as determined
--		 * by of property.
--		 */
--		ret = spi_nor_scan(nor, NULL, &hwcaps);
--		if (ret)
--			break;
--
--		ret = aspeed_smc_chip_setup_finish(chip);
--		if (ret)
--			break;
-+		controller->chips[cs] = chip;
- 
--		ret = mtd_device_register(mtd, NULL, 0);
-+		ret = aspeed_smc_register_chip(chip);
- 		if (ret)
- 			break;
--
--		controller->chips[cs] = chip;
- 	}
- 
- 	if (ret) {
-@@ -881,6 +897,7 @@ static int aspeed_smc_probe(struct platform_device *pdev)
- 		return PTR_ERR(controller->regs);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-+	controller->ahb_res = res;
- 	controller->ahb_base = devm_ioremap_resource(dev, res);
- 	if (IS_ERR(controller->ahb_base))
- 		return PTR_ERR(controller->ahb_base);
+ 	return ret;
+ }
 -- 
 2.33.0
 
