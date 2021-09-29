@@ -1,48 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13E7041BC24
-	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 03:17:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B588841BC32
+	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 03:35:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HJz556NVsz2ywQ
-	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 11:17:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HJzTg4XZCz2ymr
+	for <lists+openbmc@lfdr.de>; Wed, 29 Sep 2021 11:35:35 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=dorzW+AC;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=dorzW+AC; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HJz4p1Scwz2xtZ;
- Wed, 29 Sep 2021 11:17:28 +1000 (AEST)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 18T0uCkR095684;
- Wed, 29 Sep 2021 08:56:12 +0800 (GMT-8)
- (envelope-from jammy_huang@aspeedtech.com)
-Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
- Wed, 29 Sep 2021 09:16:56 +0800
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
- <andrew@aj.id.au>, <linux-media@vger.kernel.org>,
- <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [RESEND PATCH] media: aspeed: add debugfs
-Date: Wed, 29 Sep 2021 09:16:53 +0800
-Message-ID: <20210929011652.1709-1-jammy_huang@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HJzTC49bBz2yNY
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Sep 2021 11:35:10 +1000 (AEST)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 18T0x1K5030102
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Sep 2021 21:35:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=to : from : subject :
+ message-id : date : content-type : content-transfer-encoding :
+ mime-version; s=pp1; bh=agENvqUaWoBudGjRLf/Tw7oMZjjMpUfr0K3aWswG26o=;
+ b=dorzW+ACfZoC8selMflVcDNvpC+m95lfnwBcznEvkSS+4arg1E7JYGy/uT98TdNjSfzU
+ OVlSOyRCmObvFU+6mktMocnF8lyIEwAJHh0F951d+U0liKoPKb7QCbEM1STbW+JLDaLN
+ NIcq/VooItrYcJXnJ15gL2nXd8IjuvQySXywHQO0YecSTbAk1bvhkrlaUSfx0uxSLY+i
+ +/Z+YI2x81Z26XRZgHpMYtA1Gs7wu84r/2QbQoLsk2PKu4H7pkeowcE/sGSRnHSBrDg3
+ QXg4pq288uXWtNsM584tf9IUTXkG9TGesO+q2E6DMm92Lpuqc/js+tAZxtJ2kjXhp04A bQ== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3bce32gkwj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Sep 2021 21:35:07 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 18T1Ruj8007924
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Sep 2021 01:35:07 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma04dal.us.ibm.com with ESMTP id 3b9udbp84y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Sep 2021 01:35:06 +0000
+Received: from b03ledav002.gho.boulder.ibm.com
+ (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 18T1Z5nW20316552
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Sep 2021 01:35:05 GMT
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 427AF136053
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Sep 2021 01:35:05 +0000 (GMT)
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EDAB313605D
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Sep 2021 01:35:04 +0000 (GMT)
+Received: from demeter.local (unknown [9.65.194.119])
+ by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Sep 2021 01:35:04 +0000 (GMT)
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday September 29
+Message-ID: <bb3c031e-cbe3-36c5-0db6-d1ef454300fd@linux.ibm.com>
+Date: Tue, 28 Sep 2021 20:35:03 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.10.1
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: k5_ChFATx_vTZLNdyni9BJfLUP0AWj_B
+X-Proofpoint-ORIG-GUID: k5_ChFATx_vTZLNdyni9BJfLUP0AWj_B
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.2.115]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 18T0uCkR095684
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.391,FMLib:17.0.607.475
+ definitions=2021-09-28_11,2021-09-28_01,2020-04-07_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 mlxscore=0 bulkscore=0
+ impostorscore=0 adultscore=0 spamscore=0 mlxlogscore=596 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2109230001 definitions=main-2109290005
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,199 +100,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW@aspeedtech.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-To show video real-time information as below:
+This is a reminder of the OpenBMC Security Working Group meeting 
+scheduled for this Wednesday September 29 at 10:00am PDT.
 
-    Signal|           Resolution|       FRC
-          |     Width     Height|
-      Lock|      1920       1080|         0
+We'll discuss the following items on the agenda 
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
+and anything else that comes up:
 
-    Frame#|       Frame Duration|       FPS
-          |    Now    Min    Max|
-       496|     26     25     30|        40
+1. Continue discussion: Password based auth for IPMI over DTLS 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/31548 
+<https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/31548>
+2. (Joseph) Who wants a function to enable/disable BMC USB ports? 
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/47180 
+<https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/47180>
 
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
----
- drivers/media/platform/aspeed-video.c | 100 ++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
 
-diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index 8b3939b8052d..5b98dc7b7b15 100644
---- a/drivers/media/platform/aspeed-video.c
-+++ b/drivers/media/platform/aspeed-video.c
-@@ -21,6 +21,8 @@
- #include <linux/videodev2.h>
- #include <linux/wait.h>
- #include <linux/workqueue.h>
-+#include <linux/debugfs.h>
-+#include <linux/ktime.h>
- #include <media/v4l2-ctrls.h>
- #include <media/v4l2-dev.h>
- #include <media/v4l2-device.h>
-@@ -203,6 +205,14 @@ struct aspeed_video_buffer {
- 	struct list_head link;
- };
- 
-+struct aspeed_video_perf {
-+	ktime_t last_sample;
-+	u32 totaltime;
-+	u32 duration;
-+	u32 duration_min;
-+	u32 duration_max;
-+};
-+
- #define to_aspeed_video_buffer(x) \
- 	container_of((x), struct aspeed_video_buffer, vb)
- 
-@@ -241,6 +251,8 @@ struct aspeed_video {
- 	unsigned int frame_left;
- 	unsigned int frame_right;
- 	unsigned int frame_top;
-+
-+	struct aspeed_video_perf perf;
- };
- 
- #define to_aspeed_video(x) container_of((x), struct aspeed_video, v4l2_dev)
-@@ -444,6 +456,18 @@ static void aspeed_video_write(struct aspeed_video *video, u32 reg, u32 val)
- 		readl(video->base + reg));
- }
- 
-+static void update_perf(struct aspeed_video *v)
-+{
-+	v->perf.duration =
-+		ktime_to_ms(ktime_sub(ktime_get(),  v->perf.last_sample));
-+	v->perf.totaltime += v->perf.duration;
-+
-+	if (!v->perf.duration_max || v->perf.duration > v->perf.duration_max)
-+		v->perf.duration_max = v->perf.duration;
-+	if (!v->perf.duration_min || v->perf.duration < v->perf.duration_min)
-+		v->perf.duration_min = v->perf.duration;
-+}
-+
- static int aspeed_video_start_frame(struct aspeed_video *video)
- {
- 	dma_addr_t addr;
-@@ -482,6 +506,8 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
- 	aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
- 			    VE_INTERRUPT_COMP_COMPLETE);
- 
-+	video->perf.last_sample = ktime_get();
-+
- 	aspeed_video_update(video, VE_SEQ_CTRL, 0,
- 			    VE_SEQ_CTRL_TRIG_CAPTURE | VE_SEQ_CTRL_TRIG_COMP);
- 
-@@ -600,6 +626,8 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
- 		u32 frame_size = aspeed_video_read(video,
- 						   VE_JPEG_COMP_SIZE_READ_BACK);
- 
-+		update_perf(video);
-+
- 		spin_lock(&video->lock);
- 		clear_bit(VIDEO_FRAME_INPRG, &video->flags);
- 		buf = list_first_entry_or_null(&video->buffers,
-@@ -760,6 +788,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
- 	det->width = MIN_WIDTH;
- 	det->height = MIN_HEIGHT;
- 	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
-+	memset(&video->perf, 0, sizeof(video->perf));
- 
- 	do {
- 		if (tries) {
-@@ -1517,6 +1546,71 @@ static const struct vb2_ops aspeed_video_vb2_ops = {
- 	.buf_queue =  aspeed_video_buf_queue,
- };
- 
-+#ifdef CONFIG_DEBUG_FS
-+static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
-+{
-+	struct aspeed_video *v = s->private;
-+
-+	seq_printf(s, "%10s|%21s|%10s\n",
-+		   "Signal", "Resolution", "FRC");
-+	seq_printf(s, "%10s|%10s%11s|%10s\n",
-+		   "", "Width", "Height", "");
-+	seq_printf(s, "%10s|%10d%11d|%10d\n",
-+		   v->v4l2_input_status ? "Unlock" : "Lock",
-+		   v->pix_fmt.width, v->pix_fmt.height, v->frame_rate);
-+
-+	seq_puts(s, "\n");
-+
-+	seq_printf(s, "%10s|%21s|%10s\n",
-+		   "Frame#", "Frame Duration", "FPS");
-+	seq_printf(s, "%10s|%7s%7s%7s|%10s\n",
-+		   "", "Now", "Min", "Max", "");
-+	seq_printf(s, "%10d|%7d%7d%7d|%10d\n",
-+		   v->sequence, v->perf.duration, v->perf.duration_min,
-+		   v->perf.duration_max, 1000/(v->perf.totaltime/v->sequence));
-+
-+	return 0;
-+}
-+
-+int aspeed_video_proc_open(struct inode *inode, struct file *file)
-+{
-+	return single_open(file, aspeed_video_debugfs_show, inode->i_private);
-+}
-+
-+static const struct file_operations aspeed_video_debugfs_ops = {
-+	.owner   = THIS_MODULE,
-+	.open    = aspeed_video_proc_open,
-+	.read    = seq_read,
-+	.llseek  = seq_lseek,
-+	.release = single_release,
-+};
-+
-+static struct dentry *debugfs_entry;
-+
-+static void aspeed_video_debugfs_remove(struct aspeed_video *video)
-+{
-+	debugfs_remove_recursive(debugfs_entry);
-+	debugfs_entry = NULL;
-+}
-+
-+static int aspeed_video_debugfs_create(struct aspeed_video *video)
-+{
-+	debugfs_entry = debugfs_create_file(DEVICE_NAME, 0444, NULL,
-+						   video,
-+						   &aspeed_video_debugfs_ops);
-+	if (!debugfs_entry)
-+		aspeed_video_debugfs_remove(video);
-+
-+	return debugfs_entry == NULL ? -EIO : 0;
-+}
-+#else
-+static void aspeed_video_debugfs_remove(struct aspeed_video *video) { }
-+static int aspeed_video_debugfs_create(struct aspeed_video *video)
-+{
-+	return 0;
-+}
-+#endif /* CONFIG_DEBUG_FS */
-+
- static int aspeed_video_setup_video(struct aspeed_video *video)
- {
- 	const u64 mask = ~(BIT(V4L2_JPEG_CHROMA_SUBSAMPLING_444) |
-@@ -1708,6 +1802,10 @@ static int aspeed_video_probe(struct platform_device *pdev)
- 		return rc;
- 	}
- 
-+	rc = aspeed_video_debugfs_create(video);
-+	if (rc)
-+		dev_err(video->dev, "debugfs create failed\n");
-+
- 	return 0;
- }
- 
-@@ -1719,6 +1817,8 @@ static int aspeed_video_remove(struct platform_device *pdev)
- 
- 	aspeed_video_off(video);
- 
-+	aspeed_video_debugfs_remove(video);
-+
- 	clk_unprepare(video->vclk);
- 	clk_unprepare(video->eclk);
- 
--- 
-2.25.1
 
+Access, agenda and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group 
+<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+
+- Joseph
