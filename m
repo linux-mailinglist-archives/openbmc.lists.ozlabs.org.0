@@ -1,79 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FFE741D769
-	for <lists+openbmc@lfdr.de>; Thu, 30 Sep 2021 12:13:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA5BE41D7FE
+	for <lists+openbmc@lfdr.de>; Thu, 30 Sep 2021 12:44:34 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HKpwx20M0z304y
-	for <lists+openbmc@lfdr.de>; Thu, 30 Sep 2021 20:13:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HKqcc42h1z2ywk
+	for <lists+openbmc@lfdr.de>; Thu, 30 Sep 2021 20:44:32 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=VhHziT4w;
+	dkim=pass (1024-bit key; unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=ohMYThIa;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102f;
- helo=mail-pj1-x102f.google.com; envelope-from=wh800805@gmail.com;
+ smtp.mailfrom=yandex-team.ru (client-ip=95.108.205.193;
+ helo=forwardcorp1o.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=VhHziT4w; dkim-atps=neutral
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com
- [IPv6:2607:f8b0:4864:20::102f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
+ header.a=rsa-sha256 header.s=default header.b=ohMYThIa; 
+ dkim-atps=neutral
+X-Greylist: delayed 115 seconds by postgrey-1.36 at boromir;
+ Thu, 30 Sep 2021 20:44:07 AEST
+Received: from forwardcorp1o.mail.yandex.net (forwardcorp1o.mail.yandex.net
+ [95.108.205.193])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HKpwW69DWz2yKV
- for <openbmc@lists.ozlabs.org>; Thu, 30 Sep 2021 20:13:14 +1000 (AEST)
-Received: by mail-pj1-x102f.google.com with SMTP id
- d4-20020a17090ad98400b0019ece228690so6355106pjv.5
- for <openbmc@lists.ozlabs.org>; Thu, 30 Sep 2021 03:13:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=YYKoj4GmFrHfSUDK5/BDAamVSmgajgpOyChP8x/8Xzc=;
- b=VhHziT4wg27YdqZR+oT1DBnFF9Jsd8oyNqM39LqUgtbnhh+LFNdlEMxW/6na24LH6h
- jEUofarfIXxmWPd5Rnc6J1uQv3/XoyEcXDxK1rX3u32QtbPmP3c1k+nMS/YGEe9zWAuS
- CwEhv0j3agm+dgJUBF2s2DStO2smhvwnxcVvpu/OpFk5YNbBSLazSzaa+uNYIVo9eIdm
- IBMiN74+zrAUnEIcxC/6kkN6/C0mOshGNGr8vUmeZu5LF9NFIxINb8TBaPY09CYnMiLG
- daXBkXtdo9zc298xhxMKyMk0PZgKYidJruB8vsELu8ubUdEygdBUwt7adSpOtDys6AHU
- NShg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=YYKoj4GmFrHfSUDK5/BDAamVSmgajgpOyChP8x/8Xzc=;
- b=TMXWlZ2JqfMEj8ssmPREFAqXsW0Mv0UJHfpVKnB0cut/2Yzjga68W/mwhm5rP1OJto
- eos0Vtw+ny7IFFqyGHXU0IdrtJV3pTInV901F25DImbm2UB/pxBsE7mue8sb1Vo8oz4L
- tMte+3aNdQXmDqGi0mB6wngzgrTwbikVwnYCP09/EsuBdIFkJVHZAq704U7swz6lQ6Lz
- EZS00vpf/jrwNabdRiJp3W1SQzUs7HC+8QW31YLdD/XZIwc7Hq53dt7NnBh4ibqckA34
- yIivEDZUwhW+H1m/+tXICq2TwMJerUxGuhm87iCwM7OHcNKqWfCI8NZYfMUOLKhYsSP+
- z3nQ==
-X-Gm-Message-State: AOAM531R5LPN8nwPKQMuZ1yPQHNhZIEyeGIgw+Etha2dlroriQV+DS2Z
- CBh3snr9TQEHlaDFNPXc+A==
-X-Google-Smtp-Source: ABdhPJwqEOT18Lnd1ysWnLN0kKAdJnVhx1onaaNmTKA3CZMGYi/TtV1C1+rjZ5GK0A1CwQ6ND8zaQA==
-X-Received: by 2002:a17:90a:af92:: with SMTP id
- w18mr5541404pjq.98.1632996789868; 
- Thu, 30 Sep 2021 03:13:09 -0700 (PDT)
-Received: from smtpclient.apple (220-128-110-82.hinet-ip.hinet.net.
- [220.128.110.82])
- by smtp.gmail.com with ESMTPSA id o17sm2527114pfp.126.2021.09.30.03.13.08
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 30 Sep 2021 03:13:09 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: Ipmitool command & entity-manager question
-From: =?utf-8?B?5ZCz56eJ5piM?= <wh800805@gmail.com>
-In-Reply-To: <27ffb02323b8be39e1e92b37fc3cdc35857312b8.camel@yadro.com>
-Date: Thu, 30 Sep 2021 18:13:07 +0800
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <2BD99E33-F582-46C5-855F-942532F79FCC@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HKqc72HkBz2yPp
+ for <openbmc@lists.ozlabs.org>; Thu, 30 Sep 2021 20:44:07 +1000 (AEST)
+Received: from sas1-ec30c78b6c5b.qloud-c.yandex.net
+ (sas1-ec30c78b6c5b.qloud-c.yandex.net
+ [IPv6:2a02:6b8:c14:2704:0:640:ec30:c78b])
+ by forwardcorp1o.mail.yandex.net (Yandex) with ESMTP id 6E76E2E098B;
+ Thu, 30 Sep 2021 13:42:02 +0300 (MSK)
+Received: from 2a02:6b8:c08:8889:0:640:bf93:f901
+ (2a02:6b8:c08:8889:0:640:bf93:f901 [2a02:6b8:c08:8889:0:640:bf93:f901])
+ by sas1-ec30c78b6c5b.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
+ xfG9X30tduQ1-g2taPA9S; Thu, 30 Sep 2021 13:42:02 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; 
+ t=1632998522; bh=noxcVDdyZXfRwjYTKVR5fRj6a5xoHTkZVinu80tPu88=;
+ h=Cc:Subject:In-Reply-To:Date:References:To:From:Message-Id;
+ b=ohMYThIa8hvuFClNWuwLJOKfWZQnm2ZX3c68Mk8cyE9KOLa33mw0yv5GdR5sRZEEP
+ Kt9cmh41SwyS8lwjgknMEMyQWsV8uH6ZI+XPsnEssy6kN9xzTxXxwgqf6mV1J8NB0R
+ aYKNii36esGzt07shN0JV/fXzZNKI6UfYXB2pKQw=
+Authentication-Results: sas1-ec30c78b6c5b.qloud-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Received: from iva4-92c901fae84c.qloud-c.yandex.net
+ (iva4-92c901fae84c.qloud-c.yandex.net [2a02:6b8:c0c:150a:0:640:92c9:1fa])
+ by iva8-c5ee4261001e.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id
+ mfGTi40tAqM1-Bob6mMr2
+ for <kitsok@yandex-team.ru>; Thu, 30 Sep 2021 13:41:52 +0300
+Received: by iva4-92c901fae84c.qloud-c.yandex.net with HTTP;
+ Thu, 30 Sep 2021 13:41:52 +0300
+From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
+To: =?utf-8?B?5ZCz56eJ5piM?= <wh800805@gmail.com>,
+ Andrei Kartashev <a.kartashev@yadro.com>
+In-Reply-To: <2BD99E33-F582-46C5-855F-942532F79FCC@gmail.com>
 References: <42F9352C-E5A9-4A02-B877-95E8419EB3BE@gmail.com>
  <27ffb02323b8be39e1e92b37fc3cdc35857312b8.camel@yadro.com>
-To: Andrei Kartashev <a.kartashev@yadro.com>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+ <2BD99E33-F582-46C5-855F-942532F79FCC@gmail.com>
+Subject: Re: Ipmitool command & entity-manager question
+MIME-Version: 1.0
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Thu, 30 Sep 2021 13:42:02 +0300
+Message-Id: <59111632998078@mail.yandex-team.ru>
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset=utf-8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,287 +78,245 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrei
-
-My question is that I set MB_P12V "upper critical" is 13.23, "upper non =
-critical" is 12.6, etc .
-When I login web page, I can see the setting what I want.=20
-But when I use =E2=80=9CIpmitool sensor=E2=80=9D command, the response =
-is wrong. Like below
-
-MB P12V          | 7.215      | Volts      | ok    | na        |6.386    =
- | 6.723     | 7.429     | 7.829     | na=20
-
-I am not sure am I miss something.
-
-Thanks
-Paul
-
-> Andrei Kartashev <a.kartashev@yadro.com> =E6=96=BC 2021=E5=B9=B49=E6=9C=88=
-30=E6=97=A5 =E4=B8=8B=E5=8D=886:03 =E5=AF=AB=E9=81=93=EF=BC=9A
->=20
-> Hello,
->=20
-> What is your question exactly?
-> If it is about precision, then you should take in account that IPMI =
-use
-> 8-bit variables to represent values and some coefficients which
-> calculated based on MinValue/MaxValue parameters of corresponding
-> Sensor interface.
-> You will never get exact values in IPMI, unless you values can fit to
-> 8-bit integer.
->=20
-> On Thu, 2021-09-30 at 17:07 +0800, =E5=90=B3=E7=A7=89=E6=98=8C wrote:
->> Hi all
->>=20
->> I add the sensor in entity-manager config like below
->> {
->>             "Index": 2,
->>             "Name": "MB_VMEM",
->>             "PowerState": "On",
->>             "ScaleFactor": 1,
->>             "Thresholds": [
->>                 {
->>                     "Direction": "greater than",
->>                     "Name": "upper critical",
->>                     "Severity": 1,
->>                     "Value": 1.32
->>                 },
->>                 {
->>                     "Direction": "greater than",
->>                     "Name": "upper non critical",
->>                     "Severity": 0,
->>                     "Value": 1.26
->>                 },
->>                 {
->>                     "Direction": "less than",
->>                     "Name": "lower non critical",
->>                     "Severity": 0,
->>                     "Value": 1.14
->>                 },
->>                 {
->>                     "Direction": "less than",
->>                     "Name": "lower critical",
->>                     "Severity": 1,
->>                     "Value": 1.08
->>                 }
->>             ],
->>             "Type": "ADC"
->>         },
->>         {
->>             "Index": 3,
->>             "Name": "MB_P12V",
->>             "PowerState": "On",
->>             "ScaleFactor": 0.23,
->>             "Thresholds": [
->>                 {
->>                     "Direction": "greater than",
->>                     "Name": "upper critical",
->>                     "Severity": 1,
->>                     "Value": 13.23
->>                 },
->>                 {
->>                     "Direction": "greater than",
->>                     "Name": "upper non critical",
->>                     "Severity": 0,
->>                     "Value": 12.6
->>                 },
->>                 {
->>                     "Direction": "less than",
->>                     "Name": "lower non critical",
->>                     "Severity": 0,
->>                     "Value": 11.4
->>                 },
->>                 {
->>                     "Direction": "less than",
->>                     "Name": "lower critical",
->>                     "Severity": 1,
->>                     "Value": 10.77
->>                 }
->>             ],
->>             "Type": "ADC"
->>         },
->>         {
->>             "Index": 4,
->>             "Name": "MB_P5V",
->>             "PowerState": "On",
->>             "ScaleFactor": 0.55,
->>             "Thresholds": [
->>                 {
->>                     "Direction": "greater than",
->>                     "Name": "upper critical",
->>                     "Severity": 1,
->>                     "Value": 5.48
->>                 },
->>                 {
->>                     "Direction": "greater than",
->>                     "Name": "upper non critical",
->>                     "Severity": 0,
->>                     "Value": 5.24
->>                 },
->>                 {
->>                     "Direction": "less than",
->>                     "Name": "lower non critical",
->>                     "Severity": 0,
->>                     "Value": 4.76
->>                 },
->>                 {
->>                     "Direction": "less than",
->>                     "Name": "lower critical",
->>                     "Severity": 1,
->>                     "Value": 4.48
->>                 }
->>             ],
->>             "Type": "ADC"
->>         },
->>         {
->>             "Index": 5,
->>             "Name": "MB_P5V_SB",
->>             "PowerState": "On",
->>             "ScaleFactor": 0.25,
->>             "Thresholds": [
->>                 {
->>                     "Direction": "greater than",
->>                     "Name": "upper critical",
->>                     "Severity": 1,
->>                     "Value": 5.48
->>                 },
->>                 {
->>                     "Direction": "greater than",
->>                     "Name": "upper non critical",
->>                     "Severity": 0,
->>                     "Value": 5.24
->>                 },
->>                 {
->>                     "Direction": "less than",
->>                     "Name": "lower non critical",
->>                     "Severity": 0,
->>                     "Value": 4.76
->>                 },
->>                 {
->>                     "Direction": "less than",
->>                     "Name": "lower critical",
->>                     "Severity": 1,
->>                     "Value": 4.48
->>                 }
->>             ],
->>             "Type": "ADC"
->>         },
->>=20
->>=20
->> I use the busctrl command to see MB_P5V_SB information, it is normal.
->> root@fws7830bmc:~# busctl introspect --no-pager
->> xyz.openbmc_project.EntityManager
->> /xyz/openbmc_project/inventory/system/board/FWS7830_
->> Baseboard/MB_P5V
->> NAME                                              TYPE      SIGNATURE
->> RESULT/VALUE         FLAGS
->> org.freedesktop.DBus.Introspectable               interface -     =20
->>   -                    -
->> .Introspect                                       method    -     =20
->>   s                    -
->> org.freedesktop.DBus.Peer                         interface -     =20
->>   -                    -
->> .GetMachineId                                     method    -     =20
->>   s                    -
->> .Ping                                             method    -     =20
->>   -                    -
->> org.freedesktop.DBus.Properties                   interface -     =20
->>   -                    -
->> .Get                                              method    ss    =20
->>   v                    -
->> .GetAll                                           method    s     =20
->>   a{sv}                -
->> .Set                                              method    ssv   =20
->>   -                    -
->> .PropertiesChanged                                signal=20
->>   sa{sv}as  -                    -
->> xyz.openbmc_project.Configuration.ADC             interface -     =20
->>   -                    -
->> .Index                                            property  t     =20
->>   4                    emits-change
->> .Name                                             property  s     =20
->>   "MB_P5V"             emits-change
->> .PowerState                                       property  s     =20
->>   "On"                 emits-change
->> .ScaleFactor                                      property  d     =20
->>   0.55                 emits-change
->> .Type                                             property  s     =20
->>   "ADC"                emits-change
->> xyz.openbmc_project.Configuration.ADC.Thresholds0 interface -     =20
->>   -                    -
->> .Delete                                           method    -     =20
->>   -                    -
->> .Direction                                        property  s     =20
->>   "greater than"       emits-change writable
->> .Name                                             property  s     =20
->>   "upper critical"     emits-change writable
->> .Severity                                         property  d     =20
->>   1                    emits-change writable
->> .Value                                            property  d     =20
->>   5.48                 emits-change writable
->> xyz.openbmc_project.Configuration.ADC.Thresholds1 interface -     =20
->>   -                    -
->> .Delete                                           method    -     =20
->>   -                    -
->> .Direction                                        property  s     =20
->>   "greater than"       emits-change writable
->> .Name                                             property  s     =20
->>   "upper non critical" emits-change writable
->> .Severity                                         property  d     =20
->>   0                    emits-change writable
->> .Value                                            property  d     =20
->>   5.24                 emits-change writable
->> xyz.openbmc_project.Configuration.ADC.Thresholds2 interface -     =20
->>   -                    -
->> .Delete                                           method    -     =20
->>   -                    -
->> .Direction                                        property  s     =20
->>   "less than"          emits-change writable
->> .Name                                             property  s     =20
->>   "lower non critical" emits-change writable
->> .Severity                                         property  d     =20
->>   0                    emits-change writable
->> .Value                                            property  d     =20
->>   4.76                 emits-change writable
->> xyz.openbmc_project.Configuration.ADC.Thresholds3 interface -     =20
->>   -                    -
->> .Delete                                           method    -     =20
->>   -                    -
->> .Direction                                        property  s     =20
->>   "less than"          emits-change writable
->> .Name                                             property  s     =20
->>   "lower critical"     emits-change writable
->> .Severity                                         property  d     =20
->>   1                    emits-change writable
->> .Value                                            property  d     =20
->>   4.48                 emits-change writable
->>=20
->> But I use "ipmitoo sensor=E2=80=9D command, it return the error =
-information
->> below as
->> MB P3V3          | 3.271      | Volts      | ok    | na        |
->> 2.947     | 3.046     | 3.511     | 3.596     | na       =20
->> MB P5V           | 2.982      | Volts      | ok    | na        |
->> 2.662     | 2.829     | 3.123     | 3.264     | na       =20
->> MB P5V SB        | 5.048      | Volts      | ok    | na        |
->> 4.484     | 4.766     | 5.245     | 5.471     | na       =20
->> MB P12V          | 7.215      | Volts      | ok    | na        |
->> 6.386     | 6.723     | 7.429     | 7.829     | na=20
->>=20
->> Please give me some advise.
->>=20
->> Many thanks
->> Paul=20
->>=20
->=20
-> --=20
-> Best regards,
-> Andrei Kartashev
->=20
->=20
-
+PGRpdj5IZWxsbyBQYXVsLDwvZGl2PjxkaXY+PGJyIC8+QXMgQW5kcmVpIG1lbnRpb25lZCwgeW91
+J3ZlIGdvdCBpbmNvcnJlY3QgdmFsdWUgaW4gSVBNSSwgaXQncyA3LjIxNVYsIGFuZCBpdCdzIGJl
+eW9uZCB0aHJlc2hvbGRzLjwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PjxkaXY+VGhpcyBpcyBwcm9i
+YWJseSBkdWUgdG8gbGFjayBvZiBNaW5WYWx1ZS9NYXhWYWx1ZSBpbiBlbnRpdHktbWFuYWdlciBm
+aWxlLCB5b3Ugc2hvdWxkIGluZGljYXRlIG1pbmltdW0gYW5kIG1heGltdW0gdmFsdWVzIChhdCBi
+ZXN0KSBmb3IgZWFjaCBzZW5zb3IuPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+Rm9yIGV4YW1wbGUs
+IGhlcmUgaXMgaG93IGl0J3MgZG9uZSBpbiBteSBjb25maWc6PC9kaXY+PC9kaXY+PGRpdj48ZGl2
+PsKgwqDCoMKgwqDCoMKgIHvCoCDCoDwvZGl2PjxkaXY+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAi
+SW5kZXgiOiA1LDwvZGl2PjxkaXY+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAiQnJpZGdlR3BpbyI6
+IFsgeyAiTmFtZSI6ICJCQVRfU0VOU0UiLCAiUG9sYXJpdHkiOiAiSGlnaCIgfSBdLDwvZGl2Pjxk
+aXY+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAiTmFtZSI6ICJQX1ZCQVQiLDwvZGl2PjxkaXY+wqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCAiU2NhbGVGYWN0b3IiOjAuMzMzLDwvZGl2PjxkaXY+wqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoDxzdHJvbmc+ICJNaW4iOiAwLCAiTWF4IjogNC4wLDwvc3Ryb25nPjwv
+ZGl2PjxkaXY+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAiVHlwZSI6ICJBREMiLDwvZGl2PjxkaXY+
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAiVGhyZXNob2xkcyI6IFs8L2Rpdj48ZGl2PsKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB7ICJEaXJlY3Rpb24iOiAibGVzcyB0aGFuIiwgIk5hbWUi
+OiAibG93ZXIgbm9uIGNyaXRpY2FsIiwgIlNldmVyaXR5IjogMCwgIlZhbHVlIjogMi40IH0sPC9k
+aXY+PGRpdj7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgeyAiRGlyZWN0aW9uIjogImxl
+c3MgdGhhbiIsICJOYW1lIjogImxvd2VyIGNyaXRpY2FsIiwgIlNldmVyaXR5IjogMSwgIlZhbHVl
+IjogMi4yIH08L2Rpdj48ZGl2PsKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgXTwvZGl2PjxkaXY+wqDC
+oMKgwqDCoMKgwqAgfSw8L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5Ib3BlIHRoaXMgaGVscHMuPC9k
+aXY+PC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+MzAuMDkuMjAyMSwgMTM6MTMsICLlkLPnp4nmmIwi
+ICZsdDt3aDgwMDgwNUBnbWFpbC5jb20mZ3Q7OjwvZGl2PjxibG9ja3F1b3RlPjxwPkhpIEFuZHJl
+aTxiciAvPjxiciAvPk15IHF1ZXN0aW9uIGlzIHRoYXQgSSBzZXQgTUJfUDEyViAidXBwZXIgY3Jp
+dGljYWwiIGlzIDEzLjIzLCAidXBwZXIgbm9uIGNyaXRpY2FsIiBpcyAxMi42LCBldGMgLjxiciAv
+PldoZW4gSSBsb2dpbiB3ZWIgcGFnZSwgSSBjYW4gc2VlIHRoZSBzZXR0aW5nIHdoYXQgSSB3YW50
+LjxiciAvPkJ1dCB3aGVuIEkgdXNlIOKAnElwbWl0b29sIHNlbnNvcuKAnSBjb21tYW5kLCB0aGUg
+cmVzcG9uc2UgaXMgd3JvbmcuIExpa2UgYmVsb3c8YnIgLz48YnIgLz5NQiBQMTJWIHwgNy4yMTUg
+fCBWb2x0cyB8IG9rIHwgbmEgfDYuMzg2IHwgNi43MjMgfCA3LjQyOSB8IDcuODI5IHwgbmE8YnIg
+Lz48YnIgLz5JIGFtIG5vdCBzdXJlIGFtIEkgbWlzcyBzb21ldGhpbmcuPGJyIC8+PGJyIC8+VGhh
+bmtzPGJyIC8+UGF1bDxiciAvPsKgPC9wPjxibG9ja3F1b3RlPsKgQW5kcmVpIEthcnRhc2hldiAm
+bHQ7PGEgaHJlZj0ibWFpbHRvOmEua2FydGFzaGV2QHlhZHJvLmNvbSIgcmVsPSJub29wZW5lciBu
+b3JlZmVycmVyIj5hLmthcnRhc2hldkB5YWRyby5jb208L2E+Jmd0OyDmlrwgMjAyMeW5tDnmnIgz
+MOaXpSDkuIvljYg2OjAzIOWvq+mBkyYjeGZmMWE7PGJyIC8+wqA8YnIgLz7CoEhlbGxvLDxiciAv
+PsKgPGJyIC8+wqBXaGF0IGlzIHlvdXIgcXVlc3Rpb24gZXhhY3RseT88YnIgLz7CoElmIGl0IGlz
+IGFib3V0IHByZWNpc2lvbiwgdGhlbiB5b3Ugc2hvdWxkIHRha2UgaW4gYWNjb3VudCB0aGF0IElQ
+TUkgdXNlPGJyIC8+wqA4LWJpdCB2YXJpYWJsZXMgdG8gcmVwcmVzZW50IHZhbHVlcyBhbmQgc29t
+ZSBjb2VmZmljaWVudHMgd2hpY2g8YnIgLz7CoGNhbGN1bGF0ZWQgYmFzZWQgb24gTWluVmFsdWUv
+TWF4VmFsdWUgcGFyYW1ldGVycyBvZiBjb3JyZXNwb25kaW5nPGJyIC8+wqBTZW5zb3IgaW50ZXJm
+YWNlLjxiciAvPsKgWW91IHdpbGwgbmV2ZXIgZ2V0IGV4YWN0IHZhbHVlcyBpbiBJUE1JLCB1bmxl
+c3MgeW91IHZhbHVlcyBjYW4gZml0IHRvPGJyIC8+wqA4LWJpdCBpbnRlZ2VyLjxiciAvPsKgPGJy
+IC8+wqBPbiBUaHUsIDIwMjEtMDktMzAgYXQgMTc6MDcgKzA4MDAsIOWQs+enieaYjCB3cm90ZTo8
+YmxvY2txdW90ZT7CoEhpIGFsbDxiciAvPsKgPGJyIC8+wqBJIGFkZCB0aGUgc2Vuc29yIGluIGVu
+dGl0eS1tYW5hZ2VyIGNvbmZpZyBsaWtlIGJlbG93PGJyIC8+wqB7PCEtLSAtLT48YnIgLz7CoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJJbmRleCI6IDIsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAiTmFtZSI6ICJNQl9WTUVNIiw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCJQb3dlclN0YXRlIjogIk9uIiw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJTY2Fs
+ZUZhY3RvciI6IDEsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiVGhyZXNob2xkcyI6
+IFs8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgezwhLS0gLS0+PGJyIC8+
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIkRpcmVjdGlvbiI6ICJn
+cmVhdGVyIHRoYW4iLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCJOYW1lIjogInVwcGVyIGNyaXRpY2FsIiw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAiU2V2ZXJpdHkiOiAxLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJWYWx1ZSI6IDEuMzI8YnIgLz7CoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgfSw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgezwhLS0gLS0+PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIkRpcmVjdGlvbiI6ICJncmVhdGVyIHRoYW4iLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJOYW1lIjogInVwcGVyIG5vbiBjcml0aWNhbCIsPGJy
+IC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIlNldmVyaXR5Ijog
+MCw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiVmFsdWUi
+OiAxLjI2PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoH0sPGJyIC8+wqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHs8IS0tIC0tPjxiciAvPsKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJEaXJlY3Rpb24iOiAibGVzcyB0aGFuIiw8
+YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiTmFtZSI6ICJs
+b3dlciBub24gY3JpdGljYWwiLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCJTZXZlcml0eSI6IDAsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIlZhbHVlIjogMS4xNDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqB9LDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB7PCEt
+LSAtLT48YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiRGly
+ZWN0aW9uIjogImxlc3MgdGhhbiIsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIk5hbWUiOiAibG93ZXIgY3JpdGljYWwiLDxiciAvPsKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJTZXZlcml0eSI6IDEsPGJyIC8+wqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIlZhbHVlIjogMS4wODxiciAvPsKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqBdLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIlR5cGUiOiAiQURDIjxiciAv
+PsKgwqDCoMKgwqDCoMKgwqDCoH0sPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgezwhLS0gLS0+PGJy
+IC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiSW5kZXgiOiAzLDxiciAvPsKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIk5hbWUiOiAiTUJfUDEyViIsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAiUG93ZXJTdGF0ZSI6ICJPbiIsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAiU2NhbGVGYWN0b3IiOiAwLjIzLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIlRo
+cmVzaG9sZHMiOiBbPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHs8IS0t
+IC0tPjxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJEaXJl
+Y3Rpb24iOiAiZ3JlYXRlciB0aGFuIiw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAiTmFtZSI6ICJ1cHBlciBjcml0aWNhbCIsPGJyIC8+wqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIlNldmVyaXR5IjogMSw8YnIgLz7CoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiVmFsdWUiOiAxMy4yMzxiciAvPsKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9LDxiciAvPsKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqB7PCEtLSAtLT48YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAiRGlyZWN0aW9uIjogImdyZWF0ZXIgdGhhbiIsPGJyIC8+wqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIk5hbWUiOiAidXBwZXIgbm9uIGNy
+aXRpY2FsIiw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAi
+U2V2ZXJpdHkiOiAwLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCJWYWx1ZSI6IDEyLjY8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+fSw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgezwhLS0gLS0+PGJyIC8+
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIkRpcmVjdGlvbiI6ICJs
+ZXNzIHRoYW4iLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCJOYW1lIjogImxvd2VyIG5vbiBjcml0aWNhbCIsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIlNldmVyaXR5IjogMCw8YnIgLz7CoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiVmFsdWUiOiAxMS40PGJyIC8+wqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoH0sPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoHs8IS0tIC0tPjxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCJEaXJlY3Rpb24iOiAibGVzcyB0aGFuIiw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiTmFtZSI6ICJsb3dlciBjcml0aWNhbCIsPGJyIC8+wqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIlNldmVyaXR5IjogMSw8YnIg
+Lz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiVmFsdWUiOiAxMC43
+NzxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9PGJyIC8+wqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqBdLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIlR5cGUi
+OiAiQURDIjxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoH0sPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKg
+ezwhLS0gLS0+PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiSW5kZXgiOiA0LDxiciAv
+PsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIk5hbWUiOiAiTUJfUDVWIiw8YnIgLz7CoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCJQb3dlclN0YXRlIjogIk9uIiw8YnIgLz7CoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCJTY2FsZUZhY3RvciI6IDAuNTUsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAiVGhyZXNob2xkcyI6IFs8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgezwhLS0gLS0+PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIkRpcmVjdGlvbiI6ICJncmVhdGVyIHRoYW4iLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJOYW1lIjogInVwcGVyIGNyaXRpY2FsIiw8YnIgLz7C
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiU2V2ZXJpdHkiOiAxLDxi
+ciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJWYWx1ZSI6IDUu
+NDg8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgfSw8YnIgLz7CoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgezwhLS0gLS0+PGJyIC8+wqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIkRpcmVjdGlvbiI6ICJncmVhdGVyIHRoYW4iLDxi
+ciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJOYW1lIjogInVw
+cGVyIG5vbiBjcml0aWNhbCIsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIlNldmVyaXR5IjogMCw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAiVmFsdWUiOiA1LjI0PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoH0sPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHs8IS0t
+IC0tPjxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJEaXJl
+Y3Rpb24iOiAibGVzcyB0aGFuIiw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAiTmFtZSI6ICJsb3dlciBub24gY3JpdGljYWwiLDxiciAvPsKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJTZXZlcml0eSI6IDAsPGJyIC8+wqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIlZhbHVlIjogNC43NjxiciAvPsKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9LDxiciAvPsKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqB7PCEtLSAtLT48YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAiRGlyZWN0aW9uIjogImxlc3MgdGhhbiIsPGJyIC8+wqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIk5hbWUiOiAibG93ZXIgY3JpdGljYWwi
+LDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJTZXZlcml0
+eSI6IDEsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIlZh
+bHVlIjogNC40ODxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9PGJyIC8+
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBdLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIlR5cGUiOiAiQURDIjxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoH0sPGJyIC8+wqDCoMKgwqDC
+oMKgwqDCoMKgezwhLS0gLS0+PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiSW5kZXgi
+OiA1LDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIk5hbWUiOiAiTUJfUDVWX1NCIiw8
+YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJQb3dlclN0YXRlIjogIk9uIiw8YnIgLz7C
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJTY2FsZUZhY3RvciI6IDAuMjUsPGJyIC8+wqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAiVGhyZXNob2xkcyI6IFs8YnIgLz7CoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgezwhLS0gLS0+PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIkRpcmVjdGlvbiI6ICJncmVhdGVyIHRoYW4iLDxiciAvPsKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJOYW1lIjogInVwcGVyIGNyaXRp
+Y2FsIiw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiU2V2
+ZXJpdHkiOiAxLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCJWYWx1ZSI6IDUuNDg8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgfSw8
+YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgezwhLS0gLS0+PGJyIC8+wqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIkRpcmVjdGlvbiI6ICJncmVh
+dGVyIHRoYW4iLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCJOYW1lIjogInVwcGVyIG5vbiBjcml0aWNhbCIsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIlNldmVyaXR5IjogMCw8YnIgLz7CoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiVmFsdWUiOiA1LjI0PGJyIC8+wqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoH0sPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoHs8IS0tIC0tPjxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCJEaXJlY3Rpb24iOiAibGVzcyB0aGFuIiw8YnIgLz7CoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiTmFtZSI6ICJsb3dlciBub24gY3JpdGljYWwiLDxiciAv
+PsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJTZXZlcml0eSI6IDAs
+PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIlZhbHVlIjog
+NC43NjxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9LDxiciAvPsKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB7PCEtLSAtLT48YnIgLz7CoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiRGlyZWN0aW9uIjogImxlc3MgdGhhbiIsPGJy
+IC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIk5hbWUiOiAibG93
+ZXIgY3JpdGljYWwiLDxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCJTZXZlcml0eSI6IDEsPGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIlZhbHVlIjogNC40ODxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqB9PGJyIC8+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBdLDxiciAvPsKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIlR5cGUiOiAiQURDIjxiciAvPsKgwqDCoMKgwqDCoMKgwqDCoH0sPGJy
+IC8+wqA8YnIgLz7CoDxiciAvPsKgSSB1c2UgdGhlIGJ1c2N0cmwgY29tbWFuZCB0byBzZWUgTUJf
+UDVWX1NCIGluZm9ybWF0aW9uLCBpdCBpcyBub3JtYWwuPGJyIC8+wqA8YSBocmVmPSJtYWlsdG86
+cm9vdEBmd3M3ODMwYm1jIiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiPnJvb3RAZndzNzgzMGJt
+YzwvYT46fiMgYnVzY3RsIGludHJvc3BlY3QgLS1uby1wYWdlcjxiciAvPsKgeHl6Lm9wZW5ibWNf
+cHJvamVjdC5FbnRpdHlNYW5hZ2VyPGJyIC8+wqAveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRv
+cnkvc3lzdGVtL2JvYXJkL0ZXUzc4MzBfPGJyIC8+wqBCYXNlYm9hcmQvTUJfUDVWPGJyIC8+wqBO
+QU1FIFRZUEUgU0lHTkFUVVJFPGJyIC8+wqBSRVNVTFQvVkFMVUUgRkxBR1M8YnIgLz7CoG9yZy5m
+cmVlZGVza3RvcC5EQnVzLkludHJvc3BlY3RhYmxlIGludGVyZmFjZSAtPGJyIC8+wqDCoMKgLSAt
+PGJyIC8+wqAuSW50cm9zcGVjdCBtZXRob2QgLTxiciAvPsKgwqDCoHMgLTxiciAvPsKgb3JnLmZy
+ZWVkZXNrdG9wLkRCdXMuUGVlciBpbnRlcmZhY2UgLTxiciAvPsKgwqDCoC0gLTxiciAvPsKgLkdl
+dE1hY2hpbmVJZCBtZXRob2QgLTxiciAvPsKgwqDCoHMgLTxiciAvPsKgLlBpbmcgbWV0aG9kIC08
+YnIgLz7CoMKgwqAtIC08YnIgLz7CoG9yZy5mcmVlZGVza3RvcC5EQnVzLlByb3BlcnRpZXMgaW50
+ZXJmYWNlIC08YnIgLz7CoMKgwqAtIC08YnIgLz7CoC5HZXQgbWV0aG9kIHNzPGJyIC8+wqDCoMKg
+diAtPGJyIC8+wqAuR2V0QWxsIG1ldGhvZCBzPGJyIC8+wqDCoMKgYXtzdn0gLTxiciAvPsKgLlNl
+dCBtZXRob2Qgc3N2PGJyIC8+wqDCoMKgLSAtPGJyIC8+wqAuUHJvcGVydGllc0NoYW5nZWQgc2ln
+bmFsPGJyIC8+wqDCoMKgc2F7c3Z9YXMgLSAtPGJyIC8+wqB4eXoub3BlbmJtY19wcm9qZWN0LkNv
+bmZpZ3VyYXRpb24uQURDIGludGVyZmFjZSAtPGJyIC8+wqDCoMKgLSAtPGJyIC8+wqAuSW5kZXgg
+cHJvcGVydHkgdDxiciAvPsKgwqDCoDQgZW1pdHMtY2hhbmdlPGJyIC8+wqAuTmFtZSBwcm9wZXJ0
+eSBzPGJyIC8+wqDCoMKgIk1CX1A1ViIgZW1pdHMtY2hhbmdlPGJyIC8+wqAuUG93ZXJTdGF0ZSBw
+cm9wZXJ0eSBzPGJyIC8+wqDCoMKgIk9uIiBlbWl0cy1jaGFuZ2U8YnIgLz7CoC5TY2FsZUZhY3Rv
+ciBwcm9wZXJ0eSBkPGJyIC8+wqDCoMKgMC41NSBlbWl0cy1jaGFuZ2U8YnIgLz7CoC5UeXBlIHBy
+b3BlcnR5IHM8YnIgLz7CoMKgwqAiQURDIiBlbWl0cy1jaGFuZ2U8YnIgLz7CoHh5ei5vcGVuYm1j
+X3Byb2plY3QuQ29uZmlndXJhdGlvbi5BREMuVGhyZXNob2xkczAgaW50ZXJmYWNlIC08YnIgLz7C
+oMKgwqAtIC08YnIgLz7CoC5EZWxldGUgbWV0aG9kIC08YnIgLz7CoMKgwqAtIC08YnIgLz7CoC5E
+aXJlY3Rpb24gcHJvcGVydHkgczxiciAvPsKgwqDCoCJncmVhdGVyIHRoYW4iIGVtaXRzLWNoYW5n
+ZSB3cml0YWJsZTxiciAvPsKgLk5hbWUgcHJvcGVydHkgczxiciAvPsKgwqDCoCJ1cHBlciBjcml0
+aWNhbCIgZW1pdHMtY2hhbmdlIHdyaXRhYmxlPGJyIC8+wqAuU2V2ZXJpdHkgcHJvcGVydHkgZDxi
+ciAvPsKgwqDCoDEgZW1pdHMtY2hhbmdlIHdyaXRhYmxlPGJyIC8+wqAuVmFsdWUgcHJvcGVydHkg
+ZDxiciAvPsKgwqDCoDUuNDggZW1pdHMtY2hhbmdlIHdyaXRhYmxlPGJyIC8+wqB4eXoub3BlbmJt
+Y19wcm9qZWN0LkNvbmZpZ3VyYXRpb24uQURDLlRocmVzaG9sZHMxIGludGVyZmFjZSAtPGJyIC8+
+wqDCoMKgLSAtPGJyIC8+wqAuRGVsZXRlIG1ldGhvZCAtPGJyIC8+wqDCoMKgLSAtPGJyIC8+wqAu
+RGlyZWN0aW9uIHByb3BlcnR5IHM8YnIgLz7CoMKgwqAiZ3JlYXRlciB0aGFuIiBlbWl0cy1jaGFu
+Z2Ugd3JpdGFibGU8YnIgLz7CoC5OYW1lIHByb3BlcnR5IHM8YnIgLz7CoMKgwqAidXBwZXIgbm9u
+IGNyaXRpY2FsIiBlbWl0cy1jaGFuZ2Ugd3JpdGFibGU8YnIgLz7CoC5TZXZlcml0eSBwcm9wZXJ0
+eSBkPGJyIC8+wqDCoMKgMCBlbWl0cy1jaGFuZ2Ugd3JpdGFibGU8YnIgLz7CoC5WYWx1ZSBwcm9w
+ZXJ0eSBkPGJyIC8+wqDCoMKgNS4yNCBlbWl0cy1jaGFuZ2Ugd3JpdGFibGU8YnIgLz7CoHh5ei5v
+cGVuYm1jX3Byb2plY3QuQ29uZmlndXJhdGlvbi5BREMuVGhyZXNob2xkczIgaW50ZXJmYWNlIC08
+YnIgLz7CoMKgwqAtIC08YnIgLz7CoC5EZWxldGUgbWV0aG9kIC08YnIgLz7CoMKgwqAtIC08YnIg
+Lz7CoC5EaXJlY3Rpb24gcHJvcGVydHkgczxiciAvPsKgwqDCoCJsZXNzIHRoYW4iIGVtaXRzLWNo
+YW5nZSB3cml0YWJsZTxiciAvPsKgLk5hbWUgcHJvcGVydHkgczxiciAvPsKgwqDCoCJsb3dlciBu
+b24gY3JpdGljYWwiIGVtaXRzLWNoYW5nZSB3cml0YWJsZTxiciAvPsKgLlNldmVyaXR5IHByb3Bl
+cnR5IGQ8YnIgLz7CoMKgwqAwIGVtaXRzLWNoYW5nZSB3cml0YWJsZTxiciAvPsKgLlZhbHVlIHBy
+b3BlcnR5IGQ8YnIgLz7CoMKgwqA0Ljc2IGVtaXRzLWNoYW5nZSB3cml0YWJsZTxiciAvPsKgeHl6
+Lm9wZW5ibWNfcHJvamVjdC5Db25maWd1cmF0aW9uLkFEQy5UaHJlc2hvbGRzMyBpbnRlcmZhY2Ug
+LTxiciAvPsKgwqDCoC0gLTxiciAvPsKgLkRlbGV0ZSBtZXRob2QgLTxiciAvPsKgwqDCoC0gLTxi
+ciAvPsKgLkRpcmVjdGlvbiBwcm9wZXJ0eSBzPGJyIC8+wqDCoMKgImxlc3MgdGhhbiIgZW1pdHMt
+Y2hhbmdlIHdyaXRhYmxlPGJyIC8+wqAuTmFtZSBwcm9wZXJ0eSBzPGJyIC8+wqDCoMKgImxvd2Vy
+IGNyaXRpY2FsIiBlbWl0cy1jaGFuZ2Ugd3JpdGFibGU8YnIgLz7CoC5TZXZlcml0eSBwcm9wZXJ0
+eSBkPGJyIC8+wqDCoMKgMSBlbWl0cy1jaGFuZ2Ugd3JpdGFibGU8YnIgLz7CoC5WYWx1ZSBwcm9w
+ZXJ0eSBkPGJyIC8+wqDCoMKgNC40OCBlbWl0cy1jaGFuZ2Ugd3JpdGFibGU8YnIgLz7CoDxiciAv
+PsKgQnV0IEkgdXNlICJpcG1pdG9vIHNlbnNvcuKAnSBjb21tYW5kLCBpdCByZXR1cm4gdGhlIGVy
+cm9yIGluZm9ybWF0aW9uPGJyIC8+wqBiZWxvdyBhczxiciAvPsKgTUIgUDNWMyB8IDMuMjcxIHwg
+Vm9sdHMgfCBvayB8IG5hIHw8YnIgLz7CoDIuOTQ3IHwgMy4wNDYgfCAzLjUxMSB8IDMuNTk2IHwg
+bmE8YnIgLz7CoE1CIFA1ViB8IDIuOTgyIHwgVm9sdHMgfCBvayB8IG5hIHw8YnIgLz7CoDIuNjYy
+IHwgMi44MjkgfCAzLjEyMyB8IDMuMjY0IHwgbmE8YnIgLz7CoE1CIFA1ViBTQiB8IDUuMDQ4IHwg
+Vm9sdHMgfCBvayB8IG5hIHw8YnIgLz7CoDQuNDg0IHwgNC43NjYgfCA1LjI0NSB8IDUuNDcxIHwg
+bmE8YnIgLz7CoE1CIFAxMlYgfCA3LjIxNSB8IFZvbHRzIHwgb2sgfCBuYSB8PGJyIC8+wqA2LjM4
+NiB8IDYuNzIzIHwgNy40MjkgfCA3LjgyOSB8IG5hPGJyIC8+wqA8YnIgLz7CoFBsZWFzZSBnaXZl
+IG1lIHNvbWUgYWR2aXNlLjxiciAvPsKgPGJyIC8+wqBNYW55IHRoYW5rczxiciAvPsKgUGF1bDxi
+ciAvPsKgPC9ibG9ja3F1b3RlPsKgPGJyIC8+wqAtLTxiciAvPsKgQmVzdCByZWdhcmRzLDxiciAv
+PsKgQW5kcmVpIEthcnRhc2hldjxiciAvPsKgPGJyIC8+wqA8L2Jsb2NrcXVvdGU+PC9ibG9ja3F1
+b3RlPjxkaXY+wqA8L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj4tLcKgPC9kaXY+PGRpdj5CZXN0IHJl
+Z2FyZHMsPC9kaXY+PGRpdj5Lb25zdGFudGluIEtsdWJuaWNoa2luLDwvZGl2PjxkaXY+bGVhZCBm
+aXJtd2FyZSBlbmdpbmVlciw8L2Rpdj48ZGl2PnNlcnZlciBoYXJkd2FyZSBSJmFtcDtEIGdyb3Vw
+LDwvZGl2PjxkaXY+WWFuZGV4IE1vc2NvdyBvZmZpY2UuPC9kaXY+PGRpdj50ZWw6ICs3LTkwMy01
+MTAtMzMtMzM8L2Rpdj48ZGl2PsKgPC9kaXY+
