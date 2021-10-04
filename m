@@ -1,96 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7F5D421274
-	for <lists+openbmc@lfdr.de>; Mon,  4 Oct 2021 17:15:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87543421699
+	for <lists+openbmc@lfdr.de>; Mon,  4 Oct 2021 20:35:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HNPRV3sCwz3bj2
-	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 02:15:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HNTtH31mmz2ymb
+	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 05:35:35 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=h+B6IGer;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=SpD0j2Xe;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=jAtTAYk4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=h+B6IGer; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=SpD0j2Xe; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=jAtTAYk4; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HNPR51wLVz2xsW
- for <openbmc@lists.ozlabs.org>; Tue,  5 Oct 2021 02:15:12 +1100 (AEDT)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 194EsbcL007195
- for <openbmc@lists.ozlabs.org>; Mon, 4 Oct 2021 11:15:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : from : to :
- references : message-id : date : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=Rf5xQxu/oU0nm6YyHhIEqmMx2kklCXMssUqfDpfNgNA=;
- b=h+B6IGerUS+52rrRr0KbAM5sKDK6ou09tNwThzJID/Sg2QOn1X8NeE5W6HzASs/Wl+Ob
- 8zvaHI0h1/GH2ZXamfw+zIoKRARMEW23PHDD+dfU1i5m4PkzC+pIttsnsn/17GmoFD8S
- xpM2ApqAm/X4ILhKmJ6OFjDs1RSyCUivMVb/VVACW0/DUf9nWqE6Fd3tq8jJPWE5byjy
- PiU8uFzK8bCmKb2ROxrMAb4GJwXDDLSO07zoPUFMoA1fc+HjQ2iy7K0IpLrl1/eFupQ0
- Eltj5nAh+0CXHbzAbUTvXwG5FuV0ZNfoDvVJOyy5HnM45KnOb/D6SGuvMA/q1jLFpa9V EQ== 
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3bg3991nh4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 04 Oct 2021 11:15:09 -0400
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 194FCRjI027464
- for <openbmc@lists.ozlabs.org>; Mon, 4 Oct 2021 15:15:09 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma01wdc.us.ibm.com with ESMTP id 3bef29yc52-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 04 Oct 2021 15:15:09 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 194FF8nf51577252
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Mon, 4 Oct 2021 15:15:08 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7C687AC060
- for <openbmc@lists.ozlabs.org>; Mon,  4 Oct 2021 15:15:08 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 58027AC062
- for <openbmc@lists.ozlabs.org>; Mon,  4 Oct 2021 15:15:08 +0000 (GMT)
-Received: from demeter.local (unknown [9.160.14.168])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Mon,  4 Oct 2021 15:15:08 +0000 (GMT)
-Subject: Re: Security Working Group meeting - Wednesday September 29
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-References: <bb3c031e-cbe3-36c5-0db6-d1ef454300fd@linux.ibm.com>
-Message-ID: <e6dbbca0-e4f7-2e0f-146b-e57008a788e9@linux.ibm.com>
-Date: Mon, 4 Oct 2021 10:15:07 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.10.1
-In-Reply-To: <bb3c031e-cbe3-36c5-0db6-d1ef454300fd@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: P-ByEdv48LnHVfGajiWO8G0svAX7Ht0U
-X-Proofpoint-ORIG-GUID: P-ByEdv48LnHVfGajiWO8G0svAX7Ht0U
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HNTsm6xR8z2yb9
+ for <openbmc@lists.ozlabs.org>; Tue,  5 Oct 2021 05:35:08 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 1D68D5C0145;
+ Mon,  4 Oct 2021 14:35:05 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Mon, 04 Oct 2021 14:35:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:mime-version:content-type; s=
+ fm3; bh=GZ4mvYiaOko74nf/xjJkVpVYgt/sYfMTQPXahGibNiE=; b=SpD0j2Xe
+ cqyfSA2+M4MZCQN/gsMTr6AlehwVkR1InLfovLrtNy+KT9g2LzFaB3p99KCg/DM1
+ SbPRYRbzE8+JmcFtsIAfjaAnkUVX5wgBDKC9HiyC+Tdd3v9Rr1Vm4PLrSOuvnfhH
+ WB1aqPddrj71WkFfJpryAeixqSkvF1sb9y0qbzVhIVx6Ti6rnlBjRZq5OEPhAnO4
+ aTC1HSP1sT209MmGt1p8ZOYylC4Lq3p7KXw4Ig1U/oplw3drqEfwMismB8/G1yDO
+ yKY3aTBTYGbm8CUQhD/8YsRGopv6W/8MThLRpvrCs7qWsNdMWfRpViztBLF9Y8bF
+ sWg8cH1Xbfjinw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:message-id
+ :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm1; bh=GZ4mvYiaOko74nf/xjJkVpVYgt/sY
+ fMTQPXahGibNiE=; b=jAtTAYk4vUQ5jKazzT/CEGrhlWz0rFyb6vqGefNoBXeda
+ iV87eMfIHq8fwd7ibxWR6aBUbCNLjL44xwWkkb0Mxf5UcVdxmLPiAnDZnSkWhFBa
+ uevabnuHpjgQLrjrxTVGVeUNhrZG2AiePYj5xN5UX/TOI5AUjrTj2Ec5l0UFdqIa
+ IDBn1+A7C6oXsGfI8beZR794I+Xla45LBJYN3GTaW2Yu2cqX95EgqJ5z3etHqR4R
+ AGb6TnkMoyRUC0SQDGnuL57UAqtzjRR2nAKz7TcgH4v2Wu0Zmq3wcA44kDBKYTdB
+ GAooc1UgJC2YIU2p3DGEnJuwa+YTEEFx03i8y2w6Q==
+X-ME-Sender: <xms:UElbYSAxaCZElyOZJ0eh7eSPkQ74t0JowevDRnikTyNNMhr3V-WdFA>
+ <xme:UElbYcjG9UeYSQWf6ED90vbu0aLvHq7P2TTFWGRvUyDyMjJNopt5QHkyjmEOJ_fEz
+ AZgBKwZNz99H4EMo6k>
+X-ME-Received: <xmr:UElbYVmr_Rt_Y5L5GembiosrgbMoC1SCNDpbyEhIRHQG6EmFlUSE_6y8jcbUiImudS-C9LPFk6Xdg0AruTteRtIFYWOinHNgmQvMrfcGGjoN-g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudelvddguddvfecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enfghrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfggtggusehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeduuedvfedtvdevjeduueelleekiedu
+ veejffffffdvffdvjeekueejveetieeffeenucffohhmrghinhepghhithhhuhgsrdgtoh
+ hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
+ thhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:UElbYQxX4zuTUZ5MVxlCF9-lgv1bAJ0AJW_yWxf6WzxDF3mm5i1KnQ>
+ <xmx:UElbYXScVKMpWIPoX4tuwNnZNdvPjkKPt-gjnARDxszHj6zJF1t01A>
+ <xmx:UElbYbZxbeMFAazACw-zYHGB30YZlV62fxftMfibpz3fBsPcjKIw1Q>
+ <xmx:WUlbYeK3cQ-Xy8FtANLKrcV6IoS3uvrjOhf1-3zzB9acKHe7oksC3A>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 4 Oct 2021 14:34:56 -0400 (EDT)
+Date: Mon, 4 Oct 2021 13:34:54 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Billy Tsai <billy_tsai@aspeedtech.com>
+Subject: aspeed-adc driver kpanic
+Message-ID: <YVtJTrgm3b3W4PY9@heinlein>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.391,FMLib:17.0.607.475
- definitions=2021-10-04_04,2021-10-04_01,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 impostorscore=0 mlxscore=0
- clxscore=1015 bulkscore=0 mlxlogscore=352 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2109230001 definitions=main-2110040104
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="uQCKveLIIPAf7NyV"
+Content-Disposition: inline
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,122 +94,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/28/21 8:35 PM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday September 29 at 10:00am PDT.
->
-> We'll discuss the following items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
-> and anything else that comes up:
->
-> 1. Continue discussion: Password based auth for IPMI over DTLS 
-> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/31548 
-> <https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/31548>
 
-DISCUSSION:
+--uQCKveLIIPAf7NyV
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The planned IPMI over DLTS function will have certificate-based 
-authuentication.  For our use cases, we would like to add password-based 
-authentication, and we want to do so as securely as possible, meaning 
-what protocol we should use.  In particular, we want to know if we 
-should avoid sending a “cleartext” password (tunneled over DTLS) to the 
-server.
+Hi Billy,
 
-However note the Redfish password authentication passes in the cleartext 
-password to the Redfish/HTTP server (tunneled over HTTPS). Does not need 
-the existing ipmi_pass file, or will at least store the password 
-securely in it.
+When I run the latest linux-5.14 on QEMU with the Witherspoon config, I end=
+ up
+with a kernel panic[1].  I think there is an ordering problem in the aspeed=
+_adc
+driver. =20
 
-Contrast with Redfish password change and with Basic Auth.
+See [2,3].  The code registers with devm a pointer to the prescaler object =
+which
+is not yet created.  I think it is possible that the struct value contains
+uninitialized data as well.  Can you please take a look at this?
 
-Consider RAKP which does not require the password to be transmitted in 
-cleartext.
+1. https://gist.github.com/williamspatrick/4a0f0d1e0ca6f54816461a8df09e6cb8
+2. https://github.com/openbmc/linux/blob/dev-5.14/drivers/iio/adc/aspeed_ad=
+c.c#L513
+3. https://github.com/openbmc/linux/blob/dev-5.14/drivers/iio/adc/aspeed_ad=
+c.c#L527
 
-Can we use consider SRP (dropped in OpenSSL 3.0 -- why?) or other 
-implementations such as GnuTLS?
+--=20
+Patrick Williams
 
-Want to know what protocol to use for password auth over DTLS.  And then 
-implement it correctly.
+--uQCKveLIIPAf7NyV
+Content-Type: application/pgp-signature; name="signature.asc"
 
-TODO: Call for experts to weigh on.
+-----BEGIN PGP SIGNATURE-----
 
-> 2. (Joseph) Who wants a function to enable/disable BMC USB ports? 
-> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/47180 
-> <https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/47180> 
->
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmFbSUwACgkQqwNHzC0A
+wRkV+A//bGtZ3h5uJqjDoSpq6DcaSP/DUjjMpSLZQMQoibfIS2Pw8f7r48pQ+tzC
+xB6G6w3mEiaGNjqwogwYlw72OAF5/2h0HSFz/MvBMUHEvQkroIFJesZRX4Ds9mio
+jNR0iDecA7onDc9QddekEx8TIjS3yBLDPqSAv2/pn5IilouHSqQilHX2WvB/z1VC
+SQ/AKY3WMDgNStCFji8h54B2OJnLALmqvNgbxRFNNTbpbrcjkejSoC3y+TBsikhy
+yR5PPE/qfFQliW2mDEZ2Z+D2dASYjCnCsE9RRySCU0WTQXGBk+0KbM6/DBtt4ukK
++nHOP52Sx6zp/gTLJlVRJbT18dPWA6ywWVUwck2e7D4q+W1U/MA32U4Dzf81LwBO
+zaaNd8SFkcbwkpDPijf+PCF3H1w2QaR+bSpsnxUUGsCL6hcn6bf+geF56H4IxZ8A
+y5fN7j8sM7nDrMw00fAoJSBeZoXtyxBHGNyh5VBkSd1yDA987ZallA01gqLSD3qJ
+3+vqly8Xi8/OsimdmaZCPyJvuCW6Apbx6dH0s5oi1MNdkAqKsQ5ePdg52lhG0qi0
+v1R6C2q9Mo7WIBNliY258Pf6UBWyb47JaxVccYwqdA2nRkf1FTDtAfbx2ZXwEUO5
+6FBsnoW6LmfZZ9aDXSsKQMchfnWsk/SkOwlO5vufyg8l1SIPUIU=
+=jnHh
+-----END PGP SIGNATURE-----
 
-What does disable USB port mean?  USB for BMC use.  [Discussion excludes 
-host USB ports, and any USB ports further from the BMC.]
-
-DISCUSSION:
-
-Threats: USB protocol attack, power-based attack, epoxy-based DoS 
-attacks, use of functions built on top of USB function.
-
-Can disable ports independently: Does Redfish want to model topology?  
-Sets of USB ports, such as those with physical external connectors, and 
-internal.  ANSWER: Yes, see below.
-
-Need to model topology (machine architecture, USB hubs, etc.) as part of 
-understanding the issues?  Or can we partition USB ports and call it 
-either BMC or host?
-
-Consider essential connections such as USB-based BMC keyboards, 
-USB-based BMC/host connections, etc.
-
-The design is interested specifically in used-by-BMC external-to-the-box 
-USB ports.
-
-Note that if USB ports are needed for BMC recovery (such as a USB key), 
-then disabling the USB will remove that recovery option.
-
-Note: The U-Boot is an independent OS which may have access to a 
-“disabled” BMC.
-
-Where to disable USB ports?  In OpenBMC kernel?  In Uboot kernel (does 
-not have support for USB?)?  Via pgood gpio?
-
-What does the Redfish endpoint control?  TODO: Joseph to investigate.  
-DONE:  After the meeting.  Notes:
-
-Summary: Redfish models USB Controllers (as USBController),  USB Port 
-Collections (as PortCollection), and USB Ports (as Port).  
-Implementations who want to implement powering off ports can use the 
-USBController Resource_PowerState schema.  Implementations who want to 
-disable USB ports can use the USBController Resource_State schema or the 
-Port Enabled property.
-
-
-DETAILS: A Redfish USBController:
-
-http://redfish.dmtf.org/schemas/v1/USBController.v1_0_0.yaml#/components/schemas/USBController_v1_0_0_USBController 
-<http://redfish.dmtf.org/schemas/v1/USBController.v1_0_0.yaml#/components/schemas/USBController_v1_0_0_USBController>where 
-properties include: Ports (PortCollection), Status (which can have a 
-Resource_PowerState schema or a Resource_State schema (includes 
-enabled/disabled))
-
-Ref: https://redfish.dmtf.org/schemas/PortCollection.yaml 
-<https://redfish.dmtf.org/schemas/PortCollection.yaml>has property 
-Members which somehow presumably can get to a 
-https://redfish.dmtf.org/schemas/Port.yaml 
-<https://redfish.dmtf.org/schemas/Port.yaml>where Port_v1_5_0_Port has 
-an “Enabled” property.
-
-
-Do we need a custom OEM solution?
-
-How do testers check if a USB port is disabled?  Power?  Signals?
-
-
-
->
->
-> Access, agenda and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group 
-> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
->
-> - Joseph
-
+--uQCKveLIIPAf7NyV--
