@@ -2,71 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C31604211C9
-	for <lists+openbmc@lfdr.de>; Mon,  4 Oct 2021 16:44:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9DE34211CD
+	for <lists+openbmc@lfdr.de>; Mon,  4 Oct 2021 16:45:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HNNlp4Z9Lz2yS9
-	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 01:44:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HNNmV5dXhz2yZf
+	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 01:45:14 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=XAy6xseK;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bnpINp6n;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2e;
- helo=mail-io1-xd2e.google.com; envelope-from=bjwyman@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::12a;
+ helo=mail-il1-x12a.google.com; envelope-from=bjwyman@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=XAy6xseK; dkim-atps=neutral
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com
- [IPv6:2607:f8b0:4864:20::d2e])
+ header.s=20210112 header.b=bnpINp6n; dkim-atps=neutral
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com
+ [IPv6:2607:f8b0:4864:20::12a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HNNlQ2Fmyz2yPn
- for <openbmc@lists.ozlabs.org>; Tue,  5 Oct 2021 01:44:17 +1100 (AEDT)
-Received: by mail-io1-xd2e.google.com with SMTP id p80so20513477iod.10
- for <openbmc@lists.ozlabs.org>; Mon, 04 Oct 2021 07:44:17 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HNNlZ64rTz2yV7
+ for <openbmc@lists.ozlabs.org>; Tue,  5 Oct 2021 01:44:26 +1100 (AEDT)
+Received: by mail-il1-x12a.google.com with SMTP id w10so2236076ilc.13
+ for <openbmc@lists.ozlabs.org>; Mon, 04 Oct 2021 07:44:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=EFn5wnEKAEZb25y29QzIAy3UngZkq+Tr6QhUXIqoMzk=;
- b=XAy6xseKyA85uWu1AcjgqVxdVMhk/76Z8hg+31lpt+87yEJMxXwBvO8mxmzXawd4wo
- P6gWWRtvtpImu/vCTs46kGmuSkzGNRyRhJ52TpNNDRcT8aTJhb8F3DLdKqphel/4QWsD
- g+RjodCdu7YYMvRxnHCz/PLtrDOMpCDsCfQ4F8CxnypEaYtFB3Z7h1/Ei4lP0da2cRpN
- 7fW+gn7WNtNfUu4XjWvQxrj8l0gjuEiMQP7YiVfKE4yVVtjFDnrt3ueGCcWgDznoUmn0
- hH/3UuGZdwV5lJ9EtwqZv2/w9H9PWHdFZe4dKZy5oxzMJtQi+3EmBdtBjQ+ftkLg5aPy
- etMw==
+ h=from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=T7EvqN40ZsaJpmzmKI90qpoq8EiCU5xRqyhC9TLRD+0=;
+ b=bnpINp6npWGwJuvw9UmB8B647LD2eEkrKSk56Dn9bP/J+Jg1w4p4Pus3+Qmuyds5Mz
+ 81uLXhL2ifxN5Vuhl0+Z6K38vYsAi+tVgVK2SGHo2gyXyP4T/li3Puulj2mCRXVWfv7q
+ IvojXX8bH9OiTZ7UZ8nBYWCHInxs/7ItgoOjS8ZDkQ/b7VObC4lCjweFNGWnlwf/CXkF
+ 90F5OHbKLxf8lViRSbqVCXF638A/ZZfcadu0vjTJlMj/CLFOWs6aqFpYywlW03XrTbIT
+ VD0d8oS4zPJlEYpYrXeowzR3xSgwLlygI13jhQcZ7i974HLPOahq0M8NHJcpYB4WhxPz
+ sPSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=EFn5wnEKAEZb25y29QzIAy3UngZkq+Tr6QhUXIqoMzk=;
- b=2JtYeul3zYSQk6sctJsC0/WMyXvIgezjQPpAC9Blzo2crO/5HIg4FCS+14oEXGuZh1
- VIy7oNmarrv1v/uIlCWmt4Pu1+T05BBKvw2eJt9+GLX2Cz9z6AaYwNGmmtFIqTgwl6HW
- 77LfOiZI6bpctTv843rqhZgtL/Dckt866441b0Jt9HBgeGK6JD3ScjLjPbs2XBxKxpgi
- SKK2UGcCKRzFZSBCRs9CEkIX46fPm6ShgJdM2aA8krcfly8bMnWeyhQxWIZKFFhjl9Em
- 8qmr8J8nnBRx1V2Y7Wvp/ygKJw3dqxEKfFv+ukOvUncE4zmF9a4jx1+5JI9J5CHzoFkh
- ZXUw==
-X-Gm-Message-State: AOAM532q5O8uuoaPEBd4eeCQRRYzPkyt/9MzzzLh6B7y6VdY/TRarHgG
- B5SeXQbs0t/EJA4EMxkn4FM=
-X-Google-Smtp-Source: ABdhPJwEK9aiS5cXI9Wt4cweO7upc9wAlSU/oP6P8LW313Ia3YpyQIuAlQjfAb77zbpDZBjB69QQAw==
-X-Received: by 2002:a6b:5a0c:: with SMTP id o12mr9781570iob.140.1633358653912; 
- Mon, 04 Oct 2021 07:44:13 -0700 (PDT)
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references:mime-version:content-transfer-encoding;
+ bh=T7EvqN40ZsaJpmzmKI90qpoq8EiCU5xRqyhC9TLRD+0=;
+ b=tty8pVr3qYDp3CqdefuxGbYeZIpLyXSVD0O2LVGui0H5tLkgQDkpsG18D1OC1qWL7I
+ 1TKQxUSEGZtTrdeA52Zh5foykADq2sscO+U6K3ewPTyRxnvsoytwmr4uJKQSTyVDvRKp
+ l5zycP3RfcQLxEKgZRrUw59I2s+SwtFcWZxPZSHvtnOkSxTlu5Key5miU0U/dUHU0rnM
+ 7IyFHrHINcTZUG59sSynpDgkGmydLPrC5uN7vcDA8Py10XZGTzHU2tXCoLANwywfkTRj
+ aV4vRD4dbwQzAOuQLbBoQ85bsrfZ/giMhqAVmpK7P433GuXbiwPyvcoGIaeO+UvKAjYP
+ 8BKA==
+X-Gm-Message-State: AOAM530FMLtpZgBj6rbStKfusuV0G+PvYl8BcJFqzrGKt7gM+kdM+27V
+ oPxRn7vVPOdpYh61dQvwoh8=
+X-Google-Smtp-Source: ABdhPJy6AOE/KMxXys6rH0bg3VLu7gyzjWJnK7GpWxYJzISlnn5gnuq7UmgP7BPV1NxOT6CVOi7Tng==
+X-Received: by 2002:a05:6e02:1445:: with SMTP id
+ p5mr6807213ilo.11.1633358663794; 
+ Mon, 04 Oct 2021 07:44:23 -0700 (PDT)
 Received: from fstone04p1.aus.stglabs.ibm.com ([129.41.86.7])
- by smtp.gmail.com with ESMTPSA id b11sm3692382ile.12.2021.10.04.07.44.12
+ by smtp.gmail.com with ESMTPSA id b11sm3692382ile.12.2021.10.04.07.44.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Oct 2021 07:44:13 -0700 (PDT)
+ Mon, 04 Oct 2021 07:44:23 -0700 (PDT)
 From: Brandon Wyman <bjwyman@gmail.com>
 To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org,
  Guenter Roeck <linux@roeck-us.net>, Jean Delvare <jdelvare@suse.com>,
  linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
  Eddie James <eajames@linux.ibm.com>
-Subject: [PATCH 1/2] hwmon: (pmbus/ibm-cffps) Add mfg_id debugfs entry
-Date: Mon,  4 Oct 2021 14:43:38 +0000
-Message-Id: <20211004144339.2634330-1-bjwyman@gmail.com>
+Subject: [PATCH 2/2] hwmon: (pmbus/ibm-cffps) Use MFR_ID to choose version
+Date: Mon,  4 Oct 2021 14:43:39 +0000
+Message-Id: <20211004144339.2634330-2-bjwyman@gmail.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20211004144339.2634330-1-bjwyman@gmail.com>
+References: <20211004144339.2634330-1-bjwyman@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -84,62 +87,50 @@ Cc: Brandon Wyman <bjwyman@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add support for the manufacturer ID to the debugfs entries.
+There are multiple power supplies that will indicate
+CFFPS_CCIN_VERSION_1, use the manufacturer ID to determine if it should
+be treated as version cffps1 or version cffps2.
 
 Signed-off-by: Brandon Wyman <bjwyman@gmail.com>
 ---
- drivers/hwmon/pmbus/ibm-cffps.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/ibm-cffps.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/hwmon/pmbus/ibm-cffps.c b/drivers/hwmon/pmbus/ibm-cffps.c
-index df712ce4b164..2ee47cbbb665 100644
+index 2ee47cbbb665..292c87331f2b 100644
 --- a/drivers/hwmon/pmbus/ibm-cffps.c
 +++ b/drivers/hwmon/pmbus/ibm-cffps.c
-@@ -18,6 +18,7 @@
+@@ -502,16 +502,29 @@ static int ibm_cffps_probe(struct i2c_client *client)
+ 		u16 ccin_revision = 0;
+ 		u16 ccin_version = CFFPS_CCIN_VERSION_1;
+ 		int ccin = i2c_smbus_read_word_swapped(client, CFFPS_CCIN_CMD);
++		char mfg_id[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
  
- #include "pmbus.h"
+ 		if (ccin > 0) {
+ 			ccin_revision = FIELD_GET(CFFPS_CCIN_REVISION, ccin);
+ 			ccin_version = FIELD_GET(CFFPS_CCIN_VERSION, ccin);
+ 		}
  
-+#define CFFPS_MFG_ID_CMD                        0x99
- #define CFFPS_FRU_CMD				0x9A
- #define CFFPS_PN_CMD				0x9B
- #define CFFPS_HEADER_CMD			0x9C
-@@ -34,7 +35,7 @@
- #define CFFPS_INPUT_HISTORY_SIZE		100
- 
- #define CFFPS_CCIN_REVISION			GENMASK(7, 0)
--#define  CFFPS_CCIN_REVISION_LEGACY		 0xde
-+#define CFFPS_CCIN_REVISION_LEGACY		 0xde
- #define CFFPS_CCIN_VERSION			GENMASK(15, 8)
- #define CFFPS_CCIN_VERSION_1			 0x2b
- #define CFFPS_CCIN_VERSION_2			 0x2e
-@@ -57,6 +58,7 @@
- 
- enum {
- 	CFFPS_DEBUGFS_INPUT_HISTORY = 0,
-+	CFFPS_DEBUGFS_MFG_ID,
- 	CFFPS_DEBUGFS_FRU,
- 	CFFPS_DEBUGFS_PN,
- 	CFFPS_DEBUGFS_HEADER,
-@@ -158,6 +160,9 @@ static ssize_t ibm_cffps_debugfs_read(struct file *file, char __user *buf,
- 	switch (idx) {
- 	case CFFPS_DEBUGFS_INPUT_HISTORY:
- 		return ibm_cffps_read_input_history(psu, buf, count, ppos);
-+	case CFFPS_DEBUGFS_MFG_ID:
-+		cmd = CFFPS_MFG_ID_CMD;
-+		break;
- 	case CFFPS_DEBUGFS_FRU:
- 		cmd = CFFPS_FRU_CMD;
- 		break;
-@@ -558,6 +563,9 @@ static int ibm_cffps_probe(struct i2c_client *client)
- 	debugfs_create_file("input_history", 0444, ibm_cffps_dir,
- 			    &psu->debugfs_entries[CFFPS_DEBUGFS_INPUT_HISTORY],
- 			    &ibm_cffps_fops);
-+	debugfs_create_file("mfg_id", 0444, ibm_cffps_dir,
-+			    &psu->debugfs_entries[CFFPS_DEBUGFS_MFG_ID],
-+			    &ibm_cffps_fops);
- 	debugfs_create_file("fru", 0444, ibm_cffps_dir,
- 			    &psu->debugfs_entries[CFFPS_DEBUGFS_FRU],
- 			    &ibm_cffps_fops);
++		rc = i2c_smbus_read_block_data(client, PMBUS_MFR_ID,
++				mfg_id);
++		if (rc < 0) {
++			dev_err(&client->dev,
++					"Failed to read Manufacturer ID\n");
++			return rc;
++		}
++
+ 		switch (ccin_version) {
+ 		default:
+ 		case CFFPS_CCIN_VERSION_1:
+-			vs = cffps1;
++			if ((strncmp(mfg_id, "ACBE", 4) == 0) ||
++					(strncmp(mfg_id, "ARTE", 4) == 0))
++				vs = cffps1;
++			else
++				vs = cffps2;
+ 			break;
+ 		case CFFPS_CCIN_VERSION_2:
+ 			vs = cffps2;
 -- 
 2.25.1
 
