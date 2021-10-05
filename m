@@ -2,90 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77C3F421A32
-	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 00:37:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 215BF421AED
+	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 02:01:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HNbFq2vxpz3cJp
-	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 09:37:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HNd6W6vp2z2yn3
+	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 11:01:39 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=kUqaHw4r;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=X09/TYYA;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=g27BuLur;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::532;
+ helo=mail-pg1-x532.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=kUqaHw4r; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=X09/TYYA; 
- dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=g27BuLur; dkim-atps=neutral
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com
+ [IPv6:2607:f8b0:4864:20::532])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HNZzS4g7fz3cZb
- for <openbmc@lists.ozlabs.org>; Tue,  5 Oct 2021 09:25:24 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 16A295C00B1;
- Mon,  4 Oct 2021 18:25:21 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Mon, 04 Oct 2021 18:25:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=mNtomvxrUc8kIMv7OdfWfZNkb5b
- wwxuEl4kea5xXFdA=; b=kUqaHw4rRtm5oh/y/Zfn15RxH//ef/IPVAcwC63fBL4
- 9CBLop4Yu6NhjvU25Ll/UWzXRfIgOMEeBAkeutN5GdI3pwuoeRU5Dk6L+KUdYqDe
- ZCNw8IQLrkbgNyNNkcEbOXM/k1iJqGmHxbm3Le2MrqgcVT+fl/+VNaPOCb0t7UQa
- VqdLzp87PFJ4Bqy6lsMN4OFkWWgm3KjwzdE3VXDX8P4IeOfExM+5525FvCjSuLdA
- XMKLXaHl1CksaQZO41fOzJdC/HaWiMcNjrIj3pYqthWUBWKZeZA6o+tm6PO0CJPP
- 4hJh7XnQpydCIZQfrxSE1nlgKd96ShtKOmo9GM1GOAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=mNtomv
- xrUc8kIMv7OdfWfZNkb5bwwxuEl4kea5xXFdA=; b=X09/TYYA1PD5tnhwNOvB5a
- 1NgExcvir0PDvmBzzD020h4LPEeQpChffXo4MUooM4rjuAuSZD1jxuG40IFNWoRm
- 93KffcANhk6sD9tgeDF22MbUa5rXCPkCrsm/ktN3UwKs79UGRgNCdGuxeBvQyz48
- KuNQK74NmbG+5TvRIuBf1S+LyrybxHVLnYcSu0/8yWYj5v2rplue98koYyo/usoZ
- J3I33pBrh3V0rrKpfbCXzlT4Mty/3Gt9UEiCdy5LwvOLf3sox4+MWP9BDSSu6A+t
- oyipSisxRa8lsvlmuElaxXgokSTtTWDaFGjK0ksNfoCIrAkayhkzUwsK+BcGGB9w
- ==
-X-ME-Sender: <xms:T39bYfAAyUyjlWfAj5sZOix1rjURM28EcvXruZ3h8gSJFkZiZCVoew>
- <xme:T39bYVgio42Do_aWJPczLmPby1z5h-TurhKE_8hZzL-_3UWBR6wqbFULp083WMNjc
- L2x_MMbJ3rSIiYOvzo>
-X-ME-Received: <xmr:T39bYakH0c8qhp9GhP67cIhi9G1HEzMRY2fSwAiOECMmFaMPEbNODupe7qPiK8rr3UFlj77FbTpXMNE1_ptibUEDyk6qtlsk8ow>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudelfedgtdekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- jeenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepkeduuedtfeeihfehfeehfedvjeeu
- jeeikedtteehledvhfelheekgedvieevkefhnecuvehluhhsthgvrhfuihiivgeptdenuc
- frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:T39bYRyFkSsliPg4Y5CbQwelceU30d3ZmLSzn4VcXRfL5svp8Fi9_g>
- <xmx:T39bYUSZoITUa-dmC_jCHuSD8SXaoCNV_gY6_HTDEY57XyzYAoWwzQ>
- <xmx:T39bYUb2qoVmkq7CVMC6k4TcwOyexHLsuSsd4xfe6cqGr3228D8e3A>
- <xmx:UX9bYfKX0bvtu7qCuFsbdQl75xwqUlBgVJOU_7LVEUtP5NXmwCwh8Q>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Oct 2021 18:25:19 -0400 (EDT)
-Date: Mon, 4 Oct 2021 17:25:17 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Peter Delevoryas <pdel@fb.com>
-Subject: Re: aspeed-adc driver kpanic
-Message-ID: <YVt/TU4zANvubugD@heinlein>
-References: <YVtJTrgm3b3W4PY9@heinlein> <YVtNypUnYfp/kztP@heinlein>
- <24AC6FDD-323D-4F37-818F-C965164544BF@fb.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HNd625Bcrz2yPj
+ for <openbmc@lists.ozlabs.org>; Tue,  5 Oct 2021 11:01:14 +1100 (AEDT)
+Received: by mail-pg1-x532.google.com with SMTP id q201so5470823pgq.12
+ for <openbmc@lists.ozlabs.org>; Mon, 04 Oct 2021 17:01:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=Bl21WC3q8vxRu8y+9i8en5gjoKFE83vfROh6h0p4prY=;
+ b=g27BuLurd/l71utt9UYk3qY0XjxmEE+Z1b0lrOYw8VC+qy+QE7PLaFIQcOoummcwGE
+ VOvNrjpkBKDZvYA8XKacUL51HRrVREvgHdFJcfsr2b4uSRL9iJHn8o00t5WNJVwTnLpU
+ k4QIov8PAUE7UxvSsudr8KYyH6Z+7ogY8E0TAa94C3BMjzIU8xfdFBctq2gAQz2Xrh5w
+ v3B93ivreu2TzdlgIexjof0nKSOyDEv1va/A/i6Zjx61HKbb3bQq37yXHLU+rFXGOBvf
+ lsVQLOJ6D/lMeVfNBj6XWS0VuI4TLhWYzk1N4Kg/i5xoYKtNQLhmbM6/1J9yIO+LagDz
+ ctcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=Bl21WC3q8vxRu8y+9i8en5gjoKFE83vfROh6h0p4prY=;
+ b=WmDvI61cxGaprhLG/XVqg5yshbER6ZtmDy485JQk2EZgFw6/hyqEIH1q4xrLqSh+Vw
+ 6gJWhS2iFHjT1lBaDicbYf0lyAwlepx7GwiOWdEWGSZolf+jk7cR/VFhCQUNIo7j+LgM
+ +jjmSa797KyW5iOySlb/QcUdJaVyp6UgZlPVPgjqTvD06kH+nDzMWgSIsTscTtd3btAh
+ I14B6+3fa3JqjzDq4GKNiWzXVVDt4KCo8K96/dIdPaIWjIStXTegP08Drgnrfq8zK16v
+ Hi1n5R43APGkclSK6h9o4JAE40yGNJm+gRGqIKrlNx8vyWCmG0o7KCDeAsxrSZsa3gCM
+ nDMw==
+X-Gm-Message-State: AOAM531y4OofxCYzVA7Kc1YEO3fEunENCmfHoF9rrWceBsi0TbS0jMFJ
+ vqzzWKidfxtbzT3WdJW7fQXiaNZgBzI=
+X-Google-Smtp-Source: ABdhPJz9uE2pJE+p413oVMloK7NTy395/Xqyn/BoH13+H+DWIAaju9GshLp/jiCgY1SuA5v0iMDWvA==
+X-Received: by 2002:a05:6a00:1891:b0:446:c141:7d2a with SMTP id
+ x17-20020a056a00189100b00446c1417d2amr28882412pfh.36.1633392072032; 
+ Mon, 04 Oct 2021 17:01:12 -0700 (PDT)
+Received: from localhost.localdomain ([45.124.203.19])
+ by smtp.gmail.com with ESMTPSA id r75sm15430444pfc.94.2021.10.04.17.01.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Oct 2021 17:01:09 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: Patrick Williams <patrick@stwcx.xyz>,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.14] iio: aspeed_adc: Fix prescaler devres cleanup
+Date: Tue,  5 Oct 2021 10:30:26 +1030
+Message-Id: <20211005000026.464018-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="ZNHTb7gys93OLzrm"
-Content-Disposition: inline
-In-Reply-To: <24AC6FDD-323D-4F37-818F-C965164544BF@fb.com>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,67 +79,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Billy Tsai <billy_tsai@aspeedtech.com>,
- OpenBMC List <openbmc@lists.ozlabs.org>
+Cc: Billy Tsai <billy_tsai@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+A devres hook is added for aspeed_adc_unregister_fixed_divider that
+should pass a pointer to the fixed divider. It mistakenly had a pointer
+to a different clock, leading to a null pointer dereference.
 
---ZNHTb7gys93OLzrm
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This change was included in v7 of the patches submitted upstream.
 
-On Mon, Oct 04, 2021 at 07:26:04PM +0000, Peter Delevoryas wrote:
+Fixes: ec35bd77c642 ("iio: adc: aspeed: Fix the calculate error of clock.")
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ drivers/iio/adc/aspeed_adc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> Oh yeah, this is probably not the driver=E2=80=99s fault, this is the fau=
-lt of my QEMU
-> patches. I only allowed 32-bit aligned reads. I bet if you apply this add=
-itional
-> diff, it won=E2=80=99t crash
+diff --git a/drivers/iio/adc/aspeed_adc.c b/drivers/iio/adc/aspeed_adc.c
+index d4d8ac07d40d..3e9850a43372 100644
+--- a/drivers/iio/adc/aspeed_adc.c
++++ b/drivers/iio/adc/aspeed_adc.c
+@@ -492,8 +492,8 @@ static int aspeed_adc_probe(struct platform_device *pdev)
+ 
+ 	data = iio_priv(indio_dev);
+ 	data->dev = &pdev->dev;
+-	data->model_data = of_device_get_match_data(&pdev->dev);
+ 	platform_set_drvdata(pdev, indio_dev);
++	data->model_data = of_device_get_match_data(&pdev->dev);
+ 
+ 	data->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(data->base))
+@@ -512,7 +512,7 @@ static int aspeed_adc_probe(struct platform_device *pdev)
+ 
+ 	ret = devm_add_action_or_reset(data->dev,
+ 				       aspeed_adc_unregister_fixed_divider,
+-				       data->clk_prescaler);
++				       data->fixed_div_clk);
+ 	if (ret)
+ 		return ret;
+ 	snprintf(clk_parent_name, ARRAY_SIZE(clk_parent_name), clk_name);
+-- 
+2.33.0
 
-FWIW, applying this did get me past the kernel panic.  I don't really care =
-about
-any of the data right now.  I was trying to test something out in userspace.
-
-> diff --git a/hw/adc/aspeed_adc.c b/hw/adc/aspeed_adc.c
-> index fcd93d6853..58e3f18c6c 100644
-> --- a/hw/adc/aspeed_adc.c
-> +++ b/hw/adc/aspeed_adc.c
-> @@ -234,9 +234,9 @@ static const MemoryRegionOps aspeed_adc_engine_ops =
-=3D {
->      .write =3D aspeed_adc_engine_write,
->      .endianness =3D DEVICE_LITTLE_ENDIAN,
->      .valid =3D {
-> -        .min_access_size =3D 4,
-> +        .min_access_size =3D 1,
->          .max_access_size =3D 4,
-> -        .unaligned =3D false,
-> +        .unaligned =3D true,
->      },
->  };
-
---=20
-Patrick Williams
-
---ZNHTb7gys93OLzrm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmFbf0wACgkQqwNHzC0A
-wRkPpRAAgzi4f2Wq0LiMA531uoJKoF7vf12MZ5MTRvIOJrMJqakcfBdjI0hirrbJ
-xXs00VymE9bIEItBbB/XtzknWwaZ1JKjf52TFJrw5uFsBFQTT9Q3nIp0pR75Rjrp
-wdRgL2uhQxETcJrtSTcfe9EVjQgUeDZ1MFfTMMQUS8S6paUeaLbCWa7LY3Apegz/
-6fqgidpaxYlYMAZ9bO2FLXEqTDtEesgKUG7MWZBbjax9NmId38PhZYssTHTP9RC+
-nEMBSkaL8UiwNIN1MNsOARV1xGrB1wM2uu00zkIvtnk2w22DOCjJ+2TLJPIljCtu
-Z1XyzvXeyOJp/a9W+4dsvwnaynzOs+tCkX9jfrgKjMSsGLPZm8p4Ca88mu7fO4Bn
-kcP039wPnAtEUrWtoP1g9ptNl7FZIoi3noD9qNzjQPoD3IQzSMNanqBOZxNYLXQP
-X14sxVC1dqevhzBiA1rjLoFP4rlCrr1CuJuOQPGu97CEMaOfa9OR04Vw5qW6QZof
-4abUSqvVcMtqECAQGCAnu8IFteUCtpFnZlQOLJcUQdXJO4McZtai2EKWCnEljK6F
-//Vp8LVf+G0PjcJDE5u9uxMiLArtyO/aL9+ADFSBOIqTa/1qRcqdzDp1YuR/JZoo
-8cauxN0mjYhsMnsRHamhDbcybMRNDuv27dwl9x8+0f8dEPbcWkQ=
-=V8HG
------END PGP SIGNATURE-----
-
---ZNHTb7gys93OLzrm--
