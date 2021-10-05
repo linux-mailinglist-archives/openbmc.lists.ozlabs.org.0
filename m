@@ -1,98 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DAE54230BA
-	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 21:23:13 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4553E423452
+	for <lists+openbmc@lfdr.de>; Wed,  6 Oct 2021 01:12:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HP6tl1nMgz2yg6
-	for <lists+openbmc@lfdr.de>; Wed,  6 Oct 2021 06:23:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HPCzQ6S3mz2yg6
+	for <lists+openbmc@lfdr.de>; Wed,  6 Oct 2021 10:12:34 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qS+pVncP;
+	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=Jot/pdjB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=hotmail.com (client-ip=40.92.253.76;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=naveen.moses@hotmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=qS+pVncP; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256
+ header.s=selector1 header.b=Jot/pdjB; 
+ dkim-atps=neutral
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-oln040092253076.outbound.protection.outlook.com [40.92.253.76])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HP6tC441mz2xX8;
- Wed,  6 Oct 2021 06:22:42 +1100 (AEDT)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 195IGSoG029152; 
- Tue, 5 Oct 2021 15:22:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : content-transfer-encoding : mime-version; s=pp1;
- bh=IxD25rDbm/u5c/0cZr2UhQqHUCON5rxL3c1FpfqnLRI=;
- b=qS+pVncPzIs7Vz+3KYnoIu3hbYN6epwOMvUZadmEtorq53xNh1COgZyYwl0VbFoC80Q0
- n1nJLlV3g0IwmDTqeriS4zhtVgWd1fELR1PQiBlFWweCBPdMS2OQGpYas44MofLLu0Nz
- l/Gl3aKZ9LHhLNZFE+AOGlP0Fl+xgo7BOPLOet+qnmx6aI0zHULEqzSu1YsZF1Oxc6ab
- OgcLm7DNbU8jUQTYXc8kd8VsaCpd7g+tZctrEIWr1O/zccuey0aQIMigwfCKyZxlkJh8
- +USMHC45D41aAGair58wH2X8WZnWKHIrfHjlGF1bxdpZMVl0kufZMddp3/u/X10rt/Mf eQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3bguu8sh8k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Oct 2021 15:22:34 -0400
-Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 195IpSHB020591;
- Tue, 5 Oct 2021 15:22:34 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3bguu8sh89-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Oct 2021 15:22:34 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 195JICxs002209;
- Tue, 5 Oct 2021 19:22:33 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma01dal.us.ibm.com with ESMTP id 3bef2d9j44-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Oct 2021 19:22:33 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 195JMSLN18940312
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 Oct 2021 19:22:28 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9417FB206C;
- Tue,  5 Oct 2021 19:22:28 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EC6DCB2064;
- Tue,  5 Oct 2021 19:22:27 +0000 (GMT)
-Received: from fstone01p1.aus.stglabs.ibm.com (unknown [9.3.116.196])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue,  5 Oct 2021 19:22:27 +0000 (GMT)
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: joel@jms.id.au, eajames@linux.ibm.com,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org
-Subject: [PATCH v3] ARM: dts: aspeed: rainier: Add power-config-full-load gpio
-Date: Tue,  5 Oct 2021 19:22:26 +0000
-Message-Id: <20211005192226.213539-1-anoo@linux.ibm.com>
-X-Mailer: git-send-email 2.25.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: uKKUgnI4RP0iibHenc-3QdLTjJvlEZoI
-X-Proofpoint-GUID: 0-FZWjGJrQ_ZknfIephQA9Y0N0F01dny
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HNym75Jvdz2xtH
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Oct 2021 00:16:54 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=TdMezedQAKOYNCMJacmK7drxgHB+5ObN7e7Ns917THyenfbl96eZbpl5HGK0FFELknk0hJFqshJLEmoDAGlDpc57FyfVC/F1kq4httNOxp7YzDn0AagGretv2gcxX7fNMyQTqzRrjOk7J51zUeJWrNgmeZaOrZX6hl8dzBSbXBOzTBkG4nGe67ysd/hapvC/0wyaVxJezRUkKLCWegyZx1vDABNWkZTX2cdO7iP2LVCJtTADd9fHEjyTx/gC4w6CaFzctyyEF86EUsv6/X85B4wkWQdYJ6aW4lfl8B8ojUsGKmvcEPBRfh8gLDa8DkWSjlokzAtlkrC1XUJDnHxYAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rgb7MBl2xBrGgvRZW+zBt/o/TPTvaS+53xhWj1YJUd0=;
+ b=StUHLqD2M6fk0tOyHeVnBxgIXRTbYLJBpMNN6N0PnAkMcKZXkRXXqkLXNBKExuylhI7MU9p/fht9u4WuI/OamJy79TV8MbJsz9/M3Z8HgdV7/0EDuZujIiFmUgMkKjyB2U0g43FwCc3X56FfUWe4338SISWFJ0yd6uT1x7IHlkFhAo88UsyBwT6WuY7zqVtz8rSS+VBbezjNq9pxry207+FDKfsYucSbMybwhjIWZHZdmP6u/d+lF1Dwb9Wt34yF+Hmg2h3NEraix4dpy3T4eiJIBlWJWPXzM2nHnkVUdACbfAZl5OJPL8/TFIjejkj1aM8hMI+zTH6owyZTAYxn+g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rgb7MBl2xBrGgvRZW+zBt/o/TPTvaS+53xhWj1YJUd0=;
+ b=Jot/pdjBTrzF6XEFOVZdtmizWFFh87+vLeJUGe3u93bklqTteE0VzlZcOUBGA3NP8OhWB+F9orajD4a8A6/r8BehxzxJAVA35sgFfmvsjJJD+bxnHUtLVYBGtxZViVY05QE2JELJ9YJpAOouEF8zhg9G93VvIpgRWQbHGGbQXzL1ZB6exbCTIg9iVtNwsKQjwuH6wJ6tJhBfd/ZLAS3o1TPocPbFZflo+YLL35qbnbY46od7Wly9xlf8KQxdSWGwEF/Z19bZw7D7twRKasLWpsH4/0IEywPi3d1GyJKpt+KBHGHAShe0IixknCtZ0LndLNW39BaMncimo0YmPRNNmg==
+Received: from PS2PR02MB2695.apcprd02.prod.outlook.com (2603:1096:300:49::20)
+ by PS2PR02MB3334.apcprd02.prod.outlook.com (2603:1096:300:39::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4566.17; Tue, 5 Oct
+ 2021 13:16:34 +0000
+Received: from PS2PR02MB2695.apcprd02.prod.outlook.com
+ ([fe80::df6:eb23:2b3f:8548]) by PS2PR02MB2695.apcprd02.prod.outlook.com
+ ([fe80::df6:eb23:2b3f:8548%3]) with mapi id 15.20.4566.022; Tue, 5 Oct 2021
+ 13:16:34 +0000
+From: naveen moses <naveen.moses@hotmail.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: support for gpio  as ipmb sensor 
+Thread-Topic: support for gpio  as ipmb sensor 
+Thread-Index: AQHXubK5qcPh3V4zuk+6NBNR0ABXMw==
+Date: Tue, 5 Oct 2021 13:16:34 +0000
+Message-ID: <PS2PR02MB26959672C7002D26EB5F4A4691AF9@PS2PR02MB2695.apcprd02.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+suggested_attachment_session_id: a4754a12-d5c7-1677-ecff-67f996f76739
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [GkKKNV//xapbDLmIsIvUNxYdkqTvUgQIDV9Tg8mCi0QCeHbV71PHKA==]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 950dfc01-bf60-4578-a911-08d988025acb
+x-ms-exchange-slblob-mailprops: CjO2us0gQYBBflgMvgBqEnDrBEd7ee/uBOJmzrWnWnbUqJliI4SGtLzXjJ8MRvJRWhpkhAd7l+REwJQPy1ii2StwiWctq+7GwMFxY25SGDFrFmMf2qJf4BNltFb5E9yX3biURu0bE6/UFkk3nP70Fr2IZtZctRf63wUkeL79xDY4Fwj5HHUbI95jucIzfFEDR4q4F3UOeiBqqykQxdid0ZMS5dxIRfALplrD/v195AcBN6wDyrJYaQnfNK0eitunkWDVHWyvcorLt4JT+3LN0D4JDdiO+E9kinCuHP1/JWvLVfYw3mb8s5KujMezPT2VtDt2ke8gGtNxmlpCtN2UF9uhxYYt3heVN6Jw56/eM3IIXcUUQgKW+jktV+Et8yaTpwHXv9pIsk2/4SZh4h6bOrD71IK+7XU1gRKLjZBtIpzIGTsBhz0mimwbe+SPOmanA9PMt92udmyh+Yk4zGO0fCpg7TLDZcIHzYENn0uYQ8OVu+cCbyMJIVP1mp+WRRvSEMiBpGuEAAmzz3xa2oy4Z3O5zjPwjWRo7AwSgBmk0B5s+KsH/twTFOMvYO5wPZ62QcSs662eS151mK3dGszBX6KUsGxzq64RzWnS9Jjf8XxqyzdC/9p5pzANquMWDlNCLRHy3LAuJtF0E6M5gPWbd/c1C54MVdK8K9C8xD+RAGTCDLVdvWSsrLc9r+cG9Qfr
+x-ms-traffictypediagnostic: PS2PR02MB3334:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: PwQ+PYi5nb5D0rEai///QpO/3ifKHTpchOOnD7PDjixupk7u+xXNs6ab5LMZgrJ1MKJCCZzK69Y10tY4N1u9h1ENAijdXK7P3u+OIC3XItD/Gqqobsh6c/v6LW5ky6UDYH8G4Q6U+FN7kIawNCT3UOp3Zw+nfnj8FklcWZj8EsCjilDT6Wmq1TX8RqercytOXYM/5N2R4axDuQqGyaasNKycG4afRObJ0F18iGcOe26dpXQVrifAmUPA8PEbQCXm6Rg0Q1BpsTSo6dRbaZWdwUrqRHxeL9bPM41J2z13/UOGbSjANK5hpbRmKXGCE5EmN3L7RDev60QAl+kUaqT6zzPzrX8VGM/yTanPAFfy4Lu5DqfuKqwKTwZvwyn0iKk2MdwQWE0DZGGRo+PPy8t1LjFvKVo13gAe3wkJ6LWsYb4=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: vft3AftImSE7WQmO1C6pYKLcL5PI+/ttR+pP4CpUe4sM3WPVPVw7j8LMA5dghq+yi5HIJefVeU3yr4eV1zZvzJ9yAUKkEPG6x1LYzBDBEg2EOcIW/gOQlv5sYy6YUEXYJUg2icV7xNEYu5yyZ27BxpZAT4piO0ULVUlf2T3WBgaGc0nXWVKhF8c5SHNrXfIx
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_PS2PR02MB26959672C7002D26EB5F4A4691AF9PS2PR02MB2695apcp_"
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.391,FMLib:17.0.607.475
- definitions=2021-10-05_04,2021-10-04_01,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- clxscore=1015 phishscore=0 mlxlogscore=991 bulkscore=0 malwarescore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2109230001 definitions=main-2110050112
+X-OriginatorOrg: sct-15-20-3174-20-msonline-outlook-0bb73.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PS2PR02MB2695.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 950dfc01-bf60-4578-a911-08d988025acb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Oct 2021 13:16:34.3315 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS2PR02MB3334
+X-Mailman-Approved-At: Wed, 06 Oct 2021 10:12:12 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,56 +97,128 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: spinler@us.ibm.com, derekh@us.ibm.com, openbmc@lists.ozlabs.org,
- Adriana Kobylak <anoo@us.ibm.com>, bjwyman@gmail.com, shawnmm@us.ibm.com
+Cc: "zhikui.ren@intel.com" <zhikui.ren@intel.com>,
+ "jae.hyun.yoo@linux.intel.com" <jae.hyun.yoo@linux.intel.com>,
+ "andrew@aj.id.au" <andrew@aj.id.au>,
+ "vernon.mauery@linux.intel.com" <vernon.mauery@linux.intel.com>,
+ "ed@tanous.net" <ed@tanous.net>, naveen moses <naveen.moses@outlook.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Adriana Kobylak <anoo@us.ibm.com>
+--_000_PS2PR02MB26959672C7002D26EB5F4A4691AF9PS2PR02MB2695apcp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-Add the power-config-full-load described in:
-https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md#power-config-full-load
+Hi All,
 
-The power-config-full-load gpio is designed to be used to specify how
-many power supplies the system should have, in rainier it is 2 or 4.  If
-enough power supplies fail so that the system no longer has redundancy
-(no longer n+1), the hardware will signal to the Onboard Chip Controller
-that the system may be oversubscribed, and performance may need to be
-reduced so the system can maintain it's powered on state.
+we have a couple of gpios ( input ) accessed via ipmb commands in our platf=
+orm.
+which cannot be directly monitored using gpio monitor.
 
-Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
----
+our idea is to expose them as ipmb sensors which has gpio state as property=
+ which is updated based
+on the current state of the gpio.
 
-v2: Update commit message.
-v3: Updated gpio name to power-config-full-load to match design doc.
+at present there is no compatible interface under xyz/openbmc_project/senso=
+rs for gpio as sensor.
 
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+So is this acceptable to create a new interface for gpio state under xyz/op=
+enbmc_project/sensors :
+interface name : gpioState
+which has a property named value whose possible values are boolean (true or=
+ false).
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 33fae8ad1305..10bde77fb847 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -1998,6 +1998,19 @@ eeprom@51 {
- 		reg = <0x51>;
- 	};
- 
-+	pca_pres3: pca9552@60 {
-+		compatible = "nxp,pca9552";
-+		reg = <0x60>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+
-+		gpio-line-names =
-+			"", "", "", "", "", "", "", "",
-+			"", "", "", "", "", "", "power-config-full-load", "";
-+	};
-+
- 	pca_pres2: pca9552@61 {
- 		compatible = "nxp,pca9552";
- 		reg = <0x61>;
--- 
-2.25.1
+any alternate implementation suggestions or corrections are welcome.
 
+Thanks,
+Naveen.
+
+
+--_000_PS2PR02MB26959672C7002D26EB5F4A4691AF9PS2PR02MB2695apcp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+Hi All,</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+we have a couple of gpios ( input ) accessed via ipmb commands in our platf=
+orm.</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+which cannot be directly monitored using gpio monitor.</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+our idea is to expose them as ipmb sensors which has gpio state as property=
+ which is updated based</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+on the current state of the gpio.&nbsp;</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+at present there is no compatible interface under xyz/openbmc_project/senso=
+rs for gpio as sensor.</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+So is this acceptable to create a new interface for gpio state under <span =
+style=3D"background-color:rgb(255, 255, 255);display:inline !important">
+xyz/openbmc_project/sensors :</span>&nbsp;</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+interface name : gpioState<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+which has a property named value whose possible values are boolean (true or=
+ false).</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+any alternate implementation suggestions or corrections are welcome.&nbsp;&=
+nbsp;</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+Thanks,</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+Naveen.</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+</body>
+</html>
+
+--_000_PS2PR02MB26959672C7002D26EB5F4A4691AF9PS2PR02MB2695apcp_--
