@@ -2,67 +2,97 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8877423070
-	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 20:54:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DAE54230BA
+	for <lists+openbmc@lfdr.de>; Tue,  5 Oct 2021 21:23:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HP6FX5GL8z2ymq
-	for <lists+openbmc@lfdr.de>; Wed,  6 Oct 2021 05:54:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HP6tl1nMgz2yg6
+	for <lists+openbmc@lfdr.de>; Wed,  6 Oct 2021 06:23:11 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=Xbypg8YS;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qS+pVncP;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::432;
- helo=mail-wr1-x432.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=Xbypg8YS; dkim-atps=neutral
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com
- [IPv6:2a00:1450:4864:20::432])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=qS+pVncP; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HP6F95LS1z2xvV
- for <openbmc@lists.ozlabs.org>; Wed,  6 Oct 2021 05:54:03 +1100 (AEDT)
-Received: by mail-wr1-x432.google.com with SMTP id e12so604152wra.4
- for <openbmc@lists.ozlabs.org>; Tue, 05 Oct 2021 11:54:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=YTZv2LrAFwGE2cD42j/pA8Zen0jeVffrAGs6LqG2WSU=;
- b=Xbypg8YSEBoUxSLuE0kJ0RGubPZMeZk//pD/0rghOFON1vnQKK31+0NYKOuQym3F8s
- W1BTEaN/nbufrhHx6rj/M+2PR3WDitIZrFpwgdAzw0xBxP4ZZobZmkm3Q0CkHnpyMZDB
- qLT91i7PHcY9UQqknNgWhR8vRrxfowwkh8chqClZwwbnCH57CI2w4/K+p5CphlQhhA1s
- 6YsimpDXsZeWC5znprPzkGl3+8GrNtaMhCwMFFShNZDJ/lsOD15QslSKYWq4Q08DV9Cn
- IyhCF01MF2yi3wGyN/OgofXwgjC+DY17OioL01GwMvHaclrhXm9Ws6FEgS69TAHCpcOv
- Pnug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=YTZv2LrAFwGE2cD42j/pA8Zen0jeVffrAGs6LqG2WSU=;
- b=XOnzcqIOFKLSKXc1AnAJIDxoK1oKUzL/LpY2l6e2aBaB01UPUjLcMzMLSVWC558L3V
- Rcjv5J3+v+yGl3vk8iyrkD1Mm0HtZCFt8uRfgleUXuqmO/4j40G4hQdrrSQYfR6L7ayH
- 02jIZ3Xt/8dNxDKpYEtulOR37BCMynl2zCFHgKN/0T4MFM/7kfr8RlBe6Wth3jRaaeCc
- LF2Thuj+5Q1ciSNc9lycRcSUnZ/fqmLha7XYtyfaEYfoivXiJpkMILxegrDqpRavWW4b
- FEofROuLd3biRjFZE7rx18CT68rWTFM+RidDYq6ulmMCeweUEsD0wMayh2YoIgn4c1BG
- nvBQ==
-X-Gm-Message-State: AOAM533yq/bkMUgCACSYcx9Hjgv1JVA8PWvMTB9Mvy7pv/6TwN7RQp7s
- FwW79Xa2JL4mCRjZwT5j/vDVwd+5zTtlcJ7+zG9JOA==
-X-Google-Smtp-Source: ABdhPJwo6eyahr2SbWeam/r1ZGU2fVmz7rHPsO4PWeJ2l/aq6+dP+VHd8xiBvl5OW+Ta8MmMV6uNdWuwkK/S8TAhZcM=
-X-Received: by 2002:a5d:6d8e:: with SMTP id l14mr23046580wrs.26.1633460039080; 
- Tue, 05 Oct 2021 11:53:59 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HP6tC441mz2xX8;
+ Wed,  6 Oct 2021 06:22:42 +1100 (AEDT)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 195IGSoG029152; 
+ Tue, 5 Oct 2021 15:22:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : content-transfer-encoding : mime-version; s=pp1;
+ bh=IxD25rDbm/u5c/0cZr2UhQqHUCON5rxL3c1FpfqnLRI=;
+ b=qS+pVncPzIs7Vz+3KYnoIu3hbYN6epwOMvUZadmEtorq53xNh1COgZyYwl0VbFoC80Q0
+ n1nJLlV3g0IwmDTqeriS4zhtVgWd1fELR1PQiBlFWweCBPdMS2OQGpYas44MofLLu0Nz
+ l/Gl3aKZ9LHhLNZFE+AOGlP0Fl+xgo7BOPLOet+qnmx6aI0zHULEqzSu1YsZF1Oxc6ab
+ OgcLm7DNbU8jUQTYXc8kd8VsaCpd7g+tZctrEIWr1O/zccuey0aQIMigwfCKyZxlkJh8
+ +USMHC45D41aAGair58wH2X8WZnWKHIrfHjlGF1bxdpZMVl0kufZMddp3/u/X10rt/Mf eQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3bguu8sh8k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Oct 2021 15:22:34 -0400
+Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 195IpSHB020591;
+ Tue, 5 Oct 2021 15:22:34 -0400
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3bguu8sh89-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Oct 2021 15:22:34 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 195JICxs002209;
+ Tue, 5 Oct 2021 19:22:33 GMT
+Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
+ [9.57.198.28]) by ppma01dal.us.ibm.com with ESMTP id 3bef2d9j44-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Oct 2021 19:22:33 +0000
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
+ [9.57.199.108])
+ by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 195JMSLN18940312
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 5 Oct 2021 19:22:28 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9417FB206C;
+ Tue,  5 Oct 2021 19:22:28 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EC6DCB2064;
+ Tue,  5 Oct 2021 19:22:27 +0000 (GMT)
+Received: from fstone01p1.aus.stglabs.ibm.com (unknown [9.3.116.196])
+ by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue,  5 Oct 2021 19:22:27 +0000 (GMT)
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: joel@jms.id.au, eajames@linux.ibm.com,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org
+Subject: [PATCH v3] ARM: dts: aspeed: rainier: Add power-config-full-load gpio
+Date: Tue,  5 Oct 2021 19:22:26 +0000
+Message-Id: <20211005192226.213539-1-anoo@linux.ibm.com>
+X-Mailer: git-send-email 2.25.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: uKKUgnI4RP0iibHenc-3QdLTjJvlEZoI
+X-Proofpoint-GUID: 0-FZWjGJrQ_ZknfIephQA9Y0N0F01dny
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <CA+H48BRUkTwQ-2NtJCQZrF_RyG3p9oUFzP4cqF5iVDEy-dh39A@mail.gmail.com>
- <CAPw1Ef-nyZB1JJax2Ca=z5hWoBxAg59WoFCKLA4TG+Ln0WyMFQ@mail.gmail.com>
-In-Reply-To: <CAPw1Ef-nyZB1JJax2Ca=z5hWoBxAg59WoFCKLA4TG+Ln0WyMFQ@mail.gmail.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Tue, 5 Oct 2021 11:53:47 -0700
-Message-ID: <CAH2-KxCKuUKyDdA+qc8rexiH6O5-EHk6UPmUUmPwnjn0wDLW1Q@mail.gmail.com>
-Subject: Re: Performance issue with redfish TLS handshake
-To: John Broadbent <jebr@google.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.391,FMLib:17.0.607.475
+ definitions=2021-10-05_04,2021-10-04_01,2020-04-07_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ clxscore=1015 phishscore=0 mlxlogscore=991 bulkscore=0 malwarescore=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2109230001 definitions=main-2110050112
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,69 +104,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: sharad yadav <sharad.openbmc@gmail.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Anuraag Bharadwaj <anuraagb@google.com>
+Cc: spinler@us.ibm.com, derekh@us.ibm.com, openbmc@lists.ozlabs.org,
+ Adriana Kobylak <anoo@us.ibm.com>, bjwyman@gmail.com, shawnmm@us.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Oct 5, 2021 at 11:48 AM John Broadbent <jebr@google.com> wrote:
->
->
->
-> On Tue, Oct 5, 2021 at 1:42 AM sharad yadav <sharad.openbmc@gmail.com> wrote:
->>
->> Hi All,
->>
->> We have tried to measure redfish APIs performance benchmarking on AST2600.
->> On redfish GET request there is a penalty added for ~100ms on TLS handshake at
+From: Adriana Kobylak <anoo@us.ibm.com>
 
-This is a little higher than I would've expected, but not outside the
-realm of reasonable.  Can you triage what cipher suite you're
-negotiating between the client and server?  Are you using a DH+EC key
-cipher?  That should be faster than RSA.
+Add the power-config-full-load described in:
+https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md#power-config-full-load
 
->> https://github.com/openbmc/bmcweb/blob/master/http/http_connection.hpp#L297
->>
->> On trying below all methods, each request calls `async_handshake` which adds 100ms delay
->> before the actual redfish handler code gets called.
->> Method 1:
->> curl --insecure -X POST -D headers.txt https://${bmc}/redfish/v1/SessionService/Sessions -d    '{"UserName":"root", "Password":"0penBmc"}'
->> export token=<Read X-Auth-Token from the headers.txt>
->> curl -k -H "X-Auth-Token: $token" -H "Content-Type: application/json" -X GET https://${bmc}/redfish/v1/Systems/system
->>
->> Method 2:
->> export token=`curl -k -H "Content-Type: application/json" -X POST https://${bmc}/login -d '{"username" : "root", "password" : "0penBmc"}' | grep token | awk '{print $2;}' | tr -d '"'`
->> curl -k -H "X-Auth-Token: $token" -H "Content-Type: application/json" -X GET https://${bmc}/redfish/v1/Systems/system
->>
->> Method 3:
->> curl https://${bmc}/redfish/v1/Systems/system --insecure -u root:0penBmc -L
->>
->> We want to avoid this ~100ms delay for better performance.
->> Please suggest if there is a way to skip the `async_handshake` call by modifying the requests method?
->>
->> Thanks,
->> Sharad
->
->
->
->
-> There is logic in the crow::connection object that should allow you to use tcp keep-alive and avoid the handshake in start.
-> https://github.com/openbmc/bmcweb/blob/master/http/http_connection.hpp#L694
->
-> I have looked at the connection class in bmcweb before, and found it difficult to understand.
-> However, this is a simplified version of the states within the connection class:
->
-> start->doReadHeaders->doRead->handle->completeRequest->doWrite[if keep alive]->doReadHeaders
->
-> The async_handshake is in the start, so if you are able to use the same connection, you should only pay for the handshake once.
-> Ed Tanous and Gunnar Mills are the definitive experts.
+The power-config-full-load gpio is designed to be used to specify how
+many power supplies the system should have, in rainier it is 2 or 4.  If
+enough power supplies fail so that the system no longer has redundancy
+(no longer n+1), the hardware will signal to the Onboard Chip Controller
+that the system may be oversubscribed, and performance may need to be
+reduced so the system can maintain it's powered on state.
 
-Yep, John got this exactly right.  Make sure whatever client you're
-using is taking advantage of keepalive, and you will only take this
-TLS performance hit for the first request.
+Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
+---
 
->
->
-> Let us know what you find.
-> Thank you
+v2: Update commit message.
+v3: Updated gpio name to power-config-full-load to match design doc.
+
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 33fae8ad1305..10bde77fb847 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -1998,6 +1998,19 @@ eeprom@51 {
+ 		reg = <0x51>;
+ 	};
+ 
++	pca_pres3: pca9552@60 {
++		compatible = "nxp,pca9552";
++		reg = <0x60>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio-line-names =
++			"", "", "", "", "", "", "", "",
++			"", "", "", "", "", "", "power-config-full-load", "";
++	};
++
+ 	pca_pres2: pca9552@61 {
+ 		compatible = "nxp,pca9552";
+ 		reg = <0x61>;
+-- 
+2.25.1
+
