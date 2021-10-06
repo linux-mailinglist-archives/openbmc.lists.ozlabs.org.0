@@ -2,66 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4386842384D
-	for <lists+openbmc@lfdr.de>; Wed,  6 Oct 2021 08:44:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 55082424049
+	for <lists+openbmc@lfdr.de>; Wed,  6 Oct 2021 16:41:26 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HPQ160mW2z2xtf
-	for <lists+openbmc@lfdr.de>; Wed,  6 Oct 2021 17:44:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HPcb81Jk6z2yn7
+	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 01:41:24 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=kKVhwp0h;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=mFKxuLyX;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=moPqGsVk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f35;
- helo=mail-qv1-xf35.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=kKVhwp0h; dkim-atps=neutral
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com
- [IPv6:2607:f8b0:4864:20::f35])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=mFKxuLyX; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=moPqGsVk; 
+ dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HPQ0j6htzz2xt9
- for <openbmc@lists.ozlabs.org>; Wed,  6 Oct 2021 17:44:19 +1100 (AEDT)
-Received: by mail-qv1-xf35.google.com with SMTP id cv2so1249002qvb.5
- for <openbmc@lists.ozlabs.org>; Tue, 05 Oct 2021 23:44:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=Vp0VMYCyu34/pVqCJ8anIDxqwTfANfRnKKzZc1jtOaE=;
- b=kKVhwp0hUtX93PSdJLNwANn5RW5ZCbb1soGeGDTA32qOm+a+U1ULIVIdwBB6rQUQBm
- 3CWeo6XNvMAKUM5cd53DVUslka80xy3uib6gy/+vzFIlVVArEENP0jbNDOWFkXS4f67h
- lVH2aDwOpJ0A/DhLwZgejs16kMtxmhigy9qSI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=Vp0VMYCyu34/pVqCJ8anIDxqwTfANfRnKKzZc1jtOaE=;
- b=tHiijmBdW7viLU8Gr4xLV/Dok9B5n7VlBTRMMiAt1oz1joSGAoDRw5oWpQEWhMmok3
- am15DqTflbTh7GRZFgyDu3r5WE9ekrzj/zq+hgxrnLuf+Bw9ajq/ZPg+yE/zhjMmCJKO
- qhBT7b/EkpzlK/u4xm8bVFZORMxOnG0tq1Gj/x+PnXStjprjkAAcpsCZJbbZORNG1uJ4
- Ct8jb0RAM662L0TvmV5t6lvpGIQDtFDb4+kD9ibZdrzpSQPAe/SWA4tr9nrDCYYv7RL1
- U991Xg/sXu9mI/kNBqX8g3xwwNkSOYW3a2K4/WYiRFDkHgpN1AcvVjyhO5iglGiBCrIW
- uQrw==
-X-Gm-Message-State: AOAM530Byr6eLpf4ND1uyhlPdiEiqoFHbcb8ntLjnFSxMa4BjJPFMhdr
- psOfEoztVe/5+yvVDalRsHEQnlMJmG9eg+2+1JWoSPTXSyU=
-X-Google-Smtp-Source: ABdhPJwS47SdKM8u4JzvmMxEVDRFRof4PY8z7VeaBKhR8yvO16xuh8/a5xzipPC80aV+3iVqYonttH+tBKVVcG+fgL4=
-X-Received: by 2002:a0c:f683:: with SMTP id p3mr3362595qvn.17.1633502655242;
- Tue, 05 Oct 2021 23:44:15 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HPcZZ3rCPz2xZH
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Oct 2021 01:40:54 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id 922E45C007B;
+ Wed,  6 Oct 2021 10:40:50 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute2.internal (MEProxy); Wed, 06 Oct 2021 10:40:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=+o7lQETVX/iWQyZ15RIR9HDw4ja
+ HWM7ArR7OXQlPOEw=; b=mFKxuLyXimVJCqnLJcadR0nVEfzYuHcND8U4YPoIpJQ
+ iHmjGqNtPvUKbCqH6HwjqAK92OnKwy6OnJ8D8Qzzx7x9B+/L+woujk+Jsbdudi+a
+ VmN9CckxYdOBIRNiThGSEJ6BEpIWAWfnwqLqmqVPeB1a+p8yYMxLjn0/CNuoEXcy
+ sp9qyOQlq5KE/YltysH0DqZgbe9AYdhj0DEl7LN7x0EOo311FOauBlFDN8/oobD7
+ Px1rskxkEX8fZH09Tjq6TBKERaYj+YKf6gNv78Bhroa+d4ZAcZRfLooHTSiPjEAr
+ whlx90NvIExX9IlhYoggyiP1+gLOKpsGhcEyMB6lxvA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+o7lQE
+ TVX/iWQyZ15RIR9HDw4jaHWM7ArR7OXQlPOEw=; b=moPqGsVkqL655GgRkK8WbU
+ mFXr7qLRX9gOWj2mpe1Hji1ysT2vB+ZMTY5cUgj5TLs+ke0yoFADOAdMTUJOn2fq
+ OrjLWlOl1CYjwPxNcQIkg9Zq/ElKOQ7SYewCKhIE58x4pypwrgmC9HnMwwZQvVD8
+ YVyQzg19rzMYjUw4TCQst0KbHk3KRRBetAE+FS6T7MQEzBQEzX2YX7P4egpnkOpa
+ 5j587QUKTIc6+KEzDbkV1OxYige3RmiYKrsEqdegHHCTR2c1fegSwboKjnQLsWwh
+ 6DGeM7AukLrrSHBBpFWMs6QDuGvTq87Aw/nRshUsolpemEplk3oufddbst8aGzxQ
+ ==
+X-ME-Sender: <xms:cbVdYbuXhLhAvMBWYQX1MMe7eJi-Lsys65K3Gx3ca0SBk0DHGN727g>
+ <xme:cbVdYce4IAN4H0h3grEdbwS5ywiSPdGNNCnfyBdkelsCHnNHl5h-u_m06ISJG7ehe
+ lk0bou2GV4NDeGlzlo>
+X-ME-Received: <xmr:cbVdYezOxZsbcWKE6CyJHrxlhYBMRBxHPTRhQXR1QIZ2MEAq1l0nMimEyz073QzT2xCB3Te2fm9m020p163BKBqJUw3U1fpdYZNgC59utr9W4g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudeliedgjeeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+ geefgfdthefhkedtleffveekgfeuffehtdeinecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:crVdYaOOlLl7lMEfBppuhe4Kvf_aA5OkOog1ucrgNaLWb8q5rp17wQ>
+ <xmx:crVdYb_x7pDIKCU-Tm85V8Heqk8qzzvOObQEUiltc11eF9J8qumCQw>
+ <xmx:crVdYaUk6WGP1PpWTGvd5TWx3xmBN3c9fvku6xjnqSrRVZY8HxqbXg>
+ <xmx:crVdYbxhA28zLVYOOSe4bHXhr_UmTEmvcvrtWGERagIIFI_oFyZIHg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 6 Oct 2021 10:40:49 -0400 (EDT)
+Date: Wed, 6 Oct 2021 09:40:48 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: support for gpio  as ipmb sensor
+Message-ID: <YV21cD3HOOGi7K2f@heinlein>
+References: <PS2PR02MB26959672C7002D26EB5F4A4691AF9@PS2PR02MB2695.apcprd02.prod.outlook.com>
+ <ef4d5ac6-49e8-40d6-9e6b-1fe030f3909a@www.fastmail.com>
 MIME-Version: 1.0
-References: <368f464087a749deaf32653eb96756d1@inventec.com>
- <35a427ea453a46d795900b6609c5ecfb@inventec.com>
-In-Reply-To: <35a427ea453a46d795900b6609c5ecfb@inventec.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 6 Oct 2021 06:44:03 +0000
-Message-ID: <CACPK8Xc4gcVgMRtSrfwmcKAjoPt6qtWBM90T=0HT=HVfTrO_sA@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: aspeed: Adding Inventec Transformers BMC
-To: =?UTF-8?B?TGluLlRvbW15U0Mg5p6X5LiW5qy9IFRBTw==?= <Lin.TommySC@inventec.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="KbnuAfPTwmKEZNJ+"
+Content-Disposition: inline
+In-Reply-To: <ef4d5ac6-49e8-40d6-9e6b-1fe030f3909a@www.fastmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,415 +97,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?B?WWUuVmljIOiRieWuh+a4hSBUQU8=?= <ye.vic@inventec.com>,
+Cc: Zhikui Ren <zhikui.ren@intel.com>,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ Vernon Mauery <vernon.mauery@linux.intel.com>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "Mohammed.Habeeb ISV" <mohammed.habeeb@inventec.com>
+ Ed Tanous <ed@tanous.net>, naveen moses <naveen.moses@outlook.com>,
+ naveen moses <naveen.moses@hotmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 27 Aug 2021 at 05:45, Lin.TommySC =E6=9E=97=E4=B8=96=E6=AC=BD TAO
-<Lin.TommySC@inventec.com> wrote:
->
-> Initial introduction of Inventec Transformers family equipped with Aspeed=
- 2600 BMC SoC.
 
-I assume this is an x86 server? Mentioning details like this is useful
-for review, but is not required.
+--KbnuAfPTwmKEZNJ+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->
-> Signed-off-by: Lin.TommySC <lin.tommysc@inventec.com>
+On Wed, Oct 06, 2021 at 10:46:40AM +1030, Andrew Jeffery wrote:
+> On Tue, 5 Oct 2021, at 23:46, naveen moses wrote:
 
-Ensure your author name is set correctly:
+> > So is this acceptable to create a new interface for gpio state under=20
+> > xyz/openbmc_project/sensors :
+> > interface name : gpioState
+> > which has a property named value whose possible values are boolean=20
+> > (true or false).
+>=20
+> What about modelling the behaviour the GPIO state represents rather=20
+> than just providing a DBus interface to the GPIO values?
 
-git config --global user.anime "Lin Tommy SC" (or whatever spelling
-makes sense).
+Agreed.  In general we've tried to refrain from exposing raw GPIOs on the d=
+bus
+and instead tried to model some behavior out of those GPIOs.  Your use case
+(wanting to use gpio-monitor) doesn't really seem strong enough to me to wa=
+rrant
+a change of this direction.  You'd have to add support in `gpio-monitor` to
+watch dbus signals, in addition to gpio-lines, and create a new program that
+exposes those gpio objects.  And, at the same time you're introducing a poo=
+rly
+documented API between two dbus providers because you're expecting very spe=
+cific
+name matching.  Why not just have the original program do whatever you inte=
+nded
+gpio-monitor to do?
 
-> ---
->  .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../dts/aspeed-bmc-inventec-transformers.dts  | 486 ++++++++++++++++++
->  3 files changed, 489 insertions(+)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-inventec-transformers.dt=
-s
->
-> diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Doc=
-umentation/devicetree/bindings/vendor-prefixes.yaml
-> index 355b81148b85..28c068ed0a75 100644
-> --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> @@ -507,6 +507,8 @@ patternProperties:
->      description: Inter Control Group
->    "^invensense,.*":
->      description: InvenSense Inc.
-> +  "^inventec,.*":
-> +    description: Inventec Corporation
+--=20
+Patrick Williams
 
-Please send this change in a separate patch.
+--KbnuAfPTwmKEZNJ+
+Content-Type: application/pgp-signature; name="signature.asc"
 
->    "^inversepath,.*":
->      description: Inverse Path
->    "^iom,.*":
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 48d48c85de9e..930b8ba6c3c5 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1407,6 +1407,7 @@ dtb-$(CONFIG_ARCH_ASPEED) +=3D \
->         aspeed-bmc-intel-s2600wf.dtb \
->         aspeed-bmc-inspur-fp5280g2.dtb \
->         aspeed-bmc-inspur-nf5280m6.dtb \
-> +       aspeed-bmc-inventec-transformers.dtb \
->         aspeed-bmc-lenovo-hr630.dtb \
->         aspeed-bmc-lenovo-hr855xg2.dtb \
->         aspeed-bmc-microsoft-olympus.dtb \
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-inventec-transformers.dts b/arc=
-h/arm/boot/dts/aspeed-bmc-inventec-transformers.dts
-> new file mode 100644
-> index 000000000000..4ff28d1439cd
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-inventec-transformers.dts
-> @@ -0,0 +1,486 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +// Copyright 2021 Inventec Corp.
-> +
-> +/dts-v1/;
-> +
-> +#include "aspeed-g6.dtsi"
-> +#include "aspeed-g6-pinctrl.dtsi"
-> +#include <dt-bindings/i2c/i2c.h>
-> +#include <dt-bindings/gpio/aspeed-gpio.h>
-> +
-> +/ {
-> +       model =3D "TRANSFORMERS BMC";
-> +       compatible =3D "inventec,transformer-bmc", "aspeed,ast2600";
-> +
-> +       aliases {
-> +               serial4 =3D &uart5;
-> +       };
-> +
-> +       chosen {
-> +               stdout-path =3D &uart5;
-> +               bootargs =3D "console=3Dtty0 console=3DttyS4,115200n8 roo=
-t=3D/dev/ram rw init=3D/linuxrc";
+-----BEGIN PGP SIGNATURE-----
 
-Are you sure this is correct? The console options are ok, but the
-others are often not required.
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmFdtW4ACgkQqwNHzC0A
+wRkd1g/+IMNxWaIGLrXXbWTOIejghFwwOHtitKjWvl1M4xNtHJyCFgUFkzPEE4NB
+g2V7yZewaZC87Seqhd7A8Mkx7AAaTJu6nyjpQ3dvzDys3iwAf4iXxf1O+7JB8gXo
+mxMqIioyI3Cem3NyAy9mwHjFub9ATsbYlqFgkk6IAeuSa6pC3/BO3HpSC6Ljc2QL
+QGkL4/uriBxbq2xTsrJGU7dj92+OqGXshC2FJ5jWJMdYc6vf4+Hp2dRuYKRZFN9f
+Gnettag9NIt+Zr+y/eVKd7qS08nihhxxsV76blVNoezqpiTGkFh3AKb4GB5n4FYx
+ZXKPaWn188XN/WS3yPBVCu8XNu3kKVqyp99OzW/JSDN3KhdamgEdStzPjPqLuvZb
+Mxrc+FQ+ArrbutjFIbmIWTeqILQiMN1uwjzqx3v2B4Vo9jFsPO3vELS+3X5Jsg30
+cmljifB8ZOCZCGzT8ZXR0v1BOnYGIaAYmZq1EYk9091H+uIMpwh9nJbFtDIK6WL0
+g53nKo7jXItJHF7SqANzELeRHzOH/hIYJpZfeLX6a5PKLmm63OMIlE63SbshySkl
+eOXuIW65U24u70Ngh9U+JRcqzWZp+V3HlQREj1gBtlW5cT9ZOeO04eTmtUevx2ao
+CZbFtEXVT0H+a+/Y5sQJSbbowFOtJGKxA58VgSbbF+Wzeh71WrI=
+=oHHw
+-----END PGP SIGNATURE-----
 
-> +       };
-> +
-> +       memory@80000000 {
-> +               device_type =3D "memory";
-> +               reg =3D <0x80000000 0x80000000>;
-> +       };
-> +
-> +       reserved-memory {
-> +               #address-cells =3D <1>;
-> +               #size-cells =3D <1>;
-> +               ranges;
-> +
-> +               gfx_memory: framebuffer {
-
-Does your machine run code on the BMC to output to the display without
-the host? That is what this is for.
-
-> +                       size =3D <0x01000000>;
-> +                       alignment =3D <0x01000000>;
-> +                       compatible =3D "shared-dma-pool";
-> +                       reusable;
-> +               };
-> +
-> +               video_engine_memory: video {
-> +                       size =3D <0x04000000>;
-> +                       alignment =3D <0x01000000>;
-> +                       compatible =3D "shared-dma-pool";
-> +                       reusable;
-> +               };
-> +
-> +               ssp_memory: ssp_memory {
-
-What is ssp, out of interest?
-
-> +                       size =3D <0x00200000>;
-> +                       alignment =3D <0x00100000>;
-> +                       compatible =3D "shared-dma-pool";
-> +                       no-map;
-> +               };
-> +       };
-> +
-> +       iio-hwmon {
-> +               compatible =3D "iio-hwmon";
-
-This doesn't make sense without an io-channels property.
-
-> +       };
-> +
-> +       leds {
-> +               compatible =3D "gpio-leds";
-> +
-> +               // UID led
-> +               uid {
-> +                       label =3D "UID_LED";
-> +                       gpios =3D <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE_L=
-OW>;
-> +               };
-> +
-> +               // Heart beat led
-> +               heartbeat {
-> +                       label =3D "HB_LED";
-> +                       gpios =3D <&gpio0 ASPEED_GPIO(P, 7) GPIO_ACTIVE_L=
-OW>;
-> +               };
-> +       };
-> +
-
-> +&i2c0 {
-> +       status =3D "okay";
-> +
-> +       //Set bmc' slave address;
-> +       bmc_slave@10 {
-> +               compatible =3D "ipmb-dev";
-> +               reg =3D <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-> +               i2c-protocol;
-> +       };
-> +};
-> +
-> +&i2c2 {
-> +       status =3D "okay";
-> +};
-> +
-> +&i2c3 {
-> +       // FRU AT24C512C-SSHM-T
-> +       status =3D "okay";
-> +       eeprom@50 {
-> +               compatible =3D "atmel,24c512";
-> +               reg =3D <0x50>;
-> +               pagesize =3D <128>;
-> +       };
-> +};
-> +
-> +&i2c5 {
-> +       status =3D "okay";
-> +};
-> +
-> +&i2c6 {
-> +       status =3D "okay";
-> +
-> +       tmp75@49 {
-> +               compatible =3D "ti,tmp75";
-> +               reg =3D <0x49>;
-> +       };
-> +
-> +       tmp75@4f {
-> +               compatible =3D "ti,tmp75";
-> +               reg =3D <0x4f>;
-> +       };
-> +
-> +       tmp468@48 {
-> +               compatible =3D "ti,tmp468";
-> +               reg =3D <0x48>;
-> +       };
-> +};
-> +
-> +&i2c7 {
-> +       status =3D "okay";
-> +       adm1278@40 {
-> +               compatible =3D "adi,adm1278";
-> +               reg =3D <0x40>;
-> +       };
-> +};
-> +
-> +
-> +&i2c8 {
-> +       // FRU AT24C512C-SSHM-T
-> +       status =3D "okay";
-> +
-> +       eeprom@51 {
-> +               compatible =3D "atmel,24c512";
-> +               reg =3D <0x51>;
-> +               pagesize =3D <128>;
-> +       };
-> +
-> +       eeprom@53 {
-> +               compatible =3D "atmel,24c512";
-> +               reg =3D <0x53>;
-> +               pagesize =3D <128>;
-> +       };
-> +};
-> +
-> +&i2c9 {
-> +       // M.2
-> +       status =3D "okay";
-> +};
-> +
-> +&i2c10 {
-> +       // I2C EXPANDER
-> +       status =3D "okay";
-> +
-> +       i2c-switch@71 {
-> +               compatible =3D "nxp,pca9544";
-> +               #address-cells =3D <1>;
-> +               #size-cells =3D <0>;
-> +               reg =3D <0x71>;
-> +       };
-> +
-> +       i2c-switch@73 {
-> +               compatible =3D "nxp,pca9544";
-> +               #address-cells =3D <1>;
-> +               #size-cells =3D <0>;
-> +               reg =3D <0x73>;
-> +       };
-> +};
-> +
-> +&i2c11 {
-> +       // I2C EXPANDER
-> +       status =3D "okay";
-> +
-> +       i2c-switch@70 {
-> +               compatible =3D "nxp,pca9544";
-> +               #address-cells =3D <1>;
-> +               #size-cells =3D <0>;
-> +               reg =3D <0x70>;
-> +
-> +               pcie_eeprom_riser1: i2c@0 {
-> +                       #address-cells =3D <1>;
-> +                       #size-cells =3D <0>;
-> +                       reg =3D <0>;
-> +
-> +                       eeprom@55 {
-> +                               compatible =3D "atmel,24c512";
-> +                               reg =3D <0x55>;
-> +                               pagesize =3D <128>;
-> +                       };
-> +               };
-> +
-> +               pcie_eeprom_riser2: i2c@1 {
-> +                       #address-cells =3D <1>;
-> +                       #size-cells =3D <0>;
-> +                       reg =3D <1>;
-> +
-> +                       eeprom@55 {
-> +                               compatible =3D "atmel,24c512";
-> +                               reg =3D <0x55>;
-> +                               pagesize =3D <128>;
-> +                       };
-> +               };
-> +
-> +               pcie_eeprom_riser3: i2c@2 {
-> +                       #address-cells =3D <1>;
-> +                       #size-cells =3D <0>;
-> +                       reg =3D <2>;
-> +
-> +                       eeprom@55 {
-> +                               compatible =3D "atmel,24c512";
-> +                               reg =3D <0x55>;
-> +                               pagesize =3D <128>;
-> +                       };
-> +               };
-> +       };
-> +};
-> +
-> +&i2c12 {
-> +       status =3D "okay";
-> +
-> +       psu0:psu0@58 {
-> +               compatible =3D "pmbus";
-> +               reg =3D <0x58>;
-> +       };
-> +};
-> +
-> +&gpio0 {
-> +       status =3D "okay";
-> +       gpio-line-names =3D
-> +       /*A0-A7*/   "","","","","","","","",
-> +       /*B0-B7*/   "I2C_HSC_ALERT","BMC_READY","","","","","PSU1_ALERT",=
-"",
-> +       /*C0-C7*/   "","","","","","","","",
-> +       /*D0-D7*/   "","","","","","","","",
-> +       /*E0-E7*/   "","","","","","","","",
-> +       /*F0-F7*/   "","","","","RST_BMC_SGPIO","","","",
-> +       /*G0-G7*/   "","","JTAG_MUX_SEL","","","","","",
-> +       /*H0-H7*/   "","","","","RESET_OUT","POWER_OUT","","",
-> +       /*I0-I7*/   "","","","","","","NMI_OUT","",
-> +       /*J0-J7*/   "","","","","","","","",
-> +       /*K0-K7*/   "","","","","","","","",
-> +       /*L0-L7*/   "","","","","","","","",
-> +       /*M0-M7*/   "","","","","","","","",
-> +       /*N0-N7*/   "","","","","","","","",
-> +       /*O0-O7*/   "","","","","","","","",
-> +       /*P0-P7*/   "","","","TCK_MUX_SEL","BMC_ASD_JTAG_EN","","PREQ_N",=
-"",
-> +       /*Q0-Q7*/   "","","","","","","","",
-> +       /*R0-R7*/   "","","","","","","","",
-> +       /*S0-S7*/   "","","","","","","PCH_THERMTRIP","",
-> +       /*T0-T7*/   "","","","","","","","",
-> +       /*U0-U7*/   "","NMI_BUTTON","","","","","","",
-> +       /*V0-V7*/   "","","","","PS_PWROK","","","PRDY_N",
-> +       /*W0-W7*/   "","","","","","","","",
-> +       /*X0-X7*/   "","","","CPLD_CATERR","","","","",
-> +       /*Y0-Y7*/   "","","","","","","","",
-> +       /*Z0-Z7*/   "","","","","","","","",
-> +       /*AA0-AA7*/ "","","","","","","","",
-> +       /*AB0-AB7*/ "","","","","","","","",
-> +       /*AC0-AC7*/ "","","","","","","","";
-
-Is this machine going to run openbmc?
-
-If yes, please review this document and ensure your naming follows the
-recommendations:
-
-https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming=
-.md
-
-
-> +};
-> +
-> +&lpc_snoop {
-> +       status =3D "okay";
-> +       snoop-ports =3D <0x80>;
-> +};
-> +
-> +&emmc_controller {
-> +       status =3D "okay";
-> +       timing-phase =3D <0x700FF>;
-
-This is not the correct style for the upstream driver, please see the bindi=
-ngs:
-
-Documentation/devicetree/bindings/mmc/aspeed,sdhci.yaml
-Documentation/devicetree/bindings/mmc/mmc-controller.yaml
-
-I find them hard to understand, so you may want to compare to other
-machines in the tree:
-
-arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-
-&emmc {
-        status =3D "okay";
-        clk-phase-mmc-hs200 =3D <180>, <180>;
-};
-
-
-> +};
-> +
-> +&emmc {
-> +       status =3D "okay";
-> +
-> +       non-removable;
-> +       max-frequency =3D <52000000>;
-> +       sdhci-drive-type =3D /bits/ 8 <3>;
-> +       bus-width =3D <8>;
-> +};
-> +
-> +&vhub {
-> +       status =3D "okay";
-> +       aspeed,vhub-downstream-ports =3D <7>;
-> +       aspeed,vhub-generic-endpoints =3D <21>;
-> +       pinctrl-names =3D "default";
-> +       pinctrl-0 =3D <&pinctrl_usb2ad_default>;
-> +};
-> +
-> +&rtc {
-> +       status =3D "okay";
-> +};
-> --
-> 2.33.0
->
+--KbnuAfPTwmKEZNJ+--
