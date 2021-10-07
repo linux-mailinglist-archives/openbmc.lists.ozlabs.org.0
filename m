@@ -1,58 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8878C424CFC
-	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 08:03:32 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A792B424D1B
+	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 08:13:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HQ1362nlhz2yJ4
-	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 17:03:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HQ1G44JB0z2yYS
+	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 17:13:00 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=Wy70ZNaE;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eym2bM4O;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ smtp.mailfrom=linuxfoundation.org (client-ip=198.145.29.99;
+ helo=mail.kernel.org; envelope-from=gregkh@linuxfoundation.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=Wy70ZNaE; 
+ unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
+ header.a=rsa-sha256 header.s=korg header.b=eym2bM4O; 
  dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [71.19.156.171])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HQ12k5PRhz2yHt
- for <openbmc@lists.ozlabs.org>; Thu,  7 Oct 2021 17:03:10 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (71-212-29-146.tukw.qwest.net
- [71.212.29.146])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id E2CE252;
- Wed,  6 Oct 2021 23:03:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1633586589;
- bh=BMDC3Op7w/U0rIg38TVt+UVWdc8mvdr7eIpHHCG/AdY=;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HQ1Fj6BPWz2xg6
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Oct 2021 17:12:41 +1100 (AEDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C3749611AE;
+ Thu,  7 Oct 2021 06:12:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+ s=korg; t=1633587159;
+ bh=4bNba4XP77DpWNOzvphD9BElhgRpTGFdKWEav49aN7s=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Wy70ZNaE+bRqJ+L8pts4q6urOnfg6qnsoWv2oYdXjwlnW6h7wT29/4rfHkq8hVVm6
- C1v5YmX6sEpnVEa0YBd9BL7ywbB98xJwyWCG4zEmlPV67NjzOZoONdsSnBI0uws8z0
- X9uzLIyHHpQU+SOYPpXUCHg9L2LnAmuHWjK/Y/4M=
-Date: Wed, 6 Oct 2021 23:03:07 -0700
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 8/9] dt-bindings: document new 'dynamic' common property
-Message-ID: <YV6Nm9jVeZ5Adte5@hatter.bewilderbeest.net>
+ b=eym2bM4OT795k6yVuj2jToVv0MuAZgGMIIrbX679g22jNsQAHlR93GgJmqrBFU+aE
+ thCSFgesuQacFzqnvYS/wpa0/H+XV0Uu742osGel8y+OZGs+D7Hwfzb9bNQcU0DfwB
+ iTF4VhLvfGYb1hebuAgyeMZdsi1fzkIH6IdLeaGE=
+Date: Thu, 7 Oct 2021 08:12:37 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Zev Weiss <zev@bewilderbeest.net>
+Subject: Re: [PATCH 1/9] sysfs: add sysfs_remove_bin_file_self() function
+Message-ID: <YV6P1dM6U6sSsefc@kroah.com>
 References: <20211007000954.30621-1-zev@bewilderbeest.net>
- <20211007000954.30621-9-zev@bewilderbeest.net>
- <YV6FEisHXqdBuduZ@kroah.com>
+ <20211007000954.30621-2-zev@bewilderbeest.net>
+ <YV6EVcKUQj5DNiXZ@kroah.com>
+ <YV6Moz5eCsf6ZZWb@hatter.bewilderbeest.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YV6FEisHXqdBuduZ@kroah.com>
+In-Reply-To: <YV6Moz5eCsf6ZZWb@hatter.bewilderbeest.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,24 +58,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- Jeremy Kerr <jk@codeconstruct.com.au>
+Cc: devicetree@vger.kernel.org, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Daniel Vetter <daniel.vetter@ffwll.ch>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+ Jeremy Kerr <jk@codeconstruct.com.au>, Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Oct 06, 2021 at 10:26:42PM PDT, Greg Kroah-Hartman wrote:
->On Wed, Oct 06, 2021 at 05:09:53PM -0700, Zev Weiss wrote:
->> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
->
->I know I can not take patches without any changelog text.  Maybe other
->maintainers are more "lax" :(
->
+On Wed, Oct 06, 2021 at 10:58:59PM -0700, Zev Weiss wrote:
+> On Wed, Oct 06, 2021 at 10:23:33PM PDT, Greg Kroah-Hartman wrote:
+> > On Wed, Oct 06, 2021 at 05:09:46PM -0700, Zev Weiss wrote:
+> > > This is simply the bin_attribute analog to sysfs_remove_file_self().
+> > 
+> > No, no binary sysfs file should be triggering a remove.
+> > 
+> > binary sysfs files are "pass-through-only" from userspace to hardware,
+> > the kernel should not be even knowing what is read/written to them.
+> > 
+> > What do you think this is needed for?
+> > 
+> 
+> So, I initially set out to be able to activate/deactivate specific DT nodes
+> at runtime by using the device-tree "reserved" status as defined in the spec
+> (but not currently used anywhere in the kernel) to mean essentially "create
+> a device for this but don't bind a driver to it" (leaving it to userspace to
+> invoke bind/unbind or similar), and added initial support for the specific
+> driver I'm concerned with at the moment (aspeed-smc) -- that was the
+> previous patch series linked in the cover letter of this one.
+> 
+> In the discussion of that series, Rob suggested as an alternate approach:
+> 
+> > Another possibility is making 'status' writeable from userspace. It is
+> > just a sysfs file.
+> 
+> That seemed sort of appealing to me, and this seemed like the most obvious
+> way to go about implementing it.  Given that DT properties are binary
+> attributes, I gather you'd consider that a non-starter though?
 
-Okay -- for this one I wasn't sure what to put in the body that wasn't 
-basically just duplicating the subject line or the content of the patch, 
-but I'll make sure to put something there in the future.
+Why would a text attribute of "status" be a binary sysfs file?  That
+feels really wrong as again, binary sysfs files are not supposed to be
+parsed or handled by the kernel at all, they are only a pass-through.
 
+thanks,
 
-Zev
-
+greg k-h
