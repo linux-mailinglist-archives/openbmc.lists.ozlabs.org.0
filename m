@@ -2,90 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55082424049
-	for <lists+openbmc@lfdr.de>; Wed,  6 Oct 2021 16:41:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 91A0F424AF2
+	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 02:10:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HPcb81Jk6z2yn7
-	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 01:41:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HPsDG3QKqz30D0
+	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 11:10:54 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=mFKxuLyX;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=moPqGsVk;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=gCPWmQkF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=mFKxuLyX; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=moPqGsVk; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=gCPWmQkF; 
  dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HPcZZ3rCPz2xZH
- for <openbmc@lists.ozlabs.org>; Thu,  7 Oct 2021 01:40:54 +1100 (AEDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailout.nyi.internal (Postfix) with ESMTP id 922E45C007B;
- Wed,  6 Oct 2021 10:40:50 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute2.internal (MEProxy); Wed, 06 Oct 2021 10:40:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=+o7lQETVX/iWQyZ15RIR9HDw4ja
- HWM7ArR7OXQlPOEw=; b=mFKxuLyXimVJCqnLJcadR0nVEfzYuHcND8U4YPoIpJQ
- iHmjGqNtPvUKbCqH6HwjqAK92OnKwy6OnJ8D8Qzzx7x9B+/L+woujk+Jsbdudi+a
- VmN9CckxYdOBIRNiThGSEJ6BEpIWAWfnwqLqmqVPeB1a+p8yYMxLjn0/CNuoEXcy
- sp9qyOQlq5KE/YltysH0DqZgbe9AYdhj0DEl7LN7x0EOo311FOauBlFDN8/oobD7
- Px1rskxkEX8fZH09Tjq6TBKERaYj+YKf6gNv78Bhroa+d4ZAcZRfLooHTSiPjEAr
- whlx90NvIExX9IlhYoggyiP1+gLOKpsGhcEyMB6lxvA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+o7lQE
- TVX/iWQyZ15RIR9HDw4jaHWM7ArR7OXQlPOEw=; b=moPqGsVkqL655GgRkK8WbU
- mFXr7qLRX9gOWj2mpe1Hji1ysT2vB+ZMTY5cUgj5TLs+ke0yoFADOAdMTUJOn2fq
- OrjLWlOl1CYjwPxNcQIkg9Zq/ElKOQ7SYewCKhIE58x4pypwrgmC9HnMwwZQvVD8
- YVyQzg19rzMYjUw4TCQst0KbHk3KRRBetAE+FS6T7MQEzBQEzX2YX7P4egpnkOpa
- 5j587QUKTIc6+KEzDbkV1OxYige3RmiYKrsEqdegHHCTR2c1fegSwboKjnQLsWwh
- 6DGeM7AukLrrSHBBpFWMs6QDuGvTq87Aw/nRshUsolpemEplk3oufddbst8aGzxQ
- ==
-X-ME-Sender: <xms:cbVdYbuXhLhAvMBWYQX1MMe7eJi-Lsys65K3Gx3ca0SBk0DHGN727g>
- <xme:cbVdYce4IAN4H0h3grEdbwS5ywiSPdGNNCnfyBdkelsCHnNHl5h-u_m06ISJG7ehe
- lk0bou2GV4NDeGlzlo>
-X-ME-Received: <xmr:cbVdYezOxZsbcWKE6CyJHrxlhYBMRBxHPTRhQXR1QIZ2MEAq1l0nMimEyz073QzT2xCB3Te2fm9m020p163BKBqJUw3U1fpdYZNgC59utr9W4g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudeliedgjeeiucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
- geefgfdthefhkedtleffveekgfeuffehtdeinecuvehluhhsthgvrhfuihiivgeptdenuc
- frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:crVdYaOOlLl7lMEfBppuhe4Kvf_aA5OkOog1ucrgNaLWb8q5rp17wQ>
- <xmx:crVdYb_x7pDIKCU-Tm85V8Heqk8qzzvOObQEUiltc11eF9J8qumCQw>
- <xmx:crVdYaUk6WGP1PpWTGvd5TWx3xmBN3c9fvku6xjnqSrRVZY8HxqbXg>
- <xmx:crVdYbxhA28zLVYOOSe4bHXhr_UmTEmvcvrtWGERagIIFI_oFyZIHg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Oct 2021 10:40:49 -0400 (EDT)
-Date: Wed, 6 Oct 2021 09:40:48 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: support for gpio  as ipmb sensor
-Message-ID: <YV21cD3HOOGi7K2f@heinlein>
-References: <PS2PR02MB26959672C7002D26EB5F4A4691AF9@PS2PR02MB2695.apcprd02.prod.outlook.com>
- <ef4d5ac6-49e8-40d6-9e6b-1fe030f3909a@www.fastmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HPsCQ0VDFz2yx9;
+ Thu,  7 Oct 2021 11:10:09 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (71-212-29-146.tukw.qwest.net
+ [71.212.29.146])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 7055552;
+ Wed,  6 Oct 2021 17:10:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1633565405;
+ bh=XNJ+HTYwQ2IQpncUFadRIFOJg2t8M7ncy59/V0Jd3Ys=;
+ h=From:To:Cc:Subject:Date:From;
+ b=gCPWmQkFOF+uxRlYH8EKU/FK5HMST9HArklIZhSLKVdDTYYhb9Bymp6Hx8f33g8dd
+ Jp2uDnMCw0LJeKx1I7VXrb+uSP7UVhulS1bCEkrHnzwQJtjhc2W+B222j3y1aPZZeT
+ emW63dSFGBweyF84xuzT9QN10IxpLVkH4i5CG7og=
+From: Zev Weiss <zev@bewilderbeest.net>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH 0/9] Dynamic DT device nodes
+Date: Wed,  6 Oct 2021 17:09:45 -0700
+Message-Id: <20211007000954.30621-1-zev@bewilderbeest.net>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="KbnuAfPTwmKEZNJ+"
-Content-Disposition: inline
-In-Reply-To: <ef4d5ac6-49e8-40d6-9e6b-1fe030f3909a@www.fastmail.com>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,69 +60,97 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Zhikui Ren <zhikui.ren@intel.com>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Vernon Mauery <vernon.mauery@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Ed Tanous <ed@tanous.net>, naveen moses <naveen.moses@outlook.com>,
- naveen moses <naveen.moses@hotmail.com>
+Cc: =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+ Zev Weiss <zev@bewilderbeest.net>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Daniel Vetter <daniel.vetter@ffwll.ch>, Jeremy Kerr <jk@codeconstruct.com.au>,
+ Francis Laniel <laniel_francis@privacyrequired.com>,
+ linux-aspeed@lists.ozlabs.org, Frank Rowand <frowand.list@gmail.com>,
+ Andrey Konovalov <andreyknvl@gmail.com>, Alexey Dobriyan <adobriyan@gmail.com>,
+ devicetree@vger.kernel.org, Kees Cook <keescook@chromium.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Dan Williams <dan.j.williams@intel.com>, linux-arm-kernel@lists.infradead.org,
+ Daniel Axtens <dja@axtens.net>, Andy Shevchenko <andy@kernel.org>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Nick Desaulniers <ndesaulniers@google.com>, linux-kernel@vger.kernel.org,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hello,
 
---KbnuAfPTwmKEZNJ+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patch series is in some ways kind of a v2 for the "Dynamic
+aspeed-smc flash chips via 'reserved' DT status" series I posted
+previously [0], but takes a fairly different approach suggested by Rob
+Herring [1] and doesn't actually touch the aspeed-smc driver or
+anything in the MTD subsystem, so I haven't marked it as such.
 
-On Wed, Oct 06, 2021 at 10:46:40AM +1030, Andrew Jeffery wrote:
-> On Tue, 5 Oct 2021, at 23:46, naveen moses wrote:
+To recap a bit of the context from that series, in OpenBMC there's a
+need for certain devices (described by device-tree nodes) to be able
+to be attached and detached at runtime (for example the SPI flash for
+the host's firmware, which is shared between the BMC and the host but
+can only be accessed by one or the other at a time).  To provide that
+ability, this series adds support for a new common device-tree
+property, a boolean "dynamic" that indicates that the device may come
+and go at runtime.  When present on a node, the sysfs file for that
+node's "status" property is made writable, allowing userspace to do
+things like:
 
-> > So is this acceptable to create a new interface for gpio state under=20
-> > xyz/openbmc_project/sensors :
-> > interface name : gpioState
-> > which has a property named value whose possible values are boolean=20
-> > (true or false).
->=20
-> What about modelling the behaviour the GPIO state represents rather=20
-> than just providing a DBus interface to the GPIO values?
+  $ echo okay > /sys/firmware/devicetree/.../status
+  $ echo reserved > /sys/firmware/devicetree/.../status
 
-Agreed.  In general we've tried to refrain from exposing raw GPIOs on the d=
-bus
-and instead tried to model some behavior out of those GPIOs.  Your use case
-(wanting to use gpio-monitor) doesn't really seem strong enough to me to wa=
-rrant
-a change of this direction.  You'd have to add support in `gpio-monitor` to
-watch dbus signals, in addition to gpio-lines, and create a new program that
-exposes those gpio objects.  And, at the same time you're introducing a poo=
-rly
-documented API between two dbus providers because you're expecting very spe=
-cific
-name matching.  Why not just have the original program do whatever you inte=
-nded
-gpio-monitor to do?
+to activate and deactivate a dynamic device.
 
---=20
-Patrick Williams
+Because it leans on the OF_DYNAMIC machinery internally, this
+functionality will only work on busses that register for OF reconfig
+notifications and handle them appropriately (presently platform, i2c,
+and spi).  This series does not attempt to solve the "dynamic devices
+further down the tree" problem [2]; my hope is that handling for OF
+reconfig notifications can be extended to other families of devices
+(e.g. individual MTD spi-nor flash chips) in the future.
 
---KbnuAfPTwmKEZNJ+
-Content-Type: application/pgp-signature; name="signature.asc"
+The central change of the series is patch 6; patches 1-5 are various
+small infrastructure bits and plumbing tweaks in preparation for #6;
+patches 7-9 are Kconfig, documentation, and an inaugural use of the
+new property in the ASRock e3c246d4i BMC device tree.
 
------BEGIN PGP SIGNATURE-----
+Note that this series requires the duplicate-declaration removal patch
+that was recently merged in Rob's tree [3]; it changes one of the
+duplicated declarations and hence will not compile without that patch
+(because the declarations no longer match).
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmFdtW4ACgkQqwNHzC0A
-wRkd1g/+IMNxWaIGLrXXbWTOIejghFwwOHtitKjWvl1M4xNtHJyCFgUFkzPEE4NB
-g2V7yZewaZC87Seqhd7A8Mkx7AAaTJu6nyjpQ3dvzDys3iwAf4iXxf1O+7JB8gXo
-mxMqIioyI3Cem3NyAy9mwHjFub9ATsbYlqFgkk6IAeuSa6pC3/BO3HpSC6Ljc2QL
-QGkL4/uriBxbq2xTsrJGU7dj92+OqGXshC2FJ5jWJMdYc6vf4+Hp2dRuYKRZFN9f
-Gnettag9NIt+Zr+y/eVKd7qS08nihhxxsV76blVNoezqpiTGkFh3AKb4GB5n4FYx
-ZXKPaWn188XN/WS3yPBVCu8XNu3kKVqyp99OzW/JSDN3KhdamgEdStzPjPqLuvZb
-Mxrc+FQ+ArrbutjFIbmIWTeqILQiMN1uwjzqx3v2B4Vo9jFsPO3vELS+3X5Jsg30
-cmljifB8ZOCZCGzT8ZXR0v1BOnYGIaAYmZq1EYk9091H+uIMpwh9nJbFtDIK6WL0
-g53nKo7jXItJHF7SqANzELeRHzOH/hIYJpZfeLX6a5PKLmm63OMIlE63SbshySkl
-eOXuIW65U24u70Ngh9U+JRcqzWZp+V3HlQREj1gBtlW5cT9ZOeO04eTmtUevx2ao
-CZbFtEXVT0H+a+/Y5sQJSbbowFOtJGKxA58VgSbbF+Wzeh71WrI=
-=oHHw
------END PGP SIGNATURE-----
+[0] https://lore.kernel.org/openbmc/20210929115409.21254-1-zev@bewilderbeest.net/
+[1] https://lore.kernel.org/openbmc/CAL_JsqJH+b5oFuSP+KBLBsN5QTA6xASuqXJWXUaDkHhugXPpnQ@mail.gmail.com/
+[2] https://lore.kernel.org/openbmc/20210929220038.GS17315@packtop/
+[3] https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git/commit/?id=6663ae07d995f5fbe2988a19858b2f87e68cf929
 
---KbnuAfPTwmKEZNJ+--
+Zev Weiss (9):
+  sysfs: add sysfs_remove_bin_file_self() function
+  sysfs: add growable flag to struct bin_attribute
+  lib/string: add sysfs_buf_streq()
+  of: add self parameter to __of_sysfs_remove_bin_file()
+  of: add self parameter to of_update_property()
+  of: add support for 'dynamic' DT property
+  of: make OF_DYNAMIC selectable independently of OF_UNITTEST
+  dt-bindings: document new 'dynamic' common property
+  ARM: dts: aspeed: Add e3c246d4i BIOS flash device
+
+ .../devicetree/bindings/common-properties.txt | 18 ++++
+ .../boot/dts/aspeed-bmc-asrock-e3c246d4i.dts  | 23 ++++++
+ drivers/of/Kconfig                            |  8 +-
+ drivers/of/base.c                             |  7 +-
+ drivers/of/dynamic.c                          |  2 +-
+ drivers/of/kobj.c                             | 82 +++++++++++++++++--
+ drivers/of/of_private.h                       |  6 +-
+ fs/sysfs/file.c                               | 15 +++-
+ include/linux/of.h                            |  7 +-
+ include/linux/string.h                        |  1 +
+ include/linux/sysfs.h                         |  2 +
+ lib/string.c                                  | 34 ++++++++
+ 12 files changed, 187 insertions(+), 18 deletions(-)
+
+-- 
+2.33.0
+
