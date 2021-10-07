@@ -2,13 +2,13 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5CD1424AF9
-	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 02:13:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B21C424AFD
+	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 02:14:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HPsHj5DsXz2ywX
-	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 11:13:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HPsJp2K9Dz2ynL
+	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 11:14:50 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=cz+GMC44;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=LJnbGq7T;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,34 +18,34 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=cz+GMC44; 
+ header.a=rsa-sha256 header.s=thorn header.b=LJnbGq7T; 
  dkim-atps=neutral
 Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
  [IPv6:2605:2700:0:5::4713:9cab])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HPsCT1HVZz309K
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HPsCT4M9tz2ynx
  for <openbmc@lists.ozlabs.org>; Thu,  7 Oct 2021 11:10:13 +1100 (AEDT)
 Received: from hatter.bewilderbeest.net (71-212-29-146.tukw.qwest.net
  [71.212.29.146])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 597DAC4F;
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id C94CFC65;
  Wed,  6 Oct 2021 17:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1633565411;
- bh=cSziyfy743JedtW4xRUNVrSzMdvpgBMMh/fwJwFcHxU=;
+ s=thorn; t=1633565412;
+ bh=X7NcKoZNi7nh2DbYzKpYnZIhtNF3Gmm/jHD3A05+bD4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=cz+GMC44xNjrax4KSWP/45q0mdz1QwTmEvoQGPUcQCseAE9LUQC/RE/X8f1mlkMAM
- Db3hnwmr5IvBUUDwHGN8kGnQE+4blLSqov7KASCyW3vr6Tcq2fS4YfVq/GWlvjNVp7
- fLDBmr8MPQBql/mYuuCMznAg6RfPMvpPaIYMisOo=
+ b=LJnbGq7T4ITbr8iPodDndpzFsO83HayGNRUaqWxHfxLjDGm94vkTZoCtoI7sIULoj
+ buTVz6hkQIaZJUMCSbGdDevAAoFHUZ3PPZ6M6AhLFBbhTLGlfwp79l0vouM8SYY29D
+ 7E9N6KqIf0NLcQ7yLNK1JPJJD6uz4n0WtJ9PAzQ0=
 From: Zev Weiss <zev@bewilderbeest.net>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH 5/9] of: add self parameter to of_update_property()
-Date: Wed,  6 Oct 2021 17:09:50 -0700
-Message-Id: <20211007000954.30621-6-zev@bewilderbeest.net>
+Subject: [PATCH 6/9] of: add support for 'dynamic' DT property
+Date: Wed,  6 Oct 2021 17:09:51 -0700
+Message-Id: <20211007000954.30621-7-zev@bewilderbeest.net>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20211007000954.30621-1-zev@bewilderbeest.net>
 References: <20211007000954.30621-1-zev@bewilderbeest.net>
@@ -69,126 +69,105 @@ Cc: devicetree@vger.kernel.org, Zev Weiss <zev@bewilderbeest.net>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is to indicate that the property is being updated via its own
-sysfs method so that we ultimately call into kernfs_remove_self() and
-avoid the deadlock that would occur otherwise.
+Nodes marked with this (boolean) property will have a writable status
+sysfs file, which can be used to toggle them between "okay" and
+"reserved", effectively hot-plugging them.  Note that this will only
+be effective for devices on busses that register for OF reconfig
+notifications (currently spi, i2c, and platform), and only if
+CONFIG_OF_DYNAMIC is enabled.
 
 Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 ---
- drivers/of/base.c       | 7 ++++---
- drivers/of/dynamic.c    | 2 +-
- drivers/of/kobj.c       | 4 ++--
- drivers/of/of_private.h | 4 ++--
- include/linux/of.h      | 7 ++++++-
- 5 files changed, 15 insertions(+), 9 deletions(-)
+ drivers/of/kobj.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 69 insertions(+)
 
-diff --git a/drivers/of/base.c b/drivers/of/base.c
-index f720c0d246f2..ce4d3bc2f8a6 100644
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -1902,8 +1902,9 @@ int __of_update_property(struct device_node *np, struct property *newprop,
- 	return 0;
- }
- 
-+
- /*
-- * of_update_property - Update a property in a node, if the property does
-+ * of_update_property_self - Update a property in a node, if the property does
-  * not exist, add it.
-  *
-  * Note that we don't actually remove it, since we have given out
-@@ -1911,7 +1912,7 @@ int __of_update_property(struct device_node *np, struct property *newprop,
-  * Instead we just move the property to the "dead properties" list,
-  * and add the new property to the property list
-  */
--int of_update_property(struct device_node *np, struct property *newprop)
-+int of_update_property_self(struct device_node *np, struct property *newprop, bool self)
- {
- 	struct property *oldprop;
- 	unsigned long flags;
-@@ -1927,7 +1928,7 @@ int of_update_property(struct device_node *np, struct property *newprop)
- 	raw_spin_unlock_irqrestore(&devtree_lock, flags);
- 
- 	if (!rc)
--		__of_update_property_sysfs(np, newprop, oldprop);
-+		__of_update_property_sysfs(np, newprop, oldprop, self);
- 
- 	mutex_unlock(&of_mutex);
- 
-diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
-index cd3821a6444f..8a67f3e1b223 100644
---- a/drivers/of/dynamic.c
-+++ b/drivers/of/dynamic.c
-@@ -652,7 +652,7 @@ static int __of_changeset_entry_apply(struct of_changeset_entry *ce)
- 		__of_remove_property_sysfs(ce->np, ce->prop);
- 		break;
- 	case OF_RECONFIG_UPDATE_PROPERTY:
--		__of_update_property_sysfs(ce->np, ce->prop, ce->old_prop);
-+		__of_update_property_sysfs(ce->np, ce->prop, ce->old_prop, false);
- 		break;
- 	}
- 
 diff --git a/drivers/of/kobj.c b/drivers/of/kobj.c
-index 06d6c90f7aa1..378cb421aae1 100644
+index 378cb421aae1..141ae23f3130 100644
 --- a/drivers/of/kobj.c
 +++ b/drivers/of/kobj.c
-@@ -104,14 +104,14 @@ void __of_remove_property_sysfs(struct device_node *np, struct property *prop)
+@@ -36,6 +36,69 @@ static ssize_t of_node_property_read(struct file *filp, struct kobject *kobj,
+ 	return memory_read_from_buffer(buf, count, &offset, pp->value, pp->length);
  }
  
- void __of_update_property_sysfs(struct device_node *np, struct property *newprop,
--		struct property *oldprop)
-+		struct property *oldprop, bool self)
- {
- 	/* At early boot, bail out and defer setup to of_init() */
- 	if (!of_kset)
- 		return;
- 
- 	if (oldprop)
--		__of_sysfs_remove_bin_file(np, oldprop, false);
-+		__of_sysfs_remove_bin_file(np, oldprop, self);
- 	__of_add_property_sysfs(np, newprop);
- }
- 
-diff --git a/drivers/of/of_private.h b/drivers/of/of_private.h
-index fff157c63907..3c6816237278 100644
---- a/drivers/of/of_private.h
-+++ b/drivers/of/of_private.h
-@@ -64,7 +64,7 @@ int of_node_is_attached(struct device_node *node);
- int __of_add_property_sysfs(struct device_node *np, struct property *pp);
- void __of_remove_property_sysfs(struct device_node *np, struct property *prop);
- void __of_update_property_sysfs(struct device_node *np, struct property *newprop,
--		struct property *oldprop);
-+		struct property *oldprop, bool self);
- int __of_attach_node_sysfs(struct device_node *np);
- void __of_detach_node_sysfs(struct device_node *np);
- #else
-@@ -74,7 +74,7 @@ static inline int __of_add_property_sysfs(struct device_node *np, struct propert
- }
- static inline void __of_remove_property_sysfs(struct device_node *np, struct property *prop) {}
- static inline void __of_update_property_sysfs(struct device_node *np,
--		struct property *newprop, struct property *oldprop) {}
-+		struct property *newprop, struct property *oldprop, bool self) {}
- static inline int __of_attach_node_sysfs(struct device_node *np)
- {
- 	return 0;
-diff --git a/include/linux/of.h b/include/linux/of.h
-index 6f1c41f109bb..0e6479a884eb 100644
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -401,7 +401,12 @@ extern int of_machine_is_compatible(const char *compat);
- 
- extern int of_add_property(struct device_node *np, struct property *prop);
- extern int of_remove_property(struct device_node *np, struct property *prop);
--extern int of_update_property(struct device_node *np, struct property *newprop);
-+extern int of_update_property_self(struct device_node *np, struct property *newprop, bool self);
-+
-+static inline int of_update_property(struct device_node *np, struct property *newprop)
++static ssize_t of_node_status_write(struct file *filp, struct kobject *kobj,
++                                    struct bin_attribute *bin_attr, char *buf,
++                                    loff_t offset, size_t count)
 +{
-+	return of_update_property_self(np, newprop, false);
++	int rc;
++	char *newstatus;
++	struct property **deadprev;
++	struct property *newprop = NULL;
++	struct property *oldprop = container_of(bin_attr, struct property, attr);
++	struct device_node *np = container_of(kobj, struct device_node, kobj);
++
++	if (WARN_ON_ONCE(strcmp(oldprop->name, "status")))
++		return -EIO;
++
++	if (offset)
++		return -EINVAL;
++
++	if (sysfs_buf_streq(buf, count, "okay") || sysfs_buf_streq(buf, count, "ok"))
++		newstatus = "okay";
++	else if (sysfs_buf_streq(buf, count, "reserved"))
++		newstatus = "reserved";
++	else if (sysfs_buf_streq(buf, count, "disabled"))
++		newstatus = "disabled";
++	else
++		return -EINVAL;
++
++	if (!strcmp(newstatus, oldprop->value))
++		return count;
++
++	/*
++	 * of_update_property_self() doesn't free replaced properties, so
++	 * rifle through deadprops first to see if there's an equivalent old
++	 * status property we can reuse instead of allocating a new one.
++	 */
++	mutex_lock(&of_mutex);
++	for (deadprev = &np->deadprops; *deadprev; deadprev = &(*deadprev)->next) {
++		struct property *deadprop = *deadprev;
++		if (!strcmp(deadprop->name, "status") &&
++		    deadprop->length == strlen(newstatus) + 1 &&
++		    !strcmp(deadprop->value, newstatus)) {
++			*deadprev = deadprop->next;
++			deadprop->next = NULL;
++			newprop = deadprop;
++			break;
++		}
++	}
++	mutex_unlock(&of_mutex);
++
++	if (!newprop) {
++		newprop = kzalloc(sizeof(*newprop), GFP_KERNEL);
++		if (!newprop)
++			return -ENOMEM;
++
++		newprop->name = oldprop->name;
++		newprop->value = newstatus;
++		newprop->length = strlen(newstatus) + 1;
++	}
++
++	rc = of_update_property_self(np, newprop, true);
++
++	return rc ? rc : count;
 +}
++
+ /* always return newly allocated name, caller must free after use */
+ static const char *safe_name(struct kobject *kobj, const char *orig_name)
+ {
+@@ -79,6 +142,12 @@ int __of_add_property_sysfs(struct device_node *np, struct property *pp)
+ 	pp->attr.size = secure ? 0 : pp->length;
+ 	pp->attr.read = of_node_property_read;
  
- /* For updating the device tree at runtime */
- #define OF_RECONFIG_ATTACH_NODE		0x0001
++	if (!strcmp(pp->name, "status") && of_property_read_bool(np, "dynamic")) {
++		pp->attr.attr.mode |= 0200;
++		pp->attr.write = of_node_status_write;
++		pp->attr.growable = true;
++	}
++
+ 	rc = sysfs_create_bin_file(&np->kobj, &pp->attr);
+ 	WARN(rc, "error adding attribute %s to node %pOF\n", pp->name, np);
+ 	return rc;
 -- 
 2.33.0
 
