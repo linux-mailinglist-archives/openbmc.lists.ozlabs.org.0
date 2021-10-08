@@ -2,76 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA4B142861A
-	for <lists+openbmc@lfdr.de>; Mon, 11 Oct 2021 07:06:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BA7C342861B
+	for <lists+openbmc@lfdr.de>; Mon, 11 Oct 2021 07:06:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HSRb23gHZz2ybL
-	for <lists+openbmc@lfdr.de>; Mon, 11 Oct 2021 16:06:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HSRbm2gT2z2yhd
+	for <lists+openbmc@lfdr.de>; Mon, 11 Oct 2021 16:06:44 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=C+zkVLwQ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Vrk69gbb;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::835;
- helo=mail-qt1-x835.google.com; envelope-from=frowand.list@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::82b;
+ helo=mail-qt1-x82b.google.com; envelope-from=frowand.list@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=C+zkVLwQ; dkim-atps=neutral
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com
- [IPv6:2607:f8b0:4864:20::835])
+ header.s=20210112 header.b=Vrk69gbb; dkim-atps=neutral
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com
+ [IPv6:2607:f8b0:4864:20::82b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HQyGj0fwjz301s
- for <openbmc@lists.ozlabs.org>; Sat,  9 Oct 2021 06:01:48 +1100 (AEDT)
-Received: by mail-qt1-x835.google.com with SMTP id b16so10461860qtt.7
- for <openbmc@lists.ozlabs.org>; Fri, 08 Oct 2021 12:01:47 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HQyfp4vfzz3053
+ for <openbmc@lists.ozlabs.org>; Sat,  9 Oct 2021 06:19:13 +1100 (AEDT)
+Received: by mail-qt1-x82b.google.com with SMTP id z24so5799483qtv.9
+ for <openbmc@lists.ozlabs.org>; Fri, 08 Oct 2021 12:19:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=subject:to:cc:references:from:message-id:date:user-agent
+ h=subject:from:to:cc:references:message-id:date:user-agent
  :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=xew2Cqp055SEboMYSD4xaomAE75lVTjIUs6xXR179/0=;
- b=C+zkVLwQ561jKCx3zhQEnbk8TmUmArvKZwuTu4o6hFVYBf50l6nH4eFXzxeT6ckUFG
- iCT7GRokfADm3mNb1neAQNsX8B+bhJQe3zQAv/kVlJe6lq/GOCY/0zCqZMG/JLnZx84+
- QTJGxJARW6YfYHxWtL1p6VQgRNDqyww+1GGeqigEy+zt+NntIzIhypf3jsCXtUyhCXQY
- JXRo/4T++xB6+pLKViUSF1mz7D37WsgOLsf2/WFzq51e8PYFd32ltlPrTQ3Fq4ORQ8zk
- DiSu2vcdV9MIj6pwSf2XDvgtd7/eGnvA34XGuLQxsdeFv8D7XsXVRwNAysOAKAMTr0+8
- WhwA==
+ bh=dzA351pjnS7pL1FBPqgBtwcMIqRPM9/An2JZIEmCn84=;
+ b=Vrk69gbbdZq70K+ESlJ+kgKyQeKB+ZY0vUkmNNp7PB/SittIUHzrMAR7BnDqpiUP6J
+ loFJerFIbeWEoSLiEjNPAOnOKFMRxHqkBeENVwPnzKrUEGkj1If+pzB/kNBfqTtZDZZD
+ jqLFRlQFMk/6pJcndkcR5DnaJIszW6gf0+oP6mZojtezJspRls7JqowZfpHqMdr83FNu
+ 65T5G2el27dpNudoC8bPF2dSKYymhTiCuf9WSV9os5chO756OKGUUp/FuDqIJspP0gge
+ LiIe8R6dA5pmCLJjrU2qcrisqnpOG1byGXIDF9+6wCQi1PEIqsU8bNd94uXt1scAi1zr
+ ux8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ h=x-gm-message-state:subject:from:to:cc:references:message-id:date
  :user-agent:mime-version:in-reply-to:content-language
  :content-transfer-encoding;
- bh=xew2Cqp055SEboMYSD4xaomAE75lVTjIUs6xXR179/0=;
- b=FHRvBiFuIHnRCGRczaJShHL2u+zwFeTq/xCuQr/nzhCfBGzzshylh6SbyX+D8TGzea
- hzzXImYpjtYKE5amt+FxQ5MboXLCn1UKAY0/iKPsafk3G0AWl2+9A2TFxCjbxvrF7BHW
- QcS6mcLJMfCLxJjUY10S1HiK4D757exT1yM6qTzSWmkutYNo2WjN8pPnpiB1+pB7volv
- moSwmtIZJAKCfb2Oc/CFB9uec+JROaltqo+s+APQFjcXvZZWgmUVwvMmGGU8WVywUYKN
- Iuahx6rASSJ2U4Ny1VHA1vVNfg0YtiaWbCxGuAUK53eOfrhqBfRnBiKZ42BRUqKuR0QT
- FqJw==
-X-Gm-Message-State: AOAM5338rBN4JIdKZjEQwlUSHUNHXnYtvZnYsoDEY6uyGFCXYkFxqAS+
- sLuqjl9Eia0lS/SEh1ihikU=
-X-Google-Smtp-Source: ABdhPJwzquROKMLegjco20qGn59bJ5syteqkBCE5kUqtvcwMyaDc2geIlDVH3Sdsrj2dMslo6mBkrQ==
-X-Received: by 2002:ac8:5e51:: with SMTP id i17mr19299qtx.339.1633719704376;
- Fri, 08 Oct 2021 12:01:44 -0700 (PDT)
-Received: from [192.168.1.49] (c-67-187-90-124.hsd1.ky.comcast.net.
+ bh=dzA351pjnS7pL1FBPqgBtwcMIqRPM9/An2JZIEmCn84=;
+ b=omPEsMNng1WD5Po3NwvdOjQdWHVzmmoDTkQUC+Gfd85wTkY19QMLfUQR9W+Akd0onq
+ zE0d3tD+l2ZbljFGvQvaz+KkGuMyPNLU51q0kal7+ohIeZQBrzk5fA3dLphSfIzsOr4Z
+ Jaw1nF77p60i663GW4JGHiKbFZZesUlQuurXoHLHOZPGEtVnB2VJd1ksD1LJRZe0iRCi
+ lwmDQdCC9PlFYL88AihbSBpcti9powGxJ2FA95Z7xuodfsapWLkLewMF3caS0rL6q9it
+ FEQYt5Esh5A91gJdTjuULYDmDaEXCuncCeDRZe8KfgAnycNrxmhhHnwTLRtQGRjRpYWw
+ XdIw==
+X-Gm-Message-State: AOAM530BMXBvbiadxorqY31/ynanKozhs46XtaTsflvF9P8olIGnr36C
+ PjmNZU6lG+zhPZlPkb6ZE0E=
+X-Google-Smtp-Source: ABdhPJzHhRVfzmEtnZpeTiZIR469U2aJ3PVvupJRZdEFmGDXTWO5fCW7fjSd4a64UhtTIhQs5SPQRg==
+X-Received: by 2002:ac8:42d6:: with SMTP id g22mr144984qtm.17.1633720751242;
+ Fri, 08 Oct 2021 12:19:11 -0700 (PDT)
+Received: from [192.168.1.49] (c-67-187-90-124.hsd1.tn.comcast.net.
  [67.187.90.124])
- by smtp.gmail.com with ESMTPSA id f15sm101193qtf.66.2021.10.08.12.01.43
+ by smtp.gmail.com with ESMTPSA id i11sm224719qki.28.2021.10.08.12.19.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Oct 2021 12:01:44 -0700 (PDT)
-Subject: Re: [PATCH 7/9] of: make OF_DYNAMIC selectable independently of
- OF_UNITTEST
+ Fri, 08 Oct 2021 12:19:10 -0700 (PDT)
+Subject: Re: [PATCH 6/9] of: add support for 'dynamic' DT property
+From: Frank Rowand <frowand.list@gmail.com>
 To: Zev Weiss <zev@bewilderbeest.net>, openbmc@lists.ozlabs.org
 References: <20211007000954.30621-1-zev@bewilderbeest.net>
- <20211007000954.30621-8-zev@bewilderbeest.net>
-From: Frank Rowand <frowand.list@gmail.com>
-Message-ID: <288e4900-c23c-56ee-5c23-9a51cd3f315e@gmail.com>
-Date: Fri, 8 Oct 2021 14:01:43 -0500
+ <20211007000954.30621-7-zev@bewilderbeest.net>
+ <7bf5cfce-e84d-f0e8-e6e8-8e6fedffd154@gmail.com>
+Message-ID: <e6803838-6a02-9f67-bd09-35e5cb6aa906@gmail.com>
+Date: Fri, 8 Oct 2021 14:19:10 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20211007000954.30621-8-zev@bewilderbeest.net>
+In-Reply-To: <7bf5cfce-e84d-f0e8-e6e8-8e6fedffd154@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -93,41 +93,143 @@ Cc: devicetree@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/6/21 7:09 PM, Zev Weiss wrote:
-> The writable status sysfs file enabled by the 'dynamic' DT property
-> requires CONFIG_OF_DYNAMIC to be useful, but that shouldn't require
-> dragging in CONFIG_OF_UNITTEST as well.
+On 10/8/21 1:51 PM, Frank Rowand wrote:
+> On 10/6/21 7:09 PM, Zev Weiss wrote:
+>> Nodes marked with this (boolean) property will have a writable status
+>> sysfs file, which can be used to toggle them between "okay" and
+>> "reserved", effectively hot-plugging them.  Note that this will only
+>> be effective for devices on busses that register for OF reconfig
+>> notifications (currently spi, i2c, and platform), and only if
+>> CONFIG_OF_DYNAMIC is enabled.
+>>
+>> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+>> ---
+>>  drivers/of/kobj.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 69 insertions(+)
+>>
+>> diff --git a/drivers/of/kobj.c b/drivers/of/kobj.c
+>> index 378cb421aae1..141ae23f3130 100644
+>> --- a/drivers/of/kobj.c
+>> +++ b/drivers/of/kobj.c
+>> @@ -36,6 +36,69 @@ static ssize_t of_node_property_read(struct file *filp, struct kobject *kobj,
+>>  	return memory_read_from_buffer(buf, count, &offset, pp->value, pp->length);
+>>  }
+>>  
+>> +static ssize_t of_node_status_write(struct file *filp, struct kobject *kobj,
+>> +                                    struct bin_attribute *bin_attr, char *buf,
+>> +                                    loff_t offset, size_t count)
+>> +{
+>> +	int rc;
+>> +	char *newstatus;
+>> +	struct property **deadprev;
+>> +	struct property *newprop = NULL;
+>> +	struct property *oldprop = container_of(bin_attr, struct property, attr);
+>> +	struct device_node *np = container_of(kobj, struct device_node, kobj);
+>> +
+>> +	if (WARN_ON_ONCE(strcmp(oldprop->name, "status")))
+>> +		return -EIO;
+>> +
+>> +	if (offset)
+>> +		return -EINVAL;
+>> +
+>> +	if (sysfs_buf_streq(buf, count, "okay") || sysfs_buf_streq(buf, count, "ok"))
+>> +		newstatus = "okay";
+>> +	else if (sysfs_buf_streq(buf, count, "reserved"))
+>> +		newstatus = "reserved";
+>> +	else if (sysfs_buf_streq(buf, count, "disabled"))
+>> +		newstatus = "disabled";
+>> +	else
+>> +		return -EINVAL;
+>> +
+>> +	if (!strcmp(newstatus, oldprop->value))
+>> +		return count;
+>> +
 > 
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> ---
->  drivers/of/Kconfig | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+> If the general approach of this patch set is the correct way to provide the desired
+> functionality (I'm still pondering that), then a version of the following code
+> probably belongs in drivers/of/dynamic.c so that it is easier to maintain and keep
+> consistent with other dynamic devicetree updates.  If you look at the code there
+> that touches deadprops (eg __of_changeset_entry_apply()) you will notice that the
+> locking issues are more extensive than what is implemented here.
 > 
-> diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
-> index 3dfeae8912df..8e0ba87db030 100644
-> --- a/drivers/of/Kconfig
-> +++ b/drivers/of/Kconfig
-> @@ -55,12 +55,14 @@ config OF_KOBJ
->  # Hardly any platforms need this.  It is safe to select, but only do so if you
->  # need it.
->  config OF_DYNAMIC
-> -	bool "Support for dynamic device trees" if OF_UNITTEST
-> +	bool "Support for dynamic device trees"
->  	select OF_KOBJ
->  	help
->  	  On some platforms, the device tree can be manipulated at runtime.
-> -	  While this option is selected automatically on such platforms, you
-> -	  can enable it manually to improve device tree unit test coverage.
-> +	  With this option enabled, device tree nodes that are marked with
-> +	  the "dynamic" property can have their status toggled between
-> +	  "okay" and "reserved" via sysfs.  This can also be enabled to
-> +	  increase test coverage with CONFIG_OF_UNITTEST if desired.
->  
->  config OF_ADDRESS
->  	def_bool y
+> I'm still thinking about how this interacts with other forms of dynamic devicetree
+> changes (eg drivers/of/dynamic.c and also overlays).
+> 
+>> +	/*
+>> +	 * of_update_property_self() doesn't free replaced properties, so
+>> +	 * rifle through deadprops first to see if there's an equivalent old
+>> +	 * status property we can reuse instead of allocating a new one.
+>> +	 */
+>> +	mutex_lock(&of_mutex);
+>> +	for (deadprev = &np->deadprops; *deadprev; deadprev = &(*deadprev)->next) {
+>> +		struct property *deadprop = *deadprev;
+>> +		if (!strcmp(deadprop->name, "status") &&
+>> +		    deadprop->length == strlen(newstatus) + 1 &&
+>> +		    !strcmp(deadprop->value, newstatus)) {
+>> +			*deadprev = deadprop->next;
+>> +			deadprop->next = NULL;
+>> +			newprop = deadprop;
+>> +			break;
+>> +		}
+>> +	}
+>> +	mutex_unlock(&of_mutex);
+>> +
+>> +	if (!newprop) {
+>> +		newprop = kzalloc(sizeof(*newprop), GFP_KERNEL);
+>> +		if (!newprop)
+>> +			return -ENOMEM;
+>> +
+>> +		newprop->name = oldprop->name;
+>> +		newprop->value = newstatus;
+>> +		newprop->length = strlen(newstatus) + 1;
+>> +	}
+>> +
+>> +	rc = of_update_property_self(np, newprop, true);
+> 
+> -Frank
+> 
+>> +
+>> +	return rc ? rc : count;
+>> +}
+>> +
+>>  /* always return newly allocated name, caller must free after use */
+>>  static const char *safe_name(struct kobject *kobj, const char *orig_name)
+>>  {
+>> @@ -79,6 +142,12 @@ int __of_add_property_sysfs(struct device_node *np, struct property *pp)
+>>  	pp->attr.size = secure ? 0 : pp->length;
+>>  	pp->attr.read = of_node_property_read;
+>>  
+>> +	if (!strcmp(pp->name, "status") && of_property_read_bool(np, "dynamic")) {
+>> +		pp->attr.attr.mode |= 0200;
+>> +		pp->attr.write = of_node_status_write;
+>> +		pp->attr.growable = true;
+>> +	}
+
+This isn't (yet) a request for a change to the patch, but more exposing a
+potential issue of interaction with overlays.
+
+The current in tree instances of updating a property value are fairly
+limited.  Adding a userspace interface to update a property value
+(although limited to only a node's status value) has me thinking about
+the interaction with dynamic devicetree updates (of/overlay/dynamic.c)
+and also overlays.
+
+If a node exists in a base devicetree, containing only the property
+"status", then an overlay subsequently populates the node with a
+"dynamic" property then the sysfs status file will not be updated
+to be writable.  If we do not allow an overlay to add a property
+to an existing node, then not an issue.  But we have not created
+such overlay rules yet.
+
+Again, not a request for a change to this patch yet, just leaving
+a breadcrumb for myself.
+
+-Frank
+
+>> +
+>>  	rc = sysfs_create_bin_file(&np->kobj, &pp->attr);
+>>  	WARN(rc, "error adding attribute %s to node %pOF\n", pp->name, np);
+>>  	return rc;
+>>
 > 
 
-The help message should be extended to explain the impact of enabling
-OF_DYNAMIC manually (as opposed to auto selected) - it will be to
-allow writes to a node's "status" property in sysfs if the node contains
-a true value for the "dynamic" property.
