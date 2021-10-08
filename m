@@ -2,61 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C2D4425CDD
-	for <lists+openbmc@lfdr.de>; Thu,  7 Oct 2021 22:04:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E232E4263A2
+	for <lists+openbmc@lfdr.de>; Fri,  8 Oct 2021 06:23:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HQMjN25pzz305c
-	for <lists+openbmc@lfdr.de>; Fri,  8 Oct 2021 07:04:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HQZmk5PDSz2ypj
+	for <lists+openbmc@lfdr.de>; Fri,  8 Oct 2021 15:23:02 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Nml8N5qq;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=VzzPzDQV;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=robh+dt@kernel.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=Nml8N5qq; 
- dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f32;
+ helo=mail-qv1-xf32.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=VzzPzDQV; dkim-atps=neutral
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com
+ [IPv6:2607:f8b0:4864:20::f32])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HQMhv2HLjz2ymF;
- Fri,  8 Oct 2021 07:03:59 +1100 (AEDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 624A06121F;
- Thu,  7 Oct 2021 20:03:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1633637036;
- bh=tQrT1H6vAX9nQCz4/UDBS/7Ka8j9BQl8nLNXbURKSDI=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=Nml8N5qqjVN6g8w0QWjm28r40muERJvTDBtJlVP//mHm4s0tHUFPuxt57uMWKSCEQ
- yMH4MD9jY75zoV+M+Q71r/nRh0VUlXT1gmXy0wsBUG5BVjlWlb+Vy6iZvIKP0c8yWU
- rV8rKO/kskkzqUqKzNPluHfavLiBrTtaKK3CLm9BR1bgX5d2RDNl81xjt+R0fwf6sZ
- cHw6kcBLirU68a4v8+HKgirdWl4e+HhtVjlIzQjucZu73aGzjf/djJ0w5amLvEaqwN
- 414d2CXmVLxr5XLDm5AGVPJfUvoEPcmduqXkSi2hdncHKLfXUcIBp6R6dtLtrz1e7S
- mcpMSf7yuR4sA==
-Received: by mail-ed1-f48.google.com with SMTP id g10so26614505edj.1;
- Thu, 07 Oct 2021 13:03:56 -0700 (PDT)
-X-Gm-Message-State: AOAM532HUft3maT9iNFe1R6t8lRUqyAmvxtY8F6ueStCbN4xOFYp08KF
- UZbA2HG9oEmNGDctxNvOIAFUqHyN2LRVpOQvGw==
-X-Google-Smtp-Source: ABdhPJy8X406aFLvUmYkMkdUnIEqcALE1K/+nEQVAeFie0M4tlomNRuuYu3oyJV5PQ2EW4dv9srP6exyuQeR2iodti4=
-X-Received: by 2002:a17:907:7d8b:: with SMTP id
- oz11mr8581991ejc.84.1633637034696; 
- Thu, 07 Oct 2021 13:03:54 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HQZmG28qkz2ynk;
+ Fri,  8 Oct 2021 15:22:37 +1100 (AEDT)
+Received: by mail-qv1-xf32.google.com with SMTP id cv2so5626989qvb.5;
+ Thu, 07 Oct 2021 21:22:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=hzFQ+A2U60uu6SvNGVBqAvYNQ5Q6B46iZBnqQlLHj1M=;
+ b=VzzPzDQV+Rnew/7Wal3mIc7Cbs/MJZaFsvG+EA/fmz8X1DnTu47KPTloiCw9NuE6Gy
+ 1DktJGo4aniRIVQxyyVlDS8t0dGFDvNXpgs7sQ7ZxkMHIKFCNo8QMXXHqv4fYi+jZBc+
+ 7rbBms8EVfe7ED0JUGB/W7nhsqqw4+zPrEhio=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=hzFQ+A2U60uu6SvNGVBqAvYNQ5Q6B46iZBnqQlLHj1M=;
+ b=O/Euw98wn9olXdOLlfVHkbVOfvU2Z9+TYpsuzM3zJ4XeVByEhQosMI+6HZPS/EzO9p
+ H1b76idVoUukqMGqAnb3OAhV1qVzx/1Dg3fQSKFHJqmc/+9c3+wj2N38W6tejDfQmhxd
+ TAO/E67V28z2opPrKRORSs3tmKLeBvo39YWPeHeN0xFU3UoHFGpZFOKTVgONI7MzKqa1
+ KghRw7fHwp7y7hM4hXZQV03z8ucBKQ8eL0HObChUZYdqji+Y8xU8zMpFGy2kE/3uJmzq
+ GJVbmRGXMd/Dz3RRQTMrw44qfEA64JNzKaopElSXjEIjDaQdg6XZdjcc5/RrfemhEEJA
+ ztWQ==
+X-Gm-Message-State: AOAM532DMR5FbeJmlI0sfSmPbnM06lLbEJfgTDLObhzcmtKU1o0tKHh6
+ YL7g5yMngOoCd7q1ktSdPPPbVxj/M+NeiDoPI+0=
+X-Google-Smtp-Source: ABdhPJyn7kxRjcwMEZhm6yPesmo9KHZuxqioSEsVuMTVQFDf85q7ttZJWPAo9Qq9ejrNShFgysFVRFukeJu/CuenlDU=
+X-Received: by 2002:a05:6214:98d:: with SMTP id
+ dt13mr7861750qvb.13.1633666953691; 
+ Thu, 07 Oct 2021 21:22:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20211007000954.30621-1-zev@bewilderbeest.net>
- <CAHp75VdYBB_FaMr-uKswdvDBdobTYZkiE6ncoALuG+YYVoMwyw@mail.gmail.com>
- <YV64ZbcsHvBObH2j@hatter.bewilderbeest.net> <YV7Miz9RMMx/17A0@kroah.com>
- <YV8VGeMreR6NJad4@hatter.bewilderbeest.net>
-In-Reply-To: <YV8VGeMreR6NJad4@hatter.bewilderbeest.net>
-From: Rob Herring <robh+dt@kernel.org>
-Date: Thu, 7 Oct 2021 15:03:43 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLk-CqKVgWp3=XccHrCdQgdGoezB6=HAXMDe1Q5R4-0HA@mail.gmail.com>
-Message-ID: <CAL_JsqLk-CqKVgWp3=XccHrCdQgdGoezB6=HAXMDe1Q5R4-0HA@mail.gmail.com>
-Subject: Re: [PATCH 0/9] Dynamic DT device nodes
-To: Zev Weiss <zev@bewilderbeest.net>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+References: <20211005192226.213539-1-anoo@linux.ibm.com>
+In-Reply-To: <20211005192226.213539-1-anoo@linux.ibm.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 8 Oct 2021 04:22:21 +0000
+Message-ID: <CACPK8XdnMfDD6FHOuwyxz5S-wzaY1uSBEso6ov6OKQ0r2H7cTg@mail.gmail.com>
+Subject: Re: [PATCH v3] ARM: dts: aspeed: rainier: Add power-config-full-load
+ gpio
+To: Adriana Kobylak <anoo@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -69,104 +72,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-aspeed@lists.ozlabs.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Vetter <daniel.vetter@ffwll.ch>, Jeremy Kerr <jk@codeconstruct.com.au>,
- Francis Laniel <laniel_francis@privacyrequired.com>,
- Frank Rowand <frowand.list@gmail.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Andy Shevchenko <andy.shevchenko@gmail.com>,
- Andrey Konovalov <andreyknvl@gmail.com>, Alexey Dobriyan <adobriyan@gmail.com>,
- devicetree <devicetree@vger.kernel.org>, Kees Cook <keescook@chromium.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Dan Williams <dan.j.williams@intel.com>,
- linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
- Daniel Axtens <dja@axtens.net>, Andy Shevchenko <andy@kernel.org>,
- Andrew Jeffery <andrew@aj.id.au>, Nick Desaulniers <ndesaulniers@google.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>,
- Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Matt Spinler <spinler@us.ibm.com>, Derek Howard <derekh@us.ibm.com>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Adriana Kobylak <anoo@us.ibm.com>,
+ Eddie James <eajames@linux.ibm.com>, Brandon Wyman <bjwyman@gmail.com>,
+ shawnmm@us.ibm.com, Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Oct 7, 2021 at 10:41 AM Zev Weiss <zev@bewilderbeest.net> wrote:
+Hi Adriana,
+
+On Tue, 5 Oct 2021 at 19:22, Adriana Kobylak <anoo@linux.ibm.com> wrote:
 >
-> On Thu, Oct 07, 2021 at 03:31:39AM PDT, Greg Kroah-Hartman wrote:
-> >On Thu, Oct 07, 2021 at 02:05:41AM -0700, Zev Weiss wrote:
-> >> On Thu, Oct 07, 2021 at 12:04:41AM PDT, Andy Shevchenko wrote:
-> >> > On Thu, Oct 7, 2021 at 3:10 AM Zev Weiss <zev@bewilderbeest.net> wrote:
-> >> > > This patch series is in some ways kind of a v2 for the "Dynamic
-> >> > > aspeed-smc flash chips via 'reserved' DT status" series I posted
-> >> > > previously [0], but takes a fairly different approach suggested by Rob
-> >> > > Herring [1] and doesn't actually touch the aspeed-smc driver or
-> >> > > anything in the MTD subsystem, so I haven't marked it as such.
-> >> > >
-> >> > > To recap a bit of the context from that series, in OpenBMC there's a
-> >> > > need for certain devices (described by device-tree nodes) to be able
-> >> > > to be attached and detached at runtime (for example the SPI flash for
-> >> > > the host's firmware, which is shared between the BMC and the host but
-> >> > > can only be accessed by one or the other at a time).
-> >> >
-> >> > This seems quite dangerous. Why do you need that?
-> >>
-> >> Sometimes the host needs access to the flash (it's the host's firmware,
-> >> after all), sometimes the BMC needs access to it (e.g. to perform an
-> >> out-of-band update to the host's firmware).  To achieve the latter, the
-> >> flash needs to be attached to the BMC, but that requires some careful
-> >> coordination with the host to arbitrate which one actually has access to it
-> >> (that coordination is handled by userspace, which then tells the kernel
-> >> explicitly when the flash should be attached and detached).
-> >>
-> >> What seems dangerous?
-> >>
-> >> > Why can't device tree overlays be used?
-> >>
-> >> I'm hoping to stay closer to mainline.  The OpenBMC kernel has a documented
-> >> policy strongly encouraging upstream-first development:
-> >> https://github.com/openbmc/docs/blob/master/kernel-development.md
-> >>
-> >> I doubt Joel (the OpenBMC kernel maintainer) would be eager to start
-> >> carrying the DT overlay patches; I'd likewise strongly prefer to avoid
-> >> carrying them myself as additional downstream patches.  Hence the attempt at
-> >> getting a solution to the problem upstream.
-> >
-> >Then why not work to get device tree overlays to be merged properly?
-
-TBC, it's 'just' the general purpose userspace interface to apply
-overlays that's missing.
-
-I did suggest what's done here as overlays are kind of an overkill for
-this usecase. Much easier to write to a sysfs file than write an
-overlay, compile it with dtc, and provide it to the kernel all just to
-enable a device.
-
-Perhaps this could also be supported in the driver model directly.
-Given the "what about ACPI question", that is probably what should be
-done unless the answer is we don't care. I think we'd just need a flag
-to create devices, but not bind automatically. Or maybe abusing
-driver_override can accomplish that.
-
-> >Don't work on a half-of-a-solution when the real solution is already
-> >here.
-> >
+> From: Adriana Kobylak <anoo@us.ibm.com>
 >
-> I had been under the impression that the overlay patches had very dim
-> prospects of ever being accepted and that this might be a more tractable
-> alternative, but apparently was mistaken -- I'll look into what the
-> outstanding issues were with that and perhaps take a stab at addressing
-> them.
+> Add the power-config-full-load described in:
+> https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md#power-config-full-load
+>
+> The power-config-full-load gpio is designed to be used to specify how
+> many power supplies the system should have, in rainier it is 2 or 4.  If
+> enough power supplies fail so that the system no longer has redundancy
+> (no longer n+1), the hardware will signal to the Onboard Chip Controller
+> that the system may be oversubscribed, and performance may need to be
+> reduced so the system can maintain it's powered on state.
+>
+> Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
 
-What's dim is the patches allowing any modification to any part of the
-DT. Any changes to a DT need to work (i.e. have some effect). For
-example, randomly changing/adding/removing properties wouldn't have
-any effect because they've probably already be read and used.
+This looks good. I think the name is much easier to understand now.
 
-What I've suggested before is some sort of registration of nodes
-allowed to apply child nodes and properties to. That would serve the
-add-on board usecases which have been the main driver of this to date.
-That also got hung up on defining interface nodes to add-on boards.
-Your scope is more limited and can be limited to that scope while
-using the same configfs interface.
+I notice you've dropped all of the other names. Do you not need them?
 
-Rob
+It would be great if one of the people you cc'd could provide a
+reviewed-by before I merge this.
+
+Cheers,
+
+Joel
+
+> ---
+>
+> v2: Update commit message.
+> v3: Updated gpio name to power-config-full-load to match design doc.
+>
+>  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+>
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> index 33fae8ad1305..10bde77fb847 100644
+> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> @@ -1998,6 +1998,19 @@ eeprom@51 {
+>                 reg = <0x51>;
+>         };
+>
+> +       pca_pres3: pca9552@60 {
+> +               compatible = "nxp,pca9552";
+> +               reg = <0x60>;
+> +               #address-cells = <1>;
+> +               #size-cells = <0>;
+> +               gpio-controller;
+> +               #gpio-cells = <2>;
+> +
+> +               gpio-line-names =
+> +                       "", "", "", "", "", "", "", "",
+> +                       "", "", "", "", "", "", "power-config-full-load", "";
+> +       };
+> +
+>         pca_pres2: pca9552@61 {
+>                 compatible = "nxp,pca9552";
+>                 reg = <0x61>;
+> --
+> 2.25.1
+>
