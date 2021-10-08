@@ -2,54 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A4E0426433
-	for <lists+openbmc@lfdr.de>; Fri,  8 Oct 2021 07:45:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC6264265F5
+	for <lists+openbmc@lfdr.de>; Fri,  8 Oct 2021 10:32:34 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HQccH05CPz301s
-	for <lists+openbmc@lfdr.de>; Fri,  8 Oct 2021 16:45:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HQhJc52tPz2ywj
+	for <lists+openbmc@lfdr.de>; Fri,  8 Oct 2021 19:32:32 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lrh9ADDM;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=AjbMzcsO;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linuxfoundation.org (client-ip=198.145.29.99;
- helo=mail.kernel.org; envelope-from=gregkh@linuxfoundation.org;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12a;
+ helo=mail-lf1-x12a.google.com; envelope-from=mine260309@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
- header.a=rsa-sha256 header.s=korg header.b=lrh9ADDM; 
- dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=AjbMzcsO; dkim-atps=neutral
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com
+ [IPv6:2a00:1450:4864:20::12a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HQcbs1v9Mz2xtc;
- Fri,  8 Oct 2021 16:45:29 +1100 (AEDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E6609610E5;
- Fri,  8 Oct 2021 05:45:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1633671926;
- bh=hM+LEo6jq0sP4p14rwXKnhJUAnXreXijp/k9Sn8qwVQ=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=lrh9ADDMfDgO+XapsVQdMVRnXrY8BIE5LKdZ6yUKCkAYaoI3jsMK8yGMPKTKmlUWK
- uIaGV774meo9+ScIbEyyEZlq9Y1h5SR0xThd/YS9MaUAigJOpmn4cSFyS0tuGwaar3
- w0azjLgyNDYW4wJUiJmnTiLjYn93wgDLlpmDltP4=
-Date: Fri, 8 Oct 2021 07:45:22 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH v3] media: aspeed-video: ignore interrupts that aren't
- enabled
-Message-ID: <YV/a8k2vI8TjJR2z@kroah.com>
-References: <20210617220229.7352-1-zev@bewilderbeest.net>
- <46edf81d60a38747f7d2511f840253a1c6867652.camel@linux.ibm.com>
- <HK0PR06MB338081E134AA6F43ECBCBA4DF2D29@HK0PR06MB3380.apcprd06.prod.outlook.com>
- <CACPK8XfE6zB9BWYq7e8WbXkPFp2Cicwv2x2dc8h6jNaR2qZV0g@mail.gmail.com>
- <YVNlfwLUDNxtp0fs@hatter.bewilderbeest.net>
- <CACPK8Xfowe6k8KOucveUd-O3vMC4n7qyF8uoowcpWj-Sugqhbw@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HQhJ94WWrz2yPK
+ for <openbmc@lists.ozlabs.org>; Fri,  8 Oct 2021 19:32:08 +1100 (AEDT)
+Received: by mail-lf1-x12a.google.com with SMTP id b20so36609461lfv.3
+ for <openbmc@lists.ozlabs.org>; Fri, 08 Oct 2021 01:32:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=eQkKCv8aCOoMPrvXV0bT5NWn7gWtgADL5O+JTFntAss=;
+ b=AjbMzcsOdo3rAaoddydDHQAUKq5ik6eiIPwgPlCdZHafIBZQn2V4RSCDlBz9ekU2G3
+ 2khONs+W/6r5FQRu82Q38u9yr8Eja7n9oOoBpqEjG8VQkAigKTR3IdKZY/ZvmzCNljuH
+ 4s8Ew2RcHrLr4EQ6wvCN20RiuboMvgQljvsaSBoe7nGPAHsUXxRcjAdRltljEml0FoQC
+ 2zurzpX9GU5OvUxJY+CRhS6o8/0evKo2UtxdoX9Aov+DdJH2Ky61c1tBvKWhG6RkrYEC
+ 95xAOdiadpmZ8Ja2GCXZehwN7UbvNixdJ9mHa5MNusnFQGKuV8bRPbCQvVH80hnKkVdt
+ 4d6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=eQkKCv8aCOoMPrvXV0bT5NWn7gWtgADL5O+JTFntAss=;
+ b=o4I040Hb7+nFR1WeyoCZs9a4fT3yOeZZ1ys56JLBGVbNNdqQ/9dKKE/7R1WjuaUogC
+ KrltjJ0QM/exkVnE/5+LrKVjnnOW201rHYOhxl7bMVcA4Xjsq9Q0xXJkdoNKn1X4BHWW
+ IGmoiwV0bNJkzhllaa01zxLWw84VNb5KX37wH6FHMB+HcECbOkxnPXUyp4GT+S3GLmae
+ XacuuZyVjAKdrXhwYWD5e6ngeofjSOCbA6pMjINe1TtCsHgGwkmgfEn1Aup7Ju6T9XyU
+ ZVNvFjhEK9z2KrOcPfy2SsWubge+0tDc8FsavY96ycR2iX0m4U0sXHpShp6yYam4uPnG
+ uHpg==
+X-Gm-Message-State: AOAM531Txe/8hQOidbPYRPARGmbb8MzjvJHoKZda+eH2NfiQEpiOabT2
+ VDoij09NYUohjTFX7eeoD9XyyAhnN07ksJMQNys=
+X-Google-Smtp-Source: ABdhPJwTgHaMZAu46MJe/H6NmropA9rUQ68gTQzIJwK8djs71Hi8NyItWVGZ6DESae58xHcYroF27J5mSMXxn5UoR/E=
+X-Received: by 2002:a05:6512:398d:: with SMTP id
+ j13mr3990865lfu.292.1633681919358; 
+ Fri, 08 Oct 2021 01:31:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACPK8Xfowe6k8KOucveUd-O3vMC4n7qyF8uoowcpWj-Sugqhbw@mail.gmail.com>
+References: <CAH2-KxDe6hR1V-Lz1k8cdD11jEquy4UhR4LfLhg37E5EG42EJg@mail.gmail.com>
+ <67dbec1b-8598-8814-e85e-848b2eb123cf@yadro.com>
+ <CAH2-KxDT9DTXp99d+eV-zNinLWhw9ihaHVLNQnVsQtB7X2ZkHQ@mail.gmail.com>
+ <a40d7b9c-8fb1-bf5c-1c31-3b426c0f0fa2@amperemail.onmicrosoft.com>
+ <CAGm54UGjh9QTAw_mPdPCpZ7WihTHYXRe0m=xCWrPmpvDb99p3Q@mail.gmail.com>
+ <CAH2-KxBpQbmBAedd63-1KORd9Z81D-gWM7oqQPU05Q=4S5XYzQ@mail.gmail.com>
+ <CAGm54UF82Xx_N0g2d0sOx8Yt0vZ--+eAk18cS_68nt2RPoL=pA@mail.gmail.com>
+In-Reply-To: <CAGm54UF82Xx_N0g2d0sOx8Yt0vZ--+eAk18cS_68nt2RPoL=pA@mail.gmail.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Fri, 8 Oct 2021 16:32:00 +0800
+Message-ID: <CAARXrtnhAirRLo3EWM5=3KhjJWaWq1kPTeZ2=Yuec43Ebp1Y9g@mail.gmail.com>
+Subject: Re: [External] Re: New test for patches in openbmc/openbmc
+To: Lei Yu <yulei.sh@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,69 +80,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ryan Chen <ryan_chen@aspeedtech.com>, Zev Weiss <zev@bewilderbeest.net>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>
+Cc: Ed Tanous <edtanous@google.com>, openbmc <openbmc@lists.ozlabs.org>,
+ Thang Nguyen <thang@amperemail.onmicrosoft.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Oct 08, 2021 at 04:43:24AM +0000, Joel Stanley wrote:
-> Hi Greg,
-> 
-> On Tue, 28 Sept 2021 at 18:57, Zev Weiss <zev@bewilderbeest.net> wrote:
+It's noticed that the `repotest` is enabled in CI and we got CI
+failure due to node-manager's patch:
+https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/47673
+
+I know the right way is to ask Intel to upstream the node-manager and
+fix the issues we met.
+But in reality it's not easy and it takes time for Intel to upstream a
+repo (and it depends on Intel to decide whether or not to upstream)
+
+@Ed Do we really want to reject such patches?
+
+On Tue, Sep 28, 2021 at 4:37 PM Lei Yu <yulei.sh@bytedance.com> wrote:
+>
+> > > I have a similar case.
+> > > As an x86 system, some of the recipes/changes are referenced from
+> > > Intel-BMC, which is not upstreamed.
+> > > Currently, we had patches related to UART routing and
+> > > phosphor-node-manager-proxy.
+> > > The UART routing patches are being upstreamed thanks to Troy.
+> > > The change to node-manager is related to the HW design difference, and
+> > > due to the fact that phosphor-node-manager-proxy is in Intel-BMC, we
+> > > can not really make the patch upstream.
 > >
-> > On Mon, Sep 06, 2021 at 04:47:14AM PDT, Joel Stanley wrote:
-> > >Hi Mauro,
-> > >
-> > >On Mon, 6 Sept 2021 at 10:10, Ryan Chen <ryan_chen@aspeedtech.com> wrote:
-> > >> > Subject: Re: [PATCH v3] media: aspeed-video: ignore interrupts that aren't
-> > >> > enabled
-> > >> >
-> > >> > On Thu, 2021-06-17 at 17:02 -0500, Zev Weiss wrote:
-> > >> > > As partially addressed in commit 65d270acb2d6 ("media: aspeed: clear
-> > >> > > garbage interrupts"), the ASpeed video engine sometimes asserts
-> > >> > > interrupts that the driver hasn't enabled.  In addition to the
-> > >> > > CAPTURE_COMPLETE and FRAME_COMPLETE interrupts dealt with in that
-> > >> > > patch, COMP_READY has also been observed.  Instead of playing
-> > >> > > whack-a-mole with each one individually, we can instead just blanket
-> > >> > > ignore everything we haven't explicitly enabled.
-> > >> >
-> > >> > Suspect this will fix an intermittent problem on AST2500 with screensaver.
-> > >> > Change looks good, thanks!
-> > >> >
-> > >> > Reviewed-by: Eddie James <eajames@linux.ibm.com>
-> > >> >
-> > >> Reviewed-by: Ryan Chen <ryan_chen@aspeedtech.com>
-> > >> > >
-> > >> > > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> > >
-> > >I notice this wasn't merged in the pull request you sent for v5.15.
-> > >Would you be able to ensure it makes it in the next pull request you
-> > >send?
-> > >
-> > >It can have some fixes tags too:
-> > >
-> > >Fixes: 65d270acb2d6 ("media: aspeed: clear garbage interrupts")
-> > >Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
-> > >Acked-by: Joel Stanley <joel@jms.id.au>
-> > >
-> > >Cheers,
-> > >
-> > >Joel
-> > >
-> >
-> > Also not in the recent merge of the media/v5.15-2 tag it looks like -- ping?
-> 
-> We're struggling to get a hold of the media maintainers to merge this
-> fix. Have you heard from them recently?
-
-I have seen them on the mailing list, yes.
-
-good luck!
-
-greg k-h
+> > I'm not following why that's preventing upstreaming.  If
+> > node-manager-proxy is something you need on your systems, I don't see
+> > a reason why we would avoid cleaning it up and upstreaming it, but I
+> > have no details on what this patch is, or what it does, so it's really
+> > hard to talk in concrete terms about how to proceed next.
+>
+> node-manager-proxy is in Intel-BMC, so we really need Intel to
+> upstream it into openbmc.
+>
+> --
+> BRs,
+> Lei YU
