@@ -2,75 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A7DA426C94
-	for <lists+openbmc@lfdr.de>; Fri,  8 Oct 2021 16:13:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BDEB7426FA7
+	for <lists+openbmc@lfdr.de>; Fri,  8 Oct 2021 19:36:07 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HQqsY1tHqz2xZ2
-	for <lists+openbmc@lfdr.de>; Sat,  9 Oct 2021 01:13:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HQwMn4g1bz30R1
+	for <lists+openbmc@lfdr.de>; Sat,  9 Oct 2021 04:36:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=kLrvKJ4a;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=Z/GPBCG1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::229;
- helo=mail-oi1-x229.google.com; envelope-from=groeck7@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::434;
+ helo=mail-wr1-x434.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=kLrvKJ4a; dkim-atps=neutral
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com
- [IPv6:2607:f8b0:4864:20::229])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=Z/GPBCG1; dkim-atps=neutral
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com
+ [IPv6:2a00:1450:4864:20::434])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HQqs61MvKz2yx9
- for <openbmc@lists.ozlabs.org>; Sat,  9 Oct 2021 01:12:42 +1100 (AEDT)
-Received: by mail-oi1-x229.google.com with SMTP id n63so13901562oif.7
- for <openbmc@lists.ozlabs.org>; Fri, 08 Oct 2021 07:12:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=ec0UXnetl/cUzojliEKcqLDXOEMlqclKc/XRj4PNyXE=;
- b=kLrvKJ4aHZsTuO6lSocllGqMoHF5q/Tep3znQkD8Dx28796e+XZMG9mLO4Z9SEK8qM
- FsKe1gasVsBcasVNBeC+fvzi+5ljEzEwhyS4aQXdQ64mk941AhpqFs4X8T2Z1kGlqJ22
- NsHoST6THQvLjbZ+yQ9JScRRYx5PwUxDzmNAx4eqr4yhuTp2W9JVIaHuvgsehQIZwrKQ
- f4jYXhJNEJLCMh0g+DjPoEc0FzmnXThQr/Skulq2/iOXF2it9Pwp4XBxzbVSVIgG4ZGj
- Cka55QYrE4tOUqRYkCCbZM0KaxOIIwTqgO3BaimLABEHIJQrzb4NeUDilpaW0p8MEtlY
- 1KSw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HQwMM5hVMz2yxx
+ for <openbmc@lists.ozlabs.org>; Sat,  9 Oct 2021 04:35:41 +1100 (AEDT)
+Received: by mail-wr1-x434.google.com with SMTP id r7so31945529wrc.10
+ for <openbmc@lists.ozlabs.org>; Fri, 08 Oct 2021 10:35:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=nPTJSxY2QpM9V0qcdD8nbrJEJtr+sJZ/YbEyrztxVr8=;
+ b=Z/GPBCG1G2ZXFYO3T/dlm2mMiz8GEcm9vdgDzvVEoqitpcQ5JJssECRSaN+mW9fPv/
+ hBM2P6heShOhL60P9X0+G0ODEyeq7oHNDCMQeyJ31uTSCCsrTuTERUspNh7VpL0ojWWj
+ 6CSXaIUOecrQ4ehUP6WdZkueoSyny3rgk0sbk5cwJOPAhwpYz4NdRGTqToHCjV8btXQ3
+ VhqLHx3oR0nH30tdiGyDSnEWX3U6Osg5LxSoMhSHuVhSY80fWESflJL0xpwNoa/y/Csp
+ SrR2832lF7B8pCPlFYwh9CYwivfjelnC3FBLVWE4xEE7eRFm3Y0AAmSV2hBGNooX+8mU
+ iFcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition:in-reply-to;
- bh=ec0UXnetl/cUzojliEKcqLDXOEMlqclKc/XRj4PNyXE=;
- b=n7maQtLB/BMu6A/Avo5EL1ehkh2Goa+qFJPt90kVcwGMProzpOc97aD1q6aX3UF6rN
- VJVcjGJnL+4WXdT/OU3XGo3utzXwpp8ByEnJ3tGa/+Hu5U/QWX7b29IrCPkzPowAVL2I
- bfBtD1M0ppX/KN/OEVPjXqWdgfLgJMvQcsdsllijl93y8YZfmlKk/8Al9zCl3dlMFw8Q
- YD90V8bYsxC9VzEviMMIzAcWpbHgDB1ZLNgRDBfCa8hoH1fCXE3kYLcjXH3ZIXDhalUI
- 2uIb+IUVnUbBvuPyWkEiElxTfLxYx4+9rttLsxMhN0TolPRhDyATt4tdhJku/3AFW0VD
- fCpA==
-X-Gm-Message-State: AOAM532VojxRQ8cJb1BNHd3ys0Ae3FtBnxUAgaODG1IeERsENqoD30Yg
- lPH2NeviX+YnFaApUUX0AuTxiaGGKO4=
-X-Google-Smtp-Source: ABdhPJzOVTiNEosUQAjVv9QO0iXxPxGaeT/gqUshzEInrFSgqW3WwgCltkFL+EjuofaqHQf7o7y0Ug==
-X-Received: by 2002:a05:6808:1992:: with SMTP id
- bj18mr16600754oib.125.1633702357758; 
- Fri, 08 Oct 2021 07:12:37 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- d10sm514639ooj.24.2021.10.08.07.12.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Oct 2021 07:12:37 -0700 (PDT)
-Date: Fri, 8 Oct 2021 07:12:35 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Brandon Wyman <bjwyman@gmail.com>
-Subject: Re: [PATCH 2/2] hwmon: (pmbus/ibm-cffps) Use MFR_ID to choose version
-Message-ID: <20211008141235.GA2044602@roeck-us.net>
-References: <20211004144339.2634330-1-bjwyman@gmail.com>
- <20211004144339.2634330-2-bjwyman@gmail.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=nPTJSxY2QpM9V0qcdD8nbrJEJtr+sJZ/YbEyrztxVr8=;
+ b=DoLJfGYTBNHesb4BF622ugeDzJ1zf+FaxaFcDN2Ut0DY0+bQUY64qM3oG6duT053ie
+ 6kluGaNIG47Y5TFeMaO4gh7PwReOipxyd2vsXQ4d597azMBVCb3gZOgfzUjINYrhmqJz
+ KCR+QIYrdxAxafNAAhouata8I/AXrvxvbVEpP4zTNnQ2D3Zya17IooPC6WKmX9RcsXNU
+ 8gcp9dDYHg6Y/9/ZifBZcC8Ib8bwG4ULeBkBPTh9wAi/09TbCAPe0Q7yXPubXTwGdICH
+ fW3t/7BR/kG8zld2+e0/3QVWEaQ7zB669tCq/Y/n7C1JnVu0oOhTsQAFpomEYkgBUmQn
+ G7UQ==
+X-Gm-Message-State: AOAM530wVrC0nrneX2YhChEtBgNiHVT6IcJuqY9h+TatsArbY2RUkJov
+ 2Rfm2iNqBdbofOdAcyQ4JpQhxSNz9sFRb8imefYCjQ==
+X-Google-Smtp-Source: ABdhPJwhzeLqQtRe840W1eNXOF84RkOdDs1wgmpb5jM//t1hXllq7RMq+p7VPPX7QPbgTp0JtKqCfHlw4RnefNY9//A=
+X-Received: by 2002:adf:a3c3:: with SMTP id m3mr5760444wrb.83.1633714531494;
+ Fri, 08 Oct 2021 10:35:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211004144339.2634330-2-bjwyman@gmail.com>
+References: <CAH2-KxDe6hR1V-Lz1k8cdD11jEquy4UhR4LfLhg37E5EG42EJg@mail.gmail.com>
+ <67dbec1b-8598-8814-e85e-848b2eb123cf@yadro.com>
+ <CAH2-KxDT9DTXp99d+eV-zNinLWhw9ihaHVLNQnVsQtB7X2ZkHQ@mail.gmail.com>
+ <a40d7b9c-8fb1-bf5c-1c31-3b426c0f0fa2@amperemail.onmicrosoft.com>
+ <CAGm54UGjh9QTAw_mPdPCpZ7WihTHYXRe0m=xCWrPmpvDb99p3Q@mail.gmail.com>
+ <CAH2-KxBpQbmBAedd63-1KORd9Z81D-gWM7oqQPU05Q=4S5XYzQ@mail.gmail.com>
+ <CAGm54UF82Xx_N0g2d0sOx8Yt0vZ--+eAk18cS_68nt2RPoL=pA@mail.gmail.com>
+ <CAARXrtnhAirRLo3EWM5=3KhjJWaWq1kPTeZ2=Yuec43Ebp1Y9g@mail.gmail.com>
+In-Reply-To: <CAARXrtnhAirRLo3EWM5=3KhjJWaWq1kPTeZ2=Yuec43Ebp1Y9g@mail.gmail.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Fri, 8 Oct 2021 10:35:20 -0700
+Message-ID: <CAH2-KxCSosmLTXM2=m=cuG6X8=_MUW30ZgYEfbhGvdJXhWs-pg@mail.gmail.com>
+Subject: Re: [External] Re: New test for patches in openbmc/openbmc
+To: Lei YU <mine260309@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,59 +80,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
- linux-kernel@vger.kernel.org
+Cc: openbmc <openbmc@lists.ozlabs.org>, Lei Yu <yulei.sh@bytedance.com>,
+ Thang Nguyen <thang@amperemail.onmicrosoft.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Oct 04, 2021 at 02:43:39PM +0000, Brandon Wyman wrote:
-> There are multiple power supplies that will indicate
-> CFFPS_CCIN_VERSION_1, use the manufacturer ID to determine if it should
-> be treated as version cffps1 or version cffps2.
-> 
-> Signed-off-by: Brandon Wyman <bjwyman@gmail.com>
+On Fri, Oct 8, 2021 at 1:31 AM Lei YU <mine260309@gmail.com> wrote:
+>
+> It's noticed that the `repotest` is enabled in CI and we got CI
+> failure due to node-manager's patch:
+> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/47673
+>
+> I know the right way is to ask Intel to upstream the node-manager and
+> fix the issues we met.
+> But in reality it's not easy and it takes time for Intel to upstream a
+> repo (and it depends on Intel to decide whether or not to upstream)
 
-Applied, after fixing continnuation line alignments.
+If this is something you need, there's no need to wait for Intel, as
+that application already has an Apache 2 license.  You are free to
+upstream it and maintain it yourself if you don't want to wait for
+intel.
 
-Guenter
+>
+>
+> @Ed Do we really want to reject such patches?
 
-> ---
->  drivers/hwmon/pmbus/ibm-cffps.c | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/hwmon/pmbus/ibm-cffps.c b/drivers/hwmon/pmbus/ibm-cffps.c
-> index 2ee47cbbb665..292c87331f2b 100644
-> --- a/drivers/hwmon/pmbus/ibm-cffps.c
-> +++ b/drivers/hwmon/pmbus/ibm-cffps.c
-> @@ -502,16 +502,29 @@ static int ibm_cffps_probe(struct i2c_client *client)
->  		u16 ccin_revision = 0;
->  		u16 ccin_version = CFFPS_CCIN_VERSION_1;
->  		int ccin = i2c_smbus_read_word_swapped(client, CFFPS_CCIN_CMD);
-> +		char mfg_id[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
->  
->  		if (ccin > 0) {
->  			ccin_revision = FIELD_GET(CFFPS_CCIN_REVISION, ccin);
->  			ccin_version = FIELD_GET(CFFPS_CCIN_VERSION, ccin);
->  		}
->  
-> +		rc = i2c_smbus_read_block_data(client, PMBUS_MFR_ID,
-> +				mfg_id);
-> +		if (rc < 0) {
-> +			dev_err(&client->dev,
-> +					"Failed to read Manufacturer ID\n");
-> +			return rc;
-> +		}
-> +
->  		switch (ccin_version) {
->  		default:
->  		case CFFPS_CCIN_VERSION_1:
-> -			vs = cffps1;
-> +			if ((strncmp(mfg_id, "ACBE", 4) == 0) ||
-> +					(strncmp(mfg_id, "ARTE", 4) == 0))
-> +				vs = cffps1;
-> +			else
-> +				vs = cffps2;
->  			break;
->  		case CFFPS_CCIN_VERSION_2:
->  			vs = cffps2;
+I don't want to reject patches, I want to see them on master in a way
+that things can be changed as needs evolve.  This patch is a perfect
+example of something that, had we taken the small amount of time to
+upstream this small daemon, wouldn't have even been an issue now as
+sdbusplus needs to make a very minor change.  As-is, we're effectively
+2 levels of fork deep (openbmc upstream -> intel-bmc -> openbmc
+upstream only for bytedance systems, which is the source of the
+problem, not this patch itself.
+
+>
+> On Tue, Sep 28, 2021 at 4:37 PM Lei Yu <yulei.sh@bytedance.com> wrote:
+> >
+> > > > I have a similar case.
+> > > > As an x86 system, some of the recipes/changes are referenced from
+> > > > Intel-BMC, which is not upstreamed.
+> > > > Currently, we had patches related to UART routing and
+> > > > phosphor-node-manager-proxy.
+> > > > The UART routing patches are being upstreamed thanks to Troy.
+> > > > The change to node-manager is related to the HW design difference, and
+> > > > due to the fact that phosphor-node-manager-proxy is in Intel-BMC, we
+> > > > can not really make the patch upstream.
+> > >
+> > > I'm not following why that's preventing upstreaming.  If
+> > > node-manager-proxy is something you need on your systems, I don't see
+> > > a reason why we would avoid cleaning it up and upstreaming it, but I
+> > > have no details on what this patch is, or what it does, so it's really
+> > > hard to talk in concrete terms about how to proceed next.
+> >
+> > node-manager-proxy is in Intel-BMC, so we really need Intel to
+> > upstream it into openbmc.
+> >
+> > --
+> > BRs,
+> > Lei YU
