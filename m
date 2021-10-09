@@ -1,77 +1,134 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE51F427679
-	for <lists+openbmc@lfdr.de>; Sat,  9 Oct 2021 04:18:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0F7B427993
+	for <lists+openbmc@lfdr.de>; Sat,  9 Oct 2021 13:48:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HR7yc5xZvz308m
-	for <lists+openbmc@lfdr.de>; Sat,  9 Oct 2021 13:18:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HRNc04CMdz2xYX
+	for <lists+openbmc@lfdr.de>; Sat,  9 Oct 2021 22:48:16 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=32b0+MSH;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=dIzSLQ3O;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::233;
- helo=mail-oi1-x233.google.com; envelope-from=yulei.sh@bytedance.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20210112.gappssmtp.com
- header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=32b0+MSH; dkim-atps=neutral
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
- [IPv6:2607:f8b0:4864:20::233])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.95.90;
+ helo=nam02-dm3-obe.outbound.protection.outlook.com;
+ envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
+ header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector1-amperemail-onmicrosoft-com header.b=dIzSLQ3O; 
+ dkim-atps=neutral
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com
+ (mail-dm3nam07on2090.outbound.protection.outlook.com [40.107.95.90])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HR7y86QDFz2xY2
- for <openbmc@lists.ozlabs.org>; Sat,  9 Oct 2021 13:18:04 +1100 (AEDT)
-Received: by mail-oi1-x233.google.com with SMTP id z126so1828848oiz.12
- for <openbmc@lists.ozlabs.org>; Fri, 08 Oct 2021 19:18:04 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HRNbV1lSkz2yQ3
+ for <openbmc@lists.ozlabs.org>; Sat,  9 Oct 2021 22:47:47 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mTeMVYktNbEFhKG5HLdik4m10Svg1MqjwhRtmW9T5SuBCW1dGlbcg4ACCJkixRbxazeqchP0HoTNmIwsIpjswnwPwojiYrI799FqQFCaW325cuK+hq5Q0yqk8i9208gE81YK030Wp2gwCrLzTS6AjdZitnRswyoEW8305uLZTCIRZOQ7nT0dkcuL2HJnWb96VNCFYijdbyA5PIXt596EmcHHtYS/DfOWbrTySdKDtrujzNexqFRz5o9tbtQazHV/kKnHMxnjFs2PK7uaxfXhQV8V+zEtJ+IvdRiX5rdcOG4s1+D1r82hLCW7IRrZNij2uZZ/Ri5jSjo7nziYf/yJjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1SFAEnKfJKZXxTXZfCtngNq5GCmucJUs23fCa7IT6CI=;
+ b=lyGMDS/m8bI8ptHyOiU6PzCDbs/Wqv09ZYK6BgGnwbqwIUUy0fmbGFIkwWdFEuV7G8MVQgZ4c5VYZpFaF33KmMm69wEI/yiTMw7WWyTyGEzXdgcc9FZke7BLcoBLfRYb0o/Qzs+SHI1Wk9McKW79SH7LX7ccrDlqf/VVB9Zhcrke0tEbYOCimx4nQ5MF/nHbP7bw5v0IjqdsGyMew00dcupZF+diWXdApclHZO7taR7210ktjRkUm6rMQTBcC5dRRzizbcU2PpiowqTjj42O8FBpC8yNSUbca4MHh6VLO2Q09JdeWfWW7D8dQNreMAi2PQk9ZTYg+Z08RavDynNrZQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=5p+uZMdN2vZioeKZI7exWifsWp5x7aYjDJz9UC5OoTE=;
- b=32b0+MSHQpn++1r61LOlRsqfWkInxfNtZf1Dq+QZA5ub3iGvZGVi/II94QNsCjCRgA
- BFZHKqx8F9kiQDXEPeJYau1X4zoSNfZ3Y9JKbb6aMTYBTmVCLWulg9tcTb25t1lgml1M
- XXpFyC0t17EvtHM+bP/YsXQQCU91JlUJLfJWghmc5D93H1DQb29lmTWYy3T/2zmI8tmQ
- oFqh5lQtOIpkO5EgPOF6WHVXKshkShFFa9tPA+0XILl+sWTiAv9EaQIaXKd6szs6A4k7
- vsKgcnuH8T7kpdQbsP439D83l+cFjU4yxdpc8lvVyl6rZVAv5gWt7fc14WTryAu/n6ez
- d53g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=5p+uZMdN2vZioeKZI7exWifsWp5x7aYjDJz9UC5OoTE=;
- b=uT1C7pMF2dYzycC27wd4xcw9JzgRNk7C9rLqBvo59AENAw1TxmbEvPFD9hRLrkz8V/
- zquWAzn56IkfKCJp8uCAif3XNy8ejCigNW3gwBMvVtQPBt155Nh6tRqfxTjfsyXnQEB7
- WfK78DtPP4LEzu6ibrNMarr56icoisXY00EaUQDTfnlgOeo1bkPUbWzPKels+BcoqmK6
- TxdUaGGQ0UGMc3eCnoOsS6GdiqtVUhZYp9xE1fD4FZXa77IFjT2TOC87nf80fss6lMT+
- 6fFuQOPkCx0cfQIUYqPZd8RdSDIUh00vLrOgjmf36M57p50wH+pnMoKbP4GGnlMOcjfb
- lUjg==
-X-Gm-Message-State: AOAM533+mghSP6dUyH3OgvK4m+vCQ3vzotpihMFTpXZ/m1CrhgDTCkKq
- obwaDqQcp/uk1DXVkXvJuFdD8KkN1xTt+1of8uIrIig6GnUVqQ==
-X-Google-Smtp-Source: ABdhPJwwfldFaPZgdpk6e7dM42SjL/SNUuf1c4pkZrMgILMP8MsJYI1mnOQosjVIlUfhP86n01KhzIu2t/31s4ZICyg=
-X-Received: by 2002:a54:4d9e:: with SMTP id y30mr18873471oix.50.1633745881496; 
- Fri, 08 Oct 2021 19:18:01 -0700 (PDT)
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1SFAEnKfJKZXxTXZfCtngNq5GCmucJUs23fCa7IT6CI=;
+ b=dIzSLQ3OrHgn35xaWhoK0SoEg3vjfmQBUhoCrQ2Y4y/iwa50iC7fyTNH9kqDaO05BGQbW466f8TUsxph2oCugRzkfZACGjRupTirhNY/K8DiSht/JBn6PYm0yx7flNzcHwWBuXEXYKwthHM1o9OcxnEM4jFlt6EWIzN1keJIIcY=
+Authentication-Results: inspur.com; dkim=none (message not signed)
+ header.d=none;inspur.com; dmarc=none action=none
+ header.from=amperemail.onmicrosoft.com;
+Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
+ DM5PR01MB2796.prod.exchangelabs.com (2603:10b6:3:f5::10) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4587.18; Sat, 9 Oct 2021 11:47:40 +0000
+Received: from DM6PR01MB5145.prod.exchangelabs.com ([fe80::fb:2dbc:70b7:30f0])
+ by DM6PR01MB5145.prod.exchangelabs.com ([fe80::fb:2dbc:70b7:30f0%4])
+ with mapi id 15.20.4587.025; Sat, 9 Oct 2021 11:47:39 +0000
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ liuxiwei@inspur.com, duanzhijia01@inspur.com
+From: Thu Nguyen <thu@amperemail.onmicrosoft.com>
+Subject: Softoff features in PLDM lib.
+Message-ID: <702956f7-e667-8fd5-ed8c-4ddafbe67ccd@amperemail.onmicrosoft.com>
+Date: Sat, 9 Oct 2021 18:47:29 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-ClientProxiedBy: SG2P153CA0013.APCP153.PROD.OUTLOOK.COM (2603:1096::23) To
+ DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16)
 MIME-Version: 1.0
-References: <CAH2-KxDe6hR1V-Lz1k8cdD11jEquy4UhR4LfLhg37E5EG42EJg@mail.gmail.com>
- <67dbec1b-8598-8814-e85e-848b2eb123cf@yadro.com>
- <CAH2-KxDT9DTXp99d+eV-zNinLWhw9ihaHVLNQnVsQtB7X2ZkHQ@mail.gmail.com>
- <a40d7b9c-8fb1-bf5c-1c31-3b426c0f0fa2@amperemail.onmicrosoft.com>
- <CAGm54UGjh9QTAw_mPdPCpZ7WihTHYXRe0m=xCWrPmpvDb99p3Q@mail.gmail.com>
- <CAH2-KxBpQbmBAedd63-1KORd9Z81D-gWM7oqQPU05Q=4S5XYzQ@mail.gmail.com>
- <CAGm54UF82Xx_N0g2d0sOx8Yt0vZ--+eAk18cS_68nt2RPoL=pA@mail.gmail.com>
- <CAARXrtnhAirRLo3EWM5=3KhjJWaWq1kPTeZ2=Yuec43Ebp1Y9g@mail.gmail.com>
- <CAH2-KxCSosmLTXM2=m=cuG6X8=_MUW30ZgYEfbhGvdJXhWs-pg@mail.gmail.com>
-In-Reply-To: <CAH2-KxCSosmLTXM2=m=cuG6X8=_MUW30ZgYEfbhGvdJXhWs-pg@mail.gmail.com>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Sat, 9 Oct 2021 10:18:04 +0800
-Message-ID: <CAGm54UHq33wD5Fm6D59Mq=XwFrQvXQ0qdbV-CSRwNLuyfj06hg@mail.gmail.com>
-Subject: Re: [External] Re: New test for patches in openbmc/openbmc
-To: Ed Tanous <edtanous@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Received: from [IPv6:2402:800:6344:422a:695b:6951:bf8c:cae7]
+ (2402:800:6344:422a:695b:6951:bf8c:cae7) by
+ SG2P153CA0013.APCP153.PROD.OUTLOOK.COM (2603:1096::23) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4628.1 via Frontend Transport; Sat, 9 Oct 2021 11:47:38 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 0b193447-5214-4054-dd9c-08d98b1a988b
+X-MS-TrafficTypeDiagnostic: DM5PR01MB2796:
+X-Microsoft-Antispam-PRVS: <DM5PR01MB27967EFFBB67BF4C0194B4AA90B39@DM5PR01MB2796.prod.exchangelabs.com>
+X-MS-Exchange-Transport-Forked: True
+X-MS-Oob-TLC-OOBClassifiers: OLM:1091;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: YcSwepw7dWM4REGwRx+LPEwNl5m10ow4ilwNxu635WiOPLSDJbL7ZAjF7q2xWt2C+rD6ojHUsMVU1Dyw3z9sXWgP+s+puMRPlKSyr0rWfSLcjv2MQvMTjcSOQh9/4LN6G9eDVhd9tY/SaLijNijdxGLqlSD/4aFZtO640lpgTgDoKOnkdHZMcriK+ClFzwk0dk5KnvIl1jxe2o2t3Arnx1vmsm1r7qTnRGOPM2PIqp1jDMHIjUynJ/+v0adQ/OHALcAid0NRJVVRQpd3V+OQl2YcBHKZizSbb9M9RcGu3UAGrUOCcmarTWIkGFXlUiob33rKvO/Is1fwqOrtjcSbHgtgtUsxtoDewaltkMxlDg2JAQEIXj24+ogFbGI4LOYVNfh+pEFmrxm4RmJ/zyx8BcoUXrDRVy6ph2m7nVNIEeQMfkWL+uwrH6SxYw2y9K8Xnkeo8QZSt9subEdUTWQTAmCHEDIt1MuDiA4mqgqo+1ho9xbKuFOlpRXMHIx+Ex88n42tTQf/mAsLz5mmPLT5MJU1kjyAhaSijvyBvOctPDppuBkwgST2hzNPJ/UEgFBuUsHxv7v/Lt71D6afBMqSWvWli0g6CuFm6t18xLkuYQX6JPgU8iVRoEacZIAimlgI3DDCr6t1JXA6MS05aSh9PCDR96YQ43tVRDR00Xxelyn6fmXGl4OJTZ8PwDJwgCqUCajEZmq5Q4WawdVyWisKdyQDIPiEee9X+7/1fuIhjBzGGw7FYBjdHAROg+TN1fd89klIT7qS09SrlW7K5d+QCAa6MZ5qDzx1iNEYfYp/tPyjhep1/e2MZY5gX+5XV+zl
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(366004)(8676002)(2906002)(2616005)(66946007)(66476007)(83380400001)(66556008)(31696002)(186003)(5660300002)(38100700002)(83170400001)(6666004)(31686004)(4744005)(508600001)(8936002)(52116002)(316002)(42882007)(966005)(6486002)(43740500002)(45980500001);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?b0JtaXJzSFk4K2lkeGJMSXJ1YjJ2NnNPdzZLamwyRFpIUCtwaEYyYytVMHNC?=
+ =?utf-8?B?T0JtcDdLVEV0OU5vcFR0ZmhwTnhJaE0rZTVzNU43SjV5SVVHSDFkOEp1QUpN?=
+ =?utf-8?B?TnlsTzQ0RGJyMEtGVnc5V21lazZ5MUNMblROZE8xbnZvMGMzZDdSa21OWnBu?=
+ =?utf-8?B?UEtVbGQ0Nm4vZjVvRCtlWHhCODNoWFNGdGgxUlJlNXZyVGkrcFc2RGhtMkU1?=
+ =?utf-8?B?aWl5SjNEQVdwQ0hkZGlmRCtSaDEzYzFGeTdKUTgvSkwzNC9qcXhTbWVhRmpL?=
+ =?utf-8?B?a3VnT1BQWlo5MHEvSWlqM2RXODBTZUZPOThBeEdFNkNib25wZTFXWHR1b0xF?=
+ =?utf-8?B?UnNmelNZV3JrLzFkc1JRNzV0ZFVSQVVxV3ljZFRoYzNUVGVvVlo1aWlHMVFj?=
+ =?utf-8?B?QkEwaHZLN3JLK253bnBGSCtnbGY5UHhxckkyY0FvKzlZMGRISkl2bjh0b21O?=
+ =?utf-8?B?SmZ6TE1BbEhKc3hZNkkzQm4wYlZOM0tTam9NcmNhc1dMdkZ3LzZreTludUxQ?=
+ =?utf-8?B?Skt4SHFpY3l1MldFYzgxMkMrb1laOFoyQm1wa1pRUFdGU1p0eXZ2dlVlMWM0?=
+ =?utf-8?B?T0tUSkhpbzE5US95YzczWW5VYzlBUktYdGg5SHI5QlF5WGt5empPVHhmWWpa?=
+ =?utf-8?B?YVFuRC96QkZJdXhLSU1JTDZ2bzR5M01pNHM5RGpxM1pla1pGYTJzU085ZjZM?=
+ =?utf-8?B?SVRPRGU4YmQwejh4aGYySEJUWUFGdUhLUGJDSHlUNU1yVWg3a0VOT24yZ3BO?=
+ =?utf-8?B?NnFiK3d1RU83bGc3VUx4Q0cwb1NneFk4ejNvckNuQXNjWERLcEFEenkyM1NS?=
+ =?utf-8?B?RDhrZEVsSDVtYnA1Zk5oN0dwU080eXFtd2dZc2lWbmRPQmJZNTdwWXV3V0t2?=
+ =?utf-8?B?cnZDWC8rYjBsRHNTOXpHQ1BKRzFLeWZKaTluQ1F5dkdEK3NQaVpDRTUwb3Ew?=
+ =?utf-8?B?UzQ0MFpEWUt1ZEtTeUg1WjdYcFJ2SFg4bk1HZWkzejJEQ09TQlQ1RVpaaGtX?=
+ =?utf-8?B?S0FjUkJ6bFBTYWxwSUx6OTA5ckFCeVdyVGhXcXB0cmozKzN2QUdsRmxzcFU1?=
+ =?utf-8?B?eElGUE1iWG42Mnc1MDVGcldEMnhjOUVvazlzWVdBcDVINjB3V1cwRUdNRTd6?=
+ =?utf-8?B?WHg2TUtlVEMrRytzbkpoWXVKQVludTl4MHpIZ2NOQjVQc1NjVGhvRTAyQ2VI?=
+ =?utf-8?B?cGJ6Wkd0dVFEblJvYWNOaW14WkFPOWNCVXQ2bnZZTkpmMENEdXV0d2FWNHNl?=
+ =?utf-8?B?bmYyZFAwQzZPVXE2clI2TjF2bi9xWEpVRWxNajhmYXdCVzUrN05RQk56N01n?=
+ =?utf-8?B?WWUwR3oydWZIa0w4dUJxbVorWnh1d1dRQmcwakZNaURhaHpsbEJ5eE9HeEM0?=
+ =?utf-8?B?WXQ5MGZFRGkveGNCYTlGb1dyNmNhZ3VoalhpeUoyY29sNjNucHZ2WlRhOFJs?=
+ =?utf-8?B?VUkyaEorRlF5N0E5VkFLcHQxc0psTmNJeXJMZHdXQTQyQmZpWk5KTnYyYVQy?=
+ =?utf-8?B?dkdPNDV1bmtwQmpTRHdEa3JyZDZMbmxVbjdqemVOY1UxbzRUVno3UkN1clJ5?=
+ =?utf-8?B?NDFXWHpDWml2cnM3c011a01mS3VXQWN2QlVabnNqNTRyZmZIZ0RVRmpDc1FT?=
+ =?utf-8?B?VnlyUFNYZnpzWHd5Z2dZRCsyLzF2R0pOTk1rVGxkVXgvNFNFK1JjbmlRdWV4?=
+ =?utf-8?B?M0lMKy9jVERHT1NXZW1wdHhlZi9NQUhGcWNJNXlJNCtlQzlOOWtoaVBETkpT?=
+ =?utf-8?B?K0RoYnZXZGtPM2JIWm5wbmNSaGhXbWdnWnVidVNYU0hYVkNhRjNKVUw5SW9P?=
+ =?utf-8?B?V0I1THNhVXNNaXNoWVo2dE9FL0d2QXJrZHhSR2RwUENGeGQ1RUdJMThxUGVn?=
+ =?utf-8?Q?llK3G8Z0eeuGk?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0b193447-5214-4054-dd9c-08d98b1a988b
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2021 11:47:39.6028 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RyZGqOvopkO+moDlIepckQM2j0i8lxIvnU3H3l4CVi9KB2F68EXZiIznwYi819hJxbvOUkGmoaiLOun6W+EYlGY8/kG9m/oKgGVfjBF9dqs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR01MB2796
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,50 +140,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>,
- Thang Nguyen <thang@amperemail.onmicrosoft.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, Oct 9, 2021 at 1:35 AM Ed Tanous <edtanous@google.com> wrote:
->
-> On Fri, Oct 8, 2021 at 1:31 AM Lei YU <mine260309@gmail.com> wrote:
-> >
-> > It's noticed that the `repotest` is enabled in CI and we got CI
-> > failure due to node-manager's patch:
-> > https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/47673
-> >
-> > I know the right way is to ask Intel to upstream the node-manager and
-> > fix the issues we met.
-> > But in reality it's not easy and it takes time for Intel to upstream a
-> > repo (and it depends on Intel to decide whether or not to upstream)
->
-> If this is something you need, there's no need to wait for Intel, as
-> that application already has an Apache 2 license.  You are free to
-> upstream it and maintain it yourself if you don't want to wait for
-> intel.
->
-> >
-> >
-> > @Ed Do we really want to reject such patches?
->
-> I don't want to reject patches, I want to see them on master in a way
-> that things can be changed as needs evolve.  This patch is a perfect
-> example of something that, had we taken the small amount of time to
-> upstream this small daemon, wouldn't have even been an issue now as
-> sdbusplus needs to make a very minor change.  As-is, we're effectively
+Dear Chicago Duan and George Liu,
 
-Totally agree. We have already asked Intel to upstream the
-node-manager, let's wait for the feedback.
 
-> 2 levels of fork deep (openbmc upstream -> intel-bmc -> openbmc
-> upstream only for bytedance systems, which is the source of the
-> problem, not this patch itself.
+In PLDM source, I saw that Inspur supported graceful shutdown the host 
+OS thru PLDM commands.
 
-True. But as an Intel x86 platform, the repo is needed and in the
-current state, the patch has to be added. Otherwise the g220a build is
-broken.
-Is it OK to ignore the repotest CI failure and just merge the patch in
-meta-bytedance layer?
-(Be noted that it's not trying to make a bad example, but only trying
-to fix the broken build)
+https://github.com/openbmc/pldm/commit/184f60263a0e4c3dda934d94ecb2a904ef835299#diff-59fd39a9594f6d6f82af25037f211858fafa418aacc055e85b4cc29abccf9dee
+
+The feature used PLDM Platform SetEffecterState command to request the 
+host OS shutdown.
+
+I wonder which part in the host software will response for this PLDM 
+request?
+
+Does the host OS ( Centos, Ubuntu...) directly handle this type of command?
+
+
+Thanks.
+
+Thu Nguyen.
+
+
+
