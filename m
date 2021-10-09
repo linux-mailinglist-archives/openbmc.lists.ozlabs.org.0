@@ -1,39 +1,39 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0F7B427993
-	for <lists+openbmc@lfdr.de>; Sat,  9 Oct 2021 13:48:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE9524279F9
+	for <lists+openbmc@lfdr.de>; Sat,  9 Oct 2021 14:07:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HRNc04CMdz2xYX
-	for <lists+openbmc@lfdr.de>; Sat,  9 Oct 2021 22:48:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HRP1s4hZJz3029
+	for <lists+openbmc@lfdr.de>; Sat,  9 Oct 2021 23:07:13 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=dIzSLQ3O;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=sPRRS6y5;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.95.90;
- helo=nam02-dm3-obe.outbound.protection.outlook.com;
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.243.92;
+ helo=nam12-dm6-obe.outbound.protection.outlook.com;
  envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
  header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
- header.s=selector1-amperemail-onmicrosoft-com header.b=dIzSLQ3O; 
+ header.s=selector1-amperemail-onmicrosoft-com header.b=sPRRS6y5; 
  dkim-atps=neutral
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com
- (mail-dm3nam07on2090.outbound.protection.outlook.com [40.107.95.90])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12on2092.outbound.protection.outlook.com [40.107.243.92])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HRNbV1lSkz2yQ3
- for <openbmc@lists.ozlabs.org>; Sat,  9 Oct 2021 22:47:47 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HRP1M0lKcz2ypC
+ for <openbmc@lists.ozlabs.org>; Sat,  9 Oct 2021 23:06:45 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mTeMVYktNbEFhKG5HLdik4m10Svg1MqjwhRtmW9T5SuBCW1dGlbcg4ACCJkixRbxazeqchP0HoTNmIwsIpjswnwPwojiYrI799FqQFCaW325cuK+hq5Q0yqk8i9208gE81YK030Wp2gwCrLzTS6AjdZitnRswyoEW8305uLZTCIRZOQ7nT0dkcuL2HJnWb96VNCFYijdbyA5PIXt596EmcHHtYS/DfOWbrTySdKDtrujzNexqFRz5o9tbtQazHV/kKnHMxnjFs2PK7uaxfXhQV8V+zEtJ+IvdRiX5rdcOG4s1+D1r82hLCW7IRrZNij2uZZ/Ri5jSjo7nziYf/yJjQ==
+ b=SUY7bD0vsfC1zx2Cp7gyin0+dWdhBm6r+N/fC++QZcHbQrpjQNqDWfNCz72Gzfy7gi+fn+OYGRIdjas9+YNnuGLCVlW8yxCtVF9axmwQYrDqIiFsGaZuwqhCFcgJNDJXxZLmqEvXBGB024ePESaZXBbP6mxRM+ssw3hWcQ+XZG/ZTY9byCpP2qzyguhb9OCfYoUaqM5L1rIs3wwdJQFAE3N3xXT2LsVp/VTy/D/7EIN5srG+SNB3LAQDrfK8tGyxmF9uMzLgQ8hCuRWEjurYb8qrC4vUB/N3s6u58RtA9D8cHy2uuo6Eo6kY+SiPNC17XwvpMsglTiE9HnoViiOw1Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1SFAEnKfJKZXxTXZfCtngNq5GCmucJUs23fCa7IT6CI=;
- b=lyGMDS/m8bI8ptHyOiU6PzCDbs/Wqv09ZYK6BgGnwbqwIUUy0fmbGFIkwWdFEuV7G8MVQgZ4c5VYZpFaF33KmMm69wEI/yiTMw7WWyTyGEzXdgcc9FZke7BLcoBLfRYb0o/Qzs+SHI1Wk9McKW79SH7LX7ccrDlqf/VVB9Zhcrke0tEbYOCimx4nQ5MF/nHbP7bw5v0IjqdsGyMew00dcupZF+diWXdApclHZO7taR7210ktjRkUm6rMQTBcC5dRRzizbcU2PpiowqTjj42O8FBpC8yNSUbca4MHh6VLO2Q09JdeWfWW7D8dQNreMAi2PQk9ZTYg+Z08RavDynNrZQ==
+ bh=gZ6MH3CIH3vWaVRbj63mTAUoRTWrDKZYNA7ab+r+Oa4=;
+ b=UwRLaKvXzWvHjVDb1OML3V7WMBhCNU5GbYM8DcC99pQu6eS1eRGpX9m7rjFzphrxKVIwQhC+3rOITqVXxeL0Dwc+lwO/lOEbBHuEiN6F9GCMI5jkOCrWc4VuVE6q1OVsbcr5MzUtDUVeHhTdjBhwvIikaBgciOT9x1u5elCSAjYe/Iou5G5Xh69u0xzf6MsZ3VFhlRre+LdX8OGRcZyxMYwN2aIsXtM23OSNA2FU2NBcW6M7Lgg5OqX37JoGlT/np1hhZbSfvSp2nsL63m0TzXM4Tv/AeFHFX46qfapVUGKbNed244SUCMrB9o9JF5QU/ERf/0ipKxfLwEzNS4TdoA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=amperemail.onmicrosoft.com; dkim=pass
@@ -41,94 +41,95 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1SFAEnKfJKZXxTXZfCtngNq5GCmucJUs23fCa7IT6CI=;
- b=dIzSLQ3OrHgn35xaWhoK0SoEg3vjfmQBUhoCrQ2Y4y/iwa50iC7fyTNH9kqDaO05BGQbW466f8TUsxph2oCugRzkfZACGjRupTirhNY/K8DiSht/JBn6PYm0yx7flNzcHwWBuXEXYKwthHM1o9OcxnEM4jFlt6EWIzN1keJIIcY=
-Authentication-Results: inspur.com; dkim=none (message not signed)
- header.d=none;inspur.com; dmarc=none action=none
+ bh=gZ6MH3CIH3vWaVRbj63mTAUoRTWrDKZYNA7ab+r+Oa4=;
+ b=sPRRS6y5MauUr7og6yC4toBy7Y/3/MkDIaG7lY4F1zxjfXIgJgW/tORtYFudDQEQKPeDhAO43WkIOMfLdrt2vClkEWmIZLDi+cmZzD8O0O/NWXNYJrl5+eNXETAzfvt7I2qC3OQwYdFheV2xeEU8jw/FRkrn5hk4VKFT6n27o6I=
+Authentication-Results: linux.ibm.com; dkim=none (message not signed)
+ header.d=none;linux.ibm.com; dmarc=none action=none
  header.from=amperemail.onmicrosoft.com;
 Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
- DM5PR01MB2796.prod.exchangelabs.com (2603:10b6:3:f5::10) with Microsoft SMTP
+ DM6PR01MB5835.prod.exchangelabs.com (2603:10b6:5:14f::27) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4587.18; Sat, 9 Oct 2021 11:47:40 +0000
+ 15.20.4587.18; Sat, 9 Oct 2021 12:06:25 +0000
 Received: from DM6PR01MB5145.prod.exchangelabs.com ([fe80::fb:2dbc:70b7:30f0])
  by DM6PR01MB5145.prod.exchangelabs.com ([fe80::fb:2dbc:70b7:30f0%4])
- with mapi id 15.20.4587.025; Sat, 9 Oct 2021 11:47:39 +0000
+ with mapi id 15.20.4587.025; Sat, 9 Oct 2021 12:06:23 +0000
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- liuxiwei@inspur.com, duanzhijia01@inspur.com
+ Ed Tanous <edtanous@google.com>, Matt Spinler <mspinler@linux.ibm.com>
 From: Thu Nguyen <thu@amperemail.onmicrosoft.com>
-Subject: Softoff features in PLDM lib.
-Message-ID: <702956f7-e667-8fd5-ed8c-4ddafbe67ccd@amperemail.onmicrosoft.com>
-Date: Sat, 9 Oct 2021 18:47:29 +0700
+Subject: Support PLDM sensors/state/events in entity-manager and Dbus-sensors
+Message-ID: <3cb39323-c6f3-878b-9b99-444158777aad@amperemail.onmicrosoft.com>
+Date: Sat, 9 Oct 2021 19:06:14 +0700
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-X-ClientProxiedBy: SG2P153CA0013.APCP153.PROD.OUTLOOK.COM (2603:1096::23) To
- DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16)
+X-ClientProxiedBy: SG2PR02CA0028.apcprd02.prod.outlook.com
+ (2603:1096:3:18::16) To DM6PR01MB5145.prod.exchangelabs.com
+ (2603:10b6:5:56::16)
 MIME-Version: 1.0
 Received: from [IPv6:2402:800:6344:422a:695b:6951:bf8c:cae7]
  (2402:800:6344:422a:695b:6951:bf8c:cae7) by
- SG2P153CA0013.APCP153.PROD.OUTLOOK.COM (2603:1096::23) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4628.1 via Frontend Transport; Sat, 9 Oct 2021 11:47:38 +0000
+ SG2PR02CA0028.apcprd02.prod.outlook.com (2603:1096:3:18::16) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4587.21 via Frontend Transport; Sat, 9 Oct 2021 12:06:21 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 0b193447-5214-4054-dd9c-08d98b1a988b
-X-MS-TrafficTypeDiagnostic: DM5PR01MB2796:
-X-Microsoft-Antispam-PRVS: <DM5PR01MB27967EFFBB67BF4C0194B4AA90B39@DM5PR01MB2796.prod.exchangelabs.com>
+X-MS-Office365-Filtering-Correlation-Id: 891577f8-21e4-48c0-6e8a-08d98b1d364d
+X-MS-TrafficTypeDiagnostic: DM6PR01MB5835:
+X-Microsoft-Antispam-PRVS: <DM6PR01MB5835185EBEEABFE80A27460C90B39@DM6PR01MB5835.prod.exchangelabs.com>
 X-MS-Exchange-Transport-Forked: True
-X-MS-Oob-TLC-OOBClassifiers: OLM:1091;
+X-MS-Oob-TLC-OOBClassifiers: OLM:6108;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: YcSwepw7dWM4REGwRx+LPEwNl5m10ow4ilwNxu635WiOPLSDJbL7ZAjF7q2xWt2C+rD6ojHUsMVU1Dyw3z9sXWgP+s+puMRPlKSyr0rWfSLcjv2MQvMTjcSOQh9/4LN6G9eDVhd9tY/SaLijNijdxGLqlSD/4aFZtO640lpgTgDoKOnkdHZMcriK+ClFzwk0dk5KnvIl1jxe2o2t3Arnx1vmsm1r7qTnRGOPM2PIqp1jDMHIjUynJ/+v0adQ/OHALcAid0NRJVVRQpd3V+OQl2YcBHKZizSbb9M9RcGu3UAGrUOCcmarTWIkGFXlUiob33rKvO/Is1fwqOrtjcSbHgtgtUsxtoDewaltkMxlDg2JAQEIXj24+ogFbGI4LOYVNfh+pEFmrxm4RmJ/zyx8BcoUXrDRVy6ph2m7nVNIEeQMfkWL+uwrH6SxYw2y9K8Xnkeo8QZSt9subEdUTWQTAmCHEDIt1MuDiA4mqgqo+1ho9xbKuFOlpRXMHIx+Ex88n42tTQf/mAsLz5mmPLT5MJU1kjyAhaSijvyBvOctPDppuBkwgST2hzNPJ/UEgFBuUsHxv7v/Lt71D6afBMqSWvWli0g6CuFm6t18xLkuYQX6JPgU8iVRoEacZIAimlgI3DDCr6t1JXA6MS05aSh9PCDR96YQ43tVRDR00Xxelyn6fmXGl4OJTZ8PwDJwgCqUCajEZmq5Q4WawdVyWisKdyQDIPiEee9X+7/1fuIhjBzGGw7FYBjdHAROg+TN1fd89klIT7qS09SrlW7K5d+QCAa6MZ5qDzx1iNEYfYp/tPyjhep1/e2MZY5gX+5XV+zl
+X-Microsoft-Antispam-Message-Info: HV98GkxKaSvVaWgvNaMRDbjh8GRTSWfKkERpquJsGCdrTWQeQkxRsddRJYf0CfvtmM/PJmjTg5l+Pfqgjf/MqHHvR86xEIVbWwxaehg7jA/dafIMLtHMGJVb96p95EK+0AHzVirjPy415u/GNqoa5ckkyh6dyPZF9QUY8Fm5iSnmgTqP6TPvRsPfbCCJY+BDAEjXa6RoLgqViYmQRozKkpK/TUe3DVEJjyl2a2Me7fjfR4od9IpjXOfilfgLMy9orCg/624BAu0v4/lIdlexpYVr3SQpYMchXcr5O+5tIc13qflmfCjxhMFGjI/QQneJ5npwGZB8EJYxme0csQR3iwTUj4hGXcsAuUZ4gqiXP2NETKjm48+QomcpuJ3WotFjfMrSvWNN5H/eDjL01tgQ+aM/1Dt6PudHP04o9bKv+BZOAs5143aIapyFZnBHeyTvw3/hNC7uUP/EC1T2TukAt7tgSkUQat3cxbSWRnPGQqvqlEXdOzcjUkfol7HTq4lOxBMMoToBZcQz72CTYdjzrkXlPE7FSWwO/U2k07q2K2JmtUTB/B9SBoqxc/+nEhGlFajpUd/WpcqWgd2ugk+fSumoQ3WPlFf5p/YsDj3zSj8encalNTYlVoIE4cBXJwuRSGRhChXR3s2/n1jBIEyCuslZe4TX0BoQarkrjTumQaIJeiinm157hl3bLBSmLqi5OFMAX2mzyRQ1OakCIEl6/b0pCt9tbzg3xsHZ5OejF/tlAl2MrCDgY8Jit03pIH2xCe1ORhQAOBr26U5NdyekdGkOgqfmlah6xBXSGui4GA/wi+NzUabnj4zWZEwYcahX
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(8676002)(2906002)(2616005)(66946007)(66476007)(83380400001)(66556008)(31696002)(186003)(5660300002)(38100700002)(83170400001)(6666004)(31686004)(4744005)(508600001)(8936002)(52116002)(316002)(42882007)(966005)(6486002)(43740500002)(45980500001);
+ SFS:(4636009)(366004)(8936002)(52116002)(4744005)(2616005)(110136005)(8676002)(66476007)(66946007)(83380400001)(66556008)(2906002)(38100700002)(31686004)(83170400001)(6486002)(508600001)(31696002)(186003)(5660300002)(6666004)(966005)(42882007)(316002)(45980500001)(43740500002);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?b0JtaXJzSFk4K2lkeGJMSXJ1YjJ2NnNPdzZLamwyRFpIUCtwaEYyYytVMHNC?=
- =?utf-8?B?T0JtcDdLVEV0OU5vcFR0ZmhwTnhJaE0rZTVzNU43SjV5SVVHSDFkOEp1QUpN?=
- =?utf-8?B?TnlsTzQ0RGJyMEtGVnc5V21lazZ5MUNMblROZE8xbnZvMGMzZDdSa21OWnBu?=
- =?utf-8?B?UEtVbGQ0Nm4vZjVvRCtlWHhCODNoWFNGdGgxUlJlNXZyVGkrcFc2RGhtMkU1?=
- =?utf-8?B?aWl5SjNEQVdwQ0hkZGlmRCtSaDEzYzFGeTdKUTgvSkwzNC9qcXhTbWVhRmpL?=
- =?utf-8?B?a3VnT1BQWlo5MHEvSWlqM2RXODBTZUZPOThBeEdFNkNib25wZTFXWHR1b0xF?=
- =?utf-8?B?UnNmelNZV3JrLzFkc1JRNzV0ZFVSQVVxV3ljZFRoYzNUVGVvVlo1aWlHMVFj?=
- =?utf-8?B?QkEwaHZLN3JLK253bnBGSCtnbGY5UHhxckkyY0FvKzlZMGRISkl2bjh0b21O?=
- =?utf-8?B?SmZ6TE1BbEhKc3hZNkkzQm4wYlZOM0tTam9NcmNhc1dMdkZ3LzZreTludUxQ?=
- =?utf-8?B?Skt4SHFpY3l1MldFYzgxMkMrb1laOFoyQm1wa1pRUFdGU1p0eXZ2dlVlMWM0?=
- =?utf-8?B?T0tUSkhpbzE5US95YzczWW5VYzlBUktYdGg5SHI5QlF5WGt5empPVHhmWWpa?=
- =?utf-8?B?YVFuRC96QkZJdXhLSU1JTDZ2bzR5M01pNHM5RGpxM1pla1pGYTJzU085ZjZM?=
- =?utf-8?B?SVRPRGU4YmQwejh4aGYySEJUWUFGdUhLUGJDSHlUNU1yVWg3a0VOT24yZ3BO?=
- =?utf-8?B?NnFiK3d1RU83bGc3VUx4Q0cwb1NneFk4ejNvckNuQXNjWERLcEFEenkyM1NS?=
- =?utf-8?B?RDhrZEVsSDVtYnA1Zk5oN0dwU080eXFtd2dZc2lWbmRPQmJZNTdwWXV3V0t2?=
- =?utf-8?B?cnZDWC8rYjBsRHNTOXpHQ1BKRzFLeWZKaTluQ1F5dkdEK3NQaVpDRTUwb3Ew?=
- =?utf-8?B?UzQ0MFpEWUt1ZEtTeUg1WjdYcFJ2SFg4bk1HZWkzejJEQ09TQlQ1RVpaaGtX?=
- =?utf-8?B?S0FjUkJ6bFBTYWxwSUx6OTA5ckFCeVdyVGhXcXB0cmozKzN2QUdsRmxzcFU1?=
- =?utf-8?B?eElGUE1iWG42Mnc1MDVGcldEMnhjOUVvazlzWVdBcDVINjB3V1cwRUdNRTd6?=
- =?utf-8?B?WHg2TUtlVEMrRytzbkpoWXVKQVludTl4MHpIZ2NOQjVQc1NjVGhvRTAyQ2VI?=
- =?utf-8?B?cGJ6Wkd0dVFEblJvYWNOaW14WkFPOWNCVXQ2bnZZTkpmMENEdXV0d2FWNHNl?=
- =?utf-8?B?bmYyZFAwQzZPVXE2clI2TjF2bi9xWEpVRWxNajhmYXdCVzUrN05RQk56N01n?=
- =?utf-8?B?WWUwR3oydWZIa0w4dUJxbVorWnh1d1dRQmcwakZNaURhaHpsbEJ5eE9HeEM0?=
- =?utf-8?B?WXQ5MGZFRGkveGNCYTlGb1dyNmNhZ3VoalhpeUoyY29sNjNucHZ2WlRhOFJs?=
- =?utf-8?B?VUkyaEorRlF5N0E5VkFLcHQxc0psTmNJeXJMZHdXQTQyQmZpWk5KTnYyYVQy?=
- =?utf-8?B?dkdPNDV1bmtwQmpTRHdEa3JyZDZMbmxVbjdqemVOY1UxbzRUVno3UkN1clJ5?=
- =?utf-8?B?NDFXWHpDWml2cnM3c011a01mS3VXQWN2QlVabnNqNTRyZmZIZ0RVRmpDc1FT?=
- =?utf-8?B?VnlyUFNYZnpzWHd5Z2dZRCsyLzF2R0pOTk1rVGxkVXgvNFNFK1JjbmlRdWV4?=
- =?utf-8?B?M0lMKy9jVERHT1NXZW1wdHhlZi9NQUhGcWNJNXlJNCtlQzlOOWtoaVBETkpT?=
- =?utf-8?B?K0RoYnZXZGtPM2JIWm5wbmNSaGhXbWdnWnVidVNYU0hYVkNhRjNKVUw5SW9P?=
- =?utf-8?B?V0I1THNhVXNNaXNoWVo2dE9FL0d2QXJrZHhSR2RwUENGeGQ1RUdJMThxUGVn?=
- =?utf-8?Q?llK3G8Z0eeuGk?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Wk5oR0FFV2duMGNjQ3BOd2J4Z2pCMU9mTFAvd1dZVkw2UVB2Q1RTOENGS0g1?=
+ =?utf-8?B?citoUUFIRkFhdC8vNTJtM2VFdHlSWGxaRTc2bVJQQVpodDdmTVdmV1FnT3FZ?=
+ =?utf-8?B?WnM2ZHFiTEFOa3U4SlhNRUpqN3ZDMVFZQ0RpengrdjI1Y3JtZzdJbzZJYzJH?=
+ =?utf-8?B?NlNvSnBnOU9wS0J2Tk9rYWgzZkwzQ1ZXaUthbmhJMzAvSDQvTUt5aEQrSXFj?=
+ =?utf-8?B?SDVOa0g2dE1jQ1pUREp5OUtxVjMrSDVjRlVKeUs5a1FMQlByYlNGaGFyQUt0?=
+ =?utf-8?B?RjVESE5JTXN5bVloUkRtYzEvN1dkTVZyVmMyS21oTWxsdVo2N21zb1NXYk9J?=
+ =?utf-8?B?MlFxWjRnM2F4em5PMCtyaGhYMHRMeTU3SS95Z2srVTNVcDJzK3F4ZytkSTQ4?=
+ =?utf-8?B?MjFQWnloaHZsOGJiSnh3d0lEb3A0MVlWK0FGdHdYSWw4QVpBVWZkWld2dTQr?=
+ =?utf-8?B?S3ozT2d1bkN1T3d0QmdBQXprQWUrcHlnNnJQZHFycWRaT0twTGdEVUMwN0pl?=
+ =?utf-8?B?eHJiZzBaWGtXc1AwNk0xWWNlV1Ywbzh1aEowbm14UmhrRTNqS0gwSWdhLzQz?=
+ =?utf-8?B?VWU0MEI5Q0d3UE1nempyYUltajRsaFJONGNWTXF2Zmx0dkRNSGpDUkRMY1Fh?=
+ =?utf-8?B?N0RDMTNTV1N5UXFpOFBYSTFJRkR5SnBFeVVsbzVwVFRLVW04Um5OeHRqb21v?=
+ =?utf-8?B?SzhwU2lRNmFyM3dDTEM4UkR5K2xDbVY3a2NYSCt1TnMwZzJ0cHg5UnNvUVl3?=
+ =?utf-8?B?Z2VYbU5MbDJyRmNYaW16OGFSd3ltOEQ1alVNdmJsKzF4d3VnZ1N1MVVTV3JO?=
+ =?utf-8?B?eFJLZ1dFZGFWOG1adzFoZ2QrdHI0VVBqQUlYMHc5cktyZ1FSd0owdlBzdUZw?=
+ =?utf-8?B?cTBHVC9ycWw2WWFud2JCNkhQWmhMZkxqR2tBYkZWVGRRMnVQUTFycG03eWdw?=
+ =?utf-8?B?US8zRUlJTENtWkcraGFHUDBVbXdzZ3pWWFFubGRhVndIK0Y0aXRWbkpHZXNQ?=
+ =?utf-8?B?ajBQV1pyQmY5S2RrZFRGVUhMdFRPVnB4ZG9qenI3M3JvR3YxTWpVcHFCeCtE?=
+ =?utf-8?B?UkQwcXppbzZMYUZ1Tmh3N3NkMkpYQkxyb2Z5aUNwR2s1NVNzOXZZVk81UVpX?=
+ =?utf-8?B?dnlxTHMvVWxIb0JXUVBQQVlWbzFMclJ3UmpVUTFYTUh5Yit3cXYrVFEya1Ir?=
+ =?utf-8?B?cU9JMWFCTUlCT1ZPU1NPSEpicUd1WDVmQnRuUVRnYXNpWWZWNnZHSWp4RkZY?=
+ =?utf-8?B?eVFIei9NaXhIU01pRFJ5V0xvazk2dkNNOGVuNU1wNGF6RGk1WXlpMWdJWWpK?=
+ =?utf-8?B?Yysyb1R4N3lVOFJ6S2kzczVlbXROYVIvZ0t4Z29SU0cxYXBUYmpGZlVyN0d1?=
+ =?utf-8?B?NWdKMmpxdS81a3YreGFqSGgwR3l6Q2FmaWhGNWQ1OVU1bCtyb0QyZHNyNTBE?=
+ =?utf-8?B?WHVjMVBMQkRxNjFCYzZJUCs4MEZ6cTdRT2JPOWk5MjJISHMvOFVsekI4OGhl?=
+ =?utf-8?B?LzQ5amdhUkQrcFRqVExuT09tYkhVQVNWd2FhVE0yQ3RVYUIrVkhzQ283UWUw?=
+ =?utf-8?B?a2V6Y0VCU0JTdVRQbnhKY2tUT0hwc25Kb1NNVE4xTStqT0I1dTg3dWtZd0Jx?=
+ =?utf-8?B?cURCdjFoVFJEYjUvVm5OS0JUMi83ZWJCKzVtdWFick9HR1QySFFXVEZrZDFS?=
+ =?utf-8?B?emI0NU5vVndicmFQKzhITkJFWWxxSGVOZXAvdTRGY0JwaklmS3FYZlpqSndH?=
+ =?utf-8?B?b3pZdnBFV0xaVXZOWExTYTRjMDdFZ1dDVzB1blFESFVNT21VanZuY1NRb0VW?=
+ =?utf-8?B?UExYY0Zxd3VpS0NsOGEreWZqY2RVR216YkxDS1Q5NEFsL2g3UEhpeFVJamVP?=
+ =?utf-8?Q?ATy4iWE5gzBmb?=
 X-OriginatorOrg: amperemail.onmicrosoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b193447-5214-4054-dd9c-08d98b1a988b
+X-MS-Exchange-CrossTenant-Network-Message-Id: 891577f8-21e4-48c0-6e8a-08d98b1d364d
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2021 11:47:39.6028 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2021 12:06:23.1911 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: RyZGqOvopkO+moDlIepckQM2j0i8lxIvnU3H3l4CVi9KB2F68EXZiIznwYi819hJxbvOUkGmoaiLOun6W+EYlGY8/kG9m/oKgGVfjBF9dqs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR01MB2796
+X-MS-Exchange-CrossTenant-UserPrincipalName: gfnRVdT904pT5xSVRpG/Nvvz75e56ScZSOFzfHZhySPUdrMIUqOmgXwP4546lrD5qmcOWT8EXJKcE3+pYjKqghLjWpTtrLcrKSCaUI7UL6s=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB5835
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -143,26 +144,25 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Chicago Duan and George Liu,
+Dear All,
 
 
-In PLDM source, I saw that Inspur supported graceful shutdown the host 
-OS thru PLDM commands.
+In Ampere Computing, we are starting on supporting PLDM 
+sensors/events/status in openBmc.
 
-https://github.com/openbmc/pldm/commit/184f60263a0e4c3dda934d94ecb2a904ef835299#diff-59fd39a9594f6d6f82af25037f211858fafa418aacc055e85b4cc29abccf9dee
+Research the openBmc specs, I do not see much spec about the PLDM 
+sensors/events/status.
 
-The feature used PLDM Platform SetEffecterState command to request the 
-host OS shutdown.
+I only see PLDM stack.
 
-I wonder which part in the host software will response for this PLDM 
-request?
+https://github.com/openbmc/docs/blob/master/designs/pldm-stack.md
 
-Does the host OS ( Centos, Ubuntu...) directly handle this type of command?
+Do we have any others spec for PLDM sensors?
+
+Do we have any team working on PLDM sensors before?
 
 
-Thanks.
+Regards.
 
 Thu Nguyen.
-
-
 
