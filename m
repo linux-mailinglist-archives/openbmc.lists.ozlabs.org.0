@@ -2,91 +2,97 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7ECBC429946
-	for <lists+openbmc@lfdr.de>; Tue, 12 Oct 2021 00:00:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 92C9B4299C7
+	for <lists+openbmc@lfdr.de>; Tue, 12 Oct 2021 01:22:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HSt5P1DcQz2yYS
-	for <lists+openbmc@lfdr.de>; Tue, 12 Oct 2021 09:00:25 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=mERCAQ/+;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HSvwH1msFz2yQH
+	for <lists+openbmc@lfdr.de>; Tue, 12 Oct 2021 10:22:39 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=mERCAQ/+; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=dave.hansen@intel.com; receiver=<UNKNOWN>)
+X-Greylist: delayed 124 seconds by postgrey-1.36 at boromir;
+ Tue, 12 Oct 2021 10:15:38 AEDT
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HSt506Gycz2yMH
- for <openbmc@lists.ozlabs.org>; Tue, 12 Oct 2021 09:00:04 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19BKfhsa002292
- for <openbmc@lists.ozlabs.org>; Mon, 11 Oct 2021 18:00:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : content-type :
- subject : message-id : date : to : content-transfer-encoding :
- mime-version; s=pp1; bh=GfgGbPV608JxStEGPHZg1QacBsLsIXLN5meMX2Og9Ow=;
- b=mERCAQ/+AsygmFU5BCRcooaRC4vkJ3kZzqMcPyojfkIhuqX+BLX/iOw53DP0ud0JAfdW
- dLwqH63TCiMpGAGakbrg8w1lIS0ZNEih9YpaYUhZGUVnunRPRGSKbDms+8lSLlGjqZbi
- CZEiqfBKe6D6qIaO+RfLS3pUDhRhmgEmPQZ4bSE530b/o9ba97Y+48IE5k3+a/3Iv7aP
- Y3/ReHTbWCxJv4v8Yi33InRe+Wh7J3HXyXbe68zpYt5L6Jr6SUgPK8vYNUNAfy0wLQfl
- 7fdBFghtwCxiQOU09QXAky7F/3G3S2oMRICNcqYC9b8A3j/qxfrTMQo4ju1ys+y/kv14 8Q== 
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3bmqhy0b9t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 11 Oct 2021 18:00:02 -0400
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 19BLvGAe015101
- for <openbmc@lists.ozlabs.org>; Mon, 11 Oct 2021 22:00:01 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
- [9.57.198.25]) by ppma01wdc.us.ibm.com with ESMTP id 3bk2q9xvu3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 11 Oct 2021 22:00:01 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 19BM00RV29360620
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Mon, 11 Oct 2021 22:00:00 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B7122124058
- for <openbmc@lists.ozlabs.org>; Mon, 11 Oct 2021 22:00:00 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A2C7124053
- for <openbmc@lists.ozlabs.org>; Mon, 11 Oct 2021 22:00:00 +0000 (GMT)
-Received: from smtpclient.apple (unknown [9.160.123.215])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Mon, 11 Oct 2021 22:00:00 +0000 (GMT)
-From: Adriana Kobylak <anoo@linux.ibm.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Subject: Changing the os-release BUILD_ID back to its default value of DATETIME
-Message-Id: <E9902E4C-0786-400D-8920-9D1FDCBE001F@linux.ibm.com>
-Date: Mon, 11 Oct 2021 16:59:59 -0500
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: OrYktk7chdNC7LJMbrBhqFhs23XrbFhN
-X-Proofpoint-ORIG-GUID: OrYktk7chdNC7LJMbrBhqFhs23XrbFhN
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HSvmB4hb3z2xt7;
+ Tue, 12 Oct 2021 10:15:38 +1100 (AEDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10134"; a="207109355"
+X-IronPort-AV: E=Sophos;i="5.85,365,1624345200"; d="scan'208";a="207109355"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Oct 2021 16:12:25 -0700
+X-IronPort-AV: E=Sophos;i="5.85,365,1624345200"; d="scan'208";a="490674153"
+Received: from vg1-mobl2.amr.corp.intel.com (HELO [10.212.193.198])
+ ([10.212.193.198])
+ by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Oct 2021 16:12:23 -0700
+Subject: Re: [PATCH v2 01/15] x86/cpu: Move intel-family to arch-independent
+ headers
+To: "Winiarska, Iwona" <iwona.winiarska@intel.com>,
+ "bp@alien8.de" <bp@alien8.de>
+References: <20210803113134.2262882-1-iwona.winiarska@intel.com>
+ <20210803113134.2262882-2-iwona.winiarska@intel.com>
+ <YVtQG+idmwKn0qLe@zn.tnic>
+ <58ef4107e9b2c60a2605aac0d2fb6670a95bc9e0.camel@intel.com>
+ <67f2cfda-c78b-6282-f5a3-2f345f8e2849@intel.com>
+ <43e367e452c6c8d9c6a275299d7ff6f2bb26b8e3.camel@intel.com>
+From: Dave Hansen <dave.hansen@intel.com>
+Autocrypt: addr=dave.hansen@intel.com; keydata=
+ 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
+ z5cecg==
+Message-ID: <18cd5f4a-452b-f043-5686-fc5af47eb5ac@intel.com>
+Date: Mon, 11 Oct 2021 16:12:20 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-10-11_10,2021-10-11_01,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0
- mlxlogscore=999 spamscore=0 malwarescore=0 bulkscore=0 priorityscore=1501
- mlxscore=0 suspectscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2109230001
- definitions=main-2110110119
+In-Reply-To: <43e367e452c6c8d9c6a275299d7ff6f2bb26b8e3.camel@intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Tue, 12 Oct 2021 10:22:06 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,58 +104,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>, "Williams,
+ Dan J" <dan.j.williams@intel.com>, "zweiss@equinix.com" <zweiss@equinix.com>,
+ "jae.hyun.yoo@linux.intel.com" <jae.hyun.yoo@linux.intel.com>,
+ "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+ "corbet@lwn.net" <corbet@lwn.net>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "x86@kernel.org" <x86@kernel.org>,
+ "pierre-louis.bossart@linux.intel.com" <pierre-louis.bossart@linux.intel.com>,
+ "mingo@redhat.com" <mingo@redhat.com>,
+ "linux@roeck-us.net" <linux@roeck-us.net>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "jdelvare@suse.com" <jdelvare@suse.com>, "arnd@arndb.de" <arnd@arndb.de>,
+ "robh+dt@kernel.org" <robh+dt@kernel.org>, "Lutomirski,
+ Andy" <luto@kernel.org>, "tglx@linutronix.de" <tglx@linutronix.de>,
+ "mchehab@kernel.org" <mchehab@kernel.org>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+ "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>, "Luck,
+ Tony" <tony.luck@intel.com>, "andrew@aj.id.au" <andrew@aj.id.au>,
+ "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+ "rdunlap@infradead.org" <rdunlap@infradead.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "yazen.ghannam@amd.com" <yazen.ghannam@amd.com>,
+ "olof@lixom.net" <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+On 10/11/21 1:53 PM, Winiarska, Iwona wrote:
+>> If you're in include/linux/x86-hacks.h, what prevents you from doing
+>>
+>> #include "../../arch/x86/include/asm/intel-family.h"
+>>
+>> ?
+>>
+>> In the end, to the compiler, it's just a file in a weird location in the
+>> tree.  I think I'd prefer one weird include to moving that file out of
+>> arch/x86.
+> Using relative includes in include/linux is uncommon (I can see just one usage
+> in libfdt.h pulling stuff from scripts), so I thought I can't use it in this way
+> (seems slightly hacky to pull stuff from outside include path).
+> 
+> But if that would be ok, it looks like a good alternative to avoid duplication
+> in this case.
 
-There has been some discussion in Discord on how to work around the "Same v=
-ersion" limitation during fw updates, and having a timestamp field that cou=
-ld be used to generate a different version id (commit id plus timestamp fie=
-ld) for every build seemed had positive support in the discussion.
-Also at IBM we were looking for a field that could display the date of a bu=
-ild, such as the release or general availability date.
+If you don't want to do it from a header, you can also do it directly
+from a .c file that's outside of arch/x86.
 
-Looking at the BUILD_ID description[1]:
-
-BUILD_ID=3D
-A string uniquely identifying the system image originally used as the insta=
-llation base. In most cases, VERSION_ID or IMAGE_ID+IMAGE_VERSION are updat=
-ed when the entire system image is replaced during an update. BUILD_ID may =
-be used in distributions where the original installation image version is i=
-mportant: VERSION_ID would change during incremental system updates, but BU=
-ILD_ID would not. This field is optional.
-Examples: "BUILD_ID=3D"2013-03-20.3"", "BUILD_ID=3D201303203".
-
-The yocto recipe for os-release sets BUILD_ID to DATETIME by default[2].
-
-At the beginning of time, the BUILD_ID in openbmc was set to have the conte=
-nts of git describe[3]. Its contents now are the same as VERSION so we have=
- duplicate information:
-VERSION=3D"2.11.0-dev"
-VERSION_ID=3D2.11.0-dev-566-g263df7f852
-PRETTY_NAME=3D"Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)=
- 2.11.0-dev"
-BUILD_ID=3D"2.11.0-dev"
-
-If we let the default DATETIME value be built, it'd show in this format:
-BUILD_ID=3D"20211007135305"
-
-To re-generate the same image, BUILD_ID can be determined from the image fi=
-le names, such as:
-obmc-phosphor-image-p10bmc-20211007135305.ext4.mmc.tar
-
-Then BUILD_ID can be set in the conf file, and the image for that timestamp=
- can be built.
-
-Also individual meta layers can choose to set BUILD_ID to any date that the=
-y seem relevant for their releases.
-
-Any opinions on changing BUILD_ID to its yocto default of being a timestamp?
-
-
-1. https://www.freedesktop.org/software/systemd/man/os-release.html#BUILD_I=
-D=3D
-2. https://github.com/openbmc/openbmc/blob/3fc98fdca6aa7512a4656bec7422f557=
-c8e17555/poky/meta/recipes-core/os-release/os-release.bb#L23
-3. https://github.com/openbmc/openbmc/pull/78=
+I think that's a much better alternative than moving stuff elsewhere.
