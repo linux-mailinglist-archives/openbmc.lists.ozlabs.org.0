@@ -1,66 +1,97 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34E9A4292AA
-	for <lists+openbmc@lfdr.de>; Mon, 11 Oct 2021 16:57:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF234429581
+	for <lists+openbmc@lfdr.de>; Mon, 11 Oct 2021 19:22:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HShjD4vbCz2yKZ
-	for <lists+openbmc@lfdr.de>; Tue, 12 Oct 2021 01:57:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HSlwM60JBz2yZ2
+	for <lists+openbmc@lfdr.de>; Tue, 12 Oct 2021 04:22:11 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=f7CuQjNh;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=bkaRPCjr;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=kin+RAQ2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::536;
- helo=mail-ed1-x536.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=f7CuQjNh; dkim-atps=neutral
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com
- [IPv6:2a00:1450:4864:20::536])
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm3 header.b=bkaRPCjr; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=kin+RAQ2; 
+ dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HShhp4Q9Mz2xY6
- for <openbmc@lists.ozlabs.org>; Tue, 12 Oct 2021 01:56:57 +1100 (AEDT)
-Received: by mail-ed1-x536.google.com with SMTP id z20so68771098edc.13
- for <openbmc@lists.ozlabs.org>; Mon, 11 Oct 2021 07:56:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=+Pd6bHAS4Qps0SV9PiOU96qawgdI/awNMmIuTUTGa7I=;
- b=f7CuQjNhtmzDTPfeqPtg0xheoqXh7rcZNOiPtD85eAAyVHfZUNTaIAbKBkXDNxOpSS
- pK/aH/K0loWBWrfx3AsUgdTAdW7Myb8BD3VDs1XaQQt8I6hrdVbX5rhW6kMXARQUsouJ
- NaMQVyF6zWX9/rhRFVI7UoRBA8VXG3UEqnDcWZgFukfPQNufI0+CM6opj3fVSvjHamdg
- hv1Xwmn9HU4dTBSzbIbH1X+NIHeDMaTG2yPyDTD+3Rtxn/f7zLu7j/duIKlQ97Uty8jK
- xje/r3+fg61mHFepFf68rEk+jKFgm2SbXbD6qYft6yfwYGc/870RSOta1mz0DIJtEaVA
- /MSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=+Pd6bHAS4Qps0SV9PiOU96qawgdI/awNMmIuTUTGa7I=;
- b=dMHtCccqxeYvpsQiivVinFxZZbwqrp4oK9TB5lfeFOPf4VWnmxViTaMKjx/GcYE9wX
- 6/D7zecEt948hCx1SrubbkNGOTrIN32XBAesne+5z8pfnq+9Lrdn+N8dLt3i1Whqy3rn
- wpO/v0spU0GO4PgFr5QlhaKccZEKxmLNI8jn6ywqCK97kseIl4M40JCsFUpOQ1kc5M1b
- rRZxRF2+BfhwDkzWMYb2dTyvavgtrenaT+Zm/xXanUhpj8dFx/z7qyO65hfzMVWta9vy
- MtW7CmkxLlnn6O+JY1z1ZPnJ4jiFMz3a5iGvUxpq2X4senTq4W4pYrpxFjaTvmcXxIv8
- xQkg==
-X-Gm-Message-State: AOAM530Yi3zgF4Yjcai+5gY5jZveLH/MaZeW33XympSfRyds9oP1cnUI
- Mde3rgrjgxS2aHpeXStK1qQvcaXuVGiRJjtlc91A1JYySO0=
-X-Google-Smtp-Source: ABdhPJymFLZ4Dx2yxnPgsPL4d/4nHhRGfkkKsrP8QWKxWcOk6LpFPSdWI8zHq/VAo9e8BCEYQ6wXX5SYmWy4frB76gE=
-X-Received: by 2002:a05:6402:40d0:: with SMTP id
- z16mr42894982edb.220.1633964210863; 
- Mon, 11 Oct 2021 07:56:50 -0700 (PDT)
-MIME-Version: 1.0
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Mon, 11 Oct 2021 20:28:42 +0530
-Message-ID: <CAA7Tbcs_YbUpD-cQo2x7XpYgFyeoYT7hkWwZ_rMCf2N+6y0BTw@mail.gmail.com>
-Subject: Implementing Shutdown interfaces like Critical/Warning interfaces in
- Dbus-sensors.
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="0000000000005d437c05ce14f0f2"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HSlvs1lchz2xfH
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Oct 2021 04:21:44 +1100 (AEDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+ by mailout.nyi.internal (Postfix) with ESMTP id 8A8185C00C8;
+ Mon, 11 Oct 2021 13:21:35 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute6.internal (MEProxy); Mon, 11 Oct 2021 13:21:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=content-type:mime-version:subject:from
+ :in-reply-to:date:cc:content-transfer-encoding:message-id
+ :references:to; s=fm3; bh=nB6EmuvPxZHkHQCVca1fhv2At2uQjR0HLLPnMh
+ eHWM4=; b=bkaRPCjrgWWt+EbmUZ40dQMHA0THD7eeux44Fn1f9y8E9BfUNe/BRD
+ ggt4OvqL6w47FvHn+3gDU6vS+IQuH2HXx+DsEJaRebTQffJ6VXduoEJKuYd7Nxl8
+ V9DRnZwlAdlnf+bWyVQlZwonbVlYBuC/ZCOc9p8xMoleRzD6pfysmjpu0SUHmqKQ
+ i890a3g4XDpXVmWQsbUJAzeoQyhqa8PGaJRCZwJ86ScuM5+C9uGfZA3p/mnN/EyC
+ e7mCzIjftwt1r3h1yc5r8snjj+B63Y79U047CM+kSv6DXPmnDH46ISxkbRjFTK3R
+ PnyNkr9OgEimRIals4Oz5VS1DfzcuxKg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; bh=nB6EmuvPxZHkHQCVca1fhv2At2uQjR0HLLPnMheHW
+ M4=; b=kin+RAQ2+B6A5jSTs20wCk8fS2uyxkFUbC89B5ifAgHJXLDg1nT2yo1iO
+ +1lt+NcQnH4a//hAP4aGva2kgPu7CIXJnOWqa8UswvVCWXd6OWP/tQbDyKV0eDQJ
+ rGvTHGgzyirXpagJ31xvOq/blN2tngbiYvF/qVMrBDQmk8yQZUaL3zaR9R9bHQGl
+ KpXldgBYEQ/1ShK1SBMqVQiwuFap6mgptFzBycMUT097dI74RJmOmuJWX9pLvpHo
+ Yzh28R9qYxzoLD7AMh4xen/rUcgRR67kULMkAuvFN7Oigzsn3ciy+bkRhTPyPwsi
+ igNJSZH2GnM/0hBJcL/kccRppst+g==
+X-ME-Sender: <xms:n3JkYaOXKmr5hpGcCqoKdERgZU5SKTlRjxN25nw2VCVJthwCfRtYrQ>
+ <xme:n3JkYY8emeS9D9EQZ3KA_q7n9aRm9N5Jgi5vIxhE5-3OJPyPWhYyQZT7UxLXEfiVM
+ mURCDVsAQqMyKXbmNw>
+X-ME-Received: <xmr:n3JkYRTV2guZS--N3i1_8UhaFAf9I8hZnWdG9HktJNuErGQYvxw9n1Z4zE4a268TWfrU6A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddtiedguddtjecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpegtggfuhfgjfffgkfhfvffosehtqhhmtdhhtddvnecuhfhrohhmpeeurhgr
+ ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
+ homheqnecuggftrfgrthhtvghrnheptdethfdtgedufeetgefgteeulefgffeivdehieef
+ hfdtgfelvddvheekgfefueefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+ hmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtgho
+ mh
+X-ME-Proxy: <xmx:n3JkYasd8LKuyLFPH6BbwoQDeUCF977rNTNI3ZsH3AiQEs8lWXRj6w>
+ <xmx:n3JkYScIzMotIF2p7KorG1Qx7OFyzhLume824YjRFfYnPVGlvvRz8g>
+ <xmx:n3JkYe0eDX-xVncD9JQ49DUx8LjQjpqQJFDm_VPn4JNRn1WmOLyuAw>
+ <xmx:n3JkYTpTywAZhOalZy3qZcbtkBICBpcrz3_SZ2STx1GRKGyqb7CCGg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Oct 2021 13:21:34 -0400 (EDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: OpenBMC
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <BY5PR04MB642185E5B4FFBAFCAC253259DCB29@BY5PR04MB6421.namprd04.prod.outlook.com>
+Date: Mon, 11 Oct 2021 13:21:34 -0400
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <C24B224E-DDEA-4573-9090-49EB4FD602F0@fuzziesquirrel.com>
+References: <BN6PR04MB02751CA806D404FA7CA19855B9819@BN6PR04MB0275.namprd04.prod.outlook.com>
+ <BN8PR04MB6164B5E8966F9438F0180DB8B9809@BN8PR04MB6164.namprd04.prod.outlook.com>
+ <17a3b0e5-4613-8388-ad69-427c41439343@gmail.com>
+ <BY5PR04MB6421D6EB8BF4D9EB43BE0024DCB29@BY5PR04MB6421.namprd04.prod.outlook.com>
+ <BY5PR04MB642185E5B4FFBAFCAC253259DCB29@BY5PR04MB6421.namprd04.prod.outlook.com>
+To: Janny Au <jannya@hyvedesignsolutions.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,54 +103,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Zhikui Ren <zhikui.ren@intel.com>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Andrew Jeffery <andrew@aj.id.au>,
- Ed Tanous <ed@tanous.net>, Amithash Prasad <amithash@fb.com>,
- velumanit@hcl.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Phil Yeh <phily@hyvedesignsolutions.com>,
+ Eric Kuo <erickuo@hyvedesignsolutions.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000005d437c05ce14f0f2
-Content-Type: text/plain; charset="UTF-8"
 
-Hi All,
 
-We have a use case of triggering alarms for Soft/Hard shutdown interfaces.
-Based on these alarms, I need to power off the slots.
+> On Oct 8, 2021, at 5:12 AM, Janny Au <jannya@hyvedesignsolutions.com> =
+wrote:
+>=20
+> (Sending again for clarification...)
+>=20
+> Dear OpenBMC team,
+>=20
+> I am the current CLA Manager for Hyve Design Solutions.  Would you =
+please help me change the member list?
+>=20
+> Janny Au (CLA Manager) <jannya@hyvedesignsolutions.com> (removed)=20
+>=20
+> Phil Yeh <phily@hyvedesignsolutions.com> (new CLA manager)=20
+>=20
+> Jennie Ho <jennieh@hyvedesignsolutions.com> (removed)=20
+>=20
+> Luke Lin <LukeLin@hyvedesignsolutions.com> (removed)
+>=20
+> Regards,
+> Janny
 
-Critical and Warning interfaces and alarm created based on the sensor
-threshold Severity value. Please refer to the below code.
-https://github.com/openbmc/dbus-sensors/blob/master/src/Thresholds.cpp#L116
+Hi Janny, please just fill out the Schedule A page again and send it to =
+me.
 
-Already we have Severity 0  for Warning and Severity 1 for Critical.
-We can have Severity 2 for Softshutdown and Severity 3 for Hardshutdown.
-
-So, Based on the Severity value, the soft and hard shutdown alarm will set
-as true.
-Then the sensor-monitor application would take the action based on the
-soft/hard shutdown alarm.
-
-Could you please provide your suggestions on this.
-
-Thanks,
-Kumar.
-
---0000000000005d437c05ce14f0f2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi All,<br><br>We have a use case of triggering alarms for=
- Soft/Hard shutdown interfaces. Based on these alarms, I need to power off =
-the slots.<br><br>Critical and Warning interfaces and alarm created based o=
-n the sensor threshold Severity value. Please refer to the below code.<br><=
-a href=3D"https://github.com/openbmc/dbus-sensors/blob/master/src/Threshold=
-s.cpp#L116">https://github.com/openbmc/dbus-sensors/blob/master/src/Thresho=
-lds.cpp#L116</a><br><br>Already we have Severity 0 =C2=A0for Warning and Se=
-verity 1 for Critical.<br>We can have Severity 2 for Softshutdown and Sever=
-ity 3 for Hardshutdown.<br><br>So, Based on the Severity value, the soft an=
-d hard shutdown alarm will set as true.<br>Then the sensor-monitor applicat=
-ion would take the action based on the soft/hard shutdown alarm.<br><br>Cou=
-ld you please provide your suggestions on this.<br><div><br></div><div>Than=
-ks,</div><div>Kumar.</div></div>
-
---0000000000005d437c05ce14f0f2--
+Thanks - brad=
