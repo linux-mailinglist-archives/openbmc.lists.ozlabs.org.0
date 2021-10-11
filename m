@@ -1,59 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE4FE4295C8
-	for <lists+openbmc@lfdr.de>; Mon, 11 Oct 2021 19:35:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86FEE42960B
+	for <lists+openbmc@lfdr.de>; Mon, 11 Oct 2021 19:48:09 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HSmD13B7sz2yV4
-	for <lists+openbmc@lfdr.de>; Tue, 12 Oct 2021 04:35:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HSmVH1DH6z2ybB
+	for <lists+openbmc@lfdr.de>; Tue, 12 Oct 2021 04:48:07 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=irpmmvZa;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=KGAnLsdC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42b;
+ helo=mail-wr1-x42b.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=irpmmvZa; 
- dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [IPv6:2605:2700:0:5::4713:9cab])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=KGAnLsdC; dkim-atps=neutral
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
+ [IPv6:2a00:1450:4864:20::42b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HSmCZ5KgVz2xrg
- for <openbmc@lists.ozlabs.org>; Tue, 12 Oct 2021 04:35:21 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (71-212-29-146.tukw.qwest.net
- [71.212.29.146])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id D272312B;
- Mon, 11 Oct 2021 10:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1633973711;
- bh=37FA9CA4jkUipLpx6mASR21lCskkzjZexvQxoi2xAds=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=irpmmvZaPGMwlOIi9xZHr3WBV5ncQWV2tnQ7+PODTjtFt/nLyMkYsSujDA1/KBMDH
- C7Q552FOG8yEcEz8F7jAtrlZ65FGfi3sqnSaQPCcIrfrEa56FbPZ/m6A9dB5SxQlVW
- BF6O/6HS+yaMjymyFad5ZFyQu2ObOVmlZ5Lr6w+4=
-Date: Mon, 11 Oct 2021 10:35:05 -0700
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Frank Rowand <frowand.list@gmail.com>
-Subject: Re: [PATCH 6/9] of: add support for 'dynamic' DT property
-Message-ID: <YWR1yRmcFU66DnO5@hatter.bewilderbeest.net>
-References: <20211007000954.30621-1-zev@bewilderbeest.net>
- <20211007000954.30621-7-zev@bewilderbeest.net>
- <7bf5cfce-e84d-f0e8-e6e8-8e6fedffd154@gmail.com>
- <05e4c31e-db7e-e8f2-fa37-3cdcdf902e19@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HSmTr19HLz2xsW
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Oct 2021 04:47:41 +1100 (AEDT)
+Received: by mail-wr1-x42b.google.com with SMTP id o20so58506360wro.3
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Oct 2021 10:47:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=CD4U2BX4E+kiITaHGHSsl3DKnn2pX8JeFjnIxeL4Ask=;
+ b=KGAnLsdC3iq/1dgzHeU/gVbJi5IWN90UF2gZn+JHpSrlLQC3k7u375wwFGWJtvL13K
+ fCi5hMO2dpN70R9uMV9GAvmNd4Fy35j1ZSgMmC0Gtvk5z2cFjjMB66uO8jQvE+7ouJmS
+ 0AmSsx9V5I2bWVgVjRXFKlAtKQY86wMT1M8Dlnx/XnRuww/x7yu6wYMenS9vAa8LdaYy
+ pqUStlesafPeWn/IrLPp4ChpEQnCVcP4IjFiAyWyOIFxaifR348nJZfy1GLPaq2DgIkk
+ Ptun2jD5eZqnm7nVl75kc+GO+Fzi9HtADGeSp4Ra9wekxTfDS/BYxjTA9bqE85xpQqw5
+ zmTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=CD4U2BX4E+kiITaHGHSsl3DKnn2pX8JeFjnIxeL4Ask=;
+ b=bAjE7YZVBaX6dxh4BXzVWvxQe9YqMdgZi2HbEkKlE8iA12WF7PSCUU6kbbll/kGvi+
+ WPtaOXyw1g3bA7X9gpQ7uTWEwNe+Ctaud+DpWvBLtSLkKJw/AYSbvfM+RVYZS4ocr7dq
+ WOYEugD15ju+UjZWIJIx+fYr8mRha7fqePaAwk6xeOI8O1Zs5XJzWV2SgdhGKdB8z5+4
+ +8Ud6qkHlsLEI/JSbBejWzAGj1g5W61LT+oU3REowvgZwd5YxELRr70mZ+j/fgSY/g4P
+ zZ/H7Lku6btJ7UCM8i2OrwzAWV9pPfuv7RhRPECDrevjYmYs2H7zw0NJeV4w+bn7PMtQ
+ pcaw==
+X-Gm-Message-State: AOAM53157/JnIaoXLYTN0RxhQZqYeiKYCPwLyDu1BojKiVqKlRCcYM2u
+ M2RpJMBCfOWDgD3U3WSNvExUqpbFBniVARCwgzGruA==
+X-Google-Smtp-Source: ABdhPJxdXkHXLsEFZGXVxddslC426+PJoaOvqhNBtxp0SaQs/Vi8NPnDGk5eLDY2wabQ7Y4oFzSSCyEL6yDx0XE9Cls=
+X-Received: by 2002:a7b:c258:: with SMTP id b24mr389512wmj.160.1633974455754; 
+ Mon, 11 Oct 2021 10:47:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <05e4c31e-db7e-e8f2-fa37-3cdcdf902e19@gmail.com>
+References: <CAH2-KxDe6hR1V-Lz1k8cdD11jEquy4UhR4LfLhg37E5EG42EJg@mail.gmail.com>
+ <67dbec1b-8598-8814-e85e-848b2eb123cf@yadro.com>
+ <CAH2-KxDT9DTXp99d+eV-zNinLWhw9ihaHVLNQnVsQtB7X2ZkHQ@mail.gmail.com>
+ <a40d7b9c-8fb1-bf5c-1c31-3b426c0f0fa2@amperemail.onmicrosoft.com>
+ <CAGm54UGjh9QTAw_mPdPCpZ7WihTHYXRe0m=xCWrPmpvDb99p3Q@mail.gmail.com>
+ <CAH2-KxBpQbmBAedd63-1KORd9Z81D-gWM7oqQPU05Q=4S5XYzQ@mail.gmail.com>
+ <CAGm54UF82Xx_N0g2d0sOx8Yt0vZ--+eAk18cS_68nt2RPoL=pA@mail.gmail.com>
+ <CAARXrtnhAirRLo3EWM5=3KhjJWaWq1kPTeZ2=Yuec43Ebp1Y9g@mail.gmail.com>
+ <CAH2-KxCSosmLTXM2=m=cuG6X8=_MUW30ZgYEfbhGvdJXhWs-pg@mail.gmail.com>
+ <CAGm54UHq33wD5Fm6D59Mq=XwFrQvXQ0qdbV-CSRwNLuyfj06hg@mail.gmail.com>
+In-Reply-To: <CAGm54UHq33wD5Fm6D59Mq=XwFrQvXQ0qdbV-CSRwNLuyfj06hg@mail.gmail.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Mon, 11 Oct 2021 10:47:24 -0700
+Message-ID: <CAH2-KxDZD0hYdmrbainSHHKhtqp32a=aXmJg1WxyFOtGTSzCEA@mail.gmail.com>
+Subject: Re: [External] Re: New test for patches in openbmc/openbmc
+To: Lei Yu <yulei.sh@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,120 +82,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Rob Herring <robh+dt@kernel.org>, Jeremy Kerr <jk@codeconstruct.com.au>
+Cc: openbmc <openbmc@lists.ozlabs.org>,
+ Thang Nguyen <thang@amperemail.onmicrosoft.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Frank,
-
-Thanks for the thorough consideration on this.  (More inline below.)
-
-On Mon, Oct 11, 2021 at 06:58:32AM PDT, Frank Rowand wrote:
->Hi Matt, Greg,
+On Fri, Oct 8, 2021 at 7:18 PM Lei Yu <yulei.sh@bytedance.com> wrote:
 >
->On 10/8/21 1:51 PM, Frank Rowand wrote:
->> On 10/6/21 7:09 PM, Zev Weiss wrote:
->>> Nodes marked with this (boolean) property will have a writable status
->>> sysfs file, which can be used to toggle them between "okay" and
->>> "reserved", effectively hot-plugging them.  Note that this will only
->>> be effective for devices on busses that register for OF reconfig
->>> notifications (currently spi, i2c, and platform), and only if
->>> CONFIG_OF_DYNAMIC is enabled.
->>>
->>> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
->>> ---
->>>  drivers/of/kobj.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++
->>>  1 file changed, 69 insertions(+)
->>>
->>> diff --git a/drivers/of/kobj.c b/drivers/of/kobj.c
->>> index 378cb421aae1..141ae23f3130 100644
->>> --- a/drivers/of/kobj.c
->>> +++ b/drivers/of/kobj.c
->>> @@ -36,6 +36,69 @@ static ssize_t of_node_property_read(struct file *filp, struct kobject *kobj,
->>>      return memory_read_from_buffer(buf, count, &offset, pp->value, pp->length);
->>>  }
->>>
->>> +static ssize_t of_node_status_write(struct file *filp, struct kobject *kobj,
->>> +                                    struct bin_attribute *bin_attr, char *buf,
->>> +                                    loff_t offset, size_t count)
->>> +{
->>> +    int rc;
->>> +    char *newstatus;
->>> +    struct property **deadprev;
->>> +    struct property *newprop = NULL;
->>> +    struct property *oldprop = container_of(bin_attr, struct property, attr);
->>> +    struct device_node *np = container_of(kobj, struct device_node, kobj);
->>> +
->>> +    if (WARN_ON_ONCE(strcmp(oldprop->name, "status")))
->>> +            return -EIO;
->>> +
->>> +    if (offset)
->>> +            return -EINVAL;
->>> +
->>> +    if (sysfs_buf_streq(buf, count, "okay") || sysfs_buf_streq(buf, count, "ok"))
->>> +            newstatus = "okay";
->>> +    else if (sysfs_buf_streq(buf, count, "reserved"))
->>> +            newstatus = "reserved";
->>> +    else if (sysfs_buf_streq(buf, count, "disabled"))
->>> +            newstatus = "disabled";
->>> +    else
->>> +            return -EINVAL;
->>> +
->>> +    if (!strcmp(newstatus, oldprop->value))
->>> +            return count;
->>> +
->>
->> If the general approach of this patch set is the correct way to provide the desired
->> functionality (I'm still pondering that), then a version of the following code
+> On Sat, Oct 9, 2021 at 1:35 AM Ed Tanous <edtanous@google.com> wrote:
+> >
+> > On Fri, Oct 8, 2021 at 1:31 AM Lei YU <mine260309@gmail.com> wrote:
+> > >
+> > > It's noticed that the `repotest` is enabled in CI and we got CI
+> > > failure due to node-manager's patch:
+> > > https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/47673
+> > >
+> > > I know the right way is to ask Intel to upstream the node-manager and
+> > > fix the issues we met.
+> > > But in reality it's not easy and it takes time for Intel to upstream a
+> > > repo (and it depends on Intel to decide whether or not to upstream)
+> >
+> > If this is something you need, there's no need to wait for Intel, as
+> > that application already has an Apache 2 license.  You are free to
+> > upstream it and maintain it yourself if you don't want to wait for
+> > intel.
+> >
+> > >
+> > >
+> > > @Ed Do we really want to reject such patches?
+> >
+> > I don't want to reject patches, I want to see them on master in a way
+> > that things can be changed as needs evolve.  This patch is a perfect
+> > example of something that, had we taken the small amount of time to
+> > upstream this small daemon, wouldn't have even been an issue now as
+> > sdbusplus needs to make a very minor change.  As-is, we're effectively
 >
->After pondering, this approach does not appear workable to me.
+> Totally agree. We have already asked Intel to upstream the
+> node-manager, let's wait for the feedback.'
+
+Let's not wait any longer.  The code is licensed appropriately, is
+already open source, and in total, is smaller than a number of single
+patchsets I've seen in recent history (it would probably classify as a
+medium patchset).  Just open a review to add the code to an existing
+repository, or request a new repository along with a design doc.  If
+you want this to live in dbus-sensors, I'm fine with that, just make
+sure we have maintainers that can test on their systems;  It seems
+like an ok fit given it's another entity-manager enabled sensor app,
+although I don't have a strong opinion between the two options.
+
+
 >
-
-Okay -- I had come to a similar conclusion, if for slightly different 
-reasons (basically, just that the sets of "things that would avoid 
-binary sysfs attr abuse" and "things that would maintain userspace 
-compatibility" seemed pretty disjoint).
-
-> <snip>
+> > 2 levels of fork deep (openbmc upstream -> intel-bmc -> openbmc
+> > upstream only for bytedance systems, which is the source of the
+> > problem, not this patch itself.
 >
->So another approach is needed.  I have no yet thought this through, but I
->have an alternative.  First, change the new property name from "dynamic"
->to something more descriptive like "ownership_shifts_between_os_and_others"
->(yes, my suggestions is way too verbose and needs to be word smithed, but
->the point is to clearly state the underlying action that occurs), then
->define the result of this variable to be driver specific, where the
->driver is required upon probe to instantiate the device in a manner
->that does not impact the other user(s) of the underlying hardware
->and to use a driver specific method to transfer control of the
->hardware between the os and the other user(s).  I propose the method
->would be via a device specific file (or set of files) in sysfs (Greg's
->input invited on the use of sysfs in this manner - if I recall correctly
->this is the current preferred mechanism).
->
-
-I'm not sure if you've had a chance to take a look at it already, but 
-this sounds fairly similar to the approach I took in the semi-prequel 
-series that preceded this one: 
-https://lore.kernel.org/openbmc/20210929115409.21254-1-zev@bewilderbeest.net/
-
-The general idea there was to start making use of the "reserved" status 
-value (defined in the DT spec but thus far not really implemented 
-anywhere that I'm aware of) instead of introducing a new property.
-
-The implementation in that series was very driver-specific (probably 
-overly so), but I think could be generalized somewhat in a couple 
-directions without an enormous amount of additional work.  First 
-(top-down), we could have the driver core avoid automatically binding 
-drivers for reserved devices.  Second (bottom-up), the machinery 
-implemented in the aspeed-smc driver in that series could be lifted into 
-the MTD spi-nor framework as suggested by Dhananjay.
-
-Rob, Greg -- do you think another version of that patch series with 
-those changes might be a viable strategy?
-
-
-Thanks,
-Zev
-
+> True. But as an Intel x86 platform, the repo is needed and in the
+> current state, the patch has to be added. Otherwise the g220a build is
+> broken.
+> Is it OK to ignore the repotest CI failure and just merge the patch in
+> meta-bytedance layer?
+> (Be noted that it's not trying to make a bad example, but only trying
+> to fix the broken build)
