@@ -2,96 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF234429581
-	for <lists+openbmc@lfdr.de>; Mon, 11 Oct 2021 19:22:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BE4FE4295C8
+	for <lists+openbmc@lfdr.de>; Mon, 11 Oct 2021 19:35:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HSlwM60JBz2yZ2
-	for <lists+openbmc@lfdr.de>; Tue, 12 Oct 2021 04:22:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HSmD13B7sz2yV4
+	for <lists+openbmc@lfdr.de>; Tue, 12 Oct 2021 04:35:45 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=bkaRPCjr;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=kin+RAQ2;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=irpmmvZa;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm3 header.b=bkaRPCjr; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=kin+RAQ2; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=irpmmvZa; 
  dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HSlvs1lchz2xfH
- for <openbmc@lists.ozlabs.org>; Tue, 12 Oct 2021 04:21:44 +1100 (AEDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
- by mailout.nyi.internal (Postfix) with ESMTP id 8A8185C00C8;
- Mon, 11 Oct 2021 13:21:35 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute6.internal (MEProxy); Mon, 11 Oct 2021 13:21:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=content-type:mime-version:subject:from
- :in-reply-to:date:cc:content-transfer-encoding:message-id
- :references:to; s=fm3; bh=nB6EmuvPxZHkHQCVca1fhv2At2uQjR0HLLPnMh
- eHWM4=; b=bkaRPCjrgWWt+EbmUZ40dQMHA0THD7eeux44Fn1f9y8E9BfUNe/BRD
- ggt4OvqL6w47FvHn+3gDU6vS+IQuH2HXx+DsEJaRebTQffJ6VXduoEJKuYd7Nxl8
- V9DRnZwlAdlnf+bWyVQlZwonbVlYBuC/ZCOc9p8xMoleRzD6pfysmjpu0SUHmqKQ
- i890a3g4XDpXVmWQsbUJAzeoQyhqa8PGaJRCZwJ86ScuM5+C9uGfZA3p/mnN/EyC
- e7mCzIjftwt1r3h1yc5r8snjj+B63Y79U047CM+kSv6DXPmnDH46ISxkbRjFTK3R
- PnyNkr9OgEimRIals4Oz5VS1DfzcuxKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; bh=nB6EmuvPxZHkHQCVca1fhv2At2uQjR0HLLPnMheHW
- M4=; b=kin+RAQ2+B6A5jSTs20wCk8fS2uyxkFUbC89B5ifAgHJXLDg1nT2yo1iO
- +1lt+NcQnH4a//hAP4aGva2kgPu7CIXJnOWqa8UswvVCWXd6OWP/tQbDyKV0eDQJ
- rGvTHGgzyirXpagJ31xvOq/blN2tngbiYvF/qVMrBDQmk8yQZUaL3zaR9R9bHQGl
- KpXldgBYEQ/1ShK1SBMqVQiwuFap6mgptFzBycMUT097dI74RJmOmuJWX9pLvpHo
- Yzh28R9qYxzoLD7AMh4xen/rUcgRR67kULMkAuvFN7Oigzsn3ciy+bkRhTPyPwsi
- igNJSZH2GnM/0hBJcL/kccRppst+g==
-X-ME-Sender: <xms:n3JkYaOXKmr5hpGcCqoKdERgZU5SKTlRjxN25nw2VCVJthwCfRtYrQ>
- <xme:n3JkYY8emeS9D9EQZ3KA_q7n9aRm9N5Jgi5vIxhE5-3OJPyPWhYyQZT7UxLXEfiVM
- mURCDVsAQqMyKXbmNw>
-X-ME-Received: <xmr:n3JkYRTV2guZS--N3i1_8UhaFAf9I8hZnWdG9HktJNuErGQYvxw9n1Z4zE4a268TWfrU6A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddtiedguddtjecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpegtggfuhfgjfffgkfhfvffosehtqhhmtdhhtddvnecuhfhrohhmpeeurhgr
- ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
- homheqnecuggftrfgrthhtvghrnheptdethfdtgedufeetgefgteeulefgffeivdehieef
- hfdtgfelvddvheekgfefueefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
- hmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtgho
- mh
-X-ME-Proxy: <xmx:n3JkYasd8LKuyLFPH6BbwoQDeUCF977rNTNI3ZsH3AiQEs8lWXRj6w>
- <xmx:n3JkYScIzMotIF2p7KorG1Qx7OFyzhLume824YjRFfYnPVGlvvRz8g>
- <xmx:n3JkYe0eDX-xVncD9JQ49DUx8LjQjpqQJFDm_VPn4JNRn1WmOLyuAw>
- <xmx:n3JkYTpTywAZhOalZy3qZcbtkBICBpcrz3_SZ2STx1GRKGyqb7CCGg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Oct 2021 13:21:34 -0400 (EDT)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: OpenBMC
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <BY5PR04MB642185E5B4FFBAFCAC253259DCB29@BY5PR04MB6421.namprd04.prod.outlook.com>
-Date: Mon, 11 Oct 2021 13:21:34 -0400
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C24B224E-DDEA-4573-9090-49EB4FD602F0@fuzziesquirrel.com>
-References: <BN6PR04MB02751CA806D404FA7CA19855B9819@BN6PR04MB0275.namprd04.prod.outlook.com>
- <BN8PR04MB6164B5E8966F9438F0180DB8B9809@BN8PR04MB6164.namprd04.prod.outlook.com>
- <17a3b0e5-4613-8388-ad69-427c41439343@gmail.com>
- <BY5PR04MB6421D6EB8BF4D9EB43BE0024DCB29@BY5PR04MB6421.namprd04.prod.outlook.com>
- <BY5PR04MB642185E5B4FFBAFCAC253259DCB29@BY5PR04MB6421.namprd04.prod.outlook.com>
-To: Janny Au <jannya@hyvedesignsolutions.com>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HSmCZ5KgVz2xrg
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Oct 2021 04:35:21 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (71-212-29-146.tukw.qwest.net
+ [71.212.29.146])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id D272312B;
+ Mon, 11 Oct 2021 10:35:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1633973711;
+ bh=37FA9CA4jkUipLpx6mASR21lCskkzjZexvQxoi2xAds=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=irpmmvZaPGMwlOIi9xZHr3WBV5ncQWV2tnQ7+PODTjtFt/nLyMkYsSujDA1/KBMDH
+ C7Q552FOG8yEcEz8F7jAtrlZ65FGfi3sqnSaQPCcIrfrEa56FbPZ/m6A9dB5SxQlVW
+ BF6O/6HS+yaMjymyFad5ZFyQu2ObOVmlZ5Lr6w+4=
+Date: Mon, 11 Oct 2021 10:35:05 -0700
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Frank Rowand <frowand.list@gmail.com>
+Subject: Re: [PATCH 6/9] of: add support for 'dynamic' DT property
+Message-ID: <YWR1yRmcFU66DnO5@hatter.bewilderbeest.net>
+References: <20211007000954.30621-1-zev@bewilderbeest.net>
+ <20211007000954.30621-7-zev@bewilderbeest.net>
+ <7bf5cfce-e84d-f0e8-e6e8-8e6fedffd154@gmail.com>
+ <05e4c31e-db7e-e8f2-fa37-3cdcdf902e19@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <05e4c31e-db7e-e8f2-fa37-3cdcdf902e19@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,36 +65,120 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Phil Yeh <phily@hyvedesignsolutions.com>,
- Eric Kuo <erickuo@hyvedesignsolutions.com>
+Cc: devicetree@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Rob Herring <robh+dt@kernel.org>, Jeremy Kerr <jk@codeconstruct.com.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Frank,
+
+Thanks for the thorough consideration on this.  (More inline below.)
+
+On Mon, Oct 11, 2021 at 06:58:32AM PDT, Frank Rowand wrote:
+>Hi Matt, Greg,
+>
+>On 10/8/21 1:51 PM, Frank Rowand wrote:
+>> On 10/6/21 7:09 PM, Zev Weiss wrote:
+>>> Nodes marked with this (boolean) property will have a writable status
+>>> sysfs file, which can be used to toggle them between "okay" and
+>>> "reserved", effectively hot-plugging them.  Note that this will only
+>>> be effective for devices on busses that register for OF reconfig
+>>> notifications (currently spi, i2c, and platform), and only if
+>>> CONFIG_OF_DYNAMIC is enabled.
+>>>
+>>> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+>>> ---
+>>>  drivers/of/kobj.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++
+>>>  1 file changed, 69 insertions(+)
+>>>
+>>> diff --git a/drivers/of/kobj.c b/drivers/of/kobj.c
+>>> index 378cb421aae1..141ae23f3130 100644
+>>> --- a/drivers/of/kobj.c
+>>> +++ b/drivers/of/kobj.c
+>>> @@ -36,6 +36,69 @@ static ssize_t of_node_property_read(struct file *filp, struct kobject *kobj,
+>>>      return memory_read_from_buffer(buf, count, &offset, pp->value, pp->length);
+>>>  }
+>>>
+>>> +static ssize_t of_node_status_write(struct file *filp, struct kobject *kobj,
+>>> +                                    struct bin_attribute *bin_attr, char *buf,
+>>> +                                    loff_t offset, size_t count)
+>>> +{
+>>> +    int rc;
+>>> +    char *newstatus;
+>>> +    struct property **deadprev;
+>>> +    struct property *newprop = NULL;
+>>> +    struct property *oldprop = container_of(bin_attr, struct property, attr);
+>>> +    struct device_node *np = container_of(kobj, struct device_node, kobj);
+>>> +
+>>> +    if (WARN_ON_ONCE(strcmp(oldprop->name, "status")))
+>>> +            return -EIO;
+>>> +
+>>> +    if (offset)
+>>> +            return -EINVAL;
+>>> +
+>>> +    if (sysfs_buf_streq(buf, count, "okay") || sysfs_buf_streq(buf, count, "ok"))
+>>> +            newstatus = "okay";
+>>> +    else if (sysfs_buf_streq(buf, count, "reserved"))
+>>> +            newstatus = "reserved";
+>>> +    else if (sysfs_buf_streq(buf, count, "disabled"))
+>>> +            newstatus = "disabled";
+>>> +    else
+>>> +            return -EINVAL;
+>>> +
+>>> +    if (!strcmp(newstatus, oldprop->value))
+>>> +            return count;
+>>> +
+>>
+>> If the general approach of this patch set is the correct way to provide the desired
+>> functionality (I'm still pondering that), then a version of the following code
+>
+>After pondering, this approach does not appear workable to me.
+>
+
+Okay -- I had come to a similar conclusion, if for slightly different 
+reasons (basically, just that the sets of "things that would avoid 
+binary sysfs attr abuse" and "things that would maintain userspace 
+compatibility" seemed pretty disjoint).
+
+> <snip>
+>
+>So another approach is needed.  I have no yet thought this through, but I
+>have an alternative.  First, change the new property name from "dynamic"
+>to something more descriptive like "ownership_shifts_between_os_and_others"
+>(yes, my suggestions is way too verbose and needs to be word smithed, but
+>the point is to clearly state the underlying action that occurs), then
+>define the result of this variable to be driver specific, where the
+>driver is required upon probe to instantiate the device in a manner
+>that does not impact the other user(s) of the underlying hardware
+>and to use a driver specific method to transfer control of the
+>hardware between the os and the other user(s).  I propose the method
+>would be via a device specific file (or set of files) in sysfs (Greg's
+>input invited on the use of sysfs in this manner - if I recall correctly
+>this is the current preferred mechanism).
+>
+
+I'm not sure if you've had a chance to take a look at it already, but 
+this sounds fairly similar to the approach I took in the semi-prequel 
+series that preceded this one: 
+https://lore.kernel.org/openbmc/20210929115409.21254-1-zev@bewilderbeest.net/
+
+The general idea there was to start making use of the "reserved" status 
+value (defined in the DT spec but thus far not really implemented 
+anywhere that I'm aware of) instead of introducing a new property.
+
+The implementation in that series was very driver-specific (probably 
+overly so), but I think could be generalized somewhat in a couple 
+directions without an enormous amount of additional work.  First 
+(top-down), we could have the driver core avoid automatically binding 
+drivers for reserved devices.  Second (bottom-up), the machinery 
+implemented in the aspeed-smc driver in that series could be lifted into 
+the MTD spi-nor framework as suggested by Dhananjay.
+
+Rob, Greg -- do you think another version of that patch series with 
+those changes might be a viable strategy?
 
 
-> On Oct 8, 2021, at 5:12 AM, Janny Au <jannya@hyvedesignsolutions.com> =
-wrote:
->=20
-> (Sending again for clarification...)
->=20
-> Dear OpenBMC team,
->=20
-> I am the current CLA Manager for Hyve Design Solutions.  Would you =
-please help me change the member list?
->=20
-> Janny Au (CLA Manager) <jannya@hyvedesignsolutions.com> (removed)=20
->=20
-> Phil Yeh <phily@hyvedesignsolutions.com> (new CLA manager)=20
->=20
-> Jennie Ho <jennieh@hyvedesignsolutions.com> (removed)=20
->=20
-> Luke Lin <LukeLin@hyvedesignsolutions.com> (removed)
->=20
-> Regards,
-> Janny
+Thanks,
+Zev
 
-Hi Janny, please just fill out the Schedule A page again and send it to =
-me.
-
-Thanks - brad=
