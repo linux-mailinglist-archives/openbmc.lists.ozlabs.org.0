@@ -2,47 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42F3142CC72
-	for <lists+openbmc@lfdr.de>; Wed, 13 Oct 2021 23:01:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D650842CC67
+	for <lists+openbmc@lfdr.de>; Wed, 13 Oct 2021 22:57:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HV4gt55vjz2yHX
-	for <lists+openbmc@lfdr.de>; Thu, 14 Oct 2021 08:00:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HV4bj2kjXz2ywj
+	for <lists+openbmc@lfdr.de>; Thu, 14 Oct 2021 07:57:21 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=r+9L38BZ;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 124 seconds by postgrey-1.36 at boromir;
- Thu, 14 Oct 2021 08:00:43 AEDT
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=r+9L38BZ; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HV4gb4wy3z2xXc
- for <openbmc@lists.ozlabs.org>; Thu, 14 Oct 2021 08:00:43 +1100 (AEDT)
-X-IronPort-AV: E=McAfee;i="6200,9189,10136"; a="207650409"
-X-IronPort-AV: E=Sophos;i="5.85,371,1624345200"; d="scan'208";a="207650409"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Oct 2021 13:51:32 -0700
-X-IronPort-AV: E=Sophos;i="5.85,371,1624345200"; d="scan'208";a="717482265"
-Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
- ([10.7.150.62])
- by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Oct 2021 13:51:32 -0700
-Date: Wed, 13 Oct 2021 13:51:31 -0700
-From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: Michael Richardson <mcr@sandelman.ca>
-Subject: Re: SPAKE, DTLS and passwords
-Message-ID: <20211013205131.GC2951@mauery.jf.intel.com>
-References: <bb3c031e-cbe3-36c5-0db6-d1ef454300fd@linux.ibm.com>
- <e6dbbca0-e4f7-2e0f-146b-e57008a788e9@linux.ibm.com>
- <17277.1633384075@localhost>
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HV4bC4xRnz2xtP
+ for <openbmc@lists.ozlabs.org>; Thu, 14 Oct 2021 07:56:55 +1100 (AEDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19DJTVh0030993
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Oct 2021 16:56:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : subject :
+ message-id : date : content-type : content-transfer-encoding :
+ mime-version; s=pp1; bh=R2LVGTxbqbD9SP4oUxWojDUklfOaZEJUolvPP1AVPgk=;
+ b=r+9L38BZvRm4tScl75LW+LaOiA2uNJL8EKggAMPHDFaXaKqixeycc/4HuysoAZYOOdwR
+ ES++Gjpo/YxmV4kLMk/dY4B+HPmQGDPaoeXKUlAhhW9PLV2nAIxzjjWLSLZUBxNA8eI+
+ su3YKQKbteYIwSRRiH2Di2F/r+VSSbuq1RdaGDXHVYvO6yNlOUkxy/5ITHtwZ4/FeDrD
+ SKjUIxjPbop0HZ8Yj5zFal+6TxzWab632S6jP2XC/AXm7xeECb7oawHJ5GrRSgejWuKQ
+ 0rJEE/qz6V9ma4hl31aCgFcsBDgrKuGuOa8Kx6tC9m0c9hVsNo73oA/bfB5Wyr5AVLe1 gQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3bnm419exx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Oct 2021 16:56:51 -0400
+Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 19DKumPZ012870
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Oct 2021 16:56:51 -0400
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3bnm419ext-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 Oct 2021 16:56:51 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 19DKlTdW025997;
+ Wed, 13 Oct 2021 20:56:50 GMT
+Received: from b03cxnp08027.gho.boulder.ibm.com
+ (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
+ by ppma01dal.us.ibm.com with ESMTP id 3bnm3asfug-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 Oct 2021 20:56:50 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 19DKunvV19726808
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 Oct 2021 20:56:49 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 558D76A08D;
+ Wed, 13 Oct 2021 20:56:49 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 070176A0AE;
+ Wed, 13 Oct 2021 20:56:48 +0000 (GMT)
+Received: from demeter.local (unknown [9.160.18.190])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Wed, 13 Oct 2021 20:56:48 +0000 (GMT)
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>, Andrew Geissler <geissonator@gmail.com>
+Subject: Start using github security advisories
+Message-ID: <62b15edd-110a-3574-66c5-d11299bbd38c@linux.ibm.com>
+Date: Wed, 13 Oct 2021 15:56:47 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <17277.1633384075@localhost>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: by3pqzvrD73LEftJv9AQ1gQUYJP0WjjY
+X-Proofpoint-GUID: fbiTShmFAShO44JT02CvdABlPyiWHhGg
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
+ definitions=2021-10-13_08,2021-10-13_02,2020-04-07_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=905 phishscore=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0 adultscore=0
+ priorityscore=1501 spamscore=0 clxscore=1015 bulkscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2109230001
+ definitions=main-2110130123
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,100 +107,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 04-Oct-2021 05:47 PM, Michael Richardson wrote:
->
->Joseph Reynolds <jrey@linux.ibm.com> wrote:
->    > The planned IPMI over DLTS function will have certificate-based
->    > authuentication.=C2=A0
->
->Do you mean that the server will be authenticated with a certificate, or t=
-hat
->it will use mutual authentication?
 
-Both. There will be host certificate authentication for all connections=20
-and then the possibility to authenticate with either password or client=20
-certificates.
+Per today's Security working group meeting, we want to start using 
+[GitHub security advisories][].  I think we need someone with admin 
+permissions to github.com/openbmc/openbmc to create new advisories. Then 
+we'll want a group (team? perhaps security-response-team) with the 
+current OpenBMC [security response team][] members.  (I have that list.)
 
->    > For our use cases, we would like to add password-based
->    > authentication, and we want to do so as securely as possible, meanin=
-g what
->    > protocol we should use.=C2=A0 In particular, we want to know if we s=
-hould avoid
->    > sending a =E2=80=9Ccleartext=E2=80=9D password (tunneled over DTLS) =
-to the server.
->
->If it can be avoided, yes.
->
->https://www.rfc-editor.org/rfc/rfc8125.html#section-3.1 suggests that all
->the PAKE candidates (whether balanced or augmented) satisfy this.
->I strongly suggest that a PAKE be used.
->The CHIP/MATTER IoT people are using
->   https://datatracker.ietf.org/doc/draft-bar-cfrg-spake2plus/
->although the IRTF CFRG hasn't adopted that document yet.  I don't know
->exactly where they are with it.  But, I expect you will find many libraries
->going forward.
->
->    > However note the Redfish password authentication passes in the clear=
-text
->    > password to the Redfish/HTTP server (tunneled over HTTPS). Does not =
-need the
->    > existing ipmi_pass file, or will at least store the password securel=
-y in it.
->
->When the password is set, it can be set into two different hashed forms if=
- necessary.
+How do we get started?  Who has admin authority?
 
-Whatever password scheme is used, one requirement is that the password=20
-must be hashed or somehow encrypted securely on the BMC.
+Joseph
 
-I did see PAKE show up in my research on this, but I don't yet=20
-understand it well enough to make a call on whether to use it or not.=20
-This is why we are reaching out to the experts. :)
 
->There are two concerns that I think this description deals with.
->
->The first is:
->  a) possibility that a cleartext password will be intercepted via
->     Onpath active attack to the connection. (a "MITM")
->
->The second is:
->  b) possibility that a cleartext password will be recovered from the
->     target system's authentication database.
->
->
->Whether or not (a) is likely depends very much on whether or not the BMC w=
-ill
->be provisioned or onboarded with useful certificates that the clients can
->actually validate.   If the operational uses of IPMI-DTLS and HTTPS APIs
->are regularly skipping certificate validation, then it's probably important
->that this does not result in a password capture.
+[GitHub security advisories]: 
+https://docs.github.com/en/code-security/security-advisories/about-github-security-advisories
+[security response team]: 
+https://github.com/openbmc/docs/blob/master/security/obmc-security-response-team-guidelines.md
 
-This is a huge issue, given how few people really understand how=20
-certificates work and the difficulty of working with a pki. We should=20
-definitely do everything we can to reduce the complexity/difficulty of=20
-getting a valid host key/certificate in place. But in reality, option a)=20
-is a valid concern.
-
->{I said in summer 2020 that I would be writing a BRSKI, RFC8995 client for
->BMC. Sometime in fall 2020... but now I'm actually close to saying Winter
->2022.  I have many questions about testing this that I'll come back to}
->
->(b) wouldn't be a huge problem if all the passwords are unique.
->Afterwall, if an attacker can get a password out of the system, then the
->attacker already has access to that system.  If the passwords are unique,
->then retrieving that password gets the attacker nothing.
->
->Now, if none of the mechanisms require that a cleartext password be stored=
- on
->the system, then (b) is moot.
-
-Even if we do end up sending a tunneled password, I think there is=20
-consensus that we will not be storing it in the clear. That is one of=20
-the biggest problems with the current RMCP+ protocol, it requires use=20
-of the cleartext password on the host side.
-
---Vernon
