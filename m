@@ -1,64 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B23A42D437
-	for <lists+openbmc@lfdr.de>; Thu, 14 Oct 2021 09:55:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E9B642E1DB
+	for <lists+openbmc@lfdr.de>; Thu, 14 Oct 2021 21:12:50 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HVMCC5NLmz2yYd
-	for <lists+openbmc@lfdr.de>; Thu, 14 Oct 2021 18:55:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HVfDZ3bGTz306R
+	for <lists+openbmc@lfdr.de>; Fri, 15 Oct 2021 06:12:46 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=c8HDm9oI;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=oodsm5cI;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72a;
- helo=mail-qk1-x72a.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c31;
+ helo=mail-oo1-xc31.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=c8HDm9oI; dkim-atps=neutral
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com
- [IPv6:2607:f8b0:4864:20::72a])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=oodsm5cI; dkim-atps=neutral
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com
+ [IPv6:2607:f8b0:4864:20::c31])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HVMBr3ygSz2yLV
- for <openbmc@lists.ozlabs.org>; Thu, 14 Oct 2021 18:55:15 +1100 (AEDT)
-Received: by mail-qk1-x72a.google.com with SMTP id bl14so4696296qkb.4
- for <openbmc@lists.ozlabs.org>; Thu, 14 Oct 2021 00:55:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=9Dp7Fcvwsy95kPtN9qloRAs+U2licOB8bLuB3K/mNLQ=;
- b=c8HDm9oI7mqc1HGS7HKUIk3I9S1wbuGvXDOXlXiPpckhCIGsX4fxeBsMZ3z8SyhWsF
- H/sMafKWL9dkR4vJ9Lm6aIwxG5q0/LcfjzB6ug8xoEo8Y9JAhVTa2jD2LnxZCGkZS4cv
- Tn84riu5Ci7rN6gwmnbDqZQAa1BqNL2enTIQA=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HVfDB0KrHz2ypg
+ for <openbmc@lists.ozlabs.org>; Fri, 15 Oct 2021 06:12:25 +1100 (AEDT)
+Received: by mail-oo1-xc31.google.com with SMTP id
+ c29-20020a4ad21d000000b002b6cf3f9aceso2197298oos.13
+ for <openbmc@lists.ozlabs.org>; Thu, 14 Oct 2021 12:12:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=jfStpkkgYKalW/HbcZMksIsgwLhINNrWX5MsIGVtdCc=;
+ b=oodsm5cI0pFv8l/d6cZx5PPO9PzrYS6OMnqjnlOJEIPhWxAqy9Y0n2XFMnf+R51jmo
+ k0HUVniv5rA/Fto2zf7x47FJkWqmecAtrBA1jgUTWOmjjNWRukufRtn4ieSrXfBYja6C
+ 3kI0xpNf4JyKUb/NDfmrRde+tgBA6qC4QENcf001I/MWBNVW+NzuWj1vP6XZ/H32vJPQ
+ +BBbzGh+Xpd0kuQOMA9WkB2wjglW9vfune6TvajqnKhfHq2PCzpaSV2RBZfOLU9l0y9U
+ 1+lMS1KhYHXqHJDIxFSmyi77W79ScKlFrULZCxg3nyxVkou2PjCJa8Pxhdd5uo2rkDLp
+ Y9YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=9Dp7Fcvwsy95kPtN9qloRAs+U2licOB8bLuB3K/mNLQ=;
- b=zLfzsEe5nNBZB96hAlSakkbeAnmYrIhEgWTSLFXbYebpNJvdgG6EtDYxLBsYE66CnG
- Ejb5+h/1vhD8zzzgfKNb9q8vjgL4Uka998R8DPffgDMFIiTLJ0RwMkr+KMFiCH2PrQmA
- qFeEcANRSAKoYEIJ8NciYzYjEO+0HGpPKpuMtr79eRok7ujgwgrc7lMOQ2M9uihNFtBz
- g7j5Nr76TCGSJnWdtWO8FmvauSDXTo9ymzfwmDsN7RLI4J7XqxkDR4EMFvPvRAc9z3tb
- 1ociGJw9r4NiJ5aOzpGqou1UitzFGZJ5g4kil8+cBMBavnA6H195p9ZI5Yb65UGKFt4z
- sMEA==
-X-Gm-Message-State: AOAM533uffDUVV2cO+SQHaR+Y8+OpEXh9icDDInOGbz2XEiPd5tEbz1U
- w7D3teSOu+z6/YovMTqmn82qADm4VUaQEsFgk+48hiah
-X-Google-Smtp-Source: ABdhPJwQi1wcmA3xQ70fr9TNeUHUQMJiEvelGOV8fxT6+hHd1SrfyWo3vOQdUgibOOGSSas3lGVvYoLvEgECq10x7yE=
-X-Received: by 2002:a37:68c4:: with SMTP id d187mr3481646qkc.36.1634198111931; 
- Thu, 14 Oct 2021 00:55:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211014072743.939293-1-wangzhiqiang02@inspur.com>
-In-Reply-To: <20211014072743.939293-1-wangzhiqiang02@inspur.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 14 Oct 2021 07:55:00 +0000
-Message-ID: <CACPK8XcO6==apQyCR7JZWf+u2JaYemOW23z22g0oKsGga99etg@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: aspeed: fp5280g2: Use the 64M layout
-To: John Wang <wangzq.jn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=jfStpkkgYKalW/HbcZMksIsgwLhINNrWX5MsIGVtdCc=;
+ b=P8F3GlyjSvlWnzA+jxL8zzRuUV3UPg1ZWN6UjvIt6lHIT03bczsNSA3i0XGyjdjVxT
+ AAw1ydsdxmJoD9ZykhJ1vFHnEzCkpB/PVNO5F6f4yuaIoWrhopiR0Ar9c0mVjnwww9SE
+ rdAE9Jy8swNVWCATuAEntCeq/n+Ly+zyrRTlaIpGSxNyyOtGkhr1yHzkGXs4Qf0x3/pS
+ ZvuTW2wskpexxfLAN1cJGNqvkjbkVB7J/EgizYNvyM8O2IdfwnJB0eqv3iMRms7sevuW
+ yu7fWk7NE8+M0SbgpcPtSAuYpw46GAxW5PgwPjZ2W8+s30r7GOh15rDlFh5afXS+Z9f/
+ +nMw==
+X-Gm-Message-State: AOAM530AIJGuLqZP0xCSV4S63wwct9641hZqN3UUumNfRtJiMkF3170w
+ BI6OU+oZ9S9SHnNsbxvpT1yzDh7bwEvODg==
+X-Google-Smtp-Source: ABdhPJyWo9zv75T4OXzugMiBjaAu9EK1Mlskwz7fGnjpfGtK0P1hxt2jqxvZMcKM8WyLYRpYTDM9mw==
+X-Received: by 2002:a4a:3c07:: with SMTP id d7mr5552610ooa.84.1634238741692;
+ Thu, 14 Oct 2021 12:12:21 -0700 (PDT)
+Received: from smtpclient.apple ([2600:1700:19e0:3310:31d4:1a6:d849:959e])
+ by smtp.gmail.com with ESMTPSA id g12sm611741oof.6.2021.10.14.12.12.20
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 14 Oct 2021 12:12:21 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: Start using github security advisories
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <62b15edd-110a-3574-66c5-d11299bbd38c@linux.ibm.com>
+Date: Thu, 14 Oct 2021 14:12:20 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <67C8A5BA-9FD5-4804-B5CA-C2687FC17889@gmail.com>
+References: <62b15edd-110a-3574-66c5-d11299bbd38c@linux.ibm.com>
+To: Joseph Reynolds <jrey@linux.ibm.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,40 +82,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- George Liu <liuxiwei1013@gmail.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 14 Oct 2021 at 07:27, John Wang <wangzq.jn@gmail.com> wrote:
->
-> Use the 64M layout since the flash on the board is 64M
->
-> Signed-off-by: John Wang <wangzhiqiang02@inspur.com>
+> Per today's Security working group meeting, we want to start using =
+[GitHub security advisories][].  I think we need someone with admin =
+permissions to github.com/openbmc/openbmc to create new advisories. Then =
+we'll want a group (team? perhaps security-response-team) with the =
+current OpenBMC [security response team][] members.  (I have that list.)
 
-Thanks, merged to dev-5.14. I've also put it in the tree for v5.16.
+Looks like you=E2=80=99ll need admin authority on openbmc/openbmc in =
+order to utilize the security advisories feature. I wonder if it=E2=80=99s=
+ better to create a openbmc/security repo and we can give you and the =
+security team admin of that repo for this work? This would also provide =
+a potential location to track github issues for the security team.
 
-Cheers,
 
-Joel
 
-> ---
->  arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> index 1752f3250e44..4574dcd72df8 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> @@ -245,7 +245,7 @@ flash@0 {
->                 label = "bmc";
->                 m25p,fast-read;
->                 spi-max-frequency = <50000000>;
-> -#include "openbmc-flash-layout.dtsi"
-> +#include "openbmc-flash-layout-64.dtsi"
->         };
->  };
->
-> --
-> 2.30.2
->
+> On Oct 13, 2021, at 3:56 PM, Joseph Reynolds <jrey@linux.ibm.com> =
+wrote:
+>=20
+>=20
+> Per today's Security working group meeting, we want to start using =
+[GitHub security advisories][].  I think we need someone with admin =
+permissions to github.com/openbmc/openbmc to create new advisories. Then =
+we'll want a group (team? perhaps security-response-team) with the =
+current OpenBMC [security response team][] members.  (I have that list.)
+>=20
+> How do we get started?  Who has admin authority?
+>=20
+> Joseph
+>=20
+>=20
+> [GitHub security advisories]: =
+https://docs.github.com/en/code-security/security-advisories/about-github-=
+security-advisories
+> [security response team]: =
+https://github.com/openbmc/docs/blob/master/security/obmc-security-respons=
+e-team-guidelines.md
+>=20
+
