@@ -1,54 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EAD8431423
-	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 12:11:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E63E431FC5
+	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 16:32:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HXt2F64rxz2yw2
-	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 21:11:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HXzqX0VF8z304x
+	for <lists+openbmc@lfdr.de>; Tue, 19 Oct 2021 01:32:40 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=PskFiPf7;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d34;
+ helo=mail-io1-xd34.google.com; envelope-from=rahulmaheshwari01@gmail.com;
  receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=PskFiPf7; dkim-atps=neutral
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com
+ [IPv6:2607:f8b0:4864:20::d34])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HXt1z4wzXz2yN4;
- Mon, 18 Oct 2021 21:11:17 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 19I9meJY075064;
- Mon, 18 Oct 2021 17:48:40 +0800 (GMT-8)
- (envelope-from jammy_huang@aspeedtech.com)
-Received: from [192.168.2.115] (192.168.2.115) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 18 Oct
- 2021 18:10:35 +0800
-Message-ID: <8f20094e-506a-f03a-4dfc-669d7b0d19d8@aspeedtech.com>
-Date: Mon, 18 Oct 2021 18:10:35 +0800
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HXzq3682pz2ymZ
+ for <openbmc@lists.ozlabs.org>; Tue, 19 Oct 2021 01:32:14 +1100 (AEDT)
+Received: by mail-io1-xd34.google.com with SMTP id e144so16526331iof.3
+ for <openbmc@lists.ozlabs.org>; Mon, 18 Oct 2021 07:32:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=FkyVVdmY6x9OrnqlgBn2ZAobdAnSVOG/k7tAh9fBeyk=;
+ b=PskFiPf72Ihkoz71F2uMY6JMFi8zDxhf2eSulyxnTvMry0+JXBtGMognwgARak6ise
+ cV7U9cNs7wtgMViBgJt6jwXr+X4fq7gP2e+dXVzYt7gc4OjdLl9jJNlrSp26wSYdksI8
+ MhlylQg88VnLD3ZQGm5j6aBYHAJAAZ/GcDPnjaLaArdsAC4SgELHjF2TRgH+J2xs5OaU
+ 0miBCOTXvOY8Rp9GDc8ph1q1Z/rObOF5LwInPj/mKCyeT29mD2Oqkx74mblzoVGo1D0g
+ 3lb6M4lGVkEgxDGNZRzlLtBPPw75sN32T2DsWYSED4LkOA3Ge7EJfxmgynrogNgIucvV
+ g4AQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=FkyVVdmY6x9OrnqlgBn2ZAobdAnSVOG/k7tAh9fBeyk=;
+ b=lKLnNToFkydTAbP9+zY8C29x2KmbuDshA/6m60mPmBJTgYniR3RQAfYYq/H3IBnsHb
+ bPFAckjgSYJXNas+EdKSOdN0SZjKptHlLeZECk6PFxG6VZD8IQvCRDYo3AspW60JM20Y
+ OeyT5spWcJtEYXb37WubeUW5oKHQ/JEkPyIY5dvoZIU/w+L5B9SwghzOSCpKfxBRRVnt
+ sAsuS3LKZ7r4ipGJHwjqsv33cc6dYd41rPVWy7HzZxXnrYdI3/jBKYOJeOnqFfjbdQD2
+ JBy8JXzHjh2/g6XebSnJpYgdDcpWj3howtIv0yO3CGu1GsYRqi3bJNPi2jLcQofEMbbo
+ k2fQ==
+X-Gm-Message-State: AOAM5313HiF3XkQnyl+bRjBFIgRs+KlecfKGCuUnAoOxfEwBCcJNzHzo
+ Ab0cp+BaodAQzWlP/Pr6vcNgAPu59l0jTdD4Sis=
+X-Google-Smtp-Source: ABdhPJx0EqOdFDPMPsRknHJGDQs9pi8u5VA7Wt61bBBWkb5g7BUXk3fCxw4ebkQzB2KojMgf1nfSZGZn0qARy4xILyA=
+X-Received: by 2002:a5d:9492:: with SMTP id v18mr14580203ioj.158.1634567530425; 
+ Mon, 18 Oct 2021 07:32:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [PATCH 4/6] media: aspeed: Support aspeed mode to reduce
- compressed data
-Content-Language: en-US
-To: Paul Menzel <pmenzel@molgen.mpg.de>
-References: <20211014034819.2283-1-jammy_huang@aspeedtech.com>
- <20211014034819.2283-5-jammy_huang@aspeedtech.com>
- <ddb1e6dc-6b4f-4f67-9122-dae3dab1ae65@molgen.mpg.de>
- <5675befe-48df-9f09-f30f-d407538ad070@aspeedtech.com>
- <5466798e-32c1-81f5-3428-7bbfe31cdea7@molgen.mpg.de>
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-In-Reply-To: <5466798e-32c1-81f5-3428-7bbfe31cdea7@molgen.mpg.de>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [192.168.2.115]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 19I9meJY075064
+References: <HK0PR04MB305832327CA30B3FB2D70985E6B69@HK0PR04MB3058.apcprd04.prod.outlook.com>
+In-Reply-To: <HK0PR04MB305832327CA30B3FB2D70985E6B69@HK0PR04MB3058.apcprd04.prod.outlook.com>
+From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
+Date: Mon, 18 Oct 2021 20:01:59 +0530
+Message-ID: <CAAMkS12rPtK9QJJxz8nTmhocyhZJ7R-Zi8T9BCU5KUKjahCBZw@mail.gmail.com>
+Subject: Re: Expected response table for ipmi standard commands used for
+ verification
+To: =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+Content-Type: multipart/alternative; boundary="00000000000003312305cea16934"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,112 +74,132 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "andrew@aj.id.au" <andrew@aj.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "eajames@linux.ibm.com" <eajames@linux.ibm.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>
+Cc: openbmc <openbmc@lists.ozlabs.org>, George Keishing <gkeishin@in.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Paul,
+--00000000000003312305cea16934
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for your help.
+Hi Tony,
 
-On 2021/10/18 下午 05:34, Paul Menzel wrote:
-> Dear Jammy,
->
->
-> Am 18.10.21 um 10:51 schrieb Jammy Huang:
->
->> On 2021/10/14 下午 02:47, Paul Menzel wrote:
->>> Am 14.10.21 um 05:48 schrieb Jammy Huang:
->>>> aspeed support differential jpeg format which only compress the parts
->>> support*s*
->>>
->>>> which are changed. In this way, it reduces both the amount of data to be
->>>> transferred by network and those to be decoded on the client side.
->>> Please mention the datasheet name and revision and section, where this
->>> functionality is described.
->> Sorry but our datasheet is confidential. The basic idea of this
->> feature is that we can just compress the blocks which is different
->> with previous frame rather than full frame. This idea is similar to
->> the I & P frame in multimedia.
-> It’s still good to have the name and revision of the datasheet, the code
-> was developed against documented. (Public datasheets would be even
-> better, also for review.)
-You can reference to the datasheet of ast2600 revision 9 at section 36, 
-Video Engine.
+It would be better if you can come up with a sample file with the required
+fields for IPMI standard commands. And the sample file can have the table
+which you have suggested except the machine field. Later command usage for
+required IPMI standard commands can be changed in IPMI suite. Others can
+use the same sample file to create one for their specific system and use it=
+.
 
->
->>> Which chips support it?
->> AST2400/2500/2600 all support it.
->>>> 4 new ctrls are added:
->>>> *Aspeed JPEG Format: to control aspeed's partial jpeg on/off
->>>> *Aspeed Compression Mode: to control aspeed's compression mode
->>>> *Aspeed HQ Mode: to control aspeed's HQ mode on/off
->>>> *Aspeed HQ Quality: to control the quality of aspeed's HQ mode
->>> Please add a space after the bullet points.
->>>
->>> Excuse my ignorance, how can these options be controlled?
->> * Aspeed JPEG Format: to control jpeg format
->>     0: standard jpeg, 1: aspeed jpeg
->> * Aspeed Compression Mode: to control aspeed's compression mode
->>     0: DCT Only, 1: DCT VQ mix 2-color, 2: DCT VQ mix 4-color
->>     This is AST2400 only. It will adapt JPEG or VQ encoding method according
->>     to the context automatically.
->> * Aspeed HQ Mode: to control aspeed's HQ mode on/off
->>     0: disabled, 1: enabled
->> * Aspeed HQ Quality: to control the quality(0~11) of aspeed's HQ mode,
->>     only usefull if Aspeed HQ mode is enabled
-> Thank you. So some sysfs file?
-This is a v4l2 based driver, so I prefer to use v4l2 control interface 
-rather than sysfs.
-The user can iterate v4l2 control by V4L2_CTRL_FLAG_NEXT_CTRL to know 
-what is
-available. For example, the following is the information that 
-aspeed_video driver supports
+Thanks
+Rahul
 
-[User Controls                 ]
-Aspeed JPEG Format             : type=1, minimum=0, maximum=2, step=1, 
-default_value=0
-Aspeed Compression Mode        : type=1, minimum=0, maximum=2, step=1, 
-default_value=0
-Aspeed HQ Mode                 : type=2, minimum=0, maximum=1, step=1, 
-default_value=0
-Aspeed HQ Quality              : type=1, minimum=0, maximum=11, step=1, 
-default_value=0
-[JPEG Compression Controls     ]
-Chroma Subsampling             : type=3, minimum=0, maximum=2, step=1, 
-default_value=0
-Compression Quality            : type=1, minimum=0, maximum=11, step=1, 
-default_value=0
 
+On Tue, Oct 12, 2021 at 4:49 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Ton=
+y.Lee@quantatw.com>
+wrote:
+
+> Hi George,
 >
->>>> Aspeed JPEG Format requires an additional buffer, called bcd, to store
->>>> the information that which macro block in the new frame is different
->>> s/that which/which/
->>>
->>>> from the old one.
->>>>
->>>> To have bcd correctly working, we need to swap the buffers for src0/1 to
->>>> make src1 refer to previous frame and src0 to the coming new frame.
->>> How did you test it? What do the clients need to support?
->>>
->>> Did you test, how much bandwidth is saved? Some numbers would be nice.
->> I tested it by aspeed's kvm client which support decoding the aspeed
->> format. Currently, I am porting this feature to novnc to have openbmc
->> support it.
-> Nice.
->> The bandwidth saved is variant. It depends on how many blocks is
->> different between new and old frame.If the new frame is identical
->> with the previous one, the compressed frame only needs 12 Bytes.
-> Thank you for the explanation.
+> I would like to add a table which similar to data/ipmi_raw_cmd_table.py
+> for ipmi standard commands.
+>
+> For example, in the test "Verify_SDR_Info".
+> The output of the SDR info command could be different for different
+> machines.
+>
+> The table will be like:
+> '''
+> ipmi_standard_cmd_resp_map =3D {
+>     "${machine}": {
+>         "sdr_info": {
+>             "free_space": "unspecified",
+>             "most_recent_addition": "01/01/1970 00:00:59",
+>             "most_recent_erase": "01/01/1970 00:00:59",
+>             "sdr_overflow": "yes",
+>             "sdr_repository_update_support": "unspecified",
+>             "delete_sdr_supported": "no",
+>             "partial_add_sdr_supported": "no",
+>             "reserve_sdr_repository_supported": "yes",
+>             "sdr_repository_alloc_info_supported": "yes"
+>         },
+>                 "${ipmi_standard_cmd}":{
+>
+>                 ...
+>                 }
+>     }
+> '''
+>
+> Does this seem feasible to you?
+>
+> Thanks
+> Best Regards,
+> Tony
 >
 >
-> Kind regards,
->
-> Paul
+
+--00000000000003312305cea16934
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Tony,<div><br></div><div>It would be better if you can =
+come up with a sample file with the required fields for IPMI standard comma=
+nds. And the sample file can have the table which you have suggested except=
+ the machine=C2=A0field. Later command usage for required IPMI standard com=
+mands can be changed in IPMI suite. Others can use the same sample file to =
+create one for their specific system and use it.</div><div><br></div><div>T=
+hanks</div><div>Rahul<br><div><br></div></div></div><br><div class=3D"gmail=
+_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Oct 12, 2021 at 4:49 =
+PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@qu=
+antatw.com">Tony.Lee@quantatw.com</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">Hi George,<br>
+<br>
+I would like to add a table which similar to data/ipmi_raw_cmd_table.py for=
+ ipmi standard commands.<br>
+<br>
+For example, in the test &quot;Verify_SDR_Info&quot;.<br>
+The output of the SDR info command could be different for different machine=
+s.<br>
+<br>
+The table will be like:<br>
+&#39;&#39;&#39;<br>
+ipmi_standard_cmd_resp_map =3D {<br>
+=C2=A0 =C2=A0 &quot;${machine}&quot;: {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;sdr_info&quot;: {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;free_space&quot;: &quot;uns=
+pecified&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;most_recent_addition&quot;:=
+ &quot;01/01/1970 00:00:59&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;most_recent_erase&quot;: &q=
+uot;01/01/1970 00:00:59&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;sdr_overflow&quot;: &quot;y=
+es&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;sdr_repository_update_suppo=
+rt&quot;: &quot;unspecified&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;delete_sdr_supported&quot;:=
+ &quot;no&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;partial_add_sdr_supported&q=
+uot;: &quot;no&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;reserve_sdr_repository_supp=
+orted&quot;: &quot;yes&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;sdr_repository_alloc_info_s=
+upported&quot;: &quot;yes&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;${ipmi_standa=
+rd_cmd}&quot;:{<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ...<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 }<br>
+&#39;&#39;&#39;<br>
+<br>
+Does this seem feasible to you?<br>
+<br>
+Thanks<br>
+Best Regards,<br>
+Tony<br>
+<br>
+</blockquote></div>
+
+--00000000000003312305cea16934--
