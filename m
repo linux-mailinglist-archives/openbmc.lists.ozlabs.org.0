@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 831354313EB
-	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 11:59:13 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A54B4313F2
+	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 12:00:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HXslz1mWdz2ysv
-	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 20:59:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HXsn86STbz2yn9
+	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 21:00:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,30 +16,29 @@ Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HXslg17wdz2yPP;
- Mon, 18 Oct 2021 20:58:52 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HXsmv0lRnz2xZL;
+ Mon, 18 Oct 2021 20:59:58 +1100 (AEDT)
 Received: from [192.168.0.2] (ip5f5aef76.dynamic.kabel-deutschland.de
  [95.90.239.118])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested) (Authenticated sender: pmenzel)
- by mx.molgen.mpg.de (Postfix) with ESMTPSA id 3A67F61E5FE33;
- Mon, 18 Oct 2021 11:58:49 +0200 (CEST)
-Subject: Re: [PATCH v2 2/7] media: aspeed: use v4l2_info/v4l2_warn/v4l2_dbg
- for log
+ by mx.molgen.mpg.de (Postfix) with ESMTPSA id 7009761E5FE33;
+ Mon, 18 Oct 2021 11:59:55 +0200 (CEST)
+Subject: Re: [PATCH v2 3/7] media: aspeed: add more debug log message
 To: Jammy Huang <jammy_huang@aspeedtech.com>
 References: <20211018092207.13336-1-jammy_huang@aspeedtech.com>
- <20211018092207.13336-3-jammy_huang@aspeedtech.com>
+ <20211018092207.13336-4-jammy_huang@aspeedtech.com>
 From: Paul Menzel <pmenzel@molgen.mpg.de>
-Message-ID: <24ee2592-c62e-8108-58ff-56e648bdf445@molgen.mpg.de>
-Date: Mon, 18 Oct 2021 11:58:48 +0200
+Message-ID: <8212f2f5-d661-b598-1490-0ad5266ff2ca@molgen.mpg.de>
+Date: Mon, 18 Oct 2021 11:59:55 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <20211018092207.13336-3-jammy_huang@aspeedtech.com>
+In-Reply-To: <20211018092207.13336-4-jammy_huang@aspeedtech.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,18 +56,14 @@ Cc: linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Jammy,
+Dear Jammy:
 
 
 Am 18.10.21 um 11:22 schrieb Jammy Huang:
-> The debug log level, 0~3, is controlled by module_param, debug.
-> Higher the value, more the information.
 
-Nit: *The* higher …
+Nit (summary/suject:: message*s*
 
-Please mention your “conversion heuristic”? For example, level 3 is for 
-register operations (read, update, write)? Maybe that could also be 
-added to the module parameter description.
+Could you add an excerpt of the new log messages please?
 
 
 Kind regards,
@@ -78,159 +73,104 @@ Paul
 
 > Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
 > ---
->   drivers/media/platform/aspeed-video.c | 40 +++++++++++++++------------
->   1 file changed, 23 insertions(+), 17 deletions(-)
+>   drivers/media/platform/aspeed-video.c | 24 ++++++++++++++++++++++++
+>   1 file changed, 24 insertions(+)
 > 
 > diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-> index 6259cf17a7cc..642ca96c8c52 100644
+> index 642ca96c8c52..24ca07f40f14 100644
 > --- a/drivers/media/platform/aspeed-video.c
 > +++ b/drivers/media/platform/aspeed-video.c
-> @@ -30,6 +30,7 @@
->   #include <media/v4l2-event.h>
->   #include <media/v4l2-ioctl.h>
->   #include <media/videobuf2-dma-contig.h>
-> +#include <linux/videodev2.h>
->   
->   #define DEVICE_NAME			"aspeed-video"
->   
-> @@ -390,6 +391,8 @@ static const struct v4l2_dv_timings_cap aspeed_video_timings_cap = {
->   	},
->   };
->   
-> +static unsigned int debug;
-> +
->   static void aspeed_video_init_jpeg_table(u32 *table, bool yuv420)
->   {
->   	int i;
-> @@ -437,23 +440,23 @@ static void aspeed_video_update(struct aspeed_video *video, u32 reg, u32 clear,
->   	t &= ~clear;
->   	t |= bits;
->   	writel(t, video->base + reg);
-> -	dev_dbg(video->dev, "update %03x[%08x -> %08x]\n", reg, before,
-> -		readl(video->base + reg));
-> +	v4l2_dbg(3, debug, &video->v4l2_dev, "update %03x[%08x -> %08x]\n",
-> +		 reg, before, readl(video->base + reg));
->   }
->   
->   static u32 aspeed_video_read(struct aspeed_video *video, u32 reg)
->   {
->   	u32 t = readl(video->base + reg);
->   
-> -	dev_dbg(video->dev, "read %03x[%08x]\n", reg, t);
-> +	v4l2_dbg(3, debug, &video->v4l2_dev, "read %03x[%08x]\n", reg, t);
->   	return t;
->   }
->   
->   static void aspeed_video_write(struct aspeed_video *video, u32 reg, u32 val)
->   {
->   	writel(val, video->base + reg);
-> -	dev_dbg(video->dev, "write %03x[%08x]\n", reg,
-> -		readl(video->base + reg));
-> +	v4l2_dbg(3, debug, &video->v4l2_dev, "write %03x[%08x]\n", reg,
-> +		 readl(video->base + reg));
->   }
+> @@ -461,12 +461,17 @@ static void aspeed_video_write(struct aspeed_video *video, u32 reg, u32 val)
 >   
 >   static void update_perf(struct aspeed_video_perf *p)
-> @@ -474,13 +477,13 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
->   	u32 seq_ctrl = aspeed_video_read(video, VE_SEQ_CTRL);
->   
->   	if (video->v4l2_input_status) {
-> -		dev_dbg(video->dev, "No signal; don't start frame\n");
-> +		v4l2_warn(&video->v4l2_dev, "No signal; don't start frame\n");
->   		return 0;
->   	}
->   
->   	if (!(seq_ctrl & VE_SEQ_CTRL_COMP_BUSY) ||
->   	    !(seq_ctrl & VE_SEQ_CTRL_CAP_BUSY)) {
-> -		dev_dbg(video->dev, "Engine busy; don't start frame\n");
-> +		v4l2_warn(&video->v4l2_dev, "Engine busy; don't start frame\n");
->   		return -EBUSY;
->   	}
->   
-> @@ -489,7 +492,7 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
->   				       struct aspeed_video_buffer, link);
->   	if (!buf) {
->   		spin_unlock_irqrestore(&video->lock, flags);
-> -		dev_dbg(video->dev, "No buffers; don't start frame\n");
-> +		v4l2_warn(&video->v4l2_dev, "No buffers; don't start frame\n");
->   		return -EPROTO;
->   	}
->   
-> @@ -565,7 +568,7 @@ static void aspeed_video_bufs_done(struct aspeed_video *video,
->   
->   static void aspeed_video_irq_res_change(struct aspeed_video *video, ulong delay)
 >   {
-> -	dev_dbg(video->dev, "Resolution changed; resetting\n");
-> +	v4l2_dbg(1, debug, &video->v4l2_dev, "Resolution changed; resetting\n");
+> +	struct aspeed_video *v = container_of(p, struct aspeed_video,
+> +					      perf);
+> +
+>   	p->duration =
+>   		ktime_to_ms(ktime_sub(ktime_get(),  p->last_sample));
+>   	p->totaltime += p->duration;
 >   
->   	set_bit(VIDEO_RES_CHANGE, &video->flags);
->   	clear_bit(VIDEO_FRAME_INPRG, &video->flags);
-> @@ -766,8 +769,8 @@ static void aspeed_video_calc_compressed_size(struct aspeed_video *video,
->   	aspeed_video_write(video, VE_STREAM_BUF_SIZE,
->   			   compression_buffer_size_reg);
->   
-> -	dev_dbg(video->dev, "Max compressed size: %x\n",
-> -		video->max_compressed_size);
-> +	v4l2_dbg(1, debug, &video->v4l2_dev, "Max compressed size: %#x\n",
-> +		 video->max_compressed_size);
+>   	p->duration_max = max(p->duration, p->duration_max);
+>   	p->duration_min = min(p->duration, p->duration_min);
+> +	v4l2_dbg(2, debug, &v->v4l2_dev, "time consumed: %d ms\n",
+> +		 p->duration);
 >   }
 >   
->   #define res_check(v) test_and_clear_bit(VIDEO_MODE_DETECT_DONE, &(v)->flags)
-> @@ -804,7 +807,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->   						      res_check(video),
->   						      MODE_DETECT_TIMEOUT);
->   		if (!rc) {
-> -			dev_dbg(video->dev, "Timed out; first mode detect\n");
-> +			v4l2_warn(&video->v4l2_dev, "Timed out; first mode detect\n");
->   			clear_bit(VIDEO_RES_DETECT, &video->flags);
->   			return;
->   		}
-> @@ -822,7 +825,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->   						      MODE_DETECT_TIMEOUT);
->   		clear_bit(VIDEO_RES_DETECT, &video->flags);
->   		if (!rc) {
-> -			dev_dbg(video->dev, "Timed out; second mode detect\n");
-> +			v4l2_warn(&video->v4l2_dev, "Timed out; second mode detect\n");
->   			return;
->   		}
+>   static int aspeed_video_start_frame(struct aspeed_video *video)
+> @@ -593,6 +598,12 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>   	struct aspeed_video *video = arg;
+>   	u32 sts = aspeed_video_read(video, VE_INTERRUPT_STATUS);
 >   
-> @@ -856,7 +859,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->   	} while (invalid_resolution && (tries++ < INVALID_RESOLUTION_RETRIES));
+> +	v4l2_dbg(1, debug, &video->v4l2_dev, "irq sts=%#x %s%s%s%s\n", sts,
+> +		 sts & VE_INTERRUPT_MODE_DETECT_WD ? ", unlock" : "",
+> +		 sts & VE_INTERRUPT_MODE_DETECT ? ", lock" : "",
+> +		 sts & VE_INTERRUPT_CAPTURE_COMPLETE ? ", capture-done" : "",
+> +		 sts & VE_INTERRUPT_COMP_COMPLETE ? ", comp-done" : "");
+> +
+>   	/*
+>   	 * Resolution changed or signal was lost; reset the engine and
+>   	 * re-initialize
+> @@ -910,6 +921,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
 >   
->   	if (invalid_resolution) {
-> -		dev_dbg(video->dev, "Invalid resolution detected\n");
-> +		v4l2_warn(&video->v4l2_dev, "Invalid resolution detected\n");
->   		return;
+>   	/* Don't use direct mode below 1024 x 768 (irqs don't fire) */
+>   	if (size < DIRECT_FETCH_THRESHOLD) {
+> +		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Sync Mode\n");
+>   		aspeed_video_write(video, VE_TGS_0,
+>   				   FIELD_PREP(VE_TGS_FIRST,
+>   					      video->frame_left - 1) |
+> @@ -921,6 +933,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>   					      video->frame_bottom + 1));
+>   		aspeed_video_update(video, VE_CTRL, 0, VE_CTRL_INT_DE);
+>   	} else {
+> +		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Direct Mode\n");
+>   		aspeed_video_update(video, VE_CTRL, 0, VE_CTRL_DIRECT_FETCH);
 >   	}
 >   
-> @@ -873,8 +876,8 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->   	aspeed_video_update(video, VE_SEQ_CTRL, 0,
->   			    VE_SEQ_CTRL_AUTO_COMP | VE_SEQ_CTRL_EN_WATCHDOG);
+> @@ -937,6 +950,10 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>   		if (!aspeed_video_alloc_buf(video, &video->srcs[1], size))
+>   			goto err_mem;
 >   
-> -	dev_dbg(video->dev, "Got resolution: %dx%d\n", det->width,
-> -		det->height);
-> +	v4l2_dbg(1, debug, &video->v4l2_dev, "Got resolution: %dx%d\n",
-> +		 det->width, det->height);
+> +		v4l2_dbg(1, debug, &video->v4l2_dev, "src buf0 addr(%#x) size(%d)\n",
+> +			 video->srcs[0].dma, video->srcs[0].size);
+> +		v4l2_dbg(1, debug, &video->v4l2_dev, "src buf1 addr(%#x) size(%d)\n",
+> +			 video->srcs[1].dma, video->srcs[1].size);
+>   		aspeed_video_write(video, VE_SRC0_ADDR, video->srcs[0].dma);
+>   		aspeed_video_write(video, VE_SRC1_ADDR, video->srcs[1].dma);
+>   	}
+> @@ -1201,6 +1218,9 @@ static int aspeed_video_set_dv_timings(struct file *file, void *fh,
+>   
+>   	timings->type = V4L2_DV_BT_656_1120;
+>   
+> +	v4l2_dbg(1, debug, &video->v4l2_dev, "set new timings(%dx%d)\n",
+> +		 timings->bt.width, timings->bt.height);
+> +
+>   	return 0;
 >   }
 >   
->   static void aspeed_video_set_resolution(struct aspeed_video *video)
-> @@ -1501,7 +1504,7 @@ static void aspeed_video_stop_streaming(struct vb2_queue *q)
->   				!test_bit(VIDEO_FRAME_INPRG, &video->flags),
->   				STOP_TIMEOUT);
->   	if (!rc) {
-> -		dev_dbg(video->dev, "Timed out when stopping streaming\n");
-> +		v4l2_warn(&video->v4l2_dev, "Timed out when stopping streaming\n");
+> @@ -1383,6 +1403,7 @@ static void aspeed_video_resolution_work(struct work_struct *work)
+>   			.u.src_change.changes = V4L2_EVENT_SRC_CH_RESOLUTION,
+>   		};
 >   
->   		/*
->   		 * Need to force stop any DMA and try and get HW into a good
-> @@ -1856,6 +1859,9 @@ static struct platform_driver aspeed_video_driver = {
+> +		v4l2_dbg(1, debug, &video->v4l2_dev, "fire source change event\n");
+>   		v4l2_event_queue(&video->vdev, &ev);
+>   	} else if (test_bit(VIDEO_STREAMING, &video->flags)) {
+>   		/* No resolution change so just restart streaming */
+> @@ -1718,6 +1739,7 @@ static int aspeed_video_init(struct aspeed_video *video)
+>   		dev_err(dev, "Unable to request IRQ %d\n", irq);
+>   		return rc;
+>   	}
+> +	dev_info(video->dev, "irq %d\n", irq);
 >   
->   module_platform_driver(aspeed_video_driver);
+>   	video->eclk = devm_clk_get(dev, "eclk");
+>   	if (IS_ERR(video->eclk)) {
+> @@ -1754,6 +1776,8 @@ static int aspeed_video_init(struct aspeed_video *video)
+>   		rc = -ENOMEM;
+>   		goto err_release_reserved_mem;
+>   	}
+> +	dev_info(video->dev, "alloc mem size(%d) at %#x for jpeg header\n",
+> +		 VE_JPEG_HEADER_SIZE, video->jpeg.dma);
 >   
-> +module_param(debug, int, 0644);
-> +MODULE_PARM_DESC(debug, "Debug level (0-3)");
-> +
->   MODULE_DESCRIPTION("ASPEED Video Engine Driver");
->   MODULE_AUTHOR("Eddie James");
->   MODULE_LICENSE("GPL v2");
+>   	aspeed_video_init_jpeg_table(video->jpeg.virt, video->yuv420);
+>   
 > 
