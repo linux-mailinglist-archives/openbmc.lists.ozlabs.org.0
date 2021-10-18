@@ -2,92 +2,104 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E01A4326DE
-	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 20:50:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B975432712
+	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 21:06:39 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HY5Y1648Dz2yws
-	for <lists+openbmc@lfdr.de>; Tue, 19 Oct 2021 05:50:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HY5vd1YQXz2yyh
+	for <lists+openbmc@lfdr.de>; Tue, 19 Oct 2021 06:06:37 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=T5klUbmt;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=PjGqp/IB;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=suiF1Inl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=64.147.123.24;
- helo=wout1-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=bruce.mitchell@linux.vnet.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm3 header.b=T5klUbmt; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=PjGqp/IB; 
- dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=suiF1Inl; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HY5XX6VyMz2yn9
- for <openbmc@lists.ozlabs.org>; Tue, 19 Oct 2021 05:50:04 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 84E1F3201D2B;
- Mon, 18 Oct 2021 14:50:00 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Mon, 18 Oct 2021 14:50:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
- :references:mime-version:content-type:content-transfer-encoding
- :in-reply-to; s=fm3; bh=lBBiA5hHhRokOF95xCtjRLyeuxRoENwNJvFOHrF9
- uaA=; b=T5klUbmt3iAg9nO25yx1aVRCmXRjWqKIgUi8gxjsad6mXpDCTj2SK0jN
- g+Jlc/fPMjmwiMfJxHYWa0IfiLR8tlBZ9L2ZUp9r3TUgr3Ky1QqzvBpiij3mcfhK
- qYqtkdAbna14NBgDZ5bgfcW+D/VdS6cBjkvOX9w4QMgnYbNpyAYwhN/8+yc8Avwy
- Q6b1kwJ5ch55LsE1l/XK++9a49S7Bj0IkLSlQ5+XUbG/l5PHWtE7pRZmwSC3QtFC
- XcnTJG5l+nKvzXBgSeGSkl2IdnA34aOQsTKZwfRHwVh6Nx3bZ9NYbnYeDIEyR1Cs
- ZWyJzu4r349ZsMn0bOST5s4tH54mog==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; bh=lBBiA5hHhRokOF95xCtjRLyeuxRoENwNJvFOHrF9u
- aA=; b=PjGqp/IBocXw+gnmY24cTu3WGCJMEbBIUDWkrOclmxeMe/pS1J/w5jYeA
- LoXZMOJluDnUrrYjPhWNVf5jY3cfbMcDQWALt7Qd+/WZiFVomChRlCcNs2ayF61Y
- CYfUDqhyEXpXkDGbWr37+gPmcGoTp1iVNnt88fPKagyhjgLtvE8vJC+iIZ63OKlm
- 6gRyEyLsJYDoMyKHmzP9Ii3HHmjmrLaEB34ej0dpC3YSoB1BrCd0a1ZcuWpEU7n9
- c+gr5ngFZyFH8yz/VFYjetCD4x8dcJ4jR3vQuupbifWiNtDqaC9l6GsGaOkIildR
- HTjt1lqsQYltLs0mWSgrGKxnkQ4zQ==
-X-ME-Sender: <xms:18FtYR7CPtnOtH5Y0HbFQaC7REOvbaS38c1POPJ6ym5mOOssu9g5dQ>
- <xme:18FtYe62vSF8Ko8aIRI_h_Fx9TogsrXfFIKEBXtgDD2iwJxbNxNBvqfuGNJ6hyVWA
- Cu-xSWPA6-nlQPq_SU>
-X-ME-Received: <xmr:18FtYYcP6c7qo33kiUcadqXKO1_Ph0WppiSzZi5eNYnyBLBs7dD6KGMk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddvtddguddvjecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpeffhffvuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpeeurhgr
- ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
- homheqnecuggftrfgrthhtvghrnhephfejueelieeufeffheefiedvveeiveeihefgkeel
- teelkeeiffegfeffudeugfevnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
- hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgih
- sgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:18FtYaJShiTFC7v7VoaWksmg-ihmocP0D-qCsUQUZV2EGHmMtBLc4g>
- <xmx:18FtYVJ_CiF0IBfT7B3AFserEs72FsMPubKU6w6ZXaV3ApbT9jfZ9w>
- <xmx:18FtYTx-WnzBDlT1fFr1XBlX0Bp5xkVu1SS8Hz1CL5-6IYDDqoe5dA>
- <xmx:2MFtYThQZM2f6O-DssWQ8jllggJztbc_1UqXgp5E_JqkT5AEvoKpwA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Oct 2021 14:49:59 -0400 (EDT)
-Date: Mon, 18 Oct 2021 14:49:58 -0400
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Andrew Geissler <geissonator@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HY5v75hTxz2yZv
+ for <openbmc@lists.ozlabs.org>; Tue, 19 Oct 2021 06:06:11 +1100 (AEDT)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19IHa40E011375; 
+ Mon, 18 Oct 2021 15:06:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=B+osyFQtTcEVF4QeTS2j1HyMIdFmrNsNdQYwxDJVPsk=;
+ b=suiF1Inlizy5ZMaZWVMC0aPszifjoxreDyL4YXDyFVRGRk8G7AU81sgsfv+Rdk7VmqbZ
+ MyNtyKeltn51YY/8KrkKUeoAajZCYHeX8+eiXl6mqThs3abSGK4sQJtWIvjks2gSffpW
+ dGjfZ0VgmZ0JwuTky00zLYAhkyaZpADQrF1Yowvh8OLSq/rVpc+t7uoCBwTnxgiZyEmA
+ QN/1OUvfqlp6/7y3m2d5Dd9d/CkRj18LJq60KTztIU2x8jXlGvXwY3U1Bwy0fEnHVbrI
+ uVUgN+isJc1r49OIh/4p60vk7k1mk3zNaUcj2hgKbNZ5uMrQQrtRFqidVe09WFfmcSip ag== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3bs8bpj9xb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Oct 2021 15:06:02 -0400
+Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 19IImnPc003101;
+ Mon, 18 Oct 2021 15:06:02 -0400
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3bs8bpj9x4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Oct 2021 15:06:02 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 19IIvMgE023641;
+ Mon, 18 Oct 2021 19:06:02 GMT
+Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
+ [9.57.198.26]) by ppma04dal.us.ibm.com with ESMTP id 3bqpcb6g22-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Oct 2021 19:06:01 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 19IJ615E9044504
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Oct 2021 19:06:01 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3152D112061;
+ Mon, 18 Oct 2021 19:06:01 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AFE87112066;
+ Mon, 18 Oct 2021 19:06:00 +0000 (GMT)
+Received: from [9.163.19.199] (unknown [9.163.19.199])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon, 18 Oct 2021 19:06:00 +0000 (GMT)
+Message-ID: <cd2f6175-475f-0e5a-0b65-4f7a12959ab6@linux.vnet.ibm.com>
+Date: Mon, 18 Oct 2021 12:06:00 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
 Subject: Re: Start using github security advisories
-Message-ID: <20211018184958.zajwqmloxsyxmxv2@cheese>
+Content-Language: en-US
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ Andrew Geissler <geissonator@gmail.com>
 References: <62b15edd-110a-3574-66c5-d11299bbd38c@linux.ibm.com>
  <67C8A5BA-9FD5-4804-B5CA-C2687FC17889@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
+ <20211018184958.zajwqmloxsyxmxv2@cheese>
+From: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
+In-Reply-To: <20211018184958.zajwqmloxsyxmxv2@cheese>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <67C8A5BA-9FD5-4804-B5CA-C2687FC17889@gmail.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 7naADmLA5DslhefpwyMiiDwrqe5O4KRK
+X-Proofpoint-ORIG-GUID: -1DLFyqEB1-innRKq-Ep82ZVpNHe2e7W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
+ definitions=2021-10-18_07,2021-10-18_01,2020-04-07_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ phishscore=0 malwarescore=0 spamscore=0 clxscore=1011 suspectscore=0
+ mlxscore=0 bulkscore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ mlxlogscore=890 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2109230001 definitions=main-2110180106
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,22 +115,28 @@ Cc: openbmc <openbmc@lists.ozlabs.org>, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Oct 14, 2021 at 02:12:20PM -0500, Andrew Geissler wrote:
->> Per today's Security working group meeting, we want to start using 
->> [GitHub security advisories][].  I think we need someone with admin 
->> permissions to github.com/openbmc/openbmc to create new advisories. 
->> Then we'll want a group (team? perhaps security-response-team) with 
->> the current OpenBMC [security response team][] members.  (I have that 
->> list.)
->
->Looks like you’ll need admin authority on openbmc/openbmc in order to 
->utilize the security advisories feature. I wonder if it’s better to 
->create a openbmc/security repo and we can give you and the security 
->team admin of that repo for this work? This would also provide a 
->potential location to track github issues for the security team.
+On 10/18/2021 11:49, Brad Bishop wrote:
+> On Thu, Oct 14, 2021 at 02:12:20PM -0500, Andrew Geissler wrote:
+>>> Per today's Security working group meeting, we want to start using 
+>>> [GitHub security advisories][].  I think we need someone with admin 
+>>> permissions to github.com/openbmc/openbmc to create new advisories. 
+>>> Then we'll want a group (team? perhaps security-response-team) with 
+>>> the current OpenBMC [security response team][] members.  (I have that 
+>>> list.)
+>>
+>> Looks like you’ll need admin authority on openbmc/openbmc in order to 
+>> utilize the security advisories feature. I wonder if it’s better to 
+>> create a openbmc/security repo and we can give you and the security 
+>> team admin of that repo for this work? This would also provide a 
+>> potential location to track github issues for the security team.
+> 
+> This was my thinking as well Andrew.  I'll create 
+> openbmc/security-response if I don't see any complaints in the next 
+> little while.
+> 
+> -brad
 
-This was my thinking as well Andrew.  I'll create 
-openbmc/security-response if I don't see any complaints in the next 
-little while.
+I believe we want to make sure that none of security advisories
+get sent to Discord, wouldn't want to accidentally be going to
+something like #gh-issues.
 
--brad
