@@ -2,67 +2,96 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E63E431FC5
-	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 16:32:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B260743268A
+	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 20:36:50 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HXzqX0VF8z304x
-	for <lists+openbmc@lfdr.de>; Tue, 19 Oct 2021 01:32:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HY5FD2SL1z3053
+	for <lists+openbmc@lfdr.de>; Tue, 19 Oct 2021 05:36:48 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=PskFiPf7;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=RxwgH+jK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d34;
- helo=mail-io1-xd34.google.com; envelope-from=rahulmaheshwari01@gmail.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=bruce.mitchell@linux.vnet.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=PskFiPf7; dkim-atps=neutral
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com
- [IPv6:2607:f8b0:4864:20::d34])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=RxwgH+jK; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HXzq3682pz2ymZ
- for <openbmc@lists.ozlabs.org>; Tue, 19 Oct 2021 01:32:14 +1100 (AEDT)
-Received: by mail-io1-xd34.google.com with SMTP id e144so16526331iof.3
- for <openbmc@lists.ozlabs.org>; Mon, 18 Oct 2021 07:32:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=FkyVVdmY6x9OrnqlgBn2ZAobdAnSVOG/k7tAh9fBeyk=;
- b=PskFiPf72Ihkoz71F2uMY6JMFi8zDxhf2eSulyxnTvMry0+JXBtGMognwgARak6ise
- cV7U9cNs7wtgMViBgJt6jwXr+X4fq7gP2e+dXVzYt7gc4OjdLl9jJNlrSp26wSYdksI8
- MhlylQg88VnLD3ZQGm5j6aBYHAJAAZ/GcDPnjaLaArdsAC4SgELHjF2TRgH+J2xs5OaU
- 0miBCOTXvOY8Rp9GDc8ph1q1Z/rObOF5LwInPj/mKCyeT29mD2Oqkx74mblzoVGo1D0g
- 3lb6M4lGVkEgxDGNZRzlLtBPPw75sN32T2DsWYSED4LkOA3Ge7EJfxmgynrogNgIucvV
- g4AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=FkyVVdmY6x9OrnqlgBn2ZAobdAnSVOG/k7tAh9fBeyk=;
- b=lKLnNToFkydTAbP9+zY8C29x2KmbuDshA/6m60mPmBJTgYniR3RQAfYYq/H3IBnsHb
- bPFAckjgSYJXNas+EdKSOdN0SZjKptHlLeZECk6PFxG6VZD8IQvCRDYo3AspW60JM20Y
- OeyT5spWcJtEYXb37WubeUW5oKHQ/JEkPyIY5dvoZIU/w+L5B9SwghzOSCpKfxBRRVnt
- sAsuS3LKZ7r4ipGJHwjqsv33cc6dYd41rPVWy7HzZxXnrYdI3/jBKYOJeOnqFfjbdQD2
- JBy8JXzHjh2/g6XebSnJpYgdDcpWj3howtIv0yO3CGu1GsYRqi3bJNPi2jLcQofEMbbo
- k2fQ==
-X-Gm-Message-State: AOAM5313HiF3XkQnyl+bRjBFIgRs+KlecfKGCuUnAoOxfEwBCcJNzHzo
- Ab0cp+BaodAQzWlP/Pr6vcNgAPu59l0jTdD4Sis=
-X-Google-Smtp-Source: ABdhPJx0EqOdFDPMPsRknHJGDQs9pi8u5VA7Wt61bBBWkb5g7BUXk3fCxw4ebkQzB2KojMgf1nfSZGZn0qARy4xILyA=
-X-Received: by 2002:a5d:9492:: with SMTP id v18mr14580203ioj.158.1634567530425; 
- Mon, 18 Oct 2021 07:32:10 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HY5Dk6gHvz2ynb
+ for <openbmc@lists.ozlabs.org>; Tue, 19 Oct 2021 05:36:22 +1100 (AEDT)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19IGfCY9000459; 
+ Mon, 18 Oct 2021 14:36:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ subject : to : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=kb+EEXMWpQiSYrdFd5Y+LOu1nMYVsOd9l90bEe+o4nY=;
+ b=RxwgH+jKyToYsVd5OdNHtUOtn1dKMP6NMwT5zY04S9kN6g2Z1uD/nRqqev1NuZkm/P8b
+ Oph+7buOhXSyPAcL5n6KZAKCvjs22J5+k7DcIWEP4wS/of9QZpr8q1tJWunQBeGeZxO+
+ Kpr7LNnsyez6dIjP1J8fSAS4HXuPrZjFSCn2nArKkFrAZyAlrurpHQGTw/cXeb2rq1qt
+ OpUXYrWFVAq2ciiwrkKHlv9e3f9J172v7t3MkWvv/1QfyFQDsxmRbCViqOElCRVJEdTy
+ yC1e07XG2vvW+wuGp9ByuOxD0c37g4AFox1MQzcoSbdiZgQETmq7IToDM6heIvZQoKpT xw== 
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3bs8vm10f7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Oct 2021 14:36:11 -0400
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 19IIRwTI009009;
+ Mon, 18 Oct 2021 18:36:10 GMT
+Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
+ [9.57.198.27]) by ppma03wdc.us.ibm.com with ESMTP id 3bqpcad2m5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Oct 2021 18:36:10 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 19IIaAdv34865510
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Oct 2021 18:36:10 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4887B112067;
+ Mon, 18 Oct 2021 18:36:10 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D23AB112064;
+ Mon, 18 Oct 2021 18:36:09 +0000 (GMT)
+Received: from [9.163.19.199] (unknown [9.163.19.199])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon, 18 Oct 2021 18:36:09 +0000 (GMT)
+Message-ID: <9424b5c3-729d-a9f2-353e-546de7700c5d@linux.vnet.ibm.com>
+Date: Mon, 18 Oct 2021 11:36:09 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: Control and uses of USB for BMC's own internal uses
+Content-Language: en-US
+To: openbmc@lists.ozlabs.org, richard.marian.thomaiyar@linux.intel.com,
+ apparao.puli@linux.intel.com, patrick@stwcx.xyz
+References: <3d3276b0-6408-88bf-94b1-5060e0fbeee7@linux.vnet.ibm.com>
+From: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
+In-Reply-To: <3d3276b0-6408-88bf-94b1-5060e0fbeee7@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: FQbs5iAj-93P5RFO3aTzEGotIqYoR-5s
+X-Proofpoint-ORIG-GUID: FQbs5iAj-93P5RFO3aTzEGotIqYoR-5s
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <HK0PR04MB305832327CA30B3FB2D70985E6B69@HK0PR04MB3058.apcprd04.prod.outlook.com>
-In-Reply-To: <HK0PR04MB305832327CA30B3FB2D70985E6B69@HK0PR04MB3058.apcprd04.prod.outlook.com>
-From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
-Date: Mon, 18 Oct 2021 20:01:59 +0530
-Message-ID: <CAAMkS12rPtK9QJJxz8nTmhocyhZJ7R-Zi8T9BCU5KUKjahCBZw@mail.gmail.com>
-Subject: Re: Expected response table for ipmi standard commands used for
- verification
-To: =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
-Content-Type: multipart/alternative; boundary="00000000000003312305cea16934"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
+ definitions=2021-10-18_07,2021-10-18_01,2020-04-07_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 mlxlogscore=516 bulkscore=0 clxscore=1011 suspectscore=0
+ adultscore=0 phishscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2109230001 definitions=main-2110180103
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,132 +103,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, George Keishing <gkeishin@in.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000003312305cea16934
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 10/17/2021 11:55, Bruce Mitchell wrote:
+> This thread BMC's USB means for the BMC's own uses
+> not for Host's uses nor to provide services to the
+> Host.  Thus, if I said "Disable the BMC's USB" that
+> would not impact the Host in any fashion.
+> 
+> I need to be able to control the BMC's USB ports
+> to prevent BMC uses of USB Pen Drive updates and
+> independently prevent the BMC uses of USB serial
+> cable for UPS.  As well as re-enable those usages.
+> 
+> Clearly in this Gerrit review the term Disabled was
+> not defined.  47180: bmc-usb: property to track usb state
+> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/47180 
+> 
+> 
+> Also, since this is related to security of the BMC
+> my intent was to offer the users a clear way to
+> achieve the control of the BMC's USB ports without
+> the users needing to know any of the Servers' USB
+> topology.  I personally find complicated user options
+> for features adds risk to the system security.
+> 
+> A recommendation I have receive is to use phosphor-state-manager.
+> 
+> Also, from what I have observed this control of the
+> BMC's USB ports may be unique to my company (IBM).
+> And thus, an OEM solution may be best.
+> 
+> Does anyone else have a need or desire to control the
+> BMC's USB ports?
 
-Hi Tony,
-
-It would be better if you can come up with a sample file with the required
-fields for IPMI standard commands. And the sample file can have the table
-which you have suggested except the machine field. Later command usage for
-required IPMI standard commands can be changed in IPMI suite. Others can
-use the same sample file to create one for their specific system and use it=
-.
-
-Thanks
-Rahul
-
-
-On Tue, Oct 12, 2021 at 4:49 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Ton=
-y.Lee@quantatw.com>
-wrote:
-
-> Hi George,
->
-> I would like to add a table which similar to data/ipmi_raw_cmd_table.py
-> for ipmi standard commands.
->
-> For example, in the test "Verify_SDR_Info".
-> The output of the SDR info command could be different for different
-> machines.
->
-> The table will be like:
-> '''
-> ipmi_standard_cmd_resp_map =3D {
->     "${machine}": {
->         "sdr_info": {
->             "free_space": "unspecified",
->             "most_recent_addition": "01/01/1970 00:00:59",
->             "most_recent_erase": "01/01/1970 00:00:59",
->             "sdr_overflow": "yes",
->             "sdr_repository_update_support": "unspecified",
->             "delete_sdr_supported": "no",
->             "partial_add_sdr_supported": "no",
->             "reserve_sdr_repository_supported": "yes",
->             "sdr_repository_alloc_info_supported": "yes"
->         },
->                 "${ipmi_standard_cmd}":{
->
->                 ...
->                 }
->     }
-> '''
->
-> Does this seem feasible to you?
->
-> Thanks
-> Best Regards,
-> Tony
->
->
-
---00000000000003312305cea16934
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Tony,<div><br></div><div>It would be better if you can =
-come up with a sample file with the required fields for IPMI standard comma=
-nds. And the sample file can have the table which you have suggested except=
- the machine=C2=A0field. Later command usage for required IPMI standard com=
-mands can be changed in IPMI suite. Others can use the same sample file to =
-create one for their specific system and use it.</div><div><br></div><div>T=
-hanks</div><div>Rahul<br><div><br></div></div></div><br><div class=3D"gmail=
-_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Oct 12, 2021 at 4:49 =
-PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@qu=
-antatw.com">Tony.Lee@quantatw.com</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">Hi George,<br>
-<br>
-I would like to add a table which similar to data/ipmi_raw_cmd_table.py for=
- ipmi standard commands.<br>
-<br>
-For example, in the test &quot;Verify_SDR_Info&quot;.<br>
-The output of the SDR info command could be different for different machine=
-s.<br>
-<br>
-The table will be like:<br>
-&#39;&#39;&#39;<br>
-ipmi_standard_cmd_resp_map =3D {<br>
-=C2=A0 =C2=A0 &quot;${machine}&quot;: {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;sdr_info&quot;: {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;free_space&quot;: &quot;uns=
-pecified&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;most_recent_addition&quot;:=
- &quot;01/01/1970 00:00:59&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;most_recent_erase&quot;: &q=
-uot;01/01/1970 00:00:59&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;sdr_overflow&quot;: &quot;y=
-es&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;sdr_repository_update_suppo=
-rt&quot;: &quot;unspecified&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;delete_sdr_supported&quot;:=
- &quot;no&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;partial_add_sdr_supported&q=
-uot;: &quot;no&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;reserve_sdr_repository_supp=
-orted&quot;: &quot;yes&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;sdr_repository_alloc_info_s=
-upported&quot;: &quot;yes&quot;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;${ipmi_standa=
-rd_cmd}&quot;:{<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ...<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 }<br>
-&#39;&#39;&#39;<br>
-<br>
-Does this seem feasible to you?<br>
-<br>
-Thanks<br>
-Best Regards,<br>
-Tony<br>
-<br>
-</blockquote></div>
-
---00000000000003312305cea16934--
+Also suggested utilize https://github.com/openbmc/service-config-manager 
+to disable/enable the service and make it like enable/disable SSH
+via Redfish via bmcweb
