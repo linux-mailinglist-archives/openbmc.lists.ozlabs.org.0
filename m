@@ -2,52 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A1D3432A46
-	for <lists+openbmc@lfdr.de>; Tue, 19 Oct 2021 01:20:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 70F25432A4D
+	for <lists+openbmc@lfdr.de>; Tue, 19 Oct 2021 01:20:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HYCX85slqz3c52
-	for <lists+openbmc@lfdr.de>; Tue, 19 Oct 2021 10:20:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HYCXq0rSYz3cB5
+	for <lists+openbmc@lfdr.de>; Tue, 19 Oct 2021 10:20:43 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=nG84xIBN;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=llOcT7Pq;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
  helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=nG84xIBN; 
+ header.a=rsa-sha256 header.s=thorn header.b=llOcT7Pq; 
  dkim-atps=neutral
 Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [IPv6:2605:2700:0:5::4713:9cab])
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HYCT50bYdz3bn5
- for <openbmc@lists.ozlabs.org>; Tue, 19 Oct 2021 10:17:28 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HYCT752G2z3cBc
+ for <openbmc@lists.ozlabs.org>; Tue, 19 Oct 2021 10:17:31 +1100 (AEDT)
 Received: from hatter.bewilderbeest.net (71-212-29-146.tukw.qwest.net
  [71.212.29.146])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 56A4FB25;
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 7BB9EB60;
  Mon, 18 Oct 2021 16:17:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
  s=thorn; t=1634599044;
- bh=+bWpQkI1O4/JywgiOFgtTo1BhtlZerGBHCVvyBvBOyc=;
+ bh=pbMXjKV/yu83ApDHEM8yOgk08myjS8K3IA/vMQW187w=;
  h=From:To:Subject:Date:In-Reply-To:References:From;
- b=nG84xIBNERVi8FqLSTZr/0iu/W13lBPnbq27gKMNEX/qj58BxuINPtfoQyPixXFlR
- R3LKqg1meeK/hzvtomDDXchjR+re+OXll6vuikQW0DhKlNjZQs8pUKz0lzXWpxSwr4
- 3V7hVR0rMa/c3bGVMAuOB7pM6iYrgFqKAm7KyFIU=
+ b=llOcT7PqMbb/l9v9Sy6iHOj5Qr8f9foy6x751dkBg0YIpfGje1M7RUjFJ3HrkY+60
+ xVTj62wPo5QQu/XtUq3GIQ+bKbMr+sjibS7pKMzur5YkZSyBcfRGHO3aYhAa+ujzqU
+ 9FvO21v74u9AQCzaENH1LQ6MYKmHuyB6YFKaG0UQ=
 From: Zev Weiss <zev@bewilderbeest.net>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH linux dev-5.14 4/8] hwmon: (pmbus/lm25066) Let compiler
- determine outer dimension of lm25066_coeff
-Date: Mon, 18 Oct 2021 16:17:10 -0700
-Message-Id: <20211018231714.19054-5-zev@bewilderbeest.net>
+Subject: [PATCH linux dev-5.14 5/8] hwmon: (pmbus/lm25066) Mark lm25066_coeff
+ array const
+Date: Mon, 18 Oct 2021 16:17:11 -0700
+Message-Id: <20211018231714.19054-6-zev@bewilderbeest.net>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211018231714.19054-1-zev@bewilderbeest.net>
 References: <20211018231714.19054-1-zev@bewilderbeest.net>
@@ -67,30 +67,38 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Maintaining this manually is error prone (there are currently only
-five chips supported, not six); gcc can do it for us automatically.
+lm25066_coeff is read-only. Mark it as such.
 
 Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Fixes: 666c14906b49 ("hwmon: (pmbus/lm25066) Drop support for LM25063")
-Link: https://lore.kernel.org/r/20210928092242.30036-5-zev@bewilderbeest.net
+Link: https://lore.kernel.org/r/20210928092242.30036-6-zev@bewilderbeest.net
+[groeck: Added description]
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 ---
- drivers/hwmon/pmbus/lm25066.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/pmbus/lm25066.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/hwmon/pmbus/lm25066.c b/drivers/hwmon/pmbus/lm25066.c
-index 4dc003ff859e..1ff5407b6977 100644
+index 1ff5407b6977..dbbf8571c437 100644
 --- a/drivers/hwmon/pmbus/lm25066.c
 +++ b/drivers/hwmon/pmbus/lm25066.c
 @@ -51,7 +51,7 @@ struct __coeff {
  #define PSC_CURRENT_IN_L	(PSC_NUM_CLASSES)
  #define PSC_POWER_L		(PSC_NUM_CLASSES + 1)
  
--static struct __coeff lm25066_coeff[6][PSC_NUM_CLASSES + 2] = {
-+static struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
+-static struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
++static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
  	[lm25056] = {
  		[PSC_VOLTAGE_IN] = {
  			.m = 16296,
+@@ -449,7 +449,7 @@ static int lm25066_probe(struct i2c_client *client)
+ 	int config;
+ 	struct lm25066_data *data;
+ 	struct pmbus_driver_info *info;
+-	struct __coeff *coeff;
++	const struct __coeff *coeff;
+ 
+ 	if (!i2c_check_functionality(client->adapter,
+ 				     I2C_FUNC_SMBUS_READ_BYTE_DATA))
 -- 
 2.33.1
 
