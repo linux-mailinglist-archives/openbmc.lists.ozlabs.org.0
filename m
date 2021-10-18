@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37164431353
-	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 11:24:03 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFC1D431360
+	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 11:24:26 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HXrzN4mjBz3bXY
-	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 20:24:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HXrzr2pmfz2yn9
+	for <lists+openbmc@lfdr.de>; Mon, 18 Oct 2021 20:24:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,10 +17,10 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HXry01HzCz309K;
- Mon, 18 Oct 2021 20:22:48 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HXryB1BfLz2ypV;
+ Mon, 18 Oct 2021 20:22:57 +1100 (AEDT)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 19I90G2o071200;
+ by twspam01.aspeedtech.com with ESMTP id 19I90G7Q071201;
  Mon, 18 Oct 2021 17:00:16 +0800 (GMT-8)
  (envelope-from jammy_huang@aspeedtech.com)
 Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
@@ -31,9 +31,10 @@ To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
  <andrew@aj.id.au>, <linux-media@vger.kernel.org>,
  <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
  <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 3/7] media: aspeed: add more debug log message
-Date: Mon, 18 Oct 2021 17:22:03 +0800
-Message-ID: <20211018092207.13336-4-jammy_huang@aspeedtech.com>
+Subject: [PATCH v2 4/7] media: aspeed: refactor to gather format/compress
+ settings
+Date: Mon, 18 Oct 2021 17:22:04 +0800
+Message-ID: <20211018092207.13336-5-jammy_huang@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20211018092207.13336-1-jammy_huang@aspeedtech.com>
 References: <20211018092207.13336-1-jammy_huang@aspeedtech.com>
@@ -44,7 +45,7 @@ X-Originating-IP: [192.168.2.115]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 19I90G2o071200
+X-MAIL: twspam01.aspeedtech.com 19I90G7Q071201
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,108 +60,143 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Add API, aspeed_video_update_regs(), to gather format/compress settings
+which are controlled by user.
+
 Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
 ---
- drivers/media/platform/aspeed-video.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/media/platform/aspeed-video.c | 69 ++++++++++++++-------------
+ 1 file changed, 35 insertions(+), 34 deletions(-)
 
 diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index 642ca96c8c52..24ca07f40f14 100644
+index 24ca07f40f14..00ce4f26b068 100644
 --- a/drivers/media/platform/aspeed-video.c
 +++ b/drivers/media/platform/aspeed-video.c
-@@ -461,12 +461,17 @@ static void aspeed_video_write(struct aspeed_video *video, u32 reg, u32 val)
+@@ -967,20 +967,42 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+ 		aspeed_video_free_buf(video, &video->srcs[0]);
+ }
  
- static void update_perf(struct aspeed_video_perf *p)
+-static void aspeed_video_init_regs(struct aspeed_video *video)
++static void aspeed_video_update_regs(struct aspeed_video *video)
  {
-+	struct aspeed_video *v = container_of(p, struct aspeed_video,
-+					      perf);
+ 	u32 comp_ctrl = VE_COMP_CTRL_RSVD |
+ 		FIELD_PREP(VE_COMP_CTRL_DCT_LUM, video->jpeg_quality) |
+ 		FIELD_PREP(VE_COMP_CTRL_DCT_CHR, video->jpeg_quality | 0x10);
+-	u32 ctrl = VE_CTRL_AUTO_OR_CURSOR;
++	u32 ctrl = 0;
+ 	u32 seq_ctrl = VE_SEQ_CTRL_JPEG_MODE;
+ 
++	v4l2_dbg(1, debug, &video->v4l2_dev, "framerate(%d)\n",
++		 video->frame_rate);
++	v4l2_dbg(1, debug, &video->v4l2_dev, "subsample(%s)\n",
++		 video->yuv420 ? "420" : "444");
++	v4l2_dbg(1, debug, &video->v4l2_dev, "compression quality(%d)\n",
++		 video->jpeg_quality);
 +
- 	p->duration =
- 		ktime_to_ms(ktime_sub(ktime_get(),  p->last_sample));
- 	p->totaltime += p->duration;
+ 	if (video->frame_rate)
+ 		ctrl |= FIELD_PREP(VE_CTRL_FRC, video->frame_rate);
  
- 	p->duration_max = max(p->duration, p->duration_max);
- 	p->duration_min = min(p->duration, p->duration_min);
-+	v4l2_dbg(2, debug, &v->v4l2_dev, "time consumed: %d ms\n",
-+		 p->duration);
- }
+ 	if (video->yuv420)
+ 		seq_ctrl |= VE_SEQ_CTRL_YUV420;
  
- static int aspeed_video_start_frame(struct aspeed_video *video)
-@@ -593,6 +598,12 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
- 	struct aspeed_video *video = arg;
- 	u32 sts = aspeed_video_read(video, VE_INTERRUPT_STATUS);
- 
-+	v4l2_dbg(1, debug, &video->v4l2_dev, "irq sts=%#x %s%s%s%s\n", sts,
-+		 sts & VE_INTERRUPT_MODE_DETECT_WD ? ", unlock" : "",
-+		 sts & VE_INTERRUPT_MODE_DETECT ? ", lock" : "",
-+		 sts & VE_INTERRUPT_CAPTURE_COMPLETE ? ", capture-done" : "",
-+		 sts & VE_INTERRUPT_COMP_COMPLETE ? ", comp-done" : "");
++	if (video->jpeg.virt)
++		aspeed_video_update_jpeg_table(video->jpeg.virt, video->yuv420);
 +
- 	/*
- 	 * Resolution changed or signal was lost; reset the engine and
- 	 * re-initialize
-@@ -910,6 +921,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
- 
- 	/* Don't use direct mode below 1024 x 768 (irqs don't fire) */
- 	if (size < DIRECT_FETCH_THRESHOLD) {
-+		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Sync Mode\n");
- 		aspeed_video_write(video, VE_TGS_0,
- 				   FIELD_PREP(VE_TGS_FIRST,
- 					      video->frame_left - 1) |
-@@ -921,6 +933,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
- 					      video->frame_bottom + 1));
- 		aspeed_video_update(video, VE_CTRL, 0, VE_CTRL_INT_DE);
- 	} else {
-+		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Direct Mode\n");
- 		aspeed_video_update(video, VE_CTRL, 0, VE_CTRL_DIRECT_FETCH);
- 	}
- 
-@@ -937,6 +950,10 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
- 		if (!aspeed_video_alloc_buf(video, &video->srcs[1], size))
- 			goto err_mem;
- 
-+		v4l2_dbg(1, debug, &video->v4l2_dev, "src buf0 addr(%#x) size(%d)\n",
-+			 video->srcs[0].dma, video->srcs[0].size);
-+		v4l2_dbg(1, debug, &video->v4l2_dev, "src buf1 addr(%#x) size(%d)\n",
-+			 video->srcs[1].dma, video->srcs[1].size);
- 		aspeed_video_write(video, VE_SRC0_ADDR, video->srcs[0].dma);
- 		aspeed_video_write(video, VE_SRC1_ADDR, video->srcs[1].dma);
- 	}
-@@ -1201,6 +1218,9 @@ static int aspeed_video_set_dv_timings(struct file *file, void *fh,
- 
- 	timings->type = V4L2_DV_BT_656_1120;
- 
-+	v4l2_dbg(1, debug, &video->v4l2_dev, "set new timings(%dx%d)\n",
-+		 timings->bt.width, timings->bt.height);
++	/* Set control registers */
++	aspeed_video_update(video, VE_SEQ_CTRL,
++			    VE_SEQ_CTRL_JPEG_MODE | VE_SEQ_CTRL_YUV420,
++			    seq_ctrl);
++	aspeed_video_update(video, VE_CTRL, VE_CTRL_FRC, ctrl);
++	aspeed_video_update(video, VE_COMP_CTRL,
++			    VE_COMP_CTRL_DCT_LUM | VE_COMP_CTRL_DCT_CHR,
++			    comp_ctrl);
++}
 +
- 	return 0;
- }
++static void aspeed_video_init_regs(struct aspeed_video *video)
++{
+ 	/* Unlock VE registers */
+ 	aspeed_video_write(video, VE_PROTECTION_KEY, VE_PROTECTION_KEY_UNLOCK);
  
-@@ -1383,6 +1403,7 @@ static void aspeed_video_resolution_work(struct work_struct *work)
- 			.u.src_change.changes = V4L2_EVENT_SRC_CH_RESOLUTION,
- 		};
+@@ -995,9 +1017,8 @@ static void aspeed_video_init_regs(struct aspeed_video *video)
+ 	aspeed_video_write(video, VE_JPEG_ADDR, video->jpeg.dma);
  
-+		v4l2_dbg(1, debug, &video->v4l2_dev, "fire source change event\n");
- 		v4l2_event_queue(&video->vdev, &ev);
- 	} else if (test_bit(VIDEO_STREAMING, &video->flags)) {
- 		/* No resolution change so just restart streaming */
-@@ -1718,6 +1739,7 @@ static int aspeed_video_init(struct aspeed_video *video)
- 		dev_err(dev, "Unable to request IRQ %d\n", irq);
- 		return rc;
- 	}
-+	dev_info(video->dev, "irq %d\n", irq);
+ 	/* Set control registers */
+-	aspeed_video_write(video, VE_SEQ_CTRL, seq_ctrl);
+-	aspeed_video_write(video, VE_CTRL, ctrl);
+-	aspeed_video_write(video, VE_COMP_CTRL, comp_ctrl);
++	aspeed_video_write(video, VE_CTRL, VE_CTRL_AUTO_OR_CURSOR);
++	aspeed_video_write(video, VE_COMP_CTRL, VE_COMP_CTRL_RSVD);
  
- 	video->eclk = devm_clk_get(dev, "eclk");
- 	if (IS_ERR(video->eclk)) {
-@@ -1754,6 +1776,8 @@ static int aspeed_video_init(struct aspeed_video *video)
- 		rc = -ENOMEM;
- 		goto err_release_reserved_mem;
- 	}
-+	dev_info(video->dev, "alloc mem size(%d) at %#x for jpeg header\n",
-+		 VE_JPEG_HEADER_SIZE, video->jpeg.dma);
+ 	/* Don't downscale */
+ 	aspeed_video_write(video, VE_SCALING_FACTOR, 0x10001000);
+@@ -1326,27 +1347,6 @@ static const struct v4l2_ioctl_ops aspeed_video_ioctl_ops = {
+ 	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
+ };
  
- 	aspeed_video_init_jpeg_table(video->jpeg.virt, video->yuv420);
+-static void aspeed_video_update_jpeg_quality(struct aspeed_video *video)
+-{
+-	u32 comp_ctrl = FIELD_PREP(VE_COMP_CTRL_DCT_LUM, video->jpeg_quality) |
+-		FIELD_PREP(VE_COMP_CTRL_DCT_CHR, video->jpeg_quality | 0x10);
+-
+-	aspeed_video_update(video, VE_COMP_CTRL,
+-			    VE_COMP_CTRL_DCT_LUM | VE_COMP_CTRL_DCT_CHR,
+-			    comp_ctrl);
+-}
+-
+-static void aspeed_video_update_subsampling(struct aspeed_video *video)
+-{
+-	if (video->jpeg.virt)
+-		aspeed_video_update_jpeg_table(video->jpeg.virt, video->yuv420);
+-
+-	if (video->yuv420)
+-		aspeed_video_update(video, VE_SEQ_CTRL, 0, VE_SEQ_CTRL_YUV420);
+-	else
+-		aspeed_video_update(video, VE_SEQ_CTRL, VE_SEQ_CTRL_YUV420, 0);
+-}
+-
+ static int aspeed_video_set_ctrl(struct v4l2_ctrl *ctrl)
+ {
+ 	struct aspeed_video *video = container_of(ctrl->handler,
+@@ -1356,16 +1356,13 @@ static int aspeed_video_set_ctrl(struct v4l2_ctrl *ctrl)
+ 	switch (ctrl->id) {
+ 	case V4L2_CID_JPEG_COMPRESSION_QUALITY:
+ 		video->jpeg_quality = ctrl->val;
+-		aspeed_video_update_jpeg_quality(video);
++		if (test_bit(VIDEO_STREAMING, &video->flags))
++			aspeed_video_update_regs(video);
+ 		break;
+ 	case V4L2_CID_JPEG_CHROMA_SUBSAMPLING:
+-		if (ctrl->val == V4L2_JPEG_CHROMA_SUBSAMPLING_420) {
+-			video->yuv420 = true;
+-			aspeed_video_update_subsampling(video);
+-		} else {
+-			video->yuv420 = false;
+-			aspeed_video_update_subsampling(video);
+-		}
++		video->yuv420 = (ctrl->val == V4L2_JPEG_CHROMA_SUBSAMPLING_420);
++		if (test_bit(VIDEO_STREAMING, &video->flags))
++			aspeed_video_update_regs(video);
+ 		break;
+ 	default:
+ 		return -EINVAL;
+@@ -1393,6 +1390,8 @@ static void aspeed_video_resolution_work(struct work_struct *work)
  
+ 	aspeed_video_init_regs(video);
+ 
++	aspeed_video_update_regs(video);
++
+ 	aspeed_video_get_resolution(video);
+ 
+ 	if (video->detected_timings.width != video->active_timings.width ||
+@@ -1504,6 +1503,8 @@ static int aspeed_video_start_streaming(struct vb2_queue *q,
+ 	video->perf.duration_max = 0;
+ 	video->perf.duration_min = 0xffffffff;
+ 
++	aspeed_video_update_regs(video);
++
+ 	rc = aspeed_video_start_frame(video);
+ 	if (rc) {
+ 		aspeed_video_bufs_done(video, VB2_BUF_STATE_QUEUED);
 -- 
 2.25.1
 
