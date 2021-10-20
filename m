@@ -1,69 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06D82434629
-	for <lists+openbmc@lfdr.de>; Wed, 20 Oct 2021 09:48:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32677434683
+	for <lists+openbmc@lfdr.de>; Wed, 20 Oct 2021 10:09:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HZ2mG35P1z302C
-	for <lists+openbmc@lfdr.de>; Wed, 20 Oct 2021 18:48:30 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZG2DiMNZ;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HZ3Ds6Rxdz30CK
+	for <lists+openbmc@lfdr.de>; Wed, 20 Oct 2021 19:09:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::530;
- helo=mail-ed1-x530.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=ZG2DiMNZ; dkim-atps=neutral
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com
- [IPv6:2a00:1450:4864:20::530])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HZ2lp6yfBz2xWt;
- Wed, 20 Oct 2021 18:48:06 +1100 (AEDT)
-Received: by mail-ed1-x530.google.com with SMTP id z20so23037471edc.13;
- Wed, 20 Oct 2021 00:48:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Q5XgWi3RBd7+1oXKWAvtLEhuOtUBO2Nw1UT8cn9MibE=;
- b=ZG2DiMNZPbcfjS4RMK5jWp7G1spCaTkIxItupWSid7oeaCWUKdtPR4D2AEDNrmBmRg
- nt9obFF/b7A5CAa3eNtF+5RqnR7ZGeK2uT5SCHjdYBq+nVwynGUd2w4ksKtTwkmwuWm+
- RYvqqlsADC7Tm9s+kf6gpCGsWK8JJGhcsH59w1M4HUptrEOW276TWsc+b9LlbFp+qxtr
- Xh/YHWi8vn802G1O+7MnNBKFi5q5f7lMRhm5xopknaxghagXKMmidGXvrU4NYBruXc4L
- abABQDHtAup0jN9msraFmPmRiuW9DU/PBq9xL6Zke2dpShQ+kEHeLKMqbNElycYXaxGD
- pBxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Q5XgWi3RBd7+1oXKWAvtLEhuOtUBO2Nw1UT8cn9MibE=;
- b=43Nxl7oWUYltyfpfaFrxlOkduwgcVP9B0KslVcTRysZQOh6xV/E5D0Aw6Mhv5eFT2V
- /Q4wczII7G2f+NI4cBEpZdYgiMXt8mwjAzKmHeFTZBeiWXGYUDzyyYyb0c3eb6fwRpdo
- NgF5YlmOxMZGjgImHxrtRxPkX9ATmqI+U8PWKxvPk/YSnYJeq/SEWR+GBX9lDSRBBA0k
- 8LQMkt8myD65tbCNrdpgmw2zWDiMuQS0BIKvUeCTe7Cj7/LppTGU61cR4FYSGvNj2D/u
- twWUQ6KhlS/V2EbF/mHPPn+vRaKSLp0UiPMRPcMeZZsg9qLOFfYLyU//5YC51/z6KXgb
- jK1A==
-X-Gm-Message-State: AOAM532EngogDQVCw/MCxa7MzoKSNdzxiBcZ/Q3/a7ygGK3NMQ9ZWM0c
- EBb1YUhEWyU/+A1iIllW7X9ldx2G02To/LkELA8=
-X-Google-Smtp-Source: ABdhPJwYTapTcZYITscGYAX2BMNMgv8VssGNaam2KAUVgYHPOzHowJjTpv4zSWf3/8gVrPTGbjI3Vuhvu1lTsn/Dm0w=
-X-Received: by 2002:a17:906:bceb:: with SMTP id
- op11mr44769970ejb.449.1634716082878; 
- Wed, 20 Oct 2021 00:48:02 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HZ3DY1d1pz2yHH;
+ Wed, 20 Oct 2021 19:09:28 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 19K7krTu028983;
+ Wed, 20 Oct 2021 15:46:53 +0800 (GMT-8)
+ (envelope-from jammy_huang@aspeedtech.com)
+Received: from [192.168.2.115] (192.168.2.115) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 20 Oct
+ 2021 16:08:55 +0800
+Message-ID: <62496b13-bd5b-6a4c-d426-bf332d0335c4@aspeedtech.com>
+Date: Wed, 20 Oct 2021 16:08:56 +0800
 MIME-Version: 1.0
-References: <20211019144127.GA12978@gmail.com>
- <20211019120724.50776b81@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20211019120724.50776b81@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Wed, 20 Oct 2021 13:19:55 +0530
-Message-ID: <CAA7TbcupuBqyq_UhsL6f5723m1afzWJW0+A+jPhY_aKyEAPoMQ@mail.gmail.com>
-Subject: Re: [PATCH v2] Add payload to be 32-bit aligned to fix dropped packets
-To: Jakub Kicinski <kuba@kernel.org>
-Content-Type: multipart/alternative; boundary="0000000000006dbe5c05cec3ff23"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [PATCH v2 2/7] media: aspeed: use v4l2_info/v4l2_warn/v4l2_dbg
+ for log
+Content-Language: en-US
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+References: <20211018092207.13336-1-jammy_huang@aspeedtech.com>
+ <20211018092207.13336-3-jammy_huang@aspeedtech.com>
+ <24ee2592-c62e-8108-58ff-56e648bdf445@molgen.mpg.de>
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+In-Reply-To: <24ee2592-c62e-8108-58ff-56e648bdf445@molgen.mpg.de>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [192.168.2.115]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 19K7krTu028983
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,40 +58,203 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Networking <netdev@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Amithash Prasad <amithash@fb.com>,
- patrickw3@fb.com, Samuel Mendoza-Jonas <sam@mendozajonas.com>,
- velumanit@hcl.com, "David S. Miller" <davem@davemloft.net>
+Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "andrew@aj.id.au" <andrew@aj.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "eajames@linux.ibm.com" <eajames@linux.ibm.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "mchehab@kernel.org" <mchehab@kernel.org>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+ "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006dbe5c05cec3ff23
-Content-Type: text/plain; charset="UTF-8"
+Dear Paul,
 
-On Wed, Oct 20, 2021 at 12:37 AM Jakub Kicinski <kuba@kernel.org> wrote:
-
-> On Tue, 19 Oct 2021 20:11:27 +0530 Kumar Thangavel wrote:
-> > +     payload = ALIGN(nca->payload, 4)
+On 2021/10/18 下午 05:58, Paul Menzel wrote:
+> Dear Jammy,
 >
-> This is missing a semicolon.
 >
+> Am 18.10.21 um 11:22 schrieb Jammy Huang:
+>> The debug log level, 0~3, is controlled by module_param, debug.
+>> Higher the value, more the information.
+> Nit: *The* higher …
+>
+> Please mention your “conversion heuristic”? For example, level 3 is for
+> register operations (read, update, write)? Maybe that could also be
+> added to the module parameter description.
 
-    Kumar : Ack. Will fix this in next PS.
+OK, it will be updated as below:
 
---0000000000006dbe5c05cec3ff23
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+     The debug log level, 0~3, is controlled by module_param, debug.
+     The higher the value, the more the information.
+       0: off
+       1: info
+       2: debug
+       3: register operations
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 20, 2021 at 12:37 AM Jaku=
-b Kicinski &lt;<a href=3D"mailto:kuba@kernel.org">kuba@kernel.org</a>&gt; w=
-rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
-x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, 19=
- Oct 2021 20:11:27 +0530 Kumar Thangavel wrote:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0payload =3D ALIGN(nca-&gt;payload, 4)<br>
-<br>
-This is missing a semicolon.<br></blockquote><div><br>=C2=A0 =C2=A0 Kumar :=
- Ack. Will fix this in next PS.=C2=A0</div></div></div>
-
---0000000000006dbe5c05cec3ff23--
+>
+>
+> Kind regards,
+>
+> Paul
+>
+>
+>> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+>> ---
+>>    drivers/media/platform/aspeed-video.c | 40 +++++++++++++++------------
+>>    1 file changed, 23 insertions(+), 17 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+>> index 6259cf17a7cc..642ca96c8c52 100644
+>> --- a/drivers/media/platform/aspeed-video.c
+>> +++ b/drivers/media/platform/aspeed-video.c
+>> @@ -30,6 +30,7 @@
+>>    #include <media/v4l2-event.h>
+>>    #include <media/v4l2-ioctl.h>
+>>    #include <media/videobuf2-dma-contig.h>
+>> +#include <linux/videodev2.h>
+>>    
+>>    #define DEVICE_NAME			"aspeed-video"
+>>    
+>> @@ -390,6 +391,8 @@ static const struct v4l2_dv_timings_cap aspeed_video_timings_cap = {
+>>    	},
+>>    };
+>>    
+>> +static unsigned int debug;
+>> +
+>>    static void aspeed_video_init_jpeg_table(u32 *table, bool yuv420)
+>>    {
+>>    	int i;
+>> @@ -437,23 +440,23 @@ static void aspeed_video_update(struct aspeed_video *video, u32 reg, u32 clear,
+>>    	t &= ~clear;
+>>    	t |= bits;
+>>    	writel(t, video->base + reg);
+>> -	dev_dbg(video->dev, "update %03x[%08x -> %08x]\n", reg, before,
+>> -		readl(video->base + reg));
+>> +	v4l2_dbg(3, debug, &video->v4l2_dev, "update %03x[%08x -> %08x]\n",
+>> +		 reg, before, readl(video->base + reg));
+>>    }
+>>    
+>>    static u32 aspeed_video_read(struct aspeed_video *video, u32 reg)
+>>    {
+>>    	u32 t = readl(video->base + reg);
+>>    
+>> -	dev_dbg(video->dev, "read %03x[%08x]\n", reg, t);
+>> +	v4l2_dbg(3, debug, &video->v4l2_dev, "read %03x[%08x]\n", reg, t);
+>>    	return t;
+>>    }
+>>    
+>>    static void aspeed_video_write(struct aspeed_video *video, u32 reg, u32 val)
+>>    {
+>>    	writel(val, video->base + reg);
+>> -	dev_dbg(video->dev, "write %03x[%08x]\n", reg,
+>> -		readl(video->base + reg));
+>> +	v4l2_dbg(3, debug, &video->v4l2_dev, "write %03x[%08x]\n", reg,
+>> +		 readl(video->base + reg));
+>>    }
+>>    
+>>    static void update_perf(struct aspeed_video_perf *p)
+>> @@ -474,13 +477,13 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
+>>    	u32 seq_ctrl = aspeed_video_read(video, VE_SEQ_CTRL);
+>>    
+>>    	if (video->v4l2_input_status) {
+>> -		dev_dbg(video->dev, "No signal; don't start frame\n");
+>> +		v4l2_warn(&video->v4l2_dev, "No signal; don't start frame\n");
+>>    		return 0;
+>>    	}
+>>    
+>>    	if (!(seq_ctrl & VE_SEQ_CTRL_COMP_BUSY) ||
+>>    	    !(seq_ctrl & VE_SEQ_CTRL_CAP_BUSY)) {
+>> -		dev_dbg(video->dev, "Engine busy; don't start frame\n");
+>> +		v4l2_warn(&video->v4l2_dev, "Engine busy; don't start frame\n");
+>>    		return -EBUSY;
+>>    	}
+>>    
+>> @@ -489,7 +492,7 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
+>>    				       struct aspeed_video_buffer, link);
+>>    	if (!buf) {
+>>    		spin_unlock_irqrestore(&video->lock, flags);
+>> -		dev_dbg(video->dev, "No buffers; don't start frame\n");
+>> +		v4l2_warn(&video->v4l2_dev, "No buffers; don't start frame\n");
+>>    		return -EPROTO;
+>>    	}
+>>    
+>> @@ -565,7 +568,7 @@ static void aspeed_video_bufs_done(struct aspeed_video *video,
+>>    
+>>    static void aspeed_video_irq_res_change(struct aspeed_video *video, ulong delay)
+>>    {
+>> -	dev_dbg(video->dev, "Resolution changed; resetting\n");
+>> +	v4l2_dbg(1, debug, &video->v4l2_dev, "Resolution changed; resetting\n");
+>>    
+>>    	set_bit(VIDEO_RES_CHANGE, &video->flags);
+>>    	clear_bit(VIDEO_FRAME_INPRG, &video->flags);
+>> @@ -766,8 +769,8 @@ static void aspeed_video_calc_compressed_size(struct aspeed_video *video,
+>>    	aspeed_video_write(video, VE_STREAM_BUF_SIZE,
+>>    			   compression_buffer_size_reg);
+>>    
+>> -	dev_dbg(video->dev, "Max compressed size: %x\n",
+>> -		video->max_compressed_size);
+>> +	v4l2_dbg(1, debug, &video->v4l2_dev, "Max compressed size: %#x\n",
+>> +		 video->max_compressed_size);
+>>    }
+>>    
+>>    #define res_check(v) test_and_clear_bit(VIDEO_MODE_DETECT_DONE, &(v)->flags)
+>> @@ -804,7 +807,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>>    						      res_check(video),
+>>    						      MODE_DETECT_TIMEOUT);
+>>    		if (!rc) {
+>> -			dev_dbg(video->dev, "Timed out; first mode detect\n");
+>> +			v4l2_warn(&video->v4l2_dev, "Timed out; first mode detect\n");
+>>    			clear_bit(VIDEO_RES_DETECT, &video->flags);
+>>    			return;
+>>    		}
+>> @@ -822,7 +825,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>>    						      MODE_DETECT_TIMEOUT);
+>>    		clear_bit(VIDEO_RES_DETECT, &video->flags);
+>>    		if (!rc) {
+>> -			dev_dbg(video->dev, "Timed out; second mode detect\n");
+>> +			v4l2_warn(&video->v4l2_dev, "Timed out; second mode detect\n");
+>>    			return;
+>>    		}
+>>    
+>> @@ -856,7 +859,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>>    	} while (invalid_resolution && (tries++ < INVALID_RESOLUTION_RETRIES));
+>>    
+>>    	if (invalid_resolution) {
+>> -		dev_dbg(video->dev, "Invalid resolution detected\n");
+>> +		v4l2_warn(&video->v4l2_dev, "Invalid resolution detected\n");
+>>    		return;
+>>    	}
+>>    
+>> @@ -873,8 +876,8 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>>    	aspeed_video_update(video, VE_SEQ_CTRL, 0,
+>>    			    VE_SEQ_CTRL_AUTO_COMP | VE_SEQ_CTRL_EN_WATCHDOG);
+>>    
+>> -	dev_dbg(video->dev, "Got resolution: %dx%d\n", det->width,
+>> -		det->height);
+>> +	v4l2_dbg(1, debug, &video->v4l2_dev, "Got resolution: %dx%d\n",
+>> +		 det->width, det->height);
+>>    }
+>>    
+>>    static void aspeed_video_set_resolution(struct aspeed_video *video)
+>> @@ -1501,7 +1504,7 @@ static void aspeed_video_stop_streaming(struct vb2_queue *q)
+>>    				!test_bit(VIDEO_FRAME_INPRG, &video->flags),
+>>    				STOP_TIMEOUT);
+>>    	if (!rc) {
+>> -		dev_dbg(video->dev, "Timed out when stopping streaming\n");
+>> +		v4l2_warn(&video->v4l2_dev, "Timed out when stopping streaming\n");
+>>    
+>>    		/*
+>>    		 * Need to force stop any DMA and try and get HW into a good
+>> @@ -1856,6 +1859,9 @@ static struct platform_driver aspeed_video_driver = {
+>>    
+>>    module_platform_driver(aspeed_video_driver);
+>>    
+>> +module_param(debug, int, 0644);
+>> +MODULE_PARM_DESC(debug, "Debug level (0-3)");
+>> +
+>>    MODULE_DESCRIPTION("ASPEED Video Engine Driver");
+>>    MODULE_AUTHOR("Eddie James");
+>>    MODULE_LICENSE("GPL v2");
+>>
