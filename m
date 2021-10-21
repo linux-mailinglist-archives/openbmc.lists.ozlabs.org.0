@@ -1,91 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47513435A18
-	for <lists+openbmc@lfdr.de>; Thu, 21 Oct 2021 06:48:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id F23B2435A50
+	for <lists+openbmc@lfdr.de>; Thu, 21 Oct 2021 07:23:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HZZjx65wjz2ywS
-	for <lists+openbmc@lfdr.de>; Thu, 21 Oct 2021 15:48:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HZbVS341Qz305P
+	for <lists+openbmc@lfdr.de>; Thu, 21 Oct 2021 16:23:28 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=ZEPhrH3U;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=iJs3jKH6;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=PyngDX9d;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2f;
+ helo=mail-io1-xd2f.google.com; envelope-from=patilkg@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=ZEPhrH3U; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=iJs3jKH6; 
- dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=PyngDX9d; dkim-atps=neutral
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com
+ [IPv6:2607:f8b0:4864:20::d2f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HZZjW4hwgz2xtj
- for <openbmc@lists.ozlabs.org>; Thu, 21 Oct 2021 15:47:59 +1100 (AEDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
- by mailout.nyi.internal (Postfix) with ESMTP id C4FBE5C0195
- for <openbmc@lists.ozlabs.org>; Thu, 21 Oct 2021 00:47:57 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute6.internal (MEProxy); Thu, 21 Oct 2021 00:47:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=4JWXXT0LPm1UpjW+AfJs7pOOx9L
- ATw4uw34THABm5UQ=; b=ZEPhrH3UTyzU6qHR8j/hXc08zuMntgx0la7/muTFYut
- 99J6clnJM24x5CRspfr9ND9LjGRe+wSgZLNe/DxUN9BmKh17wna7JMww2fajN/dS
- 4YzSrP4HJ+8e/dK+aDlR4Rru6NIRIt/iWllCa6Tw27nYOXAKQ18/gEqa1IUim9N8
- k0m2OzEVWNE6rBTAVEA6NY/mBLTkw1+G+uED5YgFZMz4/gxA6BM+RFUyIQDRplBR
- rrKIXQFDq+FHXeP4TQxJN8H2cM5fIC30U2ayvhLaBVxAfYkau2rgzDFIqw1CLaPS
- kptXyGjM1yyskCBfealrg/0YI6aBVbWvWWBQzzy3pvA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=4JWXXT
- 0LPm1UpjW+AfJs7pOOx9LATw4uw34THABm5UQ=; b=iJs3jKH6eEXMy2h4bG9sVy
- OsEMq6F9J7G2b0QCnusgZKjongtq6pLw759LkDOOVCPu7ben6OEPpeMgT96rPpQH
- mwwhieaW4e9sydqEX34fRCrMQ+/IvKC53a6gscYPJGxm7AHN5c8bfhsThY66OyKa
- uYzQ07WO3BTQxRVkVtqTK+CVQyGx3AfdamxN3odKZ0usEaqlzMPNccrxsaAcLQTV
- ZdfBc0+1fTjZjkKhj0+zUKmK9ADmDyqE1qKjuy5l6tILKVTGK7lmGz5ngPD7xyW8
- THeYSGi4VoQqNcnQNUjoLCGhmw2T3kRxC13fYPAT1/9UVqg2EW4TY/CSlpJb3uBQ
- ==
-X-ME-Sender: <xms:_fBwYRp20nPWEuRZntzR_qmFsUDLIcdaGQsAF9uucbYQ7VWWZpGLiw>
- <xme:_fBwYTrBpRpOXZSKEa6l4O8vuNJzO0p0JeRNjt9u021qQYQltA822TFkTcTr1TCok
- V9vOeIrqzGnBIXfUmc>
-X-ME-Received: <xmr:_fBwYeO5Bakp9OddezXl_jRfd9vVnsa1NfQEpa8qeHG4GTzAQSXGWGtkeEu9iQZAs5znOvZH-Kdi9gbdq9bzubRxg-mKCpUV444plxKI1IBIQA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddvhedgkedvucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepvdeiiedugeelffdvtdfhvdekkeeg
- ledthfelfeejhefgtdehjedvfeejieevgeffnecuffhomhgrihhnpehphihthhhonhdroh
- hrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
- rghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:_fBwYc6DmZhLMaWgV1IiSbXL5VReSfoM2DNbdEaNAnazaTSQM_wANg>
- <xmx:_fBwYQ7380epuH-sXey6ObGNfzLL58tIncY3ju_CEjyXxwb1SJNmfw>
- <xmx:_fBwYUhhpTiKK7R6K0diNRzJaDGFwvIvcaA5CZhcZ5D8qRC7l03N0g>
- <xmx:_fBwYVUhh8VFy05AVR0xh_j4-IDclGcUQqpIAZNgT-YDucZ1sd16AA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Thu, 21 Oct 2021 00:47:57 -0400 (EDT)
-Date: Wed, 20 Oct 2021 23:47:56 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Re: OTP-5: "OpenBMC TOF Proposal" Process
-Message-ID: <YXDw/MgZSsmLt6oa@heinlein>
-References: <YXDtrwHhUcxwtlij@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HZb1D3Fjrz2y8R
+ for <openbmc@lists.ozlabs.org>; Thu, 21 Oct 2021 16:01:35 +1100 (AEDT)
+Received: by mail-io1-xd2f.google.com with SMTP id e144so27421875iof.3
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Oct 2021 22:01:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Jt95gQyUogy7qK1xxB3TIOgff8ZrmELhr/BC7hpiiiY=;
+ b=PyngDX9dRJ9a62Ep1jIPb3dR6cLboXtu5BTqtCWVutzmyPiffqCmlhFYekXWQ2dFGh
+ /+ThEbSlUbK6n2XegDa8CBZW6xe9y8IoO9BEhop3XzwBgbJ20NOVqKsGbGVuMTHiW8l2
+ oz/Awq4kvyyU0aa8Qy9qcwdVR3m8GOR7YPUs5xRpmLZKiGnDYEl5KXssB/TfX/3G+NwX
+ V5/piyn2Ki4f/65PF/R6e71rzvczvAgKKh0q1G7TrbdtVfGim479gu6YtTcBatTUcc8U
+ PnIz3yHkbHi3M2A8G4/t6UpXwAErWHHngQVnM4FZB+FroVImaOT8K6v9G001kat1i7HK
+ bIZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Jt95gQyUogy7qK1xxB3TIOgff8ZrmELhr/BC7hpiiiY=;
+ b=RykHOCPdJVnUtNmG/uobghzInH1YZxHvheBcii6uTYeJxy+DEHyQu+yxMpkCQQLAFz
+ +/e4Bh96Gl9eTN/sYTPHevLMQeHAtkNm0R+t7bQDj3CyuDVgjiZBQlIG302tX91vyPaj
+ j4KvY8OOBDSFXrTySFYPT5Se9h0B2qKDchhE4EF3SdvaBGV1FwneRnihpCf7ERhsFLAO
+ PwNIJHJHrhcWJZcwVFYa/4cEe5Fzsnw+Ygd/efryA9XV91dFo5DefB/Q1JKS45SkVUeO
+ yEC0TInDCe8JM0upYbC6GYnznqwxJHHJuvb3U9pcjZH2PnFK22mttJG3VslAWSxk0xWg
+ 0hVg==
+X-Gm-Message-State: AOAM531xnqYVziMLFzlOVbXLjnDdzimINTd7xxlfK64EbRrvwc3/bgzN
+ 8xpFGIPyTXAohIrQFFstMXUEip3Ll4ydD7NotY6y8miB
+X-Google-Smtp-Source: ABdhPJyWarVqAU7+tXdtu0Qle68TnQmSNqgkZ4d7cABdjWj/XSRVgMUjSVrAQ0LvlMBydjGH7vurGp20d7OqMfDbmBI=
+X-Received: by 2002:a02:6987:: with SMTP id e129mr2432505jac.136.1634792491450; 
+ Wed, 20 Oct 2021 22:01:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="zOI6cuY2B7GMMsZf"
-Content-Disposition: inline
-In-Reply-To: <YXDtrwHhUcxwtlij@heinlein>
+From: Kiran Gopal Patil <patilkg@gmail.com>
+Date: Thu, 21 Oct 2021 10:31:20 +0530
+Message-ID: <CALGk7QU0mNzuS0M34RE1PhjhYKUjDTOf7wLZoG8DYvjArfS9Xw@mail.gmail.com>
+Subject: Open BMC Jenkins information
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000bc034d05ced5c9a9"
+X-Mailman-Approved-At: Thu, 21 Oct 2021 16:22:26 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,48 +74,48 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000bc034d05ced5c9a9
+Content-Type: text/plain; charset="UTF-8"
 
---zOI6cuY2B7GMMsZf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hello,
+
+I am trying to understand the OpenBMC continuous integration.
+I would like to know more about what are the master hardware configuration,
+server hardware information, number of slaves and various jobs
+configuration. How the docker images are used etc.
+
+Also, what kind of tests are run in the CI.
+
+Also, through my github account I can login to https://jenkins.openbmc.org/
+however this does not enable me to see the job configuration.
+Is there any repo where all these configuration is versioned?
+
+
+Please let me know if there is any contact to check all these things or any
+document which explains all the things.
+Thanks in advance for your help.
+
+-- 
+Thanks & Regards,
+Kiran Patil
+
+--000000000000bc034d05ced5c9a9
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 20, 2021 at 11:33:51PM -0500, Patrick Williams wrote:
-> 2. Use the OTP template for the proposal type to write a draft proposal a=
-nd send
->    a copy to the [OpenBMC mailing list][4] with the title "OTP-N: Title" =
-and the
->    contents being the filled-in OTP template.
+<div dir=3D"ltr">Hello,<div><br></div><div>I am trying to understand the Op=
+enBMC continuous integration.</div><div>I would like to know more about wha=
+t are the master hardware configuration, server hardware information, numbe=
+r of slaves and various jobs configuration. How the docker images are used =
+etc.</div><div><br></div><div>Also, what kind of tests are run in the CI.=
+=C2=A0</div><div><br></div><div>Also, through my github=C2=A0account I can =
+login to=C2=A0<a href=3D"https://jenkins.openbmc.org/">https://jenkins.open=
+bmc.org/</a> however this does not enable me to see the job configuration.<=
+/div><div>Is there any repo where all these configuration is versioned?</di=
+v><div><br></div><div><div><br></div><div>Please=C2=A0let me know if there =
+is any contact to check all these things or any document which explains all=
+ the things.</div><div>Thanks in advance for your help.</div><div><br></div=
+>-- <br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_=
+signature">Thanks &amp; Regards,<br>Kiran Patil</div></div></div>
 
-I am fully aware we do not have OTP templates yet.  Much like how PEP-1[1]
-defines the PEP process and PEP-12[2] gives the templates themselves, we wi=
-ll
-have the templates come about through a future OTP.
-
-1. https://www.python.org/dev/peps/pep-0001/
-2. https://www.python.org/dev/peps/pep-0012/
-
---=20
-Patrick Williams
-
---zOI6cuY2B7GMMsZf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmFw8PoACgkQqwNHzC0A
-wRn8KxAAga9rA664Qehi4iXUhBSpzf/fTYKIbJfh31EQLOwv++JfUfc18rHIjcgS
-bafJXIPqpHqZRkA7+fw9ZyYSAMI9hgbAlbDT8Uj+y0TWMq6z+Sf8dl/Jer3xd48y
-L9GeMi3LdElFy2mM5Amqf/VCGID8D6+j7E84PsvjQeTP6xN325ex7AdjzvXrybN+
-SDG00ssYtGVVzzN2yA7llHh5X88TDaZ+KFjWRzDZGN2wnh3PdzYGndjTPyIcXLzY
-gjiTBsBj6924lUe9NZs6nlm6kuSXXyrWBx4SffYzjri32QgrZaz5jitRThfip/dD
-xhH8F8/Uft+hERNkXgpmP+A/HPqaCy+JeXkanLNWYkMiKe+QF1Tbaa/nX9XS0IKt
-WnQd4/lbuyqhZDx4vqJblKxLg9lyfVRvQVdlu7oIDFa+3VXRfjGIT821U5CR9vRX
-5OV190Aw/FMaleIYx8dnzsYfEvEum4MSi6kJJStCCfSJS6fgk6Iw/R4wnL+dGpPF
-W5I2Q5wRBPEoNOB+rzrFecbl9zjyLE5LjJk3EIsyXnyJS1CTNOkmHVdDO53EWE+8
-QLRo8vtY445NOvZeWgm1BtTJWyveD7MEh2ziyzadFS9dXIDgwLH17evdjxwm0pZo
-xZN7Rux4DD/55qux22Y/tkPCb/xf9b6PV0CEJH7sG5bbzRhNJxY=
-=+DY7
------END PGP SIGNATURE-----
-
---zOI6cuY2B7GMMsZf--
+--000000000000bc034d05ced5c9a9--
