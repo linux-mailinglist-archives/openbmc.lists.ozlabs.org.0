@@ -1,50 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2485F43726B
-	for <lists+openbmc@lfdr.de>; Fri, 22 Oct 2021 08:57:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78D404372E8
+	for <lists+openbmc@lfdr.de>; Fri, 22 Oct 2021 09:39:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HbFXS4GRTz3cSM
-	for <lists+openbmc@lfdr.de>; Fri, 22 Oct 2021 17:57:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HbGSW6j6kz3bmk
+	for <lists+openbmc@lfdr.de>; Fri, 22 Oct 2021 18:39:07 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=GY2tE09M;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=GY2tE09M; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HbFVs4q4Lz3cBR;
- Fri, 22 Oct 2021 17:56:05 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 19M6XG8p087038;
- Fri, 22 Oct 2021 14:33:16 +0800 (GMT-8)
- (envelope-from jammy_huang@aspeedtech.com)
-Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
- Fri, 22 Oct 2021 14:55:23 +0800
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
- <andrew@aj.id.au>, <linux-media@vger.kernel.org>,
- <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3 7/7] media: aspeed: Extend debug message
-Date: Fri, 22 Oct 2021 14:55:39 +0800
-Message-ID: <20211022065539.12392-8-jammy_huang@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211022065539.12392-1-jammy_huang@aspeedtech.com>
-References: <20211022065539.12392-1-jammy_huang@aspeedtech.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HbGS83dKXz2xY2
+ for <openbmc@lists.ozlabs.org>; Fri, 22 Oct 2021 18:38:47 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (71-212-29-146.tukw.qwest.net
+ [71.212.29.146])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id BBD643F5;
+ Fri, 22 Oct 2021 00:38:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1634888325;
+ bh=kLThclivvucdLvqBkWXzBYC9PcfYiKpUKEDKsLyPwD4=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=GY2tE09MyBfvWd3WTZAsuQi6XkbgwBKuEkwCUxl1EWLlDdEoIm+gkWpZI4QvDQ0WJ
+ ON2/OtO9q3/7K+sPG8xvQBUu30Uj0bYfAISTDmpOgKWuNQpM9ASBJHx7iyvG1UodCX
+ kGMU27vb/jvcgQHwu2A6F8DF2P6gIxLW4kXFtrK0=
+Date: Fri, 22 Oct 2021 00:38:40 -0700
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH 1/5] of: base: add function to check for status =
+ "reserved"
+Message-ID: <YXJqgNDOaNLzTg0T@hatter.bewilderbeest.net>
+References: <20211022020032.26980-1-zev@bewilderbeest.net>
+ <20211022020032.26980-2-zev@bewilderbeest.net>
+ <YXJdi3IBzaqmSZ9b@kroah.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.2.115]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 19M6XG8p087038
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <YXJdi3IBzaqmSZ9b@kroah.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,123 +65,173 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Rob Herring <robh+dt@kernel.org>, Jeremy Kerr <jk@codeconstruct.com.au>,
+ Frank Rowand <frowand.list@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-updated as below:
+On Thu, Oct 21, 2021 at 11:43:23PM PDT, Greg Kroah-Hartman wrote:
+>On Thu, Oct 21, 2021 at 07:00:28PM -0700, Zev Weiss wrote:
+>> Per v0.3 of the Devicetree Specification [0]:
+>>
+>>   Indicates that the device is operational, but should not be used.
+>>   Typically this is used for devices that are controlled by another
+>>   software component, such as platform firmware.
+>>
+>> One use-case for this is in OpenBMC, where certain devices (such as a
+>> BIOS flash chip) may be shared by the host and the BMC, but cannot be
+>> accessed by the BMC during its usual boot-time device probing, because
+>> they require additional (potentially elaborate) coordination with the
+>> host to arbitrate which processor is controlling the device.
+>>
+>> Devices marked with this status should thus be instantiated, but not
+>> have a driver bound to them or be otherwise touched.
+>>
+>> [0] https://github.com/devicetree-org/devicetree-specification/releases/download/v0.3/devicetree-specification-v0.3.pdf
+>>
+>> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+>> ---
+>>  drivers/of/base.c  | 56 +++++++++++++++++++++++++++++++++++++++-------
+>>  include/linux/of.h |  6 +++++
+>>  2 files changed, 54 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/of/base.c b/drivers/of/base.c
+>> index 0ac17256258d..3bd7c5b8a2cc 100644
+>> --- a/drivers/of/base.c
+>> +++ b/drivers/of/base.c
+>> @@ -580,14 +580,16 @@ int of_machine_is_compatible(const char *compat)
+>>  EXPORT_SYMBOL(of_machine_is_compatible);
+>>
+>>  /**
+>> - *  __of_device_is_available - check if a device is available for use
+>> + * __of_device_check_status - check if a device's status matches a particular string
+>>   *
+>> - *  @device: Node to check for availability, with locks already held
+>> + * @device: Node to check status of, with locks already held
+>> + * @val: Status string to check for, or NULL for "okay"/"ok"
+>>   *
+>> - *  Return: True if the status property is absent or set to "okay" or "ok",
+>> - *  false otherwise
+>> + * Return: True if status property exists and matches @val, or either "okay"
+>> + * or "ok" if @val is NULL, or if status property is absent and @val is
+>> + * "okay", "ok", or NULL.  False otherwise.
+>>   */
+>> -static bool __of_device_is_available(const struct device_node *device)
+>> +static bool __of_device_check_status(const struct device_node *device, const char *val)
+>>  {
+>>  	const char *status;
+>>  	int statlen;
+>> @@ -596,17 +598,35 @@ static bool __of_device_is_available(const struct device_node *device)
+>>  		return false;
+>>
+>>  	status = __of_get_property(device, "status", &statlen);
+>> -	if (status == NULL)
+>> -		return true;
+>> +	if (!status) {
+>> +		/* a missing status property is treated as "okay" */
+>> +		status = "okay";
+>> +		statlen = strlen(status) + 1; /* property lengths include the NUL terminator */
+>> +	}
+>>
+>>  	if (statlen > 0) {
+>> -		if (!strcmp(status, "okay") || !strcmp(status, "ok"))
+>> +		if (!val && (!strcmp(status, "okay") || !strcmp(status, "ok")))
+>> +			return true;
+>> +		else if (val && !strcmp(status, val))
+>
+>
+>Ick, where is this string coming from?  The kernel or userspace or a
+>device tree?  This feels very wrong, why is the kernel doing parsing
+>like this of different options that all mean the same thing?
+>
 
-Capture:
-  Mode                : Direct fetch
-  VGA bpp mode        : 32
-  Signal              : lock
-  Width               : 1920
-  Height              : 1080
-  FRC                 : 0
+Which string do you mean by "this string"?  'status' comes from a 
+property of the device tree node; 'val' will be one of a small set of 
+string constants passed by the caller.  Accepting either spelling of 
+"okay"/"ok" has been in place since 2008 (commit 834d97d45220, 
+"[POWERPC] Add of_device_is_available function"); using NULL as a 
+shorthand for those two strings was a suggestion that came up in review 
+feedback on a previous incarnation of these patches 
+(https://lore.kernel.org/openbmc/CAL_Jsq+rKGv39zHTxNx0A7=X4K48nXRLqWonecG5SobdJq3yKw@mail.gmail.com/T/#u).
 
-Compression:
-  Format              : JPEG
-  Subsampling         : 444
-  Quality             : 4
-  HQ Mode             : N/A
-  HQ Quality          : 0
-  Mode                : N/A
+>
+>>  			return true;
+>>  	}
+>>
+>>  	return false;
+>>  }
+>>
+>> +/**
+>> + * __of_device_is_available - check if a device is available for use
+>> + *
+>> + * @device: Node to check for availability, with locks already held
+>> + *
+>> + * Return: True if the status property is absent or set to "okay" or "ok",
+>> + * false otherwise
+>> + */
+>> +static bool __of_device_is_available(const struct device_node *device)
+>> +{
+>> +	return __of_device_check_status(device, NULL);
+>> +}
+>> +
+>>  /**
+>>   *  of_device_is_available - check if a device is available for use
+>>   *
+>> @@ -628,6 +648,26 @@ bool of_device_is_available(const struct device_node *device)
+>>  }
+>>  EXPORT_SYMBOL(of_device_is_available);
+>>
+>> +/**
+>> + * of_device_is_reserved - check if a device is marked as reserved
+>> + *
+>> + * @device: Node to check for reservation
+>> + *
+>> + * Return: True if the status property is set to "reserved", false otherwise
+>> + */
+>> +bool of_device_is_reserved(const struct device_node *device)
+>> +{
+>> +	unsigned long flags;
+>> +	bool res;
+>> +
+>> +	raw_spin_lock_irqsave(&devtree_lock, flags);
+>> +	res = __of_device_check_status(device, "reserved");
+>> +	raw_spin_unlock_irqrestore(&devtree_lock, flags);
+>
+>Why is this a "raw" spinlock?
+>
 
-Performance:
-  Frame#              : 4
-  Frame Duration(ms)  :
-    Now               : 22
-    Min               : 21
-    Max               : 22
-  FPS                 : 47
+devtree_lock being a raw_spinlock_t appears to date from commit 
+d6d3c4e65651 ("OF: convert devtree lock from rw_lock to raw spinlock"); 
+"required for preempt-rt", according to Thomas Gleixner's commit 
+message.
 
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
----
- drivers/media/platform/aspeed-video.c | 41 +++++++++++++++++++++++++--
- 1 file changed, 38 insertions(+), 3 deletions(-)
+>Where is this status coming from?
+>
 
-diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index 8e0c29551ffc..7b7a03d44af7 100644
---- a/drivers/media/platform/aspeed-video.c
-+++ b/drivers/media/platform/aspeed-video.c
-@@ -453,6 +453,9 @@ static const struct v4l2_dv_timings_cap aspeed_video_timings_cap = {
- 	},
- };
- 
-+static const char * const compress_mode_str[] = {"DCT Only",
-+	"DCT VQ mix 2-color", "DCT VQ mix 4-color"};
-+
- static unsigned int debug;
- 
- static void aspeed_video_init_jpeg_table(u32 *table, bool yuv420)
-@@ -1071,8 +1074,6 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
- 
- static void aspeed_video_update_regs(struct aspeed_video *video)
- {
--	static const char * const compress_mode_str[] = {"DCT Only",
--		"DCT VQ mix 2-color", "DCT VQ mix 4-color"};
- 	u32 comp_ctrl =	FIELD_PREP(VE_COMP_CTRL_DCT_LUM, video->jpeg_quality) |
- 		FIELD_PREP(VE_COMP_CTRL_DCT_CHR, video->jpeg_quality | 0x10) |
- 		FIELD_PREP(VE_COMP_CTRL_EN_HQ, video->hq_mode) |
-@@ -1785,9 +1786,29 @@ static const struct vb2_ops aspeed_video_vb2_ops = {
- static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
- {
- 	struct aspeed_video *v = s->private;
-+	u32 val08;
- 
- 	seq_puts(s, "\n");
- 
-+	val08 = aspeed_video_read(v, VE_CTRL);
-+	seq_puts(s, "Capture:\n");
-+	if (FIELD_GET(VE_CTRL_DIRECT_FETCH, val08)) {
-+		seq_printf(s, "  %-20s:\tDirect fetch\n", "Mode");
-+		seq_printf(s, "  %-20s:\t%s\n", "VGA bpp mode",
-+			   FIELD_GET(VE_CTRL_INT_DE, val08) ? "16" : "32");
-+	} else {
-+		seq_printf(s, "  %-20s:\tSync\n", "Mode");
-+		seq_printf(s, "  %-20s:\t%s\n", "Video source",
-+			   FIELD_GET(VE_CTRL_SOURCE, val08) ?
-+			   "external" : "internal");
-+		seq_printf(s, "  %-20s:\t%s\n", "DE source",
-+			   FIELD_GET(VE_CTRL_INT_DE, val08) ?
-+			   "internal" : "external");
-+		seq_printf(s, "  %-20s:\t%s\n", "Cursor overlay",
-+			   FIELD_GET(VE_CTRL_AUTO_OR_CURSOR, val08) ?
-+			   "Without" : "With");
-+	}
-+
- 	seq_printf(s, "  %-20s:\t%s\n", "Signal",
- 		   v->v4l2_input_status ? "Unlock" : "Lock");
- 	seq_printf(s, "  %-20s:\t%d\n", "Width", v->pix_fmt.width);
-@@ -1796,6 +1817,21 @@ static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
- 
- 	seq_puts(s, "\n");
- 
-+	seq_puts(s, "Compression:\n");
-+	seq_printf(s, "  %-20s:\t%s\n", "Format",
-+		   v->partial_jpeg ? "Aspeed" : "JPEG");
-+	seq_printf(s, "  %-20s:\t%s\n", "Subsampling",
-+		   v->yuv420 ? "420" : "444");
-+	seq_printf(s, "  %-20s:\t%d\n", "Quality", v->jpeg_quality);
-+	seq_printf(s, "  %-20s:\t%s\n", "HQ Mode",
-+		   v->partial_jpeg ? (v->hq_mode ? "on" : "off") : "N/A");
-+	seq_printf(s, "  %-20s:\t%d\n", "HQ Quality", v->jpeg_hq_quality);
-+	seq_printf(s, "  %-20s:\t%s\n", "Mode",
-+		   v->partial_jpeg ? compress_mode_str[v->compression_mode]
-+				   : "N/A");
-+
-+	seq_puts(s, "\n");
-+
- 	seq_puts(s, "Performance:\n");
- 	seq_printf(s, "  %-20s:\t%d\n", "Frame#", v->sequence);
- 	seq_printf(s, "  %-20s:\n", "Frame Duration(ms)");
-@@ -1804,7 +1840,6 @@ static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
- 	seq_printf(s, "    %-18s:\t%d\n", "Max", v->perf.duration_max);
- 	seq_printf(s, "  %-20s:\t%d\n", "FPS", 1000/(v->perf.totaltime/v->sequence));
- 
--
- 	return 0;
- }
- 
--- 
-2.25.1
+This would be specified in a DT node, e.g. via something like:
+
+   &somedev {
+     compatible = "foobar";
+     status = "reserved";
+     /* ... */
+   };
+
+>> +
+>> +	return res;
+>> +}
+>> +EXPORT_SYMBOL(of_device_is_reserved);
+>
+>EXPORT_SYMBOL_GPL()?
+>
+
+Its closest existing sibling, of_device_is_available(), is a plain 
+EXPORT_SYMBOL(); if we want to convert things more broadly that'd be 
+fine with me, but having one be GPL-only and the other not seems like 
+it'd be a bit confusing and inconsistent?
+
+
+Thanks,
+Zev
 
