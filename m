@@ -2,52 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F067143741D
-	for <lists+openbmc@lfdr.de>; Fri, 22 Oct 2021 10:57:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EAE4943742F
+	for <lists+openbmc@lfdr.de>; Fri, 22 Oct 2021 11:01:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HbJCG3ZGSz3cFc
-	for <lists+openbmc@lfdr.de>; Fri, 22 Oct 2021 19:57:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HbJHZ3HHhz3c8k
+	for <lists+openbmc@lfdr.de>; Fri, 22 Oct 2021 20:01:30 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5/rQFGg;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=b1BPRMTI;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linuxfoundation.org (client-ip=198.145.29.99;
- helo=mail.kernel.org; envelope-from=gregkh@linuxfoundation.org;
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
- header.a=rsa-sha256 header.s=korg header.b=x5/rQFGg; 
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=b1BPRMTI; 
  dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HbJBw0rVnz3c7B
- for <openbmc@lists.ozlabs.org>; Fri, 22 Oct 2021 19:57:26 +1100 (AEDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 40B13603E9;
- Fri, 22 Oct 2021 08:57:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1634893043;
- bh=RFCDB+PAgD4OJ71NPOKLB8rC7qWzqFddQNvlx4Q8aoQ=;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HbJH62MB2z3c6C
+ for <openbmc@lists.ozlabs.org>; Fri, 22 Oct 2021 20:01:05 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (71-212-29-146.tukw.qwest.net
+ [71.212.29.146])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id CE5873F5;
+ Fri, 22 Oct 2021 02:01:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1634893262;
+ bh=62xU6A5a1vC0BYtn1PBjgiBPmvcI1s9MDBG0hfgZCHU=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=x5/rQFGg7PVzqwbqY+l5wnhgJ0SPUebvudVOJsG6YeTjIjf46A9EOx9kqJc7GO2qz
- /UCIoWRqgaDRhnCTqWfleZBkIu51uMUTGSgDM96auIlKJPb73RJjBlJA9xl1NGM69v
- mF5Ic1kJTh2Z6wnxPuskl80+WJ1KFncrMmuhq+is=
-Date: Fri, 22 Oct 2021 10:57:21 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Zev Weiss <zev@bewilderbeest.net>
-Subject: Re: [PATCH 4/5] driver core: inhibit automatic driver binding on
- reserved devices
-Message-ID: <YXJ88eARBE3vU1aA@kroah.com>
+ b=b1BPRMTItp4tsRe46NuFm5eStvDBte8uFyJHx1UH+qEkNwBbsujhWbNIi3Bi1RWqg
+ HGFqBlHlAG4HVrUDOsFarXuo0nSz4sfqcrysR/G51A8BaRUT8toqIEbDqUFRB6mRvk
+ SNGJFtO5SsEbzNA0MNH/DudirogvafmkmVegjADI=
+Date: Fri, 22 Oct 2021 02:00:57 -0700
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH 0/5] driver core, of: support for reserved devices
+Message-ID: <YXJ9yR6b5vI3NwF7@hatter.bewilderbeest.net>
 References: <20211022020032.26980-1-zev@bewilderbeest.net>
- <20211022020032.26980-5-zev@bewilderbeest.net>
- <YXJeYCFJ5DnBB63R@kroah.com>
- <YXJ3IPPkoLxqXiD3@hatter.bewilderbeest.net>
+ <YXJfHwzIdksUKPIe@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <YXJ3IPPkoLxqXiD3@hatter.bewilderbeest.net>
+In-Reply-To: <YXJfHwzIdksUKPIe@kroah.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,108 +63,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kvm@vger.kernel.org, "Rafael J. Wysocki" <rafael@kernel.org>,
- Kirti Wankhede <kwankhede@nvidia.com>, Jeremy Kerr <jk@codeconstruct.com.au>,
- Rajat Jain <rajatja@google.com>, Frank Rowand <frowand.list@gmail.com>,
- Jianxiong Gao <jxgao@google.com>, Dave Jiang <dave.jiang@intel.com>,
- Saravana Kannan <saravanak@google.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, openbmc@lists.ozlabs.org,
- devicetree@vger.kernel.org, Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
- Alex Williamson <alex.williamson@redhat.com>, Rob Herring <robh+dt@kernel.org>,
- Bhaskar Chowdhury <unixbhaskar@gmail.com>,
- Thomas Gleixner <tglx@linutronix.de>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Andrew Jeffery <andrew@aj.id.au>, Cornelia Huck <cohuck@redhat.com>,
- linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
- dmaengine@vger.kernel.org
+Cc: devicetree@vger.kernel.org, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Rob Herring <robh+dt@kernel.org>, Jeremy Kerr <jk@codeconstruct.com.au>,
+ Frank Rowand <frowand.list@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Oct 22, 2021 at 01:32:32AM -0700, Zev Weiss wrote:
-> On Thu, Oct 21, 2021 at 11:46:56PM PDT, Greg Kroah-Hartman wrote:
-> > On Thu, Oct 21, 2021 at 07:00:31PM -0700, Zev Weiss wrote:
-> > > Devices whose fwnodes are marked as reserved are instantiated, but
-> > > will not have a driver bound to them unless userspace explicitly
-> > > requests it by writing to a 'bind' sysfs file.  This is to enable
-> > > devices that may require special (userspace-mediated) preparation
-> > > before a driver can safely probe them.
-> > > 
-> > > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> > > ---
-> > >  drivers/base/bus.c            |  2 +-
-> > >  drivers/base/dd.c             | 13 ++++++++-----
-> > >  drivers/dma/idxd/compat.c     |  3 +--
-> > >  drivers/vfio/mdev/mdev_core.c |  2 +-
-> > >  include/linux/device.h        | 14 +++++++++++++-
-> > >  5 files changed, 24 insertions(+), 10 deletions(-)
-> > 
-> > Ugh, no, I don't really want to add yet-another-state to the driver core
-> > like this.  Why are these devices even in the kernel with a driver that
-> > wants to bind to them registered if the driver somehow should NOT be
-> > bound to it?  Shouldn't all of that logic be in the crazy driver itself
-> > as that is a very rare and odd thing to do that the driver core should
-> > not care about at all.
-> > 
-> > And why does a device need userspace interaction at all?  Again, why
-> > would the driver not know about this and handle it all directly?
-> > 
-> 
-> Let me expand a bit more on the details of the specific situation I'm
-> dealing with...
-> 
-> On a server motherboard we've got a host CPU (Xeon, Epyc, POWER, etc.) and a
-> baseboard management controller, or BMC (typically an ARM SoC, an ASPEED
-> AST2500 in my case).  The host CPU's firmware (BIOS/UEFI, ME firmware, etc.)
-> lives in a SPI flash chip.  Because it's the host's firmware, that flash
-> chip is connected to and generally (by default) under the control of the
-> host CPU.
-> 
-> But we also want the BMC to be able to perform out-of-band updates to the
-> host's firmware, so the flash is *also* connected to the BMC.  There's an
-> external mux (controlled by a GPIO output driven by the BMC) that switches
-> which processor (host or BMC) is actually driving the SPI signals to the
-> flash chip, but there's a bunch of other stuff that's also required before
-> the BMC can flip that switch and take control of the SPI interface:
-> 
->  - the BMC needs to track (and potentially alter) the host's power state
-> to ensure it's not running (in OpenBMC the existing logic for this is    an
-> entire non-trivial userspace daemon unto itself)
-> 
->  - it needs to twiddle some other GPIOs to put the ME into recovery mode
-> 
->  - it needs to exchange some IPMI messages with the ME to confirm it got
-> into recovery mode
-> 
-> (Some of the details here are specific to the particular motherboard I'm
-> working with, but I'd guess other systems probably have broadly similar
-> requirements.)
-> 
-> The firmware flash (or at least the BMC's side of the mux in front of it) is
-> attached to a spi-nor controller that's well supported by an existing MTD
-> driver (aspeed-smc), but that driver can't safely probe the chip until all
-> the stuff described above has been done.  In particular, this means we can't
-> reasonably bind the driver to that device during the normal
-> device-discovery/driver-binding done in the BMC's boot process (nor do we
-> want to, as that would pull the rug out from under the running host).  We
-> basically only ever want to touch that SPI interface when a user (sysadmin
-> using the BMC, let's say) has explicitly initiated an out-of-band firmware
-> update.
-> 
-> So we want the kernel to be aware of the device's existence (so that we
-> *can* bind a driver to it when needed), but we don't want it touching the
-> device unless we really ask for it.
-> 
-> Does that help clarify the motivation for wanting this functionality?
+On Thu, Oct 21, 2021 at 11:50:07PM PDT, Greg Kroah-Hartman wrote:
+>On Thu, Oct 21, 2021 at 07:00:27PM -0700, Zev Weiss wrote:
+>> Hello all,
+>>
+>> This series is another incarnation of a couple other patchsets I've
+>> posted recently [0, 1], but again different enough in overall
+>> structure that I'm not sure it's exactly a v2 (or v3).
+>>
+>> As compared to [1], it abandons the writable binary sysfs files and at
+>> Frank's suggestion returns to an approach more akin to [0], though
+>> without any driver-specific (aspeed-smc) changes, which I figure might
+>> as well be done later in a separate series once appropriate
+>> infrastructure is in place.
+>>
+>> The basic idea is to implement support for a status property value
+>> that's documented in the DT spec [2], but thus far not used at all in
+>> the kernel (or anywhere else I'm aware of): "reserved".  According to
+>> the spec (section 2.3.4, Table 2.4), this status:
+>>
+>>   Indicates that the device is operational, but should not be used.
+>>   Typically this is used for devices that are controlled by another
+>>   software component, such as platform firmware.
+>>
+>> With these changes, devices marked as reserved are (at least in some
+>> cases, more on this later) instantiated, but will not have drivers
+>> bound to them unless and until userspace explicitly requests it by
+>> writing the device's name to the driver's sysfs 'bind' file.  This
+>> enables appropriate handling of hardware arrangements that can arise
+>> in contexts like OpenBMC, where a device may be shared with another
+>> external controller not under the kernel's control (for example, the
+>> flash chip storing the host CPU's firmware, shared by the BMC and the
+>> host CPU and exclusively under the control of the latter by default).
+>> Such a device can be marked as reserved so that the kernel refrains
+>> from touching it until appropriate preparatory steps have been taken
+>> (e.g. BMC userspace coordinating with the host CPU to arbitrate which
+>> processor has control of the firmware flash).
+>>
+>> Patches 1-3 provide some basic plumbing for checking the "reserved"
+>> status of a device, patch 4 is the main driver-core change, and patch
+>> 5 tweaks the OF platform code to not skip reserved devices so that
+>> they can actually be instantiated.
+>
+>Again, the driver core should not care about this, that is up to the bus
+>that wants to read these "reserved" values and do something with them or
+>not (remember the bus is the thing that does the binding, not the driver
+>core).
+>
+>But are you sure you are using the "reserved" field properly?
 
-Sure, then just do this type of thing in the driver itself.  Do not have
-any matching "ids" for this hardware it so that the bus will never call
-the probe function for this hardware _until_ a manual write happens to
-the driver's "bind" sysfs file.
+Well, thus far both Rob Herring and Oliver O'Halloran (originator of the 
+"reserved" status in the DT spec, whom I probably should have CCed 
+earlier, sorry) have seemed receptive to this interpretation of it, 
+which I'd hope would lend it some credence.
 
-Then when userspace is done, do a "unbind" write.
+>You are
+>wanting to do "something" to the device to later on be able to then have
+>the kernel touch the device, while it seems that the reason for this
+>field is for the kernel to NEVER touch the device at all.  What will
+>break if you change this logic?
 
-No driver core changes should be needed at all here.
+Given that there's no existing usage of or support for this status value 
+anywhere I can see in the kernel, and that Oliver has indicated that it 
+should be compatible with usage in OpenPower platform firmware, my 
+expectation would certainly be that nothing would break, but if there 
+are examples of things that could I'd be interested to see them.
 
-thanks,
 
-greg k-h
+Thanks,
+Zev
+
