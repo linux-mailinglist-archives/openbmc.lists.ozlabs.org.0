@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 842004381F0
-	for <lists+openbmc@lfdr.de>; Sat, 23 Oct 2021 07:16:44 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7780D4381F3
+	for <lists+openbmc@lfdr.de>; Sat, 23 Oct 2021 07:18:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HbqFk1Ldtz3cCR
-	for <lists+openbmc@lfdr.de>; Sat, 23 Oct 2021 16:16:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HbqHX0XHWz3cGB
+	for <lists+openbmc@lfdr.de>; Sat, 23 Oct 2021 16:18:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,21 +16,21 @@ Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HbqFS3v4wz2y7H
- for <openbmc@lists.ozlabs.org>; Sat, 23 Oct 2021 16:16:28 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HbqHG5X6xz2y7H
+ for <openbmc@lists.ozlabs.org>; Sat, 23 Oct 2021 16:18:02 +1100 (AEDT)
 Received: from [192.168.0.2] (ip5f5aef6e.dynamic.kabel-deutschland.de
  [95.90.239.110])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested) (Authenticated sender: pmenzel)
- by mx.molgen.mpg.de (Postfix) with ESMTPSA id B81F061EA191B;
- Sat, 23 Oct 2021 07:16:24 +0200 (CEST)
+ by mx.molgen.mpg.de (Postfix) with ESMTPSA id 4552A61EA191B;
+ Sat, 23 Oct 2021 07:17:59 +0200 (CEST)
 From: Paul Menzel <pmenzel@molgen.mpg.de>
 Subject: Re: [RFC PATCH] ARM: aspeed: Add secure boot controller support
 To: Joel Stanley <joel@jms.id.au>
 References: <20211019080608.283324-1-joel@jms.id.au>
-Message-ID: <ba48d527-a073-181b-f072-c35505cd1d1f@molgen.mpg.de>
-Date: Sat, 23 Oct 2021 07:16:24 +0200
+Message-ID: <93a1578f-442c-94ff-f22c-b6f4ba02e084@molgen.mpg.de>
+Date: Sat, 23 Oct 2021 07:17:59 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -49,12 +49,12 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.us>, Ryan Chen <ryan_chen@aspeedtech.com>,
- openbmc@lists.ozlabs.org
+Cc: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
+ Ryan Chen <ryan_chen@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-[Resent with typo fixed Andrew’s address]
+[2nd try: Resent with typo fixed Andrew’s address]
 
 Dear Joel,
 
