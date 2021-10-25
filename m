@@ -2,103 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1105A43A443
-	for <lists+openbmc@lfdr.de>; Mon, 25 Oct 2021 22:17:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8378F43A584
+	for <lists+openbmc@lfdr.de>; Mon, 25 Oct 2021 23:09:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HdR8M6BvHz2yKN
-	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 07:17:39 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=YdlM/PWB;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HdSHh31S2z2yNp
+	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 08:09:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=YdlM/PWB; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HdR7v4nmqz2xXR
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 07:17:14 +1100 (AEDT)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19PINo19020035; 
- Mon, 25 Oct 2021 20:17:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : message-id :
- content-type : subject : date : in-reply-to : cc : to : references :
- mime-version; s=pp1; bh=5kgOGxP0GUoAse/Whb/GHvlbkXCEGTWPZpZfLuVXa1E=;
- b=YdlM/PWBOlfbEEiozaTiv0TYndr7F/rRhxXuiXB58bRrVFC8YGXHfvPx4sFB9Ae5EKKN
- SkWlVdi1G2XR2DWJ0yr1K0RH+WGptNCycjUh4UDHQrJTn4n4QKSIc1dLvtL6y5Zi43JC
- ndF++E+EQmVFGPgenC+mLhRADWISRinTtvUFxKtyIaCpG4J/s8VMZWJhH6kgiq+lPPAd
- OPdaN4wDuxWNZALp4f6A/roo/JKTkycN+oiBfQuNMs6ILtv5cutwrZ9QnP5lDX95NSUI
- LEmlkYlzwY6duDLbiuNIfndYilrMKal3a9HbzcXKRjrt/5MOPXEF16NP7i5pEZxty2gX iA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3bx1ggumr1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Oct 2021 20:17:10 +0000
-Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 19PIPCtW024343;
- Mon, 25 Oct 2021 20:17:10 GMT
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3bx1ggumqn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Oct 2021 20:17:10 +0000
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 19PK93hu013789;
- Mon, 25 Oct 2021 20:17:09 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
- [9.57.198.24]) by ppma03dal.us.ibm.com with ESMTP id 3bva1ax337-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Oct 2021 20:17:09 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 19PKH8W514614914
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 25 Oct 2021 20:17:08 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 49C1EB205F;
- Mon, 25 Oct 2021 20:17:08 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DF15AB2066;
- Mon, 25 Oct 2021 20:17:07 +0000 (GMT)
-Received: from smtpclient.apple (unknown [9.65.206.111])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
- Mon, 25 Oct 2021 20:17:07 +0000 (GMT)
-From: Adriana Kobylak <anoo@linux.ibm.com>
-Message-Id: <80FD1EF5-EA89-4FE1-8075-B07E9122FF8E@linux.ibm.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_B48FD13D-79FB-4657-A8DA-539A30F1E2EC"
-Subject: Re: [External] Changing the os-release BUILD_ID back to its default
- value of DATETIME
-Date: Mon, 25 Oct 2021 15:17:06 -0500
-In-Reply-To: <CAPnigKnnvoiQyroWRyFc4Ps+AZ4XNyr5VsmuDwCOh=2YvHEE0g@mail.gmail.com>
-To: William Kennington <wak@google.com>, edtanous@google.com,
- =?utf-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>
-References: <E9902E4C-0786-400D-8920-9D1FDCBE001F@linux.ibm.com>
- <CAGm54UF4nADhYJPWjgr-ie3z2vGzW6aBvdsyQpJ4dsddgA3FLQ@mail.gmail.com>
- <CAPnigKnnvoiQyroWRyFc4Ps+AZ4XNyr5VsmuDwCOh=2YvHEE0g@mail.gmail.com>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 8Tu4-azosA6T6bvwvi9EuV3PogtXQeLl
-X-Proofpoint-GUID: 8dIWCIcaPlThv30mltrOsypSPdtkrkN6
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HdSHQ0bSmz2xDJ
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 08:08:48 +1100 (AEDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10148"; a="253294478"
+X-IronPort-AV: E=Sophos;i="5.87,181,1631602800"; d="scan'208";a="253294478"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Oct 2021 14:07:45 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.87,181,1631602800"; d="scan'208";a="554354999"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga004.fm.intel.com with ESMTP; 25 Oct 2021 14:07:45 -0700
+Received: from [10.212.134.70] (jmbills-MOBL.amr.corp.intel.com
+ [10.212.134.70])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 3E849580AF7
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Oct 2021 14:07:45 -0700 (PDT)
+Message-ID: <a9ae1f74-e48e-f266-7e88-5b2ad27cf7fe@linux.intel.com>
+Date: Mon, 25 Oct 2021 15:07:44 -0600
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-10-25_07,2021-10-25_02,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=936 clxscore=1011
- mlxscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2109230001
- definitions=main-2110250114
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.0
+Subject: Re: [phosphor-sel-logger] How to add a journal entry manually
+Content-Language: en-US
+To: openbmc@lists.ozlabs.org
+References: <DM6PR08MB5514939D6512525765C3EE23DC839@DM6PR08MB5514.namprd08.prod.outlook.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+In-Reply-To: <DM6PR08MB5514939D6512525765C3EE23DC839@DM6PR08MB5514.namprd08.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,110 +57,71 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---Apple-Mail=_B48FD13D-79FB-4657-A8DA-539A30F1E2EC
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
 
-Thanks everybody. Changes up for review:
+On 10/25/2021 5:02 AM, Chris Chen (TPI) wrote:
+> Hi all,
+> 
+> I for now have added rsyslog and phosphor-sel-logger packages to build 
+> the image, then I could see the xyz.openbmc_project.Logging.IPMI through 
+> the busctl command after the system runs up.
+> 
+>  From this link, 
+> https://lists.ozlabs.org/pipermail/openbmc/2019-October/018640.html 
+> <https://lists.ozlabs.org/pipermail/openbmc/2019-October/018640.html>, I 
+> understand that I should be able to add a journal entry that has the 
+> IPMI SEL MESSAGE_ID: "b370836ccf2f4850ac5bee185b77893a" to test the 
+> feature, but I don't know to give the correct parameters to the method 
+> call, IpmiSelAdd, as below,
+> 
+> ~# busctl call xyz.openbmc_project.Logging.IPMI 
+> /xyz/openbmc_project/Logging/IPMI xyz.openbmc_project.Logging.IPMI 
+> IpmiSelAdd xxx
+> 
+> Could someone help me out on this? Thank you.
+You can find the implementation for IpmiSelAdd, here: 
+https://github.com/openbmc/phosphor-sel-logger/blob/master/src/sel_logger.cpp#L270.
 
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/48204 <https://gerri=
-t.openbmc-project.xyz/c/openbmc/openbmc/+/48204>
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/48205 <https://gerri=
-t.openbmc-project.xyz/c/openbmc/openbmc/+/48205>
+"IpmiSelAdd", [](const std::string& message, const std::string& path,
+                     const std::vector<uint8_t>& selData,
+                     const bool& assert, const uint16_t& genId)
+
+Where
+message = the string to set as the MESSAGE in the journal
+path = the D-Bus path to the sensor that logged the event
+selData = the raw bytes of the IPMI SEL entry
+assert = the event direction of the SEL event
+genId = the Generator ID for the SEL event
+
+The busctl format is 'ssaybq', so a sample command is
+busctl call xyz.openbmc_project.Logging.IPMI 
+/xyz/openbmc_project/Logging/IPMI xyz.openbmc_project.Logging.IPMI 
+IpmiSelAdd ssaybq "helloworld" "/xyz/openbmc_project/Test" 3 16 32 64 
+true 0x81
+
+This should add an IPMI message to the journal that is picked up by 
+rsyslog and sent to /var/log/ipmi_sel like this:
+
+root@intel-obmc:~# cat /var/log/ipmi_sel
+2021-08-20T01:16:48.747428+00:00 1,2,102040,81,/xyz/openbmc_project/Test,1
 
 
-> On Oct 12, 2021, at 4:45 AM, William Kennington <wak@google.com> wrote:
->=20
-> Personally I would rather have deterministic builds and don't like
-> arbitrary build timestamp injection into images. But we can announce
-> the plan to change this behavior and adjust build processes
-> accordingly.
-
-Sounds like a plan. To keep the current behavior, I tested that adding a os=
--release.bbappend with BUILD_ID set to the current git command would build =
-the image with the value as it is today.
-
->=20
-> On Mon, Oct 11, 2021 at 10:34 PM Lei Yu <yulei.sh@bytedance.com> wrote:
->>=20
->> On Tue, Oct 12, 2021 at 6:00 AM Adriana Kobylak <anoo@linux.ibm.com> wro=
-te:
->>>=20
->>> Hi,
->>>=20
->>> There has been some discussion in Discord on how to work around the "Sa=
-me version" limitation during fw updates, and having a timestamp field that=
- could be used to generate a different version id (commit id plus timestamp=
- field) for every build seemed had positive support in the discussion.
->>=20
->> So the hash will be calculated as the `VERSION_ID` and `BUILD_ID` (as
->> timestamp), is it?
->> +1 for this proposal.
-
-Right, we=E2=80=99ll add BUILD_ID to the hash calculation.
-
->>=20
->> --
->> BRs,
->> Lei YU
-
-
---Apple-Mail=_B48FD13D-79FB-4657-A8DA-539A30F1E2EC
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" =
-class=3D"">Thanks everybody. Changes up for review:<div class=3D""><br =
-class=3D""></div><div class=3D""><a =
-href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/48204" =
-class=3D"">https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/48204</a=
-></div><div class=3D""><a =
-href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/48205" =
-class=3D"">https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/48205</a=
-></div><div class=3D""><br class=3D""><div><br class=3D""><blockquote =
-type=3D"cite" class=3D""><div class=3D"">On Oct 12, 2021, at 4:45 AM, =
-William Kennington &lt;<a href=3D"mailto:wak@google.com" =
-class=3D"">wak@google.com</a>&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div class=3D""><div =
-class=3D"">Personally I would rather have deterministic builds and don't =
-like<br class=3D"">arbitrary build timestamp injection into images. But =
-we can announce<br class=3D"">the plan to change this behavior and =
-adjust build processes<br class=3D"">accordingly.<br =
-class=3D""></div></div></blockquote><div><br class=3D""></div><div>Sounds =
-like a plan. To keep the current behavior, I tested that adding a =
-os-release.bbappend with BUILD_ID set to the current git command would =
-build the image with the value as it is today.</div><br =
-class=3D""><blockquote type=3D"cite" class=3D""><div class=3D""><div =
-class=3D""><br class=3D"">On Mon, Oct 11, 2021 at 10:34 PM Lei Yu &lt;<a =
-href=3D"mailto:yulei.sh@bytedance.com" =
-class=3D"">yulei.sh@bytedance.com</a>&gt; wrote:<br class=3D""><blockquote=
- type=3D"cite" class=3D""><br class=3D"">On Tue, Oct 12, 2021 at 6:00 AM =
-Adriana Kobylak &lt;<a href=3D"mailto:anoo@linux.ibm.com" =
-class=3D"">anoo@linux.ibm.com</a>&gt; wrote:<br class=3D""><blockquote =
-type=3D"cite" class=3D""><br class=3D"">Hi,<br class=3D""><br =
-class=3D"">There has been some discussion in Discord on how to work =
-around the "Same version" limitation during fw updates, and having a =
-timestamp field that could be used to generate a different version id =
-(commit id plus timestamp field) for every build seemed had positive =
-support in the discussion.<br class=3D""></blockquote><br class=3D"">So =
-the hash will be calculated as the `VERSION_ID` and `BUILD_ID` (as<br =
-class=3D"">timestamp), is it?<br class=3D"">+1 for this proposal.<br =
-class=3D""></blockquote></div></div></blockquote><div><br =
-class=3D""></div>Right, we=E2=80=99ll add BUILD_ID to the hash =
-calculation.</div><div><br class=3D""><blockquote type=3D"cite" =
-class=3D""><div class=3D""><div class=3D""><blockquote type=3D"cite" =
-class=3D""><br class=3D"">--<br class=3D"">BRs,<br class=3D"">Lei YU<br =
-class=3D""></blockquote></div></div></blockquote></div><br =
-class=3D""></div></body></html>=
-
---Apple-Mail=_B48FD13D-79FB-4657-A8DA-539A30F1E2EC--
-
+> 
+> Regards,
+> 
+> Chris Chen.
+> 
+> Legal Disclaimer :
+> The information contained in this message may be privileged and 
+> confidential.
+> It is intended to be read only by the individual or entity to whom it is 
+> addressed
+> or by their designee. If the reader of this message is not the intended 
+> recipient,
+> you are on notice that any distribution of this message, in any form,
+> is strictly prohibited. If you have received this message in error,
+> please immediately notify the sender and delete or destroy any copy of 
+> this message!
