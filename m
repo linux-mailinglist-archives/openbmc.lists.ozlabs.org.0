@@ -1,82 +1,97 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 397A94397F6
-	for <lists+openbmc@lfdr.de>; Mon, 25 Oct 2021 15:58:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF62543980B
+	for <lists+openbmc@lfdr.de>; Mon, 25 Oct 2021 16:03:09 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HdGkf0yxLz2y7X
-	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 00:58:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HdGrC4c8Lz2yPp
+	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 01:03:07 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=eZ7BFSwk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=MsqHVKYy;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=H162o6ep;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::733;
- helo=mail-qk1-x733.google.com; envelope-from=frowand.list@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.229;
+ helo=new3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=eZ7BFSwk; dkim-atps=neutral
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com
- [IPv6:2607:f8b0:4864:20::733])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=MsqHVKYy; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=H162o6ep; 
+ dkim-atps=neutral
+Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com
+ [66.111.4.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HdGkB2sKSz2xYL
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 00:57:53 +1100 (AEDT)
-Received: by mail-qk1-x733.google.com with SMTP id d205so11845034qke.3
- for <openbmc@lists.ozlabs.org>; Mon, 25 Oct 2021 06:57:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=subject:from:to:cc:references:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=7rxdYqIO+JK237h1leH+bsExljsO5Y3Ycz3/IBgPYvU=;
- b=eZ7BFSwkN97rU+KuOwXK41Ezbmjb1zO1EQQfTqES8rc4l6I6gaf2NlET/tJkMoA1+N
- Bxnr1CkIIGs5iKbE6Xo5MZlCChvaZUESb1vwhUZ7YGmF/yxJBPkWOlIG8rXpa4V9wyYb
- 9GWUvUtdPIRl9QDTIS+dHoa16SiuRkDAbO+N/NbK3FRHTXIs53iAYMd4ZPqMxVD8m/hf
- Md/5XiEMe6x4fFsDnaMquFen7nxsvv5Yrwe7FLlovDKY1K4CIsaAODZGZYEZ2cIo2Ml8
- VFgVMgMTZCK53gS4zuWrq66TGd1qsxc4BUrErUft7zlzoqyFS5T+Mg01bH7IhS/4GkKP
- 0Mew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:subject:from:to:cc:references:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=7rxdYqIO+JK237h1leH+bsExljsO5Y3Ycz3/IBgPYvU=;
- b=rtxb2xHHB3JwdQevUa0xexPpB/YoRUb6Bzx/Hsc+SWEynVlfA20VRIqnHJWdqFIUzV
- 8q3+fk37QOF4Z3BEPAw1O/IKMxH/fYuGy5wLeXiGbcDQOFzC8qIs3GX8J2cKCIzS6h6l
- 4BToSwNJV6Iy+/vGcOPpTXX3wtmiwFDpfEgEu3MBOYshYw7r7Pcha9S6zv+lltCabZ/j
- ezcNVghxLw5X8AiigcejK7BzgOyvQjC4b1ROiLq8L2TzCSquK65ZM4LlJu6Dkhxh/1NO
- aEl/+J/1TVvyzg5X7R+Zngq2TDrKebYVjHCLF19JekE+0SQn1n/NPX9jBOQwBHnFaILj
- wi2Q==
-X-Gm-Message-State: AOAM533ZTLGPGfd4BENBrYJGl/jDa3G19Pi4DD23eReWqY9olfCqlf34
- KO7i7Q7U3D3VnlNhGY2PBqg=
-X-Google-Smtp-Source: ABdhPJx7RB7JYMETqkdl2lDe/tLc/PmA59WParAYFcWHyJw9NE116RVhX5z3h21h20znsAvGdfjeDg==
-X-Received: by 2002:a05:620a:31a2:: with SMTP id
- bi34mr13385245qkb.331.1635170270173; 
- Mon, 25 Oct 2021 06:57:50 -0700 (PDT)
-Received: from [192.168.1.49] (c-67-187-90-124.hsd1.tn.comcast.net.
- [67.187.90.124])
- by smtp.gmail.com with ESMTPSA id r23sm8453413qtm.80.2021.10.25.06.57.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Oct 2021 06:57:49 -0700 (PDT)
-Subject: Re: [PATCH 0/5] driver core, of: support for reserved devices
-From: Frank Rowand <frowand.list@gmail.com>
-To: Zev Weiss <zev@bewilderbeest.net>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-References: <20211022020032.26980-1-zev@bewilderbeest.net>
- <YXJfHwzIdksUKPIe@kroah.com> <YXJ9yR6b5vI3NwF7@hatter.bewilderbeest.net>
- <3a5e271d-d977-7eca-21c5-fd75a2366920@gmail.com>
-Message-ID: <ad2b0169-a8c1-f94b-9bf5-11bc1e17f843@gmail.com>
-Date: Mon, 25 Oct 2021 08:57:49 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HdGqq0yPYz2xX2
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 01:02:46 +1100 (AEDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 5A360580533;
+ Mon, 25 Oct 2021 10:02:44 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute1.internal (MEProxy); Mon, 25 Oct 2021 10:02:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=O6Np07LYkZtpx8/b2Te8NTLkiKk
+ VX2DZfHpr39ip9Jo=; b=MsqHVKYy1WAnwZ/e+pNN5dj1T2Lq1ngAHAiRd1yBBkt
+ t5vPgfG4f7JIkRTGfhmkR4g9tvM27H675x/ftgn6aJTCQ2a39OsUhhUQYkSHYyDd
+ bbMAfLAHekPFqPYv+rD4sg5zm0xzu97sQp4F7oXUhpBYoLu8/5lxQl2E58fwhtk/
+ xPdURmuLE/oO0om/LB47rpbjjrEx7/F492oGODWQtPgiv8BnxoHCVAbVzRnQTgD/
+ M+J5qfQYuoN8hR3+VwMIumcE4I1KGDn0iBzcbFK8Ko2AgiHZNZwNECNMLUjaHgeB
+ 0UYzP5trnADbf6eYd0+wuIC4cl+AF2z+XZ/+kL39nEw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=O6Np07
+ LYkZtpx8/b2Te8NTLkiKkVX2DZfHpr39ip9Jo=; b=H162o6epW7+NZUqB1LuU5E
+ 0j/x+8H/78SJ7bfvRDULdowqpkv3zbdEDzLF2J8z5YhGZWdSJtm68YUtNfsST+i0
+ GbgBJs8U6LDXSgT6suua4tAqKQpUMDAv1KoM+mZtp9an0iciVY4wIJFrX9VtsF91
+ TwTLfW8zY1Qszaz3ltiDigKqggEry2j3c1RKM75h1lZkTmaSrozrqdh6g+fBsWws
+ DIeXnONVG2GGg8tcTX4fs01ODzE5xvRpaGbPuBDnQNgXiM+1Ixh5S+RwPkmJAv6/
+ 3xVDpfFigtbXWC0zdQu8fKbwEFVzqBfNysHkcJVkjfTkdQ9zhqNW49ypGmnYPNlA
+ ==
+X-ME-Sender: <xms:A7l2YepV5VZDfrRXe7spLHLIETP_giextEE0CBE24deAQ1j90L__og>
+ <xme:A7l2Ycrsg3I7drR1lVNa1ofoF9TRnkwe3Ej-6mr47KBe9BlBYe3-b15CLUy_K2bjH
+ X9djIO0DnoMDqXWUHc>
+X-ME-Received: <xmr:A7l2YTOmgbY0TfAk6WUEXqEaQWrhSIFZZ_CYmkw1kBUr9kPyhJslZz3Xha7cM58vewbeDPEfthBbYi44ynE68h167Dg8Adsdrwt0yIYaASB05g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdefhedgieekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+ geefgfdthefhkedtleffveekgfeuffehtdeinecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:A7l2Yd4BbebMsQfd7QZLHrIzv1MyMurZKecxTNFjw9u69k79Cvy-8A>
+ <xmx:A7l2Yd4DA4Uj3BJccmrzciUG2FM6ybKEpWv0N_jwIV7yYnGUOXoqYQ>
+ <xmx:A7l2Ydi1UO1yUur97b541jocm2oJk0i6W0CyTstF2NypR5xuiVYtbw>
+ <xmx:BLl2YcIJwaJgxwLeGikGlPMLIsEHM0gnjujr08o-BS9-rvBQ5ken7g>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Oct 2021 10:02:42 -0400 (EDT)
+Date: Mon, 25 Oct 2021 09:02:40 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH 4/5] driver core: inhibit automatic driver binding on
+ reserved devices
+Message-ID: <YXa5AExKg+k0MmHV@heinlein>
+References: <YXJ3IPPkoLxqXiD3@hatter.bewilderbeest.net>
+ <YXJ88eARBE3vU1aA@kroah.com> <YXLWMyleiTFDDZgm@heinlein>
+ <YXPOSZPA41f+EUvM@kroah.com>
+ <627101ee-7414-57d1-9952-6e023b8db317@gmail.com>
+ <YXZLjTvGevAXcidW@kroah.com> <YXaYmie/CUHnixtX@heinlein>
+ <YXap8V/jMM3Ksj7x@smile.fi.intel.com> <YXavBWTNYsufqj8u@heinlein>
+ <YXayTeJiQvpRutU0@kroah.com>
 MIME-Version: 1.0
-In-Reply-To: <3a5e271d-d977-7eca-21c5-fd75a2366920@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="Cj4fc/vm/r+op96T"
+Content-Disposition: inline
+In-Reply-To: <YXayTeJiQvpRutU0@kroah.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,126 +103,117 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Rob Herring <robh+dt@kernel.org>, Jeremy Kerr <jk@codeconstruct.com.au>
+Cc: Zev Weiss <zev@bewilderbeest.net>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Kirti Wankhede <kwankhede@nvidia.com>, Jeremy Kerr <jk@codeconstruct.com.au>,
+ Rajat Jain <rajatja@google.com>, Frank Rowand <frowand.list@gmail.com>,
+ Jianxiong Gao <jxgao@google.com>, Dave Jiang <dave.jiang@intel.com>,
+ kvm@vger.kernel.org, Saravana Kannan <saravanak@google.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, openbmc@lists.ozlabs.org,
+ devicetree@vger.kernel.org, Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
+ Alex Williamson <alex.williamson@redhat.com>, Rob Herring <robh+dt@kernel.org>,
+ Bhaskar Chowdhury <unixbhaskar@gmail.com>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Andrew Jeffery <andrew@aj.id.au>, Cornelia Huck <cohuck@redhat.com>,
+ linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+ dmaengine@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/25/21 12:53 AM, Frank Rowand wrote:
-> On 10/22/21 4:00 AM, Zev Weiss wrote:
->> On Thu, Oct 21, 2021 at 11:50:07PM PDT, Greg Kroah-Hartman wrote:
->>> On Thu, Oct 21, 2021 at 07:00:27PM -0700, Zev Weiss wrote:
->>>> Hello all,
->>>>
->>>> This series is another incarnation of a couple other patchsets I've
->>>> posted recently [0, 1], but again different enough in overall
->>>> structure that I'm not sure it's exactly a v2 (or v3).
->>>>
->>>> As compared to [1], it abandons the writable binary sysfs files and at
->>>> Frank's suggestion returns to an approach more akin to [0], though
->>>> without any driver-specific (aspeed-smc) changes, which I figure might
->>>> as well be done later in a separate series once appropriate
->>>> infrastructure is in place.
->>>>
->>>> The basic idea is to implement support for a status property value
->>>> that's documented in the DT spec [2], but thus far not used at all in
->>>> the kernel (or anywhere else I'm aware of): "reserved".  According to
->>>> the spec (section 2.3.4, Table 2.4), this status:
->>>>
->>>>   Indicates that the device is operational, but should not be used.
->>>>   Typically this is used for devices that are controlled by another
->>>>   software component, such as platform firmware.
->>>>
->>>> With these changes, devices marked as reserved are (at least in some
->>>> cases, more on this later) instantiated, but will not have drivers
->>>> bound to them unless and until userspace explicitly requests it by
->>>> writing the device's name to the driver's sysfs 'bind' file.  This
->>>> enables appropriate handling of hardware arrangements that can arise
->>>> in contexts like OpenBMC, where a device may be shared with another
->>>> external controller not under the kernel's control (for example, the
->>>> flash chip storing the host CPU's firmware, shared by the BMC and the
->>>> host CPU and exclusively under the control of the latter by default).
->>>> Such a device can be marked as reserved so that the kernel refrains
->>>> from touching it until appropriate preparatory steps have been taken
->>>> (e.g. BMC userspace coordinating with the host CPU to arbitrate which
->>>> processor has control of the firmware flash).
->>>>
->>>> Patches 1-3 provide some basic plumbing for checking the "reserved"
->>>> status of a device, patch 4 is the main driver-core change, and patch
->>>> 5 tweaks the OF platform code to not skip reserved devices so that
->>>> they can actually be instantiated.
->>>
->>> Again, the driver core should not care about this, that is up to the bus
->>> that wants to read these "reserved" values and do something with them or
->>> not (remember the bus is the thing that does the binding, not the driver
->>> core).
->>>
->>> But are you sure you are using the "reserved" field properly?
->>
->> Well, thus far both Rob Herring and Oliver O'Halloran (originator of the "reserved" status in the DT spec, whom I probably should have CCed earlier, sorry) have seemed receptive to this interpretation of it, which I'd hope would lend it some credence.
-> 
-> I am not on board with this interpretation.  To me, if the value of
-> status is "reserved", then the Linux kernel should _never_ use the
-> device described by the node.
-> 
-> If a "reserved" node is usable by the Linux kernel, then the specification
-> should be updated to allow this.  And the specification should probably
-> be expanded to either discuss how to describe the coordination between
-> multiple entities or state that the coordination is outside of the
-> specification and will be implemention dependent.
 
-Maybe a value of "reserved-sharable" should be added to the standard.
-This would indicate that the node is operational and controlled by
-another software component, but is available to the operating system
-after requesting permission or being granted permission from the other
-software component.
+--Cj4fc/vm/r+op96T
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The exact method of requesting permission or being granted permission
-could either be driver specific, or the driver binding could
-include one or more additional properties to describe the method.
+On Mon, Oct 25, 2021 at 03:34:05PM +0200, Greg Kroah-Hartman wrote:
+> On Mon, Oct 25, 2021 at 08:20:05AM -0500, Patrick Williams wrote:
+> > On Mon, Oct 25, 2021 at 03:58:25PM +0300, Andy Shevchenko wrote:
+> > > On Mon, Oct 25, 2021 at 06:44:26AM -0500, Patrick Williams wrote:
+> > > > On Mon, Oct 25, 2021 at 08:15:41AM +0200, Greg Kroah-Hartman wrote:
+> > > > > On Mon, Oct 25, 2021 at 12:38:08AM -0500, Frank Rowand wrote:
+> > > > > > On 10/23/21 3:56 AM, Greg Kroah-Hartman wrote:
+> > > > =20
+> > > > > We have the bind/unbind ability today, from userspace, that can c=
+ontrol
+> > > > > this.  Why not just have Linux grab the device when it boots, and=
+ then
+> > > > > when userspace wants to "give the device up", it writes to "unbin=
+d" in
+> > > > > sysfs, and then when all is done, it writes to the "bind" file an=
+d then
+> > > > > Linux takes back over.
+> > > > >=20
+> > > > > Unless for some reason Linux should _not_ grab the device when bo=
+oting,
+> > > > > then things get messier, as we have seen in this thread.
+> > > >=20
+> > > > This is probably more typical on a BMC than atypical.  The systems =
+often require
+> > > > the BMC (running Linux) to be able to reboot independently from the=
+ managed host
+> > > > (running anything).  In the example Zev gave, the BMC rebooting wou=
+ld rip away
+> > > > the BIOS chip from the running host.
+> > > >=20
+> > > > The BMC almost always needs to come up in a "I don't know what coul=
+d possibly be
+> > > > going on in the system" state and re-discover where the system was =
+left off.
+> > >=20
+> > > Isn't it an architectural issue then?
+> >=20
+> > I'm not sure what "it" you are referring to here.
+> >=20
+> > I was trying to explain why starting in "bind" state is not a good idea=
+ for a
+> > BMC in most of these cases where we want to be able to dynamically add =
+a device.
+>=20
+> I think "it" is "something needs to be the moderator between the two
+> operating systems".  What is the external entity that handles the
+> switching between the two?
 
-One thing that I am wary of is the possibility of a proliferation of
-status checks changing from "okay" to "okay" || ("reserved" and the
-state of the driver is that permission has been granted).
+Ah, ok.
 
-From a simplicity of coding view, it is really tempting to dynamically
-change the value of the status property from "reserved-sharable"
-to "okay" when the other software component grants permission to
-use the device, so that status checks will magically allow use
-instead of blocking use.  I do not like changing the value of the
-status property dynamically because the devicetree is supposed to
-describe hardware (and communicate information from the firmware
-to the operating system), not to actively maintain state.
+Those usually end up being system / device specific.  In the case of the BI=
+OS
+flash, most designs I've seen use a SPI mux between the BMC and the host
+processor or IO hub (PCH on Xeons).  The BMC has a GPIO to control the mux.
 
--Frank
+As far as state, the BMC on start-up will go through a set of discovery cod=
+e to
+figure out where it left the system prior to getting reset.  That involves
+looking at the power subsystem and usually doing some kind of query to the =
+host
+to see if it is alive.  These queries are mostly system / host-processor de=
+sign
+specific.  I've seen anything from an IPMI/IPMB message alert from the BMC =
+to
+the BIOS to ask "are you alive" to reading host processor state over JTAG to
+figure out if the processors are "making progress".
 
-> 
-> I am wary of the complexity of the operating system treating a node as
-> reserved at initial boot, then at some point via coordination with
-> some other entity starting to use the node.  It is not too complex if
-> the node is a leaf node with no links (phandles) to or from any other node,
-> but as soon as links to or from other nodes exist, then other drivers or
-> subsystems may need to be aware of when the node is available to the
-> operating system or given back to the other entity then any part of the
-> operating system has to coordinate in that state transition.  This is
-> driving a lot of my caution that we be careful to create architecture
-> and not an ad hoc hack.
-> 
-> -Frank
-> 
->>
->>> You are
->>> wanting to do "something" to the device to later on be able to then have
->>> the kernel touch the device, while it seems that the reason for this
->>> field is for the kernel to NEVER touch the device at all.  What will
->>> break if you change this logic?
->>
->> Given that there's no existing usage of or support for this status value anywhere I can see in the kernel, and that Oliver has indicated that it should be compatible with usage in OpenPower platform firmware, my expectation would certainly be that nothing would break, but if there are examples of things that could I'd be interested to see them.
->>
->>
->> Thanks,
->> Zev
->>
-> 
+--=20
+Patrick Williams
 
+--Cj4fc/vm/r+op96T
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmF2uP4ACgkQqwNHzC0A
+wRn2MQ/+IbWA2k0pqRbmsaz95jJj6QR4JWyOn//T7Ij+0GUqzRAjI79orT7opNkA
+sMhniF8v7xDUEGual2v2hEBoxtJxom3R8RgC0sQuxRFhmxdJlXCZZRqw4a42YNZN
+3ZspVBl3p7m9E3q9e8oI2yWP3RNJHErMhQJmIsw3osURrtSFCk5xdFkUMEXmzpou
+OFIxkcbKtLgi7TJ7/i9c3ubm3CExijLeUqAYr+BZHox727nQfc0ni30+KZYaTjof
+qZ6fUj890s6G9u9w1NTW+z8wzYZLhhQlB44WYBL4Ax46713+TmZnhhym5k0aD9Fh
+bh6jyfJRI7cuxXInS/uCIAqTipaI3TsNCglHZSSoLJ2E+4pLQXc/eRNRVr6Urmor
+Ut+Xv6tm9QEW4MkoTn4EpN1xTkmhczRYI6FRTal7QC0rRgOn6LN+V8UM57cmig7O
+L/wX0eUjUT7qLjmv0zReTGpjgvU1KzYr7J5riCZJuuwosvJU10sJfPaRlNR3NJ7x
+BPd+5vYifZsODphSc5IQojlCGwnTVrsbqsYWpb42ik+nLpCdfGiFYBvLCkmIfmWa
+FD+IMGh+V7Bt+DatdxLmEFTvIzEb4UrNM5+1PM/1UynD3NvJVUDbEKMlszRHKl6u
+/L+NyvjwozFI7/57T1YSk0DZPNSl7mazsNuL8UC3BXgixfw86wI=
+=z+8H
+-----END PGP SIGNATURE-----
+
+--Cj4fc/vm/r+op96T--
