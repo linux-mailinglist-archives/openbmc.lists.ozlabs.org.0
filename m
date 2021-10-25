@@ -1,55 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB39A439E9C
-	for <lists+openbmc@lfdr.de>; Mon, 25 Oct 2021 20:37:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4494B43A062
+	for <lists+openbmc@lfdr.de>; Mon, 25 Oct 2021 21:27:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HdNwZ4vtfz2yKN
-	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 05:37:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HdQ2j0HkKz2yV5
+	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 06:27:41 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1mZo0buW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=q/VzL6QD;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=ULmZFSIG;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linuxfoundation.org (client-ip=198.145.29.99;
- helo=mail.kernel.org; envelope-from=gregkh@linuxfoundation.org;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
- header.a=rsa-sha256 header.s=korg header.b=1mZo0buW; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm3 header.b=q/VzL6QD; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=ULmZFSIG; 
  dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HdNw76CY3z2y7V
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 05:36:54 +1100 (AEDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8163460FC2;
- Mon, 25 Oct 2021 18:36:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1635187011;
- bh=jIprGbQQGmCBYkXpWgtIIUsn7k/Yq53REA+NhZj7hPE=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=1mZo0buWeicna4EeDy7pCWTVfV7Pypgz3V4SqexKw3u/P2XFpmyTIxKzBZkRkyhTk
- l3DauXemQGppDSo2cWDvwDK3j8ZIEf7jrXqhJ0uOyPRS+3oxKmXSyUSZf6mKp36V+S
- yK9EHmPPGBBoSsvzcFfWPPA4a/tid9yAcwSxs1eE=
-Date: Mon, 25 Oct 2021 20:36:47 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: Re: [PATCH 4/5] driver core: inhibit automatic driver binding on
- reserved devices
-Message-ID: <YXb5P6D8qB1cQrxh@kroah.com>
-References: <YXPOSZPA41f+EUvM@kroah.com>
- <627101ee-7414-57d1-9952-6e023b8db317@gmail.com>
- <YXZLjTvGevAXcidW@kroah.com> <YXaYmie/CUHnixtX@heinlein>
- <YXap8V/jMM3Ksj7x@smile.fi.intel.com> <YXavBWTNYsufqj8u@heinlein>
- <YXayTeJiQvpRutU0@kroah.com> <YXa5AExKg+k0MmHV@heinlein>
- <YXa6t/ifxZGGSCNj@kroah.com> <YXbTLYzHadphE5ZN@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HdQ2D0xwyz2xXf
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 06:27:14 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 4B4885C019E;
+ Mon, 25 Oct 2021 15:27:10 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute3.internal (MEProxy); Mon, 25 Oct 2021 15:27:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=message-id:subject:from:to:cc:date
+ :content-type:mime-version:content-transfer-encoding; s=fm3; bh=
+ 1+tp55LVymmhxs5+EI1cI69CNxpflMxqauDqeSz10kI=; b=q/VzL6QDgaTZJ+Hf
+ zrSjCwqF4sW7tTrTgfL+BYmiW7eZe6Cg8ZlQGAlxuHiXTMkHRHEP69yTABbaPJAV
+ CC/Or6zePk75o8W3tesimdi5LI45XEM3NpZSUs1vdGuiWC1kcxP7hUUe0R0c27EN
+ rDBXflFJgH6LjZIZiLB4eMWv4qONe1dEnpsqIzjLeinxdlVjT/I9zLh0dI3E5MqT
+ IXq2E332ZC/PIEELm6Pou6/pDx/kLMBfQX8r2vpclzgyON99L+LL83ro/NtzLH+H
+ twBXbB6vLVIt70eEjXduVy1smdIBrq8iusRR6opCyAFIbWYdM4i1uLZoogUMuS7T
+ 5b9BCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:message-id:mime-version:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=1+tp55
+ LVymmhxs5+EI1cI69CNxpflMxqauDqeSz10kI=; b=ULmZFSIGUDgk0Wpudz81QJ
+ dR5y0Jt0vMuttgX7F+yzPYqXchScCzr6TfK0N/76JRNHRCQCn5MwUurL/J3U2uS+
+ RrcZdK1l84NO2oB3uJ/hUwegjmF7v/CUgmzolaKB9+iyzDo3W6I3r6sX55ZG/D/h
+ 53Ieyqh9F2aDM8yxGNK28xSSGt8X/m2UeqUBQRWr/iGa7lbfEducaz1880nEdTZl
+ j8uNTVH0XldqJ0XXkPxE6jMqe9VN/Yrw4fRk4xGXPgepW7Xjc5tNFKXyZOLUO8BY
+ Fhm9sxADyhvbBXAhWF1y9bWDpXkpos7AEQCov8eXM9wiKpbvzgdpPM3xe/pne3Tw
+ ==
+X-ME-Sender: <xms:DQV3YTcZ5olU50oTbRt5MBfO-eeMht6BFe28EA8VXuYh5iYTfhnTAQ>
+ <xme:DQV3YZNCSqpYV8uXPjzLeMZx4Yr391UbqMBizxm42rMJ6p1DmjTpjC8MEJPWDzJap
+ PcH3Qkq8_YC7yEgKqI>
+X-ME-Received: <xmr:DQV3YcjCUgrmJMa98Eyk1m2SRgi3Jn5z4BPc_Z_Ft9QQIuBf-occLn4UOritJJvZ3Z8I2Nc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdefhedgudduhecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgtfggggfesthejre
+ dttderjeenucfhrhhomhepuehrrgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhu
+ iiiiihgvshhquhhirhhrvghlrdgtohhmqeenucggtffrrghtthgvrhhnpeefiedtieethe
+ ektdfhvedtueevieetkedtieefhffgieffffdtleejheeigedtudenucevlhhushhtvghr
+ ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsgesfhhuii
+ iiihgvshhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:DQV3YU8LgAWPD7vwybqobHee3PEHyghylSLlr8YmFo0QVn18YolT9g>
+ <xmx:DQV3YfuOxYy3vkuZtPeSunGKFoA_Vxn16knTiqa7TWCcQrTKYa7NNA>
+ <xmx:DQV3YTH_3Wii03z0ieYN3L9sFzXSyx7qZW1rjp2JPl3gYYJOx77scA>
+ <xmx:DgV3YYWRSQtlLNABFZWxavz4zr77tus3npNdztOD_KRPstKhEjo2Sw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Oct 2021 15:27:09 -0400 (EDT)
+Message-ID: <96b17124acdf2309205452bc135e5653a1834aad.camel@fuzziesquirrel.com>
+Subject: please merge OWNERs files and scrub your repository maintainer
+ information
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: openbmc@lists.ozlabs.org
+Date: Mon, 25 Oct 2021 15:27:08 -0400
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.4 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YXbTLYzHadphE5ZN@heinlein>
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,83 +96,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Zev Weiss <zev@bewilderbeest.net>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Kirti Wankhede <kwankhede@nvidia.com>, Jeremy Kerr <jk@codeconstruct.com.au>,
- Rajat Jain <rajatja@google.com>, Frank Rowand <frowand.list@gmail.com>,
- Jianxiong Gao <jxgao@google.com>, Dave Jiang <dave.jiang@intel.com>,
- kvm@vger.kernel.org, Saravana Kannan <saravanak@google.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, openbmc@lists.ozlabs.org,
- devicetree@vger.kernel.org, Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
- Alex Williamson <alex.williamson@redhat.com>, Rob Herring <robh+dt@kernel.org>,
- Bhaskar Chowdhury <unixbhaskar@gmail.com>,
- Thomas Gleixner <tglx@linutronix.de>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Andrew Jeffery <andrew@aj.id.au>, Cornelia Huck <cohuck@redhat.com>,
- linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
- dmaengine@vger.kernel.org
+Cc: ed@tanous.net, manojkiran.eda@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Oct 25, 2021 at 10:54:21AM -0500, Patrick Williams wrote:
-> On Mon, Oct 25, 2021 at 04:09:59PM +0200, Greg Kroah-Hartman wrote:
-> > On Mon, Oct 25, 2021 at 09:02:40AM -0500, Patrick Williams wrote:
-> > > On Mon, Oct 25, 2021 at 03:34:05PM +0200, Greg Kroah-Hartman wrote:
-> > > > On Mon, Oct 25, 2021 at 08:20:05AM -0500, Patrick Williams wrote:
-> > > > I think "it" is "something needs to be the moderator between the two
-> > > > operating systems".  What is the external entity that handles the
-> > > > switching between the two?
-> > > 
-> > > Ah, ok.
-> > > 
-> > > Those usually end up being system / device specific.  In the case of the BIOS
-> > > flash, most designs I've seen use a SPI mux between the BMC and the host
-> > > processor or IO hub (PCH on Xeons).  The BMC has a GPIO to control the mux.
-> > > 
-> > > As far as state, the BMC on start-up will go through a set of discovery code to
-> > > figure out where it left the system prior to getting reset.  That involves
-> > > looking at the power subsystem and usually doing some kind of query to the host
-> > > to see if it is alive.  These queries are mostly system / host-processor design
-> > > specific.  I've seen anything from an IPMI/IPMB message alert from the BMC to
-> > > the BIOS to ask "are you alive" to reading host processor state over JTAG to
-> > > figure out if the processors are "making progress".
-> > 
-> > But which processor is "in control" here over the hardware?  
-> 
-> The BMC.  It owns the GPIO that controls the SPI mux.  
-> 
-> But, the BMC is responsible for doing all operations in a way that doesn't mess
-> up the running host processor(s).  Pulling away the SPI flash containing the
-> BIOS code at an incorrect time might do that.
-> 
-> > What method
-> > is used to pass the device from one CPU to another from a logical point
-> > of view?  
-> 
-> The state of the server as a whole is determined and maintained by the BMC.  I'm
-> simplifying here a bit but the operation "turn on the host processors" implies
-> "the host processors will access the BIOS" so the BMC must ensure "SPI mux is
-> switched towards the host" before "turn on the host processors".
-> 
-> > Sounds like it is another driver that needs to handle all of
-> > this, so why not have that be the one that adds/removes the devices
-> > under control here?
-> 
-> If what you're describing is moving all of the state control logic into the
-> kernel, I don't think that is feasible.  For some systems it would mean moving
-> yet another entire IPMI stack into the kernel tree.  On others it might be
-> somewhat simpler, but it is still a good amount of code.  We could probably
-> write up more details on the scope of this.
-> 
-> If what you're describing is a small driver, similar to the board support
-> drivers that were used before the device tree, that instantiates subordinate
-> devices it doesn't seem like an unreasonable alternative to DT overlays to me
-> (for whatever my limited kernel contribution experience counts for).
-> 
+Hi everyone!
 
-Something has to be here doing the mediation between the two processors
-and keeping things straight as to what processor is handling the
-hardware when.  I suggest you focus on that first...
+Continuing on the work done by Ed last year, Manoj has created an OWNERs
+file for every repository in OpenBMC. Thanks Manoj! This is a great
+piece of work that will let us turn on the OWNERs plugin everywhere,
+trivially, which enables project maintainers to delegate maintainership
+of parts of the code.
 
-Good luck!
+I just wanted to make a couple requests...
 
-greg k-h
+1 - Please review these patches as soon as possible.
+2 - Please do not ask Manoj to update your maintainer information for
+you if it is out of date. If he made a mistake copying the existing
+information from the MAINTAINERS file, go ahead and ask him to fix that.
+3 - Please scrub and fix any outdated information in your new OWNERs
+file after you've merged the patch from Manoj.
+
+Thanks!
+
+-brad
+
+
