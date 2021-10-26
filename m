@@ -1,102 +1,97 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C300043A6AE
-	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 00:38:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA04D43A945
+	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 02:32:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HdVHD4R02z2xXG
-	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 09:38:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HdXpC4qg0z2yYS
+	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 11:32:19 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=BjalCLWB;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=G5hbVnk0;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=H6NSn7Pf;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com;
- envelope-from=bruce.mitchell@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.229;
+ helo=new3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=BjalCLWB; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm1 header.b=G5hbVnk0; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=H6NSn7Pf; 
+ dkim-atps=neutral
+Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com
+ [66.111.4.229])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HdVGl2BBrz2xXG
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 09:38:22 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19PLwSqE006628; 
- Mon, 25 Oct 2021 22:38:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date : to :
- cc : from : subject : content-type : content-transfer-encoding :
- mime-version; s=pp1; bh=Cn0fW8pzAkDZPxmKGcd2yBjOWxD1GRZIWdtO6JIwqRc=;
- b=BjalCLWBoBkjw73z5i0L7hGQjtic7nUs7CMReaQbMapS4k8WSn0JYOG6t83vwtv10GyJ
- eiwdXAtjxckNYKZrtopDhoT17nFVnGTdmrpgXiDoJ485gPCIU0gmO1U1GIiQxJ40KS9i
- aesaYqSLmUzC3WFz+w9i8ZF9rOqAAjLAJhSirVe8ZZHn7bLFmf9rZNfUfkLffi61lNNU
- kU68+aAx8qhUer7L+OPE25ttV27MkDwjMi7CBD6IzJ1h5gRBmYYc38jPvps3RIHuYpQD
- qhuCbUb1cH2U7pC9qk/ckZwuEaO4wL51bvBoK541x/QE9fdWX8rDsp5TPrGgJetlXC0/ Sw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3bx4yfrnss-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Oct 2021 22:38:10 +0000
-Received: from m0098394.ppops.net (m0098394.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 19PMFYb5017521;
- Mon, 25 Oct 2021 22:38:10 GMT
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3bx4yfrnse-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Oct 2021 22:38:10 +0000
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 19PMYLIs024796;
- Mon, 25 Oct 2021 22:38:08 GMT
-Received: from b03cxnp08026.gho.boulder.ibm.com
- (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
- by ppma03wdc.us.ibm.com with ESMTP id 3bx4eygwry-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Oct 2021 22:38:08 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 19PMc8ho12583316
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 25 Oct 2021 22:38:08 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EB04178060;
- Mon, 25 Oct 2021 22:38:07 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 839A77806E;
- Mon, 25 Oct 2021 22:38:07 +0000 (GMT)
-Received: from [9.163.11.121] (unknown [9.163.11.121])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
- Mon, 25 Oct 2021 22:38:07 +0000 (GMT)
-Message-ID: <e3b860da-7fab-2453-c936-ba7fe0bc858f@linux.vnet.ibm.com>
-Date: Mon, 25 Oct 2021 15:38:06 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Content-Language: en-US
-To: apparao.puli@linux.intel.com, richard.marian.thomaiyar@linux.intel.com
-From: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
-Subject: Please review these 2 XS Gerrit reviews of service-config-manager
- (i.e. srvcfg-manager)
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: tCl-c3nDsoQSoyjz1-D6PZ1COmJdZQS_
-X-Proofpoint-ORIG-GUID: R-HP1oArv5HZ_0MKUmgL-4AIBhpA9qZ4
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
-MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-10-25_07,2021-10-25_02,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- impostorscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
- malwarescore=0 mlxscore=0 bulkscore=0 adultscore=0 clxscore=1011
- mlxlogscore=730 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2110150000 definitions=main-2110250127
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HdXnj6LGgz2xt0
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 11:31:53 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 913B3580760;
+ Mon, 25 Oct 2021 20:31:48 -0400 (EDT)
+Received: from imap43 ([10.202.2.93])
+ by compute2.internal (MEProxy); Mon, 25 Oct 2021 20:31:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=yGoSd29Cl/DpdxjWB405Kt4Sp2gFWlM
+ pymgEnWabDSc=; b=G5hbVnk0JCzsRgIKCE/zxmoYd6SCcVHCbTJ+dq+ACnXagec
+ iSCGQ7oc54Xnjt5E5RLshmhz+tplC9zrFFTMcVuLu/dJyLB37A5VCUm4P6xUecvK
+ 4MBTqH2xwfFIOS6wk5rrTgmzscT23IG/Flxuhmnb/OV62ziW4VvIgg+OG950tROR
+ A6jWF8DMuE84bAOE+5UzqviLa8vFgUHctbuGhBoIi+iEjesbWrezhDBcG+iN2Neu
+ W4Ierywl+bU2bvRzyYUrDOPX3XKIEXzGXZ6lBkpXCEUuye079Ib14dwux/htr09M
+ 7Fk9Fw4eXhA3x0YJ43OS8+2oXdxZEtBFMm1ggmQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=yGoSd2
+ 9Cl/DpdxjWB405Kt4Sp2gFWlMpymgEnWabDSc=; b=H6NSn7PfoZYoJsdI00BkD8
+ ZLcFJreGwwR+oCgmERVQjkeV2Dwr2mjJ4stGIqGRjlwPEteX5/2fuG6pc6QrWQky
+ NA5rDmD8E+0ApDejrxxn/bkbLSwL/tgP5jOjE69AMoCFh7iSF3S+LeVosNt/VL/r
+ LexgmDGPzazWT4BtmNQyQFPgjuv4yz/dh8+CK2cWcNhTUhYvbUDvShp0QeGt+yDB
+ E/vGE5EBbEPCNxgBk+zPgAqHzahQesU3viyQ3zMriy9I/0GJyhNIM3fb36SewzK5
+ ufy2OsjcshliEGICJWU/U8HGUhwBCCPcM5DnqcaNcw71S043ZeVEOUE//ghwkQwg
+ ==
+X-ME-Sender: <xms:ckx3YSmWA47RG7TypvFraRZdeEJT5RmoQAYnfB9SezwsseoI6bu-1g>
+ <xme:ckx3YZ3hMfTxOIa_hMNKi1KO-C64ei5HpM6kG_0_YVMCwD_X1pZZ2gIhWuocZbaGt
+ Q9eC60oMWQ2grq5Mw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdefiedgvdejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+ hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:ckx3YQp2DORzmZFcnyrDUbEgLjmB651RleT8wCWVflujcIkzNhRXrg>
+ <xmx:ckx3YWmqdg0WxajkV4mm3SvCnP9dsgV3cSNbw6CkZWP3esFswIq01g>
+ <xmx:ckx3YQ2psLu7AFkqHm9P2oP8NNwIW42wNoY3T2Uqe5GKCI-v0QEykw>
+ <xmx:dEx3YWNg6tgtgPfBxS4KDgRZLUHZVorYD5ucY1BqXBvG1qYtIgMreA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id D76FCAC03DB; Mon, 25 Oct 2021 20:31:46 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-1369-gd055fb5e7c-fm-20211018.002-gd055fb5e
+Mime-Version: 1.0
+Message-Id: <125453f3-55d5-4b2a-afe8-6e76b268ce01@www.fastmail.com>
+In-Reply-To: <20210922103116.30652-3-chin-ting_kuo@aspeedtech.com>
+References: <20210922103116.30652-1-chin-ting_kuo@aspeedtech.com>
+ <20210922103116.30652-3-chin-ting_kuo@aspeedtech.com>
+Date: Tue, 26 Oct 2021 11:01:26 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Chin-Ting Kuo" <chin-ting_kuo@aspeedtech.com>,
+ "Rob Herring" <robh+dt@kernel.org>, "Joel Stanley" <joel@jms.id.au>,
+ "Michael Turquette" <mturquette@baylibre.com>,
+ "Stephen Boyd" <sboyd@kernel.org>, "Adrian Hunter" <adrian.hunter@intel.com>, 
+ linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-mmc <linux-mmc@vger.kernel.org>, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-clk@vger.kernel.org
+Subject: Re: [PATCH 02/10] sdhci: aspeed: Add SDR50 support
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,23 +103,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: vernon.mauery@linux.intel.com,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, liuxiwei@inspur.com,
- Johnathan Mantey <johnathanx.mantey@intel.com>, gmills@us.ibm.com,
- rashmica.g@gmail.com
+Cc: BMC-SW@aspeedtech.com, Steven Lee <steven_lee@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Chin-Ting,
 
-47932: srvcfg-manager: Use true instead of 1 for a while loop
-https://gerrit.openbmc-project.xyz/c/openbmc/service-config-manager/+/47932
+Sorry for the delay in looking at your series.
 
-and
+On Wed, 22 Sep 2021, at 20:01, Chin-Ting Kuo wrote:
+> From the analog waveform analysis result, SD/SDIO controller
+> of AST2600 cannot always work well with 200MHz. The upper bound
+> stable frequency for SD/SDIO controller is 100MHz. Thus, SDR50
+> supported bit, instead of SDR104, in capability 2 register
+> should be set in advance.
+>
+> Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+> ---
+>  drivers/mmc/host/sdhci-of-aspeed.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c 
+> b/drivers/mmc/host/sdhci-of-aspeed.c
+> index 6e4e132903a6..c6eaeb02e3f9 100644
+> --- a/drivers/mmc/host/sdhci-of-aspeed.c
+> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
+> @@ -35,6 +35,8 @@
+>  #define ASPEED_SDC_CAP1_1_8V           (0 * 32 + 26)
+>  /* SDIO{14,24} */
+>  #define ASPEED_SDC_CAP2_SDR104         (1 * 32 + 1)
+> +/* SDIO{14,24} */
 
-47921: Replace IRC with Discord
-https://gerrit.openbmc-project.xyz/c/openbmc/service-config-manager/+/47921
+I don't think we need to duplicate this comment.
 
-Please let me know if you are way backlogged what a estimate of
-when maybe you can look at them.
+> +#define ASPEED_SDC_CAP2_SDR50          (1 * 32 + 0)
 
-Thank you!
+Can we keep the defines in increasing bit order (i.e. put 
+ASPEED_SDC_CAP2_SDR50 above ASPEED_SDC_CAP2_SDR104)?
+
+> 
+>  struct aspeed_sdc {
+>  	struct clk *clk;
+> @@ -410,11 +412,17 @@ static int aspeed_sdhci_probe(struct 
+> platform_device *pdev)
+>  	sdhci_get_of_property(pdev);
+> 
+>  	if (of_property_read_bool(np, "mmc-hs200-1_8v") ||
+> +		of_property_read_bool(np, "sd-uhs-sdr50") ||
+
+Minor formatting issue, but can you make sure all the conditions are 
+aligned vertically from the left?
+
+>  	    of_property_read_bool(np, "sd-uhs-sdr104")) {
+>  		aspeed_sdc_set_slot_capability(host, dev->parent, ASPEED_SDC_CAP1_1_8V,
+>  					       true, slot);
+>  	}
+> 
+> +	if (of_property_read_bool(np, "sd-uhs-sdr50")) {
+> +		aspeed_sdc_set_slot_capability(host, dev->parent, ASPEED_SDC_CAP2_SDR50,
+> +					       true, slot);
+> +	}
+> +
+>  	if (of_property_read_bool(np, "sd-uhs-sdr104")) {
+>  		aspeed_sdc_set_slot_capability(host, dev->parent, ASPEED_SDC_CAP2_SDR104,
+>  					       true, slot);
+> -- 
+> 2.17.1
