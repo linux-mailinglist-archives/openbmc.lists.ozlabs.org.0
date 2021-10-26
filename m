@@ -2,93 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0F6943B308
-	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 15:14:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15C3B43B4C8
+	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 16:50:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HdsjQ54Svz2yZf
-	for <lists+openbmc@lfdr.de>; Wed, 27 Oct 2021 00:14:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HdvrM70BDz2xb6
+	for <lists+openbmc@lfdr.de>; Wed, 27 Oct 2021 01:50:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=IP+UFbDg;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=C521lOPn;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42a;
+ helo=mail-pf1-x42a.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=IP+UFbDg; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=C521lOPn; dkim-atps=neutral
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com
+ [IPv6:2607:f8b0:4864:20::42a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hdshy3JjWz2x9T
- for <openbmc@lists.ozlabs.org>; Wed, 27 Oct 2021 00:13:53 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19QCaElN006514
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 13:13:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date : to :
- from : subject : content-type : content-transfer-encoding : mime-version;
- s=pp1; bh=lQJDNxpPgrx0UW4mSMpD8aIcWsdi/WGf8V+veQu5IGE=;
- b=IP+UFbDgvGx/ZYJ+UPm1/nebBB9iD0tRFekpsRSWNm8rhu4ZLnnSnVVXhBUD5cnVhT5k
- 7olz1/Xv0plwvLDywCjImHeF39SmklAFb4gMMMycMcMbSBy0pwZqfJZYGQLLYaL7i7Fo
- cY57kvHSmBPNArsL1MVuB3vGrdY59AW79riJohroUeoscPcddEmDjMEsSUEnVSzOyiPg
- JFENQeRCvNfvWDIHpBgulEVWg5Lzwu9enEO8YTMOTb3d7zIFHdKlkdHCoVOwIcSDLwxq
- abhbXCUsrf/1+T0sHOeoN+pQwd0BJ3zdO71z2FlsHaF7bOVW7ctttPZ5pUchJdWF/CG2 kw== 
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3bx4yge8f6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 13:13:45 +0000
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 19QDBUPk015489
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 13:12:41 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com
- (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
- by ppma03wdc.us.ibm.com with ESMTP id 3bx4eyuxvy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 13:12:41 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 19QDCeB152887858
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 13:12:40 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 01897BE065
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 13:12:40 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A8D51BE05F
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 13:12:39 +0000 (GMT)
-Received: from [9.77.132.135] (unknown [9.77.132.135])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 13:12:39 +0000 (GMT)
-Message-ID: <d0b57999-f452-5239-ccd1-3823fc551a30@linux.ibm.com>
-Date: Tue, 26 Oct 2021 08:12:38 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.2.0
-Content-Language: en-US
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group - Wednesday October 27
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: D_YcGd48YvAqrl_eVFihjE7K6mxwfebu
-X-Proofpoint-ORIG-GUID: D_YcGd48YvAqrl_eVFihjE7K6mxwfebu
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hdvqx1pT5z2xt0;
+ Wed, 27 Oct 2021 01:50:02 +1100 (AEDT)
+Received: by mail-pf1-x42a.google.com with SMTP id f11so14533925pfc.12;
+ Tue, 26 Oct 2021 07:50:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:date:to:cc:subject:message-id:mime-version:content-disposition
+ :user-agent; bh=YZIm96LbqBgjV0pIqz1KZWtt3dypc/WAF3GjBy/AirE=;
+ b=C521lOPnJzqQc9Qm6CmJkWAUgVXrrVLGgRh1IuwwiB+RePruIXXMz5wOD+72YgnOT5
+ WGLt1YJcb/52YLQf5aipWz9PR6qNiK4mj6d287Eif+vxQRFzSYkg9rlU30M3vhpTsCjQ
+ fyEBGyrbqS/ISCnwacLl4VQ9Kl0nXyUN3H252uE7JAQszJ+Uew03uFlwqjOqwFREJOLD
+ 14YmSMyasT7Xb6r+hFIyVZsFevQzC7RDNGiBe1veL3rJfMyCjJuXEI6Hjx57IrA7M5xY
+ w1vtoKHtsa+tSh7IHewiF9pSMd2/CGygOTM1ms3n5UZnR6Wg5qUvAVOr70WXjsW+Kbzy
+ vyVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:date:to:cc:subject:message-id:mime-version
+ :content-disposition:user-agent;
+ bh=YZIm96LbqBgjV0pIqz1KZWtt3dypc/WAF3GjBy/AirE=;
+ b=hJuCgB/6NxTxMutPXlTVU5pdnvLz32sBTNWfdXChnMZnhjQQgRQqZC+sleQkvFTPJF
+ CDTrrX89Kmw0jk5L0zkx57lvwT58uoBFwOX6Gsg77NUbaSJG8q1W4ERugQKY9FWy038R
+ lnlZ1OU9HZfzSR5wXJylrj1rSlc02Q2K3QpMLS7w0BGNvr0zpNDOPznEgHugawFR1+tN
+ GHqaAqlodU+rWxGij4Foqw8nOpJblHskD7ZpnJquE3qMXy/yFTSr4/BVfj05tNUzqp8x
+ Vm7QVHp5EedPYo4IDIS4opiMV2fibkmfn2TEiU27txtbFrshLct02Zj6JEemIwNMCWOq
+ BggA==
+X-Gm-Message-State: AOAM531pniTVdCYIrxYUR3qCx7V2ADhYWw1OjTJ2qW/PaXwQZTcKvA/a
+ Fto6cM4uJpaQcXifsVOgjuk=
+X-Google-Smtp-Source: ABdhPJzGuv2WnfRgauy6ynsONYcB+kO9o5T9gSlxjwdToJz3l9PC7qFnCd6tDQqwyjVHfqTFWvEEtQ==
+X-Received: by 2002:a63:8541:: with SMTP id u62mr12153651pgd.248.1635259800697; 
+ Tue, 26 Oct 2021 07:50:00 -0700 (PDT)
+Received: from gmail.com ([122.178.170.40])
+ by smtp.gmail.com with ESMTPSA id v13sm19001289pgt.7.2021.10.26.07.49.57
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Tue, 26 Oct 2021 07:50:00 -0700 (PDT)
+From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
+X-Google-Original-From: Kumar Thangavel <thangavel.k@hcl.com>
+Date: Tue, 26 Oct 2021 20:19:53 +0530
+To: Samuel Mendoza-Jonas <sam@mendozajonas.com>,
+ "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH v3] Add payload to be 32-bit aligned to fix dropped packets
+Message-ID: <20211026144953.GA15611@gmail.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-10-26_02,2021-10-26_01,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- impostorscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
- malwarescore=0 mlxscore=0 bulkscore=0 adultscore=0 clxscore=1015
- mlxlogscore=999 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2110150000 definitions=main-2110260076
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,31 +79,101 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ Amithash Prasad <amithash@fb.com>, velumanit@hcl.com, patrickw3@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday October 27 at 10:00am PDT.
+Update NC-SI command handler (both standard and OEM) to take into
+account of payload paddings in allocating skb (in case of payload
+size is not 32-bit aligned).
 
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-and anything else that comes up:
+The checksum field follows payload field, without taking payload
+padding into account can cause checksum being truncated, leading to
+dropped packets.
 
-1.Changing the os-release BUILD_ID back to its default value of DATETIME 
-(recipe os-release.bb) - 
-https://lore.kernel.org/openbmc/CAH2-KxB6P2HTE5iqJMx1Gwrrq_w2-gXCZ47ZXaO_x5kZ2RAzCg@mail.gmail.com/T/#m0065dab191fe8048ea02ab3c28b31362252f7622 
-<https://lore.kernel.org/openbmc/CAH2-KxB6P2HTE5iqJMx1Gwrrq_w2-gXCZ47ZXaO_x5kZ2RAzCg@mail.gmail.com/T/#m0065dab191fe8048ea02ab3c28b31362252f7622>(background 
-reference: https://man7.org/linux/man-pages/man5/os-release.5.html 
-<https://man7.org/linux/man-pages/man5/os-release.5.html>).
+Signed-off-by: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
+Acked-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 
-Will the builder need to supply BUILD_ID to maintain a stable (aka 
-deterministic, aka reproducible) build?
+---
+  v3:
+   - Added Macro for MAX
+   - Fixed the missed semicolon
 
+  v2:
+   - Added NC-SI spec version and section
+   - Removed blank line
+   - corrected spellings
 
+  v1:
+   - Initial draft
 
+---
+ net/ncsi/ncsi-cmd.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+diff --git a/net/ncsi/ncsi-cmd.c b/net/ncsi/ncsi-cmd.c
+index ba9ae482141b..179e39105072 100644
+--- a/net/ncsi/ncsi-cmd.c
++++ b/net/ncsi/ncsi-cmd.c
+@@ -18,6 +18,8 @@
+ #include "internal.h"
+ #include "ncsi-pkt.h"
+ 
++#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
++
+ u32 ncsi_calculate_checksum(unsigned char *data, int len)
+ {
+ 	u32 checksum = 0;
+@@ -213,12 +215,16 @@ static int ncsi_cmd_handler_oem(struct sk_buff *skb,
+ {
+ 	struct ncsi_cmd_oem_pkt *cmd;
+ 	unsigned int len;
++	/* NC-SI spec DSP_0222_1.2.0, section 8.2.2.2
++	 * requires payload to be padded with 0 to
++	 * 32-bit boundary before the checksum field.
++	 * Ensure the padding bytes are accounted for in
++	 * skb allocation
++	 */
+ 
++	unsigned short payload = ALIGN(nca->payload, 4);
+ 	len = sizeof(struct ncsi_cmd_pkt_hdr) + 4;
+-	if (nca->payload < 26)
+-		len += 26;
+-	else
+-		len += nca->payload;
++	len += MAX(payload, 26);
+ 
+ 	cmd = skb_put_zero(skb, len);
+ 	memcpy(&cmd->mfr_id, nca->data, nca->payload);
+@@ -272,6 +278,7 @@ static struct ncsi_request *ncsi_alloc_command(struct ncsi_cmd_arg *nca)
+ 	struct net_device *dev = nd->dev;
+ 	int hlen = LL_RESERVED_SPACE(dev);
+ 	int tlen = dev->needed_tailroom;
++	int payload;
+ 	int len = hlen + tlen;
+ 	struct sk_buff *skb;
+ 	struct ncsi_request *nr;
+@@ -281,14 +288,14 @@ static struct ncsi_request *ncsi_alloc_command(struct ncsi_cmd_arg *nca)
+ 		return NULL;
+ 
+ 	/* NCSI command packet has 16-bytes header, payload, 4 bytes checksum.
++	 * Payload needs padding so that the checksum field following payload is
++	 * aligned to 32-bit boundary.
+ 	 * The packet needs padding if its payload is less than 26 bytes to
+ 	 * meet 64 bytes minimal ethernet frame length.
+ 	 */
+ 	len += sizeof(struct ncsi_cmd_pkt_hdr) + 4;
+-	if (nca->payload < 26)
+-		len += 26;
+-	else
+-		len += nca->payload;
++	payload = ALIGN(nca->payload, 4);
++	len += MAX(payload, 26);
+ 
+ 	/* Allocate skb */
+ 	skb = alloc_skb(len, GFP_ATOMIC);
+-- 
+2.17.1
 
-- Joseph
