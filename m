@@ -2,75 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5271E43B9C3
-	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 20:41:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F16D943BB38
+	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 21:50:11 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hf0z30yqfz2ymZ
-	for <lists+openbmc@lfdr.de>; Wed, 27 Oct 2021 05:41:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hf2V95yBwz2yb5
+	for <lists+openbmc@lfdr.de>; Wed, 27 Oct 2021 06:50:09 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=e7/zsRLg;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=aIXPeDIq;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=e7/zsRLg; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d32;
+ helo=mail-io1-xd32.google.com; envelope-from=johnwedig@google.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=aIXPeDIq; dkim-atps=neutral
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com
+ [IPv6:2607:f8b0:4864:20::d32])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hf0yc2sHxz2xT8
- for <openbmc@lists.ozlabs.org>; Wed, 27 Oct 2021 05:41:12 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id CB2D44611C;
- Tue, 26 Oct 2021 18:41:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- mime-version:content-transfer-encoding:content-type:content-type
- :content-language:accept-language:in-reply-to:references
- :message-id:date:date:subject:subject:from:from:received
- :received:received:received; s=mta-01; t=1635273662; x=
- 1637088063; bh=Ps++ViWrNfVtatIH4lcZ/kkQcDfcKuAY2rMMAVwSzC0=; b=e
- 7/zsRLgP48k3FPbhulBiruZk6C7lECCvSAwDz0CQwGsuFZg8l6Bd/EhMSTpZ8M73
- vwIIKzt1cE0onl2tc1WfsFs3KL8d71qb83SYs35x0Za+qG5s3o0XHQ/jTV8EI5pU
- JMUMs5e5nvkIhvQmLylNKJNzjD9g3oQ1Arm1BPgGFs=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wUKoWZ5H35m5; Tue, 26 Oct 2021 21:41:02 +0300 (MSK)
-Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
- [172.17.100.103])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 39DD845E49;
- Tue, 26 Oct 2021 21:41:00 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (172.17.100.104) by
- T-EXCH-03.corp.yadro.com (172.17.100.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Tue, 26 Oct 2021 21:40:58 +0300
-Received: from T-EXCH-04.corp.yadro.com ([fe80::d8c5:6f0a:3d48:18df]) by
- T-EXCH-04.corp.yadro.com ([fe80::d8c5:6f0a:3d48:18df%15]) with mapi id
- 15.01.0669.032; Tue, 26 Oct 2021 21:40:57 +0300
-From: "Alexander A. Filippov" <a.filippov@yadro.com>
-To: Milton Miller II <miltonm@us.ibm.com>
-Subject: Re:  Blinking of the paired LEDs
-Thread-Topic: Blinking of the paired LEDs
-Thread-Index: AQHXyoyTXCgpfO9IDkeDP7PfSxrOnKvlXekAgAA8qjA=
-Date: Tue, 26 Oct 2021 18:40:57 +0000
-Message-ID: <513ded71b5b541a4a06e978e5400034f@yadro.com>
-References: <2f488f5e7e1140369a3663679bddd673@yadro.com>,
- <OF324F0F03.50C28783-ON0025877A.00618017-0025877A.00627501@ibm.com>
-In-Reply-To: <OF324F0F03.50C28783-ON0025877A.00618017-0025877A.00627501@ibm.com>
-Accept-Language: ru-RU, en-US
-Content-Language: ru-RU
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [10.199.18.134]
-Content-Type: text/plain; charset="koi8-r"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hf2Tr0WPRz2xXV
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Oct 2021 06:49:49 +1100 (AEDT)
+Received: by mail-io1-xd32.google.com with SMTP id f9so725228ioo.11
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 12:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=XvJSCaZLj7xqgB2r7+NfGDppqH5yifH72a0gzqs8KWQ=;
+ b=aIXPeDIqE6eIboY4+o0Ng1+CXWL90PR9lUBNjhGR81Ej7RrOxYUNvH2gOssN3E5ejT
+ QJTY/1kxwqlwB5S/ez/epT0rOgOqIPSKyeUdb8viOJotOpRFv5D+Ho//HtnMyI4I3W9o
+ XaF77dVvtVYIZo/ucnM29TqSzMl2ArGoMLhKCLhasgq7mljONJnM8LNj5/QBCxRkwPb9
+ 2UAnWDnPSXGkiZvjT8v5Lx4fidgxxFXdxGaJ6gQKZAzjiP/G/XSbMFd8Z7DZAFQLLZsL
+ apownnb6iyKiuDUiW5QdFTweoMUr9gGwT+2oWrL/jFQIW2gLGRIc9P1XB28LtVpOoLs5
+ NL9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=XvJSCaZLj7xqgB2r7+NfGDppqH5yifH72a0gzqs8KWQ=;
+ b=oep4DBfc/fP2QQpp5q5WDigUaGa9MAEhLxx5msdzJde0/Vo7YlEMBwSfNvASxv7Efj
+ nq+vxre4rGMh/jde+OJJKXwctFVhwDRlhO8ki3lcavUDP/TqzTLwAdB7Dv5uQpeh5ndn
+ dUBMEUQvwVfgJv08IhNSI10oqx716uUAoRsNvlHKOK1wzINYXygZCIIq/1PL+LedRVox
+ chbHKfl8+zwe2W7E/M4cSSAa+EkEjKuOMYQQHoo06lalD8oPGC3pYFe0ETGyjii6Dvv3
+ xXLQp13VhEwdodI7rAS49igdK2uoGX4WXeVzo9pQqk4IEzmFd/2Q7QYEAyNs3nagluiZ
+ Eg3g==
+X-Gm-Message-State: AOAM533SaF1qBud9eerCrJMoQVClKRY1D+BvkXVwAH5eSA6qqAbKMqNV
+ MI5J0U0VHZs2Ct7U+/K7zsU1/8MSSlsTFqgqJhtN5Q==
+X-Google-Smtp-Source: ABdhPJyYaVOzhxS7H9bJlo+qudFvfSE7jqTXWm9P1PdeOkq4D79jinazjEdZAGjm821/gIKkrsvwISHQFva+tarvfBk=
+X-Received: by 2002:a05:6638:25c5:: with SMTP id
+ u5mr9431957jat.149.1635277782456; 
+ Tue, 26 Oct 2021 12:49:42 -0700 (PDT)
 MIME-Version: 1.0
+From: John Wedig <johnwedig@google.com>
+Date: Tue, 26 Oct 2021 12:49:26 -0700
+Message-ID: <CACejXs+LALZsTbVazgLjOP-K2d89sgTT0jVLpTKiFECfZdcYjQ@mail.gmail.com>
+Subject: eStoraged repo
+To: bradleyb@fuzziesquirrel.com, patrick@stwcx.xyz
+Content-Type: multipart/alternative; boundary="00000000000055a5f505cf46c706"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,30 +71,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: John Broadbent <jebr@google.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> >
-> >Does anybody have suggestions about any better solution?
->
-> I'd suggest going a level higher by defining the LED to the kernel
-> as single instance of the multi-color led class.  While the class is
-> described for full RGB controls, I believe a red green led controlled
-> by 2 gpios in one bank is well within both the LED and GPIO
-> kernel specifications (I don't know if you have chosen gpios
-> in the same bank or even if you are using gpios to control it).
->=20
->=20
-> https://github.com/openbmc/linux/blob/dev-5.10/Documentation/leds/leds-cl=
-ass-multicolor.rst
->=20
+--00000000000055a5f505cf46c706
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Brad and Patrick,
 
-Yes, I've seen this feature but couldn't get it to work with gpio-leds.
-I have concluded that gpio-leds does not support multi-led.
+Now that the eStoraged
+<https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/46573> design doc is
+reviewed and merged, can you create a new repo for this? Or what's the
+next step?
 
-The kernel driver modification seems to me a little bit more complex,
-but probably you are right, it looks like a better solution.
+By the way, thank you to everyone who helped review the doc.
 
-Thanks for your advice.
+Thank you,
+John
+
+--00000000000055a5f505cf46c706
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Brad and Patrick,<div><br></div><div>Now that the=C2=A0=
+<a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/46573" targe=
+t=3D"_blank">eStoraged</a>=C2=A0design doc is reviewed and merged, can you =
+create a new repo for this? Or what&#39;s the next=C2=A0step?</div><div><br=
+></div><div>By=C2=A0the way, thank you to everyone who helped review the=C2=
+=A0doc.</div><div><br></div><div>Thank you,</div><div>John</div></div>
+
+--00000000000055a5f505cf46c706--
