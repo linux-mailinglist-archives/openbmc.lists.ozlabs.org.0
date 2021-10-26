@@ -1,75 +1,44 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C54D743ABF5
-	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 08:00:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 298F343AC09
+	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 08:10:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hdh4r4zdlz2yMq
-	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 17:00:28 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=eWUW9+Be;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HdhJZ71zsz2ywZ
+	for <lists+openbmc@lfdr.de>; Tue, 26 Oct 2021 17:10:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62a;
- helo=mail-pl1-x62a.google.com; envelope-from=ghung.quanta@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=eWUW9+Be; dkim-atps=neutral
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com
- [IPv6:2607:f8b0:4864:20::62a])
+ smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de;
+ envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
+Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hdh4T5T76z2xXx
- for <openbmc@lists.ozlabs.org>; Tue, 26 Oct 2021 17:00:08 +1100 (AEDT)
-Received: by mail-pl1-x62a.google.com with SMTP id v20so9554741plo.7
- for <openbmc@lists.ozlabs.org>; Mon, 25 Oct 2021 23:00:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=AdglrZpO8fEMDjaUyP5YE66R8VKF/TcqN/iZf8ep3K8=;
- b=eWUW9+BeWs4V4oxBHh00L3gTo6KpDJDzt4WlGDDkck2TqYU/R043sGuOLIP+l2ieqM
- 5KkP0tLexj2bH5wQh7Ie8J3aBFBYjmUQG4EWFJfczFGEVskpy70O8jOA4CxZsFf0hJN1
- WcTsn5T9yMekcJCKNLGhvkWuUey/wzGDAX1PwU7jeSzAZCQO7ZyO7Kk9xmZkCT8iZ2vb
- NURKCzvU0L7poCsqYyY9MgpAghMA9TSiFu4nDHBe8Uz1vWPQ/DVMYpqqXfiJtHTfmed/
- ZZRN0mehyDbPJf2Fk1eufJWnx2q9jnuoiXskfnciYTAfRautLK5I+e7BfiKhrd89N9NH
- iDQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=AdglrZpO8fEMDjaUyP5YE66R8VKF/TcqN/iZf8ep3K8=;
- b=RfGLRb+PQdZbrCtypXhW4CKDDMd56+E6lJoREL5RMRv7L6dpLryN9gvtucq3GCo62+
- JZyf7MSdrw190+HWzuXai38JWE0me65wJN3UQ54zklH8uuQsByRvPaL65PpfbP3cOK7i
- gmZ3G244XNeFobDiqxBSh8f8qfD1BhCOzi9tCmVPhIqwlEpwsNOZr+lBBHvnturldcH2
- QHdKKG5UzEEOiv+G13e6SE1G/uuAfJUkOoyty3vgmQIKlfq2lxuZD3ntleZn8JQjGeOf
- Fkok0WziqqUPsqWiNe/QdhCXGV8vftaxFP8jfxKZ5If3gkNr2x2id0Y+v6WWwiJwf7xT
- u6Yg==
-X-Gm-Message-State: AOAM533Bcy+3fKGr5VSIJrbtwCB758U7HkypJgDFThpf+N+wYqSj9E9j
- RfvLzScjoUYOHs0Rk4jrnBE=
-X-Google-Smtp-Source: ABdhPJwSb2c2SPbvStFvmKYMRi49/QWlbBb/s/dbc327vlHep1rHkx1OP3PIIn1kSKjWiYIX6oMrSA==
-X-Received: by 2002:a17:90a:5992:: with SMTP id
- l18mr22369309pji.127.1635228006708; 
- Mon, 25 Oct 2021 23:00:06 -0700 (PDT)
-Received: from george-Quanta.com.com (125-228-123-29.hinet-ip.hinet.net.
- [125.228.123.29])
- by smtp.gmail.com with ESMTPSA id h4sm23449010pjm.14.2021.10.25.23.00.04
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 25 Oct 2021 23:00:06 -0700 (PDT)
-From: George Hung <ghung.quanta@gmail.com>
-X-Google-Original-From: George Hung <george.hung@quantatw.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: [PATCH dev-5.14 v1] ARM: dts: nuvoton: gbs: Change the name of the
- partitions
-Date: Tue, 26 Oct 2021 13:49:04 +0800
-Message-Id: <20211026054904.8888-1-george.hung@quantatw.com>
-X-Mailer: git-send-email 2.32.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HdhJJ2mLWz2xX6;
+ Tue, 26 Oct 2021 17:10:23 +1100 (AEDT)
+Received: from [192.168.0.2] (ip5f5aef4c.dynamic.kabel-deutschland.de
+ [95.90.239.76])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ (No client certificate requested) (Authenticated sender: pmenzel)
+ by mx.molgen.mpg.de (Postfix) with ESMTPSA id 5DC7F61E6478B;
+ Tue, 26 Oct 2021 08:10:18 +0200 (CEST)
+Message-ID: <24f55e7d-2f2d-2181-2265-7365d648be8f@molgen.mpg.de>
+Date: Tue, 26 Oct 2021 08:10:18 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [PATCH 01/10] clk: aspeed: ast2600: Porting sdhci clock source
+Content-Language: en-US
+To: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+References: <20210922103116.30652-1-chin-ting_kuo@aspeedtech.com>
+ <20210922103116.30652-2-chin-ting_kuo@aspeedtech.com>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <20210922103116.30652-2-chin-ting_kuo@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,70 +50,151 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kwliu@nuvoton.com, Fran.Hsu@quantatw.com, benjaminfair@google.com,
- wltu@google.com, openbmc@lists.ozlabs.org, brandonkim@google.com,
- Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com
+Cc: devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-aspeed@lists.ozlabs.org, BMC-SW@aspeedtech.com, sboyd@kernel.org,
+ steven_lee@aspeedtech.com, mturquette@baylibre.com, linux-mmc@vger.kernel.org,
+ adrian.hunter@intel.com, linux-kernel@vger.kernel.org, andrew@aj.id.au,
+ robh+dt@kernel.org, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Change the name of the partitions for BIOS primary and
-secondary SPI EEPROMs
+Dear Chin-Ting,
 
-Signed-off-by: George Hung <george.hung@quantatw.com>
----
- arch/arm/boot/dts/nuvoton-npcm730-gbs.dts | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-index f20c2ae4f576..6894b162b050 100644
---- a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-@@ -414,17 +414,17 @@ spi-nor@0 {
- 		spi-max-frequency = <50000000>;
- 		spi-rx-bus-width = <2>;
- 		m25p,fast-read;
--		label = "pnor";
-+		label = "bios";
- 		partitions@a0000000 {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
--			pnor-primary@0 {
--				label = "pnor-primary";
-+			bios-primary@0 {
-+				label = "bios-primary";
- 				reg = <0x0000000 0x2000000>;
- 			};
--			pnor-scratch@2000000 {
--				label = "pnor-scratch";
-+			bios-secondary@2000000 {
-+				label = "bios-secondary";
- 				reg = <0x2000000 0x2000000>;
- 			};
- 		};
-@@ -437,17 +437,17 @@ spi-nor@1 {
- 		spi-max-frequency = <50000000>;
- 		spi-rx-bus-width = <2>;
- 		m25p,fast-read;
--		label = "pnor-2";
-+		label = "bios-2";
- 		partitions@a0000000 {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
--			pnor-primary@0 {
--				label = "pnor-2-primary";
-+			bios-2-primary@0 {
-+				label = "bios-2-primary";
- 				reg = <0x0000000 0x2000000>;
- 			};
--			pnor-scratch@2000000 {
--				label = "pnor-2-scratch";
-+			bios-2-secondary@2000000 {
-+				label = "bios-2-secondary";
- 				reg = <0x2000000 0x2000000>;
- 			};
- 		};
--- 
-2.32.0
+Thank you for your patch. Some small things.
 
+Please use imperative mood in the commit messages summary [1]:
+
+clk: aspeed: ast2600: Port SDHCI clock source
+
+On 22.09.21 12:31, Chin-Ting Kuo wrote:
+> - There are two clock sources used to generate
+>    SD/SDIO clock, APLL clock and HCLK (200MHz).
+>    User can select which clock source should be used
+>    by configuring SCU310[8].
+> - The SD/SDIO clock divider selection table SCU310[30:28]
+>    is different between AST2600-A1 and AST2600-A2/A3.
+>    For AST2600-A1, 200MHz SD/SDIO clock cannot be
+>    gotten by the dividers in SCU310[30:28] if APLL
+>    is not the multiple of 200MHz and HCLK is 200MHz.
+>    For AST2600-A2/A3, a new divider, "1", is added and
+>    200MHz SD/SDIO clock can be obtained by adopting HCLK
+>    as clock source and setting SCU310[30:28] to 3b'111.
+
+Please reference the datasheet name and version, and please reflow the 
+commit message for 75 characters per line.
+
+> Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+> ---
+>   drivers/clk/clk-ast2600.c | 69 ++++++++++++++++++++++++++++++++++-----
+>   1 file changed, 61 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/clk/clk-ast2600.c b/drivers/clk/clk-ast2600.c
+> index bc3be5f3eae1..a6778c18274a 100644
+> --- a/drivers/clk/clk-ast2600.c
+> +++ b/drivers/clk/clk-ast2600.c
+> @@ -168,6 +168,30 @@ static const struct clk_div_table ast2600_div_table[] = {
+>   	{ 0 }
+>   };
+>   
+> +static const struct clk_div_table ast2600_sd_div_a1_table[] = {
+> +	{ 0x0, 2 },
+> +	{ 0x1, 4 },
+> +	{ 0x2, 6 },
+> +	{ 0x3, 8 },
+> +	{ 0x4, 10 },
+> +	{ 0x5, 12 },
+> +	{ 0x6, 14 },
+> +	{ 0x7, 16 },
+> +	{ 0 }
+> +};
+> +
+> +static const struct clk_div_table ast2600_sd_div_a2_table[] = {
+> +	{ 0x0, 2 },
+> +	{ 0x1, 4 },
+> +	{ 0x2, 6 },
+> +	{ 0x3, 8 },
+> +	{ 0x4, 10 },
+> +	{ 0x5, 12 },
+> +	{ 0x6, 14 },
+> +	{ 0x7, 1 },
+> +	{ 0 }
+> +};
+> +
+>   /* For hpll/dpll/epll/mpll */
+>   static struct clk_hw *ast2600_calc_pll(const char *name, u32 val)
+>   {
+> @@ -424,6 +448,11 @@ static const char *const emmc_extclk_parent_names[] = {
+>   	"mpll",
+>   };
+>   
+> +static const char *const sd_extclk_parent_names[] = {
+> +	"hclk",
+> +	"apll",
+> +};
+> +
+>   static const char * const vclk_parent_names[] = {
+>   	"dpll",
+>   	"d1pll",
+> @@ -523,18 +552,42 @@ static int aspeed_g6_clk_probe(struct platform_device *pdev)
+>   		return PTR_ERR(hw);
+>   	aspeed_g6_clk_data->hws[ASPEED_CLK_EMMC] = hw;
+>   
+> -	/* SD/SDIO clock divider and gate */
+> -	hw = clk_hw_register_gate(dev, "sd_extclk_gate", "hpll", 0,
+> -			scu_g6_base + ASPEED_G6_CLK_SELECTION4, 31, 0,
+> -			&aspeed_g6_clk_lock);
+> +	clk_hw_register_fixed_rate(NULL, "hclk", NULL, 0, 200000000);
+> +
+> +	regmap_read(map, 0x310, &val);
+> +	hw = clk_hw_register_mux(dev, "sd_extclk_mux",
+> +				 sd_extclk_parent_names,
+> +				 ARRAY_SIZE(sd_extclk_parent_names), 0,
+> +				 scu_g6_base + ASPEED_G6_CLK_SELECTION4, 8, 1,
+> +				 0, &aspeed_g6_clk_lock);
+>   	if (IS_ERR(hw))
+>   		return PTR_ERR(hw);
+> -	hw = clk_hw_register_divider_table(dev, "sd_extclk", "sd_extclk_gate",
+> -			0, scu_g6_base + ASPEED_G6_CLK_SELECTION4, 28, 3, 0,
+> -			ast2600_div_table,
+> -			&aspeed_g6_clk_lock);
+> +
+> +	hw = clk_hw_register_gate(dev, "sd_extclk_gate", "sd_extclk_mux",
+> +				  0, scu_g6_base + ASPEED_G6_CLK_SELECTION4,
+> +				  31, 0, &aspeed_g6_clk_lock);
+>   	if (IS_ERR(hw))
+>   		return PTR_ERR(hw);
+> +
+> +	regmap_read(map, 0x14, &val);
+> +	/* AST2600-A2/A3 clock divisor is different from AST2600-A1 */
+> +	if (((val & GENMASK(23, 16)) >> 16) >= 2) {
+> +		/* AST2600-A2/A3 */
+> +		hw = clk_hw_register_divider_table(dev, "sd_extclk", "sd_extclk_gate",
+> +					0, scu_g6_base + ASPEED_G6_CLK_SELECTION4, 28, 3, 0,
+> +					ast2600_sd_div_a2_table,
+> +					&aspeed_g6_clk_lock);
+> +		if (IS_ERR(hw))
+> +			return PTR_ERR(hw);
+> +	} else {
+> +		/* AST2600-A1 */
+> +		hw = clk_hw_register_divider_table(dev, "sd_extclk", "sd_extclk_gate",
+> +					0, scu_g6_base + ASPEED_G6_CLK_SELECTION4, 28, 3, 0,
+> +					ast2600_sd_div_a1_table,
+> +					&aspeed_g6_clk_lock);
+> +		if (IS_ERR(hw))
+> +			return PTR_ERR(hw);
+> +	}
+>   	aspeed_g6_clk_data->hws[ASPEED_CLK_SDIO] = hw;
+>   
+>   	/* MAC1/2 RMII 50MHz RCLK */
+> 
+
+Does Linux already log, if A1 or A2/A3 is detected?
+
+Should a debug message be added, what clock divisor is used?
+
+
+Kind regards,
+
+Paul
