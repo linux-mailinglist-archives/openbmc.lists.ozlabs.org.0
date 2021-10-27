@@ -1,91 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D84F43CB5F
-	for <lists+openbmc@lfdr.de>; Wed, 27 Oct 2021 15:59:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D359D43CCE9
+	for <lists+openbmc@lfdr.de>; Wed, 27 Oct 2021 17:01:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HfVgX0phPz2ymZ
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 00:59:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HfX2q5CmJz30JT
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 02:01:39 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=D0rf2K/q;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=jLfy22Nk;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=rIQVpX4U;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=bs1rTwPK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25;
- helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=D0rf2K/q; 
+ header.s=fm3 header.b=rIQVpX4U; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=jLfy22Nk; 
+ header.a=rsa-sha256 header.s=fm1 header.b=bs1rTwPK; 
  dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HfVg22WTpz2xr4
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 00:59:25 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id E584A3201D28;
- Wed, 27 Oct 2021 09:59:20 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Wed, 27 Oct 2021 09:59:21 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HfX2H706Xz2yHP
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 02:01:10 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 1D7913201DCC
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Oct 2021 11:01:07 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute3.internal (MEProxy); Wed, 27 Oct 2021 11:01:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=1WlhsCIxAjU5cFVPfqwT195DxtR
- cQ90HTb7d+kOG+5s=; b=D0rf2K/q1W0+0a9Q/ga+n3+QORKN/MIQAdwFk7wYbBk
- Vm/llLpBVsq13wQ2Rj/k9K//J4tWLQaVrysnQyV+rAC+nHAOQ9+Sk2g1jAcibsos
- rzj0kSS7u5GTv2u1GaNqHqWcrvW28YL1D7lzryp1NQPuVJzbWfKp2A2cOcBHo+se
- ZcQ1IMbUNpFAB0Ak9rkQcQY4CGQPByi5wAhmPhKasN+cGRzu3TWzpsVhuilp8XPX
- 8lJC74OB5bVHv9qSJZo1cpaY3CG3r0AgJymwCqtz+4VmEmpKXSae+mIaB/cfD+jP
- jqhx8tI3Im8UIPdHX5mvNID2oWkfLyr0ROkiaMGgDdQ==
+ date:from:to:subject:message-id:mime-version:content-type; s=
+ fm3; bh=plo6fa9QEiYJJKgTPKHdqaKiEJp/4rZwKVQl50P0dD4=; b=rIQVpX4U
+ nXQhc06UXU7ddCw6LwIZgrWrLZ2eMwy4aaxRx5miYzyGQ1t9wjSvPPwqc/b7v47N
+ 2qf++5gXX+dNa0zqftuHHcgEEF90/iQnWqH5zaICnyaXtf1NR6CuHZoSdJv1lNiV
+ tqY9qdZ0npb0gzweMZ5RIjhF8lrXDKTgmKeyeDgtV1u2+q6tZ/0a6WxDDdhreYA2
+ xMH2PfmfoG4jpgVvu7YrzXwRZIE3I11kwoCT/0n0fZNeCaPjokEgVh8NcJsJCdkE
+ S1I7Sb5SE9O771PVlEMBL8Jcvqaru/u2+fz76FUGoRWDmluTwGalvY7mV1ZOtpvD
+ 1tLE/Y7mfj7s2A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=1WlhsC
- IxAjU5cFVPfqwT195DxtRcQ90HTb7d+kOG+5s=; b=jLfy22Nk15lA98hkVqgHML
- GjJ0xPcLqL1I/XgXjgkqz6UIEx90T3TzkF7yl8w/+hg9F5zxonGtidzF6bO/Y+4I
- zFTrcaLsBOl4wWa3tnJhXrMzTtdtxnRw2C4HEXUx8n3aYFmndpsrcj5rfIRr1299
- 2sIns/qbKXZB4f4mgOojO7Z0MXpG79zrMXCQTyt4E9cTW7uHKkbKk5yolsk9KdlY
- 5cEj9fzFGQrzTC3Jg+ZMa+BxOg/bReGiLr+1FH+i/4lJvUZ/P2lCNDINLagWiXrY
- E3/RpidoK3C4EnMq2V5FQLQqj46czQJGUwcbpTh/YQ0Lkkf+/OsZAsyPvpYrsiKQ
- ==
-X-ME-Sender: <xms:OFt5YUFcjhhWFnSHkehndW4aCk7GkGqJkC3o_40Wh2GcmtNEhwM1Ug>
- <xme:OFt5YdXJYQ3nIWRTX3RT5Div64ee-V8f8GxKUS4rVBsmEYHegMN4Q2zhbKjgZtdO_
- VdbR-HNpvjJrxbyMaM>
-X-ME-Received: <xmr:OFt5YeKltEue5lvDEuyauhsRIgbcTScztbDufBd4Ifks1E2fJC6WCJNdvZLGeiwpAir_CJfVcqrC5AhiksOAfWiJSDxo7A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdegtddgieekucetufdoteggodetrfdotf
+ messagingengine.com; h=content-type:date:from:message-id
+ :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm1; bh=plo6fa9QEiYJJKgTPKHdqaKiEJp/4
+ rZwKVQl50P0dD4=; b=bs1rTwPKrjcZcx3B7on6Q3zn4rnK3etEbg1P6wX79c4Lu
+ 7KrzBF/gbCqqVhUQ2WXbnJJzEXQjqSko0bDgvtkWRUzvQJoBK+Pyr3G0uWWtcsiO
+ DgJkF0WPBbhOoNatTVArsuvIuV0EEQPlhgVbSHmLzGwGtx+rnelPVRPrc8xeIUpa
+ SRE0yyB3FCIN+rt/nCwuUuA7Yr8XQ2EO6pT0MObwNULLD7cLOaTgrWYo9HhqznnI
+ JTk6HbT5Cab9NLlpwlkf04rqRQzKt7EB1D21RuugCRpG9JTeXxpTS74l52U/Kg5R
+ f3C/lE5FlKkJqABw7zGiGD+zq7Yc6qawW2JGy8vbQ==
+X-ME-Sender: <xms:sml5YeYFAtjwxh4IP1g2aZHBim0Q3X7c_pPPmCEnN3LnfDHto_yaNQ>
+ <xme:sml5YRZDJ_bNXhCSiosOR3Xz8AXKZ8NgBkSu008gxQH7gE89FJ7DYpnAjIy4cSjoS
+ DtjVTvcsrCFFRCVsAs>
+X-ME-Received: <xmr:sml5YY-spfisKPeocVaIWtqJlhMCdFkXzZpgs6iM13iM2cE3gZr8q_935HRHAwkxcdOA0IXB99TQ4gEO4nJ-b7F1WJEz3Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdegtddgkedtucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepuddufeelueehhfelheejjefgueej
- hefhtdeludefheekudduveekieduudfggeeknecuffhomhgrihhnpehophgvnhgsmhgtqd
- hprhhojhgvtghtrdighiiinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
- rghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:OFt5YWEZL7bPRMXz0dZ_bSNxrJMe3Vqp86YI-I07sb2kUEjsfi11Bg>
- <xmx:OFt5YaW4iqIIg-vrgyEfwyhnbiz033DuZUBRgqcnsM9YfpLJRK9H2A>
- <xmx:OFt5YZN496XVzzzpYO3Kt7cvgVlm5rj7DLdZgecNnIgy2-FWu1fzog>
- <xmx:OFt5YXhVNATiDe0t77-Nknld1nFw6nOTCUxgu3eanMDhdgSGInrvRw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Oct 2021 09:59:19 -0400 (EDT)
-Date: Wed, 27 Oct 2021 08:59:18 -0500
+ gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvuffkgggtugesghdtroertddtvden
+ ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
+ gtgidrgiihiieqnecuggftrfgrthhtvghrnhepfffhhedtueehveekjefhkeefjeefvedv
+ geeuhffgveegieefuefhudeijefhueejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+ dpghhithhhuhgsrdgtohhmpdhophgvnhgsmhgtqdhprhhojhgvtghtrdighiiipdhfohhr
+ mhgrthdqtghouggvrdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+ grihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:sml5YQpfShINMBK7-o3eS6BmxiGdl6V1NbeZ4OFg-O35DB7jy1oyqg>
+ <xmx:sml5YZo3iSAbifQVtmt7UziFyAIzoWBxcGK4jBIg2xQV0NCOAkui_A>
+ <xmx:sml5YeSkP3FjmIreltyRCh0rwcxqALwY1teyPlmCUfTI2Kbne0nVhw>
+ <xmx:sml5YbGCrOm9-prm2MrlJ4N8l8fU-ZA_sy-4AxBOmCuRXHAEoUeakw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Wed, 27 Oct 2021 11:01:06 -0400 (EDT)
+Date: Wed, 27 Oct 2021 10:01:04 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: John Wedig <johnwedig@google.com>
-Subject: Re: eStoraged repo
-Message-ID: <YXlbNoBeD/yE/bg/@heinlein>
-References: <CACejXs+LALZsTbVazgLjOP-K2d89sgTT0jVLpTKiFECfZdcYjQ@mail.gmail.com>
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+Subject: Additional linting in meta-layer repotest
+Message-ID: <YXlpsDxZGsbvgHpQ@heinlein>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="PPzHA1opnwhxtjEQ"
+ protocol="application/pgp-signature"; boundary="qQa5MVeMJePV5OlP"
 Content-Disposition: inline
-In-Reply-To: <CACejXs+LALZsTbVazgLjOP-K2d89sgTT0jVLpTKiFECfZdcYjQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,61 +95,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: John Broadbent <jebr@google.com>, bradleyb@fuzziesquirrel.com,
- openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---PPzHA1opnwhxtjEQ
+--qQa5MVeMJePV5OlP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 26, 2021 at 12:49:26PM -0700, John Wedig wrote:
+Hello,
 
-Hello John,
+Ed recently added a test-phase called 'repotest'[1,2] in the openbmc/openbmc
+repository that allows us to perform sanity checking on commits at that lev=
+el
+beyond a simple "does this compile".  The initial checking he added was to
+ensure that no new patches are added to the tree (in violation of our meta-=
+layer
+coding guidelines).
 
-> Now that the eStoraged
-> <https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/46573> design doc is
-> reviewed and merged, can you create a new repo for this? Or what's the
-> next step?
+I'm adding[3] additional capabilities to this script to enable linting in t=
+he
+repository.  This will run `shellcheck` for shell scripts and `eslint` for =
+JSON
+(Some might be unaware that Manoj added JSON linting with `eslint` as part =
+of
+our normal unit-test / formatting scripts[4] as well).  Once this is in pla=
+ce
+new commits will fail CI if they add new shellscripts that violate `shellch=
+eck`
+rules or JSON with invalid parsing.
 
-Yep, now that we have an agreed-to design I think it is reasonable to get a=
- repo
-made for it.  Do you have someone in mind that could be the initial maintai=
-ner
-of it?  Since you're new to the project, I'd like to have someone shadow you
-initially, with the intention that after the initial bulk of development is=
- done
-you'd take over as the primary maintainer.
+Currently, there is quite an extensive list of 'exempted' scripts (~100) wh=
+ich
+already fail `shellcheck` rules.  It is quite likely that some of these are
+real bugs, so I would strongly urge if you are the maintainer of one of the
+meta-layers holding an 'exempted' script that you look over the `shellcheck`
+failures.  Hopefully over the next few months we will greatly reduce the nu=
+mber
+of scripts in this exemption list by cleaning up the issues.
 
-You could start with someone at Google who has been maintainer on a few
-repositories already or someone from the TOF (or it doesn't have to be some=
-one
-at Google if there is interest from someone else in the community).
-
+1. https://lore.kernel.org/openbmc/CAH2-KxDe6hR1V-Lz1k8cdD11jEquy4UhR4LfLhg=
+37E5EG42EJg@mail.gmail.com/
+2. https://github.com/openbmc/openbmc/blob/master/meta-phosphor/scripts/run=
+-repotest
+3. https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/48349
+4. https://github.com/openbmc/openbmc-build-scripts/blob/master/scripts/for=
+mat-code.sh#L31
 --=20
 Patrick Williams
 
---PPzHA1opnwhxtjEQ
+--qQa5MVeMJePV5OlP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmF5WzQACgkQqwNHzC0A
-wRlc9g/+NHebhTaDsVsI1U+c52o0R+Lf1daonWnovGcesA/fOl7R2osNesQMXViX
-Has5l4I2g/dkekznoL6mqFHQ2Cf/tejEglRbj3dmq7LGjmBpXbSImVq78uZArP3+
-7ZLHpog1EnSmwXuDUJ3JaHCrVbcxGuui9k4E+xsbHfbW+q5+07glFsro552pjqDo
-XyL/bzMNemiETiueceeKXDXF4Iys+pLeCz+sR0P6JYVp//z8PkhUCXs6yMvif624
-fveeou4Zxi6TmqR5vOio0Ryd0/FkcFL4tVzXZwgxwrzm5/vbw2+YL/CrVNaFB3db
-6u7DD+HFfWb2q/HxrcgzvTj6QKaE0RKbdcy+FLEHR408Xvk8rpJMbVMeSiiuJq6M
-LRJ/Mv4ketcYt7nm/Gz5lX+4LDxYwJQ8T5Rb2DFZP4/Bdre1SWsEVSZVND29hBBt
-LIcKUYL15m0ok3tClNJL6LN65n2RSVkPf3yDvVciIyoZ+HVHhL0rBpI7eQG57d++
-h50/wgqV2oL83I4/G/SCDxvNyG76X/meQVrRzjt/nSrjg+eo9HWI/Lp01qcAm07u
-pgBJ6D9G7MiPFtvpZVYuSc4N4tVM1y82+nGQ28qf1Zi1C9NDu6+vz9bB3xFSlIpy
-0VmKFAnEl8DK8EvbNEDxiX6YD1vCiZNkzr8mSuXumer10enZuHs=
-=MpAb
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmF5aa4ACgkQqwNHzC0A
+wRmAMRAAlq3VlRqk7UJQQh2uRrUnSyaF5FcBOOSYvjvLW8AyStl/J0102PWr+OpX
+6Yl1Py9WGjyc2HnPN5fYmKwA/wa+y19spndorh8iKgkzSR7UN7y3r0S+F2Ld/WNE
+sClOuLEA8ZNbesLotUBI5+NUg1gmtU2brjrgEixk/rhybsKkLubH+jH9tCbXrecn
+K+IJkG0RxDCIAUgSfZZvZq4IY0a/+78xuVCH81va+pv8HgsCWeWfps1Ib7POZWOC
+Q/4t7Fzy/aZZNfPMPdp9JH0EWcMEfiT1VG7GydlEK8Rz3sp47r7enp0zdP+T4h0R
+pcQGDxPoMvLCJ+hLs4fs4i1iJWgc7nJcbbIrcHe+fFo4irVoXvMGl9yJUsXVcohp
+EzP939mCwqG3dGi4mj+Du62KNUffbSfsjO1cprgGuHbx8rx/fl63MdGyRfEIMH1+
+dgz3u3YswylBTJTRIispbuysZnX/HpuIwyscWsi7pbM5pKvEj1nQKUHxVuZGs49L
+zVpCX4CviHgs59amv4EGiET0VKYUmu0TV1cFlIojafKXpq1nqYAFCBDMYe5ZDH+6
+qfYgF4YHdLgC8ORx572e/DE3Y256GlN99SMeXDWVFgdhxrPAAi5N5LDwkv81L0Kc
+G/HqjePToTBqACAoRZZd5tSN9Pe48UKAKlefrCuQgl6lF5EIbGQ=
+=w96E
 -----END PGP SIGNATURE-----
 
---PPzHA1opnwhxtjEQ--
+--qQa5MVeMJePV5OlP--
