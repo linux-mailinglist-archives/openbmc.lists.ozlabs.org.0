@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 220DC43D605
-	for <lists+openbmc@lfdr.de>; Wed, 27 Oct 2021 23:46:42 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9079543D608
+	for <lists+openbmc@lfdr.de>; Wed, 27 Oct 2021 23:51:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hfj280FgLz3bmx
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 08:46:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hfj7J2qJSz3c50
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 08:51:08 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=buh8cyCo;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=N48eE68x;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=bWF23xRV;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=YDTH+Jrj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,74 +19,77 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=buh8cyCo; 
+ header.s=fm3 header.b=bWF23xRV; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=N48eE68x; 
+ header.a=rsa-sha256 header.s=fm1 header.b=YDTH+Jrj; 
  dkim-atps=neutral
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
  [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hfj1d3vVRz3bWq
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 08:46:12 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 3F2085C008F;
- Wed, 27 Oct 2021 17:46:09 -0400 (EDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hfj6s14KNz30Pj
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 08:50:45 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id CD8B05C00B3;
+ Wed, 27 Oct 2021 17:50:42 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Wed, 27 Oct 2021 17:46:09 -0400
+ by compute2.internal (MEProxy); Wed, 27 Oct 2021 17:50:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=d7bOf7Wth91GQpQloAfVUGAAl48
- GegLgMNWZcyu95Ig=; b=buh8cyCodV9L0Jr3/FV/lfcygk6s6Cz2y/1fRIzLdka
- k+HJH7P/4MGIDmeqgh1BFnR211kFu4NVdP6v0bdWLLbeNo71i8U/qEb6miSRsyXH
- lC7efON/ivBxWbCRTrzWleuQWd2D9LSm0E0TrhznsOU1EPvuRbaE68SK1BrURLDU
- 6kqYD36PoUA2c2XqMqYPYyts6IpMeSn19uEID6ZBuJzQzLAxpU92ayQkI6EZ1CeA
- NMoI6poAP8V62CKvn3TQUB20t4U9o/8S3rQMNRTQInAhDkChpHA8QYsiou3OORLm
- J76NOLB+6DXy+1XDbdRhxHXdusHznRI3rsSxoMcFbdA==
+ :content-type:in-reply-to; s=fm3; bh=1sAbElsdrkgQYfIA5Z15uSjuP/k
+ DHIqG2KhuvfHbPDU=; b=bWF23xRVfIrJ9U+E/Mm4uA7qE/3AX8K1VXHc2FxsP81
+ neF9pwXLtYEGbgPEzb0L+uG1FsYiF9xbaijVg8n8VEemx2j5U3iMQIINXUTfAb1S
+ qqnIJRNKCA/FX35eKBScWGtSWlSDOcIu+Kcn9kve42s1nof9SVYP18iw/5YjiAd4
+ YBhLGrFHS23dLoJjVtsxle0TqPwBpOZlbuCjUYmdUVcDjo7kJFoAV8h9taoMqtel
+ iRn3/wOJjbGG2aqG6E3ScbHj/Sg3KD/bFZpfoD7P3x2JqOp6m2ASgrNq+2hT5Y+n
+ 2kG1exHyL0dfcFwqRIfX3BLDaFwClJKu/OifZqSYxQg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=d7bOf7
- Wth91GQpQloAfVUGAAl48GegLgMNWZcyu95Ig=; b=N48eE68xl+Ew4V2vbPx+Cu
- hkokb/bFylZy29su4laciau7brFf+cjvqZdpq6y9tISwDd2SL1s7BTxm3ga2ZP5U
- K807OYJPRXE5GTjNdoB3iBUT4vqoEGMuTjIXXwrA7hebaQSSBk71INrKy670FRjJ
- 5vywvdR77YktpXE3wt1y6gofE/Cs0bW9Eoky5NoVBoCukMoGzxvL9auiiQgClKkU
- zw7Cc7gEfujADqvKlvbsl5pXviKb33VxSWhiFk+ntMBevB29QrrALV1Be5kDDn88
- 0znQIkuxk5GlbnBw1Ae+qveXbGeV4GQOUs7dLqRzPP6hNrXMVKWGOjbcCUCPyUUw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=1sAbEl
+ sdrkgQYfIA5Z15uSjuP/kDHIqG2KhuvfHbPDU=; b=YDTH+Jrj+5Fhz9Tb0un3iD
+ Akz0Eg3eqIGx4DOAH6Lt5H1vl19am1AMCDPrh0ClKdV9qYZaeGhZ3Ly0n5smTJ9p
+ H/dUZ0kmnug9yPpDg9g9sgTtcSrOcjAhWZkOnx6NIoKzfiYRV+rA2+TfPzTTatg1
+ NRmPAikN+pDMvBGF5I7C6zJU18GkOcAAse2LCWc3qM3LAL2hoApSAPUQBN8cO256
+ UKQfGTXP8oLPBbAo1XX+/vIvdTy6BkjwHnO1G+jD4Fp3U1mkPQAn8sRLK0f1UM30
+ 9Q8vCTxJ/xuDBA1FKFNFt30MMY9cviVsK+8whAR2NE8cnzxzsfVqnIl3wcfwIlLg
  ==
-X-ME-Sender: <xms:oMh5YQAquRTVykaFog8Uh9L-RkP6uS2agpZ6nprbiND5Zcnr-TznPg>
- <xme:oMh5YSj-iC7AhzH5LGAppvGN6fjPWxDjb0a0F1L_ROGxSuzktSe3FV79gqRIi6WsK
- HkVGuo-6lqdzw7o_ck>
-X-ME-Received: <xmr:oMh5YTl_7NgiXH77tZ-wkv_qnpoH3_uQE0_KWvfCEerJdChGGZHMzUk9O-AOEkTiTPDN8AaW1B_37-JVsx_APd2HqHQBe6LYxJR7QsDZUlohhg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdegtddguddutdcutefuodetggdotefrod
+X-ME-Sender: <xms:ssl5YQdd7Xh-56jA9bu8aNzfvBrUsSkelnLcX0xvOfHb3r2UgfSU4g>
+ <xme:ssl5YSMCD9tnPdv9BJY5dcN5AuRz7Y0lbOgF_dpJa6o5YUlxGM5EkiAftfVGT8yo3
+ o6JEIauWuHAp-gQkpE>
+X-ME-Received: <xmr:ssl5YRiz8woNmn-ZnMGDmpDrNAfi8tDGIVVy_JvIq6p-vZlGKj5SsBErFCfmQWbILaTmIQNPXZK4tKrxIugiulZZzw2icuBZEIUiyHwWlptcnA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdegtddgudeiudcutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
  necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enfghrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
+ enfghrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
  tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
- hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfdu
- hfegfefgtdehhfektdelffevkefgueffhedtieenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:oMh5YWzNbtL-IQRuzrqvIdMt33l8X2-plOySlrqkvzUlISazzv672w>
- <xmx:oMh5YVRDkGkCX79rFBNt3QqvEFJZ6Zir_EqMW7w_YzpBwl1RvIdAEA>
- <xmx:oMh5YRa_QPl1oK1MBb8Pm1XCyLBm0xPyqCOrVVbtZCx4qgMXZNbNhA>
- <xmx:och5YW7qCswBeDP3UL8R2eLhpiTnIt62L2G_vu9HuAQvtTbl_krG7A>
+ hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeduudefleeuhefhleehjeejgfeu
+ jeehhfdtledufeehkeduudevkeeiuddugfegkeenucffohhmrghinhepohhpvghnsghmtg
+ dqphhrohhjvggtthdrgiihiienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+ mhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:ssl5YV89rsus03PbP4HZ-4_4VhwXX6nHT4RzVOisEHC5lLHacw6axQ>
+ <xmx:ssl5Ycs_K3ZdliB9X4xM5ANtVAl3TiGaxZy9B00E3xzKdSLs4_JQqA>
+ <xmx:ssl5YcEnxYXrHWrvmBNMwkgNQdDPY8cceDPhCCsqr2PtEDAZ8Of_NQ>
+ <xmx:ssl5YYJkqDV4RlHkNzLCpMHUarOT5FwSAutuKzazyp0qqo1ErbRkaA>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Oct 2021 17:46:08 -0400 (EDT)
-Date: Wed, 27 Oct 2021 16:46:07 -0500
+ 27 Oct 2021 17:50:41 -0400 (EDT)
+Date: Wed, 27 Oct 2021 16:50:40 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Re: Security Working Group - Wednesday October 27 - results
-Message-ID: <YXnInyPT3dDck0Mg@heinlein>
-References: <d0b57999-f452-5239-ccd1-3823fc551a30@linux.ibm.com>
- <58aa5187-9b0a-7c65-f058-79f749287bb1@linux.ibm.com>
- <YXm3KZ34arM0avFK@heinlein>
+To: Adriana Kobylak <anoo@linux.ibm.com>
+Subject: Re: [External] Changing the os-release BUILD_ID back to its default
+ value of DATETIME
+Message-ID: <YXnJsAbwy6AseLct@heinlein>
+References: <E9902E4C-0786-400D-8920-9D1FDCBE001F@linux.ibm.com>
+ <CAGm54UF4nADhYJPWjgr-ie3z2vGzW6aBvdsyQpJ4dsddgA3FLQ@mail.gmail.com>
+ <CAPnigKnnvoiQyroWRyFc4Ps+AZ4XNyr5VsmuDwCOh=2YvHEE0g@mail.gmail.com>
+ <80FD1EF5-EA89-4FE1-8075-B07E9122FF8E@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="HNOUvCOXjUzYmaLA"
+ protocol="application/pgp-signature"; boundary="Uh+HHm87xErqZtex"
 Content-Disposition: inline
-In-Reply-To: <YXm3KZ34arM0avFK@heinlein>
+In-Reply-To: <80FD1EF5-EA89-4FE1-8075-B07E9122FF8E@linux.ibm.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,88 +101,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: edtanous@google.com, =?utf-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ William Kennington <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---HNOUvCOXjUzYmaLA
+--Uh+HHm87xErqZtex
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 27, 2021 at 03:31:37PM -0500, Patrick Williams wrote:
-> On Wed, Oct 27, 2021 at 02:11:15PM -0500, Joseph Reynolds wrote:
-> > On 10/26/21 8:12 AM, Joseph Reynolds wrote:
-> =20
-> > 1 FYA: Changing the os-release BUILD_ID back to its default value of=20
-=2E..
-> > DISCUSSION:
+On Mon, Oct 25, 2021 at 03:17:06PM -0500, Adriana Kobylak wrote:
+> Thanks everybody. Changes up for review:
+>=20
+> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/48204 <https://ger=
+rit.openbmc-project.xyz/c/openbmc/openbmc/+/48204>
+> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/48205 <https://ger=
+rit.openbmc-project.xyz/c/openbmc/openbmc/+/48205>
+>=20
+>=20
+> > On Oct 12, 2021, at 4:45 AM, William Kennington <wak@google.com> wrote:
 > >=20
-> > This was resolved: the project defaults are not being changed.
+> > Personally I would rather have deterministic builds and don't like
+> > arbitrary build timestamp injection into images. But we can announce
+> > the plan to change this behavior and adjust build processes
+> > accordingly.
 >=20
-> Can we get some more details on this decision and a reply to the original=
- ML
-> post?  It seemed like almost everyone was on-board with the initial propo=
-sal and
-> then a separate meeting with limited minutes was held which came to a dif=
-ferent
-> conclusion.  This is out of sync.
+> Sounds like a plan. To keep the current behavior, I tested that adding a =
+os-release.bbappend with BUILD_ID set to the current git command would buil=
+d the image with the value as it is today.
 
-I missed Adriana's follow up and thus I also misunderstood what you wrote h=
-ere.
-I think what you intended (please correct me) to communicate was:
+I don't actually have very strong opinions on this and didn't realize right=
+ away
+that this meant we _weren't_ making a change.  I avoided weighing in before=
+ to
+just be another "+1".
 
-    "It appears that the direction of this is now to not make the change, so
-    there is nothing for us to discuss."
+Shouldn't we attempt to match what upstream Yocto does?  Doesn't doing (mos=
+tly)
+nothing cause us to not fix the usability issue that keeps getting raised a=
+bout
+the code-update flow not accepting a simple rebuild?
 
-> I don't understand how "deterministic builds" is directly related to secu=
-rity
-> and I'd be immensely surprised if you could actually, today, build two im=
-ages
-> from the exact same git commit and end up with a byte-wise identical buil=
-d as
-> it is.
-
-I still stand by this part.  Can someone educate me on how deterministic bu=
-ilds
-is related to security?  And, are deterministic builds already a stated sec=
-urity
-goal for us?
-
-> If someone seriously wants a reproducible build on their system they can =
-easily
-> override this BUILD_ID value but it seems odd to me that:
->=20
->     1. We would choose to purposefully deviate from what upstream Yocto d=
-oes.
->     2. We would punt on the usability issue that originally pushed us down
->        pursuing any change here.
-
-I'll move this to the original thread.
-
+I don't believe that you can currently make a 100% reproducible build as it=
+ is,
+so I don't see this as a hard requirement to deviate from Yocto and if some=
+one
+does want to avoid a changing BUILD_ID we already give them the tools for i=
+t.
 
 --=20
 Patrick Williams
 
---HNOUvCOXjUzYmaLA
+--Uh+HHm87xErqZtex
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmF5yJ0ACgkQqwNHzC0A
-wRmABg//dtRVqeno5G8DORqiisEvXdw6FtlUVWK8PpBavpfcMzMHtXAUDA5SsZrQ
-WqojR4ufnH6iHB8t6sGxtW720cqdr3nJ+CQajC3+jghQhuyiecPOjC2FoNlNS6Kr
-/3iaCsZYRkLJqY1ZAGZfCKrGSrRxS8FWLfWatljyo6LRKKe3nyit3vgNk2lzhFNK
-n9rbqeZIxydfZBeHtRzoD7akby4eZi4wVlKvzlrYneC8h6u6Dwa75dfrPtowlvOr
-RjlyRqLh6wSn3eA+TljeM9n3fVy7qpzb0IXaQZTgb/XTcF79PtdFVJJUsMR1RPnZ
-+p0hp+nLNbUbTi5NjwhmaXxBbFzgqxYjl8aRs8BioJLz8RAISM4W1TNY21FGkqjk
-/+axn5anP1YoQVK8TAa3pU0ZB+OSrQLUpd24oR1xVJAO+7fMJgu/+x6BcikMwSj8
-t0kH5UvKRlW6bEKg+lI8NZh8TGO5oOhfftSYesUiRudG8xni/NRcobKeyJKJRMnt
-Zu0WQaxCxubRAJYJ4N6T9FC0ATkb9rDMWD1wKGM8Pw3nQdQz+gjSNQsYBu3hs1/r
-533lqxEU9HbhlyvziM7rjIxly/ElrbMnuTdyHPvmPb3ZyAzA0jw/rnDMGKhz086X
-Qca37MlLnk5WJBSw96kkDXacmxp+4XyhXd3cMTM1NFTCRGrhkH4=
-=pOL7
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmF5ybAACgkQqwNHzC0A
+wRnNRg//UfPY64nww13jkB80yuGDQx9IeknN4O5BclEj9abMeT+0OXP49DlWQKXn
+oANBKskpyA6bPk2UXxspFtWfvmBkqNzAzE4otAjlfWrVMeSO6z9zfvCbzKBj5xOU
+QhV1Q25R9tXaJlEDuKepa4mHNNOcBt3fEMSKZkWSIhLUvuF4sDg2BsYgvbu++cD0
+7zY0OI7L5oD7mhrbW19Jy/Zlw0eAaCo3nQTPecvsD2FsnN72QqLn6JKs0bC7EtSP
+9KuoP8tY04wBaaZ8veWaNSHe3ic3OETdLI4r96weVUZaNkw1bTAZPk1460ciQfxb
+Xceb9kV1iy8KCOm9dwOqgISzGTI0Oj0Q4JN47cJmazHfzrd+p5Zv814omeqdW57O
+1ArPnD0utotcJSZuHHtTnffH2qhECPNiJBhqtR9VS27NLfnaRc11hO1/4rfZDMnU
+cbcChSonO2hE5RKCw5ORfy1lSBmeUzKU8/LwYgQ4wCANuGPEtiltEftyB9Iohr9k
+ESZsSm3z9aukzniJLRhCLuN2PPwYE2xmPeHjTbzdGVJaxzHSyBWA7LqYD1/4mhvJ
+kt239uonSMUJATySspugTlqFeht2wN3YyoMuqc39KtNYX9IiEsuhAOO9JQp8wDow
+iTsDUKKoXC7k/gp6TKpa48872jwuE08pmUTp0ew20lP3yWNvAS0=
+=NaKu
 -----END PGP SIGNATURE-----
 
---HNOUvCOXjUzYmaLA--
+--Uh+HHm87xErqZtex--
