@@ -1,64 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF77643E3A0
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:26:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1A1043E3A2
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:27:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7Cn5TTbz2ybB
-	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:26:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7DV3tlBz30Pj
+	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:27:06 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=A6WnNrgN;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=qXON4UmK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42c;
- helo=mail-wr1-x42c.google.com; envelope-from=lukas.bulwahn@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::336;
+ helo=mail-wm1-x336.google.com; envelope-from=lukas.bulwahn@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=A6WnNrgN; dkim-atps=neutral
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com
- [IPv6:2a00:1450:4864:20::42c])
+ header.s=20210112 header.b=qXON4UmK; dkim-atps=neutral
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com
+ [IPv6:2a00:1450:4864:20::336])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg74b6XvCz3bWC
- for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:20:15 +1100 (AEDT)
-Received: by mail-wr1-x42c.google.com with SMTP id s13so3340341wrb.3
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:20:15 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg74g1QLfz3bjT
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:20:18 +1100 (AEDT)
+Received: by mail-wm1-x336.google.com with SMTP id
+ 67-20020a1c1946000000b0030d4c90fa87so5213645wmz.2
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=/Nx/FXuZHmzN2GOFSI5UkCtNDgB6jstgst0HpHC3bhg=;
- b=A6WnNrgNuUzR2IdplG9xU5Gda69cXlfGiU1iEpuut95+ObDoQu1P91FrbNMRKlmqZa
- OE1Nuc1KwLULHd2xdii8m0/7wQoIC27d/Z4SpOeEosVI7QfrR9PaO6bnH0ZNVySIxccR
- 9I70Iyl98aAfQZ4NRYpvp8TQ/ooZaDTsb5xfmQ3/7B8HKq7gVupxZAgvGtzZZGrw8zkf
- Fb7VblpEaH3Ydc7Wm3zYsqDHt5nAQ0r7VgKWFdIrJ8LGr9oBLjW4kclFyV2mePgpQ4+q
- xXtNmYzt+EEBS4miFg4Q/gJqhzs7yLP1pexOC2O44eqyGMdROaTEAGRJ2jNP6XLuc70M
- jvkA==
+ bh=h9UTPRxPPIM85WFH39byVhI0Wop1oatVXrCc+qxiWlw=;
+ b=qXON4UmKXQcP3NyhCCpnEw7n2l5yB9V8mlAogARYrAB3yclwFzmLFQ/ndWp9T6CMTY
+ ztl8rrU+HBOIlZwo9wUdrS7gRpDB23pgvHskYu5INA9Ne/uoohF4H0KKhxVTd39MLxgb
+ OCuLdYH9tL6kVMbEYs1qWb81bC2bMbLAr9H9d3ZmVzAZ6U65Y6gKTVTfSaQJHWvZf8E8
+ 8h7WN22vOD1L2sxDA4eAQzexsiB6soe4/k2tPxVqWue76hG1CDfRA6Y1PSYhmoQkpyNl
+ Q6lVcW6L55qvTE6mH/cxuaWQXREKcMuLHSY+c11NNIob5it5e7F5Cqp8jY3sl+HqszXb
+ UC/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=/Nx/FXuZHmzN2GOFSI5UkCtNDgB6jstgst0HpHC3bhg=;
- b=VlZ41o+tP6I2kuO6+Zdj1PyANF5xHDPjdiJ9rVnNGOL8wsiu/OXR+plbc/PUUbsn4+
- ojTe0WsGaiUhfS9F+Oh9PmSQhM0iL//JvJ0FUI3zekpitYAzxK5zvtWn9GA6KWp7IZRU
- kTsUJP8nNaJ0ta6sCNEuQ6WhhHUV14+uLMf2i6k17oZsz3fUSY8wIY7SfvOR6wCr/JOa
- TnmmI1fbnYJjlX1xg3PU0WkI8uoOI3hOyxem/99kf717wUWJP6JdOkH4R1XdFuedoWWt
- bAheGswhmQRjaWLuRqmOH791cctH0NY0EoM9wLY96vYhgX7u8HB65XO5ip/WpVG/ZksC
- ifoQ==
-X-Gm-Message-State: AOAM533e0vEQOHh7SukX/Zf0x6uHtd/h2Uq6RBX2UAVYoo6f7ZZs8jK2
- cudMKx+3J+v9eF+dksbeTOI=
-X-Google-Smtp-Source: ABdhPJzKYyvK9ywN7FVlYbhzQ1DkLGKtk+llarpayFZ0BWuSbPQgbsxmQR6e6DL+lCwMCTPH0zsAJA==
-X-Received: by 2002:a5d:69ce:: with SMTP id s14mr4967054wrw.25.1635430812973; 
- Thu, 28 Oct 2021 07:20:12 -0700 (PDT)
+ bh=h9UTPRxPPIM85WFH39byVhI0Wop1oatVXrCc+qxiWlw=;
+ b=gswQ6OMnLuWFIaymYWtBj9NB0C0Kf04huIz5EYf/EjFggBmof9uqLIBadNiOYMYp5R
+ AU9aqlKpoykxM6Suk2kh4Zn2/tBcIwreQKfrkAzs+tAHhfxe0JYS790SAaAJaEGiNRVu
+ p6Qz7A/Vgm0Q/8JRcyrWe/PvdpmCWWGYaKy0MnLz10yW3aACfX0ltpWBl9m8QP+Ezlan
+ IyTyhuS00Qh3IFnYVPCTk1oHv31OjN6YFpoGeyfIUlArTDXYyC9RycpiArDBgvEsLY3n
+ BtsAnERXUfUbLeW7/nvhFrK2vCm43mVKz7MCFzsEWsOZvpY9XfGbGXxrlKzHgv+KVLh/
+ iKGA==
+X-Gm-Message-State: AOAM533sb1ilTguUa+rxqwL2keRlTL7gFRYvfPwrz6kp70UpCiIQnLVG
+ pR+6DWDKpptMQYXVTeZzLoc=
+X-Google-Smtp-Source: ABdhPJwTApopXsu78VNhZKnyHSCssVCqkMXqxaLoxvpVRe0ZrqH/I2RaRROEgoJ+KRMawHk/qDAl1w==
+X-Received: by 2002:a7b:c5d8:: with SMTP id n24mr4958277wmk.51.1635430815273; 
+ Thu, 28 Oct 2021 07:20:15 -0700 (PDT)
 Received: from localhost.localdomain (i5C74E249.versanet.de. [92.116.226.73])
  by smtp.gmail.com with ESMTPSA id
- m2sm6284546wml.15.2021.10.28.07.20.11
+ m2sm6284546wml.15.2021.10.28.07.20.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Oct 2021 07:20:12 -0700 (PDT)
+ Thu, 28 Oct 2021 07:20:14 -0700 (PDT)
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 To: Russell King <linux@armlinux.org.uk>, Shawn Guo <shawnguo@kernel.org>,
  Sascha Hauer <s.hauer@pengutronix.de>,
@@ -71,10 +72,10 @@ To: Russell King <linux@armlinux.org.uk>, Shawn Guo <shawnguo@kernel.org>,
  Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>,
  Dinh Nguyen <dinguyen@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
  linux-arm-kernel@lists.infradead.org, openbmc@lists.ozlabs.org
-Subject: [PATCH 09/13] arm: milbeaut: remove select of non-existing
- PINCTRL_MILBEAUT
-Date: Thu, 28 Oct 2021 16:19:34 +0200
-Message-Id: <20211028141938.3530-10-lukas.bulwahn@gmail.com>
+Subject: [PATCH 10/13] arm: nomadik: drop selecting obsolete
+ CLKSRC_NOMADIK_MTU_SCHED_CLOCK
+Date: Thu, 28 Oct 2021 16:19:35 +0200
+Message-Id: <20211028141938.3530-11-lukas.bulwahn@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
 References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
@@ -96,44 +97,34 @@ Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>, kernel-janitors@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The patch series "Add basic support for Socionext Milbeaut M10V SoC" (see
-Link) introduced the config ARCH_MILBEAUT_M10V "Milbeaut SC2000/M10V
-platform" in ./arch/arm/mach-milbeaut/ and intended to introduce timer,
-clock, pinctrl and serial controller drivers.
+Commit 85b6fcadcf66 ("clocksource/drivers/ux500: Drop Ux500 custom
+SCHED_CLOCK") removes a sched_clock workaround and its corresponding
+config CLKSRC_NOMADIK_MTU_SCHED_CLOCK. Since then, selecting
+CLKSRC_NOMADIK_MTU_SCHED_CLOCK in ./arch/arm/mach-nomadik/Kconfig has no
+effect and ./scripts/checkkconfigsymbols.py warns:
 
-However, during patch submission in March 2019, the introduction of the
-milbeaut pinctrl driver was dropped from v2 to v3 of the patch series.
-Since then, there was no further patch series to add this pinctrl driver
-later on.
+CLKSRC_NOMADIK_MTU_SCHED_CLOCK
+Referencing files: arch/arm/mach-nomadik/Kconfig
 
-Hence, selecting PINCTRL_MILBEAUT in config is simply dangling and
-referring to a non-existing config symbols.
-Fortunately, ./scripts/checkkconfigsymbols.py warns:
-
-PINCTRL_MILBEAUT
-Referencing files: arch/arm/mach-milbeaut/Kconfig
-
-Remove this select of the non-existing PINCTRL_MILBEAUT for now.
-
-Link: https://lore.kernel.org/linux-arm-kernel/1551243056-10521-1-git-send-email-sugaya.taichi@socionext.com/
+Simply drop selecting the obsolete CLKSRC_NOMADIK_MTU_SCHED_CLOCK.
 
 Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 ---
- arch/arm/mach-milbeaut/Kconfig | 1 -
+ arch/arm/mach-nomadik/Kconfig | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm/mach-milbeaut/Kconfig b/arch/arm/mach-milbeaut/Kconfig
-index 6a576fd8521e..f9d1006f9442 100644
---- a/arch/arm/mach-milbeaut/Kconfig
-+++ b/arch/arm/mach-milbeaut/Kconfig
-@@ -13,7 +13,6 @@ config ARCH_MILBEAUT_M10V
- 	select ARM_ARCH_TIMER
- 	select MILBEAUT_TIMER
- 	select PINCTRL
--	select PINCTRL_MILBEAUT
- 	help
- 	  Support for Socionext's MILBEAUT M10V based systems
- 
+diff --git a/arch/arm/mach-nomadik/Kconfig b/arch/arm/mach-nomadik/Kconfig
+index e98429be2b18..ab52b1abc453 100644
+--- a/arch/arm/mach-nomadik/Kconfig
++++ b/arch/arm/mach-nomadik/Kconfig
+@@ -5,7 +5,6 @@ menuconfig ARCH_NOMADIK
+ 	select ARM_AMBA
+ 	select ARM_VIC
+ 	select CLKSRC_NOMADIK_MTU
+-	select CLKSRC_NOMADIK_MTU_SCHED_CLOCK
+ 	select CPU_ARM926T
+ 	select GPIOLIB
+ 	select MFD_SYSCON
 -- 
 2.26.2
 
