@@ -1,65 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64E5643E42B
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:47:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72E1543E424
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:47:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7hK1s6rz2xZg
-	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:47:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7gj2nwzz2ybB
+	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:47:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=arndb.de
- (client-ip=212.227.126.187; helo=mout.kundenserver.de;
+ (client-ip=212.227.126.131; helo=mout.kundenserver.de;
  envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.187])
+X-Greylist: delayed 276 seconds by postgrey-1.36 at boromir;
+ Fri, 29 Oct 2021 01:46:58 AEDT
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.131])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7h00ldjz2xKY
- for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:47:27 +1100 (AEDT)
-Received: from mail-wm1-f50.google.com ([209.85.128.50]) by
- mrelayeu.kundenserver.de (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1N79hs-1mjHxm00rc-017U5z for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
- 16:42:18 +0200
-Received: by mail-wm1-f50.google.com with SMTP id 192so4485236wme.3
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:42:17 -0700 (PDT)
-X-Gm-Message-State: AOAM532Gdb8EM4RXeQh2PyLDXw2M5a0jRjMwvc//5BJyfP/lbYUqLiCd
- 0NwnBmvXC994rH4V1Q2BYAXNOVBcLF5uEH/UEa4=
-X-Google-Smtp-Source: ABdhPJx9cbVaNwx+3GHbcHnQXOpN9heQ4JmpWp0Hw9nZ+0Vz+KISvn385FCbSquLcG8jLThOtn8bEBSn4MBwQAn7pDA=
-X-Received: by 2002:a1c:1c1:: with SMTP id 184mr1292581wmb.1.1635432137333;
- Thu, 28 Oct 2021 07:42:17 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7gQ1QtTz2xDg
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:46:57 +1100 (AEDT)
+Received: from mail-wm1-f47.google.com ([209.85.128.47]) by
+ mrelayeu.kundenserver.de (mreue010 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1M42zo-1mg6gA2n5M-0000Zl for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
+ 16:46:54 +0200
+Received: by mail-wm1-f47.google.com with SMTP id
+ j35-20020a05600c1c2300b0032caeca81b7so4832949wms.0
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:46:54 -0700 (PDT)
+X-Gm-Message-State: AOAM530ZTZ1FB2xjeDv9l+o2u7XSSoJYPX9tdtrin1fuEMudz6a1r8zd
+ A4orJCAB3apJRHCDHSkyzIcuu6LO9/CTaue4gjs=
+X-Google-Smtp-Source: ABdhPJxA0GJLTQ+xD6zcoP0LSqb/ZsKcXqHw7zPvo6JWGp61LpzRYISo4RdkeFEDL6Qy0I1GY7j1Zdux6/P0jUeXB5Y=
+X-Received: by 2002:a05:600c:4f42:: with SMTP id
+ m2mr13320221wmq.82.1635432414029; 
+ Thu, 28 Oct 2021 07:46:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
- <20211028141938.3530-4-lukas.bulwahn@gmail.com>
-In-Reply-To: <20211028141938.3530-4-lukas.bulwahn@gmail.com>
+ <20211028141938.3530-5-lukas.bulwahn@gmail.com>
+In-Reply-To: <20211028141938.3530-5-lukas.bulwahn@gmail.com>
 From: Arnd Bergmann <arnd@arndb.de>
-Date: Thu, 28 Oct 2021 16:42:01 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a3+-J6XbUmzWs7ATN7z53GomZSj6vq3n5R709=iL45RrA@mail.gmail.com>
-Message-ID: <CAK8P3a3+-J6XbUmzWs7ATN7z53GomZSj6vq3n5R709=iL45RrA@mail.gmail.com>
-Subject: Re: [PATCH 03/13] arm: Kconfig.debug: drop reference to removed
- ARCH_MSM
+Date: Thu, 28 Oct 2021 16:46:38 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a2LhGWer=GXMW_KT-8=nqBeS0xhu6si7Z57WAF0wE_TUA@mail.gmail.com>
+Message-ID: <CAK8P3a2LhGWer=GXMW_KT-8=nqBeS0xhu6si7Z57WAF0wE_TUA@mail.gmail.com>
+Subject: Re: [PATCH 04/13] arm: drop an obsolete ifdef with the removed config
+ PCI_HOST_ITE8152
 To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:7JHGi/yIGSh2Iq0PKOO0eLsAwGsWaVwbv5k9esY/mtfRklYiDXO
- UbncXOx16VeAUzkOwzB7dRYFDOoPLKTiJWVsihl6g5CoAafJH1TkQv1r9RRnd5eohAuyT0d
- E5+krt7zpx3KiJYOFMXp7AOq0RuJyf5hR1F6H9g0iRH1F3KlxKeIrcWI4GbZVu2PlfHC+S7
- F/WbXxXRDhBYO0/sBiBHw==
+X-Provags-ID: V03:K1:rMb7MEybclNES+COQRgcinbAku6mrMFpSGwmH3pi39o+R/vi2Bk
+ SuZ8Dg5ZhKei3jeK/mcqxMYSbBgtQ7FqrnkNdjSWBu0+eM9MlptO7jUbXgypjdAkrW4bBbv
+ FgHng+mr66kqfZf7FQylFMrUKXxyB+2YRtJvp7yv61QSNaTrQO0/WQXsl9p2lY71lMmaTIo
+ IQyt+eufliLBeqnyqgEcQ==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ml0OYKL1zss=:MHg1YyEIACSKW88IeEn8wT
- W2PArWk4ORbGYuDHIpqpM5EC75d7dkJ6kXeaTOmz/EXozTUPKDKBCE8T2kX4Kqphg+XQMMAXo
- JEw4KRlc+YEkGVg41LIRb2WFojlbo9toD24SuelPZUIdvduniYnZu6X2N26vTHIyYDfpdIL2k
- 4VrOPdJTYyipozgVyZ4kzinautk4QZTc07+C7GIL+blIx8b1nBasRjjbPleqwIMijJjxwoGSy
- +q1WgfXvnX2Ao/jxlEGnnDJJljLrGAPeLIA8q/NXGJ0Um8jU19MCjh99cQmWrWJcO+3KTi8B6
- 07RTiMLTrGIwjfxf0zHDDUOyeesRH4+S0uPRW+jawJ+Mh5IJYSdtdivr2JvObRpBOYlRDOMYq
- nIa4moyYillegv6f8iSms4XMryA0v0RHgV15IcYof1g8A/mbgvauq0GPg1XwY9A8QnTa7Ip1D
- H8KvTUEG1gFECMTWdrw2vABQs4WbwKC4aR+y12UxQkZHVS8hBDqG6ZbgRuy0xfxtR3/FG1uE2
- JrFOxTTovMlY7YPGQY/QxlfYdpiscuWEOppqdzb8zmAbNt6Os8/LCA0BYdqA6TGyeRo3f8MWE
- VXx4vcpDHmnL/9+OdVvqqmO0iBw3gCQApjaWOj2Z7FBmx7lzpBgwgiwRwDQ7uhanCZwEvudM4
- zMAvJmMW4dYYApY8Ln+dWBnaxo/DF9JxiFmgenFNKxSlUMOrk/OEXURPYsdlzuhIX0YnCFecl
- JPGIk2q4lwYYISISaAIW9pX8znfm27hR/x8yLFhj37/HT3P/xoHrkU1ys5udaTB16UAiomiW+
- 1fuWcmj7X3lOrepOdo9MKBbpIRoJhjYdtDDJakIcL2P8fABeXQ=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:s77oUdQ87A0=:VveaSDqQsjLxUbhzBpRKwx
+ ncUf6fZah7gtlA+aEE/UyCV2xrPpV4crUxDdUrG9wfqa/9J8r2TbgXbxwrvWvytDTEicquGB0
+ aa9B+0AX77i9J/4kG5ISnZLLzzuERWKUJRxaNXcmlDgw7RNVOofScnJ42ankBDh0+ABKfGAUl
+ C92iOR1JZQKaGQOwolsmd5Rf4TL0fkOFSP5D3XQVbVltp4/LH3I7+4Lb2uhPGo0IJwOxBErc4
+ wq6w+DG7Aq5i8+NFMRc3eW3hQ21KdUr+ICFwD8Aasr1bVvJwmJXLvt9bQILVEvsnwwRVcwYWk
+ /N3tVRReLle9VeUpLDA2J4dxAyDLh/0/6jb+B6txZ/3eIE3BVx6cAeHBggJ9PSNk9a7Mg2Ir5
+ 7sXZL+MyMXU7iYCzNFv+729XmciidPCbgbxkINq+HuE4EENWPNHH/H8r9CIM43y00VRAKAG/B
+ 7Wa0z74JjZvRr0YB8CFIWNe6LAeajsQHiHPogYp64JSjAmL1aFFpuBH/Y80fmY2Wrf/zEcxuS
+ v+J6UHTt60RxzCf8bpLkZmjZF6a9rrg5pvvBtyTWz7iUu0PtUwy5auxComFoUL8hXVnlz5avm
+ FTOvi7tkHUk03JIoaBXDC9GXIHZnLnB3i5PZyC4wVY1vS+UQwZ1iaKi60drdk+skEO2Bjg8tY
+ sHqh/EbRnyAGY4pUCKmeaNkueJrcuOBdpmn4ZBt26SMTJSWRWE9HBu9zAKvL+/B2pt/c8YCvr
+ kFnTdiHz1CcNTkg+WO+JKq7u01kQ5a9X3mXy/fBmn6+bGt5o6X5zDCa3S72PlZrixaibD+/Gl
+ 0kR7Peph3g5OqnEJCeRqI3pfuB75X/lht4TYkPvjwOoEwO5eeM=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,37 +95,26 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Thu, Oct 28, 2021 at 4:19 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
 >
-> Commit c0c89fafa289 ("ARM: Remove mach-msm and associated ARM architecture
-> code") removes the definition of the config ARCH_MSM. Since then, the
-> reference to ARCH_MSM in the dependencies of UNCOMPRESS_INCLUDE in
-> Kconfig.debug is dead.
+> Commit 6da5238fa384 ("ARM: 8993/1: remove it8152 PCI controller driver")
+> removes the config PCI_HOST_ITE8152, but left a dangling obsolete ifndef
+> in ./arch/arm/kernel/bios32.c.
 >
-> Fortunately, ./scripts/checkkconfigsymbols.py warns:
+> Hence, ./scripts/checkkconfigsymbols.py warns:
 >
-> ARCH_MSM
-> Referencing files: arch/arm/Kconfig.debug
+> PCI_HOST_ITE8152
+> Referencing files: arch/arm/kernel/bios32.c
 >
-> Drop the dependency on this removed config.
+> Remove this obsolete ifndef.
 >
 > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-> ---
->  arch/arm/Kconfig.debug | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm/Kconfig.debug b/arch/arm/Kconfig.debug
-> index 83484564b1d9..87aa6e92ee6e 100644
-> --- a/arch/arm/Kconfig.debug
-> +++ b/arch/arm/Kconfig.debug
-> @@ -1886,7 +1886,7 @@ config DEBUG_UNCOMPRESS
->
->  config UNCOMPRESS_INCLUDE
->         string
-> -       default "debug/uncompress.h" if ARCH_MULTIPLATFORM || ARCH_MSM || \
-> +       default "debug/uncompress.h" if ARCH_MULTIPLATFORM || \
->                                         PLAT_SAMSUNG || ARM_SINGLE_ARMV7M
 
-The PLAT_SAMSUNG reference is also misplaced here, I think you just want
-ARCH_S3C24XX instead, since the other samsung ones already require
-ARCH_MULTIPLATFORM.
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
 
-        Arnd
+I wonder if we should just remove this function and use the
+(non-empty) default version instead.
+
+96c5590058d7 ("PCI: Pull PCI 'latency timer' setup up into the core")
+introduced that generic version, and I suspect the arm version
+was left out by mistake, but it's not clear from that patch.
+
+         Arnd
