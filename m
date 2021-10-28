@@ -2,74 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DBBE43DE1E
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 11:51:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BF7043E073
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 14:03:03 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg16R0MB1z2yp4
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 20:51:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg42F3nB4z303H
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 23:03:01 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Mq9RvoyT;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=CyE/v0JX;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=fUF3H3m1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1033;
- helo=mail-pj1-x1033.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=Mq9RvoyT; dkim-atps=neutral
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com
- [IPv6:2607:f8b0:4864:20::1033])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=CyE/v0JX; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=fUF3H3m1; 
+ dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg15w1jDvz2yK6;
- Thu, 28 Oct 2021 20:50:57 +1100 (AEDT)
-Received: by mail-pj1-x1033.google.com with SMTP id
- lx5-20020a17090b4b0500b001a262880e99so4232529pjb.5; 
- Thu, 28 Oct 2021 02:50:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:date:to:cc:subject:message-id:mime-version:content-disposition
- :user-agent; bh=c/4MoribtVrSroVLteeEwlqfaqNWtDBUM4Q4t8ms3D4=;
- b=Mq9RvoyTVpctxxXHsszU2ikJCKE92Bxcj7L2kCHnD/S8Axo5EPIQeJZ4LSRRnevS9d
- 1gu6SJoWhx+l9VMTKLoLvOSibmsJxPvDjFTW8RwtCZyFdN9pqdIi9MT2QjB702FLNVqz
- /+PJx7F9GoKJOyidzW2HBgDRSvhjo8I/4+GzBKNUKsUftxOjBQgHTIxRFswpzaTrYTpf
- jOw791iKA7BCkNYVPlpMLucpAdpZnZxiJgyD8s2CMvQxpqRnCHIn8vw+QVxBJwVFGSyc
- gMSocNdvjb1FhHHHDPDGABl8l7t/Zioes7sfE1w17gBGPSqSMXmbc8XDICL8JFctB6qF
- njXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:date:to:cc:subject:message-id:mime-version
- :content-disposition:user-agent;
- bh=c/4MoribtVrSroVLteeEwlqfaqNWtDBUM4Q4t8ms3D4=;
- b=NoMCILuz9wa8lEu+rBbH5rkCX+jLGZvlxrjAZhk6h4WWMb2bWDajFVNINg0Q+KyCp+
- WUZ4DNm/McgUDOt2UZQnX81PsxWR+HU/WLNAR3LfsZ1xfxrdcJB3gkanLpEsMLdyBmWa
- D+MSClnsRuOe9HFEtjqArpJuEsa/1fMxnkvFGzzpkx6DAZpYuIUnmnfXDga8D86z7Vco
- VA0mc8OSmFL8ZPxw8Sw264dCe+FpFTsb6PX2HsQAQrLb7rGdaU+VkRZIQ4ykGOxpExfA
- b4QtJbaJ8S4tR00g7LJcquYvPodp39BtU5mbfQFLfzZLbHfgX5Ji7bu2dYeWrBu6BU70
- glrw==
-X-Gm-Message-State: AOAM530OLiiRNADOM+G1mShwuZtWeoLZLhV2Hkco9rF2LQt6a9L4Ddik
- pPKVQfDWmaCq+cv90FTcezk=
-X-Google-Smtp-Source: ABdhPJyXnVVdOZAb3eO65nIvPwtTmJ+Kvgmh5N+1ErNwraW2e2ar59AZe2axU1xQN8Xh9KKVmupMpQ==
-X-Received: by 2002:a17:90a:f195:: with SMTP id
- bv21mr3338929pjb.203.1635414654860; 
- Thu, 28 Oct 2021 02:50:54 -0700 (PDT)
-Received: from gmail.com ([122.178.170.40])
- by smtp.gmail.com with ESMTPSA id t40sm3217302pfg.142.2021.10.28.02.50.51
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 28 Oct 2021 02:50:54 -0700 (PDT)
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-X-Google-Original-From: Kumar Thangavel <thangavel.k@hcl.com>
-Date: Thu, 28 Oct 2021 15:20:48 +0530
-To: Samuel Mendoza-Jonas <sam@mendozajonas.com>,
- "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH v4] Add payload to be 32-bit aligned to fix dropped packets
-Message-ID: <20211028095047.GA15236@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg41n49lGz2x9d
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 23:02:36 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 4F6DE5C0195;
+ Thu, 28 Oct 2021 08:02:31 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Thu, 28 Oct 2021 08:02:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=qJtRiejhpVtFXcVPsjBiYGG7I69
+ KRTaqTQJsvvbe2E4=; b=CyE/v0JXbbThqfo/tUtqM+WmojH4HWBWrZ1dgPzXkoV
+ Jp9jtnGkiWS1Sa9jXRTQFQ0oKy8yEQu8llRcXZgCDFzq/qgvI7r/M03zRKw4ts79
+ iWx9x7m2H/tbonAap8ZKZTWxjChQtaUpuNaiap7V0UbgLjjvKcGdAHYrvXaAYnwD
+ h/Ort2WbjAEvUAvVUJqsLECdgwfpBMhf7SVIOt4xki2mvzghwpN4mE50uatYwCFi
+ EVdizJwBvC7LzhSQtZ1erJxWd3QOd5v1SuvbEfmRvLUs4YUHbRGWmNez5QpZdP/B
+ XCuar99546FUvzK1Yg9tmIragiqCRYno/FPBcrTcvyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=qJtRie
+ jhpVtFXcVPsjBiYGG7I69KRTaqTQJsvvbe2E4=; b=fUF3H3m1ZxzmNSxxFOcrzo
+ Owq/RxpAXzD00YD9h3NZ65O+VhBlfEBQCDTnANuPUUbtALBlJdR677WyrmcmupB8
+ OOHZMZRRQDuS5BbKl3ASR+db+g2kPa+foXHDuQbWhkfwfLyYbkfIERrEZnwgr82v
+ UR4RGkrfoCZOKfNNY02gtidYFOS2htA4cyFpW7fOX2fNnAXxpY2BjipX7bheBIIZ
+ 5RFxOw2VSxIOHcjsZ9o1+4ipE3epTGXU7sIVDtcmvRjsiNs49tqIh2hOnUzstHc9
+ UzUs/KblqqrunKZu1UmadOW/8wbyjKOtg7uggZ1x4YtPCDgh49C4lL7RkBF1ubxg
+ ==
+X-ME-Sender: <xms:VpF6YasPTlORop_VIPrc12rx7Eni0weozv_YbNqzQx-znLzNfDUxMQ>
+ <xme:VpF6Yfdp6p0Cez3YVCB6mTxpy4hyovgv79sU-N8yFLoW2CQAucThhpO9g1e9or8U1
+ AK7DDPES6BOv1YFkng>
+X-ME-Received: <xmr:VpF6YVxgF7G8zMM7p6A7JLlYIBciJHcSxckJOpMogbUfa5te_cl7SA2fkA63sJc8vMF8AwAWJ_kz2j1QxyOmINgYHZERpvcQVIibl4pUYtuJkw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdegvddggeefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+ geefgfdthefhkedtleffveekgfeuffehtdeinecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:VpF6YVMbOkkMT5Xd7t-SL8PKZe143nNBA2EvTIE1xBG_BzLHMQW6DQ>
+ <xmx:VpF6Ya_4Ecl1sxfrrII9kMDlR9CvUfjshIXhrRkuIOF-Ox9IKVgM7A>
+ <xmx:VpF6YdW4TkbjIgePYkjf_LWltCublIm3zRXoJrrvr7oTEulsGRG2jg>
+ <xmx:V5F6Yeag5u_GUuODH7heCUcicgkGCQKLu31GO7Hnzg5pCkArMJREpA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Oct 2021 08:02:30 -0400 (EDT)
+Date: Thu, 28 Oct 2021 07:02:28 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: John Wedig <johnwedig@google.com>
+Subject: Re: eStoraged repo
+Message-ID: <YXqRVDLyCL/IYwa2@heinlein>
+References: <CACejXs+LALZsTbVazgLjOP-K2d89sgTT0jVLpTKiFECfZdcYjQ@mail.gmail.com>
+ <YXlbNoBeD/yE/bg/@heinlein>
+ <CACejXsJK1+D+HqxZGgrfeEtVVwY6bQ_HzSTUuR3F_9YAgZPV+Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="DQrabjv+oxjmBE3p"
 Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <CACejXsJK1+D+HqxZGgrfeEtVVwY6bQ_HzSTUuR3F_9YAgZPV+Q@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,95 +98,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- Amithash Prasad <amithash@fb.com>, velumanit@hcl.com, patrickw3@fb.com
+Cc: Brandon Kim <brandonkim@google.com>, John Broadbent <jebr@google.com>,
+ bradleyb@fuzziesquirrel.com, openbmc@lists.ozlabs.org,
+ William Kennington <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Update NC-SI command handler (both standard and OEM) to take into
-account of payload paddings in allocating skb (in case of payload
-size is not 32-bit aligned).
 
-The checksum field follows payload field, without taking payload
-padding into account can cause checksum being truncated, leading to
-dropped packets.
+--DQrabjv+oxjmBE3p
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Kumar Thangavel <thangavel.k@hcl.com>
-Acked-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+On Wed, Oct 27, 2021 at 04:38:15PM -0700, John Wedig wrote:
 
----
-  v4:
-   - Updated existing macro for max function
+> William and Brandon (CC'd on this email) have agreed to be the initial
+> maintainers for this new repo. Let me know if you have any other question=
+s.
 
-  v3:
-   - Added Macro for MAX
-   - Fixed the missed semicolon
+SGTM.
 
-  v2:
-   - Added NC-SI spec version and section
-   - Removed blank line
-   - corrected spellings
+--=20
+Patrick Williams
 
-  v1:
-   - Initial draft
+--DQrabjv+oxjmBE3p
+Content-Type: application/pgp-signature; name="signature.asc"
 
----
- net/ncsi/ncsi-cmd.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/net/ncsi/ncsi-cmd.c b/net/ncsi/ncsi-cmd.c
-index ba9ae482141b..e44fe138c20f 100644
---- a/net/ncsi/ncsi-cmd.c
-+++ b/net/ncsi/ncsi-cmd.c
-@@ -213,12 +213,16 @@ static int ncsi_cmd_handler_oem(struct sk_buff *skb,
- {
- 	struct ncsi_cmd_oem_pkt *cmd;
- 	unsigned int len;
-+	/* NC-SI spec DSP_0222_1.2.0, section 8.2.2.2
-+	 * requires payload to be padded with 0 to
-+	 * 32-bit boundary before the checksum field.
-+	 * Ensure the padding bytes are accounted for in
-+	 * skb allocation
-+	 */
- 
-+	unsigned short payload = ALIGN(nca->payload, 4);
- 	len = sizeof(struct ncsi_cmd_pkt_hdr) + 4;
--	if (nca->payload < 26)
--		len += 26;
--	else
--		len += nca->payload;
-+	len += max(payload, 26);
- 
- 	cmd = skb_put_zero(skb, len);
- 	memcpy(&cmd->mfr_id, nca->data, nca->payload);
-@@ -272,6 +276,7 @@ static struct ncsi_request *ncsi_alloc_command(struct ncsi_cmd_arg *nca)
- 	struct net_device *dev = nd->dev;
- 	int hlen = LL_RESERVED_SPACE(dev);
- 	int tlen = dev->needed_tailroom;
-+	int payload;
- 	int len = hlen + tlen;
- 	struct sk_buff *skb;
- 	struct ncsi_request *nr;
-@@ -281,14 +286,14 @@ static struct ncsi_request *ncsi_alloc_command(struct ncsi_cmd_arg *nca)
- 		return NULL;
- 
- 	/* NCSI command packet has 16-bytes header, payload, 4 bytes checksum.
-+	 * Payload needs padding so that the checksum field following payload is
-+	 * aligned to 32-bit boundary.
- 	 * The packet needs padding if its payload is less than 26 bytes to
- 	 * meet 64 bytes minimal ethernet frame length.
- 	 */
- 	len += sizeof(struct ncsi_cmd_pkt_hdr) + 4;
--	if (nca->payload < 26)
--		len += 26;
--	else
--		len += nca->payload;
-+	payload = ALIGN(nca->payload, 4);
-+	len += max(payload, 26);
- 
- 	/* Allocate skb */
- 	skb = alloc_skb(len, GFP_ATOMIC);
--- 
-2.17.1
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmF6kVIACgkQqwNHzC0A
+wRmDBA//WPODIXFcWm3loGSfBZegS6G7GLXjhmyLdGod4CdJoluSE38YfSSo43lr
+9IoBvU1/kBbuQGDqQdSUeWGhBhlVamztqO7dlk7B+yX+W3vq3ecz3g/2k61zMJmZ
+xjwrJBKltrl0vkUL+cvXW+MtFgu1frgCodMsavy5Zyn+ApPlU4SSAozg/73DzOCR
+WGnfot/nQ9Zsw9d2fgGv0CLaq/U14H0rF6dvZejQIE5DR4WOfa6tNwZ8amjC22la
+4EvcQzJ4KohIfhzgVvn5m2tzgmXpMKPX6BUsIsluadR6e1kQweNWLWjWgB+h9NNE
+L/UOooESJPaeXjTz8Q9u9VHaSFnhy59Bzyp/z0jUx3zDseh7+uUkHq1uJUCaWV/K
+w+tlrXuSXO3V3b9I9AOSF374dSBZdo9QnLI0InRby9S3vSWczAbabTBO8MBe2MMY
+N54TzpTxp+qHT8GfJo5X+9lEf2IC0dLUeUq5V6YHkt68I2N4x+Rn6UEUspz0v3XE
+tCaHCIG+8fLV8eAdJ2cEo+iZheIGT26h40DEAlqvM2+Knz0qcMJ9N/F0gOvTHnUI
+rRpQDc7EqDrMUrvZc8YPDjOCJkfAb+3ipOFkq0fB4x70fJvmhLQ+oqi2Zj1hd2gg
+mUvp48sKj1gfxv6Q8jHsZ4EyFsbE6cNG0sCqTdGEiXKLn+BK4Jg=
+=niYz
+-----END PGP SIGNATURE-----
 
+--DQrabjv+oxjmBE3p--
