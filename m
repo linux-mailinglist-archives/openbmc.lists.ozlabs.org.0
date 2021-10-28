@@ -2,47 +2,130 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41BD843D9F4
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 05:44:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F82343D9FE
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 05:50:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HfrzX1Lqsz3bN5
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 14:44:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hfs5x3DmBz2yPc
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 14:50:29 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=nuvoton.onmicrosoft.com header.i=@nuvoton.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-nuvoton-onmicrosoft-com header.b=Hms73CWE;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
- receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
+ smtp.mailfrom=nuvoton.com (client-ip=40.107.131.58;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=chma0@nuvoton.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=nuvoton.onmicrosoft.com
+ header.i=@nuvoton.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-nuvoton-onmicrosoft-com header.b=Hms73CWE; 
+ dkim-atps=neutral
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1310058.outbound.protection.outlook.com [40.107.131.58])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HfrzD4WxCz2xtw;
- Thu, 28 Oct 2021 14:44:36 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 19S3KrXU065393;
- Thu, 28 Oct 2021 11:20:53 +0800 (GMT-8)
- (envelope-from jammy_huang@aspeedtech.com)
-Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
- Thu, 28 Oct 2021 11:43:23 +0800
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
- <andrew@aj.id.au>, <linux-media@vger.kernel.org>,
- <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v7] media: aspeed: add debugfs
-Date: Thu, 28 Oct 2021 11:43:32 +0800
-Message-ID: <20211028034332.15961-1-jammy_huang@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hfs5R63w3z2xrp
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 14:50:02 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CuEY0JiGHHPPbAuMNGGPTf/PjixrRVkw5TKGzfwjMPNlweVI+UkAbEmqZjXiB33PzGbv+zCRLi95y26YAJYFih7liCj0Pg+8KwvCJwTKjkXVlf/2gaTpF7C/wA5vWOiGt3vosf5V9htM87mGH01m/tbVbKgG46rntgZ0F+6TUV1b4JGMQxO7kszvNR2gJYD+ukUpCwH3DkNdD7qeYkD8OvEiyRCVk9WtZl5cAkWgRfN5YnSzXTmZYuhc6Fo19VYIM7/arOJgMsmOID0hfZdp9KE5tSsMR3OmoKFdlIlZ/sHYdG5Jme71xSdiybLS3rZufKLcBVEPgcxhS0E9p9WweQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0k6ZTSaDTDTTEWRWv3qdF1wSCSedcty+f3D+pgtVOcI=;
+ b=MSMR5l2PN+z13HCATQbH5sBXdLeeuBarnMXwvZ4B9xlnnzJu8akz4j8+5hs29P7EMMw7nP2RYGfTyrRyqmjc2ObngYMY/XHsK6bflSPHDxDV7FKGPrq/u5Vvo56HlaAn/Z/uetWpDbL6sfo1yGc5ZiDYi9k6AL150bXenR9iK3N3sMZPK4cwI6MxuekavwVzrC41DVTADGfGCopUnHt7m26+TcA4uQeuOFmGsCvwNOgm8HHKuKn4KQCZrc4reYYRlKu6HTXQ3G60agASXvex+4Me97+WmyEb4zpl3fI95lc3kx1GVBF2uDg9sB0DpRkVbxOXHhWVdhD0jK/G/f+3IQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
+ dkim=pass header.d=nuvoton.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0k6ZTSaDTDTTEWRWv3qdF1wSCSedcty+f3D+pgtVOcI=;
+ b=Hms73CWEGNUC/+YeL7c66v+y/YY9mI3z7Il/h8iCjSKcmMSSkR+l/11aohaABUFG+TbeCbkQbfzXhCrvA6OYYF9nrfp79EyX5jDUugNzS7VlUIdY31aml99kd9vopiaasCtqpq+TE531XsTYS6dPUbLo6bN9jKsDGjJYp4tnDCw=
+Received: from HK0PR03MB3089.apcprd03.prod.outlook.com (2603:1096:203:42::22)
+ by HK0PR03MB3490.apcprd03.prod.outlook.com (2603:1096:203:59::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4649.12; Thu, 28 Oct
+ 2021 03:49:45 +0000
+Received: from HK0PR03MB3089.apcprd03.prod.outlook.com
+ ([fe80::286b:ebae:e833:16ae]) by HK0PR03MB3089.apcprd03.prod.outlook.com
+ ([fe80::286b:ebae:e833:16ae%5]) with mapi id 15.20.4649.014; Thu, 28 Oct 2021
+ 03:49:44 +0000
+From: CS20 CHMa0 <CHMA0@nuvoton.com>
+To: "edtanous@google.com" <edtanous@google.com>
+Subject: RE: [phosphor-logging] About the "Stop emitting Entry propChanged
+ before ifacesAdded" change reason
+Thread-Topic: [phosphor-logging] About the "Stop emitting Entry propChanged
+ before ifacesAdded" change reason
+Thread-Index: AdfFhjh669KnwuGoRpm4ZK5IylzMDAAPsNYAAARZHgABdY/QoA==
+Date: Thu, 28 Oct 2021 03:49:44 +0000
+Message-ID: <HK0PR03MB3089BE72891D7A9798DD1AC8F5869@HK0PR03MB3089.apcprd03.prod.outlook.com>
+References: <HK0PR03MB3089CFCA31102DE7BB551413F5BE9@HK0PR03MB3089.apcprd03.prod.outlook.com>
+ <b71bb325-cf41-deab-5422-11520f85cc55@linux.ibm.com>
+ <YXBPMNi5yzzEtE/R@heinlein>
+In-Reply-To: <YXBPMNi5yzzEtE/R@heinlein>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: google.com; dkim=none (message not signed)
+ header.d=none;google.com; dmarc=none action=none header.from=nuvoton.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: c9eec30a-6845-465c-10a8-08d999c5fb00
+x-ms-traffictypediagnostic: HK0PR03MB3490:
+x-microsoft-antispam-prvs: <HK0PR03MB3490BA04D73713EB747F1E48F5869@HK0PR03MB3490.apcprd03.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:1775;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: BfarD/Uhwqvxxz93Hw8efcP17XpZmW1ols/hfM7L23hlY3hhxcDB0lBvO+bOmf4ftqxQ6rLx8p5PXwjs31/m8kytvL0l30IwyPeGiW1nOqsPa874ThU15eKVR64+zPHimX6EqGQC5DXfLvRtYnXhRFCBik0Bg357XcTkknSuuiN4OAnHiLjWHEn0thT7JgEeqd0RpuBXhDyNAED3Twwke75CTFIIhnnCu/xVWiO3w44FJR3WMt7uqY+v2tDpG/5uAoRt9bU4zOU9re320VdcxC+kK/8EzkU08FZQ5BSjxlvxSJbiiSvltbbmb5Zmc1QUj/uOyOWQK8Kdx1MF3ZH1AbZui3GMu6+3D9XLDkIKrHhUgcOD7iclJ1Z1y7BLY2bQEA1AEiIr62b1fBzHOgHaTTx9i70i4Ivo+hhprj5H1W+DZrxoenOxzmKJ8gT/KqyclCJvKW8k+vEaPn9y/EOXn8XzQHJC1gvG2hyzAfvUxWOGxvA9z67dXtqbJGcgmcQwgFmbNsn8OpDR8zJQUJ4WfPnsMx+ij3B63ZSrZW9vyZyji70UGpsCQAL4AXfrMZkbjTsuqtcw51Kz6OBNSrMFGxrK9NP+zFZg/9wg0zLux91clUO4aycMueHXiIho65/kMI/dE/6GHQfIkbs+2FabIdHMzPPVk5BIpnFRXLag+vj5zfAR2hiIVdxGnXyx1N02+u1UUs7oNAfHF9/k8pGEgck2uHC8BolWmUWkHodqF0SI4+ctQyT5jgrJtYzT2QDNELS8AV+AuGLKZm/GXU2m8ekiurilkenZoZsTWORhuAs=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR03MB3089.apcprd03.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(366004)(86362001)(6916009)(7696005)(54906003)(6506007)(38070700005)(55016002)(52536014)(26005)(9686003)(71200400001)(53546011)(316002)(186003)(33656002)(4326008)(66946007)(83380400001)(76116006)(508600001)(2906002)(8936002)(5660300002)(122000001)(66446008)(966005)(66556008)(66476007)(8676002)(64756008)(38100700002);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?53NbfFYQTrZl7+41AUXYoqcBzGZp4P+IMsQGoh4AHHA3ABt/McEDEiqg1s?=
+ =?iso-8859-1?Q?r4lysmv7DjfED7pRwnXNf2RPxehSLPA6tnCVwRo0q0YI2AcFOBfZ3QtnFX?=
+ =?iso-8859-1?Q?/Vo/9s3Iuy6sZirPRZpDwoFzNuEU4LcjE4TnHBj0z0upUDuN0mukEc2Krs?=
+ =?iso-8859-1?Q?bDBcR3/wU/KTqBRfyVcpsFvMW+LLWYXjfjC20u1hk4Te7LcW0GKbnIaiS8?=
+ =?iso-8859-1?Q?w0wI2Q0m1egeL49HolNP/91i/+TTuLbeHCnqjdVZ6l009ZVcsQu6wBjEJ8?=
+ =?iso-8859-1?Q?B/UY9fZ8316Sjf5rW7Z4hA0ekTpd5ASPd21vt9mw7worcwmQDINvOrz75A?=
+ =?iso-8859-1?Q?QBM5RpEJeKN+rxr0Xa30GDRttdVsXOEXP41btv3mi+427cGQBNAwhiFKMc?=
+ =?iso-8859-1?Q?UeYZ/0he5yR5ledtBW22YIQNQzPNcHUWGRlCLGE6CKe+bRw1GDEl2bg8IL?=
+ =?iso-8859-1?Q?kJOExo8DPiVVS3T4cf2s1bF4HeYHB5jX5MsfyU9+XojiC0ZiKO+YaF73xs?=
+ =?iso-8859-1?Q?i1nNlB0+9Y+h8BDufBxgjWaKJOQOOWdYLIO74o6X4xCWKpL7MjZaoPpAS1?=
+ =?iso-8859-1?Q?Djta5MMs8ons725gV1wgyBFH5agnaSoW/WBjJRtpNpPev/V0i+E5pXMAyC?=
+ =?iso-8859-1?Q?U26hWc0ITgCB4B4TNi03g/EdPtVvhqWBwmb3V5StqMD+41M9k5T1BHTJnJ?=
+ =?iso-8859-1?Q?tPLP8Ngl1J+BvlXk1nkk5Wn1dvFLhjmbMhcEPlMuGwMWY7owBZWklaV3ES?=
+ =?iso-8859-1?Q?LMYJ5OWyBDfFonTG4M+F+xM3N8lKV7Aro+ZH7oNqcpES+NU20Gw0rYQC/H?=
+ =?iso-8859-1?Q?JMuGkOFDVndhFappRusB2nibpjiJHrhz0r4FsZ7WZjMiO7HK5ATnCpSdL6?=
+ =?iso-8859-1?Q?u4rqYEUvtAlgHVEFN/pxQTjNni1FQs1J1wwFzOETEg1BtrHOzCMm+AuJUR?=
+ =?iso-8859-1?Q?LRZ4CZsMDgUC1vGiVBZhBbyEfiI+xfCcknBxDy9KJfree1TFRolkARM5fb?=
+ =?iso-8859-1?Q?HRfSf/oT7HoeigZakK2Lz5vl/+1ZHmPAYTmg05j2u6h53sTCrhfGkFJ28a?=
+ =?iso-8859-1?Q?3ufZvPzHXTXRM+rw27gea2izJFz4FghtbQeFg8sxOD2K7Gy1yQydrTHNwG?=
+ =?iso-8859-1?Q?Yk2MEtqa0H3LBa3kKAsL9XppganCbkUQlYwby6FC+4WNFyq2fSB+zIYV6p?=
+ =?iso-8859-1?Q?NMSRvPxCqonyo84hAGub62q2KsPO/eIC6jdXNEwf5uQHRn0xJpQKX9KLLY?=
+ =?iso-8859-1?Q?KfWCwrDJ9do/Wf2pWUEq8Brn05iDUU6hICX7x/xOYP3kkuJVxFSrN1k+DT?=
+ =?iso-8859-1?Q?O79FJ2d2dChPhiSSff1uWMLGZtMPHhslLK5Z/hl/gHQOhssBhS8ou7bRch?=
+ =?iso-8859-1?Q?jCtXoH+wJ4Bw0whFaq54NVKl61FrxtdnGgQO/7uxrHDxlKZsyx2DApANc/?=
+ =?iso-8859-1?Q?uaD3/hxc+23svokKqXik97Xa5azQOlp+6eO3bk2M5bgS+5hvmqFCp8p0hl?=
+ =?iso-8859-1?Q?n2zMoALNbwaOPoS6KQEw9GmLa6lc3xGWDzAf4vCmr1NqG4aE0EMMSig46/?=
+ =?iso-8859-1?Q?3P3egqkddQ9iB47ixapiU/BMFdv1LML6KoOIR2tLA0Qd1x/HUAq0BOg29t?=
+ =?iso-8859-1?Q?Btd9tHilokTYvHw06UrDwCx6J9DoKXl32Aveg8uVxVmsseHn/VReN5Hg?=
+ =?iso-8859-1?Q?=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.2.115]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 19S3KrXU065393
+X-OriginatorOrg: nuvoton.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR03MB3089.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c9eec30a-6845-465c-10a8-08d999c5fb00
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Oct 2021 03:49:44.7288 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 78FM6w+NZFAaz+FNVtSekrGSprTxOxvcUUgmXRaJdhXO8vWIg1fAbuJYAcv0XJHGABNUA0fp/TDn1M+bsur0yg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR03MB3490
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,224 +137,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Matt Spinler <mspinler@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-A debugfs file, /sys/kernel/debug/aspeed-video, will be created. You can
-read it to get video real-time information as below:
+Hi Ed,
+Before I upload the commit, I also consider revert the change in phosphor l=
+ogging.
+But I think it is reasonable to update bmcweb if it not used the good API.
 
-Capture:
-  Signal              : Lock
-  Width               : 1920
-  Height              : 1080
-  FRC                 : 60
+-----Original Message-----
+From: Patrick Williams [mailto:patrick@stwcx.xyz]
+Sent: Thursday, October 21, 2021 1:18 AM
+To: Matt Spinler <mspinler@linux.ibm.com>
+Cc: CS20 CHMa0 <CHMA0@nuvoton.com>; openbmc@lists.ozlabs.org
+Subject: Re: [phosphor-logging] About the "Stop emitting Entry propChanged =
+before ifacesAdded" change reason
 
-Performance:
-  Frame#              : 38
-  Frame Duration(ms)  :
-    Now               : 21
-    Min               : 21
-    Max               : 21
-  FPS                 : 47
+On Wed, Oct 20, 2021 at 10:13:06AM -0500, Matt Spinler wrote:
+> values, and then explicitly emits the IA signal.   Others can chime
+> in, but I didn't see it as proper D-Bus behavior to emit
+> propertiesChanged before InterfacesAdded, since in fact no property is
+> changing after the interface was added.
 
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
----
-v7:
-  - avoid divide-by-zero
-v6:
-  - update commit message
-v5:
-  - correct log
-  - update commit message
-v4:
-  - use void as aspeed_video_debugfs_create()'s return type
-  - update commit message
-v3:
- - let struct, aspeed_video_debugfs_ops, be const
-v2:
- - Change the style of debugfs information
- - Use Min/Max to remove test and branch cases
----
- drivers/media/platform/aspeed-video.c | 96 +++++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+Correct.  PropertiesChanged signals should not show up before InterfacesAdd=
+ed.
 
-diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index 8b3939b8052d..5ffbabf884eb 100644
---- a/drivers/media/platform/aspeed-video.c
-+++ b/drivers/media/platform/aspeed-video.c
-@@ -21,6 +21,8 @@
- #include <linux/videodev2.h>
- #include <linux/wait.h>
- #include <linux/workqueue.h>
-+#include <linux/debugfs.h>
-+#include <linux/ktime.h>
- #include <media/v4l2-ctrls.h>
- #include <media/v4l2-dev.h>
- #include <media/v4l2-device.h>
-@@ -203,6 +205,14 @@ struct aspeed_video_buffer {
- 	struct list_head link;
- };
- 
-+struct aspeed_video_perf {
-+	ktime_t last_sample;
-+	u32 totaltime;
-+	u32 duration;
-+	u32 duration_min;
-+	u32 duration_max;
-+};
-+
- #define to_aspeed_video_buffer(x) \
- 	container_of((x), struct aspeed_video_buffer, vb)
- 
-@@ -241,6 +251,8 @@ struct aspeed_video {
- 	unsigned int frame_left;
- 	unsigned int frame_right;
- 	unsigned int frame_top;
-+
-+	struct aspeed_video_perf perf;
- };
- 
- #define to_aspeed_video(x) container_of((x), struct aspeed_video, v4l2_dev)
-@@ -444,6 +456,16 @@ static void aspeed_video_write(struct aspeed_video *video, u32 reg, u32 val)
- 		readl(video->base + reg));
- }
- 
-+static void update_perf(struct aspeed_video_perf *p)
-+{
-+	p->duration =
-+		ktime_to_ms(ktime_sub(ktime_get(),  p->last_sample));
-+	p->totaltime += p->duration;
-+
-+	p->duration_max = max(p->duration, p->duration_max);
-+	p->duration_min = min(p->duration, p->duration_min);
-+}
-+
- static int aspeed_video_start_frame(struct aspeed_video *video)
- {
- 	dma_addr_t addr;
-@@ -482,6 +504,8 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
- 	aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
- 			    VE_INTERRUPT_COMP_COMPLETE);
- 
-+	video->perf.last_sample = ktime_get();
-+
- 	aspeed_video_update(video, VE_SEQ_CTRL, 0,
- 			    VE_SEQ_CTRL_TRIG_CAPTURE | VE_SEQ_CTRL_TRIG_COMP);
- 
-@@ -600,6 +624,8 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
- 		u32 frame_size = aspeed_video_read(video,
- 						   VE_JPEG_COMP_SIZE_READ_BACK);
- 
-+		update_perf(&video->perf);
-+
- 		spin_lock(&video->lock);
- 		clear_bit(VIDEO_FRAME_INPRG, &video->flags);
- 		buf = list_first_entry_or_null(&video->buffers,
-@@ -760,6 +786,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
- 	det->width = MIN_WIDTH;
- 	det->height = MIN_HEIGHT;
- 	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
-+	memset(&video->perf, 0, sizeof(video->perf));
- 
- 	do {
- 		if (tries) {
-@@ -1450,6 +1477,8 @@ static int aspeed_video_start_streaming(struct vb2_queue *q,
- 	struct aspeed_video *video = vb2_get_drv_priv(q);
- 
- 	video->sequence = 0;
-+	video->perf.duration_max = 0;
-+	video->perf.duration_min = 0xffffffff;
- 
- 	rc = aspeed_video_start_frame(video);
- 	if (rc) {
-@@ -1517,6 +1546,69 @@ static const struct vb2_ops aspeed_video_vb2_ops = {
- 	.buf_queue =  aspeed_video_buf_queue,
- };
- 
-+#ifdef CONFIG_DEBUG_FS
-+static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
-+{
-+	struct aspeed_video *v = s->private;
-+
-+	seq_puts(s, "\n");
-+
-+	seq_puts(s, "Capture:\n");
-+	seq_printf(s, "  %-20s:\t%s\n", "Signal",
-+		   v->v4l2_input_status ? "Unlock" : "Lock");
-+	seq_printf(s, "  %-20s:\t%d\n", "Width", v->pix_fmt.width);
-+	seq_printf(s, "  %-20s:\t%d\n", "Height", v->pix_fmt.height);
-+	seq_printf(s, "  %-20s:\t%d\n", "FRC", v->frame_rate);
-+
-+	seq_puts(s, "\n");
-+
-+	seq_puts(s, "Performance:\n");
-+	seq_printf(s, "  %-20s:\t%d\n", "Frame#", v->sequence);
-+	seq_printf(s, "  %-20s:\n", "Frame Duration(ms)");
-+	seq_printf(s, "    %-18s:\t%d\n", "Now", v->perf.duration);
-+	seq_printf(s, "    %-18s:\t%d\n", "Min", v->perf.duration_min);
-+	seq_printf(s, "    %-18s:\t%d\n", "Max", v->perf.duration_max);
-+	seq_printf(s, "  %-20s:\t%d\n", "FPS",
-+		   (v->perf.totaltime && v->sequence) ?
-+		   1000/(v->perf.totaltime/v->sequence) : 0);
-+
-+
-+	return 0;
-+}
-+
-+int aspeed_video_proc_open(struct inode *inode, struct file *file)
-+{
-+	return single_open(file, aspeed_video_debugfs_show, inode->i_private);
-+}
-+
-+static const struct file_operations aspeed_video_debugfs_ops = {
-+	.owner   = THIS_MODULE,
-+	.open    = aspeed_video_proc_open,
-+	.read    = seq_read,
-+	.llseek  = seq_lseek,
-+	.release = single_release,
-+};
-+
-+static struct dentry *debugfs_entry;
-+
-+static void aspeed_video_debugfs_remove(struct aspeed_video *video)
-+{
-+	debugfs_remove_recursive(debugfs_entry);
-+}
-+
-+static void aspeed_video_debugfs_create(struct aspeed_video *video)
-+{
-+	debugfs_entry = debugfs_create_file(DEVICE_NAME, 0444, NULL, video,
-+					    &aspeed_video_debugfs_ops);
-+}
-+#else
-+static void aspeed_video_debugfs_remove(struct aspeed_video *video) { }
-+static int aspeed_video_debugfs_create(struct aspeed_video *video)
-+{
-+	return 0;
-+}
-+#endif /* CONFIG_DEBUG_FS */
-+
- static int aspeed_video_setup_video(struct aspeed_video *video)
- {
- 	const u64 mask = ~(BIT(V4L2_JPEG_CHROMA_SUBSAMPLING_444) |
-@@ -1708,6 +1800,8 @@ static int aspeed_video_probe(struct platform_device *pdev)
- 		return rc;
- 	}
- 
-+	aspeed_video_debugfs_create(video);
-+
- 	return 0;
- }
- 
-@@ -1719,6 +1813,8 @@ static int aspeed_video_remove(struct platform_device *pdev)
- 
- 	aspeed_video_off(video);
- 
-+	aspeed_video_debugfs_remove(video);
-+
- 	clk_unprepare(video->vclk);
- 	clk_unprepare(video->eclk);
- 
--- 
-2.25.1
+> It seems like every application does their own thing here, so maybe we
+> can come up with some official best practices for how to emit signals
+> for new interfaces (unless it's there and I missed it).
 
+I'll admit the sdbusplus API is not great for this and a lot of application=
+s do it wrong.  There was this issue on the backlog to come up with somethi=
+ng
+"better": https://github.com/openbmc/sdbusplus/issues/53
+
+--
+Patrick Williams
+________________________________
+________________________________
+ The privileged confidential information contained in this email is intende=
+d for use only by the addressees as indicated by the original sender of thi=
+s email. If you are not the addressee indicated in this email or are not re=
+sponsible for delivery of the email to such a person, please kindly reply t=
+o the sender indicating this fact and delete all copies of it from your com=
+puter and network server immediately. Your cooperation is highly appreciate=
+d. It is advised that any unauthorized use of confidential information of N=
+uvoton is strictly prohibited; and any information in this email irrelevant=
+ to the official business of Nuvoton shall be deemed as neither given nor e=
+ndorsed by Nuvoton.
