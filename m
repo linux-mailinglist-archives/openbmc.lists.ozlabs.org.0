@@ -2,66 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8681843E43D
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:49:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 58CFB43E457
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:56:07 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7kY3Pl5z3cDr
-	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:49:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7sx2Dxqz3c5Q
+	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:56:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=arndb.de
- (client-ip=212.227.17.10; helo=mout.kundenserver.de;
+ (client-ip=212.227.126.135; helo=mout.kundenserver.de;
  envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7kG3lT2z3btR
- for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:49:25 +1100 (AEDT)
-Received: from mail-wr1-f41.google.com ([209.85.221.41]) by
- mrelayeu.kundenserver.de (mreue107 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1MZT2u-1mBsm73fOQ-00WTfL for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
- 16:49:21 +0200
-Received: by mail-wr1-f41.google.com with SMTP id s13so3502042wrb.3
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:49:21 -0700 (PDT)
-X-Gm-Message-State: AOAM5320gNMIs/zEkXHnG/xeiRBNVlpe4QjV1f3tRPLO0/E3gudP0HaO
- 9pxL0aQh/xet4A7zY0hh+o1ASrfNTgJFX1dC3Ls=
-X-Google-Smtp-Source: ABdhPJyZaPDPCoaDGyatBTS5bhSohWogOcSmV50vy7mFoGeznOuDlcMqq0iyn1grr0cj7qSdSBNBCx/C2MgWvgadgZU=
-X-Received: by 2002:adf:e292:: with SMTP id v18mr6094633wri.369.1635432561472; 
- Thu, 28 Oct 2021 07:49:21 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7sd38dDz2xDm
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:55:48 +1100 (AEDT)
+Received: from mail-wm1-f54.google.com ([209.85.128.54]) by
+ mrelayeu.kundenserver.de (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1Mzhzd-1mtUlU0tnN-00vdUB for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
+ 16:55:45 +0200
+Received: by mail-wm1-f54.google.com with SMTP id
+ f7-20020a1c1f07000000b0032ee11917ceso1589673wmf.0
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:55:45 -0700 (PDT)
+X-Gm-Message-State: AOAM5325NsLc19n/1y4LmZuyF8pfMhVgIEq3IBCjgiyUDUnk7HD8AY2h
+ TH31E1OA8bMQFzJdATyU8CEqBrqxE/+crchctoQ=
+X-Google-Smtp-Source: ABdhPJyG4uqa4KI4PxkZID5NK7baIbLWZaHnCQ9DvZVpGK/tLF/blE/NbR3DQZF6k+qtTHAHzW4lFAsVA+2j3CeEgVo=
+X-Received: by 2002:a05:600c:1548:: with SMTP id
+ f8mr5021740wmg.35.1635432944804; 
+ Thu, 28 Oct 2021 07:55:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
- <20211028141938.3530-9-lukas.bulwahn@gmail.com>
-In-Reply-To: <20211028141938.3530-9-lukas.bulwahn@gmail.com>
+ <20211028141938.3530-10-lukas.bulwahn@gmail.com>
+In-Reply-To: <20211028141938.3530-10-lukas.bulwahn@gmail.com>
 From: Arnd Bergmann <arnd@arndb.de>
-Date: Thu, 28 Oct 2021 16:49:05 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a3ZBwDdgZfwLMPqfV=MrinyiZ0vYppt_2PLviAbHNKZhA@mail.gmail.com>
-Message-ID: <CAK8P3a3ZBwDdgZfwLMPqfV=MrinyiZ0vYppt_2PLviAbHNKZhA@mail.gmail.com>
-Subject: Re: [PATCH 08/13] arm: imx: rename DEBUG_IMX21_IMX27_UART to
- DEBUG_IMX27_UART
+Date: Thu, 28 Oct 2021 16:55:28 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a2J3Eufd_LL7qX=0bui_PwkN1WATqrrigia3f6Z8b1tpg@mail.gmail.com>
+Message-ID: <CAK8P3a2J3Eufd_LL7qX=0bui_PwkN1WATqrrigia3f6Z8b1tpg@mail.gmail.com>
+Subject: Re: [PATCH 09/13] arm: milbeaut: remove select of non-existing
+ PINCTRL_MILBEAUT
 To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:4FRATgiJCDlVi0y/TAzP+NafE68PAq+/OuG2/juyXIWISPFRGNg
- VTgSnmRbUhvdxy08A0tr7yUad/qSSRE5f+j8zUDbeU/gFwoEChWhnhqb8jmHA8p1FOpxxjE
- UKigjTHjYsV/mHngPtnwy0gd8RU47PKZDL1ATaJ1pvi10T9hJg9cqjTu63PIua0WsIfBkW+
- /F7EevfQhIwt9bXaTa6hg==
+X-Provags-ID: V03:K1:YNtQTiz/96CWm9xZdNJqgCMniKMUCjgUi1DWNLjQEX2dYoGy98/
+ GnODelw22XhPzS5s59iXxVZV8kMqebbzp+IVMhEk7Dl9Cw0Zqbt92DXsm1hapvg01RLinNC
+ Qs/ULwX09e0kk4GIykxl3hxaw616tBQqnGT498A0DyAJDxtp1nHHrGNhbt6fXQJNiQSAo+D
+ +L4F6Xq3Sx3YRfYxc/KOg==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UKm1MHdGzQM=:AJACMJJyUInaPkrMp0hfIZ
- VOTKJXgYVHIfmOy75Lfne47ZNTXDLhS1D4zx7KBMDyD8xfLajzDadHDZC3/uhG4xzXgHWKfz3
- moZ6YBK/BEYqFW6U2Ba+oYlsSc5reeMw2Mnod1ZFCJFu5KbnLWDtEfRQs8W9ewgd7PHIyMbz9
- 4Wo/PMr/L0+ya/2RPoR9KoV/gn9eKqMozU+Hi+x7oXdzMYlzN52kIaGoQl1Z1xF2yZ4cjD3Nm
- m7EM/n96j2TTBLPNjYVF9Ndme+lPvylnWgdcH7rQGkt4ToFw+djP9Oy4OLJPAmj5nDNJx1nP9
- addAOEVaS5+6CoL1sgu9E4vfFsK2iV7m7JBHj8wBgsv203U5F3fPw9NVp9TZxAK+9y5SVu9Ct
- KQ5bfdvu4a9jdmB4rmITOi4HtqQ9XfIDdiwlIukUNeGx+XGFPn8A3w+snASm1DzDWbq/tol2y
- 8r2EXsZWa/1VJhR5eDFhQoZ7WCNfyVk0gxQYPaXK+8Gsa+7bNfyD7SeL0e7fLf6dnNAuXje/J
- wouN0NwOIu/PpVuVWKhvFMhDM9BKNnzO2VXm3ptFrdLD7lA/Au/1f7rYHfQE6f1TyRzk2HC8B
- j1Q2Mw36vVAjC3WeOEU7suL58evXRAN6MpiFRgLAoRGYeJ/e0Xc+Ijoaw1OS7Dgi4Bd8zbUyI
- MZ4G4cpddgtBgAwahoospEKdnrW0C1bbR0i9fL0APsToem5M4gr92tLXrK0T9cfr9kEjcBqbx
- o8MfIQPDAaYXUN8qmndxRUIgLAUf6kQkN3lkWX8x1wr+Uc5r1A8QQfW8GRic39n5ZcYOi9SDx
- NU4ziry/+0ikUlRD6ep17XVqb6HKggQKwIlR/VNKpASvS7rSpTLCKThgwWQFc5sJVMcGm2IWA
- G6CNK9KwDaU4ZlYdh3sEhZ+vyt2gKT6meuGfyNqLQm4hq8u9egp2e06B5fAemLYxns1iTgmxz
- /CzgzJSnxNw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:HgEpOK3WFnk=:oEvt05XjMskGWQ6mMlj0Ue
+ 5yB/gUXsywqSvkMBVHt1kH229GBnmKhKKdhTQzifCaxvp6SYU3kAEh3qMjkq9dce0cmkDZgmQ
+ y3rl86CMlcwN90FWBUkat+AkR2/77yPSOpwBcKtOvXi9etXQ1pDfr2MZGq2C+8WzbMf9aTMw3
+ bzqXHwm0EkPcPLWd9O9+uHvdXgWqwNk06B4UkLjmz38VlMyyN0d0h9OzNnH1En5peTSSRDV8o
+ qKZdKI/42JG25bEYdLzuqgXwSR2sE6yH9LL4AmjYqhZStABzxaayKOr6KMWcl8IlxgYyxbckY
+ Rco5TmEa0BDYKv9ARBUHj//vtBAUnyQxpklC3eLEnWIOz9BT93KlAqGp0UO5qX9SEo4lg5dQ/
+ ha2nDRKivwkjy0l8W+VS+SMlg7j9xK39HiS01LKqUV78aENWHh5GcqKdFmN4P94fPp153cAFb
+ XsZiCwR1EpERhnijbnFxLfzVs4kOsX3VUD9Ody6r+GqA2ZdWxRd6qQIiU3EhKt+bCBGdIlVGO
+ WIchyNjcbYXce/aLt3CbI6r0DNtI+oX30cWo/hFIcGB1D+eLUEVCzIfk9tdcGxl50Hl1BQoT7
+ vTMklt5eXlZR831gQZk09aoHubqHxZhSyEafFxZkGSJQZGMLKvAW+l5o+4A6JzKFUCuvS8cj+
+ O7nbf39mPI2SfimsuuZ1NvJCZI384ton4Fs/jZgsW+adZYu88I9G2xoRAjAqpoAb7uphgDi3n
+ vrETdsa542feRH5WhMnhhKiEmTNUWSFeNtSiUB6w1Fy1e7fUmqpY4QkbCaMuxniDfOgZJ7fdE
+ orqYN3kRahJe7XG1scjxcCMElMD/CbmD7njMq2VUaU9BiF6ZqExLsBfInrCh/KZoV7oN5ms
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,31 +79,48 @@ Cc: Tomer Maimon <tmaimon77@gmail.com>, kernel-janitors@vger.kernel.org,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>,
  Russell King <linux@armlinux.org.uk>, Arnd Bergmann <arnd@arndb.de>,
  Sekhar Nori <nsekhar@ti.com>, Sascha Hauer <s.hauer@pengutronix.de>,
- Krzysztof Halasa <khalasa@piap.pl>,
+ Jassi Brar <jaswinder.singh@linaro.org>, Krzysztof Halasa <khalasa@piap.pl>,
  Linux ARM <linux-arm-kernel@lists.infradead.org>,
  Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
  Linus Walleij <linusw@kernel.org>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Dinh Nguyen <dinguyen@kernel.org>,
+ Dinh Nguyen <dinguyen@kernel.org>, Sugaya Taichi <sugaya.taichi@socionext.com>,
  Pengutronix Kernel Team <kernel@pengutronix.de>,
- Imre Kaloz <kaloz@openwrt.org>, Shawn Guo <shawnguo@kernel.org>,
- Bartosz Golaszewski <brgl@bgdev.pl>
+ Takao Orito <orito.takao@socionext.com>, Imre Kaloz <kaloz@openwrt.org>,
+ Shawn Guo <shawnguo@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Thu, Oct 28, 2021 at 4:19 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
 >
-> Since commit 4b563a066611 ("ARM: imx: Remove imx21 support"), the config
-> DEBUG_IMX21_IMX27_UART is really only debug support for IMX27.
+> The patch series "Add basic support for Socionext Milbeaut M10V SoC" (see
+> Link) introduced the config ARCH_MILBEAUT_M10V "Milbeaut SC2000/M10V
+> platform" in ./arch/arm/mach-milbeaut/ and intended to introduce timer,
+> clock, pinctrl and serial controller drivers.
 >
-> So, rename this option to DEBUG_IMX27_UART and adjust dependencies in
-> Kconfig and rename the definitions to IMX27 as further clean-up.
+> However, during patch submission in March 2019, the introduction of the
+> milbeaut pinctrl driver was dropped from v2 to v3 of the patch series.
+> Since then, there was no further patch series to add this pinctrl driver
+> later on.
 >
-> This issue was discovered with ./scripts/checkkconfigsymbols.py, which
-> reported that DEBUG_IMX21_IMX27_UART depends on the non-existing config
-> SOC_IMX21.
+> Hence, selecting PINCTRL_MILBEAUT in config is simply dangling and
+> referring to a non-existing config symbols.
+> Fortunately, ./scripts/checkkconfigsymbols.py warns:
+>
+> PINCTRL_MILBEAUT
+> Referencing files: arch/arm/mach-milbeaut/Kconfig
+>
+> Remove this select of the non-existing PINCTRL_MILBEAUT for now.
+>
+> Link: https://lore.kernel.org/linux-arm-kernel/1551243056-10521-1-git-send-email-sugaya.taichi@socionext.com/
 >
 > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
+I would take that as an indication that there is no interest in supporting this
+platform upstream any more, the version we merged probably never worked
+without the rest of the drivers.
 
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+I've added the original authors of the other drivers to Cc. Should we remove
+all of this?
+
+        Arnd
