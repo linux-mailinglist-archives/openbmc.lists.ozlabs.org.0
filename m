@@ -2,68 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAADA43E434
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:48:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8681843E43D
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:49:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7jj5Mtsz3c7S
-	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:48:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7kY3Pl5z3cDr
+	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:49:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=arndb.de
- (client-ip=212.227.17.24; helo=mout.kundenserver.de;
+ (client-ip=212.227.17.10; helo=mout.kundenserver.de;
  envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
-X-Greylist: delayed 533 seconds by postgrey-1.36 at boromir;
- Fri, 29 Oct 2021 01:48:34 AEDT
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7jG4C0Jz3bNB
- for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:48:33 +1100 (AEDT)
-Received: from mail-wm1-f49.google.com ([209.85.128.49]) by
- mrelayeu.kundenserver.de (mreue108 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1MfpKZ-1n8ooJ2ZCr-00gENd for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
- 16:48:30 +0200
-Received: by mail-wm1-f49.google.com with SMTP id
- 67-20020a1c1946000000b0030d4c90fa87so5292822wmz.2
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:48:30 -0700 (PDT)
-X-Gm-Message-State: AOAM530jH4sxEUBHczwf25vDn/6XO8yxuSviWPIq7lYXryqKG9or443h
- XWJVXoOrgtNBVnmQPLqogfOSGCFAvWYQ03GhWEk=
-X-Google-Smtp-Source: ABdhPJzL3MD7Ov/YpXP8VB2S/9zdo9mXJlPWHWLikatiPP2chN2QqBJfFmmZsDznohWi1xDRgcrL/A+XHkQgb3o6kX0=
-X-Received: by 2002:a05:600c:1912:: with SMTP id
- j18mr12838474wmq.173.1635432509957; 
- Thu, 28 Oct 2021 07:48:29 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7kG3lT2z3btR
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:49:25 +1100 (AEDT)
+Received: from mail-wr1-f41.google.com ([209.85.221.41]) by
+ mrelayeu.kundenserver.de (mreue107 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1MZT2u-1mBsm73fOQ-00WTfL for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
+ 16:49:21 +0200
+Received: by mail-wr1-f41.google.com with SMTP id s13so3502042wrb.3
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:49:21 -0700 (PDT)
+X-Gm-Message-State: AOAM5320gNMIs/zEkXHnG/xeiRBNVlpe4QjV1f3tRPLO0/E3gudP0HaO
+ 9pxL0aQh/xet4A7zY0hh+o1ASrfNTgJFX1dC3Ls=
+X-Google-Smtp-Source: ABdhPJyZaPDPCoaDGyatBTS5bhSohWogOcSmV50vy7mFoGeznOuDlcMqq0iyn1grr0cj7qSdSBNBCx/C2MgWvgadgZU=
+X-Received: by 2002:adf:e292:: with SMTP id v18mr6094633wri.369.1635432561472; 
+ Thu, 28 Oct 2021 07:49:21 -0700 (PDT)
 MIME-Version: 1.0
 References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
- <20211028141938.3530-8-lukas.bulwahn@gmail.com>
-In-Reply-To: <20211028141938.3530-8-lukas.bulwahn@gmail.com>
+ <20211028141938.3530-9-lukas.bulwahn@gmail.com>
+In-Reply-To: <20211028141938.3530-9-lukas.bulwahn@gmail.com>
 From: Arnd Bergmann <arnd@arndb.de>
-Date: Thu, 28 Oct 2021 16:48:13 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a1T1Q5YJEhd5sM03H7vmEWzBmJ_PR3cPsdn6y=nDpyd2w@mail.gmail.com>
-Message-ID: <CAK8P3a1T1Q5YJEhd5sM03H7vmEWzBmJ_PR3cPsdn6y=nDpyd2w@mail.gmail.com>
-Subject: Re: [PATCH 07/13] arm: imx: remove dead left-over from i.MX{27, 31,
- 35} removal
+Date: Thu, 28 Oct 2021 16:49:05 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a3ZBwDdgZfwLMPqfV=MrinyiZ0vYppt_2PLviAbHNKZhA@mail.gmail.com>
+Message-ID: <CAK8P3a3ZBwDdgZfwLMPqfV=MrinyiZ0vYppt_2PLviAbHNKZhA@mail.gmail.com>
+Subject: Re: [PATCH 08/13] arm: imx: rename DEBUG_IMX21_IMX27_UART to
+ DEBUG_IMX27_UART
 To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:zomkY+AN/fpykBAJK6pao16mwnTvudZ4oHWjs6tK8uoOB35OEGw
- 9HUQtIx1k3wd8NtnFiCcV9khmv69KnrYZFUM3YRBU2yiY8IIsXDu1ES34BgyNHqmU/7WnYr
- wzJZKtSjOiQKyDWbpV34OQVIMvylG2WqMy6u19WCtUOXcpVP56SknD5G4gpnV5plqILny9b
- 2gs95ct//o3xMsUwcBsfw==
+X-Provags-ID: V03:K1:4FRATgiJCDlVi0y/TAzP+NafE68PAq+/OuG2/juyXIWISPFRGNg
+ VTgSnmRbUhvdxy08A0tr7yUad/qSSRE5f+j8zUDbeU/gFwoEChWhnhqb8jmHA8p1FOpxxjE
+ UKigjTHjYsV/mHngPtnwy0gd8RU47PKZDL1ATaJ1pvi10T9hJg9cqjTu63PIua0WsIfBkW+
+ /F7EevfQhIwt9bXaTa6hg==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:HNtuFRFmWZA=:ZRCdNO5H1Xc1CIcQKQI5a3
- sGHjw0RdBu8no6ncTGLTDFFAkDcKacSQKBdRXSjAuif2M1r5KkiPCEteMy2awa36isE3ZWHxy
- 5hI7qplHUs7MxM59KgqOLNKG8xDZS8HQ6e5XNaifcnYRxhObigeAQ6ZPA87OVqu9q09qBGKNn
- tSF3T5p5/7qwmnSHMz1zkFgnaR9nPl+bmMqwxn7WSIiU1TuCBDcLIzE4WLHe/bBwCogGq0cJI
- SNgCEkqmc9ud4LD84+pEvxB95RwshuJKLj0uHaQGy+/n+lBLns9jtop2H+v7gjTJ0Z9X9I1Qo
- sXfgbH9VS0jW3qZNy6GozZchRDmlAgxMxvYMzJ76fiaIdIE92sO+hoOrRbUORlqRD2kD/abSQ
- VvYdH5d1J9N5WUhKW8U1xbO+rhJv79YCty80PYfNtdPiM9kBJOBZfUJsoMB5rjAKQqswn/h+J
- 4E3Ic9IWH6yJl1Yoo2MF8lkI/aP5mr0unXnbLn9YGE8sv8/50xC/sSQ6CDDMHpAe4V0RPmytY
- F9hu6cgNjmTBMqvTk9ax5aGbDd0QB2QHgeOGRyVPtpOV4Hb67jNi9UE8OYZZoDIAghkKb5YQN
- m6fJZSVvP+HqCt2iGfm9BXCp7VpRpDVFMWetdbn8cHRk7HdfdeYSs6sc3V8P1s7WPpXw/xD18
- ZZmWdfvgQFIe+cQBt3+m0YMLnMS7tgvWv4LJq2No4Li1djMQF2oLPgobffTiQtZS1Rlmm+Vnj
- jQ/M5z4JOxezf3LBh6hNg/9qft37RPQHxkD5iRSyuA5ZRhOPCfBij+unK1xeav7UvMlqNXOl6
- IUySgbQ0NZRQGSBWxbGnCl0ByELJuzX50DOPBcUx/E98fJx9Hc=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UKm1MHdGzQM=:AJACMJJyUInaPkrMp0hfIZ
+ VOTKJXgYVHIfmOy75Lfne47ZNTXDLhS1D4zx7KBMDyD8xfLajzDadHDZC3/uhG4xzXgHWKfz3
+ moZ6YBK/BEYqFW6U2Ba+oYlsSc5reeMw2Mnod1ZFCJFu5KbnLWDtEfRQs8W9ewgd7PHIyMbz9
+ 4Wo/PMr/L0+ya/2RPoR9KoV/gn9eKqMozU+Hi+x7oXdzMYlzN52kIaGoQl1Z1xF2yZ4cjD3Nm
+ m7EM/n96j2TTBLPNjYVF9Ndme+lPvylnWgdcH7rQGkt4ToFw+djP9Oy4OLJPAmj5nDNJx1nP9
+ addAOEVaS5+6CoL1sgu9E4vfFsK2iV7m7JBHj8wBgsv203U5F3fPw9NVp9TZxAK+9y5SVu9Ct
+ KQ5bfdvu4a9jdmB4rmITOi4HtqQ9XfIDdiwlIukUNeGx+XGFPn8A3w+snASm1DzDWbq/tol2y
+ 8r2EXsZWa/1VJhR5eDFhQoZ7WCNfyVk0gxQYPaXK+8Gsa+7bNfyD7SeL0e7fLf6dnNAuXje/J
+ wouN0NwOIu/PpVuVWKhvFMhDM9BKNnzO2VXm3ptFrdLD7lA/Au/1f7rYHfQE6f1TyRzk2HC8B
+ j1Q2Mw36vVAjC3WeOEU7suL58evXRAN6MpiFRgLAoRGYeJ/e0Xc+Ijoaw1OS7Dgi4Bd8zbUyI
+ MZ4G4cpddgtBgAwahoospEKdnrW0C1bbR0i9fL0APsToem5M4gr92tLXrK0T9cfr9kEjcBqbx
+ o8MfIQPDAaYXUN8qmndxRUIgLAUf6kQkN3lkWX8x1wr+Uc5r1A8QQfW8GRic39n5ZcYOi9SDx
+ NU4ziry/+0ikUlRD6ep17XVqb6HKggQKwIlR/VNKpASvS7rSpTLCKThgwWQFc5sJVMcGm2IWA
+ G6CNK9KwDaU4ZlYdh3sEhZ+vyt2gKT6meuGfyNqLQm4hq8u9egp2e06B5fAemLYxns1iTgmxz
+ /CzgzJSnxNw==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,23 +93,17 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Thu, Oct 28, 2021 at 4:19 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
 >
-> The commits:
+> Since commit 4b563a066611 ("ARM: imx: Remove imx21 support"), the config
+> DEBUG_IMX21_IMX27_UART is really only debug support for IMX27.
 >
->   commit 879c0e5e0ac7 ("ARM: imx: Remove i.MX27 board files")
->   commit c93197b0041d ("ARM: imx: Remove i.MX31 board files")
->   commit e1324ece2af4 ("ARM: imx: Remove i.MX35 board files")
+> So, rename this option to DEBUG_IMX27_UART and adjust dependencies in
+> Kconfig and rename the definitions to IMX27 as further clean-up.
 >
-> remove the config MACH_MX27_3DS, MACH_MX31_3DS and MACH_MX35_3DS.
-> Commit a542fc18168c ("ARM: imx31: Remove remaining i.MX31 board code")
-> further removes arch/arm/mach-imx/3ds_debugboard.{c,h}. So, only some
-> dead left-over in Kconfig and Makefile remains.
->
-> Remove this remaining left-over.
->
-> This issue was identified with ./scripts/checkkconfigsymbols.py,
-> which warns on references to the non-existing configs
-> MACH_MX{27,31,35}_3DS in ./arch/arm/mach-imx/Kconfig.
+> This issue was discovered with ./scripts/checkkconfigsymbols.py, which
+> reported that DEBUG_IMX21_IMX27_UART depends on the non-existing config
+> SOC_IMX21.
 >
 > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+
 
 Reviewed-by: Arnd Bergmann <arnd@arndb.de>
