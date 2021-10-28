@@ -1,68 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E17D43E433
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:48:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAADA43E434
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:48:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7jG0DQ0z3bnP
-	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:48:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7jj5Mtsz3c7S
+	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:48:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=arndb.de
- (client-ip=212.227.126.130; helo=mout.kundenserver.de;
+ (client-ip=212.227.17.24; helo=mout.kundenserver.de;
  envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
+X-Greylist: delayed 533 seconds by postgrey-1.36 at boromir;
+ Fri, 29 Oct 2021 01:48:34 AEDT
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7hk3R2Fz3c70
- for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:48:06 +1100 (AEDT)
-Received: from mail-wr1-f48.google.com ([209.85.221.48]) by
- mrelayeu.kundenserver.de (mreue010 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1N9MYu-1mlUWs2sbs-015M8i for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
- 16:48:02 +0200
-Received: by mail-wr1-f48.google.com with SMTP id d10so10731871wrb.1
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:48:02 -0700 (PDT)
-X-Gm-Message-State: AOAM5313g5Sktb8KtK5P9OUvpGHxcyeCRz6uOwvga3cZa0WRF9EE83dq
- 4xJ4+Y9B6fNlqgdznVSKWjHfps7/O0NIOsVpmI8=
-X-Google-Smtp-Source: ABdhPJz7TRI3T5WUNkBtx1I3opK6zK4wMD5un05K06gP0B+1Z0NV/fjKsDEnFxUnUXMMXOynp8+ZrPiu5cPB4r2Ft0g=
-X-Received: by 2002:a05:6000:18c7:: with SMTP id
- w7mr6176696wrq.411.1635432482378; 
- Thu, 28 Oct 2021 07:48:02 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7jG4C0Jz3bNB
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:48:33 +1100 (AEDT)
+Received: from mail-wm1-f49.google.com ([209.85.128.49]) by
+ mrelayeu.kundenserver.de (mreue108 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1MfpKZ-1n8ooJ2ZCr-00gENd for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
+ 16:48:30 +0200
+Received: by mail-wm1-f49.google.com with SMTP id
+ 67-20020a1c1946000000b0030d4c90fa87so5292822wmz.2
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:48:30 -0700 (PDT)
+X-Gm-Message-State: AOAM530jH4sxEUBHczwf25vDn/6XO8yxuSviWPIq7lYXryqKG9or443h
+ XWJVXoOrgtNBVnmQPLqogfOSGCFAvWYQ03GhWEk=
+X-Google-Smtp-Source: ABdhPJzL3MD7Ov/YpXP8VB2S/9zdo9mXJlPWHWLikatiPP2chN2QqBJfFmmZsDznohWi1xDRgcrL/A+XHkQgb3o6kX0=
+X-Received: by 2002:a05:600c:1912:: with SMTP id
+ j18mr12838474wmq.173.1635432509957; 
+ Thu, 28 Oct 2021 07:48:29 -0700 (PDT)
 MIME-Version: 1.0
 References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
- <20211028141938.3530-7-lukas.bulwahn@gmail.com>
-In-Reply-To: <20211028141938.3530-7-lukas.bulwahn@gmail.com>
+ <20211028141938.3530-8-lukas.bulwahn@gmail.com>
+In-Reply-To: <20211028141938.3530-8-lukas.bulwahn@gmail.com>
 From: Arnd Bergmann <arnd@arndb.de>
-Date: Thu, 28 Oct 2021 16:47:46 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a2JMQvh7RcNaVB9nu0B+1dCHjhJj+aVR0YsfcFrSfFH-A@mail.gmail.com>
-Message-ID: <CAK8P3a2JMQvh7RcNaVB9nu0B+1dCHjhJj+aVR0YsfcFrSfFH-A@mail.gmail.com>
-Subject: Re: [PATCH 06/13] arm: ixp4xx: remove dead configs CPU_IXP43X and
- CPU_IXP46X
+Date: Thu, 28 Oct 2021 16:48:13 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a1T1Q5YJEhd5sM03H7vmEWzBmJ_PR3cPsdn6y=nDpyd2w@mail.gmail.com>
+Message-ID: <CAK8P3a1T1Q5YJEhd5sM03H7vmEWzBmJ_PR3cPsdn6y=nDpyd2w@mail.gmail.com>
+Subject: Re: [PATCH 07/13] arm: imx: remove dead left-over from i.MX{27, 31,
+ 35} removal
 To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:fU7OYKEBipsSpMT+ZzS0hGWbz3vLAo3c5pX/cgva2C9yatXqt/l
- M45tpBhEQvwH6djpmk3m/VnIks6xhVdcl4ykz+LqtE6/kGFf50ntCQ8TZvLexzVG6e23gAO
- Od9zbAdNT1WEoQ0ctJOZqgSpG4+2X9QlC3S7YxSgicpJp6W2bRW7kwVW0svkGOsZmm/Jd1q
- b9zQ5tns9vphQVAI0RiVw==
+X-Provags-ID: V03:K1:zomkY+AN/fpykBAJK6pao16mwnTvudZ4oHWjs6tK8uoOB35OEGw
+ 9HUQtIx1k3wd8NtnFiCcV9khmv69KnrYZFUM3YRBU2yiY8IIsXDu1ES34BgyNHqmU/7WnYr
+ wzJZKtSjOiQKyDWbpV34OQVIMvylG2WqMy6u19WCtUOXcpVP56SknD5G4gpnV5plqILny9b
+ 2gs95ct//o3xMsUwcBsfw==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AgqZZU/8V0g=:WDYNX5vO6SD1GhAg7MkW6b
- 8U4O1Vxqm4C3iQf85yQ/UJC3a96pCid1Q4LdjvTaGY/6OQsWmyFCvTyKrFabDqVchvN8gWocA
- iUyYyhXJPfw/jgTChUx9DmIMBev4lEMSOzNrmt5HgEmyZ9Fj7x0MkgVXl1kuyGmGO3jzupoB3
- 4mWAUTJ+Oj3HDmM+nn18vyT2Dua3E4cEbMTPkfyi3kioUInLMI3yyUVAggctEi10rvDpGx3rU
- WShrn+eZgjMki3EWsSD7NSyCvynJRNL8zJEE+Sl5J47dYArB4I09TuWcF8ATxIWd/ApB8E0xh
- PdSz/DtQfbVCYFs0JFX0rQj2WcB8R7kdNF5T03NoFVImf4R7BixaI4EHApQbOJyh1XxE+sDvT
- bGfKQD/aKQDSpbiX3B0MkKzO/PDh/ZYfH/wlaFaGfgMzNslu2u7qZaF1k5dX4OTXZtvtJUa3x
- 3xZrmJOo2FUA68ocYPtITmVOmyir0oDkJ2yvUIsXPMigLYSjQeJvzLH+MuMP5bEC3n/q3NrzN
- HzAy4lFUAZgTsDqZNWr1HoV8vKd7qngD4bj8Nm39EeaQ/BkcZOmOGeqVOaeyU/p/ns3u9yC5u
- fFoS0X3AeUqABEduotikfhZXW6rvYKTdglMPwZ/fQJtiM5IaeOkjnHfhBjHHfe0EjWWtz2Ixl
- mYtaY/WIVqIu3ama7cMwsy2q984EoKUNLs3t92h4PqptZJtzdJivxYxQmWrQ1EnD8jfw1VAHx
- dHU81wV3FjczRHmGD4lPRLWvhuHH51ZjNfCvmoKQTRnSnLIQnpaGUm+hNfN51tyXZG/BXYWMT
- tAC7JTAiIX3pQyhKhU5ONISlnHIdl021QklhC/dJye5ggJHVm/2CZzdVjAv0a6IhIfRfYQJ8m
- MzbN+mnck32JQ6b4h4pmXgCRda//S4/KStqODdgIvfmaAIEJSq7v3Yr20EXphJaKtItO7BinN
- TNRJt3m5PLQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:HNtuFRFmWZA=:ZRCdNO5H1Xc1CIcQKQI5a3
+ sGHjw0RdBu8no6ncTGLTDFFAkDcKacSQKBdRXSjAuif2M1r5KkiPCEteMy2awa36isE3ZWHxy
+ 5hI7qplHUs7MxM59KgqOLNKG8xDZS8HQ6e5XNaifcnYRxhObigeAQ6ZPA87OVqu9q09qBGKNn
+ tSF3T5p5/7qwmnSHMz1zkFgnaR9nPl+bmMqwxn7WSIiU1TuCBDcLIzE4WLHe/bBwCogGq0cJI
+ SNgCEkqmc9ud4LD84+pEvxB95RwshuJKLj0uHaQGy+/n+lBLns9jtop2H+v7gjTJ0Z9X9I1Qo
+ sXfgbH9VS0jW3qZNy6GozZchRDmlAgxMxvYMzJ76fiaIdIE92sO+hoOrRbUORlqRD2kD/abSQ
+ VvYdH5d1J9N5WUhKW8U1xbO+rhJv79YCty80PYfNtdPiM9kBJOBZfUJsoMB5rjAKQqswn/h+J
+ 4E3Ic9IWH6yJl1Yoo2MF8lkI/aP5mr0unXnbLn9YGE8sv8/50xC/sSQ6CDDMHpAe4V0RPmytY
+ F9hu6cgNjmTBMqvTk9ax5aGbDd0QB2QHgeOGRyVPtpOV4Hb67jNi9UE8OYZZoDIAghkKb5YQN
+ m6fJZSVvP+HqCt2iGfm9BXCp7VpRpDVFMWetdbn8cHRk7HdfdeYSs6sc3V8P1s7WPpXw/xD18
+ ZZmWdfvgQFIe+cQBt3+m0YMLnMS7tgvWv4LJq2No4Li1djMQF2oLPgobffTiQtZS1Rlmm+Vnj
+ jQ/M5z4JOxezf3LBh6hNg/9qft37RPQHxkD5iRSyuA5ZRhOPCfBij+unK1xeav7UvMlqNXOl6
+ IUySgbQ0NZRQGSBWxbGnCl0ByELJuzX50DOPBcUx/E98fJx9Hc=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,24 +95,22 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Thu, Oct 28, 2021 at 4:19 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
 >
-> Commit 73d04ca5f4ac ("ARM: ixp4xx: Delete Intel reference design
-> boardfiles") removes the definition of the configs MACH_IXDP465 and
-> MACH_KIXRP435, but misses to remove the configs CPU_IXP43X and CPU_IXP46X
-> that depend on those removed configs, and hence are dead now.
+> The commits:
 >
-> Fortunately, ./scripts/checkkconfigsymbols.py warns:
+>   commit 879c0e5e0ac7 ("ARM: imx: Remove i.MX27 board files")
+>   commit c93197b0041d ("ARM: imx: Remove i.MX31 board files")
+>   commit e1324ece2af4 ("ARM: imx: Remove i.MX35 board files")
 >
-> MACH_IXDP465
-> Referencing files: arch/arm/mach-ixp4xx/Kconfig
+> remove the config MACH_MX27_3DS, MACH_MX31_3DS and MACH_MX35_3DS.
+> Commit a542fc18168c ("ARM: imx31: Remove remaining i.MX31 board code")
+> further removes arch/arm/mach-imx/3ds_debugboard.{c,h}. So, only some
+> dead left-over in Kconfig and Makefile remains.
 >
-> MACH_KIXRP435
-> Referencing files: arch/arm/mach-ixp4xx/Kconfig
+> Remove this remaining left-over.
 >
-> Remove the dead configs CPU_IXP43X and CPU_IXP46X.
->
-> A further quick grep for the name of those two symbols did not show any
-> use of the two config symbols; so, there are no further clean-up activities
-> beyond this config removal needed.
+> This issue was identified with ./scripts/checkkconfigsymbols.py,
+> which warns on references to the non-existing configs
+> MACH_MX{27,31,35}_3DS in ./arch/arm/mach-imx/Kconfig.
 >
 > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
