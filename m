@@ -2,67 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EF5543E47A
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:59:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AE8FF43E549
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 17:36:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7xg165gz3bWb
-	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:59:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg8mY42bxz2yn0
+	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 02:36:29 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=U/Fj/4zS;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=arndb.de
- (client-ip=212.227.17.24; helo=mout.kundenserver.de;
- envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
+ spf=none (no SPF record) smtp.mailfrom=armlinux.org.uk
+ (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk;
+ envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256
+ header.s=pandora-2019 header.b=U/Fj/4zS; 
+ dkim-atps=neutral
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk
+ [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7xP3szDz2xDr
- for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:59:04 +1100 (AEDT)
-Received: from mail-wr1-f50.google.com ([209.85.221.50]) by
- mrelayeu.kundenserver.de (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1MxUfn-1mrI3o4AaP-00xpWc for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
- 16:59:02 +0200
-Received: by mail-wr1-f50.google.com with SMTP id m22so10817123wrb.0
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:59:01 -0700 (PDT)
-X-Gm-Message-State: AOAM531YpTMNKfwnOKArk2Ev87bQfRN9wWDSMuRiuVgMGBi5NttM01B8
- u8YjSS603VOrtM4IMFcst96n7Cx5ffuuiKQPRPU=
-X-Google-Smtp-Source: ABdhPJw1mral72Qddmd3GHMk122V+V5lr3a2+Rc1twCjQmgIEQujpYyDHdDkNkrUj9xJwnLyI7GiYnIxws+p/FRx9Gw=
-X-Received: by 2002:a05:6000:18c7:: with SMTP id
- w7mr6244203wrq.411.1635433141663; 
- Thu, 28 Oct 2021 07:59:01 -0700 (PDT)
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg8m76KRKz2xrC
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 02:36:06 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+ MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+ Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+ List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=obEVRh2SUyKsH6wuRZ+MmeBmZXXQKS44Jmrm2Q2wynI=; b=U/Fj/4zSFAfu3ihra5R0kzvttB
+ XGcVAR8aLmLHPrjVzDXTsP7lZZEKYxdFievSQRbR5RMKbt8Yu/ZRuc8yYbAUBEzr/7oTN79aMIKXK
+ rPEXXE09QDGjMZ1BM9zhfBnfKmg8nY00Zqzrm9m6lIDjIyymDCD0q0pwEEukI8ghiWm2zZy/HuIZT
+ boGw9j9RAMlBkz00H0+8QIGhaKxLDDPF2XJildRKicdgzYTY7PXIMkiix1AsCt8eMN4ajOM5gGuEI
+ JCbxWGa6C6y5Y2qPSHILdWzOXHAlaZaxtDy5TB7jIv/SkQFgurik7tg5FNImCmARI0g4Gu3MR5p9r
+ gDq03WsA==;
+Received: from shell.armlinux.org.uk
+ ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:55356)
+ by pandora.armlinux.org.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <linux@armlinux.org.uk>)
+ id 1mg7RQ-0007ix-SD; Thu, 28 Oct 2021 16:35:44 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+ (envelope-from <linux@shell.armlinux.org.uk>)
+ id 1mg7RM-0000Rz-JC; Thu, 28 Oct 2021 16:35:40 +0100
+Date: Thu, 28 Oct 2021 16:35:40 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH 04/13] arm: drop an obsolete ifdef with the removed
+ config PCI_HOST_ITE8152
+Message-ID: <YXrDTMLBAy0Ftai/@shell.armlinux.org.uk>
 References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
- <20211028141938.3530-14-lukas.bulwahn@gmail.com>
-In-Reply-To: <20211028141938.3530-14-lukas.bulwahn@gmail.com>
-From: Arnd Bergmann <arnd@arndb.de>
-Date: Thu, 28 Oct 2021 16:58:45 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a33cMrabWU7i=cT7qVJui2--VkNr2rx2BmKX5qSyfpGpg@mail.gmail.com>
-Message-ID: <CAK8P3a33cMrabWU7i=cT7qVJui2--VkNr2rx2BmKX5qSyfpGpg@mail.gmail.com>
-Subject: Re: [PATCH 13/13] arm: pgtable: refer to intended CONFIG_ARM_LPAE in
- comment
-To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:nOBSFF3duElTPGoVy0G+2HwQ6byia5zSxNNWM+/y8RzRHlL33dg
- VVphG+XwQvha/8z55HC2n+pznvSdX90r4Rb8gcI1q0wi4OfaaWxNnAeaL6v0PJYqjcYOBQR
- oIFo2yzM/O/611aCwbeiHzNMkxyVWlrSvPnHBwQ2L5rBMTTcmniwhQ9LNKLhOHbtxxywgcC
- LIHih5Pkc38fqaLEFTTfg==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PQMezIM4XZM=:mP0tfSOl/Zj6RyzKj/AMuN
- vxKlGWCedEGdmSnCxT6B5v+dyiO1jenw6PGFJdu7WViUTBR3uQT+cWCi26FZ/m2+ETVcAH0O4
- DrYcsTtdRcJvOk7WYZ81cuh2GPZqq0RrqrDFGcFizhXuSlgddX67DXaSGSd/t8Mjswb3Isuq0
- wY3o0aCK7dNyxcGIleIyNiPlQbvsa37pETOdfSGc8U5mz9UI0mz/dP+Z/nHWqaUaDHGmWQUXo
- lkCl60W9Pc2jIdA0j+IMKorvNW3mIxHk+ItyB5As9K87wQg1UMSESHA7/2Mp3VIzF7qUafbw/
- gOFhW9sgrdGCM/yPk6/dtOunABE5Y6Ra4UmtuPswBzs9COCSui0s/O5vuXOJUU5Ijk89gPMc5
- yYAbnNiPflpy6LvyHFXBIbfY61qlNjL6snJGsSyzijRXhbMfwmIoQ94MMgEM74WmahqAbRXp2
- yEJd0YeVgp5+RzqwL/J3kiYbX37APwFePUd8z+5nAkTs/mrUoGmgt/GenF/HQhdXlyhO9Mjs8
- gwvGQNDIKovcFwh5s2TUTJq6KGfgsWRORiG2FpIPs7mhgznagh5lxsPyaILxkgmNp4SQFtH3I
- T7IVOKCYUHN7OR1/ZNYHwUgaWp+3TfCe2zUKAbYOWDrmWrH5KH+6zPUnk7mDiOItCZfNRfzKp
- oDXtHrGctOqK7CAV6sGYdw6R+WuGA2FWJHzj1Or1l9N2S8MTMkSqy1M45IQx11UCnXYE+ehCM
- nS8PkjQo2hL7s/vKWcIAwi0QTfmNAgkFiOWgo8pY27RX9TcP+6ozkFpuShnt8EiDiuzr3MMsP
- GBhTbZF2dAZKdTVcU3w4ElVMAg4BojPGVmCbnyKiqqYIDtM+oHImKlnbQkegVXlpPWctak95Q
- P5eP2+DLbg3/Uxs7HDNO3k96O+c4iByYIkd5DHis5/LHOCMtenlprhxkXDK7yvzwRAgpnVumm
- 3CYIJ1udgyA==
+ <20211028141938.3530-5-lukas.bulwahn@gmail.com>
+ <CAK8P3a2LhGWer=GXMW_KT-8=nqBeS0xhu6si7Z57WAF0wE_TUA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAK8P3a2LhGWer=GXMW_KT-8=nqBeS0xhu6si7Z57WAF0wE_TUA@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,47 +73,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>, kernel-janitors@vger.kernel.org,
- Tali Perry <tali.perry1@gmail.com>, Fabio Estevam <festevam@gmail.com>,
- Benjamin Fair <benjaminfair@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Russell King <linux@armlinux.org.uk>, Arnd Bergmann <arnd@arndb.de>,
- Sekhar Nori <nsekhar@ti.com>, Sascha Hauer <s.hauer@pengutronix.de>,
- Krzysztof Halasa <khalasa@piap.pl>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- Linus Walleij <linusw@kernel.org>,
+Cc: Linus Walleij <linusw@kernel.org>, kernel-janitors@vger.kernel.org,
+ Tomer Maimon <tmaimon77@gmail.com>, Dinh Nguyen <dinguyen@kernel.org>,
+ Avi Fishman <avifishman70@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Sekhar Nori <nsekhar@ti.com>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Dinh Nguyen <dinguyen@kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>, Krzysztof Halasa <khalasa@piap.pl>,
  Pengutronix Kernel Team <kernel@pengutronix.de>,
- Imre Kaloz <kaloz@openwrt.org>, Shawn Guo <shawnguo@kernel.org>,
- Bartosz Golaszewski <brgl@bgdev.pl>
+ Patrick Venture <venture@google.com>, Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+ Imre Kaloz <kaloz@openwrt.org>, Fabio Estevam <festevam@gmail.com>,
+ Bartosz Golaszewski <brgl@bgdev.pl>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Oct 28, 2021 at 4:19 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
->
-> Commit 5615f69bc209 ("ARM: 9016/2: Initialize the mapping of KASan shadow
-> memory") adds some nested ifdef's in ./arch/arm/mm/pgd.c, and follows the
-> good practice to annotate the endif's with a comment to indicate the
-> corresponding ifdef condition.
->
-> One comment annotation refers to CONFIG_LPAE, whereas the config is
-> actually called CONFIG_ARM_LPAE. That imprecision in a comment is probably
-> tolerable for all human readers.
->
-> However, the script ./scripts/checkkconfigsymbols.py, which checks the
-> kernel tree for references to non-existing Kconfig symbols, identifies and
-> reports that the reference to CONFIG_LPAE is invalid.
->
-> The script ./scripts/checkkconfigsymbols.py has been quite useful to
-> identify a number of bugs with Kconfig symbols and deserves to be executed
-> and checked regularly.
->
-> So, repair the comment to reduce the reports from this script and simplify
-> to use this script, as new issues are easier to spot when the list of
-> reports is shorter.
->
-> Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+On Thu, Oct 28, 2021 at 04:46:38PM +0200, Arnd Bergmann wrote:
+> On Thu, Oct 28, 2021 at 4:19 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
+> >
+> > Commit 6da5238fa384 ("ARM: 8993/1: remove it8152 PCI controller driver")
+> > removes the config PCI_HOST_ITE8152, but left a dangling obsolete ifndef
+> > in ./arch/arm/kernel/bios32.c.
+> >
+> > Hence, ./scripts/checkkconfigsymbols.py warns:
+> >
+> > PCI_HOST_ITE8152
+> > Referencing files: arch/arm/kernel/bios32.c
+> >
+> > Remove this obsolete ifndef.
+> >
+> > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+> 
+> Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+> 
+> I wonder if we should just remove this function and use the
+> (non-empty) default version instead.
+> 
+> 96c5590058d7 ("PCI: Pull PCI 'latency timer' setup up into the core")
+> introduced that generic version, and I suspect the arm version
+> was left out by mistake, but it's not clear from that patch.
 
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+That was because PCI_HOST_ITE8152 needed something different from the
+"do nothing" default (setting the PCI latency timer to default to 64
+as the new generic code did.)
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
