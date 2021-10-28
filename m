@@ -1,65 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9758043E42E
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:48:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E17D43E433
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:48:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7hn4Hg7z3c6k
-	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:48:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg7jG0DQ0z3bnP
+	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:48:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=arndb.de
- (client-ip=212.227.126.134; helo=mout.kundenserver.de;
+ (client-ip=212.227.126.130; helo=mout.kundenserver.de;
  envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.134])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7h65gXBz3002
- for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:47:34 +1100 (AEDT)
-Received: from mail-wr1-f54.google.com ([209.85.221.54]) by
- mrelayeu.kundenserver.de (mreue009 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1MuluN-1mxMkz3kTT-00rlpF for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
- 16:47:30 +0200
-Received: by mail-wr1-f54.google.com with SMTP id o14so10607239wra.12
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:47:30 -0700 (PDT)
-X-Gm-Message-State: AOAM532UiyZrcAiANsZrj28r9OH149m+732ruDOVAwpriyCYqJ4l+bYV
- 25ZSvPK/HZedQTIgzKZ0Y3/PahWShoCuIAAWZtY=
-X-Google-Smtp-Source: ABdhPJyoVAkAAk4AI83BWc3dKhVnjPD+OR+iyHl9JwP/4ZYST1PD7Ic/FVFx5Kh4Wx0twMESb211U/sUQga85d1YsLc=
-X-Received: by 2002:a5d:47a3:: with SMTP id 3mr6283991wrb.336.1635432450567;
- Thu, 28 Oct 2021 07:47:30 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg7hk3R2Fz3c70
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:48:06 +1100 (AEDT)
+Received: from mail-wr1-f48.google.com ([209.85.221.48]) by
+ mrelayeu.kundenserver.de (mreue010 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1N9MYu-1mlUWs2sbs-015M8i for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021
+ 16:48:02 +0200
+Received: by mail-wr1-f48.google.com with SMTP id d10so10731871wrb.1
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:48:02 -0700 (PDT)
+X-Gm-Message-State: AOAM5313g5Sktb8KtK5P9OUvpGHxcyeCRz6uOwvga3cZa0WRF9EE83dq
+ 4xJ4+Y9B6fNlqgdznVSKWjHfps7/O0NIOsVpmI8=
+X-Google-Smtp-Source: ABdhPJz7TRI3T5WUNkBtx1I3opK6zK4wMD5un05K06gP0B+1Z0NV/fjKsDEnFxUnUXMMXOynp8+ZrPiu5cPB4r2Ft0g=
+X-Received: by 2002:a05:6000:18c7:: with SMTP id
+ w7mr6176696wrq.411.1635432482378; 
+ Thu, 28 Oct 2021 07:48:02 -0700 (PDT)
 MIME-Version: 1.0
 References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
- <20211028141938.3530-6-lukas.bulwahn@gmail.com>
-In-Reply-To: <20211028141938.3530-6-lukas.bulwahn@gmail.com>
+ <20211028141938.3530-7-lukas.bulwahn@gmail.com>
+In-Reply-To: <20211028141938.3530-7-lukas.bulwahn@gmail.com>
 From: Arnd Bergmann <arnd@arndb.de>
-Date: Thu, 28 Oct 2021 16:47:14 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a2GGbik3r5BCKE2ZCkpFyzv8Q54z_iV84ZJ+kNXYUTMzw@mail.gmail.com>
-Message-ID: <CAK8P3a2GGbik3r5BCKE2ZCkpFyzv8Q54z_iV84ZJ+kNXYUTMzw@mail.gmail.com>
-Subject: Re: [PATCH 05/13] arm: davinci: remove reference to obsolete
- BLK_DEV_PALMCHIP_BK3710
+Date: Thu, 28 Oct 2021 16:47:46 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a2JMQvh7RcNaVB9nu0B+1dCHjhJj+aVR0YsfcFrSfFH-A@mail.gmail.com>
+Message-ID: <CAK8P3a2JMQvh7RcNaVB9nu0B+1dCHjhJj+aVR0YsfcFrSfFH-A@mail.gmail.com>
+Subject: Re: [PATCH 06/13] arm: ixp4xx: remove dead configs CPU_IXP43X and
+ CPU_IXP46X
 To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:hO/aITWr8SS6cCdk7wuXi9+IYE6Avi8cRngOV4DURYbEg7+wMSC
- p++jWNOu/k29KBivp0Og667Rsgf3TB6DbtS6POtJKCCskbCk2+XJ4X80nIvyzuI47gorndR
- WXorenWTK2mc8PV13rOW1vmcFjY8Qo/jc2vK2mEEB4KHw0PpEGPTRDItuvI8C9C+7wLwA/b
- Wrp867TSBd2rIiTb3W42Q==
+X-Provags-ID: V03:K1:fU7OYKEBipsSpMT+ZzS0hGWbz3vLAo3c5pX/cgva2C9yatXqt/l
+ M45tpBhEQvwH6djpmk3m/VnIks6xhVdcl4ykz+LqtE6/kGFf50ntCQ8TZvLexzVG6e23gAO
+ Od9zbAdNT1WEoQ0ctJOZqgSpG4+2X9QlC3S7YxSgicpJp6W2bRW7kwVW0svkGOsZmm/Jd1q
+ b9zQ5tns9vphQVAI0RiVw==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:aUGH027K2Q8=:Raq+jswldQ2m+ikeGqlMWg
- +ciNth7OCnMpLmUIieWhrsq+J+QoYSM4diWKv6oEFUfO+eBIpUfXn48qirX1lmPVaVRLkNpib
- +Qxpia5rUwF0F3TugYVEKe03w+CLtKvGqEb1H80sf5tGRoABLwKfeo8ByCvAzeVLzprqqOD7W
- 4AqcDg311X+v5WuzCtiW4xE7J0K5VwPLSMIwM+X79gQqK5BETJ25xK7Nr1XJQSqddkUxhYhyd
- hq9PsnRPPJysRmjNzaVMl7Aay3OKZ8bmJ+scbZzfURwSZ3BjmdrRJ15Z5QB6aLhNqDxx4COJQ
- mAFMgOhWrVhKXj7TrhG65PhLCElrFBbp/zZZaSmscwjtp7qn5Asq3mNX9mwHnDgYs7dsYossZ
- WvOjT8fKzW8AJKzEVHi+JyYIGlc2IVs3rxb+JTao1MhErrPejWr+WwyKZ7Syzr5ReCcUTOZzc
- rT85zkD9TGeA4QEMa8bAavavqqjt25DlpyhpIUU/0JwBIs2qHrCB17zmPzs3mPWq4jvryWWuA
- b1oLrj+5ib/cvboae1PcpXChbR8eadqr13zozrqBsIZElkSIXat+L9Z70XDX9GObECVTw33+S
- jMbKwCIA3vKw+FVBK6O6GYgwWD4XDG0teTvYaFruTrcMss9jojiYYMY7EUWr0nlirEVo8s2x/
- CTFElacmO26hzE7InMNuVFhi9p4n0vzUpcmhsWskSibK9mtspUKAmrdKVc1zi6CXdYppHqnju
- 5B4AaYaKXiBds7AuCdwAEfTxq9N1U4/b+p/RGCvXH/7MFrC5i5hLjy7V6cOvRsqvpP4qvJExt
- 4KvLP+FNoF/zgs3gs3XYWL+NpM5XGaGGjOyQ9ehVS1ww3uorz0=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AgqZZU/8V0g=:WDYNX5vO6SD1GhAg7MkW6b
+ 8U4O1Vxqm4C3iQf85yQ/UJC3a96pCid1Q4LdjvTaGY/6OQsWmyFCvTyKrFabDqVchvN8gWocA
+ iUyYyhXJPfw/jgTChUx9DmIMBev4lEMSOzNrmt5HgEmyZ9Fj7x0MkgVXl1kuyGmGO3jzupoB3
+ 4mWAUTJ+Oj3HDmM+nn18vyT2Dua3E4cEbMTPkfyi3kioUInLMI3yyUVAggctEi10rvDpGx3rU
+ WShrn+eZgjMki3EWsSD7NSyCvynJRNL8zJEE+Sl5J47dYArB4I09TuWcF8ATxIWd/ApB8E0xh
+ PdSz/DtQfbVCYFs0JFX0rQj2WcB8R7kdNF5T03NoFVImf4R7BixaI4EHApQbOJyh1XxE+sDvT
+ bGfKQD/aKQDSpbiX3B0MkKzO/PDh/ZYfH/wlaFaGfgMzNslu2u7qZaF1k5dX4OTXZtvtJUa3x
+ 3xZrmJOo2FUA68ocYPtITmVOmyir0oDkJ2yvUIsXPMigLYSjQeJvzLH+MuMP5bEC3n/q3NrzN
+ HzAy4lFUAZgTsDqZNWr1HoV8vKd7qngD4bj8Nm39EeaQ/BkcZOmOGeqVOaeyU/p/ns3u9yC5u
+ fFoS0X3AeUqABEduotikfhZXW6rvYKTdglMPwZ/fQJtiM5IaeOkjnHfhBjHHfe0EjWWtz2Ixl
+ mYtaY/WIVqIu3ama7cMwsy2q984EoKUNLs3t92h4PqptZJtzdJivxYxQmWrQ1EnD8jfw1VAHx
+ dHU81wV3FjczRHmGD4lPRLWvhuHH51ZjNfCvmoKQTRnSnLIQnpaGUm+hNfN51tyXZG/BXYWMT
+ tAC7JTAiIX3pQyhKhU5ONISlnHIdl021QklhC/dJye5ggJHVm/2CZzdVjAv0a6IhIfRfYQJ8m
+ MzbN+mnck32JQ6b4h4pmXgCRda//S4/KStqODdgIvfmaAIEJSq7v3Yr20EXphJaKtItO7BinN
+ TNRJt3m5PLQ==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,10 +94,24 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Thu, Oct 28, 2021 at 4:19 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
 >
-> Commit b7fb14d3ac63 ("ide: remove the legacy ide driver") removes the
-> definition of the config BLK_DEV_PALMCHIP_BK3710.
+> Commit 73d04ca5f4ac ("ARM: ixp4xx: Delete Intel reference design
+> boardfiles") removes the definition of the configs MACH_IXDP465 and
+> MACH_KIXRP435, but misses to remove the configs CPU_IXP43X and CPU_IXP46X
+> that depend on those removed configs, and hence are dead now.
 >
-> So, remove the obsolete references in the mach-davinci architecture.
+> Fortunately, ./scripts/checkkconfigsymbols.py warns:
+>
+> MACH_IXDP465
+> Referencing files: arch/arm/mach-ixp4xx/Kconfig
+>
+> MACH_KIXRP435
+> Referencing files: arch/arm/mach-ixp4xx/Kconfig
+>
+> Remove the dead configs CPU_IXP43X and CPU_IXP46X.
+>
+> A further quick grep for the name of those two symbols did not show any
+> use of the two config symbols; so, there are no further clean-up activities
+> beyond this config removal needed.
 >
 > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
