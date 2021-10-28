@@ -1,88 +1,85 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E26E43E24C
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 15:32:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C94043E273
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 15:43:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg61L29Jsz3c6k
-	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 00:32:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg6GP0pblz2yZ2
+	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 00:43:41 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Hlrw1sXM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=vYng+++k;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=UpCYj3DV;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Hlrw1sXM; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=vYng+++k; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=UpCYj3DV; 
+ dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg60r0w81z2xg3
- for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 00:31:55 +1100 (AEDT)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19SCltoY023743; 
- Thu, 28 Oct 2021 13:31:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=1JQkbFzUJmY7GodOxQC8UtAWd4NCZDaKpESwYvoNlk4=;
- b=Hlrw1sXMK8dE42ZgziC0qK8k1i3BD5GZW+9/2GprkfjocmeGgD7D9nvZqicjvs8fpuX0
- ehy07NOlFTCKgpbVyFlNF2gZczrO0j6GrcdUZ+n9M+cJGYeV/aKVQAaAVz75A/FRiJE2
- t82h4AuWBvPZHuv5/VWMq6o90yaLNnWFTUwDnRdJyxBnla78Qfv5WDLZk3mYm31vSpaw
- Z6JlWl/X/OIgLQeqEVPZLJw0GVEi92xUM1QNmYVBc1/0XRy+O72zX7v7MXRsr904+67L
- CezuKvtijp1RsBmJYVZIpJf32RJk/zLTW1jWjrgz0c98DwtdYLRbRapiQohumxhxfpqR fQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3byv6drybq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 Oct 2021 13:31:47 +0000
-Received: from m0127361.ppops.net (m0127361.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 19SDAJYH034997;
- Thu, 28 Oct 2021 13:31:46 GMT
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3byv6dry9w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 Oct 2021 13:31:46 +0000
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 19SDC7Fs000392;
- Thu, 28 Oct 2021 13:31:40 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma05wdc.us.ibm.com with ESMTP id 3bx4emgdkq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 Oct 2021 13:31:40 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 19SDVdEs43712988
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 28 Oct 2021 13:31:39 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 43372B2073;
- Thu, 28 Oct 2021 13:31:39 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8EBCAB2071;
- Thu, 28 Oct 2021 13:31:38 +0000 (GMT)
-Received: from [9.77.132.135] (unknown [9.77.132.135])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
- Thu, 28 Oct 2021 13:31:38 +0000 (GMT)
-Message-ID: <b738b432-8416-d26d-2a89-d61e4187db67@linux.ibm.com>
-Date: Thu, 28 Oct 2021 08:31:37 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.2.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg6Fv45Cgz2yP9
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 00:43:14 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id A316A5C00DD;
+ Thu, 28 Oct 2021 09:43:11 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute2.internal (MEProxy); Thu, 28 Oct 2021 09:43:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=PxXEytPEEsY1HxptDcbziX6nU3S
+ wAyx6eLamy3AM7PY=; b=vYng+++kAzjdkqjpxyayL+U5V/1HjpbLNLSFGj647UP
+ S5ws7opHBKB3oR7IngjziogKg8QgbYj9lZi8TX4gQRirHnfvq7+RhQKfoH9nmHrP
+ fy05giby4U46JVYb5nco12hBGq2nemLjRfPIr9yVZ/qRLWFDi8VbQmPqsMgEUYYN
+ YMU9kwgQvlqAjzYe96lVzufy/ln9U0JgE/1cgxP0XKou8lpErXlhyBlIiIGLCUcY
+ ldyWp9WwviL2tV6c72D1X7eNOrCmu6oxbrO9G/ZhRd6Ia5WVAlWqi1nnaU3vNE/v
+ gD/v4LERds89ijRUsOncgpELQVJMV5v7s3VcNGkF5/A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=PxXEyt
+ PEEsY1HxptDcbziX6nU3SwAyx6eLamy3AM7PY=; b=UpCYj3DV5iaT50Yx0BR1/5
+ fb40SBFOZDBKGHFfRVetPaYKj+PrGBpi7CrrHRB/+tZNkAuofTO8ZdZThWd0oywZ
+ MaNpsQDWytsFNQJyHYT3gug9wC17eBft1Sf4ldwKYFsWyQmky8WnikvW0+t3Kyw6
+ OgtNjg193jNLXTtnL9ZesUpXewAk0lQDaL/HhRHlGPoiOPDHNAiJV11CbdPYFrMN
+ B9bH7Jf2WY1/KLa4jOE5redZx/wQPHRctZsUX97iqTnB8JOuf1FKhvm81IlxZCxB
+ GBmuOMJCncGrDTW/DHj7aTjpgMoWQuFVb6ntvcxNGB0t8rkY3iVm+jWco+MzankQ
+ ==
+X-ME-Sender: <xms:7qh6YZeVCFc9R5hFIh5lJQMnUlNypLAC3PD4fUttoRlhywABjI9CTg>
+ <xme:7qh6YXN3N-ZNs2cn2v2kLPrqncanfGhNrObNk0Z3Z9rDadMgevf_0fIZ9aP7keDFu
+ 6esN3yLHI6-7m6oPw4>
+X-ME-Received: <xmr:7qh6YSiGU6qo76D-JhrnTeNNgA82OPAx9-J64-nWxu9JkXUeXYSmxbYJ1NNpGoiqF7cT26dGQV-1g8srpzrXYQuZYLMVUw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdegvddgheelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ udenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepfeffffdvgfdtledufeelfedvffek
+ vdeffeeuleevudeitdegueevgfdtieeuueevnecuffhomhgrihhnpehgihhthhhusgdrtg
+ homhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
+ rghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:7qh6YS972zFceopSKnByfex668rGYZOlGQKnSQftwFNSdelmWRGW2w>
+ <xmx:7qh6YVtxt_iy6aKrOEiu4iYfb-oCqwt22WY83xa_4j1ObhTfUVM6nw>
+ <xmx:7qh6YRGivaB8yLpBQ_I_W2KWrU9l8R8_0ICt20JmgBie1TSOta2CQg>
+ <xmx:76h6YfKcv2chnbadSZ4SJiRQPSFQvvNoNERfwVISNjt_RjOsvy6m0Q>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Oct 2021 09:43:10 -0400 (EDT)
+Date: Thu, 28 Oct 2021 08:43:08 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Joseph Reynolds <jrey@linux.ibm.com>
 Subject: Re: Start using github security advisories
-Content-Language: en-US
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- "Mihm, James" <james.mihm@intel.com>,
- Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>,
- Andrew Geissler <geissonator@gmail.com>
+Message-ID: <YXqo7KhqQ5y/ZM5p@heinlein>
 References: <62b15edd-110a-3574-66c5-d11299bbd38c@linux.ibm.com>
  <67C8A5BA-9FD5-4804-B5CA-C2687FC17889@gmail.com>
  <20211018184958.zajwqmloxsyxmxv2@cheese>
@@ -90,22 +87,12 @@ References: <62b15edd-110a-3574-66c5-d11299bbd38c@linux.ibm.com>
  <DM8PR11MB56387B6B7713360A95C7959090859@DM8PR11MB5638.namprd11.prod.outlook.com>
  <79311a65fd6e30f18b0fb038b1906fe5ec015466.camel@fuzziesquirrel.com>
  <f53a303274f21127c3214d9aabfb0793b5a499af.camel@fuzziesquirrel.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-In-Reply-To: <f53a303274f21127c3214d9aabfb0793b5a499af.camel@fuzziesquirrel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: kf7gSw-tVSJ6SPxpmrI2BcjYE4Ws28vz
-X-Proofpoint-ORIG-GUID: NqVnGKOMKZhGK_3a60Wno1rHq6cWXmmG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-10-28_01,2021-10-26_01,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0
- clxscore=1011 adultscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
- bulkscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2110280075
+ <b738b432-8416-d26d-2a89-d61e4187db67@linux.ibm.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="BbJvhgrFeDyTgDwF"
+Content-Disposition: inline
+In-Reply-To: <b738b432-8416-d26d-2a89-d61e4187db67@linux.ibm.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -117,37 +104,98 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/27/21 2:42 PM, Brad Bishop wrote:
-> On Wed, 2021-10-27 at 15:29 -0400, Brad Bishop wrote:
->> On Wed, 2021-10-27 at 18:29 +0000, Mihm, James wrote:
->>> Brad or Andrew, Can we proceed with the creation of security
->>> repository so that we can run a couple of trials on security issues?
->> Hi James, thanks for the ping.
->>
->> The only reason I haven't already done this was this comment from
->> Bruce:
->>
->>>> I believe we want to make sure that none of security advisories
->>>> get sent to Discord, wouldn't want to accidentally be going to
->>>> something like #gh-issues.
->> This was a good point and I'm not sure what to do about it.
-> Hi James
->
-> I created the security-reponse github group and the security-response
-> repo just now and made it private.  Please do some testing and make sure
-> issues don't find their way into #gh-issues on Discord.
->
-> thx - brad
 
-Thanks Brad!
+--BbJvhgrFeDyTgDwF
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The plan is to write the first issues from real-live but low-severity  
-problems which are also common knowledge within the openBMC community.  
-Meaning: there will be minimal harm if the problem is disclosed.
+On Thu, Oct 28, 2021 at 08:31:37AM -0500, Joseph Reynolds wrote:
+> On 10/27/21 2:42 PM, Brad Bishop wrote:
+> > On Wed, 2021-10-27 at 15:29 -0400, Brad Bishop wrote:
+> >> On Wed, 2021-10-27 at 18:29 +0000, Mihm, James wrote:
+> >>> Brad or Andrew, Can we proceed with the creation of security
+> >>> repository so that we can run a couple of trials on security issues?
+> >> Hi James, thanks for the ping.
+> >>
+> >> The only reason I haven't already done this was this comment from
+> >> Bruce:
+> >>
+> >>>> I believe we want to make sure that none of security advisories
+> >>>> get sent to Discord, wouldn't want to accidentally be going to
+> >>>> something like #gh-issues.
+> >> This was a good point and I'm not sure what to do about it.
+> > Hi James
+> >
+> > I created the security-reponse github group and the security-response
+> > repo just now and made it private.  Please do some testing and make sure
+> > issues don't find their way into #gh-issues on Discord.
+> >
+> > thx - brad
+>=20
+> Thanks Brad!
+>=20
+> The plan is to write the first issues from real-live but low-severity=A0=
+=20
+> problems which are also common knowledge within the openBMC community.=A0=
+=20
+> Meaning: there will be minimal harm if the problem is disclosed.
+>=20
+> - Joseph
 
-- Joseph
+I want to reiterate three things:
 
+    1. In Github, security advisories are different from issues.  Security
+       advisories are suppose to be able to be collaborated on in private
+       without the repository itself being private.  Only when you are read=
+y to
+       reveal the security advisory can you switch it to be public.
+
+    2. We have two webhooks for Discord now: one for issues and one for code
+       changes.  Security advisories are not currently covered.  If you mak=
+e an
+       issue in a public repository anyone can see it, even if it isn't cov=
+ered
+       by a Discord webhook, so "limiting the awareness by avoiding the Dis=
+cord
+       webhook" isn't really what you want anyhow.  You need to make sure t=
+he
+       information you want to be kept private is private (and again securi=
+ty
+       advisories are suppose to be the way to do that).
+
+    3. Having a private repository means you cannot report any security
+       advisories (or issues) in a public way.  Today if someone goes to
+       https://github.com/openbmc/security-response they get a 404 (unless =
+they
+       have explicit access to the private repository).
+
+--=20
+Patrick Williams
+
+--BbJvhgrFeDyTgDwF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmF6qOoACgkQqwNHzC0A
+wRl5yQ//fKu0yPzFu4sr6FS9cChOUdfdtpQLV+2AGoFoSCc2ludS0ZTMKtxSg+II
+RH32yf/ycTZ630vp5A7FrXi++9rFNDjFaRkOGiSCfIOgf7rcxHapoTT374v00mev
+q8rgoCrLC3m/ibmybZbMGUAFqr984XB1TWUpQtKQXnRbgKFP/q2Rc3TbLIUgByw2
+MBz5+GKkvb5TGWuWZ7k7PKFdUgzzMewF2+GkLPbx7qsKkdxLmN/LDYzKxB4zjNj2
+fNbBTDGh58PE17TueNnyCYR0AIisWI+t0VqUjumZlP2/uh4BS2E1zY5DURCROjzr
+DIdSqB63V5ySJco6ZHvugfnPpsR78RFrPdkUTCFtbv3oKc91/DaWp83FwLQJGTgc
+Bu/f22TON/u0cE6ib6It9Y8bYOSPaeY6J+NNO1AHzk9oLdPhvkwr5/6fRfiPPtAX
+IygzUYj05z3cM9vykV+DIwBPWjYFFI6jYJUQ9HOYRNBIfjAjJkRxc4xJ5qUkBTlU
+qpKxUFh0omJu7fy6FK7DGNc16YmoCtnJOd1Q+sjKZVi5Pc+2dT6lijx9Ho+xVhEk
+Ism5Y2Rd2fGmiAE1cr+kvH9xFIA8wp/+TdYD/Rc+MaUEuB8lOH8biIzMVbFVnDtV
+yENQGRoaopk/fwRa5LFqRW0mUpTPPOmsnUphkHyymwYcKY+l/mM=
+=1D8e
+-----END PGP SIGNATURE-----
+
+--BbJvhgrFeDyTgDwF--
