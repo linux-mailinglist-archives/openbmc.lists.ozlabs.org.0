@@ -2,64 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4705743E387
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:23:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3906843E38A
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 16:24:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg78Z0yjlz2x9d
-	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:23:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hg79H0nT6z2yxx
+	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 01:24:19 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Vv/9qsMl;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=UfgmKlup;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::32e;
- helo=mail-wm1-x32e.google.com; envelope-from=lukas.bulwahn@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::434;
+ helo=mail-wr1-x434.google.com; envelope-from=lukas.bulwahn@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=Vv/9qsMl; dkim-atps=neutral
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com
- [IPv6:2a00:1450:4864:20::32e])
+ header.s=20210112 header.b=UfgmKlup; dkim-atps=neutral
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com
+ [IPv6:2a00:1450:4864:20::434])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg74Q6TfPz30R6
- for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:20:06 +1100 (AEDT)
-Received: by mail-wm1-x32e.google.com with SMTP id z200so5125742wmc.1
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:20:06 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hg74S5Qdkz2yp0
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 01:20:08 +1100 (AEDT)
+Received: by mail-wr1-x434.google.com with SMTP id s13so3339551wrb.3
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 07:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=TQff7+i6dxs5PfhTnnbZH3nPeykRVJI64ISY+jsjutU=;
- b=Vv/9qsMlGnB5JIv0T0bguI2eXKZZglN8vGu/a/Wi14UHFC0DGYOe02c4xk/bnwoGoN
- dMZ4KkpWjBfYiBx8ubbcr30vjuQgLNbriVJXgIvFZSZUjtn/kdZR3MdN6xyPZ3n2fFAk
- gEtQqS4k7BKSydKweSEzGIGdyC5vXQesJVhjSQXhqD2jP4iTgnAYmDOCAEsEjJlk872Y
- 43xQFIBGQjEPEzd2p6VNPkc3BFthNPM6tmoSvIEEHxS/rqlFU3L3K3aZmP9kS0HoaorD
- KxhxzfjAGk0jg+k9Q2IzkaO9FNyj945peXcoFyHCDtCJx3qLPzcfsvEtpgV5iudiOHRs
- wg6w==
+ bh=F6qCaetzo2bs6A7edSV2Oql0KSOh/v96h0FaEf6Bxg8=;
+ b=UfgmKlupugzoAbKp7xujF4Bioo5jj0psmD2waMtBu3v7UgPgx1LgBlYUNypUZlf6hg
+ FeyfH2CeOit/1NOWH/Oi7HhoRtCQoBU81UGvbinCaD9crQRtPP8kNuqNmI6E0z0iNtJX
+ pg/52AU7f1xFH0sU9Yc9veasKpTmSs6GOs9EmA0gBO/wh8XjrIl0L/srAtCpsIhXhB/q
+ 6I34wff4lmabQEuSj9N4F1sMq0VMWsCOS8RGzTXbLuehS+cQ7Ch0qETCZy3apszMJekD
+ R+SZ1NKFydq2p9x6MWvT/oqP35PqIrWxv808q1kpio5EW5ZPKg/qy7FSqUs8Naw6SOJS
+ 00vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=TQff7+i6dxs5PfhTnnbZH3nPeykRVJI64ISY+jsjutU=;
- b=YIkQrs19STAVIY/U4Re5M/4BfoPPm/ZofDgHxFCdQCDDalQJj7bspDXeBINlEo5QiV
- TRk5Tgi6hntOVndwFzd3UURsC9S+ieSKgq2o1TCzsAd+GZIyN7QdR5Sswj2qf6D/ShhW
- aWwZtx0iEGmTMjoxawZAqarElYgQ6UMKNBmcG0qnvw3UZFhNB3OVQvZ7s8BcO1Np2TFd
- NLWGTEGu4OIepIRKXZmS7NlRFDkF6+lq8Lo2p/pmly+REUqmi7PE0r0lOIazlNcfainf
- XmpBAWvI/zTN1zF9YPJZhQdR0htj8O+h6e7UPwqry8uaG8jEvaBlkcztNM9mBHxquqtc
- zZRw==
-X-Gm-Message-State: AOAM531Ky9i8sOVTnq9Fkvs1MakbeKAExGiBIPbdhdnyRLo9lyk9SEw7
- G5YyQQkN40s7tU3inuib9sY=
-X-Google-Smtp-Source: ABdhPJwnM173mMYgr46CHrhZ8lGPRb0soVkFAU/YtafftscaPvvp7hPJclRSsKpcCdMWgvZ4cK6y4A==
-X-Received: by 2002:a05:600c:24d:: with SMTP id
- 13mr9732659wmj.64.1635430803441; 
- Thu, 28 Oct 2021 07:20:03 -0700 (PDT)
+ bh=F6qCaetzo2bs6A7edSV2Oql0KSOh/v96h0FaEf6Bxg8=;
+ b=eKcMCa+C3hmBQ4uTuGP7wLHHxOmxtnXZmYrMw5qkvs9QyWC8921vp6f0/n3Xp9jD5q
+ UXepD8drVO53D6LJUc31v0Z3K+7cCFQN3VQodLkVQgqJZvZBNJTdoH0R1nomnJjAUNee
+ pZvqZQhj/UFO+yfk2JFPzIc1nFk4euFLVhCTrNxZq6hTC6GBiaBIftCQsPOEQzGbDptQ
+ QxOdnDroqS311XQV4qMCbt4twC4TNwxGyJ0MsqJost0E2C0AqjP1mo4xfXsrvQxkFmFa
+ YdGi67x0DcDMavwxrS6ceRd5eZbE7dVCqqcD/Zh2iS0DXiM85ijDzwNGOWaeEeCB1BG3
+ iKug==
+X-Gm-Message-State: AOAM532yWDbDg32tnwFfcAagk21yR+lGMQCZLGusncPhMBzni59FHRxm
+ GZ/EtS9XMlcDHaPLJf87sPKHDyCdkM+E8A==
+X-Google-Smtp-Source: ABdhPJwsYeCVobccll8qJYf0Xr5UYFyrFoG4o3B6V4rxDH3/wnWoB3yXN3/SbpxMCO72VgT9uV2yPw==
+X-Received: by 2002:adf:efca:: with SMTP id i10mr6042738wrp.289.1635430805719; 
+ Thu, 28 Oct 2021 07:20:05 -0700 (PDT)
 Received: from localhost.localdomain (i5C74E249.versanet.de. [92.116.226.73])
  by smtp.gmail.com with ESMTPSA id
- m2sm6284546wml.15.2021.10.28.07.20.02
+ m2sm6284546wml.15.2021.10.28.07.20.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Oct 2021 07:20:03 -0700 (PDT)
+ Thu, 28 Oct 2021 07:20:05 -0700 (PDT)
 From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 To: Russell King <linux@armlinux.org.uk>, Shawn Guo <shawnguo@kernel.org>,
  Sascha Hauer <s.hauer@pengutronix.de>,
@@ -72,10 +71,10 @@ To: Russell King <linux@armlinux.org.uk>, Shawn Guo <shawnguo@kernel.org>,
  Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>,
  Dinh Nguyen <dinguyen@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
  linux-arm-kernel@lists.infradead.org, openbmc@lists.ozlabs.org
-Subject: [PATCH 05/13] arm: davinci: remove reference to obsolete
- BLK_DEV_PALMCHIP_BK3710
-Date: Thu, 28 Oct 2021 16:19:30 +0200
-Message-Id: <20211028141938.3530-6-lukas.bulwahn@gmail.com>
+Subject: [PATCH 06/13] arm: ixp4xx: remove dead configs CPU_IXP43X and
+ CPU_IXP46X
+Date: Thu, 28 Oct 2021 16:19:31 +0200
+Message-Id: <20211028141938.3530-7-lukas.bulwahn@gmail.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
 References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
@@ -97,60 +96,54 @@ Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>, kernel-janitors@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Commit b7fb14d3ac63 ("ide: remove the legacy ide driver") removes the
-definition of the config BLK_DEV_PALMCHIP_BK3710.
+Commit 73d04ca5f4ac ("ARM: ixp4xx: Delete Intel reference design
+boardfiles") removes the definition of the configs MACH_IXDP465 and
+MACH_KIXRP435, but misses to remove the configs CPU_IXP43X and CPU_IXP46X
+that depend on those removed configs, and hence are dead now.
 
-So, remove the obsolete references in the mach-davinci architecture.
+Fortunately, ./scripts/checkkconfigsymbols.py warns:
+
+MACH_IXDP465
+Referencing files: arch/arm/mach-ixp4xx/Kconfig
+
+MACH_KIXRP435
+Referencing files: arch/arm/mach-ixp4xx/Kconfig
+
+Remove the dead configs CPU_IXP43X and CPU_IXP46X.
+
+A further quick grep for the name of those two symbols did not show any
+use of the two config symbols; so, there are no further clean-up activities
+beyond this config removal needed.
 
 Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 ---
- arch/arm/mach-davinci/board-dm644x-evm.c  | 3 +--
- arch/arm/mach-davinci/board-dm646x-evm.c  | 3 +--
- arch/arm/mach-davinci/board-neuros-osd2.c | 3 +--
- 3 files changed, 3 insertions(+), 6 deletions(-)
+ arch/arm/mach-ixp4xx/Kconfig | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/arch/arm/mach-davinci/board-dm644x-evm.c b/arch/arm/mach-davinci/board-dm644x-evm.c
-index cce3a621eb20..df6dbb3f0faf 100644
---- a/arch/arm/mach-davinci/board-dm644x-evm.c
-+++ b/arch/arm/mach-davinci/board-dm644x-evm.c
-@@ -834,8 +834,7 @@ static int davinci_phy_fixup(struct phy_device *phydev)
- 	return 0;
- }
+diff --git a/arch/arm/mach-ixp4xx/Kconfig b/arch/arm/mach-ixp4xx/Kconfig
+index 365a5853d310..4c787b4be62b 100644
+--- a/arch/arm/mach-ixp4xx/Kconfig
++++ b/arch/arm/mach-ixp4xx/Kconfig
+@@ -39,19 +39,6 @@ config ARCH_PRPMC1100
+ 	  PrPCM1100 Processor Mezanine Module. For more information on
+ 	  this platform, see <file:Documentation/arm/ixp4xx.rst>.
  
--#define HAS_ATA		(IS_ENABLED(CONFIG_BLK_DEV_PALMCHIP_BK3710) || \
--			 IS_ENABLED(CONFIG_PATA_BK3710))
-+#define HAS_ATA		IS_ENABLED(CONFIG_PATA_BK3710)
+-#
+-# Certain registers and IRQs are only enabled if supporting IXP465 CPUs
+-#
+-config CPU_IXP46X
+-	bool
+-	depends on MACH_IXDP465
+-	default y
+-
+-config CPU_IXP43X
+-	bool
+-	depends on MACH_KIXRP435
+-	default y
+-
+ comment "IXP4xx Options"
  
- #define HAS_NOR		IS_ENABLED(CONFIG_MTD_PHYSMAP)
- 
-diff --git a/arch/arm/mach-davinci/board-dm646x-evm.c b/arch/arm/mach-davinci/board-dm646x-evm.c
-index ee91d81ebbfd..744ece6b6b9a 100644
---- a/arch/arm/mach-davinci/board-dm646x-evm.c
-+++ b/arch/arm/mach-davinci/board-dm646x-evm.c
-@@ -151,8 +151,7 @@ static struct platform_device davinci_aemif_device = {
- 	.num_resources	= ARRAY_SIZE(davinci_aemif_resources),
- };
- 
--#define HAS_ATA		(IS_ENABLED(CONFIG_BLK_DEV_PALMCHIP_BK3710) || \
--			 IS_ENABLED(CONFIG_PATA_BK3710))
-+#define HAS_ATA		IS_ENABLED(CONFIG_PATA_BK3710)
- 
- #ifdef CONFIG_I2C
- /* CPLD Register 0 bits to control ATA */
-diff --git a/arch/arm/mach-davinci/board-neuros-osd2.c b/arch/arm/mach-davinci/board-neuros-osd2.c
-index b4843f68bb57..81c21fe5748a 100644
---- a/arch/arm/mach-davinci/board-neuros-osd2.c
-+++ b/arch/arm/mach-davinci/board-neuros-osd2.c
-@@ -164,8 +164,7 @@ static struct davinci_mmc_config davinci_ntosd2_mmc_config = {
- 	.wires		= 4,
- };
- 
--#define HAS_ATA		(IS_ENABLED(CONFIG_BLK_DEV_PALMCHIP_BK3710) || \
--			 IS_ENABLED(CONFIG_PATA_BK3710))
-+#define HAS_ATA		IS_ENABLED(CONFIG_PATA_BK3710)
- 
- #define HAS_NAND	IS_ENABLED(CONFIG_MTD_NAND_DAVINCI)
- 
+ config IXP4XX_PCI_LEGACY
 -- 
 2.26.2
 
