@@ -2,69 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB02943D891
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 03:31:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FD1843D8A7
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 03:36:09 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hfp166BLnz2yL9
-	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 12:31:06 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=BZ5wNpoQ;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hfp6v0Qyjz2yMc
+	for <lists+openbmc@lfdr.de>; Thu, 28 Oct 2021 12:36:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::832;
- helo=mail-qt1-x832.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=BZ5wNpoQ; dkim-atps=neutral
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com
- [IPv6:2607:f8b0:4864:20::832])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=inventec.com (client-ip=218.32.67.185; helo=mail.inventec.com;
+ envelope-from=lin.tommysc@inventec.com; receiver=<UNKNOWN>)
+Received: from mail.inventec.com (unknown [218.32.67.185])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hfp0k5pQCz2xXm
- for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 12:30:45 +1100 (AEDT)
-Received: by mail-qt1-x832.google.com with SMTP id t40so4357490qtc.6
- for <openbmc@lists.ozlabs.org>; Wed, 27 Oct 2021 18:30:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=ZH4E493g2kQl8dEL462gH9b7A4FA6pOO0G4i3Kri6qQ=;
- b=BZ5wNpoQpz4pwT7nYykF2lfrv3ujK/wEOX98uhgwacjw2bUibqv7K8G0sVIsPFAPhv
- yy7uaAzOBqXR5p43fYOad4BNAUmKVB7lvJ0jXKUab9/K1hKwB+TGJypQmDenSKjeMX1I
- iCb8Bp4DBvO3o7HutimgUQHCpKPtIIjHOsX5Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=ZH4E493g2kQl8dEL462gH9b7A4FA6pOO0G4i3Kri6qQ=;
- b=g+n2oxQF//ckrZoELtE77SSc0zDNUr/LmmgWUNZnIj/zrrHDGMibODVOgQs0ylBTRL
- 1pmg7KXJ4KQBsHPeEYbuyKt+PmDwUgzgXwpLoBSVlNp6XyadeERq2YOftlzhTpU0pdQW
- Yl0YCI6M96Gc/KeYA9IWjGLWI+6Mw0Wg+h2yR+0QfIwGvNeIOaIDKsl2sH0HxX/HTU9M
- A9F2V3z2aC9nyl9MjAjELV1M8POc1Px8Dy1ITsmL/77I2aStKO/ByvKm2Hw0OPlXq9Tl
- H/dAgK0YqTpbNrgyikxvwgLu8o8ZNadrDY9H9NGcLN7G0p7hl9vzsMIGro1XnoMAU74c
- 0tDw==
-X-Gm-Message-State: AOAM531eDi5tuisdTKtyFUu8MRmXAlQt7H3mWrRpUoss2fNcaRVhsV3a
- azgTUaIM6kdcary5qIk9mjoq1i8vPImC7E69+TI=
-X-Google-Smtp-Source: ABdhPJz0Yy328j66JT8j1oPMNY99pIzw9e3xAePu1R8LGNuT7E9Iwz8LcKK79ak9inZogTABbZUfc3DDW3sllY1cE7E=
-X-Received: by 2002:a05:622a:180b:: with SMTP id
- t11mr1410347qtc.25.1635384642185; 
- Wed, 27 Oct 2021 18:30:42 -0700 (PDT)
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hfp6c2ZZQz2xBw
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Oct 2021 12:35:52 +1100 (AEDT)
+Received: from IEC1-EX2016-04.iec.inventec (10.1.254.222) by
+ IEC1-EX2016-03.iec.inventec (10.15.2.59) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.15; Thu, 28 Oct 2021 09:35:44 +0800
+Received: from IEC1-MSE-FE1.inventec.com (10.1.254.203) by
+ IEC1-EX2016-04.iec.inventec (10.1.254.222) with Microsoft SMTP Server id
+ 15.1.2308.15 via Frontend Transport; Thu, 28 Oct 2021 09:35:44 +0800
+Received: from IEC1-EX2016-02.iec.inventec (iec1-ex2016-02.iec.inventec
+ [10.1.254.221])
+ by IEC1-MSE-FE1.inventec.com with ESMTP id 19S1Zhc0021765;
+ Thu, 28 Oct 2021 09:35:43 +0800 (GMT-8)
+ (envelope-from Lin.TommySC@inventec.com)
+Received: from IEC1-EX2016-01.iec.inventec (10.15.2.58) by
+ IEC1-EX2016-02.iec.inventec (10.1.254.221) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.14; Thu, 28 Oct 2021 09:35:43 +0800
+Received: from IEC1-EX2016-01.iec.inventec ([fe80::44f0:5c98:dc89:7007]) by
+ IEC1-EX2016-01.iec.inventec ([fe80::44f0:5c98:dc89:7007%8]) with mapi id
+ 15.01.2308.014; Thu, 28 Oct 2021 09:35:43 +0800
+From: =?utf-8?B?TGluLlRvbW15U0Mg5p6X5LiW5qy9IFRBTw==?=
+ <Lin.TommySC@inventec.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: RE: [PATCH v3] ARM: dts: aspeed: Adding Inventec Transformers BMC
+Thread-Topic: [PATCH v3] ARM: dts: aspeed: Adding Inventec Transformers BMC
+Thread-Index: AQHXxMT5p+2rySVIa0Wf/wrv7uwybqvaAIqZgAJs9oCACzJ/AP//hyQAgACHFVA=
+Date: Thu, 28 Oct 2021 01:35:42 +0000
+Message-ID: <180951dd171b40dd95abab364e8fd152@inventec.com>
 References: <5804770039e74d319fee323d28bdcf46@inventec.com>
  <7d7b20575f994a3c9018223a3c5f198d@inventec.com>
  <CACPK8XcCmQ5UrNe+d-iZy32SM6rUDAs7XW6je+M-_80w7zOL9Q@mail.gmail.com>
  <d7704529fe164d8a8a83f9c079018422@inventec.com>
-In-Reply-To: <d7704529fe164d8a8a83f9c079018422@inventec.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 28 Oct 2021 01:30:30 +0000
-Message-ID: <CACPK8XefeXeuYK69YVo5ou1VUutb337ZtY4GO_QxdjEpQBpK2g@mail.gmail.com>
-Subject: Re: [PATCH v3] ARM: dts: aspeed: Adding Inventec Transformers BMC
-To: =?UTF-8?B?TGluLlRvbW15U0Mg5p6X5LiW5qy9IFRBTw==?= <Lin.TommySC@inventec.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <CACPK8XefeXeuYK69YVo5ou1VUutb337ZtY4GO_QxdjEpQBpK2g@mail.gmail.com>
+In-Reply-To: <CACPK8XefeXeuYK69YVo5ou1VUutb337ZtY4GO_QxdjEpQBpK2g@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.6.148.43]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MAIL: IEC1-MSE-FE1.inventec.com 19S1Zhc0021765
+X-TM-SNTS-SMTP: C0D0AF5B32C92E084B95B9BBD300F657E05B1BC507520A8949F4EC54EB1DEC942000:8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,408 +71,224 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?B?WWUuVmljIOiRieWuh+a4hSBUQU8=?= <ye.vic@inventec.com>,
+Cc: =?utf-8?B?WWUuVmljIOiRieWuh+a4hSBUQU8=?= <ye.vic@inventec.com>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
  "Mohammed.Habeeb ISV" <mohammed.habeeb@inventec.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tommy,
-
-On Thu, 28 Oct 2021 at 00:46, Lin.TommySC =E6=9E=97=E4=B8=96=E6=AC=BD TAO
-<Lin.TommySC@inventec.com> wrote:
->
-> Hi Joel,
->
-> I've submitted another patch in link below for the Makefile alone, could =
-you help to review it as well?
->
-> https://lists.ozlabs.org/pipermail/openbmc/2021-October/027962.html
-
-Thanks for the patch. As I mentioned, I fixed it up for you when
-applying, so your follow up patch isn't required.
-
-You can see the change has been merged into the arm-soc tree, and is
-in latest linux-next. It will be send by the soc maintainers to Linus
-for v5.16:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git/commit/?h=3Darm=
-/dt&id=3D2561b4f6ecc741cb96e67c5fe250915548a83bb2
-
-Cheers,
-
-Joel
-
->
-> Thank you
-> Tommy
->
-> -----Original Message-----
-> From: Joel Stanley [mailto:joel@jms.id.au]
-> Sent: Thursday, October 21, 2021 1:43 PM
-> To: Lin.TommySC =E6=9E=97=E4=B8=96=E6=AC=BD TAO <Lin.TommySC@inventec.com=
->
-> Cc: openbmc@lists.ozlabs.org; Ye.Vic =E8=91=89=E5=AE=87=E6=B8=85 TAO <ye.=
-vic@inventec.com>; Mohammed.Habeeb ISV <mohammed.habeeb@inventec.com>
-> Subject: Re: [PATCH v3] ARM: dts: aspeed: Adding Inventec Transformers BM=
-C
->
-> On Tue, 19 Oct 2021 at 08:42, Lin.TommySC =E6=9E=97=E4=B8=96=E6=AC=BD TAO=
- <Lin.TommySC@inventec.com> wrote:
-> >
-> > Initial introduction of Inventec Transformers x86 family equipped with =
-AST2600 BMC SoC.
-> >
-> > Signed-off-by: Tommy Lin <Lin.TommySC@inventec.com>
-> > ---
-> >  .../dts/aspeed-bmc-inventec-transformers.dts  | 328
-> > ++++++++++++++++++
->
-> You've dropped the part of the change that adds the dts to the makefile.
->
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
->
-> The rest looks okay, so I've fixed that up for you and applied it.
->
-> >  1 file changed, 328 insertions(+)
-> >  create mode 100644
-> > arch/arm/boot/dts/aspeed-bmc-inventec-transformers.dts
-> >
-> > diff --git a/arch/arm/boot/dts/aspeed-bmc-inventec-transformers.dts
-> > b/arch/arm/boot/dts/aspeed-bmc-inventec-transformers.dts
-> > new file mode 100644
-> > index 000000000000..e50d8828e684
-> > --- /dev/null
-> > +++ b/arch/arm/boot/dts/aspeed-bmc-inventec-transformers.dts
-> > @@ -0,0 +1,328 @@
-> > +// SPDX-License-Identifier: GPL-2.0-or-later // Copyright 2021
-> > +Inventec Corp.
-> > +
-> > +/dts-v1/;
-> > +
-> > +#include "aspeed-g6.dtsi"
-> > +#include "aspeed-g6-pinctrl.dtsi"
-> > +#include <dt-bindings/i2c/i2c.h>
-> > +#include <dt-bindings/gpio/aspeed-gpio.h>
-> > +
-> > +/ {
-> > +       model =3D "TRANSFORMERS BMC";
-> > +       compatible =3D "inventec,transformer-bmc", "aspeed,ast2600";
-> > +
-> > +       aliases {
-> > +               serial4 =3D &uart5;
-> > +       };
-> > +
-> > +       chosen {
-> > +               stdout-path =3D &uart5;
-> > +               bootargs =3D "console=3DttyS4,115200n8";
-> > +       };
-> > +
-> > +       memory@80000000 {
-> > +               device_type =3D "memory";
-> > +               reg =3D <0x80000000 0x80000000>;
-> > +       };
-> > +
-> > +       leds {
-> > +               compatible =3D "gpio-leds";
-> > +
-> > +               // UID led
-> > +               uid {
-> > +                       label =3D "UID_LED";
-> > +                       gpios =3D <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE=
-_LOW>;
-> > +               };
-> > +
-> > +               // Heart beat led
-> > +               heartbeat {
-> > +                       label =3D "HB_LED";
-> > +                       gpios =3D <&gpio0 ASPEED_GPIO(P, 7) GPIO_ACTIVE=
-_LOW>;
-> > +               };
-> > +       };
-> > +};
-> > +
-> > +&mdio0 {
-> > +       status =3D "okay";
-> > +
-> > +       ethphy0: ethernet-phy@0 {
-> > +               compatible =3D "ethernet-phy-ieee802.3-c22";
-> > +               reg =3D <1>;
-> > +       };
-> > +};
-> > +
-> > +&mac3 {
-> > +       status =3D "okay";
-> > +       phy-mode =3D "rgmii";
-> > +       phy-handle =3D <&ethphy0>;
-> > +       pinctrl-names =3D "default";
-> > +       pinctrl-0 =3D <&pinctrl_rgmii4_default>; };
-> > +
-> > +&fmc {
-> > +       status =3D "okay";
-> > +
-> > +       flash@0 {
-> > +               status =3D "okay";
-> > +               m25p,fast-read;
-> > +               label =3D "bmc";
-> > +               spi-max-frequency =3D <33000000>;
-> > +               spi-tx-bus-width =3D <2>;
-> > +               spi-rx-bus-width =3D <2>; #include
-> > +"openbmc-flash-layout.dtsi"
-> > +       };
-> > +
-> > +       flash@1 {
-> > +               status =3D "okay";
-> > +               m25p,fast-read;
-> > +               label =3D "bmc2";
-> > +               spi-max-frequency =3D <33000000>;
-> > +               spi-tx-bus-width =3D <2>;
-> > +               spi-rx-bus-width =3D <2>;
-> > +       };
-> > +};
-> > +
-> > +&spi1 {
-> > +       status =3D "okay";
-> > +       pinctrl-names =3D "default";
-> > +       pinctrl-0 =3D <&pinctrl_spi1_default>;
-> > +
-> > +       flash@0 {
-> > +               status =3D "okay";
-> > +               m25p,fast-read;
-> > +               label =3D "bios";
-> > +               spi-max-frequency =3D <33000000>;
-> > +               spi-tx-bus-width =3D <1>;
-> > +               spi-rx-bus-width =3D <1>;
-> > +       };
-> > +};
-> > +
-> > +&wdt1 {
-> > +       status =3D "okay";
-> > +};
-> > +
-> > +&uart1 {
-> > +       status =3D "okay";
-> > +};
-> > +
-> > +&uart5 {
-> > +       status =3D "okay";
-> > +};
-> > +
-> > +&i2c0 {
-> > +       status =3D "okay";
-> > +
-> > +       //Set bmc' slave address;
-> > +       bmc_slave@10 {
-> > +               compatible =3D "ipmb-dev";
-> > +               reg =3D <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-> > +               i2c-protocol;
-> > +       };
-> > +};
-> > +
-> > +&i2c2 {
-> > +       status =3D "okay";
-> > +};
-> > +
-> > +&i2c3 {
-> > +       // FRU AT24C512C-SSHM-T
-> > +       status =3D "okay";
-> > +       eeprom@50 {
-> > +               compatible =3D "atmel,24c512";
-> > +               reg =3D <0x50>;
-> > +               pagesize =3D <128>;
-> > +       };
-> > +};
-> > +
-> > +&i2c5 {
-> > +       status =3D "okay";
-> > +};
-> > +
-> > +&i2c6 {
-> > +       status =3D "okay";
-> > +
-> > +       tmp75@49 {
-> > +               compatible =3D "ti,tmp75";
-> > +               reg =3D <0x49>;
-> > +       };
-> > +
-> > +       tmp75@4f {
-> > +               compatible =3D "ti,tmp75";
-> > +               reg =3D <0x4f>;
-> > +       };
-> > +
-> > +       tmp468@48 {
-> > +               compatible =3D "ti,tmp468";
-> > +               reg =3D <0x48>;
-> > +       };
-> > +};
-> > +
-> > +&i2c7 {
-> > +       status =3D "okay";
-> > +       adm1278@40 {
-> > +               compatible =3D "adi,adm1278";
-> > +               reg =3D <0x40>;
-> > +       };
-> > +};
-> > +
-> > +
-> > +&i2c8 {
-> > +       // FRU AT24C512C-SSHM-T
-> > +       status =3D "okay";
-> > +
-> > +       eeprom@51 {
-> > +               compatible =3D "atmel,24c512";
-> > +               reg =3D <0x51>;
-> > +               pagesize =3D <128>;
-> > +       };
-> > +
-> > +       eeprom@53 {
-> > +               compatible =3D "atmel,24c512";
-> > +               reg =3D <0x53>;
-> > +               pagesize =3D <128>;
-> > +       };
-> > +};
-> > +
-> > +&i2c9 {
-> > +       // M.2
-> > +       status =3D "okay";
-> > +};
-> > +
-> > +&i2c10 {
-> > +       // I2C EXPANDER
-> > +       status =3D "okay";
-> > +
-> > +       i2c-switch@71 {
-> > +               compatible =3D "nxp,pca9544";
-> > +               #address-cells =3D <1>;
-> > +               #size-cells =3D <0>;
-> > +               reg =3D <0x71>;
-> > +       };
-> > +
-> > +       i2c-switch@73 {
-> > +               compatible =3D "nxp,pca9544";
-> > +               #address-cells =3D <1>;
-> > +               #size-cells =3D <0>;
-> > +               reg =3D <0x73>;
-> > +       };
-> > +};
-> > +
-> > +&i2c11 {
-> > +       // I2C EXPANDER
-> > +       status =3D "okay";
-> > +
-> > +       i2c-switch@70 {
-> > +               compatible =3D "nxp,pca9544";
-> > +               #address-cells =3D <1>;
-> > +               #size-cells =3D <0>;
-> > +               reg =3D <0x70>;
-> > +
-> > +               pcie_eeprom_riser1: i2c@0 {
-> > +                       #address-cells =3D <1>;
-> > +                       #size-cells =3D <0>;
-> > +                       reg =3D <0>;
-> > +
-> > +                       eeprom@55 {
-> > +                               compatible =3D "atmel,24c512";
-> > +                               reg =3D <0x55>;
-> > +                               pagesize =3D <128>;
-> > +                       };
-> > +               };
-> > +
-> > +               pcie_eeprom_riser2: i2c@1 {
-> > +                       #address-cells =3D <1>;
-> > +                       #size-cells =3D <0>;
-> > +                       reg =3D <1>;
-> > +
-> > +                       eeprom@55 {
-> > +                               compatible =3D "atmel,24c512";
-> > +                               reg =3D <0x55>;
-> > +                               pagesize =3D <128>;
-> > +                       };
-> > +               };
-> > +
-> > +               pcie_eeprom_riser3: i2c@2 {
-> > +                       #address-cells =3D <1>;
-> > +                       #size-cells =3D <0>;
-> > +                       reg =3D <2>;
-> > +
-> > +                       eeprom@55 {
-> > +                               compatible =3D "atmel,24c512";
-> > +                               reg =3D <0x55>;
-> > +                               pagesize =3D <128>;
-> > +                       };
-> > +               };
-> > +       };
-> > +};
-> > +
-> > +&i2c12 {
-> > +       status =3D "okay";
-> > +
-> > +       psu0:psu0@58 {
-> > +               compatible =3D "pmbus";
-> > +               reg =3D <0x58>;
-> > +       };
-> > +};
-> > +
-> > +&gpio0 {
-> > +       status =3D "okay";
-> > +       gpio-line-names =3D
-> > +       /*A0-A7*/   "","","","","","","","",
-> > +       /*B0-B7*/   "presence-ps0","power-chassis-good","","","","","pr=
-esence-ps1","",
-> > +       /*C0-C7*/   "","","","","","","","",
-> > +       /*D0-D7*/   "","","","","","","","",
-> > +       /*E0-E7*/   "","","","","","","","",
-> > +       /*F0-F7*/   "","","","","power-chassis-control","","","",
-> > +       /*G0-G7*/   "","","jtag-mux","","","","","",
-> > +       /*H0-H7*/   "","","","","reset-button","power-button","","",
-> > +       /*I0-I7*/   "","","","","","","","",
-> > +       /*J0-J7*/   "","","","","","","","",
-> > +       /*K0-K7*/   "","","","","","","","",
-> > +       /*L0-L7*/   "","","","","","","","",
-> > +       /*M0-M7*/   "","","","","","","","",
-> > +       /*N0-N7*/   "","","","","","","","",
-> > +       /*O0-O7*/   "","","","","","","","",
-> > +       /*P0-P7*/   "","","","tck-mux","","","","",
-> > +       /*Q0-Q7*/   "","","","","","","","",
-> > +       /*R0-R7*/   "","","","","","","","",
-> > +       /*S0-S7*/   "","","","","","","","",
-> > +       /*T0-T7*/   "","","","","","","","",
-> > +       /*U0-U7*/   "","nmi-button","","","","","","",
-> > +       /*V0-V7*/   "","","","","power-config-full-load","","","",
-> > +       /*W0-W7*/   "","","","","","","","",
-> > +       /*X0-X7*/   "","","","","","","","",
-> > +       /*Y0-Y7*/   "","","","","","","","",
-> > +       /*Z0-Z7*/   "","","","","","","","",
-> > +       /*AA0-AA7*/ "","","","","","","","",
-> > +       /*AB0-AB7*/ "","","","","","","","",
-> > +       /*AC0-AC7*/ "","","","","","","",""; };
-> > +
-> > +&lpc_snoop {
-> > +       status =3D "okay";
-> > +       snoop-ports =3D <0x80>;
-> > +};
-> > +
-> > +&emmc_controller {
-> > +       status =3D "okay";
-> > +};
-> > +
-> > +&emmc {
-> > +       status =3D "okay";
-> > +       non-removable;
-> > +       max-frequency =3D <52000000>;
-> > +       bus-width =3D <8>;
-> > +};
-> > +
-> > +&vhub {
-> > +       status =3D "okay";
-> > +       aspeed,vhub-downstream-ports =3D <7>;
-> > +       aspeed,vhub-generic-endpoints =3D <21>;
-> > +       pinctrl-names =3D "default";
-> > +       pinctrl-0 =3D <&pinctrl_usb2ad_default>; };
-> > +
-> > +&rtc {
-> > +       status =3D "okay";
-> > +};
-> > --
-> > 2.33.0
-> >
+R290IGl0LiBUaGFua3MuDQoNClRvbW15DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpG
+cm9tOiBKb2VsIFN0YW5sZXkgW21haWx0bzpqb2VsQGptcy5pZC5hdV0gDQpTZW50OiBUaHVyc2Rh
+eSwgT2N0b2JlciAyOCwgMjAyMSA5OjMxIEFNDQpUbzogTGluLlRvbW15U0Mg5p6X5LiW5qy9IFRB
+TyA8TGluLlRvbW15U0NAaW52ZW50ZWMuY29tPg0KQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9y
+ZzsgWWUuVmljIOiRieWuh+a4hSBUQU8gPHllLnZpY0BpbnZlbnRlYy5jb20+OyBNb2hhbW1lZC5I
+YWJlZWIgSVNWIDxtb2hhbW1lZC5oYWJlZWJAaW52ZW50ZWMuY29tPg0KU3ViamVjdDogUmU6IFtQ
+QVRDSCB2M10gQVJNOiBkdHM6IGFzcGVlZDogQWRkaW5nIEludmVudGVjIFRyYW5zZm9ybWVycyBC
+TUMNCg0KSGkgVG9tbXksDQoNCk9uIFRodSwgMjggT2N0IDIwMjEgYXQgMDA6NDYsIExpbi5Ub21t
+eVNDIOael+S4luasvSBUQU8gPExpbi5Ub21teVNDQGludmVudGVjLmNvbT4gd3JvdGU6DQo+DQo+
+IEhpIEpvZWwsDQo+DQo+IEkndmUgc3VibWl0dGVkIGFub3RoZXIgcGF0Y2ggaW4gbGluayBiZWxv
+dyBmb3IgdGhlIE1ha2VmaWxlIGFsb25lLCBjb3VsZCB5b3UgaGVscCB0byByZXZpZXcgaXQgYXMg
+d2VsbD8NCj4NCj4gaHR0cHM6Ly9saXN0cy5vemxhYnMub3JnL3BpcGVybWFpbC9vcGVuYm1jLzIw
+MjEtT2N0b2Jlci8wMjc5NjIuaHRtbA0KDQpUaGFua3MgZm9yIHRoZSBwYXRjaC4gQXMgSSBtZW50
+aW9uZWQsIEkgZml4ZWQgaXQgdXAgZm9yIHlvdSB3aGVuIGFwcGx5aW5nLCBzbyB5b3VyIGZvbGxv
+dyB1cCBwYXRjaCBpc24ndCByZXF1aXJlZC4NCg0KWW91IGNhbiBzZWUgdGhlIGNoYW5nZSBoYXMg
+YmVlbiBtZXJnZWQgaW50byB0aGUgYXJtLXNvYyB0cmVlLCBhbmQgaXMgaW4gbGF0ZXN0IGxpbnV4
+LW5leHQuIEl0IHdpbGwgYmUgc2VuZCBieSB0aGUgc29jIG1haW50YWluZXJzIHRvIExpbnVzIGZv
+ciB2NS4xNjoNCg0KaHR0cHM6Ly9naXQua2VybmVsLm9yZy9wdWIvc2NtL2xpbnV4L2tlcm5lbC9n
+aXQvc29jL3NvYy5naXQvY29tbWl0Lz9oPWFybS9kdCZpZD0yNTYxYjRmNmVjYzc0MWNiOTZlNjdj
+NWZlMjUwOTE1NTQ4YTgzYmIyDQoNCkNoZWVycywNCg0KSm9lbA0KDQo+DQo+IFRoYW5rIHlvdQ0K
+PiBUb21teQ0KPg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBKb2VsIFN0
+YW5sZXkgW21haWx0bzpqb2VsQGptcy5pZC5hdV0NCj4gU2VudDogVGh1cnNkYXksIE9jdG9iZXIg
+MjEsIDIwMjEgMTo0MyBQTQ0KPiBUbzogTGluLlRvbW15U0Mg5p6X5LiW5qy9IFRBTyA8TGluLlRv
+bW15U0NAaW52ZW50ZWMuY29tPg0KPiBDYzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnOyBZZS5W
+aWMg6JGJ5a6H5riFIFRBTyA8eWUudmljQGludmVudGVjLmNvbT47IA0KPiBNb2hhbW1lZC5IYWJl
+ZWIgSVNWIDxtb2hhbW1lZC5oYWJlZWJAaW52ZW50ZWMuY29tPg0KPiBTdWJqZWN0OiBSZTogW1BB
+VENIIHYzXSBBUk06IGR0czogYXNwZWVkOiBBZGRpbmcgSW52ZW50ZWMgVHJhbnNmb3JtZXJzIA0K
+PiBCTUMNCj4NCj4gT24gVHVlLCAxOSBPY3QgMjAyMSBhdCAwODo0MiwgTGluLlRvbW15U0Mg5p6X
+5LiW5qy9IFRBTyA8TGluLlRvbW15U0NAaW52ZW50ZWMuY29tPiB3cm90ZToNCj4gPg0KPiA+IElu
+aXRpYWwgaW50cm9kdWN0aW9uIG9mIEludmVudGVjIFRyYW5zZm9ybWVycyB4ODYgZmFtaWx5IGVx
+dWlwcGVkIHdpdGggQVNUMjYwMCBCTUMgU29DLg0KPiA+DQo+ID4gU2lnbmVkLW9mZi1ieTogVG9t
+bXkgTGluIDxMaW4uVG9tbXlTQ0BpbnZlbnRlYy5jb20+DQo+ID4gLS0tDQo+ID4gIC4uLi9kdHMv
+YXNwZWVkLWJtYy1pbnZlbnRlYy10cmFuc2Zvcm1lcnMuZHRzICB8IDMyOA0KPiA+ICsrKysrKysr
+KysrKysrKysrKw0KPg0KPiBZb3UndmUgZHJvcHBlZCB0aGUgcGFydCBvZiB0aGUgY2hhbmdlIHRo
+YXQgYWRkcyB0aGUgZHRzIHRvIHRoZSBtYWtlZmlsZS4NCj4NCj4gUmV2aWV3ZWQtYnk6IEpvZWwg
+U3RhbmxleSA8am9lbEBqbXMuaWQuYXU+DQo+DQo+IFRoZSByZXN0IGxvb2tzIG9rYXksIHNvIEkn
+dmUgZml4ZWQgdGhhdCB1cCBmb3IgeW91IGFuZCBhcHBsaWVkIGl0Lg0KPg0KPiA+ICAxIGZpbGUg
+Y2hhbmdlZCwgMzI4IGluc2VydGlvbnMoKykNCj4gPiAgY3JlYXRlIG1vZGUgMTAwNjQ0DQo+ID4g
+YXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy1pbnZlbnRlYy10cmFuc2Zvcm1lcnMuZHRzDQo+
+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy1pbnZlbnRl
+Yy10cmFuc2Zvcm1lcnMuZHRzDQo+ID4gYi9hcmNoL2FybS9ib290L2R0cy9hc3BlZWQtYm1jLWlu
+dmVudGVjLXRyYW5zZm9ybWVycy5kdHMNCj4gPiBuZXcgZmlsZSBtb2RlIDEwMDY0NA0KPiA+IGlu
+ZGV4IDAwMDAwMDAwMDAwMC4uZTUwZDg4MjhlNjg0DQo+ID4gLS0tIC9kZXYvbnVsbA0KPiA+ICsr
+KyBiL2FyY2gvYXJtL2Jvb3QvZHRzL2FzcGVlZC1ibWMtaW52ZW50ZWMtdHJhbnNmb3JtZXJzLmR0
+cw0KPiA+IEBAIC0wLDAgKzEsMzI4IEBADQo+ID4gKy8vIFNQRFgtTGljZW5zZS1JZGVudGlmaWVy
+OiBHUEwtMi4wLW9yLWxhdGVyIC8vIENvcHlyaWdodCAyMDIxIA0KPiA+ICtJbnZlbnRlYyBDb3Jw
+Lg0KPiA+ICsNCj4gPiArL2R0cy12MS87DQo+ID4gKw0KPiA+ICsjaW5jbHVkZSAiYXNwZWVkLWc2
+LmR0c2kiDQo+ID4gKyNpbmNsdWRlICJhc3BlZWQtZzYtcGluY3RybC5kdHNpIg0KPiA+ICsjaW5j
+bHVkZSA8ZHQtYmluZGluZ3MvaTJjL2kyYy5oPg0KPiA+ICsjaW5jbHVkZSA8ZHQtYmluZGluZ3Mv
+Z3Bpby9hc3BlZWQtZ3Bpby5oPg0KPiA+ICsNCj4gPiArLyB7DQo+ID4gKyAgICAgICBtb2RlbCA9
+ICJUUkFOU0ZPUk1FUlMgQk1DIjsNCj4gPiArICAgICAgIGNvbXBhdGlibGUgPSAiaW52ZW50ZWMs
+dHJhbnNmb3JtZXItYm1jIiwgImFzcGVlZCxhc3QyNjAwIjsNCj4gPiArDQo+ID4gKyAgICAgICBh
+bGlhc2VzIHsNCj4gPiArICAgICAgICAgICAgICAgc2VyaWFsNCA9ICZ1YXJ0NTsNCj4gPiArICAg
+ICAgIH07DQo+ID4gKw0KPiA+ICsgICAgICAgY2hvc2VuIHsNCj4gPiArICAgICAgICAgICAgICAg
+c3Rkb3V0LXBhdGggPSAmdWFydDU7DQo+ID4gKyAgICAgICAgICAgICAgIGJvb3RhcmdzID0gImNv
+bnNvbGU9dHR5UzQsMTE1MjAwbjgiOw0KPiA+ICsgICAgICAgfTsNCj4gPiArDQo+ID4gKyAgICAg
+ICBtZW1vcnlAODAwMDAwMDAgew0KPiA+ICsgICAgICAgICAgICAgICBkZXZpY2VfdHlwZSA9ICJt
+ZW1vcnkiOw0KPiA+ICsgICAgICAgICAgICAgICByZWcgPSA8MHg4MDAwMDAwMCAweDgwMDAwMDAw
+PjsNCj4gPiArICAgICAgIH07DQo+ID4gKw0KPiA+ICsgICAgICAgbGVkcyB7DQo+ID4gKyAgICAg
+ICAgICAgICAgIGNvbXBhdGlibGUgPSAiZ3Bpby1sZWRzIjsNCj4gPiArDQo+ID4gKyAgICAgICAg
+ICAgICAgIC8vIFVJRCBsZWQNCj4gPiArICAgICAgICAgICAgICAgdWlkIHsNCj4gPiArICAgICAg
+ICAgICAgICAgICAgICAgICBsYWJlbCA9ICJVSURfTEVEIjsNCj4gPiArICAgICAgICAgICAgICAg
+ICAgICAgICBncGlvcyA9IDwmZ3BpbzAgQVNQRUVEX0dQSU8oWCwgMCkgR1BJT19BQ1RJVkVfTE9X
+PjsNCj4gPiArICAgICAgICAgICAgICAgfTsNCj4gPiArDQo+ID4gKyAgICAgICAgICAgICAgIC8v
+IEhlYXJ0IGJlYXQgbGVkDQo+ID4gKyAgICAgICAgICAgICAgIGhlYXJ0YmVhdCB7DQo+ID4gKyAg
+ICAgICAgICAgICAgICAgICAgICAgbGFiZWwgPSAiSEJfTEVEIjsNCj4gPiArICAgICAgICAgICAg
+ICAgICAgICAgICBncGlvcyA9IDwmZ3BpbzAgQVNQRUVEX0dQSU8oUCwgNykgR1BJT19BQ1RJVkVf
+TE9XPjsNCj4gPiArICAgICAgICAgICAgICAgfTsNCj4gPiArICAgICAgIH07DQo+ID4gK307DQo+
+ID4gKw0KPiA+ICsmbWRpbzAgew0KPiA+ICsgICAgICAgc3RhdHVzID0gIm9rYXkiOw0KPiA+ICsN
+Cj4gPiArICAgICAgIGV0aHBoeTA6IGV0aGVybmV0LXBoeUAwIHsNCj4gPiArICAgICAgICAgICAg
+ICAgY29tcGF0aWJsZSA9ICJldGhlcm5ldC1waHktaWVlZTgwMi4zLWMyMiI7DQo+ID4gKyAgICAg
+ICAgICAgICAgIHJlZyA9IDwxPjsNCj4gPiArICAgICAgIH07DQo+ID4gK307DQo+ID4gKw0KPiA+
+ICsmbWFjMyB7DQo+ID4gKyAgICAgICBzdGF0dXMgPSAib2theSI7DQo+ID4gKyAgICAgICBwaHkt
+bW9kZSA9ICJyZ21paSI7DQo+ID4gKyAgICAgICBwaHktaGFuZGxlID0gPCZldGhwaHkwPjsNCj4g
+PiArICAgICAgIHBpbmN0cmwtbmFtZXMgPSAiZGVmYXVsdCI7DQo+ID4gKyAgICAgICBwaW5jdHJs
+LTAgPSA8JnBpbmN0cmxfcmdtaWk0X2RlZmF1bHQ+OyB9Ow0KPiA+ICsNCj4gPiArJmZtYyB7DQo+
+ID4gKyAgICAgICBzdGF0dXMgPSAib2theSI7DQo+ID4gKw0KPiA+ICsgICAgICAgZmxhc2hAMCB7
+DQo+ID4gKyAgICAgICAgICAgICAgIHN0YXR1cyA9ICJva2F5IjsNCj4gPiArICAgICAgICAgICAg
+ICAgbTI1cCxmYXN0LXJlYWQ7DQo+ID4gKyAgICAgICAgICAgICAgIGxhYmVsID0gImJtYyI7DQo+
+ID4gKyAgICAgICAgICAgICAgIHNwaS1tYXgtZnJlcXVlbmN5ID0gPDMzMDAwMDAwPjsNCj4gPiAr
+ICAgICAgICAgICAgICAgc3BpLXR4LWJ1cy13aWR0aCA9IDwyPjsNCj4gPiArICAgICAgICAgICAg
+ICAgc3BpLXJ4LWJ1cy13aWR0aCA9IDwyPjsgI2luY2x1ZGUgDQo+ID4gKyJvcGVuYm1jLWZsYXNo
+LWxheW91dC5kdHNpIg0KPiA+ICsgICAgICAgfTsNCj4gPiArDQo+ID4gKyAgICAgICBmbGFzaEAx
+IHsNCj4gPiArICAgICAgICAgICAgICAgc3RhdHVzID0gIm9rYXkiOw0KPiA+ICsgICAgICAgICAg
+ICAgICBtMjVwLGZhc3QtcmVhZDsNCj4gPiArICAgICAgICAgICAgICAgbGFiZWwgPSAiYm1jMiI7
+DQo+ID4gKyAgICAgICAgICAgICAgIHNwaS1tYXgtZnJlcXVlbmN5ID0gPDMzMDAwMDAwPjsNCj4g
+PiArICAgICAgICAgICAgICAgc3BpLXR4LWJ1cy13aWR0aCA9IDwyPjsNCj4gPiArICAgICAgICAg
+ICAgICAgc3BpLXJ4LWJ1cy13aWR0aCA9IDwyPjsNCj4gPiArICAgICAgIH07DQo+ID4gK307DQo+
+ID4gKw0KPiA+ICsmc3BpMSB7DQo+ID4gKyAgICAgICBzdGF0dXMgPSAib2theSI7DQo+ID4gKyAg
+ICAgICBwaW5jdHJsLW5hbWVzID0gImRlZmF1bHQiOw0KPiA+ICsgICAgICAgcGluY3RybC0wID0g
+PCZwaW5jdHJsX3NwaTFfZGVmYXVsdD47DQo+ID4gKw0KPiA+ICsgICAgICAgZmxhc2hAMCB7DQo+
+ID4gKyAgICAgICAgICAgICAgIHN0YXR1cyA9ICJva2F5IjsNCj4gPiArICAgICAgICAgICAgICAg
+bTI1cCxmYXN0LXJlYWQ7DQo+ID4gKyAgICAgICAgICAgICAgIGxhYmVsID0gImJpb3MiOw0KPiA+
+ICsgICAgICAgICAgICAgICBzcGktbWF4LWZyZXF1ZW5jeSA9IDwzMzAwMDAwMD47DQo+ID4gKyAg
+ICAgICAgICAgICAgIHNwaS10eC1idXMtd2lkdGggPSA8MT47DQo+ID4gKyAgICAgICAgICAgICAg
+IHNwaS1yeC1idXMtd2lkdGggPSA8MT47DQo+ID4gKyAgICAgICB9Ow0KPiA+ICt9Ow0KPiA+ICsN
+Cj4gPiArJndkdDEgew0KPiA+ICsgICAgICAgc3RhdHVzID0gIm9rYXkiOw0KPiA+ICt9Ow0KPiA+
+ICsNCj4gPiArJnVhcnQxIHsNCj4gPiArICAgICAgIHN0YXR1cyA9ICJva2F5IjsNCj4gPiArfTsN
+Cj4gPiArDQo+ID4gKyZ1YXJ0NSB7DQo+ID4gKyAgICAgICBzdGF0dXMgPSAib2theSI7DQo+ID4g
+K307DQo+ID4gKw0KPiA+ICsmaTJjMCB7DQo+ID4gKyAgICAgICBzdGF0dXMgPSAib2theSI7DQo+
+ID4gKw0KPiA+ICsgICAgICAgLy9TZXQgYm1jJyBzbGF2ZSBhZGRyZXNzOw0KPiA+ICsgICAgICAg
+Ym1jX3NsYXZlQDEwIHsNCj4gPiArICAgICAgICAgICAgICAgY29tcGF0aWJsZSA9ICJpcG1iLWRl
+diI7DQo+ID4gKyAgICAgICAgICAgICAgIHJlZyA9IDwoMHgxMCB8IEkyQ19PV05fU0xBVkVfQURE
+UkVTUyk+Ow0KPiA+ICsgICAgICAgICAgICAgICBpMmMtcHJvdG9jb2w7DQo+ID4gKyAgICAgICB9
+Ow0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJmkyYzIgew0KPiA+ICsgICAgICAgc3RhdHVzID0gIm9r
+YXkiOw0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJmkyYzMgew0KPiA+ICsgICAgICAgLy8gRlJVIEFU
+MjRDNTEyQy1TU0hNLVQNCj4gPiArICAgICAgIHN0YXR1cyA9ICJva2F5IjsNCj4gPiArICAgICAg
+IGVlcHJvbUA1MCB7DQo+ID4gKyAgICAgICAgICAgICAgIGNvbXBhdGlibGUgPSAiYXRtZWwsMjRj
+NTEyIjsNCj4gPiArICAgICAgICAgICAgICAgcmVnID0gPDB4NTA+Ow0KPiA+ICsgICAgICAgICAg
+ICAgICBwYWdlc2l6ZSA9IDwxMjg+Ow0KPiA+ICsgICAgICAgfTsNCj4gPiArfTsNCj4gPiArDQo+
+ID4gKyZpMmM1IHsNCj4gPiArICAgICAgIHN0YXR1cyA9ICJva2F5IjsNCj4gPiArfTsNCj4gPiAr
+DQo+ID4gKyZpMmM2IHsNCj4gPiArICAgICAgIHN0YXR1cyA9ICJva2F5IjsNCj4gPiArDQo+ID4g
+KyAgICAgICB0bXA3NUA0OSB7DQo+ID4gKyAgICAgICAgICAgICAgIGNvbXBhdGlibGUgPSAidGks
+dG1wNzUiOw0KPiA+ICsgICAgICAgICAgICAgICByZWcgPSA8MHg0OT47DQo+ID4gKyAgICAgICB9
+Ow0KPiA+ICsNCj4gPiArICAgICAgIHRtcDc1QDRmIHsNCj4gPiArICAgICAgICAgICAgICAgY29t
+cGF0aWJsZSA9ICJ0aSx0bXA3NSI7DQo+ID4gKyAgICAgICAgICAgICAgIHJlZyA9IDwweDRmPjsN
+Cj4gPiArICAgICAgIH07DQo+ID4gKw0KPiA+ICsgICAgICAgdG1wNDY4QDQ4IHsNCj4gPiArICAg
+ICAgICAgICAgICAgY29tcGF0aWJsZSA9ICJ0aSx0bXA0NjgiOw0KPiA+ICsgICAgICAgICAgICAg
+ICByZWcgPSA8MHg0OD47DQo+ID4gKyAgICAgICB9Ow0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJmky
+Yzcgew0KPiA+ICsgICAgICAgc3RhdHVzID0gIm9rYXkiOw0KPiA+ICsgICAgICAgYWRtMTI3OEA0
+MCB7DQo+ID4gKyAgICAgICAgICAgICAgIGNvbXBhdGlibGUgPSAiYWRpLGFkbTEyNzgiOw0KPiA+
+ICsgICAgICAgICAgICAgICByZWcgPSA8MHg0MD47DQo+ID4gKyAgICAgICB9Ow0KPiA+ICt9Ow0K
+PiA+ICsNCj4gPiArDQo+ID4gKyZpMmM4IHsNCj4gPiArICAgICAgIC8vIEZSVSBBVDI0QzUxMkMt
+U1NITS1UDQo+ID4gKyAgICAgICBzdGF0dXMgPSAib2theSI7DQo+ID4gKw0KPiA+ICsgICAgICAg
+ZWVwcm9tQDUxIHsNCj4gPiArICAgICAgICAgICAgICAgY29tcGF0aWJsZSA9ICJhdG1lbCwyNGM1
+MTIiOw0KPiA+ICsgICAgICAgICAgICAgICByZWcgPSA8MHg1MT47DQo+ID4gKyAgICAgICAgICAg
+ICAgIHBhZ2VzaXplID0gPDEyOD47DQo+ID4gKyAgICAgICB9Ow0KPiA+ICsNCj4gPiArICAgICAg
+IGVlcHJvbUA1MyB7DQo+ID4gKyAgICAgICAgICAgICAgIGNvbXBhdGlibGUgPSAiYXRtZWwsMjRj
+NTEyIjsNCj4gPiArICAgICAgICAgICAgICAgcmVnID0gPDB4NTM+Ow0KPiA+ICsgICAgICAgICAg
+ICAgICBwYWdlc2l6ZSA9IDwxMjg+Ow0KPiA+ICsgICAgICAgfTsNCj4gPiArfTsNCj4gPiArDQo+
+ID4gKyZpMmM5IHsNCj4gPiArICAgICAgIC8vIE0uMg0KPiA+ICsgICAgICAgc3RhdHVzID0gIm9r
+YXkiOw0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJmkyYzEwIHsNCj4gPiArICAgICAgIC8vIEkyQyBF
+WFBBTkRFUg0KPiA+ICsgICAgICAgc3RhdHVzID0gIm9rYXkiOw0KPiA+ICsNCj4gPiArICAgICAg
+IGkyYy1zd2l0Y2hANzEgew0KPiA+ICsgICAgICAgICAgICAgICBjb21wYXRpYmxlID0gIm54cCxw
+Y2E5NTQ0IjsNCj4gPiArICAgICAgICAgICAgICAgI2FkZHJlc3MtY2VsbHMgPSA8MT47DQo+ID4g
+KyAgICAgICAgICAgICAgICNzaXplLWNlbGxzID0gPDA+Ow0KPiA+ICsgICAgICAgICAgICAgICBy
+ZWcgPSA8MHg3MT47DQo+ID4gKyAgICAgICB9Ow0KPiA+ICsNCj4gPiArICAgICAgIGkyYy1zd2l0
+Y2hANzMgew0KPiA+ICsgICAgICAgICAgICAgICBjb21wYXRpYmxlID0gIm54cCxwY2E5NTQ0IjsN
+Cj4gPiArICAgICAgICAgICAgICAgI2FkZHJlc3MtY2VsbHMgPSA8MT47DQo+ID4gKyAgICAgICAg
+ICAgICAgICNzaXplLWNlbGxzID0gPDA+Ow0KPiA+ICsgICAgICAgICAgICAgICByZWcgPSA8MHg3
+Mz47DQo+ID4gKyAgICAgICB9Ow0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJmkyYzExIHsNCj4gPiAr
+ICAgICAgIC8vIEkyQyBFWFBBTkRFUg0KPiA+ICsgICAgICAgc3RhdHVzID0gIm9rYXkiOw0KPiA+
+ICsNCj4gPiArICAgICAgIGkyYy1zd2l0Y2hANzAgew0KPiA+ICsgICAgICAgICAgICAgICBjb21w
+YXRpYmxlID0gIm54cCxwY2E5NTQ0IjsNCj4gPiArICAgICAgICAgICAgICAgI2FkZHJlc3MtY2Vs
+bHMgPSA8MT47DQo+ID4gKyAgICAgICAgICAgICAgICNzaXplLWNlbGxzID0gPDA+Ow0KPiA+ICsg
+ICAgICAgICAgICAgICByZWcgPSA8MHg3MD47DQo+ID4gKw0KPiA+ICsgICAgICAgICAgICAgICBw
+Y2llX2VlcHJvbV9yaXNlcjE6IGkyY0AwIHsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAj
+YWRkcmVzcy1jZWxscyA9IDwxPjsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAjc2l6ZS1j
+ZWxscyA9IDwwPjsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICByZWcgPSA8MD47DQo+ID4g
+Kw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgIGVlcHJvbUA1NSB7DQo+ID4gKyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICBjb21wYXRpYmxlID0gImF0bWVsLDI0YzUxMiI7DQo+ID4g
+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZWcgPSA8MHg1NT47DQo+ID4gKyAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICBwYWdlc2l6ZSA9IDwxMjg+Ow0KPiA+ICsgICAgICAg
+ICAgICAgICAgICAgICAgIH07DQo+ID4gKyAgICAgICAgICAgICAgIH07DQo+ID4gKw0KPiA+ICsg
+ICAgICAgICAgICAgICBwY2llX2VlcHJvbV9yaXNlcjI6IGkyY0AxIHsNCj4gPiArICAgICAgICAg
+ICAgICAgICAgICAgICAjYWRkcmVzcy1jZWxscyA9IDwxPjsNCj4gPiArICAgICAgICAgICAgICAg
+ICAgICAgICAjc2l6ZS1jZWxscyA9IDwwPjsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICBy
+ZWcgPSA8MT47DQo+ID4gKw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgIGVlcHJvbUA1NSB7
+DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb21wYXRpYmxlID0gImF0bWVs
+LDI0YzUxMiI7DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZWcgPSA8MHg1
+NT47DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBwYWdlc2l6ZSA9IDwxMjg+
+Ow0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgIH07DQo+ID4gKyAgICAgICAgICAgICAgIH07
+DQo+ID4gKw0KPiA+ICsgICAgICAgICAgICAgICBwY2llX2VlcHJvbV9yaXNlcjM6IGkyY0AyIHsN
+Cj4gPiArICAgICAgICAgICAgICAgICAgICAgICAjYWRkcmVzcy1jZWxscyA9IDwxPjsNCj4gPiAr
+ICAgICAgICAgICAgICAgICAgICAgICAjc2l6ZS1jZWxscyA9IDwwPjsNCj4gPiArICAgICAgICAg
+ICAgICAgICAgICAgICByZWcgPSA8Mj47DQo+ID4gKw0KPiA+ICsgICAgICAgICAgICAgICAgICAg
+ICAgIGVlcHJvbUA1NSB7DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb21w
+YXRpYmxlID0gImF0bWVsLDI0YzUxMiI7DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICByZWcgPSA8MHg1NT47DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBw
+YWdlc2l6ZSA9IDwxMjg+Ow0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgIH07DQo+ID4gKyAg
+ICAgICAgICAgICAgIH07DQo+ID4gKyAgICAgICB9Ow0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJmky
+YzEyIHsNCj4gPiArICAgICAgIHN0YXR1cyA9ICJva2F5IjsNCj4gPiArDQo+ID4gKyAgICAgICBw
+c3UwOnBzdTBANTggew0KPiA+ICsgICAgICAgICAgICAgICBjb21wYXRpYmxlID0gInBtYnVzIjsN
+Cj4gPiArICAgICAgICAgICAgICAgcmVnID0gPDB4NTg+Ow0KPiA+ICsgICAgICAgfTsNCj4gPiAr
+fTsNCj4gPiArDQo+ID4gKyZncGlvMCB7DQo+ID4gKyAgICAgICBzdGF0dXMgPSAib2theSI7DQo+
+ID4gKyAgICAgICBncGlvLWxpbmUtbmFtZXMgPQ0KPiA+ICsgICAgICAgLypBMC1BNyovICAgIiIs
+IiIsIiIsIiIsIiIsIiIsIiIsIiIsDQo+ID4gKyAgICAgICAvKkIwLUI3Ki8gICAicHJlc2VuY2Ut
+cHMwIiwicG93ZXItY2hhc3Npcy1nb29kIiwiIiwiIiwiIiwiIiwicHJlc2VuY2UtcHMxIiwiIiwN
+Cj4gPiArICAgICAgIC8qQzAtQzcqLyAgICIiLCIiLCIiLCIiLCIiLCIiLCIiLCIiLA0KPiA+ICsg
+ICAgICAgLypEMC1ENyovICAgIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsDQo+ID4gKyAgICAgICAv
+KkUwLUU3Ki8gICAiIiwiIiwiIiwiIiwiIiwiIiwiIiwiIiwNCj4gPiArICAgICAgIC8qRjAtRjcq
+LyAgICIiLCIiLCIiLCIiLCJwb3dlci1jaGFzc2lzLWNvbnRyb2wiLCIiLCIiLCIiLA0KPiA+ICsg
+ICAgICAgLypHMC1HNyovICAgIiIsIiIsImp0YWctbXV4IiwiIiwiIiwiIiwiIiwiIiwNCj4gPiAr
+ICAgICAgIC8qSDAtSDcqLyAgICIiLCIiLCIiLCIiLCJyZXNldC1idXR0b24iLCJwb3dlci1idXR0
+b24iLCIiLCIiLA0KPiA+ICsgICAgICAgLypJMC1JNyovICAgIiIsIiIsIiIsIiIsIiIsIiIsIiIs
+IiIsDQo+ID4gKyAgICAgICAvKkowLUo3Ki8gICAiIiwiIiwiIiwiIiwiIiwiIiwiIiwiIiwNCj4g
+PiArICAgICAgIC8qSzAtSzcqLyAgICIiLCIiLCIiLCIiLCIiLCIiLCIiLCIiLA0KPiA+ICsgICAg
+ICAgLypMMC1MNyovICAgIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsDQo+ID4gKyAgICAgICAvKk0w
+LU03Ki8gICAiIiwiIiwiIiwiIiwiIiwiIiwiIiwiIiwNCj4gPiArICAgICAgIC8qTjAtTjcqLyAg
+ICIiLCIiLCIiLCIiLCIiLCIiLCIiLCIiLA0KPiA+ICsgICAgICAgLypPMC1PNyovICAgIiIsIiIs
+IiIsIiIsIiIsIiIsIiIsIiIsDQo+ID4gKyAgICAgICAvKlAwLVA3Ki8gICAiIiwiIiwiIiwidGNr
+LW11eCIsIiIsIiIsIiIsIiIsDQo+ID4gKyAgICAgICAvKlEwLVE3Ki8gICAiIiwiIiwiIiwiIiwi
+IiwiIiwiIiwiIiwNCj4gPiArICAgICAgIC8qUjAtUjcqLyAgICIiLCIiLCIiLCIiLCIiLCIiLCIi
+LCIiLA0KPiA+ICsgICAgICAgLypTMC1TNyovICAgIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsDQo+
+ID4gKyAgICAgICAvKlQwLVQ3Ki8gICAiIiwiIiwiIiwiIiwiIiwiIiwiIiwiIiwNCj4gPiArICAg
+ICAgIC8qVTAtVTcqLyAgICIiLCJubWktYnV0dG9uIiwiIiwiIiwiIiwiIiwiIiwiIiwNCj4gPiAr
+ICAgICAgIC8qVjAtVjcqLyAgICIiLCIiLCIiLCIiLCJwb3dlci1jb25maWctZnVsbC1sb2FkIiwi
+IiwiIiwiIiwNCj4gPiArICAgICAgIC8qVzAtVzcqLyAgICIiLCIiLCIiLCIiLCIiLCIiLCIiLCIi
+LA0KPiA+ICsgICAgICAgLypYMC1YNyovICAgIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsDQo+ID4g
+KyAgICAgICAvKlkwLVk3Ki8gICAiIiwiIiwiIiwiIiwiIiwiIiwiIiwiIiwNCj4gPiArICAgICAg
+IC8qWjAtWjcqLyAgICIiLCIiLCIiLCIiLCIiLCIiLCIiLCIiLA0KPiA+ICsgICAgICAgLypBQTAt
+QUE3Ki8gIiIsIiIsIiIsIiIsIiIsIiIsIiIsIiIsDQo+ID4gKyAgICAgICAvKkFCMC1BQjcqLyAi
+IiwiIiwiIiwiIiwiIiwiIiwiIiwiIiwNCj4gPiArICAgICAgIC8qQUMwLUFDNyovICIiLCIiLCIi
+LCIiLCIiLCIiLCIiLCIiOyB9Ow0KPiA+ICsNCj4gPiArJmxwY19zbm9vcCB7DQo+ID4gKyAgICAg
+ICBzdGF0dXMgPSAib2theSI7DQo+ID4gKyAgICAgICBzbm9vcC1wb3J0cyA9IDwweDgwPjsNCj4g
+PiArfTsNCj4gPiArDQo+ID4gKyZlbW1jX2NvbnRyb2xsZXIgew0KPiA+ICsgICAgICAgc3RhdHVz
+ID0gIm9rYXkiOw0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJmVtbWMgew0KPiA+ICsgICAgICAgc3Rh
+dHVzID0gIm9rYXkiOw0KPiA+ICsgICAgICAgbm9uLXJlbW92YWJsZTsNCj4gPiArICAgICAgIG1h
+eC1mcmVxdWVuY3kgPSA8NTIwMDAwMDA+Ow0KPiA+ICsgICAgICAgYnVzLXdpZHRoID0gPDg+Ow0K
+PiA+ICt9Ow0KPiA+ICsNCj4gPiArJnZodWIgew0KPiA+ICsgICAgICAgc3RhdHVzID0gIm9rYXki
+Ow0KPiA+ICsgICAgICAgYXNwZWVkLHZodWItZG93bnN0cmVhbS1wb3J0cyA9IDw3PjsNCj4gPiAr
+ICAgICAgIGFzcGVlZCx2aHViLWdlbmVyaWMtZW5kcG9pbnRzID0gPDIxPjsNCj4gPiArICAgICAg
+IHBpbmN0cmwtbmFtZXMgPSAiZGVmYXVsdCI7DQo+ID4gKyAgICAgICBwaW5jdHJsLTAgPSA8JnBp
+bmN0cmxfdXNiMmFkX2RlZmF1bHQ+OyB9Ow0KPiA+ICsNCj4gPiArJnJ0YyB7DQo+ID4gKyAgICAg
+ICBzdGF0dXMgPSAib2theSI7DQo+ID4gK307DQo+ID4gLS0NCj4gPiAyLjMzLjANCj4gPg0K
