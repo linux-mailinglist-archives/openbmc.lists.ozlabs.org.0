@@ -2,89 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E383B440072
-	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 18:37:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F366B44021F
+	for <lists+openbmc@lfdr.de>; Fri, 29 Oct 2021 20:35:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hgp4n5GV2z3000
-	for <lists+openbmc@lfdr.de>; Sat, 30 Oct 2021 03:37:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HgrhJ5zQhz3bXv
+	for <lists+openbmc@lfdr.de>; Sat, 30 Oct 2021 05:35:12 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=kBbUoCdC;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=S/GnjTaa;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=OUj0vHhB;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=URMwiKle;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm3 header.b=kBbUoCdC; 
+ header.a=rsa-sha256 header.s=fm3 header.b=OUj0vHhB; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=S/GnjTaa; 
+ header.a=rsa-sha256 header.s=fm1 header.b=URMwiKle; 
  dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hgp4N3qzcz2xCk
- for <openbmc@lists.ozlabs.org>; Sat, 30 Oct 2021 03:37:24 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hgrgt1QWWz2y7M
+ for <openbmc@lists.ozlabs.org>; Sat, 30 Oct 2021 05:34:49 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 955005C01C2;
- Fri, 29 Oct 2021 12:37:22 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id A695C5C0103
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 14:34:46 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Fri, 29 Oct 2021 12:37:22 -0400
+ by compute3.internal (MEProxy); Fri, 29 Oct 2021 14:34:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
- :references:mime-version:content-type:in-reply-to; s=fm3; bh=xq2
- F91V71SKW8umBWMuGTUdvAKMnZwTZhRMUMiGOEbI=; b=kBbUoCdCOI0lTOIhas4
- MYvq1PzGJNcWNiUQHdFUf80t6XIFPoOTxX2IceK8DqizqPfixwQao7/Myuj1OQct
- mosIi0ICta/FG4+j0W2THresA97v+RyNRnawnQHu5UcW8Kw2ouj+YEHHkTGROxJe
- w1msFALE0T8092JS8bv9jlel7ASveBNjPraWmlRrfYGLOFfQDZYkRMv5owIp9545
- 0exY0PJqtQJRdjme7JrIVShLKdpO2P64kyMYr0i2nz0OBl10Y2+h1JgR7KeuvUX8
- dTtdljE3KTUYaLVQDm0G/k0rE3fPc/lAihGul3AKzwZGkV9VYbR+V9mViCIQl9jj
- 7ew==
+ fuzziesquirrel.com; h=message-id:subject:from:to:date
+ :content-type:mime-version:content-transfer-encoding; s=fm3; bh=
+ qiIgxhAUsxWwHUxAgiIqYC/9Gk7a7OYE+iDOJMSD2vY=; b=OUj0vHhB3fZUer0/
+ XdxeafbxhZEbMpXTPJeKLHAQ6EaSRm3lmxJ4D1M/p/lE33DUGcnm6wOcrdgunD4L
+ Sou4gnLvDpUO1PwFPWd6+o8qbMn6V8PgpbsbUgbSMYbb+bFFmzAi/srp3QDFOFXZ
+ dgZoQm1oWlLc1CcoWPW6eEoBBA8Oq4YuNoIKxS1+oahjoh90A4HREtiMByr3gcQM
+ X83YUSfoT1f0jzFRdZWSwgGdzcf/zKiamo20p2WEMiNUVaXHlwMjmu5PP+jfEhVz
+ FJqaX9598M2CV4uLtNKZ8f50olnoV9haT33sruQ1dPd03Z0VQ53P8ZQDqR/ZtiuK
+ oNQkWg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=xq2F91
- V71SKW8umBWMuGTUdvAKMnZwTZhRMUMiGOEbI=; b=S/GnjTaaoK6FCaSW3aP7Jh
- BywrfmiHKKEUloKwP2dhnnNo8le6f8Oq192mwFwrnDRx57Fp1R3hmU2Fj3M49bzE
- UxFt2m36tZxoPJyhqpITDcP+DalM7OVc3VYE29NrgWtDTqlhbLdgcOIMI7P62sDH
- PLA+2k7Jy9e3rrP9yJZ0RU31X0cJTgCUcEYf98GC+BYNiEaRzteqaVLfZxhCOc82
- LtPkd+v0yImzhimRiVK3MeaK+ZUl03tFCBe+z+VqINRESrCdlwDoPLDq621Pa2RA
- nvird+W9aAdQOKh70Wgh6bDp+/51FVTARXt3Qyyy67GjaCerR/9e5pfeWOIxAVkw
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:message-id:mime-version:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=qiIgxh
+ AUsxWwHUxAgiIqYC/9Gk7a7OYE+iDOJMSD2vY=; b=URMwiKletfNpkJc+dCioCu
+ KpuDtpDXMP2/fzJOJyWLUPL4W7N1CikoVBc6w5AoSKGGeVtOeI0bHs9rnVk29M7S
+ y1B/7uix0+ikx7DV4GW6GLjugYhbItCZCxzYR3CxIhxKs9pUD05D7go5Tl/qwaF0
+ 7eZBu4H4ep6Mo0Hzog4IyILvSmvqlUcx317JYdBbi4xOoZ/xlpYDKTnBkzg+1sIf
+ Hj2SSfTxbslVBFpG/iH8IgbI58TiZsoCXDRXcYc9gspI46f+PZxWdrXBUEsqi9Uq
+ YERwuVCmoiieuBHpkQ0fgJlM3fDQX0i3k29lY29Zmmhdu0qhYgFGooYMgGgL7S8Q
  ==
-X-ME-Sender: <xms:QiN8Ydl3BUVRMNjJ3uKSFOfCUG4mO0HVisj1E5JWenOo-s86OwpIOw>
- <xme:QiN8YY0ZAz-DgJO9t4VsJ3-49RdUWoMq1eMi83e9TTxA_Rzkm7zHvfxA3GLjPaAcJ
- dtoGXQKRn7E4hGgOpg>
-X-ME-Received: <xmr:QiN8YTrnomjGsSFylbVrPfmr4foqz72g26y22G-9UpEPkXmXBUDFKNGJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdeghedgleekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeurhgrugcu
- uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
- eqnecuggftrfgrthhtvghrnhepfeffhfefheeguddtvddtueeihfduieefkeefieefkeef
- udefueevudelgfekffefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
- hilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
-X-ME-Proxy: <xmx:QiN8Ydn7daPfB8gn2PrkBnXTz0RbX9WezZzH4MLQ-MaIa-FTtR7zZw>
- <xmx:QiN8Yb310C8Bv08wK9F_fC4KTF-umPMSV-HQZGiOHe08lyCK1G6gGw>
- <xmx:QiN8YcsL4wk7bWVY3tLTyeyIHKdG8woTsiqsvv7I7b8nNHWpL4XHPA>
- <xmx:QiN8YY_xS0Rr6piFf_0BfXlXCKfOh92x98Y-CiJe1dSnoXLGlt6wwA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 29 Oct 2021 12:37:21 -0400 (EDT)
-Date: Fri, 29 Oct 2021 12:37:20 -0400
+X-ME-Sender: <xms:xj58YcGGqlqtYqdyf8ccTjSM0CFNjUcaMkhBmiKk_ntzWnj53W4Dfw>
+ <xme:xj58YVXijq_CxvIUfpMFqc5TikrQUDIEdIyKtd2nsAqvGKbRLPfe-UXSHX6Ym4W-K
+ jYKh2ey_XXcqUMUYTY>
+X-ME-Received: <xmr:xj58YWIU63Jyi9gltxnU8V0p-AHjJs6fAb132S_OD9r3Ec0f9G3w47KtHpu8GFSPI4Ulz5A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdeghedguddvvdcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhepkf
+ fuhffvffgtfggggfesthekredttderjeenucfhrhhomhepuehrrgguuceuihhshhhophcu
+ oegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhmqeenucggtffrrg
+ htthgvrhhnpeelieejvedvvddvudfhffduueffjeeflefhleelfeejjeegfedtheehledt
+ ieefhfenucffohhmrghinhepohhpvghnsghmtgdqphhrohhjvggtthdrgiihiidpghhith
+ hhuhgsrdgtohhmpdhosghjvggtthdqmhgrphhpvghrrdhmugenucevlhhushhtvghrufhi
+ iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiih
+ gvshhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:xj58YeEloy0mNPTr5CJuTrheTGtWDc0jBvx7QInCVE18vzeJjIpujQ>
+ <xmx:xj58YSULL0hG3-YGnPw6Hulhigy5HdP0Ryat01T6bwxOBss2f1sGpA>
+ <xmx:xj58YROZDd08yxzjVijNMQfAuo4fDLe_Cs0hoGaOaFz2m8hbNTolAg>
+ <xmx:xj58YdAqC1GxIa24VfNn1nurrPu7Sws7XTVpDtEiHSETXf_daZgq7g>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Fri, 29 Oct 2021 14:34:46 -0400 (EDT)
+Message-ID: <e41ba66012487dbec35d73ed82fcc95a8a2927d0.camel@fuzziesquirrel.com>
+Subject: documenting object associations
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: Re: OTP-5: "OpenBMC TOF Proposal" Process
-Message-ID: <20211029163720.ztct456rqf7tmezj@cheese>
-References: <YXDtrwHhUcxwtlij@heinlein>
+To: openbmc@lists.ozlabs.org
+Date: Fri, 29 Oct 2021 14:34:45 -0400
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.4 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <YXDtrwHhUcxwtlij@heinlein>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,26 +97,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Oct 20, 2021 at 11:33:51PM -0500, Patrick Williams wrote:
+Hi all
 
->## Definitions
->
->* OTP: An "OpenBMC TOF Proposal".  Any request to the TOF should be framed as
->  an OTP as documented by this process.
->
->* Author: The individual(s) who write the initial draft of the OTP.
->
->* Champion: A member of the TOF, confirmed by the current TOF chair, who will
+I recently submitted a patch[1] that tries to establish a mechanism for
+documenting our DBus object associations[2].
 
-What does confirmed mean here?  The chair will document the champion 
-somewhere?  Also what if nobody on the TOF wants to volunteer to 
-champion the proposal?  One will be appointed and try their hardest to 
-represent the interests of the person making the proposal?
+The patch has been merged - I am sending this simply to highlight the
+change and to encourage everyone to document your past, present and
+future associations using this mechanism.  In case you missed the review
+feel free to reply here with suggestions for improvements.
 
->  work with the Author while this process is being followed to ensure that
->  appropriate updates to the OTP are being made.  If the Author is a member of
->  the TOF it is expected that they will also act as Champion to their own OTP.
+thx - brad
+
+[1] https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/47463
+[2] https://github.com/openbmc/docs/blob/master/architecture/object-mapper.md#associations
+
+
