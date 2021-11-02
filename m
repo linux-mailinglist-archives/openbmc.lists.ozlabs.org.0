@@ -1,74 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D98ED442DA6
-	for <lists+openbmc@lfdr.de>; Tue,  2 Nov 2021 13:15:35 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C53D4438BA
+	for <lists+openbmc@lfdr.de>; Tue,  2 Nov 2021 23:47:21 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hk84P53zHz30J3
-	for <lists+openbmc@lfdr.de>; Tue,  2 Nov 2021 23:15:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HkQ5M0WZ8z2yNY
+	for <lists+openbmc@lfdr.de>; Wed,  3 Nov 2021 09:47:19 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Oy4e08YQ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=YFmHr1Ou;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=HD1En9Ef;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2b;
- helo=mail-yb1-xb2b.google.com; envelope-from=lukas.bulwahn@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=Oy4e08YQ; dkim-atps=neutral
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com
- [IPv6:2607:f8b0:4864:20::b2b])
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm1 header.b=YFmHr1Ou; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=HD1En9Ef; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hk84156THz2y0C
- for <openbmc@lists.ozlabs.org>; Tue,  2 Nov 2021 23:15:12 +1100 (AEDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id a129so39470427yba.10
- for <openbmc@lists.ozlabs.org>; Tue, 02 Nov 2021 05:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=H0Nynl9KYEos60TLF3kMyaTZRdbJ2IJWnWt8dmgsZ8o=;
- b=Oy4e08YQ+S5kroIaoipFHcseTK3NpOCo+MSIUrjmGs+88S/D2FVe1zsab/MobPaAsJ
- PQSblcw2EVBRG7rlaelIkp5D00fsyXAEz5c56YjBeOkuUcgFksHHayttv/PlUy02IcOw
- 4nYDu8pQY0a/1NAAIM0hgPWQF9DdZl0/SwbFRVd+BQBVuUxAasx1nyiEcz9r94hfjt4X
- iSf84fPNvSvJrMBzzKbo04BZXEl5kI6YVUB2vTaEDy+Oc9rXn8V6WHlcLml1QSj6+70S
- GCa4ByRWzS8yR6FfDveQEFkp41ZSXZByjoP+diuB7jYpeUlZhqJDZQrUwxjxKLSg3zQX
- wD5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=H0Nynl9KYEos60TLF3kMyaTZRdbJ2IJWnWt8dmgsZ8o=;
- b=XxocDrEsu9sUPsmgubZMoeNqX7hrAMjDl7LqAH+tkfVwD8/QigRjCYbF820jVwpM5H
- o6BYV3X3VOKNE/X3IUjcj/9WaYvAYzghaMQuqWzhRuV21+TAdY1f+/xx1GOEec+Nn+Jq
- KkBodJuYbOWWIoZ6E5sFuDgSpxw9nr4BkTUi1+GPQfYOZe8a7DxedVQ22akEyxkwra5c
- q7PqAxubctJuhRK19AOymhLj61+UMR22OOkiKLm2kcSR2Wul1j2BkAoDgCjwlOWE1XHe
- ReBM3kO7dkzovDnk8lB1mphauT63AaiFeRpaUOz0yc3ACSXU+giTAmgwLt072jRltJJo
- ivLQ==
-X-Gm-Message-State: AOAM530U5e/pdqqHyTnFxKZmqXOwtqt+EVPE5z791ARyESM2My+4Qe9X
- 0mCNuMIF6ZO17DLR8P01jZ40ZOurD4dFkMw82ds=
-X-Google-Smtp-Source: ABdhPJxLjg53nX46gv9ag9zyfyZJr3b9fP3tgKwpwWhIuIrPOLIV5FCJQF8aI+BgAh5o6cQY+rn/rGbzr6eUr7UoMbk=
-X-Received: by 2002:a25:71c3:: with SMTP id
- m186mr37252318ybc.434.1635855309301; 
- Tue, 02 Nov 2021 05:15:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
- <20211028141938.3530-12-lukas.bulwahn@gmail.com>
- <CAK8P3a0Nq9hLbGiPCQTjVTiGFPR9-tdhN8Tf06Q=cWTgMK78yw@mail.gmail.com>
- <CACPK8XfiN5qziPHLU6J=bC34mcjz+ix7jjSX=xk9zsr7+vyTdw@mail.gmail.com>
- <CAKXUXMyrhrM2o-OEW_qTTKjfKgxt-Z6Nt69geU80AoFnM1OuMA@mail.gmail.com>
- <CAK8P3a2N3zNkGzXQD8Pbs-8pDL7mv6rneJop-C_p_+d7-_sNqA@mail.gmail.com>
-In-Reply-To: <CAK8P3a2N3zNkGzXQD8Pbs-8pDL7mv6rneJop-C_p_+d7-_sNqA@mail.gmail.com>
-From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Date: Tue, 2 Nov 2021 13:14:58 +0100
-Message-ID: <CAKXUXMzeTE11Qfces6sHLb7F_0sSSCOr91aivZmnqCS4cZM-VQ@mail.gmail.com>
-Subject: Re: [PATCH 11/13] arm: npcm: drop selecting non-existing
- ARM_ERRATA_794072
-To: Arnd Bergmann <arnd@arndb.de>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HkQ4s5znfz2xsh;
+ Wed,  3 Nov 2021 09:46:53 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id B980E5C0063;
+ Tue,  2 Nov 2021 18:46:50 -0400 (EDT)
+Received: from imap43 ([10.202.2.93])
+ by compute2.internal (MEProxy); Tue, 02 Nov 2021 18:46:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=+MmfI1hZqEV2ZXk8KmjNb0iZ8aI9C1X
+ wnf9lcQ3Z1uc=; b=YFmHr1Oukctfa1gHQIpggEvefuoGE4pnTJ5WbvG78Hb/MLR
+ EeNus6GyzokK1Fttz8p44luYffyp0Ewlu2MD/4s1pX8Kj/i0bq6RtIFD1HfUBDhZ
+ IPZ1hQei5b4JvrC74jSvh0w+2Zmt/Qeure3CpyH+2xZEvb1xzRJCsJ4lwomBUk/g
+ UR6dZUrQPfyD496Uk8DRWwqHq5UneFxRdUWwjea9IQrC1+h8GYYEADBDp03PX+Bm
+ JM9lKZQqtFn7Bn7DekpYBLZsD+3b3oyU3wETQH3ocgzi4lbiKadTU4Qukuxt1d0e
+ U7bXc7B5h2GPGBz8NMtZJMEDKv8/ds+VOwZEggQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+MmfI1
+ hZqEV2ZXk8KmjNb0iZ8aI9C1Xwnf9lcQ3Z1uc=; b=HD1En9EfpDdtNdzzDK3z1A
+ qKRdQ4dEH6fT+NppFc2Tplbqnu6bZuwIZ2WlT/DM93uDNw1D26grn7xCytMSg2q2
+ xrVPEbIaXrvKMldB++BRrrPcFqWeHN6VqkSC5NIs+MrZ3f9iwd6YsqzlWB+kS6Gi
+ rXYaTV2LumDsuvRU9fMi7rvyhycqoSiPQP+ozimKIw9/soGC81oZZQD/hAyFwQd4
+ 5/7JUYV9vx2W+iHYarCV1oKTBwPMcKBcob8LNaE7z/SNwo+WWwMtHGR4ltslXJSJ
+ LznpoJEZl0SuSAZuIpzUwbOxl0WyuRWfhlj/QuHwvn8dueRBVpkFnfICP3RJEgjQ
+ ==
+X-ME-Sender: <xms:2r-BYTq0n-5UldPg_zXq-JhZmzsp75EGAEEXvL1BEiYitN7qoaZvQA>
+ <xme:2r-BYdr0Wc9-VK76am5pTrJvQQaJ8XejF3ywxGC29ODiCq_uwK3xmEdJLWgtdMLre
+ m7gNkMED3mq4OWDKQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrtddugddtudcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
+ veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:2r-BYQN1odeZTH5cZ15jmB0wcHvGUAYh8uP328m5hMo8eAT5hwleBQ>
+ <xmx:2r-BYW7whpwHdmUZkJUde3_3rNIV1bF_Ewxia1lVDKzUDaduCpYW-w>
+ <xmx:2r-BYS73IicJx_qukKMIx6HyEDrCDFrdKZLHL6oSS_a7TxRnyUF9fA>
+ <xmx:2r-BYfubquuJ1R21rpgvG3cZ8rsh6hrsZPYt3Azxa36EUuxpnL2syg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 7A487AC0E8C; Tue,  2 Nov 2021 18:46:50 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-1369-gd055fb5e7c-fm-20211018.002-gd055fb5e
+Mime-Version: 1.0
+Message-Id: <3fc55e2b-05cb-438d-b1cb-0d62f26c5411@www.fastmail.com>
+In-Reply-To: <20211029212157.14230-1-julianbraha@gmail.com>
+References: <20211029212157.14230-1-julianbraha@gmail.com>
+Date: Wed, 03 Nov 2021 09:16:30 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Julian Braha" <julianbraha@gmail.com>,
+ "Linus Walleij" <linus.walleij@linaro.org>, "Joel Stanley" <joel@jms.id.au>
+Subject: Re: [PATCH] pinctrl: aspeed: fix unmet dependencies on MFD_SYSCON for
+ PINCTRL_ASPEED
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,57 +97,93 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>,
- kernel-janitors <kernel-janitors@vger.kernel.org>,
- Tali Perry <tali.perry1@gmail.com>, Fabio Estevam <festevam@gmail.com>,
- Benjamin Fair <benjaminfair@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Russell King <linux@armlinux.org.uk>, Sekhar Nori <nsekhar@ti.com>,
- Sascha Hauer <s.hauer@pengutronix.de>, Krzysztof Halasa <khalasa@piap.pl>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- Linus Walleij <linusw@kernel.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Dinh Nguyen <dinguyen@kernel.org>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Imre Kaloz <kaloz@openwrt.org>, Shawn Guo <shawnguo@kernel.org>,
- Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+ fazilyildiran@gmail.com, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Nov 2, 2021 at 9:11 AM Arnd Bergmann <arnd@arndb.de> wrote:
->
-> On Tue, Nov 2, 2021 at 8:31 AM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
-> > On Fri, Oct 29, 2021 at 8:36 AM Joel Stanley <joel@jms.id.au> wrote:
-> > > On Thu, 28 Oct 2021 at 14:57, Arnd Bergmann <arnd@arndb.de> wrote:
-> > > > On Thu, Oct 28, 2021 at 4:19 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
-> > > https://lore.kernel.org/all/6be32e0b5b454ed7b609317266a8e798@BLUPR03MB358.namprd03.prod.outlook.com/
-> > >
-> > > It looks like it's the same workaround as ARM_ERRATA_742230, which the
-> > > kernel does implement.
-> > >
-> > > It would be good to hear from the Nuvoton people, or an Arm person.
-> >
-> > I will happily update the patch to select ARM_ERRATA_742230 instead of
-> > the dead non-existing ARM_ERRATA_794072.
-> >
-> > In contrast to the current patch that basically only cleans up "dead
-> > config" and has no effective functional change, the new patch would
-> > change the behaviour. I cannot test this patch (beyond some basic
-> > compile test) on the hardware; so, we certainly need someone to have
-> > that hardware, knows how to test it or confirm otherwise that we
-> > should select the ARM_ERRATA_742230 fix for this hardware.
-> >
-> > The current patch should be subsumed by the new patch; the submission
-> > of the new patch is deferred until that person shows up. Let's see.
->
-> I'd prefer to leave the broken Kconfig symbol in place as a reminder until it
-> gets fixed properly then.
->
 
-Agree, this patch here should not be integrated. I rather expect that
-Avi or others at Nuvoton will provide a proper patch to act
-appropriately for the ARM_ERRATA_794072, or after proper analysis can
-determine that there is no change in the kernel required.
 
-Lukas
+On Sat, 30 Oct 2021, at 07:51, Julian Braha wrote:
+> When PINCTRL_ASPEED_G* is selected,
+> and MFD_SYSCON is not selected,
+> Kbuild gives the following warnings:
+>
+> WARNING: unmet direct dependencies detected for PINCTRL_ASPEED
+>   Depends on [n]: PINCTRL [=y] && (ARCH_ASPEED [=n] || COMPILE_TEST 
+> [=y]) && OF [=y] && MFD_SYSCON [=n]
+>   Selected by [y]:
+>   - PINCTRL_ASPEED_G4 [=y] && PINCTRL [=y] && (MACH_ASPEED_G4 [=n] || 
+> COMPILE_TEST [=y]) && OF [=y]
+>
+> WARNING: unmet direct dependencies detected for PINCTRL_ASPEED
+>   Depends on [n]: PINCTRL [=y] && (ARCH_ASPEED [=n] || COMPILE_TEST 
+> [=y]) && OF [=y] && MFD_S>
+>   Selected by [y]:
+>   - PINCTRL_ASPEED_G5 [=y] && PINCTRL [=y] && (MACH_ASPEED_G5 [=n] || 
+> COMPILE_TEST [=y]) && O>
+>
+> WARNING: unmet direct dependencies detected for PINCTRL_ASPEED
+>   Depends on [n]: PINCTRL [=y] && (ARCH_ASPEED [=n] || COMPILE_TEST 
+> [=y]) && OF [=y] && MFD_S>
+>   Selected by [y]:
+>   - PINCTRL_ASPEED_G6 [=y] && PINCTRL [=y] && (MACH_ASPEED_G6 [=n] || 
+> COMPILE_TEST [=y]) && O>
+>
+> This is because PINCTRL_ASPEED_G* selects PINCTRL_ASPEED,
+> without selecting or depending on MFD_SYSCON, despite
+> PINCTRL_ASPEED depending on MFD_SYSCON.
+>
+> These unmet dependency bugs were detected by Kismet,
+> a static analysis tool for Kconfig. Please advise
+> if this is not the appropriate solution.
+>
+> Signed-off-by: Julian Braha <julianbraha@gmail.com>
+
+From a system-level perspective MFD_SYSCON is selected by ARCH_ASPEED, 
+then the MACH_ASPEED_G* symbols depend on ARCH_ASPEED.
+
+However, that doesn't help the COMPILE_TEST case, so we need some 
+solution. Since MFD_SYSCON is required by all the relevant drivers and 
+the aspeed pinctrl core, maybe it would be best just to add as a select to 
+PINCTRL_ASPEED? Unless there's an argument for depends instead?
+
+Thanks for the patch and report!
+
+Andrew
+
+> ---
+>  drivers/pinctrl/aspeed/Kconfig | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/drivers/pinctrl/aspeed/Kconfig b/drivers/pinctrl/aspeed/Kconfig
+> index de8b185c4fee..b0bae6144fc2 100644
+> --- a/drivers/pinctrl/aspeed/Kconfig
+> +++ b/drivers/pinctrl/aspeed/Kconfig
+> @@ -11,6 +11,7 @@ config PINCTRL_ASPEED
+>  config PINCTRL_ASPEED_G4
+>  	bool "Aspeed G4 SoC pin control"
+>  	depends on (MACH_ASPEED_G4 || COMPILE_TEST) && OF
+> +	depends on MFD_SYSCON
+>  	select PINCTRL_ASPEED
+>  	help
+>  	  Say Y here to enable pin controller support for Aspeed's 4th
+> @@ -19,6 +20,7 @@ config PINCTRL_ASPEED_G4
+>  config PINCTRL_ASPEED_G5
+>  	bool "Aspeed G5 SoC pin control"
+>  	depends on (MACH_ASPEED_G5 || COMPILE_TEST) && OF
+> +	depends on MFD_SYSCON
+>  	select PINCTRL_ASPEED
+>  	help
+>  	  Say Y here to enable pin controller support for Aspeed's 5th
+> @@ -27,6 +29,7 @@ config PINCTRL_ASPEED_G5
+>  config PINCTRL_ASPEED_G6
+>  	bool "Aspeed G6 SoC pin control"
+>  	depends on (MACH_ASPEED_G6 || COMPILE_TEST) && OF
+> +	depends on MFD_SYSCON
+>  	select PINCTRL_ASPEED
+>  	help
+>  	  Say Y here to enable pin controller support for Aspeed's 6th
+> -- 
+> 2.30.2
