@@ -2,34 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18C88442920
-	for <lists+openbmc@lfdr.de>; Tue,  2 Nov 2021 09:11:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8768A44294A
+	for <lists+openbmc@lfdr.de>; Tue,  2 Nov 2021 09:22:50 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hk2fn6jKJz2yHl
-	for <lists+openbmc@lfdr.de>; Tue,  2 Nov 2021 19:11:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hk2vr2ZDMz2xvw
+	for <lists+openbmc@lfdr.de>; Tue,  2 Nov 2021 19:22:48 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=PjUNJMcS;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=arndb.de
- (client-ip=217.72.192.74; helo=mout.kundenserver.de;
- envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.74])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12f;
+ helo=mail-lf1-x12f.google.com; envelope-from=avifishman70@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=PjUNJMcS; dkim-atps=neutral
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
+ [IPv6:2a00:1450:4864:20::12f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hk2fV0Wmzz2xXG
- for <openbmc@lists.ozlabs.org>; Tue,  2 Nov 2021 19:11:12 +1100 (AEDT)
-Received: from mail-wr1-f45.google.com ([209.85.221.45]) by
- mrelayeu.kundenserver.de (mreue106 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1N3K9E-1mZKMD2XtS-010MtZ for <openbmc@lists.ozlabs.org>; Tue, 02 Nov 2021
- 09:11:07 +0100
-Received: by mail-wr1-f45.google.com with SMTP id d3so31860292wrh.8
- for <openbmc@lists.ozlabs.org>; Tue, 02 Nov 2021 01:11:06 -0700 (PDT)
-X-Gm-Message-State: AOAM531yZfjIflhjKeHeTX+T4U5B95G0K97h14HMJHOhM2OWRRnHD0rf
- tvCe+PMUqPXbDBvzaHhvezM3ayXxan3E54U7QkY=
-X-Google-Smtp-Source: ABdhPJyFtamfSUetI1AbUBIOvCYQczN1Nlzp9gFqyOAdgQNhP9d2hcmJSPJ8rKmPIqsxt4VD5S+rUEmHQuxxkKHrxEU=
-X-Received: by 2002:adf:efc6:: with SMTP id i6mr21099177wrp.428.1635840666461; 
- Tue, 02 Nov 2021 01:11:06 -0700 (PDT)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hk2vP3zNRz2xBv
+ for <openbmc@lists.ozlabs.org>; Tue,  2 Nov 2021 19:22:23 +1100 (AEDT)
+Received: by mail-lf1-x12f.google.com with SMTP id y26so41269517lfa.11
+ for <openbmc@lists.ozlabs.org>; Tue, 02 Nov 2021 01:22:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=ne7EPu6jTpGVLHdvimehHVoEG1G7OTA5OiY+BOnLe4A=;
+ b=PjUNJMcSRJ62akTQe/diEaqWuErpiYU8V09h41nU2mp9HKydnky/bk6OV2dQuyewS2
+ S9RuIpT48CK73n4qcfBiHUYtyhouUpWA0+J54GBgSj7yynd2vT4DW8fv4ahrzlsrT0E6
+ /lijxNB4x8IwycViFV+jzEaUZm/3pQxtQJf916W/qvzbddRwXkIOIm4OiMVLn/WIZ/DY
+ N5odBUKp0BxW4l3NBxeuLswtCe3PZ5pflo9kkmST1Cs2eJToB0wimMkmOPSuyQTpfxUg
+ oA9KmxcFF04RD5lgmyzKxuHhhF7bgKu7R5M+jFKRFH6KtY1r31FAMN4zM91jGi33Xl0z
+ BFsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=ne7EPu6jTpGVLHdvimehHVoEG1G7OTA5OiY+BOnLe4A=;
+ b=AQTOYMGPRpWHX+EH0k6cl2SEU2/ERWmxCk2VPun6ZpNCiFb7rEzp2pYl4vsy45boA2
+ viUS+tRAWR2K1Cj4b88YiR1/FnV8NFem9Ba49CZ3bTrXBaG95SbG8M0KNhgLWNcmU0MN
+ QJJJcYuhgVS7pvTn88OA1oZ0246bq3KMUw0ZCaP6icH8iGm0y285c3uNxakdpFMS4vPO
+ Jvcc999wUVJnd8ln+je4QSRXoF/0wApVt6VXF3TYlOgd1XvEyIl5zQ65yEHKblarF5VI
+ DdM4csq+7xPz4mZx4AzabZkTbh/KP388rBCt5yJmrQTBM9HeecFAR3vEZ/r4Xy8uO7wd
+ FP3A==
+X-Gm-Message-State: AOAM532kiKKBetXzVsZeacJxr4/4T40pdUDFx5CfVimuvsAZIGRZS0Tx
+ zY2e1rErDS75ixR/f236QfCbNHJLuVV6NeYK+w==
+X-Google-Smtp-Source: ABdhPJz2sTRMCaO5nz6DI/gO9EPlcsOXPYF/+nvlvqLAyf4DhHKZV4nnIz1ld2TtCyuBcBxPgayITk4DR6CTKXKkKxk=
+X-Received: by 2002:a05:6512:3c9e:: with SMTP id
+ h30mr2097037lfv.93.1635841334320; 
+ Tue, 02 Nov 2021 01:22:14 -0700 (PDT)
 MIME-Version: 1.0
 References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
  <20211028141938.3530-12-lukas.bulwahn@gmail.com>
@@ -37,32 +61,13 @@ References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
  <CACPK8XfiN5qziPHLU6J=bC34mcjz+ix7jjSX=xk9zsr7+vyTdw@mail.gmail.com>
  <CAKXUXMyrhrM2o-OEW_qTTKjfKgxt-Z6Nt69geU80AoFnM1OuMA@mail.gmail.com>
 In-Reply-To: <CAKXUXMyrhrM2o-OEW_qTTKjfKgxt-Z6Nt69geU80AoFnM1OuMA@mail.gmail.com>
-From: Arnd Bergmann <arnd@arndb.de>
-Date: Tue, 2 Nov 2021 09:10:50 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a2N3zNkGzXQD8Pbs-8pDL7mv6rneJop-C_p_+d7-_sNqA@mail.gmail.com>
-Message-ID: <CAK8P3a2N3zNkGzXQD8Pbs-8pDL7mv6rneJop-C_p_+d7-_sNqA@mail.gmail.com>
+From: Avi Fishman <avifishman70@gmail.com>
+Date: Tue, 2 Nov 2021 10:22:03 +0200
+Message-ID: <CAKKbWA7OiU_pp33=EQoCTOeyd3Ecmm-dtTFeu1VB_Xcpt0gMvg@mail.gmail.com>
 Subject: Re: [PATCH 11/13] arm: npcm: drop selecting non-existing
  ARM_ERRATA_794072
 To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:kxCYqvbhAhBwgq7ylaJ4lv+0E5Y47nYEEa1sTVllmV6cSJ2MO4n
- EfQ5NGp+3FDTK8DCyUUAF7kAesKXixMIYb0RROV52z7VdWH6z1ro4fNXqcYjyKDui+0Lc5/
- ivlqa5qghQmJY+v5orSiiwAWgS1U6uICn5oFpTsFlB1jnRSHaUH1yHRs1N6QPB81TbIik8Z
- PJPLjcR9xl1vaZDsPlWIg==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CSGxfiH91zA=:v/N4rcT7DiMc9RdDGE84/K
- RJZnsK2WMVgv/VVMXocfyq9fyT/PjEMuyLEuxZZYxQkC3kCIbr5WJdXok/TK0rTWmBTi+VahO
- mIq4Gj9eZn5gARXr5l9PZp2pzXuuULu2pjivGxSDxPTcI+0FEUhgxQUOw+zcUjVBmC+F7lydc
- i7mvmLuLllsY4jTgYf4vGy9XPcL0YQAI0IbwlrGGbpqZqH7KS1kcf1RjgjqDYBSaJJuOv2T/w
- A89Ra6QHDU2YOSsEh3nhdNHVL96Im5h3xUtZ82BBNf2+Mi1p7Bbz/uw/Q+eZwGVmxHsCEpCbs
- P6gzI3lO5HXSyXo65zScDgMrPtbuhKNRJ+KogingBpsa6pH/HbvJCmp1cvqy7efLaHHlI/bwR
- 2hVvaToXp1IEmr9X3ixvJkEO7YLwCR9lOe9iVZj+J94PEli5fwc49VSkn29Bf3mKZkNsF6nZX
- 1PpUiWqwMm2L0SOyrOhs9apsUW+PIjD407VhWRV3R3W37Aop4tXDk+UxBKFHpPNc/yfiGGaI6
- muY13eX1MXJMXXmVA+fzVaSDXc6jg1dKfQ9c4lRrLSNfc+62BaVPOw6WO/vVQ/R1Yz1yIEiXQ
- YCxXcjkvUwREUZqgJwhXyknZF4iuo77ilWDHNEz5Tu0RxYhTvMT4XEhoteFBdVa5/MLUTb3Uu
- Juh/OqiRtc38y1uNRjhpSgYkxGQrrxoi2js9H67xU8hherbR4mKBGVmFYdRF1rzDg/RfBr0ik
- SVPdr+gJodHkubHDztjtse0N027Y9NQC/4nqgT2m1FmlW8F+nhOY+DcsM36aPfr3AlH1wOJlz
- McxKHY84VBrtHPiiBG3/cfijAjxM6ATkrwm91zeNi5TrtBLCWc=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,8 +88,7 @@ Cc: Tomer Maimon <tmaimon77@gmail.com>,
  Sekhar Nori <nsekhar@ti.com>, Sascha Hauer <s.hauer@pengutronix.de>,
  Krzysztof Halasa <khalasa@piap.pl>,
  Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- Linus Walleij <linusw@kernel.org>,
+ Patrick Venture <venture@google.com>, Linus Walleij <linusw@kernel.org>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
  Dinh Nguyen <dinguyen@kernel.org>,
  Pengutronix Kernel Team <kernel@pengutronix.de>,
@@ -93,16 +97,127 @@ Cc: Tomer Maimon <tmaimon77@gmail.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Nov 2, 2021 at 8:31 AM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
+Hi,
+
+At Nuvoton we implied this WA in the past, not because we encountered
+a specific problem but since the errata says so and we saw this in
+other patches like:
+https://patchwork.kernel.org/project/linux-arm-kernel/patch/1396298072-13254-2-git-send-email-nitin.garg@freescale.com/
+But we didn't upstream the arch/arm/mm/proc-v7.S
+
+From the errata document.
+"794072 A short loop including a DMB instruction might cause a denial
+of service on
+another processor which executes a CP15 broadcast operation
+Status
+Affects:
+Fault Type:
+Fault Status: Cortex-A9 MPCore.
+Programmer Category B
+Present in: All r1, r2, r3 and r4 revisions Open
+Description
+A processor which continuously executes a short loop containing a DMB
+instruction might prevent a CP15
+operation broadcast by another processor making further progress,
+causing a denial of service.
+Configurations affected
+This erratum affects all Cortex-A9 MPCore processors with two or more
+processors.
+Conditions
+The erratum requires the following conditions:
+- Two or more processors are working in SMP mode (ACTLR.SMP=1)
+- One of the processors continuously executes a short loop containing
+at least one DMB instruction.
+- Another processor executes a CP15 maintenance operation that is
+broadcast. This requires that this
+processor has enabled the broadcasting of CP15 operations (ACTLR.FW=1)
+For the erratum to occur, the short loop containing the DMB
+instruction must meet all of the following additional
+conditions:
+- No more than 10 instructions other than the DMB are executed between each DMB
+- No non-conditional Load or Store, or conditional Load or Store which
+pass the condition code check, are
+executed between each DMB
+When all the conditions for the erratum are met, the short loop
+creates a continuous stream of DMB instructions.
+This might cause a denial of service, by preventing the processor
+executing the short loop from executing the
+received broadcast CP15 operation. As a result, the processor that
+originally executed the broadcast CP15
+operation is stalled until the execution of the loop is interrupted.
+Note that because the process issuing the CP15 broadcast operation
+cannot complete operation, it cannot enter
+any debug-mode, and cannot take any interrupt. If the processor
+executing the short loop also cannot be
+interrupted, for example if it has disabled its interrupts, or if no
+interrupts are routed to this processor, this
+erratum might cause a system livelock.
+Implications
+The erratum might create performance issues, or in the worst case it
+might cause a system livelock if the
+processor executing the DMB is in an infinite loop that cannot be interrupted.
+Workaround
+This erratum can be worked round by setting bit[4] of the undocumented
+Diagnostic Control Register to 1. This
+register is encoded as CP15 c15 0 c0 1.
+This bit can be written in Secure state only, with the following
+Read/Modify/Write code sequence:
+MRC p15,0,rt,c15,c0,1
+ORR rt,rt,#0x10
+MCR p15,0,rt,c15,c0,1
+When it is set, this bit causes the DMB instruction to be decoded and
+executed like a DSB.
+Using this software workaround is not expected to have any impact on
+the overall performance of the processor
+on a typical code base.
+Other workarounds are also available for this erratum, to either
+prevent or interrupt the continuous stream of
+DMB instructions that causes the deadlock. For example:
+- Inserting a non-conditional Load or Store instruction in the loop
+between each DMB
+- Inserting additional instructions in the loop, such as NOPs, to
+avoid the processor seeing back to back
+DMB instructions.
+- Making the processor executing the short loop take regular interrupts."
+
+Avi
+
+On Tue, Nov 2, 2021 at 9:31 AM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
+>
 > On Fri, Oct 29, 2021 at 8:36 AM Joel Stanley <joel@jms.id.au> wrote:
+> >
 > > On Thu, 28 Oct 2021 at 14:57, Arnd Bergmann <arnd@arndb.de> wrote:
+> > >
 > > > On Thu, Oct 28, 2021 at 4:19 PM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
+> > > >
+> > > > There is no and never was a Kconfig for ARM_ERRATA_794072 in the kernel
+> > > > tree. So, there is no need to select ARM_ERRATA_794072 in
+> > > > ./arch/arm/mach-npcm/Kconfig.
+> > > >
+> > > > Simply drop selecting the non-existing ARM_ERRATA_794072.
+> > > >
+> > > > This issue was discovered with ./scripts/checkkconfigsymbols.py.
+> > > >
+> > > > Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+> > > > ---
+> > >
+> > > Could this be a typo? Maybe we need to enable a different errata workaround
+> > > here, or maybe that code is actually needed and has to get sent.
+> >
+> > Doing some searching, u-boot had a workaround for something called
+> > ARM_ERRATA_794072.
+> >
+> > https://github.com/u-boot/u-boot/commit/f71cbfe3ca5d2ad20159871700e8e248c8818ba8
+> >
+> > Lore has the review history for that patch:
+> >
 > > https://lore.kernel.org/all/6be32e0b5b454ed7b609317266a8e798@BLUPR03MB358.namprd03.prod.outlook.com/
 > >
 > > It looks like it's the same workaround as ARM_ERRATA_742230, which the
 > > kernel does implement.
 > >
 > > It would be good to hear from the Nuvoton people, or an Arm person.
+> >
 >
 > I will happily update the patch to select ARM_ERRATA_742230 instead of
 > the dead non-existing ARM_ERRATA_794072.
@@ -116,8 +231,11 @@ On Tue, Nov 2, 2021 at 8:31 AM Lukas Bulwahn <lukas.bulwahn@gmail.com> wrote:
 >
 > The current patch should be subsumed by the new patch; the submission
 > of the new patch is deferred until that person shows up. Let's see.
+>
+> Lukas
 
-I'd prefer to leave the broken Kconfig symbol in place as a reminder until it
-gets fixed properly then.
 
-       Arnd
+
+-- 
+Regards,
+Avi
