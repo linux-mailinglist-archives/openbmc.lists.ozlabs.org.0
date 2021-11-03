@@ -2,91 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BDAE444B46
-	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 00:10:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0719C444B95
+	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 00:23:31 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hl2Yg0VPSz2yJv
-	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 10:10:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hl2rc6H4lz2yHM
+	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 10:23:28 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=AuPjmGzB;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Z7C25Y7Y;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=c4zINkFo;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.29;
- helo=out5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f29;
+ helo=mail-qv1-xf29.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=AuPjmGzB; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=Z7C25Y7Y; 
- dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
- [66.111.4.29])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=c4zINkFo; dkim-atps=neutral
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com
+ [IPv6:2607:f8b0:4864:20::f29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hl2YD3Jfbz2xCy
- for <openbmc@lists.ozlabs.org>; Thu,  4 Nov 2021 10:10:07 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 23EF15C01F4
- for <openbmc@lists.ozlabs.org>; Wed,  3 Nov 2021 19:10:05 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Wed, 03 Nov 2021 19:10:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=y8q1qPWog/e/mc+xOFDBHGIPjQo
- msyl4+PbPyMwO6SU=; b=AuPjmGzBMtHFqAIWUdN6ePXmMNEC42+NuRrSzrj8Wzk
- o8RFfHhrEN3CqRwEEW3yKOABDflnz5iK6vaefVmdD4RUM4auZtCOSLV7JIyjX79o
- tU8ew5EbPLUgteJTTQ2+niP8bOKS1vaRrwLBabCF/tIH8u+hBIPxQVxQtpgUa2b4
- CRtBjhBH18w/wFXKDtJd0eZ25vpg+bS9XolcWWRt1kUHwWB0o9/2zSkdfX8BfZVx
- 47Ob6xpncmfvng1ow1iXUvHibbm6Y3A/lGbpamWfeSv7/fzyDrCeUqbawNrseuIt
- PfDQMIKdAburcyZkI8l8CppYpxT/4p6bzsXyqHDB3YA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=y8q1qP
- Wog/e/mc+xOFDBHGIPjQomsyl4+PbPyMwO6SU=; b=Z7C25Y7Yp02QP87L+qK8E9
- 8/cdpjQuGm5Jn50OmvXqm8ZRv0HEKI3rZXeIHSJ4XYT+/LHky0/Z8vkw1DMxeMC9
- 0LQpKLCiVc2+BYJhZey+Gw6bJ12es5ePGwTOj6HRe2pSdx6CWdlpkqFlDXKvqBMo
- oaDoxMmdCQ0/YbKhJtte2MWu9ObCy3UcKE1PUJl54ZveKXiGyWcFL+1JgE82r/bR
- l4Gou2tA3aQsGzjdbpbZgkQAaCEKLKpIBEJQ/QuFICHfIol+0qSserMPH6pICx5C
- xj5C0GkJd8q4vpUEZw+eiz7owmCuVbYszn/pM/Burhn9ESpwfo9GK48Pz7P98o/g
- ==
-X-ME-Sender: <xms:zBaDYf4L6adOCGMmSXTRZwCcr_9uTRAjPKs5SN5GqKoYv_C1-z-VvQ>
- <xme:zBaDYU5rHnkgZKE7BWGC9VSn8BKGGsLuUHNcpLbZabxWmZ1tTzL3RuTlBHO2zZrmK
- iec5ByD4FEXXg7FfSA>
-X-ME-Received: <xmr:zBaDYWccpG30ci4pPfPIak8iIlcJLZtiqco3oVfAvE6X4YRbDx4dIkSUYoYMfqxGgegiVZ7EmJpKnQZ-y3zW7tz3UOTvV3ZnAYAyYk42J6WdOg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrtdefgddthecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculddvfedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeefiefgfeeigeelleeugeffgfevieeh
- jefhfefghfetgeffteegheefhfegteffgfenucffohhmrghinhepkhgvrhhnvghlrdhorh
- hgpdhgihhthhhusgdrtghomhdpohhpvghnsghmtgdqphhrohhjvggtthdrgiihiidpfhho
- rhhmrghtqdgtohguvgdrshhhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
- hmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:zBaDYQIOPOaypBH8WDTh3cz9mnKgST3cLJRoog91VxVAHcf8C4OcvQ>
- <xmx:zBaDYTKHQ94DQmNun61Go-2EsrKU3qFl1P1skjPFZH6N5PwlRMcmEg>
- <xmx:zBaDYZwYNs1MEgFXiZeypXCGTUyNl6R__-5oETFSUw3wgdVWmCX1Og>
- <xmx:zRaDYel5m-V023wpMUNTHvQNR4YjSiovV46HgEswSo6eEiX_M02ZxQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Wed, 3 Nov 2021 19:10:04 -0400 (EDT)
-Date: Wed, 3 Nov 2021 18:10:02 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Re: Additional linting in meta-layer repotest
-Message-ID: <YYMWyuIBPaFNp8z9@heinlein>
-References: <YXlpsDxZGsbvgHpQ@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hl2rG1fCRz2xCH
+ for <openbmc@lists.ozlabs.org>; Thu,  4 Nov 2021 10:23:07 +1100 (AEDT)
+Received: by mail-qv1-xf29.google.com with SMTP id v2so4085921qve.11
+ for <openbmc@lists.ozlabs.org>; Wed, 03 Nov 2021 16:23:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=lYkDRS5tcW7HGK1RAu8WQelb02ZNdMcg3YYYD7yeYSc=;
+ b=c4zINkFo+4a4HcyPyJkgJW1vAgMaUKs+Pyah/xnENPZHXngyW+cukaRLO9szyLfj43
+ DVpOsFhY5HiXb92Uqt56bKotaLm5hfB7k3xI7tpNJ6IdpY0F0FD3jen5Hxj1dgVEKHYV
+ eAZBMwYgEdixTbmE18eouEdtlUVFQD5suY9Ho=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=lYkDRS5tcW7HGK1RAu8WQelb02ZNdMcg3YYYD7yeYSc=;
+ b=lF6mrar1bBWe4zCmLtYcvMaLM1UDX9jTa4DFNnWJm82XYvgDgPeOYr6WRwtI2x2/1o
+ IbVMDtDvr3/cLXuc0Q+8lCQqfx5vSkUQcYzroB7MKiGyt+ZcsrHdG9GPVKWJ+7lxjFiU
+ 8xwtIpuse6qRbxkmoxHcv37S/6f5SKEdj4ihhnhiwNsFe+Mf1isKboTcfml5UV9c1NI4
+ 4trPUBQ2ieN+Ujne1A3oIR9n0FGfuP8QjO0IOwvfICd0DyPfhQObiy0GL6bPPqzrhkKT
+ LYmX7QeOgz8Hi4lw71OIWQNvZzDCElDZ+z/5a+KLBbGj83AwQAgHK2+nb1wwFWtbX8YF
+ rJMA==
+X-Gm-Message-State: AOAM531amrs2kJ0mh5URRReFuTOF1jewIB6S+y4UvgEiFNE9ip4L09hj
+ O6G6UnpA0l5ALSRXg2Pqdf1tDuRlalfWtyzJbVc=
+X-Google-Smtp-Source: ABdhPJxTl6pG0LuVnKg1c7Mi9+O9bMeja3oMX2bOWHexGW8kHB18k4LCC0ACNIwy1Yi6BI6WsEtpvQhpodCjcShYFPc=
+X-Received: by 2002:a05:6214:98d:: with SMTP id
+ dt13mr46315291qvb.13.1635981785624; 
+ Wed, 03 Nov 2021 16:23:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="f3LaPvPhcB2e7PTS"
-Content-Disposition: inline
-In-Reply-To: <YXlpsDxZGsbvgHpQ@heinlein>
+References: <CABoTLcQHOcfvHkCGX0nMUxFzmTcceuBhL3CQERn66CT8UsSvwQ@mail.gmail.com>
+In-Reply-To: <CABoTLcQHOcfvHkCGX0nMUxFzmTcceuBhL3CQERn66CT8UsSvwQ@mail.gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 3 Nov 2021 23:22:53 +0000
+Message-ID: <CACPK8XcRfTkZynhnmYn0ySq82MjJQZwgy_4UjKpcxYgF5cG7xw@mail.gmail.com>
+Subject: Re: Cherry-picking 5.16 commits into OpenBMC Linux?
+To: Oskar Senft <osk@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,84 +71,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Wed, 3 Nov 2021 at 16:29, Oskar Senft <osk@google.com> wrote:
+>
+> Hi Joel
+>
+> There are a few commit that I sent upstream that have been accepted by
+> the maintainers (i.e. have the appropriate "Reviewed-by" tags) that
+> are waiting for 5.16 to open.
+>
+> I'm waiting for these patches to be available to be able to send a new
+> meta-tyan directory to OpenBMC for review.
+>
+> Would it be possible to cherry-pick these commits into the OpenBMC
+> Linux tree to speed up this process? Or is this something you
+> generally prefer to not do?
 
---f3LaPvPhcB2e7PTS
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, this is exactly what the tree is for.
 
-On Wed, Oct 27, 2021 at 10:01:04AM -0500, Patrick Williams wrote:
-> Hello,
->=20
-> Ed recently added a test-phase called 'repotest'[1,2] in the openbmc/open=
-bmc
-> repository that allows us to perform sanity checking on commits at that l=
-evel
-> beyond a simple "does this compile".  The initial checking he added was to
-> ensure that no new patches are added to the tree (in violation of our met=
-a-layer
-> coding guidelines).
->=20
-> I'm adding[3] additional capabilities to this script to enable linting in=
- the
-> repository.  This will run `shellcheck` for shell scripts and `eslint` fo=
-r JSON
-> (Some might be unaware that Manoj added JSON linting with `eslint` as par=
-t of
-> our normal unit-test / formatting scripts[4] as well).  Once this is in p=
-lace
-> new commits will fail CI if they add new shellscripts that violate `shell=
-check`
-> rules or JSON with invalid parsing.
->=20
-> Currently, there is quite an extensive list of 'exempted' scripts (~100) =
-which
-> already fail `shellcheck` rules.  It is quite likely that some of these a=
-re
-> real bugs, so I would strongly urge if you are the maintainer of one of t=
-he
-> meta-layers holding an 'exempted' script that you look over the `shellche=
-ck`
-> failures.  Hopefully over the next few months we will greatly reduce the =
-number
-> of scripts in this exemption list by cleaning up the issues.
->=20
-> 1. https://lore.kernel.org/openbmc/CAH2-KxDe6hR1V-Lz1k8cdD11jEquy4UhR4LfL=
-hg37E5EG42EJg@mail.gmail.com/
-> 2. https://github.com/openbmc/openbmc/blob/master/meta-phosphor/scripts/r=
-un-repotest
-> 3. https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/48349
-> 4. https://github.com/openbmc/openbmc-build-scripts/blob/master/scripts/f=
-ormat-code.sh#L31
-> --=20
-> Patrick Williams
+> Specific patches:
+> https://lore.kernel.org/lkml/20211020164213.174597-1-osk@google.com/t/#m8f7ac85809049fadcabf6e0bed1ebab12e71f094
 
-This is now merged.
+I've applied this one.
 
---=20
-Patrick Williams
+> https://lore.kernel.org/linux-arm-kernel/20210909004920.1634322-1-osk@google.com/
 
---f3LaPvPhcB2e7PTS
-Content-Type: application/pgp-signature; name="signature.asc"
+If you take a look at the dev-5.15 branch, you can see that this one
+is already applied.
 
------BEGIN PGP SIGNATURE-----
+> There will also be an update to the DTS from the second patch once the
+> driver change from the first patch has fully landed. Or should I
+> better send that DTS change now and we'll take it into OpenBMC Linux
+> together?
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmGDFsgACgkQqwNHzC0A
-wRl8Qw//XrJs85ESifvpNNfjlXrqXVKU4MwkbbzeBxhlN/JMVR2p0pKELRYACMNu
-gdZhv/pXdf93cugaYYUEDKqUaK1zCdLpqapBsjJEbDtRiAT2BA9t+I6IfFQJeJIn
-jIH2R5AKO8VM9ZKx4t7SUv0mkFW8lPxR6C69VVRMCKKeQXGt5iU1KzHGbviDDtNf
-mBeYp8P5+6CXs7q0MrbkhRDLfPZO7ErMPZNJjnrbxxGGqXo9j1LZJitzE71C3jdN
-Lf3gBO8vSpPIQGam+EmchdUsmjYAJ3TSYvpJTepXRDHFy37LPi8RtQM7HujKtt3S
-8u43d03mbPICh7lVZUVy4OSzLLnupQinnBaYM3Qkwz1kKnHe1bQkaPL5FLla8l8X
-UCON4/neBZkw3RYRlQLtQFoqT3YbyGkTxjhtCbhDEidFQI1IOEDJWYmUe5hCTDyk
-fkEy5g2X6sKfhMyVJBqKWIFSDHN/NyoS6XuIx0Ewk5mvr1wD2BwqZMlGSYEYOjRz
-P3CUM8K69RKfEh/zvfb+NjSI8rvDVzhkb3KqJWxYomoxT+0ZQi5VUNEd8ccerxcl
-Cke0XlOsLwTphk0XI9lkff+8s9IN1acRfQsLn9yZuGco8UjpSoRrf0inmn3hgv/O
-nRc7BKiLHWyp2xsgqWefKnVGwQoeras62QfQ2EfsC0ZLv+mCYBo=
-=Pl85
------END PGP SIGNATURE-----
+Send the dts change to the upstream lists. I'll review and put it
+straight in the openbmc tree.
 
---f3LaPvPhcB2e7PTS--
+In general I encourage developers to send patches straight to the
+upstream lists, and once they've had a review there send me a note to
+backport them and I will do that as soon as possible.
+
+Cheers,
+
+Joel
