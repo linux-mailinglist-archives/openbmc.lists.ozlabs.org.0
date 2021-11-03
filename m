@@ -2,61 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2945443B20
-	for <lists+openbmc@lfdr.de>; Wed,  3 Nov 2021 02:47:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 92457443B2A
+	for <lists+openbmc@lfdr.de>; Wed,  3 Nov 2021 02:54:12 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HkV5S4zz8z2xvw
-	for <lists+openbmc@lfdr.de>; Wed,  3 Nov 2021 12:47:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HkVDy2vBmz2xtr
+	for <lists+openbmc@lfdr.de>; Wed,  3 Nov 2021 12:54:10 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=SMxYX+Fj;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=jcXf+Ciu;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2f;
- helo=mail-qv1-xf2f.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2c;
+ helo=mail-qv1-xf2c.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=SMxYX+Fj; dkim-atps=neutral
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com
- [IPv6:2607:f8b0:4864:20::f2f])
+ header.s=google header.b=jcXf+Ciu; dkim-atps=neutral
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com
+ [IPv6:2607:f8b0:4864:20::f2c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HkV512DjGz2xBr;
- Wed,  3 Nov 2021 12:47:16 +1100 (AEDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id g25so1081226qvf.13;
- Tue, 02 Nov 2021 18:47:16 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HkVDV0CG7z2xBl;
+ Wed,  3 Nov 2021 12:53:45 +1100 (AEDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id k29so1127865qve.6;
+ Tue, 02 Nov 2021 18:53:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=iIfhELKBA59uYTnqWLZdOTQFhHkJ8JIZdnz4Zyo8KZw=;
- b=SMxYX+FjngAizwzwGf0p+JkubhUWAXjRGqDCq5xJ87DyiD+8mXCwqkH/x3YfF5f29A
- xevwGdPchS1Fi5DrS3aexlrF5yG9gmA/jq6IJ1EjgqIBOD1whwOwinm0pghiUuVjdAP6
- GKfcbgfSk7Xuh4KzSSzrACWz11mURursOpVtY=
+ :cc; bh=gFLcv2iNn7US3zrzasnPKO6AXCRPJ7gLb5jCvOGUADY=;
+ b=jcXf+Ciuvaj6v+ls6ZTfBbuy40OoXomKmlu/Ez5YnrrwxsRcn7jKAexUfD92xaKAMZ
+ X56CskUI//poNj06E/w2ktPXhlxzFnou/XirhfFWpL9cT0JmkD77jhPObpDRGrJfV+Tc
+ 4AvuRnDMzTBUIfM8bsX2RvisklPuE4XwySge0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=iIfhELKBA59uYTnqWLZdOTQFhHkJ8JIZdnz4Zyo8KZw=;
- b=nTHDTeshtTBQ0cipDbTQ31ArJ+kcXTrE8JpcpEsqsHgKjpOIJXAjmbOOVHVj4MUw0W
- G7nacPu1qHdJgtZGRmMCEajr1Nafa+uXiZeEd8yT1dxrcMwQXjb6sn0bi32VcMhYljXh
- 0sTig9t9OtP0PQrkRIYdJV4IFGI9vFdApi/8qk9wkp5Qn/5DoKJQICqHIhygqfJDPRew
- gZuK+Hm8vk1w7a0aBmasJfSny7VvLWStcg9252A1/oCUp/kmAX2fiYAKb1QxZKm7Oqym
- I65lYE2U9LGFPWwAVaaDdNDOCnxQ+UNLd4BKIJ7nWuEF9oG81qAEFVFauSVTwlqwwp4B
- 9V+A==
-X-Gm-Message-State: AOAM530nHknc3s9JezFb9TbgvfwYIwfLg8kPsqj36a/mgXVyshKInJD0
- pa1+jPV8wsMUG64KblVtins409jgl0NDcM9P298=
-X-Google-Smtp-Source: ABdhPJxWUZEryVqXcBikybAoLyADEf6kRUtBPv82PFH52VOA75zBpO5PHr7kAAXN7A+FwtfuY0PHMm74kIpUVbkNYTQ=
-X-Received: by 2002:a05:6214:5002:: with SMTP id
- jo2mr39450110qvb.27.1635904032986; 
- Tue, 02 Nov 2021 18:47:12 -0700 (PDT)
+ bh=gFLcv2iNn7US3zrzasnPKO6AXCRPJ7gLb5jCvOGUADY=;
+ b=S6dcpOAmBUd9JyneR+nHtCVgYI7Cb4+MDWNdX5theebuLOq0eelF8mAGU0SiCjjR/3
+ drpCLuX4B8+/mT+2e18LD4K2rCy8PSrRdHfHq1IUXJBSdQKlZrI4/WiPbq/QlfJ//HQ0
+ doqH2nEyv1yjBIH7YHjR3MMLO2erJqsjYQ3q9mjWswFcPWR+fBNpVUJ0bnwFWp5wCiIy
+ nU8C4i5KGIMlNcA1brR97zDPH8y4f3jcciRFSxg80BABJXGylD87qFPTonzjDsCjU7DC
+ BSBF23GdAZ/Ztqr159HHDfqxa2HjcC6Vf+8+G2ysvtfeQp3DXUwBC+NX23678An62zJL
+ xzpA==
+X-Gm-Message-State: AOAM5319FQ+0omlIot0KRNsL8sp1KMf6sxo4WcNCWYhyEziVvi9TziRH
+ cT6uAI+JnMkrzkfps1sJQ6SS5czJl66G+kXU/j0=
+X-Google-Smtp-Source: ABdhPJy+StW+jzV25J6j1PkhBBtaSlkzkbT0bmfoxMxho8odzhmOY+bBdTb1ZsA8NxUhj4WcozWN0R7Get9OfSe6ThA=
+X-Received: by 2002:a0c:edb0:: with SMTP id h16mr29696762qvr.17.1635904422404; 
+ Tue, 02 Nov 2021 18:53:42 -0700 (PDT)
 MIME-Version: 1.0
 References: <20211103011357.22067-1-jammy_huang@aspeedtech.com>
-In-Reply-To: <20211103011357.22067-1-jammy_huang@aspeedtech.com>
+ <CACPK8XcuhVVvbs4m5k=1d6oFiewEo2RqqOqf5R72KJ4yjiEiUw@mail.gmail.com>
+In-Reply-To: <CACPK8XcuhVVvbs4m5k=1d6oFiewEo2RqqOqf5R72KJ4yjiEiUw@mail.gmail.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 3 Nov 2021 01:47:01 +0000
-Message-ID: <CACPK8XcuhVVvbs4m5k=1d6oFiewEo2RqqOqf5R72KJ4yjiEiUw@mail.gmail.com>
+Date: Wed, 3 Nov 2021 01:53:30 +0000
+Message-ID: <CACPK8XezrCtCbKVgNOPNt+N_7ki6Rctf9M8oLBHyixa+Wph2Sw@mail.gmail.com>
 Subject: Re: [PATCH v2] media: aspeed: fix mode-detect always time out at 2nd
  run
 To: Jammy Huang <jammy_huang@aspeedtech.com>
@@ -82,53 +82,65 @@ Cc: Paul Menzel <pmenzel@molgen.mpg.de>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 3 Nov 2021 at 01:13, Jammy Huang <jammy_huang@aspeedtech.com> wrote:
+On Wed, 3 Nov 2021 at 01:47, Joel Stanley <joel@jms.id.au> wrote:
 >
-> aspeed_video_get_resolution() will try to do res-detect again if the
-> timing got in last try is invalid. But it will always time out because
-> VE_SEQ_CTRL_TRIG_MODE_DET is only cleared after 1st mode-detect.
+> On Wed, 3 Nov 2021 at 01:13, Jammy Huang <jammy_huang@aspeedtech.com> wrote:
+> >
+> > aspeed_video_get_resolution() will try to do res-detect again if the
+> > timing got in last try is invalid. But it will always time out because
+> > VE_SEQ_CTRL_TRIG_MODE_DET is only cleared after 1st mode-detect.
+> >
+> > To fix the problem, just clear VE_SEQ_CTRL_TRIG_MODE_DET before setting
+> > it in aspeed_video_enable_mode_detect().
+> >
+> > Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+> > Acked-by: Paul Menzel <pmenzel@molgen.mpg.de>
 >
-> To fix the problem, just clear VE_SEQ_CTRL_TRIG_MODE_DET before setting
-> it in aspeed_video_enable_mode_detect().
->
-> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-> Acked-by: Paul Menzel <pmenzel@molgen.mpg.de>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-Reviewed-by: Joel Stanley <joel@jms.id.au>
+When applying, can we please have this tag added:
 
-> ---
-> v2:
->   - update commit message
-> ---
->  drivers/media/platform/aspeed-video.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
+
+Cheers,
+
+Joel
+
+
 >
-> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-> index 5ffbabf884eb..fea5e4d0927e 100644
-> --- a/drivers/media/platform/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed-video.c
-> @@ -518,6 +518,10 @@ static void aspeed_video_enable_mode_detect(struct aspeed_video *video)
->         aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
->                             VE_INTERRUPT_MODE_DETECT);
->
-> +       /* Disable mode detect in order to re-trigger */
-> +       aspeed_video_update(video, VE_SEQ_CTRL,
-> +                           VE_SEQ_CTRL_TRIG_MODE_DET, 0);
-> +
->         /* Trigger mode detect */
->         aspeed_video_update(video, VE_SEQ_CTRL, 0, VE_SEQ_CTRL_TRIG_MODE_DET);
->  }
-> @@ -809,10 +813,6 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->                         return;
->                 }
->
-> -               /* Disable mode detect in order to re-trigger */
-> -               aspeed_video_update(video, VE_SEQ_CTRL,
-> -                                   VE_SEQ_CTRL_TRIG_MODE_DET, 0);
-> -
->                 aspeed_video_check_and_set_polarity(video);
->
->                 aspeed_video_enable_mode_detect(video);
-> --
-> 2.25.1
->
+> > ---
+> > v2:
+> >   - update commit message
+> > ---
+> >  drivers/media/platform/aspeed-video.c | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+> > index 5ffbabf884eb..fea5e4d0927e 100644
+> > --- a/drivers/media/platform/aspeed-video.c
+> > +++ b/drivers/media/platform/aspeed-video.c
+> > @@ -518,6 +518,10 @@ static void aspeed_video_enable_mode_detect(struct aspeed_video *video)
+> >         aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
+> >                             VE_INTERRUPT_MODE_DETECT);
+> >
+> > +       /* Disable mode detect in order to re-trigger */
+> > +       aspeed_video_update(video, VE_SEQ_CTRL,
+> > +                           VE_SEQ_CTRL_TRIG_MODE_DET, 0);
+> > +
+> >         /* Trigger mode detect */
+> >         aspeed_video_update(video, VE_SEQ_CTRL, 0, VE_SEQ_CTRL_TRIG_MODE_DET);
+> >  }
+> > @@ -809,10 +813,6 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+> >                         return;
+> >                 }
+> >
+> > -               /* Disable mode detect in order to re-trigger */
+> > -               aspeed_video_update(video, VE_SEQ_CTRL,
+> > -                                   VE_SEQ_CTRL_TRIG_MODE_DET, 0);
+> > -
+> >                 aspeed_video_check_and_set_polarity(video);
+> >
+> >                 aspeed_video_enable_mode_detect(video);
+> > --
+> > 2.25.1
+> >
