@@ -2,155 +2,143 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 476C9444F09
-	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 07:43:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C40D444FA9
+	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 08:26:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HlDcC1GSvz2yHS
-	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 17:43:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HlFYT0C7kz2yK6
+	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 18:26:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=flex.com header.i=@flex.com header.a=rsa-sha256 header.s=dkim header.b=PMUbU7+z;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=C/OeyaoU;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=flex.com (client-ip=185.132.180.100;
- helo=mx07-002d6701.pphosted.com;
- envelope-from=prvs=59421181fc=chris.chen3@flex.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=flex.com header.i=@flex.com header.a=rsa-sha256
- header.s=dkim header.b=PMUbU7+z; dkim-atps=neutral
-Received: from mx07-002d6701.pphosted.com (mx07-002d6701.pphosted.com
- [185.132.180.100])
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.244.123;
+ helo=nam12-mw2-obe.outbound.protection.outlook.com;
+ envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
+ header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector1-amperemail-onmicrosoft-com header.b=C/OeyaoU; 
+ dkim-atps=neutral
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12on2123.outbound.protection.outlook.com [40.107.244.123])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HlDbd39p9z2x9H
- for <openbmc@lists.ozlabs.org>; Thu,  4 Nov 2021 17:42:51 +1100 (AEDT)
-Received: from pps.filterd (m0132503.ppops.net [127.0.0.1])
- by mx07-002d6701.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1A41qYQg001027; 
- Thu, 4 Nov 2021 06:42:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flex.com;
- h=from : to : subject :
- date : message-id : references : in-reply-to : content-type :
- mime-version; s=dkim; bh=btmkcvM3KOH6CJFGJw0iWtaNhfSK9j5woEuBJ1vuP64=;
- b=PMUbU7+zrJktatJkdkuqcjuoDl2QRjPTrIoaDyKwOcxBmKMhREVmceo/Rzp1UJ2MrXeH
- +Ratj0KQePCH+BpemGH6VkAdpmTPbg5UKINL8Vxq5XkUtgKVV9fbwKB1e7isphJLphMs
- 45M2RsFbTBdSULUKuRyxHpvQNzjeFgcxi+d8VR0hCY43j2vBNxF5SWRXwYQ4MQtt9ICo
- L8HGgHtP9aDSaJJ1pTB8jo9ypzBQEDn/owmf7YGO22cz5/vP5gC/SOvurMF0WsLcbqrE
- PybMkCRNMEys5jXXdmlDt1hdZYWr4fMncvf/+0npxCpYfqmWJXXETFVvyZaVHBEPkZjc Nw== 
-Received: from nam10-bn7-obe.outbound.protection.outlook.com
- (mail-bn7nam10lp2107.outbound.protection.outlook.com [104.47.70.107])
- by mx07-002d6701.pphosted.com with ESMTP id 3c468212f5-2
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 04 Nov 2021 06:42:47 +0000
-Received: from MWHPR12CA0036.namprd12.prod.outlook.com (2603:10b6:301:2::22)
- by BN7PR08MB5043.namprd08.prod.outlook.com (2603:10b6:408:27::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4669.10; Thu, 4 Nov
- 2021 06:42:43 +0000
-Received: from CO1NAM11FT008.eop-nam11.prod.protection.outlook.com
- (2603:10b6:301:2:cafe::cd) by MWHPR12CA0036.outlook.office365.com
- (2603:10b6:301:2::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4669.11 via Frontend
- Transport; Thu, 4 Nov 2021 06:42:43 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 144.49.247.95)
- smtp.mailfrom=flex.com; yadro.com; dkim=none (message not signed)
- header.d=none;yadro.com; dmarc=fail action=oreject header.from=flex.com;
-Received-SPF: Fail (protection.outlook.com: domain of flex.com does not
- designate 144.49.247.95 as permitted sender) receiver=protection.outlook.com; 
- client-ip=144.49.247.95; helo=mail.ds.dlp.protect.symantec.com;
-Received: from mail.ds.dlp.protect.symantec.com (144.49.247.95) by
- CO1NAM11FT008.mail.protection.outlook.com (10.13.175.191) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4669.10 via Frontend Transport; Thu, 4 Nov 2021 06:42:42 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HlFXx5LVBz2xY9
+ for <openbmc@lists.ozlabs.org>; Thu,  4 Nov 2021 18:25:34 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=OooGDGUlg/kRe45EG4KNDxl8SUdiKvSF4e3jVRUAgyeJ9ilyucu9HqK3r+EPUfWOHvoR9ECLuqal4uFC6W6k61CZ9p38xt6ns1TLbkE+x/43jlri82tXoovujBSoOh32ogeQ40hDMHaT3R4wzKiHCZZBeiaJwqWI7lCpCxWDFCBnqhkwr1+wWZFycawWeKzwxeoVXa7ieLtpJJ1fHNOgEPKkARLlEgOk3IVXXcoFnQOyx3CkgziaXtIrBhy4+Uvn1b/5IsgzIezHOhSbXc9s2FzZCNHnVSrkEWKY3/+25+zpnGD4PU4CuTK2rBiQvee60CWJO0Lk/+VVeUOefzbJ3w==
+ b=gxNsWM9oJUof8zlgAAy8FGM4xzbQZbD9M073s1NOBGSFAAwL7+sOQrVCtXqWXTzxiqNe5nQox9PeKcPw06PjJaWNUUCg8GNYpKZUbZeU3/aFgqr0/EDly928pipn3EiD8q25IKizv10mliaZq86YpScHujOLh0/I8WxXbCc2Oozudy3ZL1cVC9Q8fQ2EmOJvdbqEBOisg7Bm5p5zFYyPa9rECNicscVYGuVQjvPpell5SyrNzNBnaD7anO6uolrBYiiaxh4N5lCv9P7l7meBnPf2bKdf0lvBbL+TTDwcHmN4S6P0paeMsZVbMo8pP8QxdUAWt8954LJKg1BI1WTc3g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=btmkcvM3KOH6CJFGJw0iWtaNhfSK9j5woEuBJ1vuP64=;
- b=I+1h2m98hu8W1M7Ox/wnRKFV875c73IeS5jEgz5qBm5to97sqrkOQvyZGzmZW1nU8XS8/Z21lrbzye38OyKBJTw+4zk71gprTr4sj7vmXspQMi21ik5crEWNe5UhR06PBrPepP9VJlhjfEQpbkiXWPZMb7Kf8DFu43+yl7rcXbK20ymug09vV1waUd6AiJcxcFo5HoFj3UR50By9SvVTJYvnCOEvLNftgdZe5eoWokD74POBb8yt0RrjsJY6HJut1RjdOlc6tlwSMDkDBzAOFxp+DKOi/2ioftJjd9wfjd5uosY89mipWKweXc0CAH49uEF1TeYXBOxQA0kZw8yNuA==
+ bh=tc//ZWYmcV6/UaTZtEzLQRS+oYcmtQvbP7XQnj3c7xo=;
+ b=FkuzitBpiHdncA2gSskguvrPh1Y4FQcKI/eaHE1eARPTf/8TH9xz56wKxmM2FoHYfWNB5LQNDRs0Pgsfmg5WJXV7hrkciOhED733mV6Cqt5BNRYXbHSMc7tzPrc/APW++ipILurkc2oeXriwFYFGX8nCKY4HypNL6m97aFW5JOMQUGTzTL4G6pb5s+U9udJbB2OrKXhB99rhhnaF1pBEi3xUTHXmrbs45tM6lWXHNQXealmz4LXcxuFgLBpffBaRbfOlgoRhahK24Kl+YqvS1BIoKJIJhJIA5a5T5+0wSHZvDzPAkQgup0W/V1ClkcAngqT/ZHgbe98UCrqVSNXzbA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=flex.com; dmarc=pass action=none header.from=flex.com;
- dkim=pass header.d=flex.com; arc=none
-Received: from DM6PR08MB5514.namprd08.prod.outlook.com (2603:10b6:5:10a::33)
- by DM6PR08MB6188.namprd08.prod.outlook.com (2603:10b6:5:1f0::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4649.15; Thu, 4 Nov
- 2021 06:42:40 +0000
-Received: from DM6PR08MB5514.namprd08.prod.outlook.com
- ([fe80::b084:d3b3:942c:d1e9]) by DM6PR08MB5514.namprd08.prod.outlook.com
- ([fe80::b084:d3b3:942c:d1e9%3]) with mapi id 15.20.4649.020; Thu, 4 Nov 2021
- 06:42:40 +0000
-From: "Chris Chen (TPI)" <Chris.Chen3@flex.com>
-To: Andrei Kartashev <a.kartashev@yadro.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: =?big5?B?pl7C0DogW3Bob3NwaG9yLWhvc3QtaXBtaWRdIFF1ZXN0aW9ucyBhYm91dCBJUE1J?=
- =?big5?Q?_event_message?=
-Thread-Topic: [phosphor-host-ipmid] Questions about IPMI event message
-Thread-Index: AQHX0FzdH8Cp8KRP+U+lOT6FZDTGF6vx10MAgAEICmg=
-Date: Thu, 4 Nov 2021 06:42:39 +0000
-Message-ID: <DM6PR08MB5514A718D900C61B7CCFBD7CDC8D9@DM6PR08MB5514.namprd08.prod.outlook.com>
-References: <DM6PR08MB55142C3AE9871FB3700BD577DC8C9@DM6PR08MB5514.namprd08.prod.outlook.com>
- <fa95f2df7c92e64d099bbcf8f2781638c088b042.camel@yadro.com>
-In-Reply-To: <fa95f2df7c92e64d099bbcf8f2781638c088b042.camel@yadro.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-suggested_attachment_session_id: a770c043-548f-de82-18b3-c8510056b37c
-Authentication-Results-Original: yadro.com; dkim=none (message not signed)
- header.d=none;yadro.com; dmarc=none action=none header.from=flex.com;
-x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: 0c0c2c19-9d19-49dc-76f5-08d99f5e4dcf
-x-ms-traffictypediagnostic: DM6PR08MB6188:|BN7PR08MB5043:
-X-Microsoft-Antispam-PRVS: <BN7PR08MB5043152730C639F7335CEF84DC8D9@BN7PR08MB5043.namprd08.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;OLM:10000;
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tc//ZWYmcV6/UaTZtEzLQRS+oYcmtQvbP7XQnj3c7xo=;
+ b=C/OeyaoUTBMKybAQ3LB4JHvkwWwA8BHSxwhbjG2nKwz6QAUoBcxvRBZmvIVfBcapMdNikY4ZwmqSCTBfMN1SYKKK3ZCPpNTDkmUyf5IUcyzhHlYHrvkzWswgzuyqJUjQUEy7q3lng9agpFmDRfY8hdxwZFR3fDhk1E/D1WPNfgA=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=amperemail.onmicrosoft.com;
+Received: from SJ0PR01MB7238.prod.exchangelabs.com (2603:10b6:a03:3f7::22) by
+ BYAPR01MB3943.prod.exchangelabs.com (2603:10b6:a02:82::11) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4669.10; Thu, 4 Nov 2021 07:25:16 +0000
+Received: from SJ0PR01MB7238.prod.exchangelabs.com
+ ([fe80::1d89:1ea0:77b9:2328]) by SJ0PR01MB7238.prod.exchangelabs.com
+ ([fe80::1d89:1ea0:77b9:2328%9]) with mapi id 15.20.4649.017; Thu, 4 Nov 2021
+ 07:25:15 +0000
+Message-ID: <696d0f43-c665-d79d-f493-60843e239da4@amperemail.onmicrosoft.com>
+Date: Thu, 4 Nov 2021 14:25:05 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.2.1
+Subject: Re: Cherry-picking 5.16 commits into OpenBMC Linux?
+Content-Language: en-US
+To: openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>
+References: <CABoTLcQHOcfvHkCGX0nMUxFzmTcceuBhL3CQERn66CT8UsSvwQ@mail.gmail.com>
+ <CACPK8XcRfTkZynhnmYn0ySq82MjJQZwgy_4UjKpcxYgF5cG7xw@mail.gmail.com>
+From: Thang Nguyen <thang@amperemail.onmicrosoft.com>
+In-Reply-To: <CACPK8XcRfTkZynhnmYn0ySq82MjJQZwgy_4UjKpcxYgF5cG7xw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SGAP274CA0020.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b6::32)
+ To SJ0PR01MB7238.prod.exchangelabs.com
+ (2603:10b6:a03:3f7::22)
+MIME-Version: 1.0
+Received: from [192.168.86.197] (1.52.235.153) by
+ SGAP274CA0020.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b6::32) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4669.10 via Frontend Transport; Thu, 4 Nov 2021 07:25:13 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 36952c66-1cb9-4aff-207b-08d99f643f23
+X-MS-TrafficTypeDiagnostic: BYAPR01MB3943:
+X-Microsoft-Antispam-PRVS: <BYAPR01MB39430836CA5FBCE8375DF7AB8D8D9@BYAPR01MB3943.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:2449;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: yqkyNKtb5QKUdryHZTafP/wbIlY7UtatBNQTdS83s/9JAQ4mSCU//LG5xbUZq09imSOnS2/FRDoQY5XNt/XQ4d9eJBUmSkimIxNKSz/Ni6uR+2BLNxihGqXPCogNIyZGFeCFN0ZWlBgnl2XDWQEM1+dW5cB9Dof9KA+oWCMPXev0Wk1D9G4/X0p0luI94+wSKNF22E3jnchUV0hkOzY2d+eitpIVKC1Vry1LePp6dvMnNIw87JnPx6EE/WXG3kM0m8x/BP4YwcY1QrmnwYpjD8AZW/smU3F1iAFQKQNltFYhec3W5PndxHCvdZCwA4Uq/YjI1GXBzU7lJCZlCgVOCAhzoxA6BjY7aLyC2Ie4EynIuIf07mYL9oycA8CbqQl8pDJxxiVSZBCC5uhNr8nyrNwARv+V/pxo7w1aoDavAETvwR4GgFef+SMlYwkal2JUI3+gI/sDf5Dy3T6Tl2v2ZUALUPWppYv6O35GcDx8g/vqMFaot3OCVqT21szzaMF1RMQn1C8vuPWUEmHcPCw0JAHdOhok6gu8CmTPKcaJqzuis08/gjA1Gx6H6GTLpmU8JlJYpsX69+UIyjdKXGxIuVlZrmggbXFbvrAzsQOxfZlYeTIw4yEPeOZkYfkxdWr6gvbwevL09nDEoMoVojlMNxnVRxpK+uHU9AEzPishKHwa/9PIS1P5lbkR/e1O3zeJQ7+/Nh9+tGXara/HnGlbwxg1tiXYoQ8fWXQHlXl4cD8=
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:DM6PR08MB5514.namprd08.prod.outlook.com;
- PTR:; CAT:NONE;
- SFS:(366004)(71200400001)(316002)(110136005)(122000001)(508600001)(55016002)(19627405001)(2906002)(83380400001)(91956017)(6506007)(224303003)(66556008)(76116006)(66446008)(33656002)(7696005)(66946007)(9686003)(5660300002)(86362001)(186003)(64756008)(38070700005)(15650500001)(38100700002)(52536014)(66476007)(8936002)(21314003);
- DIR:OUT; SFP:1102; 
-Content-Type: multipart/alternative;
- boundary="_000_DM6PR08MB5514A718D900C61B7CCFBD7CDC8D9DM6PR08MB5514namp_"
-MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB6188
-X-CFilter-Loop: Reflected
-X-DetectorID-Processed: db4f4c5a-5dd2-4f21-956c-7ab15d947193
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: CO1NAM11FT008.eop-nam11.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 8c0c6e03-b8e1-4df8-70de-08d99f5e4c09
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: dqbB0TuGPCAAiFLwu6IPK3d8n84Bl8AJBsB850PPLoit2cmDEXyTx886pXt2JR/TbNCWtHCy/UcwdNaRZI7KgkuQ4pkk2FTaZROu/KcISiM5AfAu94IoQ9PUpYY0oWN20xT3mkfpbwmox0S/JN/C7QHxfpRRBPYaUGSJRpEsk8v4Lh1ItiGKtzMQNNq59Pci1EZGPzYojpD2S2Kc5lcgs3QHi05oFMJLTFsf57p6PKeD7K+hr0KYcgQJQ4P7tX2AnqNMAsfShs9JvpaeVMZH4qGO0RlIbqqS03Oe4JE6a8xvKTVUK2NyNW5z4QMuPvozv0evwCFgxYKHiEVJa843W1qvcthEkb0nx9WlM6ow+EB9Uqdl3BYkh1ruUB6N96esC6DwR8sdL6HHfxLW5XDImtbw8+1v3D1uuYYJ5LWudYYWmxplsSf1Z+dne6RjyQfcGtTpgTC8SCIuJfQm0VITOchfUfrYInm+gcW0QIuj3MDpDLZAQJyNu53d1MZqjFp8kmvUx43h9zGV1K+644XAwIONGalW29IHzfThunZ/VljIpe9dlC6dPZ4VEaQ0AqM8lubDTiq2u8FTtzIxOE7NExsu2aLNR5UsrxZpcCLtMbM9+Xy0trPfCD89lLM0zNLLCUghBA61KiC/MaT2UeGCzJetpgECF/pm1gTnjKYaQoqnhAb6E1nD1Gt8SerAY5FRKcu5EZ6ooTqXlkTEHvp+NxI1PJ67RUThNG1jD0rovvou9cJmoxuG9R1wtCBZNXAeTn+oxRZvg47zUXmFVvt3bw==
-X-Forefront-Antispam-Report: CIP:144.49.247.95; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.ds.dlp.protect.symantec.com;
- PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(36840700001)(46966006)(26005)(8936002)(356005)(224303003)(81166007)(336012)(19627405001)(6506007)(4186021)(508600001)(33656002)(15650500001)(70586007)(82310400003)(86362001)(9686003)(52536014)(36860700001)(110136005)(5660300002)(7696005)(316002)(2906002)(70206006)(83380400001)(55016002)(186003)(47076005)(21314003)(36900700001);
+X-Microsoft-Antispam-Message-Info: NzG+UsO+dHHGJzuQkky/n4ABZk/mWx0TxHe2R35wlHRgtKaoX0gIBSmOSJp4kxcNBQ/AUpMycZCP0U5TiwmwFpDFgh0eyGZA/+YyioaKEXoidh8tWxCSTEzn8QDeAfVGHhGhRycIbFFWW+t9lIQzMecAYv9NVqHSrnMChUVc3HpFqQoBx4gYsJbQGb4Suo07nTEkKkX5ei6Rq2AZK0IT1LNcDZkEJPkerMTKMzmmADuT+R6BFivFMQbB/FicGNqypzZZPvUML1HME3gNxaMDrkc7FOBb9PKqeHNem9WI8iIWXlskdVVfoYiz0BBkgQiY0nL9M28XW7kk1GknCasOC67SkyCErAZDWmd3YO1Jcppnv6hneT4P18kk3Rg69zuwj7gneC3tHSpuZmi/rPTglvtlGkJSkOLO2t2zGDwVhgFxal8pCRmkRDzFRyWWKMCQX3aBLoRkjGfxBSc/DCyouhco/K4NLA8sL6s/k3w9c8i2Pij2TOJkw7vObPTAApVy1RkD4CPfJhIHMWcC6ZT/DxsZE8H3Uzgkzq1GGqyo+Nbyvh7oAOb5QdJqmmMQm9mQ46CE9anYGN0Op297gKHFCwi+r1F43+UD9BpZ4CqEcvvDxLBrjhAhMC21wfcUpTloTYDhfPQ6b1gFnEcwHqcpdPqFBPZOEfcKghoVgSiYzgBIeRbLwyQooRudyk9TIYQOEAOzKLhZsxN4cvpY1CXSudveYJ6qJv1fXH8le6RMhjybEbw+R+SXfwqcc7CqcnbgoFBrJ+nWqcZCVjl4P68iIQqqPdoIsaom5qEn0cUKsEtPtD9qHv6Ii+igmpn/kxa77x321IuGn7ms0K20o4Wkng==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR01MB7238.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(366004)(38100700002)(26005)(31696002)(38350700002)(66946007)(6666004)(83380400001)(53546011)(66476007)(83170400001)(6486002)(5660300002)(966005)(186003)(8676002)(2906002)(508600001)(31686004)(6916009)(42882007)(66556008)(316002)(8936002)(52116002)(2616005)(16576012)(956004)(43740500002)(45980500001);
  DIR:OUT; SFP:1102; 
-X-OriginatorOrg: flex.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2021 06:42:42.6742 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0c0c2c19-9d19-49dc-76f5-08d99f5e4dcf
-X-MS-Exchange-CrossTenant-Id: 3f0e69e0-eb38-4eb2-b4ee-52919719d31e
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3f0e69e0-eb38-4eb2-b4ee-52919719d31e; Ip=[144.49.247.95];
- Helo=[mail.ds.dlp.protect.symantec.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT008.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR08MB5043
-X-Proofpoint-ORIG-GUID: Bu7fSHDH2p3IucvhINofFPnQbhV6si8z
-X-Proofpoint-GUID: Bu7fSHDH2p3IucvhINofFPnQbhV6si8z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-11-04_01,2021-11-03_01,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 adultscore=0
- clxscore=1015 suspectscore=0 impostorscore=0 malwarescore=0 mlxscore=0
- phishscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2110150000
- definitions=main-2111040033
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VW1DQkppLzhGRWYzMERsbjNuZWhDVnBmQWpKNzRmQnFlYlkvTy9zOVJCb3c4?=
+ =?utf-8?B?TW9xWDNUcHA5azM5QVlnMG5zTDEvRFlhN2NoaC9mWU5UUEhFdW1zR2lGY0M2?=
+ =?utf-8?B?MDhIQjFmM210ZllKRWgzdmpob1FTTjBYWHd0UnNhbmYybFVva0wzSy96WTFt?=
+ =?utf-8?B?STFISG03aXNLMksraHNJUWJzTVBpWCt0dm0vY1hRSDR6dkJjRzEzNHZrWlM0?=
+ =?utf-8?B?cFlmWVJxRGl4TlBUZUtzaE1hNGtIYXkzOG9OeWxubGdGbWwxRGpGOFBQQzFp?=
+ =?utf-8?B?WmR6bDZQTE9TYndIV3g3R3YrZnRSOXJSQ2J0Q2k5ODNBWlE3OXF4MHdkeU1o?=
+ =?utf-8?B?cFE2cjRzZE03Sk5Zb2pzUlRYUDgzbVpyUmdQSmpzQVEyNGREZ2duQTNzK0la?=
+ =?utf-8?B?Y0h2V0xjQUlEcUVrMUt1UDdickE0Q2krU2hTaDhRaVp5QmgrNkJpampHMFo5?=
+ =?utf-8?B?TTRSOEVrbkxhY245aWlTYnVBaDB6T2NBRjZucEFDUHJtV3h3UGYyY1JRbTg2?=
+ =?utf-8?B?N3hJYnpvMndYbENPY2M2ZVNpTHdTU0gyamxpR002WHpCd2poVmU4SU9iZlhh?=
+ =?utf-8?B?Wmt0QnFQdXFXVXVRbmc5OTZqTmJmUlh0YTZKSERjYklBOE4zSXNualI4V3Yz?=
+ =?utf-8?B?RzM5UjhyNGVOOTBNRkxieldpeitjd0lFRUpHdG5OWG1udTF2TW1XUFYwQ3ND?=
+ =?utf-8?B?VFl4UUs5MG9EdmJCcnM1cFNPVXkwUFFwL1hsU1ZWNmdKN0JIRUtxYzdENmN5?=
+ =?utf-8?B?bjQya3Blay9XeHlnbE9yakRVeldJNjdLbzkvSHVZTmFmSGlwa2RxVXYvd3Az?=
+ =?utf-8?B?WlZocEM1NURlR3dFcFUzOExJZDFiR0E4cUFDVkE3OWpkQmY0eWFrZk1jQ29R?=
+ =?utf-8?B?NGt5bEFQZ2lCZnY3OUdDZU5Qb296SHhIKzQyejBWYmE5TEdZNlNSUGh0b3VY?=
+ =?utf-8?B?RnNPT0ZDWHhGQVNTcjZrUThKRG1QdkxjdzVIYUU3bHhNRm5nU2M0cWh0TVU0?=
+ =?utf-8?B?cnQ1VVVia2EzTmdqazMwMXgzN3VqUWVOVm1FdTU2YWNjcUlkU0ROT1NVcDJt?=
+ =?utf-8?B?R3JOQ3dIV0RHSWs1OGNVbXpFdU91U3ZYa0dCR0hoaGxyWkFWREpsZStRcHRB?=
+ =?utf-8?B?UFpNc1h5Rk5ya1ZCSkcwR2RyQmNxWGxoVW1VbWRhSVlZWmwwei94dlc1bUNM?=
+ =?utf-8?B?cWN3UFpodGl4SXF4c25TUFpqbWl3OFY4S1ZnQzFkRUJRUUlLekpDVU9DNEg4?=
+ =?utf-8?B?eTNuN0s4KzlUMUpkN1loSW5xQk5hLzlvd2lJSUtzeWxMMlFUWHNyOUpTV2VP?=
+ =?utf-8?B?VDdSaDJIMnl5TWdmM3IzdDQ2SjZrTnhqWUdxRWFRTURjeWQ1LytxdHFicXMw?=
+ =?utf-8?B?dXFBNGZJK1lwYnRZSVpoZkVSQlYzSGhad1pKRlRzZ090Q3VLMHVrbTdJTzJ5?=
+ =?utf-8?B?NnRxREZ5Ry9WeVpQaXZPR003d3V2YXhLaXBnUkI1dVdCSi9TTHREc2EySnlI?=
+ =?utf-8?B?OWJrMEhkdWpJWld2YmRjNm9OME1uVjV5MUZDWkttY2JXbG9ZdzZKZ0hYdGdD?=
+ =?utf-8?B?TFZNc2VaKzlJRlFoYm1zUmJNeWlwdGRkS2tXemJMN3h6dGwycUJpbHNsakox?=
+ =?utf-8?B?QVIvOWpXcU94Y1YveDRuUW02dUtja1NwUUNIU2hHLzIydTJaYkpGUE9jcEFK?=
+ =?utf-8?B?czE3a1l0dWltOEF5ZmFpMWVTeXFwQXp5aEFKTjQ0cUF6T0FSeU14aHJZTXF6?=
+ =?utf-8?B?bFFvSnYweGlFVWN3UmdVY0JqMlY5UG5BekMraWtVL2pCQ0k3YVFVMVZMMjdI?=
+ =?utf-8?B?a2crV2poSUFzcWcrQVgzY25JSXRuRUZVUllJSHFucm5XaUwvRlNaaVJtY0FV?=
+ =?utf-8?B?ajNzZ2NmODRDT2NwRGlnVHR2UlhnWDZSN3NIcnAvNjI2d2hZMG1zc1dIbDNV?=
+ =?utf-8?B?NXZCWCs1UW8wMlp5cFBiVFpyVWxnU1k5U0VyRzA1Tm5HR21VWStJTk1PZHln?=
+ =?utf-8?B?QjhLZkRKK1hscVBmaVZsOVhlMGNBTFJ2SnhSdE90T1M2OXBPMVhHbDB4UVpG?=
+ =?utf-8?B?a2hRd1hLSituRWhNdmNYZDlHdVpRd2JTRjZmZExlREd3UFFjVXNzRENRYWp0?=
+ =?utf-8?B?NFRRaVp6OG91MFc4NXdHRXZ6RWNCR2FqZFpjcWhXNlVWbDJkRlpXMW0zcFhw?=
+ =?utf-8?B?ZDlqaVJXL2JIOWFTYzJLaTBaNTdUa2taeVk0TnFlUUpxNFdRckNLZzA1Nk1J?=
+ =?utf-8?B?ZXdEV2pKWjZJMG52K29xS1BrYnhEL3dUY0Q5bjFlMjRJT2N3MXdJT3ptYzB4?=
+ =?utf-8?B?NEE2Q0NWalZWVnQyb2NJRlFBWmhKei9jMTBCYnVwMytXSUpORnpIUT09?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 36952c66-1cb9-4aff-207b-08d99f643f23
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7238.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2021 07:25:15.5334 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: dpAkdpb4OhJz76EbCCrrghBjbQ4ExKS2ENhTlhIAhB5kfarDKzObYshUR0NHrkOOFndcqiOZy/mxrH8S/fd9/0vIo4rmD1P/NOdQ3xIvXKA4zIFM02FS5j5dZGDlJnFl
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB3943
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -165,429 +153,59 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_DM6PR08MB5514A718D900C61B7CCFBD7CDC8D9DM6PR08MB5514namp_
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+Hi Joel,
+We have some commits for Mt.Jade device tree that have your Reviewed-by:
+https://www.spinics.net/lists/kernel/msg4115571.html
+https://www.spinics.net/lists/kernel/msg4115572.html
+And another commit applied at 
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?h=next-20211029&id=0b32c1b4071c482f2cf98b717cfc7380423ec619.
+Would it be possible to apply into OpenBMC kernel 5.15 tree? I need 
+these commits to replace some u-boot patches in meta-ampere.
 
-SGkgQW5kcmVpLA0KDQo+PkRpc2NsYWltZXI6IGhlcmUgYW5kIGJlbG93IEkgdGFsayBvbmx5IGFi
-b3V0IGZpbGUtYmFzZWQgaW1wbGVtZW50YXRpb24NCj4+Zm9yIGxvZ3MuDQoNCj4+SXQgaXMga25v
-d24gbGltaXRhdGlvbi4gRmlyc3Qgb2YgYWxsLCB5b3Ugc2hvdWxkIGF3YXJlIHRoYXQgdGhlcmUg
-YXJlDQo+PnR3byBjb21wbGV0ZWx5IGRpZmZlcmVudCBsb2dzOiBSZWRmaXNoIExvZyBhbmQgU0VM
-IGxvZy4gV2hlbiBhbg0KPj5pbnRlcm5hbCBzZW5zb3IgdHJpZ2dlcnMgdGhyZXNob2xkIGV2ZW50
-LCB0d28gZGlmZmVyZW50IG1lc3NhZ2VzIGFyZQ0KPj5zZW50OiBvbmUgZm9yIHJlZGZpc2ggbG9n
-IGFuZCBhbm90aGVyIHRvIFNFTC4NCg0KPj5UaGUgc2VsLWxvZ2dlciBjdXJyZW50bHkgZGVzaWdu
-ZWQgdG8gb25seSBoYW5kbGUgdGhyZXNob2xkIGV2ZW50cyBmcm9tDQo+PmludGVybmFsIHNlbnNv
-cnMsIHRodXMgaXQgcmVxdWlyZXMgZGJ1cyBwYXRoIHRvIHRoZSBzZW5zb3IgYXMgYW4NCj4+YXJn
-dW1lbnQgZm9yIElwbWlTZWxBZGQuDQo+PldoZW4geW91IHNlbmQgZXh0ZXJuYWwgSVBNSSBldmVu
-dC9TRUwgYWRkIG1lc3NhZ2UsIGlwbWkgZGFlbW9uIGRvZXNuJ3QNCj4+a25vdyBob3cgdG8gaGFu
-ZGxlIGl0LiBJbnN0ZWFkLCBpbnRlbC1pcG1pLW9lbSwgdHJpZXMgdG8gcGFyc2UgdGhlDQo+PmV2
-ZW50IGFjY29yZGluZyB0byBzb21lIHJ1bGVzIGFuZCBpZiBpdCBmYWlscyBqdXN0IGFkZHMgdGhp
-cyB3ZWlyZA0KPj4iT3BlbkJNQy4wLjEuU0VMRW50cnlBZGRlZCwyQzA0MDEzMDAxMDlGRkZGIiB0
-byB0aGUgcmVkZmlzaCBsb2csIHNheWluZw0KPj4id2UgZ290IHNvbWUgaXBtaSBldmVudCwgYnV0
-IHdlIGRvbid0IGtub3cgd2hhdCBpcyBpdCIuDQpOb3cgSSBnZXQgaXQuIEkgaGF2ZSB0byBzYXkg
-dGhpcyBleHBsYW5hdGlvbiBoZWxwIG1lIHRvIHVuZGVyc3RhbmQgbW9yZSBkZXRhaWxzLiBUaGFu
-a3MgYSBsb3QuDQpBbm90aGVyLCBtYXkgSSBjb25zdWx0IHlvdSBvdGhlciByZWxhdGVkIHF1ZXN0
-aW9ucz8gVGhhdCBpcw0KDQogICogICBJIGhhZCBhIHF1ZXN0aW9uIGFib3V0ICJzZWwtbG9nZ2Vy
-IiBiZWZvcmUsIGFuZCBMZWkgc3VnZ2VzdGVkIEkgdG8gZW5hYmxlICJzZW5kLXRvLWxvZ2dlciIg
-b3B0aW9uLCBkb2VzIHRoaXMgaGF2ZSBhbnkgcmVsZXZhbmNlIHlvdSBtZW50aW9uZWQgYWJvdmU/
-DQogICogICBJIHNhdyBzb21lIGNvbXBhbmllcyBoYXZlIHRoZSB4eHgteWFtbC1jb25maWcgZm9s
-ZGVyIHdpdGggInh4eC1pcG1pLXNlbnNvcnMueWFtbCIgZXRjLiBhbmQgYWxzbyBoYXZlIHRoZSAi
-ZW50aXR5LW1hbmFnZXIiIGZvbGRlciB3aXRoICJ4eHguanNvbiIuIEJ1dCBzb21lIGNvbXBhbmll
-cyBvbmx5IGhhdmUgImVudGl0eS1tYW5hZ2VyIiBmb2xkZXIuIFNvIEkgd291bGQgbGlrZSB0byB1
-bmRlcnN0YW5kIHdoYXQgZGlmZmVyZW5jZXMgdGhleSBhcmU/IFNob3VsZCBJIG5lZWQgdGhlbSBi
-b3RoPyBJIGZvciBub3cgdXNlICJlbnRpdHktbWFuYWdlciIgb25seS4NCg0KPj5JIGV4dGVuZGVk
-IHNlbC1sb2dnZXIgd2l0aCBBZGRFeHQgbWV0aG9kLCB0byBzdG9yZSBhbnkgcmFuZG9tIFNFTCBl
-bnRyeQ0KPj50byAvdmFyL2xvZy9pcG1pX3NlbCwgYnV0IHRoaXMgcGF0Y2hlcyBhcmUgZm9yIG91
-ciBpbnRlcm5hbCBJbnRlbC1CTUMNCj4+Zm9yayBhbmQgbm90IGFwcGxpZWQgZm9yIHVwc3RyZWFt
-IHZlcnNpb24uDQo+Pkl0IGlzIG9uIG15IHJvYWRtYXAgdG8gdXBkYXRlIHBhdGNoZXMgYW5kIHN1
-Ym1pdCB0aGVtLiBJZiB0aGVyZSBpcw0KPj5kZW1hbmQgZm9yIHRoaXMgd29yaywgSSBjYW4gdHJ5
-IHRvIHByaW9yaXRpemUgaXQuDQpJdCBkZWZpbml0ZWx5IHdpbGwgYmUgaGVscGZ1bCBmb3IgbWUg
-aWYgeW91IGFyZSBhYmxlIHRvIHByaW9yaXRpemUgdGhpcyBmZWF0dXJlLjopDQoNClJlZ2FyZHMs
-DQpDaHJpcyBDaGVuDQoNCg0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCrFIpfOq
-zDogQW5kcmVpIEthcnRhc2hldiA8YS5rYXJ0YXNoZXZAeWFkcm8uY29tPg0KsUil86TptME6IDIw
-MjGmfjExpOszpOkgpFWkyCAxMDowNg0Kpqyl86rMOiBDaHJpcyBDaGVuIChUUEkpIDxDaHJpcy5D
-aGVuM0BmbGV4LmNvbT47IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyA8b3BlbmJtY0BsaXN0cy5v
-emxhYnMub3JnPg0KpUSmrjogUmU6IFtwaG9zcGhvci1ob3N0LWlwbWlkXSBRdWVzdGlvbnMgYWJv
-dXQgSVBNSSBldmVudCBtZXNzYWdlDQoNCg0KSGkgQ2hyaXMsDQoNCj4gU28sIEkgaGF2ZSAyIHF1
-ZXN0aW9ucyBmb3IgdGhpcyBhbmQgaG9wZSBzb21lb25lIHdobyBoYWQgZXhwZXJpZW5jZQ0KPiB3
-aXRoIHRoaXMgY291bGQgc2hhcmUgaWRlYXMgd2l0aCBtZSwgSSdsbCBhcHByZWNpYXRlIGl0Og0K
-PiAgICAxLiBXaHkgdGhlIGV2ZW50IGRvZXNuJ3QgYXBwZWFyIGluIHRoZSAidmFyL2xvZy9pcG1p
-X3NlbCIgb3IgY2FuJ3QNCj4gYmUgc2VlbiBieSB1c2luZyAiaXBtaXRvb2wgc2VsIGVsaXN0Ij8g
-SSBleHBlY3RlZCBpdCBzaG91bGQgYXBwZWFyLg0KDQpEaXNjbGFpbWVyOiBoZXJlIGFuZCBiZWxv
-dyBJIHRhbGsgb25seSBhYm91dCBmaWxlLWJhc2VkIGltcGxlbWVudGF0aW9uDQpmb3IgbG9ncy4N
-Cg0KSXQgaXMga25vd24gbGltaXRhdGlvbi4gRmlyc3Qgb2YgYWxsLCB5b3Ugc2hvdWxkIGF3YXJl
-IHRoYXQgdGhlcmUgYXJlDQp0d28gY29tcGxldGVseSBkaWZmZXJlbnQgbG9nczogUmVkZmlzaCBM
-b2cgYW5kIFNFTCBsb2cuIFdoZW4gYW4NCmludGVybmFsIHNlbnNvciB0cmlnZ2VycyB0aHJlc2hv
-bGQgZXZlbnQsIHR3byBkaWZmZXJlbnQgbWVzc2FnZXMgYXJlDQpzZW50OiBvbmUgZm9yIHJlZGZp
-c2ggbG9nIGFuZCBhbm90aGVyIHRvIFNFTC4NCg0KVGhlIHNlbC1sb2dnZXIgY3VycmVudGx5IGRl
-c2lnbmVkIHRvIG9ubHkgaGFuZGxlIHRocmVzaG9sZCBldmVudHMgZnJvbQ0KaW50ZXJuYWwgc2Vu
-c29ycywgdGh1cyBpdCByZXF1aXJlcyBkYnVzIHBhdGggdG8gdGhlIHNlbnNvciBhcyBhbg0KYXJn
-dW1lbnQgZm9yIElwbWlTZWxBZGQuDQpXaGVuIHlvdSBzZW5kIGV4dGVybmFsIElQTUkgZXZlbnQv
-U0VMIGFkZCBtZXNzYWdlLCBpcG1pIGRhZW1vbiBkb2Vzbid0DQprbm93IGhvdyB0byBoYW5kbGUg
-aXQuIEluc3RlYWQsIGludGVsLWlwbWktb2VtLCB0cmllcyB0byBwYXJzZSB0aGUNCmV2ZW50IGFj
-Y29yZGluZyB0byBzb21lIHJ1bGVzIGFuZCBpZiBpdCBmYWlscyBqdXN0IGFkZHMgdGhpcyB3ZWly
-ZA0KIk9wZW5CTUMuMC4xLlNFTEVudHJ5QWRkZWQsMkMwNDAxMzAwMTA5RkZGRiIgdG8gdGhlIHJl
-ZGZpc2ggbG9nLCBzYXlpbmcNCiJ3ZSBnb3Qgc29tZSBpcG1pIGV2ZW50LCBidXQgd2UgZG9uJ3Qg
-a25vdyB3aGF0IGlzIGl0Ii4NCg0KSSBleHRlbmRlZCBzZWwtbG9nZ2VyIHdpdGggQWRkRXh0IG1l
-dGhvZCwgdG8gc3RvcmUgYW55IHJhbmRvbSBTRUwgZW50cnkNCnRvIC92YXIvbG9nL2lwbWlfc2Vs
-LCBidXQgdGhpcyBwYXRjaGVzIGFyZSBmb3Igb3VyIGludGVybmFsIEludGVsLUJNQw0KZm9yayBh
-bmQgbm90IGFwcGxpZWQgZm9yIHVwc3RyZWFtIHZlcnNpb24uDQpJdCBpcyBvbiBteSByb2FkbWFw
-IHRvIHVwZGF0ZSBwYXRjaGVzIGFuZCBzdWJtaXQgdGhlbS4gSWYgdGhlcmUgaXMNCmRlbWFuZCBm
-b3IgdGhpcyB3b3JrLCBJIGNhbiB0cnkgdG8gcHJpb3JpdGl6ZSBpdC4NCg0KPiAgICAyLiBXaGF0
-IGRvZXMgIkdldCBTRFIgMDAwNCBjb21tYW5kIGZhaWxlZDogSW52YWxpZCBkYXRhIGZpZWxkIGlu
-DQo+IHJlcXVlc3QiIG1lYW4/DQo+DQo+IFRoaW5ncyB0byBOb3RlOg0KPiAgICAxLiBUaGUgdmVy
-c2lvbiBvZiBPcHJuQk1DIGNvZGViYXNlIEkgdXNlZCBpcyAyLjEwLXJjMS4NCj4gICAgMi4gVGhl
-IGltYWdlIEkgYnVpbHQgaW5jbHVkZWQgImludGVsLWlwbWktb2VtIiwgInBob3NwaG9yLWxvZ2dp
-bmciLA0KPiAicGhvc3Bob3Itc2VsLWxvZ2dlciIsICJyc3lzbG9nIiBhbmQgImVudGl0eS1tYW5h
-Z2VyIi4NCj4NCj4gVGhhbmsgeW91Lg0KPg0KPiBSZWdhcmRzLA0KPiBDaHJpcyBDaGVuDQo+IExl
-Z2FsIERpc2NsYWltZXIgOg0KPiBUaGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRoaXMgbWVz
-c2FnZSBtYXkgYmUgcHJpdmlsZWdlZCBhbmQNCj4gY29uZmlkZW50aWFsLg0KPiBJdCBpcyBpbnRl
-bmRlZCB0byBiZSByZWFkIG9ubHkgYnkgdGhlIGluZGl2aWR1YWwgb3IgZW50aXR5IHRvIHdob20g
-aXQNCj4gaXMgYWRkcmVzc2VkDQo+IG9yIGJ5IHRoZWlyIGRlc2lnbmVlLiBJZiB0aGUgcmVhZGVy
-IG9mIHRoaXMgbWVzc2FnZSBpcyBub3QgdGhlIGludGVuZGVkDQo+IHJlY2lwaWVudCwNCj4gaXMg
-c3RyaWN0bHkgcHJvaGliaXRlZC4gSWYgeW91IGhhdmUgcmVjZWl2ZWQgdGhpcyBtZXNzYWdlIGlu
-IGVycm9yLA0KPiBwbGVhc2UgaW1tZWRpYXRlbHkgbm90aWZ5IHRoZSBzZW5kZXIgYW5kIGRlbGV0
-ZSBvciBkZXN0cm95IGFueSBjb3B5IG9mDQo+IHRoaXMgbWVzc2FnZSENCg0KLS0NCkJlc3QgcmVn
-YXJkcywNCkFuZHJlaSBLYXJ0YXNoZXYNCg0KDQo=
+Thanks,
+Thang Q. Nguyen
 
---_000_DM6PR08MB5514A718D900C61B7CCFBD7CDC8D9DM6PR08MB5514namp_
-Content-Type: text/html; charset="big5"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Hi Andrei,</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important">&gt;<span style=3D"background-color:rgb(2=
-55, 255, 255);display:inline !important">&gt;</span>Disclaimer:
- here and below I talk only about file-based implementation</span><br>
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important">&gt;<span style=3D"background-color:rgb(2=
-55, 255, 255);display:inline !important">&gt;</span>for
- logs.</span><br style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pm=
-ingliu, &quot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &q=
-uot;Helvetica Neue&quot;, sans-serif;font-size:14.6667px;background-color:r=
-gb(255, 255, 255)">
-<br style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot=
-;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica=
- Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, =
-255)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important">&gt;<span style=3D"background-color:rgb(2=
-55, 255, 255);display:inline !important">&gt;</span>It
- is known limitation. First of all, you should aware that there are</span><=
-br style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;=
-Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica =
-Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, 2=
-55)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important">&gt;<span style=3D"background-color:rgb(2=
-55, 255, 255);display:inline !important">&gt;</span>two
- completely different logs: Redfish Log and SEL log. When an</span><br styl=
-e=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;Segoe U=
-I&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica Neue&qu=
-ot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, 255)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important">&gt;<span style=3D"background-color:rgb(2=
-55, 255, 255);display:inline !important">&gt;</span>internal
- sensor triggers threshold event, two different messages are</span><br styl=
-e=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;Segoe U=
-I&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica Neue&qu=
-ot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, 255)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important">&gt;<span style=3D"background-color:rgb(2=
-55, 255, 255);display:inline !important">&gt;</span>sent:
- one for redfish log and another to SEL.</span><br style=3D"font-family:&qu=
-ot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;Segoe UI&quot;, -apple-syst=
-em, BlinkMacSystemFont, Roboto, &quot;Helvetica Neue&quot;, sans-serif;font=
--size:14.6667px;background-color:rgb(255, 255, 255)">
-<br style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot=
-;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica=
- Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, =
-255)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>The
- sel-logger currently designed to only handle threshold events from</span><=
-br style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;=
-Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica =
-Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, 2=
-55)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>internal
- sensors, thus it requires dbus path to the sensor as an</span><br style=3D=
-"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;Segoe UI&qu=
-ot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica Neue&quot;,=
- sans-serif;font-size:14.6667px;background-color:rgb(255, 255, 255)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>argument
- for IpmiSelAdd.</span><br style=3D"font-family:&quot;Microsoft Jhenghei UI=
-&quot;, Pmingliu, &quot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, =
-Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size:14.6667px;backgrou=
-nd-color:rgb(255, 255, 255)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>When
- you send external IPMI event/SEL add message, ipmi daemon doesn't</span><b=
-r style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;S=
-egoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica N=
-eue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, 25=
-5)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>know
- how to handle it. Instead, intel-ipmi-oem, tries to parse the</span><br st=
-yle=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;Segoe=
- UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica Neue&=
-quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, 255)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>event
- according to some rules and if it fails just adds this weird</span><br sty=
-le=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;Segoe =
-UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica Neue&q=
-uot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, 255)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>&quot;OpenBMC=
-.0.1.SELEntryAdded,2C0401300109FFFF&quot;
- to the redfish log, saying</span><br style=3D"font-family:&quot;Microsoft =
-Jhenghei UI&quot;, Pmingliu, &quot;Segoe UI&quot;, -apple-system, BlinkMacS=
-ystemFont, Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size:14.6667=
-px;background-color:rgb(255, 255, 255)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>&quot;we
- got some ipmi event, but we don't know what is it&quot;.</span></div>
-<div style=3D"color: rgb(0, 0, 0);"><span style=3D"font-size: 12pt; font-fa=
-mily: Calibri, Helvetica, sans-serif;">Now I get it. I have to say this exp=
-lanation help me to understand more details. Thanks a lot.</span></div>
-<div style=3D"color: rgb(0, 0, 0);"><span style=3D"font-size: 12pt; font-fa=
-mily: Calibri, Helvetica, sans-serif;">Another, may I consult you other rel=
-ated questions? That is</span></div>
-<div style=3D"color: rgb(0, 0, 0);">
-<ul>
-<li style=3D"font-size:12pt;font-family:Calibri, Helvetica, sans-serif">I h=
-ad a question about &quot;sel-logger&quot; before, and Lei suggested I to e=
-nable &quot;send-to-logger&quot; option, does this have any relevance you m=
-entioned above?</li><li style=3D"font-size:12pt;font-family:Calibri, Helvet=
-ica, sans-serif"><span style=3D"font-size: 12pt; font-family: Calibri, Helv=
-etica, sans-serif;">I saw some companies have the xxx-yaml-config folder wi=
-th &quot;xxx-ipmi-sensors.yaml&quot; etc. and also have the &quot;entity-ma=
-nager&quot;
- folder with &quot;xxx.json&quot;. But some companies only have &quot;entit=
-y-manager&quot; folder. So I would like to understand what differences they=
- are? Should I need them both? I for now use &quot;entity-manager&quot;
-<span style=3D"background-color:rgb(255, 255, 255);display:inline !importan=
-t">only</span>.</span></li></ul>
-</div>
-<div style=3D"color: rgb(0, 0, 0);"><span style=3D"font-size: 12pt; font-fa=
-mily: Calibri, Helvetica, sans-serif;"><span style=3D"font-family:&quot;Mic=
-rosoft Jhenghei UI&quot;, Pmingliu, &quot;Segoe UI&quot;, -apple-system, Bl=
-inkMacSystemFont, Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size:=
-14.6667px;background-color:rgb(255, 255, 255);display:inline !important"><s=
-pan style=3D"background-color:rgb(255, 255, 255);display:inline !important"=
->&gt;<span style=3D"background-color:rgb(255, 255, 255);display:inline !imp=
-ortant">&gt;</span></span>I
- extended sel-logger with AddExt method, to store any random SEL entry</spa=
-n><br>
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>to
- /var/log/ipmi_sel, but this patches are for our internal Intel-BMC</span><=
-br style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;=
-Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica =
-Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, 2=
-55)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>fork
- and not applied for upstream version.</span><br style=3D"font-family:&quot=
-;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;Segoe UI&quot;, -apple-system=
-, BlinkMacSystemFont, Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-s=
-ize:14.6667px;background-color:rgb(255, 255, 255)">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>It
- is on my roadmap to update patches and submit them. If there is</span><br =
-style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &quot;Seg=
-oe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica Neu=
-e&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255, 255)=
-">
-<span style=3D"font-family:&quot;Microsoft Jhenghei UI&quot;, Pmingliu, &qu=
-ot;Segoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helveti=
-ca Neue&quot;, sans-serif;font-size:14.6667px;background-color:rgb(255, 255=
-, 255);display:inline !important"><span style=3D"background-color:rgb(255, =
-255, 255);display:inline !important">&gt;<span style=3D"background-color:rg=
-b(255, 255, 255);display:inline !important">&gt;</span></span>demand
- for this work, I can try to prioritize it.</span></span></div>
-<div style=3D"color: rgb(0, 0, 0);"><span style=3D"font-size: 12pt; font-fa=
-mily: Calibri, Helvetica, sans-serif;"><span style=3D"margin:0px"><span sty=
-le=3D"margin:0px;font-size:12pt">It definitely will be helpful for me if yo=
-u are able to prioritize this feature.:)</span></span></span></div>
-<div style=3D"color: rgb(0, 0, 0);"><span style=3D"font-size: 12pt; font-fa=
-mily: Calibri, Helvetica, sans-serif;"><br>
-</span></div>
-<div style=3D"color: rgb(0, 0, 0);"><span style=3D"font-size: 12pt; font-fa=
-mily: Calibri, Helvetica, sans-serif;">Regards,</span></div>
-<div style=3D"color: rgb(0, 0, 0);"><span style=3D"font-size: 12pt; font-fa=
-mily: Calibri, Helvetica, sans-serif;">Chris Chen<br>
-<span style=3D"margin:0px"></span><br>
-</span></div>
-<div>
-<div id=3D"appendonsend"></div>
-<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif; font-size:12p=
-t; color:rgb(0,0,0)">
-<br>
-</div>
-<hr tabindex=3D"-1" style=3D"display:inline-block; width:98%">
-<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" co=
-lor=3D"#000000" style=3D"font-size:11pt"><b>=B1H=A5=F3=AA=CC:</b> Andrei Ka=
-rtashev &lt;a.kartashev@yadro.com&gt;<br>
-<b>=B1H=A5=F3=A4=E9=B4=C1:</b> 2021=A6~11=A4=EB3=A4=E9 =A4U=A4=C8 10:06<br>
-<b>=A6=AC=A5=F3=AA=CC:</b> Chris Chen (TPI) &lt;Chris.Chen3@flex.com&gt;; o=
-penbmc@lists.ozlabs.org &lt;openbmc@lists.ozlabs.org&gt;<br>
-<b>=A5D=A6=AE:</b> Re: [phosphor-host-ipmid] Questions about IPMI event mes=
-sage</font>
-<div>&nbsp;</div>
-</div>
-<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt"=
->
-<div class=3D"PlainText"><br>
-Hi Chris,<br>
-<br>
-&gt; So, I have 2 questions for this and hope someone who had experience<br=
->
-&gt; with this could share ideas with me, I'll appreciate it:<br>
-&gt; &nbsp;&nbsp;&nbsp;1. Why the event doesn't appear in the &quot;var/log=
-/ipmi_sel&quot; or can't<br>
-&gt; be seen by using &quot;ipmitool sel elist&quot;? I expected it should =
-appear.<br>
-<br>
-Disclaimer: here and below I talk only about file-based implementation<br>
-for logs.<br>
-<br>
-It is known limitation. First of all, you should aware that there are<br>
-two completely different logs: Redfish Log and SEL log. When an<br>
-internal sensor triggers threshold event, two different messages are<br>
-sent: one for redfish log and another to SEL.<br>
-<br>
-The sel-logger currently designed to only handle threshold events from<br>
-internal sensors, thus it requires dbus path to the sensor as an<br>
-argument for IpmiSelAdd. <br>
-When you send external IPMI event/SEL add message, ipmi daemon doesn't<br>
-know how to handle it. Instead, intel-ipmi-oem, tries to parse the<br>
-event according to some rules and if it fails just adds this weird<br>
-&quot;OpenBMC.0.1.SELEntryAdded,2C0401300109FFFF&quot; to the redfish log, =
-saying<br>
-&quot;we got some ipmi event, but we don't know what is it&quot;.<br>
-<br>
-I extended sel-logger with AddExt method, to store any random SEL entry<br>
-to /var/log/ipmi_sel, but this patches are for our internal Intel-BMC<br>
-fork and not applied for upstream version.<br>
-It is on my roadmap to update patches and submit them. If there is<br>
-demand for this work, I can try to prioritize it.<br>
-<br>
-&gt; &nbsp;&nbsp;&nbsp;2. What does &quot;Get SDR 0004 command failed: Inva=
-lid data field in<br>
-&gt; request&quot; mean?<br>
-&gt; <br>
-&gt; Things to Note:&nbsp;<br>
-&gt; &nbsp;&nbsp;&nbsp;1. The version of OprnBMC codebase I used is 2.10-rc=
-1.<br>
-&gt; &nbsp;&nbsp;&nbsp;2. The image I built included &quot;intel-ipmi-oem&q=
-uot;, &quot;phosphor-logging&quot;,<br>
-&gt; &quot;phosphor-sel-logger&quot;, &quot;rsyslog&quot; and &quot;entity-=
-manager&quot;.<br>
-&gt; <br>
-&gt; Thank you.<br>
-&gt; <br>
-&gt; Regards,<br>
-&gt; Chris Chen&nbsp;<br>
-&gt; Legal Disclaimer :<br>
-&gt; The information contained in this message may be privileged and<br>
-&gt; confidential. <br>
-&gt; It is intended to be read only by the individual or entity to whom it<=
-br>
-&gt; is addressed <br>
-&gt; or by their designee. If the reader of this message is not the intende=
-d<br>
-&gt; recipient, <br>
-&gt; is strictly prohibited. If you have received this message in error, <b=
-r>
-&gt; please immediately notify the sender and delete or destroy any copy of=
-<br>
-&gt; this message!<br>
-<br>
--- <br>
-Best regards,<br>
-Andrei Kartashev<br>
-<br>
-<br>
-</div>
-</span></font></div>
-</div>
-</body>
-</html>
-
---_000_DM6PR08MB5514A718D900C61B7CCFBD7CDC8D9DM6PR08MB5514namp_--
+On 04/11/2021 06:22, Joel Stanley wrote:
+> On Wed, 3 Nov 2021 at 16:29, Oskar Senft <osk@google.com> wrote:
+>>
+>> Hi Joel
+>>
+>> There are a few commit that I sent upstream that have been accepted by
+>> the maintainers (i.e. have the appropriate "Reviewed-by" tags) that
+>> are waiting for 5.16 to open.
+>>
+>> I'm waiting for these patches to be available to be able to send a new
+>> meta-tyan directory to OpenBMC for review.
+>>
+>> Would it be possible to cherry-pick these commits into the OpenBMC
+>> Linux tree to speed up this process? Or is this something you
+>> generally prefer to not do?
+> 
+> Yes, this is exactly what the tree is for.
+> 
+>> Specific patches:
+>> https://lore.kernel.org/lkml/20211020164213.174597-1-osk@google.com/t/#m8f7ac85809049fadcabf6e0bed1ebab12e71f094
+> 
+> I've applied this one.
+> 
+>> https://lore.kernel.org/linux-arm-kernel/20210909004920.1634322-1-osk@google.com/
+> 
+> If you take a look at the dev-5.15 branch, you can see that this one
+> is already applied.
+> 
+>> There will also be an update to the DTS from the second patch once the
+>> driver change from the first patch has fully landed. Or should I
+>> better send that DTS change now and we'll take it into OpenBMC Linux
+>> together?
+> 
+> Send the dts change to the upstream lists. I'll review and put it
+> straight in the openbmc tree.
+> 
+> In general I encourage developers to send patches straight to the
+> upstream lists, and once they've had a review there send me a note to
+> backport them and I will do that as soon as possible.
+> 
+> Cheers,
+> 
+> Joel
+> 
