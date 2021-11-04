@@ -2,89 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F2FB44513D
-	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 10:36:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 89DA84456A9
+	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 16:57:42 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HlJRg2S3gz2yHC
-	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 20:36:15 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=izQZ6K6/;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=kAR//C+M;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HlSvm304nz2yn2
+	for <lists+openbmc@lfdr.de>; Fri,  5 Nov 2021 02:57:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=izQZ6K6/; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=kAR//C+M; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+X-Greylist: delayed 124 seconds by postgrey-1.36 at boromir;
+ Fri, 05 Nov 2021 02:57:23 AEDT
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HlJRF5tslz2xWt
- for <openbmc@lists.ozlabs.org>; Thu,  4 Nov 2021 20:35:53 +1100 (AEDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
- by mailout.nyi.internal (Postfix) with ESMTP id D697D5C0189;
- Thu,  4 Nov 2021 05:35:50 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute6.internal (MEProxy); Thu, 04 Nov 2021 05:35:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=ZRcXIy86o/grExussoPo3dK/31N
- VAM3c7wAqQpNZV0A=; b=izQZ6K6/XTPOVHSj/uy3xk+bqAadeNe9BNaWu+I05BJ
- umkClinJRe36HUfS9Ecxl6GD4ZTQoGYQlLqCUFSWvQgrEN2rUA5/XQ4rzopQSMei
- 2d8Nf4RnzC+u+4aGKa+NwAZfODqsG2nXz49fwyzKd2iizFSUgvBImLksnkjfbs1O
- ERI1VbM1xy0OTALDcPbcCLr1IudMz1oBtwbzpDpNfAZuK8S9W2ZO5aJdu5J+3uYa
- LJBAAOqTOnBCAOpkGJejjpW2ONmyzks1Eh2xwtur+c16kR3XFHSx2yvEzGSINF8S
- YRNNoBZN85hsuWZg5fj6hpf4Kv2+oWfbCw8Cnl2VdLA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=ZRcXIy
- 86o/grExussoPo3dK/31NVAM3c7wAqQpNZV0A=; b=kAR//C+MWKvXFc9+eEESmK
- H7DLLNpnDwap1HKaex9djlLy04p7qepYVu3xx9pajYvmiWybJE8aqHe3lsCQ/xoL
- UKZytI3e8tSJQaWbsQ6By2btyeWershIVBN4LlLu03vDORseN0ciHfk6FqUPd3/l
- 2LhHMByMno9h8jiCG3eHvim9G3X4ENbGEB2DFojTHxv3QNVRPB4s4S6/lAvvQho9
- uDrxX0E85LSaDk2XAoWH5esIb+IqQhd7N70Q2EkCf49UwW7M65kSBKzYt13fRj4Q
- D7ZtlL1a/3EyGiLoJkJaTr1k2oudCDmMTzUqtXKcszT+uWd0sA1GemZCI3ZkkNtQ
- ==
-X-ME-Sender: <xms:dqmDYThJkqJ4XldnwtepExqMnk23pvlDkeL-pvPtpv_LzIBdKpgncw>
- <xme:dqmDYQCZp_1MreXEXKgseDNrtSQUxFY71INTMUta1ipfN8d7S7xTeycSjZQ26q_79
- d8OQL5FmRP3rwCyTHU>
-X-ME-Received: <xmr:dqmDYTF9MpeWhQY3HC1GNFLnmmjca40OXSF7Jg8FylDXis_cP7rebu3Pov6nLHRqgfBFPJ_thlGGg2QZzM-kLIUizZWtnxlc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrtdeggddtudcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdejtddmnecujfgurhepfffhvf
- fukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhitghkucghihhllhhi
- rghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpe
- ekudeutdefiefhheefheefvdejueejieektdetheelvdfhleehkeegvdeiveekhfenucev
- lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitg
- hksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:dqmDYQTACOn9GUSD3XnbVpNRR3CFRfFCigQOOHVuDwB3fvoizdvTYg>
- <xmx:dqmDYQweMc1h_OF4wsdkOKRhXGavm-7fLUMBDgNm1quD30pGqancaw>
- <xmx:dqmDYW4v3xozZrKnnfBSznxCN2H0Xs0BMFimjaILk9GSkUj0WZDOhQ>
- <xmx:dqmDYWavpYjMq4TW-fOlQmFtEKMp52ZVytRxF0SUq0zcTT-H-NRqaQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Nov 2021 05:35:50 -0400 (EDT)
-Date: Thu, 4 Nov 2021 04:35:48 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Kun Zhao <zkxz@hotmail.com>
-Subject: Re: phosphor-logging Create API with Resolution
-Message-ID: <YYOpdFQkG+hymMPk@heinlein>
-References: <MW4PR14MB48034DC5EC5E1B30FCF58CE8DC8C9@MW4PR14MB4803.namprd14.prod.outlook.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HlSvR6lDCz2y8P;
+ Fri,  5 Nov 2021 02:57:23 +1100 (AEDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10157"; a="218927945"
+X-IronPort-AV: E=Sophos;i="5.87,209,1631602800"; d="scan'208";a="218927945"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Nov 2021 08:54:14 -0700
+X-IronPort-AV: E=Sophos;i="5.87,209,1631602800"; d="scan'208";a="468512031"
+Received: from yoojae-mobl.amr.corp.intel.com (HELO [10.209.121.122])
+ ([10.209.121.122])
+ by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Nov 2021 08:54:14 -0700
+Message-ID: <883dd517-7996-8c44-8cea-1c8838b367b6@linux.intel.com>
+Date: Thu, 4 Nov 2021 08:54:13 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="SYeWoM1tdSWlsGiF"
-Content-Disposition: inline
-In-Reply-To: <MW4PR14MB48034DC5EC5E1B30FCF58CE8DC8C9@MW4PR14MB4803.namprd14.prod.outlook.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Subject: Re: [PATCH] media: aspeed: use reset to replace clk off/on
+To: Jammy Huang <jammy_huang@aspeedtech.com>, eajames@linux.ibm.com,
+ mchehab@kernel.org, joel@jms.id.au, andrew@aj.id.au,
+ linux-media@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org
+References: <20211103054316.25272-1-jammy_huang@aspeedtech.com>
+Content-Language: en-US
+In-Reply-To: <20211103054316.25272-1-jammy_huang@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,63 +58,97 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Jammy,
 
---SYeWoM1tdSWlsGiF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 11/2/2021 10:43 PM, Jammy Huang wrote:
+> reset should be more proper than clk off/on to bring HW back to good
+> state.
+> 
+> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+> ---
+>   drivers/media/platform/aspeed-video.c | 22 +++++++++++++++++++---
+>   1 file changed, 19 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+> index fea5e4d0927e..10d182139809 100644
+> --- a/drivers/media/platform/aspeed-video.c
+> +++ b/drivers/media/platform/aspeed-video.c
+> @@ -23,6 +23,7 @@
+>   #include <linux/workqueue.h>
+>   #include <linux/debugfs.h>
+>   #include <linux/ktime.h>
+> +#include <linux/reset.h>
+>   #include <media/v4l2-ctrls.h>
+>   #include <media/v4l2-dev.h>
+>   #include <media/v4l2-device.h>
+> @@ -220,6 +221,7 @@ struct aspeed_video {
+>   	void __iomem *base;
+>   	struct clk *eclk;
+>   	struct clk *vclk;
+> +	struct reset_control *reset;
+>   
+>   	struct device *dev;
+>   	struct v4l2_ctrl_handler ctrl_handler;
+> @@ -554,6 +556,13 @@ static void aspeed_video_on(struct aspeed_video *video)
+>   	set_bit(VIDEO_CLOCKS_ON, &video->flags);
+>   }
+>   
+> +static void aspeed_video_reset(struct aspeed_video *v)
+> +{
+> +	reset_control_assert(v->reset);
+> +	udelay(100);
+> +	reset_control_deassert(v->reset);
+> +}
+> +
+>   static void aspeed_video_bufs_done(struct aspeed_video *video,
+>   				   enum vb2_buffer_state state)
+>   {
+> @@ -574,7 +583,9 @@ static void aspeed_video_irq_res_change(struct aspeed_video *video, ulong delay)
+>   	set_bit(VIDEO_RES_CHANGE, &video->flags);
+>   	clear_bit(VIDEO_FRAME_INPRG, &video->flags);
+>   
+> -	aspeed_video_off(video);
+> +	aspeed_video_write(video, VE_INTERRUPT_CTRL, 0);
+> +	aspeed_video_write(video, VE_INTERRUPT_STATUS, 0xffffffff);
+> +	aspeed_video_reset(video);
+>   	aspeed_video_bufs_done(video, VB2_BUF_STATE_ERROR);
+>   
+>   	schedule_delayed_work(&video->res_work, delay);
+> @@ -1507,8 +1518,7 @@ static void aspeed_video_stop_streaming(struct vb2_queue *q)
+>   		 * Need to force stop any DMA and try and get HW into a good
+>   		 * state for future calls to start streaming again.
+>   		 */
+> -		aspeed_video_off(video);
+> -		aspeed_video_on(video);
+> +		aspeed_video_reset(video);
 
-On Wed, Nov 03, 2021 at 11:53:17PM +0000, Kun Zhao wrote:
-> Hi Team,
->=20
-> We have a requirement to provide the value of Resolution property at the =
-time of log creation with phosphor-logging Create API. But current Create()=
- API doesn=E2=80=99t support Resolution as a parameter, we have to do two s=
-teps (create entry, set-property of Resolution of this entry) for it.
-> Any suggestions? Modify Create() API or add a new CreateWithResolution() =
-API?
+You can find the ECLK configuration in 'clk-aspeed.c' or in
+'clk-ast2600.c' that it's coupled with the video engine reset (SCU04[6]
+for AST2500 / SCU040[6] for AST2600). It means that if we call 
+clk_disable() and clk_enable() through aspeed_video_off() and
+aspeed_video_on(), the video engine reset will be implicitly asserted
+and de-asserted by the clock driver so the reset mechanism is already in
+the existing code.
 
-I suspect we're going to have other use-cases come up going forward where o=
-ther
-people want to fill in other properties, so having CreateWithNNN APIs sounds
-like it'll start having clutter.
+Thanks,
+Jae
 
-Can we enhance the handling of the AdditionalData field to take fully-quali=
-fied
-property names and place those in the appropriate property at create time,
-rather than placing them in AdditionalData?  What I mean by this is that if=
- you
-pass a key of "xyz.openbmc_project.Logging.Entry.Resolution" it will place =
-the
-value in the ...Entry.Resolution property at creation.  Any non-FQPN will s=
-tay
-in AdditionalData.
-
---=20
-Patrick Williams
-
---SYeWoM1tdSWlsGiF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmGDqXQACgkQqwNHzC0A
-wRlK1w/+MeEQL2thUZU9IZt0+IVv4n74i43sIL25iyXrsCdLWC88TNz+mjXYomiu
-TpFhL6pKiuNDaegef9t2BM1QYo8QIzWIr9ppOhX9c2j3RI9gV//Wz8XjXkfJ5Xoc
-eU8oNjLh5hw2/GljMIC24XDJ9NZCyqKyuAkUp9RXA+WrpzfKzZIQBRKmTubWlMpK
-D6KLgRNsijgLrf16qMml2UyOqevZiLrGdSlyJ+tf62moAjhoq2elrlgjQm0tXsWV
-bBc60ScpX8UHQsLcohVJCiO3ELhkR5ZDSkRy27jrxZCyDrnBpw0jYCubpLQL7Aa2
-vJmm8aO8aUecBPuZxLKkEcGfXHa8/pLIf7BEnqiSYcJS+rn93bfUn2stn8OY0yZk
-06tPTd0f0Pb9Z+5h05keS3u7ToMVDeyj7rMMxV2yeFNVAeNCvIZCKERrbxQtgKol
-biEP13K2BgCMoHtA8MPy7bafjTr6lSA12kOJLYs64Xck0tOza1OiUYc9sk+9yKFP
-C/h57F3PE+ggAiKHnzhEmBJLcCGE78O2R5OR7dOWSavqo3g9zwmg6OrXcmTvYDTu
-HWcZIWyUxoqExbkwR2zOxriBV5+bHd82+RLhFtAiOzstndEM803QolnpPAYxUt4p
-TVmVcJRVhysavwtlz9q4iCnItm1PthVz4AfVHpRwLTBPZ29K0kk=
-=e1+M
------END PGP SIGNATURE-----
-
---SYeWoM1tdSWlsGiF--
+>   		aspeed_video_init_regs(video);
+>   
+> @@ -1715,6 +1725,12 @@ static int aspeed_video_init(struct aspeed_video *video)
+>   		return rc;
+>   	}
+>   
+> +	video->reset = devm_reset_control_get(dev, NULL);
+> +	if (IS_ERR(video->reset)) {
+> +		dev_err(dev, "Unable to get reset\n");
+> +		return PTR_ERR(video->reset);
+> +	}
+> +
+>   	video->eclk = devm_clk_get(dev, "eclk");
+>   	if (IS_ERR(video->eclk)) {
+>   		dev_err(dev, "Unable to get ECLK\n");
+> 
