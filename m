@@ -1,52 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89DA84456A9
-	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 16:57:42 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AC38445AA4
+	for <lists+openbmc@lfdr.de>; Thu,  4 Nov 2021 20:39:50 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HlSvm304nz2yn2
-	for <lists+openbmc@lfdr.de>; Fri,  5 Nov 2021 02:57:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HlYr41ykVz2ymw
+	for <lists+openbmc@lfdr.de>; Fri,  5 Nov 2021 06:39:48 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=GbzbI/hL;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 124 seconds by postgrey-1.36 at boromir;
- Fri, 05 Nov 2021 02:57:23 AEDT
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2a00:1450:4864:20::134; helo=mail-lf1-x134.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=tanous-net.20210112.gappssmtp.com
+ header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=GbzbI/hL; dkim-atps=neutral
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com
+ [IPv6:2a00:1450:4864:20::134])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HlSvR6lDCz2y8P;
- Fri,  5 Nov 2021 02:57:23 +1100 (AEDT)
-X-IronPort-AV: E=McAfee;i="6200,9189,10157"; a="218927945"
-X-IronPort-AV: E=Sophos;i="5.87,209,1631602800"; d="scan'208";a="218927945"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2021 08:54:14 -0700
-X-IronPort-AV: E=Sophos;i="5.87,209,1631602800"; d="scan'208";a="468512031"
-Received: from yoojae-mobl.amr.corp.intel.com (HELO [10.209.121.122])
- ([10.209.121.122])
- by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2021 08:54:14 -0700
-Message-ID: <883dd517-7996-8c44-8cea-1c8838b367b6@linux.intel.com>
-Date: Thu, 4 Nov 2021 08:54:13 -0700
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HlYqd50Wpz2xrx
+ for <openbmc@lists.ozlabs.org>; Fri,  5 Nov 2021 06:39:23 +1100 (AEDT)
+Received: by mail-lf1-x134.google.com with SMTP id u11so14186435lfs.1
+ for <openbmc@lists.ozlabs.org>; Thu, 04 Nov 2021 12:39:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=5g1CxnQoQOUYWTM4p3PJiTg5VCTZ7GuCSaUMNTxDVZ4=;
+ b=GbzbI/hLU8UYO8fRCNWt6LN2v7TiAMxtMoUQZDd9MWhpiXFFZk/jqMlCVNxzwcfS7j
+ KuKQHI37rIma3TAz3633pqVbtvnV486rPC9PxuU3uxnwIHC+50FI/EfCBtKAhKAh2Qyx
+ 2SodpCYji90/9OKtZgVPY9XSmkq9ymP3GyJBA67Cv47nyN6kvokORrxiMZdRI8HhcpL7
+ A+C9YT+2Vf1Qc63FhDwtS+4M3P/uxWKdr9clHjXtDhMuTps8c6lI8MOwAR+KHcgBx897
+ cCRXYseZmydX1lH0ZVNCwrm4linhzLNQi0DBb1qKh6r0eJormyybRDO1xNiysk6R9wT1
+ H4Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=5g1CxnQoQOUYWTM4p3PJiTg5VCTZ7GuCSaUMNTxDVZ4=;
+ b=xi3kJHoiZ7T9Zv8J9U3mMKKZ8yvHpi/yx0anEkCG+VACMGxiDFnoSpCJ3Uy3OI58Cw
+ 7cOnrzkO0xfUK5DSJ1C0CO09dsyPG0hzh7I/xAWyqKVyYJhcgW+QmNOrGkdhgv2cnG8K
+ gbbMhSZfskbCMA78yYDoFX4iPyjZ4sEMa49t9SlGJdrrenfVwHSV8Ovrq1cNGoWMEJO+
+ tMUoKq9cgHGdCxMxBMZ4A4Zow7kxVxkUJY/yPmHBWkHeFeuTyv4NlP7x9sGuV/5D601Y
+ Zq77/cKHI84duRX3PmQkZW6O7dGkqV1Znj2LGbzHGNYgBgtgQP1iSfhpum/+6HRT9r4s
+ ftnQ==
+X-Gm-Message-State: AOAM532q7PLKLOgPPzMyQPbrlxn50TLxq8CJ/fgklZ7r7F3tiE9tQPrn
+ 17QASqCSQhu8EKMTPm1j0cqSTYxLYjajrPEeiNiTgA==
+X-Google-Smtp-Source: ABdhPJyJTaFJ57i1FpHiFibpG/vp4lY4hs64d25r0I7e15N46EGL+uf664av9opklGXkeO6tJHucnJ6e6aiEMHaEGxE=
+X-Received: by 2002:a05:6512:1189:: with SMTP id
+ g9mr12455708lfr.482.1636054756690; 
+ Thu, 04 Nov 2021 12:39:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Subject: Re: [PATCH] media: aspeed: use reset to replace clk off/on
-To: Jammy Huang <jammy_huang@aspeedtech.com>, eajames@linux.ibm.com,
- mchehab@kernel.org, joel@jms.id.au, andrew@aj.id.au,
- linux-media@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org
-References: <20211103054316.25272-1-jammy_huang@aspeedtech.com>
-Content-Language: en-US
-In-Reply-To: <20211103054316.25272-1-jammy_huang@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <HK0PR03MB3089CFCA31102DE7BB551413F5BE9@HK0PR03MB3089.apcprd03.prod.outlook.com>
+ <b71bb325-cf41-deab-5422-11520f85cc55@linux.ibm.com>
+ <YXBPMNi5yzzEtE/R@heinlein>
+In-Reply-To: <YXBPMNi5yzzEtE/R@heinlein>
+From: Ed Tanous <ed@tanous.net>
+Date: Thu, 4 Nov 2021 12:39:05 -0700
+Message-ID: <CACWQX83=F77Rh=oGJWRd9SkhqFoik-duLGJdVpaU2E+SBgWXQQ@mail.gmail.com>
+Subject: Re: [phosphor-logging] About the "Stop emitting Entry propChanged
+ before ifacesAdded" change reason
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,97 +79,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Matt Spinler <mspinler@linux.ibm.com>, CS20 CHMa0 <chma0@nuvoton.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jammy,
+On Wed, Oct 20, 2021 at 10:18 AM Patrick Williams <patrick@stwcx.xyz> wrote:
+>
+> On Wed, Oct 20, 2021 at 10:13:06AM -0500, Matt Spinler wrote:
+> > values, and then explicitly emits the IA signal.   Others can chime in,
+> > but I didn't see it as proper D-Bus behavior to emit propertiesChanged
+> > before InterfacesAdded, since in fact no property is changing after the
+> > interface was added.
+>
+> Correct.  PropertiesChanged signals should not show up before InterfacesAdded.
 
-On 11/2/2021 10:43 PM, Jammy Huang wrote:
-> reset should be more proper than clk off/on to bring HW back to good
-> state.
-> 
-> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-> ---
->   drivers/media/platform/aspeed-video.c | 22 +++++++++++++++++++---
->   1 file changed, 19 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-> index fea5e4d0927e..10d182139809 100644
-> --- a/drivers/media/platform/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed-video.c
-> @@ -23,6 +23,7 @@
->   #include <linux/workqueue.h>
->   #include <linux/debugfs.h>
->   #include <linux/ktime.h>
-> +#include <linux/reset.h>
->   #include <media/v4l2-ctrls.h>
->   #include <media/v4l2-dev.h>
->   #include <media/v4l2-device.h>
-> @@ -220,6 +221,7 @@ struct aspeed_video {
->   	void __iomem *base;
->   	struct clk *eclk;
->   	struct clk *vclk;
-> +	struct reset_control *reset;
->   
->   	struct device *dev;
->   	struct v4l2_ctrl_handler ctrl_handler;
-> @@ -554,6 +556,13 @@ static void aspeed_video_on(struct aspeed_video *video)
->   	set_bit(VIDEO_CLOCKS_ON, &video->flags);
->   }
->   
-> +static void aspeed_video_reset(struct aspeed_video *v)
-> +{
-> +	reset_control_assert(v->reset);
-> +	udelay(100);
-> +	reset_control_deassert(v->reset);
-> +}
-> +
->   static void aspeed_video_bufs_done(struct aspeed_video *video,
->   				   enum vb2_buffer_state state)
->   {
-> @@ -574,7 +583,9 @@ static void aspeed_video_irq_res_change(struct aspeed_video *video, ulong delay)
->   	set_bit(VIDEO_RES_CHANGE, &video->flags);
->   	clear_bit(VIDEO_FRAME_INPRG, &video->flags);
->   
-> -	aspeed_video_off(video);
-> +	aspeed_video_write(video, VE_INTERRUPT_CTRL, 0);
-> +	aspeed_video_write(video, VE_INTERRUPT_STATUS, 0xffffffff);
-> +	aspeed_video_reset(video);
->   	aspeed_video_bufs_done(video, VB2_BUF_STATE_ERROR);
->   
->   	schedule_delayed_work(&video->res_work, delay);
-> @@ -1507,8 +1518,7 @@ static void aspeed_video_stop_streaming(struct vb2_queue *q)
->   		 * Need to force stop any DMA and try and get HW into a good
->   		 * state for future calls to start streaming again.
->   		 */
-> -		aspeed_video_off(video);
-> -		aspeed_video_on(video);
-> +		aspeed_video_reset(video);
+But they should still show up eventually (after the InterfacesAdded),
+right?  The patchset here seems to be under the impression that
+PropertyChanged is never emitted when the object is added, which seems
+incorrect, or at the very least is a breaking behavioral change.
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/48231
 
-You can find the ECLK configuration in 'clk-aspeed.c' or in
-'clk-ast2600.c' that it's coupled with the video engine reset (SCU04[6]
-for AST2500 / SCU040[6] for AST2600). It means that if we call 
-clk_disable() and clk_enable() through aspeed_video_off() and
-aspeed_video_on(), the video engine reset will be implicitly asserted
-and de-asserted by the clock driver so the reset mechanism is already in
-the existing code.
-
-Thanks,
-Jae
-
->   		aspeed_video_init_regs(video);
->   
-> @@ -1715,6 +1725,12 @@ static int aspeed_video_init(struct aspeed_video *video)
->   		return rc;
->   	}
->   
-> +	video->reset = devm_reset_control_get(dev, NULL);
-> +	if (IS_ERR(video->reset)) {
-> +		dev_err(dev, "Unable to get reset\n");
-> +		return PTR_ERR(video->reset);
-> +	}
-> +
->   	video->eclk = devm_clk_get(dev, "eclk");
->   	if (IS_ERR(video->eclk)) {
->   		dev_err(dev, "Unable to get ECLK\n");
-> 
+>
+> > It seems like every application does their own thing here, so maybe we
+> > can come up with some official best practices for how to emit signals
+> > for new interfaces (unless it's there and I missed it).
+>
+> I'll admit the sdbusplus API is not great for this and a lot of applications do
+> it wrong.  There was this issue on the backlog to come up with something
+> "better": https://github.com/openbmc/sdbusplus/issues/53
+>
+> --
+> Patrick Williams
