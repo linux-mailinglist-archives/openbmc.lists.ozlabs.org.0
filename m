@@ -1,78 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E8A244B1AD
-	for <lists+openbmc@lfdr.de>; Tue,  9 Nov 2021 18:03:13 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB4E044B228
+	for <lists+openbmc@lfdr.de>; Tue,  9 Nov 2021 18:48:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HpZ726Zbfz2yg1
-	for <lists+openbmc@lfdr.de>; Wed, 10 Nov 2021 04:03:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hpb754dVBz2yR8
+	for <lists+openbmc@lfdr.de>; Wed, 10 Nov 2021 04:48:17 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=TaZ3qLpc;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=RYlb+YD1;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=U3HieIqv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::235;
- helo=mail-oi1-x235.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=TaZ3qLpc; dkim-atps=neutral
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com
- [IPv6:2607:f8b0:4864:20::235])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=RYlb+YD1; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=U3HieIqv; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HpZ6f1Gs1z2x9K
- for <openbmc@lists.ozlabs.org>; Wed, 10 Nov 2021 04:02:49 +1100 (AEDT)
-Received: by mail-oi1-x235.google.com with SMTP id t19so4545991oij.1
- for <openbmc@lists.ozlabs.org>; Tue, 09 Nov 2021 09:02:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=D8J+ocqO/uMCt+4wTQBc9NZ05W6TlpMzPSTaACETsEE=;
- b=TaZ3qLpczRva/rDlYUCqzzITA+OSfxMU2eunwLKaa/FQiVeZNmdysPUNLdBrsXsX9W
- e2TDtFLp+AlWMcbOO4spR57crmRY+5IO6wGfXfMrS7MeSGaVhv+ZUlQo4Hxzhz1bAP8q
- ctDnHwO6/R9IsJ3xzZtT31/hnnLlq/fdA4azqRYSQsnJ/xwl8rWJWHV30IATo/HR3X3g
- TmMN9i3P+0aH6ueBVIpytMRpCrvqrzA1b29qvG7uxD+ZDjVsX7sVomNqqz5t9taBl+Re
- QoMj1+ajlXBy8Xsq8j6S3RBfQu4BRufDmQahMK0vOhO7Ms36PmuBFDp6v8qxO3h1pJhO
- FnGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=D8J+ocqO/uMCt+4wTQBc9NZ05W6TlpMzPSTaACETsEE=;
- b=AzOaUfyyRXkoyAuf+x+E1sUtTWlmughvJkbDg3/SDNmXi4z5XWkkVes/eroVUg9gMu
- sMsiaWFVfais3FKwkvLyPbaZzOGXqujD0PPnnsNiPIjApQ4uAN57Bvq1W1/hN3Bx4TSX
- +LPvsyYN82S0tgZcpwqJpT/L254ZpfmGCSuiF2ycAupyDfuZN1nF0jdhaDWUBGdZnFGs
- /IIhlR74a2nZ6u857ozb6fEw+HHSdw2qCkrUKGSN71Zrql6tIJegW2BHmN5ODDpWhvng
- qeLWEjV/6K3XE/4sPCTohL666lCWhQz6nF7ZmWmWOLC0r7YxSdK/95zk69Y2SD4HXZwC
- rCDQ==
-X-Gm-Message-State: AOAM532ocBQLxKl1+nr2lfyl41RKo7DzP4CyIg72HWxLzFuNjgSCx/bw
- E7K9Bbxq6wB1rrG0xDPinl1LO+fj/OI=
-X-Google-Smtp-Source: ABdhPJylAwqSdUsEdQU3S5lv5xfOXt6hCTy87vV8LLKRwLSd4kvhoEx/DQBpih6wDUsl5LAieCj8mg==
-X-Received: by 2002:a05:6808:6ce:: with SMTP id
- m14mr6816746oih.134.1636477365918; 
- Tue, 09 Nov 2021 09:02:45 -0800 (PST)
-Received: from smtpclient.apple ([2600:1700:19e0:3310:7856:1a5c:bf88:e43e])
- by smtp.gmail.com with ESMTPSA id t62sm7562606oib.56.2021.11.09.09.02.45
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 09 Nov 2021 09:02:45 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: [External]  Re: Add member into Lenovo designated employees list
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <TYZPR03MB607810A7EB928481CAEF3FB5B6929@TYZPR03MB6078.apcprd03.prod.outlook.com>
-Date: Tue, 9 Nov 2021 11:02:44 -0600
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <EA446CA1-7476-4BFF-9B6B-6A7FD04E73F1@gmail.com>
-References: <SL2PR03MB41392EC887269BEBAF453E96B67C9@SL2PR03MB4139.apcprd03.prod.outlook.com>
- <9D88EA1B-4409-4BD8-A341-EAAC8FF0007A@gmail.com>
- <TYZPR03MB607810A7EB928481CAEF3FB5B6929@TYZPR03MB6078.apcprd03.prod.outlook.com>
-To: Duke KH Du <dukh@lenovo.com>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hpb6d2zZkz2xXW
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Nov 2021 04:47:52 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 1090A5C00FE;
+ Tue,  9 Nov 2021 12:47:48 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Tue, 09 Nov 2021 12:47:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=+u3yrGsEuvzhUUWBBZ+qPyt/YXA
+ +PK/bhcjPj0f/wfA=; b=RYlb+YD1z8KUu43jlcafVkvT/zA+jr+pQ6Yhaqyliv0
+ O2KMM31IdmTeq1LcVoMRwn1wpsi6v1EmIiczImli4KZIg9qOqWgS5d2b22kyCQSl
+ Gys8M8pGL4ixl/b9InoCBvTbpGrWtjmGjIJ9EPEOkns6mWJSjQhl5jaTWQWhdRSg
+ 6z+TdNEXQJC1vx7py8PPX80E3SXQ4PH2NjeZX5zmBaMymk/xvv/4oUm9+tZv9Gir
+ pQGG9G3UzLr52RuRJF23iXZZa1hoVhnrXBl4K0YW9kW6oJm2kJG1/5Y2FYzspLpy
+ s2yBx7lhGJVzCm1Tl6ZQO2jptX5kcqfsrpGofm0WilQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+u3yrG
+ sEuvzhUUWBBZ+qPyt/YXA+PK/bhcjPj0f/wfA=; b=U3HieIqv9af4Z3cp6/+tus
+ JjY2Hf6FEI7EcYaRRnCChxASiDWxMBbbHw/37JK0hzb/Mr3PaR3dGsk+exQBpNrn
+ sLKG9PIFU81tR3vfXr8Cq/WEVxy12CfUziQrcaCwLP4r5icT+F2WZFD0Su5jZFuw
+ ID417flcwfdUz1G108tS/ivoAj3s301Tx7+lrEJnIf+H5vx/9ygDsI29ZseJXRya
+ feLeUlc5/k0VcCHAQr3PnFhRQ2ChqPrj3rfPIi8TnDvgV9x3+o9KT/pWK2H+pSSd
+ TLiriOHbtlCeLdYyLLZGAusfdfN9munfXrnPRTwa0wKezBdXC8V/+ooSIfXm9P3A
+ ==
+X-ME-Sender: <xms:Q7SKYRzCSHL7Uc59Aqhl3v08m7Dq5agb3tZIg-SHC9SfqzNVMguPYQ>
+ <xme:Q7SKYRTqJYmyHKMJb8pZnsT2aOqFFT93Qfj6J6tBWbosUpHavXd00-TTI9iavpK0n
+ KRXaORD_CBO9Gg4d_k>
+X-ME-Received: <xmr:Q7SKYbX6Qo-0Z_xJbu5mMwRMznhCjHwVjfLTSUemIeFXCmvuAj3qY2woYOdX3ChEoKc1qWA5IUtoHZGQM74cHanuN-xrmA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudeggddutdefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpeffhf
+ fvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
+ ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
+ epgeehheefffegkeevhedthffgudfhgeefgfdthefhkedtleffveekgfeuffehtdeinecu
+ vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrih
+ gtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:Q7SKYTjJgoZILce-Ilq2gVBAjNdA-j12K_7_LpQHtEdehZPs6XfPNg>
+ <xmx:Q7SKYTDBWxLqeopK0R8cQAIUOk6v_rXsYKk9Gu8n6cZ97wX6Z6SWYA>
+ <xmx:Q7SKYcL9yHkeLQrwQPN-wn2_84www43hyQX98hbs4xB8E5mJwkgz0A>
+ <xmx:RLSKYWrZzuBkAgdPRuVeghyJ4Y1icp4mYYsXi84WV8boji5hWS5jwQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Nov 2021 12:47:47 -0500 (EST)
+Date: Tue, 9 Nov 2021 11:47:46 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: tandehui <dehuitan1988@hotmail.com>
+Subject: Re: ARM aarch64 confuse
+Message-ID: <YYq0QvdarGn3TG5/@heinlein>
+References: <ME3PR01MB808110CCBC2434149E0265F8C9929@ME3PR01MB8081.ausprd01.prod.outlook.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="pEFuI1ciu3SQw+Av"
+Content-Disposition: inline
+In-Reply-To: <ME3PR01MB808110CCBC2434149E0265F8C9929@ME3PR01MB8081.ausprd01.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,67 +96,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-> On Nov 9, 2021, at 1:52 AM, Duke KH Du <dukh@lenovo.com> wrote:
->=20
-> Hi Andrew,
->=20
-> Could you help to add AndrewPeng (pengms1@lenovo.com) for gerrit owner =
-(lenovo/ci-authorized-owners)?
+--pEFuI1ciu3SQw+Av
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sure, done
+On Tue, Nov 09, 2021 at 03:53:20PM +0800, tandehui wrote:
+=20
+> So does OpenBMC support 64-bit processors? If yes, what special=20
+> attention should be paid to it?
 
-> Thanks.
->=20
-> BR<
-> Duke
-> -----Original Message-----
-> From: Andrew Geissler <geissonator@gmail.com>=20
-> Sent: Wednesday, March 31, 2021 6:19 AM
-> To: Duke KH Du <dukh@lenovo.com>
-> Cc: openbmc@lists.ozlabs.org
-> Subject: [External] Re: Add member into Lenovo designated employees =
-list
->=20
->=20
->=20
->> On Mar 31, 2021, at 2:14 AM, Duke KH Du <dukh@lenovo.com> wrote:
->>=20
->> Hi Master,
->>=20
->> I would like to add our new member in Lenovo designated employees =
-list=20
->> as below=EF=BC=9F
->> Could you help on it?
->=20
-> Hey Duke, I noticed Lenovo was not added to the script used by jenkins =
-to validate groups so I put up a commit here for that:
-> =
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/41738=
+I believe the latest Nuvoton chips are already aarch64.  In theory, our code
+should be fairly 32/64-bit agnostic.  There have been a few bugs where the =
+code
+made 32-bit assumptions, especially around serializing data to/from files.
+There could certainly be more.
 
->=20
-> Currently the Lenovo gerrit group only has one person in it:
-> =
-https://gerrit.openbmc-project.xyz/admin/groups/b009effba2bf2e62802e74d749=
-db360d52c2a245,members
->=20
-> And no one is approved to add people currently:
-> =
-https://gerrit.openbmc-project.xyz/admin/groups/9f33fac15a90496c21b873f5f9=
-918af1a633a47b,members=20
->=20
-> Could you recommend someone with a gerrit account that we can add to =
-be in charge of adding new developers from your company to this group?
->=20
-> It does look like ritzenyang needs to be added to the Lenovo CLA =
-though before he can contribute code?
->=20
->> Thanks.
->>=20
->> ritzenyang  ryang14@lenovo.com
->=20
+> I am running openbmc on a ARM aarch64 cpu. I'm experiencing=20
+> some webui-related issues that seem to be related to 64-bit processors.
 
+The webui executes on browser (it is all javascript) and shouldn't care what
+kind of processor is exposing the REST/Redfish APIs.  Can you elaborate on =
+what
+kind of problems you are seeing?  It is certainly possible that there are b=
+ugs
+in the Redfish APIs themselves (see above), but it is hard to know without =
+some
+more details on what you mean by "some webui-related issues"...
+
+--=20
+Patrick Williams
+
+--pEFuI1ciu3SQw+Av
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmGKtEAACgkQqwNHzC0A
+wRmJGxAAoBH9mBPZDeatUHox5UOtZDent99r8K4Uao6dE6p7ydkYZFxyIISdQSJ/
+sZ0bXX7vpIsEgmha5aWE9H8DWHO/hrljZr8gERKg5UJTifM8AwVVvkl1+XVD/6Us
+0fLWWn4495m8CVBbPsBkHTVkPZEQA3NGiy2FKrBd2K+92vqLaVTKM0On3atZXi41
+cx0yFZP8wxhK36rpOfDxabYuTjwHuinVPOJd55LC98nItje7fT3ZI3ebZjtl4fhu
+IGPQz1mQ4m5KpJML/Kg9NDmnfm61Jowj6QI6rPn34WFZg0F0e9+aT+LGf36gidJe
+31zvBrgnhIXS/h/Fo6Uv3mACVMFXiVhMZLS4fpVGdyUKVmFuXw5X+C9mh0V38oBp
+rKcFX+eZHatKoU2zRtU6wW9CPQvYrhIx3REkttxnAiHKdat4wIidO+kQZv9HZpBl
+R5RPYQhTvqg/rkL2xgy14intlpY25yY2HkYqD6Mvz8jJr/v3Bh6DuCVwM51IVCII
+J+si1Btpp4mIJUDihYyyb8pyNhJ81ha/WGCMsjvMywoYTQbOwJaNl6EQOmEn2taB
+TEf8HAYHZkbFVV+vjCxV3LNB8wFujz/AbuE30VfWSI62GsU+tTl6MGPhV6RsVRDx
+/5u2Q7ugRVi2rhfG0DOMiZZvCGftBumDNmi2tBnaZ5icE3+lct8=
+=xNkC
+-----END PGP SIGNATURE-----
+
+--pEFuI1ciu3SQw+Av--
