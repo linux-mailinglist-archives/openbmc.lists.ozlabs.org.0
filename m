@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E301C44A164
-	for <lists+openbmc@lfdr.de>; Tue,  9 Nov 2021 02:07:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 304B444A463
+	for <lists+openbmc@lfdr.de>; Tue,  9 Nov 2021 02:58:09 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hp8vr5rK5z2yg6
-	for <lists+openbmc@lfdr.de>; Tue,  9 Nov 2021 12:07:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HpB2l0dZ9z2ywT
+	for <lists+openbmc@lfdr.de>; Tue,  9 Nov 2021 12:58:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,45 +17,40 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hp8vZ3MYNz2xtN;
- Tue,  9 Nov 2021 12:06:48 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HpB2R2N11z2xgb;
+ Tue,  9 Nov 2021 12:57:47 +1100 (AEDT)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 1A90gj1h050854;
- Tue, 9 Nov 2021 08:42:45 +0800 (GMT-8)
+ by twspam01.aspeedtech.com with ESMTP id 1A91XTXD055297;
+ Tue, 9 Nov 2021 09:33:29 +0800 (GMT-8)
  (envelope-from jammy_huang@aspeedtech.com)
 Received: from [192.168.2.115] (192.168.2.115) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 9 Nov
- 2021 09:05:59 +0800
-Message-ID: <acff05a4-38a5-4765-c6ff-011a58caf260@aspeedtech.com>
-Date: Tue, 9 Nov 2021 09:05:59 +0800
+ 2021 09:56:43 +0800
+Message-ID: <7d6ced4a-fea1-1163-40cb-65b4ea929a51@aspeedtech.com>
+Date: Tue, 9 Nov 2021 09:56:44 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.0
-Subject: Re: [PATCH] media: aspeed: use reset to replace clk off/on
+Subject: Re: [PATCH v3 5/7] media: aspeed: Support aspeed mode to reduce
+ compressed data
 Content-Language: en-US
-To: Hans Verkuil <hverkuil@xs4all.nl>, Jae Hyun Yoo
- <jae.hyun.yoo@linux.intel.com>, "eajames@linux.ibm.com"
- <eajames@linux.ibm.com>, "mchehab@kernel.org" <mchehab@kernel.org>,
- "joel@jms.id.au" <joel@jms.id.au>, "andrew@aj.id.au" <andrew@aj.id.au>,
- "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
- <linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
- <linux-kernel@vger.kernel.org>
-References: <20211103054316.25272-1-jammy_huang@aspeedtech.com>
- <883dd517-7996-8c44-8cea-1c8838b367b6@linux.intel.com>
- <HK0PR06MB272258A4BA760E70CF609888F18E9@HK0PR06MB2722.apcprd06.prod.outlook.com>
- <398d37a5-509f-b78b-360b-990d256bde63@xs4all.nl>
+To: Hans Verkuil <hverkuil@xs4all.nl>, <eajames@linux.ibm.com>,
+ <mchehab@kernel.org>, <joel@jms.id.au>, <andrew@aj.id.au>,
+ <linux-media@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+ <linux-arm-kernel@lists.infradead.org>,
+ <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
+References: <20211022065539.12392-1-jammy_huang@aspeedtech.com>
+ <20211022065539.12392-6-jammy_huang@aspeedtech.com>
+ <75ea5824-e241-6548-bdc2-7ac9ec6346b6@xs4all.nl>
 From: Jammy Huang <jammy_huang@aspeedtech.com>
-In-Reply-To: <398d37a5-509f-b78b-360b-990d256bde63@xs4all.nl>
+In-Reply-To: <75ea5824-e241-6548-bdc2-7ac9ec6346b6@xs4all.nl>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [192.168.2.115]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 1A90gj1h050854
+X-MAIL: twspam01.aspeedtech.com 1A91XTXD055297
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,124 +67,495 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Dear Hans,
 
-On 2021/11/8 下午 04:53, Hans Verkuil wrote:
-> Hi Jammy,
->
-> On 05/11/2021 02:27, Jammy Huang wrote:
->> Hi Jae,
+Thanks for your review.
+
+On 2021/11/8 下午 05:09, Hans Verkuil wrote:
+> On 22/10/2021 08:55, Jammy Huang wrote:
+>> aspeed supports differential jpeg format which only compress the parts
+>> which are changed. In this way, it reduces both the amount of data to be
+>> transferred by network and those to be decoded on the client side.
 >>
->> OK, I found it.
->> Thanks for your help.
-> So just so I understand this correctly: this patch can be dropped, right?
+>> 4 new ctrls are added:
+>> * Aspeed JPEG Format: to control aspeed's partial jpeg on/off
+>>    0: standard jpeg, 1: aspeed jpeg
+> What exactly is 'aspeed jpeg'?
+
+'aspeed jpeg' is aspeed proprietary compression format. It will compare 
+the new frame
+with previous one to decide which macroblock's data is changed, and only 
+the changed
+macroblock will be compressed. In this way, the amount of compressed data is
+significantly reduced. This is similar to the concept of I/P-frames of 
+video compression.
+
+For example, the video is static in first 3 frames and then a object in 
+the video moved in
+4th frame.
+
+         Frame Content      |    Standard    |    Aspeed
+-----------------------------------------------------------------------
+1th                                 |    Full             | Full
+2th    identical with 1st   |    Full             |   none (only about 
+12 Bytes for header data)
+3th    identical with 1st   |    Full             |   none
+4th    a object moved     |    Full             |   Only the Macroblocks 
+that have data changed are compressed
+
+I have implemented a javascript aspeed decoder in novnc to support this 
+format, but
+the performance isn't good enough. I am working on a web-assembly to 
+improve it.
+
+>> * Aspeed Compression Mode: to control aspeed's compression mode
+>>    0: DCT Only, 1: DCT VQ mix 2-color, 2: DCT VQ mix 4-color
+>>    This is AST2400 only. It will adapt JPEG or VQ encoding method according
+>>    to the context automatically.
+> What exactly does this do?
+>
+> Is this very aspeed-specific, or could this be a standard JPEG control?
+Yes, this is aspeed-specific. Its compression algorithm is a modified 
+JPEG algorithm.
+>
+>> * Aspeed HQ Mode: to control aspeed's HQ mode on/off
+>>    0: disabled, 1: enabled
+>> * Aspeed HQ Quality: to control the quality of aspeed's HQ mode
+>>    only useful if Aspeed HQ mode is enabled
+> Can these two controls be replaced by the existing V4L2_CID_JPEG_COMPRESSION_QUALITY
+> control? I.e.: range 1..12 is non-HQ, 13-24 is HQ. Note that the spec recommends
+> that value 0 is not used in the V4L2_CID_JPEG_COMPRESSION_QUALITY range:
+>
+> https://hverkuil.home.xs4all.nl/spec/userspace-api/v4l/ext-ctrls-jpeg.html
+HQ mode is aspeed-specific and not related to stanard jpeg's compression 
+quality. These two
+quality attribute can be controlled independently. So, I think it is not 
+proper to integrate them
+together.
+
+Noted, I will modified the min value of these 2 quality control.
+
+>
+>> Aspeed JPEG Format requires an additional buffer, called bcd, to store
+>> the information about which macro block in the new frame is different
+>> from the previous one.
+>>
+>> To have bcd correctly working, we need to swap the buffers for src0/1 to
+>> make src1 refer to previous frame and src0 to the coming new frame.
+>>
+>> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+>> ---
+>>   drivers/media/platform/aspeed-video.c | 222 +++++++++++++++++++++++---
+>>   1 file changed, 203 insertions(+), 19 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+>> index cafbffe1ef69..94d17dee6f3d 100644
+>> --- a/drivers/media/platform/aspeed-video.c
+>> +++ b/drivers/media/platform/aspeed-video.c
+>> @@ -32,6 +32,12 @@
+>>   #include <media/videobuf2-dma-contig.h>
+>>   #include <linux/videodev2.h>
+>>   
+>> +#define ASPEED_CID_CUSTOM_BASE			(V4L2_CID_USER_BASE | 0xf000)
+> Driver-specific control ID ranges must be reserved in include/uapi/linux/v4l2-controls.h.
+> See e.g. V4L2_CID_USER_ALLEGRO_BASE.
+OKay, I will update in the next patch.
 >
 > Regards,
 >
 > 	Hans
-
-Yes, aspeed clk driver will reset the related engine at clk-enabled.
-
-Thus, this modification isn't necessary.
-
->> Regards,
->> Jammy Huang
+>
+>> +#define V4L2_CID_ASPEED_FORMAT			(ASPEED_CID_CUSTOM_BASE  + 1)
+>> +#define V4L2_CID_ASPEED_COMPRESSION_MODE	(ASPEED_CID_CUSTOM_BASE  + 2)
+>> +#define V4L2_CID_ASPEED_HQ_MODE			(ASPEED_CID_CUSTOM_BASE  + 3)
+>> +#define V4L2_CID_ASPEED_HQ_JPEG_QUALITY		(ASPEED_CID_CUSTOM_BASE  + 4)
+>> +
+>>   #define DEVICE_NAME			"aspeed-video"
+>>   
+>>   #define ASPEED_VIDEO_JPEG_NUM_QUALITIES	12
+>> @@ -55,6 +61,7 @@
+>>   
+>>   #define VE_MAX_SRC_BUFFER_SIZE		0x8ca000 /* 1920 * 1200, 32bpp */
+>>   #define VE_JPEG_HEADER_SIZE		0x006000 /* 512 * 12 * 4 */
+>> +#define VE_BCD_BUFF_SIZE		0x100000
+>>   
+>>   #define VE_PROTECTION_KEY		0x000
+>>   #define  VE_PROTECTION_KEY_UNLOCK	0x1a038aa8
+>> @@ -108,6 +115,13 @@
+>>   #define VE_SCALING_FILTER2		0x020
+>>   #define VE_SCALING_FILTER3		0x024
+>>   
+>> +#define VE_BCD_CTRL			0x02C
+>> +#define  VE_BCD_CTRL_EN_BCD		BIT(0)
+>> +#define  VE_BCD_CTRL_EN_ABCD		BIT(1)
+>> +#define  VE_BCD_CTRL_EN_CB		BIT(2)
+>> +#define  VE_BCD_CTRL_THR		GENMASK(23, 16)
+>> +#define  VE_BCD_CTRL_ABCD_THR		GENMASK(31, 24)
+>> +
+>>   #define VE_CAP_WINDOW			0x030
+>>   #define VE_COMP_WINDOW			0x034
+>>   #define VE_COMP_PROC_OFFSET		0x038
+>> @@ -116,6 +130,7 @@
+>>   #define VE_SRC0_ADDR			0x044
+>>   #define VE_SRC_SCANLINE_OFFSET		0x048
+>>   #define VE_SRC1_ADDR			0x04c
+>> +#define VE_BCD_ADDR			0x050
+>>   #define VE_COMP_ADDR			0x054
+>>   
+>>   #define VE_STREAM_BUF_SIZE		0x058
+>> @@ -136,6 +151,8 @@
+>>   #define  VE_COMP_CTRL_HQ_DCT_CHR	GENMASK(26, 22)
+>>   #define  VE_COMP_CTRL_HQ_DCT_LUM	GENMASK(31, 27)
+>>   
+>> +#define VE_CB_ADDR			0x06C
+>> +
+>>   #define VE_OFFSET_COMP_STREAM		0x078
+>>   
+>>   #define VE_JPEG_COMP_SIZE_READ_BACK	0x084
+>> @@ -243,10 +260,15 @@ struct aspeed_video {
+>>   	unsigned int max_compressed_size;
+>>   	struct aspeed_video_addr srcs[2];
+>>   	struct aspeed_video_addr jpeg;
+>> +	struct aspeed_video_addr bcd;
+>>   
+>>   	bool yuv420;
+>> +	bool partial_jpeg;
+>> +	bool hq_mode;
+>>   	unsigned int frame_rate;
+>>   	unsigned int jpeg_quality;
+>> +	unsigned int jpeg_hq_quality;
+>> +	unsigned int compression_mode;
+>>   
+>>   	unsigned int frame_bottom;
+>>   	unsigned int frame_left;
+>> @@ -258,6 +280,13 @@ struct aspeed_video {
+>>   
+>>   #define to_aspeed_video(x) container_of((x), struct aspeed_video, v4l2_dev)
+>>   
+>> +static bool aspeed_video_alloc_buf(struct aspeed_video *video,
+>> +				   struct aspeed_video_addr *addr,
+>> +				   unsigned int size);
+>> +
+>> +static void aspeed_video_free_buf(struct aspeed_video *video,
+>> +				  struct aspeed_video_addr *addr);
+>> +
+>>   static const u32 aspeed_video_jpeg_header[ASPEED_VIDEO_JPEG_HEADER_SIZE] = {
+>>   	0xe0ffd8ff, 0x464a1000, 0x01004649, 0x60000101, 0x00006000, 0x0f00feff,
+>>   	0x00002d05, 0x00000000, 0x00000000, 0x00dbff00
+>> @@ -492,6 +521,20 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
+>>   		return -EBUSY;
+>>   	}
+>>   
+>> +	if (video->partial_jpeg && !video->bcd.size) {
+>> +		if (!aspeed_video_alloc_buf(video, &video->bcd,
+>> +					    VE_BCD_BUFF_SIZE)) {
+>> +			dev_err(video->dev, "Failed to allocate BCD buffer\n");
+>> +			dev_err(video->dev, "don't start frame\n");
+>> +			return -ENOMEM;
+>> +		}
+>> +		aspeed_video_write(video, VE_BCD_ADDR, video->bcd.dma);
+>> +		v4l2_dbg(1, debug, &video->v4l2_dev, "bcd addr(%#x) size(%d)\n",
+>> +			video->bcd.dma, video->bcd.size);
+>> +	} else if (!video->partial_jpeg && video->bcd.size) {
+>> +		aspeed_video_free_buf(video, &video->bcd);
+>> +	}
+>> +
+>>   	spin_lock_irqsave(&video->lock, flags);
+>>   	buf = list_first_entry_or_null(&video->buffers,
+>>   				       struct aspeed_video_buffer, link);
+>> @@ -635,6 +678,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>>   
+>>   	if (sts & VE_INTERRUPT_COMP_COMPLETE) {
+>>   		struct aspeed_video_buffer *buf;
+>> +		bool empty = true;
+>>   		u32 frame_size = aspeed_video_read(video,
+>>   						   VE_JPEG_COMP_SIZE_READ_BACK);
+>>   
+>> @@ -648,13 +692,23 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>>   		if (buf) {
+>>   			vb2_set_plane_payload(&buf->vb.vb2_buf, 0, frame_size);
+>>   
+>> -			if (!list_is_last(&buf->link, &video->buffers)) {
+>> +			/*
+>> +			 * partial_jpeg requires continuous update.
+>> +			 * On the contrary, standard jpeg can keep last buffer
+>> +			 * to always have the latest result.
+>> +			 */
+>> +			if (!video->partial_jpeg &&
+>> +			    list_is_last(&buf->link, &video->buffers)) {
+>> +				empty = false;
+>> +				v4l2_warn(&video->v4l2_dev, "skip to keep last frame updated\n");
+>> +			} else {
+>>   				buf->vb.vb2_buf.timestamp = ktime_get_ns();
+>>   				buf->vb.sequence = video->sequence++;
+>>   				buf->vb.field = V4L2_FIELD_NONE;
+>>   				vb2_buffer_done(&buf->vb.vb2_buf,
+>>   						VB2_BUF_STATE_DONE);
+>>   				list_del(&buf->link);
+>> +				empty = list_empty(&video->buffers);
+>>   			}
+>>   		}
+>>   		spin_unlock(&video->lock);
+>> @@ -668,7 +722,18 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>>   		aspeed_video_write(video, VE_INTERRUPT_STATUS,
+>>   				   VE_INTERRUPT_COMP_COMPLETE);
+>>   		sts &= ~VE_INTERRUPT_COMP_COMPLETE;
+>> -		if (test_bit(VIDEO_STREAMING, &video->flags) && buf)
+>> +
+>> +		// swap src buffer if partial_jpeg
+>> +		if (video->partial_jpeg) {
+>> +			u32 src0, src1;
+>> +
+>> +			src0 = aspeed_video_read(video, VE_SRC0_ADDR);
+>> +			src1 = aspeed_video_read(video, VE_SRC1_ADDR);
+>> +			aspeed_video_write(video, VE_SRC0_ADDR, src1);
+>> +			aspeed_video_write(video, VE_SRC1_ADDR, src0);
+>> +		}
+>> +
+>> +		if (test_bit(VIDEO_STREAMING, &video->flags) && !empty)
+>>   			aspeed_video_start_frame(video);
+>>   	}
+>>   
+>> @@ -931,10 +996,14 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>>   				   FIELD_PREP(VE_TGS_FIRST, video->frame_top) |
+>>   				   FIELD_PREP(VE_TGS_LAST,
+>>   					      video->frame_bottom + 1));
+>> -		aspeed_video_update(video, VE_CTRL, 0, VE_CTRL_INT_DE);
+>> +		aspeed_video_update(video, VE_CTRL,
+>> +				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
+>> +				    VE_CTRL_INT_DE);
+>>   	} else {
+>>   		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Direct Mode\n");
+>> -		aspeed_video_update(video, VE_CTRL, 0, VE_CTRL_DIRECT_FETCH);
+>> +		aspeed_video_update(video, VE_CTRL,
+>> +				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
+>> +				    VE_CTRL_DIRECT_FETCH);
+>>   	}
+>>   
+>>   	size *= 4;
+>> @@ -969,35 +1038,70 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>>   
+>>   static void aspeed_video_update_regs(struct aspeed_video *video)
+>>   {
+>> -	u32 comp_ctrl = VE_COMP_CTRL_RSVD |
+>> -		FIELD_PREP(VE_COMP_CTRL_DCT_LUM, video->jpeg_quality) |
+>> -		FIELD_PREP(VE_COMP_CTRL_DCT_CHR, video->jpeg_quality | 0x10);
+>> +	static const char * const compress_mode_str[] = {"DCT Only",
+>> +		"DCT VQ mix 2-color", "DCT VQ mix 4-color"};
+>> +	u32 comp_ctrl =	FIELD_PREP(VE_COMP_CTRL_DCT_LUM, video->jpeg_quality) |
+>> +		FIELD_PREP(VE_COMP_CTRL_DCT_CHR, video->jpeg_quality | 0x10) |
+>> +		FIELD_PREP(VE_COMP_CTRL_EN_HQ, video->hq_mode) |
+>> +		FIELD_PREP(VE_COMP_CTRL_HQ_DCT_LUM, video->jpeg_hq_quality) |
+>> +		FIELD_PREP(VE_COMP_CTRL_HQ_DCT_CHR, video->jpeg_hq_quality |
+>> +			   0x10);
+>>   	u32 ctrl = 0;
+>> -	u32 seq_ctrl = VE_SEQ_CTRL_JPEG_MODE;
+>> +	u32 seq_ctrl = 0;
+>>   
+>> -	v4l2_dbg(1, debug, &video->v4l2_dev, "framerate(%d)\n",
+>> -		 video->frame_rate);
+>> -	v4l2_dbg(1, debug, &video->v4l2_dev, "subsample(%s)\n",
+>> +	v4l2_dbg(1, debug, &video->v4l2_dev, "framerate(%d)\n", video->frame_rate);
+>> +	v4l2_dbg(1, debug, &video->v4l2_dev, "jpeg format(%s) subsample(%s)\n",
+>> +		 video->partial_jpeg ? "partial" : "standard",
+>>   		 video->yuv420 ? "420" : "444");
+>> -	v4l2_dbg(1, debug, &video->v4l2_dev, "compression quality(%d)\n",
+>> -		 video->jpeg_quality);
+>> +	v4l2_dbg(1, debug, &video->v4l2_dev, "compression quality(%d) hq(%s) hq_quality(%d)\n",
+>> +		 video->jpeg_quality, video->hq_mode ? "on" : "off",
+>> +		 video->jpeg_hq_quality);
+>> +	v4l2_dbg(1, debug, &video->v4l2_dev, "compression mode(%s)\n",
+>> +		 compress_mode_str[video->compression_mode]);
+>> +
+>> +	if (video->partial_jpeg)
+>> +		aspeed_video_update(video, VE_BCD_CTRL, 0, VE_BCD_CTRL_EN_BCD);
+>> +	else
+>> +		aspeed_video_update(video, VE_BCD_CTRL, VE_BCD_CTRL_EN_BCD, 0);
+>>   
+>>   	if (video->frame_rate)
+>>   		ctrl |= FIELD_PREP(VE_CTRL_FRC, video->frame_rate);
+>>   
+>> +	if (!video->partial_jpeg) {
+>> +		comp_ctrl &= ~FIELD_PREP(VE_COMP_CTRL_EN_HQ, video->hq_mode);
+>> +		seq_ctrl |= VE_SEQ_CTRL_JPEG_MODE;
+>> +	}
+>> +
+>>   	if (video->yuv420)
+>>   		seq_ctrl |= VE_SEQ_CTRL_YUV420;
+>>   
+>>   	if (video->jpeg.virt)
+>>   		aspeed_video_update_jpeg_table(video->jpeg.virt, video->yuv420);
+>>   
+>> +#ifdef CONFIG_MACH_ASPEED_G4
+>> +	switch (video->compression_mode) {
+>> +	case 0:	//DCT only
+>> +		comp_ctrl |= VE_COMP_CTRL_VQ_DCT_ONLY;
+>> +		break;
+>> +	case 1:	//DCT VQ mix 2-color
+>> +		comp_ctrl &= ~(VE_COMP_CTRL_VQ_4COLOR | VE_COMP_CTRL_VQ_DCT_ONLY);
+>> +		break;
+>> +	case 2:	//DCT VQ mix 4-color
+>> +		comp_ctrl |= VE_COMP_CTRL_VQ_4COLOR;
+>> +		break;
+>> +	}
+>> +#endif
+>> +
+>>   	/* Set control registers */
+>>   	aspeed_video_update(video, VE_SEQ_CTRL,
+>>   			    VE_SEQ_CTRL_JPEG_MODE | VE_SEQ_CTRL_YUV420,
+>>   			    seq_ctrl);
+>>   	aspeed_video_update(video, VE_CTRL, VE_CTRL_FRC, ctrl);
+>>   	aspeed_video_update(video, VE_COMP_CTRL,
+>> -			    VE_COMP_CTRL_DCT_LUM | VE_COMP_CTRL_DCT_CHR,
+>> +			    VE_COMP_CTRL_DCT_LUM | VE_COMP_CTRL_DCT_CHR |
+>> +			    VE_COMP_CTRL_EN_HQ | VE_COMP_CTRL_HQ_DCT_LUM |
+>> +			    VE_COMP_CTRL_HQ_DCT_CHR | VE_COMP_CTRL_VQ_4COLOR |
+>> +			    VE_COMP_CTRL_VQ_DCT_ONLY,
+>>   			    comp_ctrl);
+>>   }
+>>   
+>> @@ -1029,6 +1133,8 @@ static void aspeed_video_init_regs(struct aspeed_video *video)
+>>   
+>>   	/* Set mode detection defaults */
+>>   	aspeed_video_write(video, VE_MODE_DETECT, 0x22666500);
+>> +
+>> +	aspeed_video_write(video, VE_BCD_CTRL, 0);
+>>   }
+>>   
+>>   static void aspeed_video_start(struct aspeed_video *video)
+>> @@ -1062,6 +1168,9 @@ static void aspeed_video_stop(struct aspeed_video *video)
+>>   	if (video->srcs[1].size)
+>>   		aspeed_video_free_buf(video, &video->srcs[1]);
+>>   
+>> +	if (video->bcd.size)
+>> +		aspeed_video_free_buf(video, &video->bcd);
+>> +
+>>   	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
+>>   	video->flags = 0;
+>>   }
+>> @@ -1364,6 +1473,28 @@ static int aspeed_video_set_ctrl(struct v4l2_ctrl *ctrl)
+>>   		if (test_bit(VIDEO_STREAMING, &video->flags))
+>>   			aspeed_video_update_regs(video);
+>>   		break;
+>> +	case V4L2_CID_ASPEED_FORMAT:
+>> +		video->partial_jpeg = ctrl->val;
+>> +		if (test_bit(VIDEO_STREAMING, &video->flags))
+>> +			aspeed_video_update_regs(video);
+>> +		break;
+>> +#ifdef CONFIG_MACH_ASPEED_G4
+>> +	case V4L2_CID_ASPEED_COMPRESSION_MODE:
+>> +		video->compression_mode = ctrl->val;
+>> +		if (test_bit(VIDEO_STREAMING, &video->flags))
+>> +			aspeed_video_update_regs(video);
+>> +		break;
+>> +#endif
+>> +	case V4L2_CID_ASPEED_HQ_MODE:
+>> +		video->hq_mode = ctrl->val;
+>> +		if (test_bit(VIDEO_STREAMING, &video->flags))
+>> +			aspeed_video_update_regs(video);
+>> +		break;
+>> +	case V4L2_CID_ASPEED_HQ_JPEG_QUALITY:
+>> +		video->jpeg_hq_quality = ctrl->val;
+>> +		if (test_bit(VIDEO_STREAMING, &video->flags))
+>> +			aspeed_video_update_regs(video);
+>> +		break;
+>>   	default:
+>>   		return -EINVAL;
+>>   	}
+>> @@ -1375,6 +1506,52 @@ static const struct v4l2_ctrl_ops aspeed_video_ctrl_ops = {
+>>   	.s_ctrl = aspeed_video_set_ctrl,
+>>   };
+>>   
+>> +static const struct v4l2_ctrl_config aspeed_ctrl_format = {
+>> +	.ops = &aspeed_video_ctrl_ops,
+>> +	.id = V4L2_CID_ASPEED_FORMAT,
+>> +	.name = "Aspeed JPEG Format",
+>> +	.type = V4L2_CTRL_TYPE_BOOLEAN,
+>> +	.min = false,
+>> +	.max = true,
+>> +	.step = 1,
+>> +	.def = false,
+>> +};
+>> +
+>> +#ifdef CONFIG_MACH_ASPEED_G4
+>> +static const struct v4l2_ctrl_config aspeed_ctrl_compression_mode = {
+>> +	.ops = &aspeed_video_ctrl_ops,
+>> +	.id = V4L2_CID_ASPEED_COMPRESSION_MODE,
+>> +	.name = "Aspeed Compression Mode",
+>> +	.type = V4L2_CTRL_TYPE_INTEGER,
+>> +	.min = 0,
+>> +	.max = 2,
+>> +	.step = 1,
+>> +	.def = 0,
+>> +};
+>> +#endif
+>> +
+>> +static const struct v4l2_ctrl_config aspeed_ctrl_HQ_mode = {
+>> +	.ops = &aspeed_video_ctrl_ops,
+>> +	.id = V4L2_CID_ASPEED_HQ_MODE,
+>> +	.name = "Aspeed HQ Mode",
+>> +	.type = V4L2_CTRL_TYPE_BOOLEAN,
+>> +	.min = false,
+>> +	.max = true,
+>> +	.step = 1,
+>> +	.def = false,
+>> +};
+>> +
+>> +static const struct v4l2_ctrl_config aspeed_ctrl_HQ_jpeg_quality = {
+>> +	.ops = &aspeed_video_ctrl_ops,
+>> +	.id = V4L2_CID_ASPEED_HQ_JPEG_QUALITY,
+>> +	.name = "Aspeed HQ Quality",
+>> +	.type = V4L2_CTRL_TYPE_INTEGER,
+>> +	.min = 0,
+>> +	.max = ASPEED_VIDEO_JPEG_NUM_QUALITIES - 1,
+>> +	.step = 1,
+>> +	.def = 0,
+>> +};
+>> +
+>>   static void aspeed_video_resolution_work(struct work_struct *work)
+>>   {
+>>   	struct delayed_work *dwork = to_delayed_work(work);
+>> @@ -1644,6 +1821,7 @@ static int aspeed_video_setup_video(struct aspeed_video *video)
+>>   	struct v4l2_device *v4l2_dev = &video->v4l2_dev;
+>>   	struct vb2_queue *vbq = &video->queue;
+>>   	struct video_device *vdev = &video->vdev;
+>> +	struct v4l2_ctrl_handler *hdl = &video->ctrl_handler;
+>>   	int rc;
+>>   
+>>   	video->pix_fmt.pixelformat = V4L2_PIX_FMT_JPEG;
+>> @@ -1658,22 +1836,28 @@ static int aspeed_video_setup_video(struct aspeed_video *video)
+>>   		return rc;
+>>   	}
+>>   
+>> -	v4l2_ctrl_handler_init(&video->ctrl_handler, 2);
+>> -	v4l2_ctrl_new_std(&video->ctrl_handler, &aspeed_video_ctrl_ops,
+>> +	v4l2_ctrl_handler_init(hdl, 6);
+>> +	v4l2_ctrl_new_std(hdl, &aspeed_video_ctrl_ops,
+>>   			  V4L2_CID_JPEG_COMPRESSION_QUALITY, 0,
+>>   			  ASPEED_VIDEO_JPEG_NUM_QUALITIES - 1, 1, 0);
+>> -	v4l2_ctrl_new_std_menu(&video->ctrl_handler, &aspeed_video_ctrl_ops,
+>> +	v4l2_ctrl_new_std_menu(hdl, &aspeed_video_ctrl_ops,
+>>   			       V4L2_CID_JPEG_CHROMA_SUBSAMPLING,
+>>   			       V4L2_JPEG_CHROMA_SUBSAMPLING_420, mask,
+>>   			       V4L2_JPEG_CHROMA_SUBSAMPLING_444);
+>> +	v4l2_ctrl_new_custom(hdl, &aspeed_ctrl_format, NULL);
+>> +#ifdef CONFIG_MACH_ASPEED_G4
+>> +	v4l2_ctrl_new_custom(hdl, &aspeed_ctrl_compression_mode, NULL);
+>> +#endif
+>> +	v4l2_ctrl_new_custom(hdl, &aspeed_ctrl_HQ_mode, NULL);
+>> +	v4l2_ctrl_new_custom(hdl, &aspeed_ctrl_HQ_jpeg_quality, NULL);
+>>   
+>> -	rc = video->ctrl_handler.error;
+>> +	rc = hdl->error;
+>>   	if (rc) {
+>>   		dev_err(video->dev, "Failed to init controls: %d\n", rc);
+>>   		goto err_ctrl_init;
+>>   	}
+>>   
+>> -	v4l2_dev->ctrl_handler = &video->ctrl_handler;
+>> +	v4l2_dev->ctrl_handler = hdl;
+>>   
+>>   	vbq->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+>>   	vbq->io_modes = VB2_MMAP | VB2_READ | VB2_DMABUF;
 >>
->> Tel: 886-3-575-1185  ext.8630
->>
->> ************* Email Confidentiality Notice ********************
->> DISCLAIMER:
->> This message (and any attachments) may contain legally privileged and/or other confidential information. If you have received it in error, please notify the sender by reply e-mail and immediately delete the e-mail and any attachments without copying or disclosing the contents. Thank you.
->>
->> -----Original Message-----
->> From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->> Sent: Thursday, November 4, 2021 11:54 PM
->> To: Jammy Huang <jammy_huang@aspeedtech.com>; eajames@linux.ibm.com; mchehab@kernel.org; joel@jms.id.au; andrew@aj.id.au; linux-media@vger.kernel.org; openbmc@lists.ozlabs.org; linux-arm-kernel@lists.infradead.org; linux-aspeed@lists.ozlabs.org; linux-kernel@vger.kernel.org
->> Subject: Re: [PATCH] media: aspeed: use reset to replace clk off/on
->>
->> Hi Jammy,
->>
->> On 11/2/2021 10:43 PM, Jammy Huang wrote:
->>> reset should be more proper than clk off/on to bring HW back to good
->>> state.
->>>
->>> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
->>> ---
->>>    drivers/media/platform/aspeed-video.c | 22 +++++++++++++++++++---
->>>    1 file changed, 19 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/aspeed-video.c
->>> b/drivers/media/platform/aspeed-video.c
->>> index fea5e4d0927e..10d182139809 100644
->>> --- a/drivers/media/platform/aspeed-video.c
->>> +++ b/drivers/media/platform/aspeed-video.c
->>> @@ -23,6 +23,7 @@
->>>    #include <linux/workqueue.h>
->>>    #include <linux/debugfs.h>
->>>    #include <linux/ktime.h>
->>> +#include <linux/reset.h>
->>>    #include <media/v4l2-ctrls.h>
->>>    #include <media/v4l2-dev.h>
->>>    #include <media/v4l2-device.h>
->>> @@ -220,6 +221,7 @@ struct aspeed_video {
->>>    	void __iomem *base;
->>>    	struct clk *eclk;
->>>    	struct clk *vclk;
->>> +	struct reset_control *reset;
->>>    
->>>    	struct device *dev;
->>>    	struct v4l2_ctrl_handler ctrl_handler; @@ -554,6 +556,13 @@ static
->>> void aspeed_video_on(struct aspeed_video *video)
->>>    	set_bit(VIDEO_CLOCKS_ON, &video->flags);
->>>    }
->>>    
->>> +static void aspeed_video_reset(struct aspeed_video *v) {
->>> +	reset_control_assert(v->reset);
->>> +	udelay(100);
->>> +	reset_control_deassert(v->reset);
->>> +}
->>> +
->>>    static void aspeed_video_bufs_done(struct aspeed_video *video,
->>>    				   enum vb2_buffer_state state)
->>>    {
->>> @@ -574,7 +583,9 @@ static void aspeed_video_irq_res_change(struct aspeed_video *video, ulong delay)
->>>    	set_bit(VIDEO_RES_CHANGE, &video->flags);
->>>    	clear_bit(VIDEO_FRAME_INPRG, &video->flags);
->>>    
->>> -	aspeed_video_off(video);
->>> +	aspeed_video_write(video, VE_INTERRUPT_CTRL, 0);
->>> +	aspeed_video_write(video, VE_INTERRUPT_STATUS, 0xffffffff);
->>> +	aspeed_video_reset(video);
->>>    	aspeed_video_bufs_done(video, VB2_BUF_STATE_ERROR);
->>>    
->>>    	schedule_delayed_work(&video->res_work, delay); @@ -1507,8 +1518,7
->>> @@ static void aspeed_video_stop_streaming(struct vb2_queue *q)
->>>    		 * Need to force stop any DMA and try and get HW into a good
->>>    		 * state for future calls to start streaming again.
->>>    		 */
->>> -		aspeed_video_off(video);
->>> -		aspeed_video_on(video);
->>> +		aspeed_video_reset(video);
->> You can find the ECLK configuration in 'clk-aspeed.c' or in 'clk-ast2600.c' that it's coupled with the video engine reset (SCU04[6] for AST2500 / SCU040[6] for AST2600). It means that if we call
->> clk_disable() and clk_enable() through aspeed_video_off() and aspeed_video_on(), the video engine reset will be implicitly asserted and de-asserted by the clock driver so the reset mechanism is already in the existing code.
->>
->> Thanks,
->> Jae
->>
->>>    		aspeed_video_init_regs(video);
->>>    
->>> @@ -1715,6 +1725,12 @@ static int aspeed_video_init(struct aspeed_video *video)
->>>    		return rc;
->>>    	}
->>>    
->>> +	video->reset = devm_reset_control_get(dev, NULL);
->>> +	if (IS_ERR(video->reset)) {
->>> +		dev_err(dev, "Unable to get reset\n");
->>> +		return PTR_ERR(video->reset);
->>> +	}
->>> +
->>>    	video->eclk = devm_clk_get(dev, "eclk");
->>>    	if (IS_ERR(video->eclk)) {
->>>    		dev_err(dev, "Unable to get ECLK\n");
->>>
 -- 
 Best Regards
 Jammy
