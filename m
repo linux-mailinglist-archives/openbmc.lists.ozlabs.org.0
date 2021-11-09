@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51E3744B2EE
-	for <lists+openbmc@lfdr.de>; Tue,  9 Nov 2021 19:56:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EA8BF44B2F1
+	for <lists+openbmc@lfdr.de>; Tue,  9 Nov 2021 19:58:37 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hpcdc1XsHz2yPv
-	for <lists+openbmc@lfdr.de>; Wed, 10 Nov 2021 05:56:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HpchC5x94z2yPq
+	for <lists+openbmc@lfdr.de>; Wed, 10 Nov 2021 05:58:35 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=E/H2hPIA;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=OdzffJXW;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=LYL+4SUD;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=RtFjVHTv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,73 +19,75 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm3 header.b=E/H2hPIA; 
+ header.a=rsa-sha256 header.s=fm3 header.b=LYL+4SUD; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=OdzffJXW; 
+ header.a=rsa-sha256 header.s=fm1 header.b=RtFjVHTv; 
  dkim-atps=neutral
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
  [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hpcd85n2vz2xDw
- for <openbmc@lists.ozlabs.org>; Wed, 10 Nov 2021 05:55:56 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 647C25C01B5;
- Tue,  9 Nov 2021 13:55:53 -0500 (EST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hpcgn3t6lz2xCM
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Nov 2021 05:58:13 +1100 (AEDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+ by mailout.nyi.internal (Postfix) with ESMTP id 9BC6B5C018C;
+ Tue,  9 Nov 2021 13:58:11 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Tue, 09 Nov 2021 13:55:53 -0500
+ by compute6.internal (MEProxy); Tue, 09 Nov 2021 13:58:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
- :references:mime-version:content-type:in-reply-to; s=fm3; bh=b/T
- Y/wiOzNv7C0DlKBRTAvxt5fjVFZmlNyPqwaeMbDE=; b=E/H2hPIAMW/Z3XrdB1E
- wWFULsRaS2AdOHin+8m2U6i8EYOkD70DVz5sQMHaQdFHmr85USe0LelH+chqXkJ1
- Y3ZqzVQFKwKytFnkvyrwuLGznNlBU6nB+BshRdFlmTHTV4UWH2s+PHH2rXc0aCSv
- aa06O6v7x+rcpvpVhmhvg8AIVlMvjfUnjQRHIsaVUztYo5StgseVgaGZejKsd8+o
- NRKsVM3P8O8CeXRxH9vMFnLGbid6j7r9BGbQPh5TkATpro8SBH6DIlv55bMwLLDk
- 2EdbrpVm8+xfLOXU7hFTfNMyXCKOO2948kLhuxU8XdEhyLMcsU8sX0tiQpHVvZFu
- BNw==
+ fuzziesquirrel.com; h=message-id:subject:from:to:date
+ :in-reply-to:references:content-type:mime-version
+ :content-transfer-encoding; s=fm3; bh=xnxU2DBO907it1wJ2nPwH6D7kE
+ QUOc7yKF+6aJQjheA=; b=LYL+4SUDjWwvn4Vf8tMoYzTaUY2mNInaLuOsvz/MOt
+ iH6+OqGsLTklTK0+0d4XbiKa49Qdm8fWEAe7gHS31kR32mm7VNRk8PibYzpXQY5z
+ roBAhsb0CJ5rErRJpL3VM13u5ADJWTsrWGIldBygowhODycuzKlN3Of/u2ROq4Ma
+ Q6s/AGaBsYpxAn7wYi1pLNLsoS6ARmMw29303tNE0FFDNEIC2bdd3kA87KbAhUDx
+ +kFK/mb1mYC+UGqpMK9vtZ8rmUjpNp4JTJ2mnNqJH3MrdhCzwuPqW+bq0IugUxlf
+ c9wM65izaNdKLttNykibxFWf01sybm/yCUU6JYbhbkIw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=b/TY/w
- iOzNv7C0DlKBRTAvxt5fjVFZmlNyPqwaeMbDE=; b=OdzffJXW3+TxZOuuy9m89/
- Eue0AbigJkk0uBkH/SscBHwoVfuyBv8mj/CfhaUtaJff2YL3KaZVgBM/szU/N6qw
- ZsYE4n8mP46Eno3pffmALn219Ier/0BnmfHg68JzuXlopRtELe4xIIzQXJj5/B9H
- aAuGjTtpVFjxJkoVuoRpZYpqElY1DXPxoq3a+UMbnNqIenIA6MqHy8EvjTl/zLIP
- GX1hvaIva10vEfxnEALUujmdL2aJ3PgtAmYbBN+0JIYLWkNRD8Ueo8WFcMCUuoI/
- NUEpQ/K67cdLPtP64gTapy/ccx6KK1+sZQJpdpBsP5l2FZiNbFLNoq4bR3zZRJqA
- ==
-X-ME-Sender: <xms:OcSKYQDjMlUASUPkJxn0IvB_SlFrKmyjFrSjb_dXgi_4EpcAnMSE_Q>
- <xme:OcSKYSjDkor55hblioVfMGHFOiRSqaV-wfl6-hdcdep_peHNfRtaqmTJAuRt3iqh_
- HIHMdtGMBlZbgOToB0>
-X-ME-Received: <xmr:OcSKYTlgE2zp0puSz8xKQC4ENB8xy5RuTi2W6cdo2PZeZzwuCbfG1E4e>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudeggdduudejucetufdoteggodetrfdotf
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; bh=xnxU2DBO907it1wJ2nPwH6D7kEQUOc7yKF+6aJQjh
+ eA=; b=RtFjVHTv5zV3/gWxu0dbSrTJD3HIjJbWTh0mI2lk2iX/kzm3WOF7w2Ajx
+ dbj279IdPrCCfTIjgUKMI1wRgtkgmca0ufQZYBdggVTu04JfwZN1froApHLI39re
+ JaxeE8QZfIGzNWoedBk5dReM/zy2Y4qWF4EFMn8Vj1DOet4uNJz8p/xt8b0uTc/0
+ YW5qk06Z7k7agFfoCdINU0RComf5+qz86Ksm0cw/KtVgmhZMMcNDPtMUoqEinUkK
+ ebBkcq+mlzPCyiav/sLgh/vh5+lmRHYvHGzEqdZco1IIxzl1hLgllp3CFnIvSgzK
+ b36VcnyyeDQ4FmY8GCK+DxywD11vQ==
+X-ME-Sender: <xms:w8SKYX_oY65wCpEKFjcVwDp27LKEsv-piT9YTH43Bn8_ILwBj8LCzw>
+ <xme:w8SKYTs0dsIMvw8fVD21dQT8w_hS8d1_HzS6RtC-LX_QRH-5VOak2Ncy9yflY54CQ
+ eM0CA6U58tsHy9z7v4>
+X-ME-Received: <xmr:w8SKYVCXBUcAoZXVmAjjdpTJHsT5Acj05a4L1jwsZGTxueBuifE3XiLl9nipkGMNvUsmmfo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudeggdduudekucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeurhgrugcu
- uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
- eqnecuggftrfgrthhtvghrnhepfeffhfefheeguddtvddtueeihfduieefkeefieefkeef
- udefueevudelgfekffefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
- hilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
-X-ME-Proxy: <xmx:OcSKYWyaItRs0bBGT-OXtFSipp1zPJC5MZBGGJ-LcsGQ6b40syROcA>
- <xmx:OcSKYVSMTKlVG4_hq5VjAvHK5GltSYG4TF3PnejOEshYNI3X1AlV8g>
- <xmx:OcSKYRbUAZJmuOGFlyda29TBwJ5NCtzdKJH4EXAIx8FUariIZCMdmQ>
- <xmx:OcSKYW7rzG7BGBlMftlXssHGZW05UfelKfF1EaCrnuGL603dbCL5PQ>
+ cujfgurhepkffuhffvffgjfhgtfggggfesthejredttderjeenucfhrhhomhepuehrrggu
+ uceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtoh
+ hmqeenucggtffrrghtthgvrhhnpedujeefteekgeeigfegtedtgfejleeluedthefhtefh
+ tedufeekueeiieeffefgteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+ grihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:w8SKYTe59mVzKTtyrpEeJzEizZnl1nqp9jR7GqzidzEXC6akPfsqug>
+ <xmx:w8SKYcMKbMHHuDV_XyjENj5c3gvdJVlSnGJwTONgXtZrKqN1gP9QUQ>
+ <xmx:w8SKYVljVvMjCFckr5HJEAjgZ2SRrImGsU37gH8Q21pBfiMY4BpJhA>
+ <xmx:w8SKYWVOkFfA0GWsm7odFrBXY43bt4MKDdmS3zqPvSNAIB-1uIsEVw>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Nov 2021 13:55:52 -0500 (EST)
-Date: Tue, 9 Nov 2021 13:55:51 -0500
+ 9 Nov 2021 13:58:11 -0500 (EST)
+Message-ID: <bff66cb8fd5ae955212a8c129cd987220f07b86a.camel@fuzziesquirrel.com>
+Subject: Re: FW: Cornelis Networks CCLA
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: documenting object associations
-Message-ID: <20211109185551.6e47o7xnzfesoaxe@cheese>
-References: <e41ba66012487dbec35d73ed82fcc95a8a2927d0.camel@fuzziesquirrel.com>
- <a2ab6e03-9bf2-4b7e-aae0-7883fa325265@www.fastmail.com>
+To: "Srinivasan, Usha" <usha.srinivasan@cornelisnetworks.com>, 
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Date: Tue, 09 Nov 2021 13:58:10 -0500
+In-Reply-To: <BL0PR01MB40177ACD8D09BA45673232A39E8B9@BL0PR01MB4017.prod.exchangelabs.com>
+References: <BY3PR01MB66129A1D908203312857D3E1A5879@BY3PR01MB6612.prod.exchangelabs.com>
+ <BL0PR01MB40177ACD8D09BA45673232A39E8B9@BL0PR01MB4017.prod.exchangelabs.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.4 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <a2ab6e03-9bf2-4b7e-aae0-7883fa325265@www.fastmail.com>
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,28 +99,13 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Nov 03, 2021 at 09:17:55AM +1030, Andrew Jeffery wrote:
->
->
->On Sat, 30 Oct 2021, at 05:04, Brad Bishop wrote:
->> Hi all
->>
->> I recently submitted a patch[1] that tries to establish a mechanism for
->> documenting our DBus object associations[2].
->>
->> The patch has been merged - I am sending this simply to highlight the
->> change and to encourage everyone to document your past, present and
->> future associations using this mechanism.  In case you missed the review
->> feel free to reply here with suggestions for improvements.
->
->Seems unfortunate that there's duplication :/ Is there a way to resolve it?
+On Tue, 2021-11-02 at 22:05 +0000, Srinivasan, Usha wrote:
+> Forwarding CCLA for Cornelis Networks to openbmc mailing list.
 
-Right, I assume you mean that name and reverse_name are sort of 
-duplicated in both interfaces.  We could drop the reverse_names - it 
-probably isn't useful to know the reverse traversal association in the 
-context of the origin interface?  Now that you have me thinking about it 
-reverse_name is kind of an artifact of how associations are implemented.
+Hi, CCLA accepted, welcome!
+
+-brad
+
