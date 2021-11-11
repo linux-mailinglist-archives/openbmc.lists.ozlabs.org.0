@@ -1,72 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF5DB44CFDF
-	for <lists+openbmc@lfdr.de>; Thu, 11 Nov 2021 03:14:35 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF4A344D05B
+	for <lists+openbmc@lfdr.de>; Thu, 11 Nov 2021 04:19:34 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HqQJn5TKKz2yXv
-	for <lists+openbmc@lfdr.de>; Thu, 11 Nov 2021 13:14:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HqRlm4jRZz2yPT
+	for <lists+openbmc@lfdr.de>; Thu, 11 Nov 2021 14:19:32 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=Sws/mIn0;
+	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=aORemLrA;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::231;
- helo=mail-oi1-x231.google.com; envelope-from=yulei.sh@bytedance.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=hotmail.com (client-ip=2a01:111:f403:7005::813;
+ helo=aus01-sy4-obe.outbound.protection.outlook.com;
+ envelope-from=dehuitan1988@hotmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20210112.gappssmtp.com
- header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=Sws/mIn0; dkim-atps=neutral
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com
- [IPv6:2607:f8b0:4864:20::231])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256
+ header.s=selector1 header.b=aORemLrA; 
+ dkim-atps=neutral
+Received: from AUS01-SY4-obe.outbound.protection.outlook.com
+ (mail-sy4aus01olkn20813.outbound.protection.outlook.com
+ [IPv6:2a01:111:f403:7005::813])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HqQJM1ykzz2xDv
- for <openbmc@lists.ozlabs.org>; Thu, 11 Nov 2021 13:14:07 +1100 (AEDT)
-Received: by mail-oi1-x231.google.com with SMTP id o4so8841012oia.10
- for <openbmc@lists.ozlabs.org>; Wed, 10 Nov 2021 18:14:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=MYi5aCjUCD0+yB7qfxUE4373YpQKBy2WyMq5xwnmcA4=;
- b=Sws/mIn0Gk51Xd6SsH32MldeYkxZr5XC8c327sareMM+DOgEeKA4ZNSt1umQZdCWLZ
- +UMPAUD0HKAndn9BWL1nEmXBMY1iSvN4KzAbOdyy+TlcJwaHdwJt3X84Q02Fb0uWjK0x
- z+2WgAK/8//QJgFEnHUoOSm5MMSvZiw6J8gbgMFJqjUM7Vqf6E1KRYPPYqStf/ITPIyI
- IOr5DW1e0HVOdIL8N7lRjcgUUhP3XfGgAfBRRHmO6F9iAchJWHxX/cEE/nq7dLtE6SdI
- uJNE4q+/BCBiujekYRCK0IxVUpgj869Sc6wD8tNqFP/Tu4ADELUa4GKolN7AuBmKrCJ0
- DrtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=MYi5aCjUCD0+yB7qfxUE4373YpQKBy2WyMq5xwnmcA4=;
- b=tDWj+c/UamyS15wg/VBW5ng2XMZzJMj0xyHxUxlAzEVq3ZALGdg1aQHU/ox2ff7oJT
- +eQk8iZpklGlPRfnqsliBfXPrxL1VMIiikU9f0zGzcoMG/xYIz73Dwo3zoRXglFdhDCZ
- HJDD+noQycyQGY7YjS1iiTSOv9NzqtXzNkIdxxFdIMC06jg5OO42ZGQNZxyoIohm1xDY
- 5jkBZa/EfYp2RNbYKx4CrBwxhKeyszjt/R4/sCs1QeLvyQAYLAN04NHNfRgG1yLsF0iV
- IUmBASmqO7jZ6oxJbD51TlcKHBQkBq4zzGh1+ZU50TJfmGg42ZvrcIGpQnxSAixQ0H19
- rV/w==
-X-Gm-Message-State: AOAM530qr7cAxqgPLbNHMK3pMkP4Xdu8r9IJowpK0gm4edUbFgW1b1YJ
- 8ovUAWrCwiMBrA+Tt+PYx+bPerk+TTpUhuQMhociWoG37+BCKyy6
-X-Google-Smtp-Source: ABdhPJy+EG4MlenKY/065waysP/gEnN6ZfNyVa8/y+Ek2fHIYAtEjpemB73dSsWDy8j+Ykvx850NuIlpnPWPGAHMPJ4=
-X-Received: by 2002:a05:6808:1384:: with SMTP id
- c4mr16980516oiw.34.1636596844169; 
- Wed, 10 Nov 2021 18:14:04 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HqRlH0QxGz2xYK
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Nov 2021 14:19:05 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HyKwvux48+V8Ft4hggd16xMtGDArWBaTHnyV0VoeBJ4YtRhG0oQk92Bh0gZQRbMdr7ICbW8X+cILKUTvUhKocc2x815X0EZCIoKUdPkzwzRyDFzNouUgnW2y6G72XSskcYo+tdtEXoOWdLJx3WkfZG/F4+ckJgF8/SLEr7qNuv0cXLtQg7JMP7O3QxrNOY+QBwTjF36fUv067dMi9emfOy+y5kpjebVSlPEfh3tTSozVvXl7IMQadCJIWPLS3eZT4oV2TLVtIXRIuD+cVXoAFFAx9Ox3xesU19OioTbF7u1n4kjDw76dbFoTMb5lQ+npuOT5pPCyQ7K9ApxK4vYZsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QlRbkiYWK3IsPWy6OVr7vyNpgxV0KrktjV5DwqQl2H8=;
+ b=CsSKrodLpLA7l9KaoFhFI5gYfdZvTm0cx/pciRpf8cCskc68arrzwhac61ed9c/kdT2zzxoog3NU0opn2HSiwRniB1i19jSOaBWrtQijg8QInFjEYy5xawmyuqkM+JyZioJY6h8Yn2OTo6ndahpVWLpJhOiilPhnPCeq4m5d+loIj8SKEL0yBlp402CYPr4zGpzFWLceJ33E/IRVjR+c72zVR9kxOHKyHJ8ELlPweur8ZxcDEQFgecKETWGBj1N2Ov4lYT+fDmD2z8HuL6FPhmGlWfnLsSqCFN3LYW2/VxTjEuqYb//IyLuZEkLw0hKnA4bo4nvFAjZdUQ3ydlDiMg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QlRbkiYWK3IsPWy6OVr7vyNpgxV0KrktjV5DwqQl2H8=;
+ b=aORemLrAWxE33DEEg4bknL/oy38mYX3AZA+lgscTgk38zyDM7ODjNPN1RE3kBv5AjbBv0xjL7teDaopaf8BydQ7NhZMVuHKL9AHDAYOKQWtZVBVI9cFBDiKgWOQ/fiwYJw4LcLFw1hMIBbp4LK2N9KM7UxuDaCAKeDNfdDAZA70Nue/DF9xMl0x9OoVNuAEoIpvWRL7NCrw6JkVK/tyrlSML/uSuKCRcDpNChSz7JKbbGQ+r4FSz75Kro/pFmXPmcA2acVgcY4TijYg/Fdl9bjWFg0SlaAvNEk++Gs1J7P8y8C5nBkRJnGdqcllzbQXZktKVj7AUA00pL1riFd7z9g==
+Received: from ME3PR01MB8081.ausprd01.prod.outlook.com (2603:10c6:220:1bf::14)
+ by ME3PR01MB8083.ausprd01.prod.outlook.com (2603:10c6:220:1bd::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4669.13; Thu, 11 Nov
+ 2021 03:18:46 +0000
+Received: from ME3PR01MB8081.ausprd01.prod.outlook.com
+ ([fe80::f0eb:e25c:5384:13a5]) by ME3PR01MB8081.ausprd01.prod.outlook.com
+ ([fe80::f0eb:e25c:5384:13a5%4]) with mapi id 15.20.4669.016; Thu, 11 Nov 2021
+ 03:18:46 +0000
+From: Tan Dehui <dehuitan1988@hotmail.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+Subject: =?gb2312?B?u9i4tDogQVJNIGFhcmNoNjQgY29uZnVzZQ==?=
+Thread-Topic: ARM aarch64 confuse
+Thread-Index: AQHX1T7XJraZodjcmEm/vdx0h5388av7eVEAgAIvbnQ=
+Date: Thu, 11 Nov 2021 03:18:46 +0000
+Message-ID: <ME3PR01MB80812BFD29B6884A816CC01EC9949@ME3PR01MB8081.ausprd01.prod.outlook.com>
+References: <ME3PR01MB808110CCBC2434149E0265F8C9929@ME3PR01MB8081.ausprd01.prod.outlook.com>
+ <YYq0QvdarGn3TG5/@heinlein>
+In-Reply-To: <YYq0QvdarGn3TG5/@heinlein>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [NaHip2om6EXGbycSfRuO4gfcLBzh2NA6]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 970acab1-7a69-47d7-5d14-08d9a4c1f951
+x-ms-traffictypediagnostic: ME3PR01MB8083:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: f51IIAY/uYtiw1BET1zWisHkDWC7uCwHPYYR4cNbAW1NxSDTFwOhXaAWivuCV/Tns+cas6zW8LdWjP9+FRkXnIg385AWLQmS1ey0KIGRF8VOwMBVSi0Ya0mEn77R7p4ZrT0q+QkFGystCXOP6NjX+3t2aerXfDPAvzW/eTImEdL+WWXDVJlyI12KBbOflygwHyQ9tFhpWMzELO4hWIDcbsojs4dHATZQ8dTNL92f53KiAfCuq33feTX+cKYEgwcgyFncTpM4Z2VrqugDx4OAIcgx1dhyGr0OGDOdN4Vz7Z4G8FlO2TMkpe1WYKFhxqNxh0YN3HxfYHz32oImjFMMo6HGK0krkWXmNCA5p5/WagiYjpS7/mN5tNtGbVkH07+N09rsoty9/s3Qqf6qMmfb5z9OKQuuZRtr6nGNQXjOoNP1NQKTutCVT0dhDeHe6KkRn9ObY9gWaktHtcBBSWvpDaLtZoRefh3a9/Pp5HdFi9P0L17lwaUVbtDIxA7zdq9FLOAAcLGfqJLHTd6rvsY22NHyR5AZrGIj7tN1Yy1ItG/Qa2omipA89X02mmM5xbNxVZvo1RYKdgYos6r+H/msfw==
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: DGvlqHg4DdMYEuQOTLxu0qYrZQtyK0HiUVG0Oh8NzzIPMYI5RMVWIHteFnhmByTwk/ZrZlZFiHhlIfoWNDxKmp/+tzdJA7m8Ng4dcAy+IiPRn6KeTiRJnVh534xqXdI8Dpo8ff0uS4PEUnPHYXvx0fNBvJN7vhrMiALO7O5ZEYGCFsBs4Bc+FjrdinWti/KcxkW5jKsTpbWxoNpYlAQIpUKUP4cFwWVtzUiwgphkRhG6qna1cpJn1776jl5Rf31lOspsoXelgWn8WRH/TRV0qNLfTkwE9LsxECmyIP6Blv2OsWQ3rB4JtkUZxEnR7ayJSru4VctvcFJbgdKet8gPXhBDOWJTllpx6OdCBUzcgUYWOzBJTr5JrWbAnSRzXAqSgFt3URHw53z2XYVmXa++uRixiAEcWR8IAqucWMv68m/OiQucQyP7z5Bdy9+LgyLblFygTdph9uRfCmvf6JvoN28Lr69McZGr8cTiKkOaiiJ+TG7SbP9zYpqTTVTze0E3ZiBDrcbKXMs27ck+NO0mG01Gvxaj4BsPQVRPauCq94MCOUT+s28J8/et3sfifCiUb9oB1kNL+g5VzPumHjtNgzkRHz/wWZrzmIqRU3QejT27c/LzjS3+/GlfBDZznjVNHHtU6wVIzkcnVIB4qQEeH3PG0MQmc/04YLab7AYMFAMt7UHYXTYdR7rYwOjf2Dy8
+Content-Type: multipart/alternative;
+ boundary="_000_ME3PR01MB80812BFD29B6884A816CC01EC9949ME3PR01MB8081ausp_"
 MIME-Version: 1.0
-References: <20211110222803.836-1-a.kartashev@yadro.com>
- <20211110222803.836-3-a.kartashev@yadro.com>
-In-Reply-To: <20211110222803.836-3-a.kartashev@yadro.com>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Thu, 11 Nov 2021 10:13:53 +0800
-Message-ID: <CAGm54UESNecrEJfiv9vXyLYqM6OSGp1Cxt8hB0UJgG_Bgi=-tg@mail.gmail.com>
-Subject: Re: [External] [PATCH 2/2] ARM: dts: aspeed: add device tree for
- YADRO VEGMAN BMC
-To: Andrei Kartashev <a.kartashev@yadro.com>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: sct-15-20-3174-20-msonline-outlook-adb55.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: ME3PR01MB8081.ausprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 970acab1-7a69-47d7-5d14-08d9a4c1f951
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Nov 2021 03:18:46.7779 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME3PR01MB8083
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,77 +97,1003 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Nov 11, 2021 at 6:29 AM Andrei Kartashev <a.kartashev@yadro.com> wrote:
-> +
-> +&fmc {
-> +       status = "okay";
-> +       flash@0 {
-> +               status = "okay";
-> +               label = "bmc";
-> +               m25p,fast-read;
-> +               partitions {
-> +                       compatible = "fixed-partitions";
-> +                       #address-cells = <1>;
-> +                       #size-cells = <1>;
-> +
-> +                       u-boot@0 {
-> +                               reg = <0x0 0x80000>; // 512KB
-> +                               label = "u-boot";
-> +                       };
-> +
-> +                       fit-image-a@80000 {
-> +                               reg = <0x80000 0x1b80000>; // 27.5MB
-> +                               label = "image-a";
-> +                       };
-> +
-> +                       sofs@1c00000 {
-> +                               reg = <0x1c00000 0x200000>; // 2MB
-> +                               label = "sofs";
-> +                       };
-> +
-> +                       rwfs@1e00000 {
-> +                               reg = <0x1e00000 0x600000>;  // 6MB
-> +                               label = "rwfs";
-> +                       };
-> +
-> +                       u-boot-env@2400000 {
-> +                               reg = <0x2400000 0x20000>; // 128KB
-> +                               label = "u-boot-env";
-> +                       };
-> +
-> +                       fit-image-b@2480000 {
-> +                               reg = <0x2480000 0x1b80000>; // 27.5MB
-> +                               label = "image-b";
-> +                       };
-> +               };
-> +       };
-> +};
+--_000_ME3PR01MB80812BFD29B6884A816CC01EC9949ME3PR01MB8081ausp_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-The flash layout is not the same as the openbmc static layout, but
-like the one used by Intel-BMC.
-May I ask if you are going to upstream the bmc-code-update related
-changes for this layout?
+QW4gdW5hdXRob3JpemVkIGVycm9yIHdhcyByZXBvcnRlZCB3aGVuIEkgYWNjZXNzZWQgdGhlIFdl
+YiBzZXJ2ZXIgdGhyb3VnaCB0aGUgYnJvd3Nlci4gIFRoZSBsb2dzIGlzIGF0dGFjaGVkIGJlbG93
+Lg0KQnkgY2FwdHVyaW5nIG5ldHdvcmsgZGF0YSwgSSBmb3VuZCB0aGF0IG5vIG1vcmUgbWVzc2Fn
+ZXMgYXJlIHNlbnQgYWZ0ZXIgdGhlIFdlYiBTZXJ2ZXIgYW5kIFdlYiBDbGllbnQgc2VuZCBIZWxs
+byBtZXNzYWdlcyB0byBlYWNoIG90aGVyLg0KRnVydGhlciwgdGhyb3VnaCBkZWJ1Z2dpbmcgSSBz
+dXNwZWN0IHRoYXQgdGhlIGF1dGhlbnRpY2F0aW9uIGFsZ29yaXRobSBtaWdodCBiZSBhIGJpdCBv
+ZiBhIHByb2JsZW0uDQoNCkxPRzoNCqGtDQpGZWIgMTIgMTc6MTc6MzYgemN1MTAyLXp5bnFtcCBz
+eXN0ZW1kWzFdOiBTdGFydGluZyBQaG9zcGhvciBVc2VyIE1hbmFnZXIuLi4NCkZlYiAxMiAxNzox
+NzozNiB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IFN0YXJ0ZWQgUGhvc3Bob3Igc3lzZnMgTEVE
+IGNvbnRyb2xsZXIuDQpGZWIgMTIgMTc6MTc6MzYgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBT
+dGFydGVkIFBob3NwaG9yIHN5c2ZzIExFRCBjb250cm9sbGVyLg0KRmViIDEyIDE3OjE3OjM2IHpj
+dTEwMi16eW5xbXAgbnNsY2RbMzU0XTogWzhiNDU2N10gPGdyb3VwPSJwcml2LW5vYWNjZXNzIj4g
+ZmFpbGVkIHRvIGJpbmQgdG8gTERBUCBzZXJ2ZXIgbGRhcDovLzEyNy4wLjAuMS86IENhbid0IGNv
+bnRhY3QgTERBUCBzZXJ2ZXI6IFRyYW5zcG9ydCBlbmRwb2ludCBpcyBub3QgY29ubmVjdGVkDQpG
+ZWIgMTIgMTc6MTc6MzYgemN1MTAyLXp5bnFtcCBuc2xjZFszNTRdOiBbOGI0NTY3XSA8Z3JvdXA9
+InByaXYtbm9hY2Nlc3MiPiBubyBhdmFpbGFibGUgTERBUCBzZXJ2ZXIgZm91bmQsIHNsZWVwaW5n
+IDEgc2Vjb25kcw0KRmViIDEyIDE3OjE3OjM2IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogRmlu
+aXNoZWQgTG9hZC9TYXZlIFJhbmRvbSBTZWVkLg0KRmViIDEyIDE3OjE3OjM2IHpjdTEwMi16eW5x
+bXAgYm1jd2ViWzMzNl06IENoZWNraW5nIGNlcnRzIGluIGZpbGUgL2V0Yy9zc2wvY2VydHMvaHR0
+cHMvc2VydmVyLnBlbQ0KRmViIDEyIDE3OjE3OjM2IHpjdTEwMi16eW5xbXAgYm1jd2ViWzMzNl06
+IEVycm9yIGluIHZlcmlmeWluZyBzaWduYXR1cmUsIHJlZ2VuZXJhdGluZw0KRmViIDEyIDE3OjE3
+OjM2IHpjdTEwMi16eW5xbXAgYm1jd2ViWzMzNl06IEdlbmVyYXRpbmcgbmV3IGtleXMNCkZlYiAx
+MiAxNzoxNzozNiB6Y3UxMDItenlucW1wIGJtY3dlYlszMzZdOiBHZW5lcmF0aW5nIEVDIGtleQ0K
+RmViIDEyIDE3OjE3OjM2IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogU3RhcnRlZCBOYW1lIFNl
+cnZpY2UgQ2FjaGUgRGFlbW9uLg0KRmViIDEyIDE3OjE3OjM2IHpjdTEwMi16eW5xbXAgYm1jd2Vi
+WzMzNl06IEdlbmVyYXRpbmcgeDUwOSBDZXJ0aWZpY2F0ZQ0KRmViIDEyIDE3OjE3OjM2IHpjdTEw
+Mi16eW5xbXAgc3lzdGVtZFsxXTogU3RhcnRlZCBMREFQIGRhZW1vbi4NCkZlYiAxMiAxNzoxNzoz
+NiB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IG9ibWMtcGhvc3Bob3Itc3lzZC5zZXJ2aWNlOiBN
+YWluIHByb2Nlc3MgZXhpdGVkLCBjb2RlPWV4aXRlZCwgc3RhdHVzPTEvRkFJTFVSRQ0KRmViIDEy
+IDE3OjE3OjM2IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogb2JtYy1waG9zcGhvci1zeXNkLnNl
+cnZpY2U6IEZhaWxlZCB3aXRoIHJlc3VsdCAnZXhpdC1jb2RlJy4NCkZlYiAxMiAxNzoxNzozNiB6
+Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IFN0YXJ0ZWQgT3BlbkJNQyBpcEtWTSBkYWVtb24uDQpG
+ZWIgMTIgMTc6MTc6MzYgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBGaW5pc2hlZCBQZXJtaXQg
+VXNlciBTZXNzaW9ucy4NCkZlYiAxMiAxNzoxNzozNiB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06
+IFN0YXJ0ZWQgUGhvc3Bob3IgTG9nIE1hbmFnZXIuDQpGZWIgMTIgMTc6MTc6MzYgemN1MTAyLXp5
+bnFtcCBhdmFoaS1kYWVtb25bMzk0XTogRm91bmQgdXNlciAnYXZhaGknIChVSUQgOTk4KSBhbmQg
+Z3JvdXAgJ2F2YWhpJyAoR0lEIDk5OCkuDQpGZWIgMTIgMTc6MTc6MzYgemN1MTAyLXp5bnFtcCBu
+c2xjZFszNTRdOiBbN2IyM2M2XSA8Z3JvdXAvbWVtYmVyPSJhdmFoaSI+IGZhaWxlZCB0byBiaW5k
+IHRvIExEQVAgc2VydmVyIGxkYXA6Ly8xMjcuMC4wLjEvOiBDYW4ndCBjb250YWN0IExEQVAgc2Vy
+dmVyOiBUcmFuc3BvcnQgZW5kcG9pbnQgaXMgbm90IGNvbm5lY3RlZA0KRmViIDEyIDE3OjE3OjM2
+IHpjdTEwMi16eW5xbXAgbnNsY2RbMzU0XTogWzdiMjNjNl0gPGdyb3VwL21lbWJlcj0iYXZhaGki
+PiBubyBhdmFpbGFibGUgTERBUCBzZXJ2ZXIgZm91bmQsIHNsZWVwaW5nIDEgc2Vjb25kcw0KRmVi
+IDEyIDE3OjE3OjM2IHpjdTEwMi16eW5xbXAgb2JtYy1pa3ZtWzM5Ml06IEZhaWxlZCB0byBvcGVu
+IGlucHV0IGRldmljZQ0KRmViIDEyIDE3OjE3OjM2IHpjdTEwMi16eW5xbXAgYXVkaXRbMzkyXTog
+QU5PTV9BQkVORCBhdWlkPTQyOTQ5NjcyOTUgdWlkPTAgZ2lkPTAgc2VzPTQyOTQ5NjcyOTUgcGlk
+PTM5MiBjb21tPSJvYm1jLWlrdm0iIGV4ZT0iL3Vzci9iaW4vb2JtYy1pa3ZtIiBzaWc9NiByZXM9
+MQ0KRmViIDEyIDE3OjE3OjM2IHpjdTEwMi16eW5xbXAgb2JtYy1pa3ZtWzM5Ml06IEZhaWxlZCB0
+byBvcGVuIGEgZmlsZQ0KRmViIDEyIDE3OjE3OjM2IHpjdTEwMi16eW5xbXAgb2JtYy1pa3ZtWzM5
+Ml06IHRlcm1pbmF0ZSBjYWxsZWQgYWZ0ZXIgdGhyb3dpbmcgYW4gaW5zdGFuY2Ugb2YgJ3NkYnVz
+cGx1czo6eHl6OjpvcGVuYm1jX3Byb2plY3Q6OkNvbW1vbjo6RmlsZTo6RXJyb3I6Ok9wZW4nDQpG
+ZWIgMTIgMTc6MTc6MzYgemN1MTAyLXp5bnFtcCBvYm1jLWlrdm1bMzkyXTogICB3aGF0KCk6ICB4
+eXoub3BlbmJtY19wcm9qZWN0LkNvbW1vbi5GaWxlLkVycm9yLk9wZW46IEZhaWxlZCB0byBvcGVu
+IGEgZmlsZQ0KRmViIDEyIDE3OjE3OjM2IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogU3RhcnRl
+ZCBQaG9zcGhvciBMREFQIHByaXZpbGVnZSBtYXBwZXIuDQpGZWIgMTIgMTc6MTc6MzYgemN1MTAy
+LXp5bnFtcCBrZXJuZWw6IGF1ZGl0OiB0eXBlPTE3MDEgYXVkaXQoMTYxMzE1MDI1Ni4zNTU6Mik6
+IGF1aWQ9NDI5NDk2NzI5NSB1aWQ9MCBnaWQ9MCBzZXM9NDI5NDk2NzI5NSBwaWQ9MzkyIGNvbW09
+Im9ibWMtaWt2bSIgZXhlPSIvdXNyL2Jpbi9vYm1jLWlrdm0iIHNpZz02IHJlcz0xDQpGZWIgMTIg
+MTc6MTc6MzYgemN1MTAyLXp5bnFtcCBwaG9zcGhvci1jZXJ0aWZpY2F0ZS1tYW5hZ2VyWzM2M106
+IFdyaXRpbmcgcHJpdmF0ZSBrZXkgdG8gZmlsZQ0Koa0NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDIt
+enlucW1wIHNoWzMzOV06IEZpbmdlcnByaW50OiBzaGExISEgMzE6Yzg6OTU6Mzg6NTM6YjQ6N2Q6
+MDg6OTQ6Yzk6NDQ6MWI6ZGQ6YWU6MTY6NzE6Y2M6ZWM6ZmQ6ZDENCkZlYiAxMiAxNzoxNzozNyB6
+Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IEZpbmlzaGVkIFNTSCBLZXkgR2VuZXJhdGlvbi4NCkZl
+YiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbNDE1XTogc3lzdGVtZC1jb3JlZHVt
+cEAwLTM5NS0wLnNlcnZpY2U6IFByb3RlY3RIb3N0bmFtZT15ZXMgaXMgY29uZmlndXJlZCwgYnV0
+IHRoZSBrZXJuZWwgZG9lcyBub3Qgc3VwcG9ydCBVVFMgbmFtZXNwYWNlcywgaWdub3JpbmcgbmFt
+ZXNwYWNlIHNldHVwLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTog
+U3RhcnRlZCBXYWl0IGZvciAveHl6L29wZW5ibWNfcHJvamVjdC9jb250cm9sL2hvc3QwL2Jvb3Qv
+b25lX3RpbWUuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFy
+dGVkIFdhaXQgZm9yIC94eXovb3BlbmJtY19wcm9qZWN0L2NvbnRyb2wvaG9zdDAvYm9vdC4NCkZl
+YiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IHN0YXJ0LWlwa3ZtLnNlcnZp
+Y2U6IE1haW4gcHJvY2VzcyBleGl0ZWQsIGNvZGU9ZHVtcGVkLCBzdGF0dXM9Ni9BQlJUDQpGZWIg
+MTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBzdGFydC1pcGt2bS5zZXJ2aWNl
+OiBGYWlsZWQgd2l0aCByZXN1bHQgJ2NvcmUtZHVtcCcuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAy
+LXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFydGVkIFdhaXQgZm9yIC94eXovb3BlbmJtY19wcm9qZWN0
+L2NvbnRyb2wvaG9zdDAvcG93ZXJfcmVzdG9yZV9wb2xpY3kuDQpGZWIgMTIgMTc6MTc6MzcgemN1
+MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFydGVkIFdhaXQgZm9yIC94eXovb3BlbmJtY19wcm9q
+ZWN0L2NvbnRyb2wvaG9zdDAvcmVzdHJpY3Rpb25fbW9kZS4NCkZlYiAxMiAxNzoxNzozNyB6Y3Ux
+MDItenlucW1wIHN5c3RlbWRbMV06IFN0YXJ0ZWQgV2FpdCBmb3IgL3h5ei9vcGVuYm1jX3Byb2pl
+Y3QvbGVkL2dyb3Vwcy9ibWNfYm9vdGVkLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAg
+c3lzdGVtZFsxXTogU3RhcnRlZCBXYWl0IGZvciAveHl6L29wZW5ibWNfcHJvamVjdC90aW1lL3N5
+bmNfbWV0aG9kLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogU3Rh
+cnRlZCBQaG9zcGhvciBMRUQgR3JvdXAgTWFuYWdlbWVudCBEYWVtb24uDQpGZWIgMTIgMTc6MTc6
+MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFydGVkIFBob3NwaG9yIExkYXAgY29uZmln
+IHVwZGF0ZXIuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFy
+dGVkIFBob3NwaG9yIFNOTVAgY29uZiBNYW5hZ2VyLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16
+eW5xbXAgc3lzdGVtZFsxXTogU3RhcnRlZCBQaG9zcGhvciBOZXR3b3JrIE1hbmFnZXIuDQpGZWIg
+MTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFydGVkIE9wZW5CTUMgU29m
+dHdhcmUgVXBkYXRlIE1hbmFnZXIuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBwaG9z
+cGhvci1jaGFzc2lzLXN0YXRlLW1hbmFnZXJbNDE0XTogSW5pdGlhbCBDaGFzc2lzIFN0YXRlIHdp
+bGwgYmUgT2ZmDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFy
+dGVkIFBob3NwaG9yIENoYXNzaXMgU3RhdGUgTWFuYWdlci4NCkZlYiAxMiAxNzoxNzozNyB6Y3Ux
+MDItenlucW1wIHN5c3RlbWRbMV06IFN0YXJ0ZWQgV2FpdCBmb3IgL3h5ei9vcGVuYm1jX3Byb2pl
+Y3Qvc3RhdGUvY2hhc3NpczAuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBuc2xjZFsz
+NTRdOiBbOGI0NTY3XSA8Z3JvdXA9InByaXYtbm9hY2Nlc3MiPiBmYWlsZWQgdG8gYmluZCB0byBM
+REFQIHNlcnZlciBsZGFwOi8vMTI3LjAuMC4xLzogQ2FuJ3QgY29udGFjdCBMREFQIHNlcnZlcjog
+VHJhbnNwb3J0IGVuZHBvaW50IGlzIG5vdCBjb25uZWN0ZWQNCkZlYiAxMiAxNzoxNzozNyB6Y3Ux
+MDItenlucW1wIG5zbGNkWzM1NF06IFs4YjQ1NjddIDxncm91cD0icHJpdi1ub2FjY2VzcyI+IG5v
+IGF2YWlsYWJsZSBMREFQIHNlcnZlciBmb3VuZCwgc2xlZXBpbmcgMSBzZWNvbmRzDQpGZWIgMTIg
+MTc6MTc6MzcgemN1MTAyLXp5bnFtcCBwaG9zcGhvci1ibWMtc3RhdGUtbWFuYWdlcls0MTNdOiBT
+ZXR0aW5nIHRoZSBCTUNTdGF0ZSBmaWVsZA0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAg
+cGhvc3Bob3ItYm1jLXN0YXRlLW1hbmFnZXJbNDEzXTogU2V0dGluZyB0aGUgQk1DU3RhdGUgZmll
+bGQNCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IFN0YXJ0aW5nIFdh
+aXQgZm9yIC94eXovb3BlbmJtY19wcm9qZWN0L2xlZC9ncm91cHMuLi4NCkZlYiAxMiAxNzoxNzoz
+NyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IFN0YXJ0aW5nIFBob3NwaG9yIEluYmFuZCBJUE1J
+Li4uDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdG9wcGluZyBO
+ZXR3b3JrIFNlcnZpY2UuLi4NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIG5zY2RbMzQx
+XTogMzQxIGlnbm9yZWQgaW5vdGlmeSBldmVudCBmb3IgYC9ldGMvcmVzb2x2LmNvbmZgIChmaWxl
+IGV4aXN0cykNCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIG5zY2RbMzQxXTogMzQxIGln
+bm9yZWQgaW5vdGlmeSBldmVudCBmb3IgYC9ldGMvcmVzb2x2LmNvbmZgIChmaWxlIGV4aXN0cykN
+CkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWQtdGltZXN5bmNkWzIzM106IE5l
+dHdvcmsgY29uZmlndXJhdGlvbiBjaGFuZ2VkLCB0cnlpbmcgdG8gZXN0YWJsaXNoIGNvbm5lY3Rp
+b24uDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24g
+Y2hlY2sgcmVzdWx0ZWQgaW4gUGxhdGZvcm0gUGVyc2lzdGVudCBTdG9yYWdlIEFyY2hpdmFsIGJl
+aW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBT
+dGFydGluZyBQaG9zcGhvciBWZXJzaW9uIFNvZnR3YXJlIE1hbmFnZXIuLi4NCkZlYiAxMiAxNzox
+NzozNyB6Y3UxMDItenlucW1wIGlwbWlkWzQyNl06IEpTT04gZmlsZSBub3QgZm91bmQNCkZlYiAx
+MiAxNzoxNzozNyB6Y3UxMDItenlucW1wIGlwbWlkWzQyNl06IEpTT04gZmlsZSBub3QgZm91bmQN
+CkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IFN0YXJ0ZWQgV2FpdCBm
+b3IgL3h5ei9vcGVuYm1jX3Byb2plY3QvbGVkL2dyb3Vwcy4NCkZlYiAxMiAxNzoxNzozNyB6Y3Ux
+MDItenlucW1wIHN5c3RlbWQtdGltZXN5bmNkWzIzM106IE5ldHdvcmsgY29uZmlndXJhdGlvbiBj
+aGFuZ2VkLCB0cnlpbmcgdG8gZXN0YWJsaXNoIGNvbm5lY3Rpb24uDQpGZWIgMTIgMTc6MTc6Mzcg
+emN1MTAyLXp5bnFtcCBuc2xjZFszNTRdOiBbN2IyM2M2XSA8Z3JvdXAvbWVtYmVyPSJhdmFoaSI+
+IGZhaWxlZCB0byBiaW5kIHRvIExEQVAgc2VydmVyIGxkYXA6Ly8xMjcuMC4wLjEvOiBDYW4ndCBj
+b250YWN0IExEQVAgc2VydmVyOiBUcmFuc3BvcnQgZW5kcG9pbnQgaXMgbm90IGNvbm5lY3RlZA0K
+RmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgbnNsY2RbMzU0XTogWzdiMjNjNl0gPGdyb3Vw
+L21lbWJlcj0iYXZhaGkiPiBubyBhdmFpbGFibGUgTERBUCBzZXJ2ZXIgZm91bmQsIHNsZWVwaW5n
+IDEgc2Vjb25kcw0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgYXVkaXRbNDI2XTogQU5P
+TV9BQkVORCBhdWlkPTQyOTQ5NjcyOTUgdWlkPTAgZ2lkPTAgc2VzPTQyOTQ5NjcyOTUgcGlkPTQy
+NiBjb21tPSJpcG1pZCIgZXhlPSIvdXNyL2Jpbi9pcG1pZCIgc2lnPTExIHJlcz0xDQpGZWIgMTIg
+MTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBzeXN0ZW1kLW5ldHdvcmtkLnNlcnZp
+Y2U6IFN1Y2NlZWRlZC4NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06
+IFN0b3BwZWQgTmV0d29yayBTZXJ2aWNlLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAg
+a2VybmVsOiBhdWRpdDogdHlwZT0xNzAxIGF1ZGl0KDE2MTMxNTAyNTcuMzU1OjMpOiBhdWlkPTQy
+OTQ5NjcyOTUgdWlkPTAgZ2lkPTAgc2VzPTQyOTQ5NjcyOTUgcGlkPTQyNiBjb21tPSJpcG1pZCIg
+ZXhlPSIvdXNyL2Jpbi9pcG1pZCIgc2lnPTExIHJlcz0xDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAy
+LXp5bnFtcCBzeXN0ZW1kWzFdOiBvYm1jLXBob3NwaG9yLXN5c2Quc2VydmljZTogU2NoZWR1bGVk
+IHJlc3RhcnQgam9iLCByZXN0YXJ0IGNvdW50ZXIgaXMgYXQgMS4NCkZlYiAxMiAxNzoxNzozNyB6
+Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IFN0YXJ0ZWQgUGhvc3Bob3IgQk1DIFN0YXRlIE1hbmFn
+ZXIuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFydGVkIFBo
+b3NwaG9yIEluYmFuZCBJUE1JLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVt
+ZFsxXTogU3RhcnRlZCBQaG9zcGhvciBWZXJzaW9uIFNvZnR3YXJlIE1hbmFnZXIuDQpGZWIgMTIg
+MTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0
+ZWQgaW4gS2VybmVsIFRyYWNlIEZpbGUgU3lzdGVtIGJlaW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6
+MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0ZWQg
+aW4gQ3JlYXRlIGxpc3Qgb2Ygc3RhdGljIGRldmljZSBub2RlcyBmb3IgdGhlIGN1cnJlbnQga2Vy
+bmVsIGJlaW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1k
+WzFdOiBTdG9wcGVkIFBob3NwaG9yIFN5c3RlbSBNYW5hZ2VyLg0KRmViIDEyIDE3OjE3OjM3IHpj
+dTEwMi16eW5xbXAgc3lzdGVtZFsxXTogQ29uZGl0aW9uIGNoZWNrIHJlc3VsdGVkIGluIEZpbGUg
+U3lzdGVtIENoZWNrIG9uIFJvb3QgRGV2aWNlIGJlaW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6MTc6
+MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0ZWQgaW4g
+TG9hZCBLZXJuZWwgTW9kdWxlcyBiZWluZyBza2lwcGVkLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEw
+Mi16eW5xbXAgc3lzdGVtZFsxXTogQ29uZGl0aW9uIGNoZWNrIHJlc3VsdGVkIGluIEZVU0UgQ29u
+dHJvbCBGaWxlIFN5c3RlbSBiZWluZyBza2lwcGVkLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16
+eW5xbXAgc3lzdGVtZFsxXTogU3RhcnRpbmcgTmV0d29yayBTZXJ2aWNlLi4uDQpGZWIgMTIgMTc6
+MTc6MzcgemN1MTAyLXp5bnFtcCBuc2xjZFszNTRdOiBbM2M5ODY5XSA8Z3JvdXAvbWVtYmVyPSJz
+eXN0ZW1kLW5ldHdvcmsiPiBmYWlsZWQgdG8gYmluZCB0byBMREFQIHNlcnZlciBsZGFwOi8vMTI3
+LjAuMC4xLzogQ2FuJ3QgY29udGFjdCBMREFQIHNlcnZlcjogVHJhbnNwb3J0IGVuZHBvaW50IGlz
+IG5vdCBjb25uZWN0ZWQNCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIG5zbGNkWzM1NF06
+IFszYzk4NjldIDxncm91cC9tZW1iZXI9InN5c3RlbWQtbmV0d29yayI+IG5vIGF2YWlsYWJsZSBM
+REFQIHNlcnZlciBmb3VuZCwgc2xlZXBpbmcgMSBzZWNvbmRzDQpGZWIgMTIgMTc6MTc6MzcgemN1
+MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0ZWQgaW4gUGxhdGZv
+cm0gUGVyc2lzdGVudCBTdG9yYWdlIEFyY2hpdmFsIGJlaW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6
+MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0ZWQg
+aW4gQmluZCBtb3VudCB2b2xhdGlsZSAvdmFyL2NhY2hlIGJlaW5nIHNraXBwZWQuDQpGZWIgMTIg
+MTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0
+ZWQgaW4gQmluZCBtb3VudCB2b2xhdGlsZSAvdmFyL2xpYiBiZWluZyBza2lwcGVkLg0KRmViIDEy
+IDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogQ29uZGl0aW9uIGNoZWNrIHJlc3Vs
+dGVkIGluIEJpbmQgbW91bnQgdm9sYXRpbGUgL3Zhci9zcG9vbCBiZWluZyBza2lwcGVkLg0KRmVi
+IDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogQ29uZGl0aW9uIGNoZWNrIHJl
+c3VsdGVkIGluIEJpbmQgbW91bnQgdm9sYXRpbGUgL3NydiBiZWluZyBza2lwcGVkLg0KRmViIDEy
+IDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogQ29uZGl0aW9uIGNoZWNrIHJlc3Vs
+dGVkIGluIENvbW1pdCBhIHRyYW5zaWVudCBtYWNoaW5lLWlkIG9uIGRpc2sgYmVpbmcgc2tpcHBl
+ZC4NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IFN0YXJ0ZWQgRlJV
+IEZhdWx0IG1vbml0b3Igc2VydmljZS4NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5
+c3RlbWRbMV06IFN0YXJ0ZWQgUGhvc3Bob3IgU3lzdGVtIE1hbmFnZXIuDQpGZWIgMTIgMTc6MTc6
+MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFydGVkIE5ldHdvcmsgSVBNSSBkYWVtb24u
+DQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hl
+Y2sgcmVzdWx0ZWQgaW4gQ2hlY2sgSG9zdDAgc3RhdHVzIG9uIEJNQyByZXNldCBiZWluZyBza2lw
+cGVkLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogUmVhY2hlZCB0
+YXJnZXQgSG9zdDAgcnVubmluZyBhZnRlciByZXNldC4NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDIt
+enlucW1wIHN5c3RlbWRbMV06IENvbmRpdGlvbiBjaGVjayByZXN1bHRlZCBpbiBTdGFydCBob3N0
+MCBydW5uaW5nIGFmdGVyIEJNQyByZXNldCBiZWluZyBza2lwcGVkLg0KRmViIDEyIDE3OjE3OjM3
+IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogU3RhcnRpbmcgUGhvc3Bob3IgSG9zdCBTdGF0ZSBN
+YW5hZ2VyLi4uDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFy
+dGVkIFByb2Nlc3MgQ29yZSBEdW1wIChQSUQgNDMwL1VJRCAwKS4NCkZlYiAxMiAxNzoxNzozNyB6
+Y3UxMDItenlucW1wIHN5c3RlbWRbNDM3XTogc3lzdGVtZC1jb3JlZHVtcEAxLTQzMC0wLnNlcnZp
+Y2U6IFByaXZhdGVOZXR3b3JrPXllcyBpcyBjb25maWd1cmVkLCBidXQgdGhlIGtlcm5lbCBkb2Vz
+IG5vdCBzdXBwb3J0IG5ldHdvcmsgbmFtZXNwYWNlcywgaWdub3JpbmcuDQpGZWIgMTIgMTc6MTc6
+MzcgemN1MTAyLXp5bnFtcCBhdWRpdFs0MzVdOiBBTk9NX0FCRU5EIGF1aWQ9NDI5NDk2NzI5NSB1
+aWQ9MCBnaWQ9MCBzZXM9NDI5NDk2NzI5NSBwaWQ9NDM1IGNvbW09Im5ldGlwbWlkIiBleGU9Ii91
+c3IvYmluL25ldGlwbWlkIiBzaWc9MTEgcmVzPTENCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlu
+cW1wIGtlcm5lbDogYXVkaXQ6IHR5cGU9MTcwMSBhdWRpdCgxNjEzMTUwMjU3LjU4Mzo0KTogYXVp
+ZD00Mjk0OTY3Mjk1IHVpZD0wIGdpZD0wIHNlcz00Mjk0OTY3Mjk1IHBpZD00MzUgY29tbT0ibmV0
+aXBtaWQiIGV4ZT0iL3Vzci9iaW4vbmV0aXBtaWQiIHNpZz0xMSByZXM9MQ0KRmViIDEyIDE3OjE3
+OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogU3RhcnRlZCBQcm9jZXNzIENvcmUgRHVtcCAo
+UElEIDQzOC9VSUQgMCkuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBvYm1jLXBob3Nw
+aG9yLXN5c2RbNDM0XTogICBGaWxlICIvdXNyL3NiaW4vb2JtYy1waG9zcGhvci1zeXNkIiwgbGlu
+ZSAyNg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgb2JtYy1waG9zcGhvci1zeXNkWzQz
+NF06ICAgICBwcmludCAib2JtYy1waG9zcGhvci13YXRjaGRvZ2Qgc3RhcnRpbmcuLi4iDQpGZWIg
+MTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBvYm1jLXBob3NwaG9yLXN5c2RbNDM0XTogICAgICAg
+ICAgIF4NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIG9ibWMtcGhvc3Bob3Itc3lzZFs0
+MzRdOiBTeW50YXhFcnJvcjogTWlzc2luZyBwYXJlbnRoZXNlcyBpbiBjYWxsIHRvICdwcmludCcu
+IERpZCB5b3UgbWVhbiBwcmludCgib2JtYy1waG9zcGhvci13YXRjaGRvZ2Qgc3RhcnRpbmcuLi4i
+KT8NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbNDM5XTogc3lzdGVtZC1j
+b3JlZHVtcEAyLTQzOC0wLnNlcnZpY2U6IFByaXZhdGVOZXR3b3JrPXllcyBpcyBjb25maWd1cmVk
+LCBidXQgdGhlIGtlcm5lbCBkb2VzIG5vdCBzdXBwb3J0IG5ldHdvcmsgbmFtZXNwYWNlcywgaWdu
+b3JpbmcuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBvYm1jLXBo
+b3NwaG9yLXN5c2Quc2VydmljZTogTWFpbiBwcm9jZXNzIGV4aXRlZCwgY29kZT1leGl0ZWQsIHN0
+YXR1cz0xL0ZBSUxVUkUNCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06
+IG9ibWMtcGhvc3Bob3Itc3lzZC5zZXJ2aWNlOiBGYWlsZWQgd2l0aCByZXN1bHQgJ2V4aXQtY29k
+ZScuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBwaG9zcGhvci1ob3N0LXN0YXRlLW1h
+bmFnZXJbNDM2XTogSW5pdGlhbCBIb3N0IFN0YXRlIHdpbGwgYmUgT2ZmDQpGZWIgMTIgMTc6MTc6
+MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFydGVkIFBob3NwaG9yIEhvc3QgU3RhdGUg
+TWFuYWdlci4NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IFN0YXJ0
+ZWQgV2FpdCBmb3IgL3h5ei9vcGVuYm1jX3Byb2plY3Qvc3RhdGUvaG9zdDAuDQpGZWIgMTIgMTc6
+MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFydGluZyBSZWJvb3QgSWYgRW5hYmxl
+ZC4uLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogU3RhcnRpbmcg
+UmVzZXQgaG9zdCBzZW5zb3JzLi4uDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBwaG9z
+cGhvci1kaXNjb3Zlci1zeXN0ZW0tc3RhdGVbNDQxXTogSG9zdCBwb3dlciBpcyBvZmYsIGNoZWNr
+aW5nIHBvd2VyIHBvbGljeQ0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsx
+XTogU3RhcnRpbmcgUGhvc3Bob3IgVGltZSBNYW5hZ2VyIGRhZW1vbi4uLg0KRmViIDEyIDE3OjE3
+OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogRmluaXNoZWQgUmVib290IElmIEVuYWJsZWQu
+DQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBwaG9zcGhvci10aW1lbWFuYWdlcls0NDRd
+OiBUaW1lIG1vZGUgaXMgY2hhbmdlZA0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lz
+dGVtZFs0MzddOiBzeXN0ZW1kLWNvcmVkdW1wQDEtNDMwLTAuc2VydmljZTogUHJvdGVjdEhvc3Ru
+YW1lPXllcyBpcyBjb25maWd1cmVkLCBidXQgdGhlIGtlcm5lbCBkb2VzIG5vdCBzdXBwb3J0IFVU
+UyBuYW1lc3BhY2VzLCBpZ25vcmluZyBuYW1lc3BhY2Ugc2V0dXAuDQpGZWIgMTIgMTc6MTc6Mzcg
+emN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0ZWQgaW4gS2Vy
+bmVsIFRyYWNlIEZpbGUgU3lzdGVtIGJlaW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6MTc6MzcgemN1
+MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0ZWQgaW4gQ3JlYXRl
+IGxpc3Qgb2Ygc3RhdGljIGRldmljZSBub2RlcyBmb3IgdGhlIGN1cnJlbnQga2VybmVsIGJlaW5n
+IHNraXBwZWQuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25k
+aXRpb24gY2hlY2sgcmVzdWx0ZWQgaW4gRmlsZSBTeXN0ZW0gQ2hlY2sgb24gUm9vdCBEZXZpY2Ug
+YmVpbmcgc2tpcHBlZC4NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06
+IENvbmRpdGlvbiBjaGVjayByZXN1bHRlZCBpbiBMb2FkIEtlcm5lbCBNb2R1bGVzIGJlaW5nIHNr
+aXBwZWQuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRp
+b24gY2hlY2sgcmVzdWx0ZWQgaW4gRlVTRSBDb250cm9sIEZpbGUgU3lzdGVtIGJlaW5nIHNraXBw
+ZWQuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24g
+Y2hlY2sgcmVzdWx0ZWQgaW4gUGxhdGZvcm0gUGVyc2lzdGVudCBTdG9yYWdlIEFyY2hpdmFsIGJl
+aW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBD
+b25kaXRpb24gY2hlY2sgcmVzdWx0ZWQgaW4gQmluZCBtb3VudCB2b2xhdGlsZSAvdmFyL2NhY2hl
+IGJlaW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFd
+OiBDb25kaXRpb24gY2hlY2sgcmVzdWx0ZWQgaW4gQmluZCBtb3VudCB2b2xhdGlsZSAvdmFyL2xp
+YiBiZWluZyBza2lwcGVkLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsx
+XTogQ29uZGl0aW9uIGNoZWNrIHJlc3VsdGVkIGluIEJpbmQgbW91bnQgdm9sYXRpbGUgL3Zhci9z
+cG9vbCBiZWluZyBza2lwcGVkLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVt
+ZFsxXTogQ29uZGl0aW9uIGNoZWNrIHJlc3VsdGVkIGluIEJpbmQgbW91bnQgdm9sYXRpbGUgL3Ny
+diBiZWluZyBza2lwcGVkLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsx
+XTogQ29uZGl0aW9uIGNoZWNrIHJlc3VsdGVkIGluIENvbW1pdCBhIHRyYW5zaWVudCBtYWNoaW5l
+LWlkIG9uIGRpc2sgYmVpbmcgc2tpcHBlZC4NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1w
+IHN5c3RlbWRbMV06IFN0YXJ0aW5nIFRpbWUgJiBEYXRlIFNlcnZpY2UuLi4NCkZlYiAxMiAxNzox
+NzozNyB6Y3UxMDItenlucW1wIHBob3NwaG9yLW1hcHBlclszNzhdOiBJbnRyb3NwZWN0IGNhbGwg
+ZmFpbGVkIHdpdGggZXJyb3I6IGdlbmVyaWM6MTEzLCBObyByb3V0ZSB0byBob3N0IG9uIHByb2Nl
+c3M6IHh5ei5vcGVuYm1jX3Byb2plY3QuQ29udHJvbC5Ib3N0IHBhdGg6IC8NCkZlYiAxMiAxNzox
+NzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IHBob3NwaG9yLWlwbWktaG9zdC5zZXJ2aWNl
+OiBNYWluIHByb2Nlc3MgZXhpdGVkLCBjb2RlPWR1bXBlZCwgc3RhdHVzPTExL1NFR1YNCkZlYiAx
+MiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IHBob3NwaG9yLWlwbWktaG9zdC5z
+ZXJ2aWNlOiBGYWlsZWQgd2l0aCByZXN1bHQgJ2NvcmUtZHVtcCcuDQpGZWIgMTIgMTc6MTc6Mzcg
+emN1MTAyLXp5bnFtcCBzeXN0ZW1kWzQzOV06IHN5c3RlbWQtY29yZWR1bXBAMi00MzgtMC5zZXJ2
+aWNlOiBQcm90ZWN0SG9zdG5hbWU9eWVzIGlzIGNvbmZpZ3VyZWQsIGJ1dCB0aGUga2VybmVsIGRv
+ZXMgbm90IHN1cHBvcnQgVVRTIG5hbWVzcGFjZXMsIGlnbm9yaW5nIG5hbWVzcGFjZSBzZXR1cC4N
+CkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IHBob3NwaG9yLXJlc2V0
+LXNlbnNvci1zdGF0ZXNAMC5zZXJ2aWNlOiBTdWNjZWVkZWQuDQpGZWIgMTIgMTc6MTc6MzcgemN1
+MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBGaW5pc2hlZCBSZXNldCBob3N0IHNlbnNvcnMuDQpGZWIg
+MTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBSZWFjaGVkIHRhcmdldCBIb3N0
+MCAoUmVzZXQgQ2hlY2spLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsx
+XTogcGhvc3Bob3ItaXBtaS1uZXRAZXRoMC5zZXJ2aWNlOiBNYWluIHByb2Nlc3MgZXhpdGVkLCBj
+b2RlPWR1bXBlZCwgc3RhdHVzPTExL1NFR1YNCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlucW1w
+IHN5c3RlbWRbMV06IHBob3NwaG9yLWlwbWktbmV0QGV0aDAuc2VydmljZTogRmFpbGVkIHdpdGgg
+cmVzdWx0ICdjb3JlLWR1bXAnLg0KRmViIDEyIDE3OjE3OjM3IHpjdTEwMi16eW5xbXAgc3lzdGVt
+ZFs0NDddOiBzeXN0ZW1kLXRpbWVkYXRlZC5zZXJ2aWNlOiBQcm90ZWN0SG9zdG5hbWU9eWVzIGlz
+IGNvbmZpZ3VyZWQsIGJ1dCB0aGUga2VybmVsIGRvZXMgbm90IHN1cHBvcnQgVVRTIG5hbWVzcGFj
+ZXMsIGlnbm9yaW5nIG5hbWVzcGFjZSBzZXR1cC4NCkZlYiAxMiAxNzoxNzozNyB6Y3UxMDItenlu
+cW1wIHN5c3RlbWRbMV06IFN0YXJ0ZWQgVGltZSAmIERhdGUgU2VydmljZS4NCkZlYiAxMiAxNzox
+NzozNyB6Y3UxMDItenlucW1wIHN5c3RlbWQtdGltZWRhdGVkWzQ0N106IFNldCBOVFAgdG8gZW5h
+YmxlZCAoc3lzdGVtZC10aW1lc3luY2Quc2VydmljZSkuDQpGZWIgMTIgMTc6MTc6MzcgemN1MTAy
+LXp5bnFtcCBwaG9zcGhvci10aW1lbWFuYWdlcls0NDRdOiBVcGRhdGVkIE5UUCBzZXR0aW5nDQpG
+ZWIgMTIgMTc6MTc6MzcgemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBTdGFydGVkIFBob3NwaG9y
+IFRpbWUgTWFuYWdlciBkYWVtb24uDQpGZWIgMTIgMTc6MTc6MzggemN1MTAyLXp5bnFtcCBuc2xj
+ZFszNTRdOiBbOGI0NTY3XSA8Z3JvdXA9InByaXYtbm9hY2Nlc3MiPiBmYWlsZWQgdG8gYmluZCB0
+byBMREFQIHNlcnZlciBsZGFwOi8vMTI3LjAuMC4xLzogQ2FuJ3QgY29udGFjdCBMREFQIHNlcnZl
+cjogVHJhbnNwb3J0IGVuZHBvaW50IGlzIG5vdCBjb25uZWN0ZWQNCkZlYiAxMiAxNzoxNzozOCB6
+Y3UxMDItenlucW1wIG5zbGNkWzM1NF06IFs4YjQ1NjddIDxncm91cD0icHJpdi1ub2FjY2VzcyI+
+IG5vIGF2YWlsYWJsZSBMREFQIHNlcnZlciBmb3VuZCwgc2xlZXBpbmcgMSBzZWNvbmRzDQpGZWIg
+MTIgMTc6MTc6MzggemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBzdGFydC1pcGt2bS5zZXJ2aWNl
+OiBTY2hlZHVsZWQgcmVzdGFydCBqb2IsIHJlc3RhcnQgY291bnRlciBpcyBhdCAxLg0KRmViIDEy
+IDE3OjE3OjM4IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogQ29uZGl0aW9uIGNoZWNrIHJlc3Vs
+dGVkIGluIEtlcm5lbCBUcmFjZSBGaWxlIFN5c3RlbSBiZWluZyBza2lwcGVkLg0KRmViIDEyIDE3
+OjE3OjM4IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogQ29uZGl0aW9uIGNoZWNrIHJlc3VsdGVk
+IGluIENyZWF0ZSBsaXN0IG9mIHN0YXRpYyBkZXZpY2Ugbm9kZXMgZm9yIHRoZSBjdXJyZW50IGtl
+cm5lbCBiZWluZyBza2lwcGVkLg0KRmViIDEyIDE3OjE3OjM4IHpjdTEwMi16eW5xbXAgc3lzdGVt
+ZFsxXTogU3RvcHBlZCBPcGVuQk1DIGlwS1ZNIGRhZW1vbi4NCkZlYiAxMiAxNzoxNzozOCB6Y3Ux
+MDItenlucW1wIHN5c3RlbWRbMV06IENvbmRpdGlvbiBjaGVjayByZXN1bHRlZCBpbiBGaWxlIFN5
+c3RlbSBDaGVjayBvbiBSb290IERldmljZSBiZWluZyBza2lwcGVkLg0KRmViIDEyIDE3OjE3OjM4
+IHpjdTEwMi16eW5xbXAgc3lzdGVtZFsxXTogQ29uZGl0aW9uIGNoZWNrIHJlc3VsdGVkIGluIExv
+YWQgS2VybmVsIE1vZHVsZXMgYmVpbmcgc2tpcHBlZC4NCkZlYiAxMiAxNzoxNzozOCB6Y3UxMDIt
+enlucW1wIHN5c3RlbWRbMV06IENvbmRpdGlvbiBjaGVjayByZXN1bHRlZCBpbiBGVVNFIENvbnRy
+b2wgRmlsZSBTeXN0ZW0gYmVpbmcgc2tpcHBlZC4NCkZlYiAxMiAxNzoxNzozOCB6Y3UxMDItenlu
+cW1wIHN5c3RlbWRbMV06IENvbmRpdGlvbiBjaGVjayByZXN1bHRlZCBpbiBQbGF0Zm9ybSBQZXJz
+aXN0ZW50IFN0b3JhZ2UgQXJjaGl2YWwgYmVpbmcgc2tpcHBlZC4NCkZlYiAxMiAxNzoxNzozOCB6
+Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IENvbmRpdGlvbiBjaGVjayByZXN1bHRlZCBpbiBCaW5k
+IG1vdW50IHZvbGF0aWxlIC92YXIvY2FjaGUgYmVpbmcgc2tpcHBlZC4NCkZlYiAxMiAxNzoxNzoz
+OCB6Y3UxMDItenlucW1wIHN5c3RlbWRbMV06IENvbmRpdGlvbiBjaGVjayByZXN1bHRlZCBpbiBC
+aW5kIG1vdW50IHZvbGF0aWxlIC92YXIvbGliIGJlaW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6MTc6
+MzggemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0ZWQgaW4g
+QmluZCBtb3VudCB2b2xhdGlsZSAvdmFyL3Nwb29sIGJlaW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6
+MTc6MzggemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0ZWQg
+aW4gQmluZCBtb3VudCB2b2xhdGlsZSAvc3J2IGJlaW5nIHNraXBwZWQuDQpGZWIgMTIgMTc6MTc6
+MzggemN1MTAyLXp5bnFtcCBzeXN0ZW1kWzFdOiBDb25kaXRpb24gY2hlY2sgcmVzdWx0ZWQgaW4g
+Q29tbWl0IGEgdHJhbnNpZW50IG1hY2hpbmUtaWQgb24gZGlzayBiZWluZyBza2lwcGVkLg0KDQoN
+ClRhbiBEZWh1aQ0KDQq00yBXaW5kb3dzILDm08q8/jxodHRwczovL2dvLm1pY3Jvc29mdC5jb20v
+ZndsaW5rLz9MaW5rSWQ9NTUwOTg2Preiy80NCg0Kt6K8/sjLOiBQYXRyaWNrIFdpbGxpYW1zPG1h
+aWx0bzpwYXRyaWNrQHN0d2N4Lnh5ej4NCreiy83KsbzkOiAyMDIxxOoxMdTCMTDI1SAxOjQ3DQrK
+1bz+yMs6IHRhbmRlaHVpPG1haWx0bzpkZWh1aXRhbjE5ODhAaG90bWFpbC5jb20+DQqzrcvNOiBv
+cGVuYm1jQGxpc3RzLm96bGFicy5vcmc8bWFpbHRvOm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4N
+Ctb3zOI6IFJlOiBBUk0gYWFyY2g2NCBjb25mdXNlDQoNCk9uIFR1ZSwgTm92IDA5LCAyMDIxIGF0
+IDAzOjUzOjIwUE0gKzA4MDAsIHRhbmRlaHVpIHdyb3RlOg0KPiBTbyBkb2VzIE9wZW5CTUMgc3Vw
+cG9ydCA2NC1iaXQgcHJvY2Vzc29ycz8gSWYgeWVzLCB3aGF0IHNwZWNpYWwNCj4gYXR0ZW50aW9u
+IHNob3VsZCBiZSBwYWlkIHRvIGl0Pw0KDQpJIGJlbGlldmUgdGhlIGxhdGVzdCBOdXZvdG9uIGNo
+aXBzIGFyZSBhbHJlYWR5IGFhcmNoNjQuICBJbiB0aGVvcnksIG91ciBjb2RlDQpzaG91bGQgYmUg
+ZmFpcmx5IDMyLzY0LWJpdCBhZ25vc3RpYy4gIFRoZXJlIGhhdmUgYmVlbiBhIGZldyBidWdzIHdo
+ZXJlIHRoZSBjb2RlDQptYWRlIDMyLWJpdCBhc3N1bXB0aW9ucywgZXNwZWNpYWxseSBhcm91bmQg
+c2VyaWFsaXppbmcgZGF0YSB0by9mcm9tIGZpbGVzLg0KVGhlcmUgY291bGQgY2VydGFpbmx5IGJl
+IG1vcmUuDQoNCj4gSSBhbSBydW5uaW5nIG9wZW5ibWMgb24gYSBBUk0gYWFyY2g2NCBjcHUuIEkn
+bSBleHBlcmllbmNpbmcNCj4gc29tZSB3ZWJ1aS1yZWxhdGVkIGlzc3VlcyB0aGF0IHNlZW0gdG8g
+YmUgcmVsYXRlZCB0byA2NC1iaXQgcHJvY2Vzc29ycy4NCg0KVGhlIHdlYnVpIGV4ZWN1dGVzIG9u
+IGJyb3dzZXIgKGl0IGlzIGFsbCBqYXZhc2NyaXB0KSBhbmQgc2hvdWxkbid0IGNhcmUgd2hhdA0K
+a2luZCBvZiBwcm9jZXNzb3IgaXMgZXhwb3NpbmcgdGhlIFJFU1QvUmVkZmlzaCBBUElzLiAgQ2Fu
+IHlvdSBlbGFib3JhdGUgb24gd2hhdA0Ka2luZCBvZiBwcm9ibGVtcyB5b3UgYXJlIHNlZWluZz8g
+IEl0IGlzIGNlcnRhaW5seSBwb3NzaWJsZSB0aGF0IHRoZXJlIGFyZSBidWdzDQppbiB0aGUgUmVk
+ZmlzaCBBUElzIHRoZW1zZWx2ZXMgKHNlZSBhYm92ZSksIGJ1dCBpdCBpcyBoYXJkIHRvIGtub3cg
+d2l0aG91dCBzb21lDQptb3JlIGRldGFpbHMgb24gd2hhdCB5b3UgbWVhbiBieSAic29tZSB3ZWJ1
+aS1yZWxhdGVkIGlzc3VlcyIuLi4NCg0KLS0NClBhdHJpY2sgV2lsbGlhbXMNCg0K
 
+--_000_ME3PR01MB80812BFD29B6884A816CC01EC9949ME3PR01MB8081ausp_
+Content-Type: text/html; charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
 
-> +&i2c0 {
-> +       /* SMB_IPMB_STBY_LVC3 */
-> +       multi-master;
-> +       general-call;
-> +       aspeed,dma-buf-size = <4095>;
-> +       aspeed,hw-timeout-ms = <300>;
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
+hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
+fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dgb2312">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:DengXian;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style>
+</head>
+<body lang=3D"ZH-CN" link=3D"blue" vlink=3D"#954F72" style=3D"word-wrap:bre=
+ak-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:&quot;Aria=
+l&quot;,sans-serif;color:#333333;background:#F7F8FA">An unauthorized error =
+was reported when I accessed the Web server through the browser. &nbsp;The =
+logs is attached below.</span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:&quot;Aria=
+l&quot;,sans-serif;color:#333333;background:#F7F8FA">By capturing network d=
+ata, I found that no more messages are sent after the Web Server and Web Cl=
+ient send Hello messages to each other.&nbsp;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:&quot;Aria=
+l&quot;,sans-serif;color:#333333;background:#F7F8FA">Further, through debug=
+ging I suspect that the authentication algorithm might be a bit of a proble=
+m. &nbsp;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">LOG:=
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt">=A1=AD<span lang=3D=
+"EN-US"><o:p></o:p></span></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: Starting Phosphor User Manager...<o:p=
+></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: Started Phosphor sysfs LED controller=
+.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: Started Phosphor sysfs LED controller=
+.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp nslcd[354]: [8b4567] &lt;group=3D&quot;priv-noacc=
+ess&quot;&gt; failed to bind to LDAP server ldap://127.0.0.1/: Can't contac=
+t LDAP server: Transport endpoint is not connected<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp nslcd[354]: [8b4567] &lt;group=3D&quot;priv-noacc=
+ess&quot;&gt; no available LDAP server found, sleeping 1 seconds<o:p></o:p>=
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: Finished Load/Save Random Seed.<o:p><=
+/o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp bmcweb[336]: Checking certs in file /etc/ssl/cert=
+s/https/server.pem<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp bmcweb[336]: Error in verifying signature, regene=
+rating<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp bmcweb[336]: Generating new keys<o:p></o:p></span=
+></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp bmcweb[336]: Generating EC key<o:p></o:p></span><=
+/p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: Started Name Service Cache Daemon.<o:=
+p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp bmcweb[336]: Generating x509 Certificate<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: Started LDAP daemon.<o:p></o:p></span=
+></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: obmc-phosphor-sysd.service: Main proc=
+ess exited, code=3Dexited, status=3D1/FAILURE<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: obmc-phosphor-sysd.service: Failed wi=
+th result 'exit-code'.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: Started OpenBMC ipKVM daemon.<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: Finished Permit User Sessions.<o:p></=
+o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: Started Phosphor Log Manager.<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp avahi-daemon[394]: Found user 'avahi' (UID 998) a=
+nd group 'avahi' (GID 998).<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp nslcd[354]: [7b23c6] &lt;group/member=3D&quot;ava=
+hi&quot;&gt; failed to bind to LDAP server ldap://127.0.0.1/: Can't contact=
+ LDAP server: Transport endpoint is not connected<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp nslcd[354]: [7b23c6] &lt;group/member=3D&quot;ava=
+hi&quot;&gt; no available LDAP server found, sleeping 1 seconds<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp obmc-ikvm[392]: Failed to open input device<o:p><=
+/o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp audit[392]: ANOM_ABEND auid=3D4294967295 uid=3D0 =
+gid=3D0 ses=3D4294967295 pid=3D392 comm=3D&quot;obmc-ikvm&quot; exe=3D&quot=
+;/usr/bin/obmc-ikvm&quot; sig=3D6 res=3D1<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp obmc-ikvm[392]: Failed to open a file<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp obmc-ikvm[392]: terminate called after throwing a=
+n instance of 'sdbusplus::xyz::openbmc_project::Common::File::Error::Open'<=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp obmc-ikvm[392]:&nbsp;&nbsp; what():&nbsp; xyz.ope=
+nbmc_project.Common.File.Error.Open: Failed to open a file<o:p></o:p></span=
+></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp systemd[1]: Started Phosphor LDAP privilege mappe=
+r.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp kernel: audit: type=3D1701 audit(1613150256.355:2=
+): auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D392 comm=3D&quo=
+t;obmc-ikvm&quot; exe=3D&quot;/usr/bin/obmc-ikvm&quot; sig=3D6 res=3D1<o:p>=
+</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:36 zcu102-zynqmp phosphor-certificate-manager[363]: Writing privat=
+e key to file<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt">=A1=AD<span lang=3D=
+"EN-US"><o:p></o:p></span></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp sh[339]: Fingerprint: sha1!! 31:c8:95:38:53:b4:7d=
+:08:94:c9:44:1b:dd:ae:16:71:cc:ec:fd:d1<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Finished SSH Key Generation.<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[415]: systemd-coredump@0-395-0.service: P=
+rotectHostname=3Dyes is configured, but the kernel does not support UTS nam=
+espaces, ignoring namespace setup.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Wait for /xyz/openbmc_project=
+/control/host0/boot/one_time.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Wait for /xyz/openbmc_project=
+/control/host0/boot.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: start-ipkvm.service: Main process exi=
+ted, code=3Ddumped, status=3D6/ABRT<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: start-ipkvm.service: Failed with resu=
+lt 'core-dump'.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Wait for /xyz/openbmc_project=
+/control/host0/power_restore_policy.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Wait for /xyz/openbmc_project=
+/control/host0/restriction_mode.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Wait for /xyz/openbmc_project=
+/led/groups/bmc_booted.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Wait for /xyz/openbmc_project=
+/time/sync_method.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor LED Group Management=
+ Daemon.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor Ldap config updater.=
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor SNMP conf Manager.<o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor Network Manager.<o:p=
+></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started OpenBMC Software Update Manag=
+er.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp phosphor-chassis-state-manager[414]: Initial Chas=
+sis State will be Off<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor Chassis State Manage=
+r.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Wait for /xyz/openbmc_project=
+/state/chassis0.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp nslcd[354]: [8b4567] &lt;group=3D&quot;priv-noacc=
+ess&quot;&gt; failed to bind to LDAP server ldap://127.0.0.1/: Can't contac=
+t LDAP server: Transport endpoint is not connected<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp nslcd[354]: [8b4567] &lt;group=3D&quot;priv-noacc=
+ess&quot;&gt; no available LDAP server found, sleeping 1 seconds<o:p></o:p>=
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp phosphor-bmc-state-manager[413]: Setting the BMCS=
+tate field<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp phosphor-bmc-state-manager[413]: Setting the BMCS=
+tate field<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Starting Wait for /xyz/openbmc_projec=
+t/led/groups...<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Starting Phosphor Inband IPMI...<o:p>=
+</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Stopping Network Service...<o:p></o:p=
+></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp nscd[341]: 341 ignored inotify event for `/etc/re=
+solv.conf` (file exists)<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp nscd[341]: 341 ignored inotify event for `/etc/re=
+solv.conf` (file exists)<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd-timesyncd[233]: Network configuration cha=
+nged, trying to establish connection.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Platform =
+Persistent Storage Archival being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Starting Phosphor Version Software Ma=
+nager...<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp ipmid[426]: JSON file not found<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp ipmid[426]: JSON file not found<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Wait for /xyz/openbmc_project=
+/led/groups.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd-timesyncd[233]: Network configuration cha=
+nged, trying to establish connection.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp nslcd[354]: [7b23c6] &lt;group/member=3D&quot;ava=
+hi&quot;&gt; failed to bind to LDAP server ldap://127.0.0.1/: Can't contact=
+ LDAP server: Transport endpoint is not connected<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp nslcd[354]: [7b23c6] &lt;group/member=3D&quot;ava=
+hi&quot;&gt; no available LDAP server found, sleeping 1 seconds<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp audit[426]: ANOM_ABEND auid=3D4294967295 uid=3D0 =
+gid=3D0 ses=3D4294967295 pid=3D426 comm=3D&quot;ipmid&quot; exe=3D&quot;/us=
+r/bin/ipmid&quot; sig=3D11 res=3D1<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: systemd-networkd.service: Succeeded.<=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Stopped Network Service.<o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp kernel: audit: type=3D1701 audit(1613150257.355:3=
+): auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D426 comm=3D&quo=
+t;ipmid&quot; exe=3D&quot;/usr/bin/ipmid&quot; sig=3D11 res=3D1<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: obmc-phosphor-sysd.service: Scheduled=
+ restart job, restart counter is at 1.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor BMC State Manager.<o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor Inband IPMI.<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor Version Software Man=
+ager.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Kernel Tr=
+ace File System being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Create li=
+st of static device nodes for the current kernel being skipped.<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Stopped Phosphor System Manager.<o:p>=
+</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in File Syst=
+em Check on Root Device being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Load Kern=
+el Modules being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in FUSE Cont=
+rol File System being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Starting Network Service...<o:p></o:p=
+></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp nslcd[354]: [3c9869] &lt;group/member=3D&quot;sys=
+temd-network&quot;&gt; failed to bind to LDAP server ldap://127.0.0.1/: Can=
+'t contact LDAP server: Transport endpoint is not connected<o:p></o:p></spa=
+n></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp nslcd[354]: [3c9869] &lt;group/member=3D&quot;sys=
+temd-network&quot;&gt; no available LDAP server found, sleeping 1 seconds<o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Platform =
+Persistent Storage Archival being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /var/cache being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /var/lib being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /var/spool being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /srv being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Commit a =
+transient machine-id on disk being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started FRU Fault monitor service.<o:=
+p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor System Manager.<o:p>=
+</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Network IPMI daemon.<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Check Hos=
+t0 status on BMC reset being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Reached target Host0 running after re=
+set.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Start hos=
+t0 running after BMC reset being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Starting Phosphor Host State Manager.=
+..<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Process Core Dump (PID 430/UI=
+D 0).<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[437]: systemd-coredump@1-430-0.service: P=
+rivateNetwork=3Dyes is configured, but the kernel does not support network =
+namespaces, ignoring.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp audit[435]: ANOM_ABEND auid=3D4294967295 uid=3D0 =
+gid=3D0 ses=3D4294967295 pid=3D435 comm=3D&quot;netipmid&quot; exe=3D&quot;=
+/usr/bin/netipmid&quot; sig=3D11 res=3D1<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp kernel: audit: type=3D1701 audit(1613150257.583:4=
+): auid=3D4294967295 uid=3D0 gid=3D0 ses=3D4294967295 pid=3D435 comm=3D&quo=
+t;netipmid&quot; exe=3D&quot;/usr/bin/netipmid&quot; sig=3D11 res=3D1<o:p><=
+/o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Process Core Dump (PID 438/UI=
+D 0).<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp obmc-phosphor-sysd[434]:&nbsp;&nbsp; File &quot;/=
+usr/sbin/obmc-phosphor-sysd&quot;, line 26<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp obmc-phosphor-sysd[434]:&nbsp;&nbsp;&nbsp;&nbsp; =
+print &quot;obmc-phosphor-watchdogd starting...&quot;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp obmc-phosphor-sysd[434]:&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ^<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp obmc-phosphor-sysd[434]: SyntaxError: Missing par=
+entheses in call to 'print'. Did you mean print(&quot;obmc-phosphor-watchdo=
+gd starting...&quot;)?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[439]: systemd-coredump@2-438-0.service: P=
+rivateNetwork=3Dyes is configured, but the kernel does not support network =
+namespaces, ignoring.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: obmc-phosphor-sysd.service: Main proc=
+ess exited, code=3Dexited, status=3D1/FAILURE<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: obmc-phosphor-sysd.service: Failed wi=
+th result 'exit-code'.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp phosphor-host-state-manager[436]: Initial Host St=
+ate will be Off<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor Host State Manager.<=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Wait for /xyz/openbmc_project=
+/state/host0.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Starting Reboot If Enabled...<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Starting Reset host sensors...<o:p></=
+o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp phosphor-discover-system-state[441]: Host power i=
+s off, checking power policy<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Starting Phosphor Time Manager daemon=
+...<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Finished Reboot If Enabled.<o:p></o:p=
+></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp phosphor-timemanager[444]: Time mode is changed<o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[437]: systemd-coredump@1-430-0.service: P=
+rotectHostname=3Dyes is configured, but the kernel does not support UTS nam=
+espaces, ignoring namespace setup.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Kernel Tr=
+ace File System being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Create li=
+st of static device nodes for the current kernel being skipped.<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in File Syst=
+em Check on Root Device being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Load Kern=
+el Modules being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in FUSE Cont=
+rol File System being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Platform =
+Persistent Storage Archival being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /var/cache being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /var/lib being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /var/spool being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /srv being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Condition check resulted in Commit a =
+transient machine-id on disk being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Starting Time &amp; Date Service...<o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp phosphor-mapper[378]: Introspect call failed with=
+ error: generic:113, No route to host on process: xyz.openbmc_project.Contr=
+ol.Host path: /<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: phosphor-ipmi-host.service: Main proc=
+ess exited, code=3Ddumped, status=3D11/SEGV<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: phosphor-ipmi-host.service: Failed wi=
+th result 'core-dump'.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[439]: systemd-coredump@2-438-0.service: P=
+rotectHostname=3Dyes is configured, but the kernel does not support UTS nam=
+espaces, ignoring namespace setup.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: phosphor-reset-sensor-states@0.servic=
+e: Succeeded.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Finished Reset host sensors.<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Reached target Host0 (Reset Check).<o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: phosphor-ipmi-net@eth0.service: Main =
+process exited, code=3Ddumped, status=3D11/SEGV<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: phosphor-ipmi-net@eth0.service: Faile=
+d with result 'core-dump'.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[447]: systemd-timedated.service: ProtectH=
+ostname=3Dyes is configured, but the kernel does not support UTS namespaces=
+, ignoring namespace setup.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Time &amp; Date Service.<o:p>=
+</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd-timedated[447]: Set NTP to enabled (syste=
+md-timesyncd.service).<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp phosphor-timemanager[444]: Updated NTP setting<o:=
+p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:37 zcu102-zynqmp systemd[1]: Started Phosphor Time Manager daemon.=
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp nslcd[354]: [8b4567] &lt;group=3D&quot;priv-noacc=
+ess&quot;&gt; failed to bind to LDAP server ldap://127.0.0.1/: Can't contac=
+t LDAP server: Transport endpoint is not connected<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp nslcd[354]: [8b4567] &lt;group=3D&quot;priv-noacc=
+ess&quot;&gt; no available LDAP server found, sleeping 1 seconds<o:p></o:p>=
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: start-ipkvm.service: Scheduled restar=
+t job, restart counter is at 1.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in Kernel Tr=
+ace File System being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in Create li=
+st of static device nodes for the current kernel being skipped.<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Stopped OpenBMC ipKVM daemon.<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in File Syst=
+em Check on Root Device being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in Load Kern=
+el Modules being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in FUSE Cont=
+rol File System being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in Platform =
+Persistent Storage Archival being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /var/cache being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /var/lib being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /var/spool being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in Bind moun=
+t volatile /srv being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Feb =
+12 17:17:38 zcu102-zynqmp systemd[1]: Condition check resulted in Commit a =
+transient machine-id on disk being skipped.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Tan =
+Dehui<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal">=B4=D3<span lang=3D"EN-US"> Windows </span>=B0=E6<sp=
+an lang=3D"EN-US"><a href=3D"https://go.microsoft.com/fwlink/?LinkId=3D5509=
+86"><span lang=3D"EN-US"><span lang=3D"EN-US">=D3=CA=BC=FE</span></span></a=
+></span>=B7=A2=CB=CD</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt;font-=
+family:SimSun"><o:p>&nbsp;</o:p></span></p>
+<div style=3D"mso-element:para-border-div;border:none;border-top:solid #E1E=
+1E1 1.0pt;padding:3.0pt 0cm 0cm 0cm">
+<p class=3D"MsoNormal" style=3D"border:none;padding:0cm"><b>=B7=A2=BC=FE=C8=
+=CB<span lang=3D"EN-US">: </span>
+</b><span lang=3D"EN-US"><a href=3D"mailto:patrick@stwcx.xyz">Patrick Willi=
+ams</a><br>
+</span><b>=B7=A2=CB=CD=CA=B1=BC=E4<span lang=3D"EN-US">: </span></b><span l=
+ang=3D"EN-US">2021</span>=C4=EA<span lang=3D"EN-US">11</span>=D4=C2<span la=
+ng=3D"EN-US">10</span>=C8=D5<span lang=3D"EN-US"> 1:47<br>
+</span><b>=CA=D5=BC=FE=C8=CB<span lang=3D"EN-US">: </span></b><span lang=3D=
+"EN-US"><a href=3D"mailto:dehuitan1988@hotmail.com">tandehui</a><br>
+</span><b>=B3=AD=CB=CD<span lang=3D"EN-US">: </span></b><span lang=3D"EN-US=
+"><a href=3D"mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a><=
+br>
+</span><b>=D6=F7=CC=E2<span lang=3D"EN-US">: </span></b><span lang=3D"EN-US=
+">Re: ARM aarch64 confuse</span></p>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt;font-=
+family:SimSun"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">On Tue, Nov 09, 2021 at 03:53:2=
+0PM +0800, tandehui wrote:</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&gt; So does OpenBMC support 64=
+-bit processors? If yes, what special
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&gt; attention should be paid t=
+o it?</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I believe the latest Nuvoton ch=
+ips are already aarch64.&nbsp; In theory, our code</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">should be fairly 32/64-bit agno=
+stic.&nbsp; There have been a few bugs where the code</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">made 32-bit assumptions, especi=
+ally around serializing data to/from files.</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">There could certainly be more.<=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&gt; I am running openbmc on a =
+ARM aarch64 cpu. I'm experiencing
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&gt; some webui-related issues =
+that seem to be related to 64-bit processors.</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">The webui executes on browser (=
+it is all javascript) and shouldn't care what</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">kind of processor is exposing t=
+he REST/Redfish APIs.&nbsp; Can you elaborate on what</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">kind of problems you are seeing=
+?&nbsp; It is certainly possible that there are bugs</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">in the Redfish APIs themselves =
+(see above), but it is hard to know without some</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">more details on what you mean b=
+y &quot;some webui-related issues&quot;...</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">-- </span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Patrick Williams</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
 
-These properties are not available in openbmc linux kernel tree, but
-used in Intel-BMC/linux, may I ask if you are going to upstream the
-related changes?
-
-> +       status = "okay";
-> +};
-> +
-
--- 
-BRs,
-Lei YU
+--_000_ME3PR01MB80812BFD29B6884A816CC01EC9949ME3PR01MB8081ausp_--
