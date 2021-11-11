@@ -1,64 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B105D44D81F
-	for <lists+openbmc@lfdr.de>; Thu, 11 Nov 2021 15:17:44 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19DFD44DC7B
+	for <lists+openbmc@lfdr.de>; Thu, 11 Nov 2021 21:26:21 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HqkMB4RRMz304t
-	for <lists+openbmc@lfdr.de>; Fri, 12 Nov 2021 01:17:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HqtXV6Yqhz305B
+	for <lists+openbmc@lfdr.de>; Fri, 12 Nov 2021 07:26:18 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=h98KfKhe;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=unURXPAV;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::229;
- helo=mail-lj1-x229.google.com; envelope-from=hughsient@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=h98KfKhe; dkim-atps=neutral
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com
- [IPv6:2a00:1450:4864:20::229])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=unURXPAV; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HqkLp3N9jz2yb5
- for <openbmc@lists.ozlabs.org>; Fri, 12 Nov 2021 01:17:20 +1100 (AEDT)
-Received: by mail-lj1-x229.google.com with SMTP id z8so12178907ljz.9
- for <openbmc@lists.ozlabs.org>; Thu, 11 Nov 2021 06:17:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=Bse4adxE4e44Go3vyIVdmhc526CY8D8VmAClhrpwtvk=;
- b=h98KfKhe2Xml0DpPTdIVSh5DIm5COv4ujY1VZ+khmOl3KyroygGsn3Jq4zsAD04fpO
- IIxCbetbM8VeWEGnJQ4A9mjzPUOseiHvH2RmikZtBikISAWX0Dpga8xxYrfg4ps2U0aj
- /9U6BX0Wmbx3qAK48TVUUAABxgF8+tv1DHo2KDpoJzcQE9P/0WVEOg/o0h2jTgACUVuv
- Svt0urcYofeojitEJAvqKCjvJ7KfrxQvONA/a2ZP4gjjEUPZdbv7s+ud3WxRs4XUt0pK
- sxPHZNs/2mr0HgaBT8uxI/+mixyBXM49128MSjXyaIKNCtJvC+zxcKViLC6QfYstaE0D
- Dppw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Bse4adxE4e44Go3vyIVdmhc526CY8D8VmAClhrpwtvk=;
- b=SKA3TFORG8uw5yH8jpynFXp9TOKN48DXc6e/ay+v1i2/J7pWID7okgAeEOIdwM692j
- UEnF3wlu1r/5qQdeCIMc5M3eDnQ29I269frJ5Jwtow01N2e/Wv1aF4fWtTl5ScFQMtGJ
- ykeItkkcHIeK0I+ZT9ZXtGwwW+vcLHJqKHjKkmRl5pq+JtBBYF1wIWO+w/1je6+EWzD/
- O3sgXDcnHjrquZvOeuKmJ+dSJR2+LGgnrbFKrFyqL+fgWjshXoa5B1rme1nhFDzAmdtn
- qI8gNcCZ5ilDS0lyNA08umWPIM4S0ThrIgNOFg0P2nB/DiQyNzfidgR8QRyhbrdydBFY
- dvsA==
-X-Gm-Message-State: AOAM5336zWwY+/9R9OWTjlOncWAcRp1Ops8CnBrZOR63RBvmea4WG38O
- fsnxGzI8WwAusXUIO4QBK3CWllQBiM2zMv1piDS1KYAyxLI=
-X-Google-Smtp-Source: ABdhPJwQjkKDGm5InVbr2hKavr+zcu5ONe4ksr59/XOLtNHRyxHCe47HVKJUrGAFraC+07ItkVz5HoHunz3/oLKCPd0=
-X-Received: by 2002:a2e:9641:: with SMTP id z1mr7948750ljh.66.1636640230553;
- Thu, 11 Nov 2021 06:17:10 -0800 (PST)
-MIME-Version: 1.0
-From: Richard Hughes <hughsient@gmail.com>
-Date: Thu, 11 Nov 2021 14:16:59 +0000
-Message-ID: <CAD2FfiGpG_J5W8Ftdp5wE2wLB=7Tfmvfmivy0_4vW=D0fYdw3g@mail.gmail.com>
-Subject: Redfish implementation does not supply SoftwareId
-To: openbmc@lists.ozlabs.org
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HqtX505ZBz2yPp
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Nov 2021 07:25:56 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id CC1E445BF1;
+ Thu, 11 Nov 2021 20:25:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1636662349; x=1638476750; bh=6gDZLMf4TvWeS5t/XFi9kNM78
+ Izk9i5A/kJCZnzJ4MU=; b=unURXPAV17xCErdTCAZEbRotgjBVi0JM9663mPiwl
+ 8SmM7wbmOCQPozgdUxARXQZYd+PpU+T3F9mwsM8kZjyCHfQLIK8AbV4O9y3FjblY
+ E9N5o4xGmAsRK7gOxuULe85nN/Tmg9r7OBgSErZsa4RHKcO+6gNuVIjTntyqqNQf
+ GE=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id cr5eBZthYzEg; Thu, 11 Nov 2021 23:25:49 +0300 (MSK)
+Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
+ [172.17.100.104])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 8F3E94597C;
+ Thu, 11 Nov 2021 23:25:48 +0300 (MSK)
+Received: from [10.199.10.105] (10.199.10.105) by T-EXCH-04.corp.yadro.com
+ (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 11
+ Nov 2021 23:25:47 +0300
+Message-ID: <98e923bf1a12d2819510be7c74e497628988454f.camel@yadro.com>
+Subject: Re: [External] [PATCH 2/2] ARM: dts: aspeed: add device tree for
+ YADRO VEGMAN BMC
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: Lei Yu <yulei.sh@bytedance.com>
+Date: Thu, 11 Nov 2021 23:25:46 +0300
+In-Reply-To: <CAGm54UESNecrEJfiv9vXyLYqM6OSGp1Cxt8hB0UJgG_Bgi=-tg@mail.gmail.com>
+References: <20211110222803.836-1-a.kartashev@yadro.com>
+ <20211110222803.836-3-a.kartashev@yadro.com>
+ <CAGm54UESNecrEJfiv9vXyLYqM6OSGp1Cxt8hB0UJgG_Bgi=-tg@mail.gmail.com>
+Organization: YADRO
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.4 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.199.10.105]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,48 +78,91 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: andrew@aj.id.au, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi all,
+On Thu, 2021-11-11 at 10:13 +0800, Lei Yu wrote:
+> On Thu, Nov 11, 2021 at 6:29 AM Andrei Kartashev
+> <a.kartashev@yadro.com> wrote:
+> > +
+> > +&fmc {
+> > +       status = "okay";
+> > +       flash@0 {
+> > +               status = "okay";
+> > +               label = "bmc";
+> > +               m25p,fast-read;
+> > +               partitions {
+> > +                       compatible = "fixed-partitions";
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <1>;
+> > +
+> > +                       u-boot@0 {
+> > +                               reg = <0x0 0x80000>; // 512KB
+> > +                               label = "u-boot";
+> > +                       };
+> > +
+> > +                       fit-image-a@80000 {
+> > +                               reg = <0x80000 0x1b80000>; // 27.5MB
+> > +                               label = "image-a";
+> > +                       };
+> > +
+> > +                       sofs@1c00000 {
+> > +                               reg = <0x1c00000 0x200000>; // 2MB
+> > +                               label = "sofs";
+> > +                       };
+> > +
+> > +                       rwfs@1e00000 {
+> > +                               reg = <0x1e00000 0x600000>;  // 6MB
+> > +                               label = "rwfs";
+> > +                       };
+> > +
+> > +                       u-boot-env@2400000 {
+> > +                               reg = <0x2400000 0x20000>; // 128KB
+> > +                               label = "u-boot-env";
+> > +                       };
+> > +
+> > +                       fit-image-b@2480000 {
+> > +                               reg = <0x2480000 0x1b80000>; //
+> > 27.5MB
+> > +                               label = "image-b";
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> 
+> The flash layout is not the same as the openbmc static layout, but
+> like the one used by Intel-BMC.
+> May I ask if you are going to upstream the bmc-code-update related
+> changes for this layout?
 
-My name is Richard Hughes and I'm the upstream maintainer of fwupd
-which is a linux program that allows flashing hardware. It's used by a
-few million people already and there's recently been a lot of interest
-about getting fwupd to run on the actual BMC chip, rather than on the
-host OS. That's not really what this email is about, but might explain
-the bigger picture. I'll come back to this in a few weeks time :)
+Yeh, we got to this mess, so now it is not easy to change, so we have
+to deal with Intel-BMC layout.
+We have our own utility to manage firmware:
+https://github.com/YADRO-KNS/obmc-yadro-fwupdate
+What to do with updates through webui, I don't know yet.
 
-At the moment fwupd runs on the host OS and uses a plugin to
-communicate with various Redfish implementations, for example iDRAC
-for Dell or XClarity for Lenovo. Teddy Reed kindly donated (loaned?)
-me some hardware so I could test the fwupd plugin against the Redfish
-implementation of OpenBMC, more specifically git master on a
-evb-ast2500 board.
+> > +&i2c0 {
+> > +       /* SMB_IPMB_STBY_LVC3 */
+> > +       multi-master;
+> > +       general-call;
+> > +       aspeed,dma-buf-size = <4095>;
+> > +       aspeed,hw-timeout-ms = <300>;
+> 
+> These properties are not available in openbmc linux kernel tree, but
+> used in Intel-BMC/linux, may I ask if you are going to upstream the
+> related changes?
+> 
 
-With a small patch to fwupd (setting CURLOPT_SSL_VERIFYHOST=0) it
-seems to load and enumerate correctly, but doesn't add any devices.
-The reason I found was that the SoftwareId property is missing from
-the /redfish/v1/UpdateService/FirmwareInventory/7d021ade path. The
-SoftwareId is the "key" that maps the hardware to a specific firmware
-*stream*, so for instance it could be something like
-"USB\VID_17EF&PID_3083" for a peripheral or some other kind of
-vendor-specific string, e.g. "SAMSUNG MZVLB2T0HALB-000L7". The idea is
-that vendors then upload firmware to the LVFS website with a defined
-*stream* and updates get deployed onto matching hardware
-automatically. I'm not so sure that makes a huge amount of sense for
-the OpenBMC BMC image itself. Or maybe it does; getting new official
-OpenBMC images from the LVFS would be way cool, but I don't think we
-want to flash the entire MTD image. Anyway, I digress.
+Thank you for pointing this, will remove in next revision.
 
-I guess my question is if I could get a SoftwareId set for 7d021ade --
-e.g. "evb-ast2500" -- that at least allows the device to enumerate in
-fwupd and gives me something to test against. I guess my next question
-is how a OpenBMC distributor adds a new device into
-/redfish/v1/UpdateService/FirmwareInventory.Members -- and if there's
-a way to set SoftwareId for that new device too.
+> > +       status = "okay";
+> > +};
+> > +
+> 
 
-Sorry if all these are newbie questions, and I appreciate any
-pointers; I'm happy to send patches. Thanks.
+-- 
+Best regards,
+Andrei Kartashev
 
-Richard.
+
