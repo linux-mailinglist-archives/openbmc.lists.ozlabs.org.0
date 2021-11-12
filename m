@@ -2,87 +2,98 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 971A344EB3B
-	for <lists+openbmc@lfdr.de>; Fri, 12 Nov 2021 17:17:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 409F444EDEB
+	for <lists+openbmc@lfdr.de>; Fri, 12 Nov 2021 21:30:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HrNzK2vFpz3bP4
-	for <lists+openbmc@lfdr.de>; Sat, 13 Nov 2021 03:17:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HrVZt0LRTz3bN5
+	for <lists+openbmc@lfdr.de>; Sat, 13 Nov 2021 07:30:30 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=GXMeN0rc;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=ktCc78V4;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=SK1hig5U;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
- helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=GXMeN0rc; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=ktCc78V4; 
- dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=SK1hig5U; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HrNys2ryQz2ymt
- for <openbmc@lists.ozlabs.org>; Sat, 13 Nov 2021 03:17:24 +1100 (AEDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
- by mailout.nyi.internal (Postfix) with ESMTP id A9EBC5C19AB
- for <openbmc@lists.ozlabs.org>; Fri, 12 Nov 2021 11:17:19 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute6.internal (MEProxy); Fri, 12 Nov 2021 11:17:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:subject:message-id:mime-version:content-type; s=
- fm3; bh=epVX3inosyXGqqJdH05TXg28JQ1k1m3dgx9+HhPqegA=; b=GXMeN0rc
- pryXPXa0QEnfvnZpJlNBlhOnFe3cIL1P26noWiUf7Dg7yTvJDzpKZ2883VZE9FXG
- eHo+Y1/kK7iFKyV8B+2FA+vByCEUCu03P0yMs7yUpXtpGQHdEOmWWxymsUe7EyNC
- rBaQMVmbdRz1Q3GIqXgTj5XI3XHqaDt6FPzko07dWE9QMV4LcrQZzjabZMF9tiZF
- bdN8QQnChYc5ysrMEXnujz7QZCxxaArltvQcjOReIwP9soP4AMbCuqWMKYOOSOwt
- VTVkFVcTnB5KhocQsF/guMLxe5NLKjGcXN2KVLxOcXdBJQGaQrzg2BoANbs6iiIN
- eeEtmZKEIhX23Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:message-id
- :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; bh=epVX3inosyXGqqJdH05TXg28JQ1k1
- m3dgx9+HhPqegA=; b=ktCc78V49dc5Lg7fOvLvxokpIMDjD/o+R8p38pSeEiphq
- 3NSE2bk/p+9qy20mMEtL7dQb8B6nM8aTOU/+tWpSVneXXvJvGld0X6ZwIStXtrHy
- AjGdSlJOEmrZvhIkqGh+z6vxezd9mpNICFCp8NI1o1Eb77+rOuc2BGCRvVDwnjAo
- ZamoF1v/W6BqJciQz/FiNxWbbPZ+kWHHGiFRrhrDjaY1qPDPlokgTbvrcg1Og7Gu
- lfJSAlZqzDBcyL2b8/uwSGzHu7MxbtrFWXJiesy+94OQ1j9sxoVq/d7ZT9L6b6b+
- fAEY13cEyUBrlzODDw2+z6/zlC38RSPa/urK6v+0w==
-X-ME-Sender: <xms:j5OOYeqU7u8nFVFGPW5gQXEnYy2huCC3KHLy0DXf9VR6rRIjxOBsyw>
- <xme:j5OOYcq_Df6BNJcFIvapV1i1rAZBEJiPOtS2uuzNor020JnkPmJnN02vKQopDQvbS
- CRkiD9FRoRmzx-xsf8>
-X-ME-Received: <xmr:j5OOYTN9wndPXZ_AL1HyZEcTRHbHL7JLpoU0sQASZhFEQr5T7DydzPieneZxtEqUDtVfxxX_1gTPLQiJ1Z9RB63bG1loPEQK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrvdefgdekfecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfggtggusehgtderredttddvnecu
- hfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsthiftg
- igrdighiiiqeenucggtffrrghtthgvrhhnpeeftdffvefggeelleehteelkefgheduhfej
- feeggeeifedutdehvdethfehveehvdenucffohhmrghinhepohhpvghnsghmtgdqphhroh
- hjvggtthdrgiihiienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
- fhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:j5OOYd6MMqSkb03V_yncJ_bCNmTfKCUCyHUOaW1KkAq6MIher6FlSw>
- <xmx:j5OOYd4yAfGZoM_c3ypnjydgIOw-d090eYQA4ivc-3W3gM7BgrKWyA>
- <xmx:j5OOYdi4xJrA-7kBvIhK0qlSs0kEgnWfDVkWoAluyzStsToREjnQiA>
- <xmx:j5OOYeVh2udhaBVq_azNgOQ8D6EyDRl8FULLbiQi0geEHUeMpBTgvg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Fri, 12 Nov 2021 11:17:19 -0500 (EST)
-Date: Fri, 12 Nov 2021 10:17:17 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Unix-mode newlines
-Message-ID: <YY6TjcddpoYGmEK2@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HrVZL2Lflz2yfr;
+ Sat, 13 Nov 2021 07:30:01 +1100 (AEDT)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1ACKD3RF013752; 
+ Fri, 12 Nov 2021 20:29:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=HXFplJHayDK9tdmNj0AR0yX2Zw7ksjGKwNpuy5qtPLg=;
+ b=SK1hig5Uo6+sR99lEHxi5XheBsuci4yxgnNXm3S7ANQHv7Sk9j2yf+fVw4kkyyYFVjuN
+ W9n6pXXgoYsv9MoD3ZulQvPxr7WAt+Nns6eir5eKTJhGnfDP7M3X8zZXL6SC3q7J7xT9
+ wAoc4ALcGv0DJgDIbcdn1b9OilMbKoQvbwrLxQc2pHTXWh4tNnFvOtuWWLjwtXn0QPkV
+ koLi5dPGXong/jfRr7OSFb7dxa2A5kAbTCc8VANsjyO+GjmpY0gL0Yeax9sK5f/27lo8
+ y6NnECCOX2XXdWzcPuSHYquCG26vJY5VxnsPUTUsXrZLYfGWcftoWjDk2SIL8LkJ+YtT CA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3c9y43g9a0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Nov 2021 20:29:37 +0000
+Received: from m0098414.ppops.net (m0098414.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 1ACKFHxW021575;
+ Fri, 12 Nov 2021 20:29:37 GMT
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3c9y43g99t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Nov 2021 20:29:37 +0000
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 1ACKDLZ0020198;
+ Fri, 12 Nov 2021 20:29:36 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma01dal.us.ibm.com with ESMTP id 3c5hbety0q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Nov 2021 20:29:36 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 1ACKTYw257475502
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 12 Nov 2021 20:29:34 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2C540C6063;
+ Fri, 12 Nov 2021 20:29:34 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B4779C605A;
+ Fri, 12 Nov 2021 20:29:33 +0000 (GMT)
+Received: from fstone01p1.aus.stglabs.ibm.com (unknown [9.3.116.196])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Fri, 12 Nov 2021 20:29:33 +0000 (GMT)
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: linux@armlinux.org.uk, joel@jms.id.au, andrew@aj.id.au, olof@lixom.net,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: configs: aspeed: Add support for USB flash drives
+Date: Fri, 12 Nov 2021 20:29:31 +0000
+Message-Id: <20211112202931.2379145-1-anoo@linux.ibm.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="IHkZ/X5RFqsXTNmC"
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Li_P3rDViSUZmdcxYvh6Z2jdYEQjN8qa
+X-Proofpoint-GUID: pr-DF1aqYKsbRAaOL80q7zjY_KkdZiyp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
+ definitions=2021-11-12_05,2021-11-12_01,2020-04-07_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1011
+ impostorscore=0 priorityscore=1501 adultscore=0 phishscore=0 mlxscore=0
+ malwarescore=0 mlxlogscore=999 suspectscore=0 lowpriorityscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2110150000 definitions=main-2111120107
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,59 +105,84 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: bruce.mitchell@linux.vnet.ibm.com, openbmc@lists.ozlabs.org,
+ Adriana Kobylak <anoo@us.ibm.com>, eajames@linux.ibm.com,
+ liuxiwei1013@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+From: Adriana Kobylak <anoo@us.ibm.com>
 
---IHkZ/X5RFqsXTNmC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Add support to detect USB flash drives and create the /dev/sd* devices.
+Also add support for vfat to support USB drives formatted as FAT32.
+This support will be used to enable firmware updates via USB flash
+drives where the firmware image is stored in the USB drive and it's
+plugged into the BMC USB port.
 
-Hello,
+Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
+Tested-by: Adriana Kobylak <anoo@us.ibm.com>
+---
+ arch/arm/configs/aspeed_g5_defconfig | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-Generally we've had a preference for Unix-style newlines (\n) and not DOS-s=
-tyle
-newlines (\r\n), but it has never been documented.  I've recently found
-a small number of files that are either DOS-style or mixed-styles and I've =
-been
-fixing them as I've ran into them.
+diff --git a/arch/arm/configs/aspeed_g5_defconfig b/arch/arm/configs/aspeed_g5_defconfig
+index bee9422919aa..1b0d82c64ad4 100644
+--- a/arch/arm/configs/aspeed_g5_defconfig
++++ b/arch/arm/configs/aspeed_g5_defconfig
+@@ -37,11 +37,9 @@ CONFIG_KEXEC=y
+ CONFIG_VFP=y
+ CONFIG_NEON=y
+ CONFIG_KERNEL_MODE_NEON=y
+-CONFIG_FIRMWARE_MEMMAP=y
+ CONFIG_KPROBES=y
+ CONFIG_JUMP_LABEL=y
+ CONFIG_MODULES=y
+-# CONFIG_BLK_DEV_BSG is not set
+ # CONFIG_BLK_DEBUG_FS is not set
+ # CONFIG_MQ_IOSCHED_DEADLINE is not set
+ # CONFIG_MQ_IOSCHED_KYBER is not set
+@@ -98,6 +96,7 @@ CONFIG_NET_NCSI=y
+ CONFIG_DEVTMPFS=y
+ CONFIG_DEVTMPFS_MOUNT=y
+ # CONFIG_PREVENT_FIRMWARE_BUILD is not set
++CONFIG_FIRMWARE_MEMMAP=y
+ CONFIG_MTD=y
+ CONFIG_MTD_BLOCK=y
+ CONFIG_MTD_PARTITIONED_MASTER=y
+@@ -111,6 +110,8 @@ CONFIG_BLK_DEV_LOOP=y
+ CONFIG_BLK_DEV_NBD=y
+ CONFIG_EEPROM_AT24=y
+ CONFIG_EEPROM_AT25=y
++CONFIG_SCSI=y
++CONFIG_BLK_DEV_SD=y
+ CONFIG_NETDEVICES=y
+ CONFIG_NETCONSOLE=y
+ # CONFIG_NET_VENDOR_ALACRITECH is not set
+@@ -230,6 +231,7 @@ CONFIG_USB_DYNAMIC_MINORS=y
+ CONFIG_USB_EHCI_HCD=y
+ CONFIG_USB_EHCI_ROOT_HUB_TT=y
+ CONFIG_USB_EHCI_HCD_PLATFORM=y
++CONFIG_USB_STORAGE=y
+ CONFIG_USB_GADGET=y
+ CONFIG_USB_ASPEED_VHUB=y
+ CONFIG_USB_CONFIGFS=y
+@@ -277,6 +279,7 @@ CONFIG_FSI_OCC=y
+ CONFIG_EXT4_FS=y
+ CONFIG_FANOTIFY=y
+ CONFIG_OVERLAY_FS=y
++CONFIG_VFAT_FS=y
+ CONFIG_TMPFS=y
+ CONFIG_JFFS2_FS=y
+ # CONFIG_JFFS2_FS_WRITEBUFFER is not set
+@@ -292,6 +295,8 @@ CONFIG_PSTORE_PMSG=y
+ CONFIG_PSTORE_FTRACE=y
+ CONFIG_PSTORE_RAM=y
+ # CONFIG_NETWORK_FILESYSTEMS is not set
++CONFIG_NLS_CODEPAGE_437=y
++CONFIG_NLS_ISO8859_1=y
+ CONFIG_HARDENED_USERCOPY=y
+ CONFIG_FORTIFY_SOURCE=y
+ CONFIG_CRYPTO_HMAC=y
+-- 
+2.25.1
 
-I recently discovered that clang-format has options that allow us to force
-Unix-style newlines.  I've pushed up a commit to docs that makes two change=
-s to
-our C++ style guidelines:
-
-    1) Document expectation of using Unix-style newlines.
-    2) Update .clang-format to enforce Unix-style newlines.
-
-See https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/48770 .
-
-I'll leave this commit open until early next week and then merge it if I do=
-n't
-hear any concerns.
-
---=20
-Patrick Williams
-
---IHkZ/X5RFqsXTNmC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmGOk4sACgkQqwNHzC0A
-wRk/Vg//UlSOHcvCOqn9J6nqT/lZnGKdFF+/vqnyP9J5Bg8dqmGyKUPB2xgkj9Aj
-K1ZIqyUCukqUXRDSRMyohJm21IalbPTnPrqTYEA/nn2rO/HSsgGkPcIz1fOHck/h
-kkmbTGhRtY8IUJUP1dgghfzZkAkbOddW/bF2u/NNA3R2uDjqVobkBK8gGOq6EY67
-0cleTRwtJ8WbvspvXX3Bzob3NtqJvY5hHsVWzufsm5LzWH/2AkhjYSF66kLDcMnG
-1W3xDI/OTBfhvSU7NAiRNYZe7M3Ve5CxB1rPv47sQOkaZ3CjB0GGKYvNJNvv57vu
-3O1wItO6iIcIQldyiGQXvnytL20LpFV3dO02aSvyfqcJ2hb4W2Dg+i6hYmNl1m6B
-JWONQkQ4nK6PiirNhEa0aFaMHDpMZOfh/Elcx4RGP9ZJh2qVu/ydNaDN6KDVlTbQ
-jXFt9z3CPTmVk6XLoMTs3TQ56ZbpGlcEKNOAtVlwHmxEa7rEtaSuqrc/c5dH+Gay
-wFr0JC9sm2Dga8cBPAUff0adXjd1bgK8D2PhUE1TOdbDS1ZUnT2Cu+EPKgZwAM8A
-0OBM0jelh9Laz08kgScdLlwekN2Ew0XOX78E5wC+/ma/1KvjyLF6pADO3722+2Rt
-dhPid/S7PL2H/smukwwOl6NdRnr9j9W5P50AX65gGBV3rwREc2E=
-=/2O1
------END PGP SIGNATURE-----
-
---IHkZ/X5RFqsXTNmC--
