@@ -1,43 +1,50 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3099A450FE8
-	for <lists+openbmc@lfdr.de>; Mon, 15 Nov 2021 19:35:11 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FFAC4511B2
+	for <lists+openbmc@lfdr.de>; Mon, 15 Nov 2021 20:10:56 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HtHtN3zwvz3cVl
-	for <lists+openbmc@lfdr.de>; Tue, 16 Nov 2021 05:35:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HtJgf29T8z2yLv
+	for <lists+openbmc@lfdr.de>; Tue, 16 Nov 2021 06:10:54 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWDI6azB;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ smtp.mailfrom=linuxfoundation.org (client-ip=198.145.29.99;
+ helo=mail.kernel.org; envelope-from=gregkh@linuxfoundation.org;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
+ header.a=rsa-sha256 header.s=korg header.b=uWDI6azB; 
+ dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HtHqv32blz305V;
- Tue, 16 Nov 2021 05:32:59 +1100 (AEDT)
-X-IronPort-AV: E=McAfee;i="6200,9189,10169"; a="233746220"
-X-IronPort-AV: E=Sophos;i="5.87,237,1631602800"; d="scan'208";a="233746220"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Nov 2021 10:31:57 -0800
-X-IronPort-AV: E=Sophos;i="5.87,237,1631602800"; d="scan'208";a="735076418"
-Received: from tkolecki-mobl.ger.corp.intel.com (HELO localhost)
- ([10.249.154.97])
- by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Nov 2021 10:31:49 -0800
-From: Iwona Winiarska <iwona.winiarska@intel.com>
-To: linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH v3 13/13] docs: Add PECI documentation
-Date: Mon, 15 Nov 2021 19:25:52 +0100
-Message-Id: <20211115182552.3830849-14-iwona.winiarska@intel.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211115182552.3830849-1-iwona.winiarska@intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HtJgB5hCLz2xY4;
+ Tue, 16 Nov 2021 06:10:29 +1100 (AEDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E5FEC63715;
+ Mon, 15 Nov 2021 19:10:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+ s=korg; t=1637003426;
+ bh=DtHrB66HXLmxewymT8yGeifJxpPVREBisB7HVDuwLYk=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=uWDI6azBQctDhxtdF1G9iKbhqkN2qYhQctn9Q95ee03P+8wXH7qRA3GAepSUdZg2n
+ uKk6RWow7OZupqCCke9iIi2MeT8WkPYc4AvR4GCkYQP6OBFfqIRBToDvoJHxCRdtmJ
+ raMFBms7HRLxupcaecmEaqky9XClk8sQ0odpZa3o=
+Date: Mon, 15 Nov 2021 19:49:57 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Iwona Winiarska <iwona.winiarska@intel.com>
+Subject: Re: [PATCH v3 06/13] peci: Add device detection
+Message-ID: <YZKr1Rqfx6Cmw+Ok@kroah.com>
 References: <20211115182552.3830849-1-iwona.winiarska@intel.com>
+ <20211115182552.3830849-7-iwona.winiarska@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211115182552.3830849-7-iwona.winiarska@intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -52,137 +59,41 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
  Dave Hansen <dave.hansen@intel.com>, Zev Weiss <zweiss@equinix.com>,
  Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Jonathan Corbet <corbet@lwn.net>,
+ openbmc@lists.ozlabs.org,
  Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
  Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
  Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
  Rob Herring <robh+dt@kernel.org>, Borislav Petkov <bp@alien8.de>,
- Iwona Winiarska <iwona.winiarska@intel.com>,
  Dan Williams <dan.j.williams@intel.com>,
  Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
  linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
  Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
- Randy Dunlap <rdunlap@infradead.org>, Olof Johansson <olof@lixom.net>
+ Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+ Olof Johansson <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add a brief overview of PECI and PECI wire interface.
-The documentation also contains kernel-doc for PECI subsystem internals
-and PECI CPU Driver API.
+On Mon, Nov 15, 2021 at 07:25:45PM +0100, Iwona Winiarska wrote:
+> +void peci_device_destroy(struct peci_device *device)
+> +{
+> +	bool killed;
+> +
+> +	device_lock(&device->dev);
+> +	killed = kill_device(&device->dev);
 
-Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
----
- Documentation/index.rst      |  1 +
- Documentation/peci/index.rst | 16 +++++++++++
- Documentation/peci/peci.rst  | 51 ++++++++++++++++++++++++++++++++++++
- MAINTAINERS                  |  1 +
- 4 files changed, 69 insertions(+)
- create mode 100644 Documentation/peci/index.rst
- create mode 100644 Documentation/peci/peci.rst
+Eeek, why call this?
 
-diff --git a/Documentation/index.rst b/Documentation/index.rst
-index 54ce34fd6fbd..7671f2cd474f 100644
---- a/Documentation/index.rst
-+++ b/Documentation/index.rst
-@@ -137,6 +137,7 @@ needed).
-    misc-devices/index
-    scheduler/index
-    mhi/index
-+   peci/index
- 
- Architecture-agnostic documentation
- -----------------------------------
-diff --git a/Documentation/peci/index.rst b/Documentation/peci/index.rst
-new file mode 100644
-index 000000000000..989de10416e7
---- /dev/null
-+++ b/Documentation/peci/index.rst
-@@ -0,0 +1,16 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
-+
-+====================
-+Linux PECI Subsystem
-+====================
-+
-+.. toctree::
-+
-+   peci
-+
-+.. only::  subproject and html
-+
-+   Indices
-+   =======
-+
-+   * :ref:`genindex`
-diff --git a/Documentation/peci/peci.rst b/Documentation/peci/peci.rst
-new file mode 100644
-index 000000000000..331b1ec00e22
---- /dev/null
-+++ b/Documentation/peci/peci.rst
-@@ -0,0 +1,51 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
-+
-+========
-+Overview
-+========
-+
-+The Platform Environment Control Interface (PECI) is a communication
-+interface between Intel processor and management controllers
-+(e.g. Baseboard Management Controller, BMC).
-+PECI provides services that allow the management controller to
-+configure, monitor and debug platform by accessing various registers.
-+It defines a dedicated command protocol, where the management
-+controller is acting as a PECI originator and the processor - as
-+a PECI responder.
-+PECI can be used in both single processor and multiple-processor based
-+systems.
-+
-+NOTE:
-+Intel PECI specification is not released as a dedicated document,
-+instead it is a part of External Design Specification (EDS) for given
-+Intel CPU. External Design Specifications are usually not publicly
-+available.
-+
-+PECI Wire
-+---------
-+
-+PECI Wire interface uses a single wire for self-clocking and data
-+transfer. It does not require any additional control lines - the
-+physical layer is a self-clocked one-wire bus signal that begins each
-+bit with a driven, rising edge from an idle near zero volts. The
-+duration of the signal driven high allows to determine whether the bit
-+value is logic '0' or logic '1'. PECI Wire also includes variable data
-+rate established with every message.
-+
-+For PECI Wire, each processor package will utilize unique, fixed
-+addresses within a defined range and that address should
-+have a fixed relationship with the processor socket ID - if one of the
-+processors is removed, it does not affect addresses of remaining
-+processors.
-+
-+PECI subsystem internals
-+------------------------
-+
-+.. kernel-doc:: include/linux/peci.h
-+.. kernel-doc:: drivers/peci/internal.h
-+.. kernel-doc:: drivers/peci/core.c
-+.. kernel-doc:: drivers/peci/request.c
-+
-+PECI CPU Driver API
-+-------------------
-+.. kernel-doc:: drivers/peci/cpu.c
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0f7216644bd5..4db4979db60a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -14935,6 +14935,7 @@ R:	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
- L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
- S:	Supported
- F:	Documentation/devicetree/bindings/peci/
-+F:	Documentation/peci/
- F:	drivers/peci/
- F:	include/linux/peci-cpu.h
- F:	include/linux/peci.h
--- 
-2.31.1
+> +	device_unlock(&device->dev);
+> +
+> +	if (!killed)
+> +		return;
 
+What happened if something changed after you unlocked it?
+
+Why is kill_device() required at all?  That's a very rare function to
+call, and one that only one "bus" calls today because it is very
+special (i.e. crazy and broken...)
+
+thanks,
+
+greg k-h
