@@ -2,44 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E0D5452ED1
-	for <lists+openbmc@lfdr.de>; Tue, 16 Nov 2021 11:15:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F0DC453A75
+	for <lists+openbmc@lfdr.de>; Tue, 16 Nov 2021 20:54:39 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hthlh3sXQz2yLd
-	for <lists+openbmc@lfdr.de>; Tue, 16 Nov 2021 21:15:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Htxbc5YgFz2yPd
+	for <lists+openbmc@lfdr.de>; Wed, 17 Nov 2021 06:54:36 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=krKUMcTj;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de;
- envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22b;
+ helo=mail-oi1-x22b.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=krKUMcTj; dkim-atps=neutral
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com
+ [IPv6:2607:f8b0:4864:20::22b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HthlN4RSJz2xCC
- for <openbmc@lists.ozlabs.org>; Tue, 16 Nov 2021 21:15:25 +1100 (AEDT)
-Received: from [192.168.0.2] (ip5f5aecf5.dynamic.kabel-deutschland.de
- [95.90.236.245])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
- (No client certificate requested) (Authenticated sender: pmenzel)
- by mx.molgen.mpg.de (Postfix) with ESMTPSA id D06BD61E6478B;
- Tue, 16 Nov 2021 11:15:18 +0100 (CET)
-Message-ID: <57584776-06e7-0faf-aeb2-eab0c7c5ae1f@molgen.mpg.de>
-Date: Tue, 16 Nov 2021 11:15:18 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [RFC PATCH] ARM: aspeed: Add secure boot controller support
-Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>
-References: <20211019080608.283324-1-joel@jms.id.au>
- <8d1631a9-710e-c2c3-228c-d9a942e64aa5@molgen.mpg.de>
- <CACPK8XeDAHVgNObar=ZAOW=gzRhO_33Y-1hvJtF_fbyA2P4O6w@mail.gmail.com>
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <CACPK8XeDAHVgNObar=ZAOW=gzRhO_33Y-1hvJtF_fbyA2P4O6w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HtxbC2SRcz2xLJ
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Nov 2021 06:54:13 +1100 (AEDT)
+Received: by mail-oi1-x22b.google.com with SMTP id u74so920860oie.8
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Nov 2021 11:54:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=JwrN8XTuhFugG0tSBv8dAYpd8lTni7kRkZ8d5N3CwUM=;
+ b=krKUMcTjbmgbj4kOTP94xYZM1shxO2ecozzmTsoL2Q18aF9k9rXhr+5KY+uRxhWQ6H
+ P/6SfEplAMeTqpkbng1Fw/5SS2sD4u3oheg9nF8rr+hysYhxO5USd2ffGIy+pjhqfIIF
+ 1JzAoBl7/R0fWxE9dCCpUkvh1EX+PgaWuBkYuk9akGX4BMwCu3Kmj3vmYvmWinzoaelw
+ tjfVDfJCu5xAD/Ory5icHygFx7VsCDEzwDkEoZk/0hikLMyNOeWmUF/OOP6gwOhC0ZPR
+ XzEJxWgypMPnHdUBrMKmn7djpv223XTn2D0Kl+CBTbwrM08y6ezpw9nyXWIkO21gm1pe
+ +Pdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=JwrN8XTuhFugG0tSBv8dAYpd8lTni7kRkZ8d5N3CwUM=;
+ b=Bs6VIdkRCi4VQW7D2TLH4kkGFHvDyeMdfGuyL+4ytP2pPvKqfmG1Bl0Gj1C0ogtxQw
+ JJ32d3WKJD/NN3K8KtmVe+nG/HZK+cR7GU3uVz77wuye16RUtwPqJ+v91xIO5EzRljDa
+ fTqx020lyT+uHRlTROvgpMTq+CHkPb8VRUsoKYx2S0rjiXfe7/KootqAE9S5JTGfXHSq
+ BhRxLgXyTPh5x5KFIpwUYd0WylL9du5fLWyScsXZAFeZqpiX82qD+anFrmbDnDBpLygy
+ 1PR4Ip01733rjV557oKsdTZntRmqK9lTGb2yZXVir2krh61hjh9nPJvUcI9vL+QYeFbl
+ ns9Q==
+X-Gm-Message-State: AOAM533XcfFb2K5CwTyMD2JTJKjsEeq7a3Vyn0pAR2ULfj+APU3ADDr9
+ yjs8GJfmKruI0vobYtVE6oE=
+X-Google-Smtp-Source: ABdhPJy3k5LRqdiHoG3JduW8L95W/HVqO1Hbg3nXyrUGZvseJOWSNtEGpf7dHbCWIV1jgr/CfP++Dg==
+X-Received: by 2002:aca:afc6:: with SMTP id y189mr29752304oie.46.1637092448482; 
+ Tue, 16 Nov 2021 11:54:08 -0800 (PST)
+Received: from smtpclient.apple ([2600:1700:19e0:3310:1c73:91ab:eff9:a23d])
+ by smtp.gmail.com with ESMTPSA id r3sm3652430oti.51.2021.11.16.11.54.07
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 16 Nov 2021 11:54:08 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: New server added to OpenBMC CI pool
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <20211116000358.GF14774@packtop>
+Date: Tue, 16 Nov 2021 13:54:07 -0600
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3252E5FD-67E4-4018-A9E6-1775710F818B@gmail.com>
+References: <20211116000358.GF14774@packtop>
+To: Zev Weiss <zweiss@equinix.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,221 +81,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Edward Vielmetti <evielmetti@equinix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Joel,
 
 
-Am 16.11.21 um 06:39 schrieb Joel Stanley:
-> On Sat, 23 Oct 2021 at 05:15, Paul Menzel <pmenzel@molgen.mpg.de> wrote:
+> On Nov 15, 2021, at 6:03 PM, Zev Weiss <zweiss@equinix.com> wrote:
+>=20
+> Hi Andrew,
+>=20
+> A donated server from Equinix Metal is now online and has been added =
+as
+> a Jenkins node (builder_equinix_c0) in the OpenBMC CI pool.  This adds =
+a
+> decent chunk of capacity to the pool (it's a 24c/48t Epyc 7402P with
+> 64GB of RAM and ~1.2TB of SSD) that should help increase our overall
+> throughput on CI jobs.  We'll be providing any required support as
+> needed to keep it running smoothly and usefully.
 
->> Am 19.10.21 um 10:06 schrieb Joel Stanley:
->>> This reads out the status of the secure boot controller and exposes it
->>> in sysfs.
->>
->> Please elaborate, what that secure boot controller is, what ASpeed
-> 
-> ASPEED
+Thanks for the new jenkins node!
 
-Point taken. ;-)
+>=20
+> With the additional hardware now available, it would be great if we
+> could get e3c246d4i added to the list of platforms targeted by CI =
+runs.
 
->> devices support it (code seems to check for AST2600), and where it is
->> documented.
->>
->>> An example on a AST2600A3 QEmu model:
->>
->> Nit: QEMU
->>
->>>
->>>    # grep . /sys/bus/soc/devices/soc0/*
->>>    /sys/bus/soc/devices/soc0/abr_image:0
->>>    /sys/bus/soc/devices/soc0/family:AST2600
->>>    /sys/bus/soc/devices/soc0/low_security_key:0
->>>    /sys/bus/soc/devices/soc0/machine:Rainier 2U
->>>    /sys/bus/soc/devices/soc0/otp_protected:0
->>>    /sys/bus/soc/devices/soc0/revision:A3
->>>    /sys/bus/soc/devices/soc0/secure_boot:1
->>>    /sys/bus/soc/devices/soc0/serial_number:888844441234abcd
->>>    /sys/bus/soc/devices/soc0/soc_id:05030303
->>>    /sys/bus/soc/devices/soc0/uart_boot:1
->>
->> Can you please paste the full command to start the QEMU virtual machine?
-> 
-> The first hit on my search engine is for the QEMU documentation:
-> 
-> https://qemu.readthedocs.io/en/latest/system/arm/aspeed.html
-> 
-> I think this is sufficant.
+New system has been added to https://jenkins.openbmc.org/job/ci-openbmc/=20=
 
-Understood. Let’s hope the page is staying up for a long time, and 
-nobody edits the information.
+and other relevant daily jobs. This officially introduces the =
+meta-asrock layer
+into OpenBMC CI.
 
->> Maybe also mention the new log message:
->>
->>       AST2600 secure boot enabled
-> 
-> Sure.
-> 
->>
->>> Signed-off-by: Joel Stanley <joel@jms.id.au>
->>> ---
->>>    arch/arm/boot/dts/aspeed-g6.dtsi    |  5 ++
->>>    drivers/soc/aspeed/aspeed-socinfo.c | 71 +++++++++++++++++++++++++++++
->>>    2 files changed, 76 insertions(+)
->>>
->>> diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
->>> index ee171b3364fa..8f947ed47fc5 100644
->>> --- a/arch/arm/boot/dts/aspeed-g6.dtsi
->>> +++ b/arch/arm/boot/dts/aspeed-g6.dtsi
->>> @@ -384,6 +384,11 @@ adc1: adc@1e6e9100 {
->>>                                status = "disabled";
->>>                        };
->>>
->>> +                     sbc: secure-boot-controller@1e6f2000 {
->>> +                             compatible = "aspeed,ast2600-sbc";
->>> +                             reg = <0x1e6f2000 0x1000>;
->>> +                     };
->>> +
->>>                        gpio0: gpio@1e780000 {
->>>                                #gpio-cells = <2>;
->>>                                gpio-controller;
->>> diff --git a/drivers/soc/aspeed/aspeed-socinfo.c b/drivers/soc/aspeed/aspeed-socinfo.c
->>> index 1ca140356a08..6fa0c891f3cb 100644
->>> --- a/drivers/soc/aspeed/aspeed-socinfo.c
->>> +++ b/drivers/soc/aspeed/aspeed-socinfo.c
->>> @@ -9,6 +9,8 @@
->>>    #include <linux/slab.h>
->>>    #include <linux/sys_soc.h>
->>>
->>> +static u32 security_status;
->>> +
->>>    static struct {
->>>        const char *name;
->>>        const u32 id;
->>> @@ -74,6 +76,54 @@ static const char *siliconid_to_rev(u32 siliconid)
->>>        return "??";
->>>    }
->>>
->>> +#define SEC_STATUS           0x14
->>> +#define ABR_IMAGE_SOURCE     BIT(13)
->>> +#define OTP_PROTECTED                BIT(8)
->>> +#define LOW_SEC_KEY          BIT(7)
->>> +#define SECURE_BOOT          BIT(6)
->>> +#define UART_BOOT            BIT(5)
->>> +
->>> +static ssize_t abr_image_show(struct device *dev, struct device_attribute *attr, char *buf)
->>> +{
->>> +     return sprintf(buf, "%d\n", !!(security_status & ABR_IMAGE_SOURCE));
->>> +}
->>> +static DEVICE_ATTR_RO(abr_image);
->>> +
->>> +static ssize_t low_security_key_show(struct device *dev, struct device_attribute *attr, char *buf)
->>> +{
->>> +     return sprintf(buf, "%d\n", !!(security_status & LOW_SEC_KEY));
->>> +}
->>> +static DEVICE_ATTR_RO(low_security_key);
->>> +
->>> +static ssize_t otp_protected_show(struct device *dev, struct device_attribute *attr, char *buf)
->>> +{
->>> +     return sprintf(buf, "%d\n", !!(security_status & OTP_PROTECTED));
->>> +}
->>> +static DEVICE_ATTR_RO(otp_protected);
->>> +
->>> +static ssize_t secure_boot_show(struct device *dev, struct device_attribute *attr, char *buf)
->>> +{
->>> +     return sprintf(buf, "%d\n", !!(security_status & SECURE_BOOT));
->>> +}
->>> +static DEVICE_ATTR_RO(secure_boot);
->>> +
->>> +static ssize_t uart_boot_show(struct device *dev, struct device_attribute *attr, char *buf)
->>> +{
->>> +     /* Invert the bit, as 1 is boot from SPI/eMMC */
->>> +     return sprintf(buf, "%d\n", !(security_status & UART_BOOT));
->>> +}
->>> +static DEVICE_ATTR_RO(uart_boot);
->>> +
->>> +static struct attribute *aspeed_attrs[] = {
->>> +     &dev_attr_abr_image.attr,
->>> +     &dev_attr_low_security_key.attr,
->>> +     &dev_attr_otp_protected.attr,
->>> +     &dev_attr_secure_boot.attr,
->>> +     &dev_attr_uart_boot.attr,
->>> +     NULL,
->>> +};
->>> +ATTRIBUTE_GROUPS(aspeed);
->>> +
->>>    static int __init aspeed_socinfo_init(void)
->>>    {
->>>        struct soc_device_attribute *attrs;
->>> @@ -81,6 +131,7 @@ static int __init aspeed_socinfo_init(void)
->>>        struct device_node *np;
->>>        void __iomem *reg;
->>>        bool has_chipid = false;
->>> +     bool has_sbe = false;
->>>        u32 siliconid;
->>>        u32 chipid[2];
->>>        const char *machine = NULL;
->>> @@ -109,6 +160,20 @@ static int __init aspeed_socinfo_init(void)
->>>        }
->>>        of_node_put(np);
->>>
->>> +     /* AST2600 only */
->>> +     np = of_find_compatible_node(NULL, NULL, "aspeed,ast2600-sbc");
->>> +     if (of_device_is_available(np)) {
->>> +             void *base = of_iomap(np, 0);
->>> +             if (!base) {
->>> +                     of_node_put(np);
->>> +                     return -ENODEV;
->>> +             }
->>> +             security_status = readl(base + SEC_STATUS);
->>> +             has_sbe = true;
->>> +             iounmap(base);
->>> +             of_node_put(np);
->>> +     }
->>> +
->>>        attrs = kzalloc(sizeof(*attrs), GFP_KERNEL);
->>>        if (!attrs)
->>>                return -ENODEV;
->>> @@ -135,6 +200,9 @@ static int __init aspeed_socinfo_init(void)
->>>                attrs->serial_number = kasprintf(GFP_KERNEL, "%08x%08x",
->>>                                                 chipid[1], chipid[0]);
->>>
->>> +     if (has_sbe)
->>> +             attrs->custom_attr_group = aspeed_groups[0];
->>> +
->>>        soc_dev = soc_device_register(attrs);
->>>        if (IS_ERR(soc_dev)) {
->>>                kfree(attrs->soc_id);
->>> @@ -148,6 +216,9 @@ static int __init aspeed_socinfo_init(void)
->>>                        attrs->revision,
->>>                        attrs->soc_id);
->>>
->>> +     if (has_sbe && (security_status & SECURE_BOOT))
->>> +             pr_info("AST2600 secure boot enabled\n");
->>> +
->>
->> Maybe it is more interesting to log, when it is not enabled?
-> 
-> By default the soc will boot without secure boot, and this is not a
-> problem. It is informative to know that the system has been configured
-> with secure boot as this indicates the system has it enabled, and has
-> correctly booted (otherwise you would not see any message).
+>=20
+>=20
+> Thanks!
+>=20
+> Zev
 
-Maybe log a message in both cases? Linux also logs the message below on 
-my old Dell Intel laptop:
-
-     [    0.000000] secureboot: Secure boot could not be determined (mode 0)
-
->>>        return 0;
->>>    }
->>>    early_initcall(aspeed_socinfo_init);
->>>
-
-
-Kind regards,
-
-Paul
