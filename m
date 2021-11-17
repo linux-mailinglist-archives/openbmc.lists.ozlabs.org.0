@@ -2,72 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C2A5453F20
-	for <lists+openbmc@lfdr.de>; Wed, 17 Nov 2021 04:47:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2712453EC1
+	for <lists+openbmc@lfdr.de>; Wed, 17 Nov 2021 04:04:37 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hv85S0JmRz2yV5
-	for <lists+openbmc@lfdr.de>; Wed, 17 Nov 2021 14:47:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hv77l66fMz2yfg
+	for <lists+openbmc@lfdr.de>; Wed, 17 Nov 2021 14:04:35 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=goKyoxME;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=RuaXesJ5;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::531;
- helo=mail-pg1-x531.google.com; envelope-from=cgel.zte@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::833;
+ helo=mail-qt1-x833.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=goKyoxME; dkim-atps=neutral
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com
- [IPv6:2607:f8b0:4864:20::531])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=RuaXesJ5; dkim-atps=neutral
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com
+ [IPv6:2607:f8b0:4864:20::833])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hv4fw4xy7z2xDv
- for <openbmc@lists.ozlabs.org>; Wed, 17 Nov 2021 12:12:54 +1100 (AEDT)
-Received: by mail-pg1-x531.google.com with SMTP id m15so686151pgu.11
- for <openbmc@lists.ozlabs.org>; Tue, 16 Nov 2021 17:12:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=Z4U7aJ2c/OrCLSfs8lkK46XkDeObTTDEOGrWW7eHdek=;
- b=goKyoxMEGNfje+sDoFepIVvHWkw60Hq+MT2aTlDVFofvc4fCU44rE0reuoUwvlQCEg
- pYGjkdc4gUVxeq3pAfZnkjhabM1gq82yrhsgpfz6ushIxjJfqS+WXrt2c69oKpArY4JG
- K13aS3IJ8fgt9fdRf5NdItIOdr1eMVmuR779t4Gxr1B/rSmGcxF0s8XMUAAcbM76CRD9
- uQAIfAGDUbEmZKVhclcZy1sxsWUpdI29liS9mGmVOddNfs/Yu1oKL8nvga3adBkM9EoZ
- 0Ke5GcyASdVIH3FQJU5BTeUESN4lMQmRfYuKtvAMOoPdst4X+COlhPUUJ8N7GcseJzGS
- tM3A==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hv77L36glz2xsY
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Nov 2021 14:04:12 +1100 (AEDT)
+Received: by mail-qt1-x833.google.com with SMTP id f20so1308437qtb.4
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Nov 2021 19:04:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=GLf5BbJI7CckLz2pFGqJ5AAjWE8XhCK30asv6W7fNoY=;
+ b=RuaXesJ5CPg7SZcwlCIA9MbBhNex4vjMR08fNuI5P9JjdcUBeJtdCHutkOIqX29vPi
+ F/leFLsnQ5W9fOWB6j26AjvkP+YzR+lrP0jqSZnoLb4Uz/BmH5zpwXazoWHBPtG6h222
+ KGrWefhIT+hKuMMGxLFzdhyrsdyqaqdyfGsGQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=Z4U7aJ2c/OrCLSfs8lkK46XkDeObTTDEOGrWW7eHdek=;
- b=Cbkdwpca+avdy7Q4Z51ph5Bzu1HqSX14r2IPIiC1qRkqQzEOdkv1YfErZ9FQfvhrlM
- 1un+8z73rfyVTLy06JrElwqmhLLLCvZ6fE2wR//wwr9LJF5oNyZkzZMZtc8B+yT+KkLq
- YwbTn76t0Yc3j4EehSxsGKjne6xp89nT2LDE2hPWsAd9cLWbOhai2eDBS1vK35wLaG3X
- OcwvPIn7OKbgQvxOZ2QiHf4O8Bw7fOx+lsU/ljOzJbiE4cWE0xAmaaY/rHtNqUydJjRC
- jgbmjNyT0mF7KntqN2hG4jdyPSS00m+rxCnj26efKaARU3ZMX6w67c92wg/ISBM9kD4b
- 54Sw==
-X-Gm-Message-State: AOAM532/k59iyDh/SxlXxH5NDXPdnrhPK2fBASLRy2WQOIEhI81OT6BA
- juFMY+eXDWygB3qZHNEBwMA=
-X-Google-Smtp-Source: ABdhPJyg8sBCkf80mS6/Covkq7nAOE6icJJF7Db8nXwyn6wC2NWjBk2bzme5BycUOcdR4d+EmZ7b2g==
-X-Received: by 2002:a63:85c6:: with SMTP id u189mr2421925pgd.377.1637111571502; 
- Tue, 16 Nov 2021 17:12:51 -0800 (PST)
-Received: from localhost.localdomain ([193.203.214.57])
- by smtp.gmail.com with ESMTPSA id h36sm16019469pgb.9.2021.11.16.17.12.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Nov 2021 17:12:51 -0800 (PST)
-From: cgel.zte@gmail.com
-X-Google-Original-From: deng.changcheng@zte.com.cn
-To: avifishman70@gmail.com
-Subject: [PATCH] clk: Use div64_ul instead of do_div
-Date: Wed, 17 Nov 2021 01:12:44 +0000
-Message-Id: <20211117011244.158541-1-deng.changcheng@zte.com.cn>
-X-Mailer: git-send-email 2.25.1
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=GLf5BbJI7CckLz2pFGqJ5AAjWE8XhCK30asv6W7fNoY=;
+ b=NKjLJ4ojHfvxBKis88bLbkpKCM93kSgiTvCLKQxmPIyBcTxmnL1t/T6f3xR9z7zGwx
+ 6sb8QSXxjzbmYdZAtXX9ftO5FMlWoY7YR5ELp/ly0hHpdfynbM+WDoEqGVXeK4ji+GC9
+ 4nzV0DCcRKXJJofBtlwbBrBJt7tEeoLKXj0mRRjCfZBlNr/1v95kAlbwd1B+C+GAohZE
+ /23kd25RPQfMqxgGCOZdmsP13/aL9X49CfU3aKpEAK8QG62yKVTWUTd8E6QNEOhbVl/l
+ ZIkVPCVoHVsczlkdfZVbACOVelfYETH28liwt0v/PzkcOtc/4p6EsX62wc8NTckDf8G5
+ pVKQ==
+X-Gm-Message-State: AOAM532Am2RLQ099R+skEHA4OZvPzMn6FOE/dTexS8efmKrcmF881N5g
+ Ny3nxKy3qwmQk2wt9J0s4Zak8uJyQ1EoMvul6kA=
+X-Google-Smtp-Source: ABdhPJwhWpQqavr8/uc/3yJfMZaGN2l1C3RZ+BSTRQLSkMn6G3wacw5uGWvismy3tw6gEIMCBk8rAy/wUp0SNfkp23w=
+X-Received: by 2002:ac8:7f15:: with SMTP id f21mr12762615qtk.392.1637118248626; 
+ Tue, 16 Nov 2021 19:04:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Wed, 17 Nov 2021 14:47:20 +1100
+References: <20211019080608.283324-1-joel@jms.id.au>
+ <8d1631a9-710e-c2c3-228c-d9a942e64aa5@molgen.mpg.de>
+ <CACPK8XeDAHVgNObar=ZAOW=gzRhO_33Y-1hvJtF_fbyA2P4O6w@mail.gmail.com>
+ <57584776-06e7-0faf-aeb2-eab0c7c5ae1f@molgen.mpg.de>
+In-Reply-To: <57584776-06e7-0faf-aeb2-eab0c7c5ae1f@molgen.mpg.de>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 17 Nov 2021 03:03:56 +0000
+Message-ID: <CACPK8Xfsfz=3ByQ0jYXUe-MWs+_OxYqfUTQ5QNppPNjb9SV5_g@mail.gmail.com>
+Subject: Re: [RFC PATCH] ARM: aspeed: Add secure boot controller support
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,38 +73,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: benjaminfair@google.com, sboyd@kernel.org, venture@google.com,
- mturquette@baylibre.com, Zeal Robot <zealci@zte.com.cn>,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com,
- Changcheng Deng <deng.changcheng@zte.com.cn>, openbmc@lists.ozlabs.org,
- tmaimon77@gmail.com
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Changcheng Deng <deng.changcheng@zte.com.cn>
+On Tue, 16 Nov 2021 at 10:15, Paul Menzel <pmenzel@molgen.mpg.de> wrote:
 
-do_div() does a 64-by-32 division. If the divisor is unsigned long, using
-div64_ul can avoid truncation to 32-bit.
+> >>> +     if (has_sbe && (security_status & SECURE_BOOT))
+> >>> +             pr_info("AST2600 secure boot enabled\n");
+> >>> +
+> >>
+> >> Maybe it is more interesting to log, when it is not enabled?
+> >
+> > By default the soc will boot without secure boot, and this is not a
+> > problem. It is informative to know that the system has been configured
+> > with secure boot as this indicates the system has it enabled, and has
+> > correctly booted (otherwise you would not see any message).
+>
+> Maybe log a message in both cases? Linux also logs the message below on
+> my old Dell Intel laptop:
+>
+>      [    0.000000] secureboot: Secure boot could not be determined (mode 0)
 
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: Changcheng Deng <deng.changcheng@zte.com.cn>
----
- drivers/clk/clk-npcm7xx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I'll print a message either way, as long as the secure boot controller
+compatible was found.
 
-diff --git a/drivers/clk/clk-npcm7xx.c b/drivers/clk/clk-npcm7xx.c
-index e677bb5a784b..c75880af2b74 100644
---- a/drivers/clk/clk-npcm7xx.c
-+++ b/drivers/clk/clk-npcm7xx.c
-@@ -56,7 +56,7 @@ static unsigned long npcm7xx_clk_pll_recalc_rate(struct clk_hw *hw,
- 	otdv2 = FIELD_GET(PLLCON_OTDV2, val);
- 
- 	ret = (u64)parent_rate * fbdv;
--	do_div(ret, indv * otdv1 * otdv2);
-+	div64_ul(ret, indv * otdv1 * otdv2);
- 
- 	return ret;
- }
--- 
-2.25.1
+Thanks for the review.
 
+Cheers,
+
+Joel
