@@ -1,52 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8002D4555F9
-	for <lists+openbmc@lfdr.de>; Thu, 18 Nov 2021 08:45:01 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 973004556FE
+	for <lists+openbmc@lfdr.de>; Thu, 18 Nov 2021 09:30:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HvsJq2gLYz3c5F
-	for <lists+openbmc@lfdr.de>; Thu, 18 Nov 2021 18:44:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HvtKj49kKz2ynk
+	for <lists+openbmc@lfdr.de>; Thu, 18 Nov 2021 19:30:49 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=cKxB1LeY;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::436;
+ helo=mail-pf1-x436.google.com; envelope-from=cgel.zte@gmail.com;
  receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=cKxB1LeY; dkim-atps=neutral
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com
+ [IPv6:2607:f8b0:4864:20::436])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HvsDk46Csz2ywZ;
- Thu, 18 Nov 2021 18:41:26 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 1AI7GPnR076150;
- Thu, 18 Nov 2021 15:16:26 +0800 (GMT-8)
- (envelope-from jammy_huang@aspeedtech.com)
-Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
- Thu, 18 Nov 2021 15:40:12 +0800
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
- <andrew@aj.id.au>, <hverkuil-cisco@xs4all.nl>,
- <sakari.ailus@linux.intel.com>, <gregkh@linuxfoundation.org>,
- <laurent.pinchart@ideasonboard.com>, <linux-media@vger.kernel.org>,
- <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 09/10] media: aspeed: add comments and macro
-Date: Thu, 18 Nov 2021 15:40:30 +0800
-Message-ID: <20211118074030.685-10-jammy_huang@aspeedtech.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HvtKH1TlXz2yHP
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Nov 2021 19:30:25 +1100 (AEDT)
+Received: by mail-pf1-x436.google.com with SMTP id i12so5240307pfd.6
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Nov 2021 00:30:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=c6Lxx4TXfjBkvm4wGudSZgIaFPEI/+SKic/apfT6R10=;
+ b=cKxB1LeYrLZ4qFfo+ekjpTch+jOOBh3aE6wPkgLog+oCnjj3QpeonlaqaUWQw5gG3w
+ 7xCxT2UHhso+SIOM19zT1OlWeP1z8prlJ9NSyFP97sqLRgpe0w64WGTTkapFr1xe9gIa
+ KQ7G1Lfr2E+W8c2FSGZ93a6lFzx9uiRJC84SjnDt03D6P4lB+15WfiYy/HjGC5F5Q31p
+ p0yojJ6FCmSF/zf0I0hPmh44O5xLrDSs1yHRODTORhf7af9RUTN+SJk6neemavVtT0hi
+ XeNuwzBY8M4aQRZnK4TIHQpIwjPeWvNakJhY/k/5mfhuNbCNHm26DsAK+PMWAevGAQmb
+ /gUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references:mime-version:content-transfer-encoding;
+ bh=c6Lxx4TXfjBkvm4wGudSZgIaFPEI/+SKic/apfT6R10=;
+ b=IJfpLL1XRDMp1FVNrBbT9aa8xe2S02KETHVv+9lMclugvWqtaBF6mwtEoI0/zkAcFy
+ opjoj4berZkUzZCO2xv985KSUH84Bg7HTMileGm3JjSGsm5innkHgby/gSqp6lWvQzp5
+ fMTwzXy5I9LwG8uzyKwgqGTDkeY9s14GHOAuuf0SDjVPu/RZgF7DQ2E+1zboPD9gi5Du
+ fQgi6fzjdgileVACRLSh2xrzH/VrXapzIxcuuNhBjJJQgAaTX9+QxoURvIm04VU7cK6Q
+ L8fOVtwtANlgdkM4dkrhSh7CRkxSfMWYxxm/FN8UHuRqg3j/kzLCF50ai0rC0T4GsmFo
+ Q2Yg==
+X-Gm-Message-State: AOAM532OqxjDVGlc5shJ8lw8E4yP1fbbEk6jF2EA7kkn/+MmgCMCkE64
+ JdHT5bpxWsb6j4YtxXSt6zg=
+X-Google-Smtp-Source: ABdhPJxQ9wL1q09H9aed/A6vCOvB0QmdwbHXmPIA1QbrvEK9NoCXyXVcrc2RgWtgMF1sfra+lALpTw==
+X-Received: by 2002:a05:6a00:2313:b0:49f:d9ec:7492 with SMTP id
+ h19-20020a056a00231300b0049fd9ec7492mr55481875pfh.25.1637224217085; 
+ Thu, 18 Nov 2021 00:30:17 -0800 (PST)
+Received: from localhost.localdomain ([193.203.214.57])
+ by smtp.gmail.com with ESMTPSA id e13sm1770391pgb.8.2021.11.18.00.30.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Nov 2021 00:30:16 -0800 (PST)
+From: cgel.zte@gmail.com
+X-Google-Original-From: deng.changcheng@zte.com.cn
+To: avifishman70@gmail.com
+Subject: [PATCH v2] clk: Use div64_ul instead of do_div
+Date: Thu, 18 Nov 2021 08:28:58 +0000
+Message-Id: <20211118082858.165538-1-deng.changcheng@zte.com.cn>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211118074030.685-1-jammy_huang@aspeedtech.com>
-References: <20211118074030.685-1-jammy_huang@aspeedtech.com>
+In-Reply-To: <20211117011244.158541-1-deng.changcheng@zte.com.cn>
+References: <20211117011244.158541-1-deng.changcheng@zte.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.2.115]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 1AI7GPnR076150
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,112 +81,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: benjaminfair@google.com, sboyd@kernel.org, venture@google.com,
+ openbmc@lists.ozlabs.org, zealci@zte.com.cn, linux-kernel@vger.kernel.org,
+ linux-clk@vger.kernel.org, cgel.zte@gmail.com, deng.changcheng@zte.com.cn,
+ tali.perry1@gmail.com, mturquette@baylibre.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add comments to describe video-stat and 'struct aspeed_video'.
-Add macro, ASPEED_VIDEO_V4L2_MIN_BUF_REQ, to describe the buffers
-needed.
+From: Changcheng Deng <deng.changcheng@zte.com.cn>
 
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
----
-v5:
-  - no update
-v4:
-  - update comments
-v3:
-  - no update
-v2:
-  - no update
----
- drivers/media/platform/aspeed-video.c | 39 ++++++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 3 deletions(-)
+do_div() does a 64-by-32 division. Here the divisor is an unsigned long
+which on some platforms is 64 bit wide. So use div64_ul instead of do_div
+to avoid a possible truncation.
 
-diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index 419825ed7737..03bb6c46f2a1 100644
---- a/drivers/media/platform/aspeed-video.c
-+++ b/drivers/media/platform/aspeed-video.c
-@@ -33,6 +33,8 @@
- #include <linux/videodev2.h>
- #include <uapi/linux/aspeed-video.h>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Changcheng Deng <deng.changcheng@zte.com.cn>
+---
+ drivers/clk/clk-npcm7xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clk/clk-npcm7xx.c b/drivers/clk/clk-npcm7xx.c
+index e677bb5a784b..c75880af2b74 100644
+--- a/drivers/clk/clk-npcm7xx.c
++++ b/drivers/clk/clk-npcm7xx.c
+@@ -56,7 +56,7 @@ static unsigned long npcm7xx_clk_pll_recalc_rate(struct clk_hw *hw,
+ 	otdv2 = FIELD_GET(PLLCON_OTDV2, val);
  
-+#define ASPEED_VIDEO_V4L2_MIN_BUF_REQ 3
-+
- #define DEVICE_NAME			"aspeed-video"
+ 	ret = (u64)parent_rate * fbdv;
+-	do_div(ret, indv * otdv1 * otdv2);
++	ret = div64_ul(ret, indv * otdv1 * otdv2);
  
- #define ASPEED_VIDEO_JPEG_NUM_QUALITIES	12
-@@ -193,6 +195,15 @@
- #define VE_MEM_RESTRICT_START		0x310
- #define VE_MEM_RESTRICT_END		0x314
- 
-+/*
-+ * @VIDEO_MODE_DETECT_DONE:	a flag raised if signal lock
-+ * @VIDEO_RES_CHANGE:		a flag raised if res_change work on-going
-+ * @VIDEO_RES_DETECT:		a flag raised if res. detection on-going
-+ * @VIDEO_STREAMING:		a flag raised if user requires stream-on
-+ * @VIDEO_FRAME_INPRG:		a flag raised if hw working on a frame
-+ * @VIDEO_STOPPED:		a flag raised if device release
-+ * @VIDEO_CLOCKS_ON:		a flag raised if clk is on
-+ */
- enum {
- 	VIDEO_MODE_DETECT_DONE,
- 	VIDEO_RES_CHANGE,
-@@ -231,6 +242,28 @@ struct aspeed_video_perf {
- #define to_aspeed_video_buffer(x) \
- 	container_of((x), struct aspeed_video_buffer, vb)
- 
-+/**
-+ * struct aspeed_video - driver data
-+ *
-+ * @flags:		holds the state of video
-+ * @sequence:		holds the last number of frame completed
-+ * @max_compressed_size:holds max compressed stream's size
-+ * @srcs:		holds the buffer information for srcs
-+ * @jpeg:		holds the buffer information for jpeg header
-+ * @bcd:		holds the buffer information for bcd work
-+ * @yuv420:		a flag raised if JPEG subsampling is 420
-+ * @format:		holds the video format
-+ * @hq_mode:		a flag raised if HQ is enabled. Only for VIDEO_FMT_ASPEED
-+ * @frame_rate:		holds the frame_rate
-+ * @jpeg_quality:	holds jpeq's quality (0~11)
-+ * @jpeg_hq_quality:	holds hq's quality (0~11) only if hq_mode enabled
-+ * @compression_mode:	holds jpeg compression mode
-+ * @frame_bottom:	end position of video data in vertical direction
-+ * @frame_left:		start position of video data in horizontal direction
-+ * @frame_right:	end position of video data in horizontal direction
-+ * @frame_top:		start position of video data in vertical direction
-+ * @perf:		holds the statistics primary for debugfs
-+ */
- struct aspeed_video {
- 	void __iomem *base;
- 	struct clk *eclk;
-@@ -1305,7 +1338,7 @@ static int aspeed_video_get_parm(struct file *file, void *fh,
- 	struct aspeed_video *video = video_drvdata(file);
- 
- 	a->parm.capture.capability = V4L2_CAP_TIMEPERFRAME;
--	a->parm.capture.readbuffers = 3;
-+	a->parm.capture.readbuffers = ASPEED_VIDEO_V4L2_MIN_BUF_REQ;
- 	a->parm.capture.timeperframe.numerator = 1;
- 	if (!video->frame_rate)
- 		a->parm.capture.timeperframe.denominator = MAX_FRAME_RATE;
-@@ -1322,7 +1355,7 @@ static int aspeed_video_set_parm(struct file *file, void *fh,
- 	struct aspeed_video *video = video_drvdata(file);
- 
- 	a->parm.capture.capability = V4L2_CAP_TIMEPERFRAME;
--	a->parm.capture.readbuffers = 3;
-+	a->parm.capture.readbuffers = ASPEED_VIDEO_V4L2_MIN_BUF_REQ;
- 
- 	if (a->parm.capture.timeperframe.numerator)
- 		frame_rate = a->parm.capture.timeperframe.denominator /
-@@ -1906,7 +1939,7 @@ static int aspeed_video_setup_video(struct aspeed_video *video)
- 	vbq->drv_priv = video;
- 	vbq->buf_struct_size = sizeof(struct aspeed_video_buffer);
- 	vbq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
--	vbq->min_buffers_needed = 3;
-+	vbq->min_buffers_needed = ASPEED_VIDEO_V4L2_MIN_BUF_REQ;
- 
- 	rc = vb2_queue_init(vbq);
- 	if (rc) {
+ 	return ret;
+ }
 -- 
 2.25.1
 
