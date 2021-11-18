@@ -1,69 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01DDA456226
-	for <lists+openbmc@lfdr.de>; Thu, 18 Nov 2021 19:14:51 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75488456452
+	for <lists+openbmc@lfdr.de>; Thu, 18 Nov 2021 21:35:24 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hw7HX5Ctlz3cNt
-	for <lists+openbmc@lfdr.de>; Fri, 19 Nov 2021 05:14:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HwBPk2wL3z3bW7
+	for <lists+openbmc@lfdr.de>; Fri, 19 Nov 2021 07:35:22 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=q+tQHB0L;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=YS9n+asq;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::32f;
- helo=mail-wm1-x32f.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::936;
+ helo=mail-ua1-x936.google.com; envelope-from=venture@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=q+tQHB0L; dkim-atps=neutral
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com
- [IPv6:2a00:1450:4864:20::32f])
+ header.s=20210112 header.b=YS9n+asq; dkim-atps=neutral
+Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com
+ [IPv6:2607:f8b0:4864:20::936])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hw7H860Ncz2ywH
- for <openbmc@lists.ozlabs.org>; Fri, 19 Nov 2021 05:14:28 +1100 (AEDT)
-Received: by mail-wm1-x32f.google.com with SMTP id
- g191-20020a1c9dc8000000b0032fbf912885so5502411wme.4
- for <openbmc@lists.ozlabs.org>; Thu, 18 Nov 2021 10:14:28 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HwBPJ1sQKz2yng
+ for <openbmc@lists.ozlabs.org>; Fri, 19 Nov 2021 07:34:58 +1100 (AEDT)
+Received: by mail-ua1-x936.google.com with SMTP id az37so16483473uab.13
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Nov 2021 12:34:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=k0XstTzwI8gX3XJ9GMe6inWvVkByifX6sbleKbf5Qpw=;
- b=q+tQHB0L86kFfUda87P7wmXZ+hapSCVhzFM6BurLFojnneiZgrsZNoMEzs98yhj0Rx
- yuloX2tkEzidoKHsHtxC40ZeEOlGJrK0yPltkx469P4zvJ+tt2xRPYoQReLRk8P6Gttm
- wi5nn8uAO5VWFvVMkwfMzEqwnWr/UILqWsQbcHFekjOJ3r10Wo+CnlOrx45hua+Ia+IW
- 9RjbzWZqssAAeEX8xyDxf8XAAcT2giCxwTfp4+63k6bRwIzDroXjBEmxajhKIChqITeU
- KqMPghXzrTddXzl/oX2qzY6B6chlX44hOndHvg0S0dl7YIamXPXhrst0DHAIIxLllMZ3
- XCew==
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=n9Yymj7rmoTNmXYB+OKzy2+vwBY9MLylCD2y++o2p8o=;
+ b=YS9n+asqFY1R5lzWbRCFJYMu8LGVkc4ezIbv9XW2m33Ow2p9829nts3MDTi4tf1QM/
+ 9W2DBNMyGLkAvo5tk+FSG34dN/lXADB5cOMCah31K3K8t7OU/Wl4NLbfOyjddsUOWA5f
+ vOgypqBB2SpYXzPBCsktJbTpNZoOaGMntvXn/I3CGMYbX5/F2Ueii4D0uoRGSum6bzkh
+ kd4EmS3XnaDFGbZ+3MScQokULASYg7i12iJp5jlrcOw3tL9vA1fFJDJBM3T/MLRin0js
+ YlhG3Pfx/LME0xJK8vjVxd5urct24TA11A++BP02Ka4HIbl3EpjYuRczBmhNsIuFq6FI
+ aDgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=k0XstTzwI8gX3XJ9GMe6inWvVkByifX6sbleKbf5Qpw=;
- b=hdRO2dEAB75FsRC8QPMZt2+wdFWowtp6qE/Abbud3Q7cxBOyqcmK4+BitAuzlxmt4X
- 2q3jxdK98ou1GZ4awhI75NTA71SsQCQ0V2gxFCNwPZFrgnNMQUD6OP7mIf/XKdTAJcKV
- g6Ih+nCJUj7SsH9JC3/J0CDe/OpOY5PfullhDp11M9Mgm+IWlbb64boqOJo1smtQr3aF
- 9nEXlhhmht0WE3nPSrXDbiT6WRmeA5HwybmSw08zO7DcgffLoy17UQQQcL9Or1YeQ44l
- bwAY3k3/H9tUCdRugyOXTsA4JyEVrcObG1C7FjF2hFFA+5OirOV/2O5/z17quFHMiyRL
- hpGw==
-X-Gm-Message-State: AOAM530H7IhrNC0BnuTwI8K0oG3lGTKuNO4/V2h07pTd43uE52U/0Hzl
- yslrWHh1VUkhGKxmDPCHReJFMntE50tIK7rI9tEISw==
-X-Google-Smtp-Source: ABdhPJwJPD01U99st2KDwhP/0IKCrK2ofnbzZ28p2wIHrtn7Fym+RLqv5p604hH1NEDCL6y0k2HM9eL+QK85oggAzZU=
-X-Received: by 2002:a05:600c:190c:: with SMTP id
- j12mr12389482wmq.117.1637259261122; 
- Thu, 18 Nov 2021 10:14:21 -0800 (PST)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=n9Yymj7rmoTNmXYB+OKzy2+vwBY9MLylCD2y++o2p8o=;
+ b=ppv8Ui3sVBfC6cXJJjM6lyksEz5gvNYwzMRCzfFoK40GTof3l6P0ID/A4+cVuQVXqD
+ /FZR9pn+8wokM158pD0lsHI89l1d9AsFCIuGWV0e5jXET16uBLQ3uJAjAVs7F5J+8XmX
+ lGPLe4iHoMu7a2XI4Epnx7A+G0xQhIliAFDBo1scxb1cnjqJvB9Rr+bUyYYqv+0lC3JF
+ X9h1GsDAeQc2McqY9QK0zYO/FMBdcAPBbKunO/XI9plc5DcID//Y3a9VntNG8xkVF30q
+ Eap2SvngG1MPwAD6rFfEPT+8EEJmubWFPu2XfqaGqFOz1Lk6DxEKAswQzwv4d7J9fsSj
+ Sr5w==
+X-Gm-Message-State: AOAM530XDZPCc8S9qWjQ5zYhDM7ZqLW+lmVk9T3uvpvuKkT36oeRjjV6
+ iyCZD3u/DUj99sUvn0OBbIV8IrAEg721QNGrsBktnp8P8AwowA==
+X-Google-Smtp-Source: ABdhPJy1lT5oHDnx0ZsKp7JS5/FkjukyNCjQBHdP2el4TYSVj+G85MIATXxpCUtItRj3TmxPRMrRYFzR/q/nWWuh/sM=
+X-Received: by 2002:ab0:6c44:: with SMTP id q4mr24173924uas.127.1637267690379; 
+ Thu, 18 Nov 2021 12:34:50 -0800 (PST)
 MIME-Version: 1.0
-References: <HK0PR03MB309198479B59F9853399AB54979B9@HK0PR03MB3091.apcprd03.prod.outlook.com>
-In-Reply-To: <HK0PR03MB309198479B59F9853399AB54979B9@HK0PR03MB3091.apcprd03.prod.outlook.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Thu, 18 Nov 2021 10:14:09 -0800
-Message-ID: <CAH2-KxAmfQdYBVeq+PCdX2GLPhVFZvLpdUVkzH5QxuEQ6d80Ow@mail.gmail.com>
-Subject: Re: Retrieve meta-lenovo
-To: pengms1@lenovo.com
-Content-Type: text/plain; charset="UTF-8"
+From: Patrick Venture <venture@google.com>
+Date: Thu, 18 Nov 2021 12:34:39 -0800
+Message-ID: <CAO=notybTVxHG2LVzW66vfK3232zCON2v5-p8-bpeTYGm3MMxQ@mail.gmail.com>
+Subject: Using Qemu for BMC with a TAP interface
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="00000000000016b05305d1161767"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,47 +70,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Peter Foley <pefoley@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Nov 18, 2021 at 1:09 AM Andrew MS1 Peng <pengms1@lenovo.com> wrote:
->
-> Hi Patrick,
->
->
->
-> According to https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/47792, we would like to retrieve meta-lenovo and relative machines.
->
-> And then we download and revise meta-lenovo from gerrit, but got the error message as below when push the code to gerrit, please give us some advices. Thanks.
+--00000000000016b05305d1161767
+Content-Type: text/plain; charset="UTF-8"
 
-Submit your changes directly to openbmc/openbmc.
+Hi;
 
-https://lore.kernel.org/openbmc/CACWQX821ADQCrekLj_bGAu=1SSLCv5pTee7jaoVo2Zs6havgnA@mail.gmail.com/
+We're working on wiring up our Qemu BMC via a TAP configuration, and we're
+not seeing packets inside the Nuvoton NIC itself (a level of debugging we
+had to enable).  We're using the npcm7xx SoC device,
 
->
->
->
-> ! [remote rejected] HEAD -> refs/for/master (prohibited by Gerrit: project state does not permit write)
->
-> error: failed to push some refs to 'ssh://openbmc.gerrit/openbmc/meta-lenovo'
->
->
->
-> ________________________________
->
-> AndrewPeng
-> BMC engineer
-> Lenovo Beijing
->
-> 13260161340
-> pengms1@lenovo.com
->
->
->
-> Lenovo.com
-> Twitter | Instagram | Facebook | Linkedin | YouTube | Privacy
->
->
->
->
+-nic
+tap,fds=4:5:6:7:8:9:10:11,id=net0,model=npcm7xx-emc,mac=58:cb:52:18:b8:f7
+
+For the networking parameters, where the tap fds are valid.  I was curious
+if any of y'all got qemu networking working for your BMC SoCs, either
+Aspeed or Nuvoton?
+
+Patrick
+
+--00000000000016b05305d1161767
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi;<div><br></div><div>We&#39;re working on wiring up our =
+Qemu BMC via a TAP configuration, and we&#39;re not seeing packets inside t=
+he Nuvoton NIC itself (a level of debugging we had to enable).=C2=A0 We&#39=
+;re using the npcm7xx SoC device,=C2=A0</div><div><br></div><div><span styl=
+e=3D"color:rgb(32,33,36);font-family:WorkAroundWebKitAndMozilla,monospace;f=
+ont-size:13px;letter-spacing:0.185714px">-nic tap,fds=3D4:5:6:7:8:9:10:11,i=
+d=3Dnet0,model=3Dnpcm7xx-emc,mac=3D58:cb:52:18:b8:f7</span><br></div><div><=
+span style=3D"color:rgb(32,33,36);font-family:WorkAroundWebKitAndMozilla,mo=
+nospace;font-size:13px;letter-spacing:0.185714px"><br></span></div>For the =
+networking parameters, where the tap fds are valid.=C2=A0 I was curious if =
+any of y&#39;all got qemu networking working for your BMC SoCs, either Aspe=
+ed or Nuvoton?<div><br></div><div>Patrick</div></div>
+
+--00000000000016b05305d1161767--
