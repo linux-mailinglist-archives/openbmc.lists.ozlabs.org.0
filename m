@@ -1,69 +1,50 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 496B04555CA
-	for <lists+openbmc@lfdr.de>; Thu, 18 Nov 2021 08:35:42 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDD3C4555FD
+	for <lists+openbmc@lfdr.de>; Thu, 18 Nov 2021 08:45:25 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hvs641Fr9z304t
-	for <lists+openbmc@lfdr.de>; Thu, 18 Nov 2021 18:35:40 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=jvwlx3IA;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HvsKH5G6kz3cG2
+	for <lists+openbmc@lfdr.de>; Thu, 18 Nov 2021 18:45:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::531;
- helo=mail-ed1-x531.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=jvwlx3IA; dkim-atps=neutral
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com
- [IPv6:2a00:1450:4864:20::531])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hvs5d3dNTz2yXv;
- Thu, 18 Nov 2021 18:35:14 +1100 (AEDT)
-Received: by mail-ed1-x531.google.com with SMTP id y12so22798659eda.12;
- Wed, 17 Nov 2021 23:35:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=0URvf8Ysl7HlCW2mQtjtDZ/PGw8GXuG3xU/3331OCX0=;
- b=jvwlx3IA78l2uA7OfWM32bczmkICeILoPBj0gqinKbWVEXKxDp58/fJdo/e6ISIO/C
- G50ssJUDD0Coyp+0gSVcnawpV/rqcdks6+5rcs01R7OAaPLazzsICrwWD5BfZNR4s9Qq
- HDCOpFUXtEmOJcA3Jv1GgAzW/tA8qVnOIip5DUpu/ARTyNGIz/SJGLqVc0LS91OuLT2h
- DHPNRd5FtEhlFtbRz8DdgPMIaTgJtVck9ShyoolnGyljjSCZAAnTOz0e0hpAzHtediq2
- W7PltIjamEKNQtdaaJiaMa7L5ERcgnNy4yFgqyzD/Zl0xTlrS6tpJqq8/KhyWVInys0M
- PgtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=0URvf8Ysl7HlCW2mQtjtDZ/PGw8GXuG3xU/3331OCX0=;
- b=yN95gHokxvaWoYggx9Xx0/hiVvZ4Pb043KForEFZwp7m6+2vkwUQTQSQrL7jXnsJpR
- spQ3i5B830Y2zVd3oDhos8Ar/loxUk5cMg5hLsfgzwLZoiOhKf/k+uadGwiJ7IInPsFY
- n/X9Pw2pet6cYWUInuIUL/b91Bn02GBQ5HJvf285Md5tBb87/gotrrQLjjFCDFZaNlGH
- gkmo6D1G6AZBQIPWlCUf6cTPkZfZCTbf2BSYfm+NSIh/2N/q/DtRn5evfA/hVr9tle6J
- ieCUoRd7JAwJ9DiZxVKkIxWv0oTBNWiFxGQdZlXj/mTnNC8Ls+/8J3tVS9iK89CxUADj
- roOw==
-X-Gm-Message-State: AOAM530lF79FEzNW+pzU7pauumi4f5KzW9Q5IHbg3H2kVvmh7AISJVdl
- wwSxwaUd/slEunfh7zM6k5ZIMP/mLuWDJx2NvaNHKjR+
-X-Google-Smtp-Source: ABdhPJxes64DATiFOCsBWgnpc/9Mt0nug8lW70oZsKrVZc11R01luhC6huCnySiqN6P2f1THe5fZ5diFLT1uBpUqmz4=
-X-Received: by 2002:a17:907:d9f:: with SMTP id
- go31mr32039949ejc.412.1637220911912; 
- Wed, 17 Nov 2021 23:35:11 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HvsGC1rQZz3c68;
+ Thu, 18 Nov 2021 18:42:42 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 1AI7GOq4076133;
+ Thu, 18 Nov 2021 15:16:24 +0800 (GMT-8)
+ (envelope-from jammy_huang@aspeedtech.com)
+Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
+ Thu, 18 Nov 2021 15:40:10 +0800
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
+ <andrew@aj.id.au>, <hverkuil-cisco@xs4all.nl>,
+ <sakari.ailus@linux.intel.com>, <gregkh@linuxfoundation.org>,
+ <laurent.pinchart@ideasonboard.com>, <linux-media@vger.kernel.org>,
+ <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v5 00/10] add aspeed-jpeg support for aspeed-video
+Date: Thu, 18 Nov 2021 15:40:21 +0800
+Message-ID: <20211118074030.685-1-jammy_huang@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20211117075513.GA12199@gmail.com>
- <20211117102300.68d00e9a@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20211117102300.68d00e9a@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Thu, 18 Nov 2021 13:07:07 +0530
-Message-ID: <CAA7Tbcux55gKoqE9OoPfRcAOO1VkC9hAESHv=Egpjd_vR=M0yQ@mail.gmail.com>
-Subject: Re: [PATCH v6] Add payload to be 32-bit aligned to fix dropped packets
-To: Jakub Kicinski <kuba@kernel.org>
-Content-Type: multipart/alternative; boundary="000000000000df984705d10b3262"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [192.168.2.115]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 1AI7GOq4076133
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,41 +56,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Networking <netdev@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Amithash Prasad <amithash@fb.com>,
- patrickw3@fb.com, Samuel Mendoza-Jonas <sam@mendozajonas.com>,
- velumanit@hcl.com, "David S. Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000df984705d10b3262
-Content-Type: text/plain; charset="UTF-8"
+The aim of this series is to add aspeed-jpeg support for aspeed-video
+driver.
 
-On Wed, Nov 17, 2021 at 11:53 PM Jakub Kicinski <kuba@kernel.org> wrote:
+To achieve this major goal some refactors are included.
 
-> On Wed, 17 Nov 2021 13:25:13 +0530 Kumar Thangavel wrote:
-> > +const int padding_bytes = 26;
->
-> net/ncsi/ncsi-cmd.c:21:11: warning: symbol 'padding_bytes' was not
-> declared. Should it be static?
+In the last, debugfs information is also updated per this change.
 
-Ack.
+Changes in v5:
+ - Use model data to tell different soc
 
---000000000000df984705d10b3262
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Changes in v4:
+ - Add definition for the Aspeed JPEG format
+ - Reserve controls for ASPEED
+ - Use s_fmt to update format rather than new control
+ - Update aspeed hq quality range, 1 ~ 12
 
-<div dir=3D"ltr"><div dir=3D"ltr"></div><br><div class=3D"gmail_quote"><div=
- dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 17, 2021 at 11:53 PM Jakub Ki=
-cinski &lt;<a href=3D"mailto:kuba@kernel.org">kuba@kernel.org</a>&gt; wrote=
-:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
-8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Wed, 17 Nov=
- 2021 13:25:13 +0530 Kumar Thangavel wrote:<br>
-&gt; +const int padding_bytes =3D 26;<br>
-<br>
-net/ncsi/ncsi-cmd.c:21:11: warning: symbol &#39;padding_bytes&#39; was not =
-declared. Should it be static?</blockquote><div>Ack.=C2=A0</div></div></div=
->
 
---000000000000df984705d10b3262--
+Jammy Huang (10):
+  media: aspeed: move err-handling together to the bottom
+  media: aspeed: use v4l2_info/v4l2_warn/v4l2_dbg for log
+  media: aspeed: add more debug log messages
+  media: aspeed: refactor to gather format/compress settings
+  media: v4l: Add definition for the Aspeed JPEG format
+  media: v4l2-ctrls: Reserve controls for ASPEED
+  media: aspeed: use model-data
+  media: aspeed: Support aspeed mode to reduce compressed data
+  media: aspeed: add comments and macro
+  media: aspeed: Extend debug message
+
+ .../media/uapi/v4l/pixfmt-reserved.rst        |  12 +
+ drivers/media/platform/aspeed-video.c         | 534 ++++++++++++++----
+ drivers/media/v4l2-core/v4l2-ioctl.c          |   1 +
+ include/uapi/linux/aspeed-video.h             |  15 +
+ include/uapi/linux/v4l2-controls.h            |   5 +
+ include/uapi/linux/videodev2.h                |   1 +
+ 6 files changed, 467 insertions(+), 101 deletions(-)
+ create mode 100644 include/uapi/linux/aspeed-video.h
+
+-- 
+2.25.1
+
