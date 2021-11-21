@@ -1,72 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F0D9457F1A
-	for <lists+openbmc@lfdr.de>; Sat, 20 Nov 2021 16:52:03 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 024EC458288
+	for <lists+openbmc@lfdr.de>; Sun, 21 Nov 2021 09:44:34 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HxJ1r5w5hz3bXc
-	for <lists+openbmc@lfdr.de>; Sun, 21 Nov 2021 02:52:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HxkV75Khsz303Z
+	for <lists+openbmc@lfdr.de>; Sun, 21 Nov 2021 19:44:31 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=FUtRlNN/;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=D5Er70na;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=FUtRlNN/; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=shawnguo@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=D5Er70na; 
+ dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HxJ1S68FQz2xXd
- for <openbmc@lists.ozlabs.org>; Sun, 21 Nov 2021 02:51:40 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id A740144953;
- Sat, 20 Nov 2021 15:51:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1637423494; x=1639237895; bh=1wKxDDgGWsRFRHXp71LDHk+mG
- 8Xfb9h3L9/g9D3lC9U=; b=FUtRlNN/Q8Idh8jYCiyiXLHlFB9mv8Zz3ZDJbcrVb
- wDKrqF2qvKS3N8UTLm057w7rGlQIKCEFY2EYW9wS11Z0rSkwCD0Nx0mUTYhB/diP
- 1V+gFqUujgPtWwg5JxUKkg4r6Ts/z046ZTxyARhm+IaTNLtjouJhlMctkEDHfhp+
- M0=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PTekAli5ztyk; Sat, 20 Nov 2021 18:51:34 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 25DCC41FAA;
- Sat, 20 Nov 2021 18:51:33 +0300 (MSK)
-Received: from [10.199.10.105] (10.199.10.105) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Sat, 20
- Nov 2021 18:51:32 +0300
-Message-ID: <368313b889cbadc267b053cd808b080e9f6470a0.camel@yadro.com>
-Subject: Re: [PATCH v2 2/2] ARM: dts: aspeed: add device tree for YADRO
- VEGMAN BMC
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: Andrew Geissler <geissonator@gmail.com>
-Date: Sat, 20 Nov 2021 18:51:31 +0300
-In-Reply-To: <FA1B4FAF-387D-4D71-952A-D44B493FC67B@gmail.com>
-References: <20211119120057.12118-1-a.kartashev@yadro.com>
- <20211119120057.12118-3-a.kartashev@yadro.com>
- <FA1B4FAF-387D-4D71-952A-D44B493FC67B@gmail.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.4 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HxkTj53f0z2xrl
+ for <openbmc@lists.ozlabs.org>; Sun, 21 Nov 2021 19:44:09 +1100 (AEDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E834C60249;
+ Sun, 21 Nov 2021 08:43:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1637484243;
+ bh=tu69UPs2oFYdHGpPkYWSO++YLwvfUcLbBzuvXbiASYU=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=D5Er70nazIbKppLsd5F5Xp/QgKOjqOlEYkmYtQAD0y5OpCROq1qwnPjiUGqIeKcZ8
+ QOO4vJmuckEkXlZuydebEuZRyTvuMW/b5mhCpIOGZhRcOOs5SqdyCDrsC6/r6zVqDo
+ HmA0WVOq8M9ANGfm1YLgLfunPKpkDwXmEpFjzP4mPa2cifyRIpKUjJHgRxp0qqN8ge
+ aAFZ/vP97Nfvl6V0Z1FDaRZ8/KstBjxPa4GYQSGNJoqsypN3TnKS0dMrrmiuh+agVj
+ xVbs4DbIeG00oLvkMJiS3xFGdKExpFCqrfLyKaelKtxsdi4wbGSomDVWFP544XHxmf
+ k7pa5d51aJc7Q==
+Date: Sun, 21 Nov 2021 16:43:28 +0800
+From: Shawn Guo <shawnguo@kernel.org>
+To: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Subject: Re: [PATCH 07/13] arm: imx: remove dead left-over from
+ i.MX{27,31,35} removal
+Message-ID: <20211121083934.GK31998@dragon>
+References: <20211028141938.3530-1-lukas.bulwahn@gmail.com>
+ <20211028141938.3530-8-lukas.bulwahn@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.10.105]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211028141938.3530-8-lukas.bulwahn@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,31 +60,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
- openbmc@lists.ozlabs.org
+Cc: Linus Walleij <linusw@kernel.org>, kernel-janitors@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
+ Arnd Bergmann <arnd@arndb.de>, Dinh Nguyen <dinguyen@kernel.org>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ Sascha Hauer <s.hauer@pengutronix.de>, openbmc@lists.ozlabs.org,
+ Sekhar Nori <nsekhar@ti.com>, Russell King <linux@armlinux.org.uk>,
+ Tali Perry <tali.perry1@gmail.com>, Krzysztof Halasa <khalasa@piap.pl>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Imre Kaloz <kaloz@openwrt.org>, Fabio Estevam <festevam@gmail.com>,
+ Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-kernel@lists.infradead.org,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, Oct 28, 2021 at 04:19:32PM +0200, Lukas Bulwahn wrote:
+> The commits:
 > 
-> Can we utilize
-> https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md
->  to get some consistent naming across the GPIO’s on OpenBMC machines?
+>   commit 879c0e5e0ac7 ("ARM: imx: Remove i.MX27 board files")
+>   commit c93197b0041d ("ARM: imx: Remove i.MX31 board files")
+>   commit e1324ece2af4 ("ARM: imx: Remove i.MX35 board files")
 > 
+> remove the config MACH_MX27_3DS, MACH_MX31_3DS and MACH_MX35_3DS.
+> Commit a542fc18168c ("ARM: imx31: Remove remaining i.MX31 board code")
+> further removes arch/arm/mach-imx/3ds_debugboard.{c,h}. So, only some
+> dead left-over in Kconfig and Makefile remains.
+> 
+> Remove this remaining left-over.
+> 
+> This issue was identified with ./scripts/checkkconfigsymbols.py,
+> which warns on references to the non-existing configs
+> MACH_MX{27,31,35}_3DS in ./arch/arm/mach-imx/Kconfig.
+> 
+> Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
-Some names here are standard for Intel daemons like x86-power-control,
-host-error-monitor, pfr-manager, IntrusionSensor and so on. Other lines
-just called same as in schematics to make it easy for our engineers to
-understand what does it refer to. BTW, most of the lines there not used
-by software and appeared just because dts files are supposed to be
-hardware description and thus we describe all we have in schematics.
-
-We can rename all this according to guide you mention, but are you
-sure, there is any sense to do so?
-Keep in mind, currently there are lot of dts files which also don't
-follow convention, so I believe, it is unnecessary work. 
-
--- 
-Best regards,
-Andrei Kartashev
-
-
+Applied, thanks!
