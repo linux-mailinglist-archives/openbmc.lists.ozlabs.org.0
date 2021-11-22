@@ -1,89 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42606459436
-	for <lists+openbmc@lfdr.de>; Mon, 22 Nov 2021 18:47:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27126459858
+	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 00:21:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HyZTz6bbrz305v
-	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 04:47:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HyjvT6h93z2ybH
+	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 10:21:25 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=eu4RINqR;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Cy3+tKEg;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=Wdf7llY0;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=OVEu+mjv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm3 header.b=eu4RINqR; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm1 header.b=Wdf7llY0; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=Cy3+tKEg; 
+ header.a=rsa-sha256 header.s=fm1 header.b=OVEu+mjv; 
  dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HyZTY2NyYz2xXd
- for <openbmc@lists.ozlabs.org>; Tue, 23 Nov 2021 04:46:56 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.west.internal (Postfix) with ESMTP id 891DA3200681;
- Mon, 22 Nov 2021 12:46:53 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute5.internal (MEProxy); Mon, 22 Nov 2021 12:46:53 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hyjtz6MGqz2yLv
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Nov 2021 10:20:59 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 20E4A5C0093;
+ Mon, 22 Nov 2021 18:20:55 -0500 (EST)
+Received: from imap43 ([10.202.2.93])
+ by compute4.internal (MEProxy); Mon, 22 Nov 2021 18:20:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=PFAKb9u2kIZi8QiGsGeMMk/Cjlrvhif
+ MsvcUce+sDU8=; b=Wdf7llY0ITSlrh167i4LTnek5z5LcAOgUzXck0Name2b2Z9
+ mDxtclGkW7oryDkZwZA1Ik6h+aEOA7FcDO5/d8VR9ZAEIPddYtuY6ghAL5vw8gWq
+ 44b0pdV2heJYPVR5XHsErGGxRLq1Rc8Vj7U+9tUWt6sP0lf2eCBEDHtFbmZWh8ew
+ 48SYSQhhs8Mrzjgrm9GMR74eSuYPea1r/Aq+xL660KciC6tK+wk1vLZ4KgpCArMa
+ 8YQwBY4lUuYg7w669G38LzXPPny1hIDlQp6kZ9Kv3wmqS83TaEHQe7sCpczxV6hQ
+ 1kZP46XBPmCfVJxlDzhqa1UtKwwbpc0KP3ZbsJQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding; s=fm3; bh=2cJ4g9Qk7Q/3i
- xKDnkrEm62RXCHiYzcPZ6d+usxksdw=; b=eu4RINqRj4RW62oj4mJzQ7Hi7fdHq
- vZ1hg9HawSIBQVVjAD2B6wZfas0gbyF3fAE1faTt2x8buC3qxaHCyVJiul5AYAvG
- 3xbtz1PmcBSptGVu11A8oJL9uK2Ljes+8W2cBXglQmRy2LxZYPeEG1xA6s4mzbeL
- tzvMpFFkWdY837Wisr0r9T08Tyu/uJ+IEek8WPn4/+93E3t/2ZME9g6cuXfRggL4
- kI/zDxDF93hR/QdzfI2AFgKMDVoswsZMOE5FfpUtFi2LqgC10izYGCQa1aBLU0k1
- 7n6nA8NYrCaV6TaPoWSQo+38ivxwhVdUixAgklgRZfsRzTuOFEPMeKvFA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=2cJ4g9Qk7Q/3ixKDn
- krEm62RXCHiYzcPZ6d+usxksdw=; b=Cy3+tKEgZT243iHziBdRgF/l70ArHo62X
- yDucWe64c3DCevyRvKbb+c8C5ieQt93cLFVMbQP0FD4oxG1vh02o5SR8+mkvdG/U
- q57WJm6RHvGCm6h1MgaQdGF65/LMQOV4TQA3P6uF/OSof5Yu87su8/6M1QEj3GWI
- gTXMjC2y5Yj0zEjeF7XPwm2RNgXrdbFdfMZTPR7R9z88q3bHonpN6Lq44GYFyp/J
- hLCBG0gE0JhWn92TJmNsdWUlemcTPN44ERVANfYG1h3yMzKHFMw7Jc9ys6M6/Klq
- mUOgZESkvFF2yvCHlh9+o2rtQcL9NIn0iWbvxQR51rq6K1k/LH9/g==
-X-ME-Sender: <xms:jNebYYQyx8I02INmR8J7WUVM4u9iYUa7kwCQw4Uvtybd8NrgNabs9Q>
- <xme:jNebYVw22TdpXEIIvzQ1vc9lzYcT_g-rN5XERfRp853QwGf3hOx7SxK19YQI_QfWJ
- _yBPObagQrBGlt59io>
-X-ME-Received: <xmr:jNebYV0lg8q59MDF7SRJIdqbFurlBCNu7gQsKRdET_DML5GYe9A12fcFPk2-diyiEFLkwOHG2pFe5d00xQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrgeeggddutdeiucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
- dttdenucfhrhhomhepuehrrgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiii
- ihgvshhquhhirhhrvghlrdgtohhmqeenucggtffrrghtthgvrhhnpefgvdefveehueekvd
- dtleegtdfhhefgleelheehvedtgeevteelffekfeegudekjeenucevlhhushhtvghrufhi
- iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiih
- gvshhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:jNebYcDiB2rEcJSjx4fGg_WJybgbclltCqkSNR8oNTjC8FVLMczt6A>
- <xmx:jNebYRjQVwAyq-CZaWmQL6SBtGNqdLC0ytXXOu-VLL3ZR_EwL06o7g>
- <xmx:jNebYYrGXzETbJb-5V008DEzwP_rNJ_KyRltB8co6_9gWrbWwlQq_Q>
- <xmx:jNebYWuzQieQEZyBiiWletvjieFEtlU7ck__9Pr3OXKrhyGePxMeZQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Nov 2021 12:46:52 -0500 (EST)
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: joel@jms.id.au,
-	openbmc@lists.ozlabs.org,
-	cjengel@us.ibm.com
-Subject: [RFC PATCH u-boot v2019.04-aspeed-openbmc] aspeed/ast2600: refuse to
- boot
-Date: Mon, 22 Nov 2021 12:46:51 -0500
-Message-Id: <20211122174651.183392-1-bradleyb@fuzziesquirrel.com>
-X-Mailer: git-send-email 2.34.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=PFAKb9
+ u2kIZi8QiGsGeMMk/CjlrvhifMsvcUce+sDU8=; b=OVEu+mjvy2B5IexTh/jaVM
+ FaQY5qwZCkfwy2gWiYsxa9qE90+kNGH7rQ7uQtqi00rT+ndSOKZ2h17RQgVheT8W
+ b3b7fFjaG94aavLOCbLOt6tIb5Ak62IZbXgNtq8S+S9heDxy01/3RosWeHUo0Q9z
+ fvuWPak+Bt19xtkxK2l4JxN5FuHAsLPhkOvYpOkcD7is/8fVAMswAse5/hmRpbTE
+ guVXOwyWe1v/XeJj1QnKB3uRfCXg9o/n/dY0LFOdamsj9ZHy7L9bXlzzOroA2LVc
+ +Gwx96PAwaiEofebpCRUnRUmPRNJWK3RhPtIn5/CgrYEUvHCpyVe7FtgTn3KhKrw
+ ==
+X-ME-Sender: <xms:1iWcYfTPZJwh2MnJKBPSpH44ndl9q_cA5UgELCqz34BT13KiuuJPKA>
+ <xme:1iWcYQzfp75li0jr_85FbsfaaCcu238YCoHSMVBjlU9l2KCht_dcIrpA9fJ-cjoLm
+ HmTA7d2SSjUOVWSVw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrgeehgddtfecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculddvfedmnecujfgurhepofgfggfkjghffffhvffutgesthdtredtreer
+ tdenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjh
+ drihgurdgruheqnecuggftrfgrthhtvghrnhepteefudehueeihffhgefhjeekveffjeej
+ keehteevkeeghefhieeuvdfffefgjedtnecuffhomhgrihhnpehophgvnhgsmhgtqdhprh
+ hojhgvtghtrdighiiipdhgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedt
+ necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:1iWcYU0YT_5T-QAPXsaqIhoi8EemUtyDo4BzXbeNMoO0mcMKCv29tg>
+ <xmx:1iWcYfDyYclmv7y09EAdgx7dzzqm_TnM3_2kacU2GRroZDaQAdBnsw>
+ <xmx:1iWcYYjUexDccbqMUfNq3aaviWYoFYsPEbVboUe3SAIwjn5E0ZtR6g>
+ <xmx:1yWcYbvqafXj5hOtcO1BeyEdZKt7YeaKBX8FoBnrN54r5-eMhd-HOg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id D2286AC03DB; Mon, 22 Nov 2021 18:20:54 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-1371-g2296cc3491-fm-20211109.003-g2296cc34
+Mime-Version: 1.0
+Message-Id: <48d0cc9e-6ab6-4d94-a8aa-1be8b8c1f155@www.fastmail.com>
+In-Reply-To: <YZvLdFJnQM+GB9yy@heinlein>
+References: <CABoTLcRtPYy_Yim20FCcX6qS--t7KD81GOZyT9pKV8OwuhLPrg@mail.gmail.com>
+ <YZvLdFJnQM+GB9yy@heinlein>
+Date: Tue, 23 Nov 2021 09:50:34 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Patrick Williams" <patrick@stwcx.xyz>, "Oskar Senft" <osk@google.com>
+Subject: Re: Making obmc-console_git.bb more generic (again)?
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,200 +97,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, anoo@us.ibm.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ali El-Haj-Mahmoud <aaelhaj@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a hack that purposefully causes the SPL to fail to boot.  Enable
-with CONFIG_ASPEED_AST2600_SPL_REFUSE_TO_BOOT.  Added a clone of
-configs/ast2600_openbmc_spl_emmc_defconfig with
-CONFIG_ASPEED_AST2600_SPL_REFUSE_TO_BOOT enabled.
 
-The intent is to allow testing of a production signing process or keys
-with an image that refuses to do anything (and thus if it were to
-escape, cannot be used to do anything harmful).
 
-Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
----
- arch/arm/mach-aspeed/ast2600/Kconfig          |   7 +
- arch/arm/mach-aspeed/ast2600/spl.c            |   4 +
- ..._openbmc_spl_emmc_refuse_to_boot_defconfig | 134 ++++++++++++++++++
- 3 files changed, 145 insertions(+)
- create mode 100644 configs/ast2600_openbmc_spl_emmc_refuse_to_boot_defconfig
+On Tue, 23 Nov 2021, at 03:25, Patrick Williams wrote:
+> On Wed, Nov 17, 2021 at 05:01:25PM -0500, Oskar Senft wrote:
+>> Hi everyone
+>> 
+>> I noticed that as of
+>> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/30369 (aka
+>> https://github.com/openbmc/openbmc/commit/abf95efe7c3a34cc2e5d7424abb59710fb4a1d4d),
+>> obmc-console_git.bb assumes that we always want to use ttyVUART0.
+>
+> There was a push to move service files outside of the openbmc/openbmc repository
+> and into the underlying repos.  Brad could comment on why as he was
+> asking for it.
+>
+>> We used to have support for OBMC_CONSOLE_HOST_TTY and then create the
+>> symlink /etc/obmc-console/server.${OBMC_CONSOLE_HOST_TTY}.conf as
+>> needed.
+>> 
+>> From what I can tell, OBMC_CONSOLE_HOST_TTY is still used in quite a
+>> few machine layers. Some of them (e.g. meta-amd and meta-facebook)
+>> even went so far to replicate the previous behavior by deleting
+>> /etc/obmc-console/server.VUART0.conf and then re-creating the correct
+>> one.
+>
+> Speaking for the Facebook machines, we have some machines which use a different
+> vTTY and we have other machines which manage multiple hosts and thus have
+> multiple vTTYs.  We probably should have contributed code to pass the desired
+> vTTY(s) as a meson-option.
+>
+>> Is this actually the expected behavior? Or was that just an oversight
+>> in the commit?
+>
+> I think it was the "put the default/typical config into the repo and let
+> everyone customize it otherwise if they need" approach.
+>
+>> I'd be happy to send a review request to make this generic again if
+>> people agree. A bunch of follow-up commits could then remove the
+>> duplicate code in individual machine layer overrides.
+>
+> I'd be thankful for this.  Please feel free to add me as a reviewer.
 
-diff --git a/arch/arm/mach-aspeed/ast2600/Kconfig b/arch/arm/mach-aspeed/ast2600/Kconfig
-index fcdc425de5..4b03de4126 100644
---- a/arch/arm/mach-aspeed/ast2600/Kconfig
-+++ b/arch/arm/mach-aspeed/ast2600/Kconfig
-@@ -40,6 +40,13 @@ config TARGET_AST2600_INTEL
- 
- endchoice
- 
-+config ASPEED_AST2600_SPL_REFUSE_TO_BOOT
-+	bool "Unconditionally hang in board_init_f"
-+	default n
-+	depends on SPL && ASPEED_AST2600
-+	help
-+	  Select this option to build an SPL that will never boot.
-+
- source "board/aspeed/evb_ast2600/Kconfig"
- source "board/aspeed/fpga_ast2600/Kconfig"
- source "board/aspeed/slt_ast2600/Kconfig"
-diff --git a/arch/arm/mach-aspeed/ast2600/spl.c b/arch/arm/mach-aspeed/ast2600/spl.c
-index c759a7575d..d269831e0d 100644
---- a/arch/arm/mach-aspeed/ast2600/spl.c
-+++ b/arch/arm/mach-aspeed/ast2600/spl.c
-@@ -27,6 +27,10 @@ void board_init_f(ulong dummy)
- 	spl_early_init();
- 	timer_init();
- 	preloader_console_init();
-+#ifdef CONFIG_ASPEED_AST2600_SPL_REFUSE_TO_BOOT
-+	puts(SPL_TPL_PROMPT "development image, refusing to boot\n");
-+	hang();
-+#endif
- 	dram_init();
- 	aspeed_mmc_init();
- #endif
-diff --git a/configs/ast2600_openbmc_spl_emmc_refuse_to_boot_defconfig b/configs/ast2600_openbmc_spl_emmc_refuse_to_boot_defconfig
-new file mode 100644
-index 0000000000..f3b6106068
---- /dev/null
-+++ b/configs/ast2600_openbmc_spl_emmc_refuse_to_boot_defconfig
-@@ -0,0 +1,134 @@
-+CONFIG_ARM=y
-+CONFIG_SYS_CONFIG_NAME="evb_ast2600_spl"
-+CONFIG_SYS_DCACHE_OFF=y
-+CONFIG_POSITION_INDEPENDENT=y
-+CONFIG_SYS_THUMB_BUILD=y
-+# CONFIG_SPL_USE_ARCH_MEMCPY is not set
-+# CONFIG_SPL_USE_ARCH_MEMSET is not set
-+CONFIG_SPL_LDSCRIPT="arch/$(ARCH)/mach-aspeed/ast2600/u-boot-spl.lds"
-+CONFIG_ARCH_ASPEED=y
-+CONFIG_SYS_TEXT_BASE=0x81000000
-+CONFIG_ASPEED_AST2600=y
-+# CONFIG_ASPEED_LOADERS is not set
-+CONFIG_ASPEED_AST2600_SPL_REFUSE_TO_BOOT=y
-+CONFIG_SPL_LIBCOMMON_SUPPORT=y
-+CONFIG_SPL_LIBGENERIC_SUPPORT=y
-+CONFIG_SYS_MALLOC_F_LEN=0x2000
-+CONFIG_SPL_MMC_SUPPORT=y
-+CONFIG_SPL_SERIAL_SUPPORT=y
-+CONFIG_SPL_DRIVERS_MISC_SUPPORT=y
-+CONFIG_ENV_SIZE=0x10000
-+CONFIG_ENV_OFFSET=0x5000
-+CONFIG_SPL_SYS_MALLOC_F_LEN=0x800
-+CONFIG_SPL=y
-+CONFIG_SPL_STACK_R_ADDR=0x90300000
-+CONFIG_ARMV7_BOOT_SEC_DEFAULT=y
-+CONFIG_ARMV7_PSCI_NR_CPUS=2
-+CONFIG_NR_DRAM_BANKS=1
-+CONFIG_FIT=y
-+CONFIG_FIT_ENABLE_SHA512_SUPPORT=y
-+CONFIG_FIT_SIGNATURE=y
-+CONFIG_SPL_FIT_SIGNATURE=y
-+CONFIG_SPL_LOAD_FIT=y
-+CONFIG_USE_BOOTARGS=y
-+CONFIG_BOOTARGS="console=ttyS4,115200n8 root=/dev/ram rw"
-+CONFIG_USE_BOOTCOMMAND=y
-+CONFIG_BOOTCOMMAND="bootm 20100000"
-+CONFIG_SYS_CONSOLE_ENV_OVERWRITE=y
-+CONFIG_DISPLAY_BOARDINFO_LATE=y
-+CONFIG_ARCH_EARLY_INIT_R=y
-+CONFIG_BOARD_EARLY_INIT_F=y
-+CONFIG_SPL_BOARD_INIT=y
-+# CONFIG_SPL_LEGACY_IMAGE_SUPPORT is not set
-+CONFIG_SPL_SYS_MALLOC_SIMPLE=y
-+CONFIG_SPL_STACK_R=y
-+CONFIG_SPL_SEPARATE_BSS=y
-+CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_USE_SECTOR=y
-+CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR=0x80
-+CONFIG_SPL_SHA512_SUPPORT=y
-+CONFIG_SPL_FIT_IMAGE_TINY=y
-+CONFIG_SPL_DM_RESET=y
-+CONFIG_SPL_RAM_SUPPORT=y
-+CONFIG_SPL_RAM_DEVICE=y
-+CONFIG_SPL_WATCHDOG_SUPPORT=y
-+CONFIG_SPL_YMODEM_SUPPORT=y
-+CONFIG_HUSH_PARSER=y
-+# CONFIG_AUTO_COMPLETE is not set
-+CONFIG_SYS_PROMPT="ast# "
-+CONFIG_CMD_BOOTZ=y
-+# CONFIG_CMD_ELF is not set
-+# CONFIG_CMD_IMI is not set
-+# CONFIG_CMD_XIMG is not set
-+CONFIG_CMD_MEMTEST=y
-+CONFIG_SYS_ALT_MEMTEST=y
-+CONFIG_CMD_CLK=y
-+CONFIG_CMD_GPIO=y
-+CONFIG_CMD_GPT=y
-+# CONFIG_RANDOM_UUID is not set
-+CONFIG_CMD_I2C=y
-+CONFIG_CMD_MMC=y
-+CONFIG_CMD_PART=y
-+CONFIG_CMD_SF=y
-+CONFIG_CMD_DHCP=y
-+CONFIG_CMD_MII=y
-+CONFIG_CMD_PING=y
-+CONFIG_CMD_NCSI=y
-+CONFIG_CMD_EXT2=y
-+CONFIG_CMD_EXT4=y
-+CONFIG_CMD_EXT4_WRITE=y
-+CONFIG_CMD_FAT=y
-+CONFIG_CMD_FS_GENERIC=y
-+CONFIG_CMD_MTDPARTS=y
-+# CONFIG_SPL_DOS_PARTITION is not set
-+# CONFIG_SPL_EFI_PARTITION is not set
-+CONFIG_SPL_OF_CONTROL=y
-+CONFIG_ENV_IS_IN_MMC=y
-+CONFIG_USE_DEFAULT_ENV_FILE=y
-+CONFIG_DEFAULT_ENV_FILE="board/aspeed/ast2600_openbmc_mmc.txt"
-+CONFIG_NET_RANDOM_ETHADDR=y
-+CONFIG_SPL_DM=y
-+CONFIG_REGMAP=y
-+CONFIG_SYSCON=y
-+CONFIG_SPL_OF_TRANSLATE=y
-+CONFIG_CLK=y
-+CONFIG_SPL_CLK=y
-+CONFIG_ASPEED_HACE=y
-+CONFIG_DM_GPIO=y
-+CONFIG_ASPEED_GPIO=y
-+CONFIG_DM_I2C=y
-+CONFIG_SYS_I2C_ASPEED=y
-+CONFIG_MISC=y
-+CONFIG_ASPEED_AHBC=y
-+CONFIG_DM_MMC=y
-+CONFIG_SPL_MMC_TINY=y
-+CONFIG_MMC_SDHCI=y
-+CONFIG_MMC_SDHCI_ASPEED=y
-+CONFIG_DM_SPI_FLASH=y
-+CONFIG_SPI_FLASH=y
-+CONFIG_SPI_FLASH_GIGADEVICE=y
-+CONFIG_SPI_FLASH_MACRONIX=y
-+CONFIG_SPI_FLASH_SPANSION=y
-+CONFIG_SPI_FLASH_STMICRO=y
-+CONFIG_SPI_FLASH_WINBOND=y
-+CONFIG_PHY_BROADCOM=y
-+CONFIG_PHY_REALTEK=y
-+CONFIG_PHY_NCSI=y
-+CONFIG_DM_ETH=y
-+CONFIG_PHY_GIGE=y
-+CONFIG_FTGMAC100=y
-+CONFIG_MDIO=y
-+CONFIG_PHY=y
-+CONFIG_PINCTRL=y
-+CONFIG_RAM=y
-+CONFIG_SPL_RAM=y
-+CONFIG_DM_SERIAL=y
-+CONFIG_SYS_NS16550=y
-+CONFIG_SPI=y
-+CONFIG_DM_SPI=y
-+CONFIG_SYSRESET=y
-+CONFIG_WDT=y
-+CONFIG_USE_TINY_PRINTF=y
-+CONFIG_SPL_TINY_MEMSET=y
-+CONFIG_TPM=y
-+CONFIG_SPL_TPM=y
-+# CONFIG_EFI_LOADER is not set
--- 
-2.34.0
+Yeah I'm not sure what happened here, whether that was something I did 
+or if someone's made changes to the recipe since. When I added support 
+for exposing multiple devices from the one BMC there were some 
+complications around not breaking everyone vs having to modify every 
+in-tree consumer. I didn't have the bandwidth or ability to test fixing 
+all the platforms at the time so I put some work-arounds in the install 
+phase of the obmc-console recipe. Maybe that broke things?
 
+Anyway, please also CC me on cleanups.
+
+Cheers,
+
+Andrew
