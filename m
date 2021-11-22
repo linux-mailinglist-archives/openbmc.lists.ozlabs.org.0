@@ -1,59 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3E14458AE6
-	for <lists+openbmc@lfdr.de>; Mon, 22 Nov 2021 09:53:05 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF02845906D
+	for <lists+openbmc@lfdr.de>; Mon, 22 Nov 2021 15:42:49 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HyLdW61Jnz3dwV
-	for <lists+openbmc@lfdr.de>; Mon, 22 Nov 2021 19:53:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HyVP33b5Bz2ynk
+	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 01:42:47 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=NJN+Id+A;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=XgE5lVSb;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=178.32.125.2;
- helo=smtpout1.mo529.mail-out.ovh.net; envelope-from=clg@kaod.org;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=64.147.123.24;
+ helo=wout1-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-X-Greylist: delayed 1197 seconds by postgrey-1.36 at boromir;
- Mon, 22 Nov 2021 19:52:36 AEDT
-Received: from smtpout1.mo529.mail-out.ovh.net
- (smtpout1.mo529.mail-out.ovh.net [178.32.125.2])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm3 header.b=NJN+Id+A; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=XgE5lVSb; 
+ dkim-atps=neutral
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HyLd03QMpz3dvD
- for <openbmc@lists.ozlabs.org>; Mon, 22 Nov 2021 19:52:35 +1100 (AEDT)
-Received: from mxplan5.mail.ovh.net (unknown [10.108.1.216])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 1C738CD0D8CE;
- Mon, 22 Nov 2021 09:14:46 +0100 (CET)
-Received: from kaod.org (37.59.142.97) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2308.20; Mon, 22 Nov
- 2021 09:14:46 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-97G00221c0923f-8ed1-4d4d-8082-cc1e8ee06be1,
- 416F395970A38A0BC3BF4248461703C95BA59510) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <73fb026a-e488-cd92-50bb-38aac8616e66@kaod.org>
-Date: Mon, 22 Nov 2021 09:14:45 +0100
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HyVNc1RPKz2xtc
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Nov 2021 01:42:23 +1100 (AEDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+ by mailout.west.internal (Postfix) with ESMTP id D4A2D3201C48;
+ Mon, 22 Nov 2021 09:42:19 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute6.internal (MEProxy); Mon, 22 Nov 2021 09:42:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=date:from:to:cc:subject:message-id
+ :references:mime-version:content-type:content-transfer-encoding
+ :in-reply-to; s=fm3; bh=HrVLrTrijrrIMIX2xlFEYxNKwpvNPo2aiJWIdNho
+ LCU=; b=NJN+Id+A5tUp6RhfRhJTIjNVG0jN71ppumH6rIOjkV+BlRPmgioVOVmd
+ yq5079L7JLrGZysR/qHkMpwKpLtI8QoR9/YTStKEWncp0KslE6AtgdLqf+3LzuO1
+ SnwfVNUo0DJ2tZRi1uCkzaIkaV1NL00DXfZCo883pQVgXWummKGMDhfFMJuO0Vfs
+ qvQu8NGzMD4VjivDoQf+vECBJSyFT1ksXCVmb1CqA9v+B2x7trZhe3T5nnDb26Qw
+ ZtiHKNYVSJr8uc8CFRAicfQmqTpfk6PGM+JGamm81FD1h/ft73vMOISEU+Qzmasn
+ rrtMi7R/PTjzbdMh/o0WTu39k8++Ow==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; bh=HrVLrTrijrrIMIX2xlFEYxNKwpvNPo2aiJWIdNhoL
+ CU=; b=XgE5lVSbQZ7QP0sFA9+KCCiAICmgr9zSJf9qJiQFYW3Z/QVkpgJ4cXNn6
+ iqMXezQ0vBOTKIbfpvXAgDmLqEhfcfAUFKum2RNTSz1uSQHFzNRldRxf9GyZ57Mu
+ ykrvEbPJbw28IZMzYDKGpXlWiVquMcRTFhTLlIqK+8TlcYR8ddf7E9py6V1NI5rG
+ 7guygm/76CmRFVofoBpTMLv8WhJoZ5xnkijAYJLGXkYixfcma3VzCGlVIzoe9bIN
+ T49tIXWNAA/U3uSYm6huVrhOiZqAqq0GOuocYmzD0H9rClOCsXeq2tMePBMsY7YH
+ 6VtBzMBy8iHrV38QwRcW28gcGMYTg==
+X-ME-Sender: <xms:S6ybYaX7agHGU-qJWbseAeFuW_C-AqWJjlHrrUu_1vPUknL1I0ZAmQ>
+ <xme:S6ybYWl_tRK8BYMS2pwzZFliqmye3U7VGOnfsG8KaObqUVFPwH_QW34CqYWq34Xoy
+ Upf4cylB79ebI5p1Og>
+X-ME-Received: <xmr:S6ybYebt64Hz4nXBGxveEavzrrRneeCl7HsSZoMPKxjwuQHMuitFK4Ly>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrgeeggdeilecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpeffhffvuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpeeurhgrugcu
+ uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
+ eqnecuggftrfgrthhtvghrnhepgfetveetvdegudejkeeiheduieeuvdevffeltdfffedu
+ vdfgkeejtdeujeevffffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+ hilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
+X-ME-Proxy: <xmx:S6ybYRVbHFJA86L1mFbIN7IqsPRWyd26kEKXyldMCnqLqLCPE4ivAA>
+ <xmx:S6ybYUlqh9lbi1MsfGEml3qwSOrkpf2tvv32dw4kqhN3sv9ZLTnrgA>
+ <xmx:S6ybYWdzWBKmFVEVpA-K--u8pXSi3WMYJe6y5erOU7J7X3uFfez0aA>
+ <xmx:S6ybYQvUmYLFCBihkTb-s8ZEzXQT8ag7LAXmW-JRvFFAdiaVbD1A5A>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Nov 2021 09:42:18 -0500 (EST)
+Date: Mon, 22 Nov 2021 09:42:17 -0500
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Buddy Huang =?utf-8?B?KOm7g+Wkqem0uyk=?= <Buddy.Huang@quantatw.com>
+Subject: Re: Quanta's CCLA Schedule A update 2021-11-12
+Message-ID: <20211122144217.hqbmgjgm442ydlpw@cheese>
+References: <HK0PR04MB25631E61E0E742D187EACCC69D969@HK0PR04MB2563.apcprd04.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: Using Qemu for BMC with a TAP interface
-Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>, Patrick Venture <venture@google.com>
-References: <CAO=notybTVxHG2LVzW66vfK3232zCON2v5-p8-bpeTYGm3MMxQ@mail.gmail.com>
- <CACPK8XeXG9pnv7nWwCm=1bMNVO2a0y1YGuSohuMhB4Ous9hOFw@mail.gmail.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <CACPK8XeXG9pnv7nWwCm=1bMNVO2a0y1YGuSohuMhB4Ous9hOFw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.97]
-X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: 801ac044-6aaa-4509-9982-b228d1d8497e
-X-Ovh-Tracer-Id: 5869879166226762720
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvuddrgeefgdduudelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvfhfhjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepieegvdffkeegfeetuddttddtveduiefhgeduffekiedtkeekteekhfffleevleelnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrdeljeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdprhgtphhtthhopehpvghfohhlvgihsehgohhoghhlvgdrtghomh
+In-Reply-To: <HK0PR04MB25631E61E0E742D187EACCC69D969@HK0PR04MB2563.apcprd04.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,81 +97,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Peter Foley <pefoley@google.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Cosmo Chou =?utf-8?B?KOWRqOalt+WfuSk=?= <Cosmo.Chou@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+On Sat, Nov 13, 2021 at 01:19:12AM +0000, Buddy Huang (黃天鴻) wrote:
+>Hi team,
+>
+>Please find the attached file for updated Schedule A of CCLA from Quanta.
+>
+>
+>Sincerely,
+>Buddy
 
-On 11/22/21 08:20, Joel Stanley wrote:
-> On Thu, 18 Nov 2021 at 20:35, Patrick Venture <venture@google.com> wrote:
->>
->> Hi;
->>
->> We're working on wiring up our Qemu BMC via a TAP configuration, and we're not seeing packets inside the Nuvoton NIC itself (a level of debugging we had to enable).  We're using the npcm7xx SoC device,
->>
->> -nic tap,fds=4:5:6:7:8:9:10:11,id=net0,model=npcm7xx-emc,mac=58:cb:52:18:b8:f7
->>
->> For the networking parameters, where the tap fds are valid.  I was curious if any of y'all got qemu networking working for your BMC SoCs, either Aspeed or Nuvoton?
-> 
-> I've not tried using the -nic tap option with file descriptors. It's
-> not quite clear what you're trying to do, or what your full setup
-> looks like.
+Hi Buddy
 
-yes. could you explain please ? It is simpler to run with a netdev bridge
-backend :
+Sched A updated, thanks!
 
-   -net nic,macaddr=C0:FF:EE:00:00:03,netdev=net0 -netdev bridge,id=net0,helper=/usr/libexec/qemu-bridge-helper,br=virbr0
-
-
-Thanks,
-
-C.
-
-> 
-> I did test it out just now with a manually created tap interface:
-> 
-> sudo ip tuntap add test0 mode tap group netdev
-> sudo ip link set test0 up
-> sudo tcpdump -i test0
-> 
-> And then when I fired up a qemu instance,
-> 
-> qemu-system-arm -nographic -M romulus-bmc -kernel arch/arm/boot/zImage
-> -dtb arch/arm/boot/dts/aspeed-bmc-opp-romulus.dtb -initrd arm.cpio.xz
-> -nic tap,ifname=test0,id=net0
-> 
-> I could see packets being decoded by the tcpdump instance (my laptop
-> is 'voyager', qemu came up as fe80::5054:ff:fe12:3456):
-> 
-> $ sudo tcpdump -i test0
-> tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
-> listening on test0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
-> 15:10:32.683930 IP6 voyager > ip6-allrouters: ICMP6, router
-> solicitation, length 16
-> 15:10:33.655994 IP6 voyager.mdns > ff02::fb.mdns: 0 [2q] PTR (QM)?
-> _ipps._tcp.local. PTR (QM)? _ipp._tcp.local. (45)
-> 15:10:37.795242 IP6 fe80::5054:ff:fe12:3456 > ip6-allrouters: ICMP6,
-> router solicitation, length 16
-> 15:11:05.688413 IP6 voyager.mdns > ff02::fb.mdns: 0 [2q] PTR (QM)?
-> _ipps._tcp.local. PTR (QM)? _ipp._tcp.local. (45)
-> 15:11:07.499841 IP6 voyager > ip6-allrouters: ICMP6, router
-> solicitation, length 16
-> 15:11:11.079030 IP6 fe80::5054:ff:fe12:3456 > ip6-allrouters: ICMP6,
-> router solicitation, length 16
-> 
-> I've cc'd Cédric as he is the king of qemu command lines.
-> 
-> Cheers,
-> 
-> Joel
-> 
-> 
-> 
-> 
-> 
-> 
->>
->> Patrick
-
+-brad
