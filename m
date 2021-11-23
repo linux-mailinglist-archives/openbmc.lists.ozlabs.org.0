@@ -2,80 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1E1145A706
-	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 16:57:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D479445AA53
+	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 18:45:34 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hz81C4rtjz2ypj
-	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 02:57:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4HzBPS4qJHz2yp9
+	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 04:45:32 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=F3h+p3rn;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=ODRWsUa3;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22a;
- helo=mail-oi1-x22a.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=F3h+p3rn; dkim-atps=neutral
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com
- [IPv6:2607:f8b0:4864:20::22a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=ODRWsUa3; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hz80s0xlNz2xrP;
- Wed, 24 Nov 2021 02:57:32 +1100 (AEDT)
-Received: by mail-oi1-x22a.google.com with SMTP id bj13so45515669oib.4;
- Tue, 23 Nov 2021 07:57:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=sender:subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=tDjoMJkmiCcFGdF6dcsQYg0MFBwPTTirRRHoT1oey7I=;
- b=F3h+p3rna1hgJMQ2amlf+ALUT7PuPQRM7rEmRW/imm8BDqtBQG4JoRrF1V9Tp2glRr
- U6t2ggtR4Fd1uYVhJPkOcUlzqnqXKrWbB+KuE1uGOt6ipPpCtoFnXsSDxYHn/dNJP8ke
- Izpox4iI3wq74SQSV+G7LR4wENLrD2IO1ucM4UDLVCCLxB9HNCTPuRjYUszH2gS3UC6p
- brm92l3sf68lTFh/owt4zVPiq2WRxkLUw8znWRHa1MomnmnsL37iFOz4W2JeMSab+mLR
- SMION44E+YLOBc32dEBpDxambbnB3gqr/RToWcm0ywR0XNic2D2WXbHNc0B2CdxR5yo5
- PpOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
- :date:user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=tDjoMJkmiCcFGdF6dcsQYg0MFBwPTTirRRHoT1oey7I=;
- b=SaPUJ3T3GQ+N5zbgk3iqkEm0kVJQph1WF1cPJvjQnirEoH+RXZVYnAXrcnwtiZuX7+
- ++TQkqrlR83bla807hoysDRAXvbTAImdnV6YzdEM30TS1YILVtZv0AKAuYeNHMXCpMR1
- IBmzZMmiSXb/OzQcKJZs69TGUUNYrQkJPVTOdLef6yWOMR6OSfbikqDOgwSe5mySI0s3
- zC4gh12DUQVWA/VA2Mzo0fDGc+i2eratnlatvErgtGsrQsRnatDevaTbI3w1+zlCUdho
- h3sUb2ZyTt0Xb/RlptKrQ0CKo7uNmxq7Sz6dAw4y4CbL0ADDPjbS7C9lx+W+8We08AEy
- GkFg==
-X-Gm-Message-State: AOAM5318CXgmIaHd4PXKl+Rt/LFdZr1rabiIodGIh6nhn8xiCA9wc9xt
- PPUSW4lgO9kD+ebEl8roQMk=
-X-Google-Smtp-Source: ABdhPJyJEZGrtc0xcH378fpDYmIhdU3TWk/zSgIRsI4w8vfi4DX4cvdmiQV1eRnHYGTf+mpBnhA89Q==
-X-Received: by 2002:aca:acc4:: with SMTP id v187mr3446169oie.35.1637683049879; 
- Tue, 23 Nov 2021 07:57:29 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- c3sm2721498oiw.8.2021.11.23.07.57.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Nov 2021 07:57:29 -0800 (PST)
-Subject: Re: [PATCH v4 12/13] docs: hwmon: Document PECI drivers
-To: Iwona Winiarska <iwona.winiarska@intel.com>,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-References: <20211123140706.2945700-1-iwona.winiarska@intel.com>
- <20211123140706.2945700-13-iwona.winiarska@intel.com>
-From: Guenter Roeck <linux@roeck-us.net>
-Message-ID: <d9dd9352-54e4-9837-b818-4bd38353e477@roeck-us.net>
-Date: Tue, 23 Nov 2021 07:57:26 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HzBP22FHGz2xXm
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Nov 2021 04:45:10 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 6259C43C92;
+ Tue, 23 Nov 2021 17:45:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-type:content-type:content-transfer-encoding:mime-version
+ :x-mailer:message-id:date:date:subject:subject:from:from
+ :received:received:received; s=mta-01; t=1637689503; x=
+ 1639503904; bh=GmppmzoT9vahQUcY5qoYt+DLLo6wbqzYzXvmXSazhAM=; b=O
+ DRWsUa3o8oioC7W0SBmdzRkfDmUQijNNOMWNNHO5SB6a9tZKNzNp1L9OSDo4F03U
+ yYCcrltIXz62701FxNRXbdHWhuVfCn5lj/I1m+m6I3Gys2GorslhZCaRcxf9T4x/
+ KuEB5JiwgtyPTMoRgPS6D7XFitUThV1YTxncgyq1ZY=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id ZrUqdEr7tmnq; Tue, 23 Nov 2021 20:45:03 +0300 (MSK)
+Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
+ [172.17.100.104])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 2F8964149A;
+ Tue, 23 Nov 2021 20:45:02 +0300 (MSK)
+Received: from nb-511.yadro.com (10.199.10.105) by T-EXCH-04.corp.yadro.com
+ (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 23
+ Nov 2021 20:45:02 +0300
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: <openbmc@lists.ozlabs.org>, <joel@jms.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc] add kconfig for secondary env
+ partition
+Date: Tue, 23 Nov 2021 20:44:46 +0300
+Message-ID: <20211123174446.26011-1-a.kartashev@yadro.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <20211123140706.2945700-13-iwona.winiarska@intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.199.10.105]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,31 +72,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
- Dave Hansen <dave.hansen@intel.com>, Zev Weiss <zweiss@equinix.com>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Jonathan Corbet <corbet@lwn.net>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
- devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- Arnd Bergmann <arnd@arndb.de>, Rob Herring <robh+dt@kernel.org>,
- Borislav Petkov <bp@alien8.de>, Dan Williams <dan.j.williams@intel.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
- Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
- Randy Dunlap <rdunlap@infradead.org>, Olof Johansson <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 11/23/21 6:07 AM, Iwona Winiarska wrote:
-> From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-> 
-> Add documentation for peci-cputemp driver that provides DTS thermal
-> readings for CPU packages and CPU cores, and peci-dimmtemp driver that
-> provides Temperature Sensor on DIMM readings.
-> 
-> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-> Co-developed-by: Iwona Winiarska <iwona.winiarska@intel.com>
-> Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
-> Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Backport SYS_REDUNDAND_ENVIRONMENT and ENV_OFFSET_REDUND options from
+upstream.
+Fix indent for ENV_OFFSET and ENV_SIZE
 
+Signed-off-by: Andrei Kartashev <a.kartashev@yadro.com>
+---
+ env/Kconfig | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
-Acked-by: Guenter Roeck <linux@roeck-us.net>
+diff --git a/env/Kconfig b/env/Kconfig
+index c41478e362..07e161194a 100755
+--- a/env/Kconfig
++++ b/env/Kconfig
+@@ -656,15 +656,28 @@ config TPL_ENV_IS_IN_FLASH
+ endif
+ 
+ config ENV_OFFSET
+-        hex "Environment offset"
+-        depends on ENV_IS_IN_EEPROM || ENV_IS_IN_MMC || ENV_IS_IN_NAND || \
+-                    ENV_IS_IN_SPI_FLASH
+-        help
+-          Offset from the start of the device (or partition)
++	hex "Environment offset"
++	depends on ENV_IS_IN_EEPROM || ENV_IS_IN_MMC || ENV_IS_IN_NAND || ENV_IS_IN_SPI_FLASH
++	help
++	  Offset from the start of the device (or partition)
+ 
+ config ENV_SIZE
+-        hex "Environment Size"
+-        help
+-          Size of the environment storage area
++	hex "Environment Size"
++	help
++	  Size of the environment storage area
++
++config SYS_REDUNDAND_ENVIRONMENT
++	bool "Use secondary environment partition"
++	depends on ENV_IS_IN_EEPROM || ENV_IS_IN_MMC || ENV_IS_IN_NAND || ENV_IS_IN_SPI_FLASH
++	help
++	  Used to hold a redundant copy of the environment data. This
++	  provides a valid backup copy in case the other copy is corrupted,
++	  e.g. due to a power failure during a "saveenv" operation.
++
++config ENV_OFFSET_REDUND
++	hex "Secondary environment offset"
++	depends on SYS_REDUNDAND_ENVIRONMENT
++	help
++	  Size of the environment storage area
+ 
+ endmenu
+-- 
+2.32.0
+
