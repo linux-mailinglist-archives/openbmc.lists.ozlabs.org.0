@@ -1,65 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE25D459EA8
-	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 09:53:58 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC72445A036
+	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 11:28:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hyyc45YsLz2ynk
-	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 19:53:56 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=nqFXzfi2;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hz0hy5hS4z3fs0
+	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 21:28:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::82e;
- helo=mail-qt1-x82e.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=nqFXzfi2; dkim-atps=neutral
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com
- [IPv6:2607:f8b0:4864:20::82e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=sakari.ailus@linux.intel.com; receiver=<UNKNOWN>)
+X-Greylist: delayed 124 seconds by postgrey-1.36 at boromir;
+ Tue, 23 Nov 2021 21:27:09 AEDT
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hyybf3yJbz2yPT
- for <openbmc@lists.ozlabs.org>; Tue, 23 Nov 2021 19:53:32 +1100 (AEDT)
-Received: by mail-qt1-x82e.google.com with SMTP id a2so19167779qtx.11
- for <openbmc@lists.ozlabs.org>; Tue, 23 Nov 2021 00:53:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=vQ0wJ2HUKGEUwmb2OsdkRqQ8rWvwN0HNLkNoTNoaQSo=;
- b=nqFXzfi2dCnV8Lk3k5juBnuX56gwA7tfWjinovHPSHY2j1zcvHrliKdnoHLpzfhuwu
- O/mRWju+aaNNvmStTpqta0r3uRV4i5Ow3S7scHySvFX1Chyr6JnMmnh2DKisglfHoc/h
- lIe5nFV0UDYqqAxqM7nG7vGbn1VvYxu5GR8zI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=vQ0wJ2HUKGEUwmb2OsdkRqQ8rWvwN0HNLkNoTNoaQSo=;
- b=5rBut/HrgUHTDzmDzUrWzruk8UhO+4rR8fx3pcCU9e6nD9xzmxgjW0q3lLdSQO4HnM
- +ipsTSP3TiN+nyIP2PVJ8XBgcSfspJu2DcDRS0ALryLCEanGXGHlLLyL16XFOWpYLzK6
- 7M8Xq0KI5SOV1vIclttQDGbNvQUmyS0AL3jm6erdHv+DX3BdFJp6wWJH6GazD/AMkmUZ
- 4gpva+LjLOlDE3pNzoD6CEfU00O3WLyvkh07+vnLWTemTNPSU/a/qXKRXlvSC7eWhDns
- 7ddvmQ9aKiVtpTvL0ILZsN+rxKxayiJJWr3FFZQe+EI+qV5qEkWFPQtKop9ZHcJzRVuJ
- rz6g==
-X-Gm-Message-State: AOAM531HkSemkxwdVL8GypwUfXLC7EsabtZssTN9dLtuJjTXipr5RiRF
- F2BwufvfMUla29Labig6IsC0cGWaeSb/Y1T3hgCMjYrZwqA=
-X-Google-Smtp-Source: ABdhPJyZ5SayJ/W4D8Z0jfPb4+B4n8N7jKIIvKJnuX2WA42HZWF37RcSEBZq7w0CM4VexKQJy9Jid7Uv/w64yyW0aU0=
-X-Received: by 2002:a05:622a:20b:: with SMTP id
- b11mr4151627qtx.25.1637657606778; 
- Tue, 23 Nov 2021 00:53:26 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hz0gd4n5Pz3fpS;
+ Tue, 23 Nov 2021 21:27:09 +1100 (AEDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10176"; a="222218953"
+X-IronPort-AV: E=Sophos;i="5.87,257,1631602800"; d="scan'208";a="222218953"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+ by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Nov 2021 02:24:01 -0800
+X-IronPort-AV: E=Sophos;i="5.87,257,1631602800"; d="scan'208";a="571020561"
+Received: from paasikivi.fi.intel.com ([10.237.72.42])
+ by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Nov 2021 02:23:58 -0800
+Received: from paasikivi.fi.intel.com (localhost [127.0.0.1])
+ by paasikivi.fi.intel.com (Postfix) with ESMTP id 3A09A20762;
+ Tue, 23 Nov 2021 12:23:56 +0200 (EET)
+Date: Tue, 23 Nov 2021 12:23:56 +0200
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
+To: Jammy Huang <jammy_huang@aspeedtech.com>
+Subject: Re: [PATCH v5 05/10] media: v4l: Add definition for the Aspeed JPEG
+ format
+Message-ID: <YZzBPFHZ7MPwTWSm@paasikivi.fi.intel.com>
+References: <20211118074030.685-1-jammy_huang@aspeedtech.com>
+ <20211118074030.685-6-jammy_huang@aspeedtech.com>
+ <YZZIDNCLJXwrqY4W@paasikivi.fi.intel.com>
+ <0bed6093-0af6-4fc4-716f-6cf8b1302320@aspeedtech.com>
 MIME-Version: 1.0
-References: <20211118014445.1621187-1-wak@google.com>
-In-Reply-To: <20211118014445.1621187-1-wak@google.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 23 Nov 2021 08:53:13 +0000
-Message-ID: <CACPK8XfD31bUx1NZM3qo7VEwMe-N8VsQimP9b7GxCn1PwxC5yQ@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: nuvoton: Fix GPIO pin names
-To: "William A. Kennington III" <wak@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0bed6093-0af6-4fc4-716f-6cf8b1302320@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,176 +58,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "andrew@aj.id.au" <andrew@aj.id.au>,
+ "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "eajames@linux.ibm.com" <eajames@linux.ibm.com>,
+ "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "hverkuil-cisco@xs4all.nl" <hverkuil-cisco@xs4all.nl>,
+ "mchehab@kernel.org" <mchehab@kernel.org>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+ "laurent.pinchart@ideasonboard.com" <laurent.pinchart@ideasonboard.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi William,
+Hi Jammy,
 
-On Thu, 18 Nov 2021 at 01:45, William A. Kennington III <wak@google.com> wrote:
->
-> The pinctrl driver for the NPCM7xx updated some of the pinctrl names to
-> include HGPIO definitions, but the dts file remained unchanged. This
-> breaks pinctrl parsing if the strings don't match.
->
-> Signed-off-by: William A. Kennington III <wak@google.com>
+On Fri, Nov 19, 2021 at 10:02:40AM +0800, Jammy Huang wrote:
+> Hi Sakari,
+> 
+> On 2021/11/18 下午 08:33, Sakari Ailus wrote:
+> > Hi Jammy,
+> > 
+> > On Thu, Nov 18, 2021 at 03:40:26PM +0800, Jammy Huang wrote:
+> > > This introduces support for the Aspeed JPEG format, where the new frame
+> > > can refer to previous frame to reduce the amount of compressed data. The
+> > > concept is similar to I/P frame of video compression. I will compare the
+> > > new frame with previous one to decide which macroblock's data is
+> > > changed, and only the changed macroblocks will be compressed.
+> > > 
+> > > This Aspeed JPEG format is used by the video engine on Aspeed platforms,
+> > > which is generally adapted for remote KVM.
+> > > 
+> > > Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+> > > ---
+> > > v5:
+> > >    - no update
+> > > v4:
+> > >    - new
+> > > ---
+> > >   Documentation/media/uapi/v4l/pixfmt-reserved.rst | 12 ++++++++++++
+> > >   drivers/media/v4l2-core/v4l2-ioctl.c             |  1 +
+> > >   include/uapi/linux/videodev2.h                   |  1 +
+> > >   3 files changed, 14 insertions(+)
+> > > 
+> > > diff --git a/Documentation/media/uapi/v4l/pixfmt-reserved.rst b/Documentation/media/uapi/v4l/pixfmt-reserved.rst
+> > > index b2cd155e691b..23c05063133d 100644
+> > > --- a/Documentation/media/uapi/v4l/pixfmt-reserved.rst
+> > > +++ b/Documentation/media/uapi/v4l/pixfmt-reserved.rst
+> > > @@ -264,6 +264,18 @@ please make a proposal on the linux-media mailing list.
+> > >   	of tiles, resulting in 32-aligned resolutions for the luminance plane
+> > >   	and 16-aligned resolutions for the chrominance plane (with 2x2
+> > >   	subsampling).
+> > > +    * .. _V4L2-PIX-FMT-AJPG:
+> > > +
+> > > +      - ``V4L2_PIX_FMT_AJPG``
+> > > +      - 'AJPG'
+> > > +      - ASPEED JPEG format used by the aspeed-video driver on Aspeed platforms,
+> > > +        which is generally adapted for remote KVM.
+> > > +        On each frame compression, I will compare the new frame with previous
+> > > +        one to decide which macroblock's data is changed, and only the changed
+> > > +        macroblocks will be compressed.
+> > > +
+> > > +        You could reference to chapter 36, Video Engine, of AST2600's datasheet
+> > > +        for more information.
+> > Is this datasheet publicly available? Do you have a URL?
+> 
+> Sorry, this datasheet is not publicly available.
+> Hans mentioned this as well in the discussion below:
+> 
+> https://lkml.org/lkml/2021/11/10/101
 
-I'm wondering where you want this patch to be applied (and who would do so!).
+If the vendor documentation is not publicly available, you'll need to have
+the format documented here. Alternatively an open source implementation
+(e.g. LGPL) is presumably fine, too.
 
-Is the relevant pinctrl driver change merged to mainline? If so, send
-it to the upstream lists (linux-arm-kernel) and cc some nuvoton
-reviewers.
+-- 
+Regards,
 
-If you just want it in the openbmc tree, we can do that. Normally this
-means putting the branch name in the subject.
-
-You should get some review from someone who works on the nuvoton
-boards regardless.
-
-Cheers,
-
-Joel
-
-> ---
->  arch/arm/boot/dts/nuvoton-npcm750-gpio.dtsi | 42 ++++++++++-----------
->  1 file changed, 21 insertions(+), 21 deletions(-)
->
-> diff --git a/arch/arm/boot/dts/nuvoton-npcm750-gpio.dtsi b/arch/arm/boot/dts/nuvoton-npcm750-gpio.dtsi
-> index 444ea403547b..7c7942cdfd08 100644
-> --- a/arch/arm/boot/dts/nuvoton-npcm750-gpio.dtsi
-> +++ b/arch/arm/boot/dts/nuvoton-npcm750-gpio.dtsi
-> @@ -219,77 +219,77 @@ gpio19ol_pins: gpio19ol-pins {
->                         output-low;
->                 };
->                 gpio20_pins: gpio20-pins {
-> -                       pins = "GPIO20/SMB4CSDA/SMB15SDA";
-> +                       pins = "GPIO20/HGPIO0/SMB4CSDA/SMB15SDA";
->                         bias-disable;
->                         input-enable;
->                 };
->                 gpio20o_pins: gpio20o-pins {
-> -                       pins = "GPIO20/SMB4CSDA/SMB15SDA";
-> +                       pins = "GPIO20/HGPIO0/SMB4CSDA/SMB15SDA";
->                         bias-disable;
->                         output-high;
->                 };
->                 gpio20ol_pins: gpio20ol-pins {
-> -                       pins = "GPIO20/SMB4CSDA/SMB15SDA";
-> +                       pins = "GPIO20/HGPIO0/SMB4CSDA/SMB15SDA";
->                         bias-disable;
->                         output-low;
->                 };
->                 gpio21_pins: gpio21-pins {
-> -                       pins = "GPIO21/SMB4CSCL/SMB15SCL";
-> +                       pins = "GPIO21/HGPIO1/SMB4CSCL/SMB15SCL";
->                         bias-disable;
->                         input-enable;
->                 };
->                 gpio21ol_pins: gpio21ol-pins {
-> -                       pins = "GPIO21/SMB4CSCL/SMB15SCL";
-> +                       pins = "GPIO21/HGPIO1/SMB4CSCL/SMB15SCL";
->                         bias-disable;
->                         output-low;
->                 };
->                 gpio22_pins: gpio22-pins {
-> -                       pins = "GPIO22/SMB4DSDA/SMB14SDA";
-> +                       pins = "GPIO22/HGPIO2/SMB4DSDA/SMB14SDA";
->                         bias-disable;
->                         input-enable;
->                 };
->                 gpio22ol_pins: gpio22ol-pins {
-> -                       pins = "GPIO22/SMB4DSDA/SMB14SDA";
-> +                       pins = "GPIO22/HGPIO2/SMB4DSDA/SMB14SDA";
->                         bias-disable;
->                         output-low;
->                 };
->                 gpio23_pins: gpio23-pins {
-> -                       pins = "GPIO23/SMB4DSCL/SMB14SCL";
-> +                       pins = "GPIO23/HGPIO3/SMB4DSCL/SMB14SCL";
->                         bias-disable;
->                         input-enable;
->                 };
->                 gpio23ol_pins: gpio23ol-pins {
-> -                       pins = "GPIO23/SMB4DSCL/SMB14SCL";
-> +                       pins = "GPIO23/HGPIO3/SMB4DSCL/SMB14SCL";
->                         bias-disable;
->                         output-low;
->                 };
->                 gpio24_pins: gpio24-pins {
-> -                       pins = "GPIO24/IOXHDO";
-> +                       pins = "GPIO24/HGPIO4/IOXHDO";
->                         bias-disable;
->                         input-enable;
->                 };
->                 gpio24o_pins: gpio24o-pins {
-> -                       pins = "GPIO24/IOXHDO";
-> +                       pins = "GPIO24/HGPIO4/IOXHDO";
->                         bias-disable;
->                         output-high;
->                 };
->                 gpio24ol_pins: gpio24ol-pins {
-> -                       pins = "GPIO24/IOXHDO";
-> +                       pins = "GPIO24/HGPIO4/IOXHDO";
->                         bias-disable;
->                         output-low;
->                 };
->                 gpio25_pins: gpio25-pins {
-> -                       pins = "GPIO25/IOXHDI";
-> +                       pins = "GPIO25/HGPIO5/IOXHDI";
->                         bias-disable;
->                         input-enable;
->                 };
->                 gpio25o_pins: gpio25o-pins {
-> -                       pins = "GPIO25/IOXHDI";
-> +                       pins = "GPIO25/HGPIO5/IOXHDI";
->                         bias-disable;
->                         output-high;
->                 };
->                 gpio25ol_pins: gpio25ol-pins {
-> -                       pins = "GPIO25/IOXHDI";
-> +                       pins = "GPIO25/HGPIO5/IOXHDI";
->                         bias-disable;
->                         output-low;
->                 };
-> @@ -523,32 +523,32 @@ gpio58ol_pins: gpio58ol-pins {
->                         output-low;
->                 };
->                 gpio59_pins: gpio59-pins {
-> -                       pins = "GPIO59/SMB3DSDA";
-> +                       pins = "GPIO59/HGPIO6/SMB3DSDA";
->                         bias-disable;
->                         input-enable;
->                 };
->                 gpio59o_pins: gpio59o-pins {
-> -                       pins = "GPIO59/SMB3DSDA";
-> +                       pins = "GPIO59/HGPIO6/SMB3DSDA";
->                         bias-disable;
->                         output-high;
->                 };
->                 gpio59ol_pins: gpio59ol-pins {
-> -                       pins = "GPIO59/SMB3DSDA";
-> +                       pins = "GPIO59/HGPIO6/SMB3DSDA";
->                         bias-disable;
->                         output-low;
->                 };
->                 gpio60_pins: gpio60-pins {
-> -                       pins = "GPIO60/SMB3DSCL";
-> +                       pins = "GPIO60/HGPIO7/SMB3DSCL";
->                         bias-disable;
->                         input-enable;
->                 };
->                 gpio60o_pins: gpio60o-pins {
-> -                       pins = "GPIO60/SMB3DSCL";
-> +                       pins = "GPIO60/HGPIO7/SMB3DSCL";
->                         bias-disable;
->                         output-high;
->                 };
->                 gpio60ol_pins: gpio60ol-pins {
-> -                       pins = "GPIO60/SMB3DSCL";
-> +                       pins = "GPIO60/HGPIO7/SMB3DSCL";
->                         bias-disable;
->                         output-low;
->                 };
-> --
-> 2.34.0.rc1.387.gb447b232ab-goog
->
+Sakari Ailus
