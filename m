@@ -2,73 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0F7B45CE13
-	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 21:34:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CF60F45CE23
+	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 21:36:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hzt5p2rCzz2ynj
-	for <lists+openbmc@lfdr.de>; Thu, 25 Nov 2021 07:34:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hzt813xkGz2yxL
+	for <lists+openbmc@lfdr.de>; Thu, 25 Nov 2021 07:36:17 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=KrFQZzGa;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=RGL665Fm;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::134;
- helo=mail-lf1-x134.google.com; envelope-from=osk@google.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::22f;
+ helo=mail-lj1-x22f.google.com; envelope-from=osk@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=KrFQZzGa; dkim-atps=neutral
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com
- [IPv6:2a00:1450:4864:20::134])
+ header.s=20210112 header.b=RGL665Fm; dkim-atps=neutral
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com
+ [IPv6:2a00:1450:4864:20::22f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hzt5M2Prmz2xsC
- for <openbmc@lists.ozlabs.org>; Thu, 25 Nov 2021 07:33:57 +1100 (AEDT)
-Received: by mail-lf1-x134.google.com with SMTP id c32so10463206lfv.4
- for <openbmc@lists.ozlabs.org>; Wed, 24 Nov 2021 12:33:56 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hzt7X4Ctrz2ynG
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Nov 2021 07:35:52 +1100 (AEDT)
+Received: by mail-lj1-x22f.google.com with SMTP id z8so7952724ljz.9
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Nov 2021 12:35:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=ehE0PDLUJn5IuubBE5Fz0zYic+qSrZ8w7IQgqusMG6Q=;
- b=KrFQZzGaq836mVGevcpQCCrfUT5C70dDdVWmR4mQQhfXk9ixssnqpFJgC/RMFL/5En
- Fc+J+kgzolPFmG9O0/6NR7bv0N6L8If4lQGR5TNrqyQwb+rFZL6SGqLvhV7+ipIEpPM+
- r+Cn2L03cy60MFT3bGgnmQstLyrxcG76rSVIIrgX2LLiPtlR5SyDg+gnnKdHpylgkTFJ
- uSkNU/woUteYFgZfByflPEBPXj64Gm/8IN6eMo8MVXg41wAcDy4BP9f/3atrw7nrLXFd
- ehZQh45A0L1G9yB+n/aBx0HujKTNFPK0PlkJR5qNOluRj49LjXYPH4ezoa1B55KyNa69
- tgWA==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=W54IP7ZfTzOTv8YEG94wvKQzkghls5bBy75RxgiZ+Oc=;
+ b=RGL665FmhjUZQ8uT209FuyJtmIJBiFgyfKOSntBuy27KplTh7Vwh7g7fi2+e6IXZvK
+ Eq3ZJwqSYday+l+teo+LpqMHEp6ZasmPSL9JCqXpJYQZpSzjt3K4L3sMF0ib0sLecNjK
+ vVlep+fCEj4BA9VCbUIeRCeoLCmXOMcKhtnDnEvkQ54GXu1ipyxHnbeAPl5VIMVFn7KC
+ kTnnN436lFlbEK2qa/lrjTVGcidofk/wOGrw+AzPOjT0wWFqKtdp83m93qgqiaDMaMN3
+ HXyNVOcR0wzyd199svmJ7Rc1FbTiTN2zJ0Y0uTS4dgiDsmEgXTwqRUHyeGMXfOwxpkiy
+ ZV1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=ehE0PDLUJn5IuubBE5Fz0zYic+qSrZ8w7IQgqusMG6Q=;
- b=k753zo1p3BdeG+zy675UTgBV6vy2QYqABMwlaY1i+N3z6aPtW0OB9DHpB0mlKn8ESb
- oPabg1yUyjbNmXxtggYf1DYZj+XRPc908FYwrA4FW+NwU+S1e5aqAJhxQYdfWvpsOX43
- X/88u60sJVSQoqUJhWCX/NMI/8yYYvAWxAOQAufe2IM0jlCdTigKn/1t9Iw0cRJ8wyIm
- CT9clMt8ZNOiy/H3ZcPJXrLijra6avVKGhYIf58y62dd+j4OWWyoYhe4MT/1HOXlduap
- /Ns4dtDom5HgdeqE9fVdT+HdPgsVWPy9KzA0iw5Q3yEkhp9iRQKCxbRrILuLksUXJPW+
- oz1g==
-X-Gm-Message-State: AOAM531RX7go8HDl8jy2amlyp7xWVtYlrXv+E3NL3uLb1xLyhlAdYz5T
- 2X3WS0nFdm1EfOtLY0Vsd4HFtf1pMwStHFG6sxrH+g==
-X-Google-Smtp-Source: ABdhPJyS0nk5adDuSm1rUSVfySQJhrtvKSg6RQ6j4KEjDoKGHMAbWYnjGOru7a/AyOU3HybPH1DSeWBQri7iwoRc9xM=
-X-Received: by 2002:a05:6512:1289:: with SMTP id
- u9mr18198383lfs.273.1637786033340; 
- Wed, 24 Nov 2021 12:33:53 -0800 (PST)
+ :message-id:subject:to:cc;
+ bh=W54IP7ZfTzOTv8YEG94wvKQzkghls5bBy75RxgiZ+Oc=;
+ b=mzBiJdbXwrzpcn3VLJS8ys1zUe1lDKeUMjbVIy+d5qweag3r+1OyIOGhpxLC7hKNBI
+ IWL8F4gGiIvqGN7Iz2qURzLOL5gKMC5LXE95NZSK+oIXmL0eU3ORzpkHDjBHXTtJP/2K
+ rQ3PXZKKH5+3+ipmMBHSy7HwJ9n0270aFSJdVvxF70E5VRa+BpXXsXsAstSHQ+3p7PQ9
+ tG6SsdvVsS/+yDKsK/BdZFBF7gtEI2Sy6Xjy5kk8BRkNRfV0W+EwVne0VQX7L32ZBzUA
+ I3JunkrkZDLeHuJ5bL/mL7Qmcg6ajZqL22Npf+UqLkL6jFU4eurcaSn0JeHcLO99lXTb
+ 2jgA==
+X-Gm-Message-State: AOAM532Rc4uXgPehT3ke6ylsa5vGkPZDhyFJNlIRA6BrlN9lelYrUD7O
+ DJshc1kus18B/RQQiAkm/MEiSpE5JRb90XfJBSfE8Q==
+X-Google-Smtp-Source: ABdhPJwzEufKnCHLo6+lDSeUT7VkUWObuaEaaPgOjqHmlU+vthQOtdPxB6R0rrkDqSelBLue5klWuApY3S3C7TcOPhE=
+X-Received: by 2002:a2e:7801:: with SMTP id t1mr19792158ljc.253.1637786143468; 
+ Wed, 24 Nov 2021 12:35:43 -0800 (PST)
 MIME-Version: 1.0
-References: <CAE33tLEsCJtr9VPYj57ZcOe5iWD6282WmrMTr-Hp96Y3rkBzAA@mail.gmail.com>
- <000001d5bc87$f6fe3780$e4faa680$@linux.intel.com>
- <CAE33tLHvjuwFwCsSdohvYPHgs-f-8sDWMsNdAhzgQbs3=o7_tQ@mail.gmail.com>
- <429111627309901@mail.yandex-team.ru> <20210726145246.GL875@home.paul.comp>
- <435311627317580@mail.yandex-team.ru> <20210726165144.GN875@home.paul.comp>
- <477521627375667@mail.yandex-team.ru> <20210727093015.GQ875@home.paul.comp>
-In-Reply-To: <20210727093015.GQ875@home.paul.comp>
+References: <CABoTLcRtPYy_Yim20FCcX6qS--t7KD81GOZyT9pKV8OwuhLPrg@mail.gmail.com>
+ <YZvLdFJnQM+GB9yy@heinlein>
+ <48d0cc9e-6ab6-4d94-a8aa-1be8b8c1f155@www.fastmail.com>
+In-Reply-To: <48d0cc9e-6ab6-4d94-a8aa-1be8b8c1f155@www.fastmail.com>
 From: Oskar Senft <osk@google.com>
-Date: Wed, 24 Nov 2021 15:33:37 -0500
-Message-ID: <CABoTLcS+fPz=De0-tzOrzhwPd-b+tJ7M5H74+Qc=AiYM4vG3Pg@mail.gmail.com>
-Subject: Re: Serial Over Lan (SOL) no login prompt on Linux IRQ mode
-To: Paul Fertser <fercerpav@gmail.com>, 
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Konstantin Klubnichkin <kitsok@yandex-team.ru>
+Date: Wed, 24 Nov 2021 15:35:27 -0500
+Message-ID: <CABoTLcS1=8fp09RZxxpfha3L7REEgaBht3ivtCx5Ex-y5aDx7g@mail.gmail.com>
+Subject: Re: Making obmc-console_git.bb more generic (again)?
+To: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, 
+ Patrick Williams <patrick@stwcx.xyz>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -81,74 +77,76 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Ali El-Haj-Mahmoud <aaelhaj@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I just stumbled across this old-ish thread. I did run into a similar
-problem ages ago. The problem is that the SIRQ polarity used by the
-Aspeed must match what the "receiving end" (usually the PCH) is
-expecting. I agree that the Aspeed doc is missing some details here. I
-believe they might have clarified this on AST2600. Anyway, this
-setting can be changed in the DTS via aspeed,lpc-interrupts [1] or at
-runtime via the sysfs node sirq_polarity [2]. On the board I'm working
-on (TYAN S7106 and S8036), this had to be set to HIGH:
+Hi everyone
 
-&vuart {
-    status = "okay";
+I just sent https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/49082
+for review.
 
-    /* We enable the VUART here, but leave it in a state that does
-     * not interfere with the SuperIO. The goal is to have both the
-     * VUART and the SuperIO available and decide at runtime whether
-     * the VUART should actually be used. For that reason, configure
-     * an "invalid" IO address and an IRQ that is not used by the
-     * BMC.
-     */
-
-    aspeed,lpc-io-reg = <0xffff>;
-    aspeed,lpc-interrupts = <15 IRQ_TYPE_LEVEL_HIGH>;
-};
-
-Note that this change hasn't been added to upstream
-aspeed-bmc-tyan-s7106.dts yet, just because I'm slow ...
-
-Note that I previously introduced aspeed,sirq-polarity-sense for the
-DTS, which tried to do this automatically, but it turned out to cause
-issues, so it has been deprecated
-
-I hope this write-up helps anyone in the future.
+It took me a while to test (mainly because Yocto is weird). From what
+I can tell, this should be fully "backwards" compatible with existing
+meta machine layers that do or do not use the OBMC_CONSOLE_HOST_TTY
+variable.
 
 Oskar.
 
-[1]: https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/serial/8250.yaml#L204
-[2]: https://github.com/torvalds/linux/blob/master/Documentation/ABI/stable/sysfs-driver-aspeed-vuart#L17
-
-On Tue, Jul 27, 2021 at 5:30 AM Paul Fertser <fercerpav@gmail.com> wrote:
+On Mon, Nov 22, 2021 at 6:20 PM Andrew Jeffery <andrew@aj.id.au> wrote:
 >
-> On Tue, Jul 27, 2021 at 11:53:57AM +0300, Konstantin Klubnichkin wrote:
-> > SIRQ polarity is something I didn't try, will do it. And yes, SIRQ bit is zero,
-> > but all other bits are also zero in that register, that confuses me.
 >
-> I was also able to manually export the SIRQ pin via sysfs and when
-> manually toggling it the host was seeing UART interrupts and getting
-> data to and from VUART. That lead nowhere though, so we resorted to
-> hardware routing in ast2500 between "real UARTs".
 >
-> > Instead I configure UART routing by direct writing to registers via /dev/mem
-> > (yes, I know that it's a bad practive, but it's development).
+> On Tue, 23 Nov 2021, at 03:25, Patrick Williams wrote:
+> > On Wed, Nov 17, 2021 at 05:01:25PM -0500, Oskar Senft wrote:
+> >> Hi everyone
+> >>
+> >> I noticed that as of
+> >> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/30369 (aka
+> >> https://github.com/openbmc/openbmc/commit/abf95efe7c3a34cc2e5d7424abb59710fb4a1d4d),
+> >> obmc-console_git.bb assumes that we always want to use ttyVUART0.
+> >
+> > There was a push to move service files outside of the openbmc/openbmc repository
+> > and into the underlying repos.  Brad could comment on why as he was
+> > asking for it.
+> >
+> >> We used to have support for OBMC_CONSOLE_HOST_TTY and then create the
+> >> symlink /etc/obmc-console/server.${OBMC_CONSOLE_HOST_TTY}.conf as
+> >> needed.
+> >>
+> >> From what I can tell, OBMC_CONSOLE_HOST_TTY is still used in quite a
+> >> few machine layers. Some of them (e.g. meta-amd and meta-facebook)
+> >> even went so far to replicate the previous behavior by deleting
+> >> /etc/obmc-console/server.VUART0.conf and then re-creating the correct
+> >> one.
+> >
+> > Speaking for the Facebook machines, we have some machines which use a different
+> > vTTY and we have other machines which manage multiple hosts and thus have
+> > multiple vTTYs.  We probably should have contributed code to pass the desired
+> > vTTY(s) as a meson-option.
+> >
+> >> Is this actually the expected behavior? Or was that just an oversight
+> >> in the commit?
+> >
+> > I think it was the "put the default/typical config into the repo and let
+> > everyone customize it otherwise if they need" approach.
+> >
+> >> I'd be happy to send a review request to make this generic again if
+> >> people agree. A bunch of follow-up commits could then remove the
+> >> duplicate code in individual machine layer overrides.
+> >
+> > I'd be thankful for this.  Please feel free to add me as a reviewer.
 >
-> Should work the same.
+> Yeah I'm not sure what happened here, whether that was something I did
+> or if someone's made changes to the recipe since. When I added support
+> for exposing multiple devices from the one BMC there were some
+> complications around not breaking everyone vs having to modify every
+> in-tree consumer. I didn't have the bandwidth or ability to test fixing
+> all the platforms at the time so I put some work-arounds in the install
+> phase of the obmc-console recipe. Maybe that broke things?
 >
-> > With the routing I have absolutely no data in BMC UARTs neither during POST nor
-> > is OS.
-> > What I'm missing is how that routing works. Is it on-crystal or UART need to be
-> > routed to SoC pins thus TX/RX are connected via pins?
+> Anyway, please also CC me on cleanups.
 >
-> With the configuration as shown the host is sending data to and from
-> "COM1" (0x3f8,4) and any program on BMC is able to interact with it
-> via /dev/ttyS2, without any additional hardware connections, all
-> purely in software, the routing happens inside aspeed. Do not forget
-> to enable ttyS2 in your board's DTS. VUART is not involved at all.
+> Cheers,
 >
-> --
-> Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-> mailto:fercerpav@gmail.com
+> Andrew
