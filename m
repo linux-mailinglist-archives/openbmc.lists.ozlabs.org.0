@@ -2,64 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D603445AC09
-	for <lists+openbmc@lfdr.de>; Tue, 23 Nov 2021 20:09:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F23FD45B739
+	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 10:17:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HzDGX5QYqz2ywt
-	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 06:09:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hzb4J6bRsz2ywB
+	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 20:17:04 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=HBqF5qWJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bbTzQhfK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=HBqF5qWJ; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52d;
+ helo=mail-ed1-x52d.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=bbTzQhfK; dkim-atps=neutral
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com
+ [IPv6:2a00:1450:4864:20::52d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HzDG51Q46z2ymc
- for <openbmc@lists.ozlabs.org>; Wed, 24 Nov 2021 06:09:16 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 6E5BB43C92;
- Tue, 23 Nov 2021 19:09:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-type:content-type:content-transfer-encoding:mime-version
- :x-mailer:message-id:date:date:subject:subject:from:from
- :received:received:received; s=mta-01; t=1637694552; x=
- 1639508953; bh=7Yk7oVLcmbcE2sDaCkU8CW/PVHH7ldqQhThXLNIgTf8=; b=H
- BqF5qWJ4XPlOoSFUODom3TgNnhE8jAV6y2/1CosXyGyTcALRfj/pJOrU/BniqLQ6
- T6LeuUISFWsd7jpcllUhcqpr2BKCSQSnhnWhIa7nDaohtvpHG9d2y51o9miiBlmF
- bvP7+GX5/xjRO6CDsK2MtAA3BV1HWJ1qndPnmWyROE=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id n7T4wlw0JXNv; Tue, 23 Nov 2021 22:09:12 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id B8F6F41493;
- Tue, 23 Nov 2021 22:09:11 +0300 (MSK)
-Received: from nb-511.yadro.com (10.199.10.105) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 23
- Nov 2021 22:09:10 +0300
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: <u-boot@lists.denx.de>, <openbmc@lists.ozlabs.org>, <joel@jms.id.au>
-Subject: [PATCH] board: ast2500/ast2600: initialize LEDs
-Date: Tue, 23 Nov 2021 22:08:47 +0300
-Message-ID: <20211123190847.14943-1-a.kartashev@yadro.com>
-X-Mailer: git-send-email 2.32.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hzb3v5LzPz2yLJ
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Nov 2021 20:16:41 +1100 (AEDT)
+Received: by mail-ed1-x52d.google.com with SMTP id v1so7369528edx.2
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Nov 2021 01:16:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=HSFeKh7c6k2mxTKS0/Esde/7VUIDk11GUAXijoCqSoo=;
+ b=bbTzQhfKpBZZ/bH14mb4g95XokOYAahnsO1Al4Volqc7/ctMj3+YyusPqWj2tnMtJD
+ kfLGPGl8tMutU38TRkNrwbOwa9D8ZVBk2g5cH3YCfWPP695Pj8l01tkcEaCz1DQEMJZ5
+ 1BCqEqgmoyZTenjejHAH1+DOh2rWuny6F3HXgxGl8TjNoFE/R2oiIhWwMbaWYK68U4N0
+ Zp/DHTbFMofM/IA+4YtK7gAlbkAMLS3CdF/a/qClYxva8CAZchV2YrnMXK5ZTb+MTzvR
+ JkPy2lIGme49W5UHAfnieCRIa/h+NPANf6pdBYDz1vSpC140bReF8KcI6+5js1q+88QC
+ Irpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=HSFeKh7c6k2mxTKS0/Esde/7VUIDk11GUAXijoCqSoo=;
+ b=a+oBfA4M0eRN0/V6UeWzNMZW7TKmY1zWGKPbXjAxFmw8paR2ko2FXtwOfExNN+Jux+
+ 63l6E/WAAaEEcXis45/G39JyZ80QVCYOzH3eGR/6eO10dmis6OuAHkod1OXQlpt8KZHv
+ xX+IQqUXmHVUHj7JhOmaE8hlnlqT8VyyMdjM8Wb7x3elD9HpjPqJjzNIBmROb2GfIpE3
+ yfHPYpept6ogyHiFg5XuhN3HfqekWeJxaSCEl+82vi1NORK8otdB/Aa9ndEQiJaQpilX
+ NMwY5ko4rqOPbHhmFeeDreClyYVmMwz/SE9kEeLGUKzgwbPvgIfx93RSKLIi9H4wemv6
+ Csnw==
+X-Gm-Message-State: AOAM5315Ym1dtDaBErMr8GQnTgatPPMouSfxBiuGDE9xzgrZcO453YJ2
+ uQOaxuxtImFa/q393NcmAhXRfCv/4r+y2L2NxoMyUkNHY4A=
+X-Google-Smtp-Source: ABdhPJxj2N/s0Q6CnJ2oPxOU05sLazKeL7hvaTJ7QGFp+qOdXUqSM3PIS++JvHSA2GXYdvj6m1fM4G2trEsjAZuPKhw=
+X-Received: by 2002:a17:907:9723:: with SMTP id
+ jg35mr18896838ejc.329.1637745394204; 
+ Wed, 24 Nov 2021 01:16:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.199.10.105]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
+Date: Wed, 24 Nov 2021 14:48:30 +0530
+Message-ID: <CAA7Tbcuhk3tY-XBw2C6xtV9MEsp-Ba2GW8PZpVqj2YQNcrHb6Q@mail.gmail.com>
+Subject: FRU Device type one byte or Two byte Validation
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="00000000000074435405d1855032"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,50 +71,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, vernon.mauery@linux.intel.com,
+ Ed Tanous <ed@tanous.net>, Amithash Prasad <amithash@fb.com>,
+ velumanit@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add option to initialize LEDs in board_init stage for aspeed-based
-boards.
+--00000000000074435405d1855032
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Andrei Kartashev <a.kartashev@yadro.com>
----
- board/aspeed/evb_ast2500/evb_ast2500.c | 8 ++++++++
- board/aspeed/evb_ast2600/evb_ast2600.c | 8 ++++++++
- 2 files changed, 16 insertions(+)
+Hi All,
 
-diff --git a/board/aspeed/evb_ast2500/evb_ast2500.c b/board/aspeed/evb_ast2500/evb_ast2500.c
-index ed162c4095..9612513bfc 100644
---- a/board/aspeed/evb_ast2500/evb_ast2500.c
-+++ b/board/aspeed/evb_ast2500/evb_ast2500.c
-@@ -3,3 +3,11 @@
-  * Copyright (c) 2016 Google, Inc
-  */
- #include <common.h>
-+
-+int board_init(void)
-+{
-+	if (IS_ENABLED(CONFIG_LED))
-+		led_default_state();
-+
-+	return 0;
-+}
-diff --git a/board/aspeed/evb_ast2600/evb_ast2600.c b/board/aspeed/evb_ast2600/evb_ast2600.c
-index e6dc8c7952..9041798896 100644
---- a/board/aspeed/evb_ast2600/evb_ast2600.c
-+++ b/board/aspeed/evb_ast2600/evb_ast2600.c
-@@ -3,3 +3,11 @@
-  * Copyright (c) Aspeed Technology Inc.
-  */
- #include <common.h>
-+
-+int board_init(void)
-+{
-+	if (IS_ENABLED(CONFIG_LED))
-+		led_default_state();
-+
-+	return 0;
-+}
--- 
-2.32.0
+       We would like to validate our NIC FRU device type as 8 bit (one
+byte) or 16 bit(two byte).
 
+       This device type validation for our FRU is platform specific logic.
+This was implemented in the machine layer.
+
+       We wanted to interlink this logic with entity-manager code to get
+the device type.
+
+       Could you please provide the suggestions on get the device type in
+entity-manager.
+
+       Please refer below link for existing devicebit validation in
+entity-manager.
+
+https://github.com/openbmc/entity-manager/blob/master/src/FruDevice.cpp#L430
+
+Thanks,
+Kumar.
+
+--00000000000074435405d1855032
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi All,<div><br></div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0We w=
+ould like to validate our NIC FRU device type as 8 bit (one byte) or 16 bit=
+(two byte).=C2=A0</div><div><br></div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0This =
+device type validation for our FRU is platform specific logic.=C2=A0 This w=
+as implemented in the machine layer.=C2=A0</div><div>=C2=A0=C2=A0</div><div=
+>=C2=A0 =C2=A0 =C2=A0 =C2=A0We wanted to interlink this logic with entity-m=
+anager code to get the device type.</div><div><br></div><div>=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0Could you please provide the suggestions on get the device typ=
+e in entity-manager.</div><div>=C2=A0 =C2=A0 =C2=A0=C2=A0</div><div>=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0Please refer below link for existing devicebit validati=
+on in entity-manager.</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0<a href=3D"https=
+://github.com/openbmc/entity-manager/blob/master/src/FruDevice.cpp#L430">ht=
+tps://github.com/openbmc/entity-manager/blob/master/src/FruDevice.cpp#L430<=
+/a></div><div><br></div><div>Thanks,</div><div>Kumar.</div></div>
+
+--00000000000074435405d1855032--
