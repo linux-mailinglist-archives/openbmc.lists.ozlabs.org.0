@@ -1,76 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B343145CC02
-	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 19:24:10 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0F7B45CE13
+	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 21:34:24 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4HzqCW3DrMz2yjS
-	for <lists+openbmc@lfdr.de>; Thu, 25 Nov 2021 05:24:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hzt5p2rCzz2ynj
+	for <lists+openbmc@lfdr.de>; Thu, 25 Nov 2021 07:34:22 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=akONOIUM;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=KrFQZzGa;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.18; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=akONOIUM; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::134;
+ helo=mail-lf1-x134.google.com; envelope-from=osk@google.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=KrFQZzGa; dkim-atps=neutral
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com
+ [IPv6:2a00:1450:4864:20::134])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4HzqC15cM7z2yMc
- for <openbmc@lists.ozlabs.org>; Thu, 25 Nov 2021 05:23:39 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1637778212;
- bh=/9rmTd1NOgvxfbdOqmnU4CEQE7qGAvavwqFQFviJEBg=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=akONOIUMrC3CSnTeUQg/MU7DjWok9lLYAdKXXEGpws3dMhwYo6eYxIpBJkuOKDfZy
- xVHcw5AtbD2MTJrQ3cFZjYTPyfVtR/VPThvMlC+FczBT1LutDHm09Wbrr7PHVb85wU
- tqvxMxYGvh6nWk8UbPsm95eTpEXHbxmCT/JMKCfo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M6Ue3-1mjeLF0mkr-00700o; Wed, 24
- Nov 2021 19:23:32 +0100
-Date: Wed, 24 Nov 2021 19:23:30 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Andrei Kartashev <a.kartashev@yadro.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: aspeed: add
- vegman machine dts
-Message-ID: <YZ6DImerODeksDI5@latitude>
-References: <20211124122214.19669-1-a.kartashev@yadro.com>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Hzt5M2Prmz2xsC
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Nov 2021 07:33:57 +1100 (AEDT)
+Received: by mail-lf1-x134.google.com with SMTP id c32so10463206lfv.4
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Nov 2021 12:33:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=ehE0PDLUJn5IuubBE5Fz0zYic+qSrZ8w7IQgqusMG6Q=;
+ b=KrFQZzGaq836mVGevcpQCCrfUT5C70dDdVWmR4mQQhfXk9ixssnqpFJgC/RMFL/5En
+ Fc+J+kgzolPFmG9O0/6NR7bv0N6L8If4lQGR5TNrqyQwb+rFZL6SGqLvhV7+ipIEpPM+
+ r+Cn2L03cy60MFT3bGgnmQstLyrxcG76rSVIIrgX2LLiPtlR5SyDg+gnnKdHpylgkTFJ
+ uSkNU/woUteYFgZfByflPEBPXj64Gm/8IN6eMo8MVXg41wAcDy4BP9f/3atrw7nrLXFd
+ ehZQh45A0L1G9yB+n/aBx0HujKTNFPK0PlkJR5qNOluRj49LjXYPH4ezoa1B55KyNa69
+ tgWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=ehE0PDLUJn5IuubBE5Fz0zYic+qSrZ8w7IQgqusMG6Q=;
+ b=k753zo1p3BdeG+zy675UTgBV6vy2QYqABMwlaY1i+N3z6aPtW0OB9DHpB0mlKn8ESb
+ oPabg1yUyjbNmXxtggYf1DYZj+XRPc908FYwrA4FW+NwU+S1e5aqAJhxQYdfWvpsOX43
+ X/88u60sJVSQoqUJhWCX/NMI/8yYYvAWxAOQAufe2IM0jlCdTigKn/1t9Iw0cRJ8wyIm
+ CT9clMt8ZNOiy/H3ZcPJXrLijra6avVKGhYIf58y62dd+j4OWWyoYhe4MT/1HOXlduap
+ /Ns4dtDom5HgdeqE9fVdT+HdPgsVWPy9KzA0iw5Q3yEkhp9iRQKCxbRrILuLksUXJPW+
+ oz1g==
+X-Gm-Message-State: AOAM531RX7go8HDl8jy2amlyp7xWVtYlrXv+E3NL3uLb1xLyhlAdYz5T
+ 2X3WS0nFdm1EfOtLY0Vsd4HFtf1pMwStHFG6sxrH+g==
+X-Google-Smtp-Source: ABdhPJyS0nk5adDuSm1rUSVfySQJhrtvKSg6RQ6j4KEjDoKGHMAbWYnjGOru7a/AyOU3HybPH1DSeWBQri7iwoRc9xM=
+X-Received: by 2002:a05:6512:1289:: with SMTP id
+ u9mr18198383lfs.273.1637786033340; 
+ Wed, 24 Nov 2021 12:33:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="+vwz9t7pxwpJcIhP"
-Content-Disposition: inline
-In-Reply-To: <20211124122214.19669-1-a.kartashev@yadro.com>
-X-Provags-ID: V03:K1:09pMBVb2f9GLXt+DDzMIoqlgscKKUwMPFcFYta5Hy/81SC5Vr+e
- o7N0RNRmDFtVPYhFji1Hmx/gvnBz/rAoJglc2EsbjZnmpGyIbY/eYzIcX68IOVdGjjUxGEM
- wI9gUNk8sMhCs7B8ME/ERLOSPqvESi7JVf4nm4Y0I1/+OxzBVbjdwydJRa/7iIipIX9dITg
- squknuzn69/3m3eP6R7uQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8mnPTT9D30I=:9t1+TRvFBb6CY1NXJpxlWq
- Y14Hinea3IZwFfAaZ0iAUXm1+y6RC0NCIdhPcyQwkkyvGrFbUjXgWkzxv6QaT3XNHjGWuHpEJ
- k6ieXrjGkVyeLSMJQ82jT9ULZQuERjvxLU1LLWYJ4RVSz+QZddmhzO4c3gF9i+DYaY+Nb+pWT
- KBBgiHwG2d13VtMUgcMFqmA7kFUamj4uenEyuszH/CaDFnXJFn5vNcMTGEjCQIszHzs/MfK2f
- waLmWm6JduqUOgCJUyoyKLxb4ybm55UoUeYZDwb4Ua8zcsrbsv8q+GSO57DS6xtWw/2BR99n+
- GYAqPBcjQCYgXtkdY2oqTQET4pGs0dgDppFGiKGP+cVPeLydpr1ckkc0t/BjvwcfVOelHMpH0
- dmMeZp9HISDx56COB27SYxflwDEuxiJtw16N6Z5QlyV63jxxl/Q8IHYOHGuBW3VoOq2U6pBDC
- 0rNxwDWs+BDxSvI5N+Tr8kNMjebmysikTsd0uYTXI47ugD5x7i/AwFNRq5PJzEo+cBklf8MF6
- C20x+JcIc0VpwAmhsmOoVi8SvRgKoQOe+fhWGLbacFV/yKuZozU1D7d4BcailgOnSPFyXOnx/
- NCKxPxrYMsDuWoed3WQz9X/DfgpcHPuponm3wWkNPOML/FdPqfNsV0lO8cC6AFnrmzak1tBvl
- SyUPptmkeNH1vArqqtCKeX6VbUik8YvCUCGhyF9D0Uw6NUAukhwlSzYQxOrfaWfuDKTosa0GS
- Ya6UadDe5KgNsynn/Q+2JmSjQyLaH87480pgsZ80KBiPuGDf2QWThIPPCitY7DlZw7rD+iBfA
- T89FrPf1teg/1EGIqKy4IIooIdebtCwqpLBDPtHfQrOQc1woIxIk8FB5hm8u10ECQXD0R0d/b
- 8r6LKiiNZ0PVgNLin9YVIRsaKvuIEmmYPHPl28916U8F1hMKXl0fLPJdxIP4EUoL6M4HvHri7
- fqdb2Q+WzpL/0f2yiY4w6E7n0iyUuIEs9an5g+DS+3NQi8khO9iro2cDOm1P+MFGjsxIuhrZq
- QTtofmPlXUN+GUBxhPSLlE31TgXlo1KaTzMJGB72LeqwoYBBENPwTEtsSM13+bMWv1KmHrk7A
- 3HWxTgW6MFh9QY=
+References: <CAE33tLEsCJtr9VPYj57ZcOe5iWD6282WmrMTr-Hp96Y3rkBzAA@mail.gmail.com>
+ <000001d5bc87$f6fe3780$e4faa680$@linux.intel.com>
+ <CAE33tLHvjuwFwCsSdohvYPHgs-f-8sDWMsNdAhzgQbs3=o7_tQ@mail.gmail.com>
+ <429111627309901@mail.yandex-team.ru> <20210726145246.GL875@home.paul.comp>
+ <435311627317580@mail.yandex-team.ru> <20210726165144.GN875@home.paul.comp>
+ <477521627375667@mail.yandex-team.ru> <20210727093015.GQ875@home.paul.comp>
+In-Reply-To: <20210727093015.GQ875@home.paul.comp>
+From: Oskar Senft <osk@google.com>
+Date: Wed, 24 Nov 2021 15:33:37 -0500
+Message-ID: <CABoTLcS+fPz=De0-tzOrzhwPd-b+tJ7M5H74+Qc=AiYM4vG3Pg@mail.gmail.com>
+Subject: Re: Serial Over Lan (SOL) no login prompt on Linux IRQ mode
+To: Paul Fertser <fercerpav@gmail.com>, 
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Konstantin Klubnichkin <kitsok@yandex-team.ru>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,59 +81,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+I just stumbled across this old-ish thread. I did run into a similar
+problem ages ago. The problem is that the SIRQ polarity used by the
+Aspeed must match what the "receiving end" (usually the PCH) is
+expecting. I agree that the Aspeed doc is missing some details here. I
+believe they might have clarified this on AST2600. Anyway, this
+setting can be changed in the DTS via aspeed,lpc-interrupts [1] or at
+runtime via the sysfs node sirq_polarity [2]. On the board I'm working
+on (TYAN S7106 and S8036), this had to be set to HIGH:
 
---+vwz9t7pxwpJcIhP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+&vuart {
+    status = "okay";
 
-Hello,
+    /* We enable the VUART here, but leave it in a state that does
+     * not interfere with the SuperIO. The goal is to have both the
+     * VUART and the SuperIO available and decide at runtime whether
+     * the VUART should actually be used. For that reason, configure
+     * an "invalid" IO address and an IRQ that is not used by the
+     * BMC.
+     */
 
-On Wed, Nov 24, 2021 at 03:22:14PM +0300, Andrei Kartashev wrote:
-> Signed-off-by: Andrei Kartashev <a.kartashev@yadro.com>
-> ---
-=2E..
-> +++ b/arch/arm/dts/ast2500-vegman.dts
-> @@ -0,0 +1,167 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +// Copyright (C) 2021 YADRO
-> +/dts-v1/;
-> +
-> +#include "ast2500-u-boot.dtsi"
-> +
-> +/ {
-> +	model =3D "AST2500 VEGMAN";
-> +	compatible =3D "aspeed,ast2500-vegman", "aspeed,ast2500";
+    aspeed,lpc-io-reg = <0xffff>;
+    aspeed,lpc-interrupts = <15 IRQ_TYPE_LEVEL_HIGH>;
+};
 
-The board-specific compatible string "aspeed,ast2500-vegman" seems
-wrong, if the board is made by YADRO rather than ASPEED.
+Note that this change hasn't been added to upstream
+aspeed-bmc-tyan-s7106.dts yet, just because I'm slow ...
 
+Note that I previously introduced aspeed,sirq-polarity-sense for the
+DTS, which tried to do this automatically, but it turned out to cause
+issues, so it has been deprecated
 
-Best regards,
-Jonathan Neusch=C3=A4fer
+I hope this write-up helps anyone in the future.
 
---+vwz9t7pxwpJcIhP
-Content-Type: application/pgp-signature; name="signature.asc"
+Oskar.
 
------BEGIN PGP SIGNATURE-----
+[1]: https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/serial/8250.yaml#L204
+[2]: https://github.com/torvalds/linux/blob/master/Documentation/ABI/stable/sysfs-driver-aspeed-vuart#L17
 
-iQIyBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmGegvcACgkQCDBEmo7z
-X9se5A/4zjuDeV0/jd3yKfqVCgzI3EiBS3h2n4qOD4qf1eqFzHAhIBMPe5yh2lst
-tM7HSsA5zA8G6DXbjssuSwuU47oQQn69eMiPdGnx5JsUYOYuG7JespWDNJv2pf2n
-57Awg+/4HFMhqjxDLdfMXUTIkWPWdURMlDZ85GEV40oQr4nVaMMbfeB3fmjjsxzV
-Z/P2owGkmCw1G8EzE/8E5W4XYxRboBXWs5uyYGFcsajXIasL4Wuo2Cy5rhKNB9ZA
-no9dkxmU8K3TrpESXZ1h7SnodHz87hNAXrVGHeyL5N8hSw03/1pdEV73pH3WVi+4
-fWEmIp/TiM6khP+0kLFiWPXL1OwRPrQB6X50XjmTgYld2jXXXs3GnuJvIwoJdi+z
-MLt4TyNugl/uT3MEFfaFG4R8A0/3il5vOnUc5rWYwLsZjTBt4+lHxWMCt+7yU4K6
-kBi8Wi/90XChwGChnaQhlKTu82YvhHcYuCYQPLrclLAHir33+P2q4/ZroBXKQKks
-HvfFW5GqF92WwNBNkWB9S5eh/6fNiUrYc0twM5nVcCZqJ2yMW49WvEK25tIRduYw
-BjV0aTeJZmthgy3Ggilh0OP7nHT5sfY9aoYON56X9zM+iFTeGZ269xIrh+ZPWw7j
-HLy79gaEaBtkmwI21jUGSgR8rhCFSLC1vsOVuOxShJ5dkHe7nQ==
-=3Qmh
------END PGP SIGNATURE-----
-
---+vwz9t7pxwpJcIhP--
+On Tue, Jul 27, 2021 at 5:30 AM Paul Fertser <fercerpav@gmail.com> wrote:
+>
+> On Tue, Jul 27, 2021 at 11:53:57AM +0300, Konstantin Klubnichkin wrote:
+> > SIRQ polarity is something I didn't try, will do it. And yes, SIRQ bit is zero,
+> > but all other bits are also zero in that register, that confuses me.
+>
+> I was also able to manually export the SIRQ pin via sysfs and when
+> manually toggling it the host was seeing UART interrupts and getting
+> data to and from VUART. That lead nowhere though, so we resorted to
+> hardware routing in ast2500 between "real UARTs".
+>
+> > Instead I configure UART routing by direct writing to registers via /dev/mem
+> > (yes, I know that it's a bad practive, but it's development).
+>
+> Should work the same.
+>
+> > With the routing I have absolutely no data in BMC UARTs neither during POST nor
+> > is OS.
+> > What I'm missing is how that routing works. Is it on-crystal or UART need to be
+> > routed to SoC pins thus TX/RX are connected via pins?
+>
+> With the configuration as shown the host is sending data to and from
+> "COM1" (0x3f8,4) and any program on BMC is able to interact with it
+> via /dev/ttyS2, without any additional hardware connections, all
+> purely in software, the routing happens inside aspeed. Do not forget
+> to enable ttyS2 in your board's DTS. VUART is not involved at all.
+>
+> --
+> Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
+> mailto:fercerpav@gmail.com
