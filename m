@@ -1,65 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F23FD45B739
-	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 10:17:06 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CE2545B999
+	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 13:00:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Hzb4J6bRsz2ywB
-	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 20:17:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Hzfht1YZmz2yp2
+	for <lists+openbmc@lfdr.de>; Wed, 24 Nov 2021 23:00:30 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bbTzQhfK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=OLu7kpz2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52d;
- helo=mail-ed1-x52d.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=patchwork-bot+netdevbpf@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=bbTzQhfK; dkim-atps=neutral
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com
- [IPv6:2a00:1450:4864:20::52d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=OLu7kpz2; 
+ dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Hzb3v5LzPz2yLJ
- for <openbmc@lists.ozlabs.org>; Wed, 24 Nov 2021 20:16:41 +1100 (AEDT)
-Received: by mail-ed1-x52d.google.com with SMTP id v1so7369528edx.2
- for <openbmc@lists.ozlabs.org>; Wed, 24 Nov 2021 01:16:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=HSFeKh7c6k2mxTKS0/Esde/7VUIDk11GUAXijoCqSoo=;
- b=bbTzQhfKpBZZ/bH14mb4g95XokOYAahnsO1Al4Volqc7/ctMj3+YyusPqWj2tnMtJD
- kfLGPGl8tMutU38TRkNrwbOwa9D8ZVBk2g5cH3YCfWPP695Pj8l01tkcEaCz1DQEMJZ5
- 1BCqEqgmoyZTenjejHAH1+DOh2rWuny6F3HXgxGl8TjNoFE/R2oiIhWwMbaWYK68U4N0
- Zp/DHTbFMofM/IA+4YtK7gAlbkAMLS3CdF/a/qClYxva8CAZchV2YrnMXK5ZTb+MTzvR
- JkPy2lIGme49W5UHAfnieCRIa/h+NPANf6pdBYDz1vSpC140bReF8KcI6+5js1q+88QC
- Irpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=HSFeKh7c6k2mxTKS0/Esde/7VUIDk11GUAXijoCqSoo=;
- b=a+oBfA4M0eRN0/V6UeWzNMZW7TKmY1zWGKPbXjAxFmw8paR2ko2FXtwOfExNN+Jux+
- 63l6E/WAAaEEcXis45/G39JyZ80QVCYOzH3eGR/6eO10dmis6OuAHkod1OXQlpt8KZHv
- xX+IQqUXmHVUHj7JhOmaE8hlnlqT8VyyMdjM8Wb7x3elD9HpjPqJjzNIBmROb2GfIpE3
- yfHPYpept6ogyHiFg5XuhN3HfqekWeJxaSCEl+82vi1NORK8otdB/Aa9ndEQiJaQpilX
- NMwY5ko4rqOPbHhmFeeDreClyYVmMwz/SE9kEeLGUKzgwbPvgIfx93RSKLIi9H4wemv6
- Csnw==
-X-Gm-Message-State: AOAM5315Ym1dtDaBErMr8GQnTgatPPMouSfxBiuGDE9xzgrZcO453YJ2
- uQOaxuxtImFa/q393NcmAhXRfCv/4r+y2L2NxoMyUkNHY4A=
-X-Google-Smtp-Source: ABdhPJxj2N/s0Q6CnJ2oPxOU05sLazKeL7hvaTJ7QGFp+qOdXUqSM3PIS++JvHSA2GXYdvj6m1fM4G2trEsjAZuPKhw=
-X-Received: by 2002:a17:907:9723:: with SMTP id
- jg35mr18896838ejc.329.1637745394204; 
- Wed, 24 Nov 2021 01:16:34 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4HzfhW3bK5z2xBb;
+ Wed, 24 Nov 2021 23:00:11 +1100 (AEDT)
+Received: by mail.kernel.org (Postfix) with ESMTPS id 8FEF661055;
+ Wed, 24 Nov 2021 12:00:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1637755208;
+ bh=2x66CPb3TS7OZYOxCm6SQGm4K5jRiimJ/ekKSbLyE6g=;
+ h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+ b=OLu7kpz2GVhqEgPkxDgR/HxcwzrhrbI1Tun3umc0T8aGA7Z/B6OusebPJFYBqyLCg
+ B6+kTtTvpRvhyGAS0d1Vfbo/Uleu+xuzRRZhTv6UlyzMm3UsVI3UhPHvrTOgtBfHQS
+ /3I4iQWPEgGbDFzMiY33Vo9aLaQudKD6jdPjuS5tUgsPmck4pmaMWqxUTQ9HHl3M4g
+ YBUD2JKlnM5eWAZvAD35BIMsv0a9bZgV+8bHARF9y+FhlDZT+8LaJUgY4t3TDOZPCO
+ h8r2PSoln5kwH/1FXTEyf1RnAj3oevAkyfZo2agDJN66fKjBt3F32rMP6ndbiKWmTa
+ f9K8nAyYuVE+g==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain
+ [127.0.0.1])
+ by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 8697C609B9;
+ Wed, 24 Nov 2021 12:00:08 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Wed, 24 Nov 2021 14:48:30 +0530
-Message-ID: <CAA7Tbcuhk3tY-XBw2C6xtV9MEsp-Ba2GW8PZpVqj2YQNcrHb6Q@mail.gmail.com>
-Subject: FRU Device type one byte or Two byte Validation
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="00000000000074435405d1855032"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v8] net/ncsi : Add payload to be 32-bit aligned to fix
+ dropped packets
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: <163775520854.1662.10651574507891086617.git-patchwork-notify@kernel.org>
+Date: Wed, 24 Nov 2021 12:00:08 +0000
+References: <20211122163818.GA11306@gmail.com>
+In-Reply-To: <20211122163818.GA11306@gmail.com>
+To: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,54 +62,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, vernon.mauery@linux.intel.com,
- Ed Tanous <ed@tanous.net>, Amithash Prasad <amithash@fb.com>,
- velumanit@hcl.com
+Cc: linux-aspeed@lists.ozlabs.org, netdev@vger.kernel.org,
+ openbmc@lists.ozlabs.org, amithash@fb.com, patrickw3@fb.com, kuba@kernel.org,
+ sam@mendozajonas.com, velumanit@hcl.com, davem@davemloft.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000074435405d1855032
-Content-Type: text/plain; charset="UTF-8"
+Hello:
 
-Hi All,
+This patch was applied to netdev/net.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-       We would like to validate our NIC FRU device type as 8 bit (one
-byte) or 16 bit(two byte).
+On Mon, 22 Nov 2021 22:08:18 +0530 you wrote:
+> Update NC-SI command handler (both standard and OEM) to take into
+> account of payload paddings in allocating skb (in case of payload
+> size is not 32-bit aligned).
+> 
+> The checksum field follows payload field, without taking payload
+> padding into account can cause checksum being truncated, leading to
+> dropped packets.
+> 
+> [...]
 
-       This device type validation for our FRU is platform specific logic.
-This was implemented in the machine layer.
+Here is the summary with links:
+  - [v8] net/ncsi : Add payload to be 32-bit aligned to fix dropped packets
+    https://git.kernel.org/netdev/net/c/ac132852147a
 
-       We wanted to interlink this logic with entity-manager code to get
-the device type.
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-       Could you please provide the suggestions on get the device type in
-entity-manager.
 
-       Please refer below link for existing devicebit validation in
-entity-manager.
-
-https://github.com/openbmc/entity-manager/blob/master/src/FruDevice.cpp#L430
-
-Thanks,
-Kumar.
-
---00000000000074435405d1855032
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi All,<div><br></div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0We w=
-ould like to validate our NIC FRU device type as 8 bit (one byte) or 16 bit=
-(two byte).=C2=A0</div><div><br></div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0This =
-device type validation for our FRU is platform specific logic.=C2=A0 This w=
-as implemented in the machine layer.=C2=A0</div><div>=C2=A0=C2=A0</div><div=
->=C2=A0 =C2=A0 =C2=A0 =C2=A0We wanted to interlink this logic with entity-m=
-anager code to get the device type.</div><div><br></div><div>=C2=A0 =C2=A0 =
-=C2=A0 =C2=A0Could you please provide the suggestions on get the device typ=
-e in entity-manager.</div><div>=C2=A0 =C2=A0 =C2=A0=C2=A0</div><div>=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0Please refer below link for existing devicebit validati=
-on in entity-manager.</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0<a href=3D"https=
-://github.com/openbmc/entity-manager/blob/master/src/FruDevice.cpp#L430">ht=
-tps://github.com/openbmc/entity-manager/blob/master/src/FruDevice.cpp#L430<=
-/a></div><div><br></div><div>Thanks,</div><div>Kumar.</div></div>
-
---00000000000074435405d1855032--
