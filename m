@@ -2,53 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 195EA45D631
-	for <lists+openbmc@lfdr.de>; Thu, 25 Nov 2021 09:30:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6347645D66F
+	for <lists+openbmc@lfdr.de>; Thu, 25 Nov 2021 09:47:18 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J09zZ0GJ8z3cPr
-	for <lists+openbmc@lfdr.de>; Thu, 25 Nov 2021 19:30:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J0BMS2mLRz3054
+	for <lists+openbmc@lfdr.de>; Thu, 25 Nov 2021 19:47:16 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=ChJYRMWJ;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=haVnaQ+Y;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.15.241; helo=m15241.mail.126.com;
- envelope-from=cld795@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=ChJYRMWJ; dkim-atps=neutral
-Received: from m15241.mail.126.com (m15241.mail.126.com [220.181.15.241])
- by lists.ozlabs.org (Postfix) with ESMTP id 4J09z719plz2x9X
- for <openbmc@lists.ozlabs.org>; Thu, 25 Nov 2021 19:29:36 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=b6WLL
- 0U+s0s+AZ4tRhfDOcG1akRqvY09w+nhV9Ei1b0=; b=ChJYRMWJaP502jb1MqUcU
- H0O1pRzEBTVFA9X9HUyoRyBQyTv+Ouh/xrutp9Vy7eBNNyB3S2PDAkG9ljn69aBB
- Tiv88DydNn+X8zl66FrPV9Ua8mIYjaGSCbxQOg0/WdG5lhroSlmaA877EkPnU3Wv
- gWxzz0j3mq67MbJI9mGl9w=
-Received: from cld795$163.com ( [183.6.112.102] ) by ajax-webmail-wmsvr209
- (Coremail) ; Thu, 25 Nov 2021 16:29:23 +0800 (GMT+08:00)
-X-Originating-IP: [183.6.112.102]
-Date: Thu, 25 Nov 2021 16:29:23 +0800 (GMT+08:00)
-From: Landon <cld795@163.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: openBMC pwm-fan control policy
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
- MailMasterPC/4.15.8.1002_(Windows_10_20H2) Copyright (c) 2002-2021
- www.mailtech.cn 163com
-In-Reply-To: <mailman.0.1637828525.15424.openbmc@lists.ozlabs.org>
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::131;
+ helo=mail-lf1-x131.google.com; envelope-from=fercerpav@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=haVnaQ+Y; dkim-atps=neutral
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com
+ [IPv6:2a00:1450:4864:20::131])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J0BM35W6Hz2yHC
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Nov 2021 19:46:53 +1100 (AEDT)
+Received: by mail-lf1-x131.google.com with SMTP id bu18so14601753lfb.0
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Nov 2021 00:46:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=QwT++hdtOWltO2JOIAQpuf0fwWnIiRaBBzirsjHEAp4=;
+ b=haVnaQ+YNTRyOmJJ+malwbKJKoYr/bLAHytmSYeViQnT/VOXB7LTfpnembY4VSn81H
+ 1z0Aoru1hjs28Iw3IJ1Ig9anU/guicgBmL60t8ZVqrLTSpLfUPD/5boiWRy6IHvr3kt5
+ 91Jcdh8mVjsCJyDestSOFW61PQ5r7QOIA4I58kZZC4ZTwVMwD+hLFZIzyf/UgkOQeskz
+ yUakgmcdcpzp/TezGKEKU4vlZAtfou7QTRMGgdOqTAS5mp3Ur2+m6d2DXff3ZuJretV+
+ bwAKz0LICSvrROdFxdtK2Ka5Pu2Z7JCIIwY5ZoQ+Cb5B6T5Y4V8YhoJKoX7tlu5ul8KU
+ eqlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=QwT++hdtOWltO2JOIAQpuf0fwWnIiRaBBzirsjHEAp4=;
+ b=w7jzFsua0vnLJy7dmcyp3ovLcBQxWFm8a8vEfmNlpOHeJxMVBlZ5LRasfqtAaeUYeQ
+ kh0x1KxZVhNqXHMiXEiKdvSxhSuXzsuchGh7qbRgRfSHRcVH76/RfPd99qed3zEL5Uji
+ ZkdPMF+lmfW/Lx+FsLFpc8IahQxndQQqGlR/uMcHc3kL8ZdoPM22TsjDc39YWGwzKO0d
+ d2oIg0IaQ+FXUroIQCULzJGcbBty3h9NSzZpCHb6iqHuKOJPfUGjKhv/8S1JtPCeogDs
+ uXZBw0ZCFpH/1XULgAqeXzzX4+1S65zkr58ak35aqce9BwcKfTnqG7JRNKsRw54sBT5N
+ 9CUA==
+X-Gm-Message-State: AOAM530jgISmbfr4zUl/hknlDZfGclu/DVMkjq8PL2GER0UFFfVwun6H
+ F+3gwojYoXlevUPrkjK5qZ4=
+X-Google-Smtp-Source: ABdhPJxUofj65D8PQR0ZCcBqxtteSm87Fl3kY2x5B45eXyOI1yjXhSc1cdpy1Lni4dTotuOv3Vv92w==
+X-Received: by 2002:a19:4895:: with SMTP id
+ v143mr21159591lfa.142.1637830006169; 
+ Thu, 25 Nov 2021 00:46:46 -0800 (PST)
+Received: from home.paul.comp (paulfertser.info.
+ [2001:470:26:54b:226:9eff:fe70:80c2])
+ by smtp.gmail.com with ESMTPSA id q3sm211071lfe.48.2021.11.25.00.46.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Nov 2021 00:46:44 -0800 (PST)
+Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
+ by home.paul.comp (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTP id
+ 1AP8kf23023917; Thu, 25 Nov 2021 11:46:42 +0300
+Received: (from paul@localhost)
+ by home.paul.comp (8.15.2/8.15.2/Submit) id 1AP8kenO023916;
+ Thu, 25 Nov 2021 11:46:41 +0300
+Date: Thu, 25 Nov 2021 11:46:40 +0300
+From: Paul Fertser <fercerpav@gmail.com>
+To: Landon <cld795@163.com>
+Subject: Re: openBMC pwm-fan control policy
+Message-ID: <20211125084640.GA22508@home.paul.comp>
 References: <mailman.0.1637828525.15424.openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; 
- boundary="----=_Part_42957_1156991552.1637828963253"
+ <217ffd16.389b.17d5636abb5.Coremail.cld795@163.com>
 MIME-Version: 1.0
-Message-ID: <217ffd16.389b.17d5636abb5.Coremail.cld795@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: kMeowACXn7NjSZ9hH21EAQ--.17349W
-X-CM-SenderInfo: 5foglmqv6rljoofrz/1tbiqBZWgFc7Wzht+AABsz
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <217ffd16.389b.17d5636abb5.Coremail.cld795@163.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,34 +89,20 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_42957_1156991552.1637828963253
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Hello,
 
-SGVsbG8gZXZlcnlvbmUsIEkgd291bGQgbGlrZSB0byBhc2sgd2hhdCBpcyBzdXBwb3J0ZWQgYnkg
-b3BlbkJNQyBwd20tZmFuIGNvbnRyb2wgcG9saWN5PwpDYW4gaXQgYmUgbGlua2VkIHdpdGggdGVt
-cGVyYXR1cmUgYW5kIGN1cnJlbnQ/IFdoZXRoZXIgdGhlIHB3bS1mYW4gb3V0cHV0IGNhbiBiZSBj
-b250cm9sbGVkIGJ5IHRoZSBjb3JyZXNwb25kaW5nIHRlbXBlcmF0dXJlIGFuZCBjdXJyZW50PwpB
-cmUgdGhlcmUgYW55IGluc3RydWN0aW9ucyBvciByZWZlcmVuY2VzPwpUaGFua3Mh
-------=_Part_42957_1156991552.1637828963253
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+On Thu, Nov 25, 2021 at 04:29:23PM +0800, Landon wrote:
+> Can it be linked with temperature and current? Whether the pwm-fan output can be
+> controlled by the corresponding temperature and current?
+> Are there any instructions or references?
 
-PGh0bWw+CjxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50
-PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgo8L2hlYWQ+Cjxib2R5Pgo8c3R5bGU+CiAgICBm
-b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
-YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
-ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
-YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
-OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgSGVsbG8gZXZlcnlvbmUsIEkgd291bGQgbGlr
-ZSB0byBhc2sgd2hhdCBpcyBzdXBwb3J0ZWQgYnkgb3BlbkJNQyBwd20tZmFuIGNvbnRyb2wgcG9s
-aWN5Pzxicj5DYW4gaXQgYmUgbGlua2VkIHdpdGggdGVtcGVyYXR1cmUgYW5kIGN1cnJlbnQ/IFdo
-ZXRoZXIgdGhlIHB3bS1mYW4gb3V0cHV0IGNhbiBiZSBjb250cm9sbGVkIGJ5IHRoZSBjb3JyZXNw
-b25kaW5nIHRlbXBlcmF0dXJlIGFuZCBjdXJyZW50Pzxicj5BcmUgdGhlcmUgYW55IGluc3RydWN0
-aW9ucyBvciByZWZlcmVuY2VzPzxicj5UaGFua3MhPCEtLfCfmIAtLT4KPC9kaXY+CjwvYm9keT4K
-PC9odG1sPg==
-------=_Part_42957_1156991552.1637828963253--
+https://github.com/openbmc/phosphor-pid-control should be flexible
+enough for the purpose. Is it missing something you need?
 
+-- 
+Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
+mailto:fercerpav@gmail.com
