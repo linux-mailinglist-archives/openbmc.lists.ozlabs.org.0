@@ -2,57 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71A9F45E797
-	for <lists+openbmc@lfdr.de>; Fri, 26 Nov 2021 06:56:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C847D45E904
+	for <lists+openbmc@lfdr.de>; Fri, 26 Nov 2021 09:10:24 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J0kWL2ccdz307l
-	for <lists+openbmc@lfdr.de>; Fri, 26 Nov 2021 16:55:58 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=dr2jtOsX;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J0nVQ5dhWz3cDy
+	for <lists+openbmc@lfdr.de>; Fri, 26 Nov 2021 19:10:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.15.241; helo=m15241.mail.126.com;
- envelope-from=cld795@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=dr2jtOsX; dkim-atps=neutral
-Received: from m15241.mail.126.com (m15241.mail.126.com [220.181.15.241])
- by lists.ozlabs.org (Postfix) with ESMTP id 4J0kVy03q0z2y7M
- for <openbmc@lists.ozlabs.org>; Fri, 26 Nov 2021 16:55:33 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=3CRXA
- fCXzcyyUBl0s6a4i7umUbk0JtkQxPWw14Ii9O8=; b=dr2jtOsXRSOKopD9oJSVt
- ltKp0HjVuCAxkfhaTAAgFyoWEuv3ZALgYKtR6nfNHzdChhVK70l7zsXE6wm2ikv7
- uNHyR26GT5irXReOIOU6rGnJeOTBcX5de4SV5UBmdG7B1MsxQdLss+0J/qaLjNmW
- i7C8fwtZ7K7C3FPP0BTNDw=
-Received: from cld795$163.com ( [183.6.112.102] ) by ajax-webmail-wmsvr209
- (Coremail) ; Fri, 26 Nov 2021 13:55:31 +0800 (GMT+08:00)
-X-Originating-IP: [183.6.112.102]
-Date: Fri, 26 Nov 2021 13:55:31 +0800 (GMT+08:00)
-From: Landon <cld795@163.com>
-To: "fercerpav@gmail.com" <fercerpav@gmail.com>, 
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re:  openBMC pwm-fan control policy
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
- MailMasterPC/4.15.8.1002_(Windows_10_20H2) Copyright (c) 2002-2021
- www.mailtech.cn 163com
-In-Reply-To: <78340dc9.749f.17d5ab53990.Coremail.cld795@163.com>
-References: <mailman.0.1637828525.15424.openbmc@lists.ozlabs.org>
- <217ffd16.389b.17d5636abb5.Coremail.cld795@163.com>
- <20211125084640.GA22508@home.paul.comp>
- <78340dc9.749f.17d5ab53990.Coremail.cld795@163.com>
-Content-Type: multipart/alternative; 
- boundary="----=_Part_90342_182113379.1637906131058"
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
+ receiver=<UNKNOWN>)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J0nV3314pz30CK;
+ Fri, 26 Nov 2021 19:10:01 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 1AQ7iYfs032630;
+ Fri, 26 Nov 2021 15:44:34 +0800 (GMT-8)
+ (envelope-from jammy_huang@aspeedtech.com)
+Received: from [192.168.2.115] (192.168.2.115) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Fri, 26 Nov
+ 2021 16:08:49 +0800
+Message-ID: <b66655ac-eac8-835a-7917-0c1d035d5309@aspeedtech.com>
+Date: Fri, 26 Nov 2021 16:08:50 +0800
 MIME-Version: 1.0
-Message-ID: <687802ca.772b.17d5ad02872.Coremail.cld795@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: kMeowAAnL7PTdqBh6+ZEAQ--.41804W
-X-CM-SenderInfo: 5foglmqv6rljoofrz/1tbiTBdXgFSIp3KYFwACsI
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v5 05/10] media: v4l: Add definition for the Aspeed JPEG
+ format
+Content-Language: en-US
+To: Sakari Ailus <sakari.ailus@linux.intel.com>
+References: <20211118074030.685-1-jammy_huang@aspeedtech.com>
+ <20211118074030.685-6-jammy_huang@aspeedtech.com>
+ <YZZIDNCLJXwrqY4W@paasikivi.fi.intel.com>
+ <0bed6093-0af6-4fc4-716f-6cf8b1302320@aspeedtech.com>
+ <YZzBPFHZ7MPwTWSm@paasikivi.fi.intel.com>
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+In-Reply-To: <YZzBPFHZ7MPwTWSm@paasikivi.fi.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [192.168.2.115]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 1AQ7iYfs032630
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,139 +60,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "andrew@aj.id.au" <andrew@aj.id.au>,
+ "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "eajames@linux.ibm.com" <eajames@linux.ibm.com>,
+ "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "hverkuil-cisco@xs4all.nl" <hverkuil-cisco@xs4all.nl>,
+ "mchehab@kernel.org" <mchehab@kernel.org>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+ "laurent.pinchart@ideasonboard.com" <laurent.pinchart@ideasonboard.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_90342_182113379.1637906131058
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Hi Sakari,
 
-YWRkOiBJIGp1c3Qgd2FudCB0byBrbm93IGluIE9wZW5CTUMgYnkgcmVhZGluZyBkaWZmZXJlbnQg
-dGVtcGVyYXR1cmUgdmFsdWVzIG9yIGN1cnJlbnQgdmFsdWVzIHRvIGNvbnRyb2wgdGhlIGZhbiBv
-dXRwdXQsIHNvIGFzIHRvIGNvb2wgZG93biwgaG93IGRvZXMgdGhpcyBzdHJhdGVneSB3b3JrPyBB
-biBleGFtcGxlIG9mIHRoaXMuCgoKClRoYW5rcyEKT24gMTEvMjYvMjAyMSAxMzoyNu+8jExhbmRv
-bjxjbGQ3OTVAMTYzLmNvbT4gd3JvdGXvvJoKaGVsbG8sIHBhdWwKCgpUaGFuayB5b3UgZm9yIHlv
-dXIgcmVwbHkhCgpJJ3ZlIHJlYWQgdGhlICJwaG9zcGhvci1waWQtY29udHJvbCAiLgpCdXQgSSBk
-aWRuJ3QgcmVhZCBhYm91dCB0aGUgbGlua2VkIGJldHdlZW4gdGVtcGVyYXR1cmUgYW5kIGN1cnJl
-bnQuCgpjb3VsZCB5b3UgZ2l2ZSBtZSBhbiBleGFtcGxlPwoKCgpUaGFua3MhCk9uIDExLzI1LzIw
-MjEgMTY6NDbvvIxQYXVsIEZlcnRzZXI8ZmVyY2VycGF2QGdtYWlsLmNvbT4gd3JvdGXvvJoKSGVs
-bG8sCgpPbiBUaHUsIE5vdiAyNSwgMjAyMSBhdCAwNDoyOToyM1BNICswODAwLCBMYW5kb24gd3Jv
-dGU6CkNhbiBpdCBiZSBsaW5rZWQgd2l0aCB0ZW1wZXJhdHVyZSBhbmQgY3VycmVudD8gV2hldGhl
-ciB0aGUgcHdtLWZhbiBvdXRwdXQgY2FuIGJlCmNvbnRyb2xsZWQgYnkgdGhlIGNvcnJlc3BvbmRp
-bmcgdGVtcGVyYXR1cmUgYW5kIGN1cnJlbnQ/CkFyZSB0aGVyZSBhbnkgaW5zdHJ1Y3Rpb25zIG9y
-IHJlZmVyZW5jZXM/CgpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1waWQtY29u
-dHJvbCBzaG91bGQgYmUgZmxleGlibGUKZW5vdWdoIGZvciB0aGUgcHVycG9zZS4gSXMgaXQgbWlz
-c2luZyBzb21ldGhpbmcgeW91IG5lZWQ/CgotLQpCZSBmcmVlLCB1c2UgZnJlZSAoaHR0cDovL3d3
-dy5nbnUub3JnL3BoaWxvc29waHkvZnJlZS1zdy5odG1sKSBzb2Z0d2FyZSEKbWFpbHRvOmZlcmNl
-cnBhdkBnbWFpbC5jb20K
-------=_Part_90342_182113379.1637906131058
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+On 2021/11/23 下午 06:23, Sakari Ailus wrote:
+> Hi Jammy,
+>
+> On Fri, Nov 19, 2021 at 10:02:40AM +0800, Jammy Huang wrote:
+>> Hi Sakari,
+>>
+>> On 2021/11/18 下午 08:33, Sakari Ailus wrote:
+>>> Hi Jammy,
+>>>
+>>> On Thu, Nov 18, 2021 at 03:40:26PM +0800, Jammy Huang wrote:
+>>>> This introduces support for the Aspeed JPEG format, where the new frame
+>>>> can refer to previous frame to reduce the amount of compressed data. The
+>>>> concept is similar to I/P frame of video compression. I will compare the
+>>>> new frame with previous one to decide which macroblock's data is
+>>>> changed, and only the changed macroblocks will be compressed.
+>>>>
+>>>> This Aspeed JPEG format is used by the video engine on Aspeed platforms,
+>>>> which is generally adapted for remote KVM.
+>>>>
+>>>> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+>>>> ---
+>>>> v5:
+>>>>     - no update
+>>>> v4:
+>>>>     - new
+>>>> ---
+>>>>    Documentation/media/uapi/v4l/pixfmt-reserved.rst | 12 ++++++++++++
+>>>>    drivers/media/v4l2-core/v4l2-ioctl.c             |  1 +
+>>>>    include/uapi/linux/videodev2.h                   |  1 +
+>>>>    3 files changed, 14 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/media/uapi/v4l/pixfmt-reserved.rst b/Documentation/media/uapi/v4l/pixfmt-reserved.rst
+>>>> index b2cd155e691b..23c05063133d 100644
+>>>> --- a/Documentation/media/uapi/v4l/pixfmt-reserved.rst
+>>>> +++ b/Documentation/media/uapi/v4l/pixfmt-reserved.rst
+>>>> @@ -264,6 +264,18 @@ please make a proposal on the linux-media mailing list.
+>>>>    	of tiles, resulting in 32-aligned resolutions for the luminance plane
+>>>>    	and 16-aligned resolutions for the chrominance plane (with 2x2
+>>>>    	subsampling).
+>>>> +    * .. _V4L2-PIX-FMT-AJPG:
+>>>> +
+>>>> +      - ``V4L2_PIX_FMT_AJPG``
+>>>> +      - 'AJPG'
+>>>> +      - ASPEED JPEG format used by the aspeed-video driver on Aspeed platforms,
+>>>> +        which is generally adapted for remote KVM.
+>>>> +        On each frame compression, I will compare the new frame with previous
+>>>> +        one to decide which macroblock's data is changed, and only the changed
+>>>> +        macroblocks will be compressed.
+>>>> +
+>>>> +        You could reference to chapter 36, Video Engine, of AST2600's datasheet
+>>>> +        for more information.
+>>> Is this datasheet publicly available? Do you have a URL?
+>> Sorry, this datasheet is not publicly available.
+>> Hans mentioned this as well in the discussion below:
+>>
+>> https://lkml.org/lkml/2021/11/10/101
+> If the vendor documentation is not publicly available, you'll need to have
+> the format documented here. Alternatively an open source implementation
+> (e.g. LGPL) is presumably fine, too.
+Please refer to 
+https://github.com/AspeedTech-BMC/openbmc/releases/download/v07.02/SDK_User_Guide_v07.02.pdf.
+At Page 132, 'Video stream data format – ASPEED mode compression' 
+describes the data format.
+Is above information  enough??
 
-PGh0bWw+CjxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50
-PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgo8L2hlYWQ+Cjxib2R5Pgo8c3R5bGU+CiAgICBm
-b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
-YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
-ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
-YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
-OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgPGRpdj48ZGl2PgogICAgPGRpdj4KICAgICAg
-ICA8c3BhbiBzdHlsZT0iY29sb3I6IHJnYig1MSwgNTEsIDUxKTsgZm9udC1mYW1pbHk6IEFyaWFs
-LCAnTWljcm9zb2Z0IFlhSGVpJywgJ1xcNUZBRei9r+mbhem7kScsICdcXDVCOELkvZMnLCAnTWFs
-Z3VuIEdvdGhpYycsIE1laXJ5bywgc2Fucy1zZXJpZjsgbGluZS1oZWlnaHQ6IDI2cHg7IHRleHQt
-YWxpZ246IGp1c3RpZnk7IHdpZG93czogYXV0bzsgYmFja2dyb3VuZC1jb2xvcjogcmdiKDI0Nywg
-MjQ4LCAyNTApOyI+YWRkOjwvc3Bhbj48c3Bhbj4mbmJzcDs8L3NwYW4+PHNwYW4gZGF0YS1zZWN0
-aW9uPSIwIiBkYXRhLXNlbnRlbmNlPSIwIiBkYXRhLWdyb3VwPSIwLTAiIGNsYXNzPSJ0Z3QiIHN0
-eWxlPSJib3gtc2l6aW5nOiBib3JkZXItYm94OyBtaW4taGVpZ2h0OiAyNnB4OyBsaW5lLWhlaWdo
-dDogMjZweDsgY29sb3I6IHJnYig1MSwgNTEsIDUxKTsgZm9udC1mYW1pbHk6IEFyaWFsLCAnTWlj
-cm9zb2Z0IFlhSGVpJywgJ1xcNUZBRei9r+mbhem7kScsICdcXDVCOELkvZMnLCAnTWFsZ3VuIEdv
-dGhpYycsIE1laXJ5bywgc2Fucy1zZXJpZjsgdGV4dC1hbGlnbjoganVzdGlmeTsgd2lkb3dzOiBh
-dXRvOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjQ3LCAyNDgsIDI1MCk7Ij5JIGp1c3Qgd2FudCB0
-byBrbm93IGluIE9wZW5CTUMgYnkgcmVhZGluZyBkaWZmZXJlbnQgdGVtcGVyYXR1cmUgdmFsdWVz
-IG9yIGN1cnJlbnQgdmFsdWVzIHRvIGNvbnRyb2wgdGhlIGZhbiBvdXRwdXQsIHNvIGFzIHRvIGNv
-b2wgZG93biwgaG93IGRvZXMgdGhpcyBzdHJhdGVneSB3b3JrPzwvc3Bhbj48c3BhbiBkYXRhLXNl
-Y3Rpb249IjAiIGRhdGEtc2VudGVuY2U9IjEiIGRhdGEtZ3JvdXA9IjAtMSIgY2xhc3M9InRndCIg
-c3R5bGU9ImJveC1zaXppbmc6IGJvcmRlci1ib3g7IG1pbi1oZWlnaHQ6IDI2cHg7IGxpbmUtaGVp
-Z2h0OiAyNnB4OyBjb2xvcjogcmdiKDUxLCA1MSwgNTEpOyBmb250LWZhbWlseTogQXJpYWwsICdN
-aWNyb3NvZnQgWWFIZWknLCAnXFw1RkFF6L2v6ZuF6buRJywgJ1xcNUI4QuS9kycsICdNYWxndW4g
-R290aGljJywgTWVpcnlvLCBzYW5zLXNlcmlmOyB0ZXh0LWFsaWduOiBqdXN0aWZ5OyB3aWRvd3M6
-IGF1dG87IGJhY2tncm91bmQtY29sb3I6IHJnYigyNDcsIDI0OCwgMjUwKTsiPiZuYnNwO0FuIGV4
-YW1wbGUgb2YgdGhpcy48L3NwYW4+PHNwYW4+PGJyPgogICAgICAgIDwvc3Bhbj4KICAgIDwvZGl2
-PjxkaXY+PHNwYW4gZGF0YS1zZWN0aW9uPSIwIiBkYXRhLXNlbnRlbmNlPSIxIiBkYXRhLWdyb3Vw
-PSIwLTEiIGNsYXNzPSJ0Z3QiIHN0eWxlPSJib3gtc2l6aW5nOiBib3JkZXItYm94OyBtaW4taGVp
-Z2h0OiAyNnB4OyBsaW5lLWhlaWdodDogMjZweDsgY29sb3I6IHJnYig1MSwgNTEsIDUxKTsgZm9u
-dC1mYW1pbHk6IEFyaWFsLCAnTWljcm9zb2Z0IFlhSGVpJywgJ1xcNUZBRei9r+mbhem7kScsICdc
-XDVCOELkvZMnLCAnTWFsZ3VuIEdvdGhpYycsIE1laXJ5bywgc2Fucy1zZXJpZjsgdGV4dC1hbGln
-bjoganVzdGlmeTsgd2lkb3dzOiBhdXRvOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjQ3LCAyNDgs
-IDI1MCk7Ij48YnI+PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gZGF0YS1zZWN0aW9uPSIwIiBkYXRh
-LXNlbnRlbmNlPSIxIiBkYXRhLWdyb3VwPSIwLTEiIGNsYXNzPSJ0Z3QiIHN0eWxlPSJib3gtc2l6
-aW5nOiBib3JkZXItYm94OyBtaW4taGVpZ2h0OiAyNnB4OyBsaW5lLWhlaWdodDogMjZweDsgY29s
-b3I6IHJnYig1MSwgNTEsIDUxKTsgZm9udC1mYW1pbHk6IEFyaWFsLCAnTWljcm9zb2Z0IFlhSGVp
-JywgJ1xcNUZBRei9r+mbhem7kScsICdcXDVCOELkvZMnLCAnTWFsZ3VuIEdvdGhpYycsIE1laXJ5
-bywgc2Fucy1zZXJpZjsgdGV4dC1hbGlnbjoganVzdGlmeTsgd2lkb3dzOiBhdXRvOyBiYWNrZ3Jv
-dW5kLWNvbG9yOiByZ2IoMjQ3LCAyNDgsIDI1MCk7Ij5UaGFua3MhPC9zcGFuPjwvZGl2PjxkaXY+
-CiAgICA8L2Rpdj4KICAgIDxkaXYgaWQ9Im50ZXMtcGNtYWMtc2lnbmF0dXJlIiBzdHlsZT0iZm9u
-dC1mYW1pbHk6J+W+rui9r+mbhem7kSciPgogICAgICAgIAogICAgICAgIDxkaXYgc3R5bGU9ImZv
-bnQtc2l6ZToxNHB4OyBwYWRkaW5nOiAwOyAgbWFyZ2luOjA7Ij4KCiAgICAgICAgPC9kaXY+CiAg
-ICA8L2Rpdj4KPC9kaXY+PC9kaXY+PGRpdiBjbGFzcz0iSi1yZXBseSIgc3R5bGU9ImJhY2tncm91
-bmQtY29sb3I6I2YyZjJmMjtjb2xvcjpibGFjaztwYWRkaW5nLXRvcDo2cHg7cGFkZGluZy1ib3R0
-b206NnB4O2JvcmRlci1yYWRpdXM6M3B4Oy1tb3otYm9yZGVyLXJhZGl1czozcHg7LXdlYmtpdC1i
-b3JkZXItcmFkaXVzOjNweDttYXJnaW4tdG9wOjQ1cHg7bWFyZ2luLWJvdHRvbToyMHB4O2ZvbnQt
-ZmFtaWx5Oiflvq7ova/pm4Xpu5EnOyI+CiAgICA8ZGl2IHN0eWxlPSJmb250LXNpemU6MTJweDts
-aW5lLWhlaWdodDoxLjU7d29yZC1icmVhazpicmVhay1hbGw7bWFyZ2luLWxlZnQ6MTBweDttYXJn
-aW4tcmlnaHQ6MTBweCI+T24gPHNwYW4gY2xhc3M9Im1haWwtZGF0ZSI+MTEvMjYvMjAyMSAxMzoy
-Njwvc3Bhbj7vvIw8YSBjbGFzcz0ibWFpbC10byIgc3R5bGU9InRleHQtZGVjb3JhdGlvbjpub25l
-O2NvbG9yOiMyYTgzZjI7IiBocmVmPSJtYWlsdG86Y2xkNzk1QDE2My5jb20iPkxhbmRvbiZsdDtj
-bGQ3OTVAMTYzLmNvbSZndDs8L2E+IHdyb3Rl77yaIDwvZGl2Pgo8L2Rpdj4KPGJsb2NrcXVvdGUg
-aWQ9Im50ZXMtcGNtYWlsLXF1b3RlIiBzdHlsZT0ibWFyZ2luOiAwOyBwYWRkaW5nOiAwOyBmb250
-LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAn5b6u6L2v6ZuF6buRJzsiPgoKPHN0eWxlPgogICAg
-Zm9udHsKICAgICAgICBsaW5lLWhlaWdodDogMS42OwogICAgfQogICAgdWwsb2x7CiAgICAgICAg
-cGFkZGluZy1sZWZ0OiAyMHB4OwogICAgICAgIGxpc3Qtc3R5bGUtcG9zaXRpb246IGluc2lkZTsK
-ICAgIH0KPC9zdHlsZT4KPGRpdiBzdHlsZT0iZm9udC1mYW1pbHk65b6u6L2v6ZuF6buRLFZlcmRh
-bmEsJnF1b3Q7TWljcm9zb2Z0IFlhaGVpJnF1b3Q7LFNpbVN1bixzYW5zLXNlcmlmO2ZvbnQtc2l6
-ZToxNHB4OyBsaW5lLWhlaWdodDoxLjY7Ij4KICAgIDxkaXY+CiAgICA8ZGl2PgogICAgICAgIDxz
-cGFuPmhlbGxvLCBwYXVsPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+PGJyPjwvc3Bhbj48L2Rpdj48
-ZGl2PjxzcGFuIHN0eWxlPSIiPlRoYW5rIHlvdSBmb3IgeW91ciByZXBseSE8L3NwYW4+PHNwYW4+
-PGJyPjwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSIiPkkndmUgcmVhZCZuYnNwOzwvc3Bh
-bj48c3BhbiBzdHlsZT0iIj50aGUgIjwvc3Bhbj48c3BhbiBzdHlsZT0ibGluZS1oZWlnaHQ6IDIy
-LjRweDsiPnBob3NwaG9yLXBpZC1jb250cm9sPC9zcGFuPjxzcGFuIHN0eWxlPSJsaW5lLWhlaWdo
-dDogMjIuNHB4OyI+Jm5ic3A7PC9zcGFuPjxzcGFuIHN0eWxlPSIiPiIuPC9zcGFuPjwvZGl2Pjxk
-aXY+PHNwYW4gc3R5bGU9IiI+QnV0IEkgZGlkbid0IHJlYWQgYWJvdXQgdGhlJm5ic3A7PC9zcGFu
-PjxzcGFuIHN0eWxlPSIiPmxpbmtlZCZuYnNwOzwvc3Bhbj48c3BhbiBzdHlsZT0iIj5iZXR3ZWVu
-IHRlbXBlcmF0dXJlIGFuZCBjdXJyZW50Ljwvc3Bhbj48c3BhbiBzdHlsZT0iIj48YnI+PC9zcGFu
-PjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9IiI+Y291bGQgeW91IGdpdmUgbWUgYW4gZXhhbXBsZT88
-L3NwYW4+PHNwYW4gc3R5bGU9IiI+PGJyPjwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSIi
-Pjxicj48L3NwYW4+PC9kaXY+PGRpdiBzdHlsZT0idGV4dC1hbGlnbjoganVzdGlmeTsgIj48Zm9u
-dCBjb2xvcj0iIzMzMzMzMyIgZmFjZT0iQXJpYWwsIE1pY3Jvc29mdCBZYUhlaSwgXFw1RkFF6L2v
-6ZuF6buRLCBcXDVCOELkvZMsIE1hbGd1biBHb3RoaWMsIE1laXJ5bywgc2Fucy1zZXJpZiI+PHNw
-YW4gc3R5bGU9ImxpbmUtaGVpZ2h0OiAyNnB4OyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjQ3LCAy
-NDgsIDI1MCk7Ij5UaGFua3MhPC9zcGFuPjwvZm9udD48L2Rpdj48ZGl2PgogICAgPC9kaXY+CiAg
-ICA8ZGl2IHN0eWxlPSJmb250LWZhbWlseTon5b6u6L2v6ZuF6buRJyI+CiAgICAgICAgCiAgICAg
-ICAgPGRpdiBzdHlsZT0iZm9udC1zaXplOjE0cHg7IHBhZGRpbmc6IDA7ICBtYXJnaW46MDsiPgoK
-ICAgICAgICA8L2Rpdj4KICAgIDwvZGl2Pgo8L2Rpdj48ZGl2IGNsYXNzPSJKLXJlcGx5IiBzdHls
-ZT0iYmFja2dyb3VuZC1jb2xvcjojZjJmMmYyO2NvbG9yOmJsYWNrO3BhZGRpbmctdG9wOjZweDtw
-YWRkaW5nLWJvdHRvbTo2cHg7Ym9yZGVyLXJhZGl1czozcHg7LW1vei1ib3JkZXItcmFkaXVzOjNw
-eDstd2Via2l0LWJvcmRlci1yYWRpdXM6M3B4O21hcmdpbi10b3A6NDVweDttYXJnaW4tYm90dG9t
-OjIwcHg7Zm9udC1mYW1pbHk6J+W+rui9r+mbhem7kSc7Ij4KICAgIDxkaXYgc3R5bGU9ImZvbnQt
-c2l6ZToxMnB4O2xpbmUtaGVpZ2h0OjEuNTt3b3JkLWJyZWFrOmJyZWFrLWFsbDttYXJnaW4tbGVm
-dDoxMHB4O21hcmdpbi1yaWdodDoxMHB4Ij5PbiA8c3BhbiBjbGFzcz0ibWFpbC1kYXRlIj4xMS8y
-NS8yMDIxIDE2OjQ2PC9zcGFuPu+8jDxhIGNsYXNzPSJtYWlsLXRvIiBzdHlsZT0idGV4dC1kZWNv
-cmF0aW9uOm5vbmU7Y29sb3I6IzJhODNmMjsiIGhyZWY9Im1haWx0bzpmZXJjZXJwYXZAZ21haWwu
-Y29tIj5QYXVsIEZlcnRzZXImbHQ7ZmVyY2VycGF2QGdtYWlsLmNvbSZndDs8L2E+IHdyb3Rl77ya
-IDwvZGl2Pgo8L2Rpdj4KPGJsb2NrcXVvdGUgaWQ9Im50ZXMtcGNtYWlsLXF1b3RlIiBzdHlsZT0i
-bWFyZ2luOiAwOyBwYWRkaW5nOiAwOyBmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAn5b6u
-6L2v6ZuF6buRJzsiPgpIZWxsbyw8YnI+PGJyPk9uIFRodSwgTm92IDI1LCAyMDIxIGF0IDA0OjI5
-OjIzUE0gKzA4MDAsIExhbmRvbiB3cm90ZTo8YnI+IDxibG9ja3F1b3RlIGNsYXNzPSJtbWJxYzEi
-PkNhbiBpdCBiZSBsaW5rZWQgd2l0aCB0ZW1wZXJhdHVyZSBhbmQgY3VycmVudD8gV2hldGhlciB0
-aGUgcHdtLWZhbiBvdXRwdXQgY2FuIGJlPGJyPiBjb250cm9sbGVkIGJ5IHRoZSBjb3JyZXNwb25k
-aW5nIHRlbXBlcmF0dXJlIGFuZCBjdXJyZW50Pzxicj4gQXJlIHRoZXJlIGFueSBpbnN0cnVjdGlv
-bnMgb3IgcmVmZXJlbmNlcz88YnI+PC9ibG9ja3F1b3RlPjxicj5odHRwczovL2dpdGh1Yi5jb20v
-b3BlbmJtYy9waG9zcGhvci1waWQtY29udHJvbCBzaG91bGQgYmUgZmxleGlibGU8YnI+ZW5vdWdo
-IGZvciB0aGUgcHVycG9zZS4gSXMgaXQgbWlzc2luZyBzb21ldGhpbmcgeW91IG5lZWQ/PGJyPjxi
-cj4tLSA8YnI+QmUgZnJlZSwgdXNlIGZyZWUgKGh0dHA6Ly93d3cuZ251Lm9yZy9waGlsb3NvcGh5
-L2ZyZWUtc3cuaHRtbCkgc29mdHdhcmUhPGJyPm1haWx0bzo8YSBkYXRhLWF1dG8tbGluaz0iMSIg
-aHJlZj0ibWFpbHRvOmZlcmNlcnBhdkBnbWFpbC5jb20iPmZlcmNlcnBhdkBnbWFpbC5jb208L2E+
-PGJyPjwvYmxvY2txdW90ZT4KPC9kaXY+PC9ibG9ja3F1b3RlPjwhLS3wn5iALS0+CjwvZGl2Pgo8
-L2JvZHk+CjwvaHRtbD4=
-------=_Part_90342_182113379.1637906131058--
+Besides, I have already had openbmc's kvm support this aspeed format.
+The source code of the implementation will be released after performance 
+tuning finished.
+
+-- 
+Best Regards
+Jammy
 
