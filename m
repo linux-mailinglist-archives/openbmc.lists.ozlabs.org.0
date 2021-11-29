@@ -2,74 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 783DE46120D
-	for <lists+openbmc@lfdr.de>; Mon, 29 Nov 2021 11:22:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 27AEA4613B2
+	for <lists+openbmc@lfdr.de>; Mon, 29 Nov 2021 12:13:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J2hHj2r6qz3cYC
-	for <lists+openbmc@lfdr.de>; Mon, 29 Nov 2021 21:22:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J2jPr0Ypdz30J5
+	for <lists+openbmc@lfdr.de>; Mon, 29 Nov 2021 22:13:04 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=oy5m1eCW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=jWuUsTWK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=oy5m1eCW; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::633;
+ helo=mail-pl1-x633.google.com; envelope-from=rushtotom@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=jWuUsTWK; dkim-atps=neutral
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com
+ [IPv6:2607:f8b0:4864:20::633])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J2hHB3415z3cH2
- for <openbmc@lists.ozlabs.org>; Mon, 29 Nov 2021 21:22:14 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 62D3242310;
- Mon, 29 Nov 2021 10:22:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1638181328; x=1639995729; bh=JXY1RVYstVJquzr3YTOqZbcpI
- qgx00rTxMIPOF/xbfQ=; b=oy5m1eCWrq7U++uegnVwyi+UWXENYB1CBWYoik/Sl
- IAHPcwW6vyA3h36fspMua61P4zqIlp4h4RzxzhP73kLKwSsnSnXnxiuD8gqy8UWJ
- xh3fWFZxFG5TvVsZgynMrUnjmDtcWSVZPv+kVWpZLcRFFF6b9JeYfi0bFZlgjZgf
- xs=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ILjgvh0fU7OT; Mon, 29 Nov 2021 13:22:08 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id C020F42306;
- Mon, 29 Nov 2021 13:22:06 +0300 (MSK)
-Received: from [10.199.10.105] (10.199.10.105) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 29
- Nov 2021 13:22:06 +0300
-Message-ID: <18a75e7d223e2c054e93e9a83a6c0ba474125518.camel@yadro.com>
-Subject: Re:  openBMC pwm-fan control policy
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: Landon <cld795@163.com>, "fercerpav@gmail.com" <fercerpav@gmail.com>
-Date: Mon, 29 Nov 2021 13:22:05 +0300
-In-Reply-To: <459566ca.670c.17d6b13a847.Coremail.cld795@163.com>
-References: <mailman.0.1637828525.15424.openbmc@lists.ozlabs.org>
- <217ffd16.389b.17d5636abb5.Coremail.cld795@163.com>
- <20211125084640.GA22508@home.paul.comp>
- <78340dc9.749f.17d5ab53990.Coremail.cld795@163.com>
- <687802ca.772b.17d5ad02872.Coremail.cld795@163.com>
- <20211126215734.GH22508@home.paul.comp>
- <459566ca.670c.17d6b13a847.Coremail.cld795@163.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.4 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J2jPR4NdZz2yJV
+ for <openbmc@lists.ozlabs.org>; Mon, 29 Nov 2021 22:12:41 +1100 (AEDT)
+Received: by mail-pl1-x633.google.com with SMTP id u17so11866094plg.9
+ for <openbmc@lists.ozlabs.org>; Mon, 29 Nov 2021 03:12:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=3ZDO54jN9z+z7IhGAfCbWDWLd++ynf9+Dg4iJUYA+n8=;
+ b=jWuUsTWKSCgBf1VF+W8rgJ/VsBbxqN22E0cWm5vdjhtwtOh6d+gbtwynjtiI9uK4VH
+ ZNUvoaUwMicQK3GjQPrc/QAo+AyA+hYOhT+ZdegPTnPUDtnC8iQL1fewe0DuptabJoLc
+ Cx0u7GFejF7Mw1D+Yzd8Myf2h4M1D17Ni0IGBRlyoEUEg612lRad3ArScXIiHYHtGXJi
+ FAcJn5Og8vMMQZ3GH3PuN+GYEarNJkyQKID7rvaVLpQl32xgD9kHQcU1efRotPgbj+zF
+ 6AP4ps3Z9UKDVi0bXqx3d98dpHmq0OEckovTBlxB4GBnk4VOgvQcJ9dHHgEt4iuvn3y/
+ idOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=3ZDO54jN9z+z7IhGAfCbWDWLd++ynf9+Dg4iJUYA+n8=;
+ b=Ri9EKGTHYyIf5o2Sj9qU5OnBuP6lDs1dU5SzrkQWXkC35SmBS8op1sRASKcxwayxXc
+ JmJVQKoshMILLBgbkUtnua4CyraDF+Vk0cN3qCqJH7Ht956wQ+xqsh+8Ht0O2c2ejacH
+ pPEE/8M6sD+BskMQtDyxR/jke0AIRz7Rnu3LVNGxg0btDtfpeoHA8TsPOi32FPDFmrXx
+ wNCmIZT9qCdWSVrn53PBRZzRd6ZXbYMkLDYRNWGlXpIImAfGKV9D6/Td5u2ULbPkZYbP
+ U/Cl4iUQkbMsmXox/NrfKOq3tl04P5u1G0ZTDxHXnnJLWC7OxjMHbLFUCrrS8zFx9LEl
+ r6Cw==
+X-Gm-Message-State: AOAM532DcBCECy1WmUL3XAcrBhORW11CB2xZI54wDisBqfvL/9PGaId4
+ DrWimqR/AVZAGAqqyapPgphyR5TKMky4/Nfa/Nk=
+X-Google-Smtp-Source: ABdhPJzkbJmsXk2wGPMzN/p2GIbi4o7doSBqFEcA4RCgCqEw+3LKUs4UWMpuxQB3nx06si+linYSp5BuGzoBiUaBOXM=
+X-Received: by 2002:a17:90b:3a83:: with SMTP id
+ om3mr37553661pjb.211.1638184359349; 
+ Mon, 29 Nov 2021 03:12:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.10.105]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+References: <YaPzMYi/UHwvEiGf@heinlein>
+ <954c1bbd0bf7996b82b5890b1ecb1a6903c8b047.camel@yadro.com>
+In-Reply-To: <954c1bbd0bf7996b82b5890b1ecb1a6903c8b047.camel@yadro.com>
+From: Tom Joseph <rushtotom@gmail.com>
+Date: Mon, 29 Nov 2021 16:42:28 +0530
+Message-ID: <CADCscQ=iuhyi5_H3TAn1JXPLBq4BrdJJeHZqGNLahRzgnzwTzg@mail.gmail.com>
+Subject: Re: C++ co-routines are coming soon...
+To: Andrei Kartashev <a.kartashev@yadro.com>
+Content-Type: multipart/alternative; boundary="000000000000d0d15b05d1eb84ab"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,61 +75,251 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+--000000000000d0d15b05d1eb84ab
+Content-Type: text/plain; charset="UTF-8"
 
-Please read phosphor-pid-control documentation:
-https://github.com/openbmc/phosphor-pid-control
-https://github.com/openbmc/phosphor-pid-control/blob/master/configure.md
-https://github.com/openbmc/phosphor-pid-control/blob/master/tuning.md
-https://github.com/openbmc/phosphor-pid-control/tree/master/examples
+Thanks Patrick! Really excited to see C++20 features in action.
 
-Keep in mind that there are two different ways to configure phosphor-
-pid-control: statically with JSON config files and dynamically with
-DBUS (generally, using EntityManager JSON configuration) and same
-parameters with this two ways mostly have different names.
-The way you want to use is generally depend on either you use EM for
-your platform or not.
-
-On Mon, 2021-11-29 at 17:43 +0800, Landon wrote:
->  Thank you!  
-> I have read it
-> :  https://github.com/openbmc/entity-manager/blob/master/configurations/R1000%20Chassis.json
-> But I don't understand,
-> Is there an explanation for this part?
-> Are there general instructions on how to control fan output by
-> temperature?
-> 
-> and how to use phosphor-pid-control  to set this ?
->  
-> Is there“ phosphor-pid-control ”the instructions for this part?
-> Thank you very much !
-> On 11/27/2021 05:57，Paul Fertser<fercerpav@gmail.com> wrote： 
-> > On Fri, Nov 26, 2021 at 01:55:31PM +0800, Landon wrote:
-> >  
-> > > add: I just want to know in  OpenBMC by reading different
-> > > temperature values  or
-> > >  current values to  control the fan  output, so as  to cool down,
-> > >  how does  this
-> > >  strategy work? An example of this.
-> > 
-> > This is using temperature values to control the fans so as to cool
-> > down, it works by configuring phosphor-pid-control appropriately, I
-> > hope it's enough of an example:
-> > 
-> > https://github.com/openbmc/entity-
-> > manager/blob/master/configurations/R1000%20Chassis.json
-> > 
-> > If you think phosphor-pid-control is missing some documentation
-> > please
-> > read its source code and send documentation patches for review.
-> > 
-
--- 
-Best regards,
-Andrei Kartashev
+Regards,
+Tom
 
 
+On Mon, Nov 29, 2021 at 1:47 PM Andrei Kartashev <a.kartashev@yadro.com>
+wrote:
+
+> Thank you for your effort here!
+> This three are really long waiting 'must have' things.
+> I will try to test this proposal.
+>
+> On Sun, 2021-11-28 at 15:22 -0600, Patrick Williams wrote:
+> > Hello,
+> >
+> > I just pushed up some code I've been working on for initial community
+> > preview:
+> > C++20 coroutine support in sdbusplus[1].  This code should be
+> > considered
+> > "experimental" for the time-being but a good preview of where I plan
+> > to take the
+> > sdbusplus bindings.  I know there are complaints about the current
+> > sdbusplus
+> > support in one of three veins depending on your perspective of
+> > importance:
+> >
+> >     1. The current sdbusplus server bindings in phosphor-dbus-
+> > interfaces are
+> >        synchronous.
+> >     2. There are no sdbusplus client bindings in phosphor-dbus-
+> > interfaces.
+> >     3. The code using the sdbusplus Boost/ASIO interfaces is very
+> > callback
+> >        intensive (and difficult to read).
+> >
+> > I've been wanting to leverage C++20 coroutines for quite a while in
+> > order to
+> > address these shortcomings but haven't gotten around to it due to
+> > lack of
+> > understanding on my part (and lack of time to fix this) and lack of
+> > maturity in
+> > the library support.  There is a proposal for C++23 (P2300)[2] which
+> > attempts to
+> > fix the "maturity" problem and the authors of that have been using
+> > libunifex[3]
+> > as their proving ground.  Using libunifex and becoming enlightened by
+> > Eric
+> > Niebler's excellent talk at CppCon'21, I've finally been able to make
+> > some good
+> > progress on this.
+> >
+> > There will be more to come, but I wanted to give a taste of what a
+> > C++20
+> > co-routine-based sdbusplus agent might look like.  This is an example
+> > of a
+> > task that reacts to D-Bus "NameOwnerChanged" signals:
+> >
+> > ```
+> > auto watch_events(sdbusplus::async::context_t& ctx)
+> >     -> sdbusplus::execution::task<void>
+> > {
+> >     using namespace sdbusplus::async::match;
+> >     auto m = match(ctx, rules::nameOwnerChanged());
+> >
+> >     while (auto msg = co_await m.next())
+> >     {
+> >         std::string service, old_name, new_name;
+> >         msg.read(service, old_name, new_name);
+> >         if (!new_name.empty())
+> >         {
+> >             std::cout << new_name << " owns " << service <<
+> > std::endl;
+> >         }
+> >         else
+> >         {
+> >             std::cout << service << " released" << std::endl;
+> >         }
+> >     };
+> >
+> >     co_return;
+> > }
+> > ```
+> >
+> > I currently have `match` implemented and I plan to get `call` working
+> > very soon.
+> > Sometime between now and late January I'll probably do an educational
+> > talk on
+> > co-routines.
+> >
+> > 1. https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/49117
+> > 2. https://github.com/cplusplus/papers/issues/1054
+> > 3. https://github.com/facebookexperimental/libunifex
+> > 4. https://www.youtube.com/watch?v=xLboNIf7BTg
+> >
+>
+> --
+> Best regards,
+> Andrei Kartashev
+>
+>
+>
+
+--000000000000d0d15b05d1eb84ab
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Thanks Patrick! Really excited to see C++=
+20 features in action.<br></div><div dir=3D"ltr"><br></div><div>Regards,</d=
+iv><div>Tom<br><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cl=
+ass=3D"gmail_attr">On Mon, Nov 29, 2021 at 1:47 PM Andrei Kartashev &lt;<a =
+href=3D"mailto:a.kartashev@yadro.com">a.kartashev@yadro.com</a>&gt; wrote:<=
+br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex">Thank you for yo=
+ur effort here!<br>
+This three are really long waiting &#39;must have&#39; things.<br>
+I will try to test this proposal.<br>
+<br>
+On Sun, 2021-11-28 at 15:22 -0600, Patrick Williams wrote:<br>
+&gt; Hello,<br>
+&gt; <br>
+&gt; I just pushed up some code I&#39;ve been working on for initial commun=
+ity<br>
+&gt; preview:<br>
+&gt; C++20 coroutine support in sdbusplus[1].=C2=A0 This code should be<br>
+&gt; considered<br>
+&gt; &quot;experimental&quot; for the time-being but a good preview of wher=
+e I plan<br>
+&gt; to take the<br>
+&gt; sdbusplus bindings.=C2=A0 I know there are complaints about the curren=
+t<br>
+&gt; sdbusplus<br>
+&gt; support in one of three veins depending on your perspective of<br>
+&gt; importance:<br>
+&gt; <br>
+&gt; =C2=A0=C2=A0=C2=A0 1. The current sdbusplus server bindings in phospho=
+r-dbus-<br>
+&gt; interfaces are<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 synchronous.<br>
+&gt; =C2=A0=C2=A0=C2=A0 2. There are no sdbusplus client bindings in phosph=
+or-dbus-<br>
+&gt; interfaces.<br>
+&gt; =C2=A0=C2=A0=C2=A0 3. The code using the sdbusplus Boost/ASIO interfac=
+es is very<br>
+&gt; callback<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 intensive (and difficult to read)=
+.<br>
+&gt; <br>
+&gt; I&#39;ve been wanting to leverage C++20 coroutines for quite a while i=
+n<br>
+&gt; order to<br>
+&gt; address these shortcomings but haven&#39;t gotten around to it due to<=
+br>
+&gt; lack of<br>
+&gt; understanding on my part (and lack of time to fix this) and lack of<br=
+>
+&gt; maturity in<br>
+&gt; the library support.=C2=A0 There is a proposal for C++23 (P2300)[2] wh=
+ich<br>
+&gt; attempts to<br>
+&gt; fix the &quot;maturity&quot; problem and the authors of that have been=
+ using<br>
+&gt; libunifex[3]<br>
+&gt; as their proving ground.=C2=A0 Using libunifex and becoming enlightene=
+d by<br>
+&gt; Eric<br>
+&gt; Niebler&#39;s excellent talk at CppCon&#39;21, I&#39;ve finally been a=
+ble to make<br>
+&gt; some good<br>
+&gt; progress on this.<br>
+&gt; <br>
+&gt; There will be more to come, but I wanted to give a taste of what a<br>
+&gt; C++20<br>
+&gt; co-routine-based sdbusplus agent might look like.=C2=A0 This is an exa=
+mple<br>
+&gt; of a<br>
+&gt; task that reacts to D-Bus &quot;NameOwnerChanged&quot; signals:<br>
+&gt; <br>
+&gt; ```<br>
+&gt; auto watch_events(sdbusplus::async::context_t&amp; ctx)<br>
+&gt; =C2=A0=C2=A0=C2=A0 -&gt; sdbusplus::execution::task&lt;void&gt;<br>
+&gt; {<br>
+&gt; =C2=A0=C2=A0=C2=A0 using namespace sdbusplus::async::match;<br>
+&gt; =C2=A0=C2=A0=C2=A0 auto m =3D match(ctx, rules::nameOwnerChanged());<b=
+r>
+&gt; <br>
+&gt; =C2=A0=C2=A0=C2=A0 while (auto msg =3D co_await m.next())<br>
+&gt; =C2=A0=C2=A0=C2=A0 {<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 std::string service, old_na=
+me, new_name;<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 msg.read(service, old_name,=
+ new_name);<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!new_name.empty())<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 {<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 std=
+::cout &lt;&lt; new_name &lt;&lt; &quot; owns &quot; &lt;&lt; service &lt;&=
+lt;<br>
+&gt; std::endl;<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 else<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 {<br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 std=
+::cout &lt;&lt; service &lt;&lt; &quot; released&quot; &lt;&lt; std::endl;<=
+br>
+&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }<br>
+&gt; =C2=A0=C2=A0=C2=A0 };<br>
+&gt; <br>
+&gt; =C2=A0=C2=A0=C2=A0 co_return;<br>
+&gt; }<br>
+&gt; ```<br>
+&gt; <br>
+&gt; I currently have `match` implemented and I plan to get `call` working<=
+br>
+&gt; very soon.<br>
+&gt; Sometime between now and late January I&#39;ll probably do an educatio=
+nal<br>
+&gt; talk on<br>
+&gt; co-routines.<br>
+&gt; <br>
+&gt; 1. <a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+=
+/49117" rel=3D"noreferrer" target=3D"_blank">https://gerrit.openbmc-project=
+.xyz/c/openbmc/sdbusplus/+/49117</a><br>
+&gt; 2. <a href=3D"https://github.com/cplusplus/papers/issues/1054" rel=3D"=
+noreferrer" target=3D"_blank">https://github.com/cplusplus/papers/issues/10=
+54</a><br>
+&gt; 3. <a href=3D"https://github.com/facebookexperimental/libunifex" rel=
+=3D"noreferrer" target=3D"_blank">https://github.com/facebookexperimental/l=
+ibunifex</a><br>
+&gt; 4. <a href=3D"https://www.youtube.com/watch?v=3DxLboNIf7BTg" rel=3D"no=
+referrer" target=3D"_blank">https://www.youtube.com/watch?v=3DxLboNIf7BTg</=
+a><br>
+&gt; <br>
+<br>
+-- <br>
+Best regards,<br>
+Andrei Kartashev<br>
+<br>
+<br>
+</blockquote></div></div>
+
+--000000000000d0d15b05d1eb84ab--
