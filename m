@@ -2,68 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27AEA4613B2
-	for <lists+openbmc@lfdr.de>; Mon, 29 Nov 2021 12:13:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 27E1A461CCC
+	for <lists+openbmc@lfdr.de>; Mon, 29 Nov 2021 18:34:57 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J2jPr0Ypdz30J5
-	for <lists+openbmc@lfdr.de>; Mon, 29 Nov 2021 22:13:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J2stR0Gdmz3062
+	for <lists+openbmc@lfdr.de>; Tue, 30 Nov 2021 04:34:55 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=jWuUsTWK;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=C3sE39/+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::633;
- helo=mail-pl1-x633.google.com; envelope-from=rushtotom@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42f;
+ helo=mail-wr1-x42f.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=jWuUsTWK; dkim-atps=neutral
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com
- [IPv6:2607:f8b0:4864:20::633])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=C3sE39/+; dkim-atps=neutral
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com
+ [IPv6:2a00:1450:4864:20::42f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J2jPR4NdZz2yJV
- for <openbmc@lists.ozlabs.org>; Mon, 29 Nov 2021 22:12:41 +1100 (AEDT)
-Received: by mail-pl1-x633.google.com with SMTP id u17so11866094plg.9
- for <openbmc@lists.ozlabs.org>; Mon, 29 Nov 2021 03:12:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J2st226tsz2ymP
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Nov 2021 04:34:32 +1100 (AEDT)
+Received: by mail-wr1-x42f.google.com with SMTP id i5so38541011wrb.2
+ for <openbmc@lists.ozlabs.org>; Mon, 29 Nov 2021 09:34:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=3ZDO54jN9z+z7IhGAfCbWDWLd++ynf9+Dg4iJUYA+n8=;
- b=jWuUsTWKSCgBf1VF+W8rgJ/VsBbxqN22E0cWm5vdjhtwtOh6d+gbtwynjtiI9uK4VH
- ZNUvoaUwMicQK3GjQPrc/QAo+AyA+hYOhT+ZdegPTnPUDtnC8iQL1fewe0DuptabJoLc
- Cx0u7GFejF7Mw1D+Yzd8Myf2h4M1D17Ni0IGBRlyoEUEg612lRad3ArScXIiHYHtGXJi
- FAcJn5Og8vMMQZ3GH3PuN+GYEarNJkyQKID7rvaVLpQl32xgD9kHQcU1efRotPgbj+zF
- 6AP4ps3Z9UKDVi0bXqx3d98dpHmq0OEckovTBlxB4GBnk4VOgvQcJ9dHHgEt4iuvn3y/
- idOA==
+ :cc:content-transfer-encoding;
+ bh=Te7dfqCwbHqpHzw9TVhKbegVEB87iaLPApK/hAGzSDY=;
+ b=C3sE39/+yZupVn2uNn4BZ2eTVyyaYOAQUPG3nZOu6L97dnL508KP4PdyYRoXDdNqhC
+ 5ACKH/wJQ+2Alwfgb0qCTBfbbVvFwuTElJw7WaHpJu2oKWIanFsTDLgZSHdGSMj11FJR
+ LcIRih52hguC3kb4Ub8X56sk8nE5blOAmMuxmFAdjPgkAQORirZcTSwFA2MTLnz67kot
+ vdWkMskHBaIRJ/fmQB2Q8/WirGWWrvwq8clAUJ1Zf6V8ThqMAIK8SbpEC30QhGGeelYL
+ 3q8P8yIoZBFoUYGeO5cUHbv9ucLUujn0E3Xa2IpmOI54MMaMigRC2qCF6bzfMuh++TrF
+ ru9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=3ZDO54jN9z+z7IhGAfCbWDWLd++ynf9+Dg4iJUYA+n8=;
- b=Ri9EKGTHYyIf5o2Sj9qU5OnBuP6lDs1dU5SzrkQWXkC35SmBS8op1sRASKcxwayxXc
- JmJVQKoshMILLBgbkUtnua4CyraDF+Vk0cN3qCqJH7Ht956wQ+xqsh+8Ht0O2c2ejacH
- pPEE/8M6sD+BskMQtDyxR/jke0AIRz7Rnu3LVNGxg0btDtfpeoHA8TsPOi32FPDFmrXx
- wNCmIZT9qCdWSVrn53PBRZzRd6ZXbYMkLDYRNWGlXpIImAfGKV9D6/Td5u2ULbPkZYbP
- U/Cl4iUQkbMsmXox/NrfKOq3tl04P5u1G0ZTDxHXnnJLWC7OxjMHbLFUCrrS8zFx9LEl
- r6Cw==
-X-Gm-Message-State: AOAM532DcBCECy1WmUL3XAcrBhORW11CB2xZI54wDisBqfvL/9PGaId4
- DrWimqR/AVZAGAqqyapPgphyR5TKMky4/Nfa/Nk=
-X-Google-Smtp-Source: ABdhPJzkbJmsXk2wGPMzN/p2GIbi4o7doSBqFEcA4RCgCqEw+3LKUs4UWMpuxQB3nx06si+linYSp5BuGzoBiUaBOXM=
-X-Received: by 2002:a17:90b:3a83:: with SMTP id
- om3mr37553661pjb.211.1638184359349; 
- Mon, 29 Nov 2021 03:12:39 -0800 (PST)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=Te7dfqCwbHqpHzw9TVhKbegVEB87iaLPApK/hAGzSDY=;
+ b=2AlSVIU6pde/rhjvV4tleF1XRTlYwbZGGikhlIIQn6QZK6DnnKVU3YfRwJ9f2+mU9V
+ OIEh8hlK65Htrqs81yzLMTaU0Cvsv7qTJ0fvce3r12K2XfGh8Y+oo/BpLxYWz/XpLFTk
+ zdg+avPgkvxM+UJ1gKSgD3Z1k7JbSL3zZXYBdcZXhkDyozVonRV9j7gYrqWHEp6xjtPJ
+ RAn6OPepOGZfQCpxJihUEo5FXHSxrOLsqtxmLSVJSZsUixiIIqEUvhyTYZuKbkyWNeSm
+ lD+D/Wh7yhyX18DyggHeQqb2FeDEIPcVlwd3gmAYcp72xXstT3u9dgwbyXFu4giFMNqw
+ ZXXA==
+X-Gm-Message-State: AOAM530H7rme0/e2aG62sHwtHTm48aKiZ5bql1NsCN1H0WwznUPyYK/I
+ lpbUjZKVXFvSZEzLsvMm07tx+6Yyk8zXGh1pEP3MZSTrFAojXg==
+X-Google-Smtp-Source: ABdhPJzXAuSBhWMAwBQ7fnUbD/Yl/HSzlsSpXguGjm8XuDgktUBKeoRt1LhJU5t39IHDpjEWL2mj2h57XzutZUoqpmg=
+X-Received: by 2002:adf:cd02:: with SMTP id w2mr36171014wrm.269.1638207265186; 
+ Mon, 29 Nov 2021 09:34:25 -0800 (PST)
 MIME-Version: 1.0
-References: <YaPzMYi/UHwvEiGf@heinlein>
- <954c1bbd0bf7996b82b5890b1ecb1a6903c8b047.camel@yadro.com>
-In-Reply-To: <954c1bbd0bf7996b82b5890b1ecb1a6903c8b047.camel@yadro.com>
-From: Tom Joseph <rushtotom@gmail.com>
-Date: Mon, 29 Nov 2021 16:42:28 +0530
-Message-ID: <CADCscQ=iuhyi5_H3TAn1JXPLBq4BrdJJeHZqGNLahRzgnzwTzg@mail.gmail.com>
-Subject: Re: C++ co-routines are coming soon...
-To: Andrei Kartashev <a.kartashev@yadro.com>
-Content-Type: multipart/alternative; boundary="000000000000d0d15b05d1eb84ab"
+References: <DF4PR8401MB09557853DD75C419B6748824D8629@DF4PR8401MB0955.NAMPRD84.PROD.OUTLOOK.COM>
+In-Reply-To: <DF4PR8401MB09557853DD75C419B6748824D8629@DF4PR8401MB0955.NAMPRD84.PROD.OUTLOOK.COM>
+From: Ed Tanous <edtanous@google.com>
+Date: Mon, 29 Nov 2021 09:34:13 -0800
+Message-ID: <CAH2-KxDmuQk6tv5uBJZNFTfFugkE=3Rw78EKGPsvhoNwKa2gzw@mail.gmail.com>
+Subject: Re: Romulus Build error in phosphor-webui
+To: "Muggeridge, Matt" <matt.muggeridge2@hpe.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,251 +75,288 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d0d15b05d1eb84ab
-Content-Type: text/plain; charset="UTF-8"
-
-Thanks Patrick! Really excited to see C++20 features in action.
-
-Regards,
-Tom
-
-
-On Mon, Nov 29, 2021 at 1:47 PM Andrei Kartashev <a.kartashev@yadro.com>
-wrote:
-
-> Thank you for your effort here!
-> This three are really long waiting 'must have' things.
-> I will try to test this proposal.
+On Sun, Nov 28, 2021 at 8:56 PM Muggeridge, Matt
+<matt.muggeridge2@hpe.com> wrote:
 >
-> On Sun, 2021-11-28 at 15:22 -0600, Patrick Williams wrote:
-> > Hello,
-> >
-> > I just pushed up some code I've been working on for initial community
-> > preview:
-> > C++20 coroutine support in sdbusplus[1].  This code should be
-> > considered
-> > "experimental" for the time-being but a good preview of where I plan
-> > to take the
-> > sdbusplus bindings.  I know there are complaints about the current
-> > sdbusplus
-> > support in one of three veins depending on your perspective of
-> > importance:
-> >
-> >     1. The current sdbusplus server bindings in phosphor-dbus-
-> > interfaces are
-> >        synchronous.
-> >     2. There are no sdbusplus client bindings in phosphor-dbus-
-> > interfaces.
-> >     3. The code using the sdbusplus Boost/ASIO interfaces is very
-> > callback
-> >        intensive (and difficult to read).
-> >
-> > I've been wanting to leverage C++20 coroutines for quite a while in
-> > order to
-> > address these shortcomings but haven't gotten around to it due to
-> > lack of
-> > understanding on my part (and lack of time to fix this) and lack of
-> > maturity in
-> > the library support.  There is a proposal for C++23 (P2300)[2] which
-> > attempts to
-> > fix the "maturity" problem and the authors of that have been using
-> > libunifex[3]
-> > as their proving ground.  Using libunifex and becoming enlightened by
-> > Eric
-> > Niebler's excellent talk at CppCon'21, I've finally been able to make
-> > some good
-> > progress on this.
-> >
-> > There will be more to come, but I wanted to give a taste of what a
-> > C++20
-> > co-routine-based sdbusplus agent might look like.  This is an example
-> > of a
-> > task that reacts to D-Bus "NameOwnerChanged" signals:
-> >
-> > ```
-> > auto watch_events(sdbusplus::async::context_t& ctx)
-> >     -> sdbusplus::execution::task<void>
-> > {
-> >     using namespace sdbusplus::async::match;
-> >     auto m = match(ctx, rules::nameOwnerChanged());
-> >
-> >     while (auto msg = co_await m.next())
-> >     {
-> >         std::string service, old_name, new_name;
-> >         msg.read(service, old_name, new_name);
-> >         if (!new_name.empty())
-> >         {
-> >             std::cout << new_name << " owns " << service <<
-> > std::endl;
-> >         }
-> >         else
-> >         {
-> >             std::cout << service << " released" << std::endl;
-> >         }
-> >     };
-> >
-> >     co_return;
-> > }
-> > ```
-> >
-> > I currently have `match` implemented and I plan to get `call` working
-> > very soon.
-> > Sometime between now and late January I'll probably do an educational
-> > talk on
-> > co-routines.
-> >
-> > 1. https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/49117
-> > 2. https://github.com/cplusplus/papers/issues/1054
-> > 3. https://github.com/facebookexperimental/libunifex
-> > 4. https://www.youtube.com/watch?v=xLboNIf7BTg
-> >
->
-> --
-> Best regards,
-> Andrei Kartashev
+> I have not been able to resolve this build error. I=E2=80=99ll be gratefu=
+l for any suggestions.
 >
 >
 >
+> As an aside: how do I create an openbmc shell environment that is identic=
+al to what the build uses? If I could do that, then I may be able to triage=
+ further.
 
---000000000000d0d15b05d1eb84ab
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+bitbake -c devshell phosphor-webui
 
-<div dir=3D"ltr"><div dir=3D"ltr">Thanks Patrick! Really excited to see C++=
-20 features in action.<br></div><div dir=3D"ltr"><br></div><div>Regards,</d=
-iv><div>Tom<br><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cl=
-ass=3D"gmail_attr">On Mon, Nov 29, 2021 at 1:47 PM Andrei Kartashev &lt;<a =
-href=3D"mailto:a.kartashev@yadro.com">a.kartashev@yadro.com</a>&gt; wrote:<=
-br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">Thank you for yo=
-ur effort here!<br>
-This three are really long waiting &#39;must have&#39; things.<br>
-I will try to test this proposal.<br>
-<br>
-On Sun, 2021-11-28 at 15:22 -0600, Patrick Williams wrote:<br>
-&gt; Hello,<br>
-&gt; <br>
-&gt; I just pushed up some code I&#39;ve been working on for initial commun=
-ity<br>
-&gt; preview:<br>
-&gt; C++20 coroutine support in sdbusplus[1].=C2=A0 This code should be<br>
-&gt; considered<br>
-&gt; &quot;experimental&quot; for the time-being but a good preview of wher=
-e I plan<br>
-&gt; to take the<br>
-&gt; sdbusplus bindings.=C2=A0 I know there are complaints about the curren=
-t<br>
-&gt; sdbusplus<br>
-&gt; support in one of three veins depending on your perspective of<br>
-&gt; importance:<br>
-&gt; <br>
-&gt; =C2=A0=C2=A0=C2=A0 1. The current sdbusplus server bindings in phospho=
-r-dbus-<br>
-&gt; interfaces are<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 synchronous.<br>
-&gt; =C2=A0=C2=A0=C2=A0 2. There are no sdbusplus client bindings in phosph=
-or-dbus-<br>
-&gt; interfaces.<br>
-&gt; =C2=A0=C2=A0=C2=A0 3. The code using the sdbusplus Boost/ASIO interfac=
-es is very<br>
-&gt; callback<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 intensive (and difficult to read)=
-.<br>
-&gt; <br>
-&gt; I&#39;ve been wanting to leverage C++20 coroutines for quite a while i=
-n<br>
-&gt; order to<br>
-&gt; address these shortcomings but haven&#39;t gotten around to it due to<=
-br>
-&gt; lack of<br>
-&gt; understanding on my part (and lack of time to fix this) and lack of<br=
 >
-&gt; maturity in<br>
-&gt; the library support.=C2=A0 There is a proposal for C++23 (P2300)[2] wh=
-ich<br>
-&gt; attempts to<br>
-&gt; fix the &quot;maturity&quot; problem and the authors of that have been=
- using<br>
-&gt; libunifex[3]<br>
-&gt; as their proving ground.=C2=A0 Using libunifex and becoming enlightene=
-d by<br>
-&gt; Eric<br>
-&gt; Niebler&#39;s excellent talk at CppCon&#39;21, I&#39;ve finally been a=
-ble to make<br>
-&gt; some good<br>
-&gt; progress on this.<br>
-&gt; <br>
-&gt; There will be more to come, but I wanted to give a taste of what a<br>
-&gt; C++20<br>
-&gt; co-routine-based sdbusplus agent might look like.=C2=A0 This is an exa=
-mple<br>
-&gt; of a<br>
-&gt; task that reacts to D-Bus &quot;NameOwnerChanged&quot; signals:<br>
-&gt; <br>
-&gt; ```<br>
-&gt; auto watch_events(sdbusplus::async::context_t&amp; ctx)<br>
-&gt; =C2=A0=C2=A0=C2=A0 -&gt; sdbusplus::execution::task&lt;void&gt;<br>
-&gt; {<br>
-&gt; =C2=A0=C2=A0=C2=A0 using namespace sdbusplus::async::match;<br>
-&gt; =C2=A0=C2=A0=C2=A0 auto m =3D match(ctx, rules::nameOwnerChanged());<b=
-r>
-&gt; <br>
-&gt; =C2=A0=C2=A0=C2=A0 while (auto msg =3D co_await m.next())<br>
-&gt; =C2=A0=C2=A0=C2=A0 {<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 std::string service, old_na=
-me, new_name;<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 msg.read(service, old_name,=
- new_name);<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!new_name.empty())<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 {<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 std=
-::cout &lt;&lt; new_name &lt;&lt; &quot; owns &quot; &lt;&lt; service &lt;&=
-lt;<br>
-&gt; std::endl;<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 else<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 {<br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 std=
-::cout &lt;&lt; service &lt;&lt; &quot; released&quot; &lt;&lt; std::endl;<=
-br>
-&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }<br>
-&gt; =C2=A0=C2=A0=C2=A0 };<br>
-&gt; <br>
-&gt; =C2=A0=C2=A0=C2=A0 co_return;<br>
-&gt; }<br>
-&gt; ```<br>
-&gt; <br>
-&gt; I currently have `match` implemented and I plan to get `call` working<=
-br>
-&gt; very soon.<br>
-&gt; Sometime between now and late January I&#39;ll probably do an educatio=
-nal<br>
-&gt; talk on<br>
-&gt; co-routines.<br>
-&gt; <br>
-&gt; 1. <a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+=
-/49117" rel=3D"noreferrer" target=3D"_blank">https://gerrit.openbmc-project=
-.xyz/c/openbmc/sdbusplus/+/49117</a><br>
-&gt; 2. <a href=3D"https://github.com/cplusplus/papers/issues/1054" rel=3D"=
-noreferrer" target=3D"_blank">https://github.com/cplusplus/papers/issues/10=
-54</a><br>
-&gt; 3. <a href=3D"https://github.com/facebookexperimental/libunifex" rel=
-=3D"noreferrer" target=3D"_blank">https://github.com/facebookexperimental/l=
-ibunifex</a><br>
-&gt; 4. <a href=3D"https://www.youtube.com/watch?v=3DxLboNIf7BTg" rel=3D"no=
-referrer" target=3D"_blank">https://www.youtube.com/watch?v=3DxLboNIf7BTg</=
-a><br>
-&gt; <br>
-<br>
--- <br>
-Best regards,<br>
-Andrei Kartashev<br>
-<br>
-<br>
-</blockquote></div></div>
+>
+>
+> Here are the details of the build failure=E2=80=A6
 
---000000000000d0d15b05d1eb84ab--
+Unfortunately, the webui was one things that made it possible to break
+the reproducibility of the yocto environment (ie, they rely on your
+host systems npm storage) and that seems to be the failure you're
+getting here.  Ideally, there would be some yocto machinery to help
+with this and make this more reliable, but it didn't really exist when
+we first ported the UI to the bmc years ago.  Supposedly there have
+been significant improvements to the npm.bbclass in upstream yocto, so
+it's possible that it's capable of doing what we need these days, but
+I don't think anyone has looked into it.
+
+>
+>
+>
+> $ lsb_release -a
+>
+> No LSB modules are available.
+>
+> Distributor ID: Ubuntu
+>
+> Description:    Ubuntu 20.04.2 LTS
+>
+> Release:        20.04
+>
+> Codename:       focal
+>
+>
+>
+> Building from a fresh clone:
+>
+>
+>
+> git clone https://github.com/openbmc/openbmc.git
+>
+> cd openbmc
+>
+> . setup romulus
+>
+> bitbake obmc-phosphor-image
+>
+> :
+>
+> Eventually an ERROR occurs
+>
+> :
+>
+> ERROR: phosphor-webui-1.0+gitAUTOINC+f59274e8ec-r1 do_compile: ExecutionE=
+rror('/sbox/user/openbmc/build/romulus/tmp/work/all-openbmc-linux/phosphor-=
+webui/1.0+gitAUTOINC+f59274e8ec-r1/temp/run.do_compile.255021', 1, None, No=
+ne)
+>
+> ERROR: Logfile of failure stored in: /sbox/user/openbmc/build/romulus/tmp=
+/work/all-openbmc-linux/phosphor-webui/1.0+gitAUTOINC+f59274e8ec-r1/temp/lo=
+g.do_compile.255021
+>
+>
+>
+> An error log is created under my ~/.npm directory (which seems like an od=
+d location for it):
+>
+>
+>
+> 12516 error Error while executing:
+>
+> 12516 error /sbox/user/openbmc/build/romulus/tmp/hosttools/git ls-remote =
+-h -t https://github.com/novnc/noVNC.git
+>
+> 12516 error fatal: unable to access 'https://github.com/novnc/noVNC.git/'=
+: gnutls_handshake() failed: Access was denied
+>
+>
+>
+> Though, I can successfully run that command from the shell.
+>
+>
+>
+> Some google research suggests it could be related to the version of TLS t=
+hat Git is using (https://stackoverflow.com/a/60292604/7010982) and that it=
+ needs TLS v1.2. However, it seems I=E2=80=99m using supported versions
+> (https://stackoverflow.com/a/53604947/7010982):
+>
+>
+>
+> $ ldd $(which "$(git --exec-path)"/git-http-push) | grep gnutls
+>
+>         libcurl-gnutls.so.4 =3D> /lib/x86_64-linux-gnu/libcurl-gnutls.so.=
+4 (0x00007fdf47f21000)
+>
+>         libgnutls.so.30 =3D> /lib/x86_64-linux-gnu/libgnutls.so.30 (0x000=
+07fdf47933000)
+>
+>
+> $ curl --version
+>
+> curl 7.68.0 (x86_64-pc-linux-gnu) libcurl/7.68.0 OpenSSL/1.1.1f zlib/1.2.=
+11 brotli/1.0.7 libidn2/2.2.0 libpsl/0.21.0 (+libidn2/2.2.0) libssh/0.9.3/o=
+penssl/zlib nghttp2/1.40.0 librtmp/2.3
+>
+> Release-Date: 2020-01-08
+>
+> Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop=
+3 pop3s rtmp rtsp scp sftp smb smbs smtp smtps telnet tftp
+>
+> Features: AsynchDNS brotli GSS-API HTTP2 HTTPS-proxy IDN IPv6 Kerberos La=
+rgefile libz NTLM NTLM_WB PSL SPNEGO SSL TLS-SRP UnixSockets
+>
+>
+>
+>
+>
+> Here=E2=80=99s more of the log=E2=80=A6
+>
+> 12510 verbose stack Error: exited with error code: 128
+>
+> 12510 verbose stack     at ChildProcess.<anonymous> (/sbox/user/openbmc/b=
+uild/romulus/tmp/work/all-openbmc-linux/phosphor-webui/1.0+gitAUTOINC+f5927=
+4e8ec-r1/recipe-sysroot-native/usr/lib/node_modules/npm/node_modules/pacote=
+/lib/util/finished.js:12:19)
+>
+> 12510 verbose stack     at ChildProcess.emit (events.js:375:28)
+>
+> 12510 verbose stack     at maybeClose (internal/child_process.js:1055:16)
+>
+> 12510 verbose stack     at Socket.<anonymous> (internal/child_process.js:=
+441:11)
+>
+> 12510 verbose stack     at Socket.emit (events.js:375:28)
+>
+> 12510 verbose stack     at Pipe.<anonymous> (net.js:675:12)
+>
+> 12511 verbose cwd /sbox/user/openbmc/build/romulus/tmp/work/all-openbmc-l=
+inux/phosphor-webui/1.0+gitAUTOINC+f59274e8ec-r1/git
+>
+> 12512 verbose Linux 5.4.0-84-generic
+>
+> 12513 verbose argv "/sbox/user/openbmc/build/romulus/tmp/work/all-openbmc=
+-linux/phosphor-webui/1.0+gitAUTOINC+f59274e8ec-r1/recipe-sysroot-native/us=
+r/bin/node" "/sbox/user/openbmc/build/romulus/tmp/work/all-openbmc-linux/ph=
+osphor-webui/1.0+gitAUTOINC+f59274e8ec-r1/recipe-sysroot-native/usr/bin/npm=
+" "--loglevel" "info" "--proxy=3Dhttp://proxy:8080" "--https-proxy=3Dhttp:/=
+/proxy:8080" "install"
+>
+> 12514 verbose node v14.17.1
+>
+> 12515 verbose npm  v6.14.13
+>
+> 12516 error Error while executing:
+>
+> 12516 error /sbox/user/openbmc/build/romulus/tmp/hosttools/git ls-remote =
+-h -t https://github.com/novnc/noVNC.git
+>
+> 12516 error
+>
+> 12516 error fatal: unable to access 'https://github.com/novnc/noVNC.git/'=
+: gnutls_handshake() failed: Access was denied
+>
+> 12516 error
+>
+> 12516 error exited with error code: 128
+>
+> 12517 verbose exit [ 1, true ]
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> Contents of: log.do_compile.255021
+>
+>
+>
+>
+>
+> DEBUG: Executing shell function do_compile
+>
+> npm info it worked if it ends with ok
+>
+> npm info using npm@6.14.13
+>
+> npm info using node@v14.17.1
+>
+> npm info lifecycle phosphor-webui@2.8.0-dev~preinstall: phosphor-webui@2.=
+8.0-dev
+>
+> npm timing stage:loadCurrentTree Completed in 41ms
+>
+> npm timing stage:loadIdealTree:cloneCurrentTree Completed in 1ms
+>
+> npm timing stage:loadIdealTree:loadShrinkwrap Completed in 1275ms
+>
+> npm timing stage:loadIdealTree:loadAllDepsIntoIdealTree Completed in 3285=
+ms
+>
+> npm timing stage:loadIdealTree Completed in 5545ms
+>
+> npm timing stage:generateActionsToTake Completed in 1045ms
+>
+> npm timing audit submit Completed in 1366ms
+>
+> npm http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/audi=
+ts/quick 1766ms
+>
+> npm timing audit body Completed in 411ms
+>
+> npm timing action:extract Completed in 2048ms
+>
+> npm WARN tar ENOENT: no such file or directory, open '/sbox/user/openbmc/=
+build/romulus/tmp/work/all-openbmc-linux/phosphor-webui/1.0+gitAUTOINC+f592=
+74e8ec-r1/git/node_modules/.staging/pump-64d8e380/package.json'
+>
+> npm WARN tar ENOENT: no such file or directory, open '/sbox/user/openbmc/=
+build/romulus/tmp/work/all-openbmc-linux/phosphor-webui/1.0+gitAUTOINC+f592=
+74e8ec-r1/git/node_modules/.staging/os-locale-6fd88320/package.json
+>
+> :
+>
+> Lots of lines similar to the previous
+>
+> :
+>
+> npm timing stage:rollbackFailedOptional Completed in 1ms
+>
+> npm timing stage:runTopLevelLifecycles Completed in 13501ms
+>
+> npm ERR! Error while executing:
+>
+> npm ERR! /sbox/user/openbmc/build/romulus/tmp/hosttools/git ls-remote -h =
+-t https://github.com/novnc/noVNC.git
+>
+> npm ERR!
+>
+> npm ERR! fatal: unable to access 'https://github.com/novnc/noVNC.git/': g=
+nutls_handshake() failed: Access was denied
+>
+> npm ERR!
+>
+> npm ERR! exited with error code: 128
+>
+> npm timing npm Completed in 15630ms
+>
+>
+>
+> npm ERR! A complete log of this run can be found in:
+>
+> npm ERR!     /home/user/.npm/_logs/2021-11-25T03_04_36_251Z-debug.log
+>
+> WARNING: /sbox/user/openbmc/build/romulus/tmp/work/all-openbmc-linux/phos=
+phor-webui/1.0+gitAUTOINC+f59274e8ec-r1/temp/run.do_compile.3665580:143 exi=
+t 1 from 'npm --loglevel info --proxy=3Dhttp://proxy:8080 --https-proxy=3Dh=
+ttp://proxy:8080 install'
+>
+> WARNING: Backtrace (BB generated script):
+>
+>                 #1: do_compile, /sbox/user/openbmc/build/romulus/tmp/work=
+/all-openbmc-linux/phosphor-webui/1.0+gitAUTOINC+f59274e8ec-r1/temp/run.do_=
+compile.3665580, line 143
+>
+>                 #2: main, /sbox/user/openbmc/build/romulus/tmp/work/all-o=
+penbmc-linux/phosphor-webui/1.0+gitAUTOINC+f59274e8ec-r1/temp/run.do_compil=
+e.3665580, line 148
