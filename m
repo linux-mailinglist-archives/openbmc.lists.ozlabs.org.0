@@ -1,68 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF666463E62
-	for <lists+openbmc@lfdr.de>; Tue, 30 Nov 2021 20:04:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD1514643F0
+	for <lists+openbmc@lfdr.de>; Wed,  1 Dec 2021 01:27:43 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J3WqH54dJz305v
-	for <lists+openbmc@lfdr.de>; Wed,  1 Dec 2021 06:04:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J3g0F4RGjz308v
+	for <lists+openbmc@lfdr.de>; Wed,  1 Dec 2021 11:27:41 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=ixWjuaA1;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=k9F1sVrx;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::22e;
- helo=mail-lj1-x22e.google.com; envelope-from=wak@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::833;
+ helo=mail-qt1-x833.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=ixWjuaA1; dkim-atps=neutral
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com
- [IPv6:2a00:1450:4864:20::22e])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=k9F1sVrx; dkim-atps=neutral
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com
+ [IPv6:2607:f8b0:4864:20::833])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J3Wpw1FLTz2yRf
- for <openbmc@lists.ozlabs.org>; Wed,  1 Dec 2021 06:04:07 +1100 (AEDT)
-Received: by mail-lj1-x22e.google.com with SMTP id k23so43140023lje.1
- for <openbmc@lists.ozlabs.org>; Tue, 30 Nov 2021 11:04:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J3fzp1WfZz304n
+ for <openbmc@lists.ozlabs.org>; Wed,  1 Dec 2021 11:27:16 +1100 (AEDT)
+Received: by mail-qt1-x833.google.com with SMTP id t11so22168049qtw.3
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Nov 2021 16:27:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=IuX+G/qrQsgb+EfCYMkmAcdo5LUGijAIJ9iqRXz7nh0=;
- b=ixWjuaA1fzbMg3GfbYq5kU0nEsbWrvbpi30bbu5WAPEkEtV77DyGEysNDC+i00dFLe
- 7Myigvx/Jgketl22W5D642hRmO+B0eKuhtwQbRCWboiM296C8oQ9c7DrS0t5baGwvqZs
- oWGihZ7cRt9+DhvDj2t+G0I+H1ThZcEBKBZHjLQcQfyTW+jruxlmNUCYG1Uo8ZCInOdF
- LwavjuhvOSK9OuExq256+HHwhdyVuj5Ugd51hWgZKsyr1BavQZycfMilE8TfDow8VtQw
- suYr77Y83+WVH8pBxIdgMQd2OELTxblB+qAly7AJz+nf4jct+oREEi/WVr4nfrMBxDae
- qTbw==
+ :cc; bh=HKN5ifiaWpLrTgW1qDZs3TgMb6ZK2mF5QFDhZvdjIAg=;
+ b=k9F1sVrxpAAMbliDUyFHkas0XLkglCZCbxRyoxmFdMMSThOO5fCiIh0tW6GnjSoIUm
+ Ru75R/FZc+Zl3b5WcwZBGwGP5hjL/tjokAgBqQLR1e+EMpAuJltOLunQ2cas/B+kBNpF
+ iwxcrzz1IHNl81au2tMr6+l0b4P7oyGgZ53WE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=IuX+G/qrQsgb+EfCYMkmAcdo5LUGijAIJ9iqRXz7nh0=;
- b=dkcDeuy/c4tiD8kRHxyTYKBXP3oYog5Arcuhw2bGe25+OnNXwWvUNHMNE+2e7/OUvM
- RiVr2Bld0QQJj0+K+jSZj0z+Pzgc8GJBWDZ+kP/3hbNm/TXuXDhtRg0tmZ8ybqaj61VX
- SWc8Cmm3C/WIU5lzWjAZvsd85Kt36VloK/mZbQGUTsYqGBe9DG30llUVdvbTOWr9m2zK
- 8BTjTkmkIXI76uISxZqAI7OGdX9tTuWMw8HiourZ1wL1hXkKWRxwcnybfmO/CaswhGIG
- Zkhxu2MZY4jtGwDNejVUdmTsuvzGljMdHxJt2KUg8XFjhFpTa7wUg1U/FG6qDiYcnp1v
- +rWQ==
-X-Gm-Message-State: AOAM533n/+rUnyNftQb9FPz4uHLUVTEarEh5cE+umaf2i9R8irtO0boE
- P1ZpOmMgJAgaWTHpuhes2L2Jk3RwflmJNidB9yDFhQ==
-X-Google-Smtp-Source: ABdhPJwJPWi62SLq7sF1CXSXyv0ymLCYAXyx6FJFoq21/wFreC8VPn6ixTUwhMu9CzjrZU7gJPpNZqgl/i+B3NLjPws=
-X-Received: by 2002:a2e:894e:: with SMTP id b14mr812605ljk.216.1638299044540; 
- Tue, 30 Nov 2021 11:04:04 -0800 (PST)
+ bh=HKN5ifiaWpLrTgW1qDZs3TgMb6ZK2mF5QFDhZvdjIAg=;
+ b=6FJZGL+XnmIL8FthqwDazGWStlc02eLEJ4z0yT1C/XV/Me8eSu/Eth8vJd2ZOYrj5h
+ Jp3EsMQ3w9yzD3OP6CUp9t5KAv1aVjZ7tHvfev9/2afnonZX/nJvh0pLJaVayo5ssiMf
+ 09iUq9glnraXW7Uc0etOnAx5lPqcWF2BdZ6rXg6f29B6zxhuKclrHYX/b57LK/ZrxTR5
+ xSpRFY4ZB2ZUKTGr/GU6zWNN/UPtu2C9ufLqB2P/oQGla+1kuhbgKwLciUYL6KGJzR+f
+ 64QCtUdTifMlYmqQGMF1n0CCESeCBoMgzUBp5oEbjBBQot1qxJyvSCSs649jwlQUUN92
+ NyMw==
+X-Gm-Message-State: AOAM533SSm/QgfBbauk3/O7alycRh6EeZHQLSBFrW3Z/hKoRMgXyhvKq
+ ND/XaIu3H9LHOGLH0/i2yscraL0aHfxWpmzCLBI=
+X-Google-Smtp-Source: ABdhPJzY6KYCJUbhdvF5I8AvCRVysO0Piji02QgXuZRLPzip7FcR6R2Qj/JTiDgUEXFFR+A3A2bpWO9HZtnthVRPPQY=
+X-Received: by 2002:a05:622a:588:: with SMTP id
+ c8mr3381408qtb.108.1638318431138; 
+ Tue, 30 Nov 2021 16:27:11 -0800 (PST)
 MIME-Version: 1.0
 References: <20211118014445.1621187-1-wak@google.com>
  <CACPK8XfD31bUx1NZM3qo7VEwMe-N8VsQimP9b7GxCn1PwxC5yQ@mail.gmail.com>
  <CAPnigKmd38-bHesYpSKp14Rv+KO48nTP-NxYZRKozR8zQWOPRA@mail.gmail.com>
 In-Reply-To: <CAPnigKmd38-bHesYpSKp14Rv+KO48nTP-NxYZRKozR8zQWOPRA@mail.gmail.com>
-From: William Kennington <wak@google.com>
-Date: Tue, 30 Nov 2021 11:03:51 -0800
-Message-ID: <CAPnigKmQ5C2S83fBSKGUn-8KDeTt5qoqmmLrpHp=bvhopdTZjQ@mail.gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 1 Dec 2021 00:26:58 +0000
+Message-ID: <CACPK8Xf6HfrBwjUA24hds+KT_aMBY25v0yivQDDONGiAy_Dejw@mail.gmail.com>
 Subject: Re: [PATCH] ARM: dts: nuvoton: Fix GPIO pin names
-To: Joel Stanley <joel@jms.id.au>, tmaimon77@gmail.com
+To: William Kennington <wak@google.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -79,14 +77,17 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-+Tomer Maimon
-
-
-On Tue, Nov 30, 2021 at 10:59 AM William Kennington <wak@google.com> wrote:
+On Tue, 30 Nov 2021 at 18:59, William Kennington <wak@google.com> wrote:
 >
 > The changes only exist in 9a543726887d805d80f63b5165ef3d1a07d6c6eb,
 > which is an openbmc specific tree change. Mainline doesn't have the
 > breakage yet.
+
+Please reply inline on open source mailing lists instead of top posting.
+
+If you want this in the openbmc tree, we have conventions for doing
+so. Please see my note below.
+
 >
 > On Tue, Nov 23, 2021 at 12:53 AM Joel Stanley <joel@jms.id.au> wrote:
 > >
