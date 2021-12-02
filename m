@@ -2,148 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F82D465BE5
-	for <lists+openbmc@lfdr.de>; Thu,  2 Dec 2021 02:57:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 47925465C24
+	for <lists+openbmc@lfdr.de>; Thu,  2 Dec 2021 03:28:55 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J4Jx83K98z30Bm
-	for <lists+openbmc@lfdr.de>; Thu,  2 Dec 2021 12:57:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J4Kdd0zZBz2yP0
+	for <lists+openbmc@lfdr.de>; Thu,  2 Dec 2021 13:28:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=MHUQzojp;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=fhr1XC7W;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=equinix.com (client-ip=148.163.159.192;
- helo=mx0b-00268f01.pphosted.com;
- envelope-from=prvs=3970ecf77f=zweiss@equinix.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::431;
+ helo=mail-pf1-x431.google.com; envelope-from=howard10703049@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256
- header.s=pps202002 header.b=MHUQzojp; 
- dkim-atps=neutral
-Received: from mx0b-00268f01.pphosted.com (mx0b-00268f01.pphosted.com
- [148.163.159.192])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=fhr1XC7W; dkim-atps=neutral
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com
+ [IPv6:2607:f8b0:4864:20::431])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J4JwZ6PTGz2xYG;
- Thu,  2 Dec 2021 12:56:42 +1100 (AEDT)
-Received: from pps.filterd (m0165120.ppops.net [127.0.0.1])
- by mx0b-00268f01.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 1B1J6bNp016114;
- Thu, 2 Dec 2021 01:54:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com;
- h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-id : content-transfer-encoding : mime-version; s=pps202002;
- bh=hviwN8qUbtMd1vM9KDlv92Z6gNjVcChT2w0rOWTSTZ4=;
- b=MHUQzojpcUA2W0hpchav8ao7jexqaYhRNXCKlwhijZwawhs4Mik1LLB7rGxOP6zngE54
- LB2jfCf6+aSst02VfdWIIDjMxrTJ7VQQqbrnEoKYLfc9Gfenj6mok7hvP44PnAR8eom5
- Gril45d7xfOrgXoK9UAsXwJveXG1JKE8u8GGjt3Dh+inkKnFzxEKUq3hi0Wbo3ZhXGQU
- KHWsVxRbhg18GH36hE0lAqZhWED1bucG+xZ4jQ9O8M1XZOPLTYSbMi0PBkzuEWkO1TyL
- 0G+rMSu/o1JH2N/AL6Yj0MyznqAP1TlZH85EGXHL+yuypS7bEO5zJzWcnC/px8Jbbc8h 8g== 
-Received: from nam12-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam12lp2171.outbound.protection.outlook.com [104.47.55.171])
- by mx0b-00268f01.pphosted.com (PPS) with ESMTPS id 3cpeww0x32-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 02 Dec 2021 01:54:58 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lZajjkz5Js9xAfHWe+ThAvlMJQG6P7u5lWiL0o+TC3x737o+oK7XyjywsYEJ2lJmrfJ/tB0s9wOXkHWLB0jC596GSuIVHDfKTJbvfnlSDTzxvfNQNKTuZnht8micgecZEAZUbrZHLTVHbRoSiaMl3s7aQs+UMHlneywIT5414HF+Igj+B7ZCksvrCLIg2g2OKAdxqZxqeVeZHKzhaqOQwiIYrxNzBXyz26XyqaTXnhcvfDYS8VykUjCE8hHOxu9meD0WmsHWOTS/5+lcgqkBy2EZ5PRfJWj5HOK4y80/zKNN/PXTtzENQ3XoQ8hi4yAFVxe2VFpcKeJG1tcN9VBr+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hviwN8qUbtMd1vM9KDlv92Z6gNjVcChT2w0rOWTSTZ4=;
- b=L79wCDcoC+ZjkbNBS8Z5468czZjoq16XHAeFkSnLfBukTcjJdz3vIuP2RdwOWo8+PtuWsuVkcPovyeK9Y4BgEX1ZA9Rif43PMPLbWFouY5/c1UPqDUMcMiYBe+0vECdpg6ldwNiC7ThjxNvFIGS7BKCHrJ5ZAGFtAZHZRPgSg0o/npuCz0lg+2FjG5osz0KN1H+QaUuvrbzEmoKkuLbvGHx2/zvwcUDoRJbW9WWJu68FJMfpnP/J4PtCUOuN2yaofC0NCVDLigPpyOEEqehqFQYoTqHIkWhffigKj5jPrerr3kEWvdPAiA65Kv37VwiATH9/88Yjj71OHWHOqsrIrg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
- dkim=pass header.d=equinix.com; arc=none
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
- by DM8PR04MB8087.namprd04.prod.outlook.com (2603:10b6:8:2::6) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4734.23; Thu, 2 Dec 2021 01:54:56 +0000
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::61fc:37a:892f:c6b9]) by DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::61fc:37a:892f:c6b9%9]) with mapi id 15.20.4734.024; Thu, 2 Dec 2021
- 01:54:56 +0000
-From: Zev Weiss <zweiss@equinix.com>
-To: Billy Tsai <billy_tsai@aspeedtech.com>
-Subject: Re: [PATCH v4 02/13] dt-bindings: Add bindings for peci-aspeed
-Thread-Topic: [PATCH v4 02/13] dt-bindings: Add bindings for peci-aspeed
-Thread-Index: AQHX5p+P62em8bYgd0e1yu+07efK7qwecfWA
-Date: Thu, 2 Dec 2021 01:54:56 +0000
-Message-ID: <20211202015455.GB25091@packtop>
-References: <20211123140706.2945700-1-iwona.winiarska@intel.com>
- <20211123140706.2945700-3-iwona.winiarska@intel.com>
- <DDB2E224-472B-41CC-A5C6-BEADB4BF2041@aspeedtech.com>
-In-Reply-To: <DDB2E224-472B-41CC-A5C6-BEADB4BF2041@aspeedtech.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c1912db3-f9e9-46bf-5035-08d9b536bdd4
-x-ms-traffictypediagnostic: DM8PR04MB8087:
-x-microsoft-antispam-prvs: <DM8PR04MB808715801125B9369457FC84C3699@DM8PR04MB8087.namprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:6430;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 8qeoaB0QpQmIoQysRAyj4ouAuU2XVX7P2OGB2jKCGHKoMi5EAwkIggfT0AiGjw0x2aSUJssgQ4IHBzWmTv1PMZITmW9K4JRfqMh2Hdi0Vm77VUKNKFYYaEBHu+Ova9Ru5X8XZNmLOegQaeUgKMnDFsDh3sLp9soTi9H6vvB3l2+2yCwXd/eJS26HPRbk/WPd2+C7O7s5fao1jTdm3UlClB7zr+RieOyKVnqBvqEkIpDuhD++On50DtWrPSJkYnquoluLxDquaqsMRYO8cIF58iddaa5HAsYS0taAZ89RMeDpCPi2f6lVfRNoSoitqP5nWin37G0rHuYrkoBEbl14VZfzTfaLnwGOLQuV/Y2lNZ4B1NA5krZB993IH2fJWTQt3TaH/6hsTGlhy4FfU7A4XV7FcqNNr7PMsgo7WuRZ9v9ZSe5Y9Wb3IFHd9Gi8LRsCO+tTBXgUfDVVH2wfxJxh7cXCDsbS7fbQB6rnqWDdBOA4hraDJFT3KLx2Pl/KlwuTdU5JjCUCQfRhbH/wXDQ3FnU+riwOX2M2tKsf4d5LW2rIY8pZDwcH1ygWj4QNak9KAoz1Adh+1W3y3hr2J7gw1DI1cX4fsCKWzls3GfOtAqOlVqQUgn4Rl+aju1xUqqzjgxxfH8RtR2Xc2iQKdpbgluIeVDmOldExJ8L16HWPvGJlAZ7632lUMUkgSrux7iyV5KXanCeB8X3Yvaos8vfHNw==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM8PR04MB8007.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(7916004)(366004)(6916009)(1076003)(8936002)(6506007)(7416002)(8676002)(4326008)(66446008)(2906002)(76116006)(54906003)(33656002)(71200400001)(83380400001)(508600001)(38070700005)(6512007)(9686003)(33716001)(66556008)(186003)(316002)(6486002)(5660300002)(64756008)(66476007)(86362001)(26005)(38100700002)(91956017)(122000001)(66946007);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Cp9SQyUFjJIAhUmdeOQT/CUt/FUxnYvtnnIk+gpsXCZZBmCxoymvhNQuxtg4?=
- =?us-ascii?Q?2FXwjEHsaRw2Mo8D8YOJkhr7iJbX9HIGZaYk+eXubUNPQNXK44I5bMukfKOD?=
- =?us-ascii?Q?SwidVbGGUq4n8NFpHq54yqNkL7oI4Rtsg4hi/CFWwl7CYdcMwwEDSScuhyUC?=
- =?us-ascii?Q?RlqBLevcLlEoq1QxTVo4YRWMnd1I+K0Xv0TPcIpTJyWAL5l0HOpZqJKVfsLr?=
- =?us-ascii?Q?5KCOAzWHP/4jloUVpedoFT4KjEXVFxiHBs0YpNZKpt1sbmSNH8DnF6DNHI8t?=
- =?us-ascii?Q?EfPm1wldwGfKmQ/Sn64ySPq/UdJKB2dQvf6NqBHhV2cRPYu3BqJ06NmDlZ5Y?=
- =?us-ascii?Q?iJimPQKHQwvtrpFnLfWFILZVorfuYA1qe35cpE4JuFdIUv6vWyainaS1tdLH?=
- =?us-ascii?Q?W71+H/bH2iq0537RBQcWMpAQ+xYgr/zkQoITqhq/YicqXzKMmaAqG0ecqLKk?=
- =?us-ascii?Q?hukgZbIRuLtLvg6zVZMHSft7uTSIv7yfvlMz1krNNqkE4Sj4BqylEkaDwgUq?=
- =?us-ascii?Q?9nrD38i9Z+dAlU7IVvw2mHYRVuGvP2v34Al/U6AP5if/CDGx+AFhcYQf/y5Q?=
- =?us-ascii?Q?kVRcMWrqfYrIk1kcO5CsDKXkDVY4S+fmQKu8DqnVRBGQyivJKqVue1luWdIe?=
- =?us-ascii?Q?JLh63RhWTZBZVh4IibEGRyZe+5Tkosput8ld7C7hXcyhKLbiSW2ugV8+d7jt?=
- =?us-ascii?Q?qjiSmamrMHcKdCVm4WhFbEstVDEw5G1TZn8+4nAGkAkkmi8RBn2BT9qcP9xs?=
- =?us-ascii?Q?94sItePCPMvwZ232lObl4+HCOrpTBXx4ShYjB0IbyAN7zWFriKSxFLm7U+0F?=
- =?us-ascii?Q?wSTHWJPSV7YND78rL9WEfY0vYifxiSKEEGDHO3sZ4iDA/kxH/0feEffrKVhS?=
- =?us-ascii?Q?SEXC8BZYEOIrxQX2yKC+hFZcYjcOovwlqK0N/KDSvNcxlhxC9gAKZOQqnHoR?=
- =?us-ascii?Q?920Tl2Om22r9hIQfPa2YWxvp4haFIjk14uu9e0cpf8feAYkMMauq77PuP+LW?=
- =?us-ascii?Q?cudjjO4A5oBeVHzBgYo+9RW3GmfI4uFx8PyLkukIn1h5CQNoBleS77Dvi9dC?=
- =?us-ascii?Q?e55U3DfN8PwhdzepNXR8/Yldg5beIY3PIVVoLCzq8+mPnrYa+77+OfiXI0wk?=
- =?us-ascii?Q?/Nxd7Rba7fq3aIznRgwkkJxKmRWAUlIi7FCdp1sjJYCp40N5sF0wD8sfeZP8?=
- =?us-ascii?Q?oss2OvEO/8G0nXURQWwcwac2zCSTk0l5yhxzMmEYM2t+N/kpiOh4ibMfvkyF?=
- =?us-ascii?Q?7tUsVYe/YhrkxC6pyjwBFwRXCsXqsvH2AI3scYsnQeURku9czc7ZOOwjlLjt?=
- =?us-ascii?Q?Fvaq//jddwYsN38Mb7SAKh2WHb7eep/yIt18X7Ltx4S+5Sd+fSLgyoorpfxk?=
- =?us-ascii?Q?qJSAav0NTuFTfZ4/cUIjRGPRemw2MwQBU8RbmMBoLmjMO5d5qGLWBDzdh8E1?=
- =?us-ascii?Q?YBRHsIbPUeDnGayJx9hJlqGv0/E5SajgjXOtVV44yErAk++wdKOEsFgpjHXM?=
- =?us-ascii?Q?d7NOH/8J7J9ivOBZKr8PG/cLGdMV5qUj1DwwCg1/q0hA82CjLQgV/NMjh649?=
- =?us-ascii?Q?KZYBEPoiNAL8/D6WLWLk840DowC5zOjDGtG0DT+j8aHx/hE7CRmw8k3hsGie?=
- =?us-ascii?Q?UPi6P0uVIXdFYoD7p+N9siw=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <E4636955DCFD3E4CBC45635FB4179E07@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J4KdD58CBz2yP0
+ for <openbmc@lists.ozlabs.org>; Thu,  2 Dec 2021 13:28:31 +1100 (AEDT)
+Received: by mail-pf1-x431.google.com with SMTP id u80so26526286pfc.9
+ for <openbmc@lists.ozlabs.org>; Wed, 01 Dec 2021 18:28:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=e6+QQIGM7tGhgsTZa6l/u5EJrdc9NbKEQBmODS1UfDU=;
+ b=fhr1XC7WmqLBXBWRGF7eFk+y3JMStEYNran7UN4KKcEvF+xxL7Mqtk9gvvShAuNoZD
+ zeyHxMfjR6cNTJw21HKx5hKPOeLFt80uUqArGsd2OjKqOxyQWj2LrD90PqRpQqaHg41m
+ 1DBGkVYshwQhh+ObVkcvsq9SyxXZ5JrRKXOyLt/4qp+RWfIYyHT6O2rhDaLbbbWuaw7E
+ tvxM1lmHHGconTBDS1pn01kAdpHEf/TJiOtXw53YQHEmXOBssuGZW7AU1ntc2cGuJ7bn
+ nw1pAaQWSRJLKHYay/8MngGNJoEcvx27fLj7cBF8rQB4SymllAG8VuRQ4n8jIkpVx/3L
+ WCrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=e6+QQIGM7tGhgsTZa6l/u5EJrdc9NbKEQBmODS1UfDU=;
+ b=Nx6XP8S2GTo7CmtOi4YYpH83YafbgJNEJwAKUMry+rHF1NoclkUVvb1Jg58u9JS1Ys
+ fvQvEaqFdKB26XGXsvyO8z2O8OD6GlxXVSSBE/LRwTdo4xpecKgbigViw6IHaVFU7Lcp
+ LepB2IOgscB9QC1BIJRZ8yT3UOekWuzaJVM+xGpBLFLKuuWwKW3HuLF9KibN45y2sBqN
+ Zpfi8MNcc72+2JooKQCow2RodNm5fmpCPDwIQP/ChjAbnYzltnqRSSAlzQ85ayuWTjN/
+ G5w0GaNww0/vpmY8Kqk6UxESIaKuaoG6MqRYuDvKwWqzd24lQMBLGHV+ZcTi8FMMA2dI
+ x/bQ==
+X-Gm-Message-State: AOAM532RTwftuBEI6AHVLqnZcROTOeILO3NbsmYaevMlpNnof1+S04Mv
+ PsFXRwhRd8Gk9FKZXjUMoKjeSpXOoos=
+X-Google-Smtp-Source: ABdhPJy/HMMmr3NsiIwj6KCzGxSNRxvWK5ZKWPlKOFQ1ncjIZKbsRx2cAOZInJuxBqTFWfBuJ5IE7w==
+X-Received: by 2002:a63:5816:: with SMTP id m22mr7633306pgb.98.1638412109030; 
+ Wed, 01 Dec 2021 18:28:29 -0800 (PST)
+Received: from howard-System-Product-Name.dhcpserver.bu9bmc.local
+ (125-228-123-29.hinet-ip.hinet.net. [125.228.123.29])
+ by smtp.gmail.com with ESMTPSA id ml24sm581057pjb.16.2021.12.01.18.28.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 01 Dec 2021 18:28:28 -0800 (PST)
+From: Howard Chiu <howard10703049@gmail.com>
+X-Google-Original-From: Howard Chiu <howard.chiu@quantatw.com>
+To: openbmc@lists.ozlabs.org,
+	joel@jms.id.au
+Subject: [PATCH linux dev-4.7] Porting tach driver for ast26xx from Aspeed
+ linux
+Date: Thu,  2 Dec 2021 10:26:23 +0800
+Message-Id: <20211202022623.182903-1-howard.chiu@quantatw.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-OriginatorOrg: equinix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c1912db3-f9e9-46bf-5035-08d9b536bdd4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Dec 2021 01:54:56.6000 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: L/tXYWgGivVXW7R4brJcQePToO9Fn6+9Kx6UjJbqndSlO8Hzf/Upc4EDftwLaQFxwMj5u4oXtkCI47faSIpN0Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR04MB8087
-X-Proofpoint-GUID: Ax80BdjYaQj671GBHEZzMyc32x61MaKT
-X-Proofpoint-ORIG-GUID: Ax80BdjYaQj671GBHEZzMyc32x61MaKT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-11-30_10,2021-12-01_01,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- adultscore=0 phishscore=0 mlxlogscore=875 spamscore=0 priorityscore=1501
- clxscore=1011 mlxscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2112020006
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -155,90 +81,481 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Randy Dunlap <rdunlap@infradead.org>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
- Dave Hansen <dave.hansen@intel.com>, Rob Herring <robh@kernel.org>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Iwona Winiarska <iwona.winiarska@intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
- Guenter Roeck <linux@roeck-us.net>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
- Rob Herring <robh+dt@kernel.org>, Borislav Petkov <bp@alien8.de>,
- Dan Williams <dan.j.williams@intel.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
- Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jonathan Corbet <corbet@lwn.net>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Olof Johansson <olof@lixom.net>
+Cc: Howard Chiu <howard.chiu@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Dec 01, 2021 at 02:38:04AM PST, Billy Tsai wrote:
->Hi,
->
->On 2021/11/23, 10:10 PM, "openbmc on behalf of Iwona Winiarska" <openbmc-b=
-ounces+billy_tsai=3Daspeedtech.com@lists.ozlabs.org on behalf of iwona.wini=
-arska@intel.com> wrote:
->
->    Add device tree bindings for the peci-aspeed controller driver.
->
->    >   +  aspeed,clock-divider:
->    >   +    description:
->    >   +      This value determines PECI controller internal clock dividi=
-ng
->    >   +      rate. The divider will be calculated as 2 raised to the pow=
-er of
->    >   +      the given value.
->    >   +    $ref: /schemas/types.yaml#/definitions/uint32
->    >   +    minimum: 0
->    >   +    maximum: 7
->    >   +    default: 0
->    >   +
->    >   +  aspeed,msg-timing:
->    >   +    description:
->    >   +      Message timing negotiation period. This value will determin=
-e the period
->    >   +      of message timing negotiation to be issued by PECI controll=
-er. The unit
->    >   +      of the programmed value is four times of PECI clock period.
->    >   +    $ref: /schemas/types.yaml#/definitions/uint32
->    >   +    minimum: 0
->    >   +    maximum: 255
->    >   +    default: 1
->    >   +
->    >   +  aspeed,addr-timing:
->    >   +    description:
->    >   +      Address timing negotiation period. This value will determin=
-e the period
->    >   +      of address timing negotiation to be issued by PECI controll=
-er. The unit
->    >   +      of the programmed value is four times of PECI clock period.
->    >   +    $ref: /schemas/types.yaml#/definitions/uint32
->    >   +    minimum: 0
->    >   +    maximum: 255
->    >   +    default: 1
->I suggest deleting these three properties and replacing them with the foll=
-owing
->
->aspeed,peci-bit-time:
->        description:
->          The bit time driven by PECI controller. The unit of the value is=
- Hz.
->    minimum: 2000
->    maximum: 1000000
->
->And the driver should use this property to caculate the appropriate clock-=
-divider,
->msg-timing and addr-timing, instead of exposing hardware registers to dts.
->
+Aspeed did not commit tach driver to upstream for ast2600 series yet.
+To support ast26xx on OpenBMC, we need this driver and update the g6 device tree as well.
 
-Or perhaps just 'bus-frequency' a la i2c-aspeed, gpio-aspeed-sgpio, etc?
+Change-Id: I1714abf4fd08edead789439e5723b183d1b0d175
+Signed-off-by: Howard Chiu <howard.chiu@quantatw.com>
+---
+ arch/arm/boot/dts/aspeed-g6.dtsi    |  22 ++
+ drivers/hwmon/Kconfig               |   8 +
+ drivers/hwmon/Makefile              |   1 +
+ drivers/hwmon/tach-aspeed-ast2600.c | 388 ++++++++++++++++++++++++++++
+ 4 files changed, 419 insertions(+)
+ create mode 100644 drivers/hwmon/tach-aspeed-ast2600.c
 
+diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+index 5106a424f1ce..ec249f450552 100644
+--- a/arch/arm/boot/dts/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+@@ -304,6 +304,28 @@ apb {
+ 			#size-cells = <1>;
+ 			ranges;
+ 
++			pwm_tach: pwm_tach@1e610000 {
++				compatible = "aspeed,ast2600-pwm-tach", "simple-mfd", "syscon";
++				reg = <0x1e610000 0x100>;
++				clocks = <&syscon ASPEED_CLK_AHB>;
++				resets = <&syscon ASPEED_RESET_PWM>;
++
++				pwm: pwm {
++					compatible = "aspeed,ast2600-pwm";
++					#pwm-cells = <3>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++					status = "disabled";
++				};
++
++				tach: tach {
++					compatible = "aspeed,ast2600-tach";
++					#address-cells = <1>;
++					#size-cells = <0>;
++					status = "disabled";
++				};
++			};
++
+ 			syscon: syscon@1e6e2000 {
+ 				compatible = "aspeed,ast2600-scu", "syscon", "simple-mfd";
+ 				reg = <0x1e6e2000 0x1000>;
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index 64bd3dfba2c4..0eb307cb67fc 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -397,6 +397,14 @@ config SENSORS_ASPEED
+ 	  This driver can also be built as a module. If so, the module
+ 	  will be called aspeed_pwm_tacho.
+ 
++config SENSORS_TACH_ASPEED_AST2600
++	tristate "ASPEED ast2600 Tachometer support"
++	help
++	  This driver provides support for Aspeed ast2600 Tachometer.
++
++	  To compile this driver as a module, choose M here: the module
++	  will be called tach-aspeed-ast2600.
++
+ config SENSORS_ATXP1
+ 	tristate "Attansic ATXP1 VID controller"
+ 	depends on I2C
+diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
+index baee6a8d4dd1..ce66874c8ce2 100644
+--- a/drivers/hwmon/Makefile
++++ b/drivers/hwmon/Makefile
+@@ -51,6 +51,7 @@ obj-$(CONFIG_SENSORS_ARM_SCMI)	+= scmi-hwmon.o
+ obj-$(CONFIG_SENSORS_ARM_SCPI)	+= scpi-hwmon.o
+ obj-$(CONFIG_SENSORS_AS370)	+= as370-hwmon.o
+ obj-$(CONFIG_SENSORS_ASC7621)	+= asc7621.o
++obj-$(CONFIG_SENSORS_TACH_ASPEED_AST2600) += tach-aspeed-ast2600.o
+ obj-$(CONFIG_SENSORS_ASPEED)	+= aspeed-pwm-tacho.o
+ obj-$(CONFIG_SENSORS_ATXP1)	+= atxp1.o
+ obj-$(CONFIG_SENSORS_AXI_FAN_CONTROL) += axi-fan-control.o
+diff --git a/drivers/hwmon/tach-aspeed-ast2600.c b/drivers/hwmon/tach-aspeed-ast2600.c
+new file mode 100644
+index 000000000000..0b2551fc1711
+--- /dev/null
++++ b/drivers/hwmon/tach-aspeed-ast2600.c
+@@ -0,0 +1,388 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (C) ASPEED Technology Inc.
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 or later as
++ * published by the Free Software Foundation.
++ */
++
++#include <linux/clk.h>
++#include <linux/errno.h>
++#include <linux/delay.h>
++#include <linux/hwmon.h>
++#include <linux/hwmon-sysfs.h>
++#include <linux/io.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/of_platform.h>
++#include <linux/of_device.h>
++#include <linux/platform_device.h>
++#include <linux/mfd/syscon.h>
++#include <linux/sysfs.h>
++#include <linux/reset.h>
++#include <linux/regmap.h>
++/* TACH Control Register */
++#define ASPEED_TACHO_CTRL_CH(ch) ((ch * 0x10) + 0x08)
++#define TACHO_IER BIT(31) //enable tacho interrupt
++#define TACHO_INVERS_LIMIT BIT(30) //inverse tacho limit comparison
++#define TACHO_LOOPBACK BIT(29) //tacho loopback
++#define TACHO_ENABLE BIT(28) //{enable tacho}
++#define TACHO_DEBOUNCE_MASK (0x3 << 26) //{tacho de-bounce}
++#define TACHO_DEBOUNCE_BIT (26) //{tacho de-bounce}
++#define TECHIO_EDGE_MASK (0x3 << 24) //tacho edge}
++#define TECHIO_EDGE_BIT (24) //tacho edge}
++#define TACHO_CLK_DIV_T_MASK (0xf << 20)
++#define TACHO_CLK_DIV_BIT (20)
++#define TACHO_THRESHOLD_MASK (0xfffff) //tacho threshold bit
++/* [27:26] */
++#define DEBOUNCE_3_CLK 0x00 /* 10b */
++#define DEBOUNCE_2_CLK 0x01 /* 10b */
++#define DEBOUNCE_1_CLK 0x02 /* 10b */
++#define DEBOUNCE_0_CLK 0x03 /* 10b */
++/* [25:24] */
++#define F2F_EDGES 0x00 /* 10b */
++#define R2R_EDGES 0x01 /* 10b */
++#define BOTH_EDGES 0x02 /* 10b */
++/* [23:20] */
++/* Cover rpm range 5~5859375 */
++#define DEFAULT_TACHO_DIV 5
++
++/* TACH Status Register */
++#define ASPEED_TACHO_STS_CH(x) ((x * 0x10) + 0x0C)
++
++/*PWM_TACHO_STS */
++#define TACHO_ISR BIT(31) //interrupt status and clear
++#define PWM_OUT BIT(25) //{pwm_out}
++#define PWM_OEN BIT(24) //{pwm_oeN}
++#define TACHO_DEB_INPUT BIT(23) //tacho deB input
++#define TACHO_RAW_INPUT BIT(22) //tacho raw input}
++#define TACHO_VALUE_UPDATE BIT(21) //tacho value updated since the last read
++#define TACHO_FULL_MEASUREMENT BIT(20) //{tacho full measurement}
++#define TACHO_VALUE_MASK 0xfffff //tacho value bit [19:0]}
++/**********************************************************
++ * Software setting
++ *********************************************************/
++#define DEFAULT_FAN_MIN_RPM 1000
++#define DEFAULT_FAN_PULSE_PR 2
++/*
++ * Add this value to avoid CPU consuming a lot of resources in waiting rpm
++ * updating. Assume the max rpm of fan is 60000, the period of updating tach
++ * value will equal to (1000000 * 2 * 60) / (2 * max_rpm) = 1000.
++ */
++#define RPM_POLLING_PERIOD_US 1000
++
++struct aspeed_tacho_channel_params {
++	int limited_inverse;
++	u16 threshold;
++	u8 tacho_edge;
++	u8 tacho_debounce;
++	u8 pulse_pr;
++	u32 min_rpm;
++	u32 divide;
++	u32 sample_period; /* unit is us */
++};
++
++struct aspeed_tach_data {
++	struct regmap *regmap;
++	unsigned long clk_freq;
++	struct reset_control *reset;
++	bool tach_present[16];
++	struct aspeed_tacho_channel_params *tacho_channel;
++	/* for hwmon */
++	const struct attribute_group *groups[2];
++};
++
++static u32 aspeed_get_fan_tach_sample_period(struct aspeed_tach_data *priv,
++					     u8 fan_tach_ch)
++{
++	u32 tach_period_us;
++	u8 pulse_pr = priv->tacho_channel[fan_tach_ch].pulse_pr;
++	u32 min_rpm = priv->tacho_channel[fan_tach_ch].min_rpm;
++	/*
++	 * min(Tach input clock) = (PulsePR * minRPM) / 60
++	 * max(Tach input period) = 60 / (PulsePR * minRPM)
++	 * Tach sample period > 2 * max(Tach input period) = (2*60) / (PulsePR * minRPM)
++	 */
++	tach_period_us = (1000000 * 2 * 60) / (pulse_pr * min_rpm);
++	/* Add the margin (about 1.2) of tach sample period to avoid sample miss */
++	tach_period_us = (tach_period_us * 1200) >> 10;
++	pr_debug("tach%d sample period = %dus", fan_tach_ch, tach_period_us);
++	return tach_period_us;
++}
++
++static void aspeed_set_fan_tach_ch_enable(struct aspeed_tach_data *priv,
++					  u8 fan_tach_ch, bool enable,
++					  u32 tacho_div)
++{
++	u32 reg_value = 0;
++
++	if (enable) {
++		/* divide = 2^(tacho_div*2) */
++		priv->tacho_channel[fan_tach_ch].divide = 1 << (tacho_div << 1);
++
++		reg_value = TACHO_ENABLE |
++			    (priv->tacho_channel[fan_tach_ch].tacho_edge
++			     << TECHIO_EDGE_BIT) |
++			    (tacho_div << TACHO_CLK_DIV_BIT) |
++			    (priv->tacho_channel[fan_tach_ch].tacho_debounce
++			     << TACHO_DEBOUNCE_BIT);
++
++		if (priv->tacho_channel[fan_tach_ch].limited_inverse)
++			reg_value |= TACHO_INVERS_LIMIT;
++
++		if (priv->tacho_channel[fan_tach_ch].threshold)
++			reg_value |=
++				(TACHO_IER |
++				 priv->tacho_channel[fan_tach_ch].threshold);
++
++		regmap_write(priv->regmap, ASPEED_TACHO_CTRL_CH(fan_tach_ch),
++			     reg_value);
++
++		priv->tacho_channel[fan_tach_ch].sample_period =
++			aspeed_get_fan_tach_sample_period(priv, fan_tach_ch);
++	} else
++		regmap_update_bits(priv->regmap,
++				   ASPEED_TACHO_CTRL_CH(fan_tach_ch),
++				   TACHO_ENABLE, 0);
++}
++
++static int aspeed_get_fan_tach_ch_rpm(struct aspeed_tach_data *priv,
++				      u8 fan_tach_ch)
++{
++	u32 raw_data, tach_div, clk_source, usec, val;
++	u64 rpm;
++	int ret;
++
++	usec = priv->tacho_channel[fan_tach_ch].sample_period;
++	/* Restart the Tach channel to guarantee the value is fresh */
++	regmap_update_bits(priv->regmap, ASPEED_TACHO_CTRL_CH(fan_tach_ch),
++			     TACHO_ENABLE, 0);
++	regmap_update_bits(priv->regmap, ASPEED_TACHO_CTRL_CH(fan_tach_ch),
++			     TACHO_ENABLE, TACHO_ENABLE);
++	ret = regmap_read_poll_timeout(
++		priv->regmap, ASPEED_TACHO_STS_CH(fan_tach_ch), val,
++		(val & TACHO_FULL_MEASUREMENT) && (val & TACHO_VALUE_UPDATE),
++		RPM_POLLING_PERIOD_US, usec);
++
++	if (ret) {
++		/* return 0 if we didn't get an answer because of timeout*/
++		if (ret == -ETIMEDOUT)
++			return 0;
++		else
++			return ret;
++	}
++
++	raw_data = val & TACHO_VALUE_MASK;
++	/*
++	 * We need the mode to determine if the raw_data is double (from
++	 * counting both edges).
++	 */
++	if (priv->tacho_channel[fan_tach_ch].tacho_edge == BOTH_EDGES)
++		raw_data <<= 1;
++
++	tach_div = raw_data * (priv->tacho_channel[fan_tach_ch].divide) *
++		   (priv->tacho_channel[fan_tach_ch].pulse_pr);
++
++	pr_debug("clk %ld, raw_data %d , tach_div %d\n", priv->clk_freq, raw_data, tach_div);
++
++	clk_source = priv->clk_freq;
++
++	if (tach_div == 0)
++		return -EDOM;
++
++	rpm = (u64)clk_source * 60;
++	do_div(rpm, tach_div);
++
++	return rpm;
++}
++
++static ssize_t show_rpm(struct device *dev, struct device_attribute *attr,
++			char *buf)
++{
++	struct sensor_device_attribute *sensor_attr = to_sensor_dev_attr(attr);
++	int index = sensor_attr->index;
++	int rpm;
++	struct aspeed_tach_data *priv = dev_get_drvdata(dev);
++
++	rpm = aspeed_get_fan_tach_ch_rpm(priv, index);
++	if (rpm < 0)
++		return rpm;
++
++	return sprintf(buf, "%d\n", rpm);
++}
++
++static umode_t fan_dev_is_visible(struct kobject *kobj, struct attribute *a,
++				  int index)
++{
++	struct device *dev = container_of(kobj, struct device, kobj);
++	struct aspeed_tach_data *priv = dev_get_drvdata(dev);
++
++	if (!priv->tach_present[index])
++		return 0;
++	return a->mode;
++}
++
++static SENSOR_DEVICE_ATTR(fan1_input, 0444, show_rpm, NULL, 0);
++static SENSOR_DEVICE_ATTR(fan2_input, 0444, show_rpm, NULL, 1);
++static SENSOR_DEVICE_ATTR(fan3_input, 0444, show_rpm, NULL, 2);
++static SENSOR_DEVICE_ATTR(fan4_input, 0444, show_rpm, NULL, 3);
++static SENSOR_DEVICE_ATTR(fan5_input, 0444, show_rpm, NULL, 4);
++static SENSOR_DEVICE_ATTR(fan6_input, 0444, show_rpm, NULL, 5);
++static SENSOR_DEVICE_ATTR(fan7_input, 0444, show_rpm, NULL, 6);
++static SENSOR_DEVICE_ATTR(fan8_input, 0444, show_rpm, NULL, 7);
++static SENSOR_DEVICE_ATTR(fan9_input, 0444, show_rpm, NULL, 8);
++static SENSOR_DEVICE_ATTR(fan10_input, 0444, show_rpm, NULL, 9);
++static SENSOR_DEVICE_ATTR(fan11_input, 0444, show_rpm, NULL, 10);
++static SENSOR_DEVICE_ATTR(fan12_input, 0444, show_rpm, NULL, 11);
++static SENSOR_DEVICE_ATTR(fan13_input, 0444, show_rpm, NULL, 12);
++static SENSOR_DEVICE_ATTR(fan14_input, 0444, show_rpm, NULL, 13);
++static SENSOR_DEVICE_ATTR(fan15_input, 0444, show_rpm, NULL, 14);
++static SENSOR_DEVICE_ATTR(fan16_input, 0444, show_rpm, NULL, 15);
++static struct attribute *fan_dev_attrs[] = {
++	&sensor_dev_attr_fan1_input.dev_attr.attr,
++	&sensor_dev_attr_fan2_input.dev_attr.attr,
++	&sensor_dev_attr_fan3_input.dev_attr.attr,
++	&sensor_dev_attr_fan4_input.dev_attr.attr,
++	&sensor_dev_attr_fan5_input.dev_attr.attr,
++	&sensor_dev_attr_fan6_input.dev_attr.attr,
++	&sensor_dev_attr_fan7_input.dev_attr.attr,
++	&sensor_dev_attr_fan8_input.dev_attr.attr,
++	&sensor_dev_attr_fan9_input.dev_attr.attr,
++	&sensor_dev_attr_fan10_input.dev_attr.attr,
++	&sensor_dev_attr_fan11_input.dev_attr.attr,
++	&sensor_dev_attr_fan12_input.dev_attr.attr,
++	&sensor_dev_attr_fan13_input.dev_attr.attr,
++	&sensor_dev_attr_fan14_input.dev_attr.attr,
++	&sensor_dev_attr_fan15_input.dev_attr.attr,
++	&sensor_dev_attr_fan16_input.dev_attr.attr,
++	NULL
++};
++
++static const struct attribute_group fan_dev_group = {
++	.attrs = fan_dev_attrs,
++	.is_visible = fan_dev_is_visible,
++};
++
++static void aspeed_create_fan_tach_channel(struct aspeed_tach_data *priv,
++					   u32 tach_ch, int count,
++					   u32 fan_pulse_pr, u32 fan_min_rpm,
++					   u32 tacho_div)
++{
++	priv->tach_present[tach_ch] = true;
++	priv->tacho_channel[tach_ch].pulse_pr = fan_pulse_pr;
++	priv->tacho_channel[tach_ch].min_rpm = fan_min_rpm;
++	priv->tacho_channel[tach_ch].limited_inverse = 0;
++	priv->tacho_channel[tach_ch].threshold = 0;
++	priv->tacho_channel[tach_ch].tacho_edge = F2F_EDGES;
++	priv->tacho_channel[tach_ch].tacho_debounce = DEBOUNCE_3_CLK;
++	aspeed_set_fan_tach_ch_enable(priv, tach_ch, true, tacho_div);
++}
++
++static int aspeed_tach_create_fan(struct device *dev, struct device_node *child,
++				  struct aspeed_tach_data *priv)
++{
++	u32 fan_pulse_pr, fan_min_rpm;
++	u32 tacho_div;
++	u32 tach_channel;
++	int ret, count;
++
++	ret = of_property_read_u32(child, "reg", &tach_channel);
++	if (ret)
++		return ret;
++
++	ret = of_property_read_u32(child, "aspeed,pulse-pr", &fan_pulse_pr);
++	if (ret)
++		fan_pulse_pr = DEFAULT_FAN_PULSE_PR;
++
++	ret = of_property_read_u32(child, "aspeed,min-rpm", &fan_min_rpm);
++	if (ret)
++		fan_min_rpm = DEFAULT_FAN_MIN_RPM;
++
++	ret = of_property_read_u32(child, "aspeed,tach-div", &tacho_div);
++	if (ret)
++		tacho_div = DEFAULT_TACHO_DIV;
++
++	aspeed_create_fan_tach_channel(priv, tach_channel, count, fan_pulse_pr,
++				       fan_min_rpm, tacho_div);
++
++	return 0;
++}
++
++static int aspeed_tach_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct device_node *np, *child;
++	struct aspeed_tach_data *priv;
++	struct device *hwmon;
++	struct clk *clk;
++	int ret;
++
++	np = dev->parent->of_node;
++	dev_info(dev, "tach probe start\n");
++
++	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
++	if (!priv)
++		return -ENOMEM;
++
++	priv->tacho_channel = devm_kzalloc(
++		dev, 16 * sizeof(*priv->tacho_channel), GFP_KERNEL);
++
++	priv->regmap = syscon_node_to_regmap(np);
++	if (IS_ERR(priv->regmap)) {
++		dev_err(dev, "Couldn't get regmap\n");
++		return -ENODEV;
++	}
++
++	clk = of_clk_get(np, 0);
++	if (IS_ERR(clk))
++		return -ENODEV;
++	priv->clk_freq = clk_get_rate(clk);
++
++	priv->reset = of_reset_control_get_shared(np, NULL);
++	if (IS_ERR(priv->reset)) {
++		dev_err(&pdev->dev, "can't get aspeed_pwm_tacho reset\n");
++		return PTR_ERR(priv->reset);
++	}
++
++	//scu init
++	reset_control_deassert(priv->reset);
++
++	for_each_child_of_node(dev->of_node, child) {
++		ret = aspeed_tach_create_fan(dev, child, priv);
++		if (ret) {
++			of_node_put(child);
++			return ret;
++		}
++	}
++
++	priv->groups[0] = &fan_dev_group;
++	priv->groups[1] = NULL;
++	dev_info(dev, "tach probe done\n");
++	hwmon = devm_hwmon_device_register_with_groups(dev, "aspeed_tach", priv,
++						       priv->groups);
++
++	return PTR_ERR_OR_ZERO(hwmon);
++}
++
++static const struct of_device_id of_stach_match_table[] = {
++	{
++		.compatible = "aspeed,ast2600-tach",
++	},
++	{},
++};
++MODULE_DEVICE_TABLE(of, of_stach_match_table);
++
++static struct platform_driver aspeed_tach_driver = {
++	.probe		= aspeed_tach_probe,
++	.driver		= {
++		.name	= "aspeed_tach",
++		.of_match_table = of_stach_match_table,
++	},
++};
++
++module_platform_driver(aspeed_tach_driver);
++
++MODULE_AUTHOR("Ryan Chen <ryan_chen@aspeedtech.com>");
++MODULE_DESCRIPTION("ASPEED Fan tach device driver");
++MODULE_LICENSE("GPL");
+-- 
+2.25.1
 
-Zev
