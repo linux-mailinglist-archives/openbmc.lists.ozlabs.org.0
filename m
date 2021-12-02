@@ -2,67 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40E0246686D
-	for <lists+openbmc@lfdr.de>; Thu,  2 Dec 2021 17:34:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BF440466D27
+	for <lists+openbmc@lfdr.de>; Thu,  2 Dec 2021 23:46:40 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J4hP40QrCz2yqC
-	for <lists+openbmc@lfdr.de>; Fri,  3 Dec 2021 03:34:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J4rfk4QLzz3bsp
+	for <lists+openbmc@lfdr.de>; Fri,  3 Dec 2021 09:46:38 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=Y5Fwh3Gr;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=PkTuv4bY;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=Y5Fwh3Gr; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=PkTuv4bY; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J4hNg6PDDz2yQH
- for <openbmc@lists.ozlabs.org>; Fri,  3 Dec 2021 03:33:55 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 414384380C
- for <openbmc@lists.ozlabs.org>; Thu,  2 Dec 2021 16:33:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- in-reply-to:content-disposition:content-type:content-type
- :mime-version:references:message-id:subject:subject:from:from
- :date:date:received:received:received; s=mta-01; t=1638462830;
- x=1640277231; bh=RRCLdSX+7586EC3MsCSO6bxvvCwgP5Ub9FSyocgMH90=; b=
- Y5Fwh3GrRdln6reCn3coK6piVOvPF8jagAx7zIoaSEEsnq4RGpUhcvdZgaO3o7i3
- ZQp8+6tcvtudQoSExoWwHwLV2zsMh8CZuzetYWWbn1xrIKkCMpWkmA4zx8tQ/Xgn
- gvop8aIkZee2GY93Nohk0bHl6BqUZj50zrDNxE4ROnY=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id JLOvXCS0WISH for <openbmc@lists.ozlabs.org>;
- Thu,  2 Dec 2021 19:33:50 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id E1ACB4380A
- for <openbmc@lists.ozlabs.org>; Thu,  2 Dec 2021 19:33:50 +0300 (MSK)
-Received: from localhost (172.17.1.114) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 2 Dec
- 2021 19:33:50 +0300
-Date: Thu, 2 Dec 2021 19:33:50 +0300
-From: "Alexander A. Filippov" <a.filippov@yadro.com>
-To: <openbmc@lists.ozlabs.org>
-Subject: Re: Is BBLAYERS_NON_REMOVABLE obsolette?
-Message-ID: <Yaj0bPk3yiw/9y8F@nbwork.lan>
-References: <bf3a0a05af8f4307ad487f29e0c19da3@yadro.com>
- <YajoGODkG52luR0T@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J4rdV2n4zz2yPV
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Dec 2021 09:45:33 +1100 (AEDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1B2MGxVk029745; 
+ Thu, 2 Dec 2021 22:45:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=EpwzfzfCbqjmF4vQ5HUv4JcP7UW/KJN62a2mrgkjLdA=;
+ b=PkTuv4bYrEbz0BZuvoX5e8f01WbQtKNU9IoiR0MZwwghDBqWTQiBnRZcvaCcNn5GbPPv
+ q4NrC3g504D02rsAYfYXLJEenX7B1pCU3IFmJxFPLJWOa/P+7MjAlrAxD//Oog4NAYbK
+ SE2LLoFZ9pEY7qlx1dfT64Py9qf/HHZteQHRbuaJhqz6mq5GG6X9m7kBlQg6E/zAPiwT
+ mKk1WW8eYIEoPfG0/QZDIto3YrbgsUc5cPJ2RXuV7wIBLDIBJkWeVZIV7catGO7oB3/t
+ O/lRuTNj6Ur1PmK5XWm4BGtk97LZPLNoWYy2nCctmPKV5Z5TguYTydj0/aj+dEmtU1s6 gA== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3cq6t5gq0a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Dec 2021 22:45:29 +0000
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 1B2MZ8Bp006503;
+ Thu, 2 Dec 2021 22:45:28 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma02wdc.us.ibm.com with ESMTP id 3ckcad0n11-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Dec 2021 22:45:28 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 1B2MjRiV27918638
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 2 Dec 2021 22:45:27 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5D66A112069;
+ Thu,  2 Dec 2021 22:45:27 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A0B72112061;
+ Thu,  2 Dec 2021 22:45:26 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.127.216])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Thu,  2 Dec 2021 22:45:26 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.15] ARM: dts: aspeed: Everest and Rainier: Enable
+ ftrace in ramoops buffer
+Date: Thu,  2 Dec 2021 16:45:25 -0600
+Message-Id: <20211202224525.29178-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-In-Reply-To: <YajoGODkG52luR0T@heinlein>
-X-Originating-IP: [172.17.1.114]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: t6zYYmhb4Wr5VE3Cawp5bUxlgPtBaGJ2
+X-Proofpoint-GUID: t6zYYmhb4Wr5VE3Cawp5bUxlgPtBaGJ2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
+ definitions=2021-12-02_15,2021-12-02_01,2021-12-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxscore=0
+ lowpriorityscore=0 clxscore=1011 impostorscore=0 priorityscore=1501
+ spamscore=0 adultscore=0 phishscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=726 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2110150000 definitions=main-2112020137
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,18 +96,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Dec 02, 2021 at 09:36:56AM -0600, Patrick Williams wrote:
-> 
-> Yes, please go ahead and remove across the meta-layers.  As you said I don't see
-> any occurrence of "NON_REMOVABLE" outside of our layers:
-> 
+Increase the size of the buffer and set the ftrace-size property in order
+to collect event tracing during a crash.
 
-Done.
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 3 ++-
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/49261
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+index f42e2d776ba8..ceb7c1ad95ef 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+@@ -171,9 +171,10 @@ flash_memory: region@b8000000 {
+ 		/* 48MB region from the end of flash to start of vga memory */
+ 		ramoops@bc000000 {
+ 			compatible = "ramoops";
+-			reg = <0xbc000000 0x180000>; /* 16 * (3 * 0x8000) */
++			reg = <0xbc000000 0x200000>; /* 16 * (4 * 0x8000) */
+ 			record-size = <0x8000>;
+ 			console-size = <0x8000>;
++			ftrace-size = <0x8000>;
+ 			pmsg-size = <0x8000>;
+ 			max-reason = <3>; /* KMSG_DUMP_EMERG */
+ 		};
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 866f32cdccea..66f15e3aa742 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -102,9 +102,10 @@ flash_memory: region@b8000000 {
+ 
+ 		ramoops@bc000000 {
+ 			compatible = "ramoops";
+-			reg = <0xbc000000 0x180000>; /* 16 * (3 * 0x8000) */
++			reg = <0xbc000000 0x200000>; /* 16 * (4 * 0x8000) */
+ 			record-size = <0x8000>;
+ 			console-size = <0x8000>;
++			ftrace-size = <0x8000>;
+ 			pmsg-size = <0x8000>;
+ 			max-reason = <3>; /* KMSG_DUMP_EMERG */
+ 		};
+-- 
+2.27.0
 
---
-Alexander
