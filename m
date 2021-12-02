@@ -2,74 +2,139 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47925465C24
-	for <lists+openbmc@lfdr.de>; Thu,  2 Dec 2021 03:28:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 859D8465C36
+	for <lists+openbmc@lfdr.de>; Thu,  2 Dec 2021 03:32:55 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J4Kdd0zZBz2yP0
-	for <lists+openbmc@lfdr.de>; Thu,  2 Dec 2021 13:28:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J4KkF328cz2yZ6
+	for <lists+openbmc@lfdr.de>; Thu,  2 Dec 2021 13:32:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=fhr1XC7W;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=Cbypq+Ss;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::431;
- helo=mail-pf1-x431.google.com; envelope-from=howard10703049@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feab::71d;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=billy_tsai@aspeedtech.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=fhr1XC7W; dkim-atps=neutral
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com
- [IPv6:2607:f8b0:4864:20::431])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
+ header.a=rsa-sha256 header.s=selector1 header.b=Cbypq+Ss; 
+ dkim-atps=neutral
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-sgaapc01on2071d.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:feab::71d])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J4KdD58CBz2yP0
- for <openbmc@lists.ozlabs.org>; Thu,  2 Dec 2021 13:28:31 +1100 (AEDT)
-Received: by mail-pf1-x431.google.com with SMTP id u80so26526286pfc.9
- for <openbmc@lists.ozlabs.org>; Wed, 01 Dec 2021 18:28:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=e6+QQIGM7tGhgsTZa6l/u5EJrdc9NbKEQBmODS1UfDU=;
- b=fhr1XC7WmqLBXBWRGF7eFk+y3JMStEYNran7UN4KKcEvF+xxL7Mqtk9gvvShAuNoZD
- zeyHxMfjR6cNTJw21HKx5hKPOeLFt80uUqArGsd2OjKqOxyQWj2LrD90PqRpQqaHg41m
- 1DBGkVYshwQhh+ObVkcvsq9SyxXZ5JrRKXOyLt/4qp+RWfIYyHT6O2rhDaLbbbWuaw7E
- tvxM1lmHHGconTBDS1pn01kAdpHEf/TJiOtXw53YQHEmXOBssuGZW7AU1ntc2cGuJ7bn
- nw1pAaQWSRJLKHYay/8MngGNJoEcvx27fLj7cBF8rQB4SymllAG8VuRQ4n8jIkpVx/3L
- WCrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=e6+QQIGM7tGhgsTZa6l/u5EJrdc9NbKEQBmODS1UfDU=;
- b=Nx6XP8S2GTo7CmtOi4YYpH83YafbgJNEJwAKUMry+rHF1NoclkUVvb1Jg58u9JS1Ys
- fvQvEaqFdKB26XGXsvyO8z2O8OD6GlxXVSSBE/LRwTdo4xpecKgbigViw6IHaVFU7Lcp
- LepB2IOgscB9QC1BIJRZ8yT3UOekWuzaJVM+xGpBLFLKuuWwKW3HuLF9KibN45y2sBqN
- Zpfi8MNcc72+2JooKQCow2RodNm5fmpCPDwIQP/ChjAbnYzltnqRSSAlzQ85ayuWTjN/
- G5w0GaNww0/vpmY8Kqk6UxESIaKuaoG6MqRYuDvKwWqzd24lQMBLGHV+ZcTi8FMMA2dI
- x/bQ==
-X-Gm-Message-State: AOAM532RTwftuBEI6AHVLqnZcROTOeILO3NbsmYaevMlpNnof1+S04Mv
- PsFXRwhRd8Gk9FKZXjUMoKjeSpXOoos=
-X-Google-Smtp-Source: ABdhPJy/HMMmr3NsiIwj6KCzGxSNRxvWK5ZKWPlKOFQ1ncjIZKbsRx2cAOZInJuxBqTFWfBuJ5IE7w==
-X-Received: by 2002:a63:5816:: with SMTP id m22mr7633306pgb.98.1638412109030; 
- Wed, 01 Dec 2021 18:28:29 -0800 (PST)
-Received: from howard-System-Product-Name.dhcpserver.bu9bmc.local
- (125-228-123-29.hinet-ip.hinet.net. [125.228.123.29])
- by smtp.gmail.com with ESMTPSA id ml24sm581057pjb.16.2021.12.01.18.28.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Dec 2021 18:28:28 -0800 (PST)
-From: Howard Chiu <howard10703049@gmail.com>
-X-Google-Original-From: Howard Chiu <howard.chiu@quantatw.com>
-To: openbmc@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH linux dev-4.7] Porting tach driver for ast26xx from Aspeed
- linux
-Date: Thu,  2 Dec 2021 10:26:23 +0800
-Message-Id: <20211202022623.182903-1-howard.chiu@quantatw.com>
-X-Mailer: git-send-email 2.25.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J4Kjf1pDTz2yK6;
+ Thu,  2 Dec 2021 13:32:20 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=PVqrzG4KZSPGVhCQOA8Xzf/cVvCCA1m1EvSpx9pFtgxo/51qgIKddXedxiS9+fNIc3IQfmutGkFOpRjzgzDrwZ76GGdyZipqxnkMXEgKZYhjxWkGWJmS0HvquJ7AHeqH/cSQMMZgImloC+lI864SO/Npw2gUVx/xzja0LHSk49xxe+H0QuABzi/+A9xMxQHFZG8PZSX05VsmYjSe4/iLA07n6SHl0n3/XC2+FLwFjx2FMUJx/Icd523WDdUiFhq22U/b1KyqS8vEtHV/fotbSxKLooIL+Njy8odMkbZ2HdL/6dqft/Zk1eIxTB+uHK4f84BoQERqS6Vls3BnYumKGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JsROCf9ZK+f0rApKQmrLRHInLWf+DOgqWD4yZ/Y2GtU=;
+ b=Y4ck53Fbr+uqrRQpundj9PYOmrj/cgkoYKw5MnWQwBA7O4gc1cbeD8EBW4Ykam0b6AftsZshXMPSaVeMH+9gKgt3j0vhdpAM2Tn9zHIztGvyjQmp5WEt5A5tVC5WY+HlMt5z/p+77EKitncGuwGAysqxYX8S1Dcg3jEPJ82+rxQG2uNeVvwWgN2pim6n09UiwnH8l9il9+FLaiqDvFr0TfirG7sucAMGyElmDRUschctYk4IqTlen7TSjPbpltIKg5uOBSl5dCVweRfM3G9XKjVdwXpIGY1M/uv+NX3Go9IiNLyvGhgk1YToNWREKj8FdksOGc9dRvsXRCGbNCoctw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JsROCf9ZK+f0rApKQmrLRHInLWf+DOgqWD4yZ/Y2GtU=;
+ b=Cbypq+SsyWyZ4KzNy1USSC/OIF5f+8wDhhaRuSs/lKOOf03HnnDg7x6UJQezlIrwahpnn9QcJjo77iENJHlDl8VnL0Z2xGGTcclQPxbGdUjqmwzlKRo0EYxmmYM+ju6F+UaxgBbtnSIdldrXbLpqO8j2kG/r5nS23yEG1I02fWjDs+twVM7eJSTo+T7QMHF5P7tVF0UKGvi5dnYKb8p5Qc2fmY7buXs5XP8fMxQSsM5U1Dm7Gg8R6nOobRi/sz3yyl+AxvDDFDeVuXUjwlu2fsacZvMwJ4azTQ/vsKvGeEP0NcPTCM46WjZcMivZmthLaM8tKIjXLVFvDwfbhVhnNA==
+Received: from SG2PR06MB3365.apcprd06.prod.outlook.com (2603:1096:4:69::12) by
+ SG2PR06MB2364.apcprd06.prod.outlook.com (2603:1096:4:d::23) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4734.23; Thu, 2 Dec 2021 02:31:58 +0000
+Received: from SG2PR06MB3365.apcprd06.prod.outlook.com
+ ([fe80::b066:63b0:ffa5:6a7b]) by SG2PR06MB3365.apcprd06.prod.outlook.com
+ ([fe80::b066:63b0:ffa5:6a7b%3]) with mapi id 15.20.4734.024; Thu, 2 Dec 2021
+ 02:31:58 +0000
+From: Billy Tsai <billy_tsai@aspeedtech.com>
+To: Zev Weiss <zweiss@equinix.com>
+Subject: Re: [PATCH v4 02/13] dt-bindings: Add bindings for peci-aspeed
+Thread-Topic: [PATCH v4 02/13] dt-bindings: Add bindings for peci-aspeed
+Thread-Index: AQHX4HPXMbpig5e+0UWtpGOsbqQ2CaweBD8AgAB6DwCAAJB0gA==
+Date: Thu, 2 Dec 2021 02:31:58 +0000
+Message-ID: <4B35121C-3BF3-4EF2-BBE6-AA76FA1920E3@aspeedtech.com>
+References: <20211123140706.2945700-1-iwona.winiarska@intel.com>
+ <20211123140706.2945700-3-iwona.winiarska@intel.com>
+ <DDB2E224-472B-41CC-A5C6-BEADB4BF2041@aspeedtech.com>
+ <20211202015455.GB25091@packtop>
+In-Reply-To: <20211202015455.GB25091@packtop>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: e01df356-5873-4f19-a3a8-08d9b53bea20
+x-ms-traffictypediagnostic: SG2PR06MB2364:
+x-microsoft-antispam-prvs: <SG2PR06MB2364C0ED1C82F5C51B66ABCA8B699@SG2PR06MB2364.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6790;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: qcMlOpz+MMYULzaO1BNiAHFneTGQWqpnp0CWn1liiZqC5QfcnmW1FMpJlmJ9ocm2LjYWfpUjhJ3sfArFCSchqfSbHZw4trLRIu3MtljdzWo64okUziLuY4/4OOWw29sr416GdrK0/MVBM4nmW4u9qkfqRn4ne5N36h9byv6Fs3TBYqulJdURGeqCURRKkdblnQXTyQlcjGet67vBWQP3h1YyktAkgs19j8b2Owidy+qlWQTALzyU2v847k64FR7wNQrq13n9lroPSy2geiU946V3Va9wcyMNZXGSKXlFNhhEOH7ckBbEsqtIVI+vrQkFextef1VHoAWtPTSLB9uYU3rGa3M8W8QZm0B4sxT+Ns3He9poFYImoRtUJXAkpuAYTvfNXWApTvzRlrrhFILBE5cCguOqMwDmxZgq4Qaa/pdMznkHQcxHrT9KOmaqaSvpm3OOepvjSeABhxfybfDvfTOj3vlLhDG/QzcCnz3bsKvEThoSwH1h1YXrlcQ5iTnkjAId88mizFK1ROEgi4YEbux96aNWuDok3OiFOSa7mQFSoYo20afABRqJiYSvNbo9IsDYO0IFXDvHpS6NUXetln2/YG+zozI9gN/LU/l9xB25GsNeRPyPLljzvdRpK3WgetDZvPAtJU2KSOs5Wk/fpW3hnAkk8batS09ixNjtViM4VuJtkIOv4NTnMwo/aXacHObd1OIk27KSwvsmRpOFJbVK7x710flwbjC+SzwLVApbKgEQHyJrClwRJtPcEYJd
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SG2PR06MB3365.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(39840400004)(346002)(136003)(376002)(366004)(396003)(66946007)(66446008)(316002)(91956017)(64756008)(33656002)(5660300002)(76116006)(7416002)(66476007)(6486002)(38070700005)(54906003)(86362001)(508600001)(6512007)(71200400001)(186003)(36756003)(8676002)(4326008)(53546011)(66556008)(2616005)(6916009)(38100700002)(83380400001)(122000001)(26005)(2906002)(8936002)(6506007)(45980500001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cUJ6NVV1U3FPNkxXWWx3TmtTaElYT2VqdUdlWTFyTG9xL01xQ1REODNkSllT?=
+ =?utf-8?B?bkdkQyszV3BzN3llWDBNdmRtR2ZBN3UreW9obnNVT0JIUDhxcFZsdjd0RXhp?=
+ =?utf-8?B?RlkvTG9mYnNQVUFjU2NkSk53NC8zWDJhUGNxbXhHQUJqaXVNSVRvNXY5MnAw?=
+ =?utf-8?B?Ky9mQkJ3QjlRVXRDaHg5cGZnWVV2VlFQSHc3NzlFeXdTczJMWXpYVzRTRExr?=
+ =?utf-8?B?dlRWSkYvbWFBR3IrdlJlOENNZk1hR1h4WGpXMHorVnhZRHcxMWZ5cEVkd2h0?=
+ =?utf-8?B?NXdvSVU5VngvS3lOUHh4RmNHVE1YVVRBSndaWTEyalF1ckZONWFTTkRYdWVm?=
+ =?utf-8?B?RnFienVpbVZsU2hSSG54bEtrR082anRkeFpKRXNmS1ZkWUZHOURyTWp0Q0Z6?=
+ =?utf-8?B?T3lGL29DZU5Id2RmVmV4TDc4SEpDTC9RWEpPV0Y1aVJvR2pKT3dJZ3pGWjZJ?=
+ =?utf-8?B?ZmU2OGhlWHNMVXM3dUMrVW1SL2hpcmRrYWJmY3YyZU8rVngzdEx0a1lBWTJS?=
+ =?utf-8?B?eGNIaTNsN0NDalh2NTFjQzJUbFFIdlFxYUFENFlQV0NlNUt6Wm5MT0NBUFZQ?=
+ =?utf-8?B?dDkwOE1uczVTRDd5bmsrK3k1aHc2bzNwYXJpV2E0MExadnpSRDkvOWd0c1Ir?=
+ =?utf-8?B?dDl5bWFMRCtuaDBHdG04ZUEzNUFHZ1hSY0QwekJGaHd4ck1TY2dydDI5S1Zq?=
+ =?utf-8?B?Tzhid1MzenVkUk1rQmpIMlk5SFhjRWgvMmxtU3NIS1BMNDlNZENNWHhzS0pR?=
+ =?utf-8?B?SXlMaTFvdU9SbVlRQmtQYndCOXlkMFRjNzV2dWR3ME1wYlZhZnBuK2dTK0xi?=
+ =?utf-8?B?K25rT1FRRHRseW1TMlNJS2QrWVF2bHUvcTVwNUM4V2VYaHNaUXhwUk1RQU9T?=
+ =?utf-8?B?VW8vUHoxRnpqWEpzQ0xKOWVya2dCZG1BVU9WUTBtWU9wV3E4N3k1anpLangx?=
+ =?utf-8?B?UXRUZXJMRWd3TXU5WmVqTGtiUjZ3WDBvZC9VSGFrNHdaZXdnbWdOUmVmQmFG?=
+ =?utf-8?B?anl6R2xESFpsTWdIeHpmWHM1YVd5U2tMMHNHc1d2c1A1OHV4ZmxjSXlhUk04?=
+ =?utf-8?B?REl2cjBUeStoeUY1ZElrTEtCRU4zTFVZMWsvd003djh1SFZSL1dBSThGbmJ6?=
+ =?utf-8?B?djB6dlVITDhDTWdJTmpicnYybmwyMXJDSTZpVlhhUi9kdEJ0RWxNSGM1MnFZ?=
+ =?utf-8?B?eWo3dWJKVVl3Q0F5QUFnMW9kd2ozUjZwNSt6NTczNXpwWnNiOWFxREtvSlIw?=
+ =?utf-8?B?QVZOeVA1bTllR0pUaE9hckZHRTE5YS9GTW54S2hlRkRnMFY2L1hRRlZkbXV3?=
+ =?utf-8?B?QnBnaUxNTVk5N3V6VXZYQk1jZmd2QVltRkRaUjgwU1VFSmp3eGVxdEdVZlVQ?=
+ =?utf-8?B?Skt3czZhSm1MR1pqdzdUbVVnZW5QeDQ3b2UxcWRWNVVJVlptRFJXMWtBbHZS?=
+ =?utf-8?B?SVZ4YjdUMFc4UitteUZnYk8xdEJiOS9MOU5XLytyTnU5MkFSdTcwRkdocG81?=
+ =?utf-8?B?UnFhdDdId1RCa1BSTG1EK0JGSFpQVFpZallieUJXZXcvbFUzU2ZTLzZRK2dB?=
+ =?utf-8?B?VDdnWnNObE9EMWpMNEs2d3pUbGpITFhlcExscUVLQlZyU2dCZ3RPV2hEQXpZ?=
+ =?utf-8?B?S1JITDk3bTNoRVpOVEZCb0QxYXZCbWhVdnpFZTNBbmhNditNZmxROEx1bWxP?=
+ =?utf-8?B?bXM3WS82RWRTRFRtWEQ2U3hTcTUxQzRMbGRIYUhYMjFvU01WS2xkQXpVbEFu?=
+ =?utf-8?B?OEtYQ1VqM0owMU9RWlcybmdyYkh3WTlZSVN0TXQ0U2UrQmhFMWoxSjFZVFZS?=
+ =?utf-8?B?bm1aeXZwOGxqM1U5N01aZlJuWTI3ekFpdUhEL1hqeGszR0RpekR1OHZGdjVM?=
+ =?utf-8?B?bi9ERDRwakxkK244NnFMbXVPTFhKbFp3UWlpRzU5V3N0T2hoMWNHaHFGeDNG?=
+ =?utf-8?B?SS8rWFhUSDJTZ0UwTjRFakxVY25zZlZycUI0TzhXMGp5WE5JVHVuYmdoVmhY?=
+ =?utf-8?B?Mjg1eHFReCtOWXoxVFdJcW5tanFxVmg5Q3V2cVh3Z0J0ZlVDdmFrakpJazBo?=
+ =?utf-8?B?anJUUk5qYU9XQzdFYU91UzFMOWl0dHJpOFd4a21CZW03amJPVHJRMmg5VXhZ?=
+ =?utf-8?B?U1pTRXRhOFlPRU5SYWxnbkhRMEI2a3RGYlQxVEtUSk4xc3ZGUStCZ2djdFVW?=
+ =?utf-8?B?cGk2emVjYVBEbCtVRHY1T2NXamtCcXJrUTQyQUhTbU80WFZ4ZWVqaTIzL3J5?=
+ =?utf-8?Q?yfXKi3sf2ZeGEZnRNvQotaBk4H4c8Dnq+JwGC/eT1E=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <4D5B21A72CB7F24FA7C900FFA83C05AB@apcprd06.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SG2PR06MB3365.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e01df356-5873-4f19-a3a8-08d9b53bea20
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Dec 2021 02:31:58.3082 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: VvjePIbzpIOUKMnAZpCMrObgYPYXjGqwN4G+w2kxTXhGtlZ5acPqL7WDzKpiEOilYBsi+VVfxBANtI+Qo1mrf9fH0v9s8EvC4LGjmyBv1sM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB2364
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,481 +146,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Howard Chiu <howard.chiu@quantatw.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+ Dave Hansen <dave.hansen@intel.com>, Rob Herring <robh@kernel.org>,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ Iwona Winiarska <iwona.winiarska@intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+ Guenter Roeck <linux@roeck-us.net>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
+ Rob Herring <robh+dt@kernel.org>, Borislav Petkov <bp@alien8.de>,
+ Dan Williams <dan.j.williams@intel.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+ "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
+ Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jonathan Corbet <corbet@lwn.net>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Olof Johansson <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Aspeed did not commit tach driver to upstream for ast2600 series yet.
-To support ast26xx on OpenBMC, we need this driver and update the g6 device tree as well.
-
-Change-Id: I1714abf4fd08edead789439e5723b183d1b0d175
-Signed-off-by: Howard Chiu <howard.chiu@quantatw.com>
----
- arch/arm/boot/dts/aspeed-g6.dtsi    |  22 ++
- drivers/hwmon/Kconfig               |   8 +
- drivers/hwmon/Makefile              |   1 +
- drivers/hwmon/tach-aspeed-ast2600.c | 388 ++++++++++++++++++++++++++++
- 4 files changed, 419 insertions(+)
- create mode 100644 drivers/hwmon/tach-aspeed-ast2600.c
-
-diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
-index 5106a424f1ce..ec249f450552 100644
---- a/arch/arm/boot/dts/aspeed-g6.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g6.dtsi
-@@ -304,6 +304,28 @@ apb {
- 			#size-cells = <1>;
- 			ranges;
- 
-+			pwm_tach: pwm_tach@1e610000 {
-+				compatible = "aspeed,ast2600-pwm-tach", "simple-mfd", "syscon";
-+				reg = <0x1e610000 0x100>;
-+				clocks = <&syscon ASPEED_CLK_AHB>;
-+				resets = <&syscon ASPEED_RESET_PWM>;
-+
-+				pwm: pwm {
-+					compatible = "aspeed,ast2600-pwm";
-+					#pwm-cells = <3>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					status = "disabled";
-+				};
-+
-+				tach: tach {
-+					compatible = "aspeed,ast2600-tach";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					status = "disabled";
-+				};
-+			};
-+
- 			syscon: syscon@1e6e2000 {
- 				compatible = "aspeed,ast2600-scu", "syscon", "simple-mfd";
- 				reg = <0x1e6e2000 0x1000>;
-diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index 64bd3dfba2c4..0eb307cb67fc 100644
---- a/drivers/hwmon/Kconfig
-+++ b/drivers/hwmon/Kconfig
-@@ -397,6 +397,14 @@ config SENSORS_ASPEED
- 	  This driver can also be built as a module. If so, the module
- 	  will be called aspeed_pwm_tacho.
- 
-+config SENSORS_TACH_ASPEED_AST2600
-+	tristate "ASPEED ast2600 Tachometer support"
-+	help
-+	  This driver provides support for Aspeed ast2600 Tachometer.
-+
-+	  To compile this driver as a module, choose M here: the module
-+	  will be called tach-aspeed-ast2600.
-+
- config SENSORS_ATXP1
- 	tristate "Attansic ATXP1 VID controller"
- 	depends on I2C
-diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
-index baee6a8d4dd1..ce66874c8ce2 100644
---- a/drivers/hwmon/Makefile
-+++ b/drivers/hwmon/Makefile
-@@ -51,6 +51,7 @@ obj-$(CONFIG_SENSORS_ARM_SCMI)	+= scmi-hwmon.o
- obj-$(CONFIG_SENSORS_ARM_SCPI)	+= scpi-hwmon.o
- obj-$(CONFIG_SENSORS_AS370)	+= as370-hwmon.o
- obj-$(CONFIG_SENSORS_ASC7621)	+= asc7621.o
-+obj-$(CONFIG_SENSORS_TACH_ASPEED_AST2600) += tach-aspeed-ast2600.o
- obj-$(CONFIG_SENSORS_ASPEED)	+= aspeed-pwm-tacho.o
- obj-$(CONFIG_SENSORS_ATXP1)	+= atxp1.o
- obj-$(CONFIG_SENSORS_AXI_FAN_CONTROL) += axi-fan-control.o
-diff --git a/drivers/hwmon/tach-aspeed-ast2600.c b/drivers/hwmon/tach-aspeed-ast2600.c
-new file mode 100644
-index 000000000000..0b2551fc1711
---- /dev/null
-+++ b/drivers/hwmon/tach-aspeed-ast2600.c
-@@ -0,0 +1,388 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) ASPEED Technology Inc.
-+ *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License version 2 or later as
-+ * published by the Free Software Foundation.
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/errno.h>
-+#include <linux/delay.h>
-+#include <linux/hwmon.h>
-+#include <linux/hwmon-sysfs.h>
-+#include <linux/io.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/of_platform.h>
-+#include <linux/of_device.h>
-+#include <linux/platform_device.h>
-+#include <linux/mfd/syscon.h>
-+#include <linux/sysfs.h>
-+#include <linux/reset.h>
-+#include <linux/regmap.h>
-+/* TACH Control Register */
-+#define ASPEED_TACHO_CTRL_CH(ch) ((ch * 0x10) + 0x08)
-+#define TACHO_IER BIT(31) //enable tacho interrupt
-+#define TACHO_INVERS_LIMIT BIT(30) //inverse tacho limit comparison
-+#define TACHO_LOOPBACK BIT(29) //tacho loopback
-+#define TACHO_ENABLE BIT(28) //{enable tacho}
-+#define TACHO_DEBOUNCE_MASK (0x3 << 26) //{tacho de-bounce}
-+#define TACHO_DEBOUNCE_BIT (26) //{tacho de-bounce}
-+#define TECHIO_EDGE_MASK (0x3 << 24) //tacho edge}
-+#define TECHIO_EDGE_BIT (24) //tacho edge}
-+#define TACHO_CLK_DIV_T_MASK (0xf << 20)
-+#define TACHO_CLK_DIV_BIT (20)
-+#define TACHO_THRESHOLD_MASK (0xfffff) //tacho threshold bit
-+/* [27:26] */
-+#define DEBOUNCE_3_CLK 0x00 /* 10b */
-+#define DEBOUNCE_2_CLK 0x01 /* 10b */
-+#define DEBOUNCE_1_CLK 0x02 /* 10b */
-+#define DEBOUNCE_0_CLK 0x03 /* 10b */
-+/* [25:24] */
-+#define F2F_EDGES 0x00 /* 10b */
-+#define R2R_EDGES 0x01 /* 10b */
-+#define BOTH_EDGES 0x02 /* 10b */
-+/* [23:20] */
-+/* Cover rpm range 5~5859375 */
-+#define DEFAULT_TACHO_DIV 5
-+
-+/* TACH Status Register */
-+#define ASPEED_TACHO_STS_CH(x) ((x * 0x10) + 0x0C)
-+
-+/*PWM_TACHO_STS */
-+#define TACHO_ISR BIT(31) //interrupt status and clear
-+#define PWM_OUT BIT(25) //{pwm_out}
-+#define PWM_OEN BIT(24) //{pwm_oeN}
-+#define TACHO_DEB_INPUT BIT(23) //tacho deB input
-+#define TACHO_RAW_INPUT BIT(22) //tacho raw input}
-+#define TACHO_VALUE_UPDATE BIT(21) //tacho value updated since the last read
-+#define TACHO_FULL_MEASUREMENT BIT(20) //{tacho full measurement}
-+#define TACHO_VALUE_MASK 0xfffff //tacho value bit [19:0]}
-+/**********************************************************
-+ * Software setting
-+ *********************************************************/
-+#define DEFAULT_FAN_MIN_RPM 1000
-+#define DEFAULT_FAN_PULSE_PR 2
-+/*
-+ * Add this value to avoid CPU consuming a lot of resources in waiting rpm
-+ * updating. Assume the max rpm of fan is 60000, the period of updating tach
-+ * value will equal to (1000000 * 2 * 60) / (2 * max_rpm) = 1000.
-+ */
-+#define RPM_POLLING_PERIOD_US 1000
-+
-+struct aspeed_tacho_channel_params {
-+	int limited_inverse;
-+	u16 threshold;
-+	u8 tacho_edge;
-+	u8 tacho_debounce;
-+	u8 pulse_pr;
-+	u32 min_rpm;
-+	u32 divide;
-+	u32 sample_period; /* unit is us */
-+};
-+
-+struct aspeed_tach_data {
-+	struct regmap *regmap;
-+	unsigned long clk_freq;
-+	struct reset_control *reset;
-+	bool tach_present[16];
-+	struct aspeed_tacho_channel_params *tacho_channel;
-+	/* for hwmon */
-+	const struct attribute_group *groups[2];
-+};
-+
-+static u32 aspeed_get_fan_tach_sample_period(struct aspeed_tach_data *priv,
-+					     u8 fan_tach_ch)
-+{
-+	u32 tach_period_us;
-+	u8 pulse_pr = priv->tacho_channel[fan_tach_ch].pulse_pr;
-+	u32 min_rpm = priv->tacho_channel[fan_tach_ch].min_rpm;
-+	/*
-+	 * min(Tach input clock) = (PulsePR * minRPM) / 60
-+	 * max(Tach input period) = 60 / (PulsePR * minRPM)
-+	 * Tach sample period > 2 * max(Tach input period) = (2*60) / (PulsePR * minRPM)
-+	 */
-+	tach_period_us = (1000000 * 2 * 60) / (pulse_pr * min_rpm);
-+	/* Add the margin (about 1.2) of tach sample period to avoid sample miss */
-+	tach_period_us = (tach_period_us * 1200) >> 10;
-+	pr_debug("tach%d sample period = %dus", fan_tach_ch, tach_period_us);
-+	return tach_period_us;
-+}
-+
-+static void aspeed_set_fan_tach_ch_enable(struct aspeed_tach_data *priv,
-+					  u8 fan_tach_ch, bool enable,
-+					  u32 tacho_div)
-+{
-+	u32 reg_value = 0;
-+
-+	if (enable) {
-+		/* divide = 2^(tacho_div*2) */
-+		priv->tacho_channel[fan_tach_ch].divide = 1 << (tacho_div << 1);
-+
-+		reg_value = TACHO_ENABLE |
-+			    (priv->tacho_channel[fan_tach_ch].tacho_edge
-+			     << TECHIO_EDGE_BIT) |
-+			    (tacho_div << TACHO_CLK_DIV_BIT) |
-+			    (priv->tacho_channel[fan_tach_ch].tacho_debounce
-+			     << TACHO_DEBOUNCE_BIT);
-+
-+		if (priv->tacho_channel[fan_tach_ch].limited_inverse)
-+			reg_value |= TACHO_INVERS_LIMIT;
-+
-+		if (priv->tacho_channel[fan_tach_ch].threshold)
-+			reg_value |=
-+				(TACHO_IER |
-+				 priv->tacho_channel[fan_tach_ch].threshold);
-+
-+		regmap_write(priv->regmap, ASPEED_TACHO_CTRL_CH(fan_tach_ch),
-+			     reg_value);
-+
-+		priv->tacho_channel[fan_tach_ch].sample_period =
-+			aspeed_get_fan_tach_sample_period(priv, fan_tach_ch);
-+	} else
-+		regmap_update_bits(priv->regmap,
-+				   ASPEED_TACHO_CTRL_CH(fan_tach_ch),
-+				   TACHO_ENABLE, 0);
-+}
-+
-+static int aspeed_get_fan_tach_ch_rpm(struct aspeed_tach_data *priv,
-+				      u8 fan_tach_ch)
-+{
-+	u32 raw_data, tach_div, clk_source, usec, val;
-+	u64 rpm;
-+	int ret;
-+
-+	usec = priv->tacho_channel[fan_tach_ch].sample_period;
-+	/* Restart the Tach channel to guarantee the value is fresh */
-+	regmap_update_bits(priv->regmap, ASPEED_TACHO_CTRL_CH(fan_tach_ch),
-+			     TACHO_ENABLE, 0);
-+	regmap_update_bits(priv->regmap, ASPEED_TACHO_CTRL_CH(fan_tach_ch),
-+			     TACHO_ENABLE, TACHO_ENABLE);
-+	ret = regmap_read_poll_timeout(
-+		priv->regmap, ASPEED_TACHO_STS_CH(fan_tach_ch), val,
-+		(val & TACHO_FULL_MEASUREMENT) && (val & TACHO_VALUE_UPDATE),
-+		RPM_POLLING_PERIOD_US, usec);
-+
-+	if (ret) {
-+		/* return 0 if we didn't get an answer because of timeout*/
-+		if (ret == -ETIMEDOUT)
-+			return 0;
-+		else
-+			return ret;
-+	}
-+
-+	raw_data = val & TACHO_VALUE_MASK;
-+	/*
-+	 * We need the mode to determine if the raw_data is double (from
-+	 * counting both edges).
-+	 */
-+	if (priv->tacho_channel[fan_tach_ch].tacho_edge == BOTH_EDGES)
-+		raw_data <<= 1;
-+
-+	tach_div = raw_data * (priv->tacho_channel[fan_tach_ch].divide) *
-+		   (priv->tacho_channel[fan_tach_ch].pulse_pr);
-+
-+	pr_debug("clk %ld, raw_data %d , tach_div %d\n", priv->clk_freq, raw_data, tach_div);
-+
-+	clk_source = priv->clk_freq;
-+
-+	if (tach_div == 0)
-+		return -EDOM;
-+
-+	rpm = (u64)clk_source * 60;
-+	do_div(rpm, tach_div);
-+
-+	return rpm;
-+}
-+
-+static ssize_t show_rpm(struct device *dev, struct device_attribute *attr,
-+			char *buf)
-+{
-+	struct sensor_device_attribute *sensor_attr = to_sensor_dev_attr(attr);
-+	int index = sensor_attr->index;
-+	int rpm;
-+	struct aspeed_tach_data *priv = dev_get_drvdata(dev);
-+
-+	rpm = aspeed_get_fan_tach_ch_rpm(priv, index);
-+	if (rpm < 0)
-+		return rpm;
-+
-+	return sprintf(buf, "%d\n", rpm);
-+}
-+
-+static umode_t fan_dev_is_visible(struct kobject *kobj, struct attribute *a,
-+				  int index)
-+{
-+	struct device *dev = container_of(kobj, struct device, kobj);
-+	struct aspeed_tach_data *priv = dev_get_drvdata(dev);
-+
-+	if (!priv->tach_present[index])
-+		return 0;
-+	return a->mode;
-+}
-+
-+static SENSOR_DEVICE_ATTR(fan1_input, 0444, show_rpm, NULL, 0);
-+static SENSOR_DEVICE_ATTR(fan2_input, 0444, show_rpm, NULL, 1);
-+static SENSOR_DEVICE_ATTR(fan3_input, 0444, show_rpm, NULL, 2);
-+static SENSOR_DEVICE_ATTR(fan4_input, 0444, show_rpm, NULL, 3);
-+static SENSOR_DEVICE_ATTR(fan5_input, 0444, show_rpm, NULL, 4);
-+static SENSOR_DEVICE_ATTR(fan6_input, 0444, show_rpm, NULL, 5);
-+static SENSOR_DEVICE_ATTR(fan7_input, 0444, show_rpm, NULL, 6);
-+static SENSOR_DEVICE_ATTR(fan8_input, 0444, show_rpm, NULL, 7);
-+static SENSOR_DEVICE_ATTR(fan9_input, 0444, show_rpm, NULL, 8);
-+static SENSOR_DEVICE_ATTR(fan10_input, 0444, show_rpm, NULL, 9);
-+static SENSOR_DEVICE_ATTR(fan11_input, 0444, show_rpm, NULL, 10);
-+static SENSOR_DEVICE_ATTR(fan12_input, 0444, show_rpm, NULL, 11);
-+static SENSOR_DEVICE_ATTR(fan13_input, 0444, show_rpm, NULL, 12);
-+static SENSOR_DEVICE_ATTR(fan14_input, 0444, show_rpm, NULL, 13);
-+static SENSOR_DEVICE_ATTR(fan15_input, 0444, show_rpm, NULL, 14);
-+static SENSOR_DEVICE_ATTR(fan16_input, 0444, show_rpm, NULL, 15);
-+static struct attribute *fan_dev_attrs[] = {
-+	&sensor_dev_attr_fan1_input.dev_attr.attr,
-+	&sensor_dev_attr_fan2_input.dev_attr.attr,
-+	&sensor_dev_attr_fan3_input.dev_attr.attr,
-+	&sensor_dev_attr_fan4_input.dev_attr.attr,
-+	&sensor_dev_attr_fan5_input.dev_attr.attr,
-+	&sensor_dev_attr_fan6_input.dev_attr.attr,
-+	&sensor_dev_attr_fan7_input.dev_attr.attr,
-+	&sensor_dev_attr_fan8_input.dev_attr.attr,
-+	&sensor_dev_attr_fan9_input.dev_attr.attr,
-+	&sensor_dev_attr_fan10_input.dev_attr.attr,
-+	&sensor_dev_attr_fan11_input.dev_attr.attr,
-+	&sensor_dev_attr_fan12_input.dev_attr.attr,
-+	&sensor_dev_attr_fan13_input.dev_attr.attr,
-+	&sensor_dev_attr_fan14_input.dev_attr.attr,
-+	&sensor_dev_attr_fan15_input.dev_attr.attr,
-+	&sensor_dev_attr_fan16_input.dev_attr.attr,
-+	NULL
-+};
-+
-+static const struct attribute_group fan_dev_group = {
-+	.attrs = fan_dev_attrs,
-+	.is_visible = fan_dev_is_visible,
-+};
-+
-+static void aspeed_create_fan_tach_channel(struct aspeed_tach_data *priv,
-+					   u32 tach_ch, int count,
-+					   u32 fan_pulse_pr, u32 fan_min_rpm,
-+					   u32 tacho_div)
-+{
-+	priv->tach_present[tach_ch] = true;
-+	priv->tacho_channel[tach_ch].pulse_pr = fan_pulse_pr;
-+	priv->tacho_channel[tach_ch].min_rpm = fan_min_rpm;
-+	priv->tacho_channel[tach_ch].limited_inverse = 0;
-+	priv->tacho_channel[tach_ch].threshold = 0;
-+	priv->tacho_channel[tach_ch].tacho_edge = F2F_EDGES;
-+	priv->tacho_channel[tach_ch].tacho_debounce = DEBOUNCE_3_CLK;
-+	aspeed_set_fan_tach_ch_enable(priv, tach_ch, true, tacho_div);
-+}
-+
-+static int aspeed_tach_create_fan(struct device *dev, struct device_node *child,
-+				  struct aspeed_tach_data *priv)
-+{
-+	u32 fan_pulse_pr, fan_min_rpm;
-+	u32 tacho_div;
-+	u32 tach_channel;
-+	int ret, count;
-+
-+	ret = of_property_read_u32(child, "reg", &tach_channel);
-+	if (ret)
-+		return ret;
-+
-+	ret = of_property_read_u32(child, "aspeed,pulse-pr", &fan_pulse_pr);
-+	if (ret)
-+		fan_pulse_pr = DEFAULT_FAN_PULSE_PR;
-+
-+	ret = of_property_read_u32(child, "aspeed,min-rpm", &fan_min_rpm);
-+	if (ret)
-+		fan_min_rpm = DEFAULT_FAN_MIN_RPM;
-+
-+	ret = of_property_read_u32(child, "aspeed,tach-div", &tacho_div);
-+	if (ret)
-+		tacho_div = DEFAULT_TACHO_DIV;
-+
-+	aspeed_create_fan_tach_channel(priv, tach_channel, count, fan_pulse_pr,
-+				       fan_min_rpm, tacho_div);
-+
-+	return 0;
-+}
-+
-+static int aspeed_tach_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct device_node *np, *child;
-+	struct aspeed_tach_data *priv;
-+	struct device *hwmon;
-+	struct clk *clk;
-+	int ret;
-+
-+	np = dev->parent->of_node;
-+	dev_info(dev, "tach probe start\n");
-+
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	priv->tacho_channel = devm_kzalloc(
-+		dev, 16 * sizeof(*priv->tacho_channel), GFP_KERNEL);
-+
-+	priv->regmap = syscon_node_to_regmap(np);
-+	if (IS_ERR(priv->regmap)) {
-+		dev_err(dev, "Couldn't get regmap\n");
-+		return -ENODEV;
-+	}
-+
-+	clk = of_clk_get(np, 0);
-+	if (IS_ERR(clk))
-+		return -ENODEV;
-+	priv->clk_freq = clk_get_rate(clk);
-+
-+	priv->reset = of_reset_control_get_shared(np, NULL);
-+	if (IS_ERR(priv->reset)) {
-+		dev_err(&pdev->dev, "can't get aspeed_pwm_tacho reset\n");
-+		return PTR_ERR(priv->reset);
-+	}
-+
-+	//scu init
-+	reset_control_deassert(priv->reset);
-+
-+	for_each_child_of_node(dev->of_node, child) {
-+		ret = aspeed_tach_create_fan(dev, child, priv);
-+		if (ret) {
-+			of_node_put(child);
-+			return ret;
-+		}
-+	}
-+
-+	priv->groups[0] = &fan_dev_group;
-+	priv->groups[1] = NULL;
-+	dev_info(dev, "tach probe done\n");
-+	hwmon = devm_hwmon_device_register_with_groups(dev, "aspeed_tach", priv,
-+						       priv->groups);
-+
-+	return PTR_ERR_OR_ZERO(hwmon);
-+}
-+
-+static const struct of_device_id of_stach_match_table[] = {
-+	{
-+		.compatible = "aspeed,ast2600-tach",
-+	},
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, of_stach_match_table);
-+
-+static struct platform_driver aspeed_tach_driver = {
-+	.probe		= aspeed_tach_probe,
-+	.driver		= {
-+		.name	= "aspeed_tach",
-+		.of_match_table = of_stach_match_table,
-+	},
-+};
-+
-+module_platform_driver(aspeed_tach_driver);
-+
-+MODULE_AUTHOR("Ryan Chen <ryan_chen@aspeedtech.com>");
-+MODULE_DESCRIPTION("ASPEED Fan tach device driver");
-+MODULE_LICENSE("GPL");
--- 
-2.25.1
-
+SGkgWmV2LA0KDQpPbiAyMDIxLzEyLzIsIDk6NTUgQU0sICJaZXYgV2Vpc3MiIDx6d2Vpc3NAZXF1
+aW5peC5jb20+IHdyb3RlOg0KDQogICAgT24gV2VkLCBEZWMgMDEsIDIwMjEgYXQgMDI6Mzg6MDRB
+TSBQU1QsIEJpbGx5IFRzYWkgd3JvdGU6DQogICAgPiAgID5IaSwNCiAgICA+ICAgPg0KICAgID4g
+ICA+T24gMjAyMS8xMS8yMywgMTA6MTAgUE0sICJvcGVuYm1jIG9uIGJlaGFsZiBvZiBJd29uYSBX
+aW5pYXJza2EiIDxvcGVuYm1jLWJvdW5jZXMrYmlsbHlfdHNhaT1hc3BlZWR0ZWNoLmNvbUBsaXN0
+cy5vemxhYnMub3JnIG9uIGJlaGFsZiBvZiBpd29uYS53aW5pYXJza2FAaW50ZWwuY29tPiB3cm90
+ZToNCiAgICA+ICAgPg0KICAgID4gICA+ICAgIEFkZCBkZXZpY2UgdHJlZSBiaW5kaW5ncyBmb3Ig
+dGhlIHBlY2ktYXNwZWVkIGNvbnRyb2xsZXIgZHJpdmVyLg0KICAgID4gICA+DQogICAgPiAgID4g
+ICAgPiAgICsgIGFzcGVlZCxjbG9jay1kaXZpZGVyOg0KICAgID4gICA+ICAgID4gICArICAgIGRl
+c2NyaXB0aW9uOg0KICAgID4gICA+ICAgID4gICArICAgICAgVGhpcyB2YWx1ZSBkZXRlcm1pbmVz
+IFBFQ0kgY29udHJvbGxlciBpbnRlcm5hbCBjbG9jayBkaXZpZGluZw0KICAgID4gICA+ICAgID4g
+ICArICAgICAgcmF0ZS4gVGhlIGRpdmlkZXIgd2lsbCBiZSBjYWxjdWxhdGVkIGFzIDIgcmFpc2Vk
+IHRvIHRoZSBwb3dlciBvZg0KICAgID4gICA+ICAgID4gICArICAgICAgdGhlIGdpdmVuIHZhbHVl
+Lg0KICAgID4gICA+ICAgID4gICArICAgICRyZWY6IC9zY2hlbWFzL3R5cGVzLnlhbWwjL2RlZmlu
+aXRpb25zL3VpbnQzMg0KICAgID4gICA+ICAgID4gICArICAgIG1pbmltdW06IDANCiAgICA+ICAg
+PiAgICA+ICAgKyAgICBtYXhpbXVtOiA3DQogICAgPiAgID4gICAgPiAgICsgICAgZGVmYXVsdDog
+MA0KICAgID4gICA+ICAgID4gICArDQogICAgPiAgID4gICAgPiAgICsgIGFzcGVlZCxtc2ctdGlt
+aW5nOg0KICAgID4gICA+ICAgID4gICArICAgIGRlc2NyaXB0aW9uOg0KICAgID4gICA+ICAgID4g
+ICArICAgICAgTWVzc2FnZSB0aW1pbmcgbmVnb3RpYXRpb24gcGVyaW9kLiBUaGlzIHZhbHVlIHdp
+bGwgZGV0ZXJtaW5lIHRoZSBwZXJpb2QNCiAgICA+ICAgPiAgICA+ICAgKyAgICAgIG9mIG1lc3Nh
+Z2UgdGltaW5nIG5lZ290aWF0aW9uIHRvIGJlIGlzc3VlZCBieSBQRUNJIGNvbnRyb2xsZXIuIFRo
+ZSB1bml0DQogICAgPiAgID4gICAgPiAgICsgICAgICBvZiB0aGUgcHJvZ3JhbW1lZCB2YWx1ZSBp
+cyBmb3VyIHRpbWVzIG9mIFBFQ0kgY2xvY2sgcGVyaW9kLg0KICAgID4gICA+ICAgID4gICArICAg
+ICRyZWY6IC9zY2hlbWFzL3R5cGVzLnlhbWwjL2RlZmluaXRpb25zL3VpbnQzMg0KICAgID4gICA+
+ICAgID4gICArICAgIG1pbmltdW06IDANCiAgICA+ICAgPiAgICA+ICAgKyAgICBtYXhpbXVtOiAy
+NTUNCiAgICA+ICAgPiAgICA+ICAgKyAgICBkZWZhdWx0OiAxDQogICAgPiAgID4gICAgPiAgICsN
+CiAgICA+ICAgPiAgICA+ICAgKyAgYXNwZWVkLGFkZHItdGltaW5nOg0KICAgID4gICA+ICAgID4g
+ICArICAgIGRlc2NyaXB0aW9uOg0KICAgID4gICA+ICAgID4gICArICAgICAgQWRkcmVzcyB0aW1p
+bmcgbmVnb3RpYXRpb24gcGVyaW9kLiBUaGlzIHZhbHVlIHdpbGwgZGV0ZXJtaW5lIHRoZSBwZXJp
+b2QNCiAgICA+ICAgPiAgICA+ICAgKyAgICAgIG9mIGFkZHJlc3MgdGltaW5nIG5lZ290aWF0aW9u
+IHRvIGJlIGlzc3VlZCBieSBQRUNJIGNvbnRyb2xsZXIuIFRoZSB1bml0DQogICAgPiAgID4gICAg
+PiAgICsgICAgICBvZiB0aGUgcHJvZ3JhbW1lZCB2YWx1ZSBpcyBmb3VyIHRpbWVzIG9mIFBFQ0kg
+Y2xvY2sgcGVyaW9kLg0KICAgID4gICA+ICAgID4gICArICAgICRyZWY6IC9zY2hlbWFzL3R5cGVz
+LnlhbWwjL2RlZmluaXRpb25zL3VpbnQzMg0KICAgID4gICA+ICAgID4gICArICAgIG1pbmltdW06
+IDANCiAgICA+ICAgPiAgICA+ICAgKyAgICBtYXhpbXVtOiAyNTUNCiAgICA+ICAgPiAgICA+ICAg
+KyAgICBkZWZhdWx0OiAxDQogICAgPiAgID5JIHN1Z2dlc3QgZGVsZXRpbmcgdGhlc2UgdGhyZWUg
+cHJvcGVydGllcyBhbmQgcmVwbGFjaW5nIHRoZW0gd2l0aCB0aGUgZm9sbG93aW5nDQogICAgPiAg
+ID4NCiAgICA+ICAgPmFzcGVlZCxwZWNpLWJpdC10aW1lOg0KICAgID4gICA+ICAgICAgICBkZXNj
+cmlwdGlvbjoNCiAgICA+ICAgPiAgICAgICAgICBUaGUgYml0IHRpbWUgZHJpdmVuIGJ5IFBFQ0kg
+Y29udHJvbGxlci4gVGhlIHVuaXQgb2YgdGhlIHZhbHVlIGlzIEh6Lg0KICAgID4gICA+ICAgIG1p
+bmltdW06IDIwMDANCiAgICA+ICAgPiAgICBtYXhpbXVtOiAxMDAwMDAwDQogICAgPiAgID4NCiAg
+ICA+ICAgPkFuZCB0aGUgZHJpdmVyIHNob3VsZCB1c2UgdGhpcyBwcm9wZXJ0eSB0byBjYWN1bGF0
+ZSB0aGUgYXBwcm9wcmlhdGUgY2xvY2stZGl2aWRlciwNCiAgICA+ICAgPm1zZy10aW1pbmcgYW5k
+IGFkZHItdGltaW5nLCBpbnN0ZWFkIG9mIGV4cG9zaW5nIGhhcmR3YXJlIHJlZ2lzdGVycyB0byBk
+dHMuDQogICAgPiAgID4NCg0KICAgID4gICBPciBwZXJoYXBzIGp1c3QgJ2J1cy1mcmVxdWVuY3kn
+IGEgbGEgaTJjLWFzcGVlZCwgZ3Bpby1hc3BlZWQtc2dwaW8sIGV0Yz8NCg0KSXQncyBhIGdvb2Qg
+aWRlYWwgZm9yIHRoZSBjb25zaXN0ZW5jeS4NCg0KVGhhbmtzDQoNCkJlc3QgUmVnYXJkcywNCkJp
+bGx5IFRzYWkNCg0KDQo=
