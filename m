@@ -1,50 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21F354671C1
-	for <lists+openbmc@lfdr.de>; Fri,  3 Dec 2021 06:54:52 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 249AA4671D4
+	for <lists+openbmc@lfdr.de>; Fri,  3 Dec 2021 07:21:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J528p0VXDz3c6G
-	for <lists+openbmc@lfdr.de>; Fri,  3 Dec 2021 16:54:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J52l407nwz3058
+	for <lists+openbmc@lfdr.de>; Fri,  3 Dec 2021 17:21:04 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=NrYxsPP3;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=aVbGd5/e;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=perches.com
- (client-ip=216.40.44.90; helo=smtprelay.hostedemail.com;
- envelope-from=joe@perches.com; receiver=<UNKNOWN>)
-Received: from smtprelay.hostedemail.com (smtprelay0090.hostedemail.com
- [216.40.44.90])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm1 header.b=NrYxsPP3; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=aVbGd5/e; 
+ dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J528T1d3Jz2ynk
- for <openbmc@lists.ozlabs.org>; Fri,  3 Dec 2021 16:54:31 +1100 (AEDT)
-Received: from omf18.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
- by smtprelay04.hostedemail.com (Postfix) with ESMTP id C73411812EF2A;
- Fri,  3 Dec 2021 05:54:27 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by
- omf18.hostedemail.com (Postfix) with ESMTPA id 3C21F35; 
- Fri,  3 Dec 2021 05:54:26 +0000 (UTC)
-Message-ID: <a5d44f520d9b1e0e7b48860000a8e657ef8e5b39.camel@perches.com>
-Subject: Re: [RFC Patch v2 1/3] i2c debug counters as sysfs attributes
-From: Joe Perches <joe@perches.com>
-To: Sui Chen <suichen@google.com>, linux-kernel@vger.kernel.org
-Date: Thu, 02 Dec 2021 21:54:25 -0800
-In-Reply-To: <20211203023728.3699610-2-suichen@google.com>
-References: <20211203023728.3699610-1-suichen@google.com>
- <20211203023728.3699610-2-suichen@google.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.40.4-1ubuntu2 
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 3C21F35
-X-Spam-Status: No, score=-3.25
-X-Stat-Signature: rqema1cduzhupfdpnd4z7soeitwq9m7g
-X-Rspamd-Server: rspamout04
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX18mAWqEgH6LGGdG9zFQcE5JiVDmWP40504=
-X-HE-Tag: 1638510866-239568
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J52kY37gvz2yZv
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Dec 2021 17:20:36 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 8A4655C0340;
+ Fri,  3 Dec 2021 01:20:33 -0500 (EST)
+Received: from imap43 ([10.202.2.93])
+ by compute4.internal (MEProxy); Fri, 03 Dec 2021 01:20:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=NolDgpibMX9cQ8oCzV2c7s/wsKLOFWh
+ zZAgQevKD3V8=; b=NrYxsPP3o8VSiY0SYlg6nx6L3CdgzlBrpHiTCvj+zrlp6lf
+ ZSlBZacibQMlDAKAOYVAxt7UtAXSGL1Ri1wpNMtUlsHUseF0np48/UuMJPpW99f3
+ 2WrrXmJv1xWCTJmhcrBXu2kq2V2F7NtkMKfMiWYAzm1CdycnP96XhZqWoKPRxchs
+ GgA/+19/4cdAKAwVhf29ZBW0Srtxo9TR9UaaoG3opAZv4yVmR/xMtGez/kUXLGNW
+ cRyCJAfZsrmBVtUtpdN4RYvH3KSru4/ZafbppCEaL2dc/ZuyYDHvxg7wogtF3yRc
+ 2p0oMNhbssURe5MuNThOmV7NqQruyq6DpDsvP2A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=NolDgp
+ ibMX9cQ8oCzV2c7s/wsKLOFWhzZAgQevKD3V8=; b=aVbGd5/eZYkmXfYdlx+NJh
+ GEcPVUSAdaUT5Ig9K6d8OEUIcZAJ017a3VyBx8JbFuStICV8pqSt28IxMRjb8qKt
+ SMm9t83v3Z3/wr6VX2Ew0WucbqKieke/SZdIZDaIbG3y/qnnRUUp2y9fmJ7GaTU1
+ 8m/i5H6AGaJCzRlsTwkRa7QNSlhAyPg1FVzpvK+CI2UyqNltG8Qy7DqOWI8nU7z+
+ CKmGJwv/dIOOy6DbL0O8EZ1Du53pnAmKo4w96rxfPRnMPM7xxEt5XV/kLQdacvHK
+ 54W+fOdTzBMjeET8fQQR4GNNZHfd/EfSOKsnJ8pnIviZiXYTmq/XLIuELgoCJ/EQ
+ ==
+X-ME-Sender: <xms:MbepYbrKigQ1C_qzySko92gpGu7NFtaMHKn0BOs95Lc_dvgUG_gqng>
+ <xme:MbepYVqJqRgMI1P3IsLNo8p2vsYcQMrDkHohwe8HlBL0OMgufo-ljARvVGCqj8ffU
+ H-_V0VL_LozmoAA8Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrieeigdeliecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
+ veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:MbepYYOv7nN6nuXfk03xcV9PI5Zqhas9p3_KoVZ90U89GfwV2Tei3w>
+ <xmx:MbepYe7Y93m_051lR_P3CnSflMCRAK__2CfI2rW4jXQnoZDxNkRZlg>
+ <xmx:MbepYa71GDfXkXbr-9qVH6tBP9D8I6DiWVXsTVKT9jTfDYsWkG_34Q>
+ <xmx:MbepYQn2ICqffieWadpY25ZqP5cTqtGc30htWfTcVhpu-G49Ke5REA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 142D5AC03DB; Fri,  3 Dec 2021 01:20:33 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4458-g51a91c06b2-fm-20211130.004-g51a91c06
+Mime-Version: 1.0
+Message-Id: <56d66cf6-a05f-461f-9db5-b02b30dc12b2@www.fastmail.com>
+In-Reply-To: <20211203035019.GC25091@packtop>
+References: <20211201072902.127542-1-joel@jms.id.au>
+ <CAMRc=McG0stAC_v9_oLjwXa4=nyJVpmuyi2eVWCFA+NW9mWibg@mail.gmail.com>
+ <CACPK8XcEhsz8Xk2m7bdPaFnwQ3BrKTH80r-ir_qwngTZ+FmGBQ@mail.gmail.com>
+ <20211203035019.GC25091@packtop>
+Date: Fri, 03 Dec 2021 16:50:12 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Zev Weiss" <zweiss@equinix.com>, "Joel Stanley" <joel@jms.id.au>
+Subject: Re: [libgpiod PATCH] gpioget: Add --line-name to lookup GPIO line
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,75 +98,79 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: benjaminfair@google.com, andrew@aj.id.au, openbmc@lists.ozlabs.org,
- tali.perry1@gmail.com, krellan@google.com, linux-i2c@vger.kernel.org
+Cc: "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ Bartosz Golaszewski <brgl@bgdev.pl>, Eddie James <eajames@linux.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 2021-12-02 at 18:37 -0800, Sui Chen wrote:
-> This change adds a few example I2C debug counters as sysfs attributes:
-> - ber_cnt (bus error count)
-> - nack_cnt (NACK count)
-> - rec_fail_cnt, rec_succ_cnt (recovery failure/success count)
-> - timeout_cnt (timeout count)
-> - i2c_speed (bus frequency)
-> - tx_complete_cnt (transaction completed, including both as an initiator
->   and as a target)
-> 
-> The function i2c_adapter_create_stats_folder creates a stats directory
-> in the device's sysfs directory to hold the debug counters. The platform
-> drivers are responsible for instantiating the counters in the stats
-> directory if applicable.
-[]
-> diff --git a/drivers/i2c/i2c-dev.c b/drivers/i2c/i2c-dev.c
-[]
-> +void i2c_adapter_create_stats_folder(struct i2c_adapter* adapter) {
-> +	adapter->stats = kzalloc(sizeof(struct i2c_adapter_stats), GFP_KERNEL);
-
-unchecked alloc, could fail.
-
-> +	adapter->stats->kobj = kobject_create_and_add("stats", &adapter->dev.kobj);;
-> +}
-> +
-> +void i2c_adapter_stats_register_counter(struct i2c_adapter* adapter,
-> +	const char* counter_name, void* data_source) {
-> +	int ret;
-> +	if (adapter->stats == NULL) {
-> +		i2c_adapter_create_stats_folder(adapter);
-> +	}
-
-So all of these adapter->stats dereferences could oops.
-
-> +	if (!strcmp(counter_name, "ber_cnt")) {
-> +		adapter->stats->ber_cnt = data_source;
-> +		ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_ber_cnt.attr);
-> +	} else if (!strcmp(counter_name, "nack_cnt")) {
-> +		adapter->stats->nack_cnt = data_source;
-> +		ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_nack_cnt.attr);
-> +	} else if (!strcmp(counter_name, "rec_succ_cnt")) {
-> +		adapter->stats->rec_succ_cnt = data_source;
-> +		ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_rec_succ_cnt.attr);
-> +	} else if (!strcmp(counter_name, "rec_fail_cnt")) {
-> +		adapter->stats->rec_fail_cnt = data_source;
-> +		ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_rec_fail_cnt.attr);
-> +	} else if (!strcmp(counter_name, "timeout_cnt")) {
-> +		adapter->stats->timeout_cnt = data_source;
-> +		ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_timeout_cnt.attr);
-> +	} else if (!strcmp(counter_name, "i2c_speed")) {
-> +		adapter->stats->i2c_speed = data_source;
-> +		ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_i2c_speed.attr);
-> +	} else if (!strcmp(counter_name, "tx_complete_cnt")) {
-> +		adapter->stats->tx_complete_cnt = data_source;
-> +		ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_tx_complete_cnt.attr);
-> +	}
-
-and if none of the strcmp comparisons match, ret is uninitialized.
-
-> +
-> +	if (ret) {
-> +		printk("Failed to create sysfs file for %s", counter_name);
-
-pr_<level> and should have a terminating newline
 
 
+On Fri, 3 Dec 2021, at 14:20, Zev Weiss wrote:
+> On Wed, Dec 01, 2021 at 08:29:47PM PST, Joel Stanley wrote:
+>>On Wed, 1 Dec 2021 at 08:29, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>>
+>>> On Wed, Dec 1, 2021 at 8:29 AM Joel Stanley <joel@jms.id.au> wrote:
+>>> >
+>>> > Systems provide line names to make using GPIOs easier for userspace. Use
+>>> > this feature to make the tools user friendly by adding the ability to
+>>> > show the state of a named line.
+>>> >
+>>> >  $ gpioget --line-name power-chassis-good
+>>> >  1
+>>> >
+>>> >  $ gpioget -L pcieslot-power
+>>> >  0
+>>
+>>> I'm not very convinced to be honest. It's not like "gpioget gpiochip0
+>>> `gpiofind gpiochip0 line-name`" requires much more typing than
+>>> "gpioget gpiochip --line-name=name".
+>>
+>>I'm taking on feedback from people working in our labs, and
+>>implementing userspace applications. We've been building BMCs with
+>>mainline Linux for about six years now, and it's been a long road
+>>re-training them from "back in the day we just did devmem <this>
+>><that>" and "why can't we just do cat /sys/class/gpio/gpio305/value",
+>>and now "why does the level of the GPIO change back after I run the
+>>command?".
+>>
+>>This usability improvement is one more step towards them using and
+>>being happy with the "new world" of the gpiod API.
+>>
+>>Once we settle on a good API here, I plan on submitting a version of
+>>gpioget/gpioset added to busybox.
+>>
+>>> There are also other questions:
+>>> this uses getopt and only allows to specify a single line name. What
+>>> if we want to specify more lines like with offsets? Even if you allow
+>>> multiple names, getopt() doesn't guarantee ordering of arguments.
+>>
+>>If you're happy with the concept I'm happy to iterate on the implementation.
+>>
+>>Yes, it only allows a single line name. That tends to be how the tool
+>>is used, both from the command line and in scripts.
+>>
+>>Can you give me an example of your proposed command line API, so I can
+>>understand what you're suggesting here?
+>>
+>
+> My two cents: like Jeremy, I would very much welcome the ability to
+> specify GPIOs by name instead of number, but the one-line-only
+> limitation does seem unfortunate.  How about making a command-line flag
+> that just means "line-specifier arguments should be interpreted as names
+> instead of numbers"?
+>
+> So you could do:
+>
+>   $ gpioget --by-name chassis-intrusion cpu1-prochot
+>   0 1
+>
+>   $ gpioset --by-name led-green=1 led-red=0
+>
 
+I came up with this approach as well (independently, just thinking 
+about Joel's patch). I think it has good ergonomics. I hadn't figured 
+out how we should interpret the arguments as line index vs line name, 
+but your --by-name option solves that. I like it a lot.
+
+Andrew
