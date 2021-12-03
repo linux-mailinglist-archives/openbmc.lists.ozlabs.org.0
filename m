@@ -1,74 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15FC24674A5
-	for <lists+openbmc@lfdr.de>; Fri,  3 Dec 2021 11:19:15 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B12A467B93
+	for <lists+openbmc@lfdr.de>; Fri,  3 Dec 2021 17:38:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J581r6j6dz308v
-	for <lists+openbmc@lfdr.de>; Fri,  3 Dec 2021 21:19:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J5JR02Qrjz3bWw
+	for <lists+openbmc@lfdr.de>; Sat,  4 Dec 2021 03:38:04 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bgdev-pl.20210112.gappssmtp.com header.i=@bgdev-pl.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=2LaKkFiq;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=ArLkupHj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=bgdev.pl
- (client-ip=2a00:1450:4864:20::52a; helo=mail-ed1-x52a.google.com;
- envelope-from=brgl@bgdev.pl; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=kernel.org (client-ip=2604:1380:4601:e00::1;
+ helo=ams.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bgdev-pl.20210112.gappssmtp.com
- header.i=@bgdev-pl.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=2LaKkFiq; dkim-atps=neutral
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com
- [IPv6:2a00:1450:4864:20::52a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=ArLkupHj; 
+ dkim-atps=neutral
+Received: from ams.source.kernel.org (ams.source.kernel.org
+ [IPv6:2604:1380:4601:e00::1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J581P5tHxz2xDY
- for <openbmc@lists.ozlabs.org>; Fri,  3 Dec 2021 21:18:48 +1100 (AEDT)
-Received: by mail-ed1-x52a.google.com with SMTP id x15so9596726edv.1
- for <openbmc@lists.ozlabs.org>; Fri, 03 Dec 2021 02:18:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=XTjnjmHFEpnEFTVjBjOe1NAWxlCV0BUHNCPW5djSw5g=;
- b=2LaKkFiqei1zR23gg/atHaiYhBx0OqMivxbTdeyOLfY2rNOgPdTC+A+eRnAy068MZI
- F/sH1VjQRQpZbQVSz2OnsDDPRm5ERrSlFOuO7SNN9AQLZLyAMHWGCcsSDV4OxCBNkOsh
- o3QP8XT/UPWMKeApPlsTsFEtbmDAK5PaZs4YNbw8jG5b9Z4l/qj43ky4/4WWh1qQWtyP
- Iu5mrf56nPVUtmzslCG/B7jp9eg6lgGjGJp9h8hrfdU6ZQGkzNTcZhQdb8XUeHqvgiB2
- a+IxgCExg1FoWtUkICi9H+XxvSaBxcRxNgZumvRqC7i3gGzBcBM93oN23e5Ze+pe40Dg
- ryNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=XTjnjmHFEpnEFTVjBjOe1NAWxlCV0BUHNCPW5djSw5g=;
- b=ORE1fqeOFCwetazkDlICttMKpOHGrvT/D7ZMNNfqaNj0MjzaSBbpZ7h4+rrQBEC8H3
- pV1KkNSLQc8SYZOzqcrQ6XDZRto7gVaiHV4KNzEPsavCykgPBmmIf1fpgX5xeTh0oYmG
- RG7lap/8aUKX0U56Glkf+M8yCeMXH9UKv1sW3vQKTGkxj0MjiLPK+hYGY4J2mbZBRrOe
- TjAS5LcVX8W4XE6tVMrtQBERSLKH7Q94R6oeoafs4jrYsGa14n8s0US50H2pP9dVYl3l
- NIXdYa3L0K7pqvyqJIZ0/9r1MzhUN6wmOjm8ZrfA9C/ZEUzmjNwICPGMfpyD1+JhKZft
- nsrA==
-X-Gm-Message-State: AOAM533HIpAfg/1MHh41fwXg2C/wAGpLA8ti9sffwyidBU3vwJ6HamiV
- AgY+gtd+nyruU4ZvlO44ns1ne/rW6oA+AJCIrApgq72zOE3xKDwh
-X-Google-Smtp-Source: ABdhPJxypJv8XErfHRuqkXVHyKtOg3P4RSUfdy/7URwKabJs7JnzL+f50qXCH1okVSwS3waJ+xVS+zB03SQLxFOAPWU=
-X-Received: by 2002:a05:6402:27c7:: with SMTP id
- c7mr25953722ede.0.1638526721048; 
- Fri, 03 Dec 2021 02:18:41 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J5JQb3Hncz302G
+ for <openbmc@lists.ozlabs.org>; Sat,  4 Dec 2021 03:37:43 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 2B1BDB8266D;
+ Fri,  3 Dec 2021 16:37:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44260C53FCD;
+ Fri,  3 Dec 2021 16:37:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1638549457;
+ bh=RaQUeM5FjKYkPEE/kCPfxJNphXuR9R0Uk5864sf6S2M=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=ArLkupHjT5pr4EvSwZ2qdKt0GL4gc7v7rXuPWG6a5Fb9+jjIQpKKkCiOHcBLBBIcZ
+ oCnb76jPjqlqzYFsFgLQwGb54TrcL6UmNpnqtTqDok2ph0aDpzA+Jm3lhMeO8wIyF9
+ LVD0bfQhTY2eDl008epTwItD8C+F0qFbGS3gkXdQyWNqJY42ZkY/ED8pZ71nLwTM2K
+ uaJaEyGo3s7Y+9ERKN37+m2lEIUdNmQVNQKiwzTixlkUjx2vlV2j8QPnUeD4jamwfm
+ mhIfQdC9rDcf6CBr3iC8xcwjLHDFAyOV1fErsDd3M9yJFteAfAjfG/g2IrhC59pocr
+ oldKQ2sS13dZA==
+Date: Fri, 3 Dec 2021 17:37:34 +0100
+From: Wolfram Sang <wsa@kernel.org>
+To: Sui Chen <suichen@google.com>
+Subject: Re: [RFC Patch v2 0/3] I2C statistics as sysfs attributes
+Message-ID: <YapHznDoqJ+wjx8m@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+ Sui Chen <suichen@google.com>, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-i2c@vger.kernel.org, joel@jms.id.au,
+ andrew@aj.id.au, tali.perry1@gmail.com, benjaminfair@google.com,
+ krellan@google.com, joe@perches.com
+References: <20211203023728.3699610-1-suichen@google.com>
 MIME-Version: 1.0
-References: <20211201072902.127542-1-joel@jms.id.au>
- <CAMRc=McG0stAC_v9_oLjwXa4=nyJVpmuyi2eVWCFA+NW9mWibg@mail.gmail.com>
- <CACPK8XcEhsz8Xk2m7bdPaFnwQ3BrKTH80r-ir_qwngTZ+FmGBQ@mail.gmail.com>
- <20211203035019.GC25091@packtop>
- <56d66cf6-a05f-461f-9db5-b02b30dc12b2@www.fastmail.com>
-In-Reply-To: <56d66cf6-a05f-461f-9db5-b02b30dc12b2@www.fastmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Fri, 3 Dec 2021 11:18:30 +0100
-Message-ID: <CAMRc=Me26z7d26AY-UFe7T83doqXvreuEtjs1W--uJLmzKaNvA@mail.gmail.com>
-Subject: Re: [libgpiod PATCH] gpioget: Add --line-name to lookup GPIO line
-To: Andrew Jeffery <andrew@aj.id.au>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="LHJ0t05wcta78tCq"
+Content-Disposition: inline
+In-Reply-To: <20211203023728.3699610-1-suichen@google.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,94 +69,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>, Zev Weiss <zweiss@equinix.com>
+Cc: benjaminfair@google.com, andrew@aj.id.au, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, tali.perry1@gmail.com, krellan@google.com,
+ joe@perches.com, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Dec 3, 2021 at 7:20 AM Andrew Jeffery <andrew@aj.id.au> wrote:
->
->
->
-> On Fri, 3 Dec 2021, at 14:20, Zev Weiss wrote:
-> > On Wed, Dec 01, 2021 at 08:29:47PM PST, Joel Stanley wrote:
-> >>On Wed, 1 Dec 2021 at 08:29, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
-> >>>
-> >>> On Wed, Dec 1, 2021 at 8:29 AM Joel Stanley <joel@jms.id.au> wrote:
-> >>> >
-> >>> > Systems provide line names to make using GPIOs easier for userspace. Use
-> >>> > this feature to make the tools user friendly by adding the ability to
-> >>> > show the state of a named line.
-> >>> >
-> >>> >  $ gpioget --line-name power-chassis-good
-> >>> >  1
-> >>> >
-> >>> >  $ gpioget -L pcieslot-power
-> >>> >  0
-> >>
-> >>> I'm not very convinced to be honest. It's not like "gpioget gpiochip0
-> >>> `gpiofind gpiochip0 line-name`" requires much more typing than
-> >>> "gpioget gpiochip --line-name=name".
-> >>
-> >>I'm taking on feedback from people working in our labs, and
-> >>implementing userspace applications. We've been building BMCs with
-> >>mainline Linux for about six years now, and it's been a long road
-> >>re-training them from "back in the day we just did devmem <this>
-> >><that>" and "why can't we just do cat /sys/class/gpio/gpio305/value",
-> >>and now "why does the level of the GPIO change back after I run the
-> >>command?".
-> >>
-> >>This usability improvement is one more step towards them using and
-> >>being happy with the "new world" of the gpiod API.
-> >>
-> >>Once we settle on a good API here, I plan on submitting a version of
-> >>gpioget/gpioset added to busybox.
-> >>
-> >>> There are also other questions:
-> >>> this uses getopt and only allows to specify a single line name. What
-> >>> if we want to specify more lines like with offsets? Even if you allow
-> >>> multiple names, getopt() doesn't guarantee ordering of arguments.
-> >>
-> >>If you're happy with the concept I'm happy to iterate on the implementation.
-> >>
 
-Alright, it looks like this has passed by popular vote.
+--LHJ0t05wcta78tCq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> >>Yes, it only allows a single line name. That tends to be how the tool
-> >>is used, both from the command line and in scripts.
-> >>
-> >>Can you give me an example of your proposed command line API, so I can
-> >>understand what you're suggesting here?
-> >>
-> >
-> > My two cents: like Jeremy, I would very much welcome the ability to
-> > specify GPIOs by name instead of number, but the one-line-only
-> > limitation does seem unfortunate.  How about making a command-line flag
-> > that just means "line-specifier arguments should be interpreted as names
-> > instead of numbers"?
-> >
-> > So you could do:
-> >
-> >   $ gpioget --by-name chassis-intrusion cpu1-prochot
-> >   0 1
-> >
-> >   $ gpioset --by-name led-green=1 led-red=0
+On Thu, Dec 02, 2021 at 06:37:25PM -0800, Sui Chen wrote:
+> Add I2C statistics such as Bus Error counts and NACK counts as sysfs
+> attributes so they don't need to live in debugfs.
 
-I like this more - that way we either allow offsets or names. Please
-make sure corner cases are covered. If you can add this to other tools
-too, I'm fine with that, but put the name lookup code into
-tools-common.c please. I would also like to see bats test cases
-covering this.
+What has changed since v1?
 
-Thanks!
-Bart
+=46rom a glimpse, none of my questions to v1 have been answered or
+addressed?
 
-> >
->
-> I came up with this approach as well (independently, just thinking
-> about Joel's patch). I think it has good ergonomics. I hadn't figured
-> out how we should interpret the arguments as line index vs line name,
-> but your --by-name option solves that. I like it a lot.
->
-> Andrew
+
+--LHJ0t05wcta78tCq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmGqR8oACgkQFA3kzBSg
+KbbJUQ/9FR9iFKVBIJx91SD9MXVjmtU8xgFUs8hXfXmN6gNe9QnzRtcO4qas2tKI
+Flxo3yz9ocPpH/Gb3SG1Kwdv9Jze5gOL1nLrml8zVUiJa3JsrnQmqQVSZOpPLcpE
+H/yKLGu1FH4ALjSAsg6tJKyc1JJqdbhBqqhWCQXTjB1RNN7FpNzy1RlxwsKUNF47
+ZKMJ3A7ADX+wNpRAQg/k3UFkN5kNcGyuRhHg+4hQyySjrxaraaAZBOhjLiiAtTuj
+ahkNbwvUHnZeO694UMK/0/xQAEGzgan4ryrNo32I8nautczhk9DWPLTxVJIfOh4a
+3bhjhtBVo7EQ1wM64jH0cp2lvJ6588syqk7+rI207YBa9zIkZTjuH4w/9678pinX
+Rpbwpn1M/nQpdjds55QGYaSVMbzGoQRh25PN4xHkyynRAd37aOdUp2JCMgqcqLoC
+s9fTyXDEzwDiZEKKM5uG9+JmQQjiMZ4dhdk9D/DY+36mfQ10Rw3W9QeJ0JGqYTCW
+h7aswLDb1Q+PuwEKnlAC2pe1g6bIA5igjcPGdMBi6B7zpQXGyKJP12TlPpTex4s8
+GTGqHx2zIP0mGgrLzfRl0M2RZddiDPSAhGVMoa0lq/EXRN4Qqse59VdJZCB814tC
+TCG9sBXqMFbuFvwQOzOfiyjQoyN/6Fs850U4EJfTjMMAohnn9iY=
+=LdTx
+-----END PGP SIGNATURE-----
+
+--LHJ0t05wcta78tCq--
