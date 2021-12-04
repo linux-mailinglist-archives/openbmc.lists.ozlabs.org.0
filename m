@@ -1,86 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 214B1467DBE
-	for <lists+openbmc@lfdr.de>; Fri,  3 Dec 2021 20:05:18 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43ADE4686B4
+	for <lists+openbmc@lfdr.de>; Sat,  4 Dec 2021 18:41:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J5Mhq6Mflz3bNB
-	for <lists+openbmc@lfdr.de>; Sat,  4 Dec 2021 06:05:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J5xnQ0YKVz2yPs
+	for <lists+openbmc@lfdr.de>; Sun,  5 Dec 2021 04:41:14 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=H+z8bHKW;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=j2k/cIq9;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=KY0M2wwP;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=hotmail.com (client-ip=40.92.42.83;
- helo=nam10-mw2-obe.outbound.protection.outlook.com;
- envelope-from=zkxz@hotmail.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256
- header.s=selector1 header.b=H+z8bHKW; 
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=j2k/cIq9; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=KY0M2wwP; 
  dkim-atps=neutral
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com
- (mail-mw2nam10olkn2083.outbound.protection.outlook.com [40.92.42.83])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J5MhP74ZBz2yph
- for <openbmc@lists.ozlabs.org>; Sat,  4 Dec 2021 06:04:52 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fFklqkJiBipq4jWF8cA17hkaVys0jfOytY3v2HwN2XaJBf8hsQinW+695fQqIzfUuJcviMjH3kwroE9hHIGzz286WZ/gSmwS4v3pShiHJTAJzTV1CumBSOJ7WgJxxgmeccpLewmZzgx4Hb2jEkZsJe7GAgwpySAUXCcESS9pJwIDOBtT466T0HW8oODSNW1SYzLbr/wVKcOGRbmkCzboZ+q9oruCZ325v+cFYDMH/xO/1gsU4h2vY80wXa1HaCiwd6RKo7vylRpZQRGzC71qQPicVng/sLZDzIqO2pGn4fFaIYbI3cNNIJ0VoUc26wFnzI7b6YIY8VSbyaiPvlGlJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=p58CXrVnTdfuoioLEYiSDvTn+JRvIMFBkSrteAAJEug=;
- b=CMGZrHTRHQV6VM0UsKAiKgPF4hBhHeKcD6UbXfkIOrAesTPPgrT14UGqJSSSIFdsveSGOyfnEAVQLYhTZjsVTI5JMdtONNgHkVK4f36bAdVLSKQUZ1RCqr0OnLicqZiEdOQDrTwNAlT7igrN5fgZ1V28FOQpp41g1sRg2LTq1JxofROJiNCriYFpWGWZlvbN89vNR3xXT24G+okt36CXnSa3GIPyPRm+OaLFn/oRzCEytb9YkYttp4rifO7mh1EpBcaGzJ081HJTUgmE/sBreO5sasrerv7HNkkCn8sD0s774Zvd3tgj77R2s2ustKQZ78rtYXoL70ppofuirxeaNg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=p58CXrVnTdfuoioLEYiSDvTn+JRvIMFBkSrteAAJEug=;
- b=H+z8bHKW7GskJcLN8jtXOlLjT3N6km3o3yJPDsXlibQxih6EnTpdjgiFTfEz3H08LT52JKwbug/ktl5HOnsZHyDLY4UQAe8Hlhmejo0JMIh1RPH7S99eKuko90fSzdqE07Qv6K9+pDC9wXJ9IAUqMP/gwZwLlF6XTyVV7J7mJzq1/clAIqjcNzZUAQLsjBXiHfaj6N9gvMGaOIKTK8O9kcDt2dtWbJGmaIMZbnOSkf9DE2+qHc6nHgD2rNwBAIQ9abr7Oy+sve6IB4zSLEI4e1YDz+dfhv3Bdj9TJyBuhKdWfJh0/fbnzWXVZH4VppjEDtxh15QflkB3v85y23D/mg==
-Received: from SJ0PR14MB4805.namprd14.prod.outlook.com (2603:10b6:a03:376::7)
- by BYAPR14MB3175.namprd14.prod.outlook.com (2603:10b6:a03:d9::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.11; Fri, 3 Dec
- 2021 18:31:45 +0000
-Received: from SJ0PR14MB4805.namprd14.prod.outlook.com
- ([fe80::855b:40a8:8bd1:3a3e]) by SJ0PR14MB4805.namprd14.prod.outlook.com
- ([fe80::855b:40a8:8bd1:3a3e%9]) with mapi id 15.20.4734.028; Fri, 3 Dec 2021
- 18:31:45 +0000
-From: Kun Zhao <zkxz@hotmail.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Any cmdline tools to modify DBus
-Thread-Topic: Any cmdline tools to modify DBus
-Thread-Index: Adfoc1KRRnzGloZ9RVOnQZdSCvUk9w==
-Date: Fri, 3 Dec 2021 18:31:44 +0000
-Message-ID: <SJ0PR14MB48051F038B0094EDF6662CCDDC6A9@SJ0PR14MB4805.namprd14.prod.outlook.com>
-Accept-Language: en-US, zh-CN
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-tmn: [eVTeabs7C0FgEF3TmZx4JJMgxxYUQ4UX]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 33e41b88-16da-4941-5baa-08d9b68b28f2
-x-ms-traffictypediagnostic: BYAPR14MB3175:
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: o7OoSAY4Cf5+eBoEIBD1BXAg5Iw6xrWA1FXPBrrZmV3x9T6g2/sonLQH+eOC4N41ebM4XejSt989W1DAZgHn24sw+XoL3QLGpLL2r6jSjhtixmKw2ayozUDFV1pXk48b9rFJcPnxz5ckP/Eg9ZRPGHarREoIItONLutYr1LSwu8hCpWu6llsY4pkr7zDgQt14rJuZfZt01UHmuHD1KlOymNrdW1DJ9MqN9FFwGBDeKefomPJ18BmsrOQr4KIyeJ8Dl48L0Tz7fksAOnhF+UFpjLkiDmv5FgZK0iBn0wEyiXr8BqNQ9qA2zOO/LndWPwZUU7e3l1simdv4tGN62OzHsk5Jsc2rjQttmIRn+HEIcClf97l85CLIKsZVj8L2/fYEVVUjv5Tj91ubvwsKwa4VJxI8kIJLp2fgI4oK0URpRotmT3RLSU9W70I3tpn1yNr35PZZ2m/UQPSq2BX9qCZm0YjkdsDM+xSP8UHancH1b3mTqWpTiZNKFPsDzyLiSPAFDsSdzVJf93JZzvmMW7SUaaq8fFI+KwMvXsyao0n8h5L4Hc44VGVvD0hte8FRIolAWLi8ivzBmSOnzEmz+imjQ==
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: gG6IOYbVmh4oJGTB7DJgKdXv0xU8PDz2dV26LV/Arlj8pMYKdymjtVKqxRcQTErDpc1fqBZ8iTq11ZttqkJAB/DI9xzf0B6R1e8ICERFqZILkYP2NAkeHwNhrSymkEbDNFFhiRh8yyjljNG4/UqAZSqz22YaQ71DLkRwVDfbss/QuFv3MkPv1vwAhgHTY5LJquH8+CzncyNVPUI401HXppav3oaTO34PnTc19cXrUCinnKFABROyMv+X8DOzmdEOwtjPAfdGI8AAtUAUq9KIt207NPlSvsIGyCaw+ELmg9iEszhpd/0xy+7RD9qAicQbujKm0JbA757T1gH8E3NVgMY2MPxrR8yAfgjtd//m01W6WMZsGtTrHgqs0FzTUjB3GxP0Aby5sKesRv8/mO2t6OtTgXjhL+Ma7TMqL7slUHBBbGkIpEtUs61txoPp6R8pQXWNg1vSLEGBPHEYUvtR20HISPpLu/V56f1Yj7dnZQDiKziE71+bRnPP+Gqy9ya2LX6FlND8OrdaGHriRFjFbp77KeHFNiUij2wDpVwBMliIHg4YV00pvPftOqjcpD7KgWZg6K87XyVDsp3QoLhFiLyBkpZ44Tynq0tlG7lXbE5LBs5ED8YGz+N/l2As2prdAB30L07EHxOdcY/+NAOi+Bp/QpijUYuY9LvZYWvko0WCY5C0S5pv30nJnUDvFMYfpcid7s6a0a7DPk9y/qte+xYaKDg5lEEEaS1zMyXgcWOTVfbC86UjdospaedEwThIK1d9U8YNBO8bQYLjoZKZp6KTZ1dFQMw6RBDyfohUAYrgihDu3FFErd4W/fDgY0IYaq/qoVYgIVNI/98eXJEhlvBaYBuBHT5ZvAtTHtMGmJl96fCOu+ylvYY6jpltmTHR98IOQDFWxIu95qZNV7HN/YU/jcBcYnjrTT7v02A/3lyVa+bTSflBlPli+Hvr8ACP
-Content-Type: multipart/alternative;
- boundary="_000_SJ0PR14MB48051F038B0094EDF6662CCDDC6A9SJ0PR14MB4805namp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J5xmx5LYMz2yJv
+ for <openbmc@lists.ozlabs.org>; Sun,  5 Dec 2021 04:40:48 +1100 (AEDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailout.west.internal (Postfix) with ESMTP id 661E73200B23;
+ Sat,  4 Dec 2021 12:40:45 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute1.internal (MEProxy); Sat, 04 Dec 2021 12:40:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=q5bc8X7qxvPClHyyCR5WeEeYNZq
+ wQr4iIBu2icmGFiE=; b=j2k/cIq9uUUjrXwnBAXZe3DHNt2nr2Ga2ob/D21uCn1
+ G6CVpvsWWJ3r+EI+t10Ks/yy8mc7plz3c/Uyqi0rOE64KBF0p24dEeImcFRwHYxN
+ oo+oxKL3+WZ2miyFA8I5R3KMAHtRwJj5WUiEypKDEwphXESNmiL3ArBjt05p9t+p
+ ptD+brqRFQh4OtYZNl8G9xShHr9hBzJ7PcRx3dp5E0ia7f3LVsMwu+WR577T7cXC
+ 82c6hRAfmgyPvONkgn0/TDo4cSdfT4gn9dZ1gfs0u5Pfx/T5DhzISNNXrvBMA8Rw
+ fBgo43GLMiY7mJo+9aQKora45jW65qw6tnVE25zOr8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=q5bc8X
+ 7qxvPClHyyCR5WeEeYNZqwQr4iIBu2icmGFiE=; b=KY0M2wwPW0Qo+lHayqi5oP
+ /vR/xA7GRrE0dZ57xYOHiTPH3t3ZXNWgQegmcrk4jho3OogHbr7EETlzJAr0bN+Y
+ ryYAUhu7MtFtwuLiBtsnOLM3DmQrW/jGTJBS7bWhJIm/QBkqH1ISWMqz5okuIxD1
+ ANJ0hpdVaBUx2z0k8qwjltiFgavtJoMG37Tw5TW0gIr+l5mtVzHIVGJ5YuE0lvQg
+ rAKFJKQj7EuaKCnPnMz1Wr3nzOegDnQKFoeRXRqY9m2UQ5ou6xDCt8WUZIEew6c+
+ /NQcRFpviIknjdM85nKLuDU/TvVoOZHuMa3ssubQ/EBXG37sgLnv9btz18laJgRQ
+ ==
+X-ME-Sender: <xms:HKirYcFm0DYs8EFl8RKoIEilgtQ5E-L5wTwIvh6Q5h5yCICzCRi_UQ>
+ <xme:HKirYVVC7_L7c26hWkpZEnQLBf7OVhikOnzPZLhpo6v9Tr417tnNClJY0WYOoi3xW
+ bduxVKgqs3kLwjV88g>
+X-ME-Received: <xmr:HKirYWL0MzmSt_TI0897387lj-dhD5C6rlnil1GoIF4VZPuLBZUbo0C-kIpP46sljxFuvtIu2NDv0wUgUSjxEXEZV-ZF2QG3fvkZrd9F6hW7hA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrieelgddutdefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpeffhf
+ fvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
+ ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
+ epgeehheefffegkeevhedthffgudfhgeefgfdthefhkedtleffveekgfeuffehtdeinecu
+ vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrih
+ gtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:HKirYeGF6pOd7p5ow5JQbPndHC-KjYPA3_Tiun7sDH95V6E7efg2zw>
+ <xmx:HKirYSXr0nRf4h2ak25CYaeQS6DqxNKytj-mPL2Brs2RCDtZR93vtw>
+ <xmx:HKirYRP5E5qffQ_eFdykTlW-W7Fnp7p9jSr_auPzENkWC9iR-laXcw>
+ <xmx:HKirYbd78vz2xdJPZU37qjePbuOa3wfmJ9lByP4Gwa_AimijFPwb-w>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 4 Dec 2021 12:40:44 -0500 (EST)
+Date: Sat, 4 Dec 2021 11:40:43 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Kun Zhao <zkxz@hotmail.com>
+Subject: Re: Any cmdline tools to modify DBus
+Message-ID: <YauoG2/JyAeyqT1z@heinlein>
+References: <SJ0PR14MB48051F038B0094EDF6662CCDDC6A9@SJ0PR14MB4805.namprd14.prod.outlook.com>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-3174-20-msonline-outlook-32894.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR14MB4805.namprd14.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 33e41b88-16da-4941-5baa-08d9b68b28f2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Dec 2021 18:31:44.7990 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR14MB3175
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="NFHtkjF9P/zAqTh9"
+Content-Disposition: inline
+In-Reply-To: <SJ0PR14MB48051F038B0094EDF6662CCDDC6A9@SJ0PR14MB4805.namprd14.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,62 +96,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_SJ0PR14MB48051F038B0094EDF6662CCDDC6A9SJ0PR14MB4805namp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
 
-SGkgVGVhbSwNCg0KSXMgdGhlcmUgYW55IGNtZCB0byBjcmVhdGUvZGVsZXRlIGludGVyZmFjZS9w
-cm9wZXJ0eSBvZiBleGlzdGluZyBEQnVzIG9iamVjdHMgY3JlYXRlZCBieSBvdGhlciBzZXJ2aWNl
-cz8gTG9va2luZyBmb3IgYW4gZWFzaWVyIHdheSB0byBxdWlja2x5IGRvIGl0IGZvciBkZWJ1Z2dp
-bmcgaW4gZWFybHkgZGV2ZWxvcG1lbnQgcGhhc2Ugd2l0aG91dCBjb2RpbmcuDQpQbGVhc2UgYWR2
-aXNlLg0KDQpUaGFua3MsDQpLdW4NCg==
+--NFHtkjF9P/zAqTh9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
---_000_SJ0PR14MB48051F038B0094EDF6662CCDDC6A9SJ0PR14MB4805namp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+On Fri, Dec 03, 2021 at 06:31:44PM +0000, Kun Zhao wrote:
+> Is there any cmd to create/delete interface/property of existing DBus obj=
+ects created by other services? Looking for an easier way to quickly do it =
+for debugging in early development phase without coding.
+> Please advise.
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-5a6L5L2TOw0KCXBhbm9zZS0xOjIgMSA2IDAgMyAxIDEgMSAxIDE7fQ0KQGZvbnQtZmFjZQ0KCXtm
-b250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2IDMgMiA0
-O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToyIDE1IDUg
-MiAyIDIgNCAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJcQOWui+S9kyI7DQoJ
-cGFub3NlLTE6MiAxIDYgMCAzIDEgMSAxIDEgMTt9DQovKiBTdHlsZSBEZWZpbml0aW9ucyAqLw0K
-cC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0KCXttYXJnaW46MGluOw0K
-CW1hcmdpbi1ib3R0b206LjAwMDFwdDsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQtZmFtaWx5
-OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxpbmsNCgl7bXNv
-LXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOiMwNTYzQzE7DQoJdGV4dC1kZWNvcmF0aW9uOnVu
-ZGVybGluZTt9DQphOnZpc2l0ZWQsIHNwYW4uTXNvSHlwZXJsaW5rRm9sbG93ZWQNCgl7bXNvLXN0
-eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOiM5NTRGNzI7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVy
-bGluZTt9DQpzcGFuLkVtYWlsU3R5bGUxNw0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1jb21w
-b3NlOw0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOndpbmRvd3Rl
-eHQ7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9u
-dC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3Np
-emU6OC41aW4gMTEuMGluOw0KCW1hcmdpbjoxLjBpbiAxLjI1aW4gMS4waW4gMS4yNWluO30NCmRp
-di5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3JkU2VjdGlvbjE7fQ0KLS0+PC9zdHlsZT48IS0tW2lm
-IGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlZGVmYXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9
-IjEwMjYiIC8+DQo8L3htbD48IVtlbmRpZl0tLT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxv
-OnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0Ij4NCjxvOmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIx
-IiAvPg0KPC9vOnNoYXBlbGF5b3V0PjwveG1sPjwhW2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkg
-bGFuZz0iRU4tVVMiIGxpbms9IiMwNTYzQzEiIHZsaW5rPSIjOTU0RjcyIj4NCjxkaXYgY2xhc3M9
-IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5IaSBUZWFtLDxvOnA+PC9vOnA+
-PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj5JcyB0aGVyZSBhbnkgY21kIHRvIGNyZWF0ZS9kZWxldGUgaW50ZXJmYWNl
-L3Byb3BlcnR5IG9mIGV4aXN0aW5nIERCdXMgb2JqZWN0cyBjcmVhdGVkIGJ5IG90aGVyIHNlcnZp
-Y2VzPyBMb29raW5nIGZvciBhbiBlYXNpZXIgd2F5IHRvIHF1aWNrbHkgZG8gaXQgZm9yIGRlYnVn
-Z2luZyBpbiBlYXJseSBkZXZlbG9wbWVudCBwaGFzZSB3aXRob3V0IGNvZGluZy48bzpwPjwvbzpw
-PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPlBsZWFzZSBhZHZpc2UuPG86cD48L286cD48L3A+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJN
-c29Ob3JtYWwiPlRoYW5rcyw8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkt1
-bjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2JvZHk+DQo8L2h0bWw+DQo=
+I don't know of anything at this time.
 
---_000_SJ0PR14MB48051F038B0094EDF6662CCDDC6A9SJ0PR14MB4805namp_--
+Once I add the client bindings in sdbusplus, I considered it would be fairly
+easy to write a small CLI that allowed interrogation of the dbus objects in=
+ a
+friendlier way.  We could also allow that to use the server bindings to cre=
+ate
+simple test executables.
+
+--=20
+Patrick Williams
+
+--NFHtkjF9P/zAqTh9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmGrqBgACgkQqwNHzC0A
+wRlQpRAAl5SxwfFhzrCzthvfW4rHDh8tDlx2bEGhxmdiYBwCkhkdcMDK2LUL84ua
+J1JmY1ZdhVqwAdemhrgSC0EbX57hHb4tfxIem1ZxETNr82/gGtgfdWmaH0Thj649
+ejlPERzUGBLY7INPYaVvdfuko2bHkdRTLAwZhIcSMhAK4JTEedGoUFWYswCQanfJ
+GqrKD099lBzHAQphgbQ7uoYfQnMCW4RoHkOZJIYqQSR4Ty8a33SHuT2ZcllajF/Z
+sF8wHLxXw2cUusk35+xUsoMDzIjbXvO/ORB+o9fENhgBn+6nW++pIqZlu5Wpa8lS
+p5DnPZ3xtruyKmdYNbAu86fYZAqhCTWYvl3xQEPwA2LUV00LPmFhMydOyJ2C1sAH
++giUtPy8HWlsqYb+mn7LDXKiZncbWa4guQ4Ye8nhxaKtkl3jkblWgvAUSkAAhNl7
+04aRxNbkElE8kA/VFvfjjHmrrR+zLpPjSLA4BL0Y+ZY9xLtAp011TJcZ2sVk7g2w
+xq8euCxiXPVmV01mmURi3GaNRukvrnAbS4AWbxJHHlhZFT3H+w9Dw3HM+/ue1FOq
+dRo44oyMw7xWlxSt4foAZ23cjfLmql8xIg90oER20r0R5VgcKvoGtav3FrjffP8H
+Byqe7z1RHQKfYiBn4ZgtnIcIbO4/uFozIfaKbkJOdNXL5cZS71M=
+=Sh+D
+-----END PGP SIGNATURE-----
+
+--NFHtkjF9P/zAqTh9--
