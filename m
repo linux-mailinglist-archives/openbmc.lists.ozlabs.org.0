@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 182CE468E48
-	for <lists+openbmc@lfdr.de>; Mon,  6 Dec 2021 01:23:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6BD8468E62
+	for <lists+openbmc@lfdr.de>; Mon,  6 Dec 2021 01:49:11 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J6kgM6gQkz2yYS
-	for <lists+openbmc@lfdr.de>; Mon,  6 Dec 2021 11:23:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J6lDj4Nj9z2yw5
+	for <lists+openbmc@lfdr.de>; Mon,  6 Dec 2021 11:49:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,15 +17,15 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J6kg44cG1z2x9D;
- Mon,  6 Dec 2021 11:23:27 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J6lDQ4Swtz2xXs;
+ Mon,  6 Dec 2021 11:48:52 +1100 (AEDT)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 1B5NvL4l019924;
- Mon, 6 Dec 2021 07:57:21 +0800 (GMT-8)
+ by twspam01.aspeedtech.com with ESMTP id 1B60NNMV022616;
+ Mon, 6 Dec 2021 08:23:23 +0800 (GMT-8)
  (envelope-from jammy_huang@aspeedtech.com)
 Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
- Mon, 6 Dec 2021 08:22:11 +0800
+ Mon, 6 Dec 2021 08:48:13 +0800
 From: Jammy Huang <jammy_huang@aspeedtech.com>
 To: <hverkuil-cisco@xs4all.nl>, <sakari.ailus@linux.intel.com>,
  <gregkh@linuxfoundation.org>, <laurent.pinchart@ideasonboard.com>,
@@ -33,9 +33,9 @@ To: <hverkuil-cisco@xs4all.nl>, <sakari.ailus@linux.intel.com>,
  <andrew@aj.id.au>, <linux-media@vger.kernel.org>,
  <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
  <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] media: aspeed: move err-handling together to the bottom
-Date: Mon, 6 Dec 2021 08:22:09 +0800
-Message-ID: <20211206002209.412-1-jammy_huang@aspeedtech.com>
+Subject: [PATCH v2] media: aspeed: move err-handling together to the bottom
+Date: Mon, 6 Dec 2021 08:48:11 +0800
+Message-ID: <20211206004811.1118-1-jammy_huang@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -44,7 +44,7 @@ X-Originating-IP: [192.168.2.115]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 1B5NvL4l019924
+X-MAIL: twspam01.aspeedtech.com 1B60NNMV022616
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,8 +61,10 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 refine aspeed_video_setup_video() flow.
 
-Change-Id: Icc7bcec800d5a9d478ead1b283fdb3aa15a86b80
 Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+---
+v2:
+ - remove change-id in comment
 ---
  drivers/media/platform/aspeed-video.c | 24 +++++++++++-------------
  1 file changed, 11 insertions(+), 13 deletions(-)
