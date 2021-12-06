@@ -2,69 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6161C4696A1
-	for <lists+openbmc@lfdr.de>; Mon,  6 Dec 2021 14:16:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 767AB46A34F
+	for <lists+openbmc@lfdr.de>; Mon,  6 Dec 2021 18:43:01 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J73pW275Nz2ymv
-	for <lists+openbmc@lfdr.de>; Tue,  7 Dec 2021 00:16:03 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=oRRHhbqT;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J79kW2yXcz2ywd
+	for <lists+openbmc@lfdr.de>; Tue,  7 Dec 2021 04:42:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=oRRHhbqT; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=209.85.210.42; helo=mail-ot1-f42.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com
+ [209.85.210.42])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J73p656LTz2yN4
- for <openbmc@lists.ozlabs.org>; Tue,  7 Dec 2021 00:15:42 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 4038A43853;
- Mon,  6 Dec 2021 13:15:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1638796537; x=1640610938; bh=WYnhsStQPKwBhv3yqIJvJ0ar/
- 93JiGJNAwumc8N/HXM=; b=oRRHhbqTG9Hwmf8J/3NMw+b8y+ffhQ3Lby4UetdpT
- uVYv345rJPS422NRX56ui5PJs51B4uWnXdD6oCCDKq5pY/EXZQtikRpA2s5fr77G
- ZwX0snd4wFuCZybxdZiPySigCMWSCozmol8KzEpH7q0zBKdD15ltZ23aKvjig++j
- 2s=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id V1ryOn8CB0sz; Mon,  6 Dec 2021 16:15:37 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 2E2D44384B;
- Mon,  6 Dec 2021 16:15:35 +0300 (MSK)
-Received: from [10.199.10.105] (10.199.10.105) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 6 Dec
- 2021 16:15:35 +0300
-Message-ID: <e698c84c424d698eb54a595c0df265a7de613946.camel@yadro.com>
-Subject: Re: [PATCH v2 0/2] ARM: dts: device tree for YADRO VEGMAN BMC
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: <joel@jms.id.au>, <andrew@aj.id.au>, <openbmc@lists.ozlabs.org>,
- <devicetree@vger.kernel.org>
-Date: Mon, 6 Dec 2021 16:15:29 +0300
-In-Reply-To: <20211119120057.12118-1-a.kartashev@yadro.com>
-References: <20211119120057.12118-1-a.kartashev@yadro.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.4 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J79kD3v0nz2xCt;
+ Tue,  7 Dec 2021 04:42:42 +1100 (AEDT)
+Received: by mail-ot1-f42.google.com with SMTP id
+ u18-20020a9d7212000000b00560cb1dc10bso14564435otj.11; 
+ Mon, 06 Dec 2021 09:42:42 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=AbndXfdUqpyPQteYDfKjE1VIDsx2qwSU9ZClP6riQdE=;
+ b=6PbxTA727EPdj7hxJrRGi/ZahyulLr7JpQc+L+NcBmYph4d8lDFO5eFg/dlu7ZmKeO
+ U2C2g5PJd38Dt6Mp4d+Mn2i3819PqCAOpUPddwjUMcNuQT+I5CDdw4KUG0mN0OXxsNca
+ 4MPnga1LpILDsZBzUhbHn0/mrnfXC2jgrx+sYn175W3lKiPO0k+MX+l+LXFwTvfNSgOr
+ bbWkekLQxuHRPB4NwhR7M2dTD2gBQgj5yAPwBKO058KgF8uFdAYciyjEEGXuQz2Upjnv
+ ETuJ7iLX/mwMHddGuQc7P+vd3dRGS/x4SOim9K7I1vxahqiZPQIwwO4O8jZji6KEoLS7
+ HJuw==
+X-Gm-Message-State: AOAM530dU7/IMqDE/QsjYOcY6AwUIJs2L5ifrTwzKkJjf2zGj9rXKK3n
+ HLKLVRb8V8vM2Fc7Ux+Pdg==
+X-Google-Smtp-Source: ABdhPJzRIALyGrYVn7vIW3KpfiJT2LlB6/qH5jyCFoTtpMhgKtFla0ts7XKqa5lxJaRE1k7QLXD+DA==
+X-Received: by 2002:a05:6830:1bc3:: with SMTP id
+ v3mr30400158ota.276.1638812559197; 
+ Mon, 06 Dec 2021 09:42:39 -0800 (PST)
+Received: from xps15.herring.priv (66-90-148-213.dyn.grandenetworks.net.
+ [66.90.148.213])
+ by smtp.googlemail.com with ESMTPSA id b17sm2494489ots.66.2021.12.06.09.42.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Dec 2021 09:42:38 -0800 (PST)
+From: Rob Herring <robh@kernel.org>
+To: Brendan Higgins <brendanhiggins@google.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ Rayn Chen <rayn_chen@aspeedtech.com>
+Subject: [PATCH] dt-bindings: i2c: aspeed: Drop stray '#interrupt-cells'
+Date: Mon,  6 Dec 2021 11:42:37 -0600
+Message-Id: <20211206174237.2298580-1-robh@kernel.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.10.105]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,41 +66,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Thierry Reding <thierry.reding@gmail.com>, linux-i2c@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Gently ping.
+'#interrupt-cells' is not documented which causes a warning when
+'unevaluatedProperties' is implemented. Unless the I2C controller is
+also an interrupt controller, '#interrupt-cells' is not valid. This
+doesn't appear to be the case from the driver, so just remove it from
+the example.
 
-Is there any other comments for dts files?
+Cc: Brendan Higgins <brendanhiggins@google.com>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Joel Stanley <joel@jms.id.au>
+Cc: Andrew Jeffery <andrew@aj.id.au>
+Cc: Rayn Chen <rayn_chen@aspeedtech.com>
+Cc: linux-i2c@vger.kernel.org
+Cc: openbmc@lists.ozlabs.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-aspeed@lists.ozlabs.org
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml | 1 -
+ 1 file changed, 1 deletion(-)
 
-On Fri, 2021-11-19 at 15:00 +0300, Andrei Kartashev wrote:
-> This brings initial DTS files for VEGMAN BMC machines
-> 
-> ---
->   v2:
->   - Cleanup I2C definitions
->   - Use OpenBMC flash layout
-> 
-> Andrei Kartashev (2):
->   dt-bindings: vendor-prefixes: add YADRO
->   ARM: dts: aspeed: add device tree for YADRO VEGMAN BMC
-> 
->  .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
->  arch/arm/boot/dts/Makefile                    |   5 +-
->  arch/arm/boot/dts/aspeed-bmc-vegman-n110.dts  | 149 +++++++++
->  arch/arm/boot/dts/aspeed-bmc-vegman-rx20.dts  | 255 ++++++++++++++
->  arch/arm/boot/dts/aspeed-bmc-vegman-sx20.dts  | 154 +++++++++
->  arch/arm/boot/dts/aspeed-bmc-vegman.dtsi      | 311
-> ++++++++++++++++++
->  6 files changed, 875 insertions(+), 1 deletion(-)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-vegman-n110.dts
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-vegman-rx20.dts
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-vegman-sx20.dts
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-vegman.dtsi
-> 
-
+diff --git a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+index ea643e6c3ef5..f597f73ccd87 100644
+--- a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
++++ b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+@@ -63,7 +63,6 @@ examples:
+     i2c0: i2c-bus@40 {
+       #address-cells = <1>;
+       #size-cells = <0>;
+-      #interrupt-cells = <1>;
+       compatible = "aspeed,ast2500-i2c-bus";
+       reg = <0x40 0x40>;
+       clocks = <&syscon ASPEED_CLK_APB>;
 -- 
-Best regards,
-Andrei Kartashev
-
+2.32.0
 
