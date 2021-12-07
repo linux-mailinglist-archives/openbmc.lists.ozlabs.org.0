@@ -2,96 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E718B46C49D
-	for <lists+openbmc@lfdr.de>; Tue,  7 Dec 2021 21:28:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3355046C653
+	for <lists+openbmc@lfdr.de>; Tue,  7 Dec 2021 22:09:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J7sMC5Z16z3015
-	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 07:28:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J7tG504Zxz3c75
+	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 08:09:17 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=h18mYXVu;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=LDdAbf3r;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=h18mYXVu; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J7sLk0fhvz2yPv
- for <openbmc@lists.ozlabs.org>; Wed,  8 Dec 2021 07:28:13 +1100 (AEDT)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1B7KM8p3030250; 
- Tue, 7 Dec 2021 20:28:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=+vGvN2iZOtStJOScKQDdF4Wc/2E0aQHQ/08Sk7tPuD8=;
- b=h18mYXVucp7miS6oL8ZqqUkci9Ila8Q/ZWbG+fWqSmXsAK+iRknlaet4WXlju1wM1Uvv
- EWtykg2EwhL4gXxNyQLdQIW8Kxa7XLjIW7vENtw68kn49gF28e3sKLvkrVulhRDvH/q+
- ru5UBjH4TdopRWaGkmVhLxxECeIMVeptij8IRdO0+m1xRniDFEzk2OubhZhJpBL5JwiG
- ktZAUYON/KqVrjK7HKvlxcV7DsTQlX3AA4ML6G5Li+SxdCP4VwG+1S3FccDszYNrvkId
- DerCrkPlvVgykxirmxGNSle+mTsq4syBgv73sHaUTF9s5KGVQp57SELfjxuKyxEbJz7G QQ== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3ctek983g9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 Dec 2021 20:28:08 +0000
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 1B7KRqpd005508;
- Tue, 7 Dec 2021 20:28:08 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma03dal.us.ibm.com with ESMTP id 3cqyyb2h5w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 07 Dec 2021 20:28:07 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 1B7KS6HH55181658
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 7 Dec 2021 20:28:06 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7F247AC069;
- Tue,  7 Dec 2021 20:28:06 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A2B3FAC064;
- Tue,  7 Dec 2021 20:28:05 +0000 (GMT)
-Received: from [9.211.98.136] (unknown [9.211.98.136])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue,  7 Dec 2021 20:28:05 +0000 (GMT)
-Message-ID: <1dfc35d0-c888-692e-dee3-342753d7228c@linux.ibm.com>
-Date: Tue, 7 Dec 2021 14:28:04 -0600
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.17.20; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=LDdAbf3r; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J7tFj1Vkmz2xWr
+ for <openbmc@lists.ozlabs.org>; Wed,  8 Dec 2021 08:08:55 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1638911323;
+ bh=K4vF7NtANaqqajHsilWhxkIG2LZVP7G25JabgORPFjI=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=LDdAbf3rur2gSEH+++YUq4kjIxDYzZjoGzwLi5zLQQk7R/CzZcNtJ5VpPkRWZGxU3
+ MK6pOO7OYweYKI+B8VrbUi+ydkePjrkG5uzwYqct7SocjQc/U5B4Ozf4M9E+1mspah
+ XrFnVOwZ90+sso/yjmEBbQH7RYP4pT2B/QFAj2is=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MuDbx-1mZJIc0rKX-00uX2z; Tue, 07
+ Dec 2021 22:08:43 +0100
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: linux-gpio@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: [PATCH v2 0/8] Nuvoton WPCM450 pinctrl and GPIO driver
+Date: Tue,  7 Dec 2021 22:08:15 +0100
+Message-Id: <20211207210823.1975632-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [PATCH linux dev-5.15 1/2] ARM: dts: Aspeed: Rainier: Add GPIO
- hog for USB power control
-Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>
-References: <20211206213218.104318-1-eajames@linux.ibm.com>
- <CACPK8XehjN1cvRPhOiVYh+3CARJnsr5yPZSwLHAoaLgVrF6gHA@mail.gmail.com>
-From: Eddie James <eajames@linux.ibm.com>
-In-Reply-To: <CACPK8XehjN1cvRPhOiVYh+3CARJnsr5yPZSwLHAoaLgVrF6gHA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: f0QRk_aFhFtLY-n4CVsJnnXQCJrCi7t3
-X-Proofpoint-ORIG-GUID: f0QRk_aFhFtLY-n4CVsJnnXQCJrCi7t3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2021-12-07_08,2021-12-06_02,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- suspectscore=0 bulkscore=0 clxscore=1015 phishscore=0 mlxlogscore=999
- adultscore=0 spamscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2112070125
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:YuSMQ4GRNlylx4koho/4mLk3qqxB2udQnbqjMCtBcyP0tPiO3WS
+ y3pZ/wLkBmFN2NorXTAPDj6GwEElNXfeyOj2SI0SGl2hMkxusGP7DcJEkdUyfDZ7VbXS236
+ 14UTYiNDjx5Lo38xkiU5HCQQ7tYPkBm6UHW1uTB+8buSrx62FA4n+Tj70xjL9PKFqmO3VaE
+ runBuV67kPx4vPeUBuVuw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:R8UxeRZfJd8=:KyF77CNJlPuomFUj4jQ9BM
+ G/Kk+otr4gfpquo1zt5kdH/2rr0t1/+Fq0NxuIXuDVcCZqKlSf2lfb2SGXN3hiSObBaFomc/h
+ 31volWN3MFAXtACtagM0bAJwlh6d547RlTCXAGWrzUGNBh0aN+8qyxod5Juklmr3PlJONCEAC
+ X6nHNjdVZLCIHS7eKSbSGhN+gcxJ6ZAsYL293OpxJrxa5Cyzw8/OyHtFqSnbajWKkDaQ1eO6z
+ t+JccSIXpHEeTTbyqdbCAx4P+nsNtCUYR8tiS3YF4z1XhVNQeYW64O/qnJ99o1kmyRxOmutCY
+ YUOCSW0dzvfKLMBp1It2J15po3gCF6fNNeBLdxDSwAQh/c7D3XFVmkT4WtvsjXxM6M3UMhwq/
+ cpGBl+RZ0SFFVfuRG/r1J02tvImBh2YKT5Cph09kdUD1p6MJxQdrGG6d3C2K8LcGHOd/waE/r
+ Ah7Fwcky9g9abwspFlnLAGknQTje5VOHXI/QLwpH8D3B4dYwwegWne/Vysag+qkb580n22qna
+ KbVgh+lVW8XDKybKwkiYL14BG/VldBMVh+VZhoEta/LlNkgKKNbSEBt99A1Ewe4Zx30fxIbqO
+ lX/2NicebZmNEVnN84vsAp8Fg0B8pxbY57hJX8NH1oPDqIQk/83yX+lUyKylJOsTyVFD21izk
+ MhIzvn/66wkpcHmryc6V5CNFh+8dMV+XopsjA8WO3uRrWMsyJtZvLApA8PwcPHpHpyeWPTS4F
+ GvT2rQsSkZdQETPi1twx9DuDTIaZXQpm+0MJIRvB+77L76+so/CAhAVl/Yo4Y53vG37mW5FcX
+ ukgR0OyKaDaVxjAjxuNeC+OxqDXzBZHOhlF726pVUI5HThnToTxJf1fzHPkxjqjH/iVAH7o/s
+ JT/AyIJX9gLIKz/JgQ64WIUy17YvKReGXIq16xcJT1rRnWcz/X6psvqaBO+IW+7UK94CNEn2v
+ H4a0fYwBDWNc2zpN2f70XeiCHv+WuXn8mcUcbO7oJ8HD2pVeMfYgmA8/62Bx2LLD2SVIZd8Kx
+ xQ0KCyoZcvrpnPKhSo+oTcabTUviIDwLq43G2GfzSMC2KId3mXzv7F1t23hphf07RqWhTXyN/
+ SBzsrIKiSGPKT0=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,65 +80,102 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Tomer Maimon <tmaimon77@gmail.com>,
+ Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Rob Herring <robh+dt@kernel.org>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+It's been a while, but here is finally version 2 of the WPCM450 GPIO drive=
+r.
 
-On 12/6/21 16:54, Joel Stanley wrote:
-> On Mon, 6 Dec 2021 at 21:32, Eddie James <eajames@linux.ibm.com> wrote:
->> Set the USB power control to always on.
->>
->> Signed-off-by: Eddie James <eajames@linux.ibm.com>
->> ---
->>   arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 9 ++++++++-
->>   1 file changed, 8 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->> index 866f32cdccea..b2af8ad09d33 100644
->> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->> @@ -255,7 +255,7 @@ &gpio0 {
->>          /*L0-L7*/       "","","","","","","","",
->>          /*M0-M7*/       "","","","","","","","",
->>          /*N0-N7*/       "","","","","","","","",
->> -       /*O0-O7*/       "","","","usb-power","","","","",
-> Do we want to remove the pin from the gpio-names? Can we leave it
-> there as documentation, or does it conflict?
+The biggest change since v1 has been the restructuring of the DT binding t=
+o
+give each GPIO bank its own node.
+
+Another thing that changed is how pins are muxed to GPIO mode: In v1, this
+happened automatically when the corresponding GPIO was used. I copied this
+feature from the pinctrl-npcm7xx driver, but removed it along with the
+.gpio_request_enable and .gpio_disable_free callbacks. Instead, pins can n=
+ow
+be switched to GPIO explicitly, if needed.
+
+Everything else is noted in the individual patches.
+
+I hope I didn't miss anything that was requested in response to v1. If I d=
+id,
+please make your comment again.
 
 
-I don't know; The pin isn't documented so I thought it better to remove 
-it from the line names. Then below, I named it according to the board 
-spec, which somewhat fits with the i2c mux hog. I'm open to whatever we 
-think is best here.
+Best regards,
+Jonathan Neusch=C3=A4fer
 
 
-Thanks!
+v1:
+- https://lore.kernel.org/lkml/20210602120329.2444672-1-j.neuschaefer@gmx.=
+net/
 
-Eddie
-
-
+> This series adds support for pinctrl and GPIO in the Nuvoton WPCM450 SoC=
+.
+> Both my DT bindings and my driver are based on the work done by others f=
+or
+> the newer Nuvoton NPCM7xx SoC, and I've tried to keep both similar.
 >
->> +       /*O0-O7*/       "","","","","","","","",
->>          /*P0-P7*/       "","","","","pcieslot-power","","","",
->>          /*Q0-Q7*/       "cfam-reset","","regulator-standby-faulted","","","","","",
->>          /*R0-R7*/       "bmc-tpm-reset","power-chassis-control","power-chassis-good","","","","","",
->> @@ -275,6 +275,13 @@ i2c3_mux_oe_n {
->>                  output-high;
->>                  line-name = "I2C3_MUX_OE_N";
->>          };
->> +
->> +       usb_power_en_n {
->> +               gpio-hog;
->> +               gpios = <ASPEED_GPIO(O, 3) GPIO_ACTIVE_LOW>;
->> +               output-high;
->> +               line-name = "USB_POWER_EN_N";
-> This contradicts what you called it above.
+> Instead of extending the pinctrl-npcm7xx driver to add WPCM450 support,
+> I copied/forked it. The pinmux mechanism is very similar (using MFSEL1 a=
+nd
+> MFSEL2 registers), but the GPIO register interface has been redesigned f=
+or
+> NPCM7xx; adding support for the older GPIO controller would make the dri=
+ver
+> harder to understand, while only enabling a small amount of code sharing=
+.
 >
->> +       };
->>   };
->>
->>   &emmc_controller {
->> --
->> 2.27.0
->>
+> The DT binding in YAML format might make a good template for also conver=
+ting
+> the nuvoton,npcm7xx-pinctrl binding to YAML.
+>
+> Both in the DT binding and in the driver I kept the name "pinctrl". For =
+the
+> driver, I find it accurate enough because it handles pinctrl and GPIO. F=
+or
+> the DT node, it's a bit less accurate because the register block at 0xb8=
+003000
+> is about GPIOs, and pin control happens in the global control registers =
+(GCR)
+> block, except for input debouncing. So, "GPIO" might be the more appropr=
+iate
+> name component there.
+
+
+Jonathan Neusch=C3=A4fer (8):
+  dt-bindings: arm/npcm: Add binding for global control registers (GCR)
+  MAINTAINERS: Match all of bindings/arm/npcm/ as part of NPCM
+    architecture
+  ARM: dts: wpcm450: Add global control registers (GCR) node
+  dt-bindings: pinctrl: Add Nuvoton WPCM450
+  pinctrl: nuvoton: Add driver for WPCM450
+  ARM: dts: wpcm450: Add pinctrl and GPIO nodes
+  ARM: dts: wpcm450: Add pin functions
+  ARM: dts: wpcm450-supermicro-x9sci-ln4f: Add GPIO LEDs and buttons
+
+ .../bindings/arm/npcm/nuvoton,gcr.yaml        |   45 +
+ .../pinctrl/nuvoton,wpcm450-pinctrl.yaml      |  190 +++
+ MAINTAINERS                                   |    2 +
+ .../nuvoton-wpcm450-supermicro-x9sci-ln4f.dts |   43 +
+ arch/arm/boot/dts/nuvoton-wpcm450.dtsi        |  384 ++++++
+ drivers/pinctrl/Makefile                      |    2 +-
+ drivers/pinctrl/nuvoton/Kconfig               |   18 +
+ drivers/pinctrl/nuvoton/Makefile              |    1 +
+ drivers/pinctrl/nuvoton/pinctrl-wpcm450.c     | 1134 +++++++++++++++++
+ 9 files changed, 1818 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/arm/npcm/nuvoton,gcr=
+.yaml
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/nuvoton,wpcm=
+450-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+
+=2D-
+2.30.2
+
