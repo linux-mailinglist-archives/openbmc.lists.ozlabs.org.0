@@ -2,76 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C92E46C664
-	for <lists+openbmc@lfdr.de>; Tue,  7 Dec 2021 22:09:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 574FA46C66A
+	for <lists+openbmc@lfdr.de>; Tue,  7 Dec 2021 22:11:05 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J7tGl1J9Gz3cSN
-	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 08:09:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J7tJ723lKz3cPf
+	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 08:11:03 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=JMxB8wxG;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=jdNIaXUD;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.21; helo=mout.gmx.net;
+ (client-ip=212.227.15.19; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=JMxB8wxG; 
+ header.s=badeba3b8450 header.b=jdNIaXUD; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J7tFl5Hg0z2xWr
- for <openbmc@lists.ozlabs.org>; Wed,  8 Dec 2021 08:08:59 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J7tFm4G1vz2xsC
+ for <openbmc@lists.ozlabs.org>; Wed,  8 Dec 2021 08:09:00 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1638911326;
- bh=ucTTqYfqrAIEEQUOAqIQuTU4lLZGs0Rtoae2Ggs56Lk=;
+ s=badeba3b8450; t=1638911329;
+ bh=KuuD6eeMVERCTcB38ObnXFq9aI+j62KUONB7+XNWmJ8=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JMxB8wxG8C8TyjLgWq12CJQRzhzbOn2CbRMLngVQ5T8LFHWpTO+dYH6M30ZHNejGj
- mXmUQTZLQd12/0pIJEiQtAk94jqUVZAdmUadPmMp7sM0ZQlXyswZVDmdI4baHwuvsP
- KFMe/32VdpZ4b7JrIT7xDQr/J9Db3OmzT9dQYrsY=
+ b=jdNIaXUDI61KFrl2Uu0kT7UxcRjjqO8DfRWt4ncRFTfj2rMk5/OK1R5mRekNs9mys
+ ETarCqHd5oWGS51PRb1C6o+D+mOfRNnsdDlWGiVLo7CPTuoxqrgLK+brZFyMcCOpXZ
+ l7Z51DWkqwYMuFhyzHY+Y34HyoUn5Cuj4a1hI2RM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQMuX-1nGNHb1yxV-00MIU3; Tue, 07
- Dec 2021 22:08:46 +0100
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1ML9yS-1nBgah0rA2-00IAob; Tue, 07
+ Dec 2021 22:08:49 +0100
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: linux-gpio@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH v2 1/8] dt-bindings: arm/npcm: Add binding for global control
- registers (GCR)
-Date: Tue,  7 Dec 2021 22:08:16 +0100
-Message-Id: <20211207210823.1975632-2-j.neuschaefer@gmx.net>
+Subject: [PATCH v2 2/8] MAINTAINERS: Match all of bindings/arm/npcm/ as part
+ of NPCM architecture
+Date: Tue,  7 Dec 2021 22:08:17 +0100
+Message-Id: <20211207210823.1975632-3-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211207210823.1975632-1-j.neuschaefer@gmx.net>
 References: <20211207210823.1975632-1-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:5z6fEwkITtvUUGanwwbUAU9wniS3Wxx/3lxzUrIulEn2I63yJtD
- 2ZJaoUkFgy/5lelXXUnnsIeIHi4tAIEojSrz6nzdNhILkTKHXJu6zGm31w/lk2gfZfIlHhj
- e2brlbpU+yQqnd6seeDz8jx/m5Lz8NcDzo5HEayRqFXGGof3x+eAq1CdqtzNKsdBetFbDRN
- 87M0qpknnQsCbuVPCN2mA==
+X-Provags-ID: V03:K1:EtnkHO3/DgWnnNDn9NeWYv3hTDh3PjMdqIiWBau9Fa2MKUIVYWZ
+ /2Fy9Yc2jXJUIRJJ8bcHEsfFzYKpeRiWr5n6J7yHi42PF4FvPETUwac8BO4qCwodPdbRUHR
+ TxWTZEiLhqtALU3mEY7zTrqkrQww2my+8LWAJCfBX+v6lLhwNGbCgP9lS0eLvybCmBi4VIr
+ u/2epOCUVYoRviwPqamEQ==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BdxySlRDLD8=:YMshSa6kD+dYBdTNnTBAsk
- UeMhi1NiJHp6Yf88bupwAc+LxGKIiR8SoJeN2oFWYnisPRBrOyUzb+GpnZaJWsmhMZc4rSrdw
- nPkL1FL7e7Bn+1AAOtFlHkH6cFq5W1ZXPbiI3sSSBkuiBlGteJOR1QcU7AJb19XgPyRakjaS1
- z+K0Uovf7uoH2iH2VBkg2BAGx4q1l1U+uw6/HhpzYJhxIRhtdbnKWhMaW85yR14ZHMwRKpHlI
- WFriqjcrbVoECGnCyNko/A2eeNczLraAEq8WMIJc0uF13Bl+/H5TKMnJHvlSsxXzwLj6tpDZP
- sXcf9OfOV+0uutcyyPkp4lGGys7AJtlevK+UtXESDebc2tXH0LQ73DkaUb3nnP9juzBPzC1DV
- bn2KUyFdrSFPTptnZg/o72xUlmlCymSt+6XJYTKXvhDlj+sVpOrubweaToQRYC1fcY0Yld2Xu
- qj2wm/E1gGo7Qo07UimbL4tc7DFwLk7oRYQjugdLzRoj+DY6a4QXwGxK8J/TlfmuXlc53kDFW
- ltOpJez/x12B/0/nuU1qwEA5innGtu9XS/TyweFA1lCpiEIJdetkm7O5GDN00QXQDIrEXE3IZ
- CLPzrYArvaKTLt2TVU+eVQm5Fd/1HyoTF2WMtlMvThxn70ur1+BapfrDgWCF0KPrs/Dl7HMu4
- 8gcZcyuVvoRR9W6W1Wgx+HiLus/S3y1OyHrbBalrosvchez6fq4Kjk2YhrgUs0nVpNbK2RxxY
- ZBT6W7yzQc37NFVkTM9M56GNqMn6c4O2DcmcX/WxtlntLUkAQHuAD0Wg4rJSOGR3n/DjefVEY
- j65Wp6/sA81mRBsuUzBzIQpGcH4izDHl4paY3NzzDHaUYug/cXEKyrwqoVlGpTTEXeE7ySHyd
- UvFHhoojM3QODJHL8XwAXnRcTPk4/Z7wgbJHy0mV6Y6+5U6MSjt96i5fMJMyNvF768/5ZEplc
- 47Tsu8OoYr8/w+FE2FMStNOJvbgm3LMTzc1wdOUVsVAG2QgrsbJFNMHSlVFW1sz7QhATlPurb
- 6O/9FPAAS7RKtR49U1oPeFq3FAt7k+qWaGbqRkCHcHJqwojWlXJZKaNgO+1P4SknsmqcJn1TJ
- h96n/2qkTawnWI=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Y0aYPSWaj9w=:yLYx2bO7tUZnINS6uBXipG
+ V9ChDAAOGIKJ+vfw1AUIE4PWsSO6KTVjHBvaL+tlX1GL3x35v/9qdRZa6qAmw+41Hoa32evCV
+ JCoDkLljd7B3LfyWG6/KgscRuhHBV7Ufhx3Ij7XuqYJyDhCHp8arn/Qxib/y9P1QvzQ9yHNbG
+ I4HAKOMBr+rbQRLhW3UhJJaOKjZV36uRcrscwZyXwGYCZKmARERByxRDKi1NQCdbaO+bDMdy5
+ yMVf4URgR1CHDKgakMxtKOewsqquqblh0D+LeCK1SyscBCFKVwu41sK+aywP985HCumBIcCdE
+ lDOQum+pAuLY0W63ashC297z9tsQ5zP4vzB48HqVkgzXOm3I21dx+LvYV7NoSEITLy7xLIryc
+ RKP88CGA/EsKOhqupNVy8Vk3zlocTaMxpx32zeO+4awmhE+ja4F34scimakXlwyKnQR0TQofD
+ +xVyxdVXcNZVyTYGKDK2Kq2ZutSpuqD1QcA5Kj5XNUetUatPIIu/sjsxUDrjwmsR6OUaSmNAT
+ yh6D/EZk38frUmwuy8wPWqUmMOyCa8hb2ZYUrPCuUIOIn7XVEdzhhJGL8MmTklB8fryOhhqLF
+ 02JhHJehkr/baQLLDKjf2vEJzF0/0Zw1lfw1ap/5IyWJ7UGUbEr8IDQcaUU7nsnRlmdEhhFT+
+ INC+k0XxINHGjbzZuCnJZMKVmDKdgQOAs3MNIfNETnOFSt5c6dvkuBGzyLBb5K19NZt9BXq38
+ /B/TBFWze5at2ad2CY5moFhkrX+YFJ+psMc2jQ9TYLqVWaCIpjLIJ1I8saDjgwNYlZKpX3k7t
+ 8vyzFFTbAe1ytlhNBamj8AUc3xs1GHpUgYI9cC/GFQGrOpbE8wGi4ti081VNlE9jyLVBybnup
+ iG7pYpqYIPPAXTfi9pNOzbQrFo+HVx1NPKCLMi3Lozwi/4ObbbhtHD51ny2xzIHN9VWaRwWAS
+ pzxKRdSU9V2ZZIKe55x1IZuD5AMH5qvWs4sKgUtRROTU+N9ztbWxxnZQkjMk1bD8MA84ZNwzn
+ 4ygjsDe+N189FXivGvn8NECpK/9YJxFOY8POdetZYqQIM/Afio2ubOsGYRh7haOj5MUOAB9VB
+ Ifo6WQdwupJFz0=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,92 +83,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>, Linus Walleij <linus.walleij@linaro.org>,
- linux-kernel@vger.kernel.org,
+Cc: Tomer Maimon <tmaimon77@gmail.com>,
+ Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org,
  =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Rob Herring <robh+dt@kernel.org>, Tali Perry <tali.perry1@gmail.com>,
- openbmc@lists.ozlabs.org, Benjamin Fair <benjaminfair@google.com>
+ Rob Herring <robh+dt@kernel.org>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-A nuvoton,*-gcr node is present in nuvoton-common-npcm7xx.dtsi and will
-be added to nuvoton-wpcm450.dtsi. It is necessary for the NPCM7xx and
-WPCM450 pinctrl drivers, and may later be used to retrieve SoC model and
-version information.
-
-This patch adds a binding to describe this node.
+All files in Documentation/devicetree/bindings/arm/npcm/ belong to the
+Nuvoton NPCM architecture, even when their names might not spell it out
+explicitly.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-
 =2D--
+
 v2:
-- Rename node in example to syscon@800000
-- Add subnode to example
+- no changes
 
 v1:
-- https://lore.kernel.org/lkml/20210602120329.2444672-2-j.neuschaefer@gmx.=
+- https://lore.kernel.org/lkml/20210602120329.2444672-3-j.neuschaefer@gmx.=
 net/
 =2D--
- .../bindings/arm/npcm/nuvoton,gcr.yaml        | 45 +++++++++++++++++++
- 1 file changed, 45 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/arm/npcm/nuvoton,gcr=
-.yaml
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/npcm/nuvoton,gcr.yaml b=
-/Documentation/devicetree/bindings/arm/npcm/nuvoton,gcr.yaml
-new file mode 100644
-index 0000000000000..62020d7ac305b
-=2D-- /dev/null
-+++ b/Documentation/devicetree/bindings/arm/npcm/nuvoton,gcr.yaml
-@@ -0,0 +1,45 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/arm/npcm/nuvoton,gcr.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Global Control Registers block in Nuvoton SoCs
-+
-+maintainers:
-+  - Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-+
-+description: |
-+  The Global Control Registers (GCR) are a block of registers in Nuvoton =
-SoCs
-+  that expose misc functionality such as chip model and version informati=
-on or
-+  pinmux settings.
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - nuvoton,wpcm450-gcr
-+          - nuvoton,npcm750-gcr
-+      - const: syscon
-+      - const: simple-mfd
-+  reg: true
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    gcr: syscon@800000 {
-+      compatible =3D "nuvoton,npcm750-gcr", "syscon", "simple-mfd";
-+      reg =3D <0x800000 0x1000>;
-+
-+      uart-mux-controller {
-+        compatible =3D "mmio-mux";
-+        #mux-control-cells =3D <1>;
-+        mux-reg-masks =3D <0x38 0x07>;
-+        idle-states =3D <2>;
-+      };
-+    };
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 360e9aa0205d6..eff3edafd8814 100644
+=2D-- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2338,6 +2338,7 @@ L:	openbmc@lists.ozlabs.org (moderated for non-subsc=
+ribers)
+ S:	Supported
+ F:	Documentation/devicetree/bindings/*/*/*npcm*
+ F:	Documentation/devicetree/bindings/*/*npcm*
++F:	Documentation/devicetree/bindings/arm/npcm/*
+ F:	arch/arm/boot/dts/nuvoton-npcm*
+ F:	arch/arm/mach-npcm/
+ F:	drivers/*/*npcm*
 =2D-
 2.30.2
 
