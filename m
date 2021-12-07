@@ -1,60 +1,48 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44CAD46AE3B
-	for <lists+openbmc@lfdr.de>; Tue,  7 Dec 2021 00:05:39 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC5C046AFFC
+	for <lists+openbmc@lfdr.de>; Tue,  7 Dec 2021 02:43:48 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J7Jtn1bVHz2yb6
-	for <lists+openbmc@lfdr.de>; Tue,  7 Dec 2021 10:05:37 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=o+Hq59pJ;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J7NPG54lgz305v
+	for <lists+openbmc@lfdr.de>; Tue,  7 Dec 2021 12:43:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=o+Hq59pJ; 
- dkim-atps=neutral
-X-Greylist: delayed 1125 seconds by postgrey-1.36 at boromir;
- Tue, 07 Dec 2021 10:05:17 AEDT
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [71.19.156.171])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J7JtP6HGzz2x9K
- for <openbmc@lists.ozlabs.org>; Tue,  7 Dec 2021 10:05:17 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (174-21-184-96.tukw.qwest.net
- [174.21.184.96])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 1ABA15B1;
- Mon,  6 Dec 2021 15:05:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1638831916;
- bh=AGZUvdoz1R/W4UGcI1sQgiuXPO1E1UwVokdQHmJX2XY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=o+Hq59pJTf0HeC60xL18SQ1NRlYfPzNViiEaAFvLov1s302L/L9DIpY/cUfw4XD8g
- UM9m0iZdUijm6HcJAemqg/QgxQafZaSmj5CjxIW3s0FqzWFPJ9bqyNyTNwX+Az5/q9
- rm5Gve+vEkPdOYHJrfPJ7+kTIXCv0Boi9ND6kDc0=
-Date: Mon, 6 Dec 2021 15:05:14 -0800
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Guenter Roeck <linux@roeck-us.net>, g@hatter.bewilderbeest.net
-Subject: Re: [PATCH 1/2] hwmon: add Delta AHE-50DC fan control module driver
-Message-ID: <Ya6XKtxREvocOXow@hatter.bewilderbeest.net>
-References: <20211206224419.15736-1-zev@bewilderbeest.net>
- <20211206224419.15736-2-zev@bewilderbeest.net>
- <28719505-ace1-bb04-bbc2-043c56b0db7d@roeck-us.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J7NMy5YPFz2xXg;
+ Tue,  7 Dec 2021 12:42:36 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 1B71GubU058439;
+ Tue, 7 Dec 2021 09:16:56 +0800 (GMT-8)
+ (envelope-from jammy_huang@aspeedtech.com)
+Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
+ Tue, 7 Dec 2021 09:41:50 +0800
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
+ <andrew@aj.id.au>, <linux-media@vger.kernel.org>,
+ <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH 0/2] Use v4l2_info/v4l2_warn/v4l2_dbg for log
+Date: Tue, 7 Dec 2021 09:41:45 +0800
+Message-ID: <20211207014147.226-1-jammy_huang@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <28719505-ace1-bb04-bbc2-043c56b0db7d@roeck-us.net>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [192.168.2.115]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 1B71GubU058439
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,60 +54,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, openbmc@lists.ozlabs.org,
- Jean Delvare <jdelvare@suse.com>, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Dec 06, 2021 at 03:02:49PM PST, Guenter Roeck wrote:
->On 12/6/21 2:44 PM, Zev Weiss wrote:
->>This device is an integrated module of the Delta AHE-50DC Open19 power
->>shelf.  For lack of proper documentation, this driver has been developed
->>referencing an existing (GPL) driver that was included in a code release
->>from LinkedIn [1].  It provides four fan speeds, four temperatures, and
->>one voltage reading, as well as a handful of warning and fault
->>indicators.
->>
->>[1] https://github.com/linkedin/o19-bmc-firmware/blob/master/meta-openbmc/meta-linkedin/meta-deltapower/recipes-kernel/fancontrol-mod/files/fancontrol.c
->>
->>Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
->>---
->
->[ ... ]
->
->>+
->>+static const u8 AHE50DC_FAN_TEMP_REGS[] = { 0x8d, 0x8e, 0x8f, 0xd0 };
->>+static const u8 AHE50DC_FAN_SPEED_REGS[] = { 0x90, 0x91, 0x92, 0x93 };
->>+static const u8 AHE50DC_FAN_FAN_STATUS_REGS[] = { 0x81, 0x82 };
->>+#define AHE50DC_FAN_VIN_REG 0x88
->>+#define AHE50DC_FAN_CHIP_STATUS_REG 0x79
->
->PMBus registers:
->
->	PMBUS_STATUS_WORD               = 0x79,
->
->	PMBUS_STATUS_FAN_12             = 0x81,
->	PMBUS_STATUS_FAN_34             = 0x82,
->
->	PMBUS_READ_VIN                  = 0x88,
->
->        PMBUS_READ_TEMPERATURE_1        = 0x8D,
->        PMBUS_READ_TEMPERATURE_2        = 0x8E,
->        PMBUS_READ_TEMPERATURE_3        = 0x8F,
->        PMBUS_READ_FAN_SPEED_1          = 0x90,
->        PMBUS_READ_FAN_SPEED_2          = 0x91,
->        PMBUS_READ_FAN_SPEED_3          = 0x92,
->        PMBUS_READ_FAN_SPEED_4          = 0x93,
->
->This is quite obviously a PMBus device. Why not use the PMBus driver ?
->
->Guenter
+In this seris, v4l2_xxx log macro will be adapted.
+With v4l2_dbg, the debug level can be set with the module parameter
+called debug. In this way, we won't have to see all debug logs together.
+To many log could have bad influence on the rate to reproduce some
+issues as well.
 
-Ah, so it appears -- not familiar enough with the constants to recognize 
-it immediately I suppose (and wasn't expecting PMBus on this particular 
-device).  Let me try that.
+Some logs are added, and more is coming for aspeed-format.
 
+Jammy Huang (2):
+  media: aspeed: use v4l2_info/v4l2_warn/v4l2_dbg for log
+  media: aspeed: add more debug log messages
 
-Thanks,
-Zev
+ drivers/media/platform/aspeed-video.c | 64 ++++++++++++++++++++-------
+ 1 file changed, 47 insertions(+), 17 deletions(-)
+
+-- 
+2.25.1
 
