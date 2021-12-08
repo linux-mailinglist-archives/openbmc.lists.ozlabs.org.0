@@ -1,64 +1,97 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1224046DBC2
-	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 20:01:59 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0520E46DBDC
+	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 20:14:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J8RNh6Npmz3bYD
-	for <lists+openbmc@lfdr.de>; Thu,  9 Dec 2021 06:01:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J8RgH6tBpz3bW6
+	for <lists+openbmc@lfdr.de>; Thu,  9 Dec 2021 06:14:35 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=YLb5QJ2k;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=cftNaKUe;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::929;
- helo=mail-ua1-x929.google.com; envelope-from=venture@google.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=YLb5QJ2k; dkim-atps=neutral
-Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com
- [IPv6:2607:f8b0:4864:20::929])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=cftNaKUe; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J8RNG1KBqz2yZx
- for <openbmc@lists.ozlabs.org>; Thu,  9 Dec 2021 06:01:31 +1100 (AEDT)
-Received: by mail-ua1-x929.google.com with SMTP id p37so6455088uae.8
- for <openbmc@lists.ozlabs.org>; Wed, 08 Dec 2021 11:01:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=B85WHsGNUyxlIniBajf7245gvVg6FfXco3AFJvtYzPE=;
- b=YLb5QJ2kPicOfle4DFLOAXmM7aXdJMe5aqveU3HL9omG+YGRjCUrbv6UxBEF2moFxV
- kMwKfcWfaqdIdxERA0d65dESTdUSxkWsY3N5NShvx9IBtcMatTMJ8AwPz6Em2gkRf4NH
- bC0SFIW+sMOPeSH+mXfX3Jjdf3Sj39Hsgki/Wt8N+4bVonzXN26Af4oT05bOBzu1NEZi
- Wg2yfpvhJy+qkyK/U2uyUK+bHKcYHRvqx63Mgthj3KGK/KsRRGH60ZUX12LCvz5BOtaU
- HqiBZJwUkKpWg14YPs5bUOmVv6KyB7BgMXWclCXd5y9cVG03C2mPfHJ5jXyKddZZcqSS
- tIFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=B85WHsGNUyxlIniBajf7245gvVg6FfXco3AFJvtYzPE=;
- b=fo8qigMBFIK/B5VyltbIQdhPjNRtgide757j6AynVKF1yJRNzAx2ejSTCjyDSxg4W9
- xJdh8DJivZgiXjZvnoDzOwg3iZ3dMxiVj4F1IeRRTXKZphLjANl8/NMdT+Pqtu5M2bR1
- QBnBms4aINoOFfs9KHji4J3YH+X/OsdhbZxc+GzJFj9u4CRpx3BoOeKOwK82ujjEF/CQ
- xH1Vn4Ei3XK0B27IScPllWVyLyiXn+0kY4YGqK7S5lNsKDIQWsLILyWXfWQqSFg7j9DY
- g0uSaS2SAjLydmfxvNqziTIr+lsUuB/mzrQoGogAXznPwMinu6Id1KNxHLRw15zKdi58
- ECyA==
-X-Gm-Message-State: AOAM5330ecwKZecKv83X3+TeiEcihoVL59F4pm+uxZFIjJvByP6i1IRL
- cBpgvYtYZZrm693WUgXIyE6ZOgbHS4UIL+2Aq4m/FmLhzk0=
-X-Google-Smtp-Source: ABdhPJy98dIU/E/NmwQTU9DD519tLOZ4GH8ao8Yar56+UvMsyJPeINbIZQPD5hHZFJl6KT8B2nd/Pm+1z58C3TSroZY=
-X-Received: by 2002:a67:fa12:: with SMTP id i18mr628616vsq.49.1638990087402;
- Wed, 08 Dec 2021 11:01:27 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J8Rft0zxfz2xfN
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Dec 2021 06:14:13 +1100 (AEDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1B8IbdSC012803
+ for <openbmc@lists.ozlabs.org>; Wed, 8 Dec 2021 19:14:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ subject : from : to : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=hUCThIdgMPDCCBgOinNp7vvHkHEF4D66g2WgcO2wH+E=;
+ b=cftNaKUeW0VhYWG3QgKpavhs8I6UKsZG3jU32wrxltPPVJl8iZElZk15sDPJDHgUrgG0
+ oSo4dIibQz0qjoijQBbFkyZyKg4UuvYmzTmrhjLbqJtyScvTvjamctDXr0bixw/f3rkG
+ 0MsBedDAeALynjrfdTIvOIHymyeHWQKno2Y+Ty2dbwu4J1rBffvbg7FY0OJiPOrx1Bl6
+ 3Y9mXqwmRvraAX3MV4+PKLBsfTFwf/mUIGi7zqqoHu0iMvoQrZPbrMmZETOIre41YRbx
+ LcP1Oymb+pTo8VtTsrv1V7wJDlvjij6BMyogfOAf9c+NTOYrGIfqKgRLMPdKxXwxCJUW Ww== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3cu0hmtrtd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 08 Dec 2021 19:14:10 +0000
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 1B8JDq3v028920
+ for <openbmc@lists.ozlabs.org>; Wed, 8 Dec 2021 19:14:09 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma05wdc.us.ibm.com with ESMTP id 3cqyyb8rpd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 08 Dec 2021 19:14:09 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 1B8JE8oO15466944
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Wed, 8 Dec 2021 19:14:08 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EA405C60CD
+ for <openbmc@lists.ozlabs.org>; Wed,  8 Dec 2021 19:14:07 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4FDBFC60F4
+ for <openbmc@lists.ozlabs.org>; Wed,  8 Dec 2021 19:14:02 +0000 (GMT)
+Received: from [9.65.197.216] (unknown [9.65.197.216])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Wed,  8 Dec 2021 19:14:02 +0000 (GMT)
+Message-ID: <64bef7b7-2dae-056c-98dc-696b864f4fb7@linux.ibm.com>
+Date: Wed, 8 Dec 2021 13:14:01 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.2.0
+Subject: Re: Security Working Group meeting - Wednesday December 8 - results
+Content-Language: en-US
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+References: <0abb0557-9797-cd8e-1d21-bc8abf24d7ad@linux.ibm.com>
+In-Reply-To: <0abb0557-9797-cd8e-1d21-bc8abf24d7ad@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: qWdVNfguN_TfjJnDNbynurNPKTcJ9mtA
+X-Proofpoint-ORIG-GUID: qWdVNfguN_TfjJnDNbynurNPKTcJ9mtA
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-From: Patrick Venture <venture@google.com>
-Date: Wed, 8 Dec 2021 11:01:15 -0800
-Message-ID: <CAO=notyNtux_jNWFsrYex_vkKxt_JEE=ATU-RrL=o7vmsEdEBA@mail.gmail.com>
-Subject: i3c on Qemu
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000f3918905d2a71d68"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
+ definitions=2021-12-08_07,2021-12-08_01,2021-12-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ adultscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015
+ impostorscore=0 suspectscore=0 malwarescore=0 mlxscore=0 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2110150000 definitions=main-2112080108
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,28 +103,122 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Hao Wu <wuhaotsh@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000f3918905d2a71d68
-Content-Type: text/plain; charset="UTF-8"
+On 12/7/21 3:55 PM, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday December 8 at 10:00am PDT.
+>
+> We'll discuss the following items on the agenda 
+> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+> and anything else that comes up:
+>
 
-Hi all;
+Attendance: James, Joseph, Anton, Dhananjay, Ratan
 
-With ast2600 and the nuvoton 8xx, we're seeing the introduction of i3c and
-I was curious if anyone on this list was already working on it for Aspeed
-or Qemu in general.
 
-Patrick
+1 OpenBMC CNA onboarding
 
---000000000000f3918905d2a71d68
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+DISCUSSION:
 
-<div dir=3D"ltr">Hi all;<div><br></div><div>With ast2600 and the nuvoton 8x=
-x, we&#39;re seeing the introduction of i3c and I was curious if anyone on =
-this list was already working on it for Aspeed or Qemu in general.</div><di=
-v><br></div><div>Patrick</div></div>
+James started the process to onboard the OpenBMC project as a CNA.  (See 
+agenda item 2 from 2021-11-10.)   Onboarding process is next week for 
+James, Joseph, and Dhananjay.
 
---000000000000f3918905d2a71d68--
+Onboarding time commitment: unknown  -  watch  videos
+
+Here are the training links:
+
+please view the six on-boarding videos, available on the CNA On-Boarding 
+Channel on YouTube--> Click 
+here<https://www.youtube.com/playlist?list=PLWfD9RQVdJ6c4eMkdqbOKqF7zPCqXkgX3 
+<https://www.youtube.com/playlist?list=PLWfD9RQVdJ6c4eMkdqbOKqF7zPCqXkgX3>>
+
+
+   1.  CVE Program Overview
+
+   2.  Becoming a CNA
+
+   3.  CNA Processes
+
+   4.  Assigning CVE IDs
+
+   5.  CVE Record (previously “CVE Entry”) Creation
+
+   6.  CVE Record Submission Process to the MITRE Top-Level Root Only
+
+      *   CVE Record (previously “CVE Entry”) GitHub Submissions
+
+
+Softcopies of the presentations are available here  
+(https://www.cve.org/ResourcesSupport/Resources#CVENumberingAuthorities 
+<https://www.cve.org/ResourcesSupport/Resources#CVENumberingAuthorities>)
+
+
+2 Daemon privilege separation design doc for review 
+<https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/49100>(PoC 
+<https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/42748>change for 
+ACLs)
+
+DISCUSSION:
+
+This is a multi-stage project, and having a design will make it easier 
+to move forward.
+
+Next steps:
+
+  *
+
+    approve design doc (need reviewers),
+
+  *
+
+    then write acl rules
+
+  *
+
+    Then change process to an unique user
+
+  *
+
+    List all services which need to participate  - all D-bus service
+    owners and clients
+
+  *
+
+    Move to a role-based approach?
+
+Idea: Complete the privilege separation work for a service to use as a 
+model for other services.  When this is done, repo maintainers will have 
+an easier time to understand what changes are needed.
+
+We briefly talked through an example set of rules for bmcweb and  ipmid 
+talking to phosphor-user-manager.
+
+
+3 Move meeting earlier by 1 hour?  Let’s renegotiate the meeting time.
+
+
+4 Progress on BMC secure boot?
+
+AST2600 hardware secure U-boot  boot, then secure booting the Linux 
+kernel. No additional pieces.
+
+See the AST security guide.  How is signing-key management done?
+
+Dhananjay to  follow up.
+
+
+
+Joseph
+
+
+>
+>
+> Access, agenda and notes are in the wiki:
+> https://github.com/openbmc/openbmc/wiki/Security-working-group 
+> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
+>
+> - Joseph
+
