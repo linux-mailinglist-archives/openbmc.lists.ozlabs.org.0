@@ -1,92 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFC2746D907
-	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 17:56:53 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 048D846D93B
+	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 18:07:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J8NcM5cwwz307x
-	for <lists+openbmc@lfdr.de>; Thu,  9 Dec 2021 03:56:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J8NrK62D8z3bSn
+	for <lists+openbmc@lfdr.de>; Thu,  9 Dec 2021 04:07:13 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=OFxhNDZl;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Vd/bp/07;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=aQIXcuZs;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=OFxhNDZl; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=Vd/bp/07; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=aQIXcuZs; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J8Nbt2gHjz2xZm
- for <openbmc@lists.ozlabs.org>; Thu,  9 Dec 2021 03:56:25 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 3076C5C0233;
- Wed,  8 Dec 2021 11:56:22 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Wed, 08 Dec 2021 11:56:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=HkKal48JqOtwZLmiPcvaJr89A4o
- JbMV+KOixhPqjwj4=; b=OFxhNDZlGdMeqL+7dhzelnvQ+vXuigDKmcOZuIjsw+S
- fcnJWEuzx1m3UUP7wzD8GNm3/BAFT8cJmWpGci5swKZuunBJyii6Xp31I2IwFJ6q
- 864kHKq6J+4Wy/xkQBCtKeyfJ/SyrJM4KjM7zREX9MXQSUUPRPGW7hVWabD+XaC7
- md0KufSiMD1Nq2HdUO+JkwGHkWKQiuDe1MWs0uX3cI7JzavaTkoTtnayqNMWiG1/
- EbMNRom9gGH6bDGoqKBrEc+2GxnngJwah2rJ6AoVwWifGGQE7fz/sPlK/OZ/Icq5
- wDz5mvOzknu6C6Vj5k6fX/XI0ju8w6eEn9PENjcFgGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=HkKal4
- 8JqOtwZLmiPcvaJr89A4oJbMV+KOixhPqjwj4=; b=Vd/bp/07YqSQrGlwZ1Sc2G
- XwxeNWo2eKXovLoirO1iEDGTIb2iLKz5PEkchE8Tz6oAlp+4eK7hkwc4cPm2SyJa
- WBHd41DDwcsp4gL40MD9or3IKERrd/+dX0CoaXyv7zVQejLyu4tcICwDoohz0aiL
- 2W7QyQe5aLcKvnbKZ3X4YhKL0nVLqHOXhvrFbhJwgU/zjkBjfZDgfUQklWnYDnks
- o8/5HsK2oGgeB/dR3DBYX61K0U6T/sElfuR7FydGi4RP+lxK+Wh21yDVFiin5+GJ
- bsbko1luzGkixaqA1ZXpea3RBN/Hxg2LT01qsQpIutXMI0NjSTbn/3VDcccmdKAQ
- ==
-X-ME-Sender: <xms:teOwYX749KPH_6V_QNlh_9wKW6ajvcZzY20Co4zRmH6Gm3yww7PpTg>
- <xme:teOwYc4drYamCYt8bZEOUngpuSwLKnVj6Bkif-c5jKMQjGHNoDTxYZkHDc6F5CsFW
- zDr42Qo2sJ6t0S1dDE>
-X-ME-Received: <xmr:teOwYeccxfXK7kh6CI0wcAf04EAC1cbboLBdZpLhbc0XdQ6H6Rj4wocwuh0OlYWYzz4guftq1zhx4u2qbuD2pHf-126CMbGp9IZISg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrjeekgdelfecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtdorredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpedtgfdvjeegvddtkefgveefhffhffeu
- hfeuiefgvedufeelieetjeekkefhtdeufeenucffohhmrghinhepghhithhhuhgsrdgtoh
- hmpdhvihhrthhurghlqdhmvgguihgrrdhmugenucevlhhushhtvghrufhiiigvpedtnecu
- rfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:teOwYYJEvPgI4-BnYWKqPEEpZ1ryZum-zyvlHSPWHipFV469Eiuztw>
- <xmx:teOwYbK70S0TT0S3gYFcoQ4uNV0h2QZgyhkqaUJk0uumpEoCXiTv7g>
- <xmx:teOwYRxz7dUouwAf4ZfXX26SrBEVsc7In4-OYXtAilbVzqAyVADu6A>
- <xmx:tuOwYdxPDOpHv0LPZFiyxaj8xUwpEde37YvoYlPWmmFY5bU99bec1A>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Dec 2021 11:56:21 -0500 (EST)
-Date: Wed, 8 Dec 2021 10:56:19 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: "Hawrylewicz Czarnowski,
- Przemyslaw" <przemyslaw.hawrylewicz.czarnowski@intel.com>
-Subject: Re: Virtual Media repository request
-Message-ID: <YbDjsxZYYtnNPsCK@heinlein>
-References: <DM4PR11MB52476717C6A134B92BD62061B96E9@DM4PR11MB5247.namprd11.prod.outlook.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J8Nqx196Rz2yPT
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Dec 2021 04:06:52 +1100 (AEDT)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1B8GMS2j004148; 
+ Wed, 8 Dec 2021 17:06:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=IUzDDMmDKPh8LyJ7/sqRcCa7j4thZ7FSuaDJQKBt4lA=;
+ b=aQIXcuZs0PilXL7Gm49b/hpZOUkHxpDmhf5HwXsanRsGBWvSjwA+3ORrMEThom8AK0MX
+ UwKkE5qWWlPZ8O5xD4MSUFgvddB1UwRn+nOpgZf5mGQUeT3OCdgedw5XUg1DSQ79CsLY
+ SkFd/uwxTCsUn1Leay9pPgVdqy3SigTD/EhTtZBo4XF0wXGsqpWv/26dc1T86F0t3C8/
+ G8JY/x1aGOowJY/wJtL4rnVjuuGzl31ygO7XfKc5gLrbBnrtusYqoY2Lgbic+zIiMlbk
+ l3+wit8lQcG1SuW6Tp7mwZEC907Tw93+IKPFYh//NF7WkstdrfUDts2MJoPWny6lMRav zg== 
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3cu05ygy81-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Dec 2021 17:06:49 +0000
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 1B8GVU7H013836;
+ Wed, 8 Dec 2021 17:06:47 GMT
+Received: from b03cxnp07027.gho.boulder.ibm.com
+ (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
+ by ppma01wdc.us.ibm.com with ESMTP id 3cqyyb6jq2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Dec 2021 17:06:47 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 1B8H6kFk18088222
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 8 Dec 2021 17:06:46 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 980C178072;
+ Wed,  8 Dec 2021 17:06:46 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C83278060;
+ Wed,  8 Dec 2021 17:06:46 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.84.65])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed,  8 Dec 2021 17:06:46 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH v2 1/2] ARM: dts: Aspeed: Rainier: Add GPIO hog for USB power
+ control
+Date: Wed,  8 Dec 2021 11:06:40 -0600
+Message-Id: <20211208170641.13322-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="yzIPxjtNeqDgQ9ZO"
-Content-Disposition: inline
-In-Reply-To: <DM4PR11MB52476717C6A134B92BD62061B96E9@DM4PR11MB5247.namprd11.prod.outlook.com>
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: a90BH8bCKQAC6UgqRYmDYhTfSbqcuJ91
+X-Proofpoint-GUID: a90BH8bCKQAC6UgqRYmDYhTfSbqcuJ91
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
+ definitions=2021-12-08_07,2021-12-08_01,2021-12-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ bulkscore=0 spamscore=0 mlxlogscore=600 malwarescore=0 suspectscore=0
+ impostorscore=0 phishscore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2110150000 definitions=main-2112080099
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,77 +97,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Set the USB power control to always on.
 
---yzIPxjtNeqDgQ9ZO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-On Tue, Dec 07, 2021 at 03:50:47PM +0000, Hawrylewicz Czarnowski, Przemysla=
-w wrote:
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 866f32cdccea..cb7d86a2862c 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -275,6 +275,12 @@ i2c3_mux_oe_n {
+ 		output-high;
+ 		line-name = "I2C3_MUX_OE_N";
+ 	};
++
++	usb_power {
++		gpio-hog;
++		gpios = <ASPEED_GPIO(O, 3) GPIO_ACTIVE_LOW>;
++		output-high;
++	};
+ };
+ 
+ &emmc_controller {
+-- 
+2.27.0
 
-Hello Przemyslaw,
-
-Thank you for wanting to work at getting this code mainlined.  I know there=
- has
-been quite a bit of interest from various people outside Intel.
-
-> I would like to request for new Virtual Media service repository (based o=
-n the design document located here: https://github.com/openbmc/docs/blob/ma=
-ster/designs/virtual-media.md).
-
-I know you've got a pending commit to update some pieces of this design.  S=
-ince
-none of the code has been submitted since the design was originally written=
-, do
-we need anyone to re-read it and see if anything has changed in the rest of=
- the
-codebase that needs design updates?
-
-> The service itself is a reworked Virtual Media which early stage is avail=
-able here: https://github.com/Intel-BMC/provingground.
->=20
-
-What did you have in mind for maintainer structure on this?  I'd ideally li=
-ke to
-see someone outside of Intel be a co-maintainer with you since:
-
-  - This code was initially written as experimental Intel-only repository
-    without any community feedback and
-  - The current code hasn't been touched in 2 years and best practices have
-    likely changed.
-  - You're not currently a maintainer on any other repositories.
-
-> And additional question: is there anything to do in order to enable CI fo=
-r this repo?
-
-Once the repository is set up, Andrew G can enable CI on it fairly quickly.
-
---=20
-Patrick Williams
-
---yzIPxjtNeqDgQ9ZO
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmGw47IACgkQqwNHzC0A
-wRk2aA//Zip+2+8W15svAhA7UgxfAXXC+l+cxDPuVFNco4pbxri+rZoMF8kg1dy0
-estBQ01eBnWJVBJzJGM1QIW4a/BHnvxpoaAp77Nb6bNRRZXy7tBgXFivf8O7qDlu
-EHOVt0FF9dqTzRIpPuMDM6mu2ClWWr3PaetkX2CD/liyOfToNOrxfCgCwqmkhpMX
-3Zc2/P3DmDe7p6wT5IsiQengnIVXRYHI8HbcIKpORmFOtdv51weQTCxrwN8LNLBI
-1+Xt2ewzm4M4IYB58DJf+bqbTH+FABIFlpxtPQEUmFTdk/TQuuyvFLKYjIKwu1l0
-ffnyagjwezr3YxVXzzm88gBl2S+S7BzAXpn4bIrqsfTvpyMP+PskU5DYXZFE9GZW
-cEj2lc9d8NamhBJtchW9/iaZvKrIkhIcwetMAArdF65gDrIT1jNsfawIDOF7gGo4
-eml+VzTUbP4IUBNRz/qGp2w8SrAOe77ESuRZsdisprtpws9gEL07SpLI6I2LbPKF
-3uHCQ1aYMTNK2Q0DPoPPchI9rEb0YLPkVwFRePXTiAVkwLqNcCS8Cmho1jIiWIWN
-qDHZtbcIZdxeJQGQ0ht3IEWxPaRpZhgUJXGVCGKrGFqZBgOxmVUrvwTOru334WJ3
-6PLZhlJE/+jcTXiks6Ni8xa4rv70SlyvAnRouuoeAlMxjKXNSu4=
-=7w3h
------END PGP SIGNATURE-----
-
---yzIPxjtNeqDgQ9ZO--
