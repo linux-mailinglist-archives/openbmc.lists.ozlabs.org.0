@@ -2,63 +2,45 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AE6A46C970
-	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 01:41:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4339B46C99C
+	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 01:53:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J7yz13lRvz2ywb
-	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 11:41:33 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=AascMbPs;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J7zF30qtYz3bnC
+	for <lists+openbmc@lfdr.de>; Wed,  8 Dec 2021 11:53:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=AascMbPs; 
- dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [IPv6:2605:2700:0:5::4713:9cab])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J7yyb53sfz2yfd
- for <openbmc@lists.ozlabs.org>; Wed,  8 Dec 2021 11:41:11 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (174-21-184-96.tukw.qwest.net
- [174.21.184.96])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 55EC913C;
- Tue,  7 Dec 2021 16:41:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1638924067;
- bh=s6ABec3cQrCcwPwEvvQilvY6nhXEAAn1Z6NWqTy6sz0=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=AascMbPsQDB9NcwR0tS32+ZQuxnkbYy7eC8g/a1ysYKFM9OO8D1vjBsGt7n8N+eRC
- N1MqH+iN/LQeiNztVbPSH843kHSOcucQxVctbvoIgBPtW8GJzyhsuFhsrjIRW2WZIp
- ru3PUKGWqQ2QR5HwwbL29x3D9A6WAliPtpHlweu4=
-Date: Tue, 7 Dec 2021 16:41:02 -0800
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH v3 1/2] hwmon: (pmbus) Add Delta AHE-50DC fan control
- module driver
-Message-ID: <Ya//HhC8a1DmQQAx@hatter.bewilderbeest.net>
-References: <20211207071521.543-1-zev@bewilderbeest.net>
- <20211207071521.543-2-zev@bewilderbeest.net>
- <20211207175015.GA772416@roeck-us.net>
- <Ya+0YDWIRBQFnEDb@hatter.bewilderbeest.net>
- <f30241ad-f3c4-ee78-22f3-405401615b61@roeck-us.net>
- <Ya/X46owU78iVbSO@hatter.bewilderbeest.net>
- <abc2e3bc-3806-dbd3-840c-e19154bc0587@roeck-us.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J7zDl1lV0z2xDV
+ for <openbmc@lists.ozlabs.org>; Wed,  8 Dec 2021 11:53:24 +1100 (AEDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10191"; a="298521906"
+X-IronPort-AV: E=Sophos;i="5.87,295,1631602800"; d="scan'208";a="298521906"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Dec 2021 16:52:22 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.87,295,1631602800"; d="scan'208";a="749253709"
+Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
+ by fmsmga006.fm.intel.com with ESMTP; 07 Dec 2021 16:52:19 -0800
+Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
+ (envelope-from <lkp@intel.com>)
+ id 1mulBy-000NA6-NP; Wed, 08 Dec 2021 00:52:18 +0000
+Date: Wed, 8 Dec 2021 08:51:58 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+ linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 5/8] pinctrl: nuvoton: Add driver for WPCM450
+Message-ID: <202112080810.lGBV2yEm-lkp@intel.com>
+References: <20211207210823.1975632-6-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <abc2e3bc-3806-dbd3-840c-e19154bc0587@roeck-us.net>
+In-Reply-To: <20211207210823.1975632-6-j.neuschaefer@gmx.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,91 +52,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, openbmc@lists.ozlabs.org,
- Jean Delvare <jdelvare@suse.com>, linux-kernel@vger.kernel.org
+Cc: kbuild-all@lists.01.org, Tomer Maimon <tmaimon77@gmail.com>,
+ Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org,
+ Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+ Rob Herring <robh+dt@kernel.org>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 07, 2021 at 03:15:18PM PST, Guenter Roeck wrote:
->On 12/7/21 1:53 PM, Zev Weiss wrote:
->>On Tue, Dec 07, 2021 at 11:44:01AM PST, Guenter Roeck wrote:
->>>On 12/7/21 11:22 AM, Zev Weiss wrote:
->>>>On Tue, Dec 07, 2021 at 09:50:15AM PST, Guenter Roeck wrote:
->>>>>On Mon, Dec 06, 2021 at 11:15:20PM -0800, Zev Weiss wrote:
->>>>>>This device is an integrated module of the Delta AHE-50DC Open19 power
->>>>>>shelf.  For lack of proper documentation, this driver has been developed
->>>>>>referencing an existing (GPL) driver that was included in a code release
->>>>>>from LinkedIn [1].  It provides four fan speeds, four temperatures, and
->>>>>>one voltage reading, as well as a handful of warning and fault
->>>>>>indicators.
->>>>>>
->>>>>>[1] https://github.com/linkedin/o19-bmc-firmware/blob/master/meta-openbmc/meta-linkedin/meta-deltapower/recipes-kernel/fancontrol-mod/files/fancontrol.c
->>>>>>
->>>>>
->>>>>Hmm, that reference isn't really accurate anymore. I think it would be
->>>>>better to just say that the device was found to be PMBus compliant.
->>>>
->>>>Sure, will do.
->>>>
->>>
->>>Makes me wonder: How do you know that the referenced driver is for Delta AHE-50DC ?
->>
->>We'd been waiting for the source code for the software it ships with for a while, and were finally provided with that repo; everything I've observed from the factory software is consistent with the code in that driver.  A sampling:
->>
->
->I assume you mean "Delta AHE-50DC" when you refer to "it".
->
+Hi "Jonathan,
 
-Yes.
+I love your patch! Perhaps something to improve:
 
->[ ... ]
->>>Can you check this with real hardware, by any chance ?
->>>
->>
->>If you mean running that code on it, yes -- here's the userspace utility that invokes that library routine:
->>
->>     root@bmc-oob:~# fan-util.sh
->>     fan1 speed: 7860 RPM
->>     fan2 speed: 7860 RPM
->>     fan3 speed: 7620 RPM
->>     fan4 speed: 7560 RPM
->>     temperature1: 29.20 C
->>     temperature2: 27.80 C
->>     temperature3: 28.50 C
->>     temperature4: 30.20 C
->>     vin_undervolt_fault: no
->>     overtemperature_warning: no
->>     fan_fault: no
->>     fan_warning: no
->>     fan_status: ok
->>
->
->That doesn't really tell me anything in the context of the driver you submitted.
->Would it be possible to install your driver and provide the output from the
->"sensors" command ? It should match the information from the proprietary
->driver/tool.
->
+[auto build test WARNING on linusw-pinctrl/devel]
+[also build test WARNING on robh/for-next linus/master v5.16-rc4 next-20211207]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Thanks, in doing so I realized I'd neglected to prevent reads from 
-unsupported registers in the read_word_data function, which was leading 
-to the driver producing sysfs files for meaningless sensor limits that 
-the device doesn't actually support.  With that fix (which I'll include 
-in v4):
+url:    https://github.com/0day-ci/linux/commits/Jonathan-Neusch-fer/Nuvoton-WPCM450-pinctrl-and-GPIO-driver/20211208-051101
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git devel
+config: h8300-randconfig-r024-20211207 (https://download.01.org/0day-ci/archive/20211208/202112080810.lGBV2yEm-lkp@intel.com/config)
+compiler: h8300-linux-gcc (GCC) 11.2.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/c08fb0aafb60234854aa86433da809fe5112f55e
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Jonathan-Neusch-fer/Nuvoton-WPCM450-pinctrl-and-GPIO-driver/20211208-051101
+        git checkout c08fb0aafb60234854aa86433da809fe5112f55e
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=h8300 SHELL=/bin/bash drivers/pinctrl/nuvoton/
 
-     root@ahe-50dc:~# /tmp/sensors 'ahe50dc_fan-*'
-     ahe50dc_fan-i2c-28-30
-     Adapter: i2c-8-mux (chan_id 0)
-     vin:          12.29 V  
-     fan1:        7680 RPM
-     fan2:        7860 RPM
-     fan3:        7680 RPM
-     fan4:        7380 RPM
-     temp1:        +27.8 C  
-     temp2:        +23.4 C  
-     temp3:        +25.3 C  
-     temp4:        +24.5 C  
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+   In file included from include/linux/device.h:15,
+                    from drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:5:
+   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c: In function 'npcm7xx_get_groups_count':
+>> drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:28: warning: format '%d' expects argument of type 'int', but argument 4 has type 'long unsigned int' [-Wformat=]
+    1564 |         dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
+         |                            ^~~~~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:129:41: note: in definition of macro 'dev_printk'
+     129 |                 _dev_printk(level, dev, fmt, ##__VA_ARGS__);            \
+         |                                         ^~~
+   include/linux/dev_printk.h:158:37: note: in expansion of macro 'dev_fmt'
+     158 |         dev_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |                                     ^~~~~~~
+   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:9: note: in expansion of macro 'dev_dbg'
+    1564 |         dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
+         |         ^~~~~~~
+   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:42: note: format string is defined here
+    1564 |         dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
+         |                                         ~^
+         |                                          |
+         |                                          int
+         |                                         %ld
 
 
+vim +1564 drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
 
-Zev
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1559  
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1560  static int npcm7xx_get_groups_count(struct pinctrl_dev *pctldev)
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1561  {
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1562  	struct npcm7xx_pinctrl *npcm = pinctrl_dev_get_drvdata(pctldev);
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1563  
+3b588e43ee5c7a Tomer Maimon 2018-08-08 @1564  	dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1565  	return ARRAY_SIZE(npcm7xx_groups);
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1566  }
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1567  
 
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
