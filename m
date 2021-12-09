@@ -1,74 +1,98 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FFA046E6D7
-	for <lists+openbmc@lfdr.de>; Thu,  9 Dec 2021 11:42:13 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEEBF46F163
+	for <lists+openbmc@lfdr.de>; Thu,  9 Dec 2021 18:13:50 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4J8rFb1zg0z3bXP
-	for <lists+openbmc@lfdr.de>; Thu,  9 Dec 2021 21:42:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4J90xS3gx3z3bjF
+	for <lists+openbmc@lfdr.de>; Fri, 10 Dec 2021 04:13:48 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=cIyALKII;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=rghjwJiN;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.kononenko@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=cIyALKII; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=rghjwJiN; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4J8rF827ntz2yp2
- for <openbmc@lists.ozlabs.org>; Thu,  9 Dec 2021 21:41:48 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 29BD243802;
- Thu,  9 Dec 2021 10:41:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:content-language:content-type
- :content-type:in-reply-to:mime-version:user-agent:date:date
- :message-id:from:from:references:subject:subject:received
- :received:received; s=mta-01; t=1639046501; x=1640860902; bh=V0m
- 3ybUwfOFj+vkz87laqbxFvBMZoeg1++YQ1ATZbnQ=; b=cIyALKIIGImQ0ZAQFtk
- kWyE8L6gQMscDNcgF4oRYQpTE1RRycaHp/iiotGh6bw/F433BA7qfzzmej/rv8AR
- h3XRhbak2uRmcUAP3QLytuBHmLJ7p8zl4oHf7shOI+qSsZ5R/ljtCINLXSN5U+QL
- BRk2ebNQqbIo58RpcjwerenQ=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id zbg7vCFscDLj; Thu,  9 Dec 2021 13:41:41 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 2201C42E30;
- Thu,  9 Dec 2021 13:41:41 +0300 (MSK)
-Received: from [10.199.18.103] (10.199.18.103) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 9 Dec
- 2021 13:41:40 +0300
-Subject: Re: Virtual Media repository request
-To: "Czarnowski, Przemyslaw"
- <przemyslaw.hawrylewicz.czarnowski@linux.intel.com>, Patrick Williams
- <patrick@stwcx.xyz>
-References: <DM4PR11MB52476717C6A134B92BD62061B96E9@DM4PR11MB5247.namprd11.prod.outlook.com>
- <YbDjsxZYYtnNPsCK@heinlein>
- <475ba120-3734-8bf1-868f-83f48f10ccac@linux.intel.com>
-From: i.kononenko <i.kononenko@yadro.com>
-Message-ID: <012fbafd-dc98-0f59-51d6-4d09f45d5412@yadro.com>
-Date: Thu, 9 Dec 2021 13:41:40 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <475ba120-3734-8bf1-868f-83f48f10ccac@linux.intel.com>
-Content-Type: text/plain; charset="utf-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4J90wy4pBMz308v
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Dec 2021 04:13:22 +1100 (AEDT)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1B9H9Y1d001242; 
+ Thu, 9 Dec 2021 17:13:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=TutM/nOUf30LSIGPkWnFpNDua6aW0XUFS6erpkUsIpo=;
+ b=rghjwJiNlkzpHGCkAq/PVUjqgKVtAAg4xgZkbLyP7Udpi/fy3IADMFWl31zOvEoG6jYu
+ 3HQO2ywY1WEwM8RVd8BK6LfW1rPU8bCl0cFsTkaRxussj4zz74c3QbsZP0wQv/ed7U/J
+ cAKuT0ES2Lx9pVcPJXm8qGpx4bl5FQa5zc3Gt68Rd4HympsfK8RaMpjX53y/KR5C8/iQ
+ c5+ZHC/v6uqTRw0hReQWQZxvFwgYq6B2GQXCIYzgsSVKLcpryih8/tCwl+jXs5ZvvSvL
+ cw7kU4DiP9d/8EYjn2ha/w6FmLc9N71cMZTTmyGxoVmFpMyyfxTdPPVabV5YAbiOrFW/ +Q== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3cum4735u9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Dec 2021 17:13:15 +0000
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 1B9HDFU6019256;
+ Thu, 9 Dec 2021 17:13:15 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma02dal.us.ibm.com with ESMTP id 3cqyycp5vj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Dec 2021 17:13:15 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 1B9HDDhJ31523128
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 9 Dec 2021 17:13:13 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9192D12405E;
+ Thu,  9 Dec 2021 17:13:13 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 39B1F124066;
+ Thu,  9 Dec 2021 17:13:13 +0000 (GMT)
+Received: from [9.65.197.216] (unknown [9.65.197.216])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Thu,  9 Dec 2021 17:13:13 +0000 (GMT)
+Message-ID: <7e7f0779-d6c7-99b3-d88a-5a239440984a@linux.ibm.com>
+Date: Thu, 9 Dec 2021 11:13:12 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.2.0
+Subject: Re: Security Working Group meeting - Wednesday December 8 - results
 Content-Language: en-US
+To: Andrew Jeffery <andrew@aj.id.au>
+References: <0abb0557-9797-cd8e-1d21-bc8abf24d7ad@linux.ibm.com>
+ <64bef7b7-2dae-056c-98dc-696b864f4fb7@linux.ibm.com>
+ <2fb7a5f7-a9a3-4c00-9b16-d98a9c0af91c@www.fastmail.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+In-Reply-To: <2fb7a5f7-a9a3-4c00-9b16-d98a9c0af91c@www.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 3pwxV3pHa7bItjfJMGZ7fzZYyB4SnOXx
+X-Proofpoint-GUID: 3pwxV3pHa7bItjfJMGZ7fzZYyB4SnOXx
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.18.103]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
+ definitions=2021-12-09_07,2021-12-08_01,2021-12-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxlogscore=942
+ priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 phishscore=0
+ suspectscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2110150000
+ definitions=main-2112090089
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,83 +104,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello!
-
-Here I have some points about the Virtual Media feature.
-Some time ago I have worked to improve virtual media, in the YADRO we implement 
-the feature based on the `Intel-BMC/provingground/virtual-media` implementation.
-
-Since the project was not be upstreamed, that was our private changes. 
-Today we have the good news, the project will be published and I guess our changes
-could be provided too.
-
-On 09.12.2021 11:56, Czarnowski, Przemyslaw wrote:
-> On 08.12.2021 17:56, Patrick Williams wrote:
->> On Tue, Dec 07, 2021 at 03:50:47PM +0000, Hawrylewicz Czarnowski, Przemyslaw wrote:
+On 12/9/21 4:21 AM, Andrew Jeffery wrote:
+> On Thu, 9 Dec 2021, at 05:44, Joseph Reynolds wrote:
+>
+>> 4 Progress on BMC secure boot?
 >>
->> Hello Przemyslaw,
+>> AST2600 hardware secure U-boot  boot, then secure booting the Linux
+>> kernel. No additional pieces.
 >>
->> Thank you for wanting to work at getting this code mainlined.  I know there has
->> been quite a bit of interest from various people outside Intel.
+>> See the AST security guide.  How is signing-key management done?
 >>
->>> I would like to request for new Virtual Media service repository (based on the design document located here: https://github.com/openbmc/docs/blob/master/designs/virtual-media.md).
->>
->> I know you've got a pending commit to update some pieces of this design.  Since
->> none of the code has been submitted since the design was originally written, do
->> we need anyone to re-read it and see if anything has changed in the rest of the
->> codebase that needs design updates?
-> 
-> The code base for VM is "live" at the moment and besides asynchronousness nothing needs to be updated at the moment.
-> 
-> There is a limitation for DVD iso's which lies in USB gadget and how it is implemented, so maybe there could be some kind of note about that.
-> 
+>> Dhananjay to  follow up.
+> As someone who was involved in integrating the AST2600 secure-boot support into OpenBMC, what's going on here?
 
-Some months ago I published changes for the kernel:usb-gadget:mass-storage that aims
-to support CD/DVD/BD media types (based on the image size).
-The work has not been completed, the changes require to be properly formed. Looks 
-like the publishing virtual media repository is a good point to actualize that patch
-series.
+Someone asked the question you see above, and Dhananjay tried to 
+answer.  The consensus was that there is support for AST2600 secure 
+booting U-Boot, support for U-Boot securely loading the Linux kernel, 
+and no additional support.  Your summary would be appreciated.
 
-Please, feel free to suggest helpful notes to improve a VM consumer interface; e.g. 
-I still don't know how to better determine VM-image type - by the image size, how I 
-did, or by sysfs interface(like the `cdrom` is specified).
+Is there a document which what a system integrator needs to use this 
+function?  Ideally it would be linked from 
+https://github.com/openbmc/docs/blob/master/features.md
 
->>
->>> The service itself is a reworked Virtual Media which early stage is available here: https://github.com/Intel-BMC/provingground.
->>>
->>
->> What did you have in mind for maintainer structure on this?  I'd ideally like to
->> see someone outside of Intel be a co-maintainer with you since:
->>
->>    - This code was initially written as experimental Intel-only repository
->>      without any community feedback and
->>    - The current code hasn't been touched in 2 years and best practices have
->>      likely changed.
->>    - You're not currently a maintainer on any other repositories.
-> 
-> The code base exposed in provingground was under the development at that moment and actually shouldn't be submitted. The code is updated now (still needs some polishing I suppose) but I am ready to push updated sources and ask the community to review it.
-> 
-> Right now I am the main person for VM in Intel, but actually I was thinking about some co-maintainership in case there are other parties willing to have contribution in the code. This could be worked out during review process.
+Joseph
 
-Since I have some work to support VM and have examined the virtual-media implementation
-by Intel I could contribute them.
+>
+> Andrew
 
-> 
->>
->>> And additional question: is there anything to do in order to enable CI for this repo?
->>
->> Once the repository is set up, Andrew G can enable CI on it fairly quickly.
->>
-> 
-> Glad to hear that.
-> 
-> 
-
--- 
-Best regards,
-
-Igor Kononenko
