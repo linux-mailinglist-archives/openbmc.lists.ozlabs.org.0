@@ -2,68 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 873BB471657
-	for <lists+openbmc@lfdr.de>; Sat, 11 Dec 2021 22:13:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FEEA4716B3
+	for <lists+openbmc@lfdr.de>; Sat, 11 Dec 2021 22:22:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JBL9N2TJ6z3cQj
-	for <lists+openbmc@lfdr.de>; Sun, 12 Dec 2021 08:13:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JBLMc30Hmz3cJ9
+	for <lists+openbmc@lfdr.de>; Sun, 12 Dec 2021 08:22:36 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=7R4sM4lP;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=LtcXpV4c;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2a00:1450:4864:20::229; helo=mail-lj1-x229.google.com;
+ (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com;
  envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=tanous-net.20210112.gappssmtp.com
  header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=7R4sM4lP; dkim-atps=neutral
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com
- [IPv6:2a00:1450:4864:20::229])
+ header.s=20210112 header.b=LtcXpV4c; dkim-atps=neutral
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
+ [IPv6:2a00:1450:4864:20::22a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JBL8x2tgJz2yPM
- for <openbmc@lists.ozlabs.org>; Sun, 12 Dec 2021 08:13:18 +1100 (AEDT)
-Received: by mail-lj1-x229.google.com with SMTP id m12so18482085ljj.6
- for <openbmc@lists.ozlabs.org>; Sat, 11 Dec 2021 13:13:18 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JBLMF0FTpz2yQK
+ for <openbmc@lists.ozlabs.org>; Sun, 12 Dec 2021 08:22:15 +1100 (AEDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 13so18410498ljj.11
+ for <openbmc@lists.ozlabs.org>; Sat, 11 Dec 2021 13:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=tanous-net.20210112.gappssmtp.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=OeOzAA/7BEF26ePEe9QACge/M6XX9487yfhDNlPypa8=;
- b=7R4sM4lP2qa5Opy6rziMNeOPPCKwT08/dKfKdW+tAvV7sCyZ5IFBMTMQ0Ca0PF3+Yc
- jMrjDOnZN/zIEwnruQ74BXGb4dohcsZ0K9xvW6ALRj3SzOVIkOOPraXfAhk7dJP93thm
- 2YrF7yPwLZHcq5Zosl8epWm7Qc5YOF2wEgaq+Bzh4VU2TrcCI1mcZWXQ3PWcOFOxMNcX
- Z+jgy0SH3iA8lqt7u6UuSf1n8dbKWgVjFzgpNHJiH2JpGOf/aWNruKacdNnz8/pkun4i
- PLCrcMXD+PtLiMa9s/tRaguu1ECVYkIrSs4u5/+LqPCzpXmZ8bchQB5SyyX4yZqUuxXa
- Peyg==
+ :cc; bh=2fcV1qIWXlXpt4seJvia/lEuHpt4qtSOH7Qy9wkZwxY=;
+ b=LtcXpV4cDkuEymEm6e51UrjNgXgEtPNKf7SjAT50Mc8UJ0zdAfZecgq6D6M+QMIPvu
+ hF9okakXSp0YhRl1bkP6E5cFaMDF9yzpXiShfFX04XMKJTHpC7cBPG0htG4UxTBAQSxQ
+ VLWb4hKQ63wjQRgkw88XYY66Lsi22blTg/ksoAiQWytljWcbbK0IB0wVnKz2WekWRoqG
+ Icf3t3iz75cmPJRLLiT/JkOXk+dQjsi91BBsW7SrXbLu/qiwFuMKOLkaAhUAm30vw+LN
+ GwxgmXRuHSu41WJfOhgOv3gRdQHvtvVzFRIGGfySA1flYaOHGhqyL/zD3UNjJPogO8P5
+ jlzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=OeOzAA/7BEF26ePEe9QACge/M6XX9487yfhDNlPypa8=;
- b=gdMhv2i5NRLsmbwXA7fUtxN+8WVSYvpS3XMzx+ojv3rVRgyRIhJYpz1H2IrI5rhswo
- aGBGGoMUcy67dRHWAc1/MtJCERqPirKBGIfCWNKDj3PJbzth/4SvEomtcmhuvrWZW4yA
- vRr5LJfPqxQPF773byLiPisegiuxmTcjdZdpFyC1lw9egCkL94BW8/Clu6nXnS1nPOy8
- RisXjTjMgGNk2IJHxbzGBSER6OIROV1ruX9fz4GcJfMbkfUW/GkTZUwfnI/EwzyUOfsj
- r1fFHxNLDdCHxa2h0g3KZj3rcaIjs1O8O1TsW3GwNck3Jc+H+tPoVm1I7ZCA1LyqCACo
- Vuuw==
-X-Gm-Message-State: AOAM5331284dP5WXQA2apkcVjrBtSCbOXsaTm3Yd6StHxU8NB4kNG9Tj
- l9PdgNjLxbRec+FEpCSQrhqY5c3ofjxxCwGGG58sCw==
-X-Google-Smtp-Source: ABdhPJw6NJNR13jaKcC22HnPaLL8gPtu0rxUIl0A6otpOlP9NpnSoI9DFuSJofEKIGb9AaVAKwsLZd6lwnoiFLrD4V4=
-X-Received: by 2002:a2e:86cc:: with SMTP id n12mr20038932ljj.275.1639257190933; 
- Sat, 11 Dec 2021 13:13:10 -0800 (PST)
+ bh=2fcV1qIWXlXpt4seJvia/lEuHpt4qtSOH7Qy9wkZwxY=;
+ b=dO4Qt6ZASKhMNesk49DVnAyhdUGOTHI7IOkn8xhZplOPcFx0CPTvwlxU8rpnSIuK8w
+ ClNK4FbOYLBsELLDsxJWx5ubNVHbxZRRKGktn8Ar3ESSKE59pywQrlXZqSHw+0rkUhiE
+ Mg/TOx7rxbINGCR0Ay59XQA1AcCcKXQk9S61djO20+rbT6BmdBRjk+17HwQti9sSh2nJ
+ eZKQM6spo1CxqSu578uLj0sOnDBRoFy1O/vD/IlJDK2r81ZIwtmidFVpUXhsb+ZCvUXH
+ 3IQ+EJl0MZcUHuTTTM704nC4nHHJOszuJKuah6CZvj7UmW6xNDSvoWFLZCD2Rq/V/YV5
+ K3Ow==
+X-Gm-Message-State: AOAM530v6Uahh6ticHQdhT7krfsuPzKpNgNbS/2oZ+OgXJ/VUgffG6Or
+ TPBCFHJGCJM64odcy50yccg+IS68y9XV9o/5CPjoug==
+X-Google-Smtp-Source: ABdhPJwfXqgra/z42JC536RuAuXGA3GzhzJedCtZ8HuwKeP6CBM5Vv1K+8L511XFoPBpvzbG5QJYha5Sy1x8+xbXt0c=
+X-Received: by 2002:a2e:86cc:: with SMTP id n12mr20076090ljj.275.1639257730455; 
+ Sat, 11 Dec 2021 13:22:10 -0800 (PST)
 MIME-Version: 1.0
-References: <DM4PR11MB52476717C6A134B92BD62061B96E9@DM4PR11MB5247.namprd11.prod.outlook.com>
-In-Reply-To: <DM4PR11MB52476717C6A134B92BD62061B96E9@DM4PR11MB5247.namprd11.prod.outlook.com>
+References: <3d3276b0-6408-88bf-94b1-5060e0fbeee7@linux.vnet.ibm.com>
+ <9424b5c3-729d-a9f2-353e-546de7700c5d@linux.vnet.ibm.com>
+ <CAH2-KxCbH76ByDPD2sOjL1S_x-7pn1-dKn7S7-ukfUzcgNhMfA@mail.gmail.com>
+ <8122cf87625adf94b9e2f4374e405aeb40c21460.camel@fuzziesquirrel.com>
+In-Reply-To: <8122cf87625adf94b9e2f4374e405aeb40c21460.camel@fuzziesquirrel.com>
 From: Ed Tanous <ed@tanous.net>
-Date: Sat, 11 Dec 2021 13:13:00 -0800
-Message-ID: <CACWQX81Q0w=oK_Sv9OHKrMo5pj2-HaPEW8Dh1MEuRDjNSQKKaA@mail.gmail.com>
-Subject: Re: Virtual Media repository request
-To: "Hawrylewicz Czarnowski,
- Przemyslaw" <przemyslaw.hawrylewicz.czarnowski@intel.com>
+Date: Sat, 11 Dec 2021 13:21:59 -0800
+Message-ID: <CACWQX82YarT4DXa+qLc+8dYaT8GU-L1rEui00==m=V2v1jmnmA@mail.gmail.com>
+Subject: Re: Control and uses of USB for BMC's own internal uses
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -76,38 +78,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>,
+ Ed Tanous <edtanous@google.com>, apparao.puli@linux.intel.com,
+ richard.marian.thomaiyar@linux.intel.com, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 7, 2021 at 7:52 AM Hawrylewicz Czarnowski, Przemyslaw
-<przemyslaw.hawrylewicz.czarnowski@intel.com> wrote:
+On Tue, Oct 19, 2021 at 6:46 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
 >
-> Hi.
+> On Mon, 2021-10-18 at 13:32 -0700, Ed Tanous wrote:
+> > On Mon, Oct 18, 2021 at 11:36 AM Bruce Mitchell
+> > <bruce.mitchell@linux.vnet.ibm.com> wrote:
+> > >
+> > > On 10/17/2021 11:55, Bruce Mitchell wrote:
+> > > >
+> > > >
+> >
+> > Some clarifying questions:
+> > There are physically available USB A ports connected directly to the
+> > BMC on IBM platforms?  Or are these traces within the board?
+> > What are these direct bmc usb ports used for normally?
+> >
+> > Considering that while the BMC use case is likely IBM specific,
 >
-> I would like to request for new Virtual Media service repository (based on the design document located here: https://github.com/openbmc/docs/blob/master/designs/virtual-media.md).
+> Just curious - what makes you say this?
 
-Considering that the virtual media already uses pieces of
-functionality from the old virtual media, why wouldn't this just go in
-https://github.com/openbmc/jsnbd
-
-Ideally we shouldn't need two different virtual media implementations,
-and my understanding is that the "new" one is a complete replacement
-for jsnbd, while still using the javascript portions of it;  Moving
-the implementation there will simplify when people look for virtual
-media, and will promote the reuse of code, so I think that's what we
-should do.
-
->
-> The service itself is a reworked Virtual Media which early stage is available here: https://github.com/Intel-BMC/provingground.
->
-> And additional question: is there anything to do in order to enable CI for this repo?
-
-I believe CI is already enabled for jsnbd, so I think we're already
-good to go there.
+I don't know of any BMCs that actually expose the BMC USB to a
+physical port.  There are lots that expose the USB to the host via
+internally routed lines.  Maybe there are more than just IBM boards
+that I've not seen before?
 
 >
-> --
-> Best regards,
-> Przemyslaw Czarnowski
+> > but
+> > the idea of disabling a generic USB port isn't IBM specific, it seems
+> > like we need a model for a USB port on dbus and relate it to the
+> > various resources.  If and when a host interface wanted to implement a
+> > similar feature, we'd be able to reuse it.
+>
+> The goal isn't really to disable a USB port.  It is to disable the
+> assorted bits of software that run when a USB device of a specific class
+> (mass storage, serial, etc) is plugged into it.  What would it even mean
+> to disable a USB port?  Would it need to be powered off?
+
+I know there's use cases for disabling the USB ports entirely for
+preventing things like USB booting.  Yes, ideally they wouldn't even
+provide power to avoid things like shorting it out to take the server
+down, but I don't know of any implementations that do that.
+
 >
