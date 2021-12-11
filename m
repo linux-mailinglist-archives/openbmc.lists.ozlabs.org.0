@@ -2,70 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FEEA4716B3
-	for <lists+openbmc@lfdr.de>; Sat, 11 Dec 2021 22:22:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 97F954716BF
+	for <lists+openbmc@lfdr.de>; Sat, 11 Dec 2021 22:28:40 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JBLMc30Hmz3cJ9
-	for <lists+openbmc@lfdr.de>; Sun, 12 Dec 2021 08:22:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JBLVZ36Znz2xvy
+	for <lists+openbmc@lfdr.de>; Sun, 12 Dec 2021 08:28:38 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=LtcXpV4c;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=Mjj4BSUV;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com;
+ (client-ip=2a00:1450:4864:20::130; helo=mail-lf1-x130.google.com;
  envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=tanous-net.20210112.gappssmtp.com
  header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=LtcXpV4c; dkim-atps=neutral
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
- [IPv6:2a00:1450:4864:20::22a])
+ header.s=20210112 header.b=Mjj4BSUV; dkim-atps=neutral
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com
+ [IPv6:2a00:1450:4864:20::130])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JBLMF0FTpz2yQK
- for <openbmc@lists.ozlabs.org>; Sun, 12 Dec 2021 08:22:15 +1100 (AEDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 13so18410498ljj.11
- for <openbmc@lists.ozlabs.org>; Sat, 11 Dec 2021 13:22:14 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JBLVC4kvDz2yxW
+ for <openbmc@lists.ozlabs.org>; Sun, 12 Dec 2021 08:28:17 +1100 (AEDT)
+Received: by mail-lf1-x130.google.com with SMTP id u3so24213757lfl.2
+ for <openbmc@lists.ozlabs.org>; Sat, 11 Dec 2021 13:28:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=tanous-net.20210112.gappssmtp.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=2fcV1qIWXlXpt4seJvia/lEuHpt4qtSOH7Qy9wkZwxY=;
- b=LtcXpV4cDkuEymEm6e51UrjNgXgEtPNKf7SjAT50Mc8UJ0zdAfZecgq6D6M+QMIPvu
- hF9okakXSp0YhRl1bkP6E5cFaMDF9yzpXiShfFX04XMKJTHpC7cBPG0htG4UxTBAQSxQ
- VLWb4hKQ63wjQRgkw88XYY66Lsi22blTg/ksoAiQWytljWcbbK0IB0wVnKz2WekWRoqG
- Icf3t3iz75cmPJRLLiT/JkOXk+dQjsi91BBsW7SrXbLu/qiwFuMKOLkaAhUAm30vw+LN
- GwxgmXRuHSu41WJfOhgOv3gRdQHvtvVzFRIGGfySA1flYaOHGhqyL/zD3UNjJPogO8P5
- jlzg==
+ :cc; bh=PJFplU6fFc+s7cudNsjrhd+SZK2MYlpQ5bBN8riWD0A=;
+ b=Mjj4BSUVXG8+njTqFPatYDk1N5VYsYaJJ+ack0S0IABNzgp+cneYaiGd/lVF50Q/av
+ UX49+FbbOLP81IRKo4qsV8Ow1pNauMXozXEBVTfkAIxIb0+7WDYGs5M9hZxnI54movBl
+ F0J7CPlycxvJutb/HlJnxjwJWw9UV1uI0dynILgqua2zpnxJl5RjTVcJUWGeDVlOXcf2
+ wdv2rDqm/V83BNCduMIRCzJNU4+chysdJlGxLqilRN+w4/2HQ0UHKgUxjvfzkoXtyJop
+ o/pY/hyUw2l7eGJSmTBezOlAf5MzVlj6WQQCAfFYpSSWMjP1hpPmrPrQr4QJI2bSyERE
+ 3o3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=2fcV1qIWXlXpt4seJvia/lEuHpt4qtSOH7Qy9wkZwxY=;
- b=dO4Qt6ZASKhMNesk49DVnAyhdUGOTHI7IOkn8xhZplOPcFx0CPTvwlxU8rpnSIuK8w
- ClNK4FbOYLBsELLDsxJWx5ubNVHbxZRRKGktn8Ar3ESSKE59pywQrlXZqSHw+0rkUhiE
- Mg/TOx7rxbINGCR0Ay59XQA1AcCcKXQk9S61djO20+rbT6BmdBRjk+17HwQti9sSh2nJ
- eZKQM6spo1CxqSu578uLj0sOnDBRoFy1O/vD/IlJDK2r81ZIwtmidFVpUXhsb+ZCvUXH
- 3IQ+EJl0MZcUHuTTTM704nC4nHHJOszuJKuah6CZvj7UmW6xNDSvoWFLZCD2Rq/V/YV5
- K3Ow==
-X-Gm-Message-State: AOAM530v6Uahh6ticHQdhT7krfsuPzKpNgNbS/2oZ+OgXJ/VUgffG6Or
- TPBCFHJGCJM64odcy50yccg+IS68y9XV9o/5CPjoug==
-X-Google-Smtp-Source: ABdhPJwfXqgra/z42JC536RuAuXGA3GzhzJedCtZ8HuwKeP6CBM5Vv1K+8L511XFoPBpvzbG5QJYha5Sy1x8+xbXt0c=
-X-Received: by 2002:a2e:86cc:: with SMTP id n12mr20076090ljj.275.1639257730455; 
- Sat, 11 Dec 2021 13:22:10 -0800 (PST)
+ bh=PJFplU6fFc+s7cudNsjrhd+SZK2MYlpQ5bBN8riWD0A=;
+ b=syIcRnI5D1dNdAOaN1/S5pp1GF10ttYl4dwNKnqS9oVGWp/+6+Ye9Q8nNKq6N+Vzp9
+ GF5Qji9KnXWydDcMYnpbBtz9UyhB/9o6ndlXtW0DFM390WYIH3JrEa6d2S6Ua4VQqbjf
+ DJ8y2D8wViXCbO/kMGfG3dANx5U4DS++Ei5zdoPINkR2WKPgNNvDIPeTq40xGi3Kmqng
+ aQ9gh3hb40FbWRKv7Rpo1yJscXLsBjvTqt0eETsRLc+cLwdFlcEwzhzd8Pz15FZclNZR
+ 3Rlhq+YuaDUpoMKmnm1KSKP699HZEsYUC9LA+aDOvtJ86jR0m4rXKQeP6IHwBChvYkaH
+ Zkkw==
+X-Gm-Message-State: AOAM532/iuD9ripO3CJPDt24n1gnpVvhfhRgJUXYG08eSgMY42VNjMBY
+ 5TSD7o/m9NeYzC8InTSiTiux8A68cP909TBTwnhFNWQ1xSM=
+X-Google-Smtp-Source: ABdhPJw88RQnkrF1sql/a62fJqUe044xjVPGtZmQbkmcDxnA+0XfASd9vSCfzg85uVAfomq9QtAMnRmOcHHQV8EYXZ4=
+X-Received: by 2002:a05:6512:368c:: with SMTP id
+ d12mr19457158lfs.538.1639258093192; 
+ Sat, 11 Dec 2021 13:28:13 -0800 (PST)
 MIME-Version: 1.0
-References: <3d3276b0-6408-88bf-94b1-5060e0fbeee7@linux.vnet.ibm.com>
- <9424b5c3-729d-a9f2-353e-546de7700c5d@linux.vnet.ibm.com>
- <CAH2-KxCbH76ByDPD2sOjL1S_x-7pn1-dKn7S7-ukfUzcgNhMfA@mail.gmail.com>
- <8122cf87625adf94b9e2f4374e405aeb40c21460.camel@fuzziesquirrel.com>
-In-Reply-To: <8122cf87625adf94b9e2f4374e405aeb40c21460.camel@fuzziesquirrel.com>
+References: <PS2PR02MB35412394ABF3E0441D72627E90B69@PS2PR02MB3541.apcprd02.prod.outlook.com>
+In-Reply-To: <PS2PR02MB35412394ABF3E0441D72627E90B69@PS2PR02MB3541.apcprd02.prod.outlook.com>
 From: Ed Tanous <ed@tanous.net>
-Date: Sat, 11 Dec 2021 13:21:59 -0800
-Message-ID: <CACWQX82YarT4DXa+qLc+8dYaT8GU-L1rEui00==m=V2v1jmnmA@mail.gmail.com>
-Subject: Re: Control and uses of USB for BMC's own internal uses
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Date: Sat, 11 Dec 2021 13:28:02 -0800
+Message-ID: <CACWQX828Gxj0tnyppiGfMxNktu7iepYgxT=qs0UQjKFMuy6sbg@mail.gmail.com>
+Subject: Re: Etag support in openbmc
+To: "Mohammed.Habeeb ISV" <mohammed.habeeb@inventec.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -78,51 +76,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>,
- Ed Tanous <edtanous@google.com>, apparao.puli@linux.intel.com,
- richard.marian.thomaiyar@linux.intel.com, openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Oct 19, 2021 at 6:46 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
->
-> On Mon, 2021-10-18 at 13:32 -0700, Ed Tanous wrote:
-> > On Mon, Oct 18, 2021 at 11:36 AM Bruce Mitchell
-> > <bruce.mitchell@linux.vnet.ibm.com> wrote:
-> > >
-> > > On 10/17/2021 11:55, Bruce Mitchell wrote:
-> > > >
-> > > >
-> >
-> > Some clarifying questions:
-> > There are physically available USB A ports connected directly to the
-> > BMC on IBM platforms?  Or are these traces within the board?
-> > What are these direct bmc usb ports used for normally?
-> >
-> > Considering that while the BMC use case is likely IBM specific,
->
-> Just curious - what makes you say this?
+We previously supported etag for static resources, hence the
+references to them.  They were removed when I moved phosphor-webui to
+webpack builds, and it was always on my list to add them back, using
+webpacks hashing mechanisms, but I never got a chance.
 
-I don't know of any BMCs that actually expose the BMC USB to a
-physical port.  There are lots that expose the USB to the host via
-internally routed lines.  Maybe there are more than just IBM boards
-that I've not seen before?
+In practice, they didn't provide that much utility because most browsers:
+1. only cache if you have a valid SSL certificate.
+2. Have a very limited cache size.
+3. Don't support cross site etag caches.
 
->
-> > but
-> > the idea of disabling a generic USB port isn't IBM specific, it seems
-> > like we need a model for a USB port on dbus and relate it to the
-> > various resources.  If and when a host interface wanted to implement a
-> > similar feature, we'd be able to reuse it.
->
-> The goal isn't really to disable a USB port.  It is to disable the
-> assorted bits of software that run when a USB device of a specific class
-> (mass storage, serial, etc) is plugged into it.  What would it even mean
-> to disable a USB port?  Would it need to be powered off?
+So in practice, the cache didn't provide any benefit in a majority of cases.
 
-I know there's use cases for disabling the USB ports entirely for
-preventing things like USB booting.  Yes, ideally they wouldn't even
-provide power to avoid things like shorting it out to take the server
-down, but I don't know of any implementations that do that.
+In terms of supporting etags on non-static resources, that's quite
+complex, given that cache invalidation is difficult, and likely
+deserves its own design document.
 
+-Ed
+
+On Mon, Oct 11, 2021 at 8:04 PM Mohammed.Habeeb ISV
+<mohammed.habeeb@inventec.com> wrote:
 >
+> Hi
+>
+> Do we have the Etag support in OpenBMC? I see there is a mention of ETag in
+> bmcweb file redfish-core/src / error_messages.cpp, however not sure if Etag is supported.
+> Please let me know.
+>
+> Regards
