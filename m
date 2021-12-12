@@ -1,78 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9B83471EB5
-	for <lists+openbmc@lfdr.de>; Mon, 13 Dec 2021 00:21:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F987471ED8
+	for <lists+openbmc@lfdr.de>; Mon, 13 Dec 2021 00:39:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JC0yM5xt2z3f2r
-	for <lists+openbmc@lfdr.de>; Mon, 13 Dec 2021 10:21:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JC1Lt0GTqz3cN9
+	for <lists+openbmc@lfdr.de>; Mon, 13 Dec 2021 10:39:18 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=FMVowCVO;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=ZP+XULGv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.19; helo=mout.gmx.net;
+ (client-ip=212.227.17.21; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=FMVowCVO; 
+ header.s=badeba3b8450 header.b=ZP+XULGv; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JC0mC4RD8z3h3F
- for <openbmc@lists.ozlabs.org>; Mon, 13 Dec 2021 10:12:42 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JC1LP56trz2xDY
+ for <openbmc@lists.ozlabs.org>; Mon, 13 Dec 2021 10:38:51 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1639350751;
- bh=IoQi5EMV/XH/LpqMr+ICgxVN4Bq0JmYZIA4yRCf+EI8=;
+ s=badeba3b8450; t=1639352319;
+ bh=3mMkIzuePUJJcDGvvt1bcnCBjfHfXYzeCjAoAmGStgY=;
  h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=FMVowCVOvdeE/C79RvbcOZTU4BcOnnrVPPyanA1TfQow8SmZgTOnoQ3XAzF4NQYQ8
- vv+gqCw3h9BhdovWNeKnD1y4A3M34Pdn/Q5nRBZ6ffdzWTXNoUA22RKpuQvDo52PDi
- Vzh2h19125jrhlS4aOPY2RcmFlXP3VcBlcXbzSyk=
+ b=ZP+XULGv7neuk32zfUabDp08CoZbLEXOdLfoFLMVLMNjMcxQA8d19vblzucX9nJPn
+ D0SqzVK7H0E54MwvJkdI/HNJ0zDjdvVPE1LV/cNGIXqVrOUItYRnf8s79A6Hz3YNGb
+ 7wJj1K9mK2paOxfV6+jxMgw9DrrrQGsqZXWHGC7U=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCsPy-1mnmak3B0C-008t7c; Mon, 13
- Dec 2021 00:12:30 +0100
-Date: Mon, 13 Dec 2021 00:12:29 +0100
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvK0X-1mf9xu0VU1-00rDCW; Mon, 13
+ Dec 2021 00:38:39 +0100
+Date: Mon, 13 Dec 2021 00:38:38 +0100
 From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2 1/8] dt-bindings: arm/npcm: Add binding for global
- control registers (GCR)
-Message-ID: <YbaB3a3pFo9pA2I0@latitude>
+Subject: Re: [PATCH v2 4/8] dt-bindings: pinctrl: Add Nuvoton WPCM450
+Message-ID: <YbaH/ny1nI5l7hh0@latitude>
 References: <20211207210823.1975632-1-j.neuschaefer@gmx.net>
- <20211207210823.1975632-2-j.neuschaefer@gmx.net>
- <YbNqKfwYes0rH07B@robh.at.kernel.org>
+ <20211207210823.1975632-5-j.neuschaefer@gmx.net>
+ <YbNvqTUwi1jzff4D@robh.at.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="8Nw9gXbH6ji+XyMM"
+ protocol="application/pgp-signature"; boundary="dobARXniaDUcaAko"
 Content-Disposition: inline
-In-Reply-To: <YbNqKfwYes0rH07B@robh.at.kernel.org>
-X-Provags-ID: V03:K1:mKk8Aj49glbM/0M2m2dk9cYhezX/sIrY9ojc/IGUkfvsS6FwQ32
- THkfd5/wiOkW2DOSO/UaK2Z/vJgijwMB228OOxdqaRUYdeNRul3LcUZnRyL/Nudbl9fiJqD
- r3Z9wO7XnK0kkWFDrnznS/DsEA876ChdXq1IluGMqZNpfTwawBgpya9VqGLTRJn95tEabEt
- wkbhv06qX/bnCxN8DcPag==
+In-Reply-To: <YbNvqTUwi1jzff4D@robh.at.kernel.org>
+X-Provags-ID: V03:K1:z+ESN2bwK8jz2Nyyr7dtTNg/XT/Ev9qeLtEvNLs5LUKKpvzCZ86
+ SfZXs5qodvV8E/01/s8k1uUpWaSDGGVCt2AOje8PZ4SENbh0kI2+GgXjLPhbOtQB44Eab2R
+ ovymWZtXKVeDnprY3QiQ+hXjg3zmrIbGgIQxrHvQhfGG3bipQYEAYJP+Ojrxs9jXLUcDUoh
+ p72gnnLF5fsbzJM/dVzuQ==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YY93j3RXj2M=:yFNRmAusrQsqdZwAwRz4vf
- bpE01BLsoEP8BykGLkpTjjhb6R+ZBk98G3CDkUyyfSzRKafc0hG/LDaHAJiAXGYwGbXoUDXl3
- Eod2/hDh87ucctPRQ7MHekLpRzIynTR5m06adGA3rNvTk1iTtJgUqV9itvz9rusQ1iap6FaYK
- uTqapUQD490QEErncmnWHZSyMBeRSKIy3aRBPBjfc6SGtC768ILZYjltzGi/kuqqvFjtzfWJH
- LoF0Lyh14EDNF1mHnovF4VyLRMhTDWJ0ngryrafQUka5wbuyMuwlcy5J6DYsE5P9QpOL/7CRh
- /tgSEq4qNd39+dqnOGzCCfF6Dz7cuEqfUHHL5knbZbWQWdVQ6dedsLrP5tfZYqZKlBT2OBVkz
- mA/IapCj8bbnTMmU+vsx59GJu+T9XZgLl8hFQbfLaFzaldPFAz9SiaJi4pMcYnRXqXjHlBlr0
- 3th+RYvG4EP8LX/i4IXXcGQv21DIxINsQUa8/7zcHYwJwaIMSmgBdA4+D5kxQgPpIw++1NHnL
- f2S7U743/dvEGJW5vxMTRpZYgViCAGIxTSUUnk2EaD/M587NcfunYKJmvkJYUXjMgZXsHPI2X
- 8cvkV6un4fa0ifejZlkH84b7KbAjPUAKvw3c8jXYsMqjS4SrBD4fqMPDdUKeJUcCc3cF7zZjP
- rkAHX/a/Veaulj2X5pAp2/1Cr+mxKqdUdZBlCVcFenaWrHpxXy4w+nNCV7I9PMjrF8tLXo170
- DUlU3+xVW7iXRPoBOFohxpZQmP7TIKAQ5gRAQ/UK7vy1niikNpvHDtGjW7po+9X7s6hsFu5oN
- pRVxlUyC1eUxH1EKUZGeXsi7UpFXWRU/f2a5ExReKKKhMGwcVX1QxkCEEmM7Us5lAoAdjY1JJ
- Gw3zR0NQ2ZsqEXzE1AHb1I8UJ2zd/PhWMQJ2SzyuuPQrRGmuKB4Ts+hKH9ogGjJ19kH535hyl
- e47odlZ2Kc6bkp3O8gAQtZQtIWujmnj7yWlXAfdET5JjtjE3LYR8eXalVsLAfFmHfNNgWJ57k
- DIheW2waRiL84cBLvSKbSnTWgHeHHjMeDhIwuoRfF2sMv432lHYoyk0vymB7OOR+NEQ+UO1g0
- xqqKd9l2kCU1eQ=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ENfgMEktfxI=:yemYLyXas7ihLqEjvU6TRf
+ dMgrj5TJ+GABYNdCcf+W0AvaAUvifRq2fzdIFYygZ2NpbxzeSjpJ9HZ/iqmkydIAX7rLXJi8s
+ c04VHduIDT845ZgatwY175eEsPwmwy/3OeYSnCTn7Jxx7bcdtcqp5XncxqYV3P3j0MjsIWIPX
+ rsIZukky35NjiffPyZn4iHlG1Sm1xgc/CumeBxgZSNKojdboGfmA+hyzwa2EYYBH0sTSAqmMS
+ 3Z3Px1+ox6ajNmTu5f9lU2Zyk56x6qLF5DT85SV54a6pdb7Q0HOiYVJ3ZW//gYNMMYzXcZY5r
+ qSoKy8XhwvRH6VSZLInXqkzCS7E6y1DcIks9TzL4L2ZNH81dyStifLba+UYPIzpuRDIPx5obF
+ taAAeWvSSnyYRSvsbI6MPzCeYeTelRhY8DTtd8w7kEvujypQxRuM7QBzHy2X84Ne5KK6cRt39
+ kua8zkajxO1pK2kIVRbsHqMZ9c0O8Aos4JEZrOR8aIuOlcFygujgR3wCjaEDU5yQo9S0jd9gx
+ SyYTAYkDcWCvzsmqzRucrW3ZK5u0LjaaAHYDEdRQyDB/Ve/wN6CSH0zOVQ0IE0g/ISGtz7cOb
+ JOQnhcrM/+s+kILki4iM9HwIoY3K23GgxEf0pdmaP5CZEuzfKjDWQ/Ec5smksmEl3QbCljqix
+ qhtiBzh2/HPU1xnw5KlW7HeTlxwngBqdwbkwvw/idOBrlOkGAPyAGHnnlZSXVhlQe91zW6e7v
+ 3HPnFatmueMBLVE9FwhrrEG1/n9TnmVd01RZh5i43fo/JNnVJlIaTImVJ2JJmip7HuGTU9ipN
+ WA3qU6hLY6+tijAdPjcVN8OWMfOHgWHE8c/8RC+snUxl9PMXE5QxkDGn5ro5pY3jvlkmGQ0zG
+ hiHsi299gmfuC0YuFNzPjfVLXyrJcj22vVZEB3ayrrc0ENeb3J9q0EVxlwH4MG/CjtIfmS4si
+ B3OTDYCIOMAbNwmgtyru+eio50EKk7NBmlYq3XKwevURy1VcNSIM8a/2xxWtIeebMdp1DKuyC
+ SatkEkeX2ShcBasAxH0CCUOlgcn6G1BE32eRq0KgxDsv8uL4GLJPPpD8KyhIhmZa/b8k4I6fQ
+ adY54NY8ctdPl4=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,107 +84,197 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
  openbmc@lists.ozlabs.org,
  Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
  linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- Tali Perry <tali.perry1@gmail.com>, Linus Walleij <linus.walleij@linaro.org>,
- Benjamin Fair <benjaminfair@google.com>
+ Linus Walleij <linus.walleij@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---8Nw9gXbH6ji+XyMM
+--dobARXniaDUcaAko
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 10, 2021 at 08:54:33AM -0600, Rob Herring wrote:
-> On Tue, Dec 07, 2021 at 10:08:16PM +0100, Jonathan Neusch=C3=A4fer wrote:
-> > A nuvoton,*-gcr node is present in nuvoton-common-npcm7xx.dtsi and will
-> > be added to nuvoton-wpcm450.dtsi. It is necessary for the NPCM7xx and
-> > WPCM450 pinctrl drivers, and may later be used to retrieve SoC model and
-> > version information.
+Hello,
+
+On Fri, Dec 10, 2021 at 09:18:01AM -0600, Rob Herring wrote:
+> On Tue, Dec 07, 2021 at 10:08:19PM +0100, Jonathan Neusch=C3=A4fer wrote:
+> > This binding is heavily based on the one for NPCM7xx, because the
+> > hardware is similar. There are some notable differences, however:
 > >=20
-> > This patch adds a binding to describe this node.
+> > - The addresses of GPIO banks are not physical addresses but simple
+> >   indices (0 to 7), because the GPIO registers are not laid out in
+> >   convenient blocks.
+> > - Pinmux settings can explicitly specify that the GPIO mode is used.
+> >=20
+> > Certain pins support blink patterns in hardware. This is currently not
+> > modelled in the DT binding.
 > >=20
 > > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 > >=20
+> >=20
 > > ---
 [...]
-> > +description: |
->=20
-> Don't need '|' if no formatting.
-
-Ok, I'll drop it.
-
-> > +  The Global Control Registers (GCR) are a block of registers in Nuvot=
-on SoCs
-> > +  that expose misc functionality such as chip model and version inform=
-ation or
-> > +  pinmux settings.
+> > +patternProperties:
+> > +  # There are three kinds of subnodes:
+> > +  # 1. a GPIO controller node for each GPIO bank
+> > +  # 2. a pinmux node configures pin muxing for a group of pins (e.g. r=
+mii2)
+> > +  # 3. a pinconf node configures properties of a single pin
 > > +
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - enum:
-> > +          - nuvoton,wpcm450-gcr
-> > +          - nuvoton,npcm750-gcr
-> > +      - const: syscon
-> > +      - const: simple-mfd
+> > +  "^gpio@.*$":
+> > +    if:
 >=20
-> blank line
+> Not necessary because you can't have a property with '@' in it.
 
-I'll add it.
+Ok, I'll change it to "^gpio".
 
-> > +  reg: true
+
+> > +        interrupts:
+> > +          maxItems: 4
 >=20
-> Need to define how many entries:
+> Need to define what each interrupt is.
+
+I think in this case one description for all interrupts would be more
+useful, e.g.:
+
+  interrupts:
+    maxItems: 4
+    description: The interrupts associated with this GPIO bank.
+
+
+> > +        nuvoton,interrupt-map:
 >=20
-> maxItems: 1
+> Reusing 'interrupt-map' with a different definition bothers me...=20
+
+I'm open to tweaking the name, perhaps to something like
+nuvoton,gpio-interrupt-map. (Or dropping it entirely =E2=80=94 see below.)
+
+
+> > +  "^mux_.*$":
+>=20
+> Use '-' rather than '_' and the '.*' is not necessary.
+>=20
+> "^mux-"
 
 Ok
 
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +
-> > +additionalProperties: false
-
-Ah, oops, I missed that I still had this line, when I added the child
-node to the example.
-
-> Ideally, you should define the child node names, but you can do this:
 >=20
-> additionalProperties:
->   type: object
+> > +    if:
 >=20
-> which means anything undefined must be a node.
+> Don't need this.
 
-Ok, makes sense, thanks.
+Ok, I'll remove the if/type/then lines throughout the file.
+
+
+> > +        pins:
+> > +          description:
+> > +            A list of pins to configure in certain ways, such as enabl=
+ing
+> > +            debouncing
+> > +          items:
+> > +            enum: [ gpio0, gpio1, gpio2, gpio3, gpio4, gpio5, gpio6, g=
+pio7,
+> > +                    gpio8, gpio9, gpio10, gpio11, gpio12, gpio13, gpio=
+14,
+> > +                    gpio15, gpio16, gpio17, gpio18, gpio19, gpio20, gp=
+io21,
+> > +                    gpio22, gpio23, gpio24, gpio25, gpio26, gpio27, gp=
+io28,
+> > +                    gpio29, gpio30, gpio31, gpio32, gpio33, gpio34, gp=
+io35,
+> > +                    gpio36, gpio37, gpio38, gpio39, gpio40, gpio41, gp=
+io42,
+> > +                    gpio43, gpio44, gpio45, gpio46, gpio47, gpio48, gp=
+io49,
+> > +                    gpio50, gpio51, gpio52, gpio53, gpio54, gpio55, gp=
+io56,
+> > +                    gpio57, gpio58, gpio59, gpio60, gpio61, gpio62, gp=
+io63,
+> > +                    gpio64, gpio65, gpio66, gpio67, gpio68, gpio69, gp=
+io70,
+> > +                    gpio71, gpio72, gpio73, gpio74, gpio75, gpio76, gp=
+io77,
+> > +                    gpio78, gpio79, gpio80, gpio81, gpio82, gpio83, gp=
+io84,
+> > +                    gpio85, gpio86, gpio87, gpio88, gpio89, gpio90, gp=
+io91,
+> > +                    gpio92, gpio93, gpio94, gpio95, gpio96, gpio97, gp=
+io98,
+> > +                    gpio99, gpio100, gpio101, gpio102, gpio103, gpio10=
+4,
+> > +                    gpio105, gpio106, gpio107, gpio108, gpio109, gpio1=
+10,
+> > +                    gpio111, gpio112, gpio113, gpio114, gpio115, gpio1=
+16,
+> > +                    gpio117, gpio118, gpio119, gpio120, gpio121, gpio1=
+22,
+> > +                    gpio123, gpio124, gpio125, gpio126, gpio127 ]
+>=20
+> pattern: '^gpio1?[0-9]{1,2}$'
+
+Indeed, that looks better.
+
+> Feel free to tweak it more to limit to 127 if you want.
+
+Ok.
+
+
+> > +      gpio0: gpio@0 {
+> > +        reg =3D <0>;
+> > +        gpio-controller;
+> > +        #gpio-cells =3D <2>;
+> > +        interrupts =3D <2 IRQ_TYPE_LEVEL_HIGH
+> > +                      3 IRQ_TYPE_LEVEL_HIGH
+> > +                      4 IRQ_TYPE_LEVEL_HIGH>;
+> > +        nuvoton,interrupt-map =3D <0 16 0>;
+>=20
+> Based on the example, you don't need this as it is 1:1.
+
+Ah, it's a bad example. The real chip also has this node:
+
+
+	gpio1: gpio@1 {
+		reg =3D <1>;
+		gpio-controller;
+		#gpio-cells =3D <2>;
+		interrupts =3D <5 IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-controller;
+		nuvoton,interrupt-map =3D <16 2 8>;
+	};
+
+=2E.. meaning that bits 16 and 17 in the GPIO controller's interrupt
+status register correspond to pins 8 and 9 of GPIO bank 1.
+
+I'm not completely sure this is a good property to have in the
+devicetree, I could also hide it in the driver (just like the register
+offsets are not part of this binding).
+
 
 
 Thanks,
 Jonathan
 
---8Nw9gXbH6ji+XyMM
+--dobARXniaDUcaAko
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmG2gdwACgkQCDBEmo7z
-X9uJYw/+KUq+yx3n/rhPsNIcTamlF8dDPIAtXBzpieCJZTm8+/nZFH91ntW0u4nR
-5UjQnU7fMDc8LQlHwhr0QDRNyA/na+xiU/L9+MZyxt6bDHoAhGNuAlLieOWpK87l
-AmTUdBbXUHY5COVHA3f86mWf02mSqJAc9Gf8D9T9kQkIpqQ8lPB3nN4sGnAb7gSh
-0cMILvfALzWvYgpiDnmxjnLnFoPHkTdcuEVlyzbAn08GJTTxpG+C5cUbckNpqDI9
-/o94Rj+y+Bdpg+oU8lYpVCTlza0SMjTDfca+Z6rQ8hMVvZNvuqjpU1X7IqpTGF17
-r6gyDlpy6KzP1bbMuxtcJ7iH6ILEJQQhY8JjcljPij42QD8fQ4OYoqNFzufJoQ5/
-0p0gLS9p4LVK2Df0NRK/DTgFw37oVdRGBExmEnSNt3VaCJj8CWz78jI0E2Z9ywXG
-QS8ybWnaBeLZebGst0U5XzjL87mR+4y/pvhyt9ryZv64woeYwOtwdF3pNGGCG5RF
-MNJoM/Mmjkt91/q2564qRwBeZndzoDnKDLtzIKusPyqxSaQ9PaoTeR5tMqRFGTjh
-E18TzVK9z8BzIXCoKHUQgJcyxN7ZBOIwuqbEuTLRqoiiMpNnbr2oxLooOIKJo9mY
-HUza0e+eOZnI4FF3YR5s2sXMKZwr/BdYelI7ytDiHA9Xn5LAcSg=
-=vLrk
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmG2h9YACgkQCDBEmo7z
+X9smnw/9EREnQfOVwcf3sZmXZKAGJ3NOAE3UMGzyikvU9A0cJLjb5TcMUXW6QosO
+2pz4Mf/H8zsGrmFFC/DwC8yO7sMGHckNHFof+/uqgUPJF4pO8cAlUSUqO5QWh/Kz
+vE8/gVz5mNOna7mKfpMXUs2vznNvAKNWQlhizEsal8zY3Dcir4+09Za5u08oTDbR
+52IAbxsuMC68ULft3NJMeib/Zm839MC38GBs93rNyojNu1yBt7DVkNrxyxo8kt6y
+pYNkhTrGKx5p8Yetoax7tKchIvs0k03L7BiabHkimQ7QTZ4XPkjG7vRJ+6PcDVOc
+wc25k1ERWWdi1ORwBGLlvC8But6bvhM14NRezRGEwRY2WbY5h6aiHSXFfWtk80VA
+9ZXaKiuIbCiRGyksdrq2nUu1E258bifUowCYgB/sp68IOdOLYh4zDpFegztDvUtH
+LgfFMXGBMb8Gu1VUOc02wKgmA6tjnzNSr1eiR1uCigUyyoJLqOaHjmCJo2ZHnQNQ
+jFih2QcjTh7uN9gyveARd1rLSadidfjIO7SEqTnGNMQTBOYeiq8YIIJ+kOx+FeCe
+PikOCQyhN0Q/fptQuuCeMe4991//+UBd9sCxzGpDdEnLz4V0GcQcoPATPBnG7bUE
+u2YsJaQeNjSURsnVN/S7qZ2cSxkqIRglFV3W4q6aGtMROEnzRLY=
+=iNfO
 -----END PGP SIGNATURE-----
 
---8Nw9gXbH6ji+XyMM--
+--dobARXniaDUcaAko--
