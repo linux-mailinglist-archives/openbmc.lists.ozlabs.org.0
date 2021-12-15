@@ -1,65 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40A52475106
-	for <lists+openbmc@lfdr.de>; Wed, 15 Dec 2021 03:39:52 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4E96475112
+	for <lists+openbmc@lfdr.de>; Wed, 15 Dec 2021 03:50:40 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JDKGG151rz3bg8
-	for <lists+openbmc@lfdr.de>; Wed, 15 Dec 2021 13:39:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JDKVk4nngz307W
+	for <lists+openbmc@lfdr.de>; Wed, 15 Dec 2021 13:50:38 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=M+QxXWgs;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=gIRtGp7a;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.15.241; helo=m15241.mail.126.com;
- envelope-from=cld795@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=M+QxXWgs; dkim-atps=neutral
-Received: from m15241.mail.126.com (unknown [220.181.15.241])
- by lists.ozlabs.org (Postfix) with ESMTP id 4JDKFn4BMTz2xtL
- for <openbmc@lists.ozlabs.org>; Wed, 15 Dec 2021 13:39:19 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=B1y9l
- M6sPvlJOcFgSxv5V05YmvjopLZi/Ba4GWK2PNs=; b=M+QxXWgs5aFNWmoSugWtn
- 16M05/QBQGg3Un1GqjGmV5xbuFVHYXKEs+rT6Ndjp6bG60gx3RbvpVAw63Sh2ZqX
- 13ycUvN3TIwMvnNp/CuVXQ0PQOhFYj0YVSREBZLhO8P386WL20HAjuNc5K1uqeHx
- 2OMUNzBX3Y3Yypns0FifqQ=
-Received: from cld795$163.com ( [183.6.112.102] ) by ajax-webmail-wmsvr209
- (Coremail) ; Wed, 15 Dec 2021 10:39:05 +0800 (GMT+08:00)
-X-Originating-IP: [183.6.112.102]
-Date: Wed, 15 Dec 2021 10:39:05 +0800 (GMT+08:00)
-From: Landon <cld795@163.com>
-To: "a.kartashev@yadro.com" <a.kartashev@yadro.com>
-Subject: Re:  openBMC pwm-fan control policy
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
- MailMasterPC/4.15.8.1002_(Windows_10_20H2) Copyright (c) 2002-2021
- www.mailtech.cn 163com
-In-Reply-To: <fabdbd3d04e3db2cef14346bc5b7e3fe71101c40.camel@yadro.com>
-References: <mailman.0.1637828525.15424.openbmc@lists.ozlabs.org>
- <217ffd16.389b.17d5636abb5.Coremail.cld795@163.com>
- <20211125084640.GA22508@home.paul.comp>
- <78340dc9.749f.17d5ab53990.Coremail.cld795@163.com>
- <687802ca.772b.17d5ad02872.Coremail.cld795@163.com>
- <20211126215734.GH22508@home.paul.comp>
- <459566ca.670c.17d6b13a847.Coremail.cld795@163.com>
- <18a75e7d223e2c054e93e9a83a6c0ba474125518.camel@yadro.com>
- <6fc4e62.472c.17d7a6a0885.Coremail.cld795@163.com>
- <2f6c7248.c41.17d9291a38e.Coremail.cld795@163.com>
- <8e645b4.344b.17d93d37f8d.Coremail.cld795@163.com>
- <fabdbd3d04e3db2cef14346bc5b7e3fe71101c40.camel@yadro.com>
-Content-Type: multipart/alternative; 
- boundary="----=_Part_22312_1537313452.1639535945359"
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=gIRtGp7a; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JDKVL4cBvz2yZ6
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Dec 2021 13:50:18 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (174-21-184-96.tukw.qwest.net
+ [174.21.184.96])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 6490B3E8;
+ Tue, 14 Dec 2021 18:50:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1639536614;
+ bh=KQaQRP6Tw3usqEqoyvbweA1bP3Jg1Y5OszN8o3P2emI=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=gIRtGp7aeRDVqSAwgD5tEdImompocs4artMMGWTUQJPBmrGGo/cZdUXECtn/O16Zb
+ FzVrWJqJ3IWF7yjIQnsbj34+pYxXLrBLUo0oVQDRFuD3geh+yEIEQ1y4s9eLCZ5Z66
+ NJjoWjbqtGMeK6j7PtAw/3y4J7bBuHcNeR+ibd2Q=
+Date: Tue, 14 Dec 2021 18:50:09 -0800
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Ryan Chen <ryan_chen@aspeedtech.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] pinctrl: ast2400: add
+ support for TXD3/RXD3 pins
+Message-ID: <YblX4e2Zk/idHoAQ@hatter.bewilderbeest.net>
+References: <20211213194703.24060-1-zev@bewilderbeest.net>
+ <HK0PR06MB338026E6233FBF845BF04F5EF2759@HK0PR06MB3380.apcprd06.prod.outlook.com>
+ <Ybf0TApJEEaM4FDL@hatter.bewilderbeest.net>
+ <HK0PR06MB3380B961DEE52F90241657FDF2759@HK0PR06MB3380.apcprd06.prod.outlook.com>
+ <YbgNgBDzrGEI+1/c@hatter.bewilderbeest.net>
+ <HK0PR06MB3380C413C9024689082AC4E2F2759@HK0PR06MB3380.apcprd06.prod.outlook.com>
+ <YbgSyxUdI+tiG2L1@hatter.bewilderbeest.net>
+ <HK0PR06MB3380C34C97A93A62C7053CA3F2759@HK0PR06MB3380.apcprd06.prod.outlook.com>
 MIME-Version: 1.0
-Message-ID: <71c701f.1d85.17dbbf5268f.Coremail.cld795@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: kMeowAAnx3VJVblhzGUGAA--.43501W
-X-CM-SenderInfo: 5foglmqv6rljoofrz/xtbBIw1qgF3mBAPkHQABsA
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <HK0PR06MB3380C34C97A93A62C7053CA3F2759@HK0PR06MB3380.apcprd06.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,257 +70,124 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "fercerpav@gmail.com" <fercerpav@gmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ ChiaWei Wang <chiawei_wang@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_22312_1537313452.1639535945359
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+On Mon, Dec 13, 2021 at 09:21:36PM PST, Ryan Chen wrote:
+>Hello,
+>> -----Original Message-----
+>> From: Zev Weiss <zev@bewilderbeest.net>
+>> Sent: Tuesday, December 14, 2021 11:43 AM
+>> To: Ryan Chen <ryan_chen@aspeedtech.com>
+>> Cc: openbmc@lists.ozlabs.org; Joel Stanley <joel@jms.id.au>; ChiaWei Wang
+>> <chiawei_wang@aspeedtech.com>
+>> Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] pinctrl: ast2400: add
+>> support for TXD3/RXD3 pins
+>>
+>> On Mon, Dec 13, 2021 at 07:29:48PM PST, Ryan Chen wrote:
+>> >Hello,
+>> >> -----Original Message-----
+>> >> From: Zev Weiss <zev@bewilderbeest.net>
+>> >> Sent: Tuesday, December 14, 2021 11:21 AM
+>> >> To: Ryan Chen <ryan_chen@aspeedtech.com>
+>> >> Cc: openbmc@lists.ozlabs.org; Joel Stanley <joel@jms.id.au>; ChiaWei
+>> >> Wang <chiawei_wang@aspeedtech.com>
+>> >> Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] pinctrl: ast2400:
+>> >> add support for TXD3/RXD3 pins
+>> >>
+>> >> On Mon, Dec 13, 2021 at 05:39:17PM PST, Ryan Chen wrote:
+>> >> >Hello,
+>> >> >
+>> >> >> -----Original Message-----
+>> >> >> From: Zev Weiss <zev@bewilderbeest.net>
+>> >> >> Sent: Tuesday, December 14, 2021 9:33 AM
+>> >> >> To: Ryan Chen <ryan_chen@aspeedtech.com>
+>> >> >> Cc: openbmc@lists.ozlabs.org; Joel Stanley <joel@jms.id.au>;
+>> >> >> ChiaWei Wang <chiawei_wang@aspeedtech.com>
+>> >> >> Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] pinctrl: ast2400:
+>> >> >> add support for TXD3/RXD3 pins
+>> >> >>
+>> >> >> On Mon, Dec 13, 2021 at 05:22:52PM PST, Ryan Chen wrote:
+>> >> >> >Hello,
+>> >> >> >	You may need claim for function group for link, not for pin link.
+>> >> >> >	Ex.
+>> >> >> >	static struct aspeed_sig_desc uart3_link[] = {
+>> >> >> >		{ 0x80, BIT(22), 0},
+>> >> >> >		{ 0x80, BIT(23), 0},
+>> >> >> >	}
+>> >> >> >
+>> >> >> >	ast2400_groups[] = {
+>> >> >> >	{ "UART3", 2, uart3_link },
+>> >> >> >Ryan
+>> >> >>
+>> >> >> Hi Ryan,
+>> >> >>
+>> >> >> That possibility occurred to me, but the existing function/group
+>> >> >> names in arch/arm/dts/ast2400.dtsi (lines 1130-1133 and 1375-1378)
+>> >> >> made me think they should be separate.
+>> >> >This device tree is copied from Linux kernel.
+>> >> >
+>> >> >> I'm certainly not an expert on pinctrl stuff though...is there
+>> >> >> some other existing logic or mechanism to link a "UART3" to the
+>> >> >> separate "TXD3" and "RXD3" in the device tree?
+>> >> >There is no separate in u-boot device tree.
+>> >>
+>> >> Perhaps we're misunderstanding each other...
+>> >>
+>> >>
+>> https://github.com/openbmc/u-boot/blob/a570745a1a836e351bd4b1131f23a4
+>> >> fa5013d6dd/arch/arm/dts/ast2400.dtsi#L1130-L1133
+>> >>
+>> >> and
+>> >>
+>> >>
+>> https://github.com/openbmc/u-boot/blob/a570745a1a836e351bd4b1131f23a4
+>> >> fa5013d6dd/arch/arm/dts/ast2400.dtsi#L1375-L1378
+>> >>
+>> >The following is my point.
+>> >https://github.com/openbmc/u-boot/blob/a570745a1a836e351bd4b1131f23a
+>> 4fa
+>> >5013d6dd/arch/arm/dts/ast2400.dtsi#L3
+>> >
+>>
+>> I'm afraid I don't follow...how does it being copied from the Linux kernel device
+>> tree affect whether or not we should group these two or keep them separate?
+>My point is the original dtsi file is copy from kernel.
+>So that dtsi define is inherit. So that you see in currently u-boot.
+>
 
-VGhhbmtzICEgCk9uIDEyLzcvMjAyMSAxNjowNe+8jEFuZHJlaSBLYXJ0YXNoZXY8YS5rYXJ0YXNo
-ZXZAeWFkcm8uY29tPiB3cm90Ze+8mgpTb3JyeSwgSSBwcm9iYWJseSBtaXNzIHlvdXIgcXVlc3Rp
-b24uCgpJIHN0aWxsIGRvbid0IHVuZGVyc3RhbmQsIHdoYXQga2luZCBvZiBoZWxwIGRvIHlvdSBu
-ZWVkLCBidXQgSSB3aWxsIHRyeQp0byBleHBsYWluIHRoZSBpZGVhOgpQSUQtY29udHJvbCBkYWVt
-b24gdXNlIGNvbmNlcHQgb2YgdGhlIFBJRCBzeXN0ZW1zLCB3aGVyZSB5b3UgaGF2ZQppbnB1dHMg
-KHNlbnNvcnMpIGFuZCBvdXRwdXRzIChGQU5zKS4gVG8gY29uZmlndXJlIFBJRHMgaW4gcGlkLWNv
-bnRyb2wKdGhlIHpvbmUgY29uY2VwdCBpcyB1c2VkOiB0aGVybWFsIHpvbmUgY2FuIGhhdmUgc2V2
-ZXJhbCBmYW5zIGFuZApzZXZlcmFsIHNlbnNvcnMuIApUaGVuIHlvdSBzaG91bGQgc2VsZWN0IFBJ
-RC1sb29wIHR5cGUgYW5kIHNldCBwYXJhbWV0ZXJzIGZvciBlYWNoIHNlbnNvcgphbmQgRkFOLiBG
-b3Igbm9ybWFsIHRlbXBlcmF0dXJlIHNlbnNvciB5b3UgZ2VuZXJhbGx5IHdpbGwgdXNlIG5vcm1h
-bApQSUQtbG9vcCwgd2VyZSB5b3Ugc2V0dXAgUElEIGNvZWZmaWNpZW50cyBhbmQgc2V0cG9pbnQg
-KHRhcmdldAp0ZW1wZXJhdHVyZSkuIFdoZW4gdGhlIHZhbHVlIG9mIG9uZSAob3IgbW9yZSkgc2Vu
-c29yIGV4Y2VlZCBzZXRwb2ludApQSUQtY29udHJvbCB3aWxsIGluY3JlYXNlIHRoZSBzcGVlZCBv
-ZiB0aGUgZmFucyBpbiB0aGUgem9uZSB0cnlpbmcgdG8Ka2VlcCB0ZW1wZXJhdHVyZXMgYmVsb3cg
-dGhlIHNldHBvaW50cy4KRm9yIGN1cnJlbnQgc2Vuc29ycyB5b3UgcHJvYmFibHkgc2hvdWxkIHVz
-ZSBzdGVwd2lzZSBtb2RlLCBidXQgSSdtIG5vdApmYW1pbGlhciBoZXJlLgoKT24gVHVlLCAyMDIx
-LTEyLTA3IGF0IDE1OjM3ICswODAwLCBMYW5kb24gd3JvdGU6CiAgCiAgCk9uIDEyLzcvMjAyMSAw
-OTo0Ne+8jExhbmRvbjxjbGQ3OTVAMTYzLmNvbT4gd3JvdGXvvJoKCiBIZWxsbywKQ2FuIHlvdSB0
-YWtlIGEgbG9vayBhdCBpdCwgcGxlYXNlPwogClRoYW5rcyEKT24gMTIvMi8yMDIxIDE3OjEx77yM
-TGFuZG9uPGNsZDc5NUAxNjMuY29tPiB3cm90Ze+8mgpIZWxsbywKCkkgcmVhZCB0aGUKICJodHRw
-czovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1waWQtY29udHJvbC9ibG9iL21hc3Rlci9j
-b25maWd1cmUubWQi77yaCgpIb3cgdG8gQ29uZmlndXJlIFBob3NwaG9yLXBpZC1jb250cm9sCgp0
-eXBlID09ICJ0ZW1wIgoKRXhhY3RseSB0aGUgc2FtZSBhcyBtYXJnaW4gYnV0IGFsbCB0aGUgaW5w
-dXRzIGFyZSBzdXBwb3NlZCB0byBiZQphYnNvbHV0ZSB0ZW1wZXJhdHVyZXMgYW5kIHNvIHRoZSBt
-YXhpbWFsIHZhbHVlIGlzIHVzZWQgdG8gZmVlZAp0aGUgUElEIGxvb3AuCnR5cGUgPT0gInN0ZXB3
-aXNlIgoKIm5hbWUiOiAidGVtcDEiLAoidHlwZSI6ICJzdGVwd2lzZSIsCiJpbnB1dHMiOiBbInRl
-bXAxIl0sCiJzZXRwb2ludCI6IDMwLjAsCiJwaWQiOiB7CiAgInNhbXBsZVBlcmlvZCI6IDAuMSwK
-ICAicG9zaXRpdmVIeXN0ZXJlc2lzIjogMS4wLAogICJuZWdhdGl2ZUh5c3RlcmVzaXMiOiAxLjAs
-CiAgImlzQ2VpbGluZyI6IGZhbHNlLAogICJyZWFkaW5nIjogewogICAgIjAiOiA0NSwKICAgICIx
-IjogNDYsCiAgICAiMiI6IDQ3LAogIH0sCiAgIm91dHB1dCI6IHsKICAgICIwIjogNTAwMCwKICAg
-ICIxIjogMjQwMCwKICAgICIyIjogMjYwMCwKICB9Cn0KYW5kCiBpbiAgImh0dHBzOi8vZ2l0aHVi
-LmNvbS9vcGVuYm1jL2VudGl0eS1tYW5hZ2VyL2Jsb2IvbWFzdGVyL2NvbmZpZ3VyYXRpb25zL1Ix
-MDAwJTIwQ2hhc3Npcy5qc29uCiIKewogICAgICAgICAgICAiQ2xhc3MiOiAidGVtcCIsICAgICAg
-ICAgICAgIkZGR2FpbkNvZWZmaWNpZW50IjogMC4wLAoiRkZPZmZDb2VmZmljaWVudCI6IDAuMCwg
-ICAgICAgICAgICAiSUNvZWZmaWNpZW50IjogLTQuNjQsICAgICAgCiJJTGltaXRNYXgiOiAxMDAs
-ICAgICAgICAgICAgIklMaW1pdE1pbiI6IDMwLCAgICAgICAgICAgCiJJbnB1dHMiOiBbICAgICAg
-ICAgICAgICAgICJFeGl0IEFpciBUZW1wIiAgICAgICAgICAgIF0sICAgICAgICAKIk5hbWUiOiAi
-RXhpdCBBaXIgVGVtcCIsICAgICAgICAgICAgIk5lZ2F0aXZlSHlzdGVyZXNpcyI6IDUuMCwgIAoi
-T3V0TGltaXRNYXgiOiAxMDAsICAgICAgICAgICAgIk91dExpbWl0TWluIjogMzAsICAgICAgICAg
-ICAKIk91dHB1dHMiOiBbXSwgICAgICAgICAgICAiUENvZWZmaWNpZW50IjogLTAuMTUsICAgICAg
-ICAgICAKIlBvc2l0aXZlSHlzdGVyZXNpcyI6IDAuMCwgICAgICAgICAgICAiU2V0UG9pbnQiOiA3
-NS4wLCAgICAgICAgIAoiU2xld05lZyI6IC0xLCAgICAgICAgICAgICJTbGV3UG9zIjogMC4wLCAg
-ICAgICAgICAgICJUeXBlIjoKIlBpZCIsICAgICAgICAgICAgIlpvbmVzIjogWyAgICAgICAgICAg
-ICAgICAiWm9uZSAxIiwgICAgICAgICAgIAoiWm9uZSAyIiwgICAgICAgICAgICAgICAgIlpvbmUg
-MyIsICAgICAgICAgICAgICAgICJab25lIDQiLCAgICAgCiJab25lIDUiLCAgICAgICAgICAgICAg
-ICAiWm9uZSA2IiAgICAgICAgICAgIF0gICAgICAgIH0sCiBidXQgIEkgZG9uJ3QgdW5kZXJzdGFu
-ZCBob3cgdG8gY29udHJvbCB0aGUgZmFuIGJ5IHRlbXBlcmF0dXJlID8KSSB3YXMgd29uZGVyaW5n
-IGlmIHlvdSBjb3VsZCBoZWxwIG1lIGV4cGxhaW4gPwpUaGFuayB5b3UgdmVyeSBtdWNoICEKT24g
-MTEvMjkvMjAyMSAxODoyMu+8jEFuZHJlaSBLYXJ0YXNoZXY8YS5rYXJ0YXNoZXZAeWFkcm8uY29t
-Pgp3cm90Ze+8mgpIZWxsbywKClBsZWFzZSByZWFkIHBob3NwaG9yLXBpZC1jb250cm9sIGRvY3Vt
-ZW50YXRpb246Cmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLXBpZC1jb250cm9s
-Cmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLXBpZC0KY29udHJvbC9ibG9iL21h
-c3Rlci9jb25maWd1cmUubWQKaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItcGlk
-LQpjb250cm9sL2Jsb2IvbWFzdGVyL3R1bmluZy5tZApodHRwczovL2dpdGh1Yi5jb20vb3BlbmJt
-Yy9waG9zcGhvci1waWQtCmNvbnRyb2wvdHJlZS9tYXN0ZXIvZXhhbXBsZXMKCktlZXAgaW4gbWlu
-ZCB0aGF0IHRoZXJlIGFyZSB0d28gZGlmZmVyZW50IHdheXMgdG8gY29uZmlndXJlCnBob3NwaG9y
-LQpwaWQtY29udHJvbDogc3RhdGljYWxseSB3aXRoIEpTT04gY29uZmlnIGZpbGVzIGFuZCBkeW5h
-bWljYWxseQp3aXRoCkRCVVMgKGdlbmVyYWxseSwgdXNpbmcgRW50aXR5TWFuYWdlciBKU09OIGNv
-bmZpZ3VyYXRpb24pIGFuZApzYW1lCnBhcmFtZXRlcnMgd2l0aCB0aGlzIHR3byB3YXlzIG1vc3Rs
-eSBoYXZlIGRpZmZlcmVudCBuYW1lcy4KVGhlIHdheSB5b3Ugd2FudCB0byB1c2UgaXMgZ2VuZXJh
-bGx5IGRlcGVuZCBvbiBlaXRoZXIgeW91IHVzZQpFTQpmb3IKeW91ciBwbGF0Zm9ybSBvciBub3Qu
-CgpPbiBNb24sIDIwMjEtMTEtMjkgYXQgMTc6NDMgKzA4MDAsIExhbmRvbiB3cm90ZToKIAogVGhh
-bmsgeW91ISAKIEkgaGF2ZSByZWFkIGl0CiA6ICBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9l
-bnRpdHktCm1hbmFnZXIvYmxvYi9tYXN0ZXIvY29uZmlndXJhdGlvbnMvUjEwMDAlMjBDaGFzc2lz
-Lmpzb24KIEJ1dCBJIGRvbid0IHVuZGVyc3RhbmQsCiBJcyB0aGVyZSBhbiBleHBsYW5hdGlvbiBm
-b3IgdGhpcyBwYXJ0PwogQXJlIHRoZXJlIGdlbmVyYWwgaW5zdHJ1Y3Rpb25zIG9uIGhvdyB0byBj
-b250cm9sIGZhbiBvdXRwdXQKYnkKIHRlbXBlcmF0dXJlPwogCiBhbmQgaG93IHRvIHVzZSBwaG9z
-cGhvci1waWQtY29udHJvbCAgdG8gc2V0IHRoaXMgPwogIAogSXMgdGhlcmXigJwgcGhvc3Bob3It
-cGlkLWNvbnRyb2wg4oCddGhlIGluc3RydWN0aW9ucyBmb3IgdGhpcwpwYXJ0PwogVGhhbmsgeW91
-IHZlcnkgbXVjaCAhCiBPbiAxMS8yNy8yMDIxIDA1OjU377yMUGF1bCBGZXJ0c2VyPGZlcmNlcnBh
-dkBnbWFpbC5jb20+IHdyb3Rl77yaCiAKT24gRnJpLCBOb3YgMjYsIDIwMjEgYXQgMDE6NTU6MzFQ
-TSArMDgwMCwgTGFuZG9uIHdyb3RlOgogIAogCmFkZDogSSBqdXN0IHdhbnQgdG8ga25vdyBpbiAg
-T3BlbkJNQyBieSByZWFkaW5nIGRpZmZlcmVudAogdGVtcGVyYXR1cmUgdmFsdWVzICBvcgogIGN1
-cnJlbnQgdmFsdWVzIHRvICBjb250cm9sIHRoZSBmYW4gIG91dHB1dCwgc28gYXMgIHRvCmNvb2wg
-ZG93biwKICBob3cgZG9lcyAgdGhpcwogIHN0cmF0ZWd5IHdvcms/IEFuIGV4YW1wbGUgb2YgdGhp
-cy4KCiBUaGlzIGlzIHVzaW5nIHRlbXBlcmF0dXJlIHZhbHVlcyB0byBjb250cm9sIHRoZSBmYW5z
-IHNvIGFzCnRvIGNvb2wKIGRvd24sIGl0IHdvcmtzIGJ5IGNvbmZpZ3VyaW5nIHBob3NwaG9yLXBp
-ZC1jb250cm9sCmFwcHJvcHJpYXRlbHksIEkKIGhvcGUgaXQncyBlbm91Z2ggb2YgYW4gZXhhbXBs
-ZToKIAogaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvZW50aXR5LQogbWFuYWdlci9ibG9iL21h
-c3Rlci9jb25maWd1cmF0aW9ucy9SMTAwMCUyMENoYXNzaXMuanNvbgogCiBJZiB5b3UgdGhpbmsg
-cGhvc3Bob3ItcGlkLWNvbnRyb2wgaXMgbWlzc2luZyBzb21lCmRvY3VtZW50YXRpb24KIHBsZWFz
-ZQogcmVhZCBpdHMgc291cmNlIGNvZGUgYW5kIHNlbmQgZG9jdW1lbnRhdGlvbiBwYXRjaGVzIGZv
-cgpyZXZpZXcuCiAKCgotLQpCZXN0IHJlZ2FyZHMsCkFuZHJlaSBLYXJ0YXNoZXYKCg==
-------=_Part_22312_1537313452.1639535945359
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+I mean, I saw that comment and I'm aware of the derivation of the file, 
+but I'm still not sure what bearing it has on the question at hand.
 
-PGh0bWw+CjxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50
-PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgo8L2hlYWQ+Cjxib2R5Pgo8c3R5bGU+CiAgICBm
-b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
-YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
-ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
-YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
-OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgPGRpdj48ZGl2PgogICAgPGRpdj4KICAgICAg
-ICA8c3Bhbj5UaGFua3MgISZuYnNwOzwvc3Bhbj48L2Rpdj48ZGl2PgogICAgPC9kaXY+CiAgICA8
-ZGl2IGlkPSJudGVzLXBjbWFjLXNpZ25hdHVyZSIgc3R5bGU9ImZvbnQtZmFtaWx5Oiflvq7ova/p
-m4Xpu5EnIj4KICAgICAgICAKICAgICAgICA8ZGl2IHN0eWxlPSJmb250LXNpemU6MTRweDsgcGFk
-ZGluZzogMDsgIG1hcmdpbjowOyI+CgogICAgICAgIDwvZGl2PgogICAgPC9kaXY+CjwvZGl2Pjwv
-ZGl2PjxkaXYgY2xhc3M9IkotcmVwbHkiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmMmYyZjI7
-Y29sb3I6YmxhY2s7cGFkZGluZy10b3A6NnB4O3BhZGRpbmctYm90dG9tOjZweDtib3JkZXItcmFk
-aXVzOjNweDstbW96LWJvcmRlci1yYWRpdXM6M3B4Oy13ZWJraXQtYm9yZGVyLXJhZGl1czozcHg7
-bWFyZ2luLXRvcDo0NXB4O21hcmdpbi1ib3R0b206MjBweDtmb250LWZhbWlseTon5b6u6L2v6ZuF
-6buRJzsiPgogICAgPGRpdiBzdHlsZT0iZm9udC1zaXplOjEycHg7bGluZS1oZWlnaHQ6MS41O3dv
-cmQtYnJlYWs6YnJlYWstYWxsO21hcmdpbi1sZWZ0OjEwcHg7bWFyZ2luLXJpZ2h0OjEwcHgiPk9u
-IDxzcGFuIGNsYXNzPSJtYWlsLWRhdGUiPjEyLzcvMjAyMSAxNjowNTwvc3Bhbj7vvIw8YSBjbGFz
-cz0ibWFpbC10byIgc3R5bGU9InRleHQtZGVjb3JhdGlvbjpub25lO2NvbG9yOiMyYTgzZjI7IiBo
-cmVmPSJtYWlsdG86YS5rYXJ0YXNoZXZAeWFkcm8uY29tIj5BbmRyZWkgS2FydGFzaGV2Jmx0O2Eu
-a2FydGFzaGV2QHlhZHJvLmNvbSZndDs8L2E+IHdyb3Rl77yaIDwvZGl2Pgo8L2Rpdj4KPGJsb2Nr
-cXVvdGUgaWQ9Im50ZXMtcGNtYWlsLXF1b3RlIiBzdHlsZT0ibWFyZ2luOiAwOyBwYWRkaW5nOiAw
-OyBmb250LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAn5b6u6L2v6ZuF6buRJzsiPgpTb3JyeSwg
-SSBwcm9iYWJseSBtaXNzIHlvdXIgcXVlc3Rpb24uPGJyPjxicj5JIHN0aWxsIGRvbid0IHVuZGVy
-c3RhbmQsIHdoYXQga2luZCBvZiBoZWxwIGRvIHlvdSBuZWVkLCBidXQgSSB3aWxsIHRyeTxicj50
-byBleHBsYWluIHRoZSBpZGVhOjxicj5QSUQtY29udHJvbCBkYWVtb24gdXNlIGNvbmNlcHQgb2Yg
-dGhlIFBJRCBzeXN0ZW1zLCB3aGVyZSB5b3UgaGF2ZTxicj5pbnB1dHMgKHNlbnNvcnMpIGFuZCBv
-dXRwdXRzIChGQU5zKS4gVG8gY29uZmlndXJlIFBJRHMgaW4gcGlkLWNvbnRyb2w8YnI+dGhlIHpv
-bmUgY29uY2VwdCBpcyB1c2VkOiB0aGVybWFsIHpvbmUgY2FuIGhhdmUgc2V2ZXJhbCBmYW5zIGFu
-ZDxicj5zZXZlcmFsIHNlbnNvcnMuJm5ic3A7PGJyPlRoZW4geW91IHNob3VsZCBzZWxlY3QgUElE
-LWxvb3AgdHlwZSBhbmQgc2V0IHBhcmFtZXRlcnMgZm9yIGVhY2ggc2Vuc29yPGJyPmFuZCBGQU4u
-IEZvciBub3JtYWwgdGVtcGVyYXR1cmUgc2Vuc29yIHlvdSBnZW5lcmFsbHkgd2lsbCB1c2Ugbm9y
-bWFsPGJyPlBJRC1sb29wLCB3ZXJlIHlvdSBzZXR1cCBQSUQgY29lZmZpY2llbnRzIGFuZCBzZXRw
-b2ludCAodGFyZ2V0PGJyPnRlbXBlcmF0dXJlKS4gV2hlbiB0aGUgdmFsdWUgb2Ygb25lIChvciBt
-b3JlKSBzZW5zb3IgZXhjZWVkIHNldHBvaW50PGJyPlBJRC1jb250cm9sIHdpbGwgaW5jcmVhc2Ug
-dGhlIHNwZWVkIG9mIHRoZSBmYW5zIGluIHRoZSB6b25lIHRyeWluZyB0bzxicj5rZWVwIHRlbXBl
-cmF0dXJlcyBiZWxvdyB0aGUgc2V0cG9pbnRzLjxicj5Gb3IgY3VycmVudCBzZW5zb3JzIHlvdSBw
-cm9iYWJseSBzaG91bGQgdXNlIHN0ZXB3aXNlIG1vZGUsIGJ1dCBJJ20gbm90PGJyPmZhbWlsaWFy
-IGhlcmUuPGJyPjxicj5PbiBUdWUsIDIwMjEtMTItMDcgYXQgMTU6MzcgKzA4MDAsIExhbmRvbiB3
-cm90ZTo8YnI+IDxibG9ja3F1b3RlIGNsYXNzPSJtbWJxYzEiPiZuYnNwOyZuYnNwOzxicj4gJm5i
-c3A7Jm5ic3A7PGJyPiBPbiAxMi83LzIwMjEgMDk6NDXvvIxMYW5kb24mbHQ7Y2xkNzk1QDE2My5j
-b20mZ3Q7IHdyb3Rl77yaIDxicj4gPGJsb2NrcXVvdGUgY2xhc3M9Im1tYnFjMiI+PGJyPiAmbmJz
-cDtIZWxsbyw8YnI+IENhbiB5b3UgdGFrZSBhIGxvb2sgYXQgaXQsIHBsZWFzZT88YnI+ICZuYnNw
-Ozxicj4gVGhhbmtzITxicj4gT24gMTIvMi8yMDIxIDE3OjEx77yMTGFuZG9uJmx0O2NsZDc5NUAx
-NjMuY29tJmd0OyB3cm90Ze+8miA8YnI+IDxibG9ja3F1b3RlIGNsYXNzPSJtbWJxYzMiPkhlbGxv
-LDxicj4gPGJyPiBJIHJlYWQgdGhlPGJyPiAmbmJzcDsiaHR0cHM6Ly9naXRodWIuY29tL29wZW5i
-bWMvcGhvc3Bob3ItcGlkLWNvbnRyb2wvYmxvYi9tYXN0ZXIvY29uZmlndXJlLm1kIu+8mjxicj4g
-PGJyPiBIb3cgdG8gQ29uZmlndXJlIFBob3NwaG9yLXBpZC1jb250cm9sPGJyPiA8YnI+IHR5cGUg
-PT0gInRlbXAiPGJyPiA8YnI+IEV4YWN0bHkgdGhlIHNhbWUgYXMmbmJzcDttYXJnaW4mbmJzcDti
-dXQgYWxsIHRoZSBpbnB1dHMgYXJlIHN1cHBvc2VkIHRvIGJlPGJyPiBhYnNvbHV0ZSB0ZW1wZXJh
-dHVyZXMgYW5kIHNvIHRoZSBtYXhpbWFsIHZhbHVlIGlzIHVzZWQgdG8gZmVlZDxicj4gdGhlIFBJ
-RCBsb29wLjxicj4gdHlwZSA9PSAic3RlcHdpc2UiPGJyPiA8YnI+ICJuYW1lIjogInRlbXAxIiw8
-YnI+ICJ0eXBlIjogInN0ZXB3aXNlIiw8YnI+ICJpbnB1dHMiOiBbInRlbXAxIl0sPGJyPiAic2V0
-cG9pbnQiOiAzMC4wLDxicj4gInBpZCI6IHs8YnI+ICZuYnNwOyZuYnNwOyJzYW1wbGVQZXJpb2Qi
-OiAwLjEsPGJyPiAmbmJzcDsmbmJzcDsicG9zaXRpdmVIeXN0ZXJlc2lzIjogMS4wLDxicj4gJm5i
-c3A7Jm5ic3A7Im5lZ2F0aXZlSHlzdGVyZXNpcyI6IDEuMCw8YnI+ICZuYnNwOyZuYnNwOyJpc0Nl
-aWxpbmciOiBmYWxzZSw8YnI+ICZuYnNwOyZuYnNwOyJyZWFkaW5nIjogezxicj4gJm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7IjAiOiA0NSw8YnI+ICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyIxIjog
-NDYsPGJyPiAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsiMiI6IDQ3LDxicj4gJm5ic3A7Jm5ic3A7
-fSw8YnI+ICZuYnNwOyZuYnNwOyJvdXRwdXQiOiB7PGJyPiAmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsiMCI6IDUwMDAsPGJyPiAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsiMSI6IDI0MDAsPGJyPiAm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsiMiI6IDI2MDAsPGJyPiAmbmJzcDsmbmJzcDt9PGJyPiB9
-PGJyPiBhbmQ8YnI+ICZuYnNwO2luJm5ic3A7Jm5ic3A7Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVu
-Ym1jL2VudGl0eS1tYW5hZ2VyL2Jsb2IvbWFzdGVyL2NvbmZpZ3VyYXRpb25zL1IxMDAwJTIwQ2hh
-c3Npcy5qc29uPGJyPiAiPGJyPiB7PGJyPiAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsiQ2xhc3MiOiAidGVtcCIs
-ICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyJGRkdhaW5Db2VmZmljaWVudCI6IDAuMCw8YnI+ICJGRk9mZkNvZWZmaWNpZW50
-IjogMC4wLCAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsiSUNvZWZmaWNpZW50IjogLTQuNjQsICZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOzxicj4gIklMaW1pdE1heCI6IDEwMCwgJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IklMaW1pdE1pbiI6
-IDMwLCAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDs8YnI+ICJJbnB1dHMiOiBbICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyJFeGl0IEFpciBUZW1wIiAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtdLCAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDs8YnI+ICJOYW1lIjogIkV4aXQgQWlyIFRlbXAiLCAmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsiTmVn
-YXRpdmVIeXN0ZXJlc2lzIjogNS4wLCAmbmJzcDs8YnI+ICJPdXRMaW1pdE1heCI6IDEwMCwgJm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Ik91dExpbWl0TWluIjogMzAsICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOzxicj4gIk91dHB1dHMiOiBbXSwgJm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-IlBDb2VmZmljaWVudCI6IC0wLjE1LCAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDs8YnI+ICJQb3NpdGl2ZUh5c3RlcmVzaXMiOiAwLjAs
-ICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyJTZXRQb2ludCI6IDc1LjAsICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOzxicj4gIlNsZXdOZWciOiAtMSwgJm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IlNsZXdQb3Mi
-OiAwLjAsICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyJUeXBlIjo8YnI+ICJQaWQiLCAmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsiWm9uZXMiOiBbICZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyJab25lIDEiLCAmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDs8YnI+ICJab25lIDIi
-LCAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsiWm9uZSAzIiwgJm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IlpvbmUgNCIsICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOzxi
-cj4gIlpvbmUgNSIsICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyJab25lIDYiICZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwO10gJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7fSw8YnI+
-ICZuYnNwO2J1dCAmbmJzcDtJIGRvbid0IHVuZGVyc3RhbmQgaG93IHRvIGNvbnRyb2wgdGhlIGZh
-biBieSB0ZW1wZXJhdHVyZSA/PGJyPiBJIHdhcyB3b25kZXJpbmcgaWYgeW91IGNvdWxkIGhlbHAg
-bWUgZXhwbGFpbiA/PGJyPiBUaGFuayB5b3UgdmVyeSBtdWNoICE8YnI+IE9uIDExLzI5LzIwMjEg
-MTg6MjLvvIxBbmRyZWkgS2FydGFzaGV2Jmx0O2Eua2FydGFzaGV2QHlhZHJvLmNvbSZndDs8YnI+
-IHdyb3Rl77yaIDxicj4gPGJsb2NrcXVvdGUgY2xhc3M9Im1tYnFjMyI+SGVsbG8sPGJyPiA8YnI+
-IFBsZWFzZSByZWFkIHBob3NwaG9yLXBpZC1jb250cm9sIGRvY3VtZW50YXRpb246PGJyPiBodHRw
-czovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1waWQtY29udHJvbDxicj4gaHR0cHM6Ly9n
-aXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItcGlkLTxicj4gY29udHJvbC9ibG9iL21hc3Rlci9j
-b25maWd1cmUubWQ8YnI+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLXBpZC08
-YnI+IGNvbnRyb2wvYmxvYi9tYXN0ZXIvdHVuaW5nLm1kPGJyPiBodHRwczovL2dpdGh1Yi5jb20v
-b3BlbmJtYy9waG9zcGhvci1waWQtPGJyPiBjb250cm9sL3RyZWUvbWFzdGVyL2V4YW1wbGVzPGJy
-PiA8YnI+IEtlZXAgaW4gbWluZCB0aGF0IHRoZXJlIGFyZSB0d28gZGlmZmVyZW50IHdheXMgdG8g
-Y29uZmlndXJlPGJyPiBwaG9zcGhvci08YnI+IHBpZC1jb250cm9sOiBzdGF0aWNhbGx5IHdpdGgg
-SlNPTiBjb25maWcgZmlsZXMgYW5kIGR5bmFtaWNhbGx5PGJyPiB3aXRoPGJyPiBEQlVTIChnZW5l
-cmFsbHksIHVzaW5nIEVudGl0eU1hbmFnZXIgSlNPTiBjb25maWd1cmF0aW9uKSBhbmQ8YnI+IHNh
-bWU8YnI+IHBhcmFtZXRlcnMgd2l0aCB0aGlzIHR3byB3YXlzIG1vc3RseSBoYXZlIGRpZmZlcmVu
-dCBuYW1lcy48YnI+IFRoZSB3YXkgeW91IHdhbnQgdG8gdXNlIGlzIGdlbmVyYWxseSBkZXBlbmQg
-b24gZWl0aGVyIHlvdSB1c2U8YnI+IEVNPGJyPiBmb3I8YnI+IHlvdXIgcGxhdGZvcm0gb3Igbm90
-Ljxicj4gPGJyPiBPbiBNb24sIDIwMjEtMTEtMjkgYXQgMTc6NDMgKzA4MDAsIExhbmRvbiB3cm90
-ZTo8YnI+ICZuYnNwOzxicj4gPGJsb2NrcXVvdGUgY2xhc3M9Im1tYnFjMyI+Jm5ic3A7VGhhbmsg
-eW91ISZuYnNwOyA8YnI+ICZuYnNwO0kgaGF2ZSByZWFkIGl0PGJyPiAmbmJzcDs6Jm5ic3A7Jm5i
-c3A7aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvZW50aXR5LTxicj4gbWFuYWdlci9ibG9iL21h
-c3Rlci9jb25maWd1cmF0aW9ucy9SMTAwMCUyMENoYXNzaXMuanNvbjxicj4gJm5ic3A7QnV0IEkg
-ZG9uJ3QgdW5kZXJzdGFuZCw8YnI+ICZuYnNwO0lzIHRoZXJlIGFuIGV4cGxhbmF0aW9uIGZvciB0
-aGlzIHBhcnQ/PGJyPiAmbmJzcDtBcmUgdGhlcmUgZ2VuZXJhbCBpbnN0cnVjdGlvbnMgb24gaG93
-IHRvIGNvbnRyb2wgZmFuIG91dHB1dDxicj4gYnk8YnI+ICZuYnNwO3RlbXBlcmF0dXJlPzxicj4g
-Jm5ic3A7PGJyPiAmbmJzcDthbmQgaG93IHRvIHVzZSZuYnNwO3Bob3NwaG9yLXBpZC1jb250cm9s
-Jm5ic3A7IHRvIHNldCB0aGlzID88YnI+ICZuYnNwOyZuYnNwOzxicj4gJm5ic3A7SXMgdGhlcmXi
-gJwmbmJzcDtwaG9zcGhvci1waWQtY29udHJvbCZuYnNwO+KAnXRoZSBpbnN0cnVjdGlvbnMgZm9y
-IHRoaXM8YnI+IHBhcnQ/PGJyPiAmbmJzcDtUaGFuayB5b3UgdmVyeSBtdWNoICE8YnI+ICZuYnNw
-O09uIDExLzI3LzIwMjEgMDU6NTfvvIxQYXVsIEZlcnRzZXImbHQ7ZmVyY2VycGF2QGdtYWlsLmNv
-bSZndDsgd3JvdGXvvJo8YnI+ICZuYnNwOzxicj4gPGJsb2NrcXVvdGUgY2xhc3M9Im1tYnFjMyI+
-T24gRnJpLCBOb3YgMjYsIDIwMjEgYXQgMDE6NTU6MzFQTSArMDgwMCwgTGFuZG9uIHdyb3RlOjxi
-cj4gJm5ic3A7Jm5ic3A7PGJyPiAmbmJzcDs8YnI+IDxibG9ja3F1b3RlIGNsYXNzPSJtbWJxYzMi
-PmFkZDombmJzcDtJIGp1c3Qgd2FudCB0byBrbm93IGluICZuYnNwO09wZW5CTUMgYnkgcmVhZGlu
-ZyBkaWZmZXJlbnQ8YnI+ICZuYnNwO3RlbXBlcmF0dXJlIHZhbHVlcyAmbmJzcDtvcjxicj4gJm5i
-c3A7Jm5ic3A7Y3VycmVudCB2YWx1ZXMgdG8gJm5ic3A7Y29udHJvbCB0aGUgZmFuICZuYnNwO291
-dHB1dCwgc28gYXMgJm5ic3A7dG88YnI+IGNvb2wgZG93biw8YnI+ICZuYnNwOyZuYnNwO2hvdyBk
-b2VzICZuYnNwO3RoaXM8YnI+ICZuYnNwOyZuYnNwO3N0cmF0ZWd5IHdvcms/Jm5ic3A7QW4gZXhh
-bXBsZSBvZiB0aGlzLjxicj4gPC9ibG9ja3F1b3RlPjxicj4gJm5ic3A7VGhpcyBpcyB1c2luZyB0
-ZW1wZXJhdHVyZSB2YWx1ZXMgdG8gY29udHJvbCB0aGUgZmFucyBzbyBhczxicj4gdG8gY29vbDxi
-cj4gJm5ic3A7ZG93biwgaXQgd29ya3MgYnkgY29uZmlndXJpbmcgcGhvc3Bob3ItcGlkLWNvbnRy
-b2w8YnI+IGFwcHJvcHJpYXRlbHksIEk8YnI+ICZuYnNwO2hvcGUgaXQncyBlbm91Z2ggb2YgYW4g
-ZXhhbXBsZTo8YnI+ICZuYnNwOzxicj4gJm5ic3A7aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMv
-ZW50aXR5LTxicj4gJm5ic3A7bWFuYWdlci9ibG9iL21hc3Rlci9jb25maWd1cmF0aW9ucy9SMTAw
-MCUyMENoYXNzaXMuanNvbjxicj4gJm5ic3A7PGJyPiAmbmJzcDtJZiB5b3UgdGhpbmsgcGhvc3Bo
-b3ItcGlkLWNvbnRyb2wgaXMgbWlzc2luZyBzb21lPGJyPiBkb2N1bWVudGF0aW9uPGJyPiAmbmJz
-cDtwbGVhc2U8YnI+ICZuYnNwO3JlYWQgaXRzIHNvdXJjZSBjb2RlIGFuZCBzZW5kIGRvY3VtZW50
-YXRpb24gcGF0Y2hlcyBmb3I8YnI+IHJldmlldy48YnI+ICZuYnNwOzxicj4gPC9ibG9ja3F1b3Rl
-PjwvYmxvY2txdW90ZT48YnI+PC9ibG9ja3F1b3RlPjwvYmxvY2txdW90ZT48L2Jsb2NrcXVvdGU+
-PC9ibG9ja3F1b3RlPjxicj4tLSA8YnI+QmVzdCByZWdhcmRzLDxicj5BbmRyZWkgS2FydGFzaGV2
-PGJyPjxicj48L2Jsb2NrcXVvdGU+PCEtLfCfmIAtLT4KPC9kaXY+CjwvYm9keT4KPC9odG1sPg==
-------=_Part_22312_1537313452.1639535945359--
+Is your view that because the dts was initially just copied from the 
+kernel, it's not necessarily the right fit for u-boot, and that we 
+should change it to unify these two functions in a single group?  If so, 
+I guess I'm still wondering what tangible benefit that would have, and 
+about the flexibility issue I raised a few messages back.
 
+If that's not what you're aiming to suggest, pardon me if I'm being 
+dense here, but I'm going to need a more detailed explanation, because 
+as it stands I'm still pretty mystified.
+
+
+>>
+>>
+>> >> look fairly separate to me?
+>> >>
+>> >> >May I know why you need separate?
+>> >>
+>> >> In my particular case I don't need these two to be separate, but it
+>> >> seems conceivable that there might be other cases that would require
+>> >> a different set of signals to be enabled for a generic "UART3" group
+>> >> -- possibly more (sideband signals like CTS and such), or perhaps
+>> >> even fewer (e.g. if you had an output-only UART3 just for logging or
+>> >> something, and only needed TXD3 for that, but still wanted to use pin
+>> >> B14 as GPIOE7 instead of RXD3).  Keeping them separate seems like it
+>> >> leaves things as flexible as possible, avoiding imposing any artificial
+>> constraints.
+>> >>
+>> >>
+>> >> Zev
+>> >
