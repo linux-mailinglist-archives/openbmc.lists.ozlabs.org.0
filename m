@@ -1,78 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FAC8478348
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 03:42:18 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BAB247834E
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 03:42:55 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JFYD76DZHz3bnG
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 13:42:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JFYDs34N4z3bnG
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 13:42:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=konsulko.com header.i=@konsulko.com header.a=rsa-sha256 header.s=google header.b=BuCqLSUr;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bVXWXenw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=konsulko.com (client-ip=2607:f8b0:4864:20::f2c;
- helo=mail-qv1-xf2c.google.com; envelope-from=trini@konsulko.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::730;
+ helo=mail-qk1-x730.google.com; envelope-from=mr.bossman075@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=konsulko.com header.i=@konsulko.com header.a=rsa-sha256
- header.s=google header.b=BuCqLSUr; dkim-atps=neutral
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com
- [IPv6:2607:f8b0:4864:20::f2c])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=bVXWXenw; dkim-atps=neutral
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com
+ [IPv6:2607:f8b0:4864:20::730])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JDbpT6vm0z2ypK
- for <openbmc@lists.ozlabs.org>; Thu, 16 Dec 2021 00:35:13 +1100 (AEDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id u16so20264616qvk.4
- for <openbmc@lists.ozlabs.org>; Wed, 15 Dec 2021 05:35:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=konsulko.com; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=ihbK9qMYbEaOWKsAip6q/9Mzg+fEhBnVcARmrtF3lwo=;
- b=BuCqLSUrdjVZjfIfXeSpoyvWGQhAgsw0JShks8kh8P3ffv8VUMMeQuTvETm60KwiC0
- EkQyZsxuJFvbhGgoKF+7nYAzonby56tdKCJ+zTxbL/ISOEEFvgFOcQ2mOBEe+8QpBSBU
- 7dAk0GUgMi2q0E9pHcVSygaedtKFpN+rYnpz4=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JDfPw4rgGz305p
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Dec 2021 02:32:34 +1100 (AEDT)
+Received: by mail-qk1-x730.google.com with SMTP id 132so20324675qkj.11
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Dec 2021 07:32:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:subject:to:cc:references:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=Z+oh2c3Jcnkt54ng3vXXJOximUDkzdE7qD69NGAAi3U=;
+ b=bVXWXenwgc9g+2HfHCmbN1/c0J29vFn2xTRDYsZEBNXB8tdOW1XLoK5yjTZRzMJ0Fj
+ Ss+fkA9QSn998XnZzAha9h/nM5hEf/4UNKEx5ZnXik/51zyinlVWRXgFpN8h2zfJShER
+ 56ihXKUjb3CVyJPAjZoCBqpahVpQ6E6NWS9LWdxQ3qQNgIMq4vVIyhBaurYyAaHXlTvr
+ c1R/O0ViHcjBrZK9S0hMrlA6QPjQiZxiqYW+b0rH6sRo7R6qlNk1E5KnHAbW7FOpMjzv
+ 40cjCwwEKjHhBjJ/WD7HVt9UMBwwc/x7GJts8sV4+SMehxA9DiQqBsP6te1/UqOQ7YG0
+ X5uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=ihbK9qMYbEaOWKsAip6q/9Mzg+fEhBnVcARmrtF3lwo=;
- b=UgGL8GCDLWCsGGPUhIQjfXmVmQ7OVbNzFZfOeIr3SRc5yb7DkbtoYUkDrYbLZH2hSN
- CNd3Uag5+g9JZI+dZd5LdqCVCQtkhPzQ8AxbSG9sJ3kF3C8XH0Z3aQe/6zMphawm64Wz
- iZcuz3H4xTj8P76Bee21eCi2FDHjZwZtrDEfBz22mpruY4lFsHuG+mF159UvVYg+Gj8+
- pYv2pYIz9ic404hNQIKB27yw8D3dDPEczxrSeWYQNu/T9JUtIFbXLZV8ECawaqQ725kI
- f4EXT9mi9G9Fb2OxclpldXuMnavJsr9y/OnIzuCNJgxErwqUpKwPo3sYr/IM++rHjJHo
- /q7Q==
-X-Gm-Message-State: AOAM531Pt9W+y8UgYdfmpGwuRtwx2e9fiOTMP9oMTzidwUTBt2vmlGHa
- Ey6Uyu7XveogwpG7ouyCVwD1HQ==
-X-Google-Smtp-Source: ABdhPJy7k81vapyVBeNvO+e2PA8V6Mwx3kRi//zB3QZAeaZB1Auis/PHXbVt1maEpNYdm1ffk6COYw==
-X-Received: by 2002:a05:6214:e63:: with SMTP id
- jz3mr7450910qvb.107.1639575309878; 
- Wed, 15 Dec 2021 05:35:09 -0800 (PST)
-Received: from bill-the-cat
- (2603-6081-7b01-cbda-b008-f6f1-3496-c51e.res6.spectrum.com.
- [2603:6081:7b01:cbda:b008:f6f1:3496:c51e])
- by smtp.gmail.com with ESMTPSA id o4sm995713qkh.107.2021.12.15.05.35.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Dec 2021 05:35:09 -0800 (PST)
-Date: Wed, 15 Dec 2021 08:35:06 -0500
-From: Tom Rini <trini@konsulko.com>
-To: =?utf-8?B?55ub?= <stanley.chuys@gmail.com>
+ h=x-gm-message-state:from:subject:to:cc:references:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=Z+oh2c3Jcnkt54ng3vXXJOximUDkzdE7qD69NGAAi3U=;
+ b=wfbvtdQlOOyc/SZmHGmoA2wzoCTM8TBR7rQYbvnDJzRbi/kFn5QKaxxepZ84osQjGR
+ OFKzd0iZzMd4xRmEIWXXnIM0S8cJ+ssPz7p4dlos5oMtGdv8KedMpfUDZeWZXwQIox6n
+ kL+pQabf6tcz5XRTk0vTSO5Ospu+XTLl1KstKdSjQhUuYqcrTr4yWN/2VvL9mJhLH7cp
+ GqCEivWVAdQYAzM1GnF/XD3tQkS8hBCn+FplGQKJfb9+89U4Bgm/lB8acgBhTsFhu4rA
+ DT0DHSdVynrCHiBfYPietXf5cMtpVwgtfOroyaSYtQ6CfNgavtl/KBmCO5YufJLz125s
+ lK/w==
+X-Gm-Message-State: AOAM530vloMqzlhA7ZSiQ87XOpZBeOprb8+YdaUj2SR1mK6m96i4q3jP
+ h6RmSQvdbPOo1v7U3XmdMlIC9Cm9MNL+gA==
+X-Google-Smtp-Source: ABdhPJxBOIi6sbLxkTb3AHSgWHbSp3pGlZU2LKUu7chs+qv2neDH9ADbw02MusRA0OoR5IbE5APA0Q==
+X-Received: by 2002:a05:620a:4514:: with SMTP id
+ t20mr8983370qkp.171.1639582351916; 
+ Wed, 15 Dec 2021 07:32:31 -0800 (PST)
+Received: from [10.65.4.0] ([146.115.16.202])
+ by smtp.gmail.com with ESMTPSA id r20sm1234019qkp.21.2021.12.15.07.32.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Dec 2021 07:32:31 -0800 (PST)
+From: Jesse Taube <mr.bossman075@gmail.com>
+X-Google-Original-From: Jesse Taube <Mr.Bossman075@gmail.com>
 Subject: Re: [PATCH v1 8/9] ARM: dts: Add Nuvoton NPCM845 device tree
-Message-ID: <20211215133506.GZ2773246@bill-the-cat>
+To: Tom Rini <trini@konsulko.com>, =?UTF-8?B?55ub?= <stanley.chuys@gmail.com>
 References: <20211215025800.26918-1-yschu@nuvoton.com>
  <20211215025800.26918-9-yschu@nuvoton.com>
  <20211215130723.GW2773246@bill-the-cat>
  <CAPwEoQPu5uC=PGKo2R687R2Ed-GmA_ktG+9uvr4=yU+Kpp4rEQ@mail.gmail.com>
+ <20211215133506.GZ2773246@bill-the-cat>
+Message-ID: <f2deb80c-6500-80de-658f-564f5ebda86f@gmail.com>
+Date: Wed, 15 Dec 2021 10:32:21 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="RDS4xtyBfx+7DiaI"
-Content-Disposition: inline
-In-Reply-To: <CAPwEoQPu5uC=PGKo2R687R2Ed-GmA_ktG+9uvr4=yU+Kpp4rEQ@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
+In-Reply-To: <20211215133506.GZ2773246@bill-the-cat>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Fri, 17 Dec 2021 13:39:52 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -95,55 +100,22 @@ Cc: festevam@denx.de, tmaimon77@gmail.com, narmstrong@baylibre.com,
  Stanley Chu <yschu@nuvoton.com>, stephan@gerhold.net, andre.przywara@arm.com,
  tharvey@gateworks.com, vabhav.sharma@nxp.com, fangyuanseu@gmail.com,
  seanga2@gmail.com, patrick@blueri.se, avifishman70@gmail.com, sjg@chromium.org,
- samuel@sholland.org, christianshewitt@gmail.com, mr.bossman075@gmail.com,
+ samuel@sholland.org, christianshewitt@gmail.com,
  giulio.benetti@benettiengineering.com, bmeng.cn@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+> OK.  The device trees at least need to be in linux-next.  That will
+> cover a lot of baseline review that needs to happen before we take it
+> in.
+> 
+Hi Tom!
+If my understanding is correct device tree's should be accepted into 
+Linux-next before U-Boot, or am I wrong.
 
---RDS4xtyBfx+7DiaI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Also Stanley, I don't think I apply to this patch set...
+When getting maintainers I think you should pass `--nogit --norolestats`.
+I may be wrong about this though as I'm new to contributions.
 
-On Wed, Dec 15, 2021 at 09:32:00PM +0800, =E7=9B=9B wrote:
-> Tom Rini <trini@konsulko.com> =E6=96=BC 2021=E5=B9=B412=E6=9C=8815=E6=97=
-=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=889:07=E5=AF=AB=E9=81=93=EF=BC=9A
-> >
-> > On Wed, Dec 15, 2021 at 10:57:59AM +0800, Stanley Chu wrote:
-> >
-> > > Add a common device tree for all Nuvoton NPCM8xx BMCs and a board
-> > > specific device tree for the NPCM845(Arbel) evaluation board.
-> > >
-> > > Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-> >
-> > Which Linux kernel release are these from?  Thanks!
-> These are new created because NPCM845 is an new generation BMC chip,
-> not upstream to Linux kernel yet.
-
-OK.  The device trees at least need to be in linux-next.  That will
-cover a lot of baseline review that needs to happen before we take it
-in.
-
---=20
-Tom
-
---RDS4xtyBfx+7DiaI
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCgAdFiEEGjx/cOCPqxcHgJu/FHw5/5Y0tywFAmG57wMACgkQFHw5/5Y0
-tywMWQv/YBZWJ2nw8o6b82R7B8VUMhHpAIBeOchXvkuMPuzi5eaPpCjF/4JJZYAF
-LA5qz4Hat0nmf4E/G4MS2vSGCXF3TelIjrOAnkmi+KBqBsfFFp2604Vo0xn6z41X
-7yPipBO4qQxhZ97d84H/otxUChEkgctJyOfsOKTlI3B4AbKl/qCJgTixAX0Asus9
-+Wyl0p/s+Zb7z1CugiIx8NonPY63Rsz65D7isbWfZZ+bLtnUhwYd1uUHLkHCBnfS
-BKEU1EreWYA9OVkpLPbY0wkn3cSl5SSGrTr/tSmjEFxVARYsxGTgrPOmWpfUxssc
-pKTmK0UW1q+8Qv02JnlGYXvFpTMOR9D3e40W5NtQdrDzu/vG5HMTbfccBFtdDv2e
-v0nDz/97Zvl2DZEDqsv49Un7euMP/OJOnXKAM6TntF1blUmHm8JIzoO+tMHaPpps
-Fa+y1AhdwO6Ar8/WDsfzGaB0b/oP76UORay5vHujSOU/49dKS9CJJKa2uicG3EYz
-KsJ38bLW
-=EXt3
------END PGP SIGNATURE-----
-
---RDS4xtyBfx+7DiaI--
+Thanks,
+Jesse T
