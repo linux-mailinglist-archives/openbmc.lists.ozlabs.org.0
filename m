@@ -2,86 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49903477ABD
-	for <lists+openbmc@lfdr.de>; Thu, 16 Dec 2021 18:36:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CEFD477EC7
+	for <lists+openbmc@lfdr.de>; Thu, 16 Dec 2021 22:28:08 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JFK6Q0fLyz30R8
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 04:36:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JFQFd6h60z3cCJ
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 08:28:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=HyVzx40B;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=RwssU/wf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=f/e8s/I1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1;
+ helo=dfw.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=HyVzx40B; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=RwssU/wf; 
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=f/e8s/I1; 
  dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [IPv6:2604:1380:4641:c500::1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JFK613WjHz2y0B
- for <openbmc@lists.ozlabs.org>; Fri, 17 Dec 2021 04:36:09 +1100 (AEDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
- by mailout.west.internal (Postfix) with ESMTP id 844DA3200A6A;
- Thu, 16 Dec 2021 12:36:07 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute6.internal (MEProxy); Thu, 16 Dec 2021 12:36:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:mime-version:content-type; s=
- fm3; bh=addcqSOeOtbCdB0dUOLd8Q1+EUWF1BiriTA/hummKPY=; b=HyVzx40B
- QQx9urAhT75acDXCq/gQDxEjeUOTu3R/PXgZm6izX9yFinxihesyIRRHW++9UOGM
- crEurD/zF7XjXdXwmYuzZr2VKtO2Ytocswmexi1FiXXdSBJ1KfpJFyRl0ZTW2M0s
- +/9wDO++2gtuFJTS/5Ek5dMgqOwyRXog8v53QEaQiduKM9KOnp7BSgYgw3Ryn2Uj
- AmKjuG6NIUsFhPfCQYtA1bArC5ONorrGiMTIHbIu+/ZBrM291o9YwLV9kdhFm6T4
- 3vL9W9v4XsBgT3ZRE+0Kr2Ub50CHO4L/tI8AfG48F2X24M9hz5MxXaaM9zgO019H
- 2sKmvZiwkniMFQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:message-id
- :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; bh=addcqSOeOtbCdB0dUOLd8Q1+EUWF1
- BiriTA/hummKPY=; b=RwssU/wf4SnhmQ6aZuloXgJza23AjrIVFysHfwgklTHDc
- ejgZuXwzGo2tLHRpBQJEYoW/EdVTnCrrSNruJPbh56iePGS4yx9Le6awrlEqiaiN
- gQSoi3/Ob6td2HWC+iueafx2nmGdxqRRRGMDqRtW8vaBgUC92n6NUv0+/qoVsu5M
- SRv56dqNYfroDrcOJNefQFCOZhTDQ8EuCqGGq9RKknYJiCvbgVRnmz++fH1wmrBx
- DFUJCGdzAUVRBPKQWz7eVhsR4FXDJG+CFW4ZyddiPvSk/KwwVd5m/xJkusfEdHos
- UZ0r6wFn6fYrNk8JHqN2hysl/7sQqmshLOnG002SA==
-X-ME-Sender: <xms:Bnm7YZGOpexLIvU3iNinFJL2L7XJcSHL6t-1SwdokMP0l5l6-ubDZw>
- <xme:Bnm7YeUVNvTsp0d5CsAmkyGdVr3hqr3GkS1gwWGg0T0HDUoXk8DND4UaKMe9BHzN0
- YKxFJyHVzfX6y5o-D4>
-X-ME-Received: <xmr:Bnm7YbJoL09XOfnw0S7xy4DKi82urQpXfr_Gjvr0yJTuCS6TJ7MHfcD1sV7y3QOoOmIpiPblF02mIWDblmZqjQa2kvrT8gcA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrleeggddutdegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkgggtugesghdtreertddtvden
- ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
- gtgidrgiihiieqnecuggftrfgrthhtvghrnhepjeffueelheelvdefveejueffjeejveeu
- veehtdduffdtgeelkedvtdevveetgfetnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
- hrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:Bnm7YfHrOnS6Mf5o_u-w5duczyWQRlrDvYZjNOri0Q0TD_zFYonE2A>
- <xmx:Bnm7YfW_gCk7zWpXypRz_YXHeA59Rcxycb9Z4Iyzv4E1TkcrCYkI0Q>
- <xmx:Bnm7YaN1CkVY7fEY3enLKtWf5-N7MOaHLjjFf56QvD95Hm99fVOv4Q>
- <xmx:B3m7YQcqKn_4Q7_UkhfWA6uEr7sPOxVvx_4fcjoxCpuHqbrdeaRTIg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Dec 2021 12:36:06 -0500 (EST)
-Date: Thu, 16 Dec 2021 11:36:05 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Andrew Geissler <geissonator@gmail.com>
-Subject: Enable Bletchley in Jenkins.
-Message-ID: <Ybt5BZg/vjRWfp3W@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JFQF91QwMz3c7V;
+ Fri, 17 Dec 2021 08:27:41 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 39E62618B3;
+ Thu, 16 Dec 2021 21:27:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3ADC36AE2;
+ Thu, 16 Dec 2021 21:27:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1639690055;
+ bh=pKM53rkOhJMnvKB9zo6bgmg+3fPyM92dkJeoZNFz93w=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=f/e8s/I1vShbyoIoWFX7pBbXOkYiUUaI5Zm8x665JhFRxft06nKQvjJWtLElBwnKs
+ fIO1bH1W2If+CtadgWeZmwcJTa7hRplGTC9X5gc+oWJmOlJ3Ky+5y3C4SjRdYJo/aW
+ 1YcPtLHI8S77lQEWocICVY07uZUqqrO06djZNNyd2OKiftS097jQr+puTlvljspzUe
+ GqrYhNGpXKgMHhQb1beA54ij921KXe0+KAHb2j2yw+lYzerfqA/6Yvhx6nMeTvovmq
+ fSP/P2DQb8UeIvWtwCbFsvnL5+F8j2xLTGEngK/qGSs51FdgHQMykerY8gtUJ4iFRh
+ w8Gq4qqOHe00w==
+Date: Thu, 16 Dec 2021 22:27:32 +0100
+From: Wolfram Sang <wsa@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH] dt-bindings: i2c: aspeed: Drop stray '#interrupt-cells'
+Message-ID: <YbuvRPcjRY5Y06vi@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>, Rob Herring <robh@kernel.org>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ Rayn Chen <rayn_chen@aspeedtech.com>, devicetree@vger.kernel.org,
+ Thierry Reding <thierry.reding@gmail.com>,
+ linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org
+References: <20211206174237.2298580-1-robh@kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="ECDcQF7QXVs91cRX"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="l5K4g4+9dpQAuWMg"
 Content-Disposition: inline
+In-Reply-To: <20211206174237.2298580-1-robh@kernel.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,46 +73,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
+ Brendan Higgins <brendanhiggins@google.com>, linux-kernel@vger.kernel.org,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Rayn Chen <rayn_chen@aspeedtech.com>, linux-arm-kernel@lists.infradead.org,
+ linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---ECDcQF7QXVs91cRX
+--l5K4g4+9dpQAuWMg
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Andrew,
+On Mon, Dec 06, 2021 at 11:42:37AM -0600, Rob Herring wrote:
+> '#interrupt-cells' is not documented which causes a warning when
+> 'unevaluatedProperties' is implemented. Unless the I2C controller is
+> also an interrupt controller, '#interrupt-cells' is not valid. This
+> doesn't appear to be the case from the driver, so just remove it from
+> the example.
+>=20
+> Cc: Brendan Higgins <brendanhiggins@google.com>
+> Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+> Cc: Joel Stanley <joel@jms.id.au>
+> Cc: Andrew Jeffery <andrew@aj.id.au>
+> Cc: Rayn Chen <rayn_chen@aspeedtech.com>
+> Cc: linux-i2c@vger.kernel.org
+> Cc: openbmc@lists.ozlabs.org
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: linux-aspeed@lists.ozlabs.org
+> Signed-off-by: Rob Herring <robh@kernel.org>
 
-Can we get the machine 'bletchley' enabled in CI?  Facebook is doing some f=
-airly
-active development on it and I'd like to keep tabs on build regressions.  We
-currently contribute 4 cloud instances to the Jenkins pool and have 3 machi=
-ne
-types.  Let me know if we need to enable any additional compute resources.
+Applied to for-next, thanks!
 
---=20
-Patrick Williams
 
---ECDcQF7QXVs91cRX
+--l5K4g4+9dpQAuWMg
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmG7eQMACgkQqwNHzC0A
-wRl2aRAAkVd9jnZ7UhPEwZyumO0hCp7dwQiip2vJ0j9DatzfQB6obn79OLY92bhr
-jQm60X/FiDOTO1b77VO2CPJF+QOSXnODYpfkaEwVk3gBJ5PP8ZA+0kl9gRilO74z
-c6re6Z9sctLXZT1FBP2AAgyU/SercmXiLS8CyFOVNc5yq4gzxW9JomBj8EoQYcJC
-HkytCSgeawexqgGbdMFPcB/suwmVaaIt2dPtIXoF3pdKBrSneaGvsS1CLDqk/9oZ
-a07LSCWpiHJuPH4ZyYb3pDH7DKbYJVDTE/rHXPzuDp/Uif5e2f204oFBptOgWKMx
-mAvkj1AdiA3CRbWET6Q7V2OYtO4VInNVkAtqK7fnmrgCt7W4U9Dz6T8/GAPShvRn
-2VVY3q7UJl8C9brEezGsHuPrcRYJ3p+N5gcRcj6tvHo4mx92gb9AML10u1CKPskP
-afDkiQloWSs3uvi5EjeC2L0vaqcIvJJZDbhpVC9/8Md9qzZswjjdQzeD/AmDVuUi
-cD+Zr3Ttb31tWSE7BQtv5hf+XxMrK1Vjs5/ZLDutyKhd6Q+XAXCqCIVKd6dzFVmu
-GA9I8eOWX+jVLjmX3Fq99/0xBWklmvZCKim8hUH2aCnm6Y8MTpy9fKxYaQ18VmTI
-Wa7JeVas0eHcfb6VERX7l3aLQrAJIQFYKA1Vtj4TFSyt6C+buAU=
-=3NLS
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmG7r0QACgkQFA3kzBSg
+KbbyQA/7B2deteOtnwmeqCT1aEFkmDE8vuQqAIyP9S/wcEb4Zz5QNq31qsl7O1Sf
+PfP8bcD4w3ivIP6nAw/TQN6R2ofiiPKYZxWjZSzhy0E3ZP5/Mvhy1SaBmgEkSgsP
+Tnw1FNZzQVtzGaVvaMtgm3EYeyBm1FYXOhgoszGFaHzd8nFYOHvorddDModiCF5N
+0phMhilsdI3d6RyI+FHUQITeHmTLFniBc3Kj66d0y4MVBHBc23pMWVUQCnDJfPmj
+L5AmHRNCioTs+reOKYdUjTdtv9OsjG+FcLit8hrFnruw35WpUy2zA2ltvsIVhkPx
+nTB+2cNUk+YwIx1hGQ6t6fJ299GR6k+Z+89dp7YZrT5g6XQ0TjJX45BMi3Gt7T2d
+2noiO3Yhz/zvGs1bu/+4rj9Xzz/JzSqKNpA5K6JC9iKTu9hj/UsZY32OmbLgb11x
+MnD2VKqJztDYH8qMFKq6RKKYC/8K/lKO600ir5HFeeWN0tnwTrtFeiNlM/VbVfEk
+YA4VBOlxZ4fXiyeBUpP1Fev3RtJaRuAG4ruDxXh9cQCyGpADE6GTtgOfU3q3gl/l
+0F9XFkXNqBDr+6iKTJIcW4D64eGIB1QStmknWsd+ZrrznJp179NoylB4NN2oiCoL
+zDP3oWkXUNmlMa9e4NORmA4DCqvbAEb+Y9T5UTm0QEax1T//jHM=
+=2kfu
 -----END PGP SIGNATURE-----
 
---ECDcQF7QXVs91cRX--
+--l5K4g4+9dpQAuWMg--
