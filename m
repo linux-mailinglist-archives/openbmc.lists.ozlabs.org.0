@@ -1,68 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A00FD4768B5
-	for <lists+openbmc@lfdr.de>; Thu, 16 Dec 2021 04:29:59 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BEDB4768C4
+	for <lists+openbmc@lfdr.de>; Thu, 16 Dec 2021 04:39:23 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JDyKd1kwRz3c5f
-	for <lists+openbmc@lfdr.de>; Thu, 16 Dec 2021 14:29:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JDyXT1qh9z3c5h
+	for <lists+openbmc@lfdr.de>; Thu, 16 Dec 2021 14:39:21 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=TayLYKm7;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=oyA6hUaH;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::233;
- helo=mail-oi1-x233.google.com; envelope-from=linus.walleij@linaro.org;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::12f;
+ helo=mail-lf1-x12f.google.com; envelope-from=osk@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
- header.s=google header.b=TayLYKm7; dkim-atps=neutral
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
- [IPv6:2607:f8b0:4864:20::233])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=oyA6hUaH; dkim-atps=neutral
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
+ [IPv6:2a00:1450:4864:20::12f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JDyK94R98z2ynm
- for <openbmc@lists.ozlabs.org>; Thu, 16 Dec 2021 14:29:31 +1100 (AEDT)
-Received: by mail-oi1-x233.google.com with SMTP id r26so34533120oiw.5
- for <openbmc@lists.ozlabs.org>; Wed, 15 Dec 2021 19:29:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=UsxS3cyMXTSd/5dEUxUXWzl1BGIjNb+A41isAFW684A=;
- b=TayLYKm7gCeuqQb9cm8r765MqSSpedezKlCFG8xuhGLQYCwJNyYDVMEG9leDr0u6CY
- fkNvIOlP9Na/Th6qkKNnc6x+bvfn8C8lupqPK7GiP7KRjyScMKhpEBkWEtgt9hUCE6gg
- 7vVOEtnJeGFR/LuffNb47ewKOslDxgwk+YJldC6AIh79XDjMjwwiQemDK8YgxOgxHDdd
- fLAQDncAJH78sXCzbh0lMRemUmr0p4Dd9BWnRgL4sP1dI+kj1vRzNknASF59iFIsZqOA
- PgmFJivdme8GXgdMRXa2x1h9Ju02hqMcTCmAKSikTGvGiB8SDQ6n6+TMkJQQJkvDg/GI
- TpFw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JDyX54pqVz2ynt
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Dec 2021 14:38:59 +1100 (AEDT)
+Received: by mail-lf1-x12f.google.com with SMTP id t3so554684lfe.12
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Dec 2021 19:38:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=V7nAjGzPuiGdZvL4FOpuWJ9b8fgBjWsRW2Bzwj1GC50=;
+ b=oyA6hUaHXi219qfnWB50W370xxLK2cVOvwU1jLNAN6YTNWloX/VndFO7i4M9dguow0
+ yWeP7AA6Op7aQECjcg1gvK/c9AT34fhJEeKclr1dumYlrnLdO9psF7TZUlzDX0WGjc0Z
+ 5f+YsciVh212USHDFqLsBZIl1U6yVI/FNcJLju9Tlh/MrYKljkLkh7UR/Efbqr+Ak4o8
+ nW13pw6VVR+ldleIFXt0rCxAaVaumwgTWAGIQoMMa8Los7oEUX8//dEaVVc59VfUsukx
+ pJUma/Dl84dYbOFROv2OZdvDYiMjwyDN8W78nlWTep3lYsc4c58E9Di5b6HZTIJvf+0E
+ 7RMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=UsxS3cyMXTSd/5dEUxUXWzl1BGIjNb+A41isAFW684A=;
- b=MyKsUENpljeW9koNa2YDea8MBMwfC0WkC0CFQYrPDPVU5K4nSI0c6cp7g4/Gq6VIGG
- tuhx57WZU/J6d94rYl57OJuWv+WkQpyy8otLdubUE9x2emO0PKjjODm8CCdNz0tR+jOf
- L5S4siVw+05vCtELsM84Ta3TPkKE1xytoGY08cHFB2d8UzkTNi8Tbbj2i3Tc70jxzakl
- ThZansax4S0NUYkCb0ToMOa0a6VNzeDdQY+ycf1d49lW7ke+GlsSrhqksb2zsEWNn2Gd
- DW/P+lE44HdmLrpGnM1LYRHZRV6SxEAIwQTejSDBjYy90z0LmmctQHLfpkWhXdXHYKZN
- gxoQ==
-X-Gm-Message-State: AOAM532MPQxQqXXypuDCzFO3kTU2reZmgXtilmHwPUHSAMDiSCHjM7z1
- 6/F1FMqUSPdgtExyTng0EQhW5/8PNTHEa+/i2dhORg==
-X-Google-Smtp-Source: ABdhPJxJdoUfL7Na9pv4TPbOhdVT16g8SCas8hbxRD9wkYxYOAC6HLsTEj8L3HiugXvF3P9AS5qpGWRXfTs8rzXSWFE=
-X-Received: by 2002:a05:6808:60e:: with SMTP id
- y14mr2618437oih.162.1639625367674; 
- Wed, 15 Dec 2021 19:29:27 -0800 (PST)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=V7nAjGzPuiGdZvL4FOpuWJ9b8fgBjWsRW2Bzwj1GC50=;
+ b=t0BVmUwmlyIJKSRG/9mHCbaTe1o1mGel2qNzx06yomBeU9WDGbk9BoXDlYC4gL9Qox
+ qoQBQRk2Punc8cAd4N5St4K+TFQT+eFUGHpTsbjDTFPfjvxJBvHkU0kwih/25wnKT9al
+ 8EKdhPw4L9IfRO33ezPoZYt31KcEAyjp5ea6jmmpE8zL/R9dbDZv3PTqS8qviZZW7Y7r
+ qeSpKKBV7a+9QQrFflU6XrVRJnvtqV1dGtRNElfC2hyIfaF8VCjXXtYdUKyLlTd6VLcy
+ R1Ld54pmb99D/qpMRlgGYffWD+61c1YDHUsrhxDoOvrJesa9bxRMaITPiLkUlwr0GwpN
+ 4cMQ==
+X-Gm-Message-State: AOAM532vBgupjraDHS4z7FfLfXnflHa8wMI0dFvO4RUE5xDzRY0H7UTd
+ LRyzEgj9m8orEK1uV4t4fqMn4nydpUu3oYE5mX6O/KPMpua7Dg==
+X-Google-Smtp-Source: ABdhPJwFCPLQggOIv7RfBRk4a/8DXRGhuyMUbNHk/0YRlHRGF5VAtiTpXcqITDUtZANk5mZoq1eB29KDxvccBoIRMJU=
+X-Received: by 2002:a19:8c48:: with SMTP id i8mr12958886lfj.179.1639625932006; 
+ Wed, 15 Dec 2021 19:38:52 -0800 (PST)
 MIME-Version: 1.0
-References: <20211215214022.146391-1-julianbraha@gmail.com>
-In-Reply-To: <20211215214022.146391-1-julianbraha@gmail.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 16 Dec 2021 04:29:15 +0100
-Message-ID: <CACRpkdYngi90omV64yj4OEQysKhVVaOpwXAThUtv51Rv9NvxNw@mail.gmail.com>
-Subject: Re: [PATCH v1] pinctrl: aspeed: fix unmet dependencies on MFD_SYSCON
- for PINCTRL_ASPEED
-To: Julian Braha <julianbraha@gmail.com>
+From: Oskar Senft <osk@google.com>
+Date: Wed, 15 Dec 2021 22:38:36 -0500
+Message-ID: <CABoTLcTACbnnPZ8dfc_oFwgoT5JikYBHgfTjzknJbqC98rLMQQ@mail.gmail.com>
+Subject: Slow performance of VUART on AST2500 with 5.15.5
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -75,19 +70,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- fazilyildiran@gmail.com, linux-arm-kernel@lists.infradead.org
+Cc: Jeremy Kerr <jk@codeconstruct.com.au>,
+ Ali El-Haj-Mahmoud <aaelhaj@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Dec 15, 2021 at 10:40 PM Julian Braha <julianbraha@gmail.com> wrote:
+Hi everyone
 
-> When PINCTRL_ASPEED_G* is selected,
-> and MFD_SYSCON is not selected,
-> Kbuild gives the following warnings:
+I'm doing some more validation work with meta-tyan
+(https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/49181) on the
+current 5.15.5 kernel. I noticed that when using ttyS0 from the host
+(being the VUART in the AST2500), that the transfer host->BMC is
+really slow (like 300 baud slow). This is true even after stopping
+obmc-console-server and just doing `cat /dev/ttyVUART0`, so I figured
+it must be a kernel problem. When I then tried kernel 5.2.11 (with the
+DTS from 5.15.5 minus the uart_routing node), then VUART behaved
+normally. After having done this comparison, I think that 5.15.5 is
+generally just much slower.
 
-Patch applied as nonurgent fix.
+Is anyone aware of AST2500 VUART (or something else that would affect
+performance on an AST2500) having gotten broken somewhere between
+5.2.11 and 5.15.5?
 
-Yours,
-Linus Walleij
+Thanks
+Oskar.
