@@ -2,68 +2,47 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3A10478535
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 07:40:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 802604785EA
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 09:06:52 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JFfVT4JkPz30R1
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 17:40:01 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=nSg0aaqQ;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JFhQf3kb0z3cQX
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 19:06:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.15.241; helo=m15241.mail.126.com;
- envelope-from=cld795@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=nSg0aaqQ; dkim-atps=neutral
-Received: from m15241.mail.126.com (m15241.mail.126.com [220.181.15.241])
- by lists.ozlabs.org (Postfix) with ESMTP id 4JFfV24yCpz2xsM
- for <openbmc@lists.ozlabs.org>; Fri, 17 Dec 2021 17:39:31 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=P9Uk2
- dQqPhFoJJUxezp7jFLpdpfMIgIWvNhHAbig+Jo=; b=nSg0aaqQclbk81+XibDFk
- dtUvEAzCvjo732vyP/fpU02CpExUGtF88Ru+WxILz7DY4g4VtqC39po1WvOQhmFa
- 8pakJ8MsDTHURJ5NnVcWlAeCC2kTwRDG4gcoRq6mc07k0eY/mZ7B7SJZ3gbJVVy3
- oh0Px+r3Wy1CIR9velZ+0s=
-Received: from cld795$163.com ( [183.6.112.102] ) by ajax-webmail-wmsvr209
- (Coremail) ; Fri, 17 Dec 2021 14:39:20 +0800 (GMT+08:00)
-X-Originating-IP: [183.6.112.102]
-Date: Fri, 17 Dec 2021 14:39:20 +0800 (GMT+08:00)
-From: Landon <cld795@163.com>
-To: "a.kartashev@yadro.com" <a.kartashev@yadro.com>, 
- "fercerpav@gmail.com" <fercerpav@gmail.com>, 
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: OpenBMC appear SQUASHFS error problem
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
- MailMasterPC/4.15.8.1002_(Windows_10_20H2) Copyright (c) 2002-2021
- www.mailtech.cn 163com
-In-Reply-To: <473d9b80.264c.17dbc330d1d.Coremail.cld795@163.com>
-References: <mailman.0.1637828525.15424.openbmc@lists.ozlabs.org>
- <217ffd16.389b.17d5636abb5.Coremail.cld795@163.com>
- <20211125084640.GA22508@home.paul.comp>
- <78340dc9.749f.17d5ab53990.Coremail.cld795@163.com>
- <687802ca.772b.17d5ad02872.Coremail.cld795@163.com>
- <20211126215734.GH22508@home.paul.comp>
- <459566ca.670c.17d6b13a847.Coremail.cld795@163.com>
- <18a75e7d223e2c054e93e9a83a6c0ba474125518.camel@yadro.com>
- <6fc4e62.472c.17d7a6a0885.Coremail.cld795@163.com>
- <2f6c7248.c41.17d9291a38e.Coremail.cld795@163.com>
- <8e645b4.344b.17d93d37f8d.Coremail.cld795@163.com>
- <fabdbd3d04e3db2cef14346bc5b7e3fe71101c40.camel@yadro.com>
- <12f6e3dd.234a.17dbc1c17dd.Coremail.cld795@163.com>
- <473d9b80.264c.17dbc330d1d.Coremail.cld795@163.com>
-Content-Type: multipart/alternative; 
- boundary="----=_Part_93263_918538629.1639723160596"
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=jamin_lin@aspeedtech.com;
+ receiver=<UNKNOWN>)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JFhQM0kD6z2x9H
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Dec 2021 19:06:32 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 1BH7eY9M017060;
+ Fri, 17 Dec 2021 15:40:34 +0800 (GMT-8)
+ (envelope-from jamin_lin@aspeedtech.com)
+Received: from aspeedtech.com (118.99.190.129) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Fri, 17 Dec
+ 2021 16:06:03 +0800
+Date: Fri, 17 Dec 2021 16:06:02 +0800
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: Create AST2600 OTP image
+Message-ID: <20211217080601.GA4293@aspeedtech.com>
+References: <TYZPR06MB4015221527D36DC4780C1F23FC779@TYZPR06MB4015.apcprd06.prod.outlook.com>
+ <f42a6852-ab70-48b8-ba5d-74ba503e63dd@www.fastmail.com>
 MIME-Version: 1.0
-Message-ID: <48f9ad91.7b59.17dc71dd414.Coremail.cld795@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: kMeowAAXt3WYMLxh_9EHAA--.52564W
-X-CM-SenderInfo: 5foglmqv6rljoofrz/1tbiqBBsgFc7XJVjMwABsg
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <f42a6852-ab70-48b8-ba5d-74ba503e63dd@www.fastmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Originating-IP: [118.99.190.129]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 1BH7eY9M017060
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,179 +54,142 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Troy Lee <troy_lee@aspeedtech.com>, Steven Lee <steven_lee@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_93263_918538629.1639723160596
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+The 12/16/2021 22:43, Andrew Jeffery wrote:
+> Hi Jamin,
+> 
+> On Thu, 16 Dec 2021, at 17:11, Jamin Lin wrote:
+> > Hi OpenBMC team
+> >
+> > I have some questions about OTP image creation in OpenBMC. To support 
+> > AST2600 RoT(Root of Trust, AST2600 ROM code verified SPL), users should 
+> > program "A public key" in OTP and uses "A private key" with SPL image 
+> > to create signature and place it in SPL.
+> > The SOCESEC tool help user to create OTP and SPL images for AST2600 
+> > secure boot support.
+> > The following are my questions and solutions
+> >
+> >   1.  There was a socsec-sign.bbclass in OpenBMC and it is used for SPL 
+> > image generation with SOCSEC tool. Do you agree if I modify 
+> > socsec-sign.bbclass to create OTP image?
+> 
+> I'm not convinced on this one. While the OTP configuration and the 
+> output of the socsec signing process are tightly coupled they involve 
+> separate processes. Off the top of my head, the fact that socsec and 
+> otptool are separate utilities suggests to me that they should use 
+> separate bbclasses in the build process.
+> 
+> >
+> > If no, I will try to use solution 2.
+> >
+> 
+> This is the path you should follow - I have some comments below.
+> 
+> >
+> >
+> >   1.  I will create a new recipe to create OTP image and this recipe 
+> > will be placed in meta-aspeed/recipes-aspeed/otp/otp.bb
+> 
+> Okay.
+> 
+> >
+> > To successfully build the OTP and SPL images, we should create the 
+> > key-pair one for OTP(public key) and another for SPL(private key).
+> >
+> > Do you have any suggestion to place these keys in where?
+> >
+> >   1.  So far, we placed both private key and public keys here, 
+> > https://github.com/openbmc/openbmc/tree/master/meta-aspeed/recipes-bsp/u-boot/files
+> >
+> > How to get the public key in OTP recipe? It seems I need to place 
+> > public key, 
+> > https://github.com/openbmc/openbmc/blob/master/meta-aspeed/recipes-bsp/u-boot/files/rsa_pub_oem_dss_key.pem
+> >
+> > in meta-aspeed/recipes-aspeed/otp/files and private key in u-boot, 
+> > https://github.com/openbmc/openbmc/blob/master/meta-aspeed/recipes-bsp/u-boot/files/rsa_oem_dss_key.pem
+> 
+> We might need a separate recipe e.g. called 'aspeed-ast2600-rot-keys', 
+> and move the files you've pointed to above into that recipe. From there 
+> both the OTP and u-boot recipes can depend on 'aspeed-ast2600-rot-keys' 
+> to gain access to the files.
+> 
+> >
+> >   1.  The socsec tool settings should be consistent. For example: If 
+> > user set the algorithm "RSA4096_SHA512" in SPL, it is required to use 
+> > the corresponding *.json config in OTP.
+> >
+> > https://github.com/openbmc/openbmc/blob/master/meta-aspeed/classes/socsec-sign.bbclass#L8
+> 
+> Yes, but maybe this creates too many headaches to enforce? We'd have to 
+> parse the json and line it up with SOCSEC_SIGN_ALGO in the recipe. It 
+> seems much easier if we just do a `socsec verify ...` once we've 
+> generated all the artefacts, feeding in the OTP image we've also built 
+> through the otptool bbclass. If the verification fails then the build 
+> fails and someone can look at what happened.
+> 
+> >
+> > By default, it set SOCSEC_SIGN_ALGO ?= "RSA4096_SHA512" to create SPL, 
+> > it is required to use 
+> > https://github.com/AspeedTech-BMC/openbmc/blob/aspeed-master/meta-aspeed-sdk/recipes-aspeed/security/aspeed-secure-config/configs/ast2600/security/otp/evbA3_RSA4096_SHA512.json 
+> > for OTP image generation.
+> 
+> This isn't true. How I want this to work is that each platform provides 
+> its own OTP json configuration, and the otptool bbclass consumes that 
+> to produce the OTP image.
+> 
+> Platform designers should have the freedom to pick their own 
+> platform-specific OTP settings with respect to e.g. the ABR, boot 
+> source fallback, secureboot etc features. There's no point generating 
+> the cartesian product of configurations out of the box, it would just 
+> be confusing and a *huge* amount of noise.
+> 
+> I've cooked up a platform-specific config for our p10bmc systems for 
+> instance, and was planning on integrating that into the OpenBMC tree.
+> 
+> >
+> >   How to share the environment variable between u-boot and otp recipes?
+> >
+> >   Do you prefer to add "SOCSEC_SIGN_ALGO" in machine configuration 
+> > file, so this variable can be recognized between otp and u-boot recipes.
+> >
+> >   Do you have any suggestion?
+> 
+> It should be set by the platform config and so should be available to 
+> any recipe executed in the build process, included e.g. an otptool 
+> recipe. Platform bitbake configs shouldn't rely on any particular 
+> default value being set in socsec-sign bbclass for SOCSEC_SIGN_ALGO (we 
+> might change the default in the future - then any platforms relying on 
+> a particular default value would break).
+> 
+> >
+> >   1.  How to trigger the build process to build create OTP image if 
+> > user only issues "bitbake obmc-phosphor-image"?
+> >
+> > https://github.com/AspeedTech-BMC/openbmc/blob/aspeed-master/meta-aspeed-sdk/classes/image_types_phosphor_aspeed.bbclass#L84
+> >
+> > Our solution set the do_generate_static_tar task dependencies. So, 
+> > build process create the otp image first, then run 
+> > do_generate_static_tar task.
+> 
+> You probably want to add it as a dependency of u-boot. This way the 
+> socsec-sign bbclass can implement the functionality to run `socsec 
+> verify ...` with the OTP blob as its last step, triggered from the 
+> u-boot recipe.
+> 
+> >
+> > Do you have any suggestion? Do I need to modify this bbclass, 
+> > https://github.com/openbmc/openbmc/blob/master/meta-phosphor/classes/image_types_phosphor.bbclass 
+> 
+> No, I don't expect so.
+> 
+> Andrew
 
-aGVsbG8sCmNhbiB5b3UgaGVscCBtZSA/CmhlbGxvLApUaGUgZXJyb3IgYXBwZWFyIHNvbWV0aW1l
-cywgIEl0IGRvZXNuJ3QgYWx3YXlzIGNvbWUgdXAuCkRvIHlvdSBrbm93IHdoYXQgdGhlIHByb2Js
-ZW0gaXMgPwoKCgpTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRy
-eSBbNzhiZDBdClsgICA2Mi4wMTA2OTRdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBw
-YWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNjClsgICA2Mi4xMDA0OTFdIFBpZCAyODg2KHVwdGlt
-ZSkgb3ZlciBjb3JlX3BpcGVfbGltaXQKWyAgIDYyLjEwNTc5MF0gU2tpcHBpbmcgY29yZSBkdW1w
-ClsgICA2Mi4yODk5MzddIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hl
-IGVudHJ5IFs3OGJkMF0KWyAgIDYyLjI5Njk5M10gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byBy
-ZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2MKWyAgIDYyLjMwNDU2N10gU1FVQVNIRlMg
-ZXJyb3I6IFVuYWJsZSB0byByZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXQpbICAgNjIuMzEx
-NjM0XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNp
-emUgZWEzYwpbICAgNjIuMzQxMzgzXSBQaWQgMjkxNyh1cHRpbWUpIG92ZXIgY29yZV9waXBlX2xp
-bWl0ClsgICA2Mi4zNDY2OTRdIFNraXBwaW5nIGNvcmUgZHVtcApbICAgNjMuMTEyMjQ0XSBTUVVB
-U0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBdClsgICA2
-My4xMTkzNDRdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9jayA3OGJk
-MCwgc2l6ZSBlYTNjClsgICA2My4xMjY4NjRdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVh
-ZCBkYXRhIGNhY2hlIGVudHJ5IFs3OGJkMF0KWyAgIDYzLjEzMzk4NF0gU1FVQVNIRlMgZXJyb3I6
-IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2MKWyAgIDYzLjE2NTEy
-MV0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQw
-XQpbICAgNjMuMTcyMjU0XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxv
-Y2sgNzhiZDAsIHNpemUgZWEzYwpbICAgNjMuMTc5NzYyXSBTUVVBU0hGUyBlcnJvcjogVW5hYmxl
-IHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBdClsgICA2My4xODY3NzZdIFNRVUFTSEZT
-IGVycm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNjClsgICA2
-My4xOTQ3ODddIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5
-IFs3OGJkMF0KWyAgIDYzLjIwMTkwMV0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIHBh
-Z2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2MKWyAgIDYzLjIwOTQwMF0gU1FVQVNIRlMgZXJyb3I6
-IFVuYWJsZSB0byByZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXQpbICAgNjMuMjE2NDIwXSBT
-UVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNpemUgZWEz
-YwpbICAgNjMuMjQxMzExXSBQaWQgMzAwMSh1cHRpbWUpIG92ZXIgY29yZV9waXBlX2xpbWl0Clsg
-ICA2My4yNDY2MTNdIFNraXBwaW5nIGNvcmUgZHVtcApbICAgNjMuMjYwNDgxXSBQaWQgMzAwMih1
-cHRpbWUpIG92ZXIgY29yZV9waXBlX2xpbWl0ClsgICA2My4yNjU3OTBdIFNraXBwaW5nIGNvcmUg
-ZHVtcApbICAgNjMuMzAxODU3XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBj
-YWNoZSBlbnRyeSBbNzhiZDBdClsgICA2My4zMDg5NzVdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUg
-dG8gcmVhZCBwYWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNjClsgICA2My4zMTY0MDldIFNRVUFT
-SEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5IFs3OGJkMF0KWyAgIDYz
-LjMyMTQ5NF0gUGlkIDI5OTQodG9wKSBvdmVyIGNvcmVfcGlwZV9saW1pdApbICAgNjMuMzIzNDg1
-XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNpemUg
-ZWEzYwpbICAgNjMuMzI4NDA4XSBTa2lwcGluZyBjb3JlIGR1bXAKWyAgIDYzLjQ3MzUyOV0gUGlk
-IDMwMDYodXB0aW1lKSBvdmVyIGNvcmVfcGlwZV9saW1pdApbICAgNjMuNDc4ODYyXSBTa2lwcGlu
-ZyBjb3JlIGR1bXAKWyAgIDY0LjExMzI0NF0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFk
-IGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXQpbICAgNjQuMTIwMzUyXSBTUVVBU0hGUyBlcnJvcjog
-VW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNpemUgZWEzYwpbICAgNjQuMTI3ODAx
-XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBd
-ClsgICA2NC4xMzQ5MDZdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9j
-ayA3OGJkMCwgc2l6ZSBlYTNjClsgICA2NC4xNDY2NjRdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUg
-dG8gcmVhZCBmcmFnbWVudCBjYWNoZSBlbnRyeSBbODZmZTEwXQpbICAgNjQuMTU0MzQzXSBTUVVB
-U0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgODZmZTEwLCBzaXplIDk5ODAK
-WyAgIDY0LjI4MjYwN10gUGlkIDMwNzYodXB0aW1lKSBvdmVyIGNvcmVfcGlwZV9saW1pdApbICAg
-NjQuMjg3ODk1XSBTa2lwcGluZyBjb3JlIGR1bXAKWyAgIDY1LjAyMzY5MF0gU1FVQVNIRlMgZXJy
-b3I6IFVuYWJsZSB0byByZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXQoKClRoYW5rcyAh
-------=_Part_93263_918538629.1639723160596
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-PGh0bWw+CjxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50
-PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgo8L2hlYWQ+Cjxib2R5Pgo8c3R5bGU+CiAgICBm
-b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
-YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
-ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
-YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
-OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgPGRpdj48L2Rpdj4KPHN0eWxlPgogICAgZm9u
-dHsKICAgICAgICBsaW5lLWhlaWdodDogMS42OwogICAgfQogICAgdWwsb2x7CiAgICAgICAgcGFk
-ZGluZy1sZWZ0OiAyMHB4OwogICAgICAgIGxpc3Qtc3R5bGUtcG9zaXRpb246IGluc2lkZTsKICAg
-IH0KPC9zdHlsZT4KPGRpdiBzdHlsZT0iZm9udC1mYW1pbHk65b6u6L2v6ZuF6buRLFZlcmRhbmEs
-JnF1b3Q7TWljcm9zb2Z0IFlhaGVpJnF1b3Q7LFNpbVN1bixzYW5zLXNlcmlmO2ZvbnQtc2l6ZTox
-NHB4OyBsaW5lLWhlaWdodDoxLjY7Ij4KICAgIDxkaXY+PC9kaXY+CjxzdHlsZT4KICAgIGZvbnR7
-CiAgICAgICAgbGluZS1oZWlnaHQ6IDEuNjsKICAgIH0KICAgIHVsLG9sewogICAgICAgIHBhZGRp
-bmctbGVmdDogMjBweDsKICAgICAgICBsaXN0LXN0eWxlLXBvc2l0aW9uOiBpbnNpZGU7CiAgICB9
-Cjwvc3R5bGU+CjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OuW+rui9r+mbhem7kSxWZXJkYW5hLCZx
-dW90O01pY3Jvc29mdCBZYWhlaSZxdW90OyxTaW1TdW4sc2Fucy1zZXJpZjtmb250LXNpemU6MTRw
-eDsgbGluZS1oZWlnaHQ6MS42OyI+CiAgICA8ZGl2IGNsYXNzPSJKLXJlcGx5IiBzdHlsZT0iYmFj
-a2dyb3VuZC1jb2xvcjojZjJmMmYyO2NvbG9yOmJsYWNrO3BhZGRpbmctdG9wOjZweDtwYWRkaW5n
-LWJvdHRvbTo2cHg7Ym9yZGVyLXJhZGl1czozcHg7LW1vei1ib3JkZXItcmFkaXVzOjNweDstd2Vi
-a2l0LWJvcmRlci1yYWRpdXM6M3B4O21hcmdpbi10b3A6NDVweDttYXJnaW4tYm90dG9tOjIwcHg7
-Zm9udC1mYW1pbHk6J+W+rui9r+mbhem7kSc7Ij48ZGl2IHN0eWxlPSJmb250LXNpemU6MTJweDts
-aW5lLWhlaWdodDoxLjU7d29yZC1icmVhazpicmVhay1hbGw7bWFyZ2luLWxlZnQ6MTBweDttYXJn
-aW4tcmlnaHQ6MTBweCI+aGVsbG8sPC9kaXY+PGRpdiBzdHlsZT0iZm9udC1zaXplOjEycHg7bGlu
-ZS1oZWlnaHQ6MS41O3dvcmQtYnJlYWs6YnJlYWstYWxsO21hcmdpbi1sZWZ0OjEwcHg7bWFyZ2lu
-LXJpZ2h0OjEwcHgiPmNhbiB5b3UgaGVscCBtZSA/PC9kaXY+CjwvZGl2Pgo8YmxvY2txdW90ZSBp
-ZD0ibnRlcy1wY21haWwtcXVvdGUiIHN0eWxlPSJtYXJnaW46IDA7IHBhZGRpbmc6IDA7IGZvbnQt
-c2l6ZTogMTRweDsgZm9udC1mYW1pbHk6ICflvq7ova/pm4Xpu5EnOyI+Cgo8c3R5bGU+CiAgICBm
-b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
-YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
-ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
-YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
-OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgPGRpdj4KICAgIDxkaXY+aGVsbG8sPC9kaXY+
-PGRpdj5UaGUgZXJyb3ImbmJzcDthcHBlYXIgc29tZXRpbWVzLCAmbmJzcDs8c3BhbiBzdHlsZT0i
-Y29sb3I6IHJnYig1MSwgNTEsIDUxKTsgZm9udC1mYW1pbHk6IHRhaG9tYSwgJ01pY3Jvc29mdCBZ
-YUhlaScsIOW+rui9r+mbhem7kSwg5a6L5L2TLCAnTWFsZ3VuIEdvdGhpYycsIHNhbnMtc2VyaWY7
-IGxpbmUtaGVpZ2h0OiAyNnB4OyB0ZXh0LWFsaWduOiBqdXN0aWZ5OyB3aWRvd3M6IGF1dG87IGJh
-Y2tncm91bmQtY29sb3I6IHJnYigyNDcsIDI0OCwgMjUwKTsiPkl0IGRvZXNuJ3QgYWx3YXlzIGNv
-bWUgdXAuPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoNTEsIDUxLCA1
-MSk7IGZvbnQtZmFtaWx5OiB0YWhvbWEsICdNaWNyb3NvZnQgWWFIZWknLCDlvq7ova/pm4Xpu5Es
-IOWui+S9kywgJ01hbGd1biBHb3RoaWMnLCBzYW5zLXNlcmlmOyBsaW5lLWhlaWdodDogMjZweDsg
-dGV4dC1hbGlnbjoganVzdGlmeTsgd2lkb3dzOiBhdXRvOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2Io
-MjQ3LCAyNDgsIDI1MCk7Ij5EbyB5b3Uga25vdyB3aGF0IHRoZSBwcm9ibGVtIGlzID88L3NwYW4+
-PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoNTEsIDUxLCA1MSk7IGZvbnQtZmFtaWx5OiB0YWhvbWEs
-ICdNaWNyb3NvZnQgWWFIZWknLCDlvq7ova/pm4Xpu5EsIOWui+S9kywgJ01hbGd1biBHb3RoaWMn
-LCBzYW5zLXNlcmlmOyBsaW5lLWhlaWdodDogMjZweDsgdGV4dC1hbGlnbjoganVzdGlmeTsgd2lk
-b3dzOiBhdXRvOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjQ3LCAyNDgsIDI1MCk7Ij48YnI+PC9z
-cGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoNTEsIDUxLCA1MSk7IGZvbnQt
-ZmFtaWx5OiB0YWhvbWEsICdNaWNyb3NvZnQgWWFIZWknLCDlvq7ova/pm4Xpu5EsIOWui+S9kywg
-J01hbGd1biBHb3RoaWMnLCBzYW5zLXNlcmlmOyBsaW5lLWhlaWdodDogMjZweDsgdGV4dC1hbGln
-bjoganVzdGlmeTsgd2lkb3dzOiBhdXRvOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjQ3LCAyNDgs
-IDI1MCk7Ij48YnI+PC9zcGFuPjwvZGl2PjxkaXY+U1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byBy
-ZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXTxicj5bICZuYnNwOyA2Mi4wMTA2OTRdIFNRVUFT
-SEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNjPGJy
-PlsgJm5ic3A7IDYyLjEwMDQ5MV0gUGlkIDI4ODYodXB0aW1lKSBvdmVyIGNvcmVfcGlwZV9saW1p
-dDxicj5bICZuYnNwOyA2Mi4xMDU3OTBdIFNraXBwaW5nIGNvcmUgZHVtcDxicj5bICZuYnNwOyA2
-Mi4yODk5MzddIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5
-IFs3OGJkMF08YnI+WyAmbmJzcDsgNjIuMjk2OTkzXSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRv
-IHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNpemUgZWEzYzxicj5bICZuYnNwOyA2Mi4zMDQ1Njdd
-IFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5IFs3OGJkMF08
-YnI+WyAmbmJzcDsgNjIuMzExNjM0XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFn
-ZSwgYmxvY2sgNzhiZDAsIHNpemUgZWEzYzxicj5bICZuYnNwOyA2Mi4zNDEzODNdIFBpZCAyOTE3
-KHVwdGltZSkgb3ZlciBjb3JlX3BpcGVfbGltaXQ8YnI+WyAmbmJzcDsgNjIuMzQ2Njk0XSBTa2lw
-cGluZyBjb3JlIGR1bXA8YnI+WyAmbmJzcDsgNjMuMTEyMjQ0XSBTUVVBU0hGUyBlcnJvcjogVW5h
-YmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBdPGJyPlsgJm5ic3A7IDYzLjExOTM0
-NF0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXpl
-IGVhM2M8YnI+WyAmbmJzcDsgNjMuMTI2ODY0XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJl
-YWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBdPGJyPlsgJm5ic3A7IDYzLjEzMzk4NF0gU1FVQVNI
-RlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2M8YnI+
-WyAmbmJzcDsgNjMuMTY1MTIxXSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBj
-YWNoZSBlbnRyeSBbNzhiZDBdPGJyPlsgJm5ic3A7IDYzLjE3MjI1NF0gU1FVQVNIRlMgZXJyb3I6
-IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2M8YnI+WyAmbmJzcDsg
-NjMuMTc5NzYyXSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRy
-eSBbNzhiZDBdPGJyPlsgJm5ic3A7IDYzLjE4Njc3Nl0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0
-byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2M8YnI+WyAmbmJzcDsgNjMuMTk0Nzg3
-XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBd
-PGJyPlsgJm5ic3A7IDYzLjIwMTkwMV0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIHBh
-Z2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2M8YnI+WyAmbmJzcDsgNjMuMjA5NDAwXSBTUVVBU0hG
-UyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBdPGJyPlsgJm5i
-c3A7IDYzLjIxNjQyMF0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2Nr
-IDc4YmQwLCBzaXplIGVhM2M8YnI+WyAmbmJzcDsgNjMuMjQxMzExXSBQaWQgMzAwMSh1cHRpbWUp
-IG92ZXIgY29yZV9waXBlX2xpbWl0PGJyPlsgJm5ic3A7IDYzLjI0NjYxM10gU2tpcHBpbmcgY29y
-ZSBkdW1wPGJyPlsgJm5ic3A7IDYzLjI2MDQ4MV0gUGlkIDMwMDIodXB0aW1lKSBvdmVyIGNvcmVf
-cGlwZV9saW1pdDxicj5bICZuYnNwOyA2My4yNjU3OTBdIFNraXBwaW5nIGNvcmUgZHVtcDxicj5b
-ICZuYnNwOyA2My4zMDE4NTddIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNh
-Y2hlIGVudHJ5IFs3OGJkMF08YnI+WyAmbmJzcDsgNjMuMzA4OTc1XSBTUVVBU0hGUyBlcnJvcjog
-VW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNpemUgZWEzYzxicj5bICZuYnNwOyA2
-My4zMTY0MDldIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5
-IFs3OGJkMF08YnI+WyAmbmJzcDsgNjMuMzIxNDk0XSBQaWQgMjk5NCh0b3ApIG92ZXIgY29yZV9w
-aXBlX2xpbWl0PGJyPlsgJm5ic3A7IDYzLjMyMzQ4NV0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0
-byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2M8YnI+WyAmbmJzcDsgNjMuMzI4NDA4
-XSBTa2lwcGluZyBjb3JlIGR1bXA8YnI+WyAmbmJzcDsgNjMuNDczNTI5XSBQaWQgMzAwNih1cHRp
-bWUpIG92ZXIgY29yZV9waXBlX2xpbWl0PGJyPlsgJm5ic3A7IDYzLjQ3ODg2Ml0gU2tpcHBpbmcg
-Y29yZSBkdW1wPGJyPlsgJm5ic3A7IDY0LjExMzI0NF0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0
-byByZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXTxicj5bICZuYnNwOyA2NC4xMjAzNTJdIFNR
-VUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNj
-PGJyPlsgJm5ic3A7IDY0LjEyNzgwMV0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIGRh
-dGEgY2FjaGUgZW50cnkgWzc4YmQwXTxicj5bICZuYnNwOyA2NC4xMzQ5MDZdIFNRVUFTSEZTIGVy
-cm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNjPGJyPlsgJm5i
-c3A7IDY0LjE0NjY2NF0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIGZyYWdtZW50IGNh
-Y2hlIGVudHJ5IFs4NmZlMTBdPGJyPlsgJm5ic3A7IDY0LjE1NDM0M10gU1FVQVNIRlMgZXJyb3I6
-IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2NrIDg2ZmUxMCwgc2l6ZSA5OTgwPGJyPlsgJm5ic3A7
-IDY0LjI4MjYwN10gUGlkIDMwNzYodXB0aW1lKSBvdmVyIGNvcmVfcGlwZV9saW1pdDxicj5bICZu
-YnNwOyA2NC4yODc4OTVdIFNraXBwaW5nIGNvcmUgZHVtcDxicj5bICZuYnNwOyA2NS4wMjM2OTBd
-IFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5IFs3OGJkMF08
-L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PlRoYW5rcyAhPC9kaXY+PC9kaXY+PGJsb2NrcXVvdGUg
-aWQ9Im50ZXMtcGNtYWlsLXF1b3RlIiBzdHlsZT0ibWFyZ2luOiAwOyBwYWRkaW5nOiAwOyBmb250
-LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAn5b6u6L2v6ZuF6buRJzsiPjxkaXYgc3R5bGU9ImZv
-bnQtZmFtaWx5OuW+rui9r+mbhem7kSxWZXJkYW5hLCZxdW90O01pY3Jvc29mdCBZYWhlaSZxdW90
-OyxTaW1TdW4sc2Fucy1zZXJpZjtmb250LXNpemU6MTRweDsgbGluZS1oZWlnaHQ6MS42OyI+Cjwv
-ZGl2PjwvYmxvY2txdW90ZT48c3R5bGU+CiAgICBmb250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAx
-LjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBwYWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAg
-bGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwogICAgfQo8L3N0eWxlPgo8L2Rpdj48L2Jsb2Nr
-cXVvdGU+CjwvZGl2Pgo8L2Rpdj48IS0t8J+YgC0tPgo8L2Rpdj4KPC9ib2R5Pgo8L2h0bWw+
-------=_Part_93263_918538629.1639723160596--
+Hi Andrew
+Thanks for all your suggestions and review.
+I created two patches and waiting for review.
+Thanks-Jamin
 
