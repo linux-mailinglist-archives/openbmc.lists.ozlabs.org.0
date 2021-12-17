@@ -1,52 +1,45 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8E0847870F
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 10:29:57 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4BB6478805
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 10:46:09 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JFkGW2ZFhz3cN1
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 20:29:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JFkdC2g0Dz3c4b
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 20:46:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=przemyslaw.hawrylewicz.czarnowski@linux.intel.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158;
+ helo=codeconstruct.com.au; envelope-from=jk@codeconstruct.com.au;
  receiver=<UNKNOWN>)
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JFkGF6N3qz2xtM
- for <openbmc@lists.ozlabs.org>; Fri, 17 Dec 2021 20:29:40 +1100 (AEDT)
-X-IronPort-AV: E=McAfee;i="6200,9189,10200"; a="263891869"
-X-IronPort-AV: E=Sophos;i="5.88,213,1635231600"; d="scan'208";a="263891869"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
- by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2021 01:28:35 -0800
-X-IronPort-AV: E=Sophos;i="5.88,213,1635231600"; d="scan'208";a="466442730"
-Received: from phawryle-mobl1.ger.corp.intel.com (HELO [10.249.135.222])
- ([10.249.135.222])
- by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2021 01:28:30 -0800
-Message-ID: <d9ea11af-4b30-3424-5b1b-e0a51dde28f4@linux.intel.com>
-Date: Fri, 17 Dec 2021 10:28:28 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JFkct6XJMz306j
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Dec 2021 20:45:50 +1100 (AEDT)
+Received: from pecola.lan (unknown [159.196.93.152])
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id BAF5620181;
+ Fri, 17 Dec 2021 17:45:46 +0800 (AWST)
+Message-ID: <8857fb3c25b2e3918dcda00f04710b3e9f84f1d9.camel@codeconstruct.com.au>
 Subject: Re: Virtual Media repository request
-Content-Language: en-US
-To: Ed Tanous <ed@tanous.net>, Jeremy Kerr <jk@codeconstruct.com.au>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
+To: "Czarnowski, Przemyslaw"
+ <przemyslaw.hawrylewicz.czarnowski@linux.intel.com>, Ed Tanous
+ <ed@tanous.net>
+Date: Fri, 17 Dec 2021 17:45:46 +0800
+In-Reply-To: <d9ea11af-4b30-3424-5b1b-e0a51dde28f4@linux.intel.com>
 References: <DM4PR11MB52476717C6A134B92BD62061B96E9@DM4PR11MB5247.namprd11.prod.outlook.com>
  <YbDjsxZYYtnNPsCK@heinlein>
  <475ba120-3734-8bf1-868f-83f48f10ccac@linux.intel.com>
  <YbdwYODNRJPuRady@heinlein>
  <5c98b6d46d71907242f1d868cc3d918db99cea53.camel@codeconstruct.com.au>
  <CACWQX819tsUA6t190mVp8LrrHbteiP4w-35MEH9LG9mWTvYgxw@mail.gmail.com>
-From: "Czarnowski, Przemyslaw"
- <przemyslaw.hawrylewicz.czarnowski@linux.intel.com>
-In-Reply-To: <CACWQX819tsUA6t190mVp8LrrHbteiP4w-35MEH9LG9mWTvYgxw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <d9ea11af-4b30-3424-5b1b-e0a51dde28f4@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.42.0-2 
+MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -63,55 +56,20 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 15.12.2021 20:26, Ed Tanous wrote:
-> On Mon, Dec 13, 2021 at 6:11 PM Jeremy Kerr <jk@codeconstruct.com.au> wrote:
->>
->> Hi all,
->>
->>> Maybe Ed's proposal of using an existing repository solves that.  We
->>> would need to make sure the current maintainer is accepting of
->>> whatever design direction you've decided to go though.
->>
->> I'm fine with replacing the jsnbd code with a newer implementation,
->> provided there's general community acceptance for doing so. If that's
->> the case, I'm happy to use the existing repo, or replacing openbmc/jsnbd
->> entirely - whatever suits best.
->>
->> [Perhaps in your design document, you can expand the Alternatives
->> Considered section, to provide some motivation to change over]
->>
->> However, I'm *not* OK with just introducing a completely alternate VM
->> implementation and leaving jsnbd as-is, where some platforms use one,
->> and some the other. We have way too many instances where there are two
->> separate implementations and/or repos that deliver the same
->> functionality. I would like to avoid making that problem worse.
-> 
-> +1
+Hi Przemyslaw,
 
-I am ok with that approach, but I just wanted to separate service code 
-and JS nbd server, as they are quite distinct entities from my perspective.
-So yes for taking over VM functionality by the new service in separate 
-repo, leaving only nbd server implementation on this repo.
-What do you think?
+> I am ok with that approach, but I just wanted to separate service code
+> and JS nbd server, as they are quite distinct entities from my
+> perspective.
 
-> 
->>
->> So, either:
->>
->>   - submit these as updates to jsnbd, which implement the new structure as
->>     you like. I'd be happy to hand over the repo to the new maintainers.
->>
->>   or
->>
->>   - provide the new VM implementation as a new repo, propose to change
->>     platforms to use the new implementation, and we can delete jsnbd.
->>
->> Cheers,
->>
->>
->> Jeremy
+The actual nbd server code is tiny; only around 260 lines of javascript.
+I don't think it's worth keeping a whole repo for that, given we would
+not be using the jsnbd/nbd-proxy code.
+
+So, I'd suggest just including this with the new VM implementation, or
+moving it alongside the rest of the web ui.
+
+Cheers,
 
 
--- 
-Best regards,
-Przemyslaw Czarnowski
+Jeremy
