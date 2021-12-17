@@ -1,92 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3CA0478352
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 03:44:51 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3EE7478339
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 03:36:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JFYH5572Zz3bhh
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 13:44:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JFY5r5rL0z3c9S
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 13:36:48 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=NP0vZ+FU;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=pRJvxIhR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2f;
- helo=mail-qv1-xf2f.google.com; envelope-from=seanga2@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2e;
+ helo=mail-yb1-xb2e.google.com; envelope-from=tyler.sabdon@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=NP0vZ+FU; dkim-atps=neutral
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com
- [IPv6:2607:f8b0:4864:20::f2f])
+ header.s=20210112 header.b=pRJvxIhR; dkim-atps=neutral
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com
+ [IPv6:2607:f8b0:4864:20::b2e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JDkPP2rbhz2x99
- for <openbmc@lists.ozlabs.org>; Thu, 16 Dec 2021 05:32:25 +1100 (AEDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id jo22so21053956qvb.13
- for <openbmc@lists.ozlabs.org>; Wed, 15 Dec 2021 10:32:25 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JFY5P3mGrz2yK3
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Dec 2021 13:36:23 +1100 (AEDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id f186so2380006ybg.2
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Dec 2021 18:36:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:subject:to:cc:references:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=DqCTkekrYdxUkdUMUBmKp4SWDRJWlUTJWmdQHFONGSg=;
- b=NP0vZ+FUr+sIKC58VcciFSPZPxouwhht12Ah/rhtHQkutFHigSfAnIyLl/6RMplwcZ
- XDHH0Q0Idjbc7VUvC7rVdafd25Bavg4YLgf5pZt0O4Bv83m1hZ5yLempgP4ctr8GxpHK
- WNWJtQUq8dwm8o/abBqvdgrSsw0mYTv/SDXE9EoyGka35TlhQJj7/3XjL7KyinxRkrm5
- q90NuGmNWre0u+3fDwbkX/UXPa6JHcIGSr8wxclcMSTpHHoaehXSgEwfBHoJBSX1ctka
- m4lm7ZaCC6YgrcmINyX+aFZXWKdmYMZwdR4AJagM2gBqfkSn386JbrahYJqeQtEAsXdl
- 7kZg==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=5nTCvXfQAJc321hU8RXV4CaGBuKc0qsPg8Vjo/ddfW0=;
+ b=pRJvxIhRjrXodSEwNx0ZbzNRct0nU7RefJ2aXuL/L5Tne9oTjz7++OoFLFuj9hJvRU
+ R3vyWiA59YjmxzhmltpRztcOc61jII8fGlgl4KU7bfyRDNqv6TnfYZeROPE9sHVJIV5d
+ BlggXFnTAKt0U8ChdekVXwv6PlNhAPz5bssal4mDXEBLPsI/9Tarf5ZNqgjbaiDA0kDw
+ 6rqkQXi6kdVFGPSGhVx9tHo15WGj0SvAiRHSf6312yQqn4rFpFTCtQ0Jdf+klmjBFuuV
+ mtFYI0P0FtjKX1o3mjRqtD1mpt897Yk8u2Oh1BpcaNMno76JZH/3CRgWWiUuto6fHFDu
+ LKdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:from:subject:to:cc:references:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=DqCTkekrYdxUkdUMUBmKp4SWDRJWlUTJWmdQHFONGSg=;
- b=IhEMS9wXaU+ZSBMWLjvWmZ+81a207p4j8R5tA215kqBWXWe3wQ7Eu0Wk9GI6BNfFPT
- tE+Kw+W5ZuIfYlxqq+kF1Vm+ij1wA0G4nbLP5aiX7REkRyKgGDiMkQndcfeBRSLevjKr
- xjzdexod8MUd5I+hV+TBUQ+xaqc3YM6kAGAPhTWz8kYuE9sHF4onvM4g00rg3t6bYETw
- VVVKQ75bV2i+B6jvhijOiVlp6f2nl2tUIWhQ1XNrcYLLCaOQKT9Gyc7LpSH54hMsPnAC
- jduRm4lPHZxU7I+SAfMt0sl9qk5+Jz6u61LW4gaCX/UEJO8kChy/+NrhzyzER+ACjyeX
- uG/w==
-X-Gm-Message-State: AOAM533bXZrng4jOyOaCu0lJhS5YcnsDQKwylDM39ZcJV0Z/a/rgZJXh
- Xakv9t6kJscLCMgx7VC2Kyj2MzNfPrCwaw==
-X-Google-Smtp-Source: ABdhPJzqMZXnkRCX/73g9yZ7bgytVekx0Xnccmaj5rNTlEr7cWD6/7nvTxxq6DsEPQEFjp5TBNCzcw==
-X-Received: by 2002:ad4:56ed:: with SMTP id
- cr13mr12507927qvb.127.1639593142214; 
- Wed, 15 Dec 2021 10:32:22 -0800 (PST)
-Received: from [192.168.1.201] (pool-108-18-207-184.washdc.fios.verizon.net.
- [108.18.207.184])
- by smtp.googlemail.com with ESMTPSA id a20sm1438229qkh.63.2021.12.15.10.32.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Dec 2021 10:32:21 -0800 (PST)
-From: Sean Anderson <seanga2@gmail.com>
-Subject: Re: [PATCH v1 2/9] clk: nuvoton: Add support for NPCM845
-To: Stanley Chu <stanley.chuys@gmail.com>, lukma@denx.de,
- jagan@amarulasolutions.com, andre.przywara@arm.com, festevam@denx.de,
- narmstrong@baylibre.com, pbrobinson@gmail.com, tharvey@gateworks.com,
- christianshewitt@gmail.com, lokeshvutla@ti.com, sjg@chromium.org,
- sr@denx.de, michal.simek@xilinx.com, hs@denx.de, weijie.gao@mediatek.com,
- hannes.schmelzer@br-automation.com, harm.berntsen@nedap.com,
- sebastian.reichel@collabora.com, stephan@gerhold.net, fangyuanseu@gmail.com,
- kettenis@openbsd.org, dsankouski@gmail.com, vabhav.sharma@nxp.com,
- bmeng.cn@gmail.com, patrick@blueri.se, samuel@sholland.org,
- giulio.benetti@benettiengineering.com, mr.bossman075@gmail.com,
- yschu@nuvoton.com, kwliu@nuvoton.com, ctcchien@nuvoton.com,
- avifishman70@gmail.com, tmaimon77@gmail.com
-References: <20211215025800.26918-1-yschu@nuvoton.com>
- <20211215025800.26918-3-yschu@nuvoton.com>
-Message-ID: <a461da7a-14cc-0119-6d0b-4fa08d7ee5ce@gmail.com>
-Date: Wed, 15 Dec 2021 13:32:20 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=5nTCvXfQAJc321hU8RXV4CaGBuKc0qsPg8Vjo/ddfW0=;
+ b=Kx3ibvRQmR1H3vJaiCfnku+LJ8MRROGR2RUB6njhn2V+ndyIE+27gD/l0NgLVFMH4O
+ SOWoJdw/+SrBJzdQ/xgNkReynglD/il+aMj19cGfR+CljClZ5ET2x5+JIXs3yvDu7Vih
+ Y9kWiaeeMcI6QaxxKV8rvqb9o+RhY0LLSf/NpuMS8EYqjHEXUMxuFl3bYpU9j2eX+nym
+ GoI2kUrqzJw2dWwk1B6fvHdI4w0Qt4Qn7G0USCdDjKszK0YN0330liLXgAsOTc1uNWDO
+ RpOxnMCHGtixvOgcxk9e8F28pD1zBEhQDbbD9r+ib+PIrWeuBjafvGwJhPFoaU+XRBRU
+ 1yiA==
+X-Gm-Message-State: AOAM530zE1pfUGO3Fb+IjKWMeG4+gWd5DdMt20GYMrhNofuHo7tPaSp5
+ lTWdPRmfg6NXDHs6aM6c1pxTN1l+2ZCIRD8Q7sc=
+X-Google-Smtp-Source: ABdhPJzsp1XINoN27zHt5hWTvyRPIna2gMmNrKEeGiYR/w4scL6H0UPrEe3HaQMoNnXm+VKoDpKFMQ2zaFXutKCJUNE=
+X-Received: by 2002:a25:aea4:: with SMTP id b36mr1582534ybj.182.1639708579825; 
+ Thu, 16 Dec 2021 18:36:19 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20211215025800.26918-3-yschu@nuvoton.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Mailman-Approved-At: Fri, 17 Dec 2021 13:39:52 +1100
+References: <CAO9PYRKmup17BSTLNLdBMO=-HjQ2Lxw+Gcw7+0VY8DKVMed9GA@mail.gmail.com>
+ <YbduMfjuc7TXT6Rw@heinlein>
+ <CAO9PYRJD0MJsuY8M_80yJci-nT8idKL7VhSXJzvX_JS1wreJzA@mail.gmail.com>
+ <YbtzcvbSwTjGzfcH@heinlein>
+In-Reply-To: <YbtzcvbSwTjGzfcH@heinlein>
+From: Deng Tyler <tyler.sabdon@gmail.com>
+Date: Fri, 17 Dec 2021 10:36:08 +0800
+Message-ID: <CAO9PYRKPrVzew5KUcxL7HKo4VXNR+mEef7AiPas-5FxdcB5FeA@mail.gmail.com>
+Subject: Re: Run unit-test during development
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: multipart/alternative; boundary="0000000000006f8b6805d34e67ca"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,377 +76,217 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: u-boot@lists.denx.de, openbmc@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 12/14/21 9:57 PM, Stanley Chu wrote:
-> Add clock controller driver for NPCM845
-> 
-> Signed-off-by: Stanley Chu <yschu@nuvoton.com>
+--0000000000006f8b6805d34e67ca
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Patrick:
+    I try to build and run unit test repository which support meson such as
+phosphor-logging and phosphor-network. There is dependency issue while
+building them and I wonder it is a bug or my environment issue.
+/openbmc/phosphor-logging$ meson builddir && ninja -C builddir test
+The Meson build system
+Version: 0.59.2
+Source dir:  /openbmc/phosphor-logging
+Build dir:  /openbmc/phosphor-logging/builddir
+Build type: native build
+Project name: phosphor-logging
+Project version: 1.0.0
+C++ compiler for the host machine: c++ (gcc 7.5.0 "c++ (Ubuntu
+7.5.0-3ubuntu1~18.04) 7.5.0")
+C++ linker for the host machine: c++ ld.bfd 2.30
+Host machine cpu family: x86_64
+Host machine cpu: x86_64
+Program python3 found: YES (/usr/bin/python3)
+Found pkg-config: /usr/bin/pkg-config (0.29.1)
+Run-time dependency systemd found: YES 237
+Found CMake: /usr/bin/cmake (3.10.2)
+Run-time dependency sdbusplus found: NO (tried pkgconfig and cmake)
+Cloning into 'sdbusplus'...
+remote: Enumerating objects: 3559, done.
+remote: Counting objects: 100% (609/609), done.
+remote: Compressing objects: 100% (384/384), done.
+remote: Total 3559 (delta 346), reused 403 (delta 162), pack-reused 2950
+Receiving objects: 100% (3559/3559), 891.70 KiB | 7.37 MiB/s, done.
+Resolving deltas: 100% (2289/2289), done.
+
+Executing subproject sdbusplus
+
+sdbusplus| Project name: sdbusplus
+sdbusplus| Project version: 1.0.0
+sdbusplus| C compiler for the host machine: cc (gcc 7.5.0 "cc (Ubuntu
+7.5.0-3ubuntu1~18.04) 7.5.0")
+sdbusplus| C linker for the host machine: cc ld.bfd 2.30
+sdbusplus| C++ compiler for the host machine: c++ (gcc 7.5.0 "c++ (Ubuntu
+7.5.0-3ubuntu1~18.04) 7.5.0")
+sdbusplus| C++ linker for the host machine: c++ ld.bfd 2.30
+sdbusplus| Run-time dependency libsystemd found: NO (tried pkgconfig and
+cmake)
+
+subprojects/sdbusplus/meson.build:14:0: ERROR: Dependency "libsystemd" not
+found, tried pkgconfig and cmake
+
+A full log can be found at
+ /openbmc/phosphor-logging/builddir/meson-logs/meson-log.txt
+
+Patrick Williams <patrick@stwcx.xyz> =E6=96=BC 2021=E5=B9=B412=E6=9C=8817=
+=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=881:12=E5=AF=AB=E9=81=93=EF=BC=
+=9A
+
+> On Thu, Dec 16, 2021 at 01:53:41PM +0800, Deng Tyler wrote:
+> > Hi Patrick:
+> >     Thank for your kind reply and that's really helpful. I am trying to
+> > figure out the meson subprojects system but still encounter lot of
+> barrier.
+> > I run unt test using command "meson buiildir && ninja -C builddir test"
+> in
+> > my development environment but never work. Could you help to cite an
+> > example in current openbmc repository? Do openbmc contributor run unit
+> test
+> > by meson subprojects or run-unit-test-docker.sh when they are developin=
+g?
+>
+> I can't really comment on what other people do, but I can tell you what I
+> do.
+>
+> 1. If the repository supports Meson, I always attempt to build / test usi=
+ng
+>    standalone support (ie. meson subprojects).
+>
+> 2. If 'meson subprojects' doesn't seem to work, I fix it to make it work.
+>
+> 3. If the repository is anything else and it isn't too much effort, I try
+> to
+>    port it to meson.
+>
+> 4. When all else fails I use 'run-unit-test-docker.sh'.  I often execute
+> it with
+>    an alias I have: `NO_FORMAT_CODE=3D1 lf-ut`[1].
+>
 > ---
->   drivers/clk/Makefile                      |   1 +
->   drivers/clk/nuvoton/Makefile              |   1 +
->   drivers/clk/nuvoton/clk_npcm8xx.c         | 213 ++++++++++++++++++++++
->   include/dt-bindings/clock/npcm845-clock.h |  17 ++
->   4 files changed, 232 insertions(+)
->   create mode 100644 drivers/clk/nuvoton/Makefile
->   create mode 100644 drivers/clk/nuvoton/clk_npcm8xx.c
->   create mode 100644 include/dt-bindings/clock/npcm845-clock.h
-> 
-> diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
-> index 711ae5bc29..a3b64b73c2 100644
-> --- a/drivers/clk/Makefile
-> +++ b/drivers/clk/Makefile
-> @@ -53,3 +53,4 @@ obj-$(CONFIG_STM32H7) += clk_stm32h7.o
->   obj-$(CONFIG_CLK_VERSAL) += clk_versal.o
->   obj-$(CONFIG_CLK_CDCE9XX) += clk-cdce9xx.o
->   obj-$(CONFIG_CLK_VERSACLOCK) += clk_versaclock.o
-> +obj-$(CONFIG_ARCH_NPCM) += nuvoton/
+>
+> Do you have examples of meson+ninja failing?  I'm fairly certain it works
+> fine
+> for almost every repository I'm listed as a maintainer on.  I've also use=
+d
+> it
+> (or fixed it) fairly recently for: bmcweb, phosphor-logging, and
+> phosphor-certificate-manager.
+>
+> Maybe you can point to what failure you're seeing in that case as well (y=
+ou
+> can upload a log to gist.github.com )?
+>
+>
+>
+> 1.
+> https://github.com/williamspatrick/dotfiles/blob/fb542abf99c944051544990f=
+69a6d20c82d2a904/env/30_linux/lfopenbmc.zsh#L76
+>
+> --
+> Patrick Williams
+>
 
-Please keep this in alphabetical order (I know the file isn't perfect).
+--0000000000006f8b6805d34e67ca
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> diff --git a/drivers/clk/nuvoton/Makefile b/drivers/clk/nuvoton/Makefile
-> new file mode 100644
-> index 0000000000..998e5329bb
-> --- /dev/null
-> +++ b/drivers/clk/nuvoton/Makefile
-> @@ -0,0 +1 @@
-> +obj-$(CONFIG_ARCH_NPCM8XX) += clk_npcm8xx.o
-> diff --git a/drivers/clk/nuvoton/clk_npcm8xx.c b/drivers/clk/nuvoton/clk_npcm8xx.c
-> new file mode 100644
-> index 0000000000..c547c47e82
-> --- /dev/null
-> +++ b/drivers/clk/nuvoton/clk_npcm8xx.c
-> @@ -0,0 +1,213 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Copyright (c) 2021 Nuvoton Technology.
-> + */
-> +
-> +#include <common.h>
-> +#include <dm.h>
-> +#include <clk-uclass.h>
-> +#include <asm/types.h>
-> +#include <asm/arch/clock.h>
+<div dir=3D"ltr">Hi Patrick:<div>=C2=A0 =C2=A0 I try to build and run unit =
+test repository which support meson such as phosphor-logging and phosphor-n=
+etwork. There is dependency issue while building them and I wonder it is a =
+bug or my environment issue.</div><div>/openbmc/phosphor-logging$ meson bui=
+lddir &amp;&amp; ninja -C builddir test<br>The Meson build system<br>Versio=
+n: 0.59.2<br>Source dir: =C2=A0/openbmc/phosphor-logging<br>Build dir: =C2=
+=A0/openbmc/phosphor-logging/builddir<br>Build type: native build<br>Projec=
+t name: phosphor-logging<br>Project version: 1.0.0<br>C++ compiler for the =
+host machine: c++ (gcc 7.5.0 &quot;c++ (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0&=
+quot;)<br>C++ linker for the host machine: c++ ld.bfd 2.30<br>Host machine =
+cpu family: x86_64<br>Host machine cpu: x86_64<br>Program python3 found: YE=
+S (/usr/bin/python3)<br>Found pkg-config: /usr/bin/pkg-config (0.29.1)<br>R=
+un-time dependency systemd found: YES 237<br>Found CMake: /usr/bin/cmake (3=
+.10.2)<br>Run-time dependency sdbusplus found: NO (tried pkgconfig and cmak=
+e)<br>Cloning into &#39;sdbusplus&#39;...<br>remote: Enumerating objects: 3=
+559, done.<br>remote: Counting objects: 100% (609/609), done.<br>remote: Co=
+mpressing objects: 100% (384/384), done.<br>remote: Total 3559 (delta 346),=
+ reused 403 (delta 162), pack-reused 2950<br>Receiving objects: 100% (3559/=
+3559), 891.70 KiB | 7.37 MiB/s, done.<br>Resolving deltas: 100% (2289/2289)=
+, done.<br><br>Executing subproject sdbusplus<br><br>sdbusplus| Project nam=
+e: sdbusplus<br>sdbusplus| Project version: 1.0.0<br>sdbusplus| C compiler =
+for the host machine: cc (gcc 7.5.0 &quot;cc (Ubuntu 7.5.0-3ubuntu1~18.04) =
+7.5.0&quot;)<br>sdbusplus| C linker for the host machine: cc ld.bfd 2.30<br=
+>sdbusplus| C++ compiler for the host machine: c++ (gcc 7.5.0 &quot;c++ (Ub=
+untu 7.5.0-3ubuntu1~18.04) 7.5.0&quot;)<br>sdbusplus| C++ linker for the ho=
+st machine: c++ ld.bfd 2.30<br>sdbusplus| Run-time dependency libsystemd fo=
+und: NO (tried pkgconfig and cmake)<br><br>subprojects/sdbusplus/meson.buil=
+d:14:0: ERROR: Dependency &quot;libsystemd&quot; not found, tried pkgconfig=
+ and cmake<br><br>A full log can be found at =C2=A0/openbmc/phosphor-loggin=
+g/builddir/meson-logs/meson-log.txt<br></div></div><br><div class=3D"gmail_=
+quote"><div dir=3D"ltr" class=3D"gmail_attr">Patrick Williams &lt;<a href=
+=3D"mailto:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&gt; =E6=96=BC 2021=E5=
+=B9=B412=E6=9C=8817=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=881:12=E5=
+=AF=AB=E9=81=93=EF=BC=9A<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">On Thu, Dec 16, 2021 at 01:53:41PM +0800, Deng Tyler wrote:<br>
+&gt; Hi Patrick:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Thank for your kind reply and that&#39;s really hel=
+pful. I am trying to<br>
+&gt; figure out the meson subprojects system but still encounter lot of bar=
+rier.<br>
+&gt; I run unt test using command &quot;meson buiildir &amp;&amp; ninja -C =
+builddir test&quot; in<br>
+&gt; my development environment but never work. Could you help to cite an<b=
+r>
+&gt; example in current openbmc repository? Do openbmc contributor run unit=
+ test<br>
+&gt; by meson subprojects or run-unit-test-docker.sh when they are developi=
+ng?<br>
+<br>
+I can&#39;t really comment on what other people do, but I can tell you what=
+ I do.<br>
+<br>
+1. If the repository supports Meson, I always attempt to build / test using=
+<br>
+=C2=A0 =C2=A0standalone support (ie. meson subprojects).<br>
+<br>
+2. If &#39;meson subprojects&#39; doesn&#39;t seem to work, I fix it to mak=
+e it work.<br>
+<br>
+3. If the repository is anything else and it isn&#39;t too much effort, I t=
+ry to<br>
+=C2=A0 =C2=A0port it to meson.<br>
+<br>
+4. When all else fails I use &#39;run-unit-test-docker.sh&#39;.=C2=A0 I oft=
+en execute it with<br>
+=C2=A0 =C2=A0an alias I have: `NO_FORMAT_CODE=3D1 lf-ut`[1].<br>
+<br>
+---<br>
+<br>
+Do you have examples of meson+ninja failing?=C2=A0 I&#39;m fairly certain i=
+t works fine<br>
+for almost every repository I&#39;m listed as a maintainer on.=C2=A0 I&#39;=
+ve also used it<br>
+(or fixed it) fairly recently for: bmcweb, phosphor-logging, and<br>
+phosphor-certificate-manager.<br>
+<br>
+Maybe you can point to what failure you&#39;re seeing in that case as well =
+(you<br>
+can upload a log to <a href=3D"http://gist.github.com" rel=3D"noreferrer" t=
+arget=3D"_blank">gist.github.com</a> )?<br>
+<br>
+<br>
+<br>
+1. <a href=3D"https://github.com/williamspatrick/dotfiles/blob/fb542abf99c9=
+44051544990f69a6d20c82d2a904/env/30_linux/lfopenbmc.zsh#L76" rel=3D"norefer=
+rer" target=3D"_blank">https://github.com/williamspatrick/dotfiles/blob/fb5=
+42abf99c944051544990f69a6d20c82d2a904/env/30_linux/lfopenbmc.zsh#L76</a><br=
+>
+<br>
+-- <br>
+Patrick Williams<br>
+</blockquote></div>
 
-Please add this include file in this patch.
-
-> +#include <asm/io.h>
-> +#include <linux/delay.h>
-> +#include <dt-bindings/clock/npcm845-clock.h>
-
-Please order these correctly. See https://www.denx.de/wiki/U-Boot/CodingStyle#Include_files
-
-> +
-> +struct npcm_clk_priv {
-> +	struct clk_ctl *regs;
-> +};
-> +
-> +enum regss {
-
-perhaps "pll_id" or similar?
-
-> +	PLL_0,
-> +	PLL_1,
-> +	PLL_2,
-> +	PLL_CLKREF,
-> +};
-> +
-> +static u32 clk_get_pll_freq(struct clk_ctl *regs, enum regss pll)
-> +{
-> +	u32 pllval;
-> +	u32 fin = EXT_CLOCK_FREQUENCY_KHZ; /* 25KHz */
-
-Please get this from the device tree.
-
-> +	u32 fout, nr, nf, no;
-> +
-> +	switch (pll) {
-> +	case PLL_0:
-> +		pllval = readl(&regs->pllcon0);
-> +		break;
-> +	case PLL_1:
-> +		pllval = readl(&regs->pllcon1);
-> +		break;
-> +	case PLL_2:
-> +		pllval = readl(&regs->pllcon2);
-> +		break;
-> +	case PLL_CLKREF:
-
-This is not used.
-
-> +	default:
-> +		return 0;
-> +	}
-> +
-> +	/* PLL Input Clock Divider */
-> +	nr = (pllval >> PLLCON_INDV) & 0x1f;
-
-With
-
-	#define PLLCON_INDV GENMASK(6, 0)
-
-you can do
-
-	nr = FIELD_GET(PLLCON_INDV, pllval);
-
-This applies to all your other register accesses.
-
-> +	/* PLL VCO Output Clock Feedback Divider */
-> +	nf = (pllval >> PLLCON_FBDV) & 0xfff;
-> +	/* PLL Output Clock Divider 1 */
-> +	no = ((pllval >> PLLCON_OTDV1) & 0x7) *
-> +		((pllval >> PLLCON_OTDV2) & 0x7);
-> +
-> +	fout = ((10 * fin * nf) / (no * nr));
-
-Can this overflow? Can you add a comment about that?
-
-> +
-> +	return fout * 100;
-
-Where do these 10 and 100 factors come from? Please combine them.
-
-> +}
-> +
-> +static u32 npcm_mmc_set_rate(struct clk_ctl *regs, ulong rate)
-> +{
-> +	u32 pll0_freq, div, sdhci_clk;
-> +
-> +	/* To acquire PLL0 frequency. */
-> +	pll0_freq = clk_get_pll_freq(regs, PLL_0);
-> +
-> +	/* Calculate rounded up div to produce closest to
-> +	 * target output clock
-> +	 */
-> +	div = (pll0_freq % rate == 0) ? (pll0_freq / rate) :
-> +					(pll0_freq / rate) + 1;
-
-div = DIV_ROUND_UP(pll0_freq, rate);
-
-> +
-> +	writel((readl(&regs->clkdiv1) & ~(0x1f << CLKDIV1_MMCCKDIV))
-> +	       | (div - 1) << CLKDIV1_MMCCKDIV, &regs->clkdiv1);
-
-example of FIELD_PREP:
-
-	clkdiv1 = readl(&regs->clkdiv1);
-	clkdiv1 &= ~CLKDIV1_MMCCKDIV;
-	clkdiv1 |= FIELD_PREP(CLKDIV1_MMCCKDIV, div - 1);
-	writel(clkdiv1, &regs->clkdiv1);
-
-You don't have to break out each line, but please apply this to your
-register writes.
-
-> +
-> +	/* Wait to the div to stabilize */
-> +	udelay(100);
-> +
-> +	/* Select PLL0 as source */
-> +	writel((readl(&regs->clksel) & ~(0x3 << CLKSEL_SDCKSEL))
-> +		| (CLKSEL_SDCKSEL_PLL0 << CLKSEL_SDCKSEL),
-> +		&regs->clksel);
-> +
-> +	sdhci_clk = pll0_freq / div;
-> +
-> +	return sdhci_clk;
-> +}
-> +
-> +static u32 npcm_uart_set_rate(struct clk_ctl *regs, ulong rate)
-> +{
-> +	u32 src_freq, div;
-> +
-> +	src_freq = clk_get_pll_freq(regs, PLL_2) / 2;
-> +	div = (src_freq % rate == 0) ? (src_freq / rate) :
-> +					(src_freq / rate) + 1;
-> +	writel((readl(&regs->clkdiv1) & ~(0x1f << CLKDIV1_UARTDIV))
-> +		| (div - 1) << CLKDIV1_UARTDIV, &regs->clkdiv1);
-> +	writel((readl(&regs->clksel) & ~(3 << CLKSEL_UARTCKSEL))
-> +		| (CLKSEL_UARTCKSEL_PLL2 << CLKSEL_UARTCKSEL),
-> +		&regs->clksel);
-> +
-> +	return (src_freq / div);
-> +}
-> +
-> +static ulong npcm_get_cpu_freq(struct clk_ctl *regs)
-> +{
-> +	ulong fout = 0;
-> +	u32 clksel = readl(&regs->clksel) & (0x3 << CLKSEL_CPUCKSEL);
-> +
-> +	if (clksel == CLKSEL_CPUCKSEL_PLL0)
-
-Use a switch here.
-
-> +		fout = (ulong)clk_get_pll_freq(regs, PLL_0);
-> +	else if (clksel == CLKSEL_CPUCKSEL_PLL1)
-> +		fout = (ulong)clk_get_pll_freq(regs, PLL_1);
-> +	else if (clksel == CLKSEL_CPUCKSEL_CLKREF)
-> +		fout = EXT_CLOCK_FREQUENCY_MHZ; /* FOUT is specified in MHz */
-> +	else
-> +		fout = EXT_CLOCK_FREQUENCY_MHZ; /* FOUT is specified in MHz */
-> +
-> +	return fout;
-> +}
-> +
-> +static u32 npcm_get_apb_divisor(struct clk_ctl *regs, u32 apb)
-> +{
-> +	u32 apb_divisor = 2;
-
-Just inline this. E.g.
-
-	return 2 << ...;
-
-> +
-> +	/* AHBn div */
-> +	apb_divisor = apb_divisor * (1 << ((readl(&regs->clkdiv1)
-> +						>> CLKDIV1_CLK4DIV) & 0x3));
-> +
-> +	switch (apb) {
-> +	case APB2: /* APB divisor */
-> +		apb_divisor = apb_divisor *
-> +				(1 << ((readl(&regs->clkdiv2)
-> +					>> CLKDIV2_APB2CKDIV) & 0x3));
-> +		break;
-> +	case APB5: /* APB divisor */
-> +		apb_divisor = apb_divisor *
-> +				(1 << ((readl(&regs->clkdiv2)
-> +					>> CLKDIV2_APB5CKDIV) & 0x3));
-> +		break;
-> +	default:
-> +		apb_divisor = 0xFFFFFFFF;
-
-Isn't getting here a bug?
-
-> +		break;
-> +	}
-> +
-> +	return apb_divisor;
-> +}
-> +
-> +static ulong npcm_clk_get_rate(struct clk *clk)
-> +{
-> +	struct npcm_clk_priv *priv = dev_get_priv(clk->dev);
-> +
-> +	switch (clk->id) {
-> +	case CLK_APB2:
-> +		return npcm_get_cpu_freq(priv->regs) /
-> +			npcm_get_apb_divisor(priv->regs, APB2);
-> +	case CLK_APB5:
-> +		return npcm_get_cpu_freq(priv->regs) /
-> +			npcm_get_apb_divisor(priv->regs, APB5);
-
-I think you can use a more modular approach here:
-
-	struct clk parent;
-	
-	switch (clk->id) {
-	case CLK_APB2:
-		parent.id = CLK_AHB;
-		ret = clk_request(clk->dev, &parent);
-		if (ret)
-			return ret;
-		
-		fin = clk_get_rate(&parent);
-		if (IS_ERR_VALUE(fin))
-			return fin;
-
-		return fin / FIELD_GET(CLKDIV2_APB2CKDIV, readl(&regs->clkdiv2));
-	}
-
-And of course you can go further and create some arrays to hold those
-parameters if you like.
-
-This switch statement should also return -ENOSYS in the default case.
-
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static ulong npcm_clk_set_rate(struct clk *clk, ulong rate)
-> +{
-> +	struct npcm_clk_priv *priv = dev_get_priv(clk->dev);
-> +
-> +	switch (clk->id) {
-> +	case CLK_EMMC:
-> +		return npcm_mmc_set_rate(priv->regs, rate);
-> +
-> +	case CLK_UART:
-> +		return npcm_uart_set_rate(priv->regs, rate);
-> +	default:
-> +		return -ENOENT;
-
--ENOSYS
-
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_clk_probe(struct udevice *dev)
-> +{
-> +	struct npcm_clk_priv *priv = dev_get_priv(dev);
-> +	void *base;
-> +
-> +	base = dev_read_addr_ptr(dev);
-> +	if (!base)
-> +		return -ENOENT;
-> +
-> +	priv->regs = (struct clk_ctl *)base;
-
-You can directly assign to regs. And there is no need to cast here,
-since base is a void pointer.
-
-> +
-> +	return 0;
-> +}
-> +
-> +static struct clk_ops npcm_clk_ops = {
-> +	.get_rate = npcm_clk_get_rate,
-> +	.set_rate = npcm_clk_set_rate,
-
-Please add a .request callback which enforces the max clock id.
-
---Sean
-
-> +};
-> +
-> +static const struct udevice_id npcm_clk_ids[] = {
-> +	{ .compatible = "nuvoton,npcm845-clock" },
-> +	{ }
-> +};
-> +
-> +U_BOOT_DRIVER(clk_npcm) = {
-> +	.name           = "clk_npcm",
-> +	.id             = UCLASS_CLK,
-> +	.of_match       = npcm_clk_ids,
-> +	.ops            = &npcm_clk_ops,
-> +	.priv_auto	= sizeof(struct npcm_clk_priv),
-> +	.probe          = npcm_clk_probe,
-> +};
-> diff --git a/include/dt-bindings/clock/npcm845-clock.h b/include/dt-bindings/clock/npcm845-clock.h
-> new file mode 100644
-> index 0000000000..fca10d39c8
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/npcm845-clock.h
-> @@ -0,0 +1,17 @@
-> +/* SPDX-License-Identifier: GPL-2.0+ */
-> +
-> +#ifndef _DT_BINDINGS_NPCM845_CLOCK_H_
-> +#define _DT_BINDINGS_NPCM845_CLOCK_H_
-> +
-> +#define CLK_TIMER	    0
-> +#define CLK_UART	    1
-> +#define CLK_SD		    2
-> +#define CLK_EMMC	    3
-> +#define CLK_APB1	    4
-> +#define CLK_APB2	    5
-> +#define CLK_APB3	    6
-> +#define CLK_APB4	    7
-> +#define CLK_APB5	    8
-> +#define CLK_AHB		    9
-> +
-> +#endif
-> 
-
+--0000000000006f8b6805d34e67ca--
