@@ -1,94 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A0FC478358
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 03:46:31 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3A10478535
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 07:40:03 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JFYK06tW9z3cJm
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 13:46:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JFfVT4JkPz30R1
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 17:40:01 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=FFfYbeSh;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=S86wORQu;
+	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=nSg0aaqQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=FFfYbeSh; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=S86wORQu; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JFY9W5kKYz3c7r
- for <openbmc@lists.ozlabs.org>; Fri, 17 Dec 2021 13:39:59 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id CD2985C0160;
- Thu, 16 Dec 2021 21:39:55 -0500 (EST)
-Received: from imap43 ([10.202.2.93])
- by compute4.internal (MEProxy); Thu, 16 Dec 2021 21:39:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=RvVmLgJ+CfIM8KgsuhBrVfZ8NqzSNxS
- HCy/QyHOevIc=; b=FFfYbeShZATKMkapn+oaHM1QvzBVcyCYmBYPGlc7nEj3GLS
- Qlied/aNtCxa2eCTcacDMDVP1Vo/FRe+eIEFpnHTPI1K/UeQ5KeAXftoG/Vhwq1o
- mSpuNHj/18rj/Cg9y48+wp9tFYkwwu5Ha6/KM9PgPwjTGBbkQcn4u1rBnI6QBv41
- 20I8b9AFQEN1TSApE8mO7EvYR1xhe0OxL8FnALvWFe3J05CZdSnllB3YekHY7plA
- bCwNx4dQHeX49qLJniujPmcywxay6+iU6owIZCc8TpLG9GTIdogPN/YEX40uFaxz
- zipa+pY95I+9xo4yIDu09hKJ6PcOdRJ5lQpQwjg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=RvVmLg
- J+CfIM8KgsuhBrVfZ8NqzSNxSHCy/QyHOevIc=; b=S86wORQu9zZQaO8yAzPQ3z
- wSfJXiblJMcnTdSi5au2F4OoVFnZoQM+LDwY0ztJ2Zc1mYLN3LjSTkbd6ZTrGsWz
- t2nFk2dhoQDRv1bLmah8ShJGgwpf8v1fBfEh2rZBSy9lmRmPJTt7yghluc1WutFs
- NEXA/B0kglJc6CQGBIP9jF1JHAie9VIKoGJGykxE57LMXSUQeAHjrfhtjW6Hf0jL
- kI/NQfIJmj02Tag9akSNP27zEitr+GewXpIWcxmeLyTDeEarIooLH77iC1k/WffP
- F87qsPNFjfsw9Hcp9q+hOHsDX6iViWXI8MSZyePGoFFC9AdZUDWaBlpPfGesp08A
- ==
-X-ME-Sender: <xms:e_i7YSAoPQH0HXaziD2ho2TtAAqDl5hL3B5DZnOIQjK_7cVyJsa__Q>
- <xme:e_i7YcjxjH5dAMGkATCC12Uc7aIsUAih8ISuLF_P5xaCCdF2MXQkxOC7EwV_-w_fY
- 2ODYdYWJIPVwOHkog>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrleehgdegkecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
- veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:e_i7YVn6_M5IyYXpDJMgsnOFW8jL2UNIwtqcaUZsBIIo7wXI5H-Mkg>
- <xmx:e_i7YQz6kadUxEkYPWWz2bDHCxW13DHM_vwoubgFQagw6GoD2mCE2w>
- <xmx:e_i7YXQDIqd7LJ5P8G2_-5R5lXfrLTyfgqLB33vcXT1pVayrPUgsng>
- <xmx:e_i7YY6pQ2wujbiRR-i5BYvfZpZg9Kk09_NLdFGJfOVPclG3savaBQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 79CD7AC03DB; Thu, 16 Dec 2021 21:39:55 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4524-g5e5d2efdba-fm-20211214.001-g5e5d2efd
-Mime-Version: 1.0
-Message-Id: <40eb458a-678c-4dfa-b07e-f73ac9cdb3fa@www.fastmail.com>
-In-Reply-To: <CAO9PYRKPrVzew5KUcxL7HKo4VXNR+mEef7AiPas-5FxdcB5FeA@mail.gmail.com>
-References: <CAO9PYRKmup17BSTLNLdBMO=-HjQ2Lxw+Gcw7+0VY8DKVMed9GA@mail.gmail.com>
- <YbduMfjuc7TXT6Rw@heinlein>
- <CAO9PYRJD0MJsuY8M_80yJci-nT8idKL7VhSXJzvX_JS1wreJzA@mail.gmail.com>
- <YbtzcvbSwTjGzfcH@heinlein>
- <CAO9PYRKPrVzew5KUcxL7HKo4VXNR+mEef7AiPas-5FxdcB5FeA@mail.gmail.com>
-Date: Fri, 17 Dec 2021 13:09:35 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Deng Tyler" <tyler.sabdon@gmail.com>,
- "Patrick Williams" <patrick@stwcx.xyz>
-Subject: Re: Run unit-test during development
-Content-Type: text/plain
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.15.241; helo=m15241.mail.126.com;
+ envelope-from=cld795@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
+ header.s=s110527 header.b=nSg0aaqQ; dkim-atps=neutral
+Received: from m15241.mail.126.com (m15241.mail.126.com [220.181.15.241])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4JFfV24yCpz2xsM
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Dec 2021 17:39:31 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=P9Uk2
+ dQqPhFoJJUxezp7jFLpdpfMIgIWvNhHAbig+Jo=; b=nSg0aaqQclbk81+XibDFk
+ dtUvEAzCvjo732vyP/fpU02CpExUGtF88Ru+WxILz7DY4g4VtqC39po1WvOQhmFa
+ 8pakJ8MsDTHURJ5NnVcWlAeCC2kTwRDG4gcoRq6mc07k0eY/mZ7B7SJZ3gbJVVy3
+ oh0Px+r3Wy1CIR9velZ+0s=
+Received: from cld795$163.com ( [183.6.112.102] ) by ajax-webmail-wmsvr209
+ (Coremail) ; Fri, 17 Dec 2021 14:39:20 +0800 (GMT+08:00)
+X-Originating-IP: [183.6.112.102]
+Date: Fri, 17 Dec 2021 14:39:20 +0800 (GMT+08:00)
+From: Landon <cld795@163.com>
+To: "a.kartashev@yadro.com" <a.kartashev@yadro.com>, 
+ "fercerpav@gmail.com" <fercerpav@gmail.com>, 
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: OpenBMC appear SQUASHFS error problem
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
+ MailMasterPC/4.15.8.1002_(Windows_10_20H2) Copyright (c) 2002-2021
+ www.mailtech.cn 163com
+In-Reply-To: <473d9b80.264c.17dbc330d1d.Coremail.cld795@163.com>
+References: <mailman.0.1637828525.15424.openbmc@lists.ozlabs.org>
+ <217ffd16.389b.17d5636abb5.Coremail.cld795@163.com>
+ <20211125084640.GA22508@home.paul.comp>
+ <78340dc9.749f.17d5ab53990.Coremail.cld795@163.com>
+ <687802ca.772b.17d5ad02872.Coremail.cld795@163.com>
+ <20211126215734.GH22508@home.paul.comp>
+ <459566ca.670c.17d6b13a847.Coremail.cld795@163.com>
+ <18a75e7d223e2c054e93e9a83a6c0ba474125518.camel@yadro.com>
+ <6fc4e62.472c.17d7a6a0885.Coremail.cld795@163.com>
+ <2f6c7248.c41.17d9291a38e.Coremail.cld795@163.com>
+ <8e645b4.344b.17d93d37f8d.Coremail.cld795@163.com>
+ <fabdbd3d04e3db2cef14346bc5b7e3fe71101c40.camel@yadro.com>
+ <12f6e3dd.234a.17dbc1c17dd.Coremail.cld795@163.com>
+ <473d9b80.264c.17dbc330d1d.Coremail.cld795@163.com>
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_93263_918538629.1639723160596"
+MIME-Version: 1.0
+Message-ID: <48f9ad91.7b59.17dc71dd414.Coremail.cld795@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: kMeowAAXt3WYMLxh_9EHAA--.52564W
+X-CM-SenderInfo: 5foglmqv6rljoofrz/1tbiqBBsgFc7XJVjMwABsg
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,25 +75,179 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 17 Dec 2021, at 13:06, Deng Tyler wrote:
-> Hi Patrick:
->     I try to build and run unit test repository which support meson such as
-> phosphor-logging and phosphor-network. There is dependency issue while
-> building them and I wonder it is a bug or my environment issue.
-> /openbmc/phosphor-logging$ meson builddir && ninja -C builddir test
+------=_Part_93263_918538629.1639723160596
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-...
+aGVsbG8sCmNhbiB5b3UgaGVscCBtZSA/CmhlbGxvLApUaGUgZXJyb3IgYXBwZWFyIHNvbWV0aW1l
+cywgIEl0IGRvZXNuJ3QgYWx3YXlzIGNvbWUgdXAuCkRvIHlvdSBrbm93IHdoYXQgdGhlIHByb2Js
+ZW0gaXMgPwoKCgpTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRy
+eSBbNzhiZDBdClsgICA2Mi4wMTA2OTRdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBw
+YWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNjClsgICA2Mi4xMDA0OTFdIFBpZCAyODg2KHVwdGlt
+ZSkgb3ZlciBjb3JlX3BpcGVfbGltaXQKWyAgIDYyLjEwNTc5MF0gU2tpcHBpbmcgY29yZSBkdW1w
+ClsgICA2Mi4yODk5MzddIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hl
+IGVudHJ5IFs3OGJkMF0KWyAgIDYyLjI5Njk5M10gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byBy
+ZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2MKWyAgIDYyLjMwNDU2N10gU1FVQVNIRlMg
+ZXJyb3I6IFVuYWJsZSB0byByZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXQpbICAgNjIuMzEx
+NjM0XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNp
+emUgZWEzYwpbICAgNjIuMzQxMzgzXSBQaWQgMjkxNyh1cHRpbWUpIG92ZXIgY29yZV9waXBlX2xp
+bWl0ClsgICA2Mi4zNDY2OTRdIFNraXBwaW5nIGNvcmUgZHVtcApbICAgNjMuMTEyMjQ0XSBTUVVB
+U0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBdClsgICA2
+My4xMTkzNDRdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9jayA3OGJk
+MCwgc2l6ZSBlYTNjClsgICA2My4xMjY4NjRdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVh
+ZCBkYXRhIGNhY2hlIGVudHJ5IFs3OGJkMF0KWyAgIDYzLjEzMzk4NF0gU1FVQVNIRlMgZXJyb3I6
+IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2MKWyAgIDYzLjE2NTEy
+MV0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQw
+XQpbICAgNjMuMTcyMjU0XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxv
+Y2sgNzhiZDAsIHNpemUgZWEzYwpbICAgNjMuMTc5NzYyXSBTUVVBU0hGUyBlcnJvcjogVW5hYmxl
+IHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBdClsgICA2My4xODY3NzZdIFNRVUFTSEZT
+IGVycm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNjClsgICA2
+My4xOTQ3ODddIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5
+IFs3OGJkMF0KWyAgIDYzLjIwMTkwMV0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIHBh
+Z2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2MKWyAgIDYzLjIwOTQwMF0gU1FVQVNIRlMgZXJyb3I6
+IFVuYWJsZSB0byByZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXQpbICAgNjMuMjE2NDIwXSBT
+UVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNpemUgZWEz
+YwpbICAgNjMuMjQxMzExXSBQaWQgMzAwMSh1cHRpbWUpIG92ZXIgY29yZV9waXBlX2xpbWl0Clsg
+ICA2My4yNDY2MTNdIFNraXBwaW5nIGNvcmUgZHVtcApbICAgNjMuMjYwNDgxXSBQaWQgMzAwMih1
+cHRpbWUpIG92ZXIgY29yZV9waXBlX2xpbWl0ClsgICA2My4yNjU3OTBdIFNraXBwaW5nIGNvcmUg
+ZHVtcApbICAgNjMuMzAxODU3XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBj
+YWNoZSBlbnRyeSBbNzhiZDBdClsgICA2My4zMDg5NzVdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUg
+dG8gcmVhZCBwYWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNjClsgICA2My4zMTY0MDldIFNRVUFT
+SEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5IFs3OGJkMF0KWyAgIDYz
+LjMyMTQ5NF0gUGlkIDI5OTQodG9wKSBvdmVyIGNvcmVfcGlwZV9saW1pdApbICAgNjMuMzIzNDg1
+XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNpemUg
+ZWEzYwpbICAgNjMuMzI4NDA4XSBTa2lwcGluZyBjb3JlIGR1bXAKWyAgIDYzLjQ3MzUyOV0gUGlk
+IDMwMDYodXB0aW1lKSBvdmVyIGNvcmVfcGlwZV9saW1pdApbICAgNjMuNDc4ODYyXSBTa2lwcGlu
+ZyBjb3JlIGR1bXAKWyAgIDY0LjExMzI0NF0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFk
+IGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXQpbICAgNjQuMTIwMzUyXSBTUVVBU0hGUyBlcnJvcjog
+VW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNpemUgZWEzYwpbICAgNjQuMTI3ODAx
+XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBd
+ClsgICA2NC4xMzQ5MDZdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9j
+ayA3OGJkMCwgc2l6ZSBlYTNjClsgICA2NC4xNDY2NjRdIFNRVUFTSEZTIGVycm9yOiBVbmFibGUg
+dG8gcmVhZCBmcmFnbWVudCBjYWNoZSBlbnRyeSBbODZmZTEwXQpbICAgNjQuMTU0MzQzXSBTUVVB
+U0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgODZmZTEwLCBzaXplIDk5ODAK
+WyAgIDY0LjI4MjYwN10gUGlkIDMwNzYodXB0aW1lKSBvdmVyIGNvcmVfcGlwZV9saW1pdApbICAg
+NjQuMjg3ODk1XSBTa2lwcGluZyBjb3JlIGR1bXAKWyAgIDY1LjAyMzY5MF0gU1FVQVNIRlMgZXJy
+b3I6IFVuYWJsZSB0byByZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXQoKClRoYW5rcyAh
+------=_Part_93263_918538629.1639723160596
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
->
-> subprojects/sdbusplus/meson.build:14:0: ERROR: Dependency "libsystemd" not
-> found, tried pkgconfig and cmake
+PGh0bWw+CjxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50
+PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgo8L2hlYWQ+Cjxib2R5Pgo8c3R5bGU+CiAgICBm
+b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
+YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
+ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
+YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
+OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgPGRpdj48L2Rpdj4KPHN0eWxlPgogICAgZm9u
+dHsKICAgICAgICBsaW5lLWhlaWdodDogMS42OwogICAgfQogICAgdWwsb2x7CiAgICAgICAgcGFk
+ZGluZy1sZWZ0OiAyMHB4OwogICAgICAgIGxpc3Qtc3R5bGUtcG9zaXRpb246IGluc2lkZTsKICAg
+IH0KPC9zdHlsZT4KPGRpdiBzdHlsZT0iZm9udC1mYW1pbHk65b6u6L2v6ZuF6buRLFZlcmRhbmEs
+JnF1b3Q7TWljcm9zb2Z0IFlhaGVpJnF1b3Q7LFNpbVN1bixzYW5zLXNlcmlmO2ZvbnQtc2l6ZTox
+NHB4OyBsaW5lLWhlaWdodDoxLjY7Ij4KICAgIDxkaXY+PC9kaXY+CjxzdHlsZT4KICAgIGZvbnR7
+CiAgICAgICAgbGluZS1oZWlnaHQ6IDEuNjsKICAgIH0KICAgIHVsLG9sewogICAgICAgIHBhZGRp
+bmctbGVmdDogMjBweDsKICAgICAgICBsaXN0LXN0eWxlLXBvc2l0aW9uOiBpbnNpZGU7CiAgICB9
+Cjwvc3R5bGU+CjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OuW+rui9r+mbhem7kSxWZXJkYW5hLCZx
+dW90O01pY3Jvc29mdCBZYWhlaSZxdW90OyxTaW1TdW4sc2Fucy1zZXJpZjtmb250LXNpemU6MTRw
+eDsgbGluZS1oZWlnaHQ6MS42OyI+CiAgICA8ZGl2IGNsYXNzPSJKLXJlcGx5IiBzdHlsZT0iYmFj
+a2dyb3VuZC1jb2xvcjojZjJmMmYyO2NvbG9yOmJsYWNrO3BhZGRpbmctdG9wOjZweDtwYWRkaW5n
+LWJvdHRvbTo2cHg7Ym9yZGVyLXJhZGl1czozcHg7LW1vei1ib3JkZXItcmFkaXVzOjNweDstd2Vi
+a2l0LWJvcmRlci1yYWRpdXM6M3B4O21hcmdpbi10b3A6NDVweDttYXJnaW4tYm90dG9tOjIwcHg7
+Zm9udC1mYW1pbHk6J+W+rui9r+mbhem7kSc7Ij48ZGl2IHN0eWxlPSJmb250LXNpemU6MTJweDts
+aW5lLWhlaWdodDoxLjU7d29yZC1icmVhazpicmVhay1hbGw7bWFyZ2luLWxlZnQ6MTBweDttYXJn
+aW4tcmlnaHQ6MTBweCI+aGVsbG8sPC9kaXY+PGRpdiBzdHlsZT0iZm9udC1zaXplOjEycHg7bGlu
+ZS1oZWlnaHQ6MS41O3dvcmQtYnJlYWs6YnJlYWstYWxsO21hcmdpbi1sZWZ0OjEwcHg7bWFyZ2lu
+LXJpZ2h0OjEwcHgiPmNhbiB5b3UgaGVscCBtZSA/PC9kaXY+CjwvZGl2Pgo8YmxvY2txdW90ZSBp
+ZD0ibnRlcy1wY21haWwtcXVvdGUiIHN0eWxlPSJtYXJnaW46IDA7IHBhZGRpbmc6IDA7IGZvbnQt
+c2l6ZTogMTRweDsgZm9udC1mYW1pbHk6ICflvq7ova/pm4Xpu5EnOyI+Cgo8c3R5bGU+CiAgICBm
+b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
+YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
+ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
+YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
+OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgPGRpdj4KICAgIDxkaXY+aGVsbG8sPC9kaXY+
+PGRpdj5UaGUgZXJyb3ImbmJzcDthcHBlYXIgc29tZXRpbWVzLCAmbmJzcDs8c3BhbiBzdHlsZT0i
+Y29sb3I6IHJnYig1MSwgNTEsIDUxKTsgZm9udC1mYW1pbHk6IHRhaG9tYSwgJ01pY3Jvc29mdCBZ
+YUhlaScsIOW+rui9r+mbhem7kSwg5a6L5L2TLCAnTWFsZ3VuIEdvdGhpYycsIHNhbnMtc2VyaWY7
+IGxpbmUtaGVpZ2h0OiAyNnB4OyB0ZXh0LWFsaWduOiBqdXN0aWZ5OyB3aWRvd3M6IGF1dG87IGJh
+Y2tncm91bmQtY29sb3I6IHJnYigyNDcsIDI0OCwgMjUwKTsiPkl0IGRvZXNuJ3QgYWx3YXlzIGNv
+bWUgdXAuPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoNTEsIDUxLCA1
+MSk7IGZvbnQtZmFtaWx5OiB0YWhvbWEsICdNaWNyb3NvZnQgWWFIZWknLCDlvq7ova/pm4Xpu5Es
+IOWui+S9kywgJ01hbGd1biBHb3RoaWMnLCBzYW5zLXNlcmlmOyBsaW5lLWhlaWdodDogMjZweDsg
+dGV4dC1hbGlnbjoganVzdGlmeTsgd2lkb3dzOiBhdXRvOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2Io
+MjQ3LCAyNDgsIDI1MCk7Ij5EbyB5b3Uga25vdyB3aGF0IHRoZSBwcm9ibGVtIGlzID88L3NwYW4+
+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoNTEsIDUxLCA1MSk7IGZvbnQtZmFtaWx5OiB0YWhvbWEs
+ICdNaWNyb3NvZnQgWWFIZWknLCDlvq7ova/pm4Xpu5EsIOWui+S9kywgJ01hbGd1biBHb3RoaWMn
+LCBzYW5zLXNlcmlmOyBsaW5lLWhlaWdodDogMjZweDsgdGV4dC1hbGlnbjoganVzdGlmeTsgd2lk
+b3dzOiBhdXRvOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjQ3LCAyNDgsIDI1MCk7Ij48YnI+PC9z
+cGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoNTEsIDUxLCA1MSk7IGZvbnQt
+ZmFtaWx5OiB0YWhvbWEsICdNaWNyb3NvZnQgWWFIZWknLCDlvq7ova/pm4Xpu5EsIOWui+S9kywg
+J01hbGd1biBHb3RoaWMnLCBzYW5zLXNlcmlmOyBsaW5lLWhlaWdodDogMjZweDsgdGV4dC1hbGln
+bjoganVzdGlmeTsgd2lkb3dzOiBhdXRvOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjQ3LCAyNDgs
+IDI1MCk7Ij48YnI+PC9zcGFuPjwvZGl2PjxkaXY+U1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byBy
+ZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXTxicj5bICZuYnNwOyA2Mi4wMTA2OTRdIFNRVUFT
+SEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNjPGJy
+PlsgJm5ic3A7IDYyLjEwMDQ5MV0gUGlkIDI4ODYodXB0aW1lKSBvdmVyIGNvcmVfcGlwZV9saW1p
+dDxicj5bICZuYnNwOyA2Mi4xMDU3OTBdIFNraXBwaW5nIGNvcmUgZHVtcDxicj5bICZuYnNwOyA2
+Mi4yODk5MzddIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5
+IFs3OGJkMF08YnI+WyAmbmJzcDsgNjIuMjk2OTkzXSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRv
+IHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNpemUgZWEzYzxicj5bICZuYnNwOyA2Mi4zMDQ1Njdd
+IFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5IFs3OGJkMF08
+YnI+WyAmbmJzcDsgNjIuMzExNjM0XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgcGFn
+ZSwgYmxvY2sgNzhiZDAsIHNpemUgZWEzYzxicj5bICZuYnNwOyA2Mi4zNDEzODNdIFBpZCAyOTE3
+KHVwdGltZSkgb3ZlciBjb3JlX3BpcGVfbGltaXQ8YnI+WyAmbmJzcDsgNjIuMzQ2Njk0XSBTa2lw
+cGluZyBjb3JlIGR1bXA8YnI+WyAmbmJzcDsgNjMuMTEyMjQ0XSBTUVVBU0hGUyBlcnJvcjogVW5h
+YmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBdPGJyPlsgJm5ic3A7IDYzLjExOTM0
+NF0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXpl
+IGVhM2M8YnI+WyAmbmJzcDsgNjMuMTI2ODY0XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJl
+YWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBdPGJyPlsgJm5ic3A7IDYzLjEzMzk4NF0gU1FVQVNI
+RlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2M8YnI+
+WyAmbmJzcDsgNjMuMTY1MTIxXSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBj
+YWNoZSBlbnRyeSBbNzhiZDBdPGJyPlsgJm5ic3A7IDYzLjE3MjI1NF0gU1FVQVNIRlMgZXJyb3I6
+IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2M8YnI+WyAmbmJzcDsg
+NjMuMTc5NzYyXSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRy
+eSBbNzhiZDBdPGJyPlsgJm5ic3A7IDYzLjE4Njc3Nl0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0
+byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2M8YnI+WyAmbmJzcDsgNjMuMTk0Nzg3
+XSBTUVVBU0hGUyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBd
+PGJyPlsgJm5ic3A7IDYzLjIwMTkwMV0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIHBh
+Z2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2M8YnI+WyAmbmJzcDsgNjMuMjA5NDAwXSBTUVVBU0hG
+UyBlcnJvcjogVW5hYmxlIHRvIHJlYWQgZGF0YSBjYWNoZSBlbnRyeSBbNzhiZDBdPGJyPlsgJm5i
+c3A7IDYzLjIxNjQyMF0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2Nr
+IDc4YmQwLCBzaXplIGVhM2M8YnI+WyAmbmJzcDsgNjMuMjQxMzExXSBQaWQgMzAwMSh1cHRpbWUp
+IG92ZXIgY29yZV9waXBlX2xpbWl0PGJyPlsgJm5ic3A7IDYzLjI0NjYxM10gU2tpcHBpbmcgY29y
+ZSBkdW1wPGJyPlsgJm5ic3A7IDYzLjI2MDQ4MV0gUGlkIDMwMDIodXB0aW1lKSBvdmVyIGNvcmVf
+cGlwZV9saW1pdDxicj5bICZuYnNwOyA2My4yNjU3OTBdIFNraXBwaW5nIGNvcmUgZHVtcDxicj5b
+ICZuYnNwOyA2My4zMDE4NTddIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNh
+Y2hlIGVudHJ5IFs3OGJkMF08YnI+WyAmbmJzcDsgNjMuMzA4OTc1XSBTUVVBU0hGUyBlcnJvcjog
+VW5hYmxlIHRvIHJlYWQgcGFnZSwgYmxvY2sgNzhiZDAsIHNpemUgZWEzYzxicj5bICZuYnNwOyA2
+My4zMTY0MDldIFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5
+IFs3OGJkMF08YnI+WyAmbmJzcDsgNjMuMzIxNDk0XSBQaWQgMjk5NCh0b3ApIG92ZXIgY29yZV9w
+aXBlX2xpbWl0PGJyPlsgJm5ic3A7IDYzLjMyMzQ4NV0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0
+byByZWFkIHBhZ2UsIGJsb2NrIDc4YmQwLCBzaXplIGVhM2M8YnI+WyAmbmJzcDsgNjMuMzI4NDA4
+XSBTa2lwcGluZyBjb3JlIGR1bXA8YnI+WyAmbmJzcDsgNjMuNDczNTI5XSBQaWQgMzAwNih1cHRp
+bWUpIG92ZXIgY29yZV9waXBlX2xpbWl0PGJyPlsgJm5ic3A7IDYzLjQ3ODg2Ml0gU2tpcHBpbmcg
+Y29yZSBkdW1wPGJyPlsgJm5ic3A7IDY0LjExMzI0NF0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0
+byByZWFkIGRhdGEgY2FjaGUgZW50cnkgWzc4YmQwXTxicj5bICZuYnNwOyA2NC4xMjAzNTJdIFNR
+VUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNj
+PGJyPlsgJm5ic3A7IDY0LjEyNzgwMV0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIGRh
+dGEgY2FjaGUgZW50cnkgWzc4YmQwXTxicj5bICZuYnNwOyA2NC4xMzQ5MDZdIFNRVUFTSEZTIGVy
+cm9yOiBVbmFibGUgdG8gcmVhZCBwYWdlLCBibG9jayA3OGJkMCwgc2l6ZSBlYTNjPGJyPlsgJm5i
+c3A7IDY0LjE0NjY2NF0gU1FVQVNIRlMgZXJyb3I6IFVuYWJsZSB0byByZWFkIGZyYWdtZW50IGNh
+Y2hlIGVudHJ5IFs4NmZlMTBdPGJyPlsgJm5ic3A7IDY0LjE1NDM0M10gU1FVQVNIRlMgZXJyb3I6
+IFVuYWJsZSB0byByZWFkIHBhZ2UsIGJsb2NrIDg2ZmUxMCwgc2l6ZSA5OTgwPGJyPlsgJm5ic3A7
+IDY0LjI4MjYwN10gUGlkIDMwNzYodXB0aW1lKSBvdmVyIGNvcmVfcGlwZV9saW1pdDxicj5bICZu
+YnNwOyA2NC4yODc4OTVdIFNraXBwaW5nIGNvcmUgZHVtcDxicj5bICZuYnNwOyA2NS4wMjM2OTBd
+IFNRVUFTSEZTIGVycm9yOiBVbmFibGUgdG8gcmVhZCBkYXRhIGNhY2hlIGVudHJ5IFs3OGJkMF08
+L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PlRoYW5rcyAhPC9kaXY+PC9kaXY+PGJsb2NrcXVvdGUg
+aWQ9Im50ZXMtcGNtYWlsLXF1b3RlIiBzdHlsZT0ibWFyZ2luOiAwOyBwYWRkaW5nOiAwOyBmb250
+LXNpemU6IDE0cHg7IGZvbnQtZmFtaWx5OiAn5b6u6L2v6ZuF6buRJzsiPjxkaXYgc3R5bGU9ImZv
+bnQtZmFtaWx5OuW+rui9r+mbhem7kSxWZXJkYW5hLCZxdW90O01pY3Jvc29mdCBZYWhlaSZxdW90
+OyxTaW1TdW4sc2Fucy1zZXJpZjtmb250LXNpemU6MTRweDsgbGluZS1oZWlnaHQ6MS42OyI+Cjwv
+ZGl2PjwvYmxvY2txdW90ZT48c3R5bGU+CiAgICBmb250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAx
+LjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBwYWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAg
+bGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwogICAgfQo8L3N0eWxlPgo8L2Rpdj48L2Jsb2Nr
+cXVvdGU+CjwvZGl2Pgo8L2Rpdj48IS0t8J+YgC0tPgo8L2Rpdj4KPC9ib2R5Pgo8L2h0bWw+
+------=_Part_93263_918538629.1639723160596--
 
-You need to run:
-
-sudo apt install libsystemd-dev
-
-Andrew
