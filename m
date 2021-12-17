@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBC56478C07
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 14:11:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B519F478C0E
+	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 14:13:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JFq9k6NGMz3cHC
-	for <lists+openbmc@lfdr.de>; Sat, 18 Dec 2021 00:11:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JFqDV4khjz3cBq
+	for <lists+openbmc@lfdr.de>; Sat, 18 Dec 2021 00:13:30 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=cIJPs9OP;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=SiaH67q5;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=inAsOBon;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=BZjnXSpA;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,81 +19,74 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=cIJPs9OP; 
+ header.s=fm3 header.b=inAsOBon; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=SiaH67q5; 
+ header.a=rsa-sha256 header.s=fm1 header.b=BZjnXSpA; 
  dkim-atps=neutral
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
  [66.111.4.25])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JFq9J68rPz3bhh
- for <openbmc@lists.ozlabs.org>; Sat, 18 Dec 2021 00:10:44 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.nyi.internal (Postfix) with ESMTP id E39FF5C01E9;
- Fri, 17 Dec 2021 08:10:42 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute5.internal (MEProxy); Fri, 17 Dec 2021 08:10:42 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JFqD36PDWz2ynV
+ for <openbmc@lists.ozlabs.org>; Sat, 18 Dec 2021 00:13:07 +1100 (AEDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+ by mailout.nyi.internal (Postfix) with ESMTP id F0EDC5C01A5;
+ Fri, 17 Dec 2021 08:13:05 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute6.internal (MEProxy); Fri, 17 Dec 2021 08:13:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=jcS0z+DLyGlTM6B1p7IJe4Y2j1g
- WrH6TBS10Oi7FnaQ=; b=cIJPs9OP9I0A8Y1sDDrfdLiMAfPYxi5QSx2+Z3D7a8E
- DZsGiPQ54ORIA2TIMeBwY4y1x/47s3/owNlVSe6UOv/oJiioK1ufox1JbuHGwrtI
- dw5KT/zxEmu+BicKB0eoTfHWPT5A72/7iFtAA9ul6L5MoCsLKLymas++srUsPHk8
- hvRfhUhvQEevJ7N6mlWOP7ihYK0V+jpBSQVUoBNYMW9f/7jA/CFI8Y5QcWgKUAh2
- OpX63208x13EvdgY0gHnz/ergkIZ9yasR9GznvF6oz6vALUWgfE5FVKJNsuwtZac
- w3aoqSw6Z6+iVbfQiAGoS8FppPVj4a8nHfpsRZ9a9FA==
+ :content-type:in-reply-to; s=fm3; bh=uwDUCG3QUXCNFtC8QII3Ebc596s
+ SG+IMw6q0N3uw+lw=; b=inAsOBonVmLHE3FCGrMqNLU0On6mkUb5LNqHu19yLtv
+ 6a6T4+lNzrZT3AB0BIzAkGrCKy/TTxW6TB6I7BKU/6CZRaoTcB1wdjla2XEugPZr
+ K7AvIGRPO6UyD2wY8U+bT6yJqMcL2rx5JDVkJ9WvJdgNblAa5pa7rp/mEQrOxyCm
+ cm+/1YKExuL3MQ8nYJu8PULY4/u7KpVBhbmdZ+oXbdMS504dVG5eaRCDKK+ucWEh
+ 1n1dlv5VltvbNWcJecluNoYu7WLrjuObkyGQnSNA/N0QSvBgxsBh/FliRQV7HEK/
+ jEQKFvrkaiXZ7JWuonpSdrXY6+e2iK5ya6RwLc8z46g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=jcS0z+
- DLyGlTM6B1p7IJe4Y2j1gWrH6TBS10Oi7FnaQ=; b=SiaH67q54rqnduSNLo6UI0
- YeP9562xva7ulCndQg7jLmlgAS0l3xae/N/KYpkPX0ydW41uwC3FHCvAZwboeTCf
- XYA1esF8zdRRjYmIusK+cK7pXdS6YWSxIRl4Y50S6uQkdSGEkoO8Y7YpCX9E+ghl
- InXJ3mCfXVqGVmB8wjkY4sewHb9DeEBAOWBdtjuSFzi9kxFKAUYbMuTyZjRa0KD/
- QIo+TdiIVg5+dLzTJycouovQ+mKWhIpqcdtMHCJbBSF9Opn8MtpJf29pp1leIXso
- MlxtiyaOxSV5v+CDnryrdsqxdiY+W9T+pQzHi7ojsvhXsC6cy23d1qIrhwboMiLg
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=uwDUCG
+ 3QUXCNFtC8QII3Ebc596sSG+IMw6q0N3uw+lw=; b=BZjnXSpARP6iKmt2x6a/Ya
+ ps8Pc9MDhEKYVNoxs9RABbCCO2F7YRxvQlnq9Ha1rOc7Whzq6VP3zz0CEkHYE1el
+ tiYGkuQW/W1K5S4s5vq2R/j5xvn+GMT+Xp3rXBnsxqnEVBxZDnWkdatrKutF1DHI
+ iv00uYDck9CmdeEORuOin//s+6vw0X2jsNgq7omj+TwaM8RaJezj1STpp/1v6O5c
+ Of/ORPntB4qSp8w/Q+DXyoz282R/8KW2Hq1Gp+JCbSpikzTDWiqjtDHIHCxLGnwk
+ GbuNHJ+RThFSA+DUv56OiSKanKhMn8ZCG13i7VDgFmCtE9HTmQT27gSWMFWFU4bw
  ==
-X-ME-Sender: <xms:Uoy8YexSwviaFa7Pn_JnS2VJ1IWR0VLoFh0t_xa65vdsdXkxhZidPw>
- <xme:Uoy8YaRyw-K6PjPuFmUqwgi1PAu2IUPcBjV3Rmu2Kb4RVDHU46PET4lBzGACYOOvY
- uaqhzFI-1_XzKs28MI>
-X-ME-Received: <xmr:Uoy8YQWAxwTxsdSYtATpNlX5fOW3BWGygfMmjfBOlt2xBPFdSZOp46vmiVR5uoH8zpdywQAmskEhxzAMPNAwa_d1DsvPYZd0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrleeigdeglecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:4Yy8YYPmwil3hBpXb_w648XS8BQoxSpRLkv6modRhc0OqwK9uqUU4A>
+ <xme:4Yy8Ye_zz0XmdWXgWm9ILTwKO3SJ9pwSoUA9eKeimiSk66Fw_x36JNoLfLpY5YnID
+ lV42qzaFD4yTdJeVIs>
+X-ME-Received: <xmr:4Yy8YfTuZ6g_YSAniQANv2CsTuI1w9qiZ2LkcmL1mYgabwwlEJ6XkBT-9nCV5Z72Z-U5AILBwZr4yO7IdBkv6u4wrkudlkdJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrleeigdehtdcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdejtddmnecujfgurhepfffhvf
- fukfhfgggtuggjsehgtdorredttdejnecuhfhrohhmpefrrghtrhhitghkucghihhllhhi
+ fukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhi
  rghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpe
- fhffejffeiudelgeffleeitdeuudelkedvgedvfffhkeevieelhfdvuddvueejffenucev
+ egheehfeffgeekveehtdfhgfduhfegfefgtdehhfektdelffevkefgueffhedtieenucev
  lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitg
  hksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:Uoy8YUhsdeX7O7Z7Tz4Au85MkflI-39DOqNLytusfUE9HZxAGO1I6g>
- <xmx:Uoy8YQCP67A87oEOLjAUrZMbTi2CYI0kXJItHHCX2AV90vqMzwVJmA>
- <xmx:Uoy8YVJ_rEvfZ1sidGPIXp9QvRotXYY61qXCv-lj_HCLlWPOeNIi2g>
- <xmx:Uoy8YZ64IvxEyhNyEQVBN31D2Fh8VJX-2E2N9ssXtoSnPw8-P0emXg>
+X-ME-Proxy: <xmx:4Yy8YQtiwzqNMVDCLmArNTPtS1rfm7QaYzV3nQLW3iq8ASl9WaZ3UQ>
+ <xmx:4Yy8YQdlrrf6vDNBQQ9Crtlo3Ji3PsqM3P398IVP36y3jb-IMO_iGg>
+ <xmx:4Yy8YU3qX5nDCJWFQo3sSY0TXzHaKyn48cMwVatyVFTQPT66wGjE7A>
+ <xmx:4Yy8YYl2YIDI6hET_4s8an08ypODLolKH5nvmV778Ll4x045LauvBw>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Dec 2021 08:10:41 -0500 (EST)
-Date: Fri, 17 Dec 2021 07:10:41 -0600
+ 17 Dec 2021 08:13:05 -0500 (EST)
+Date: Fri, 17 Dec 2021 07:13:04 -0600
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Landon <cld795@163.com>
-Subject: Re: OpenBMC web sometimes jump back to the login screen problem
-Message-ID: <YbyMUeXNLwjlcHyD@heinlein>
-References: <78340dc9.749f.17d5ab53990.Coremail.cld795@163.com>
- <687802ca.772b.17d5ad02872.Coremail.cld795@163.com>
- <20211126215734.GH22508@home.paul.comp>
- <459566ca.670c.17d6b13a847.Coremail.cld795@163.com>
- <18a75e7d223e2c054e93e9a83a6c0ba474125518.camel@yadro.com>
- <6fc4e62.472c.17d7a6a0885.Coremail.cld795@163.com>
- <2f6c7248.c41.17d9291a38e.Coremail.cld795@163.com>
- <8e645b4.344b.17d93d37f8d.Coremail.cld795@163.com>
- <fabdbd3d04e3db2cef14346bc5b7e3fe71101c40.camel@yadro.com>
- <c5bba33.2c37.17dc20f1cb1.Coremail.cld795@163.com>
+To: Kun Zhao <zkxz@hotmail.com>
+Subject: Re: Any cmdline tools to modify DBus
+Message-ID: <YbyM4NqhGKEDFDii@heinlein>
+References: <SJ0PR14MB48051F038B0094EDF6662CCDDC6A9@SJ0PR14MB4805.namprd14.prod.outlook.com>
+ <YauoG2/JyAeyqT1z@heinlein>
+ <SJ0PR14MB4805E542324051E7A3E55BFADC6F9@SJ0PR14MB4805.namprd14.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="0zcuHMZmA1MqMLA4"
+ protocol="application/pgp-signature"; boundary="cmvSqdyfAuIwF+Zp"
 Content-Disposition: inline
-In-Reply-To: <c5bba33.2c37.17dc20f1cb1.Coremail.cld795@163.com>
+In-Reply-To: <SJ0PR14MB4805E542324051E7A3E55BFADC6F9@SJ0PR14MB4805.namprd14.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,50 +98,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---0zcuHMZmA1MqMLA4
-Content-Type: text/plain; charset=utf-8
+--cmvSqdyfAuIwF+Zp
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Dec 16, 2021 at 03:05:10PM +0800, Landon wrote:
-=20
-> I try update the webui-vue  =E2=80=9Cwebui-vue_git.bb=E2=80=9D of the SRC=
-REV, but There is no effect, the problem is  still existence.
-> sorry to have troubled you so much!
+On Wed, Dec 08, 2021 at 07:33:19AM +0000, Kun Zhao wrote:
+> Thanks Patrick. Any plan to implement those?
 
-This seems just as likely to be caused by a bmcweb change as a webui-vue ch=
-ange.
-If you're using a fork (Aspeed's tree) you're far less likely to be able to
-update bmcweb without there being lots of other compatibility issues with
-internal BMC services.
+Like anything in an open source project, it'll get done when it gets done. =
+ If
+you want to contribute code in that area, please let me know and I can poin=
+t you
+in the right direction.
 
 --=20
 Patrick Williams
 
---0zcuHMZmA1MqMLA4
+--cmvSqdyfAuIwF+Zp
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmG8jFAACgkQqwNHzC0A
-wRkiaw/6AyGZMLf/tMmvH9Ayzlkbf8Id+/osYKNh8pcXhphBQHH4H5WBdrm1uCXG
-1CZN4/F59Z92ecKYFjzmLJC7h1oWbWKB7yNfvODm0oj1tn9xiVX6NT0WaL2Lx9s4
-ZoTIqdz6NfoyZzhuAsRUnsg8mkmfcaQEAw7KOeg7gyfS9SdcooWKRZXAyodvIzvG
-9tziZ6yrnHcH8Q1sltHKwrNZMkuuc0efDeYUuFssAAcraSx0/PHeSSj2X3MVhREZ
-K9+pMtKMvnnGzEbXYMTmjWxkQ2YWKojYhPmh7sMNUyH2TMp6+b0sYi7ekUBCk9pJ
-fMScMSIm5LJQgI/JAFwoTCHCTKTn/c/N3t2qhpjFXIeqJHAvdiWJ7Eu5/XG+Ot5s
-tBFdxjQ/xeUZgGdQytiVs9iZBn50X1xICp8a0DPtxNQq/d9GVDhCCJIJj+iu8iHU
-q/adYODqAbjPCi3vWUAoSpFWQmmiUEONfA1yGHCStWPNRbB+kzcuePpNLunTdekW
-6JIBhQgYEoJLh80+32e+5H/sPcpMlofTkNRp5wLSzRki+YO+pnfsbjLvd+WpYwNO
-k1A+9T2zqyYeEP3H7chM3XmfLdOIq4Br6RpHhuZKiH0a3RN7vI12D2fzp0uq/iXu
-D6pd+KlrH++CvcRlCyB+2nHVp51frCyZPzPCF6jJJaro4nhGTQw=
-=jJBw
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmG8jOAACgkQqwNHzC0A
+wRmgfQ/+IAbQFF/u3fdkYP8HYRcON0GlrMXpIDPVaeat+6iXYTZOYoKeJXxyM+5v
+27KE1whk1BtzQ/rfFDuL4ucUFDwYXoL9TqOT2IfIjEjRgfMzbh5DVvwo9Tu//t/c
+S7PBKNKzdrN0emajz9ItuYvZ2iR4QPxQ87200hk3My8xU8/Sw+I/TBo0GU4m5LwW
+lZljQ5ujVrMc2iCx8yCWbcTKoCbNSrKrrOH+qqabMEo3XsQWcB3mr+8TVpqW7JBE
+M7yxURUpZTOsf2/HWvpikhcecBNW1lGMK3euTbJJxiM6glwdXSzr5VZGAjGmbh/r
+v3OeRaav1LVcY17UT7SI7+C69rp8ZM/ylph3tqGGM4NeJ4pURYQrg9IvRKrNjQFE
+rqVRx0uD7u55+GztFymbeeM1TfJIzMR93kxjP5xHhbkVvjyXATEkbawyRnSxQwql
+ipI6dYIlhbUZPuLABeq+uZ/GAOOMo5i5vvNHLBNWm4LfJ7+2qkTCQ27CfGxBYmNM
+2HN7x67kj2DCuqljrJ9u5IldSF6CRv6EsT+7LYpJnuJOa4VcydQGF77ne6AzFD65
+ezH4k80EALkFT5UI1KcfR2/88/B6pHZckVpw6vcqghTXnSdVzmViFRknxFDcJZ80
+RbDpYMpF5QYgmRM2QJ6zMRERX57Bn2Phg9HOg0OQk9NhP0O932w=
+=NnN+
 -----END PGP SIGNATURE-----
 
---0zcuHMZmA1MqMLA4--
+--cmvSqdyfAuIwF+Zp--
