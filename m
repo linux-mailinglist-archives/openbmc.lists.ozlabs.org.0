@@ -1,76 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B722B479051
-	for <lists+openbmc@lfdr.de>; Fri, 17 Dec 2021 16:49:16 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id F29EE479B98
+	for <lists+openbmc@lfdr.de>; Sat, 18 Dec 2021 16:39:39 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JFthB4G79z3cV7
-	for <lists+openbmc@lfdr.de>; Sat, 18 Dec 2021 02:49:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JGVQd6Tv3z306m
+	for <lists+openbmc@lfdr.de>; Sun, 19 Dec 2021 02:39:37 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=MsyAIMi0;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=hxqkAfdc;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c2d;
- helo=mail-oo1-xc2d.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=MsyAIMi0; dkim-atps=neutral
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com
- [IPv6:2607:f8b0:4864:20::c2d])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.15.19; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=hxqkAfdc; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JFtgq4Xkmz2xtw
- for <openbmc@lists.ozlabs.org>; Sat, 18 Dec 2021 02:48:55 +1100 (AEDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id
- a11-20020a4ad1cb000000b002c2657270a0so824475oos.8
- for <openbmc@lists.ozlabs.org>; Fri, 17 Dec 2021 07:48:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=6dm4pOYGFOUOnd9TBndDBcAp1Msui/lpdLLescsGmQA=;
- b=MsyAIMi0rI6dnluKwifLKBjgw8MSA/nu+AxFriSzfgy8u63mTZjxqKW/csPHbRk/LU
- z5IKRn04aNy9X7PEIV2twi23dM3LV86s7LDdAYc0uRKQlpjafphFv/EjqXr/oZUUpOA5
- Hj8sSooRsCVcCixaPCG1tv1mosUkULpk1DV9CNCdPWdkAmT4I/s4rMIn0jdAg7jSn3Bk
- NDyxO9ubTSyLLE/Sj5ecyT3FEnPMdTV+E19VHDqWPZ0NXDnp027/RjdX1Ioqu9ZXGzex
- gm5h8qjf/CQJv9WcxZlqM6AsBEkx+OfM/hs+mJYd39XmZuV/1uFrUaCc4Qv4T9dQ5nUH
- YRsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition:in-reply-to;
- bh=6dm4pOYGFOUOnd9TBndDBcAp1Msui/lpdLLescsGmQA=;
- b=E8Va2iHQOZhMy5Y5zShdWlLcvlKdfDZrbub+vIWrK41kh1YMbW1OEMylpW9XUqfcyT
- X3zEzgiXqtIo9XLASKy2OPZs/D0W5SL/sWst3oe+yoM26glTczbm5B+f4GlcCGgylopK
- Zyxy8A38izJEeptsqkO5WTrxUWV2o5AerGBbR+vr787b95gyqVZiB3aK0hAVckwF0F/o
- bM3Y4g33oS3+sWqgW/3yVgyncLRwhJ4XEjTen/WRDyJvyxJtWMVKL3edp/sfBaoWu7Z1
- veGTsq300dGAXNX+h2KFySDZ1tDuNuW61Q3c6rRj+c9tFmZPSMLm892/8O05csbjUJFT
- CqFw==
-X-Gm-Message-State: AOAM532KG39cxbsPERV7qdcwQ1/Zk7ItwYq/xxOAF8oCKLJGGBIT7Xoc
- +tCpS34x/EjcQ2IzEVh8ihU=
-X-Google-Smtp-Source: ABdhPJy4vDAoMqy1suYtcDZ5UF0RmpzzS+JQbYdAFRDtXk7bkPcIiomXqooHg3rF3Mi9zza1gK/0lQ==
-X-Received: by 2002:a4a:d284:: with SMTP id h4mr2323424oos.31.1639756132252;
- Fri, 17 Dec 2021 07:48:52 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- c41sm1746402otu.7.2021.12.17.07.48.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Dec 2021 07:48:51 -0800 (PST)
-Date: Fri, 17 Dec 2021 07:48:50 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Zev Weiss <zev@bewilderbeest.net>
-Subject: Re: [PATCH v4 2/2] dt-bindings: add Delta AHE-50DC fan control module
-Message-ID: <20211217154850.GA2969063@roeck-us.net>
-References: <20211208213703.2577-1-zev@bewilderbeest.net>
- <20211208213703.2577-3-zev@bewilderbeest.net>
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JGVQ93SrSz2y7P
+ for <openbmc@lists.ozlabs.org>; Sun, 19 Dec 2021 02:39:11 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1639841945;
+ bh=MRyFDIwwAfIPkkcyDVDGrNn3Seh++39CRJKoEQM13Do=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=hxqkAfdcsryX7ITENmrwy5AFO5z8XeFJ34subuAAK2iJiczKdxqzblbk7TZF9MO7i
+ U+BI2XvOWNaPCG3NMFoqmMreF0bZA1CStsCWK+caJe4VWvL3MRQ3OfXKB5z97+wsNG
+ 9UT4ZDgI79fmTYfqX7pqy2Rtm7OsA7962JBh+S7M=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Ma24s-1n228K3Kwm-00VzCG; Sat, 18
+ Dec 2021 16:39:04 +0100
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH] MAINTAINERS: ARM/WPCM450: Add 'W:' line with wiki
+Date: Sat, 18 Dec 2021 16:38:48 +0100
+Message-Id: <20211218153848.750547-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211208213703.2577-3-zev@bewilderbeest.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:vagE4hLBPDZwE8fYlJP2cALU9IV/bKr3GmSeIK85Z2G9Zeiz9R3
+ Hocb2R8fI2og1N8TzR+0haTR0ffOJQCurktImQ2IrjEiIjHwHMAoU8m2I8xGOWDjcQEKBB0
+ hu3Ewf8D3xptpeb5Ca0Q1Hn1GIUcHLkxZYoanRPnP8ruAK35N3S+AVlNehLVWFEBdcYs/OC
+ 51UEAuzvTDI/HWch1FODw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:pSeuRBInons=:Ulr1FJeoFn+j4E4uEoiLkA
+ TvVmMt1gqc3qy0cnAM+1cN9jRYrvNNHRTLp3QHVfzAs8JWAu7TuUAd+iMKss09fP56JXd4cbY
+ lizO6Fi/caMpfqTG7TGpGorBzTPQF7o5xdbp3A+NjDtxLtcxSnYz1B2Hbj3XZvgLbvCd5xN+l
+ tf6YkVGSDWFg6S0XfkfsmscRULekj4JO2KppvpFhjvlWTPLPjF18CpQc/4sX6trhw6K60d2ou
+ iU62l7G/K+3sKYgm1QGbqxMl4XVqYZlLUaaUavYlUf62C7O5fwfLq/InJRYxgZiHZt58yD8vx
+ udOVoSrynbKBiKD8v4wx4q3VeTN5U0DixQef24w3mXuppma1Hj+hd2admb0JRmhPNL2QvuxnZ
+ ITD9VgwUXvk8Ui58LqJrapmfbDJs5+V/tPN+yLMz27TjKm9cpgaV2lSy3IvSS2GqkMkfbCbEL
+ 8m2KDeNqnbLkIDFPbDBNtZBM9PoTLjlXHyb7y82xsfnx0Gn4cwwp2uVImqRuhgkTQKeFsrYHx
+ H/3h/ZQJedYeVSbZBiSgYC6IsZNqMZurHJnYv0jYhlTr7Sp2DQ5MdOYKDBG2eNXnM3jx4TSDs
+ Hl1Gil107BGI2Hcj5cxgaFw2+h1tRLzcV0JUrcGOvXIPGzUFE5Nx+YOvxshLYU1y5S3FBvsCp
+ mOv3p0TX/8sIgsH9tiGHLRroiamyL04h4ACoYmzl2wEbkFmMphytVhWWRyStQ3owRBUU8aZXD
+ 151QGtzJBMn8HPWOOtK97DKKDMWu6MVyigwj1TGBIS4R8jI79jc8M5ee7BWW8qW9bptbxW/tu
+ ifISIApyiPcQF9u9gBVsYhHEesYMbI4iVeVhj/QHSrtIB4dl+4aJFlXQ7WW9KWGxugVb7BpS9
+ l6Fh4XJz16tuQWoeA1vOmq1vVfmmKNDHrwZi41UbjMl97K5N0csS/y34tCi+gqrY+c4t1ekfD
+ Evp6E98JgetmIkKhlmnzZqx0xBqyh6gDkl66jRZZBidzNu2tfIkZ55iA0rvxdIFzuzyb6RTqF
+ TF0xesUK4Y55hWuyQ8rMZ8DgrAya9xlarvcpg0sJ8qmsXkzHkhwl7CHoMrBnE8p5yYtGlVE3O
+ Upq8Wf5EHX8Kuw=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,38 +79,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- openbmc@lists.ozlabs.org, Jean Delvare <jdelvare@suse.com>,
- Rob Herring <robh+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Dec 08, 2021 at 01:37:03PM -0800, Zev Weiss wrote:
-> This is the integrated fan control module of the Delta AHE-50DC Open19
-> power shelf.
-> 
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> Acked-by: Rob Herring <robh@kernel.org>
+The wiki is a useful source of 3rd-party information about the SoC,
+mostly hardware documentation.
 
-Applied.
+Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+=2D--
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks,
-Guenter
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1fbbd9fa88d86..39d9e2c6f94ac 100644
+=2D-- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2350,6 +2350,7 @@ ARM/NUVOTON WPCM450 ARCHITECTURE
+ M:	Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+ L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
+ S:	Maintained
++W:	https://github.com/neuschaefer/wpcm450/wiki
+ F:	Documentation/devicetree/bindings/*/*wpcm*
+ F:	arch/arm/boot/dts/nuvoton-wpcm450*
+ F:	arch/arm/mach-npcm/wpcm450.c
+=2D-
+2.30.2
 
-> ---
->  Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
-> index 791079021f1b..1c43cc91f804 100644
-> --- a/Documentation/devicetree/bindings/trivial-devices.yaml
-> +++ b/Documentation/devicetree/bindings/trivial-devices.yaml
-> @@ -73,6 +73,8 @@ properties:
->            - dallas,ds4510
->              # Digital Thermometer and Thermostat
->            - dallas,ds75
-> +            # Delta AHE-50DC Open19 power shelf fan control module
-> +          - delta,ahe50dc-fan
->              # Delta Electronics DPS-650-AB power supply
->            - delta,dps650ab
->            # Delta Electronics DPS920AB 920W 54V Power Supply
