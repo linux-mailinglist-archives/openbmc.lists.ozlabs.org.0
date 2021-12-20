@@ -1,68 +1,50 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADEDD47B2DD
-	for <lists+openbmc@lfdr.de>; Mon, 20 Dec 2021 19:30:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE48847B40A
+	for <lists+openbmc@lfdr.de>; Mon, 20 Dec 2021 20:57:02 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JHp6q3Yg6z2ywv
-	for <lists+openbmc@lfdr.de>; Tue, 21 Dec 2021 05:30:27 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=WmdDr5jV;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JHr2h6PBsz3bgl
+	for <lists+openbmc@lfdr.de>; Tue, 21 Dec 2021 06:57:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::436;
- helo=mail-wr1-x436.google.com; envelope-from=edtanous@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=WmdDr5jV; dkim-atps=neutral
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com
- [IPv6:2a00:1450:4864:20::436])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.120; helo=mga04.intel.com;
+ envelope-from=sakari.ailus@linux.intel.com; receiver=<UNKNOWN>)
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JHp6L6K80z2yMV
- for <openbmc@lists.ozlabs.org>; Tue, 21 Dec 2021 05:30:00 +1100 (AEDT)
-Received: by mail-wr1-x436.google.com with SMTP id s1so21954858wrg.1
- for <openbmc@lists.ozlabs.org>; Mon, 20 Dec 2021 10:30:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=NK3gowILqnrXTCk3B+Di9asARCiOKmPry8DLwQlexMw=;
- b=WmdDr5jV3YQvOGBzJtJBYeA1I+BdIF3c6uo/qSvcfq5PkCcskG+HBqAJCAgf9VuPzn
- Be5/CR8/A6St89Lfky55CHBw+zZIQgdSSmpwL/UQqm1YY89HAj39HsL3Sy2z8lNVXmdA
- Qpz7Hz1ynu4TkBjFiDqO4fcn/duI3lLdrR2MlziFJInS3cmmLHiZZuPaE+YwHf1/O5jG
- /72LYZhkxSvp0JD1TocstA8HSFMGGPSMy44W0h++f0SuyGg7hnrItyzULrRkAsuG2Zp4
- UpVbi7JAs0EETZciAt6LtbnmqIFCWk3wThHZwgRG7I3G8DTLULW7gIkQ2ShtQd3Nrken
- Hq9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=NK3gowILqnrXTCk3B+Di9asARCiOKmPry8DLwQlexMw=;
- b=l1OVQusPZHqWHAzjuuCE8jD2CcQAUKJhmeACWZzUPkSqpJf44b0MOHuTGMbyGwA3ST
- itiO7XLIPERN6N8boKK4EyOx0CIyIgfB74px2QIJ+vgC5asL+NM1c8GKVtTU1VizW2qz
- lrH94MYbODltRgDdRECRXyN6FOLTycZOaVtzNGHpPpBsw055Syoyl3Lz6AJ5ktjLxdKQ
- fHDyxvQZpQmZH64qMFwrFacwmAxt+3PgbGbo71cretg0Ht98B10pA4+mpzg5Y2kM+m5/
- I9p6pwYCiIZxexo3m1M8WyO1xFOTrd7aNmnhqweb7UF+U5WrQtXu515Aa3h3PMafh1tx
- Un5g==
-X-Gm-Message-State: AOAM531EU03XDoRiu4N29i0IhY8HYDo8ARCCWOooPkn/PkNODhuO69Es
- eGhJ9r7VAh2DUluIYgcAYKfA1kICa2h61xW15PWFHg==
-X-Google-Smtp-Source: ABdhPJz+1uOOypx3h0WFLStNdk6o7Th1Y3vsijkyEisknWuMC4cnB7VRxzxhRv9Aefq92uCTyLcDFIwv9VPOpNjibhw=
-X-Received: by 2002:adf:aa08:: with SMTP id p8mr14361980wrd.572.1640024992755; 
- Mon, 20 Dec 2021 10:29:52 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JHr2L4ghqz2xsd;
+ Tue, 21 Dec 2021 06:56:41 +1100 (AEDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10204"; a="239004447"
+X-IronPort-AV: E=Sophos;i="5.88,221,1635231600"; d="scan'208";a="239004447"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Dec 2021 11:55:09 -0800
+X-IronPort-AV: E=Sophos;i="5.88,221,1635231600"; d="scan'208";a="755508588"
+Received: from paasikivi.fi.intel.com ([10.237.72.42])
+ by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Dec 2021 11:55:05 -0800
+Received: from paasikivi.fi.intel.com (localhost [127.0.0.1])
+ by paasikivi.fi.intel.com (Postfix) with SMTP id 48A17201D7;
+ Mon, 20 Dec 2021 21:55:03 +0200 (EET)
+Date: Mon, 20 Dec 2021 21:55:03 +0200
+From: "sakari.ailus@linux.intel.com" <sakari.ailus@linux.intel.com>
+To: Jammy Huang <jammy_huang@aspeedtech.com>
+Subject: Re: [PATCH v5 00/10] add aspeed-jpeg support for aspeed-video
+Message-ID: <YcDfl9V1oJFMebfF@paasikivi.fi.intel.com>
+References: <20211118074030.685-1-jammy_huang@aspeedtech.com>
+ <5ab806d1-e407-1fa4-83ec-93ebe8df7db4@xs4all.nl>
+ <b6ba49f3-a9ed-f5e6-959c-309db8cce7f6@aspeedtech.com>
+ <6e0da74e-ddce-3c94-42a1-f98833489d60@xs4all.nl>
+ <549aaf9a-cd72-e200-0329-30f6c71b8ed7@aspeedtech.com>
+ <e61856d5-c371-ab52-2814-d0d8aabee0f0@aspeedtech.com>
 MIME-Version: 1.0
-References: <CAA7TbcvUE+iQxNepB6UcwD760JaKgK-8d3LW1HLk4DcuhbqmYw@mail.gmail.com>
- <CAA7Tbct7QyLjEa3WZug=U+jVzhGqLdCeX1H+GU=KNtMnqcAXZg@mail.gmail.com>
-In-Reply-To: <CAA7Tbct7QyLjEa3WZug=U+jVzhGqLdCeX1H+GU=KNtMnqcAXZg@mail.gmail.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Mon, 20 Dec 2021 10:29:41 -0800
-Message-ID: <CAH2-KxDeAixLTj0MH2H+PH0P8NJv2Jf03VCdyxta17jLNuEnHw@mail.gmail.com>
-Subject: Re: hwmontempsensor issue in dbus-sensor
-To: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e61856d5-c371-ab52-2814-d0d8aabee0f0@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,80 +56,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: bruce.mitchell@linux.vnet.ibm.com, Jayashree D <jayashree-d@hcl.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, velumanit@hcl.com
+Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "andrew@aj.id.au" <andrew@aj.id.au>,
+ "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "eajames@linux.ibm.com" <eajames@linux.ibm.com>,
+ "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ "mchehab@kernel.org" <mchehab@kernel.org>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+ "laurent.pinchart@ideasonboard.com" <laurent.pinchart@ideasonboard.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sun, Dec 19, 2021 at 9:11 PM Kumar Thangavel
-<kumarthangavel.hcl@gmail.com> wrote:
->
-> Hi All,
->
-> Gentle Reminder on this.
->
-> Thanks,
-> Kumar.
->
-> On Thu, Dec 16, 2021 at 1:56 PM Kumar Thangavel <kumarthangavel.hcl@gmail.com> wrote:
->>
->> Hi All,
->>
->>
->> In dbus-sensors repo, I saw the patch for changes in Hwmon Temp Sensor.
->> https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e5341b22b7ab
+Hi Jammy,
 
-Bruce, this is your patch.  Could you take a look at the below and
-provide your input?
+On Tue, Dec 07, 2021 at 11:03:00AM +0800, Jammy Huang wrote:
+> Hi Hans,
+> 
+> The implementation of decoder for this format as been available here.
+> https://github.com/AspeedTech-BMC/aspeed_codec
 
->>
->>
->> While testing those changes in my platform, I found that each sensor in hwmon temp has been creating twice.
->> After analyzed the patch, for below 2 paths SP_OUTLET_TEMP sensor is created twice.
->>
->>
->> /sys/class/hwmon/hwmon2/temp2_input
->> /sys/class/hwmon/hwmon2/temp1_input
->>
->>
->> Before your change, hwmon temp sensor will check whether the path is already exists or not.
->> If it exists, it will skip and proceed with next path.
->> https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e5341b22b7abL96
->>
->>
->> Could you please explain why it is creating twice in hwmon temp ?
->>
->>
->> Journalctl log before your changes applied :
->>
->>
->> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path : "/sys/class/hwmon/hwmon2/temp2_input"
->> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Type : xyz.openbmc_project.Configuration.TMP421
->> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Name : SP_OUTLET_TEMP
->> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
->> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
->> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path : "/sys/class/hwmon/hwmon2/temp1_input"
->>
->>
->>
->> Journalctl log after your changes applied :
->>
->>
->> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : "/sys/class/hwmon/hwmon2/temp2_input"
->> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor type : xyz.openbmc_project.Configuration.TMP421
->> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name : SP_OUTLET_TEMP
->> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
->> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
->>
->>
->> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : "/sys/class/hwmon/hwmon2/temp1_input"
->> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor type : xyz.openbmc_project.Configuration.TMP421
->> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name : SP_OUTLET_TEMP
->> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
->> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
->>
->>
->>
->> Thanks,
->>
->> Kumar.
+The format documentation should point to this, as well as other
+documentation there is.
+
+I'm not sure there have been specific requirements of license, but it's the
+first time I see MPL 2.0 being used in such context. It's eventually
+convertible to GPL (or LGPL) although the route is inconvenient at best.
+Or would people be happy with MPL code in v4l-utils?
+
+I wonder what others think.
+
+-- 
+Regards,
+
+Sakari Ailus
