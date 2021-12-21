@@ -1,55 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E30347B84B
-	for <lists+openbmc@lfdr.de>; Tue, 21 Dec 2021 03:15:11 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id F055D47C532
+	for <lists+openbmc@lfdr.de>; Tue, 21 Dec 2021 18:44:43 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JJ0R11dCFz302G
-	for <lists+openbmc@lfdr.de>; Tue, 21 Dec 2021 13:15:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JJP3Y6Ymkz2xXg
+	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 04:44:41 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=TfaGYcVb;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
+ smtp.mailfrom=flex--suichen.bounces.google.com
+ (client-ip=2607:f8b0:4864:20::b49; helo=mail-yb1-xb49.google.com;
+ envelope-from=3cblcyqckb7ejlztyvexffxcv.tfdfgvesdtczjkj.fqcrsj.fix@flex--suichen.bounces.google.com;
  receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=TfaGYcVb; dkim-atps=neutral
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com
+ [IPv6:2607:f8b0:4864:20::b49])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JJ0Qk208yz2xBJ;
- Tue, 21 Dec 2021 13:14:51 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 1BL28DUG011549;
- Tue, 21 Dec 2021 10:08:13 +0800 (GMT-8)
- (envelope-from jammy_huang@aspeedtech.com)
-Received: from [192.168.2.115] (192.168.2.115) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 21 Dec
- 2021 10:13:34 +0800
-Message-ID: <d9dc2375-e4a8-9bb2-bb70-7104fa8186a7@aspeedtech.com>
-Date: Tue, 21 Dec 2021 10:13:34 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH v5 00/10] add aspeed-jpeg support for aspeed-video
-Content-Language: en-US
-To: "sakari.ailus@linux.intel.com" <sakari.ailus@linux.intel.com>
-References: <20211118074030.685-1-jammy_huang@aspeedtech.com>
- <5ab806d1-e407-1fa4-83ec-93ebe8df7db4@xs4all.nl>
- <b6ba49f3-a9ed-f5e6-959c-309db8cce7f6@aspeedtech.com>
- <6e0da74e-ddce-3c94-42a1-f98833489d60@xs4all.nl>
- <549aaf9a-cd72-e200-0329-30f6c71b8ed7@aspeedtech.com>
- <e61856d5-c371-ab52-2814-d0d8aabee0f0@aspeedtech.com>
- <YcDfl9V1oJFMebfF@paasikivi.fi.intel.com>
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-In-Reply-To: <YcDfl9V1oJFMebfF@paasikivi.fi.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [192.168.2.115]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 1BL28DUG011549
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JJP3C1Dv8z2xXg
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 04:44:21 +1100 (AEDT)
+Received: by mail-yb1-xb49.google.com with SMTP id
+ r18-20020a25ac52000000b005c9047c420bso27022207ybd.4
+ for <openbmc@lists.ozlabs.org>; Tue, 21 Dec 2021 09:44:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=CDuBDxOSUYlCehxXtPSC2OIzjN0BmuoKrvgmDwQyvuQ=;
+ b=TfaGYcVbeJF4OeDvfFRzo2v0n3VAgiSZ3mYQT9Dxs6ECLCGrTBdlc+kWr64JHpqCR8
+ rH3rwP7DYtDKLJtEcuRtG6Xiau9Wem4usMhThTsyuDqj+AcHiYOyPEUtPSQMvdv3Y5ox
+ 0kYuYQxzIGm39nxLk/ZGKVHHUVDhP6RUQ1v++V1m8R5Xo6/bal8jhjQ7DHJJRj29aIWm
+ G9Cee5gMwrOgqiNuG4RWRaivl/BNl+Z6ii9TJOQBJ1uWshAgX1+i8HbRDlIvEHsMupZJ
+ pM+5xJt07vuSvz1P6oGCwpVEURMMbNuTiQuJKVMZRPJjN9JrnB+ADawiT2newm6S6EGT
+ sQJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=CDuBDxOSUYlCehxXtPSC2OIzjN0BmuoKrvgmDwQyvuQ=;
+ b=2pJR/q7BQU+gK2Bpbv2n7UjJVkJxYcqJqwul2V4s4CtF8RLEzXylYv52vRO2bxQopj
+ s41hCtw7qvjHgAfDpUy8TPi7Is+zeaWkdESlIxCUBs4gbPTYPZkepa65con8WHIUcnlW
+ lq0PsNrtOPmhZ+Mb4v5BshzqIX1QjwgJi1wOJFC8ekpszmxh+FaToq3pIWEtppHBpEO0
+ nma7l1ObLpalDFJwplMLKO54EuGTZuz7UFRqooBzJ97KuUSmOXxudZq/+S9BUnyVOApX
+ lqBDAI/hb9911RXes54GqHTHK7ECb4LTgnQbzLLnUYKoNtfuNsQKeVbbQTN0aczQcoAu
+ TQiw==
+X-Gm-Message-State: AOAM530nZud/D/DsuI+hGDwZ+tGLeUzoFlx47TQS7pWJVNi4eozdUprc
+ wwOp9TqTKP8/Nhi6ik2mkze/HjFnPwmb
+X-Google-Smtp-Source: ABdhPJxArDKEt7s8nvJ9hO+5aMzE0jhQdqi4ArT2F52H2Z6NTXreZ4J7/reCC5firYqFR/Hmc/uPcZyFi9bu
+X-Received: from suichen.svl.corp.google.com
+ ([2620:15c:2c5:13:19fd:5987:f46f:7488])
+ (user=suichen job=sendgmr) by 2002:a25:2f03:: with SMTP id
+ v3mr6131319ybv.557.1640108656573; Tue, 21 Dec 2021 09:44:16 -0800 (PST)
+Date: Tue, 21 Dec 2021 09:43:41 -0800
+Message-Id: <20211221174344.1249202-1-suichen@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.34.1.307.g9b7440fafd-goog
+Subject: [RFC Patch v3 0/3] I2C statistics as sysfs attributes
+From: Sui Chen <suichen@google.com>
+To: linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,56 +75,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "andrew@aj.id.au" <andrew@aj.id.au>,
- "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "eajames@linux.ibm.com" <eajames@linux.ibm.com>,
- "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>,
- "mchehab@kernel.org" <mchehab@kernel.org>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- "laurent.pinchart@ideasonboard.com" <laurent.pinchart@ideasonboard.com>
+Cc: benjaminfair@google.com, andrew@aj.id.au, openbmc@lists.ozlabs.org,
+ tali.perry1@gmail.com, krellan@google.com, linux-i2c@vger.kernel.org,
+ Sui Chen <suichen@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Sakari,
+Add I2C statistics (transaction, bus error and NACK counts) as sysfs
+attributes for a stable and unified API.
 
-On 2021/12/21 上午 03:55, sakari.ailus@linux.intel.com wrote:
-> Hi Jammy,
->
-> On Tue, Dec 07, 2021 at 11:03:00AM +0800, Jammy Huang wrote:
->> Hi Hans,
->>
->> The implementation of decoder for this format as been available here.
->> https://github.com/AspeedTech-BMC/aspeed_codec
-> The format documentation should point to this, as well as other
-> documentation there is.
-OK, I will add this into format documentation as well.
->
-> I'm not sure there have been specific requirements of license, but it's the
-> first time I see MPL 2.0 being used in such context. It's eventually
-> convertible to GPL (or LGPL) although the route is inconvenient at best.
-> Or would people be happy with MPL code in v4l-utils?
+The motivation is monitoring large numbers of BMCs at scale.
+Monitoring will be done using OpenBMC, which includes a Redfish
+implementation (bmcweb) and runs on different SoCs.
 
-In order to have aspeed-jpeg format to work on openbmc's KVM, I was 
-working on noVNC.
-And this codec library is part of the code to make it work.
+OpenBMC has distribution-wide DBus C++ bindings, for which I2C
+statistics will be added. For the Redfish schemas, the upcoming
+Release 2021.4 will include I2C statistics too.
 
-Before I put this source on github, I am not sure which kind of license 
-is suitable. So I check
-what noVNC used, https://github.com/novnc/noVNC/blob/master/LICENSE.txt. 
-That's why I
-adapted MPL 2.0.
+Since both OpenBMC and Redfish have/will have committed to stable
+APIs for monitoring I2C statistics, we would like to learn the
+kernel community's opinion on stable kernel APIs for I2C counters.
 
-If you think GPL(or LGPL) is more suitable, I can make a switch.
+A more detailed explanation could be found in [1].
+
+This version (v3) fixes format errors, potential unchecked memory
+allocation, and fixes a build problem found by the Kernel Test Robot.
+
+Thanks!
+
+[1] https://lore.kernel.org/lkml/CAJOps0u=seskB-YGvLBsHantJohkEX7do-mt7YSZ6zChQMQxbg@mail.gmail.com/
 
 
->
-> I wonder what others think.
->
+Sui Chen (2):
+  i2c debug counters as sysfs attributes
+  add npcm7xx debug counters as sysfs attributes
+
+Tali Perry (1):
+  i2c: npcm7xx: add tx_complete counter
+
+ drivers/i2c/busses/i2c-npcm7xx.c |  13 ++++
+ drivers/i2c/i2c-core-base.c      |  23 ++++++
+ drivers/i2c/i2c-dev.c            | 124 +++++++++++++++++++++++++++++++
+ include/linux/i2c.h              |  28 +++++++
+ 4 files changed, 188 insertions(+)
+
 -- 
-Best Regards
-Jammy
+2.34.1.307.g9b7440fafd-goog
 
