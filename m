@@ -1,64 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C9A447CABB
-	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 02:23:20 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83C5047CACA
+	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 02:31:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JJbDk2N4wz2ynj
-	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 12:23:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JJbQS3HM5z2ym7
+	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 12:31:44 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=NTUsZ+hX;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=HGxs8jlV;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::82b;
- helo=mail-qt1-x82b.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72b;
+ helo=mail-qk1-x72b.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=NTUsZ+hX; dkim-atps=neutral
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com
- [IPv6:2607:f8b0:4864:20::82b])
+ header.s=google header.b=HGxs8jlV; dkim-atps=neutral
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com
+ [IPv6:2607:f8b0:4864:20::72b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JJbDG1BMkz2yPM;
- Wed, 22 Dec 2021 12:22:52 +1100 (AEDT)
-Received: by mail-qt1-x82b.google.com with SMTP id j17so582244qtx.2;
- Tue, 21 Dec 2021 17:22:52 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JJbQ03BNqz2xsx;
+ Wed, 22 Dec 2021 12:31:18 +1100 (AEDT)
+Received: by mail-qk1-x72b.google.com with SMTP id p4so845829qkm.7;
+ Tue, 21 Dec 2021 17:31:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=cNVgFuSkvXsOF4mMDEXYWlsVrY9TlgTecIPAVLkOuWs=;
- b=NTUsZ+hXhAodFI9Oan+WRQ3tF0KpKZnGm18/mkaitLP2Ggx9jiN3HG4WVR7UsgomM4
- LNeynEFuG7cIg8gIUZdiizlJ1815Kx+tG5yi0mXaU6NPdtJxOcHD99hO8I2VDtUKdp5/
- wgAmLauiM8/dqVp43ngZ1f9vLn+6DKkqIdHUE=
+ :cc; bh=BL4VTrxHuhNngkVjVPPyXcbNQ/vv2xvDhyVBuDNvoBE=;
+ b=HGxs8jlV6uJBLy77VN0ld1Ch0KRpJ634KfWR9yIX8fJk3s2xAZEEuxCDpXgkg8n9Yo
+ iOnOqRhsMKTh31pymyYvwtnt3keVbkK4uIiH7PR9wCr9iPjXQXz3CRRpxDAC+et0arj7
+ SAtH7PDcshRL8CTuOEcpixfhsxwtrIIL5YMCQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=cNVgFuSkvXsOF4mMDEXYWlsVrY9TlgTecIPAVLkOuWs=;
- b=xwTp681NykDiP2AgrudeTdme/5kzHYHU9VNeIny6lzT3WYr2hAJ3FlJY1wKMeIOVMO
- Gve0v0meOuFAixYNRNKDxsVWx3PWdVenOvT6xu9BK32Jein9iz84UUEhPFi1EMfU4tpO
- VnsQUN/o7c7HQsT8CBbghqFTM9o9n8rEl/6p7F8DqnFcF09+m9V0LQtimF3+uFt9dy8P
- zKlRgb2EUdjG7Gs9bm/Sr7aK9otkUF0DH0gyitrazyVv0Uvm0obSfMaSKF9mrL3RCGbJ
- pqyrJJnKkkjr2CqEDHfwAJiMbLxJSk9M+L1B08aQU8G0D25KcUoRyNyDWXhHoWdKZOj/
- /d5Q==
-X-Gm-Message-State: AOAM532SGvIseQUCGugqJXeoz4o4PJz7CdsDFzJ+rWdGQDAQWf+qPQa0
- A9xZiK5Kk/aPHhzc6ocHHmVA46s7ZcuHB8b3mPQ=
-X-Google-Smtp-Source: ABdhPJy3jDioVIMXa2v625o3reDXrAtyaAv6CujTMELAi6Yci7xqNtalhS1zaix51U3flPHoVs8qoyEnjyutV/e5lvg=
-X-Received: by 2002:a05:622a:588:: with SMTP id
- c8mr699346qtb.108.1640136168852; 
- Tue, 21 Dec 2021 17:22:48 -0800 (PST)
+ bh=BL4VTrxHuhNngkVjVPPyXcbNQ/vv2xvDhyVBuDNvoBE=;
+ b=NuyfjpJADKMchvvjc5K3fw/625cuGyN/bzqgZNgJbBNqnc2ZeIr6ltNBltDePcYW4I
+ Bdrsg6YRB6EljEAbE05VDmvOKfqe3nIiRNrOWD3xC2ODLM/SEh5SHlAaKgKiH0cTJZoZ
+ 8BUz1NIh++RmUyKCISYfOFZ4Oq+nLsojvByR0l3KyndYumZSTQScodK6hlqxx9CMRAmu
+ BclqD8G9VFSZdqdmYzEKe0P6hxbkTBHr7Gn98zFEV2EmI8HBUqdNykIzck2EcAlX9PDS
+ sGwjF4jCLiP5eN6mPH2V7IeVHWwefmUIdlAJleHfBxddzxn8hRW2QcqakTC1ezTOTTn3
+ 0Xrg==
+X-Gm-Message-State: AOAM533KQ0R5cQU5PVu5tsbAhBaUt4KPNc5/UcjeLKWbJQXXkSahzl4Y
+ YV6VMKePqux32Otp36wYrkt7h+05CVecoYVKY6g=
+X-Google-Smtp-Source: ABdhPJwYB/w9mWQ/fJ18cguaiEKzZSEf2jcz9l7mfEhP1ihTCU6+UEnF0DuWo1HpbZ9y0+2JAC3df9FcIneYpMNTd+k=
+X-Received: by 2002:a37:4047:: with SMTP id n68mr734946qka.346.1640136674770; 
+ Tue, 21 Dec 2021 17:31:14 -0800 (PST)
 MIME-Version: 1.0
 References: <20211217095403.2618-1-jammy_huang@aspeedtech.com>
- <20211217095403.2618-5-jammy_huang@aspeedtech.com>
-In-Reply-To: <20211217095403.2618-5-jammy_huang@aspeedtech.com>
+ <20211217095403.2618-4-jammy_huang@aspeedtech.com>
+In-Reply-To: <20211217095403.2618-4-jammy_huang@aspeedtech.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 22 Dec 2021 01:22:36 +0000
-Message-ID: <CACPK8Xf7rsjgCv=Honyf8gwDWbG67dPVjE+z_tXD4yEu1WaE5w@mail.gmail.com>
-Subject: Re: [PATCH 4/4] media: aspeed: Fix timing polarity incorrect
+Date: Wed, 22 Dec 2021 01:31:02 +0000
+Message-ID: <CACPK8Xf_5wZXzfDSrdLLxs_B_jX7BVHc5o2Thw1DJvYix1AA8Q@mail.gmail.com>
+Subject: Re: [PATCH 3/4] media: aspeed: Correct values for detected timing
 To: Jammy Huang <jammy_huang@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -83,58 +82,110 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Fri, 17 Dec 2021 at 09:54, Jammy Huang <jammy_huang@aspeedtech.com> wrote:
 >
-> This is a workaround for polarity unstable.
-> Sync value get by VR09C counts from sync's rising edge, which means
-> sync's polarity is negative if sync value is bigger than total/2.
+> Correct timing's fp/sync/bp value based on the information below.
+> It should be noticed that the calculation formula should be changed
+> per sync polarity.
+>
+> The sequence of signal: sync - backporch - video data - frontporch
+>
+> The following registers start counting from sync's rising edge:
+> 1. VR090: frame edge's left and right
+> 2. VR094: frame edge's top and bottom
+> 3. VR09C: counting from sync's rising edge to falling edge
+>
+>             +--+     +-------------------+     +--+
+>             |  |     |    v i d e o      |     |  |
+>          +--+  +-----+                   +-----+  +---+
+>
+>         sync+--+
+>     left/top+--------+
+> right/bottom+----------------------------+
+>
+>                   +-------------------+
+>                   |    v i d e o      |
+>       +--+  +-----+                   +-----+  +---+
+>          |  |                               |  |
+>          +--+                               +--+
+>         sync+-------------------------------+
+>     left/top+-----+
+> right/bottom+-------------------------+
+
+This is a good explanation. Can you add detail that relates the names
+you use here to to the variable names in your patch (or change them to
+match)?
+
 >
 > Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
 > ---
->  drivers/media/platform/aspeed-video.c | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
+>  drivers/media/platform/aspeed-video.c | 27 ++++++++++++++++++++++-----
+>  1 file changed, 22 insertions(+), 5 deletions(-)
 >
 > diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-> index 5ad3a20c5bac..f628f69bb7dd 100644
+> index 581a4261f9b7..5ad3a20c5bac 100644
 > --- a/drivers/media/platform/aspeed-video.c
 > +++ b/drivers/media/platform/aspeed-video.c
-> @@ -989,6 +989,15 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+> @@ -988,10 +988,20 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>                                                 src_tb_edge);
 >                 video->frame_top = FIELD_GET(VE_SRC_TB_EDGE_DET_TOP,
 >                                              src_tb_edge);
+> -               det->vfrontporch = video->frame_top;
+> -               det->vbackporch = FIELD_GET(VE_MODE_DETECT_V_LINES, mds) -
+> -                       video->frame_bottom;
 >                 det->vsync = FIELD_GET(VE_SYNC_STATUS_VSYNC, sync);
-> +               /*
-> +                * Workaround for polarity detection
-> +                * Use sync(VR098) counts from sync's rising edge till falling
-> +                * edge to tell sync polarity.
-> +                */
-> +               if (det->vsync > (FIELD_GET(VE_MODE_DETECT_V_LINES, mds) >> 1))
 
-Are you right shifting as this is the value / 2? I think it's clearer
-to write / 2 instead of >> 1.
 
-Mention in the comment that this is a workaround for when the sync
-value is larger than half.
+Would it be clearer if you structured the code like this?
 
-> +                       det->polarities &= ~V4L2_DV_VSYNC_POS_POL;
-> +               else
-> +                       det->polarities |= V4L2_DV_VSYNC_POS_POL;
->                 if (det->polarities & V4L2_DV_VSYNC_POS_POL) {
->                         det->vbackporch = video->frame_top - det->vsync;
->                         det->vfrontporch =
-> @@ -1010,6 +1019,15 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+ vsync = FIELD_GET(VE_SYNC_STATUS_VSYNC, sync);
+ vlines = FIELD_GET(VE_MODE_DETECT_V_LINES, mds);
+
+ if (det->polarities & V4L2_DV_VSYNC_POS_POL)) {
+    det->vbackporch = video->frame_top - vsync;
+    det->vfrontporch = vlines - video->frame_bottom;
+    det->vsync = vsync;
+ } else {
+    det->vbackporch = video->frame_top;
+    det->vfrontporch = vlines - video->frame_bottom - vsync;
+    det->vsync = vlines - vsync;
+
+}
+
+
+> +               if (det->polarities & V4L2_DV_VSYNC_POS_POL) {
+> +                       det->vbackporch = video->frame_top - det->vsync;
+> +                       det->vfrontporch =
+> +                               FIELD_GET(VE_MODE_DETECT_V_LINES, mds) -
+> +                               video->frame_bottom;
+> +               } else {
+> +                       det->vsync = FIELD_GET(VE_MODE_DETECT_V_LINES, mds) -
+> +                                              det->vsync;
+> +                       det->vbackporch = video->frame_top;
+> +                       det->vfrontporch =
+> +                               FIELD_GET(VE_MODE_DETECT_V_LINES, mds) -
+> +                               video->frame_bottom - det->vsync;
+> +               }
+>                 if (video->frame_top > video->frame_bottom)
+>                         continue;
+>
+> @@ -999,9 +1009,16 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>                                                src_lr_edge);
 >                 video->frame_left = FIELD_GET(VE_SRC_LR_EDGE_DET_LEFT,
 >                                               src_lr_edge);
+> -               det->hfrontporch = video->frame_left;
+> -               det->hbackporch = htotal - video->frame_right;
 >                 det->hsync = FIELD_GET(VE_SYNC_STATUS_HSYNC, sync);
-> +               /*
-> +                * Workaround for polarity detection
-> +                * Use sync(VR098) counts from sync's rising edge till falling
-> +                * edge to tell sync polarity.
-> +                */
-> +               if (det->hsync > (htotal >> 1))
-> +                       det->polarities &= ~V4L2_DV_HSYNC_POS_POL;
-> +               else
-> +                       det->polarities |= V4L2_DV_HSYNC_POS_POL;
->                 if (det->polarities & V4L2_DV_HSYNC_POS_POL) {
->                         det->hbackporch = video->frame_left - det->hsync;
->                         det->hfrontporch = htotal - video->frame_right;
+> +               if (det->polarities & V4L2_DV_HSYNC_POS_POL) {
+> +                       det->hbackporch = video->frame_left - det->hsync;
+> +                       det->hfrontporch = htotal - video->frame_right;
+> +               } else {
+> +                       det->hsync = htotal - det->hsync;
+> +                       det->hbackporch = video->frame_left;
+> +                       det->hfrontporch = htotal - video->frame_right -
+> +                                          det->hsync;
+> +               }
+>                 if (video->frame_left > video->frame_right)
+>                         continue;
+>
 > --
 > 2.25.1
 >
