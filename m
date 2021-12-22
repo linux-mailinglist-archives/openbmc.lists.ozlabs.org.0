@@ -2,68 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6F2547D005
-	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 11:31:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 412FE47D733
+	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 19:53:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JJqNt4c4Hz2xF1
-	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 21:31:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JK2XV0qWMz3052
+	for <lists+openbmc@lfdr.de>; Thu, 23 Dec 2021 05:53:30 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=oO9NEosp;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=b1IEc9jh;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::741;
- helo=mail-qk1-x741.google.com; envelope-from=liuxiwei1013@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=oO9NEosp; dkim-atps=neutral
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com
- [IPv6:2607:f8b0:4864:20::741])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=b1IEc9jh; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JJqNT3Kclz2xWc
- for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 21:30:47 +1100 (AEDT)
-Received: by mail-qk1-x741.google.com with SMTP id r139so947570qke.9
- for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 02:30:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=0JXm25Q0a+BSoTsSR3DtnyRvdZ4wMiBKzmlNVZDM2f4=;
- b=oO9NEospgcXyYiVtyA7pTJ/l6L6KK1peK8nNnuPH42FWJPedYKb5WL8gWj9iL0KAvI
- yIv/RZr/72bFeyDBNWMiZgwowdlXueLFlaVb7AtAHwBCqrsmSwYCE/BhfD8asnlNZMCU
- I7/5g4jBlNJr1ql+wxaNDdOBwiE+kQq2dRudLAWkEF+iqk7E4EM6KPJ9YWdxAUanFDzY
- ZP+I0Aurz7dASP6qwRs29uQq6JNYE/1T8+2q4t4wiujrlo5mV07m6Sc10nvnqKZs9d8f
- mwlnHnIPDoj5E/RrEYxSdd23DD1kJJRqtHGvw1KeXECyVt08xZQorjRWtu2JY/w/7boy
- Bp9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=0JXm25Q0a+BSoTsSR3DtnyRvdZ4wMiBKzmlNVZDM2f4=;
- b=PFaHksB9/Wmm1lnc8rp2Y+nx6uLwk8cz1w8tvzD39+fHW3f6DQf/sJLfWwVoqDu0N6
- jZIUlte6ds3SCYojadc4vnJ1NgLXwYaTFJwI8YFsjtqGi80ZCoyYix8891WGBLDHLZmK
- H+HFKXZa4rbTNlJr9jhL7Jed4atQkmHi2sZHFMf8f/1n/lKVs+WjHrz6oIKf1ymQt2dc
- 0lDSjbdLMotITGRpStygnJ/bor1b1CWSq31CJYepaFdyC1Z2nawVmi5Ccx2jR0hvjDFv
- WpFH1Oqa1ejDqsXVaG7WJDQEgJGHVE4ynR9ESOz6awcXddUFiTgeT4pmrREyqqmIa4LK
- RHig==
-X-Gm-Message-State: AOAM533LersH1rNLZn1GiW7ZDwsW1cI3A6mwgYZorLVEdSpRfQziIUp9
- CVqXDaNpG6xW4XuEoH+/4WpFjzdxCoU34JfQPO8=
-X-Google-Smtp-Source: ABdhPJzzmY2HgwUnd1EmG64liRpSVxm2KvmnAycwY18u3Ih7lPRkVMwNGszwnjtE2XMXqu1m99z6S3lnEJ4sE2ztb78=
-X-Received: by 2002:a37:a895:: with SMTP id r143mr638172qke.712.1640169043805; 
- Wed, 22 Dec 2021 02:30:43 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JK2X04T0Sz2xsk
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Dec 2021 05:53:03 +1100 (AEDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1BMITxnv029849
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 18:53:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date : to :
+ from : subject : content-type : content-transfer-encoding : mime-version;
+ s=pp1; bh=zR2JpRaYTMJ7mKdKA6Ov0uik1f5gD79wtlka2z08xRw=;
+ b=b1IEc9jhp6Bx7/DOwNAcGqJJhHTmZQiNPmsaBsIWWNWwe7xLuIqly2AVgX698Nb7DoiM
+ xLMi9DjyN7XG0sf4vhnzUUzHXtbMu4NGfvYFvqM/64DkNrro+fbZ04W2wFP7GnYqyGLm
+ n1M4//EhrfVX2McF1noeiyciUp+PcS15C7JPxa21IIXvey4c05AUareHVPC/zGejHzuS
+ nrsUgCRPpci3cvejXtw1PZechEjWvGLB+0lHDBJTFNDPgQN5mgZJvzyDyPJuOPPoWEqT
+ y/TVecN/MtqR30NZZMDzlOGbJPCL5jUwqdvF6xvyBFw7rtyKTJs3sZrw4Jp3YZiaGa4e 5g== 
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3d3f0benk7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 18:52:59 +0000
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 1BMIkrdt015331
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 18:52:59 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma03wdc.us.ibm.com with ESMTP id 3d179aut2f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 18:52:59 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 1BMIqwim27722012
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 18:52:58 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 918D5112065
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 18:52:58 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 63274112062
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 18:52:58 +0000 (GMT)
+Received: from [9.65.195.235] (unknown [9.65.195.235])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 18:52:58 +0000 (GMT)
+Message-ID: <3f70d38c-36e0-0cfd-2aa5-ca81989bba6f@linux.ibm.com>
+Date: Wed, 22 Dec 2021 12:52:57 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.2.0
+Content-Language: en-US
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting 2021-12-22 - results
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 6D2BKaQTCjoXdEUehS7ccBvBVRh-jZ8o
+X-Proofpoint-GUID: 6D2BKaQTCjoXdEUehS7ccBvBVRh-jZ8o
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <CANFuQ7AkTrtrogMj4YeAe0SWQFjG1Cd9WqFAktbvsOHmtd-Qpw@mail.gmail.com>
- <CAGm54UFK6tFt64Z0aeKQWdmseJotBrtnNFgD90wjdQidU0x9Gw@mail.gmail.com>
-In-Reply-To: <CAGm54UFK6tFt64Z0aeKQWdmseJotBrtnNFgD90wjdQidU0x9Gw@mail.gmail.com>
-From: George Liu <liuxiwei1013@gmail.com>
-Date: Wed, 22 Dec 2021 18:30:32 +0800
-Message-ID: <CANFuQ7CMEh_+UcREYNM5ZZj9YxQVbbEYeZ4LUVEnq6tMBqE8UQ@mail.gmail.com>
-Subject: Re: [External] Solve the problem of bad CRC when using
- u-boot-aspeed-sdk
-To: Lei Yu <yulei.sh@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
+ definitions=2021-12-22_08,2021-12-22_01,2021-12-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=878 phishscore=0
+ clxscore=1015 priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0
+ mlxscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2110150000 definitions=main-2112220102
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,51 +99,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Dec 22, 2021 at 6:24 PM Lei Yu <yulei.sh@bytedance.com> wrote:
->
-> On Wed, Dec 22, 2021 at 4:05 PM George Liu <liuxiwei1013@gmail.com> wrote:
-> >
-> > Hi, everyone:
-> >
-> > The 64M flash used by Inspur's fp5280g2 machine has recently found
-> > that it cannot be saved when setting the u-boot environment variable,
-> > and then a warning message appears when rebooting:
-> >
-> > ```
-> > Loading Environment from SPI Flash... SF: Detected mx66l51235l with
-> > page size 256 Bytes, erase size 64 KiB, total 64 MiB
-> > *** Warning-bad CRC, using default environment
-> > ```
-> >
-> > Since fp5280g2 includes `openbmc-flash-layout-64.dtsi`, the initial problem is:
-> > 1. The value of CONFIG_ENV_SIZE and CONFIG_ENV_OFFSET[1] of u-boot is
-> > inconsistent with the size of u-boot env of Kernel's
-> > openbmc-flash-layout-64.dtsi[2].
-> > 2. The `Env. size` of the fw_env_ast2600_nor.config[3] file also needs
-> > to be updated
-> >
-> > After modifying the above problem and test by:
-> > 1. Use `setenv` to add a new environment variable in u-boot and reboot
-> > BMC, and then use `fw_printenv` to see this value synchronously.
-> > 2. Use `fw_setenv` to add a new environment variable in BMC and reboot
-> > BMC into u-boot, and then use `printenv` to see this value
-> > synchronously.
-> >
-> > We pushed a new patch to meta-inspur and it worked fine.
-> > https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/49916
->
-> Good to know the issue is fixed.
-> Could you kindly re-work the patches to make it applicable for all
-> systems using 64MiB static layout?
+Community,
 
-Sure, We will re-test and re-push it, Thanks for your reply :)
+The OpenBMC security working group held a meeting today.  (Sorry I 
+missed sending a meeting announcement.)  We discussed the projects 
+progress toward becoming CVE Numbering Authority (CNA) with Mitre.
 
->
->
-> --
-> BRs,
-> Lei YU
+Meeting held 2021-12-22:
+
+Attendance: Joseph R, James M, Dhananjay P
+
+
+This meeting had low attendance because of the holiday season.
+
+
+1 CVE Numbering Authority (CNA)  onboarding
+
+Discussion
+
+The CNA training session was held.  We are working on the homework now 
+(creating dummy CVEs).  We found this tool easy to use: vulnogram.github.io
+
+TODO: Document new procedures and guidance for the OpenBMC Security 
+Response Team to follow when working as a CNA.
+
+TODO: Create a test issue under 
+https://github.com/openbmc/security-response/issues 
+<https://github.com/openbmc/security-response/issues>
+
+And see if it leaks out into public communication channels, then start 
+writing up old vulnerabilities.
+
