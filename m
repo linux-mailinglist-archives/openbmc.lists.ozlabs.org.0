@@ -2,46 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1215C47CF23
-	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 10:24:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4441547CFC4
+	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 11:13:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JJnvb5wsZz3bht
-	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 20:24:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JJq0Q10h4z2ypX
+	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 21:13:26 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=OwZGvPbC;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=troy_lee@aspeedtech.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c32;
+ helo=mail-oo1-xc32.google.com; envelope-from=leetroy@gmail.com;
  receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=OwZGvPbC; dkim-atps=neutral
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com
+ [IPv6:2607:f8b0:4864:20::c32])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JJnvK0h7Lz30Hr
- for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 20:23:56 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 1BM9Ht34081427;
- Wed, 22 Dec 2021 17:17:55 +0800 (GMT-8)
- (envelope-from troy_lee@aspeedtech.com)
-Received: from localhost.localdomain (192.168.10.10) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 22 Dec
- 2021 17:23:21 +0800
-From: Troy Lee <troy_lee@aspeedtech.com>
-To: <qemu-devel@nongnu.org>, <openbmc@lists.ozlabs.org>
-Subject: [PATCH v1 2/2] hw/arm/aspeed_ast2600: create i3c instance
-Date: Wed, 22 Dec 2021 17:23:19 +0800
-Message-ID: <20211222092319.2988568-3-troy_lee@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211222092319.2988568-1-troy_lee@aspeedtech.com>
-References: <20211222092319.2988568-1-troy_lee@aspeedtech.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JJq000CQYz2xsj
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 21:13:01 +1100 (AEDT)
+Received: by mail-oo1-xc32.google.com with SMTP id
+ y13-20020a4a624d000000b002daae38b0b5so573110oog.9
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Dec 2021 02:13:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=V7bbdHWNEEqlKDqJhjPg0gt0ycyFpnBJ9VFQDwjPwJk=;
+ b=OwZGvPbCWliC1s6b3g+osC4vh+r/G4X1boWK01Fidhk4SAdG+k68oXeoI2ZvDgY0Uc
+ CO7BjJsliv+5fCaEUESA3II6kPrnpPraeglaMidGqSykNvbeXQEWKeIAtL40jqEBLk9W
+ rA/udVK+vWlGDZ2mbNGapA7n4XPleFVgldBHP8+Y2siByurt1O9a4PdX4DHHUJ8kGsi6
+ GjoKCUX1yh/kKfXqxJb7b1X1xV48+Jqf1Lk/abG7QXuquqb8QB1BBD7Ctf2+8FSbO3m3
+ bPgRyxB5lkR72yQl1szq9ttyHCv8dAWLjM9JRgBkqnrut/nQUn83mW7MwQKJc8O2tn3a
+ 5PZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=V7bbdHWNEEqlKDqJhjPg0gt0ycyFpnBJ9VFQDwjPwJk=;
+ b=G/qnW/jJJP0bbdd3g08NixjHVsW5HPjES0curp7ogrWSRuOY+CABKouFyihu8tmFQY
+ MFQRR13c8OO13tP2LSOY3beu2gN5LBXFCg/vBeFhbytaO8RAdSa5MJo6JsuS4wY2w3HS
+ qdP5iSiCeDbNfiCZMa8hmzhfRFlPYbhdknW3r5DV+pqRYp0oIxLDH/DNiswElTy1DJIh
+ UoEwCYFO2IPlC2QNd/IUCAvNPCfdluMBAJXh+e02zRCRBcCdGaUpj1AN7YCEfokiFmvu
+ sXNqQL5iW4plhVsCetua8/qVkW3cldaI/gVjK8Eit+Ke16FiSF5ttuVbS8kl4VJAJTcE
+ AUEw==
+X-Gm-Message-State: AOAM530lygRm6c6QMY1dhIRLh0qNqqdkRtik96dszjJ61Lzsa9GcroDm
+ UOOisWs13Mdlx7mpR7/pfQgx8VgpdtbaFpPk7SPxKF0h/1I=
+X-Google-Smtp-Source: ABdhPJxBOq7emtO+k7PdSsn9pe8Myd++LWgbgOU5ke885UQAy3VFC11XSaC41OcuwvgD6pE97Bl9f7C5SC2sMUpMUnM=
+X-Received: by 2002:a4a:ead8:: with SMTP id s24mr1397236ooh.89.1640167978358; 
+ Wed, 22 Dec 2021 02:12:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.10.10]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 1BM9Ht34081427
+References: <CAO=notyNtux_jNWFsrYex_vkKxt_JEE=ATU-RrL=o7vmsEdEBA@mail.gmail.com>
+In-Reply-To: <CAO=notyNtux_jNWFsrYex_vkKxt_JEE=ATU-RrL=o7vmsEdEBA@mail.gmail.com>
+From: Troy Lee <leetroy@gmail.com>
+Date: Wed, 22 Dec 2021 18:12:51 +0800
+Message-ID: <CAN9Jwz0fLF+8_mSS8hSDOcAJVB_78zX3jwORd96ZAkCZNc5VnA@mail.gmail.com>
+Subject: Re: i3c on Qemu
+To: Patrick Venture <venture@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,92 +74,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Andrew Jeffery <andrew@aj.id.au>,
- leetroy@gmail.com, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Cc: Hao Wu <wuhaotsh@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This patch includes i3c instance in ast2600 soc.
+Hi Patrick,
 
-Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
----
- hw/arm/aspeed_ast2600.c     | 12 ++++++++++++
- include/hw/arm/aspeed_soc.h |  3 +++
- 2 files changed, 15 insertions(+)
+On Thu, Dec 9, 2021 at 3:02 AM Patrick Venture <venture@google.com> wrote:
+>
+> Hi all;
+>
+> With ast2600 and the nuvoton 8xx, we're seeing the introduction of i3c and I was curious if anyone on this list was already working on it for Aspeed or Qemu in general.
+>
+> Patrick
 
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index f2fef9d706..219b025bc2 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -63,6 +63,7 @@ static const hwaddr aspeed_soc_ast2600_memmap[] = {
-     [ASPEED_DEV_VUART]     = 0x1E787000,
-     [ASPEED_DEV_FSI1]      = 0x1E79B000,
-     [ASPEED_DEV_FSI2]      = 0x1E79B100,
-+    [ASPEED_DEV_I3C]       = 0x1E7A0000,
-     [ASPEED_DEV_SDRAM]     = 0x80000000,
- };
- 
-@@ -112,6 +113,7 @@ static const int aspeed_soc_ast2600_irqmap[] = {
-     [ASPEED_DEV_FSI1]      = 100,
-     [ASPEED_DEV_FSI2]      = 101,
-     [ASPEED_DEV_DP]        = 62,
-+    [ASPEED_DEV_I3C]       = 102,   /* 102 -> 107 */
- };
- 
- static qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int ctrl)
-@@ -230,6 +232,8 @@ static void aspeed_soc_ast2600_init(Object *obj)
- 
-     object_initialize_child(obj, "pwm", &s->pwm, TYPE_ASPEED_PWM);
- 
-+    object_initialize_child(obj, "i3c", &s->i3c, TYPE_ASPEED_I3C);
-+
-     object_initialize_child(obj, "fsi[*]", &s->fsi[0], TYPE_ASPEED_APB2OPB);
- }
- 
-@@ -542,6 +546,14 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->pwm), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_PWM));
- 
-+    /* I3C */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->i3c), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->i3c), 0, sc->memmap[ASPEED_DEV_I3C]);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->i3c), 0,
-+                       aspeed_soc_get_irq(s, ASPEED_DEV_I3C));
-+
-     /* FSI */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->fsi[0]), errp)) {
-         return;
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 0db200d813..0c950fab3c 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -21,6 +21,7 @@
- #include "hw/timer/aspeed_timer.h"
- #include "hw/rtc/aspeed_rtc.h"
- #include "hw/i2c/aspeed_i2c.h"
-+#include "hw/misc/aspeed_i3c.h"
- #include "hw/ssi/aspeed_smc.h"
- #include "hw/misc/aspeed_hace.h"
- #include "hw/watchdog/wdt_aspeed.h"
-@@ -53,6 +54,7 @@ struct AspeedSoCState {
-     AspeedRtcState rtc;
-     AspeedTimerCtrlState timerctrl;
-     AspeedI2CState i2c;
-+    AspeedI3CState i3c;
-     AspeedSCUState scu;
-     AspeedHACEState hace;
-     AspeedXDMAState xdma;
-@@ -148,6 +150,7 @@ enum {
-     ASPEED_DEV_FSI2,
-     ASPEED_DEV_DPMCU,
-     ASPEED_DEV_DP,
-+    ASPEED_DEV_I3C,
- };
- 
- #endif /* ASPEED_SOC_H */
--- 
-2.25.1
+I have submitted an initial commit for I3C with ast2600.
+However, this isn't a real I3C model, and it is just good enough to
+bring Aspeed SDK image up.
 
+https://patchwork.kernel.org/project/qemu-devel/list/?series=599257
+
+Thanks,
+Troy Lee
