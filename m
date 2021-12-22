@@ -2,63 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8032847CAD6
-	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 02:38:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C8AB47CCE0
+	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 07:11:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JJbZN2cM3z2ywv
-	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 12:38:36 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=NEsC0bwT;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JJjd86dpHz3bmk
+	for <lists+openbmc@lfdr.de>; Wed, 22 Dec 2021 17:11:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::730;
- helo=mail-qk1-x730.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=NEsC0bwT; dkim-atps=neutral
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com
- [IPv6:2607:f8b0:4864:20::730])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JJbYv3z3fz2xt0;
- Wed, 22 Dec 2021 12:38:09 +1100 (AEDT)
-Received: by mail-qk1-x730.google.com with SMTP id p4so859765qkm.7;
- Tue, 21 Dec 2021 17:38:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=fJAfK3DqpfiPmHQwaBI/smOBiafG0laxAPbgGyOvQTg=;
- b=NEsC0bwTrII2R5alA3OhKMtCJh6qrGtuahtPqUjey2ycLMqVZjwaz2JNlqDUDv/LSz
- ZQqLPDa9wna5XSVi0/muG0Apl+8GH4q4zGAPrcxoZX9XOmTJRnuCPjYxhATh7kTWXRyf
- gUiVLkVJypdREiMOBk6ZrWff6h4SMV81HMYzg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=fJAfK3DqpfiPmHQwaBI/smOBiafG0laxAPbgGyOvQTg=;
- b=W7xBFVcezxY0MGDwgec8V8ryNokpKiyHTpOwW+KOokpy550Jlk+HPFi1Hip+Td19Y0
- 6f9XeG+aHQOVEyf/IRYf8epx9kqdf/pm4uQJzkB9yY7CxwH6jk66aaJowhNc3TNUUnlJ
- c4QY8J/4IForhoKH/4gRBCznSt7RAOjI2803antseR7dWQekfc2uwLqCoqHQTdyEt1Kk
- NMl+7wcbeHOS4l53dem58Y+y3G/ms6X2mbYDmI/gEPcy5vBuL9kXcFjytEQbo/MXg+TX
- nECj4aJ8xu7s4TNXgXPQUlqG4S44MCFEhak/SMtpa3PofuqJbWQByHGEJ3aP4bDNhAo4
- b+8w==
-X-Gm-Message-State: AOAM532vKuHl5ZKDNWiDVpPMcGmdHbw5E7+Y15MINa7mP+RefcTmZ0Sg
- WEabTaDk07Uu64N2/hM6pfdMDx+i1KU0fYZ+Vvs=
-X-Google-Smtp-Source: ABdhPJxhiavwjj59AhM6tp4D2rXd4oQSL5w/FRsldzbqAWfZsoEC+QgYrJGyQgUTUvGjcxZ9auohlAELtVpy61lkCeg=
-X-Received: by 2002:a37:94c2:: with SMTP id w185mr740322qkd.666.1640137086103; 
- Tue, 21 Dec 2021 17:38:06 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JJjcq0M9Jz2xvP;
+ Wed, 22 Dec 2021 17:11:04 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 1BM64kGh064294;
+ Wed, 22 Dec 2021 14:04:46 +0800 (GMT-8)
+ (envelope-from jammy_huang@aspeedtech.com)
+Received: from [192.168.2.115] (192.168.2.115) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 22 Dec
+ 2021 14:10:12 +0800
+Message-ID: <203e9233-c32d-1c16-be0e-3d95ef1c3829@aspeedtech.com>
+Date: Wed, 22 Dec 2021 14:10:12 +0800
 MIME-Version: 1.0
-References: <20211210093623.2140640-1-yulei.sh@bytedance.com>
-In-Reply-To: <20211210093623.2140640-1-yulei.sh@bytedance.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 22 Dec 2021 01:37:53 +0000
-Message-ID: <CACPK8XeK977rY33Kt3-vhEbqa68iXbG6vbRAfRGYxC94tE=t_g@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: aspeed: g220a: Enable secondary flash
-To: Lei YU <yulei.sh@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH 2/4] media: aspeed: Use FIELD_GET to improve readability
+Content-Language: en-US
+To: Joel Stanley <joel@jms.id.au>
+References: <20211217095403.2618-1-jammy_huang@aspeedtech.com>
+ <20211217095403.2618-3-jammy_huang@aspeedtech.com>
+ <CACPK8XcmcP=vu8pWVKdiQVokPyh39Tuy0mfmgPSzb0wb0tcJuA@mail.gmail.com>
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+In-Reply-To: <CACPK8XcmcP=vu8pWVKdiQVokPyh39Tuy0mfmgPSzb0wb0tcJuA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [192.168.2.115]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 1BM64kGh064294
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,58 +57,119 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc <openbmc@lists.ozlabs.org>,
+Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Eddie James <eajames@linux.ibm.com>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>,
+ "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Lei,
+Hi Joel,
 
-On Fri, 10 Dec 2021 at 09:36, Lei YU <yulei.sh@bytedance.com> wrote:
->
-> Enable the secondary flash of the g220a's BMC and the wdt2.
->
-> Signed-off-by: Lei YU <yulei.sh@bytedance.com>
+OK, I will update in next patch as you advised.
+Thanks for your review.
 
-I've applied this and the layout patch for v5.17, and to the openbmc tree.
+On 2021/12/22 上午 08:59, Joel Stanley wrote:
+> On Fri, 17 Dec 2021 at 09:53, Jammy Huang <jammy_huang@aspeedtech.com> wrote:
+>> Use the bitfield macro FIELD_GET, and GENMASK to do the shift and mask in
+>> one go for reg values.
+>>
+>> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+>> ---
+>>   drivers/media/platform/aspeed-video.c | 35 ++++++++++++---------------
+>>   1 file changed, 16 insertions(+), 19 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+>> index d5f77b205175..581a4261f9b7 100644
+>> --- a/drivers/media/platform/aspeed-video.c
+>> +++ b/drivers/media/platform/aspeed-video.c
+>> @@ -156,26 +156,22 @@
+>>   #define  VE_SRC_LR_EDGE_DET_NO_H       BIT(13)
+>>   #define  VE_SRC_LR_EDGE_DET_NO_DISP    BIT(14)
+>>   #define  VE_SRC_LR_EDGE_DET_NO_CLK     BIT(15)
+>> -#define  VE_SRC_LR_EDGE_DET_RT_SHF     16
+>> -#define  VE_SRC_LR_EDGE_DET_RT         GENMASK(27, VE_SRC_LR_EDGE_DET_RT_SHF)
+>> +#define  VE_SRC_LR_EDGE_DET_RT         GENMASK(27, 16)
+>>   #define  VE_SRC_LR_EDGE_DET_INTERLACE  BIT(31)
+>>
+>>   #define VE_SRC_TB_EDGE_DET             0x094
+>>   #define  VE_SRC_TB_EDGE_DET_TOP                GENMASK(12, 0)
+>> -#define  VE_SRC_TB_EDGE_DET_BOT_SHF    16
+>> -#define  VE_SRC_TB_EDGE_DET_BOT                GENMASK(28, VE_SRC_TB_EDGE_DET_BOT_SHF)
+>> +#define  VE_SRC_TB_EDGE_DET_BOT                GENMASK(28, 16)
+>>
+>>   #define VE_MODE_DETECT_STATUS          0x098
+>>   #define  VE_MODE_DETECT_H_PERIOD       GENMASK(11, 0)
+>> -#define  VE_MODE_DETECT_V_LINES_SHF    16
+>> -#define  VE_MODE_DETECT_V_LINES                GENMASK(27, VE_MODE_DETECT_V_LINES_SHF)
+>> +#define  VE_MODE_DETECT_V_LINES                GENMASK(27, 16)
+>>   #define  VE_MODE_DETECT_STATUS_VSYNC   BIT(28)
+>>   #define  VE_MODE_DETECT_STATUS_HSYNC   BIT(29)
+>>
+>>   #define VE_SYNC_STATUS                 0x09c
+>>   #define  VE_SYNC_STATUS_HSYNC          GENMASK(11, 0)
+>> -#define  VE_SYNC_STATUS_VSYNC_SHF      16
+>> -#define  VE_SYNC_STATUS_VSYNC          GENMASK(27, VE_SYNC_STATUS_VSYNC_SHF)
+>> +#define  VE_SYNC_STATUS_VSYNC          GENMASK(27, 16)
+>>
+>>   #define VE_H_TOTAL_PIXELS              0x0A0
+>>
+>> @@ -988,23 +984,24 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>>                  sync = aspeed_video_read(video, VE_SYNC_STATUS);
+>>                  htotal = aspeed_video_read(video, VE_H_TOTAL_PIXELS);
+>>
+>> -               video->frame_bottom = (src_tb_edge & VE_SRC_TB_EDGE_DET_BOT) >>
+>> -                       VE_SRC_TB_EDGE_DET_BOT_SHF;
+>> -               video->frame_top = src_tb_edge & VE_SRC_TB_EDGE_DET_TOP;
+>> +               video->frame_bottom = FIELD_GET(VE_SRC_TB_EDGE_DET_BOT,
+>> +                                               src_tb_edge);
+>> +               video->frame_top = FIELD_GET(VE_SRC_TB_EDGE_DET_TOP,
+>> +                                            src_tb_edge);
+>>                  det->vfrontporch = video->frame_top;
+>> -               det->vbackporch = ((mds & VE_MODE_DETECT_V_LINES) >>
+>> -                       VE_MODE_DETECT_V_LINES_SHF) - video->frame_bottom;
+>> -               det->vsync = (sync & VE_SYNC_STATUS_VSYNC) >>
+>> -                       VE_SYNC_STATUS_VSYNC_SHF;
+>> +               det->vbackporch = FIELD_GET(VE_MODE_DETECT_V_LINES, mds) -
+>> +                       video->frame_bottom;
+>> +               det->vsync = FIELD_GET(VE_SYNC_STATUS_VSYNC, sync);
+>>                  if (video->frame_top > video->frame_bottom)
+>>                          continue;
+>>
+>> -               video->frame_right = (src_lr_edge & VE_SRC_LR_EDGE_DET_RT) >>
+>> -                       VE_SRC_LR_EDGE_DET_RT_SHF;
+>> -               video->frame_left = src_lr_edge & VE_SRC_LR_EDGE_DET_LEFT;
+>> +               video->frame_right = FIELD_GET(VE_SRC_LR_EDGE_DET_RT,
+>> +                                              src_lr_edge);
+>> +               video->frame_left = FIELD_GET(VE_SRC_LR_EDGE_DET_LEFT,
+>> +                                             src_lr_edge);
+> I suggest putting these on one line to further improve readability:
+>
+>                 video->frame_right = FIELD_GET(VE_SRC_LR_EDGE_DET_RT,
+> src_lr_edge);
+>                 video->frame_left = FIELD_GET(VE_SRC_LR_EDGE_DET_LEFT,
+> src_lr_edge);
+>
+> The same for the other lines you've changed above.
+>
+> And then add:
+>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+>
+>>                  det->hfrontporch = video->frame_left;
+>>                  det->hbackporch = htotal - video->frame_right;
+>> -               det->hsync = sync & VE_SYNC_STATUS_HSYNC;
+>> +               det->hsync = FIELD_GET(VE_SYNC_STATUS_HSYNC, sync);
+>>                  if (video->frame_left > video->frame_right)
+>>                          continue;
+>>
+>> --
+>> 2.25.1
+>>
+-- 
+Best Regards
+Jammy
 
-> ---
->  arch/arm/boot/dts/aspeed-bmc-bytedance-g220a.dts | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-bytedance-g220a.dts b/arch/arm/boot/dts/aspeed-bmc-bytedance-g220a.dts
-> index 01dace8f5e5f..05f392f42960 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-bytedance-g220a.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-bytedance-g220a.dts
-> @@ -260,6 +260,13 @@ flash@0 {
->                 spi-max-frequency = <50000000>;
->  #include "openbmc-flash-layout-64.dtsi"
->         };
-> +       flash@1 {
-> +               status = "okay";
-> +               label = "alt-bmc";
-> +               m25p,fast-read;
-> +               spi-max-frequency = <50000000>;
-> +#include "openbmc-flash-layout-64-alt.dtsi"
-> +       };
->  };
->
->  &spi1 {
-> @@ -278,6 +285,10 @@ &adc {
->         status = "okay";
->  };
->
-> +&wdt2 {
-> +       aspeed,alt-boot;
-> +};
-> +
->  &gpio {
->         status = "okay";
->         gpio-line-names =
-> --
-> 2.25.1
->
