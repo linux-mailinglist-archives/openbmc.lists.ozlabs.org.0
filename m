@@ -1,14 +1,14 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F409747F107
-	for <lists+openbmc@lfdr.de>; Fri, 24 Dec 2021 21:13:50 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B331F47F109
+	for <lists+openbmc@lfdr.de>; Fri, 24 Dec 2021 21:14:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JLJDD69Cyz2yxP
-	for <lists+openbmc@lfdr.de>; Sat, 25 Dec 2021 07:13:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JLJDx47Wgz303Z
+	for <lists+openbmc@lfdr.de>; Sat, 25 Dec 2021 07:14:25 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=JYNhAuDV;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=cHdNzbmQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,59 +18,59 @@ Authentication-Results: lists.ozlabs.org;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=JYNhAuDV; 
+ header.s=badeba3b8450 header.b=cHdNzbmQ; 
  dkim-atps=neutral
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JLJ872zjBz2yfr
- for <openbmc@lists.ozlabs.org>; Sat, 25 Dec 2021 07:10:15 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JLJ883dg6z3bT7
+ for <openbmc@lists.ozlabs.org>; Sat, 25 Dec 2021 07:10:16 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1640376601;
- bh=uCU4WScJHVUxlsEOqBn3UTIKUZe4k1mrK8GC9hWSR/4=;
+ s=badeba3b8450; t=1640376602;
+ bh=2dPShzHFzriRqFtF9y9WKwPMzzdl/zbLzrTjgdDn6yw=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JYNhAuDVTYYslQQ0FcWkfibQ/J4NHCBDv0bgyFS7hYueTUxkgXYAMFYSnx/ay0tLr
- 0JQCdokTIKFQK5edsPKUMlud6sh0MXeCQD9sYTxjgJPHRtE2aNxYEJz9SdIkd6LyCp
- QVgR5B0UiQoLdnIpL2af6c/FXjlp4LpNHQRcM54g=
+ b=cHdNzbmQAEkhxgczTvaGiwnDUn4P/vpmb6FfNbzYZrvWir0COSlIJmfHctf+3FIK7
+ ikDbFeofW/J73/QlDoKfEPRql3FVNSXNRKbSQWwY9IS6UPE5LvrneaMcuWceg8RG6l
+ rEvme9hBUeMI7NGpvsRdT1H8W+jdsmV2lJQS04eA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ma24y-1mvPOX1DYC-00VxCv; Fri, 24
- Dec 2021 21:10:01 +0100
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MPXdC-1mnBuq2Dg2-00MYOR; Fri, 24
+ Dec 2021 21:10:02 +0100
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: linux-gpio@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH v3 6/9] ARM: dts: wpcm450: Add pinctrl and GPIO nodes
-Date: Fri, 24 Dec 2021 21:09:32 +0100
-Message-Id: <20211224200935.93817-7-j.neuschaefer@gmx.net>
+Subject: [PATCH v3 7/9] ARM: dts: wpcm450: Add pin functions
+Date: Fri, 24 Dec 2021 21:09:33 +0100
+Message-Id: <20211224200935.93817-8-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211224200935.93817-1-j.neuschaefer@gmx.net>
 References: <20211224200935.93817-1-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:QwwPzIh6AfwnFWJ3JODbacJDi9/Y8M9tp0rFd84RF82EP/+RFgQ
- 80FvxQ+8nqjHZTYX4BNpcAFq3vl8GRZhc+wfDVWvL9sZjHFNh60GU1Ml/BBr+zjAKU8xAn2
- plZIzrh1xM5yN3hxUI3S3gcbhkV41WOBJFmBuD4koXa4Y/dNClduK2Xk3s4WZzrDP/+5Y/Y
- TVJQkKLldzLZspBLWSziw==
+X-Provags-ID: V03:K1:KeAON96EusSGtc1TAmVKCAO4ZyrOffMl31UPPQgHwRvLeGR87I7
+ F70+1M/BEXwruyEFH+cV0Lgpj/qgS2wUIEuhjIIMYkjXO6Or1SF68boWqcI+q51G6NapbgS
+ ngOVW4CeJfC+c8wufCmOQVYvvno3BObiaPCjL1vN2VReDMvrVgmoL2QDG+j+Z/MC6ZCfOKl
+ jTV4XwK/hSDtHJBJA6Xag==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:iGrDbB7wE74=:/kjfEZKTi56F2zQ+PrhGeJ
- Q15rqlmFM0uyLn9JsV17zK92tWDXNwh3NdtAOpPeKGQc1eQ92FBZT0DVGy8auHYJvRbpqETZU
- 8w6W0MzmMQUG7DD+v4EOdTz7G4T0eHMjSHEBf+DYpQcEs5nwsi2fNk0RxFxuBcOx2XErcIfoc
- Frs07VqL6UdHbGb6ZcNXMw/bPCwUfcyS9kylswgi/KQ6JN7hlIRFFXkEJR0CJXG3XSJl8VNzd
- vZlIwgn7wsmAlUNc1xX+X/zDB271k9aGDEfJfTG1zRe6bheDY4Qv5U3i+jMVD8ETpl0XrGXbJ
- lHHnOCdw7lC+K/8TdUBoCrWy/XmW3mKsXiOmnJLJA96+T4+555dC8INsdF6XWlAbo0ee2k0Vc
- Cp0UU/nJf7wyZ93LCkGQlYuek7h1qe5VJQ/LW637BMPaM+8AHrRKoe6xtZK63Xxie0cWbdePC
- EWbS82T7Z1jkGGoBNRGcmPPuVfnA4SQGxmRq7NLnKJvrLhPXL/zoc9hRWs+vBCQr+evSeua1V
- IGvWvuieWapnekYxx8dAtdACenVDjs0hl8jtBJZsxqDqJAzT9J72qYr3nljgUZ9hfU5ulBnTw
- 1K32yPiqqyi0L45iHqWZXgbbPPzBeCPwmAUpb6L7j3CXXy4s2C6hg7k+AMHHslAgpVWrPfFFa
- ddp6hpZgDPyGYlJWz806DBcmtcSk+jMR5iysRgWjNdchnPkJE6dy+lMB8MC2eOmxWMx8cDUwv
- TFaGD/tk25pVaRarn+AhEI2b6k84VyNqGS5tdpE8jNj8kski/B94glhadmx3POPSTgznc3heg
- FL/jfRfwP+6FHNnj5oE887BUotBjIcPiHpgLh5RHM/l9FnS0CpNO/bBIyaXEmfiapcp+Yrn33
- 6D+wJkayOK0PG9UMLd5OgxLvzXi+FSWIMTwdl50fp+RoqWAoZYOLrb0u8LXna0Vz66zzIW8dp
- WoCIswLAaMfrp+XZ9Jd/+9pk69soHomrZgJ478oikiIhRfXWYRmPwhFGhfEfIRubjIL1duE1k
- BuRBAB8hspO8N6FsR+Vur6ss9CZCkHWog0osrxpntdX1VPTZnbMMLBd1aeIqWLZxBP4ZIANPO
- RWUN1gVL00FLcE=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Y7/l5wAHr2Y=:k1t2XnCiseVt1SKbBbteGf
+ 5c+I1cl7tt3YAoP9dnkdSphW72gSjjErocrkmpcQ8iggkZ/dRbPcA/InuoLx/9XL6abQft29s
+ XkbVlx6kGsmnlJTcXhxL1QFmS+8MRHYN3H9IT632m1D4P5JPFKImZEKg+l9f0TKsvpQKbg260
+ Ooqx0T220O0+N0+1d+Xo1HGzkwYUzSn2Phr8F/ieDsI3/LuxCTcJwBAcN1blkIdIdzCDpLjPp
+ Heo7j/zHYmv3N7/gA3sCxNK9xiOvZGpV/QL8XErBpYrQxN1vxpiIposLn8B9LPJNz381bcmi9
+ V7P5W43/DiygyHAJCjpdRaGZNhIUGmltSLIwS9AqLv/GBQDL90+iDqg4lSvlq/urdv3hPu+QQ
+ B51r/IhxlAbmBpef2j8nlm7ehNukL7Qx/oPs5poXzHoF3EMmJGXHiCCvhFR+Tn1KfKFxjpalf
+ AiP6rFz1lGBiI76r4KPGsp14a/vA2VQE6tsiCb6cwBkrgq32dIJ61MN9+h4hgJUWLtVTs0PuL
+ Hn1YNKUOMxSDRCulPzXZ/h4DOLC2vHrY4ZtCwmLX6R8jJe0JhcmSB/no/xC+kbtluIPWm8F6b
+ wiJH8I6kVRsqn7FsFM2nBSj3bgz2Pz8/Z+DeTcGEtaJlu5fcliNNDpvkU4edwpLcXLOe6eARS
+ ut5Si+jaANfu/wrzA2gozrGpN/L+1d5SIWvCaytnag2n0YUYSsQQprTMPkJHiGcpHrONbArZG
+ VfemcaWqBAh2Rd0FX7ImdmqE3MAoeAfCCJs/FXDVg0hzfNVWVBi2kstf4h82ugacbRJWsgVQB
+ 3ZJKc/YO245kHwcZGfIa1LRVlVBmTAX8Fp0e6GwCPOjUcIo1xv1cy79YwaouV7w+9wVLFVPTj
+ 3PFm9A383acRHXvR44gKgGT3wYHLI7pD72uvbifOACwbLlHG4fJPgCuKm85rIAuykcpl/LtS6
+ Jam/Al4Mf3WTCOHQvwX20c93nqfQFVNm57lNgVI6VxcxVkO8I87g6s9e+MrgMgSu0pSl+tXTt
+ SwptsAqhkjy5Xm+dgU8jQe5eZ8ukNoWDEHBYkBhgRlEi5L3OYA862boaI9DVSR5WxP9JTevwF
+ kCVH/pI9TwEDH4=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,120 +91,344 @@ Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This patch adds the pin controller and GPIO banks to the devicetree for th=
-e
-WPCM450 SoC.
+As done in nuvoton-common-npcm7xx.dtsi, this patch adds pinmux nodes for
+all pin functions to nuvoton-wpcm450.dtsi.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-
 =2D--
+
+I'm not quite convinced of the value of this patch, as the pin functions
+could easily be specified in board.dts files when needed.
+
+
 v3:
-- Add Linus' R-b tag
-- Remove nuvoton,interrupt-map again, to simplify the binding
-- Make tuples clearer
+- Adjust to schema changes
 
 v2:
-- https://lore.kernel.org/lkml/20211207210823.1975632-7-j.neuschaefer@gmx.=
-net/
-- Move GPIO banks into subnodes
-- Add /alias/gpio*
+- no changes
 
 v1:
-- https://lore.kernel.org/lkml/20210602120329.2444672-7-j.neuschaefer@gmx.=
+- https://lore.kernel.org/lkml/20210602120329.2444672-8-j.neuschaefer@gmx.=
 net/
 =2D--
- arch/arm/boot/dts/nuvoton-wpcm450.dtsi | 72 ++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+ arch/arm/boot/dts/nuvoton-wpcm450.dtsi | 305 +++++++++++++++++++++++++
+ 1 file changed, 305 insertions(+)
 
 diff --git a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi b/arch/arm/boot/dts/nu=
 voton-wpcm450.dtsi
-index a17ee70085dd0..66c35626c80a6 100644
+index 66c35626c80a6..0c547bd88bdbd 100644
 =2D-- a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
 +++ b/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
-@@ -8,6 +8,17 @@ / {
- 	#address-cells =3D <1>;
- 	#size-cells =3D <1>;
-
-+	aliases {
-+		gpio0 =3D &gpio0;
-+		gpio1 =3D &gpio1;
-+		gpio2 =3D &gpio2;
-+		gpio3 =3D &gpio3;
-+		gpio4 =3D &gpio4;
-+		gpio5 =3D &gpio5;
-+		gpio6 =3D &gpio6;
-+		gpio7 =3D &gpio7;
-+	};
+@@ -148,6 +148,311 @@ gpio7: gpio@7 {
+ 				gpio-controller;
+ 				#gpio-cells =3D <2>;
+ 			};
 +
- 	cpus {
- 		#address-cells =3D <1>;
- 		#size-cells =3D <0>;
-@@ -77,5 +88,66 @@ aic: interrupt-controller@b8002000 {
- 			interrupt-controller;
- 			#interrupt-cells =3D <2>;
++			smb3_pins: mux-smb3 {
++				groups =3D "smb3";
++				function =3D "smb3";
++			};
++
++			smb4_pins: mux-smb4 {
++				groups =3D "smb4";
++				function =3D "smb4";
++			};
++
++			smb5_pins: mux-smb5 {
++				groups =3D "smb5";
++				function =3D "smb5";
++			};
++
++			scs1_pins: mux-scs1 {
++				groups =3D "scs1";
++				function =3D "scs1";
++			};
++
++			scs2_pins: mux-scs2 {
++				groups =3D "scs2";
++				function =3D "scs2";
++			};
++
++			scs3_pins: mux-scs3 {
++				groups =3D "scs3";
++				function =3D "scs3";
++			};
++
++			smb0_pins: mux-smb0 {
++				groups =3D "smb0";
++				function =3D "smb0";
++			};
++
++			smb1_pins: mux-smb1 {
++				groups =3D "smb1";
++				function =3D "smb1";
++			};
++
++			smb2_pins: mux-smb2 {
++				groups =3D "smb2";
++				function =3D "smb2";
++			};
++
++			bsp_pins: mux-bsp {
++				groups =3D "bsp";
++				function =3D "bsp";
++			};
++
++			hsp1_pins: mux-hsp1 {
++				groups =3D "hsp1";
++				function =3D "hsp1";
++			};
++
++			hsp2_pins: mux-hsp2 {
++				groups =3D "hsp2";
++				function =3D "hsp2";
++			};
++
++			r1err_pins: mux-r1err {
++				groups =3D "r1err";
++				function =3D "r1err";
++			};
++
++			r1md_pins: mux-r1md {
++				groups =3D "r1md";
++				function =3D "r1md";
++			};
++
++			rmii2_pins: mux-rmii2 {
++				groups =3D "rmii2";
++				function =3D "rmii2";
++			};
++
++			r2err_pins: mux-r2err {
++				groups =3D "r2err";
++				function =3D "r2err";
++			};
++
++			r2md_pins: mux-r2md {
++				groups =3D "r2md";
++				function =3D "r2md";
++			};
++
++			kbcc_pins: mux-kbcc {
++				groups =3D "kbcc";
++				function =3D "kbcc";
++			};
++
++			dvo0_pins: mux-dvo0 {
++				groups =3D "dvo";
++				function =3D "dvo0";
++			};
++
++			dvo3_pins: mux-dvo3 {
++				groups =3D "dvo";
++				function =3D "dvo3";
++			};
++
++			clko_pins: mux-clko {
++				groups =3D "clko";
++				function =3D "clko";
++			};
++
++			smi_pins: mux-smi {
++				groups =3D "smi";
++				function =3D "smi";
++			};
++
++			uinc_pins: mux-uinc {
++				groups =3D "uinc";
++				function =3D "uinc";
++			};
++
++			gspi_pins: mux-gspi {
++				groups =3D "gspi";
++				function =3D "gspi";
++			};
++
++			mben_pins: mux-mben {
++				groups =3D "mben";
++				function =3D "mben";
++			};
++
++			xcs2_pins: mux-xcs2 {
++				groups =3D "xcs2";
++				function =3D "xcs2";
++			};
++
++			xcs1_pins: mux-xcs1 {
++				groups =3D "xcs1";
++				function =3D "xcs1";
++			};
++
++			sdio_pins: mux-sdio {
++				groups =3D "sdio";
++				function =3D "sdio";
++			};
++
++			sspi_pins: mux-sspi {
++				groups =3D "sspi";
++				function =3D "sspi";
++			};
++
++			fi0_pins: mux-fi0 {
++				groups =3D "fi0";
++				function =3D "fi0";
++			};
++
++			fi1_pins: mux-fi1 {
++				groups =3D "fi1";
++				function =3D "fi1";
++			};
++
++			fi2_pins: mux-fi2 {
++				groups =3D "fi2";
++				function =3D "fi2";
++			};
++
++			fi3_pins: mux-fi3 {
++				groups =3D "fi3";
++				function =3D "fi3";
++			};
++
++			fi4_pins: mux-fi4 {
++				groups =3D "fi4";
++				function =3D "fi4";
++			};
++
++			fi5_pins: mux-fi5 {
++				groups =3D "fi5";
++				function =3D "fi5";
++			};
++
++			fi6_pins: mux-fi6 {
++				groups =3D "fi6";
++				function =3D "fi6";
++			};
++
++			fi7_pins: mux-fi7 {
++				groups =3D "fi7";
++				function =3D "fi7";
++			};
++
++			fi8_pins: mux-fi8 {
++				groups =3D "fi8";
++				function =3D "fi8";
++			};
++
++			fi9_pins: mux-fi9 {
++				groups =3D "fi9";
++				function =3D "fi9";
++			};
++
++			fi10_pins: mux-fi10 {
++				groups =3D "fi10";
++				function =3D "fi10";
++			};
++
++			fi11_pins: mux-fi11 {
++				groups =3D "fi11";
++				function =3D "fi11";
++			};
++
++			fi12_pins: mux-fi12 {
++				groups =3D "fi12";
++				function =3D "fi12";
++			};
++
++			fi13_pins: mux-fi13 {
++				groups =3D "fi13";
++				function =3D "fi13";
++			};
++
++			fi14_pins: mux-fi14 {
++				groups =3D "fi14";
++				function =3D "fi14";
++			};
++
++			fi15_pins: mux-fi15 {
++				groups =3D "fi15";
++				function =3D "fi15";
++			};
++
++			pwm0_pins: mux-pwm0 {
++				groups =3D "pwm0";
++				function =3D "pwm0";
++			};
++
++			pwm1_pins: mux-pwm1 {
++				groups =3D "pwm1";
++				function =3D "pwm1";
++			};
++
++			pwm2_pins: mux-pwm2 {
++				groups =3D "pwm2";
++				function =3D "pwm2";
++			};
++
++			pwm3_pins: mux-pwm3 {
++				groups =3D "pwm3";
++				function =3D "pwm3";
++			};
++
++			pwm4_pins: mux-pwm4 {
++				groups =3D "pwm4";
++				function =3D "pwm4";
++			};
++
++			pwm5_pins: mux-pwm5 {
++				groups =3D "pwm5";
++				function =3D "pwm5";
++			};
++
++			pwm6_pins: mux-pwm6 {
++				groups =3D "pwm6";
++				function =3D "pwm6";
++			};
++
++			pwm7_pins: mux-pwm7 {
++				groups =3D "pwm7";
++				function =3D "pwm7";
++			};
++
++			hg0_pins: mux-hg0 {
++				groups =3D "hg0";
++				function =3D "hg0";
++			};
++
++			hg1_pins: mux-hg1 {
++				groups =3D "hg1";
++				function =3D "hg1";
++			};
++
++			hg2_pins: mux-hg2 {
++				groups =3D "hg2";
++				function =3D "hg2";
++			};
++
++			hg3_pins: mux-hg3 {
++				groups =3D "hg3";
++				function =3D "hg3";
++			};
++
++			hg4_pins: mux-hg4 {
++				groups =3D "hg4";
++				function =3D "hg4";
++			};
++
++			hg5_pins: mux-hg5 {
++				groups =3D "hg5";
++				function =3D "hg5";
++			};
++
++			hg6_pins: mux-hg6 {
++				groups =3D "hg6";
++				function =3D "hg6";
++			};
++
++			hg7_pins: mux-hg7 {
++				groups =3D "hg7";
++				function =3D "hg7";
++			};
  		};
-+
-+		pinctrl: pinctrl@b8003000 {
-+			compatible =3D "nuvoton,wpcm450-pinctrl";
-+			reg =3D <0xb8003000 0x1000>;
-+			#address-cells =3D <1>;
-+			#size-cells =3D <0>;
-+
-+			gpio0: gpio@0 {
-+				reg =3D <0>;
-+				gpio-controller;
-+				#gpio-cells =3D <2>;
-+				interrupts =3D <2 IRQ_TYPE_LEVEL_HIGH>,
-+					     <3 IRQ_TYPE_LEVEL_HIGH>,
-+					     <4 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupt-controller;
-+			};
-+
-+			gpio1: gpio@1 {
-+				reg =3D <1>;
-+				gpio-controller;
-+				#gpio-cells =3D <2>;
-+				interrupts =3D <5 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupt-controller;
-+			};
-+
-+			gpio2: gpio@2 {
-+				reg =3D <2>;
-+				gpio-controller;
-+				#gpio-cells =3D <2>;
-+			};
-+
-+			gpio3: gpio@3 {
-+				reg =3D <3>;
-+				gpio-controller;
-+				#gpio-cells =3D <2>;
-+			};
-+
-+			gpio4: gpio@4 {
-+				reg =3D <4>;
-+				gpio-controller;
-+				#gpio-cells =3D <2>;
-+			};
-+
-+			gpio5: gpio@5 {
-+				reg =3D <5>;
-+				gpio-controller;
-+				#gpio-cells =3D <2>;
-+			};
-+
-+			gpio6: gpio@6 {
-+				reg =3D <6>;
-+				gpio-controller;
-+				#gpio-cells =3D <2>;
-+			};
-+
-+			gpio7: gpio@7 {
-+				reg =3D <7>;
-+				gpio-controller;
-+				#gpio-cells =3D <2>;
-+			};
-+		};
  	};
  };
 =2D-
