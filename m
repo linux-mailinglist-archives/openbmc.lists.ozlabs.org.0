@@ -2,149 +2,155 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74C9047FA19
-	for <lists+openbmc@lfdr.de>; Mon, 27 Dec 2021 05:31:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 829D547FBFD
+	for <lists+openbmc@lfdr.de>; Mon, 27 Dec 2021 11:54:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JMl9320C8z3051
-	for <lists+openbmc@lfdr.de>; Mon, 27 Dec 2021 15:31:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JMvgs2wvQz2yxL
+	for <lists+openbmc@lfdr.de>; Mon, 27 Dec 2021 21:54:49 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=g6yQEm2f;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=KFyyzAHp;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=equinix.com (client-ip=148.163.159.192;
- helo=mx0b-00268f01.pphosted.com;
- envelope-from=prvs=399563d983=zweiss@equinix.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=shuox.zhang@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256
- header.s=pps202002 header.b=g6yQEm2f; 
- dkim-atps=neutral
-Received: from mx0b-00268f01.pphosted.com (mx0b-00268f01.pphosted.com
- [148.163.159.192])
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=KFyyzAHp; dkim-atps=neutral
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JMl8c2dxfz2xWl
- for <openbmc@lists.ozlabs.org>; Mon, 27 Dec 2021 15:30:32 +1100 (AEDT)
-Received: from pps.filterd (m0105197.ppops.net [127.0.0.1])
- by mx0a-00268f01.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 1BQGCsS5024714;
- Mon, 27 Dec 2021 04:30:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com;
- h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-id : content-transfer-encoding : mime-version; s=pps202002;
- bh=mHA2q+xR92R8NC021xbDnoCOYrXGmHu3KgpHgKRu+f8=;
- b=g6yQEm2fi+muo9FRmsn5yZg8X2U/UcJ2cMmM9iPut2iON0IH0XcBs46jgaUGBKg+7sxz
- 5fxCEXdrh/cL/61rJv6EhSWjGUczrsponCWALwwkIjwruxtQcL9CyakqSm02z4LsSOtw
- aKtIAV/fmLtilo8yUUqtaVK97fq/oFLFqiLgZfny7Ff2KzFRc7HaW8KlQ5GOtLHA23zw
- E10gjLS+PXYm9LJ9UJa+8LW9fbbsKi8TxVberMS+8X3yb0/KbZL871Q6CjE5WXC9glwa
- j2NvopNJCKOPHWR6urNvRP+v7b5Nw+kZnKy4LL56lRRApPYfBWC+7/a8p/lfxUok0gBU jA== 
-Received: from nam04-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam08lp2048.outbound.protection.outlook.com [104.47.73.48])
- by mx0a-00268f01.pphosted.com (PPS) with ESMTPS id 3d6uqgrw28-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Dec 2021 04:30:15 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JMvgJ0bWWz2xsW
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Dec 2021 21:54:13 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1640602460; x=1672138460;
+ h=from:to:subject:date:message-id:mime-version;
+ bh=3iIvcpHYV/pUPSd3sIrjteOJobJtvsJIKiNMjbz91Ew=;
+ b=KFyyzAHp0gMV2lTiJnYvAZCS5sZxGCqm/PgwpNK6V0LzagKuU3qke2aN
+ HXZ52GZykDi6vr7DbllmEGD2941lw3xEQikaEDsCeUA9GreZl+JkPI42y
+ yNkW8vre9ZcOux2E9y8kO1V1SVZDYsi47pQq6ZEN3oBZ9vdvFv7rf2e3R
+ JGIc7HY7E7bR7kziHrGmaPpaDHUz2ijTz/IMX1gKWRsJw99O0nEO2cLJ2
+ CZFLhbmIMgKucjSzu5xy+q2tpS5vc6OuYKL25HKKVgVkNMfoe6uB9BNLs
+ yspQzgdEHsrSMxxJeOwgI+Dr/nFNtW3vTcFcXFJcEQ4oHPLKLfdQUaCho Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10209"; a="228498507"
+X-IronPort-AV: E=Sophos;i="5.88,239,1635231600"; 
+ d="scan'208,217";a="228498507"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Dec 2021 02:53:08 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,239,1635231600"; 
+ d="scan'208,217";a="523245487"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+ by orsmga008.jf.intel.com with ESMTP; 27 Dec 2021 02:53:08 -0800
+Received: from fmsmsx608.amr.corp.intel.com (10.18.126.88) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20; Mon, 27 Dec 2021 02:53:08 -0800
+Received: from fmsmsx601.amr.corp.intel.com (10.18.126.81) by
+ fmsmsx608.amr.corp.intel.com (10.18.126.88) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20; Mon, 27 Dec 2021 02:53:07 -0800
+Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20 via Frontend Transport; Mon, 27 Dec 2021 02:53:07 -0800
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.105)
+ by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2308.20; Mon, 27 Dec 2021 02:53:07 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SD23sABX3yaAOPuDQDtpsDseLKA3UGGdo+mnbcEMNSZhPkImarI0HqhJ2G3dYg4CZ9Kvn+E6ubbsuSVQ22Ypnu4HO2MlMZHSjuRMjFnYJns2DLvB+cfa+GJCmNxpRzw0aWReZmN2WbhP70E3uLtOYQBdpjuFWUdadDziwdofepY4IHbbIn/xPxius2kjMlVraRqnfX4zYokT+hVCkIf/zSaPmrFqekuxS5K3lbKQfZqMz/KueBUq4PhGpFdOJzi0Sjx78uB5GN+AuZG+VJ0spgkcGIVljHu9CdJB15WyTeDs0rkTt9UpJRWMkizy1efL8tqbaca4aMFehP3r53R+JQ==
+ b=I7y+1TsBzMVXVtijn+y5L3Zd9Mz4dDYMjezzZzKrhRA7A+v9rHUrezZPd2dWpEq2I0CQION1wve7MjjVPBwmxbWjtAjShbtn6XYB+QYNAA72w/LPV4BpaOM5RxIWmAG319YwXvR42sxHIL0l+9ljyPrizqk0jIkQQaQrMJMinK7HMRoOQHtYtSFYIRM3l//gaCyPd0BpDHjvjUiFxkRFAWW/wcagVp+ARDHVC5WdDGhq0rXj93RCmPaHi8Ir32a975swSLHrSKopnG70FTTMLtDMfOt6RfXz/6Xr+D92mPh9N74d0W0yK/ZWrtWVg1O1Ydbdmw0XGA3hsQzwzG20bg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mHA2q+xR92R8NC021xbDnoCOYrXGmHu3KgpHgKRu+f8=;
- b=gcGFRfscrJ0fP0mPokiiclO8zZBmziN7wNPQrN5nto9/dj5r9HdLPtRzSA6adi9Al7/dQ8INSaDrhpDghKC0idlA7Su9/FlAzEOrJb4UJlbmiDZS2gAvjzI8zZH+MkJTL/BdjAAvMoEvq0/1EcXseJZJTMHahyQUFGAp8Ff2zj5UzUP/rHvARts46UdRLQNXwfVi25S8+td0OQVueExudrtK1YeTk5ofYeHLJoT0v6D1xUcHYxZqzaKuztlIVRZdq8FKOpwdndAMK44A83UqQR3nZoE/uMsMukyNDpUs6KOHe+PiDcBR+ugfJjDVIRnKsTRH3KizmH67uNweUA7ZCA==
+ bh=KNuCWeONyPaikIjnkPt22Ic7MTWKY3O7pQKO9ooyZIo=;
+ b=YesP0/k7aV3GJwy2JNmrmoBxvKl8hF1jb5ZlD2OjmyyTDhIj8CVNaxg/DfKQ1zzfis1FvRo4k7n9c5UkMCIVDoJeF1cc/ZJvq5GFLbt8MkVJvdYxh25rvlUMMkNFiZVmivRN26A+fbGWHHy6NUoEdtg/Zrcf27wqbkMeUupKkLlWpl1Gbl8KCDkdLdxXgUNW+ySzPBUHIoc/T/2W1t0o37b6IGTZlsT90Hrk6N4kZQUcWolhsg1JvNoYBxtYK5JSOdJWkW/X0mk5DtdMZ+M535sEmxCBcS4L5Yf2my5VwTu392oB7Hkc0HHTy0Sb++eXo/bcARwivZgBl9ucvGdx2w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
- dkim=pass header.d=equinix.com; arc=none
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
- by DM8PR04MB8182.namprd04.prod.outlook.com (2603:10b6:5:317::9) with
- Microsoft SMTP Server (version=TLS1_2,
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BYAPR11MB3349.namprd11.prod.outlook.com (2603:10b6:a03:1c::21)
+ by BY5PR11MB3909.namprd11.prod.outlook.com (2603:10b6:a03:191::13)
+ with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4823.19; Mon, 27 Dec
- 2021 04:30:14 +0000
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::7c94:793b:ee8b:f4f8]) by DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::7c94:793b:ee8b:f4f8%3]) with mapi id 15.20.4823.022; Mon, 27 Dec 2021
- 04:30:13 +0000
-From: Zev Weiss <zweiss@equinix.com>
-To: Oskar Senft <osk@google.com>
-Subject: Re: Slow performance of VUART on AST2500 with 5.15.5
-Thread-Topic: Slow performance of VUART on AST2500 with 5.15.5
-Thread-Index: AQHX+tpx+y2rftSRxE2MGwgpi5/XoA==
-Date: Mon, 27 Dec 2021 04:30:13 +0000
-Message-ID: <20211227042940.GA5754@packtop>
-References: <CABoTLcTACbnnPZ8dfc_oFwgoT5JikYBHgfTjzknJbqC98rLMQQ@mail.gmail.com>
- <20211216042729.GJ25091@packtop>
- <CABoTLcQapj0LRAAWoo4ncagVGzK9brSz0RJti4H=+eeX5-o5kg@mail.gmail.com>
-In-Reply-To: <CABoTLcQapj0LRAAWoo4ncagVGzK9brSz0RJti4H=+eeX5-o5kg@mail.gmail.com>
+ 2021 10:53:05 +0000
+Received: from BYAPR11MB3349.namprd11.prod.outlook.com
+ ([fe80::8864:1d:ed75:55f8]) by BYAPR11MB3349.namprd11.prod.outlook.com
+ ([fe80::8864:1d:ed75:55f8%6]) with mapi id 15.20.4823.022; Mon, 27 Dec 2021
+ 10:53:05 +0000
+From: "Zhang, ShuoX" <shuox.zhang@intel.com>
+To: "ed@tanous.net" <ed@tanous.net>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: Sometimes https certificate installation fails
+Thread-Topic: Sometimes https certificate installation fails
+Thread-Index: Adf7Duea4mE1vLKrThKwAfaAk2sl4A==
+Date: Mon, 27 Dec 2021 10:53:05 +0000
+Message-ID: <BYAPR11MB3349652B688B83BFF5CD0B28E2429@BYAPR11MB3349.namprd11.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-version: 11.6.200.16
+dlp-reaction: no-action
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 0c7c2550-5713-4037-391d-08d9c8f193a0
-x-ms-traffictypediagnostic: DM8PR04MB8182:EE_
-x-microsoft-antispam-prvs: <DM8PR04MB8182556B74B8A6CD975EACB9C3429@DM8PR04MB8182.namprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-ms-office365-filtering-correlation-id: 1b052a0f-72e2-492f-be2a-08d9c9270f91
+x-ms-traffictypediagnostic: BY5PR11MB3909:EE_
+x-microsoft-antispam-prvs: <BY5PR11MB3909A886459A32B6BD24459BE2429@BY5PR11MB3909.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6430;
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 1OU8o9SEo5SG9DZAlGsCNKOY1yFCFckm1F9udQyb68+aZPfsaZB+fV+hSr4IFfeZ99ULvOya6Ca13tybq7xYz5xQb9GLc7nkqCOKG3JOZzlv8c0Efi/OPt+ImMC4xllIH3Dwwt4AMXOl7cDXmhcB7NJ8Vx+Dg+GlnPlY/VxkTm3YHM04UfUrXGg9udV1tT9gDRShyDCsnLCIa+y9tcEE3TPYMP8oX2vP5m/dKGjw6C9WJSdjLw8UUx1mBxDpiupCEtUsebm7IFxAVQfbPQ+g0ax9ezHxGr1YWN4CNaYXNIU2zXjejcR4DrQdUcQmCcWcIJ6hmpWJckg6LxYlWdrdq1wCuKKfSVW9FSpfqymriJQyUqb2UXpm2u+okqCm0pEsHre0iYLOoKumZxwSMU7xwpPXRdA0E7SX5xlx9lqegRzk9qwmOpQPVCDy0fJlqQhUmNltOO/pRaBygUzp+eJg1eI1xgXZfG9QUsluwFekODSQ6cKaYOHR1g3PJPiILIB+Rpn96LPQAggXfUTO0fY6CaOd9/sZVp3xiN+/FA8fe9p7dD9WPccZgKzg0oTXVSajgJhIptP8rAka6PjSp8PiYITbKBtsfu7AGXBDQDDH+7IWlJA+gNpDIo7XDteTYWhfyWtcsZ5eX9N+6xJKy0zvUdE73pQYP9uQ+lDWOE6y9IPhpviW4SySAoko/wyyp106
+x-microsoft-antispam-message-info: hhwZ7PaoabK2AnS22BgJkSATn1LhSRUh7IEMV7cdiLzUrVjwfsha7RyKuFf6slNCICCJTxk76xwx6g/AArj2uUBHpZKpxLQlowJ6Jio8KgJKuPSR4UuANzUf89Dpg+o+VxG52W5PHSvavdgzKbAR074P8LOvHpJ4lxptDZ2rGm5TxGuOE+QqIJA2Z5Lu88VbeuO/FCa3e11mY4LwOpFBhLEPaBO0kuzCdygTSeK7eY/GmnpdJisLxsteyFxFZh6iX6DSo66ACzu8/c+lxslzie1MCnQ0Lj0nqPK89pIgnETvTmiz7Zz1ZXWlfZdSNazWfj9d4cHMBZJs9QEJudqPN2zrphnyID/8rrSoHIpMOk8jC3LEwy7IMcTiYdlPQcfGfSfFFZIhnXLCLdn24QbPG8HsSJ4t9B9aikhMeUX2nLvzav6VW5VNhmKqetazOMx8YFNzRcE0xvzTi/mQ7FR8NSuptPFt7DPngBcrPkPL8+ybEAcnjSMYItVgjCj3JtxnNqq8ozmeyQzGK7rVojJip3joV77e19nsReEcodd3/2JEOlc7d/NN5zj0FGVBu6vK8mfAXKA7c6U1O+kYDSrg/4y4hZujlcu4m/52o842Mppmlajl7XCyGf7sWf6yWRR0V2KJSQyKez1ElvqgTsNxYt1QW9pjAFP9lycYfO+L2P3MkqRcU5SXbeflJMgou/+Am41bhn4qCZddnk6EAbC7+w==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM8PR04MB8007.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(7916004)(4636009)(366004)(33716001)(83380400001)(508600001)(8676002)(71200400001)(6506007)(33656002)(5660300002)(6916009)(86362001)(38100700002)(122000001)(64756008)(8936002)(66556008)(316002)(66476007)(66946007)(38070700005)(54906003)(6512007)(6486002)(1076003)(9686003)(4326008)(26005)(186003)(2906002)(66446008)(76116006)(91956017);
+ IPV:NLI; SFV:NSPM; H:BYAPR11MB3349.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(366004)(55016003)(7696005)(86362001)(508600001)(186003)(38070700005)(82960400001)(6506007)(26005)(2906002)(316002)(110136005)(38100700002)(9686003)(122000001)(83380400001)(5660300002)(64756008)(8676002)(76116006)(33656002)(66446008)(66476007)(52536014)(66556008)(4744005)(71200400001)(66946007)(8936002);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?rYtwLHJ7Ysz6ZIZtL04EcISFapvCpndWyKafxrXCDxISFq4gujJDatPIzAUX?=
- =?us-ascii?Q?3kce/Gfl+efDHwngvgsVgIj9wnSmcMuLvxbqlK+uPG+uaBtMJWqRrnxgjsux?=
- =?us-ascii?Q?bwyhb7VuAcfv0VHQ/LIUUE1kE/Sj8aoYix1jBASWYwoMfpVh+OqOTrm8U3wB?=
- =?us-ascii?Q?tkbKuFX29iCsB15qFt0/hNswEaU9C7al8n9EDHbZ6YDbS5TabnJiVSGAAEuJ?=
- =?us-ascii?Q?zO72X+m+X77AxcikAolXsNpz1jDZIywpHjJzetfXCLRA3EGimvrD4Ftbdytf?=
- =?us-ascii?Q?dYIdWuJ3gYOLverEFXTQzg+7zi0J8aBAgpiwllAIDA+Bgf4Q5i7wMhKHNd6+?=
- =?us-ascii?Q?vCbtZWpg3XqlpeoqxPlRtAGcwgCnC2AblB1uzH5a1JM7q9R0t3/76q1vTJN1?=
- =?us-ascii?Q?oCti5aV70RnSVCnVsPmiWJcOYU32wlbfXZL/cnS+iyxVpTbAlNiPxDi4HqHf?=
- =?us-ascii?Q?ZXKMfpHia3RjVnJUYd8GvWnDJ9daZd128aIpjhXZQ9EuuO1XyT/dUdo6npKo?=
- =?us-ascii?Q?7p4KHWBct94bA/qIRBq4l5kGsOn81rm8fLqL3/c1hHJCzAtbyPrhYE5R8Bcr?=
- =?us-ascii?Q?MAYeehOkVRd5aiVZShA43f0pKm5rqTR4pgCEuG+lvJKGH7QJ0kirO8LBRLXG?=
- =?us-ascii?Q?IKmIZtPEKKZt+QYsFcdshawzhskBY3aqld/ZPLEuew2bwNRrsU+Kn0e8ARUj?=
- =?us-ascii?Q?qasc7HrU68Xti6UwJXCAV4AeFvPRX0WmpYIEYoxaqGXK3AQgqlbNIR5LwJg1?=
- =?us-ascii?Q?0kWrKPg+0+sFmPIvxFotkWDTdTkUhIf/LqqTGT9cLRG4jPTx02a9ho6QOluT?=
- =?us-ascii?Q?ylL9Q7f/JvmdHvdJGSub9ffUPuAbQpkbdRPn727syZt7d+ISbAt5rxQ+e+fn?=
- =?us-ascii?Q?myY2N8T8mpmccEKiKK0dTq0XxLX8O+JXJcFv7k9IX0QWDMjY8W/TQ7CR0MXg?=
- =?us-ascii?Q?jAO1ep0+JuMEOPhCx/kETcJn/iNdRZ4vhpSZzAb2tdroehzxLW2uH8GTPmpg?=
- =?us-ascii?Q?3si+GQ+e/FA5HeRWOiLqpDl1QOtWCLUvWBhAgW2ePQSzTOm56Zqf329u5EtV?=
- =?us-ascii?Q?qsW2jUoPE6Q+vcgYpJHE2KWTPVLJWDgUhkr5bwQTmPKUNaUB5fcrAUtX9JDY?=
- =?us-ascii?Q?1itQsdW3kBAVCvSP2c6rpq+JBEIY7rU39fARSPYrAgR9KyzNdSxQU42zVFRE?=
- =?us-ascii?Q?nfb3e6C6c57QA9cVG0a/phsl04iAo4NNG+JqaVj5bYGxo3HIeihR6Sup9Es4?=
- =?us-ascii?Q?ws4ZYh4i0MV9OtsTrc4W+5Y5/yxl6volo7X/MBAHaBD2ro9iMoKuOLWm2mKJ?=
- =?us-ascii?Q?hqVGW4IgGAoOTiFWI/EXoj4KG+j4jY6jiHnHI5pgPEoxZe56IxpsGfNBVgBN?=
- =?us-ascii?Q?8HtQYwVMLmq3czXtA0quqkMRxGK+X+SMDY8sGmXHsV/2/1VXxl5VB0UN0Que?=
- =?us-ascii?Q?WNOgg0FFcJSsjjEFcH17TNKXwpsBFWAhNgzT6fOO9X/Wtur1HqkfdBgzTahk?=
- =?us-ascii?Q?mtEt4DbRD1iBEG3QjHcmGio2y4OSF4l3DoE+I5rJDJs/a6LNiVd10BJAEixD?=
- =?us-ascii?Q?SG+DMjFmoUrlZy7uwUWgZbk/3X6ZqhJhV18HLDiZOcXn8S40Y9MsEdbcRNGr?=
- =?us-ascii?Q?uRPHMaN+YtnXPBwu41TQF7k=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <AEDBE2147AAABD4AB811A1C92EF256A0@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+x-ms-exchange-antispam-messagedata-0: =?koi8-r?Q?R5fHk3WaqNzo8mvEoVauQrpDhX/KsSWrPPwn/jMFmRL9Wo2TSAUYGUg1b14uEA?=
+ =?koi8-r?Q?8atF3X5J8pqpD42U7wSn4WQi5qGqgtixzdCTNmqVGqBoJDB/fjKV3JDv2w+PMN?=
+ =?koi8-r?Q?ubaIv++9DDgFLjSy1AHHuzDlJOE8MpARPK+2Gw3m/YmDE7bMS0inL2y8X0XN/P?=
+ =?koi8-r?Q?ABldqW28OBwhxqnMjjPKyoToUAACT0/Ilpb5bdxRTz2qsm3t+5pHakGw+86kdJ?=
+ =?koi8-r?Q?jwQyR9YIQH26HASwZWV3L0CpDxJsb7Vgbd5mpf5BH0nj+DMgLLRH1ukuqZnPYd?=
+ =?koi8-r?Q?iqwIwK54g2gA5KtewEefT7Wca1QBd4EzUeQHXsufWtb+sZAlbAqcUK+HGUKqwK?=
+ =?koi8-r?Q?Lqq/4wcr1TgrC2G0CwBlGyEqwZ8txcDVjzm4qOfKliVkw/dj4/LFkJ73/y4zNs?=
+ =?koi8-r?Q?j3xI9q8HfV8mI2TCdGtKqCGJ7/gcxIVXePIGInaxS1RZ6KpcqBdiDDArIfeLFq?=
+ =?koi8-r?Q?ht7DPDSJcIgRs5gGgXbAIiT0nYsiwMGKvZ53DFdIzRGfCDwUoH2WC5jNPBW2rD?=
+ =?koi8-r?Q?zQSA9dg/XHWcPH3b4iAn37I3ziS+BATNrA2cmBoFvaOJR9gTNkehy+N1Z2Nktc?=
+ =?koi8-r?Q?zsexhIXbGaQ5TJj2zRaeqv5Ldc7FXGE4V2is32fSX86qXZTvIk/nfU/eH+otwT?=
+ =?koi8-r?Q?62EUHpTLhP+dVomaZm/zVf9orpu9F6CFAWSA8RSgVfa5LicZoKEAiWd3f13L8Z?=
+ =?koi8-r?Q?K06SWn6cYpe8pzU88PoEElsOjnAqka7AGlXmq+jYUjZgGgMGTk1NJSb5zBAuiX?=
+ =?koi8-r?Q?TrQPTaHA5fE33kcsWAdSvQaXbMMHCanpWt3yRHq25v36qmN8QMLjbYZRg8vR9z?=
+ =?koi8-r?Q?xJwti4JH0+2vwmKRrVtLcvx325YvdAfYc7eC4rEBU4KU3s1nOLBSxZHDmwLdhf?=
+ =?koi8-r?Q?SGCeDVT/O40R++Gh4QOFKVCRhZDsEdSEhLs0h8ngMQ4WD1dscnkN/L82k54fi4?=
+ =?koi8-r?Q?lgJ3PSGVatPc22fGftm1NA83u0FWqIETmRyDeBHPk6abak84zOeAvS7cz3v5eG?=
+ =?koi8-r?Q?IboW14JHHL0ethsXJCKc0mzqPWEbRfTbee5peAbjQPRbZ59qktNVCJZ+i6ayyj?=
+ =?koi8-r?Q?B+eazo/+2AHNrKwIO+HDNdE9tgN8VFWMOgq4JfP4ZI4liOpDIgP2XplZV3a6Xk?=
+ =?koi8-r?Q?0LiXxHyJJggf55bqQHNx9N74/yE9pzUEvqus1ec54SYEw7s8eBTET/fOGzZSnP?=
+ =?koi8-r?Q?d9FbaXD3SN7SMPKZ3E3MzITut3O62ntSJ/HsI5Bhgdjusola0cPKugHuZeqaOs?=
+ =?koi8-r?Q?PWmBaRTzrjbeKkpcim8YvbdhOjNGtpE5l5E8WT4EtwfQaMfqd8sjelLVNvuKN2?=
+ =?koi8-r?Q?KjK4u++4hZq7pl7TpDx4ZMy8pSlpTlHzN6DNYYnijv1BdNy49LiFMDIaKNnv6y?=
+ =?koi8-r?Q?dpDwXzC72DLweS7QI4YgXb/ms+Iaa67oYO2W5cIEy8TIFILRW/W4P2g/iw7JI5?=
+ =?koi8-r?Q?b0rKuFaIhSp/OUq5xNSE4xn9jVBMHzNsNQB9iJGO/4fW7mqSWgYvqKw3QT7Xn4?=
+ =?koi8-r?Q?Ap7v0lOf3IaDAvDuB9HPebE7herjLEkCwZedUkIuhwceNv144KjYG2wVXR8IfW?=
+ =?koi8-r?Q?q7Ji5CqZ76Nt1k7ohzcFx0eIwGHRKew=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_BYAPR11MB3349652B688B83BFF5CD0B28E2429BYAPR11MB3349namp_"
 MIME-Version: 1.0
-X-OriginatorOrg: equinix.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0c7c2550-5713-4037-391d-08d9c8f193a0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Dec 2021 04:30:13.7499 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3349.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1b052a0f-72e2-492f-be2a-08d9c9270f91
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Dec 2021 10:53:05.0763 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: mtvGtQOXrEDcozPG6Xiv14MaS12iXR1W8JucS2fKvSl98qlg6snoB+AY6KV2XTzyPZSCLEdPfCsaNvdo40Fm5g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR04MB8182
-X-Proofpoint-GUID: 45taWfB8QogwVL-RylTkdkxdcKRurA3x
-X-Proofpoint-ORIG-GUID: 45taWfB8QogwVL-RylTkdkxdcKRurA3x
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2021-12-27_01,2021-12-24_01,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 bulkscore=0 mlxscore=0
- mlxlogscore=999 clxscore=1015 suspectscore=0 impostorscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2110150000
- definitions=main-2112270023
+X-MS-Exchange-CrossTenant-userprincipalname: hf+hWppso66a0OfFMyOxPbSBurXuFkh7kf9Of/5yvFN6Gj80I9IR8fSDiM1IKtbH39/SLcPk47P+rzf8oB2Olw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB3909
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -156,63 +162,104 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Troy Lee <troy_lee@aspeedtech.com>, Jeremy Kerr <jk@codeconstruct.com.au>,
- Ali El-Haj-Mahmoud <aaelhaj@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Dec 15, 2021 at 10:54:19PM CST, Oskar Senft wrote:
->Hi Zev
->
->> >Is anyone aware of AST2500 VUART (or something else that would affect
->> >performance on an AST2500) having gotten broken somewhere between
->> >5.2.11 and 5.15.5?
->>
->> Yes, this is a known issue.
->
->And I felt that I was going crazy! Thanks for confirming that this is
->a known issue.
->
->> Prior to commit 54da3e381c2 ("serial: 8250_aspeed_vuart: use UPF_IOREMAP
->> to set up register mapping"), a long-standing bug in the aspeed-vuart
->> driver had a side-effect of unintentionally leaving the VUART's FIFOs
->> disabled.  With that patch applied to fix the bug, the FIFOs get enabled
->> as they were originally intended to be, but that in turn seems to expose
->> another bug with the host-side THRE bit not getting set when it should,
->> so the host-side driver's write routine ends up waiting for a timeout to
->> expire on every character (when it would otherwise continue on to the
->> next character upon seeing THRE asserted).  I think this may be a VUART
->> hardware problem, though that hasn't been officially confirmed thus far.
->
->Did you reach out to Aspeed yet? I've had some good experiences when
->talking with them directly.
->
+--_000_BYAPR11MB3349652B688B83BFF5CD0B28E2429BYAPR11MB3349namp_
+Content-Type: text/plain; charset="koi8-r"
+Content-Transfer-Encoding: quoted-printable
 
-I've discussed it a little with Troy on Discord, though I haven't yet
-heard any conclusive statements about the recommended course of action.
+Hi all,
+       Sometimes the https certificate is not displayed on redfish , but /e=
+tc/ssl/certs/https/server.pem exists, and other URLs can be accessed.
+       It can't find its path under dbus .
+       Is the default https certificate called by bmcweb, and then phosphor=
+-certificate-manager is generated ?
 
->
->> I'm hoping we can land on a better solution, but as a temporary
->> band-aid, hacking the driver to treat the device as an 8250 instead of a
->> 16550A (effectively just re-disabling the FIFOs) should speed things
->> back up:
->
->I can confirm that this fixes things, thank you! Is it worth dropping
->that into upstream for the time being, or do you think a "better
->solution" is imminent?
->
+=84=80/xyz
+  =84=80/xyz/openbmc_project
+    =84=80/xyz/openbmc_project/certs
+      =84=80/xyz/openbmc_project/certs/server
+        =84=80/xyz/openbmc_project/certs/server/https
 
-I don't really know what the timeline on a better workaround might be
-(or even if one is likely to exist); hopefully someone from Aspeed might
-be more likely to have some insight on that...
+--_000_BYAPR11MB3349652B688B83BFF5CD0B28E2429BYAPR11MB3349namp_
+Content-Type: text/html; charset="koi8-r"
+Content-Transfer-Encoding: quoted-printable
 
-I wouldn't be opposed to dropping that hack into the mainline driver at
-least for the time being though; seems like it shouldn't leave things
-any worse off than they were before the accidental bugfix side-effect of
-the UPF_IOREMAP patch, anyway.  Joel or Andrew, any particular opinions
-here?=20
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dkoi8-r">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@DengXian";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Hi all,<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;Sometimes the h=
+ttps certificate is not displayed on redfish , but /etc/ssl/certs/https/ser=
+ver.pem exists, and other URLs can be accessed.<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; It can&#8217;t =
+find its path under dbus . &nbsp;<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Is the def=
+ault https certificate called by bmcweb, and then phosphor-certificate-mana=
+ger is generated ?<o:p></o:p></p>
+<p class=3D"MsoNormal"><b><o:p>&nbsp;</o:p></b></p>
+<p class=3D"MsoNormal" style=3D"margin-left:.5in"><span lang=3D"ZH-CN" styl=
+e=3D"font-family:DengXian">=84=80</span>/xyz<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-left:.5in">&nbsp; <span lang=3D"ZH-C=
+N" style=3D"font-family:DengXian">
+=84=80</span>/xyz/openbmc_project<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-left:.5in">&nbsp;&nbsp;&nbsp; <span =
+lang=3D"ZH-CN" style=3D"font-family:DengXian">
+=84=80</span>/xyz/openbmc_project/certs<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-left:.5in">&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp; <span lang=3D"ZH-CN" style=3D"font-family:DengXian">
+=84=80</span>/xyz/openbmc_project/certs/server<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-left:.5in">&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp; <span lang=3D"ZH-CN" style=3D"font-family:DengXian">
+=84=80</span>/xyz/openbmc_project/certs/server/https<o:p></o:p></p>
+</div>
+</body>
+</html>
 
-
-Zev
+--_000_BYAPR11MB3349652B688B83BFF5CD0B28E2429BYAPR11MB3349namp_--
