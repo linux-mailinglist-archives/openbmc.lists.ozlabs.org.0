@@ -2,57 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B12CC480940
-	for <lists+openbmc@lfdr.de>; Tue, 28 Dec 2021 13:54:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F0BF480F0F
+	for <lists+openbmc@lfdr.de>; Wed, 29 Dec 2021 03:55:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JNZHP4mRVz3bmf
-	for <lists+openbmc@lfdr.de>; Tue, 28 Dec 2021 23:54:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JNwxZ1dDcz307W
+	for <lists+openbmc@lfdr.de>; Wed, 29 Dec 2021 13:55:14 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=MPT3HLOQ;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.219.45; helo=mail-qv1-f45.google.com;
- envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com
- [209.85.219.45])
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::235;
+ helo=mail-oi1-x235.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=MPT3HLOQ; dkim-atps=neutral
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com
+ [IPv6:2607:f8b0:4864:20::235])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JNZH51G9fz2yV7
- for <openbmc@lists.ozlabs.org>; Tue, 28 Dec 2021 23:54:07 +1100 (AEDT)
-Received: by mail-qv1-f45.google.com with SMTP id q4so16278824qvh.9
- for <openbmc@lists.ozlabs.org>; Tue, 28 Dec 2021 04:54:07 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JNwx76LNpz2yw1
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Dec 2021 13:54:49 +1100 (AEDT)
+Received: by mail-oi1-x235.google.com with SMTP id be32so32739546oib.11
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Dec 2021 18:54:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:content-transfer-encoding:mime-version:subject:date:references
+ :to:in-reply-to:message-id;
+ bh=qz/iQUWewPgGteOnlHxNUc5Py5kByVnpgqel0XRoRJc=;
+ b=MPT3HLOQI0sgSMiejxO0tGJRtkK0Qcgu1Ad3WWUrlHVLec7yXJjiyX4bbXgQCye4HK
+ G8AROCoB1igVwOv2uauX+Q+LhpsH12JKHljduxGLS3vbG9ndT1aIKqDnQdD8jU9bE9am
+ ySuILWTyOKkyHJHNtxjeBCVDH94IIwh0s5HmyEjictib/b13BLRWyXNO143tFZeW336H
+ PqXEjjNJoXRGRfrMZG76ISHchMcBYpbwyQRhOjI06yM2pbewKk6ZXzndkkuMHDr/d1xs
+ w1RkCnwWamTtrrTgX3CMx3iueKdDTuZErMp+P7Rh2jgOtI7y4QHGT9zqL2gNetmteMpR
+ gJdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
- :message-id;
- bh=ZJRShB4R17XUyA+Lmky9Eq7KbI1a01Ayw4czD8PmLMk=;
- b=vlIixv1OzZ9iC33lr82HxPFSxAbTLzfEowrmnGdHKwdwLnWN8Y2nMPTEFHENz/Wd13
- m25eMQXZg3KcxyKJURe0wCG189WZZawabsDg5xxQQkAFSNgUsd98tInaJ74Vz9CHNguK
- /rUgPsZLwK5AUvCvrl1ALL7QhHnAk5kXiUSXj08n64udMmwbNYbPSqjgjOg4W4ppEbgE
- Ov3vtxAL9oIWEA0begYfaPgv9ia/wbrKrXd/axwuHOaxGY6qoTjpWETU8QHMTruCIqpk
- 5+ACN4G3LZo4D7gSWKN/OkQAk05+saMK68xVOdbD4eaME8elTXLCIrleGBofwiMSu3VG
- iMLA==
-X-Gm-Message-State: AOAM532NaxUrqFnHH9WutTVzC5dTW7gwjjTH+3i9IWaWoCHPMDV2QKCs
- wOCIZy0BQDZhU/CDaeH2aA==
-X-Google-Smtp-Source: ABdhPJy/fzYGUO6kMogbqR18MjovZaSQSfYizR9m/aisbNPZJViok+Nkn+4LdRkBGt95ydX9TJxItg==
-X-Received: by 2002:a05:6214:500a:: with SMTP id
- jo10mr18668993qvb.17.1640696044298; 
- Tue, 28 Dec 2021 04:54:04 -0800 (PST)
-Received: from robh.at.kernel.org ([24.55.105.145])
- by smtp.gmail.com with ESMTPSA id j16sm15759721qtx.92.2021.12.28.04.54.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Dec 2021 04:54:03 -0800 (PST)
-Received: (nullmailer pid 685117 invoked by uid 1000);
- Tue, 28 Dec 2021 12:54:00 -0000
-From: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20211227183251.132525-2-krzysztof.kozlowski@canonical.com>
-References: <20211227183251.132525-1-krzysztof.kozlowski@canonical.com>
- <20211227183251.132525-2-krzysztof.kozlowski@canonical.com>
-Subject: Re: [PATCH 2/8] dt-bindings: rng: atmel,
- at91-trng: convert Atmel TRNG to dtschema
-Date: Tue, 28 Dec 2021 08:54:00 -0400
-Message-Id: <1640696040.235226.685116.nullmailer@robh.at.kernel.org>
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:date:references:to:in-reply-to:message-id;
+ bh=qz/iQUWewPgGteOnlHxNUc5Py5kByVnpgqel0XRoRJc=;
+ b=nVlJmOnBFtspFoIS0UeiOdHqRMgNssHFqfEjpCuOeOJ1q2F5C6f7XWyZJdM4aTF0lq
+ Y4LoQ9Hi349s/sMDxPz6sTcOV8jSlCi+Et4L3BsP25WBWZSnKsCFQolmi+LMHzgXP+Gy
+ J4ZWlE4eKa9FO8P8ai84kwbMIBr8g+f9T6Kr+GEU185tNqq2VUt8BY+aiyj4ZwvopW+T
+ pyyK8osTA2+gUVmnJv5LmAMj07YWXGF01yqY8XUeM7U7uB0aDp5qVDR1QFhkYlwlscpG
+ uWgvstRqw8MNVPpMRx0XaMW0WhRi/myB17T3KXHee2KgBXHBtkFt756oqX0VJQUDlEbE
+ UigQ==
+X-Gm-Message-State: AOAM532Xm/JVp3AS56vZSPnFvGgfjBWFWaE12nPRcS4vH0yh0UXh9SGw
+ kvsUS/aWB5usw79axtxvwASX9HnJUS4=
+X-Google-Smtp-Source: ABdhPJxJdS/RwEYORsQjJVw9m7cpEpTfViirCXOtS9vFw1qeNi46sg6fYo0nnuLZ8WTY2klQE8jWZw==
+X-Received: by 2002:aca:efc2:: with SMTP id
+ n185mr18752395oih.102.1640746486522; 
+ Tue, 28 Dec 2021 18:54:46 -0800 (PST)
+Received: from smtpclient.apple ([2600:1700:19e0:3310:c78:c461:b21e:323b])
+ by smtp.gmail.com with ESMTPSA id g7sm3390706oon.27.2021.12.28.18.54.45
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 28 Dec 2021 18:54:46 -0800 (PST)
+From: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: openbmc gerrit, jenkins and opengrok infrastructure updates on
+ Dec 28th
+Date: Tue, 28 Dec 2021 20:54:45 -0600
+References: <2D95E09C-F2D2-4595-98E9-4ABAB29E5FC9@gmail.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+In-Reply-To: <2D95E09C-F2D2-4595-98E9-4ABAB29E5FC9@gmail.com>
+Message-Id: <CC0ABE74-E2DB-4C5C-8E75-831C1C0D1C7C@gmail.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,50 +84,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Nishanth Menon <nm@ti.com>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Tomer Maimon <tmaimon77@gmail.com>, Tony Lindgren <tony@atomide.com>,
- Matt Mackall <mpm@selenic.com>, Tali Perry <tali.perry1@gmail.com>,
- Khuong Dinh <khuong@os.amperecomputing.com>,
- Benjamin Fair <benjaminfair@google.com>, openbmc@lists.ozlabs.org,
- Ludovic Desroches <ludovic.desroches@microchip.com>,
- Patrice Chotard <patrice.chotard@foss.st.com>, devicetree@vger.kernel.org,
- Nicolas Ferre <nicolas.ferre@microchip.com>, Rob Herring <robh+dt@kernel.org>,
- Santosh Shilimkar <ssantosh@kernel.org>, linux-arm-kernel@lists.infradead.org,
- Herbert Xu <herbert@gondor.apana.org.au>, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>, linux-kernel@vger.kernel.org,
- linux-crypto@vger.kernel.org, =?utf-8?q?Pali_Roh=C3=A1r?= <pali@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 27 Dec 2021 19:32:45 +0100, Krzysztof Kozlowski wrote:
-> Convert the Atmel TRNG bindings to DT schema.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> ---
->  .../bindings/rng/atmel,at91-trng.yaml         | 46 +++++++++++++++++++
->  .../devicetree/bindings/rng/atmel-trng.txt    | 16 -------
->  2 files changed, 46 insertions(+), 16 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/rng/atmel,at91-trng.yaml
->  delete mode 100644 Documentation/devicetree/bindings/rng/atmel-trng.txt
-> 
-
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
-
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
-
-Full log is available here: https://patchwork.ozlabs.org/patch/1573492
 
 
-rng@e2010000: compatible:0: 'microchip,sama7g5-trng' is not one of ['atmel,at91sam9g45-trng', 'microchip,sam9x60-trng']
-	arch/arm/boot/dts/at91-sama7g5ek.dt.yaml
+> On Dec 16, 2021, at 11:21 AM, Andrew Geissler <geissonator@gmail.com> =
+wrote:
+>=20
+> OpenBMC'ers
+>=20
+> I=E2=80=99m going to plan on doing some OpenBMC infrastructure =
+maintenance on Dec 28, 2021. This means gerrit, jenkins, and opengrok =
+will all be down for a certain period of time. I=E2=80=99m not much of a =
+system admin so I=E2=80=99m not going to provide much of a time table =
+other then I=E2=80=99ll do it as fast as I can :). But probably best to =
+count on not having these services from 8-5 US central time on that day.
+>=20
+> I=E2=80=99ll post to the #infrastructure channel in discord when I =
+start and end.
 
-rng@e2010000: compatible: Additional items are not allowed ('atmel,at91sam9g45-trng' was unexpected)
-	arch/arm/boot/dts/at91-sama7g5ek.dt.yaml
+Updates complete, let me know if you run into any issues via the =
+#infrastructure channel in discord.
 
-rng@e2010000: compatible: ['microchip,sama7g5-trng', 'atmel,at91sam9g45-trng'] is too long
-	arch/arm/boot/dts/at91-sama7g5ek.dt.yaml
+Jenkins was updated to 2.303.3
+Gerrit was updated to 3.4.3
+OpenGrok was updated to 1.7.25
+
+>=20
+> Andrew
 
