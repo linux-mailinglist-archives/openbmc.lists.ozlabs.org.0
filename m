@@ -1,107 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02AF04825BB
-	for <lists+openbmc@lfdr.de>; Fri, 31 Dec 2021 21:12:47 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40149482CAB
+	for <lists+openbmc@lfdr.de>; Sun,  2 Jan 2022 21:17:57 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JQbsl6CRqz302G
-	for <lists+openbmc@lfdr.de>; Sat,  1 Jan 2022 07:12:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JRqtq17Rdz2yn9
+	for <lists+openbmc@lfdr.de>; Mon,  3 Jan 2022 07:17:55 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Zye9yjsL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=j+URcDdg;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com;
- envelope-from=bruce.mitchell@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::a34;
+ helo=mail-vk1-xa34.google.com; envelope-from=venture@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Zye9yjsL; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=j+URcDdg; dkim-atps=neutral
+Received: from mail-vk1-xa34.google.com (mail-vk1-xa34.google.com
+ [IPv6:2607:f8b0:4864:20::a34])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JQbsB4sFXz2yjS
- for <openbmc@lists.ozlabs.org>; Sat,  1 Jan 2022 07:12:13 +1100 (AEDT)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1BVJIV5d019710; 
- Fri, 31 Dec 2021 20:12:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- subject : from : to : cc : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=VcNgTCgs5N/f2Jtd7H7FNl9av8xg/+dPz+o17KdnAwM=;
- b=Zye9yjsLn2IXMeNEt6FGkk2hWzSmwbnZh5xQMMRsF0RO9hsQHt02dPafG9AXgH/skmkh
- eeppNdkx7jE2UUl10TluaTEyfRkKDBF2larL6E0VASJDLpFovKiQ1H8JXsKL4B7ovLr2
- cN0Apkgp0MSF/6geLGe+fTXKDpTI2yjtsOfVAam8CnIXp4A53T8fqL1OUcUfqy/PMqnZ
- InfU3HuEilGcd3ySw5/6+hFQtAPdD790JWP2Jpx7UJOiXtc986N5DVOsHKijSHFCIDu+
- US4NxDy6GrmRiht3cWuaAN2ynb6KjhsxDncgA3lUhLR6VEpBIkK9s5wDhck09O0+oEZF jA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3da7wh8ptr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Dec 2021 20:12:04 +0000
-Received: from m0127361.ppops.net (m0127361.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 1BVKC4Iu008327;
- Fri, 31 Dec 2021 20:12:04 GMT
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3da7wh8ptk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Dec 2021 20:12:04 +0000
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 1BVK4cae023165;
- Fri, 31 Dec 2021 20:12:03 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma03wdc.us.ibm.com with ESMTP id 3d5txc2p4t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 31 Dec 2021 20:12:03 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 1BVKC3dI29229498
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 31 Dec 2021 20:12:03 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DBCB6124054;
- Fri, 31 Dec 2021 20:12:02 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5B875124052;
- Fri, 31 Dec 2021 20:12:02 +0000 (GMT)
-Received: from [9.211.146.101] (unknown [9.211.146.101])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
- Fri, 31 Dec 2021 20:12:02 +0000 (GMT)
-Message-ID: <5e028060-b1c8-c76d-6093-2560c66822ee@linux.vnet.ibm.com>
-Date: Fri, 31 Dec 2021 12:12:02 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: hwmontempsensor issue in dbus-sensor
-Content-Language: en-US
-From: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
-To: Ed Tanous <edtanous@google.com>,
- Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-References: <CAA7TbcvUE+iQxNepB6UcwD760JaKgK-8d3LW1HLk4DcuhbqmYw@mail.gmail.com>
- <CAA7Tbct7QyLjEa3WZug=U+jVzhGqLdCeX1H+GU=KNtMnqcAXZg@mail.gmail.com>
- <CAH2-KxDeAixLTj0MH2H+PH0P8NJv2Jf03VCdyxta17jLNuEnHw@mail.gmail.com>
- <4c4d2c0a-8840-4562-8e79-304f32a11904@linux.vnet.ibm.com>
-In-Reply-To: <4c4d2c0a-8840-4562-8e79-304f32a11904@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 0kLXUPa0shatnfJWs1KNxRdHE9hEXH_i
-X-Proofpoint-ORIG-GUID: uX2YmBlp3K2D-4AMpg2MNSXZKYXHoqgL
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JRqtM69Plz2xRn
+ for <openbmc@lists.ozlabs.org>; Mon,  3 Jan 2022 07:17:29 +1100 (AEDT)
+Received: by mail-vk1-xa34.google.com with SMTP id o2so17821582vkn.0
+ for <openbmc@lists.ozlabs.org>; Sun, 02 Jan 2022 12:17:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=sBvwX4k70d0A9Id9dVzWbxfxx8OIfvxFOb8lkqCmxtQ=;
+ b=j+URcDdgCfSJvJ3PXmtIaXBO5SiwtAH3qIP4oouEtzO5pghjxyMA2QcxGgiykRNJ9d
+ G23+3HW8NLr76CdbDnuFdhIG53gCseQYQt98MIfn5IPIuWTRGZ92hT1iambxvfouQJac
+ z4TN/VkTKj5QLhOMp28hsQuS7y3645AvhOrMibdtw4fRKaXULrqIDGc1+B+BQomeOcOM
+ viC7PXmXem8QQwmGkN5HmID02jmE9tnhRMG84inhblYc+xsS5a4RR2WtraPVaQf9nGFf
+ xZlkzGaHniHeePLbx6Jl/8CjRt9XVpEjEWz//0qXHyYhus0eJY049855AEHBb1bXpDwx
+ JN9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=sBvwX4k70d0A9Id9dVzWbxfxx8OIfvxFOb8lkqCmxtQ=;
+ b=S0wDMd2DObF6Z3ae82/XIMcBwO129pXtmAyw5HZoAmVkgYoMtsUwi89uTY7k9qTEi1
+ jV1oJJHd4KTrv/efXROuVIRIHXpKahSqgaaYe3DL/5RlcF/1c6SFO46/qDI54TDb6v2T
+ j4O+LBIXZS3GJC7TeDBpPW4GxHYu1u9l1c/73UxmT30ppJ6KKDN2WtZXZQq4GXgTyKa+
+ Zh9jE/abRKEJpysYwQn08vLErfxzkUH9Q8SPD3DJvSCP1Ca6Jc36Hh5lJjiA8Ts1tYyV
+ sMbFanu8a0R83uE5Ibc/Q3iOL4f3o33D9e6wPJn1NsRgyZA+NEG0nXVNXtOdhSy9gR0M
+ KgGA==
+X-Gm-Message-State: AOAM532GfLhTjzm4ER4Gv5Iyrp4lvGdcARCuNVHXAERQrU6SMJxhFVOY
+ kqxtQ4QhMEw4IOF6trU4W7ohuoNHSqxhNudWfinnFHK5OwM=
+X-Google-Smtp-Source: ABdhPJw20E7RyE63z8bkKbKF5z/XZnBvY6ajM7bL1tjHCzfy/cMJUP3DwIlpXwJce6h6EU/WsprDK63zHsp2epVb8mA=
+X-Received: by 2002:a05:6122:221d:: with SMTP id
+ bb29mr2119245vkb.30.1641154644744; 
+ Sun, 02 Jan 2022 12:17:24 -0800 (PST)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2021-12-31_09,2021-12-30_02,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- suspectscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
- impostorscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0 spamscore=0
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2112310084
+References: <CAO=notyNtux_jNWFsrYex_vkKxt_JEE=ATU-RrL=o7vmsEdEBA@mail.gmail.com>
+ <CAN9Jwz0fLF+8_mSS8hSDOcAJVB_78zX3jwORd96ZAkCZNc5VnA@mail.gmail.com>
+In-Reply-To: <CAN9Jwz0fLF+8_mSS8hSDOcAJVB_78zX3jwORd96ZAkCZNc5VnA@mail.gmail.com>
+From: Patrick Venture <venture@google.com>
+Date: Sun, 2 Jan 2022 12:17:13 -0800
+Message-ID: <CAO=notzZOjCQdTiAXmve9ce5h-xNTH0L+dBQFTnOxNRkEe+5Yg@mail.gmail.com>
+Subject: Re: i3c on Qemu
+To: Troy Lee <leetroy@gmail.com>, Joe Komlodi <komlodi@google.com>
+Content-Type: multipart/alternative; boundary="0000000000009f8c8705d49f1773"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,117 +75,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: velumanit@hcl.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Jayashree D <jayashree-d@hcl.com>
+Cc: Hao Wu <wuhaotsh@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 12/31/2021 09:30, Bruce Mitchell wrote:
-> On 12/20/2021 10:29, Ed Tanous wrote:
->> On Sun, Dec 19, 2021 at 9:11 PM Kumar Thangavel
->> <kumarthangavel.hcl@gmail.com> wrote:
->>>
->>> Hi All,
->>>
->>> Gentle Reminder on this.
->>>
->>> Thanks,
->>> Kumar.
->>>
->>> On Thu, Dec 16, 2021 at 1:56 PM Kumar Thangavel 
->>> <kumarthangavel.hcl@gmail.com> wrote:
->>>>
->>>> Hi All,
->>>>
->>>>
->>>> In dbus-sensors repo, I saw the patch for changes in Hwmon Temp Sensor.
->>>> https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e5341b22b7ab 
->>>>
->>
->> Bruce, this is your patch.  Could you take a look at the below and
->> provide your input?
->>
->>>>
->>>>
->>>> While testing those changes in my platform, I found that each sensor 
->>>> in hwmon temp has been creating twice.
->>>> After analyzed the patch, for below 2 paths SP_OUTLET_TEMP sensor is 
->>>> created twice.
->>>>
->>>>
->>>> /sys/class/hwmon/hwmon2/temp2_input
->>>> /sys/class/hwmon/hwmon2/temp1_input
->>>>
->>>>
->>>> Before your change, hwmon temp sensor will check whether the path is 
->>>> already exists or not.
->>>> If it exists, it will skip and proceed with next path.
->>>> https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e5341b22b7abL96 
->>>>
->>>>
->>>>
->>>> Could you please explain why it is creating twice in hwmon temp ?
->>>>
->>>>
->>>> Journalctl log before your changes applied :
->>>>
->>>>
->>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path : 
->>>> "/sys/class/hwmon/hwmon2/temp2_input"
->>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Type : 
->>>> xyz.openbmc_project.Configuration.TMP421
->>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Name : SP_OUTLET_TEMP
->>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path : 
->>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
->>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path : 
->>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
->>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path : 
->>>> "/sys/class/hwmon/hwmon2/temp1_input"
->>>>
->>>>
->>>>
->>>> Journalctl log after your changes applied :
->>>>
->>>>
->>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : 
->>>> "/sys/class/hwmon/hwmon2/temp2_input"
->>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor type : 
->>>> xyz.openbmc_project.Configuration.TMP421
->>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name : SP_OUTLET_TEMP
->>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : 
->>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
->>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : 
->>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
->>>>
->>>>
->>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : 
->>>> "/sys/class/hwmon/hwmon2/temp1_input"
->>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor type : 
->>>> xyz.openbmc_project.Configuration.TMP421
->>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name : SP_OUTLET_TEMP
->>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : 
->>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
->>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : 
->>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
->>>>
->>>>
->>>>
->>>> Thanks,
->>>>
->>>> Kumar.
-> 
-> I will give it quick look today.  Also today is my last day at IBM.
-> 
+--0000000000009f8c8705d49f1773
+Content-Type: text/plain; charset="UTF-8"
 
-The problem I had to solve was that I was adding devices
-(DPS310 and Si7020 type) that has more than one sensor type
-per device, in this case under /sys/bus/iio/devices .
-So the loop cannot continue after finding the first sensor of
-the device.  I have not seen p10bmc /sys/class/hwmon temperature
-sensors being created twice, in this case the TMP75.
-
-What is the entity-manager configuration for your system?
-I suspect that the dbus-sensors Hwmon does not take into account
-some detail that is needs to related to entity-manager.
+Hi Troy,
 
 
+
+On Wed, Dec 22, 2021 at 2:13 AM Troy Lee <leetroy@gmail.com> wrote:
+
+> Hi Patrick,
+>
+> On Thu, Dec 9, 2021 at 3:02 AM Patrick Venture <venture@google.com> wrote:
+> >
+> > Hi all;
+> >
+> > With ast2600 and the nuvoton 8xx, we're seeing the introduction of i3c
+> and I was curious if anyone on this list was already working on it for
+> Aspeed or Qemu in general.
+> >
+> > Patrick
+>
+> I have submitted an initial commit for I3C with ast2600.
+> However, this isn't a real I3C model, and it is just good enough to
+> bring Aspeed SDK image up.
+>
+> https://patchwork.kernel.org/project/qemu-devel/list/?series=599257
+>
+> Thanks,
+> Troy Lee
+>
+
+Thanks, I saw that and I think it probably fixes our bootloop issue when
+i3c is enabled.  My team will be working actively on real i3c support in
+the coming months as we continue building support for the next Nuvoton SoC
+and the ast2600.
+
+Patrick
+
+--0000000000009f8c8705d49f1773
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Troy,<div><br></div><div><br></div></d=
+iv><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On =
+Wed, Dec 22, 2021 at 2:13 AM Troy Lee &lt;<a href=3D"mailto:leetroy@gmail.c=
+om">leetroy@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">Hi Patrick,<br>
+<br>
+On Thu, Dec 9, 2021 at 3:02 AM Patrick Venture &lt;<a href=3D"mailto:ventur=
+e@google.com" target=3D"_blank">venture@google.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Hi all;<br>
+&gt;<br>
+&gt; With ast2600 and the nuvoton 8xx, we&#39;re seeing the introduction of=
+ i3c and I was curious if anyone on this list was already working on it for=
+ Aspeed or Qemu in general.<br>
+&gt;<br>
+&gt; Patrick<br>
+<br>
+I have submitted an initial commit for I3C with ast2600.<br>
+However, this isn&#39;t a real I3C model, and it is just good enough to<br>
+bring Aspeed SDK image up.<br>
+<br>
+<a href=3D"https://patchwork.kernel.org/project/qemu-devel/list/?series=3D5=
+99257" rel=3D"noreferrer" target=3D"_blank">https://patchwork.kernel.org/pr=
+oject/qemu-devel/list/?series=3D599257</a><br>
+<br>
+Thanks,<br>
+Troy Lee<br></blockquote><div><br></div><div>Thanks, I saw that and I think=
+ it probably fixes our bootloop issue when i3c is enabled.=C2=A0 My team wi=
+ll be working actively on real i3c support in the coming months as we conti=
+nue building support for the next Nuvoton SoC and the ast2600.</div><div><b=
+r></div><div>Patrick</div></div></div>
+
+--0000000000009f8c8705d49f1773--
