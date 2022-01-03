@@ -1,72 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82888482EA2
-	for <lists+openbmc@lfdr.de>; Mon,  3 Jan 2022 08:08:53 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27375482F92
+	for <lists+openbmc@lfdr.de>; Mon,  3 Jan 2022 10:44:54 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JS6Kv2wJFz304x
-	for <lists+openbmc@lfdr.de>; Mon,  3 Jan 2022 18:08:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JS9nv754nz2yp9
+	for <lists+openbmc@lfdr.de>; Mon,  3 Jan 2022 20:44:51 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HYhaMqBc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=fcCLtTz7;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::536;
- helo=mail-ed1-x536.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org;
+ envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=HYhaMqBc; dkim-atps=neutral
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com
- [IPv6:2a00:1450:4864:20::536])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=fcCLtTz7; 
+ dkim-atps=neutral
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JS9nR3WPbz2x9S
+ for <openbmc@lists.ozlabs.org>; Mon,  3 Jan 2022 20:44:27 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JS6KV3NVZz2xgb
- for <openbmc@lists.ozlabs.org>; Mon,  3 Jan 2022 18:08:28 +1100 (AEDT)
-Received: by mail-ed1-x536.google.com with SMTP id o6so132526890edc.4
- for <openbmc@lists.ozlabs.org>; Sun, 02 Jan 2022 23:08:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=NHZXehm927KzyKKNWTOoXfcUbZ7zByws6+ycWQTcJRc=;
- b=HYhaMqBcLuLMhGXhJqYmkLq48w7N/lEZYw0CwrF1XgidYeScNZRR+14e4IySLZgrHQ
- BvVUxVSX6lson2aNsp6guT4SH68hfA41J4Wxq5+2K7/owRDjXRGnX9jo/o4EmANv9VB/
- MGI8X5E8Rq5kjdCVa1EtutYuxvjD850AeVi9XG4BzlK6naWIGtdyb1VbOWGhdrub0Edr
- Qdqp14/lgCWAumC2q1XbAxYCmKQ4Ogb/2MTRme+mpn3przNfEM553HMiB0xMfoFwbQPy
- 5ZBb2vqi65fwFV8f5mI0OtsQl0p+CCG7PGlqavTWY+UPV7/hbezXfUA/gd/zJpEJ268p
- mfLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=NHZXehm927KzyKKNWTOoXfcUbZ7zByws6+ycWQTcJRc=;
- b=RuGXhc2ayuz1lIvW5jsjvt+U1XXhWOrm1U8TT3oClu2ZtiMiSaiwzxdEnQT9FAy0UW
- O5cHinm9WD2Viiv8nvjAU53tt+Qif+vjquGMx6BPdRRGHybxrizCkcCePZ8XBFhvZwKI
- qc/U82UDZ/o/w//GJkaEWg6J3vcOZkfehFG5NiBEfVMA6IjkViB79JiO+fl2Mnxtni0P
- F2U6pWT31JP7EEpgQdUAp4dIMXkwcqZ0Rt0Ch0PmJZ2FAcscp67tKlyMSrvwiiOkoc7T
- Uufw6HFL8cEDlyj0c8FvvPy/RpKw27E2sQn2Yny0sFWFyeXwSggyaXh3fwZd+4Vc5cEi
- 2xLQ==
-X-Gm-Message-State: AOAM530vHwv/vYnAkp+QKmbZJqeoY6GHXByn1YbxfjPofxq+8i7z5HEB
- Efc/ewxGglORVdmy7FMoPx11Y6ug5fQxyAgCg1Y=
-X-Google-Smtp-Source: ABdhPJyUuO/ufuo4UMzhFTHJlFyGCAHNRToMF0FpriMYuHKke762OvazrowZI8q09vkzg4tbYesGFmbX4BzO3rET1c4=
-X-Received: by 2002:a05:6402:d72:: with SMTP id
- ec50mr35909272edb.107.1641193698527; 
- Sun, 02 Jan 2022 23:08:18 -0800 (PST)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 9A09160FA6;
+ Mon,  3 Jan 2022 09:44:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4581AC36AEE;
+ Mon,  3 Jan 2022 09:44:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1641203063;
+ bh=ihGRiJtMqi1KackPQURTxGDLqipQgGwaNxDqfKCAvuA=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=fcCLtTz7COwnFHF8HDOkCo76M0jaDy9+tnLxfu+o7qoBh/ocL9b4cCQ7AkjGy4RSf
+ 3fmAjZAcWDTkXglGrMalXzTA7rx9iiRTAu1dWCESgndBkn9HLghNOvJiU9C6eJ2J9r
+ UE/lzm25TfjR/0FErn78a1+rjr4ALpJMUeZj4ubo01wX6esqmDsHLBlfqJu1dMVWPl
+ IfiC511QnvkiJ1/1KXGHgC+TEgxJDhDV3xdyQ3ce8rozk73MBLuXj7ToI1Qd8aMgk3
+ NvVt98gbNOoDe6xGCrQWgYuJleqiayC6Be6mw7dzDce6ZHD5IP+HxRs8oCwTV7jnhL
+ 7u67Wgt+Ln2bw==
+Date: Mon, 3 Jan 2022 10:44:19 +0100
+From: Wolfram Sang <wsa@kernel.org>
+To: Sui Chen <suichen@google.com>
+Subject: Re: [RFC Patch v2 0/3] I2C statistics as sysfs attributes
+Message-ID: <YdLFc/sJDf8rrPQ6@ninjato>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+ Sui Chen <suichen@google.com>, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-i2c@vger.kernel.org, joel@jms.id.au,
+ andrew@aj.id.au, tali.perry1@gmail.com, benjaminfair@google.com,
+ krellan@google.com, joe@perches.com
+References: <20211203023728.3699610-1-suichen@google.com>
+ <YapHznDoqJ+wjx8m@kunai>
+ <CAJOps0u=seskB-YGvLBsHantJohkEX7do-mt7YSZ6zChQMQxbg@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAA7TbcvUE+iQxNepB6UcwD760JaKgK-8d3LW1HLk4DcuhbqmYw@mail.gmail.com>
- <CAA7Tbct7QyLjEa3WZug=U+jVzhGqLdCeX1H+GU=KNtMnqcAXZg@mail.gmail.com>
- <CAH2-KxDeAixLTj0MH2H+PH0P8NJv2Jf03VCdyxta17jLNuEnHw@mail.gmail.com>
- <4c4d2c0a-8840-4562-8e79-304f32a11904@linux.vnet.ibm.com>
- <5e028060-b1c8-c76d-6093-2560c66822ee@linux.vnet.ibm.com>
-In-Reply-To: <5e028060-b1c8-c76d-6093-2560c66822ee@linux.vnet.ibm.com>
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Mon, 3 Jan 2022 12:40:22 +0530
-Message-ID: <CAA7TbcsoGm+=GH27hVShaLWiu1o=NSn9dG=VS+4_Mgc5vikbuQ@mail.gmail.com>
-Subject: Re: hwmontempsensor issue in dbus-sensor
-To: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>
-Content-Type: multipart/alternative; boundary="0000000000006889f805d4a82f60"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="SG3y9r3TeWn5kgv3"
+Content-Disposition: inline
+In-Reply-To: <CAJOps0u=seskB-YGvLBsHantJohkEX7do-mt7YSZ6zChQMQxbg@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,307 +70,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: velumanit@hcl.com, Ed Tanous <edtanous@google.com>,
- Jayashree D <jayashree-d@hcl.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: benjaminfair@google.com, andrew@aj.id.au, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, tali.perry1@gmail.com, krellan@google.com,
+ joe@perches.com, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006889f805d4a82f60
-Content-Type: text/plain; charset="UTF-8"
 
-Thanks Bruce for your response.
-
-Please find below the entitymanager hwmon sensor configuration path for our
-system.
-https://github.com/openbmc/entity-manager/blob/master/configurations/FBYV2.json#L434
-
-Thanks,
-Kumar.
-
-
-
-On Sat, Jan 1, 2022 at 1:42 AM Bruce Mitchell <
-bruce.mitchell@linux.vnet.ibm.com> wrote:
-
-> On 12/31/2021 09:30, Bruce Mitchell wrote:
-> > On 12/20/2021 10:29, Ed Tanous wrote:
-> >> On Sun, Dec 19, 2021 at 9:11 PM Kumar Thangavel
-> >> <kumarthangavel.hcl@gmail.com> wrote:
-> >>>
-> >>> Hi All,
-> >>>
-> >>> Gentle Reminder on this.
-> >>>
-> >>> Thanks,
-> >>> Kumar.
-> >>>
-> >>> On Thu, Dec 16, 2021 at 1:56 PM Kumar Thangavel
-> >>> <kumarthangavel.hcl@gmail.com> wrote:
-> >>>>
-> >>>> Hi All,
-> >>>>
-> >>>>
-> >>>> In dbus-sensors repo, I saw the patch for changes in Hwmon Temp
-> Sensor.
-> >>>>
-> https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e5341b22b7ab
-> >>>>
-> >>
-> >> Bruce, this is your patch.  Could you take a look at the below and
-> >> provide your input?
-> >>
-> >>>>
-> >>>>
-> >>>> While testing those changes in my platform, I found that each sensor
-> >>>> in hwmon temp has been creating twice.
-> >>>> After analyzed the patch, for below 2 paths SP_OUTLET_TEMP sensor is
-> >>>> created twice.
-> >>>>
-> >>>>
-> >>>> /sys/class/hwmon/hwmon2/temp2_input
-> >>>> /sys/class/hwmon/hwmon2/temp1_input
-> >>>>
-> >>>>
-> >>>> Before your change, hwmon temp sensor will check whether the path is
-> >>>> already exists or not.
-> >>>> If it exists, it will skip and proceed with next path.
-> >>>>
-> https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e5341b22b7abL96
-> >>>>
-> >>>>
-> >>>>
-> >>>> Could you please explain why it is creating twice in hwmon temp ?
-> >>>>
-> >>>>
-> >>>> Journalctl log before your changes applied :
-> >>>>
-> >>>>
-> >>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path :
-> >>>> "/sys/class/hwmon/hwmon2/temp2_input"
-> >>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Type :
-> >>>> xyz.openbmc_project.Configuration.TMP421
-> >>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Name : SP_OUTLET_TEMP
-> >>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path :
-> >>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
-> >>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path :
-> >>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
-> >>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path :
-> >>>> "/sys/class/hwmon/hwmon2/temp1_input"
-> >>>>
-> >>>>
-> >>>>
-> >>>> Journalctl log after your changes applied :
-> >>>>
-> >>>>
-> >>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> >>>> "/sys/class/hwmon/hwmon2/temp2_input"
-> >>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor type :
-> >>>> xyz.openbmc_project.Configuration.TMP421
-> >>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name : SP_OUTLET_TEMP
-> >>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> >>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
-> >>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> >>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
-> >>>>
-> >>>>
-> >>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> >>>> "/sys/class/hwmon/hwmon2/temp1_input"
-> >>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor type :
-> >>>> xyz.openbmc_project.Configuration.TMP421
-> >>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name : SP_OUTLET_TEMP
-> >>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> >>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
-> >>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> >>>> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
-> >>>>
-> >>>>
-> >>>>
-> >>>> Thanks,
-> >>>>
-> >>>> Kumar.
-> >
-> > I will give it quick look today.  Also today is my last day at IBM.
-> >
->
-> The problem I had to solve was that I was adding devices
-> (DPS310 and Si7020 type) that has more than one sensor type
-> per device, in this case under /sys/bus/iio/devices .
-> So the loop cannot continue after finding the first sensor of
-> the device.  I have not seen p10bmc /sys/class/hwmon temperature
-> sensors being created twice, in this case the TMP75.
->
-> What is the entity-manager configuration for your system?
-> I suspect that the dbus-sensors Hwmon does not take into account
-> some detail that is needs to related to entity-manager.
->
->
->
-
---0000000000006889f805d4a82f60
-Content-Type: text/html; charset="UTF-8"
+--SG3y9r3TeWn5kgv3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Thanks Bruce for your response.<div><br></div><div>Please =
-find below the entitymanager hwmon sensor configuration path for our system=
-.</div><div><a href=3D"https://github.com/openbmc/entity-manager/blob/maste=
-r/configurations/FBYV2.json#L434">https://github.com/openbmc/entity-manager=
-/blob/master/configurations/FBYV2.json#L434</a><br></div><div><br></div><di=
-v>Thanks,</div><div>Kumar.</div><div><br></div><div><br></div></div><br><di=
-v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Jan 1=
-, 2022 at 1:42 AM Bruce Mitchell &lt;<a href=3D"mailto:bruce.mitchell@linux=
-.vnet.ibm.com">bruce.mitchell@linux.vnet.ibm.com</a>&gt; wrote:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">On 12/31/2021 09:30, Bruce =
-Mitchell wrote:<br>
-&gt; On 12/20/2021 10:29, Ed Tanous wrote:<br>
-&gt;&gt; On Sun, Dec 19, 2021 at 9:11 PM Kumar Thangavel<br>
-&gt;&gt; &lt;<a href=3D"mailto:kumarthangavel.hcl@gmail.com" target=3D"_bla=
-nk">kumarthangavel.hcl@gmail.com</a>&gt; wrote:<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; Hi All,<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; Gentle Reminder on this.<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; Thanks,<br>
-&gt;&gt;&gt; Kumar.<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; On Thu, Dec 16, 2021 at 1:56 PM Kumar Thangavel <br>
-&gt;&gt;&gt; &lt;<a href=3D"mailto:kumarthangavel.hcl@gmail.com" target=3D"=
-_blank">kumarthangavel.hcl@gmail.com</a>&gt; wrote:<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Hi All,<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; In dbus-sensors repo, I saw the patch for changes in Hwmon=
- Temp Sensor.<br>
-&gt;&gt;&gt;&gt; <a href=3D"https://github.com/openbmc/dbus-sensors/commit/=
-544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f=
-9c79a60faf8a26f410c1568e5341b22b7ab" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3ba0=
-fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e5341b=
-22b7ab</a> <br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; Bruce, this is your patch.=C2=A0 Could you take a look at the belo=
-w and<br>
-&gt;&gt; provide your input?<br>
-&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; While testing those changes in my platform, I found that e=
-ach sensor <br>
-&gt;&gt;&gt;&gt; in hwmon temp has been creating twice.<br>
-&gt;&gt;&gt;&gt; After analyzed the patch, for below 2 paths SP_OUTLET_TEMP=
- sensor is <br>
-&gt;&gt;&gt;&gt; created twice.<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; /sys/class/hwmon/hwmon2/temp2_input<br>
-&gt;&gt;&gt;&gt; /sys/class/hwmon/hwmon2/temp1_input<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Before your change, hwmon temp sensor will check whether t=
-he path is <br>
-&gt;&gt;&gt;&gt; already exists or not.<br>
-&gt;&gt;&gt;&gt; If it exists, it will skip and proceed with next path.<br>
-&gt;&gt;&gt;&gt; <a href=3D"https://github.com/openbmc/dbus-sensors/commit/=
-544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f=
-9c79a60faf8a26f410c1568e5341b22b7abL96" rel=3D"noreferrer" target=3D"_blank=
-">https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3=
-ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e53=
-41b22b7abL96</a> <br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Could you please explain why it is creating twice in hwmon=
- temp ?<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Journalctl log before your changes applied :<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path : <b=
-r>
-&gt;&gt;&gt;&gt; &quot;/sys/class/hwmon/hwmon2/temp2_input&quot;<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Type : <b=
-r>
-&gt;&gt;&gt;&gt; xyz.openbmc_project.Configuration.TMP421<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Name : SP=
-_OUTLET_TEMP<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path=
- : <br>
-&gt;&gt;&gt;&gt; /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP<br=
->
-&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path=
- : <br>
-&gt;&gt;&gt;&gt; /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_=
-TEMP<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path : <b=
-r>
-&gt;&gt;&gt;&gt; &quot;/sys/class/hwmon/hwmon2/temp1_input&quot;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Journalctl log after your changes applied :<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : <b=
-r>
-&gt;&gt;&gt;&gt; &quot;/sys/class/hwmon/hwmon2/temp2_input&quot;<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor ty=
-pe : <br>
-&gt;&gt;&gt;&gt; xyz.openbmc_project.Configuration.TMP421<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name : SP=
-_OUTLET_TEMP<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : <b=
-r>
-&gt;&gt;&gt;&gt; /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP<br=
->
-&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : <b=
-r>
-&gt;&gt;&gt;&gt; /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_=
-TEMP<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : <b=
-r>
-&gt;&gt;&gt;&gt; &quot;/sys/class/hwmon/hwmon2/temp1_input&quot;<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor ty=
-pe : <br>
-&gt;&gt;&gt;&gt; xyz.openbmc_project.Configuration.TMP421<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name : SP=
-_OUTLET_TEMP<br>
-&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : <b=
-r>
-&gt;&gt;&gt;&gt; /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP<br=
->
-&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path : <b=
-r>
-&gt;&gt;&gt;&gt; /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_=
-TEMP<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Thanks,<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Kumar.<br>
-&gt; <br>
-&gt; I will give it quick look today.=C2=A0 Also today is my last day at IB=
-M.<br>
-&gt; <br>
-<br>
-The problem I had to solve was that I was adding devices<br>
-(DPS310 and Si7020 type) that has more than one sensor type<br>
-per device, in this case under /sys/bus/iio/devices .<br>
-So the loop cannot continue after finding the first sensor of<br>
-the device.=C2=A0 I have not seen p10bmc /sys/class/hwmon temperature<br>
-sensors being created twice, in this case the TMP75.<br>
-<br>
-What is the entity-manager configuration for your system?<br>
-I suspect that the dbus-sensors Hwmon does not take into account<br>
-some detail that is needs to related to entity-manager.<br>
-<br>
-<br>
-</blockquote></div>
 
---0000000000006889f805d4a82f60--
+> - Because we're targeting at-scale monitoring of fleets of machines
+>    in large numbers with identical hardware configuration, the
+>    I2C counters (including NACK) can be used for apples-to-apples
+>    comparison, for detecting anomaly, etc., while this may not be
+>    applicable to a single machine.
+
+Okay, I buy this argument. Let's work on this during the next cycle.
+=46rom a glimpse, we need some refactoring, like moving stuff away from
+i2c-dev into the core and probably add a generic stats-struct which can
+be attached to i2c_adapter. But I'll respond to that in more detail to
+v3 when I have a better picture.
+
+
+--SG3y9r3TeWn5kgv3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmHSxXMACgkQFA3kzBSg
+Kbadew//YJJjHVOZvJkbqH10fwSHXbLcfLmRWbC7F3u0BLstTzPTXvm0ESE+4wQS
+nMPzxnZHMzfTDfFObBwzkIVcdoY9msPlCxqgAXfBFDbLVBlca1ANtZbom8t26EYS
+eqWtWtJ09qxIpbjMcecvF0SOcZzSA5CpCGKlpV0gXl5RXD09c9mw1HsB+zZoaKEE
+/58mOG6Evjf0oAUO0oqbi6km3AmYDb74REXcgeL2npsbSkK0vO2vinwSgEOybIUE
+G51tKqW6ESYGS7s2ZlYniaFhcNagy5J9HuXgbvRurX1ebsMsbJ7444qHPbmGP2uf
+ZSu8E2IF9qsCGA1nQGhSsLXGY7OVXSISP3sKyfE7UFTHwTWVV/zebAZZPPfwD9py
+yrokc66kBpWWwV6KLTPt+DJcEwPlVCsyo4vcjAz5+zglIFy9XmidsjZSjPgluAPV
+EkPqx6n6ftylYIJeeKMquqmjKC3oZzNy6rhneVJ0moZRoZXeOF9/UO95qJgiikol
+qYhzD7SW87ceiKFxLYhnj/SH149CxJighnfnMCOlfL4+zKuIKfDeHURRcW+ablyG
+hcfaewyz+MbWhllgAmOmrBfJLCNzKvZCj3I504uLnQ22KYwiangvNOwuLRjSRSJ+
+af1+YoVXg+pY9IcQy+7lP3uXUHWpu3aZq1hfPcn01MHffyQX+A0=
+=RbAX
+-----END PGP SIGNATURE-----
+
+--SG3y9r3TeWn5kgv3--
