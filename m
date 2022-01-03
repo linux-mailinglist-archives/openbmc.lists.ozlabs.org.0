@@ -1,61 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA9B44830E4
-	for <lists+openbmc@lfdr.de>; Mon,  3 Jan 2022 13:13:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73D14483037
+	for <lists+openbmc@lfdr.de>; Mon,  3 Jan 2022 12:10:41 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JSF5K5MMzz308J
-	for <lists+openbmc@lfdr.de>; Mon,  3 Jan 2022 23:13:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JSChv2xJzz2yp9
+	for <lists+openbmc@lfdr.de>; Mon,  3 Jan 2022 22:10:39 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=AcCeAjJS;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=46.105.37.156; helo=8.mo552.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-X-Greylist: delayed 8743 seconds by postgrey-1.36 at boromir;
- Mon, 03 Jan 2022 23:13:08 AEDT
-Received: from 8.mo552.mail-out.ovh.net (8.mo552.mail-out.ovh.net
- [46.105.37.156])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=AcCeAjJS; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JSF500p3fz2yY0
- for <openbmc@lists.ozlabs.org>; Mon,  3 Jan 2022 23:13:05 +1100 (AEDT)
-Received: from mxplan5.mail.ovh.net (unknown [10.108.1.93])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 0591921284;
- Mon,  3 Jan 2022 09:47:19 +0000 (UTC)
-Received: from kaod.org (37.59.142.106) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.17; Mon, 3 Jan
- 2022 10:47:18 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-106R0068baf1245-61fa-44b9-9d80-a92a2f10c7f9,
- 71ABFCEAB0EE88409933ED7B68EF8EFCD2601B88) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <1e9d57e3-873a-be84-e702-fcc0c4397602@kaod.org>
-Date: Mon, 3 Jan 2022 10:47:15 +0100
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JSChV0L8bz2y7P
+ for <openbmc@lists.ozlabs.org>; Mon,  3 Jan 2022 22:10:17 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 550B146E47;
+ Mon,  3 Jan 2022 11:10:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1641208211; x=1643022612; bh=YTVqHpD3V+dSVbeMY597QTIiF
+ uPqqEUXLsQ0bJrvx1w=; b=AcCeAjJS9vFJckCOK4OVmez/PIWbcqBXsov1fC6Ul
+ Kkf6W2kHyDF1W+1VnuQqw+CE6LkGNS8f/uwTm+4o3xhFUpRTy4yKxXXMQrErwDIi
+ p4sfJadIFtnii9/ds/VujiYUbExMrGOvaknrMf5gj9SH/2fFzm94tpDqyG9AT2VG
+ d4=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id h-esVlIiTUT1; Mon,  3 Jan 2022 14:10:11 +0300 (MSK)
+Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
+ [172.17.100.104])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id A37FB46D6D;
+ Mon,  3 Jan 2022 14:10:10 +0300 (MSK)
+Received: from [172.17.4.172] (172.17.4.172) by T-EXCH-04.corp.yadro.com
+ (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 3 Jan
+ 2022 14:10:09 +0300
+Message-ID: <ff7a3d7fc5ed91ab62b935421f779a6407e817fc.camel@yadro.com>
+Subject: Re: [ERROR: Nothing RPROVIDES 'u-boot-default-env']
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: Nikhil V <nikhil.vu@zohocorp.com>, openbmc <openbmc@lists.ozlabs.org>
+Date: Mon, 3 Jan 2022 14:10:09 +0300
+In-Reply-To: <17e1f659f9b.c8f061fb4115.9212316766481010802@zohocorp.com>
+References: <17e1f659f9b.c8f061fb4115.9212316766481010802@zohocorp.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.4 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: i3c on Qemu
-Content-Language: en-US
-To: Patrick Venture <venture@google.com>, Troy Lee <leetroy@gmail.com>, Joe
- Komlodi <komlodi@google.com>
-References: <CAO=notyNtux_jNWFsrYex_vkKxt_JEE=ATU-RrL=o7vmsEdEBA@mail.gmail.com>
- <CAN9Jwz0fLF+8_mSS8hSDOcAJVB_78zX3jwORd96ZAkCZNc5VnA@mail.gmail.com>
- <CAO=notzZOjCQdTiAXmve9ce5h-xNTH0L+dBQFTnOxNRkEe+5Yg@mail.gmail.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <CAO=notzZOjCQdTiAXmve9ce5h-xNTH0L+dBQFTnOxNRkEe+5Yg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.106]
-X-ClientProxiedBy: DAG1EX2.mxp5.local (172.16.2.2) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: d2e5098d-24c0-4c83-942b-5cc32c71f6c5
-X-Ovh-Tracer-Id: 14278099670653045667
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvuddrudefuddgtdekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvfhfhjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepjeekvdfgudevkeefkeeltdejteekvdegffegudetgeettdffjeefheekfeelffdtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddruddtieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdprhgtphhtthhopehophgvnhgsmhgtsehlihhsthhsrdhoiihlrggsshdrohhrgh
+X-Originating-IP: [172.17.4.172]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,44 +75,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Hao Wu <wuhaotsh@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Patrick,
+Hello, 
+
+It's hard to say what's wrong without knowing of what are you exactly
+doing. Since there is no such platform as "at91" in OpenBMC, we don't
+know what recipe do you use for u-boot.
+Generally, u-boot recipe should include u-boot.inc: 
+
+> require recipes-bsp/u-boot/u-boot.inc
+
+This include file provide u-boot-default-env recipe
+https://github.com/openbmc/openbmc/blob/master/poky/meta/recipes-bsp/u-boot/u-boot.inc#L215
+
+On Mon, 2022-01-03 at 15:34 +0530, Nikhil V wrote:
+> Hi,
+>      I am trying to build image for openbmc on SAMA5D27-som1-ek1
+> development board made by microchip(atmel). SAMA5D27 board has yocto
+> support.
+>      I have added meta-atmel layer to openbmc, while building/compiling
+> using " bitbake obmc-phosphor-image ", I am facing following error,
+>      
+>       [ERROR: Nothing RPROVIDES 'u-boot-default-env']
+> 
+>       I have tried by updating with following content but didnt get any
+> result.
+>                 PREFERRED_PROVIDER_u-boot = "u-boot-at91"
+>                 PREFERRED_PROVIDER_virtual/bootloader = "u-boot-at91"
+> 
+>       Can you help me to find a solution.
+> 
+>   
+> Thanks & Regards,
+> Nikhil Muley
+> 
+> 
+> 
+
+-- 
+Best regards,
+Andrei Kartashev
 
 
-On 1/2/22 21:17, Patrick Venture wrote:
-> Hi Troy,
-> 
-> 
-> 
-> On Wed, Dec 22, 2021 at 2:13 AM Troy Lee <leetroy@gmail.com <mailto:leetroy@gmail.com>> wrote:
-> 
->     Hi Patrick,
-> 
->     On Thu, Dec 9, 2021 at 3:02 AM Patrick Venture <venture@google.com <mailto:venture@google.com>> wrote:
->      >
->      > Hi all;
->      >
->      > With ast2600 and the nuvoton 8xx, we're seeing the introduction of i3c and I was curious if anyone on this list was already working on it for Aspeed or Qemu in general.
->      >
->      > Patrick
-> 
->     I have submitted an initial commit for I3C with ast2600.
->     However, this isn't a real I3C model, and it is just good enough to
->     bring Aspeed SDK image up.
-> 
->     https://patchwork.kernel.org/project/qemu-devel/list/?series=599257 <https://patchwork.kernel.org/project/qemu-devel/list/?series=599257>
-> 
->     Thanks,
->     Troy Lee
-> 
-> 
-> Thanks, I saw that and I think it probably fixes our bootloop issue when i3c is enabled.  My team will be working actively on real i3c support in the coming months as we continue building support for the next Nuvoton SoC and the ast2600.
-
-What kind of devices are you using ?
-
-Thanks,
-
-C.
