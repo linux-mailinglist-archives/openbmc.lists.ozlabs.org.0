@@ -1,89 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 358F24847D5
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jan 2022 19:27:23 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 510B84847E5
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jan 2022 19:32:49 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JT1LK0jwvz2ywV
-	for <lists+openbmc@lfdr.de>; Wed,  5 Jan 2022 05:27:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JT1Sb0qNwz2yp9
+	for <lists+openbmc@lfdr.de>; Wed,  5 Jan 2022 05:32:47 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=Ir6IEVvF;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=KvybTbgn;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=iPE7TgIa;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.230;
- helo=new4-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::435;
+ helo=mail-wr1-x435.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm1 header.b=Ir6IEVvF; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=KvybTbgn; 
- dkim-atps=neutral
-Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
- [66.111.4.230])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=iPE7TgIa; dkim-atps=neutral
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com
+ [IPv6:2a00:1450:4864:20::435])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JT1KF6lDJz2ywH
- for <openbmc@lists.ozlabs.org>; Wed,  5 Jan 2022 05:26:25 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id D12A6580443;
- Tue,  4 Jan 2022 13:26:22 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Tue, 04 Jan 2022 13:26:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=date:from:to:subject:message-id
- :mime-version:content-type; s=fm1; bh=Axpf/eY9xXw+6zjGO1PDnr95bK
- j12ePdP7epwpwwLyM=; b=Ir6IEVvFtWsv3wcx0nCHjdQ+7qY+cDlO+nm0rkvgHX
- kixhu8RMYKGeE99aVwvwI/LuiFK9sgDnlWYBSwVNkZPc+Xb9Ed0yYPvKNPeRMdxU
- u9FZyIXEgWXF1JDab2mGOcLoi6Gj4IK/OONEvZ0xK9NnanbRi3XMCABG8RFrmmOP
- S5Nq0rkRv7X+ND48jnuFuzaGCIvxkGb3cCZDoW57A9DeHorZTQ406tbAvfhlXTOB
- tzlYakGqWTqHqJ3YGXKHWjaSFeuKxClXihCTB2ce6wKYPR6PfLtQEvYEp13QOuep
- WLJunBEyciQGMlWhQ3994zbzMZtIhxzUx+IoslUtRbGw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:message-id
- :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; bh=Axpf/eY9xXw+6zjGO1PDnr95bKj12
- ePdP7epwpwwLyM=; b=KvybTbgn5E4gOtMRRvd9IrHgHmaRyfX9UoyIyk3woCt5r
- 5DJ1i0p5mF9M5ZSEnu1Hon/LpO8BTHaYcMbBHr5borsqZOPYVtckHOSQjX7MmUDw
- ff5OhWlFnWW7V/bT9NRjITF9Bcurw+qIGS+X4zvUIJ1yOYt3gVo1r3ZbDlmWvlX3
- mDyE4ApNyos4haZ9+b697zgz8YJaTGH8CGOog1qianb+YBUnQzez4LWVI2kf4dVF
- JWXcQVctKuuiusxXiKHthUJlVD1naUXEoXml4F0/k6YvTfrvQnF1t0VMnOjrNkTc
- VxS/Nrt8evmcFyu11FT4rRZZGMsIs9H/z83ZiSlkg==
-X-ME-Sender: <xms:TpHUYc5qQADhW7q9D5mL2sFQ-aeCJ4OTvZh7URs7uYCaF-R62JCN1w>
- <xme:TpHUYd6pQF39IICWKq7SPVnw4SRR5NxxTZkLdkmu1iAqyU7WB4RsmDMN_TFwkgjy0
- iALQlQfFtnKhpt6L1g>
-X-ME-Received: <xmr:TpHUYbcfLuG5zqKYGSaC3DfRFml6rmYogZ4apx25GSlcx4wFxoLWPhQgm7u-ANKi6aZqwCF5Mtv_3EeGbQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudeffedguddufecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggusehttdertd
- dttddvnecuhfhrohhmpeeurhgrugcuuehishhhohhpuceosghrrggulhgvhigssehfuhii
- iihivghsqhhuihhrrhgvlhdrtghomheqnecuggftrfgrthhtvghrnhepudehieekkeejud
- euueekudeftdefleegvedutdejhfekgfffgeelgeegkeelfedvnecuffhomhgrihhnpehg
- ihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
- hlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:TpHUYRJXuYQACLRvUkvZzHicVQAv6Tra4sBdvbO5Y9MXOBtM1we6vQ>
- <xmx:TpHUYQIDACSaGhXM5Mbq6gakvoNNBUvCo18In3UT3ySeyFraM2TtYQ>
- <xmx:TpHUYSywc1nBo7-TyTSW67CcfqLaRbTwf1y7bRQ6fVGWPxwKs6e_Eg>
- <xmx:TpHUYVVg-naTyMU4NTSIs_C8fDydj_JujkU9AXAe0u6j_gh0uFfGTg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Jan 2022 13:26:21 -0500 (EST)
-Date: Tue, 4 Jan 2022 13:26:19 -0500
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: openbmc@lists.ozlabs.org, hpham@amperecomputing.com, amithash@fb.com,
- yuenn@google.com, gkeishin@gmail.com, James.Mihm@intel.com,
- chen.kenyy@inventec.com, tmaimon77@gmail.com,
- chyishian.jiang@gmail.com, p.k.lee@quantatw.com, a.amelkin@yadro.com
-Subject: removal of company specific, general-developers teams
-Message-ID: <20220104182619.ua6xl655s72d44wu@cheese.fuzziesquirrel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JT1SC3KwSz2x9P
+ for <openbmc@lists.ozlabs.org>; Wed,  5 Jan 2022 05:32:25 +1100 (AEDT)
+Received: by mail-wr1-x435.google.com with SMTP id v7so77842350wrv.12
+ for <openbmc@lists.ozlabs.org>; Tue, 04 Jan 2022 10:32:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=MaDw5LkqkIABc0iToPQSPR5BynqqirotYv13VAhvdJE=;
+ b=iPE7TgIaRt+8pkr6Fwfh252aon+KQJUfkPaigeaPHinxAjYa3b/z9F1VsBOm5gJy/B
+ 3p+/oPnHqu1jJYYbx4Fq/RmmKdNm0xdSZxrVH/LvmIOJQoBCfGKdvGoqLrGGxrLsh1pw
+ 6oKBzm9q1c9LVXvw1pSa0GHKOobMjXoYKnMnFUVIX0o4rFulurn/ON79ItidJhWfOJOs
+ VTfc1hja1IvmESXLIGanKhNJVJHHZtWFfuak1nDrfWZuAh636w/o361c6gzvliqyE+Na
+ esV5UYXXYBlPp/iB0NmeBBiFipq51l18Fidi2xaCMs9oJTB0RRQXJ+IcWzmiiM+w7kOQ
+ gneg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=MaDw5LkqkIABc0iToPQSPR5BynqqirotYv13VAhvdJE=;
+ b=S4t05Kcso2wwN5aI9f9doziaSAol1SCrBCmJoBGN2FAsCvQmQIAbu/h3AwT9bklyfh
+ ALEpUZGXoLCrmd0lOjbfmYOVL/nIvJoVPFQQJMDaxLNyQYSCBI0peZrDsEGxvV7mkOHW
+ Eec7DbF6Zg9dDQcZBejLEE5k8EbfcmpQR5lw0+W2kJH4b0pFRzYMrDlIWsbeXh0+GCQe
+ BPYt+O4YlJLnjzza/zoQZojlE3v/tmg3Pj63WYTDDDBbG9/BklcxMout/WaKjGPKyh43
+ GzHlJqBNLayk2hW8BbW9Umeop6g0zZFmDfK/Vpbab8aEkth9TFLJXhRX39vfqwuWyUEZ
+ 9hFg==
+X-Gm-Message-State: AOAM532ygKhICAMxB9r33iK3uWFFeDyUdpgpVV2mN6LKr+2cLx5hRkMc
+ TE8VW5VEqaM2I5rlI8cQH4qSHkxZ1jPx9XDgBJ4eMA==
+X-Google-Smtp-Source: ABdhPJyKDbQGqrKS2mjrokqrl97nd2da63j//4YOxTC/97fOTHb4alzFyY7ybfUg42G69g7/FBfBHHmOifpdBuKL0L4=
+X-Received: by 2002:a5d:6da3:: with SMTP id u3mr41072310wrs.712.1641321137732; 
+ Tue, 04 Jan 2022 10:32:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
+References: <Yc25imp2cCDpyXNt@heinlein>
+In-Reply-To: <Yc25imp2cCDpyXNt@heinlein>
+From: Ed Tanous <edtanous@google.com>
+Date: Tue, 4 Jan 2022 10:32:06 -0800
+Message-ID: <CAH2-KxAYsF5WQGbJDZAXyMhjm-9MZ77PX6pAEwOk7pSScUCayw@mail.gmail.com>
+Subject: Re: meta-phosphor: enable `allow-root-login`?
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,32 +73,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi all
+On Thu, Dec 30, 2021 at 5:52 AM Patrick Williams <patrick@stwcx.xyz> wrote:
+>
+> Hello,
+>
+> Looking for opinions, especially from security minded individuals...
+>
+> In many of our `local.conf.sample` files we enable "debug-tweaks" but for
+> production builds this is probably not a good idea.  I had it turned off on a
+> production build and ran into a case where we could not log in as root on SSH.
+> We debugged this down to missing the 'priv-admin' group for root, which is
+> typically enabled in `phosphor-rootfs-postcommands.bbclass` when either
+> "debug-tweaks" or "allow-root-login" is enabled.
+>
+> I am currently enabling this IMAGE_FEATURE in meta-facebook to avoid having this
+> happen again.  Is there any reason why we wouldn't want to enable it by default
+> in meta-phosphor?  There isn't really full support for non-root users in the
+> base systems anyhow, so is there anyone that wouldn't want "allow-root-login"
+> enabled by default?
 
-There are a number of github teams that as far as I know are unused so I 
-would like to delete them:
+Doesn't this directly violate the principle of least privilege?  I
+wouldn't expect root to be usable to outside users, given that it
+gives significantly more permissions than any outside user should have
+access to.  My understanding was that priv-admin was supposed to be
+the privilege level for "all permissions for things that an external
+user should be able to do".  Is that not working for your use case?
+It'd be interesting to understand what permissions priv-admin is
+missing.  I don't really think giving out root to external users is a
+good idea in general.
 
-https://github.com/orgs/openbmc/teams/general-developers
-https://github.com/orgs/openbmc/teams/ampere
-https://github.com/orgs/openbmc/teams/dell
-https://github.com/orgs/openbmc/teams/facebook
-https://github.com/orgs/openbmc/teams/google
-https://github.com/orgs/openbmc/teams/ibm
-https://github.com/orgs/openbmc/teams/ibm-development
-https://github.com/orgs/openbmc/teams/ibm-test
-https://github.com/orgs/openbmc/teams/intel
-https://github.com/orgs/openbmc/teams/inventec
-https://github.com/orgs/openbmc/teams/nuvoton
-https://github.com/orgs/openbmc/teams/quanta
-https://github.com/orgs/openbmc/teams/yadro
-
-If you are aware of any use of these github teams please let me know.  
-If I have not heard anything by February I will assume the groups are 
-unused and delete them.
-
-thanks!
-
--brad
+>
+> I'm fine leaving this in meta-facebook, but I'm trying to prevent someone else
+> from having the same issue for what seems like a default case presently.
+>
+> 1. https://github.com/openbmc/openbmc/blob/master/meta-phosphor/classes/phosphor-rootfs-postcommands.bbclass#L10
+>
+> --
+> Patrick Williams
