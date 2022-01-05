@@ -1,94 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D70E485786
-	for <lists+openbmc@lfdr.de>; Wed,  5 Jan 2022 18:43:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFAF548578D
+	for <lists+openbmc@lfdr.de>; Wed,  5 Jan 2022 18:44:11 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JTcKG0K2yz30Jw
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jan 2022 04:43:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JTcL14rKBz30Bc
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jan 2022 04:44:09 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=fmUw6MR4;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=konsulko.com header.i=@konsulko.com header.a=rsa-sha256 header.s=google header.b=UY0QqTzK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=konsulko.com (client-ip=2607:f8b0:4864:20::82c;
+ helo=mail-qt1-x82c.google.com; envelope-from=trini@konsulko.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=fmUw6MR4; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=konsulko.com header.i=@konsulko.com header.a=rsa-sha256
+ header.s=google header.b=UY0QqTzK; dkim-atps=neutral
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com
+ [IPv6:2607:f8b0:4864:20::82c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JTcJl6mHrz2xXV
- for <openbmc@lists.ozlabs.org>; Thu,  6 Jan 2022 04:43:03 +1100 (AEDT)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 205HcBFM018769
- for <openbmc@lists.ozlabs.org>; Wed, 5 Jan 2022 17:42:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date : to :
- from : subject : content-type : content-transfer-encoding : mime-version;
- s=pp1; bh=lJitkXSNVNbZhYfBuSYEHYp60iMK2mkbL8mkJLWoDDA=;
- b=fmUw6MR42SkgtmYBj2qG9qgXRa3OIESYbC95HpDeelRp/bf8v6epV9nhCY468tHiwYF7
- u0vY6pv6wcJ4zy9vdqKcRBeAGt56ZbbQiFBSHooeNkwWe7FO7BMkbMW0FbpNVODT8ZS5
- uIVgzCiF3VxiP2nMsygmuEv9mPKnAZMRG0+Z8ivxXCvoYWjWNEVCRCUPHQho4nnZvxit
- 6gS+5v7LYDeo5CVKkJtP2jxfz6pAsuYMelEMaW4ThppYZLwlzwaSlf2Tkk9Fp7FyaQPB
- kgknbdNGYS19uX2+Igk1xxv1iYrW4jAgLjhDY5nYe6ZnYDSXl1BUfzw1A4WXGqK9naEY vw== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3dcpka3p5r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 05 Jan 2022 17:42:57 +0000
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 205HcfVb008357
- for <openbmc@lists.ozlabs.org>; Wed, 5 Jan 2022 17:42:57 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma03dal.us.ibm.com with ESMTP id 3daekbjxe9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 05 Jan 2022 17:42:57 +0000
-Received: from b03ledav006.gho.boulder.ibm.com
- (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 205HguOM36831572
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 5 Jan 2022 17:42:56 GMT
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 29C2EC6057
- for <openbmc@lists.ozlabs.org>; Wed,  5 Jan 2022 17:42:56 +0000 (GMT)
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E3585C605B
- for <openbmc@lists.ozlabs.org>; Wed,  5 Jan 2022 17:42:55 +0000 (GMT)
-Received: from [9.160.92.126] (unknown [9.160.92.126])
- by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed,  5 Jan 2022 17:42:55 +0000 (GMT)
-Message-ID: <d36d0990-7c00-bf7d-890b-82e12687d395@linux.ibm.com>
-Date: Wed, 5 Jan 2022 11:42:54 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.1
-Content-Language: en-US
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group meeting - Wednesday January 5
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ZbpZNJNzWZgTO1R352ji855r5w_M7lyB
-X-Proofpoint-ORIG-GUID: ZbpZNJNzWZgTO1R352ji855r5w_M7lyB
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JTcKf6Twfz2yPd
+ for <openbmc@lists.ozlabs.org>; Thu,  6 Jan 2022 04:43:50 +1100 (AEDT)
+Received: by mail-qt1-x82c.google.com with SMTP id f9so38313698qtk.4
+ for <openbmc@lists.ozlabs.org>; Wed, 05 Jan 2022 09:43:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=konsulko.com; s=google;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=rIXb+jPonro+HVpbvSesH8vZ5Jjf2pRgPCeOH55CBhg=;
+ b=UY0QqTzKJvO4qwEjmOZDqiroD34sJXJgz5bSXuiFdXk43DpJbPqtRDDuV6WS2J2TcA
+ C82JZP24W+w1DqranV8WgSls3z5mOzX3tvnnP5gxyC/4Jg6BwPb7DbHwMcpNWs61v8bA
+ BYnBotJMMzCbvJ41YjkloOt2T2i9VS9Ene45k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=rIXb+jPonro+HVpbvSesH8vZ5Jjf2pRgPCeOH55CBhg=;
+ b=YCbpP2iv8aF/tXhxRLNGOdNgmsekgXzXs3UnRbT3jbS6ifnG1gLAGOU69+zYgUwCVE
+ m9tz/J25j4wj8J+iud0Rp1bneiPgHFvotMHBLO6Msc/KbpGfAztnZiD6tdFZ96dugTOj
+ ItyzkjV0o9k8LsVPwZKAHh41Cu5qlbr9fzWM4ECPNzOsu30jkKeGsZXGOtJmqXsh0EZh
+ Cq07AxXAo31PQIYqHGBmV2d4f5boSbDuhx4q1QgrwyG3nzj40Xl9hoJz/QtLO6KIaReZ
+ ZWr38K7AeioKUJcIhgL0qzNmoJZRt8gvjRYq+s8CEOa4hMw4/BbKyAIxpJOqI9kXQACO
+ iLzg==
+X-Gm-Message-State: AOAM533mHVBT9u6HslvJlTuVXoWcVV++GbiEDKtunNENhY/W0MajfGq6
+ VtqGB8KfJfKr3hL2HtJm2XCRkA==
+X-Google-Smtp-Source: ABdhPJyolIm7IWsCpZaNsaHHLGhr5R/dUKo5g5V8YDepGLBHqO7Il1+yxiOWq9li9t/HnKzJyuC+jQ==
+X-Received: by 2002:a05:622a:40d:: with SMTP id
+ n13mr49548112qtx.511.1641404626687; 
+ Wed, 05 Jan 2022 09:43:46 -0800 (PST)
+Received: from bill-the-cat
+ (2603-6081-7b01-cbda-8841-a9f4-ab99-2748.res6.spectrum.com.
+ [2603:6081:7b01:cbda:8841:a9f4:ab99:2748])
+ by smtp.gmail.com with ESMTPSA id ay42sm32854557qkb.40.2022.01.05.09.43.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Jan 2022 09:43:46 -0800 (PST)
+Date: Wed, 5 Jan 2022 12:43:44 -0500
+From: Tom Rini <trini@konsulko.com>
+To: Andrei Kartashev <a.kartashev@yadro.com>
+Subject: Re: [PATCH] board: ast2500/ast2600: initialize LEDs
+Message-ID: <20220105174344.GA2773246@bill-the-cat>
+References: <20211123190847.14943-1-a.kartashev@yadro.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2022-01-05_05,2022-01-04_01,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=759 bulkscore=0
- spamscore=0 impostorscore=0 adultscore=0 mlxscore=0 clxscore=1015
- malwarescore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2201050116
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="UWWZ58LfvZf2M5yT"
+Content-Disposition: inline
+In-Reply-To: <20211123190847.14943-1-a.kartashev@yadro.com>
+X-Clacks-Overhead: GNU Terry Pratchett
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,22 +81,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: u-boot@lists.denx.de, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday January 5 at 10:00am PDT.
 
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-and anything else that comes up:
+--UWWZ58LfvZf2M5yT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-1.
+On Tue, Nov 23, 2021 at 10:08:47PM +0300, Andrei Kartashev wrote:
 
+> Add option to initialize LEDs in board_init stage for aspeed-based
+> boards.
+>=20
+> Signed-off-by: Andrei Kartashev <a.kartashev@yadro.com>
+> ---
+>  board/aspeed/evb_ast2500/evb_ast2500.c | 8 ++++++++
+>  board/aspeed/evb_ast2600/evb_ast2600.c | 8 ++++++++
+>  2 files changed, 16 insertions(+)
 
+This does not currently build on current next, please rebase, thanks.
 
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+--=20
+Tom
 
-- Joseph
+--UWWZ58LfvZf2M5yT
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAABCgAdFiEEGjx/cOCPqxcHgJu/FHw5/5Y0tywFAmHV2NAACgkQFHw5/5Y0
+tyy9CgwAq86eRacVYYCGdpw7tL5iqvJ67EqBOdwU1qa56u5490fDVTVHe+CrClDq
+ER+fx5iwrPByD1UqHHjvPna5AYt/dDyVHWkZRFd7f3B1sU/+JP+9lIICRtzVWNzt
+ZcCwyAysYryswSgUzgCokskkwsVBx0aaaFDYeJHkEpNqup/xUcY366Bw2SGMqgxm
+DVrTVooe1v3RD9BIPpPYpDQMDDRtIsvjOYtZJphPIg0YW2DH8ojRRYyZzuh2rc//
+60+6UB6/aDw5q2kElFcRJtB2lG9/BhHP6hMYKGOYCQagEeeNgPBrRUlfydTtxXsT
+YC9PI75V5ZqCnZ+bzm7cdgxbOFj+5m668kCcViAJTqBObvbE1FK/VMbFrbEpmxB1
+xWtWsn3tvHVNhT+chfgfAhb13hDxionsWI/2NAbM9ajIhctRladAcBicBBsTiogT
+yRrP1829FPykgQY+XdjR9X/vfil970MHrfzm3UnN1DUwhbKJxsc6PJR006rTO+Zu
+zjqQFFgB
+=PIJQ
+-----END PGP SIGNATURE-----
+
+--UWWZ58LfvZf2M5yT--
