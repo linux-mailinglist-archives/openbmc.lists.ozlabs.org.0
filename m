@@ -1,70 +1,162 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5119948649F
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jan 2022 13:52:40 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31BB9486790
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jan 2022 17:23:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JV5qB1JS4z30LJ
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jan 2022 23:52:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JVBVQ0ZSBz30Lb
+	for <lists+openbmc@lfdr.de>; Fri,  7 Jan 2022 03:23:26 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JsolqJ29;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=m2N023Sl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::534;
- helo=mail-ed1-x534.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.100; helo=mga07.intel.com;
+ envelope-from=jiaqing.zhao@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=JsolqJ29; dkim-atps=neutral
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com
- [IPv6:2a00:1450:4864:20::534])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=m2N023Sl; dkim-atps=neutral
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JV5pl0kpRz305q
- for <openbmc@lists.ozlabs.org>; Thu,  6 Jan 2022 23:52:12 +1100 (AEDT)
-Received: by mail-ed1-x534.google.com with SMTP id z9so8960099edm.10
- for <openbmc@lists.ozlabs.org>; Thu, 06 Jan 2022 04:52:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=MsNXUcvHWOPJyu3NNDTld0SLu9yVDFfZ4c7CS9L9k0c=;
- b=JsolqJ29I20fOTzBzP1JFHt68a9AWCVhaKwlVx/fRHNurBKeNaDcIF16tv188gM5ZR
- huBQmXx+muSGHmk/5cpoGCWpS1h3moAu9n/CtmSJDkW9OD3jRQaebSOMOtOqE+MKOSPs
- 5HQUA/VTsQwcZ2aQ3QU7FRyyZwZdm5EXnhRZehaE1F2ULjpTt8q6EJkFx+UFtHYZ1fN3
- plUpZlnq3Hpej6DjXY4fDdxWqc2sCKre89s1OIu32CSUL80cWZ+G0aCJS0fl5p726fKy
- q8WofxWw2NcNSm1ravgh283vWKnU0/HpQ6vuAb6gIFXbs/b//uyp9OtPjzql4hjZ7Ada
- TCtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=MsNXUcvHWOPJyu3NNDTld0SLu9yVDFfZ4c7CS9L9k0c=;
- b=dpR4FZpckAPmCW374NV7bo/KV8MhLq+HcLA7zisFY85Hyp6fBIJkX6hulgnovQJKIh
- EiYuX1g2FuWPc24Zy618YcrHKFFKOdX4ApgcN3PLOwbc+WpmJlqFoy6U5j+/R/FTsd21
- 4DBJB0plR+CrQcYPJgy6e4dNZM4GDP8ktYXJKVPBrG0DM5c/2KAJ6ZJyLVuL0DPm6vjr
- VqCu8k7Qg5pVGDsOwiAk85yXb00bVzHryPZ2MQeF7jxOH9z9V2pRmSEW2SO4Sa1kuQSe
- GQOjxCTqkmReSt5uz0jEU0TmcK3WNA+fOxvYsJyMChsIZua6bC3QtqUh/6yZYZp66Q7g
- I6aA==
-X-Gm-Message-State: AOAM532eaAQbAPYbwoEIduLUgiPvJZAil5JscjjhCpo6XE8nuIeF5xoh
- K9k8+jV5EuqhWeEspiXdB/yVkIWTsHMC3WDeTTE=
-X-Google-Smtp-Source: ABdhPJwv7Ij02Hyxi99aka4OfHhKPVN1OOkORFt3HxwF/HXHzixc/eyHpD9ltZXxo4UlheFWIXK+ACpiEzFZW6gLr4o=
-X-Received: by 2002:a17:906:f8c2:: with SMTP id
- lh2mr46354185ejb.364.1641473526124; 
- Thu, 06 Jan 2022 04:52:06 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JVBTw3JNLz2x9V
+ for <openbmc@lists.ozlabs.org>; Fri,  7 Jan 2022 03:22:54 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1641486180; x=1673022180;
+ h=from:to:subject:date:message-id:references:in-reply-to:
+ content-transfer-encoding:mime-version;
+ bh=zjSFG665ppmwjq8MIpSBLntNWyEB4EUhnjnBbb47XrE=;
+ b=m2N023Sl1D0HZLgKIehkly9OGvevaRZ8MH7GeANweHTNx8kkgvnfsNYe
+ hltM9vIACOFjONzXUM8N4KU/ksJtNT/wRoAxylb/95R+yrxoeDb1a1JYD
+ 9mP+6sgZlM3kb+4RJKPOFXMMbEMusYOfOC2p5F893Rnl+B0XXdhkbiQbm
+ uurZUheI54lgjANQCoa0qtqeSGF/ttAYB86G9MUpngcTjjxSUS72VsPEe
+ mI7QAe8b0+rAWBRVc/hCmzQsTERhjSjnKg8RhjgfTSUWfJxE7nr9afoya
+ U40R7r6EwxirKtWFlOhBjd1syMcLIf94LHSPpW0tZ7/1U/kTf9mTxA33x A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10217"; a="306037125"
+X-IronPort-AV: E=Sophos;i="5.88,267,1635231600"; d="scan'208";a="306037125"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+ by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jan 2022 08:21:50 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,267,1635231600"; d="scan'208";a="527001171"
+Received: from fmsmsx606.amr.corp.intel.com ([10.18.126.86])
+ by fmsmga007.fm.intel.com with ESMTP; 06 Jan 2022 08:21:50 -0800
+Received: from fmsmsx606.amr.corp.intel.com (10.18.126.86) by
+ fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20; Thu, 6 Jan 2022 08:21:50 -0800
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20 via Frontend Transport; Thu, 6 Jan 2022 08:21:50 -0800
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (104.47.74.40) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2308.20; Thu, 6 Jan 2022 08:21:49 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=RU55Tcxc0sDt8mMctPR09MOG0XY+NpLMy1GB4n1oekkjywT35Tr5aNAYlme+b12aJw4XexFOiZSdPCKMO/K/Dn5E/GCcWXvgtMSSSr/7f8QOKQ3gw/ZBIkHismo8z9k5WxOA7DCOSr89QQ5RnIshHetb4aoxWOam+m9qbHNxHg2ob7BHc7EguKmpdeotcgecIjYEGg3qbd53LI/iu+AQnwQtcAPJfwdTldIdnoE9RlqXSAnosKOa+MTrCkN6E6WXAtpQ1YnjKNZt1BnYZFfN0q1X0Lxmx36boA2faqlijp7tsfI99AZ53FRwexXzZS6ubeu8s87alnEoJJzJRoNDoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zjSFG665ppmwjq8MIpSBLntNWyEB4EUhnjnBbb47XrE=;
+ b=JZ5JlFig9D7JnDT6ryYTffc9E9DeFDkKz2EGbZAovq56DeAp/NNq2dUSvsOkptpO+29pv8tp4hf1BXJBXpMoZ7FX3XHmss3gohrpWvbOgpBnV7vEB1PGkunjJlETbnQ+rmOfAexa2XltKna/SKVWVWtWcrbPpVNq28+dZmcMVORkWOnbVHKygUH6skUxoB199QEA5AaPghlqH4yMskbjcVFRZm5kLVGFtY5FxOvHEi5FVDFGBxY6r2+8hgPhT9yEXqYsxZ5hehG0dPcsbkwhELzxIiFbd9gJu+iwdx4l9UAx31PEpUfrveBsIccG8bWvWXHLRHJnq/JnhaS8dp9M5w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from CO1PR11MB4785.namprd11.prod.outlook.com (2603:10b6:303:6f::21)
+ by MW4PR11MB5773.namprd11.prod.outlook.com (2603:10b6:303:180::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4867.10; Thu, 6 Jan
+ 2022 16:21:45 +0000
+Received: from CO1PR11MB4785.namprd11.prod.outlook.com
+ ([fe80::5835:30d7:a41d:c8b]) by CO1PR11MB4785.namprd11.prod.outlook.com
+ ([fe80::5835:30d7:a41d:c8b%7]) with mapi id 15.20.4867.009; Thu, 6 Jan 2022
+ 16:21:45 +0000
+From: "Zhao, Jiaqing" <jiaqing.zhao@intel.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Configuring VLAN interface via redfish
+Thread-Topic: Configuring VLAN interface via redfish
+Thread-Index: Adf9o9dB2um6eb+4SWiXkEgQuFq+hwFdH8Zw
+Date: Thu, 6 Jan 2022 16:21:44 +0000
+Message-ID: <CO1PR11MB4785A886A5EDDA181994FC1C8E4C9@CO1PR11MB4785.namprd11.prod.outlook.com>
+References: <CO1PR11MB478536190313942A25F149BB8E459@CO1PR11MB4785.namprd11.prod.outlook.com>
+In-Reply-To: <CO1PR11MB478536190313942A25F149BB8E459@CO1PR11MB4785.namprd11.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-version: 11.6.200.16
+dlp-reaction: no-action
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: d6721587-5dcd-4ff3-41f8-08d9d130a1a4
+x-ms-traffictypediagnostic: MW4PR11MB5773:EE_
+x-microsoft-antispam-prvs: <MW4PR11MB57739E03677D50D27D1FAD0B8E4C9@MW4PR11MB5773.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: jm6MET1O7EojNBK8eyD3JuNQEy/12vWlakPKD8SgTTJEPoW0dEP1J/SiwY+nFRDjcT7UMAmPaN26Rk0yN943CJ3aacudSQE3R5m914BlPViPJuABbcRZYTzGYj8uIw0xPave7qrfUAVCTnjLPSpHZk1q3wV7i8HenDuTll+UIL5OTvHbloOFrMNP3pAPhaSwh71f4PuVF0C/RgeLy+2y6lzaRQi7HPZO1WIGGgxWaQg5xoP9Fmh/gclIgjaEqXMfaLhSHv6CYCc9TPC0+sgNz15GD9hQETlwBfuSfuxNZ5V99SLqzcugX1BXQEsInwvPfx1AiQ/dcYucny3IRMawHenSatptYq9cpGdVbOFMBtyuP1auPWaGAUyAAsF5zyXlPdRpuswLh8ULAV+eFDSBR1OrFVEed2Ukmb5xRDwoWg3blk/4dHIp1cQqJHB2EK8MUR1hyNuY6MoZTJc1yT8717Li1emsk21pE+4qPIIpvRshfjJ6G+QieYvn+wqZKOQaJOAoqEjiahc9OHLzTTgo8ZlV5Yf23L2cOWyZWThhgP5iekzFuOFgNpTBop3qvzuYVEx4Sh8SeV7dGs6sza5UuQT37rTZNKcfaeRl2sCfbuWGn+4JTmyfBlkn9RIP4Sxgdy6WmCdlW8FOS496/mwPEQwUc4E2FBdXhFMCWZGKsbrJX9k8Dc7goQISU7bjAafY+wl3rketN4MfX51Nqu+vStTVCz+PTBimf47O68GSGNkEve4Ul1OD9z53zbddWe+nwNPCwPrwl73fDnOg+jME8Pyfe/bfGX/XLZ1zCl6Jxvs=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CO1PR11MB4785.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(366004)(316002)(71200400001)(83380400001)(8936002)(6916009)(6506007)(508600001)(26005)(38100700002)(966005)(66946007)(9686003)(76116006)(2906002)(122000001)(7696005)(8676002)(55016003)(33656002)(66556008)(186003)(38070700005)(52536014)(5660300002)(64756008)(82960400001)(66476007)(86362001)(66446008);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?d0hVQ3F0c1p6emRrMUZQL1RmUlBCWkU3L2pSVWx5WUVteUp5TTV4bnQ3dTNa?=
+ =?utf-8?B?bnlmeFBjTjQzYTRzdnpCN1dtRStJTkUrYTJ1dlBLNnRQejVnMFU3d08wZ01T?=
+ =?utf-8?B?NTZCcU5Tb1F3UjluOGJTQkt3MCs2ck1NYW1jeG1rcTBRaTg1ZGZuU1p6bnBY?=
+ =?utf-8?B?V3ZwMERLVEwrUEZxQkJHcUtzZm9kRjhhL0o3dWw0ZWVPeCtXWm5vRWY5dDNE?=
+ =?utf-8?B?M3VWbEFzYjZqcVpYQy84WlJpUjBqYkE3UElocmNydzZUWmVtWXYzM2FCaGRE?=
+ =?utf-8?B?SjhsTjNiVE9hNXFaM0VoWWw5cjVjNnNYNGRQbStGNU1menp2WmFvNCtPQ0pC?=
+ =?utf-8?B?QS82MHZpVmZkSXNtQ2Rwb3h6dkVVSlRmU3hFT3hpdWU3SXphcDVIWGhqam5I?=
+ =?utf-8?B?QjVLaG9QT3p1WmhrUmt0ZmsyNmRVbFRJOHFRNjc4ZGM5eUhSdTVQRjB1eHVU?=
+ =?utf-8?B?NDJxUW5VZTdZcWR1eUNuVWN3Mm1SbjRNc0Z2R0toUUYzYjBCR1RSLzUvRGhJ?=
+ =?utf-8?B?a0ROVXFyUjlFVTVQUGJLWmRlbnRTQjd3aWdaNnY0S3JoRC9iMFFwbGIyODdZ?=
+ =?utf-8?B?ZEhRNm5mbFMvaTdVOWZBOGpVeU5iYVNPNCtyVjVQSzRKZjFNc1grV3JlL0I3?=
+ =?utf-8?B?ZjdaZDlPaUtKOUdDa1BoZVVQVlBFRnhLdnlJVGRrNlZBOVBWckNxQ1FxYmlh?=
+ =?utf-8?B?RDVocS9DbXhQck9LNm5PanVNd2Z3c3BsZy9pRU54Mm5teFFGMFdQQmhuNVo4?=
+ =?utf-8?B?YXkzMC8rZGJCbm9SVXRPZ0NPdkJmY2luNmYyQWxmNnlHU3RRemlpVFBxY0V2?=
+ =?utf-8?B?QXJUKzM4bVJlQjhaRHozbTlpTVZiSmhhLy9MVkxwWlJhTEwrWEFDSkhYejB3?=
+ =?utf-8?B?VVRLTW92QU9aT1cwM1J5ZGh4dWF5czZ6by9MUkViSTk4YWh3OGVuWlROL0VY?=
+ =?utf-8?B?ZTRJUXNmRHRodEVqUERqK1dLbURZVWhOTWRVSmlBajVQZ3Y3eFpTeCtQOVVQ?=
+ =?utf-8?B?QXFaVm5LWEVwU1h0UGxUdDlOVFJ5L2lMZ2ZtV0dNMWg2cTRvQkJmS0p4WnlV?=
+ =?utf-8?B?Vm1rTEs3UGtwb0VQMFB5aVpXRTMwTkh2TG9tY1Y4NUFpRldYM0w2a1hmYTFu?=
+ =?utf-8?B?RG9OUkYvem42akFnRWRsc2pGTThwMEozTThQYWRUVEtLYXo3SHQxVWN1VUpX?=
+ =?utf-8?B?SVRLMUVjbE9MT3hqR3lGNUJVYk4yMmYzcmN6b3EwekJicFE0OHFSc1pRT2FR?=
+ =?utf-8?B?dGRmclJDK3hFeDFVek9nWGZZV1ZzcjdUVDlvQVdnWG50SkxCdWsveHY1cGIr?=
+ =?utf-8?B?WWcweUptNGpVbHBWZXdqeHREMTRSV3hqTGFzTER3N3ptd05Bd2lTMnJxK0Rq?=
+ =?utf-8?B?ZFZ0K0ViS1d3QzBFT0M3Tk42bzQ1MzNhRi9mRzFwZVRVdmxlSzYvMFNaTXRt?=
+ =?utf-8?B?c2V4d3ZBNlNCZTVUbmd1OFYvQ2pHNjE2N0kydXppekY5ZGFEd3BXWDBzMzZG?=
+ =?utf-8?B?Y0xlUGhzSzE4Z3RpSDZSVkdtM3VEcUxYMTdWaXhVU1JBNjAveWhEVk8wN05s?=
+ =?utf-8?B?dkFOTFRwUzRKamJiRmlURkRrTE5jWmFZa0VNaXV1N05kS28ySkZHZnFzQXRn?=
+ =?utf-8?B?WmJVMks1bmVJYXpVY1dUQVduMUljTDlrVCt2c2p0cEUvN2Z4YmxtWDg4cEpl?=
+ =?utf-8?B?UG4wZDhENkM2OVBySnhJdWNodERhRG9UcERCaDl0MXl4Z2xnRUZXZlgzbGdJ?=
+ =?utf-8?B?ZFhac0pUM05aNzVzZzU5WUM4Wit3SXJNeXFXbXRLc29PTS9RQVBmU0Z6SnVM?=
+ =?utf-8?B?UXJkMElRelJDYzFwWDRwZXRZdzYvWlBrbjU4MGJnVXpERTEwekVUY1kyNlNm?=
+ =?utf-8?B?QXhHL1B4NkFrc01QaXRISnFtNnNqVjhLdTBIWjUvb1dmSjBVa21EYjNxOHFG?=
+ =?utf-8?B?cHBsaU9GSUhpbXZHRVUxMG1maGNGM1JyM0FVSjF6WWJlYlFNODl2b2Y5WFIv?=
+ =?utf-8?B?VDRrQ3hpYXc1Q3hXWjZLZlVCQjIzRHRNcll2KzBQREFDZUJNMUFBejRJRE9n?=
+ =?utf-8?B?U2JUdHRVRGdKNHpzdHZyWlE2a2QxNjYraVJIT3BWZ3F0T0VXcmF0VG1mcGsv?=
+ =?utf-8?B?RElNa2p5dGNZMkgxS2g1S3dmbVdOZ3cydWtNRTY4YWUvV3NuckxWem0ycFdS?=
+ =?utf-8?Q?BlEDK9EQ+BHjS+t7MhF1GgM=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CACWQX80hcLXJrvXmg45v6L89_Ks__qc5MqUETGyvKeaqxzqY-w@mail.gmail.com>
- <8589D844-7432-4C87-9CF0-71C6303228DF@stwcx.xyz>
- <CAH2-KxBMht4OaoVi=ceVa3w46Gp_Ejbfcv+M7apVtZj4Up1c0Q@mail.gmail.com>
-In-Reply-To: <CAH2-KxBMht4OaoVi=ceVa3w46Gp_Ejbfcv+M7apVtZj4Up1c0Q@mail.gmail.com>
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Thu, 6 Jan 2022 18:24:10 +0530
-Message-ID: <CAA7TbcvuvdLvSkSsObttDuF5bK7=roDeiETq1dxTPHo3RkbasQ@mail.gmail.com>
-Subject: Re: hwmontempsensor issue in dbus-sensor
-To: Ed Tanous <edtanous@google.com>
-Content-Type: multipart/alternative; boundary="0000000000006ed28105d4e95646"
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB4785.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d6721587-5dcd-4ff3-41f8-08d9d130a1a4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jan 2022 16:21:44.9542 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: dQPek5WB22hF6Rh32gslXocifDXqsW8MLNAkCXdaNN0Eylk5Ob03NT9IL0hxwUxPiGr4dfGlemzePErBaRnmwQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB5773
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,348 +168,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>,
- Jayashree D <jayashree-d@hcl.com>, velumanit@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006ed28105d4e95646
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi All,
-
-  Please find the below patch to fix this issue.
-  https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/50153
-
-Thanks,
-Kumar.
-
-On Wed, Jan 5, 2022 at 12:08 AM Ed Tanous <edtanous@google.com> wrote:
-
-> On Mon, Jan 3, 2022 at 1:09 PM Patrick Williams <patrick@stwcx.xyz> wrote=
-:
-> >
-> > Ed,
-> >
-> > I think there are other commits needing the IIO functionality now. Ther=
-e
-> is at least the pending commit for Humidity that we=E2=80=99d like to get=
- merged. I
-> think it is better to move forward with a fix rather than backwards with =
-a
-> revert at this point.
->
-> Sure, if there are patches available to fix the regression, I'm happy
-> to avoid the revert.  I'll let this sit another day or two to see if
-> someone puts up a patch to fix the issue, but after that, we need to
-> unbreak master, and in the absence of a patch to fix it, a revert is
-> the next best option.
->
-> >
-> > Kumar/Jayashree,
-> >
-> > Can you dig into this and get to the bottom of it?
-> >
-> > - Patrick
-> > Sent from my iPhone
-> >
-> > > On Jan 3, 2022, at 11:21 AM, Ed Tanous <ed@tanous.net> wrote:
-> > >
-> > > =EF=BB=BFOn Fri, Dec 31, 2021 at 9:31 AM Bruce Mitchell
-> > > <bruce.mitchell@linux.vnet.ibm.com> wrote:
-> > >>
-> > >>> On 12/20/2021 10:29, Ed Tanous wrote:
-> > >>> On Sun, Dec 19, 2021 at 9:11 PM Kumar Thangavel
-> > >>> <kumarthangavel.hcl@gmail.com> wrote:
-> > >>>>
-> > >>>> Hi All,
-> > >>>>
-> > >>>> Gentle Reminder on this.
-> > >>>>
-> > >>>> Thanks,
-> > >>>> Kumar.
-> > >>>>
-> > >>>> On Thu, Dec 16, 2021 at 1:56 PM Kumar Thangavel <
-> kumarthangavel.hcl@gmail.com> wrote:
-> > >>>>>
-> > >>>>> Hi All,
-> > >>>>>
-> > >>>>>
-> > >>>>> In dbus-sensors repo, I saw the patch for changes in Hwmon Temp
-> Sensor.
-> > >>>>>
-> https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3=
-ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e53=
-41b22b7ab
-> > >>>
-> > >>> Bruce, this is your patch.  Could you take a look at the below and
-> > >>> provide your input?
-> > >>>
-> > >>>>>
-> > >>>>>
-> > >>>>> While testing those changes in my platform, I found that each
-> sensor in hwmon temp has been creating twice.
-> > >>>>> After analyzed the patch, for below 2 paths SP_OUTLET_TEMP sensor
-> is created twice.
-> > >>>>>
-> > >>>>>
-> > >>>>> /sys/class/hwmon/hwmon2/temp2_input
-> > >>>>> /sys/class/hwmon/hwmon2/temp1_input
-> > >>>>>
-> > >>>>>
-> > >>>>> Before your change, hwmon temp sensor will check whether the path
-> is already exists or not.
-> > >>>>> If it exists, it will skip and proceed with next path.
-> > >>>>>
-> https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3=
-ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e53=
-41b22b7abL96
-> > >>>>>
-> > >>>>>
-> > >>>>> Could you please explain why it is creating twice in hwmon temp ?
-> > >>>>>
-> > >>>>>
-> > >>>>> Journalctl log before your changes applied :
-> > >>>>>
-> > >>>>>
-> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path :
-> "/sys/class/hwmon/hwmon2/temp2_input"
-> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Type :
-> xyz.openbmc_project.Configuration.TMP421
-> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Name :
-> SP_OUTLET_TEMP
-> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path :
-> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
-> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path :
-> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
-> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path :
-> "/sys/class/hwmon/hwmon2/temp1_input"
-> > >>>>>
-> > >>>>>
-> > >>>>>
-> > >>>>> Journalctl log after your changes applied :
-> > >>>>>
-> > >>>>>
-> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> "/sys/class/hwmon/hwmon2/temp2_input"
-> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor type :
-> xyz.openbmc_project.Configuration.TMP421
-> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name :
-> SP_OUTLET_TEMP
-> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
-> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
-> > >>>>>
-> > >>>>>
-> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> "/sys/class/hwmon/hwmon2/temp1_input"
-> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor type :
-> xyz.openbmc_project.Configuration.TMP421
-> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name :
-> SP_OUTLET_TEMP
-> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
-> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
-> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
-> > >>>>>
-> > >>>>>
-> > >>>>>
-> > >>>>> Thanks,
-> > >>>>>
-> > >>>>> Kumar.
-> > >>
-> > >> I will give it quick look today.  Also today is my last day at IBM.
-> > >>
-> > >
-> > > Do you plan on continuing this beyond your tenure at IBM?  If not, is
-> > > someone taking this feature over for you?  Given it's been a few week=
-s
-> > > since this regression was reported, and I don't see any fixes in
-> > > review, I'm leaning toward reverting it on master for the time being
-> > > until someone puts up a patch to fix the issue.
-> >
->
-
---0000000000006ed28105d4e95646
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi All,</div><div><br></div><div>=C2=A0 Please find t=
-he below patch to fix this issue.</div>=C2=A0=C2=A0<a aria-label=3D"Link ht=
-tps://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/50153" title=3D"h=
-ttps://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/50153" href=3D"h=
-ttps://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/50153" rel=3D"no=
-opener noreferrer" target=3D"_blank" tabindex=3D"-1" style=3D"box-sizing:bo=
-rder-box;outline-style:none;color:rgb(98,100,167);text-decoration-line:none=
-;font-family:&quot;Segoe UI&quot;,system-ui,&quot;Apple Color Emoji&quot;,&=
-quot;Segoe UI Emoji&quot;,sans-serif;font-size:14px">https://gerrit.openbmc=
--project.xyz/c/openbmc/dbus-sensors/+/50153</a><br><div><br></div><div>Than=
-ks,</div><div>Kumar.</div></div><br><div class=3D"gmail_quote"><div dir=3D"=
-ltr" class=3D"gmail_attr">On Wed, Jan 5, 2022 at 12:08 AM Ed Tanous &lt;<a =
-href=3D"mailto:edtanous@google.com">edtanous@google.com</a>&gt; wrote:<br><=
-/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
-rder-left:1px solid rgb(204,204,204);padding-left:1ex">On Mon, Jan 3, 2022 =
-at 1:09 PM Patrick Williams &lt;<a href=3D"mailto:patrick@stwcx.xyz" target=
-=3D"_blank">patrick@stwcx.xyz</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Ed,<br>
-&gt;<br>
-&gt; I think there are other commits needing the IIO functionality now. The=
-re is at least the pending commit for Humidity that we=E2=80=99d like to ge=
-t merged. I think it is better to move forward with a fix rather than backw=
-ards with a revert at this point.<br>
-<br>
-Sure, if there are patches available to fix the regression, I&#39;m happy<b=
-r>
-to avoid the revert.=C2=A0 I&#39;ll let this sit another day or two to see =
-if<br>
-someone puts up a patch to fix the issue, but after that, we need to<br>
-unbreak master, and in the absence of a patch to fix it, a revert is<br>
-the next best option.<br>
-<br>
-&gt;<br>
-&gt; Kumar/Jayashree,<br>
-&gt;<br>
-&gt; Can you dig into this and get to the bottom of it?<br>
-&gt;<br>
-&gt; - Patrick<br>
-&gt; Sent from my iPhone<br>
-&gt;<br>
-&gt; &gt; On Jan 3, 2022, at 11:21 AM, Ed Tanous &lt;<a href=3D"mailto:ed@t=
-anous.net" target=3D"_blank">ed@tanous.net</a>&gt; wrote:<br>
-&gt; &gt;<br>
-&gt; &gt; =EF=BB=BFOn Fri, Dec 31, 2021 at 9:31 AM Bruce Mitchell<br>
-&gt; &gt; &lt;<a href=3D"mailto:bruce.mitchell@linux.vnet.ibm.com" target=
-=3D"_blank">bruce.mitchell@linux.vnet.ibm.com</a>&gt; wrote:<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt;&gt; On 12/20/2021 10:29, Ed Tanous wrote:<br>
-&gt; &gt;&gt;&gt; On Sun, Dec 19, 2021 at 9:11 PM Kumar Thangavel<br>
-&gt; &gt;&gt;&gt; &lt;<a href=3D"mailto:kumarthangavel.hcl@gmail.com" targe=
-t=3D"_blank">kumarthangavel.hcl@gmail.com</a>&gt; wrote:<br>
-&gt; &gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt; Hi All,<br>
-&gt; &gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt; Gentle Reminder on this.<br>
-&gt; &gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt; Thanks,<br>
-&gt; &gt;&gt;&gt;&gt; Kumar.<br>
-&gt; &gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt; On Thu, Dec 16, 2021 at 1:56 PM Kumar Thangavel &lt;<=
-a href=3D"mailto:kumarthangavel.hcl@gmail.com" target=3D"_blank">kumarthang=
-avel.hcl@gmail.com</a>&gt; wrote:<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Hi All,<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; In dbus-sensors repo, I saw the patch for changes=
- in Hwmon Temp Sensor.<br>
-&gt; &gt;&gt;&gt;&gt;&gt; <a href=3D"https://github.com/openbmc/dbus-sensor=
-s/commit/544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad=
-3b7fe091f9c79a60faf8a26f410c1568e5341b22b7ab" rel=3D"noreferrer" target=3D"=
-_blank">https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7=
-d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1=
-568e5341b22b7ab</a><br>
-&gt; &gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt; Bruce, this is your patch.=C2=A0 Could you take a look at=
- the below and<br>
-&gt; &gt;&gt;&gt; provide your input?<br>
-&gt; &gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; While testing those changes in my platform, I fou=
-nd that each sensor in hwmon temp has been creating twice.<br>
-&gt; &gt;&gt;&gt;&gt;&gt; After analyzed the patch, for below 2 paths SP_OU=
-TLET_TEMP sensor is created twice.<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; /sys/class/hwmon/hwmon2/temp2_input<br>
-&gt; &gt;&gt;&gt;&gt;&gt; /sys/class/hwmon/hwmon2/temp1_input<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Before your change, hwmon temp sensor will check =
-whether the path is already exists or not.<br>
-&gt; &gt;&gt;&gt;&gt;&gt; If it exists, it will skip and proceed with next =
-path.<br>
-&gt; &gt;&gt;&gt;&gt;&gt; <a href=3D"https://github.com/openbmc/dbus-sensor=
-s/commit/544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad=
-3b7fe091f9c79a60faf8a26f410c1568e5341b22b7abL96" rel=3D"noreferrer" target=
-=3D"_blank">https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef89=
-8fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f4=
-10c1568e5341b22b7abL96</a><br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Could you please explain why it is creating twice=
- in hwmon temp ?<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Journalctl log before your changes applied :<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
-Path : &quot;/sys/class/hwmon/hwmon2/temp2_input&quot;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
-Type : xyz.openbmc_project.Configuration.TMP421<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
-Name : SP_OUTLET_TEMP<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
-Dbus path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
-Dbus path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP<=
-br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
-Path : &quot;/sys/class/hwmon/hwmon2/temp1_input&quot;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Journalctl log after your changes applied :<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
-Path : &quot;/sys/class/hwmon/hwmon2/temp2_input&quot;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
-Sensor type : xyz.openbmc_project.Configuration.TMP421<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
-Name : SP_OUTLET_TEMP<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
-Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
-Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
-Path : &quot;/sys/class/hwmon/hwmon2/temp1_input&quot;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
-Sensor type : xyz.openbmc_project.Configuration.TMP421<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
-Name : SP_OUTLET_TEMP<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
-Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
-Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Thanks,<br>
-&gt; &gt;&gt;&gt;&gt;&gt;<br>
-&gt; &gt;&gt;&gt;&gt;&gt; Kumar.<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt; I will give it quick look today.=C2=A0 Also today is my last =
-day at IBM.<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;<br>
-&gt; &gt; Do you plan on continuing this beyond your tenure at IBM?=C2=A0 I=
-f not, is<br>
-&gt; &gt; someone taking this feature over for you?=C2=A0 Given it&#39;s be=
-en a few weeks<br>
-&gt; &gt; since this regression was reported, and I don&#39;t see any fixes=
- in<br>
-&gt; &gt; review, I&#39;m leaning toward reverting it on master for the tim=
-e being<br>
-&gt; &gt; until someone puts up a patch to fix the issue.<br>
-&gt;<br>
-</blockquote></div>
-
---0000000000006ed28105d4e95646--
+SGksIGFsbA0KDQpUaGUgaW5pdGlhbCBtZXNzYWdlIEkgc2VudCBvbiBEZWMgMjAyMSBpcyBibG9j
+a2VkIHNpbmNlIEkgd2FzIG5vdCBhIG1lbWJlciBvZiB0aGlzIG1haWxpbmcgbGlzdCBhdCB0aGF0
+IHRpbWUsIHBsZWFzZSBpZ25vcmUgdGhhdCBvbmUuDQoNCldpdGggc3lzdGVtZC1uZXR3b3JrZCwg
+ZWFjaCBWTEFOIGlzIGEgdmlydHVhbCBpbnRlcmZhY2UgYXNzb2NpYXRlZCB0byB0aGUgcGh5c2lj
+YWwgaW50ZXJmYWNlLCBhbmQgaXQgaGFzIGl0cyBvd24gbmV0d29yayBjb25maWcgbGlrZSBJUCBh
+ZGRyZXNzLiBDdXJyZW50bHkgb3VyIHBob3NwaG9yLW5ldHdvcmtkIGFsc28gc3VwcG9ydHMgaXQg
+d2VsbC4gQnV0IGluIHRoZSBibWN3ZWIgc2lkZSwgd2UgbGFjayB0aGUgaW1wbGVtZW50YXRpb24u
+IEFuZCB0aGVyZSBpcyBhbiBpc3N1ZSBsb25nIGFnbyBhYm91dCBpdCBhdCBodHRwczovL2dpdGh1
+Yi5jb20vb3BlbmJtYy9ibWN3ZWIvaXNzdWVzLzc5Lg0KDQpJbiBjdXJyZW50IFJlZGZpc2ggaW1w
+bGVtZW50YXRpb24sIFZMQU4gaXMgb25seSBzaG93biBhdCAv4oCLcmVkZmlzaC/igIt2MS/igItN
+YW5hZ2Vycy/igItibWMv4oCLRXRoZXJuZXRJbnRlcmZhY2VzL+KAizxzdHI+L+KAi1ZMQU5zL+KA
+izxzdHI+IHdpdGggdmVyeSBsaW1pdGVkIGluZm9ybWF0aW9uIChPbmx5IFZMQU4gSUQpLiBVc2Vy
+IGNhbm5vdCBjb25maWd1cmUgdGhlIGludGVyZmFjZSBpdHNlbGYuIEFuZCB0aGUgVkxhbk5ldHdv
+cmtJbnRlcmZhY2Ugc2NoZW1hIGlzIGRlcHJlY2F0ZWQgb24gMjAyMS4zLg0KDQpNeSBwcm9wb3Nh
+bCBpcyBleHBvc2luZyB0aGUgVkxBTiB2aXJ0dWFsIGludGVyZmFjZSBpbiB0aGUgc2FtZSB3YXkg
+YXMgcGh5c2ljYWwgaW50ZXJmYWNlLiBJbiB0aGlzIHdheSwgd2UgY2FsbCB1dGlsaXplIGV4aXN0
+aW5nIGNvZGUgb2YgZ2V0dGluZy9zZXR0aW5nIGludGVyZmFjZSBwcm9wZXJ0aWVzLCBvbmx5IG5l
+ZWQgdG8gZXh0ZW5kIHNvbWUgVkxBTi1zcGVjaWZpYyBwcm9wZXJ0aWVzLiBUaGlzIGlzIGFsc28g
+dGhlIHdheSBzdWdnZXN0ZWQgYnkgUmVkZmlzaCBzY2hlbWEuDQoNCkRldGFpbHMgYXJlOg0KDQox
+LiBJbiBFdGhlcm5ldEludGVyZmFjZSwgdXNlIEV0aGVybmV0SW50ZXJmYWNlVHlwZSB0byBpbmRp
+Y2F0ZSB3aGV0aGVyIGl0IGlzIHBoeXNpY2FsIG9yIFZMQU4gKFBoeXNpY2FsL1ZpcnR1YWwpDQoy
+LiBBZGQgVkxBTi1zcGVjaWZpYyBwcm9wZXJ0aWVzIGxpa2UgVkxBTklkIHRvIFZMQU4gaW50ZXJm
+YWNlcy4NCjMuIEFkZCBhIG5ldyBBUEkgdG8gY3JlYXRlIFZMQU4uIChUaGlzIHJlcGxhY2VzIGN1
+cnJlbnQgUE9TVCAvcmVkZmlzaC92MS9NYW5hZ2Vycy9ibWMvRXRoZXJuZXRJbnRlcmZhY2VzLzxz
+dHI+L1ZMQU5zKQ0KNC4gQ3JlYXRlIGEgREVMRVRFIG1ldGhvZCBoYW5kbGVyIGluIC9yZWRmaXNo
+L3YxL01hbmFnZXJzL2JtYy9FdGhlcm5ldEludGVyZmFjZXMvPHN0cj4gZm9yIGRlbGV0aW5nIFZM
+QU4gaW50ZXJmYWNlLg0KDQpGb3IgIzMsIG15IGlkZWEgaXMgdG8gYWRkIGFuIE9FTSBhY3Rpb24g
+Q3JlYXRlVkxBTiBpbiBlYWNoIHBoeXNpY2FsIGludGVyZmFjZSwgdGhlIHBheWxvYWQgd2lsbCBi
+ZSBpbiB7IlZMQU5JZCI6IDF9IGZvcm1hdC4gSSBrbm93IHRoaXMgaXMgYSBub24tc3RhbmRhcmQg
+d2F5LCBidXQgSSBjYW5ub3QgdGhpbmsgb2YgYSBiZXR0ZXIgaWRlYS4gUE9TVGluZyB0aGUgRXRo
+ZXJuZXRJbnRlcmZhY2VDb2xsZWN0aW9uIHNlZW1zIGNhbm5vdCBoYW5kbGUgd2hpY2ggcGh5c2lj
+YWwgaW50ZXJmYWNlIHRoZSBWTEFOIGludGVyZmFjZSBiZWxvbmdzIHRvLg0KDQpBbHNvLCBJIGZv
+dW5kIHRoYXQgY2hhbmdpbmcgVkxBTiBJRCBpcyBub3Qgc3VwcG9ydGVkIGluIHBob3NwaG9yLW5l
+dHdvcmtkLCB0aG91Z2ggYm1jd2ViIGN1cnJlbnQgaGFzIGEgUEFUQ0ggaGFuZGxlciBmb3IgaXQs
+IGl0IHdpbGwgbm90IHRha2UgZWZmZWN0LiBJIGFtIGFsc28gZ29pbmcgdG8gcmVtb3ZlIGl0IGlu
+IG15IHBhdGNoLg0KDQpBbnkgc3VnZ2VzdGlvbnMvYWx0ZXJuYXRpdmVzIHdpbGwgYmUgYXBwcmVj
+aWF0ZWQuDQoNClRoYW5rcywNCkppYXFpbmcNCg0K
