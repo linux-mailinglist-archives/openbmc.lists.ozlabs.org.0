@@ -2,57 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57E074860D6
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jan 2022 08:05:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5119948649F
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jan 2022 13:52:40 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JTy6S0YPpz30gk
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jan 2022 18:05:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JV5qB1JS4z30LJ
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jan 2022 23:52:38 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JsolqJ29;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=inspur.com (client-ip=210.51.61.248; helo=ssh248.corpemail.net;
- envelope-from=maxiaochao@inspur.com; receiver=<UNKNOWN>)
-X-Greylist: delayed 129 seconds by postgrey-1.36 at boromir;
- Thu, 06 Jan 2022 18:05:00 AEDT
-Received: from ssh248.corpemail.net (ssh248.corpemail.net [210.51.61.248])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::534;
+ helo=mail-ed1-x534.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=JsolqJ29; dkim-atps=neutral
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com
+ [IPv6:2a00:1450:4864:20::534])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JTy646b1pz2xDM
- for <openbmc@lists.ozlabs.org>; Thu,  6 Jan 2022 18:05:00 +1100 (AEDT)
-Received: from ([60.208.111.195])
- by ssh248.corpemail.net ((D)) with ASMTP (SSL) id AYI00114;
- Thu, 06 Jan 2022 15:02:14 +0800
-Received: from jtjnmail201604.home.langchao.com (10.100.2.4) by
- jtjnmail201605.home.langchao.com (10.100.2.5) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.20; Thu, 6 Jan 2022 15:02:15 +0800
-Received: from jtjnmail201604.home.langchao.com ([fe80::2830:53ee:1228:5322])
- by jtjnmail201604.home.langchao.com ([fe80::2830:53ee:1228:5322%5])
- with mapi id 15.01.2308.020; Thu, 6 Jan 2022 15:02:15 +0800
-From: =?utf-8?B?WGlhb2NoYW8gTWEgKOmprOWwj+i2hSk=?= <maxiaochao@inspur.com>
-To: "mine260309@gmail.com" <mine260309@gmail.com>
-Subject: =?utf-8?B?562U5aSNOiBVcGRhdGUgKG9yIGdlbmVyYXRlKSAvZXRjL2lwbWlfcGFzcyBm?=
- =?utf-8?Q?ile?=
-Thread-Topic: Update (or generate) /etc/ipmi_pass file
-Thread-Index: AdgCrg4my0csNWtVRYG20ese5zhM7v//rp8A//903oA=
-Date: Thu, 6 Jan 2022 07:02:15 +0000
-Message-ID: <dbe4f24d42c24b9cbe8992fb982f02ec@inspur.com>
-References: <3e6afebf819c4784a4dbacacccb74214@inspur.com>
- <CAARXrtmN1Fu8tWsqVotOwz_xdZkPLdaRPoS831mqRTO4FP6HHg@mail.gmail.com>
-In-Reply-To: <CAARXrtmN1Fu8tWsqVotOwz_xdZkPLdaRPoS831mqRTO4FP6HHg@mail.gmail.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.72.192.64]
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
- micalg=SHA1; boundary="----=_NextPart_000_0046_01D8030E.63B5E480"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JV5pl0kpRz305q
+ for <openbmc@lists.ozlabs.org>; Thu,  6 Jan 2022 23:52:12 +1100 (AEDT)
+Received: by mail-ed1-x534.google.com with SMTP id z9so8960099edm.10
+ for <openbmc@lists.ozlabs.org>; Thu, 06 Jan 2022 04:52:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=MsNXUcvHWOPJyu3NNDTld0SLu9yVDFfZ4c7CS9L9k0c=;
+ b=JsolqJ29I20fOTzBzP1JFHt68a9AWCVhaKwlVx/fRHNurBKeNaDcIF16tv188gM5ZR
+ huBQmXx+muSGHmk/5cpoGCWpS1h3moAu9n/CtmSJDkW9OD3jRQaebSOMOtOqE+MKOSPs
+ 5HQUA/VTsQwcZ2aQ3QU7FRyyZwZdm5EXnhRZehaE1F2ULjpTt8q6EJkFx+UFtHYZ1fN3
+ plUpZlnq3Hpej6DjXY4fDdxWqc2sCKre89s1OIu32CSUL80cWZ+G0aCJS0fl5p726fKy
+ q8WofxWw2NcNSm1ravgh283vWKnU0/HpQ6vuAb6gIFXbs/b//uyp9OtPjzql4hjZ7Ada
+ TCtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=MsNXUcvHWOPJyu3NNDTld0SLu9yVDFfZ4c7CS9L9k0c=;
+ b=dpR4FZpckAPmCW374NV7bo/KV8MhLq+HcLA7zisFY85Hyp6fBIJkX6hulgnovQJKIh
+ EiYuX1g2FuWPc24Zy618YcrHKFFKOdX4ApgcN3PLOwbc+WpmJlqFoy6U5j+/R/FTsd21
+ 4DBJB0plR+CrQcYPJgy6e4dNZM4GDP8ktYXJKVPBrG0DM5c/2KAJ6ZJyLVuL0DPm6vjr
+ VqCu8k7Qg5pVGDsOwiAk85yXb00bVzHryPZ2MQeF7jxOH9z9V2pRmSEW2SO4Sa1kuQSe
+ GQOjxCTqkmReSt5uz0jEU0TmcK3WNA+fOxvYsJyMChsIZua6bC3QtqUh/6yZYZp66Q7g
+ I6aA==
+X-Gm-Message-State: AOAM532eaAQbAPYbwoEIduLUgiPvJZAil5JscjjhCpo6XE8nuIeF5xoh
+ K9k8+jV5EuqhWeEspiXdB/yVkIWTsHMC3WDeTTE=
+X-Google-Smtp-Source: ABdhPJwv7Ij02Hyxi99aka4OfHhKPVN1OOkORFt3HxwF/HXHzixc/eyHpD9ltZXxo4UlheFWIXK+ACpiEzFZW6gLr4o=
+X-Received: by 2002:a17:906:f8c2:: with SMTP id
+ lh2mr46354185ejb.364.1641473526124; 
+ Thu, 06 Jan 2022 04:52:06 -0800 (PST)
 MIME-Version: 1.0
-tUid: 20221061502142698f9e3b2748ba026df8e85a283e890
-X-Abuse-Reports-To: service@corp-email.com
-Abuse-Reports-To: service@corp-email.com
-X-Complaints-To: service@corp-email.com
-X-Report-Abuse-To: service@corp-email.com
+References: <CACWQX80hcLXJrvXmg45v6L89_Ks__qc5MqUETGyvKeaqxzqY-w@mail.gmail.com>
+ <8589D844-7432-4C87-9CF0-71C6303228DF@stwcx.xyz>
+ <CAH2-KxBMht4OaoVi=ceVa3w46Gp_Ejbfcv+M7apVtZj4Up1c0Q@mail.gmail.com>
+In-Reply-To: <CAH2-KxBMht4OaoVi=ceVa3w46Gp_Ejbfcv+M7apVtZj4Up1c0Q@mail.gmail.com>
+From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
+Date: Thu, 6 Jan 2022 18:24:10 +0530
+Message-ID: <CAA7TbcvuvdLvSkSsObttDuF5bK7=roDeiETq1dxTPHo3RkbasQ@mail.gmail.com>
+Subject: Re: hwmontempsensor issue in dbus-sensor
+To: Ed Tanous <edtanous@google.com>
+Content-Type: multipart/alternative; boundary="0000000000006ed28105d4e95646"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,124 +76,348 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Bruce Mitchell <bruce.mitchell@linux.vnet.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>,
+ Jayashree D <jayashree-d@hcl.com>, velumanit@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_NextPart_000_0046_01D8030E.63B5E480
-Content-Type: text/plain;
-	charset="utf-8"
+--0000000000006ed28105d4e95646
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Sorry I didn't explain some of the methods I tried  : (
+Hi All,
 
-1. I tried the method you mentioned, but failed.
-The length of the password I want to set is 5 digits.
-I modified the complexity setting via /etc/pam.d/common-password, but =
-still cannot set a 5-digit password. (The setting for reducing the =
-length requirement failed to take effect)
+  Please find the below patch to fix this issue.
+  https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/50153
 
-2. I also tried to temporarily remove pam_cracklib.so in =
-/etc/pam.d/common-pasword so that it does not perform complexity =
-detection. Failed very directly......
+Thanks,
+Kumar.
 
------=E9=82=AE=E4=BB=B6=E5=8E=9F=E4=BB=B6-----
-=E5=8F=91=E4=BB=B6=E4=BA=BA: Lei YU [mailto:mine260309@gmail.com]=20
-=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4: 2022=E5=B9=B41=E6=9C=886=E6=97=A5 =
-14:41
-=E6=94=B6=E4=BB=B6=E4=BA=BA: Xiaochao Ma (=E9=A9=AC=E5=B0=8F=E8=B6=85) =
-<maxiaochao@inspur.com>
-=E6=8A=84=E9=80=81: openbmc@lists.ozlabs.org
-=E4=B8=BB=E9=A2=98: Re: Update (or generate) /etc/ipmi_pass file
+On Wed, Jan 5, 2022 at 12:08 AM Ed Tanous <edtanous@google.com> wrote:
 
-On Thu, Jan 6, 2022 at 11:39 AM Xiaochao Ma =
-(=E9=A9=AC=E5=B0=8F=E8=B6=85) <maxiaochao@inspur.com> wrote:
+> On Mon, Jan 3, 2022 at 1:09 PM Patrick Williams <patrick@stwcx.xyz> wrote=
+:
+> >
+> > Ed,
+> >
+> > I think there are other commits needing the IIO functionality now. Ther=
+e
+> is at least the pending commit for Humidity that we=E2=80=99d like to get=
+ merged. I
+> think it is better to move forward with a fix rather than backwards with =
+a
+> revert at this point.
 >
-> Hello everyone
+> Sure, if there are patches available to fix the regression, I'm happy
+> to avoid the revert.  I'll let this sit another day or two to see if
+> someone puts up a patch to fix the issue, but after that, we need to
+> unbreak master, and in the absence of a patch to fix it, a revert is
+> the next best option.
 >
->
->
-> I now want to add a default user to my own machine (I modified=20
-> obmc-phosphor-image.bbappend, use the useradd=E2=80=A6 ),
->
-> but the new default user cannot use Ipmi. It is because the ipmi_pass =
-file is not updated.
->
->   I couldn't find a method/tool to generate ipmi_pass file. So how can =
-I generate a new ipmi_pass file?
+> >
+> > Kumar/Jayashree,
+> >
+> > Can you dig into this and get to the bottom of it?
+> >
+> > - Patrick
+> > Sent from my iPhone
+> >
+> > > On Jan 3, 2022, at 11:21 AM, Ed Tanous <ed@tanous.net> wrote:
+> > >
+> > > =EF=BB=BFOn Fri, Dec 31, 2021 at 9:31 AM Bruce Mitchell
+> > > <bruce.mitchell@linux.vnet.ibm.com> wrote:
+> > >>
+> > >>> On 12/20/2021 10:29, Ed Tanous wrote:
+> > >>> On Sun, Dec 19, 2021 at 9:11 PM Kumar Thangavel
+> > >>> <kumarthangavel.hcl@gmail.com> wrote:
+> > >>>>
+> > >>>> Hi All,
+> > >>>>
+> > >>>> Gentle Reminder on this.
+> > >>>>
+> > >>>> Thanks,
+> > >>>> Kumar.
+> > >>>>
+> > >>>> On Thu, Dec 16, 2021 at 1:56 PM Kumar Thangavel <
+> kumarthangavel.hcl@gmail.com> wrote:
+> > >>>>>
+> > >>>>> Hi All,
+> > >>>>>
+> > >>>>>
+> > >>>>> In dbus-sensors repo, I saw the patch for changes in Hwmon Temp
+> Sensor.
+> > >>>>>
+> https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3=
+ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e53=
+41b22b7ab
+> > >>>
+> > >>> Bruce, this is your patch.  Could you take a look at the below and
+> > >>> provide your input?
+> > >>>
+> > >>>>>
+> > >>>>>
+> > >>>>> While testing those changes in my platform, I found that each
+> sensor in hwmon temp has been creating twice.
+> > >>>>> After analyzed the patch, for below 2 paths SP_OUTLET_TEMP sensor
+> is created twice.
+> > >>>>>
+> > >>>>>
+> > >>>>> /sys/class/hwmon/hwmon2/temp2_input
+> > >>>>> /sys/class/hwmon/hwmon2/temp1_input
+> > >>>>>
+> > >>>>>
+> > >>>>> Before your change, hwmon temp sensor will check whether the path
+> is already exists or not.
+> > >>>>> If it exists, it will skip and proceed with next path.
+> > >>>>>
+> https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7d684c3=
+ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1568e53=
+41b22b7abL96
+> > >>>>>
+> > >>>>>
+> > >>>>> Could you please explain why it is creating twice in hwmon temp ?
+> > >>>>>
+> > >>>>>
+> > >>>>> Journalctl log before your changes applied :
+> > >>>>>
+> > >>>>>
+> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path :
+> "/sys/class/hwmon/hwmon2/temp2_input"
+> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Type :
+> xyz.openbmc_project.Configuration.TMP421
+> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Name :
+> SP_OUTLET_TEMP
+> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path :
+> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
+> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Dbus path :
+> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
+> > >>>>> Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: Path :
+> "/sys/class/hwmon/hwmon2/temp1_input"
+> > >>>>>
+> > >>>>>
+> > >>>>>
+> > >>>>> Journalctl log after your changes applied :
+> > >>>>>
+> > >>>>>
+> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
+> "/sys/class/hwmon/hwmon2/temp2_input"
+> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor type :
+> xyz.openbmc_project.Configuration.TMP421
+> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name :
+> SP_OUTLET_TEMP
+> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
+> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
+> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
+> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
+> > >>>>>
+> > >>>>>
+> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
+> "/sys/class/hwmon/hwmon2/temp1_input"
+> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Sensor type :
+> xyz.openbmc_project.Configuration.TMP421
+> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Name :
+> SP_OUTLET_TEMP
+> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
+> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP
+> > >>>>> Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: Path :
+> /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP
+> > >>>>>
+> > >>>>>
+> > >>>>>
+> > >>>>> Thanks,
+> > >>>>>
+> > >>>>> Kumar.
+> > >>
+> > >> I will give it quick look today.  Also today is my last day at IBM.
+> > >>
+> > >
+> > > Do you plan on continuing this beyond your tenure at IBM?  If not, is
+> > > someone taking this feature over for you?  Given it's been a few week=
+s
+> > > since this regression was reported, and I don't see any fixes in
+> > > review, I'm leaning toward reverting it on master for the time being
+> > > until someone puts up a patch to fix the issue.
+> >
 >
 
-What I do is to use qemu or a real BMC, adjust the ipmi =
-username/passwords, and then copy the ipmi_pass out.
+--0000000000006ed28105d4e95646
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-------=_NextPart_000_0046_01D8030E.63B5E480
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
+<div dir=3D"ltr"><div>Hi All,</div><div><br></div><div>=C2=A0 Please find t=
+he below patch to fix this issue.</div>=C2=A0=C2=A0<a aria-label=3D"Link ht=
+tps://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/50153" title=3D"h=
+ttps://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/50153" href=3D"h=
+ttps://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/50153" rel=3D"no=
+opener noreferrer" target=3D"_blank" tabindex=3D"-1" style=3D"box-sizing:bo=
+rder-box;outline-style:none;color:rgb(98,100,167);text-decoration-line:none=
+;font-family:&quot;Segoe UI&quot;,system-ui,&quot;Apple Color Emoji&quot;,&=
+quot;Segoe UI Emoji&quot;,sans-serif;font-size:14px">https://gerrit.openbmc=
+-project.xyz/c/openbmc/dbus-sensors/+/50153</a><br><div><br></div><div>Than=
+ks,</div><div>Kumar.</div></div><br><div class=3D"gmail_quote"><div dir=3D"=
+ltr" class=3D"gmail_attr">On Wed, Jan 5, 2022 at 12:08 AM Ed Tanous &lt;<a =
+href=3D"mailto:edtanous@google.com">edtanous@google.com</a>&gt; wrote:<br><=
+/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex">On Mon, Jan 3, 2022 =
+at 1:09 PM Patrick Williams &lt;<a href=3D"mailto:patrick@stwcx.xyz" target=
+=3D"_blank">patrick@stwcx.xyz</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Ed,<br>
+&gt;<br>
+&gt; I think there are other commits needing the IIO functionality now. The=
+re is at least the pending commit for Humidity that we=E2=80=99d like to ge=
+t merged. I think it is better to move forward with a fix rather than backw=
+ards with a revert at this point.<br>
+<br>
+Sure, if there are patches available to fix the regression, I&#39;m happy<b=
+r>
+to avoid the revert.=C2=A0 I&#39;ll let this sit another day or two to see =
+if<br>
+someone puts up a patch to fix the issue, but after that, we need to<br>
+unbreak master, and in the absence of a patch to fix it, a revert is<br>
+the next best option.<br>
+<br>
+&gt;<br>
+&gt; Kumar/Jayashree,<br>
+&gt;<br>
+&gt; Can you dig into this and get to the bottom of it?<br>
+&gt;<br>
+&gt; - Patrick<br>
+&gt; Sent from my iPhone<br>
+&gt;<br>
+&gt; &gt; On Jan 3, 2022, at 11:21 AM, Ed Tanous &lt;<a href=3D"mailto:ed@t=
+anous.net" target=3D"_blank">ed@tanous.net</a>&gt; wrote:<br>
+&gt; &gt;<br>
+&gt; &gt; =EF=BB=BFOn Fri, Dec 31, 2021 at 9:31 AM Bruce Mitchell<br>
+&gt; &gt; &lt;<a href=3D"mailto:bruce.mitchell@linux.vnet.ibm.com" target=
+=3D"_blank">bruce.mitchell@linux.vnet.ibm.com</a>&gt; wrote:<br>
+&gt; &gt;&gt;<br>
+&gt; &gt;&gt;&gt; On 12/20/2021 10:29, Ed Tanous wrote:<br>
+&gt; &gt;&gt;&gt; On Sun, Dec 19, 2021 at 9:11 PM Kumar Thangavel<br>
+&gt; &gt;&gt;&gt; &lt;<a href=3D"mailto:kumarthangavel.hcl@gmail.com" targe=
+t=3D"_blank">kumarthangavel.hcl@gmail.com</a>&gt; wrote:<br>
+&gt; &gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt; Hi All,<br>
+&gt; &gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt; Gentle Reminder on this.<br>
+&gt; &gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt; Thanks,<br>
+&gt; &gt;&gt;&gt;&gt; Kumar.<br>
+&gt; &gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt; On Thu, Dec 16, 2021 at 1:56 PM Kumar Thangavel &lt;<=
+a href=3D"mailto:kumarthangavel.hcl@gmail.com" target=3D"_blank">kumarthang=
+avel.hcl@gmail.com</a>&gt; wrote:<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Hi All,<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; In dbus-sensors repo, I saw the patch for changes=
+ in Hwmon Temp Sensor.<br>
+&gt; &gt;&gt;&gt;&gt;&gt; <a href=3D"https://github.com/openbmc/dbus-sensor=
+s/commit/544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad=
+3b7fe091f9c79a60faf8a26f410c1568e5341b22b7ab" rel=3D"noreferrer" target=3D"=
+_blank">https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef898fe7=
+d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f410c1=
+568e5341b22b7ab</a><br>
+&gt; &gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt; Bruce, this is your patch.=C2=A0 Could you take a look at=
+ the below and<br>
+&gt; &gt;&gt;&gt; provide your input?<br>
+&gt; &gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; While testing those changes in my platform, I fou=
+nd that each sensor in hwmon temp has been creating twice.<br>
+&gt; &gt;&gt;&gt;&gt;&gt; After analyzed the patch, for below 2 paths SP_OU=
+TLET_TEMP sensor is created twice.<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; /sys/class/hwmon/hwmon2/temp2_input<br>
+&gt; &gt;&gt;&gt;&gt;&gt; /sys/class/hwmon/hwmon2/temp1_input<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Before your change, hwmon temp sensor will check =
+whether the path is already exists or not.<br>
+&gt; &gt;&gt;&gt;&gt;&gt; If it exists, it will skip and proceed with next =
+path.<br>
+&gt; &gt;&gt;&gt;&gt;&gt; <a href=3D"https://github.com/openbmc/dbus-sensor=
+s/commit/544e7dc58cecef898fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad=
+3b7fe091f9c79a60faf8a26f410c1568e5341b22b7abL96" rel=3D"noreferrer" target=
+=3D"_blank">https://github.com/openbmc/dbus-sensors/commit/544e7dc58cecef89=
+8fe7d684c3ba0fbce178cf2d#diff-bfc8d7ed4ade4b3519ad3b7fe091f9c79a60faf8a26f4=
+10c1568e5341b22b7abL96</a><br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Could you please explain why it is creating twice=
+ in hwmon temp ?<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Journalctl log before your changes applied :<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
+Path : &quot;/sys/class/hwmon/hwmon2/temp2_input&quot;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
+Type : xyz.openbmc_project.Configuration.TMP421<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
+Name : SP_OUTLET_TEMP<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
+Dbus path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
+Dbus path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP<=
+br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:32 yosemitev2 hwmontempsensor[286]: =
+Path : &quot;/sys/class/hwmon/hwmon2/temp1_input&quot;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Journalctl log after your changes applied :<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
+Path : &quot;/sys/class/hwmon/hwmon2/temp2_input&quot;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
+Sensor type : xyz.openbmc_project.Configuration.TMP421<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
+Name : SP_OUTLET_TEMP<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
+Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
+Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
+Path : &quot;/sys/class/hwmon/hwmon2/temp1_input&quot;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
+Sensor type : xyz.openbmc_project.Configuration.TMP421<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
+Name : SP_OUTLET_TEMP<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
+Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_TEMP<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Dec 31 16:01:54 yosemitev2 hwmontempsensor[327]: =
+Path : /xyz/openbmc_project/sensors/temperature/SP_OUTLET_REMOTE_TEMP<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Thanks,<br>
+&gt; &gt;&gt;&gt;&gt;&gt;<br>
+&gt; &gt;&gt;&gt;&gt;&gt; Kumar.<br>
+&gt; &gt;&gt;<br>
+&gt; &gt;&gt; I will give it quick look today.=C2=A0 Also today is my last =
+day at IBM.<br>
+&gt; &gt;&gt;<br>
+&gt; &gt;<br>
+&gt; &gt; Do you plan on continuing this beyond your tenure at IBM?=C2=A0 I=
+f not, is<br>
+&gt; &gt; someone taking this feature over for you?=C2=A0 Given it&#39;s be=
+en a few weeks<br>
+&gt; &gt; since this regression was reported, and I don&#39;t see any fixes=
+ in<br>
+&gt; &gt; review, I&#39;m leaning toward reverting it on master for the tim=
+e being<br>
+&gt; &gt; until someone puts up a patch to fix the issue.<br>
+&gt;<br>
+</blockquote></div>
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIKRTCCA6Iw
-ggKKoAMCAQICEGPKUixTOHaaTcIS5DrQVuowDQYJKoZIhvcNAQELBQAwWTETMBEGCgmSJomT8ixk
-ARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxhbmdjaGFvMRQwEgYKCZImiZPyLGQBGRYEaG9tZTES
-MBAGA1UEAxMJSU5TUFVSLUNBMB4XDTE3MDEwOTA5MjgzMFoXDTI3MDEwOTA5MzgyOVowWTETMBEG
-CgmSJomT8ixkARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxhbmdjaGFvMRQwEgYKCZImiZPyLGQB
-GRYEaG9tZTESMBAGA1UEAxMJSU5TUFVSLUNBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAq+Q17xtjJLyp5hgXDie1r4DeNj76VUvbZNSywWU5zhx+e0Lu0kwcZ0T3KncZdgdWyqYvRJMQ
-/VVqX3gS4VxtLw3zBrg9kGuD0LfpH0cA2b0ZHpxRh5WapP14flcSh/lnawig29z44wfUEg43yTZO
-lOfPKos/Dm6wyrJtaPmD6AF7w4+vFZH0zMYfjQkSN/xGgS3OPBNAB8PTHM2sV+fFmnnlTFpyRg0O
-IIA2foALZvjIjNdUfp8kMGSh/ZVMfHqTH4eo+FcZPZ+t9nTaJQz9cSylw36+Ig6FGZHA/Zq+0fYy
-VCxR1ZLULGS6wsVep8j075zlSinrVpMadguOcArThwIDAQABo2YwZDATBgkrBgEEAYI3FAIEBh4E
-AEMAQTALBgNVHQ8EBAMCAYYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUXlkDprRMWGCRTvYe
-taU5pjLBNWowEAYJKwYBBAGCNxUBBAMCAQAwDQYJKoZIhvcNAQELBQADggEBAErE37vtdSu2iYVX
-Fvmrg5Ce4Y5NyEyvaTh5rTGt/CeDjuFS5kwYpHVLt3UFYJxLPTlAuBKNBwJuQTDXpnEOkBjTwukC
-0VZ402ag3bvF/AQ81FVycKZ6ts8cAzd2GOjRrQylYBwZb/H3iTfEsAf5rD/eYFBNS6a4cJ27OQ3s
-Y4N3ZyCXVRlogsH+dXV8Nn68BsHoY76TvgWbaxVsIeprTdSZUzNCscb5rx46q+fnE0FeHK01iiKA
-xliHryDoksuCJoHhKYxQTuS82A9r5EGALTdmRxhSLL/kvr2M3n3WZmVL6UulBFsNSKJXuIzTe2+D
-mMr5DYcsm0ZfNbDOAVrLPnUwggabMIIFg6ADAgECAhN+AABady6mEgoZsjT0AAAAAFp3MA0GCSqG
-SIb3DQEBCwUAMFkxEzARBgoJkiaJk/IsZAEZFgNjb20xGDAWBgoJkiaJk/IsZAEZFghsYW5nY2hh
-bzEUMBIGCgmSJomT8ixkARkWBGhvbWUxEjAQBgNVBAMTCUlOU1BVUi1DQTAeFw0xOTA0MjQwNzQz
-MjNaFw0yNDA0MjIwNzQzMjNaMIGWMRMwEQYKCZImiZPyLGQBGRYDY29tMRgwFgYKCZImiZPyLGQB
-GRYIbGFuZ2NoYW8xFDASBgoJkiaJk/IsZAEZFgRob21lMRUwEwYDVQQLDAzmtarmva7kv6Hmga8x
-EjAQBgNVBAMMCemprOWwj+i2hTEkMCIGCSqGSIb3DQEJARYVbWF4aWFvY2hhb0BpbnNwdXIuY29t
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArxxzwz7wyqRKj9zkngKWY2QzuntASQpb
-M6SqulV/sFmLMW8TIBRht3UppU/fvQsdLFd32/MzAVDf5qBF3krBU4eX8LcADirkqfvP50iFjY1R
-SAYBYa1wkyILRVGWpVC/qKMEMumM6cWTlH0GyVtm77qafZmcQ7YveqHeECAIfFnAaZCa8xtEs9+R
-9vcSrhAT0i/D3a4bUaOQkKekz48m0gF2rECOUhk249cLbgkOJkI0CDSt/IPeLy5bZJ8ZgrOTmyHa
-LCSJS1VDbSlwk9jKcoaB725hrqLz0Sp0baB/gUlAJGNQPy7AKBzk6Uibw+YfXIUM2uyEvw8P+0VY
-Pepx7QIDAQABo4IDHDCCAxgwPQYJKwYBBAGCNxUHBDAwLgYmKwYBBAGCNxUIgvKpH4SB13qGqZE9
-hoD3FYPYj1yBSv2LJoGUp00CAWQCAVwwKQYDVR0lBCIwIAYIKwYBBQUHAwIGCCsGAQUFBwMEBgor
-BgEEAYI3CgMEMAsGA1UdDwQEAwIFoDA1BgkrBgEEAYI3FQoEKDAmMAoGCCsGAQUFBwMCMAoGCCsG
-AQUFBwMEMAwGCisGAQQBgjcKAwQwRAYJKoZIhvcNAQkPBDcwNTAOBggqhkiG9w0DAgICAIAwDgYI
-KoZIhvcNAwQCAgCAMAcGBSsOAwIHMAoGCCqGSIb3DQMHMB0GA1UdDgQWBBSQmhIT5stHwDWAnskw
-M0mlgnF98zAfBgNVHSMEGDAWgBReWQOmtExYYJFO9h61pTmmMsE1ajCB0QYDVR0fBIHJMIHGMIHD
-oIHAoIG9hoG6bGRhcDovLy9DTj1JTlNQVVItQ0EsQ049SlRDQTIwMTIsQ049Q0RQLENOPVB1Ymxp
-YyUyMEtleSUyMFNlcnZpY2VzLENOPVNlcnZpY2VzLENOPUNvbmZpZ3VyYXRpb24sREM9aG9tZSxE
-Qz1sYW5nY2hhbyxEQz1jb20/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVjdENs
-YXNzPWNSTERpc3RyaWJ1dGlvblBvaW50MIHEBggrBgEFBQcBAQSBtzCBtDCBsQYIKwYBBQUHMAKG
-gaRsZGFwOi8vL0NOPUlOU1BVUi1DQSxDTj1BSUEsQ049UHVibGljJTIwS2V5JTIwU2VydmljZXMs
-Q049U2VydmljZXMsQ049Q29uZmlndXJhdGlvbixEQz1ob21lLERDPWxhbmdjaGFvLERDPWNvbT9j
-QUNlcnRpZmljYXRlP2Jhc2U/b2JqZWN0Q2xhc3M9Y2VydGlmaWNhdGlvbkF1dGhvcml0eTBHBgNV
-HREEQDA+oCUGCisGAQQBgjcUAgOgFwwVbWF4aWFvY2hhb0BpbnNwdXIuY29tgRVtYXhpYW9jaGFv
-QGluc3B1ci5jb20wDQYJKoZIhvcNAQELBQADggEBAGsWSCGucuJ7y3TgHBxlOjx4SQI21uq4CL6G
-qb2ZIkFEyh5txT3tPEtqyq9R1ZQpMzoLviuMOhiBoeiQ9y1qee/K/ymINc5Nybv7X7lo2/tu7RVT
-MWrkWgwx+i4uzTcA0S0hJOPZI9ZRCguzdHdRRR/yf4sgzPfApi/gbQIMB+1LqaNDpE9XrGW+JEIo
-gxY5CGbOJcCgNYFrWm1RZQ0J55hJCi6gcPot2gTHP4XdTmn7OQEv5IVPGoiiqKD7ypIJHoC3wT3W
-16jEnpKztq3AkCrtjTQLky9wGYCIKDKnMVXiGIdWsXYxPXk1/qqTqkSODudN2NfYhIPnwmNwlD1i
-cdkxggOTMIIDjwIBATBwMFkxEzARBgoJkiaJk/IsZAEZFgNjb20xGDAWBgoJkiaJk/IsZAEZFghs
-YW5nY2hhbzEUMBIGCgmSJomT8ixkARkWBGhvbWUxEjAQBgNVBAMTCUlOU1BVUi1DQQITfgAAWncu
-phIKGbI09AAAAABadzAJBgUrDgMCGgUAoIIB+DAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
-CSqGSIb3DQEJBTEPFw0yMjAxMDYwNzAyMTRaMCMGCSqGSIb3DQEJBDEWBBRafNLvlLH0LN5bVEUL
-m66JBIGCwTB/BgkrBgEEAYI3EAQxcjBwMFkxEzARBgoJkiaJk/IsZAEZFgNjb20xGDAWBgoJkiaJ
-k/IsZAEZFghsYW5nY2hhbzEUMBIGCgmSJomT8ixkARkWBGhvbWUxEjAQBgNVBAMTCUlOU1BVUi1D
-QQITfgAAWncuphIKGbI09AAAAABadzCBgQYLKoZIhvcNAQkQAgsxcqBwMFkxEzARBgoJkiaJk/Is
-ZAEZFgNjb20xGDAWBgoJkiaJk/IsZAEZFghsYW5nY2hhbzEUMBIGCgmSJomT8ixkARkWBGhvbWUx
-EjAQBgNVBAMTCUlOU1BVUi1DQQITfgAAWncuphIKGbI09AAAAABadzCBkwYJKoZIhvcNAQkPMYGF
-MIGCMAsGCWCGSAFlAwQBKjALBglghkgBZQMEARYwCgYIKoZIhvcNAwcwCwYJYIZIAWUDBAECMA4G
-CCqGSIb3DQMCAgIAgDANBggqhkiG9w0DAgIBQDAHBgUrDgMCGjALBglghkgBZQMEAgMwCwYJYIZI
-AWUDBAICMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQBKuM+10vGjG7CpZhA1WFM0xe+V
-Z7uln0LtK0RMNhB00gY45FZSRPrOnZsnNDH4M3IRY/nGbvtaiDu5dQ11IiI7CeX69E7sF7oiTiTy
-3QBqCTkTlslJScS+Aey+OdXa4Zwksen1Ablf6vzVLXE6D5+8xKQjGTXzCwAs5kJYonslyP05mUmT
-QZQo3zCNJPnSN3J+d81JQqsLGQdeEcRgRx8ay5M+15tvDcP6svOyyG02gfPOM4fX34RX0ifA+Dt8
-72eq00GWRnB++utuaflyPIuOUcJ/ikXvkP+UFzcAH18VWGL71oCusBMEqqCATxMOWDUo1BGz1on3
-eOiXfOa77ha4AAAAAAAA
-
-------=_NextPart_000_0046_01D8030E.63B5E480--
+--0000000000006ed28105d4e95646--
