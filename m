@@ -1,77 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7766488B47
-	for <lists+openbmc@lfdr.de>; Sun,  9 Jan 2022 18:35:59 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D619488B41
+	for <lists+openbmc@lfdr.de>; Sun,  9 Jan 2022 18:34:50 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JX3yj5TKZz30N9
-	for <lists+openbmc@lfdr.de>; Mon, 10 Jan 2022 04:35:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JX3xN29X3z30Mm
+	for <lists+openbmc@lfdr.de>; Mon, 10 Jan 2022 04:34:48 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=ATJsY33T;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=d/vN6wBy;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.22; helo=mout.gmx.net;
+ (client-ip=212.227.15.15; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=ATJsY33T; 
+ header.s=badeba3b8450 header.b=d/vN6wBy; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JX3x01CJdz30Dg
- for <openbmc@lists.ozlabs.org>; Mon, 10 Jan 2022 04:34:26 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JX3x01FFbz30JN
+ for <openbmc@lists.ozlabs.org>; Mon, 10 Jan 2022 04:34:27 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1641749655;
- bh=iPSBD2awiftOLogxsCMiyQPe19EVPJ9UGcWv/u2KUGk=;
+ s=badeba3b8450; t=1641749656;
+ bh=taSe74XlwBpmhJ0j1x0XEjHYq/VEdG+uKdcA54j4lbw=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ATJsY33T9YmuKdN+uMLJvhbXsPtAxZtIC38JHDnj04sP4X9R4hGGa14virZ3nRrBI
- aTc3/c/TSb9J0vkv/PHg8pJXCQ4iNkBZmah/YR1zwxZgCGjoDxEnU0xu1mhXZKNNeF
- q+PhqNfWAUqKIO8d3earntctczFsQsWN2OPn8vQw=
+ b=d/vN6wByFgYgDyElXm5kbOfiTZXw9EHrwI6sXnL+3BFCh9JOpnNLanHBFdjxatqut
+ edj338np8NaBDW+LyrvDoHHT0liFwsBBE+1rMPFnCrJd9q8BCrzuWvVuwW4sQ52cCV
+ bAntztQItSXKsLyTKLvXiMHAnP+xR/rw+ui+7vmg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([89.0.222.244]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4hzj-1mP89B43rb-011i7j; Sun, 09
- Jan 2022 18:34:15 +0100
+Received: from longitude ([89.0.222.244]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MeCpR-1mXpIV0mNr-00bIGq; Sun, 09
+ Jan 2022 18:34:16 +0100
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: linux-gpio@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH v4 2/9] MAINTAINERS: Match all of bindings/arm/npcm/ as part
- of NPCM architecture
-Date: Sun,  9 Jan 2022 18:29:53 +0100
-Message-Id: <20220109173000.1242703-3-j.neuschaefer@gmx.net>
+Subject: [PATCH v4 3/9] ARM: dts: wpcm450: Add global control registers (GCR)
+ node
+Date: Sun,  9 Jan 2022 18:29:54 +0100
+Message-Id: <20220109173000.1242703-4-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220109173000.1242703-1-j.neuschaefer@gmx.net>
 References: <20220109173000.1242703-1-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:COUIWzWI3NV8k793KkNeU7tCZhSj5gGen+76B2rEC21V4/TOUhM
- rFExiA4PoIeY4vfvFVZxtWB6P++xcu/O6mxpK0LsbOp2zxWmddopaqcNqB56rTJmeCHR2b/
- jqVYrGSNgGRuxYGtGkOsoBDjyFQVaY9CgbKbubr7u8MZPoQvFQOiM+8opA4K0XZTAyuef1q
- 2r12ZDwiBoWTDYGO1q0qg==
+X-Provags-ID: V03:K1:dfQ9ODRg8JIeE1gnqr6ntlsmbtVZdw0XFEpZB9G7GcdZCGEfSZE
+ VT1wKiFnkI1Mi+58kZMlAhToRhphJRY2YC+ZbuTLhNu3ag5DieMa2mimwEa8RxiNNgAftII
+ yQ6fkuUK242PYWhUXmmqqSpNR1vjKu4KfJ5pOtfGGXnYrs0MbMos43dau91Y0JCeqj/XZtA
+ DyXrsu3OJUWM/CBytmsCA==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:JsIHhT4hU4g=:u+Qx8ueXfXPIxFGDu9zfO+
- +TLRmpjHI82Ur694DkG9nrhG/DVtKfcVnoWw8jU3ogq/eTQBbcZUA2a3zd56WnTixyL6PXiwg
- LBPv6pJo0TG8agfJUkh1792X+i+VrAbcpPGN3W9ZHQsyqufSlROgnFsvzMNXwfjaTv4OGEDY5
- lD1XM58N+eSEvR4lfnkBtEv/iNlksZCVfIxDcsEZCsmvTa+16FHGhtwS9Ucicu9t91unEwSeE
- 4RO2yV+52tliahtEnfHinmsGRcrw2Rx7UPdkIdGNhegw4I1nV4oHhP0PJHcycOmfXAmfjJqoX
- 0pFmETpvKfiCcYGrIrRd7eZoz9aUIUvypxX5NYxcdxmOOISfjkmPfyHsaM+GekVNsxbY2F39J
- LY3clNkEEINnFfHNadlp2ouGBQE6YVyAYDc4WyBluMzQulMw9Tp8yphkdDOj/jGtzME3BESFL
- egV3+HauBSCV6kcmNFDQ6uz2eC7U+d/Sw+TdsnKwHdOofPg9lNKTyi6r3Jyr+fTw6/wtKPLIB
- roaxzqoqrXl4kz9nxj58mDJcR3u1ECy70KZ3m/vfT/uEdDFv6IpzwQq3mQnoi4ALu5+nfRIE9
- qmWeQ2liR5Tj/85UsEaxUTwk6QV+UCPbImSZFQJrJTLgrB9WFKltV89jqws8dYCPavaL3bwH1
- g/q7UTodHnqPTW+J72ucWNL0SqH+gFmE9RKV/IDS7rdmfXskoTBoRW71yK2rW55Zmkhr4ejC/
- gYDhvjNd70g+ArTEgEOP4cylwrYzxyViwV2JVm0EY5E2aUeLoyn/bmOt7S/R4PvUfqwTWS4yO
- JFBx6mNs4a469y9DyW6cHa1Su8av64I/EehnXZWfxXvHaBEmFmdbjyIm/l7BxWMsxw6wfz7eM
- 3fwNZZgo1alZxnGq2eqRLvRvNda8LJSCdTY+xXhwG3q5/YViVGTzeQnkCULSe0O9E9e22dVwl
- hVxaYxCVuj3VOFAtQnpi2fqu46jgPODL0Eetd3OlrBxQpt4ko0npnvdD+twRB3I/lMgdrNoWb
- h46jVVpjGdxzA8XsmbnfLzBOgAH2dPAzb+ks7Kp8XsT37hiZDJ8Qpbob/zwiAfdBNFPuYN+/c
- 9P0cB6m7JHeluw=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1UqqEqcNczo=:n0BnMDnrdVuD3koEdsk1fP
+ 98UM1zsmal32BaD5HG0gNOXxbypsH6iGYYcY4Vxar319pKjJAaoRQ/c4QIum7QjUReegNYrSy
+ 6Ek4CC9WZoqXtMSloiCYi/PQVPbi6zZPbQecK28qjkF6xT0Zz3m5pJR5mW9Dz7fKJe/EqfRVc
+ CctL3HcVOiXz5A2Xmo5K8wOT1vDR3x/Mif03KKnAKF/XTyxDPTDxP596Q2K7lLe8Tm4ZiAuLq
+ U1vrCabwZuvLhN0TF0t7+qYS04/7v/ChEyhW/pb+qFcnK7FBBg2lAZqgsx4El3+tJ2D5PCSBI
+ Da26Z+sh50+4RRe4bYK7i6dLrCqEVkODZG5HWqUpCoNpBDJyPPnrxCDDks7cjkR5sRm/Zf7A/
+ xNnWPrLQn3j62TQS34TmG8/vimchb+udZ8StYq8n/qkqtK0BTuia15a4dzv/vfAFeJMtCSUOy
+ 1JhsZcDSrta1XuvTZQ8jdrbiQsvEW0KD5x4APfP3yQfyeJ+BKpaYjJOZd4Q8mUtKLPSPDTits
+ kNGEV/UKRsGJG7s6r1chVYf8dzK6G1TlFqCsrof///NTQans4Z7ZCFFcq4Gg3dHI7ITEFo7PL
+ P95J5VVw8m5eakTl7YXENO+fo9iWjwsEjV2kM5z2F2BkxfKQa/1bqXR9BY4xw1mVvrwMPjAEf
+ 0WkLbZ97Tbi/7J+WfVtV05YZwfudmEqSqeLcEh25cUIBMQP8FYEPNvni9SZoyxmcwcbyhfjjx
+ FwNVT8tzxQU8cHR69Jgq0mNdeLSjnh9lQPkNAhXXHpv8EZ9YCbvJsubrFUhJl/vgeL86dEcx9
+ B2MkwZXj61qAwmGi3nqySa6l87ANKDXScRtHZNhLTE0Wc/LMYAt4odbOJTx6aGUo/aznc2lg8
+ P7Vd3sSgjy2BMdTkThTijW+WGZTjn0qz3OpLxr/lqrKZlTgRqxvn5GOQJHsG4qMp9MKI5kmym
+ 8VFRZXy2ijuXT5RoplF7cH6WwC/A01MI8+s57x+rNKdAB083qTGLrrBchz+6HTRgfR323WITH
+ 0aMl4pSNZrQjOhP4eftHb1yNnwZdW/jlBS0dI+VfLNTRcRfY4/TUcaMEjCuaO5Rmt6oaErGfG
+ eUC8aEquhQz/LQ=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,36 +92,47 @@ Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-All files in Documentation/devicetree/bindings/arm/npcm/ belong to the
-Nuvoton NPCM architecture, even when their names might not spell it out
-explicitly.
+The Global Control Registers (GCR) are a block of registers in Nuvoton
+SoCs that expose misc functionality such as chip model and version
+information or pinmux settings.
+
+This patch adds a GCR node to nuvoton-wpcm450.dtsi in preparation for
+enabling pinctrl on this SoC.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-=2D--
 
-v2-v4:
+
+=2D--
+v3-v4:
 - no changes
 
+v2:
+- Rename node to syscon@b0000000
+
 v1:
-- https://lore.kernel.org/lkml/20210602120329.2444672-3-j.neuschaefer@gmx.=
+- https://lore.kernel.org/lkml/20210602120329.2444672-4-j.neuschaefer@gmx.=
 net/
 =2D--
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/nuvoton-wpcm450.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8912b2c1260ca..123c967936785 100644
-=2D-- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2338,6 +2338,7 @@ L:	openbmc@lists.ozlabs.org (moderated for non-subsc=
-ribers)
- S:	Supported
- F:	Documentation/devicetree/bindings/*/*/*npcm*
- F:	Documentation/devicetree/bindings/*/*npcm*
-+F:	Documentation/devicetree/bindings/arm/npcm/*
- F:	arch/arm/boot/dts/nuvoton-npcm*
- F:	arch/arm/mach-npcm/
- F:	drivers/*/*npcm*
+diff --git a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi b/arch/arm/boot/dts/nu=
+voton-wpcm450.dtsi
+index d7cbeb1874840..a17ee70085dd0 100644
+=2D-- a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
++++ b/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
+@@ -33,6 +33,11 @@ soc {
+ 		interrupt-parent =3D <&aic>;
+ 		ranges;
+
++		gcr: syscon@b0000000 {
++			compatible =3D "nuvoton,wpcm450-gcr", "syscon", "simple-mfd";
++			reg =3D <0xb0000000 0x200>;
++		};
++
+ 		serial0: serial@b8000000 {
+ 			compatible =3D "nuvoton,wpcm450-uart";
+ 			reg =3D <0xb8000000 0x20>;
 =2D-
 2.30.2
 
