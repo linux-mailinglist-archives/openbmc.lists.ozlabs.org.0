@@ -1,74 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 234064896E5
-	for <lists+openbmc@lfdr.de>; Mon, 10 Jan 2022 12:02:01 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92F1B489AEA
+	for <lists+openbmc@lfdr.de>; Mon, 10 Jan 2022 14:56:30 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JXW9f6xHKz2yPp
-	for <lists+openbmc@lfdr.de>; Mon, 10 Jan 2022 22:01:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JXb3049yPz3bZc
+	for <lists+openbmc@lfdr.de>; Tue, 11 Jan 2022 00:56:28 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=OersIMM5;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=GwNUREuE;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.kononenko@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=OersIMM5; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ smtp.mailfrom=intel.com (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=GwNUREuE; dkim-atps=neutral
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JXW9G1lTQz2yHM
- for <openbmc@lists.ozlabs.org>; Mon, 10 Jan 2022 22:01:38 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id E1BA34758E;
- Mon, 10 Jan 2022 11:01:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:content-language:content-type
- :content-type:in-reply-to:mime-version:user-agent:date:date
- :message-id:from:from:references:subject:subject:received
- :received:received; s=mta-01; t=1641812493; x=1643626894; bh=/DC
- 6tINeiFmrDZAqRmTxHrAo9V4Xr79MYEkSms8JgDs=; b=OersIMM5qErBQjO54p6
- oDoQ6taeSY1zeBWLxb3HdhCJC48gG5PxLKObkJXgh0nIQjeI99G9rSlQsukeyY2d
- AVfhgUkvUX8I6FCU8bqCvS2nIp732AXe9IN+TnuXpjMAUTw6CoA2EB68GcBi74ba
- aIEJ6aiPqapHdEskZnj5+LhU=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id vrVQeuDMfr1d; Mon, 10 Jan 2022 14:01:33 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id CD90946BB4;
- Mon, 10 Jan 2022 14:01:32 +0300 (MSK)
-Received: from [10.199.10.196] (10.199.10.196) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 10
- Jan 2022 14:01:30 +0300
-Subject: Re: Feature Enhancement - Virtual Media over HTML5
-To: Dhines Kumar Eswaran <dhineskumare@ami.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>, "ed@tanous.net" <ed@tanous.net>, "jk@ozlabs.org"
- <jk@ozlabs.org>, "geissonator@yahoo.com" <geissonator@yahoo.com>,
- "raviteja28031990@gmail.com" <raviteja28031990@gmail.com>,
- "gmills@us.ibm.com" <gmills@us.ibm.com>
-References: <CO1PR10MB4804435C69CA969461FCCF61C8509@CO1PR10MB4804.namprd10.prod.outlook.com>
-From: i.kononenko <i.kononenko@yadro.com>
-Message-ID: <dddccb48-51aa-b63a-5f7a-9ed16b14fa82@yadro.com>
-Date: Mon, 10 Jan 2022 14:01:34 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JXb2b029mz2xtP
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Jan 2022 00:56:05 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1641822967; x=1673358967;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=cicLgHiEPGQOrIjOfgQxMbxQzmM/uxWwtuhfal7Bd1E=;
+ b=GwNUREuESz8ksLVweAsk8nxwVcfweiWQjxVf1t1tYQbmBEi8XVP+wOLj
+ uPSWUiyfvVsCk7KQaH4KGsEG1hxTqnI83sCYpludF0q3frTY5fPIhmkgg
+ tPopZU0MlPmKg+1pl+8l3xlJbislXDTB7I5CwjZ3e6sPLHzD5MQ3I4j16
+ WS81sdBuz//JgU2vgleSh/ZRZbuFWUFaSPMV+L+hL/xLXgusdkpjPTikv
+ UoOg93ZkmCwJMgnsuLtYJyRMzOvZIb26+HwGzhbUDci3SMwrJerXDPpm7
+ OloPeK+v3Tq5TrdKVT0rq4/O07alBIrmt5kSHl01xe9TOzRenFllWeDOZ w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10222"; a="243179113"
+X-IronPort-AV: E=Sophos;i="5.88,277,1635231600"; d="scan'208";a="243179113"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jan 2022 05:55:02 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,277,1635231600"; d="scan'208";a="764520088"
+Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
+ by fmsmga005.fm.intel.com with ESMTP; 10 Jan 2022 05:54:59 -0800
+Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
+ (envelope-from <lkp@intel.com>)
+ id 1n6v8U-0003ZZ-I4; Mon, 10 Jan 2022 13:54:58 +0000
+Date: Mon, 10 Jan 2022 21:54:13 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+ linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 5/9] pinctrl: nuvoton: Add driver for WPCM450
+Message-ID: <202201102127.3Rm7ZYyP-lkp@intel.com>
+References: <20220109173000.1242703-6-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
-In-Reply-To: <CO1PR10MB4804435C69CA969461FCCF61C8509@CO1PR10MB4804.namprd10.prod.outlook.com>
-Content-Type: text/plain; charset="windows-1252"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.10.196]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220109173000.1242703-6-j.neuschaefer@gmx.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,66 +70,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Gayatri L <gayathril@ami.com>, Pravinash Jeyapaul <pravinashj@ami.com>,
- Sanjay Ahuja <SanjayA@ami.com>
+Cc: kbuild-all@lists.01.org, Tomer Maimon <tmaimon77@gmail.com>,
+ Avi Fishman <avifishman70@gmail.com>, Linus Walleij <linus.walleij@linaro.org>,
+ llvm@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Andy Shevchenko <andy.shevchenko@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi "Jonathan,
+
+I love your patch! Perhaps something to improve:
+
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on linus/master v5.16 next-20220110]
+[cannot apply to linusw-pinctrl/devel]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/0day-ci/linux/commits/Jonathan-Neusch-fer/Nuvoton-WPCM450-pinctrl-and-GPIO-driver/20220110-013733
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+config: arm64-randconfig-r014-20220109 (https://download.01.org/0day-ci/archive/20220110/202201102127.3Rm7ZYyP-lkp@intel.com/config)
+compiler: clang version 14.0.0 (https://github.com/llvm/llvm-project f3a344d2125fa37e59bae1b0874442c650a19607)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # https://github.com/0day-ci/linux/commit/e62ece12931654ffea372713cc39fd64779c8b4a
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Jonathan-Neusch-fer/Nuvoton-WPCM450-pinctrl-and-GPIO-driver/20220110-013733
+        git checkout e62ece12931654ffea372713cc39fd64779c8b4a
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/pinctrl/nuvoton/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:41: warning: format specifies type 'int' but the argument has type 'unsigned long' [-Wformat]
+           dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
+                                           ~~     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+                                           %lu
+   include/linux/dev_printk.h:163:47: note: expanded from macro 'dev_dbg'
+                   dev_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__); \
+                                                       ~~~     ^~~~~~~~~~~
+   include/linux/dev_printk.h:129:34: note: expanded from macro 'dev_printk'
+                   _dev_printk(level, dev, fmt, ##__VA_ARGS__);            \
+                                           ~~~    ^~~~~~~~~~~
+   include/linux/kernel.h:46:25: note: expanded from macro 'ARRAY_SIZE'
+   #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
+                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   1 warning generated.
 
 
-On 10.01.2022 13:25, Dhines Kumar Eswaran wrote:
-> Hi All,
-> 
-> We are planning to support multiple Virtual media redirection support simultaneously.
-> The below is the proposed design.
-> 
+vim +1564 drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
 
-Do you already saw the current work upon redesigning the jsnbd? What backend you are want to use?
-The current progress of the nbd-proxy(jsnbd) might conflict with your design if it is based on the current nbd-proxy.
-Please, refer to the appropriate gerrit change (1). 
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1559  
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1560  static int npcm7xx_get_groups_count(struct pinctrl_dev *pctldev)
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1561  {
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1562  	struct npcm7xx_pinctrl *npcm = pinctrl_dev_get_drvdata(pctldev);
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1563  
+3b588e43ee5c7a Tomer Maimon 2018-08-08 @1564  	dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1565  	return ARRAY_SIZE(npcm7xx_groups);
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1566  }
+3b588e43ee5c7a Tomer Maimon 2018-08-08  1567  
 
-> Existing Virtual media implementation:
-> 
-> WebUI is having single browse slot. It is used to redirect any kind of media, which can be either CD or HDD media instance.
-> It is mapped with "/vm/0/0" API endpoint, and media endpoint is hardcoded to 0(Zero).
-> 
-> Virtual media is using "/dev/nbd0" device, and Dump offload is using "/dev/nbd1" device. It is parsing from the jsnbd configuration file.
-> 
-> Enhancement: Multiple simultaneous media redirections feature in single WebUI session.
-> 
-> WebUI will have two different browse slots to select the file, (i.e., ) Virtual media device - HDD and Virtual media device - CD. Both slots will support media redirection concurrently.
-> 
-
-We already have worked in the past to make able configure virtual-media device type by client request. E.g. in the usb-ctrl, we have a flag to specify whether USB, USB-RO, HDD, CD(DVD) VM-type.
-Is it really required to have separate VM-endpoints for the CD and HDD types?
-
-> Virtual media device - HDD slot is mapped through "/vm/0/0" API endpoint and media endpoint is 0(zero) which is used for initiating the proxy handler, which is present in bmcweb package.
-> HDD slot will use "/dev/nbd0" device for HDD media instance redirection.
-> 
-> Virtual media device - CD slot is mapped through "/vm/0/1" API endpoint and media endpoint is 1(one) which is used for initiating the proxy handler, which is present in bmcweb package.
-> CD slot will use "/dev/nbd1" device for CD media instance redirection.
-> 
-> Dump offload will use "/dev/nbd2" device. It is also parsing the nbd device from jsnbd configuration file.
-> 
-> Configuration file looks like,
-> [cid:image001.jpg@01D80639.FCBD3330]
-> 
-> This is an extension with what the community has implemented and I hope, it does not have any regression or conflict with others who are using virtual media and nbd devices.
-> Please help to review the proposed implementation, so that, I can go ahead with implementing the enhancement.
-> 
-> Thanks,
-> Dinesh E
-> 
-> 
-> 
-> -The information contained in this message may be confidential and proprietary to American Megatrends (AMI). This communication is intended to be read only by the individual or entity to whom it is addressed or by their designee. If the reader of this message is not the intended recipient, you are on notice that any distribution of this message, in any form, is strictly prohibited. Please promptly notify the sender by reply e-mail or by telephone at 770-246-8600, and then delete or destroy all copies of the transmission.
-> 
-
-
-Links:
-[1] - https://gerrit.openbmc-project.xyz/c/openbmc/jsnbd/+/49944
-
--- 
-Best regards,
-
-Igor Kononenko
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
