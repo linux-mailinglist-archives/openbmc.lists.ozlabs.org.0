@@ -1,65 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3D9F48AC10
-	for <lists+openbmc@lfdr.de>; Tue, 11 Jan 2022 12:00:10 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BFB648B373
+	for <lists+openbmc@lfdr.de>; Tue, 11 Jan 2022 18:17:31 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JY7545HQzz30H3
-	for <lists+openbmc@lfdr.de>; Tue, 11 Jan 2022 22:00:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JYHST1NSJz30Jh
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jan 2022 04:17:29 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=N+MW1AOl;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=P6QccqsF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::82d;
- helo=mail-qt1-x82d.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22b;
+ helo=mail-oi1-x22b.google.com; envelope-from=proclivis@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=N+MW1AOl; dkim-atps=neutral
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com
- [IPv6:2607:f8b0:4864:20::82d])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=P6QccqsF; dkim-atps=neutral
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com
+ [IPv6:2607:f8b0:4864:20::22b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JY74f2NDvz2ymZ;
- Tue, 11 Jan 2022 21:59:44 +1100 (AEDT)
-Received: by mail-qt1-x82d.google.com with SMTP id q14so18078714qtx.10;
- Tue, 11 Jan 2022 02:59:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=bHrbOrbls6RMwF4zXh/JucakSYo80NpW3Y1oPsSn0+A=;
- b=N+MW1AOl6r8OnoNgkE7IklzPbNXkOMm8DKxoSGLIlJl3g1xEfBdMpQfjcH0LUl5ZLl
- l9p06YQhns35PMs7qmp7Q3sAvIWerlgkmkJ3IoaA5RP8OkOAHpdEwUrqymW0/nvPUjhV
- MI/9Fj8wjVvZpNdcvDDXyz/a44ryDQ8X5UCq0=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JYHS26h03z2ymb
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jan 2022 04:17:04 +1100 (AEDT)
+Received: by mail-oi1-x22b.google.com with SMTP id w188so2336613oiw.13
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Jan 2022 09:17:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=content-transfer-encoding:from:mime-version:subject:message-id:date
+ :cc:to; bh=Ka32h4Qt6vOef9AKsvKKPMIe6MvxOipANIMxdIq1HUw=;
+ b=P6QccqsFHnMRur3tcNKAPP2J/RVClHSjY6iJBYmlEePCjbe2wtcYbRH4j1gPwrF8g4
+ yeyCDX5Z4H5OYiKTNnreF23p5F54d2P5EpQJMtyKaUK0wayG2QRH8eYVcS4rL9drSMPV
+ QU0ka4arhRRxOkufq1nr6YuDlCFC3yrnBO15TA9xuCmRYutvYD1/NPKAfU9Ny0nWDyrP
+ U0j/FIO4l1yxeOwL51AMCQS9HfSAv5RNzWMVVVL5Mq5+RP8oTK2IexdUJEP8gXiSPSwn
+ mp4eArQg7Oj36+cC3dp5LFvPA+RkEFbybxDMQX9bBFnUZpL1VpfE198IW89Xdh+XUWsC
+ 3J/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=bHrbOrbls6RMwF4zXh/JucakSYo80NpW3Y1oPsSn0+A=;
- b=6G6q3i8sspi2Q3ea3VRSrf8sfVSw6IpFBPnuauZ/rMUlGkg+0x20FYcvI1nji2y6HG
- GaIk/LohrM5vydWQ27lvGWqCgJmh6U9wOp8xH2Q7h9BxSFVvS91wLLLnomY7Gk304Ke7
- twBAabG5S4l9JjhPJ5xG7f9QC5f/Hkn1qdBSHB4jEgCX3zjYidaCJ5gC42QFePs5bQVc
- XUIxMKSkgcqHkVi5kfmTncgE+yWuDfbshKuui/aJ8SVAdmL7h5enH/+XfnK7iuZp1pL6
- 1T0Zt3ax7nRNBwlGXTwowdP5i8uxYrL3yECtMna2iBpHIqZG6cWTxTRqpqiI3DdW86zx
- jycA==
-X-Gm-Message-State: AOAM530qTJoY/fUCwRI0b9R2BJ7Cnxb/wl+3DcOQ8JVNCR9EDLoKQCQk
- MTT+GG8Iy92+zU2Y7/ZzOI3LzNhtPCHtaCcjvZ3FUS8f
-X-Google-Smtp-Source: ABdhPJwFsqlEroGN3U55JVWSumZqoKNo3s6q1iayFmqeYxyY4VyTbQDGFPPubUrEmX0irnNrB5YLROVH6FTznMWp9tw=
-X-Received: by 2002:a05:622a:1044:: with SMTP id
- f4mr3122569qte.494.1641898780492; 
- Tue, 11 Jan 2022 02:59:40 -0800 (PST)
-MIME-Version: 1.0
-References: <20220105101719.7093-1-zev@bewilderbeest.net>
-In-Reply-To: <20220105101719.7093-1-zev@bewilderbeest.net>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 11 Jan 2022 10:59:28 +0000
-Message-ID: <CACPK8XeHyoo0D1vQm=L8m284kC5n-O+FEMp1HN+ROWJfx7qjhQ@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: aspeed: Add ASRock ROMED8HM3 BMC
-To: Zev Weiss <zev@bewilderbeest.net>
-Content-Type: text/plain; charset="UTF-8"
+ h=x-gm-message-state:content-transfer-encoding:from:mime-version
+ :subject:message-id:date:cc:to;
+ bh=Ka32h4Qt6vOef9AKsvKKPMIe6MvxOipANIMxdIq1HUw=;
+ b=YqToFcrU0CjzDun9skM8tEApoWHK13NY833bjkkFIxOT1y34Xzje+03zJv7/m5aAJy
+ vGfXNIyqY2s1TfBd/eDCyNh/Tu+TzlcW+aN9Cvpx+B4U3wQwumWbc9eRwyhoo6FrduLB
+ FCAPkZLzbivEKT2gxvSyXy79kLOp4uDnFwiRwRUK7GviUb9268eagTdamymjXk4XO1Zr
+ rtzFfJMCTwuSMamHmEqo4EWSPYjZeg93H/AjfaXGKwG9xwL31OughAUlQoJEcDvgRWrK
+ cgwIkQEIxz1Xd7K2mpfe0u0/DXOWj3xOIFO5z+ng5Ylg2rdGwLyaMpPGDfc1y+Pn/KcV
+ 9prg==
+X-Gm-Message-State: AOAM5324FoJz+TjLxGZ63Wz42md90Eg0l0deOqtd4/nbO90OWK4yC3Wh
+ SPjSq1QCq+reyjAH/B2aTYvfyUvEN/U=
+X-Google-Smtp-Source: ABdhPJzarl7wTd4iYppEasKdVriH+TbEqvfj2Cy7l5oguNHpZI66e7j9JTQSxmQvfPpkXU/DToJ47Q==
+X-Received: by 2002:a05:6808:1444:: with SMTP id
+ x4mr2511629oiv.171.1641921419766; 
+ Tue, 11 Jan 2022 09:16:59 -0800 (PST)
+Received: from smtpclient.apple (229.sub-174-198-128.myvzw.com.
+ [174.198.128.229])
+ by smtp.gmail.com with ESMTPSA id 23sm2123878oty.6.2022.01.11.09.16.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Jan 2022 09:16:59 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary=Apple-Mail-CF607D50-0CB7-4E44-B4D4-D25315D6D8B2
+Content-Transfer-Encoding: 7bit
+From: Mike Jones <proclivis@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: Query Sensor
+Message-Id: <9049D645-3D91-4302-881A-E5FD287FE22C@gmail.com>
+Date: Tue, 11 Jan 2022 10:16:58 -0700
+To: Ed Tanous <edtanous@google.com>
+X-Mailer: iPad Mail (19C56)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,314 +80,202 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Arnd Bergmann <arnd@arndb.de>,
- Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Neil Horman <neil.horman@privafy.com>,
- Olof Johansson <olof@lixom.net>, Anthony Jenkins <anthony.jenkins@privafy.com>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 5 Jan 2022 at 23:10, Zev Weiss <zev@bewilderbeest.net> wrote:
->
-> This is a half-width, single-socket Epyc server board with an AST2500
-> BMC.  This device tree is sufficient for basic OpenBMC functionality,
-> but we'll need to add a few more devices (as driver support becomes
-> available) before it's fully usable.
->
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 
-Reviewed-by: Joel Stanley <joel@jms.id.au>
+--Apple-Mail-CF607D50-0CB7-4E44-B4D4-D25315D6D8B2
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Have you considered using the openbmc gpio naming scheme for the
-gpio-line-names?
+=EF=BB=BFThis is how to do it:
+
+dbus-send --system --print-reply \
+--dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a187a66b71e=
+b7a1f29187594c05bb8fd9a.Hwmon1 \
+/xyz/openbmc_project/sensors/temperature/lm75temp \
+org.freedesktop.DBus.Properties.Get string:xyz.openbmc_project.Sensor.Value s=
+tring:Value \
+double:
+
+It is not clear to me why the second parameter string:Value
+
+I guessed on that and it works. Perhaps xyz=E2=80=A6Sensor.Value is the Prop=
+erty name, and properties have values, so the second parameter says get the V=
+alue of a property whose name ends in .Value.
+
+To test that, I tried string:MaxValue, and that works.
+
+I confirmed with this:
+
+busctl introspect xyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a1=
+87a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 /xyz/openbmc_project/sensors/tempera=
+ture/lm75temp
+
+A very useful command.
+
+Also useful:
+
+dbus-send --system --print-reply \
+--dest=3Dxyz.openbmc_project.ObjectMapper /\
+xyz/openbmc_project/object_mapper \
+xyz.openbmc_project.ObjectMapper.GetSubTree \
+string:"/" int32:0 array:string:"xyz.openbmc_project.Sensor.Value"
 
 
-> ---
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../boot/dts/aspeed-bmc-asrock-romed8hm3.dts  | 259 ++++++++++++++++++
->  2 files changed, 260 insertions(+)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts
->
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 0de64f237cd8..4008d2143b44 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1481,6 +1481,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->         aspeed-bmc-arm-centriq2400-rep.dtb \
->         aspeed-bmc-arm-stardragon4800-rep2.dtb \
->         aspeed-bmc-asrock-e3c246d4i.dtb \
-> +       aspeed-bmc-asrock-romed8hm3.dtb \
->         aspeed-bmc-bytedance-g220a.dtb \
->         aspeed-bmc-facebook-cloudripper.dtb \
->         aspeed-bmc-facebook-cmm.dtb \
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts b/arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts
-> new file mode 100644
-> index 000000000000..e71ccfd1df63
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts
-> @@ -0,0 +1,259 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/dts-v1/;
-> +
-> +#include "aspeed-g5.dtsi"
-> +#include <dt-bindings/gpio/aspeed-gpio.h>
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +
-> +/{
-> +       model = "ASRock ROMED8HM3 BMC v1.00";
-> +       compatible = "asrock,romed8hm3-bmc", "aspeed,ast2500";
-> +
-> +       aliases {
-> +               serial4 = &uart5;
-> +       };
-> +
-> +       chosen {
-> +               stdout-path = &uart5;
-> +               bootargs = "console=tty0 console=ttyS4,115200 earlycon";
-> +       };
-> +
-> +       memory@80000000 {
-> +               reg = <0x80000000 0x20000000>;
-> +       };
-> +
-> +       leds {
-> +               compatible = "gpio-leds";
-> +
-> +               heartbeat {
-> +                       gpios = <&gpio ASPEED_GPIO(H, 6) GPIO_ACTIVE_LOW>;
-> +                       linux,default-trigger = "timer";
-> +               };
-> +
-> +               system-fault {
-> +                       gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_LOW>;
-> +                       panic-indicator;
-> +               };
-> +       };
-> +
-> +       iio-hwmon {
-> +               compatible = "iio-hwmon";
-> +               io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-> +                       <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
-> +                       <&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
-> +                       <&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
-> +       };
-> +};
-> +
-> +&fmc {
-> +       status = "okay";
-> +       flash@0 {
-> +               status = "okay";
-> +               m25p,fast-read;
-> +               label = "bmc";
-> +               spi-max-frequency = <100000000>; /* 100 MHz */
-> +#include "openbmc-flash-layout-64.dtsi"
-> +       };
-> +};
-> +
-> +&uart5 {
-> +       status = "okay";
-> +};
-> +
-> +&vuart {
-> +       status = "okay";
-> +       aspeed,lpc-io-reg = <0x2f8>;
-> +       aspeed,lpc-interrupts = <3 IRQ_TYPE_LEVEL_HIGH>;
-> +};
-> +
-> +&mac0 {
-> +       status = "okay";
-> +
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_rgmii1_default &pinctrl_mdio1_default>;
-> +};
-> +
-> +&i2c0 {
-> +       status = "okay";
-> +
-> +       /* inlet temp sensor */
-> +       w83773g@4c {
-> +               compatible = "nuvoton,w83773g";
-> +               reg = <0x4c>;
-> +       };
-> +};
-> +
-> +&i2c1 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c2 {
-> +       status = "okay";
-> +
-> +       /* IPB temp sensor */
-> +       w83773g@4c {
-> +               compatible = "nuvoton,w83773g";
-> +               reg = <0x4c>;
-> +       };
-> +
-> +       /* IPB PMIC */
-> +       lm25066@40 {
-> +               compatible = "lm25066";
-> +               reg = <0x40>;
-> +       };
-> +
-> +       /* 12VSB PMIC */
-> +       lm25066@41 {
-> +               compatible = "lm25066";
-> +               reg = <0x41>;
-> +       };
-> +};
-> +
-> +&i2c4 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c5 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c6 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c7 {
-> +       status = "okay";
-> +
-> +       /* Baseboard FRU eeprom */
-> +       eeprom@50 {
-> +               compatible = "st,24c128", "atmel,24c128";
-> +               reg = <0x50>;
-> +               pagesize = <16>;
-> +       };
-> +};
-> +
-> +&i2c8 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c9 {
-> +       status = "okay";
-> +};
-> +
-> +&video {
-> +       status = "okay";
-> +};
-> +
-> +&vhub {
-> +       status = "okay";
-> +};
-> +
-> +&lpc_ctrl {
-> +       status = "okay";
-> +};
-> +
-> +&lpc_snoop {
-> +       status = "okay";
-> +       snoop-ports = <0x80>;
-> +};
-> +
-> +&kcs3 {
-> +       status = "okay";
-> +       aspeed,lpc-io-reg = <0xca2>;
-> +};
-> +
-> +&pwm_tacho {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_pwm3_default
-> +               &pinctrl_pwm4_default
-> +               &pinctrl_pwm5_default
-> +               &pinctrl_pwm6_default>;
-> +
-> +       fan@3 {
-> +               reg = <0x03>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x03 0x0b>;
-> +       };
-> +
-> +       fan@4 {
-> +               reg = <0x04>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x04 0x0c>;
-> +       };
-> +
-> +       fan@5 {
-> +               reg = <0x05>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x05 0x0d>;
-> +       };
-> +
-> +       fan@6 {
-> +               reg = <0x06>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x06 0x0e>;
-> +       };
-> +};
-> +
-> +&gpio {
-> +       status = "okay";
-> +       gpio-line-names =
-> +               /*  A */ "LOCATORLED_STATUS_N", "BMC_MAC2_INTB", "NMI_BTN_N", "BMC_NMI",
-> +                       "", "", "", "",
-> +               /*  B */ "DDR_MEM_TEMP", "", "", "", "", "", "", "",
-> +               /*  C */ "", "", "", "", "PCIE_HP_SEL_N", "PCIE_SATA_SEL_N", "LOCATORBTN", "",
-> +               /*  D */ "BMC_PSIN", "BMC_PSOUT", "BMC_RESETCON", "RESETCON",
-> +                       "", "", "", "PSU_FAN_FAIL_N",
-> +               /*  E */ "", "", "", "", "", "", "", "",
-> +               /*  F */ "NIC_PWR_GOOD", "PRSNTB0", "PRSNTB1", "PRSNTB2",
-> +                       "PRSNTB3", "", "3VSB_PCIE1_PG", "12V_PCIE1_PG",
-> +               /*  G */ "HWM_BAT_EN", "CHASSIS_ID0", "CHASSIS_ID1", "CHASSIS_ID2",
-> +                       "BMC_ALERT1_N_R", "BMC_ALERT2_N_R", "BMC_ALERT3_N", "BMC_ALERT4_N",
-> +               /*  H */ "X24_C1_PRSNT", "X24_C2_PRSNT", "X24_C3_PRSNT", "FM_MEM_THERM_EVENT_BMC_R_N",
-> +                       "FACMODE", "BMC_RTCRST", "BMC_HB_LED_N", "BMC_CASEOPEN",
-> +               /*  I */ "", "", "", "", "", "", "", "",
-> +               /*  J */ "BMC_READY", "BMC_PCH_BIOS_CS_N", "", "P0_MA_DDR_QS_CS_N",
-> +                       "", "", "", "",
-> +               /*  K */ "", "", "", "", "", "", "", "",
-> +               /*  L */ "", "", "", "", "", "", "", "",
-> +               /*  M */ "", "", "MEZZ_PWRBRK_N", "OCP_HP_RST_EN",
-> +                       "MAIN_PWR_EN_G", "BMC_MAIN_EN", "AUX_PWR_EN_G", "BMC_AUX_EN",
-> +               /*  N */ "", "", "", "", "", "", "", "",
-> +               /*  O */ "", "", "", "", "", "", "", "",
-> +               /*  P */ "", "", "", "", "", "", "", "",
-> +               /*  Q */ "", "", "", "",
-> +                       "BMC_SMB_PRESENT_1_N", "BMC_SMB_PRESENT_2_N",
-> +                       "BMC_SMB_PRESENT_3_N", "BMC_PCIE_WAKE_N",
-> +               /*  R */ "", "", "THERMALTRIP_CLEAR_N", "", "", "", "", "",
-> +               /*  S */ "", "", "", "", "", "", "", "",
-> +               /*  T */ "", "", "", "", "", "", "", "",
-> +               /*  U */ "", "", "", "", "", "", "", "",
-> +               /*  V */ "", "", "", "", "", "", "", "",
-> +               /*  W */ "", "", "", "", "", "", "", "",
-> +               /*  X */ "", "", "", "", "", "", "", "",
-> +               /*  Y */ "SLP_S3", "SLP_S4_S5", "NODE_ID_1", "NODE_ID_2", "", "", "", "",
-> +               /*  Z */ "", "", "SYSTEM_FAULT_LED_N", "FAST_THROTTLE_N",
-> +                       "", "", "", "",
-> +               /* AA */ "FM_CPU0_IBMC_THERMTRIP_N", "", "PROCHOT_L_G", "",
-> +                       "", "", "", "",
-> +               /* AB */ "BMC_FORCE_SELFREFRESH", "PWRGD_OUT", "", "IRQ_BMC_PCH_SMI_LPC_N",
-> +                       "", "", "", "",
-> +               /* AC */ "", "", "", "", "", "", "", "";
-> +};
-> +
-> +&adc {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_adc0_default
-> +               &pinctrl_adc1_default
-> +               &pinctrl_adc2_default
-> +               &pinctrl_adc3_default
-> +               &pinctrl_adc4_default
-> +               &pinctrl_adc5_default
-> +               &pinctrl_adc6_default
-> +               &pinctrl_adc7_default
-> +               &pinctrl_adc8_default
-> +               &pinctrl_adc9_default
-> +               &pinctrl_adc10_default
-> +               &pinctrl_adc11_default
-> +               &pinctrl_adc12_default
-> +               &pinctrl_adc13_default
-> +               &pinctrl_adc14_default
-> +               &pinctrl_adc15_default>;
-> +};
-> --
-> 2.34.1
->
+Mike
+
+Sent from my iPad
+
+> On Jan 10, 2022, at 4:50 PM, Ed Tanous <edtanous@google.com> wrote:
+> =EF=BB=BFOn Mon, Jan 10, 2022 at 3:47 PM Mike Jones <proclivis@gmail.com> w=
+rote:
+>>=20
+>> Hi,
+>>=20
+>> I could not find an example of a sensor query in the docs. I assume somet=
+hing like this:
+>>=20
+>> dbus-send --system --print-reply \
+>>=20
+>> --dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a187a66b=
+71eb7a1f29187594c05bb8fd9a.Hwmon1 \
+>>=20
+>> /xyz/openbmc_project/sensors/temperature/lm75temp
+>>=20
+>> xyz.openbmc_project.Sensor.Property.Get xyz.openbmc_project.Sensor.Value \=
+
+>>=20
+>> double:
+>=20
+> I don't have an example offhand, but the interface you're looking for
+> in the bolded area is
+> org.freedesktop.DBus.Properties.Get
+>=20
+> Stack overflow for essentially the same question with an example:
+> https://stackoverflow.com/questions/48648952/set-get-property-using-dbus-s=
+end
+>=20
+>>=20
+>> With the bold interface replaced with something correct.
+>>=20
+>> Can some one give me an example, and a url about how to query properties?=
+
+>>=20
+>> Mike
+>>=20
+>> Sent from my iPad
+
+--Apple-Mail-CF607D50-0CB7-4E44-B4D4-D25315D6D8B2
+Content-Type: text/html;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
+utf-8"></head><body dir=3D"auto"><div dir=3D"ltr">=EF=BB=BFThis is how to do=
+ it:<div dir=3D"ltr"><div><br></div><div><p class=3D"MsoNormal" style=3D"-we=
+bkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Cali=
+bri, sans-serif;">dbus-send --system --print-reply \<o:p></o:p></p><p class=3D=
+"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size:=
+ 11pt; font-family: Calibri, sans-serif;">--dest=3Dxyz.openbmc_project.Hwmon=
+-5a446562b1a2e55ef11da905907088a187a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 \<o=
+:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto;=
+ margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">/xyz/openb=
+mc_project/sensors/temperature/lm75temp \<o:p></o:p></p><p class=3D"MsoNorma=
+l" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; fo=
+nt-family: Calibri, sans-serif;">org.freedesktop.DBus.Properties.Get string:=
+xyz.openbmc_project.Sensor.Value string:Value \<o:p></o:p></p><p class=3D"Ms=
+oNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11=
+pt; font-family: Calibri, sans-serif;">double:</p><p class=3D"MsoNormal" sty=
+le=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-fam=
+ily: Calibri, sans-serif;"><br></p><p class=3D"MsoNormal" style=3D"-webkit-t=
+ext-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, s=
+ans-serif;">It is not clear to me why the second parameter string:Value</p><=
+p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; f=
+ont-size: 11pt; font-family: Calibri, sans-serif;"><br></p><p class=3D"MsoNo=
+rmal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt;=
+ font-family: Calibri, sans-serif;">I guessed on that and it works. Perhaps x=
+yz=E2=80=A6Sensor.Value is the Property name, and properties have values, so=
+ the second parameter says get the Value of a property whose name ends in .V=
+alue.</p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; mar=
+gin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"><br></p><p cla=
+ss=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-=
+size: 11pt; font-family: Calibri, sans-serif;">To test that, I tried string:=
+MaxValue, and that works.</p><p class=3D"MsoNormal" style=3D"-webkit-text-si=
+ze-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-se=
+rif;"><br></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto=
+; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">I confirm=
+ed with this:</p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: a=
+uto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"><br></=
+p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0i=
+n; font-size: 11pt; font-family: Calibri, sans-serif;"><span style=3D"backgr=
+ound-color: rgb(255, 255, 255);">busctl introspect xyz.openbmc_project.Hwmon=
+-5a446562b1a2e55ef11da905907088a187a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 /xy=
+z/openbmc_project/sensors/temperature/lm75temp</span></p><p class=3D"MsoNorm=
+al" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; f=
+ont-family: Calibri, sans-serif;"><span style=3D"background-color: rgb(255, 2=
+55, 255);"><br></span></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-=
+adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif=
+;"><span style=3D"background-color: rgb(255, 255, 255);">A very useful comma=
+nd.</span></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto=
+; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"><br></p><=
+p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; f=
+ont-size: 11pt; font-family: Calibri, sans-serif;">Also useful:</p><p class=3D=
+"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size:=
+ 11pt; font-family: Calibri, sans-serif;"><br></p><p class=3D"MsoNormal" sty=
+le=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-fam=
+ily: Calibri, sans-serif;">dbus-send --system --print-reply \<o:p></o:p></p>=
+<p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in;=
+ font-size: 11pt; font-family: Calibri, sans-serif;">--dest=3Dxyz.openbmc_pr=
+oject.ObjectMapper /\<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-=
+text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, s=
+ans-serif;">xyz/openbmc_project/object_mapper \<o:p></o:p></p><p class=3D"Ms=
+oNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11=
+pt; font-family: Calibri, sans-serif;">xyz.openbmc_project.ObjectMapper.GetS=
+ubTree \<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adj=
+ust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">=
+string:"/" int32:0 array:string:"xyz.openbmc_project.Sensor.Value"</p><p cla=
+ss=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-=
+size: 11pt; font-family: Calibri, sans-serif;"><br></p><p class=3D"MsoNormal=
+" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; fon=
+t-family: Calibri, sans-serif;"><br></p><p class=3D"MsoNormal" style=3D"-web=
+kit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calib=
+ri, sans-serif;">Mike</p><br><div dir=3D"ltr">Sent from my iPad</div><div di=
+r=3D"ltr"><br><blockquote type=3D"cite">On Jan 10, 2022, at 4:50 PM, Ed Tano=
+us &lt;edtanous@google.com&gt; wrote:<br><br></blockquote></div><blockquote t=
+ype=3D"cite"><div dir=3D"ltr">=EF=BB=BF<span>On Mon, Jan 10, 2022 at 3:47 PM=
+ Mike Jones &lt;proclivis@gmail.com&gt; wrote:</span><br><blockquote type=3D=
+"cite"><span></span><br></blockquote><blockquote type=3D"cite"><span>Hi,</sp=
+an><br></blockquote><blockquote type=3D"cite"><span></span><br></blockquote>=
+<blockquote type=3D"cite"><span>I could not find an example of a sensor quer=
+y in the docs. I assume something like this:</span><br></blockquote><blockqu=
+ote type=3D"cite"><span></span><br></blockquote><blockquote type=3D"cite"><s=
+pan>dbus-send --system --print-reply \</span><br></blockquote><blockquote ty=
+pe=3D"cite"><span></span><br></blockquote><blockquote type=3D"cite"><span>--=
+dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a187a66b71eb7=
+a1f29187594c05bb8fd9a.Hwmon1 \</span><br></blockquote><blockquote type=3D"ci=
+te"><span></span><br></blockquote><blockquote type=3D"cite"><span>/xyz/openb=
+mc_project/sensors/temperature/lm75temp</span><br></blockquote><blockquote t=
+ype=3D"cite"><span></span><br></blockquote><blockquote type=3D"cite"><span>x=
+yz.openbmc_project.Sensor.Property.Get xyz.openbmc_project.Sensor.Value \</s=
+pan><br></blockquote><blockquote type=3D"cite"><span></span><br></blockquote=
+><blockquote type=3D"cite"><span>double:</span><br></blockquote><blockquote t=
+ype=3D"cite"><span></span><br></blockquote><span></span><br><span>I don't ha=
+ve an example offhand, but the interface you're looking for</span><br><span>=
+in the bolded area is</span><br><span>org.freedesktop.DBus.Properties.Get</s=
+pan><br><span></span><br><span>Stack overflow for essentially the same quest=
+ion with an example:</span><br><span>https://stackoverflow.com/questions/486=
+48952/set-get-property-using-dbus-send</span><br><span></span><br><blockquot=
+e type=3D"cite"><span></span><br></blockquote><blockquote type=3D"cite"><spa=
+n>With the bold interface replaced with something correct.</span><br></block=
+quote><blockquote type=3D"cite"><span></span><br></blockquote><blockquote ty=
+pe=3D"cite"><span>Can some one give me an example, and a url about how to qu=
+ery properties?</span><br></blockquote><blockquote type=3D"cite"><span></spa=
+n><br></blockquote><blockquote type=3D"cite"><span>Mike</span><br></blockquo=
+te><blockquote type=3D"cite"><span></span><br></blockquote><blockquote type=3D=
+"cite"><span>Sent from my iPad</span><br></blockquote></div></blockquote></d=
+iv></div></div></body></html>=
+
+--Apple-Mail-CF607D50-0CB7-4E44-B4D4-D25315D6D8B2--
