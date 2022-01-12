@@ -1,65 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAAAA48BC0A
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jan 2022 01:52:36 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2A5448BC42
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jan 2022 02:15:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JYTYZ4bGdz3035
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jan 2022 11:52:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JYV3Y6Prnz30D7
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jan 2022 12:15:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=OB80mjKi;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=K2ve6+e/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2a;
- helo=mail-qv1-xf2a.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=OB80mjKi; dkim-atps=neutral
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com
- [IPv6:2607:f8b0:4864:20::f2a])
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=K2ve6+e/; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JYTY747Pjz2xtv;
- Wed, 12 Jan 2022 11:52:09 +1100 (AEDT)
-Received: by mail-qv1-xf2a.google.com with SMTP id kl12so1232871qvb.5;
- Tue, 11 Jan 2022 16:52:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=+BgWpZzbxCgBoKpAYDSuqEtaMBxXySjsMaStwtkHZLg=;
- b=OB80mjKifIvc9EHx5zG+SkcH7yRMZSrRQfy3eaWc/DKzOeWK4e5uBMsZJIbVO0f/Cl
- i+w7LX3TWzIbpkY+IWG4ncOGaxh0UkPRtJfoB4B5ybQtzvpgkKu15LlSR3n8tl2Q8N3b
- mEvoTmZxcExs8mBAlxOFbFFwDWYaZ/bzYvD/o=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=+BgWpZzbxCgBoKpAYDSuqEtaMBxXySjsMaStwtkHZLg=;
- b=aJmUBnTr32e9aw95h5oVsnTnRoz1JkZjmW3RsW9woJDynth8DS1luTAhaLgjEvzidZ
- tuIeeEWWfoWUZRaeu9yL/UcjSR6wPnHUmVc8TLbeGlycLOzq9tQKXSEsYSz/kqzM4lbf
- oLqvVRxQaUAyKWs20WgelKE5iwHqjNCBSovwJv7mhUlJ0qrMTcNEyvwxWEbuQifSGe+b
- 3LET8KQOMB+RDh6BbmdndY+vuEPNCgd/6/ou/IvAcSQCkhXlnc2F4AcJAZmsP8MvOwbK
- dJXmBN+0JSFOkr83PjnPhEJEQNfAZTgCJ+Ui0s5FlEv/Tq+nLqgDWPQj/c4XfwC2Jlth
- g7FQ==
-X-Gm-Message-State: AOAM530ZmTaia46oTU4texpDIrTn5ruimjZvFUecBfvOdMHxJrzjU8m8
- iao7ukVO+Tn/KJTCFHWZmHx2Oe1o5EwCvd3hGaI=
-X-Google-Smtp-Source: ABdhPJzJOUMABjpc3ziYwOsfvzN8V0NbNaMl+QXw963PVYPbHL58cyH5UiA1U0TR38v7QS3biobyspuPT3SSX4zmMi0=
-X-Received: by 2002:ad4:5dce:: with SMTP id m14mr5680680qvh.130.1641948725803; 
- Tue, 11 Jan 2022 16:52:05 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JYV3B00G4z2xDV
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jan 2022 12:14:45 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (174-21-190-118.tukw.qwest.net
+ [174.21.190.118])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id C2F2F293;
+ Tue, 11 Jan 2022 17:14:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1641950082;
+ bh=ZT9PJgDrRvnP2QDGwtXPPP/4k5HNYE0wgsYa9UJT854=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=K2ve6+e/Wb3O8ZduDSRjEZzuxJGea+jfax//ksc/Hy/zXpM/RKo3AxqWPb4van+yu
+ pHP13cg1diJKrks2OVy0GJPVKmcSpdRDsNTVhvvjh8TOuhdaz5GLPl/fpRKt7cLhlG
+ 0wSnqA17NpekCGWo1D57vLEge9d/c9YC9lO+Z0I0=
+Date: Tue, 11 Jan 2022 17:14:38 -0800
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH] ARM: dts: aspeed: Add ASRock ROMED8HM3 BMC
+Message-ID: <Yd4rfi/iICQ5EjGh@hatter.bewilderbeest.net>
+References: <20220105101719.7093-1-zev@bewilderbeest.net>
+ <CACPK8XeHyoo0D1vQm=L8m284kC5n-O+FEMp1HN+ROWJfx7qjhQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20211214045348.13702-1-jammy_huang@aspeedtech.com>
-In-Reply-To: <20211214045348.13702-1-jammy_huang@aspeedtech.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 12 Jan 2022 00:51:53 +0000
-Message-ID: <CACPK8XfkXi6M=gzfkYcuoga6WxnzSm2+mspBt4gjop7Ytm+VCA@mail.gmail.com>
-Subject: Re: [PATCH] media: aspeed: Fix no complete irq for non-64-aligned
- width
-To: Jammy Huang <jammy_huang@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CACPK8XeHyoo0D1vQm=L8m284kC5n-O+FEMp1HN+ROWJfx7qjhQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,64 +63,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+Cc: devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Arnd Bergmann <arnd@arndb.de>,
  Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>, linux-media@vger.kernel.org
+ Rob Herring <robh+dt@kernel.org>, Neil Horman <neil.horman@privafy.com>,
+ Olof Johansson <olof@lixom.net>, Anthony Jenkins <anthony.jenkins@privafy.com>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 14 Dec 2021 at 04:53, Jammy Huang <jammy_huang@aspeedtech.com> wrote:
+On Tue, Jan 11, 2022 at 02:59:28AM PST, Joel Stanley wrote:
+>On Wed, 5 Jan 2022 at 23:10, Zev Weiss <zev@bewilderbeest.net> wrote:
+>>
+>> This is a half-width, single-socket Epyc server board with an AST2500
+>> BMC.  This device tree is sufficient for basic OpenBMC functionality,
+>> but we'll need to add a few more devices (as driver support becomes
+>> available) before it's fully usable.
+>>
+>> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 >
-> In ast2500, engine will stop occasionally for 1360x768.
+>Reviewed-by: Joel Stanley <joel@jms.id.au>
 >
-> This is a bug which has been addressed, but the workaround is specific
-> for 1680 only. Here we make it more complete.
+
+Thanks!
+
+>Have you considered using the openbmc gpio naming scheme for the
+>gpio-line-names?
 >
-> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-> ---
->  drivers/media/platform/aspeed-video.c | 12 +++++++-----
->  1 file changed, 7 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-> index 793b2adaa0f5..4d3e6b105d44 100644
-> --- a/drivers/media/platform/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed-video.c
-> @@ -1055,18 +1055,20 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
->         /* Set capture/compression frame sizes */
->         aspeed_video_calc_compressed_size(video, size);
->
-> -       if (video->active_timings.width == 1680) {
-> +       if (!IS_ALIGNED(act->width, 64)) {
->                 /*
->                  * This is a workaround to fix a silicon bug on A1 and A2
 
-Please add:  "a AST2500 silicon bug" so we know which A1/A2 this is
-referring to.
+I looked at it, but decided not to for a few reasons:
 
-With that added, you can add:
+  - For systems that are in the early stages of a porting effort (like 
+    this one currently is), I'm still referring to hardware schematics 
+    fairly often, and using the same identifiers in software that are 
+    used in the schematics simplifies things by avoiding an extra
+    translation step between the two.
 
- Reviewed-by: Joel Stanley <joel@jms.id.au>
+  - Most of the GPIO-related userspace components (that I'm dealing with 
+    anyway, e.g. x86-power-control and host-error-monitor) already have 
+    their own GPIO line-name configuration/remapping mechanisms that need 
+    to be set up anyway.
 
->                  * revisions. Since it doesn't break capturing operation of
->                  * other revisions, use it for all revisions without checking
-> -                * the revision ID. It picked 1728 which is a very next
-> -                * 64-pixels aligned value to 1680 to minimize memory bandwidth
-> +                * the revision ID. It picked new width which is a very next
-> +                * 64-pixels aligned value to minimize memory bandwidth
->                  * and to get better access speed from video engine.
->                  */
-> +               u32 width = ALIGN(act->width, 64);
-> +
->                 aspeed_video_write(video, VE_CAP_WINDOW,
-> -                                  1728 << 16 | act->height);
-> -               size += (1728 - 1680) * video->active_timings.height;
-> +                                  width << 16 | act->height);
-> +               size = width * act->height;
+  - There's a solid mix of GPIOs that would be covered by the naming 
+    guidelines and others that aren't; having a mix of the two styles 
+    seems a bit awkward to me.
 
-You could make it clearer by putting the write on one line:
+That said, I sympathize with the motivation behind it and I'm not 
+vehemently opposed on the whole, so if there's a strong preference to 
+follow that scheme I could probably be talked into changing it.
 
-                aspeed_video_write(video, VE_CAP_WINDOW, width << 16 |
-act->height);
+
+Zev
+
