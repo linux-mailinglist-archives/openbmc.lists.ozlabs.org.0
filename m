@@ -1,100 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10DA748BC70
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jan 2022 02:29:30 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1229148BCDC
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jan 2022 03:05:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JYVN76QNhz2xBq
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jan 2022 12:29:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JYW9d6snTz2ypY
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jan 2022 13:05:25 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=pb5rPCIS;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=rQpbD9nL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=permerror (SPF Permanent Error: Two or more type
- TXT spf records found.) smtp.mailfrom=us.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
- receiver=<UNKNOWN>)
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2a00:1450:4864:20::12f; helo=mail-lf1-x12f.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=pb5rPCIS; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=tanous-net.20210112.gappssmtp.com
+ header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=rQpbD9nL; dkim-atps=neutral
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
+ [IPv6:2a00:1450:4864:20::12f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JYVMZ2JqRz2xX8;
- Wed, 12 Jan 2022 12:28:57 +1100 (AEDT)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 20BMxNM0006519; 
- Wed, 12 Jan 2022 01:28:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date : from
- : cc : to : content-type : mime-version : subject; s=pp1;
- bh=csUnf65UK6mPGGDdRv370RZvdzjBrePQKrCJuQagHGw=;
- b=pb5rPCISjQqCD1yp2oQGU5X84Zwiiv3p9VmraC1C5beCQ7JjnOMfbPy93lP6qXASDw/R
- 0u4m4vbooOKMSMfXbgbcjc/K7qqpcnT/CjxkxSkVjdxtdhpGEze4QctVNLOc/T42dsE7
- 2wXs8i8DQO8GodtQ3vyxr6K1dC+RDCmLp/YwNa2qgmiHepJTftDRwCS/ZqI41JMqcWoc
- hV70LhhIXQkQOhpmeDRjoLzpQUDwEKzw8tMB8UFKL6SPTzD1C9BcEeTZwSTXvCbcODBS
- OkMM5bPDgNAE1INx5h/4S5zE9srxNBPh1ChCm3pNRlZnBRx8qg+qPZxkivpjT58LReCL 1w== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3dhdev258e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Jan 2022 01:28:40 +0000
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 20C1IPa8022067;
- Wed, 12 Jan 2022 01:28:39 GMT
-Received: from b03cxnp07028.gho.boulder.ibm.com
- (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
- by ppma05wdc.us.ibm.com with ESMTP id 3df28b0xte-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Jan 2022 01:28:39 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 20C1ScOw6947206
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 12 Jan 2022 01:28:38 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F8A578066;
- Wed, 12 Jan 2022 01:28:38 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EEDA97805C;
- Wed, 12 Jan 2022 01:28:37 +0000 (GMT)
-Received: from mww0332.dal12m.mail.ibm.com (unknown [9.208.69.80])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Wed, 12 Jan 2022 01:28:37 +0000 (GMT)
-Message-ID: <OF56051358.C6261723-ON002587C8.00081CB9-1641950916512@ibm.com>
-Date: Wed, 12 Jan 2022 01:28:36 +0000
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: "Zev Weiss" <zev@bewilderbeest.net>, "Joel Stanley" <joel@jms.id.au>
-Content-Type: multipart/mixed;
- boundary="--_com.fiberlink.maas360.email_397748017531830"
-X-MIMETrack: Itemize by traveler on TWW2043/03/G/IBM(Release 11.0.1FP2HF125 |
- November 22, 2021) at 01/12/2022 01:28:36
-X-Mailer: Traveler 11.0.1.1 Build 202005211639_30 on server tww2043/03/G/IBM on
- behalf of device with id mdm...4a2, type 1300 (maas360android) and
- description MaaS360-MaaS360 Mail-Android:MaaS360-MaaS360 Mail-Android/7.70
- at 20220112012836663 by DS-7f4967a69700[SendMail]
-X-KeepSent: 56051358:C6261723-002587C8:00081CB9; name=$KeepSent; type=4
-X-Disclaimed: 51803
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: itov74uvdQBMeTWl4jVNqUTH7cXNa0W7
-X-Proofpoint-ORIG-GUID: itov74uvdQBMeTWl4jVNqUTH7cXNa0W7
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JYW9D0rz0z2xsG
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jan 2022 13:05:01 +1100 (AEDT)
+Received: by mail-lf1-x12f.google.com with SMTP id br17so2993791lfb.6
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Jan 2022 18:05:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=FkQ137eaUWa9xtZ2+Jy8YfaIvF3yVTqNyQ8urNakj/0=;
+ b=rQpbD9nL3ncYgO89MYhgZTQ6NbJeVqQ9FJwFysXiKh/IJ8JzzFlm0WTPPMDRDkz1vH
+ utQC8PuCPHsoxIT/wLxfHCOzxTuqpeV7EGcjJofBuiEamGxA6NaT2fmUAUs7Efsmx5ek
+ NbhkGMxIvybhSjpWwA/eCkfRHuCQd9Ec9Cqe2S4kAcgleMlU0g8iJXhBBjYvCh6ceKRU
+ ig9Vf0KcpxYASxX+KZOJ4dWJEDZF+Y79MKTADtKxTrI4fOi8UpqVqept7AWL8kPbv75I
+ 8k24c/utWdF4xIfc9khoipIk9XWQXIPfjq1RJdine86PWfHtW+YgLiBvH8kay8w9pOAa
+ u+Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=FkQ137eaUWa9xtZ2+Jy8YfaIvF3yVTqNyQ8urNakj/0=;
+ b=xMvTt5ulwfy/4X2shEmx3NE4lxAsw46/nYbnnhzeztLWSiCynQbtwt8jJDy70wiX+t
+ +dR8PF+ko4IkYULySNHZMrGu0oonYXkt0lQsm7zYEniiBqqjMcTgzbkQOzG4VAGu+xeg
+ Nz5GfiQ92d3n1ATlBADxtJYfr7Uu4ylgl7ZGT2ELXx4AFOWE3uUcDU4Y72EiGZvyiZZg
+ TyPCtWLGFSzzeYCd/e9/+RLLavuWVfN063FAM1mhanrtbxa29XiVUNqEuQU/eAdgLNzX
+ oTcnvfeubGopglAFHg+IUUHe4Hj/Jk0+qpOtEvvJgdk7+4Mh8Pryd9KCQbPzcEuGOwML
+ 5YBw==
+X-Gm-Message-State: AOAM5309CS+zQUN1NWZgViyH+e/oES3QsBu4jiT/QrlX1S9nF5YNV3Uh
+ kuV1lHOpjzawBJOxu1fTKhR+SQVEB9gFNMsiA2CerQ==
+X-Google-Smtp-Source: ABdhPJx07IBDCOYakxdk/2klEdFYwCBs5LMIwcjy5gQlkSDIXdkbu1UHo936Blo0Uy54Zlx6CEWrUbGHAzWvkffV9io=
+X-Received: by 2002:a2e:3514:: with SMTP id z20mr2719436ljz.56.1641953095068; 
+ Tue, 11 Jan 2022 18:04:55 -0800 (PST)
 MIME-Version: 1.0
-Subject: RE: [PATCH] ARM: dts: aspeed: Add ASRock ROMED8HM3 BMC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2022-01-11_04,2022-01-11_01,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0
- mlxlogscore=999 spamscore=0 clxscore=1011 bulkscore=0 mlxscore=0
- impostorscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2201120002
+References: <CAH2-KxBPXa6woa-9cFQ_Bn1Oqk3OYFKLPf2jpRU0mgRm443S1A@mail.gmail.com>
+ <725B4491-C6A5-4B90-BE1A-B9EA6BE277AA@gmail.com>
+In-Reply-To: <725B4491-C6A5-4B90-BE1A-B9EA6BE277AA@gmail.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Tue, 11 Jan 2022 18:04:44 -0800
+Message-ID: <CACWQX82gK7O-qNrFJxi3q70ejdXJLULCPxBi=8+jtZvZNj8t8w@mail.gmail.com>
+Subject: Re: Query Sensor
+To: Mike Jones <proclivis@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000f84e7505d558fe01"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,152 +76,430 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Arnd Bergmann <arnd@arndb.de>,
- Andrew
- Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Olof Johansson <olof@lixom.net>, Anthony
- Jenkins <anthony.jenkins@privafy.com>, Neil
- Horman <neil.horman@privafy.com>
+Cc: Ed Tanous <edtanous@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-----_com.fiberlink.maas360.email_397748017531830
-Content-Type: multipart/alternative;
-	 boundary="--_com.fiberlink.maas360.email_397748018473401"
-
-
-
-----_com.fiberlink.maas360.email_397748018473401
-Content-Type: text/plain; charset=utf-8
+--000000000000f84e7505d558fe01
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-My response tagged=20
+On Tue, Jan 11, 2022 at 9:53 AM Mike Jones <proclivis@gmail.com> wrote:
 
-
--------- Original Message --------
-From: Zev Weiss=20
-Date: Tue, January 11, 2022 7:15 PM -0600
-To: Joel Stanley=20
-CC: devicetree , linux-aspeed , Arnd Bergmann , Andrew Jeffery , OpenBMC Ma=
-illist , Linux Kernel Mailing List , Rob Herring , Neil Horman , Olof Johan=
-sson , Anthony Jenkins , Linux ARM=20
-Subject: [EXTERNAL] Re: [PATCH] ARM: dts: aspeed: Add ASRock ROMED8HM3 BMC
-
-
-On Tue, Jan 11, 2022 at 02:59:28AM PST, Joel Stanley wrote:
->On Wed, 5 Jan 2022 at 23:10, Zev Weiss wrote:
->>
->> This is a half-width, single-socket Epyc server board with an AST2500
->> BMC.=C2=A0=C2=A0This device tree is sufficient for basic OpenBMC functio=
-nality,
->> but we'll need to add a few more devices (as driver support becomes
->> available) before it's fully usable.
->>
->> Signed-off-by: Zev Weiss=20
+> Ed,
 >
->Reviewed-by: Joel Stanley=20
+> So to be sure I understand, dbus-sensors implements the dbus services for
+> each sensor type, and the requests I made were serviced by one of these.
+
+
+Correct.
+
+
 >
+> The interface is defined by yaml files in phosphor-dbus-interfaces.
 
-Thanks!
 
->Have you considered using the openbmc gpio naming scheme for the
->gpio-line-names?
+Yep.
+
+
 >
-
-I looked at it, but decided not to for a few reasons:
-
-=C2=A0=C2=A0- For systems that are in the early stages of a porting effort =
-(like=20
-=C2=A0=C2=A0=C2=A0=C2=A0this one currently is), I'm still referring to hard=
-ware schematics=20
-=C2=A0=C2=A0=C2=A0=C2=A0fairly often, and using the same identifiers in sof=
-tware that are=20
-=C2=A0=C2=A0=C2=A0=C2=A0used in the schematics simplifies things by avoidin=
-g an extra
-=C2=A0=C2=A0=C2=A0=C2=A0translation step between the two.
-
-=C2=A0=C2=A0- Most of the GPIO-related userspace components (that I'm deali=
-ng with=20
-=C2=A0=C2=A0=C2=A0=C2=A0anyway, e.g. x86-power-control and host-error-monit=
-or) already have=20
-=C2=A0=C2=A0=C2=A0=C2=A0their own GPIO line-name configuration/remapping me=
-chanisms that need=20
-=C2=A0=C2=A0=C2=A0=C2=A0to be set up anyway.
-
-=C2=A0=C2=A0- There's a solid mix of GPIOs that would be covered by the nam=
-ing=20
-=C2=A0=C2=A0=C2=A0=C2=A0guidelines and others that aren't; having a mix of =
-the two styles=20
-=C2=A0=C2=A0=C2=A0=C2=A0seems a bit awkward to me.
-
-That said, I sympathize with the motivation behind it and I'm not=20
-vehemently opposed on the whole, so if there's a strong preference to=20
-follow that scheme I could probably be talked into changing it.
+> phosphor-dbus- interfaces generates c++ base classes, and dbus-sensors
+> probably have c++ classes inheriting from them.
 
 
 
-Milton >=C2=A0=C2=A0Did this assessment take into consideration=20
-Milton > https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/49863
-
-Milton > is there something that could be improved?=20
-
-
-Zev
+For various technical and social reasons which I=E2=80=99ve detailed in mai=
+l to
+this list in the past, dbus-sensors doesn=E2=80=99t depend directly on
+phosphor-dbus-interfaces, nor rely on the generated code. It instead
+generates code from c++ template expansion in sdbusplus.
 
 
+>
+> These interfaces are not Redfish interfaces.
 
-----_com.fiberlink.maas360.email_397748018473401
-Content-Type: text/html; charset=utf-8
+
+Correct.
+
+
+>
+> When WebUI fetches sensor values, is it using these interfaces, or is
+> there another Redfish layer involved that translates the query? Or perhap=
+s
+> Redfish only matters for things like a PSU?
+
+
+
+Depends on which webui you=E2=80=99re talking about, there are two.
+
+Phosphor-webui (ie the =E2=80=9Cold=E2=80=9D one) goes directly to dbus thr=
+ough the
+rest-dbus abstraction in bmcweb.  This was very good for initial
+prototyping (aside from a port to c++, the code largely hasn=E2=80=99t chan=
+ged
+since it was written) but not great at keeping a consistent or standardized
+API.
+
+Webui-vue (ie, the new one) relies on Redfish directly, which in-effect
+makes a very nice Redfish gui, and minimizes the chance that the dbus
+interfaces are correct, but redfish is broken.  It also keeps us standard
+compliant, so in theory webui-vue could be used on another non-openbmc
+project in the future.
+
+Ed
+
+
+>
+> Mike
+>
+>
+> Sent from my iPad
+>
+> > On Jan 11, 2022, at 10:22 AM, Ed Tanous <edtanous@google.com> wrote:
+> >
+> > =EF=BB=BFOn Tue, Jan 11, 2022 at 9:17 AM Mike Jones <proclivis@gmail.co=
+m> wrote:
+> >>
+> >> =EF=BB=BFThis is how to do it:
+> >>
+> >> dbus-send --system --print-reply \
+> >>
+> >>
+> --dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a187a66b=
+71eb7a1f29187594c05bb8fd9a.Hwmon1
+> \
+> >>
+> >> /xyz/openbmc_project/sensors/temperature/lm75temp \
+> >>
+> >> org.freedesktop.DBus.Properties.Get
+> string:xyz.openbmc_project.Sensor.Value string:Value \
+> >>
+> >> double:
+> >>
+> >>
+> >> It is not clear to me why the second parameter string:Value
+> >>
+> >>
+> >> I guessed on that and it works. Perhaps xyz=E2=80=A6Sensor.Value is th=
+e
+> Property name, and properties have values, so the second parameter says g=
+et
+> the Value of a property whose name ends in .Value.\
+> >
+> > For better or worse, the term "Value" is overloaded in both the
+> > interface name, yz.openbmc_project.Sensor.Value, and the property name
+> > within the interface, Value.  That's why you see it twice in this
+> > case.  They are distinct things within the request that just happen to
+> > share a name.  Docs for the interface and property are here:
+> >
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/e0674c894ed36a2e=
+8cf96207907a531d2f514054/yaml/xyz/openbmc_project/Sensor/Value.interface.ya=
+ml#L24
+> >
+> > Happy to see you figured it out.
+> >
+> >>
+> >>
+> >> To test that, I tried string:MaxValue, and that works.
+> >>
+> >>
+> >> I confirmed with this:
+> >>
+> >>
+> >> busctl introspect
+> xyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a187a66b71eb7a1f2=
+9187594c05bb8fd9a.Hwmon1
+> /xyz/openbmc_project/sensors/temperature/lm75temp
+> >>
+> >>
+> >> A very useful command.
+> >>
+> >>
+> >> Also useful:
+> >>
+> >>
+> >> dbus-send --system --print-reply \
+> >>
+> >> --dest=3Dxyz.openbmc_project.ObjectMapper /\
+> >>
+> >> xyz/openbmc_project/object_mapper \
+> >>
+> >> xyz.openbmc_project.ObjectMapper.GetSubTree \
+> >>
+> >> string:"/" int32:0 array:string:"xyz.openbmc_project.Sensor.Value"
+> >>
+> >>
+> >>
+> >> Mike
+> >>
+> >>
+> >> Sent from my iPad
+> >>
+> >> On Jan 10, 2022, at 4:50 PM, Ed Tanous <edtanous@google.com> wrote:
+> >>
+> >> =EF=BB=BFOn Mon, Jan 10, 2022 at 3:47 PM Mike Jones <proclivis@gmail.c=
+om>
+> wrote:
+> >>
+> >>
+> >> Hi,
+> >>
+> >>
+> >> I could not find an example of a sensor query in the docs. I assume
+> something like this:
+> >>
+> >>
+> >> dbus-send --system --print-reply \
+> >>
+> >>
+> >>
+> --dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a187a66b=
+71eb7a1f29187594c05bb8fd9a.Hwmon1
+> \
+> >>
+> >>
+> >> /xyz/openbmc_project/sensors/temperature/lm75temp
+> >>
+> >>
+> >> xyz.openbmc_project.Sensor.Property.Get
+> xyz.openbmc_project.Sensor.Value \
+> >>
+> >>
+> >> double:
+> >>
+> >>
+> >>
+> >> I don't have an example offhand, but the interface you're looking for
+> >> in the bolded area is
+> >> org.freedesktop.DBus.Properties.Get
+> >>
+> >> Stack overflow for essentially the same question with an example:
+> >>
+> https://stackoverflow.com/questions/48648952/set-get-property-using-dbus-=
+send
+> >>
+> >>
+> >> With the bold interface replaced with something correct.
+> >>
+> >>
+> >> Can some one give me an example, and a url about how to query
+> properties?
+> >>
+> >>
+> >> Mike
+> >>
+> >>
+> >> Sent from my iPad
+>
+--=20
+-Ed
+
+--000000000000f84e7505d558fe01
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-My response tagged <br><br><br>-------- Original Message --------<br>From: =
-Zev Weiss <zev@bewilderbeest.net><br>Date: Tue, January 11, 2022 7:15 PM -0=
-600<br>To: Joel Stanley <joel@jms.id.au><br>CC: devicetree <devicetree@vger=
-.kernel.org>, linux-aspeed <linux-aspeed@lists.ozlabs.org>, Arnd Bergmann <=
-arnd@arndb.de>, Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc=
-@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org=
->, Rob Herring <robh+dt@kernel.org>, Neil Horman <neil.horman@privafy.com>,=
- Olof Johansson <olof@lixom.net>, Anthony Jenkins <anthony.jenkins@privafy.=
-com>, Linux ARM <linux-arm-kernel@lists.infradead.org><br>Subject: [EXTERNA=
-L] Re: [PATCH] ARM: dts: aspeed: Add ASRock ROMED8HM3 BMC<br><br><br>On Tue=
-, Jan 11, 2022 at 02:59:28AM PST, Joel Stanley wrote:<br>>On Wed, 5 Jan 202=
-2 at 23:10, Zev Weiss <zev@bewilderbeest.net> wrote:<br>>><br>>> This is a =
-half-width, single-socket Epyc server board with an AST2500<br>>> BMC.&nbsp=
-;&nbsp;This device tree is sufficient for basic OpenBMC functionality,<br>>=
-> but we'll need to add a few more devices (as driver support becomes<br>>>=
- available) before it's fully usable.<br>>><br>>> Signed-off-by: Zev Weiss =
-<zev@bewilderbeest.net><br>><br>>Reviewed-by: Joel Stanley <joel@jms.id.au>=
-<br>><br><br>Thanks!<br><br>>Have you considered using the openbmc gpio nam=
-ing scheme for the<br>>gpio-line-names?<br>><br><br>I looked at it, but dec=
-ided not to for a few reasons:<br><br>&nbsp;&nbsp;- For systems that are in=
- the early stages of a porting effort (like <br>&nbsp;&nbsp;&nbsp;&nbsp;thi=
-s one currently is), I'm still referring to hardware schematics <br>&nbsp;&=
-nbsp;&nbsp;&nbsp;fairly often, and using the same identifiers in software t=
-hat are <br>&nbsp;&nbsp;&nbsp;&nbsp;used in the schematics simplifies thing=
-s by avoiding an extra<br>&nbsp;&nbsp;&nbsp;&nbsp;translation step between =
-the two.<br><br>&nbsp;&nbsp;- Most of the GPIO-related userspace components=
- (that I'm dealing with <br>&nbsp;&nbsp;&nbsp;&nbsp;anyway, e.g. x86-power-=
-control and host-error-monitor) already have <br>&nbsp;&nbsp;&nbsp;&nbsp;th=
-eir own GPIO line-name configuration/remapping mechanisms that need <br>&nb=
-sp;&nbsp;&nbsp;&nbsp;to be set up anyway.<br><br>&nbsp;&nbsp;- There's a so=
-lid mix of GPIOs that would be covered by the naming <br>&nbsp;&nbsp;&nbsp;=
-&nbsp;guidelines and others that aren't; having a mix of the two styles <br=
->&nbsp;&nbsp;&nbsp;&nbsp;seems a bit awkward to me.<br><br>That said, I sym=
-pathize with the motivation behind it and I'm not <br>vehemently opposed on=
- the whole, so if there's a strong preference to <br>follow that scheme I c=
-ould probably be talked into changing it.<br><br><br><br>Milton >&nbsp;&nbs=
-p;Did this assessment take into consideration <br> Milton > <a href=3D"http=
-s://gerrit.openbmc-project.xyz/c/openbmc/docs/+/49863" target=3D"=5Fblank">=
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/49863</a><br><br>Milton=
- > is there something that could be improved? <br><br><br>Zev<br><br><BR>
-<BR>
+<div><br></div><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Tue, Jan 11, 2022 at 9:53 AM Mike Jones &lt;<a href=3D"m=
+ailto:proclivis@gmail.com">proclivis@gmail.com</a>&gt; wrote:<br></div><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+-width:1px;border-left-style:solid;padding-left:1ex;border-left-color:rgb(2=
+04,204,204)">Ed,<br>
+<br>
+So to be sure I understand, dbus-sensors implements the dbus services for e=
+ach sensor type, and the requests I made were serviced by one of these.</bl=
+ockquote><div dir=3D"auto"><br></div><div dir=3D"auto">Correct.</div><div d=
+ir=3D"auto"><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;padding-left:1=
+ex;border-left-color:rgb(204,204,204)" dir=3D"auto"><br>
+<br>
+The interface is defined by yaml files in phosphor-dbus-interfaces.</blockq=
+uote><div dir=3D"auto"><br></div><div dir=3D"auto">Yep.</div><div dir=3D"au=
+to"><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left-width:1px;border-left-style:solid;padding-left:1ex;borde=
+r-left-color:rgb(204,204,204)" dir=3D"auto"><br>
+<br>
+phosphor-dbus- interfaces generates c++ base classes, and dbus-sensors prob=
+ably have c++ classes inheriting from them.</blockquote><div dir=3D"auto"><=
+br></div><div dir=3D"auto"><br></div><div dir=3D"auto">For various technica=
+l and social reasons which I=E2=80=99ve detailed in mail to this list in th=
+e past, dbus-sensors doesn=E2=80=99t depend directly on phosphor-dbus-inter=
+faces, nor rely on the generated code. It instead generates code from c++ t=
+emplate expansion in sdbusplus.</div><div dir=3D"auto"><br></div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width=
+:1px;border-left-style:solid;padding-left:1ex;border-left-color:rgb(204,204=
+,204)" dir=3D"auto"><br>
+<br>
+These interfaces are not Redfish interfaces.</blockquote><div dir=3D"auto">=
+<br></div><div dir=3D"auto">Correct.</div><div dir=3D"auto"><br></div><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-=
+width:1px;border-left-style:solid;padding-left:1ex;border-left-color:rgb(20=
+4,204,204)" dir=3D"auto"><br>
+<br>
+When WebUI fetches sensor values, is it using these interfaces, or is there=
+ another Redfish layer involved that translates the query? Or perhaps Redfi=
+sh only matters for things like a PSU?</blockquote><div dir=3D"auto"><br></=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">Depends on which webui yo=
+u=E2=80=99re talking about, there are two.</div><div dir=3D"auto"><br></div=
+><div dir=3D"auto">Phosphor-webui (ie the =E2=80=9Cold=E2=80=9D one) goes d=
+irectly to dbus through the rest-dbus abstraction in bmcweb.=C2=A0 This was=
+ very good for initial prototyping (aside from a port to c++, the code larg=
+ely hasn=E2=80=99t changed since it was written) but not great at keeping a=
+ consistent or standardized API.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Webui-vue (ie, the new one) relies on Redfish directly, which in-=
+effect makes a very nice Redfish gui, and minimizes the chance that the dbu=
+s interfaces are correct, but redfish is broken.=C2=A0 It also keeps us sta=
+ndard compliant, so in theory webui-vue could be used on another non-openbm=
+c project in the future.</div><div dir=3D"auto"><br></div><div dir=3D"auto"=
+>Ed</div><div dir=3D"auto"><br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid=
+;padding-left:1ex;border-left-color:rgb(204,204,204)" dir=3D"auto"><br>
+<br>
+Mike<br>
+<br>
+<br>
+Sent from my iPad<br>
+<br>
+&gt; On Jan 11, 2022, at 10:22 AM, Ed Tanous &lt;<a href=3D"mailto:edtanous=
+@google.com" target=3D"_blank">edtanous@google.com</a>&gt; wrote:<br>
+&gt; <br>
+&gt; =EF=BB=BFOn Tue, Jan 11, 2022 at 9:17 AM Mike Jones &lt;<a href=3D"mai=
+lto:proclivis@gmail.com" target=3D"_blank">proclivis@gmail.com</a>&gt; wrot=
+e:<br>
+&gt;&gt; <br>
+&gt;&gt; =EF=BB=BFThis is how to do it:<br>
+&gt;&gt; <br>
+&gt;&gt; dbus-send --system --print-reply \<br>
+&gt;&gt; <br>
+&gt;&gt; --dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a=
+187a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 \<br>
+&gt;&gt; <br>
+&gt;&gt; /xyz/openbmc_project/sensors/temperature/lm75temp \<br>
+&gt;&gt; <br>
+&gt;&gt; org.freedesktop.DBus.Properties.Get string:xyz.openbmc_project.Sen=
+sor.Value string:Value \<br>
+&gt;&gt; <br>
+&gt;&gt; double:<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; It is not clear to me why the second parameter string:Value<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; I guessed on that and it works. Perhaps xyz=E2=80=A6Sensor.Value i=
+s the Property name, and properties have values, so the second parameter sa=
+ys get the Value of a property whose name ends in .Value.\<br>
+&gt; <br>
+&gt; For better or worse, the term &quot;Value&quot; is overloaded in both =
+the<br>
+&gt; interface name, yz.openbmc_project.Sensor.Value, and the property name=
+<br>
+&gt; within the interface, Value.=C2=A0 That&#39;s why you see it twice in =
+this<br>
+&gt; case.=C2=A0 They are distinct things within the request that just happ=
+en to<br>
+&gt; share a name.=C2=A0 Docs for the interface and property are here:<br>
+&gt; <a href=3D"https://github.com/openbmc/phosphor-dbus-interfaces/blob/e0=
+674c894ed36a2e8cf96207907a531d2f514054/yaml/xyz/openbmc_project/Sensor/Valu=
+e.interface.yaml#L24" rel=3D"noreferrer" target=3D"_blank">https://github.c=
+om/openbmc/phosphor-dbus-interfaces/blob/e0674c894ed36a2e8cf96207907a531d2f=
+514054/yaml/xyz/openbmc_project/Sensor/Value.interface.yaml#L24</a><br>
+&gt; <br>
+&gt; Happy to see you figured it out.<br>
+&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; To test that, I tried string:MaxValue, and that works.<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; I confirmed with this:<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; busctl introspect xyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da9=
+05907088a187a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 /xyz/openbmc_project/sens=
+ors/temperature/lm75temp<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; A very useful command.<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; Also useful:<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; dbus-send --system --print-reply \<br>
+&gt;&gt; <br>
+&gt;&gt; --dest=3Dxyz.openbmc_project.ObjectMapper /\<br>
+&gt;&gt; <br>
+&gt;&gt; xyz/openbmc_project/object_mapper \<br>
+&gt;&gt; <br>
+&gt;&gt; xyz.openbmc_project.ObjectMapper.GetSubTree \<br>
+&gt;&gt; <br>
+&gt;&gt; string:&quot;/&quot; int32:0 array:string:&quot;xyz.openbmc_projec=
+t.Sensor.Value&quot;<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; Mike<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; Sent from my iPad<br>
+&gt;&gt; <br>
+&gt;&gt; On Jan 10, 2022, at 4:50 PM, Ed Tanous &lt;<a href=3D"mailto:edtan=
+ous@google.com" target=3D"_blank">edtanous@google.com</a>&gt; wrote:<br>
+&gt;&gt; <br>
+&gt;&gt; =EF=BB=BFOn Mon, Jan 10, 2022 at 3:47 PM Mike Jones &lt;<a href=3D=
+"mailto:proclivis@gmail.com" target=3D"_blank">proclivis@gmail.com</a>&gt; =
+wrote:<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; Hi,<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; I could not find an example of a sensor query in the docs. I assum=
+e something like this:<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; dbus-send --system --print-reply \<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; --dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a=
+187a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 \<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; /xyz/openbmc_project/sensors/temperature/lm75temp<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; xyz.openbmc_project.Sensor.Property.Get xyz.openbmc_project.Sensor=
+.Value \<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; double:<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; I don&#39;t have an example offhand, but the interface you&#39;re =
+looking for<br>
+&gt;&gt; in the bolded area is<br>
+&gt;&gt; org.freedesktop.DBus.Properties.Get<br>
+&gt;&gt; <br>
+&gt;&gt; Stack overflow for essentially the same question with an example:<=
+br>
+&gt;&gt; <a href=3D"https://stackoverflow.com/questions/48648952/set-get-pr=
+operty-using-dbus-send" rel=3D"noreferrer" target=3D"_blank">https://stacko=
+verflow.com/questions/48648952/set-get-property-using-dbus-send</a><br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; With the bold interface replaced with something correct.<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; Can some one give me an example, and a url about how to query prop=
+erties?<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; Mike<br>
+&gt;&gt; <br>
+&gt;&gt; <br>
+&gt;&gt; Sent from my iPad<br>
+</blockquote></div></div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" =
+data-smartmail=3D"gmail_signature"><div dir=3D"ltr">-Ed</div></div>
 
-----_com.fiberlink.maas360.email_397748018473401--
-
-----_com.fiberlink.maas360.email_397748017531830--
-
+--000000000000f84e7505d558fe01--
