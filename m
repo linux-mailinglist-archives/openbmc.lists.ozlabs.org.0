@@ -1,78 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED72D48DF7E
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jan 2022 22:19:34 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ECCD48DFA8
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jan 2022 22:31:11 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JZckr5tQGz30D7
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 08:19:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JZd0F3sn8z30LQ
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 08:31:09 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=kfCYDOIw;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=X2yjcHxW;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::331;
- helo=mail-ot1-x331.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::233;
+ helo=mail-oi1-x233.google.com; envelope-from=proclivis@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=kfCYDOIw; dkim-atps=neutral
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com
- [IPv6:2607:f8b0:4864:20::331])
+ header.s=20210112 header.b=X2yjcHxW; dkim-atps=neutral
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
+ [IPv6:2607:f8b0:4864:20::233])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JZcjb3s2Wz2xYG;
- Fri, 14 Jan 2022 08:18:27 +1100 (AEDT)
-Received: by mail-ot1-x331.google.com with SMTP id
- a12-20020a0568301dcc00b005919e149b4cso7849634otj.8; 
- Thu, 13 Jan 2022 13:18:27 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JZczt62S1z2xCM
+ for <openbmc@lists.ozlabs.org>; Fri, 14 Jan 2022 08:30:48 +1100 (AEDT)
+Received: by mail-oi1-x233.google.com with SMTP id s9so9607095oib.11
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Jan 2022 13:30:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=bhIUZEyLkSCGKc1UkQdjKABPVPiYlDrmgBY5iTyEfnQ=;
- b=kfCYDOIwjO5zYFAj467OnoWk6vFNfpF21UB/Y8CjghGbDlgAY6KtHfnoEzZn12RZic
- vaqrkd4JZ4D6FflEP6nKSOSaHrMBFHo6v8uqIA/FkKKceoCidKboHcqNs7/psr5UgM3o
- NNrzoHd+ymJzr7dTFAZ6r+B7NH0XuEEl+pHDo5CK8h8myM5yw7pUqzoh7UBUfEjU+IQ5
- y2SCDx5CDUEOKtUS0gac4h/83qhREAr+lc8IZkFuhk6P4s6nNy1y2LMbPzsZRVyQGN2p
- /qOODnFGXx+wsD9laL3pBpEHPCNwpRrMKGI76OYpOshuYLws10bcwiqcJyU3VjVHJVfu
- r+ow==
+ h=content-transfer-encoding:from:mime-version:date:subject:message-id
+ :to; bh=63xeOCeeJClytcbsE2/E6ngezVvhpicx2zmO37zTGlc=;
+ b=X2yjcHxWiRrqAOLlzcOXZUoU0nQD2ez7CW5PXt0rf+uWHxQ86hWiiMz3pQbKANTB1Z
+ TbDYB3yw8m4lfUvkP08vpfp+YAvKSjPVk3cyLlKuCZDMID5tZWjTjdFIQsvnS0xl7Oue
+ Y16VKG2zqmwO7Z1cUnff7tNbKBoHQ4bniX2bJGYxN/svmJWCEr328YbdCEuC02DvIUbm
+ +zypFNX/sQVpe8LmG9uuaWnm1qK5GurdWm94oWzVWgxph12iCpKDT6tnjDTuIfFB6O0T
+ CSIgjtUkj27ZBqY1pSBRqFr4Ct4H7ilM8nVlPN0lcw9eJGqxaMHHzEkODf7KJWnYSZc8
+ /E8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=bhIUZEyLkSCGKc1UkQdjKABPVPiYlDrmgBY5iTyEfnQ=;
- b=pJ+cg/kta52Ui0eL6Zr8toHuE16Si1Zr6emrjDJM5YtpnTZe/r8TGXEIKKsQ3Zo/G+
- 8Ocyb/yZMtQcLerfkeCV/nWtu659NYUhcxu1Rz3IyHQ3YYxxLsMx9+Xk43fTv7PXrPJg
- rnD/Z78l15+XJc5/Rqx5el7FZkjRV+PNNumJTeS2uBWPzyGEKQlwOVuVQaj8vzvpNAyq
- rSNfyOMLVzHiuiWSq5/35ATwsJdu6QfoH7B9vL5BSSyb/HnP0idX2pMm7WrC6qxQM7V2
- L2pq5ge8G9GprK1V0RUj0H/2BLTR9i0jk8sUxmMIXfQLUGPTnofBQYgW0/bJYBje91yu
- nJUg==
-X-Gm-Message-State: AOAM533fRI71G8dUCmyZV7gJa4Vs1NiBbMniTiH+lr9lcSEsbS+ShY7Q
- k9KAHpypUIj2RiXWT//xR/Y=
-X-Google-Smtp-Source: ABdhPJwlPvNEuK39AHfpxsyj9XIKIhhFFrRo9lAnrK7Q+YbNmpsGjP53cLUDAwb+N+udui/QQg8Ylw==
-X-Received: by 2002:a9d:4e4:: with SMTP id 91mr4516525otm.45.1642108704859;
- Thu, 13 Jan 2022 13:18:24 -0800 (PST)
-Received: from Andrews-MBP-2.attlocal.com
- ([2600:1700:19e0:3310:f8ba:b1e:54e1:cdfc])
- by smtp.gmail.com with ESMTPSA id z188sm932015ooa.8.2022.01.13.13.18.24
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 13 Jan 2022 13:18:24 -0800 (PST)
-From: Andrew Geissler <geissonator@gmail.com>
-X-Google-Original-From: Andrew Geissler <geissonator@yahoo.com>
-To: joel@jms.id.au, andrew@aj.id.au, robh+dt@kernel.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] ARM: dts: aspeed: everest: add reset-cause-pinhole
-Date: Thu, 13 Jan 2022 15:17:35 -0600
-Message-Id: <20220113211735.37861-2-geissonator@yahoo.com>
-X-Mailer: git-send-email 2.30.1 (Apple Git-130)
-In-Reply-To: <20220113211735.37861-1-geissonator@yahoo.com>
-References: <20220113211735.37861-1-geissonator@yahoo.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
+ :subject:message-id:to;
+ bh=63xeOCeeJClytcbsE2/E6ngezVvhpicx2zmO37zTGlc=;
+ b=bNZLQO+73V/AL2QYHCZptvDBxFpw/MYIYHI0YLNZGqUng3EvzLuIBF1z9+I8UJD5fG
+ qP2XmV+nt2mxaDDfmsC6ZPZsACCKUTBFbggpb72Ak65FGNIX2sVm4pZ2SAiFAbStarrt
+ dDPJU9VZR++Dzr/MvGV0JAta7R+MJjVf1tD4kA7QTUh3aohsSX0PYhUCX3xNzrNbT7t9
+ Tijv0ah1fQeDe8v/BaTj96hk7UC3iv+0R0uTWv7fb/StJu8RbqfDACMJeQKVcvhrbGGj
+ OBJdp3Nozl0Ol+ZgFzrEZEubBE8Bsp2MLVcN4pW7Zt5yvyiTK+mqLkt2+SJGxkCfPXyo
+ 9oHg==
+X-Gm-Message-State: AOAM531Sr3pIIVDdViEhGE95YhnvCSCLODzjv2JbVbR9dd/aBHJDRK1W
+ 6qLGR94XDOLWpElp/kdBmVqUA1bi0kg=
+X-Google-Smtp-Source: ABdhPJwEfYZxJfK5sZ7sPYmd4s5q16D8d2FXQ+TCEaW4VUj9mY4ajTgmzKzquiKEpfBZnCPW8SdIjg==
+X-Received: by 2002:aca:c157:: with SMTP id r84mr5039081oif.71.1642109445271; 
+ Thu, 13 Jan 2022 13:30:45 -0800 (PST)
+Received: from smtpclient.apple (212.sub-174-198-140.myvzw.com.
+ [174.198.140.212])
+ by smtp.gmail.com with ESMTPSA id b17sm995136ots.66.2022.01.13.13.30.44
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Jan 2022 13:30:45 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+From: Mike Jones <proclivis@gmail.com>
+Mime-Version: 1.0 (1.0)
+Date: Thu, 13 Jan 2022 14:30:43 -0700
+Subject: Sanitycheck problem
+Message-Id: <BEA6AAA9-904A-40D7-B114-A9229B38F0DE@gmail.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+X-Mailer: iPad Mail (19C56)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,38 +79,20 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org,
- Andrew Geissler <geissonator@yahoo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This GPIO is used on the everest system to indicate the BMC was reset
-due to a physical pinhole reset.
+Hi,
 
-It has been verified that the previous name for this pin has not been
-utilized by userspace so the name change is ok.
+If i bitbske -c devshell dbus-sensors, them meson build, sanitycheck.exe fai=
+ls with a exec for at error.
 
-See the following doc for more information:
-https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md
+Is there a workaround?
 
-Signed-off-by: Andrew Geissler <geissonator@yahoo.com>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The goal is to modify code and compile without bitbaking.
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-index f48b33b0c606..6b5d5c56951f 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-@@ -271,7 +271,7 @@ &gpio0 {
- 	/*D0-D7*/	"","","","","","","","",
- 	/*E0-E7*/	"","","","","","","","",
- 	/*F0-F7*/	"PIN_HOLE_RESET_IN_N","","battery-voltage-read-enable",
--				"PIN_HOLE_RESET_OUT_N","","",
-+				"reset-cause-pinhole","","",
- 				"factory-reset-toggle","",
- 	/*G0-G7*/	"","","","","","","","",
- 	/*H0-H7*/	"led-rtc-battery","led-bmc","led-rear-enc-id0","led-rear-enc-fault0","","","","",
--- 
-2.25.1
+If there is better solution, let me know.
 
+Mike
+
+Sent from my iPad=
