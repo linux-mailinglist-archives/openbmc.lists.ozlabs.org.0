@@ -1,65 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8E8348D3E3
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jan 2022 09:53:20 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C995048DF5D
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jan 2022 22:04:08 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JZJ9p3qjwz2yxm
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jan 2022 19:53:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JZcP25np5z30L4
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 08:04:06 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=I4HR79HO;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=J2PzXCY6;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::635;
- helo=mail-pl1-x635.google.com; envelope-from=logananth13.hcl@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=I4HR79HO; dkim-atps=neutral
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com
- [IPv6:2607:f8b0:4864:20::635])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=J2PzXCY6; dkim-atps=neutral
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JZJ9N6Xwgz2yY7
- for <openbmc@lists.ozlabs.org>; Thu, 13 Jan 2022 19:52:54 +1100 (AEDT)
-Received: by mail-pl1-x635.google.com with SMTP id n11so6677255plf.4
- for <openbmc@lists.ozlabs.org>; Thu, 13 Jan 2022 00:52:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=D9rJ/Ilp7aW9P45vRSl749+MzTdGSXcoTQDvPeSsCzQ=;
- b=I4HR79HOOvGYf6PZ5eDTHIFoqXnPHm3L3pB9UP+E37Bd4kmgttLky1EFpAxLgIMRYk
- dId+7n4gn/ZnLihFjhT15ivNXFHOytQywxInpVHRNOfTqsm1Rkc9FgtBjVI1biJFv5nv
- U6cheyu4emRU1uNH547zF+ptX4g0674hGkCvE4KP3spORWB4WvC8rsM0W9Cuy3a4MIID
- YtraxJlOqFuja8ZIoSdAUrITpTETZUy62t4NZHuemLv+lX4pI/O/j2cNNlVAgUnxjpJZ
- 91Ir7iJvHDYG0oJcAy09XpKg1rLUu35zVur4bWFqVkC0oHe8MRP+yF19WHe6e+nLNPgL
- hOUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=D9rJ/Ilp7aW9P45vRSl749+MzTdGSXcoTQDvPeSsCzQ=;
- b=H5KW6ioIL8Sz1QfvA1ZmDzlBrs8HcEpbdkPJmqUktyGPukYp9LS0yZl8KVu0a8bd06
- kVpz/meLaqn3MSBOhZ/mBVlt6zDfr+6n90dukUtfHfuoqE5uZyxrvEZypvw8ZFZ+B4oo
- E1SsWBc98SptE72+ZkN7V+F7FQ1w9eEndIih1QlTZStV7o/O+EakCBjE0MdSKVFTHVCC
- 6G8r4FqoHtAhDcm/xV6dX/zoES50aaRZ87HX4p8w6eG1hzSukl5NQQ5SycUl7AbSW5Vm
- cfiXRc1V91DId2Mw7on6D4S5FVuk/Je7U1+rTuOR2+3A6jqOeeOTGyj7PDjhrNic8eo8
- 3i4Q==
-X-Gm-Message-State: AOAM532Ek5Vz63hI8xe99pt8rhpAFBxXzfsc1Pjz5VLFCW9y72jg24b0
- Pdk5rz56JT1hebVuwmooFsx1GFPKwqXiqKXcafc=
-X-Google-Smtp-Source: ABdhPJyTbzBZJj7ExOnZOIciWh6s38KR8IyYCRhrFxk+rmDuNceeH3DvS3hh5TrL94cmgvWXSyBqkwD63Z6Ypd1HK6U=
-X-Received: by 2002:a05:6a00:1582:b0:4bb:4bc8:7ecd with SMTP id
- u2-20020a056a00158200b004bb4bc87ecdmr3311572pfk.46.1642063971895; Thu, 13 Jan
- 2022 00:52:51 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JZcNW3sbRz2xBL;
+ Fri, 14 Jan 2022 08:03:34 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1642107819; x=1673643819;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Ftmbq4MhF254TtN2OkjaCBszJRBYw/W1sHTyP+uFt1U=;
+ b=J2PzXCY6gKDsAFTi5iOgh1uPuvwslrKMlYba+6bW+TRTZGA8VDJhKFH+
+ M99B7YoSpaqHGduUZy+BtKCy+Da9/2E3MjAx5ls6x074j8+OB28U6LSr3
+ VZOgbSVWuzTMrwy6B7Bn/YkhnajBA+XINgonaTs+QLcBUIBi4kTTs15Wq
+ ZzMI49r54SAkgrCEpNq09nnaumywK/WE3wMTuSTTHdfWs7k6o1c8ge32b
+ AcaTTQ7St9xnd5sd6/dPtt4F9MGk+d4G3+IEyzSOtKj0FV+Enxqh82koa
+ mV1rvHTEMtxscG44y//5/PhZw/62eWuO2LdZZsxSLDaORhzx+JIi3Ep3N g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10226"; a="224801975"
+X-IronPort-AV: E=Sophos;i="5.88,286,1635231600"; d="scan'208";a="224801975"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Jan 2022 13:02:05 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,286,1635231600"; d="scan'208";a="614099063"
+Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
+ by FMSMGA003.fm.intel.com with ESMTP; 13 Jan 2022 13:02:03 -0800
+Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
+ (envelope-from <lkp@intel.com>)
+ id 1n87EQ-0007dZ-IH; Thu, 13 Jan 2022 21:02:02 +0000
+Date: Fri, 14 Jan 2022 05:01:48 +0800
+From: kernel test robot <lkp@intel.com>
+To: Iwona Winiarska <iwona.winiarska@intel.com>,
+ linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH v5 05/13] peci: Add peci-aspeed controller driver
+Message-ID: <202201140455.rWgkX1hh-lkp@intel.com>
+References: <20220112230247.982212-6-iwona.winiarska@intel.com>
 MIME-Version: 1.0
-From: logananth hcl <logananth13.hcl@gmail.com>
-Date: Thu, 13 Jan 2022 14:22:40 +0530
-Message-ID: <CAGpPFEFoTO-cUxvxEnoNQ3YoKBWRK+pOeyGzni6E5Da-=w+stA@mail.gmail.com>
-Subject: Procedure for the send review on u-boot patch
-To: joel@jms.id.au, openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000be4c6805d572cfd5"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220112230247.982212-6-iwona.winiarska@intel.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,38 +71,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: velumanit@hcl.com
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
+ kbuild-all@lists.01.org, linux-aspeed@lists.ozlabs.org,
+ linux-doc@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000be4c6805d572cfd5
-Content-Type: text/plain; charset="UTF-8"
+Hi Iwona,
 
-Hai All,
+Thank you for the patch! Yet something to improve:
 
-In openbmc/u-boot repo(branch - v2016.07-aspeed-openbmc)
-https://github.com/openbmc/u-boot/tree/v2016.07-aspeed-openbmc
+[auto build test ERROR on groeck-staging/hwmon-next]
+[also build test ERROR on linux/master linus/master v5.16 next-20220113]
+[cannot apply to joel-aspeed/for-next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-I want to send a review on this particular branch in u-boot through
-upstream.
-Is there any specific procedure to upstream it,
-kindly provide your suggestions.
+url:    https://github.com/0day-ci/linux/commits/Iwona-Winiarska/Introduce-PECI-subsystem/20220113-071131
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/groeck/linux-staging.git hwmon-next
+config: ia64-randconfig-r033-20220113 (https://download.01.org/0day-ci/archive/20220114/202201140455.rWgkX1hh-lkp@intel.com/config)
+compiler: ia64-linux-gcc (GCC) 11.2.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/9b4f2401a427cff2efc191f507d73ec8ae1ad872
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Iwona-Winiarska/Introduce-PECI-subsystem/20220113-071131
+        git checkout 9b4f2401a427cff2efc191f507d73ec8ae1ad872
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=ia64 SHELL=/bin/bash
 
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
-Thanks,
-Logananth.s
+All errors (new ones prefixed by >>, old ones prefixed by <<):
 
---000000000000be4c6805d572cfd5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+>> ERROR: modpost: "devm_clk_hw_register" [drivers/peci/controller/peci-aspeed.ko] undefined!
+>> ERROR: modpost: "__clk_get_name" [drivers/peci/controller/peci-aspeed.ko] undefined!
 
-<div dir=3D"ltr">Hai All,<div><br></div><div>In openbmc/u-boot repo(branch =
-- v2016.07-aspeed-openbmc)</div><div><a href=3D"https://github.com/openbmc/=
-u-boot/tree/v2016.07-aspeed-openbmc" target=3D"_blank">https://github.com/o=
-penbmc/u-boot/tree/v2016.07-aspeed-openbmc</a><br></div><div><br></div><div=
->I want to send a review on this particular branch in u-boot through upstre=
-am.=C2=A0<br>Is there any specific procedure to upstream it,=C2=A0<br>kindl=
-y provide your suggestions.</div><div><br></div><div><br></div><div>Thanks,=
-</div><div>Logananth.s</div></div>
-
---000000000000be4c6805d572cfd5--
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
