@@ -1,66 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3905348D203
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jan 2022 06:32:45 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A042948D339
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jan 2022 08:56:14 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JZCkM0PNDz2yfc
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jan 2022 16:32:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JZGvw3Wm7z2yZW
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jan 2022 18:56:12 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Ycnh4Z1d;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mrX1ngAf;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::735;
- helo=mail-qk1-x735.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Ycnh4Z1d; dkim-atps=neutral
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com
- [IPv6:2607:f8b0:4864:20::735])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=mrX1ngAf; dkim-atps=neutral
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JZCjy0Tg3z2xsK
- for <openbmc@lists.ozlabs.org>; Thu, 13 Jan 2022 16:32:20 +1100 (AEDT)
-Received: by mail-qk1-x735.google.com with SMTP id t66so6060422qkb.4
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jan 2022 21:32:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=xhnv6cDEIDnEyb+5VaPQiLHw0DQrlG2/ydsIQ2G5Ccc=;
- b=Ycnh4Z1ddNEZ4psVUIYs4heQ7UAW3kUqMeuViQs0OLDldFmGRrqlfLsnn9ejvvYmRA
- akSV8hz3huXVS/XjI+k6UGkNR4p98se8vNBYtxthXvcNVhKVCNRJGrJTaFSNlH46zfY8
- nTLvquhvZ79wTclUcl8j0q1k47Tlugi2J3zTQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=xhnv6cDEIDnEyb+5VaPQiLHw0DQrlG2/ydsIQ2G5Ccc=;
- b=2EJ9CcFPQjfNCC3gzye1OcenVGFWKSDlHcpR7mzY0hU+gkDiLnkX2PsM63a+95BiR/
- GE87eqVEl25eawKT32vBvLbzEe7cjpIChZYg+nC2zirltx/iJJJTRUAYFriZRHdfwxqF
- NRiFjuAj8PKLY0w41HRltNW8HlsUlHbAIAWaO/0H/DXqhRisnBVswt2cuO1+72BAgcvQ
- oH4u6oOmVZ2+HyWDy7qGPXS5Dn7CMpKLNs/I8XuFn7NYUAqhGkOxqlQYWXKv+QpBBDn2
- JSx3q09d7p7Te7yEZm+z80iRH1yFZQHjF2arM+B3fGKSHvVD8DjcX1SvakCABnzML72i
- 2PkQ==
-X-Gm-Message-State: AOAM530T+j/kuE4iFw9XqE7jPKkf6eeTfvsUgSdZwTQiGBpAflkWXZxx
- aBoRogNQPLnPJb3igBmN0wmteyl5eyXuOfx4ohn7uDh5
-X-Google-Smtp-Source: ABdhPJybvUfdX2q7qyDOn3EoEltP4RfccQEeXuPfvGXhIUjPVAYm979+ajNi+U3OcUU99erUTtaxqBr7Cf5hMbIt47g=
-X-Received: by 2002:a05:620a:f0b:: with SMTP id
- v11mr2103174qkl.243.1642051936456; 
- Wed, 12 Jan 2022 21:32:16 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JZGvS1vhrz2x9X;
+ Thu, 13 Jan 2022 18:55:43 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1642060548; x=1673596548;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=tBSjCUr5LQ/WmW8KrgBUGf3PU+8WqY/65bcLq1A2bvk=;
+ b=mrX1ngAfxtRr6BaLYFJwl6PHEfy07CzmYNJPWZwci688GR6hJYH76ZSZ
+ wrKiamDo3/o5dAqRb0HEllGcr8JrFjW93nXNbuNW9W6adr2ZHJnfw1Nxa
+ BNYXCuEp10bVc66yPnpZNEyP8G9FVGkeOfkt6lHhi56L3ne1/yRYMi2DF
+ BL2qor/JV6DhycY7u0F+t0hxR/4t5fkPnCwQvBarE8loitivdDajpSDtp
+ +AKdifH3sDOR3K3QbV38G8kk5fLd5BNyN6tzA/vf9nVfMfYy+uJ/Je1JL
+ D+LMS74YwGlfzrTt8J2wDv5TY02SVFcXRA3dyNFs222L3a3X5rovbYYS2 g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10225"; a="224644307"
+X-IronPort-AV: E=Sophos;i="5.88,284,1635231600"; d="scan'208";a="224644307"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jan 2022 23:54:39 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,284,1635231600"; d="scan'208";a="623769451"
+Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
+ by orsmga004.jf.intel.com with ESMTP; 12 Jan 2022 23:54:36 -0800
+Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
+ (envelope-from <lkp@intel.com>)
+ id 1n7uwN-0006yg-Jf; Thu, 13 Jan 2022 07:54:35 +0000
+Date: Thu, 13 Jan 2022 15:54:26 +0800
+From: kernel test robot <lkp@intel.com>
+To: Iwona Winiarska <iwona.winiarska@intel.com>,
+ linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH v5 08/13] peci: Add support for PECI device drivers
+Message-ID: <202201131534.HcDrC30f-lkp@intel.com>
+References: <20220112230247.982212-9-iwona.winiarska@intel.com>
 MIME-Version: 1.0
-References: <20220112065350.20680-1-potin.lai@quantatw.com>
-In-Reply-To: <20220112065350.20680-1-potin.lai@quantatw.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 13 Jan 2022 05:32:04 +0000
-Message-ID: <CACPK8Xfqu61phgbNRuD075ZXCRknWidBhnAa-3oVSZFa3m4ong@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.15 v2 1/1] hwmon: (pmbus) Add support for MPS
- Multi-phase mp5023
-To: Potin Lai <potin.lai@quantatw.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220112230247.982212-9-iwona.winiarska@intel.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,231 +71,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Howard Chiu <howard.chiu@quantatw.com>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
+ kbuild-all@lists.01.org, linux-aspeed@lists.ozlabs.org,
+ linux-doc@vger.kernel.org, llvm@lists.linux.dev,
+ Rob Herring <robh+dt@kernel.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 12 Jan 2022 at 06:54, Potin Lai <potin.lai@quantatw.com> wrote:
->
-> From: Howard Chiu <howard.chiu@quantatw.com>
->
-> Add support for mp5023 device from Monolithic Power Systems, Inc. (MPS)
-> vendor. This is a Hot-Swap Controller.
->
-> Link: https://lore.kernel.org/r/HKAPR04MB400349AA406694FB976D78D096709@HKAPR04MB4003.apcprd04.prod.outlook.com
-> Signed-off-by: Howard Chiu <howard.chiu@quantatw.com>
->
-> ---
-> Change since v1:
-> - update commit message
-> - add lore link for reference
+Hi Iwona,
 
-Thanks, applied to dev-.5.15.
+I love your patch! Perhaps something to improve:
 
-> ---
->  Documentation/hwmon/mp5023.rst | 84 ++++++++++++++++++++++++++++++++++
->  drivers/hwmon/pmbus/Kconfig    |  9 ++++
->  drivers/hwmon/pmbus/Makefile   |  1 +
->  drivers/hwmon/pmbus/mp5023.c   | 66 ++++++++++++++++++++++++++
->  4 files changed, 160 insertions(+)
->  create mode 100644 Documentation/hwmon/mp5023.rst
->  create mode 100644 drivers/hwmon/pmbus/mp5023.c
->
-> diff --git a/Documentation/hwmon/mp5023.rst b/Documentation/hwmon/mp5023.rst
-> new file mode 100644
-> index 000000000000..af5ab1345a91
-> --- /dev/null
-> +++ b/Documentation/hwmon/mp5023.rst
-> @@ -0,0 +1,84 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +Kernel driver mp5023
-> +====================
-> +
-> +Supported chips:
-> +
-> +  * MPS MP5023
-> +
-> +    Prefix: 'mp5023'
-> +
-> +  * Datasheet
-> +
-> +    Publicly available at the MPS website : https://www.monolithicpower.com/en/mp5023.html
-> +
-> +Author:
-> +
-> +       Howard Chiu <howard.chiu@quantatw.com>
-> +
-> +Description
-> +-----------
-> +
-> +This driver implements support for Monolithic Power Systems, Inc. (MPS)
-> +MP5023 Hot-Swap Controller.
-> +
-> +Device complaint with:
-> +
-> +- PMBus rev 1.3 interface.
-> +
-> +Device supports direct format for reading input voltage, output voltage,
-> +output current, input power and temperature.
-> +
-> +The driver exports the following attributes via the 'sysfs' files
-> +for input voltage:
-> +
-> +**in1_input**
-> +
-> +**in1_label**
-> +
-> +**in1_max**
-> +
-> +**in1_max_alarm**
-> +
-> +**in1_min**
-> +
-> +**in1_min_alarm**
-> +
-> +The driver provides the following attributes for output voltage:
-> +
-> +**in2_input**
-> +
-> +**in2_label**
-> +
-> +**in2_alarm**
-> +
-> +The driver provides the following attributes for output current:
-> +
-> +**curr1_input**
-> +
-> +**curr1_label**
-> +
-> +**curr1_alarm**
-> +
-> +**curr1_max**
-> +
-> +The driver provides the following attributes for input power:
-> +
-> +**power1_input**
-> +
-> +**power1_label**
-> +
-> +**power1_alarm**
-> +
-> +The driver provides the following attributes for temperature:
-> +
-> +**temp1_input**
-> +
-> +**temp1_max**
-> +
-> +**temp1_max_alarm**
-> +
-> +**temp1_crit**
-> +
-> +**temp1_crit_alarm**
-> diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
-> index ffb609cee3a4..b56bd8542864 100644
-> --- a/drivers/hwmon/pmbus/Kconfig
-> +++ b/drivers/hwmon/pmbus/Kconfig
-> @@ -276,6 +276,15 @@ config SENSORS_MP2975
->           This driver can also be built as a module. If so, the module will
->           be called mp2975.
->
-> +config SENSORS_MP5023
-> +       tristate "MPS MP5023"
-> +       help
-> +         If you say yes here you get hardware monitoring support for MPS
-> +         MP5023.
-> +
-> +         This driver can also be built as a module. If so, the module will
-> +         be called mp5023.
-> +
->  config SENSORS_PIM4328
->         tristate "Flex PIM4328 and compatibles"
->         help
-> diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
-> index 0ed4d596a948..61cdc24b1309 100644
-> --- a/drivers/hwmon/pmbus/Makefile
-> +++ b/drivers/hwmon/pmbus/Makefile
-> @@ -31,6 +31,7 @@ obj-$(CONFIG_SENSORS_MAX34440)        += max34440.o
->  obj-$(CONFIG_SENSORS_MAX8688)  += max8688.o
->  obj-$(CONFIG_SENSORS_MP2888)   += mp2888.o
->  obj-$(CONFIG_SENSORS_MP2975)   += mp2975.o
-> +obj-$(CONFIG_SENSORS_MP5023)   += mp5023.o
->  obj-$(CONFIG_SENSORS_PM6764TR) += pm6764tr.o
->  obj-$(CONFIG_SENSORS_PXE1610)  += pxe1610.o
->  obj-$(CONFIG_SENSORS_Q54SJ108A2)       += q54sj108a2.o
-> diff --git a/drivers/hwmon/pmbus/mp5023.c b/drivers/hwmon/pmbus/mp5023.c
-> new file mode 100644
-> index 000000000000..14d3934aa099
-> --- /dev/null
-> +++ b/drivers/hwmon/pmbus/mp5023.c
-> @@ -0,0 +1,66 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * Driver for MPS MP5023 Hot-Swap Controller
-> + */
-> +
-> +#include <linux/i2c.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include "pmbus.h"
-> +
-> +static struct pmbus_driver_info mp5023_info = {
-> +       .pages = 1,
-> +
-> +       .format[PSC_VOLTAGE_IN] = direct,
-> +       .format[PSC_VOLTAGE_OUT] = direct,
-> +       .format[PSC_CURRENT_OUT] = direct,
-> +       .format[PSC_POWER] = direct,
-> +       .format[PSC_TEMPERATURE] = direct,
-> +
-> +       .m[PSC_VOLTAGE_IN] = 32,
-> +       .b[PSC_VOLTAGE_IN] = 0,
-> +       .R[PSC_VOLTAGE_IN] = 0,
-> +       .m[PSC_VOLTAGE_OUT] = 32,
-> +       .b[PSC_VOLTAGE_OUT] = 0,
-> +       .R[PSC_VOLTAGE_OUT] = 0,
-> +       .m[PSC_CURRENT_OUT] = 16,
-> +       .b[PSC_CURRENT_OUT] = 0,
-> +       .R[PSC_CURRENT_OUT] = 0,
-> +       .m[PSC_POWER] = 1,
-> +       .b[PSC_POWER] = 0,
-> +       .R[PSC_POWER] = 0,
-> +       .m[PSC_TEMPERATURE] = 2,
-> +       .b[PSC_TEMPERATURE] = 0,
-> +       .R[PSC_TEMPERATURE] = 0,
-> +
-> +       .func[0] =
-> +               PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_PIN |
-> +               PMBUS_HAVE_TEMP | PMBUS_HAVE_IOUT |
-> +               PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP,
-> +};
-> +
-> +static int mp5023_probe(struct i2c_client *client)
-> +{
-> +       return pmbus_do_probe(client, &mp5023_info);
-> +}
-> +
-> +static const struct of_device_id __maybe_unused mp5023_of_match[] = {
-> +       { .compatible = "mps,mp5023", },
-> +       {}
-> +};
-> +
-> +MODULE_DEVICE_TABLE(of, mp5023_of_match);
-> +
-> +static struct i2c_driver mp5023_driver = {
-> +       .driver = {
-> +                  .name = "mp5023",
-> +                  .of_match_table = of_match_ptr(mp5023_of_match),
-> +       },
-> +       .probe_new = mp5023_probe,
-> +};
-> +
-> +module_i2c_driver(mp5023_driver);
-> +
-> +MODULE_AUTHOR("Howard Chiu <howard.chiu@quantatw.com>");
-> +MODULE_DESCRIPTION("PMBus driver for MPS MP5023 HSC");
-> +MODULE_LICENSE("GPL");
-> --
-> 2.17.1
->
+[auto build test WARNING on groeck-staging/hwmon-next]
+[also build test WARNING on linux/master linus/master v5.16 next-20220112]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/0day-ci/linux/commits/Iwona-Winiarska/Introduce-PECI-subsystem/20220113-071131
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/groeck/linux-staging.git hwmon-next
+config: hexagon-randconfig-r033-20220113 (https://download.01.org/0day-ci/archive/20220113/202201131534.HcDrC30f-lkp@intel.com/config)
+compiler: clang version 14.0.0 (https://github.com/llvm/llvm-project d1021978b8e7e35dcc30201ca1731d64b5a602a8)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/0c9888d465568adc8526df1407c9a75be5ce6cd4
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Iwona-Winiarska/Introduce-PECI-subsystem/20220113-071131
+        git checkout 0c9888d465568adc8526df1407c9a75be5ce6cd4
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash drivers/peci/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/peci/request.c:111:23: warning: address of array 'req->rx.buf' will always evaluate to 'true' [-Wpointer-bool-conversion]
+           if (WARN_ON(!req->rx.buf))
+                       ~~~~~~~~~^~~
+   include/asm-generic/bug.h:121:25: note: expanded from macro 'WARN_ON'
+           int __ret_warn_on = !!(condition);                              \
+                                  ^~~~~~~~~
+   1 warning generated.
+
+
+vim +111 drivers/peci/request.c
+
+   101	
+   102	static int peci_request_xfer_retry(struct peci_request *req)
+   103	{
+   104		long wait_interval = PECI_RETRY_INTERVAL_MIN;
+   105		struct peci_device *device = req->device;
+   106		struct peci_controller *controller = to_peci_controller(device->dev.parent);
+   107		unsigned long start = jiffies;
+   108		int ret;
+   109	
+   110		/* Don't try to use it for ping */
+ > 111		if (WARN_ON(!req->rx.buf))
+   112			return 0;
+   113	
+   114		do {
+   115			ret = peci_request_xfer(req);
+   116			if (ret) {
+   117				dev_dbg(&controller->dev, "xfer error: %d\n", ret);
+   118				return ret;
+   119			}
+   120	
+   121			if (peci_request_status(req) != -EAGAIN)
+   122				return 0;
+   123	
+   124			/* Set the retry bit to indicate a retry attempt */
+   125			req->tx.buf[1] |= PECI_RETRY_BIT;
+   126	
+   127			if (schedule_timeout_interruptible(wait_interval))
+   128				return -ERESTARTSYS;
+   129	
+   130			wait_interval = min_t(long, wait_interval * 2, PECI_RETRY_INTERVAL_MAX);
+   131		} while (time_before(jiffies, start + PECI_RETRY_TIMEOUT));
+   132	
+   133		dev_dbg(&controller->dev, "request timed out\n");
+   134	
+   135		return -ETIMEDOUT;
+   136	}
+   137	
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
