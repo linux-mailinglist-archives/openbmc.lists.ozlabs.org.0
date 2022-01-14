@@ -1,45 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9875948EB46
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 15:08:19 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F29F48F004
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 19:41:41 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jb36n3QVpz30jP
-	for <lists+openbmc@lfdr.de>; Sat, 15 Jan 2022 01:08:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jb9BC2Kldz30LS
+	for <lists+openbmc@lfdr.de>; Sat, 15 Jan 2022 05:41:39 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=xCXrmdGi;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Jj5RqRor;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.alibaba.com (client-ip=115.124.30.43;
- helo=out30-43.freemail.mail.aliyun.com;
- envelope-from=guoheyi@linux.alibaba.com; receiver=<UNKNOWN>)
-Received: from out30-43.freemail.mail.aliyun.com
- (out30-43.freemail.mail.aliyun.com [115.124.30.43])
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=xCXrmdGi; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=Jj5RqRor; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jb36V5xV2z2yLy
- for <openbmc@lists.ozlabs.org>; Sat, 15 Jan 2022 01:08:01 +1100 (AEDT)
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R751e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e04400; MF=guoheyi@linux.alibaba.com;
- NM=1; PH=DS; RN=4; SR=0; TI=SMTPD_---0V1oh27f_1642169273; 
-Received: from 30.39.196.58(mailfrom:guoheyi@linux.alibaba.com
- fp:SMTPD_---0V1oh27f_1642169273) by smtp.aliyun-inc.com(127.0.0.1);
- Fri, 14 Jan 2022 22:07:54 +0800
-Message-ID: <cfa9fa4f-09cd-1ca4-ce06-30bb9515c31e@linux.alibaba.com>
-Date: Fri, 14 Jan 2022 22:07:53 +0800
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jb99j2HMrz307j
+ for <openbmc@lists.ozlabs.org>; Sat, 15 Jan 2022 05:41:12 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 1CD395C00CD;
+ Fri, 14 Jan 2022 13:41:07 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute3.internal (MEProxy); Fri, 14 Jan 2022 13:41:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=gBQDNg9rOvUBGMQsVqIo7rQNgOE
+ chDoomnp64Bs8Tn8=; b=xCXrmdGiJrG0+lVG6zPklCi2/yDB1xvhN/3XLsh6YLx
+ +T+rhBwTB57GqnZT6ha6XwzjZOtf97mIDrwGgsleV0SC2kuvQlehoRcokgM5LKqB
+ plJKv5ydtVQloBfVXNUCTVl9Wd9bcUZqrQj6e79Xyi6SwYs9ph4GWxBnx4Tgezqe
+ DTHseTbyzV6cVy2vsyrI056skBO6LPaBfVqYDKGYxDGFHDQaNWk+J44MFc9e0tq0
+ bh0j6qu7KnDUYU+qIQFoLn7t5nHmLWyTDTguj/ADOKmhCuHqy9LntXgaGqMtG7qD
+ gx/QoIxYdHRS3B9tpiOB7gba3Oj1i07LdmLiEvXYH2Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=gBQDNg
+ 9rOvUBGMQsVqIo7rQNgOEchDoomnp64Bs8Tn8=; b=Jj5RqRorYRyee7I4Po4uuK
+ hBrhvclSNUByqhIhcxRGqFWaqF2xQXiqsaBgv8xW/3mCRExfyqYZwg6LedirlSHL
+ Q9nrhcmXfjMSVZV3ZbFjUhw9lLxBZ4ZkU9p3RSReQz3VBsFzqG/0Pd/w4hUh77oc
+ 0QBv9LkFtySSh1fc3OyHPbEQwrj3/FgCGMzYIP9N17gb5IaEKV3yUvmQb7cBJNCM
+ mlYh0PQYnVQbS70xRVZ+haTVDZ2+1ML1FHJhukwR28lLFMjgE1qqqpJUbOhYICpB
+ zq7XXgH4BqBwKAJJ/92I+egqf1qnt7Y4pQh1PMjUHZDkIk19d+BSqGXfB8M2KeEQ
+ ==
+X-ME-Sender: <xms:wsPhYQ6e-oGN_kfql9HqyM3_VxjvUG60b5Rrc2XIEN829eNdCCcYww>
+ <xme:wsPhYR78k6LSlhP15nuXpWSuSFWC3Lcdc0iTdPVBKH0fWD-wRj62DSPiU3mkAp6lW
+ LsASKXOpgUGdq79xNM>
+X-ME-Received: <xmr:wsPhYfekjZT8jCeDwDrfqcfpdOU7kwMC_IaoQs5Y4edw7aqrBieTiHyfAXHOwbSn7xoxSpyNuikW0xF4g4HGZT6Lxw4jDump>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrtdehgdduudeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+ geefgfdthefhkedtleffveekgfeuffehtdeinecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:wsPhYVKTHA3ljak5c3700eeUhpQPPsQ426JV35UV_1SLBdBHymhzKQ>
+ <xmx:wsPhYUIqYmkyCdeDP_MZehfk1jpAXi4OVdunalCTkjesSmdt8LFFSA>
+ <xmx:wsPhYWzmgcI4NMJ7PLmuG67ddvK8ZLLJ7nfxpyoOHW5U5QASwgmdaQ>
+ <xmx:w8PhYezJt4jWrGBjXTws-c5BO-gAnrtgtnNAXvJDouit_CMrSqsq-g>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Jan 2022 13:41:06 -0500 (EST)
+Date: Fri, 14 Jan 2022 12:41:05 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Mike Jones <proclivis@gmail.com>
+Subject: Re: Sanitycheck problem
+Message-ID: <YeHDwS7/D9JY4XXw@heinlein>
+References: <BEA6AAA9-904A-40D7-B114-A9229B38F0DE@gmail.com>
+ <YeCqx/CTU7pRDVyj@heinlein>
+ <47171FDF-05E4-4501-A499-137A09D2FCCB@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: netipmid consumes much CPU when obmc-console socket is shutdown
-Content-Language: en-US
-To: Ed Tanous <ed@tanous.net>
-References: <9ab8b62c-dd62-7dee-ba15-5785035bf343@linux.alibaba.com>
- <CACWQX80N9iT6j_MaZBdQbKj0DU_C4VYz-kYktOa0SK56Lm03kA@mail.gmail.com>
-From: Heyi Guo <guoheyi@linux.alibaba.com>
-In-Reply-To: <CACWQX80N9iT6j_MaZBdQbKj0DU_C4VYz-kYktOa0SK56Lm03kA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="e1GwPkg7l2Oycou2"
+Content-Disposition: inline
+In-Reply-To: <47171FDF-05E4-4501-A499-137A09D2FCCB@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,72 +98,87 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Vernon Mauery <vernon.mauery@linux.intel.com>,
- openbmc <openbmc@lists.ozlabs.org>, Tom Joseph <rushtotom@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Ed,
 
-Thanks for your advice. I'll make a try later. But I'm still curious why 
-boost read_some() function returns with 0 data byte and none error code, 
-which seems to violate the reference obviously.
+--e1GwPkg7l2Oycou2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
+On Thu, Jan 13, 2022 at 05:24:00PM -0700, Mike Jones wrote:
+> This is the error:
+>=20
+> root@ubuntu:~/share/design/code/openbmc/build/ast2600-default/tmp/work/ar=
+mv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e891=
+9-r0/git# <mailto:root@ubuntu:~/share/design/code/openbmc/build/ast2600-def=
+ault/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitA=
+UTOINC+26601e8919-r0/git#> meson build
+> The Meson build system
+> Version: 0.58.1
+> Source dir: /home/openbmc/share/design/code/openbmc/build/ast2600-default=
+/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOI=
+NC+26601e8919-r0/git
+> Build dir: /home/openbmc/share/design/code/openbmc/build/ast2600-default/=
+tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOIN=
+C+26601e8919-r0/git/build
+> Build type: native build
+> Project name: dbus-sensors
+> Project version: 0.1
+> =20
+> meson.build:1:0: ERROR: Could not invoke sanity test executable: [Errno 8=
+] Exec format error: '/home/openbmc/share/design/code/openbmc/build/ast2600=
+-default/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+=
+gitAUTOINC+26601e8919-r0/git/build/meson-private/sanitycheckcpp.exe'.
+> =20
+> A full log can be found at /home/openbmc/share/design/code/openbmc/build/=
+ast2600-default/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-senso=
+rs/0.1+gitAUTOINC+26601e8919-rroot@ubuntu:~root@ubrootroot@ubuntu:~/share/d=
+esign/code/openbmc/build/ast2600-default/tmp/work/armv7ahf-vfpv4d16-openbmc=
+-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e8919-r0/git#
+>=20
+> The path to sanitycheckcpp.exe is there, but fails, as if it must run on =
+a different architecture.
 
-Heyi
+I'm not sure what is going on and I don't really use devtool very often.  T=
+he
+"Build type: native build" is where things are going wrong though.  You've =
+tried
+to get bitbake to set you up a cross-compile environment (targeting ARM) and
+yet meson thinks you're building a native (targeting x86 likely).  Usually
+bitbake has some special environment settings or a cross-env file for Meson=
+, so
+however you're invoking meson might be missing that.
 
-在 2022/1/6 下午12:45, Ed Tanous 写道:
-> On Tue, Jan 4, 2022 at 6:31 PM Heyi Guo <guoheyi@linux.alibaba.com> wrote:
->> Hi all,
->>
->> We found netipmid will consumes much CPU when SOL is activated but
->> obmc-console socket is shutdown by some reason (can simply shutdown
->> obmc-console by systemctl stop ....).
->>
->> After obmc-console socket is closed, the async_wait() in
->> startHostConsole() is always triggered, and consoleInputHandler() will
->> read empty data (readSize == 0 and readDataLen == 0), but all the ec
->> condition check will NOT hit!
->>
->>   From boost reference, it is said the function read_some() will:
->>
->> The function call will block until one or more bytes of data has been
->> read successfully, or until an error occurs.
->>
->> Is it a bug of boost? Or is there anything wrong in ipmi-net? And how
->> can we make netipmid more robust on obmc-console socket shutdown?
->>
-> With not much knowledge of IPMI, but coming from a lot of knowledge of
-> boost and asio, that usage looks odd.  Instead of the
-> consoleSocket.async_wait done here:
-> https://github.com/openbmc/phosphor-net-ipmid/blob/12d199b27764496bfff8a45661239b1e509c336f/sol/sol_manager.cpp#L92
-> Which then calls into a blocking async_read on the socket, I would've
-> expected a consoleSocket.async_read_some with a given buffer to reduce
-> the number of system calls, and to read out partial data as it's
-> available.  Whether or not it would have different behavior in this
-> case, I can't say, but doing things the more expected way, and letting
-> asio handle it in the expected way in the past has netted us good
-> results in other applications.
->
-> Another interesting thing is the use of std::deque for the console
-> buffer type here.
-> https://github.com/openbmc/phosphor-net-ipmid/blob/d4a4bed525f79c39705fa526b20ab663bb2c2069/sol/console_buffer.hpp#L12
->
-> I would've expected to see one of the streaming buffer types like
-> flat_buffer (https://www.boost.org/doc/libs/develop/libs/beast/doc/html/beast/ref/boost__beast__flat_buffer.html)
-> or multi-buffer
-> (https://www.boost.org/doc/libs/1_78_0/libs/beast/doc/html/beast/ref/boost__beast__multi_buffer.html),
-> which are designed for exactly what's being done here, streaming data
-> in and out of a pipe of variable lengths, and can be streamed into and
-> out of directly without having the extra copy.  Additionally,
-> deque<uint8_t> is going to have a lot of memory overhead compared to a
-> flat buffer type.
->
-> Not sure if any of the above is helpful to you or not, but it might
-> give you some things to try.
->
->> Thanks,
->>
->> Heyi
->>
+Is it actually necessary to call meson anyhow?  Hasn't the 'configure' step
+already ran when devtool sets up the environment?  `meson build` says "set =
+up
+a new meson directory named build".  Did you intend something like
+`ninja -C build`?
+
+--=20
+Patrick Williams
+
+--e1GwPkg7l2Oycou2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmHhw78ACgkQqwNHzC0A
+wRkbQg/8Dvl+0C2qyPtapy3gdn3MtNxqC2RR9Ca9s2lM+l22siMIlAcC4rNrGQ81
+itIa2TZKjb8/+bvTfV2lF7cJVL98eWwUYrEExEZ+ccfcDXFNFxPxKlR0dWMZ/QnY
+ktQiAQj1R3Nuuau3XMYZvQLJeLx44HMP44/Q1MBNDBck4kvi8+KFUHfBoRsfY+kq
+sECUSnapcMBusPb42KnqalbO0ya4gzRVJluquaNW8qsrSHRZa1j5HXbvGMWwuAHK
+GcyyDOS3IDWCF7W+co2TUAk2dOlYZ/jei9AOuEmmXrsW1poRgKo/eGCFT8YKmIJM
+IwEqmYAqeC+PkblxhyDQMJHNxhHO28J1iVZAId3uQTngjbPE0ObmGQIjcEpLRGY1
+2HrWoQPy0Tc2Ne9ac1eMzMLUaC4otBrF4/ORVNznKMBR/s69iONUY2RZUPlcwvI2
+KVUO2J+ZzoHe49AZCd4Z3pPRzdnjIa/eZhphTqOBk+frAtmjN5OO/8WID2VraIdj
+HOlWlhdVIx12lQj8sJvt2UvYz3Ti2x0HLod5tvu1zGaNZf5kHWWDs4mtVGxjmCgu
+zFYZ1AlnNpDbDxSFq4Kz0delIcGdgjYM+5NJ3H2keGVjwIfwMZsuaj3G8cfxisA+
+5uwE3tZZ3CHRrAyhkJDLy9op+yzeMIECK8PMJ+L1wk2X5Fc5K+g=
+=RPir
+-----END PGP SIGNATURE-----
+
+--e1GwPkg7l2Oycou2--
