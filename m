@@ -1,71 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCA6F49002F
-	for <lists+openbmc@lfdr.de>; Mon, 17 Jan 2022 03:25:23 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FE014901F2
+	for <lists+openbmc@lfdr.de>; Mon, 17 Jan 2022 07:27:26 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JcbNK5PM9z30L1
-	for <lists+openbmc@lfdr.de>; Mon, 17 Jan 2022 13:25:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jchlb6XJBz2ynQ
+	for <lists+openbmc@lfdr.de>; Mon, 17 Jan 2022 17:27:23 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=TvemMbt1;
+	dkim=pass (1024-bit key; unprotected) header.d=wistron.com header.i=@wistron.com header.a=rsa-sha256 header.s=security header.b=H37+A631;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::82f;
- helo=mail-qt1-x82f.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=wistron.com (client-ip=103.200.3.18; helo=segapp02.wistron.com;
+ envelope-from=lulu_su@wistron.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=TvemMbt1; dkim-atps=neutral
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com
- [IPv6:2607:f8b0:4864:20::82f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=wistron.com header.i=@wistron.com header.a=rsa-sha256
+ header.s=security header.b=H37+A631; dkim-atps=neutral
+X-Greylist: delayed 396 seconds by postgrey-1.36 at boromir;
+ Fri, 14 Jan 2022 14:35:42 AEDT
+Received: from segapp02.wistron.com (segapp01.wistron.com [103.200.3.18])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JcbMr2W36z2yLP;
- Mon, 17 Jan 2022 13:24:54 +1100 (AEDT)
-Received: by mail-qt1-x82f.google.com with SMTP id c19so17880596qtx.3;
- Sun, 16 Jan 2022 18:24:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=SHEqK5JLEeu9SvzW1gebcOdXEXOC523/xTa7jp+gqf8=;
- b=TvemMbt1elmxONhCJ9bH+fFSahL1xeJY28RNaE6HHzLKPlbBCnEDGSMQjNtjjvXNgJ
- iYikFbnch4vVl6JJ7XKg/m4yQf7LuRmKV+zvXMOmcSE/h6x0/D5PbsFizFJCeC6G88Su
- Ui8z2hRE1LW2AZsGCVvRIWb2oYoHKh+tUeC3Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=SHEqK5JLEeu9SvzW1gebcOdXEXOC523/xTa7jp+gqf8=;
- b=xBNtL7DOgQDESdxI/GKPBja8Dd9+YQit3Wpji9WxIsPYQuDcMyRrkGEs5mgiww+DiS
- aZp/kZaRhJ1FL5Zs8ZX84jaYVkdylUKy/PWIJicYuRzimBMUl5g2m/Ay3Ggvf7fQ7xP4
- Jd5ToLbqIqPBxiBXkLTU7SYEKIyVtKkssgDP8O888Dl6BOZXSuxxCr8CfbdD5Q9xxA2c
- 9Dsxr8DgyTcq0WwYJR9+WR89XzMsBHDRJ2IMxVfUc4eOMpLDyxY6E3N/DXtolhYH1EsY
- DzK9max3V0q9tvpaeLO8IrQDa+KUUgf0u+DWX3aWwvOuR8u2lypgVo09J5Q18nFRrR52
- XazQ==
-X-Gm-Message-State: AOAM531hT6yI2hBLl3Ge3gPR608RwvYiN8l/G9OWsJWveNNGYl1KOrbW
- V5BkK4R/qNLH3vYT9uVr6dX3OJz36+Y4u4MEQZo=
-X-Google-Smtp-Source: ABdhPJz8JBgHOfrwZOtiSMxcwxbBOgBqdYtj7KzYp4bLd6Rg5DcQyjzHbwHoY68mX+g481LUhrQs/hy8EQVUxZt1ibw=
-X-Received: by 2002:a05:622a:1a89:: with SMTP id
- s9mr10025191qtc.625.1642386290551; 
- Sun, 16 Jan 2022 18:24:50 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JZn4t5gGWz2xBk
+ for <openbmc@lists.ozlabs.org>; Fri, 14 Jan 2022 14:35:41 +1100 (AEDT)
+Received: from EXCHAPP04.whq.wistron (unknown [10.37.38.27])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by segapp02.wistron.com (MTA) with ESMTPS id 4JZmvz08dmzMpvk5;
+ Fri, 14 Jan 2022 11:27:59 +0800 (CST)
+x-scoring-category: 1 100
+Received: from EXCHAPP04.whq.wistron (10.37.38.27) by EXCHAPP04.whq.wistron
+ (10.37.38.27) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.17; Fri, 14 Jan
+ 2022 11:27:56 +0800
+Received: from gitserver.wistron.com (10.37.38.240) by EXCHAPP04.whq.wistron
+ (10.37.38.27) with Microsoft SMTP Server id 15.1.2375.17 via Frontend
+ Transport; Fri, 14 Jan 2022 11:27:56 +0800
+From: Lulu Su <Lulu_Su@wistron.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: [PATCH linux dev-5.4 v1] hwmon: (pmbus) Add a PMBUS_NO_CAPABILITY
+ platform data flag
+Date: Fri, 14 Jan 2022 11:27:08 +0800
+Message-ID: <20220114032708.2532-1-Lulu_Su@wistron.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-References: <20211224012738.1551-1-jammy_huang@aspeedtech.com>
- <20211224012738.1551-2-jammy_huang@aspeedtech.com>
- <703ff71e-c76a-9df1-c644-04efed0199ca@xs4all.nl>
- <609cfe9e-2fd8-b31a-9d71-b83d61693f84@aspeedtech.com>
-In-Reply-To: <609cfe9e-2fd8-b31a-9d71-b83d61693f84@aspeedtech.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 17 Jan 2022 02:24:38 +0000
-Message-ID: <CACPK8XeJQHLWfVbBjArxV_QMDDnRXfccOeXdsn6aBEG7gd8yvw@mail.gmail.com>
-Subject: Re: [PATCH v8 1/4] media: v4l: Add definition for the Aspeed JPEG
- format
-To: Jammy Huang <jammy_huang@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-TM-SNTS-SMTP: 79961A6ED3178AD3CC92295669A34E92B44541B6AAE2433613B9058FA075B21A2000:8
+x-msw-jemd-scanning-scores: mailshell=1
+X-OriginalId: qf20EBRxpi024900
+x-msw-jemd-newsletter: false
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wistron.com; s=security;
+ t=1642130940; bh=8EcKTubOVgzJc/eKnwvl1uED46J6h6mqXXSlTKLEem4=;
+ h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type;
+ b=H37+A631V5FKqQsUfIjr8tJ8j2JNxLE9cwNxrrrTL+B3JfruoGgR2HjlLqAe5O50c
+ jP/cKHS68XDWlt11DpyW8f86ybvM4q8GIncRYKM294bHVkT2iA45aJWZ6qVJVa3eSR
+ kULO6xrdlraFUglqoQFOYz3va0C0F4n2leqd20nw=
+X-Mailman-Approved-At: Mon, 17 Jan 2022 17:27:04 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,177 +69,72 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "andrew@aj.id.au" <andrew@aj.id.au>,
- "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "eajames@linux.ibm.com" <eajames@linux.ibm.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "sakari.ailus@linux.intel.com" <sakari.ailus@linux.intel.com>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>,
- "mchehab@kernel.org" <mchehab@kernel.org>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>
+Cc: Eddie James <eajames@linux.ibm.com>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 17 Jan 2022 at 02:00, Jammy Huang <jammy_huang@aspeedtech.com> wrot=
-e:
->
-> Hi Hans,
->
-> On 2022/1/14 =E4=B8=8B=E5=8D=88 04:11, Hans Verkuil wrote:
-> > On 24/12/2021 02:27, Jammy Huang wrote:
-> >> This introduces support for the Aspeed JPEG format, where the new fram=
-e
-> >> can refer to previous frame to reduce the amount of compressed data. T=
-he
-> >> concept is similar to I/P frame of video compression. It will compare =
-the
-> >> new frame with previous one to decide which macroblock's data is
-> >> changed, and only the changed macroblocks will be compressed.
-> >>
-> >> This Aspeed JPEG format is used by the video engine on Aspeed platform=
-s,
-> >> which is generally adapted for remote KVM.
-> >>
-> >> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-> >> ---
-> >> v8:
-> >>    - Add decoder information for aspeed-jpeg
-> >> v7:
-> >>    - Add more information for aspeed-jpeg
-> >> v6:
-> >>    - Update description for new format, aspeed-jpeg, in Documentation.
-> >> v5:
-> >>    - no update
-> >> v4:
-> >>    - new
-> >> ---
-> >>   .../media/uapi/v4l/pixfmt-reserved.rst          | 17 +++++++++++++++=
-++
-> >>   drivers/media/v4l2-core/v4l2-ioctl.c            |  1 +
-> >>   include/uapi/linux/videodev2.h                  |  1 +
-> >>   3 files changed, 19 insertions(+)
-> >>
-> >> diff --git a/Documentation/media/uapi/v4l/pixfmt-reserved.rst b/Docume=
-ntation/media/uapi/v4l/pixfmt-reserved.rst
-> > This is the wrong file! It should be:
-> >
-> > Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
->
-> Thanks, I just used git format-patch to generate the cover-letter and
-> didn't notice this.
->
-> It looks like the file, pixfmt-reserved.rst, has different path in
-> different Linux kernel,
->
-> * 5.4:           Documentation/media/uapi/v4l/pixfmt-reserved.rst
->
-> * 5.10/5.15: Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
->
-> 5.4 is the one I based to submit the patches.
->
-> Could you suggest the kernel that I should based to submit these patches?=
-?
+From: Eddie James <eajames@linux.ibm.com>
 
-You should always submit based on the latest release.
+Some PMBus chips don't respond with valid data when reading the
+CAPABILITY register. Add a flag that device drivers can set so
+that the PMBus core driver doesn't use CAPABILITY to determine it's
+behavior.
 
-There are sometimes exceptions where you will base your patches on
-something even newer, but generally you should grab the latest.
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Link: https://lore.kernel.org/r/20201222152640.27749-2-eajames@linux.ibm.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+(cherry picked from commit e5befc024cb4515d815662ed8746712cc5366bfc)
+---
+ drivers/hwmon/pmbus/pmbus_core.c | 8 +++++---
+ include/linux/pmbus.h            | 9 +++++++++
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
-Be sure to re-test on the latest kernel before submitting.
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index f7fc388..0f381558 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -2156,9 +2156,11 @@ static int pmbus_init_common(struct i2c_client *client, struct pmbus_data *data,
+ 	}
+ 
+ 	/* Enable PEC if the controller supports it */
+-	ret = i2c_smbus_read_byte_data(client, PMBUS_CAPABILITY);
+-	if (ret >= 0 && (ret & PB_CAPABILITY_ERROR_CHECK))
+-		client->flags |= I2C_CLIENT_PEC;
++	if (!(data->flags & PMBUS_NO_CAPABILITY)) {
++		ret = i2c_smbus_read_byte_data(client, PMBUS_CAPABILITY);
++		if (ret >= 0 && (ret & PB_CAPABILITY_ERROR_CHECK))
++			client->flags |= I2C_CLIENT_PEC;
++	}
+ 
+ 	if (data->info->pages)
+ 		pmbus_clear_faults(client);
+diff --git a/include/linux/pmbus.h b/include/linux/pmbus.h
+index 08468fc..74e1be0 100644
+--- a/include/linux/pmbus.h
++++ b/include/linux/pmbus.h
+@@ -25,6 +25,15 @@
+  */
+ #define PMBUS_SKIP_STATUS_CHECK	(1 << 0)
+ 
++/*
++ * PMBUS_NO_CAPABILITY
++ *
++ * Some PMBus chips don't respond with valid data when reading the CAPABILITY
++ * register. For such chips, this flag should be set so that the PMBus core
++ * driver doesn't use CAPABILITY to determine it's behavior.
++ */
++#define PMBUS_NO_CAPABILITY			BIT(2)
++
+ struct pmbus_platform_data {
+ 	u32 flags;		/* Device specific flags */
+ 
+-- 
+2.7.4
 
-Cheers,
 
-Joel
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+This email contains confidential or legally privileged information and is for the sole use of its intended recipient. 
+Any unauthorized review, use, copying or distribution of this email or the content of this email is strictly prohibited.
+If you are not the intended recipient, you may reply to the sender and should delete this e-mail immediately.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
->
-> I will need to change the number of V4L2_CID_USER_ASPEED_BASE per differe=
-nt
->
-> linux kernel as well.
->
-> >
-> > Regards,
-> >
-> >       Hans
-> >
-> >> index b2cd155e691b..1d0dc8d86ed7 100644
-> >> --- a/Documentation/media/uapi/v4l/pixfmt-reserved.rst
-> >> +++ b/Documentation/media/uapi/v4l/pixfmt-reserved.rst
-> >> @@ -264,6 +264,23 @@ please make a proposal on the linux-media mailing=
- list.
-> >>      of tiles, resulting in 32-aligned resolutions for the luminance p=
-lane
-> >>      and 16-aligned resolutions for the chrominance plane (with 2x2
-> >>      subsampling).
-> >> +    * .. _V4L2-PIX-FMT-AJPG:
-> >> +
-> >> +      - ``V4L2_PIX_FMT_AJPG``
-> >> +      - 'AJPG'
-> >> +      - ASPEED JPEG format used by the aspeed-video driver on Aspeed =
-platforms,
-> >> +        which is generally adapted for remote KVM.
-> >> +        On each frame compression, I will compare the new frame with =
-previous
-> >> +        one to decide which macroblock's data is changed, and only th=
-e changed
-> >> +        macroblocks will be compressed.
-> >> +
-> >> +        The implementation is based on AST2600 A3 datasheet, revision=
- 0.9, which
-> >> +        is not publicly available. Or you can reference Video stream =
-data format
-> >> +        =E2=80=93 ASPEED mode compression of SDK_User_Guide which ava=
-ilable on
-> >> +        AspeedTech-BMC/openbmc/releases.
-> >> +
-> >> +        Decoder's implementation can be found here,
-> >> +        `https://github.com/AspeedTech-BMC/aspeed_codec/ <https://git=
-hub.com/AspeedTech-BMC/aspeed_codec/>`__
-> >>
-> >>   .. tabularcolumns:: |p{6.6cm}|p{2.2cm}|p{8.7cm}|
-> >>
-> >> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2=
--core/v4l2-ioctl.c
-> >> index 24db33f803c0..00dde01d2f97 100644
-> >> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
-> >> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
-> >> @@ -1378,6 +1378,7 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc=
- *fmt)
-> >>              case V4L2_PIX_FMT_S5C_UYVY_JPG: descr =3D "S5C73MX interl=
-eaved UYVY/JPEG"; break;
-> >>              case V4L2_PIX_FMT_MT21C:        descr =3D "Mediatek Compr=
-essed Format"; break;
-> >>              case V4L2_PIX_FMT_SUNXI_TILED_NV12: descr =3D "Sunxi Tile=
-d NV12 Format"; break;
-> >> +            case V4L2_PIX_FMT_AJPG:         descr =3D "Aspeed JPEG"; =
-break;
-> >>              default:
-> >>                      if (fmt->description[0])
-> >>                              return;
-> >> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/video=
-dev2.h
-> >> index 3210b3c82a4a..994eb6155ea9 100644
-> >> --- a/include/uapi/linux/videodev2.h
-> >> +++ b/include/uapi/linux/videodev2.h
-> >> @@ -726,6 +726,7 @@ struct v4l2_pix_format {
-> >>   #define V4L2_PIX_FMT_INZI     v4l2_fourcc('I', 'N', 'Z', 'I') /* Int=
-el Planar Greyscale 10-bit and Depth 16-bit */
-> >>   #define V4L2_PIX_FMT_SUNXI_TILED_NV12 v4l2_fourcc('S', 'T', '1', '2'=
-) /* Sunxi Tiled NV12 Format */
-> >>   #define V4L2_PIX_FMT_CNF4     v4l2_fourcc('C', 'N', 'F', '4') /* Int=
-el 4-bit packed depth confidence information */
-> >> +#define V4L2_PIX_FMT_AJPG     v4l2_fourcc('A', 'J', 'P', 'G') /* Aspe=
-ed JPEG */
-> >>
-> >>   /* 10bit raw bayer packed, 32 bytes for every 25 pixels, last LSB 6 =
-bits unused */
-> >>   #define V4L2_PIX_FMT_IPU3_SBGGR10  v4l2_fourcc('i', 'p', '3', 'b') /=
-* IPU3 packed 10-bit BGGR bayer */
->
-> --
-> Best Regards
-> Jammy
->
