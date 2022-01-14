@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F29F48F004
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 19:41:41 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C35F48F005
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 19:42:47 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jb9BC2Kldz30LS
-	for <lists+openbmc@lfdr.de>; Sat, 15 Jan 2022 05:41:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jb9CT3V6cz30NC
+	for <lists+openbmc@lfdr.de>; Sat, 15 Jan 2022 05:42:45 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=xCXrmdGi;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Jj5RqRor;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=rON5vdDG;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=UeVxqpxf;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,74 +19,73 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=xCXrmdGi; 
+ header.s=fm3 header.b=rON5vdDG; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=Jj5RqRor; 
+ header.a=rsa-sha256 header.s=fm1 header.b=UeVxqpxf; 
  dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jb99j2HMrz307j
- for <openbmc@lists.ozlabs.org>; Sat, 15 Jan 2022 05:41:12 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 1CD395C00CD;
- Fri, 14 Jan 2022 13:41:07 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Fri, 14 Jan 2022 13:41:07 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jb9C522Sxz2xDD
+ for <openbmc@lists.ozlabs.org>; Sat, 15 Jan 2022 05:42:25 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 5FF7A5C0108;
+ Fri, 14 Jan 2022 13:42:23 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Fri, 14 Jan 2022 13:42:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=gBQDNg9rOvUBGMQsVqIo7rQNgOE
- chDoomnp64Bs8Tn8=; b=xCXrmdGiJrG0+lVG6zPklCi2/yDB1xvhN/3XLsh6YLx
- +T+rhBwTB57GqnZT6ha6XwzjZOtf97mIDrwGgsleV0SC2kuvQlehoRcokgM5LKqB
- plJKv5ydtVQloBfVXNUCTVl9Wd9bcUZqrQj6e79Xyi6SwYs9ph4GWxBnx4Tgezqe
- DTHseTbyzV6cVy2vsyrI056skBO6LPaBfVqYDKGYxDGFHDQaNWk+J44MFc9e0tq0
- bh0j6qu7KnDUYU+qIQFoLn7t5nHmLWyTDTguj/ADOKmhCuHqy9LntXgaGqMtG7qD
- gx/QoIxYdHRS3B9tpiOB7gba3Oj1i07LdmLiEvXYH2Q==
+ :content-type:in-reply-to; s=fm3; bh=EN7k2gEbcOjT9x0EAuUZQzGLyDB
+ GdbMrKkpgRIk1/RM=; b=rON5vdDGu/o9xquZ9anegZ1TkSMaq/KxSKiauyc1L3v
+ CglyALAekTpW1PaPgiikybQ+BQ88gmH/sR77KtFUN7iQ9cDhK9tFKei1uiI0OBho
+ 3ltnhGOlY/XRjAuL9c6eZL4Lb9UnWkxoCT41hTkuBPWoQFoZc9KFs09o7YezJU1+
+ LrT4Ht9r1tqNejdKWWsFvYkc0rc5DPXQRSXsgXgQAq8CdqIRedXEK/U3G60x4GpE
+ K+fwM5s21bxQBI/naj/PvzZHhgkx3/edfw+IydhGM9WBudznu1F9zg8Omg1XJP3c
+ kgNrVw9PGIsG3yEKzxfJUfvOSfbAQFt3idSVEwVAcyg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=gBQDNg
- 9rOvUBGMQsVqIo7rQNgOEchDoomnp64Bs8Tn8=; b=Jj5RqRorYRyee7I4Po4uuK
- hBrhvclSNUByqhIhcxRGqFWaqF2xQXiqsaBgv8xW/3mCRExfyqYZwg6LedirlSHL
- Q9nrhcmXfjMSVZV3ZbFjUhw9lLxBZ4ZkU9p3RSReQz3VBsFzqG/0Pd/w4hUh77oc
- 0QBv9LkFtySSh1fc3OyHPbEQwrj3/FgCGMzYIP9N17gb5IaEKV3yUvmQb7cBJNCM
- mlYh0PQYnVQbS70xRVZ+haTVDZ2+1ML1FHJhukwR28lLFMjgE1qqqpJUbOhYICpB
- zq7XXgH4BqBwKAJJ/92I+egqf1qnt7Y4pQh1PMjUHZDkIk19d+BSqGXfB8M2KeEQ
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=EN7k2g
+ EbcOjT9x0EAuUZQzGLyDBGdbMrKkpgRIk1/RM=; b=UeVxqpxfvFTVMaCMa2Qc1c
+ d6AtLGUpyZn0CSzV4Xx8/pcMCZe1bukkPBAO6W9uiACdaq7NL4pINgTL/4+kHRaW
+ sl3o5LcVO+vx2S4TKXRl9ogOIl3zL9xe1fNrL1XdbizjUBBF20KTEXVkAGL2qRj8
+ 7/alwKjhQtOVInDnNTnI6kXZoxbKZRLFrTXKd+Y3VmydkWYSGv0VqjD+QgsZ1hJN
+ gMPcrT9W0T1082QxyWDE22Fwr05B86agWi9BlLnAWpK5CwxC/5jgAx7EIt5rcpEq
+ FXiZ9l8B+7eb6QHLYirPjf26npsQxhrf7st5dia2+pF2NNpnOltKRGyFsawy+QnQ
  ==
-X-ME-Sender: <xms:wsPhYQ6e-oGN_kfql9HqyM3_VxjvUG60b5Rrc2XIEN829eNdCCcYww>
- <xme:wsPhYR78k6LSlhP15nuXpWSuSFWC3Lcdc0iTdPVBKH0fWD-wRj62DSPiU3mkAp6lW
- LsASKXOpgUGdq79xNM>
-X-ME-Received: <xmr:wsPhYfekjZT8jCeDwDrfqcfpdOU7kwMC_IaoQs5Y4edw7aqrBieTiHyfAXHOwbSn7xoxSpyNuikW0xF4g4HGZT6Lxw4jDump>
+X-ME-Sender: <xms:DsThYcYJ_y-8ZZ2crU4bEzBudwONR6hhXNIAtuEmob8skDSJoIePRA>
+ <xme:DsThYXYp3ZDaESxDI4aw0tuw5df-C3vTfRI3AbV_7XRe1bMhd_nYZGsi9UlkjkXW6
+ ci5d06grYGEaoDEsJM>
+X-ME-Received: <xmr:DsThYW8Dk-X6emrsUCCp6ZyIps3t7PsWEZUbGBKnpIIgx7baiz3CcsNC0koq6eewR1-ZHBjYtPCWNvPrZM7o_h2tsV0J-vKs>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrtdehgdduudeiucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
  vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
- geefgfdthefhkedtleffveekgfeuffehtdeinecuvehluhhsthgvrhfuihiivgeptdenuc
- frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:wsPhYVKTHA3ljak5c3700eeUhpQPPsQ426JV35UV_1SLBdBHymhzKQ>
- <xmx:wsPhYUIqYmkyCdeDP_MZehfk1jpAXi4OVdunalCTkjesSmdt8LFFSA>
- <xmx:wsPhYWzmgcI4NMJ7PLmuG67ddvK8ZLLJ7nfxpyoOHW5U5QASwgmdaQ>
- <xmx:w8PhYezJt4jWrGBjXTws-c5BO-gAnrtgtnNAXvJDouit_CMrSqsq-g>
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeefffeuudeuheduhfektdfgfedv
+ feekffdtleeivdffieeuudffgfdtveffveehnecuffhomhgrihhnpegumhhtfhdrohhrgh
+ dpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
+ rghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:DsThYWqc5YVeh1tm2nSBP046WZyBTdzKJEaRloegTYn2FIvtete5Jg>
+ <xmx:DsThYXqZRqfZvzZChn99jot1ytouFarKuIcc_R0lBlSsMesPQVZdPw>
+ <xmx:DsThYUSRUXDQGHxz_7xKTsvjoMxeifUCm3y9eWBbywDK3-20FT6CMQ>
+ <xmx:D8ThYWR_bX-cFoQ1BVclYm6ufS6vc0QzgniIDNDgjdrovZ_Mq6h3BQ>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Jan 2022 13:41:06 -0500 (EST)
-Date: Fri, 14 Jan 2022 12:41:05 -0600
+ 14 Jan 2022 13:42:22 -0500 (EST)
+Date: Fri, 14 Jan 2022 12:42:20 -0600
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Mike Jones <proclivis@gmail.com>
-Subject: Re: Sanitycheck problem
-Message-ID: <YeHDwS7/D9JY4XXw@heinlein>
-References: <BEA6AAA9-904A-40D7-B114-A9229B38F0DE@gmail.com>
- <YeCqx/CTU7pRDVyj@heinlein>
- <47171FDF-05E4-4501-A499-137A09D2FCCB@gmail.com>
+To: "Udupa.Ashwini ISV" <udupa.ashwini@inventec.com>
+Subject: Re: Redfish collection capabilities
+Message-ID: <YeHEDNtVqR9Gl8M5@heinlein>
+References: <SG2PR02MB27962E46AE874F41055B5F3785539@SG2PR02MB2796.apcprd02.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="e1GwPkg7l2Oycou2"
+ protocol="application/pgp-signature"; boundary="nGEDTjOIRhC3nq2w"
 Content-Disposition: inline
-In-Reply-To: <47171FDF-05E4-4501-A499-137A09D2FCCB@gmail.com>
+In-Reply-To: <SG2PR02MB27962E46AE874F41055B5F3785539@SG2PR02MB2796.apcprd02.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,87 +97,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---e1GwPkg7l2Oycou2
+--nGEDTjOIRhC3nq2w
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 13, 2022 at 05:24:00PM -0700, Mike Jones wrote:
-> This is the error:
->=20
-> root@ubuntu:~/share/design/code/openbmc/build/ast2600-default/tmp/work/ar=
-mv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e891=
-9-r0/git# <mailto:root@ubuntu:~/share/design/code/openbmc/build/ast2600-def=
-ault/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitA=
-UTOINC+26601e8919-r0/git#> meson build
-> The Meson build system
-> Version: 0.58.1
-> Source dir: /home/openbmc/share/design/code/openbmc/build/ast2600-default=
-/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOI=
-NC+26601e8919-r0/git
-> Build dir: /home/openbmc/share/design/code/openbmc/build/ast2600-default/=
-tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOIN=
-C+26601e8919-r0/git/build
-> Build type: native build
-> Project name: dbus-sensors
-> Project version: 0.1
-> =20
-> meson.build:1:0: ERROR: Could not invoke sanity test executable: [Errno 8=
-] Exec format error: '/home/openbmc/share/design/code/openbmc/build/ast2600=
--default/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+=
-gitAUTOINC+26601e8919-r0/git/build/meson-private/sanitycheckcpp.exe'.
-> =20
-> A full log can be found at /home/openbmc/share/design/code/openbmc/build/=
-ast2600-default/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-senso=
-rs/0.1+gitAUTOINC+26601e8919-rroot@ubuntu:~root@ubrootroot@ubuntu:~/share/d=
-esign/code/openbmc/build/ast2600-default/tmp/work/armv7ahf-vfpv4d16-openbmc=
--linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e8919-r0/git#
->=20
-> The path to sanitycheckcpp.exe is there, but fails, as if it must run on =
-a different architecture.
+On Thu, Jan 13, 2022 at 11:47:11PM +0000, Udupa.Ashwini ISV wrote:
+> Is Redfish collection capabilities (https://redfish.dmtf.org/schemas/v1/C=
+ollectionCapabilities.v1_3_0.json) supported in OpenBMC?
 
-I'm not sure what is going on and I don't really use devtool very often.  T=
-he
-"Build type: native build" is where things are going wrong though.  You've =
-tried
-to get bitbake to set you up a cross-compile environment (targeting ARM) and
-yet meson thinks you're building a native (targeting x86 likely).  Usually
-bitbake has some special environment settings or a cross-env file for Meson=
-, so
-however you're invoking meson might be missing that.
-
-Is it actually necessary to call meson anyhow?  Hasn't the 'configure' step
-already ran when devtool sets up the environment?  `meson build` says "set =
-up
-a new meson directory named build".  Did you intend something like
-`ninja -C build`?
+https://github.com/openbmc/bmcweb/search?q=3DCollectionCapabilities
 
 --=20
 Patrick Williams
 
---e1GwPkg7l2Oycou2
+--nGEDTjOIRhC3nq2w
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmHhw78ACgkQqwNHzC0A
-wRkbQg/8Dvl+0C2qyPtapy3gdn3MtNxqC2RR9Ca9s2lM+l22siMIlAcC4rNrGQ81
-itIa2TZKjb8/+bvTfV2lF7cJVL98eWwUYrEExEZ+ccfcDXFNFxPxKlR0dWMZ/QnY
-ktQiAQj1R3Nuuau3XMYZvQLJeLx44HMP44/Q1MBNDBck4kvi8+KFUHfBoRsfY+kq
-sECUSnapcMBusPb42KnqalbO0ya4gzRVJluquaNW8qsrSHRZa1j5HXbvGMWwuAHK
-GcyyDOS3IDWCF7W+co2TUAk2dOlYZ/jei9AOuEmmXrsW1poRgKo/eGCFT8YKmIJM
-IwEqmYAqeC+PkblxhyDQMJHNxhHO28J1iVZAId3uQTngjbPE0ObmGQIjcEpLRGY1
-2HrWoQPy0Tc2Ne9ac1eMzMLUaC4otBrF4/ORVNznKMBR/s69iONUY2RZUPlcwvI2
-KVUO2J+ZzoHe49AZCd4Z3pPRzdnjIa/eZhphTqOBk+frAtmjN5OO/8WID2VraIdj
-HOlWlhdVIx12lQj8sJvt2UvYz3Ti2x0HLod5tvu1zGaNZf5kHWWDs4mtVGxjmCgu
-zFYZ1AlnNpDbDxSFq4Kz0delIcGdgjYM+5NJ3H2keGVjwIfwMZsuaj3G8cfxisA+
-5uwE3tZZ3CHRrAyhkJDLy9op+yzeMIECK8PMJ+L1wk2X5Fc5K+g=
-=RPir
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmHhxAwACgkQqwNHzC0A
+wRnlow/8DkvYWYIA3x6/v82VEUHh1HToNsFLPFWYHeUl5001JaW9w0/C0+qX3zGg
+kgkYHPq/SqF7eZwkg1QaNMEQqhWJRpmxQmPQUBDRJeOjeSESvPFxOXG0P04C743c
+bd1FRgoJSkIrYyTnXLPm0XYnvAj7YsfC7fXXLw7Xf7c537WVMeld8Rl1r5QSexgY
+zvahzG+DAI5daGtJxI3CJnFPfty/GPg5Bk9E2tNDPiwWgjJ8Qd8tshV1Tufas7gD
+Zynmm4ib1bNxUulRljwSgYQs2rMGr0twz7MTHMqkyBs9cy38KXwdpdYaS2AHosyj
+Wi/74mthzTbsN1qrG7Yd1spUv7dfPXFBeeNqfJz/Bcj+pOZFDhYMRmRC4vapMdD6
++EkUmZFDvkWeeIaT45TxknpNQ+Gcm+ZtXS76Z9FS029iW25jXVDBXlw4L6kjxbMT
+5/5G7X3eF4hgPU+goIcDKnLNHxgGbEEOuM7DyqKTDnxt/cb8hRJokaGsGbfqTvsM
+8DL+7LkNXESKh/w8uYyPEv8UKnAO0ztSNp/Q0ltGyu6uliQMWWEReYE9WkQUWiDB
+2QuN1P/bOSnoEnzz5f+XnuS3Lr7ThADIl1G7P/315UVa0qA4QUBUDCUXqa4eXw2d
+R2CY3wN38wwrDvtB4BkP6MuSaS+oKXOcUSTB5bYRi5csvvafoLs=
+=17Wz
 -----END PGP SIGNATURE-----
 
---e1GwPkg7l2Oycou2--
+--nGEDTjOIRhC3nq2w--
