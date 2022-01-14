@@ -2,126 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6BBA48E120
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 00:48:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB22C48E171
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 01:24:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JZh2K0tXRz30LD
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 10:48:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JZhrC4P2xz3089
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jan 2022 11:24:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=InventecCorp.onmicrosoft.com header.i=@InventecCorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-InventecCorp-onmicrosoft-com header.b=JPSRpT7D;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=VLfcOZPT;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=inventec.com (client-ip=2a01:111:f400:feab::718;
- helo=apc01-sg2-obe.outbound.protection.outlook.com;
- envelope-from=udupa.ashwini@inventec.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=InventecCorp.onmicrosoft.com
- header.i=@InventecCorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-InventecCorp-onmicrosoft-com header.b=JPSRpT7D; 
- dkim-atps=neutral
-Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-sgaapc01on20718.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:feab::718])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::229;
+ helo=mail-oi1-x229.google.com; envelope-from=proclivis@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=VLfcOZPT; dkim-atps=neutral
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com
+ [IPv6:2607:f8b0:4864:20::229])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JZh1p2tgFz2yQw
- for <openbmc@lists.ozlabs.org>; Fri, 14 Jan 2022 10:47:40 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WdPYVnK6pNf3ecW3QFbnqlAHBunoQ9EgttRdpDiC7SaOw2/o7WcnTcy67fRdy1OLwU7oeBPzKFMBM+giqwfUbpaxutvPT9UFvIfCy7VxQBraUSm7iMLoh02URdnfGDBcMKnNJFKBXjz8qjWHyDpy1DaKliA5hqj7tOM5WPHtyXxw37uUo3fW/HZoyw43vAAkW2VBV+94fbwLsyv4MgpGkOXBnb7w17sZsyS87MC7EignASlLAJt9wuP5QNAs5UPjRbXjpxvbID9ZoMvYSgnj3xjXQ/2rseKYV71KDxno47WoQ7anvyVI8c1il1HgBrN5cYxKrweEpybfiBeZSQ7/lQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kkH3u7vbRVIO/MiIV5BJqSQCs6Tmag1hiGN1wEf/ze0=;
- b=J0mJXwjXyElYxV0CCXH7eAE9i8vnwCeb02NFC00bwyhdnNil4J1XaNdRzNwXUkvwQ9d1zOUGCz5LbTvvWPb5ZzBXTDjRNDi/rKVMRohBU9uHkx3stUfg0tsRwguJNaePaq6eW7NEQWkvJph+HlmPQ1vBcEHvX65peawmTJCg/EufNXaEdR3OmfVNBo+xilPF/rld6fpoX4v5Ct1lN/uiaSIdguo+aE6FMkNR4wH8xi40z8/j62jkcn2Fg5KRDG8Ibm6ow4Vy6D/fuGYmilowD8i/fJd+4e7km+gVl28HJ1iPodJSJs/NhcJ/jmkVNs9lS0p8O26rIa0E9HF1yG/Q9Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=inventec.com; dmarc=pass action=none header.from=inventec.com;
- dkim=pass header.d=inventec.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=InventecCorp.onmicrosoft.com; s=selector2-InventecCorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kkH3u7vbRVIO/MiIV5BJqSQCs6Tmag1hiGN1wEf/ze0=;
- b=JPSRpT7DBY1RHnp3KC3/j98lmzKOYi48eysOQNTT+HaOTSf9BUxaTNKb7T4Pv1nW+gJvCKZuu+zWnSWyZMGgHJrl5acp7cyQzxdOXPb1r04TgtcjrvA/Zl7Qx7Kz56tAG98Jqa+o8GbhOooL/QxIk3qc/WvD2tduXCH++zMApMo=
-Received: from SG2PR02MB2796.apcprd02.prod.outlook.com (2603:1096:4:59::20) by
- SG2PR02MB2666.apcprd02.prod.outlook.com (2603:1096:4:5f::20) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4888.11; Thu, 13 Jan 2022 23:47:11 +0000
-Received: from SG2PR02MB2796.apcprd02.prod.outlook.com
- ([fe80::380a:d799:d1e4:9f78]) by SG2PR02MB2796.apcprd02.prod.outlook.com
- ([fe80::380a:d799:d1e4:9f78%3]) with mapi id 15.20.4867.012; Thu, 13 Jan 2022
- 23:47:11 +0000
-From: Udupa.Ashwini ISV <udupa.ashwini@inventec.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Redfish collection capabilities
-Thread-Topic: Redfish collection capabilities
-Thread-Index: AdgI14zJNjq++54tRPG5Sh3X9hEQ7g==
-Date: Thu, 13 Jan 2022 23:47:11 +0000
-Message-ID: <SG2PR02MB27962E46AE874F41055B5F3785539@SG2PR02MB2796.apcprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=inventec.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 0cdd3488-7222-4c32-af99-08d9d6ef04c0
-x-ms-traffictypediagnostic: SG2PR02MB2666:EE_
-x-microsoft-antispam-prvs: <SG2PR02MB2666D2AFCBC7BF85DCDD64C185539@SG2PR02MB2666.apcprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2089;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: qeSuTGpt5iygj0h61zPXli++9F+cdL9At9KbQGH13ho+cV4LlLR/kdbLvzkUcCmwHAS2Z5HLs/muMdfUNvlu0LiHg75FUIVvvz2HyFSI8tV1K61zO5FAOvyc3q3pScTsIMRQq3YzLRfCBn73moy4BJH5RpWi33jh9hVoO8iBWUBWJMd08PchMxHb2kddwaPT7JNaP7bFGs8KMJCu5NEOos0NIsHN7bJnjoCRpqBKvsoXo7/npzxB2daxi+meEyBhyBArRtkBwRWmrDmJBYW/DAWdVs9hGYo9Me0KkSKuRB0s/h+0nCTLS0YgEVSrFZtGRIgq/t8N9rzYRYVWnRbVLWvvbB89hrteNJ2hfYFOKMAipySVKV3qC0WHLYstyeg70HD75AJHydKLIkBZWmkPVIyp9iKYDFL5QzGSU8SXaUfzDkEWSETOF2gmQPpQc4E7aS90muMws8u98IlpXfMFJ9mT+CAYzlRJ+TNct62fJ5yE5PeQbx3lqbQ3KPnCr7AlX6uyt2w3NehdpnN5LH0e92016lPXTwYl8ycwP+WZ37nSh+7pnL+0YRSsXdc+3dTgcbZk8AqE8/VMFtQhdBjEA/L3fcpqAOb/L+1aqo+ZRyl9eiqKyQ8znvUhhUhSrDbLW+XCRdECZawGocDvAtNuRdwV2THeUlGSISH+nQASbpOs0GqV0pYXd+Y4F8KHo2eUSDrBk+2oi+FCgjE0+AHwmLtZk4/I3JYbT6vIbpHYAQKmNDyd1++BtfaLCM6JFqpOSO063P+LMX6y9LwaYHmhR3uk0WF/czXSJenhtI3bZdw=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SG2PR02MB2796.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(166002)(9326002)(8676002)(558084003)(3480700007)(9686003)(7116003)(8936002)(6506007)(2906002)(38070700005)(7696005)(33656002)(186003)(5660300002)(52536014)(71200400001)(64756008)(66446008)(76116006)(66476007)(6916009)(66946007)(66556008)(38100700002)(316002)(122000001)(55016003)(508600001)(86362001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?T2s/gH/FpOB3DFxan4igpAyWaEymjfpz6IQep98fxeGUk1/cFVFoiavoVrGE?=
- =?us-ascii?Q?37yOvWzuCAbZJS+DyNzLrvOmp74fdjYlxhGa9cJhmiPbepe686czFY1ZSloC?=
- =?us-ascii?Q?10VSRz1lYpJy7viALPQzcd1VA+j8J0eV7BaOUKQgwWCe6l32PGFhatIi39/f?=
- =?us-ascii?Q?0ERF1BeDjmx9JjBMApVfASXdro68L9ztyKgvtZNaxTGI5GLh8zSALF1juMtA?=
- =?us-ascii?Q?Pyt/DWMMvED8cXIdoed4iZ5/M1YGbkLNNHjmiOjj47z+tqlyuDhJE9f79qQ2?=
- =?us-ascii?Q?+qy/9Qu3x3MH1aMZKGX+zUPGv5L078+WyGbiS5lGWWYE0yM/s05zT+tRLV33?=
- =?us-ascii?Q?9ZXxfcQ9G94KwL9wSSa00yE42y+vO44Nd0sl9lzclG3NGKph/S1VHda2cRV8?=
- =?us-ascii?Q?abT5X1mmUMs7xnL/uaaFqCrQCDwHO43nXihLWa8WBi8xfJqAav6sQ40+shWo?=
- =?us-ascii?Q?M1w9Leyl+bb1towTu8t9qKFql2dYbrMRApLS7/NpdM7Df0sZ5DaBKxfz5BXN?=
- =?us-ascii?Q?DMmmQoLYLr30GLDfXyEhDbf44dTVSCsusNOYx+8HDTx4LUMtEhwVYcFtNlVN?=
- =?us-ascii?Q?PRnat6yjHk7guEpwn2VfL9XDCkgvwbrQvCStgcMr937zjZoE0t0AXEb9W9cJ?=
- =?us-ascii?Q?sQlIOVbuJzeJhYIdr5k8I0ivKny/nMkW707TEkSpE22QhrGYE6DipWfyKHLG?=
- =?us-ascii?Q?CV+g+ceI5bTBu+uS9d/RIAnppUgJbyOLRyKALNrLLfB3fAaGSuPhuwSDbA52?=
- =?us-ascii?Q?m8UL+S73OvW4+igqOhKNqa03ntHzJ5eI+JnPyFEs2/hSuJW3SIkMdRRn62KU?=
- =?us-ascii?Q?LJ/Zgc1y0kqWtbNbfM4x3KcKnGwl16dqbGjAU8BS/eM/BL/s4+2MaBjFIDLf?=
- =?us-ascii?Q?03L3y9FcXXEa/8WteOnpOxnuTa4Z0d6nxEN96ZV8wTGKj7X/QEGtfIX6UyUs?=
- =?us-ascii?Q?epP8mxh9ZrokaeM9Rr3TbHL90203r7VqTKWlsDYnIC4v6y9Mu2vNoox0uUyZ?=
- =?us-ascii?Q?EXhD+uI8do/UX277AlSrU/6i83KJgr7FbqKKq6kJR067CYypoi9utbWOfAkj?=
- =?us-ascii?Q?gX3OVsn/KYjKz+vxRl6gtpV45XVHADhThmyPAWiBorztoI2IqsVZc9dES4yd?=
- =?us-ascii?Q?0KVGin+rsOkGZ68dnVhA7q1DxMmI5vwOc+qCUMVG6ctiPVbvDcnnAtwFoiPj?=
- =?us-ascii?Q?v8rlG6aNO68HHrU4XVaIA8CTfzC1edrkfesnw692iFqGiZDl/9rnsBupiTYJ?=
- =?us-ascii?Q?IF4X2inqRMZfXtr6B9TY0isC04B3+epqeHR4UdYCh3yUinq1MrefmpdthVqI?=
- =?us-ascii?Q?NT3K3fcC4tHV/YiQmsxUGOMUW4CtmhtrUYmq7N0kKWwuRtO05cK3NnWWGRvd?=
- =?us-ascii?Q?cz6sCkaZVQ7dW8HbSYn2Ltrk6gzyzcnzmE1MXkGYJzqpq6cFC4EXh3k01WwA?=
- =?us-ascii?Q?W4YqsuOxfPY7NPg92Fw0lHozI33noja+lm1ME851btFwJ5QwDv/EdtRRLL8D?=
- =?us-ascii?Q?w/No/y9mDCU3HRmuCuqCxYDywrsI2MBLckvqnsA/8cYx8JeyAdlOijMNudZZ?=
- =?us-ascii?Q?J9RFGvsvmIgFN1ZeVwSDaEReuifX6+8p4YRtbpqNn+zQigVRS3uhNhWOopTn?=
- =?us-ascii?Q?Gf8oeLaXaiPSKUpMgM7AmepckN97MNMLsGgFSvDufwpmICvPIqK7n6Xm0YW9?=
- =?us-ascii?Q?r4JUqHMfVCo+7S1tNjliOB0Y0sDobKLzMKdQOAkZX3QSOTNHUZTW+WOdnfsq?=
- =?us-ascii?Q?gIt4mfIi4g=3D=3D?=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JZhqp4phWz2x9P
+ for <openbmc@lists.ozlabs.org>; Fri, 14 Jan 2022 11:24:04 +1100 (AEDT)
+Received: by mail-oi1-x229.google.com with SMTP id y14so10160074oia.9
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Jan 2022 16:24:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
+ :references; bh=Y4QuzQF77tU2uzJblOokDQJI4r0V8bFKBeBiA57XwEs=;
+ b=VLfcOZPTDPA+YNWIP4W7vjKGzlWMoqXnKkJxwl4w97RUSicCs0mZixURjr3RwWOtPY
+ qO/BHJLsKF+UgFTtKYpWPN/1M3SFSgIu56x8mr4xNK3ysBJmEK5/xGEkrI85rQXd0u1s
+ icVqTQF27I6U2VhfmN6lbHT0WQYr7Ngk2dI/u377/vFyB52d/elpLDwxtvYi9rE6drRF
+ B+LxXtUkviABeGszjklXJ1DtIe7A8e9jZzDYf+k5I8qIfrCfaOyuO4DRMvqhTw4ns0Pq
+ WklVsyWofK7qzXu8qIzswMyHl6l20M/5j4cNm4Yp9oSzrsVrzGGZTU9GXDeKHcNx1f/3
+ ivRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:message-id:mime-version:subject:date
+ :in-reply-to:cc:to:references;
+ bh=Y4QuzQF77tU2uzJblOokDQJI4r0V8bFKBeBiA57XwEs=;
+ b=xtv+jL77aJjFLxMJrlbnp8YUZXdSYDvBBKwANEueSmlLhucGlhDKw/W4T756cRPidJ
+ OABzOvDY2+SOK9qDXxcU+8Xsg15XWY58tnRHCAp4Iz7qPaCgyxgJR+f95fSMaQDs7s+o
+ bA4iAH9gqOXVquGAVZwywjWY4Bpz4KxjVPMa44yQk502cbimQt5G13HXxMKG1uxfUxMG
+ SOVA619yDdhJHADARlJiipq+5Zr2WtvfIVq0LucWo3FUcEM3NoBqa0W3qK5QuKy2oPrQ
+ bmMQOZ4T3A1yQ3Cdlp1Fk+B49/kvuH7ByqH3i4skcVABMWR5mHd0keLVRdVh91pfTNxf
+ r+Zg==
+X-Gm-Message-State: AOAM531TjMXdyVnOIATxkmtfBjpKcoqxrIVY30WJ8gnuEykZXzbjoSuR
+ 3m1C13OufZaVFeYPS5cN9z09tH45EZcHcg==
+X-Google-Smtp-Source: ABdhPJwDnaY424uB6lNzCIhiMtnnc+hCw0k1SdQSJYc+IGVs2mYtepW5v2HDj9aVexkbaLsu0VY2hw==
+X-Received: by 2002:a54:4191:: with SMTP id 17mr5131843oiy.131.1642119842271; 
+ Thu, 13 Jan 2022 16:24:02 -0800 (PST)
+Received: from smtpclient.apple ([70.39.92.56])
+ by smtp.gmail.com with ESMTPSA id v26sm1145960oos.13.2022.01.13.16.24.01
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 13 Jan 2022 16:24:02 -0800 (PST)
+From: Mike Jones <proclivis@gmail.com>
+Message-Id: <47171FDF-05E4-4501-A499-137A09D2FCCB@gmail.com>
 Content-Type: multipart/alternative;
- boundary="_000_SG2PR02MB27962E46AE874F41055B5F3785539SG2PR02MB2796apcp_"
-MIME-Version: 1.0
-X-OriginatorOrg: inventec.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SG2PR02MB2796.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0cdd3488-7222-4c32-af99-08d9d6ef04c0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jan 2022 23:47:11.2869 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 2ae41f0c-acca-40f1-9c63-49475ff38512
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: beGbey6cFAEggwOzstrg7OFyym4uCX5iJVgQoDx2j74erDqrGMpvYWYrgqWFG8sA9ofQ90VHQuj7h/g6P2q5iLp4R6oedAUK4h7y6E+GZfQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR02MB2666
+ boundary="Apple-Mail=_14C0D461-2EE2-4A0E-A144-C3A0C8961513"
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
+Subject: Re: Sanitycheck problem
+Date: Thu, 13 Jan 2022 17:24:00 -0700
+In-Reply-To: <YeCqx/CTU7pRDVyj@heinlein>
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <BEA6AAA9-904A-40D7-B114-A9229B38F0DE@gmail.com>
+ <YeCqx/CTU7pRDVyj@heinlein>
+X-Mailer: Apple Mail (2.3693.40.0.1.81)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -133,83 +80,150 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_SG2PR02MB27962E46AE874F41055B5F3785539SG2PR02MB2796apcp_
-Content-Type: text/plain; charset="us-ascii"
+
+--Apple-Mail=_14C0D461-2EE2-4A0E-A144-C3A0C8961513
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Hi,
-Is Redfish collection capabilities (https://redfish.dmtf.org/schemas/v1/Col=
-lectionCapabilities.v1_3_0.json) supported in OpenBMC?
+This is the error:
 
-Regards,
-Ashwini
+=
+root@ubuntu:~/share/design/code/openbmc/build/ast2600-default/tmp/work/arm=
+v7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e891=
+9-r0/git# =
+<mailto:root@ubuntu:~/share/design/code/openbmc/build/ast2600-default/tmp/=
+work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+2=
+6601e8919-r0/git#> meson build
+The Meson build system
+Version: 0.58.1
+Source dir: =
+/home/openbmc/share/design/code/openbmc/build/ast2600-default/tmp/work/arm=
+v7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e891=
+9-r0/git
+Build dir: =
+/home/openbmc/share/design/code/openbmc/build/ast2600-default/tmp/work/arm=
+v7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e891=
+9-r0/git/build
+Build type: native build
+Project name: dbus-sensors
+Project version: 0.1
+=20
+meson.build:1:0: ERROR: Could not invoke sanity test executable: [Errno =
+8] Exec format error: =
+'/home/openbmc/share/design/code/openbmc/build/ast2600-default/tmp/work/ar=
+mv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e89=
+19-r0/git/build/meson-private/sanitycheckcpp.exe'.
+=20
+A full log can be found at =
+/home/openbmc/share/design/code/openbmc/build/ast2600-default/tmp/work/arm=
+v7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e891=
+9-rroot@ubuntu:~root@ubrootroot@ubuntu:~/share/design/code/openbmc/build/a=
+st2600-default/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-senso=
+rs/0.1+gitAUTOINC+26601e8919-r0/git#
+
+The path to sanitycheckcpp.exe is there, but fails, as if it must run on =
+a different architecture.
+
+> On Jan 13, 2022, at 3:42 PM, Patrick Williams <patrick@stwcx.xyz> =
+wrote:
+>=20
+> On Thu, Jan 13, 2022 at 02:30:43PM -0700, Mike Jones wrote:
+>> If i bitbske -c devshell dbus-sensors, them meson build, =
+sanitycheck.exe fails with a exec for at error.
+>=20
+> What is 'sanitycheck.exe'?  I don't recognize that in any way and a
+> search on our GH repo isn't showing anything either:
+>=20
+> https://github.com/search?q=3Dorg%3Aopenbmc+sanitycheck&type=3Dcode
+>=20
+> --=20
+> Patrick Williams
 
 
---_000_SG2PR02MB27962E46AE874F41055B5F3785539SG2PR02MB2796apcp_
-Content-Type: text/html; charset="us-ascii"
+--Apple-Mail=_14C0D461-2EE2-4A0E-A144-C3A0C8961513
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=us-ascii
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
-break-word">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi,<o:p></o:p></p>
-<p class=3D"MsoNormal">Is Redfish collection capabilities (<a href=3D"https=
-://redfish.dmtf.org/schemas/v1/CollectionCapabilities.v1_3_0.json">https://=
-redfish.dmtf.org/schemas/v1/CollectionCapabilities.v1_3_0.json</a>) support=
-ed in OpenBMC?<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Regards,<o:p></o:p></p>
-<p class=3D"MsoNormal">Ashwini<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dus-ascii"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><div =
+dir=3D"auto" style=3D"word-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;" class=3D"">This is the error:</div><div =
+dir=3D"auto" style=3D"word-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;" class=3D""><br class=3D""></div><div =
+dir=3D"auto" style=3D"word-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;" class=3D""><div style=3D"margin: 0in; =
+font-size: 11pt; font-family: Calibri, sans-serif;" class=3D""><a =
+href=3D"mailto:root@ubuntu:~/share/design/code/openbmc/build/ast2600-defau=
+lt/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAU=
+TOINC+26601e8919-r0/git#" style=3D"color: rgb(5, 99, 193);" =
+class=3D"">root@ubuntu:~/share/design/code/openbmc/build/ast2600-default/t=
+mp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOIN=
+C+26601e8919-r0/git#</a>&nbsp;meson build<o:p class=3D""></o:p></div><div =
+style=3D"margin: 0in; font-size: 11pt; font-family: Calibri, =
+sans-serif;" class=3D"">The Meson build system<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0in; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">Version: 0.58.1<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0in; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">Source dir: =
+/home/openbmc/share/design/code/openbmc/build/ast2600-default/tmp/work/arm=
+v7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e891=
+9-r0/git<o:p class=3D""></o:p></div><div style=3D"margin: 0in; =
+font-size: 11pt; font-family: Calibri, sans-serif;" class=3D"">Build =
+dir: =
+/home/openbmc/share/design/code/openbmc/build/ast2600-default/tmp/work/arm=
+v7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e891=
+9-r0/git/build<o:p class=3D""></o:p></div><div style=3D"margin: 0in; =
+font-size: 11pt; font-family: Calibri, sans-serif;" class=3D"">Build =
+type: native build<o:p class=3D""></o:p></div><div style=3D"margin: 0in; =
+font-size: 11pt; font-family: Calibri, sans-serif;" class=3D"">Project =
+name: dbus-sensors<o:p class=3D""></o:p></div><div style=3D"margin: 0in; =
+font-size: 11pt; font-family: Calibri, sans-serif;" class=3D"">Project =
+version: 0.1<o:p class=3D""></o:p></div><div style=3D"margin: 0in; =
+font-size: 11pt; font-family: Calibri, sans-serif;" class=3D""><o:p =
+class=3D"">&nbsp;</o:p></div><div style=3D"margin: 0in; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">meson.build:1:0: ERROR: =
+Could not invoke sanity test executable: [Errno 8] Exec format error: =
+'/home/openbmc/share/design/code/openbmc/build/ast2600-default/tmp/work/ar=
+mv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e89=
+19-r0/git/build/meson-private/sanitycheckcpp.exe'.<o:p =
+class=3D""></o:p></div><div style=3D"margin: 0in; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D""><o:p =
+class=3D"">&nbsp;</o:p></div><div style=3D"margin: 0in; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">A full log can be found at =
+/home/openbmc/share/design/code/openbmc/build/ast2600-default/tmp/work/arm=
+v7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-sensors/0.1+gitAUTOINC+26601e891=
+9-rroot@ubuntu:~root@ubrootroot@ubuntu:~/share/design/code/openbmc/build/a=
+st2600-default/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/dbus-senso=
+rs/0.1+gitAUTOINC+26601e8919-r0/git#</div><div style=3D"margin: 0in; =
+font-size: 11pt; font-family: Calibri, sans-serif;" class=3D""><br =
+class=3D""></div><div style=3D"margin: 0in; font-size: 11pt; =
+font-family: Calibri, sans-serif;" class=3D"">The path to =
+sanitycheckcpp.exe is there, but fails, as if it must run on a different =
+architecture.</div><div><br class=3D""><blockquote type=3D"cite" =
+class=3D""><div class=3D"">On Jan 13, 2022, at 3:42 PM, Patrick Williams =
+&lt;<a href=3D"mailto:patrick@stwcx.xyz" =
+class=3D"">patrick@stwcx.xyz</a>&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div class=3D""><div class=3D"">On =
+Thu, Jan 13, 2022 at 02:30:43PM -0700, Mike Jones wrote:<br =
+class=3D""><blockquote type=3D"cite" class=3D"">If i bitbske -c devshell =
+dbus-sensors, them meson build, sanitycheck.exe fails with a exec for at =
+error.<br class=3D""></blockquote><br class=3D"">What is =
+'sanitycheck.exe'? &nbsp;I don't recognize that in any way and a<br =
+class=3D"">search on our GH repo isn't showing anything either:<br =
+class=3D""><br class=3D""><a =
+href=3D"https://github.com/search?q=3Dorg%3Aopenbmc+sanitycheck&amp;type=3D=
+code" =
+class=3D"">https://github.com/search?q=3Dorg%3Aopenbmc+sanitycheck&amp;typ=
+e=3Dcode</a><br class=3D""><br class=3D"">-- <br class=3D"">Patrick =
+Williams<br class=3D""></div></div></blockquote></div><br =
+class=3D""></div>
+</body></html>=
 
---_000_SG2PR02MB27962E46AE874F41055B5F3785539SG2PR02MB2796apcp_--
+--Apple-Mail=_14C0D461-2EE2-4A0E-A144-C3A0C8961513--
