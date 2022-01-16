@@ -2,70 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9168D48F537
-	for <lists+openbmc@lfdr.de>; Sat, 15 Jan 2022 06:45:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3494648FA03
+	for <lists+openbmc@lfdr.de>; Sun, 16 Jan 2022 01:39:13 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JbRwb3SGpz2yg5
-	for <lists+openbmc@lfdr.de>; Sat, 15 Jan 2022 16:45:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jbx4F1Tblz30Dg
+	for <lists+openbmc@lfdr.de>; Sun, 16 Jan 2022 11:39:09 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=KlncH9xM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=S/WGipPO;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52f;
- helo=mail-ed1-x52f.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::22d;
+ helo=mail-oi1-x22d.google.com; envelope-from=linus.walleij@linaro.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=KlncH9xM; dkim-atps=neutral
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com
- [IPv6:2a00:1450:4864:20::52f])
+ unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
+ header.s=google header.b=S/WGipPO; dkim-atps=neutral
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com
+ [IPv6:2607:f8b0:4864:20::22d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JbRwF3Nxhz2yLT
- for <openbmc@lists.ozlabs.org>; Sat, 15 Jan 2022 16:45:31 +1100 (AEDT)
-Received: by mail-ed1-x52f.google.com with SMTP id o6so41815471edc.4
- for <openbmc@lists.ozlabs.org>; Fri, 14 Jan 2022 21:45:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jbx3s6zxZz2xrj
+ for <openbmc@lists.ozlabs.org>; Sun, 16 Jan 2022 11:38:47 +1100 (AEDT)
+Received: by mail-oi1-x22d.google.com with SMTP id r138so18063217oie.3
+ for <openbmc@lists.ozlabs.org>; Sat, 15 Jan 2022 16:38:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=ucj2Os/wRUr5WLRG1S7na21lS+mWLqNqv3mZLwumwDA=;
- b=KlncH9xMRTtQzHWpiNSpPA+s4cRJo6sspDGcM67skcvyn4rk3n3elqScWbroxSLiWT
- gRHz8i6fFJi14ZHSyD7XeyPfOPa28oZuqxUpO48DyltwzInqb4rFBB1FQhwd98OnNJLm
- AICAwyX499KSDDuKVd9Hj8l10yZ+oVYUUU18cbsIB6k5QhvKry7u6PT11CKWKIa5vw+8
- f75f2hkANVa4CfwHj1lvC5rI79BZf6LdMMaxau8iqRhRSV9OflurBziuW5HRXT2ddrHa
- 2m/HVR0zXxfXiuAFXfZB1dn3nfuavhitwDqAsKKfl1RtsM+ZbsvNYhDLjAM1lXxmu8SI
- 7ixw==
+ :cc:content-transfer-encoding;
+ bh=Xq1STW/9GWXWNpMTgrEANORa+fFhQI5P1Xh1Ux8Ap7E=;
+ b=S/WGipPOi+aDaNKPU2W8GTv/m3kK9LmuVfzsLaYXeLm0+2aUx9j3qiGyVfnNb86HO3
+ uAu0/PqIedCkjPsAzuAB0DDPRocf48Qd+VQTKcHpEiopVFbzn/oep4vkXBhjpTncDTJ1
+ NoySbok2W+5d3+E+3fxBMoYkxu7mXLgkEyyNTRZpCeXhvk89K9Ztsg4k0GUyM2r//Kzo
+ LuvjlYorZ///4oXPV2ZQZLIt/pHCuKmkW/+jrE/j6V3Y7GOCDJc83dJDAepj1kqKVPjg
+ psuJTy94gVNyOqb6HeCRzEgRpuRhokAs4WxDs1kuWyH7Ck0J1fQck9SoDFxoW9K/4VPB
+ +xJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=ucj2Os/wRUr5WLRG1S7na21lS+mWLqNqv3mZLwumwDA=;
- b=pHgIjYI8fUuTQtNkpURma1ZSYMe65z2cTFw6X4RofmBWN19a/62A1VAu3+A2lvevco
- 4RVJiOe8R44NPo3gJm2gLKw+jArsUhlW81nTkZ50eYFOfgKaTxnu4+GSelCp9oQhSCGA
- bVfKPXw9GBDgKguoGGS1Zd/kgUgDQUKngV9pDYAqNp/nDjFTNtpBIfT5HN4m2FTA+jyA
- 4eT27rrh1VD5BbSP16egZrQVkUHWd5f2320jbgr7Bj9c13J2tNu8XZV0/9YNVPL/HbXT
- rPdi4v2PqL8wTvt7kIau/mnUEnVvHpILlqaFD28MAGc7ajK1xV/7mLy4BWSvc2QGKanL
- L1TQ==
-X-Gm-Message-State: AOAM530+GHV1QMvbhzumjS0+/EduFidoukfwHB9hrt4VPRRs1Lu/B9T/
- 1uGjY0v+eUbT8/q9igamKWq/cjONZnzU/IL9wl0=
-X-Google-Smtp-Source: ABdhPJy4yaAoYZg+v9/LnyJfvOwxFrol+ZSH90RzC/0Nqb+T1gjJgt4b+/tGPQggZrFHJEagbB491oDo/AlyGlIjhS0=
-X-Received: by 2002:a17:906:5048:: with SMTP id
- e8mr9719284ejk.651.1642225526336; 
- Fri, 14 Jan 2022 21:45:26 -0800 (PST)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=Xq1STW/9GWXWNpMTgrEANORa+fFhQI5P1Xh1Ux8Ap7E=;
+ b=dAu0YXSYTthm8xXqvb11kU+QvBuOrBc07rHTilPu4B91lS+fDgFnb15id9B0/iLMxN
+ R6Afx1k8x42lwnUHzlAWkWAMvJh36yO44hLQjjmMNJISf1T83GxpYjpgrTKR68tRYGkw
+ 6KsyvNrZHE0x6MdjoP8xvQKrFJhtVrC7Lrk9N6jpJWyzkFvEwibeGITmid3TM8ujOVlf
+ ZwA5lZit/Ot1G0lpvDPp0rGYT84aYt3+6w6DxdisyaocO5wr05bnlMHSYWemhG1qfhGL
+ EkAgxmKPRWLmTR9Bc2Ngq8Ft0u+CxtdegPAQIsMdmdycaVSHpie88aSB18v/8VYPg3VP
+ G5ag==
+X-Gm-Message-State: AOAM530fubyTwA9nI5bO2uh9NrqI794qCXrT9tOcqS/DcuKIGz1NWKs2
+ oNheWUco62LGiFx3Qms5rbICAXjKSHRRHCHzv/SVLQ==
+X-Google-Smtp-Source: ABdhPJz42hl7ypfOI7dDD092Ja9BAFGUUKC1+kMjBppzuKHX4HH94KrnMiQemb4kuGpj7lBiKnd/mFuhjgCZnQx/J0w=
+X-Received: by 2002:a05:6808:2097:: with SMTP id
+ s23mr8315616oiw.132.1642293523401; 
+ Sat, 15 Jan 2022 16:38:43 -0800 (PST)
 MIME-Version: 1.0
-References: <CAA7TbctqbhbfV5e-QH-QcuwgfHPVLj3z6wFAXKMo6cd-=A1ZYg@mail.gmail.com>
- <CACWQX80YTyuMYozJgpLx36X_7sbwdp2O+BGCdxJQXyMPA+VjxQ@mail.gmail.com>
- <CAA7TbcspNFo4UyfL-3iG9KWEHep4jfBhP=1U0KCegaNbvcWfmw@mail.gmail.com>
- <YeHGiLCArvqNCodq@heinlein>
-In-Reply-To: <YeHGiLCArvqNCodq@heinlein>
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Sat, 15 Jan 2022 11:15:15 +0530
-Message-ID: <CAA7TbcuOC4oNCh2NO7nbyRZgu+UdSUNSdsoVXqewaChD4RfM4Q@mail.gmail.com>
-Subject: Re: New repository request for platform specific Bridge IC code
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: multipart/alternative; boundary="000000000000236f9b05d5986d9b"
+References: <20220109173000.1242703-1-j.neuschaefer@gmx.net>
+In-Reply-To: <20220109173000.1242703-1-j.neuschaefer@gmx.net>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Sun, 16 Jan 2022 01:38:32 +0100
+Message-ID: <CACRpkdY+Jdn_Yr4BpuXssTn=6wjDPm9mMgz3yrjVGw8=UzKbzQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/9] Nuvoton WPCM450 pinctrl and GPIO driver
+To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,142 +76,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>,
- velumanit@hcl.com, patrickw3@fb.com, Amithash Prasad <amithash@fb.com>
+Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Tali Perry <tali.perry1@gmail.com>, linux-gpio@vger.kernel.org,
+ Andy Shevchenko <andy.shevchenko@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000236f9b05d5986d9b
-Content-Type: text/plain; charset="UTF-8"
+On Sun, Jan 9, 2022 at 6:34 PM Jonathan Neusch=C3=A4fer
+<j.neuschaefer@gmx.net> wrote:
 
-Hi Patrick,
+> This is version 4 of the WPCM450 pinctrl/GPIO driver patchset,
+> with some small, (hopefully) final improvements and cleanups
+> (see patches 4 and 5).
 
-Thanks for the response. Sure. I will open an issue in TOF for requesting a
-new repository.
+It looks good to me, but I'd like some confirmation that Andy
+is happy with it.
 
-Thanks,
-Kumar.
+> I'm targetting 5.18, it's now too close to the 5.17 merge window anyway.
 
-On Sat, Jan 15, 2022 at 12:22 AM Patrick Williams <patrick@stwcx.xyz> wrote:
+Could you rebase it on v5.17-rc and resend it once that comes out?
+It would help me a lot to have a known good baseline.
 
-> On Wed, Jan 05, 2022 at 07:53:18PM +0530, Kumar Thangavel wrote:
-> > On Wed, Jan 5, 2022 at 1:20 AM Ed Tanous <ed@tanous.net> wrote:
-> >
-> > > On Mon, Jan 3, 2022 at 11:55 PM Kumar Thangavel
-> > > <kumarthangavel.hcl@gmail.com> wrote:
-> <<clipped>>
->
-> We are initially supporting the non-open BIC implementation that we had on
-> Yosemite v1,2, and 3, but we have recently started a fully open source
-> implementation of the BIC side of this:
->
->     https://github.com/facebook/OpenBIC
->
-> We'd certainly be interested in collaborating if anyone else is interested
-> in
-> designing a system using a uC like this.  Basically the BIC acts as an IO
-> expander for the BMC so that we can manage multiple hosts and/or
-> accelerator
-> cards.
->
-> At a high-level this is similar to the PLDM subsystem.  We have some IPMB
-> events
-> that the BIC push to the BMC and we already have those handled in the IPMI
-> handlers, but there are other parts of the design where the BMC initiates
-> activity.
->
-> We could certainly spread the implementation out into various repositories,
-> like dbus-sensors and phosphor-bmc-code-mgmt, but I suspect there are
-> going to
-> be challenges in a bug-free implementation in that regard.  There are cases
-> where asking the BIC to do one activity, such as update itself, takes
-> offline
-> some other pieces of functionality, like sensors, and so there does need
-> to be
-> some state-awareness.  It seems less error prone to put all the various
-> DBus
-> objects related to the BIC into one daemon/repository in the same manner as
-> PLDM is doing.
->
->
-> Kumar, in order to get closure on this, I think you should open an issue to
-> technical-oversight-forum requesting a repository.  Repository oversight is
-> one of the primary functions of the TOF.
->
-> --
-> Patrick Williams
->
-
---000000000000236f9b05d5986d9b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi Patrick,</div><div><br></div><div>Thanks for the r=
-esponse. Sure. I will open an issue in TOF for requesting a new repository.=
-</div><div><br></div><div>Thanks,</div><div>Kumar.</div><br><div class=3D"g=
-mail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Jan 15, 2022 at 1=
-2:22 AM Patrick Williams &lt;<a href=3D"mailto:patrick@stwcx.xyz">patrick@s=
-twcx.xyz</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex">On Wed, Jan 05, 2022 at 07:53:18PM +0530, Kumar Thangavel wrote:<br=
->
-&gt; On Wed, Jan 5, 2022 at 1:20 AM Ed Tanous &lt;<a href=3D"mailto:ed@tano=
-us.net" target=3D"_blank">ed@tanous.net</a>&gt; wrote:<br>
-&gt; <br>
-&gt; &gt; On Mon, Jan 3, 2022 at 11:55 PM Kumar Thangavel<br>
-&gt; &gt; &lt;<a href=3D"mailto:kumarthangavel.hcl@gmail.com" target=3D"_bl=
-ank">kumarthangavel.hcl@gmail.com</a>&gt; wrote:<br>
-&lt;&lt;clipped&gt;&gt;<br>
-<br>
-We are initially supporting the non-open BIC implementation that we had on<=
-br>
-Yosemite v1,2, and 3, but we have recently started a fully open source<br>
-implementation of the BIC side of this:<br>
-<br>
-=C2=A0 =C2=A0 <a href=3D"https://github.com/facebook/OpenBIC" rel=3D"norefe=
-rrer" target=3D"_blank">https://github.com/facebook/OpenBIC</a><br>
-<br>
-We&#39;d certainly be interested in collaborating if anyone else is interes=
-ted in<br>
-designing a system using a uC like this.=C2=A0 Basically the BIC acts as an=
- IO<br>
-expander for the BMC so that we can manage multiple hosts and/or accelerato=
-r<br>
-cards.<br>
-<br>
-At a high-level this is similar to the PLDM subsystem.=C2=A0 We have some I=
-PMB events<br>
-that the BIC push to the BMC and we already have those handled in the IPMI<=
-br>
-handlers, but there are other parts of the design where the BMC initiates<b=
-r>
-activity.<br>
-<br>
-We could certainly spread the implementation out into various repositories,=
-<br>
-like dbus-sensors and phosphor-bmc-code-mgmt, but I suspect there are going=
- to<br>
-be challenges in a bug-free implementation in that regard.=C2=A0 There are =
-cases<br>
-where asking the BIC to do one activity, such as update itself, takes offli=
-ne<br>
-some other pieces of functionality, like sensors, and so there does need to=
- be<br>
-some state-awareness.=C2=A0 It seems less error prone to put all the variou=
-s DBus<br>
-objects related to the BIC into one daemon/repository in the same manner as=
-<br>
-PLDM is doing.<br>
-<br>
-<br>
-Kumar, in order to get closure on this, I think you should open an issue to=
-<br>
-technical-oversight-forum requesting a repository.=C2=A0 Repository oversig=
-ht is<br>
-one of the primary functions of the TOF.<br>
-<br>
--- <br>
-Patrick Williams<br>
-</blockquote></div></div>
-
---000000000000236f9b05d5986d9b--
+Thanks!
+Linus Walleij
