@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F498492198
-	for <lists+openbmc@lfdr.de>; Tue, 18 Jan 2022 09:47:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D2DB492190
+	for <lists+openbmc@lfdr.de>; Tue, 18 Jan 2022 09:46:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JdMpK26lQz3bV8
-	for <lists+openbmc@lfdr.de>; Tue, 18 Jan 2022 19:47:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JdMnL39QDz30N9
+	for <lists+openbmc@lfdr.de>; Tue, 18 Jan 2022 19:46:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,11 +17,11 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JdMn31Zxnz2ynQ;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JdMn30znrz2xDV;
  Tue, 18 Jan 2022 19:45:56 +1100 (AEDT)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 20I8c8xP013911;
- Tue, 18 Jan 2022 16:38:08 +0800 (GMT-8)
+ by twspam01.aspeedtech.com with ESMTP id 20I8c8Qh013912;
+ Tue, 18 Jan 2022 16:38:09 +0800 (GMT-8)
  (envelope-from jammy_huang@aspeedtech.com)
 Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
@@ -31,10 +31,9 @@ To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
  <andrew@aj.id.au>, <linux-media@vger.kernel.org>,
  <openbmc@lists.ozlabs.org>, <linux-arm-kernel@lists.infradead.org>,
  <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3 1/2] media: aspeed: Add macro for the fields of the
- mode-detect registers
-Date: Tue, 18 Jan 2022 16:44:48 +0800
-Message-ID: <20220118084449.5182-2-jammy_huang@aspeedtech.com>
+Subject: [PATCH v3 2/2] video: aspeed: Fix unstable timing detection
+Date: Tue, 18 Jan 2022 16:44:49 +0800
+Message-ID: <20220118084449.5182-3-jammy_huang@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220118084449.5182-1-jammy_huang@aspeedtech.com>
 References: <20220118084449.5182-1-jammy_huang@aspeedtech.com>
@@ -45,7 +44,7 @@ X-Originating-IP: [192.168.2.115]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 20I8c8xP013911
+X-MAIL: twspam01.aspeedtech.com 20I8c8Qh013912
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,51 +59,51 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-VE_MODE_DT_HOR_TOLER: the tolerance in detecting for stable horizontal
-signal.
-VE_MODE_DT_VER_TOLER: the tolerance in detecting for stable vertical
-signal.
-VE_MODE_DT_HOR_STABLE: the minimum required count in detecting stable
-HSYNC signal to set mode detection horizontal signal stable.
-VE_MODE_DT_VER_STABLE: the minimum required count in detecting stable
-VSYNC signal to set mode detection vertical signal stable.
+Using stable-signal in resolution detection, and try detection again
+if unstable.
+
+VE_MODE_DETECT_EXTSRC_ADC: 1 if video source is from ADC output.
+VE_MODE_DETECT_H_STABLE: 1 if horizontal signal detection is stable.
+VE_MODE_DETECT_V_STABLE: 1 if vertical signal detection is stable.
 
 Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
 ---
- drivers/media/platform/aspeed-video.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/media/platform/aspeed-video.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index 4f5f5dd364ee..5ba4d70c8dab 100644
+index 5ba4d70c8dab..585ee2997d44 100644
 --- a/drivers/media/platform/aspeed-video.c
 +++ b/drivers/media/platform/aspeed-video.c
-@@ -190,6 +190,12 @@
- #define  VE_INTERRUPT_VSYNC_DESC	BIT(11)
+@@ -165,9 +165,14 @@
  
- #define VE_MODE_DETECT			0x30c
-+#define  VE_MODE_DT_HOR_TOLER		GENMASK(31, 28)
-+#define  VE_MODE_DT_VER_TOLER		GENMASK(27, 24)
-+#define  VE_MODE_DT_HOR_STABLE		GENMASK(23, 20)
-+#define  VE_MODE_DT_VER_STABLE		GENMASK(19, 16)
-+#define  VE_MODE_DT_EDG_THROD		GENMASK(15, 8)
+ #define VE_MODE_DETECT_STATUS		0x098
+ #define  VE_MODE_DETECT_H_PERIOD	GENMASK(11, 0)
++#define  VE_MODE_DETECT_EXTSRC_ADC	BIT(12)
++#define  VE_MODE_DETECT_H_STABLE	BIT(13)
++#define  VE_MODE_DETECT_V_STABLE	BIT(14)
+ #define  VE_MODE_DETECT_V_LINES		GENMASK(27, 16)
+ #define  VE_MODE_DETECT_STATUS_VSYNC	BIT(28)
+ #define  VE_MODE_DETECT_STATUS_HSYNC	BIT(29)
++#define  VE_MODE_DETECT_VSYNC_RDY	BIT(30)
++#define  VE_MODE_DETECT_HSYNC_RDY	BIT(31)
+ 
+ #define VE_SYNC_STATUS			0x09c
+ #define  VE_SYNC_STATUS_HSYNC		GENMASK(11, 0)
+@@ -971,6 +976,13 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+ 			return;
+ 		}
+ 
++		mds = aspeed_video_read(video, VE_MODE_DETECT_STATUS);
++		// try detection again if current signal isn't stable
++		if (!(mds & VE_MODE_DETECT_H_STABLE) ||
++		    !(mds & VE_MODE_DETECT_V_STABLE) ||
++		    (mds & VE_MODE_DETECT_EXTSRC_ADC))
++			continue;
 +
- #define VE_MEM_RESTRICT_START		0x310
- #define VE_MEM_RESTRICT_END		0x314
+ 		aspeed_video_check_and_set_polarity(video);
  
-@@ -1238,7 +1244,12 @@ static void aspeed_video_init_regs(struct aspeed_video *video)
- 	aspeed_video_write(video, VE_SCALING_FILTER3, 0x00200000);
- 
- 	/* Set mode detection defaults */
--	aspeed_video_write(video, VE_MODE_DETECT, 0x22666500);
-+	aspeed_video_write(video, VE_MODE_DETECT,
-+			   FIELD_PREP(VE_MODE_DT_HOR_TOLER, 2) |
-+			   FIELD_PREP(VE_MODE_DT_VER_TOLER, 2) |
-+			   FIELD_PREP(VE_MODE_DT_HOR_STABLE, 6) |
-+			   FIELD_PREP(VE_MODE_DT_VER_STABLE, 6) |
-+			   FIELD_PREP(VE_MODE_DT_EDG_THROD, 0x65));
- 
- 	aspeed_video_write(video, VE_BCD_CTRL, 0);
- }
+ 		aspeed_video_enable_mode_detect(video);
 -- 
 2.25.1
 
