@@ -2,96 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C10A1494004
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 19:36:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C044494161
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 21:00:37 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JfDrD4mgkz3bPB
-	for <lists+openbmc@lfdr.de>; Thu, 20 Jan 2022 05:36:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JfGhz3DP4z30R0
+	for <lists+openbmc@lfdr.de>; Thu, 20 Jan 2022 07:00:35 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Ib65WsKK;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=HGI7jUu5;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=B8mu3RqE;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Ib65WsKK; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=HGI7jUu5; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=B8mu3RqE; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JfDqk4s94z2yYc
- for <openbmc@lists.ozlabs.org>; Thu, 20 Jan 2022 05:36:18 +1100 (AEDT)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 20JIBARE023645
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 18:36:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- subject : from : to : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=K3jzJnVkfbY/7P2qjz9R+c99W9RsmyG/mhWGsOUeBSw=;
- b=Ib65WsKKwkzxMgDI2s/bKNJqeMSdeNBeaw2QTo2abi9t4WXoLcmGFdPvmXPMWxOgYrk9
- sRZsoZkJF5CGOwsGl1UbYwpgU+FFYMF7gQb1jtF+oGr6o95sgeagp0dwv5DSiNj4Sh+d
- 4qp06oBotLCxUB2I/5yBFcXJxLh/+TKgZZHFp8T1UmvMF83KLMsiLJ10Bzjgq77bzJjE
- q/WKa/elcVqI7gFbSis104ATf379c/NTd/Gq+4uCek+fl1iCnIDRnMX22K1pP8bvHAZR
- h5kgmmn4j0/GG0VoSHkkS622E0Tu7gb9Pb2rCcJraV+oair5zBSavJYQBvNb+Iah3CyK eA== 
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3dpmvhd4ft-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 18:36:15 +0000
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 20JII03p032567
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 18:36:14 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma01wdc.us.ibm.com with ESMTP id 3dknwbegr5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 18:36:14 +0000
-Received: from b03ledav003.gho.boulder.ibm.com
- (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 20JIaEWD35455364
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 18:36:14 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 11A9C6A064
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 18:36:14 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C7B0D6A058
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 18:36:13 +0000 (GMT)
-Received: from [9.160.122.53] (unknown [9.160.122.53])
- by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 18:36:13 +0000 (GMT)
-Message-ID: <7ef1bc65-a7a8-7ac0-f1af-80a929c8f36a@linux.ibm.com>
-Date: Wed, 19 Jan 2022 12:36:12 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.1
-Subject: Re: Security Working Group meeting - Wednesday January 19 - results
-Content-Language: en-US
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-References: <c8c1bdcb-bf8a-c266-53c2-51f53fbe44ea@linux.ibm.com>
-In-Reply-To: <c8c1bdcb-bf8a-c266-53c2-51f53fbe44ea@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Pr7IWfNRN2jRS6F5Wa6sTgWvOPtta2Pt
-X-Proofpoint-ORIG-GUID: Pr7IWfNRN2jRS6F5Wa6sTgWvOPtta2Pt
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JfGhX2TZ3z2ynM
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Jan 2022 07:00:11 +1100 (AEDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id CFC105C02B2
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 15:00:08 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute5.internal (MEProxy); Wed, 19 Jan 2022 15:00:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=+oNR5c1tw/r3dngqXEAwXINDvj8
+ yubzSvpaiX+RY5sc=; b=HGI7jUu5qRb4nyuojYMDJ+ZlZ4FB6clYsC09R4VynvE
+ XYUBH84QCdm6CiEtuwX9NMjymxNCfyTT1idLk9sSYUe6KfCHMiyNNKhqS6ZMBjpj
+ 97wU2FD0gKHqq6lhUnV3uHq81vvs1AnW5W7bko0+BwOXP3aYp7JT++x/q2OeFSmc
+ ETOxrCvuaReTWHObpkfU38zCnF1wVnwK66G11zFMpoF+cuzM6aFmWW2yH1svnmej
+ u6KIEHSVk2Hoj/pfYyerX258P6mH0i6xeJ+8FvI0PgJW8Gb7Wvsx9w6xGhcz5WOr
+ z8msfC1t0nAi4N+03mKoCTxnQg48DV5dFPXqWFiFRjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+oNR5c
+ 1tw/r3dngqXEAwXINDvj8yubzSvpaiX+RY5sc=; b=B8mu3RqEf5isfq6wzfwYAL
+ QWRvJeTYca4bEgLkJcRU+Xq/Joj9VAcCe/211FFToQ8KfdGLneS4aP4a0EA2+YVS
+ gCb9fdQnZeO/huDAkVAf2PAqCZ+xZ/8ag8IO6NRcHH+it488Ox/E5FKwWZbPts0X
+ lvhzMQcjD/LOYZk3/MQ1HHis6LKTRPxsbNNmrxW8fb1Q5mVsEIkKP9Rm7NKLXzob
+ etYMPabARrJIzsM6Z0Hi2kR/jf019SKK6cZJb/Vm0W/5IQ2IZJKjMIjUv/ji5Ye+
+ 6PKJxgFVRVi4ygXFq8uTrpqXl1sc5kNtPZisHM0ZUjHSR7uDOi0SyJStcV6ehsiw
+ ==
+X-ME-Sender: <xms:yG3oYWT10u11bAogI-53XWkwkrQNP7BgBXdSHxWFnAAnxXOp7FPbZQ>
+ <xme:yG3oYbxvcAMswUO85pFKHah9S3RVmx625lr6CZo2dTOu0QHL4z6uc2KQvO2dni00f
+ _IH78z4scK_Bx368E8>
+X-ME-Received: <xmr:yG3oYT3T8nsxr8qjv3bcBJKnJX57fNIEE1G683IXwAulJi8CSdJuEM--h4vV4lf-HtyWg1xd0jcIJUPHkh5Vpwhu87hb--0NSdJCj9gFgkOw9A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudeigdejvdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
+ fefgtdehhfektdelffevkefgueffhedtieenucevlhhushhtvghrufhiiigvpedtnecurf
+ grrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:yG3oYSArTNd7YUntb4gSaIsVVseBTvsEhVD4jZOJpLcP7ZIKAOT63w>
+ <xmx:yG3oYfjg8Ndjf6yHdTfAO_KkBNLb978y4Cw5WzG7mNUsfbINNnFU1A>
+ <xmx:yG3oYeo1NVGmB7Ok3AFxaR9JTMP0sDZAyQbq7U_tYCxDRMj0U1HyeQ>
+ <xmx:yG3oYRde1KA3dokyK6TxKPuwlsKUpRMKkOlDdJ8cdDiKf2tUztPWkA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 15:00:08 -0500 (EST)
+Date: Wed, 19 Jan 2022 14:00:06 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+Subject: Re: Upcoming OpenBMC release 2.11
+Message-ID: <YehtxgLG3KlzKFAk@heinlein>
+References: <YbposjOPwc1puNvR@heinlein>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2022-01-19_10,2022-01-19_01,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=919 clxscore=1015
- adultscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 mlxscore=0 spamscore=0 malwarescore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2201190103
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="laRRm6GtiD1wKuox"
+Content-Disposition: inline
+In-Reply-To: <YbposjOPwc1puNvR@heinlein>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,47 +99,45 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 1/18/22 10:03 PM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday January 19 at 10:00am PDT.
->
-> We'll discuss the following items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-> and anything else that comes up:
->
->
 
-Attended: Joseph, Dhananjay, James Mihm, Aviram from Kameleon, Dick 
-Wilkins, Daniil, Jiang Zhang.
+--laRRm6GtiD1wKuox
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+Reminder...
 
-1 James mentioned two topics from last time: (a) integrate OpenBMC 
-Security Response Team (SRT) docs into github, and (2) enhance the SRT 
-process (as the OpenBMC CNA) to follow the correct process to write CVEs.
+On Wed, Dec 15, 2021 at 04:14:10PM -0600, Patrick Williams wrote:
+> What I'd like to do is target January 14th, 2022 for our 2.11 release.  I=
+f you
+> are interested in your systems working on that release branch, please tes=
+t the
+> 'honister' branch and let me know of any issues you see either here or in
+> #release-planning.
 
-James renewed the call to push to writeup security issues in (private 
-repo) https://github.com/openbmc/security-response/issues 
-<https://github.com/openbmc/security-response/issues>
+I have not heard from anyone on interest in a 2.11 release.
 
-We are still working on this, with the limited amount of time we have.
+--=20
+Patrick Williams
 
+--laRRm6GtiD1wKuox
+Content-Type: application/pgp-signature; name="signature.asc"
 
-2 Aviram from Kameleon briefly outlined interest in an OpenBMC Root of 
-Trust (RoT).
+-----BEGIN PGP SIGNATURE-----
 
-The RoT controls access to the flash for both the BMC and host, 
-following WIP standards from OCP: 
-https://www.opencompute.org/blog/ocp-security-announces-version-10-specs-for-root-of-trust 
-<https://www.opencompute.org/blog/ocp-security-announces-version-10-specs-for-root-of-trust>
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmHobcQACgkQqwNHzC0A
+wRmDBQ/8CDTFXIKQlxOZCWuHOz80vuqrPPGtqRvqSiQm4Nhqkchg02RGkDgX7LUM
+UYFPEE1ViTlHvBuvX7JZwJ1ppujNnkG3JcaCbB3p0ySdbRsQRPbI6J9n063pe8lu
+EsjdtoA6LD7g3U8h+QsXL1rfsp7uZ7Ztx9p/Z+9vG8xy714TppwM0PegnDGGfSUi
+gfctl425dYMt5WahelxjjgD3o0Rt69qc8BvQ0CUBQUg14/8yGx7af/p4S09kFFQA
+Yf6qzB4kzc1mTZ0en3eZ4pfxrFSFW3Ppkfkl3B+k6ZHKVHc0MQViUmRCsELTK0b4
+TkBrwGioEbd4qMmHNXwC2Dcu/+PfjqE35zoz3ElZsN7swvEOkDtoNrnqH0dgXWKs
+UhoA84vVgqqjiv2MFQNqHpfik1Rn/59JUAE+1A/ZTAE76AcM/GxRh/XQG3BeQw3y
+91470DOzcXdE3aJfq4Yzo5vIZahLVUAXqw+77yVFSYpBaWZrBJW4SwMB+nMnNBz5
+Pq48zW5Ma016x9OOC9FWW3hlrC5WkAa740vEePDdE94KtrWlwv84eVeWwWbEl2xW
+IKjaHwwWsr4s3go09pB1vcrdnLkBnYxYHjvvntaNr2JHI2TXdvE8UNNLzvDkWkEp
+mF3e+ssFB41J2rhWBVMofL7k/bosuI4vU12ucCA5wd05yYkpk0U=
+=wsCw
+-----END PGP SIGNATURE-----
 
-
--Joseph
-
->
->
-> Access, agenda and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group 
-> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
->
-> - Joseph
-
+--laRRm6GtiD1wKuox--
