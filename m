@@ -1,69 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6FE449334F
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 04:07:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2391A4933E2
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 05:04:04 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JdrCx5CKZz30KR
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 14:07:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JdsTF6hsbz2xv8
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 15:04:01 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=dCh2d1L+;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=XKPS2byW;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f31;
- helo=mail-qv1-xf31.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=dCh2d1L+; dkim-atps=neutral
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com
- [IPv6:2607:f8b0:4864:20::f31])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=XKPS2byW; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JdrCY1wjZz2xtL
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 14:07:03 +1100 (AEDT)
-Received: by mail-qv1-xf31.google.com with SMTP id t7so1541313qvj.0
- for <openbmc@lists.ozlabs.org>; Tue, 18 Jan 2022 19:07:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=yeYAEDHS6vA1Ae/k/34htmVP3QfuHUc1zWVxkC1Xvmk=;
- b=dCh2d1L+83WtvPXn3XNfGgPHPxvFauLjdCFp/ch9DNYrTPAT+z7FdaV1wtTwHXmq0f
- wy+BGoW5rNo0sHv9Hj642Uo5u6p1ytPOKZ1URo0EGVMN7F16EZvhBZ/OcT9Ue2KZVj6J
- rv+C0i0TCiBa0iEyCmDLUyYsaVGfF4kqp3/kw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=yeYAEDHS6vA1Ae/k/34htmVP3QfuHUc1zWVxkC1Xvmk=;
- b=TnU6AcI4ERdH4C84a2EXn2RecCFLPtlQgB493ff8NZjKGztWFjv+cGHjipSPyJNScm
- rCRrfiOn30NVlsl3nu5l/xnx1+N9OEedQBesuWJPRPtDUfgBU9Kiyzg/ZpAwhVAhzv9a
- d16xiu7JcyBWkZJ1ic08C3F0aCmB91NJOPG3fCI5rmBPvcdSKChcjDWbt1VM4p1Ua4gR
- KJ0kA6JNZp9EzNcYQeHv7Z2IfxLLHWwLWVX1SbdFcwjhlN8DBs6hUae8WgKeF1eal7Ej
- 31oCMc536GEG60h4ynEpHY0BrKQolZ7QNsQTwjb5k0VwcPBPDbnSTfdhPOt4Iy+wg6FA
- lBJw==
-X-Gm-Message-State: AOAM531wcQazQraRrG1HJHpRMfI6d5XjWQwljWO1tYmcqOM6J+DfvMik
- /0IRYibJO+rmAH9GqMnqnT+yCZB54M+eo0matrg=
-X-Google-Smtp-Source: ABdhPJwsNaCTHyeElnHn0pewfvJdYEROQdqkbMZaikHgf5TdTD+53yrugxEmun11EUX0IZIsjdvkpeVuAVdIRoiSwoo=
-X-Received: by 2002:a05:6214:29cf:: with SMTP id
- gh15mr17362795qvb.21.1642561619070; 
- Tue, 18 Jan 2022 19:06:59 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JdsSp18kRz2xBL
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 15:03:37 +1100 (AEDT)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 20J33qpT017395
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date : to :
+ from : subject : content-type : content-transfer-encoding : mime-version;
+ s=pp1; bh=B5sdSpQ7ptL8xMjoiYE2YwY4JrsvGrwQ9agVdUt6eRk=;
+ b=XKPS2byWyXwwEd18Njn4n5WBZJbl/2onjt2lOP5ifTYqtfdmZC537fkEy+y0soN+YfXh
+ 7U7i87S1EhH7w5lJwee6EXG0PESFatQfZmB9x/PiZuPJegs50Kae0m4nj/R0l6J5kt9p
+ dZLmtTKD6tmlFKYwobLRjaG5z6UTmO+FClFE4oN2aIE+3sPfFTfgU7P6FPdWehiSZ2XX
+ mi20ZnovQqX5jTS0CT8Zi/pbFgZmV5KaxP61SbaJxRPb9v3PT48ormL1bAV7utKrpASF
+ IsDS69wY0KvzedNrP5c7EvlyjwtWjn4veP9iTOP18L+Rk2xKYOXtvXvvGc7SAQcHeWY3 rA== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3dp90ha0m4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:33 +0000
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 20J3rekK031455
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:32 GMT
+Received: from b03cxnp08027.gho.boulder.ibm.com
+ (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
+ by ppma04dal.us.ibm.com with ESMTP id 3dknwb7qwc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:32 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 20J43VKO18743602
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:31 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7107AC606C
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:31 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 35A8BC6070
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:31 +0000 (GMT)
+Received: from [9.160.36.49] (unknown [9.160.36.49])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:30 +0000 (GMT)
+Message-ID: <c8c1bdcb-bf8a-c266-53c2-51f53fbe44ea@linux.ibm.com>
+Date: Tue, 18 Jan 2022 22:03:29 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.1
+Content-Language: en-US
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday January 19
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -1Qpm0zjtLib9dnZa-QnZZMBX3gdwpIj
+X-Proofpoint-GUID: -1Qpm0zjtLib9dnZa-QnZZMBX3gdwpIj
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <CAGpPFEFoTO-cUxvxEnoNQ3YoKBWRK+pOeyGzni6E5Da-=w+stA@mail.gmail.com>
- <CACPK8Xec1P8xF9t8Uj1Fg0YsX4v6Y6Gi=KkeZD70AoLPqZB=PA@mail.gmail.com>
- <YeHE3qPWS0LpmLIb@heinlein>
- <CACPK8XebyrX1jpiJxsvH7+kJxKYMWgbWG7GZYi9BU9qYJWHi6w@mail.gmail.com>
- <Yeb7iXvJSFvWa/NP@heinlein>
-In-Reply-To: <Yeb7iXvJSFvWa/NP@heinlein>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 19 Jan 2022 03:06:46 +0000
-Message-ID: <CACPK8Xd+TgWx8bv810LBeTO9KYOUR3CsipamEBou+RHYteZz6w@mail.gmail.com>
-Subject: Re: Procedure for the send review on u-boot patch
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
+ definitions=2022-01-19_04,2022-01-18_01,2021-12-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
+ suspectscore=0 mlxlogscore=675 priorityscore=1501 mlxscore=0 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2110150000 definitions=main-2201190019
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,34 +100,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, velumanit@hcl.com,
- logananth hcl <logananth13.hcl@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 18 Jan 2022 at 17:40, Patrick Williams <patrick@stwcx.xyz> wrote:
->
-> On Mon, Jan 17, 2022 at 06:54:48AM +0000, Joel Stanley wrote:
-> > On Fri, 14 Jan 2022 at 18:45, Patrick Williams <patrick@stwcx.xyz> wrote:
-> > > On Thu, Jan 13, 2022 at 10:40:40PM +0000, Joel Stanley wrote:
-> > > > I strongly recommend using the newer v2019.04 based branch for any new
-> > > > system you're bringing up.
->
-> I was under the mistaken assumption that the aspeed-sdk was not hosted and
-> maintained by us.  In u-boot-common-aspeed-sdk_2019.04.inc I see:
->
-> HOMEPAGE = "https://github.com/AspeedTech-BMC/u-boot"
->
-> ... but ...
->
-> SRC_URI = "git://git@github.com/openbmc/u-boot.git;nobranch=1;protocol=https"
->
-> Should we align these to avoid any confusion?  I assume we should adjust the
-> HOMEPAGE to point at our repository?
+This is a reminder of the OpenBMC Security Working Group meeting 
+scheduled for this Wednesday January 19 at 10:00am PDT.
 
-The upstream for our branch is that homepage URL. Ideally we would put
-all of our patches into the SDK (I often send Aspeed pull requests to
-do this), and un-fork the repository.
+We'll discuss the following items on the agenda 
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+and anything else that comes up:
 
-If you found the homepage URL confusing we could add a note to
-explain, and change it. I'll leave it to you.
+1.
+
+
+
+Access, agenda and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group 
+<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+
+- Joseph
