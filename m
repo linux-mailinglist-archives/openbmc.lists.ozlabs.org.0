@@ -2,93 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2391A4933E2
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 05:04:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E5B9F49352A
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 07:49:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JdsTF6hsbz2xv8
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 15:04:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jdx855TVMz30gg
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 17:49:25 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=XKPS2byW;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=BwAbs/qh;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=XKPS2byW; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=BwAbs/qh; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JdsSp18kRz2xBL
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 15:03:37 +1100 (AEDT)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 20J33qpT017395
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date : to :
- from : subject : content-type : content-transfer-encoding : mime-version;
- s=pp1; bh=B5sdSpQ7ptL8xMjoiYE2YwY4JrsvGrwQ9agVdUt6eRk=;
- b=XKPS2byWyXwwEd18Njn4n5WBZJbl/2onjt2lOP5ifTYqtfdmZC537fkEy+y0soN+YfXh
- 7U7i87S1EhH7w5lJwee6EXG0PESFatQfZmB9x/PiZuPJegs50Kae0m4nj/R0l6J5kt9p
- dZLmtTKD6tmlFKYwobLRjaG5z6UTmO+FClFE4oN2aIE+3sPfFTfgU7P6FPdWehiSZ2XX
- mi20ZnovQqX5jTS0CT8Zi/pbFgZmV5KaxP61SbaJxRPb9v3PT48ormL1bAV7utKrpASF
- IsDS69wY0KvzedNrP5c7EvlyjwtWjn4veP9iTOP18L+Rk2xKYOXtvXvvGc7SAQcHeWY3 rA== 
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3dp90ha0m4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:33 +0000
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 20J3rekK031455
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:32 GMT
-Received: from b03cxnp08027.gho.boulder.ibm.com
- (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
- by ppma04dal.us.ibm.com with ESMTP id 3dknwb7qwc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:32 +0000
-Received: from b03ledav006.gho.boulder.ibm.com
- (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
- by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 20J43VKO18743602
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:31 GMT
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7107AC606C
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:31 +0000 (GMT)
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 35A8BC6070
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:31 +0000 (GMT)
-Received: from [9.160.36.49] (unknown [9.160.36.49])
- by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 04:03:30 +0000 (GMT)
-Message-ID: <c8c1bdcb-bf8a-c266-53c2-51f53fbe44ea@linux.ibm.com>
-Date: Tue, 18 Jan 2022 22:03:29 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.1
-Content-Language: en-US
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group meeting - Wednesday January 19
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -1Qpm0zjtLib9dnZa-QnZZMBX3gdwpIj
-X-Proofpoint-GUID: -1Qpm0zjtLib9dnZa-QnZZMBX3gdwpIj
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jdx7D1Cm3z3bTd
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 17:48:39 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (174-21-190-118.tukw.qwest.net
+ [174.21.190.118])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 18D48135;
+ Tue, 18 Jan 2022 22:48:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1642574916;
+ bh=cXqNS9oxeWnPCgtLPMam07e5ji5JmEjZaiMzj3q0aGg=;
+ h=From:To:Cc:Subject:Date:From;
+ b=BwAbs/qhbbnUrn+Prpl/a+GLc1AY57gDguxIpIDlLbvE9Cij5gURBJRc8HqeIJT+b
+ mId3daWW/wG/ord2/UzGIKqcjuVl2Gn8IAsRrhBeowQzAfAmc1ZyByFXCAfXnT5oNu
+ h8t8tAUY2HeftNz3Ac7HEBGn4rSQTMUSxv3K5rWc=
+From: Zev Weiss <zev@bewilderbeest.net>
+To: openembedded-core@lists.openembedded.org
+Subject: [OE-core][PATCH] u-boot: Split do_configure logic into separate file
+Date: Tue, 18 Jan 2022 22:48:12 -0800
+Message-Id: <20220119064812.17824-1-zev@bewilderbeest.net>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2022-01-19_04,2022-01-18_01,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0
- impostorscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
- suspectscore=0 mlxlogscore=675 priorityscore=1501 mlxscore=0 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2201190019
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,22 +60,117 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Zev Weiss <zev@bewilderbeest.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday January 19 at 10:00am PDT.
+Some auxiliary u-boot recipes may need u-boot properly configured
+(including *.cfg additions via bbappends) but aren't necessarily
+building u-boot itself; to support such situations, here we split the
+u-boot do_configure() out of u-boot.inc and into its own
+u-boot-configure.inc.
 
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-and anything else that comes up:
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+---
+ meta/recipes-bsp/u-boot/u-boot-configure.inc | 39 ++++++++++++++++++++
+ meta/recipes-bsp/u-boot/u-boot.inc           | 31 +---------------
+ 2 files changed, 40 insertions(+), 30 deletions(-)
+ create mode 100644 meta/recipes-bsp/u-boot/u-boot-configure.inc
 
-1.
+diff --git a/meta/recipes-bsp/u-boot/u-boot-configure.inc b/meta/recipes-bsp/u-boot/u-boot-configure.inc
+new file mode 100644
+index 000000000000..04e0894752f4
+--- /dev/null
++++ b/meta/recipes-bsp/u-boot/u-boot-configure.inc
+@@ -0,0 +1,39 @@
++# This provides the logic for creating the desired u-boot config,
++# accounting for any *.cfg files added to SRC_URI.  It's separated
++# from u-boot.inc for use by recipes that need u-boot properly
++# configured but aren't doing a full build of u-boot itself (such as
++# its companion tools).
++
++inherit uboot-config cml1
++
++DEPENDS += "kern-tools-native"
++
++do_configure () {
++    if [ -n "${UBOOT_CONFIG}" ]; then
++        unset i j
++        for config in ${UBOOT_MACHINE}; do
++            i=$(expr $i + 1);
++            for type in ${UBOOT_CONFIG}; do
++                j=$(expr $j + 1);
++                if [ $j -eq $i ]; then
++                    oe_runmake -C ${S} O=${B}/${config} ${config}
++                    if [ -n "${@' '.join(find_cfgs(d))}" ]; then
++                        merge_config.sh -m -O ${B}/${config} ${B}/${config}/.config ${@" ".join(find_cfgs(d))}
++                        oe_runmake -C ${S} O=${B}/${config} oldconfig
++                    fi
++                fi
++            done
++            unset j
++        done
++        unset i
++        DEVTOOL_DISABLE_MENUCONFIG=true
++    else
++        if [ -n "${UBOOT_MACHINE}" ]; then
++            oe_runmake -C ${S} O=${B} ${UBOOT_MACHINE}
++        else
++            oe_runmake -C ${S} O=${B} oldconfig
++        fi
++        merge_config.sh -m .config ${@" ".join(find_cfgs(d))}
++        cml1_do_configure
++    fi
++}
+diff --git a/meta/recipes-bsp/u-boot/u-boot.inc b/meta/recipes-bsp/u-boot/u-boot.inc
+index 2d5e46f4ef1c..f022aed732ce 100644
+--- a/meta/recipes-bsp/u-boot/u-boot.inc
++++ b/meta/recipes-bsp/u-boot/u-boot.inc
+@@ -3,7 +3,6 @@ PROVIDES = "virtual/bootloader"
+ 
+ PACKAGE_ARCH = "${MACHINE_ARCH}"
+ 
+-DEPENDS += "kern-tools-native"
+ DEPENDS += "${@bb.utils.contains('UBOOT_ENV_SUFFIX', 'scr', 'u-boot-mkimage-native', '', d)}"
+ 
+ inherit uboot-config uboot-extlinux-config uboot-sign deploy cml1 python3native kernel-arch
+@@ -25,35 +24,7 @@ PACKAGECONFIG[openssl] = ",,openssl-native"
+ # file already exists it will not be overwritten.
+ UBOOT_LOCALVERSION ?= ""
+ 
+-do_configure () {
+-    if [ -n "${UBOOT_CONFIG}" ]; then
+-        unset i j
+-        for config in ${UBOOT_MACHINE}; do
+-            i=$(expr $i + 1);
+-            for type in ${UBOOT_CONFIG}; do
+-                j=$(expr $j + 1);
+-                if [ $j -eq $i ]; then
+-                    oe_runmake -C ${S} O=${B}/${config} ${config}
+-                    if [ -n "${@' '.join(find_cfgs(d))}" ]; then
+-                        merge_config.sh -m -O ${B}/${config} ${B}/${config}/.config ${@" ".join(find_cfgs(d))}
+-                        oe_runmake -C ${S} O=${B}/${config} oldconfig
+-                    fi
+-                fi
+-            done
+-            unset j
+-        done
+-        unset i
+-        DEVTOOL_DISABLE_MENUCONFIG=true
+-    else
+-        if [ -n "${UBOOT_MACHINE}" ]; then
+-            oe_runmake -C ${S} O=${B} ${UBOOT_MACHINE}
+-        else
+-            oe_runmake -C ${S} O=${B} oldconfig
+-        fi
+-        merge_config.sh -m .config ${@" ".join(find_cfgs(d))}
+-        cml1_do_configure
+-    fi
+-}
++require u-boot-configure.inc
+ 
+ do_compile () {
+     if [ "${@bb.utils.filter('DISTRO_FEATURES', 'ld-is-gold', d)}" ]; then
+-- 
+2.33.0
 
-
-
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
-
-- Joseph
