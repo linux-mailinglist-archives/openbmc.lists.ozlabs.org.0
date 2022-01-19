@@ -1,90 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C044494161
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 21:00:37 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86649494344
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jan 2022 23:51:54 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JfGhz3DP4z30R0
-	for <lists+openbmc@lfdr.de>; Thu, 20 Jan 2022 07:00:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JfLVc32M7z30hX
+	for <lists+openbmc@lfdr.de>; Thu, 20 Jan 2022 09:51:52 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=HGI7jUu5;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=B8mu3RqE;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=MSjB2aY1;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=gaVTuARK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
- helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=HGI7jUu5; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm1 header.b=MSjB2aY1; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=B8mu3RqE; 
+ header.a=rsa-sha256 header.s=fm1 header.b=gaVTuARK; 
  dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JfGhX2TZ3z2ynM
- for <openbmc@lists.ozlabs.org>; Thu, 20 Jan 2022 07:00:11 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.nyi.internal (Postfix) with ESMTP id CFC105C02B2
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 15:00:08 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute5.internal (MEProxy); Wed, 19 Jan 2022 15:00:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=+oNR5c1tw/r3dngqXEAwXINDvj8
- yubzSvpaiX+RY5sc=; b=HGI7jUu5qRb4nyuojYMDJ+ZlZ4FB6clYsC09R4VynvE
- XYUBH84QCdm6CiEtuwX9NMjymxNCfyTT1idLk9sSYUe6KfCHMiyNNKhqS6ZMBjpj
- 97wU2FD0gKHqq6lhUnV3uHq81vvs1AnW5W7bko0+BwOXP3aYp7JT++x/q2OeFSmc
- ETOxrCvuaReTWHObpkfU38zCnF1wVnwK66G11zFMpoF+cuzM6aFmWW2yH1svnmej
- u6KIEHSVk2Hoj/pfYyerX258P6mH0i6xeJ+8FvI0PgJW8Gb7Wvsx9w6xGhcz5WOr
- z8msfC1t0nAi4N+03mKoCTxnQg48DV5dFPXqWFiFRjA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JfLV63Lwcz2xv0
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Jan 2022 09:51:25 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 8CD005C013E;
+ Wed, 19 Jan 2022 17:51:21 -0500 (EST)
+Received: from imap43 ([10.202.2.93])
+ by compute3.internal (MEProxy); Wed, 19 Jan 2022 17:51:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=vqd0bmt32sMD2FhrdgDMOUdASKD1Nky
+ +3PB95BIQMaE=; b=MSjB2aY1H9dGjZOlOOdfTnkJzQ3efHFAq0E/BkJ1H+69vkx
+ eAMs7bXRQKnoLM7PwKzfLGZm3HiPuOMrTsvERhtjk0T9G6wMPQARL+uyfMyaaXgD
+ h6dTOgzAPkf/VO2GdzBv40cc9n1nQ4OoGG55XWRsqYiHJTnZ8UFO5wihYXJ6l9ZW
+ m/ZkWa387xWJ6JjJ+hHdUjSz1zWGmmPb4K7A4rFdiQDtSZprwW1xvQohXBGIpTp3
+ KzLswpIrHl455C2XWYs3QNLhMCYIPmRc6oJ6xPaSi6n8P/RyDOcMS0s3BdCV9Z9m
+ RIGPDdBzmmscSEnxT1AGSJM+d0O930xMZ6Cdo0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+oNR5c
- 1tw/r3dngqXEAwXINDvj8yubzSvpaiX+RY5sc=; b=B8mu3RqEf5isfq6wzfwYAL
- QWRvJeTYca4bEgLkJcRU+Xq/Joj9VAcCe/211FFToQ8KfdGLneS4aP4a0EA2+YVS
- gCb9fdQnZeO/huDAkVAf2PAqCZ+xZ/8ag8IO6NRcHH+it488Ox/E5FKwWZbPts0X
- lvhzMQcjD/LOYZk3/MQ1HHis6LKTRPxsbNNmrxW8fb1Q5mVsEIkKP9Rm7NKLXzob
- etYMPabARrJIzsM6Z0Hi2kR/jf019SKK6cZJb/Vm0W/5IQ2IZJKjMIjUv/ji5Ye+
- 6PKJxgFVRVi4ygXFq8uTrpqXl1sc5kNtPZisHM0ZUjHSR7uDOi0SyJStcV6ehsiw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=vqd0bm
+ t32sMD2FhrdgDMOUdASKD1Nky+3PB95BIQMaE=; b=gaVTuARKhXs5gH8IPaNGNl
+ CSMB6kZ/GsQStZctsrG/n/ljeDEpQy1mkw/xI8GdI3MGDJj/b+TXN0nLIe2ZMj/D
+ c5xgFzxmPeyPdnY5aOLw5yLAmgoA0VYPA5Wa0JpYLPseCV0eqebYWGC7yNIHr9hU
+ FFsVY8pfqMFbkBmXKutu3MCgCddeyJslLj+scDTS/aYZ2vK3u1eKjI1pLwEF9Z8r
+ RtbOJm+yFPAMAOkGWGOB5Z0WonwJHc6Spr3nR1cj7aWjA5CCzrv9wvKVBDcS3nmu
+ V+PLl4RafvqTBNXpC+rm0eiTNcBbz8aUV45DgOqSybJafsit0Kjaqv8HzdjXyoPA
  ==
-X-ME-Sender: <xms:yG3oYWT10u11bAogI-53XWkwkrQNP7BgBXdSHxWFnAAnxXOp7FPbZQ>
- <xme:yG3oYbxvcAMswUO85pFKHah9S3RVmx625lr6CZo2dTOu0QHL4z6uc2KQvO2dni00f
- _IH78z4scK_Bx368E8>
-X-ME-Received: <xmr:yG3oYT3T8nsxr8qjv3bcBJKnJX57fNIEE1G683IXwAulJi8CSdJuEM--h4vV4lf-HtyWg1xd0jcIJUPHkh5Vpwhu87hb--0NSdJCj9gFgkOw9A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudeigdejvdcutefuodetggdotefrodftvf
+X-ME-Sender: <xms:6JXoYR6yRboM4vZbpevTaGwh324bz7Wz00kEMi2xQW9tVYfXW9zX0Q>
+ <xme:6JXoYe7mUW3wcOeQgta1RH3dttkprhL2nmgOHjSHRq0_aK45jDchPqvGoox0edFRI
+ xNbppQWvEuqI1lIIA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudejgddtfecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
- fefgtdehhfektdelffevkefgueffhedtieenucevlhhushhtvghrufhiiigvpedtnecurf
- grrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:yG3oYSArTNd7YUntb4gSaIsVVseBTvsEhVD4jZOJpLcP7ZIKAOT63w>
- <xmx:yG3oYfjg8Ndjf6yHdTfAO_KkBNLb978y4Cw5WzG7mNUsfbINNnFU1A>
- <xmx:yG3oYeo1NVGmB7Ok3AFxaR9JTMP0sDZAyQbq7U_tYCxDRMj0U1HyeQ>
- <xmx:yG3oYRde1KA3dokyK6TxKPuwlsKUpRMKkOlDdJ8cdDiKf2tUztPWkA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Wed, 19 Jan 2022 15:00:08 -0500 (EST)
-Date: Wed, 19 Jan 2022 14:00:06 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Re: Upcoming OpenBMC release 2.11
-Message-ID: <YehtxgLG3KlzKFAk@heinlein>
-References: <YbposjOPwc1puNvR@heinlein>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="laRRm6GtiD1wKuox"
-Content-Disposition: inline
-In-Reply-To: <YbposjOPwc1puNvR@heinlein>
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpefgfefffffghefhfeegfffhteelgffhgeegjeetleevvdeuleduteehkeeh
+ hfeikeenucffohhmrghinhepghhithhhuhgsrdgtohhmpdgtohguvggtohhnshhtrhhutg
+ htrdgtohhmrdgruhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+ fhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:6JXoYYd_IWBoPX-XKm_801ihBb3o_a0LBL4qXzPUrYKOTqLkE4WZDQ>
+ <xmx:6JXoYaICLu48kUjOVncB9Y8hoKwi9bz47y9w6Dqhmx_Zecer0fI3yQ>
+ <xmx:6JXoYVJvkOWJ7nldeWJF3Bf8CsoEEFFha84DXIzJrzd7jbiL5gtiYw>
+ <xmx:6ZXoYV0fwwJm2wkjwGb5NpbV8HxY46Mm0KIzHsMX7IJV29h_hMzCvQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 5BE34AC0E99; Wed, 19 Jan 2022 17:51:20 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4585-ga9d9773056-fm-20220113.001-ga9d97730
+Mime-Version: 1.0
+Message-Id: <ab4ba81d-1fd2-4afe-a628-f7c06a37c4a0@www.fastmail.com>
+In-Reply-To: <BL0PR01MB5156352A9E00E59F5F9641E4FF579@BL0PR01MB5156.prod.exchangelabs.com>
+References: <BL0PR01MB5156352A9E00E59F5F9641E4FF579@BL0PR01MB5156.prod.exchangelabs.com>
+Date: Thu, 20 Jan 2022 09:21:00 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Tung Nguyen OS" <tungnguyen@os.amperecomputing.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "Jeremy Kerr" <jk@codeconstruct.com.au>,
+ "Matt Johnston" <matt@codeconstruct.com.au>
+Subject: Re: MCTP/PLDM BMC-host communication design
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,48 +99,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Thu Nguyen OS <thu@os.amperecomputing.com>,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---laRRm6GtiD1wKuox
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Reminder...
+On Tue, 18 Jan 2022, at 03:03, Tung Nguyen OS wrote:
+> Dear community,
+> [Switched the email in PlainText format]
+>
+> We are using community PLDM/MCTP code to design our MCTP/PLDM stack via 
+> SMBUS on aarch64 system. Basically, we have 2 CPU sockets corresponding 
+> with 2 SMBUS addresses, and the MCTP/PLDM stack looks like this image:
+> https://github.com/tungnguyen-ampere/images/blob/7dba355b4742d0ffab9cd39303bbb6e9c8a6f646/current_design.png
+>
+> Due to the not supported of discovery process, we are fixing the EIDs 
+> for host.
 
-On Wed, Dec 15, 2021 at 04:14:10PM -0600, Patrick Williams wrote:
-> What I'd like to do is target January 14th, 2022 for our 2.11 release.  I=
-f you
-> are interested in your systems working on that release branch, please tes=
-t the
-> 'honister' branch and let me know of any issues you see either here or in
-> #release-planning.
+This is true if you're using the libmctp userspace solution.
 
-I have not heard from anyone on interest in a 2.11 release.
+This isn't true if you're using the in-kernel MCTP stack with the associated utilities from Code Construct:
 
---=20
-Patrick Williams
+https://codeconstruct.com.au/docs/mctp-on-linux-introduction/
 
---laRRm6GtiD1wKuox
-Content-Type: application/pgp-signature; name="signature.asc"
+Specifically, mctpd can handle discovery and network setup for you.
 
------BEGIN PGP SIGNATURE-----
+The kernel solution is the future of MCTP in OpenBMC, so if this isn't part of your plan then I'd encourage you to consider it.
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmHobcQACgkQqwNHzC0A
-wRmDBQ/8CDTFXIKQlxOZCWuHOz80vuqrPPGtqRvqSiQm4Nhqkchg02RGkDgX7LUM
-UYFPEE1ViTlHvBuvX7JZwJ1ppujNnkG3JcaCbB3p0ySdbRsQRPbI6J9n063pe8lu
-EsjdtoA6LD7g3U8h+QsXL1rfsp7uZ7Ztx9p/Z+9vG8xy714TppwM0PegnDGGfSUi
-gfctl425dYMt5WahelxjjgD3o0Rt69qc8BvQ0CUBQUg14/8yGx7af/p4S09kFFQA
-Yf6qzB4kzc1mTZ0en3eZ4pfxrFSFW3Ppkfkl3B+k6ZHKVHc0MQViUmRCsELTK0b4
-TkBrwGioEbd4qMmHNXwC2Dcu/+PfjqE35zoz3ElZsN7swvEOkDtoNrnqH0dgXWKs
-UhoA84vVgqqjiv2MFQNqHpfik1Rn/59JUAE+1A/ZTAE76AcM/GxRh/XQG3BeQw3y
-91470DOzcXdE3aJfq4Yzo5vIZahLVUAXqw+77yVFSYpBaWZrBJW4SwMB+nMnNBz5
-Pq48zW5Ma016x9OOC9FWW3hlrC5WkAa740vEePDdE94KtrWlwv84eVeWwWbEl2xW
-IKjaHwwWsr4s3go09pB1vcrdnLkBnYxYHjvvntaNr2JHI2TXdvE8UNNLzvDkWkEp
-mF3e+ssFB41J2rhWBVMofL7k/bosuI4vU12ucCA5wd05yYkpk0U=
-=wsCw
------END PGP SIGNATURE-----
+There might be some work to do to get the latest work from Jeremy and Matt into the OpenBMC kernel tree, but I'm sure they will be happy to help out.
 
---laRRm6GtiD1wKuox--
+Cheers,
+
+Andrew
