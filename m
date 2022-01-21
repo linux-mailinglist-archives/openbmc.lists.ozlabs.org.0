@@ -1,126 +1,126 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9034849762D
-	for <lists+openbmc@lfdr.de>; Sun, 23 Jan 2022 23:54:02 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BA4C49762E
+	for <lists+openbmc@lfdr.de>; Sun, 23 Jan 2022 23:54:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JhpMD3kfsz30RQ
-	for <lists+openbmc@lfdr.de>; Mon, 24 Jan 2022 09:54:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JhpN43Nx2z30Lp
+	for <lists+openbmc@lfdr.de>; Mon, 24 Jan 2022 09:54:44 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=mZ0IFmwZ;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=CXiZmr4N;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.236.130;
- helo=nam11-bn8-obe.outbound.protection.outlook.com;
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.92.115;
+ helo=nam10-bn7-obe.outbound.protection.outlook.com;
  envelope-from=tungnguyen@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=mZ0IFmwZ; 
+ header.a=rsa-sha256 header.s=selector2 header.b=CXiZmr4N; 
  dkim-atps=neutral
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam11on2130.outbound.protection.outlook.com [40.107.236.130])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com
+ (mail-bn7nam10on2115.outbound.protection.outlook.com [40.107.92.115])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jg5fL1Zhbz30MT
- for <openbmc@lists.ozlabs.org>; Fri, 21 Jan 2022 15:16:07 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jg5q36jFMz2xtF
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Jan 2022 15:23:42 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=b3Xq/L9cOREIkGrpj/SxZwf73qOliOrY0Dnsyq/+rCAiqgLVvY1FTJ9P/iW4DB1EzzlvzgF4JCaxGP25wUO2ww9BkrpNxXl78HABmMDgmnl8AQqUOlk7gW4FgzCU3ZD+52RG8whPE63zxUREiEZzFltBeTyyhEIcRyjUW7oCFMw+3NaHnDYe7de+UtH0hZA4nPAR1YX6syb9isdfqCGOKYveuOtbGpCsZFiCX5dcf+WFk4j4iLMeq1tXxAQioCWc/RfzePn0uTW1sLRkXAGpjWKsitLwVepk3p7Oe8uVQfVUL8rwXNpeU6XbJqA8YHkjQHk/iLodyu2ql8hCHuTZ4g==
+ b=EykAUKS0PYX9zpXLTaLZS9u3atQzldaBPHrgkU9Q57HJqZNJBqX3neCsTbvIafNGR0x76oZJcsWvBcio6muM+Jkv0PpRKWl/P+QHsk9Vm0MBbwiVx1kXb8Dq61Gthj69SAKB/I+2mFU+sJmSI8IJXxPRcdYPs3GrcsLdRgi65o5+SDmSL5HUgg6YeteiDB6cpBRvs4+6NZR74nD999LF9X+DM39xwzJv+VSqWvpLlC9D3K/ZMbBFUfKWzwHQVIUED8QBcJIRTVmdIGqNQy4osrdgve0UCyq+0v5dt2c88ULEdS3Wj2wCb+QDbX1+NyGHzsERnWN4TxPDfkKiNzWOPg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=H0ck8kXznRY3sSlpYik+0XqK0S5iDoEa4AH1SDoNRnk=;
- b=bm+0ds9uDQXjfwRtGpkr++oreDC/uTz99HrhqkwsfYsXayUyb0V2YU7iwR+nD1pZxW55A3nA1phM91GLotdgRaNQT39oN0PB4yk9dEOOVO0kx+FNg3fjEQ/WQrMu/g1bP5lOtWUReR8Xyd9FEoW5epjt9JE9LB53+3ekGTEAmRBDFSf2L4vdCNcN4bQB1CTkF4qPQp3e3TcH2AwSQPdtSKJlG8PgBUL/4nEFRIIk5nw0bUHrcaU9sPdKmFlH4XiLcNwlhFNp02BTeVQFQ3Y0Z3d7XegZqWD5hqE9xBK5g/7iS5OQv0FzLZUbAR1zdqF0TfImNbQW09KHjD913OEASg==
+ bh=OUK8wlhzX2ojkQHE/jUQzdjn7USmqrClF9pci67V9cQ=;
+ b=QfVZeYT2ZBK2iJSePj2y4CGfQxcXuWvzWRNLNN68BZrDDCTbUWUPnpLYUsnH1acsB1dLqdngw2UbhWOw9ux89qSZ5Y67PdOykDhfeM2iojVRg05wtE31eTrFnBVE0N4ZWL5AIQAZ5RFZZaXOqDWpr+qykoq8AJj4FDbqEgWryiUWhMA/3R3Nx8wglVt3+8iLj20teXPWnev02vnJVyobLL9i4OvNogmwi7+8o9uj8cTbydiKGURZ5KTW0I/2VmkYDKJYIz4PFTTnMZShghzs0Nq8M7bfUd27aAHaId9tAX/WBm8RlQGwkt6cvJ9uL2zEWeEjdc9QksFOicF6rONykA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=H0ck8kXznRY3sSlpYik+0XqK0S5iDoEa4AH1SDoNRnk=;
- b=mZ0IFmwZAfdAFl5GZQ5Wn8Yj2ZyoiSAfyEsopiAFBihCiIxjE33hDIzYEXzibmMl2wvE58y6+MUtn+qtWmB4AP0iFnUv1NaTvwyp22Tg/JgMKNVrB0RuGReLkMFG7rH0uP6k13HFOdlWWrOfhcb+/+aAzOtrauzxFV5YhnzwykQ=
+ bh=OUK8wlhzX2ojkQHE/jUQzdjn7USmqrClF9pci67V9cQ=;
+ b=CXiZmr4NoP4ugxAUr6zq1XOEkNEtJ5GM7su/vshzRW0enx1Jj/N3pxHuocH1i6GapNVWxbFhe6Qz1GO+kto/KAmA8zXVBKNSi2eBBo1RNCrh6fFqB8RksIRoXk+G5ylxF6cURlGXBFaktuP1O4FmAOhskiQnM38sAgLT4PhrRJQ=
 Received: from BL0PR01MB5156.prod.exchangelabs.com (2603:10b6:208:67::13) by
  MN2PR01MB5629.prod.exchangelabs.com (2603:10b6:208:117::11) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4909.8; Fri, 21 Jan 2022 04:15:46 +0000
+ 15.20.4909.8; Fri, 21 Jan 2022 04:23:24 +0000
 Received: from BL0PR01MB5156.prod.exchangelabs.com
  ([fe80::4c74:e515:b548:1486]) by BL0PR01MB5156.prod.exchangelabs.com
  ([fe80::4c74:e515:b548:1486%4]) with mapi id 15.20.4888.014; Fri, 21 Jan 2022
- 04:15:46 +0000
+ 04:23:24 +0000
 From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>
-To: Jeremy Kerr <jk@codeconstruct.com.au>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
+To: Jeremy Kerr <jk@codeconstruct.com.au>, "andrew@aj.id.au" <andrew@aj.id.au>
 Subject: Re: MCTP/PLDM BMC-host communication design
 Thread-Topic: MCTP/PLDM BMC-host communication design
-Thread-Index: AQHYC73kfl3LazavgkaXDWxfXPa3z6xrGKsAgAHB8eI=
-Date: Fri, 21 Jan 2022 04:15:46 +0000
-Message-ID: <BL0PR01MB515649ABC90BE4CCC465B8B9FF5B9@BL0PR01MB5156.prod.exchangelabs.com>
+Thread-Index: AQHYC73kfl3LazavgkaXDWxfXPa3z6xrGKsAgAHB8eKAAArjQw==
+Date: Fri, 21 Jan 2022 04:23:24 +0000
+Message-ID: <BL0PR01MB5156BFDEAE95BDF87F395F8AFF5B9@BL0PR01MB5156.prod.exchangelabs.com>
 References: <BL0PR01MB5156352A9E00E59F5F9641E4FF579@BL0PR01MB5156.prod.exchangelabs.com>
  <3f884ee81d2bfacf4a112369b79e7e5d367ad774.camel@codeconstruct.com.au>
-In-Reply-To: <3f884ee81d2bfacf4a112369b79e7e5d367ad774.camel@codeconstruct.com.au>
+ <BL0PR01MB515649ABC90BE4CCC465B8B9FF5B9@BL0PR01MB5156.prod.exchangelabs.com>
+In-Reply-To: <BL0PR01MB515649ABC90BE4CCC465B8B9FF5B9@BL0PR01MB5156.prod.exchangelabs.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-suggested_attachment_session_id: 90870085-6444-4a12-ec7d-53d2a1f88451
+suggested_attachment_session_id: 700842d6-7f6d-0ed6-a63d-c7127df91998
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 757e35c4-d12e-40fd-66df-08d9dc94b307
+x-ms-office365-filtering-correlation-id: 4e29bfe1-28b5-4a38-900d-08d9dc95c3e5
 x-ms-traffictypediagnostic: MN2PR01MB5629:EE_
-x-microsoft-antispam-prvs: <MN2PR01MB5629D9FB4A850438E8C4F124FF5B9@MN2PR01MB5629.prod.exchangelabs.com>
+x-microsoft-antispam-prvs: <MN2PR01MB5629AF042D914AB2303690FBFF5B9@MN2PR01MB5629.prod.exchangelabs.com>
 x-ms-oob-tlc-oobclassifiers: OLM:8882;
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 5fzrNPakorcLxFPPdUJ/P6YLcdzYpAA5gn0RuFnNPkGUm/Wywes5fT1Lah2Ed2NGeeBqlW4QGa69wYTSHzTdYL1RthHf4Xrlp1VWtthUWqleZOW80qEbUvb2bJPFfgHAwcNz+HhlQRvfLx1kv91AFmq1rD1vyXTRD1+6m3FoWONoFoNxteCYD5luy8FBL6asX3EqgUKPcXUX4SWyIKDYj/teKGAJsOOFWUUqajECmnCiE6bgKVubHjIB/7TJbCLP4hNu0TxBBtMP34uQEI2edTrzNVzg8w6L+ExOzal/M9O0BVvf27+PK97mvmI2JVxyPtInN/KbJKhMjNWxMCggd1ObTLW0GrJt/C6YWtq0DnvF9C8tSTRMytVo3Z/hG9zyof9l9m0k2A2qcS7aMG/8Mptd/yWqOdm5KIwphRCVW/nxLkbDZItHY2TLCnX3uT4yfvjbsIwdzQ7cdm82Ur60dBsiFVQF+IyBRduifLcN1aLrtpG7DpPj192FZC8IX1/dr3OHNLuPdHjrwQ0QA4zSnZHscZSaCu4gBQezw7qLhmPSqHLGOiF8YSfimXRPbxJulOIE4QCUS3gFVYvBa0XFFVEEXkrlBjiy8lXaEzz7osY+8+B67jmaL5amwdlYbOldImCVAt+/Gs4DQpTCP6LTlqr3n1GfyFZ6JDRakrYSef64BgZC6AN6J18FxNn/yuUwTNPCc1rff5bweLmPl5j5GScuWdtQEBA4MtAwOCCNbhDtPu4T/51HwxK7j1TicdKxm5fMvbbsto2qWDG0YyuF49OiDHxEe+qQ4wSqUehqbZ6Y2dfSOemqGWhk4FZqX0VP1pvZngS9zs8HoU0BKy79Cw==
+x-microsoft-antispam-message-info: Khvm8corRIPf1FpIMBCHG2NZaPKfygzitx4kSYBjG/35+oe3tocjt7aWc9j5ntKGyDPJFkI08j0Tnhip/mNx57eTzJ9gX5bMCvAWdiyiwkhU5agYdVILY3Cg84Dgdk1DW5r7/RzNGA4s8osb6hfKo/s4lhduBI5s1mSc9Zpcit6wQun2lvzdhzuXfIe93Q2194TdBsSjT2fT7qTaZemXZKOoRR2lFaZsVnC1bpQIgBglArf78jopxtoePz4ANK8FIwCiJKzkJRVeNne1PKVVl7JipekMHjvBrGI5teFf+CWvIc/jNfNNnA9FHNiYjyzwyvYIRR7yGrd21LAzYvKIIKvnJ7gVmjChMN6y7ilr/xdxH2pRyafUWAxouDxYJAF+UmHJbD4h0h7Sua24Q2e23ibxeZ/dmyLkXp6Qnd9eRmy2n7jeTc5fimufmuAaS8GUO4Zw2P6fpFn0iIEcQpS9CL0+s2+Catvjm9q6llELoDk+A7VumeJ7YAIBkBY6Do+Ul3glFeoulNllGma/BfJkv28Xkr7SaloSwaXTVs7KigBcXBrBpkZIqgrH9xA2Yjt8m6MtuS27rRssI4/l3Wp1r9cHIjXKGsPfUoVbx7m5uc00FOxA/ckcxXBqZo+WfEYWxVCpKQ4v61HWQ7+yKGOZsarTtvir5N2/oBkRmYmeD9SGma3Wroizo8Nbu/7VnvAp1ligWXpXr4OZWSJEkhQ5i1f7xA9dwpyqeD28XdT/uP5IkWPYvdQHlhy1SKp5hcTyGDosugK+jXiUWo55QRtuC3/b/6K8WVvUf42qwmzwTZsj34lZFzZTIyIxTxvp6SyFO9fP9XR5xAx+3y8EuNfQpQ==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:BL0PR01MB5156.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(52536014)(66556008)(66476007)(166002)(66946007)(26005)(5660300002)(316002)(19627405001)(7696005)(508600001)(71200400001)(64756008)(110136005)(186003)(83380400001)(66446008)(9686003)(33656002)(91956017)(76116006)(4326008)(54906003)(38070700005)(8676002)(38100700002)(3480700007)(107886003)(2906002)(6506007)(53546011)(86362001)(55016003)(122000001)(966005)(8936002);
+ SFS:(4636009)(366004)(52536014)(66556008)(66476007)(66946007)(26005)(2940100002)(5660300002)(316002)(7696005)(508600001)(71200400001)(64756008)(110136005)(186003)(83380400001)(66446008)(9686003)(33656002)(91956017)(76116006)(4326008)(54906003)(38070700005)(8676002)(38100700002)(3480700007)(2906002)(6506007)(53546011)(86362001)(55016003)(122000001)(966005)(8936002);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?cu+f2xS2Ar3iP8WzBL7XugM+yVJWoA/vW826a9VJiUeaX8CWoGZitbsPDwIv?=
- =?us-ascii?Q?v4Rr7B9jz+oezaz7BXaFShVSRCRjmlglC2kZb8wY31G4Y1KD14rx8Oed4NHY?=
- =?us-ascii?Q?cRBv89MAbup6oaY3OnUhEMOORKQB3lTPJwqUJqh23lQxAhOGWCuSXFTHpDsk?=
- =?us-ascii?Q?l+zG8uJqRuTTe/kQSPUpN+0pOi8BTrEi2JbaNIXWIcykRZOq7siknucShjgV?=
- =?us-ascii?Q?IC/9k+g9uMpZ2I4zGhhdxyXzkWmLETqmJlvuueoslgQmkktGmW+oZxAlNasB?=
- =?us-ascii?Q?ZWmRgTjqJkkcT8w1HKQ5pAyXgdzaFsqlzrCDJ9UkQr3PXHsaFaxVu3aaRpR2?=
- =?us-ascii?Q?9Cbby/d6/DYnLzL9lcePa4c1xvGUISwHCabPfVPP2Xn04MVFUk+1Rhao6Iqo?=
- =?us-ascii?Q?3C5N/M+NtupPB+6H5H6EohfvCuNA21Q3xhbX8gzpUnAauw9F0FNyCgV2Ew82?=
- =?us-ascii?Q?0e7hocbzCeV2CsayLZrWhVuqXiOI4FFqZD0NIE9eBqf9ufBwcfC7qSA6yLQZ?=
- =?us-ascii?Q?ZuGflatos7E9l9JbBsoRSWZr49Oy7X5oM5fT/bagJM1ARlkXmUT9qdJ6vpVb?=
- =?us-ascii?Q?YDVYwYxKvHOS/miZcdbUkVa3LWocxwh7Ufz0C4oZpcanOjZmHhbiak9Xr68e?=
- =?us-ascii?Q?EGzIikw3CGju7rAoLv0pZeBYZnCNvEmc1eEcWr0qPOGBZXPs/YHwn5QlRfSO?=
- =?us-ascii?Q?+K34/ZShPfPBxJzgaAEMs3MlxvdnRTVJr0Y1rBXyVS9oB1XCOFz7wftA9TBb?=
- =?us-ascii?Q?jxk/ONzZBuvOl93bx/QsIjBk4+YiNZ0blhsXUWDQzSal1cSsMePkiltckH4s?=
- =?us-ascii?Q?8Hmwmr30T46nN/TWjH2GC0a0ryedWS6+gm9pZx3W+UkLjR7IXsSeVQoV+DsG?=
- =?us-ascii?Q?Og8jtiCLHaqg1ulpY2bdUoamRGxcOo0uHlWXrDfC7AQ6A84MO/mDH2GJRRg7?=
- =?us-ascii?Q?4GcHTOUdeNI7FEiMhTLm4S24mHiAWr9pFB/V3p6kSCZLjex5NwaIavQYVulf?=
- =?us-ascii?Q?LDz2wv6bLNDj9fpEgkJXujYpKzW+WRWed8T+TBAf91iITzC/3LivY/uSilV7?=
- =?us-ascii?Q?DfVDYbcVc05fXIO2egXOD0oE0pM96fnaYnXCjP2159zF0V7w6w5Z0PFd22b/?=
- =?us-ascii?Q?v3UfzCIiq3IIKZ4uzQeinv26X394GpphJ4eKYJzqpOmvkOCl+EouHNTe+zWK?=
- =?us-ascii?Q?2MISAbdAr5pPZh6DsHDOotE5Rm+GbGBjQ3362YmP3F+y3rRUtM6ZJ+ck1B5J?=
- =?us-ascii?Q?uGEFzPQjcBicXk6qENsfinIgzaKf5Gpw9ffRFGfZHWBRxVNMG+i9PYXsf1oV?=
- =?us-ascii?Q?NRrxuQzzpSyJlOorQd4G0984pmFu1AIEjVLyn1d/OpXmm/3d4PcHSMxP4Cjv?=
- =?us-ascii?Q?zlHlMBJpYXho8oru8wGCsGpFl0HroXxgSDYquTKHqmQ9WjCdRjOYcPG6KVLM?=
- =?us-ascii?Q?SezPy4GdwgufBDbOCfiUh+p0hPBWjT1Ena95GZW5XR+4Coq8EQcBwBXeAgLK?=
- =?us-ascii?Q?V4Jj1B9O78WxKL2CZbkXFurScfGrZ+iV8iNJRH+MTRXMtZT2pqIvFfVpJlzD?=
- =?us-ascii?Q?+IzUq/XRTLJmgvh8aTCXNJaiZEqXCNypzkvI8vZy//FTsykChSHlZMli7IX9?=
- =?us-ascii?Q?H4SiTEsvwc9PjLhHT/uKG20TBmFX8bafiN+En4H+oGpEaXyMah399zSGckdF?=
- =?us-ascii?Q?boLD4GPkWbSkY5QKl6ao3e/YaFAodPebm0xgAyDHAILT6meW?=
-Content-Type: multipart/alternative;
- boundary="_000_BL0PR01MB515649ABC90BE4CCC465B8B9FF5B9BL0PR01MB5156prod_"
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Zk6BaFREolFsaLH7tHxf0xBmfYyx9mww90LGn6sOFYF0tOa4WC26Jv2RBTnZ?=
+ =?us-ascii?Q?vlJaFZbYOPNWMX2wXngyuSuC82zqwyLA5nlMQX9Zn4yVZhYcyBbHBcw2dGsm?=
+ =?us-ascii?Q?5QC5lamezG5elb0hFnGjeynvoSXzo7K4VXXvqBGnoa26ESImoj6MvQnDHSh0?=
+ =?us-ascii?Q?x7cwBeT5ghMi2/2HMn/Sd1XgMarFPWnClBJVcOXmrANq0AP9EEi9qxf+cIxZ?=
+ =?us-ascii?Q?tAcv7m7aOrtm9UxiMIHAVO4u8Nt37Wf/BCh3PZ0/cZfjnNcSalI2FMMl7Ay+?=
+ =?us-ascii?Q?GV2Y8UEQNwMCR6SRUzLqiqS33TAV7LEiJEF02en/7LIvMbEcI9TJOW+7zjxd?=
+ =?us-ascii?Q?0Y6OSU+Rm8vbDWSaCVmNrgVZ8iWo6A+FknQRWif5+oaAKFj9WyD5X74qk1Nw?=
+ =?us-ascii?Q?YFkUNHlFb3yp7ju0GDLRo8D0+IM9ButuRCqliSQHtwj5uUX+fdWD+hgklCRY?=
+ =?us-ascii?Q?Pg6t7m8g3D3ecE19e2tH6T740Wl9Bnf82gZGON+XffvFq9v+3f39bXP2jUWQ?=
+ =?us-ascii?Q?w1+40XjBeKhLgFLL42AwcL7oEBeEG1pdm2nl8VTLHUeQOHlCpp1RWgbDKoA/?=
+ =?us-ascii?Q?Pv0mbym6uwWRnlfr8TCoL8tRPcRQ5Su9/UU3Ze9HgvD+OUUNzol3HmEFxyn5?=
+ =?us-ascii?Q?3TeLqhF/kYIYaJ2Cc/lW2cPiXD+RWm1sGYKhR/sgeLEb48cLZiGjRJaXhOGa?=
+ =?us-ascii?Q?2FoqP/bR3z78r0qgON6Yo8oBnDf0c/Ud5hTmw1IBDXJ8mBd1ehOR9jQHREBs?=
+ =?us-ascii?Q?loKO1wgcaF3ZhzsU8Q9b2NYGaXcfCf/e9G+fsEL46I6A1wVu6XW8Jdm99N+Q?=
+ =?us-ascii?Q?n1G7t7M+MgpM3mCcQVzSkZ7v3P3fDATjfDNnQS8Ur6qzPOxxQsWVGu2zd6os?=
+ =?us-ascii?Q?zOcHLMW2r2VFXBhkeEZPcdV4J7wVk93IrzLbvVoguDo3LtrFbZzMJbTlX3i0?=
+ =?us-ascii?Q?3u11erH3/J6ylnZEiA9kj7DyXWnZbQYnkMydM2kzUApqlckRc53l4xrra5Cr?=
+ =?us-ascii?Q?lUjzSaqlvBYv2+CH7urGQWxkZHEPW7EqMSTQtswMqm07ZZJgZO3SHcO/5kJw?=
+ =?us-ascii?Q?CUvgqm0rqAz65FrjBqSo4jQ+e6PH1ggUF702qHZbHPaT39lU6hkDy7t6kms9?=
+ =?us-ascii?Q?h66f/kf0fDb+J4vk+Vd4pcAa2rORRDPtrVDk+D+WFn7fdHBUkauhs7OKErLb?=
+ =?us-ascii?Q?tJbmNolxBxKKq4FyEptmNBLyzaOtMSKfXQlUxHzgYXbJ7x/RtINqBwtSc1Qi?=
+ =?us-ascii?Q?bnN0Eys15CWNMLzH6JSPx6fx4SFliIDr56yZmcFej1K6IN22G7ukE7VISmy8?=
+ =?us-ascii?Q?/mPdcxNPphc9wioVYxoqAg0NXVmuigs5RaatDRiXUkC9bFJhKupW22DQh/X3?=
+ =?us-ascii?Q?QrqXXJG/Oy0hwLT8l1V5BInojJ85tnzJG3K2YQLqiqw0v8gFeHsdBLzGtoKH?=
+ =?us-ascii?Q?3o7Bi1ll/m8gguEKd1XgaNbyXpzSBTE1o/nhXwLzsqLp5VCWskXCLulVg5cL?=
+ =?us-ascii?Q?55nXbcWxZT98TF037rismkq5FQsf5CS2LdrAGOsYUUP8/zSJJ4oSXJRUXZhG?=
+ =?us-ascii?Q?C0DI1AftxcgJQ8E5glQogXCZDehfDiZ61P5BQZcBq7QfZlJrL/ZB4nP8DJTJ?=
+ =?us-ascii?Q?At70gw86U75mxxgUtdZ76pUCM+mIl/b4b58tnqWJ6MuA+jHoejPCky8DjgQj?=
+ =?us-ascii?Q?2CLvPz32RDT8jlidM0liC3vvBiPSSxKrnTAlLm9O54nJT09b?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: os.amperecomputing.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: BL0PR01MB5156.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 757e35c4-d12e-40fd-66df-08d9dc94b307
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jan 2022 04:15:46.5106 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4e29bfe1-28b5-4a38-900d-08d9dc95c3e5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jan 2022 04:23:24.3225 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: SX0CYTj2WZ8aOZLNo5QiXBblwCcHfiYTaoUTL69RhrLy2jMEc0Cl5BTSMsWVo7g05eYTchQpiCnq5n8es6NPSporwqwsyMs8p+9ZslqNjJuALtKS3fdLgKiDPyDAvHLk
+X-MS-Exchange-CrossTenant-userprincipalname: PWQCCGhqnwbqYrw3ekrAd0zxIEpJBoTm0a1339h9X/GAOAe4ZwzBsW0VtwfNpJwX4ES2+rc7la+NEnEnIXC4Jst9PMxrAlItygmeNmmHeeyvtPhzkRqdt/GbBdmqE41J
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR01MB5629
 X-Mailman-Approved-At: Mon, 24 Jan 2022 09:53:37 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -135,13 +135,42 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: Thu Nguyen OS <thu@os.amperecomputing.com>,
- Thang Nguyen OS <thang@os.amperecomputing.com>
+ Thang Nguyen OS <thang@os.amperecomputing.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BL0PR01MB515649ABC90BE4CCC465B8B9FF5B9BL0PR01MB5156prod_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Dear Jeremy, Andrew,
+Appreciated of your comments. We are using the userspace MCTP and will cons=
+ider moving to kernel space MCTP as the suggestion.
+Because of the specific requirements, we look forward for simpler way. In o=
+ur case, we have on-chip sensors and events which are allocated in both 2 s=
+ockets, and the situation is: we must send the PLDM command to poll the dat=
+a.  If using 2 interfaces to communicate with host, I think it would be com=
+plex when sending to multiple sockets.
+The things should be considered as :
++ If a socket is problem during runtime, is the process of MCTPL/PLDM still=
+ ok
++ If one, or more socket problem. Can we reboot the whole system to recover=
+ ?
+
+When using 1 interface, i think:
++ From the host side, socket 0 (master) should manage its other sockets, (m=
+ight be not via SMBus, but other faster sockets communication). Of course, =
+the more work should be implemented in the firmware, and you have pointed.
++ BMC just recover the system (via reboot) when socket 0 issue, otherwise i=
+t does properly
+
+Do you think any more issues with the communication performance ?
+
+Thanks,
+
+________________________________________
+From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>
+Sent: Friday, January 21, 2022 11:15 AM
+To: Jeremy Kerr; openbmc@lists.ozlabs.org
+Cc: Thu Nguyen OS; Thang Nguyen OS
+Subject: Re: MCTP/PLDM BMC-host communication design
 
 Dear Jeremy, Andrew,
 Appreciated of your comments. We are using the userspace MCTP and will cons=
@@ -247,202 +276,3 @@ Regards,
 
 Jeremy
 
-
---_000_BL0PR01MB515649ABC90BE4CCC465B8B9FF5B9BL0PR01MB5156prod_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Dear Jeremy, Andrew,</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Appreciated of your comments. W<span style=3D"color: rgb(0, 0, 0); font-fam=
-ily: Calibri, Arial, Helvetica, sans-serif; font-size: 12pt;">e are using t=
-he
-</span><span style=3D"color: rgb(0, 0, 0); font-family: Calibri, Arial, Hel=
-vetica, sans-serif; font-size: 12pt;">userspace&nbsp;</span><span style=3D"=
-color: rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica, sans-serif; fo=
-nt-size: 12pt;">MCTP and will consider moving
- to kernel space MCTP as the suggestion.&nbsp;</span></div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<span style=3D"color: rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica,=
- sans-serif; font-size: 12pt;">Because of the specific requirements, we loo=
-k forward for simpler way. In our case, we have on-chip sensors and events =
-which are allocated in both 2 sockets,
- and the situation is: we must send the PLDM command to poll the data.&nbsp=
-;&nbsp;</span><span style=3D"color: rgb(0, 0, 0); font-family: Calibri, Ari=
-al, Helvetica, sans-serif; font-size: 12pt;">I</span><span style=3D"color: =
-rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt;">f
- using 2 interfaces to communicate with host, I think it would be complex w=
-hen sending to multiple sockets.&nbsp;</span></div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<span style=3D"color: rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica,=
- sans-serif; font-size: 12pt;">The things should be considered as :</span><=
-/div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-+ If a socket is problem during runtime, is the process of MCTPL/PLDM still=
- ok</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-+ If one, or more socket problem. Can we reboot the whole system to recover=
- ?</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-When using 1 interface, i think:</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-+ From the host side, socket 0 (master) should manage its other sockets, (m=
-ight be not via SMBus, but other faster sockets communication). Of course, =
-the more work should be implemented in the firmware, and you have pointed.<=
-/div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-+ BMC just recover the system (via reboot) when socket 0 issue, otherwise i=
-t does properly</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Do you think any more issues with the communication performance ?</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Thanks,</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div id=3D"appendonsend"></div>
-<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
-<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
-yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Jeremy Kerr &lt;jk@co=
-deconstruct.com.au&gt;<br>
-<b>Sent:</b> Thursday, January 20, 2022 7:53 AM<br>
-<b>To:</b> Tung Nguyen OS &lt;tungnguyen@os.amperecomputing.com&gt;; openbm=
-c@lists.ozlabs.org &lt;openbmc@lists.ozlabs.org&gt;<br>
-<b>Cc:</b> Thu Nguyen OS &lt;thu@os.amperecomputing.com&gt;; Thang Nguyen O=
-S &lt;thang@os.amperecomputing.com&gt;<br>
-<b>Subject:</b> Re: MCTP/PLDM BMC-host communication design</font>
-<div>&nbsp;</div>
-</div>
-<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
-">
-<div class=3D"PlainText">Hi Tung,<br>
-<br>
-&gt; We are using community PLDM/MCTP code to design our MCTP/PLDM stack<br=
->
-&gt; via SMBUS on aarch64 system. Basically, we have 2 CPU sockets<br>
-&gt; corresponding with 2 SMBUS addresses, and the MCTP/PLDM stack looks<br=
->
-&gt; like this image:<br>
-&gt;&nbsp; <br>
-&gt; <a href=3D"https://github.com/tungnguyen-ampere/images/blob/7dba355b47=
-42d0ffab9cd39303bbb6e9c8a6f646/current_design.png">
-https://github.com/tungnguyen-ampere/images/blob/7dba355b4742d0ffab9cd39303=
-bbb6e9c8a6f646/current_design.png</a><br>
-<br>
-That looks good to me, but a couple of notes:<br>
-<br>
-&nbsp;- EID 0 and EID 1 are reserved addresses according to the spec, the<b=
-r>
-&nbsp;&nbsp; usable range starts at 8<br>
-<br>
-&nbsp;- therefore, the *convention* so far for EID allocation is to assign<=
-br>
-&nbsp;&nbsp; EID 8 to the BMC, as the top-level bus owner, and allocate onw=
-ards<br>
-&nbsp;&nbsp; from there. However, that's certainly not fixed if you require=
-<br>
-&nbsp;&nbsp; something different for your design.<br>
-<br>
-&nbsp;- you don't necessarily need two EIDs (0 and 1) for the BMC there.<br=
->
-&nbsp;&nbsp; Even if there are two interfaces, you can use a single EID on =
-the<br>
-&nbsp;&nbsp; BMC, which simplifies things.<br>
-<br>
-&gt; Due to the not supported of discovery process, we are fixing the EIDs<=
-br>
-&gt; for host.<br>
-<br>
-As Andrew has mentioned, we have the in-kernel stack working, including<br>
-the EID discovery process using MCTP Control Protocol messaging.<br>
-<br>
-If you'd like to experiment with this, we have a couple of backport<br>
-branches for 5.10 and 5.15 kernels, depending on which you're working<br>
-with:<br>
-<br>
-&nbsp;<a href=3D"https://codeconstruct.com.au/docs/mctp-on-linux-introducti=
-on/#our-development-branches">https://codeconstruct.com.au/docs/mctp-on-lin=
-ux-introduction/#our-development-branches</a><br>
-<br>
-It's still possible to use fixed EID(s) for remote endpoints though, if<br>
-your host MCTP stack does not support the control protocol. You'll just<br>
-need to set up (on the BMC) some static routes for the fixed remote<br>
-EIDs. I'm happy to help out with configuring that if you like.<br>
-<br>
-&gt; A new way that is considering is like the image:&nbsp; <br>
-&gt; <a href=3D"https://github.com/tungnguyen-ampere/images/blob/7dba355b47=
-42d0ffab9cd39303bbb6e9c8a6f646/new_design.png">
-https://github.com/tungnguyen-ampere/images/blob/7dba355b4742d0ffab9cd39303=
-bbb6e9c8a6f646/new_design.png</a><br>
-<br>
-That looks like it has some considerable drawbacks though, being:<br>
-<br>
-&nbsp;- you'll now need to implement MCTP bridging between the SMBus link<b=
-r>
-&nbsp;&nbsp; (between host and socket 0) and whatever interface you're usin=
-g to<br>
-&nbsp;&nbsp; communicate between socket 0 and socket 1. This may then requi=
-re you<br>
-&nbsp;&nbsp; to implement more of the control protocol stack on the host (f=
-or<br>
-&nbsp;&nbsp; example, as you'll need to allocate EID pools from the top-lev=
-el bus<br>
-&nbsp;&nbsp; owner, if you're doing dynamic addressing).<br>
-<br>
-&nbsp;&nbsp; That's all still possible, but requires more firmware you'll n=
-eed to<br>
-&nbsp;&nbsp; implement<br>
-<br>
-&nbsp;- if there's an issue with the socket 0's link, (say, if the host<br>
-&nbsp;&nbsp; has offlined offlined CPUs in socket 0), you might lose MCTP<b=
-r>
-&nbsp;&nbsp; connectivity between the BMC and socket 1 too.<br>
-<br>
-That said, it's still feasible, but I'd suggest your first design as a<br>
-simpler and more reliable solution.<br>
-<br>
-Regards,<br>
-<br>
-<br>
-Jeremy<br>
-<br>
-</div>
-</span></font></div>
-</body>
-</html>
-
---_000_BL0PR01MB515649ABC90BE4CCC465B8B9FF5B9BL0PR01MB5156prod_--
