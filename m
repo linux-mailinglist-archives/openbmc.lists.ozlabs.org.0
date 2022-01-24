@@ -1,128 +1,137 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BA4C49762E
-	for <lists+openbmc@lfdr.de>; Sun, 23 Jan 2022 23:54:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA1FC497735
+	for <lists+openbmc@lfdr.de>; Mon, 24 Jan 2022 03:23:49 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JhpN43Nx2z30Lp
-	for <lists+openbmc@lfdr.de>; Mon, 24 Jan 2022 09:54:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jhv1H6FTbz30Ll
+	for <lists+openbmc@lfdr.de>; Mon, 24 Jan 2022 13:23:47 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=CXiZmr4N;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=Se400Cfm;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.92.115;
- helo=nam10-bn7-obe.outbound.protection.outlook.com;
- envelope-from=tungnguyen@os.amperecomputing.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:febc::706;
+ helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ envelope-from=spencer.ku@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=CXiZmr4N; 
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=Se400Cfm; 
  dkim-atps=neutral
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com
- (mail-bn7nam10on2115.outbound.protection.outlook.com [40.107.92.115])
+Received: from APC01-HK2-obe.outbound.protection.outlook.com
+ (mail-hk2apc01on0706.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:febc::706])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jg5q36jFMz2xtF
- for <openbmc@lists.ozlabs.org>; Fri, 21 Jan 2022 15:23:42 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jhv0n6pwXz2xrj
+ for <openbmc@lists.ozlabs.org>; Mon, 24 Jan 2022 13:23:20 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EykAUKS0PYX9zpXLTaLZS9u3atQzldaBPHrgkU9Q57HJqZNJBqX3neCsTbvIafNGR0x76oZJcsWvBcio6muM+Jkv0PpRKWl/P+QHsk9Vm0MBbwiVx1kXb8Dq61Gthj69SAKB/I+2mFU+sJmSI8IJXxPRcdYPs3GrcsLdRgi65o5+SDmSL5HUgg6YeteiDB6cpBRvs4+6NZR74nD999LF9X+DM39xwzJv+VSqWvpLlC9D3K/ZMbBFUfKWzwHQVIUED8QBcJIRTVmdIGqNQy4osrdgve0UCyq+0v5dt2c88ULEdS3Wj2wCb+QDbX1+NyGHzsERnWN4TxPDfkKiNzWOPg==
+ b=ighSk7kjfOYgY2kTsLSYnFveUJaNvE6nyqckGYB+qI51C9RV0bc91Gf/WNzUJZbGnrbyeBoQGxNF8TeRmUjd0TzrYjqRn4fy/34s0ZjS7gv9iBNbubbE8lFJ5EbyaZ33yU6ZEy7iDYME2S/Kfwz8vlkNCgRbYxKfqU+85ah68jVXL+UCFjv5E/Ue018c4xX4kCcWCq2vmcHoTy/Q8W5VLfqx/ty8msHW/01FRUztvob33e5CWYiwqxAW0F8TGt7zKJy2lGK8iTCWAh4H3+hMQxbHEPdyVkl2xQVvvmx827ifOXJDDb3xeO3C3pTYiUFqaZLRiSi5RXIBMnnCPulYjw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OUK8wlhzX2ojkQHE/jUQzdjn7USmqrClF9pci67V9cQ=;
- b=QfVZeYT2ZBK2iJSePj2y4CGfQxcXuWvzWRNLNN68BZrDDCTbUWUPnpLYUsnH1acsB1dLqdngw2UbhWOw9ux89qSZ5Y67PdOykDhfeM2iojVRg05wtE31eTrFnBVE0N4ZWL5AIQAZ5RFZZaXOqDWpr+qykoq8AJj4FDbqEgWryiUWhMA/3R3Nx8wglVt3+8iLj20teXPWnev02vnJVyobLL9i4OvNogmwi7+8o9uj8cTbydiKGURZ5KTW0I/2VmkYDKJYIz4PFTTnMZShghzs0Nq8M7bfUd27aAHaId9tAX/WBm8RlQGwkt6cvJ9uL2zEWeEjdc9QksFOicF6rONykA==
+ bh=zCPcKvuWv220XgJJnO+WtqiVsnP+6AqN7N3/rWY/9O8=;
+ b=aTtvqPKXScX3xC9A85uLCTY71Enx7cl58otp5j1FK2JYQr8EU9pErwgd7JZZLfzBxLOd/29YoPdB73T3naPSNLguEO1fBs/UUBnsNyiisSXzbAO9fmDVZlgUWF96EW4KsAFExDg688rA4ZdObPdHnZJ1iMf1vZyQ9+NMIpu92x6K6Mfxu/a/Cr4DPvlT2ro4dTDLp7a3je64m0Kdnz6DaqkwZ/4NfzxVPThJhzeJnlhkcRkBSSxKwyTnVAyLtZATaJhrNrME/ZCGvS7+nkrkrXjhiZCElKyLWcm/W2tSMLK3DA4qeS0VsFWMaxPRvTxZumkM9kWNzXgwjJuTLOSxqA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OUK8wlhzX2ojkQHE/jUQzdjn7USmqrClF9pci67V9cQ=;
- b=CXiZmr4NoP4ugxAUr6zq1XOEkNEtJ5GM7su/vshzRW0enx1Jj/N3pxHuocH1i6GapNVWxbFhe6Qz1GO+kto/KAmA8zXVBKNSi2eBBo1RNCrh6fFqB8RksIRoXk+G5ylxF6cURlGXBFaktuP1O4FmAOhskiQnM38sAgLT4PhrRJQ=
-Received: from BL0PR01MB5156.prod.exchangelabs.com (2603:10b6:208:67::13) by
- MN2PR01MB5629.prod.exchangelabs.com (2603:10b6:208:117::11) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4909.8; Fri, 21 Jan 2022 04:23:24 +0000
-Received: from BL0PR01MB5156.prod.exchangelabs.com
- ([fe80::4c74:e515:b548:1486]) by BL0PR01MB5156.prod.exchangelabs.com
- ([fe80::4c74:e515:b548:1486%4]) with mapi id 15.20.4888.014; Fri, 21 Jan 2022
- 04:23:24 +0000
-From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>
-To: Jeremy Kerr <jk@codeconstruct.com.au>, "andrew@aj.id.au" <andrew@aj.id.au>
-Subject: Re: MCTP/PLDM BMC-host communication design
-Thread-Topic: MCTP/PLDM BMC-host communication design
-Thread-Index: AQHYC73kfl3LazavgkaXDWxfXPa3z6xrGKsAgAHB8eKAAArjQw==
-Date: Fri, 21 Jan 2022 04:23:24 +0000
-Message-ID: <BL0PR01MB5156BFDEAE95BDF87F395F8AFF5B9@BL0PR01MB5156.prod.exchangelabs.com>
-References: <BL0PR01MB5156352A9E00E59F5F9641E4FF579@BL0PR01MB5156.prod.exchangelabs.com>
- <3f884ee81d2bfacf4a112369b79e7e5d367ad774.camel@codeconstruct.com.au>
- <BL0PR01MB515649ABC90BE4CCC465B8B9FF5B9@BL0PR01MB5156.prod.exchangelabs.com>
-In-Reply-To: <BL0PR01MB515649ABC90BE4CCC465B8B9FF5B9@BL0PR01MB5156.prod.exchangelabs.com>
-Accept-Language: en-US
-Content-Language: en-US
+ bh=zCPcKvuWv220XgJJnO+WtqiVsnP+6AqN7N3/rWY/9O8=;
+ b=Se400CfmQ3nkA0Y8GlSpweLvUnU33t97HeiT+dfz7QoH613E5kVFF0AtYHccLAR7XU8w19D9byd9IEsde1hENGkWyl3t9bv6QRz2WnkP1lXTUTHptKFwkolGGiRNY9tTrtyiJmgfoJjbwYP/CaVe3yYj739ZqT0BohfrwmjYDWo=
+Received: from HK0PR04MB3299.apcprd04.prod.outlook.com (2603:1096:203:8f::22)
+ by TY2PR04MB2736.apcprd04.prod.outlook.com (2603:1096:404:3e::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4909.8; Mon, 24 Jan
+ 2022 02:22:51 +0000
+Received: from HK0PR04MB3299.apcprd04.prod.outlook.com
+ ([fe80::5994:f7bb:bf49:351c]) by HK0PR04MB3299.apcprd04.prod.outlook.com
+ ([fe80::5994:f7bb:bf49:351c%5]) with mapi id 15.20.4909.017; Mon, 24 Jan 2022
+ 02:22:51 +0000
+From: =?big5?B?U3BlbmNlciBLdSAopWqlQLfsKQ==?= <Spencer.Ku@quantatw.com>
+To: i.kononenko <i.kononenko@yadro.com>, Ed Tanous <edtanous@google.com>
+Subject: RE: Implement Ethernet Interface Properties
+Thread-Topic: Implement Ethernet Interface Properties
+Thread-Index: AdfmmeLt8bsv+QLKRK2scPouEluJvQARsvaAABzs1sAJbZHE8AA0o1EAALl+nwA=
+Date: Mon, 24 Jan 2022 02:22:51 +0000
+Message-ID: <HK0PR04MB3299149FF576D92D818FFD6CE45E9@HK0PR04MB3299.apcprd04.prod.outlook.com>
+References: <HK0PR04MB329947E4E37431B956A8D17AE4689@HK0PR04MB3299.apcprd04.prod.outlook.com>
+ <CAH2-KxDx2BwNMWaGvzUeQZVt4me5WSBvkni3A0ig-ohtxiWEUQ@mail.gmail.com>
+ <HK0PR04MB3299920FAFF33D27C503A218E4699@HK0PR04MB3299.apcprd04.prod.outlook.com>
+ <HK0PR04MB3299DA39BBF0596CA83BC41EE45A9@HK0PR04MB3299.apcprd04.prod.outlook.com>
+ <8076733c-ae3d-c239-d7ed-12d6612854c8@yadro.com>
+In-Reply-To: <8076733c-ae3d-c239-d7ed-12d6612854c8@yadro.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-suggested_attachment_session_id: 700842d6-7f6d-0ed6-a63d-c7127df91998
 authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+ header.d=none;dmarc=none action=none header.from=quantatw.com;
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 4e29bfe1-28b5-4a38-900d-08d9dc95c3e5
-x-ms-traffictypediagnostic: MN2PR01MB5629:EE_
-x-microsoft-antispam-prvs: <MN2PR01MB5629AF042D914AB2303690FBFF5B9@MN2PR01MB5629.prod.exchangelabs.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-ms-office365-filtering-correlation-id: b167c134-0bf5-47dc-6a52-08d9dee06be3
+x-ms-traffictypediagnostic: TY2PR04MB2736:EE_
+x-microsoft-antispam-prvs: <TY2PR04MB2736D0B0C35C8BB44D7E4859E45E9@TY2PR04MB2736.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Khvm8corRIPf1FpIMBCHG2NZaPKfygzitx4kSYBjG/35+oe3tocjt7aWc9j5ntKGyDPJFkI08j0Tnhip/mNx57eTzJ9gX5bMCvAWdiyiwkhU5agYdVILY3Cg84Dgdk1DW5r7/RzNGA4s8osb6hfKo/s4lhduBI5s1mSc9Zpcit6wQun2lvzdhzuXfIe93Q2194TdBsSjT2fT7qTaZemXZKOoRR2lFaZsVnC1bpQIgBglArf78jopxtoePz4ANK8FIwCiJKzkJRVeNne1PKVVl7JipekMHjvBrGI5teFf+CWvIc/jNfNNnA9FHNiYjyzwyvYIRR7yGrd21LAzYvKIIKvnJ7gVmjChMN6y7ilr/xdxH2pRyafUWAxouDxYJAF+UmHJbD4h0h7Sua24Q2e23ibxeZ/dmyLkXp6Qnd9eRmy2n7jeTc5fimufmuAaS8GUO4Zw2P6fpFn0iIEcQpS9CL0+s2+Catvjm9q6llELoDk+A7VumeJ7YAIBkBY6Do+Ul3glFeoulNllGma/BfJkv28Xkr7SaloSwaXTVs7KigBcXBrBpkZIqgrH9xA2Yjt8m6MtuS27rRssI4/l3Wp1r9cHIjXKGsPfUoVbx7m5uc00FOxA/ckcxXBqZo+WfEYWxVCpKQ4v61HWQ7+yKGOZsarTtvir5N2/oBkRmYmeD9SGma3Wroizo8Nbu/7VnvAp1ligWXpXr4OZWSJEkhQ5i1f7xA9dwpyqeD28XdT/uP5IkWPYvdQHlhy1SKp5hcTyGDosugK+jXiUWo55QRtuC3/b/6K8WVvUf42qwmzwTZsj34lZFzZTIyIxTxvp6SyFO9fP9XR5xAx+3y8EuNfQpQ==
+x-microsoft-antispam-message-info: FVjzgfMr2XdcCKw7gNDX24DRDYfA8qNzZWdEFsXMoF/LEdDRdiEQ5MitLXCu0vJUSXHLG3LIYUANPFtOMc3Z31jm94Xm/upXuxiizmJZukukTvPZfHEwiwvLkPkUrqYDO1O80jK7F4N+41iaMXiaN5op4iM0Yfi89GP5BsbXldn3upmfDTjaNThSoNql7ebRY3+Bez/J8UMSeD25+xdTtuY6iyhi11C3r/CIsIdW01QMO9AFbsGCJBRnoCNUwG3Ke5xFOQ88giKla5D+Bb1mzzNeQfxAUXIoPc98V8rKOZo6AOQfq+iRd3pDAs+hK4DARcXiUwIivwSiiING8F4okGxkjba5JZHhzBf3fiHryWAVfKbhrioumkqSgM/ODvrgzV4XxWzG4IebwM0CSM4fk+DFMPCqKPFYagQKpSRASxAUU86W91fxNrbDH8NSrvpNNZEYGpLdidp82yu7cza9gd0WajHWNrtM73vJ7UBBYqAg82ElSg3Y5DpUp1IvkdB5ATjrTIBg95ZujkEBwE6D+R/v43Mf5vLg2KH4nOj82HiSncWIHMwPafpe3MuArSq9rdmbJ6yMA3Tak9wOpi0CTL+HG43ugaB83YCL/0UbxCWGc+XVBAgziHVYNvTJwY0kx+hIIz9PgbDHdJPf6tCwtvT7iL5YX3Pf61/544gDvFRYqg8aRFaxs0QGewnplrpT3BqWjXijkD4L9xiA8TxMvbpzEL22ifvGK8lAaZU17ReGApDJpHuKf7R+2cVcSolC/HArZMycGeWxZmzUdldPjfABrcnVa6OizTW2kEkfqDk=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL0PR01MB5156.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(52536014)(66556008)(66476007)(66946007)(26005)(2940100002)(5660300002)(316002)(7696005)(508600001)(71200400001)(64756008)(110136005)(186003)(83380400001)(66446008)(9686003)(33656002)(91956017)(76116006)(4326008)(54906003)(38070700005)(8676002)(38100700002)(3480700007)(2906002)(6506007)(53546011)(86362001)(55016003)(122000001)(966005)(8936002);
+ IPV:NLI; SFV:NSPM; H:HK0PR04MB3299.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(366004)(186003)(55016003)(9686003)(966005)(66446008)(110136005)(66476007)(3480700007)(54906003)(316002)(7696005)(66946007)(8676002)(66556008)(64756008)(86362001)(45080400002)(122000001)(71200400001)(38100700002)(4326008)(6506007)(83380400001)(76116006)(38070700005)(8936002)(26005)(85182001)(53546011)(2906002)(508600001)(5660300002)(33656002)(52536014);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Zk6BaFREolFsaLH7tHxf0xBmfYyx9mww90LGn6sOFYF0tOa4WC26Jv2RBTnZ?=
- =?us-ascii?Q?vlJaFZbYOPNWMX2wXngyuSuC82zqwyLA5nlMQX9Zn4yVZhYcyBbHBcw2dGsm?=
- =?us-ascii?Q?5QC5lamezG5elb0hFnGjeynvoSXzo7K4VXXvqBGnoa26ESImoj6MvQnDHSh0?=
- =?us-ascii?Q?x7cwBeT5ghMi2/2HMn/Sd1XgMarFPWnClBJVcOXmrANq0AP9EEi9qxf+cIxZ?=
- =?us-ascii?Q?tAcv7m7aOrtm9UxiMIHAVO4u8Nt37Wf/BCh3PZ0/cZfjnNcSalI2FMMl7Ay+?=
- =?us-ascii?Q?GV2Y8UEQNwMCR6SRUzLqiqS33TAV7LEiJEF02en/7LIvMbEcI9TJOW+7zjxd?=
- =?us-ascii?Q?0Y6OSU+Rm8vbDWSaCVmNrgVZ8iWo6A+FknQRWif5+oaAKFj9WyD5X74qk1Nw?=
- =?us-ascii?Q?YFkUNHlFb3yp7ju0GDLRo8D0+IM9ButuRCqliSQHtwj5uUX+fdWD+hgklCRY?=
- =?us-ascii?Q?Pg6t7m8g3D3ecE19e2tH6T740Wl9Bnf82gZGON+XffvFq9v+3f39bXP2jUWQ?=
- =?us-ascii?Q?w1+40XjBeKhLgFLL42AwcL7oEBeEG1pdm2nl8VTLHUeQOHlCpp1RWgbDKoA/?=
- =?us-ascii?Q?Pv0mbym6uwWRnlfr8TCoL8tRPcRQ5Su9/UU3Ze9HgvD+OUUNzol3HmEFxyn5?=
- =?us-ascii?Q?3TeLqhF/kYIYaJ2Cc/lW2cPiXD+RWm1sGYKhR/sgeLEb48cLZiGjRJaXhOGa?=
- =?us-ascii?Q?2FoqP/bR3z78r0qgON6Yo8oBnDf0c/Ud5hTmw1IBDXJ8mBd1ehOR9jQHREBs?=
- =?us-ascii?Q?loKO1wgcaF3ZhzsU8Q9b2NYGaXcfCf/e9G+fsEL46I6A1wVu6XW8Jdm99N+Q?=
- =?us-ascii?Q?n1G7t7M+MgpM3mCcQVzSkZ7v3P3fDATjfDNnQS8Ur6qzPOxxQsWVGu2zd6os?=
- =?us-ascii?Q?zOcHLMW2r2VFXBhkeEZPcdV4J7wVk93IrzLbvVoguDo3LtrFbZzMJbTlX3i0?=
- =?us-ascii?Q?3u11erH3/J6ylnZEiA9kj7DyXWnZbQYnkMydM2kzUApqlckRc53l4xrra5Cr?=
- =?us-ascii?Q?lUjzSaqlvBYv2+CH7urGQWxkZHEPW7EqMSTQtswMqm07ZZJgZO3SHcO/5kJw?=
- =?us-ascii?Q?CUvgqm0rqAz65FrjBqSo4jQ+e6PH1ggUF702qHZbHPaT39lU6hkDy7t6kms9?=
- =?us-ascii?Q?h66f/kf0fDb+J4vk+Vd4pcAa2rORRDPtrVDk+D+WFn7fdHBUkauhs7OKErLb?=
- =?us-ascii?Q?tJbmNolxBxKKq4FyEptmNBLyzaOtMSKfXQlUxHzgYXbJ7x/RtINqBwtSc1Qi?=
- =?us-ascii?Q?bnN0Eys15CWNMLzH6JSPx6fx4SFliIDr56yZmcFej1K6IN22G7ukE7VISmy8?=
- =?us-ascii?Q?/mPdcxNPphc9wioVYxoqAg0NXVmuigs5RaatDRiXUkC9bFJhKupW22DQh/X3?=
- =?us-ascii?Q?QrqXXJG/Oy0hwLT8l1V5BInojJ85tnzJG3K2YQLqiqw0v8gFeHsdBLzGtoKH?=
- =?us-ascii?Q?3o7Bi1ll/m8gguEKd1XgaNbyXpzSBTE1o/nhXwLzsqLp5VCWskXCLulVg5cL?=
- =?us-ascii?Q?55nXbcWxZT98TF037rismkq5FQsf5CS2LdrAGOsYUUP8/zSJJ4oSXJRUXZhG?=
- =?us-ascii?Q?C0DI1AftxcgJQ8E5glQogXCZDehfDiZ61P5BQZcBq7QfZlJrL/ZB4nP8DJTJ?=
- =?us-ascii?Q?At70gw86U75mxxgUtdZ76pUCM+mIl/b4b58tnqWJ6MuA+jHoejPCky8DjgQj?=
- =?us-ascii?Q?2CLvPz32RDT8jlidM0liC3vvBiPSSxKrnTAlLm9O54nJT09b?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+x-ms-exchange-antispam-messagedata-0: =?big5?B?aitRKzJFY1FtVkZaOGFYSGFnQitmTXpTK3daYU1pb2Fsd05GZExydnJxMTNwUHky?=
+ =?big5?B?RkQrS0NSN3NvMkpGUHV6MyswUjZMSEhZdk00akVYUFh4aFFJNGY5OHJndkw3RWxt?=
+ =?big5?B?MTY3dTREL2NqU0lhaVBZS1JHY2JlUE1FaFBoWGRkWHptaHlPTUV2Y1hiZzZZTll5?=
+ =?big5?B?c25odVdZZHJKQXNYc3dqV0dMVVpZV3VlQVVncnBHUVdZMW9WdzYxbEk5Z2IvMW92?=
+ =?big5?B?cXhkY0tOMlExWjlXVHdKQm1pbVJpVi9DbFNWUmN3L25BU3RwRlR6K2ZKcDQvK08v?=
+ =?big5?B?K1B4Ky9STzl5c0RQb3dpS05GSm9pMnFYT2VrZXh4YzJvbTltVGhmVlJZM1VrU1Nk?=
+ =?big5?B?bU5pdUk5aVZ3V0tSbk9Ja1pQYVpDVy81czU3dWlLNFJBTzJuQzJFSStwVC8vS2hP?=
+ =?big5?B?WGlqZTJsRjYvWkI4cldoelJoNEk4Yk1Eb0F3R2cwaHlBTGo0TERCNjNyMzlwQ09q?=
+ =?big5?B?OHFmeEdQVFpZc0JzTFRpSjM2SksyeFczUnhuUlcrdk4zSTFkZ2lpbnBFeUVUVFMy?=
+ =?big5?B?QzVWWXo5ajcvL1Y0M1lKUGQzYXNPL1psNWlQYjZLVHpXbm55cFI1T1FMZlFoL2tM?=
+ =?big5?B?UjFtamhxcTV0MnVGa2R1UjM4N25WdTVlUWhjWFR3VnJPQ20vN20weUlLektmUEdw?=
+ =?big5?B?OFZuYzN5d3U4V0RGV2drVi9rTmlVbXpUQ1hZekRvc0pDb08vTEZqQXJTVUJnbGRn?=
+ =?big5?B?Z04wMFFVeVo1UGNqdnhQSGpBZTVaNjViQmk3bkxDaVk5WXk3S1B0aXUyVHd5MnNN?=
+ =?big5?B?Mi9acDNlY3REajJIdU5Pd1A4aGhXT3pqUXQ5aTQxaU5CSWJpbjVBK1VWUGRLWmxy?=
+ =?big5?B?NERlaUJwWDVCVFBqampZOGNjRkVLYi9iUzNVek9SaFJQSkFTMFZGekhwOHhzU3g2?=
+ =?big5?B?Unh6ZDU2eDZDejkvSHIxdlpBaUdqZitlcFVnb2c1aXpDUE9WcG8wd1ZZZC9WWisw?=
+ =?big5?B?RkJkOVJRam8wV1Q5Z3lSeHU5OXJLdU5leTR3L05mdWltYzYxSllreU1YRjVsb3JH?=
+ =?big5?B?cUNwdytyUHUwaG9YN1F6a2VBc3ZFcG1xelhvV3hOL2N6aiswMXNzYk56STU0SmhJ?=
+ =?big5?B?dG9vT1oyNi9xWHNvY3JOZ1NKVGNYSXRJalJObHM3amxxc003dSt1Y1hIQkZ5UTRM?=
+ =?big5?B?RHFxZktSaTcvZjdrY1pMZXA4NXg2OGozbnNOaTEyTnpkbkFaWDQrM2VSQURJOTlK?=
+ =?big5?B?VVphcTBCaUNYY2xhckdjaXRFNUY2UXhUbDN0OU1BVFZzbXRRMVlMT1FWTWpqNktv?=
+ =?big5?B?V0w0Rjd4QldLeUZVcDdTRER1eitYZGRwVzRVUk9NcVBENmxHTnhMREIxenBBcmxC?=
+ =?big5?B?Sk5DQlB1NmtDTERmWkpIWFhBOXV2empZZ0diSDl1K2VWTzU1eWNiUmVZTmlNQVN5?=
+ =?big5?B?UERBVzZML005cERFdlpuK0E1OFRudWxiZXh0SXpVZXBqY0VPZVlhS3h1eXgzaDVJ?=
+ =?big5?B?S0NYUVd4Wk5sNUE1T1Y1WUdFSG1JdWlkL1JNby9yRDVzWURmZ2htV1BDdkZGVzNn?=
+ =?big5?B?MUtlY05Xb1l2REdId1ZNOHdIdm5jeHN2YVk0WVRnSTgzMjhmOTF1S05FUnhJdEpW?=
+ =?big5?B?YVR6R3ZaMmh3d1BjVE9xMHVkV1U1SkF3NnRCSklMN29JMjQxeS92T2R6RmNYTStB?=
+ =?big5?B?RnJIRm05eVhJcXBib1lMZStNVUQ4WlpKenJPNXFpK3lrd0J1bTBGZnhuVERtYi9j?=
+ =?big5?B?dkkySnZUek05RmF4WlY4bzZZdG93RngrYXh2VzhqQnRWZi8yTFgyZUdFVERKd2tH?=
+ =?big5?B?MVkxeHVBdzFGRWo3OHNCaWI2THB2MktXNUhFek1zQysvdjdYc1Bybko2OUhmNzNH?=
+ =?big5?B?cjFnWHhjK1FSTkR5SFM3YkJTYnFob3BMSldYSzNHdW41Qk5mQ0p5TEUyeHhWS0U4?=
+ =?big5?B?NWdPeUt6bmg3enBibmF5bU1NbkRUUjArSkpnZ1hvQ1E0eUhxTjB6Rncra09jOS9S?=
+ =?big5?B?S0R1YStXc29UNW9VL29GRi9qM0R4Ynk3TEszQ1lIUXAvbjdPd1g3bzVXS1Roenpw?=
+ =?big5?B?MllBbTllaHAvYU11bG8waE1ka2pkdExMRlhabllXaEpwenNOcDUrcjBHRWt6THFo?=
+ =?big5?Q?BOn3gDNdf14=3D?=
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-OriginatorOrg: os.amperecomputing.com
+X-OriginatorOrg: quantatw.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BL0PR01MB5156.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4e29bfe1-28b5-4a38-900d-08d9dc95c3e5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jan 2022 04:23:24.3225 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3299.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b167c134-0bf5-47dc-6a52-08d9dee06be3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Jan 2022 02:22:51.2648 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-id: 179b0327-07fc-4973-ac73-8de7313561b2
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: PWQCCGhqnwbqYrw3ekrAd0zxIEpJBoTm0a1339h9X/GAOAe4ZwzBsW0VtwfNpJwX4ES2+rc7la+NEnEnIXC4Jst9PMxrAlItygmeNmmHeeyvtPhzkRqdt/GbBdmqE41J
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR01MB5629
-X-Mailman-Approved-At: Mon, 24 Jan 2022 09:53:37 +1100
+X-MS-Exchange-CrossTenant-userprincipalname: /D0ZaNWgbDT6lfts6vEg78CNu/4wHFdxtV96vFsOfATdCPALnxqjiRDXvHR9X2g1ZJZvWWnhOTkHB83FhwUQhg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR04MB2736
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -134,145 +143,93 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com>,
- Thang Nguyen OS <thang@os.amperecomputing.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ =?big5?B?RnJhbiBIc3UgKK59u3jBvik=?= <Fran.Hsu@quantatw.com>,
+ =?big5?B?TGl0enVuZyBDaGVuICizr6dR2nop?= <Litzung.Chen@quantatw.com>,
+ Nan Zhou <nanzhou@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Jeremy, Andrew,
-Appreciated of your comments. We are using the userspace MCTP and will cons=
-ider moving to kernel space MCTP as the suggestion.
-Because of the specific requirements, we look forward for simpler way. In o=
-ur case, we have on-chip sensors and events which are allocated in both 2 s=
-ockets, and the situation is: we must send the PLDM command to poll the dat=
-a.  If using 2 interfaces to communicate with host, I think it would be com=
-plex when sending to multiple sockets.
-The things should be considered as :
-+ If a socket is problem during runtime, is the process of MCTPL/PLDM still=
- ok
-+ If one, or more socket problem. Can we reboot the whole system to recover=
- ?
-
-When using 1 interface, i think:
-+ From the host side, socket 0 (master) should manage its other sockets, (m=
-ight be not via SMBus, but other faster sockets communication). Of course, =
-the more work should be implemented in the firmware, and you have pointed.
-+ BMC just recover the system (via reboot) when socket 0 issue, otherwise i=
-t does properly
-
-Do you think any more issues with the communication performance ?
-
-Thanks,
-
-________________________________________
-From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>
-Sent: Friday, January 21, 2022 11:15 AM
-To: Jeremy Kerr; openbmc@lists.ozlabs.org
-Cc: Thu Nguyen OS; Thang Nguyen OS
-Subject: Re: MCTP/PLDM BMC-host communication design
-
-Dear Jeremy, Andrew,
-Appreciated of your comments. We are using the userspace MCTP and will cons=
-ider moving to kernel space MCTP as the suggestion.
-Because of the specific requirements, we look forward for simpler way. In o=
-ur case, we have on-chip sensors and events which are allocated in both 2 s=
-ockets, and the situation is: we must send the PLDM command to poll the dat=
-a.  If using 2 interfaces to communicate with host, I think it would be com=
-plex when sending to multiple sockets.
-The things should be considered as :
-+ If a socket is problem during runtime, is the process of MCTPL/PLDM still=
- ok
-+ If one, or more socket problem. Can we reboot the whole system to recover=
- ?
-
-When using 1 interface, i think:
-+ From the host side, socket 0 (master) should manage its other sockets, (m=
-ight be not via SMBus, but other faster sockets communication). Of course, =
-the more work should be implemented in the firmware, and you have pointed.
-+ BMC just recover the system (via reboot) when socket 0 issue, otherwise i=
-t does properly
-
-Do you think any more issues with the communication performance ?
-
-Thanks,
-
-________________________________
-From: Jeremy Kerr <jk@codeconstruct.com.au>
-Sent: Thursday, January 20, 2022 7:53 AM
-To: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>; openbmc@lists.ozlab=
-s.org <openbmc@lists.ozlabs.org>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com>; Thang Nguyen OS <thang@os.a=
-mperecomputing.com>
-Subject: Re: MCTP/PLDM BMC-host communication design
-
-Hi Tung,
-
-> We are using community PLDM/MCTP code to design our MCTP/PLDM stack
-> via SMBUS on aarch64 system. Basically, we have 2 CPU sockets
-> corresponding with 2 SMBUS addresses, and the MCTP/PLDM stack looks
-> like this image:
->
-> https://github.com/tungnguyen-ampere/images/blob/7dba355b4742d0ffab9cd393=
-03bbb6e9c8a6f646/current_design.png
-
-That looks good to me, but a couple of notes:
-
- - EID 0 and EID 1 are reserved addresses according to the spec, the
-   usable range starts at 8
-
- - therefore, the *convention* so far for EID allocation is to assign
-   EID 8 to the BMC, as the top-level bus owner, and allocate onwards
-   from there. However, that's certainly not fixed if you require
-   something different for your design.
-
- - you don't necessarily need two EIDs (0 and 1) for the BMC there.
-   Even if there are two interfaces, you can use a single EID on the
-   BMC, which simplifies things.
-
-> Due to the not supported of discovery process, we are fixing the EIDs
-> for host.
-
-As Andrew has mentioned, we have the in-kernel stack working, including
-the EID discovery process using MCTP Control Protocol messaging.
-
-If you'd like to experiment with this, we have a couple of backport
-branches for 5.10 and 5.15 kernels, depending on which you're working
-with:
-
- https://codeconstruct.com.au/docs/mctp-on-linux-introduction/#our-developm=
-ent-branches
-
-It's still possible to use fixed EID(s) for remote endpoints though, if
-your host MCTP stack does not support the control protocol. You'll just
-need to set up (on the BMC) some static routes for the fixed remote
-EIDs. I'm happy to help out with configuring that if you like.
-
-> A new way that is considering is like the image:
-> https://github.com/tungnguyen-ampere/images/blob/7dba355b4742d0ffab9cd393=
-03bbb6e9c8a6f646/new_design.png
-
-That looks like it has some considerable drawbacks though, being:
-
- - you'll now need to implement MCTP bridging between the SMBus link
-   (between host and socket 0) and whatever interface you're using to
-   communicate between socket 0 and socket 1. This may then require you
-   to implement more of the control protocol stack on the host (for
-   example, as you'll need to allocate EID pools from the top-level bus
-   owner, if you're doing dynamic addressing).
-
-   That's all still possible, but requires more firmware you'll need to
-   implement
-
- - if there's an issue with the socket 0's link, (say, if the host
-   has offlined offlined CPUs in socket 0), you might lose MCTP
-   connectivity between the BMC and socket 1 too.
-
-That said, it's still feasible, but I'd suggest your first design as a
-simpler and more reliable solution.
-
-Regards,
-
-
-Jeremy
-
+SGkgS29ub25lbmtvLCBUaGFua3MgZm9yIHlvdXIgcmVwbHkhDQoNCj4gLS0tLS1PcmlnaW5hbCBN
+ZXNzYWdlLS0tLS0NCj4gRnJvbTogaS5rb25vbmVua28gPGkua29ub25lbmtvQHlhZHJvLmNvbT4N
+Cj4gU3ViamVjdDogUmU6IEltcGxlbWVudCBFdGhlcm5ldCBJbnRlcmZhY2UgUHJvcGVydGllcw0K
+PiANCj4gSGkgU3BlbmNlciENCj4gDQo+IE9uIDIwLjAxLjIwMjIgMTE6NDIsIFNwZW5jZXIgS3Ug
+KKVqpUC37Ckgd3JvdGU6DQo+ID4gSGkgQWxsLA0KPiA+DQo+ID4gV2UgZmluYWxseSBkZWNpZGUg
+dG8gaW1wbGVtZW50IHNpeCBwcm9wZXJ0aWVzIHRvIEV0aGVybmV0IGludGVyZmFjZToNCj4gPiBS
+eFBhY2tldHMsIFR4UGFja2V0cywgUnhCeXRlcywgVHhCeXRlcywgUnhEcm9wcGVkLCBhbmQgVHhE
+cm9wcGVkLg0KPiA+DQo+ID4gVGhvc2UgaW5mb3JtYXRpb24gY29tZSBmcm9tIEV0aGVybmV0IHN0
+YXRpc3RpY3MgYW5kIHdlIGNhbiByZWFkIHRoZQ0KPiA+IGZpbGUgdG8gZ2V0IHRoZSBwcm9wZXJ0
+eSB2YWx1ZSBkaXJlY3RseS4gKHVuZGVyDQo+ID4gL3N5cy9jbGFzcy9uZXQvPEV0aGVybmV0IG5h
+bWU+L3N0YXRpc3RpY3MpDQo+ID4NCj4gPiBGb3IgdGhlIHN1aXRhYmxlIHByb3BlcnR5IGluIEV0
+aGVybmV0SW50ZXJmYWNlIG1vZGVsLCB3ZSBnb3QgdGhlDQo+ID4gZmVlZGJhY2sgZm9ybSBSZWRm
+aXNoIGZvcnVtIGFuZCB0aGV5IHNhaWQgT0VNIHByb3BlcnRpZXMgd291bGQgYmUgdGhlDQo+ID4g
+b25seSBvdGhlciBvcHRpb24gYXQgdGhpcyB0aW1lLiBGb3IgbW9yZSBkaXNjdXNzaW9uIGRldGFp
+bDoNCj4gPiBodHRwczovL2FwYzAxLnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91
+cmw9aHR0cHMlM0ElMkYlMkZyZWRmDQo+ID4gaXNoZm9ydW0uY29tJTJGdGhyZWFkJTJGNTc5JTJG
+YWRkaXRpb25hbC1pbmZvcm1hdGlvbi1ldGhlcm5ldC1pbnRlcmZhYw0KPiA+DQo+IGUmYW1wO2Rh
+dGE9MDQlN0MwMSU3Q1NwZW5jZXIuS3UlNDBxdWFudGF0dy5jb20lN0NlMjEyMGE3YTJiYjI0Ng0K
+PiA5ZjQwOWMwDQo+ID4NCj4gOGQ5ZGJmNDYxMDAlN0MxNzliMDMyNzA3ZmM0OTczYWM3MzhkZTcz
+MTM1NjFiMiU3QzElN0MwJTdDNjM3NzgyDQo+IDY2NjEzMTgNCj4gPg0KPiA1MzEwMyU3Q1Vua25v
+d24lN0NUV0ZwYkdac2IzZDhleUpXSWpvaU1DNHdMakF3TURBaUxDSlFJam9pVjJsdQ0KPiBNeklp
+TENKQg0KPiA+DQo+IFRpSTZJazFoYVd3aUxDSlhWQ0k2TW4wJTNEJTdDMzAwMCZhbXA7c2RhdGE9
+ZklFT0RLUmYxZWxBb2VwSWRTYnBHDQo+IFNMOW5ZDQo+ID4gTUUzRlRFUW0xSW9vSktPTHMlM0Qm
+YW1wO3Jlc2VydmVkPTANCj4gPg0KPiANCj4gSSdkIHN1Z2dlc3QgcmVmZXJyaW5nIHRvIHRoZSBb
+MV0gKio5LjcuIFJlc291cmNlIGV4dGVuc2liaWxpdHkqKiB0byBleGFtaW5lIHRoZQ0KPiBwcm9w
+ZXIgd2F5IG9mIE9FTS1wcm9wZXJ0aWVzIGRlZmluaXRpb24uDQo+IA0KDQpBcyB3ZSBkaXNjdXNz
+ZWQgaW4gdGhlIFBSICwgSSBuZWVkIHRvIGRlZmluZSBhbmQgY3JlYXRlIHRoZSBKU09OIHNjaGVt
+YSAiT2VtRXRoZXJuZXRJbnRlcmZhY2UiLg0KSSB3aWxsIHB1c2ggdGhlIHNjaGVtYSB0byBnZXJy
+aXQgc29vbiB3aGVuIEkgZmluaXNoIGl0Lg0KDQo+IA0KPiA+IFRoZSBmb2xsb3dpbmcgb3V0cHV0
+IGlzIHRoZSByZXN1bHQgb2YgbXkgY3VycmVudGx5IE9FTSBpbXBsZW1lbnQ6DQo+ID4gaHR0cHM6
+Ly8ke2JtY30vcmVkZmlzaC92MS9NYW5hZ2Vycy9ibWMvRWhlcm5ldEludGVyZmFjZXMvZXRoMA0K
+PiA+IHsNCj4gPiAgICJAb2RhdGEuaWQiOiAiL3JlZGZpc2gvdjEvTWFuYWdlcnMvYm1jL0V0aGVy
+bmV0SW50ZXJmYWNlcy9ldGgwIiwNCj4gPiAgIC4uLg0KPiA+ICAgIk9lbSI6IHsNCj4gPiAgICAg
+IlN0YXRpc3RpY3MiOiBbDQo+IA0KPiBMb29rcyBsaWtlICJAb2RhdGEudHlwZSIgcmVxdWlyZWQg
+ZmllbGQgaXMgbWlzc2VkLiBUaGUgKio5LjcuNC4gT0VNIHByb3BlcnR5DQo+IGV4YW1wbGVzKioN
+Cj4gY29udGFpbnMgdGhlIGV4YW1wbGUgb2YgdGhlIHJpZ2h0IHdheSB0byBkZWZpbmUgT0VNLXBy
+b3BlcnRpZXMuDQo+IA0KPiA+ICAgICAgIHsNCj4gPiAgICAgICAgICJSeEJ5dGVzIjogNDgyNDQw
+MjYsDQo+ID4gICAgICAgICAiUnhEcm9wcGVkIjogMjIyODU2LA0KPiA+ICAgICAgICAgIlJ4UGFj
+a2V0cyI6IDQ4NDMxNSwNCj4gPiAgICAgICAgICJUeEJ5dGVzIjogODI1ODQ1LA0KPiA+ICAgICAg
+ICAgIlR4RHJvcHBlZCI6IDAsDQo+ID4gICAgICAgICAiVHhQYWNrZXRzIjogNTQ3Mg0KPiA+ICAg
+ICAgIH0NCj4gPiAgICAgXQ0KPiA+ICAgfSwNCj4gPiAgICJTcGVlZE1icHMiOiAxMDAsDQo+ID4g
+ICAuLi4NCj4gPiB9DQo+ID4NCj4gPiBCdXQgaXQgY2Fubm90IHBhc3MgdGhlIFJlZGZpc2ggdmFs
+aWRhdG9yLCBhbmQgaGVyZSBpcyB0aGUgZXJyb3IgbWVzc2FnZXM6DQo+ID4gRVJST1IgLSBUaGlz
+IGNvbXBsZXggb2JqZWN0IFJ4Qnl0ZXMgc2hvdWxkIGJlIGEgZGljdGlvbmFyeSBvciBOb25lLCBi
+dXQgaXQncw0KPiBvZiB0eXBlIC4uLg0KPiANCj4gRG9lcyBpdCByZXF1aXJlIHRvIGhhdmUgdGhl
+IGludGVnZXIgdmFsdWVzPyBJIGd1ZXNzIGVhY2ggbWVudGlvbmVkIGZpZWxkIG1pZ2h0DQo+IGNv
+bnRhaW4gc3RyaW5nIHZhbHVlcy4NCj4gDQoNCkkgdGhpbmsgdGhlIG1haW4gcmVhc29uIHdoaWNo
+IG9jY3VycyB0aGUgZXJyb3IgaXMgdGhhdCBJIGRpZG4ndCBkZWZpbmUgdGhlIG9kYXRhIElEIGFu
+ZCB0eXBlLiANClRoZXkgY2Fubm90IGZpbmQgdGhlIHJlZmVyZW5jZSB0byBhbmFseXplIHRoZSBw
+cm9wZXJ0eS4gSSBhZGQgdGhlIHRlbXAgb2RhdGEgZmllbGQgKHBhdGNoIDMgaW4gdGhlIFBSKSwg
+YW5kIHRoZSBlcnJvciBtZXNzYWdlcyBoYXMgYmVlbiBjaGFuZ2VkIHRvIFdSQU5JTkc6DQoNCldB
+Uk5JTkcgLSBDb3VsZG4ndCBnZXQgc2NoZW1hIGZvciBvYmplY3QsIHNraXBwaW5nIE9lbU9iamVj
+dCBPcGVuQm1jDQpXQVJOSU5HIC0gU3RhdGlzdGljcyBub3QgZGVmaW5lZCBpbiBzY2hlbWEgQ29t
+cGxleCBPcGVuQm1jIFJlc291cmNlLk9lbU9iamVjdCAoY2hlY2sgdmVyc2lvbiwgc3BlbGxpbmcg
+YW5kIGNhc2luZykNCg0KSSB3aWxsIHJ1biB0aGUgUmVkZmlzaCB2YWxpZGF0b3IgYWdhaW4gd2hl
+biBJIGZpbmlzaCB0aGUgc2NoZW1hLg0KDQo+ID4gRVJST1IgLSBSeEJ5dGVzOiBDb3VsZCBub3Qg
+ZmluaXNoIGNoZWNrIG9uIHRoaXMgcHJvcGVydHkgKCdpbnQnIG9iamVjdCBpcyBub3QNCj4gaXRl
+cmFibGUpDQo+ID4NCj4gPiBJcyB0aGVyZSBhbnl0aGluZyBJIGRpZG4ndCBub3RpY2U/IE9yIGhh
+cyB0aGVyZSBhbnkgc3BlYyBvciBleGFtcGxlIHRoYXQgSSBjYW4NCj4gZm9sbG93IHRvIGltcGxl
+bWVudD8NCj4gPg0KPiA+IEkgaGFkIGFscmVhZHkgcHVzaCB0aGUgaW1wbGVtZW50YXRpb24gdG8g
+Z2Vycml0IGFuZCBtYXJrIGFzIFdJUC4gSGVyZSBpcyB0aGUNCj4gbGluazoNCj4gPg0KPiBodHRw
+czovL2FwYzAxLnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMlM0El
+MkYlMkZnZXJyaXQub3ANCj4gZW5ibWMtcHJvamVjdC54eXolMkZjJTJGb3BlbmJtYyUyRmJtY3dl
+YiUyRiUyQiUyRjUwNTIyJmFtcDtkYXRhDQo+ID0wNCU3QzAxJTdDU3BlbmNlci5LdSU0MHF1YW50
+YXR3LmNvbSU3Q2UyMTIwYTdhMmJiMjQ2OWY0MDljMDhkOWQNCj4gYmY0NjEwMCU3QzE3OWIwMzI3
+MDdmYzQ5NzNhYzczOGRlNzMxMzU2MWIyJTdDMSU3QzAlN0M2Mzc3ODI2NjYxDQo+IDMxODUzMTAz
+JTdDVW5rbm93biU3Q1RXRnBiR1pzYjNkOGV5SldJam9pTUM0d0xqQXdNREFpTENKUUlqb2lWMg0K
+PiBsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENKWFZDSTZNbjAlM0QlN0MzMDAwJmFtcDtzZGF0YT1k
+diUyRlhIRktUdg0KPiBJUG5iSERnQkZiRTBVVSUyQkg4RzZqemZzNFh2R1lWdWx0RG8lM0QmYW1w
+O3Jlc2VydmVkPTANCj4gPg0KPiA+IFdlIGFyZSB3aWxsaW5nIHRvIHNlZSBhbnkgc3VnZ2VzdGlv
+bnMgYW5kIGFsdGVybmF0aXZlcyBhcyB3ZWxsLiBUaGFua3MhDQo+ID4NCj4gPiBTaW5jZXJlbHks
+DQo+ID4gU3BlbmNlciBLdQ0KPiA+DQo+IA0KPiBMaW5rczoNCj4gWzFdIERTUDAyNjYgUmVkZmlz
+aCBTcGVjaWZpY2F0aW9uOg0KPiANCj4gaHR0cHM6Ly9hcGMwMS5zYWZlbGlua3MucHJvdGVjdGlv
+bi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGd3d3LmRtDQo+IHRmLm9yZyUyRnNpdGVz
+JTJGZGVmYXVsdCUyRmZpbGVzJTJGc3RhbmRhcmRzJTJGZG9jdW1lbnRzJTJGRFNQMDI2Nl8xLjgN
+Cj4gLjAucGRmJmFtcDtkYXRhPTA0JTdDMDElN0NTcGVuY2VyLkt1JTQwcXVhbnRhdHcuY29tJTdD
+ZTIxMjBhN2EyYmINCj4gMjQ2OWY0MDljMDhkOWRiZjQ2MTAwJTdDMTc5YjAzMjcwN2ZjNDk3M2Fj
+NzM4ZGU3MzEzNTYxYjIlN0MxJTdDMA0KPiAlN0M2Mzc3ODI2NjYxMzE4NTMxMDMlN0NVbmtub3du
+JTdDVFdGcGJHWnNiM2Q4ZXlKV0lqb2lNQzR3TGpBDQo+IHdNREFpTENKUUlqb2lWMmx1TXpJaUxD
+SkJUaUk2SWsxaGFXd2lMQ0pYVkNJNk1uMCUzRCU3QzMwMDAmYW1wO3NkDQo+IGF0YT1rUDZrZFB4
+N1NHYlJVMlA4dE1aQ0dmdnE2TUloejhqT3AlMkJRZiUyQlNtT3dUSSUzRCZhbXA7cmVzDQo+IGVy
+dmVkPTANCj4gDQo+IC0tDQo+IEJlc3QgcmVnYXJkcywNCj4gDQo+IElnb3IgS29ub25lbmtvDQoN
+ClNpbmNlcmVseSwNClNwZW5jZXIgS3UNCg==
