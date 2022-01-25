@@ -1,65 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4C0149B527
-	for <lists+openbmc@lfdr.de>; Tue, 25 Jan 2022 14:33:40 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC33249B846
+	for <lists+openbmc@lfdr.de>; Tue, 25 Jan 2022 17:11:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jjnqk4rqYz3bXV
-	for <lists+openbmc@lfdr.de>; Wed, 26 Jan 2022 00:33:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JjsL84WKSz3bP1
+	for <lists+openbmc@lfdr.de>; Wed, 26 Jan 2022 03:11:44 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=SoW7RWo/;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=WUp5OfMp;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=SoW7RWo/; dkim-atps=neutral
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=WUp5OfMp; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JjnqF31SCz301v;
- Wed, 26 Jan 2022 00:33:11 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1643117593; x=1674653593;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=D7hlzJPeHygbU5POvuC9qTcjfzuKUzeZK78Zs9FRQi0=;
- b=SoW7RWo/pgmKg6SjSEjPmXnnEyPr25Q2n5OwucK45RkclUMtGXUGrT2d
- CEeaQzCTSazL8V09R6sRWh8FdjeUwrS8umx03qV6Jy80fjSyn2oaqx1tX
- y9n3X7AVQUWIbM4c51Sve90n4ztgz3BmcFdQRkSYSpFJdPl4wsaJAkkve
- fKSgu12/QOQ6CFv0NUgymebArwZjtkbAtJZBA0mtQ+clJrzg5pcBbtn4j
- E22yQWBALs2mVV4ouqPCl289Kgudqc9rl/fZHPPVRww7dX5VYXVDucncO
- c7Ii3RGUjqxynvXkgOK5Q5hSLwzpUQNNXBdN2XR8vPIzDTdR5tpYfOpjK Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10237"; a="246080069"
-X-IronPort-AV: E=Sophos;i="5.88,315,1635231600"; d="scan'208";a="246080069"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jan 2022 05:32:00 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,315,1635231600"; d="scan'208";a="627928236"
-Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
- by orsmga004.jf.intel.com with ESMTP; 25 Jan 2022 05:31:57 -0800
-Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
- (envelope-from <lkp@intel.com>)
- id 1nCLvQ-000Jwk-AH; Tue, 25 Jan 2022 13:31:56 +0000
-Date: Tue, 25 Jan 2022 21:31:32 +0800
-From: kernel test robot <lkp@intel.com>
-To: Iwona Winiarska <iwona.winiarska@intel.com>,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH v6 05/13] peci: Add peci-aspeed controller driver
-Message-ID: <202201252130.U4qxBhmg-lkp@intel.com>
-References: <20220125011104.2480133-6-iwona.winiarska@intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JjsKj63Rkz301M
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Jan 2022 03:11:20 +1100 (AEDT)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 20PFlZpT025957; 
+ Tue, 25 Jan 2022 16:11:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=edgPrUVxbHrPUudBEXmZeM6bNicbubsBxmQ7OMnm/Ak=;
+ b=WUp5OfMp/X8aszeSzSzz9TspJ7nDWTincjxotv0wbaknpA7n6qQIlZ8LsV/2DZTYXTXg
+ +5gVLu0xG39JA0gYL7PxlAsIEl5yh7LYeHlFxrI+uXMthb0u1LJGvy7HHWsQo3sG0KYX
+ PLi5oO0c88d6c6WCUBFVjQs3vGoW193cskQnsUUmVCtXk1YbkMEF8V3NDKEhfL6IWoEP
+ EZG3kt4JMPyWJ3PmhEg+zftQVhjtlg0pyE2EH7y2mwB3d0YV0bxVlsoSk61AS+eDyoFc
+ DJGedzn3fBfTRjILNaglDr2qbYzeR++FaO7wgo8stqwwl6+93HMKZsu0HnrAk06j1el+ NA== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3dtm5k8kg7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Jan 2022 16:11:17 +0000
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 20PGBC8t002033;
+ Tue, 25 Jan 2022 16:11:17 GMT
+Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
+ [9.57.198.26]) by ppma04dal.us.ibm.com with ESMTP id 3dr9jaea62-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Jan 2022 16:11:16 +0000
+Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
+ [9.57.199.106])
+ by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 20PGBCKt9110092
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Jan 2022 16:11:12 GMT
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AF43B2806D;
+ Tue, 25 Jan 2022 16:11:12 +0000 (GMT)
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 57A3928073;
+ Tue, 25 Jan 2022 16:11:11 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.115.219])
+ by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue, 25 Jan 2022 16:11:11 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.15] fsi: Add trace events in initialization path
+Date: Tue, 25 Jan 2022 10:11:07 -0600
+Message-Id: <20220125161107.77962-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220125011104.2480133-6-iwona.winiarska@intel.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Szk0pQNKGVUzGgEI7UcGlg51jtRVlHc7
+X-Proofpoint-ORIG-GUID: Szk0pQNKGVUzGgEI7UcGlg51jtRVlHc7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
+ definitions=2022-01-25_03,2022-01-25_02,2021-12-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999
+ malwarescore=0 suspectscore=0 adultscore=0 clxscore=1015 mlxscore=0
+ bulkscore=0 impostorscore=0 priorityscore=1501 spamscore=0
+ lowpriorityscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2201110000 definitions=main-2201250104
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,178 +95,248 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- kbuild-all@lists.01.org, linux-aspeed@lists.ozlabs.org,
- linux-doc@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- linux-arm-kernel@lists.infradead.org
+Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Iwona,
+Add definitions for trace events to show the scanning flow in order
+to debug recent scanning problems.
 
-Thank you for the patch! Yet something to improve:
-
-[auto build test ERROR on groeck-staging/hwmon-next]
-[also build test ERROR on linux/master linus/master v5.17-rc1 next-20220125]
-[cannot apply to joel-aspeed/for-next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
-
-url:    https://github.com/0day-ci/linux/commits/Iwona-Winiarska/Introduce-PECI-subsystem/20220125-115946
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/groeck/linux-staging.git hwmon-next
-config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20220125/202201252130.U4qxBhmg-lkp@intel.com/config)
-compiler: sh4-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/35075a61a26913806122a9b500915dc66ad678bd
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Iwona-Winiarska/Introduce-PECI-subsystem/20220125-115946
-        git checkout 35075a61a26913806122a9b500915dc66ad678bd
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=sh SHELL=/bin/bash drivers/
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> drivers/clk/clk.c:856:6: error: redefinition of 'clk_unprepare'
-     856 | void clk_unprepare(struct clk *clk)
-         |      ^~~~~~~~~~~~~
-   In file included from drivers/clk/clk.c:9:
-   include/linux/clk.h:303:20: note: previous definition of 'clk_unprepare' with type 'void(struct clk *)'
-     303 | static inline void clk_unprepare(struct clk *clk)
-         |                    ^~~~~~~~~~~~~
->> drivers/clk/clk.c:937:5: error: redefinition of 'clk_prepare'
-     937 | int clk_prepare(struct clk *clk)
-         |     ^~~~~~~~~~~
-   In file included from drivers/clk/clk.c:9:
-   include/linux/clk.h:271:19: note: previous definition of 'clk_prepare' with type 'int(struct clk *)'
-     271 | static inline int clk_prepare(struct clk *clk)
-         |                   ^~~~~~~~~~~
->> drivers/clk/clk.c:1183:6: error: redefinition of 'clk_is_enabled_when_prepared'
-    1183 | bool clk_is_enabled_when_prepared(struct clk *clk)
-         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   In file included from drivers/clk/clk.c:9:
-   include/linux/clk.h:284:20: note: previous definition of 'clk_is_enabled_when_prepared' with type 'bool(struct clk *)' {aka '_Bool(struct clk *)'}
-     284 | static inline bool clk_is_enabled_when_prepared(struct clk *clk)
-         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Kconfig warnings: (for reference only)
-   WARNING: unmet direct dependencies detected for COMMON_CLK
-   Depends on !HAVE_LEGACY_CLK
-   Selected by
-   - PECI_ASPEED && PECI && (ARCH_ASPEED || COMPILE_TEST && OF && HAS_IOMEM
-
-
-vim +/clk_unprepare +856 drivers/clk/clk.c
-
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  844  
-4dff95dc9477a3 Stephen Boyd     2015-04-30  845  /**
-4dff95dc9477a3 Stephen Boyd     2015-04-30  846   * clk_unprepare - undo preparation of a clock source
-4dff95dc9477a3 Stephen Boyd     2015-04-30  847   * @clk: the clk being unprepared
-4dff95dc9477a3 Stephen Boyd     2015-04-30  848   *
-4dff95dc9477a3 Stephen Boyd     2015-04-30  849   * clk_unprepare may sleep, which differentiates it from clk_disable.  In a
-4dff95dc9477a3 Stephen Boyd     2015-04-30  850   * simple case, clk_unprepare can be used instead of clk_disable to gate a clk
-4dff95dc9477a3 Stephen Boyd     2015-04-30  851   * if the operation may sleep.  One example is a clk which is accessed over
-4dff95dc9477a3 Stephen Boyd     2015-04-30  852   * I2c.  In the complex case a clk gate operation may require a fast and a slow
-4dff95dc9477a3 Stephen Boyd     2015-04-30  853   * part.  It is this reason that clk_unprepare and clk_disable are not mutually
-4dff95dc9477a3 Stephen Boyd     2015-04-30  854   * exclusive.  In fact clk_disable must be called before clk_unprepare.
-4dff95dc9477a3 Stephen Boyd     2015-04-30  855   */
-4dff95dc9477a3 Stephen Boyd     2015-04-30 @856  void clk_unprepare(struct clk *clk)
-b2476490ef1113 Mike Turquette   2012-03-15  857  {
-4dff95dc9477a3 Stephen Boyd     2015-04-30  858  	if (IS_ERR_OR_NULL(clk))
-4dff95dc9477a3 Stephen Boyd     2015-04-30  859  		return;
-b2476490ef1113 Mike Turquette   2012-03-15  860  
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  861  	clk_core_unprepare_lock(clk->core);
-1e435256d625c2 Olof Johansson   2013-04-27  862  }
-4dff95dc9477a3 Stephen Boyd     2015-04-30  863  EXPORT_SYMBOL_GPL(clk_unprepare);
-1e435256d625c2 Olof Johansson   2013-04-27  864  
-4dff95dc9477a3 Stephen Boyd     2015-04-30  865  static int clk_core_prepare(struct clk_core *core)
-4dff95dc9477a3 Stephen Boyd     2015-04-30  866  {
-4dff95dc9477a3 Stephen Boyd     2015-04-30  867  	int ret = 0;
-b2476490ef1113 Mike Turquette   2012-03-15  868  
-a63347251907d7 Stephen Boyd     2015-05-06  869  	lockdep_assert_held(&prepare_lock);
-a63347251907d7 Stephen Boyd     2015-05-06  870  
-4dff95dc9477a3 Stephen Boyd     2015-04-30  871  	if (!core)
-4dff95dc9477a3 Stephen Boyd     2015-04-30  872  		return 0;
-b2476490ef1113 Mike Turquette   2012-03-15  873  
-4dff95dc9477a3 Stephen Boyd     2015-04-30  874  	if (core->prepare_count == 0) {
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  875  		ret = clk_pm_runtime_get(core);
-4dff95dc9477a3 Stephen Boyd     2015-04-30  876  		if (ret)
-4dff95dc9477a3 Stephen Boyd     2015-04-30  877  			return ret;
-b2476490ef1113 Mike Turquette   2012-03-15  878  
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  879  		ret = clk_core_prepare(core->parent);
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  880  		if (ret)
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  881  			goto runtime_put;
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  882  
-4dff95dc9477a3 Stephen Boyd     2015-04-30  883  		trace_clk_prepare(core);
-1c155b3dfe0835 Ulf Hansson      2013-03-12  884  
-4dff95dc9477a3 Stephen Boyd     2015-04-30  885  		if (core->ops->prepare)
-4dff95dc9477a3 Stephen Boyd     2015-04-30  886  			ret = core->ops->prepare(core->hw);
-1c155b3dfe0835 Ulf Hansson      2013-03-12  887  
-4dff95dc9477a3 Stephen Boyd     2015-04-30  888  		trace_clk_prepare_complete(core);
-b2476490ef1113 Mike Turquette   2012-03-15  889  
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  890  		if (ret)
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  891  			goto unprepare;
-b2476490ef1113 Mike Turquette   2012-03-15  892  	}
-b2476490ef1113 Mike Turquette   2012-03-15  893  
-4dff95dc9477a3 Stephen Boyd     2015-04-30  894  	core->prepare_count++;
-b2476490ef1113 Mike Turquette   2012-03-15  895  
-9461f7b33d11cb Jerome Brunet    2018-06-19  896  	/*
-9461f7b33d11cb Jerome Brunet    2018-06-19  897  	 * CLK_SET_RATE_GATE is a special case of clock protection
-9461f7b33d11cb Jerome Brunet    2018-06-19  898  	 * Instead of a consumer claiming exclusive rate control, it is
-9461f7b33d11cb Jerome Brunet    2018-06-19  899  	 * actually the provider which prevents any consumer from making any
-9461f7b33d11cb Jerome Brunet    2018-06-19  900  	 * operation which could result in a rate change or rate glitch while
-9461f7b33d11cb Jerome Brunet    2018-06-19  901  	 * the clock is prepared.
-9461f7b33d11cb Jerome Brunet    2018-06-19  902  	 */
-9461f7b33d11cb Jerome Brunet    2018-06-19  903  	if (core->flags & CLK_SET_RATE_GATE)
-9461f7b33d11cb Jerome Brunet    2018-06-19  904  		clk_core_rate_protect(core);
-9461f7b33d11cb Jerome Brunet    2018-06-19  905  
-4dff95dc9477a3 Stephen Boyd     2015-04-30  906  	return 0;
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  907  unprepare:
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  908  	clk_core_unprepare(core->parent);
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  909  runtime_put:
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  910  	clk_pm_runtime_put(core);
-9a34b45397e5a3 Marek Szyprowski 2017-08-21  911  	return ret;
-b2476490ef1113 Mike Turquette   2012-03-15  912  }
-b2476490ef1113 Mike Turquette   2012-03-15  913  
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  914  static int clk_core_prepare_lock(struct clk_core *core)
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  915  {
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  916  	int ret;
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  917  
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  918  	clk_prepare_lock();
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  919  	ret = clk_core_prepare(core);
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  920  	clk_prepare_unlock();
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  921  
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  922  	return ret;
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  923  }
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  924  
-4dff95dc9477a3 Stephen Boyd     2015-04-30  925  /**
-4dff95dc9477a3 Stephen Boyd     2015-04-30  926   * clk_prepare - prepare a clock source
-4dff95dc9477a3 Stephen Boyd     2015-04-30  927   * @clk: the clk being prepared
-4dff95dc9477a3 Stephen Boyd     2015-04-30  928   *
-4dff95dc9477a3 Stephen Boyd     2015-04-30  929   * clk_prepare may sleep, which differentiates it from clk_enable.  In a simple
-4dff95dc9477a3 Stephen Boyd     2015-04-30  930   * case, clk_prepare can be used instead of clk_enable to ungate a clk if the
-4dff95dc9477a3 Stephen Boyd     2015-04-30  931   * operation may sleep.  One example is a clk which is accessed over I2c.  In
-4dff95dc9477a3 Stephen Boyd     2015-04-30  932   * the complex case a clk ungate operation may require a fast and a slow part.
-4dff95dc9477a3 Stephen Boyd     2015-04-30  933   * It is this reason that clk_prepare and clk_enable are not mutually
-4dff95dc9477a3 Stephen Boyd     2015-04-30  934   * exclusive.  In fact clk_prepare must be called before clk_enable.
-4dff95dc9477a3 Stephen Boyd     2015-04-30  935   * Returns 0 on success, -EERROR otherwise.
-4dff95dc9477a3 Stephen Boyd     2015-04-30  936   */
-4dff95dc9477a3 Stephen Boyd     2015-04-30 @937  int clk_prepare(struct clk *clk)
-b2476490ef1113 Mike Turquette   2012-03-15  938  {
-035a61c314eb3d Tomeu Vizoso     2015-01-23  939  	if (!clk)
-4dff95dc9477a3 Stephen Boyd     2015-04-30  940  		return 0;
-035a61c314eb3d Tomeu Vizoso     2015-01-23  941  
-a6adc30ba7bef8 Dong Aisheng     2016-06-30  942  	return clk_core_prepare_lock(clk->core);
-7ef3dcc8145263 James Hogan      2013-07-29  943  }
-4dff95dc9477a3 Stephen Boyd     2015-04-30  944  EXPORT_SYMBOL_GPL(clk_prepare);
-035a61c314eb3d Tomeu Vizoso     2015-01-23  945  
-
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
 ---
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+ drivers/fsi/fsi-core.c                   |  13 ++-
+ drivers/fsi/fsi-master-aspeed.c          |   2 +
+ include/trace/events/fsi.h               | 109 +++++++++++++++++++++++
+ include/trace/events/fsi_master_aspeed.h |  12 +++
+ 4 files changed, 133 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
+index 59ddc9fd5bca..78710087aa05 100644
+--- a/drivers/fsi/fsi-core.c
++++ b/drivers/fsi/fsi-core.c
+@@ -24,9 +24,6 @@
+ 
+ #include "fsi-master.h"
+ 
+-#define CREATE_TRACE_POINTS
+-#include <trace/events/fsi.h>
+-
+ #define FSI_SLAVE_CONF_NEXT_MASK	GENMASK(31, 31)
+ #define FSI_SLAVE_CONF_SLOTS_MASK	GENMASK(23, 16)
+ #define FSI_SLAVE_CONF_SLOTS_SHIFT	16
+@@ -95,6 +92,9 @@ struct fsi_slave {
+ 	u8			t_echo_delay;
+ };
+ 
++#define CREATE_TRACE_POINTS
++#include <trace/events/fsi.h>
++
+ #define to_fsi_master(d) container_of(d, struct fsi_master, dev)
+ #define to_fsi_slave(d) container_of(d, struct fsi_slave, dev)
+ 
+@@ -524,6 +524,8 @@ static int fsi_slave_scan(struct fsi_slave *slave)
+ 			dev->addr = engine_addr;
+ 			dev->size = slots * engine_page_size;
+ 
++			trace_fsi_dev_init(dev);
++
+ 			dev_dbg(&slave->dev,
+ 			"engine[%i]: type %x, version %x, addr %x size %x\n",
+ 					dev->unit, dev->engine_type, version,
+@@ -953,6 +955,7 @@ static int __fsi_get_new_minor(struct fsi_slave *slave, enum fsi_dev_type type,
+ 		if (id >= 0) {
+ 			*out_index = fsi_adjust_index(cid);
+ 			*out_dev = fsi_base_dev + id;
++			trace_fsi_minor(cid, type, true, cid);
+ 			return 0;
+ 		}
+ 		/* Other failure */
+@@ -966,6 +969,7 @@ static int __fsi_get_new_minor(struct fsi_slave *slave, enum fsi_dev_type type,
+ 		return id;
+ 	*out_index = fsi_adjust_index(id);
+ 	*out_dev = fsi_base_dev + id;
++	trace_fsi_minor(cid, type, false, id);
+ 	return 0;
+ }
+ 
+@@ -1006,6 +1010,7 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+ 
+ 	crc = crc4(0, cfam_id, 32);
+ 	if (crc) {
++		trace_fsi_slave_invalid_cfam(master, link, cfam_id);
+ 		dev_warn(&master->dev, "slave %02x:%02x invalid cfam id CRC!\n",
+ 				link, id);
+ 		return -EIO;
+@@ -1080,6 +1085,8 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+ 	if (rc)
+ 		goto err_free;
+ 
++	trace_fsi_slave_init(slave);
++
+ 	/* Create chardev for userspace access */
+ 	cdev_init(&slave->cdev, &cfam_fops);
+ 	rc = cdev_device_add(&slave->cdev, &slave->dev);
+diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
+index 8606e55c1721..04fec1aab23c 100644
+--- a/drivers/fsi/fsi-master-aspeed.c
++++ b/drivers/fsi/fsi-master-aspeed.c
+@@ -449,11 +449,13 @@ static ssize_t cfam_reset_store(struct device *dev, struct device_attribute *att
+ {
+ 	struct fsi_master_aspeed *aspeed = dev_get_drvdata(dev);
+ 
++	trace_fsi_master_aspeed_cfam_reset(true);
+ 	mutex_lock(&aspeed->lock);
+ 	gpiod_set_value(aspeed->cfam_reset_gpio, 1);
+ 	usleep_range(900, 1000);
+ 	gpiod_set_value(aspeed->cfam_reset_gpio, 0);
+ 	mutex_unlock(&aspeed->lock);
++	trace_fsi_master_aspeed_cfam_reset(false);
+ 
+ 	return count;
+ }
+diff --git a/include/trace/events/fsi.h b/include/trace/events/fsi.h
+index 9832cb8e0eb0..251bc57a8b7f 100644
+--- a/include/trace/events/fsi.h
++++ b/include/trace/events/fsi.h
+@@ -122,6 +122,115 @@ TRACE_EVENT(fsi_master_break,
+ 	)
+ );
+ 
++TRACE_EVENT(fsi_slave_init,
++	TP_PROTO(const struct fsi_slave *slave),
++	TP_ARGS(slave),
++	TP_STRUCT__entry(
++		__field(int,	master_idx)
++		__field(int,	master_n_links)
++		__field(int,	idx)
++		__field(int,	link)
++		__field(int,	chip_id)
++		__field(__u32,	cfam_id)
++		__field(__u32,	size)
++	),
++	TP_fast_assign(
++		__entry->master_idx = slave->master->idx;
++		__entry->master_n_links = slave->master->n_links;
++		__entry->idx = slave->cdev_idx;
++		__entry->link = slave->link;
++		__entry->chip_id = slave->chip_id;
++		__entry->cfam_id = slave->cfam_id;
++		__entry->size = slave->size;
++	),
++	TP_printk("fsi%d: idx:%d link:%d/%d cid:%d cfam:%08x %08x",
++		__entry->master_idx,
++		__entry->idx,
++		__entry->link,
++		__entry->master_n_links,
++		__entry->chip_id,
++		__entry->cfam_id,
++		__entry->size
++	)
++);
++
++TRACE_EVENT(fsi_slave_invalid_cfam,
++	TP_PROTO(const struct fsi_master *master, int link, uint32_t cfam_id),
++	TP_ARGS(master, link, cfam_id),
++	TP_STRUCT__entry(
++		__field(int,	master_idx)
++		__field(int,	master_n_links)
++		__field(int,	link)
++		__field(__u32,	cfam_id)
++	),
++	TP_fast_assign(
++		__entry->master_idx = master->idx;
++		__entry->master_n_links = master->n_links;
++		__entry->link = link;
++		__entry->cfam_id = cfam_id;
++	),
++	TP_printk("fsi%d: cfam:%08x link:%d/%d",
++		__entry->master_idx,
++		__entry->cfam_id,
++		__entry->link,
++		__entry->master_n_links
++	)
++);
++
++TRACE_EVENT(fsi_minor,
++	TP_PROTO(int cid, enum fsi_dev_type type, bool legacy, int result),
++	TP_ARGS(cid, type, legacy, result),
++	TP_STRUCT__entry(
++		__field(int,	cid)
++		__field(int,	type)
++		__field(bool,	legacy)
++		__field(int,	result)
++	),
++	TP_fast_assign(
++		__entry->cid = cid;
++		__entry->type = type;
++		__entry->legacy = legacy;
++		__entry->result = result;
++	),
++	TP_printk("%d: cid:%d type:%d%s",
++		__entry->result,
++		__entry->cid,
++		__entry->type,
++		__entry->legacy ? " legacy" : ""
++	)
++);
++
++TRACE_EVENT(fsi_dev_init,
++	TP_PROTO(const struct fsi_device *dev),
++	TP_ARGS(dev),
++	TP_STRUCT__entry(
++		__field(int,	master_idx)
++		__field(int,	link)
++		__field(int,	type)
++		__field(int,	unit)
++		__field(int,	version)
++		__field(__u32,	addr)
++		__field(__u32,	size)
++	),
++	TP_fast_assign(
++		__entry->master_idx = dev->slave->master->idx;
++		__entry->link = dev->slave->link;
++		__entry->type = dev->engine_type;
++		__entry->unit = dev->unit;
++		__entry->version = dev->version;
++		__entry->addr = dev->addr;
++		__entry->size = dev->size;
++	),
++	TP_printk("fsi%d: slv%d: t:%02x u:%02x v:%02x %08x@%08x",
++		__entry->master_idx,
++		__entry->link,
++		__entry->type,
++		__entry->unit,
++		__entry->version,
++		__entry->size,
++		__entry->addr
++	)
++);
+ 
+ #endif /* _TRACE_FSI_H */
+ 
+diff --git a/include/trace/events/fsi_master_aspeed.h b/include/trace/events/fsi_master_aspeed.h
+index a355ceacc33f..0fff873775f1 100644
+--- a/include/trace/events/fsi_master_aspeed.h
++++ b/include/trace/events/fsi_master_aspeed.h
+@@ -72,6 +72,18 @@ TRACE_EVENT(fsi_master_aspeed_opb_error,
+ 		)
+ 	);
+ 
++TRACE_EVENT(fsi_master_aspeed_cfam_reset,
++	TP_PROTO(bool start),
++	TP_ARGS(start),
++	TP_STRUCT__entry(
++		__field(bool,	start)
++	),
++	TP_fast_assign(
++		__entry->start = start;
++	),
++	TP_printk("%s", __entry->start ? "start" : "end")
++);
++
+ #endif
+ 
+ #include <trace/define_trace.h>
+-- 
+2.27.0
+
