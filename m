@@ -2,97 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF1D349BC23
-	for <lists+openbmc@lfdr.de>; Tue, 25 Jan 2022 20:31:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F246049BE4A
+	for <lists+openbmc@lfdr.de>; Tue, 25 Jan 2022 23:15:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jjxn44JlNz3bWR
-	for <lists+openbmc@lfdr.de>; Wed, 26 Jan 2022 06:31:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jk1QF6LdSz3bZL
+	for <lists+openbmc@lfdr.de>; Wed, 26 Jan 2022 09:15:49 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=WA6F9yEp;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=FyA4vq8/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::234;
+ helo=mail-oi1-x234.google.com; envelope-from=proclivis@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=WA6F9yEp; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=FyA4vq8/; dkim-atps=neutral
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
+ [IPv6:2607:f8b0:4864:20::234])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jjxmd3lDgz2yQK
- for <openbmc@lists.ozlabs.org>; Wed, 26 Jan 2022 06:31:29 +1100 (AEDT)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 20PIkXZq015512; 
- Tue, 25 Jan 2022 19:31:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=Bt0xHr1q5ok4k/Ard2czpA6C2p2H5YW2urtWnUJ2Dxs=;
- b=WA6F9yEp/Ajt9u+oE6YzHDA3qnjRMiDiO2I+sTrMwXmbYUrGmbsS2y5GH7vKkQSvL7hi
- dpdpTjNYPFkBrDCDWkG5MuMRENOXkLbFcDEZd93kF/Nm9IT9zn+4GCqIZoTpDmbg1vY8
- msXst8yWsGuTBmbrI3RURuTWLYNHX5ZztqDyyJKmhe7VK3VHZ8tCLIVSH9+apYdo73HF
- uyVrR4RsZkC3aWcH05ghjKmokTqmvHRP9KuCeIF2iqO1x7/q3vTZQFazBt/W+5hqcdJV
- CB6Wf5FnEctuwSRUA3bdNz82i9s1PeIIwqkGmwXcv7cCqBBlrazzDJTsUs7npUOAW3XK Ow== 
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3dtpsj0s2g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Jan 2022 19:31:25 +0000
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 20PJRqp8031582;
- Tue, 25 Jan 2022 19:31:24 GMT
-Received: from b03cxnp07027.gho.boulder.ibm.com
- (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
- by ppma03wdc.us.ibm.com with ESMTP id 3dr9jac6hm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Jan 2022 19:31:24 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 20PJVNWG34603408
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 25 Jan 2022 19:31:23 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B5002BE051;
- Tue, 25 Jan 2022 19:31:23 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7E303BE053;
- Tue, 25 Jan 2022 19:31:23 +0000 (GMT)
-Received: from [9.211.115.219] (unknown [9.211.115.219])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Tue, 25 Jan 2022 19:31:23 +0000 (GMT)
-Message-ID: <67ea2a48-4908-43e6-6a13-3f33ed28dccb@linux.ibm.com>
-Date: Tue, 25 Jan 2022 13:31:23 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH linux dev-5.15] fsi: Add trace events in initialization
- path
-Content-Language: en-US
-To: Paul Menzel <pmenzel@molgen.mpg.de>
-References: <20220125161107.77962-1-eajames@linux.ibm.com>
- <7d0206b4-edb8-96a1-59d5-09ecec8f3d66@molgen.mpg.de>
-From: Eddie James <eajames@linux.ibm.com>
-In-Reply-To: <7d0206b4-edb8-96a1-59d5-09ecec8f3d66@molgen.mpg.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: CLRMIaEnYc_igx6W1GL1bn-T35ZXQiAh
-X-Proofpoint-ORIG-GUID: CLRMIaEnYc_igx6W1GL1bn-T35ZXQiAh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2022-01-25_04,2022-01-25_02,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- mlxlogscore=999 suspectscore=0 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 phishscore=0 mlxscore=0 clxscore=1011 spamscore=0
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2201110000 definitions=main-2201250118
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jk1Pr0NsHz3002
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Jan 2022 09:15:27 +1100 (AEDT)
+Received: by mail-oi1-x234.google.com with SMTP id y23so15606769oia.13
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Jan 2022 14:15:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=content-transfer-encoding:from:mime-version:date:subject:message-id
+ :to; bh=fGkAvqBatixHSgiCSE4ZRABRCj7otwMF5ZjLLe/60K4=;
+ b=FyA4vq8/pBpb1Qw23xfekfitqFNapWm2MEHUcEhnB6AoEbLErEJEsA1hvIaWQSTK0w
+ ygAIjQLlZ/u0rhXwa74lnB4UNuT9k2881mkMG0tsUEDUUO3kMnZ9Bhxx5C10FNpWdhkT
+ f4F2XKz4XTA9+t14LUSuRMdimWzkWrfCgV+t93uJXIbfkIaUlMebs5+S5lZxxg51DbAg
+ MHBiw7HQ+7Sd840XjbwN32UbA8hbl5axqe5if5CvGe43vJqJOZMZbKzNcoTnR7roi0P1
+ Vt0oAW6s6t90UyJgSSV4IxIw5y7rLH99SUIZNhDld3T8+6VzwE87Q5DaQZbIa4PhxyNv
+ KOUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
+ :subject:message-id:to;
+ bh=fGkAvqBatixHSgiCSE4ZRABRCj7otwMF5ZjLLe/60K4=;
+ b=6MD1HCWLU7H82qzTFHk9m+6y+NWwq0g27N+xQWxO7lUrMAgQS2fIlzbLu4HH60UhrQ
+ 5G/9zY+39bcsEUcTVmcOjwyBlUQxiG2nkcL7bm1XybkNL7noItkhKSp4Jr5ui9C3jUdW
+ mZM9d+XEgBUlt53C5+VtE26+CP+fhoYmw6ppGv2N12zxqQ0m0vrYxKwKifKQjFAq0Avl
+ dWAupJuz+/dRVX66fUsvCYXQ8dsEOq3pgpMtTi4wHwJwgQ8LzEMnziH5vfClzX0TiJnt
+ 5HOWI1muMtPe3lTfnXIIGnnBh29VPF1cKjbWsmMp/RGJHwWPbtA83Wy+5d7QBHOgFwJC
+ KhKg==
+X-Gm-Message-State: AOAM532bxb8EzZJN3Jsfdn66UqB1xctGYCvI5v5RTtcH1DqI09gmVGB8
+ a/SmNUApJzL/j9pL3TbmUNAmdcVmcEWI6A==
+X-Google-Smtp-Source: ABdhPJzKGJw0itRImzBW7tZB4FX9rlAysB52G3zVMi1fhynby/bEe+Hj8rpp3zIfIR8mHt80dOcm0A==
+X-Received: by 2002:a05:6808:10c6:: with SMTP id
+ s6mr1964405ois.321.1643148922170; 
+ Tue, 25 Jan 2022 14:15:22 -0800 (PST)
+Received: from smtpclient.apple ([2600:100e:b060:df6a:e1c2:78c2:49ec:71a5])
+ by smtp.gmail.com with ESMTPSA id bq9sm8663873oib.28.2022.01.25.14.15.20
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Jan 2022 14:15:21 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary=Apple-Mail-E61133CC-DDF2-4AE9-A810-5D039A5BC2D2
+Content-Transfer-Encoding: 7bit
+From: Mike Jones <proclivis@gmail.com>
+Mime-Version: 1.0 (1.0)
+Date: Tue, 25 Jan 2022 15:15:19 -0700
+Subject: No dbus objects for phosphor-regulators
+Message-Id: <8C9640C9-6E1B-4495-BA55-258DA1548799@gmail.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+X-Mailer: iPad Mail (19C56)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,304 +80,388 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On 1/25/22 10:38, Paul Menzel wrote:
-> Dear Eddie,
->
->
-> Am 25.01.22 um 17:11 schrieb Eddie James:
->> Add definitions for trace events to show the scanning flow in order
->> to debug recent scanning problems.
->
-> Maybe give an example how to trace one of the new trace events.
+--Apple-Mail-E61133CC-DDF2-4AE9-A810-5D039A5BC2D2
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+Hi,
+=20
+I need some help getting phosphor-power/phosphor-regulators to add dbus obje=
+cts.
+=20
+I made a config file below, and verified that it is on the target and loads w=
+ithout error.
+=20
+When the target boots, using a I2C spy tool, the 0xDD command is being read p=
+eriodically, suggesting that this service is processing the read command, an=
+d a query show the service is up.
+=20
+Using dbus-monitor =E2=80=93system, I do not see any transactions that place=
+ these sensor read values on dbus, nor does the normal probing the chassis a=
+nd inventory show values.
+=20
+My bbappend is shown below, it is simple, but I wonder what is missing.
+=20
+What else do I need to so that there are dbus objects?
+=20
+Note I have not done anything to intentionally use open_power. My goal is to=
+ only use phosphor-regulators to expose some telemetry that hwmon does not s=
+upport.
+=20
+Mike
+=20
+*************** phosphor-power_%.bbappend ************
+=20
+FILESEXTRAPATHS:prepend :=3D "${THISDIR}/${PN}:"
+=20
+inherit obmc-phosphor-systemd
+=20
+SRC_URI +=3D file://config.json
+do_install:append(){
+    install -D ${WORKDIR}/config.json ${D}${datadir}/phosphor-regulators/con=
+fig.json
+}
+FILES:${PN} +=3D "${datadir}/phosphor-regulators/config.json"
+=20
+************* config file ****************
+=20
+{
+  "comments": [ "Config file for a ADI one-chassis system" ],
+=20
+  "rules": [
+    {
+      "comments": [ "Sets output voltage for a PMBus regulator rail" ],
+      "id": "set_voltage_rule",
+      "actions": [
+        {
+          "pmbus_write_vout_command": {
+            "format": "linear"
+          }
+        }
+      ]
+    },
+=20
+    {
+      "comments": [ "Reads sensors from a PMBus regulator rail" ],
+      "id": "read_sensors_rule",
+      "actions": [
+        {
+          "comments": [ "Read output voltage from READ_VOUT." ],
+          "pmbus_read_sensor": {
+            "type": "vout",
+            "command": "0xDD",
+            "format": "linear_16"
+          }
+        }
+      ]
+    }
+  ],
+=20
+  "chassis": [
+    {
+      "comments": [ "Chassis number 1 containing CPUs and memory" ],
+      "number": 1,
+      "inventory_path": "system/chassis",
+      "devices": [
+        {
+          "comments": [ "LTC3888 regulator producing the Vdd rail" ],
+          "id": "vdd_regulator",
+          "is_regulator": true,
+          "fru": "system/chassis/motherboard/regulator1",
+          "i2c_interface": {
+            "bus": 11,
+            "address": "0x4f"
+          },
+          "rails": [
+            {
+              "comments": [ "Vdd rail" ],
+              "id": "vdd",
+              "configuration": {
+                "volts": 1.10,
+                "rule_id": "set_voltage_rule"
+              },
+              "sensor_monitoring": {
+                "rule_id": "read_sensors_rule"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+=20
+Mike
 
-Hi, sure.
+Sent from my iPad=
 
+--Apple-Mail-E61133CC-DDF2-4AE9-A810-5D039A5BC2D2
+Content-Type: text/html;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-To enable:
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
+utf-8"></head><body dir=3D"auto"><p class=3D"MsoNormal" style=3D"-webkit-tex=
+t-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, san=
+s-serif;">Hi,<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-siz=
+e-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-ser=
+if;"><o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-=
+adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif=
+;">I need some help getting phosphor-power/phosphor-regulators to add dbus o=
+bjects.<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adju=
+st: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"><=
+o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust=
+: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">I m=
+ade a config file below, and verified that it is on the target and loads wit=
+hout error.<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-=
+adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif=
+;"><o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-ad=
+just: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"=
+>When the target boots, using a I2C spy tool, the 0xDD command is being read=
+ periodically, suggesting that this service is processing the read command, a=
+nd a query show the service is up.<o:p></o:p></p><p class=3D"MsoNormal" styl=
+e=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-fami=
+ly: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" style=3D=
+"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: C=
+alibri, sans-serif;">Using dbus-monitor =E2=80=93system, I do not see any tr=
+ansactions that place these sensor read values on dbus, nor does the normal p=
+robing the chassis and inventory show values.<o:p></o:p></p><p class=3D"MsoN=
+ormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt=
+; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class=3D"MsoNor=
+mal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; f=
+ont-family: Calibri, sans-serif;">My bbappend is shown below, it is simple, b=
+ut I wonder what is missing.<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-=
+webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Ca=
+libri, sans-serif;"><o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" style=3D"-we=
+bkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Cali=
+bri, sans-serif;">What else do I need to so that there are dbus objects?<o:p=
+></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; m=
+argin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;<=
+/o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; mar=
+gin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">Note I have no=
+t done anything to intentionally use open_power. My goal is to only use phos=
+phor-regulators to expose some telemetry that hwmon does not support.<o:p></=
+o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; marg=
+in: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:=
+p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin=
+: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">Mike<o:p></o:p></=
+p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0i=
+n; font-size: 11pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p>=
+<p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in;=
+ font-size: 11pt; font-family: Calibri, sans-serif;">*************** phospho=
+r-power_%.bbappend ************<o:p></o:p></p><p class=3D"MsoNormal" style=3D=
+"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: C=
+alibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" style=3D"-w=
+ebkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Cal=
+ibri, sans-serif;">FILESEXTRAPATHS:prepend :=3D "${THISDIR}/${PN}:"<o:p></o:=
+p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin=
+: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p>=
+</p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0=
+in; font-size: 11pt; font-family: Calibri, sans-serif;">inherit obmc-phospho=
+r-systemd<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-ad=
+just: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"=
+><o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adju=
+st: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">S=
+RC_URI +=3D&nbsp;<a href=3D"file://config.json/" style=3D"color: rgb(5, 99, 1=
+93);">file://config.json</a><o:p></o:p></p><p class=3D"MsoNormal" style=3D"-=
+webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Ca=
+libri, sans-serif;">do_install:append(){<o:p></o:p></p><p class=3D"MsoNormal=
+" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; fon=
+t-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp; install -D ${WORKDIR}/con=
+fig.json ${D}${datadir}/phosphor-regulators/config.json<o:p></o:p></p><p cla=
+ss=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-=
+size: 11pt; font-family: Calibri, sans-serif;">}<o:p></o:p></p><p class=3D"M=
+soNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 1=
+1pt; font-family: Calibri, sans-serif;">FILES:${PN} +=3D "${datadir}/phospho=
+r-regulators/config.json"<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-web=
+kit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calib=
+ri, sans-serif;"><o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" style=3D"-webki=
+t-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri=
+, sans-serif;">************* config file ****************<o:p></o:p></p><p c=
+lass=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; fon=
+t-size: 11pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p cla=
+ss=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-=
+size: 11pt; font-family: Calibri, sans-serif;">{<o:p></o:p></p><p class=3D"M=
+soNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 1=
+1pt; font-family: Calibri, sans-serif;">&nbsp; "comments": [ "Config file fo=
+r a ADI one-chassis system" ],<o:p></o:p></p><p class=3D"MsoNormal" style=3D=
+"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: C=
+alibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" style=3D"-w=
+ebkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Cal=
+ibri, sans-serif;">&nbsp; "rules": [<o:p></o:p></p><p class=3D"MsoNormal" st=
+yle=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-fa=
+mily: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp; {<o:p></o:p></p><p class=3D"M=
+soNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 1=
+1pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "comm=
+ents": [ "Sets output voltage for a PMBus regulator rail" ],<o:p></o:p></p><=
+p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; f=
+ont-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp; "id": "set_voltage_rule",<o:p></o:p></p><p class=3D"MsoNormal" style=3D=
+"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: C=
+alibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "actions": [<o:p></o:p><=
+/p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0=
+in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp; {<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webk=
+it-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibr=
+i, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "pmbu=
+s_write_vout_command": {<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webk=
+it-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibr=
+i, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp; "format": "linear"<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-web=
+kit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calib=
+ri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<o:=
+p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; m=
+argin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<o:p></o:p></p><p class=3D"MsoNormal" style=3D=
+"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: C=
+alibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<o:p></o:p></p><p class=
+=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-si=
+ze: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp; },<o:p></o:p=
+></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin:=
+ 0in; font-size: 11pt; font-family: Calibri, sans-serif;"><o:p>&nbsp;</o:p><=
+/p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0=
+in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp; {=
+<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: aut=
+o; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp; "comments": [ "Reads sensors from a PMBus regulator r=
+ail" ],<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adju=
+st: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "id": "read_sensors_rule",<o:p></o:p></p><p cl=
+ass=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font=
+-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p; "actions": [<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-s=
+ize-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-s=
+erif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<o:p></o:p></p><p class=3D=
+"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size:=
+ 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp; "comments": [ "Read output voltage from READ_VOUT." ],<=
+o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto=
+; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "pmbus_read_sensor": {<o:p></o=
+:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margi=
+n: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "type": "vout",<o:p></o:p=
+></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin:=
+ 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "command": "0xDD",<o:p></o:=
+p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin=
+: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "format": "linear_16"<o:p>=
+</o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; ma=
+rgin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<o:p></o:p></p><p class=3D"MsoNor=
+mal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; f=
+ont-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+ }<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: a=
+uto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp; ]<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-we=
+bkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Cali=
+bri, sans-serif;">&nbsp;&nbsp;&nbsp; }<o:p></o:p></p><p class=3D"MsoNormal" s=
+tyle=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-f=
+amily: Calibri, sans-serif;">&nbsp; ],<o:p></o:p></p><p class=3D"MsoNormal" s=
+tyle=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-f=
+amily: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" sty=
+le=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-fam=
+ily: Calibri, sans-serif;">&nbsp; "chassis": [<o:p></o:p></p><p class=3D"Mso=
+Normal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11p=
+t; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp; {<o:p></o:p></p><p c=
+lass=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; fon=
+t-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp; "comments": [ "Chassis number 1 containing CPUs and memory" ],<o:p></o:p=
+></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin:=
+ 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp; "number": 1,<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-web=
+kit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calib=
+ri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "inventory_path": "system/ch=
+assis",<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adju=
+st: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "devices": [<o:p></o:p></p><p class=3D"MsoNorm=
+al" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; f=
+ont-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+ {<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: a=
+uto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "comments": [ "LTC3888 regu=
+lator producing the Vdd rail" ],<o:p></o:p></p><p class=3D"MsoNormal" style=3D=
+"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: C=
+alibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "=
+id": "vdd_regulator",<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-=
+text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, s=
+ans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "is_regul=
+ator": true,<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size=
+-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-seri=
+f;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "fru": "system/ch=
+assis/motherboard/regulator1",<o:p></o:p></p><p class=3D"MsoNormal" style=3D=
+"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: C=
+alibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "=
+i2c_interface": {<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text=
+-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans=
+-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "=
+bus": 11,<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-ad=
+just: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"=
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "address=
+": "0x4f"<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-ad=
+just: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;"=
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<o:p></o:p></p><p c=
+lass=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; fon=
+t-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp; "rails": [<o:p></o:p></p><p class=3D"MsoNormal" s=
+tyle=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-f=
+amily: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp; {<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-=
+text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, s=
+ans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp; "comments": [ "Vdd rail" ],<o:p></o:p></p><p class=3D"MsoNorm=
+al" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; f=
+ont-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "id": "vdd",<o:p></o:p></p><p class=3D"=
+MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 1=
+1pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "configuration": {<o:p></o:p></p>=
+<p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in;=
+ font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "volts":=
+ 1.10,<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjus=
+t: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp; "rule_id": "set_voltage_rule"<o:p></o:p></p><p class=3D"MsoNorm=
+al" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; f=
+ont-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<o:p></o:p></p><p class=3D"MsoNormal"=
+ style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font=
+-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "sensor_monitoring": {<o:p></o:p></p><p cl=
+ass=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font=
+-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "rule_id": "r=
+ead_sensors_rule"<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text=
+-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans=
+-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;}<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-siz=
+e-adjust: auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-ser=
+if;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<o:=
+p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust: auto; m=
+argin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<o:p></o:p></p><p class=3D"MsoNo=
+rmal" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt;=
+ font-family: Calibri, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p; }<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-webkit-text-size-adjust:=
+ auto; margin: 0in; font-size: 11pt; font-family: Calibri, sans-serif;">&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp; ]<o:p></o:p></p><p class=3D"MsoNormal" style=3D"-=
+webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: Ca=
+libri, sans-serif;">&nbsp;&nbsp;&nbsp; }<o:p></o:p></p><p class=3D"MsoNormal=
+" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; fon=
+t-family: Calibri, sans-serif;">&nbsp; ]<o:p></o:p></p><p class=3D"MsoNormal=
+" style=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; fon=
+t-family: Calibri, sans-serif;">}<o:p></o:p></p><p class=3D"MsoNormal" style=
+=3D"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-famil=
+y: Calibri, sans-serif;"><o:p>&nbsp;</o:p></p><p class=3D"MsoNormal" style=3D=
+"-webkit-text-size-adjust: auto; margin: 0in; font-size: 11pt; font-family: C=
+alibri, sans-serif;"><o:p>Mike</o:p></p><br><div dir=3D"ltr">Sent from my iP=
+ad</div></body></html>=
 
-echo fsi_slave_init >> /sys/kernel/debug/tracing/set_event
-
-
-To look at the traces:
-
-cat /sys/kernel/debug/tracing/trace
-
-
- From one of our systems:
-
-  openpower-proc--588     [000] .n...    36.544026: fsi_slave_init: 
-fsi0: idx:1 link:0/1 cid:0 cfam:c0020da6 00800000
-  openpower-proc--588     [001] .n...    36.777409: fsi_slave_init: 
-fsi1: idx:2 link:1/8 cid:1 cfam:c0020da6 00800000
-  openpower-proc--588     [000] .n...    36.931405: fsi_slave_init: 
-fsi1: idx:3 link:2/8 cid:2 cfam:c0020da6 00800000
-  openpower-proc--588     [000] .n...    37.202587: fsi_slave_init: 
-fsi1: idx:4 link:3/8 cid:3 cfam:c0020da6 00800000
-  openpower-proc--588     [000] .n...    37.874995: fsi_slave_init: 
-fsi1: idx:2 link:1/8 cid:1 cfam:c0020da6 00800000
-  openpower-proc--588     [000] .n...    38.062801: fsi_slave_init: 
-fsi1: idx:3 link:2/8 cid:2 cfam:c0020da6 00800000
-  openpower-proc--588     [000] .n...    38.335173: fsi_slave_init: 
-fsi1: idx:4 link:3/8 cid:3 cfam:c0020da6 00800000
-  openpower-proc--679     [000] .n...    39.607437: fsi_slave_init: 
-fsi0: idx:1 link:0/1 cid:0 cfam:c0020da6 00800000
-  openpower-proc--679     [000] .n...    39.908873: fsi_slave_init: 
-fsi1: idx:2 link:1/8 cid:1 cfam:c0020da6 00800000
-  openpower-proc--679     [000] .n...    40.275172: fsi_slave_init: 
-fsi1: idx:3 link:2/8 cid:2 cfam:c0020da6 00800000
-  openpower-proc--679     [000] .n...    40.772409: fsi_slave_init: 
-fsi1: idx:4 link:3/8 cid:3 cfam:c0020da6 00800000
-  openpower-proc--679     [000] .n...    41.474989: fsi_slave_init: 
-fsi1: idx:2 link:1/8 cid:1 cfam:c0020da6 00800000
-  openpower-proc--679     [000] .n...    41.749825: fsi_slave_init: 
-fsi1: idx:3 link:2/8 cid:2 cfam:c0020da6 00800000
-  openpower-proc--679     [001] .n...    42.111040: fsi_slave_init: 
-fsi1: idx:4 link:3/8 cid:3 cfam:c0020da6 00800000
-
-Thanks,
-
-Eddie
-
-
->
->
-> Kind regards,
->
-> Paul
->
->
->> Signed-off-by: Eddie James <eajames@linux.ibm.com>
->> ---
->>   drivers/fsi/fsi-core.c                   |  13 ++-
->>   drivers/fsi/fsi-master-aspeed.c          |   2 +
->>   include/trace/events/fsi.h               | 109 +++++++++++++++++++++++
->>   include/trace/events/fsi_master_aspeed.h |  12 +++
->>   4 files changed, 133 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
->> index 59ddc9fd5bca..78710087aa05 100644
->> --- a/drivers/fsi/fsi-core.c
->> +++ b/drivers/fsi/fsi-core.c
->> @@ -24,9 +24,6 @@
->>     #include "fsi-master.h"
->>   -#define CREATE_TRACE_POINTS
->> -#include <trace/events/fsi.h>
->> -
->>   #define FSI_SLAVE_CONF_NEXT_MASK    GENMASK(31, 31)
->>   #define FSI_SLAVE_CONF_SLOTS_MASK    GENMASK(23, 16)
->>   #define FSI_SLAVE_CONF_SLOTS_SHIFT    16
->> @@ -95,6 +92,9 @@ struct fsi_slave {
->>       u8            t_echo_delay;
->>   };
->>   +#define CREATE_TRACE_POINTS
->> +#include <trace/events/fsi.h>
->> +
->>   #define to_fsi_master(d) container_of(d, struct fsi_master, dev)
->>   #define to_fsi_slave(d) container_of(d, struct fsi_slave, dev)
->>   @@ -524,6 +524,8 @@ static int fsi_slave_scan(struct fsi_slave *slave)
->>               dev->addr = engine_addr;
->>               dev->size = slots * engine_page_size;
->>   +            trace_fsi_dev_init(dev);
->> +
->>               dev_dbg(&slave->dev,
->>               "engine[%i]: type %x, version %x, addr %x size %x\n",
->>                       dev->unit, dev->engine_type, version,
->> @@ -953,6 +955,7 @@ static int __fsi_get_new_minor(struct fsi_slave 
->> *slave, enum fsi_dev_type type,
->>           if (id >= 0) {
->>               *out_index = fsi_adjust_index(cid);
->>               *out_dev = fsi_base_dev + id;
->> +            trace_fsi_minor(cid, type, true, cid);
->>               return 0;
->>           }
->>           /* Other failure */
->> @@ -966,6 +969,7 @@ static int __fsi_get_new_minor(struct fsi_slave 
->> *slave, enum fsi_dev_type type,
->>           return id;
->>       *out_index = fsi_adjust_index(id);
->>       *out_dev = fsi_base_dev + id;
->> +    trace_fsi_minor(cid, type, false, id);
->>       return 0;
->>   }
->>   @@ -1006,6 +1010,7 @@ static int fsi_slave_init(struct fsi_master 
->> *master, int link, uint8_t id)
->>         crc = crc4(0, cfam_id, 32);
->>       if (crc) {
->> +        trace_fsi_slave_invalid_cfam(master, link, cfam_id);
->>           dev_warn(&master->dev, "slave %02x:%02x invalid cfam id 
->> CRC!\n",
->>                   link, id);
->>           return -EIO;
->> @@ -1080,6 +1085,8 @@ static int fsi_slave_init(struct fsi_master 
->> *master, int link, uint8_t id)
->>       if (rc)
->>           goto err_free;
->>   +    trace_fsi_slave_init(slave);
->> +
->>       /* Create chardev for userspace access */
->>       cdev_init(&slave->cdev, &cfam_fops);
->>       rc = cdev_device_add(&slave->cdev, &slave->dev);
->> diff --git a/drivers/fsi/fsi-master-aspeed.c 
->> b/drivers/fsi/fsi-master-aspeed.c
->> index 8606e55c1721..04fec1aab23c 100644
->> --- a/drivers/fsi/fsi-master-aspeed.c
->> +++ b/drivers/fsi/fsi-master-aspeed.c
->> @@ -449,11 +449,13 @@ static ssize_t cfam_reset_store(struct device 
->> *dev, struct device_attribute *att
->>   {
->>       struct fsi_master_aspeed *aspeed = dev_get_drvdata(dev);
->>   +    trace_fsi_master_aspeed_cfam_reset(true);
->>       mutex_lock(&aspeed->lock);
->>       gpiod_set_value(aspeed->cfam_reset_gpio, 1);
->>       usleep_range(900, 1000);
->>       gpiod_set_value(aspeed->cfam_reset_gpio, 0);
->>       mutex_unlock(&aspeed->lock);
->> +    trace_fsi_master_aspeed_cfam_reset(false);
->>         return count;
->>   }
->> diff --git a/include/trace/events/fsi.h b/include/trace/events/fsi.h
->> index 9832cb8e0eb0..251bc57a8b7f 100644
->> --- a/include/trace/events/fsi.h
->> +++ b/include/trace/events/fsi.h
->> @@ -122,6 +122,115 @@ TRACE_EVENT(fsi_master_break,
->>       )
->>   );
->>   +TRACE_EVENT(fsi_slave_init,
->> +    TP_PROTO(const struct fsi_slave *slave),
->> +    TP_ARGS(slave),
->> +    TP_STRUCT__entry(
->> +        __field(int,    master_idx)
->> +        __field(int,    master_n_links)
->> +        __field(int,    idx)
->> +        __field(int,    link)
->> +        __field(int,    chip_id)
->> +        __field(__u32,    cfam_id)
->> +        __field(__u32,    size)
->> +    ),
->> +    TP_fast_assign(
->> +        __entry->master_idx = slave->master->idx;
->> +        __entry->master_n_links = slave->master->n_links;
->> +        __entry->idx = slave->cdev_idx;
->> +        __entry->link = slave->link;
->> +        __entry->chip_id = slave->chip_id;
->> +        __entry->cfam_id = slave->cfam_id;
->> +        __entry->size = slave->size;
->> +    ),
->> +    TP_printk("fsi%d: idx:%d link:%d/%d cid:%d cfam:%08x %08x",
->> +        __entry->master_idx,
->> +        __entry->idx,
->> +        __entry->link,
->> +        __entry->master_n_links,
->> +        __entry->chip_id,
->> +        __entry->cfam_id,
->> +        __entry->size
->> +    )
->> +);
->> +
->> +TRACE_EVENT(fsi_slave_invalid_cfam,
->> +    TP_PROTO(const struct fsi_master *master, int link, uint32_t 
->> cfam_id),
->> +    TP_ARGS(master, link, cfam_id),
->> +    TP_STRUCT__entry(
->> +        __field(int,    master_idx)
->> +        __field(int,    master_n_links)
->> +        __field(int,    link)
->> +        __field(__u32,    cfam_id)
->> +    ),
->> +    TP_fast_assign(
->> +        __entry->master_idx = master->idx;
->> +        __entry->master_n_links = master->n_links;
->> +        __entry->link = link;
->> +        __entry->cfam_id = cfam_id;
->> +    ),
->> +    TP_printk("fsi%d: cfam:%08x link:%d/%d",
->> +        __entry->master_idx,
->> +        __entry->cfam_id,
->> +        __entry->link,
->> +        __entry->master_n_links
->> +    )
->> +);
->> +
->> +TRACE_EVENT(fsi_minor,
->> +    TP_PROTO(int cid, enum fsi_dev_type type, bool legacy, int result),
->> +    TP_ARGS(cid, type, legacy, result),
->> +    TP_STRUCT__entry(
->> +        __field(int,    cid)
->> +        __field(int,    type)
->> +        __field(bool,    legacy)
->> +        __field(int,    result)
->> +    ),
->> +    TP_fast_assign(
->> +        __entry->cid = cid;
->> +        __entry->type = type;
->> +        __entry->legacy = legacy;
->> +        __entry->result = result;
->> +    ),
->> +    TP_printk("%d: cid:%d type:%d%s",
->> +        __entry->result,
->> +        __entry->cid,
->> +        __entry->type,
->> +        __entry->legacy ? " legacy" : ""
->> +    )
->> +);
->> +
->> +TRACE_EVENT(fsi_dev_init,
->> +    TP_PROTO(const struct fsi_device *dev),
->> +    TP_ARGS(dev),
->> +    TP_STRUCT__entry(
->> +        __field(int,    master_idx)
->> +        __field(int,    link)
->> +        __field(int,    type)
->> +        __field(int,    unit)
->> +        __field(int,    version)
->> +        __field(__u32,    addr)
->> +        __field(__u32,    size)
->> +    ),
->> +    TP_fast_assign(
->> +        __entry->master_idx = dev->slave->master->idx;
->> +        __entry->link = dev->slave->link;
->> +        __entry->type = dev->engine_type;
->> +        __entry->unit = dev->unit;
->> +        __entry->version = dev->version;
->> +        __entry->addr = dev->addr;
->> +        __entry->size = dev->size;
->> +    ),
->> +    TP_printk("fsi%d: slv%d: t:%02x u:%02x v:%02x %08x@%08x",
->> +        __entry->master_idx,
->> +        __entry->link,
->> +        __entry->type,
->> +        __entry->unit,
->> +        __entry->version,
->> +        __entry->size,
->> +        __entry->addr
->> +    )
->> +);
->>     #endif /* _TRACE_FSI_H */
->>   diff --git a/include/trace/events/fsi_master_aspeed.h 
->> b/include/trace/events/fsi_master_aspeed.h
->> index a355ceacc33f..0fff873775f1 100644
->> --- a/include/trace/events/fsi_master_aspeed.h
->> +++ b/include/trace/events/fsi_master_aspeed.h
->> @@ -72,6 +72,18 @@ TRACE_EVENT(fsi_master_aspeed_opb_error,
->>           )
->>       );
->>   +TRACE_EVENT(fsi_master_aspeed_cfam_reset,
->> +    TP_PROTO(bool start),
->> +    TP_ARGS(start),
->> +    TP_STRUCT__entry(
->> +        __field(bool,    start)
->> +    ),
->> +    TP_fast_assign(
->> +        __entry->start = start;
->> +    ),
->> +    TP_printk("%s", __entry->start ? "start" : "end")
->> +);
->> +
->>   #endif
->>     #include <trace/define_trace.h>
+--Apple-Mail-E61133CC-DDF2-4AE9-A810-5D039A5BC2D2--
