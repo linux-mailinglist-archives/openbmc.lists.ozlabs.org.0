@@ -2,66 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AABE449DA80
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jan 2022 07:18:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 327A54A001D
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jan 2022 19:31:04 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jkr4j4TNSz30jV
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jan 2022 17:18:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JlmHV10cNz3bc4
+	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 05:31:02 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=kwRkDMa7;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=jeZ5WIWW;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f33;
- helo=mail-qv1-xf33.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=kwRkDMa7; dkim-atps=neutral
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com
- [IPv6:2607:f8b0:4864:20::f33])
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2a00:1450:4864:20::133; helo=mail-lf1-x133.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=tanous-net.20210112.gappssmtp.com
+ header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=jeZ5WIWW; dkim-atps=neutral
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com
+ [IPv6:2a00:1450:4864:20::133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jkr4J5pnvz2yMt
- for <openbmc@lists.ozlabs.org>; Thu, 27 Jan 2022 17:18:07 +1100 (AEDT)
-Received: by mail-qv1-xf33.google.com with SMTP id d8so1998215qvv.2
- for <openbmc@lists.ozlabs.org>; Wed, 26 Jan 2022 22:18:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JlmH52GwWz30Mn
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Jan 2022 05:30:38 +1100 (AEDT)
+Received: by mail-lf1-x133.google.com with SMTP id bu18so13493189lfb.5
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jan 2022 10:30:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20210112.gappssmtp.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=gLKN947sfn8FJ1UvrWJJRgjbZ2fmrOZJO6tYis51NK0=;
- b=kwRkDMa7m6L55/vJ2F5F1Z4MgfeIkUI44fPPPHXBxwGQuqYs+tLcSDJSYBqsKP773r
- +JrdbiVudm2rVdcWbDJRk9aK3BTpIK2hrGfnqFfpEb4ZYCoxMmNbyuYCJ240I+ew1all
- XyMUZ5L8rcFwzJPeuJcy8f+Y1H5xQyoFWYGfQ=
+ bh=5eBhpZ3NGfkwtMwXR7E/upTmj2f/mb0q1gX5k0NSSZA=;
+ b=jeZ5WIWWLyX8sJUodQxO3Oy8Xa2bXZZ4txvEAscHLuhZUxD9fWhdN6nM2wUGTkoSg8
+ xsLSZcME2QoZsYP3t4+7mx8HdcXDnyRVjIUbqI9pcMTM6OjiBA5R3ZApWwd4KPwvOJOO
+ gqbrEpMdsQOUEIxJwniAeLI/XeYACqyLDF2aA0r74brZ7A1bidFar7gqfkfpKCoHKD0F
+ kg50XMpKlHLsrN1r7zogQwaJ+KcJZyluo0yU5tvHhyuccVLvgNbS9Jfq8wrhZEKhVHKc
+ ZFvHqRf26LWVvpSJKUzmMvPVQbItXrtazeSSpFdXOQApRtlGZJnpZk02JzTmRdE73xGX
+ 0NJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=gLKN947sfn8FJ1UvrWJJRgjbZ2fmrOZJO6tYis51NK0=;
- b=Ur5K/Rpqj9MOC8I9FlA9nV/WyYKUYkq6u+cHbVPWzTyZrpB8/c6p9Oz2J4eF385kHL
- MMvUpe+ZUyD/BQ0mnfkpDFiIGroRisQ+JEp0a/gL+GJn9Bs6x9cWAuOuUmxDqJTBodng
- 794BmX3AER7mOGR74jkHdS6GwQxa3otuCPwyACBt1nNw/3cSHH+qlgpwyMeYZXTItzh4
- +P/EjobVQMTJ+tQCwQfT7d84NfLA3RA/T3yhG01ZR4FSGrUx0vclweae4MdVELVmgAvH
- 1huqnXeR39YujInqxMXDgab825D/h3IomNIUD1EpyHutX9byTv1///vKJ/lxH0jBitxq
- sDMg==
-X-Gm-Message-State: AOAM533q0EeqGTHGGD0aj5otHJ2oyWlRhyUOogAAYF4rBT6bEADoH7iA
- Ij8dzVNjs/FhYf3s4CICVrj6cXLqhPa20ft6xFQ=
-X-Google-Smtp-Source: ABdhPJyXgLE777Pcq09aIB1MHPIOrgCI+VmHTfcIXhTEKMj9xIgTqRlzjk+XyYNuaaHdX21F5XW9zEHqIt6MLGmuWBU=
-X-Received: by 2002:ad4:5ca5:: with SMTP id q5mr1454600qvh.107.1643264279542; 
- Wed, 26 Jan 2022 22:17:59 -0800 (PST)
+ bh=5eBhpZ3NGfkwtMwXR7E/upTmj2f/mb0q1gX5k0NSSZA=;
+ b=clG/WN0ClbZa4a8bLZZI0RXlxZwOoW1mj6YZjDKHBHSENT/4ikYTxTlp5RajiPME0l
+ lI9joMcvGo+umSdxW14KTakYJ/FRjqvAcDlqDq6AivO4kHfQC/XtioKaO7DI4w8+W0jn
+ W1ErJUOl/7t55sLbWtJF9T4Ez8xFB/O8A+jIrDRvF6fOz7wKe2QeNVh6RnB424HbkPlf
+ 0nc/cv8wJ7FsI79/aVf0YO15t3+N/LOLVlUVnCHICatlDkZLuKLq0Z3xpVhDrviI9St9
+ n8pZkAeuE8NLqkarHaHoujAfT9EXEtxV09xQxj8QvW1yz08Cocv67wkEfr6lOmg3QrvX
+ 2SUw==
+X-Gm-Message-State: AOAM530go/a43IBoskItP3oi2HNTqLrOx73l1Tr+dS3kWW2EGytM4JJx
+ tPForJAcbLoF0DJddQW4e+FN2OuVMmOErmV46d0jEg==
+X-Google-Smtp-Source: ABdhPJxpWPJzny/0CYByBLfliWZYVr21rLZFEgLzZPUKS8PHcfYPEqFcIF4JS7104rwwKBpxk3i5H8ARhDM45Gb2ctE=
+X-Received: by 2002:a05:6512:3f8e:: with SMTP id
+ x14mr7162393lfa.538.1643394631676; 
+ Fri, 28 Jan 2022 10:30:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20220114032708.2532-1-Lulu_Su@wistron.com>
- <CACPK8Xf817U7_6ww9m7Jxa6W9OGpTLGfPpzioW1mzv=PmSMuWA@mail.gmail.com>
- <83259c613f2c4329acfa8de770c43876@wistron.com>
-In-Reply-To: <83259c613f2c4329acfa8de770c43876@wistron.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 27 Jan 2022 06:17:45 +0000
-Message-ID: <CACPK8XeDQ+oYn6WR6aO+R5rUZw3MsQ4GvTwANjamn270pZHHiw@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.4 v1] hwmon: (pmbus) Add a PMBUS_NO_CAPABILITY
- platform data flag
-To: Lulu Su <Lulu_Su@wistron.com>
+References: <CACWQX82gK7O-qNrFJxi3q70ejdXJLULCPxBi=8+jtZvZNj8t8w@mail.gmail.com>
+ <AB057B30-4E65-4958-BDB9-0EDF4771C5B7@gmail.com>
+In-Reply-To: <AB057B30-4E65-4958-BDB9-0EDF4771C5B7@gmail.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Fri, 28 Jan 2022 10:30:20 -0800
+Message-ID: <CACWQX83CDLLYbXqAnbkpHL8WStQWnezkZgPew_H2W1psiCKayA@mail.gmail.com>
+Subject: Re: Query Sensor
+To: Mike Jones <proclivis@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -75,65 +79,222 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>
+Cc: Ed Tanous <edtanous@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 17 Jan 2022 at 07:08, <Lulu_Su@wistron.com> wrote:
+On Thu, Jan 13, 2022 at 1:16 PM Mike Jones <proclivis@gmail.com> wrote:
 >
-> Hello,
+> Ed,
 >
-> Thanks for the suggestion, but this branch has been used for our platform=
- for a while.
+> What translates the redfish query into a dbus query?
 
-Are you merging and testing stable updates into this branch?
-
-If so, it would be good if you could contribute your changes to the
-community maintained repository.
-
-If not, then I suggest you look into this.
+The code in bmcweb.  Look in the redfish-core folder for the redfish
+specific bits.
 
 >
-> Andrew Jeffery suggested that we backport this commit.
-> (https://github.com/ibm-openbmc/openbmc/pull/204#:~:text=3DThere%27s%20pr=
-oper%20support%20for%20avoiding%20the%20CAPABILITY%20register%20upstream.%2=
-0Please%20backport%20https%3A//git.kernel.org/pub/scm/linux/kernel/git/torv=
-alds/linux.git/commit/drivers/hwmon/pmbus/pmbus_core.c%3Fh%3Dv5.16%2Drc4%26=
-id%3De5befc024cb45%20and%20implement%20the%20patch%20in%20terms%20of%20that=
-.)
+> Mike
 >
-> Could you agree to backport this commit? Thanks.
-
-I have backported this commit and pushed it to dev-5.4.
-
-Be warned that no one is maintaining this old branch, so if you are
-shipping firmware based off it, I would recommend finding someone to
-step forward to help maintain it.
-
-Cheers,
-
-Joel
-
+> Sent from my iPad
 >
-> >Hello,
-> >
-> >I note that you're targeting v5.4 for this patch. I don't know anyone wo=
-rking on maintaining this kernel tree in the openbmc project.
-> >
-> >I suggest you move your platform to the latest LTS, v5.15. This patch is=
- already present in that tree.
+> On Jan 11, 2022, at 7:04 PM, Ed Tanous <ed@tanous.net> wrote:
 >
-> -------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------
-> This email contains confidential or legally privileged information and is=
- for the sole use of its intended recipient.
-> Any unauthorized review, use, copying or distribution of this email or th=
-e content of this email is strictly prohibited.
-> If you are not the intended recipient, you may reply to the sender and sh=
-ould delete this e-mail immediately.
-> -------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------
+> =EF=BB=BF
 >
+>
+> On Tue, Jan 11, 2022 at 9:53 AM Mike Jones <proclivis@gmail.com> wrote:
+>>
+>> Ed,
+>>
+>> So to be sure I understand, dbus-sensors implements the dbus services fo=
+r each sensor type, and the requests I made were serviced by one of these.
+>
+>
+> Correct.
+>
+>>
+>>
+>> The interface is defined by yaml files in phosphor-dbus-interfaces.
+>
+>
+> Yep.
+>
+>>
+>>
+>> phosphor-dbus- interfaces generates c++ base classes, and dbus-sensors p=
+robably have c++ classes inheriting from them.
+>
+>
+>
+> For various technical and social reasons which I=E2=80=99ve detailed in m=
+ail to this list in the past, dbus-sensors doesn=E2=80=99t depend directly =
+on phosphor-dbus-interfaces, nor rely on the generated code. It instead gen=
+erates code from c++ template expansion in sdbusplus.
+>
+>>
+>>
+>> These interfaces are not Redfish interfaces.
+>
+>
+> Correct.
+>
+>>
+>>
+>> When WebUI fetches sensor values, is it using these interfaces, or is th=
+ere another Redfish layer involved that translates the query? Or perhaps Re=
+dfish only matters for things like a PSU?
+>
+>
+>
+> Depends on which webui you=E2=80=99re talking about, there are two.
+>
+> Phosphor-webui (ie the =E2=80=9Cold=E2=80=9D one) goes directly to dbus t=
+hrough the rest-dbus abstraction in bmcweb.  This was very good for initial=
+ prototyping (aside from a port to c++, the code largely hasn=E2=80=99t cha=
+nged since it was written) but not great at keeping a consistent or standar=
+dized API.
+>
+> Webui-vue (ie, the new one) relies on Redfish directly, which in-effect m=
+akes a very nice Redfish gui, and minimizes the chance that the dbus interf=
+aces are correct, but redfish is broken.  It also keeps us standard complia=
+nt, so in theory webui-vue could be used on another non-openbmc project in =
+the future.
+>
+> Ed
+>
+>>
+>>
+>> Mike
+>>
+>>
+>> Sent from my iPad
+>>
+>> > On Jan 11, 2022, at 10:22 AM, Ed Tanous <edtanous@google.com> wrote:
+>> >
+>> > =EF=BB=BFOn Tue, Jan 11, 2022 at 9:17 AM Mike Jones <proclivis@gmail.c=
+om> wrote:
+>> >>
+>> >> =EF=BB=BFThis is how to do it:
+>> >>
+>> >> dbus-send --system --print-reply \
+>> >>
+>> >> --dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a187=
+a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 \
+>> >>
+>> >> /xyz/openbmc_project/sensors/temperature/lm75temp \
+>> >>
+>> >> org.freedesktop.DBus.Properties.Get string:xyz.openbmc_project.Sensor=
+.Value string:Value \
+>> >>
+>> >> double:
+>> >>
+>> >>
+>> >> It is not clear to me why the second parameter string:Value
+>> >>
+>> >>
+>> >> I guessed on that and it works. Perhaps xyz=E2=80=A6Sensor.Value is t=
+he Property name, and properties have values, so the second parameter says =
+get the Value of a property whose name ends in .Value.\
+>> >
+>> > For better or worse, the term "Value" is overloaded in both the
+>> > interface name, yz.openbmc_project.Sensor.Value, and the property name
+>> > within the interface, Value.  That's why you see it twice in this
+>> > case.  They are distinct things within the request that just happen to
+>> > share a name.  Docs for the interface and property are here:
+>> > https://github.com/openbmc/phosphor-dbus-interfaces/blob/e0674c894ed36=
+a2e8cf96207907a531d2f514054/yaml/xyz/openbmc_project/Sensor/Value.interface=
+.yaml#L24
+>> >
+>> > Happy to see you figured it out.
+>> >
+>> >>
+>> >>
+>> >> To test that, I tried string:MaxValue, and that works.
+>> >>
+>> >>
+>> >> I confirmed with this:
+>> >>
+>> >>
+>> >> busctl introspect xyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da9059=
+07088a187a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 /xyz/openbmc_project/sensors=
+/temperature/lm75temp
+>> >>
+>> >>
+>> >> A very useful command.
+>> >>
+>> >>
+>> >> Also useful:
+>> >>
+>> >>
+>> >> dbus-send --system --print-reply \
+>> >>
+>> >> --dest=3Dxyz.openbmc_project.ObjectMapper /\
+>> >>
+>> >> xyz/openbmc_project/object_mapper \
+>> >>
+>> >> xyz.openbmc_project.ObjectMapper.GetSubTree \
+>> >>
+>> >> string:"/" int32:0 array:string:"xyz.openbmc_project.Sensor.Value"
+>> >>
+>> >>
+>> >>
+>> >> Mike
+>> >>
+>> >>
+>> >> Sent from my iPad
+>> >>
+>> >> On Jan 10, 2022, at 4:50 PM, Ed Tanous <edtanous@google.com> wrote:
+>> >>
+>> >> =EF=BB=BFOn Mon, Jan 10, 2022 at 3:47 PM Mike Jones <proclivis@gmail.=
+com> wrote:
+>> >>
+>> >>
+>> >> Hi,
+>> >>
+>> >>
+>> >> I could not find an example of a sensor query in the docs. I assume s=
+omething like this:
+>> >>
+>> >>
+>> >> dbus-send --system --print-reply \
+>> >>
+>> >>
+>> >> --dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a187=
+a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 \
+>> >>
+>> >>
+>> >> /xyz/openbmc_project/sensors/temperature/lm75temp
+>> >>
+>> >>
+>> >> xyz.openbmc_project.Sensor.Property.Get xyz.openbmc_project.Sensor.Va=
+lue \
+>> >>
+>> >>
+>> >> double:
+>> >>
+>> >>
+>> >>
+>> >> I don't have an example offhand, but the interface you're looking for
+>> >> in the bolded area is
+>> >> org.freedesktop.DBus.Properties.Get
+>> >>
+>> >> Stack overflow for essentially the same question with an example:
+>> >> https://stackoverflow.com/questions/48648952/set-get-property-using-d=
+bus-send
+>> >>
+>> >>
+>> >> With the bold interface replaced with something correct.
+>> >>
+>> >>
+>> >> Can some one give me an example, and a url about how to query propert=
+ies?
+>> >>
+>> >>
+>> >> Mike
+>> >>
+>> >>
+>> >> Sent from my iPad
+>
+> --
+> -Ed
