@@ -2,13 +2,13 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 327A54A001D
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jan 2022 19:31:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 986084A002E
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jan 2022 19:34:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JlmHV10cNz3bc4
-	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 05:31:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JlmMQ3X2Cz3bYv
+	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 05:34:26 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=jeZ5WIWW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=D4ZNaBC9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,53 +19,54 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=tanous-net.20210112.gappssmtp.com
  header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=jeZ5WIWW; dkim-atps=neutral
+ header.s=20210112 header.b=D4ZNaBC9; dkim-atps=neutral
 Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com
  [IPv6:2a00:1450:4864:20::133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JlmH52GwWz30Mn
- for <openbmc@lists.ozlabs.org>; Sat, 29 Jan 2022 05:30:38 +1100 (AEDT)
-Received: by mail-lf1-x133.google.com with SMTP id bu18so13493189lfb.5
- for <openbmc@lists.ozlabs.org>; Fri, 28 Jan 2022 10:30:38 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JlmM26lvnz30NB
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Jan 2022 05:34:06 +1100 (AEDT)
+Received: by mail-lf1-x133.google.com with SMTP id x7so13476276lfu.8
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jan 2022 10:34:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=tanous-net.20210112.gappssmtp.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=5eBhpZ3NGfkwtMwXR7E/upTmj2f/mb0q1gX5k0NSSZA=;
- b=jeZ5WIWWLyX8sJUodQxO3Oy8Xa2bXZZ4txvEAscHLuhZUxD9fWhdN6nM2wUGTkoSg8
- xsLSZcME2QoZsYP3t4+7mx8HdcXDnyRVjIUbqI9pcMTM6OjiBA5R3ZApWwd4KPwvOJOO
- gqbrEpMdsQOUEIxJwniAeLI/XeYACqyLDF2aA0r74brZ7A1bidFar7gqfkfpKCoHKD0F
- kg50XMpKlHLsrN1r7zogQwaJ+KcJZyluo0yU5tvHhyuccVLvgNbS9Jfq8wrhZEKhVHKc
- ZFvHqRf26LWVvpSJKUzmMvPVQbItXrtazeSSpFdXOQApRtlGZJnpZk02JzTmRdE73xGX
- 0NJw==
+ bh=eLRJTn5GsbamKNn07hp+RZjvAzqsD6x5O8RenRav3wY=;
+ b=D4ZNaBC90clGvxlub/biJT1KPwvbyM8hBnxMMbU6kPOXUhYIJ7BubCbvnlj5jegfLV
+ DRlKlD7rhFhujh98AEpZAeg1NMZTCdyxfRuU7wvoOVxncyBp1xbq+0fQUeJ65WAzwsap
+ F5jIvssHGG+Q1c36aBzyXgueDrY2GaEqjhrpsSV/HYA0JAGCEdy1/VhwmbrIEIcN7lqz
+ KtJTxrGMG7VgiACXVmp/OBA3AHMn1hw/9Ri5Mq7o4Lbb0NI23gj9Ju3hM4p0cyQcmuMd
+ ltrfnTsEIsYYR0M9p2QnN+kSWoKSsR8CRyPR7EqUPGt0V94oqGjLM8Ccnf2y5DOVdOkj
+ WDgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=5eBhpZ3NGfkwtMwXR7E/upTmj2f/mb0q1gX5k0NSSZA=;
- b=clG/WN0ClbZa4a8bLZZI0RXlxZwOoW1mj6YZjDKHBHSENT/4ikYTxTlp5RajiPME0l
- lI9joMcvGo+umSdxW14KTakYJ/FRjqvAcDlqDq6AivO4kHfQC/XtioKaO7DI4w8+W0jn
- W1ErJUOl/7t55sLbWtJF9T4Ez8xFB/O8A+jIrDRvF6fOz7wKe2QeNVh6RnB424HbkPlf
- 0nc/cv8wJ7FsI79/aVf0YO15t3+N/LOLVlUVnCHICatlDkZLuKLq0Z3xpVhDrviI9St9
- n8pZkAeuE8NLqkarHaHoujAfT9EXEtxV09xQxj8QvW1yz08Cocv67wkEfr6lOmg3QrvX
- 2SUw==
-X-Gm-Message-State: AOAM530go/a43IBoskItP3oi2HNTqLrOx73l1Tr+dS3kWW2EGytM4JJx
- tPForJAcbLoF0DJddQW4e+FN2OuVMmOErmV46d0jEg==
-X-Google-Smtp-Source: ABdhPJxpWPJzny/0CYByBLfliWZYVr21rLZFEgLzZPUKS8PHcfYPEqFcIF4JS7104rwwKBpxk3i5H8ARhDM45Gb2ctE=
-X-Received: by 2002:a05:6512:3f8e:: with SMTP id
- x14mr7162393lfa.538.1643394631676; 
- Fri, 28 Jan 2022 10:30:31 -0800 (PST)
+ bh=eLRJTn5GsbamKNn07hp+RZjvAzqsD6x5O8RenRav3wY=;
+ b=Lgnnat71PHNxBpGDpdGUrVwef6qXKL5rnBO0NiaG2yos3tfk2/vDSDVVDJYnuKo/5t
+ lkToCvUp2P53Xav/Il5NWEn6nqGuNpaBSp4uqkY4S4957ch4iRghqR2H+DPyHeiKpK4J
+ 9aLON4YhWOqwFjkRmNfNEb7xyCb5wvkxGSAZtMehT/+vIbT8rB5EuuyI7xiqVFYufPzE
+ 0IFanc8QPO32x48FcxHlce266oW5Vxtf9ekoecyWbGuDg6bYWgnB3mxwDfaI98r84rzs
+ gdVWozl/4Wq/pXkGBu/XlAiYMpYl4vq/Nv+L47zMfOY/R6CMEgrm5qqY9lEox9Q2nOEG
+ nI+A==
+X-Gm-Message-State: AOAM531R4eH1Aw8DpusbBHWLiyfgrJHEQRDiAMst6z1OrAg4m2/qpOq7
+ 3avE0gEkUsiRZcMkHnxQFTQR/LbEL8lFfwEDl8uuqQ==
+X-Google-Smtp-Source: ABdhPJxBCVZZqljvD68jXBIrSKZLJTqRMaFOaXoGwpxH0KcsSlwuVw/2ok67yfjhSHCE2KHkEHbL42BIVKGI4r6ZogM=
+X-Received: by 2002:a05:6512:782:: with SMTP id
+ x2mr6792687lfr.183.1643394843429; 
+ Fri, 28 Jan 2022 10:34:03 -0800 (PST)
 MIME-Version: 1.0
-References: <CACWQX82gK7O-qNrFJxi3q70ejdXJLULCPxBi=8+jtZvZNj8t8w@mail.gmail.com>
- <AB057B30-4E65-4958-BDB9-0EDF4771C5B7@gmail.com>
-In-Reply-To: <AB057B30-4E65-4958-BDB9-0EDF4771C5B7@gmail.com>
+References: <9ab8b62c-dd62-7dee-ba15-5785035bf343@linux.alibaba.com>
+ <CACWQX80N9iT6j_MaZBdQbKj0DU_C4VYz-kYktOa0SK56Lm03kA@mail.gmail.com>
+ <cfa9fa4f-09cd-1ca4-ce06-30bb9515c31e@linux.alibaba.com>
+In-Reply-To: <cfa9fa4f-09cd-1ca4-ce06-30bb9515c31e@linux.alibaba.com>
 From: Ed Tanous <ed@tanous.net>
-Date: Fri, 28 Jan 2022 10:30:20 -0800
-Message-ID: <CACWQX83CDLLYbXqAnbkpHL8WStQWnezkZgPew_H2W1psiCKayA@mail.gmail.com>
-Subject: Re: Query Sensor
-To: Mike Jones <proclivis@gmail.com>
+Date: Fri, 28 Jan 2022 10:33:52 -0800
+Message-ID: <CACWQX83C3rSkc=D1DQvM=vzf3r3o_7Oc7P-oFVYA-iVrWz9y9A@mail.gmail.com>
+Subject: Re: netipmid consumes much CPU when obmc-console socket is shutdown
+To: Heyi Guo <guoheyi@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -79,222 +80,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Vernon Mauery <vernon.mauery@linux.intel.com>,
+ openbmc <openbmc@lists.ozlabs.org>, Tom Joseph <rushtotom@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Jan 13, 2022 at 1:16 PM Mike Jones <proclivis@gmail.com> wrote:
+On Fri, Jan 14, 2022 at 6:08 AM Heyi Guo <guoheyi@linux.alibaba.com> wrote:
 >
-> Ed,
+> Hi Ed,
 >
-> What translates the redfish query into a dbus query?
+> Thanks for your advice. I'll make a try later. But I'm still curious why
+> boost read_some() function returns with 0 data byte and none error code,
+> which seems to violate the reference obviously.
 
-The code in bmcweb.  Look in the redfish-core folder for the redfish
-specific bits.
+Like I said before, my guess is it's related to the fact that you're
+combining an async_wait with a read_some in a way that asio didn't
+intend in an evented system.
 
 >
-> Mike
+> Thanks,
 >
-> Sent from my iPad
+> Heyi
 >
-> On Jan 11, 2022, at 7:04 PM, Ed Tanous <ed@tanous.net> wrote:
->
-> =EF=BB=BF
->
->
-> On Tue, Jan 11, 2022 at 9:53 AM Mike Jones <proclivis@gmail.com> wrote:
->>
->> Ed,
->>
->> So to be sure I understand, dbus-sensors implements the dbus services fo=
-r each sensor type, and the requests I made were serviced by one of these.
->
->
-> Correct.
->
->>
->>
->> The interface is defined by yaml files in phosphor-dbus-interfaces.
->
->
-> Yep.
->
->>
->>
->> phosphor-dbus- interfaces generates c++ base classes, and dbus-sensors p=
-robably have c++ classes inheriting from them.
->
->
->
-> For various technical and social reasons which I=E2=80=99ve detailed in m=
-ail to this list in the past, dbus-sensors doesn=E2=80=99t depend directly =
-on phosphor-dbus-interfaces, nor rely on the generated code. It instead gen=
-erates code from c++ template expansion in sdbusplus.
->
->>
->>
->> These interfaces are not Redfish interfaces.
->
->
-> Correct.
->
->>
->>
->> When WebUI fetches sensor values, is it using these interfaces, or is th=
-ere another Redfish layer involved that translates the query? Or perhaps Re=
-dfish only matters for things like a PSU?
->
->
->
-> Depends on which webui you=E2=80=99re talking about, there are two.
->
-> Phosphor-webui (ie the =E2=80=9Cold=E2=80=9D one) goes directly to dbus t=
-hrough the rest-dbus abstraction in bmcweb.  This was very good for initial=
- prototyping (aside from a port to c++, the code largely hasn=E2=80=99t cha=
-nged since it was written) but not great at keeping a consistent or standar=
-dized API.
->
-> Webui-vue (ie, the new one) relies on Redfish directly, which in-effect m=
-akes a very nice Redfish gui, and minimizes the chance that the dbus interf=
-aces are correct, but redfish is broken.  It also keeps us standard complia=
-nt, so in theory webui-vue could be used on another non-openbmc project in =
-the future.
->
-> Ed
->
->>
->>
->> Mike
->>
->>
->> Sent from my iPad
->>
->> > On Jan 11, 2022, at 10:22 AM, Ed Tanous <edtanous@google.com> wrote:
->> >
->> > =EF=BB=BFOn Tue, Jan 11, 2022 at 9:17 AM Mike Jones <proclivis@gmail.c=
-om> wrote:
->> >>
->> >> =EF=BB=BFThis is how to do it:
->> >>
->> >> dbus-send --system --print-reply \
->> >>
->> >> --dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a187=
-a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 \
->> >>
->> >> /xyz/openbmc_project/sensors/temperature/lm75temp \
->> >>
->> >> org.freedesktop.DBus.Properties.Get string:xyz.openbmc_project.Sensor=
-.Value string:Value \
->> >>
->> >> double:
->> >>
->> >>
->> >> It is not clear to me why the second parameter string:Value
->> >>
->> >>
->> >> I guessed on that and it works. Perhaps xyz=E2=80=A6Sensor.Value is t=
-he Property name, and properties have values, so the second parameter says =
-get the Value of a property whose name ends in .Value.\
->> >
->> > For better or worse, the term "Value" is overloaded in both the
->> > interface name, yz.openbmc_project.Sensor.Value, and the property name
->> > within the interface, Value.  That's why you see it twice in this
->> > case.  They are distinct things within the request that just happen to
->> > share a name.  Docs for the interface and property are here:
->> > https://github.com/openbmc/phosphor-dbus-interfaces/blob/e0674c894ed36=
-a2e8cf96207907a531d2f514054/yaml/xyz/openbmc_project/Sensor/Value.interface=
-.yaml#L24
->> >
->> > Happy to see you figured it out.
->> >
->> >>
->> >>
->> >> To test that, I tried string:MaxValue, and that works.
->> >>
->> >>
->> >> I confirmed with this:
->> >>
->> >>
->> >> busctl introspect xyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da9059=
-07088a187a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 /xyz/openbmc_project/sensors=
-/temperature/lm75temp
->> >>
->> >>
->> >> A very useful command.
->> >>
->> >>
->> >> Also useful:
->> >>
->> >>
->> >> dbus-send --system --print-reply \
->> >>
->> >> --dest=3Dxyz.openbmc_project.ObjectMapper /\
->> >>
->> >> xyz/openbmc_project/object_mapper \
->> >>
->> >> xyz.openbmc_project.ObjectMapper.GetSubTree \
->> >>
->> >> string:"/" int32:0 array:string:"xyz.openbmc_project.Sensor.Value"
->> >>
->> >>
->> >>
->> >> Mike
->> >>
->> >>
->> >> Sent from my iPad
->> >>
->> >> On Jan 10, 2022, at 4:50 PM, Ed Tanous <edtanous@google.com> wrote:
->> >>
->> >> =EF=BB=BFOn Mon, Jan 10, 2022 at 3:47 PM Mike Jones <proclivis@gmail.=
-com> wrote:
->> >>
->> >>
->> >> Hi,
->> >>
->> >>
->> >> I could not find an example of a sensor query in the docs. I assume s=
-omething like this:
->> >>
->> >>
->> >> dbus-send --system --print-reply \
->> >>
->> >>
->> >> --dest=3Dxyz.openbmc_project.Hwmon-5a446562b1a2e55ef11da905907088a187=
-a66b71eb7a1f29187594c05bb8fd9a.Hwmon1 \
->> >>
->> >>
->> >> /xyz/openbmc_project/sensors/temperature/lm75temp
->> >>
->> >>
->> >> xyz.openbmc_project.Sensor.Property.Get xyz.openbmc_project.Sensor.Va=
-lue \
->> >>
->> >>
->> >> double:
->> >>
->> >>
->> >>
->> >> I don't have an example offhand, but the interface you're looking for
->> >> in the bolded area is
->> >> org.freedesktop.DBus.Properties.Get
->> >>
->> >> Stack overflow for essentially the same question with an example:
->> >> https://stackoverflow.com/questions/48648952/set-get-property-using-d=
-bus-send
->> >>
->> >>
->> >> With the bold interface replaced with something correct.
->> >>
->> >>
->> >> Can some one give me an example, and a url about how to query propert=
-ies?
->> >>
->> >>
->> >> Mike
->> >>
->> >>
->> >> Sent from my iPad
->
-> --
-> -Ed
+> =E5=9C=A8 2022/1/6 =E4=B8=8B=E5=8D=8812:45, Ed Tanous =E5=86=99=E9=81=93:
+> > On Tue, Jan 4, 2022 at 6:31 PM Heyi Guo <guoheyi@linux.alibaba.com> wro=
+te:
+> >> Hi all,
+> >>
+> >> We found netipmid will consumes much CPU when SOL is activated but
+> >> obmc-console socket is shutdown by some reason (can simply shutdown
+> >> obmc-console by systemctl stop ....).
+> >>
+> >> After obmc-console socket is closed, the async_wait() in
+> >> startHostConsole() is always triggered, and consoleInputHandler() will
+> >> read empty data (readSize =3D=3D 0 and readDataLen =3D=3D 0), but all =
+the ec
+> >> condition check will NOT hit!
+> >>
+> >>   From boost reference, it is said the function read_some() will:
+> >>
+> >> The function call will block until one or more bytes of data has been
+> >> read successfully, or until an error occurs.
+> >>
+> >> Is it a bug of boost? Or is there anything wrong in ipmi-net? And how
+> >> can we make netipmid more robust on obmc-console socket shutdown?
+> >>
+> > With not much knowledge of IPMI, but coming from a lot of knowledge of
+> > boost and asio, that usage looks odd.  Instead of the
+> > consoleSocket.async_wait done here:
+> > https://github.com/openbmc/phosphor-net-ipmid/blob/12d199b27764496bfff8=
+a45661239b1e509c336f/sol/sol_manager.cpp#L92
+> > Which then calls into a blocking async_read on the socket, I would've
+> > expected a consoleSocket.async_read_some with a given buffer to reduce
+> > the number of system calls, and to read out partial data as it's
+> > available.  Whether or not it would have different behavior in this
+> > case, I can't say, but doing things the more expected way, and letting
+> > asio handle it in the expected way in the past has netted us good
+> > results in other applications.
+> >
+> > Another interesting thing is the use of std::deque for the console
+> > buffer type here.
+> > https://github.com/openbmc/phosphor-net-ipmid/blob/d4a4bed525f79c39705f=
+a526b20ab663bb2c2069/sol/console_buffer.hpp#L12
+> >
+> > I would've expected to see one of the streaming buffer types like
+> > flat_buffer (https://www.boost.org/doc/libs/develop/libs/beast/doc/html=
+/beast/ref/boost__beast__flat_buffer.html)
+> > or multi-buffer
+> > (https://www.boost.org/doc/libs/1_78_0/libs/beast/doc/html/beast/ref/bo=
+ost__beast__multi_buffer.html),
+> > which are designed for exactly what's being done here, streaming data
+> > in and out of a pipe of variable lengths, and can be streamed into and
+> > out of directly without having the extra copy.  Additionally,
+> > deque<uint8_t> is going to have a lot of memory overhead compared to a
+> > flat buffer type.
+> >
+> > Not sure if any of the above is helpful to you or not, but it might
+> > give you some things to try.
+> >
+> >> Thanks,
+> >>
+> >> Heyi
+> >>
