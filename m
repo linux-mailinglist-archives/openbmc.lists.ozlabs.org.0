@@ -2,72 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CB524A031A
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jan 2022 22:45:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 640B14A032B
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jan 2022 22:49:25 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jlrbw1vD1z3bPJ
-	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 08:45:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JlrhM1yKSz3bYw
+	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 08:49:23 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=AlWODT9n;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=AXYeQNsq;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.19; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=AlWODT9n; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JlrbV6974z2yP9
- for <openbmc@lists.ozlabs.org>; Sat, 29 Jan 2022 08:45:10 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1643406287;
- bh=P84tyrXYJDCkUgk9lKDmYiZswR055eF1GEXuSKNmM7g=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=AlWODT9ntTG9aoafUzGV3ofl2a1P8r1ZculmqAs0zR19VnHpz297JT/3faXeCsQAN
- O5q6qC+dEPjoh6cAoD5tBA2tTTDie0JfbaBwayT20vjuD2npZJRTxb0VWiGQF/LMag
- ZiHcEMFkd+y9Qc0nr+QKF0WSlWVxL0MRdx7hn4zI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([89.0.80.162]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MwQXH-1mM0vC1NUj-00sQZ6; Fri, 28
- Jan 2022 22:44:47 +0100
-From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=AXYeQNsq; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jlrgz0Ng5z2yN3
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Jan 2022 08:49:02 +1100 (AEDT)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 20SLKwbd028643; 
+ Fri, 28 Jan 2022 21:48:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=cnBadB7VIRbP5PTnuyuWYbM/022/c+elAR7Bpjm/ucE=;
+ b=AXYeQNsqbiYudfP0ScN0dnGxHYuS3fbSRGwyHp2U+cG5ACxrM5yFMLvsyjzQo3t0tYaf
+ +hOb8TZiZNGUcRDr8rZ2LSOifaGyqokmMa/DiA2ZUlg40FIAz6PTewKJKdYpJrzzKrl3
+ Vd5rkVnv/cIUOKfr4hbzwviXIVhjmGN1WatzGA+lGotvEE6pG2X02v7BLIcmAMdq3iyA
+ 9KHl2SdYQz6P7tOlrGenXZVcJB3k6gEnr+LtE0N1cL4NqIof7sDotCsM237YnP4KqTTv
+ M9e+v5v7DM3PWxNhhwfkE8CPxnHhwYV2PDuqMqdJ0MfcxG1QCe2o558dJzidi+xhwDAc aQ== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3dvgqjag4m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 28 Jan 2022 21:48:59 +0000
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 20SLW4cI015885;
+ Fri, 28 Jan 2022 21:48:58 GMT
+Received: from b03cxnp07027.gho.boulder.ibm.com
+ (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
+ by ppma05wdc.us.ibm.com with ESMTP id 3dtbckc078-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 28 Jan 2022 21:48:58 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 20SLmvaF29688152
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 28 Jan 2022 21:48:57 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 444E47805C;
+ Fri, 28 Jan 2022 21:48:57 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AF5D978066;
+ Fri, 28 Jan 2022 21:48:56 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.120.50])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Fri, 28 Jan 2022 21:48:56 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH] dt-bindings: timer: nuvoton,npcm7xx-timer: Convert to YAML
-Date: Fri, 28 Jan 2022 22:44:26 +0100
-Message-Id: <20220128214427.1990183-1-j.neuschaefer@gmx.net>
-X-Mailer: git-send-email 2.34.1
+Subject: [PATCH linux dev-5.15 0/3] Support PL2303 on AST2600
+Date: Fri, 28 Jan 2022 15:48:49 -0600
+Message-Id: <20220128214852.21551-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:7zFHR3oZpCRvermhRWwMjjfCEewDVqTz/9ti8jC0h0TomfWOKKc
- 8rmAh+wu3xGqphVWIZlPwO45zoBn4aIon1nqFG7MbAahZVLifYMJBGY20kxHYeHsQ3mcKcW
- y92cikwXkqrP75bKDw4DeC2U5fRbzxIi2vAOP+RzpLji1QiEVv295cSFoxLH1mTywCNvVhY
- 7jyv0SAV/w80Y/WYyT9lg==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UG0/RIO59cE=:6E1eBsUUTcW3ap1iXFiUIo
- D/rA4pLmT4Owlbhrmz4ad0ChIq+POLcMpN4hyGp8OUEKsjS4QzqLjqniClZTy0HS4NezWy6z+
- AuXAkmbrR5nu72PehsGQlZy6/4afM/FunCVQ7XPK9NJxyJbmyWTUCtNLXlnuOiEbJwRJuzkqN
- 7GvD0+mPIe5P4OuuvRuL/FGrm36Dv15nf69U0bT6MEzuGn182ry8AgLKyzpljKR7O/C0q5kLr
- C6IIwbMP3rxHXTnOltWGh9tkCiMsHSUqDVHdzRsKzUYzozLbaC8TGxqnjGHX+30m0+mgpJxUh
- HVBPywMmv2/fqIbKkfdWOGu2FfvMxePiL3LI73VendiHJ3b9uRH7YlZ1VyuKlwY30Na8A2cZy
- 200CahOBHCsUh8rUo3QEHGPutFUPUpbHLhPO3ZO6EaO9UDDFnucX7m7fTYLtrC4Wa1YIZLGLI
- GMkPSD2Xr1pBj4XgB2kKVSgTE3jiJQrToMU0XgwMXvgoFaEMoYGSid52NwaNsli2Ca8jmW/SA
- A+T6ipBnu7dCZbDmzcUEI6af/rBkWgh+0P3R2ymvut+/lXJWGH4QNtE7iIz0kpd/A3+ntAETM
- 20O8iRHj/3pHK32WLWg0Uzdk6qtPEovDQevuYGwib9l+qXEmWkAaT9WyR5LANDKzQoPDIu5MT
- HxDBGjrAGKSXRMKmK+LP1mvK2bzIXk2ChMYrzSGSdvuSoDSUF3gecPQdLKLQnnxT5+/hV+OP/
- fwcocVN1PgPDy0Xj9tQTk35lQAEgohSWgHL1kEi0AGBrtrlrH2ZlSe9KGqNRDzhArP8yCbIEF
- 3lx0KPFTDOXDytdoY0U8XhKw9nABPg6q2y3ZhlZHUxNnoK4iaVbTcWsWaabHmu1gXidTJ9LoK
- QO0ScEL9CPfOTfSLzhWOwtUHXNXLHP78DEDT+DDRaR3cvL2auDRkYk1XgR4SxFcBdzWToqp9P
- 0wT8FCtUlge6mFWIgyZpt8JzEK+N4U7FuROLFfD6gZokf2TJIZh+uy4naGxa6ARQTgwja6dJj
- yKvhFyWzvnkuUXoE+BeiUcyHsfhjlGaK1yaKvA9+0cKlMNTEhMrx98Dk62AvM8mw6X2hzPg7K
- xCtProyB+Tw1jI=
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 9GXmYUP0bpUqqQShUARlxsTvH1ME1qMz
+X-Proofpoint-ORIG-GUID: 9GXmYUP0bpUqqQShUARlxsTvH1ME1qMz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
+ definitions=2022-01-28_08,2022-01-28_01,2021-12-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0
+ bulkscore=0 priorityscore=1501 mlxlogscore=592 clxscore=1015 adultscore=0
+ suspectscore=0 lowpriorityscore=0 mlxscore=0 spamscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2201110000
+ definitions=main-2201280123
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,113 +96,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>, linux-kernel@vger.kernel.org,
- Benjamin Fair <benjaminfair@google.com>
+Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Let's convert this devicetree binding to YAML, to make it easier to
-extend later.
+This series provides support for the PL2303 serial-to-USB converter
+on the AST2600-based systems, Everest and Rainier.
 
-Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-=2D--
- .../bindings/timer/nuvoton,npcm7xx-timer.txt  | 21 ---------
- .../bindings/timer/nuvoton,npcm7xx-timer.yaml | 46 +++++++++++++++++++
- 2 files changed, 46 insertions(+), 21 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/timer/nuvoton,npcm7x=
-x-timer.txt
- create mode 100644 Documentation/devicetree/bindings/timer/nuvoton,npcm7x=
-x-timer.yaml
+Eddie James (3):
+  USB: serial: pl2303: Add IBM device IDs
+  USB: uhci: Add ast2600 compatible
+  arm: dts: Aspeed: Rainier and Everest: Enable UHCI
 
-diff --git a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer=
-.txt b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt
-deleted file mode 100644
-index ac3a5e887455d..0000000000000
-=2D-- a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt
-+++ /dev/null
-@@ -1,21 +0,0 @@
--Nuvoton NPCM7xx timer
--
--Nuvoton NPCM7xx have three timer modules, each timer module provides five=
- 24-bit
--timer counters.
--
--Required properties:
-=2D- compatible      : "nuvoton,npcm750-timer" for Poleg NPCM750, or
--                    "nuvoton,wpcm450-timer" for Hermon WPCM450.
-=2D- reg             : Offset and length of the register set for the devic=
-e.
-=2D- interrupts      : Contain the timer interrupt of timer 0.
-=2D- clocks          : phandle of timer reference clock (usually a 25 MHz =
-clock).
--
--Example:
--
--timer@f0008000 {
--    compatible =3D "nuvoton,npcm750-timer";
--    interrupts =3D <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
--    reg =3D <0xf0008000 0x50>;
--    clocks =3D <&clk NPCM7XX_CLK_TIMER>;
--};
--
-diff --git a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer=
-.yaml b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.yaml
-new file mode 100644
-index 0000000000000..33f9bacc8423c
-=2D-- /dev/null
-+++ b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.yaml
-@@ -0,0 +1,46 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/timer/nuvoton,npcm7xx-timer.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Nuvoton NPCM7xx timer
-+
-+maintainers:
-+  - Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - nuvoton,wpcm450-timer  # for Hermon WPCM450
-+      - nuvoton,npcm7xx-timer  # for Poleg NPCM750
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    items:
-+      - description: The timer interrupt of timer 0
-+
-+  clocks:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
-+    timer@f0008000 {
-+        compatible =3D "nuvoton,npcm750-timer";
-+        interrupts =3D <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
-+        reg =3D <0xf0008000 0x50>;
-+        clocks =3D <&clk NPCM7XX_CLK_TIMER>;
-+    };
-=2D-
-2.34.1
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 4 ++++
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 4 ++++
+ drivers/usb/host/uhci-platform.c             | 3 ++-
+ drivers/usb/serial/pl2303.c                  | 1 +
+ drivers/usb/serial/pl2303.h                  | 3 +++
+ 5 files changed, 14 insertions(+), 1 deletion(-)
+
+-- 
+2.27.0
 
