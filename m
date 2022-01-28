@@ -2,93 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 141DF4A0332
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jan 2022 22:50:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C3B774A0354
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jan 2022 23:11:41 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jlrj566YTz2xs7
-	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 08:50:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JlsB34RS1z3bXn
+	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 09:11:39 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ILBh52yf;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=EH8cb7CR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=ILBh52yf; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jlrh04nL2z2yN3
- for <openbmc@lists.ozlabs.org>; Sat, 29 Jan 2022 08:49:04 +1100 (AEDT)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 20SL63QH015128; 
- Fri, 28 Jan 2022 21:49:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=XXZsQbkFAFc5HlnFubgZ7msbZ7m7yHpSrB3KXuC/k3w=;
- b=ILBh52yfyTHhfjPcL26xORVgeBHbuZPgz22XDCvbqwSLV+F930SQ/jUvU4liHVx9xQlr
- QSIY1KaQJuEVVL6utV6qv0ZSEJcN2yeta4gtUEdfnLFODfkuDj8v4AyUqcv5jdB9tREw
- rUbJmiPsvpgcQrRvgR4sXOwUDnYdl7w5c/lAyGRLm3PCOK/VdQRQ424+aro053YtGgEm
- aaNtDWtdTcqfpvynVdYZEi0AOL3zhX/yry8hMVLQEIT16CJTLNKdUUTl4eDC/Ry3JaPV
- nD1zmNjOc7ZgGkA45ieFobVGvexOG5Zxp95ZAag09Pel5Zotu6YUTwR3glC9FRlUEAzL mA== 
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3dvpentbyw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 28 Jan 2022 21:49:01 +0000
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 20SLWpNT006582;
- Fri, 28 Jan 2022 21:49:01 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com
- (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
- by ppma03wdc.us.ibm.com with ESMTP id 3dr9jcj7ay-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 28 Jan 2022 21:49:01 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 20SLmx7Q15597942
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 28 Jan 2022 21:49:00 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DD7957806E;
- Fri, 28 Jan 2022 21:48:59 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 846C078063;
- Fri, 28 Jan 2022 21:48:59 +0000 (GMT)
-Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.120.50])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
- Fri, 28 Jan 2022 21:48:59 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.15 3/3] arm: dts: Aspeed: Rainier and Everest:
- Enable UHCI
-Date: Fri, 28 Jan 2022 15:48:52 -0600
-Message-Id: <20220128214852.21551-4-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20220128214852.21551-1-eajames@linux.ibm.com>
-References: <20220128214852.21551-1-eajames@linux.ibm.com>
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.15.18; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=EH8cb7CR; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jls9d1TBgz30NP
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Jan 2022 09:11:15 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1643407862;
+ bh=bEeUJC3i3htr2+186+xh0G3nfWq3BNhbq5STMlDxzU8=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=EH8cb7CRfGs0YUTvH/l16GKFsNxQB07YX1ikEsj13ROfpP8w+G+XaLnKXN2QS1hsC
+ Red01BHca3IOiRVGQMsgxf0e2vLCkZ1/sW7SQ3pgkGwGhxKn4uxYT9spcKr75Sj6bT
+ haRWXhoVyxPSIob2Mgq8ImQbvyPkA3izsuLsj5Vg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([89.0.80.162]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDQiS-1n4C3P3hVG-00AS99; Fri, 28
+ Jan 2022 23:11:01 +0100
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: dts: wpcm450: Enable watchdog by default
+Date: Fri, 28 Jan 2022 23:10:53 +0100
+Message-Id: <20220128221054.2002911-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: dzeUzQTFSCpwk4c228b9XaerzeyhOfjR
-X-Proofpoint-ORIG-GUID: dzeUzQTFSCpwk4c228b9XaerzeyhOfjR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2022-01-28_08,2022-01-28_01,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0
- priorityscore=1501 phishscore=0 spamscore=0 clxscore=1015 suspectscore=0
- lowpriorityscore=0 malwarescore=0 mlxscore=0 mlxlogscore=793 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2201110000
- definitions=main-2201280123
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:MFrSRbBqxcvFIu0fH4f2jjf542T47yvK8RSqkovEh64f9ueZ/6c
+ Jr8N8OtCAx/OucJW2XgkGiDXB/4ZnBpg3hIPr5Svio06Vfkoba855QMYzg8vUuTFsinWWJU
+ 3fXMu1IwGRpF2+jy874gIqqdK387TIAQ2DAGZLFepJIIFGCPDyelBRNPaYy3MP1pw5eGoYL
+ YrsNy8DUyrQQuqysWQMKw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:BnV6HWXCrfo=:npCPAtpG1+EP7b0f78X6Bd
+ Z+wYWQ6VAcbLOW1hmomXZW+hVgfTZz3lgJnerQ+TM7jn5K6/afq3XRK9IhIhHCA1mmjDqmrsr
+ in2BD7J5aBly2ghq0zRUr2xKW7s1UQzmQAjHhdH75A/G6iZ7faEB4pi3+vMrnXi/J9CDHEIrI
+ JLxtrfe15SZqfnXmvXboNbS2sU4zaAMhDRYJClysEM6mmCEAP55w88ULXq0sm+0y9qphKKyjc
+ eKFySxE2AjbXRyzxJQHAFeQGhaemm+wSckKTtxYKcW5UMDoNQ5miR3xcTN7MlQfXFlCWGcQ7o
+ gGt60BbXVdoIK3YV1EpkIuOz7TUXiEGOABr7wSt0M0bLkPLcpsaMTZn6+XHWLs3Edv7G3c4Ol
+ floeonwVcT9Xadnw5Am1DjsffCdcoUboo19vkm64yAPo4nw2L7k/ME+qrMkgXvGPDSXsv8bQ9
+ +rBUC7wdUU/6hEV9jl89sNQ7S8cKzClsCBgTXqR9qjmzqoE0QTVZpOLvHksqJtqX1FaS3cEe2
+ vEEDGq6A2nqSLq0b/ocSVqtLEsz3h/JQtyARyE2m/P6HINyDIXxL7E9ZLVqZmciZJCzntXy9O
+ PIdu5qXe0lRbfFQsoqFFQJOkKF/IzBDBq8Jb9Ene27UPwtGsjbwwqkMEwmrFgjOeabHPCSvMP
+ gNxYci+ctLmMGNxuEhKFwBlk+WEyUTmauD1PYY3t3m2B3AF6g4cj0VOco46bbi81R5cNFb/3u
+ Ymu6xy61StIvGY3d4lhM+ZIbuC9s0pR1YU/QFPnnnpqdbChPTHHlpnQkpkKCA+4M9XEv5QUa5
+ nq/i5PJMpXznSj4csaEWsuazKwYFeQL5yVjjdJIupwawEAVUX3LrXUzosBznkeRHLcdkU1DIr
+ 79PUzgutsKLjb+ORvR5xjGY4MrB8E9goSGQUBnNyYsgODg/4Pl1GJrwJoZMzhp+exW9g7GPm0
+ jKM4Q5VfSXJbuYawP3eeXdBKhPDX4cVsGz+HK2aS722pxYjdB6Zg0iKRWg9/A8A7ZuC64Qh6O
+ UzIDULQGUlUg6a0pqgpStpbhLXKmsB95EFbxEEnOkEkixjDjViG9kiQwRKjSt4dM8n02Pb4ct
+ OUwsumfnzjgm6s=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,49 +79,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Rob Herring <robh+dt@kernel.org>,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The UHCI controller is necessary to talk to slower, USB1.1 devices, so
-enable the UHCI controller in the device tree.
+The watchdog timer is always usable, regardless of board design, so
+there is no point in marking the watchdog device as disabled-by-default
+in nuvoton-wpcm450.dtsi.
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 4 ++++
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 4 ++++
- 2 files changed, 8 insertions(+)
+Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+=2D--
+ arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts | 4 ----
+ arch/arm/boot/dts/nuvoton-wpcm450.dtsi                      | 1 -
+ 2 files changed, 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-index 7256b8cbd552..547c71bfdfa7 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-@@ -2394,6 +2394,10 @@ &ehci1 {
- 	status = "okay";
+diff --git a/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts b=
+/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts
+index 3ee61251a16d0..1ae7ae4804275 100644
+=2D-- a/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts
++++ b/arch/arm/boot/dts/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts
+@@ -77,7 +77,3 @@ &serial1 {
+ 	/* "Serial over LAN" port. Connected to ttyS2 of the host system. */
+ 	status =3D "okay";
  };
- 
-+&uhci {
-+	status = "okay";
-+};
-+
- &emmc_controller {
- 	status = "okay";
- };
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 652c866c14dc..b0fad1153e76 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -239,6 +239,10 @@ &ehci1 {
- 	status = "okay";
- };
- 
-+&uhci {
-+	status = "okay";
-+};
-+
- &gpio0 {
- 	gpio-line-names =
- 	/*A0-A7*/	"","","","","","","","",
--- 
-2.27.0
+-
+-&watchdog0 {
+-	status =3D "okay";
+-};
+diff --git a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi b/arch/arm/boot/dts/nu=
+voton-wpcm450.dtsi
+index 93595850a4c3c..b9b669cd632f1 100644
+=2D-- a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
++++ b/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
+@@ -81,7 +81,6 @@ watchdog0: watchdog@b800101c {
+ 			interrupts =3D <1 IRQ_TYPE_LEVEL_HIGH>;
+ 			reg =3D <0xb800101c 0x4>;
+ 			clocks =3D <&clk24m>;
+-			status =3D "disabled";
+ 		};
+
+ 		aic: interrupt-controller@b8002000 {
+=2D-
+2.34.1
 
