@@ -1,74 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E9114A2D68
-	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 10:32:21 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DF084A2D70
+	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 10:39:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jm8HR20MRz3bW9
-	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 20:32:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jm8S00pDkz30Md
+	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 20:39:44 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=GODZTR03;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=Rwz1Sy7Q;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.20; helo=mout.gmx.net;
+ (client-ip=212.227.17.21; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=GODZTR03; 
+ header.s=badeba3b8450 header.b=Rwz1Sy7Q; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jm8Gx3Npyz303n
- for <openbmc@lists.ozlabs.org>; Sat, 29 Jan 2022 20:31:51 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jm8Rc0Mphz2xs4
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Jan 2022 20:39:23 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1643448699;
- bh=D7rgkhQ57nbk53MLqwVeodUVHa6zUEeKtJ5R3AU99Ms=;
+ s=badeba3b8450; t=1643449155;
+ bh=Op5WAOFoopxJqRI4M6WGEIj6EBhlwpGSblJPcKgOtgY=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=GODZTR03kAqA1EQvaWgGzO5mpwJpE2bzAP1UmexkBVOk7SxcNNLBziEbRr+oqmsf/
- GDqbj85vHxd58r1eIzC/SKTyPWnABc5U0Bd3WOWGstYixqUE3+kLvw2muPtFcW6yOE
- 8OjASb/B6n3mD6DpwhNc2pwgtPCkwAfb7s0Y2+cc=
+ b=Rwz1Sy7QbfB3qeSPzD7xpKfY0U38AiNJ576xPDoEGyy08XfmAEkTttIqtHrhaZ1AA
+ 9qVXFwg1HkgJlHVhMV49Mzx3gA1QhFNM0y5cEeY0tms3DM5Gf3nCX6iqmAN4YFPQvw
+ kMeNVVD6kArPlH0gVxIUGNCb8ii5l424Y3t5W7Dw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ml6m4-1mX0rf0FQa-00lU4c; Sat, 29
- Jan 2022 10:31:39 +0100
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3UZG-1nEIAD1h1W-000ZAM; Sat, 29
+ Jan 2022 10:39:15 +0100
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH] ARM: dts: nuvoton,
- npcm7xx: remove bogus unit addresses from fixed-partition nodes
-Date: Sat, 29 Jan 2022 10:29:56 +0100
-Message-Id: <20220129092957.2189769-1-j.neuschaefer@gmx.net>
+To: linux-i2c@vger.kernel.org
+Subject: [PATCH] i2c: npcm7xx: Fix typos
+Date: Sat, 29 Jan 2022 10:39:07 +0100
+Message-Id: <20220129093907.2196730-1-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:LkNGm0idUbl+qi69GkTuh98bAQ1fCO3fAj1Oi4R4OxcDtIVWBSn
- HSielVDyKOsbvIWKemrpwF15/S2D0/evvKWXZWDXLTzBs38uinRBEjsVompQ+aW4iBx/Abx
- neuO9nRtJWmaG2dFMnzqxc5LquketEE5BIGxu9NDo3Q2VCuePizgXghCZRIjkLylVOHZPyI
- IE9FJGczWzevtKy6Sk+SQ==
+X-Provags-ID: V03:K1:doqg1AvrDm2EWU0TKD4LgefzLSS50Klm1z7L4UIO6eD1gOSlxXZ
+ 6EQBqy2/3Cvwt+zh7HMSzylgtc4MF0x0csj0dmQjwiw7k2DvyygjHJVuvA7QIkiktgMveht
+ EcjxQMrw+OZ/GxxSZTkIuFbvY6Xh5R+VKyZsxRWy3umfik0MgLZD7HsbO3WBYBSpcZnPwpp
+ gcl6/qfkR4TQKIJnj9Klg==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1DelM3YvDQw=:4eDFFnnBYNfHlQVoVZkQzD
- v0WZYylljURUdWR/ibjKeH0YflwanU8LzCXhvdndyN5oBS0QccUA4zO5j8cpAAkPZj8Jo6pz/
- KFnN2zJnJFMz/T73zfE7NRZdvdYAXBXtW5bsC/p4D6WD5dSMmjhLbshoNKIiH8bAoGbf43oZr
- KwvyNtu19S/1WO0QCxkVFgpIfcGMIicIQ5l9b/wu/620618YKoJCgf/Le+tYinCoz/P11o/QQ
- U1upvGxIyaD7BKbGlxB/v1B/Nhq6Q3nQa20oWCfyv/mCGu3aaVDDeZ2UsYw8VJOqgC4chDi1i
- y36lYE/fGyPbtIwut2EsHGwIKjMoaMC2o66quQ9gEpSHdrjLLaDrvdZoQ2Lz0OHslIauKeNwK
- 7d3QXKlPYxxrnIqyhFLUgJ+5ZtguyrviiALzT+SqxiAhKJCSgHo65MT0cbNn3pT0tMRuEB8HG
- E2xsiPUEq81cEh+cVCSzJnla8N4tzcHnABWKCHZd6mRbpL1r4glsKwJO7VWBeIG+A02Q+8qR3
- IlBxN7MzhAeoPj5QuG036p7OHCasicTajv9niqpuLVggj9lxxzIh0YzqHtsaVXRMdgLo/72Tz
- 9UfpzgO4Ug8vAoOCiDneMwKOl3p0IJkEBAVVOdNjwgD1XnXnnyVMxR9VLnY6zd/pQXgEcIcnE
- X0apjVQriN+C+3ZN4fMzYuWxaMPMlRfFfq+FOzXcruhAtkZlp9nihx/17PmWqidXxGqOLp766
- DuK2H/ytNdwOyVZL3JJ7pbI984lyZQ8UURoSmZE6Bz2aY02fn3nNPzMSvB+y2fUrdGSxuN9ih
- H28dsqBO8gZb9BuhLcsmPxf/7P0/fNdFlgfpy6ylJi/mN8Pj/hC3dEvm0NIUV+7QKTalde2tr
- 4TyRE9CsVnElsUjR2MIPdrSfmDQhGM9XaxCYC6DFoEkqioraG/3F+KhkpW/WuxjekSVR3DCjt
- 7INpANxG4ycHxbg+Q1gbZiVH0duHQU4yQkfZc1r5WyzbjjB5ZoFk/i6q/ZvHTUI260zgSQlqV
- Jq7/t25NFU1TGKovtxJwbodZv4IlfnBJTDIdHMVhj/2WEZRK8CO0cbx+sR6j/yWSuYcKgi43q
- XYuKvkS3ExWeR0=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:C3nW1pPfTOs=:GwBV/SYaRmMtIAIF/gkZyF
+ NEn7kDjnOOeuu9pCLhO3Ey0GOUdp4z0TicEjgWSoBdfA2sHqgZI59vOp+Sf/Ull59tZLeNgdE
+ Yc9sa/LUL1Zns5Gx3mLkqOgKZt8lj1zL+p/roH+wLfPjZ9aYSFa9RCJHjy077xI0f/8rnUrpI
+ zB8AvDGmCn7oLqgvlQAoaMZO3JpuZBOYTMSlBI40KxPCsT8FBAyuDHkdH64CLzM/TyDwZfPLe
+ Yrkhs787l13WHislDdDvZR1yE/WOi5z+RxODe3CF/dkDT7TvzzAm61izsiZH3bgzGRz8i/xc6
+ jl1004hP+yBtVsF/UEOnfsyAjf+u9USVkqK3TwMlrfyJ0vV46Nq9bDvIPz3a2ZwQkkugPaU2L
+ A0ByUbrpLuuw9+SFuMgsuLXYJhjjCvBK0V6OhqXoHvnu58HQ9m9AgGWBwvymJ+EgIpdD2Aoq7
+ xVfS5FifyTc0fGwJfAIVlBNY8oJFMTZ1Ybr69Q3nNQLNH8Kg+QED3vNqjUgXVth4n8rprbcdB
+ CBIp6Z6lf7996PxYF31maD+tgtBHDxdoXa52i22GYF3u4l8hQcN9tY43brqKi/DXHiWGiMdiP
+ IQx7+7oSY9Bj0L083HktTQZTXQM9QtqVfiq2F0LmXzM7Ej7wv2nHvZmQ1HExeX4AelkS1j/Qc
+ mC0W0NIKxYSLkMfvlB8PlzC4bddJZRPtfc1QQMaNDwqPIPio/bj/Q+YO/VPdP3AlAtArhPAoN
+ 74lZUUKmn8CwNGN0vSgc3ANdmOe61sKsapPYt1ysyW+AaLG5qkeDeR/wqWeT+4HUlSo6eE5Fr
+ Qxu2JWfpAxsmKrJ7wzs+7fIEFIagn2wYDXKaeztWss005nUYHRXSoMod70hcITIcp6Hp9aKd2
+ X4SblpsX3tP96wNwRma2imvaA9Vq51h50ebEBiDheRdEIKFbm77Uhys695NY9kxs62iyN/TY4
+ bF6odIYUKSJCI0H8nQ9ySSczOKrEtSWNcu1lTl598EfR51qsn6k9BXoXqizucQJbrYi0AMf8s
+ a4/Pz9mDzGS6J0UDEdfvxY3kLgDf6pejZWUKS4qXxcfVzdYp/DIoIYSUqkJimaJAgY7tlf80x
+ K8QXdJphsD4X+4=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,141 +79,90 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
  =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- linux-kernel@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
+ Tali Perry <tali.perry1@gmail.com>, linux-kernel@vger.kernel.org,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The unit addresses do not correspond to the nodes' reg properties,
-because they don't have any.
+The comments in this driver have a few typos. Let's fix them.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 =2D--
- arch/arm/boot/dts/nuvoton-npcm730-gbs.dts            | 2 +-
- arch/arm/boot/dts/nuvoton-npcm730-gsj.dts            | 2 +-
- arch/arm/boot/dts/nuvoton-npcm730-kudo.dts           | 6 +++---
- arch/arm/boot/dts/nuvoton-npcm750-evb.dts            | 4 ++--
- arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts | 6 +++---
- 5 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/i2c/busses/i2c-npcm7xx.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts b/arch/arm/boot/dts=
-/nuvoton-npcm730-gbs.dts
-index eb6eb21cb2a44..33c8d5b3d679a 100644
-=2D-- a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-@@ -366,7 +366,7 @@ spi-nor@0 {
- 		spi-max-frequency =3D <20000000>;
- 		spi-rx-bus-width =3D <2>;
- 		label =3D "bmc";
--		partitions@80000000 {
-+		partitions {
- 			compatible =3D "fixed-partitions";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts b/arch/arm/boot/dts=
-/nuvoton-npcm730-gsj.dts
-index d4ff49939a3d9..bbe18618f5c56 100644
-=2D-- a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
-@@ -142,7 +142,7 @@ spi-nor@0 {
- 		reg =3D <0>;
- 		spi-rx-bus-width =3D <2>;
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npc=
+m7xx.c
+index 2ad166355ec9b..71aad029425d8 100644
+=2D-- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -781,7 +781,7 @@ static void npcm_i2c_set_fifo(struct npcm_i2c *bus, in=
+t nread, int nwrite)
+ 		/*
+ 		 * if we are about to read the first byte in blk rd mode,
+ 		 * don't NACK it. If slave returns zero size HW can't NACK
+-		 * it immidiattly, it will read extra byte and then NACK.
++		 * it immediately, it will read extra byte and then NACK.
+ 		 */
+ 		if (bus->rd_ind =3D=3D 0 && bus->read_block_use) {
+ 			/* set fifo to read one byte, no last: */
+@@ -981,7 +981,7 @@ static void npcm_i2c_slave_xmit(struct npcm_i2c *bus, =
+u16 nwrite,
+ /*
+  * npcm_i2c_slave_wr_buf_sync:
+  * currently slave IF only supports single byte operations.
+- * in order to utilyze the npcm HW FIFO, the driver will ask for 16 bytes
++ * in order to utilize the npcm HW FIFO, the driver will ask for 16 bytes
+  * at a time, pack them in buffer, and then transmit them all together
+  * to the FIFO and onward to the bus.
+  * NACK on read will be once reached to bus->adap->quirks->max_read_len.
+@@ -1175,7 +1175,7 @@ static irqreturn_t npcm_i2c_int_slave_handler(struct=
+ npcm_i2c *bus)
+ 				/*
+ 				 * the i2c module can response to 10 own SA.
+ 				 * check which one was addressed by the master.
+-				 * repond to the first one.
++				 * respond to the first one.
+ 				 */
+ 				addr =3D ((i2ccst3 & 0x07) << 7) |
+ 					(i2ccst2 & 0x7F);
+@@ -1753,8 +1753,8 @@ static void npcm_i2c_recovery_init(struct i2c_adapte=
+r *_adap)
+ 	/*
+ 	 * npcm i2c HW allows direct reading of SCL and SDA.
+ 	 * However, it does not support setting SCL and SDA directly.
+-	 * The recovery function can togle SCL when SDA is low (but not set)
+-	 * Getter functions used internally, and can be used externaly.
++	 * The recovery function can toggle SCL when SDA is low (but not set)
++	 * Getter functions used internally, and can be used externally.
+ 	 */
+ 	rinfo->get_scl =3D npcm_i2c_get_SCL;
+ 	rinfo->get_sda =3D npcm_i2c_get_SDA;
+@@ -1768,10 +1768,10 @@ static void npcm_i2c_recovery_init(struct i2c_adap=
+ter *_adap)
 
--		partitions@80000000 {
-+		partitions {
- 			compatible =3D "fixed-partitions";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts b/arch/arm/boot/dt=
-s/nuvoton-npcm730-kudo.dts
-index 82a104b2a65f1..8e3425cb8e8b9 100644
-=2D-- a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-@@ -388,7 +388,7 @@ spi-nor@0 {
- 		spi-max-frequency =3D <5000000>;
- 		spi-rx-bus-width =3D <2>;
- 		label =3D "bmc";
--		partitions@80000000 {
-+		partitions {
- 			compatible =3D "fixed-partitions";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <1>;
-@@ -422,7 +422,7 @@ spi-nor@1 {
- 		reg =3D <1>;
- 		spi-max-frequency =3D <5000000>;
- 		spi-rx-bus-width =3D <2>;
--		partitions@88000000 {
-+		partitions {
- 			compatible =3D "fixed-partitions";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <1>;
-@@ -447,7 +447,7 @@ spi-nor@0 {
- 		reg =3D <0>;
- 		spi-max-frequency =3D <5000000>;
- 		spi-rx-bus-width =3D <2>;
--		partitions@A0000000 {
-+		partitions {
- 			compatible =3D "fixed-partitions";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts=
-/nuvoton-npcm750-evb.dts
-index 0334641f88292..cf274c926711a 100644
-=2D-- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-@@ -74,7 +74,7 @@ spi-nor@0 {
- 		spi-rx-bus-width =3D <2>;
- 		reg =3D <0>;
- 		spi-max-frequency =3D <5000000>;
--		partitions@80000000 {
-+		partitions {
- 			compatible =3D "fixed-partitions";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <1>;
-@@ -135,7 +135,7 @@ spi-nor@0 {
- 		spi-rx-bus-width =3D <2>;
- 		reg =3D <0>;
- 		spi-max-frequency =3D <5000000>;
--		partitions@A0000000 {
-+		partitions {
- 			compatible =3D "fixed-partitions";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts b/arch/a=
-rm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-index 767e0ac0df7c5..7fe7efee28acb 100644
-=2D-- a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-@@ -107,7 +107,7 @@ spi-nor@0 {
- 		reg =3D <0>;
- 		spi-rx-bus-width =3D <2>;
-
--		partitions@80000000 {
-+		partitions {
- 			compatible =3D "fixed-partitions";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <1>;
-@@ -146,7 +146,7 @@ spi-nor@1 {
- 		reg =3D <1>;
- 		npcm,fiu-rx-bus-width =3D <2>;
-
--		partitions@88000000 {
-+		partitions {
- 			compatible =3D "fixed-partitions";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <1>;
-@@ -173,7 +173,7 @@ spi-nor@0 {
- 		reg =3D <0>;
- 		spi-rx-bus-width =3D <2>;
-
--		partitions@A0000000 {
-+		partitions {
- 			compatible =3D "fixed-partitions";
- 			#address-cells =3D <1>;
- 			#size-cells =3D <1>;
+ /*
+  * npcm_i2c_init_clk: init HW timing parameters.
+- * NPCM7XX i2c module timing parameters are depenent on module core clk (=
+APB)
++ * NPCM7XX i2c module timing parameters are dependent on module core clk =
+(APB)
+  * and bus frequency.
+- * 100kHz bus requires tSCL =3D 4 * SCLFRQ * tCLK. LT and HT are simetric=
+.
+- * 400kHz bus requires assymetric HT and LT. A different equation is reco=
+mended
++ * 100kHz bus requires tSCL =3D 4 * SCLFRQ * tCLK. LT and HT are symmetri=
+c.
++ * 400kHz bus requires asymmetric HT and LT. A different equation is reco=
+mmended
+  * by the HW designer, given core clock range (equations in comments belo=
+w).
+  *
+  */
 =2D-
 2.34.1
 
