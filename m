@@ -2,57 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 898944A2FE3
-	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 14:50:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C99754A2FFE
+	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 15:11:48 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JmG1j2n0fz3cBK
-	for <lists+openbmc@lfdr.de>; Sun, 30 Jan 2022 00:50:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JmGTs3qJ2z3bcC
+	for <lists+openbmc@lfdr.de>; Sun, 30 Jan 2022 01:11:45 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IhI3PyBl;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FoJk1244;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.151; helo=mga17.intel.com;
+ smtp.mailfrom=intel.com (client-ip=192.55.52.115; helo=mga14.intel.com;
  envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=IhI3PyBl; dkim-atps=neutral
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ header.s=Intel header.b=FoJk1244; dkim-atps=neutral
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JmG1F73sHz3bTQ
- for <openbmc@lists.ozlabs.org>; Sun, 30 Jan 2022 00:50:20 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JmGTS3KqYz30LP
+ for <openbmc@lists.ozlabs.org>; Sun, 30 Jan 2022 01:11:18 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1643464226; x=1675000226;
+ t=1643465484; x=1675001484;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=qmU2oBNdDVA7ZCo3g+qvehePoifnt3O+PR6U0hOTzqg=;
- b=IhI3PyBlcavojfPe0vKfb5iEHys3JQhGK9sUS+uCokfaQmjxImm9mIY0
- 0aQfXepdh/4Fzi1jFHSlsILTQ3FE96q4O2drviLRSavfERMqiv4n1vEHI
- VAnLN7OT18h2pVvvVYVYiEtqheSgTaGLQVxt5XyDRcVSp/9bJl59FmwKR
- qmrHuNKUh9sBcZhlRiHiDuPBgb6BfdujoX2MIqeAd8/zoN79N3+kgwf3q
- eE16/B9RYOsOyEfiGid5Dz323SBhH4IueT6Xx1RADF+awy/8RzUrx03tB
- 0fO+d9E+0aabQ4E61lwSFRzuPsaU6oXKrlLg1aTDPJJFxaLWm5gxlI3eH g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10241"; a="227938502"
-X-IronPort-AV: E=Sophos;i="5.88,326,1635231600"; d="scan'208";a="227938502"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jan 2022 05:49:16 -0800
+ bh=VFcCHcnZzHGge7LC66GRjpuVC7vd/ne1/nu/vMIi1JY=;
+ b=FoJk1244ovRgwuR+4FfqUAiB9K5tQISB7Uh1zsT7nRKXolTf7VkJ1WFw
+ rxegY1lZD6FGuaDOibeeJHGIXYf7+u3dZWdTen3WR58IvTeEDawOOdO0w
+ elCASPM5/qMcE9O5g0BP3r9BrDgiP1vlPQDQiBXdcEz1liXeDdsIra+Ko
+ NxMQ6t74pMpK1mAP3Q7CmLGxl91BH6a8NHMc9w6+YMLnuCdu8++vEHwnu
+ Rmbwg7RnS69rlrnw6QLZ2LKT+borqvN0HqzM3mrrkyhviKGj7rGVW3Uaf
+ 1R/iA4mGMUU3gfIx/k14QSxKQsbq0d43HlUdax/jX5KwxMadSry2MyoWG A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10241"; a="247493911"
+X-IronPort-AV: E=Sophos;i="5.88,326,1635231600"; d="scan'208";a="247493911"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Jan 2022 06:10:16 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,326,1635231600"; d="scan'208";a="564482966"
+X-IronPort-AV: E=Sophos;i="5.88,326,1635231600"; d="scan'208";a="675344441"
 Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
- by orsmga001.jf.intel.com with ESMTP; 29 Jan 2022 05:49:12 -0800
+ by fmsmga001.fm.intel.com with ESMTP; 29 Jan 2022 06:10:13 -0800
 Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
  (envelope-from <lkp@intel.com>)
- id 1nDo6K-000PGi-0A; Sat, 29 Jan 2022 13:49:12 +0000
-Date: Sat, 29 Jan 2022 21:48:55 +0800
+ id 1nDoQe-000PHv-Tv; Sat, 29 Jan 2022 14:10:12 +0000
+Date: Sat, 29 Jan 2022 22:09:17 +0800
 From: kernel test robot <lkp@intel.com>
 To: Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
  linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
 Subject: Re: [PATCH v5 5/9] pinctrl: nuvoton: Add driver for WPCM450
-Message-ID: <202201292134.kcXZbWy4-lkp@intel.com>
+Message-ID: <202201292234.NpSNe4TD-lkp@intel.com>
 References: <20220129115228.2257310-6-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -89,33 +89,31 @@ https://git-scm.com/docs/git-format-patch]
 
 url:    https://github.com/0day-ci/linux/commits/Jonathan-Neusch-fer/Nuvoton-WPCM450-pinctrl-and-GPIO-driver/20220129-195955
 base:   https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git devel
-config: s390-allyesconfig (https://download.01.org/0day-ci/archive/20220129/202201292134.kcXZbWy4-lkp@intel.com/config)
-compiler: s390-linux-gcc (GCC) 11.2.0
+config: um-allmodconfig (https://download.01.org/0day-ci/archive/20220129/202201292234.NpSNe4TD-lkp@intel.com/config)
+compiler: gcc-9 (Debian 9.3.0-22) 9.3.0
 reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
         # https://github.com/0day-ci/linux/commit/3fd91ea1bad905592e89c8f987f6bd3740329b80
         git remote add linux-review https://github.com/0day-ci/linux
         git fetch --no-tags linux-review Jonathan-Neusch-fer/Nuvoton-WPCM450-pinctrl-and-GPIO-driver/20220129-195955
         git checkout 3fd91ea1bad905592e89c8f987f6bd3740329b80
         # save the config file to linux build tree
         mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=s390 SHELL=/bin/bash drivers/pinctrl/nuvoton/
+        make W=1 O=build_dir ARCH=um SHELL=/bin/bash drivers/pinctrl/nuvoton/
 
 If you fix the issue, kindly add following tag as appropriate
 Reported-by: kernel test robot <lkp@intel.com>
 
 All warnings (new ones prefixed by >>):
 
-   In file included from include/linux/printk.h:555,
-                    from include/asm-generic/bug.h:22,
-                    from arch/s390/include/asm/bug.h:68,
-                    from include/linux/bug.h:5,
-                    from include/linux/mmdebug.h:5,
-                    from arch/s390/include/asm/cmpxchg.h:11,
-                    from arch/s390/include/asm/atomic.h:16,
-                    from include/linux/atomic.h:7,
-                    from include/linux/rcupdate.h:25,
+>> drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:908: warning: "DS" redefined
+     908 | #define DS(lo, hi) (((lo) << DRIVE_STRENGTH_LO_SHIFT) | \
+         | 
+   In file included from arch/x86/um/shared/sysdep/ptrace.h:44,
+                    from arch/um/include/asm/ptrace-generic.h:11,
+                    from arch/x86/um/asm/ptrace.h:9,
+                    from arch/um/include/asm/processor-generic.h:13,
+                    from arch/x86/um/asm/processor.h:41,
+                    from include/linux/rcupdate.h:30,
                     from include/linux/rculist.h:11,
                     from include/linux/pid.h:5,
                     from include/linux/sched.h:14,
@@ -123,44 +121,56 @@ All warnings (new ones prefixed by >>):
                     from include/linux/dev_printk.h:16,
                     from include/linux/device.h:15,
                     from drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:5:
+   arch/x86/um/shared/sysdep/ptrace_64.h:38: note: this is the location of the previous definition
+      38 | #define DS (HOST_DS * sizeof(long))
+         | 
+   In file included from include/linux/printk.h:555,
+                    from include/asm-generic/bug.h:22,
+                    from ./arch/um/include/generated/asm/bug.h:1,
+                    from include/linux/bug.h:5,
+                    from include/linux/thread_info.h:13,
+                    from include/asm-generic/current.h:5,
+                    from ./arch/um/include/generated/asm/current.h:1,
+                    from include/linux/sched.h:12,
+                    from include/linux/ratelimit.h:6,
+                    from include/linux/dev_printk.h:16,
+                    from include/linux/device.h:15,
+                    from drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:5:
    drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c: In function 'npcm7xx_get_groups_count':
->> drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:28: warning: format '%d' expects argument of type 'int', but argument 4 has type 'long unsigned int' [-Wformat=]
-    1564 |         dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
-         |                            ^~~~~~~~~~~~~~~~~~
-   include/linux/dynamic_debug.h:134:29: note: in definition of macro '__dynamic_func_call'
-     134 |                 func(&id, ##__VA_ARGS__);               \
-         |                             ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:166:9: note: in expansion of macro '_dynamic_func_call'
-     166 |         _dynamic_func_call(fmt,__dynamic_dev_dbg,               \
-         |         ^~~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:155:9: note: in expansion of macro 'dynamic_dev_dbg'
-     155 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |         ^~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:155:30: note: in expansion of macro 'dev_fmt'
-     155 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                              ^~~~~~~
-   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:9: note: in expansion of macro 'dev_dbg'
-    1564 |         dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
-         |         ^~~~~~~
-   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:42: note: format string is defined here
-    1564 |         dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
-         |                                         ~^
-         |                                          |
-         |                                          int
-         |                                         %ld
+   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:21: warning: format '%d' expects argument of type 'int', but argument 4 has type 'long unsigned int' [-Wformat=]
+    1564 |  dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
+         |                     ^~~~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:134:15: note: in definition of macro '__dynamic_func_call'
+     134 |   func(&id, ##__VA_ARGS__);  \
+         |               ^~~~~~~~~~~
+   include/linux/dynamic_debug.h:166:2: note: in expansion of macro '_dynamic_func_call'
+     166 |  _dynamic_func_call(fmt,__dynamic_dev_dbg,   \
+         |  ^~~~~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:155:2: note: in expansion of macro 'dynamic_dev_dbg'
+     155 |  dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |  ^~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:155:23: note: in expansion of macro 'dev_fmt'
+     155 |  dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |                       ^~~~~~~
+   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:2: note: in expansion of macro 'dev_dbg'
+    1564 |  dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
+         |  ^~~~~~~
+   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:35: note: format string is defined here
+    1564 |  dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
+         |                                  ~^
+         |                                   |
+         |                                   int
+         |                                  %ld
 
 
-vim +1564 drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+vim +/DS +908 drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
 
-3b588e43ee5c7a Tomer Maimon 2018-08-08  1559  
-3b588e43ee5c7a Tomer Maimon 2018-08-08  1560  static int npcm7xx_get_groups_count(struct pinctrl_dev *pctldev)
-3b588e43ee5c7a Tomer Maimon 2018-08-08  1561  {
-3b588e43ee5c7a Tomer Maimon 2018-08-08  1562  	struct npcm7xx_pinctrl *npcm = pinctrl_dev_get_drvdata(pctldev);
-3b588e43ee5c7a Tomer Maimon 2018-08-08  1563  
-3b588e43ee5c7a Tomer Maimon 2018-08-08 @1564  	dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
-3b588e43ee5c7a Tomer Maimon 2018-08-08  1565  	return ARRAY_SIZE(npcm7xx_groups);
-3b588e43ee5c7a Tomer Maimon 2018-08-08  1566  }
-3b588e43ee5c7a Tomer Maimon 2018-08-08  1567  
+3b588e43ee5c7ad Tomer Maimon 2018-08-08  907  
+3b588e43ee5c7ad Tomer Maimon 2018-08-08 @908  #define DS(lo, hi)	(((lo) << DRIVE_STRENGTH_LO_SHIFT) | \
+3b588e43ee5c7ad Tomer Maimon 2018-08-08  909  			 ((hi) << DRIVE_STRENGTH_HI_SHIFT))
+3b588e43ee5c7ad Tomer Maimon 2018-08-08  910  #define DSLO(x)		(((x) >> DRIVE_STRENGTH_LO_SHIFT) & 0xF)
+3b588e43ee5c7ad Tomer Maimon 2018-08-08  911  #define DSHI(x)		(((x) >> DRIVE_STRENGTH_HI_SHIFT) & 0xF)
+3b588e43ee5c7ad Tomer Maimon 2018-08-08  912  
 
 ---
 0-DAY CI Kernel Test Service, Intel Corporation
