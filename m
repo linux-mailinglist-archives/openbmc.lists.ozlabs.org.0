@@ -2,63 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C99754A2FFE
-	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 15:11:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C03794A300D
+	for <lists+openbmc@lfdr.de>; Sat, 29 Jan 2022 15:34:34 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JmGTs3qJ2z3bcC
-	for <lists+openbmc@lfdr.de>; Sun, 30 Jan 2022 01:11:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JmH084K0vz3bV6
+	for <lists+openbmc@lfdr.de>; Sun, 30 Jan 2022 01:34:32 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FoJk1244;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=Hgl5Mpeq;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=FoJk1244; dkim-atps=neutral
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JmGTS3KqYz30LP
- for <openbmc@lists.ozlabs.org>; Sun, 30 Jan 2022 01:11:18 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1643465484; x=1675001484;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=VFcCHcnZzHGge7LC66GRjpuVC7vd/ne1/nu/vMIi1JY=;
- b=FoJk1244ovRgwuR+4FfqUAiB9K5tQISB7Uh1zsT7nRKXolTf7VkJ1WFw
- rxegY1lZD6FGuaDOibeeJHGIXYf7+u3dZWdTen3WR58IvTeEDawOOdO0w
- elCASPM5/qMcE9O5g0BP3r9BrDgiP1vlPQDQiBXdcEz1liXeDdsIra+Ko
- NxMQ6t74pMpK1mAP3Q7CmLGxl91BH6a8NHMc9w6+YMLnuCdu8++vEHwnu
- Rmbwg7RnS69rlrnw6QLZ2LKT+borqvN0HqzM3mrrkyhviKGj7rGVW3Uaf
- 1R/iA4mGMUU3gfIx/k14QSxKQsbq0d43HlUdax/jX5KwxMadSry2MyoWG A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10241"; a="247493911"
-X-IronPort-AV: E=Sophos;i="5.88,326,1635231600"; d="scan'208";a="247493911"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jan 2022 06:10:16 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,326,1635231600"; d="scan'208";a="675344441"
-Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
- by fmsmga001.fm.intel.com with ESMTP; 29 Jan 2022 06:10:13 -0800
-Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
- (envelope-from <lkp@intel.com>)
- id 1nDoQe-000PHv-Tv; Sat, 29 Jan 2022 14:10:12 +0000
-Date: Sat, 29 Jan 2022 22:09:17 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 5/9] pinctrl: nuvoton: Add driver for WPCM450
-Message-ID: <202201292234.NpSNe4TD-lkp@intel.com>
-References: <20220129115228.2257310-6-j.neuschaefer@gmx.net>
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.17.22; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=Hgl5Mpeq; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JmGzm0hNYz30LP
+ for <openbmc@lists.ozlabs.org>; Sun, 30 Jan 2022 01:34:10 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1643466832;
+ bh=taC2dJ+Qss3OD09RIyTYnVy9WqLukbC51BxQLCbK8TU=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=Hgl5MpeqgmQGPgcIyTgcxiKqh2UDYBJcoCo6gqwRtq6l+0q/DqLJ5y2O169AusO7y
+ Gdqlj2LK4vw18tSv5FBMMdzz/2Jlnm/0iy9WM4Kkc6F6Tp7O37kTmSVMk5kkfHhmh2
+ MIOJlvy1e7qoKrApVgM5kjfNFZq+KzNR39Q43WWQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MlNp7-1mWpgb1rzR-00lm6m; Sat, 29
+ Jan 2022 15:33:52 +0100
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH] soc: nuvoton: Add SoC info driver for WPCM450
+Date: Sat, 29 Jan 2022 15:33:07 +0100
+Message-Id: <20220129143316.2321460-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220129115228.2257310-6-j.neuschaefer@gmx.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:G5UyEZgtCNbwbrQRFEb36mFglkcmK/qLhvzHOH1DipwTiYXP1ja
+ 5h0PCE2G/Z9CVN1syJr1WFwYpyg+8eK3TxZP7NDcn0M9z10N2wibKf4yMdh9B79NPFr9IpU
+ sHXc+KHy+sTJja3jVhlvZsBSf9PZPZMLDWd7qaVm/TizztJfRHMFCmTAFhkWboDd1XSJzXP
+ iH/HUf9MVgAtrPo+hpHVA==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sa3TxCkDkfk=:DUv+30ZLikV+PotVOxo6fH
+ TCQW0Dtmt1u5HClvmap9cDIsEqSFkrEgpS9kBYL+5g/mjHmKUPdDT/Jhyf/zc1NHL13I3DZgL
+ Nv2Cmq7Gj5MCR8GQdcumcOt5L77KOq46M/zsQeqfjtzibXjg3KsILwoD6mUmvSbyMiIqHajAN
+ BCFthsMYdW1/tdjqqb8nAJfv4LF1Bno0mlZqnkdzrHkr3eESc1R29pZwXpF6H5akx3DmnWekC
+ pCVUxK2t0hPscmYZq00hoNsQj+vwwV51kMoL4q3I4Ed9c3ymoUhwQhC5cYMZSnRE/Xqr5xn/E
+ 3MqJNkibCCDiscaQLrgBdyTKaPQ4AvqdzFdsLN5bsqm+1eHLKAk8Wk/Dlr8524ohmEUp9P0im
+ RpK/W+bWbpRRHUEjJo1Kh6l5Z1L1tGex27OCMxsAqslQAnjHIk0a8eHIhowi3NdMXQKCbg0JW
+ BzyXL/i8kOO1UX+sNh99rsActOyeKHKi5b8gLH4IZAOVna30oZBOGU6UtBVqIdGYHDF0s+Htg
+ 6z9C6Ny267bj3Vkx+NJ4I9fuLWWHNab6qj7B5vgvgxBSt0htmVqG4FlD976NsS1cFXJMdEZGE
+ IBA9t+eYA1rLNSLQe3SqBn4g9ZCUy2iWQ8TXc+6XJqgg6xYfuchEF7USPU1iz90swE/60sZ93
+ nPnci0O6lvoNl+dssprWFtoyMe952LUhPwgXZIiO9JM0SHFl21Nt2SM0bxyDMs32idzTR7LFt
+ ltDecTsvceSbSUOEOjO7RoBhcgyr2H80Q4/yp0doPxqJjrIAVa8jdwpAFtTyU9/Y0PjDda1XT
+ cHJml5outm1/SPe6pijyZflSxoGzWmCTacisZcVm4iJbj1yLyY8vrutphCGHdwxIPPv6FKQ4/
+ dopAehKmovRBGyrXEZZN5vgpwBTuqmIdCRm/wZXA4wRo60dFQUc6sRX78SZ4tPHoLKHZsav8t
+ jtrC9s45FEh66KabX6PKr0Exnf/ndG/pC0/D6a6Io2xl8a6RHg6IlNEy7m31hBMBRoWfcNm9l
+ Ta1ZYOJqMGuZYMWeaYpqlfdNl8e2vW5UbzKE51xJYla2cz6Vjsju3wKWEqPh/elHCpFLil8yB
+ 4wbaoL21CsjBUA=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,108 +79,183 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kbuild-all@lists.01.org, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Linus Walleij <linus.walleij@linaro.org>,
- linux-kernel@vger.kernel.org, Andy Shevchenko <andy.shevchenko@gmail.com>,
- Rob Herring <robh+dt@kernel.org>, openbmc@lists.ozlabs.org
+Cc: Damien Le Moal <damien.lemoal@wdc.com>, Hector Martin <marcan@marcan.st>,
+ Arnd Bergmann <arnd@arndb.de>, Linus Walleij <linus.walleij@linaro.org>,
+ Palmer Dabbelt <palmerdabbelt@google.com>,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi "Jonathan,
+Add a SoC information driver for Nuvoton WPCM450 SoCs. It provides
+information such as the SoC revision.
 
-I love your patch! Perhaps something to improve:
+Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+=2D--
 
-[auto build test WARNING on linusw-pinctrl/devel]
-[also build test WARNING on robh/for-next linus/master v5.17-rc1 next-20220128]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+The "nuvoton,wpcm450-gcr" compatible string is defined in:
 
-url:    https://github.com/0day-ci/linux/commits/Jonathan-Neusch-fer/Nuvoton-WPCM450-pinctrl-and-GPIO-driver/20220129-195955
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git devel
-config: um-allmodconfig (https://download.01.org/0day-ci/archive/20220129/202201292234.NpSNe4TD-lkp@intel.com/config)
-compiler: gcc-9 (Debian 9.3.0-22) 9.3.0
-reproduce (this is a W=1 build):
-        # https://github.com/0day-ci/linux/commit/3fd91ea1bad905592e89c8f987f6bd3740329b80
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Jonathan-Neusch-fer/Nuvoton-WPCM450-pinctrl-and-GPIO-driver/20220129-195955
-        git checkout 3fd91ea1bad905592e89c8f987f6bd3740329b80
-        # save the config file to linux build tree
-        mkdir build_dir
-        make W=1 O=build_dir ARCH=um SHELL=/bin/bash drivers/pinctrl/nuvoton/
+  [PATCH v5 1/9] dt-bindings: arm/npcm: Add binding for global control reg=
+isters (GCR)
+  https://lore.kernel.org/lkml/20220129115228.2257310-2-j.neuschaefer@gmx.=
+net/
+=2D--
+ drivers/soc/Kconfig               |  1 +
+ drivers/soc/Makefile              |  1 +
+ drivers/soc/nuvoton/Kconfig       | 11 ++++
+ drivers/soc/nuvoton/Makefile      |  2 +
+ drivers/soc/nuvoton/wpcm450-soc.c | 90 +++++++++++++++++++++++++++++++
+ 5 files changed, 105 insertions(+)
+ create mode 100644 drivers/soc/nuvoton/Kconfig
+ create mode 100644 drivers/soc/nuvoton/Makefile
+ create mode 100644 drivers/soc/nuvoton/wpcm450-soc.c
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+diff --git a/drivers/soc/Kconfig b/drivers/soc/Kconfig
+index a8562678c4370..310c7e3a17723 100644
+=2D-- a/drivers/soc/Kconfig
++++ b/drivers/soc/Kconfig
+@@ -13,6 +13,7 @@ source "drivers/soc/imx/Kconfig"
+ source "drivers/soc/ixp4xx/Kconfig"
+ source "drivers/soc/litex/Kconfig"
+ source "drivers/soc/mediatek/Kconfig"
++source "drivers/soc/nuvoton/Kconfig"
+ source "drivers/soc/qcom/Kconfig"
+ source "drivers/soc/renesas/Kconfig"
+ source "drivers/soc/rockchip/Kconfig"
+diff --git a/drivers/soc/Makefile b/drivers/soc/Makefile
+index adb30c2d4feaa..f02c9b091a513 100644
+=2D-- a/drivers/soc/Makefile
++++ b/drivers/soc/Makefile
+@@ -18,6 +18,7 @@ obj-y				+=3D ixp4xx/
+ obj-$(CONFIG_SOC_XWAY)		+=3D lantiq/
+ obj-$(CONFIG_LITEX_SOC_CONTROLLER) +=3D litex/
+ obj-y				+=3D mediatek/
++obj-y				+=3D nuvoton/
+ obj-y				+=3D amlogic/
+ obj-y				+=3D qcom/
+ obj-y				+=3D renesas/
+diff --git a/drivers/soc/nuvoton/Kconfig b/drivers/soc/nuvoton/Kconfig
+new file mode 100644
+index 0000000000000..50166f37096b7
+=2D-- /dev/null
++++ b/drivers/soc/nuvoton/Kconfig
+@@ -0,0 +1,11 @@
++# SPDX-License-Identifier: GPL-2.0
++menuconfig WPCM450_SOC
++	bool "Nuvoton WPCM450 SoC driver"
++	default y if ARCH_WPCM450
++	select SOC_BUS
++	help
++	  Say Y here to compile the SoC information driver for Nuvoton
++	  WPCM450 SoCs.
++
++	  This driver provides information such as the SoC model and
++	  revision.
+diff --git a/drivers/soc/nuvoton/Makefile b/drivers/soc/nuvoton/Makefile
+new file mode 100644
+index 0000000000000..e30317b4e8290
+=2D-- /dev/null
++++ b/drivers/soc/nuvoton/Makefile
+@@ -0,0 +1,2 @@
++# SPDX-License-Identifier: GPL-2.0-only
++obj-$(CONFIG_WPCM450_SOC)	+=3D wpcm450-soc.o
+diff --git a/drivers/soc/nuvoton/wpcm450-soc.c b/drivers/soc/nuvoton/wpcm4=
+50-soc.c
+new file mode 100644
+index 0000000000000..e5723d6c933bc
+=2D-- /dev/null
++++ b/drivers/soc/nuvoton/wpcm450-soc.c
+@@ -0,0 +1,90 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Nuvoton WPCM450 SoC Identification
++ *
++ * Copyright (C) 2021 Jonathan Neusch=C3=A4fer
++ */
++
++#include <linux/mfd/syscon.h>
++#include <linux/of.h>
++#include <linux/regmap.h>
++#include <linux/sys_soc.h>
++#include <linux/slab.h>
++
++#define GCR_PDID	0
++#define PDID_CHIP(x)	((x) & 0x00ffffff)
++#define CHIP_WPCM450	0x926450
++#define PDID_REV(x)	((x) >> 24)
++
++struct revision {
++	u8 number;
++	const char *name;
++};
++
++const struct revision revisions[] __initconst =3D {
++	{ 0x00, "Z1" },
++	{ 0x03, "Z2" },
++	{ 0x04, "Z21" },
++	{ 0x08, "A1" },
++	{ 0x09, "A2" },
++	{ 0x0a, "A3" },
++	{}
++};
++
++static const char * __init get_revision(u8 rev)
++{
++	int i;
++
++	for (i =3D 0; revisions[i].name; i++)
++		if (revisions[i].number =3D=3D rev)
++			return revisions[i].name;
++	return NULL;
++}
++
++static int __init wpcm450_soc_init(void)
++{
++	struct soc_device_attribute *attr;
++	struct soc_device *soc;
++	const char *revision;
++	struct regmap *gcr;
++	u32 pdid;
++	int ret;
++
++	if (!of_machine_is_compatible("nuvoton,wpcm450"))
++		return 0;
++
++	gcr =3D syscon_regmap_lookup_by_compatible("nuvoton,wpcm450-gcr");
++	if (IS_ERR(gcr))
++		return PTR_ERR(gcr);
++	ret =3D regmap_read(gcr, GCR_PDID, &pdid);
++	if (ret)
++		return ret;
++
++	if (PDID_CHIP(pdid) !=3D CHIP_WPCM450) {
++		pr_warn("Unknown chip ID in GCR.PDID: 0x%06x\n", PDID_CHIP(pdid));
++		return -ENODEV;
++	}
++
++	revision =3D get_revision(PDID_REV(pdid));
++	if (!revision) {
++		pr_warn("Unknown chip revision in GCR.PDID: 0x%02x\n", PDID_REV(pdid));
++		return -ENODEV;
++	}
++
++	attr =3D kzalloc(sizeof(*attr), GFP_KERNEL);
++	if (!attr)
++		return -ENOMEM;
++
++	attr->family =3D "Nuvoton NPCM";
++	attr->soc_id =3D "WPCM450";
++	attr->revision =3D revision;
++	soc =3D soc_device_register(attr);
++	if (IS_ERR(soc)) {
++		kfree(attr);
++		pr_warn("Could not register SoC device\n");
++		return PTR_ERR(soc);
++	}
++
++	return 0;
++}
++device_initcall(wpcm450_soc_init);
+=2D-
+2.34.1
 
-All warnings (new ones prefixed by >>):
-
->> drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:908: warning: "DS" redefined
-     908 | #define DS(lo, hi) (((lo) << DRIVE_STRENGTH_LO_SHIFT) | \
-         | 
-   In file included from arch/x86/um/shared/sysdep/ptrace.h:44,
-                    from arch/um/include/asm/ptrace-generic.h:11,
-                    from arch/x86/um/asm/ptrace.h:9,
-                    from arch/um/include/asm/processor-generic.h:13,
-                    from arch/x86/um/asm/processor.h:41,
-                    from include/linux/rcupdate.h:30,
-                    from include/linux/rculist.h:11,
-                    from include/linux/pid.h:5,
-                    from include/linux/sched.h:14,
-                    from include/linux/ratelimit.h:6,
-                    from include/linux/dev_printk.h:16,
-                    from include/linux/device.h:15,
-                    from drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:5:
-   arch/x86/um/shared/sysdep/ptrace_64.h:38: note: this is the location of the previous definition
-      38 | #define DS (HOST_DS * sizeof(long))
-         | 
-   In file included from include/linux/printk.h:555,
-                    from include/asm-generic/bug.h:22,
-                    from ./arch/um/include/generated/asm/bug.h:1,
-                    from include/linux/bug.h:5,
-                    from include/linux/thread_info.h:13,
-                    from include/asm-generic/current.h:5,
-                    from ./arch/um/include/generated/asm/current.h:1,
-                    from include/linux/sched.h:12,
-                    from include/linux/ratelimit.h:6,
-                    from include/linux/dev_printk.h:16,
-                    from include/linux/device.h:15,
-                    from drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:5:
-   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c: In function 'npcm7xx_get_groups_count':
-   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:21: warning: format '%d' expects argument of type 'int', but argument 4 has type 'long unsigned int' [-Wformat=]
-    1564 |  dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
-         |                     ^~~~~~~~~~~~~~~~~~
-   include/linux/dynamic_debug.h:134:15: note: in definition of macro '__dynamic_func_call'
-     134 |   func(&id, ##__VA_ARGS__);  \
-         |               ^~~~~~~~~~~
-   include/linux/dynamic_debug.h:166:2: note: in expansion of macro '_dynamic_func_call'
-     166 |  _dynamic_func_call(fmt,__dynamic_dev_dbg,   \
-         |  ^~~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:155:2: note: in expansion of macro 'dynamic_dev_dbg'
-     155 |  dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |  ^~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:155:23: note: in expansion of macro 'dev_fmt'
-     155 |  dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                       ^~~~~~~
-   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:2: note: in expansion of macro 'dev_dbg'
-    1564 |  dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
-         |  ^~~~~~~
-   drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:35: note: format string is defined here
-    1564 |  dev_dbg(npcm->dev, "group size: %d\n", ARRAY_SIZE(npcm7xx_groups));
-         |                                  ~^
-         |                                   |
-         |                                   int
-         |                                  %ld
-
-
-vim +/DS +908 drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-
-3b588e43ee5c7ad Tomer Maimon 2018-08-08  907  
-3b588e43ee5c7ad Tomer Maimon 2018-08-08 @908  #define DS(lo, hi)	(((lo) << DRIVE_STRENGTH_LO_SHIFT) | \
-3b588e43ee5c7ad Tomer Maimon 2018-08-08  909  			 ((hi) << DRIVE_STRENGTH_HI_SHIFT))
-3b588e43ee5c7ad Tomer Maimon 2018-08-08  910  #define DSLO(x)		(((x) >> DRIVE_STRENGTH_LO_SHIFT) & 0xF)
-3b588e43ee5c7ad Tomer Maimon 2018-08-08  911  #define DSHI(x)		(((x) >> DRIVE_STRENGTH_HI_SHIFT) & 0xF)
-3b588e43ee5c7ad Tomer Maimon 2018-08-08  912  
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
