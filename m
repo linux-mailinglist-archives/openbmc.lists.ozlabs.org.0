@@ -2,72 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E25E4A35B1
-	for <lists+openbmc@lfdr.de>; Sun, 30 Jan 2022 11:28:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F3554A3840
+	for <lists+openbmc@lfdr.de>; Sun, 30 Jan 2022 19:48:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JmnV26gmSz3bW9
-	for <lists+openbmc@lfdr.de>; Sun, 30 Jan 2022 21:28:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jn0Zd6zGbz3bSh
+	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 05:48:25 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=jvwp6E6+;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=F/u7iXKf;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.18; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=jvwp6E6+; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62a;
+ helo=mail-ej1-x62a.google.com; envelope-from=andy.shevchenko@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=F/u7iXKf; dkim-atps=neutral
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com
+ [IPv6:2a00:1450:4864:20::62a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JmnTd6tsnz30Mn
- for <openbmc@lists.ozlabs.org>; Sun, 30 Jan 2022 21:28:19 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1643538476;
- bh=hLhVxqGCTT0SP56FBjtCArN7ldgzwA2hHFxUD+0qoX4=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=jvwp6E6+c0I1HPRshmZVKx/3PmawessslXIx0iGawpZgTE+JRA7bI7yJlPwrz2STn
- S4UgugeSjEWGMdakugdAqTlr8wM3l3pJkg0BIqdy82vUlo9rfBOn2qnI6os4oB89Si
- fFoNLLAoi2vkEA+jqo1tfhiq1KHg5HVEQKR831dA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mn2W5-1mUrFb2Atz-00k7Ri; Sun, 30
- Jan 2022 11:27:56 +0100
-From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH v2] dt-bindings: timer: nuvoton, npcm7xx-timer: Convert to YAML
-Date: Sun, 30 Jan 2022 11:27:02 +0100
-Message-Id: <20220130102704.2892072-1-j.neuschaefer@gmx.net>
-X-Mailer: git-send-email 2.34.1
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jn0ZG3TjZz2yfc
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Jan 2022 05:48:04 +1100 (AEDT)
+Received: by mail-ej1-x62a.google.com with SMTP id s5so36015802ejx.2
+ for <openbmc@lists.ozlabs.org>; Sun, 30 Jan 2022 10:48:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=aoIi1xNlWyLsIaWBt8loIMMaCfondWklXIe5cHckPXY=;
+ b=F/u7iXKfIY7c/7MmsgcafAjL/R6D4j1JPVHCBPaOeuSGXeCyWf6fTcgqnDEwO8NMgI
+ uGKtVlqLYq3zOeKxT4oeuAJDw1RjqQtFAA2Ob0XnMesqt/bL4ECwww4zoJuHxDuB3diq
+ ihxLpZpZXH67vnODkTt5fysR03eeYnUGxCuPQzU5032rVZOb7G1RDioV5skOVc3R3cqF
+ X90vRsZPhP4nKAoOq8i4qrn7RQYoAfvaeXk3CB6MR+9YY9hvM2bLFqigExY77dkkp/Tu
+ OIsc0zs036FSGuyREoXtHszi6waolcgFdVrzaltXp9IM5N2vIjrnWbpcD1EbUbsNs+Qb
+ cCyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=aoIi1xNlWyLsIaWBt8loIMMaCfondWklXIe5cHckPXY=;
+ b=OjgslkGwCyNW/gKKOVgh44uBMaA89DxJV4NZCkS8bfPo19+6aTZPdOWEMmzhOH3/zE
+ dLX7AnhDMqosyg9zPCvS+dVs/kCF/pxysHUpms7ChEAIQH7iS2+fiD1P9rO5GMucXWxZ
+ 4QbVgDJSP9QrF+wv1ghTq6eVhFo4JqrNiZymfkS1zs7MlFDNH0Mt6h0uIx9JtPdm2Vwk
+ yXQJ3MH0XsYUJZlPiRzN9VwVEv9/7leXSiZ9f1YAr/3Fu0rzPP/39X4+qBVh0EJxaakk
+ 5quBFM9DQEfk+5IiarCHt8X3EIdsJfmzqCNg74EQNHSGVBbSfjpD9BlYvjvKOb+ntIAA
+ dyWw==
+X-Gm-Message-State: AOAM532MjPFOw89YeghA5zDFpo8/0dK1/6/XzbEK5O49C27jNS3ij8Me
+ KcySTDsxUCTS21CglMquUHrdQYVy1yQJM6v4mM0=
+X-Google-Smtp-Source: ABdhPJynTXX9qeIiR8ceufTHQt8Z8Xy4Vq4iwbqRbcJjN6l+Y0Ej2OIWh6p8hW3KZNCDqZAEue+JXmeyiTwBiXL1TTY=
+X-Received: by 2002:a17:906:604d:: with SMTP id
+ p13mr14162629ejj.639.1643568479968; 
+ Sun, 30 Jan 2022 10:47:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:KgtyDL+sIGlvIqmFNv5lxED6AgqBgd0MW4vhsZxXY8xPzRN58ac
- pvD1snTbOu6LxvDIvsPXQXg40l3eL6So6P/nIgrnSyGjL6NdoZXO1gI3lWkuj8h9joAoWk0
- U/dFm0n2p/o3s5ujR5/OM2m9t9vuRGqIII2hrMI1ubtRQpe3I2+8A9LobdXZRRUvbx68GrT
- pWNj/e66MU/c9cRlsNUUQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:hQ45Lk3Mggk=:R+IrEDbT4qG6RbIBApp5eG
- 0x4AvFnZDxms0Dl9fm/Q0BnXhMkNcQGlH1hR2FgKyUTWEWZDtkwBJ6Fko925mbx9TZH5YPiNO
- Dr6qGq3UQfmIH2ff6AWPAw+6H2pzXAREPJsFViTMB0Yvsvv5JiziHwPIElqReI04WdAeF1Km+
- invSUMnlgLC0C+VC6XC1ZbQQT5XSnI7UTSPXps2bzzQyRX8w/mwb8b+lrM1/6E4NbOTVkmPzI
- Kd7PU7B43cqBziZcuA215YVAU5UcsK9KU4F8uqtmsT8DUGDx3r0U0mIO80/x+aDJXddCspbL3
- FslEmtXsyvNgPuoSoKeVjvA+OZiZTpVhn9IHeV5wrOQt2gJdr0iMrQ0iaiKBsYNkrFB6xnRVz
- j5qWGrjh8tU5TP5en3NniU+ozZdz02aIq0+6mNItk1axPNvUqk8rr1djuU+e69DoLN/iJhXJQ
- ZGSz0JanUaCxNUkR/eisEUfgEJksy25i5D7ihu2E+zuUnO6PXXaSeC9lZY7fgNkDJlrcdvFv9
- hrxpnpHlLVCpFRpPlF4ZQVKP5ZTm97UMoJz7GBgtLXEyT3YbsA9INiRYUqOoYhC+R2YW9+MBT
- T9OuxHHD6FogGvaLr76gDp7A87qRCqsSabcZYXDS89eGjEVcH1Kf6SkzJa/7YOe5H+JzVCwo+
- Ez9msY/8hvNPUhtp0TmadZU1qyk0SgIwmR6hK1ldVTjmkAWJ1jW9eMIRT+yhgg2cnr1f3RACy
- eAlCrGxOk1H28Ychc5mmzIRjrSo5Xu2il3+gU1kvN2hGT4KiQtqHdv/4/X2INy2dHc/nmVqQP
- 3lEpHdViBnqPYgz1KujlbNsoagPgPY/dDjC8qHf8jXrtzpJLqz/GWWid+UwvqqNtWm38H5ofI
- JFlgdZ4WA7gDro425m0pQm0YAEKv5hkRNRGjWfN1VlI6E3QMVy1hiRmzN4ppDIRPFJ2pNd8Mt
- wkDIYR7xbCW/qSbwqNGZziRGdfjDf6pPhfbLD8BNlscffxUVziydvS6YjDet4vYbntuHFjavk
- wDddxQbytywW6lmfGsGonxuO5P/RlLhGwwXfdS0huN2ali557LQQgtrwW/vL71u1kcxrbN9ST
- EuI4r6ZophnO4U=
+References: <20220129115228.2257310-6-j.neuschaefer@gmx.net>
+ <202201292234.NpSNe4TD-lkp@intel.com>
+In-Reply-To: <202201292234.NpSNe4TD-lkp@intel.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Sun, 30 Jan 2022 20:47:23 +0200
+Message-ID: <CAHp75VdVoqRk6bLwaOPfGdfyVoH_9DUj2Lb4VBOHrhM9SpoMNA@mail.gmail.com>
+Subject: Re: [PATCH v5 5/9] pinctrl: nuvoton: Add driver for WPCM450
+To: kernel test robot <lkp@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,117 +75,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>, linux-kernel@vger.kernel.org,
- Benjamin Fair <benjaminfair@google.com>
+Cc: devicetree <devicetree@vger.kernel.org>, kbuild-all@lists.01.org,
+ Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Let's convert this devicetree binding to YAML, to make it easier to
-extend later.
+On Sat, Jan 29, 2022 at 4:10 PM kernel test robot <lkp@intel.com> wrote:
+>
+> Hi "Jonathan,
+>
+> I love your patch! Perhaps something to improve:
+>
+> [auto build test WARNING on linusw-pinctrl/devel]
+> [also build test WARNING on robh/for-next linus/master v5.17-rc1 next-20220128]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch]
+>
+> url:    https://github.com/0day-ci/linux/commits/Jonathan-Neusch-fer/Nuvoton-WPCM450-pinctrl-and-GPIO-driver/20220129-195955
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git devel
+> config: um-allmodconfig (https://download.01.org/0day-ci/archive/20220129/202201292234.NpSNe4TD-lkp@intel.com/config)
+> compiler: gcc-9 (Debian 9.3.0-22) 9.3.0
+> reproduce (this is a W=1 build):
+>         # https://github.com/0day-ci/linux/commit/3fd91ea1bad905592e89c8f987f6bd3740329b80
+>         git remote add linux-review https://github.com/0day-ci/linux
+>         git fetch --no-tags linux-review Jonathan-Neusch-fer/Nuvoton-WPCM450-pinctrl-and-GPIO-driver/20220129-195955
+>         git checkout 3fd91ea1bad905592e89c8f987f6bd3740329b80
+>         # save the config file to linux build tree
+>         mkdir build_dir
+>         make W=1 O=build_dir ARCH=um SHELL=/bin/bash drivers/pinctrl/nuvoton/
+>
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+>
+> All warnings (new ones prefixed by >>):
 
-Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-=2D--
+...
 
-v2:
-- Fix nuvoton,npcm750-timer compatible string
-=2D--
- .../bindings/timer/nuvoton,npcm7xx-timer.txt  | 21 ---------
- .../bindings/timer/nuvoton,npcm7xx-timer.yaml | 46 +++++++++++++++++++
- 2 files changed, 46 insertions(+), 21 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/timer/nuvoton,npcm7x=
-x-timer.txt
- create mode 100644 Documentation/devicetree/bindings/timer/nuvoton,npcm7x=
-x-timer.yaml
+> >> drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:908: warning: "DS" redefined
+>      908 | #define DS(lo, hi) (((lo) << DRIVE_STRENGTH_LO_SHIFT) | \
+>          |
 
-diff --git a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer=
-.txt b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt
-deleted file mode 100644
-index ac3a5e887455d..0000000000000
-=2D-- a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt
-+++ /dev/null
-@@ -1,21 +0,0 @@
--Nuvoton NPCM7xx timer
--
--Nuvoton NPCM7xx have three timer modules, each timer module provides five=
- 24-bit
--timer counters.
--
--Required properties:
-=2D- compatible      : "nuvoton,npcm750-timer" for Poleg NPCM750, or
--                    "nuvoton,wpcm450-timer" for Hermon WPCM450.
-=2D- reg             : Offset and length of the register set for the devic=
-e.
-=2D- interrupts      : Contain the timer interrupt of timer 0.
-=2D- clocks          : phandle of timer reference clock (usually a 25 MHz =
-clock).
--
--Example:
--
--timer@f0008000 {
--    compatible =3D "nuvoton,npcm750-timer";
--    interrupts =3D <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
--    reg =3D <0xf0008000 0x50>;
--    clocks =3D <&clk NPCM7XX_CLK_TIMER>;
--};
--
-diff --git a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer=
-.yaml b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.yaml
-new file mode 100644
-index 0000000000000..0cbc26a721514
-=2D-- /dev/null
-+++ b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.yaml
-@@ -0,0 +1,46 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/timer/nuvoton,npcm7xx-timer.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Nuvoton NPCM7xx timer
-+
-+maintainers:
-+  - Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - nuvoton,wpcm450-timer  # for Hermon WPCM450
-+      - nuvoton,npcm750-timer  # for Poleg NPCM750
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    items:
-+      - description: The timer interrupt of timer 0
-+
-+  clocks:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
-+    timer@f0008000 {
-+        compatible =3D "nuvoton,npcm750-timer";
-+        interrupts =3D <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
-+        reg =3D <0xf0008000 0x50>;
-+        clocks =3D <&clk NPCM7XX_CLK_TIMER>;
-+    };
-=2D-
-2.34.1
+>    arch/x86/um/shared/sysdep/ptrace_64.h:38: note: this is the location of the previous definition
+>       38 | #define DS (HOST_DS * sizeof(long))
 
+This is a good example why short and namespace-less definitions are
+not always good even in standalone module.
+
+...
+
+>    drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c: In function 'npcm7xx_get_groups_count':
+>    drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c:1564:21: warning: format '%d' expects argument of type 'int', but argument 4 has type 'long unsigned int' [-Wformat=]
+
+Should be %zu
+
+If it's already in for-next, there should be two patches to fix these issues.
+
+-- 
+With Best Regards,
+Andy Shevchenko
