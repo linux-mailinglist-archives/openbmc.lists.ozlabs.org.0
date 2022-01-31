@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE5804A3CB7
-	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 04:25:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E3F5F4A3CBF
+	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 04:42:30 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JnD2m4JLNz30Q6
-	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 14:25:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JnDQr5477z2yfc
+	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 14:42:28 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=W2cIysd/;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=adb1ETMf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=maoY4+W/;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=DCHbSCqA;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,67 +19,67 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=W2cIysd/; 
+ header.s=fm1 header.b=maoY4+W/; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=adb1ETMf; 
+ header.a=rsa-sha256 header.s=fm1 header.b=DCHbSCqA; 
  dkim-atps=neutral
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
  [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JnD2K2LxRz2y0B
- for <openbmc@lists.ozlabs.org>; Mon, 31 Jan 2022 14:24:40 +1100 (AEDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
- by mailout.nyi.internal (Postfix) with ESMTP id 4B34A5C00D9;
- Sun, 30 Jan 2022 22:24:37 -0500 (EST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JnDQR6VcXz2xsK
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Jan 2022 14:42:07 +1100 (AEDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id E22175C00A1;
+ Sun, 30 Jan 2022 22:42:05 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute1.internal (MEProxy); Sun, 30 Jan 2022 22:24:37 -0500
+ by compute5.internal (MEProxy); Sun, 30 Jan 2022 22:42:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
  :cc:content-transfer-encoding:date:date:from:from:in-reply-to
  :message-id:mime-version:reply-to:sender:subject:subject:to:to;
- s=fm1; bh=EqZrgkt2lPFA8HbkQG/DBjQ2lHNSVk9idFq9c8UTz6Y=; b=W2cIy
- sd/iQ8CuSUEei1aiYOxZAUt+1DI2YFJXB/3ucVIm5wc8OGd3UnXC9DGHfroh4xg6
- XaKODFpFrg7rqehj91NCyFi9ZJPZCQ/M0nbOkJRTuBnEd1TfrqGC312ckt1IW0Rj
- Gtfg+XHs903VD++ir7KZi813jn/hUdOBRh2qnMxiDZIFZKSsethYf1gyyL87YQU+
- 269Az9C1wulUEa+CXjklHQ2kV/zJtHI/r7lkvhYBwwZ+74btUNRDjrCfKlyKlheK
- 2fBzbZn92+eVPO0swg/jWycuwyugHV6m4AdGZU30w1+a/ggJeza+XHO5Fs9mgOjA
- z0OZh1hodl/F05D3A==
+ s=fm1; bh=2gno013I25+ySp7F0Sv5fGTEjuy3MQruYqxZAm1iKcc=; b=maoY4
+ +W/8T81HwyMdM17DsaZe8m1N17JLkfqZGdZk00Xo+gSAN3Fuvcvk20KaxYQXbpM2
+ TLjzQ5DirUWGhLeLjD3OuZL/urgVp+NKUGJ1cRheChbaQn/W+FeNv5nCGIRegnub
+ xp7/HFlqZf7w76DGxbfGj5z9WNgrUVxVSqzhXIFgasuineZ2jdKkm++J7JQOq71y
+ u5J+oIxlU5cCBhAsz4p8D4Myaj5JSOqXDIKCVby2KowG01bLnN7HPVlbK7Peb0oz
+ AKeAeuUvKei21cYYMd8672UtyRvlVSHTZRvgzEgezVq9btQlQ5WIXdHa8dH4xe+D
+ HGZQBRptLeFRXQohQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
  :from:from:in-reply-to:message-id:mime-version:reply-to:sender
  :subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; bh=EqZrgkt2lPFA8HbkQG/DBjQ2lHNSV
- k9idFq9c8UTz6Y=; b=adb1ETMf+fC29/UAF5Ffi+kxgTW0nxIXPlQGXhuRi/06y
- rpeO8GzoqXgntpEHjdvyHVXyUy1zsGAsQrw3afCspVk1O0TTtF7XPFQ/lmrI7mMf
- UxuL1hAYWSiKVfE4VBjAchgVnvf5RdA5lBypBr5zrkqYoXMPYEQZme4pzCLvlOBr
- 8Jug1McJa0nOHplJV7S4kzAErmooLq3bW0UyLM2OpFIf04/HWt7sw9D/GrQZb23Y
- sgXp5jzjWSeoTmgF9HkawFfLhw/6Cchn4efn0ZI0MhRTsdbLNkxBS7vBvOEQVao+
- ou+4QzjQTqFs1jigfgo/GyyvwF/KjYIAksMcC9YmQ==
-X-ME-Sender: <xms:dFb3YQcMgWJvS5kn8OJoKeHKQqbkuhgT8rKmFcy3EQ5alTA41mSs9g>
- <xme:dFb3YSOFKlJIsDU4zmYlSfrfEsvooOBmAKANV9pPC3orBVTFi2xGvwlCQJ-43nBbB
- uGd3bG_WeS5Z0ordw>
-X-ME-Received: <xmr:dFb3YRh6XD3xCbCyfQ1ggTFk67KTLFET4GFrDUV6NMO6NmnOr5EiPMLfvktvyCoauUQtahlVOsd4nz6lzP3v6-PiJsnd342OMtAB9Jm4mPrc1ZjY3qkIUZWLERuRVBJf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgedtgdehkecutefuodetggdotefrodftvf
+ :x-me-sender:x-sasl-enc; s=fm1; bh=2gno013I25+ySp7F0Sv5fGTEjuy3M
+ QruYqxZAm1iKcc=; b=DCHbSCqA0d27aJ4798pzoDW/8iA+4RDjVOhbNZ3RsIF82
+ wXM1oq3uyeiL1fuA6/td0aDl2ZyGk/5A84TkKlDhiaOHlD9dtSLKgw8CGBeRw16V
+ ylPcOFJug/CRi4dQkOxTDoREQCADtT0K+wO6CFIzYGYq7Y55RByoPcU3VTaIWhtH
+ Uf/MdFHQDxKlJs3kz6floP95V+w1+h2xZw1+bGKy0rQ5BMila6098ZqKNeJW6tdP
+ vbBT9iLQQiLwF0209II4SuQdq9Oy/AVo71gUmUPdMj2vJdkMSA9zm/Wr3SaMm/Ii
+ isDRt5ZCP3uLWhBDUJdwvQaHaZI6Myl+OJAOsj7FQ==
+X-ME-Sender: <xms:jVr3YYarlVAR7qv0og_t5HK7aDY47pQyPFmWNDVAq0dx40ol51VJ_g>
+ <xme:jVr3YTaIUmPNIojzbfk4_w_EnYmTmDOwp85c7K4D3fW5wyLqP_k6_-JvimcpjPzaz
+ Bg6nxPUBDBmOEDxng>
+X-ME-Received: <xmr:jVr3YS_brM3kbE8zyB-iZOH0NIKG9ubYrdSd1gxLuDl8YGQ79gPD5n4c925230fxq8dvVE1XbC5Ekqb6vJMnAwsSWkDHvkCyc-61GcURae_TjC6t1eW5RomHkaaH-ep->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgedtgdeiudcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertd
  dtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhi
- ugdrrghuqeenucggtffrrghtthgvrhhnpeekieehgedulefhteeuhffhveekuefhffevle
- eugfefvdeukedtudegieegfefhjeenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhk
- vghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
- hlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:dFb3YV_4FNm_wzxi3Q0W326T-jgE2KHVFecJPFX_dCjXPunRP5mCxA>
- <xmx:dFb3Ycve6toksw7TzpvPvYzJD7flc2sjcrzpcEVzOVCh5niQ7ZE3xg>
- <xmx:dFb3YcHaNSgF_HDzRDQF78LhGBHC1zMjm_E_nMwleTTvLpQp5DJb8A>
- <xmx:dVb3YV7ayB2kR52ZTW0VD7Xgk39_UhYtBEhptLIekx95bGiByujlSQ>
+ ugdrrghuqeenucggtffrrghtthgvrhhnpeeiteehudevlefhvddvjeeluefhleetveehff
+ fgiedtfeegkeejfeeivefgheehgfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecu
+ vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvg
+ ifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:jVr3YSr5vPX0K801R2qn_iZzH344x8fQfBRoqakisFK744tTQB9X7Q>
+ <xmx:jVr3YTqXTcTzVTQ9w_26U8xK9eXWvwyQDLqAwiYlg5PJeAYo05cTsw>
+ <xmx:jVr3YQQcRoFNbKjRLd1zbhS_cgmoZU0qxcAN91VSIhwhqsghTiWsQg>
+ <xmx:jVr3YSV-rKMSlAj5q2xssKWhgvlqF1Afq4zxCTV82vSROuj0f2tkXQ>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 30 Jan 2022 22:24:34 -0500 (EST)
+ 30 Jan 2022 22:42:02 -0500 (EST)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: u-boot@lists.denx.de
-Subject: [PATCH] gpio: Add gpio_request_by_line_name()
-Date: Mon, 31 Jan 2022 13:54:05 +1030
-Message-Id: <20220131032405.105204-1-andrew@aj.id.au>
+Subject: [PATCH] image: Control FIT signature verification at runtime
+Date: Mon, 31 Jan 2022 14:11:47 +1030
+Message-Id: <20220131034147.106415-1-andrew@aj.id.au>
 X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -94,16 +94,16 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: sjg@chromium.org, openbmc@lists.ozlabs.org
+Cc: openbmc@lists.ozlabs.org, sjg@chromium.org, chiawei_wang@aspeedtech.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add support for the upstream gpio-line-names property already described
-in the common GPIO binding document[1]. The ability to search for a line
-name allows boards to lift the implementation of common GPIO behaviours
-away from specific line indexes on a GPIO controller.
-
-[1] https://github.com/devicetree-org/dt-schema/blob/3c35bfee83c2e38e2ae7af5f83eb89ca94a521e8/dtschema/schemas/gpio/gpio.yaml#L17
+Some platform designs include support for disabling secure-boot via a
+jumper on the board. Sometimes this control can be separate from the
+mechanism enabling the root-of-trust for the platform. Add support for
+this latter scenario by allowing boards to implement
+board_fit_image_require_verfied(), which is then invoked in the usual
+FIT verification paths.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
@@ -123,77 +123,103 @@ Please take a look!
 
 Andrew
 
- drivers/gpio/gpio-uclass.c | 26 ++++++++++++++++++++++++++
- include/asm-generic/gpio.h | 19 +++++++++++++++++++
- 2 files changed, 45 insertions(+)
+ boot/Kconfig     |  8 ++++++++
+ boot/image-fit.c | 21 +++++++++++++++++----
+ include/image.h  |  9 +++++++++
+ 3 files changed, 34 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpio/gpio-uclass.c b/drivers/gpio/gpio-uclass.c
-index 125ae53d612f..be00a1f7d871 100644
---- a/drivers/gpio/gpio-uclass.c
-+++ b/drivers/gpio/gpio-uclass.c
-@@ -1187,6 +1187,32 @@ int gpio_request_by_name(struct udevice *dev, const char *list_name, int index,
- 				 index, desc, flags, index > 0, NULL);
+diff --git a/boot/Kconfig b/boot/Kconfig
+index c8d5906cd304..ec413151fd5a 100644
+--- a/boot/Kconfig
++++ b/boot/Kconfig
+@@ -78,6 +78,14 @@ config FIT_SIGNATURE
+ 	  format support in this case, enable it using
+ 	  CONFIG_LEGACY_IMAGE_FORMAT.
+ 
++if FIT_SIGNATURE
++config FIT_RUNTIME_SIGNATURE
++	bool "Control verification of FIT uImages at runtime"
++	help
++	  This option allows board support to disable verification of
++	  signatures at runtime, for example through the state of a GPIO.
++endif # FIT_SIGNATURE
++
+ config FIT_SIGNATURE_MAX_SIZE
+ 	hex "Max size of signed FIT structures"
+ 	depends on FIT_SIGNATURE
+diff --git a/boot/image-fit.c b/boot/image-fit.c
+index f01cafe4e277..919dbfa4ee1d 100644
+--- a/boot/image-fit.c
++++ b/boot/image-fit.c
+@@ -1308,6 +1308,14 @@ static int fit_image_check_hash(const void *fit, int noffset, const void *data,
+ 	return 0;
  }
  
-+int gpio_request_by_line_name(struct udevice *dev, const char *line_name,
-+			      struct gpio_desc *desc, int flags)
++#ifndef __weak
++#define __weak
++#endif
++__weak int board_fit_image_require_verified(void)
 +{
-+	int ret;
-+
-+	ret = dev_read_stringlist_search(dev, "gpio-line-names", line_name);
-+	if (ret < 0)
-+		return ret;
-+
-+	desc->dev = dev;
-+	desc->offset = ret;
-+	desc->flags = 0;
-+
-+	ret = dm_gpio_request(desc, line_name);
-+	if (ret) {
-+		debug("%s: dm_gpio_requestf failed\n", __func__);
-+		return ret;
-+	}
-+
-+	ret = dm_gpio_set_dir_flags(desc, flags | desc->flags);
-+	if (ret)
-+		debug("%s: dm_gpio_set_dir failed\n", __func__);
-+
-+	return ret;
++	return 1;
 +}
 +
- int gpio_request_list_by_name_nodev(ofnode node, const char *list_name,
- 				    struct gpio_desc *desc, int max_count,
- 				    int flags)
-diff --git a/include/asm-generic/gpio.h b/include/asm-generic/gpio.h
-index adc19e9765d7..81f63f06f15e 100644
---- a/include/asm-generic/gpio.h
-+++ b/include/asm-generic/gpio.h
-@@ -579,6 +579,25 @@ int gpio_claim_vector(const int *gpio_num_array, const char *fmt);
- int gpio_request_by_name(struct udevice *dev, const char *list_name,
- 			 int index, struct gpio_desc *desc, int flags);
+ int fit_image_verify_with_data(const void *fit, int image_noffset,
+ 			       const void *key_blob, const void *data,
+ 			       size_t size)
+@@ -1319,6 +1327,7 @@ int fit_image_verify_with_data(const void *fit, int image_noffset,
  
-+/* gpio_request_by_line_name - Locate and request a GPIO by line name
-+ *
-+ * Request a GPIO using the offset of the provided line name in the
-+ * gpio-line-names property found in the OF node of the GPIO udevice.
-+ *
-+ * This allows boards to implement common behaviours using GPIOs while not
-+ * requiring specific GPIO offsets be used.
-+ *
-+ * @dev:	An instance of a GPIO controller udevice
-+ * @line_name:	The name of the GPIO (e.g. "bmc-secure-boot")
-+ * @desc:	A GPIO descriptor that is populated with the requested GPIO
-+ *              upon return
-+ * @flags:	The GPIO settings apply to the request
-+ * @return 0 if the named line was found and requested successfully, or a
-+ * negative error code if the GPIO cannot be found or the request failed.
+ 	/* Verify all required signatures */
+ 	if (FIT_IMAGE_ENABLE_VERIFY &&
++	    fit_image_require_verified() &&
+ 	    fit_image_verify_required_sigs(fit, image_noffset, data, size,
+ 					   key_blob, &verify_all)) {
+ 		err_msg = "Unable to verify required signature";
+@@ -1340,9 +1349,11 @@ int fit_image_verify_with_data(const void *fit, int image_noffset,
+ 						 &err_msg))
+ 				goto error;
+ 			puts("+ ");
+-		} else if (FIT_IMAGE_ENABLE_VERIFY && verify_all &&
+-				!strncmp(name, FIT_SIG_NODENAME,
+-					strlen(FIT_SIG_NODENAME))) {
++		} else if (FIT_IMAGE_ENABLE_VERIFY &&
++			   fit_image_require_verified() &&
++			   verify_all &&
++			   !strncmp(name, FIT_SIG_NODENAME,
++				    strlen(FIT_SIG_NODENAME))) {
+ 			ret = fit_image_check_sig(fit, noffset, data, size,
+ 						  gd_fdt_blob(), -1, &err_msg);
+ 
+@@ -2061,7 +2072,9 @@ int fit_image_load(bootm_headers_t *images, ulong addr,
+ 		if (image_type == IH_TYPE_KERNEL)
+ 			images->fit_uname_cfg = fit_base_uname_config;
+ 
+-		if (FIT_IMAGE_ENABLE_VERIFY && images->verify) {
++		if (FIT_IMAGE_ENABLE_VERIFY &&
++		    fit_image_require_verified() &&
++		    images->verify) {
+ 			puts("   Verifying Hash Integrity ... ");
+ 			if (fit_config_verify(fit, cfg_noffset)) {
+ 				puts("Bad Data Hash\n");
+diff --git a/include/image.h b/include/image.h
+index 97e5f2eb24d6..98900c2e839b 100644
+--- a/include/image.h
++++ b/include/image.h
+@@ -1173,6 +1173,15 @@ int calculate_hash(const void *data, int data_len, const char *algo,
+ # define FIT_IMAGE_ENABLE_VERIFY	CONFIG_IS_ENABLED(FIT_SIGNATURE)
+ #endif
+ 
++/*
++ * Further, allow run-time control of verification, e.g. via a jumper
 + */
-+int gpio_request_by_line_name(struct udevice *dev, const char *line_name,
-+			      struct gpio_desc *desc, int flags);
++#if defined(CONFIG_FIT_RUNTIME_SIGNATURE)
++# define fit_image_require_verified()	board_fit_image_require_verified()
++#else
++# define fit_image_require_verified()	FIT_IMAGE_ENABLE_VERIFY
++#endif
 +
- /**
-  * gpio_request_list_by_name() - Request a list of GPIOs
-  *
+ #ifdef USE_HOSTCC
+ void *image_get_host_blob(void);
+ void image_set_host_blob(void *host_blob);
 -- 
 2.32.0
 
