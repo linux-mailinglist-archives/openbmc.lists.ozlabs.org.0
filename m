@@ -1,77 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 927AB4A4955
-	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 15:31:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B74244A4985
+	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 15:42:35 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JnVqZ3C9Jz3Wtr
-	for <lists+openbmc@lfdr.de>; Tue,  1 Feb 2022 01:31:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JnW4T2dGrz3bPH
+	for <lists+openbmc@lfdr.de>; Tue,  1 Feb 2022 01:42:33 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=SQi0+qGQ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=Cac3ITSC;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZBJzAfUE;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.18; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=SQi0+qGQ; 
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20;
+ helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=Cac3ITSC; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=ZBJzAfUE; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
+ [64.147.123.20])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JnVq84gsyz2xb8
- for <openbmc@lists.ozlabs.org>; Tue,  1 Feb 2022 01:31:00 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1643639446;
- bh=cvP66XLBo1tA/1NqtRz9tAMUUM7FbuNRovgufc8YVCg=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=SQi0+qGQ/8cFJF0IQv5/Rm/HWHavFPE07kJrx0EDZmduEqWC2RYmoyByHEugix8xM
- aKra8cxtVAlRyolA93iO5VELUvL56fdGWd+uV3u92F6tTSBu8C1PyYEM0og8OfbmMs
- O1K9s9xrZvIMn5L3QW3arusi8AtOmC496GBsiaXE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgesQ-1mbu1q2Z4e-00h2Lg; Mon, 31
- Jan 2022 15:30:46 +0100
-Date: Mon, 31 Jan 2022 15:30:45 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH] ARM: dts: nuvoton, npcm7xx: remove bogus unit addresses
- from fixed-partition nodes
-Message-ID: <YffylboRjcfX9cz2@latitude>
-References: <20220129092957.2189769-1-j.neuschaefer@gmx.net>
- <CACPK8Xfa8dYaAqg=8MA7zm82ve-K+t_sCfwXF82-9EV97rUYNg@mail.gmail.com>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JnW3z6vYPz30Mr
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Feb 2022 01:42:07 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 4F3EF32009F3;
+ Mon, 31 Jan 2022 09:42:03 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Mon, 31 Jan 2022 09:42:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm1; bh=qupwSld2ya6UMVqH8JAKoHxs0rpGV1IKA9Poqd
+ x7/zo=; b=Cac3ITSCJaNILS9/PYdOp3J87Evw8PVJNrLlyuukqZvTuRR9J03ps+
+ ZhRUtqt6jxyula5b3hpnRTqYUMFPa9RAF4c9hg1SgJMrrBSPf28FBebuW8FIboJo
+ GD+yFOd/iUVOhMjOBhlDkBTlIBWfEbMuKV+3G2WWvQnJOshGCIxeShMQAZKzKPNz
+ bTZp8MpicH2DglxUN3q4k2NtFBgMF0urQwSdBABcVqct5gCuZiFCLwPlmWF473Kq
+ G1UTTVZJVD7xHtC1uhmQj84kTUMJv4Ddjje4eCw6QVebOOhZ69dg1AvW31BMzJDn
+ aT8n0IM8Ld7oC1tXTZmwunOJLM43ZKtw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=qupwSld2ya6UMVqH8
+ JAKoHxs0rpGV1IKA9Poqdx7/zo=; b=ZBJzAfUErFY6LcgqwfuRy9f8fHroXe93T
+ Y1EuwDPuw4CUHtfBwHql1dLp5rHIrZcTk483kiMuyZgJXgo4O2AVj0JdmCHxOmG0
+ iBwiVkuydwTGsIbBvmlvduDkkdamvC1ScZkHhdh5g+3zFLYsBMfPx4sQkTp+XYso
+ EWK5VYUxE3k52YNxz624yuxYwV1pOs5nv2t8kCBqybyXukPbElnzwA8ikpwJhzr3
+ DqqhrHdPrDE+O1lu+8f7o4LqnojhELysXT+5sLwcsxfEPhGAb9c1AFLUyidHYRMb
+ hZ8r8oKLsBaU53QrEoYDJakBHFthwlWbWZoRpDofAVulvBkGLv7sg==
+X-ME-Sender: <xms:OvX3YWSxhr-5OJ_9y7Aj_dm9I1dgpk1dygpi8LiKOYPfVvogwklVew>
+ <xme:OvX3Ybx73xecMKxA5CfZuvhiyaasWdGmHlFTyRKqsTPc567lg2rtUjK0TOfpjxTTw
+ la3bgMBxeg7no3dxYM>
+X-ME-Received: <xmr:OvX3YT3vAgRB9T7EjqL1P24H75ChZ9r5CwGNDYAca5BMY4i7AsWkv6PUYB8yNzinsJXu77Gssvtxvq8ByyL1hWCzcVglwVhNpD3rSA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgedugdeikecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeekteejuefhkeejuedtledugeelueev
+ teeuueehieetvddtiefggedukeefffegveenucffohhmrghinhepghhithhhuhgsrdgtoh
+ hmpdhrvghlvggrshgvqdhnohhtvghsrdhmugenucevlhhushhtvghrufhiiigvpedtnecu
+ rfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:OvX3YSAXUA9Cbs9P0KuFQ2ZMiWUdojtoG_P6aG07vF1fIRul-gaPiQ>
+ <xmx:OvX3YfhcpMfbsW6JjxMfO_5gQCs4KeieL0e0J7r80rTcx5sOyFSX7A>
+ <xmx:OvX3YeoBCfLigwenqhhO2q3C9ZlXVnXoBmwkxOMTJyesufwiDT0DEw>
+ <xmx:OvX3YfLWFfYvSrWrKEyVufT_ebWwnJfZMUpv8rSGssTI_w8O135nLg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 31 Jan 2022 09:42:01 -0500 (EST)
+Date: Mon, 31 Jan 2022 08:42:00 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: "Muggeridge, Matt" <matt.muggeridge2@hpe.com>
+Subject: Re: OpenBMC v2.10/Hardknott status please
+Message-ID: <Yff1OKHtWj+xN7HN@heinlein>
+References: <DM4PR84MB1855478F75965FD5275971E6D8259@DM4PR84MB1855.NAMPRD84.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="rAX5NXH1poDvzv0I"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="gCIf0NWSlklWgG88"
 Content-Disposition: inline
-In-Reply-To: <CACPK8Xfa8dYaAqg=8MA7zm82ve-K+t_sCfwXF82-9EV97rUYNg@mail.gmail.com>
-X-Provags-ID: V03:K1:H9zxdogpEi7RKDIQoE/qcLE/xh4/erV7/Wdu/LDpsXznxY6nPiq
- a7qlms8M8GRG/Fj+yR90Jro+cskkL6o1X7AuoO2N0Rqyo+DpfdOnBhNF/e4GuW/mc5l6GPq
- c37cNIKqZG3aSR6bUpKWqsFpvtN6/XgO/Y+uQh1IPx8QbdW5HVT4TQr+T4gmBu8ql++EFHq
- c8ujDBqO9y1JaflsAoWyA==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:msJLetRTpsI=:8hRL9IaFvOlZUtKrRa6vOn
- 4BYbKmRIxqaCnnYimqGnhb14e7UMxNcuHZYOMbmSsHE7MqEvNu0LJ+WEcpavOnH5Mlg6pXA1i
- IlWqBm+XVNASFR3Zb1gr18OLBOZ8rhipWR3Lgf9mG9U6fOEuSVjiiW9514UXslJbugxu8QXYj
- HTZ8sk+Z9c86SHqGvGKHM8nqgddwT/qSnMQSGb1FsjrTfQuMw8MAYkLGuy7M8xaZEpTMbMmyf
- 7nvv8hk/syztc6OUT0xVvkZODkpGIzihJhhHLyaTpa9Qqpj7Ldj5xugEpcG9OVb3lP1PqyVaN
- ZPBQMaDj3FPW0bWJ7jY/2Wp7pxANS9CoxeeXs+tzIOTyy/cniDEpCoOBOLkGyiMd1p8UyRS4w
- TQqEsbnp6wkGXv6ZY1NU1TauyP1atsfXDR07p/5OK4crRRE8V9pIgXxoW7MOWLDmh+1u9nC95
- unksqNdKPxOjxwIofHwQYJQqxIIVGyFH/OT2AqRrS/HsnadOX1SP3ggf1TOQ29Shhq8hPKy/j
- N7aE7AeJQVMoZbgQfsFHE7bxA4ahtn8lKgJxgXe8rR73avxi4TlpxJHI9Yx9RAC1ei5gJgDvs
- /MuO8cPtqoNV3o748uTCit3xpBGzZJ4aDfUwsl848K8oaurz+4uAPkPrzxmLN9Jx34++mtS0h
- w9yaLSx0FtH2YDyf6D6x8wtZBKSqvjKlrda50JnM1H61PhxuoHCNeEfN6BwNbVUJqiqI+VFol
- g9gdJH4TyirggWsQgmx9Phwf+9k+zuxTDC/VOTseDXT6lQP+PD1oDQkonRwerDKIUD9rhKdOh
- XvD2q6FDOonALZ1w4dX6yrrS2525DXrbQhd2RoIWonnet7o2G9yPwCBsMfPzTWSRSONYUxAs4
- S4/rOYjX5giCKaz89oEKEpornbhnVDxqQLF5sNvfD0NZYaTqfz2T3Ef1nYjEpbNkLyEoEvUqU
- sqQG5J3pk1T18ZetSp76ejz8yrKUoMmXpYVMs7dMlNgv3xY6N0xx5xRC5NXSHEZLLOEAwtmxW
- JlG/uWfjZhmMKIOROXbdkQJk59UEm8rRZcMFlnLDZS7oi1b2aaJADVnAbzPrC1JCnH88R7sGo
- b7HiEv1Vdoz4M0=
+In-Reply-To: <DM4PR84MB1855478F75965FD5275971E6D8259@DM4PR84MB1855.NAMPRD84.PROD.OUTLOOK.COM>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,186 +98,87 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Benjamin Fair <benjaminfair@google.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---rAX5NXH1poDvzv0I
-Content-Type: text/plain; charset=utf-8
+--gCIf0NWSlklWgG88
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 31, 2022 at 06:29:42AM +0000, Joel Stanley wrote:
-> On Sat, 29 Jan 2022 at 09:32, Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx=
-=2Enet> wrote:
-> >
-> > The unit addresses do not correspond to the nodes' reg properties,
-> > because they don't have any.
-> >
-> > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+On Mon, Jan 31, 2022 at 04:50:40AM +0000, Muggeridge, Matt wrote:
+> Hi,
 >=20
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> OpenBMC v2.10 is desirable because it has the 5.10 kernel, with an LTS of=
+ Dec 2026. Though, I need some clarification, please.
+
+The v2.10-rc1 tag is also based on Yocto Hardknott which is EOL in March 20=
+22.
+To me, this is far more important than the kernel EOL for 5.15 being in Oct=
+ober
+2023.
+
+> I see a few pieces of information that cause me to question if there will=
+ be an OpenBMC 2.10 release.
+
+The v2.10-rc1 tag was made back in May and nobody seemed to care enough to =
+push
+for a formal release to be done.  I don't expect this to be done now.
+
+> In a message from Patrick Williams (appended) he states 2.9 was the last =
+release and the plan is to target January 14th, 2022 for a 2.11 release. Wh=
+at about 2.10?
 >=20
-> Do you want to add a Fixes: line?
-
-Sounds reasonable, I'll add it.
-
-
-Jonathan
-
+> Meanwhile, at the time of this message, there are no release notes<https:=
+//github.com/openbmc/docs/blob/master/release/release-notes.md> reported fo=
+r 2.10.  Though, the Current Release Content<https://github.com/openbmc/ope=
+nbmc/wiki/Current-Release-Content/b8934b1382409fdecf996fed6c56339e76717f2c>=
+ suggests 2.10 has been released.  If so, when was it released?
 >=20
-> > ---
-> >  arch/arm/boot/dts/nuvoton-npcm730-gbs.dts            | 2 +-
-> >  arch/arm/boot/dts/nuvoton-npcm730-gsj.dts            | 2 +-
-> >  arch/arm/boot/dts/nuvoton-npcm730-kudo.dts           | 6 +++---
-> >  arch/arm/boot/dts/nuvoton-npcm750-evb.dts            | 4 ++--
-> >  arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts | 6 +++---
-> >  5 files changed, 10 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts b/arch/arm/boot/=
-dts/nuvoton-npcm730-gbs.dts
-> > index eb6eb21cb2a44..33c8d5b3d679a 100644
-> > --- a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-> > +++ b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-> > @@ -366,7 +366,7 @@ spi-nor@0 {
-> >                 spi-max-frequency =3D <20000000>;
-> >                 spi-rx-bus-width =3D <2>;
-> >                 label =3D "bmc";
-> > -               partitions@80000000 {
-> > +               partitions {
-> >                         compatible =3D "fixed-partitions";
-> >                         #address-cells =3D <1>;
-> >                         #size-cells =3D <1>;
-> > diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts b/arch/arm/boot/=
-dts/nuvoton-npcm730-gsj.dts
-> > index d4ff49939a3d9..bbe18618f5c56 100644
-> > --- a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
-> > +++ b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
-> > @@ -142,7 +142,7 @@ spi-nor@0 {
-> >                 reg =3D <0>;
-> >                 spi-rx-bus-width =3D <2>;
-> >
-> > -               partitions@80000000 {
-> > +               partitions {
-> >                         compatible =3D "fixed-partitions";
-> >                         #address-cells =3D <1>;
-> >                         #size-cells =3D <1>;
-> > diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts b/arch/arm/boot=
-/dts/nuvoton-npcm730-kudo.dts
-> > index 82a104b2a65f1..8e3425cb8e8b9 100644
-> > --- a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-> > +++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-> > @@ -388,7 +388,7 @@ spi-nor@0 {
-> >                 spi-max-frequency =3D <5000000>;
-> >                 spi-rx-bus-width =3D <2>;
-> >                 label =3D "bmc";
-> > -               partitions@80000000 {
-> > +               partitions {
-> >                         compatible =3D "fixed-partitions";
-> >                         #address-cells =3D <1>;
-> >                         #size-cells =3D <1>;
-> > @@ -422,7 +422,7 @@ spi-nor@1 {
-> >                 reg =3D <1>;
-> >                 spi-max-frequency =3D <5000000>;
-> >                 spi-rx-bus-width =3D <2>;
-> > -               partitions@88000000 {
-> > +               partitions {
-> >                         compatible =3D "fixed-partitions";
-> >                         #address-cells =3D <1>;
-> >                         #size-cells =3D <1>;
-> > @@ -447,7 +447,7 @@ spi-nor@0 {
-> >                 reg =3D <0>;
-> >                 spi-max-frequency =3D <5000000>;
-> >                 spi-rx-bus-width =3D <2>;
-> > -               partitions@A0000000 {
-> > +               partitions {
-> >                         compatible =3D "fixed-partitions";
-> >                         #address-cells =3D <1>;
-> >                         #size-cells =3D <1>;
-> > diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/=
-dts/nuvoton-npcm750-evb.dts
-> > index 0334641f88292..cf274c926711a 100644
-> > --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> > +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> > @@ -74,7 +74,7 @@ spi-nor@0 {
-> >                 spi-rx-bus-width =3D <2>;
-> >                 reg =3D <0>;
-> >                 spi-max-frequency =3D <5000000>;
-> > -               partitions@80000000 {
-> > +               partitions {
-> >                         compatible =3D "fixed-partitions";
-> >                         #address-cells =3D <1>;
-> >                         #size-cells =3D <1>;
-> > @@ -135,7 +135,7 @@ spi-nor@0 {
-> >                 spi-rx-bus-width =3D <2>;
-> >                 reg =3D <0>;
-> >                 spi-max-frequency =3D <5000000>;
-> > -               partitions@A0000000 {
-> > +               partitions {
-> >                         compatible =3D "fixed-partitions";
-> >                         #address-cells =3D <1>;
-> >                         #size-cells =3D <1>;
-> > diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts b/arc=
-h/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-> > index 767e0ac0df7c5..7fe7efee28acb 100644
-> > --- a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-> > +++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-> > @@ -107,7 +107,7 @@ spi-nor@0 {
-> >                 reg =3D <0>;
-> >                 spi-rx-bus-width =3D <2>;
-> >
-> > -               partitions@80000000 {
-> > +               partitions {
-> >                         compatible =3D "fixed-partitions";
-> >                         #address-cells =3D <1>;
-> >                         #size-cells =3D <1>;
-> > @@ -146,7 +146,7 @@ spi-nor@1 {
-> >                 reg =3D <1>;
-> >                 npcm,fiu-rx-bus-width =3D <2>;
-> >
-> > -               partitions@88000000 {
-> > +               partitions {
-> >                         compatible =3D "fixed-partitions";
-> >                         #address-cells =3D <1>;
-> >                         #size-cells =3D <1>;
-> > @@ -173,7 +173,7 @@ spi-nor@0 {
-> >                 reg =3D <0>;
-> >                 spi-rx-bus-width =3D <2>;
-> >
-> > -               partitions@A0000000 {
-> > +               partitions {
-> >                         compatible =3D "fixed-partitions";
-> >                         #address-cells =3D <1>;
-> >                         #size-cells =3D <1>;
-> > --
-> > 2.34.1
-> >
+> Can someone clarify the status of v2.10?
 
---rAX5NXH1poDvzv0I
+There don't seem to be anyone vocally interested in any releases.  I mentio=
+ned
+hypothetically making a release for v2.11 and nobody responded.  I think th=
+ere
+was a simple regression test ran on Witherspoon but beyond that we have no
+information on the stability of that branch.
+
+As best I can tell, most companies that are active in the development either
+work off `master` or have their own internal release process.  I keep heari=
+ng
+small comments here and there on Discord like "I'm building a machine based=
+ on
+vx.y" but I have no idea why they chose "vx.y" and quite often they're only
+asking because they ran into a bug that has already been fixed on `master`.
+
+If there really are people that are interested in us making formal releases,
+we need people to express a real interest and contribute (at a minimum) some
+testing to the release-candidate branches.
+
+--=20
+Patrick Williams
+
+--gCIf0NWSlklWgG88
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmH38pUACgkQCDBEmo7z
-X9tMVBAAwevMH6Wfum5ueAOh4Vbal0I1DSk/wmTaKTN7uO6saDzRT7SaGHAEPiif
-buVC/uZRol2ek6dcvrwPFXciY/Rijcahdu7jvkKFC3nIB2uk/R/IeTta5KC35Wkw
-Kt4l9gU6OIqxOBvz2LKKDWZ7UpC++Z4ygHsnjAhr3pttL78RR1TLl+DEcz1arMYY
-2KP4fa0Jq8cF5iUfPAYCDHh3T3sw4bYkZ+8uA5feXZpDf2dkW+DZ3FQpv/G6Tx4E
-iRdpxQNt8iqc6e+RNHq2PPpInwnVzIAZj0QemWjaGJdDJBv0hS1vfl7iq1Omu66Z
-+Slm4gK5nYVD/bsUAft+8yykTULdjQBC6YoTCFhi6XRSdoJxhJuNh5po+DmH9Xdd
-5qwP8eX4CoGI1USNfVghnZHmeqbGMNwgwvA8aFIAJ3S7htQuBsuve/X5S3nlYcYJ
-YMnXDn0C0NY7kI5HdDAIGQIh9hUdStZxo+YeCcAlO2/JkwWfLg6+W8QpQD4zcd8y
-OCNoPvXi4yjHQ6+IioanwtHEH2dry0KhrqYQWYVtjd70pO/VJdLNxyfr2iLa3biG
-ykL7MM5YNnV94SPBm7vPIAAKKNhK/z1qzqhAINxMxLLl2gipUOP872IXLNngRm8t
-47nWNj8pVwqORkisq+oYg6f1CXyg4ilkBpoY+iga2MCwmHjME+o=
-=9aSg
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmH39TYACgkQqwNHzC0A
+wRnEOQ/+Kf21mqYdNd2mua5j3NTUavsKqu5CSs7b4o/gyRjtlQGGx4hrxrbnV0Wk
+U5gialyjiMHtW3ovDk3NEcCkBNy3OuQTT04CmdylCB0WJx3TUkNsJm0y6hBnzEk9
+eu3H8kTjQFRhg73tqHUaqFsDYXi1i72qb+mH8lAxEzLyQa53mJM7V6RyWUMDP1aP
+z5Za55MoN9ZIraN/VPDSZ/cTn2DdomhcP+EuygT4ZQCxU6dgPnsHhBcGf3PPict9
+cwEFgiV6DGj1TX7gcbPOfXrK+zyLM8ZMt5PWarYFpBZKqZQFv0kjx2dZV8XdOsuQ
+D3lqXYGAGCJLQ01fdRlCZu6ISg1pSmZKMl8hNPpow7ju2CIu5d98zANdestyyZ7b
+uoJR5N3699z5PBSeLkZkHa9MA5ajKoCOeqj6rWVJOH7ISXJYltefVmoiQoIcpaid
+XkdgsV/REAkSswRo64eif6ZkIOXpQdcoJB4rGPtpmHNZh6dzXvjtB2IOKJUa39ca
+Ww7HrpmxPNO7DKnYGn7J4Xs+XeoB+lPYIeFmyXRc9z/w8Eo/WcvXkZFQ4Cz5LeBy
+xGMKgDVm7PtmmZBWN4TnA5ITrZXdEnBseuGGok+GCuk6TsMfyxt6FHlMx3JYE9Wo
+fhABhfekK5PumId0iDftrIuqJdtqkuh+FJEzBxmoM6zEJ9GNJpU=
+=8LrU
 -----END PGP SIGNATURE-----
 
---rAX5NXH1poDvzv0I--
+--gCIf0NWSlklWgG88--
