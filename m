@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE9E44A52AD
-	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 23:55:05 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5C964A52BA
+	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 23:59:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jnk0l3Kk9z3bTt
-	for <lists+openbmc@lfdr.de>; Tue,  1 Feb 2022 09:55:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jnk5q4xG8z3bTt
+	for <lists+openbmc@lfdr.de>; Tue,  1 Feb 2022 09:59:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=xpzHUqyd;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=fiG1ry7F;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=ByG/QgM9;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=fwVle7bF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,75 +19,70 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=xpzHUqyd; 
+ header.s=fm1 header.b=ByG/QgM9; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=fiG1ry7F; 
+ header.a=rsa-sha256 header.s=fm2 header.b=fwVle7bF; 
  dkim-atps=neutral
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
  [64.147.123.19])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jnk0G5NCmz2xWd
- for <openbmc@lists.ozlabs.org>; Tue,  1 Feb 2022 09:54:37 +1100 (AEDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
- by mailout.west.internal (Postfix) with ESMTP id 0AAAE32020C9;
- Mon, 31 Jan 2022 17:54:33 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute1.internal (MEProxy); Mon, 31 Jan 2022 17:54:34 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jnk5S0VcPz2ybK
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Feb 2022 09:59:07 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 16FEA3202056;
+ Mon, 31 Jan 2022 17:59:06 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Mon, 31 Jan 2022 17:59:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm1; bh=mb3cla5nk/g+8BhGMo3iwLj1qxSfeQZmGD7N2c
- +R4/Q=; b=xpzHUqydzAMCXZgDUTUAGelqNFog1P9kLhKVeY0xgs1D+9b9cp6JnU
- em0PMgn0gFLU2io4uqPPSsduOSYXo/r/vS0SlKt/utroka24Bnlbh9NY2euUkZQ2
- C6i0ipUuh+C/UGaVFKVS4NwYtfckAUGEGd95XfgE00U8zOZKQvTQGQQzMSmYXjLY
- VtxWvQiuZoykqmLzj8YC79yj0bu6qmmbPmnBMjUPKI5JEdwclSyOW91slSJm4JI5
- 2oe50YyLEimi3orMTKdc8ShKQe8vt9GBlrpvZJmRtVDs4yWobcJmajvrSRA+Fp0/
- y/TvzdvKHabcNgRPdAqT+4fwXjtkVX0g==
+ :cc:content-transfer-encoding:date:date:from:from:in-reply-to
+ :message-id:mime-version:reply-to:sender:subject:subject:to:to;
+ s=fm1; bh=QZydiwxkoHdggem/2L9cZuXRJY9q6DVG49v3cduCXZc=; b=ByG/Q
+ gM9obnlgsx38AMiUQeP+rRYsjNp6lkif+mpSgCkJBM8eVAvECiUqb4Ab4F+F8/dO
+ MvaRVrlFzS5shdive6EwhzHjt143WQpoewQPcSfEcIG6KQmYUYnIbsWRAJukza1d
+ GipEm5hgwSTdZw/QcAz/YxOtujtx7gfkTuz2fyJt58uQDWEtRkP5+VTNiaTr3Dhb
+ 9/9GtB4GcAMxKs8lJOf2qm87Xjgzaz/1wT4Sg7C0nteJ7faD9sDN40Gx8asiGq0h
+ vjFa+ElvxhQSzjL/HZxfIG+NnwcYx7it/QcgL33Ata2moGFCbNx/Gp3aFFEHx5Gt
+ tPoaF4IxtkWE382WQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=mb3cla5nk/g+8BhGM
- o3iwLj1qxSfeQZmGD7N2c+R4/Q=; b=fiG1ry7FqrZbMlgYJrTnFnxN3qzOm5A5p
- MucyNNu6Wud6VxsLWgJiFvQfcJf8CP+DQ06pZvou5CB/kOENHH0DR4PfiTE+TV8w
- KvST8JGjYbkG7KbN/mCPUDjlJOqi0P1Men3wwNK6RxUGZ6tPrrd/tU+ECx2MElph
- o+n//FEQ/ina3O+JgHOqat0aPrGA+EjLm7jFkF5MYjix7DfZUTf66KUo55sSfgjK
- FnPr+b/N+5dRSX5kApF7pZPqEXPJm9ny0uRQUJWzi/jNZv658V6tuXgpaccy8UGi
- u8G94giyYgwHV5Abf2ju26chIVb3LUbYInkKHt08VvheEMQbMMNaw==
-X-ME-Sender: <xms:qGj4YbnIa_TcFBQXzcHDurxyTvPAwfQ1Cc1Z4fDuPTL27OgPQIm1mg>
- <xme:qGj4Ye3IvKifBG_ZAJK6trdxHXBW85QbXKUkOrXg5bY79ymeBJiAT-FhsL0Of1Bgf
- mc3Gq0weloPp23VMv0>
-X-ME-Received: <xmr:qGj4YRrTwiysRq_VSlAIWRb7tC1B8Z8aT8Pg3CzX4VJbKa6zQSDTCsBE1NzL9-nJ2gzN0HUFILDmXdM5p_doCnyfomAmgGOCFpaEwA>
+ messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
+ :from:from:in-reply-to:message-id:mime-version:reply-to:sender
+ :subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm2; bh=QZydiwxkoHdggem/2L9cZuXRJY9q6
+ DVG49v3cduCXZc=; b=fwVle7bFXfAuQqLaSy9zaIfbfWQP2GpFV0VpO3zhJJGpM
+ u/16Tt0oKwg0J0F3oZWmoh4wtE0AfEjb8KZIbRh6kVZRR4yicaTSuB1irK1zbrox
+ h3ow+Rli+CKgjHnEyxRzXTVF3NQi+uvbvb7mzi6cLyebWvU1Jss8vLneobTeogSU
+ M+SFc/oWXLOMamxqn/KOxpScKDWXwtTYCvs3g7NhjaIRwePlB8AN4jIj9LOIbXTg
+ aVCEeySa2hrOopQt7d//ipGvsSh7BNYNbPEc5zEygX6RYerKG6jNYuKZ3oaff6Wz
+ aA8n66ayBx/yQs1JPOu3+1UyGnHvLhmSogcw1/y/g==
+X-ME-Sender: <xms:uWn4Ye6KTvYf_hYlYkR7w0Db8-nXphRvJGju3giBuk_7axHwmIf63g>
+ <xme:uWn4YX4XoS_l-mWaqn6RpW2jnXJppxxlrPESNtVktLywvTJ7yb7jOKdC96mEqfBd9
+ p_srcSf-699eL3_DuU>
+X-ME-Received: <xmr:uWn4YdeMOubmKtmDk9ZB7VkoLfakXRWXyDt6GcQ6YOKePyPmXl4jihgaZmo9YWULTf-j2qjNoZrxBj1M8OMN2xcqImGiP33su2YArg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgedvgddtgecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
- fefgtdehhfektdelffevkefgueffhedtieenucevlhhushhtvghrufhiiigvpedtnecurf
- grrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:qGj4YTmqeIX3YBrZE4xS7XBPWwe--I_csbIgefcAx374HxuMfHo5wg>
- <xmx:qGj4YZ10H9RAr5IbWKeSs41OLjrim_ANjbQj-RkI3Tq0M6D5V7uaFw>
- <xmx:qGj4YStRzLtO4hx1IcSWPNgGSF8rSzWEpukAEhopy6BSKdfqvDQ8Ow>
- <xmx:qWj4YW95SZdEllxlOHsnyUAydMSzqhbcXD01sT7EsHZfua5fjA3Yyw>
+ uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculddvfedmnecujfgurhephffvuf
+ ffkffoggfgsedtkeertdertddtnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghm
+ shcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpedvfe
+ etvddtgfeutdegkeegtdeigfduudfgiedutdegkefftdduueeugfelgeffheenucffohhm
+ rghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+ hmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:uWn4YbKNji7ZLsU0FbrcyWhewsWBwlIMLIGlF4ZZzXgYi03IAFV82g>
+ <xmx:uWn4YSIFXB4_IBKHgqzO4jB94pYxiNzITc903DXe13pA3WY6eTgLjA>
+ <xmx:uWn4YcxXCVI8h-nkCmOg3eQtdl8xdks1haMz8D2ArXI-q8p8OdtKfA>
+ <xmx:uWn4YczNZRdt0iuiiiDEwv-KQhHECSheEx_gHZe5ctKboncl_Bxfww>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Jan 2022 17:54:32 -0500 (EST)
-Date: Mon, 31 Jan 2022 16:54:31 -0600
+ 31 Jan 2022 17:59:05 -0500 (EST)
 From: Patrick Williams <patrick@stwcx.xyz>
-To: "Muggeridge, Matt" <matt.muggeridge2@hpe.com>
-Subject: Re: OpenBMC v2.10/Hardknott status please
-Message-ID: <Yfhop9g2lX+DZ5iN@heinlein>
-References: <DM4PR84MB1855478F75965FD5275971E6D8259@DM4PR84MB1855.NAMPRD84.PROD.OUTLOOK.COM>
- <Yff1OKHtWj+xN7HN@heinlein>
- <DM4PR84MB1855BB4EEAB345B6A0FDB8E2D8259@DM4PR84MB1855.NAMPRD84.PROD.OUTLOOK.COM>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH dev-5.15] mtd: aspeed-smc: improve probe resilience
+Date: Mon, 31 Jan 2022 16:59:04 -0600
+Message-Id: <20220131225904.137769-1-patrick@stwcx.xyz>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="2ZfqUNr3Gk5iRZ5/"
-Content-Disposition: inline
-In-Reply-To: <DM4PR84MB1855BB4EEAB345B6A0FDB8E2D8259@DM4PR84MB1855.NAMPRD84.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,49 +94,105 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+The aspeed-smc can have multiple SPI devices attached to it in the
+device tree.  If one of the devices is missing or failing the entire
+probe will fail and all MTD devices under the controller will be
+removed.  On OpenBMC this results in a kernel panic due to missing
+rootfs:
 
---2ZfqUNr3Gk5iRZ5/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[    0.538774] aspeed-smc 1e620000.spi: Using 50 MHz SPI frequency
+[    0.540471] aspeed-smc 1e620000.spi: w25q01jv-iq (131072 Kbytes)
+[    0.540750] aspeed-smc 1e620000.spi: CE0 window [ 0x20000000 - 0x28000000 ] 128MB
+[    0.540943] aspeed-smc 1e620000.spi: CE1 window [ 0x28000000 - 0x2c000000 ] 64MB
+[    0.541143] aspeed-smc 1e620000.spi: read control register: 203b0041
+[    0.581442] 5 fixed-partitions partitions found on MTD device bmc
+[    0.581625] Creating 5 MTD partitions on "bmc":
+[    0.581854] 0x000000000000-0x0000000e0000 : "u-boot"
+[    0.584472] 0x0000000e0000-0x000000100000 : "u-boot-env"
+[    0.586468] 0x000000100000-0x000000a00000 : "kernel"
+[    0.588465] 0x000000a00000-0x000006000000 : "rofs"
+[    0.590552] 0x000006000000-0x000008000000 : "rwfs"
+[    0.592605] aspeed-smc 1e620000.spi: Using 50 MHz SPI frequency
+[    0.592801] aspeed-smc 1e620000.spi: unrecognized JEDEC id bytes: 00 00 00 00 00 00
+[    0.593039] Deleting MTD partitions on "bmc":
+[    0.593175] Deleting u-boot MTD partition
+[    0.637929] Deleting u-boot-env MTD partition
+[    0.829527] Deleting kernel MTD partition
+[    0.856902] Freeing initrd memory: 1032K
+[    0.866428] Deleting rofs MTD partition
+[    0.906264] Deleting rwfs MTD partition
+[    0.986628] aspeed-smc 1e620000.spi: Aspeed SMC probe failed -2
+[    0.986929] aspeed-smc: probe of 1e620000.spi failed with error -2
+...
+[    2.936719] /dev/mtdblock: Can't open blockdev
+mount: mounting /dev/mtdblock on run/initramfs/ro failed: No such file or directory
+[    2.963030] MTD: Couldn't look up '/dev/mtdblock': -2
+mount: mounting /dev/mtdblock on run/initramfs/rw failed: No such file or directory
 
-On Mon, Jan 31, 2022 at 09:01:31PM +0000, Muggeridge, Matt wrote:
-=20
-> - The 5.15 kernel is in OpenBMC/master, which I guess will be branched as=
-=20
-> kirkstone sometime from June (based on historically OpenBMC releases bran=
-ch=20
-> ~3mo after Yocto release).=20
+Mounting read-write /dev/mtdblock filesystem failed.  Please fix and run
+	mount /dev/mtdblock run/initramfs/rw -t jffs2 -o rw
+or perform a factory reset with the clean-rwfs-filesystem option.
+Fatal error, triggering kernel panic!
+[    3.013047] Kernel panic - not syncing: Attempted to kill init! exitcode=0x00000100
 
-FWIW, our honister branch, which should become 2.11 if we ever make that ta=
-g,
-is also using the 5.15 kernel.
+Many BMC designs have two flash chips so that they can handle a hardware
+failure of one of them.  If one chip failed, it doesn't do any good to
+have redundancy if they all get removed anyhow.
 
---=20
-Patrick Williams
+Improve the resilience of the probe function to handle one of the
+children being missing or failed.  Only in the case where all children
+fail to probe should the controller be failed out.
 
---2ZfqUNr3Gk5iRZ5/
-Content-Type: application/pgp-signature; name="signature.asc"
+Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20211229143334.297305-1-patrick@stwcx.xyz
+---
+ drivers/mtd/spi-nor/controllers/aspeed-smc.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+diff --git a/drivers/mtd/spi-nor/controllers/aspeed-smc.c b/drivers/mtd/spi-nor/controllers/aspeed-smc.c
+index c421fad4b3f5..416ea247f843 100644
+--- a/drivers/mtd/spi-nor/controllers/aspeed-smc.c
++++ b/drivers/mtd/spi-nor/controllers/aspeed-smc.c
+@@ -1246,6 +1246,7 @@ static int aspeed_smc_setup_flash(struct aspeed_smc_controller *controller,
+ 	struct device_node *child;
+ 	unsigned int cs;
+ 	int ret = -ENODEV;
++	bool found_one = false;
+ 
+ 	for_each_available_child_of_node(np, child) {
+ 		struct aspeed_smc_chip *chip;
+@@ -1311,8 +1312,17 @@ static int aspeed_smc_setup_flash(struct aspeed_smc_controller *controller,
+ 		 * by of property.
+ 		 */
+ 		ret = spi_nor_scan(nor, NULL, &hwcaps);
+-		if (ret)
+-			break;
++		/*
++		 * If we fail to scan the device it might not be present or
++		 * broken.  Don't fail the whole controller if others work.
++		 */
++		if (ret) {
++			if (found_one)
++				ret = 0;
++
++			devm_kfree(controller->dev, chip);
++			continue;
++		}
+ 
+ 		ret = aspeed_smc_chip_setup_finish(chip);
+ 		if (ret)
+@@ -1323,6 +1333,7 @@ static int aspeed_smc_setup_flash(struct aspeed_smc_controller *controller,
+ 			break;
+ 
+ 		controller->chips[cs] = chip;
++		found_one = true;
+ 	}
+ 
+ 	if (ret) {
+-- 
+2.34.1
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmH4aKUACgkQqwNHzC0A
-wRnCuRAAhOf4br/vKjgpfVCRYZLnORMqlYCy7tRillsFWGlydP4SIJ+cu4FSuZlj
-XEvPbexbgzv7R9SbkYKB9gvAx6GaiRF6oxzPyNl2o5fVVQDbSIefwyk5XjWWYpqk
-hhToEiPrBPjb9zuZnxtJr0z6ePbSkkPIXXoftUMROp6YpN4WNBuGTc2STfyn3u3r
-9M5YLgu5nLCYVcn1CngFJobH/CKBJk7oNBl8BwiP+UnDxYZSZiNdGzK+rQ97ML+J
-YlRkThaNr7cYHaKCNWKn3uUfji6zeVvmICBoUjvS88//Q0tw1eg57M04OZiGZUi9
-9dMyWCjZr3sFElG5RopZjrnHXpPC5AfRhnFweIOhG79Xyw0O+9bZaJyE+FyK0dCv
-53j9XBLgDGS9AhTE2JG6O1eJdITYW4n//RvTvOwDKcDJv1nw0NDlGRo5Ll1igbGW
-hmSpEVmnaQh89xnITsf2xmDQTRXFcbUYyY85rqb20M0Vsug9y1orMnLW4wcOxL2W
-PIF4Xd4SIcLxgWxSqNT84fFq2zlBJpwJuPCQrjebVYdJYKj9enTjfzqjy1mKg3PD
-MZK3V6NY5OT6dtT+WLLjYsFiwuaNAiU3SDVO2pyb62Ps5Dy4liO3mmv9U3knrEzV
-J3zqNmiGjiYN57N5ny6y/At6Amr4m0jdTXywhjVCfF7h5JN/i0I=
-=t8lp
------END PGP SIGNATURE-----
-
---2ZfqUNr3Gk5iRZ5/--
