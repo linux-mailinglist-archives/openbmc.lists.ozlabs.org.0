@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DDAC4A3C72
-	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 02:28:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A8834A3C73
+	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 02:29:14 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jn9SK6FZrz30NP
-	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 12:28:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jn9T43J3vz30Nd
+	for <lists+openbmc@lfdr.de>; Mon, 31 Jan 2022 12:29:12 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=iECD4D/h;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=RfavmZ+1;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=TpESBBVc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=iFKbj3Ac;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,49 +19,49 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=iECD4D/h; 
+ header.s=fm1 header.b=TpESBBVc; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=RfavmZ+1; 
+ header.a=rsa-sha256 header.s=fm1 header.b=iFKbj3Ac; 
  dkim-atps=neutral
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
  [66.111.4.29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jn9Pm3CWXz2xsY
- for <openbmc@lists.ozlabs.org>; Mon, 31 Jan 2022 12:26:20 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.nyi.internal (Postfix) with ESMTP id 735945C00F8;
- Sun, 30 Jan 2022 20:26:18 -0500 (EST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jn9Pp44v0z2xsY
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Jan 2022 12:26:22 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id B41505C00EC;
+ Sun, 30 Jan 2022 20:26:20 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute5.internal (MEProxy); Sun, 30 Jan 2022 20:26:18 -0500
+ by compute4.internal (MEProxy); Sun, 30 Jan 2022 20:26:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
  :cc:content-transfer-encoding:date:date:from:from:in-reply-to
  :in-reply-to:message-id:mime-version:references:reply-to:sender
- :subject:subject:to:to; s=fm1; bh=HVzBxeFpzvE6wCKGgGQrnwhzEj3CAy
- UlyiX1edYCefs=; b=iECD4D/hp9kqJyKx9f9U2MA++mxZZNX2X17iyNipTthG31
- fPMwn3P9Tj5lYGv7+uo9OQG3SCg7bBNdiPebY7CiKgld3AQahfp8EO0XyQDMre6U
- q+Skz1sBc1Oafgug5CsV62CvbkNwHDvCCFuV6JegFmVhs2wNJjVd/o/WSEgUPk/h
- aH6ZCohbMnUSi1ys1dmqVl01dIDb2dJOzn9zvl1KLj20zLVtLqlzqIpmM30q8P4L
- wgKzskf+OX9EjQM/mt4HI3WL7nrQbHWfjdzTWR5YgB1k4yqXQOAxGpkmING4CUyZ
- ZMc8QhxmYYOnVPu/w8ZOjZU7EnBYmUAo+XgyQ/4w==
+ :subject:subject:to:to; s=fm1; bh=2oimyd1cG/eGSpPS1wmNEY6/51xaE9
+ n8y5HF5ezJDH4=; b=TpESBBVcMQWzcTIoR2xSAd67/vFIIiNb/9r1cvRTT34jEu
+ 94ioo1tATosCAaxOPsmnoX11AKICt6xK9klDVBVO9bOGM3mfzL19W4CcJ5hgMMHJ
+ cVXt5sq0X/5CFn5jocvu1BAlBJmfk0ugeF+yhM5fIZMkdZ4LmExNdIE6qD2R88kA
+ Mzp3pgn5/MBomurAwQhR0AuMGjj5W4kInkIGHi6p0wfPlystRnaTF9UFCxci3oYH
+ pPo6qveKokvl2PtLshGB7EhqZRjH+0x80E6FFN/xlM44XOIHNYFM77avqIVvvYdx
+ M4gNtKilcqKL8UR2V8gxtHPylWlL5vCuVwDyzP6Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:sender:subject:subject:to:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=HVzBxe
- FpzvE6wCKGgGQrnwhzEj3CAyUlyiX1edYCefs=; b=RfavmZ+1NDtm0lcNU3XR5d
- +j12HT9m2RR/wWq6K4SfXGH2l7p/0cqlYxtPqrn65xMT33kpHzfa3X3Ekwt7IhoC
- xT1Qi2LnD/hsbPXcQvQ6I3o2sYY2FlNclrjiv8iOolVwEr3TB1UpF5vF17BcuolD
- 4PUARrm0o7c+57jVVd5hhfkbYZ6Z8R7luEocbD2dc1iAi07S9TbqUfTdTebpopvu
- wWrRpC2AZUztdOmiLqjEHZIdiVVfsIUqweoRwUet5QQ53ixl63rraWsjU9k/4z05
- hsPSLT7lGdVRhgS43pAX/yhUaFizm0XrSoBiUW9khvTpWhH7oJtGyJ01uqLMxmVg
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=2oimyd
+ 1cG/eGSpPS1wmNEY6/51xaE9n8y5HF5ezJDH4=; b=iFKbj3AcS8/65hRHoetQm0
+ 3UUQdIw4jjmzQhOcAprSAnB6I2TiAIjxu1ohD6m/MGoNWpzsXk1NjEAwmdo6Ft8X
+ gMr/9ed5jF5EST22qc38RQurZn2HTbxykKG2jHJbni/W/Ekfs16LxdSVATn9azsj
+ qUHbaMge5Hc1ZDGggncLO/aPT0hmxE/3gpKbJABBgz3L2/J+Rd5pbenzw5+uzgL+
+ WLUeyN5ObRJqzpsFV8CcQX5JR348fyRSnhfZqj1O+5c1UA5koPrrxoJUyU7oL4SG
+ NGXJkkS4sBniTS+IzXy9AGiMKWexStiJpsdSPsDXXJ0VUKB8OeP3nTJ/Ejae7d3g
  ==
-X-ME-Sender: <xms:ujr3YR_Ccb3l57gE_qXpvsSxYE1fgRJKOQTEe0TXhPyOvsGlSdmA8g>
- <xme:ujr3YVudYfwxNtssmwB_X0dWUbbD1fLhMWTNpizz-bEPi24vTWDd77p0_lp3rU1o9
- egpyPMAAqlsDtcbgA>
-X-ME-Received: <xmr:ujr3YfAZNBogCWmc4uVSe_j2S847SQQgpCVwexESVODP7qA4gmL7SKxQqFZfBDZMEIMfvBwEUfoeUKldqApQKrOwIZx2Js_YanzZvulZaD9aZuS3NJuip9epqrL5Y60d>
+X-ME-Sender: <xms:vDr3YeZW3rGZwf7IDOZUDemDZ-NT9hhDm0pVwaZNBFX7VQ_TECiwuw>
+ <xme:vDr3YRbAu1UpbLW1KKWqO_ZK5VbM56Xwvfj8KLqnxFtivpjnTUwcRTvwFwO2F_6s2
+ Np8Q9IWrW_JJ-dE_Q>
+X-ME-Received: <xmr:vDr3YY_lLE_9DMCOxLXurlgi4EieXVST59GZ3XwqNSGbrx7-HCq3ZZEJz18fAY3LEfcbBCxPYs3LX0p_LMI5JS8SZtxx7CN9MBNvYQ2GjnFKUnTX6UHaPl75jYXs_47h>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgedtgdefvdcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
@@ -69,18 +69,18 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgedtgdefvdcutefuodetggdote
  rdhiugdrrghuqeenucggtffrrghtthgvrhhnpeejgfdvveehteekveeggeellefgleette
  ejffelffdvudduveeiffegteelvefhteenucevlhhushhtvghrufhiiigvpedtnecurfgr
  rhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:ujr3YVcXoEVPRc0x7J8VM96KkoqHBuejf4czI5MylUUfxIB2-mmspA>
- <xmx:ujr3YWPemaxqIf5DdeLc-IMSPCIAKre87-shU7z4FmOAP55H41W-sw>
- <xmx:ujr3YXk-exkkILX-NCmiFvTOYVVJBd1EE0e2glJT4EQgcQZ7bZrMYg>
- <xmx:ujr3YY0WDOxIuovMPD_SHzqDNM0NLCNvLRAzlv8kRqNqS5ku7OJXhg>
+X-ME-Proxy: <xmx:vDr3YQqkE_OH7YIftuLdrwnQ7mgUAmk7CjdI63PQcTqXSdfsNvSyXg>
+ <xmx:vDr3YZqYOUbNNgos7Mx41GJjEZgBQqopnPuFq6fZwnb1VscIIC0qsQ>
+ <xmx:vDr3YeTxfmDnj8tAsEhnOBb7yOK3tD5myAIjRaGmpVBaachnNRVOMw>
+ <xmx:vDr3YaBmM484X5G7RrStwhKrVHL4uMVdhpQeO4J7AJ7gejyhBfzLtw>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 30 Jan 2022 20:26:16 -0500 (EST)
+ 30 Jan 2022 20:26:18 -0500 (EST)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 3/6] ARM: ast2600: Control FIT
- uImage signature verification at runtime
-Date: Mon, 31 Jan 2022 11:55:35 +1030
-Message-Id: <20220131012538.73021-4-andrew@aj.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 4/6] configs: ast2600: Runtime
+ control of FIT signature verification
+Date: Mon, 31 Jan 2022 11:55:36 +1030
+Message-Id: <20220131012538.73021-5-andrew@aj.id.au>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220131012538.73021-1-andrew@aj.id.au>
 References: <20220131012538.73021-1-andrew@aj.id.au>
@@ -101,87 +101,26 @@ Cc: eajames@linux.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Implement support for disabling signature verification of FIT images at
-runtime by sampling the "bmc-secure-boot" GPIO. If the line name is not
-provided in the devicetree then secure-boot continues to be required as
-if the feature were not present.
+Turn on runtime control of FIT signature verification for systems using
+the ast2600_openbmc_spl_emmc_defconfig, such as IBM's Rainier platform.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- arch/arm/mach-aspeed/ast2600/Makefile      |  1 +
- arch/arm/mach-aspeed/ast2600/secure-boot.c | 53 ++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
- create mode 100644 arch/arm/mach-aspeed/ast2600/secure-boot.c
+ configs/ast2600_openbmc_spl_emmc_defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/mach-aspeed/ast2600/Makefile b/arch/arm/mach-aspeed/ast2600/Makefile
-index d07e8c737cfe..70b7ae11df56 100644
---- a/arch/arm/mach-aspeed/ast2600/Makefile
-+++ b/arch/arm/mach-aspeed/ast2600/Makefile
-@@ -1,4 +1,5 @@
- obj-y   += platform.o board_common.o scu_info.o utils.o cache.o
-+obj-$(CONFIG_FIT_RUNTIME_SIGNATURE) += secure-boot.o
- obj-$(CONFIG_ASPEED_SECURE_BOOT) += crypto.o aspeed_verify.o
- obj-$(CONFIG_ASPEED_LOADERS) += spl_boot.o
- obj-$(CONFIG_SPL_BUILD) += spl.o
-diff --git a/arch/arm/mach-aspeed/ast2600/secure-boot.c b/arch/arm/mach-aspeed/ast2600/secure-boot.c
-new file mode 100644
-index 000000000000..ced353686387
---- /dev/null
-+++ b/arch/arm/mach-aspeed/ast2600/secure-boot.c
-@@ -0,0 +1,53 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+// (C) Copyright IBM Corp. 2022
-+
-+#include <common.h>
-+#include <asm-generic/gpio.h>
-+#include <dm.h>
-+
-+static int aspeed_get_chained_secboot_state(void)
-+{
-+	struct gpio_desc desc;
-+	struct udevice *dev;
-+	int secboot;
-+	int rc;
-+
-+	rc = uclass_get_device_by_driver(UCLASS_GPIO,
-+					 DM_GET_DRIVER(gpio_aspeed),
-+					 &dev);
-+	if (rc < 0) {
-+		debug("Warning: GPIO initialization failure: %d\n", rc);
-+		return rc;
-+	}
-+
-+	rc = gpio_request_by_line_name(dev, "bmc-secure-boot", &desc,
-+				       GPIOD_IS_IN);
-+	if (rc < 0) {
-+		debug("Failed to acquire secure-boot GPIO: %d\n", rc);
-+		return rc;
-+	}
-+
-+	secboot = dm_gpio_get_value(&desc);
-+	if (secboot < 0)
-+		debug("Failed to read secure-boot GPIO value: %d\n", rc);
-+
-+	rc = dm_gpio_free(dev, &desc);
-+	if (rc < 0)
-+		debug("Failed to free secure-boot GPIO: %d\n", rc);
-+
-+	return secboot;
-+}
-+
-+int board_fit_image_require_verified(void)
-+{
-+	int secboot;
-+
-+	secboot = aspeed_get_chained_secboot_state();
-+
-+	/*
-+	 * If secure-boot is enabled then require signature verification.
-+	 * Otherwise, if we fail to read the GPIO, enforce FIT signature
-+	 * verification
-+	 */
-+	return secboot >= 0 ? secboot : 1;
-+}
+diff --git a/configs/ast2600_openbmc_spl_emmc_defconfig b/configs/ast2600_openbmc_spl_emmc_defconfig
+index 5f50298a589c..a3d229d786b8 100644
+--- a/configs/ast2600_openbmc_spl_emmc_defconfig
++++ b/configs/ast2600_openbmc_spl_emmc_defconfig
+@@ -29,6 +29,7 @@ CONFIG_NR_DRAM_BANKS=1
+ CONFIG_FIT=y
+ CONFIG_FIT_ENABLE_SHA512_SUPPORT=y
+ CONFIG_FIT_SIGNATURE=y
++CONFIG_FIT_RUNTIME_SIGNATURE=y
+ CONFIG_SPL_FIT_SIGNATURE=y
+ CONFIG_SPL_LOAD_FIT=y
+ CONFIG_USE_BOOTARGS=y
 -- 
 2.32.0
 
