@@ -2,74 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D37834A78E5
-	for <lists+openbmc@lfdr.de>; Wed,  2 Feb 2022 20:48:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 65EF94A7928
+	for <lists+openbmc@lfdr.de>; Wed,  2 Feb 2022 21:01:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JpsmM3tdKz3bcW
-	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 06:48:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jpt3W0fJ0z3bdC
+	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 07:01:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=I27RTCQy;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=M5bNtZhW;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.21; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=I27RTCQy; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jpsly2Mq5z2xvV
- for <openbmc@lists.ozlabs.org>; Thu,  3 Feb 2022 06:47:57 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1643831270;
- bh=5U9CnV/KKYbMvTjECYzPkLNYMSXa+nJQvJjUFVr5+wg=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=I27RTCQy/bgZzEkA6IWQWMKZE36HFgsUjYeZ5zezC5GABMebc15NFwZ2aBfqoui4L
- 5iD3FT8+ikOyCXmGpHcIqjMBvmiYSZvA85U0EQWv2DaOUzc2O51RVJuy3tSI1rj5a2
- Oh15F4RENCsdyQSiyQ1TzsH2lcMvDoDaU9f+tQq0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MD9XF-1n6r9514jp-009Av1; Wed, 02
- Feb 2022 20:47:50 +0100
-Date: Wed, 2 Feb 2022 20:47:49 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Subject: Re: [PATCH 1/2] Enable pass-through on GPIOE1 and GPIOE3 free
-Message-ID: <Yfrf5d4qWBV8KCf3@latitude>
-References: <3f326d63-a803-0305-ce82-6d9f7fcba830@linux.intel.com>
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=M5bNtZhW; dkim-atps=neutral
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jpt334tl7z30Dv
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Feb 2022 07:01:02 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1643832064; x=1675368064;
+ h=message-id:date:mime-version:to:from:subject:
+ content-transfer-encoding;
+ bh=ghoaGIvHOohYAdEMkU3TDebLbUxwZUrAGaJ7rg8UWuQ=;
+ b=M5bNtZhWdb4I0gLaFoLoRrnWHz1+qbwuwjojeJFRJCLX84917U6wSgLO
+ hqZ8QqoMCX7nDzYCzs4InGU09u2o443CVCsdA1fjT9NpjteXypnG5vTNS
+ NxoO4AqDCDu2foynMDZKXUsBA91L8Ic4Pg66JvD++i5YMCPD4y8p9ZT/s
+ rfEpfDWiARvOUqLSFa8Hgh6AkeaW9ykrZsnqlO1WR0esJMhaKyFZmv4xF
+ llGvu8ZvPhzTKefbcIceBJTDusO3oP1qeafEdL4AhMcOgBqGtqWpCkrRi
+ y/0B6FnM5EiqyYxq3fN2QIQEDMIzgg/durB/QqaIipAJ5fD0cBOR84sGY w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10246"; a="248226978"
+X-IronPort-AV: E=Sophos;i="5.88,337,1635231600"; d="scan'208";a="248226978"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Feb 2022 11:59:59 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,337,1635231600"; d="scan'208";a="497870159"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga002.jf.intel.com with ESMTP; 02 Feb 2022 11:59:59 -0800
+Received: from [10.212.254.232] (jmbills-MOBL.amr.corp.intel.com
+ [10.212.254.232])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 9CC89580B0E
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Feb 2022 11:59:59 -0800 (PST)
+Message-ID: <5c24d89c-4e58-4d1c-ffe2-d1586c6eceeb@linux.intel.com>
+Date: Wed, 2 Feb 2022 12:59:59 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="TvWmv27h3/0RgW3Y"
-Content-Disposition: inline
-In-Reply-To: <3f326d63-a803-0305-ce82-6d9f7fcba830@linux.intel.com>
-X-Provags-ID: V03:K1:mDIiro8f00Pj6ON4HMFevu8nEFLV2b7CTdxqSutC13sx+TwhS8l
- muUsWf5oVPx/epJQEc5RU/t7zlS0zNR0NcgSiAZQqjwFeD27a0GSDKzVlekfWcaJxENdI8q
- QQtYS06rofYR9wpa0+IENK61uXr4HATy54TN+tDXjzhASDGP7KJeV9DF9UD0TmULMA+vz/B
- rZ/QXMqS0rgGAXRClIwIw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OtGGZCD0fB0=:cdzUfMh0PQCmkd3+Enq8tu
- lK+4PQ0J/p9DFt0VVJ1eYCUvvUiMBD7KZPPrYcVJEsa0gzOWm5Gs/WOvjFByu8a5OHDRN35Sf
- DQIrTeYCyr2PAD062pyVzQZOO6yGYq5dD98xH15XQGaQrR9NHwYi3sNU+8wKGX8Mu1ffstuUu
- octjDCuEZCv2IcvpYhKL2r9NVVe5dtgKvFk3OEHCg0zynX1VJEtf/0VF3LIVMTMxXTUtVAFiR
- EEntrJfsf/I0xUFaLPBp2jRJcI5pjFxjWciRrhux+B7k+rys1XfqwZA5ZuW/aMKG9I0yq05CZ
- LvnZ26Iwz4xkXrkAyvZyC77asjGwhwFjETrSwCIMJcFeb2MGynpqvEv2pne6G02w/LL8T7Wtr
- FwASFg/bLEoJpYgM+x8jb/rjXRc/bW6dkSn0rRLkTvmQGFES4Mti+oZbyZuDclmB4BzurxHZO
- /RtYHfj+WbQ2VWF0NIKVa8YWgDwiIMrqNkxMtFuHgV+MCS2xmMKgK/9Mk0pGCX8ydHNEEyCsI
- RHDwLMn/xfQTjDLorUYu5lcas1u8DqQV4k/6Fic4ko7q1lWJw3a5ZeTCpq8Tk7hyEWgxBeIgD
- ZKpaAUMkf1gNohjY9VaL0V2T92iAcX1gLcyw27TnIuSrNuVIjUE4DJUq4iqs6izv3j7eJHOgo
- kVGfwKbmXSwqN5T+3BgGa4bA23iSdeggKoEPEo7gvK/GBbGlnqO/M8/Qb6YKV18XIDwiK8+lD
- YcMCNEwmW0nrtqFoDej2PrFlM+SuOtYHEsUtzeUX7Zchcj59HUvPj3zbGcdQMNU7zI/A056Nz
- bA9wLVwVH1ndYrIhs8TDDSDXtTIoNcw4QpqFS5oiBJcu6wh9ZNSUt5+O3s/+7b410wNRyaVBa
- iWgz7OtjHFQboY1sMeKEWT2702KZCsb8XSa1EUg8GEQlbUf9CV1/snP6LW3ycDBa/gJC6rq4a
- ge3AMvzClXIC+RYbIMr5NCZKPrqY6GoBHX7s71JyS+Mi05Wx11rWShOpJ5cDZAGJd6mOEYPGC
- PKfefw9wlIhWc+k1oh4QGrJdxTGjM+N6OJznHLwyJu8pzv3tuzQuNBM8SMcJUtY6bfUwHACMn
- nJDXVNS7dh7LCc=
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Content-Language: en-US
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Subject: [PATCH 1/2] pinctrl: aspeed: Enable pass-through on GPIOE1 and GPIOE3
+ free
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,48 +74,184 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This change adds a gpio_disable_free() implementation that checks
+if the GPIO being freed is GPIOE1 (33) or GPIOE3 (35) and will
+re-enable the pass-through mux.
 
---TvWmv27h3/0RgW3Y
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Tested:
+Requested GPIOs 33 and 35 and used devmem to check that pass-through
+was disabled. Then freed them and checked that pass-through was
+enabled again.
 
-On Wed, Feb 02, 2022 at 12:41:01PM -0700, Bills, Jason M wrote:
-> From a511f72a6514e67ee332715f1950140be528f112 Mon Sep 17 00:00:00 2001
-> From: "Jason M. Bills" <jason.m.bills@linux.intel.com>
-> Date: Fri, 3 May 2019 16:12:39 -0700
-> Subject: [PATCH 1/2] Enable pass-through on GPIOE1 and GPIOE3 free
+Signed-off-by: Jason M. Bills <jason.m.bills@linux.intel.com>
+---
+  drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c | 17 +++++++
+  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 17 +++++++
+  drivers/pinctrl/aspeed/pinctrl-aspeed.c    | 53 ++++++++++++++++++++++
+  drivers/pinctrl/aspeed/pinctrl-aspeed.h    |  3 ++
+  4 files changed, 90 insertions(+)
 
-Please use a prefix such as "pinctrl: aspeed:" in the subject line.
-This way, the context of the patch will be clear to everyone who sees
-only the subject line.
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c 
+b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
+index 4c0d26606b6c..6ab3473cbba6 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
+@@ -2785,6 +2785,22 @@ static int aspeed_g5_sig_expr_set(struct 
+aspeed_pinmux_data *ctx,
+  	return 0;
+  }
 
++#define GPIOE1 33
++#define GPIOE3 35
++static void aspeed_g5_gpio_disable_free(struct pinctrl_dev *pctldev,
++			      struct pinctrl_gpio_range *range,
++			      unsigned int offset)
++{
++	/*
++	 * If we're freeing GPIOE1 (33) or GPIOE3 (35) then re-enable the
++	 * pass-through mux setting; otherwise, do nothing.
++	 */
++	if (offset != GPIOE1 && offset != GPIOE3)
++		return;
++
++	aspeed_gpio_disable_free(pctldev, range, offset);
++}
++
+  static const struct aspeed_pin_config_map aspeed_g5_pin_config_map[] = {
+  	{ PIN_CONFIG_BIAS_PULL_DOWN,  0, 1, BIT_MASK(0)},
+  	{ PIN_CONFIG_BIAS_PULL_DOWN, -1, 0, BIT_MASK(0)},
+@@ -2820,6 +2836,7 @@ static const struct pinmux_ops 
+aspeed_g5_pinmux_ops = {
+  	.get_function_groups = aspeed_pinmux_get_fn_groups,
+  	.set_mux = aspeed_pinmux_set_mux,
+  	.gpio_request_enable = aspeed_gpio_request_enable,
++	.gpio_disable_free = aspeed_g5_gpio_disable_free,
+  	.strict = true,
+  };
 
-Best regards,
-Jonathan Neusch=C3=A4fer
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c 
+b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+index a3fa03bcd9a3..ffc72168ef7b 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+@@ -2693,6 +2693,22 @@ static int aspeed_g6_sig_expr_set(struct 
+aspeed_pinmux_data *ctx,
+  	return 0;
+  }
 
---TvWmv27h3/0RgW3Y
-Content-Type: application/pgp-signature; name="signature.asc"
++#define GPIOP1 121
++#define GPIOP3 123
++static void aspeed_g6_gpio_disable_free(struct pinctrl_dev *pctldev,
++			      struct pinctrl_gpio_range *range,
++			      unsigned int offset)
++{
++	/*
++	 * If we're freeing GPIOP1 (121) or GPIOP3 (123) then re-enable the
++	 * pass-through mux setting; otherwise, do nothing.
++	 */
++	if (offset != GPIOP1 && offset != GPIOP3)
++		return;
++
++	aspeed_gpio_disable_free(pctldev, range, offset);
++}
++
+  static const struct aspeed_pin_config_map aspeed_g6_pin_config_map[] = {
+  	{ PIN_CONFIG_BIAS_PULL_DOWN,  0,   1, BIT_MASK(0)},
+  	{ PIN_CONFIG_BIAS_PULL_DOWN, -1,   0, BIT_MASK(0)},
+@@ -2733,6 +2749,7 @@ static const struct pinmux_ops 
+aspeed_g6_pinmux_ops = {
+  	.get_function_groups = aspeed_pinmux_get_fn_groups,
+  	.set_mux = aspeed_pinmux_set_mux,
+  	.gpio_request_enable = aspeed_gpio_request_enable,
++	.gpio_disable_free = aspeed_g6_gpio_disable_free,
+  	.strict = true,
+  };
 
------BEGIN PGP SIGNATURE-----
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.c 
+b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+index c94e24aadf92..ade658af580b 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+@@ -439,6 +439,59 @@ int aspeed_gpio_request_enable(struct pinctrl_dev 
+*pctldev,
+  	return 0;
+  }
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmH638EACgkQCDBEmo7z
-X9skZBAAgm2i3PwQ8KeA3UXv5Smptg5Yax/UZ6eWOmxOAsiRhE8eDHOeGszVGaKe
-jeC3wHVsufyUQCPPRujDu86wYTkabm9wsrdRivDlQWCGEKHY3VyREzIGZ5Fr81lg
-YzRYxd04Xy5e3CyAktzwrcUVlkbXp3ePRREP1dO2ztCyznzy2kS8g8s4r9/9ImSa
-cFQ35mzMh6UqivZV+xJ/WVxebmQMP1klDqUBbhSNqNedPx1emPP4jFGahY5GsLhK
-jlp6alq2rXgedcfYPQjOIz25YQi/ejLegjR15RIAVc9g3u+LuqPgS9Pb9bHi6LPF
-xpjx/Y8G+60mBjsYKBZShn/vQKjkMc/lZQX8r36LqqChejKgh3RQQOWumIxoQUep
-In/ICuaVfpJ0OO3HN6yyLw1MxXkYCHWsbVTuOn+WbdIS9CgSRvxcsVXJhfHxgPoy
-4atKn1Ch0j/DGk2rngfAAJFeir+YT3obZSrJ/kxKdOdXSnZR3ZXgzxoNGW9h5HiX
-jWIGhV7mxSHJDCT6v1uINZAyGhg9UvDwrNeE13+tCJAyB6qVtpv28dmVBUaXLO1W
-//rjFyc4eyX0MHYMaMsoqFFXxIRoxPNaRXD89hWYsctvV7JuWF8thkqPWOGiJhLX
-U8zSvo9wYTGwBMRfzL01NcEetWLAKIP09DWmO0ddqXiRygz+bSs=
-=kCQe
------END PGP SIGNATURE-----
++void aspeed_gpio_disable_free(struct pinctrl_dev *pctldev,
++			      struct pinctrl_gpio_range *range,
++			      unsigned int offset)
++{
++	struct aspeed_pinctrl_data *pdata = pinctrl_dev_get_drvdata(pctldev);
++	const struct aspeed_pin_desc *pdesc = pdata->pins[offset].drv_data;
++	const struct aspeed_sig_expr ***prios, **funcs, *expr;
++	int ret;
++
++	if (!pdesc)
++		return;
++
++	dev_dbg(pctldev->dev,
++		"Freeing pass-through pin %s (%d). Re-enabling pass-through.\n",
++		pdesc->name, offset);
++
++	prios = pdesc->prios;
++
++	if (!prios)
++		return;
++
++	/* Disable any functions of higher priority than GPIO just in case */
++	while ((funcs = *prios)) {
++		if (aspeed_gpio_in_exprs(funcs))
++			break;
++
++		ret = aspeed_disable_sig(&pdata->pinmux, funcs);
++		if (ret)
++			return;
++
++		prios++;
++	}
++
++	if (!funcs) {
++		char *signals = get_defined_signals(pdesc);
++
++		pr_warn("No GPIO signal type found on pin %s (%d). Found: %s\n",
++			pdesc->name, offset, signals);
++		kfree(signals);
++
++		return;
++	}
++
++	/*
++	 * Pass-through should be one priority higher than the GPIO function,
++	 * so decrement our prios and enable that function
++	 */
++	prios--;
++	funcs = *prios;
++	expr = *funcs;
++	aspeed_sig_expr_enable(&pdata->pinmux, expr);
++}
++
+  int aspeed_pinctrl_probe(struct platform_device *pdev,
+  			 struct pinctrl_desc *pdesc,
+  			 struct aspeed_pinctrl_data *pdata)
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.h 
+b/drivers/pinctrl/aspeed/pinctrl-aspeed.h
+index 4dcde3bc29c8..bd497c20a15f 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed.h
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.h
+@@ -101,6 +101,9 @@ int aspeed_pinmux_set_mux(struct pinctrl_dev 
+*pctldev, unsigned int function,
+  int aspeed_gpio_request_enable(struct pinctrl_dev *pctldev,
+  		struct pinctrl_gpio_range *range,
+  		unsigned int offset);
++void aspeed_gpio_disable_free(struct pinctrl_dev *pctldev,
++		struct pinctrl_gpio_range *range,
++		unsigned int offset);
+  int aspeed_pinctrl_probe(struct platform_device *pdev,
+  		struct pinctrl_desc *pdesc,
+  		struct aspeed_pinctrl_data *pdata);
+-- 
+2.25.1
 
---TvWmv27h3/0RgW3Y--
