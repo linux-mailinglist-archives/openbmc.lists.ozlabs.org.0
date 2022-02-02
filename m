@@ -1,69 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 491114A78D6
-	for <lists+openbmc@lfdr.de>; Wed,  2 Feb 2022 20:43:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D37834A78E5
+	for <lists+openbmc@lfdr.de>; Wed,  2 Feb 2022 20:48:21 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jpsfl0lgbz3bbL
-	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 06:43:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JpsmM3tdKz3bcW
+	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 06:48:19 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=eh9SYdQ6;
+	dkim=pass (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=I27RTCQy;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.120; helo=mga04.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=eh9SYdQ6; dkim-atps=neutral
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JpsdP3XZjz3c9f
- for <openbmc@lists.ozlabs.org>; Thu,  3 Feb 2022 06:42:17 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1643830937; x=1675366937;
- h=message-id:date:mime-version:to:from:subject:
- content-transfer-encoding;
- bh=E9MNovrBtSBddazXKaBDHCWKv+fwV17wthSXY4x/22A=;
- b=eh9SYdQ6efFj5L3/J9rVsHWLjPJe3f610Ku+ZLJaQJv73TsGHyJamnHx
- euy0JL4SKTuvYMaLsDgqKSoqs6/0WLlUTlWClUKCqw6JudLRe1xMLTdmw
- k1izqPiTBJsSxsQ5TdiQYu9Az4+O/ixcAREBrbScVhK/rLUsVlJUUIKaa
- mi9SBWeQ6N0/eu1wd03MLM4gz91aQm8/iNrV4tyf37TwukapOjPPDSjWv
- uH0cQTrikdOyHXR0KoeUaSBk2TS8w5xWQtAt5R4dFNuPZuSZFBKhXv5b5
- G1AXdii6bFYhTzTeG+vAlv8j3u17MfcSPfG03ILUdWPLR1HhXd3P1ZQLF g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10246"; a="246839356"
-X-IronPort-AV: E=Sophos;i="5.88,337,1635231600"; 
- d="scan'208,223";a="246839356"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Feb 2022 11:41:14 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,337,1635231600"; 
- d="scan'208,223";a="631094876"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga004.jf.intel.com with ESMTP; 02 Feb 2022 11:41:14 -0800
-Received: from [10.212.254.232] (jmbills-MOBL.amr.corp.intel.com
- [10.212.254.232])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 7E56F580AF6
- for <openbmc@lists.ozlabs.org>; Wed,  2 Feb 2022 11:41:14 -0800 (PST)
-Message-ID: <88b41666-3a4c-00e3-b528-3896c9ddbc9f@linux.intel.com>
-Date: Wed, 2 Feb 2022 12:41:14 -0700
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.17.21; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=I27RTCQy; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jpsly2Mq5z2xvV
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Feb 2022 06:47:57 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1643831270;
+ bh=5U9CnV/KKYbMvTjECYzPkLNYMSXa+nJQvJjUFVr5+wg=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=I27RTCQy/bgZzEkA6IWQWMKZE36HFgsUjYeZ5zezC5GABMebc15NFwZ2aBfqoui4L
+ 5iD3FT8+ikOyCXmGpHcIqjMBvmiYSZvA85U0EQWv2DaOUzc2O51RVJuy3tSI1rj5a2
+ Oh15F4RENCsdyQSiyQ1TzsH2lcMvDoDaU9f+tQq0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MD9XF-1n6r9514jp-009Av1; Wed, 02
+ Feb 2022 20:47:50 +0100
+Date: Wed, 2 Feb 2022 20:47:49 +0100
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Subject: Re: [PATCH 1/2] Enable pass-through on GPIOE1 and GPIOE3 free
+Message-ID: <Yfrf5d4qWBV8KCf3@latitude>
+References: <3f326d63-a803-0305-ce82-6d9f7fcba830@linux.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Content-Language: en-US
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Subject: [PATCH 2/2] Allow monitoring of power control input GPIOs
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="TvWmv27h3/0RgW3Y"
+Content-Disposition: inline
+In-Reply-To: <3f326d63-a803-0305-ce82-6d9f7fcba830@linux.intel.com>
+X-Provags-ID: V03:K1:mDIiro8f00Pj6ON4HMFevu8nEFLV2b7CTdxqSutC13sx+TwhS8l
+ muUsWf5oVPx/epJQEc5RU/t7zlS0zNR0NcgSiAZQqjwFeD27a0GSDKzVlekfWcaJxENdI8q
+ QQtYS06rofYR9wpa0+IENK61uXr4HATy54TN+tDXjzhASDGP7KJeV9DF9UD0TmULMA+vz/B
+ rZ/QXMqS0rgGAXRClIwIw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OtGGZCD0fB0=:cdzUfMh0PQCmkd3+Enq8tu
+ lK+4PQ0J/p9DFt0VVJ1eYCUvvUiMBD7KZPPrYcVJEsa0gzOWm5Gs/WOvjFByu8a5OHDRN35Sf
+ DQIrTeYCyr2PAD062pyVzQZOO6yGYq5dD98xH15XQGaQrR9NHwYi3sNU+8wKGX8Mu1ffstuUu
+ octjDCuEZCv2IcvpYhKL2r9NVVe5dtgKvFk3OEHCg0zynX1VJEtf/0VF3LIVMTMxXTUtVAFiR
+ EEntrJfsf/I0xUFaLPBp2jRJcI5pjFxjWciRrhux+B7k+rys1XfqwZA5ZuW/aMKG9I0yq05CZ
+ LvnZ26Iwz4xkXrkAyvZyC77asjGwhwFjETrSwCIMJcFeb2MGynpqvEv2pne6G02w/LL8T7Wtr
+ FwASFg/bLEoJpYgM+x8jb/rjXRc/bW6dkSn0rRLkTvmQGFES4Mti+oZbyZuDclmB4BzurxHZO
+ /RtYHfj+WbQ2VWF0NIKVa8YWgDwiIMrqNkxMtFuHgV+MCS2xmMKgK/9Mk0pGCX8ydHNEEyCsI
+ RHDwLMn/xfQTjDLorUYu5lcas1u8DqQV4k/6Fic4ko7q1lWJw3a5ZeTCpq8Tk7hyEWgxBeIgD
+ ZKpaAUMkf1gNohjY9VaL0V2T92iAcX1gLcyw27TnIuSrNuVIjUE4DJUq4iqs6izv3j7eJHOgo
+ kVGfwKbmXSwqN5T+3BgGa4bA23iSdeggKoEPEo7gvK/GBbGlnqO/M8/Qb6YKV18XIDwiK8+lD
+ YcMCNEwmW0nrtqFoDej2PrFlM+SuOtYHEsUtzeUX7Zchcj59HUvPj3zbGcdQMNU7zI/A056Nz
+ bA9wLVwVH1ndYrIhs8TDDSDXtTIoNcw4QpqFS5oiBJcu6wh9ZNSUt5+O3s/+7b410wNRyaVBa
+ iWgz7OtjHFQboY1sMeKEWT2702KZCsb8XSa1EUg8GEQlbUf9CV1/snP6LW3ycDBa/gJC6rq4a
+ ge3AMvzClXIC+RYbIMr5NCZKPrqY6GoBHX7s71JyS+Mi05Wx11rWShOpJ5cDZAGJd6mOEYPGC
+ PKfefw9wlIhWc+k1oh4QGrJdxTGjM+N6OJznHLwyJu8pzv3tuzQuNBM8SMcJUtY6bfUwHACMn
+ nJDXVNS7dh7LCc=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,135 +81,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
- From a2c4c93d5472944d7f296c258ac89fabed528b86 Mon Sep 17 00:00:00 2001
-From: "Jason M. Bills" <jason.m.bills@linux.intel.com>
-Date: Fri, 24 May 2019 12:42:59 -0700
-Subject: [PATCH 2/2] Allow monitoring of power control input GPIOs
 
-The pass-through input GPIOs cannot be monitored because when
-requested, pass-through is disabled which causes a change on the
-pass-through output.
+--TvWmv27h3/0RgW3Y
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The SIO GPIOs cannot be monitored because when requested, the
-request is rejected based on the value of the ACPI strap.
+On Wed, Feb 02, 2022 at 12:41:01PM -0700, Bills, Jason M wrote:
+> From a511f72a6514e67ee332715f1950140be528f112 Mon Sep 17 00:00:00 2001
+> From: "Jason M. Bills" <jason.m.bills@linux.intel.com>
+> Date: Fri, 3 May 2019 16:12:39 -0700
+> Subject: [PATCH 1/2] Enable pass-through on GPIOE1 and GPIOE3 free
 
-This change removes the register check condition from the pass-
-through and desired SIO GPIOs so they can be requested and
-monitored from power control.
+Please use a prefix such as "pinctrl: aspeed:" in the subject line.
+This way, the context of the patch will be clear to everyone who sees
+only the subject line.
 
-Tested:
-For pass-through, I used gpioset to hold a request on the input
-GPIOs and confirmed that pass-through remained enabled.
 
-For SIO, I used gpioget to confirm that I can successfully request
-and read the GPIO value.
+Best regards,
+Jonathan Neusch=C3=A4fer
 
-Signed-off-by: Jason M. Bills <jason.m.bills@linux.intel.com>
----
-  drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c | 10 +++++-----
-  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 10 +++++-----
-  2 files changed, 10 insertions(+), 10 deletions(-)
+--TvWmv27h3/0RgW3Y
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c 
-b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-index 6ab3473cbba6..69a05a03dd63 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-@@ -279,7 +279,7 @@ FUNC_GROUP_DECL(SD2, F19, E21, F20, D20, D21, E20, 
-G18, C21);
+-----BEGIN PGP SIGNATURE-----
 
-  #define B20 32
-  SIG_EXPR_LIST_DECL_SINGLE(B20, NCTS3, NCTS3, SIG_DESC_SET(SCU80, 16));
--SIG_EXPR_DECL_SINGLE(GPIE0IN, GPIE0, GPIE0_DESC);
-+SIG_EXPR_DECL_SINGLE(GPIE0IN, GPIE0);
-  SIG_EXPR_DECL_SINGLE(GPIE0IN, GPIE, GPIE_DESC);
-  SIG_EXPR_LIST_DECL_DUAL(B20, GPIE0IN, GPIE0, GPIE);
-  PIN_DECL_2(B20, GPIOE0, NCTS3, GPIE0IN);
-@@ -299,7 +299,7 @@ FUNC_GROUP_DECL(GPIE0, B20, C20);
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmH638EACgkQCDBEmo7z
+X9skZBAAgm2i3PwQ8KeA3UXv5Smptg5Yax/UZ6eWOmxOAsiRhE8eDHOeGszVGaKe
+jeC3wHVsufyUQCPPRujDu86wYTkabm9wsrdRivDlQWCGEKHY3VyREzIGZ5Fr81lg
+YzRYxd04Xy5e3CyAktzwrcUVlkbXp3ePRREP1dO2ztCyznzy2kS8g8s4r9/9ImSa
+cFQ35mzMh6UqivZV+xJ/WVxebmQMP1klDqUBbhSNqNedPx1emPP4jFGahY5GsLhK
+jlp6alq2rXgedcfYPQjOIz25YQi/ejLegjR15RIAVc9g3u+LuqPgS9Pb9bHi6LPF
+xpjx/Y8G+60mBjsYKBZShn/vQKjkMc/lZQX8r36LqqChejKgh3RQQOWumIxoQUep
+In/ICuaVfpJ0OO3HN6yyLw1MxXkYCHWsbVTuOn+WbdIS9CgSRvxcsVXJhfHxgPoy
+4atKn1Ch0j/DGk2rngfAAJFeir+YT3obZSrJ/kxKdOdXSnZR3ZXgzxoNGW9h5HiX
+jWIGhV7mxSHJDCT6v1uINZAyGhg9UvDwrNeE13+tCJAyB6qVtpv28dmVBUaXLO1W
+//rjFyc4eyX0MHYMaMsoqFFXxIRoxPNaRXD89hWYsctvV7JuWF8thkqPWOGiJhLX
+U8zSvo9wYTGwBMRfzL01NcEetWLAKIP09DWmO0ddqXiRygz+bSs=
+=kCQe
+-----END PGP SIGNATURE-----
 
-  #define F18 34
-  SIG_EXPR_LIST_DECL_SINGLE(F18, NDSR3, NDSR3, SIG_DESC_SET(SCU80, 18));
--SIG_EXPR_DECL_SINGLE(GPIE2IN, GPIE2, GPIE2_DESC);
-+SIG_EXPR_DECL_SINGLE(GPIE2IN, GPIE2);
-  SIG_EXPR_DECL_SINGLE(GPIE2IN, GPIE, GPIE_DESC);
-  SIG_EXPR_LIST_DECL_DUAL(F18, GPIE2IN, GPIE2, GPIE);
-  PIN_DECL_2(F18, GPIOE2, NDSR3, GPIE2IN);
-@@ -1412,7 +1412,7 @@ FUNC_GROUP_DECL(ADC15, H4);
-
-  #define R22 192
-  SIG_EXPR_DECL_SINGLE(SIOS3, SIOS3, SIG_DESC_SET(SCUA4, 8));
--SIG_EXPR_DECL_SINGLE(SIOS3, ACPI, ACPI_DESC);
-+SIG_EXPR_DECL_SINGLE(SIOS3, ACPI);
-  SIG_EXPR_LIST_DECL_DUAL(R22, SIOS3, SIOS3, ACPI);
-  SIG_EXPR_LIST_DECL_SINGLE(R22, DASHR22, DASHR22, SIG_DESC_SET(SCU94, 10));
-  PIN_DECL_2(R22, GPIOY0, SIOS3, DASHR22);
-@@ -1420,7 +1420,7 @@ FUNC_GROUP_DECL(SIOS3, R22);
-
-  #define R21 193
-  SIG_EXPR_DECL_SINGLE(SIOS5, SIOS5, SIG_DESC_SET(SCUA4, 9));
--SIG_EXPR_DECL_SINGLE(SIOS5, ACPI, ACPI_DESC);
-+SIG_EXPR_DECL_SINGLE(SIOS5, ACPI);
-  SIG_EXPR_LIST_DECL_DUAL(R21, SIOS5, SIOS5, ACPI);
-  SIG_EXPR_LIST_DECL_SINGLE(R21, DASHR21, DASHR21, SIG_DESC_SET(SCU94, 10));
-  PIN_DECL_2(R21, GPIOY1, SIOS5, DASHR21);
-@@ -1436,7 +1436,7 @@ FUNC_GROUP_DECL(SIOPWREQ, P22);
-
-  #define P21 195
-  SIG_EXPR_DECL_SINGLE(SIOONCTRL, SIOONCTRL, SIG_DESC_SET(SCUA4, 11));
--SIG_EXPR_DECL_SINGLE(SIOONCTRL, ACPI, ACPI_DESC);
-+SIG_EXPR_DECL_SINGLE(SIOONCTRL, ACPI);
-  SIG_EXPR_LIST_DECL_DUAL(P21, SIOONCTRL, SIOONCTRL, ACPI);
-  SIG_EXPR_LIST_DECL_SINGLE(P21, DASHP21, DASHP21, SIG_DESC_SET(SCU94, 11));
-  PIN_DECL_2(P21, GPIOY3, SIOONCTRL, DASHP21);
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c 
-b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-index ffc72168ef7b..458b84b223c4 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-@@ -776,7 +776,7 @@ SSSF_PIN_DECL(AC23, GPIOO7, PWM7, 
-SIG_DESC_SET(SCU41C, 23));
-
-  #define AB22 120
-  SIG_EXPR_LIST_DECL_SEMG(AB22, PWM8, PWM8G1, PWM8, SIG_DESC_SET(SCU41C, 
-24));
--SIG_EXPR_LIST_DECL_SESG(AB22, THRUIN0, THRU0, SIG_DESC_SET(SCU4BC, 24));
-+SIG_EXPR_LIST_DECL_SESG(AB22, THRUIN0, THRU0);
-  PIN_DECL_2(AB22, GPIOP0, PWM8, THRUIN0);
-  GROUP_DECL(PWM8G1, AB22);
-  FUNC_DECL_2(PWM8, PWM8G0, PWM8G1);
-@@ -793,7 +793,7 @@ FUNC_DECL_2(PWM9, PWM9G0, PWM9G1);
-
-  #define AA23 122
-  SIG_EXPR_LIST_DECL_SEMG(AA23, PWM10, PWM10G1, PWM10, 
-SIG_DESC_SET(SCU41C, 26));
--SIG_EXPR_LIST_DECL_SESG(AA23, THRUIN1, THRU1, SIG_DESC_SET(SCU4BC, 26));
-+SIG_EXPR_LIST_DECL_SESG(AA23, THRUIN1, THRU1);
-  PIN_DECL_2(AA23, GPIOP2, PWM10, THRUIN1);
-  GROUP_DECL(PWM10G1, AA23);
-  FUNC_DECL_2(PWM10, PWM10G0, PWM10G1);
-@@ -1086,16 +1086,16 @@ FUNC_GROUP_DECL(GPIU7, AC17);
-  FUNC_GROUP_DECL(ADC15, AC17);
-
-  #define AB15 168
--SSSF_PIN_DECL(AB15, GPIOV0, SIOS3, SIG_DESC_SET(SCU434, 8));
-+SSSF_PIN_DECL(AB15, GPIOV0, SIOS3);
-
-  #define AF14 169
--SSSF_PIN_DECL(AF14, GPIOV1, SIOS5, SIG_DESC_SET(SCU434, 9));
-+SSSF_PIN_DECL(AF14, GPIOV1, SIOS5);
-
-  #define AD14 170
-  SSSF_PIN_DECL(AD14, GPIOV2, SIOPWREQ, SIG_DESC_SET(SCU434, 10));
-
-  #define AC15 171
--SSSF_PIN_DECL(AC15, GPIOV3, SIOONCTRL, SIG_DESC_SET(SCU434, 11));
-+SSSF_PIN_DECL(AC15, GPIOV3, SIOONCTRL);
-
-  #define AE15 172
-  SSSF_PIN_DECL(AE15, GPIOV4, SIOPWRGD, SIG_DESC_SET(SCU434, 12));
--- 
-2.25.1
-
+--TvWmv27h3/0RgW3Y--
