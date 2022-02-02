@@ -1,67 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AD224A78D1
-	for <lists+openbmc@lfdr.de>; Wed,  2 Feb 2022 20:42:31 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 491114A78D6
+	for <lists+openbmc@lfdr.de>; Wed,  2 Feb 2022 20:43:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jpsdd0r53z3cBZ
-	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 06:42:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jpsfl0lgbz3bbL
+	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 06:43:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dBL2GpyA;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=eh9SYdQ6;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
+ (client-ip=192.55.52.120; helo=mga04.intel.com;
  envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=dBL2GpyA; dkim-atps=neutral
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ header.s=Intel header.b=eh9SYdQ6; dkim-atps=neutral
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JpsdC6j2Zz2xY6
- for <openbmc@lists.ozlabs.org>; Thu,  3 Feb 2022 06:42:06 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JpsdP3XZjz3c9f
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Feb 2022 06:42:17 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1643830928; x=1675366928;
+ t=1643830937; x=1675366937;
  h=message-id:date:mime-version:to:from:subject:
  content-transfer-encoding;
- bh=TJ7VQzE63R4Se9UOTYu3C03DxVr1A7FIGvKfj0AVdYo=;
- b=dBL2GpyAQ9lUGhk+SzlEWWNrvdShM4nwxyfbZ53e3v2lZRcDz72hYEEZ
- /+Bh1D4dGCVLJCd0vZfVbvWiwTXCPxKoDQUu0iBUQK0sazi9YrEHHCeS8
- o7jN8MYXM7bRnzcKWzhUdXqVsH/ilnr2+n9Xqy0TFgIrdw6nrcF2uVazh
- MtmWi8dLDXwt4m4riG66372gUUxGP0rFnC6F5th1U3p8U6JJDYEJDP8zA
- ATXZQMfuN/lalL1WWkPlUzH8ELhDWdgyl9W4fQ0q1vQhVJhxYy9gGVVlR
- mgOR18/B7kHg408ot1lMS2P5fnisYi39Jw06U1Hyfl76NqKNkjkh+UcMY w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10246"; a="334365126"
+ bh=E9MNovrBtSBddazXKaBDHCWKv+fwV17wthSXY4x/22A=;
+ b=eh9SYdQ6efFj5L3/J9rVsHWLjPJe3f610Ku+ZLJaQJv73TsGHyJamnHx
+ euy0JL4SKTuvYMaLsDgqKSoqs6/0WLlUTlWClUKCqw6JudLRe1xMLTdmw
+ k1izqPiTBJsSxsQ5TdiQYu9Az4+O/ixcAREBrbScVhK/rLUsVlJUUIKaa
+ mi9SBWeQ6N0/eu1wd03MLM4gz91aQm8/iNrV4tyf37TwukapOjPPDSjWv
+ uH0cQTrikdOyHXR0KoeUaSBk2TS8w5xWQtAt5R4dFNuPZuSZFBKhXv5b5
+ G1AXdii6bFYhTzTeG+vAlv8j3u17MfcSPfG03ILUdWPLR1HhXd3P1ZQLF g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10246"; a="246839356"
 X-IronPort-AV: E=Sophos;i="5.88,337,1635231600"; 
- d="scan'208,223";a="334365126"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Feb 2022 11:41:03 -0800
+ d="scan'208,223";a="246839356"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Feb 2022 11:41:14 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.88,337,1635231600"; 
- d="scan'208,223";a="771549658"
+ d="scan'208,223";a="631094876"
 Received: from linux.intel.com ([10.54.29.200])
- by fmsmga005.fm.intel.com with ESMTP; 02 Feb 2022 11:41:03 -0800
+ by orsmga004.jf.intel.com with ESMTP; 02 Feb 2022 11:41:14 -0800
 Received: from [10.212.254.232] (jmbills-MOBL.amr.corp.intel.com
  [10.212.254.232])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id E6C8F580B0E
- for <openbmc@lists.ozlabs.org>; Wed,  2 Feb 2022 11:41:01 -0800 (PST)
-Message-ID: <3f326d63-a803-0305-ce82-6d9f7fcba830@linux.intel.com>
-Date: Wed, 2 Feb 2022 12:41:01 -0700
+ by linux.intel.com (Postfix) with ESMTPS id 7E56F580AF6
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Feb 2022 11:41:14 -0800 (PST)
+Message-ID: <88b41666-3a4c-00e3-b528-3896c9ddbc9f@linux.intel.com>
+Date: Wed, 2 Feb 2022 12:41:14 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
 Content-Language: en-US
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Subject: [PATCH 1/2] Enable pass-through on GPIOE1 and GPIOE3 free
+Subject: [PATCH 2/2] Allow monitoring of power control input GPIOs
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -78,186 +78,132 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
- From a511f72a6514e67ee332715f1950140be528f112 Mon Sep 17 00:00:00 2001
+ From a2c4c93d5472944d7f296c258ac89fabed528b86 Mon Sep 17 00:00:00 2001
 From: "Jason M. Bills" <jason.m.bills@linux.intel.com>
-Date: Fri, 3 May 2019 16:12:39 -0700
-Subject: [PATCH 1/2] Enable pass-through on GPIOE1 and GPIOE3 free
+Date: Fri, 24 May 2019 12:42:59 -0700
+Subject: [PATCH 2/2] Allow monitoring of power control input GPIOs
 
-This change adds a gpio_disable_free() implementation that checks
-if the GPIO being freed is GPIOE1 (33) or GPIOE3 (35) and will
-re-enable the pass-through mux.
+The pass-through input GPIOs cannot be monitored because when
+requested, pass-through is disabled which causes a change on the
+pass-through output.
+
+The SIO GPIOs cannot be monitored because when requested, the
+request is rejected based on the value of the ACPI strap.
+
+This change removes the register check condition from the pass-
+through and desired SIO GPIOs so they can be requested and
+monitored from power control.
 
 Tested:
-Requested GPIOs 33 and 35 and used devmem to check that pass-through
-was disabled. Then freed them and checked that pass-through was
-enabled again.
+For pass-through, I used gpioset to hold a request on the input
+GPIOs and confirmed that pass-through remained enabled.
+
+For SIO, I used gpioget to confirm that I can successfully request
+and read the GPIO value.
 
 Signed-off-by: Jason M. Bills <jason.m.bills@linux.intel.com>
 ---
-  drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c | 17 +++++++
-  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 17 +++++++
-  drivers/pinctrl/aspeed/pinctrl-aspeed.c    | 53 ++++++++++++++++++++++
-  drivers/pinctrl/aspeed/pinctrl-aspeed.h    |  3 ++
-  4 files changed, 90 insertions(+)
+  drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c | 10 +++++-----
+  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 10 +++++-----
+  2 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c 
 b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-index 4c0d26606b6c..6ab3473cbba6 100644
+index 6ab3473cbba6..69a05a03dd63 100644
 --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
 +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-@@ -2785,6 +2785,22 @@ static int aspeed_g5_sig_expr_set(struct 
-aspeed_pinmux_data *ctx,
-  	return 0;
-  }
+@@ -279,7 +279,7 @@ FUNC_GROUP_DECL(SD2, F19, E21, F20, D20, D21, E20, 
+G18, C21);
 
-+#define GPIOE1 33
-+#define GPIOE3 35
-+static void aspeed_g5_gpio_disable_free(struct pinctrl_dev *pctldev,
-+			      struct pinctrl_gpio_range *range,
-+			      unsigned int offset)
-+{
-+	/*
-+	 * If we're freeing GPIOE1 (33) or GPIOE3 (35) then re-enable the
-+	 * pass-through mux setting; otherwise, do nothing.
-+	 */
-+	if (offset != GPIOE1 && offset != GPIOE3)
-+		return;
-+
-+	aspeed_gpio_disable_free(pctldev, range, offset);
-+}
-+
-  static const struct aspeed_pin_config_map aspeed_g5_pin_config_map[] = {
-  	{ PIN_CONFIG_BIAS_PULL_DOWN,  0, 1, BIT_MASK(0)},
-  	{ PIN_CONFIG_BIAS_PULL_DOWN, -1, 0, BIT_MASK(0)},
-@@ -2820,6 +2836,7 @@ static const struct pinmux_ops 
-aspeed_g5_pinmux_ops = {
-  	.get_function_groups = aspeed_pinmux_get_fn_groups,
-  	.set_mux = aspeed_pinmux_set_mux,
-  	.gpio_request_enable = aspeed_gpio_request_enable,
-+	.gpio_disable_free = aspeed_g5_gpio_disable_free,
-  	.strict = true,
-  };
+  #define B20 32
+  SIG_EXPR_LIST_DECL_SINGLE(B20, NCTS3, NCTS3, SIG_DESC_SET(SCU80, 16));
+-SIG_EXPR_DECL_SINGLE(GPIE0IN, GPIE0, GPIE0_DESC);
++SIG_EXPR_DECL_SINGLE(GPIE0IN, GPIE0);
+  SIG_EXPR_DECL_SINGLE(GPIE0IN, GPIE, GPIE_DESC);
+  SIG_EXPR_LIST_DECL_DUAL(B20, GPIE0IN, GPIE0, GPIE);
+  PIN_DECL_2(B20, GPIOE0, NCTS3, GPIE0IN);
+@@ -299,7 +299,7 @@ FUNC_GROUP_DECL(GPIE0, B20, C20);
 
+  #define F18 34
+  SIG_EXPR_LIST_DECL_SINGLE(F18, NDSR3, NDSR3, SIG_DESC_SET(SCU80, 18));
+-SIG_EXPR_DECL_SINGLE(GPIE2IN, GPIE2, GPIE2_DESC);
++SIG_EXPR_DECL_SINGLE(GPIE2IN, GPIE2);
+  SIG_EXPR_DECL_SINGLE(GPIE2IN, GPIE, GPIE_DESC);
+  SIG_EXPR_LIST_DECL_DUAL(F18, GPIE2IN, GPIE2, GPIE);
+  PIN_DECL_2(F18, GPIOE2, NDSR3, GPIE2IN);
+@@ -1412,7 +1412,7 @@ FUNC_GROUP_DECL(ADC15, H4);
+
+  #define R22 192
+  SIG_EXPR_DECL_SINGLE(SIOS3, SIOS3, SIG_DESC_SET(SCUA4, 8));
+-SIG_EXPR_DECL_SINGLE(SIOS3, ACPI, ACPI_DESC);
++SIG_EXPR_DECL_SINGLE(SIOS3, ACPI);
+  SIG_EXPR_LIST_DECL_DUAL(R22, SIOS3, SIOS3, ACPI);
+  SIG_EXPR_LIST_DECL_SINGLE(R22, DASHR22, DASHR22, SIG_DESC_SET(SCU94, 10));
+  PIN_DECL_2(R22, GPIOY0, SIOS3, DASHR22);
+@@ -1420,7 +1420,7 @@ FUNC_GROUP_DECL(SIOS3, R22);
+
+  #define R21 193
+  SIG_EXPR_DECL_SINGLE(SIOS5, SIOS5, SIG_DESC_SET(SCUA4, 9));
+-SIG_EXPR_DECL_SINGLE(SIOS5, ACPI, ACPI_DESC);
++SIG_EXPR_DECL_SINGLE(SIOS5, ACPI);
+  SIG_EXPR_LIST_DECL_DUAL(R21, SIOS5, SIOS5, ACPI);
+  SIG_EXPR_LIST_DECL_SINGLE(R21, DASHR21, DASHR21, SIG_DESC_SET(SCU94, 10));
+  PIN_DECL_2(R21, GPIOY1, SIOS5, DASHR21);
+@@ -1436,7 +1436,7 @@ FUNC_GROUP_DECL(SIOPWREQ, P22);
+
+  #define P21 195
+  SIG_EXPR_DECL_SINGLE(SIOONCTRL, SIOONCTRL, SIG_DESC_SET(SCUA4, 11));
+-SIG_EXPR_DECL_SINGLE(SIOONCTRL, ACPI, ACPI_DESC);
++SIG_EXPR_DECL_SINGLE(SIOONCTRL, ACPI);
+  SIG_EXPR_LIST_DECL_DUAL(P21, SIOONCTRL, SIOONCTRL, ACPI);
+  SIG_EXPR_LIST_DECL_SINGLE(P21, DASHP21, DASHP21, SIG_DESC_SET(SCU94, 11));
+  PIN_DECL_2(P21, GPIOY3, SIOONCTRL, DASHP21);
 diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c 
 b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-index a3fa03bcd9a3..ffc72168ef7b 100644
+index ffc72168ef7b..458b84b223c4 100644
 --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
 +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-@@ -2693,6 +2693,22 @@ static int aspeed_g6_sig_expr_set(struct 
-aspeed_pinmux_data *ctx,
-  	return 0;
-  }
+@@ -776,7 +776,7 @@ SSSF_PIN_DECL(AC23, GPIOO7, PWM7, 
+SIG_DESC_SET(SCU41C, 23));
 
-+#define GPIOP1 121
-+#define GPIOP3 123
-+static void aspeed_g6_gpio_disable_free(struct pinctrl_dev *pctldev,
-+			      struct pinctrl_gpio_range *range,
-+			      unsigned int offset)
-+{
-+	/*
-+	 * If we're freeing GPIOP1 (121) or GPIOP3 (123) then re-enable the
-+	 * pass-through mux setting; otherwise, do nothing.
-+	 */
-+	if (offset != GPIOP1 && offset != GPIOP3)
-+		return;
-+
-+	aspeed_gpio_disable_free(pctldev, range, offset);
-+}
-+
-  static const struct aspeed_pin_config_map aspeed_g6_pin_config_map[] = {
-  	{ PIN_CONFIG_BIAS_PULL_DOWN,  0,   1, BIT_MASK(0)},
-  	{ PIN_CONFIG_BIAS_PULL_DOWN, -1,   0, BIT_MASK(0)},
-@@ -2733,6 +2749,7 @@ static const struct pinmux_ops 
-aspeed_g6_pinmux_ops = {
-  	.get_function_groups = aspeed_pinmux_get_fn_groups,
-  	.set_mux = aspeed_pinmux_set_mux,
-  	.gpio_request_enable = aspeed_gpio_request_enable,
-+	.gpio_disable_free = aspeed_g6_gpio_disable_free,
-  	.strict = true,
-  };
+  #define AB22 120
+  SIG_EXPR_LIST_DECL_SEMG(AB22, PWM8, PWM8G1, PWM8, SIG_DESC_SET(SCU41C, 
+24));
+-SIG_EXPR_LIST_DECL_SESG(AB22, THRUIN0, THRU0, SIG_DESC_SET(SCU4BC, 24));
++SIG_EXPR_LIST_DECL_SESG(AB22, THRUIN0, THRU0);
+  PIN_DECL_2(AB22, GPIOP0, PWM8, THRUIN0);
+  GROUP_DECL(PWM8G1, AB22);
+  FUNC_DECL_2(PWM8, PWM8G0, PWM8G1);
+@@ -793,7 +793,7 @@ FUNC_DECL_2(PWM9, PWM9G0, PWM9G1);
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.c 
-b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-index c94e24aadf92..ade658af580b 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-@@ -439,6 +439,59 @@ int aspeed_gpio_request_enable(struct pinctrl_dev 
-*pctldev,
-  	return 0;
-  }
+  #define AA23 122
+  SIG_EXPR_LIST_DECL_SEMG(AA23, PWM10, PWM10G1, PWM10, 
+SIG_DESC_SET(SCU41C, 26));
+-SIG_EXPR_LIST_DECL_SESG(AA23, THRUIN1, THRU1, SIG_DESC_SET(SCU4BC, 26));
++SIG_EXPR_LIST_DECL_SESG(AA23, THRUIN1, THRU1);
+  PIN_DECL_2(AA23, GPIOP2, PWM10, THRUIN1);
+  GROUP_DECL(PWM10G1, AA23);
+  FUNC_DECL_2(PWM10, PWM10G0, PWM10G1);
+@@ -1086,16 +1086,16 @@ FUNC_GROUP_DECL(GPIU7, AC17);
+  FUNC_GROUP_DECL(ADC15, AC17);
 
-+void aspeed_gpio_disable_free(struct pinctrl_dev *pctldev,
-+			      struct pinctrl_gpio_range *range,
-+			      unsigned int offset)
-+{
-+	struct aspeed_pinctrl_data *pdata = pinctrl_dev_get_drvdata(pctldev);
-+	const struct aspeed_pin_desc *pdesc = pdata->pins[offset].drv_data;
-+	const struct aspeed_sig_expr ***prios, **funcs, *expr;
-+	int ret;
-+
-+	if (!pdesc)
-+		return;
-+
-+	dev_dbg(pctldev->dev,
-+		"Freeing pass-through pin %s (%d). Re-enabling pass-through.\n",
-+		pdesc->name, offset);
-+
-+	prios = pdesc->prios;
-+
-+	if (!prios)
-+		return;
-+
-+	/* Disable any functions of higher priority than GPIO just in case */
-+	while ((funcs = *prios)) {
-+		if (aspeed_gpio_in_exprs(funcs))
-+			break;
-+
-+		ret = aspeed_disable_sig(&pdata->pinmux, funcs);
-+		if (ret)
-+			return;
-+
-+		prios++;
-+	}
-+
-+	if (!funcs) {
-+		char *signals = get_defined_signals(pdesc);
-+
-+		pr_warn("No GPIO signal type found on pin %s (%d). Found: %s\n",
-+			pdesc->name, offset, signals);
-+		kfree(signals);
-+
-+		return;
-+	}
-+
-+	/*
-+	 * Pass-through should be one priority higher than the GPIO function,
-+	 * so decrement our prios and enable that function
-+	 */
-+	prios--;
-+	funcs = *prios;
-+	expr = *funcs;
-+	aspeed_sig_expr_enable(&pdata->pinmux, expr);
-+}
-+
-  int aspeed_pinctrl_probe(struct platform_device *pdev,
-  			 struct pinctrl_desc *pdesc,
-  			 struct aspeed_pinctrl_data *pdata)
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.h 
-b/drivers/pinctrl/aspeed/pinctrl-aspeed.h
-index 4dcde3bc29c8..bd497c20a15f 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed.h
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.h
-@@ -101,6 +101,9 @@ int aspeed_pinmux_set_mux(struct pinctrl_dev 
-*pctldev, unsigned int function,
-  int aspeed_gpio_request_enable(struct pinctrl_dev *pctldev,
-  		struct pinctrl_gpio_range *range,
-  		unsigned int offset);
-+void aspeed_gpio_disable_free(struct pinctrl_dev *pctldev,
-+		struct pinctrl_gpio_range *range,
-+		unsigned int offset);
-  int aspeed_pinctrl_probe(struct platform_device *pdev,
-  		struct pinctrl_desc *pdesc,
-  		struct aspeed_pinctrl_data *pdata);
+  #define AB15 168
+-SSSF_PIN_DECL(AB15, GPIOV0, SIOS3, SIG_DESC_SET(SCU434, 8));
++SSSF_PIN_DECL(AB15, GPIOV0, SIOS3);
+
+  #define AF14 169
+-SSSF_PIN_DECL(AF14, GPIOV1, SIOS5, SIG_DESC_SET(SCU434, 9));
++SSSF_PIN_DECL(AF14, GPIOV1, SIOS5);
+
+  #define AD14 170
+  SSSF_PIN_DECL(AD14, GPIOV2, SIOPWREQ, SIG_DESC_SET(SCU434, 10));
+
+  #define AC15 171
+-SSSF_PIN_DECL(AC15, GPIOV3, SIOONCTRL, SIG_DESC_SET(SCU434, 11));
++SSSF_PIN_DECL(AC15, GPIOV3, SIOONCTRL);
+
+  #define AE15 172
+  SSSF_PIN_DECL(AE15, GPIOV4, SIOPWRGD, SIG_DESC_SET(SCU434, 12));
 -- 
 2.25.1
 
