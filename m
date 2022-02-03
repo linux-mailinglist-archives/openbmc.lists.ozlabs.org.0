@@ -1,15 +1,15 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A1B24A7DB7
-	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 03:12:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20E584A7DBA
+	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 03:14:31 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jq2Hb07nVz3bbg
-	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 13:12:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jq2Kw6hgLz3bTn
+	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 13:14:28 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=NdbZMMhc;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=I1dTP/0A;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=o/+JZeNh;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=HZYC/RQf;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,48 +19,48 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=NdbZMMhc; 
+ header.s=fm1 header.b=o/+JZeNh; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=I1dTP/0A; 
+ header.a=rsa-sha256 header.s=fm2 header.b=HZYC/RQf; 
  dkim-atps=neutral
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
  [64.147.123.24])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jq2H95XYsz3bNs
- for <openbmc@lists.ozlabs.org>; Thu,  3 Feb 2022 13:12:05 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jq2KX5FYQz2xsS
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Feb 2022 13:14:08 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id D6EA83202195;
- Wed,  2 Feb 2022 21:12:03 -0500 (EST)
+ by mailout.west.internal (Postfix) with ESMTP id EF5953202221;
+ Wed,  2 Feb 2022 21:14:06 -0500 (EST)
 Received: from imap43 ([10.202.2.93])
- by compute3.internal (MEProxy); Wed, 02 Feb 2022 21:12:04 -0500
+ by compute3.internal (MEProxy); Wed, 02 Feb 2022 21:14:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
  :content-type:date:date:from:from:in-reply-to:in-reply-to
  :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm1; bh=RUDE84Ab/nb0kk6cLkLf1R9R+crKZchJHz4/Od
- 8hxMc=; b=NdbZMMhctLcEExKukmCttiANtJ1hg/VYzy6nhScWviakBXdCnXWQbc
- KCZfl3BvST4l4iCfz1u7PZT3Dn4XroE3MWHD0yjNs/mxMdlLC4igQpJhvuyIodqR
- /aLJuS9Jx0Dt6goNIDqg9QGtdRJ5QbwzC0RvaienUBz4GW+JEVmzpyEUvBrhdpmB
- pngLVuut/2QpAotADF9jos7KoWHzndpNPiU918USe0aWYCTpVC06Jux1eO+3LXSK
- DUH8fpR6X8u7V6m33TvGWRv2RcGmdHQG+1nGJbwIynv6JV9PejEMK7srwjMKE/YK
- YNgHHwARbDYjsexbmcYOlVmvhprRj8FA==
+ :subject:to:to; s=fm1; bh=Qu8bhZALRpGl9BsoXv2jKAow5OolnjDaQTP9L0
+ qj9VQ=; b=o/+JZeNhoWtrV7YSd7kSZOsaxGQOl525h2UT9VGjNTZg4PEZaknapE
+ cF8/fMH0WjyoaWzTo8mJmHKoM1PdUinYFnhnurobrFBMURiq7AgdIZT21EbvBV7m
+ pFkpMhHmrdgRtpP9U7YFYebMgA4GHljYC/XRSr+WLM6sebXU9fc01LkjsufofsYC
+ YRQxkcZJ1sRZXdHsU7+L2PZbYPQK4S7ieIjTRzoY2VomMCvKUugIVvAy/YxcvuIB
+ 0UG1AL/wHDeMnAOfzB6MzvVcuxga5mED6F0hKdVWl2hNsf+K48X5y+uCEGV8J2Lm
+ y+gNnjfcH2Qh7t5X7Ml212wSPTBQF79w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:date:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=RUDE84Ab/nb0kk6cL
- kLf1R9R+crKZchJHz4/Od8hxMc=; b=I1dTP/0AJkVIV2IzSenYUDrIlLhl+jHia
- k6JA+NkgsezPolAXUE91hDVvG7JNbM3NMNn+f9oNsUaR6pvq9dBTPaPwi0LftEJU
- nnGW37nf04pP2ncnVTs2z5WeW3iEXDhc/3rv2r9r77IDr8/aPXa97s5FNgMEAvI3
- 7GPWbiRtNl7A7vliuhGlzAxuhehqKbyaj7Mq4NuQuwSyAC/wjsxaibCHwNcDl0BI
- Au4HTdx6MspINwntf5y0zgTq0eIpznrWNAzg7qCtfkMloGDavRPNUOe8nFuyMt7H
- pCBZaRYMqu6CMyjRBICU5764+RraqjtxD6DyHO6hARk1n+N1S+sQw==
-X-ME-Sender: <xms:8zn7YUCleTibsUkhl4RwV8IOq3f6bADEW6_gFo6pj8gXuznBluqxzA>
- <xme:8zn7YWj4OHVPCyKUUskOphgSCbB6XMy3nhxQ3m4NpnOOHChBlEIY4tDGU3MyjC1ET
- fk_wV2ikqah55msSQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeeigdegfecutefuodetggdotefrodftvf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Qu8bhZALRpGl9BsoX
+ v2jKAow5OolnjDaQTP9L0qj9VQ=; b=HZYC/RQfDJC3Bwqgk20wzYhTYZRmLh8Tr
+ g3Lo0H5o5FJxb52urVGQbE3fcjT6hFsMqEQ0Bj3pxDcZGhcTNeCkSc5xd2mbi+Ll
+ pc7QXfENJaZ3/9vuxnLMXiyc2vXukxokWFGpXpE2IH6Gi7Eq68FyK2A4sjMa9AQ0
+ 0Jm3I00iDLUDaO6vaEHeygAwioehZLgrV/bpMiIu+FVxt3RZF66NpzlFR6/xlwzg
+ +KItq7Gopc4w6AFB8Lqu4BrQm5iI4T5m4CEkBRcwQlx4fefpJCh4/G8r0Gnh1mFr
+ B/86/mN5LoJK5umcHf6aLN7yhkaaytq8tOqt3V8P+qxPqKn1goKfw==
+X-ME-Sender: <xms:bjr7YXhFqcykGHX1e88AcrXKhT110ip5i-KddFLd4g8W0FIFEV_86w>
+ <xme:bjr7YUCAEpvSQd3teCr1fTSB0-z00ee119PH5B-orj5tOgb4yfmy-vd3RhCOQo1Sk
+ NvRd_G6c3ihiwgiXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeeigdeggecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
@@ -68,24 +68,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeeigdegfecutefuodetggdote
  htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
  veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
  grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:8zn7YXmMrz_nSaKyGCJG6Zz7xM54FJNvlA73M1GuuScyZqfwbmdU1g>
- <xmx:8zn7YazxYohW_mluwr_O76qVhFqFkjL5sehcUsbUHbfJRdZCG_2lZg>
- <xmx:8zn7YZQyFSal68uMd6r8T8FhpX79LexL_xp3sUuNXZVL5pFbHmgFYg>
- <xmx:8zn7YUPQbG2M9-kQhJqvKtIT_9xc-raXidb3MXDbALfpF1H_WPYyaA>
+X-ME-Proxy: <xmx:bjr7YXFzelj-9XkkUkJzZlPDkD96YVbADzkkrufoPJZwydw1KRsTPQ>
+ <xmx:bjr7YUQZ6l7bwaPOHBe3vvjJY7t_29SM4ZUA8AjS1iwgVkO_oYxlXQ>
+ <xmx:bjr7YUyeUztVZxf2NbZj6c76f6J4K6o7o1zGsuk3ZgK8Gm8rS7_wNw>
+ <xmx:bjr7YRt7DjSq87NxCUA5rJ2ym245PxD5kVQQ2r_mEZxZeRjBTt9zwQ>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 1E2D4AC0E99; Wed,  2 Feb 2022 21:12:03 -0500 (EST)
+ id 5401EAC0E9A; Wed,  2 Feb 2022 21:14:06 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-4585-ga9d9773056-fm-20220113.001-ga9d97730
 Mime-Version: 1.0
-Message-Id: <926eb042-991c-4794-9e72-84056b7f6473@www.fastmail.com>
-In-Reply-To: <20220124191503.88452-5-eajames@linux.ibm.com>
+Message-Id: <68e65de2-0047-4e81-8c97-67e9982f71d4@www.fastmail.com>
+In-Reply-To: <20220124191503.88452-6-eajames@linux.ibm.com>
 References: <20220124191503.88452-1-eajames@linux.ibm.com>
- <20220124191503.88452-5-eajames@linux.ibm.com>
-Date: Thu, 03 Feb 2022 12:41:42 +1030
+ <20220124191503.88452-6-eajames@linux.ibm.com>
+Date: Thu, 03 Feb 2022 12:43:45 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH U-Boot v2019.04-aspeed-openbmc 4/6] gpio: Enable hogging
- support in SPL
+Subject: Re: [PATCH U-Boot v2019.04-aspeed-openbmc 5/6] Add GPIO hogging
+ support for AST2600 openbmc config
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -104,100 +104,49 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Tue, 25 Jan 2022, at 05:45, Eddie James wrote:
-> Use the CONFIG macros to conditionally build the GPIO hogging support in
-> either the SPL or U-Boot, or both, depending on the configuration. Also
-> call the GPIO hog probe function in the common SPL board initialization
-> as an equivalent to adding it to the U-Boot init sequence functions.
+> Enable GPIO support in the SPL and hog the GPIOs in the SPL only. Also
+> increase the size of the malloc size in the SPL to get the GPIO driver
+> loaded.
 >
 > Signed-off-by: Eddie James <eajames@linux.ibm.com>
 > ---
->  common/spl/spl.c           |  7 +++++++
->  drivers/gpio/Kconfig       | 10 ++++++++++
->  drivers/gpio/gpio-uclass.c | 12 +++++++-----
->  3 files changed, 24 insertions(+), 5 deletions(-)
+>  configs/ast2600_openbmc_spl_emmc_defconfig | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/common/spl/spl.c b/common/spl/spl.c
-> index a1d4514fd3..bbb7578463 100644
-> --- a/common/spl/spl.c
-> +++ b/common/spl/spl.c
-> @@ -12,6 +12,9 @@
->  #include <dm.h>
->  #include <handoff.h>
->  #include <spl.h>
-> +#if defined(CONFIG_SPL_GPIO_HOG)
-> +#include <asm/gpio.h>
-> +#endif
->  #include <asm/sections.h>
->  #include <asm/u-boot.h>
->  #include <nand.h>
-> @@ -652,6 +655,10 @@ void board_init_r(gd_t *dummy1, ulong dummy2)
->  	timer_init();
->  #endif
-> 
-> +#if defined(CONFIG_SPL_GPIO_HOG)
-> +	gpio_hog_probe_all();
-> +#endif
-> +
->  #if CONFIG_IS_ENABLED(BOARD_INIT)
->  	spl_board_init();
->  #endif
-> diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-> index a8dc16ca0e..8b8bf6822f 100644
-> --- a/drivers/gpio/Kconfig
-> +++ b/drivers/gpio/Kconfig
-> @@ -24,6 +24,16 @@ config GPIO_HOG
->  	  is a mechanism providing automatic GPIO request and config-
->  	  uration as part of the gpio-controller's driver probe function.
-> 
-> +config SPL_GPIO_HOG
-> +	bool "Enable GPIO hog support in SPL"
-> +	depends on SPL_GPIO_SUPPORT
-> +	default n
-> +	help
-> +	  Enable gpio hog support
-> +	  The GPIO chip may contain GPIO hog definitions. GPIO hogging
-> +	  is a mechanism providing automatic GPIO request and config-
-> +	  uration as part of the gpio-controller's driver probe function.
-> +
->  config ALTERA_PIO
->  	bool "Altera PIO driver"
->  	depends on DM_GPIO
-> diff --git a/drivers/gpio/gpio-uclass.c b/drivers/gpio/gpio-uclass.c
-> index 01cfa2f788..219caa651b 100644
-> --- a/drivers/gpio/gpio-uclass.c
-> +++ b/drivers/gpio/gpio-uclass.c
-> @@ -144,7 +144,7 @@ static int gpio_find_and_xlate(struct gpio_desc *desc,
->  		return gpio_xlate_offs_flags(desc->dev, desc, args);
->  }
-> 
-> -#if defined(CONFIG_GPIO_HOG)
-> +#if CONFIG_IS_ENABLED(GPIO_HOG)
-> 
->  struct gpio_hog_priv {
->  	struct gpio_desc gpiod;
-> @@ -1033,9 +1033,6 @@ int gpio_dev_request_index(struct udevice *dev, 
-> const char *nodename,
-> 
->  static int gpio_post_bind(struct udevice *dev)
->  {
-> -	struct udevice *child;
-> -	ofnode node;
-> -
->  #if defined(CONFIG_NEEDS_MANUAL_RELOC)
->  	struct dm_gpio_ops *ops = (struct dm_gpio_ops *)device_get_ops(dev);
->  	static int reloc_done;
-> @@ -1066,7 +1063,11 @@ static int gpio_post_bind(struct udevice *dev)
->  	}
->  #endif
-> 
-> -	if (IS_ENABLED(CONFIG_GPIO_HOG)) {
-> +#if CONFIG_IS_ENABLED(GPIO_HOG)
+> diff --git a/configs/ast2600_openbmc_spl_emmc_defconfig 
+> b/configs/ast2600_openbmc_spl_emmc_defconfig
+> index 344a4d8f9c..5f50298a58 100644
+> --- a/configs/ast2600_openbmc_spl_emmc_defconfig
+> +++ b/configs/ast2600_openbmc_spl_emmc_defconfig
+> @@ -11,6 +11,7 @@ CONFIG_SYS_TEXT_BASE=0x81000000
+>  CONFIG_ASPEED_AST2600=y
+>  # CONFIG_ASPEED_LOADERS is not set
+>  CONFIG_TARGET_EVB_AST2600A1=y
+> +CONFIG_SPL_GPIO_SUPPORT=y
+>  CONFIG_SPL_LIBCOMMON_SUPPORT=y
+>  CONFIG_SPL_LIBGENERIC_SUPPORT=y
+>  CONFIG_SYS_MALLOC_F_LEN=0x2000
+> @@ -19,7 +20,7 @@ CONFIG_SPL_SERIAL_SUPPORT=y
+>  CONFIG_SPL_DRIVERS_MISC_SUPPORT=y
+>  CONFIG_ENV_SIZE=0x10000
+>  CONFIG_ENV_OFFSET=0x5000
+> -CONFIG_SPL_SYS_MALLOC_F_LEN=0x800
+> +CONFIG_SPL_SYS_MALLOC_F_LEN=0x1000
 
-Why switch to a CPP conditional here?
+How much capacity does this leave us with? Have you looked at the 
+memory layout for the SPL (I haven't, so any legwork you do here is 
+appreciated ;) )?
 
-I mean, it's not clear why there was a choice for a C conditional 
-originally, so I'm curious either way.
-
-Otherwise:
-
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+>  CONFIG_SPL=y
+>  CONFIG_SPL_STACK_R_ADDR=0x90300000
+>  CONFIG_ARMV7_BOOT_SEC_DEFAULT=y
+> @@ -94,6 +95,7 @@ CONFIG_CLK=y
+>  CONFIG_SPL_CLK=y
+>  CONFIG_ASPEED_HACE=y
+>  CONFIG_DM_GPIO=y
+> +CONFIG_SPL_GPIO_HOG=y
+>  CONFIG_ASPEED_GPIO=y
+>  CONFIG_DM_I2C=y
+>  CONFIG_SYS_I2C_ASPEED=y
+> -- 
+> 2.27.0
