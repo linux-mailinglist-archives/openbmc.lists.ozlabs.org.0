@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C78B34A9026
-	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 22:44:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EF4754A907E
+	for <lists+openbmc@lfdr.de>; Thu,  3 Feb 2022 23:12:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JqXJK3w30z2xtv
-	for <lists+openbmc@lfdr.de>; Fri,  4 Feb 2022 08:44:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JqXwW4rx6z3bb9
+	for <lists+openbmc@lfdr.de>; Fri,  4 Feb 2022 09:12:43 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=r0VnLpnN;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=SDoFTofV;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=L14h8rIP;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=T0WkUk0w;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,48 +19,48 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=r0VnLpnN; 
+ header.s=fm2 header.b=L14h8rIP; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=SDoFTofV; 
+ header.a=rsa-sha256 header.s=fm2 header.b=T0WkUk0w; 
  dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JqXHs4y5lz3bZb
- for <openbmc@lists.ozlabs.org>; Fri,  4 Feb 2022 08:44:25 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JqXw64xxvz2yMy
+ for <openbmc@lists.ozlabs.org>; Fri,  4 Feb 2022 09:12:22 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id C29755C020D;
- Thu,  3 Feb 2022 16:44:23 -0500 (EST)
+ by mailout.nyi.internal (Postfix) with ESMTP id C951D5C0175;
+ Thu,  3 Feb 2022 17:12:20 -0500 (EST)
 Received: from imap43 ([10.202.2.93])
- by compute3.internal (MEProxy); Thu, 03 Feb 2022 16:44:23 -0500
+ by compute3.internal (MEProxy); Thu, 03 Feb 2022 17:12:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
  :content-type:date:date:from:from:in-reply-to:in-reply-to
  :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm2; bh=YUMZpQlAEGmgqKs9d7mZecYBnVAR/dSwe5ycXg
- ht5l0=; b=r0VnLpnN0cX5ksHAMkueUPxtuC0e1C+SS0wnGXzl90UxI82W7Mhq/i
- Mech7zdBzffItAgfbU+e5j4iqywZoB75y7kAJnp08sEBa9D50rCZWRMxWyfT6F5w
- MThJEKQG3n3BX0Q3qyDAC+dWTosDLuqn1WLczlRzE+S7lsphiaxoQhhfbXmyJgct
- 4Dc+z2a7LvgtPygDCe77BweulFdxxv6WsSl3JO5Hj+SVQ4kQWPXvH+tzMRm1vZih
- Tm3Jq3Lev8mFL1W/accUzslj/m/7xRX2lQOFKAuNp9FeAAc0nrwivPYGu+yH9qYe
- LWpR51yrRWC4r7ReXfQi2Kx71114I9Lw==
+ :subject:to:to; s=fm2; bh=2/Vymd2EILYmcIALnx9HSiNVDhaYrJdmSZcXjZ
+ NdH+E=; b=L14h8rIP7CayT1aiXw3tXL/QJzImJiEpZ7XOJ+nakPqy8vgVVt5Gbx
+ r98pFfe6Qj1ak2CgVW/q0GwjLEsZrqHCEvB9n8tD2rqqQRMfz7AhJY01yUuFYvzs
+ 8bt+ecfEvHm+cgK5RtLBMU9/x4SdNrta1evww+3p+yENItum3ezQXG2KctvNTnc/
+ VXA5dw5+qtXR6aP3CmuZmhyKsCeKnOJTUZPDEuCKl5UhkSkPa4Qlt4u2Qsvt60qr
+ bcyI6izoCuacQr7Q2aCHvCKIOYOZeePWF01w/LVZ6DyFg8IpIzSTX36RgQi7ONFC
+ qlU457pJvyclm4nIhEBoykSP+wiONI+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:date:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=YUMZpQlAEGmgqKs9d
- 7mZecYBnVAR/dSwe5ycXght5l0=; b=SDoFTofVN93Gh3KGz9A+xNgv+xxCBoiKG
- /AFkBNTK6k8D31XPQM6cpqt6+EWJ4k5vLDFWMko7ytHSEiWNSTN/2Nn/s0Sb1Uwt
- COvEdFqN4XueqqprdXp4hmR/XT/IOn63sIJ4I+/366UM3A0ZrhOfqc1Ja0OXMrnx
- 7u8Y351hHXATrV5sqFZRxIOoEbvCjnp3kgb/ERxh1Gv3G141cZvJ+Zk/D9O+KRFv
- WlSeLApMNJvbQy9BvWOopvE7JsSwdobkVc0pVrQ8gnUpz/TakdRQuANEIvCixdTE
- +QtzPQUFEx9F102h871vdDRTs7k3Y9jYxOaTeqafqdsHX5vMDE/7A==
-X-ME-Sender: <xms:t0z8YWwsf2buxCqnT50QfIP6x7YC-tSJTqoDAlDRmIEsIozvOWiEoA>
- <xme:t0z8YSQOlcnymfNr5qB7Z6k6w-IEHt95ED1NKccPnLfDkVgG7snqoPhET-RWideEI
- zFSU1LjR-UUijaUBg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeejgdduheefucetufdoteggodetrfdotf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=2/Vymd2EILYmcIALn
+ x9HSiNVDhaYrJdmSZcXjZNdH+E=; b=T0WkUk0wtzQnV1bxyHMMEaOT1h6llDPQQ
+ LyYZ2X+RXBIo/zWJaLVSdQIBNFhAzeamz2Vf6bmjCKoR+eJHDyUUWgb5AwUSigan
+ SKXYxXnNHlznPFrFZwWm4cbiDBplEXfYYee+8nFXl3sZ1v+Dif/Ud3EpMI8un3Vc
+ 2gIt86ABiReAS4zXk/4Pj3JEvuYDMPM8VL7BxupWrTxjb8zW3flgtDJ9R9WEC+ED
+ dUI8o+dFKNsxiwcMHuXyWOhz8tsedS5zAQfUlnCKL3+2lB24OI6FYpIN3dIuzoku
+ kU0u9jeO7Lm4ctoD+YFF4oIxJ3R3Luf/D/IaonAJ5D8hB5KE0pyDQ==
+X-ME-Sender: <xms:RFP8YWwXB4iLrfJToQ1rCuU0LnoHkpjvlpdaEg0HmkMMaGbXQDhi4Q>
+ <xme:RFP8YSQdltE7K4fYu43JpG_FgiarKmdPI2O8fbpozLn2maom6ptM_BQ8l2VpqYOGy
+ kdO6l-T8knLqcny7g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeejgdduheekucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
@@ -68,26 +68,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeejgdduheefucetufdoteggod
  grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
  hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
  eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:t0z8YYW1u_ecoya3sf0zGCU42BWPZMk_FEHPBt3B3_k0tASR4gErNg>
- <xmx:t0z8YcgzgRG4k_FsEirox_goV4o0SQPKdcBB5pQNM27uUGAorE7F8Q>
- <xmx:t0z8YYCALPEeyWT67QkSy_EtXIc_gOYwwgOHBMvKKWmFkMfQNxI4IQ>
- <xmx:t0z8YX9h92ZVDpgHsOlRw1ygM8T6z0J0R7eOonuswROzsXvvVMiE-A>
+X-ME-Proxy: <xmx:RFP8YYUYqSeXxxRYXv7cG_eMUBC1wh137_LVcsrYfSZfSqKZDRQy5w>
+ <xmx:RFP8YchahgQ_77jFHxzELSmblRxc0CkOXSzwe6PSjUjn40zU-Tl6yg>
+ <xmx:RFP8YYAbaP9qt4KAtoV4iS1aE1MCXv44M5Wv3gvXHFFfUln6FDMmcg>
+ <xmx:RFP8YX9Qa0JXVYOA7FTxWs9s0LR9P8aXVfTMVbARWQfK6lUfFI9-pg>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 9F3B9AC0E99; Thu,  3 Feb 2022 16:44:23 -0500 (EST)
+ id 8DABCAC0E99; Thu,  3 Feb 2022 17:12:20 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-4586-g104bd556f9-fm-20220203.002-g104bd556
 Mime-Version: 1.0
-Message-Id: <807573dd-5b8c-4a4b-a014-e6badd7ad775@www.fastmail.com>
-In-Reply-To: <44d92066-775d-64a7-c1e7-711b89868be3@linux.ibm.com>
+Message-Id: <a006b9dd-aa29-435a-870f-b58c30adc1a8@www.fastmail.com>
+In-Reply-To: <585eb304-8cb5-563e-d8f9-feb5f336c50e@linux.ibm.com>
 References: <20220124191503.88452-1-eajames@linux.ibm.com>
- <20220124191503.88452-6-eajames@linux.ibm.com>
- <68e65de2-0047-4e81-8c97-67e9982f71d4@www.fastmail.com>
- <44d92066-775d-64a7-c1e7-711b89868be3@linux.ibm.com>
-Date: Fri, 04 Feb 2022 08:14:02 +1030
+ <20220124191503.88452-7-eajames@linux.ibm.com>
+ <4bd0324e-9226-4072-8cb2-81ae305db55a@www.fastmail.com>
+ <585eb304-8cb5-563e-d8f9-feb5f336c50e@linux.ibm.com>
+Date: Fri, 04 Feb 2022 08:42:00 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH U-Boot v2019.04-aspeed-openbmc 5/6] Add GPIO hogging
- support for AST2600 openbmc config
+Subject: Re: [PATCH U-Boot v2019.04-aspeed-openbmc 6/6] ast2600: Add GPIO
+ controller and hog TPM reset pin
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -105,47 +105,43 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Fri, 4 Feb 2022, at 02:29, Eddie James wrote:
-> On 2/2/22 20:13, Andrew Jeffery wrote:
+On Fri, 4 Feb 2022, at 02:31, Eddie James wrote:
+> On 2/2/22 20:17, Andrew Jeffery wrote:
 >>
 >> On Tue, 25 Jan 2022, at 05:45, Eddie James wrote:
->>> Enable GPIO support in the SPL and hog the GPIOs in the SPL only. Also
->>> increase the size of the malloc size in the SPL to get the GPIO driver
->>> loaded.
+>>> Hog the GPIO pin to reset the TPM.
 >>>
 >>> Signed-off-by: Eddie James <eajames@linux.ibm.com>
 >>> ---
->>>   configs/ast2600_openbmc_spl_emmc_defconfig | 4 +++-
->>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>>   arch/arm/dts/ast2600-rainier.dts | 11 +++++++++++
+>>>   1 file changed, 11 insertions(+)
 >>>
->>> diff --git a/configs/ast2600_openbmc_spl_emmc_defconfig
->>> b/configs/ast2600_openbmc_spl_emmc_defconfig
->>> index 344a4d8f9c..5f50298a58 100644
->>> --- a/configs/ast2600_openbmc_spl_emmc_defconfig
->>> +++ b/configs/ast2600_openbmc_spl_emmc_defconfig
->>> @@ -11,6 +11,7 @@ CONFIG_SYS_TEXT_BASE=0x81000000
->>>   CONFIG_ASPEED_AST2600=y
->>>   # CONFIG_ASPEED_LOADERS is not set
->>>   CONFIG_TARGET_EVB_AST2600A1=y
->>> +CONFIG_SPL_GPIO_SUPPORT=y
->>>   CONFIG_SPL_LIBCOMMON_SUPPORT=y
->>>   CONFIG_SPL_LIBGENERIC_SUPPORT=y
->>>   CONFIG_SYS_MALLOC_F_LEN=0x2000
->>> @@ -19,7 +20,7 @@ CONFIG_SPL_SERIAL_SUPPORT=y
->>>   CONFIG_SPL_DRIVERS_MISC_SUPPORT=y
->>>   CONFIG_ENV_SIZE=0x10000
->>>   CONFIG_ENV_OFFSET=0x5000
->>> -CONFIG_SPL_SYS_MALLOC_F_LEN=0x800
->>> +CONFIG_SPL_SYS_MALLOC_F_LEN=0x1000
->> How much capacity does this leave us with? Have you looked at the
->> memory layout for the SPL (I haven't, so any legwork you do here is
->> appreciated ;) )?
+>>> diff --git a/arch/arm/dts/ast2600-rainier.dts b/arch/arm/dts/ast2600-rainier.dts
+>>> index aae507b4c2..d0e82d1512 100755
+>>> --- a/arch/arm/dts/ast2600-rainier.dts
+>>> +++ b/arch/arm/dts/ast2600-rainier.dts
+>>> @@ -108,3 +108,14 @@
+>>>   	u-boot,dm-pre-reloc;
+>>>   	status = "okay";
+>>>   };
+>>> +
+>>> +&gpio0 {
+>>> +	u-boot,dm-pre-reloc;
+>>> +
+>>> +	tpm_reset {
+>>> +		u-boot,dm-pre-reloc;
+>> Do we need this in the hog node? Seems like it's only necessary in controller nodes.
 >
 >
-> I'm not sure, I haven't looked into it that much. When I was debugging, 
-> trying to figure out why my SPL wouldn't load, we were right at capacity 
-> without the GPIO stuff - allocating like 0x7c0 or so. We should have 
-> plenty more room now. I guess I'm not sure where that memory comes from 
-> anyway.
+> Yes it is necessary, the SPL dtc compiler will cull anything without 
+> that property.
 
-Okay. Might be something for another day.
+Are you sure it's done at dts translation time?
+
+My understanding is the driver model core will only instantiate drivers 
+for devices with the property. This suggests all nodes are retained.
+
+I used uclass_get_device_by_driver() in the mach-aspeed patch which 
+will forcibly probe the driver.
+
+Andrew
