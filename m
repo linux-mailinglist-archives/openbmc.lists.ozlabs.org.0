@@ -2,44 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3C8A4A9D34
-	for <lists+openbmc@lfdr.de>; Fri,  4 Feb 2022 17:54:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F2A04AA2DE
+	for <lists+openbmc@lfdr.de>; Fri,  4 Feb 2022 23:09:01 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jr1qP3qwxz3bbk
-	for <lists+openbmc@lfdr.de>; Sat,  5 Feb 2022 03:54:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jr8nj2dWZz3bVd
+	for <lists+openbmc@lfdr.de>; Sat,  5 Feb 2022 09:08:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sandelman.ca (client-ip=2a01:7e00:e000:2bb::1;
- helo=relay.sandelman.ca; envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
-Received: from relay.sandelman.ca (relay.cooperix.net
- [IPv6:2a01:7e00:e000:2bb::1])
+ smtp.mailfrom=gmail.com (client-ip=209.85.161.52; helo=mail-oo1-f52.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com
+ [209.85.161.52])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jr1q34F0kz30Md
- for <openbmc@lists.ozlabs.org>; Sat,  5 Feb 2022 03:54:37 +1100 (AEDT)
-Received: from dooku.sandelman.ca (unknown [142.169.78.77])
- by relay.sandelman.ca (Postfix) with ESMTPS id 0ADF21F44B;
- Fri,  4 Feb 2022 16:54:32 +0000 (UTC)
-Received: by dooku.sandelman.ca (Postfix, from userid 179)
- id E99731A03ED; Fri,  4 Feb 2022 11:54:31 -0500 (EST)
-From: Michael Richardson <mcr+ietf@sandelman.ca>
-To: "Andrew Jeffery" <andrew@aj.id.au>, openbmc <openbmc@lists.ozlabs.org>
-Subject: Re: Security Working Group meeting - Wednesday February 2
-In-reply-to: <819fc231-cb0e-41d1-ad46-d7957a4c48e4@beta.fastmail.com>
-References: <5516f17c-5fb4-875f-fae1-00d86923bdae@linux.ibm.com>
- <de58b515-0f0b-4e49-4955-f9144896d313@linux.ibm.com>
- <231809.1643915597@dooku>
- <819fc231-cb0e-41d1-ad46-d7957a4c48e4@beta.fastmail.com>
-Comments: In-reply-to "Andrew Jeffery" <andrew@aj.id.au>
- message dated "Fri, 04 Feb 2022 17:51:01 +1030."
-X-Mailer: MH-E 8.6+git; nmh 1.7.1; GNU Emacs 26.3
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jr8nH3zfYz30LQ;
+ Sat,  5 Feb 2022 09:08:33 +1100 (AEDT)
+Received: by mail-oo1-f52.google.com with SMTP id
+ p4-20020a4a8e84000000b002e598a51d60so6209949ook.2; 
+ Fri, 04 Feb 2022 14:08:33 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=JQ7WYZ4Zqg4HCtyNEPmfKDttwiehHxrZDO82/S7zZVE=;
+ b=XJrgMAFuIPMLqPK1S6e1AfAGPtQb3EA81HvNWUJsXXmbnSfPw3/I29L4odl9qqzino
+ 8KPVG5RcYaeWA5arkZ7/jyAUbqmouCyHsH4EeFq1XawUhWq5/7lTbYvIzO0rXnWMaKGw
+ fXIGdz0qec4+Gfr5Og0iWWL+PDpsrbscdRj8xuTGNhsm+FHYvmwQoCxq+h1bfCSWNoBF
+ Npxbfi2TFZISo0895FLpipOzDDYFlHaM7FFyCgio+s1BnWDkw1poIv9MF+EUc5la6Q6R
+ eus5P6390Yz+cPFfhF9/BLgXX32apyU3nUX6H5sCWa++DYbCFRotQi1spmOIwRdW5Rqp
+ 8Siw==
+X-Gm-Message-State: AOAM532eS159Ent4zsDduYHzHoJpOKdc6rrzyR0qLDo8iIY95coE4Cym
+ z6bY1fWjQIFbSMJTC0X4SA==
+X-Google-Smtp-Source: ABdhPJzCR5b4do+sC8vu/Kn5Ig8ZQCwMphWuSpBEn7uPBasp5qvvVQX+Sgl9UoFUkOwZhnxHZ1k+PQ==
+X-Received: by 2002:a4a:ca98:: with SMTP id x24mr322821ooq.43.1644012509912;
+ Fri, 04 Feb 2022 14:08:29 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net.
+ [66.90.148.213])
+ by smtp.gmail.com with ESMTPSA id cv13sm1005610oab.7.2022.02.04.14.08.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Feb 2022 14:08:29 -0800 (PST)
+Received: (nullmailer pid 3267244 invoked by uid 1000);
+ Fri, 04 Feb 2022 22:08:27 -0000
+Date: Fri, 4 Feb 2022 16:08:27 -0600
+From: Rob Herring <robh@kernel.org>
+To: Iwona Winiarska <iwona.winiarska@intel.com>
+Subject: Re: [PATCH v7 02/13] dt-bindings: Add bindings for peci-aspeed
+Message-ID: <Yf2j2+QbO9kg0E1E@robh.at.kernel.org>
+References: <20220202144838.163875-1-iwona.winiarska@intel.com>
+ <20220202144838.163875-3-iwona.winiarska@intel.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Fri, 04 Feb 2022 11:54:31 -0500
-Message-ID: <281326.1643993671@dooku>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220202144838.163875-3-iwona.winiarska@intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,68 +67,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
+ Dave Hansen <dave.hansen@intel.com>, Zev Weiss <zweiss@equinix.com>,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Jonathan Corbet <corbet@lwn.net>,
+ openbmc@lists.ozlabs.org,
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+ Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
+ Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
+ Billy Tsai <billy_tsai@aspeedtech.com>, Rob Herring <robh+dt@kernel.org>,
+ Borislav Petkov <bp@alien8.de>, Dan Williams <dan.j.williams@intel.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
+ Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+ Olof Johansson <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=-=-=
-Content-Type: text/plain
+On Wed, 02 Feb 2022 15:48:27 +0100, Iwona Winiarska wrote:
+> Add device tree bindings for the peci-aspeed controller driver.
+> 
+> Co-developed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> ---
+>  .../devicetree/bindings/peci/peci-aspeed.yaml | 72 +++++++++++++++++++
+>  1 file changed, 72 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/peci/peci-aspeed.yaml
+> 
 
-
-Andrew Jeffery <andrew@aj.id.au> wrote:
-    > On Fri, 4 Feb 2022, at 05:43, Michael Richardson wrote:
-    >> Thanks for the great notes!
-    >>
-
-    > You might also be interested in chapters 9 and 10 of https://github.com/AspeedTech-BMC/openbmc/releases/download/v08.00/SDK_User_Guide_v08.00.pdf :)
-
-So, not completely under NDA then.
-Thank you for pointing at that.
-I wish I could edit the missing articles into that document.
-
-I saw that the section after socsec is about boot from uart, which requires a
-jumper to be moved.
-
-I see a place for an RSA private key as well as the public ones to validate
-the boot image.  Multiple OTP headers, up to 64k bits (8K bytes I guess) is
-available.
-
-Is anyone out there using this *today* for signing evidence for a measured
-boot?  Or for including an IDevID into the system?   You can unicast me if
-you prefer.
-
-Getting manufacturer signed IDevIDs in is critical to getting better
-onboarding story for BMCs.  I would love to work with someone to prototype this.
-
-(Ah, xmodem/ymodem brings back many memories.  How much zmodem kicked their
-ass.  And telebit trailblazers..)
-
-I wonder if the OpenBMC project cares about the case of the name... as ASPEED
-has "OpenBmc" everywhere.  Some people care... It's a bit like Brown M&Ms :-)
-(e.g., RFC4301 says it is "IPsec" and not "IPSec")
-
-
---
-Michael Richardson <mcr+IETF@sandelman.ca>, Sandelman Software Works
- -= IPv6 IoT consulting =-
-
-
-
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAEBCgAdFiEEow/1qDVgAbWL2zxYcAKuwszYgEMFAmH9WkcACgkQcAKuwszY
-gENToAwAv7VnM7NTHduAtddpFm1sdJEDgS0pOxCVBvan7or0IRg0VhGsI3L+5z/k
-pDq5TFDuU2Wmyq1AnfBhgZBgbYiYOLr7TAoA3BC420Jr7I3Htq2HuB6xYXwcQBqu
-ukgEbRb6Y6yEGh0zhWfrkJIw/VPlpFqmlpiOFhpX/iB2GuWJBLsEPypinAuTJNLC
-SBvhOKam8853GheK2ciLOiYJ1TdsZGHAN24vnQqT+NxOosgyfdoU377jJ+RvJ5cA
-3FXdInprnr34AuVxRu5oJjnBlDffABhQh/3gpZ2cgfa+XkTcs9Fj1A9hz2F9S7aL
-cVSwTInvj5m62TGsVaxkZEXP2nWD7gxgwp7+7tRGnq8xZi4qcLyFhbS2jyFrEP0D
-Rzt9lbl7pUpAneynHjjGmKYd0pHhQbVx7HFFlxNnRAwKaGOhj5XkX2ePd/fPLhrr
-i4fu59fFY3yzog5fkiuoEuM0NnjAtS0/wz4+Mrd8TiAzcaYoJzMG55ba01c8GnXl
-DOFJ6Nbr
-=+Fm5
------END PGP SIGNATURE-----
---=-=-=--
+Reviewed-by: Rob Herring <robh@kernel.org>
