@@ -2,74 +2,135 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79E9A4AA9C8
-	for <lists+openbmc@lfdr.de>; Sat,  5 Feb 2022 16:55:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0975E4AB306
+	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 02:08:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JrcRv1WTWz3bZC
-	for <lists+openbmc@lfdr.de>; Sun,  6 Feb 2022 02:55:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JsSgc3VYMz30MQ
+	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 12:08:12 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=CFwBXWh1;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=vVSiJTO2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.15; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=CFwBXWh1; 
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feae::71c;
+ helo=apc01-psa-obe.outbound.protection.outlook.com;
+ envelope-from=chiawei_wang@aspeedtech.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
+ header.a=rsa-sha256 header.s=selector1 header.b=vVSiJTO2; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JrcQj4b7cz2yK2
- for <openbmc@lists.ozlabs.org>; Sun,  6 Feb 2022 02:54:04 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1644076430;
- bh=5et5IUkQeGLITjhMu9UAGqm9VpqhlDQyT1g9WVmTbCs=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CFwBXWh1lCL4fivxCOu/Gnze2bkvrruP03pBlwPyK3akfLAdg8cR0qDJYSVdoni3N
- o1Jf1dFoaspqElQCWMQG+dt7ghBZDRbp6BmSChzC1VQgkGjxS5vLoaKFRbW6fcWh+d
- +NJRnLefNSldQ6UaVc6yOrkD9jcZAz/NXxlzvOyo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([87.78.182.239]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mzhj9-1mLMqt1uCH-00vjK7; Sat, 05
- Feb 2022 16:53:50 +0100
-From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: linux-gpio@vger.kernel.org
-Subject: [PATCH v3 2/2] pinctrl: nuvoton: npcm7xx: Rename DS() macro to DSTR()
-Date: Sat,  5 Feb 2022 16:53:31 +0100
-Message-Id: <20220205155332.1308899-3-j.neuschaefer@gmx.net>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220205155332.1308899-1-j.neuschaefer@gmx.net>
-References: <20220205155332.1308899-1-j.neuschaefer@gmx.net>
+Received: from APC01-PSA-obe.outbound.protection.outlook.com
+ (mail-psaapc01on2071c.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:feae::71c])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JsSg92wL9z2xKK
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Feb 2022 12:07:48 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=BJUqdD62XONvKhJNmeTp0dPJgwp2Jk4E3UDw2HBIwUbc1M1Ydb0xbOyi+p8zPku6OR30pv2qHk7K18AIETBqcZArsSfbwFtijVZi90Hr8ejFcZRq7deVpKCUtsm57GWP/h65eIzOERYCoPIKwTpXDhI2w+RUKn3YqjVwyJcockw/FdJa4WAYfPfU+N8JclLnhBx5ZriRle7oCFhwPwyGmLO7COqehhI2AILqKpqfbkkxbpowv74TDuPWbH5C70xPk4ye1PkvbiQBaFV9eDpmkgqaFsnQSzMDjSJ0tfXjK/joMHiSFXp7mSDOL23UdzRSGXoq/sitLmw04YjpWuLFVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TlvHGpZOpvYzy++73M9euBkNpNBz3AobeB7pWQJ4Gik=;
+ b=VOC/WTBvaFv3YJ8M95mkqBpv9cUpElB65ODJ7zfBB8xVXrtc0+uAKK6SkKUGvhpTVBGHJvIfFzYsEUlY64D3fBj2FktgtF3Qobg1LFN1irr8IAGKDajA6MysPdgXjuBHSzHvxGoqmkWP4tDIh4N/6fKK5mKj7R/qCQFk6FnfniGHDp9UU3sNeKBjTqVHCTJ3hCmUUoprRiMBdE7W/rjQ5M8EANykbw+/ugnHYBsHfQERDHOwW8BwjfSo84v22ikSD6pHHNMX9nfHCDRPJ7VK2V2B8KYoK3dReluJdLB8Mq0wey/xC0m3a6RHwQA0+0dHfMRro9zLVY170nY2zzwQ5w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TlvHGpZOpvYzy++73M9euBkNpNBz3AobeB7pWQJ4Gik=;
+ b=vVSiJTO2ewdDi00V3204P3WstZwnVVqeog1Smbf3iMSX2/iSya1zxO2cvMqqevpOY6pdYZNsrBZXw0oakET+9SgEZ0NKFXYFV6lRvpLj10hZivsaYG5SZETMVWCTTEdHktBlO/UMVcmzlUfE3psfpDdubh/nLIp+SEDL13CFDmwoLoEcYQCcy/XLQPkvrL3j+b6Xs4hu40ceRoQVL4DDkynACLhOWrxleFyCNXpgmw3AQ6A4YrFg1ZBqHJ1OisGw8cPYopUHoMXc96TRKQ3eXX6iQgf9J1YtLaRN2vFPIX/y90zkthI9c23qJ4yveWUX1yAoyo6WNCsPDv58pqY0Ng==
+Received: from HK0PR06MB3779.apcprd06.prod.outlook.com (2603:1096:203:b8::10)
+ by TY2PR06MB2797.apcprd06.prod.outlook.com (2603:1096:404:3f::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4951.17; Mon, 7 Feb
+ 2022 01:07:26 +0000
+Received: from HK0PR06MB3779.apcprd06.prod.outlook.com
+ ([fe80::c4c2:84ad:81d1:e3e7]) by HK0PR06MB3779.apcprd06.prod.outlook.com
+ ([fe80::c4c2:84ad:81d1:e3e7%4]) with mapi id 15.20.4951.018; Mon, 7 Feb 2022
+ 01:07:25 +0000
+From: ChiaWei Wang <chiawei_wang@aspeedtech.com>
+To: Andrew Jeffery <andrew@aj.id.au>, "u-boot@lists.denx.de"
+ <u-boot@lists.denx.de>
+Subject: RE: [PATCH] image: Control FIT signature verification at runtime
+Thread-Topic: [PATCH] image: Control FIT signature verification at runtime
+Thread-Index: AQHYFlSIUinVBpl/0EiKzu3l/osMz6yHSlSg
+Date: Mon, 7 Feb 2022 01:07:25 +0000
+Message-ID: <HK0PR06MB3779465E79CE71DEDB4F5633912C9@HK0PR06MB3779.apcprd06.prod.outlook.com>
+References: <20220131034147.106415-1-andrew@aj.id.au>
+In-Reply-To: <20220131034147.106415-1-andrew@aj.id.au>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 9c1311b5-da0f-4967-30b9-08d9e9d63454
+x-ms-traffictypediagnostic: TY2PR06MB2797:EE_
+x-microsoft-antispam-prvs: <TY2PR06MB2797CB201562F3AFA6BF3B60912C9@TY2PR06MB2797.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:1332;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: FZE5oKpyfWze2znW1cV6a7mAtdJdySX8mvhIlS7sXvaRrWDjT8r60/aOj0qw/TYAXTrF93mvO/zj66J/gS+LcECTDUaoZjQ298s3u3iq7oETI5vd/2doVopQLKVpYB6/4d9CFA7BEqdeKVirk8WMAmS+Iji/EIL+4dxJ+RpZQJUD3b7KsFwvcPsC861O0pm0LTtRp1JvTO8t2R8JTfZAxujJbJ81cHh5f//1/CDjx1KUq/BeASwwBNBXgowHfwWS52KWsUkYB6d5wFChz9A9yF6YM3/NeLA8zdrmb2VpIwKsj5ly5l6G7/Qldu3shhYHCc1cEPMKMGvhEiPmEUI5MNhu8feI3OOgPBgtjxfENAIfYPX8OvUKz3+TTMh8to5qb+7RK1rxaqxj2tPBh7wd1ZQ/+XfxrAkOHgNFh2i5K9/F6QhXDqpnMbTT97QPLJv6uLmSXBK5x85z5sUseqMotcRSz18f5Js4YzyLPqrOQmbfFtiKdLFUja+CA6U8yYafJIIaqkZvx5ILID5jeQseFy1F8b3uA+0apZFr5fCjpy2dMmwepmibPl/kBEvBhZy+kJ+tQZ8Yt+Cm6YJ+a8mib6DxGg+gqkt/R8D+bAEyUcmDTZHq55ZG4H3vLS6uUlIS9tdVLIcN/G/QHVd6Nj04Q5IbTId30xI6eFc+Lwt/x8EmftF4wtc6ZEliFXzzFYzTO2hzLafheX4SqV868ZuLW+pVTEjx2WpHD4efunGTS1kEG4basFwcMU2GxATjvHYl2UjAcNBXgXWe1kV/VeX4YkzvbRNq4B00z84HFsNA03M=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR06MB3779.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230001)(396003)(346002)(376002)(39830400003)(136003)(366004)(66556008)(66476007)(64756008)(66446008)(55016003)(8676002)(2906002)(8936002)(66946007)(86362001)(76116006)(38070700005)(4326008)(52536014)(122000001)(38100700002)(508600001)(107886003)(15650500001)(83380400001)(7696005)(9686003)(6506007)(71200400001)(966005)(110136005)(26005)(186003)(54906003)(316002)(5660300002)(33656002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?YUZzODJvcGZMUTNRM0FQTzBrREFUWFJaUnI3NTRtSWwyL1poaUlOa0trTyti?=
+ =?utf-8?B?WTRSNCtZbC90ZUJDM1I5b1BFdlJsOW9GQWNJdW8wa0tjV3J1SGdOd3RyeUI0?=
+ =?utf-8?B?NURoTXFmbUhDY0JUb00wY2ZmcVkzVWdsUHlCbm9OQVNPYi9QeVRGZ0l6aXVN?=
+ =?utf-8?B?cXJwR1MvekNJMHYybTJZa0xYWmd0cHRBcG5aSUg2NlZKUjJsZzREM2d4MFZW?=
+ =?utf-8?B?TFhGS1l3bXJuYnVJaHJFd2E3Ryt1MWQyMnA2UThKV1hqYmdRNyswd1RCRnhl?=
+ =?utf-8?B?eGl5c1VuUUNpZWxoNCsrdC93citzME9iMWx4bUNaYktqVHBodGdab2ZPNlQw?=
+ =?utf-8?B?cGFhRkRZZmQxRGc5WnB2VG44Si9haEhZSU9iY0pPUUxMYmRjYktoZm0vdWZX?=
+ =?utf-8?B?TmNROEtHekdXSWY3WjJPVXhxN3liMVF5eGdhMWdUenR5VzNQcmR5RkdLc09V?=
+ =?utf-8?B?cVEzeldkNzhQVnYrblZ3ZitNQWovQlZqNFA1WGFUTU5wMkQ3TTIxeFlwVDRs?=
+ =?utf-8?B?RjhOZTlFNldTRktZMVhIQTJsaDBHS013bG83NEFJU2lvNnJFV01HaE5DTytW?=
+ =?utf-8?B?SDJMam1oRE5CNmxyY2RXcUpMSWtUeHEzMGhSaXJlcjhoMFk3YmU3WU5icDM4?=
+ =?utf-8?B?NmVzRmlCUU1IbzBaWWpvM3pPWnYxeG50SmN2djhHNUFXdUswbDNvT2hSZ1ZD?=
+ =?utf-8?B?K09EZGNXaWhySk5rNFR1NGRJRm0rb1MvcEpKTnVwS09IdGlvcDJpUDRuWHRL?=
+ =?utf-8?B?Qjc3V1U2dEtEQkgzakVJU3FaRll0RmJtaXpYT1ZWbzA3TkgxZzgrSVNUbFpu?=
+ =?utf-8?B?N1gwbzk2MjlDTllpbmQ2NlAvRkx5ZnNDNHNNdjZRY2wvTm9WVU40WEI4azJ2?=
+ =?utf-8?B?dVhmVFhwcmw3VTNoZkl2RUtzb212VGg3ckluWnYvSDRwMVJBbTNnQ0JUOExy?=
+ =?utf-8?B?WmQwZ1U4Nkp0UVZwWEdQM2FkL2NXVXpsNUJNUmE0UVJ6S3k5bENKQU4vZTJY?=
+ =?utf-8?B?ZERKOUozSExQUHdzUFhHTGNUWUpBc2VHT0oyZzJjZm5VUE5UUlFrRFBKcHJs?=
+ =?utf-8?B?dWkyRHVrQjRDanh3TGFaT0xlTml6VzFlNVRJMlFJS05udkFBMGhxMUNQSjJm?=
+ =?utf-8?B?QVYyZmlnanF1d0x3Y3Z0VEdtNzB2VWQ4TFU0YzlOTHlzNzBCWUt0NFpkaXYy?=
+ =?utf-8?B?NENWY0FWZ1hkVjdGb3kyM1lYdkpHbytHQ3VhSkMzL00xNGx5R2RmSm9FclB6?=
+ =?utf-8?B?QnNQTVF0d2V3RWNGK1VoZnB3cmxXWHBtYWdaZkYyUjg3SFp5b2svWmwvV0Iz?=
+ =?utf-8?B?VlAzb0lHcVpsMURjeWFoYzJWODlsV2E4QkRxUzlCUGlhaEs0M24vSXdDY2Qv?=
+ =?utf-8?B?WDQxaTF3UHJpck5MTlc0dHBrN3JMWlhtSWZMRFZ1bml2dHVGR2plaHpwN1d4?=
+ =?utf-8?B?bE5CZkcrd0pscExnQmVqMzNrTlJEanhsNGl1Um16MHNOQnFaT0V1UGpoQmZY?=
+ =?utf-8?B?Y2p3alBreXZTbWcwcTJtRVVxMmFDY1RIRFNNakF2UUM3WTBlbXZZU1JDVkRU?=
+ =?utf-8?B?TElvTW42YmtIV1A4Y1h0dWFwSERwOFdPR1owMFhhTFRZbGNSTSt0THdsZVRO?=
+ =?utf-8?B?VUtYZFRPdTMrNjJxQTlqUFRyVEVONmF0M3ZSdWUyWG9kK1ZudjFxWGl5YUt0?=
+ =?utf-8?B?clBOMmVPMEZUVkFaa0xNZGxjUW9JT2NkWGJkeGMwZm9WQkdRczY5TTkxY0Vh?=
+ =?utf-8?B?ejVnZ29ieE56VktpKzh0VjFIVldJNFB3c3FyQXpwUUZWeXNGN1dlU1ZoL29m?=
+ =?utf-8?B?dzlHcUorZnNRNkhlY1VTMyt2NVRiTXBFTW00ZnZzcEVkOG1pb2pjbHpKTUls?=
+ =?utf-8?B?V0JEaGpZdlFzK3IyMFMxZHpaV1ZueGxzSFB4Qmtjck9VZnA1M1hsVkRqeHRL?=
+ =?utf-8?B?dXZ4MEs3Y2Nxbmw1MWpJbXpudnZmVjdabFpqU1M0WGRxeXIwWjBKQ3BBdmQx?=
+ =?utf-8?B?aGd1aUx0Y2xXemZUWWpzWXZVUHNLc1k2ZW9EOVY4UldPRVpvcUIyUkVmRGNM?=
+ =?utf-8?B?dHcrRnE4cmtzQ3I3RzdqM1lkbENjR08zc3p2TEFZY1JLU2xMVXA0bGhpOEw1?=
+ =?utf-8?B?dkxIN2ZYYWV1TDhSd0VrQ1JNdElxbktXcDdraVRhYU5ULzBYZFZEa2JUaWx3?=
+ =?utf-8?B?eHVzVXZrNWdyNnMxZllOQzBzUXZDNzhsa2RHOVRpMmEybkM1VHZnVmVNRlBH?=
+ =?utf-8?B?Ylo3N1h6Sm5YcTN6czg5b2lxSDh3PT0=?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:hewL6cIcJsXmP+79VERqwa4VXcXQo5nlp3efl2SLBMeUihGMMAl
- GUlmEEbwwH7rkBEhUYnddtIQkoQu99HPKpt21pzOXwj/hKMYcG/PCulhizBTwrbOhIEjX27
- 8bmOCpks/eRRgpHmNDOG1+6a31ZXGjiC2ZSO1cOCaLdD4fFAu6ts0QFTuFQRkIEOeTupMeN
- Tsxf6MtKoXhwyTwLKFQQQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:X1GzSRtMWso=:GAEuqVo6sD+iHwqpAhbe/H
- 7Mv3ELO8lKzd5A1qLugEPGYdTA/tIj29sUGHn0X/gxFuZIA8I7RHA4rG5BNjK1RIbOBzOsF7f
- AcOXYtAdtrLCX19HlJlPq5rUs8FgTOJDr2X3kmZHHBkMQVE5cDTwqCRWrZdtXOA2jV4ArRnz7
- wF58wgc6onp9nKsK0ithmDoBKzTE1Y94xB9lqYWSp1xzBHW+f0rA39SZIZzeHceLTx4M+bSan
- P/FEVRlnvE3UXWBH4K5JUPdqgjEkTLnyMD3AqECrEf/SEfUEPIemNDwcStc2XVAjj1cD7K8/C
- usfqjUMPWmSEI2n1U5YElh8a+tfgUBURaqymPzuNN56jHbVKntrlBIp+WsfeP4bJbnYtf0BUF
- zhlUbPQqe6vjbVBub+Lq5CPibKg5dxEAq72tYVm1QqeITs6e3Z/Ng3k1/+7i+I4P46kwF1Myt
- ntt1QjytRjFRUhJYyZQ5k2OomcnnzJFWL/rjaag5wSwKYQ2cJ02P4n3bgCDgxRblpxfD/cO5h
- KPTew6tnqVIKJvOMwIEHSOiaUAdIVFfDUI1n0EOhGlU1ocikKViEvZwrCsXwkdZMKyLCpp8tY
- ck/kp9yfWIOYfkg7HEVD8uaOprfO4Gjm/Sk/KMWvOi2mPqUEuCJnqy8ZMJAfbGekRvKe8lbYx
- K1gUE7CpVnfMX7BK36CJwC+4J82j2Njv1xgFsKwjcclCfkry1dpC7fgrgG7Hm3EN5RhLVdwys
- 1fO3oV165RuzYuxIpATy5CjH6olwARcbn5WrDqj5PoIwGIk4NnxXNQl1ez68f3V437IQppM0m
- btSGVp9YQRc1oWmx9A7XhMU40Tgu3xypsZPE6oj0pmcLtApnLTy5ZCYl7Kbkq4efybpkQVgYP
- /EjxPQhjYxlaysPfv20KoDGvzusTuUqW0TzqTzufRbRSDsNnEIbg80k2IRMd4vUBi8rYzw8KP
- 4QLr5C2pdnr0+cIwDUKTkt9fGqQ/onuaPmLjP43BK/qMGC/blNp07vsHLfaWzewUezYcp+0Zj
- 6yyRjeQBJPxlVCkNTrHv7U6nx6tHGa9E5YMvVnzpT7mlZSKbVHR2hz/IVBAxfOVfqykpE3mjU
- TuRVtkTDr/zHqU=
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB3779.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9c1311b5-da0f-4967-30b9-08d9e9d63454
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Feb 2022 01:07:25.9060 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: p/bi32kYWaM7tGaL+l+u/4YLqaT4yOyB2jArPIrJmJihWykSt1UKZLfrzcBI8KsAvEyuWdKl7u7dnWHMUTIoufKkwZuS/LmtBxyWxaD6SSQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR06MB2797
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,520 +142,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kernel test robot <lkp@intel.com>, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>, Linus Walleij <linus.walleij@linaro.org>,
- linux-kernel@vger.kernel.org,
- =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Andy Shevchenko <andy.shevchenko@gmail.com>,
- Benjamin Fair <benjaminfair@google.com>, Tali Perry <tali.perry1@gmail.com>,
- openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>
+Cc: Johnny Huang <johnny_huang@aspeedtech.com>,
+ "sjg@chromium.org" <sjg@chromium.org>, Ryan Chen <ryan_chen@aspeedtech.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The name "DS" is defined in arch/x86/um/shared/sysdep/ptrace_64.h,
-which results in a compiler warning when build-testing on ARCH=3Dum.
-Rename this driver's "DS" macro to DSTR so avoid this collision.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Fixes: 3b588e43ee5c7 ("pinctrl: nuvoton: add NPCM7xx pinctrl and GPIO driv=
-er")
-Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-=2D--
- drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 158 +++++++++++-----------
- 1 file changed, 79 insertions(+), 79 deletions(-)
-
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/n=
-uvoton/pinctrl-npcm7xx.c
-index e05bbc7fb09de..6656bac3f3840 100644
-=2D-- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-@@ -905,7 +905,7 @@ static struct npcm7xx_func npcm7xx_funcs[] =3D {
- #define DRIVE_STRENGTH_HI_SHIFT		12
- #define DRIVE_STRENGTH_MASK		0x0000FF00
-
--#define DS(lo, hi)	(((lo) << DRIVE_STRENGTH_LO_SHIFT) | \
-+#define DSTR(lo, hi)	(((lo) << DRIVE_STRENGTH_LO_SHIFT) | \
- 			 ((hi) << DRIVE_STRENGTH_HI_SHIFT))
- #define DSLO(x)		(((x) >> DRIVE_STRENGTH_LO_SHIFT) & 0xF)
- #define DSHI(x)		(((x) >> DRIVE_STRENGTH_HI_SHIFT) & 0xF)
-@@ -925,31 +925,31 @@ struct npcm7xx_pincfg {
- static const struct npcm7xx_pincfg pincfg[] =3D {
- 	/*		PIN	  FUNCTION 1		   FUNCTION 2		  FUNCTION 3	    FLAGS */
- 	NPCM7XX_PINCFG(0,	 iox1, MFSEL1, 30,	  none, NONE, 0,	none, NONE, 0,	   =
-  0),
--	NPCM7XX_PINCFG(1,	 iox1, MFSEL1, 30,	  none, NONE, 0,	none, NONE, 0,	   =
-  DS(8, 12)),
--	NPCM7XX_PINCFG(2,	 iox1, MFSEL1, 30,	  none, NONE, 0,	none, NONE, 0,	   =
-  DS(8, 12)),
-+	NPCM7XX_PINCFG(1,	 iox1, MFSEL1, 30,	  none, NONE, 0,	none, NONE, 0,	   =
-  DSTR(8, 12)),
-+	NPCM7XX_PINCFG(2,	 iox1, MFSEL1, 30,	  none, NONE, 0,	none, NONE, 0,	   =
-  DSTR(8, 12)),
- 	NPCM7XX_PINCFG(3,	 iox1, MFSEL1, 30,	  none, NONE, 0,	none, NONE, 0,	   =
-  0),
- 	NPCM7XX_PINCFG(4,	 iox2, MFSEL3, 14,	 smb1d, I2CSEGSEL, 7,	none, NONE, 0=
-,	     SLEW),
- 	NPCM7XX_PINCFG(5,	 iox2, MFSEL3, 14,	 smb1d, I2CSEGSEL, 7,	none, NONE, 0=
-,	     SLEW),
- 	NPCM7XX_PINCFG(6,	 iox2, MFSEL3, 14,	 smb2d, I2CSEGSEL, 10,  none, NONE,=
- 0,       SLEW),
- 	NPCM7XX_PINCFG(7,	 iox2, MFSEL3, 14,	 smb2d, I2CSEGSEL, 10,  none, NONE,=
- 0,       SLEW),
--	NPCM7XX_PINCFG(8,      lkgpo1, FLOCKR1, 4,        none, NONE, 0,	none, N=
-ONE, 0,	     DS(8, 12)),
--	NPCM7XX_PINCFG(9,      lkgpo2, FLOCKR1, 8,        none, NONE, 0,	none, N=
-ONE, 0,	     DS(8, 12)),
--	NPCM7XX_PINCFG(10,	 ioxh, MFSEL3, 18,	  none, NONE, 0,	none, NONE, 0,	  =
-   DS(8, 12)),
--	NPCM7XX_PINCFG(11,	 ioxh, MFSEL3, 18,	  none, NONE, 0,	none, NONE, 0,	  =
-   DS(8, 12)),
-+	NPCM7XX_PINCFG(8,      lkgpo1, FLOCKR1, 4,        none, NONE, 0,	none, N=
-ONE, 0,	     DSTR(8, 12)),
-+	NPCM7XX_PINCFG(9,      lkgpo2, FLOCKR1, 8,        none, NONE, 0,	none, N=
-ONE, 0,	     DSTR(8, 12)),
-+	NPCM7XX_PINCFG(10,	 ioxh, MFSEL3, 18,	  none, NONE, 0,	none, NONE, 0,	  =
-   DSTR(8, 12)),
-+	NPCM7XX_PINCFG(11,	 ioxh, MFSEL3, 18,	  none, NONE, 0,	none, NONE, 0,	  =
-   DSTR(8, 12)),
- 	NPCM7XX_PINCFG(12,	 gspi, MFSEL1, 24,	 smb5b, I2CSEGSEL, 19,  none, NONE=
-, 0,	     SLEW),
- 	NPCM7XX_PINCFG(13,	 gspi, MFSEL1, 24,	 smb5b, I2CSEGSEL, 19,  none, NONE=
-, 0,	     SLEW),
- 	NPCM7XX_PINCFG(14,	 gspi, MFSEL1, 24,	 smb5c, I2CSEGSEL, 20,	none, NONE,=
- 0,	     SLEW),
- 	NPCM7XX_PINCFG(15,	 gspi, MFSEL1, 24,	 smb5c, I2CSEGSEL, 20,	none, NONE,=
- 0,	     SLEW),
--	NPCM7XX_PINCFG(16,     lkgpo0, FLOCKR1, 0,        none, NONE, 0,	none, N=
-ONE, 0,	     DS(8, 12)),
--	NPCM7XX_PINCFG(17,      pspi2, MFSEL3, 13,     smb4den, I2CSEGSEL, 23,  =
-none, NONE, 0,       DS(8, 12)),
--	NPCM7XX_PINCFG(18,      pspi2, MFSEL3, 13,	 smb4b, I2CSEGSEL, 14,  none,=
- NONE, 0,	     DS(8, 12)),
--	NPCM7XX_PINCFG(19,      pspi2, MFSEL3, 13,	 smb4b, I2CSEGSEL, 14,  none,=
- NONE, 0,	     DS(8, 12)),
-+	NPCM7XX_PINCFG(16,     lkgpo0, FLOCKR1, 0,        none, NONE, 0,	none, N=
-ONE, 0,	     DSTR(8, 12)),
-+	NPCM7XX_PINCFG(17,      pspi2, MFSEL3, 13,     smb4den, I2CSEGSEL, 23,  =
-none, NONE, 0,       DSTR(8, 12)),
-+	NPCM7XX_PINCFG(18,      pspi2, MFSEL3, 13,	 smb4b, I2CSEGSEL, 14,  none,=
- NONE, 0,	     DSTR(8, 12)),
-+	NPCM7XX_PINCFG(19,      pspi2, MFSEL3, 13,	 smb4b, I2CSEGSEL, 14,  none,=
- NONE, 0,	     DSTR(8, 12)),
- 	NPCM7XX_PINCFG(20,	smb4c, I2CSEGSEL, 15,    smb15, MFSEL3, 8,      none,=
- NONE, 0,	     0),
- 	NPCM7XX_PINCFG(21,	smb4c, I2CSEGSEL, 15,    smb15, MFSEL3, 8,      none,=
- NONE, 0,	     0),
- 	NPCM7XX_PINCFG(22,      smb4d, I2CSEGSEL, 16,	 smb14, MFSEL3, 7,      no=
-ne, NONE, 0,	     0),
- 	NPCM7XX_PINCFG(23,      smb4d, I2CSEGSEL, 16,	 smb14, MFSEL3, 7,      no=
-ne, NONE, 0,	     0),
--	NPCM7XX_PINCFG(24,	 ioxh, MFSEL3, 18,	  none, NONE, 0,	none, NONE, 0,	  =
-   DS(8, 12)),
--	NPCM7XX_PINCFG(25,	 ioxh, MFSEL3, 18,	  none, NONE, 0,	none, NONE, 0,	  =
-   DS(8, 12)),
-+	NPCM7XX_PINCFG(24,	 ioxh, MFSEL3, 18,	  none, NONE, 0,	none, NONE, 0,	  =
-   DSTR(8, 12)),
-+	NPCM7XX_PINCFG(25,	 ioxh, MFSEL3, 18,	  none, NONE, 0,	none, NONE, 0,	  =
-   DSTR(8, 12)),
- 	NPCM7XX_PINCFG(26,	 smb5, MFSEL1, 2,	  none, NONE, 0,	none, NONE, 0,	   =
-  0),
- 	NPCM7XX_PINCFG(27,	 smb5, MFSEL1, 2,	  none, NONE, 0,	none, NONE, 0,	   =
-  0),
- 	NPCM7XX_PINCFG(28,	 smb4, MFSEL1, 1,	  none, NONE, 0,	none, NONE, 0,	   =
-  0),
-@@ -965,12 +965,12 @@ static const struct npcm7xx_pincfg pincfg[] =3D {
- 	NPCM7XX_PINCFG(39,	smb3b, I2CSEGSEL, 11,	  none, NONE, 0,	none, NONE, 0,=
-	     SLEW),
- 	NPCM7XX_PINCFG(40,	smb3b, I2CSEGSEL, 11,	  none, NONE, 0,	none, NONE, 0,=
-	     SLEW),
- 	NPCM7XX_PINCFG(41,  bmcuart0a, MFSEL1, 9,         none, NONE, 0,	none, N=
-ONE, 0,	     0),
--	NPCM7XX_PINCFG(42,  bmcuart0a, MFSEL1, 9,         none, NONE, 0,	none, N=
-ONE, 0,	     DS(2, 4) | GPO),
-+	NPCM7XX_PINCFG(42,  bmcuart0a, MFSEL1, 9,         none, NONE, 0,	none, N=
-ONE, 0,	     DSTR(2, 4) | GPO),
- 	NPCM7XX_PINCFG(43,      uart1, MFSEL1, 10,	 jtag2, MFSEL4, 0,  bmcuart1,=
- MFSEL3, 24,    0),
- 	NPCM7XX_PINCFG(44,      uart1, MFSEL1, 10,	 jtag2, MFSEL4, 0,  bmcuart1,=
- MFSEL3, 24,    0),
- 	NPCM7XX_PINCFG(45,      uart1, MFSEL1, 10,	 jtag2, MFSEL4, 0,	none, NONE=
-, 0,	     0),
--	NPCM7XX_PINCFG(46,      uart1, MFSEL1, 10,	 jtag2, MFSEL4, 0,	none, NONE=
-, 0,	     DS(2, 8)),
--	NPCM7XX_PINCFG(47,      uart1, MFSEL1, 10,	 jtag2, MFSEL4, 0,	none, NONE=
-, 0,	     DS(2, 8)),
-+	NPCM7XX_PINCFG(46,      uart1, MFSEL1, 10,	 jtag2, MFSEL4, 0,	none, NONE=
-, 0,	     DSTR(2, 8)),
-+	NPCM7XX_PINCFG(47,      uart1, MFSEL1, 10,	 jtag2, MFSEL4, 0,	none, NONE=
-, 0,	     DSTR(2, 8)),
- 	NPCM7XX_PINCFG(48,	uart2, MFSEL1, 11,   bmcuart0b, MFSEL4, 1,      none,=
- NONE, 0,	     GPO),
- 	NPCM7XX_PINCFG(49,	uart2, MFSEL1, 11,   bmcuart0b, MFSEL4, 1,      none,=
- NONE, 0,	     0),
- 	NPCM7XX_PINCFG(50,	uart2, MFSEL1, 11,	  none, NONE, 0,        none, NONE=
-, 0,	     0),
-@@ -980,8 +980,8 @@ static const struct npcm7xx_pincfg pincfg[] =3D {
- 	NPCM7XX_PINCFG(54,	uart2, MFSEL1, 11,	  none, NONE, 0,        none, NONE=
-, 0,	     0),
- 	NPCM7XX_PINCFG(55,	uart2, MFSEL1, 11,	  none, NONE, 0,        none, NONE=
-, 0,	     0),
- 	NPCM7XX_PINCFG(56,	r1err, MFSEL1, 12,	  none, NONE, 0,	none, NONE, 0,	  =
-   0),
--	NPCM7XX_PINCFG(57,       r1md, MFSEL1, 13,        none, NONE, 0,        =
-none, NONE, 0,       DS(2, 4)),
--	NPCM7XX_PINCFG(58,       r1md, MFSEL1, 13,        none, NONE, 0,	none, N=
-ONE, 0,	     DS(2, 4)),
-+	NPCM7XX_PINCFG(57,       r1md, MFSEL1, 13,        none, NONE, 0,        =
-none, NONE, 0,       DSTR(2, 4)),
-+	NPCM7XX_PINCFG(58,       r1md, MFSEL1, 13,        none, NONE, 0,	none, N=
-ONE, 0,	     DSTR(2, 4)),
- 	NPCM7XX_PINCFG(59,	smb3d, I2CSEGSEL, 13,	  none, NONE, 0,	none, NONE, 0,=
-	     0),
- 	NPCM7XX_PINCFG(60,	smb3d, I2CSEGSEL, 13,	  none, NONE, 0,	none, NONE, 0,=
-	     0),
- 	NPCM7XX_PINCFG(61,      uart1, MFSEL1, 10,	  none, NONE, 0,	none, NONE, =
-0,     GPO),
-@@ -1004,19 +1004,19 @@ static const struct npcm7xx_pincfg pincfg[] =3D {
- 	NPCM7XX_PINCFG(77,    fanin13, MFSEL2, 13,        none, NONE, 0,	none, N=
-ONE, 0,	     0),
- 	NPCM7XX_PINCFG(78,    fanin14, MFSEL2, 14,        none, NONE, 0,	none, N=
-ONE, 0,	     0),
- 	NPCM7XX_PINCFG(79,    fanin15, MFSEL2, 15,        none, NONE, 0,	none, N=
-ONE, 0,	     0),
--	NPCM7XX_PINCFG(80,	 pwm0, MFSEL2, 16,        none, NONE, 0,	none, NONE, =
-0,	     DS(4, 8)),
--	NPCM7XX_PINCFG(81,	 pwm1, MFSEL2, 17,        none, NONE, 0,	none, NONE, =
-0,	     DS(4, 8)),
--	NPCM7XX_PINCFG(82,	 pwm2, MFSEL2, 18,        none, NONE, 0,	none, NONE, =
-0,	     DS(4, 8)),
--	NPCM7XX_PINCFG(83,	 pwm3, MFSEL2, 19,        none, NONE, 0,	none, NONE, =
-0,	     DS(4, 8)),
--	NPCM7XX_PINCFG(84,         r2, MFSEL1, 14,        none, NONE, 0,        =
-none, NONE, 0,	     DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(85,         r2, MFSEL1, 14,        none, NONE, 0,        =
-none, NONE, 0,	     DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(86,         r2, MFSEL1, 14,        none, NONE, 0,        =
-none, NONE, 0,	     DS(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(80,	 pwm0, MFSEL2, 16,        none, NONE, 0,	none, NONE, =
-0,	     DSTR(4, 8)),
-+	NPCM7XX_PINCFG(81,	 pwm1, MFSEL2, 17,        none, NONE, 0,	none, NONE, =
-0,	     DSTR(4, 8)),
-+	NPCM7XX_PINCFG(82,	 pwm2, MFSEL2, 18,        none, NONE, 0,	none, NONE, =
-0,	     DSTR(4, 8)),
-+	NPCM7XX_PINCFG(83,	 pwm3, MFSEL2, 19,        none, NONE, 0,	none, NONE, =
-0,	     DSTR(4, 8)),
-+	NPCM7XX_PINCFG(84,         r2, MFSEL1, 14,        none, NONE, 0,        =
-none, NONE, 0,	     DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(85,         r2, MFSEL1, 14,        none, NONE, 0,        =
-none, NONE, 0,	     DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(86,         r2, MFSEL1, 14,        none, NONE, 0,        =
-none, NONE, 0,	     DSTR(8, 12) | SLEW),
- 	NPCM7XX_PINCFG(87,         r2, MFSEL1, 14,        none, NONE, 0,        =
-none, NONE, 0,	     0),
- 	NPCM7XX_PINCFG(88,         r2, MFSEL1, 14,        none, NONE, 0,        =
-none, NONE, 0,	     0),
- 	NPCM7XX_PINCFG(89,         r2, MFSEL1, 14,        none, NONE, 0,        =
-none, NONE, 0,	     0),
- 	NPCM7XX_PINCFG(90,      r2err, MFSEL1, 15,        none, NONE, 0,        =
-none, NONE, 0,       0),
--	NPCM7XX_PINCFG(91,       r2md, MFSEL1, 16,	  none, NONE, 0,        none,=
- NONE, 0,	     DS(2, 4)),
--	NPCM7XX_PINCFG(92,       r2md, MFSEL1, 16,	  none, NONE, 0,        none,=
- NONE, 0,	     DS(2, 4)),
-+	NPCM7XX_PINCFG(91,       r2md, MFSEL1, 16,	  none, NONE, 0,        none,=
- NONE, 0,	     DSTR(2, 4)),
-+	NPCM7XX_PINCFG(92,       r2md, MFSEL1, 16,	  none, NONE, 0,        none,=
- NONE, 0,	     DSTR(2, 4)),
- 	NPCM7XX_PINCFG(93,    ga20kbc, MFSEL1, 17,	 smb5d, I2CSEGSEL, 21,  none,=
- NONE, 0,	     0),
- 	NPCM7XX_PINCFG(94,    ga20kbc, MFSEL1, 17,	 smb5d, I2CSEGSEL, 21,  none,=
- NONE, 0,	     0),
- 	NPCM7XX_PINCFG(95,	  lpc, NONE, 0,		  espi, MFSEL4, 8,      gpio, MFSEL1=
-, 26,    0),
-@@ -1062,34 +1062,34 @@ static const struct npcm7xx_pincfg pincfg[] =3D {
- 	NPCM7XX_PINCFG(133,	smb10, MFSEL4, 13,	  none, NONE, 0,	none, NONE, 0,	 =
-    0),
- 	NPCM7XX_PINCFG(134,	smb11, MFSEL4, 14,	  none, NONE, 0,	none, NONE, 0,	 =
-    0),
- 	NPCM7XX_PINCFG(135,	smb11, MFSEL4, 14,	  none, NONE, 0,	none, NONE, 0,	 =
-    0),
--	NPCM7XX_PINCFG(136,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(137,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(138,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(139,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(140,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(136,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(137,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(138,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(139,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(140,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
- 	NPCM7XX_PINCFG(141,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    0),
--	NPCM7XX_PINCFG(142,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(142,	  sd1, MFSEL3, 12,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
- 	NPCM7XX_PINCFG(143,       sd1, MFSEL3, 12,      sd1pwr, MFSEL4, 5,      =
-none, NONE, 0,       0),
--	NPCM7XX_PINCFG(144,	 pwm4, MFSEL2, 20,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(4, 8)),
--	NPCM7XX_PINCFG(145,	 pwm5, MFSEL2, 21,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(4, 8)),
--	NPCM7XX_PINCFG(146,	 pwm6, MFSEL2, 22,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(4, 8)),
--	NPCM7XX_PINCFG(147,	 pwm7, MFSEL2, 23,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(4, 8)),
--	NPCM7XX_PINCFG(148,	 mmc8, MFSEL3, 11,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(149,	 mmc8, MFSEL3, 11,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(150,	 mmc8, MFSEL3, 11,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(151,	 mmc8, MFSEL3, 11,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(152,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(144,	 pwm4, MFSEL2, 20,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(4, 8)),
-+	NPCM7XX_PINCFG(145,	 pwm5, MFSEL2, 21,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(4, 8)),
-+	NPCM7XX_PINCFG(146,	 pwm6, MFSEL2, 22,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(4, 8)),
-+	NPCM7XX_PINCFG(147,	 pwm7, MFSEL2, 23,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(4, 8)),
-+	NPCM7XX_PINCFG(148,	 mmc8, MFSEL3, 11,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(149,	 mmc8, MFSEL3, 11,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(150,	 mmc8, MFSEL3, 11,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(151,	 mmc8, MFSEL3, 11,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(152,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
- 	NPCM7XX_PINCFG(153,     mmcwp, FLOCKR1, 24,       none, NONE, 0,	none, N=
-ONE, 0,	     0),  /* Z1/A1 */
--	NPCM7XX_PINCFG(154,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(154,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
- 	NPCM7XX_PINCFG(155,     mmccd, MFSEL3, 25,      mmcrst, MFSEL4, 6,      =
-none, NONE, 0,       0),  /* Z1/A1 */
--	NPCM7XX_PINCFG(156,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(157,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(158,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(159,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DS(8, 12) | SLEW),
--
--	NPCM7XX_PINCFG(160,    clkout, MFSEL1, 21,        none, NONE, 0,        =
-none, NONE, 0,	     DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(161,	  lpc, NONE, 0,		  espi, MFSEL4, 8,      gpio, MFSEL=
-1, 26,    DS(8, 12)),
--	NPCM7XX_PINCFG(162,    serirq, NONE, 0,           gpio, MFSEL1, 31,	none=
-, NONE, 0,	     DS(8, 12)),
-+	NPCM7XX_PINCFG(156,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(157,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(158,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(159,	  mmc, MFSEL3, 10,	  none, NONE, 0,	none, NONE, 0,	 =
-    DSTR(8, 12) | SLEW),
-+
-+	NPCM7XX_PINCFG(160,    clkout, MFSEL1, 21,        none, NONE, 0,        =
-none, NONE, 0,	     DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(161,	  lpc, NONE, 0,		  espi, MFSEL4, 8,      gpio, MFSEL=
-1, 26,    DSTR(8, 12)),
-+	NPCM7XX_PINCFG(162,    serirq, NONE, 0,           gpio, MFSEL1, 31,	none=
-, NONE, 0,	     DSTR(8, 12)),
- 	NPCM7XX_PINCFG(163,	  lpc, NONE, 0,		  espi, MFSEL4, 8,      gpio, MFSEL=
-1, 26,    0),
- 	NPCM7XX_PINCFG(164,	  lpc, NONE, 0,		  espi, MFSEL4, 8,      gpio, MFSEL=
-1, 26,    SLEWLPC),
- 	NPCM7XX_PINCFG(165,	  lpc, NONE, 0,		  espi, MFSEL4, 8,      gpio, MFSEL=
-1, 26,    SLEWLPC),
-@@ -1102,25 +1102,25 @@ static const struct npcm7xx_pincfg pincfg[] =3D {
- 	NPCM7XX_PINCFG(172,	 smb6, MFSEL3, 1,	  none, NONE, 0,	none, NONE, 0,	  =
-   0),
- 	NPCM7XX_PINCFG(173,	 smb7, MFSEL3, 2,	  none, NONE, 0,	none, NONE, 0,	  =
-   0),
- 	NPCM7XX_PINCFG(174,	 smb7, MFSEL3, 2,	  none, NONE, 0,	none, NONE, 0,	  =
-   0),
--	NPCM7XX_PINCFG(175,	pspi1, MFSEL3, 4,       faninx, MFSEL3, 3,      none=
-, NONE, 0,	     DS(8, 12)),
--	NPCM7XX_PINCFG(176,     pspi1, MFSEL3, 4,       faninx, MFSEL3, 3,      =
-none, NONE, 0,	     DS(8, 12)),
--	NPCM7XX_PINCFG(177,     pspi1, MFSEL3, 4,       faninx, MFSEL3, 3,      =
-none, NONE, 0,	     DS(8, 12)),
--	NPCM7XX_PINCFG(178,	   r1, MFSEL3, 9,	  none, NONE, 0,	none, NONE, 0,	  =
-   DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(179,	   r1, MFSEL3, 9,	  none, NONE, 0,	none, NONE, 0,	  =
-   DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(180,	   r1, MFSEL3, 9,	  none, NONE, 0,	none, NONE, 0,	  =
-   DS(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(175,	pspi1, MFSEL3, 4,       faninx, MFSEL3, 3,      none=
-, NONE, 0,	     DSTR(8, 12)),
-+	NPCM7XX_PINCFG(176,     pspi1, MFSEL3, 4,       faninx, MFSEL3, 3,      =
-none, NONE, 0,	     DSTR(8, 12)),
-+	NPCM7XX_PINCFG(177,     pspi1, MFSEL3, 4,       faninx, MFSEL3, 3,      =
-none, NONE, 0,	     DSTR(8, 12)),
-+	NPCM7XX_PINCFG(178,	   r1, MFSEL3, 9,	  none, NONE, 0,	none, NONE, 0,	  =
-   DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(179,	   r1, MFSEL3, 9,	  none, NONE, 0,	none, NONE, 0,	  =
-   DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(180,	   r1, MFSEL3, 9,	  none, NONE, 0,	none, NONE, 0,	  =
-   DSTR(8, 12) | SLEW),
- 	NPCM7XX_PINCFG(181,	   r1, MFSEL3, 9,	  none, NONE, 0,	none, NONE, 0,	  =
-   0),
- 	NPCM7XX_PINCFG(182,	   r1, MFSEL3, 9,	  none, NONE, 0,	none, NONE, 0,	  =
-   0),
--	NPCM7XX_PINCFG(183,     spi3, MFSEL4, 16,	  none, NONE, 0,	none, NONE, 0=
-,	     DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(184,     spi3, MFSEL4, 16,	  none, NONE, 0,	none, NONE, 0=
-,	     DS(8, 12) | SLEW | GPO),
--	NPCM7XX_PINCFG(185,     spi3, MFSEL4, 16,	  none, NONE, 0,	none, NONE, 0=
-,	     DS(8, 12) | SLEW | GPO),
--	NPCM7XX_PINCFG(186,     spi3, MFSEL4, 16,	  none, NONE, 0,	none, NONE, 0=
-,	     DS(8, 12)),
--	NPCM7XX_PINCFG(187,   spi3cs1, MFSEL4, 17,        none, NONE, 0,	none, N=
-ONE, 0,	     DS(8, 12)),
--	NPCM7XX_PINCFG(188,  spi3quad, MFSEL4, 20,     spi3cs2, MFSEL4, 18,     =
-none, NONE, 0,    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(189,  spi3quad, MFSEL4, 20,     spi3cs3, MFSEL4, 19,     =
-none, NONE, 0,    DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(190,      gpio, FLOCKR1, 20,   nprd_smi, NONE, 0,	none, N=
-ONE, 0,	     DS(2, 4)),
--	NPCM7XX_PINCFG(191,	 none, NONE, 0,		  none, NONE, 0,	none, NONE, 0,	   =
-  DS(8, 12)),  /* XX */
--
--	NPCM7XX_PINCFG(192,	 none, NONE, 0,		  none, NONE, 0,	none, NONE, 0,	   =
-  DS(8, 12)),  /* XX */
-+	NPCM7XX_PINCFG(183,     spi3, MFSEL4, 16,	  none, NONE, 0,	none, NONE, 0=
-,	     DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(184,     spi3, MFSEL4, 16,	  none, NONE, 0,	none, NONE, 0=
-,	     DSTR(8, 12) | SLEW | GPO),
-+	NPCM7XX_PINCFG(185,     spi3, MFSEL4, 16,	  none, NONE, 0,	none, NONE, 0=
-,	     DSTR(8, 12) | SLEW | GPO),
-+	NPCM7XX_PINCFG(186,     spi3, MFSEL4, 16,	  none, NONE, 0,	none, NONE, 0=
-,	     DSTR(8, 12)),
-+	NPCM7XX_PINCFG(187,   spi3cs1, MFSEL4, 17,        none, NONE, 0,	none, N=
-ONE, 0,	     DSTR(8, 12)),
-+	NPCM7XX_PINCFG(188,  spi3quad, MFSEL4, 20,     spi3cs2, MFSEL4, 18,     =
-none, NONE, 0,    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(189,  spi3quad, MFSEL4, 20,     spi3cs3, MFSEL4, 19,     =
-none, NONE, 0,    DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(190,      gpio, FLOCKR1, 20,   nprd_smi, NONE, 0,	none, N=
-ONE, 0,	     DSTR(2, 4)),
-+	NPCM7XX_PINCFG(191,	 none, NONE, 0,		  none, NONE, 0,	none, NONE, 0,	   =
-  DSTR(8, 12)),  /* XX */
-+
-+	NPCM7XX_PINCFG(192,	 none, NONE, 0,		  none, NONE, 0,	none, NONE, 0,	   =
-  DSTR(8, 12)),  /* XX */
- 	NPCM7XX_PINCFG(193,	   r1, MFSEL3, 9,	  none, NONE, 0,	none, NONE, 0,	  =
-   0),
- 	NPCM7XX_PINCFG(194,	smb0b, I2CSEGSEL, 0,	  none, NONE, 0,	none, NONE, 0,=
-	     0),
- 	NPCM7XX_PINCFG(195,	smb0b, I2CSEGSEL, 0,	  none, NONE, 0,	none, NONE, 0,=
-	     0),
-@@ -1131,11 +1131,11 @@ static const struct npcm7xx_pincfg pincfg[] =3D {
- 	NPCM7XX_PINCFG(200,        r2, MFSEL1, 14,        none, NONE, 0,        =
-none, NONE, 0,       0),
- 	NPCM7XX_PINCFG(201,	   r1, MFSEL3, 9,	  none, NONE, 0,	none, NONE, 0,	  =
-   0),
- 	NPCM7XX_PINCFG(202,	smb0c, I2CSEGSEL, 1,	  none, NONE, 0,	none, NONE, 0,=
-	     0),
--	NPCM7XX_PINCFG(203,    faninx, MFSEL3, 3,         none, NONE, 0,	none, N=
-ONE, 0,	     DS(8, 12)),
-+	NPCM7XX_PINCFG(203,    faninx, MFSEL3, 3,         none, NONE, 0,	none, N=
-ONE, 0,	     DSTR(8, 12)),
- 	NPCM7XX_PINCFG(204,	  ddc, NONE, 0,           gpio, MFSEL3, 22,	none, NO=
-NE, 0,	     SLEW),
- 	NPCM7XX_PINCFG(205,	  ddc, NONE, 0,           gpio, MFSEL3, 22,	none, NO=
-NE, 0,	     SLEW),
--	NPCM7XX_PINCFG(206,	  ddc, NONE, 0,           gpio, MFSEL3, 22,	none, NO=
-NE, 0,	     DS(4, 8)),
--	NPCM7XX_PINCFG(207,	  ddc, NONE, 0,           gpio, MFSEL3, 22,	none, NO=
-NE, 0,	     DS(4, 8)),
-+	NPCM7XX_PINCFG(206,	  ddc, NONE, 0,           gpio, MFSEL3, 22,	none, NO=
-NE, 0,	     DSTR(4, 8)),
-+	NPCM7XX_PINCFG(207,	  ddc, NONE, 0,           gpio, MFSEL3, 22,	none, NO=
-NE, 0,	     DSTR(4, 8)),
- 	NPCM7XX_PINCFG(208,       rg2, MFSEL4, 24,         ddr, MFSEL3, 26,     =
-none, NONE, 0,       0),
- 	NPCM7XX_PINCFG(209,       rg2, MFSEL4, 24,         ddr, MFSEL3, 26,     =
-none, NONE, 0,       0),
- 	NPCM7XX_PINCFG(210,       rg2, MFSEL4, 24,         ddr, MFSEL3, 26,     =
-none, NONE, 0,       0),
-@@ -1147,20 +1147,20 @@ static const struct npcm7xx_pincfg pincfg[] =3D {
- 	NPCM7XX_PINCFG(216,   rg2mdio, MFSEL4, 23,         ddr, MFSEL3, 26,     =
-none, NONE, 0,       0),
- 	NPCM7XX_PINCFG(217,   rg2mdio, MFSEL4, 23,         ddr, MFSEL3, 26,     =
-none, NONE, 0,       0),
- 	NPCM7XX_PINCFG(218,     wdog1, MFSEL3, 19,        none, NONE, 0,	none, N=
-ONE, 0,	     0),
--	NPCM7XX_PINCFG(219,     wdog2, MFSEL3, 20,        none, NONE, 0,	none, N=
-ONE, 0,	     DS(4, 8)),
-+	NPCM7XX_PINCFG(219,     wdog2, MFSEL3, 20,        none, NONE, 0,	none, N=
-ONE, 0,	     DSTR(4, 8)),
- 	NPCM7XX_PINCFG(220,	smb12, MFSEL3, 5,	  none, NONE, 0,	none, NONE, 0,	  =
-   0),
- 	NPCM7XX_PINCFG(221,	smb12, MFSEL3, 5,	  none, NONE, 0,	none, NONE, 0,	  =
-   0),
- 	NPCM7XX_PINCFG(222,     smb13, MFSEL3, 6,         none, NONE, 0,	none, N=
-ONE, 0,	     0),
- 	NPCM7XX_PINCFG(223,     smb13, MFSEL3, 6,         none, NONE, 0,	none, N=
-ONE, 0,	     0),
-
- 	NPCM7XX_PINCFG(224,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     SLEW),
--	NPCM7XX_PINCFG(225,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     DS(8, 12) | SLEW | GPO),
--	NPCM7XX_PINCFG(226,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     DS(8, 12) | SLEW | GPO),
--	NPCM7XX_PINCFG(227,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(228,   spixcs1, MFSEL4, 28,        none, NONE, 0,	none, N=
-ONE, 0,	     DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(229,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(230,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     DS(8, 12) | SLEW),
--	NPCM7XX_PINCFG(231,    clkreq, MFSEL4, 9,         none, NONE, 0,        =
-none, NONE, 0,	     DS(8, 12)),
-+	NPCM7XX_PINCFG(225,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     DSTR(8, 12) | SLEW | GPO),
-+	NPCM7XX_PINCFG(226,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     DSTR(8, 12) | SLEW | GPO),
-+	NPCM7XX_PINCFG(227,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(228,   spixcs1, MFSEL4, 28,        none, NONE, 0,	none, N=
-ONE, 0,	     DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(229,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(230,	 spix, MFSEL4, 27,        none, NONE, 0,	none, NONE,=
- 0,	     DSTR(8, 12) | SLEW),
-+	NPCM7XX_PINCFG(231,    clkreq, MFSEL4, 9,         none, NONE, 0,        =
-none, NONE, 0,	     DSTR(8, 12)),
- 	NPCM7XX_PINCFG(253,	 none, NONE, 0,		  none, NONE, 0,	none, NONE, 0,	   =
-  GPI), /* SDHC1 power */
- 	NPCM7XX_PINCFG(254,	 none, NONE, 0,		  none, NONE, 0,	none, NONE, 0,	   =
-  GPI), /* SDHC2 power */
- 	NPCM7XX_PINCFG(255,	 none, NONE, 0,		  none, NONE, 0,	none, NONE, 0,	   =
-  GPI), /* DACOSEL */
-=2D-
-2.34.1
-
+SGkgQW5kcmV3LA0KDQpJIGFtIGN1cmlvdXMgYWJvdXQgdGhlIHVzYWdlIHNjZW5hcmlvLg0KSXMg
+dGhlIHJ1bnRpbWUgY29udHJvbCByZXF1aXJlZCBmb3IgcHJvZHVjdGlvbiByZWxlYXNlPw0KQXMg
+dGhpcyBjb250cm9sIGFjdHMgbGlrZSBhIGJhY2tkb29yIHRvIGJ5cGFzcyB0aGUgY2hhaW4tb2Yt
+dHJ1c3QuDQpJZiBpdCBpcyBmb3IgZGVidWdnaW5nL2RldmVsb3BtZW50IHB1cnBvc2VzLCBzaG91
+bGQgd2UgZW5jb3VyYWdlIHRoZSB1c2Ugb2YgdW5zaWduZWQgaW1hZ2VzIHVuZGVyIFJEIGVudmly
+b25tZW50cz8NCkJleW9uZCB0aGlzLCBJIGhhdmUgbm8gY29uY2VybiBhcyB0aGUgcGF0Y2ggcHJv
+dmlkZXMgbW9yZSBmbGV4aWJpbGl0eS4NCg0KPiBGcm9tOiBBbmRyZXcgSmVmZmVyeSA8YW5kcmV3
+QGFqLmlkLmF1Pg0KPiBTZW50OiBNb25kYXksIEphbnVhcnkgMzEsIDIwMjIgMTE6NDIgQU0NCj4g
+DQo+IFNvbWUgcGxhdGZvcm0gZGVzaWducyBpbmNsdWRlIHN1cHBvcnQgZm9yIGRpc2FibGluZyBz
+ZWN1cmUtYm9vdCB2aWEgYSBqdW1wZXINCj4gb24gdGhlIGJvYXJkLiBTb21ldGltZXMgdGhpcyBj
+b250cm9sIGNhbiBiZSBzZXBhcmF0ZSBmcm9tIHRoZSBtZWNoYW5pc20NCj4gZW5hYmxpbmcgdGhl
+IHJvb3Qtb2YtdHJ1c3QgZm9yIHRoZSBwbGF0Zm9ybS4gQWRkIHN1cHBvcnQgZm9yIHRoaXMgbGF0
+dGVyIHNjZW5hcmlvDQo+IGJ5IGFsbG93aW5nIGJvYXJkcyB0byBpbXBsZW1lbnQgYm9hcmRfZml0
+X2ltYWdlX3JlcXVpcmVfdmVyZmllZCgpLCB3aGljaCBpcw0KPiB0aGVuIGludm9rZWQgaW4gdGhl
+IHVzdWFsIEZJVCB2ZXJpZmljYXRpb24gcGF0aHMuDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBBbmRy
+ZXcgSmVmZmVyeSA8YW5kcmV3QGFqLmlkLmF1Pg0KPiAtLS0NCj4gSGksDQo+IA0KPiBUaGlzIHBh
+dGNoIGlzIGV4dHJhY3RlZCBmcm9tIGFuZCBtb3RpdmF0ZWQgYnkgYSBzZXJpZXMgYWRkaW5nIHJ1
+bi10aW1lIGNvbnRyb2wNCj4gb2YgRklUIHNpZ25hdHVyZSB2ZXJpZmljYXRpb24gdG8gdS1ib290
+IGluIE9wZW5CTUM6DQo+IA0KPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9vcGVuYm1jLzIwMjIw
+MTMxMDEyNTM4LjczMDIxLTEtYW5kcmV3QGFqLmlkLmF1Lw0KPiANCj4gVW5mb3J0dW5hdGVseSB0
+aGUgT3BlbkJNQyB1LWJvb3QgdHJlZSBpcyBxdWl0ZSBhIHdheSBiZWhpbmQgb24gdHJhY2tpbmcN
+Cj4gdXBzdHJlYW0gYW5kIGNvbnRhaW5zIGEgYnVuY2ggb2Ygb3V0LW9mLXRyZWUgd29yayBhcyB3
+ZWxsLiBBcyBzdWNoIEknbSBsb29raW5nDQo+IHRvIHVwc3RyZWFtIHRoZSBjb3VwbGUgb2YgY2hh
+bmdlcyB0aGF0IG1ha2Ugc2Vuc2UgYWdhaW5zdCBtYXN0ZXIuDQo+IA0KPiBQbGVhc2UgdGFrZSBh
+IGxvb2shDQo+IA0KPiBBbmRyZXcNCj4gDQo+ICBib290L0tjb25maWcgICAgIHwgIDggKysrKysr
+KysNCj4gIGJvb3QvaW1hZ2UtZml0LmMgfCAyMSArKysrKysrKysrKysrKysrKy0tLS0gIGluY2x1
+ZGUvaW1hZ2UuaCAgfCAgOQ0KPiArKysrKysrKysNCj4gIDMgZmlsZXMgY2hhbmdlZCwgMzQgaW5z
+ZXJ0aW9ucygrKSwgNCBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1naXQgYS9ib290L0tjb25m
+aWcgYi9ib290L0tjb25maWcgaW5kZXggYzhkNTkwNmNkMzA0Li5lYzQxMzE1MWZkNWENCj4gMTAw
+NjQ0DQo+IC0tLSBhL2Jvb3QvS2NvbmZpZw0KPiArKysgYi9ib290L0tjb25maWcNCj4gQEAgLTc4
+LDYgKzc4LDE0IEBAIGNvbmZpZyBGSVRfU0lHTkFUVVJFDQo+ICAJICBmb3JtYXQgc3VwcG9ydCBp
+biB0aGlzIGNhc2UsIGVuYWJsZSBpdCB1c2luZw0KPiAgCSAgQ09ORklHX0xFR0FDWV9JTUFHRV9G
+T1JNQVQuDQo+IA0KPiAraWYgRklUX1NJR05BVFVSRQ0KPiArY29uZmlnIEZJVF9SVU5USU1FX1NJ
+R05BVFVSRQ0KPiArCWJvb2wgIkNvbnRyb2wgdmVyaWZpY2F0aW9uIG9mIEZJVCB1SW1hZ2VzIGF0
+IHJ1bnRpbWUiDQo+ICsJaGVscA0KPiArCSAgVGhpcyBvcHRpb24gYWxsb3dzIGJvYXJkIHN1cHBv
+cnQgdG8gZGlzYWJsZSB2ZXJpZmljYXRpb24gb2YNCj4gKwkgIHNpZ25hdHVyZXMgYXQgcnVudGlt
+ZSwgZm9yIGV4YW1wbGUgdGhyb3VnaCB0aGUgc3RhdGUgb2YgYSBHUElPLg0KPiArZW5kaWYgIyBG
+SVRfU0lHTkFUVVJFDQo+ICsNCg0KVXNpbmcgImRlcGVuZHMgb24iIG1pZ2h0IGJlIHByZWZlcnJl
+ZCBmb3IgS2NvbmZpZyBkZXBlbmRlbmN5Lg0KDQpSZWdhcmRzLA0KQ2hpYXdlaQ0K
