@@ -2,137 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E7464AB576
-	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 08:03:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AB3A4AB7FF
+	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 10:58:24 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JscXx6Bsnz3bPT
-	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 18:02:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JshRL0TPrz30RQ
+	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 20:58:22 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=dakUvohX;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=OMlFafxp;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:febc::70a;
- helo=apc01-hk2-obe.outbound.protection.outlook.com;
- envelope-from=jamin_lin@aspeedtech.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
- header.a=rsa-sha256 header.s=selector1 header.b=dakUvohX; 
- dkim-atps=neutral
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-hk2apc01on070a.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:febc::70a])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::835;
+ helo=mail-qt1-x835.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=OMlFafxp; dkim-atps=neutral
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com
+ [IPv6:2607:f8b0:4864:20::835])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JscXR2YC2z2ybK
- for <openbmc@lists.ozlabs.org>; Mon,  7 Feb 2022 18:02:29 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nq4F3Wcetv4ETTQCBhjNYSClbyweMMZ0my4l2ShWBBjlaw8p0MaV7G3eJvhDL6VrdnDmRb6vJcQdMyTfeZLth9cH10jaRuEsu3W1UwWQEVuJHH4ko+piNfnmDbCRsIDsZvPFqgIM8DiIfMEH+2MjEHRxF4uYZFzhm6jCCmPJI2mC46G2wG0gYZ3RLLHbAhQjWC9d/SI6YLZQI+vjipYRqwiFRRUHEgx3Q+u9w4pYvnobXQBI6KjkDtFYKOHnKba16sQvOeEkew5ZAiMQWlqQls4pms/X6WEbxiAlbj0dv/p9n2vLXJZYe86eojIqtXTYEZkhWAv8G8eorTULtC8XWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ex0uSjmRSv/3vaOWU4avhclLF8sJGV7qY9PIBfkJuMU=;
- b=aDlK6smVZxKVZA1ydT21e7iXmcaDMOWiHhN0vpqbJbOx6s7xBvZhjL+scPL0wm5SgjqEWsVBXuPX8IAa4gq8AU3brh1ITTwY5xwtsXNU/G6ibVJR4V5ByxIs2LVsZsMLwm/bkV/iXqEZuhcnXx5xEszP4poA6iH7sVzD9XoiIu9KfgQ4CmdS/EWYJSwr67eWURcX04EhSxFeZnL1nfU7emil/M+opWaCk2PwIOgzFtfsf2rs33EUkZiVEeu4I2/LXrSyg3koDTmK/de7YhLAjDK4djcc4D6x9z9lhUzhOL688xL0h+UQeapeDw2jzFaRiQmfCXC/ujiXKpBXhC7zRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ex0uSjmRSv/3vaOWU4avhclLF8sJGV7qY9PIBfkJuMU=;
- b=dakUvohXSx3xNk4D9OtjTH1t9tuJ/9EI5VMxcFirZauVzqfvt8uBxrXL2i+HeIN1hQNyvc4Py2oZbrad7K46ztABdeODNfgivr+dE34vwZpgqvaV5p3qcc3vnEwoti9E/FwcGbN1qkoMdMGawbZaVArjK49ud4g+VEPqNq/ZNDnGb65/xwSDVQ31iLTwkhvPwdg5aj0Wn9OLFFN24cWAv63AydoJEg4Ld4A2Isf4hQxyJj64n9kz00UbRUzzv9l6jzjtOZzFG/44SoB9+0uzb4ngaqD9gi8ubbueqjYbwP43Kv9G0qhqKixH1cdT8D63ZUzpOBAnhUVL7kKNerNWSA==
-Received: from TYZPR06MB4015.apcprd06.prod.outlook.com (2603:1096:400:28::9)
- by SG2PR06MB3080.apcprd06.prod.outlook.com (2603:1096:4:6d::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4951.18; Mon, 7 Feb
- 2022 07:02:04 +0000
-Received: from TYZPR06MB4015.apcprd06.prod.outlook.com
- ([fe80::d0f0:11b4:e1f4:8310]) by TYZPR06MB4015.apcprd06.prod.outlook.com
- ([fe80::d0f0:11b4:e1f4:8310%7]) with mapi id 15.20.4951.018; Mon, 7 Feb 2022
- 07:02:04 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: Joel Stanley <joel@jms.id.au>, Dylan Hung <dylan_hung@aspeedtech.com>,
- Ryan Chen <ryan_chen@aspeedtech.com>, ChiaWei Wang
- <chiawei_wang@aspeedtech.com>
-Subject: RE: Openbmc u-boot trees (was Re: u-boot:rsa adds rsa3072 algorithm)
-Thread-Topic: Openbmc u-boot trees (was Re: u-boot:rsa adds rsa3072 algorithm)
-Thread-Index: AQHYG+hmIuMp3Rt9gEubL4/iiSSGWKyHqODQ
-Date: Mon, 7 Feb 2022 07:02:04 +0000
-Message-ID: <TYZPR06MB4015B2ADBBB832D151F4B433FC2C9@TYZPR06MB4015.apcprd06.prod.outlook.com>
-References: <TYZPR06MB4015DC4BD5CA2FFAB595C69AFC2C9@TYZPR06MB4015.apcprd06.prod.outlook.com>
- <CACPK8XfwLCxNVLfVa=FYw0TVXPE_Kj8+p7=6Svw_O10x22Jf1g@mail.gmail.com>
-In-Reply-To: <CACPK8XfwLCxNVLfVa=FYw0TVXPE_Kj8+p7=6Svw_O10x22Jf1g@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: d4a1c786-895a-49e2-5aa7-08d9ea07bf52
-x-ms-traffictypediagnostic: SG2PR06MB3080:EE_
-x-microsoft-antispam-prvs: <SG2PR06MB30800300F0762B965D088E87FC2C9@SG2PR06MB3080.apcprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 9y3FulBx4qFcH0uCZ8XL66RDuZbxjWSOqGoUWzEZmbPNXOfIPN6KyFmHwWMOCr+SeQVxcQ2yGPyEGtJr/uD5fv4M0nh6Szk56A7ERO0Ip4EOmdCoQ0LMcN3nbXfAmVYDvDyy9bdvyuCs9pNpN4j2BDWw2kFDcxIUEOCfLzWikXCLQasi+2jRTlks8RXYaZdEfZo4UB09HeNxEhH+3KRTBONq6iaVOj36kQglr7dJvdw8c3YgpFemi4hn97W9RPX9nSceiSiy+qB2o+zYDTl+hA6+6WOWK0cHzBDa4/lHVtoLtxQS+tqGGcpuDBcsk5Fa90madf1qBiH0brj0FwsNMoQdRRfvmyOpeb1mV0kVBXD+XvbtxBksh0KoWzvbWwX3vQL4GBUvBHeP91tDVcnnr55ZhAfNgd/0VtIOJCQ8WVTUQlExKEp4h0/7Lu4CcAzqS9wJbMLM7dtW4B+rCY+dX1d4Kpv4pEU488cyKuRSDLD2FahzcO8w/hg38K+G8c3/5ZFUHfhkyc0M8KU9Ahm1kvgXJ2Ft9YKmfKBLKj0EGXIzDWBf/xMJOqnxPehA7kgq2FuZINh/255aLCI715N87VO0C9hTry/hkZVN90HF+Zb9d9ASjYrmQUqnXUxZ+8BTj1MbASFKkc+5XxVs7SM21FRFIQSIDBVeZ0Mxgtnxib5Ex3Qco5a045BOxqe86H+a9yiD7TCK2hPbkIL0OWq3QTSe3oOSuwUHE8quT5bnBtA6xl2HJSxIZb6iZIA7vHUkLik4pFDZ3nA5OyrJx0SlVKlWEUuUv5WS/xffO9g1TS0=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4015.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(39840400004)(346002)(366004)(136003)(396003)(376002)(83380400001)(86362001)(122000001)(38100700002)(110136005)(6636002)(316002)(54906003)(38070700005)(52536014)(7696005)(55016003)(9686003)(6506007)(64756008)(71200400001)(26005)(186003)(508600001)(53546011)(5660300002)(966005)(8936002)(2906002)(76116006)(66946007)(66476007)(66446008)(66556008)(33656002)(4326008)(8676002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?d3htaFdXdzgrZ1llaEhVQXd2UmQzZ3RJVUl0TXB4OW1sVjI5eFRXdDhaUTR6?=
- =?utf-8?B?T2RaenZZeklJZVlERDZ0dUh6VFF0L1NISmpCdDk1d1N2Kzl0ZHZnblNLdEpX?=
- =?utf-8?B?MjhlUWtDWTVLVzVmaXFNbHpJWERYZXFFVmYrWmNiSjVaUjZHNnVOeVVzekN4?=
- =?utf-8?B?MmhRZ04rbjNyNHpKTnNPZjRxenpKdkpaRUFGZnhaQndyeHZyQllDdzh0VGZC?=
- =?utf-8?B?Uzk4cjgyeWZxU3BnbTFadFZWdE81bWpveExDLytpU21YWEdvSERsa1lKc05M?=
- =?utf-8?B?Ty8xdkNDSW1vblQvUGZ0V21PLzEzM0dFMkpwczZMVzBWak05b3ZPUHRCQTNY?=
- =?utf-8?B?ZVpRNU9XLzh4eUlickdSdXlhYk5lZEs1VjUzbENHVGJzeFQrUnFTVjVDU1JR?=
- =?utf-8?B?QkE2UnVxajlHYVY5dWVaL1VzcHVza082OWg4QUFVZWt1b3kyZUhYVTZXYVNT?=
- =?utf-8?B?UDViK0h0aW1uTUlnZjdXNHJYSC9PVUd4NU12Um14NG9OWWxORzZWY3RseU4r?=
- =?utf-8?B?RkJqMTMrT0RGTmw4TGhLcHRjWU8rQVVRYnlNVzU4MFZOTEtWTUdsdmFreGcw?=
- =?utf-8?B?bkxxNUNTdXFUc1NSNGJMU04xRW03THh4VDA5aTBsdU10YzNkKzJqSTFhbVZO?=
- =?utf-8?B?bXdHMHlYdmJ3bHgxckZlYjJBZ0MrVytIU3lFdmRJcmhUMWthU3UrYjZ6NlYw?=
- =?utf-8?B?WEc0dzJ2Tllod2dHZWhtT0tkQmVIanpkN253eExHbW1TaVZzZTFlMVlKRUJR?=
- =?utf-8?B?Q00rWW1yZExEUTFaZDUzc2J3RC9BakJsWGh1Z3NIdk80eVR4T29oTEVOQStn?=
- =?utf-8?B?SzY0MVJ4RmVEeVBRUFFSdURQUTZ2dS8yeEQ4SkNKQmMxam9XUnF3TFRSMDR6?=
- =?utf-8?B?RldJd3lXU0R1Z2I0cGNSKzJlS2habVp4TWYzMDJSV00zVjYyQm1yVDNac1NL?=
- =?utf-8?B?TTdoWVR3RVpIUTJOSmdIWkdvU29FSGcvVkNHVlliZFo4UkNrb1RURjVEdXEv?=
- =?utf-8?B?Q0laL3pOS2pVTzFrRm1MT1dGb2xTbnU4Rm1QbnFNYUNSek52N01mYnFFKzhV?=
- =?utf-8?B?V1hrV3VNMVlaK0R1ZmhzYUkxRTI5dktyOXRwTmwvRVZUNFh4KzRkejNGTGJh?=
- =?utf-8?B?Rjk3c28ya0VjUy9LeU9nQ2h0NmQrd3ZDTkY4b1BBS3IwUVA1dHNCem42aEg3?=
- =?utf-8?B?SXBUM202b21yeCtUVHlDU3dyOXlOMUFiNlFGV0dtbUtmajgzMHhrVUpUWlpj?=
- =?utf-8?B?ZEk3UGhlSDV0VUpRVVNpelVUVDgwZDJoRXZseFY5NGJtVHN6d3Y1Znp3cTlI?=
- =?utf-8?B?WVZNYm9lV1dicFQvS01pVDMyQy9CeUxzdFZkNDFwL3pzUkIxazBPT3V6U1ha?=
- =?utf-8?B?MGQ0dWR4TGI2YU9FM1BpbTg1cUtkcWhvYXB3WUJGVUczNXdIUkJwMXdjeFdB?=
- =?utf-8?B?L2JYL2RYWFZ1VitIM0d3MVVnRFpkcTdqa3VOOGF0NmRabTBWM1B1KzdzR0hS?=
- =?utf-8?B?ZUNLTXBtVmlqNGQ1UFpick5reE5taWdJU3JWRlV6ZTRJMko0UE50VzJ0SUtT?=
- =?utf-8?B?VmFraDYreG03TEJ1SVdiUkgrNk8wU0ZHNUpRWS9PSVJsR0JEeDU2QVh6NVBF?=
- =?utf-8?B?TURkVzVPUmdNcSt6VkJZajdxaXhkSUpGMDdZNDkvNWdlcFMrTHZ1ZTBPaTVy?=
- =?utf-8?B?L3dtbjNFMFJlWk1waThoTjh1dU8zZ3ArQjVjMk1rL3NyYVVBM0t5NjlteWxo?=
- =?utf-8?B?TTlzbERQSFVkTHZYMk9RUzhKQXI5Tnp4QjZzamYzUS9nMFhVVEJrNzVLSlhu?=
- =?utf-8?B?M2luN0JoY3gyVUhkMkhYc3B4a2tCN3NrNDlkOUx4b0RBYVE0RGxvYndKazRq?=
- =?utf-8?B?Nk1KV2dCejFYd1hkYWRmZkFvbkp2aGtTMDJBODZTY0pBdU44SUxZbnhkVm5l?=
- =?utf-8?B?S1haWitwdmpLcVhmdXM4bFNyRkJZK25UZ0FWblA3cXBiU1lLRTc2WWN3OGFo?=
- =?utf-8?B?Z3BzVkZtMm0wMFpnQVorTGRBZkNhZkU5dXE0UUpjMEI3K2FDNkh3eGltSTdQ?=
- =?utf-8?B?VTFBQlNjdzNiQnRLTW4yaldKSVRMQkJiS2g0ZEdSemJmNkZVT2NVc3RDUExv?=
- =?utf-8?B?N0o1cWJEbVBMZDlqLzNWajh1QXlvV1ZjY0V6bHd0NFFDNmxsNGZmUjdxd0ZJ?=
- =?utf-8?B?eU11Z01TYkRwVU91aFpwSFN6dEZzRGpPVFBIcTJrWEI1ZW91ZHBvQ2NueGlr?=
- =?utf-8?B?VlVDNkFYaVZtNmNOYWZFeTc3N3JnPT0=?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JshQy18tPz2xXs
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Feb 2022 20:58:02 +1100 (AEDT)
+Received: by mail-qt1-x835.google.com with SMTP id j12so11405365qtr.2
+ for <openbmc@lists.ozlabs.org>; Mon, 07 Feb 2022 01:58:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=NKVqEQtXVmG6FvU399l1Y3yIMwpfqL4hFZMiVeXFJJk=;
+ b=OMlFafxp5Yd9Ve4TUP3W2F1Rr99YQHcKSuvSBTY774VH1SzmXGSK9oS7YVgdDhQe6R
+ 3s71Ky2EE0deRqMKutdBP1w7TteFlTMOsh5euTvdC6emozy9ClsklwqTD6g893+kmRsv
+ FIJtlvbzyr0B8FmC9UrOebyR2Bk6YLcJSdvQI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=NKVqEQtXVmG6FvU399l1Y3yIMwpfqL4hFZMiVeXFJJk=;
+ b=JPhpW1eEcnKoMJ9xt9L5ua8lGxZxoxcC2EtMvxtppwWRLb3EX/624gzRSFToMxvbl9
+ wXI2/LVo8ea6+oniprrTj5Rc+tBvJ/6mNiSiAufuocJV3aqshEu2Rptqx1WYaIALljge
+ KbfetBkltrDGNx/I++soyP9a7FfBsje99UT2Dr5tU7WNylmd8275X/aewzreBSCWY1HT
+ iE3JWPhgYKPBGQSKOrApaPrhkzmiJc6S3LWscOVv0T8y9OaZ3LSGQ6P41TH+FcLY6Grz
+ AEmi365CkuyUCXXAX1nFSxCjBVrnAsOzss/bjf6FkKN8wowoZozqR/zOqxa9+25KGwDB
+ HzfQ==
+X-Gm-Message-State: AOAM533nsqp6eGeu5RvGGxQ+z+ILBUht4ejwB5It1cvmWx19kYxRlUle
+ 4VZA/HfVuhT0Ntc83IEEDyM7aqVGWAw2Yd2EHE22jaMw
+X-Google-Smtp-Source: ABdhPJwpaL2XZWvQc/T3QamYqXvW5rAYdUsOIlzFPc7/8OQh0l2WCbszonK3P30/uFpryoF81xK6H5LYt5kDF17Tj6s=
+X-Received: by 2002:ac8:608:: with SMTP id d8mr7201918qth.494.1644227879454;
+ Mon, 07 Feb 2022 01:57:59 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4015.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d4a1c786-895a-49e2-5aa7-08d9ea07bf52
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Feb 2022 07:02:04.3589 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: SuYPrzoQvBEcTrgUMEToG0ZLRZqy76DnskwcXibvOsy6JcHxPEIbW+4JU32PQlLZdv6uDXIqJSpd567L2pR4izeIsLzvVAj+paultNV9QIk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB3080
+References: <20220125161107.77962-1-eajames@linux.ibm.com>
+ <CACPK8XevA9_DNpGkfDe8=2zy7VPZcTa1ehzoJRHLVtrWapf42Q@mail.gmail.com>
+ <bfb4ed15-3082-8495-a4e1-d027263c77ab@linux.ibm.com>
+In-Reply-To: <bfb4ed15-3082-8495-a4e1-d027263c77ab@linux.ibm.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 7 Feb 2022 09:57:47 +0000
+Message-ID: <CACPK8Xc6nCrQcpuah7stkj_0oaH5qe+2L0nBGFQ-fr2LLNZ5wg@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.15] fsi: Add trace events in initialization
+ path
+To: Eddie James <eajames@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -144,49 +73,287 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Troy Lee <troy_lee@aspeedtech.com>, Steven Lee <steven_lee@aspeedtech.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-KyBSeWFuLCBDaGlhV2VpIGFuZCBEeWxhbg0KDQoqKioqKioqKioqKioqIEVtYWlsIENvbmZpZGVu
-dGlhbGl0eSBOb3RpY2UgKioqKioqKioqKioqKioqKioqKioNCkRJU0NMQUlNRVI6DQpUaGlzIG1l
-c3NhZ2UgKGFuZCBhbnkgYXR0YWNobWVudHMpIG1heSBjb250YWluIGxlZ2FsbHkgcHJpdmlsZWdl
-ZCBhbmQvb3Igb3RoZXIgY29uZmlkZW50aWFsIGluZm9ybWF0aW9uLiBJZiB5b3UgaGF2ZSByZWNl
-aXZlZCBpdCBpbiBlcnJvciwgcGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGJ5IHJlcGx5IGUtbWFp
-bCBhbmQgaW1tZWRpYXRlbHkgZGVsZXRlIHRoZSBlLW1haWwgYW5kIGFueSBhdHRhY2htZW50cyB3
-aXRob3V0IGNvcHlpbmcgb3IgZGlzY2xvc2luZyB0aGUgY29udGVudHMuIFRoYW5rIHlvdS4NCg0K
-LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IEpvZWwgU3RhbmxleSA8am9lbEBqbXMu
-aWQuYXU+IA0KU2VudDogTW9uZGF5LCBGZWJydWFyeSA3LCAyMDIyIDI6MDMgUE0NClRvOiBKYW1p
-biBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNoLmNvbT4NCkNjOiBvcGVuYm1jQGxpc3RzLm96bGFi
-cy5vcmc7IFRyb3kgTGVlIDx0cm95X2xlZUBhc3BlZWR0ZWNoLmNvbT47IFN0ZXZlbiBMZWUgPHN0
-ZXZlbl9sZWVAYXNwZWVkdGVjaC5jb20+OyBBbmRyZXcgSmVmZmVyeSA8YW5kcmV3QGFqLmlkLmF1
-Pg0KU3ViamVjdDogT3BlbmJtYyB1LWJvb3QgdHJlZXMgKHdhcyBSZTogdS1ib290OnJzYSBhZGRz
-IHJzYTMwNzIgYWxnb3JpdGhtKQ0KDQpIaSBKYW1pbiwNCg0KT24gTW9uLCA3IEZlYiAyMDIyIGF0
-IDAyOjI2LCBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNoLmNvbT4gd3JvdGU6DQo+DQo+
-IEhpIEpvZWwgYW5kIE9wZW5CTUMgdGVhbSwNCj4NCj4NCj4NCj4gVGhpcyBwYXRjaCB3YXMgYXBw
-bGllZCB0byB1LWJvb3QvbWFzdGVyLCANCj4gaHR0cDovL3BhdGNod29yay5vemxhYnMub3JnL3By
-b2plY3QvdWJvb3QvcGF0Y2gvMjAyMjAxMTkwODIzMjMuNDU2Ny0yLQ0KPiBqYW1pbl9saW5AYXNw
-ZWVkdGVjaC5jb20vDQo+DQo+IENvbW1pdCAgIDJhNGIwZDU4OTBkZWIwYzk3M2Y4ZGI3YmIwM2Fk
-YWQ5NmFmZjEwNTANCj4NCj4gaHR0cHM6Ly9naXRodWIuY29tL3UtYm9vdC91LWJvb3QvY29tbWl0
-LzJhNGIwZDU4OTBkZWIwYzk3M2Y4ZGI3YmIwM2FkYQ0KPiBkOTZhZmYxMDUwDQo+DQo+IENvdWxk
-IHlvdSBwbGVhc2UgaGVscCB0byBiYWNrcG9ydCB0aGUgcGF0Y2ggdG8gdGhlIG9wZW5ibWMvdS1i
-b290IHRyZWU/DQoNClN1cmUsIEkgY2FuIGRvIHRoYXQuDQoNCkknZCBsaWtlIHRvIHN0YXJ0IGEg
-ZGlzY3Vzc2lvbiBhYm91dCB0aGUgdS1ib290IHRyZWVzIGFuZCBob3cgd2UgbWFpbnRhaW4gdGhl
-bS4gQ3VycmVudGx5IHdlIGhhdmU6DQoNCiAtIHVwc3RyZWFtOyBwYXJ0aWFsIDI2MDAgc3VwcG9y
-dA0KIC0gYXNwZWVkLW1hc3Rlci12MjAxOS4wNCwgU0RLIHRyZWUgbWFpbnRhaW5lZCBieSBBU1BF
-RUQNCiAtIHYyMDE5LjA0LWFzcGVlZC1vcGVuYm1jLCBvcGVuYm1jIG1haW50YWluZWQgYnkgSm9l
-bC4gQmFzZWQgb24gU0RLIHRyZWUNCg0KSW4gdGhlIHBhc3QgSSB3YXMgcHV0dGluZyBjb2RlIGlu
-IHRoZSBvcGVuYm1jIHRyZWUgc28gd2UgY291bGQgdXNlIGl0IGZvciBicmluZ3VwLCBhbmQgdHJ5
-aW5nIHRvIHNlbmQgcHVsbCByZXF1ZXN0cyB0byB0aGUgU0RLIHRyZWUuDQoNCk5vdyB5b3UncmUg
-c2VuZGluZyBwYXRjaGVzIHVwc3RyZWFtIChleGNlbGxlbnQhKSBhbmQgc2VuZGluZyBtZSByZXF1
-ZXN0cyB0byBtZXJnZSBpbnRvIHRoZSBvcGVuYm1jIHRyZWUuDQoNCkkgd291bGQgbGlrZSB0byBz
-ZWUgZmV3ZXIgdHJlZXMuDQoNCkluIHRoZSBzaG9ydCB0ZXJtLCBvbmUgb3B0aW9uIGlzIHdlIHB1
-dCBhbGwgb2YgdGhlIG9wZW5ibWMgcGF0Y2hlcyBpbiB0aGUgU0RLLCBhbmQgY29udGludWUgdXNp
-bmcgdGhhdCBmb3Igb3BlbmJtYy4gV291bGQgdGhpcyB3b3JrIGZvciBhc3BlZWQ/DQoNCkluIHRo
-ZSBtZWRpdW0gdGVybSwgd2Ugc2hvdWxkIHN0YXJ0IHVzaW5nIHVwc3RyZWFtIHJlbGVhc2VzLiBU
-aGVyZSBtYXkgc3RpbGwgYmUgc29tZSBkb3duc3RyZWFtIGNvZGUgKGFzIHdlIGhhdmUgZm9yIExp
-bnV4IGluIG91ciBkZXYgYnJhbmNoZXMpLCBidXQgdGhpcyB3aWxsIGdvIHRvIHplcm8gb3ZlciB0
-aW1lLg0KDQpQbGVhc2UgbGV0IG1lIGtub3cgeW91ciB0aG91Z2h0cy4NCg0KQ2hlZXJzLA0KDQpK
-b2VsDQo=
+On Mon, 31 Jan 2022 at 15:08, Eddie James <eajames@linux.ibm.com> wrote:
+>
+>
+> On 1/30/22 23:59, Joel Stanley wrote:
+> > On Tue, 25 Jan 2022 at 16:11, Eddie James <eajames@linux.ibm.com> wrote:
+> >> Add definitions for trace events to show the scanning flow in order
+> >> to debug recent scanning problems.
+> > Do you intend this to be merged upstream?
+>
+>
+> Was planning to send it up, yes.
+>
+>
+> >
+> > Some of the traces look like they might be useful in a general sense,
+> > but others (trace_fsi_minor) look like they might be just debugging?
+>
+>
+> Yea its purely for debugging. I could drop that one.
+
+Can you send a v2 on the upstream list so we can get this merged?
+
+Cheers,
+
+Joel
+
+>
+>
+> >
+> >> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+> >> ---
+> >>   drivers/fsi/fsi-core.c                   |  13 ++-
+> >>   drivers/fsi/fsi-master-aspeed.c          |   2 +
+> >>   include/trace/events/fsi.h               | 109 +++++++++++++++++++++++
+> >>   include/trace/events/fsi_master_aspeed.h |  12 +++
+> >>   4 files changed, 133 insertions(+), 3 deletions(-)
+> >>
+> >> diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
+> >> index 59ddc9fd5bca..78710087aa05 100644
+> >> --- a/drivers/fsi/fsi-core.c
+> >> +++ b/drivers/fsi/fsi-core.c
+> >> @@ -24,9 +24,6 @@
+> >>
+> >>   #include "fsi-master.h"
+> >>
+> >> -#define CREATE_TRACE_POINTS
+> >> -#include <trace/events/fsi.h>
+> >> -
+> >>   #define FSI_SLAVE_CONF_NEXT_MASK       GENMASK(31, 31)
+> >>   #define FSI_SLAVE_CONF_SLOTS_MASK      GENMASK(23, 16)
+> >>   #define FSI_SLAVE_CONF_SLOTS_SHIFT     16
+> >> @@ -95,6 +92,9 @@ struct fsi_slave {
+> >>          u8                      t_echo_delay;
+> >>   };
+> >>
+> >> +#define CREATE_TRACE_POINTS
+> >> +#include <trace/events/fsi.h>
+> > Did this move for a reason?
+>
+>
+> Yes, I wanted to use the fsi_slave structure in the trace event, so I
+> had to include the traces after the structure definition.
+>
+>
+> Thanks,
+>
+> Eddie
+>
+>
+> >
+> >> +
+> >>   #define to_fsi_master(d) container_of(d, struct fsi_master, dev)
+> >>   #define to_fsi_slave(d) container_of(d, struct fsi_slave, dev)
+> >>
+> >> @@ -524,6 +524,8 @@ static int fsi_slave_scan(struct fsi_slave *slave)
+> >>                          dev->addr = engine_addr;
+> >>                          dev->size = slots * engine_page_size;
+> >>
+> >> +                       trace_fsi_dev_init(dev);
+> >> +
+> >>                          dev_dbg(&slave->dev,
+> >>                          "engine[%i]: type %x, version %x, addr %x size %x\n",
+> >>                                          dev->unit, dev->engine_type, version,
+> >> @@ -953,6 +955,7 @@ static int __fsi_get_new_minor(struct fsi_slave *slave, enum fsi_dev_type type,
+> >>                  if (id >= 0) {
+> >>                          *out_index = fsi_adjust_index(cid);
+> >>                          *out_dev = fsi_base_dev + id;
+> >> +                       trace_fsi_minor(cid, type, true, cid);
+> >>                          return 0;
+> >>                  }
+> >>                  /* Other failure */
+> >> @@ -966,6 +969,7 @@ static int __fsi_get_new_minor(struct fsi_slave *slave, enum fsi_dev_type type,
+> >>                  return id;
+> >>          *out_index = fsi_adjust_index(id);
+> >>          *out_dev = fsi_base_dev + id;
+> >> +       trace_fsi_minor(cid, type, false, id);
+> >>          return 0;
+> >>   }
+> >>
+> >> @@ -1006,6 +1010,7 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+> >>
+> >>          crc = crc4(0, cfam_id, 32);
+> >>          if (crc) {
+> >> +               trace_fsi_slave_invalid_cfam(master, link, cfam_id);
+> >>                  dev_warn(&master->dev, "slave %02x:%02x invalid cfam id CRC!\n",
+> >>                                  link, id);
+> >>                  return -EIO;
+> >> @@ -1080,6 +1085,8 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+> >>          if (rc)
+> >>                  goto err_free;
+> >>
+> >> +       trace_fsi_slave_init(slave);
+> >> +
+> >>          /* Create chardev for userspace access */
+> >>          cdev_init(&slave->cdev, &cfam_fops);
+> >>          rc = cdev_device_add(&slave->cdev, &slave->dev);
+> >> diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
+> >> index 8606e55c1721..04fec1aab23c 100644
+> >> --- a/drivers/fsi/fsi-master-aspeed.c
+> >> +++ b/drivers/fsi/fsi-master-aspeed.c
+> >> @@ -449,11 +449,13 @@ static ssize_t cfam_reset_store(struct device *dev, struct device_attribute *att
+> >>   {
+> >>          struct fsi_master_aspeed *aspeed = dev_get_drvdata(dev);
+> >>
+> >> +       trace_fsi_master_aspeed_cfam_reset(true);
+> >>          mutex_lock(&aspeed->lock);
+> >>          gpiod_set_value(aspeed->cfam_reset_gpio, 1);
+> >>          usleep_range(900, 1000);
+> >>          gpiod_set_value(aspeed->cfam_reset_gpio, 0);
+> >>          mutex_unlock(&aspeed->lock);
+> >> +       trace_fsi_master_aspeed_cfam_reset(false);
+> >>
+> >>          return count;
+> >>   }
+> >> diff --git a/include/trace/events/fsi.h b/include/trace/events/fsi.h
+> >> index 9832cb8e0eb0..251bc57a8b7f 100644
+> >> --- a/include/trace/events/fsi.h
+> >> +++ b/include/trace/events/fsi.h
+> >> @@ -122,6 +122,115 @@ TRACE_EVENT(fsi_master_break,
+> >>          )
+> >>   );
+> >>
+> >> +TRACE_EVENT(fsi_slave_init,
+> >> +       TP_PROTO(const struct fsi_slave *slave),
+> >> +       TP_ARGS(slave),
+> >> +       TP_STRUCT__entry(
+> >> +               __field(int,    master_idx)
+> >> +               __field(int,    master_n_links)
+> >> +               __field(int,    idx)
+> >> +               __field(int,    link)
+> >> +               __field(int,    chip_id)
+> >> +               __field(__u32,  cfam_id)
+> >> +               __field(__u32,  size)
+> >> +       ),
+> >> +       TP_fast_assign(
+> >> +               __entry->master_idx = slave->master->idx;
+> >> +               __entry->master_n_links = slave->master->n_links;
+> >> +               __entry->idx = slave->cdev_idx;
+> >> +               __entry->link = slave->link;
+> >> +               __entry->chip_id = slave->chip_id;
+> >> +               __entry->cfam_id = slave->cfam_id;
+> >> +               __entry->size = slave->size;
+> >> +       ),
+> >> +       TP_printk("fsi%d: idx:%d link:%d/%d cid:%d cfam:%08x %08x",
+> >> +               __entry->master_idx,
+> >> +               __entry->idx,
+> >> +               __entry->link,
+> >> +               __entry->master_n_links,
+> >> +               __entry->chip_id,
+> >> +               __entry->cfam_id,
+> >> +               __entry->size
+> >> +       )
+> >> +);
+> >> +
+> >> +TRACE_EVENT(fsi_slave_invalid_cfam,
+> >> +       TP_PROTO(const struct fsi_master *master, int link, uint32_t cfam_id),
+> >> +       TP_ARGS(master, link, cfam_id),
+> >> +       TP_STRUCT__entry(
+> >> +               __field(int,    master_idx)
+> >> +               __field(int,    master_n_links)
+> >> +               __field(int,    link)
+> >> +               __field(__u32,  cfam_id)
+> >> +       ),
+> >> +       TP_fast_assign(
+> >> +               __entry->master_idx = master->idx;
+> >> +               __entry->master_n_links = master->n_links;
+> >> +               __entry->link = link;
+> >> +               __entry->cfam_id = cfam_id;
+> >> +       ),
+> >> +       TP_printk("fsi%d: cfam:%08x link:%d/%d",
+> >> +               __entry->master_idx,
+> >> +               __entry->cfam_id,
+> >> +               __entry->link,
+> >> +               __entry->master_n_links
+> >> +       )
+> >> +);
+> >> +
+> >> +TRACE_EVENT(fsi_minor,
+> >> +       TP_PROTO(int cid, enum fsi_dev_type type, bool legacy, int result),
+> >> +       TP_ARGS(cid, type, legacy, result),
+> >> +       TP_STRUCT__entry(
+> >> +               __field(int,    cid)
+> >> +               __field(int,    type)
+> >> +               __field(bool,   legacy)
+> >> +               __field(int,    result)
+> >> +       ),
+> >> +       TP_fast_assign(
+> >> +               __entry->cid = cid;
+> >> +               __entry->type = type;
+> >> +               __entry->legacy = legacy;
+> >> +               __entry->result = result;
+> >> +       ),
+> >> +       TP_printk("%d: cid:%d type:%d%s",
+> >> +               __entry->result,
+> >> +               __entry->cid,
+> >> +               __entry->type,
+> >> +               __entry->legacy ? " legacy" : ""
+> >> +       )
+> >> +);
+> >> +
+> >> +TRACE_EVENT(fsi_dev_init,
+> >> +       TP_PROTO(const struct fsi_device *dev),
+> >> +       TP_ARGS(dev),
+> >> +       TP_STRUCT__entry(
+> >> +               __field(int,    master_idx)
+> >> +               __field(int,    link)
+> >> +               __field(int,    type)
+> >> +               __field(int,    unit)
+> >> +               __field(int,    version)
+> >> +               __field(__u32,  addr)
+> >> +               __field(__u32,  size)
+> >> +       ),
+> >> +       TP_fast_assign(
+> >> +               __entry->master_idx = dev->slave->master->idx;
+> >> +               __entry->link = dev->slave->link;
+> >> +               __entry->type = dev->engine_type;
+> >> +               __entry->unit = dev->unit;
+> >> +               __entry->version = dev->version;
+> >> +               __entry->addr = dev->addr;
+> >> +               __entry->size = dev->size;
+> >> +       ),
+> >> +       TP_printk("fsi%d: slv%d: t:%02x u:%02x v:%02x %08x@%08x",
+> >> +               __entry->master_idx,
+> >> +               __entry->link,
+> >> +               __entry->type,
+> >> +               __entry->unit,
+> >> +               __entry->version,
+> >> +               __entry->size,
+> >> +               __entry->addr
+> >> +       )
+> >> +);
+> >>
+> >>   #endif /* _TRACE_FSI_H */
+> >>
+> >> diff --git a/include/trace/events/fsi_master_aspeed.h b/include/trace/events/fsi_master_aspeed.h
+> >> index a355ceacc33f..0fff873775f1 100644
+> >> --- a/include/trace/events/fsi_master_aspeed.h
+> >> +++ b/include/trace/events/fsi_master_aspeed.h
+> >> @@ -72,6 +72,18 @@ TRACE_EVENT(fsi_master_aspeed_opb_error,
+> >>                  )
+> >>          );
+> >>
+> >> +TRACE_EVENT(fsi_master_aspeed_cfam_reset,
+> >> +       TP_PROTO(bool start),
+> >> +       TP_ARGS(start),
+> >> +       TP_STRUCT__entry(
+> >> +               __field(bool,   start)
+> >> +       ),
+> >> +       TP_fast_assign(
+> >> +               __entry->start = start;
+> >> +       ),
+> >> +       TP_printk("%s", __entry->start ? "start" : "end")
+> >> +);
+> >> +
+> >>   #endif
+> >>
+> >>   #include <trace/define_trace.h>
+> >> --
+> >> 2.27.0
+> >>
