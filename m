@@ -2,57 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E43A84AC114
-	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 15:23:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AAA54AC25D
+	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 16:05:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JspJj5FRqz3bbC
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 01:23:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JsqFd5kQbz3bTs
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 02:05:25 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=ma7vUQQh;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=WJvCVlpJ;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.161.49; helo=mail-oo1-f49.google.com;
- envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com
- [209.85.161.49])
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.24;
+ helo=wout1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=ma7vUQQh; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=WJvCVlpJ; 
+ dkim-atps=neutral
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JspJR5fvNz2xY3
- for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 01:22:45 +1100 (AEDT)
-Received: by mail-oo1-f49.google.com with SMTP id
- c7-20020a4ad207000000b002e7ab4185d2so13779332oos.6
- for <openbmc@lists.ozlabs.org>; Mon, 07 Feb 2022 06:22:45 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
- :message-id;
- bh=QIbiP35GQSEEEaU8+SHxv92w3MHEG9bQFU7JRjEoZlY=;
- b=mIo+hOQYGqYO/BdWH8kbUPLmyxZPYHeQ8QpYKAo0JxYsIyZVTguUnNi2321owYhrlY
- HUsBFT7MFGma8GC9CvZfwr7hskhVld0DPhnIYHFFzC03DXqlHfOKZR/PoircZXqCJm3y
- RKJo+e1NT48hY2oekPjweiWmLYEsAmPtEwiX28EsJjgH41Nce1t9W3859kVdHpsYG+K/
- iMN/vc7gcL4xuunQCtmhTt93xNR+wZKSXQmiG/fNpp4ZNp+jfxiMfgLW8HfW6fPrZc0u
- JkgOEQNI/Qg1fTV0sb9knY/sdVSLXEtAtdHs1dZSg8wLNtQu7knk18M3BWco3f9dWLtQ
- L+Bg==
-X-Gm-Message-State: AOAM532Yx4TtCBWplPhvfZnQ9xty1XvRkFOLysIPjXfr0HtQvRC2F4h8
- mOrLG1j1nf7hwH3UXw5zlA==
-X-Google-Smtp-Source: ABdhPJxfXZdsGyfmTD5R1VDT1P4brg4JwOcmWmQsyw1NxMpW2nnJoH8Cy0v4BgETqUhZfQJQxbm3pg==
-X-Received: by 2002:a05:6870:44:: with SMTP id 4mr3436859oaz.68.1644243762896; 
- Mon, 07 Feb 2022 06:22:42 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net.
- [66.90.148.213])
- by smtp.gmail.com with ESMTPSA id t31sm4334410oaa.9.2022.02.07.06.22.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Feb 2022 06:22:42 -0800 (PST)
-Received: (nullmailer pid 320510 invoked by uid 1000);
- Mon, 07 Feb 2022 14:22:40 -0000
-From: Rob Herring <robh@kernel.org>
-To: Tyrone Ting <warp5tw@gmail.com>
-In-Reply-To: <20220207063338.6570-2-warp5tw@gmail.com>
-References: <20220207063338.6570-1-warp5tw@gmail.com>
- <20220207063338.6570-2-warp5tw@gmail.com>
-Subject: Re: [PATCH v1 1/6] dt-bindings: i2c: npcm: support NPCM845
-Date: Mon, 07 Feb 2022 08:22:40 -0600
-Message-Id: <1644243760.823059.320509.nullmailer@robh.at.kernel.org>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JsqDT5hJ6z2x9R
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 02:04:25 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 0014B32020D3;
+ Mon,  7 Feb 2022 10:04:19 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Mon, 07 Feb 2022 10:04:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+ :cc:content-transfer-encoding:date:date:from:from:in-reply-to
+ :message-id:mime-version:reply-to:sender:subject:subject:to:to;
+ s=fm2; bh=kCkgsv5eaUYRiHSMsWv3ktFFO2E9gGbEWbk6zYLA+d0=; b=ma7vU
+ QQhJYDbacUyx0oa3r5WBU/vsy+MY6dNqfJrZpqulEOh0sObfeW2nGMSuK006xkOJ
+ h00tbsypibl0r2MOXHYWClIEt5CGMX7OPo0jn6D5JTrY9Tp/SdBUZFMnedAzx1Au
+ S5A32YRJXEG3+kCWrt6V4mPvgyOEJNaknr7FI1lI/fNj2yMvI4eUGwhzX/AXThSk
+ To+czRVPvl3GuodSoaHKDm5WnZYZRgdoVGDrgp4Cqt131NVnf0YxoaTqoqheCwC+
+ ysvtYdlChO+mILL0gcY1XVhzwQ3wD7Mu9m8cAEUXCupFFUU329n9PAN716oTWI65
+ qXNz8Eku0qo15VIWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
+ :from:from:in-reply-to:message-id:mime-version:reply-to:sender
+ :subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm2; bh=kCkgsv5eaUYRiHSMsWv3ktFFO2E9g
+ GbEWbk6zYLA+d0=; b=WJvCVlpJFIB0jm8jTG3D9bXKBfqLpDcH0hqmO8a/4CpNN
+ 7yt9U/3x3sZ3Ivq6kTBTI8nknNIRlUq2puGp07MI4Kf3FGinkhHwOEfBcR+0EIT6
+ 6/PMfGCgxC/SUqGeb8l/I0NjJPEMRgMIjqdiHHFfNQy5cebnKyI7RBLWGG+5E5qU
+ Se/I+eDkK3uabALqicCo5Y+da7NfxXRxvezTN8HRVhfoPt4dd411pXl61Ou8zi+h
+ //bzLTJy/StiXMNX609VokXGnhR2BJWhpHSRnMUX+E3fdnNWKGkLL5ic1jtfQpTl
+ X8d2uoqpbMUQWLj5Bciet2HZaA7A2qO21HO7sxCFw==
+X-ME-Sender: <xms:8jQBYs4jj-YDnGqGljZCpyiFcJq_KdcxwutE-qwPPpz8JUyR5L-F7Q>
+ <xme:8jQBYt5u-7LVpX_kYJSvKTWZCN1J8nNAuSjGagHNDIlymqWl1WaXnpiO7rSeJ_VcY
+ rgPe0sZUo8p3mPQNA>
+X-ME-Received: <xmr:8jQBYrcAssp3MM55wkL_BNYJVtT3dUD3UAmuQbV2277T8QnWTfVwNrLkXYbCcgqNXM8zKgaQpo0DBxB1X6RJmh3zx-ae5QANObmdV9pjo1pw8JukE4VoMVCkhfZEXaE_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrheehgdeilecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertd
+ dtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhi
+ ugdrrghuqeenucggtffrrghtthgvrhhnpeekhfeiffejveefveehtdeiiefhfedvjeelvd
+ dvtdehffetudejtefhueeuleeftdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+ mhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:8jQBYhIkBtr1g3aViXn-TFBYoBfcTm5AjoocNKddRAeGrThPO_b7NQ>
+ <xmx:8jQBYgJM4XEnuterSrbQb-ry6E9Hf4KTdVV8GECpklNssd6W8h3Vgw>
+ <xmx:8jQBYizF9TVv1V6P_GbUmSkQJhmuT9AAn9i_aetcBD95rwfLEz7jYQ>
+ <xmx:8zQBYlFCsXRHPS5JxY-Uw0e3dV_sMzJqTCA_GXC6MDQN-bbnDjV89Q>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Feb 2022 10:04:15 -0500 (EST)
+From: Andrew Jeffery <andrew@aj.id.au>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 0/3] hw: aspeed_gpio: Model new interface for the AST2600
+Date: Tue,  8 Feb 2022 01:34:06 +1030
+Message-Id: <20220207150409.358888-1-andrew@aj.id.au>
+X-Mailer: git-send-email 2.32.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,133 +93,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, KWLIU@nuvoton.com, tali.perry1@gmail.com,
- linux-i2c@vger.kernel.org, andriy.shevchenko@linux.intel.com,
- benjaminfair@google.com, krzysztof.kozlowski@canonical.com,
- openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com,
- tomer.maimon@nuvoton.com, devicetree@vger.kernel.org, bence98@sch.bme.hu,
- arnd@arndb.de, sven@svenpeter.dev, robh+dt@kernel.org, Avi.Fishman@nuvoton.com,
- yangyicong@hisilicon.com, semen.protsenko@linaro.org, jie.deng@intel.com,
- avifishman70@gmail.com, venture@google.com, linux-kernel@vger.kernel.org,
- wsa@kernel.org, kfting@nuvoton.com, tali.perry@nuvoton.com, olof@lixom.net
+Cc: peter.maydell@linaro.org, openbmc@lists.ozlabs.org, qemu-arm@nongnu.org,
+ clg@kaod.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 07 Feb 2022 14:33:33 +0800, Tyrone Ting wrote:
-> From: Tyrone Ting <kfting@nuvoton.com>
-> 
-> This commit adds compatible and syscon description for NPCM845 i2c module.
-> 
-> Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
-> Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-> ---
->  .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     | 21 ++++++++++++++-----
->  1 file changed, 16 insertions(+), 5 deletions(-)
-> 
+Hello,
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
+This series adds support for a new register interface supported by the
+Aspeed GPIO controller, present in at least the AST2600.
 
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
+The new interface is a single register implementing an indirect command
+protocol that allows us to manipulate up to (at least) 208 GPIOs. This
+makes it possible to write very simple drivers for e.g. u-boot and
+jettison the need for the tedious data model required to deal with the
+old register layout.
 
-Full log is available here: https://patchwork.ozlabs.org/patch/1589171
+I've lightly tested the device consistency under Linux. The Linux
+driver is implemented in terms of the old interface, so data model
+consistency can be tested one way by poking the driver using the
+libgpiod tools and then the other using devmem to drive the new
+interface.
 
+Please review!
 
-i2c@80000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
+Andrew
 
-i2c@81000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-gsj.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
+Andrew Jeffery (3):
+  hw: aspeed_gpio: Cleanup stray semicolon after switch
+  hw: aspeed_gpio: Split GPIOSet handling from accessors
+  hw: aspeed_gpio: Support the AST2600's indexed register interface
 
-i2c@82000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-gsj.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
+ hw/gpio/aspeed_gpio.c         | 305 ++++++++++++++++++++++++++++------
+ include/hw/gpio/aspeed_gpio.h |   3 +
+ 2 files changed, 261 insertions(+), 47 deletions(-)
 
-i2c@83000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gsj.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@84000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gsj.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@85000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@86000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@87000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@88000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-gsj.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@89000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-gsj.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@8a000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-gsj.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@8b000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-gsj.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@8c000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-gsj.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@8d000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dt.yaml
-
-i2c@8e000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gbs.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm750-evb.dt.yaml
-
-i2c@8f000: 'syscon' is a required property
-	arch/arm/boot/dts/nuvoton-npcm730-gsj.dt.yaml
-	arch/arm/boot/dts/nuvoton-npcm730-kudo.dt.yaml
+-- 
+2.32.0
 
