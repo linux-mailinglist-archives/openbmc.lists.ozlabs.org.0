@@ -1,84 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A12C4ACF4B
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 03:58:42 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AEE04ACF4F
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 03:59:18 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jt74Z72Ylz3Wtt
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 13:58:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Jt75H5ZTnz3bP4
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 13:59:15 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=eSTSgcNb;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=HIpTqdEH;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=canonical.com (client-ip=185.125.188.123;
- helo=smtp-relay-internal-1.canonical.com;
+ smtp.mailfrom=canonical.com (client-ip=185.125.188.122;
+ helo=smtp-relay-internal-0.canonical.com;
  envelope-from=krzysztof.kozlowski@canonical.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=canonical.com header.i=@canonical.com
- header.a=rsa-sha256 header.s=20210705 header.b=eSTSgcNb; 
+ header.a=rsa-sha256 header.s=20210705 header.b=HIpTqdEH; 
  dkim-atps=neutral
-Received: from smtp-relay-internal-1.canonical.com
- (smtp-relay-internal-1.canonical.com [185.125.188.123])
+Received: from smtp-relay-internal-0.canonical.com
+ (smtp-relay-internal-0.canonical.com [185.125.188.122])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JskH71qlfz2xrt
- for <openbmc@lists.ozlabs.org>; Mon,  7 Feb 2022 22:21:22 +1100 (AEDT)
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JskQw1Rrxz3bTD
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Feb 2022 22:28:07 +1100 (AEDT)
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 990FC3F1F0
- for <openbmc@lists.ozlabs.org>; Mon,  7 Feb 2022 11:21:16 +0000 (UTC)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 9493E3FE4B
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Feb 2022 11:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1644232876;
- bh=8Y9yNV8EX7NTdignHPRQY252HgYt0mlpY9TRr3lWof4=;
+ s=20210705; t=1644233284;
+ bh=Tn4bc4zR8BLXzuWSYuCglM3OFSG7x0cpAc4I3hArdaE=;
  h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
  In-Reply-To:Content-Type;
- b=eSTSgcNb5oVwfcw0ULwPZgHsDxRfMEBuxriKUgbStBXQdjXd11jYqzwadGxDxOykc
- EBWcInM7eeHx4uo934mDavnItYbh1/cl6g4RHkw3DIh9ShzEnFV0mXd5Cni+4d0EmK
- N7gzpz8Iw93dtVHqyQFXATMdhA3XxcSFpZjhYgjv2U2trv+43ejV2/YqONbiPnbekt
- ARkcT2LaYj9VhlJu30bmHzD9Gp5Ms7ZGMrNaL2nKRSc4DHV+gS8mi36Ab0IqXPceus
- vkW+HEomIL1lFyNlc4cOrrywyS1Ob4jRyBtgulQzIsMImsgnHO5eFp5+X3Z6godOzi
- 2J1YioqkXRWZQ==
-Received: by mail-wm1-f69.google.com with SMTP id
- i8-20020a1c3b08000000b0037bb9f6feeeso3082751wma.5
- for <openbmc@lists.ozlabs.org>; Mon, 07 Feb 2022 03:21:16 -0800 (PST)
+ b=HIpTqdEH2NnMH2SXfTeBY3e2Yb1mnBDg3sCzDIc37PGAREk/FvRTmUHox6LeIZnHl
+ o/En9ZcC6VJdOhGUCoT4NvDhMJrF4UxiDfe/1wSowk/k6mM1P8O9YkuAmrlSsI6+zD
+ kH0DgtSB0mgm49lmJDebtZAvUNmAA2rMUseoNqMRKVFMaGa3d67AcVcpQgB4OZVWPG
+ flCBrou5md8xaKXqO/zLism8YO2JwjgkGsskSlwpUq5nciWxQ9r0zRsCH9E2rhup0P
+ trjssaVYABUphmNxRNCKAg7ZpIWXGM8OK+wTlI3aaGcFyaCs4oePKwZ9aQquRg94UK
+ g7I4KD+dPkp4w==
+Received: by mail-ej1-f69.google.com with SMTP id
+ o7-20020a170906860700b006cbe6deec1bso510278ejx.22
+ for <openbmc@lists.ozlabs.org>; Mon, 07 Feb 2022 03:28:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
  :content-language:to:cc:references:from:in-reply-to
  :content-transfer-encoding;
- bh=8Y9yNV8EX7NTdignHPRQY252HgYt0mlpY9TRr3lWof4=;
- b=6Mos+8wNz4AUnjK+CkYAZwhxfpFmYIRTgoY1BW3uL+Ol8Hvfq80cpleLf9IR9MZSv6
- ze8Uz5TnK3Esyv7qNkRiYEG+1pmiHcDb/XaLwxBzdVL6Hp+Il9mERUl/aeOlw3JJPIqz
- MjsgmfgkUuc8xy2th9D1EKs0JnYfKZoKi2U069qtEWW3MMOyqJCHsJ0Fyy5rFByKpii9
- eHBZWgNVFnu1vBglzt04TiH7NRcVo2tnTniV4RjhOld06W9zsjIn+dDgXXZcdlAEPJJA
- A5NSqJ2RglR/fkbtkfgbTTCBgLAMZfkVaUNGD2oYYPWRuy6lYIXcV0gI2ktjYH1njuqu
- r5Bw==
-X-Gm-Message-State: AOAM530o/EmjzT3AQX5mRIgjZsk5a6WBamXXOLPwMGGJHu1vOmdWJKDO
- cOCII44V4jj2E2G23zBwKHTu1KdQi22sH7CC4CWMwqaaYjjQEiNl3+ES15y5mcWFGcAGyComf4g
- msO/79sYHa6LhGoQnUDWBeYTQ0iLEsbXVhSGf
-X-Received: by 2002:a5d:6603:: with SMTP id n3mr9256737wru.20.1644232866112;
- Mon, 07 Feb 2022 03:21:06 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJz28bw0iWdum97UqccNObiTCl0E42zll9NAhEqs1JdVzu878pa6CnjxT2SeV0Ew8TU0VtcspA==
-X-Received: by 2002:a5d:6603:: with SMTP id n3mr9256693wru.20.1644232865857;
- Mon, 07 Feb 2022 03:21:05 -0800 (PST)
+ bh=Tn4bc4zR8BLXzuWSYuCglM3OFSG7x0cpAc4I3hArdaE=;
+ b=tFmBao7ji21eue3ekJxRj9u/8pZa5WGT0meyDjqrRja1kuFwKLM2KcS1yRFRlH6s5d
+ TAv31ET/Te8TSx79Qna+PugJoiEceL3HTi2d72AQURw841w5FFkpl5wLvxQ4JBIx3aku
+ 0lpzUm57jrXJno0m3WxfZ3CiyRLPEZ2M+IjiXGR7b4BikAjDx958OFlSSaxv76EZa4AF
+ 7307jhY+X1nYSuknKsKW1nHFU1hLCTu/5GEpBBULkyefYlmMCzptDQUdn3MGdnCO0T3x
+ G9lNstOjsJQAy0gqNs5CDKFlB0vCNu6SgUlhcj5G1ad9ICbwL2yYDkHIoS6TcwifH92b
+ mUdQ==
+X-Gm-Message-State: AOAM531tYUl00ulPpKrT7wkdFqdvoO2Xpxo5OrWke58VQG9Nhjj5bg4f
+ cBaaYYPA2LTmto3vQmawv5BJf7V4viVDjjTMfadCIaf/RJTMKh9B+0ozhQP046oKhaaIMYNNzA7
+ bLj/iw+g4gXmaltvyhFJ0kFYLDlT0XMOlc/Us
+X-Received: by 2002:a05:6402:881:: with SMTP id
+ e1mr11159383edy.234.1644233273262; 
+ Mon, 07 Feb 2022 03:27:53 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJz4ZPRw7J+5pEKOaY5Z7jldo/XTG3FVjdDvBj6oSzyzQCPUO8pkxiH+YwKpJrz6QXStMDjdRQ==
+X-Received: by 2002:a05:6402:881:: with SMTP id
+ e1mr11159366edy.234.1644233273056; 
+ Mon, 07 Feb 2022 03:27:53 -0800 (PST)
 Received: from [192.168.0.87] (xdsl-188-155-168-84.adslplus.ch.
  [188.155.168.84])
- by smtp.gmail.com with ESMTPSA id b4sm2321525wrw.100.2022.02.07.03.21.04
+ by smtp.gmail.com with ESMTPSA id z19sm3611505eji.87.2022.02.07.03.27.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Feb 2022 03:21:05 -0800 (PST)
-Message-ID: <776e1b61-678d-6686-06fe-a74b7ff68b85@canonical.com>
-Date: Mon, 7 Feb 2022 12:21:03 +0100
+ Mon, 07 Feb 2022 03:27:52 -0800 (PST)
+Message-ID: <a3ef9a3d-951e-c7b2-f4e5-ec613997501e@canonical.com>
+Date: Mon, 7 Feb 2022 12:27:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH v1 2/6] i2c: npcm: Fix timeout calculation
+Subject: Re: [PATCH v1 1/6] dt-bindings: i2c: npcm: support NPCM845
 Content-Language: en-US
 To: Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
  tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
@@ -90,9 +92,9 @@ To: Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
  Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com, KWLIU@nuvoton.com,
  JJLIU0@nuvoton.com, kfting@nuvoton.com
 References: <20220207063338.6570-1-warp5tw@gmail.com>
- <20220207063338.6570-3-warp5tw@gmail.com>
+ <20220207063338.6570-2-warp5tw@gmail.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220207063338.6570-3-warp5tw@gmail.com>
+In-Reply-To: <20220207063338.6570-2-warp5tw@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Tue, 08 Feb 2022 13:58:20 +1100
@@ -113,14 +115,82 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On 07/02/2022 07:33, Tyrone Ting wrote:
-> From: Tali Perry <tali.perry1@gmail.com>
+> From: Tyrone Ting <kfting@nuvoton.com>
 > 
-> Use adap.timeout for timeout calculation instead of hard-coded
-> value of 35ms.
-> Use syscon to access gcr, instead of "compatible".
+> This commit adds compatible and syscon description for NPCM845 i2c module.
 
-One commit = one fix/feature/logical change, so requirement of syscon
-should be a separate commit.
+Do not use "This commit" but instead:
+https://elixir.bootlin.com/linux/v5.13/source/Documentation/process/submitting-patches.rst#L89
+
+> 
+> Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
+> Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+> ---
+>  .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     | 21 ++++++++++++++-----
+>  1 file changed, 16 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+> index 128444942aec..05e58f44b03a 100644
+> --- a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+> +++ b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+> @@ -7,17 +7,22 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+>  title: nuvoton NPCM7XX I2C Controller Device Tree Bindings
+>  
+>  description: |
+> -  The NPCM750x includes sixteen I2C bus controllers. All Controllers support
+> -  both master and slave mode. Each controller can switch between master and slave
+> -  at run time (i.e. IPMB mode). Each controller has two 16 byte HW FIFO for TX and
+> -  RX.
+> +  The NPCM7XX includes sixteen I2C bus controllers and the NPCM8XX includes
+> +  twenty-seven I2C bus controllers. NPCM8XX controllers 24-26 are connected on I2C
+> +  pins in parallel to controllers 8-10.
+> +  All controllers support both master and slave mode.
+> +  Each controller can switch between master and slave at run time (i.e. IPMB mode).
+> +  NPCM7XX I2C controller has two 16 byte HW FIFO for TX and RX and NPCM8XX I2C
+> +  controller has two 32 byte HW FIFO for TX and RX.
+>  
+>  maintainers:
+>    - Tali Perry <tali.perry1@gmail.com>
+>  
+>  properties:
+>    compatible:
+> -    const: nuvoton,npcm750-i2c
+> +    enum:
+> +      - nuvoton,npcm750-i2c
+> +      - nuvoton,npcm845-i2c
+>  
+>    reg:
+>      maxItems: 1
+> @@ -36,11 +41,16 @@ properties:
+>      default: 100000
+>      enum: [100000, 400000, 1000000]
+>  
+> +  syscon:
+> +    $ref: "/schemas/types.yaml#/definitions/phandle"
+> +    description: The phandle of system manager register node.
+> +
+>  required:
+>    - compatible
+>    - reg
+>    - interrupts
+>    - clocks
+> +  - syscon
+
+This breaks ABI of existing DTS. Actually your driver change does it but
+here it is explicit...
+
+>  
+>  allOf:
+>    - $ref: /schemas/i2c/i2c-controller.yaml#
+> @@ -57,6 +67,7 @@ examples:
+>          clock-frequency = <100000>;
+>          interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
+>          compatible = "nuvoton,npcm750-i2c";
+> +        syscon = <&gcr>;
+>      };
+>  
+>  ...
 
 
 Best regards,
