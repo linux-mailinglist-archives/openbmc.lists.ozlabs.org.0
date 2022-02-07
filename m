@@ -1,123 +1,155 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D55184AC4E9
-	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 17:09:43 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 827A54AC7BD
+	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 18:37:54 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jsrgn4KBgz30QS
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 03:09:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JstdX1Cy4z30Qy
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 04:37:52 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=NOMTnpp5;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=HFbFs0H8;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:feae::700;
- helo=apc01-psa-obe.outbound.protection.outlook.com;
- envelope-from=potin.lai@quantatw.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=quantacorp.onmicrosoft.com
- header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-quantacorp-onmicrosoft-com header.b=NOMTnpp5; 
- dkim-atps=neutral
-Received: from APC01-PSA-obe.outbound.protection.outlook.com
- (mail-psaapc01on20700.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:feae::700])
+ smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=sharad.khetan@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=HFbFs0H8; dkim-atps=neutral
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JsrgH483Wz2xKJ
- for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 03:09:13 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jstd06pL5z30BL
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 04:37:18 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1644255445; x=1675791445;
+ h=from:to:subject:date:message-id:references:in-reply-to:
+ content-transfer-encoding:mime-version;
+ bh=D7k7rXEcwMTpYe8L0U7DpQR02W6Y/2h9AmRCHvppWrc=;
+ b=HFbFs0H8DL5pemCUDGQzMbz0qIgi/W1gI4EugGmAWT/OpWJWaPgn153W
+ cuJnXFGIFLLF8TzQvoumjO3JfBMR8XYnkwwgKhWcqI5SfhzC/AlhPvva7
+ VUeWKY0bC/YrLmdF3NWPMOdxhSk01JRZ60HvtEp9uNCQwlP9X5lymT0PX
+ MoYAwcRY2o7VMc7g4O59MpmqXpIyaHElW2WFdX4+Tzb2TVGgwa0WOkqWe
+ kRrwlTaH8/wBj5Fc6Yro079VKc3DHTrzgdaXr0746wT5rWA+Ht02n6Uku
+ 07j+uPmYBWFddqdn+h2PFf2hamSsFJpo7awxFxAVz2gsSM11KpT7cVbD3 Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10250"; a="228737264"
+X-IronPort-AV: E=Sophos;i="5.88,350,1635231600"; d="scan'208";a="228737264"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Feb 2022 09:36:15 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,350,1635231600"; d="scan'208";a="700544122"
+Received: from fmsmsx606.amr.corp.intel.com ([10.18.126.86])
+ by orsmga005.jf.intel.com with ESMTP; 07 Feb 2022 09:36:15 -0800
+Received: from fmsmsx606.amr.corp.intel.com (10.18.126.86) by
+ fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20; Mon, 7 Feb 2022 09:36:14 -0800
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20 via Frontend Transport; Mon, 7 Feb 2022 09:36:14 -0800
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.42) by
+ edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2308.20; Mon, 7 Feb 2022 09:36:14 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IbsNMDKGzBPC9UdxUA1CSCNR2OovpPPAqhvpxaudljRnzYVvsiZbkKj8FWiSvPIY7nfJm9OTOp5v0ut1VcXUMW42PbPN4sLmAjPH6DeTolyDNr8y5jGEUtEYEvPBpZ9ATxmtqMFabniDCe7v/Z6Gw0FV19i4KPf5HWKBp83rgccrUCFwHnq/A4j1TSEzJBOb2LiidTT2R3/lkdMW6c+V+ZoHYa+otF9zZfS6UJ2p0AYUuproAOj4ssSQTOnkivfMLb3eJBgHbSHrN5BPy+nyRcyUoDdpbMtIh39ErlYdUY3/yFV6S4B4xjOtAdVockwVs8UzHVUm8hH0jRnB++OzEA==
+ b=AcnRfvFlkCnzXkuhU+AqHr08TEd0eJ5jzDo11JK5oAXWhXspRGIOIiaOV3dIGgpX1dzQ2SIn7uhORSh9RHE5f4HnSPMWo0BTWfqF76n1L9rKRbUN2O2CFAh3aZF6nrVt3yXdVr3135rVrRnobqWIZuIxNiDZ1szzB5+niM5Cy9qKiTV81FTztpzupRHXAnTDdXWezGAhi1pPfdUf5/LaX7AgFl7CGamKGffCzMpbIMRxiWUM0SjpKeDmXmtJVZrFP5FSkcqZ1NMuvxYRQPce3iUUoEYYZ8V+Kepj8IxgniZfDdCR+kyVqUehIeCFM7zx+3kXMPTRxTtpQPuc7YaTSQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MzPkrfpvJ1p2VRZh8IZIY0ZjRbIpknKir2zC4h4sIFs=;
- b=VD1dVNLEAeYaQI7ZE1u//iXR/VfYgthWlipL8frX4O+aTueTvN9Ixx9x29gLVwN8LmqEfiDiiQEqCfN6iJh+mfJOHhvoBYcfEa2aF/YmB6sEu31i0MxVzk+GUsKCZC0PxkjzifOdGhZ1I7YlAbu3F2Ed53Sqpl8JK54a42cr/lIgnf1hfKqC2qSM+T8bRVgm3ZejnsAQrL5w7ltLEPT5nBH1eiZvp5DeUH8agsVEIt5yIlMiEinV18VKcmaqlhRLAUNSN0GQSldxEwBDu+7toHNWKVE8VLESyDVoCNbEcZgqV3all7jY0S4xVmQNScfegO1E/ot7BSTo5EMZGhPGBg==
+ bh=bBJKYaYJzo/wBDx74B8Ytrz44/fswnEvQehZ9GgWhfQ=;
+ b=H/LYM6iBkFzRslLoHkpZygoAD4htwfR3lEVtoXXQxrFgpZkaQHCx/a+1uvxR/Q/5DZwwSYFfdPuTyucwbkySeHoRjjw4Iuv3Jshoeq65hAxaHynTZOkJNAZI8UxY/CWX9psltKrAFP2B6tzNdIrc6wOZUrXM3/KF/eiDPTalNShaKq/PDcd48X2Br5h3ZWcs/qeg++KlkteSgNWLLyMWlCfqoofdHs+rPfYpxrDHp5kzHrTqLByjc7jHVU4E5mYanzN77SHOB5mfAnT4vQOC2Y1nQz9wAp71yvBYXG2iC4GQmzbnTUgG/z7ltFl5hmCIS4GXPR0fObuW+dEGTY+SbQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MzPkrfpvJ1p2VRZh8IZIY0ZjRbIpknKir2zC4h4sIFs=;
- b=NOMTnpp5ZXTUS2rxYr/Xnave6wmD4m2RpmNz+dQcSL5iZ99tqU9yJfzd94mM4hGqARr9TZ6359mV8Y8kApFWXtvT+8ZZkBvvJSA3swcUPPTDfPVqHsp3up/jD/nv1djx72ty4g5qg7hGcE0khlCtJpbWJtSuZnhMcHAI1ag2dd0=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=quantatw.com;
-Received: from HK0PR04MB3282.apcprd04.prod.outlook.com (2603:1096:203:89::17)
- by SL2PR04MB3066.apcprd04.prod.outlook.com (2603:1096:100:34::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4951.12; Mon, 7 Feb
- 2022 16:08:48 +0000
-Received: from HK0PR04MB3282.apcprd04.prod.outlook.com
- ([fe80::8160:1a0:97e1:9e53]) by HK0PR04MB3282.apcprd04.prod.outlook.com
- ([fe80::8160:1a0:97e1:9e53%3]) with mapi id 15.20.4951.018; Mon, 7 Feb 2022
- 16:08:48 +0000
-From: Potin Lai <potin.lai@quantatw.com>
-To: openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>,
- Patrick Williams <patrick@stwcx.xyz>, Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: [u-boot,
- v2019.04-aspeed-openbmc v2 1/1] arm: dts: Aspeed: add Bletchley dts
-Date: Tue,  8 Feb 2022 00:08:17 +0800
-Message-Id: <20220207160817.21102-1-potin.lai@quantatw.com>
-X-Mailer: git-send-email 2.17.1
-Content-Type: text/plain
-X-ClientProxiedBy: HK2PR02CA0148.apcprd02.prod.outlook.com
- (2603:1096:202:16::32) To HK0PR04MB3282.apcprd04.prod.outlook.com
- (2603:1096:203:89::17)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: ff4b956e-4d16-4d9e-ca6a-08d9ea541fe4
-X-MS-TrafficTypeDiagnostic: SL2PR04MB3066:EE_
-X-Microsoft-Antispam-PRVS: <SL2PR04MB3066F0C496CD66E6BECDA4C68E2C9@SL2PR04MB3066.apcprd04.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:409;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: lk8SQjkaXHkerl1eDRvIW5GRYjHlGnJc3h3T1G67yWt8VE9lYBQJjRr252brGB5PIXjrq7410IT5dUTiBEV2N+RdgzkibDF7wTP6p+Q1uJy9qjyxY8qaHrgDlhgUaGGQe/tBZ2blwLysVnaa5C5BB3Dhu2JAM8JXQsgE/YrcJuZDkT6hcOw1BaFTKuT6keCjZCVXaYst4N5Az68gYUD0hg1O4872O/hgHcTWQ7veQgi44sU+5zPT1E8aCfgeHxoWSTnWMHbKK7GZLgEzWcRMqIeiLVYs/SHKUSMoRxeHF4GVazN6o1Om79X0iQlNuSPdS1LkxBbAWy1/FB0u5l6rtDPGYK/KsthOmUDgo17n+SuRKIvbWjsfwQAiy2ynIV3nxNCXg9eYnxGQ7idfZUmH2nWi+FUCrPUcWTPvYvrFZQtLwvmTBuo1awu/Rujxni2ymZdVrAr675LezzK9/UAOoPwHuJnGMekrbrecJuJO4EsieVSiWZ9qPTZbjhJh61CD5r2+c2i+Uj2XoeLWirL8TEBhmpiy+JnSYriY/49UsLlcWLPCoVkbEB+E/80Zarf2OyjnC80lD76nfoKf4S9CVGWVkSZZIocqUPlxY8AUZdoRNatt++gR9XrGPl+QS/tIcj5fsFI2fKmxAzN3DBAYPeUvuoKoywhKSOBXAKou2RY88ZPNaEEDPinubzclWT+wFH1bG5hR16PIFXsaJU8HSg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:HK0PR04MB3282.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(6506007)(508600001)(38350700002)(52116002)(38100700002)(83380400001)(6486002)(86362001)(6512007)(5660300002)(6666004)(66946007)(316002)(66556008)(66476007)(8676002)(4326008)(8936002)(110136005)(36756003)(44832011)(2906002)(26005)(1076003)(186003)(2616005)(107886003);
+Received: from MWHPR11MB0046.namprd11.prod.outlook.com (2603:10b6:301:67::30)
+ by SN6PR11MB3134.namprd11.prod.outlook.com (2603:10b6:805:d9::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4951.18; Mon, 7 Feb
+ 2022 17:36:13 +0000
+Received: from MWHPR11MB0046.namprd11.prod.outlook.com
+ ([fe80::31d7:4d19:5b17:37e7]) by MWHPR11MB0046.namprd11.prod.outlook.com
+ ([fe80::31d7:4d19:5b17:37e7%5]) with mapi id 15.20.4951.019; Mon, 7 Feb 2022
+ 17:36:13 +0000
+From: "Khetan, Sharad" <sharad.khetan@intel.com>
+To: Terry Duncan <terry.s.duncan@linux.intel.com>, Patrick Williams
+ <patrick@stwcx.xyz>, OpenBMC List <openbmc@lists.ozlabs.org>
+Subject: RE: TOF Nominations
+Thread-Topic: TOF Nominations
+Thread-Index: AQHYCZaOfkFZpTFTpEmcf0/cd2lmwax5Or0AgA9CBzA=
+Date: Mon, 7 Feb 2022 17:36:13 +0000
+Message-ID: <MWHPR11MB0046A46CE1A96951234EAC65F12C9@MWHPR11MB0046.namprd11.prod.outlook.com>
+References: <YdiCUiwh1iD4ycr8@heinlein> <YeH2OHImO/oRgkjN@heinlein>
+ <YeH5uCwUQ02RrGok@heinlein>
+ <9758e5b1-b600-edc8-659c-25a93dbcfb44@linux.intel.com>
+In-Reply-To: <9758e5b1-b600-edc8-659c-25a93dbcfb44@linux.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.200.16
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 8cda0893-0ea1-45e7-5b21-08d9ea605634
+x-ms-traffictypediagnostic: SN6PR11MB3134:EE_
+x-microsoft-antispam-prvs: <SN6PR11MB31347F76483480EB2F6BB7B7F12C9@SN6PR11MB3134.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 55cLl1orMMHIG/TqlkOaEPixIjZnvXOruTdrlH0s3N1OKri9/Fujp72nvLGyvkPlIdh5AYe5NAmytp0ZgxYrtiwc8VPYzIHrZcxUkdYviD0RcruCAS0d0BiRhtc5QcZWGKx0giGmisQw9cTZT/JrceWjZrftFcqaLgucL4D6E3YP3rqkXU0K5RmB2J0lSYvP+atfYln0Qw2gng+zsbC0XVUUvOa5B6bd5/DSyxRqZ9FDup0lv7aMdl+ql2QAb8/TigKmAc1WBOI3PABRrEUitrBp9TY70KWf/VTshdauZzg4HVfZCj5dBbGUBhz+yru0MFke0LywiWKYmrf10hyb4OUSy+s8e4lohtlzsaeCwUiIUpQ2uwkKL2bBPCbAIdssyCL3k9z0tLbSBKgaxgfWvVWurQ7neQ2Q+IGv/PboyrLjcUq+SGaj0c4mRhfFKYjp2X0Y8KSJe4fG2wSXyfild3szK+bQVR+Iee7m/4IxxqJCYJt3rJqOLtiMaCZzjMkmOj90wP16cQmifyPRIJDmhJJkX95ZiNrGP3eoUPRKxudsfeUnS972jsvp/C0yR0QHlFsop2CTc2ewUjr4UXkyKFMF20NrcGSHSe6scIYyd6ii0p0C8w9pK7uyC0vresC/uwIcX/aWm1glHE2i4KeD8nJFZks+dBaK8ozpwrHkpsVurOvvi99rB6iybbizrmfPMUYHYMjvHPzIo7TN7a+Z6Hv/4uytYbLHka+b6ZA+86TRvgbucKQ1CjU2ozmzkiWuGDC1bvBT4P8pOnrGhjKmpmxFJI5G2WZaE6W8wpg+RO9kppHn1keqG4i4U/dBxL8K+5mPHfdn7iUwgMGC7tHwRA==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MWHPR11MB0046.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230001)(366004)(8936002)(83380400001)(86362001)(3480700007)(66446008)(64756008)(7116003)(66556008)(66476007)(8676002)(66946007)(52536014)(5660300002)(76116006)(122000001)(55016003)(110136005)(2906002)(38100700002)(316002)(38070700005)(82960400001)(53546011)(9686003)(71200400001)(7696005)(6506007)(966005)(26005)(186003)(508600001)(33656002);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ceCjGS/AmtV642iQ5A582TH3g9KBz7DqU2UvA1L5KcnZVF1YQledPg+6m44I?=
- =?us-ascii?Q?tMhSRPSUtPXbxGxD2Jhpls63O7C08zDFMg2i+DTV9Sqn/W1C+MTXgnDM6Hy4?=
- =?us-ascii?Q?Sw1b7gevzCo6+vyIBWKym+Uk5KF9b6qw8uDXhm3/gW86u/KZbc7SjTENdTf1?=
- =?us-ascii?Q?2TnJAkFeXewfr0FhgzgtfjSbJqvFrB4ph/8Hgr8BkTk4Dz5lvNTRXaFkDGvp?=
- =?us-ascii?Q?rnddyKT4o3vFf+voRJK5JLNdFMtjnLCeU1up+sQ2l0tZIDJeunSACiJSRZ2h?=
- =?us-ascii?Q?Or2JLcN7hPWEY4J5sUvOtEReqv7ajHEnGGnHTvMRv1qYsNdmWE9xbJcd0fs4?=
- =?us-ascii?Q?MasXe1tEi70G5LPD3bP5uzb9YQtRn8gQU8e+OkRrlIxuf04VSzQ5htJRdhQt?=
- =?us-ascii?Q?B42fSzHjlESYOcRyK7tI6OFzkmttn5O90gGby0EgfoeyRE6vGWhbmzZuwneP?=
- =?us-ascii?Q?Yu9GhX7BvzUdt27G1XEtIZqtMo7zl98ZWYiSRcJZMCbg5TiWh908FJkoLr11?=
- =?us-ascii?Q?ZfLQasj4q7wA7VzG7nUuZwAckOHnXvdTbcHjO0goWCFjrk4i4X8KTRP4348L?=
- =?us-ascii?Q?sVC1HloRYvOi6JIYQAAI1z4a1WkxvWqGGaHFhAzbIGY/bNRp/OfJhELuOtta?=
- =?us-ascii?Q?7M5mRiXbcREe2axz09OTbkGR2de8/cOYW2kcdXjzWbweJEvOubm3nSpPsR6K?=
- =?us-ascii?Q?TbGU2fkwu3M6C46R19p6ty96gD9sg8l8BS4Psb/N7ZnvE5XIxQQ4hbWJulDi?=
- =?us-ascii?Q?sB5fsGuhl+iVUFrftwUY1fqTekfyJbt7r17/qXeAb39/2J3uuJt4RYh1ZOUn?=
- =?us-ascii?Q?Iob6I119k7DWQSTvO6J18pz2skrQWGEfgOQxY/u+WlDjxrb7oTtZsyso94Bp?=
- =?us-ascii?Q?OHUDvQWCN6kQpe9OCZwCTXgyETgnQ8TVISqD9HpAZaxqqOjuPUGHDh7hNi2N?=
- =?us-ascii?Q?ygz34pkq+xjDHld9wjsCMfVkQm8M5xui0r4QBC70EgHJUpnNlm7KKt+UZuvS?=
- =?us-ascii?Q?aIge8U+J810hxeFr0CjWQxYHMA1bTdyQHztHfyUwHSFgKHxTFqd2U7nv2njY?=
- =?us-ascii?Q?SUXFR8Cb2E2KERtIX0OJDoOiv9LKbmkBbsHhcgTsBYgJ/XSpt4x+f8Tuwuwl?=
- =?us-ascii?Q?V44xv13Wiry6ZKfwdwBJs2YHAYU1oTgqGMS00G8ebW22cJVb8NpuX/0HZUu1?=
- =?us-ascii?Q?XBijqhwGUNhyxIK+OobVINGZAc2fi7e0xkJ6w5Ni8B+qpE0t9Z1XucE93m2u?=
- =?us-ascii?Q?eioardV9vh78vUXsXweDCnU1mQ+C4KkZOaUjLTQr9I2fPvqfxlHKlu8p4zTl?=
- =?us-ascii?Q?QtQWFOImOrKYPfoJTmIPU9fyEo1rZLM2F+vdU03sHMkqtQMMvayB5LwJ/sbE?=
- =?us-ascii?Q?yeUU//ToRGC7r7QnwBp58rPj4tvE82FvSWxAiTFJuWqjwEElHtMzLfbXauDo?=
- =?us-ascii?Q?3H78hgzZRI66avsxwyjKqY44KQLzQ5sKU0q0lot3ybdfIG5GS5emWNsh5Q+b?=
- =?us-ascii?Q?jYuNgfW4xlPtXgfUVGtmjcOxoQ2NtstZOTkpXQpU5GuMwXTc58p/saq6Z5Nj?=
- =?us-ascii?Q?1KeNIKloUL4ELcUeRE4nHzDCgCJ27CyNKlpLfV5U61qX3Xy+EXGq0W3CGcGG?=
- =?us-ascii?Q?GYMDpJk36IElBcMM95fIKxM=3D?=
-X-OriginatorOrg: quantatw.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff4b956e-4d16-4d9e-ca6a-08d9ea541fe4
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3282.apcprd04.prod.outlook.com
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?gQvypYv/C1kpaUcV0xSHIbFMk3HQTi/97NtTsecbM5PKLfIdoxgUHKS7bg6r?=
+ =?us-ascii?Q?ui9tiF5FXOg4Zg84Ko3Tn45bt8ZO2ueLG0P4nEOsl4hqjjCPNRJ1g8u+WonP?=
+ =?us-ascii?Q?dCkvDuFpcfhaQnsliJwg8QEEL6xQVJwlobp+l4/BXecz2SSy3gL1Tgh+xX3f?=
+ =?us-ascii?Q?HcPwjHvS/gv8KUN3AdJmzThKotmCHfU3gcDF9AfQYDLTS9mM2iXZdkKXqR3J?=
+ =?us-ascii?Q?ilprVzAVr2rXe9m1nMfRO3xJatJbAjUqwujiuOImMT+EHsPH/RGWrQQyEcbi?=
+ =?us-ascii?Q?vPbNTHbxDmGbU3ArFl4H0VR9JvtmRNCbJ3dpUJAS0KsLHZ2KzuqBBtX/1+Gt?=
+ =?us-ascii?Q?IcHjWPMrKgItAiK/avFieSbC+GUd0MYeKGeEIxyVCkrMeV52GuvFNzNidCm/?=
+ =?us-ascii?Q?vssnGOyUWY3GTNune9NDvXLp5mE74moobABZgaKXhnaz1ebgovNvWjwUT4uD?=
+ =?us-ascii?Q?fIm1DhXSSE8FoKq90ZryjPfTOsXSjituoVYPbWcyhf7U2wZEqhCPCppydhoX?=
+ =?us-ascii?Q?4zdoKrdrM25nX13h54GRlJTjQLI488B2XdUGwDe3o6/eo9ZxnddnA8FCg/mF?=
+ =?us-ascii?Q?g1ZhN2pkFS1l/SYS85QjJbTdyJ6ck2HFAXx4TompzfrL4e3CA/QVgMmhykI/?=
+ =?us-ascii?Q?a9mTnlbw6LafKsQJK7SyZ5yxNYqf2rKZx33fL6rCDYwsPLoL94H6AdYHVBxn?=
+ =?us-ascii?Q?NLD09iF3pKkUqybjZfF23tfYqaPOhu11BbTMEqMFr1NPt61CinsDcw5HcJrD?=
+ =?us-ascii?Q?D8G+5bFtccSV7ij2Gp4nqqmmzXsv7g771cRahowWjStk8E/acXDbjgIggJ1Z?=
+ =?us-ascii?Q?ILOC9+2AfCFvpGu+ucIpQAW87hSO1c6R6ySSOZWl5cAjDSK8t0wMFzCurz7A?=
+ =?us-ascii?Q?wdz0ey6yliJEQok4J1OJWs8ClCH9Gb1lDpGGaUcB+nfXpWtmkg+yGelt1PZn?=
+ =?us-ascii?Q?D17QqzdMjptyzs+k/Tl9cLoLUQo1E3BBvbPBrHJHn/6y3KcmNMkk/FBWqYU5?=
+ =?us-ascii?Q?ZisjuZZjgjAQtINLDfTR7OEbDVkVX26z3P+jTUuAD2jLNrjh16qXw94AjWqQ?=
+ =?us-ascii?Q?ZrHWkfjuzE52UsQrDPuxv30E383maatwDJmKJJnGtFKLGi3H0KqMPDrs6j11?=
+ =?us-ascii?Q?mCJYP08NLhI+KvljAOQsKmXKEJPSQv9bvTW/3Yy7Le2cgKTY7lrtkLSVtjDI?=
+ =?us-ascii?Q?T8LaPJOJpqVR3j8JMObLZN8HHPV2UpVLpntu680PJwHSjqVPGjMFl1p4ez/c?=
+ =?us-ascii?Q?aEb+iN7jX7d8u9KjKBqrrdUnGE2HHNIEgj0BZZLvReTk8aYCpRBV81Fm9Tjf?=
+ =?us-ascii?Q?PEyjGuU0HDLliKm49oo3IVgCjE+hiWO2cIzWo+AIXlVUcjL5Ej48N+bI6TTK?=
+ =?us-ascii?Q?cDohxcmZge05lCAT7V7nZMrIGPHCJnR7+Dd5+t/lJ3cq1JVxky2jE+sh/kSP?=
+ =?us-ascii?Q?uf5XfoJKO/tkykMZ1ZxWW4wuf+agqhX+jbXSl6fSt5AGzJmp8BVDWNM0SB+l?=
+ =?us-ascii?Q?cabZDnRsVQVNSXbagLesgD63vNthe57xDunPpTZjCwOn5u+B4SisLKy4a9dK?=
+ =?us-ascii?Q?nssOJ2gguhpL78ae4p2Ylb4OFkBC3V+EDLNvMfbkcnl5GWDrCe7TEHpfLqSV?=
+ =?us-ascii?Q?Cg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Feb 2022 16:08:48.5375 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 179b0327-07fc-4973-ac73-8de7313561b2
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: avBVUBlYNe9csF6I+Xa5/X9/2HjJyTv17HClo9AeeKvSFKEabbITMqWUo2qM9j7DHMZHx0VrbDakjnRAtRKjiQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SL2PR04MB3066
+X-MS-Exchange-CrossTenant-AuthSource: MWHPR11MB0046.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8cda0893-0ea1-45e7-5b21-08d9ea605634
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Feb 2022 17:36:13.2417 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: qZYPnAJi5VeFLw8mgDkv09mLLdJkZG5ZtLBbB1TviP8qax9K2VKDeF8KX8yPHLrswCkmKyOpp+Xwg9z77bUeLw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR11MB3134
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -129,282 +161,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Potin Lai <potin.lai@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Initial introduction of Bletchley equipped with
-Aspeed 2600 BMC SoC.
+Hi All,
+I would like to nominate Sumanth Bhat for the TOF. I realize this is past t=
+he deadline, but would like the TOF to consider his nomination if possible.=
+ Sumanth has been contributing to OpenBMC since beginning of 2020 is playin=
+g an important role in bringing MCTP and PLDM to OpenBMC.
 
-Signed-off-by: Potin Lai <potin.lai@quantatw.com>
+Thanks,
+Sharad
 
----
+-----Original Message-----
+From: openbmc <openbmc-bounces+sharad.khetan=3Dintel.com@lists.ozlabs.org> =
+On Behalf Of Terry Duncan
+Sent: Friday, January 28, 2022 4:27 PM
+To: Patrick Williams <patrick@stwcx.xyz>; OpenBMC List <openbmc@lists.ozlab=
+s.org>
+Subject: Re: TOF Nominations
 
-change v1 -> v2:
-* sort Makefile alphabetically
-* add licence and copyright
-* update model name
-* remove the nodes not using (fsi, emmc, sdhci, ehci, pcie & display_port)
----
- arch/arm/dts/Makefile              |   9 +-
- arch/arm/dts/ast2600-bletchley.dts | 223 +++++++++++++++++++++++++++++
- 2 files changed, 228 insertions(+), 4 deletions(-)
- create mode 100644 arch/arm/dts/ast2600-bletchley.dts
 
-diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index df844065cd..ac93a89c07 100755
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -677,15 +677,16 @@ dtb-$(CONFIG_ARCH_BCM6858) += \
- dtb-$(CONFIG_ARCH_ASPEED) += \
- 	ast2400-evb.dtb \
- 	ast2500-evb.dtb \
--	ast2600-evb.dtb \
--	ast2600-ncsi.dtb \
- 	ast2600a0-evb.dtb \
- 	ast2600a1-evb.dtb \
-+	ast2600-bletchley.dtb \
-+	ast2600-evb.dtb \
- 	ast2600-fpga.dtb \
-+	ast2600-intel.dtb \
-+	ast2600-ncsi.dtb \
- 	ast2600-rainier.dtb \
- 	ast2600-slt.dtb \
--	ast2600-tacoma.dtb \
--	ast2600-intel.dtb
-+	ast2600-tacoma.dtb
- 
- dtb-$(CONFIG_ARCH_STI) += stih410-b2260.dtb
- 
-diff --git a/arch/arm/dts/ast2600-bletchley.dts b/arch/arm/dts/ast2600-bletchley.dts
-new file mode 100644
-index 0000000000..2417c95f00
---- /dev/null
-+++ b/arch/arm/dts/ast2600-bletchley.dts
-@@ -0,0 +1,223 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+// Copyright (c) 2022 Meta Platforms Inc.
-+/dts-v1/;
-+
-+#include "ast2600-u-boot.dtsi"
-+
-+/ {
-+        model = "AST2600 Bletchley";
-+        compatible = "aspeed,ast2600-bletchley", "aspeed,ast2600";
-+
-+	memory {
-+		device_type = "memory";
-+		reg = <0x80000000 0x40000000>;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	aliases {
-+		mmc0 = &emmc_slot0;
-+		mmc1 = &sdhci_slot0;
-+		mmc2 = &sdhci_slot1;
-+		spi0 = &fmc;
-+		spi1 = &spi1;
-+		spi2 = &spi2;
-+		ethernet0 = &mac0;
-+		ethernet1 = &mac1;
-+		ethernet2 = &mac2;
-+		ethernet3 = &mac3;
-+	};
-+
-+	cpus {
-+		cpu@0 {
-+			clock-frequency = <800000000>;
-+		};
-+		cpu@1 {
-+			clock-frequency = <800000000>;
-+		};
-+	};
-+};
-+
-+&uart5 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&sdrammc {
-+	clock-frequency = <400000000>;
-+};
-+
-+&wdt1 {
-+	status = "okay";
-+};
-+
-+&wdt2 {
-+	status = "okay";
-+};
-+
-+&wdt3 {
-+	status = "okay";
-+};
-+
-+&mdio {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_mdio4_default>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+};
-+
-+&mac2 {
-+	status = "okay";
-+	phy-mode = "rgmii";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii3_default &pinctrl_mac3link_default>;
-+	fixed-link {
-+		speed = <1000>;
-+		full-duplex;
-+	};
-+};
-+
-+&fmc {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_fmcquad_default>;
-+
-+	flash@0 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+
-+	flash@1 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+
-+	flash@2 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default &pinctrl_spi1abr_default
-+			&pinctrl_spi1cs1_default &pinctrl_spi1wp_default
-+			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
-+
-+	flash@0 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+
-+	flash@1 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+};
-+
-+&spi2 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi2_default &pinctrl_spi2cs1_default
-+			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
-+
-+	flash@0 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+
-+	flash@1 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+
-+	flash@2 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c5_default>;
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c6_default>;
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c7_default>;
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c8_default>;
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c9_default>;
-+};
-+
-+&scu {
-+	mac0-clk-delay = <0x10 0x0a
-+			  0x10 0x10
-+			  0x10 0x10>;
-+	mac1-clk-delay = <0x10 0x0a
-+			  0x10 0x10
-+			  0x10 0x10>;
-+	mac2-clk-delay = <0x08 0x04
-+			  0x08 0x04
-+			  0x08 0x04>;
-+	mac3-clk-delay = <0x08 0x04
-+			  0x08 0x04
-+			  0x08 0x04>;
-+};
-+
-+&hace {
-+	status = "okay";
-+};
--- 
-2.17.1
+On 1/14/22 2:31 PM, Patrick Williams wrote:
+> On Fri, Jan 14, 2022 at 04:16:24PM -0600, Patrick Williams wrote:
+>> On Fri, Jan 07, 2022 at 12:11:30PM -0600, Patrick Williams wrote:
+>  =20
+>>> * Jan 30th:	Nominations (self or peer) for TOF seats must be sent to th=
+e mailing
+>>>              list.
+
+I would like to nominate Jason Bills for the TOF. He is well known in the L=
+F community and an active contributor to the OpenBMC community. He has a lo=
+ng list of submissions[1] going back to October 2018. He is active on the m=
+ailing lists and the discord channel. He is maintainer of five OpenBMC repo=
+sitories including x86-power-control, phosphor-sel-logger, host-error-monit=
+or, libpeci and peci-pcie. Jason actively reviews code submissions on these=
+ repositories and others [2].=20
+Jason will a great asset to the OpenBMC TOF.
+
+[1]
+https://gerrit.openbmc-project.xyz/q/owner:jason.m.bills%2540linux.intel.co=
+m,275
+
+[2]
+https://gerrit.openbmc-project.xyz/q/reviewedby:jason.m.bills%2540linux.int=
+el.com
+
 
