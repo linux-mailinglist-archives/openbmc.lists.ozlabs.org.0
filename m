@@ -1,76 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F2D94ABDA8
-	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 13:01:28 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 760BD4ABEBD
+	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 14:01:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jsl9L01Hhz30QS
-	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 23:01:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JsmVm0kSRz3bZP
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 00:01:36 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=WUkDxhCE;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=JqNzuh+G;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.20; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=WUkDxhCE; 
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org;
+ envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=JqNzuh+G; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jsl8s2FvVz30Ld
- for <openbmc@lists.ozlabs.org>; Mon,  7 Feb 2022 23:00:59 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1644235224;
- bh=ny+4Ok9hjLmZqMdJOe+AHOHZyUc8dQTSBOKig5sw1Zw=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=WUkDxhCEnOgHi9guAMa8VpNWsUNYQ9ylfHk2co/w4BFeE7z7hvrg4aglMTKohiJdh
- +6pdR+jeYSdTHrEEBT21mzjMQG9b4Yiy6d6CqAjXfDVEtnuhDb1CUDfFzOrsJTmWlM
- NNX0rrIzd0y/MrBW5+72cOw3QSb/K3pgz+xzvfZk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5VHG-1oO2ST3tkI-01709e; Mon, 07
- Feb 2022 13:00:24 +0100
-Date: Mon, 7 Feb 2022 13:00:20 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v1 6/6] i2c: npcm: Support NPCM845
-Message-ID: <YgEJ1M40AG9EuRPI@latitude>
-References: <20220207063338.6570-1-warp5tw@gmail.com>
- <20220207063338.6570-7-warp5tw@gmail.com>
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JsmVN2kSxz2xDY
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 00:01:16 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 2172E61123;
+ Mon,  7 Feb 2022 13:01:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0157DC004E1;
+ Mon,  7 Feb 2022 13:01:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1644238869;
+ bh=JOc1/6BZgCfsZYq3N36mbfIFoPDeRG9grLrfprzG+r8=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=JqNzuh+GfyMIdM8LVAIedh2MKCYgVMklskYwUHWzplhWZR/hBE0x/twHaAFevsUXq
+ C/E4Jug/AouJue+jyUK/C0O1u/z12BfWJzANeJFD7Au8GmHtqxed85it87Jm2c/VqD
+ 5iQ2ykyE0D210OFRnxrp1QLzwip5+oW/VaaxIp7XSR+CYrpbYVdATtoLE0qWcPrSMb
+ 8utW3YP28BdnBMw5zbLGVlnmKtCXWwvzOLnjMU0h/mIDR6ryIvPGoCHVc56p2gkMmX
+ xf59ddSVHTIZcKFaqjrShePZ4Tx2FXmxeTqpSHjx+6maF4TIXk0gIvwTnGVuoTw0fE
+ AQlM41k4JBebA==
+Date: Mon, 7 Feb 2022 14:01:06 +0100
+From: Wolfram Sang <wsa@kernel.org>
+To: Sui Chen <suichen@google.com>
+Subject: Re: [RFC Patch v3 1/3] i2c debug counters as sysfs attributes
+Message-ID: <YgEYEk355t8C4J1x@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+ Sui Chen <suichen@google.com>, linux-kernel@vger.kernel.org,
+ linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org, joel@jms.id.au,
+ andrew@aj.id.au, tali.perry1@gmail.com, benjaminfair@google.com,
+ krellan@google.com, kernel test robot <lkp@intel.com>
+References: <20211221174344.1249202-1-suichen@google.com>
+ <20211221174344.1249202-2-suichen@google.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="LFTVFI5jLgkqvDDv"
+ protocol="application/pgp-signature"; boundary="kV9YJMcLA9AXD3Nw"
 Content-Disposition: inline
-In-Reply-To: <20220207063338.6570-7-warp5tw@gmail.com>
-X-Provags-ID: V03:K1:yg89WwvSEPrQ7hqxZPv4583IrZHv7A7T87r0LqD6PbFz3C7FN/u
- DCigsPCdor6D5A6cW9pbDSVK9Wv7zDCZff+OnUfqn03zB/IKN/kfRue1QlcueWxNEcDF7cq
- v7kUL6I1LDa0n/X7JpqTp/cVEV9z/uaWTnAp/M1NjLk7sw5xbBxX58aGYTsD5gpunxjgfA6
- 1P2h57S5hXSollPCTcc1Q==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8fYjpuUTdVs=:2HRW9Qcc8Ghko4L1byQbVD
- lmQ7pKccZZzOktEod4HjQC/E6jDMhwDGbyRtgVU0Sf4j7OBkxDUfOpmYI93BaCMI9vzvsSCFD
- JfQH+uIWV1CPxiPvuOl3SFC0i+0cqZ17luQNWqH8imhzzLwxuS7KXIWYLdtgwbE7VybSuIZR1
- voqbrdVjGNd0tnSpFgyuazpvvpT5To6xMnKVNZBuZA/9wDUc4pAZiiRQuHaQuuFDEdnkFlV/L
- Csfel/qt5978fj/frEdEBsUGY8EVIaR5UhtQGY6r1HyeWA6cjpPQ3a7WoDtFO1IPHD/MGXWiS
- f3XvSBL0r1fCSfJmhOzIFWEXG2aRY/14QNV7NjQwGyi1BGpTUK0dGrQG71Cr+oC/oxcUXM7oO
- vYTKndhedx4Aah3lvXvFjBDpqKG1WbZgdZsXslmGHpZg5q5eJJKNsQ+kPpticRlWreVFv0VWI
- pPD5tkzu+iwSrSXEBThmAzH4Kro62lSd7P7J3fJupbtFYjabuokC0mzhHHq6Ilk12L4zj6nn0
- 4gFLb4t2jl969pYzy80DBcm8ylnpledOKttDYk1oyS2vlRRHyMUx0FkmHcq6982V1kzSHADJp
- eKyw0r8F1AgtvRM0wlywMNb56T6n05UVSK4uKIRWg3uyvDWemu3InSJSUdeOhokKzaH0eM4BY
- fWJs5h2g95mpZ9Z/ILWbcWq0ThSRE9R28DIYvnS+XxGTjtIDhYVtdoOGd/DUCFs3jFPAUngRf
- Y/GQ9r91dZNYfbpdIcSm16+uREm8tTCGgWDu3a0uhT1jWMZrFo23fp5FOrXidLFQfZhiJVpcr
- TGue+U3yFTPbD6zYzlRnhkjOFEughCCkmKS5XmE/sXQ08ZzAguUTvo6ilo1d4PhJWDvE3TbW/
- jtOu4YGjeENxCsmjO8vHSLUUMzLusw+FFPunKxq40Kh7HSY7b5ROsctYyKJMc0jeBpGg3IKz2
- LpsVGHevTX8b3NYlzs/mvFXhfbXORXLCrsEqzl8jatYjSNZOmqkue7D+9ayv3YQ2AVaJetn/5
- gTFPW3l6Ih0rNgigutZdWDeh26ct2uEt86X9/iIGAWWj3w+Og7Q4XcafO0BPFw1GEtin06IUa
- O7Zwmqt7vE/nZc=
+In-Reply-To: <20211221174344.1249202-2-suichen@google.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,104 +69,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
- linux-i2c@vger.kernel.org, benjaminfair@google.com,
- krzysztof.kozlowski@canonical.com, openbmc@lists.ozlabs.org,
- JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com,
- KWLIU@nuvoton.com, bence98@sch.bme.hu, arnd@arndb.de, sven@svenpeter.dev,
- robh+dt@kernel.org, Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com,
- semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com,
- venture@google.com, yangyicong@hisilicon.com, linux-kernel@vger.kernel.org,
- wsa@kernel.org, kfting@nuvoton.com, tali.perry@nuvoton.com, olof@lixom.net
+Cc: benjaminfair@google.com, andrew@aj.id.au, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, tali.perry1@gmail.com, krellan@google.com,
+ kernel test robot <lkp@intel.com>, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---LFTVFI5jLgkqvDDv
+--kV9YJMcLA9AXD3Nw
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello,
+Hi,
 
-On Mon, Feb 07, 2022 at 02:33:38PM +0800, Tyrone Ting wrote:
-> From: Tyrone Ting <kfting@nuvoton.com>
->=20
-> NPCM8XX uses a similar i2c module as NPCM7XX.
-> The only difference is that the internal HW FIFO
-> is larger.
->=20
-> Related Makefile and Kconfig files are modified
-> to support as well.
->=20
-> Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller drive=
-r")
+I finally had some time to look at your proposal. As I wrote last time,
+you convinced me to have the stats in sysfs for apple-to-apple
+comparisons.
 
-It's not really a bug fix, but rather an additional feature.
-Therefore, I suggest removing the Fixes tag from this patch.
+One change I'd like to see is to let the I2C core handle the stats and
+not the individual bus drivers. From what I see, the I2C core could
+handle all this if the bus drivers use proper fault codes.
 
-> Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-> ---
-[...]
->  /* init register and default value required to enable module */
->  #define NPCM_I2CSEGCTL			0xE4
-> +#ifdef CONFIG_ARCH_NPCM7XX
->  #define NPCM_I2CSEGCTL_INIT_VAL		0x0333F000
-> +#else
-> +#define NPCM_I2CSEGCTL_INIT_VAL		0x9333F000
-> +#endif
+> - ber_cnt (bus error count)
 
-This is going to cause problems when someone tries to compile a kernel
-that runs on both NPCM7xx and NPCM8xx (because the driver will then only
-work on NPCM7xx).
+I'm not sure what exactly "bus error" means in this case. But I think it
+can be translated to any not-otherwise handled errno returned by
+__i2c_transfer() or __i2c_smbus_transfer(). I also think it should be
+named "bus_errors". Do we really need the "cnt" suffix?
 
-And every time another platform is added, this approach will make the
-code less readable.
+> - nack_cnt (NACK count)
 
-A more future-proof approach is probably to have a struct with chip-
-specific data (such as the I2CSECCTL initialization value), which is
-then selected via the .data field in of_device_id.
+This would be -ENXIO for __i2c_transfer and friends. Name should be
+"NACKs"?
+
+> - rec_fail_cnt, rec_succ_cnt (recovery failure/success count)
+
+This would be the return code of i2c_recover_bus(). Names should be
+"recovery_failures" and "recovery_successes"?
+
+> - timeout_cnt (timeout count)
+
+This would be -ETIMEDOUT for __i2c_transfer and friends. Name should be
+"timeouts"?
+
+> - i2c_speed (bus frequency)
+
+Yes, we can have that. I don't think this is really a stat, though. It
+is an attribute of an adapter. It has been requested before:
+
+http://patchwork.ozlabs.org/project/linux-i2c/patch/1413403411-8895-4-git-send-email-octavian.purdila@intel.com/
+http://patchwork.ozlabs.org/project/linux-i2c/patch/20181210084111.6938-2-tudor.ambarus@microchip.com/
+http://patchwork.ozlabs.org/project/linux-i2c/patch/20201013100314.216154-1-tali.perry1@gmail.com/
+
+So, I think we can tackle it again but it is orthogonal from the stats
+series.
+
+> - tx_complete_cnt (transaction completed, including both as an initiator
+>   and as a target)
+
+This would be retval == num_msgs for __i2c_transfer and friends. I also
+think it should be named "transfers_completed". "tx" often goes with
+"rx" as a pair. I really wondered "why only tx" first.
+
+So, let's keep at the high level first. What do you think about my
+suggestions?
+
+Thanks and happy hacking,
+
+   Wolfram
 
 
->  static const struct of_device_id npcm_i2c_bus_of_table[] =3D {
->  	{ .compatible =3D "nuvoton,npcm750-i2c", },
-> +	{ .compatible =3D "nuvoton,npcm845-i2c", },
->  	{}
->  };
->  MODULE_DEVICE_TABLE(of, npcm_i2c_bus_of_table);
-
-e.g.:
-
-	static const struct of_device_id npcm_i2c_bus_of_table[] =3D {
-		{ .compatible =3D "nuvoton,npcm750-i2c", .data =3D &npcm750_info },
-		{ .compatible =3D "nuvoton,npcm845-i2c", .data =3D &npcm845_info },
-		{}
-	};
-	MODULE_DEVICE_TABLE(of, npcm_i2c_bus_of_table);
-
-
-Best regards,
-Jonathan
-
---LFTVFI5jLgkqvDDv
+--kV9YJMcLA9AXD3Nw
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmIBCaYACgkQCDBEmo7z
-X9uI7A/+MWPp/zPHPaH3lYE4rWHKtXP/hbBmF0vkBrZkvhLAh69d3QhFSCURD+7b
-aC2EGxA6Jmnnbq4iGi76fSAge1D6KiDCpYvi3QLRSY5h66nEyvnAs2JlZZXMfBkQ
-TTCWSzdULh1ow8+IdwzTuQ/ngCNk+Dar1R8tsPvZjfgjNA+huM/UuBNP6c8XY/pe
-r1gGazpuFO5IittQwGVqW0f7WVdu7gBGsuOBlpdS4xMGdw5Zp2XSmMXPjESEI6Tp
-lCycBXLdhzEokfA76PhOuRSjn6V3fyZYlw/iIxLh/vISBD+XtAt9RuvvqHmxIlS0
-T+rqm3Kdn6BPb6xYxdBt2lySI6838dS7CvAI4ntu42bGTM+xboOSXm7RTUT0/PRV
-cGV3Uo3vx9fLNWVjxLhEbuMYyGY1AbE5UuORWkij2XilAWrwOqvFUWWu0Xw5UnaA
-SaWSZHU7/9QP16BCwoVt5Nv2HiygMddN50dZFAzcy2oLXoChLFThcrc5KGKvfX/4
-ltXWQ4XI+7riX9QhoD9HX2SLwTNaX1V8nHojvzbflb7UIvujg8VSu2uBq6hRElDe
-BrBEbtEkFYVzs2zkULWGsp9bQGcwJF3gVEWFTpxuLWS6xFB3kJqPhVffoqxL4NbD
-W3HqOmJArx3js3avkgpp3LzI8hAAYfq+yP3Fibsmc9Z89mU5rYE=
-=8qyc
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmIBGA4ACgkQFA3kzBSg
+KbYCOA/+NKh18t9FOXG44dWZgqsl4HHVMSmEjwzcVjFNG8EDlatHUuhVIO2jag8j
+3SWfe/lNFa0e30K0ggYZDSkkL70i65Rs6/7bxCGL8+UhD3K+w5l7+6IKkAJ/cYOf
+ZtnjnOhMQxQ9YFh/YxG7+xOd9vJ8gpi001htwf6t0OBU7KR80SfjF+YlkZfZ/BVJ
+9Xsr965j/Qf+wFzrPtuEmMo7qScyns95fcryivYCg+/9RQ101+sUs4AtE41bKFIo
+3gtxbEoyqVMweaF4sigBqnu75fillhHlU3+ChU54IzPwclTBfX1i1YqLOAkA9wUn
+jf3OTXgOCORXhVDF6rXd7GaiZdDzvBFk85oluZP3KxpwraYhNCjPOYgZko6fQqJB
+fPxipmFwHionCOje+owWxIJskFc/nfEFl32VtO+QXpFklXkm/LkAqb+imgMjZDw0
+UBJxDI1LW8vAmxcoQR9Qh4iiiAjCkV5RoOosevk1Q68N6rbv8KuWFio2PqmcDmOE
+W5A24VtxdbYyYJ9jMchSRXJoPXNW5I4YZ0W4v4WIqyWWGODPjOanxr57RBlDuJbo
+KqqIwmc8N8kTIE2qvJ7cn2vZ8RoRdQsAUNL6gRFUsjqA/470yLwTkzPfRh9/ACB2
+e/Q5dEAm7CNzs5hfSWxg8ViAJA6EW2XThZW9Or2XSvkRj/l5YeA=
+=logL
 -----END PGP SIGNATURE-----
 
---LFTVFI5jLgkqvDDv--
+--kV9YJMcLA9AXD3Nw--
