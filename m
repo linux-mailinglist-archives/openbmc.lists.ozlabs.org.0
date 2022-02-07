@@ -2,122 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF2154AB36A
-	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 04:27:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 18A594AB3C3
+	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 07:03:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JsWmh3cFqz3Wtp
-	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 14:27:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JsbDR5t2Bz30NB
+	for <lists+openbmc@lfdr.de>; Mon,  7 Feb 2022 17:03:35 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=J92/YuN8;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=QYTTNnyl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:febc::714;
- helo=apc01-hk2-obe.outbound.protection.outlook.com;
- envelope-from=potin.lai@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f29;
+ helo=mail-qv1-xf29.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=quantacorp.onmicrosoft.com
- header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-quantacorp-onmicrosoft-com header.b=J92/YuN8; 
- dkim-atps=neutral
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-hk2apc01on0714.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:febc::714])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=QYTTNnyl; dkim-atps=neutral
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com
+ [IPv6:2607:f8b0:4864:20::f29])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JsWmB66hJz2xX8
- for <openbmc@lists.ozlabs.org>; Mon,  7 Feb 2022 14:27:20 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nTKe+9wrrFxqhaifeUqTs1UVoKhCHIhIoI/wKHWMj3+0SxkinpWKNdd497JOCPt65BjXBQtQJAZV6WftjGqPn1jwKqPAUll7uYozDAsRin/G68ki5VAozhzPNBYPoJ+JwBkAn7wNRepWvIzA8mlgmAhcGj8wVeou5dP6uKKJI3ZnJ4NfSzTsPhqM06m/gPkg7DiJ69w6X9th9r3/A4Vqw+YhZmEYOvR5vsCaGHES4oxLeIgehsSrjTP+S+L59NAPORaQ55bE/O/to2bJ4CAYYxtoauZk2AxjLAK3521FRbvX/9A3QHwW+ZB6ZOGDlbpO3e1XUxIHs1GtCpq56VPbCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ko7VV8iVoGdtoMwhSyz2iUFnNfVegCff1qozo6bhwkQ=;
- b=inVOH/o6tikbypwUId8M099a8/TtocSbgmXZT7C6RItm5DjfMRf2kg6keyvdpSFfb1getPZrTw8x9lv122Iy/WOSsVbe+vkjRkPGbMHIOPapoi+2A0EDTJqH5WZkV2Bqdesvuv/DbrCiVv2VQIe7VyPGwyXoN6fsNKVIBIHLHR+/0tmg0fFk/KW9D2dqf63EQYebrKaPknwML9op8gQndRuFXb8icsb/vgMPZfo0FWn8QAGsTMv9lzbix7FesepqQ7T7QEj1Iw7clIbg3a5PLhvFY2gXu9JeiQXurfnfYaV2t6lI+8E/UoO1ZdVTr8uXsby4kL9G9v4L2p6Y0TV58A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ko7VV8iVoGdtoMwhSyz2iUFnNfVegCff1qozo6bhwkQ=;
- b=J92/YuN8Hmr5mUX42Smp5zMwW5GrlaxYJofBVEk6fdNG3uAQgVrTO6Ou+Mr+qnBPiX8Jmjbmql30b520vQ2mIdOTDz+EciYdtAWPRpj8iY6DVTQIenkfHPsma5vQCZ39SPDUK7IZzAuIcQ2om+tDpN8p5Rc+PVU/KqY5PkkI/ow=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=quantatw.com;
-Received: from HK0PR04MB3282.apcprd04.prod.outlook.com (2603:1096:203:89::17)
- by TYZPR04MB5038.apcprd04.prod.outlook.com (2603:1096:400:12d::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4951.12; Mon, 7 Feb
- 2022 03:26:57 +0000
-Received: from HK0PR04MB3282.apcprd04.prod.outlook.com
- ([fe80::8160:1a0:97e1:9e53]) by HK0PR04MB3282.apcprd04.prod.outlook.com
- ([fe80::8160:1a0:97e1:9e53%3]) with mapi id 15.20.4951.018; Mon, 7 Feb 2022
- 03:26:56 +0000
-From: Potin Lai <potin.lai@quantatw.com>
-To: openbmc@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [u-boot,
- v2019.04-aspeed-openbmc 1/1] arm: dts: Aspeed: add Bletchley dts
-Date: Mon,  7 Feb 2022 11:26:41 +0800
-Message-Id: <20220207032641.17889-1-potin.lai@quantatw.com>
-X-Mailer: git-send-email 2.17.1
-Content-Type: text/plain
-X-ClientProxiedBy: HK2PR02CA0142.apcprd02.prod.outlook.com
- (2603:1096:202:16::26) To HK0PR04MB3282.apcprd04.prod.outlook.com
- (2603:1096:203:89::17)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JsbD445SLz2xXV
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Feb 2022 17:03:14 +1100 (AEDT)
+Received: by mail-qv1-xf29.google.com with SMTP id a28so3442679qvb.10
+ for <openbmc@lists.ozlabs.org>; Sun, 06 Feb 2022 22:03:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=WZkL3bOaxrucylVrF7iVrDzDGzYaY4PmoTbZqUjvgCw=;
+ b=QYTTNnyl+E+4FkLrSZsdk2A0QCaSiWadP2bdizN3wbLMKuBlIv7n134+ZxbX+sT6Lh
+ 4UnTJKjqbK52Gvb6v+FtJZeDF6Kl+9f5bOifFdUyJUjmyrV6ZAcX1wSxlbLrVrduoFFF
+ 2gh5UBRFmZ+T8guGmXNz4kKfXUVTD4RelMKlc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=WZkL3bOaxrucylVrF7iVrDzDGzYaY4PmoTbZqUjvgCw=;
+ b=WUjVOuMMHhGd39myFHCVskzrzS9hfE2C+AjYdUDuA2HU5i4EtE8LrCQnJyGahNKCxp
+ XE8yN9dl3MY8rk9HioOLDX4geAO1KoHJ7PZk4ojJnPvAo5TU+WP6Ui5x4qelQJlUB2Ek
+ 0qphpDudPYsb6WmTFRqf/V/ikixaxkhMLh8R5vneTEr8BYTJHinHOOrOYGNhiE3uk7Ud
+ l+DrNTL8qn9X5jPof82YTHJpFLNG55/cQC7ilVDmRJ5vIpav5ObrmU+UU3IVtVOrurZm
+ x1BBWkqqdWlh58htCkTt2zIcQkgnrQSbva06jy1zMr5joFdDyN8tBajTwMvMvqM4pLi3
+ JmSA==
+X-Gm-Message-State: AOAM5310V3hCdlDoAuqABii9QLwn5+e6fza/qCb3R4TBSRrxt+pJMIaw
+ n6wswwqQOjhw44m3esIkskbr2snzUHAo9+Z7+DE=
+X-Google-Smtp-Source: ABdhPJxYSLsNu1xb+ESmidKri/KryxQ8/czdf5hm8THcklfLzJe54jZIOGUCXp3REsoZsyOjIRrNf55SazNcseNyfcA=
+X-Received: by 2002:a05:6214:c29:: with SMTP id
+ a9mr2056876qvd.130.1644213790958; 
+ Sun, 06 Feb 2022 22:03:10 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 16cfda09-6a0c-4554-f1c6-08d9e9e9b169
-X-MS-TrafficTypeDiagnostic: TYZPR04MB5038:EE_
-X-Microsoft-Antispam-PRVS: <TYZPR04MB503817F270DB68E54983392D8E2C9@TYZPR04MB5038.apcprd04.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:121;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: W2HC6rGpZQt2vym2xSHUAtdtjH/4ltPWosg7bC38CXtRz/+QBkEQ6mbp0UwhCZ7wCjLxUW66Nf/ecOBXuFL5U8C/G9/dQ/WzRVTrW3/kgj56wWyo4p+hO7UqYjLI3oNrPyJxtomKDVdN6UPlsWT1MW/NvE8zdrTU93gFNxAudczkC0MI2KcnXBrchqoSg7whRxeQRgT02DxSs0tOOivz5thTjUOBRYAtGNUYMQ144sIRr0wqYxNfDe513ha/HsOQPH3Z1O+xUMZlupmd+5tIn5MEftL8fC6hxMYO0ihmqEpXmW7+TQPWrZprPRf2EidtZ+7NfJkoom4WgF2R7tb1p6UHkka4lsBHKtHEut9n3VP+4ydIRUUG5R6AxK+zc4RsybHGTLVK3Z3yu+CsA2Tqs5YAkoD1Vn4pv4L2JD94xDdeFLF8Vc/cXG+Kbnz3h7QJOs5F22Kl4uepwpkZFCjyRUoVRK2En0I+LfvkLVVl2rDOnYk9wK3z7dTVyJmt04K2YCn6/3j6d9lFy48SWzrb4yZFi3dOKBkBJsC/YtO7M7PMUhlofuApMoxbEp7YdERyMjO73/4LNa6aP8HPuI8Jjst8Ut+xwSSIqD4J1yBb6b6jEl4RiPxANMeO85xAZSVHfy1Bo/ve1JhViPlru83JyNBIEoQrfDQAwrHQjoTtvh0clOtgPRncD8+m4zaOFzQleYZZghB+nxNHB9GUps4wPQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:HK0PR04MB3282.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(316002)(2906002)(54906003)(107886003)(83380400001)(1076003)(66476007)(44832011)(5660300002)(26005)(186003)(2616005)(36756003)(66556008)(66946007)(52116002)(6506007)(6512007)(6666004)(6486002)(8676002)(8936002)(4326008)(38350700002)(38100700002)(86362001)(508600001);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?CMdfzK4fc8bZobyncTdFGywD7kdu+7IMh9YH2kK5DjE+lkCE9depBBBHtuuC?=
- =?us-ascii?Q?C9Jwci62Be37GJqIuIoYi0SBH5c/FR+aitP4t8fC1LsPNtXdH78JxyKNP1Tt?=
- =?us-ascii?Q?gYI5Z+EGjpFPX7qy+2hsyWZcNiJnrLq0K0as2/HeOTtB13IjqmAF6j+ijLjF?=
- =?us-ascii?Q?xNnHEPTAh3UHvl2Ny52+pR5XOfLZCdCLWmAOcagB59YV4GZr9M1bTbyXAbZI?=
- =?us-ascii?Q?WT/rmKUXNhead61I0YDpmNajc1eNabArXPiLhN9FOqjEq5t46PdBwhgTEnYc?=
- =?us-ascii?Q?4i+SXEP+QhGpOEZ5YI//hrobcWvrQZ31pYJjlRCcLFnSEG3OYkHHQMCQyGy3?=
- =?us-ascii?Q?5SH6jP4XJyp3fBXw4popS2TR9ySha7C7MaxqEdrynypZoN1RFb4MNNYICYnt?=
- =?us-ascii?Q?DMPMGYUr1aN99F1CGg2Mj+HnKnNrcVvsHI0FJfY6WAJs6D7Kpue53eU+Kden?=
- =?us-ascii?Q?BQMgyVJRYU/v8rYklxZy3GlYMUSayeHCDlFl4T1jSfneccqytX2tCsH3Y60A?=
- =?us-ascii?Q?kFE903Dm1x+RGcscu3se7yka0IZ2Y9576hijsEq6BmYoeGgdMumcWrgk6Zgo?=
- =?us-ascii?Q?ihgTqi/nOKJCGNg0kSyVAZa6IGZFW4/2FHeD5kP7EtjUgW4NGHzv1H9KASAr?=
- =?us-ascii?Q?2W1RMvN3SvHodNvPRb/YRTVp8ZIgtdbN15IgsosxHfP7+cxVn29rhXfT8qJq?=
- =?us-ascii?Q?b58mcqboqN+9CZIL59Z6AsQp3rKAhMCFaDSQsJCOcC0xAzFjiSC1BAJPCO9F?=
- =?us-ascii?Q?k28i26JPMkMdDLftCOe88J4yyYj8ZCBKmbAe5xeVdwueyLXTKQXZnxyrrTjW?=
- =?us-ascii?Q?olv7LZdGWODM96UEJxbVV43QBGy/oooRAJnZJzS29znDVWLk1IzsoqYeuWeF?=
- =?us-ascii?Q?mGYWiuexx66wYJcmXhQHaAZausPrNTwYSCN9yGBuxZ1/I9g3c1JAhpKbZ9xO?=
- =?us-ascii?Q?rTZtnR3bRsziczzfGHLv6FHvPqeyhjLC3X/wI9eFbpYIqDqxFqFdyXDCF7cm?=
- =?us-ascii?Q?y8pkqmocuN70h68pnxl3evM1tkCJ/iIxc1jN83U//Kbl7rACXnFzfG5zCjB2?=
- =?us-ascii?Q?6W9IZhwFS9qNri7xFTyB9FLO5J8lFLAjk0SLxsdgnM9uMBzzSg5bzyFTBnqS?=
- =?us-ascii?Q?2IV+Unz2/oeW9Isy9JcRfQmMxov20lWm8hjPOi3xB078/bbDDa8f7U1pUXue?=
- =?us-ascii?Q?16Pv/hn2kevgqHiCn1oofZRTLQjncdwyyu6sWsl0/5/gKukr9ps62rq5ElM9?=
- =?us-ascii?Q?RTFBY2Ge7gR8ZjaiVz0LLqqDgITPi/+IW/NXvt5vbOdMgYq1JI5owHQB3rSc?=
- =?us-ascii?Q?ZNU+YTY/DVj8h1FuTv/J7CGc5j3/VK3LeFvMHCTrwc8BbGfPWMQxqzPtRflJ?=
- =?us-ascii?Q?btzSG8AsFoFGOAYXt+kn0A+CJyvvbKtzmUcGCyw5v4ePr5PlgWZ4eB5ObHoQ?=
- =?us-ascii?Q?fHpMkQPavcpSlxQyI9w9poNK/t05ohUUT90+hG/qIqYyNSuwbjutv6TaCKU/?=
- =?us-ascii?Q?YoGb+YFiOD7v7uMvAxxWB9BLfAnUKjGDAISvttZzJ6OlMqkOv8qrlgnN3ox8?=
- =?us-ascii?Q?SQuAjQoGtSujaXtMUTcFdM+IlKHzgDjxLV2X2kQxGMTouJ/iN9C+g20nh/uC?=
- =?us-ascii?Q?WIlj1S+jgVDaiO/XBrKD7DU=3D?=
-X-OriginatorOrg: quantatw.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 16cfda09-6a0c-4554-f1c6-08d9e9e9b169
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3282.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Feb 2022 03:26:56.5610 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 179b0327-07fc-4973-ac73-8de7313561b2
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XxhzPXgVLNry1ihEERBVMAxEKbhik4dm6cyl674pdv45wU4QHWx3QcQa3n8VaGSXw2MCV0WxEyWR5TrgB733UQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR04MB5038
+References: <TYZPR06MB4015DC4BD5CA2FFAB595C69AFC2C9@TYZPR06MB4015.apcprd06.prod.outlook.com>
+In-Reply-To: <TYZPR06MB4015DC4BD5CA2FFAB595C69AFC2C9@TYZPR06MB4015.apcprd06.prod.outlook.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 7 Feb 2022 06:02:59 +0000
+Message-ID: <CACPK8XfwLCxNVLfVa=FYw0TVXPE_Kj8+p7=6Svw_O10x22Jf1g@mail.gmail.com>
+Subject: Openbmc u-boot trees (was Re: u-boot:rsa adds rsa3072 algorithm)
+To: Jamin Lin <jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -129,325 +71,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Potin Lai <potin.lai@quantatw.com>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Troy Lee <troy_lee@aspeedtech.com>, Steven Lee <steven_lee@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Initial introduction of Bletchley equipped with
-Aspeed 2600 BMC SoC.
+Hi Jamin,
 
-Signed-off-by: Potin Lai <potin.lai@quantatw.com>
----
- arch/arm/dts/Makefile              |   3 +-
- arch/arm/dts/ast2600-bletchley.dts | 285 +++++++++++++++++++++++++++++
- 2 files changed, 287 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm/dts/ast2600-bletchley.dts
+On Mon, 7 Feb 2022 at 02:26, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
+>
+> Hi Joel and OpenBMC team,
+>
+>
+>
+> This patch was applied to u-boot/master, http://patchwork.ozlabs.org/project/uboot/patch/20220119082323.4567-2-jamin_lin@aspeedtech.com/
+>
+> Commit   2a4b0d5890deb0c973f8db7bb03adad96aff1050
+>
+> https://github.com/u-boot/u-boot/commit/2a4b0d5890deb0c973f8db7bb03adad96aff1050
+>
+> Could you please help to backport the patch to the openbmc/u-boot tree?
 
-diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index df844065cd..a172a9f8c6 100755
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -685,7 +685,8 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	ast2600-rainier.dtb \
- 	ast2600-slt.dtb \
- 	ast2600-tacoma.dtb \
--	ast2600-intel.dtb
-+	ast2600-intel.dtb \
-+	ast2600-bletchley.dtb
- 
- dtb-$(CONFIG_ARCH_STI) += stih410-b2260.dtb
- 
-diff --git a/arch/arm/dts/ast2600-bletchley.dts b/arch/arm/dts/ast2600-bletchley.dts
-new file mode 100644
-index 0000000000..ec14898400
---- /dev/null
-+++ b/arch/arm/dts/ast2600-bletchley.dts
-@@ -0,0 +1,285 @@
-+/dts-v1/;
-+
-+#include "ast2600-u-boot.dtsi"
-+
-+/ {
-+        model = "AST2600 EVB";
-+        compatible = "aspeed,ast2600-evb", "aspeed,ast2600";
-+
-+	memory {
-+		device_type = "memory";
-+		reg = <0x80000000 0x40000000>;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	aliases {
-+		mmc0 = &emmc_slot0;
-+		mmc1 = &sdhci_slot0;
-+		mmc2 = &sdhci_slot1;
-+		spi0 = &fmc;
-+		spi1 = &spi1;
-+		spi2 = &spi2;
-+		ethernet0 = &mac0;
-+		ethernet1 = &mac1;
-+		ethernet2 = &mac2;
-+		ethernet3 = &mac3;
-+	};
-+
-+	cpus {
-+		cpu@0 {
-+			clock-frequency = <800000000>;
-+		};
-+		cpu@1 {
-+			clock-frequency = <800000000>;
-+		};
-+	};
-+};
-+
-+&uart5 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&sdrammc {
-+	clock-frequency = <400000000>;
-+};
-+
-+&wdt1 {
-+	status = "okay";
-+};
-+
-+&wdt2 {
-+	status = "okay";
-+};
-+
-+&wdt3 {
-+	status = "okay";
-+};
-+
-+&mdio {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_mdio4_default>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+};
-+
-+&mac2 {
-+	status = "okay";
-+	phy-mode = "rgmii";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii3_default &pinctrl_mac3link_default>;
-+	fixed-link {
-+		speed = <1000>;
-+		full-duplex;
-+	};
-+};
-+
-+&fmc {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_fmcquad_default>;
-+
-+	flash@0 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+
-+	flash@1 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+
-+	flash@2 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default &pinctrl_spi1abr_default
-+			&pinctrl_spi1cs1_default &pinctrl_spi1wp_default
-+			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
-+
-+	flash@0 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+
-+	flash@1 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+};
-+
-+&spi2 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi2_default &pinctrl_spi2cs1_default
-+			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
-+
-+	flash@0 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+
-+	flash@1 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+
-+	flash@2 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+};
-+
-+&emmc {
-+	u-boot,dm-pre-reloc;
-+	timing-phase = <0x700ff>;
-+};
-+
-+&emmc_slot0 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+	bus-width = <4>;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_emmc_default>;
-+	sdhci-drive-type = <1>;
-+};
-+
-+&sdhci {
-+	timing-phase = <0xc6ffff>;
-+};
-+
-+&sdhci_slot0 {
-+	status = "okay";
-+	bus-width = <4>;
-+	pwr-gpios = <&gpio0 ASPEED_GPIO(V, 0) GPIO_ACTIVE_HIGH>;
-+	pwr-sw-gpios = <&gpio0 ASPEED_GPIO(V, 1) GPIO_ACTIVE_HIGH>;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_sd1_default>;
-+	sdhci-drive-type = <1>;
-+};
-+
-+&sdhci_slot1 {
-+	status = "okay";
-+	bus-width = <4>;
-+	pwr-gpios = <&gpio0 ASPEED_GPIO(V, 2) GPIO_ACTIVE_HIGH>;
-+	pwr-sw-gpios = <&gpio0 ASPEED_GPIO(V, 3) GPIO_ACTIVE_HIGH>;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_sd2_default>;
-+	sdhci-drive-type = <1>;
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c5_default>;
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c6_default>;
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c7_default>;
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c8_default>;
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c9_default>;
-+};
-+
-+&pcie_bridge1 {
-+	status = "okay";
-+};
-+
-+&h2x {
-+	status = "okay";
-+};
-+
-+#if 0
-+&fsim0 {
-+	status = "okay";
-+};
-+
-+&fsim1 {
-+	status = "okay";
-+};
-+#endif
-+
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+&display_port {
-+	status = "okay";
-+};
-+
-+&scu {
-+	mac0-clk-delay = <0x10 0x0a
-+			  0x10 0x10
-+			  0x10 0x10>;
-+	mac1-clk-delay = <0x10 0x0a
-+			  0x10 0x10
-+			  0x10 0x10>;
-+	mac2-clk-delay = <0x08 0x04
-+			  0x08 0x04
-+			  0x08 0x04>;
-+	mac3-clk-delay = <0x08 0x04
-+			  0x08 0x04
-+			  0x08 0x04>;
-+};
-+
-+&hace {
-+	status = "okay";
-+};
--- 
-2.17.1
+Sure, I can do that.
 
+I'd like to start a discussion about the u-boot trees and how we
+maintain them. Currently we have:
+
+ - upstream; partial 2600 support
+ - aspeed-master-v2019.04, SDK tree maintained by ASPEED
+ - v2019.04-aspeed-openbmc, openbmc maintained by Joel. Based on SDK tree
+
+In the past I was putting code in the openbmc tree so we could use it
+for bringup, and trying to send pull requests to the SDK tree.
+
+Now you're sending patches upstream (excellent!) and sending me
+requests to merge into the openbmc tree.
+
+I would like to see fewer trees.
+
+In the short term, one option is we put all of the openbmc patches in
+the SDK, and continue using that for openbmc. Would this work for
+aspeed?
+
+In the medium term, we should start using upstream releases. There may
+still be some downstream code (as we have for Linux in our dev
+branches), but this will go to zero over time.
+
+Please let me know your thoughts.
+
+Cheers,
+
+Joel
