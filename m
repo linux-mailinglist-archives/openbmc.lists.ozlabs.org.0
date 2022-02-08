@@ -2,91 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 928844ACFFC
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 04:57:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DF42B4AD07C
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 06:11:42 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jt8Nt1S9rz30Mj
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 14:57:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JtB2440smz3bVy
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 16:11:40 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=SVWTxnN8;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JinE16RL;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=qKCf4QL3;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::102c;
+ helo=mail-pj1-x102c.google.com; envelope-from=gpgpgp@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=SVWTxnN8; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=JinE16RL; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=qKCf4QL3; dkim-atps=neutral
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com
+ [IPv6:2607:f8b0:4864:20::102c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jt8Mj6dkZz30NW
- for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 14:56:49 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 3EAD75C0178;
- Mon,  7 Feb 2022 22:56:48 -0500 (EST)
-Received: from imap50 ([10.202.2.100])
- by compute3.internal (MEProxy); Mon, 07 Feb 2022 22:56:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm2; bh=Pf1FVZIT3m6FzTw5Nz3yydfyvZrbzlW/e2zpW7
- p3UXg=; b=SVWTxnN8APycrQfujs4VFR+LfXdh/FqX1Z6P8h6YD5eA2/SueDaNec
- 9MSUFE5F+D+alPKm0TPFVW5MYY1TxkDXb6O/B3USwVqxDRMkKCvheNI0UGXH0wpp
- YWqTHUzvkcotLSKsXi1p+A2zcZ1mR7uLMqsys6FAqcwCH2z+OvWRd919WhXISDKD
- 59LIR7MA8gcqxtoaFx7o900vClgGl9I7bo8sq0U4bmEjPzc3h6lsLymZGaqxq+05
- XSxTbiiLjihhtP9uUy31BVgJydLxU5XlSzvvpUVwIoyImi8HtMLQBeORSgktCP7+
- llL8B7tUszh0rnrLtTBs9tD0MzHCWstg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Pf1FVZIT3m6FzTw5N
- z3yydfyvZrbzlW/e2zpW7p3UXg=; b=JinE16RL+I/ldk6MdtVno3FAEfyBEZeWk
- PEZWMEA1wBVonKmLeGrsGoY4gmaCWdM6tAdg+xjz+RsoKhCL6pqCF/iEclPpg3fA
- f+euL1ZMfItyoE/D9l6L0cH/nWt2T2OlqM6tEzWLdXpioW4ew/5ZgWMp7IdhIVr4
- IO1MHGiO0wQaUhOO8ie9Zv8+Xdwi9UjiclvJguDUV6x3SXrIA+QTQD/ZJgNMMAy6
- fxz44cbflt7c/4IwJK+cwU6tXiSw67IrMbmWgrJ955YJjlIZrHAVhHeY0DWf7GfD
- sAMOpFKW9Al9w4JT0wEy9aOAnNdbSJ+0nx05qTGi/G5XuKMIvZerQ==
-X-ME-Sender: <xms:AOoBYiw4HTfqQSz7yFasaOCdPwnZ3DfIx2Iap6CAvamEEPA0KI3aAQ>
- <xme:AOoBYuSObvD716JiAUEsvA-ird_FOEz0FCbSlmJUgFL3qE0Eiw6HKJnoVg7KaccKJ
- 0AhTZw3InZNOr5Saw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrheeigdeigecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
- veeuffenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:AOoBYkUHBB0LmRq8YrL7LK_q44iyZ9RE5PZc7zBB1WbezM_RbxJpFw>
- <xmx:AOoBYoiCvsfV0-YfJJJXVjKqUamgmpnVZ7FpQ_ljGdtlChnSWu3GFA>
- <xmx:AOoBYkCIB7fyk2qfV-4a6X9ntrexLde3_re4UDmDZK2OTiYUU53eow>
- <xmx:AOoBYvrnTk5Jm7soHi-3UNP_KPMsROxOcn2CDY-nlpuviyKsoQmDNA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 0B2631920083; Mon,  7 Feb 2022 22:56:47 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4748-g31a5b5f50e-fm-cal2020-20220204.001-g31a5b5f5
-Mime-Version: 1.0
-Message-Id: <f4b9c687-e716-45c1-82f9-ab3d03ff85d7@www.fastmail.com>
-In-Reply-To: <20220207231334.59845-7-eajames@linux.ibm.com>
-References: <20220207231334.59845-1-eajames@linux.ibm.com>
- <20220207231334.59845-7-eajames@linux.ibm.com>
-Date: Tue, 08 Feb 2022 14:26:25 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v4 6/6] ast2600: Add GPIO
- controller and hog TPM reset pin
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JtB1f1nWyz2xsc
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 16:11:16 +1100 (AEDT)
+Received: by mail-pj1-x102c.google.com with SMTP id
+ t4-20020a17090a510400b001b8c4a6cd5dso1515541pjh.5
+ for <openbmc@lists.ozlabs.org>; Mon, 07 Feb 2022 21:11:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=IncEpOAIigKzWMXDrEZLGk+2QgIFDxoqCC7bESzRs0Q=;
+ b=qKCf4QL35KF4mq4AO5kSMGw0gRW5lR8LFZvw8zw51wm9m7ekPJiieQGyEPkJ75AEUM
+ /18jo5Z4bWpX/dv4hiegLeMkbBDcAzWv7/xXEZpBSc6L4IWjdwIWjTZG+TEycSyadXiX
+ Ml42kUTtLx5KmjWmHTEwpALHyB9xjjSf3yeGIKIgqS6c04fNSSVNKnuJyCWgn1Ccczo0
+ m3wQ92ZuaHTkEIS3bTsiVv+wyhcOohyVXFQMNs1OUS71A5nabnvEgdLCm5ECbyPfppDg
+ vZsNug3WvM6FhX+zZLlCjbVv5QKihh1f6EixOq20x1xLMGm9N296pDOezhYvSv3oN13v
+ ydDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=IncEpOAIigKzWMXDrEZLGk+2QgIFDxoqCC7bESzRs0Q=;
+ b=e/Lso20sQCTL4VcYrUpOFTu//+P8aczbJ5mXS5RGkj3SYbKe+RKv4q1PblFpHhPm3O
+ Q7cxQoFRX7jljZpmmE985449VeLV0nXLllNDv9eS9+eQUFNXtQyCM8MSnSbkLN5tEtQ2
+ I+W7OdSazd9EjEaVglm64yEkph7eGYIuVIdD7xg9Ywy3E6yngW3EKz0xMMwpDwVMCzcF
+ f4l/lTAiG5BeCzZcJ49PA2RgOe9N9moacIp1GPCyN6wzIgdOcMXiAYnJwIoEThoeZS14
+ R9i3bnA5fc7yJGNczTmo6mRcuee73s8HYlDT42IogtHJeqwY2FlfLJ9+Zm0pgwsPx+p7
+ dZrQ==
+X-Gm-Message-State: AOAM533Jfr8ThrFxF9cTeHNb7628lz04VZC9prB5jXUku2tiFtelAi9q
+ wmuS2lj6JGUDHZXuON7d2f0f0A+tluwC2P2sw9FeadxN3/zLTw==
+X-Google-Smtp-Source: ABdhPJwhyK6OaKr9hfQz/8SSSK3Qx8S5cj+2YB+ONXYLwc7ttZfJOBe5mieLWBXr/bBcB3f0vAPjDvGmObNvZH/DLJ0=
+X-Received: by 2002:a17:90b:4a09:: with SMTP id
+ kk9mr2562355pjb.107.1644297072875; 
+ Mon, 07 Feb 2022 21:11:12 -0800 (PST)
+MIME-Version: 1.0
+From: Michael Shen <gpgpgp@google.com>
+Date: Tue, 8 Feb 2022 13:10:37 +0800
+Message-ID: <CAD1rtg8sa2OG4jUL8x7Gr9ExzH-tEswhHwSDaZtWhcAN4sAvuw@mail.gmail.com>
+Subject: Propose a new application for reading DIMM SPD directly
+To: openbmc@lists.ozlabs.org
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,37 +75,24 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Openbmc,
 
+We would like to propose an application that directly reads the DIMM
+SPD over HW interface(mostly I2C/I3C).
 
-On Tue, 8 Feb 2022, at 09:43, Eddie James wrote:
-> Hog the GPIO pin to reset the TPM.
->
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+If I understand correctly, the main method for obtaining the SPD
+information in openbmc is from SMBIOS which is prepared by BIOS. And
+We are exploring another way that excludes the involvement of BIOS.
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+The architecture of this application will be similar to the
+openbmc/smbios-mdr (the dimm part). The main difference will be the
+data source (changed from SMBIOS to SPD).
 
-> ---
->  arch/arm/dts/ast2600-rainier.dts | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/arch/arm/dts/ast2600-rainier.dts b/arch/arm/dts/ast2600-rainier.dts
-> index aae507b4c2..d0e82d1512 100755
-> --- a/arch/arm/dts/ast2600-rainier.dts
-> +++ b/arch/arm/dts/ast2600-rainier.dts
-> @@ -108,3 +108,14 @@
->  	u-boot,dm-pre-reloc;
->  	status = "okay";
->  };
-> +
-> +&gpio0 {
-> +	u-boot,dm-pre-reloc;
-> +
-> +	tpm_reset {
-> +		u-boot,dm-pre-reloc;
-> +		gpio-hog;
-> +		output-high;
-> +		gpios = <ASPEED_GPIO(R, 0) GPIO_ACTIVE_HIGH>;
-> +	};
-> +};
-> -- 
-> 2.27.0
+Currently the code is still being implemented, and we plan to support
+DDR5 SPD first, then expand to other DDR generation(if needed).
+
+If this proposal looks good to you, please help to create a repo for
+this application.
+
+Best,
+Michael
