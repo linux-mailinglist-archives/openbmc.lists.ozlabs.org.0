@@ -2,70 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 250F34AD614
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 12:22:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 51F854AD6AA
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 12:29:00 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JtLFl632zz3bT6
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 22:22:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JtLPP6zwWz30gg
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 22:28:57 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bgdev-pl.20210112.gappssmtp.com header.i=@bgdev-pl.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=5i2mLyCk;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t0ybZeeH;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=bgdev.pl
- (client-ip=2a00:1450:4864:20::632; helo=mail-ej1-x632.google.com;
- envelope-from=brgl@bgdev.pl; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bgdev-pl.20210112.gappssmtp.com
- header.i=@bgdev-pl.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=5i2mLyCk; dkim-atps=neutral
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com
- [IPv6:2a00:1450:4864:20::632])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linuxfoundation.org (client-ip=139.178.84.217;
+ helo=dfw.source.kernel.org; envelope-from=gregkh@linuxfoundation.org;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
+ header.a=rsa-sha256 header.s=korg header.b=t0ybZeeH; 
+ dkim-atps=neutral
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JtLNz5KScz2xXX;
+ Tue,  8 Feb 2022 22:28:34 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JtLFM45W5z2xsq
- for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 22:21:57 +1100 (AEDT)
-Received: by mail-ej1-x632.google.com with SMTP id m4so51365946ejb.9
- for <openbmc@lists.ozlabs.org>; Tue, 08 Feb 2022 03:21:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=h0bqkP/6kD2dEkTgCubdbv5SGEcZhSAS2Kpi6oik4hU=;
- b=5i2mLyCkBUfIRWek2qWcm/zBcM11Y03MOtIhtz12kWjcGuMWlRSu8EfTFzGlcPaytg
- NNaP8hu1d5WvRHwkqHi7zAOt444rdPN5JI7ZGDgygYNXcgv+mST7i/BgBYsEzk1eUbQN
- 0Ze2FF+aCITVaZKXfG0XGhZY8K4GF9L1sswh/Xux5GmLXI0xgji8M+rCJkW/NlPGN4SL
- wHd308PhxidAO8oeEOZWkq+OCYjIOeIHp+f5eazLoAu55A+lBfCzYlG+Py8C2wSjw0/k
- Lbuz6O93L3AqwHg2hRlx//zVK4FiKU0mRVyOKNXjBwZaWCcL501sCik1deDVh9weKU83
- 7AcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=h0bqkP/6kD2dEkTgCubdbv5SGEcZhSAS2Kpi6oik4hU=;
- b=x7Fi/BpGFMhPtNWTvMMkrm9Plh5y2X4tRqbVqoeOy2+KBCuC/jyC3n8dVlYL6gawRd
- pHhsKLijHF18oAwZ305zlxAA8eA5fGp3zeoY+5MoiAUfve2xmuGJV274yJCA65/nnb75
- p/tvJ7EvxU32UpuUpnA51P44xIpqO4SVWhT75E+Zp4ubqjn2Bv/GtyWWnui8cZuMEZho
- gRP9ftxpkWxqImYUccMZ5r9HFc1zF8eynaOpkUJ3uf5dMgsX5DV5JYEzU3gN71qW8jFs
- v4Ur4OJwp+vb4AKaHUY2i0yEP7TDyQ2L5traDnmSzvEtnR7pfJRchPzoPS77vVPKwc8E
- SCEw==
-X-Gm-Message-State: AOAM533frrmU1+rZVnPllv/UgYFH2ZUaBGwtGXp9Ff0k7KBc8tc3mJAT
- gqXJ1e47ysUworAzrw7VdrKb80WQavSgoSsV4xAyew==
-X-Google-Smtp-Source: ABdhPJy72mKz942t5mnsstnJzgdSQgFirWBs0odiUef50w6iscT45TayiO/M7HTYnn3ITd3xgxGBzHLtIU2lxZzJUQk=
-X-Received: by 2002:a17:906:ad8e:: with SMTP id
- la14mr3290346ejb.492.1644319313799; 
- Tue, 08 Feb 2022 03:21:53 -0800 (PST)
-MIME-Version: 1.0
-References: <20220203042134.68425-1-joel@jms.id.au>
- <20220203042134.68425-2-joel@jms.id.au>
-In-Reply-To: <20220203042134.68425-2-joel@jms.id.au>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 8 Feb 2022 12:21:43 +0100
-Message-ID: <CAMRc=MfYH=YuFaV-pX0weM5o+i7u7gkQ7d7qg2j-XK2EoN1BkA@mail.gmail.com>
-Subject: Re: [libgpiod PATCH 1/7] tools: Clean up scandir memory allocations
+ by dfw.source.kernel.org (Postfix) with ESMTPS id CD7D7615EF;
+ Tue,  8 Feb 2022 11:28:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2927C004E1;
+ Tue,  8 Feb 2022 11:28:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+ s=korg; t=1644319711;
+ bh=S/OkajaK//lhGgvpH8Fw06Nx4ATm9sAyJIS5raQ2bvQ=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=t0ybZeeHBJKmL5e5GBklD/SFNg2ORM9tj6Uo94eWeAyDaZznYCaSGBMNaoKafm9Rx
+ o26RX7aXd2Niprs6HcmE6Xc+k1+wpuIvcCGKjthZfKnrVjNwbyTlR6uWsSW7lg2Sgn
+ rVoqZL/xTG2Nwq7Q4um8qFYpeVKRyLKz3iFMsY8o=
+Date: Tue, 8 Feb 2022 12:28:29 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Joel Stanley <joel@jms.id.au>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v7 07/13] peci: Add sysfs interface for PECI bus
+Message-ID: <YgJT3bd8Uj8omVYz@kroah.com>
+References: <20220202144838.163875-1-iwona.winiarska@intel.com>
+ <20220202144838.163875-8-iwona.winiarska@intel.com>
+ <YgJPFlr18AmWiTRY@kroah.com>
+ <CACPK8Xc0Mo-eAH3bv1uAWxAsPFkLk0gZr9Sx0T0An68Lt2+c+Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACPK8Xc0Mo-eAH3bv1uAWxAsPFkLk0gZr9Sx0T0An68Lt2+c+Q@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,55 +63,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Zev Weiss <zweiss@equinix.com>
+Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>, linux-doc@vger.kernel.org,
+ Dave Hansen <dave.hansen@intel.com>, Zev Weiss <zweiss@equinix.com>,
+ Jonathan Corbet <corbet@lwn.net>, Iwona Winiarska <iwona.winiarska@intel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+ Guenter Roeck <linux@roeck-us.net>, devicetree <devicetree@vger.kernel.org>,
+ Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
+ Billy Tsai <billy_tsai@aspeedtech.com>, Rob Herring <robh+dt@kernel.org>,
+ Borislav Petkov <bp@alien8.de>, Dan Williams <dan.j.williams@intel.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>, linux-hwmon@vger.kernel.org,
+ Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Randy Dunlap <rdunlap@infradead.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Olof Johansson <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Feb 3, 2022 at 5:22 AM Joel Stanley <joel@jms.id.au> wrote:
->
-> The code copied from gpiofind didn't free the memory from scandir.
->
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->  tools/tools-common.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/tools/tools-common.c b/tools/tools-common.c
-> index 0dc3d52668d7..c83e68a2c1e4 100644
-> --- a/tools/tools-common.c
-> +++ b/tools/tools-common.c
-> @@ -190,12 +190,17 @@ struct gpiod_chip *chip_by_line_name(const char *name)
->
->                         die_perror("unable to open %s", entries[i]->d_name);
->                 }
-> +               free(entries[i]);
->
->                 offset = gpiod_chip_find_line(chip, name);
-> -               if (offset >= 0)
-> +               if (offset >= 0) {
-> +                       free(entries);
->                         return chip;
-> +               }
-> +               gpiod_chip_unref(chip);
->         }
->
-> +       free(entries);
->         return NULL;
->  }
->
-> --
-> 2.34.1
->
+On Tue, Feb 08, 2022 at 11:15:30AM +0000, Joel Stanley wrote:
+> On Tue, 8 Feb 2022 at 11:08, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Wed, Feb 02, 2022 at 03:48:32PM +0100, Iwona Winiarska wrote:
+> > > PECI devices may not be discoverable at the time when PECI controller is
+> > > being added (e.g. BMC can boot up when the Host system is still in S5).
+> > > Since we currently don't have the capabilities to figure out the Host
+> > > system state inside the PECI subsystem itself, we have to rely on
+> > > userspace to do it for us.
+> > >
+> > > In the future, PECI subsystem may be expanded with mechanisms that allow
+> > > us to avoid depending on userspace interaction (e.g. CPU presence could
+> > > be detected using GPIO, and the information on whether it's discoverable
+> > > could be obtained over IPMI).
+> > > Unfortunately, those methods may ultimately not be available (support
+> > > will vary from platform to platform), which means that we still need
+> > > platform independent method triggered by userspace.
+> > >
+> > > Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
+> > > ---
+> > >  Documentation/ABI/testing/sysfs-bus-peci | 16 +++++
+> > >  drivers/peci/Makefile                    |  2 +-
+> > >  drivers/peci/core.c                      |  3 +-
+> > >  drivers/peci/device.c                    |  1 +
+> > >  drivers/peci/internal.h                  |  5 ++
+> > >  drivers/peci/sysfs.c                     | 82 ++++++++++++++++++++++++
+> > >  6 files changed, 107 insertions(+), 2 deletions(-)
+> > >  create mode 100644 Documentation/ABI/testing/sysfs-bus-peci
+> > >  create mode 100644 drivers/peci/sysfs.c
+> > >
+> > > diff --git a/Documentation/ABI/testing/sysfs-bus-peci b/Documentation/ABI/testing/sysfs-bus-peci
+> > > new file mode 100644
+> > > index 000000000000..56c2b2216bbd
+> > > --- /dev/null
+> > > +++ b/Documentation/ABI/testing/sysfs-bus-peci
+> > > @@ -0,0 +1,16 @@
+> > > +What:                /sys/bus/peci/rescan
+> > > +Date:                July 2021
+> > > +KernelVersion:       5.15
+> >
+> > 5.15 was a long time ago :(
+> >
+> >
+> > Other than this nit, these all look semi-sane to me.  What tree are you
+> > wanting these to go through, mine?  If so, can you fix this up (both
+> > places in this file) and resend?
+> 
+> Yes, I recommend Iwona send these through your tree.
+> 
+> Thanks for taking another look over them. Thanks to Iwona and Intel
+> for doing this work.
 
-Good catch! It doesn't come up with gpiodetect which is what I tested
-with valgrind but does show up for gpiofind and gpioinfo. This patch
-however doesn't apply on the current master. Also: I don't really want
-new features for the v1.6.x series and we're heavily reworking the
-interface. Current version is in the next/libgpiod-2.0 branch but I
-should be posting a new version with reworked test suite later this
-week. How about working on this feature for the new API right away and
-make it part of libgpiod starting with v2.0?
+Can you provide an ack or reviewed-by for them when they are reposted so
+I know this?
 
-Bart
+thanks,
+
+greg k-h
