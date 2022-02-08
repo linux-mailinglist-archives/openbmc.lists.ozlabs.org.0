@@ -1,65 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF42B4AD07C
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 06:11:42 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D16A14AD156
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 07:04:39 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JtB2440smz3bVy
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 16:11:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JtCC93tVcz30Qq
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 17:04:37 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=qKCf4QL3;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=j0cTA1Uy;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::102c;
- helo=mail-pj1-x102c.google.com; envelope-from=gpgpgp@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f33;
+ helo=mail-qv1-xf33.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=qKCf4QL3; dkim-atps=neutral
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com
- [IPv6:2607:f8b0:4864:20::102c])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=j0cTA1Uy; dkim-atps=neutral
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com
+ [IPv6:2607:f8b0:4864:20::f33])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JtB1f1nWyz2xsc
- for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 16:11:16 +1100 (AEDT)
-Received: by mail-pj1-x102c.google.com with SMTP id
- t4-20020a17090a510400b001b8c4a6cd5dso1515541pjh.5
- for <openbmc@lists.ozlabs.org>; Mon, 07 Feb 2022 21:11:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=IncEpOAIigKzWMXDrEZLGk+2QgIFDxoqCC7bESzRs0Q=;
- b=qKCf4QL35KF4mq4AO5kSMGw0gRW5lR8LFZvw8zw51wm9m7ekPJiieQGyEPkJ75AEUM
- /18jo5Z4bWpX/dv4hiegLeMkbBDcAzWv7/xXEZpBSc6L4IWjdwIWjTZG+TEycSyadXiX
- Ml42kUTtLx5KmjWmHTEwpALHyB9xjjSf3yeGIKIgqS6c04fNSSVNKnuJyCWgn1Ccczo0
- m3wQ92ZuaHTkEIS3bTsiVv+wyhcOohyVXFQMNs1OUS71A5nabnvEgdLCm5ECbyPfppDg
- vZsNug3WvM6FhX+zZLlCjbVv5QKihh1f6EixOq20x1xLMGm9N296pDOezhYvSv3oN13v
- ydDQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JtCBm1dyzz30Ds
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 17:04:14 +1100 (AEDT)
+Received: by mail-qv1-xf33.google.com with SMTP id d3so7599566qvb.5
+ for <openbmc@lists.ozlabs.org>; Mon, 07 Feb 2022 22:04:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=BWQ1BZ7bw+zVzFJkhx0Q/ujI/Fj1ONr2nv+/pdxlucI=;
+ b=j0cTA1UyNIdveiN2qMcoKT1gjG5tbeLmmda1GDzfGb28UDUqEIbwzckC0cALDPGXwa
+ wZ8e4N9u85EVGeubPmGehoOUHlzvZL8IDpbA2swK9twcJXM4ReZsndhiXgwnXw/jPfxK
+ d1u/RYFzNsmDgwlAWXOsJ2ww6JgaUCh06T0R8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=IncEpOAIigKzWMXDrEZLGk+2QgIFDxoqCC7bESzRs0Q=;
- b=e/Lso20sQCTL4VcYrUpOFTu//+P8aczbJ5mXS5RGkj3SYbKe+RKv4q1PblFpHhPm3O
- Q7cxQoFRX7jljZpmmE985449VeLV0nXLllNDv9eS9+eQUFNXtQyCM8MSnSbkLN5tEtQ2
- I+W7OdSazd9EjEaVglm64yEkph7eGYIuVIdD7xg9Ywy3E6yngW3EKz0xMMwpDwVMCzcF
- f4l/lTAiG5BeCzZcJ49PA2RgOe9N9moacIp1GPCyN6wzIgdOcMXiAYnJwIoEThoeZS14
- R9i3bnA5fc7yJGNczTmo6mRcuee73s8HYlDT42IogtHJeqwY2FlfLJ9+Zm0pgwsPx+p7
- dZrQ==
-X-Gm-Message-State: AOAM533Jfr8ThrFxF9cTeHNb7628lz04VZC9prB5jXUku2tiFtelAi9q
- wmuS2lj6JGUDHZXuON7d2f0f0A+tluwC2P2sw9FeadxN3/zLTw==
-X-Google-Smtp-Source: ABdhPJwhyK6OaKr9hfQz/8SSSK3Qx8S5cj+2YB+ONXYLwc7ttZfJOBe5mieLWBXr/bBcB3f0vAPjDvGmObNvZH/DLJ0=
-X-Received: by 2002:a17:90b:4a09:: with SMTP id
- kk9mr2562355pjb.107.1644297072875; 
- Mon, 07 Feb 2022 21:11:12 -0800 (PST)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=BWQ1BZ7bw+zVzFJkhx0Q/ujI/Fj1ONr2nv+/pdxlucI=;
+ b=LtsFOAcrsUg8fhHySEdmN+yg+tLCUj6pwj7L270EFuMXqH7XXv6anyhJC3BeEBlswJ
+ tppw13M5wHjNmpvdMUeUZd0ZO6o9rrk6NGohW6/iged9OEc/D+CYITICJRTR7+sU0Rwr
+ Adm7n46MK0EeYWzPae4mIKPXuyO4rnZv3EdKFcD+56ZsZilI2bGkaH3Y0TW7aCUSdElo
+ /sbZf2QNsN9smuwtZ0tcWZS9fMygVNS2KBuHcM26sylY/V7tQe1hKBQri167/ccMTzzK
+ xWFhvPvQSsx2fO1fx5EquNIMvmjfrl4rCjOORSYkdupziHRJyN7W8RJ7uHp4g5fH64DH
+ T4Xw==
+X-Gm-Message-State: AOAM5324YmbSmpKU8h1hAW7JErmB2iRuc7RnKPMwsgDwAj/u/QZt+EPr
+ DTbQo9orFkhnZ1kScQWbfdo4SQl0B8geTb2iUk4=
+X-Google-Smtp-Source: ABdhPJw+ynuscCml0gRuNZwZt1H9yrickhxffg26IPN0JscyClNoM9Q6F4qsn0lTmMfu18KD4tlG5zKpNZx0HIyF/lI=
+X-Received: by 2002:ad4:5ca5:: with SMTP id q5mr2052212qvh.107.1644300250536; 
+ Mon, 07 Feb 2022 22:04:10 -0800 (PST)
 MIME-Version: 1.0
-From: Michael Shen <gpgpgp@google.com>
-Date: Tue, 8 Feb 2022 13:10:37 +0800
-Message-ID: <CAD1rtg8sa2OG4jUL8x7Gr9ExzH-tEswhHwSDaZtWhcAN4sAvuw@mail.gmail.com>
-Subject: Propose a new application for reading DIMM SPD directly
-To: openbmc@lists.ozlabs.org
+References: <20220131012538.73021-1-andrew@aj.id.au>
+ <20220131012538.73021-3-andrew@aj.id.au>
+In-Reply-To: <20220131012538.73021-3-andrew@aj.id.au>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 8 Feb 2022 06:03:57 +0000
+Message-ID: <CACPK8XcY=afrQ9bE2A3q1tC8Hhxmx3oVM7k_C_fVoYGbLJ4OUg@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 2/6] image: Control FIT
+ uImage signature verification at runtime
+To: Andrew Jeffery <andrew@aj.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -72,27 +72,149 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Openbmc,
+On Mon, 31 Jan 2022 at 01:26, Andrew Jeffery <andrew@aj.id.au> wrote:
+>
+> Some platform designs include support for disabling secure-boot via a
+> jumper on the board. Sometimes this control can be separate from the
+> mechanism enabling the root-of-trust for the platform. Add support for
+> this latter scenario by allowing boards to implement
+> board_fit_image_require_verfied(), which is then invoked in the usual
+> FIT verification paths.
+>
+> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+> ---
+>  Kconfig            |  9 +++++++++
+>  common/image-fit.c | 17 +++++++++++++++--
+>  include/image.h    |  9 +++++++++
+>  3 files changed, 33 insertions(+), 2 deletions(-)
+>
+> diff --git a/Kconfig b/Kconfig
+> index c3dfa8de47c8..11f796035ae4 100644
+> --- a/Kconfig
+> +++ b/Kconfig
+> @@ -322,6 +322,15 @@ config FIT_SIGNATURE
+>           format support in this case, enable it using
+>           CONFIG_IMAGE_FORMAT_LEGACY.
+>
+> +if FIT_SIGNATURE
+> +config FIT_RUNTIME_SIGNATURE
+> +       bool "Control verification of FIT uImages at runtime"
 
-We would like to propose an application that directly reads the DIMM
-SPD over HW interface(mostly I2C/I3C).
+Can you follow the pattern of the other FIT_ options by making this
+depends on FIT_SIGNATURE?
 
-If I understand correctly, the main method for obtaining the SPD
-information in openbmc is from SMBIOS which is prepared by BIOS. And
-We are exploring another way that excludes the involvement of BIOS.
+> +       help
+> +         This option allows board support to disable verification of
+> +         signatures at runtime, for example through the state of a GPIO.
+> +endif # FIT_SIGNATURE
+> +
+> +
+>  config FIT_SIGNATURE_MAX_SIZE
+>         hex "Max size of signed FIT structures"
+>         depends on FIT_SIGNATURE
+> diff --git a/common/image-fit.c b/common/image-fit.c
+> index 3c8667f93de2..eb1e66b02b68 100644
+> --- a/common/image-fit.c
+> +++ b/common/image-fit.c
+> @@ -1199,6 +1199,14 @@ static int fit_image_check_hash(const void *fit, int noffset, const void *data,
+>         return 0;
+>  }
+>
+> +#ifndef __weak
+> +#define __weak
+> +#endif
 
-The architecture of this application will be similar to the
-openbmc/smbios-mdr (the dimm part). The main difference will be the
-data source (changed from SMBIOS to SPD).
+Shouldn't we always get this from linux/compiler.h?
 
-Currently the code is still being implemented, and we plan to support
-DDR5 SPD first, then expand to other DDR generation(if needed).
+> +__weak int board_fit_image_require_verified(void)
+> +{
+> +       return 1;
+> +}
+> +
+>  int fit_image_verify_with_data(const void *fit, int image_noffset,
+>                                const void *data, size_t size)
+>  {
+> @@ -1209,6 +1217,7 @@ int fit_image_verify_with_data(const void *fit, int image_noffset,
+>
+>         /* Verify all required signatures */
+>         if (IMAGE_ENABLE_VERIFY &&
+> +           fit_image_require_verified() &&
+>             fit_image_verify_required_sigs(fit, image_noffset, data, size,
+>                                            gd_fdt_blob(), &verify_all)) {
+>                 err_msg = "Unable to verify required signature";
+> @@ -1230,7 +1239,9 @@ int fit_image_verify_with_data(const void *fit, int image_noffset,
+>                                                  &err_msg))
+>                                 goto error;
+>                         puts("+ ");
+> -               } else if (IMAGE_ENABLE_VERIFY && verify_all &&
+> +               } else if (IMAGE_ENABLE_VERIFY &&
+> +                               fit_image_require_verified() &&
+> +                               verify_all &&
 
-If this proposal looks good to you, please help to create a repo for
-this application.
+reading through this it's quite confusing.
 
-Best,
-Michael
+We have IMAGE_ENABLE_VERIFY, a compile time constant that will be true
+if CONFIG_FIT_SIGNATURE is enabled.
+
+We're adding a function that will override this.
+
+So we could have a function:
+
+__weak bool fit_enable_verification(void)
+{
+   return IMAGE_ENABLE_VERIFY;
+}
+
+The downside of this would be if a board were to implement this but
+not have FIT_SIGNATURE enabled then they could return true when they
+shouldn't. You could go back to this:
+
+static bool fit_enable_verification(void)
+{
+   return IMAGE_ENABLE_VERIFY && board_fit_image_require_verified();
+}
+
+And drop the ifdefs from image.h
+
+>                                 !strncmp(name, FIT_SIG_NODENAME,
+>                                         strlen(FIT_SIG_NODENAME))) {
+>                         ret = fit_image_check_sig(fit, noffset, data,
+> @@ -1849,7 +1860,9 @@ int fit_image_load(bootm_headers_t *images, ulong addr,
+>                 if (image_type == IH_TYPE_KERNEL)
+>                         images->fit_uname_cfg = fit_base_uname_config;
+>
+> -               if (IMAGE_ENABLE_VERIFY && images->verify) {
+> +               if (IMAGE_ENABLE_VERIFY &&
+> +                               fit_image_require_verified() &&
+> +                               images->verify) {
+>                         puts("   Verifying Hash Integrity ... ");
+>                         if (fit_config_verify(fit, cfg_noffset)) {
+>                                 puts("Bad Data Hash\n");
+> diff --git a/include/image.h b/include/image.h
+> index 937c7eee8ffb..19ea743af08f 100644
+> --- a/include/image.h
+> +++ b/include/image.h
+> @@ -1103,6 +1103,15 @@ int calculate_hash(const void *data, int data_len, const char *algo,
+>  # define IMAGE_ENABLE_VERIFY   0
+>  #endif
+>
+> +/*
+> + * Further, allow run-time control of verification, e.g. via a jumper
+> + */
+> +#if defined(CONFIG_FIT_RUNTIME_SIGNATURE)
+> +# define fit_image_require_verified()  board_fit_image_require_verified()
+> +#else
+> +# define fit_image_require_verified()  IMAGE_ENABLE_VERIFY
+> +#endif
+> +
+>  #ifdef USE_HOSTCC
+>  void *image_get_host_blob(void);
+>  void image_set_host_blob(void *host_blob);
+> --
+> 2.32.0
+>
