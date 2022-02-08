@@ -2,55 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 636D14ADD04
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 16:40:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A2A414ADD20
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 16:41:59 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JtRzx0zZlz3bTP
-	for <lists+openbmc@lfdr.de>; Wed,  9 Feb 2022 02:40:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JtS1K2syxz3bbN
+	for <lists+openbmc@lfdr.de>; Wed,  9 Feb 2022 02:41:57 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=iHdF/20g;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=GNNV+pr2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.24; helo=mga09.intel.com;
+ smtp.mailfrom=intel.com (client-ip=134.134.136.65; helo=mga03.intel.com;
  envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=iHdF/20g; dkim-atps=neutral
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ header.s=Intel header.b=GNNV+pr2; dkim-atps=neutral
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JtRxw6pFJz3bb7;
- Wed,  9 Feb 2022 02:38:59 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JtRy75nx7z3bWR;
+ Wed,  9 Feb 2022 02:39:11 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1644334741; x=1675870741;
+ t=1644334752; x=1675870752;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=dBGNLTAhMm/rLap+uLYJ2ObOqJBY7MZbfZ++aQxavR8=;
- b=iHdF/20g6sEgcJUNKsL6fx7MegLzWirwRkNwLuE+6Rf/7XhMFM3m+mqw
- 49wrsArquKRhPc+FWe/KgoPBar0m7J23ZHeH5a+ENsuUTJ6hl6nV6HUdS
- L0Lc4wNfGid8gqprp4qFftOaBF/SNvzXrfDLJYyqxd9XfkLR6ltHH3w1x
- B8U9/xqartP7MAbQ+b82NndJ6c7u3zVprVuTKUyFFdaFtAR+HbKci1hRr
- nUnnl9NRUEJh2qihv8QUfvnkR7WkoTL5YLtPAK5AyCPYq7WIoJsz+lE3y
- JesGPJXNkSVtcEUI6z+jZDpUTeXFVsqNEoWwO1C06VhM01GSdrBo2cS0J A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10252"; a="248734378"
-X-IronPort-AV: E=Sophos;i="5.88,353,1635231600"; d="scan'208";a="248734378"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Feb 2022 07:37:57 -0800
-X-IronPort-AV: E=Sophos;i="5.88,353,1635231600"; d="scan'208";a="621936143"
+ bh=Dd3qfG+MZDrzIPyDzwKeChb5w5M9qgLZ0uwvyZmbVNo=;
+ b=GNNV+pr22LTmFYzakzW/Ni70lZwJ24jzL1HA144JZ8NuU/epT/GpGUlO
+ oJ6zQe5lZFKqKhAX/U02LI2auxOr326ak0+B54lx1elEMK1qCys8VSV98
+ sD5u48Qt01OJtd2C6bG77TWVZ5fw/7E4gMvgNAmKc8OJ8dFBGgFMJ6NvW
+ 3jEXnV3mRJWZrApVJ2QMrt+o9yRANvFDHaP7JRXpNTyuNHX7gW6bCh03/
+ Se46/MH5Xn9bXwL2Q/krK34lndrApIV6POFObJ5cD8H0Q727N0kO17VKB
+ 0B6ka6Xah1ShA95A+ZzAHU94F9dpbgGwl9HPpIEx17DqJmUF4uunonpQI g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10252"; a="248918625"
+X-IronPort-AV: E=Sophos;i="5.88,353,1635231600"; d="scan'208";a="248918625"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Feb 2022 07:38:09 -0800
+X-IronPort-AV: E=Sophos;i="5.88,353,1635231600"; d="scan'208";a="628921982"
 Received: from mgorzkow-mobl1.ger.corp.intel.com (HELO localhost)
  ([10.249.139.232])
- by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Feb 2022 07:37:51 -0800
+ by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Feb 2022 07:38:02 -0800
 From: Iwona Winiarska <iwona.winiarska@intel.com>
 To: linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH v8 02/13] dt-bindings: Add bindings for peci-aspeed
-Date: Tue,  8 Feb 2022 16:36:28 +0100
-Message-Id: <20220208153639.255278-3-iwona.winiarska@intel.com>
+Subject: [PATCH v8 03/13] ARM: dts: aspeed: Add PECI controller nodes
+Date: Tue,  8 Feb 2022 16:36:29 +0100
+Message-Id: <20220208153639.255278-4-iwona.winiarska@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220208153639.255278-1-iwona.winiarska@intel.com>
 References: <20220208153639.255278-1-iwona.winiarska@intel.com>
@@ -69,8 +69,7 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
  Dave Hansen <dave.hansen@intel.com>, Zev Weiss <zweiss@equinix.com>,
- Rob Herring <robh@kernel.org>, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Jonathan Corbet <corbet@lwn.net>,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Jonathan Corbet <corbet@lwn.net>,
  Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
  Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
  Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
@@ -84,96 +83,84 @@ Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add device tree bindings for the peci-aspeed controller driver.
+Add PECI controller nodes with all required information.
 
 Co-developed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
 Reviewed-by: Joel Stanley <joel@jms.id.au>
-Reviewed-by: Rob Herring <robh@kernel.org>
 ---
- .../devicetree/bindings/peci/peci-aspeed.yaml | 72 +++++++++++++++++++
- 1 file changed, 72 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/peci/peci-aspeed.yaml
+ arch/arm/boot/dts/aspeed-g4.dtsi | 11 +++++++++++
+ arch/arm/boot/dts/aspeed-g5.dtsi | 11 +++++++++++
+ arch/arm/boot/dts/aspeed-g6.dtsi | 11 +++++++++++
+ 3 files changed, 33 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/peci/peci-aspeed.yaml b/Documentation/devicetree/bindings/peci/peci-aspeed.yaml
-new file mode 100644
-index 000000000000..1e68a801a92a
---- /dev/null
-+++ b/Documentation/devicetree/bindings/peci/peci-aspeed.yaml
-@@ -0,0 +1,72 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/peci/peci-aspeed.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/arch/arm/boot/dts/aspeed-g4.dtsi b/arch/arm/boot/dts/aspeed-g4.dtsi
+index f14dace34c5a..fa8b581c3d6c 100644
+--- a/arch/arm/boot/dts/aspeed-g4.dtsi
++++ b/arch/arm/boot/dts/aspeed-g4.dtsi
+@@ -392,6 +392,17 @@ uart_routing: uart-routing@9c {
+ 				};
+ 			};
+ 
++			peci0: peci-controller@1e78b000 {
++				compatible = "aspeed,ast2400-peci";
++				reg = <0x1e78b000 0x60>;
++				interrupts = <15>;
++				clocks = <&syscon ASPEED_CLK_GATE_REFCLK>;
++				resets = <&syscon ASPEED_RESET_PECI>;
++				cmd-timeout-ms = <1000>;
++				clock-frequency = <1000000>;
++				status = "disabled";
++			};
 +
-+title: Aspeed PECI Bus Device Tree Bindings
+ 			uart2: serial@1e78d000 {
+ 				compatible = "ns16550a";
+ 				reg = <0x1e78d000 0x20>;
+diff --git a/arch/arm/boot/dts/aspeed-g5.dtsi b/arch/arm/boot/dts/aspeed-g5.dtsi
+index 7495f93c5069..4147b397c883 100644
+--- a/arch/arm/boot/dts/aspeed-g5.dtsi
++++ b/arch/arm/boot/dts/aspeed-g5.dtsi
+@@ -516,6 +516,17 @@ ibt: ibt@140 {
+ 				};
+ 			};
+ 
++			peci0: peci-controller@1e78b000 {
++				compatible = "aspeed,ast2500-peci";
++				reg = <0x1e78b000 0x60>;
++				interrupts = <15>;
++				clocks = <&syscon ASPEED_CLK_GATE_REFCLK>;
++				resets = <&syscon ASPEED_RESET_PECI>;
++				cmd-timeout-ms = <1000>;
++				clock-frequency = <1000000>;
++				status = "disabled";
++			};
 +
-+maintainers:
-+  - Iwona Winiarska <iwona.winiarska@intel.com>
-+  - Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+ 			uart2: serial@1e78d000 {
+ 				compatible = "ns16550a";
+ 				reg = <0x1e78d000 0x20>;
+diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+index c32e87fad4dc..3d5ce9da42c3 100644
+--- a/arch/arm/boot/dts/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+@@ -512,6 +512,17 @@ wdt4: watchdog@1e7850c0 {
+ 				status = "disabled";
+ 			};
+ 
++			peci0: peci-controller@1e78b000 {
++				compatible = "aspeed,ast2600-peci";
++				reg = <0x1e78b000 0x100>;
++				interrupts = <GIC_SPI 38 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&syscon ASPEED_CLK_GATE_REF0CLK>;
++				resets = <&syscon ASPEED_RESET_PECI>;
++				cmd-timeout-ms = <1000>;
++				clock-frequency = <1000000>;
++				status = "disabled";
++			};
 +
-+allOf:
-+  - $ref: peci-controller.yaml#
-+
-+properties:
-+  compatible:
-+    enum:
-+      - aspeed,ast2400-peci
-+      - aspeed,ast2500-peci
-+      - aspeed,ast2600-peci
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    description:
-+      Clock source for PECI controller. Should reference the external
-+      oscillator clock.
-+    maxItems: 1
-+
-+  resets:
-+    maxItems: 1
-+
-+  cmd-timeout-ms:
-+    minimum: 1
-+    maximum: 1000
-+    default: 1000
-+
-+  clock-frequency:
-+    description:
-+      The desired operation frequency of PECI controller in Hz.
-+    minimum: 2000
-+    maximum: 2000000
-+    default: 1000000
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - resets
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/ast2600-clock.h>
-+    peci-controller@1e78b000 {
-+      compatible = "aspeed,ast2600-peci";
-+      reg = <0x1e78b000 0x100>;
-+      interrupts = <GIC_SPI 38 IRQ_TYPE_LEVEL_HIGH>;
-+      clocks = <&syscon ASPEED_CLK_GATE_REF0CLK>;
-+      resets = <&syscon ASPEED_RESET_PECI>;
-+      cmd-timeout-ms = <1000>;
-+      clock-frequency = <1000000>;
-+    };
-+...
+ 			lpc: lpc@1e789000 {
+ 				compatible = "aspeed,ast2600-lpc-v2", "simple-mfd", "syscon";
+ 				reg = <0x1e789000 0x1000>;
 -- 
 2.34.1
 
