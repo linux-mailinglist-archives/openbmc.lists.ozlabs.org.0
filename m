@@ -1,78 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 005734AD470
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 10:12:35 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 699DB4AD4B1
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 10:23:09 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JtHN14PYrz3bT6
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 20:12:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JtHcC0ntdz3bWj
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 20:23:07 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=MikKXHNC;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=k7DIfwDI;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::432;
- helo=mail-wr1-x432.google.com; envelope-from=lee.jones@linaro.org;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f34;
+ helo=mail-qv1-xf34.google.com; envelope-from=tali.perry1@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
- header.s=google header.b=MikKXHNC; dkim-atps=neutral
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com
- [IPv6:2a00:1450:4864:20::432])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=k7DIfwDI; dkim-atps=neutral
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com
+ [IPv6:2607:f8b0:4864:20::f34])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JtHMf09M2z30Mj
- for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 20:12:12 +1100 (AEDT)
-Received: by mail-wr1-x432.google.com with SMTP id i15so7061784wrb.3
- for <openbmc@lists.ozlabs.org>; Tue, 08 Feb 2022 01:12:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:content-transfer-encoding:in-reply-to;
- bh=PJbKv3ScWJ3/TAfgKO6PRsVz/IUNS0H9jBQYHa3CD78=;
- b=MikKXHNC7i8rGs44Asf8Jltk2wDHP5beBwjhNrJRwru1xPj9434goPNBtOm01gMVIK
- nRZtnKT7utsqD8aIkFYbhKrp4NQOyle38PSLs0r2HG3vo1RvzhCJFDIS7GazFXHq6b09
- tnzf6yX8f5EhR0SR+laSdQcmjhJEu+6EsgrmNc0+24LBvmXTUseN45DA/GfPAy1tXq8N
- 4KLMlvbltpmOjIcLoy2IcZsWnOEVffib1NqGtaKIBhFI4feR1i+DwmMdBpMquWzL7iL6
- fmmGVGG6R3dWzy3WVCoJl14kCKefoAfykRgUojxb/TfM7gbgoPvjs6Ah3qLYFmX9cyS0
- t/Zg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JtHbq0DbDz2yNr
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 20:22:45 +1100 (AEDT)
+Received: by mail-qv1-xf34.google.com with SMTP id n6so5249760qvk.13
+ for <openbmc@lists.ozlabs.org>; Tue, 08 Feb 2022 01:22:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=CYVaXukRgUCEvFAm5Rvccoy4E4azJEZwAWMrVoUo60s=;
+ b=k7DIfwDI7lJiplAzuKEv1ztD9Ak9R+8xzxXZwM2usNppLiqm5bdYqIWjxkDIV/hyth
+ ohH/mlhrT+QZKqQQcL4CVOEUStEq97nRWHFMcuBpSGh8p21ytE+IJyOPEqHc9spG2xBW
+ C2ygszJiPgi6KJkccRu5ROmtgEnrKUhGWEmUSxXbx+XquhltiVUwk007dTvR1zFvr1mg
+ 4IKqahTBJrweYv7eF2lTvrY2L9Wf+Xlu2XxweOif/adWLK3ZobULps3DQMQXxzH5uHmr
+ oeFKqTDxURrYQKIfoBjWfKCCmG6qhyEcL94CbAWjJjN24gAitBWghlsnh+R6+geClxmu
+ t3Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:content-transfer-encoding
- :in-reply-to;
- bh=PJbKv3ScWJ3/TAfgKO6PRsVz/IUNS0H9jBQYHa3CD78=;
- b=ysi9MKZ8FWMHeJ4BePGXglp2Plwt2dX8FRUxyR+AYG6pXdFQ6OSBCRzqnq1PI+DHxi
- 0dW7bJ1FPRdAIFcgpdR9gpqLeK9T55xeidkth++MxnB+YYy8AIUyHijS3MC7bIYfwTL1
- YMEUMFVcqmoekkHws3pdinsm42Lb0PMm0q5Y1yj9WmDcx8cSsVAj8fHwXj+yBrbhXWc1
- zy2yZ89vDYsCbeE7g4X15H+O5GIE21Dx0cAw9qdhisbyPbji2bOjvGN2GtCxbpPjIFt6
- d3zmbtM31k/GtRf+wxxGRgMj1zojArjfL4e7f/nF5C0N9Kqk5Ocjr0EeMYSMIBHU7Ljh
- 0t+Q==
-X-Gm-Message-State: AOAM533lzZZ0zaIVCb+YWOpQo8WyU+7SomZgKrjP67ewKj3rSGYT+ERL
- NrCQq/KyR62oCFLggkx8NXsDag==
-X-Google-Smtp-Source: ABdhPJxPp5FT1Ln9HKzS0CItdTmHplu9PkCnWQ1NkcWrbT8LwTxXwyvXSrHh1aLxTYM8Z/xM2BydOQ==
-X-Received: by 2002:a5d:598a:: with SMTP id n10mr2648769wri.136.1644311526908; 
- Tue, 08 Feb 2022 01:12:06 -0800 (PST)
-Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net.
- [86.27.177.88])
- by smtp.gmail.com with ESMTPSA id 24sm1460362wmf.48.2022.02.08.01.12.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Feb 2022 01:12:06 -0800 (PST)
-Date: Tue, 8 Feb 2022 09:12:03 +0000
-From: Lee Jones <lee.jones@linaro.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v6 2/9] mfd: smpro-mfd: Adds Ampere's Altra SMpro MFD
- driver
-Message-ID: <YgIz484pt8IJmP85@google.com>
-References: <20211224041352.29405-1-quan@os.amperecomputing.com>
- <20211224041352.29405-3-quan@os.amperecomputing.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=CYVaXukRgUCEvFAm5Rvccoy4E4azJEZwAWMrVoUo60s=;
+ b=eGd17WvhqnlVASjC841S7dikGES6AFAoiHc30u/2dOnQZacCD1KyOPDRVcX1doNYn4
+ S5+gfZVrtaXxcJYIB3+9VQ43vln50E31vmOiu2klYtgS4D3eYhR0Ov8Tuuqr/3AVzPLz
+ 7TL77aJYs99izAlLi8BW3a9+Ebs/+V5bfyDT2EIPbePNsoThXwz3NlnwwLpsuZUMULQb
+ iQPMmI4ChEEi6Y8CyA4gVnXdB5X+TPoFSMjS0iyWe/OGEjtKl5m0eAtzD9MVKacVeBQ2
+ sMx8RU1BuMWMwkvFRUFp4n9STv4caAQMqLxARmRm0prdcFb+l9FArJkukrTg8KyirkBa
+ CTAw==
+X-Gm-Message-State: AOAM531db5h9PDChTCNv1o8mhVaCz186rnW8nCVGwF9zGtmcb03onF9U
+ aJ+FutR53ZcdsVdcdb8qOKmcEuS/DoLFzXBWQIQ=
+X-Google-Smtp-Source: ABdhPJyIzKvFKpf1BBmc+9sLhRsGbOh9ftgw+xxzEK5Z04ibvmuVWz+wsnEwZUKatWlmrd9PAjYjXFPw3XpMNV/ekhc=
+X-Received: by 2002:a05:6214:1cc7:: with SMTP id
+ g7mr2490810qvd.124.1644312162002; 
+ Tue, 08 Feb 2022 01:22:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211224041352.29405-3-quan@os.amperecomputing.com>
+References: <20220207063338.6570-1-warp5tw@gmail.com>
+ <20220207063338.6570-7-warp5tw@gmail.com>
+In-Reply-To: <20220207063338.6570-7-warp5tw@gmail.com>
+From: Tali Perry <tali.perry1@gmail.com>
+Date: Tue, 8 Feb 2022 11:22:30 +0200
+Message-ID: <CAHb3i=vdc_+J4pCBcY--C85ZR1uXO1LG02UsttsfSnsQBDKWAg@mail.gmail.com>
+Subject: Re: [PATCH v1 6/6] i2c: npcm: Support NPCM845
+To: Tyrone Ting <warp5tw@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,181 +77,136 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
- Dragan Cvetic <dragan.cvetic@xilinx.com>,
- Phong Vo <phong@os.amperecomputing.com>, Jonathan Corbet <corbet@lwn.net>,
- openbmc@lists.ozlabs.org, "Rafael J . Wysocki" <rafael@kernel.org>,
- Derek Kiernan <derek.kiernan@xilinx.com>, Guenter Roeck <linux@roeck-us.net>,
- devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- Arnd Bergmann <arnd@arndb.de>,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Rob Herring <robh+dt@kernel.org>,
- Open Source Submission <patches@amperecomputing.com>,
- linux-hwmon@vger.kernel.org, Andrew Jeffery <andrew@aj.id.au>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-kernel@vger.kernel.org,
- Mark Brown <broonie@kernel.org>,
- Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
+Cc: Tomer Maimon <tmaimon77@gmail.com>, devicetree <devicetree@vger.kernel.org>,
+ yangyicong@hisilicon.com, Linux I2C <linux-i2c@vger.kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
+ lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com, KWLIU@nuvoton.com,
+ bence98@sch.bme.hu, arnd@arndb.de, sven@svenpeter.dev,
+ Rob Herring <robh+dt@kernel.org>, Avi Fishman <Avi.Fishman@nuvoton.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com,
+ Patrick Venture <venture@google.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Wolfram Sang <wsa@kernel.org>, kfting@nuvoton.com,
+ Tali Perry <tali.perry@nuvoton.com>, olof@lixom.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 24 Dec 2021, Quan Nguyen wrote:
+>On 08/02/2022 09:51, Tali Perry wrote:
+>>> On 08/02/2022 08:14, Tali Perry wrote:
+>>>>> Subject: Re: [PATCH v1 6/6] i2c: npcm: Support NPCM845
+>>>>>
+>>>>> On 07/02/2022 13:00, Jonathan Neusch=C3=A4fer wrote:
+>>>>>> Hello,
+>>>>>>
+>>>>>> On Mon, Feb 07, 2022 at 02:33:38PM +0800, Tyrone Ting wrote:
+>>>>>>> From: Tyrone Ting <kfting@nuvoton.com>
+>>>>>>>
+>>>>>>> NPCM8XX uses a similar i2c module as NPCM7XX.
+>>>>>>> The only difference is that the internal HW FIFO is larger.
+>>>>>>>
+>>>>>>> Related Makefile and Kconfig files are modified to support as well.
+>>>>>>>
+>>>>>>> Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller
+>>>>>>> driver")
+>>>>>>
+>>>>>> It's not really a bug fix, but rather an additional feature.
+>>>>>> Therefore, I suggest removing the Fixes tag from this patch.
+>>>>>>
+>>>>>>> Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+>>>>>>> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+>>>>>>> ---
+>>>>>> [...]
+>>>>>>>  /* init register and default value required to enable module */
+>>>>>>>  #define NPCM_I2CSEGCTL 0xE4
+>>>>>>> +#ifdef CONFIG_ARCH_NPCM7XX
+>>>>>>>  #define NPCM_I2CSEGCTL_INIT_VAL 0x0333F000
+>>>>>>> +#else
+>>>>>>> +#define NPCM_I2CSEGCTL_INIT_VAL 0x9333F000
+>>>>>>> +#endif
+>>>>>>
+>>>>>> This is going to cause problems when someone tries to compile a kern=
+el
+>>>>>> that runs on both NPCM7xx and NPCM8xx (because the driver will then
+>>>>>> only work on NPCM7xx).
+>>>>>
+>>>>> Yes, good catch.
+>>>>>
+>>>>> The NPCM7XX is multiplatform, I guess NPCM8xx will be as well, so thi=
+s looks like an invalid code. How such code is supposed to work on multipla=
+tform kernel?
+>>>>>
+>>>>
+>>>> NPCM7xx and NPCM8xx are very different devices.
+>>>> They share same driver sources for some of the modules but it's not AB=
+I.
+>>>> Users cannot compile a single kernel with two separate DTS.
+>>>> In case of the i2c controller, the npcm7xx has a 16 byte HW FIFO,
+>>>> and the NPCM8xx has 32 bytes HW FIFO.
+>>>> This also means that registers fields are slightly different.
+>>>> For init data we can move it to the DTS, but register field sizes
+>>>> can't be handled with this approach.
+>>>>
+>>>
+>>> What do you mean they cannot compile a kernel with different DTS? Of
+>>> course they can - when we talk about multiplatform sub-architectures!
+>>> Maybe there is something specific in NPCMxxx which stops it but then it
+>>> should not be marked multiplatform.
+>>>
+>>
+>>
+>> NCPM7xx is ARM32 bit (dual core Cortex A9)
+>> NPCM8xx is ARM64 bit (quad core Cortex A35)
+>>
+>> They have completely different architecture so not ABI compliant.
+>> I2C module is similar, but the devices are quite different and have
+>> separate architectures.
+>
+>OK, in such case usually you indeed can't have both. :)
+>
+>> Sorry for the confusion.
+>> This is the first patch we try to upstream for NPCM8xx.
+>> In the coming weeks we will upstream the architecture of NPCM8xx as well=
+.
+>
+>Still, ARCH_XXX should not be hard-coded in the drivers to change the
+>driver's behavior, even if driver won't be used simultaneously. It
+>breaks all design principles and prevents any further re-use if a new
+>use case appears.
+>
+>You can use "ifdef ARCH_XXX" to skip building of some parts of the
+>driver, but it's not the case here.
+>
 
-> Adds Multi-function devices driver for SMpro co-processor found on the
-> Mt.Jade hardware reference platform with Ampere's Altra processor family.
-> 
-> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-> ---
-> Changes in v6:
->   + Update license part to reflect that this driver is clone from
->   simple-mfd-i2c driver [Quan]
-> 
-> Changes in v5:
->   + Dropped the use of simple-mfd-i2c driver [Quan]
->   + Introduced drivers/mfd/smpro-mfd.c driver to instantiate
->   sub-devices. This is to avoid DT nodes without resource issue [Quan]
->   + Revised commit message [Quan]
-> 
-> Changes in v4:
->   + Add "depends on I2C" to fix build issue found by kernel test
->   robot [Guenter]
-> 
-> Changes in v3:
->   + None
-> 
-> Changes in v2:
->   + Used 'struct of_device_id's .data attribute [Lee Jones]
-> 
->  drivers/mfd/Kconfig     | 12 +++++++
->  drivers/mfd/Makefile    |  1 +
->  drivers/mfd/smpro-mfd.c | 76 +++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 89 insertions(+)
->  create mode 100644 drivers/mfd/smpro-mfd.c
-> 
-> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
-> index a21cbdf89477..a886da5018b1 100644
-> --- a/drivers/mfd/Kconfig
-> +++ b/drivers/mfd/Kconfig
-> @@ -77,6 +77,18 @@ config MFD_AS3711
->  	help
->  	  Support for the AS3711 PMIC from AMS
->  
-> +config MFD_SMPRO
-> +	tristate "Ampere Computing MFD SMpro core driver"
-> +	depends on I2C
-> +	select MFD_CORE
-> +	select REGMAP_I2C
-> +	help
-> +	  Say yes here to enable SMpro driver support for Ampere's Altra
-> +	  processor family.
-> +
-> +	  Ampere's Altra SMpro exposes an I2C regmap interface that can
-> +	  be accessed by child devices.
-> +
->  config MFD_AS3722
->  	tristate "ams AS3722 Power Management IC"
->  	select MFD_CORE
-> diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
-> index 4d53e951a92d..fbcd09dce5ce 100644
-> --- a/drivers/mfd/Makefile
-> +++ b/drivers/mfd/Makefile
-> @@ -267,6 +267,7 @@ obj-$(CONFIG_MFD_QCOM_PM8008)	+= qcom-pm8008.o
->  
->  obj-$(CONFIG_SGI_MFD_IOC3)	+= ioc3.o
->  obj-$(CONFIG_MFD_SIMPLE_MFD_I2C)	+= simple-mfd-i2c.o
-> +obj-$(CONFIG_MFD_SMPRO)		+= smpro-mfd.o
->  obj-$(CONFIG_MFD_INTEL_M10_BMC)   += intel-m10-bmc.o
->  
->  obj-$(CONFIG_MFD_ATC260X)	+= atc260x-core.o
-> diff --git a/drivers/mfd/smpro-mfd.c b/drivers/mfd/smpro-mfd.c
-> new file mode 100644
-> index 000000000000..132d4e2dde12
-> --- /dev/null
-> +++ b/drivers/mfd/smpro-mfd.c
-> @@ -0,0 +1,76 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Ampere Altra Family SMPro MFD - I2C
-> + *
-> + * Copyright (c) 2021, Ampere Computing LLC
-> + * Author: Quan Nguyen <quan@os.amperecomputing..com>
-> + *
-> + * Based on simple-mfd-i2c.c:
+Correct, the main change is in FIFO size:
++#ifdef CONFIG_ARCH_NPCM7XX
+#define I2C_HW_FIFO_SIZE               16
++#else
++#define I2C_HW_FIFO_SIZE               32
++#endif /* CONFIG_ARCH_NPCM7XX */
 
-Why aren't you just using this?
+NPCM7XX will always have 16 bytes, all the next gens will have 32.
 
-> + * Copyright (c) by Michael Walle <michael@walle.cc>
-> + */
-> +
-> +#include <linux/i2c.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of_platform.h>
-> +#include <linux/mfd/core.h>
-> +#include <linux/regmap.h>
-> +
-> +/* Identification Registers */
-> +#define MANUFACTURER_ID_REG     0x02
-> +#define AMPERE_MANUFACTURER_ID  0xCD3A
-> +
-> +static const struct regmap_config simple_word_regmap_config = {
-> +	.reg_bits = 8,
-> +	.val_bits = 16,
-> +};
-> +
-> +static const struct mfd_cell smpro_devs[] = {
-> +	MFD_CELL_NAME("smpro-hwmon"),
-> +};
+This impact some registers sizes, like this one:
 
-What are the other devices?
++#ifdef CONFIG_ARCH_NPCM7XX
+#define NPCM_I2CRXF_STS_RX_BYTES       GENMASK(4, 0)
++#else
++#define NPCM_I2CRXF_STS_RX_BYTES       GENMASK(5, 0)
++#endif /*CONFIG_ARCH_NPCM7XX*/
 
-> +static int smpro_mfd_probe(struct i2c_client *i2c)
-> +{
-> +	const struct regmap_config *config;
-> +	struct regmap *regmap;
-> +	unsigned int val;
-> +	int ret;
-> +
-> +	config = device_get_match_data(&i2c->dev);
-> +	if (!config)
-> +		config = &simple_word_regmap_config;
-> +
-> +	regmap = devm_regmap_init_i2c(i2c, config);
-> +	if (IS_ERR(regmap))
-> +		return PTR_ERR(regmap);
-> +
-> +	/* Check for valid ID */
-> +	ret = regmap_read(regmap, MANUFACTURER_ID_REG, &val);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (val != AMPERE_MANUFACTURER_ID)
-> +		return -ENODEV;
-> +
-> +	return devm_mfd_add_devices(&i2c->dev, PLATFORM_DEVID_AUTO,
-> +				    smpro_devs, ARRAY_SIZE(smpro_devs), NULL, 0, NULL);
-> +}
-> +
-> +static const struct of_device_id smpro_mfd_of_match[] = {
-> +	{ .compatible = "ampere,smpro", .data = &simple_word_regmap_config },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, smpro_mfd_of_match);
-> +
-> +static struct i2c_driver smpro_mfd_driver = {
-> +	.probe_new = smpro_mfd_probe,
-> +	.driver = {
-> +		.name = "smpro-mfd-i2c",
-> +		.of_match_table = smpro_mfd_of_match,
-> +	},
-> +};
-> +module_i2c_driver(smpro_mfd_driver);
-> +
-> +MODULE_AUTHOR("Quan Nguyen <quan@os.amperecomputing.com>");
-> +MODULE_DESCRIPTION("SMPRO MFD - I2C driver");
-> +MODULE_LICENSE("GPL v2");
+For this, the FIFO size should be defined before compilation.
+I also don't want to let users select FIFO size per architecture.
+NPCM7XX has 16, NPCM8XX has 32. This is not a user selection.
+It's part of the arch.
 
--- 
-Lee Jones [李琼斯]
-Principal Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+
+
+>
+>Best regards,
+>Krzysztof
+
+Thanks,
+Tali
