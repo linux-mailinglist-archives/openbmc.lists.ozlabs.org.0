@@ -1,61 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D9A94ADD6C
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 16:49:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC4BA4AE326
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 22:56:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JtS9t1lCBz3bPM
-	for <lists+openbmc@lfdr.de>; Wed,  9 Feb 2022 02:49:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JtcK32QcVz3bV8
+	for <lists+openbmc@lfdr.de>; Wed,  9 Feb 2022 08:56:07 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=JN4eov3w;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=r0YGzozJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=eEu8bJs8;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.43; helo=mga05.intel.com;
- envelope-from=iwona.winiarska@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=JN4eov3w; dkim-atps=neutral
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=r0YGzozJ; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=eEu8bJs8; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JtS2p5TXjz3bV2;
- Wed,  9 Feb 2022 02:43:14 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1644334995; x=1675870995;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=4GFjvUMiVMcumvdOgAlzmh492IdarzKncsOwfSSWUls=;
- b=JN4eov3wDn3mde8W+IqQxpUz4Sz4BUJuwbcDBurtEOB7mydAasUTHMeL
- 54mI5RH8DW+C8A6cU2OwVxYcnvkYYUvWC8vgEVE/M53Zi0Qyova98IT5h
- hzZJ0nw3bRlcistTR3+e9y7twtj516kh/NZIodwEdFdj+3ZEVytcpUqCV
- Z7U3GpwMOvj11XHsaP9TZXsT4lPYasjRzuqizfoZqYSl8lqrgdsBOP6K9
- k1NdPx2GH/IU5HqpFiKOTz2B1ivGcUFIL0Yttw0SkdSM7UxBe2L4HH8zq
- 3PyxmI/l5xWktFcM04ba+WtErZ2DPSEYdCVKxx8IQDNjdU6bP/GQPM7i7 Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10252"; a="335376032"
-X-IronPort-AV: E=Sophos;i="5.88,353,1635231600"; d="scan'208";a="335376032"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
- by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Feb 2022 07:42:13 -0800
-X-IronPort-AV: E=Sophos;i="5.88,353,1635231600"; d="scan'208";a="601273985"
-Received: from mgorzkow-mobl1.ger.corp.intel.com (HELO localhost)
- ([10.249.139.232])
- by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Feb 2022 07:42:07 -0800
-From: Iwona Winiarska <iwona.winiarska@intel.com>
-To: linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH v8 13/13] docs: Add PECI documentation
-Date: Tue,  8 Feb 2022 16:36:39 +0100
-Message-Id: <20220208153639.255278-14-iwona.winiarska@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220208153639.255278-1-iwona.winiarska@intel.com>
-References: <20220208153639.255278-1-iwona.winiarska@intel.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JtcJb5T83z2yHL
+ for <openbmc@lists.ozlabs.org>; Wed,  9 Feb 2022 08:55:43 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 7B2495C0193;
+ Tue,  8 Feb 2022 16:55:39 -0500 (EST)
+Received: from imap50 ([10.202.2.100])
+ by compute3.internal (MEProxy); Tue, 08 Feb 2022 16:55:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm2; bh=xmISKJ4ZUBu527dWBfA5I5h7NlJbJ8PL9WhBQ1
+ tOcEo=; b=r0YGzozJanyr46SM3rh3/kpQI3ZZwIwOCJ5c3zFnW44eTtnhCUXHg9
+ NJNyMBixZiwe6O0/+Ze8N+06diTKmBJmRlGAURXPb1OV8VKEIOHwhfKpl7rK2Qbl
+ 3YAvHSZm48qlkxMTERkaFSIpEHV/NfRshRRGCRWCrbxkJhMZB+s7j67RPcUO/RTa
+ PKR2cSkFNVNUwmFhKxgPkNfYgPuOMvlVvCa6fuDxbdDrB7Xlp8bUh00HgJ85lCvo
+ Ci7cIwOFgn0rsHds7tiojt+A+bqaSY6VsFJ6997ISbyqPS8+T6D0Nq5vymEj+s3v
+ 6vyis7fO+LYLnuf/9hhVwCKRs51aXZ9w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=xmISKJ4ZUBu527dWB
+ fA5I5h7NlJbJ8PL9WhBQ1tOcEo=; b=eEu8bJs82q/mlK1/aXQELEyem24fyjMbW
+ uIpbVwsj/U38yQB8FwRfvhQB5+4oVJ9ulruok6RJpqg3zqj7xXpAZzKJ4lyHuxkb
+ bM+e7zQ0XvwvbfJ0W9Z02dnvNiXAD2LlMDhUyT1z5GZzrw2BRt13o8mTKZbqhq0F
+ YCHz4CQspIj3Ee0UBJtsMwWCRRpcZ9l3Z0tUOJCj6UZJ7GUK2VZl6aLSZkNsyvkh
+ A3YM36U0CBU8itOFBofnYFDZItIDFbHiiBtBRy5GlbgePU7W6f4qagnc6j6IbU9m
+ aMkNof/0S/ej0PZHhEX3ra3BkbcNOkLaUb4GsPxCJUz0ww235LqHQ==
+X-ME-Sender: <xms:2uYCYnKUsMWQOQG_p_kV8jvH7FCBThyKvNxOmqQCB-2oQBPcq-F0zw>
+ <xme:2uYCYrK8m86gZUTer-8GvTYIJAAZmdxN7kTgVaxRpkHz5rGXO4x5MCaqWqFZNxcLW
+ qMe71psc8hRh40Ukw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrheejgdduhedtucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhepudfftddvveekfffgteffffeuveegjeelgefhffejtdehtdfhlefgkeef
+ hfefkeeinecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
+ gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:2-YCYvubTyu6LQOjjCWJ2KyQ0t0HQO97nT75_ya0u3OSxZjOxsb5-g>
+ <xmx:2-YCYgZYULGqjDJmxPX0ybVdZ38BJIttrWrzq8bvgnUqmHMe6ey8sA>
+ <xmx:2-YCYuaiFkS5yuzktE6VQ59CYD6Tv7RdHuDgs20Trrzg-AkieH-iPA>
+ <xmx:2-YCYuFJdEJeO--wflQ_hXYmrwXVomEeGb8V2bz0SuiSg6R9ClmGtg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id E24201920084; Tue,  8 Feb 2022 16:55:38 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4748-g31a5b5f50e-fm-cal2020-20220204.001-g31a5b5f5
+Mime-Version: 1.0
+Message-Id: <3c14e608-ca3d-4b79-9dfa-4f65ea1fc742@www.fastmail.com>
+In-Reply-To: <HK0PR06MB3779465E79CE71DEDB4F5633912C9@HK0PR06MB3779.apcprd06.prod.outlook.com>
+References: <20220131034147.106415-1-andrew@aj.id.au>
+ <HK0PR06MB3779465E79CE71DEDB4F5633912C9@HK0PR06MB3779.apcprd06.prod.outlook.com>
+Date: Wed, 09 Feb 2022 08:25:16 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>,
+ U-Boot-Denx <u-boot@lists.denx.de>
+Subject: Re: [PATCH] image: Control FIT signature verification at runtime
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,140 +98,84 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org,
- Dave Hansen <dave.hansen@intel.com>, Zev Weiss <zweiss@equinix.com>,
- Jonathan Corbet <corbet@lwn.net>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
- Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
- Billy Tsai <billy_tsai@aspeedtech.com>, Rob Herring <robh+dt@kernel.org>,
- Borislav Petkov <bp@alien8.de>, Iwona Winiarska <iwona.winiarska@intel.com>,
- Dan Williams <dan.j.williams@intel.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org,
- Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
- Randy Dunlap <rdunlap@infradead.org>, Olof Johansson <olof@lixom.net>
+Cc: Johnny Huang <johnny_huang@aspeedtech.com>,
+ Ryan Chen <ryan_chen@aspeedtech.com>, Simon Glass <sjg@chromium.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add a brief overview of PECI and PECI wire interface.
-The documentation also contains kernel-doc for PECI subsystem internals
-and PECI CPU Driver API.
 
-Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
----
- Documentation/index.rst      |  1 +
- Documentation/peci/index.rst | 16 +++++++++++
- Documentation/peci/peci.rst  | 51 ++++++++++++++++++++++++++++++++++++
- MAINTAINERS                  |  1 +
- 4 files changed, 69 insertions(+)
- create mode 100644 Documentation/peci/index.rst
- create mode 100644 Documentation/peci/peci.rst
 
-diff --git a/Documentation/index.rst b/Documentation/index.rst
-index b58692d687f6..1988c19d9daf 100644
---- a/Documentation/index.rst
-+++ b/Documentation/index.rst
-@@ -138,6 +138,7 @@ needed).
-    scheduler/index
-    mhi/index
-    tty/index
-+   peci/index
- 
- Architecture-agnostic documentation
- -----------------------------------
-diff --git a/Documentation/peci/index.rst b/Documentation/peci/index.rst
-new file mode 100644
-index 000000000000..989de10416e7
---- /dev/null
-+++ b/Documentation/peci/index.rst
-@@ -0,0 +1,16 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
-+
-+====================
-+Linux PECI Subsystem
-+====================
-+
-+.. toctree::
-+
-+   peci
-+
-+.. only::  subproject and html
-+
-+   Indices
-+   =======
-+
-+   * :ref:`genindex`
-diff --git a/Documentation/peci/peci.rst b/Documentation/peci/peci.rst
-new file mode 100644
-index 000000000000..331b1ec00e22
---- /dev/null
-+++ b/Documentation/peci/peci.rst
-@@ -0,0 +1,51 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
-+
-+========
-+Overview
-+========
-+
-+The Platform Environment Control Interface (PECI) is a communication
-+interface between Intel processor and management controllers
-+(e.g. Baseboard Management Controller, BMC).
-+PECI provides services that allow the management controller to
-+configure, monitor and debug platform by accessing various registers.
-+It defines a dedicated command protocol, where the management
-+controller is acting as a PECI originator and the processor - as
-+a PECI responder.
-+PECI can be used in both single processor and multiple-processor based
-+systems.
-+
-+NOTE:
-+Intel PECI specification is not released as a dedicated document,
-+instead it is a part of External Design Specification (EDS) for given
-+Intel CPU. External Design Specifications are usually not publicly
-+available.
-+
-+PECI Wire
-+---------
-+
-+PECI Wire interface uses a single wire for self-clocking and data
-+transfer. It does not require any additional control lines - the
-+physical layer is a self-clocked one-wire bus signal that begins each
-+bit with a driven, rising edge from an idle near zero volts. The
-+duration of the signal driven high allows to determine whether the bit
-+value is logic '0' or logic '1'. PECI Wire also includes variable data
-+rate established with every message.
-+
-+For PECI Wire, each processor package will utilize unique, fixed
-+addresses within a defined range and that address should
-+have a fixed relationship with the processor socket ID - if one of the
-+processors is removed, it does not affect addresses of remaining
-+processors.
-+
-+PECI subsystem internals
-+------------------------
-+
-+.. kernel-doc:: include/linux/peci.h
-+.. kernel-doc:: drivers/peci/internal.h
-+.. kernel-doc:: drivers/peci/core.c
-+.. kernel-doc:: drivers/peci/request.c
-+
-+PECI CPU Driver API
-+-------------------
-+.. kernel-doc:: drivers/peci/cpu.c
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c666ef7ea5a5..9d248d55ac30 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -15122,6 +15122,7 @@ M:	Iwona Winiarska <iwona.winiarska@intel.com>
- L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
- S:	Supported
- F:	Documentation/devicetree/bindings/peci/
-+F:	Documentation/peci/
- F:	drivers/peci/
- F:	include/linux/peci-cpu.h
- F:	include/linux/peci.h
--- 
-2.34.1
+On Mon, 7 Feb 2022, at 11:37, ChiaWei Wang wrote:
+> Hi Andrew,
+>
+> I am curious about the usage scenario.
+> Is the runtime control required for production release?
 
+Yes.
+
+> As this control acts like a backdoor to bypass the chain-of-trust.
+
+Right, just as strap pin controlling the SB ROM in the 2600 allows bypass.
+
+It's just another one of these affecting a different boot stage.
+
+> If it is for debugging/development purposes, should we encourage the 
+> use of unsigned images under RD environments?
+> Beyond this, I have no concern as the patch provides more flexibility.
+>
+>> From: Andrew Jeffery <andrew@aj.id.au>
+>> Sent: Monday, January 31, 2022 11:42 AM
+>> 
+>> Some platform designs include support for disabling secure-boot via a jumper
+>> on the board. Sometimes this control can be separate from the mechanism
+>> enabling the root-of-trust for the platform. Add support for this latter scenario
+>> by allowing boards to implement board_fit_image_require_verfied(), which is
+>> then invoked in the usual FIT verification paths.
+>> 
+>> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+>> ---
+>> Hi,
+>> 
+>> This patch is extracted from and motivated by a series adding run-time control
+>> of FIT signature verification to u-boot in OpenBMC:
+>> 
+>> https://lore.kernel.org/openbmc/20220131012538.73021-1-andrew@aj.id.au/
+>> 
+>> Unfortunately the OpenBMC u-boot tree is quite a way behind on tracking
+>> upstream and contains a bunch of out-of-tree work as well. As such I'm looking
+>> to upstream the couple of changes that make sense against master.
+>> 
+>> Please take a look!
+>> 
+>> Andrew
+>> 
+>>  boot/Kconfig     |  8 ++++++++
+>>  boot/image-fit.c | 21 +++++++++++++++++----  include/image.h  |  9
+>> +++++++++
+>>  3 files changed, 34 insertions(+), 4 deletions(-)
+>> 
+>> diff --git a/boot/Kconfig b/boot/Kconfig index c8d5906cd304..ec413151fd5a
+>> 100644
+>> --- a/boot/Kconfig
+>> +++ b/boot/Kconfig
+>> @@ -78,6 +78,14 @@ config FIT_SIGNATURE
+>>  	  format support in this case, enable it using
+>>  	  CONFIG_LEGACY_IMAGE_FORMAT.
+>> 
+>> +if FIT_SIGNATURE
+>> +config FIT_RUNTIME_SIGNATURE
+>> +	bool "Control verification of FIT uImages at runtime"
+>> +	help
+>> +	  This option allows board support to disable verification of
+>> +	  signatures at runtime, for example through the state of a GPIO.
+>> +endif # FIT_SIGNATURE
+>> +
+>
+> Using "depends on" might be preferred for Kconfig dependency.
+
+Yes, that's probably better.
+
+Thanks for taking a look.
+
+Andrew
