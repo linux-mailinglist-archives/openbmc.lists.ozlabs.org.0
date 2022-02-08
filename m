@@ -2,65 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FE6F4AD60B
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 12:16:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 250F34AD614
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 12:22:22 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JtL6b4fg9z3bZC
-	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 22:16:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JtLFl632zz3bT6
+	for <lists+openbmc@lfdr.de>; Tue,  8 Feb 2022 22:22:19 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Ch1X4rYM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bgdev-pl.20210112.gappssmtp.com header.i=@bgdev-pl.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=5i2mLyCk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72e;
- helo=mail-qk1-x72e.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Ch1X4rYM; dkim-atps=neutral
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com
- [IPv6:2607:f8b0:4864:20::72e])
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=bgdev.pl
+ (client-ip=2a00:1450:4864:20::632; helo=mail-ej1-x632.google.com;
+ envelope-from=brgl@bgdev.pl; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=bgdev-pl.20210112.gappssmtp.com
+ header.i=@bgdev-pl.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=5i2mLyCk; dkim-atps=neutral
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com
+ [IPv6:2a00:1450:4864:20::632])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JtL6953lwz2x9V;
- Tue,  8 Feb 2022 22:15:45 +1100 (AEDT)
-Received: by mail-qk1-x72e.google.com with SMTP id w8so13370543qkw.8;
- Tue, 08 Feb 2022 03:15:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JtLFM45W5z2xsq
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Feb 2022 22:21:57 +1100 (AEDT)
+Received: by mail-ej1-x632.google.com with SMTP id m4so51365946ejb.9
+ for <openbmc@lists.ozlabs.org>; Tue, 08 Feb 2022 03:21:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=t5ATNDVY5BBfcfxijhXC/1iC+qNbs6QVAVyFAJglrIA=;
- b=Ch1X4rYMr6HA1Ert5gDxuP0Z4IHG5DzbbwXXVp6sgfJ/CbGFZ34axFqel/jGAus/dC
- 1JMkI3rMljd8A3TjT9YDbKHImN6wrC30A6uMP635b2hz9jqCbJeODuA2HtYBPpqQaq34
- g5feFwoun/O0JX5iG88O36A8iojpT6tu43L8E=
+ :cc; bh=h0bqkP/6kD2dEkTgCubdbv5SGEcZhSAS2Kpi6oik4hU=;
+ b=5i2mLyCkBUfIRWek2qWcm/zBcM11Y03MOtIhtz12kWjcGuMWlRSu8EfTFzGlcPaytg
+ NNaP8hu1d5WvRHwkqHi7zAOt444rdPN5JI7ZGDgygYNXcgv+mST7i/BgBYsEzk1eUbQN
+ 0Ze2FF+aCITVaZKXfG0XGhZY8K4GF9L1sswh/Xux5GmLXI0xgji8M+rCJkW/NlPGN4SL
+ wHd308PhxidAO8oeEOZWkq+OCYjIOeIHp+f5eazLoAu55A+lBfCzYlG+Py8C2wSjw0/k
+ Lbuz6O93L3AqwHg2hRlx//zVK4FiKU0mRVyOKNXjBwZaWCcL501sCik1deDVh9weKU83
+ 7AcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=t5ATNDVY5BBfcfxijhXC/1iC+qNbs6QVAVyFAJglrIA=;
- b=x0X3/KxrbWihaLNBnCL6pE1XLknUhkPqLB1IRno7p/JUKX3ZAvBh/L2zphb+v/sWU5
- jFT0R6xOtRluFHpQgK2UlNCP/+9dhOldU/wgyU5tz3JGNx4VYTejXD6UTmeUGjKhU1wr
- oBoHJKZ3WcL+or4jnAshXXw/8DXIt0xZ0fROVdR+QNOJMBizkSAxKzAc93cjHTteg1oc
- RMz/qBhWvDVklKE8lcK29AsxpxIuJ0SNF+axkdZFQSMwSH+JgirV9O9VPkBzmIbGD/XZ
- dwVkdYwUIZgsfu3B+uUv3hKCUTLn8MDRgCgIb5fytq0VPx+cPEKmCAiTz4Tgxz5A/rVT
- p7Sg==
-X-Gm-Message-State: AOAM5300vlcVoGlFzhiRmoyzx2DEOjlg8xYScxJzbCWOLQ2MPJrZHQPE
- jILxDWEj0dfpJ8SA4RHWhjIqC716Qy5PCGoGLhA=
-X-Google-Smtp-Source: ABdhPJwVhiQ9NYAesN9fwHxFsiR0uMR/oXmTftb8+ojrbzE9gOYzak69ZOdtSmXgJGRvv+Z7ZVyIh3pVPztPCn+MRgY=
-X-Received: by 2002:a05:620a:44c7:: with SMTP id
- y7mr2284975qkp.347.1644318942239; 
- Tue, 08 Feb 2022 03:15:42 -0800 (PST)
+ bh=h0bqkP/6kD2dEkTgCubdbv5SGEcZhSAS2Kpi6oik4hU=;
+ b=x7Fi/BpGFMhPtNWTvMMkrm9Plh5y2X4tRqbVqoeOy2+KBCuC/jyC3n8dVlYL6gawRd
+ pHhsKLijHF18oAwZ305zlxAA8eA5fGp3zeoY+5MoiAUfve2xmuGJV274yJCA65/nnb75
+ p/tvJ7EvxU32UpuUpnA51P44xIpqO4SVWhT75E+Zp4ubqjn2Bv/GtyWWnui8cZuMEZho
+ gRP9ftxpkWxqImYUccMZ5r9HFc1zF8eynaOpkUJ3uf5dMgsX5DV5JYEzU3gN71qW8jFs
+ v4Ur4OJwp+vb4AKaHUY2i0yEP7TDyQ2L5traDnmSzvEtnR7pfJRchPzoPS77vVPKwc8E
+ SCEw==
+X-Gm-Message-State: AOAM533frrmU1+rZVnPllv/UgYFH2ZUaBGwtGXp9Ff0k7KBc8tc3mJAT
+ gqXJ1e47ysUworAzrw7VdrKb80WQavSgoSsV4xAyew==
+X-Google-Smtp-Source: ABdhPJy72mKz942t5mnsstnJzgdSQgFirWBs0odiUef50w6iscT45TayiO/M7HTYnn3ITd3xgxGBzHLtIU2lxZzJUQk=
+X-Received: by 2002:a17:906:ad8e:: with SMTP id
+ la14mr3290346ejb.492.1644319313799; 
+ Tue, 08 Feb 2022 03:21:53 -0800 (PST)
 MIME-Version: 1.0
-References: <20220202144838.163875-1-iwona.winiarska@intel.com>
- <20220202144838.163875-8-iwona.winiarska@intel.com>
- <YgJPFlr18AmWiTRY@kroah.com>
-In-Reply-To: <YgJPFlr18AmWiTRY@kroah.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 8 Feb 2022 11:15:30 +0000
-Message-ID: <CACPK8Xc0Mo-eAH3bv1uAWxAsPFkLk0gZr9Sx0T0An68Lt2+c+Q@mail.gmail.com>
-Subject: Re: [PATCH v7 07/13] peci: Add sysfs interface for PECI bus
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+References: <20220203042134.68425-1-joel@jms.id.au>
+ <20220203042134.68425-2-joel@jms.id.au>
+In-Reply-To: <20220203042134.68425-2-joel@jms.id.au>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 8 Feb 2022 12:21:43 +0100
+Message-ID: <CAMRc=MfYH=YuFaV-pX0weM5o+i7u7gkQ7d7qg2j-XK2EoN1BkA@mail.gmail.com>
+Subject: Re: [libgpiod PATCH 1/7] tools: Clean up scandir memory allocations
+To: Joel Stanley <joel@jms.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,76 +77,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>, linux-doc@vger.kernel.org,
- Dave Hansen <dave.hansen@intel.com>, Zev Weiss <zweiss@equinix.com>,
- Jonathan Corbet <corbet@lwn.net>, Iwona Winiarska <iwona.winiarska@intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
- Guenter Roeck <linux@roeck-us.net>, devicetree <devicetree@vger.kernel.org>,
- Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
- Billy Tsai <billy_tsai@aspeedtech.com>, Rob Herring <robh+dt@kernel.org>,
- Borislav Petkov <bp@alien8.de>, Dan Williams <dan.j.williams@intel.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>, linux-hwmon@vger.kernel.org,
- Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
- Randy Dunlap <rdunlap@infradead.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Olof Johansson <olof@lixom.net>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Zev Weiss <zweiss@equinix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 8 Feb 2022 at 11:08, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Thu, Feb 3, 2022 at 5:22 AM Joel Stanley <joel@jms.id.au> wrote:
 >
-> On Wed, Feb 02, 2022 at 03:48:32PM +0100, Iwona Winiarska wrote:
-> > PECI devices may not be discoverable at the time when PECI controller is
-> > being added (e.g. BMC can boot up when the Host system is still in S5).
-> > Since we currently don't have the capabilities to figure out the Host
-> > system state inside the PECI subsystem itself, we have to rely on
-> > userspace to do it for us.
-> >
-> > In the future, PECI subsystem may be expanded with mechanisms that allow
-> > us to avoid depending on userspace interaction (e.g. CPU presence could
-> > be detected using GPIO, and the information on whether it's discoverable
-> > could be obtained over IPMI).
-> > Unfortunately, those methods may ultimately not be available (support
-> > will vary from platform to platform), which means that we still need
-> > platform independent method triggered by userspace.
-> >
-> > Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
-> > ---
-> >  Documentation/ABI/testing/sysfs-bus-peci | 16 +++++
-> >  drivers/peci/Makefile                    |  2 +-
-> >  drivers/peci/core.c                      |  3 +-
-> >  drivers/peci/device.c                    |  1 +
-> >  drivers/peci/internal.h                  |  5 ++
-> >  drivers/peci/sysfs.c                     | 82 ++++++++++++++++++++++++
-> >  6 files changed, 107 insertions(+), 2 deletions(-)
-> >  create mode 100644 Documentation/ABI/testing/sysfs-bus-peci
-> >  create mode 100644 drivers/peci/sysfs.c
-> >
-> > diff --git a/Documentation/ABI/testing/sysfs-bus-peci b/Documentation/ABI/testing/sysfs-bus-peci
-> > new file mode 100644
-> > index 000000000000..56c2b2216bbd
-> > --- /dev/null
-> > +++ b/Documentation/ABI/testing/sysfs-bus-peci
-> > @@ -0,0 +1,16 @@
-> > +What:                /sys/bus/peci/rescan
-> > +Date:                July 2021
-> > +KernelVersion:       5.15
+> The code copied from gpiofind didn't free the memory from scandir.
 >
-> 5.15 was a long time ago :(
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>  tools/tools-common.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 >
+> diff --git a/tools/tools-common.c b/tools/tools-common.c
+> index 0dc3d52668d7..c83e68a2c1e4 100644
+> --- a/tools/tools-common.c
+> +++ b/tools/tools-common.c
+> @@ -190,12 +190,17 @@ struct gpiod_chip *chip_by_line_name(const char *name)
 >
-> Other than this nit, these all look semi-sane to me.  What tree are you
-> wanting these to go through, mine?  If so, can you fix this up (both
-> places in this file) and resend?
+>                         die_perror("unable to open %s", entries[i]->d_name);
+>                 }
+> +               free(entries[i]);
+>
+>                 offset = gpiod_chip_find_line(chip, name);
+> -               if (offset >= 0)
+> +               if (offset >= 0) {
+> +                       free(entries);
+>                         return chip;
+> +               }
+> +               gpiod_chip_unref(chip);
+>         }
+>
+> +       free(entries);
+>         return NULL;
+>  }
+>
+> --
+> 2.34.1
+>
 
-Yes, I recommend Iwona send these through your tree.
+Good catch! It doesn't come up with gpiodetect which is what I tested
+with valgrind but does show up for gpiofind and gpioinfo. This patch
+however doesn't apply on the current master. Also: I don't really want
+new features for the v1.6.x series and we're heavily reworking the
+interface. Current version is in the next/libgpiod-2.0 branch but I
+should be posting a new version with reworked test suite later this
+week. How about working on this feature for the new API right away and
+make it part of libgpiod starting with v2.0?
 
-Thanks for taking another look over them. Thanks to Iwona and Intel
-for doing this work.
-
-Cheers,
-
-Joel
+Bart
