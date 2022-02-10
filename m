@@ -2,66 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66D254B0A7C
-	for <lists+openbmc@lfdr.de>; Thu, 10 Feb 2022 11:24:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E54A4B0B39
+	for <lists+openbmc@lfdr.de>; Thu, 10 Feb 2022 11:46:47 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JvXt90xXDz3bVL
-	for <lists+openbmc@lfdr.de>; Thu, 10 Feb 2022 21:24:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JvYMn29d7z3bc6
+	for <lists+openbmc@lfdr.de>; Thu, 10 Feb 2022 21:46:45 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=amk3e9l5;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W4iUUfli;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=linuxfoundation.org (client-ip=2604:1380:4601:e00::1;
+ helo=ams.source.kernel.org; envelope-from=gregkh@linuxfoundation.org;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=amk3e9l5; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
+ header.a=rsa-sha256 header.s=korg header.b=W4iUUfli; 
+ dkim-atps=neutral
+Received: from ams.source.kernel.org (ams.source.kernel.org
+ [IPv6:2604:1380:4601:e00::1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JvXsk6dCSz3bP1
- for <openbmc@lists.ozlabs.org>; Thu, 10 Feb 2022 21:24:10 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id E6EF0474F2
- for <openbmc@lists.ozlabs.org>; Thu, 10 Feb 2022 10:24:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- in-reply-to:content-disposition:content-type:content-type
- :mime-version:references:message-id:subject:subject:from:from
- :date:date:received:received:received; s=mta-01; t=1644488644;
- x=1646303045; bh=w1anvQN+BDFkOvA5UlqHEVCbWdN+XwSeKVyF5h5lhHY=; b=
- amk3e9l5btBCBlQS62iEOX4OrLB7wkXEair1Fg3p8agQBCJf+JEzsloNCcDkc/0l
- xhFrHNMzOXLuL29eb6LQ6JNXJ1992d5XwvmBdvikSDbckehRAhNPqYER++/R2R69
- 1toUpw2HWVVUC4RZz5ChH4NoThCNePAeHUXxBL64oFg=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id C0ML79FPrHGm for <openbmc@lists.ozlabs.org>;
- Thu, 10 Feb 2022 13:24:04 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JvYMG6Bbqz3bPK;
+ Thu, 10 Feb 2022 21:46:17 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 54AC347564
- for <openbmc@lists.ozlabs.org>; Thu, 10 Feb 2022 13:24:03 +0300 (MSK)
-Received: from localhost (172.17.1.114) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 10
- Feb 2022 13:24:02 +0300
-Date: Thu, 10 Feb 2022 13:24:02 +0300
-From: "Alexander A. Filippov" <a.filippov@yadro.com>
-To: <openbmc@lists.ozlabs.org>
-Subject: Re: LDAP groups and roles mapping
-Message-ID: <YgTnwp2ry/u6RYw5@nbwork.lan>
-References: <Ydw+3uYSqK44CTHq@nbwork.lan>
+ by ams.source.kernel.org (Postfix) with ESMTPS id 7C1E2B824A5;
+ Thu, 10 Feb 2022 10:46:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAAC8C004E1;
+ Thu, 10 Feb 2022 10:46:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+ s=korg; t=1644489972;
+ bh=qhgOSNqzVwAgQEC+/Ughopou3AgvMKYhrHTrwnUjWFo=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=W4iUUfliBgRfgMb3+LAgt77ybKOcO8zcmnMp7YXwwzY8e2ldIwu+gZuQj4SyOCk0m
+ +u+WSqYFt+URKQQUJQ1v2flcaSrGHdy0TGgBwv5T6kfaMXo8mWFH2lGxzVf+JtE+xc
+ hLd/K/qM8dR02Z4k3bRl+LKOlbGx1P/hhKDs/bGg=
+Date: Thu, 10 Feb 2022 11:46:09 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Zev Weiss <zev@bewilderbeest.net>
+Subject: Re: [PATCH] serial: 8250_aspeed_vuart: add PORT_ASPEED_VUART port type
+Message-ID: <YgTs8XNR6h34s0jc@kroah.com>
+References: <20220209203414.23491-1-zev@bewilderbeest.net>
+ <YgTBennInxX3fE3X@kroah.com>
+ <YgTDm5qKUJyzciR2@hatter.bewilderbeest.net>
+ <YgTKvIqTIOomFSsF@kroah.com>
+ <YgTZQQuTkLjnkeyB@hatter.bewilderbeest.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Ydw+3uYSqK44CTHq@nbwork.lan>
-X-Originating-IP: [172.17.1.114]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+In-Reply-To: <YgTZQQuTkLjnkeyB@hatter.bewilderbeest.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,24 +65,135 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, Konstantin Aladyshev <aladyshev22@gmail.com>,
+ Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Oskar Senft <osk@google.com>,
+ linux-serial@vger.kernel.org,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Jiri Slaby <jirislaby@kernel.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jan 10, 2022 at 05:12:46PM +0300, Alexander A. Filippov wrote:
-> Our customers want LDAP groups and roles mapping working not only by primary
-> group, but also by the membership in one of these groups.
-> And this requirement seems to me reasonable.
+On Thu, Feb 10, 2022 at 01:22:09AM -0800, Zev Weiss wrote:
+> On Thu, Feb 10, 2022 at 12:20:12AM PST, Greg Kroah-Hartman wrote:
+> > On Wed, Feb 09, 2022 at 11:49:47PM -0800, Zev Weiss wrote:
+> > > On Wed, Feb 09, 2022 at 11:40:42PM PST, Greg Kroah-Hartman wrote:
+> > > > On Wed, Feb 09, 2022 at 12:34:14PM -0800, Zev Weiss wrote:
+> > > > > Commit 54da3e381c2b ("serial: 8250_aspeed_vuart: use UPF_IOREMAP to
+> > > > > set up register mapping") fixed a bug that had, as a side-effect,
+> > > > > prevented the 8250_aspeed_vuart driver from enabling the VUART's
+> > > > > FIFOs.  However, fixing that (and hence enabling the FIFOs) has in
+> > > > > turn revealed what appears to be a hardware bug in the ASPEED VUART in
+> > > > > which the host-side THRE bit doesn't get if the BMC-side receive FIFO
+> > > > > trigger level is set to anything but one byte.  This causes problems
+> > > > > for polled-mode writes from the host -- for example, Linux kernel
+> > > > > console writes proceed at a glacial pace (less than 100 bytes per
+> > > > > second) because the write path waits for a 10ms timeout to expire
+> > > > > after every character instead of being able to continue on to the next
+> > > > > character upon seeing THRE asserted.  (GRUB behaves similarly.)
+> > > > >
+> > > > > As a workaround, introduce a new port type for the ASPEED VUART that's
+> > > > > identical to PORT_16550A as it had previously been using, but with
+> > > > > UART_FCR_R_TRIG_00 instead to set the receive FIFO trigger level to
+> > > > > one byte, which (experimentally) seems to avoid the problematic THRE
+> > > > > behavior.
+> > > > >
+> > > > > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> > > > > Tested-by: Konstantin Aladyshev <aladyshev22@gmail.com>
+> > > >
+> > > > Do we need a "Fixes:" tag here as well?
+> > > 
+> > > I was wondering the same -- I left it out because it didn't seem like it was
+> > > strictly a bug in the earlier commit that's really being fixed per se, but
+> > > perhaps that's an overly pedantic distinction.  I can certainly add it if
+> > > you'd prefer.
+> > 
+> > This obviously fixes an issue, if you don't have a specific commit that
+> > caused it, a cc: stable@vger.kernel.org should be added so we know to
+> > backport this to all stable kernels.
+> > 
 > 
-> As I can see in the code of phosphor-user-manager it can be easily solved by
-> searching the user name in the group members list that already received by the
-> `getgrnam` function. But I have doubts - wasn't this restriction done
-> intentionally?
+> Okay -- well, I suppose it's a fix in the sense that if you have the earlier
+> commit, you'll also want this one, so I'll add the tag.
+
+Please do.
+
+> > > > > ---
+> > > > >  drivers/tty/serial/8250/8250_aspeed_vuart.c | 2 +-
+> > > > >  drivers/tty/serial/8250/8250_port.c         | 8 ++++++++
+> > > > >  include/uapi/linux/serial_core.h            | 3 +++
+> > > > >  3 files changed, 12 insertions(+), 1 deletion(-)
+> > > > >
+> > > > > diff --git a/drivers/tty/serial/8250/8250_aspeed_vuart.c b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> > > > > index 2350fb3bb5e4..c2cecc6f47db 100644
+> > > > > --- a/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> > > > > +++ b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> > > > > @@ -487,7 +487,7 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
+> > > > >  	port.port.irq = irq_of_parse_and_map(np, 0);
+> > > > >  	port.port.handle_irq = aspeed_vuart_handle_irq;
+> > > > >  	port.port.iotype = UPIO_MEM;
+> > > > > -	port.port.type = PORT_16550A;
+> > > > > +	port.port.type = PORT_ASPEED_VUART;
+> > > > >  	port.port.uartclk = clk;
+> > > > >  	port.port.flags = UPF_SHARE_IRQ | UPF_BOOT_AUTOCONF | UPF_IOREMAP
+> > > > >  		| UPF_FIXED_PORT | UPF_FIXED_TYPE | UPF_NO_THRE_TEST;
+> > > > > diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+> > > > > index 3b12bfc1ed67..973870ebff69 100644
+> > > > > --- a/drivers/tty/serial/8250/8250_port.c
+> > > > > +++ b/drivers/tty/serial/8250/8250_port.c
+> > > > > @@ -307,6 +307,14 @@ static const struct serial8250_config uart_config[] = {
+> > > > >  		.rxtrig_bytes	= {1, 32, 64, 112},
+> > > > >  		.flags		= UART_CAP_FIFO | UART_CAP_SLEEP,
+> > > > >  	},
+> > > > > +	[PORT_ASPEED_VUART] = {
+> > > > > +		.name		= "ASPEED VUART",
+> > > > > +		.fifo_size	= 16,
+> > > > > +		.tx_loadsz	= 16,
+> > > > > +		.fcr		= UART_FCR_ENABLE_FIFO | UART_FCR_R_TRIG_00,
+> > > > > +		.rxtrig_bytes	= {1, 4, 8, 14},
+> > > > > +		.flags		= UART_CAP_FIFO,
+> > > > > +	},
+> > > > >  };
+> > > > >
+> > > > >  /* Uart divisor latch read */
+> > > > > diff --git a/include/uapi/linux/serial_core.h b/include/uapi/linux/serial_core.h
+> > > > > index c4042dcfdc0c..cd11748833e6 100644
+> > > > > --- a/include/uapi/linux/serial_core.h
+> > > > > +++ b/include/uapi/linux/serial_core.h
+> > > > > @@ -274,4 +274,7 @@
+> > > > >  /* Freescale LINFlexD UART */
+> > > > >  #define PORT_LINFLEXUART	122
+> > > > >
+> > > > > +/* ASPEED AST2x00 virtual UART */
+> > > > > +#define PORT_ASPEED_VUART	123
+> > > >
+> > > > Why does this value have to be in a uapi header file?  What userspace
+> > > > tool is going to need this?
+> > > >
+> > > 
+> > > I only put it there because that was where all the other port type constants
+> > > were defined, and wondered the same thing about the lot of them.  Is there a
+> > > userspace tool that makes use of any of these?
+> > 
+> > Not really, please don't add it if you do not require it.
+> > 
 > 
+> It seems like an odd inconsistency to put this one particular definition
+> somewhere else when the other 100+ of its siblings are in the uapi header;
+> would you want a preceding patch to move them all somewhere under
+> include/linux?  (Which in turn doesn't really seem like a change for -stable
+> I'd think.)
+> 
+> Though actually, on further investigation I see those constants are in fact
+> exposed to userspace in struct serial_struct->type (via
+> TIOCGSERIAL/TIOCSSERIAL), and via the 'type' sysfs attribute, so I'd think
+> we'd probably want to keep them as they are?
 
-I've pushed the fix for phosphor-user-manager that fixes the role determination
-using the groups membership.
+One of these days I'll unwind this mess.  There should not be any need
+to export this to userspace as userspace doesn't really care about it.
 
-  https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-user-manager/+/51114
+but for now, sure, keep it :(
 
---
-Alexander
+thanks,
+
+greg k-h
