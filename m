@@ -1,58 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AB7F4B2EA3
-	for <lists+openbmc@lfdr.de>; Fri, 11 Feb 2022 21:43:10 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6FE44B2EE2
+	for <lists+openbmc@lfdr.de>; Fri, 11 Feb 2022 21:53:54 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JwQYR6yQSz3cDS
-	for <lists+openbmc@lfdr.de>; Sat, 12 Feb 2022 07:43:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JwQnr3s3vz3bd4
+	for <lists+openbmc@lfdr.de>; Sat, 12 Feb 2022 07:53:52 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=KfUd4S7c;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=JYooOT1F;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Fqo6PuV8;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25;
+ helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=KfUd4S7c; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=JYooOT1F; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=Fqo6PuV8; 
  dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [IPv6:2605:2700:0:5::4713:9cab])
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JwQY001b6z3bbW;
- Sat, 12 Feb 2022 07:42:43 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (174-21-187-98.tukw.qwest.net
- [174.21.187.98])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 07AED425;
- Fri, 11 Feb 2022 12:42:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1644612160;
- bh=NcOgnI4XVfpjdB5tu79X+6ZPVwodL2Y1hcUhjUhpw9w=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=KfUd4S7cGL8zKJd82OGDd1XIqCApewYFWIxJI5wLhD903V4RL8n0s2Cm76sHf6R1i
- zhGdpyg4u988T8ydyEMqDch6dmqiLAK09eZHet/sISpXXK0wuSY/KRuRSAc634kUEr
- EQorTx2VE6+tCSUdsTYEdI2WzP5Znhm/gUcMgEtc=
-Date: Fri, 11 Feb 2022 12:42:38 -0800
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: Re: [PATCH v2] serial: 8250_aspeed_vuart: add PORT_ASPEED_VUART port
- type
-Message-ID: <YgbKPmZIpfRPKg1k@hatter.bewilderbeest.net>
-References: <20220211004203.14915-1-zev@bewilderbeest.net>
- <YgY4IODZlKTG7yzn@smile.fi.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JwQnM3KG2z2ymg
+ for <openbmc@lists.ozlabs.org>; Sat, 12 Feb 2022 07:53:26 +1100 (AEDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailout.west.internal (Postfix) with ESMTP id 34608320214B;
+ Fri, 11 Feb 2022 15:53:23 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute1.internal (MEProxy); Fri, 11 Feb 2022 15:53:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm1; bh=aG2pgNnHKU+YAKcBY6dsM1LQnJu7+naXjHyh16
+ B1uw8=; b=JYooOT1FKQZtuHyZuJhpNilUCu0cjEjRjZHDrWiShPSyQOHHLHn/3W
+ O8hMAEFHWiJTLikwot3tJAKlJgEcM5ImY6mQXJWpHgoB5cpN8U98jMAB1TAaqnp+
+ dR7n5C7rwQy2Lnn0g0K/pSMuiTihP4u8qkkp9tgJkFlhYruhm1LPopnQMyZATI/C
+ wIJuRkukArel/NNKhwU6NRQxyDQFzRYQFW8+hAokoi+W1CR2J/Tuoqgpn/vrtPTR
+ CmWYPQjMD9RjanaoL+w+Qs46b3+0aD/uwfrW/C8vfJJgLpBMCm7GWkVWyxyOmIFJ
+ CJXrnee8U5jfyEnJTPIWbvfP81JQhkDw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=aG2pgNnHKU+YAKcBY
+ 6dsM1LQnJu7+naXjHyh16B1uw8=; b=Fqo6PuV8zMNydW/4RCwqE8lxZyls9UD3B
+ l4LcGFuXBjwRca+uzrra3GCY1N19Z0HHZZY9wiYhDhmEzEkHONuBs01C507KRrZ9
+ wwvPWkIUm5ZIJIovWKqMbQEWN4E3XCXGyHV4lM2OA3ncQw2poTlcLIN673DVXf1V
+ YZHWjNdeB+Qd4UyNsvGYd75NePxA8CHFrH2ATV1IDbBIYVc42wiHXR1U/MiXdCwK
+ zd+0x1VBFPJyrVtgbW7vWtOEPcEE30KgN9lU4MCgVoJkNQxhJX5NVnBhCPeQrB1T
+ DDu4mavrmCnwHMFn1oTLHbGtuaIuiVerVIjDhp1x9E/bi/T+/Njkg==
+X-ME-Sender: <xms:wswGYtrpKsrNkrovQdEAd0l-Hhki_lhWeL26os9xrqkhU1WXG4DOXQ>
+ <xme:wswGYvqJTYsug5dUfjZ4FrRSKKR9VMnhJKX4g4Dy_8Ab0Otsq6WyYmP3VtbIVyhs0
+ 03pDAgQlRd2TKuha68>
+X-ME-Received: <xmr:wswGYqOz0u_OUkN07Z8yqTK7ikIwjxDAon1mgT1RbXiSKWk-fFW6_9WjEybRkYM5zV7MGIHgQQCA-McnMLybZqXReCyydA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrieefgddufeelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ jeenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepkeduuedtfeeihfehfeehfedvjeeu
+ jeeikedtteehledvhfelheekgedvieevkefhnecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:wswGYo5aQqMo3MWwNU4n_KrS0I8KAETM1dpyO5JwMGEP4jm7-WLslw>
+ <xmx:wswGYs7mx_uEC89CxuyKfZeIjgaT1i1TcYkyDgFl1hQDi8UrGQycFA>
+ <xmx:wswGYgj2SLjBVrfLLUmlgXGL23hoplI68pMRCzXnP7s2JZ6PsSzYkA>
+ <xmx:wswGYqTpqKVBSrrbdFIc6tbTuot0SCbo1kNCnHfra1wv3laot-JdnQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Feb 2022 15:53:21 -0500 (EST)
+Date: Fri, 11 Feb 2022 14:53:20 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Shawn McCarney <shawnmm@linux.ibm.com>
+Subject: Re: No dbus objects for phosphor-regulators
+Message-ID: <YgbMwFhqMO5ikp5E@heinlein>
+References: <9aaceaed-1a8a-6a13-d650-8f4678d267d4@linux.ibm.com>
+ <6D1561E1-59FC-4126-9271-A7C8BFDB0B11@gmail.com>
+ <1858988f-100f-b3b4-c599-80cddaa7247a@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="Mr17tZS2tp9o/wRR"
 Content-Disposition: inline
-In-Reply-To: <YgY4IODZlKTG7yzn@smile.fi.intel.com>
+In-Reply-To: <1858988f-100f-b3b4-c599-80cddaa7247a@linux.ibm.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,75 +99,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Konstantin Aladyshev <aladyshev22@gmail.com>,
- Andrew Jeffery <andrew@aj.id.au>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Oskar Senft <osk@google.com>,
- linux-serial@vger.kernel.org, Jiri Slaby <jirislaby@kernel.org>,
- linux-arm-kernel@lists.infradead.org
+Cc: openbmc@lists.ozlabs.org, Mike Jones <proclivis@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Feb 11, 2022 at 02:19:12AM PST, Andy Shevchenko wrote:
->On Thu, Feb 10, 2022 at 04:42:03PM -0800, Zev Weiss wrote:
->> Commit 54da3e381c2b ("serial: 8250_aspeed_vuart: use UPF_IOREMAP to
->> set up register mapping") fixed a bug that had, as a side-effect,
->> prevented the 8250_aspeed_vuart driver from enabling the VUART's
->> FIFOs.  However, fixing that (and hence enabling the FIFOs) has in
->> turn revealed what appears to be a hardware bug in the ASPEED VUART in
->> which the host-side THRE bit doesn't get if the BMC-side receive FIFO
->> trigger level is set to anything but one byte.  This causes problems
->> for polled-mode writes from the host -- for example, Linux kernel
->> console writes proceed at a glacial pace (less than 100 bytes per
->> second) because the write path waits for a 10ms timeout to expire
->> after every character instead of being able to continue on to the next
->> character upon seeing THRE asserted.  (GRUB behaves similarly.)
->>
->> As a workaround, introduce a new port type for the ASPEED VUART that's
->> identical to PORT_16550A as it had previously been using, but with
->> UART_FCR_R_TRIG_00 instead to set the receive FIFO trigger level to
->> one byte, which (experimentally) seems to avoid the problematic THRE
->> behavior.
->
->...
->
->> +	[PORT_ASPEED_VUART] = {
->> +		.name		= "ASPEED VUART",
->> +		.fifo_size	= 16,
->> +		.tx_loadsz	= 16,
->> +		.fcr		= UART_FCR_ENABLE_FIFO | UART_FCR_R_TRIG_00,
->> +		.rxtrig_bytes	= {1, 4, 8, 14},
->> +		.flags		= UART_CAP_FIFO,
->> +	},
->
->This is quite similar to AR7 type. Can that be (re-)used?
->
 
-I suppose that could work if there's a strong preference for it, but I'd 
-sort of prefer to keep it as a separate entry if that's alright.
+--Mr17tZS2tp9o/wRR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Firstly, I haven't yet heard back from ASPEED confirming the nature of 
-the underlying problem, so it seems entirely possible we'll end up 
-wanting to tweak it further if they can suggest a better workaround, and 
-I believe having rxtrig_bytes defined (which AR7 doesn't) enables 
-adjusting the trigger-level FCR bits from userspace via sysfs, which 
-could be useful for experiments relating to that.
+On Fri, Feb 11, 2022 at 09:32:13AM -0600, Shawn McCarney wrote:
+> On 2/9/2022 4:30 PM, Mike Jones wrote:
+> > iPad On Feb 1, 2022, at 10:38 AM, Shawn McCarney=20
+> > <shawnmm@linux.ibm.com> wrote: =EF=BB=BF =E2=80=8D =E2=80=8D =E2=80=8D =
+=E2=80=8D =E2=80=8D =E2=80=8D =E2=80=8D =E2=80=8D =E2=80=8D =E2=80=8D =E2=
+=80=8D =E2=80=8D =E2=80=8D=20
+> phosphor-regulators currently communicates directly with voltage=20
+> regulators using i2c-dev; it does not use device drivers.
+>=20
+> The reason is that most regulator drivers provide either no or very=20
+> limited ability to configure regulators.=C2=A0 For the systems I work on,=
+ we=20
+> need to do extensive regulator configuration to fine tune things (output=
+=20
+> voltage, pgood min/max, timing, etc.) Redundant phase fault detection is=
+=20
+> also pretty device-specific and on involves communicating with multiple=
+=20
+> devices.
 
-Secondly, there are a half-dozen or so other existing entries in the 
-uart_config[] array that differ only in name, so it doesn't seem to be 
-something that's generally been deemed worth optimizing thus far, and 
-now that the constant value has been shifted down it's just filling in a 
-previously-empty slot in the array instead of expanding it further.
+Out of curiosity, had you done any investigation with getting the support y=
+ou
+need upstreamed in drivers?  If you had upstream discussions I'd like some
+pointers to them (lore links) since, as Ed pointed out, we're having design
+discussions on this same problem generally speaking.
 
-But mostly it strikes me as a bit...gratuitously confusing to label the 
-port as something it ultimately isn't, even if they're functionally 
-"close enough" (calling it an 8250 or 16550A is a bit different, as 
-those are well-established, widely-emulated ones that have become 
-generic nomenclature, which isn't so much the case for AR7).  While in 
-the source code it could be explained with a comment, having 
-/proc/tty/driver/serial (and wherever else that name might end up) 
-referencing a totally unrelated MIPS SoC just seems kind of weird to me.
+--=20
+Patrick Williams
 
+--Mr17tZS2tp9o/wRR
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Zev
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmIGzL4ACgkQqwNHzC0A
+wRktNg/+K1bX2FPutQ6uyjfXbWWHLRxyKKwiDxR+6DPK7UgtUDiOV+7TtiZUCxpZ
+yzPcp3PkYyDToLp5qXxl58bHjClYc/4pRm0fOecA09r18gU1D/7PP4w9UJFewwVQ
+dpWdeuNqK5ut8hrdI7q5bfjnWRLfzYp7o4TuCAqeveVyo/XzcG8lf7hdCU+o5xHE
+TuLpijdJpKptHZx3XrhltViNuK6qp9N8ygwxKakB9dEUWb8gqYxsrFN3FqCdzbo5
+fKL/li8ct071LDUf6RpNTXSy3dItR81agaj9nmRBOShuBrR70xFc2+fQTvLLc/QR
+2RrLYzrJovECwlQf8jn6E2GhEiCItZxdmlqIDBocJynUOv1oAsVoCw4NTs+oRXT2
+FpGyWZuJK4znMp61ePNF2kli4ya+IEOXP2Bf0EEuAG8tTCB79jxj2GosHUdzi25A
+Ml/JDbnu4LWFvV39v8wRuqUIv67tzi/13v3Hct6x+Pwo0fuFWdPJT3/LNGfp2Etz
+f9b9I8W1DPLVtwwFzr1itJTTjg9iY+wXc1TaDqHrKr5OEaGwyy1btj9V5nWPCarB
++Zosdf3A3LXoft9QltWdvOM2SRl6/e+EfSS4WQZzlz0TS/+kxqaMdfmW3C/kZc7j
+9tzS3uB4s543kYd2Ui8U4lVnS6+/FxM/QALYLcKmesIsXyzhFdw=
+=9dCo
+-----END PGP SIGNATURE-----
+
+--Mr17tZS2tp9o/wRR--
