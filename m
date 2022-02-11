@@ -1,77 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 845084B2E5A
-	for <lists+openbmc@lfdr.de>; Fri, 11 Feb 2022 21:20:50 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AB7F4B2EA3
+	for <lists+openbmc@lfdr.de>; Fri, 11 Feb 2022 21:43:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JwQ3h0tGCz3cM5
-	for <lists+openbmc@lfdr.de>; Sat, 12 Feb 2022 07:20:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JwQYR6yQSz3cDS
+	for <lists+openbmc@lfdr.de>; Sat, 12 Feb 2022 07:43:07 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=aCPw83fs;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=KfUd4S7c;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42a;
- helo=mail-wr1-x42a.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=aCPw83fs; dkim-atps=neutral
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com
- [IPv6:2a00:1450:4864:20::42a])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=KfUd4S7c; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JwQ3F3Xz4z3bbW
- for <openbmc@lists.ozlabs.org>; Sat, 12 Feb 2022 07:20:23 +1100 (AEDT)
-Received: by mail-wr1-x42a.google.com with SMTP id o24so14406057wro.3
- for <openbmc@lists.ozlabs.org>; Fri, 11 Feb 2022 12:20:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=ChzrFn58ov+zTOdaAxSrDVPbrK6lcu83c25lZhy/HPA=;
- b=aCPw83fs+bqj/3Twjb3F0fX06NLcV7PHO32p+2mRwglIhdr3XI0KGT+czwlBUEZ1mD
- XTz6bhEpLxmagBXwsIdvIFgUq//Cv4pdYIRSLx1RreJyHlI3Zd6k/GlvewU11F1KXHCF
- Eq2BKfxhP2d3Ps8f/KnyWR/phK/CCxm2/Rc1c7gKtmzhFwFDUUZmLR51kwfCnGaS1bje
- sPntHjqVHp1WEgP/EtJ6WM0Qp74ApmxUjJpIOckBZSwXqFT/rYVDj1cmV9CtiwQ3XlPi
- nWQM5qOs2LxRg9+Qy2wV94xen9Gdyc9gcSCDGEveVbnjc7fkavQ+3juZlJ/RPuQ15AeH
- M+wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=ChzrFn58ov+zTOdaAxSrDVPbrK6lcu83c25lZhy/HPA=;
- b=Jk4JOuoxfuEPvI07FE8ZUDGhto7RDKlG5ovk0Q1qi3C/LLPQuSL5HAO9XCc4yMW7Hz
- 4At1+bnqfx0zCbcIgxP/HorO4Wimz0lBeeQxX5KkQjQMRyzyUxEz2C7avNFymXKNj8QJ
- aKm33OGEgPg6N9VQGmLkKE5RI+ngY8RlRQtSzZkhbAvw95iKflsGJRxFeV5Tn1rPVtWU
- up7jb64moj820bTehBBHvxGq81drcuhhb49q/r5Eqtb4e8ogTOkLMtWPs/CWZ7N9R8u4
- obedHinl8fxL9Ep1CXt927U2XhH12DtBoPy+mc4STg83w4V8w6SMMJkucnnH0uh59UZr
- 7Rpw==
-X-Gm-Message-State: AOAM531eu+hiBYnmHryLefElhdspowvOFQuuFaIPvX+G1fglPuuzGUwJ
- KmKbLq6Y1kMCX7aNCk757DSmpj4O9npVxGRCFidf1w==
-X-Google-Smtp-Source: ABdhPJyLdT1szufBQqUuQoWaUHHBc1exQPHMph0+n+vK6wb6Lk3/HfurwnQ42+1pbZrDkulJ3mYid4m8IHrB28NwkGA=
-X-Received: by 2002:a5d:6d85:: with SMTP id l5mr2611585wrs.425.1644610816490; 
- Fri, 11 Feb 2022 12:20:16 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JwQY001b6z3bbW;
+ Sat, 12 Feb 2022 07:42:43 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (174-21-187-98.tukw.qwest.net
+ [174.21.187.98])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 07AED425;
+ Fri, 11 Feb 2022 12:42:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1644612160;
+ bh=NcOgnI4XVfpjdB5tu79X+6ZPVwodL2Y1hcUhjUhpw9w=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=KfUd4S7cGL8zKJd82OGDd1XIqCApewYFWIxJI5wLhD903V4RL8n0s2Cm76sHf6R1i
+ zhGdpyg4u988T8ydyEMqDch6dmqiLAK09eZHet/sISpXXK0wuSY/KRuRSAc634kUEr
+ EQorTx2VE6+tCSUdsTYEdI2WzP5Znhm/gUcMgEtc=
+Date: Fri, 11 Feb 2022 12:42:38 -0800
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: Re: [PATCH v2] serial: 8250_aspeed_vuart: add PORT_ASPEED_VUART port
+ type
+Message-ID: <YgbKPmZIpfRPKg1k@hatter.bewilderbeest.net>
+References: <20220211004203.14915-1-zev@bewilderbeest.net>
+ <YgY4IODZlKTG7yzn@smile.fi.intel.com>
 MIME-Version: 1.0
-References: <9aaceaed-1a8a-6a13-d650-8f4678d267d4@linux.ibm.com>
- <6D1561E1-59FC-4126-9271-A7C8BFDB0B11@gmail.com>
- <1858988f-100f-b3b4-c599-80cddaa7247a@linux.ibm.com>
- <DCAD9B4C-D047-40A0-B4AD-1D21C0CF6197@gmail.com>
- <5d8e7a32-667e-be32-3c01-160e5bd6b4a1@linux.ibm.com>
-In-Reply-To: <5d8e7a32-667e-be32-3c01-160e5bd6b4a1@linux.ibm.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Fri, 11 Feb 2022 12:20:05 -0800
-Message-ID: <CAH2-KxCOOqoXmBLmR+=Jjrea1fouCOYOb4pGwZHwk5c=QJHeJg@mail.gmail.com>
-Subject: Re: No dbus objects for phosphor-regulators
-To: Shawn McCarney <shawnmm@linux.ibm.com>,
- Justin Ledford <justinledford@google.com>, 
- Gunnar Mills <gmills@linux.vnet.ibm.com>, Andrew Jeffery <andrew@aj.id.au>, 
- Adriana Kobylak <anoo@linux.ibm.com>, Peter Lundgren <peterlundgren@google.com>,
- Jason Ling <jasonling@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <YgY4IODZlKTG7yzn@smile.fi.intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,72 +64,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Mike Jones <proclivis@gmail.com>
+Cc: linux-aspeed@lists.ozlabs.org, Konstantin Aladyshev <aladyshev22@gmail.com>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Oskar Senft <osk@google.com>,
+ linux-serial@vger.kernel.org, Jiri Slaby <jirislaby@kernel.org>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Feb 11, 2022 at 8:06 AM Shawn McCarney <shawnmm@linux.ibm.com> wrot=
-e:
+On Fri, Feb 11, 2022 at 02:19:12AM PST, Andy Shevchenko wrote:
+>On Thu, Feb 10, 2022 at 04:42:03PM -0800, Zev Weiss wrote:
+>> Commit 54da3e381c2b ("serial: 8250_aspeed_vuart: use UPF_IOREMAP to
+>> set up register mapping") fixed a bug that had, as a side-effect,
+>> prevented the 8250_aspeed_vuart driver from enabling the VUART's
+>> FIFOs.  However, fixing that (and hence enabling the FIFOs) has in
+>> turn revealed what appears to be a hardware bug in the ASPEED VUART in
+>> which the host-side THRE bit doesn't get if the BMC-side receive FIFO
+>> trigger level is set to anything but one byte.  This causes problems
+>> for polled-mode writes from the host -- for example, Linux kernel
+>> console writes proceed at a glacial pace (less than 100 bytes per
+>> second) because the write path waits for a 10ms timeout to expire
+>> after every character instead of being able to continue on to the next
+>> character upon seeing THRE asserted.  (GRUB behaves similarly.)
+>>
+>> As a workaround, introduce a new port type for the ASPEED VUART that's
+>> identical to PORT_16550A as it had previously been using, but with
+>> UART_FCR_R_TRIG_00 instead to set the receive FIFO trigger level to
+>> one byte, which (experimentally) seems to avoid the problematic THRE
+>> behavior.
 >
-> On 2/11/2022 9:42 AM, Mike Jones wrote:
+>...
 >
-> I was mainly surprised because a conversation I had with Guenter, if I re=
-member correctly, suggested that /dev/i2c calls from user space work with h=
-wmon, because hwmon does not lock the i2c except when using it.
+>> +	[PORT_ASPEED_VUART] = {
+>> +		.name		= "ASPEED VUART",
+>> +		.fifo_size	= 16,
+>> +		.tx_loadsz	= 16,
+>> +		.fcr		= UART_FCR_ENABLE_FIFO | UART_FCR_R_TRIG_00,
+>> +		.rxtrig_bytes	= {1, 4, 8, 14},
+>> +		.flags		= UART_CAP_FIFO,
+>> +	},
 >
-> So I assumed that in this case, it was the polling of hwmon that was just=
- keeping it locked enough to conflict with phosphor-regulators and then it =
-gives up.
+>This is quite similar to AR7 type. Can that be (re-)used?
 >
-> With i2c-dev, you can specify I2C_SLAVE or I2C_SLAVE_FORCE when creating =
-the connection.  I believe I2C_SLAVE will cause communication attempts to f=
-ail if a driver is bound.  I2C_SLAVE_FORCE will still try to communicate.
->
-> I wanted to take the more conservative approach, because there are scenar=
-ios where interleaving communication can cause serious problems.  For examp=
-le, if one PMBus regulator supports multiple rails, you have to set the PMB=
-us PAGE register to the rail you are interested in.  Subsequent PMBus comma=
-nds will affect that rail.  If phosphor-regulators and a driver are both co=
-mmunicating with the regulator, they may both be setting PAGE and thus thei=
-r subsequent commands are going to the wrong rail.
->
->
-> I could just not use hwmon at all use phosphor-regulators for all telemet=
-ry, but this seemed like more work.
->
-> Sorry about that.  I think if you have already done the work of defining =
-the regulator and a read sensors rule in your JSON file, adding a few more =
-sensors is not much additional work though.  Let me know if you have questi=
-ons.
->
-> Also, I will need to figure out how to connect phosphor-regulators teleme=
-try to Redfish and the WebUI. Are there examples of how to do that?
->
-> It should just work with no additional effort as long as you define the f=
-ollowing correctly in your JSON file:
->
-> * The "inventory_path" property of your "chassis" object needs to match a=
- real chassis inventory item on D-Bus.
->
-> * The "fru" property of your regulator "device" object needs to match a r=
-eal inventory item on D-Bus.  As I mentioned earlier, normally if the regul=
-ator is pluggable then this is the regulator itself.  Otherwise it is the l=
-arger hardware item that contains it, such as a motherboard.  FRU is the ac=
-ronym for Field Replaceable Unit, referring to a pluggable hardware item.
->
-> phosphor-regulators will publish your sensors on D-Bus with the standard =
-object paths and properties.  The two JSON properties above are used to def=
-ine a "chassis" association and an "inventory_item" association on D-Bus th=
-at is used by bmcweb.  This will cause your sensors to appear in Redfish an=
-d the Web UI.
->
-> Thanks,
->
-> Shawn
 
-This same topic is essentially being discussed in a design doc here:
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/50509
+I suppose that could work if there's a strong preference for it, but I'd 
+sort of prefer to keep it as a separate entry if that's alright.
 
-I've CCed the relevant parties from that review on this thread, and I
-don't have a strong opinion what forum we use to discuss this, but we
-should ideally all be talking together on a common solution.
+Firstly, I haven't yet heard back from ASPEED confirming the nature of 
+the underlying problem, so it seems entirely possible we'll end up 
+wanting to tweak it further if they can suggest a better workaround, and 
+I believe having rxtrig_bytes defined (which AR7 doesn't) enables 
+adjusting the trigger-level FCR bits from userspace via sysfs, which 
+could be useful for experiments relating to that.
+
+Secondly, there are a half-dozen or so other existing entries in the 
+uart_config[] array that differ only in name, so it doesn't seem to be 
+something that's generally been deemed worth optimizing thus far, and 
+now that the constant value has been shifted down it's just filling in a 
+previously-empty slot in the array instead of expanding it further.
+
+But mostly it strikes me as a bit...gratuitously confusing to label the 
+port as something it ultimately isn't, even if they're functionally 
+"close enough" (calling it an 8250 or 16550A is a bit different, as 
+those are well-established, widely-emulated ones that have become 
+generic nomenclature, which isn't so much the case for AR7).  While in 
+the source code it could be explained with a comment, having 
+/proc/tty/driver/serial (and wherever else that name might end up) 
+referencing a totally unrelated MIPS SoC just seems kind of weird to me.
+
+
+Zev
+
