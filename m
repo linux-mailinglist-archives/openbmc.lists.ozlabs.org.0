@@ -2,64 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9FD84B1C1A
-	for <lists+openbmc@lfdr.de>; Fri, 11 Feb 2022 03:18:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EE084B1AE9
+	for <lists+openbmc@lfdr.de>; Fri, 11 Feb 2022 02:05:08 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jvy2Z3DgCz3bdG
-	for <lists+openbmc@lfdr.de>; Fri, 11 Feb 2022 13:18:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JvwQ95xksz3cBr
+	for <lists+openbmc@lfdr.de>; Fri, 11 Feb 2022 12:05:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Xd7iyFwG;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=hE/Mrs0O;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::92c;
- helo=mail-ua1-x92c.google.com; envelope-from=karthicsk706@gmail.com;
+ smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::b2d;
+ helo=mail-yb1-xb2d.google.com; envelope-from=linus.walleij@linaro.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=Xd7iyFwG; dkim-atps=neutral
-Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com
- [IPv6:2607:f8b0:4864:20::92c])
+ unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
+ header.s=google header.b=hE/Mrs0O; dkim-atps=neutral
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com
+ [IPv6:2607:f8b0:4864:20::b2d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JvPNJ5rpVz2ymg
- for <openbmc@lists.ozlabs.org>; Thu, 10 Feb 2022 15:46:39 +1100 (AEDT)
-Received: by mail-ua1-x92c.google.com with SMTP id w21so2400826uan.7
- for <openbmc@lists.ozlabs.org>; Wed, 09 Feb 2022 20:46:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=DErYDUbh4s2cblWAN9OMY7V6tiK/UnAxfXz7cSu+dmw=;
- b=Xd7iyFwGhGfJ0s/zQRq+VmUoVo4FgP8DLLScFSJiGjukuqEr4Vgu1LB/qAS2ZikK+D
- 6Z7+dCOxhiSzkjBvqLHqRAvsYqAmaH7r6d/VZu+BPmRN6zyFXXmTqIEYVYna6FVcADCp
- pvB9IL1NdnoDPYx2pZ6O17zGnOuR2Ad0PciqVtWGrunWOTKJj76LRtEaJZxTKNRj3zVh
- VsebBO4n7wWAeuox/cqevit/+S/GnG58ttWxO/BqBJm1HE8AUtbj4Dpm6iGRYoJn1hKB
- ePis+S0BA9IiACby7UX7f+ZVsrq86HaAbo9SuGCgbSETQ8C5cw21PuiIU4j4r1klujJu
- OHdg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JvwPq2HGzz2yMt
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Feb 2022 12:04:46 +1100 (AEDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id j2so20686391ybu.0
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Feb 2022 17:04:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=WsTiTpIPXd6aBVRDWWCsW2EfHImVRBu7uRe/2mtmvMo=;
+ b=hE/Mrs0OT4PJEvvcSBW//N5IldkDiXP8QA8UXh6EUPg2m7sgepjbdSVH+YRKBY3QFF
+ a5/XUpkCzfPY3wLcdHeRPOOWiHRzJX5iLHRp/rhZXAEgVFWb2kCc0jQjK9jkPjth8baS
+ +SOfsi88n5gCkWBefJdLXdpRv9Sk8q3cKpl2RU0uBFtwaBTO3w2BZTvEjvrI4u7yw+uM
+ 8VUBEoTAxYHIlXAbNeBdu+5rzGI6Qu1v3d2T9BKeN1AiCpuOyAoOJJBm7cc8iVHZ8Edm
+ hsjw53+KzB5w4jjKF7GFI35WTcf6mL82oIre7eqJ5K6FZXnmghyatq7Kc8zOXWjB4LWB
+ +7NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=DErYDUbh4s2cblWAN9OMY7V6tiK/UnAxfXz7cSu+dmw=;
- b=CYLff78AC0DeaFEZ9SZhvr1i4qOSFFEUItCuaJWWpAKBRBF5xdIgnXKiiwzLOHU2Sn
- bq9Z7Pz/WNM1C76N+qrJQPb1rE/McaH7LWRhPed+qbuAtS+ADAin63SMXcAyaVh9PwaA
- BdzEDBj5Q/BlNcjVivG6h+ioViBLqE2eCTVwTI1BldzZjsUTpyI6XbS7LBt0nyOALVHY
- NraNp84i/ug+7U9G3ovyXdHbTQyu6HrlA83G3S8HHvKIsaweTbnS9hvcSEiO0aAAN+Dn
- 31DwVfZo2vzsSZAYn9Y2Q6cmVFA0xKjJ8Ig1qikfbhc1TDNM2v/K7oqxgQWhEvkURV3n
- Ha/w==
-X-Gm-Message-State: AOAM5306ZuVr+YIjtwuUIFYysD1HkyqCmkDd04zsPzRc2IHqPUXL1MiJ
- r8GejVkoQpUDFuqUnexCNxdAtBtmn7yI1oea4GcxEJoT9RGTaQ==
-X-Google-Smtp-Source: ABdhPJx2TQVSIlseEpLGnMBne3FZjJJXfznTEoXhYmH1zUxPkeKefATv2JAWD33xgFABeA5tkSN0qH1h+YumHCqSa2k=
-X-Received: by 2002:ab0:7389:: with SMTP id l9mr1863110uap.1.1644468394433;
- Wed, 09 Feb 2022 20:46:34 -0800 (PST)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=WsTiTpIPXd6aBVRDWWCsW2EfHImVRBu7uRe/2mtmvMo=;
+ b=2CuMBLvxhplT82FC10x9uBiYwSVdKzsKqQ9L2xwQ6X+YUFufkuS9UZVdkQ06m8nQMR
+ ZNYMqSpCiAHEhTurE+3UEdYZY5v7WYVR1Um9YaxhzwOdfu6Z9guYMQCdSXNlQ76a+xAb
+ s9+HWGBwo/QlAPC5z/YmgEQW2ohuzAYuMvh8iaga3MF1y1FYrBdR5jGL09e8M8fQArFN
+ C9Sky16J8biTPatgO0BPNho4PezdjZYM7IBsNVDM4wNUNW6MUazoDw4xp8mdgZMsvA7H
+ 50VOe69k5mFN8YEsgpLKjAeuoQtBRE4Cinp1vFgO70hpcqOg62GzLzdykXxXLOepohiw
+ fErw==
+X-Gm-Message-State: AOAM532W9pNlhfQOMmGDUAZ9hhiy74aHkrKh8spRkoCkpHXrj59TD9ZI
+ 5h7ZtpU2RCA8YlL6BxbuJaV+GvoxtJfIbLHbUBdnxg==
+X-Google-Smtp-Source: ABdhPJx8k/neEG8CQ2DJYegDVZpGIz+78Gj9mxX8H5U/x2yDSI9sCRLGpI/0cV62BDxBuVS7AyEpooCPglR+uu9KsbU=
+X-Received: by 2002:a81:b343:: with SMTP id r64mr10383367ywh.268.1644541483360; 
+ Thu, 10 Feb 2022 17:04:43 -0800 (PST)
 MIME-Version: 1.0
-From: karthi keyan <karthicsk706@gmail.com>
-Date: Thu, 10 Feb 2022 10:16:23 +0530
-Message-ID: <CAMN9bcxGP4V0vKqLbh7yNdnjr45mpZkBo4vzpP_xU7mfM329tA@mail.gmail.com>
-Subject: EEPROM byte size identification implementation
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="0000000000007e9f4f05d7a2a280"
-X-Mailman-Approved-At: Fri, 11 Feb 2022 13:16:37 +1100
+References: <20220205155332.1308899-1-j.neuschaefer@gmx.net>
+ <20220205155332.1308899-2-j.neuschaefer@gmx.net>
+In-Reply-To: <20220205155332.1308899-2-j.neuschaefer@gmx.net>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Fri, 11 Feb 2022 02:04:32 +0100
+Message-ID: <CACRpkdYJnB1HnEt29p3G_fUEMMHoXMmuKBkUHAGV5sKUpiU3eg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] pinctrl: nuvoton: npcm7xx: Use %zu printk format
+ for ARRAY_SIZE()
+To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,41 +77,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: velumanit@hcl.com, anoo@us.ibm.com, Ed Tanous <ed@tanous.net>,
- thangavel.k@hcl.com
+Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>,
+ linux-gpio@vger.kernel.org, Andy Shevchenko <andy.shevchenko@gmail.com>,
+ Benjamin Fair <benjaminfair@google.com>, kernel test robot <lkp@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000007e9f4f05d7a2a280
-Content-Type: text/plain; charset="UTF-8"
+On Sat, Feb 5, 2022 at 4:53 PM Jonathan Neusch=C3=A4fer
+<j.neuschaefer@gmx.net> wrote:
 
-In phosphor-networkd repo, ncsid is the separate daemon. It doesn't have
-the dbus-service for it, and it is not associated with the dbus service. We
-wanted to get the nic card manufacturer details from ncsid and that can be
-shared with other modules. So  it is possible to update the code with
-handling dbus- service and dbus operations. If so, we can get the nic card
-details using dbus to other modules or repositories. So is it possible to
-change that binary into service to expose D-bus?
+> When compile-testing on 64-bit architectures, GCC complains about the
+> mismatch of types between the %d format specifier and value returned by
+> ARRAY_LENGTH(). Use %zu, which is correct everywhere.
+>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Fixes: 3b588e43ee5c7 ("pinctrl: nuvoton: add NPCM7xx pinctrl and GPIO dri=
+ver")
+> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+> ---
+>
+> v3:
 
-for reference: https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/49477
+Applied this v3 rather than the other version.
 
-Regards,
-Karthikeyan P
-
---0000000000007e9f4f05d7a2a280
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>In phosphor-networkd repo, ncsid is the separate daem=
-on. It doesn&#39;t have the dbus-service for it, and it is not associated w=
-ith the dbus service. We wanted to get the nic card manufacturer details fr=
-om ncsid and that can be shared with other modules. So=C2=A0 it is possible=
- to update the code with handling dbus- service and dbus operations. If so,=
- we can get the nic card details using dbus to other modules or repositorie=
-s. So is it possible to change that binary into service to expose D-bus?</d=
-iv><div><br></div><div>for reference:=C2=A0<a href=3D"https://gerrit.openbm=
-c-project.xyz/c/openbmc/docs/+/49477" target=3D"_blank">https://gerrit.open=
-bmc-project.xyz/c/openbmc/docs/+/49477</a></div><div><br></div><div>Regards=
-,</div><div>Karthikeyan P</div></div>
-
---0000000000007e9f4f05d7a2a280--
+Yours,
+Linus Walleij
