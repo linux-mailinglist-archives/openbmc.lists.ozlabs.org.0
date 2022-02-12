@@ -1,75 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 410AA4B3118
-	for <lists+openbmc@lfdr.de>; Fri, 11 Feb 2022 23:56:49 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 659574B33E1
+	for <lists+openbmc@lfdr.de>; Sat, 12 Feb 2022 09:41:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JwTWf6wHfz3bcB
-	for <lists+openbmc@lfdr.de>; Sat, 12 Feb 2022 09:56:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JwkVG02HWz3cC5
+	for <lists+openbmc@lfdr.de>; Sat, 12 Feb 2022 19:41:26 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=doxLCLfn;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=ECsMFeCK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2d;
- helo=mail-io1-xd2d.google.com; envelope-from=proclivis@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=doxLCLfn; dkim-atps=neutral
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com
- [IPv6:2607:f8b0:4864:20::d2d])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.15.19; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=ECsMFeCK; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JwTWD2YnPz30R0
- for <openbmc@lists.ozlabs.org>; Sat, 12 Feb 2022 09:56:23 +1100 (AEDT)
-Received: by mail-io1-xd2d.google.com with SMTP id q204so13177885iod.8
- for <openbmc@lists.ozlabs.org>; Fri, 11 Feb 2022 14:56:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=content-transfer-encoding:from:mime-version:subject:date:message-id
- :references:cc:in-reply-to:to;
- bh=aQThvyHrmHYJKmyEmQTRnAAe8LxCAZTx/wHXwO3n8Uc=;
- b=doxLCLfnbx40R0b03wv5146FSM03JEm9xynFcARFeFYIqwY8V2X1TNw61carEvKvcq
- VT0jyaefdTdSxw6dtEvJre6dGkQ1Yo1OrnSIBF0J1LUQ4NFhHcBOQGruVIMA/QxFAkJ1
- H+YTXjP+ONpYhPBPKB+QnqkhoGJdGBiTgAC2GVAqjo6pl2EcCsLbrQdWi8CPKKZCO5Xe
- QfuhO4qXAxoh8kbk6ZeRNrOm5TfN9vW8/6v96WZBYtUOtmBrFoRp3dhNoqqOwDN9FHOD
- b6ESvkqKuykwq30r5qYp2j5fPw3lfUaVmi5D4OaBgJntYDnjI9sr6re+OdfqHTntNxa+
- kcWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:content-transfer-encoding:from:mime-version
- :subject:date:message-id:references:cc:in-reply-to:to;
- bh=aQThvyHrmHYJKmyEmQTRnAAe8LxCAZTx/wHXwO3n8Uc=;
- b=zxgmQuahURjJ/gC78qndqBXZAFRxe0o4swbaRT9XaR5osrb5uRpSH9LH6PgC1fjEhl
- Em3Si0kffFr0/3HvG1APy4nViWORq3WzMy6tz7nY6va1Zo2YCq7jtpr+SMU/Cwflathw
- yHZqn0ColXZjGhc4rktH5esrFLOo5Aw4QgYHJM373hc2upLFsqZwajG007JiuaPmfZsy
- jF8Hc/w6sx3OfQotR9KmVlY1jebjuro9Rmlb4kkibN+7HRv7g5VcAZYWpW1qFA+HYrVX
- sqvrqg4yvZT7XORxGSGEFbZYP/QeWZU4HxJrhX7JfOs/WY9n8n3EArzRSLLoED/iJ0HI
- KTzw==
-X-Gm-Message-State: AOAM532gkpg0+aZyGZbZJiMB6uZYpinAPtnarcaOOfLccxUMCRq6gQ3B
- XnBYNIb9pkm8CQtDa7uI5wU=
-X-Google-Smtp-Source: ABdhPJw0XaIX+PhCNrfrPvmVxvu2ljVxyXK7ubpizjUNQ7c9KqASV3l28riuzQs9FYr7bPrvnEH8rg==
-X-Received: by 2002:a05:6638:1454:: with SMTP id
- l20mr2115441jad.22.1644620179957; 
- Fri, 11 Feb 2022 14:56:19 -0800 (PST)
-Received: from smtpclient.apple ([2601:281:c000:e8c:d0ca:f309:80a0:46f0])
- by smtp.gmail.com with ESMTPSA id d11sm14155822ioc.49.2022.02.11.14.56.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Feb 2022 14:56:19 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Mike Jones <proclivis@gmail.com>
-Mime-Version: 1.0 (1.0)
-Subject: Re: No dbus objects for phosphor-regulators
-Date: Fri, 11 Feb 2022 15:56:18 -0700
-Message-Id: <875224D5-837F-4538-8128-F5F45808B689@gmail.com>
-References: <CAH2-KxCOOqoXmBLmR+=Jjrea1fouCOYOb4pGwZHwk5c=QJHeJg@mail.gmail.com>
-In-Reply-To: <CAH2-KxCOOqoXmBLmR+=Jjrea1fouCOYOb4pGwZHwk5c=QJHeJg@mail.gmail.com>
-To: Ed Tanous <edtanous@google.com>
-X-Mailer: iPad Mail (19C56)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JwkTr4yCwz3bTT
+ for <openbmc@lists.ozlabs.org>; Sat, 12 Feb 2022 19:41:02 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1644655247;
+ bh=6yeoDgDJPy6Mv0rvAeCcJ+cV6rpBoVqlTD6BL6nGPBA=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=ECsMFeCK10kEQy3vbM9SlWqvEBXVpIb+kEL310FW9HTi3XaktD/N3qlGeNb11HQn1
+ dLcf++lYoAUcthwIAk0zz+LAN6GgpMU+xYbomhYFNvmTsdqaD+ilXbFHoyBv5Xzmm8
+ jXucMoJq9Sb5zEpy3Otb7VAJ3pWZix6JwAZat8hk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MLzBj-1na3rS2BsH-00Hyov; Sat, 12
+ Feb 2022 09:40:47 +0100
+Date: Sat, 12 Feb 2022 09:40:45 +0100
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
+Subject: Re: [PATCH v5 0/9] Nuvoton WPCM450 pinctrl and GPIO driver
+Message-ID: <YgdyjUbb4lnrVHmJ@latitude>
+References: <20220129115228.2257310-1-j.neuschaefer@gmx.net>
+ <CACRpkdYEigGHkoGfBg15tFXadgpXUAjDOnw7ePXhmvHJqPEJXw@mail.gmail.com>
+ <YfZkis8M81Ejpagq@latitude>
+ <CACPK8XdFXRQf3MpPh3z=EMAKtnQSHL+iwwMCVYc5dP9DfQEN+Q@mail.gmail.com>
+ <YfpyjDBH83FE7r4o@latitude>
+ <CAHp75Vdg8zFSHaTP_8jQua5QfRYbvZ4_rLdCtt3ks8YEibseTg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="zAZgCYGBplb8VEfC"
+Content-Disposition: inline
+In-Reply-To: <CAHp75Vdg8zFSHaTP_8jQua5QfRYbvZ4_rLdCtt3ks8YEibseTg@mail.gmail.com>
+X-Provags-ID: V03:K1:hJPvO5vHcOttZM1wfVcuMJQGsgrEjDcKwOkTeT64bNtzFABDEGK
+ WIamoNhFYPIJHSOMwXV0YQfcg3M4errYW7wm5rOzvzRkWqMDpmhLL04tZCTAsKolznmxDEH
+ phmVnU7DTvxszphcydPY+LPpRINwC5jVWzlk5OGTGRtEXG7YLZAd2GCetPFrbrQw1At0n4X
+ nqekm7hvvtg4RUJUdg8HQ==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:m2XNOyAVX7w=:s0wxwPeA9HvMlq2eNhUmBQ
+ YnTuICPMq5UsHNHC5Xa5U0FlgVBZIBn4D9GIa/bhgvvI1dP8Jg9zJOi64TOWmMFa3mTeW1cJR
+ oANWnW5BPC87zf5727tPIKYgQpEtk30o4RVJbbf/LKXzdD/jxdHrEZTRHX56YvNjv9H0yXK7k
+ RPvyYbRYCBA1isASYbQfU51gvgP4bq2q1JlUjocLr2GA3ZfrYyhGJ39VxrOniZFyrr6Ph3lPy
+ 0uGTB0YB9vEXollfRTCk3wtZqgGUO/YaQcS4X30SdX9N6YG8U8RQwQyJuniI0sWWP1zxUm5ZZ
+ vt344G6IR9U7mmrfmrZk9ePes8Ec6cR37hvpotm94pD1YH1FS4smHA//xhBpOmdgDdBWGBHJF
+ c+54oo1DKmcgFJY4BCzr4bk1W1CEJSg45jaVdC/Pgn8OGXwTesZVH/QCgWNfZQKEkgzhoxVF2
+ o4UZnAxQZ7t1hsZUMMFh0UBEplloQvZNwySlX4Xe6cXc6fChoYdGMyoTfQ0+g9Yfg/pXDbnvL
+ rLmvg/wg7peJ1aIKWczNnZ88QlV8xRwJ++rZM2aXkqdd62RJcupYTPoRyDuYAJ5MJ38mcc9o1
+ 53cQeMQD7RPXXYqhWL6hZpDGsmjWP258ovGjZNjO/25uVlsUcyBG79JkhuXsEWuxbOPjKikCd
+ rjtOZPAD38MFanB4kGS7127Nhz3yulktAB+aG7ZUusXUE5kV0JMpwS6rrSj+j71JK/JKjPM6Y
+ uBt+u3XfHRzkaV1zWYSCSd9dM75n6Duzj0WX/jWsW8pDFIq7z/59D0zn9GGKk5nc/nuIRfvQr
+ YjEVYxAsDit4uVyRAfut/wojaqtA8XbZe5WV2KkkpxZnnYTBdxY10x4F7jbxsgjlbp71yBY8A
+ 8Rp2K08sB5seh24kdJnoV9Xi4sdmwdbK44Mz1l7bQGBY5p8GHU1jLN7qCkjSpBd4Ay6jqwkuc
+ 6T12h008PmhZtSCE/9LeVR0OdIaWvZ3ItPAztVon95bjlfwWmCCeA4KFIYfn4NpNBsBKMy3li
+ TgYCLZrYfc3v+digCqTQbdQfkScxHa3dVT96D8riDMX7/eAXnwQAgnBQmp/wFJ21OxBL0tMzq
+ 1ksURp/xrWAjIM=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,88 +86,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Lundgren <peterlundgren@google.com>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org, Shawn McCarney <shawnmm@linux.ibm.com>,
- Justin Ledford <justinledford@google.com>,
- Gunnar Mills <gmills@linux.vnet.ibm.com>, Jason Ling <jasonling@google.com>
+Cc: devicetree <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, Tali Perry <tali.perry1@gmail.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+--zAZgCYGBplb8VEfC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sent from my iPad
-
-> On Feb 11, 2022, at 1:20 PM, Ed Tanous <edtanous@google.com> wrote:
+On Wed, Feb 02, 2022 at 02:10:44PM +0200, Andy Shevchenko wrote:
+> On Wed, Feb 2, 2022 at 2:01 PM Jonathan Neusch=C3=A4fer
+> <j.neuschaefer@gmx.net> wrote:
+> > On Tue, Feb 01, 2022 at 11:42:11PM +0000, Joel Stanley wrote:
+> > > On Tue, 1 Feb 2022 at 13:05, Jonathan Neusch=C3=A4fer <j.neuschaefer@=
+gmx.net> wrote:
 >=20
-> =EF=BB=BFOn Fri, Feb 11, 2022 at 8:06 AM Shawn McCarney <shawnmm@linux.ibm=
-.com> wrote:
->>=20
->> On 2/11/2022 9:42 AM, Mike Jones wrote:
->>=20
->> I was mainly surprised because a conversation I had with Guenter, if I re=
-member correctly, suggested that /dev/i2c calls from user space work with hw=
-mon, because hwmon does not lock the i2c except when using it.
->>=20
->> So I assumed that in this case, it was the polling of hwmon that was just=
- keeping it locked enough to conflict with phosphor-regulators and then it g=
-ives up.
->>=20
->> With i2c-dev, you can specify I2C_SLAVE or I2C_SLAVE_FORCE when creating t=
-he connection.  I believe I2C_SLAVE will cause communication attempts to fai=
-l if a driver is bound.  I2C_SLAVE_FORCE will still try to communicate.
->>=20
->> I wanted to take the more conservative approach, because there are scenar=
-ios where interleaving communication can cause serious problems.  For exampl=
-e, if one PMBus regulator supports multiple rails, you have to set the PMBus=
- PAGE register to the rail you are interested in.  Subsequent PMBus commands=
- will affect that rail.  If phosphor-regulators and a driver are both commun=
-icating with the regulator, they may both be setting PAGE and thus their sub=
-sequent commands are going to the wrong rail.
->>=20
->>=20
->> I could just not use hwmon at all use phosphor-regulators for all telemet=
-ry, but this seemed like more work.
->>=20
->> Sorry about that.  I think if you have already done the work of defining t=
-he regulator and a read sensors rule in your JSON file, adding a few more se=
-nsors is not much additional work though.  Let me know if you have questions=
-.
->>=20
->> Also, I will need to figure out how to connect phosphor-regulators teleme=
-try to Redfish and the WebUI. Are there examples of how to do that?
->>=20
->> It should just work with no additional effort as long as you define the f=
-ollowing correctly in your JSON file:
->>=20
->> * The "inventory_path" property of your "chassis" object needs to match a=
- real chassis inventory item on D-Bus.
->>=20
->> * The "fru" property of your regulator "device" object needs to match a r=
-eal inventory item on D-Bus.  As I mentioned earlier, normally if the regula=
-tor is pluggable then this is the regulator itself.  Otherwise it is the lar=
-ger hardware item that contains it, such as a motherboard.  FRU is the acron=
-ym for Field Replaceable Unit, referring to a pluggable hardware item.
->>=20
->> phosphor-regulators will publish your sensors on D-Bus with the standard o=
-bject paths and properties.  The two JSON properties above are used to defin=
-e a "chassis" association and an "inventory_item" association on D-Bus that i=
-s used by bmcweb.  This will cause your sensors to appear in Redfish and the=
- Web UI.
->>=20
->> Thanks,
->>=20
->> Shawn
+> ...
 >=20
-> This same topic is essentially being discussed in a design doc here:
-> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/50509
-
-I will move my discussion to Gerrit.
-
-Note that I work for ADI, my team supports ADM1266, ADM1278, LTC297X, LTC388=
-X, the MAX devices in this category, and I am on the SMIF (PMBus) Board and o=
-n the PMBus Technical Committee.
-
+> > > I assume you're sending a v6 to fix some of the warnings?
+> >
+> > No, the warnings are fairly independent of this patchset, it's just that
+> > the adjacent pinctrl-npcm7xx driver started to be built by the bot, due
+> > to my Kconfig change. I'll fix them in a separate patchset.
 >=20
-> I've CCed the relevant parties from that review on this thread, and I
-> don't have a strong opinion what forum we use to discuss this, but we
-> should ideally all be talking together on a common solution.
+> I guess you need to fix that first.
+>=20
+> Because now and then all CIs will complain to your patch and confuse peop=
+le.
+
+FWIW, Linus has applied the npcm7xx fixes to for-next in the pinctrl tree,
+which means that they are not blocking this patchset anymore, AFAICS.
+
+
+Jonathan
+
+--zAZgCYGBplb8VEfC
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmIHcmkACgkQCDBEmo7z
+X9uckRAAoi/mjUjwvtfOFTsTH/PH/r6DDSOiFTU+ycxhILZmK9lMk3c33cNUu1ib
+9eJY87Mg8UpRJvvNST2usUdrxKV1eUi/lEI0idiu9+Q9HMFo84s0Wv37NhfwCGDR
+mgTW0IbUsLvRegIP6Rl75XSAn6+GTIIYyhMA0Ohw9T37JOa1YI2ysV+dkqPkSala
+WUe1CmWQ6yFSyLslMp6ZqZtg2rpTMCR0vat54Ykbfrity9fxd67OZE/561bvGKht
+qpCEXrfWk1N35pQH/2VUfVBerwLWfW+Dq6ddq5qGMyTXr4hnGyQiidGQb16aPugT
+ZGzq1S7TdnJ3r3k+HwMOpbARR4sn5i4LWkPkvAv2WvGScHfUwOfS4ttM0Q6H6/2T
+lLt7jnYuosmvFtArXbc/PllfNWRfQeMylBzRoh8GOHCNSHhgewMZYB+SBqGrMqb7
+lue4pyfWONnC85aWCYZyBbM1Bmh9E0LAs/8KxievUS/nWbDOe/Qz09m+XanUq1CF
+5QzMKcaJekmiVVxDquzj/17c9V7ZZrb9dT6mTSYSoG0I77rKsPNHMkIccRVHm9ez
+J10PVtMUNLYUdc5r62fn9HBo+x/aNtEHdnd/CTx3jZ2CFVPmAW2gGz9fQMwlWLyJ
+LAKCGXBxxFoEO/bcZevsri26S8yvt7Lw+mIpupglsw/luJwHNUQ=
+=Yhe6
+-----END PGP SIGNATURE-----
+
+--zAZgCYGBplb8VEfC--
