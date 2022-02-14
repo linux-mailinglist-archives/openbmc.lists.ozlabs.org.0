@@ -1,75 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B75BB4B5D89
-	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 23:18:15 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DDF24B5E01
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 00:01:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JyJWn26sQz3cP5
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 09:18:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JyKTj41nmz3bWR
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 10:01:29 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=ZTRwJbBo;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=b9+XvHYO;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::433;
- helo=mail-wr1-x433.google.com; envelope-from=benjaminfair@google.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=ZTRwJbBo; dkim-atps=neutral
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
- [IPv6:2a00:1450:4864:20::433])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=b9+XvHYO; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JyJWP63VRz3bPP
- for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 09:17:52 +1100 (AEDT)
-Received: by mail-wr1-x433.google.com with SMTP id u1so15329455wrg.11
- for <openbmc@lists.ozlabs.org>; Mon, 14 Feb 2022 14:17:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=SLIqGgQ691gOx0sCReH052AW/z6J2Gj6SmP7IPYWf7Q=;
- b=ZTRwJbBoMpU6EkQo7f7P/HL8cgjuUSoMPvAL1bbKf40FxTVwgzbx8NJHprDttpggET
- nif995oJbC7k9sshytGil96zJzv4DjgZwBzkTFur7VNqnx++nqF80K86C/aTBis9SPlq
- m3DNl3leioNsbmQQ8gQws5BWGJBwALfO8Oof7uzGrfXuqI04pDd2byNgwv0mspWS5TZ2
- I2xWu42HCpxR/o+jEy6Lb0Wr/+SD4cZOYfrkyEWlAUw1NAkDWp+4kIMh9Iqh2X7CVprP
- rJSGPlpjzs/5u8MEg2cPu8Eh/Zwm+5mWdWVxTbNW7m8aXTyKEy9ZRwAQ+jXmFGlyPW6M
- eymA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=SLIqGgQ691gOx0sCReH052AW/z6J2Gj6SmP7IPYWf7Q=;
- b=vzRQ7iGAPavJQwK2x6oieNILEg7ZG/1IftahnJ0R31QXKmbhaqmSODplSvhmnwPtAg
- ZDN7qJzaVUGakYnJj1GyTcJgIucpHwVZpFLHWDd8+gt1K7EyLhEVUJA1pyveu2DOljAT
- glk9fW8h8FCAui3J0J9QLi+3lpYHn/8Xxzt0cu0ulxaCZ5xDNZlrjOeLs2u4gGjAxInn
- srzIehejcCgzcerJleP556dnbCpXpktBIjrRz07w6j0/XvLMavfEjSVGmaS3tiqXiLFB
- fi+932XuHtfRn7UYOyUm2I3rR6Wfvo0r+USUD0pG2PpoYAxUuikmSMOev2tOz6eS1rw7
- /1Qg==
-X-Gm-Message-State: AOAM533Zl3m82IbtmWDhwAYfie685NkCYZYikYKw2CTI/8zYDdWWeCAb
- p9iMeoRjU8LDnWv//1VwF3nsFSbC0SOxa+/4W1i+2g==
-X-Google-Smtp-Source: ABdhPJy+GkLzfvFyYG658HSvjbWmtR+kdbgNkvgMxUWJ9EH0L+V8aH3jUDnBGkfrXk8gIVKPRrSlF4SU7CY3XyVDm6g=
-X-Received: by 2002:a5d:5264:: with SMTP id l4mr767134wrc.483.1644877066648;
- Mon, 14 Feb 2022 14:17:46 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JyKTF717wz2ywb
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 10:01:05 +1100 (AEDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 21EMAQmh003764; 
+ Mon, 14 Feb 2022 23:01:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=inQ7ERtewt1fTYCyG4tNrmkbS9COvMX3pRhHsOkVZg4=;
+ b=b9+XvHYO8ogV/AGh4QqVM2F+2vkJZSr54/uchepnjJVuzLngsCRkVrF1R30CNeofwgAn
+ Seu5/vphaZWweOb6nFpIvAaw4knNqIqi3Et6HmSPf4jlyNPTaN/55bQZDhK7t83YJEVi
+ jIxLPta1W+n1oBDT/yJ+4JkcbYI+9dEUgxXzEN33gNI6/bD4IUkUYjPjBbZapWNelNrS
+ sfifl3IAgsYpMXV3L6tbWmig/+A0CvkfEDvAybhFGhfkiylANh/Jz50HVi5oUMGYE8/P
+ kf4H/LDs+51bN9OW4gu1upqwNsp8se6oS1VEhidKkcXkLHYAil852Va6v0AM+wFijXkD uA== 
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3e6ycr6mqt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Feb 2022 23:01:02 +0000
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 21EMw3gg016402;
+ Mon, 14 Feb 2022 23:01:01 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma03wdc.us.ibm.com with ESMTP id 3e64hab6hk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Feb 2022 23:01:01 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 21EN0x6934472236
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 14 Feb 2022 23:00:59 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6E5E21120AF;
+ Mon, 14 Feb 2022 23:00:59 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B7D4D11209D;
+ Mon, 14 Feb 2022 23:00:58 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.163.10.159])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon, 14 Feb 2022 23:00:58 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.15 0/4] hwmon: (occ) Add various poll response
+ data in sysfs
+Date: Mon, 14 Feb 2022 17:00:49 -0600
+Message-Id: <20220214230053.38449-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-References: <CAD1rtg8sa2OG4jUL8x7Gr9ExzH-tEswhHwSDaZtWhcAN4sAvuw@mail.gmail.com>
- <YgIXodbEP9hmae6Q@heinlein>
- <CAD1rtg-tTrbjiL76NRDGnAfx36JBM4Rcb2gyUYjROR-2=H+Uqg@mail.gmail.com>
- <YgQcaInEBq8ZBlIm@heinlein>
- <CAH2-KxAyXn3YndZY_aWAMt4M6eTMrkPA91vCPeOj0tZOgPv-vA@mail.gmail.com>
- <YgQuzD9AkrqstygH@heinlein>
- <CAH2-KxA6MhNXUs+KXAjHTcJe1gWyGwfL+OUQBuCfQnPMSX7GZQ@mail.gmail.com>
- <CAD1rtg8vM-2PckG1Cct7m5tyFJ-axvKQ_ky2z=rzV4O9mZjoWA@mail.gmail.com>
- <5892de79-ea79-8922-d809-1dd5622a84ad@linux.intel.com>
-In-Reply-To: <5892de79-ea79-8922-d809-1dd5622a84ad@linux.intel.com>
-From: Benjamin Fair <benjaminfair@google.com>
-Date: Mon, 14 Feb 2022 14:17:09 -0800
-Message-ID: <CADKL2t7Jrn5LqTu8Yy9CbCaH2VHHe_Ub=gPaH78Hx2-ZHj2g1w@mail.gmail.com>
-Subject: Re: Propose a new application for reading DIMM SPD directly
-To: "Zbigniew, Lukwinski" <zbigniew.lukwinski@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: iCSb4IjoHct-NgFWxSv44hlsTJwv6jpr
+X-Proofpoint-GUID: iCSb4IjoHct-NgFWxSv44hlsTJwv6jpr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
+ definitions=2022-02-14_07,2022-02-14_03,2021-12-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=576 bulkscore=0
+ adultscore=0 spamscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2201110000 definitions=main-2202140131
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,70 +96,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>, openbmc@lists.ozlabs.org,
- Michael Shen <gpgpgp@google.com>
+Cc: baileysh@us.ibm.com, Eddie James <eajames@linux.ibm.com>, cjcain@us.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 11 Feb 2022 at 13:21, Zbigniew, Lukwinski
-<zbigniew.lukwinski@linux.intel.com> wrote:
->
-> On 2/11/2022 1:40 AM, Michael Shen wrote:
-> > On Thu, Feb 10, 2022 at 6:45 AM Ed Tanous <edtanous@google.com> wrote:
-> >> On Wed, Feb 9, 2022 at 1:14 PM Patrick Williams <patrick@stwcx.xyz> wrote:
-> >>> On Wed, Feb 09, 2022 at 12:20:00PM -0800, Ed Tanous wrote:
-> >>>> On Wed, Feb 9, 2022 at 11:56 AM Patrick Williams <patrick@stwcx.xyz> wrote:
-> >>>>> On Tue, Feb 08, 2022 at 04:23:12PM +0800, Michael Shen wrote:
-> >>>>>> On Tue, Feb 8, 2022 at 3:11 PM Patrick Williams <patrick@stwcx.xyz> wrote:
-> >>>>>>> On Tue, Feb 08, 2022 at 01:10:37PM +0800, Michael Shen wrote:
-> >>>>>> BIOS owns the MUX select pin and it can decide who owns the SPD(I2C/I3C) bus.
-> >>>>>>  From my understanding, BIOS only needs to read SPD during the POST stage.
-> >>>>>> For the rest of time, BIOS will hand over the SPD bus to BMC.
-> >>>>> That seems like it might work.  You'll have to deal with the time when the BIOS
-> >>>>> has the mux in the BMC code somehow.  Ideally I'd ask for the mux select to also
-> >>>>> be fed to the BMC as an input GPIO so that you can differentiate between "we
-> >>>>> don't own the mux" and "all the devices are NAKing us".
-> >>>> This seems like a nitty gritty design detail that's best handled in
-> >>>> code when we review it.  I think the important bit here is that there
-> >>>> are paths where this could work without a significant design issue.
-> >>> Just one subtlety.  I wouldn't expect this, necessarily, to be in _our_ design
-> >>> and/or code, except that we'd want to document the GPIO line like we do all
-> >>> others.  I was trying to hint that "if I were involved in this hardware design,
-> >>> I'd ask for...".  If you leave it out, I'm sure it'll work _most_ of the time
-> >>> just fine and it'll be your problem to debug it when it doesn't.
-> >> Understood.
-> > Thanks for all your suggestions. I will keep them in mind during implementation.
->
-> What about CLTT? Switching MUX to the BMC makes CPU not able to get DIMM
-> temperature. Are you assuming here this feature is enabled in BMC FW?
+BMC control applications need to check various additional bits in the
+extended status in the poll response, as well as the OCC mode and IPS
+status bytes. Export all those through sysfs. In addition, add the "soft"
+minimum power cap attribute through hwmon.
 
-BMC could assist with CLTT, but since this is CPU-specific it would
-belong in a separate daemon. That daemon could get the relevant
-temperatures over D-Bus using the standard sensor interface, so I
-don't think it should affect the design for this component.
+Eddie James (4):
+  hwmon: (occ) Add sysfs entry for IPS (Idle Power Saver) status
+  hwmon: (occ) Add sysfs entry for OCC mode
+  hwmon: (occ) Add sysfs entries for additional extended status bits
+  hwmon: (occ) Add soft minimum power cap attribute
 
-> Are you going to support DCPMM as well? If so, there is another problem
-> since switching MUX to BMC you brakes NVDIMM related FW/SW running on
-> Host OS.
+ drivers/hwmon/occ/common.c | 19 +++++++++++++---
+ drivers/hwmon/occ/common.h |  2 ++
+ drivers/hwmon/occ/sysfs.c  | 46 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+), 3 deletions(-)
 
-There are no plans currently for supporting NVDIMMs, just DDR5 at
-first as Michael mentioned, and possibly other DDR versions in the
-future.
+-- 
+2.27.0
 
-> >>>>> You should take a look at what is already existing in fru-device (part of
-> >>>>> entity-manager repository).  This is already doing this for IPMI-format EEPROM
-> >>>>> data.  We should be able to replicate/enhance this code, in the same repository,
-> >>>>> to handle SPD format.
-> >>>> I am not sure if it's a good idea to put it into the entity-manager
-> >>>> repo. As you said EM
-> >>>> is designed for IPMI-format EEPROM. Adding another parser into that
-> >>>> repo may violate
-> >>>> EM's design.
-> >>> I'm not sure why it would be an issue.  Hopefully one of the maintainers of that
-> >>> repo can weigh in.  I wouldn't expect "parsing only IPMI-format EEPROMs" is a
-> >>> design but just the current state of implementation.
-> >> So long as it can function properly in its current design, i have no
-> >> problem with FruDevice adding more parsing types.  In fact, there's
-> >> already patchsets out to add Linkedins proprietary fru type to
-> >> FruDevice, so in terms of design, Patricks request seems reasonable.
-> > Got it. Then I will push the code to EM.
