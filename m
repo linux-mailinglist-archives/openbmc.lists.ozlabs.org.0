@@ -1,93 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA6694B5E07
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 00:04:03 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 501254B5E09
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 00:05:03 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JyKXd3GsPz3bTd
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 10:04:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JyKYm3hw5z3bbQ
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 10:05:00 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=trssU6mK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=fV0Xdy20;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=K3JR2sId;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=trssU6mK; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=fV0Xdy20; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=K3JR2sId; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JyKTK2Pk0z2ywb
- for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 10:01:09 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 21EKI44c019552; 
- Mon, 14 Feb 2022 23:01:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=Kd1FD4NJgY4bDYP6yHxyjz7rGjiUViUnTQ1l/FQqWVQ=;
- b=trssU6mK8DmDPg0dkWepbs5vhH1c+dZEYTzQvRZrjTxNDOc/bi3L6rnPE0tZUksaKDPC
- icbb8sYhMAbXUVtsrEN7fp0YFYaXbdQt1AAWTePjkdAJH5UVqQCICG8uCyWJKBsPm0Et
- 2fgH0KrpdeMDaFmMUmOw4fUFfBVoPUoxdcruKaQcBVV8InDhzYTapjGAMu4hlW8dPwuQ
- fs+GmZXetOVwuEXomAI+gdo8H0zHaToSQN91nxrg1APoYPfbNBNN/A+dP2iC+0mOj3QP
- g4pv+63SFN2pXfVvpxPCOXvUI7DGYQTFRAaQJtGi6GORJw1dEH3dnsCJpnqsxMpQ54WK PA== 
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3e79fw64w0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Feb 2022 23:01:06 +0000
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 21EMw4dK011068;
- Mon, 14 Feb 2022 23:01:05 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
- [9.57.198.24]) by ppma04wdc.us.ibm.com with ESMTP id 3e64hab693-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Feb 2022 23:01:05 +0000
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
- [9.57.199.109])
- by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 21EN13kh22806954
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Feb 2022 23:01:03 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5DAA01120A5;
- Mon, 14 Feb 2022 23:01:03 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 79AAB1120B1;
- Mon, 14 Feb 2022 23:01:02 +0000 (GMT)
-Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.163.10.159])
- by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
- Mon, 14 Feb 2022 23:01:02 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.15 4/4] hwmon: (occ) Add soft minimum power cap
- attribute
-Date: Mon, 14 Feb 2022 17:00:53 -0600
-Message-Id: <20220214230053.38449-5-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20220214230053.38449-1-eajames@linux.ibm.com>
-References: <20220214230053.38449-1-eajames@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JyKVP27DJz3cHN
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 10:02:04 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+ by mailout.nyi.internal (Postfix) with ESMTP id 7B3C55C027C
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Feb 2022 18:02:01 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute2.internal (MEProxy); Mon, 14 Feb 2022 18:02:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm1; bh=k1htBV27WJ406S5iFWhSOqW/tuXlhc6qCDD4HI
+ yjbNo=; b=fV0Xdy202ZhPqzVKblMcsX+kZgIyxC8kbVchu7gSMijGx6wS5HD89r
+ uW9qIKdKKZgluEVxRaNZzIrT9ylfHsrEAiU4pGatll3avLRLaqD3KwCnr61sD+dS
+ 49J+ayOkJvVAM7VrB7iaZrAn9C6Cw1Qa8RLKC3TCa0AwN9xBI7yH1Kag6HIMqHMx
+ ClE57VmLym3KE3aMcOkGAVsX5gx6JViRLPHh04pxUw1pnMgbieZDqdqxDN1vaOmx
+ RO+I+otVbAKW7HhEtU1TmEaTgIfVBoxoN+lTllrcnBe3DDwHBOF3+ORZyF5bhWil
+ bsPhUhUnvPwKtjflO2e3QRGrBshQn2QA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=k1htBV27WJ406S5iF
+ WhSOqW/tuXlhc6qCDD4HIyjbNo=; b=K3JR2sId34jrfA9jb4L+5vh9Qs7WajiLI
+ OO8Xui3GamYUzWsCYS8fu05/q6IJTVn1+rDbHmtIgiee7K4aIZ0ObnmrmtcXoge8
+ idZWIG6DIcfaZ+wFzn7+GjDG3hpNaKpUX6f43TX+EVsgKsV3r2DTE+dRJI4T0LoB
+ ilJYkmwIA/k/wtLnpEWqqa3EnQQLwvrQea0n+JgdaO10FbPLSZ5BjQ0Pd9Zp5jbX
+ xyP5xBJYHEXwXzIkGBYFNfo5NkZBe//Yp96J7qjnczxpBvVW0PS0OTmMWeTnGWDH
+ fcREvKgcvPEOPHO0+rX3LHdSrYzkXsUZXE9096MpaIVGmZBwlumYw==
+X-ME-Sender: <xms:ad8KYuxUjIrMeNNxBiIOAn_ZiCyTNNUC92mgt6hJwd3gmxJSiVty-Q>
+ <xme:ad8KYqRMkku6Vf2Dry1QWV64Lz-53v9fNTSPH0vYg0Ba65p5g9sE2aEuFKxSKhYpf
+ Ch-LpKR3ize9GmbTyc>
+X-ME-Received: <xmr:ad8KYgVStnS9-wA1h0pCOJt8t4zyWtNIRinhsMBOPEveuy5a7h6ccvPwX4L04oz5AkkKD1VF9uCuvuncgVYjhdUVJ9XKykP8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeefgddthecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculddvfedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeeludejuddtveektdfhffejhedtvdei
+ uedtvedvffdugeegjeeiieevudekheehvdenucffohhmrghinhepghhithhhuhgsrdgtoh
+ hmpdhmvghmsggvrhhshhhiphdqrghnugdqvhhothhinhhgrdhmugdpkhgvrhhnvghlrdho
+ rhhgpdgtohhnthhrrggtthdrmhgunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+ hmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:ad8KYkjW0LZR5l52X82eRJ0HL6q-HlNeWRlViwZ7ImK7i-ZPGzyU8g>
+ <xmx:ad8KYgCxE648oi-oDtlt87XxkcnAuhnkkgBeH3ePQ_v45laHGeN3zg>
+ <xmx:ad8KYlL5Tnxb7Pjr9k_iV5vGzGx5XezrVGHFAwGNZXI9doIAnZsRGQ>
+ <xmx:ad8KYv_v7frHYU0gSQicZgMaIYZxyGwBr6ht1xDI8JtgZVI3HBjgkg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Mon, 14 Feb 2022 18:02:00 -0500 (EST)
+Date: Mon, 14 Feb 2022 17:01:59 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+Subject: Re: Upcoming TOF elections
+Message-ID: <YgrfZx6QzsuKr4ar@heinlein>
+References: <YdiCUiwh1iD4ycr8@heinlein>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: QsuV-jAOtEPFypcLFI0iBT0S5H42Wg5W
-X-Proofpoint-ORIG-GUID: QsuV-jAOtEPFypcLFI0iBT0S5H42Wg5W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2022-02-14_07,2022-02-14_03,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0
- malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 phishscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2201110000 definitions=main-2202140131
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="nbFX/6ervw2LCop/"
+Content-Disposition: inline
+In-Reply-To: <YdiCUiwh1iD4ycr8@heinlein>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,64 +99,96 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: baileysh@us.ibm.com, Eddie James <eajames@linux.ibm.com>, cjcain@us.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Export the power caps data for the soft minimum power cap through hwmon.
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/hwmon/occ/common.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+--nbFX/6ervw2LCop/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
-index 0cb4a0a6cbc1..f00cd59f1d19 100644
---- a/drivers/hwmon/occ/common.c
-+++ b/drivers/hwmon/occ/common.c
-@@ -674,6 +674,9 @@ static ssize_t occ_show_caps_3(struct device *dev,
- 	case 7:
- 		val = caps->user_source;
- 		break;
-+	case 8:
-+		val = get_unaligned_be16(&caps->soft_min) * 1000000ULL;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -835,12 +838,13 @@ static int occ_setup_sensor_attrs(struct occ *occ)
- 	case 1:
- 		num_attrs += (sensors->caps.num_sensors * 7);
- 		break;
--	case 3:
--		show_caps = occ_show_caps_3;
--		fallthrough;
- 	case 2:
- 		num_attrs += (sensors->caps.num_sensors * 8);
- 		break;
-+	case 3:
-+		show_caps = occ_show_caps_3;
-+		num_attrs += (sensors->caps.num_sensors * 9);
-+		break;
- 	default:
- 		sensors->caps.num_sensors = 0;
- 	}
-@@ -1047,6 +1051,15 @@ static int occ_setup_sensor_attrs(struct occ *occ)
- 			attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
- 						     show_caps, NULL, 7, 0);
- 			attr++;
-+
-+			if (sensors->caps.version > 2) {
-+				snprintf(attr->name, sizeof(attr->name),
-+					 "power%d_cap_min_soft", s);
-+				attr->sensor = OCC_INIT_ATTR(attr->name, 0444,
-+							     show_caps, NULL,
-+							     8, 0);
-+				attr++;
-+			}
- 		}
- 	}
- 
--- 
-2.27.0
+Hello OpenBMC Community members,
 
+Per [1], the TOF was expected to take additional action regarding the upcom=
+ing
+elections by Feb 15th:
+
+    Feb 15th - Current TOF must publish a final list of eligible voting mem=
+bers
+               and upcoming candidates for TOF seats.
+
+TL;DR: The following 4 individuals were nominated for TOF terms and since t=
+here
+       were exactly 4 seats open there is no need for a formal election:
+
+          - Andrew Jeffery
+          - Jason Bills
+          - Patrick Williams
+          - William Kennington
+
+----
+
+The TOF voted on the following 4 motions today:
+
+  a. Set "Highly-Productive" score to 100pts for 2021H2. **passed**
+
+  b. Accept [2] as final voting membership for 2022H1 elections.  **passed**
+
+  c. Accept the 4 on-time TOF nominations:  **passed**
+        - Andrew Jeffery
+        - Jason Bills
+        - Patrick Williams
+        - William Kennington
+
+  d. Accept the late TOF nomination[3].  **failed**
+
+All motions passed with unanimous support except for (d).  (d) received mul=
+tiple
+dissenting votes and therefore did not pass per the TOF process[4].
+
+In light of this, the 4 individuals with accepted nominations from motion (=
+c)
+are considered to have run unopposed for the 4 open TOF seats and an electi=
+on is
+unnecessary.  Their terms will begin April 1st, 2022.
+
+Thank you to Andrew, Jason and William for joining the TOF.  Much thanks al=
+so
+to the TOF members rolling off (Deepak, Lei Yu, and Richard) for volunteeri=
+ng
+to help get the TOF going and for your contributions in its establishment o=
+ver
+the last year.
+
+1. https://github.com/openbmc/docs/blob/master/tof/membership-and-voting.md
+2. https://github.com/openbmc/tof-election/blob/a4f3dd64a0e19be3e88a0316f6b=
+af7db76d91f07/2022H1/rollcall.json
+3. https://lore.kernel.org/openbmc/MWHPR11MB0046A46CE1A96951234EAC65F12C9@M=
+WHPR11MB0046.namprd11.prod.outlook.com/
+4. https://github.com/openbmc/docs/blob/master/tof/contract.md#meetings
+
+--=20
+Patrick Williams
+
+--nbFX/6ervw2LCop/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmIK32UACgkQqwNHzC0A
+wRm+hw/+PhUAVjSzzNKAoJC7Jv3fvso0R5yy0cw6SmUnqjMsrQr7jzDkASNO2L7F
+sjZuHaq/OVm0+XYBgDIUbmDNeUtQlHn2lTWC+nF9DmXk5AGZmhL/jCzM6AUbVFQf
+N5f/UXvjhCRmUXtKI39j25Y2haT7t7ODXMaO1oHW2v11seFgNX/Bn86C9VDamMhA
+SODC09mPfzF0syVMSVcOWSNlL6EydBmygfwQ1jL9UFQGeLwdKEP3U0BYANueKV3v
+i5MQJ97+GIXnX5jXe+R33cf4R6MBlh6VkLFF6dzUE8Js73+ZBqIiLtEAQrkl4ysH
+cQunrQRjn+rMfFsUDtPSIe7B3+c802zsWfqXfhKyeQtvNzYOo2JSz9pdLC578s1M
+ELBsBB8mDrtWZ52qeYRNboGZLndqob57ys2tzWvD2u2Gpm3tZo1qOqp4OigWLtm8
+BIWjPhFZFZS6ahARtPMuZFLuBxW63zORI4KF2Pf2RmoNTtIstweHsLh1F2PfO7fL
+pqGMDPq1FwTuDV80Y0ICBIXruDMFQUJGjhsEQpMA8dXLKcUF+xF6xKGggTaWmLZu
+9fNuEUiWJgvKItzt/pBOO1sKMnpGpubnJUL00Z2chX9weELKLzjd7Ok5VMLle3V2
+Sm8uzx9OQZ6WgVzNMU1rU41iMihwMfWVyalX1bbCmHnQTUkIluM=
+=dbVi
+-----END PGP SIGNATURE-----
+
+--nbFX/6ervw2LCop/--
