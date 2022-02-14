@@ -2,46 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28DEE4B40F4
-	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 05:38:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EDCCF4B40E4
+	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 05:35:15 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jxs0S4sLXz30FH
-	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 15:38:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JxrxF346gz3bSk
+	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 15:35:13 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=LPggZ0EL;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=y8VRQQS0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:febc::707;
- helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:feab::72d;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
  envelope-from=potin.lai@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=quantacorp.onmicrosoft.com
  header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-quantacorp-onmicrosoft-com header.b=LPggZ0EL; 
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=y8VRQQS0; 
  dkim-atps=neutral
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-hk2apc01on0707.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:febc::707])
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-sgaapc01on2072d.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:feab::72d])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jxrq43YVMz3bV4
- for <openbmc@lists.ozlabs.org>; Mon, 14 Feb 2022 15:29:51 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jxrq12Ykdz3bZW
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Feb 2022 15:29:49 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lKqem1N5D8WInqybYOoJiY0OGQJgDfsXa08o0no8d3CFBREjYz/o4jmKtRNWr90a7iQAZgmoFOp1phEYPKFGloD8rOJZRnGTBvC7j9XFqIlQlWXpfE8TzuPSlEOFkG6pkDDG5vUavGTBSkT6IjDNfmqh/G7SS+DLjy1Ytn6773XikPc5zUZ5ZROpXd071oRoitb5XkLVVv1ZH+L0EKD4a1iriDfdQo9q7RGPL+fb/p89oJraNOk1cDg/Uy/JPW9kk2Y8mdVxaxNcSi2+yf+ByM+Y3jKRgEs0QBUouniaDpQbuFRv6iio+6lzQie3RJVZO4/cJc4gzQrHqqQwVvOGxg==
+ b=TvA/cZF8beRNK8Iglok7XvWsHrUNgzOjV4jhvcnokDv6Nu50mFDJpHdMh0HsoIXQJeL//ENfsFNPd4JKurr4NixVuXUCayBMrL4KenSVD5hFKCB9Ap/n8AIINg74YBYHh5A9bt5th9zpP63NsA1a7I+Rm53nbB5Tz9iOOJLL+EDk2G697CHjsfr2bnkbMIxAcsG//o6hdxdu+Cho1Zos3N5jq/yw9cPWhzoZfDxSGLAQ4Jyo44be2Dx7HIDzujxw1fs9lFOsHKphsy/yLcxz9qFivzIZWCouKkfdQtBEnY7qzOvz9mTnTeAZAeYHhtZZDMmVHq1YbwyWedHF322afw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KpAZh1T7C+POkdbs/YT2d/ls+QvRhT3Kw33SEe6rvw4=;
- b=lyfB9Fi9yc2B8jRfqaIunC52BUDnsoDU+Dibi9h7+LchxRSKWf/1mdF8TRB8R28oJ+cHEFfNqdLoAIRk+dq7WqAFMZHRpdfAXClJ386wl9w6Dpu9E/sXBm4Jgu3sjoj5qlH5OO48mr/g5QDV7Z0Q3srS1Hvovpu0k2LW8MThyglDbFbEpAfMgV0pjQBI3uIglmUKlfjRnmuVF6czgeCRqrWk44mE/libvRHJ5jZXhc/E2OpaeE3knD+IUR8WmIrV39SNr4PIhaxLfBWrOvdGKe1JgmUzipD6W9YDY6uW6U4srVSUVLhEUGWIHt/RKAk7Xd5HmrQOf4Gdp0A/60O9KA==
+ bh=1U+qZMiEYQuuwUYthaqKiZ4rPo5rYgpYTpz5r6aqttg=;
+ b=UmtkOsJfuIIYRqq0KBTSDkevbHitP8+3xlMTSXeEsUHv0hytl5Z20x4NQ/OQkb9LhnPAS7F8+zc1MgFZjA9EaLpRMENnvgrW9pPoMW1o41rLOGDbEGgQALBoGYlnhykaYJ9rWo9QmvZAUYn7+1HN553Piadq01CEWcbhoOhfwotDlhY0VMKRu1XeY203o5UJeDOs82jCfWS0AaTWwvxItOkTNwTS//EoKAwnjSnaXOeMfVKu/NRjUqJihXYjUBoMFIpW7aadtfMMnAnkqlcBGq+GSd8GQdQSCFpaoViuBLalx8OE7xahE7/byMqBAqdek4cTrnaxJKK+wIlFnOqnEw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KpAZh1T7C+POkdbs/YT2d/ls+QvRhT3Kw33SEe6rvw4=;
- b=LPggZ0ELBXijmlbVMJOzDhArLFvhRGWODVIdEv5sdQV6WTOls3aziIuNOzKADqAlSWB4uwiJgsVZKP2x4E7wqum3ZXUWSYrFtgQyqcmUGqw4SNIaKI1gcGBtmigssy+3yF6twDhlK7lQUZWCLhC+f/rCqqprnuPedbaLVPrPidM=
+ bh=1U+qZMiEYQuuwUYthaqKiZ4rPo5rYgpYTpz5r6aqttg=;
+ b=y8VRQQS0Jtgz0+VJit5AjfWjk7FYhkzpdWV2a1v2RZY9prfEOhIc6Iu18kMqJKJ6zdRpcysJXoy33fzG9MEqQo9QdRjdgDZRzC+/DvhKvKezKsbodP2bl2sR52jQvJK/RxzAUBCIQqLd/tiHaDHxs6BihPfJteRb+zjMja2rWi8=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=quantatw.com;
 Received: from HK0PR04MB3282.apcprd04.prod.outlook.com (2603:1096:203:89::17)
@@ -56,10 +56,10 @@ Received: from HK0PR04MB3282.apcprd04.prod.outlook.com
 From: Potin Lai <potin.lai@quantatw.com>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH linux dev-5.15 v2 07/10] arch: arm: dts: bletchley: add
- shunt-resistor for ADM1278
-Date: Mon, 14 Feb 2022 12:29:09 +0800
-Message-Id: <20220214042912.14584-8-potin.lai@quantatw.com>
+Subject: [PATCH linux dev-5.15 v2 08/10] arch: arm: dts: bletchley: add INA230
+ sensor on each sled
+Date: Mon, 14 Feb 2022 12:29:10 +0800
+Message-Id: <20220214042912.14584-9-potin.lai@quantatw.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220214042912.14584-1-potin.lai@quantatw.com>
 References: <20220214042912.14584-1-potin.lai@quantatw.com>
@@ -69,56 +69,56 @@ X-ClientProxiedBy: HK2PR02CA0136.apcprd02.prod.outlook.com
  (2603:1096:203:89::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: c2901b23-5149-45ae-7c80-08d9ef7296e5
+X-MS-Office365-Filtering-Correlation-Id: 44f19aa4-d8d9-43d4-000e-08d9ef72974c
 X-MS-TrafficTypeDiagnostic: HK0PR04MB2292:EE_
-X-Microsoft-Antispam-PRVS: <HK0PR04MB2292C60CABFEFFA6940EA8608E339@HK0PR04MB2292.apcprd04.prod.outlook.com>
+X-Microsoft-Antispam-PRVS: <HK0PR04MB22924FCAAD4D9B027F837BFF8E339@HK0PR04MB2292.apcprd04.prod.outlook.com>
 X-MS-Oob-TLC-OOBClassifiers: OLM:330;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: zgTj7bkkiPiAAvBTReN9OnHYAVDBXL9Hm6xIpVPNepHiLlE/KtN0pNL4BUtVFhELUrUfhv/aL/13zzQnUBjDskd4m77ZKXD2q+2mqS76UpzugaVjj8ZWAiDqk0PKRVLQDkylXr518PRZEHoiyd9NgQBu4SCwwLnLshAFqqK0bsAzqVI+UFMaG9+EKQR81dYtgBIqCB5GiIgKtxsdveBhpnADHdOGhA0qCA32L2bTGDu9YOb/2bTpVTRTJii/2GxgLglhwNO11n8XuUirYb7C2m+5wdhDH4h1wn3l5nL50VpS75g2yh+epwuvpfFVa0deQ5VhMPW/wf0RbO8og5pa36oUA4EqpNM+WlmIqFWBbYs0ZuzHHtTYUm1XqiJneRHsy2jZWvgm5GFZr2xZCFOQJJXkn3kJugFHyqqG7tC8SHUOTorbgueNaJ/QlmvcerYzvMro7GT+UAkR02+DJZ55OTI7F96hCkz79TQ9ng+hGTibU7Ef16moSiVfXXBx259yONaNpkg3up3mN+7uFsihLhaOMJoAbyHUHwCF9D65b0CtaIwGPdJ1dBudfgqilcCDpmmcsVGVddm8uJVPAx/q00bueciPectAD3IGmOA0heWTiPvhLgIcrPwvBK6L5SQUqSzg3tOdcfWTlO+dWaJplOzUzs8eaKOCyQE/YuWu1CRJ14HUMATBc4ZWBjzLpF8lQNrzI3Oi7xbNninChxdh2g==
+X-Microsoft-Antispam-Message-Info: 3BPUTYdU770HGgsf2jfA1giVCpvmJJiqSKa4bYIqZ7g8P08G4X/jRAlCro3APg1uFHb5wZyDjreCJO4Rb+QVdxiBA+WEVWcrLW38yeeFB78U3EzJJVFn66XXfxJrJ7e28lLraODnCAiNykMNBsfqxmT58jIL2L8kYIfiNbedrQevJugK6UMDM+fkUkoE1OK8KPjRzHx2EAf1OZ/lYdtTNcbbH9fpxEkMLOrpCGXcdTVNsS6zXYZBtdT62WX6TTUYlYl/81ffmM80fCKsO+vApA0WzkNdmcGSg4cwoTKvBuHMoODpKAOyhGisZep3GQZRaN/WyjV4EwXYF1HIbk/ELzxaQTjUVqqpUOqmFppb3h5sb9M1A4xdV2AtVMD6IJFqurGHdM81i++SIqnhxjcv79cke7XmQD7O37Bxx5Fc47poum5Kr0BEYH3xIyooUcouvkAdSddSXeyJ+7LGSoIbun41VcEa0Rl6zxAbZbpwRYUKs+I5jLCnIb9f6IpQasAE6v5PjlnAQDhik/OD5Myt9MZXrc1a/KVSr0vRsZoc4OMNy3/cDGq/SjJ02V1N9SktC6VJSf3BFL4VNtzBq8Ub/o7TkTumVAUapHoJ+kMTeR1jyKkanGDBrByVQqc6/krAzoF/TJAcKCEOHFX+j973FYy0PFvy+KqGCNdjgvSCVN35/v/0IvGe+EcMaTXNaCTAoFKUkCpNf2Wb1zn23Byn9w==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:HK0PR04MB3282.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(6512007)(6486002)(52116002)(36756003)(2906002)(44832011)(508600001)(38350700002)(316002)(38100700002)(8676002)(186003)(66946007)(4326008)(66476007)(66556008)(26005)(107886003)(6666004)(8936002)(2616005)(5660300002)(1076003)(4744005)(6506007)(86362001);
+ SFS:(13230001)(4636009)(366004)(6512007)(6486002)(52116002)(36756003)(2906002)(44832011)(508600001)(38350700002)(316002)(38100700002)(8676002)(186003)(66946007)(4326008)(66476007)(66556008)(26005)(107886003)(6666004)(8936002)(2616005)(83380400001)(5660300002)(1076003)(6506007)(86362001);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?5/BMU98HyUniXHp4H0JvOLd2pM3qPwuRY8WRCd41L5ZaRQywNpsdr9zZdiMj?=
- =?us-ascii?Q?MmfIS9ifZy75SHBI9uRZkOrk8UpWmopRUFK4Xub2huqt+pq4aSS1hFp2d7a8?=
- =?us-ascii?Q?kR8t10eSn7zFjpCNxZfj2RWyT+oZjklBQnB13ZAaSuMHsW/162yNZV0ihj7l?=
- =?us-ascii?Q?1d4LzG9ik+U+sDUh6mqn9nIBNkI5ftXIIEajovg1Bh45nX1b4D+6k3WSfFJG?=
- =?us-ascii?Q?5sqWLWpGsQW8wk9tWHCg4j0gVl50QEz+p4s1Kyw/j63bV2m74jTvScZKm/ep?=
- =?us-ascii?Q?A1UXKDbm+DEegaZqp33C+9Hpo2KljcfsTt6/+bFJ12adY1KDzZX4LzL8sI1w?=
- =?us-ascii?Q?CT2QuZBYDxybaFvMCOW5YOP5+ECMV5kkoPiWyYONW7a8gr6NKFD2Fi9IGHR1?=
- =?us-ascii?Q?7LxYa76CqLfHkZj7mBXQvBZANceLEblqKJXbSfOm53nwsVv1iwtnhYV2nSA1?=
- =?us-ascii?Q?HQennLapbzcAr0OMMkNYi1OgLvh17JR7a0FXhg/V8y9ctCeNpD/2RoODlFL3?=
- =?us-ascii?Q?cYauqONNiYcspLGx/br2hSY80mQSFPbw0VD0O2P9zzAdE/vIlg1kgL8dTfRI?=
- =?us-ascii?Q?wD//p7pqde0QKhpePV66Qwolhh4X+0O8bJJh4FWiGc8h9xf3zK1O/T/JOEWu?=
- =?us-ascii?Q?I4T08+9AsYFH0xsYTUGi6N0hNBTnxNZDZ9yD+93WQGScukfP4FqXOBwkW/Xl?=
- =?us-ascii?Q?i24oIIwKEKEdHQMH7NSFuZDPoH2dh7e9yQM6wd50nTfFkOsaMIU5yyWJ4mNf?=
- =?us-ascii?Q?hUdeiTxUoNzt7GJkzQAbJeRtgRg2zEtveDtUNe5Q3OvflZeLRgyzLIzlb/L9?=
- =?us-ascii?Q?FEKrCVhINqg8hxOj6JrqGW6R9tCDjdkuz3Bw7MQzM1RvC9K3qPn9QFt07vFw?=
- =?us-ascii?Q?u+8/ED9KXdeLlNOGHiKJB15J/jvgV8CDYJBDxi72pj+7m+NgufQZfV6ZjeoW?=
- =?us-ascii?Q?hYQd1sG1lAG0wL1tt2eIpYSfXVtFMx4BIaOpNeEGxW5S9s3JoA3KTTObf+st?=
- =?us-ascii?Q?xjMfzotvLrLAn+oFMzGAkfji83toydWZ2DZIzXRmVAgzToK+Y1iKgf3UPPwN?=
- =?us-ascii?Q?FKx45bHlxD0XwgHTVaatnkGt+2argIsvw9+WhNC+cOCKm4W71Jw6x0+8Xfhn?=
- =?us-ascii?Q?kDrHlzJFz16lJFjT+CVnev91TB6vPD/BeZVqbr/7yuCd6fNvQXamDUcHXBgi?=
- =?us-ascii?Q?xggcdM4cgwoxiBoejgmF0YQIyAI0AcbIxBaMxVyN2mNT0zbZ5exigrGMSAcV?=
- =?us-ascii?Q?1NLhXNaiGDC496tE65dY3ZOfUbMLOT31g94PnclIZjZsRcjcqpgCwY8GN7SC?=
- =?us-ascii?Q?IoVof7WAUOfJCAikye/x+y4wayeUJI8EHKYoZcwFqITp7E1KFbI1l/KXHhHT?=
- =?us-ascii?Q?co1bu0Y541gmCDYZgDyQop7ngDOtC0l2MQM/P+xlrJaO45i+XrbOTP4x5d+R?=
- =?us-ascii?Q?sax7geKlKN9dMXUHribDMEsDGMlvd3CZe6/xUAr5mKBeh1titbe0a24A95us?=
- =?us-ascii?Q?HGTMCWScVEobqk2Bujlz9iiAGyHM4JKDpQBrWonbsQmmur5mt+OpuUflj6ZH?=
- =?us-ascii?Q?Edj/j6M+f/V3dv5dsIO3oSTgNt1kll/os3ZCKa/HvoLC4EaHkYoAQ9SIwxSC?=
- =?us-ascii?Q?sg9zGTuObXJM88bbzLcNAjY=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?UrD4sDLOQd3Bgc3QvJSzTK8N3fqSRbx/nKJ/sXdARzypTUVuiSS20GaQy4Ik?=
+ =?us-ascii?Q?MMCXRqev/AP1QIFZ2z+HOpyN4gHSykbnozCd+a6mC04TR6I6C1N307YQgsR7?=
+ =?us-ascii?Q?cP/RsPqIaPkno+Ur8qYSiRVCn33lYc3oPRFt71EmVi7+nXD14NdO08h1G7RJ?=
+ =?us-ascii?Q?c8eDldr523JbqTs6+QhtCKf6xD/vrupWUG0vKhf77DSNOQHNfS4EEsdDvsCq?=
+ =?us-ascii?Q?I7ukQCesOtAAzTbDtd0+5VDFGbTbwyCojmTTTLdMNUupsxFMPSKkZt1d+BHV?=
+ =?us-ascii?Q?0DY5MylnPsrJGTdcLjfpDYQgmi343GMA7uWmKJpmIEQIcolATNrMl7n/Ggsn?=
+ =?us-ascii?Q?zKvqiNH+u/uO+8EOcsRB0ScoZuODHYXd/W2dLKjvgqQZ4PorlCiECyZtGxlo?=
+ =?us-ascii?Q?3A7cna437H42lOAj12C0xhszI+oWm2+Gt6rOwpjRqhvXvHyMKcQbJULq6z0S?=
+ =?us-ascii?Q?XHE1BszvS58zBT96tTsfW0+n9IJoSJPV3VYi6CFKHtUzn2HbE+sjuJYEWKXz?=
+ =?us-ascii?Q?3A+CW/oO9ybQWIccPC7wtJ3H5oU05U+OiHQJ87cHiiPr0b7pk53h6gti4dcZ?=
+ =?us-ascii?Q?2WTfAi/2bhxlLCvAR7TQIq8Do6ueXN9wloCQ/YScp4QbRLbE9BFZ/IlkrYHz?=
+ =?us-ascii?Q?nUKd0Pin+JWcTJ5OlpKMN0RaL883s+E6kgIXLXZfSGZLsU9lc5AGea42kz/+?=
+ =?us-ascii?Q?1SpoC8etJvHQAIzQdEm3cEG1oZJrsziUM3Ze13aR8EO6wsGyxI7Y/tZOYUyO?=
+ =?us-ascii?Q?POz7Pfq2NJ0fZMXrR8VcSa400ehV19KnbcKRCDa4Hnknse1Jr6WJLLqbOZs9?=
+ =?us-ascii?Q?grFgvTz0oDoWybtqMC4Vu4en5dYS4oZ2pozy9kB1in97Y6BOoWSY404jkrum?=
+ =?us-ascii?Q?j/23DSiK+Wrs6YgVnC9O/3hrlXEcmikvLpx8Wridiz0GF1u/RVg2IJ3oghnU?=
+ =?us-ascii?Q?d+Vl24SUmj7+lyvUoBDz4Ld5e6QFPk1GJfkjUIg46iXTs/aiwy48v8+56zvX?=
+ =?us-ascii?Q?JDstPoZJxeH2Acn1Jsh+hhz21WpuNBjQG/W0SPuEo/miqnRkiO+p1zg/RYX7?=
+ =?us-ascii?Q?vJQxTaTt520/oMnY6Vtu8jtpvAOicecOW8yhXr0PM3at31XLjTkanEe81Uc5?=
+ =?us-ascii?Q?BYWWLeBlAb5MxGTLXNCsjnaVN0Ih8sWVtio1vYGXHHUTJSnJBF4hbgifNWLh?=
+ =?us-ascii?Q?m2t2MR23MiGJvNKg+Iid7x4y6UCTgI1l3IyQpR0nVLsRlovVn/J4/oHz6eI3?=
+ =?us-ascii?Q?ZFbCkFIWGXATDo+Av4/+ZtRK7aFrexrU4NrWWuVNHR3bCaEATUshkPyKFvBN?=
+ =?us-ascii?Q?y3A05rhw5MPOt4uN+s/j3fPfxOcJY7JsP1FvVdQEu0OGEjvfcpLO/RjtiRjs?=
+ =?us-ascii?Q?mBYELBqr79Zhc1DqnoUU0qRRRT5Kts4ioFBZv5rK7e4fo03sxGC0vq6w+5KL?=
+ =?us-ascii?Q?QMelnjpMMFb/11wUyQsVfoKSbDovJA2Xfw2OKpGk+qVn8LAwIJnN4VT5wkJ1?=
+ =?us-ascii?Q?tAsKmWEXBPqTKYVF+wDspmxgrvIT3i9L5Ng+QgYWsY7QfBSoX2cPJaqcqx95?=
+ =?us-ascii?Q?Dljf20DFYLKv/omvtU+qoU7gFrM6v1WQoqhoOtGabxXMr0OXE0vaPhjvr+jD?=
+ =?us-ascii?Q?713RNMs+Xo411a5mPQ4yr9s=3D?=
 X-OriginatorOrg: quantatw.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c2901b23-5149-45ae-7c80-08d9ef7296e5
+X-MS-Exchange-CrossTenant-Network-Message-Id: 44f19aa4-d8d9-43d4-000e-08d9ef72974c
 X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3282.apcprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2022 04:29:29.0005 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2022 04:29:29.4848 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 179b0327-07fc-4973-ac73-8de7313561b2
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qMriXaAm94VUpKvwgfFoCSaEqhuEJAoXTkzO+p8TgDhjRIaU5QJ9jWDFFaeDIxgnB+KaQWUcKgbKmZCVBehXIg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: hVwqP+HC1ymUptd2aKUTuGXOvIbEdt/QqUN/axBeuqlFFFEg+IR4y+dMhLhJRgzll1CQG4iir6quSiRK278Vhw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR04MB2292
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -135,25 +135,95 @@ Cc: Potin Lai <potin.lai@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-fix with correct shunt-resistor value base on EVT HW
+add INA230 node on each sled base on EVT HW
 
 Signed-off-by: Potin Lai <potin.lai@quantatw.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-facebook-bletchley.dts | 1 +
- 1 file changed, 1 insertion(+)
+ .../dts/aspeed-bmc-facebook-bletchley.dts     | 36 +++++++++++++++----
+ 1 file changed, 30 insertions(+), 6 deletions(-)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-bletchley.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-bletchley.dts
-index 8afaa8f52c38..76c086ea7b71 100644
+index 76c086ea7b71..8c8fbfcbb257 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-facebook-bletchley.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-bletchley.dts
-@@ -715,6 +715,7 @@
- 	adm1278@11 {
- 		compatible = "adi,adm1278";
- 		reg = <0x11>;
-+		shunt-resistor-micro-ohms = <300>;
- 	};
+@@ -249,7 +249,11 @@
  
- 	tmp421@4c {
+ &i2c0 {
+ 	status = "okay";
+-	/* TODO: Add ADC INA230 */
++	ina230@45 {
++		compatible = "ti,ina230";
++		reg = <0x45>;
++		shunt-resistor = <2000>;
++	};
+ 
+ 	mp5023@40 {
+ 		compatible = "mps,mp5023";
+@@ -315,7 +319,11 @@
+ 
+ &i2c1 {
+ 	status = "okay";
+-	/* TODO: Add ADC INA230 */
++	ina230@45 {
++		compatible = "ti,ina230";
++		reg = <0x45>;
++		shunt-resistor = <2000>;
++	};
+ 
+ 	mp5023@40 {
+ 		compatible = "mps,mp5023";
+@@ -385,7 +393,11 @@
+ 
+ &i2c2 {
+ 	status = "okay";
+-	/* TODO: Add ADC INA230 */
++	ina230@45 {
++		compatible = "ti,ina230";
++		reg = <0x45>;
++		shunt-resistor = <2000>;
++	};
+ 
+ 	mp5023@40 {
+ 		compatible = "mps,mp5023";
+@@ -451,7 +463,11 @@
+ 
+ &i2c3 {
+ 	status = "okay";
+-	/* TODO: Add ADC INA230 */
++	ina230@45 {
++		compatible = "ti,ina230";
++		reg = <0x45>;
++		shunt-resistor = <2000>;
++	};
+ 
+ 	mp5023@40 {
+ 		compatible = "mps,mp5023";
+@@ -517,7 +533,11 @@
+ 
+ &i2c4 {
+ 	status = "okay";
+-	/* TODO: Add ADC INA230 */
++	ina230@45 {
++		compatible = "ti,ina230";
++		reg = <0x45>;
++		shunt-resistor = <2000>;
++	};
+ 
+ 	mp5023@40 {
+ 		compatible = "mps,mp5023";
+@@ -583,7 +603,11 @@
+ 
+ &i2c5 {
+ 	status = "okay";
+-	/* TODO: Add ADC INA230 */
++	ina230@45 {
++		compatible = "ti,ina230";
++		reg = <0x45>;
++		shunt-resistor = <2000>;
++	};
+ 
+ 	mp5023@40 {
+ 		compatible = "mps,mp5023";
 -- 
 2.17.1
 
