@@ -2,54 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F4184B5A78
-	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 20:15:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B75BB4B5D89
+	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 23:18:15 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JyDTK5XSRz3cPD
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 06:15:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JyJWn26sQz3cP5
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 09:18:13 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=Z3FRMJQU;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=ZTRwJbBo;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.microsoft.com (client-ip=13.77.154.182;
- helo=linux.microsoft.com; envelope-from=dphadke@linux.microsoft.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::433;
+ helo=mail-wr1-x433.google.com; envelope-from=benjaminfair@google.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com
- header.a=rsa-sha256 header.s=default header.b=Z3FRMJQU; 
- dkim-atps=neutral
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
- by lists.ozlabs.org (Postfix) with ESMTP id 4JyDSv5PGJz30QZ
- for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 06:15:27 +1100 (AEDT)
-Received: from [192.168.86.183] (unknown [50.47.106.53])
- by linux.microsoft.com (Postfix) with ESMTPSA id 7DB1E20B9C2C;
- Mon, 14 Feb 2022 11:14:53 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7DB1E20B9C2C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1644866093;
- bh=u7fmwyMnefTy/iAPBlNWtwJwxxEPBonFRf3mFB40KyI=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=Z3FRMJQUHf3kbu2qgNJK1nessI5R9KKbr6YD2LTEZ1JGojSI4JFg0wHcGXWDidzZa
- rbMjdCYW299wsAObk7BXW2O2GjYP7tezJKSg5eS4GnyEsUeKpMx6MfAIcC3llxbzJk
- b+HMbzpa3V6RP6pFQ/nTnGo7dMAbLZjwHT+3MfwU=
-Message-ID: <e44df5b3-a338-3cd5-5399-6b5cbf55f5c9@linux.microsoft.com>
-Date: Mon, 14 Feb 2022 11:14:53 -0800
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=ZTRwJbBo; dkim-atps=neutral
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
+ [IPv6:2a00:1450:4864:20::433])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JyJWP63VRz3bPP
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 09:17:52 +1100 (AEDT)
+Received: by mail-wr1-x433.google.com with SMTP id u1so15329455wrg.11
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Feb 2022 14:17:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=SLIqGgQ691gOx0sCReH052AW/z6J2Gj6SmP7IPYWf7Q=;
+ b=ZTRwJbBoMpU6EkQo7f7P/HL8cgjuUSoMPvAL1bbKf40FxTVwgzbx8NJHprDttpggET
+ nif995oJbC7k9sshytGil96zJzv4DjgZwBzkTFur7VNqnx++nqF80K86C/aTBis9SPlq
+ m3DNl3leioNsbmQQ8gQws5BWGJBwALfO8Oof7uzGrfXuqI04pDd2byNgwv0mspWS5TZ2
+ I2xWu42HCpxR/o+jEy6Lb0Wr/+SD4cZOYfrkyEWlAUw1NAkDWp+4kIMh9Iqh2X7CVprP
+ rJSGPlpjzs/5u8MEg2cPu8Eh/Zwm+5mWdWVxTbNW7m8aXTyKEy9ZRwAQ+jXmFGlyPW6M
+ eymA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=SLIqGgQ691gOx0sCReH052AW/z6J2Gj6SmP7IPYWf7Q=;
+ b=vzRQ7iGAPavJQwK2x6oieNILEg7ZG/1IftahnJ0R31QXKmbhaqmSODplSvhmnwPtAg
+ ZDN7qJzaVUGakYnJj1GyTcJgIucpHwVZpFLHWDd8+gt1K7EyLhEVUJA1pyveu2DOljAT
+ glk9fW8h8FCAui3J0J9QLi+3lpYHn/8Xxzt0cu0ulxaCZ5xDNZlrjOeLs2u4gGjAxInn
+ srzIehejcCgzcerJleP556dnbCpXpktBIjrRz07w6j0/XvLMavfEjSVGmaS3tiqXiLFB
+ fi+932XuHtfRn7UYOyUm2I3rR6Wfvo0r+USUD0pG2PpoYAxUuikmSMOev2tOz6eS1rw7
+ /1Qg==
+X-Gm-Message-State: AOAM533Zl3m82IbtmWDhwAYfie685NkCYZYikYKw2CTI/8zYDdWWeCAb
+ p9iMeoRjU8LDnWv//1VwF3nsFSbC0SOxa+/4W1i+2g==
+X-Google-Smtp-Source: ABdhPJy+GkLzfvFyYG658HSvjbWmtR+kdbgNkvgMxUWJ9EH0L+V8aH3jUDnBGkfrXk8gIVKPRrSlF4SU7CY3XyVDm6g=
+X-Received: by 2002:a5d:5264:: with SMTP id l4mr767134wrc.483.1644877066648;
+ Mon, 14 Feb 2022 14:17:46 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] image: Control FIT signature verification at runtime
-Content-Language: en-US
-To: Andrew Jeffery <andrew@aj.id.au>, "Alex G." <mr.nuke.me@gmail.com>,
- U-Boot-Denx <u-boot@lists.denx.de>, Christopher J Engel <cjengel@us.ibm.com>
-References: <20220131034147.106415-1-andrew@aj.id.au>
- <97430094-7d2a-432b-a121-96812fac87f9@gmail.com>
- <cf36daed-852b-4c72-b2f3-febf7fd3f802@www.fastmail.com>
-From: Dhananjay Phadke <dphadke@linux.microsoft.com>
-In-Reply-To: <cf36daed-852b-4c72-b2f3-febf7fd3f802@www.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAD1rtg8sa2OG4jUL8x7Gr9ExzH-tEswhHwSDaZtWhcAN4sAvuw@mail.gmail.com>
+ <YgIXodbEP9hmae6Q@heinlein>
+ <CAD1rtg-tTrbjiL76NRDGnAfx36JBM4Rcb2gyUYjROR-2=H+Uqg@mail.gmail.com>
+ <YgQcaInEBq8ZBlIm@heinlein>
+ <CAH2-KxAyXn3YndZY_aWAMt4M6eTMrkPA91vCPeOj0tZOgPv-vA@mail.gmail.com>
+ <YgQuzD9AkrqstygH@heinlein>
+ <CAH2-KxA6MhNXUs+KXAjHTcJe1gWyGwfL+OUQBuCfQnPMSX7GZQ@mail.gmail.com>
+ <CAD1rtg8vM-2PckG1Cct7m5tyFJ-axvKQ_ky2z=rzV4O9mZjoWA@mail.gmail.com>
+ <5892de79-ea79-8922-d809-1dd5622a84ad@linux.intel.com>
+In-Reply-To: <5892de79-ea79-8922-d809-1dd5622a84ad@linux.intel.com>
+From: Benjamin Fair <benjaminfair@google.com>
+Date: Mon, 14 Feb 2022 14:17:09 -0800
+Message-ID: <CADKL2t7Jrn5LqTu8Yy9CbCaH2VHHe_Ub=gPaH78Hx2-ZHj2g1w@mail.gmail.com>
+Subject: Re: Propose a new application for reading DIMM SPD directly
+To: "Zbigniew, Lukwinski" <zbigniew.lukwinski@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,141 +81,70 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Simon Glass <sjg@chromium.org>, "Chia-Wei,
- Wang" <chiawei_wang@aspeedtech.com>
+Cc: Ed Tanous <edtanous@google.com>, openbmc@lists.ozlabs.org,
+ Michael Shen <gpgpgp@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/13/2022 5:13 PM, Andrew Jeffery wrote:
-> Right, I think this question is an indication that I could write a more
-> informative commit message, so if we converge on something acceptable
-> I'll update it. Let me provide some more context:
-> 
-> As mentioned above this is motivated by use with BMCs, specifically on
-> the ASPEED AST2600, in some specific platform contexts.
-> 
-> Platforms can be designed with two styles of firmware management in
-> mind:
-> 
-> 1. The typical approach - No owner control: Manufacturer supplied
-> firmware with secure-boot always enabled
-> 
-> 2. The atypical approach - Full owner control: Owner-controlled firmware
-> with secure-boot optionally enabled
-> 
-> For quite a few contributing to OpenBMC, the manufacturer and the owner
-> are the same, and so the typical approach is a good match. It probably
-> is the use case Dhananjay was considering[1]. It also caters to the
-> traditionally closed-source firmware ecosystem where manufacturer
-> control is retained.
-> 
-> [1]https://lore.kernel.org/openbmc/016ae207-2ecb-1817-d10e-12819c8c40ef@linux.microsoft.com/
-> 
-> The second approach requires open-source firmware stacks combined with
-> platforms designed to enable owner control. There are some ecosystems
-> that allow this (e.g. OpenPOWER). On the host side for those systems
-> it's possible to secure-boot them using firmware and kernels signed
-> entirely and only by user-controlled keys. We're looking to enable this
-> for the BMC side too, as much as we can.
-> 
-> For completeness (i.e. stating this to make the argument self-contained,
-> not implying that you're unaware of it), for secure-boot to be
-> meaningful at a given point in the boot process we need all previous
-> elements of the boot process to have been verified. That is, it's not
-> enough to verify u-boot if the u-boot SPL is not verified.
-> 
-> Where such systems use the AST2600, limitations of the AST2600
-> secure-boot design come into play:
-> 
-> 3. All secure-boot configuration is held in OTP memory integrated into
-> the SoC
-> 
-> 4. The OTP memory must be write-protected to prevent attackers
-> installing arbitrary keys without physical presence
-> 
-> 5. The OTP is write-protected by configuration held in the OTP.
-> 
-> The consequence with respect to 2. is that the system manufacturer
-> either must:
-> 
-> 6. Program and write-protect the OTP during production, or
-> 
-> 7. Ship the system with the OTP in a vulnerable state.
-> 
-> We figure the latter isn't desirable which means dealing with
-> limitations of the former.
-> 
-> If the OTP is programmed (with the required public keys) and
-> write-protected by the manufacturer, then when configured as a
-> secure-boot root-of-trust, the AST2600 must only boot an SPL image
-> signed by the manufacturer. From here there are two options for owner
-> control:
-> 
-> 8. The manufacturer signs arbitrary SPLs upon request. This requires
-> trust from both parties and potentially a lot of auditing focus from the
-> manufacturer.
-> 
-> 9. The manufacturer publishes the source for the signed u-boot SPL
-> binary in a fashion that allows reproducible builds for verification by
-> inspection. Firmware signed by owner-controlled keys can only be applied
-> beyond this boot stage.
-> 
-> Despite the compromise, the latter approach seems to be the most
-> reasonable in the circumstances.
-> 
-> Again for completeness, broadly, security can be divided into two
-> categories:
-> 
-> 10. Software security
-> 11. Physical security
-> 
-> Controlling secure-boot in a way that requires physical presence rules
-> out the ability to influence the boot process via (remote) software
-> attacks. This is beneficial. The approach at the platform level does not
-> yet solve for physical security, however given this is motivated by use
-> on BMCs, physical security concerns could be viewed as taken care of in
-> the sense that the systems are likely installed in a datacenter or some
-> other controlled environment.
+On Fri, 11 Feb 2022 at 13:21, Zbigniew, Lukwinski
+<zbigniew.lukwinski@linux.intel.com> wrote:
+>
+> On 2/11/2022 1:40 AM, Michael Shen wrote:
+> > On Thu, Feb 10, 2022 at 6:45 AM Ed Tanous <edtanous@google.com> wrote:
+> >> On Wed, Feb 9, 2022 at 1:14 PM Patrick Williams <patrick@stwcx.xyz> wrote:
+> >>> On Wed, Feb 09, 2022 at 12:20:00PM -0800, Ed Tanous wrote:
+> >>>> On Wed, Feb 9, 2022 at 11:56 AM Patrick Williams <patrick@stwcx.xyz> wrote:
+> >>>>> On Tue, Feb 08, 2022 at 04:23:12PM +0800, Michael Shen wrote:
+> >>>>>> On Tue, Feb 8, 2022 at 3:11 PM Patrick Williams <patrick@stwcx.xyz> wrote:
+> >>>>>>> On Tue, Feb 08, 2022 at 01:10:37PM +0800, Michael Shen wrote:
+> >>>>>> BIOS owns the MUX select pin and it can decide who owns the SPD(I2C/I3C) bus.
+> >>>>>>  From my understanding, BIOS only needs to read SPD during the POST stage.
+> >>>>>> For the rest of time, BIOS will hand over the SPD bus to BMC.
+> >>>>> That seems like it might work.  You'll have to deal with the time when the BIOS
+> >>>>> has the mux in the BMC code somehow.  Ideally I'd ask for the mux select to also
+> >>>>> be fed to the BMC as an input GPIO so that you can differentiate between "we
+> >>>>> don't own the mux" and "all the devices are NAKing us".
+> >>>> This seems like a nitty gritty design detail that's best handled in
+> >>>> code when we review it.  I think the important bit here is that there
+> >>>> are paths where this could work without a significant design issue.
+> >>> Just one subtlety.  I wouldn't expect this, necessarily, to be in _our_ design
+> >>> and/or code, except that we'd want to document the GPIO line like we do all
+> >>> others.  I was trying to hint that "if I were involved in this hardware design,
+> >>> I'd ask for...".  If you leave it out, I'm sure it'll work _most_ of the time
+> >>> just fine and it'll be your problem to debug it when it doesn't.
+> >> Understood.
+> > Thanks for all your suggestions. I will keep them in mind during implementation.
+>
+> What about CLTT? Switching MUX to the BMC makes CPU not able to get DIMM
+> temperature. Are you assuming here this feature is enabled in BMC FW?
 
-We can decouple HW RoT and runtime control on enforcing secure boot
-(requiring one or keys) on FIT image. Conflating two raises lot of
-questions.
+BMC could assist with CLTT, but since this is CPU-specific it would
+belong in a separate daemon. That daemon could get the relevant
+temperatures over D-Bus using the standard sensor interface, so I
+don't think it should affect the design for this component.
 
-There's not much case for disabling HW RoT, which implies the bootloader
-(U-Boot or more) has to be trusted after board is manufactured
-(OTPstraps, especially OTPCFG0[6], are programmed).
+> Are you going to support DCPMM as well? If so, there is another problem
+> since switching MUX to BMC you brakes NVDIMM related FW/SW running on
+> Host OS.
 
-There's indeed a case for disabling secure boot on OS FIT image -
-If bootloader is trusted, it's possible to remotely push the policy to
-disable runtime FIT image secure boot. Such policy push must use secure 
-transport (someway authenticated) and storage (simplest U-Boot env).
-This is helpful in cases like booting diagnostic images if board has to
-be RMA'ed and diagnostic images won't be signed by production keys.
+There are no plans currently for supporting NVDIMMs, just DDR5 at
+first as Michael mentioned, and possibly other DDR versions in the
+future.
 
-There's a key-requirement policy already implemented [1].
-
-[1] 
-https://lore.kernel.org/u-boot/cover.1597643014.git.thiruan@linux.microsoft.com/
-
-Board code can patch "required-policy" = none at runtime based 
-appropriate logic.
-
-Regards,
-Dhananjay
-
-> 
-> With that in mind:
-> 
-> To escape the manufacturer's key-chain for owner-controlled signatures
-> the concept is the manufacturer-signed SPL (or u-boot payload) will load
-> keys from an external, write-protected EEPROM. These keys are used to
-> verify the next element of the boot process, providing user control.
-> 
-> To configure owner-controlled keys the EEPROM write-protect must be
-> disabled. This may, for example, be done via a physical jumper. If left
-> with write-protection disabled the matching public key for the signature
-> on the payload can arbitrarily be installed into the EEPROM which makes
-> secure-boot verification moot. The patch avoids the run-around in this
-> last behaviour by providing a platform hook to read the state of what is
-> effectively the EEPROM write-protect pin.
-
+> >>>>> You should take a look at what is already existing in fru-device (part of
+> >>>>> entity-manager repository).  This is already doing this for IPMI-format EEPROM
+> >>>>> data.  We should be able to replicate/enhance this code, in the same repository,
+> >>>>> to handle SPD format.
+> >>>> I am not sure if it's a good idea to put it into the entity-manager
+> >>>> repo. As you said EM
+> >>>> is designed for IPMI-format EEPROM. Adding another parser into that
+> >>>> repo may violate
+> >>>> EM's design.
+> >>> I'm not sure why it would be an issue.  Hopefully one of the maintainers of that
+> >>> repo can weigh in.  I wouldn't expect "parsing only IPMI-format EEPROMs" is a
+> >>> design but just the current state of implementation.
+> >> So long as it can function properly in its current design, i have no
+> >> problem with FruDevice adding more parsing types.  In fact, there's
+> >> already patchsets out to add Linkedins proprietary fru type to
+> >> FruDevice, so in terms of design, Patricks request seems reasonable.
+> > Got it. Then I will push the code to EM.
