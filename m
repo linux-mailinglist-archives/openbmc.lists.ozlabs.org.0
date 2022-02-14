@@ -1,128 +1,122 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 374D14B4091
-	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 05:03:17 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6617B4B40D9
+	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 05:30:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JxrDL5QgJz3bb2
-	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 15:03:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JxrqH71xTz3bct
+	for <lists+openbmc@lfdr.de>; Mon, 14 Feb 2022 15:30:03 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=VMO5LfZ9;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=MvcF9ep2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feae::706;
- helo=apc01-psa-obe.outbound.protection.outlook.com;
- envelope-from=troy_lee@aspeedtech.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
- header.a=rsa-sha256 header.s=selector1 header.b=VMO5LfZ9; 
+ smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:feab::702;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=potin.lai@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=MvcF9ep2; 
  dkim-atps=neutral
-Received: from APC01-PSA-obe.outbound.protection.outlook.com
- (mail-psaapc01on20706.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:feae::706])
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-sgaapc01on20702.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:feab::702])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JxrCn2RhGz2xs2
- for <openbmc@lists.ozlabs.org>; Mon, 14 Feb 2022 15:02:43 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jxrpx1S8Hz2x9b
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Feb 2022 15:29:43 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BihTRTE4ESQBvGvCf4Gls3+7l5Bm1bHxBmqE9QPkn/+n1R5xBPiwxD4E6m8NC4wtOujiInGw9ix4JHhs9CNaFAotJ/eYxUneR70pZWsKmOqd8drL/nkx4c0i2OywSOPEZvYxOhOPVTwBjYhse0JcX+xiM3Hl1NrcNnIEgDkw8viDLQp4Gh1BzYxT3g4iHkeV1b61T9+uJuAGviPcR46x7xJ6//zCFbQYUiLlx6WTbHLsugfAEhnY9m0yFOxTxzmidGzHQyAjqre6yLc86iXzFYpwEXa5VTY2LCnDxOw9woAPcrr516psXZJJ5BrpjnWnyPVX8nZiSO3Ltbi+frSvoQ==
+ b=fUBaqpFDahQjmumEw8nc53pc1uFz55IBSGa4qSk34juIdNsKn64u8d/phz+LU8uNR5qAGFQZKccYz8S1AMfXc3kYGYkVEnQJtnQqHpfMNkQ9YT+eERzeODiwlSX1Q0/9s8cwfBUZcDRC8lzyD/QJe+hx26dsuvHBe8p7mJMCcD2OLD5RwAgdoFhe5UkJZlotIsYehGLJz/a5Ics+0Ll5qIIBKqIxOGm10upWFWD+xTugQPjm7pUmyC/I3WDTEm1NcJ63hd7l0siUf3BKWAT05zndVRScN7LvMY1M2KTIHAQo7urC8O61DJ7UE6n80UZIdL1QI1EblWcFqYkXN5DgMA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=H6r6qQ+Tz5ByaGneL6bVudwB2qL05Abggsm3l6fl9Io=;
- b=Z2WwSttayCCajFai8z6j1UAaIKxeoxIZXoRB6b+HbAMAuiy8vAWbdT1Xp7eoAObWB681nGX9MIRHKjydxeb24qjypUzYnZhIYGN7GRmCnGPaiv7IL1soBJzROaHOimuOeAEaT6zyg1X3QbThyB/qAV8/Y/okbxNFMPZjxEdu2e36NuGP1UjiHodo0bsoIHKf85rVDw7ow3jTSk6+zYopZM4YdtfETHES/OTxe0elC+V3+9a07OFyBXkATais2LQc1rVNm1ClyO0CHAo13gN7FHaIw18Jb1gk34tWEJtEQQxQccd199cnakbil/2pMIcjBMibHULTK1fok/i0WFpt5g==
+ bh=DwPThxUa4lppSG4WcB365RJn7VMCO8VtnfeYQFpgnHk=;
+ b=FdcgRhGa4zHRSXnli0HTBerpibY8/xPCkG3XeHfHOIbI1az+rS51687UU7vTmANQUQtsQQ617kQIapXT8CatjkrC1jBu3kPRm1Ui3ZQoIJkR9X2A+hmHMjYL64xC0HrpE6BMQjX/KNHEfM40YhPhDZ6xN4P77xgML2HChg7RM4wbksxPr+cTStpf7PtLOUrzMchavrfUr3PLpqZtSpYJcjxBBHkv7802rc2clpaDG9UuJuBRfEsO9Z0Qd+11rJzluKt6e162GftihrPfNqjrkQk8zPBEwlCQ+Mo3FVTqra71nPMLXXn4qq3YEJ6pdJ3gkXvJGTF9rR9andnh/O4W+g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=H6r6qQ+Tz5ByaGneL6bVudwB2qL05Abggsm3l6fl9Io=;
- b=VMO5LfZ9n1bXSPi6BG21OxAJ7Ww8c5if5rOfWYtaGu1JvTgut7n0lb/tMR4HepTwMZdVZVL7wpG80OuasR/elHBGVfqpGkud1sWmBKsdl4gTkKRRpMiS4Y44gmePMW+Rci6Y2gb3X8tyB8RBfI/Y25uveQQeIrSAhdhGimluO7F8pSgGUnCWBB0hsYUms/5Y9Um7qFGns4Bfwadqk7cuMNjcOesb8PX6enZoce/9W2VVtK8pa8RawV95e1bZ571lIzzGLm/t3MgcrT8RFycfMTTdQj8GJLvHsipgn0X7wvqLXenpF0TUkBRglFh4vCmY/Qsw211dC+S78lIklS5apA==
-Received: from HK0PR06MB2145.apcprd06.prod.outlook.com (2603:1096:203:4b::20)
- by TYZPR06MB5395.apcprd06.prod.outlook.com (2603:1096:400:201::13)
- with Microsoft SMTP Server (version=TLS1_2,
+ bh=DwPThxUa4lppSG4WcB365RJn7VMCO8VtnfeYQFpgnHk=;
+ b=MvcF9ep25JSBQnYjNroW4n8z3C4QI+Zwb/6/NiEKGqGEJbgc/I0W8hajmy4nW3quL42/NKWMcmmzMe5dsZ1+P8RnBZ73cpG2ttTFCB2UWkk36nd3TYiy9KVms0dZyS8NpyS0FxkHgZEfaEx+66V0PbY2sYYjyBSEr1flQLEMazg=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=quantatw.com;
+Received: from HK0PR04MB3282.apcprd04.prod.outlook.com (2603:1096:203:89::17)
+ by SG2PR04MB5916.apcprd04.prod.outlook.com (2603:1096:4:1db::10) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4975.11; Mon, 14 Feb
- 2022 04:02:21 +0000
-Received: from HK0PR06MB2145.apcprd06.prod.outlook.com
- ([fe80::1d71:2917:2d9:701b]) by HK0PR06MB2145.apcprd06.prod.outlook.com
- ([fe80::1d71:2917:2d9:701b%6]) with mapi id 15.20.4975.011; Mon, 14 Feb 2022
- 04:02:21 +0000
-From: Troy Lee <troy_lee@aspeedtech.com>
-To: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: RE: [AST2600] PWM/TACH driver and dbus-sensor issue 
-Thread-Topic: [AST2600] PWM/TACH driver and dbus-sensor issue 
-Thread-Index: AQHYHb9Z9fVcffI98EScCXqS70CDbayN0A+AgASdxKqAAAIO4A==
-Date: Mon, 14 Feb 2022 04:02:21 +0000
-Message-ID: <HK0PR06MB21458E132EC1569124866E2E8A339@HK0PR06MB2145.apcprd06.prod.outlook.com>
-References: <CO1PR01MB6759E0EC69109784C4B3C282FF2E9@CO1PR01MB6759.prod.exchangelabs.com>
- <HK0PR06MB2145535BDA1526108377B8478A309@HK0PR06MB2145.apcprd06.prod.outlook.com>
- <CO1PR01MB6759A78F5D01E78934B055CAFF339@CO1PR01MB6759.prod.exchangelabs.com>
-In-Reply-To: <CO1PR01MB6759A78F5D01E78934B055CAFF339@CO1PR01MB6759.prod.exchangelabs.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 1a463ea3-65c7-4c93-c66e-08d9ef6ecd32
-x-ms-traffictypediagnostic: TYZPR06MB5395:EE_
-x-microsoft-antispam-prvs: <TYZPR06MB5395F5E6B96CCE17159AAEB98A339@TYZPR06MB5395.apcprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: c7fk8HbCVIYE9Bp3E00BkQePZHAMw1uSwVIFjTG7dtVFptaXUST5RgXMhftiLcwoq10bGxmSoiuOjE9gA87Gdj9oe1B9IzP/MkjOSgse80mu/tW8VsA6HfvlDmuO6uEGjHYVxNVTGp11PWYGYuyvtXhzMfmU1wk0VP6iE0iDWj8M5HyKxNYq4grDPkal3hbcM6P0XdSASyWfAOfcYldwo4EyS6eAQ6aXdpd5mrTS+gnWpOzx6asa/aT8PSCNG76XR+auaCcsb7VloVGCyZPgdZMgky//w3I0EbKjbLx1wB8Uw/gsJiL7dC20xwVJ8asm/vsDka60QGv4GvrDAnPbTNjkFvy1UJVTmkmfuM0p9ZFLUqQOTWSPL8JN53JJRRWipV/kSz23T1gqbsZxkBkVFhqp+Lf15fg3JT2WaAiMWgjB8wGsO/HuZiIoPapmVDQ1GgOfCMiQUsECXUC4owGT76Y+AjC9yw6KHwC3Eh1WvtuD2PURPgsEy19xCfvF1dMm7zNW4b8IS8Mz5dwBikIewR3wnPrilGJvHHjDagi1lawoUC+QzzYdv3MprOEb8G7VTsQAsGdfdoJeMu+J9Uc2unSC8LYm/PfNFpEIZuZXqU+DjtBC2/fJ2eAQ+jGzEE3NVb2U4EG8yZ2Glbxtav4cJWDXE7Oydt9Fovhdc0U1zuz8datXt+NGsi24eCwbjxUyNsPTtdJfGOHhWeQW3bSRYqX9HQpvesd3f7Vb1dHOlCSnn4k9iLvUFYJPUnPXlkMkrONQV3bNGZlD5ztMjMecBpzf5c+syYkii0K9nrxTWqAKIQ3dEJzMnOSjrXY8Bl6U
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:HK0PR06MB2145.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(376002)(366004)(396003)(39840400004)(346002)(136003)(55016003)(86362001)(54906003)(186003)(33656002)(26005)(38100700002)(71200400001)(7696005)(6506007)(4743002)(2906002)(53546011)(107886003)(316002)(110136005)(122000001)(52536014)(64756008)(66446008)(66476007)(66556008)(4326008)(5660300002)(8936002)(966005)(38070700005)(8676002)(83380400001)(9686003)(76116006)(508600001)(66946007);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?dJXSq3dcNXwJu8HR5A5ACroVhqK0EyUsgIR4/TSRsang/SlAhuOypr/Y0jCL?=
- =?us-ascii?Q?sOQrFiOYscjE1i/aDIr1zbSjqsSD62Ts25ide3ZPaugQcGvjpVKNht+lLNtG?=
- =?us-ascii?Q?ocGyA5T5TpIMEfndyQueEkUgBKI4fDKNs6omAbAj7Wdb0okDl3mXr/kUTue1?=
- =?us-ascii?Q?2k+w+EqHD6PYP03hWINS1NwGIPYIcBXEfB9sv6cjRh1VuSUpLm7+rH7IoQjL?=
- =?us-ascii?Q?/p8qOuOXChImFbRnwpwxFX3SN4Ya/yRzz2pCrKrKgCl5oR6UhhhQ2XWQiKse?=
- =?us-ascii?Q?TmfOwu4Ya6p63jLpPWjA0z6mbKAprfgIzsnSzbQmdZo2mUWYQQBMDggVMpEF?=
- =?us-ascii?Q?8bn8bWFkZMi8U/LYkH0VZ4jS3cjUslSPTJ30oPAe+4aIlUp139q7XE0q/sx6?=
- =?us-ascii?Q?YBZn15UbZ6Z5W71vXDttl5D4y0ttZZKZCgepNanJ16f+h+DncYoL/7biMe48?=
- =?us-ascii?Q?yF7wNkpvdBJ83eLLYy+rWD0wjJidYg+1aIZDzbaRO9Wd9hkYq1TIIEkuAwpo?=
- =?us-ascii?Q?w/3bkUkhqBq7E3uxm68ctnuWVy4aG8Qb7KCs51G0dxIybH+M/GgOQNnd11py?=
- =?us-ascii?Q?8qhj0jiANemgfC2IDHOlF/nZ8t8Q/4aUkjIUz7KivRwwkmVUReLWcDO6evZH?=
- =?us-ascii?Q?83gW1jqNfV1Z5DTYvqgQjYlLQPQJ4Yaa3oFWp5DT0gZetNSEonvPRhj2zRfs?=
- =?us-ascii?Q?kP1B/ClKv10XHPUTwhLkJ3B2liqNzeIyFVqteWlztNoacG1NPI1VaGFJKfzo?=
- =?us-ascii?Q?lmJg0go5iuRuUTzH3/tj6Sa+Fgf02c7E+2LadVdT9OFgoh5rjxXqc83CqCq3?=
- =?us-ascii?Q?fYnOO+cpCfva1yq35lz8qMkRP1bCEzXmWFT+kCVo9MHfk+w8xTy5QzXuF4b2?=
- =?us-ascii?Q?hmRhMirVWZUMWnEtBLKA0Wjngga26XrNyp64bQxJYYExcwflUgzM7GPWXj3c?=
- =?us-ascii?Q?DtxClSZTY/qq3Gk1AP0aFzzjMm6NY2HZg/7L4aE8q4WNK19NX3yfmukxH6IC?=
- =?us-ascii?Q?FG7G2y14r+fABet9ZRlYK5eKOFh2SsLA1UFZ6658ln7JEB8+bAjTpxVWIzuO?=
- =?us-ascii?Q?hg95IcEg/EautcHrgjXpBrf7Qxmq5w7+4eu4tJLScnJPmVz3tQx951oRXuZ7?=
- =?us-ascii?Q?kjGiXGm/yv2/GSOkrwpfUXyU2sWvqY9xwYMQHMOKbPKWPDtqrr9LOlcSJiKj?=
- =?us-ascii?Q?lvcieGIod0Kv6u5QfcnbPt9nTkxg4H7Ijgl+G1X1zFJT+zPAFbthpkI0XlrS?=
- =?us-ascii?Q?F77YXdmz5d3PUWgl7057ANYIGogzWPXslmQI02dDU4KAF/S2YVdxMdBpZ+0v?=
- =?us-ascii?Q?OcKK+T1EnkHEg19FiYkiKbv7rBcZ7JuCzq2IF/e/N41hLc34RQ9Y3nvCEnOK?=
- =?us-ascii?Q?0mjAZPMejpnptOPwjfHd2dgubS7qvoVVv25zjOjX40dMyUEcK55/J84FUWTI?=
- =?us-ascii?Q?lVFBv5+JYbODi7NMw4aT0cFYF3vnwCHE61YdNqhV551wPoO8UZLgSdLN0VUO?=
- =?us-ascii?Q?FRElV08W2VQwZhN7aH3fBOP/Xc/aVjT0wCW3C8QdZJHyUyyG98YYobxznlub?=
- =?us-ascii?Q?VjhMMcC4j7kV5DX5C6WSV0v7NLHu7FfEYu72Rysic0wI+yuO8YpyA2YxrV4Z?=
- =?us-ascii?Q?DB8coQRl5v0h3/7PAN58EF8=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ 2022 04:29:25 +0000
+Received: from HK0PR04MB3282.apcprd04.prod.outlook.com
+ ([fe80::ec21:c033:761d:3e03]) by HK0PR04MB3282.apcprd04.prod.outlook.com
+ ([fe80::ec21:c033:761d:3e03%4]) with mapi id 15.20.4975.018; Mon, 14 Feb 2022
+ 04:29:24 +0000
+From: Potin Lai <potin.lai@quantatw.com>
+To: openbmc@lists.ozlabs.org,
+	joel@jms.id.au
+Subject: [PATCH linux dev-5.15 v2 00/10] update Facebook Bletchley BMC
+Date: Mon, 14 Feb 2022 12:29:02 +0800
+Message-Id: <20220214042912.14584-1-potin.lai@quantatw.com>
+X-Mailer: git-send-email 2.17.1
+Content-Type: text/plain
+X-ClientProxiedBy: HK2PR02CA0136.apcprd02.prod.outlook.com
+ (2603:1096:202:16::20) To HK0PR04MB3282.apcprd04.prod.outlook.com
+ (2603:1096:203:89::17)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: c9c5ce32-949d-45f3-e1a7-08d9ef729436
+X-MS-TrafficTypeDiagnostic: SG2PR04MB5916:EE_
+X-Microsoft-Antispam-PRVS: <SG2PR04MB5916BF7E75CB5E41E3A7143D8E339@SG2PR04MB5916.apcprd04.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:590;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: pvUsDeMc49np22V9Xj1v++2fa4T8IxLOgEy7KUqIR29WzOmciDGQ5biUZorTChP/Vn7QAxbpFcDZWePQxOu5j8eLhrVg+0ya7o3PmHs/riDTmIE3o4aKZA4zCEXNGyMDFCXBXa14bZjU/OJTWWwjsFVAyy4ftiyghEzLbeQP0kKj6oQwkAT1aKHKofuDV9Z1RM36i2ySpA5JerxCz35ao59buiQk1+HmbDi3kfCWPcfnIDwlYMGo+e62C10mFRG6SpjaYHplcM+13T/t4kfzThjEFM5/a8Rur50bNbkNXVMEIXfQ3GRnGk4GroICCMqdeHCaWhP3aGFTBo++7+bgXErnARIq8oYjjtXianR7sPLHWAKrbrt1/qS+oqp7h2Ge24FNls42XY5PzHq8GUkKsXyf4Bw1RMKuVBBdACJZSWYLkaG25tm0FkIahBBe0rJuV4nJzt+VWiAwu6OKAjKuCy9WQo+0z0hjI3UyscRCNh6tsW2GqXddCr8QYHA2+PhCVANQzsfdbQb2BKdBtV2l94hkTjRAcviD2pkf2IMLlUjR5gBk0z6ZXzaFXSVoCkm6uPwjphkAOCFwIY1o9ufEtym2PksIE5ZL0U/j6xBx9nfyUedEy1EO1rxHsZlV4LeloEf7Pczy5YYnpWpqTBbPTKWRCvQ39kB4GilQI0n/Zc88yD3NNBg1cfe5oJTGm3mwItNycISpTf08ZbAyXITbwI6u682TMqW9h99HooM+6B1Mm2S49ERXBvMnuk0fMUUCkjNNFpfLsKbeoybisb8dOVeuy2OzmR3zJmVh82UroRs=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR04MB3282.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230001)(4636009)(366004)(47680400002)(8676002)(36756003)(66946007)(66556008)(15650500001)(8936002)(5660300002)(83380400001)(66476007)(26005)(2616005)(186003)(1076003)(44832011)(4326008)(316002)(966005)(86362001)(38100700002)(52116002)(6512007)(508600001)(2906002)(107886003)(38350700002)(6506007)(6666004)(6486002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?iCpu02sR9BRQTnYnrBBNq5GEOWWX92ab/N/x24kuJlWxiQNKX73wC04c1J7b?=
+ =?us-ascii?Q?CXRdgK7vSNRFAK3pgAcnKT7jn/90VLdlp7XyTN4lA9mXzHLIxB3A+n5EIAnc?=
+ =?us-ascii?Q?oVJsCnmcvXaVj2LBATT8pnaX6lgx7iJWMmHhCQbaTx7eG0+RRxsiD+uGJqL6?=
+ =?us-ascii?Q?P/QLbGObXaeGEZUH63RGegBQ3YkhLUsoggsa7SkW+sc3I5VAufnOy1CJEZDv?=
+ =?us-ascii?Q?WCf02uEZuXfhwfasDSFNndQNhCcAMiSDz4ZTtjR2MtHQS+rkCt4X+R4/Hhtm?=
+ =?us-ascii?Q?bAjjj4KEVqEUphmzmq2iH1Q82oqp8Md4va/qFb+Hm8S7gRtjT7zN2tt8SlUE?=
+ =?us-ascii?Q?LlCWA5ne87oijd/p0oP1r0EDj8oqo/sPcfxfpZbOavQ/Gk9ckqFMvnZjtoeV?=
+ =?us-ascii?Q?80zrDIpXNtUbtaJhVmarCkH35wxiCU3WU+sB5gz53/75gn9u5Pn2c7zByeYi?=
+ =?us-ascii?Q?2IsqPOBZxAz/2XOHQDEFirACZ3PAWZqJXBzj2TUXjIb+rUDVLnIpb9sc5BcZ?=
+ =?us-ascii?Q?CEo56VmhNbWgiyZ9Ng3Y05TkJSssJyZ1174eC9KlfJl9wNPtuuWGtwwp13xX?=
+ =?us-ascii?Q?LiR9o2KwQp0KG1GpGvihWwJyWgacrT+Lo8ddmWNNNrwLPEVSbshhvRie9gQd?=
+ =?us-ascii?Q?Zh2YizHIP/43h5BhgcNk8p7zHZQkgbRwvwGtnClfKdR6CdLEoWRE8U0wwm6m?=
+ =?us-ascii?Q?lhCZX5UHngn8Y1uzHycinpAQI42+QDiZLtUbbqMTJ4pGwUMMQ3v2wbF2flfv?=
+ =?us-ascii?Q?wiz5L+jGGWoc93ChWRYy224HbdvBCQ6pm9NwtqjI/8cQNREIeWU+G8xqw48H?=
+ =?us-ascii?Q?iG4pmhJzyVl3NfXR84mCIGAdHdtyjGTIl35zpwXyKATbuifIU3uDy3wXUUxj?=
+ =?us-ascii?Q?xPkjpbeby/PIi9lrwRSfXUnyuTEj2A6d2QuM43QLBVNmLHOCtXUVHGcOr6UX?=
+ =?us-ascii?Q?s0bTywOaE1jt8lcU72nDe5cmnpK7Y2ptPRAGWoZZerc8NG3LThevuRxytJpH?=
+ =?us-ascii?Q?v0YoIWnd+wAW6+sqaVWPn0pTpIJmEQySdkk3aHjkG4vmmvu1BdlVEPexcGqQ?=
+ =?us-ascii?Q?NirH4CTOT82TEqAZv+lBR9UhWIkbeYQG3H0l91IyVSntrEkvGs/VeIn/z137?=
+ =?us-ascii?Q?sHInPZxwKgGbgZJD85brpTORRRbLHiWGG1WNQe/lqtX45tqQrxV0pbcoQxVZ?=
+ =?us-ascii?Q?Y+WQ66sGEVXifJVUx7kzhTBafGgXS2Ef7/u56gYZz2omh77FnXu5MhvhBoW6?=
+ =?us-ascii?Q?DG79odXABGcORBLrVMFl+0uDckQ9xTxhFIBqaNBi6mTaAhaWloVegILFKH+2?=
+ =?us-ascii?Q?g2SU9xWJGNmmho8VMUT3auBmCxVUAwRD8qJQeiYuTMIEwyfp3tMHl5XfQGQB?=
+ =?us-ascii?Q?aUEF0aIzix7xqMsze/pn2fBJzMsQXeMbdvqF0tPUuWTrZ3Ma/pokkRj6wE6Z?=
+ =?us-ascii?Q?QoB9rYoUpTUHPeWhN+YRDB9bGcw8oHUoqdeN8GGelQ8qoOALKBvpG8OmUR89?=
+ =?us-ascii?Q?+aqVUU+sFEZ5NHLp1q0h9LbbRyqreqn1NZEguy5BHupJXCeP3dWYwZ2KYisl?=
+ =?us-ascii?Q?PFLZkTBYdKI5wBA40Q7shXG9BvMrW3bIvRuwF8/mWTM67Bb52hdWx2d/5g+J?=
+ =?us-ascii?Q?AnYcZiBJRs0Xsd9p9ciUE+k=3D?=
+X-OriginatorOrg: quantatw.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c9c5ce32-949d-45f3-e1a7-08d9ef729436
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3282.apcprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB2145.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a463ea3-65c7-4c93-c66e-08d9ef6ecd32
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Feb 2022 04:02:21.7108 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: EeteLQiBQ1Bf8utTA+QX8Nm8jSmwSiwzEYzDKTeeI6B+ZB4gnjFhG5WLjh3Uqljl5Hn0SrI1fqZSSuT7yz9Mpw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB5395
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2022 04:29:24.5008 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: AkVjaVQLjxZAdlbuISt27Pk0yYZytcp6Jspm0MrlKQqSozmOw8QUzLVdxqrF9OFJDALR8W2Ip4bx4d9B8qpRQw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB5916
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -134,149 +128,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Billy Tsai <billy_tsai@aspeedtech.com>,
- Thu Nguyen OS <thu@os.amperecomputing.com>,
- Thang Nguyen OS <thang@os.amperecomputing.com>,
- Phong Vo OS <phong@os.amperecomputing.com>
+Cc: Potin Lai <potin.lai@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Adding Billy.
+This patch series update Facebook Bletchley BMC devicetree base on EVT HW
+schematioc design, and rebase SLED numbering to 1-based for OpenBMC
+multi-host.
 
-Hi Tung,
+- GPIO:
+  - adding more gpio line names
+  - include interrupt line in io expander for gpio interrupt monitoring
 
-> -----Original Message-----
-> From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>
-> Sent: Monday, February 14, 2022 11:46 AM
-> To: Troy Lee <troy_lee@aspeedtech.com>; openbmc@lists.ozlabs.org
-> Cc: Thu Nguyen OS <thu@os.amperecomputing.com>; Thang Nguyen OS
-> <thang@os.amperecomputing.com>; Phong Vo OS
-> <phong@os.amperecomputing.com>
-> Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
->=20
-> Hi Troy,
-> Thank you for the information, i have merged the dbus-sensor patch and se=
-e
-> it creates the Fan sensors well.
-> One more issue i have observed about the fan tach report like this:
->=20
-> root@mtmitchell:~# echo 120 > /sys/class/hwmon/hwmon1/pwm1
-> root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-> 418526
-> root@mtmitchell:~# echo 100 > /sys/class/hwmon/hwmon1/pwm1
-> root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-> 195312
-> root@mtmitchell:~# echo 255 > /sys/class/hwmon/hwmon1/pwm1
-> root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-> 0
-> root@mtmitchell:~# echo 50 > /sys/class/hwmon/hwmon1/pwm1
-> root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-> 0
->=20
-> It means the fan speed is reported incorrectly somehow, but i can see the
-> fan speed changes by eyes, do you have idea on this issue ?
+- SPI flash:
+  - adding dual flash BSM module support
+  - switch to spi2-gpio on spi2 due to unstable signal issue
 
-Does the aspeed,pulse-pr property of fan node set correspondingly?
-What is the expected RPM of you fan? 418526 RPM?
+- Hwmon Sensors:
+  - adding INA230 sensors for monitoring
+  - fix ADM1278 shunt-resistor
 
-Thanks,
-Troy Lee
+- MDIO Bus: enable mido3 bus
 
->=20
-> ________________________________________
-> From: Troy Lee <troy_lee@aspeedtech.com>
-> Sent: Friday, February 11, 2022 12:13 PM
-> To: Tung Nguyen OS; openbmc@lists.ozlabs.org
-> Cc: Thu Nguyen OS; Thang Nguyen OS; Phong Vo OS
-> Subject: RE: [AST2600] PWM/TACH driver and dbus-sensor issue
->=20
-> Hi Tung,
->=20
-> > -----Original Message-----
-> > From: openbmc <openbmc-
-> > bounces+troy_lee=3Daspeedtech.com@lists.ozlabs.org> On Behalf Of Tung
-> > Nguyen OS
-> > Sent: Wednesday, February 9, 2022 10:40 PM
-> > To: openbmc@lists.ozlabs.org
-> > Cc: Thu Nguyen OS <thu@os.amperecomputing.com>; Thang Nguyen OS
-> > <thang@os.amperecomputing.com>; Phong Vo OS
-> > <phong@os.amperecomputing.com>
-> > Subject: [AST2600] PWM/TACH driver and dbus-sensor issue
-> >
-> > Dear community,
-> > We have ported the PWM/TACH hwmon driver for AST2600 from ASPEED's
-> > repository https://github.com/AspeedTech-BMC/linux/tree/aspeed-
-> master-
-> > v5.4/drivers/hwmon to support Ampere Computing's systems. Verify with
-> > AST2600 EVB, i can see the driver works. However there is a concern lik=
-e:
-> > 1. The change of hwmon fan pwm/tach in sysfs (as below), this is
-> > different from the ast2500 as the separated of the fan*_input and pwm1
-> > in various hwmon directories. At this time, the driver doesn't exist
-> > in the OpenBMC linux at https://github.com/openbmc/linux. Is OpenBMC
-> > going to merge and keep this driver ?
->=20
-> Please have a look on this patch.
-> https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/49253
->=20
-> Thanks,
-> Troy Lee
->=20
-> > root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon hwmon0/ hwmon1/
-> > hwmon2/ hwmon3/ hwmon4/ hwmon5/ hwmon6/ hwmon7/ hwmon8/
-> hwmon9/
-> > root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon0/
-> > drwxr-xr-x    3 root     root             0 Jan  1  1970 .
-> > drwxr-xr-x    3 root     root             0 Jan  1  1970 ..
-> > lrwxrwxrwx    1 root     root             0 Feb  9 08:38 device -
-> > > ../../../1e610000.pwm_tach:tach
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan10_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan11_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan12_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan13_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan14_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan15_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan16_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan1_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan2_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan3_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan4_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan5_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan6_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan7_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan8_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 fan9_input
-> > -r--r--r--    1 root     root          4096 Feb  9 08:38 name
-> > lrwxrwxrwx    1 root     root             0 Feb  9 08:38 of_node -
-> > > ../../../../../../../../firmware/devicetree/base/ahb/apb/pwm_tach@1e
-> > > 610
-> > 000/tach
-> > drwxr-xr-x    2 root     root             0 Feb  9 08:38 power
-> > lrwxrwxrwx    1 root     root             0 Jan  1  1970 subsystem -
-> > > ../../../../../../../../class/hwmon
-> > -rw-r--r--    1 root     root          4096 Jan  1  1970 uevent
-> > root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon*/pwm*
-> > -rw-r--r--    1 root     root          4096 Feb  9 09:13
-> > /sys/class/hwmon/hwmon1/pwm1
-> > -rw-r--r--    1 root     root          4096 Feb  9 09:20
-> > /sys/class/hwmon/hwmon2/pwm1
-> > -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> > /sys/class/hwmon/hwmon3/pwm1
-> > -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> > /sys/class/hwmon/hwmon4/pwm1
-> > -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> > /sys/class/hwmon/hwmon5/pwm1
-> > -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> > /sys/class/hwmon/hwmon6/pwm1
-> > -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> > /sys/class/hwmon/hwmon7/pwm1
-> > -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> > /sys/class/hwmon/hwmon8/pwm1
-> >
-> > 2. With above changes, the dbus-sensor for FAN/PWM shall not work
-> > because of the compatibility. So if OpenBMC want to keep above
-> > PWM/TACH driver, does any sides have the plan to support the fan
-> > sensor, if not, we can join and do it.
-> >
-> > Thank you and best regards,
-> > Tung
+- RTC: switch to external battery-backed rtc
+
+- OpenBMC: 1-based SLED numbering
+
+
+LINK: [v1] https://lore.kernel.org/all/20220211014347.24841-1-potin.lai@quantatw.com/
+
+
+Changes v1 --> v2:
+- update the details of new added gpio line names in commit message
+- add battery-backed rtc information in comment and commit message
+
+Potin Lai (10):
+  arch: arm: dts: bletchley: switch sled numbering to 1-based
+  arch: arm: dts: bletchley: separate leds into multiple groups
+  arch: arm: dts: bletchley: update gpio-line-names
+  arch: arm: dts: bletchley: update fmc configurations
+  arch: arm: dts: bletchley: switch to spi-gpio for spi2
+  arch: arm: dts: bletchley: add interrupt support for sled io expander
+  arch: arm: dts: bletchley: add shunt-resistor for ADM1278
+  arch: arm: dts: bletchley: add INA230 sensor on each sled
+  arch: arm: dts: bletchley: enable mdio3 bus
+  arch: arm: dts: bletchley: cleanup redundant nodes
+
+ .../dts/aspeed-bmc-facebook-bletchley.dts     | 303 +++++++++++-------
+ 1 file changed, 194 insertions(+), 109 deletions(-)
+
+-- 
+2.17.1
+
