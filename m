@@ -2,78 +2,127 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 475934B6222
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 05:35:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DCB8E4B6228
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 05:35:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JyStT6hmTz2yPL
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 15:34:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JySvD3N3hz3bSk
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 15:35:36 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=A2ndsGN8;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=bHUOV7Xx;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::334;
- helo=mail-ot1-x334.google.com; envelope-from=mr.nuke.me@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=A2ndsGN8; dkim-atps=neutral
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com
- [IPv6:2607:f8b0:4864:20::334])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe5a::72d;
+ helo=nam12-mw2-obe.outbound.protection.outlook.com;
+ envelope-from=tungnguyen@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=bHUOV7Xx; 
+ dkim-atps=neutral
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12on2072d.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:fe5a::72d])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jx06r1Pqkz305B
- for <openbmc@lists.ozlabs.org>; Sun, 13 Feb 2022 05:55:29 +1100 (AEDT)
-Received: by mail-ot1-x334.google.com with SMTP id
- j38-20020a9d1926000000b0059fa6de6c71so8597093ota.10
- for <openbmc@lists.ozlabs.org>; Sat, 12 Feb 2022 10:55:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=message-id:date:mime-version:user-agent:subject:content-language:to
- :cc:references:from:in-reply-to:content-transfer-encoding;
- bh=6vjKSXgaCBWDz29bfYKoPcOZqwPTT5Qtqn8BPDoq0mo=;
- b=A2ndsGN8J4J6cqGSXlYAr+LAGg+PhBEFYIUEnz01ezqY3HvD2L42iITfa5vX4iaY1B
- 53UpmJhMLlGCAwZnnEmYT9QGJkYwNfSg92L2UizHl4oRJ1p5JKfKnsyIq5Lql5ZW67lZ
- YPjPmK3OSHWEn4F0ZWQrwSKWF5Hl49Q36OcsBzre7ldNCEGGsO0X8jYfvMllwJTj6cGU
- t2wUlcwzv4ebSk85M3o+psnVpr471MNaITxNoJuJbWH1+7PC76HmPfb0osAXpmhtjIWD
- osdhWqAioX7cfO8AjwXwFhnbPDcDEd329p9mFJT6POvmGfvGFOlV4iGNcaHfWo3nR1qP
- ivBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=6vjKSXgaCBWDz29bfYKoPcOZqwPTT5Qtqn8BPDoq0mo=;
- b=DFJW9pa9bZ2paIBmzaDwqeJN5zpPe7A8Oj6yaZuYVNVG+d61bVXUGV7rr6iZTFGYE6
- W4uc+O9XwcJxRS1PRUdHJHFOKskca3I36swnRjKliWFv3R1wbzRbQ+PV9a4VqhfGCI7C
- bR8SlAXHwsJ1+hk1VqT7zk8q3OXTaI27xaK2fLtIYnCLMOI2cQMdTg/c064GjYq6Cqak
- +PQTHa1Xv6BLhgLGyRBY4GrX1yyvUVN6FxTBZO8ZczMWVRmzVtr824bTgxygq+2kIRQW
- Gf05TX+0kIV5hlOD1lrsgzPPpiMnvpeqwp4RLVL6GzrfpGu873mfpv/7CkWfHBhQ1xku
- bNAQ==
-X-Gm-Message-State: AOAM530vf4R29NpGvtSu3oBZTsO8Oo/7pxmaHF0HJS1GdfnSJ8mjGfhj
- zoZKiyI66W6FI8Vl0ExM5l5Y7hbGn8g=
-X-Google-Smtp-Source: ABdhPJyKwlu7paxxCESB/0gu2AyPrKAp7PDcIA56nl3ioRBbiF3bDLUQnJNcXADmIdR/QHMP+fBtkQ==
-X-Received: by 2002:a05:6830:16cf:: with SMTP id
- l15mr2473736otr.378.1644692126108; 
- Sat, 12 Feb 2022 10:55:26 -0800 (PST)
-Received: from ?IPV6:2601:2c1:8501:182d::edf? ([2601:2c1:8501:182d::edf])
- by smtp.gmail.com with ESMTPSA id bf15sm11547412oib.32.2022.02.12.10.55.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 12 Feb 2022 10:55:25 -0800 (PST)
-Message-ID: <97430094-7d2a-432b-a121-96812fac87f9@gmail.com>
-Date: Sat, 12 Feb 2022 12:55:24 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH] image: Control FIT signature verification at runtime
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jxqrs6ppKz2xvW
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Feb 2022 14:46:20 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UryXf2XaE9ltsuJw0hpZYVNHnfYWKtm1nJZn/lFDV+m10DZ2pHaGESR2Ty3SQ4VbDFfD1k3vjUCSDUEjQmG+88B255c8DvqcWq3sNIIahgD1rYi2QGVeJCQ9SaHI61t8Oz5DD/G4JNs5keFkSlIMOZ7c8GLee7C/igyzDidXhGei3+3QnJwJ8T1A5YelJepQ6RufrZm0cddNMnEr8qYVqu6Ap8NdQpIU8jNxK2rqfBxLwP3Vxn0oHKU9z/ZiztEXwWsyNwS8JNUxQirWAoBu7/MQCySwfCuHDMPsYMAFaW6j/0kPcbki2dHnpYT9gSsdjWu2Rt+ujACjCQrHw9BN6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3EKV0p4UT4zGUoZaBscJpOG6VBhfU9H+yoWxjwwpuyg=;
+ b=eXhn9Tcnf+fOKiw40B0w+hjf0AmPO4GRqH9T4w9F9xUpWrJ46qwHr+1m1YHqiJXoUpfruGwh9H2Zd8S884ajUlEpd+pAY5TJKIGtFAT1BnhmpaYzDzka63w5p9MyoHvKoCdxyQyXVeYdCHduII0VCBf01TH4cLTHZtLHzr+myRWatuOGyQzl8BOV2QOv+amnXx3aY5SXpDWQTT87+JQlCvmpfQOKohA9WHz0CogaHW0Li6dq43vVt2s3HM/AjMlr4iqQOj3jGVv/UIfxkLYVaiC0h42VNLYjFju5SzYpxxDnJ+EqyqlD0cYtOmdl5we6qT1u1poVfHQngFojMRR8tA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3EKV0p4UT4zGUoZaBscJpOG6VBhfU9H+yoWxjwwpuyg=;
+ b=bHUOV7XxaebW2cKS4sPIePTuKPk/kdJ+g4yHkZzX7cQ8gwgOhaNB+5ioj/y7XNVKxbHqZBq5uh9KCnstW1/jMe/y4+LLrZENaNvRgvFDsgccgX8W9aQzK22Z9AHTdheKJLpIRgH1pN/ql35ZoyCEGfmwG1k1JixEQ3X3U/gqIBM=
+Received: from CO1PR01MB6759.prod.exchangelabs.com (2603:10b6:303:f5::9) by
+ BN8PR01MB5540.prod.exchangelabs.com (2603:10b6:408:bb::10) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4975.15; Mon, 14 Feb 2022 03:45:56 +0000
+Received: from CO1PR01MB6759.prod.exchangelabs.com
+ ([fe80::ad17:6c06:ffcb:b709]) by CO1PR01MB6759.prod.exchangelabs.com
+ ([fe80::ad17:6c06:ffcb:b709%9]) with mapi id 15.20.4975.018; Mon, 14 Feb 2022
+ 03:45:56 +0000
+From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>
+To: Troy Lee <troy_lee@aspeedtech.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue 
+Thread-Topic: [AST2600] PWM/TACH driver and dbus-sensor issue 
+Thread-Index: AQHYHb9Z9fVcffI98EScCXqS70CDbayN0A+AgASdxKo=
+Date: Mon, 14 Feb 2022 03:45:56 +0000
+Message-ID: <CO1PR01MB6759A78F5D01E78934B055CAFF339@CO1PR01MB6759.prod.exchangelabs.com>
+References: <CO1PR01MB6759E0EC69109784C4B3C282FF2E9@CO1PR01MB6759.prod.exchangelabs.com>
+ <HK0PR06MB2145535BDA1526108377B8478A309@HK0PR06MB2145.apcprd06.prod.outlook.com>
+In-Reply-To: <HK0PR06MB2145535BDA1526108377B8478A309@HK0PR06MB2145.apcprd06.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-To: Andrew Jeffery <andrew@aj.id.au>, u-boot@lists.denx.de
-References: <20220131034147.106415-1-andrew@aj.id.au>
-From: "Alex G." <mr.nuke.me@gmail.com>
-In-Reply-To: <20220131034147.106415-1-andrew@aj.id.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+suggested_attachment_session_id: 87f29990-f365-06af-383f-61e44bbdd542
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: e1368966-e25f-4c46-ea67-08d9ef6c81f9
+x-ms-traffictypediagnostic: BN8PR01MB5540:EE_
+x-microsoft-antispam-prvs: <BN8PR01MB5540649FF28D800A25DF9B2FFF339@BN8PR01MB5540.prod.exchangelabs.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ES3LC5Q0S8E+ekGyU2HMUGFTifB8RSfmGjVo6i/G2OPe3Sh/LILn2Zl1PbsNdDS8S871HbyqjK2bq6XU1dtUabFBGIM2ZgabDjwbWg3HvjWdH/3oJKwxGFtzVwOqH0igEOIE1wYN2BX/fbtoubPutLUccov3xW+7OGZDtF3IKzEmP/S9V3Fj0nL/M2EgAOyy3v5t6ULq0gWq5PJIPYVANQ1KdEZKMYZbkYMY0T2os7Syv+66Zjxqjdl0oSI1Q/A8EqDqSSRZ3PfgZ5yKPyDsuMG8KCdhX1YuZD9C5IzTk/kDYpmIboD2QIguPT9xbBVl/y5Ixdkoagbi0T5zaYVYFUuW8x+JX4dElkAVF0OAfVDETHE2VE5Lx5zRlfAt8N8P8RJwYr46yvqtl1iUfWuGlPaRBa9GYWCV1M9EtLYYuV/jWu8jvyKjYETWaQaQ+MesaYUEOxuzsCRGdjr3neCz5vPWt7OerEtVyDcAMeNn6WwS1kRgwF32cD2F8G6T02Dpus8D+VbRcffRqicSXc0Q3D2zzzWC3rGFEzUNVFJAeFrXm2HxtQQnBBC0+OfDyrUbqvb4Yvj+8VrltSt7CO1aVQLsIaSIFnZT4sQhBNjaFOE5/S6zViBa7cFWI9hXzcHHZbcTtPTGrtby/neJd/5khj+iZ1H8Sc4A5Wl0QSRSvRWR5Q2EZY8w4ahzTHZfNKiDsAmW4cBe3RvJaUyMZMYv9RKOcy1k/qrl2rOTXZoRsf5A41L7lWZnky8ocuk32s78CcKCmN1RfR7RkqVio2AGVY7opDfkyDokWEcrcNRgSkwgA+M7oiL8ZtUkEWwiCN4W
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CO1PR01MB6759.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(13230001)(4636009)(366004)(966005)(110136005)(4326008)(508600001)(6506007)(76116006)(66556008)(186003)(91956017)(66476007)(64756008)(316002)(54906003)(5660300002)(4743002)(66946007)(8676002)(33656002)(66446008)(2906002)(9686003)(26005)(107886003)(86362001)(83380400001)(71200400001)(38070700005)(38100700002)(55016003)(122000001)(53546011)(8936002)(7696005)(52536014);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?0pzhwcIhAp9D9RkGSTzlnKg1gHx0NX6x9vH6SmODSLwOJ6b5O80RgLIw4juJ?=
+ =?us-ascii?Q?YmInsCkRcKpDmgq6eP/NMQrdWQxB4Jsh9Nabakkz6Oakv00EsWvx2AC4bcM6?=
+ =?us-ascii?Q?01NniWAX2TLQpbvP9GmjAcWEH8d69tYdOJx2pVQV9h9e5yvpYUeWbrigJwkH?=
+ =?us-ascii?Q?lBEl2EFc4N4HwkqbeuHN6P2nR6frSE01KEqT0hCOV1CmRVtNYYgOHtkdgtb3?=
+ =?us-ascii?Q?DuFi5h9MPZzNKaPFOWl6v/xy3WH1VZm7hDEWmEkSEQPcSEUndScTvqfC7znv?=
+ =?us-ascii?Q?bKegYSb7YmjxjF3vBKX69Y76hQqhNzbDXkvTYWgA/+ACZy0rEQRQyQNQ4UQN?=
+ =?us-ascii?Q?pVGmAoNkNJkfRPp5vMO2WlJIHts/xVxfZkSG03NKUD3dQSn50W3r5xReWDEU?=
+ =?us-ascii?Q?o+CsuFk8S0UV8NwFxOgEngB3Z3A5zvPoODdFP4osdt80bp/UEMIrZiEV7ETU?=
+ =?us-ascii?Q?2zl/+P90RBaX2n/U56juQ/AYVtCUmNMqbrwgsgzd5g4o6lsmZDqtQeFcRIyg?=
+ =?us-ascii?Q?JGTOAsDDgfusHpmWDbcN4OqUCw4+cHXAN4DAxJwg+5Qbj8j5ddtvSRqW2/wE?=
+ =?us-ascii?Q?RQuKFVAm8s+qaxoZtrnbW79HkYPU+J6E2y0AZKicERzw3psXeaBhRCeBFdqz?=
+ =?us-ascii?Q?ipoD+iTqUCZoBCJwaIP91gLE7aU8FHAW4eJuf8v/AOMH3qv9qGj9c59Rsmwe?=
+ =?us-ascii?Q?qB7zfNDt68lLXld1oYIa/cqROR40/6SK1na0n9btfGnS4rfySF9K/i9ssRAl?=
+ =?us-ascii?Q?/AW3H45lc9TEMBhGCuMrmFadcvdYGBRbafLebUqvu4RlKUPADXQY0xbaOD/N?=
+ =?us-ascii?Q?at+7rTQVVR8KARFwnUVpXaVY/kXASG4RctMuS8BI87rfMIDMJYX857UAVsBH?=
+ =?us-ascii?Q?my1O+MN/l9co+ZD78hECvXvt9iNSHcffqPgbzx8+jVpD7uOHmIeY0Qh1qx8U?=
+ =?us-ascii?Q?hYlqCPAmmBLSvmvEN1p8zyxZl7TkTGwHvSfJVBgN8AmHS1s+sYIdbU+zb6Nc?=
+ =?us-ascii?Q?NW1XEPwkjrRCfLAVKmsA7Kgbs1+wveOKaXhL65jHDzAEYLIVzMR6mdm0a+aL?=
+ =?us-ascii?Q?ylIQXhcPtJzF/32xpHHO9Uq6crhJPPU6AKeExbcck/vV7G0jdvFWFGyvFVmq?=
+ =?us-ascii?Q?dUaJp9+2Mi/R5zEaZwJNA4RsEs7M3pjjL+VSZ0ly6rtdiNv4IJ/dc8G7648Z?=
+ =?us-ascii?Q?Mbh8uRfBNae4qxjZYqpJoz1CqX4JB3PVHK/MuVf8lZuEmWaB9WRx6ZJUMbbg?=
+ =?us-ascii?Q?hvVMhcUAWgwZEntJQ8i0QNqp0VDUTXEDguvACitXIWovwSUFRX9TRaZm8gRQ?=
+ =?us-ascii?Q?Wx2smwHZOQcVMKcdpn6l6M0mbMwOp+oFeSSNTV4qDpGDoVMK9So1ro48BHeR?=
+ =?us-ascii?Q?EcnjIDnqtbeQiw/uI9Huig8/Uy+TjmxMTJTTO6WvGWqT4kkId4EpquldmjGh?=
+ =?us-ascii?Q?JIwBQ7o8/IPlRdYJTKYOPS8vVH04dgQCntT49EuwoFq5g/1c9WVQVPokHL0G?=
+ =?us-ascii?Q?SEuD1dXlxU78qFAcj363kTMyNjSZaWEIRf3zQucVPy92cB0Vmy5oHK0O1Tyv?=
+ =?us-ascii?Q?d4tdpwVkL3dVDkeI4hAhxdpViisu36BAX6RxEpfJeaSBsn9m5oK3hCupr5rX?=
+ =?us-ascii?Q?b6VhyZZApbOnHuXNXiGoKWXco5IBb6sUL8yMlQTOdTXagUb12zYKr0Ec0WRJ?=
+ =?us-ascii?Q?eWQWV4Kj+z8Ly4r4mY2osKzX9rIFKk4xvdCDxWeD7iJr9R7A?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR01MB6759.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e1368966-e25f-4c46-ea67-08d9ef6c81f9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Feb 2022 03:45:56.4375 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: +5j0btZcuOAvIdIDrjC1NzGyEsWo3wfP2ZvlP+laBaUXOLBYNT4I1G4zhTgcoo9zdh8qu0Hf+SPrzit8F6mo9t7KnsLtr9T/L1a6VcIfZ6Hnklf8ePlm5r5dX7OuQoqQ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR01MB5540
 X-Mailman-Approved-At: Tue, 15 Feb 2022 15:34:02 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -86,126 +135,125 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, sjg@chromium.org, chiawei_wang@aspeedtech.com
+Cc: Thu Nguyen OS <thu@os.amperecomputing.com>,
+ Thang Nguyen OS <thang@os.amperecomputing.com>,
+ Phong Vo OS <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 1/30/22 21:41, Andrew Jeffery wrote:
-> Some platform designs include support for disabling secure-boot via a
-> jumper on the board. Sometimes this control can be separate from the
-> mechanism enabling the root-of-trust for the platform. Add support for
-> this latter scenario by allowing boards to implement
-> board_fit_image_require_verfied(), which is then invoked in the usual
-> FIT verification paths.
-> 
-> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> ---
-> Hi,
-> 
-> This patch is extracted from and motivated by a series adding run-time
-> control of FIT signature verification to u-boot in OpenBMC:
-> 
-> https://lore.kernel.org/openbmc/20220131012538.73021-1-andrew@aj.id.au/
-> 
-> Unfortunately the OpenBMC u-boot tree is quite a way behind on tracking
-> upstream and contains a bunch of out-of-tree work as well. As such I'm
-> looking to upstream the couple of changes that make sense against
-> master.
+Hi Troy,
+Thank you for the information, i have merged the dbus-sensor patch and see =
+it creates the Fan sensors well.
+One more issue i have observed about the fan tach report like this:
 
-I don't understand the practical use of a mechanism to disable security 
-if secure boot was enabled in the first place. Sure it can be 
-technically done, but why is this not a bad idea?
+root@mtmitchell:~# echo 120 > /sys/class/hwmon/hwmon1/pwm1
+root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
+418526
+root@mtmitchell:~# echo 100 > /sys/class/hwmon/hwmon1/pwm1
+root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
+195312
+root@mtmitchell:~# echo 255 > /sys/class/hwmon/hwmon1/pwm1
+root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
+0
+root@mtmitchell:~# echo 50 > /sys/class/hwmon/hwmon1/pwm1
+root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
+0
 
-> Please take a look!
-> 
-> Andrew
-> 
->   boot/Kconfig     |  8 ++++++++
->   boot/image-fit.c | 21 +++++++++++++++++----
->   include/image.h  |  9 +++++++++
->   3 files changed, 34 insertions(+), 4 deletions(-)
-> 
-> diff --git a/boot/Kconfig b/boot/Kconfig
-> index c8d5906cd304..ec413151fd5a 100644
-> --- a/boot/Kconfig
-> +++ b/boot/Kconfig
-> @@ -78,6 +78,14 @@ config FIT_SIGNATURE
->   	  format support in this case, enable it using
->   	  CONFIG_LEGACY_IMAGE_FORMAT.
->   
-> +if FIT_SIGNATURE
-> +config FIT_RUNTIME_SIGNATURE
-> +	bool "Control verification of FIT uImages at runtime"
-> +	help
-> +	  This option allows board support to disable verification of
-> +	  signatures at runtime, for example through the state of a GPIO.
+It means the fan speed is reported incorrectly somehow, but i can see the f=
+an speed changes by eyes, do you have idea on this issue ?
 
-The commit message does a much nicer job explaining this option, even 
-though it is this kconfig help text that almost all users will ever see.
+________________________________________
+From: Troy Lee <troy_lee@aspeedtech.com>
+Sent: Friday, February 11, 2022 12:13 PM
+To: Tung Nguyen OS; openbmc@lists.ozlabs.org
+Cc: Thu Nguyen OS; Thang Nguyen OS; Phong Vo OS
+Subject: RE: [AST2600] PWM/TACH driver and dbus-sensor issue
 
-> +endif # FIT_SIGNATURE
-> +
->   config FIT_SIGNATURE_MAX_SIZE
->   	hex "Max size of signed FIT structures"
->   	depends on FIT_SIGNATURE
-> diff --git a/boot/image-fit.c b/boot/image-fit.c
-> index f01cafe4e277..919dbfa4ee1d 100644
-> --- a/boot/image-fit.c
-> +++ b/boot/image-fit.c
-> @@ -1308,6 +1308,14 @@ static int fit_image_check_hash(const void *fit, int noffset, const void *data,
->   	return 0;
->   }
->   
-> +#ifndef __weak
-> +#define __weak
-> +#endif
+Hi Tung,
 
-What?
+> -----Original Message-----
+> From: openbmc <openbmc-
+> bounces+troy_lee=3Daspeedtech.com@lists.ozlabs.org> On Behalf Of Tung
+> Nguyen OS
+> Sent: Wednesday, February 9, 2022 10:40 PM
+> To: openbmc@lists.ozlabs.org
+> Cc: Thu Nguyen OS <thu@os.amperecomputing.com>; Thang Nguyen OS
+> <thang@os.amperecomputing.com>; Phong Vo OS
+> <phong@os.amperecomputing.com>
+> Subject: [AST2600] PWM/TACH driver and dbus-sensor issue
+>
+> Dear community,
+> We have ported the PWM/TACH hwmon driver for AST2600 from ASPEED's
+> repository https://github.com/AspeedTech-BMC/linux/tree/aspeed-master-
+> v5.4/drivers/hwmon to support Ampere Computing's systems. Verify with
+> AST2600 EVB, i can see the driver works. However there is a concern like:
+> 1. The change of hwmon fan pwm/tach in sysfs (as below), this is differen=
+t
+> from the ast2500 as the separated of the fan*_input and pwm1 in various
+> hwmon directories. At this time, the driver doesn't exist in the OpenBMC
+> linux at https://github.com/openbmc/linux. Is OpenBMC going to merge and
+> keep this driver ?
 
-> +__weak int board_fit_image_require_verified(void)
-> +{
-> +	return 1;
-> +}
-> +
+Please have a look on this patch.
+https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/49253
 
-I caution against having any platform security related functionality as 
-a weak function. Did I get the right function, or something else with 
-the same name was compiled that returns 0 and silently disables security 
-in my platform?
+Thanks,
+Troy Lee
 
-I think a weak function in this context is a source of confusion and 
-future bugs. You could instead require the symbol to be defined if and 
-only if the appropriate kconfig is selected. Symbol not defined -> 
-compiler error. Symbol defined twice -> compiler error. Solves the 
-issues in the preceding paragraph.
-
-[snip]
-
-> diff --git a/include/image.h b/include/image.h
-> index 97e5f2eb24d6..98900c2e839b 100644
-> --- a/include/image.h
-> +++ b/include/image.h
-> @@ -1173,6 +1173,15 @@ int calculate_hash(const void *data, int data_len, const char *algo,
->   # define FIT_IMAGE_ENABLE_VERIFY	CONFIG_IS_ENABLED(FIT_SIGNATURE)
->   #endif
->   
-> +/*
-> + * Further, allow run-time control of verification, e.g. via a jumper
-> + */
-> +#if defined(CONFIG_FIT_RUNTIME_SIGNATURE)
-> +# define fit_image_require_verified()	board_fit_image_require_verified()
-> +#else
-> +# define fit_image_require_verified()	FIT_IMAGE_ENABLE_VERIFY
-> +#endif
-> +
-
-image.h is also used for host code. When only changing target code 
-behavior, there should be a very good reason to modify common code. I'm 
-not convinced that threshold has been met.
-
-My second concern here is subjective: I don't like functions defined as 
-macros, further depending on config selections. It makes many code 
-parsers and IDEs poop their pantaloons. It makes u-boot harder to work 
-with as a result. I suggest finding a way to turn this into a static inline.
-
-Alex
+> root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon hwmon0/ hwmon1/
+> hwmon2/ hwmon3/ hwmon4/ hwmon5/ hwmon6/ hwmon7/ hwmon8/
+> hwmon9/ root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon0/
+> drwxr-xr-x    3 root     root             0 Jan  1  1970 .
+> drwxr-xr-x    3 root     root             0 Jan  1  1970 ..
+> lrwxrwxrwx    1 root     root             0 Feb  9 08:38 device -
+> > ../../../1e610000.pwm_tach:tach
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan10_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan11_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan12_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan13_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan14_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan15_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan16_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan1_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan2_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan3_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan4_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan5_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan6_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan7_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan8_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan9_input
+> -r--r--r--    1 root     root          4096 Feb  9 08:38 name
+> lrwxrwxrwx    1 root     root             0 Feb  9 08:38 of_node -
+> > ../../../../../../../../firmware/devicetree/base/ahb/apb/pwm_tach@1e610
+> 000/tach
+> drwxr-xr-x    2 root     root             0 Feb  9 08:38 power
+> lrwxrwxrwx    1 root     root             0 Jan  1  1970 subsystem -
+> > ../../../../../../../../class/hwmon
+> -rw-r--r--    1 root     root          4096 Jan  1  1970 uevent
+> root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon*/pwm*
+> -rw-r--r--    1 root     root          4096 Feb  9 09:13
+> /sys/class/hwmon/hwmon1/pwm1
+> -rw-r--r--    1 root     root          4096 Feb  9 09:20
+> /sys/class/hwmon/hwmon2/pwm1
+> -rw-r--r--    1 root     root          4096 Feb  9 08:38
+> /sys/class/hwmon/hwmon3/pwm1
+> -rw-r--r--    1 root     root          4096 Feb  9 08:38
+> /sys/class/hwmon/hwmon4/pwm1
+> -rw-r--r--    1 root     root          4096 Feb  9 08:38
+> /sys/class/hwmon/hwmon5/pwm1
+> -rw-r--r--    1 root     root          4096 Feb  9 08:38
+> /sys/class/hwmon/hwmon6/pwm1
+> -rw-r--r--    1 root     root          4096 Feb  9 08:38
+> /sys/class/hwmon/hwmon7/pwm1
+> -rw-r--r--    1 root     root          4096 Feb  9 08:38
+> /sys/class/hwmon/hwmon8/pwm1
+>
+> 2. With above changes, the dbus-sensor for FAN/PWM shall not work
+> because of the compatibility. So if OpenBMC want to keep above
+> PWM/TACH driver, does any sides have the plan to support the fan sensor, =
+if
+> not, we can join and do it.
+>
+> Thank you and best regards,
+> Tung
