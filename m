@@ -2,94 +2,94 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E31B94B5E0D
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 00:09:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 302674B5E13
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 00:14:17 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JyKfv0zs6z3bVt
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 10:09:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JyKmQ2y3Mz3bTr
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 10:14:14 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=mZ0DzXOa;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ChaYTPoI;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=RF5aRo66;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=kY+nTSSj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=mZ0DzXOa; 
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=RF5aRo66; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=ChaYTPoI; 
+ header.a=rsa-sha256 header.s=fm2 header.b=kY+nTSSj; 
  dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JyKfS1FfGz30Dg
- for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 10:09:03 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 35B835C02BF;
- Mon, 14 Feb 2022 18:09:02 -0500 (EST)
-Received: from imap50 ([10.202.2.100])
- by compute3.internal (MEProxy); Mon, 14 Feb 2022 18:09:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JyKm12Z4cz30Dg
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 10:13:53 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id A8BDB5C007A;
+ Mon, 14 Feb 2022 18:13:51 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Mon, 14 Feb 2022 18:13:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
  :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
  :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm2; bh=Jmnvm22RIqGYuNlr8/etLWJGtsffOGXNbGIjcv
- X+NGY=; b=mZ0DzXOaUGaJfdHr0FpJPnCC+9+GIRRn41WgVCbm7KLEu9jk51OjQ/
- zSI9fpvgrdmRjnovlbrBHLw577DleE1r2ip845f7/BSyHHXFTjs3czJ0xKULxhn+
- 1+s+t53e2FxgrZ5jqqmPGnmZlJMke3A1oObh7dLldDfVREykTS9aRtg9ltNflqOU
- KgithS441QNnuhh1PxtelNE6l8cJKN62tKQyqzb2ze6772kKa17cBzQ91KQ3MpAT
- 3zdwTLplypLdEul+JJXV/zBhNH2qIK0wvphYiIiGTbVfTNVk8fPkhSEMdRdsewZX
- IAV8JaAnFM/HCPNM2pNVzK+2XH/aUM1Q==
+ :subject:to:to; s=fm1; bh=zQOUGzaO5jH0YR0DE2qbAOYoi3kB4ThwHC/JzV
+ v/jhw=; b=RF5aRo66KaZrmQSZ+VAGbgTikfZDDf/lLLsuRnszY+mqvAW7/2bbCm
+ pOnrjJE+9t6W/rpa2dYk1whnf78eV+Dlyej1MzxRFLZgqOw9mWdKbe7WdMsiDHVv
+ EJiwIzpRx1AyEjUPXXo/sKJ8voq+lqHso6Ot0updAJnzQDD83zemgQ3GyQa0BFg2
+ OnJrRXev7J59il+XkA9mHSYhY5Jo2amkgh6HFt85pPZdfovL4OsN0X01yj2oe3Kl
+ bcbfk58Ebsite5eo9ziiq6/Zrr32+l6nkWtWV07cDUuDxxY668viUxfBNXU6u7Ub
+ Sxe4zgBfLytl0rE0loaScSM4TdfJ7g2g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-type:date:date:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Jmnvm22RIqGYuNlr8
- /etLWJGtsffOGXNbGIjcvX+NGY=; b=ChaYTPoISwBs7ybRhooUEA1NQ8A3kkcth
- VR6c9SwmGGTyTeUlbSMo8rpzmMH9dv5PoEyqaNuzj1tWyGFZU+UPeNe7ojnIPd8Z
- u5QX9N4K2NlzvWaY+uWJTkkwMpaz8+vqyEXgZd5bgBxmpEZyDf23MHUzkfzkwdbI
- RZTVfoUQI12Y9eDiKRTh/obYf9VzK2M+oilVs8butmwTqVvrJXl4KBgG+0KS32IO
- jl/3/4y7dg2RAi+X/cJXpjJl+vFtWtp0iKy05IVIBrdq7LAEX5zW4UFWtRx3mOgX
- 3iBgpmWi4eKLxfyZR/D14wisW8fRVxnPSD8P5Swl1FyJUax2Xeuow==
-X-ME-Sender: <xms:DeEKYtuxtV5-tv7W5iFqVroubzfNw8xGL1X7AWV3o0hrwGRcTNGtPA>
- <xme:DeEKYmeYAbkcu0xQ16duy_It3KGt5GvLAZ0k1V6GZ48gr7zkpJfKTJjRnavnzOYuu
- cFf9Bf9OY2-oirqHw>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=zQOUGzaO5jH0YR0DE
+ 2qbAOYoi3kB4ThwHC/JzVv/jhw=; b=kY+nTSSjw0qyQIn5njpvRSrpdJZ8hzi47
+ EdBqyXoMisvxYEyiEks17K+mA6iHMmv5sJc0WWQ62PuKSNEamxqaOrVDEaE3l1uZ
+ 6Q4ZAyfX4XbqqsaSa49U8x+Bss1eGwp66n685nZF5cTCKIL8LpMaMF4C2WIvBgpR
+ oQ4Zvlo+5p6f72PoB3QtreMTusJBGSgw0qkpMLpR99izXigqJBlA2N9CsKy3AD6B
+ 3H3fFkQjsHh9PnWdYReZNq3GmQH4+leysBxxcnwXtoJXKNtX6tC1fNghkRtbVCjQ
+ MKXoBpd4eqcpIzciExVJMfPsZv/VLXPVmh2iU9ykcZK1rN4nxZRbw==
+X-ME-Sender: <xms:L-IKYtg2KVng10UCJhJPn3SMKMSYdvMU3cNCMr2IhC2-9SF4f0btjw>
+ <xme:L-IKYiCG6CQV4ARy1wOa0tE7gxuIXLF6sohpz6OIpoCeRnOuz13il6CK_1vlRSmXD
+ 4aSYQ6ofiYxcCt3k8A>
+X-ME-Received: <xmr:L-IKYtEzYvxxy5lM7xz1Tceq8twmZPhPcJZGQu8B-QeadoYEb7ZvGFx3rGAKehAjh5YLIdt43iIYe9CwDxn-hNvPjBEXrx31>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeefgddtjecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeduffdtvdevkeffgfetffffueevgeejleeghfffjedthedthfelgfekfefh
- feekieenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
- eptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:DeEKYgzG7vzNKC02YxGf4RhgKChpyPkKIH9vU2sc3PhrTD5UlLMEBg>
- <xmx:DeEKYkOHjHdQaXsYwglLrtYQVyZdklz4_t-L7HljfpqxFIJLBSHicA>
- <xmx:DeEKYt-NYzBeiavNZCz4BtdTFL4V88HtJGv7VXgHQoHjcuGJsSB6Iw>
- <xmx:DuEKYgnFC0jCDwHOZsyP7N5cPx7T11E7cfd3EEkQ71tuJ2wURKZ5hQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 0CAFF1920081; Mon, 14 Feb 2022 18:09:00 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4748-g31a5b5f50e-fm-cal2020-20220204.001-g31a5b5f5
-Mime-Version: 1.0
-Message-Id: <1f8ec3ae-d15b-4869-8216-b6e4aacc34ef@www.fastmail.com>
-In-Reply-To: <e44df5b3-a338-3cd5-5399-6b5cbf55f5c9@linux.microsoft.com>
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpedvffeggfefteeigfethfeiveeuudeg
+ vdfggfejfeehudetjeefffetkedtleehhfenucffohhmrghinhepkhgvrhhnvghlrdhorh
+ hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
+ thhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:L-IKYiRC7fe2x8hSqXrEhNq_EvT6AX-7syUONNRpk1LkrZxLu1XHPA>
+ <xmx:L-IKYqxF5SaQdRt1J7aqXg7950EFdBmPLhlyd64IbVYJZCbneS7J3A>
+ <xmx:L-IKYo7OrW-cUxGdbIM-A2bitrEEmYSrEIikRdP3N2atNi84AaY9qA>
+ <xmx:L-IKYhkCMntw6NgQvI79FCiyyGPb3iJDhkAcLBfDjceyh7HAwz__3Q>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Feb 2022 18:13:50 -0500 (EST)
+Date: Mon, 14 Feb 2022 17:13:49 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Dhananjay Phadke <dphadke@linux.microsoft.com>
+Subject: Re: [PATCH] image: Control FIT signature verification at runtime
+Message-ID: <YgriLTCF5hvtPCMm@heinlein>
 References: <20220131034147.106415-1-andrew@aj.id.au>
  <97430094-7d2a-432b-a121-96812fac87f9@gmail.com>
  <cf36daed-852b-4c72-b2f3-febf7fd3f802@www.fastmail.com>
  <e44df5b3-a338-3cd5-5399-6b5cbf55f5c9@linux.microsoft.com>
-Date: Tue, 15 Feb 2022 09:38:40 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Dhananjay Phadke" <dphadke@linux.microsoft.com>,
- "Alex G." <mr.nuke.me@gmail.com>, U-Boot-Denx <u-boot@lists.denx.de>,
- "Christopher J Engel" <cjengel@us.ibm.com>
-Subject: Re: [PATCH] image: Control FIT signature verification at runtime
-Content-Type: text/plain
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="LDYq71dmuFXk9ftG"
+Content-Disposition: inline
+In-Reply-To: <e44df5b3-a338-3cd5-5399-6b5cbf55f5c9@linux.microsoft.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,112 +101,114 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Simon Glass <sjg@chromium.org>, "Chia-Wei,
- Wang" <chiawei_wang@aspeedtech.com>
+Cc: Christopher J Engel <cjengel@us.ibm.com>, "Chia-Wei,
+ Wang" <chiawei_wang@aspeedtech.com>, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, U-Boot-Denx <u-boot@lists.denx.de>,
+ "Alex G." <mr.nuke.me@gmail.com>, Simon Glass <sjg@chromium.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+--LDYq71dmuFXk9ftG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 15 Feb 2022, at 05:44, Dhananjay Phadke wrote:
+On Mon, Feb 14, 2022 at 11:14:53AM -0800, Dhananjay Phadke wrote:
 > On 2/13/2022 5:13 PM, Andrew Jeffery wrote:
->> Right, I think this question is an indication that I could write a more
->> informative commit message, so if we converge on something acceptable
->> I'll update it. Let me provide some more context:
->> 
->> As mentioned above this is motivated by use with BMCs, specifically on
->> the ASPEED AST2600, in some specific platform contexts.
->> 
->> Platforms can be designed with two styles of firmware management in
->> mind:
->> 
->> 1. The typical approach - No owner control: Manufacturer supplied
->> firmware with secure-boot always enabled
->> 
->> 2. The atypical approach - Full owner control: Owner-controlled firmware
->> with secure-boot optionally enabled
->> 
->> For quite a few contributing to OpenBMC, the manufacturer and the owner
->> are the same, and so the typical approach is a good match. It probably
->> is the use case Dhananjay was considering[1]. It also caters to the
->> traditionally closed-source firmware ecosystem where manufacturer
->> control is retained.
->> 
->> [1]https://lore.kernel.org/openbmc/016ae207-2ecb-1817-d10e-12819c8c40ef@linux.microsoft.com/
->> 
->> The second approach requires open-source firmware stacks combined with
->> platforms designed to enable owner control. There are some ecosystems
->> that allow this (e.g. OpenPOWER). On the host side for those systems
->> it's possible to secure-boot them using firmware and kernels signed
->> entirely and only by user-controlled keys. We're looking to enable this
->> for the BMC side too, as much as we can.
->> 
->> For completeness (i.e. stating this to make the argument self-contained,
->> not implying that you're unaware of it), for secure-boot to be
->> meaningful at a given point in the boot process we need all previous
->> elements of the boot process to have been verified. That is, it's not
->> enough to verify u-boot if the u-boot SPL is not verified.
->> 
->> Where such systems use the AST2600, limitations of the AST2600
->> secure-boot design come into play:
->> 
->> 3. All secure-boot configuration is held in OTP memory integrated into
->> the SoC
->> 
->> 4. The OTP memory must be write-protected to prevent attackers
->> installing arbitrary keys without physical presence
->> 
->> 5. The OTP is write-protected by configuration held in the OTP.
->> 
->> The consequence with respect to 2. is that the system manufacturer
->> either must:
->> 
->> 6. Program and write-protect the OTP during production, or
->> 
->> 7. Ship the system with the OTP in a vulnerable state.
->> 
->> We figure the latter isn't desirable which means dealing with
->> limitations of the former.
->> 
->> If the OTP is programmed (with the required public keys) and
->> write-protected by the manufacturer, then when configured as a
->> secure-boot root-of-trust, the AST2600 must only boot an SPL image
->> signed by the manufacturer. From here there are two options for owner
->> control:
->> 
->> 8. The manufacturer signs arbitrary SPLs upon request. This requires
->> trust from both parties and potentially a lot of auditing focus from the
->> manufacturer.
->> 
->> 9. The manufacturer publishes the source for the signed u-boot SPL
->> binary in a fashion that allows reproducible builds for verification by
->> inspection. Firmware signed by owner-controlled keys can only be applied
->> beyond this boot stage.
->> 
->> Despite the compromise, the latter approach seems to be the most
->> reasonable in the circumstances.
->> 
->> Again for completeness, broadly, security can be divided into two
->> categories:
->> 
->> 10. Software security
->> 11. Physical security
->> 
->> Controlling secure-boot in a way that requires physical presence rules
->> out the ability to influence the boot process via (remote) software
->> attacks. This is beneficial. The approach at the platform level does not
->> yet solve for physical security, however given this is motivated by use
->> on BMCs, physical security concerns could be viewed as taken care of in
->> the sense that the systems are likely installed in a datacenter or some
->> other controlled environment.
->
+>=20
 > We can decouple HW RoT and runtime control on enforcing secure boot
 > (requiring one or keys) on FIT image. Conflating two raises lot of
 > questions.
 
-Right. They are decoupled. What I'm proposing in the patch only affects 
-FIT verification.
+I won't claim to be a security expert but I don't understand this statement.
+What are the "lots of questions" that are raised?
 
-Cheers,
+> There's not much case for disabling HW RoT, which implies the bootloader
+> (U-Boot or more) has to be trusted after board is manufactured
+> (OTPstraps, especially OTPCFG0[6], are programmed).
+>=20
+> There's indeed a case for disabling secure boot on OS FIT image -
 
-Andrew
+Why wouldn't you want to replace the bootloader just as easily as you can
+replace the kernel / OS itself?  I don't understand why this is more special
+than any other software.  Bootloaders are replaced on "real" systems all the
+time.  There are multiple efforts to be able to replace BIOS/UEFI with a fr=
+ee
+implementation as well.
+
+I would consider the "HW RoT" to be the software in ROMs and not anything
+which can be replaced, like u-boot.  Why are you extending it to include u-=
+boot?
+
+> If bootloader is trusted, it's possible to remotely push the policy to
+> disable runtime FIT image secure boot. Such policy push must use secure=
+=20
+> transport (someway authenticated) and storage (simplest U-Boot env).
+> This is helpful in cases like booting diagnostic images if board has to
+> be RMA'ed and diagnostic images won't be signed by production keys.
+
+For second-hand / recycled hardware, I'm not sure the bootloader _is_ trust=
+ed.
+It is also possible that I punt on some aspects of supply-chain security and
+simply replace it all when it arrives in my hands.  ie. If I can securely
+replace all the bits, I really don't care if it was tampered with in transi=
+t.
+
+> There's a key-requirement policy already implemented [1].
+>=20
+> [1]=20
+> https://lore.kernel.org/u-boot/cover.1597643014.git.thiruan@linux.microso=
+ft.com/
+>=20
+> Board code can patch "required-policy" =3D none at runtime based=20
+> appropriate logic.
+>=20
+> Regards,
+> Dhananjay
+>=20
+> >=20
+> > With that in mind:
+> >=20
+> > To escape the manufacturer's key-chain for owner-controlled signatures
+> > the concept is the manufacturer-signed SPL (or u-boot payload) will load
+> > keys from an external, write-protected EEPROM. These keys are used to
+> > verify the next element of the boot process, providing user control.
+> >=20
+> > To configure owner-controlled keys the EEPROM write-protect must be
+> > disabled. This may, for example, be done via a physical jumper. If left
+> > with write-protection disabled the matching public key for the signature
+> > on the payload can arbitrarily be installed into the EEPROM which makes
+> > secure-boot verification moot. The patch avoids the run-around in this
+> > last behaviour by providing a platform hook to read the state of what is
+> > effectively the EEPROM write-protect pin.
+
+Isn't this jumper proposal just like the TCG Physical Presence requirements?
+This is a software implementation and requires a particular hardware design=
+ for
+it to be done right, but it seems to be along the same lines.
+
+--=20
+Patrick Williams
+
+--LDYq71dmuFXk9ftG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmIK4isACgkQqwNHzC0A
+wRnNwA//e6Fil3ULKlZbLpBeZZaiVm2JnSgVaqUxtOzcty2HzR0E5+Msol9UhUVm
+DpS+t/oxg9PLXYoVClI7lAqFN19ADHYW+RXT+2lU3vHjckY5V94HiuWgKu8kyxi8
+mXvRlNWsGewyogcyPhbJgroRobtpCP3TsDFpX6YXgAOpOSe4re+I37JWNSjbPI6x
+DlBkVveobpfk6SoG3/VhrKZjNx2TcXAPSP5l059UhzDE8YUD6vOBy+rReOl+DJk/
+sj8O8VMKOWvto6tXS7neHEJ5rUGCHmwOmrlLLZtBu7WcYd0R/bElRuPEO8JwhJ0R
+qU/qVR0FGoQtkQtzeicRIMRN77Mk3LBM7Dt9AoTrxecEnXumjjWAXyB/j+1LGGvu
+sxSJo0busvkmQo1kJ1YUu3UXCV7SPLTmWaLJUN+JGszXwFQE7dMGi/K+nyOGJ4gf
+yPmmpr5EDBgtbC2c4KVB75U14cZ0jjHvWeKifVMijIzB7a6YTRcqz6t3EL+FMwUI
+fnpg64+laJgBoktki5UrIEC62ybr1QGII49TFmO0myC6Jf1S5AKOR7p8vV7yUbnY
+dPT+dlI+GhyERDsLJhwhRfWnqWM7Cmv4IXCA5d30jhikbom54aJW0Hcfqf/m/TRv
+kVG++CfGmNOcPW+hlc0U9vRLj0MqChuuEivg3tMU+2zKVvY7fEU=
+=J9cm
+-----END PGP SIGNATURE-----
+
+--LDYq71dmuFXk9ftG--
