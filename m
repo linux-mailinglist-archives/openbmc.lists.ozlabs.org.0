@@ -1,78 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 113BD4B751A
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 21:41:10 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 969B24B7B57
+	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 00:48:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JytKH4Wfdz3cCM
-	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 07:41:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JyyT40t0Kz3c5j
+	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 10:48:08 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=O/wDzP0d;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Gf/ctdlV;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=zbigniew.lukwinski@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42a;
+ helo=mail-pf1-x42a.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=O/wDzP0d; dkim-atps=neutral
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=Gf/ctdlV; dkim-atps=neutral
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com
+ [IPv6:2607:f8b0:4864:20::42a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JytJt1kjMz3bPT
- for <openbmc@lists.ozlabs.org>; Wed, 16 Feb 2022 07:40:45 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1644957646; x=1676493646;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=bY9BmFKod1HOc7dwnMoN+m1ulD283ZboMBxETmlB4sw=;
- b=O/wDzP0dOr9ois//rV2YWTgpkRW1Lyzvlp3p4HhYcLWH0/nE0BOE9nPT
- opn65fCcEuBRh2rY6vjZ1oXC2aFgEVNr+n2j+0kSlEKvUUqvOdIiVMQBq
- lcvE4Trnr7K7sGJfCEiDuBO/xXqd6IPTwD+5Wuh2P/tcXLmJjdQ/3jsHG
- 65vcpnngCjVl0y5yVmwyJotJNmQ5Up9VzEh21HvYkvuJy+2DroA5ge9VD
- DR/rB3n6nI+V6cdaABXnU4TMpkniPi5+UeQU4LyWyRAcxo8iW10uxTZZ5
- 9mEG5enXO8HsCKIQmmWQOXBaag6GVyf1ovPUkYzBbWouFz7mgCRkmgv9w A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10259"; a="248045591"
-X-IronPort-AV: E=Sophos;i="5.88,371,1635231600"; d="scan'208";a="248045591"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Feb 2022 12:39:41 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,371,1635231600"; d="scan'208";a="544491508"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga008.jf.intel.com with ESMTP; 15 Feb 2022 12:39:41 -0800
-Received: from [10.252.43.27] (joudin-MOBL.ger.corp.intel.com [10.252.43.27])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128
- bits)) (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 0B99958010C;
- Tue, 15 Feb 2022 12:39:39 -0800 (PST)
-Message-ID: <54fa7998-223c-f8fe-2fb5-124822a0b06f@linux.intel.com>
-Date: Tue, 15 Feb 2022 21:39:36 +0100
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JyySg67Wvz3002
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Feb 2022 10:47:45 +1100 (AEDT)
+Received: by mail-pf1-x42a.google.com with SMTP id m22so668990pfk.6
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 15:47:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=h2Bdaje8zrkmHj3PV4EQQh5UlviVp1k3LmK5pYerKN4=;
+ b=Gf/ctdlVtjGQVdXwt6iHyWxCAsuj6irAC2bC1BRklMH6nPlxccjWTvcE678DVC38pD
+ STqNqHzFT8hNVLFXL5xZVhx3ib/A65U7omNtVOh2kHqmQFU0uuj8ZyJuFSjbAUE3P+n0
+ A1mSm41VSDTfxzmdBvNiXgmH3BSYTV66bOwf3skW+UIa7XPhJE6zyeHBo2t9LAHuz3QL
+ DPiaUFhE8dry5o4h11gSP6efjl7YK66KFFTSUP4iI8n1I2qQRmcVQ7CntUeCbXxRGi5E
+ KzsH4OXLe3WzOd5qS0Na9ujUymJPFN9b81VXiRCbd1+DwURbh55QuW20f1VCyBqZV9Dm
+ BRCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=h2Bdaje8zrkmHj3PV4EQQh5UlviVp1k3LmK5pYerKN4=;
+ b=J9gIb+3hS7wi0l2nf5R0egzcbZdXR5f4czAL+QvCjqO0DbQ202MHTF/Y+G6JPEt1mX
+ Jw6j777TV1T/77TWqThzJTJmvQUew0uT/BoCZpBfuoN1A6OUreFXmO1H7gU4Q/Xjm5gE
+ SS5uPizKhAM435nxAWfZZMbxacMKGu36ngWf8VN8bZVtoGmF8msjBBlIy07qndYQxpGE
+ 4CNpkx/3eAFDXtv0q8/vYbSXCWE0yi5LvnyXFsehE9Eceia/xBrQgnG3VrYOH9qEb5AW
+ 0Li4R+UhTFdLApN0SlzuH+SexnklLXXs49mBty0qvz+Mh/SRiPm9E+KBLdFBJPiRtCmy
+ if8g==
+X-Gm-Message-State: AOAM533ewaXd7qHGUmc1lBPG3C7ZU6IcQMp7rAwtYDpoZ1wVwUC/iDws
+ dZqikipPLpTJrS8PFPyxMTEdK6HLXfg=
+X-Google-Smtp-Source: ABdhPJw1BLuZS3SJZ+kzwrpWtpjmkQ9YTFjKTeyrxWGMiX5AV0XBflBsCqTHGfkx70t6+knz676vyg==
+X-Received: by 2002:aa7:909a:0:b0:4e1:6d4:5905 with SMTP id
+ i26-20020aa7909a000000b004e106d45905mr434551pfa.34.1644968860850; 
+ Tue, 15 Feb 2022 15:47:40 -0800 (PST)
+Received: from voyager.lan ([45.124.203.14])
+ by smtp.gmail.com with ESMTPSA id w12sm3462239pgl.64.2022.02.15.15.47.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Feb 2022 15:47:40 -0800 (PST)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc] aspeed: Disable unused loaders,
+ add STMICRO flash
+Date: Wed, 16 Feb 2022 10:17:30 +1030
+Message-Id: <20220215234731.130682-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: Propose a new application for reading DIMM SPD directly
-Content-Language: en-US
-To: Michael Shen <gpgpgp@google.com>, Benjamin Fair <benjaminfair@google.com>
-References: <CAD1rtg8sa2OG4jUL8x7Gr9ExzH-tEswhHwSDaZtWhcAN4sAvuw@mail.gmail.com>
- <YgIXodbEP9hmae6Q@heinlein>
- <CAD1rtg-tTrbjiL76NRDGnAfx36JBM4Rcb2gyUYjROR-2=H+Uqg@mail.gmail.com>
- <YgQcaInEBq8ZBlIm@heinlein>
- <CAH2-KxAyXn3YndZY_aWAMt4M6eTMrkPA91vCPeOj0tZOgPv-vA@mail.gmail.com>
- <YgQuzD9AkrqstygH@heinlein>
- <CAH2-KxA6MhNXUs+KXAjHTcJe1gWyGwfL+OUQBuCfQnPMSX7GZQ@mail.gmail.com>
- <CAD1rtg8vM-2PckG1Cct7m5tyFJ-axvKQ_ky2z=rzV4O9mZjoWA@mail.gmail.com>
- <5892de79-ea79-8922-d809-1dd5622a84ad@linux.intel.com>
- <CADKL2t7Jrn5LqTu8Yy9CbCaH2VHHe_Ub=gPaH78Hx2-ZHj2g1w@mail.gmail.com>
- <CAD1rtg8Ja4_XMu3O4KBrhJv4kRwezEPYi4J1698uW1_4ff=TiQ@mail.gmail.com>
-From: "Zbigniew, Lukwinski" <zbigniew.lukwinski@linux.intel.com>
-In-Reply-To: <CAD1rtg8Ja4_XMu3O4KBrhJv4kRwezEPYi4J1698uW1_4ff=TiQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,84 +79,76 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>, openbmc@lists.ozlabs.org
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/15/2022 2:50 AM, Michael Shen wrote:
->> What about CLTT? Switching MUX to the BMC makes CPU not able to get DIMM
->> temperature. Are you assuming here this feature is enabled in BMC FW?
-> CPU can still monitor the DIMM temp by reading the MR4 register and
-> trigger the DIMM throttling if needed. So I think the CLTT will not be
-> affected.
-> If CPU needs something more than MR4 register provided, BMC can assist
-> it in another separate daemon like Benjamin mentioned.
+By removing the unused loaders we save enough space to enable the ST
+Micro flash devices and still fit in the size limit:
 
-Got it.
+ text	   data	    bss	    dec	    hex	filename
+ 340614	  13608	      0	 354222	  567ae	ast2400-obj/u-boot
+ 340923	  13632	      0	 354555	  568fb	ast2500-obj/u-boot
 
-> On Tue, Feb 15, 2022 at 6:17 AM Benjamin Fair <benjaminfair@google.com> wrote:
->> On Fri, 11 Feb 2022 at 13:21, Zbigniew, Lukwinski
->> <zbigniew.lukwinski@linux.intel.com> wrote:
->>> On 2/11/2022 1:40 AM, Michael Shen wrote:
->>>> On Thu, Feb 10, 2022 at 6:45 AM Ed Tanous <edtanous@google.com> wrote:
->>>>> On Wed, Feb 9, 2022 at 1:14 PM Patrick Williams <patrick@stwcx.xyz> wrote:
->>>>>> On Wed, Feb 09, 2022 at 12:20:00PM -0800, Ed Tanous wrote:
->>>>>>> On Wed, Feb 9, 2022 at 11:56 AM Patrick Williams <patrick@stwcx.xyz> wrote:
->>>>>>>> On Tue, Feb 08, 2022 at 04:23:12PM +0800, Michael Shen wrote:
->>>>>>>>> On Tue, Feb 8, 2022 at 3:11 PM Patrick Williams <patrick@stwcx.xyz> wrote:
->>>>>>>>>> On Tue, Feb 08, 2022 at 01:10:37PM +0800, Michael Shen wrote:
->>>>>>>>> BIOS owns the MUX select pin and it can decide who owns the SPD(I2C/I3C) bus.
->>>>>>>>>   From my understanding, BIOS only needs to read SPD during the POST stage.
->>>>>>>>> For the rest of time, BIOS will hand over the SPD bus to BMC.
->>>>>>>> That seems like it might work.  You'll have to deal with the time when the BIOS
->>>>>>>> has the mux in the BMC code somehow.  Ideally I'd ask for the mux select to also
->>>>>>>> be fed to the BMC as an input GPIO so that you can differentiate between "we
->>>>>>>> don't own the mux" and "all the devices are NAKing us".
->>>>>>> This seems like a nitty gritty design detail that's best handled in
->>>>>>> code when we review it.  I think the important bit here is that there
->>>>>>> are paths where this could work without a significant design issue.
->>>>>> Just one subtlety.  I wouldn't expect this, necessarily, to be in _our_ design
->>>>>> and/or code, except that we'd want to document the GPIO line like we do all
->>>>>> others.  I was trying to hint that "if I were involved in this hardware design,
->>>>>> I'd ask for...".  If you leave it out, I'm sure it'll work _most_ of the time
->>>>>> just fine and it'll be your problem to debug it when it doesn't.
->>>>> Understood.
->>>> Thanks for all your suggestions. I will keep them in mind during implementation.
->>> What about CLTT? Switching MUX to the BMC makes CPU not able to get DIMM
->>> temperature. Are you assuming here this feature is enabled in BMC FW?
->> BMC could assist with CLTT, but since this is CPU-specific it would
->> belong in a separate daemon. That daemon could get the relevant
->> temperatures over D-Bus using the standard sensor interface, so I
->> don't think it should affect the design for this component.
->>
->>> Are you going to support DCPMM as well? If so, there is another problem
->>> since switching MUX to BMC you brakes NVDIMM related FW/SW running on
->>> Host OS.
->> There are no plans currently for supporting NVDIMMs, just DDR5 at
->> first as Michael mentioned, and possibly other DDR versions in the
->> future.
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ configs/evb-ast2400_defconfig | 4 ++++
+ configs/evb-ast2500_defconfig | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-I see. So the app will just read SPD non-volatile content and provide it 
-for user, e.g. over DBus, right?
+diff --git a/configs/evb-ast2400_defconfig b/configs/evb-ast2400_defconfig
+index bb9c80a88521..f92dbfd668cd 100644
+--- a/configs/evb-ast2400_defconfig
++++ b/configs/evb-ast2400_defconfig
+@@ -17,6 +17,8 @@ CONFIG_SYS_CONSOLE_ENV_OVERWRITE=y
+ CONFIG_HUSH_PARSER=y
+ # CONFIG_AUTO_COMPLETE is not set
+ CONFIG_SYS_PROMPT="ast# "
++# CONFIG_CMD_IMI is not set
++# CONFIG_CMD_XIMG is not set
+ CONFIG_CMD_MEMTEST=y
+ CONFIG_SYS_ALT_MEMTEST=y
+ CONFIG_CMD_CLK=y
+@@ -51,6 +53,7 @@ CONFIG_DM_SPI_FLASH=y
+ CONFIG_SPI_FLASH=y
+ CONFIG_SPI_FLASH_MACRONIX=y
+ CONFIG_SPI_FLASH_SPANSION=y
++CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_REALTEK=y
+ CONFIG_DM_ETH=y
+@@ -65,3 +68,4 @@ CONFIG_DM_SPI=y
+ CONFIG_SYSRESET=y
+ CONFIG_TIMER=y
+ CONFIG_WDT=y
++# CONFIG_EFI_LOADER is not set
+diff --git a/configs/evb-ast2500_defconfig b/configs/evb-ast2500_defconfig
+index 000ed3f90bdd..91921cf76e62 100644
+--- a/configs/evb-ast2500_defconfig
++++ b/configs/evb-ast2500_defconfig
+@@ -17,6 +17,8 @@ CONFIG_SYS_CONSOLE_ENV_OVERWRITE=y
+ CONFIG_HUSH_PARSER=y
+ # CONFIG_AUTO_COMPLETE is not set
+ CONFIG_SYS_PROMPT="ast# "
++# CONFIG_CMD_IMI is not set
++# CONFIG_CMD_XIMG is not set
+ CONFIG_CMD_MEMTEST=y
+ CONFIG_SYS_ALT_MEMTEST=y
+ CONFIG_CMD_CLK=y
+@@ -52,6 +54,7 @@ CONFIG_SPI_FLASH=y
+ CONFIG_SPI_FLASH_GIGADEVICE=y
+ CONFIG_SPI_FLASH_MACRONIX=y
+ CONFIG_SPI_FLASH_SPANSION=y
++CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_REALTEK=y
+ CONFIG_DM_ETH=y
+@@ -66,3 +69,4 @@ CONFIG_DM_SPI=y
+ CONFIG_SYSRESET=y
+ CONFIG_TIMER=y
+ CONFIG_WDT=y
++# CONFIG_EFI_LOADER is not set
+-- 
+2.34.1
 
-Are you going to access DIMM periodically? It seems that it shall be 
-enough to access DIMMs once per ac cycle/dc cycle. And just return SPD 
-ownership to the CPU for the rest of time.
-
->>>>>>>> You should take a look at what is already existing in fru-device (part of
->>>>>>>> entity-manager repository).  This is already doing this for IPMI-format EEPROM
->>>>>>>> data.  We should be able to replicate/enhance this code, in the same repository,
->>>>>>>> to handle SPD format.
->>>>>>> I am not sure if it's a good idea to put it into the entity-manager
->>>>>>> repo. As you said EM
->>>>>>> is designed for IPMI-format EEPROM. Adding another parser into that
->>>>>>> repo may violate
->>>>>>> EM's design.
->>>>>> I'm not sure why it would be an issue.  Hopefully one of the maintainers of that
->>>>>> repo can weigh in.  I wouldn't expect "parsing only IPMI-format EEPROMs" is a
->>>>>> design but just the current state of implementation.
->>>>> So long as it can function properly in its current design, i have no
->>>>> problem with FruDevice adding more parsing types.  In fact, there's
->>>>> already patchsets out to add Linkedins proprietary fru type to
->>>>> FruDevice, so in terms of design, Patricks request seems reasonable.
->>>> Got it. Then I will push the code to EM.
