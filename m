@@ -2,95 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B7D94B6199
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 04:26:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 59E5D4B6334
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 06:56:56 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JyRM14t2Xz3bcZ
-	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 14:26:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JyVj16lqLz3bZR
+	for <lists+openbmc@lfdr.de>; Tue, 15 Feb 2022 16:56:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=Fyss2rLI;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=RyvtEKlI;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=e7EkjOF9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::833;
+ helo=mail-qt1-x833.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=Fyss2rLI; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=RyvtEKlI; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=e7EkjOF9; dkim-atps=neutral
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com
+ [IPv6:2607:f8b0:4864:20::833])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JyRLY39qKz30Ld
- for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 14:25:41 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id F10A25C02C1;
- Mon, 14 Feb 2022 22:25:36 -0500 (EST)
-Received: from imap50 ([10.202.2.100])
- by compute3.internal (MEProxy); Mon, 14 Feb 2022 22:25:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm2; bh=iDQeASY6QoW5QQYO02Rgb+xYbxTR6+yCsph8o2
- y3ylU=; b=Fyss2rLIm3f7zkP9SjaYk9i3Kwq8ZOJhGRJN+Pu49CXDdz88E16N+C
- kLLwtnFltfDuZ4SG86wgPJoiBKueaYWfu6sSd7ANBqmDfmonuZPZwLHpsb7NPQCj
- wrjgybsuCpPgWdv30E6dRM+Yc2o8P4gKOBqCLlcCHhiIlmZAsW8DI+pGQAMqUwse
- U5IeqLCmEk4tuGxALpl62YGqIEvhi/8LqyLm1z6OC6DMg9XqAypxBKUgDTgW/dSu
- 29F27syMyviyUbfM1tkjSz6PzQLYzJT8BQrD9+egfJ6A7PHxURX3KSO47YdAwRfe
- OklZ/9DWLLwV2zkmBuF7v1/hWx33erOQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=iDQeASY6QoW5QQYO0
- 2Rgb+xYbxTR6+yCsph8o2y3ylU=; b=RyvtEKlITb43/69y0Bd7XZCkmyp4thHps
- FYwZjehh5DlZgrtX/SEfos+cEaoYUkOUJ9aHc2MLRAVm70/47AypgDheUY4rGsEy
- r72+vpiFqV2kx9NPoSJt5LnKVXJMEuZDfusObZ2H8lP9iNKurKkVxZsr1PHvGYyo
- S1VauSxat5jOR5w9ygplRGgKjsy4UeDHTJF8SKThqrFXU0C7/8AfvIiPxy8pAnuy
- W2M6K0W3Cpcnmp9T6Q/ktziDxyv2Uzd0Nax839MoPbaXxXzmyH9i1hEQgpbnpQfb
- XosqR735fPk4BYck6Gg+vOsGyY635rRMu+csrHBuvfwFBPgS//dDA==
-X-ME-Sender: <xms:MB0LYkjfWyAbluE8v7g8ntUPwKxZAUK4hpt-uRCx6YPFomcBgOgNgw>
- <xme:MB0LYtDdDuCR1sjH6v20JQ9Sz9236ZzAnDVJvLpzvPWvwh0mv30aiPOy6UmR0N8-W
- Is3yYIpbHe4Bu-7AQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeefgdehlecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeduffdtvdevkeffgfetffffueevgeejleeghfffjedthedthfelgfekfefh
- feekieenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
- eptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:MB0LYsGpvZRI95NjDIrHfOMnlZvhG5ekVBI2W5Xky0_RkyJNVviwUQ>
- <xmx:MB0LYlQZFNxQlRNZWi4uGdFMzImSKg8A7f4XfJlOhjnkNbKGBTk2lA>
- <xmx:MB0LYhwFBDHb-iU5iHcyqnh0P7kwKw3i3pYOSoByGD3-aL1Lz_uBFQ>
- <xmx:MB0LYkqKZFj-tcTj4sKh2OuULxtj_IVWPkgvYHk3cDUb6AYx8inXng>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 431FE1920081; Mon, 14 Feb 2022 22:25:36 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4748-g31a5b5f50e-fm-cal2020-20220204.001-g31a5b5f5
-Mime-Version: 1.0
-Message-Id: <e4b7fc2b-511a-46f0-8a6f-001c16ebe712@www.fastmail.com>
-In-Reply-To: <06616971-2f88-740d-e805-d229aa86d985@linux.microsoft.com>
-References: <20220131034147.106415-1-andrew@aj.id.au>
- <97430094-7d2a-432b-a121-96812fac87f9@gmail.com>
- <cf36daed-852b-4c72-b2f3-febf7fd3f802@www.fastmail.com>
- <e44df5b3-a338-3cd5-5399-6b5cbf55f5c9@linux.microsoft.com>
- <YgriLTCF5hvtPCMm@heinlein>
- <06616971-2f88-740d-e805-d229aa86d985@linux.microsoft.com>
-Date: Tue, 15 Feb 2022 13:55:13 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Dhananjay Phadke" <dphadke@linux.microsoft.com>,
- "Patrick Williams" <patrick@stwcx.xyz>
-Subject: Re: [PATCH] image: Control FIT signature verification at runtime
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JyVhf4fQFz30NR
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 16:56:32 +1100 (AEDT)
+Received: by mail-qt1-x833.google.com with SMTP id y8so17616247qtn.8
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Feb 2022 21:56:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=uPUj/2D0fnRRHEGsxfFw4uPYjIMmB8m7B7g+xVLuCTs=;
+ b=e7EkjOF9JnmPm2zvwdTKMlYivOB6v4VFpWSOnTeskfEh9TmfPrj9ow39Zv8UTTKTDD
+ GCALVJO2THsTZ9IRY73lRRhUJettrYNXO6G+v6eI7xNrz6nwh2hfeArS1DWLdU54W3r1
+ XqSl0wO9nM2J38wWwIORRLsAWma/NjrwNvmXU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=uPUj/2D0fnRRHEGsxfFw4uPYjIMmB8m7B7g+xVLuCTs=;
+ b=XVToifygwgsrJllPWzosTMtAyyNgE/VAtCEk2wh2P5EhVAiXSWQKliJUEtYp5oWrqW
+ 01RKrBR/tHUMr1fzzayZclKbfHCCwXRLLNKCuGkkG4I7owfYSA5xvvjevGDocbav8ejX
+ qxyscMIyoleuDIKWEBnlNqI9qz2zypX/ZcUqAj/W+zRV1TNpcZXVSLFfxtkxKdvvGg61
+ dDqkX3LT0emMOe0Z5mp/4+HPsUZ3OsTjCWUKpbkomoMtB8LqWR9qqexwZKOnsRza3x1T
+ jvBPTjY7nyUCDIVZIptrgdIkALTb1+hGnKA+JIrvvUhov3FdBkz8g4TV2SutQVHaYzYT
+ zYRg==
+X-Gm-Message-State: AOAM532CSWpue4Su4DvNrR6npCbabUMCFDm6m0LEc00qUSk1a1dwn1eP
+ 1zs5/pPT6hbPEQBfEPAtFDJPccpFdHOsHYZE9zw=
+X-Google-Smtp-Source: ABdhPJxDiNItJktz4LNO+XrPyLIgW4R0iAfyKu+KkaTWOe+XGOJYyD101ljPiR6VxTVgla4El5GLg42q9jEpkrRZCeQ=
+X-Received: by 2002:ac8:7e91:: with SMTP id w17mr1635736qtj.678.1644904589150; 
+ Mon, 14 Feb 2022 21:56:29 -0800 (PST)
+MIME-Version: 1.0
+References: <20220129115228.2257310-1-j.neuschaefer@gmx.net>
+ <CACRpkdYEigGHkoGfBg15tFXadgpXUAjDOnw7ePXhmvHJqPEJXw@mail.gmail.com>
+ <YfZkis8M81Ejpagq@latitude>
+ <CACPK8XdFXRQf3MpPh3z=EMAKtnQSHL+iwwMCVYc5dP9DfQEN+Q@mail.gmail.com>
+ <YfpyjDBH83FE7r4o@latitude>
+ <CAHp75Vdg8zFSHaTP_8jQua5QfRYbvZ4_rLdCtt3ks8YEibseTg@mail.gmail.com>
+ <YgdyjUbb4lnrVHmJ@latitude>
+In-Reply-To: <YgdyjUbb4lnrVHmJ@latitude>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 15 Feb 2022 05:56:17 +0000
+Message-ID: <CACPK8Xe-t8Qso_AX+q08OxrgmUPbEayhnHXH5xiLr7M6rDxjuw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/9] Nuvoton WPCM450 pinctrl and GPIO driver
+To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,42 +78,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Christopher J Engel <cjengel@us.ibm.com>, openbmc@lists.ozlabs.org,
- U-Boot-Denx <u-boot@lists.denx.de>, "Alex G." <mr.nuke.me@gmail.com>,
- Simon Glass <sjg@chromium.org>, "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>
+Cc: devicetree <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ Andy Shevchenko <andy.shevchenko@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On Tue, 15 Feb 2022, at 13:42, Dhananjay Phadke wrote:
-> On 2/14/2022 3:13 PM, Patrick Williams wrote:
->> On Mon, Feb 14, 2022 at 11:14:53AM -0800, Dhananjay Phadke wrote:
->>> There's a key-requirement policy already implemented [1].
->>>
->>> [1]
->>> https://lore.kernel.org/u-boot/cover.1597643014.git.thiruan@linux.microsoft.com/
->>>
->>> Board code can patch "required-policy" = none at runtime based
->>> appropriate logic.
->>>
+On Mon, 14 Feb 2022 at 12:05, Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.n=
+et> wrote:
 >
-> [...]
+> On Wed, Feb 02, 2022 at 02:10:44PM +0200, Andy Shevchenko wrote:
+> > On Wed, Feb 2, 2022 at 2:01 PM Jonathan Neusch=C3=A4fer
+> > <j.neuschaefer@gmx.net> wrote:
+> > > On Tue, Feb 01, 2022 at 11:42:11PM +0000, Joel Stanley wrote:
+> > > > On Tue, 1 Feb 2022 at 13:05, Jonathan Neusch=C3=A4fer <j.neuschaefe=
+r@gmx.net> wrote:
+> >
+> > ...
+> >
+> > > > I assume you're sending a v6 to fix some of the warnings?
+> > >
+> > > No, the warnings are fairly independent of this patchset, it's just t=
+hat
+> > > the adjacent pinctrl-npcm7xx driver started to be built by the bot, d=
+ue
+> > > to my Kconfig change. I'll fix them in a separate patchset.
+> >
+> > I guess you need to fix that first.
+> >
+> > Because now and then all CIs will complain to your patch and confuse pe=
+ople.
 >
->> 
->> Isn't this jumper proposal just like the TCG Physical Presence requirements?
->> This is a software implementation and requires a particular hardware design for
->> it to be done right, but it seems to be along the same lines.
->
-> I'm supporting idea of having control on FIT verification, just pointed
-> that it maybe done by board code by just patching U-Boot control FDT,
-> either the "required-policy" property at /signature or "required"
-> property in individual key nodes.
+> FWIW, Linus has applied the npcm7xx fixes to for-next in the pinctrl tree=
+,
+> which means that they are not blocking this patchset anymore, AFAICS.
 
-This might separate the logic out in a way that's acceptable to Alex.
+I've applied the device tree changes, and I will send a pull request
+for v5.18 with those.
 
-Let me poke at it.
+I assume you want Linus to merge the pinctrl bindings and driver
+through his tree.
 
-Thanks,
+Cheers,
 
-Andrew
+Joel
