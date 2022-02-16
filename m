@@ -2,133 +2,125 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E3174B7FDE
-	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 06:04:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A2094B83B4
+	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 10:10:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Jz5Tc2rXXz3cBW
-	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 16:04:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JzBxT0tmgz3bZY
+	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 20:10:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=iZ0FUH+G;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=O4AW15Ru;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7e8d::726;
- helo=nam04-bn8-obe.outbound.protection.outlook.com;
- envelope-from=tungnguyen@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=iZ0FUH+G; 
+ smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:febc::72e;
+ helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ envelope-from=neal_liu@aspeedtech.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
+ header.a=rsa-sha256 header.s=selector1 header.b=O4AW15Ru; 
  dkim-atps=neutral
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam08on20726.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:7e8d::726])
+Received: from APC01-HK2-obe.outbound.protection.outlook.com
+ (mail-hk2apc01on072e.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:febc::72e])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JycKl6qq7z2xMQ
- for <openbmc@lists.ozlabs.org>; Tue, 15 Feb 2022 21:10:34 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JzBwy6GM2z2yYJ
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Feb 2022 20:09:37 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cT4Q2XjheDAXVtgEaCvvjK4L1y16+MjrRrGY+bgatBMpwc2i4DDz6TQ+v5eN30F5fc1yLk85f0J9zQex5F/FHAXuKgauv+hBKb1GDu/2h9u4ysDhUSiPsACjBteC7jYqxrqHENRLQ0wc0KhtTIDnkSexy75cgz55519LaEXsgtiD6PDywc0aI3HF6GYAm7BQm6lGq6cZ2aQziLjHH24qEzl2nrDkoQ/LD+cOJ4Su5ogzlTZW002duFdWTNm/T5vNWuOu8H9vVBrZ8c9+lWR+V0VV+ozqJ283mENnjOF1LinOPeK4M8wuqaVCFdVQQRc20xJr1AYWAd6PYdmVd/qOIw==
+ b=Uy8qihgEovR/T8FUb12ugWNreYf7aJrNj8xnZ4e/A+4yH8Q1rXjiT4oXJ6O8fjskVx19mSZF0dYzjm6/p6nl6/UQrU+Ak9kg5XJH+VrAly8JV8+ICNk/PBjTiHVYWr+XHWr0eO1f1RlGOJMUCvBr+KAAfIv9W9PCz48AmKSkJDxhgnhAzH3q9DEdOZA89HTaXVEBNpcB05AUxh1X1BC+mx1rzbqvq1osKLy9OetRD37X1lEZLwNvWLm2UiBr53VTfcTfZJrSSUdSEmPzQegFn3NffJVvEr9RwKuwheyNJEEBE0PDU0BqFHMMte60eSYbKHJSDT1fHtykQfgqNM1FFA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RES4rYKaxHQinaVxhYbst8Ru/CiRAOfZ/gFDAekrubM=;
- b=TxUuUXDhVrURzhxtq8CVOIZdRtxrUfTYqMMwkQ9n/j1h8ogEKg5LNpz/gw0vUDnalFAvdd3wsP5NHEMqGq7BoIsDtes38wFSeNXVIZssFyrCYXLXIRiyEotxaD5ZyQxDyiAfBI9K9KNK4OVRb4+axVKZPr4UrF7lakYkIvIiRad3pnyDzqEnNgec2jojIgUZLlj/5VIFD7B3m/1Ir1Vw2IVTcedIF8bH16El7PrIEcXh88O4YJMTiMmeLU+O7YVm3oLfEOA3twJ/rzCKTjZMYyhCu35FcL8ZbZw/1iq9G/8OPbTHE6kX/BL2NdnMnJp1Kiur2GNP9Ou8KSmWY9j5XQ==
+ bh=ZBKl8Hjtm8MuIJOXAQ/T6IYyzyvDqu434Q1jeWPRj7U=;
+ b=F+ZCIhEJ4YYtueGg6j2WN5mDVCvo0cu3eeuavFASH9uQoHA6hLK5k7qSQVzd3XpgNCmlbhMGImyt61ZhFOE4Y0Fvhb3nEma8tKgAIPaQcJ/G8KTLJ/+DUmThhtUe2PVp4zEPDZvBN2HHNqyrhBk5u5wX71Riu9wgFs1d/4vWv2QoQBY/1bih9ME4tE1eh7B/1iBJlwwN/A5GRd+IYnrWmeqJPffIiIwUZayvfyiNaxtlghxMmMx33pBEVwQ+iyYPIZyDCwKIZH+bLXXAeKp+xrxiP8EvhriUAquIg67GO/hMTMuJwnS++qyDFLmhr+0g+5KPLgSHuGPrRCZNY/FIUg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RES4rYKaxHQinaVxhYbst8Ru/CiRAOfZ/gFDAekrubM=;
- b=iZ0FUH+GrJdEZhER8t5n14+i1qiWynT+Kf7chJtqZ2TRAFca0xDG9oixQJOXy+17WvWP8qzsbIVAoUxpzJntUyLH+zYc7E6XwlP6xgqm+WhE5wyrIpve+Iam2S8T5o1VrA/lhTX80nK6cdaIw17c7CnFS1NfvOH2tZ51y1ejzog=
-Received: from CO1PR01MB6759.prod.exchangelabs.com (2603:10b6:303:f5::9) by
- DM6PR01MB5356.prod.exchangelabs.com (2603:10b6:5:17f::21) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4975.18; Tue, 15 Feb 2022 10:10:10 +0000
-Received: from CO1PR01MB6759.prod.exchangelabs.com
- ([fe80::ad17:6c06:ffcb:b709]) by CO1PR01MB6759.prod.exchangelabs.com
- ([fe80::ad17:6c06:ffcb:b709%9]) with mapi id 15.20.4975.019; Tue, 15 Feb 2022
- 10:10:10 +0000
-From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>
-To: Billy Tsai <billy_tsai@aspeedtech.com>, Troy Lee
- <troy_lee@aspeedtech.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue 
-Thread-Topic: [AST2600] PWM/TACH driver and dbus-sensor issue 
-Thread-Index: AQHYHb9Z9fVcffI98EScCXqS70CDbayN0A+AgASdxKqAAAIO4IAAB0KpgACtO4CAAUemHg==
-Date: Tue, 15 Feb 2022 10:10:10 +0000
-Message-ID: <CO1PR01MB675963DCF2D3A0505CE2780AFF349@CO1PR01MB6759.prod.exchangelabs.com>
-References: <CO1PR01MB6759E0EC69109784C4B3C282FF2E9@CO1PR01MB6759.prod.exchangelabs.com>
- <HK0PR06MB2145535BDA1526108377B8478A309@HK0PR06MB2145.apcprd06.prod.outlook.com>
- <CO1PR01MB6759A78F5D01E78934B055CAFF339@CO1PR01MB6759.prod.exchangelabs.com>
- <HK0PR06MB21458E132EC1569124866E2E8A339@HK0PR06MB2145.apcprd06.prod.outlook.com>
- <CO1PR01MB6759010F944EAF2DF12EAA39FF339@CO1PR01MB6759.prod.exchangelabs.com>
- <5BF20D73-BEBB-4C25-AFE8-63DF434CFBC4@aspeedtech.com>
-In-Reply-To: <5BF20D73-BEBB-4C25-AFE8-63DF434CFBC4@aspeedtech.com>
+ bh=ZBKl8Hjtm8MuIJOXAQ/T6IYyzyvDqu434Q1jeWPRj7U=;
+ b=O4AW15Ru1olU0J41HrD3h3MBoslr4yyMAxRdp3vyfak6rtuVSl802se1OkkPe9+IpCU/XhLbof3V6RBltLOIBwyK2QT/UmSYNH6UQaxdyaIaCt+qwenawCSYVrXgm+y/QjuAqkIcJaYo4x5n/MJ46aQ80YFlG+ihWOtO8Bl5sjOhIFMLZCKeK0NuMiBMJJtak0GzsC29clm2cP0Y8vAs9+/VcoSTg0+MSlvdDuyOAGfOyZW5w3RewdlNKfwCzyYRE8M6mXjwXFCF97unDIXkTQqQrE1wvtjoRJDtjdRJvuU91MC0L0bE9cD5XwzCbgEwfkuxH5dEDYbecBVSDUXGNg==
+Received: from HK0PR06MB3202.apcprd06.prod.outlook.com (2603:1096:203:87::17)
+ by PSAPR06MB4166.apcprd06.prod.outlook.com (2603:1096:301:32::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4975.11; Wed, 16 Feb
+ 2022 09:09:13 +0000
+Received: from HK0PR06MB3202.apcprd06.prod.outlook.com
+ ([fe80::c5e1:3ddf:613:ee69]) by HK0PR06MB3202.apcprd06.prod.outlook.com
+ ([fe80::c5e1:3ddf:613:ee69%6]) with mapi id 15.20.4975.017; Wed, 16 Feb 2022
+ 09:09:13 +0000
+From: Neal Liu <neal_liu@aspeedtech.com>
+To: "cryptodev-linux-devel@gna.org" <cryptodev-linux-devel@gna.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: [Issue Report] Kernel panic while running "openssl engine" within
+ cryptodev kernel module inserted
+Thread-Topic: [Issue Report] Kernel panic while running "openssl engine"
+ within cryptodev kernel module inserted
+Thread-Index: AdgjE4L2KHpmIEnzQBWrhZISpPBRAg==
+Date: Wed, 16 Feb 2022 09:09:13 +0000
+Message-ID: <HK0PR06MB320233BBB8CCC79F1809253F80359@HK0PR06MB3202.apcprd06.prod.outlook.com>
 Accept-Language: en-US
-Content-Language: en-US
+Content-Language: zh-TW
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-suggested_attachment_session_id: bd94b15d-f442-591d-ea94-6fbc0ec1058d
 authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 9aac837e-1827-4f74-c159-08d9f06b598d
-x-ms-traffictypediagnostic: DM6PR01MB5356:EE_
-x-microsoft-antispam-prvs: <DM6PR01MB5356CB2F12511E7134FBDF6BFF349@DM6PR01MB5356.prod.exchangelabs.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-office365-filtering-correlation-id: d3a4dc22-644f-4aab-e642-08d9f12c0014
+x-ms-traffictypediagnostic: PSAPR06MB4166:EE_
+x-microsoft-antispam-prvs: <PSAPR06MB41662F32AE2F1858397E56AB80359@PSAPR06MB4166.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:2150;
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 7X+PnYtmaEybNb7ziFCrkC88Oz31nO8B8vEFnLxk3GSddv6RsR7PeioJoWfqjHiGE4+RatcTaWUsFxQS5RvyegUb2309xRA6nbfaGjzvCFFR318RPuq6VF6f7nzoB+n6aCI1ekZHgu2qsdwotEIBJGmpXzIyMI+gpb2Lsp5/YvNpgrUKZVmAE0PHXv30sx4xPwlNqtZbisdl9wxAW4zgNyviKz1y0kXsuacgfBt2hIQzwZwJYrwnEGU3YSWCQvqmRRj+lvmwSRmCO7x43Zo0eD0hxPtx6F9F8WkqUAEcPqIONhf53A6GjheQmCpH1D8Dhppq8ownwN+aKLBjKvYUklU9kVIVxz1gCyd6MU1xDeaco+C0C94uNmqljmBJqCrLh+wk1rPehzD1AI/bFRCzUOPemthz9/hYMYndBiYrCwO+rYvIuvmNYLCEPn/6crW2zu+/6M0tkJv+DyogCRjqKX2dT9vvlHCsj0xXJmi3b/hAxoaciJMCsW2E5hUXLyGnLR22HVTNJJiHJv3hbWGNNVZvnr1YTPKuMmZeI56etMWwEkNrFQxWzoq3vV3pT/8cWDMcXsbXlkinELzLEld77IyqAGSGGPGAR+AcFgTxsbE2xOOV4/bUensnrjLoG9jCzNeGq1vtKT8TR5v4BiGtR7TqY2TFQa/ZhlGV/qGs7XAvDv8JdgKpH9gl4LW52hsgQgrcHhNFKuOdcZyMlefhAtMcZoQB98YUovNuR5AHGXHL3vu8wOsMQbsCrzuAQC2N8LcoWb0CbYnQOB5rUIrao1f+GoAOi0/wA7dqyEC+x/xmCOHAbnjCgUTd/vTdav3a
+x-microsoft-antispam-message-info: XzbbcFvhUOSwu8vHDoI5NoY+DU+TgkwuhPAimx2LgKmPM/xXCb8AVX9jU3ot0HWniRDZM+NnVpfEPPJwQ1OeTeRV6fBYe2/mxRN9CYVe44SX39qVfKW5UjDT2e1ODK7qsDtzQ5uO+ureONAo1eVvW6a8Co4uKibzTMxw2sCPnvMxt+ZlQeATw/LEfXTm3Eonv9ht3eMG+h97TVq4v0cjj2Hnj9Vzco4IB+1vm7UvGIiidcKs05d39IfT9C+SHR/2N4ZKP8wkFXCMn/OvY5Ez4dOWiSTfg8GX5po7Y7HG+JA0XfAN0lRBXixYwHBdEIYz2+m3008hzIgIKULRjGXbaUmCJNidDxsq6j1XrQxDGF2DdYLvsU/js15QtbXQVAXDmwFG4bFbWHTShPWZGdXnPx+Q+kAnDHkCQH4YjREfxpZuoNUKE8QKsH33IOs0+7bWwfQBt061rxYwxBgC2zMMrfQ7Sozz0QX87SysCfTFADeLtSoBNlPJwMXrTwulqlIDUwI1TVG4b13hDF2yHWLkjbzE9EqZ1a6YlfjXFtrG42qqYVp9bzpxiJlrvEvfKbRAbGN584o4umKPXhN64LMtRTjclerCoD5zRUPctFqEaCAmSa+L/zpeNhERk4ioYO+UaLP3Cw2h0yaT2jWIjRHJJeVCBKJZm07N8fQsFsPykqx8rposqww0VxR5uUROnZmNkmbVUDohDWErqKaP69xMLQ==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CO1PR01MB6759.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(54906003)(76116006)(107886003)(966005)(316002)(53546011)(508600001)(71200400001)(110136005)(8676002)(4326008)(38070700005)(7696005)(6506007)(9686003)(66556008)(186003)(66446008)(4743002)(66946007)(66476007)(26005)(64756008)(83380400001)(55016003)(91956017)(38100700002)(86362001)(52536014)(5660300002)(8936002)(2906002)(122000001)(33656002);
+ IPV:NLI; SFV:NSPM; H:HK0PR06MB3202.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230001)(136003)(346002)(396003)(39850400004)(366004)(376002)(55016003)(52536014)(33656002)(9686003)(5660300002)(186003)(26005)(2906002)(38100700002)(38070700005)(8676002)(8936002)(66476007)(76116006)(66446008)(66946007)(66556008)(316002)(122000001)(107886003)(64756008)(110136005)(4326008)(71200400001)(86362001)(508600001)(7696005)(6506007);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?jxo4g6GfFA5vxazYJSf07+8ix+F6WGEMkYqLN4CMOWFVQN8wsyEFQ9I7X2gg?=
- =?us-ascii?Q?cmb4T5ufDlHiFNm0q70W08f5mAp2TFrmu54uJ9ACMAcNYucnI+zHjp2qzgCJ?=
- =?us-ascii?Q?r1klDAs4rI8BL/z7+pBVrSJUFgm+b6DBcesjc3EgIyMnWFdtHCscl38cPVsx?=
- =?us-ascii?Q?vzfk9s/yI51iQTfeRrSTTyKQZ2pQnHEW9vfdDWAKEUyN/zHy/EQIngO30R6m?=
- =?us-ascii?Q?7/F/PXGnJDNhKQ3isw1JUSGWGch2qrRDvvuU3ad1/3DrEeGg9WHLXeowQi3S?=
- =?us-ascii?Q?/XqKcSM64yA112XScCKGwetvv9VVLRmbOLZ0XVuwncesFhGCTnnVAUs4LvFD?=
- =?us-ascii?Q?WkdHaIpuSzvp6uLkm9k7sZ0Y3WgefSQSWtaVYKUmO0Y7PzL0BtujGrFDrAOd?=
- =?us-ascii?Q?bB5nrS9vDEFJcf1rVJe+1+aCtliccs5ZdUjpRJA6Nm9yWyIVXw6tTH5SOHM/?=
- =?us-ascii?Q?rC4GLHZOz9lbilSR03ZVvFEgzgA+pDs7ZefdhnuOrbnC/oWh0vuiI8lHzwDD?=
- =?us-ascii?Q?yJglXJ7Nz2wXzPIEddRG1A3sy82thwOvJjJHxDf/8bQJ+QrdwGCWMK5Bc2qY?=
- =?us-ascii?Q?6Gg7M8HjObMEufysBiDZW+xJ/dGSRdz3/XxXi6gia28Mwp8EVi+3OH3xftl7?=
- =?us-ascii?Q?OZmjpN0rFBplpT/s+Rr5RMuntnLXeIjIbywAzywGvZmNIeai08qA1SC/KqyF?=
- =?us-ascii?Q?ErPDDLJNwZa7IHkt+eXiyadwTg5TV8O+lPIMTiOxxL2qS+Tjimks3BG2Z66/?=
- =?us-ascii?Q?W682XWqWWF+afGT0OXMiAvbJODtV3FwLWsJ8fnj72jXZEWjtlaSdMG3yVDq7?=
- =?us-ascii?Q?MB+reYZYtbxXW/CSdZfdaM/peumYeIPT7oi3dGXleXipI2cSvKmD552GmJ14?=
- =?us-ascii?Q?bSXPxHXzYRFyMZxe/4TNGHscjm7+wfi65MoO5X8BRrEAHIdU7tRWqBc3jHDy?=
- =?us-ascii?Q?8rWJGHsKMI3mARGGNBFXf+zIAFHgHqu5H3MGT8e9ubGNCpJ62R2W2BmiFczZ?=
- =?us-ascii?Q?yy0a43ezTvDYE7/Wev1B6ZBlELudHKMFjBesfBZOFmUVohSkkBAROcVxYCvO?=
- =?us-ascii?Q?X1d2MgyTxnw7JIeyv/MwvMqlR3A6kgXRRFnarVN+UihDYYubVB9LgFImqBrz?=
- =?us-ascii?Q?pPoDJK7dZCF0/WRTR7eF3qIxdv5AdvE7FunJv70ncUhWXyJlvIQVT+A8Fez5?=
- =?us-ascii?Q?MHjzO21ZSJbgS3l3Uf32fVoVtWhgqscURmMOq2ghiuy6QQd7pRM7UlWMbDbr?=
- =?us-ascii?Q?og1ZNqJlqnhagcX9mrIrLKt4mXx9E2opqGKSBWerNJBM1bOBsKb74AKf7RB2?=
- =?us-ascii?Q?s6LCOHNh/31vFKXwz8We/H5Y3S12WBs/JBJwudM96jDWcPXnEbsyCYwBrHmh?=
- =?us-ascii?Q?SkVw0FegfClNvpaiPl6RE4ZnVa4NQQXKL7vEq2YIkmDO9HdyIOuEpfc411ZZ?=
- =?us-ascii?Q?5J3ZmHIMkudj5jhnihwbz7DWISvcqi3MDnbG+iwLrTgfhpn6rZVwa46ucxnR?=
- =?us-ascii?Q?yVMU93IQ9Y6d2aSDwqR86vyxlNJtrEDpU7BloKSja4uB1ZcHpNn7vJpjaB45?=
- =?us-ascii?Q?VyNt6qb3XhAh7l09llXiNLpFtlYS+c55Dh7CbBjRMDDzUfIeNn00g9B2knBE?=
- =?us-ascii?Q?G8yoUrKZ8gZX7X8I0S3R+7db7JcoZAL5D03plzVrsNvE6sKU6V78XUgKvD7o?=
- =?us-ascii?Q?YHQ2MROGPbdZ6XgAbRATyny2Gm/GP6tWdyEM5b3wbuluDbI9?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?W9v8Ftck1dTdEddtAa8qYMbuIoomPlGnj4BVtqU18M3FjPF/TDgvhtT0OKsP?=
+ =?us-ascii?Q?wtQhz59T5x5VB0EXfv8DQmZ1++EpQWXzPHYrOlG75H+tCdF5IIpHmVL0Sw+L?=
+ =?us-ascii?Q?hb6+nQ5ViVPL6DEZnfWyyINW3LNfhUTvcRfx0eJsUSft8kY78GCEHCaOONy6?=
+ =?us-ascii?Q?M8oM4tnnYJwvNsY8V0s/6XdDDlqsWwzRBIQWbr1IWI2iOtdbzG0APYM4jg/C?=
+ =?us-ascii?Q?Rtm8ImYqTFzuBK5rpLEJiEesHmjalXT3JHyJ/e9XOMDr7hPm34FNiZ9PEkEZ?=
+ =?us-ascii?Q?KG3SWPSMH/F6qgTGkhMBx7dJU8tAgrndBWPLTjOOPcq550huFeeFWND+RVMe?=
+ =?us-ascii?Q?BMMZ6+9fVuSE/8j4bLk6XoxXvS5+vedr26/UkKssY+3Rj+9mK8nrDHCFYZ9h?=
+ =?us-ascii?Q?NJ2iOaRKc29osaojPMJWpthkz8X3ub9O4TS73e3NxR3J0XQxGUi2VoRJqIL7?=
+ =?us-ascii?Q?IDSnOwA+A0o8fc7gwDL/bKZTyiSlNVlMTd0fT5HEg0/AMX43BSGfLLdEkGnG?=
+ =?us-ascii?Q?vgIZ9qr4gI0SUuhI4bBieCbentSgU0LKvIhxNdyLSDWQ6l7PQNcuQSponAhs?=
+ =?us-ascii?Q?48K6gs9Fc9YDgBSkhtZSbNMHLu/LLlca5Nkl4HQ58/IRGrBe/YSiDAgayZFu?=
+ =?us-ascii?Q?zn8pxm1F298w/p6u+a5sZPCapfZiH722XKgf9gJ6DspM+an3Ko5Qz5BJlhsX?=
+ =?us-ascii?Q?jbdy4d0OWxQIUdTBrm59UOAYkkPo2tA7DrmlY38naNHWHJDfV4Dvkkhzx7Hf?=
+ =?us-ascii?Q?o/MHkwGirepvwH/wy0F7XLPo0ovkRLh6KVwz2Z4e0MjxzXrytyl0VhZvyKb+?=
+ =?us-ascii?Q?TTnQRdZFIOivbrzk1PaIda/y2RPm/WUM8kcqUncys7Sk9yrPSbHhEbD0QM8U?=
+ =?us-ascii?Q?uEb0pKT1PqFhNO5MgS1CohIFyDdVpdwg/O+UWVOkzAHcAvGFqygUypBiN0ZI?=
+ =?us-ascii?Q?4cmTUWaByM8kv62gF6weQSlI3LCC7NSnaikh0IKoQbFan7Kk27pjvn3OXbYl?=
+ =?us-ascii?Q?GN/jJG62mYmiPea3CoZWrbs33gwoX/2fMb1yCqRwa/Z+7/YPaTzcRJB6enSp?=
+ =?us-ascii?Q?bGQnLv5lDDJs7K79v04XdNAf1rv4PMSPOuufZZ212kr/ufQ4Vy6MCbVdHV/m?=
+ =?us-ascii?Q?+GRukcoFWXgpD8wcIrVKCD64TF79pwVBv0BmQaQeuzC1FGlmEbbiPPsBudPr?=
+ =?us-ascii?Q?RHByki8w7gH0PHDt3QrGyXW2NBx7CewG4lttQOZi4a9w2SIbt+capOQ7epKB?=
+ =?us-ascii?Q?KqaYxAiI6h6xSa076UbiuxdMLqWUhbER46jPnt0+d4xRlL/8mkVuZII0FXwE?=
+ =?us-ascii?Q?JcL3otTFtG+Gk5r3qD81MH0YKgSMSm+LFHhLE2PykTC6UEQjeIwF/XRdzFMg?=
+ =?us-ascii?Q?mNiNtqyY9i5O47l8bTj8dEfzzp4s6ryxcOyzpdU/2zvl4aE9cICCTgZtixAF?=
+ =?us-ascii?Q?f2UKucL6ROSDGkEF7APKK+0X/sgs2TY85xDUhVohVAihRt2eULP3O48OMvl4?=
+ =?us-ascii?Q?WlBX/h2r3cQ57WBdg0ogyYdu8kxO5VlItmYbCyevcm1nx0AxfI40+EWJCW8W?=
+ =?us-ascii?Q?sKLn65i/bj9MH8LNoLKsmPijv9VgqOIyRWVnjCfGK6bG3hJvZIUYNOPK3lPh?=
+ =?us-ascii?Q?Cy3iBc+bHDEgA8+FdTECUD4=3D?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-OriginatorOrg: os.amperecomputing.com
+X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR01MB6759.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9aac837e-1827-4f74-c159-08d9f06b598d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Feb 2022 10:10:10.1140 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB3202.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d3a4dc22-644f-4aab-e642-08d9f12c0014
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Feb 2022 09:09:13.1079 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wlHCBLKgramUHvSmR2d3nGpxOKGyKqtGT2GRNC9TQAOjqv3G0XXEqyRGzTB5ormka97BKhq7/NqHthtoOrBsePwjcxbpah+vl9UGoVZEg/LQkLqiuRJtwaqpj0UEzADh
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB5356
-X-Mailman-Approved-At: Wed, 16 Feb 2022 16:03:41 +1100
+X-MS-Exchange-CrossTenant-userprincipalname: mQ3zRz8YZ6tP6AKsQBBmdPHB4DsjzUMqgmDD7GfbyMG+nscsz+2rezPqNyZ+23449NL9Jrrkw41ahCLl+reFLQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PSAPR06MB4166
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -140,280 +132,216 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com>,
- Thang Nguyen OS <thang@os.amperecomputing.com>,
- Phong Vo OS <phong@os.amperecomputing.com>
+Cc: BMC-SW <BMC-SW@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Billy,
+Hi all,
 
-Please help check:
-root@sunmoonlake:/tmp# ./test.sh 100
-echo 100 > /sys/class/hwmon/hwmon1/pwm1
-cat /sys/class/hwmon/hwmon0/fan1_input
-0
-devmem 0x1e610000
-0x0001101E
-devmem 0x1e610004
-0xFF006500
-devmem 0x1e610008
-0x10500000
-devmem 0x1e61000c
-0xA5400000
-root@sunmoonlake:/tmp# ./test.sh 120
-echo 120 > /sys/class/hwmon/hwmon1/pwm1
-cat /sys/class/hwmon/hwmon0/fan1_input
-266335
-devmem 0x1e610000
-0x0001101E
-devmem 0x1e610004
-0xFF007900
-devmem 0x1e610008
-0x10500000
-devmem 0x1e61000c
-0xF4B00016
-root@sunmoonlake:/tmp# ./test.sh 140
-echo 140 > /sys/class/hwmon/hwmon1/pwm1
-cat /sys/class/hwmon/hwmon0/fan1_input
-837053
-devmem 0x1e610000
-0x0001101E
-devmem 0x1e610004
-0xFF008D00
-devmem 0x1e610008
-0x10500000
-devmem 0x1e61000c
-0xE4B00007
-root@sunmoonlake:/tmp# ./test.sh 255
-echo 255 > /sys/class/hwmon/hwmon1/pwm1
-cat /sys/class/hwmon/hwmon0/fan1_input
-0
-devmem 0x1e610000
-0x0001101E
-devmem 0x1e610004
-0xFF000000
-devmem 0x1e610008
-0x10500000
-devmem 0x1e61000c
-0xB5C00000
-root@sunmoonlake:/tmp#
+I would like to report an issue about OpenBMC + OpenSSL + Cryptodev-linux c=
+ombination running on Aspeed ast2600 platform.
+Kernel panic occurs while running "openssl engine" command. Will put more d=
+etail logs below.
 
-Please note that i'm using the fan settings as:
+After digging in more, I figure out an workaround to avoid this issue.
+I'm wondering whether this bug is related to gcc compiler or not?
+Did anybody met this issue before?
+Any suggestion is appreciated.
 
-        fan0: pwm-fan0 {
-                compatible =3D "pwm-fan";
-                pwms =3D <&pwm 0 40000 0>;        /* Target freq:25 kHz */
-                cooling-min-state =3D <0>;
-                cooling-max-state =3D <3>;
-                #cooling-cells =3D <2>;
-                cooling-levels =3D <0 25 128 255>;
-        };
-.....
-        fan@0 {
-                reg =3D <0x00>;
-                aspeed,pulse-pr =3D <2>;
-        };
+Workaround:
+- Force enable CONFIG_GCC_PLUGINS config in Linux-5.15
 
+Here are the detail steps to reproduce the issue:
+1. Get latest OpenBMC source
+* $ git clone git@github.com:openbmc/openbmc.git
 
-________________________________________
-From: Billy Tsai <billy_tsai@aspeedtech.com>
-Sent: Monday, February 14, 2022 1:34 PM
-To: Tung Nguyen OS; Troy Lee; openbmc@lists.ozlabs.org
-Cc: Thu Nguyen OS; Thang Nguyen OS; Phong Vo OS
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
+2. Setup ast2600 target
+* $ . setup evb-ast2600
 
-Hi Tung,
+3. Apply below patches to support openssl and cryptodev-linux kernel module=
+s
+* Linux defconfig
+diff --git a/meta-aspeed/recipes-kernel/linux/linux-aspeed/aspeed-g6/defcon=
+fig b/meta-aspeed/recipes-kernel/linux/linux-aspeed/aspeed-g6/defconfig
+index 451afd81a..d4b0ba4d8 100644
+--- a/meta-aspeed/recipes-kernel/linux/linux-aspeed/aspeed-g6/defconfig
++++ b/meta-aspeed/recipes-kernel/linux/linux-aspeed/aspeed-g6/defconfig
+@@ -289,3 +289,4 @@ CONFIG_DEBUG_LIST=3Dy
+ CONFIG_FUNCTION_TRACER=3Dy
+ CONFIG_DEBUG_USER=3Dy
+ # CONFIG_RUNTIME_TESTING_MENU is not set
++CONFIG_MODULES=3Dy
 
-Can you check the PWM frequency and dump the register value 0x1e610000~0x1e=
-61000c?
+* Use hw engine
+diff --git a/meta-phosphor/recipes-connectivity/openssl/openssl_%.bbappend =
+b/meta-phosphor/recipes-connectivity/openssl/openssl_%.bbappend
+index 0581dcd63..c51b8ecde 100644
+--- a/meta-phosphor/recipes-connectivity/openssl/openssl_%.bbappend
++++ b/meta-phosphor/recipes-connectivity/openssl/openssl_%.bbappend
+@@ -1,5 +1,6 @@
+ # General config settings.
+-EXTRA_OECONF:append:class-target =3D " shared no-hw no-err no-psk no-srp "
++EXTRA_OECONF:append:class-target =3D " shared no-err no-psk no-srp no-dyna=
+mic-engine "
+
+ # Disable SSL (keep TLS only).
+ EXTRA_OECONF:append:class-target =3D " no-ssl2 no-ssl3 "
+
+* Install libcrypto & libssl & openssl stuffs
+diff --git a/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb b=
+/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb
+index 494b06c7c..4fa2efcad 100644
+--- a/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb
++++ b/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb
+@@ -52,3 +52,12 @@ ROOTFS_POSTPROCESS_COMMAND +=3D "remove_etc_version ; "
+ # The shadow recipe provides the binaries(like useradd, usermod) needed by=
+ the
+ # phosphor-user-manager.
+ ROOTFS_RO_UNNEEDED:remove =3D "shadow"
++
++IMAGE_INSTALL:append =3D " \
++    libcrypto \
++    libssl \
++    openssl \
++    openssl-bin \
++    openssl-conf \
++    openssl-engines \
++    "
+
+* Enable cryptodev-linux
+diff --git a/poky/meta/recipes-connectivity/openssl/openssl_3.0.1.bb b/poky=
+/meta/recipes-connectivity/openssl/openssl_3.0.1.bb
+index 7727ec43e..15fd68e8a 100644
+--- a/poky/meta/recipes-connectivity/openssl/openssl_3.0.1.bb
++++ b/poky/meta/recipes-connectivity/openssl/openssl_3.0.1.bb
+@@ -27,6 +27,7 @@ MULTILIB_SCRIPTS =3D "${PN}-bin:${bindir}/c_rehash"
+ PACKAGECONFIG ?=3D ""
+ PACKAGECONFIG:class-native =3D ""
+ PACKAGECONFIG:class-nativesdk =3D ""
++PACKAGECONFIG:class-target =3D "cryptodev-linux"
+
+ PACKAGECONFIG[cryptodev-linux] =3D "enable-devcryptoeng,disable-devcryptoe=
+ng,cryptodev-linux,,cryptodev-module"
+ PACKAGECONFIG[no-tls1] =3D "no-tls1"
+
+4. Build obmc-phosphor-image & running on ast2600
+
+5. Insert cryptodev kernel module
+* $ modprobe cryptodev
+i. [  136.485187] cryptodev: loading out-of-tree module taints kernel.
+ii. [  136.494384] cryptodev: driver 1.12 loaded.
+
+6. Running openssl engine to check hw engine is supported
+* $ openssl engine
+
+7. Kernel panic
+root@ast2600-default:~# openssl engine
+[  165.288203] Kernel panic - not syncing: stack-protector: Kernel stack is=
+ corrupted in: cryptodev_ioctl+0xc60/0xd30 [cryptodev]
+[  165.300953] CPU: 0 PID: 501 Comm: openssl Tainted: G           O      5.=
+15.0-dirty-0e311ef17334 #1
+[  165.310961] Hardware name: Generic DT based system
+[  165.316307] Backtrace:
+[  165.319038] [<80bc7708>] (dump_backtrace) from [<80bc7950>] (show_stack+=
+0x20/0x24)
+[  165.327507]  r7:80d665f8 r6:8100e768 r5:60000093 r4:80d7a02c
+[  165.333819] [<80bc7930>] (show_stack) from [<80bcc48c>] (dump_stack_lvl+=
+0x48/0x54)
+[  165.342279] [<80bcc444>] (dump_stack_lvl) from [<80bcc4b0>] (dump_stack+=
+0x18/0x1c)
+[  165.350738]  r5:00000000 r4:811003a8
+[  165.354722] [<80bcc498>] (dump_stack) from [<80bc7d48>] (panic+0x108/0x3=
+30)
+[  165.362504] [<80bc7c40>] (panic) from [<80bd516c>] (rcu_dynticks_inc+0x0=
+/0x44)
+[  165.370579]  r3:81538d80 r2:861e7200 r1:7f0024c0 r0:80d665f8
+[  165.376893]  r7:8486c000
+[  165.379714] [<80bd5150>] (__stack_chk_fail) from [<7f0024c0>] (cryptodev=
+_ioctl+0xc60/0xd30 [cryptodev])
+[  165.390223] [<7f001860>] (cryptodev_ioctl [cryptodev]) from [<80309f44>]=
+ (sys_ioctl+0x570/0xc44)
+[  165.400055]  r10:00000036 r9:00000003 r8:84b19f00 r7:76f15c60 r6:7ed8f72=
+8 r5:84b19f00
+[  165.408792]  r4:8004636a
+[  165.411613] [<803099d4>] (sys_ioctl) from [<80100060>] (ret_fast_syscall=
++0x0/0x48)
+[  165.420071] Exception stack(0x8486dfa8 to 0x8486dff0)
+[  165.425712] dfa0:                   76f15b60 76f14824 00000003 8004636a =
+76f15c60 00a82808
+[  165.434842] dfc0: 76f15b60 76f14824 7ed8f728 00000036 00000003 76d30e5c =
+7ed8fde0 00000000
+[  165.443969] dfe0: 76f14944 7ed8f684 76e2d758 76cae67c
+[  165.449609]  r10:00000036 r9:8486c000 r8:80100244 r7:00000036 r6:7ed8f72=
+8 r5:76f14824
+[  165.458337]  r4:76f15b60
+[  165.461168] CPU1: stopping
+[  165.464202] CPU: 1 PID: 0 Comm: swapper/1 Tainted: G           O      5.=
+15.0-dirty-0e311ef17334 #1
+[  165.474205] Hardware name: Generic DT based system
+[  165.479551] Backtrace:
+[  165.482283] [<80bc7708>] (dump_backtrace) from [<80bc7950>] (show_stack+=
+0x20/0x24)
+[  165.490749]  r7:81418e40 r6:00000001 r5:600f0193 r4:80d7a02c
+[  165.497061] [<80bc7930>] (show_stack) from [<80bcc48c>] (dump_stack_lvl+=
+0x48/0x54)
+[  165.505519] [<80bcc444>] (dump_stack_lvl) from [<80bcc4b0>] (dump_stack+=
+0x18/0x1c)
+[  165.513979]  r5:81006654 r4:811002c8
+[  165.517963] [<80bcc498>] (dump_stack) from [<8010ff64>] (do_handle_IPI+0=
+x2c8/0x2fc)
+[  165.526511] [<8010fc9c>] (do_handle_IPI) from [<8010ffc0>] (ipi_handler+=
+0x28/0x30)
+[  165.534971]  r9:81552000 r8:bc80200c r7:81418e40 r6:00000014 r5:81006654=
+ r4:814da200
+[  165.543610] [<8010ff98>] (ipi_handler) from [<80187a6c>] (handle_percpu_=
+devid_irq+0x8c/0x1e0)
+[  165.553135] [<801879e0>] (handle_percpu_devid_irq) from [<80180e80>] (ha=
+ndle_domain_irq+0x6c/0x88)
+[  165.563150]  r7:00000004 r6:00000000 r5:00000000 r4:80f85030
+[  165.569461] [<80180e14>] (handle_domain_irq) from [<80101230>] (gic_hand=
+le_irq+0x78/0x8c)
+[  165.578600]  r7:80f8503c r6:bc802000 r5:81553f38 r4:81006654
+[  165.584911] [<801011b8>] (gic_handle_irq) from [<80100afc>] (__irq_svc+0=
+x5c/0x78)
+[  165.593269] Exception stack(0x81553f38 to 0x81553f80)
+[  165.598904] 3f20:                                                       =
+000a49a8 00000000
+[  165.608035] 3f40: 00000001 8011c4e0 81552000 00000001 81005f50 81005f90 =
+810ced6f 80d69660
+[  165.617165] 3f60: 00000000 81553f94 81553f98 81553f88 80108df0 80108df4 =
+600f0013 ffffffff
+[  165.626294]  r9:81552000 r8:810ced6f r7:81553f6c r6:ffffffff r5:600f0013=
+ r4:80108df4
+[  165.634932] [<80108dac>] (arch_cpu_idle) from [<80bdd378>] (default_idle=
+_call+0x38/0xc8)
+[  165.643972] [<80bdd340>] (default_idle_call) from [<8015df78>] (do_idle+=
+0xd8/0x144)
+[  165.652526] [<8015dea0>] (do_idle) from [<8015e314>] (cpu_startup_entry+=
+0x28/0x2c)
+[  165.660988]  r9:410fc075 r8:8000406a r7:81553ff8 r6:10c0387d r5:00000001=
+ r4:00000096
+[  165.669627] [<8015e2ec>] (cpu_startup_entry) from [<80110530>] (secondar=
+y_start_kernel+0x160/0x184)
+[  165.679732] [<801103d0>] (secondary_start_kernel) from [<801016f0>] (__e=
+nable_mmu+0x0/0x30)
+[  165.689062]  r5:00000051 r4:8156806a
+
+Other information:
+root@ast2600-default:~# openssl version
+OpenSSL 1.1.1g  21 Apr 2020
+
+root@ast2600-default:~# modinfo cryptodev
+filename:      /lib/modules/5.15.0-dirty-0e311ef17334/extra/cryptodev.ko
+license:        GPL
+description:    CryptoDev driver
+author:        Nikos Mavrogiannopoulos <nmav@gnutls.org>
+depends:
+name:         cryptodev
+vermagic:      5.15.0-dirty-0e311ef17334 SMP mod_unload ARMv7 p2v8
+parm:         cryptodev_verbosity:0: normal, 1: verbose, 2: debug (int)
 
 Thanks
 
 Best Regards,
-Billy Tsai
-
-From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>
-Date: Monday, February 14, 2022 at 12:24 PM
-To: Troy Lee <troy_lee@aspeedtech.com>, "openbmc@lists.ozlabs.org" <openbmc=
-@lists.ozlabs.org>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com>, Thang Nguyen OS <thang@os.a=
-mperecomputing.com>, Phong Vo OS <phong@os.amperecomputing.com>, Billy Tsai=
- <billy_tsai@aspeedtech.com>
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Troy,
-the fan settings in device tree are similar to aspeed-ast2600a1-evb.dts, li=
-ke:
-
-        fan0: pwm-fan0 {
-                compatible =3D "pwm-fan";
-                pwms =3D <&pwm 0 40000 0>;        /* Target freq:25 kHz */
-                cooling-min-state =3D <0>;
-                cooling-max-state =3D <3>;
-                #cooling-cells =3D <2>;
-                cooling-levels =3D <0 25 128 255>;
-        };
-.....
-        fan@0 {
-                reg =3D <0x00>;
-                aspeed,pulse-pr =3D <2>;
-        };
-
-I test with co-fan F-5010HH12B and San Ace 92 with above setting, and the r=
-esult looks like in-correct as in previous email.
-
-________________________________________
-From: Troy Lee <troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com>>
-Sent: Monday, February 14, 2022 11:02 AM
-To: Tung Nguyen OS; openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.or=
-g>
-Cc: Thu Nguyen OS; Thang Nguyen OS; Phong Vo OS; Billy Tsai
-Subject: RE: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Adding Billy.
-
-Hi Tung,
-
------Original Message-----
-From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com<mailto:tungnguyen@o=
-s.amperecomputing.com>>
-Sent: Monday, February 14, 2022 11:46 AM
-To: Troy Lee <troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com>>; ope=
-nbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com<mailto:thu@os.amperecomputing=
-.com>>; Thang Nguyen OS
-<thang@os.amperecomputing.com<mailto:thang@os.amperecomputing.com>>; Phong =
-Vo OS
-<phong@os.amperecomputing.com<mailto:phong@os.amperecomputing.com>>
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Troy,
-Thank you for the information, i have merged the dbus-sensor patch and see
-it creates the Fan sensors well.
-One more issue i have observed about the fan tach report like this:
-
-root@mtmitchell:~# echo 120 > /sys/class/hwmon/hwmon1/pwm1
-root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-418526
-root@mtmitchell:~# echo 100 > /sys/class/hwmon/hwmon1/pwm1
-root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-195312
-root@mtmitchell:~# echo 255 > /sys/class/hwmon/hwmon1/pwm1
-root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-0
-root@mtmitchell:~# echo 50 > /sys/class/hwmon/hwmon1/pwm1
-root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-0
-
-It means the fan speed is reported incorrectly somehow, but i can see the
-fan speed changes by eyes, do you have idea on this issue ?
-
-Does the aspeed,pulse-pr property of fan node set correspondingly?
-What is the expected RPM of you fan? 418526 RPM?
-
-Thanks,
-Troy Lee
-
-
-________________________________________
-From: Troy Lee <troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com>>
-Sent: Friday, February 11, 2022 12:13 PM
-To: Tung Nguyen OS; openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.or=
-g>
-Cc: Thu Nguyen OS; Thang Nguyen OS; Phong Vo OS
-Subject: RE: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Tung,
-
-> -----Original Message-----
-> From: openbmc <openbmc-
-> bounces+troy_lee=3Daspeedtech.com@lists.ozlabs.org<mailto:aspeedtech.com@=
-lists.ozlabs.org>> On Behalf Of Tung
-> Nguyen OS
-> Sent: Wednesday, February 9, 2022 10:40 PM
-> To: openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>
-> Cc: Thu Nguyen OS <thu@os.amperecomputing.com<mailto:thu@os.amperecomputi=
-ng.com>>; Thang Nguyen OS
-> <thang@os.amperecomputing.com<mailto:thang@os.amperecomputing.com>>; Phon=
-g Vo OS
-> <phong@os.amperecomputing.com<mailto:phong@os.amperecomputing.com>>
-> Subject: [AST2600] PWM/TACH driver and dbus-sensor issue
->
-> Dear community,
-> We have ported the PWM/TACH hwmon driver for AST2600 from ASPEED's
-> repository https://github.com/AspeedTech-BMC/linux/tree/aspeed-
-master-
-> v5.4/drivers/hwmon to support Ampere Computing's systems. Verify with
-> AST2600 EVB, i can see the driver works. However there is a concern like:
-> 1. The change of hwmon fan pwm/tach in sysfs (as below), this is
-> different from the ast2500 as the separated of the fan*_input and pwm1
-> in various hwmon directories. At this time, the driver doesn't exist
-> in the OpenBMC linux at https://github.com/openbmc/linux. Is OpenBMC
-> going to merge and keep this driver ?
-
-Please have a look on this patch.
-https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/49253
-
-Thanks,
-Troy Lee
-
-> root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon hwmon0/ hwmon1/
-> hwmon2/ hwmon3/ hwmon4/ hwmon5/ hwmon6/ hwmon7/ hwmon8/
-hwmon9/
-> root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon0/
-> drwxr-xr-x    3 root     root             0 Jan  1  1970 .
-> drwxr-xr-x    3 root     root             0 Jan  1  1970 ..
-> lrwxrwxrwx    1 root     root             0 Feb  9 08:38 device -
-> > ../../../1e610000.pwm_tach:tach
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan10_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan11_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan12_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan13_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan14_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan15_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan16_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan1_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan2_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan3_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan4_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan5_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan6_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan7_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan8_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 fan9_input
-> -r--r--r--    1 root     root          4096 Feb  9 08:38 name
-> lrwxrwxrwx    1 root     root             0 Feb  9 08:38 of_node -
-> > ../../../../../../../../firmware/devicetree/base/ahb/apb/pwm_tach@1e
-> > 610
-> 000/tach
-> drwxr-xr-x    2 root     root             0 Feb  9 08:38 power
-> lrwxrwxrwx    1 root     root             0 Jan  1  1970 subsystem -
-> > ../../../../../../../../class/hwmon
-> -rw-r--r--    1 root     root          4096 Jan  1  1970 uevent
-> root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon*/pwm*
-> -rw-r--r--    1 root     root          4096 Feb  9 09:13
-> /sys/class/hwmon/hwmon1/pwm1
-> -rw-r--r--    1 root     root          4096 Feb  9 09:20
-> /sys/class/hwmon/hwmon2/pwm1
-> -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> /sys/class/hwmon/hwmon3/pwm1
-> -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> /sys/class/hwmon/hwmon4/pwm1
-> -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> /sys/class/hwmon/hwmon5/pwm1
-> -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> /sys/class/hwmon/hwmon6/pwm1
-> -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> /sys/class/hwmon/hwmon7/pwm1
-> -rw-r--r--    1 root     root          4096 Feb  9 08:38
-> /sys/class/hwmon/hwmon8/pwm1
->
-> 2. With above changes, the dbus-sensor for FAN/PWM shall not work
-> because of the compatibility. So if OpenBMC want to keep above
-> PWM/TACH driver, does any sides have the plan to support the fan
-> sensor, if not, we can join and do it.
->
-> Thank you and best regards,
-> Tung
+-Neal
 
