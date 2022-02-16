@@ -2,107 +2,95 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DB504B924A
-	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 21:32:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6197E4B9305
+	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 22:09:41 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JzV520XTgz3bc6
-	for <lists+openbmc@lfdr.de>; Thu, 17 Feb 2022 07:32:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JzVvk6hCcz3cHf
+	for <lists+openbmc@lfdr.de>; Thu, 17 Feb 2022 08:09:38 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=gN5HL38k;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=wkxQKvcn;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=HxIdT0OC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20;
+ helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=gN5HL38k; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=wkxQKvcn; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=HxIdT0OC; 
+ dkim-atps=neutral
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
+ [64.147.123.20])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JzV4Y4NR8z3bc3
- for <openbmc@lists.ozlabs.org>; Thu, 17 Feb 2022 07:32:13 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 21GJGYNs024349; 
- Wed, 16 Feb 2022 20:32:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- subject : references : to : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=En5CuvGxn/6eQ2V/biVEjN/fD83uFtkyAqXzU77ibGo=;
- b=gN5HL38kiH2X7ofDKBrZy3abMajxzrXP3jPe0VLvj0kDbX7vM/C+bbFWn0HoCiiLhvOO
- UFv6hya9fUkqSiT28tYKdOWGULLVfmaaL2+pkSVi1qxHDoYDTNx+jPskDyZXna5IXXUB
- Ubaez+knpbnzEnRx+89kE7AkD8S+XbZ+U01CfP1jlHlNfJ3dGnEMNDsckTJdW55/4Pji
- UBy8V9rB45Fjntirv2C9C+Pa+2AQna4FCYRgPg+GhGC+7M+u0UKNcXX42jYAK8o2nnZS
- F9j6xQwFblymBmJD/cclA7U/BYx8h0xcWN8/G2w/KCR95mXzkHEszJwvo8WcaN09s4xc 1g== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3e91gcjg6v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Feb 2022 20:32:10 +0000
-Received: from m0098409.ppops.net (m0098409.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 21GKGTDQ029045;
- Wed, 16 Feb 2022 20:32:09 GMT
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3e91gcjg6b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Feb 2022 20:32:09 +0000
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 21GKSDSM005901;
- Wed, 16 Feb 2022 20:32:08 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma04wdc.us.ibm.com with ESMTP id 3e64hbr7ub-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Feb 2022 20:32:08 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 21GKW7mK21037350
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Feb 2022 20:32:07 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 88662B2073;
- Wed, 16 Feb 2022 20:32:07 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E4581B206A;
- Wed, 16 Feb 2022 20:32:06 +0000 (GMT)
-Received: from [9.65.84.126] (unknown [9.65.84.126])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
- Wed, 16 Feb 2022 20:32:06 +0000 (GMT)
-Message-ID: <41f57009-93da-2920-8074-40f8d146519d@linux.ibm.com>
-Date: Wed, 16 Feb 2022 14:32:05 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.1
-Subject: Is priv-noaccess needed?
-Content-Language: en-US
-References: <cb1a8c54-5a5e-cc07-2f41-95c2036b4dc9@linux.ibm.com>
-To: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
- openbmc <openbmc@lists.ozlabs.org>,
- Vernon Mauery <vernon.mauery@linux.intel.com>,
- Deepak Kodihalli <deepak.kodihalli.83@gmail.com>,
- Ratan Gupta <ratankgupta31@gmail.com>, Tom Joseph <rushtotom@gmail.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-In-Reply-To: <cb1a8c54-5a5e-cc07-2f41-95c2036b4dc9@linux.ibm.com>
-X-Forwarded-Message-Id: <cb1a8c54-5a5e-cc07-2f41-95c2036b4dc9@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: pjNySMTfsaQdI8h-TCgnApsEkK9iW0l9
-X-Proofpoint-GUID: c1Y7le-YMzQg2ik5ROqnK95LjCoe1jef
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JzVvF1XsFz2yQG
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Feb 2022 08:09:12 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id C5FB932020A8;
+ Wed, 16 Feb 2022 16:09:08 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Wed, 16 Feb 2022 16:09:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm1; bh=jkLMflRLFmS5w4TuJMgOW29qje327xPFMKHs+m
+ crfPc=; b=wkxQKvcnM8rEMscIDjPOnC2tKioBzP6cyr/qseIq4e6m+ppFZrbeXo
+ XZiExG4UukoK7GKecjYLdEuVFkShF5/GrLK+SFpRzAb3h8KjZnDu4Qb78mJzghMZ
+ ImFkY8FM1wLs+M07WMxfLaNI3QHegX5j+Py3pi3oZvPNQNtNhy+WCCSU6dWjqGUI
+ GZ6NETaFLDQhUP1mHMIWW+Qt+m6JOaGzUfe0BFpm1t2YTsztL2bL6thPKSZiD51L
+ rRZDCXGN/s5qqn9m0mFASdJi1Y+ukMXBVHUtdbuidJMCswtZhiRifFIHXnsWYybm
+ m2ulN1dQsRzkdCswbisLZ4v0nzNxn26w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=jkLMflRLFmS5w4TuJ
+ MgOW29qje327xPFMKHs+mcrfPc=; b=HxIdT0OCQ1iUim8tkFjDL8ynDPFdIE22v
+ OJVP5VODr0VTlSw3HaFLUVAvB7nXliAIj2E1/sao0OV0cLPZe6Jgpihr7NQWbD/C
+ LLdoNkqvOm3fzc4By9zeJJZTUtOr9PXpnkXpsbrVGBlYIYnaNFmRPx8HVQFJyZO8
+ LgrKkX3pY3tOYVI5Nyz0dopdSwUGMxnBvTC1oUKXnUpvFLVVJUqOhEyXgncS3TY0
+ Wr2sHlnogDLSWB+EfAp2Kqr75i7vUn9dsYvz8M4Dgkf/8h1AaoVDdoVqbXnqUrr3
+ Xo/j0HwvUTDKnMu0O+7/YovklSxsJ0XwNFu4EQ7Ne/FxOKb3swvRQ==
+X-ME-Sender: <xms:82cNYvzrwd-OUjwFn6hQdXuE7TlwC_JnxuF2MoeZMGkmQ2gHTmDiqg>
+ <xme:82cNYnT-29uaSd_j99F4kBNK2KlfENS0-4aCOIqiFHcPVuCrmoduSedXjQmPAM6sp
+ q65GfUVKXsAgi0S3AE>
+X-ME-Received: <xmr:82cNYpXnl2Vc0UwxivnT7TvGAtUafCrBB916bTYwRurIZWCFx5Pn5s-azq-WUZPAXt4Wg--0JCoRO6E4pDCtGWZ2Her23uWM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeeigddugeegucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepuddufeelueehhfelheejjefgueej
+ hefhtdeludefheekudduveekieduudfggeeknecuffhomhgrihhnpehophgvnhgsmhgtqd
+ hprhhojhgvtghtrdighiiinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
+ rghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:82cNYpjk_LPgBvpeIHR93n064CnIIVvogdFOCaNArduRsX8j-o02nQ>
+ <xmx:82cNYhCpcaATOnmizyjTGMkhuKKSA-y8WmU9y-SsLSsOXRC5Mw9L9A>
+ <xmx:82cNYiL476k_wjGIce7MQ7GHKq_8QWzLeC2we0eLTAO8FmuaQxCnHA>
+ <xmx:9GcNYu7q4tJ__gQa5yGqFA8faBxIE4wwXj2Wly-VOxjxEvOvkK4lQg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 16 Feb 2022 16:09:07 -0500 (EST)
+Date: Wed, 16 Feb 2022 15:09:06 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Subject: Re: request to add Gilbert Chen to CLA repository ACL
+Message-ID: <Yg1n8r9QfhPwHkHT@heinlein>
+References: <PAXPR08MB6560EBD9F7A7DB8A23A9997E862F9@PAXPR08MB6560.eurprd08.prod.outlook.com>
+ <af16b2be83e516ee1315ed6c238e98384fdf473b.camel@fuzziesquirrel.com>
+ <PAXPR08MB6560E663519DBD5399A077CB862F9@PAXPR08MB6560.eurprd08.prod.outlook.com>
+ <PAXPR08MB6560715A7152F90C9274667B86359@PAXPR08MB6560.eurprd08.prod.outlook.com>
+ <20220216175620.qwdoegm5d7ja3hof@cheese>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2022-02-16_09,2022-02-16_01,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- suspectscore=0 bulkscore=0 mlxlogscore=897 lowpriorityscore=0 adultscore=0
- clxscore=1011 malwarescore=0 mlxscore=0 spamscore=0 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2201110000 definitions=main-2202160113
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="2e3b8D1+toQ6e5mS"
+Content-Disposition: inline
+In-Reply-To: <20220216175620.qwdoegm5d7ja3hof@cheese>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -114,73 +102,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Gilbert Chen <Gilbert.Chen@arm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-User manager and IPMI maintainers (and please forward to additional 
-interested parties):
 
-We are trying to understand how the NoAccess (priv-noaccess) role is 
-used in OpenBMC.  See the discussion below, the gerrit review, and the 
-IPMI questions.
+--2e3b8D1+toQ6e5mS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-What are the use cases?  What is this role used for?  If we need this 
-role, let's understand why.  Otherwise, can we deprecate this role and 
-remove it?
+On Wed, Feb 16, 2022 at 12:56:20PM -0500, Brad Bishop wrote:
+> On Wed, Feb 16, 2022 at 01:48:55PM +0000, Gilbert Chen wrote:
+> >Hi Brad,
+> >
+> >The change of openbmc-build-scripts has been merged. My gerrit account i=
+s also in arm/ci-authorized group.
+> >But the gerrit patch I submited still cannot let OpenBMC CI work for me.=
+ When I push new commit.
+> >The change log of gerrit still shows "User not approved, see admin CI"
+> >https://gerrit.openbmc-project.xyz/c/openbmc/pldm/+/51184
+> >
+> >Sorry for trouble you again. Do you know if anything I missed?
+>=20
+> It is no trouble.  I forgot that Gerrit creates private groups by=20
+> default, which would cause this.  I've corrected that and it should work=
+=20
+> now.  Please let me know if it doesn't.
+>=20
+> -brad
 
-Joseph
+I retriggered Gilbert's commit in Jenkins and it appears to be working now.
 
+--=20
+Patrick Williams
 
--------- Forwarded Message --------
-Subject: 	Re: Security Working Group meeting - Wednesday February 16 - 
-results
-Date: 	Wed, 16 Feb 2022 13:31:25 -0600
-From: 	Joseph Reynolds <jrey@linux.ibm.com>
-To: 	openbmc <openbmc@lists.ozlabs.org>
+--2e3b8D1+toQ6e5mS
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmINZ+8ACgkQqwNHzC0A
+wRl5fw//UbXsVC59Q2AFIdQi4TVKrN6Z+O3gVq7vsNl7q+xVul9c/YaGNYSumDr5
+nkhoZ6VkVh9OKnP/sL7WFIL3cTpJPxQ8gNW21YBwdeJbJxN4LLVwsm4sR/l8yJEL
+9G3zFiATW+Joj4EsPnF0PjyNO9XcBjvzSriXbRXTq9HtKC0HFWsBbvVRomI9HHpF
+OeHO6u1kmRlX7uFBcOpSbmX15k4/YFEyvyH+gk2t0zg0S3UvuKLqXTz+rcEcrhwx
+xaCLQuR3uab2gJU2oAeXJboSad3h5Hwo6M2G7jrVoEqEPmiXKWokobqs3/88bE/a
+STic6Y+cxYIrWU8yGiJMU9RT4LVesYK2jI562lqUtTH+Cy2SGWdFsaXFSx1HpvGn
+B/Y7nojkAh+28czg5VkcPix/VSUg51PWcexbMC3WrOb4hoba1rM4Fbp6sC7t67wn
+1VvFqkdmj7dnSRuDM3Q6Q9b1nm1XZNJn0U6A5bJM7U+uUJgVayuS2C1wcEKGmnmH
+2ig/dWJryLrG7v6lOFxK+bVkJ3zAwp5M/hrH1/X2PNRUeE64kJ3BW0ccTJlTH8n3
+RrUUH32kX+xogszgS3HSlW18gCCXxiGKnIBdmWqZdeINxJnKJ5nGfrapfh5ckrkN
+OJR9UeFS+N5nKHB8RpzMqjOPCGobdBT5BUIAMxvyYR8sPqtHau4=
+=QsJt
+-----END PGP SIGNATURE-----
 
-On 2/16/22 7:21 AM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday February 16 at 10:00am PDT.
->
-> We'll discuss the following items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-> and anything else that comes up:
-
-Attended: Joseph, Daniil, Dhananjay, Dick, James, Jiang
-
-
-> 1.Do we need to discuss the concept and need for NoAccess users and 
-> how they would be different from disabled BMC user accounts?  See 
-> discussion in 
-> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/49295 
-> <https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/49295>
-
-DISCUSSION:
-
-Does the project have any NoAccess (priv-noaccess) users?
-
-Is noaccess needed to implement IPMI Callback users?
-
-Note that we prefer to disable ipmi users, not change their role.
-
-Can ipmitool be used to create a callback user?  If so, what role does 
-phosphor-user-manager use for that user?
-
-Is the IPMI callback role deprecated?  Can we remove it from OpenBMC?
-
-Is callback needed to implement trusted system interfaces and 
-sessionless interfaces IPMB?
-
-...snip...
-
-Joseph
-
->
-> Access, agenda and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group 
-> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
->
-> - Joseph
-
+--2e3b8D1+toQ6e5mS--
