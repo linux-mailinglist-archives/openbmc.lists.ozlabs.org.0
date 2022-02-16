@@ -2,125 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A2094B83B4
-	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 10:10:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 349F44B89DC
+	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 14:28:22 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JzBxT0tmgz3bZY
-	for <lists+openbmc@lfdr.de>; Wed, 16 Feb 2022 20:10:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JzJgR4pqbz3f19
+	for <lists+openbmc@lfdr.de>; Thu, 17 Feb 2022 00:28:19 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=O4AW15Ru;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=PzNauOAJ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:febc::72e;
- helo=apc01-hk2-obe.outbound.protection.outlook.com;
- envelope-from=neal_liu@aspeedtech.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::429;
+ helo=mail-pf1-x429.google.com; envelope-from=ghung.quanta@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
- header.a=rsa-sha256 header.s=selector1 header.b=O4AW15Ru; 
- dkim-atps=neutral
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-hk2apc01on072e.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:febc::72e])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=PzNauOAJ; dkim-atps=neutral
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com
+ [IPv6:2607:f8b0:4864:20::429])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JzBwy6GM2z2yYJ
- for <openbmc@lists.ozlabs.org>; Wed, 16 Feb 2022 20:09:37 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Uy8qihgEovR/T8FUb12ugWNreYf7aJrNj8xnZ4e/A+4yH8Q1rXjiT4oXJ6O8fjskVx19mSZF0dYzjm6/p6nl6/UQrU+Ak9kg5XJH+VrAly8JV8+ICNk/PBjTiHVYWr+XHWr0eO1f1RlGOJMUCvBr+KAAfIv9W9PCz48AmKSkJDxhgnhAzH3q9DEdOZA89HTaXVEBNpcB05AUxh1X1BC+mx1rzbqvq1osKLy9OetRD37X1lEZLwNvWLm2UiBr53VTfcTfZJrSSUdSEmPzQegFn3NffJVvEr9RwKuwheyNJEEBE0PDU0BqFHMMte60eSYbKHJSDT1fHtykQfgqNM1FFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZBKl8Hjtm8MuIJOXAQ/T6IYyzyvDqu434Q1jeWPRj7U=;
- b=F+ZCIhEJ4YYtueGg6j2WN5mDVCvo0cu3eeuavFASH9uQoHA6hLK5k7qSQVzd3XpgNCmlbhMGImyt61ZhFOE4Y0Fvhb3nEma8tKgAIPaQcJ/G8KTLJ/+DUmThhtUe2PVp4zEPDZvBN2HHNqyrhBk5u5wX71Riu9wgFs1d/4vWv2QoQBY/1bih9ME4tE1eh7B/1iBJlwwN/A5GRd+IYnrWmeqJPffIiIwUZayvfyiNaxtlghxMmMx33pBEVwQ+iyYPIZyDCwKIZH+bLXXAeKp+xrxiP8EvhriUAquIg67GO/hMTMuJwnS++qyDFLmhr+0g+5KPLgSHuGPrRCZNY/FIUg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZBKl8Hjtm8MuIJOXAQ/T6IYyzyvDqu434Q1jeWPRj7U=;
- b=O4AW15Ru1olU0J41HrD3h3MBoslr4yyMAxRdp3vyfak6rtuVSl802se1OkkPe9+IpCU/XhLbof3V6RBltLOIBwyK2QT/UmSYNH6UQaxdyaIaCt+qwenawCSYVrXgm+y/QjuAqkIcJaYo4x5n/MJ46aQ80YFlG+ihWOtO8Bl5sjOhIFMLZCKeK0NuMiBMJJtak0GzsC29clm2cP0Y8vAs9+/VcoSTg0+MSlvdDuyOAGfOyZW5w3RewdlNKfwCzyYRE8M6mXjwXFCF97unDIXkTQqQrE1wvtjoRJDtjdRJvuU91MC0L0bE9cD5XwzCbgEwfkuxH5dEDYbecBVSDUXGNg==
-Received: from HK0PR06MB3202.apcprd06.prod.outlook.com (2603:1096:203:87::17)
- by PSAPR06MB4166.apcprd06.prod.outlook.com (2603:1096:301:32::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4975.11; Wed, 16 Feb
- 2022 09:09:13 +0000
-Received: from HK0PR06MB3202.apcprd06.prod.outlook.com
- ([fe80::c5e1:3ddf:613:ee69]) by HK0PR06MB3202.apcprd06.prod.outlook.com
- ([fe80::c5e1:3ddf:613:ee69%6]) with mapi id 15.20.4975.017; Wed, 16 Feb 2022
- 09:09:13 +0000
-From: Neal Liu <neal_liu@aspeedtech.com>
-To: "cryptodev-linux-devel@gna.org" <cryptodev-linux-devel@gna.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: [Issue Report] Kernel panic while running "openssl engine" within
- cryptodev kernel module inserted
-Thread-Topic: [Issue Report] Kernel panic while running "openssl engine"
- within cryptodev kernel module inserted
-Thread-Index: AdgjE4L2KHpmIEnzQBWrhZISpPBRAg==
-Date: Wed, 16 Feb 2022 09:09:13 +0000
-Message-ID: <HK0PR06MB320233BBB8CCC79F1809253F80359@HK0PR06MB3202.apcprd06.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: d3a4dc22-644f-4aab-e642-08d9f12c0014
-x-ms-traffictypediagnostic: PSAPR06MB4166:EE_
-x-microsoft-antispam-prvs: <PSAPR06MB41662F32AE2F1858397E56AB80359@PSAPR06MB4166.apcprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2150;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: XzbbcFvhUOSwu8vHDoI5NoY+DU+TgkwuhPAimx2LgKmPM/xXCb8AVX9jU3ot0HWniRDZM+NnVpfEPPJwQ1OeTeRV6fBYe2/mxRN9CYVe44SX39qVfKW5UjDT2e1ODK7qsDtzQ5uO+ureONAo1eVvW6a8Co4uKibzTMxw2sCPnvMxt+ZlQeATw/LEfXTm3Eonv9ht3eMG+h97TVq4v0cjj2Hnj9Vzco4IB+1vm7UvGIiidcKs05d39IfT9C+SHR/2N4ZKP8wkFXCMn/OvY5Ez4dOWiSTfg8GX5po7Y7HG+JA0XfAN0lRBXixYwHBdEIYz2+m3008hzIgIKULRjGXbaUmCJNidDxsq6j1XrQxDGF2DdYLvsU/js15QtbXQVAXDmwFG4bFbWHTShPWZGdXnPx+Q+kAnDHkCQH4YjREfxpZuoNUKE8QKsH33IOs0+7bWwfQBt061rxYwxBgC2zMMrfQ7Sozz0QX87SysCfTFADeLtSoBNlPJwMXrTwulqlIDUwI1TVG4b13hDF2yHWLkjbzE9EqZ1a6YlfjXFtrG42qqYVp9bzpxiJlrvEvfKbRAbGN584o4umKPXhN64LMtRTjclerCoD5zRUPctFqEaCAmSa+L/zpeNhERk4ioYO+UaLP3Cw2h0yaT2jWIjRHJJeVCBKJZm07N8fQsFsPykqx8rposqww0VxR5uUROnZmNkmbVUDohDWErqKaP69xMLQ==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:HK0PR06MB3202.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(136003)(346002)(396003)(39850400004)(366004)(376002)(55016003)(52536014)(33656002)(9686003)(5660300002)(186003)(26005)(2906002)(38100700002)(38070700005)(8676002)(8936002)(66476007)(76116006)(66446008)(66946007)(66556008)(316002)(122000001)(107886003)(64756008)(110136005)(4326008)(71200400001)(86362001)(508600001)(7696005)(6506007);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?W9v8Ftck1dTdEddtAa8qYMbuIoomPlGnj4BVtqU18M3FjPF/TDgvhtT0OKsP?=
- =?us-ascii?Q?wtQhz59T5x5VB0EXfv8DQmZ1++EpQWXzPHYrOlG75H+tCdF5IIpHmVL0Sw+L?=
- =?us-ascii?Q?hb6+nQ5ViVPL6DEZnfWyyINW3LNfhUTvcRfx0eJsUSft8kY78GCEHCaOONy6?=
- =?us-ascii?Q?M8oM4tnnYJwvNsY8V0s/6XdDDlqsWwzRBIQWbr1IWI2iOtdbzG0APYM4jg/C?=
- =?us-ascii?Q?Rtm8ImYqTFzuBK5rpLEJiEesHmjalXT3JHyJ/e9XOMDr7hPm34FNiZ9PEkEZ?=
- =?us-ascii?Q?KG3SWPSMH/F6qgTGkhMBx7dJU8tAgrndBWPLTjOOPcq550huFeeFWND+RVMe?=
- =?us-ascii?Q?BMMZ6+9fVuSE/8j4bLk6XoxXvS5+vedr26/UkKssY+3Rj+9mK8nrDHCFYZ9h?=
- =?us-ascii?Q?NJ2iOaRKc29osaojPMJWpthkz8X3ub9O4TS73e3NxR3J0XQxGUi2VoRJqIL7?=
- =?us-ascii?Q?IDSnOwA+A0o8fc7gwDL/bKZTyiSlNVlMTd0fT5HEg0/AMX43BSGfLLdEkGnG?=
- =?us-ascii?Q?vgIZ9qr4gI0SUuhI4bBieCbentSgU0LKvIhxNdyLSDWQ6l7PQNcuQSponAhs?=
- =?us-ascii?Q?48K6gs9Fc9YDgBSkhtZSbNMHLu/LLlca5Nkl4HQ58/IRGrBe/YSiDAgayZFu?=
- =?us-ascii?Q?zn8pxm1F298w/p6u+a5sZPCapfZiH722XKgf9gJ6DspM+an3Ko5Qz5BJlhsX?=
- =?us-ascii?Q?jbdy4d0OWxQIUdTBrm59UOAYkkPo2tA7DrmlY38naNHWHJDfV4Dvkkhzx7Hf?=
- =?us-ascii?Q?o/MHkwGirepvwH/wy0F7XLPo0ovkRLh6KVwz2Z4e0MjxzXrytyl0VhZvyKb+?=
- =?us-ascii?Q?TTnQRdZFIOivbrzk1PaIda/y2RPm/WUM8kcqUncys7Sk9yrPSbHhEbD0QM8U?=
- =?us-ascii?Q?uEb0pKT1PqFhNO5MgS1CohIFyDdVpdwg/O+UWVOkzAHcAvGFqygUypBiN0ZI?=
- =?us-ascii?Q?4cmTUWaByM8kv62gF6weQSlI3LCC7NSnaikh0IKoQbFan7Kk27pjvn3OXbYl?=
- =?us-ascii?Q?GN/jJG62mYmiPea3CoZWrbs33gwoX/2fMb1yCqRwa/Z+7/YPaTzcRJB6enSp?=
- =?us-ascii?Q?bGQnLv5lDDJs7K79v04XdNAf1rv4PMSPOuufZZ212kr/ufQ4Vy6MCbVdHV/m?=
- =?us-ascii?Q?+GRukcoFWXgpD8wcIrVKCD64TF79pwVBv0BmQaQeuzC1FGlmEbbiPPsBudPr?=
- =?us-ascii?Q?RHByki8w7gH0PHDt3QrGyXW2NBx7CewG4lttQOZi4a9w2SIbt+capOQ7epKB?=
- =?us-ascii?Q?KqaYxAiI6h6xSa076UbiuxdMLqWUhbER46jPnt0+d4xRlL/8mkVuZII0FXwE?=
- =?us-ascii?Q?JcL3otTFtG+Gk5r3qD81MH0YKgSMSm+LFHhLE2PykTC6UEQjeIwF/XRdzFMg?=
- =?us-ascii?Q?mNiNtqyY9i5O47l8bTj8dEfzzp4s6ryxcOyzpdU/2zvl4aE9cICCTgZtixAF?=
- =?us-ascii?Q?f2UKucL6ROSDGkEF7APKK+0X/sgs2TY85xDUhVohVAihRt2eULP3O48OMvl4?=
- =?us-ascii?Q?WlBX/h2r3cQ57WBdg0ogyYdu8kxO5VlItmYbCyevcm1nx0AxfI40+EWJCW8W?=
- =?us-ascii?Q?sKLn65i/bj9MH8LNoLKsmPijv9VgqOIyRWVnjCfGK6bG3hJvZIUYNOPK3lPh?=
- =?us-ascii?Q?Cy3iBc+bHDEgA8+FdTECUD4=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4JzJYg2WKfz3cm5
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Feb 2022 00:23:18 +1100 (AEDT)
+Received: by mail-pf1-x429.google.com with SMTP id i6so2109463pfc.9
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Feb 2022 05:23:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=cGzxPhGkzzk/RdLs5ptqnb0ofQbtX7ai/I4Pi56CHK4=;
+ b=PzNauOAJXVqhTGnZKuA78Xf+eGgKk1PO0x2V+eBwrEGeIxZh0o9uaky2mUOrXY4OKD
+ p/GI4vJ7uRX7wKTAfDWFWUBC/Bgy+X+La7kkBHVYji2AFp+s4xRF1lFCnhbUNbvq7itF
+ jG89vNBvmtDHNXdb4ygf/F/qw9dQubDIHkJXR++nmzjqH/8D668HLOGosAR4belDKynu
+ nB3oiO5VqK+J3+0DDQH3L+VD7ST1H4gpqraVg5oqPfDVjsfHSmHQSgwBjQ4hGSAs7Gzf
+ USztl2sCsXVLsOtKqGYVqdmrb313dXOd92fNqfdTB4+O0K5YzaIRKn2PJBlUUj7jyAez
+ TLmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=cGzxPhGkzzk/RdLs5ptqnb0ofQbtX7ai/I4Pi56CHK4=;
+ b=kehoDAo9Dr62my4JIfKkwwpPdSB9DiRrMv6sVq4+xnmYyXqDPU7pE6WZNfUwvwZs1J
+ Q5LAhR/uTEo37txxs8HQcXzuv1jvLm2+mqP9oXAR10QzdjDt6Y0Z3UyrhfIXQxW4DzeH
+ LlZ7jCA0Q+iHPNWilYxG19ica6nz08EOHW7eq6SYA1ds2k29h4Y75JYFveqjXAUtlJKf
+ EPSRgUWO+ndgZ66ftjXhcJV0/pUEGvjXyrwyQvYN8QMe6tZMO4UGdgzXgaPKS/dTkJAA
+ BYg88lW2rCss83I3ZteVgqcbxqa5x4Zv03kIK51WS4hrM7TPjuToHt57b6DK7u6PBwuh
+ rIDw==
+X-Gm-Message-State: AOAM533r7Uvt5dNZ8rx5uewmGBMWbeLVAO5AEK7xN3FaFHM4g7c4Afm2
+ 66U2uydog/yPcVOkwea0fl0=
+X-Google-Smtp-Source: ABdhPJwREDecRGh8gwjpBxe0at5jUDcqyZhuZu4pUvkP1VrNvUrzfbLczCqG2MQ/XMWHBlO3G/1bIg==
+X-Received: by 2002:a62:7554:0:b0:4e1:5898:4fbb with SMTP id
+ q81-20020a627554000000b004e158984fbbmr3125230pfc.2.1645017794301; 
+ Wed, 16 Feb 2022 05:23:14 -0800 (PST)
+Received: from george-Quanta.com.com (125-228-123-29.hinet-ip.hinet.net.
+ [125.228.123.29])
+ by smtp.gmail.com with ESMTPSA id l12sm46421269pfc.182.2022.02.16.05.23.12
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 16 Feb 2022 05:23:13 -0800 (PST)
+From: GeorgeHuang <ghung.quanta@gmail.com>
+X-Google-Original-From: GeorgeHuang <george.hung@quantatw.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: [PATCH dev-5.15 v1] ARM: dts: aspeed: Add device tree for Quanta S6Q
+ BMC
+Date: Wed, 16 Feb 2022 21:11:14 +0800
+Message-Id: <20220216131114.40806-1-george.hung@quantatw.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB3202.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d3a4dc22-644f-4aab-e642-08d9f12c0014
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Feb 2022 09:09:13.1079 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: mQ3zRz8YZ6tP6AKsQBBmdPHB4DsjzUMqgmDD7GfbyMG+nscsz+2rezPqNyZ+23449NL9Jrrkw41ahCLl+reFLQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PSAPR06MB4166
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -132,216 +81,647 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW <BMC-SW@aspeedtech.com>
+Cc: openbmc@lists.ozlabs.org, george.hung@quantatw.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi all,
+The Quanta S6Q is a server platform with AST2600 BMC SoC
 
-I would like to report an issue about OpenBMC + OpenSSL + Cryptodev-linux c=
-ombination running on Aspeed ast2600 platform.
-Kernel panic occurs while running "openssl engine" command. Will put more d=
-etail logs below.
+Signed-off-by: GeorgeHuang <george.hung@quantatw.com>
+---
+ arch/arm/boot/dts/Makefile                  |   1 +
+ arch/arm/boot/dts/aspeed-bmc-quanta-s6q.dts | 610 ++++++++++++++++++++
+ 2 files changed, 611 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-quanta-s6q.dts
 
-After digging in more, I figure out an workaround to avoid this issue.
-I'm wondering whether this bug is related to gcc compiler or not?
-Did anybody met this issue before?
-Any suggestion is appreciated.
-
-Workaround:
-- Force enable CONFIG_GCC_PLUGINS config in Linux-5.15
-
-Here are the detail steps to reproduce the issue:
-1. Get latest OpenBMC source
-* $ git clone git@github.com:openbmc/openbmc.git
-
-2. Setup ast2600 target
-* $ . setup evb-ast2600
-
-3. Apply below patches to support openssl and cryptodev-linux kernel module=
-s
-* Linux defconfig
-diff --git a/meta-aspeed/recipes-kernel/linux/linux-aspeed/aspeed-g6/defcon=
-fig b/meta-aspeed/recipes-kernel/linux/linux-aspeed/aspeed-g6/defconfig
-index 451afd81a..d4b0ba4d8 100644
---- a/meta-aspeed/recipes-kernel/linux/linux-aspeed/aspeed-g6/defconfig
-+++ b/meta-aspeed/recipes-kernel/linux/linux-aspeed/aspeed-g6/defconfig
-@@ -289,3 +289,4 @@ CONFIG_DEBUG_LIST=3Dy
- CONFIG_FUNCTION_TRACER=3Dy
- CONFIG_DEBUG_USER=3Dy
- # CONFIG_RUNTIME_TESTING_MENU is not set
-+CONFIG_MODULES=3Dy
-
-* Use hw engine
-diff --git a/meta-phosphor/recipes-connectivity/openssl/openssl_%.bbappend =
-b/meta-phosphor/recipes-connectivity/openssl/openssl_%.bbappend
-index 0581dcd63..c51b8ecde 100644
---- a/meta-phosphor/recipes-connectivity/openssl/openssl_%.bbappend
-+++ b/meta-phosphor/recipes-connectivity/openssl/openssl_%.bbappend
-@@ -1,5 +1,6 @@
- # General config settings.
--EXTRA_OECONF:append:class-target =3D " shared no-hw no-err no-psk no-srp "
-+EXTRA_OECONF:append:class-target =3D " shared no-err no-psk no-srp no-dyna=
-mic-engine "
-
- # Disable SSL (keep TLS only).
- EXTRA_OECONF:append:class-target =3D " no-ssl2 no-ssl3 "
-
-* Install libcrypto & libssl & openssl stuffs
-diff --git a/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb b=
-/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb
-index 494b06c7c..4fa2efcad 100644
---- a/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb
-+++ b/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb
-@@ -52,3 +52,12 @@ ROOTFS_POSTPROCESS_COMMAND +=3D "remove_etc_version ; "
- # The shadow recipe provides the binaries(like useradd, usermod) needed by=
- the
- # phosphor-user-manager.
- ROOTFS_RO_UNNEEDED:remove =3D "shadow"
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index f75f6c30b633..c56211f92712 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1498,6 +1498,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-opp-zaius.dtb \
+ 	aspeed-bmc-portwell-neptune.dtb \
+ 	aspeed-bmc-quanta-q71l.dtb \
++	aspeed-bmc-quanta-s6q.dtb \
+ 	aspeed-bmc-supermicro-x11spi.dtb \
+ 	aspeed-bmc-inventec-transformers.dtb \
+ 	aspeed-bmc-tyan-s7106.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-quanta-s6q.dts b/arch/arm/boot/dts/aspeed-bmc-quanta-s6q.dts
+new file mode 100644
+index 000000000000..69e1bd256271
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed-bmc-quanta-s6q.dts
+@@ -0,0 +1,610 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++// Copyright 2022 Quanta Corp.
++/dts-v1/;
 +
-+IMAGE_INSTALL:append =3D " \
-+    libcrypto \
-+    libssl \
-+    openssl \
-+    openssl-bin \
-+    openssl-conf \
-+    openssl-engines \
-+    "
-
-* Enable cryptodev-linux
-diff --git a/poky/meta/recipes-connectivity/openssl/openssl_3.0.1.bb b/poky=
-/meta/recipes-connectivity/openssl/openssl_3.0.1.bb
-index 7727ec43e..15fd68e8a 100644
---- a/poky/meta/recipes-connectivity/openssl/openssl_3.0.1.bb
-+++ b/poky/meta/recipes-connectivity/openssl/openssl_3.0.1.bb
-@@ -27,6 +27,7 @@ MULTILIB_SCRIPTS =3D "${PN}-bin:${bindir}/c_rehash"
- PACKAGECONFIG ?=3D ""
- PACKAGECONFIG:class-native =3D ""
- PACKAGECONFIG:class-nativesdk =3D ""
-+PACKAGECONFIG:class-target =3D "cryptodev-linux"
-
- PACKAGECONFIG[cryptodev-linux] =3D "enable-devcryptoeng,disable-devcryptoe=
-ng,cryptodev-linux,,cryptodev-module"
- PACKAGECONFIG[no-tls1] =3D "no-tls1"
-
-4. Build obmc-phosphor-image & running on ast2600
-
-5. Insert cryptodev kernel module
-* $ modprobe cryptodev
-i. [  136.485187] cryptodev: loading out-of-tree module taints kernel.
-ii. [  136.494384] cryptodev: driver 1.12 loaded.
-
-6. Running openssl engine to check hw engine is supported
-* $ openssl engine
-
-7. Kernel panic
-root@ast2600-default:~# openssl engine
-[  165.288203] Kernel panic - not syncing: stack-protector: Kernel stack is=
- corrupted in: cryptodev_ioctl+0xc60/0xd30 [cryptodev]
-[  165.300953] CPU: 0 PID: 501 Comm: openssl Tainted: G           O      5.=
-15.0-dirty-0e311ef17334 #1
-[  165.310961] Hardware name: Generic DT based system
-[  165.316307] Backtrace:
-[  165.319038] [<80bc7708>] (dump_backtrace) from [<80bc7950>] (show_stack+=
-0x20/0x24)
-[  165.327507]  r7:80d665f8 r6:8100e768 r5:60000093 r4:80d7a02c
-[  165.333819] [<80bc7930>] (show_stack) from [<80bcc48c>] (dump_stack_lvl+=
-0x48/0x54)
-[  165.342279] [<80bcc444>] (dump_stack_lvl) from [<80bcc4b0>] (dump_stack+=
-0x18/0x1c)
-[  165.350738]  r5:00000000 r4:811003a8
-[  165.354722] [<80bcc498>] (dump_stack) from [<80bc7d48>] (panic+0x108/0x3=
-30)
-[  165.362504] [<80bc7c40>] (panic) from [<80bd516c>] (rcu_dynticks_inc+0x0=
-/0x44)
-[  165.370579]  r3:81538d80 r2:861e7200 r1:7f0024c0 r0:80d665f8
-[  165.376893]  r7:8486c000
-[  165.379714] [<80bd5150>] (__stack_chk_fail) from [<7f0024c0>] (cryptodev=
-_ioctl+0xc60/0xd30 [cryptodev])
-[  165.390223] [<7f001860>] (cryptodev_ioctl [cryptodev]) from [<80309f44>]=
- (sys_ioctl+0x570/0xc44)
-[  165.400055]  r10:00000036 r9:00000003 r8:84b19f00 r7:76f15c60 r6:7ed8f72=
-8 r5:84b19f00
-[  165.408792]  r4:8004636a
-[  165.411613] [<803099d4>] (sys_ioctl) from [<80100060>] (ret_fast_syscall=
-+0x0/0x48)
-[  165.420071] Exception stack(0x8486dfa8 to 0x8486dff0)
-[  165.425712] dfa0:                   76f15b60 76f14824 00000003 8004636a =
-76f15c60 00a82808
-[  165.434842] dfc0: 76f15b60 76f14824 7ed8f728 00000036 00000003 76d30e5c =
-7ed8fde0 00000000
-[  165.443969] dfe0: 76f14944 7ed8f684 76e2d758 76cae67c
-[  165.449609]  r10:00000036 r9:8486c000 r8:80100244 r7:00000036 r6:7ed8f72=
-8 r5:76f14824
-[  165.458337]  r4:76f15b60
-[  165.461168] CPU1: stopping
-[  165.464202] CPU: 1 PID: 0 Comm: swapper/1 Tainted: G           O      5.=
-15.0-dirty-0e311ef17334 #1
-[  165.474205] Hardware name: Generic DT based system
-[  165.479551] Backtrace:
-[  165.482283] [<80bc7708>] (dump_backtrace) from [<80bc7950>] (show_stack+=
-0x20/0x24)
-[  165.490749]  r7:81418e40 r6:00000001 r5:600f0193 r4:80d7a02c
-[  165.497061] [<80bc7930>] (show_stack) from [<80bcc48c>] (dump_stack_lvl+=
-0x48/0x54)
-[  165.505519] [<80bcc444>] (dump_stack_lvl) from [<80bcc4b0>] (dump_stack+=
-0x18/0x1c)
-[  165.513979]  r5:81006654 r4:811002c8
-[  165.517963] [<80bcc498>] (dump_stack) from [<8010ff64>] (do_handle_IPI+0=
-x2c8/0x2fc)
-[  165.526511] [<8010fc9c>] (do_handle_IPI) from [<8010ffc0>] (ipi_handler+=
-0x28/0x30)
-[  165.534971]  r9:81552000 r8:bc80200c r7:81418e40 r6:00000014 r5:81006654=
- r4:814da200
-[  165.543610] [<8010ff98>] (ipi_handler) from [<80187a6c>] (handle_percpu_=
-devid_irq+0x8c/0x1e0)
-[  165.553135] [<801879e0>] (handle_percpu_devid_irq) from [<80180e80>] (ha=
-ndle_domain_irq+0x6c/0x88)
-[  165.563150]  r7:00000004 r6:00000000 r5:00000000 r4:80f85030
-[  165.569461] [<80180e14>] (handle_domain_irq) from [<80101230>] (gic_hand=
-le_irq+0x78/0x8c)
-[  165.578600]  r7:80f8503c r6:bc802000 r5:81553f38 r4:81006654
-[  165.584911] [<801011b8>] (gic_handle_irq) from [<80100afc>] (__irq_svc+0=
-x5c/0x78)
-[  165.593269] Exception stack(0x81553f38 to 0x81553f80)
-[  165.598904] 3f20:                                                       =
-000a49a8 00000000
-[  165.608035] 3f40: 00000001 8011c4e0 81552000 00000001 81005f50 81005f90 =
-810ced6f 80d69660
-[  165.617165] 3f60: 00000000 81553f94 81553f98 81553f88 80108df0 80108df4 =
-600f0013 ffffffff
-[  165.626294]  r9:81552000 r8:810ced6f r7:81553f6c r6:ffffffff r5:600f0013=
- r4:80108df4
-[  165.634932] [<80108dac>] (arch_cpu_idle) from [<80bdd378>] (default_idle=
-_call+0x38/0xc8)
-[  165.643972] [<80bdd340>] (default_idle_call) from [<8015df78>] (do_idle+=
-0xd8/0x144)
-[  165.652526] [<8015dea0>] (do_idle) from [<8015e314>] (cpu_startup_entry+=
-0x28/0x2c)
-[  165.660988]  r9:410fc075 r8:8000406a r7:81553ff8 r6:10c0387d r5:00000001=
- r4:00000096
-[  165.669627] [<8015e2ec>] (cpu_startup_entry) from [<80110530>] (secondar=
-y_start_kernel+0x160/0x184)
-[  165.679732] [<801103d0>] (secondary_start_kernel) from [<801016f0>] (__e=
-nable_mmu+0x0/0x30)
-[  165.689062]  r5:00000051 r4:8156806a
-
-Other information:
-root@ast2600-default:~# openssl version
-OpenSSL 1.1.1g  21 Apr 2020
-
-root@ast2600-default:~# modinfo cryptodev
-filename:      /lib/modules/5.15.0-dirty-0e311ef17334/extra/cryptodev.ko
-license:        GPL
-description:    CryptoDev driver
-author:        Nikos Mavrogiannopoulos <nmav@gnutls.org>
-depends:
-name:         cryptodev
-vermagic:      5.15.0-dirty-0e311ef17334 SMP mod_unload ARMv7 p2v8
-parm:         cryptodev_verbosity:0: normal, 1: verbose, 2: debug (int)
-
-Thanks
-
-Best Regards,
--Neal
++#include "aspeed-g6.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++#include <dt-bindings/i2c/i2c.h>
++
++/ {
++	model = "Quanta S6Q BMC";
++	compatible = "quanta,s6q-bmc", "aspeed,ast2600";
++
++	aliases {
++		// bus 0
++		i2c20 = &SMB_HOST_DB2000_3V3AUX_SCL;
++		i2c21 = &U12_PCA9546_CH1;
++		i2c22 = &SMB_HOST_DB800_B_SCL;
++		i2c23 = &SMB_HOST_DB800_C_SCL;
++
++		// bus 1
++		i2c24 = &SMB_M2_P0_1V8AUX_SCL;
++		i2c25 = &SMB_M2_P1_1V8AUX_SCL;
++		i2c26 = &SMB_CPU_PIROM_3V3AUX_SCL;
++		i2c27 = &SMB_TEMP_3V3AUX_SCL;
++		i2c28 = &SMB_IPMB_3V3AUX_SSDSB_SCL;
++		i2c29 = &SMB_IPMB_3V3AUX_SCL;
++		i2c31 = &SMB_FB_SCL;
++
++		// bus 1 - Fan board
++		i2c32 = &SMB_IOEXP_SCL;
++		i2c33 = &SMB_PROGRAM_SCL;
++		i2c34 = &SMB_FB_SCL_CH2;
++		i2c35 = &SMB_FAN_SENSE_SCL;
++
++		// bus 6
++		i2c36 = &U197_PCA9546_CH0;
++		i2c37 = &U197_PCA9546_CH1;
++		i2c38 = &U197_PCA9546_CH2;
++		i2c39 = &U197_PCA9546_CH3;
++
++		//bus 7
++		i2c40 = &SMB_OCP_SFF_3V3AUX_SCL; //OCP1
++		i2c41 = &SMB_OCP_LFF_3V3AUX_SCL; //OCP2
++	};
++
++	chosen {
++		stdout-path = &uart5;
++		bootargs = "console=ttyS4,115200n8 earlycon";
++	};
++
++	memory@80000000 {
++		device_type = "memory";
++		reg = <0x80000000 0x40000000>;
++	};
++
++	iio-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
++			<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
++			<&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
++			<&adc1 4>, <&adc1 5>, <&adc1 6>, <&adc1 7>;
++	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		BMC_HEARTBEAT_N {
++			label="BMC_HEARTBEAT_N";
++			gpios = <&gpio0 ASPEED_GPIO(P, 7) GPIO_ACTIVE_LOW>;
++			linux,default-trigger = "heartbeat";
++		};
++
++		BMC_LED_STATUS_AMBER_N {
++			label="BMC_LED_STATUS_AMBER_N";
++			gpios = <&gpio0 ASPEED_GPIO(S, 6) GPIO_ACTIVE_LOW>;
++			default-state = "off";
++		};
++
++		FM_ID_LED_N {
++			label="FM_ID_LED_N";
++			gpios = <&gpio0 ASPEED_GPIO(B, 5) GPIO_ACTIVE_LOW>;
++			default-state = "off";
++		};
++	};
++};
++
++&gpio0 {
++	gpio-line-names =
++	/*A0 - A7*/	"", "", "", "", "", "", "", "",
++	/*B0 - B7*/	"", "", "", "", "", "", "", "",
++	/*C0 - C7*/	"", "", "", "", "", "", "", "",
++	/*D0 - D7*/	"", "", "", "", "", "", "", "",
++	/*E0 - E7*/	"", "", "", "", "", "", "", "",
++	/*F0 - F7*/	"PLTRST_N", "", "PWR_DEBUG_N", "", "", "", "", "",
++	/*G0 - G7*/	"", "", "", "", "", "", "", "",
++	/*H0 - H7*/	"", "", "", "", "", "", "", "",
++	/*I0 - I7*/	"", "", "", "", "", "", "", "",
++	/*J0 - J7*/	"", "", "", "", "", "", "", "",
++	/*K0 - K7*/	"", "", "", "", "", "", "", "",
++	/*L0 - L7*/	"", "", "", "", "PREQ_N", "TCK_MUX_SEL", "", "",
++	/*M0 - M7*/	"", "", "", "PWRGD_SYS_PWROK", "", "PRDY_N", "", "",
++	/*N0 - N7*/	"", "", "", "", "", "", "", "",
++	/*O0 - O7*/	"", "", "", "", "", "", "", "",
++	/*P0 - P7*/	"SYS_BMC_PWRBTN_R_N", "SYS_PWRBTN_N", "FM_MB_RST_BTN", "RST_BMC_RSTBTN_OUT_N", "", "", "", "",
++	/*Q0 - Q7*/	"", "", "", "", "", "", "", "",
++	/*R0 - R7*/	"", "", "", "", "", "", "", "",
++	/*S0 - S7*/	"", "", "", "FP_ID_BTN_SCM_N", "", "", "", "",
++	/*T0 - T7*/	"", "", "", "", "", "", "", "",
++	/*U0 - U7*/	"", "", "", "", "", "", "", "",
++	/*V0 - V7*/	"", "", "", "", "", "SMI", "", "",
++	/*W0 - W7*/	"", "", "", "", "", "", "", "",
++	/*X0 - X7*/	"", "", "", "", "", "", "", "",
++	/*Y0 - Y7*/	"", "", "", "", "", "", "", "",
++	/*Z0 - Z7*/	"FM_BMC_READY_N", "", "", "", "", "", "", "",
++	/*AA0 - AA7*/	"", "", "", "", "", "", "", "",
++	/*AB0 - AB7*/	"", "", "", "", "", "", "", "",
++	/*AC0 - AC7*/	"", "", "", "", "", "", "", "";
++};
++
++&sgpiom0 {
++	status = "okay";
++	ngpios = <128>;
++	bus-frequency = <48000>;
++	gpio-line-names =
++	/* SGPIO input lines */
++	/*IOA0-IOA7*/	"","", "SIO_POWER_GOOD","OA1", "XDP_PRST_N","", "","", "FM_SLPS3_PLD_N","", "FM_SLPS4_PLD_N","", "FM_BIOS_POST_CMPLT_BMC_N","", "FM_ADR_TRIGGER_N","OA7",
++	/*IOB0-IOB7*/	"FM_ADR_COMPLETE","", "FM_PMBUS_ALERT_B_EN","", "PSU0_PRESENT_N","", "PSU1_PRESENT_N","", "PSU0_VIN_BUF_GOOD","", "PSU01_VIN_BUF_GOOD","", "PWRGD_PS0_PWROK_R","", "PWRGD_PS1_PWROK_R","",
++	/*IOC0-IOC7*/	"PWRGD_PS_PWROK_PLD_R","", "CHASSIS_INTRUSION","", "BMC_MFG_MODE","", "FM_BMC_EN_DET_R","", "FM_ME_BT_DONE","", "CPU1_PRESENCE","", "CPU2_PRESENCE","", "IRQ_PSYS_CRIT_N","",
++	/*IOD0-IOD7*/	"","", "CPU1_THERMTRIP","", "CPU2_THERMTRIP","", "CPU1_MEM_THERM_EVENT","", "CPU2_MEM_THERM_EVENT","", "CPU1_VRHOT","", "CPU2_VRHOT","", "","",
++	/*IOE0-IOE7*/	"","", "CPU1_MEM_VRHOT","", "CPU2_MEM_VRHOT","", "","", "PCH_BMC_THERMTRIP","", "","", "","", "","",
++	/*IOF0-IOF7*/	"CPU_ERR0","", "CPU_ERR1","", "CPU_ERR2","", "","", "","", "CPU_CATERR","", "","", "","",
++	/*IOG0-IOG7*/	"","", "","", "","", "","", "","", "","", "","", "","",
++	/*IOH0-IOH7*/	"","", "FP_ID_BTN_R1_N","", "FP_RST_BTN_N","", "","", "","", "FP_PWR_BTN_PLD_N_R","", "","", "","",
++	/*IOI0-IOI7*/	"","", "","", "","", "","", "","", "","", "","", "","",
++	/*IOJ0-IOJ7*/	"","", "","", "","", "","", "","", "","", "","", "","",
++	/*IOK0-IOK7*/	"","", "","", "","", "","", "","", "","", "","", "","",
++	/*IOL0-IOL7*/	"","", "","", "","", "","", "","", "","", "","", "","",
++	/*IOM0-IOM7*/	"","", "","", "","", "","", "","", "","", "","", "","",
++	/*ION0-ION7*/	"","BMC_SW_HEARTBEAT_N_R", "","FP_LED_FAULT_N", "","FP_ID_LED_N", "","FM_BMC_RSTBTN_OUT_N", "","FM_THERMTRIP_DLY_LVC1_R_N", "","", "","RST_PCA9548_SENSOR_PLD_N", "","USB_OC1_REAR_N",
++	/*IOO0-IOO7*/	"","IRQ_TPM_SPI_N", "","", "","IRQ_PCH_SCI_WHEA_R_N", "","IRQ_BMC_PCH_NMI_R", "","H_CPU_NMI_LVC1_R_N", "","", "","", "","FM_JTAG_BMC_PLD_MUX_SEL",
++	/*IOP0-IOP7*/	"IP0","OP0", "","", "","", "","", "","", "","", "","", "IP7","OP7";
++};
++
++&adc0 {
++	vref = <2500>;
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
++		&pinctrl_adc2_default &pinctrl_adc3_default
++		&pinctrl_adc4_default &pinctrl_adc5_default
++		&pinctrl_adc6_default &pinctrl_adc7_default>;
++};
++
++&adc1 {
++	vref = <2500>;
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
++		&pinctrl_adc10_default &pinctrl_adc11_default
++		&pinctrl_adc12_default &pinctrl_adc13_default
++		&pinctrl_adc14_default &pinctrl_adc15_default>;
++};
++
++&mdio2 {
++	status = "okay";
++
++	ethphy2: ethernet-phy@0 {
++		compatible = "ethernet-phy-ieee802.3-c22";
++		reg = <0>;
++	};
++};
++
++&mac2 {
++	status = "okay";
++
++	phy-mode = "rgmii";
++	phy-handle = <&ethphy2>;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii3_default>;
++};
++
++&mac3 {
++	status = "okay";
++
++	phy-mode = "rmii";
++	use-ncsi;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii4_default>;
++};
++
++&fmc {
++	status = "okay";
++
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "bmc";
++		spi-max-frequency = <50000000>;
++#include "openbmc-flash-layout-64.dtsi"
++	};
++};
++
++&spi2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_spi2_default &pinctrl_spi2cs1_default
++		&pinctrl_spi2cs2_default>;
++	status = "okay";
++
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "spi2:0";
++		spi-max-frequency = <50000000>;
++	};
++};
++
++&kcs1 {
++	status = "okay";
++	aspeed,lpc-io-reg = <0xCA0>;
++};
++
++&kcs2 {
++	status = "okay";
++	aspeed,lpc-io-reg = <0xCA8>;
++};
++
++&kcs3 {
++	status = "okay";
++	aspeed,lpc-io-reg = <0xCA2>;
++};
++
++&emmc_controller {
++	status = "okay";
++};
++
++&emmc {
++	non-removable;
++	bus-width = <4>;
++	max-frequency = <100000000>;
++};
++
++&vhub {
++	status = "okay";
++};
++
++&lpc_snoop {
++	status = "okay";
++	snoop-ports = <0x80>;
++};
++
++&uart1 {
++	status = "okay";
++};
++
++&uart2 {
++	status = "okay";
++};
++
++&uart4 {
++	status = "okay";
++};
++
++&uart5 {
++	status = "okay";
++};
++
++&uart_routing {
++	status = "okay";
++};
++
++&i2c0 {
++	status = "okay";
++
++	U34_PWR_ADC@48 {
++		compatible = "ti,ads7830";
++		reg = <0x48>;
++	};
++
++	U35_PWR_ADC@4b {
++		compatible = "ti,ads7830";
++		reg = <0x4b>;
++	};
++
++	i2c-switch@70 {
++		compatible = "nxp,pca9546";
++		reg = <0x70>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		i2c-mux-idle-disconnect;
++
++		SMB_HOST_DB2000_3V3AUX_SCL: i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++		};
++
++		U12_PCA9546_CH1: i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++		};
++
++		SMB_HOST_DB800_B_SCL: i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++		};
++
++		SMB_HOST_DB800_C_SCL: i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++		};
++	};
++};
++
++&i2c1 {
++	status = "okay";
++
++	i2c-switch@59 {
++		compatible = "nxp,pca9848";
++		reg = <0x59>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		i2c-mux-idle-disconnect;
++
++		SMB_M2_P0_1V8AUX_SCL: i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++		};
++
++		SMB_M2_P1_1V8AUX_SCL: i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++		};
++
++		SMB_CPU_PIROM_3V3AUX_SCL: i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++		};
++
++		SMB_TEMP_3V3AUX_SCL: i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++
++			U163_tmp75@48 {
++				compatible = "ti,tmp75";
++				reg = <0x48>;
++			};
++			U114_tmp75@49 {
++				compatible = "ti,tmp75";
++				reg = <0x49>;
++			};
++		};
++
++		SMB_IPMB_3V3AUX_SSDSB_SCL: i2c@4 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <4>;
++
++			U4_tmp75@4c {
++				compatible = "ti,tmp75";
++				reg = <0x4c>;
++			};
++			U73_tmp75@4d {
++				compatible = "ti,tmp75";
++				reg = <0x4d>;
++			};
++		};
++
++		SMB_IPMB_3V3AUX_SCL: i2c@5 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <5>;
++
++			U190_fru@51 {
++				compatible = "atmel,24c128";
++				reg = <0x51>;
++				pagesize = <32>;
++			};
++		};
++
++		SMB_FB_SCL: i2c@7 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <7>;
++
++			i2c-switch@77 {
++				compatible = "nxp,pca9546";
++				reg = <0x77>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++				i2c-mux-idle-disconnect;
++
++				SMB_IOEXP_SCL: i2c@0 {
++					#address-cells = <1>;
++					#size-cells = <0>;
++					reg = <0>;
++				};
++
++				SMB_PROGRAM_SCL: i2c@1 {
++					#address-cells = <1>;
++					#size-cells = <0>;
++					reg = <1>;
++				};
++
++				SMB_FB_SCL_CH2: i2c@2 {
++					#address-cells = <1>;
++					#size-cells = <0>;
++					reg = <2>;
++				};
++
++				SMB_FAN_SENSE_SCL: i2c@3 {
++					#address-cells = <1>;
++					#size-cells = <0>;
++					reg = <3>;
++
++					Current_Meter_U2@45 {
++						compatible = "ti,ina219";
++						reg = <0x45>;
++						shunt-resistor = <1000>; /* = 1 mOhm */
++					};
++
++					Current_Meter_U3@44 {
++						compatible = "ti,ina219";
++						reg = <0x44>;
++						shunt-resistor = <1000>; /* = 1 mOhm */
++					};
++
++					TEMP_sensor_U2@4b {
++						compatible = "ti,tmp75";
++						reg = <0x4b>;
++					};
++				};
++			};
++		};
++	};
++};
++
++&i2c2 {
++	status = "okay";
++	bus-frequency = <400000>;
++
++	ipmb@10 {
++		compatible = "ipmb-dev";
++		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c3 {
++	status = "okay";
++
++	/* MB FRU (U173) @ 0xA2 */
++	mb_fru: mb_fru@51 {
++		compatible = "atmel,24c128";
++		reg = <0x51>;
++		pagesize = <32>;
++	};
++
++	/* FP_U1 Inlet */
++	FP_U1_tmp75@4a {
++		compatible = "ti,tmp75";
++		reg = <0x4a>;
++	};
++
++	FP_U4_fru@52 {
++		compatible = "atmel,24c02";
++		reg = <0x52>;
++		pagesize = <16>;
++	};
++};
++
++&i2c4 {
++	status = "okay";
++};
++
++&i2c5 {
++	status = "okay";
++};
++
++&i2c6 {
++	status = "okay";
++
++	i2c-switch@77 {
++		compatible = "nxp,pca9548";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x77>;
++		i2c-mux-idle-disconnect;
++
++		U197_PCA9546_CH0: i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++		};
++
++		U197_PCA9546_CH1: i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++
++			cpu0_pvccin@60 {
++				compatible = "isil,raa229004";
++				reg = <0x60>;
++			};
++
++			cpu0_pvccinfaon@61 {
++				compatible = "isil,isl69260";
++				reg = <0x61>;
++			};
++
++			cpu0_pvccd_hv@63 {
++				compatible = "isil,isl69260";
++				reg = <0x63>;
++			};
++		};
++
++		U197_PCA9546_CH2: i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++
++			cpu1_pvccin@72 {
++				compatible = "isil,raa229004";
++				reg = <0x72>;
++			};
++
++			cpu1_pvccinfaon@74 {
++				compatible = "isil,isl69260";
++				reg = <0x74>;
++			};
++
++			cpu1_pvccd_hv@76 {
++				compatible = "isil,isl69260";
++				reg = <0x76>;
++			};
++		};
++
++		U197_PCA9546_CH3: i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++		};
++	};
++};
++
++&i2c7 {
++	status = "okay";
++
++	i2c-switch@75 {
++		compatible = "nxp,pca9546";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x75>;
++		i2c-mux-idle-disconnect;
++
++		SMB_OCP_SFF_3V3AUX_SCL: i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++		};
++
++		SMB_OCP_LFF_3V3AUX_SCL: i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++		};
++	};
++};
++
++&i2c8 {
++	status = "okay";
++};
++
++&i2c9 {
++	status = "okay";
++};
++
++&i2c11 {
++	status = "okay";
++};
++
++&i2c14 {
++	status = "okay";
++
++	/* SCM FRU (U19) @ 0xA2 */
++	scm_fru: scm_fru@51 {
++		compatible = "atmel,24c128";
++		reg = <0x51>;
++		pagesize = <32>;
++	};
++
++	scm_tmp75_u4@4a {
++		compatible = "ti,tmp75";
++		reg = <0x4a>;
++	};
++};
++
++&i2c15 {
++	status = "okay";
++};
+-- 
+2.32.0
 
