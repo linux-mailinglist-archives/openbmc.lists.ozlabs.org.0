@@ -2,54 +2,96 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A9A14BA151
-	for <lists+openbmc@lfdr.de>; Thu, 17 Feb 2022 14:35:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B3A2C4BA3D5
+	for <lists+openbmc@lfdr.de>; Thu, 17 Feb 2022 15:58:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JzwnD6tV8z3cSg
-	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 00:35:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4JzycY1CNQz3cPD
+	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 01:58:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3snuqyc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=tORuF7e3;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=S4zqm7QB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linuxfoundation.org (client-ip=145.40.68.75;
- helo=ams.source.kernel.org; envelope-from=gregkh@linuxfoundation.org;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
- header.a=rsa-sha256 header.s=korg header.b=t3snuqyc; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
+ header.a=rsa-sha256 header.s=fm1 header.b=tORuF7e3; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=S4zqm7QB; 
  dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jzwmp2K3Nz30QD
- for <openbmc@lists.ozlabs.org>; Fri, 18 Feb 2022 00:35:04 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id EFFE4B821A6;
- Thu, 17 Feb 2022 13:35:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09914C340E8;
- Thu, 17 Feb 2022 13:34:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1645104899;
- bh=9v/KY6UyxRTPcd6xOwvubbzjjW378d+/ijseTAzwTdE=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=t3snuqycXMWKEzd88XrfHtB+yFflxAl8hWqwjRuKtZH35L8IriV/eNXU2ZP9IvAhL
- KstUeXTse0qpq6gI+t3aXevmBwUqrT324UkL4opX9TSYI6wNISHaq8wRKRmVq7F8Uh
- uE7NDjSZdy0A3tcaU8YXh2FeMwdvfo5prkAH1e3E=
-Date: Thu, 17 Feb 2022 14:34:56 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Zev Weiss <zev@bewilderbeest.net>
-Subject: Re: [PATCH 4/4] misc: Add power-efuse driver
-Message-ID: <Yg5PALyUv6qHPz//@kroah.com>
-References: <20220217104444.7695-1-zev@bewilderbeest.net>
- <20220217104444.7695-5-zev@bewilderbeest.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220217104444.7695-5-zev@bewilderbeest.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Jzyc62m1hz3bcn
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Feb 2022 01:57:41 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id C29595C017C;
+ Thu, 17 Feb 2022 09:57:37 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Thu, 17 Feb 2022 09:57:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
+ :content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm1; bh=TUjvHNV5+Gec7Ouno7Ey/A9489K0PpdLzGs6SZ
+ YwmRQ=; b=tORuF7e31SR0hX6vIgPTrj6rmjdOSzVIf3PbtUUH5xvj0A6CyN13k0
+ iyad7xQV/WxSpg5g3+QjSZAmNaO4umJGuyaIIUoUpq755xzqu+vW0gUPJ5aL9jTx
+ uxG+6HDSEke5UryTPTMOfuUTFQFp8mOK/cW4SprBCVAzx/BtGgdzRr8LCWDxocrE
+ vpQmWp0LfqDJA+Q89fi84gJwZJC+65rigaBr8ga8Um/8Ze7fRa/gZ23kegGVJYl0
+ myfESs35Tv6MC9PBQejXISo741WXE9LNRmX4ZOln2bGznlgfrR/0SR5eHg49iath
+ 3tAYsFlFQ9XUk3/BtjCfBUdJLnvAm4Bw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=TUjvHNV5+Gec7Ouno7Ey/A9489K0PpdLzGs6SZYwm
+ RQ=; b=S4zqm7QBz9/RQBUEg44VWd6zrp5isAQtRaBVETy9nBza3dXOlaz7yLRAl
+ BgZRr46UBkfu8cvBdrXIQ9MXz/qfDWL/M26VL/C6XL50kr2lotloG/yq+1z3AlfX
+ pJhk614SJP/Jbg1D7SQ3b6h4726p+yCWr1IK0b2+Xt9lnhkLCJ1ukgbpLZd/x9Hh
+ 5PDSpymljhfgu0ZfdgjBmlmt99+sppILQ84yac4olevBTYe+3hAaUtJgH5AhOmSf
+ eQjs2TPvs9gUOctEtm1FLy3vOLQGMNclPqG/0xt5qwBOjZX/ZWSEjEmUc1FUEHWl
+ 9vPVvulB+r+kNR+mUzxqSuO0RaxSg==
+X-ME-Sender: <xms:YWIOYpRrLiCT3Ud4UKcgnWzbZ6Doyy_BABId0XOGITjCsfgSdXsaFw>
+ <xme:YWIOYizi0DQoATqT4JYYrEvX63DRXaE0swDTYs6eYoXhRaqoKBmI1dPOmfyF6XxzN
+ YjX9I-UA7saKkb6GQM>
+X-ME-Received: <xmr:YWIOYu0sFMjMxyB4pT4evt5vpj5MscDCNOumxuye5TGj1ZpxcikVWn9ESHbenQvjD6rnxg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgdeilecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdefhedmnecujfgurheptggguffhjgffgffkfhfvofesthhqmhdthhdt
+ vdenucfhrhhomhepuehrrgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiih
+ gvshhquhhirhhrvghlrdgtohhmqeenucggtffrrghtthgvrhhnpedttefhtdegudefteeg
+ gfetueelgfffiedvheeifefhtdfgledvvdehkefgfeeufeenucevlhhushhtvghrufhiii
+ gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgv
+ shhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:YWIOYhB7U4avo43uR53tlI0mIXDyuu8eJpISdf84t3YrgdC_V1_QuA>
+ <xmx:YWIOYiiKH8EIzodcalrjwxJlLy0umN_NRq236o37tpsDaNA2FgYwzA>
+ <xmx:YWIOYlpfVB5-eGSaDetffdmTPPF3tIbAda52y0fQQl0Bn4a-pJWtKQ>
+ <xmx:YWIOYmbY2P5viFflCy45HBSpN6ZuUsEOb-VwIbs-Mx-EdEp19znD1w>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Feb 2022 09:57:37 -0500 (EST)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: Upcoming OpenBMC release 2.11
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <YgbNmq8SVgJMHXcn@heinlein>
+Date: Thu, 17 Feb 2022 09:57:36 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4AF3D7E9-4752-4AF5-B556-BAD50F9560BD@fuzziesquirrel.com>
+References: <YbposjOPwc1puNvR@heinlein> <YehtxgLG3KlzKFAk@heinlein>
+ <CAH2KKeY_aGKzp+BjYJPagjWAR2WLuqeib4aPy2nBjSc4_ed_zg@mail.gmail.com>
+ <YgbNmq8SVgJMHXcn@heinlein>
+To: Patrick Williams <patrick@stwcx.xyz>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,293 +103,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- Arnd Bergmann <arnd@arndb.de>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Guenter Roeck <linux@roeck-us.net>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>, Thaj <tajudheenk@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Feb 17, 2022 at 02:44:44AM -0800, Zev Weiss wrote:
-> This driver provides a sysfs interface to access the on/off state and
-> error flags of a regulator supplying a power output controlled by the
-> system.
-> 
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> ---
->  MAINTAINERS                |   5 +
->  drivers/misc/Kconfig       |  15 +++
->  drivers/misc/Makefile      |   1 +
->  drivers/misc/power-efuse.c | 221 +++++++++++++++++++++++++++++++++++++
->  4 files changed, 242 insertions(+)
->  create mode 100644 drivers/misc/power-efuse.c
 
-You add sysfs files, yet have no Documentation/ABI/ entry updates
-documenting what those sysfs files do?  Please fix.
 
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index fca970a46e77..d1153a0389d2 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -7064,6 +7064,11 @@ S:	Orphan
->  W:	http://aeschi.ch.eu.org/efs/
->  F:	fs/efs/
->  
-> +POWER EFUSE DRIVER
-> +M:	Zev Weiss <zev@bewilderbeest.net>
-> +S:	Maintained
-> +F:	drivers/misc/power-efuse.c
-> +
->  EHEA (IBM pSeries eHEA 10Gb ethernet adapter) DRIVER
->  M:	Douglas Miller <dougmill@linux.ibm.com>
->  L:	netdev@vger.kernel.org
-> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
-> index 0f5a49fc7c9e..45fc3e8ad35d 100644
-> --- a/drivers/misc/Kconfig
-> +++ b/drivers/misc/Kconfig
-> @@ -470,6 +470,21 @@ config HISI_HIKEY_USB
->  	  switching between the dual-role USB-C port and the USB-A host ports
->  	  using only one USB controller.
->  
-> +config POWER_EFUSE
-> +	tristate "Power efuse driver support"
-> +	depends on OF && REGULATOR
-> +	help
-> +	  This driver supports a regulator device functioning as a
-> +	  power efuse, with status bits and an on/off switch available
-> +	  via sysfs.
-> +
-> +	  A typical use for this would be for an efuse controlling a
-> +	  generic power output for supplying power to devices external
-> +	  to the system running this driver (such as in the management
-> +	  controller of a "smart" PDU or similar), allowing the
-> +	  operator to manually turn the output on and off, check if
-> +	  the efuse has tripped due to overload, etc.
-> +
->  source "drivers/misc/c2port/Kconfig"
->  source "drivers/misc/eeprom/Kconfig"
->  source "drivers/misc/cb710/Kconfig"
-> diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
-> index a086197af544..7bd784b89ef8 100644
-> --- a/drivers/misc/Makefile
-> +++ b/drivers/misc/Makefile
-> @@ -59,3 +59,4 @@ obj-$(CONFIG_UACCE)		+= uacce/
->  obj-$(CONFIG_XILINX_SDFEC)	+= xilinx_sdfec.o
->  obj-$(CONFIG_HISI_HIKEY_USB)	+= hisi_hikey_usb.o
->  obj-$(CONFIG_HI6421V600_IRQ)	+= hi6421v600-irq.o
-> +obj-$(CONFIG_POWER_EFUSE)	+= power-efuse.o
-> diff --git a/drivers/misc/power-efuse.c b/drivers/misc/power-efuse.c
-> new file mode 100644
-> index 000000000000..e974dde57615
-> --- /dev/null
-> +++ b/drivers/misc/power-efuse.c
-> @@ -0,0 +1,221 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * This module provides a thin wrapper around a regulator device that exposes
-> + * status bits and on/off state via sysfs.
-> + *
-> + * Copyright (C) 2022 Zev Weiss <zev@bewilderbeest.net>
-> + */
-> +
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regulator/consumer.h>
-> +
-> +struct efuse {
-> +	struct regulator *reg;
-> +	struct {
-> +		unsigned int cache;
-> +		unsigned long ttl;
-> +		unsigned long fetch_time;
-> +		struct mutex lock;
-> +	} error_flags;
-> +};
-> +
-> +/* Ensure that the next error_flags access fetches them from the device */
-> +static void efuse_invalidate_error_flags(struct efuse *efuse)
-> +{
-> +	mutex_lock(&efuse->error_flags.lock);
-> +	efuse->error_flags.fetch_time = 0;
-> +	mutex_unlock(&efuse->error_flags.lock);
-> +}
-> +
-> +static ssize_t efuse_show_operstate(struct device *dev, struct device_attribute *attr,
-> +				    char *buf)
-> +{
-> +	struct efuse *efuse = dev_get_drvdata(dev);
-> +	int status = regulator_is_enabled(efuse->reg);
-> +
-> +	if (status < 0)
-> +		return status;
-> +
-> +	return sysfs_emit(buf, "%s\n", status ? "on" : "off");
-> +}
-> +
-> +static ssize_t efuse_set_operstate(struct device *dev, struct device_attribute *attr,
-> +				   const char *buf, size_t count)
-> +{
-> +	int status, wantstate;
-> +	struct efuse *efuse = dev_get_drvdata(dev);
-> +	struct regulator *reg = efuse->reg;
-> +
-> +	if (sysfs_streq(buf, "on"))
-> +		wantstate = 1;
-> +	else if (sysfs_streq(buf, "off"))
-> +		wantstate = 0;
-> +	else
-> +		return -EINVAL;
-> +
-> +	status = regulator_is_enabled(reg);
-> +
-> +	/*
-> +	 * We need to ensure our enable/disable calls don't get imbalanced, so
-> +	 * bail if we can't determine the current state.
-> +	 */
-> +	if (status < 0)
-> +		return status;
-> +
-> +	/* Return early if we're already in the desired state */
-> +	if (!!status == wantstate)
-> +		return count;
-> +
-> +	if (wantstate)
-> +		status = regulator_enable(reg);
-> +	else
-> +		status = regulator_disable(reg);
-> +
-> +	/*
-> +	 * Toggling operstate can reset latched status flags, so invalidate
-> +	 * the cached value.
-> +	 */
-> +	efuse_invalidate_error_flags(efuse);
-> +
-> +	if (!status && regulator_is_enabled(reg) != wantstate) {
-> +		/*
-> +		 * We could do
-> +		 *
-> +		 *   if (!wantstate)
-> +		 *     regulator_force_disable(reg);
-> +		 *
-> +		 * here, but it's likely to leave it such that it can't then
-> +		 * be re-enabled, so we'll just report the error and leave it
-> +		 * as it is (and hopefully as long as our enable/disable calls
-> +		 * remain balanced and nobody registers another consumer for
-> +		 * the same supply we won't end up in this situation anyway).
-> +		 */
-> +		dev_err(dev, "regulator_%sable() didn't take effect\n", wantstate ? "en" : "dis");
-> +		status = -EIO;
-> +	}
-> +
-> +	return status ? : count;
-> +}
-> +
-> +static int efuse_update_error_flags(struct efuse *efuse)
-> +{
-> +	int status = 0;
-> +	unsigned long cache_expiry;
-> +
-> +	mutex_lock(&efuse->error_flags.lock);
-> +
-> +	cache_expiry = efuse->error_flags.fetch_time + efuse->error_flags.ttl;
-> +
-> +	if (!efuse->error_flags.ttl || !efuse->error_flags.fetch_time ||
-> +	    time_after(jiffies, cache_expiry)) {
-> +		status = regulator_get_error_flags(efuse->reg, &efuse->error_flags.cache);
-> +		if (!status)
-> +			efuse->error_flags.fetch_time = jiffies;
-> +	}
-> +
-> +	mutex_unlock(&efuse->error_flags.lock);
-> +
-> +	return status;
-> +}
-> +
-> +static DEVICE_ATTR(operstate, 0644, efuse_show_operstate, efuse_set_operstate);
-> +
-> +#define EFUSE_ERROR_ATTR(name, bit)							    \
-> +	static ssize_t efuse_show_##name(struct device *dev, struct device_attribute *attr, \
-> +					 char *buf)                                         \
-> +	{                                                                                   \
-> +		struct efuse *efuse = dev_get_drvdata(dev);                                 \
-> +		int status = efuse_update_error_flags(efuse);                               \
-> +		if (status)                                                                 \
-> +			return status;                                                      \
-> +		return sysfs_emit(buf, "%d\n", !!(efuse->error_flags.cache & bit));         \
-> +	}                                                                                   \
-> +	static DEVICE_ATTR(name, 0444, efuse_show_##name, NULL)
-> +
-> +EFUSE_ERROR_ATTR(under_voltage, REGULATOR_ERROR_UNDER_VOLTAGE);
-> +EFUSE_ERROR_ATTR(over_current, REGULATOR_ERROR_OVER_CURRENT);
-> +EFUSE_ERROR_ATTR(regulation_out, REGULATOR_ERROR_REGULATION_OUT);
-> +EFUSE_ERROR_ATTR(fail, REGULATOR_ERROR_FAIL);
-> +EFUSE_ERROR_ATTR(over_temp, REGULATOR_ERROR_OVER_TEMP);
-> +EFUSE_ERROR_ATTR(under_voltage_warn, REGULATOR_ERROR_UNDER_VOLTAGE_WARN);
-> +EFUSE_ERROR_ATTR(over_current_warn, REGULATOR_ERROR_OVER_CURRENT_WARN);
-> +EFUSE_ERROR_ATTR(over_voltage_warn, REGULATOR_ERROR_OVER_VOLTAGE_WARN);
-> +EFUSE_ERROR_ATTR(over_temp_warn, REGULATOR_ERROR_OVER_TEMP_WARN);
-> +
-> +static struct attribute *attributes[] = {
-> +	&dev_attr_operstate.attr,
-> +	&dev_attr_under_voltage.attr,
-> +	&dev_attr_over_current.attr,
-> +	&dev_attr_regulation_out.attr,
-> +	&dev_attr_fail.attr,
-> +	&dev_attr_over_temp.attr,
-> +	&dev_attr_under_voltage_warn.attr,
-> +	&dev_attr_over_current_warn.attr,
-> +	&dev_attr_over_voltage_warn.attr,
-> +	&dev_attr_over_temp_warn.attr,
-> +	NULL,
-> +};
-> +
-> +static const struct attribute_group attr_group = {
-> +	.attrs = attributes,
-> +};
+> On Feb 11, 2022, at 3:56 PM, Patrick Williams <patrick@stwcx.xyz> =
+wrote:
+>=20
+> On Fri, Feb 11, 2022 at 03:33:12PM +0530, Thaj wrote:
+>> Hi Patrick,
+>=20
+> Hello Thaj,
+>=20
+>>=20
+>> 2.9 is quiet old. There are a lot of changes after that. A newer =
+u-boot
+>> with secure boot support, better AST2600 support etc. A new release =
+is
+>> necessary.=20
+>=20
+> It seems that not many people who are active contributors in the =
+community
+> actually care about releases, so there hasn't been much effort put =
+into it.
+> You used the word "necessary".  Would you care to expand, for the =
+community,
+> what your use case is where you rely on releases?
+>=20
+>> There is no 2.11.0-rc1 yet. Is it possible to initiate a release
+>> process?
+>=20
+> The honister branch is effectively the '2.11.0-rc'.  I don't have =
+permissions
+> to create tags myself.  I'll see if Brad has bandwidth to create a tag =
+in the
+> near future.
 
-ATTRIBUTE_GROUPS()?
-
-> +
-> +static int efuse_probe(struct platform_device *pdev)
-> +{
-> +	int status;
-> +	struct regulator *reg;
-> +	struct efuse *efuse;
-> +	u32 cache_ttl_ms;
-> +
-> +	reg = devm_regulator_get(&pdev->dev, "vout");
-> +	if (IS_ERR(reg))
-> +		return PTR_ERR(reg);
-> +
-> +	status = regulator_enable(reg);
-> +	if (status) {
-> +		dev_err(&pdev->dev, "failed to enable regulator\n");
-> +		return status;
-> +	}
-> +
-> +	efuse = devm_kzalloc(&pdev->dev, sizeof(*efuse), GFP_KERNEL);
-> +	if (!efuse)
-> +		return -ENOMEM;
-> +
-> +	efuse->reg = reg;
-> +	mutex_init(&efuse->error_flags.lock);
-> +
-> +	if (!of_property_read_u32(pdev->dev.of_node, "error-flags-cache-ttl-ms", &cache_ttl_ms))
-> +		efuse->error_flags.ttl = msecs_to_jiffies(cache_ttl_ms);
-> +
-> +	platform_set_drvdata(pdev, efuse);
-> +
-> +	return sysfs_create_group(&pdev->dev.kobj, &attr_group);
-
-You just raced with userspace and lost :(
-
-Set the default groups for your platform driver and then the driver core
-will automatically create/remove them for you, no need for you to do
-anything directly with them at all.
-
-thanks,
-
-greg k-h
+We have a 2.11.0 tag now.=
