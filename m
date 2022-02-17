@@ -2,81 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 070554BA7E7
-	for <lists+openbmc@lfdr.de>; Thu, 17 Feb 2022 19:14:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D23EC4BACA9
+	for <lists+openbmc@lfdr.de>; Thu, 17 Feb 2022 23:35:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K02zR3GJLz3cVL
-	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 05:14:43 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bjgBJHKo;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K08mS2SvNz3cVw
+	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 09:35:36 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2e;
- helo=mail-qv1-xf2e.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=bjgBJHKo; dkim-atps=neutral
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com
- [IPv6:2607:f8b0:4864:20::f2e])
+ smtp.mailfrom=gmail.com (client-ip=209.85.166.46; helo=mail-io1-f46.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com
+ [209.85.166.46])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K02z52Fkqz3cGG
- for <openbmc@lists.ozlabs.org>; Fri, 18 Feb 2022 05:14:24 +1100 (AEDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id a28so9887600qvb.10
- for <openbmc@lists.ozlabs.org>; Thu, 17 Feb 2022 10:14:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=sender:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=K49iyUfP87GUSWjSsQDrw9184z8W1wX9twPD7fJ5DdI=;
- b=bjgBJHKoVTIzjZh3TmK6la8r3vIUyGMNAK24MTaOPb6docls8lRqvD/AFi3e5NyXKK
- TCmevyglQ7g2F+IgIKqpwf2V03nQF7ZYx/2bbI5ANGBUOvEj6r7kkCOaxKMSaJ54VmV4
- zSf1LBF4o4KnEon7TGh3bpCsrjUVq4L8zOoQKnArLV+7gihJNitVkreWa62ch2IcbGsW
- dl4tYq3tA8CN5ZNC9W7eTZy01p0d8u0VSek5TbY+n7krrC5zO2DZNUA7qlTfLzocbpYY
- CIgRnEv1xGZNwHcQ1Ux8m5OCFxxdcd5WoGljDECICzITVLL1o9rX9HB1O2J2XynHQiFg
- Kdjw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K08m76Dkmz30KZ
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Feb 2022 09:35:17 +1100 (AEDT)
+Received: by mail-io1-f46.google.com with SMTP id v19so526838iom.7
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Feb 2022 14:35:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:sender:message-id:date:mime-version:user-agent
- :subject:content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=K49iyUfP87GUSWjSsQDrw9184z8W1wX9twPD7fJ5DdI=;
- b=igYATeJCEf2PKOEdSDE6ugSSjTyg8w9ZUR2iko+kz5X8R7w8Eu43FJHt1aloX2s9jb
- abYiRoHZIv87fWGPcin3kQjG/Uui35ExnQRKjnD1KuBsw955KE/ertLGWOgx4Nmw9HIb
- 7NY4Bdwu0dRT1+Nz1kUUhvXA5sqZkaGPlrC0pCr5S45CFFGRbwyl8Dk4e3CmSC7GVFXV
- 7rXct2wPI7R5xDIgns6vOvgBSWPlOqIPBMGYv44oz3OCONNXSbOS8hEOESRv+uibssSg
- QuU7Dy2wGy02lWECzCG2fbvlGR6fOHTh2qbowAkd/6MrWF/MzkPP2LKrU9Ew1zmTbmrm
- 4vTQ==
-X-Gm-Message-State: AOAM532tRT2tMM5dUkODooLH0D45MzJbg/5xaZa/SQV/fDh7zX8e8jhH
- sehfr0sQaRoLNNmA2cMlkDA=
-X-Google-Smtp-Source: ABdhPJx9Kr9K7CaT4uf99J5p6k4IB7qjpuwkNpxc9I74+w8uJKlDLM85H41UC8A+sKnvawNpUmdEKQ==
-X-Received: by 2002:a05:622a:1007:b0:2d6:5ac4:6b78 with SMTP id
- d7-20020a05622a100700b002d65ac46b78mr3534147qte.668.1645121661036; 
- Thu, 17 Feb 2022 10:14:21 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
- ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id y5sm20490979qkp.37.2022.02.17.10.14.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Feb 2022 10:14:20 -0800 (PST)
-Message-ID: <5b0b69cf-5688-3679-dd77-49179e0b17bb@roeck-us.net>
-Date: Thu, 17 Feb 2022 10:14:18 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 0/4] misc: Add power-efuse driver
-Content-Language: en-US
-To: Zev Weiss <zev@bewilderbeest.net>, linux-kernel@vger.kernel.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Arnd Bergmann <arnd@arndb.de>
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=QJCJJkJqtOsQ/CSbeUuObYQcThTPRTm035a09VI6ZJ4=;
+ b=VCTVAtHfmkDccpf+1g7QipBdO0JblpmN7bCh1YE+9D8UqMU2ebQOVh07pPK8a5Df6L
+ sPrYFpmMob9jRh7QvYR69kORZUT0rUkuIZ2kzYJgOOAMIb5EQ/Lb8rrt+1DJh4nRdaja
+ Hg7Q45tcixq7wjGLiB0uoCPeoNP62Q8yv8svW1YMAJYHvixK/Ca2MwVDNXqlbooOA7QO
+ gnLC+aaCgmJZFfrz2LRM5GeVcCOJi1fhN+zxgVuaA2FJToe3IJ8gxv0O96/FT/mTISCh
+ Vt1i8m75PJJoi6xh1dzTpcpJMTzIVHI55rMa5bLbMKIjgzJCAdFdWWpfdHvVFNN2wtIO
+ q6iw==
+X-Gm-Message-State: AOAM533HdM/D/INZu3BWeKAjL86Z0pxy62Tpgs1Eglfv7esuz4vY1KqS
+ q/UxvNA5M1mIQ7/LeiyswA==
+X-Google-Smtp-Source: ABdhPJy0BMvl0r/0X5Zc06+9xSfxyHJxRc8f8yEbFq5HYdWl/tpmNswA1NCuOnIwtqi5NIlgpfhMVw==
+X-Received: by 2002:a02:7a16:0:b0:313:f2f9:2ebc with SMTP id
+ a22-20020a027a16000000b00313f2f92ebcmr3370002jac.136.1645137315031; 
+ Thu, 17 Feb 2022 14:35:15 -0800 (PST)
+Received: from robh.at.kernel.org ([64.188.179.250])
+ by smtp.gmail.com with ESMTPSA id u15sm2891106ill.75.2022.02.17.14.35.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Feb 2022 14:35:14 -0800 (PST)
+Received: (nullmailer pid 3892127 invoked by uid 1000);
+ Thu, 17 Feb 2022 22:35:12 -0000
+Date: Thu, 17 Feb 2022 16:35:12 -0600
+From: Rob Herring <robh@kernel.org>
+To: Zev Weiss <zev@bewilderbeest.net>
+Subject: Re: [PATCH 3/4] dt-bindings: Add power-efuse binding
+Message-ID: <Yg7NoLzC7zt2oihV@robh.at.kernel.org>
 References: <20220217104444.7695-1-zev@bewilderbeest.net>
-From: Guenter Roeck <linux@roeck-us.net>
-In-Reply-To: <20220217104444.7695-1-zev@bewilderbeest.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <20220217104444.7695-4-zev@bewilderbeest.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220217104444.7695-4-zev@bewilderbeest.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,77 +67,75 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, openbmc@lists.ozlabs.org,
- Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Mark Brown <broonie@kernel.org>
+ Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/17/22 02:44, Zev Weiss wrote:
-> Hello,
+On Thu, Feb 17, 2022 at 02:44:43AM -0800, Zev Weiss wrote:
+> This can be used to describe a power output supplied by a regulator
+> device that the system controls.
 > 
-> This patch series is another incarnation of some previous efforts [0]
-> at enabling userspace access to the OPERATION state (and now status
-> flags) of PMBus devices, specifically with respect to efuses
-> protecting general-purpose power outputs.  This functionality is an
-> important component enabling a port of OpenBMC to the Delta AHE-50DC
-> Open19 power shelf [1].
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> ---
+>  .../devicetree/bindings/misc/power-efuse.yaml | 37 +++++++++++++++++++
+>  1 file changed, 37 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/misc/power-efuse.yaml
 > 
-> The first patch extends the pmbus core's regulator support with an
-> implementation of the .get_error_flags() operation, mapping PMBus
-> status flags to REGULATOR_ERROR_* flags where possible, and the second
-> patch adds regulator support for the lm25066 driver.  These two
-> patches are essentially independent of the power-efuse driver (and
-> each other) and could potentially be applicable individually, but are
-> necessary for the power-efuse driver to be useful on the AHE-50DC.
-> 
+> diff --git a/Documentation/devicetree/bindings/misc/power-efuse.yaml b/Documentation/devicetree/bindings/misc/power-efuse.yaml
+> new file mode 100644
+> index 000000000000..cadce15d2ce7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/misc/power-efuse.yaml
+> @@ -0,0 +1,37 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/misc/power-efuse.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Generic power efuse device
 
-Nevertheless, the first two patches are orthogonal to the remaining
-two patches and should be separate.
+No idea what this is, but I doubt any such generic device exists. This 
+needs sufficient description to be convincing that it is indeed generic.
 
-Guenter
+> +
+> +maintainers:
+> + - Zev Weiss <zev@bewilderbeest.net>
+> +
+> +properties:
+> +  compatible:
+> +    const: power-efuse
+> +
+> +  vout-supply:
+> +    description:
+> +      phandle to the regulator providing power for the efuse
+> +
+> +  error-flags-cache-ttl-ms:
+> +    description:
+> +      The number of milliseconds the vout-supply regulator's error
+> +      flags should be cached before re-fetching them.
 
-> The third and fourth patches add dt-bindings and the implementation of
-> the power-efuse driver, respectively.  The driver is fairly simple; it
-> merely provides a sysfs interface to enable, disable, and retrieve
-> error flags from an underlying regulator.
-> 
-> There is one aspect of its usage of the regulator API I'm a bit
-> uncertain about, however: this driver seems like a case where an
-> exclusive 'get' of the regulator (i.e. devm_regulator_get_exclusive()
-> instead of devm_regulator_get() in efuse_probe()) would be
-> appropriate, since in the intended usage no other device should be
-> using an efuse's regulator.  With an exclusive get though, the
-> regulator's use_count and the consumer's enable_count don't balance
-> out properly to allow the enable/disable operations to work properly
-> (the former ending up one more than the latter, leading to
-> enable_count underflows on attempts to disable the regulator).  So at
-> least for now it's using a non-exclusive get -- I'd be happy to hear
-> any pointers on a way to allow an exclusive get to work here, though.
-> 
-> 
-> Thanks,
-> Zev
-> 
-> [0] https://lore.kernel.org/openbmc/YGLepYLvtlO6Ikzs@hatter.bewilderbeest.net/
-> [1] https://www.open19.org/marketplace/delta-16kw-power-shelf/
-> 
-> Zev Weiss (4):
->    hwmon: (pmbus) Add get_error_flags support to regulator ops
->    hwmon: (pmbus) lm25066: Add regulator support
->    dt-bindings: Add power-efuse binding
->    misc: Add power-efuse driver
-> 
->   .../devicetree/bindings/misc/power-efuse.yaml |  37 +++
->   MAINTAINERS                                   |   5 +
->   drivers/hwmon/pmbus/Kconfig                   |   7 +
->   drivers/hwmon/pmbus/lm25066.c                 |  14 ++
->   drivers/hwmon/pmbus/pmbus_core.c              |  97 ++++++++
->   drivers/misc/Kconfig                          |  15 ++
->   drivers/misc/Makefile                         |   1 +
->   drivers/misc/power-efuse.c                    | 221 ++++++++++++++++++
->   8 files changed, 397 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/misc/power-efuse.yaml
->   create mode 100644 drivers/misc/power-efuse.c
-> 
+What are 'error flags'? Not something I've heard with respect to 
+regulators.
 
+> +
+> +required:
+> +  - compatible
+> +  - vout-supply
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    efuse {
+> +        compatible = "power-efuse";
+> +        vout-supply = <&efuse_reg>;
+> +        error-flags-cache-ttl-ms = <500>;
+> +    };
+> -- 
+> 2.35.1
+> 
+> 
