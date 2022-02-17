@@ -2,96 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3A2C4BA3D5
-	for <lists+openbmc@lfdr.de>; Thu, 17 Feb 2022 15:58:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EF8714BA62D
+	for <lists+openbmc@lfdr.de>; Thu, 17 Feb 2022 17:40:22 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4JzycY1CNQz3cPD
-	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 01:58:05 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=tORuF7e3;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=S4zqm7QB;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K00tX3JQ0z3cbD
+	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 03:40:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.29;
- helo=out5-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=gmail.com (client-ip=209.85.166.177;
+ helo=mail-il1-f177.google.com; envelope-from=robherring2@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm1 header.b=tORuF7e3; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=S4zqm7QB; 
- dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
- [66.111.4.29])
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com
+ [209.85.166.177])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Jzyc62m1hz3bcn
- for <openbmc@lists.ozlabs.org>; Fri, 18 Feb 2022 01:57:41 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id C29595C017C;
- Thu, 17 Feb 2022 09:57:37 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Thu, 17 Feb 2022 09:57:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm1; bh=TUjvHNV5+Gec7Ouno7Ey/A9489K0PpdLzGs6SZ
- YwmRQ=; b=tORuF7e31SR0hX6vIgPTrj6rmjdOSzVIf3PbtUUH5xvj0A6CyN13k0
- iyad7xQV/WxSpg5g3+QjSZAmNaO4umJGuyaIIUoUpq755xzqu+vW0gUPJ5aL9jTx
- uxG+6HDSEke5UryTPTMOfuUTFQFp8mOK/cW4SprBCVAzx/BtGgdzRr8LCWDxocrE
- vpQmWp0LfqDJA+Q89fi84gJwZJC+65rigaBr8ga8Um/8Ze7fRa/gZ23kegGVJYl0
- myfESs35Tv6MC9PBQejXISo741WXE9LNRmX4ZOln2bGznlgfrR/0SR5eHg49iath
- 3tAYsFlFQ9XUk3/BtjCfBUdJLnvAm4Bw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=TUjvHNV5+Gec7Ouno7Ey/A9489K0PpdLzGs6SZYwm
- RQ=; b=S4zqm7QBz9/RQBUEg44VWd6zrp5isAQtRaBVETy9nBza3dXOlaz7yLRAl
- BgZRr46UBkfu8cvBdrXIQ9MXz/qfDWL/M26VL/C6XL50kr2lotloG/yq+1z3AlfX
- pJhk614SJP/Jbg1D7SQ3b6h4726p+yCWr1IK0b2+Xt9lnhkLCJ1ukgbpLZd/x9Hh
- 5PDSpymljhfgu0ZfdgjBmlmt99+sppILQ84yac4olevBTYe+3hAaUtJgH5AhOmSf
- eQjs2TPvs9gUOctEtm1FLy3vOLQGMNclPqG/0xt5qwBOjZX/ZWSEjEmUc1FUEHWl
- 9vPVvulB+r+kNR+mUzxqSuO0RaxSg==
-X-ME-Sender: <xms:YWIOYpRrLiCT3Ud4UKcgnWzbZ6Doyy_BABId0XOGITjCsfgSdXsaFw>
- <xme:YWIOYizi0DQoATqT4JYYrEvX63DRXaE0swDTYs6eYoXhRaqoKBmI1dPOmfyF6XxzN
- YjX9I-UA7saKkb6GQM>
-X-ME-Received: <xmr:YWIOYu0sFMjMxyB4pT4evt5vpj5MscDCNOumxuye5TGj1ZpxcikVWn9ESHbenQvjD6rnxg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgdeilecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdefhedmnecujfgurheptggguffhjgffgffkfhfvofesthhqmhdthhdt
- vdenucfhrhhomhepuehrrgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiih
- gvshhquhhirhhrvghlrdgtohhmqeenucggtffrrghtthgvrhhnpedttefhtdegudefteeg
- gfetueelgfffiedvheeifefhtdfgledvvdehkefgfeeufeenucevlhhushhtvghrufhiii
- gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgv
- shhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:YWIOYhB7U4avo43uR53tlI0mIXDyuu8eJpISdf84t3YrgdC_V1_QuA>
- <xmx:YWIOYiiKH8EIzodcalrjwxJlLy0umN_NRq236o37tpsDaNA2FgYwzA>
- <xmx:YWIOYlpfVB5-eGSaDetffdmTPPF3tIbAda52y0fQQl0Bn4a-pJWtKQ>
- <xmx:YWIOYmbY2P5viFflCy45HBSpN6ZuUsEOb-VwIbs-Mx-EdEp19znD1w>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Feb 2022 09:57:37 -0500 (EST)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: Upcoming OpenBMC release 2.11
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <YgbNmq8SVgJMHXcn@heinlein>
-Date: Thu, 17 Feb 2022 09:57:36 -0500
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4AF3D7E9-4752-4AF5-B556-BAD50F9560BD@fuzziesquirrel.com>
-References: <YbposjOPwc1puNvR@heinlein> <YehtxgLG3KlzKFAk@heinlein>
- <CAH2KKeY_aGKzp+BjYJPagjWAR2WLuqeib4aPy2nBjSc4_ed_zg@mail.gmail.com>
- <YgbNmq8SVgJMHXcn@heinlein>
-To: Patrick Williams <patrick@stwcx.xyz>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K00tG6RTRz3bT6
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Feb 2022 03:40:06 +1100 (AEDT)
+Received: by mail-il1-f177.google.com with SMTP id n5so2649478ilk.12
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Feb 2022 08:40:06 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+ :message-id;
+ bh=ZTjwSd+wHhmCGk8JqBXyhv8IcrizpvVNCPSWVUYfN5Q=;
+ b=Mtp/DMSmT50hz+xnhPTglEwuo7gxeeu/abGo9BPeLENmHMqg5z/cMhHQoJQC5Daykp
+ v7egXlVTjLitwe8UMnzmW5wxNZgDXBZSVEM9MP7BDlzU/PnB/RvguFnzp1J0hMNo7SKx
+ FPXHVaY96r9kRNF2zc2I9s+Mc2BRef/qEDOQ0WjtXQ5bA/YXgbHA5LC041p9vDh5RPgl
+ GmjL7+P1/m9UY+LRlHaA6nHyliwBO1YlIQYWedIlIy32Z07kb7TUZTBrAcSkIj1nFt4q
+ xLN9eTApF91Tw1FaAdDzpnOiQsZF3yz8SSyukGTkBgGmuL6qgis6p09DgldBXw4ZAgXH
+ tB1g==
+X-Gm-Message-State: AOAM533/Lg0gA8xuUX3UCcAqeeGQxK6YLZGtVc1ud9v3BGdnlx56JzAU
+ KlnE0DNwW42KaVBkmsBE5Q==
+X-Google-Smtp-Source: ABdhPJz1Y8+veVYBuVo5eRY627g99ZkONn9xwBPYq02yX+hJd5PmyyrIfeQd/bz4Iu6Wu1GjvWbFEQ==
+X-Received: by 2002:a92:d242:0:b0:2b9:a33b:9068 with SMTP id
+ v2-20020a92d242000000b002b9a33b9068mr2622224ilg.144.1645116002966; 
+ Thu, 17 Feb 2022 08:40:02 -0800 (PST)
+Received: from robh.at.kernel.org ([64.188.179.250])
+ by smtp.gmail.com with ESMTPSA id q4sm2131485ilv.5.2022.02.17.08.40.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Feb 2022 08:40:02 -0800 (PST)
+Received: (nullmailer pid 3365327 invoked by uid 1000);
+ Thu, 17 Feb 2022 16:39:55 -0000
+From: Rob Herring <robh@kernel.org>
+To: Zev Weiss <zev@bewilderbeest.net>
+In-Reply-To: <20220217104444.7695-4-zev@bewilderbeest.net>
+References: <20220217104444.7695-1-zev@bewilderbeest.net>
+ <20220217104444.7695-4-zev@bewilderbeest.net>
+Subject: Re: [PATCH 3/4] dt-bindings: Add power-efuse binding
+Date: Thu, 17 Feb 2022 10:39:55 -0600
+Message-Id: <1645115995.379177.3365326.nullmailer@robh.at.kernel.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,42 +64,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>, Thaj <tajudheenk@gmail.com>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
+ Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, 17 Feb 2022 02:44:43 -0800, Zev Weiss wrote:
+> This can be used to describe a power output supplied by a regulator
+> device that the system controls.
+> 
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> ---
+>  .../devicetree/bindings/misc/power-efuse.yaml | 37 +++++++++++++++++++
+>  1 file changed, 37 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/misc/power-efuse.yaml
+> 
 
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-> On Feb 11, 2022, at 3:56 PM, Patrick Williams <patrick@stwcx.xyz> =
-wrote:
->=20
-> On Fri, Feb 11, 2022 at 03:33:12PM +0530, Thaj wrote:
->> Hi Patrick,
->=20
-> Hello Thaj,
->=20
->>=20
->> 2.9 is quiet old. There are a lot of changes after that. A newer =
-u-boot
->> with secure boot support, better AST2600 support etc. A new release =
-is
->> necessary.=20
->=20
-> It seems that not many people who are active contributors in the =
-community
-> actually care about releases, so there hasn't been much effort put =
-into it.
-> You used the word "necessary".  Would you care to expand, for the =
-community,
-> what your use case is where you rely on releases?
->=20
->> There is no 2.11.0-rc1 yet. Is it possible to initiate a release
->> process?
->=20
-> The honister branch is effectively the '2.11.0-rc'.  I don't have =
-permissions
-> to create tags myself.  I'll see if Brad has bandwidth to create a tag =
-in the
-> near future.
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/misc/power-efuse.yaml:10:2: [warning] wrong indentation: expected 2 but found 1 (indentation)
 
-We have a 2.11.0 tag now.=
+dtschema/dtc warnings/errors:
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/1594124
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
