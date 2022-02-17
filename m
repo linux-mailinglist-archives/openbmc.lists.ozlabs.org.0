@@ -2,138 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 336D74BAFC0
-	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 03:37:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 243294BAFC5
+	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 03:38:04 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K0G7K4ycLz3cRn
-	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 13:37:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K0G894NdGz3cQJ
+	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 13:38:01 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=HGxd45PM;
+	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=BsyNv/lR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7e8a::719;
- helo=nam10-bn7-obe.outbound.protection.outlook.com;
- envelope-from=tungnguyen@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.151; helo=m13151.mail.163.com;
+ envelope-from=damon3000@163.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=HGxd45PM; 
- dkim-atps=neutral
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com
- (mail-bn7nam10on20719.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:7e8a::719])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4JzrpJ5x03z3bc6
- for <openbmc@lists.ozlabs.org>; Thu, 17 Feb 2022 21:36:06 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lmetpHOjwpMA/LMWcbLqiuNRzt5M7Zn3L2+/zAaXVHKPgpORbh8gA8s2ULBTYmhaQ8EZDFpOErQ4pmreUNgW4X2h6mgi9i3ObMl1SMq5P1a6P2CES+VboJTLHm1Vhxc7lIAV7CW1Surrn6DJvZEwkgKPne8H4Nsv7WV2DkLcQOyymOfwLX0/QSvLCUS4bGqcHN88Q6Z+ZufyWDIp9f853pT1LG2/e8gyUwqD5JUml7txs9SOSOYoltPMGevmdXCIjabUoiTXaw0Iw8uRSX+nqBk+xDU7Hvvn7EFY929L69MgZtOf3tDIQYmoOJWEpDG3aK73EEkQFKV5CxxmbkSchw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dkdm5uzD3YbChlxFp0BcwNisdnkkmRYF9h/Fr6Us/Do=;
- b=TrzjIECTuKUbsmhtKJ+OHrqA4NKNVD0es0DKdvzfqmbRGDfGBjCkySoL+C9gSYFL1dU731p5lyc+5EVBYVwLgaXGBzYUFKLiyfNfEx6hBPSqBdJqbLGlfGoPz4EiJ2LLptxnAwJ9bAlu62px591u9NXlgwCtNVVScUOOw4RvhZUBEGO0Y5KqfQZ6rzxMpb2G4ep2sVdVWNqjTwjB2wIFjMXd/RTazdn1vDnMYPjV49Pw26ljuZpdrQFIkCGU3Mgk0HId5N8Be42FlwkpvsUNB9Xl6bKOGSOrwjd/dgZigd6PZ1KoJaILzB5q+DRCjl0DsdXUx9ExcjOIKdGnSIegNA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dkdm5uzD3YbChlxFp0BcwNisdnkkmRYF9h/Fr6Us/Do=;
- b=HGxd45PMs074o4GiIwIvfZN075pH4wAWaRuIllgg6F6PPo9twZxiK0g71tDzXv009J6dbwDx8DynX99+wx0+v8G4A14nNC+WjajYKrnKM7PujCxx/R0yVOEX8EOJ2meP22jj+SaPawcJLZi/DiOPYeQ3x5Ui9nONKtp9D98NksA=
-Received: from CO1PR01MB6759.prod.exchangelabs.com (2603:10b6:303:f5::9) by
- BN7PR01MB3972.prod.exchangelabs.com (2603:10b6:406:87::30) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4995.14; Thu, 17 Feb 2022 10:35:44 +0000
-Received: from CO1PR01MB6759.prod.exchangelabs.com
- ([fe80::ad17:6c06:ffcb:b709]) by CO1PR01MB6759.prod.exchangelabs.com
- ([fe80::ad17:6c06:ffcb:b709%9]) with mapi id 15.20.4975.019; Thu, 17 Feb 2022
- 10:35:44 +0000
-From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>
-To: Billy Tsai <billy_tsai@aspeedtech.com>, Troy Lee
- <troy_lee@aspeedtech.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue 
-Thread-Topic: [AST2600] PWM/TACH driver and dbus-sensor issue 
-Thread-Index: AQHYHb9Z9fVcffI98EScCXqS70CDbayN0A+AgASdxKqAAAIO4IAAB0KpgACtO4CAAUemHoAAjXqAgADP/BmAAdV3AP//+JQL
-Date: Thu, 17 Feb 2022 10:35:44 +0000
-Message-ID: <CO1PR01MB6759F88E3ABEB3E6B816EFC3FF369@CO1PR01MB6759.prod.exchangelabs.com>
-References: <CO1PR01MB6759E0EC69109784C4B3C282FF2E9@CO1PR01MB6759.prod.exchangelabs.com>
- <HK0PR06MB2145535BDA1526108377B8478A309@HK0PR06MB2145.apcprd06.prod.outlook.com>
- <CO1PR01MB6759A78F5D01E78934B055CAFF339@CO1PR01MB6759.prod.exchangelabs.com>
- <HK0PR06MB21458E132EC1569124866E2E8A339@HK0PR06MB2145.apcprd06.prod.outlook.com>
- <CO1PR01MB6759010F944EAF2DF12EAA39FF339@CO1PR01MB6759.prod.exchangelabs.com>
- <5BF20D73-BEBB-4C25-AFE8-63DF434CFBC4@aspeedtech.com>
- <CO1PR01MB675963DCF2D3A0505CE2780AFF349@CO1PR01MB6759.prod.exchangelabs.com>
- <D9562E34-D61F-4F51-B4EF-7F4F83F27367@aspeedtech.com>
- <CO1PR01MB6759567EAB2EE2D6FC02CF6EFF359@CO1PR01MB6759.prod.exchangelabs.com>
- <4903B31A-A11F-4A4E-8C64-CBAEA0975600@aspeedtech.com>
-In-Reply-To: <4903B31A-A11F-4A4E-8C64-CBAEA0975600@aspeedtech.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-suggested_attachment_session_id: f18fd493-e4a3-63cf-ab74-017e25e36170
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 2e0fc2a8-f6b2-4516-0442-08d9f20140c8
-x-ms-traffictypediagnostic: BN7PR01MB3972:EE_
-x-microsoft-antispam-prvs: <BN7PR01MB3972D1DFE8D735A981BD1A71FF369@BN7PR01MB3972.prod.exchangelabs.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: +NxKVQPocKaXYOYSGxcK+YJj2/lIZyO9vNt2rGDjF0W54S8QvxiFS5Waz+i7CXK391JlFhvzN0mwubT8Y5l/M0bzh93pvKLwaHklZ2ynMkpP5PjlCuuNXtuYI51PBmQQXbB7O+YZ6iQeXjbmWjmbRBT18ozOhfxqOgzGZajBRz5p4ZvMZJLrqTNB7zQVVE1wILON0KFQjxUEE8uP8Z0q9YO+p2kI7o7NVXDJEEk9ovhjEZ9Eibfgkl/lLoQUYfu+/JfdKBbSHL3MxeAxHdkud/edWHlU9HNCEUu7F/197oRdn42TRp/5k75r9aEtUIakMtJlwZ8JoDmfS0gTLfotR3uDt6sIGYBhZVeitlwAfGZM2tQCO0vxDLlkJQhJVuetcieptyamQdPDPKBsp/cLC/58QZCx1f8ukwP7mFudr7JA1OLKaBDoSt2wKmwhUPwhIvvP5AXYT2Mr+Bl9T/JFQ85V1rfVrTT8e8Iumu2zAk8PUE1uGeAOVnL2l9WSjE+GL2z2FEoE8ND00r51nZyg4s5ab7YVKykTRPHHxpbLWgKMe/rh0azBb3BZDrJLUllIigx9+3cDu7OYrxop+c8u2qrZNiwK/I1YX8bUMcVjrPtbIAZ1HOKJ2tZ2kR1qHf8Q5ZfNtomXBKkC92dofle9YR6ecpqoq23rGcQXkE+7HhpS7AaBJ7wvGA2XJVPJ94w4mi18lCzrEcMXGAvsmJIBWl8qlubHzEvnJqDCE1mIuYH2VNjF5jvOsfRmg+dlY+clqIl3idMO2uQ0FIvmemTovh0LaTEHe+U3kKucfsVIrABia03zDQApN3RhKH2zSRvN
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CO1PR01MB6759.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(33656002)(5660300002)(71200400001)(91956017)(83380400001)(4326008)(30864003)(8936002)(52536014)(2906002)(186003)(107886003)(26005)(4743002)(86362001)(316002)(7696005)(6506007)(9686003)(966005)(508600001)(38070700005)(110136005)(54906003)(38100700002)(55016003)(122000001)(64756008)(76116006)(8676002)(53546011)(66946007)(66446008)(66476007)(66556008);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?uF0pH+FvN+ZwSfi5UzHR5xQtxPx6N9n2yJf8a6eicaez2Am0fHhRR8qiN/ll?=
- =?us-ascii?Q?HjKdAn+ivqVeDoru+Plv64kwSoC51i4pyzw/s4Z1VqwWKMaM/Z5YHSrp80vz?=
- =?us-ascii?Q?hpguLN/DzpVXe8MeWPi09WYppRaBBHwlpxjUCSg1HrtnG0MUARCob7qLb6S4?=
- =?us-ascii?Q?+SKYgMtm1sNlex67e8pN5oZ8CEpwqBiPuOP+zTyGJgOMzGrlZvrb3lFskZvF?=
- =?us-ascii?Q?cckUSD4rFbBsPMDarOz2LR0G2/+HpCZzwGWafpHQOTLxjHQiMxie1k6nLBMI?=
- =?us-ascii?Q?awzHM4/Zb5Soezwi79M3cCb0jdfcZd6hEjOYYI90xzcwApVXuz9pTTgGgRk0?=
- =?us-ascii?Q?C2lJLdHFEjZl7isIX3Dlo4LFzJxfGwPJzwGAvveFUGF1ROw2tJf+bLM1Y4/7?=
- =?us-ascii?Q?i9KnJitJI6sdii2isbr0qKffSc2EBr/QDIBvIh0QXvibM6/iT4iVFVm7EMqB?=
- =?us-ascii?Q?xMGeelfBk7PGduOBlXgzyVLpxGUH/t+zEqaWAzTRQ0Lcv912h8wveBOShe1y?=
- =?us-ascii?Q?skrhChJaZ2Kf+rbcTWG+3UN3B4Pbzf9TqZw87dPriHYnDj4WDzAN4mBuIFyG?=
- =?us-ascii?Q?1QH3s5jf//H8ULD/nxfaWqFjWDMeaHG+Qr/sjagoRKDBl2PlYyQiKjR8Me2a?=
- =?us-ascii?Q?I3Xnd1RhtPIELiBQafjfxziT8LNgLuo7+Q1QObUzr1AH69AX9riLb7vto9dy?=
- =?us-ascii?Q?ctZ3M7jod51RbGpjX5LYALVqN7cTaBaw1RVhziptfZnvS2q6kROmZlWYEZZd?=
- =?us-ascii?Q?QkFZlk5sS6xxSjxNemVQCcRyBBwKgHKt8mZcnnkxnEIdMjqJsSdf7VkjRfw5?=
- =?us-ascii?Q?oAu6c44P4xcg1GvkuiVcaUdgaOfTpqimtGodaprUfINDPp1K161A+mIkj/c7?=
- =?us-ascii?Q?+fcAVHwzg0oJ0dfXq7x+OCed7wtpQtd2+5sOMTgDgWlmIPaLMF6Sy0Kaa6Y6?=
- =?us-ascii?Q?8mkB4xGVQfC3AZMEm9Vam3RZ4xKJU+aUu2UUWWttsKE2BtsAEHaRkqEJRPtu?=
- =?us-ascii?Q?svWCy2yOHO/cLfdu2T41yI/sBiD/jFT4c44rvZg6wZJTIj1RAfyxtYNlUA92?=
- =?us-ascii?Q?fmHZubMrc8O3vRFpJir869hs1j35hK3VFqwIET3wBLu0f4tUewh7RjDV9q2G?=
- =?us-ascii?Q?QCbDfgDY2sx8ZhsSega1F6k0DP9HmhlztygH6ux51N2jRi+Fo2FLvL4vU4eB?=
- =?us-ascii?Q?X2Jxh3gW6YjFnKFc01bposGSUKvCjuf6kwxagTQxs2ID/QrqJ70FSXUFbCWd?=
- =?us-ascii?Q?OJOafNXwwgtf6omuWnV7gbmfCZFzbGUF162pm/uz2hJS3LeJsOMZ3crEQBIV?=
- =?us-ascii?Q?u04txL4jJVbeLdYLWOpbtbxznjt+APbE6CKx3mX2b93Jx4UsD7fSt9EOMgoj?=
- =?us-ascii?Q?iLKfaO29bju4okBdehk3vj+xngYcHAI50afL1JrdVwjAhwCRME0XHwpr/eYU?=
- =?us-ascii?Q?JlN6P9Lvq1xVhKF+BBhesWOw9AWCWjnzxYH1aniLDJS/Au+p5Cu8dt+iKmS4?=
- =?us-ascii?Q?1WmF2pfBkbM/2GuFzABis0f3tdOgLhjLNRLbZQZGaiUMVR0qn/FzAivUspWe?=
- =?us-ascii?Q?VUD5FwxzX0PTbfaHTCoy/j0++gEUOizv73H+5IWb+eOQwV3ed/fPJP7k9xUd?=
- =?us-ascii?Q?MsAh9XRmG3aQnbSE+E88ztVJDABjAMhXEj3S9doKLAMg5cY2CzkUpSK5tJYD?=
- =?us-ascii?Q?dSVjB5yV/QotmysbzIZVDtr6F/D1L46LOIz3BL4L6aIfRJu5?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
+ header.s=s110527 header.b=BsyNv/lR; dkim-atps=neutral
+Received: from m13151.mail.163.com (m13151.mail.163.com [220.181.13.151])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4JzsZN1jffz3bT5
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Feb 2022 22:10:44 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=891GM
+ 8AdNmNQzP/ZgPSjpdEuYHqorWtO86c7YdvwYq4=; b=BsyNv/lRFfYJsksnjinds
+ mYhXWavoaZww7qBJsFM8UGGO3BjUkRl9TUTomE1L34gOVXur9dcxbvTYnu1C63/6
+ +VIMeh+GI3TAIbj2c7E8FL5V0b1YuGDYfvifdsvb4T3dmLGnpm/HxjXVeN7JvHHG
+ KzXaiUUwu2DjQzXEfXInuU=
+Received: from damon3000$163.com ( [120.253.234.195] ) by
+ ajax-webmail-wmsvr151 (Coremail) ; Thu, 17 Feb 2022 19:10:33 +0800 (CST)
+X-Originating-IP: [120.253.234.195]
+Date: Thu, 17 Feb 2022 19:10:33 +0800 (CST)
+From: damon3000  <damon3000@163.com>
+To: "Patrick Williams" <patrick@stwcx.xyz>
+Subject: Re:Re: FRU access configuration
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
+ Copyright (c) 2002-2022 www.mailtech.cn 163com
+In-Reply-To: <YgwATu32A9FJUHxk@heinlein>
+References: <ad1d881.3105.17efb5ed0dc.Coremail.damon3000@163.com>
+ <YgwATu32A9FJUHxk@heinlein>
+X-CM-CTRLDATA: N6bbP2Zvb3Rlcl9odG09MTM5MTQ6NTY=
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_146127_1597560439.1645096233916"
 MIME-Version: 1.0
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR01MB6759.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2e0fc2a8-f6b2-4516-0442-08d9f20140c8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Feb 2022 10:35:44.3344 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: v/NwmScIeJ7MtE5x/xsY9IuRQyTGfbfunkmRbJGUEyzSA/dKFbG+07RXhLgDXNz2a7j278DOVZ3IlzNy09VD/pHywvll30IalUuxEctrYaof6e2IQqMpnpnh3x2mseyY
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR01MB3972
+Message-ID: <3cbbabf.9be4.17f07606bbc.Coremail.damon3000@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: l8GowADX30srLQ5icwg4AA--.39963W
+X-CM-SenderInfo: pgdp00atqqiqqrwthudrp/xtbBEwqqJF3l--Wd+gAAsC
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-Mailman-Approved-At: Fri, 18 Feb 2022 13:36:55 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -146,476 +62,360 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com>,
- Thang Nguyen OS <thang@os.amperecomputing.com>,
- Phong Vo OS <phong@os.amperecomputing.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Bill,
-Yes, I'm using EVB. After removing the jumper at J80 i can see the fan work=
-s well, and the speeds show correctly. I think It implies that the ported d=
-river works OK.
+------=_Part_146127_1597560439.1645096233916
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Thank you for your support.
-Tung
+SGkgUGF0cmljaywKCgogIDEuICBBY2NvcmRpbmcgdG8geW91ciBzdWdnZXN0aW9uLCBJIGNhbiBz
+Y2FuIG15IEZSVSBpbmZvcm1hdGlvbiB2aWEgYnVzY3RsIGNvbW1hbmQsIGJ1dCBlbnRpdHktbWFu
+YWdlciBkaWQgbm90IHN0YXJ0IGFuZCBjYW4gbm90IGJlIGFjY2Vzc2VkLgpUaGUgbG9nIGlzIGFz
+IGJlbG93OgoKIgpidXNjdGwgdHJlZSAtLW5vLXBhZ2VyIHh5ei5vcGVuYm1jX3Byb2plY3QuRnJ1
+RGV2aWNlCmAtL3h5egogIGAtL3h5ei9vcGVuYm1jX3Byb2plY3QKICAgIGAtL3h5ei9vcGVuYm1j
+X3Byb2plY3QvRnJ1RGV2aWNlCiAgICAgIHwtL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNl
+LzEwXzY0CiAgICAgIHwtL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzEwXzY1CiAgICAg
+IHwtL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzEwXzY3CiAgICAgIHwtL3h5ei9vcGVu
+Ym1jX3Byb2plY3QvRnJ1RGV2aWNlLzNfODAKICAgICAgfC0veHl6L29wZW5ibWNfcHJvamVjdC9G
+cnVEZXZpY2UvNl83MgogICAgICB8LS94eXovb3BlbmJtY19wcm9qZWN0L0ZydURldmljZS82Xzc0
+CiAgICAgIHwtL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzZfNzYKICAgICAgfC0veHl6
+L29wZW5ibWNfcHJvamVjdC9GcnVEZXZpY2UvN184MQogICAgICB8LS94eXovb3BlbmJtY19wcm9q
+ZWN0L0ZydURldmljZS83Xzg5CiAgICAgIGAtL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNl
+L3Rlc3QKCgpidXNjdGwgaW50cm9zcGVjdCAtLW5vLXBhZ2VyIHh5ei5vcGVuYm1jX3Byb2plY3Qu
+RnJ1RGV2aWNlIFwKPiAgL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlL0JyYWhtYV9fX19f
+X19fX19fX19fCk5BTUUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFRZUEUgICAgICBT
+SUdOQVRVUkUgUkVTVUxUL1ZBTFVFICAgICAgICAgICAgICAgICAgICAgICBGTEFHUwpvcmcuZnJl
+ZWRlc2t0b3AuREJ1cy5JbnRyb3NwZWN0YWJsZSBpbnRlcmZhY2UgLSAgICAgICAgIC0gICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgLQouSW50cm9zcGVjdCAgICAgICAgICAgICAgICAg
+ICAgICAgICBtZXRob2QgICAgLSAgICAgICAgIHMgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgLQpvcmcuZnJlZWRlc2t0b3AuREJ1cy5QZWVyICAgICAgICAgICBpbnRlcmZhY2UgLSAg
+ICAgICAgIC0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLQouR2V0TWFjaGluZUlk
+ICAgICAgICAgICAgICAgICAgICAgICBtZXRob2QgICAgLSAgICAgICAgIHMgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgLQouUGluZyAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICBtZXRob2QgICAgLSAgICAgICAgIC0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+LQpvcmcuZnJlZWRlc2t0b3AuREJ1cy5Qcm9wZXJ0aWVzICAgICBpbnRlcmZhY2UgLSAgICAgICAg
+IC0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLQouR2V0ICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICBtZXRob2QgICAgc3MgICAgICAgIHYgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgLQouR2V0QWxsICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZXRo
+b2QgICAgcyAgICAgICAgIGF7c3Z9ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLQouU2V0
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZXRob2QgICAgc3N2ICAgICAgIC0gICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLQouUHJvcGVydGllc0NoYW5nZWQgICAgICAg
+ICAgICAgICAgICBzaWduYWwgICAgc2F7c3Z9YXMgIC0gICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgLQp4eXoub3BlbmJtY19wcm9qZWN0LkZydURldmljZSAgICAgICBpbnRlcmZhY2Ug
+LSAgICAgICAgIC0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLQouQUREUkVTUyAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICBwcm9wZXJ0eSAgdSAgICAgICAgIDgwICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgZW1pdHMtY2hhbmdlCi5CT0FSRF9GUlVfVkVSU0lPTl9J
+RCAgICAgICAgICAgICAgIHByb3BlcnR5ICBzICAgICAgICAgIlVWRDA1MCIgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBlbWl0cy1jaGFuZ2UKLkJPQVJEX0lORk9fQU0xICAgICAgICAgICAgICAg
+ICAgICAgcHJvcGVydHkgIHMgICAgICAgICAiVjEgICIgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIGVtaXRzLWNoYW5nZQouQk9BUkRfSU5GT19BTTIgICAgICAgICAgICAgICAgICAgICBwcm9w
+ZXJ0eSAgcyAgICAgICAgICIwMTIzNDU2Nzg5QUJDREUwMDFUQUcwMDAwMDAyICAiIGVtaXRzLWNo
+YW5nZQouQk9BUkRfSU5GT19BTTMgICAgICAgICAgICAgICAgICAgICBwcm9wZXJ0eSAgcyAgICAg
+ICAgICJSMUIgIiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZW1pdHMtY2hhbmdlCi5CT0FS
+RF9JTkZPX0FNNCAgICAgICAgICAgICAgICAgICAgIHByb3BlcnR5ICBzICAgICAgICAgIlhYMSAi
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBlbWl0cy1jaGFuZ2UKLkJPQVJEX0lORk9fQU01
+ICAgICAgICAgICAgICAgICAgICAgcHJvcGVydHkgIHMgICAgICAgICAiMEUxMTIyMzM0NEUwIiAg
+ICAgICAgICAgICAgICAgICAgIGVtaXRzLWNoYW5nZQouQk9BUkRfSU5GT19BTTYgICAgICAgICAg
+ICAgICAgICAgICBwcm9wZXJ0eSAgcyAgICAgICAgICIwMiIgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgZW1pdHMtY2hhbmdlCi5CT0FSRF9MQU5HVUFHRV9DT0RFICAgICAgICAgICAgICAg
+IHByb3BlcnR5ICBzICAgICAgICAgIjAiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBl
+bWl0cy1jaGFuZ2UKLkJPQVJEX01BTlVGQUNUVVJFUiAgICAgICAgICAgICAgICAgcHJvcGVydHkg
+IHMgICAgICAgICAiSHVhcWluIFRlbGVjb20gICIgICAgICAgICAgICAgICAgIGVtaXRzLWNoYW5n
+ZQouQk9BUkRfTUFOVUZBQ1RVUkVfREFURSAgICAgICAgICAgICBwcm9wZXJ0eSAgcyAgICAgICAg
+ICIxOTk2LTA3LTA3IC0gMTA6NTc6MDAiICAgICAgICAgICAgZW1pdHMtY2hhbmdlCi5CT0FSRF9Q
+QVJUX05VTUJFUiAgICAgICAgICAgICAgICAgIHByb3BlcnR5ICBzICAgICAgICAgIk5BICAgICAg
+ICAgICAgICAgICAgIiAgICAgICAgICAgICBlbWl0cy1jaGFuZ2UKLkJPQVJEX1BST0RVQ1RfTkFN
+RSAgICAgICAgICAgICAgICAgcHJvcGVydHkgIHMgICAgICAgICAidGVzdCAgICAgICAgICAgICAg
+IiAgICAgICAgICAgICBlbWl0cy1jaGFuZ2UKLkJPQVJEX1NFUklBTF9OVU1CRVIgICAgICAgICAg
+ICAgICAgcHJvcGVydHkgIHMgICAgICAgICAiMzEyMEUzMzkwMDAxMVgwMDEwICAgICAgICAgICAg
+IiBlbWl0cy1jaGFuZ2UKCgoKcm9vdEBza3k6L2V0Yy9kZWZhdWx0L29ibWMvZWVwcm9tcy9zeXN0
+ZW0vY2hhc3NpcyMgZWNobyAiMjRjNjQgMHg1MCA+IC9zeXMvYnVzL2kyYy9kZXZpY2VzL2kyYy0z
+L25ld19kZXZpY2UiCjI0YzY0IDB4NTAgPiAvc3lzL2J1cy9pMmMvZGV2aWNlcy9pMmMtMy9uZXdf
+ZGV2aWNlCnJvb3RAc2t5Oi9ldGMvZGVmYXVsdC9vYm1jL2VlcHJvbXMvc3lzdGVtL2NoYXNzaXMj
+IGJ1c2N0bCB0cmVlIC0tbm8tcGFnZXIgeHl6Lm9wZW5ibWNfcHJvamVjdC5FbnRpdHlNYW5hZ2Vy
+CkZhaWxlZCB0byBpbnRyb3NwZWN0IG9iamVjdCAvIG9mIHNlcnZpY2UgeHl6Lm9wZW5ibWNfcHJv
+amVjdC5FbnRpdHlNYW5hZ2VyOiBUaGUgbmFtZSBpcyBub3QgYWN0aXZhdGFibGUKTm8gb2JqZWN0
+cyBkaXNjb3ZlcmVkLgoKIgoKCkkgbW9kaWZpZWQgb25lIG9mIHRoZSBjb25maWd1cmF0aW9uIHdo
+aWNoIGlzIGluIGVudGl0eS1tYW5hZ2VyL2NvbmZpZ3VyYXRpb24gZm9sZGVyLCBpdHMgbmFtZSBp
+cyBNdF9qYWRlLmpzb24sIFRoZSBtb2RpZmljYXRpb24gaXMgYXMgYmVsb3cgZnJvbSBsaW5lIDc1
+OToKICAgICAgIk5hbWUiOiAiJGJ1cyB0ZXN0IiwKICAgICAgIlByb2JlIjogInh5ei5vcGVuYm1j
+X3Byb2plY3QuRnJ1RGV2aWNlKHsnUFJPRFVDVF9QUk9EVUNUX05BTUUnOiAndGVzdCd9KSIsCiAg
+ICAgICAgIlR5cGUiOiAiQ2hhc3NpcyIsCgoKU3RpbGwgb2NjdXJyZWQgdGhlIGFib3ZlIGxvZy4K
+CgoKMi4gQWNjb3JkaW5nIHRvIG1ldGEtcXVhbnRhJ3MgY29tbWl0LCBJIGRpZCBub3QgZmluZCB0
+aGV5IG1vZGlmeSBlbnRpdHktbWFuYWdlci9jb25maWd1cmF0aW9uIGZpbGVzLiBBbmQgSSB0cmll
+ZCB0aGUgbWV0aG9kLCBob3dldmVyIEkgY2FuIG5vdCBkaXNwbGF5IHRoZW0gdG8gImlwbWl0b29s
+IGZydSIKCgoKIgpjb21taXQgMGRlNDg1NmQwMzdmZjI1MjViM2RkNzRjZTJjYmFmZGQ0ZGNmZjQ0
+MwpBdXRob3I6IEpvc2VwaCBGdSA8am9zZXBoLmZ1QHF1YW50YXR3LmNvbT4KRGF0ZTogICBXZWQg
+SmFuIDI2IDE0OjM3OjQyIDIwMjIgKzA4MDAKCiAgICBtZXRhLXF1YW50YTogczZxOiBhZGQgZnJ1
+IHlhbWwgY29uZmlnIGZpbGVzCiAgICAKICAgIEFkZCBmcnUgc2V0dGluZyBjb25maWcgYW5kIGRl
+dmljZSBqc29uIGZpbGUuCgoiCgoKCkNvdWxkIHlvdSBwcm92aWRlIHNvbWUgc3VnZ2VzdGlvbnM/
+CgoKCgoKCgoKCgoKCgoKCgoKQXQgMjAyMi0wMi0xNiAwMzozNDozOCwgIlBhdHJpY2sgV2lsbGlh
+bXMiIDxwYXRyaWNrQHN0d2N4Lnh5ej4gd3JvdGU6Cj5PbiBUdWUsIEZlYiAxNSwgMjAyMiBhdCAx
+MToxMzoyMkFNICswODAwLCBkYW1vbjMwMDAgd3JvdGU6Cj4+IEhpIEFsbCwKPj4gCj4+IEkgYW0g
+bmV3IHRvIG9wZW5ibWMuIEkgYW0gc3RhcnRlZCBwb3J0aW5nIG9wZW5ibWMgZmVhdHVyZXMgdG8g
+bmV3IGhhcmR3YXJlLgo+PiBTbywgSSB3YW50IHRvIGFkZCBzdXBwb3J0IGZvciBGUlVJRCBFRVBS
+T00uIEZSVUlEIGNvbnRlbnRzIHNob3VsZCBiZSBhdmFpbGFibGUgYXMgZGJ1cyBvYmplY3RzLiBX
+aGF0IGNoYW5nZXMgbmVlZHMgdG8gZG9uZSBpbiB0aGUgYXBwbGljYXRpb24gc2lkZS4KPj4gCj4+
+IFBsZWFzZSBwcm92aWRlIHRoZSBzdGVwcyBvciBzdWdnZXN0aW9ucyB0byBmb2xsb3cuCj4KPllv
+dSBzaG91bGQgcHJvYmFibHkgbG9vayBhdCBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9lbnRp
+dHktbWFuYWdlciBhbmQKPmV4aXN0aW5nIHN5c3RlbXMgdGhhdCBsZXZlcmFnZSBpdC4gIFRoZXJl
+IGlzIGFscmVhZHkgc3VwcG9ydCBmb3Igc3BlY2lmeWluZyB0aGUKPmxvY2F0aW9uIG9mIHlvdXIg
+RUVQUk9NIGFuZCBpbnRlcnByZXRpbmcgaXQgLyBleHBvc2luZyBhcyBkYnVzIG9iamVjdHMuCj4K
+PidGcnVEZXZpY2UnIGlzIHR5cGljYWxseSBpbnZvbHZlZCBpbiB0aGUgRUVQUk9NIHBhcnNpbmcg
+YW5kIHRoZW4gdGhlcmUgaXMKPmVudGl0eS1tYW5hZ2VyIEpTT04gdGhhdCBleHBvc2VzIHNwZWNp
+ZmljIEVFUFJPTSBmaWVsZHMgYXMgdGhlIEludmVudG9yeQo+b2JqZWN0KHMpLgo+Cj4tLSAKPlBh
+dHJpY2sgV2lsbGlhbXMK
+------=_Part_146127_1597560439.1645096233916
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-________________________________________
-From: Billy Tsai <billy_tsai@aspeedtech.com>
-Sent: Thursday, February 17, 2022 9:57 AM
-To: Tung Nguyen OS; Troy Lee; openbmc@lists.ozlabs.org
-Cc: Thu Nguyen OS; Thang Nguyen OS; Phong Vo OS
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Tung,
-
-I can reproduce your issue by shorting out the PWM and TACH pin.
-Are you using our evb for testing? If yes, please check there is no jumper =
-at J80.
-
-Thanks
-
-Best Regards,
-Billy Tsai
-
-From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>
-Date: Wednesday, February 16, 2022 at 3:07 PM
-To: Billy Tsai <billy_tsai@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.c=
-om>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com>, Thang Nguyen OS <thang@os.a=
-mperecomputing.com>, Phong Vo OS <phong@os.amperecomputing.com>
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Billy,
-I don't have the device to capture the waveform here, i will need our HW te=
-am's help. Meanwhile, debugging in the tach-aspeed-ast2600.c i have observe=
-d that:
-+ In the case that can read the fan speed, the debug messages output like:
-# cat /sys/class/hwmon/hwmon1/pwm1
-120
-# echo 110 > /sys/class/hwmon/hwmon1/pwm1
-# cat /sys/class/hwmon/hwmon0/fan1_input
-837053
-[  325.499388] clk 200000000, raw_data 7 , tach_div 14336
-[  326.070305] clk 200000000, raw_data 7 , tach_div 14336
-[  326.641221] clk 200000000, raw_data 7 , tach_div 14336
-[  327.212095] clk 200000000, raw_data 7 , tach_div 14336
-[  327.783012] clk 200000000, raw_data 7 , tach_div 14336
-
-+ In the issue case, i can see the code is timeout at regmap_read_poll_time=
-out (below)
-150 static int aspeed_get_fan_tach_ch_rpm(struct aspeed_tach_data *priv,
-151                                       u8 fan_tach_ch)
-152 {
-153         u32 raw_data, tach_div, clk_source, usec, val;
-154         u64 rpm;
-155         int ret;
-156
-157         usec =3D priv->tacho_channel[fan_tach_ch].sample_period;
-158         /* Restart the Tach channel to guarantee the value is fresh */
-159         regmap_update_bits(priv->regmap, ASPEED_TACHO_CTRL_CH(fan_tach_=
-ch),
-160                              TACHO_ENABLE, 0);
-161         regmap_update_bits(priv->regmap, ASPEED_TACHO_CTRL_CH(fan_tach_=
-ch),
-162                              TACHO_ENABLE, TACHO_ENABLE);
-163         ret =3D regmap_read_poll_timeout(
-164                 priv->regmap, ASPEED_TACHO_STS_CH(fan_tach_ch), val,
-165                 (val & TACHO_FULL_MEASUREMENT) && (val & TACHO_VALUE_UP=
-DATE),
-166                 RPM_POLLING_PERIOD_US, usec);
-167
-168         if (ret) {
-169                 /* return 0 if we didn't get an answer because of timeo=
-ut*/
-170                 if (ret =3D=3D -ETIMEDOUT)
-171                         return 0; =3D=3D> TIMEOUT HERE
-172                 else
-173                         return ret;
-174         }
-175
-176         raw_data =3D val & TACHO_VALUE_MASK;
-
-Do you have comments on what should be checked here ?
-
-________________________________________
-From: Billy Tsai <billy_tsai@aspeedtech.com<mailto:billy_tsai@aspeedtech.co=
-m>>
-Sent: Tuesday, February 15, 2022 5:33 PM
-To: Tung Nguyen OS; Troy Lee; openbmc@lists.ozlabs.org<mailto:openbmc@lists=
-.ozlabs.org>
-Cc: Thu Nguyen OS; Thang Nguyen OS; Phong Vo OS
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Tung,
-
-The register setting looks fine.
-Can you check the connection of the FAN tach pin and BMC tach input pin?
-If it is normal, can you check the FAN tach output waveform?
-
-I test with San Ace 80 and get the result below:
-
-root@ast2600-default:~# cat /sys/class/hwmon/hwmon1/fan1_input
-3570
-root@ast2600-default:~# echo 100 > /sys/class/hwmon/hwmon4/pwm1
-root@ast2600-default:~# cat /sys/class/hwmon/hwmon1/fan1_input
-3568
-root@ast2600-default:~# echo 120 > /sys/class/hwmon/hwmon4/pwm1
-root@ast2600-default:~# cat /sys/class/hwmon/hwmon1/fan1_input
-4032
-root@ast2600-default:~# echo 140 > /sys/class/hwmon/hwmon4/pwm1
-root@ast2600-default:~# cat /sys/class/hwmon/hwmon1/fan1_input
-4422
-root@ast2600-default:~# echo 255 > /sys/class/hwmon/hwmon4/pwm1
-root@ast2600-default:~# cat /sys/class/hwmon/hwmon1/fan1_input
-6293
-
-
-Thanks
-
-Best Regards,
-Billy Tsai
-
-From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com<mailto:tungnguyen@o=
-s.amperecomputing.com>>
-Date: Tuesday, February 15, 2022 at 6:10 PM
-To: Billy Tsai <billy_tsai@aspeedtech.com<mailto:billy_tsai@aspeedtech.com>=
->, Troy Lee <troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com>>, "ope=
-nbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>" <openbmc@lists.ozla=
-bs.org<mailto:openbmc@lists.ozlabs.org>>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com<mailto:thu@os.amperecomputing=
-.com>>, Thang Nguyen OS <thang@os.amperecomputing.com<mailto:thang@os.amper=
-ecomputing.com>>, Phong Vo OS <phong@os.amperecomputing.com<mailto:phong@os=
-.amperecomputing.com>>
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Billy,
-
-Please help check:
-root@sunmoonlake:/tmp# ./test.sh 100
-echo 100 > /sys/class/hwmon/hwmon1/pwm1
-cat /sys/class/hwmon/hwmon0/fan1_input
-0
-devmem 0x1e610000
-0x0001101E
-devmem 0x1e610004
-0xFF006500
-devmem 0x1e610008
-0x10500000
-devmem 0x1e61000c
-0xA5400000
-root@sunmoonlake:/tmp# ./test.sh 120
-echo 120 > /sys/class/hwmon/hwmon1/pwm1
-cat /sys/class/hwmon/hwmon0/fan1_input
-266335
-devmem 0x1e610000
-0x0001101E
-devmem 0x1e610004
-0xFF007900
-devmem 0x1e610008
-0x10500000
-devmem 0x1e61000c
-0xF4B00016
-root@sunmoonlake:/tmp# ./test.sh 140
-echo 140 > /sys/class/hwmon/hwmon1/pwm1
-cat /sys/class/hwmon/hwmon0/fan1_input
-837053
-devmem 0x1e610000
-0x0001101E
-devmem 0x1e610004
-0xFF008D00
-devmem 0x1e610008
-0x10500000
-devmem 0x1e61000c
-0xE4B00007
-root@sunmoonlake:/tmp# ./test.sh 255
-echo 255 > /sys/class/hwmon/hwmon1/pwm1
-cat /sys/class/hwmon/hwmon0/fan1_input
-0
-devmem 0x1e610000
-0x0001101E
-devmem 0x1e610004
-0xFF000000
-devmem 0x1e610008
-0x10500000
-devmem 0x1e61000c
-0xB5C00000
-root@sunmoonlake:/tmp#
-
-Please note that i'm using the fan settings as:
-
-        fan0: pwm-fan0 {
-                compatible =3D "pwm-fan";
-                pwms =3D <&pwm 0 40000 0>;        /* Target freq:25 kHz */
-                cooling-min-state =3D <0>;
-                cooling-max-state =3D <3>;
-                #cooling-cells =3D <2>;
-                cooling-levels =3D <0 25 128 255>;
-        };
-.....
-        fan@0 {
-                reg =3D <0x00>;
-                aspeed,pulse-pr =3D <2>;
-        };
-
-
-________________________________________
-From: Billy Tsai <billy_tsai@aspeedtech.com<mailto:billy_tsai@aspeedtech.co=
-m><mailto:billy_tsai@aspeedtech.com<mailto:billy_tsai@aspeedtech.com>>>
-Sent: Monday, February 14, 2022 1:34 PM
-To: Tung Nguyen OS; Troy Lee; openbmc@lists.ozlabs.org<mailto:openbmc@lists=
-.ozlabs.org><mailto:openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.or=
-g>>
-Cc: Thu Nguyen OS; Thang Nguyen OS; Phong Vo OS
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Tung,
-
-Can you check the PWM frequency and dump the register value 0x1e610000~0x1e=
-61000c?
-
-Thanks
-
-Best Regards,
-Billy Tsai
-
-From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com<mailto:tungnguyen@o=
-s.amperecomputing.com><mailto:tungnguyen@os.amperecomputing.com<mailto:tung=
-nguyen@os.amperecomputing.com>>>
-Date: Monday, February 14, 2022 at 12:24 PM
-To: Troy Lee <troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com><mailt=
-o:troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com>>>, "openbmc@lists=
-.ozlabs.org<mailto:openbmc@lists.ozlabs.org><mailto:openbmc@lists.ozlabs.or=
-g<mailto:openbmc@lists.ozlabs.org>>" <openbmc@lists.ozlabs.org<mailto:openb=
-mc@lists.ozlabs.org><mailto:openbmc@lists.ozlabs.org<mailto:openbmc@lists.o=
-zlabs.org>>>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com<mailto:thu@os.amperecomputing=
-.com><mailto:thu@os.amperecomputing.com<mailto:thu@os.amperecomputing.com>>=
->, Thang Nguyen OS <thang@os.amperecomputing.com<mailto:thang@os.amperecomp=
-uting.com><mailto:thang@os.amperecomputing.com<mailto:thang@os.amperecomput=
-ing.com>>>, Phong Vo OS <phong@os.amperecomputing.com<mailto:phong@os.amper=
-ecomputing.com><mailto:phong@os.amperecomputing.com<mailto:phong@os.amperec=
-omputing.com>>>, Billy Tsai <billy_tsai@aspeedtech.com<mailto:billy_tsai@as=
-peedtech.com><mailto:billy_tsai@aspeedtech.com<mailto:billy_tsai@aspeedtech=
-.com>>>
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Troy,
-the fan settings in device tree are similar to aspeed-ast2600a1-evb.dts, li=
-ke:
-
-        fan0: pwm-fan0 {
-                compatible =3D "pwm-fan";
-                pwms =3D <&pwm 0 40000 0>;        /* Target freq:25 kHz */
-                cooling-min-state =3D <0>;
-                cooling-max-state =3D <3>;
-                #cooling-cells =3D <2>;
-                cooling-levels =3D <0 25 128 255>;
-        };
-.....
-        fan@0 {
-                reg =3D <0x00>;
-                aspeed,pulse-pr =3D <2>;
-        };
-
-I test with co-fan F-5010HH12B and San Ace 92 with above setting, and the r=
-esult looks like in-correct as in previous email.
-
-________________________________________
-From: Troy Lee <troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com><mai=
-lto:troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com>><mailto:troy_le=
-e@aspeedtech.com<mailto:troy_lee@aspeedtech.com><mailto:troy_lee@aspeedtech=
-.com<mailto:troy_lee@aspeedtech.com>>>>
-Sent: Monday, February 14, 2022 11:02 AM
-To: Tung Nguyen OS; openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.or=
-g><mailto:openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>><mailto=
-:openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org><mailto:openbmc@l=
-ists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>>>
-Cc: Thu Nguyen OS; Thang Nguyen OS; Phong Vo OS; Billy Tsai
-Subject: RE: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Adding Billy.
-
-Hi Tung,
-
------Original Message-----
-From: Tung Nguyen OS <tungnguyen@os.amperecomputing.com<mailto:tungnguyen@o=
-s.amperecomputing.com><mailto:tungnguyen@os.amperecomputing.com<mailto:tung=
-nguyen@os.amperecomputing.com>><mailto:tungnguyen@os.amperecomputing.com<ma=
-ilto:tungnguyen@os.amperecomputing.com><mailto:tungnguyen@os.amperecomputin=
-g.com<mailto:tungnguyen@os.amperecomputing.com>>>>
-Sent: Monday, February 14, 2022 11:46 AM
-To: Troy Lee <troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com><mailt=
-o:troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com>><mailto:troy_lee@=
-aspeedtech.com<mailto:troy_lee@aspeedtech.com><mailto:troy_lee@aspeedtech.c=
-om<mailto:troy_lee@aspeedtech.com>>>>; openbmc@lists.ozlabs.org<mailto:open=
-bmc@lists.ozlabs.org><mailto:openbmc@lists.ozlabs.org<mailto:openbmc@lists.=
-ozlabs.org>><mailto:openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.or=
-g><mailto:openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>>>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com<mailto:thu@os.amperecomputing=
-.com><mailto:thu@os.amperecomputing.com<mailto:thu@os.amperecomputing.com>>=
-<mailto:thu@os.amperecomputing.com<mailto:thu@os.amperecomputing.com><mailt=
-o:thu@os.amperecomputing.com<mailto:thu@os.amperecomputing.com>>>>; Thang N=
-guyen OS
-<thang@os.amperecomputing.com<mailto:thang@os.amperecomputing.com><mailto:t=
-hang@os.amperecomputing.com<mailto:thang@os.amperecomputing.com>><mailto:th=
-ang@os.amperecomputing.com<mailto:thang@os.amperecomputing.com><mailto:than=
-g@os.amperecomputing.com<mailto:thang@os.amperecomputing.com>>>>; Phong Vo =
-OS
-<phong@os.amperecomputing.com<mailto:phong@os.amperecomputing.com><mailto:p=
-hong@os.amperecomputing.com<mailto:phong@os.amperecomputing.com>><mailto:ph=
-ong@os.amperecomputing.com<mailto:phong@os.amperecomputing.com><mailto:phon=
-g@os.amperecomputing.com<mailto:phong@os.amperecomputing.com>>>>
-Subject: Re: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Troy,
-Thank you for the information, i have merged the dbus-sensor patch and see
-it creates the Fan sensors well.
-One more issue i have observed about the fan tach report like this:
-
-root@mtmitchell:~# echo 120 > /sys/class/hwmon/hwmon1/pwm1
-root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-418526
-root@mtmitchell:~# echo 100 > /sys/class/hwmon/hwmon1/pwm1
-root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-195312
-root@mtmitchell:~# echo 255 > /sys/class/hwmon/hwmon1/pwm1
-root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-0
-root@mtmitchell:~# echo 50 > /sys/class/hwmon/hwmon1/pwm1
-root@mtmitchell:~# cat /sys/class/hwmon/hwmon0/fan1_input
-0
-
-It means the fan speed is reported incorrectly somehow, but i can see the
-fan speed changes by eyes, do you have idea on this issue ?
-
-Does the aspeed,pulse-pr property of fan node set correspondingly?
-What is the expected RPM of you fan? 418526 RPM?
-
-Thanks,
-Troy Lee
-
-
-________________________________________
-From: Troy Lee <troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com><mai=
-lto:troy_lee@aspeedtech.com<mailto:troy_lee@aspeedtech.com>><mailto:troy_le=
-e@aspeedtech.com<mailto:troy_lee@aspeedtech.com><mailto:troy_lee@aspeedtech=
-.com<mailto:troy_lee@aspeedtech.com>>>>
-Sent: Friday, February 11, 2022 12:13 PM
-To: Tung Nguyen OS; openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.or=
-g><mailto:openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>><mailto=
-:openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org><mailto:openbmc@l=
-ists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>>>
-Cc: Thu Nguyen OS; Thang Nguyen OS; Phong Vo OS
-Subject: RE: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Hi Tung,
-
------Original Message-----
-From: openbmc <openbmc-
-bounces+troy_lee=3Daspeedtech.com@lists.ozlabs.org<mailto:aspeedtech.com@li=
-sts.ozlabs.org><mailto:aspeedtech.com@lists.ozlabs.org<mailto:aspeedtech.co=
-m@lists.ozlabs.org>><mailto:aspeedtech.com@lists.ozlabs.org<mailto:aspeedte=
-ch.com@lists.ozlabs.org><mailto:aspeedtech.com@lists.ozlabs.org<mailto:aspe=
-edtech.com@lists.ozlabs.org>>>> On Behalf Of Tung
-Nguyen OS
-Sent: Wednesday, February 9, 2022 10:40 PM
-To: openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org><mailto:openbm=
-c@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>><mailto:openbmc@lists.o=
-zlabs.org<mailto:openbmc@lists.ozlabs.org><mailto:openbmc@lists.ozlabs.org<=
-mailto:openbmc@lists.ozlabs.org>>>
-Cc: Thu Nguyen OS <thu@os.amperecomputing.com<mailto:thu@os.amperecomputing=
-.com><mailto:thu@os.amperecomputing.com<mailto:thu@os.amperecomputing.com>>=
-<mailto:thu@os.amperecomputing.com<mailto:thu@os.amperecomputing.com><mailt=
-o:thu@os.amperecomputing.com<mailto:thu@os.amperecomputing.com>>>>; Thang N=
-guyen OS
-<thang@os.amperecomputing.com<mailto:thang@os.amperecomputing.com><mailto:t=
-hang@os.amperecomputing.com<mailto:thang@os.amperecomputing.com>><mailto:th=
-ang@os.amperecomputing.com<mailto:thang@os.amperecomputing.com><mailto:than=
-g@os.amperecomputing.com<mailto:thang@os.amperecomputing.com>>>>; Phong Vo =
-OS
-<phong@os.amperecomputing.com<mailto:phong@os.amperecomputing.com><mailto:p=
-hong@os.amperecomputing.com<mailto:phong@os.amperecomputing.com>><mailto:ph=
-ong@os.amperecomputing.com<mailto:phong@os.amperecomputing.com><mailto:phon=
-g@os.amperecomputing.com<mailto:phong@os.amperecomputing.com>>>>
-Subject: [AST2600] PWM/TACH driver and dbus-sensor issue
-
-Dear community,
-We have ported the PWM/TACH hwmon driver for AST2600 from ASPEED's
-repository https://github.com/AspeedTech-BMC/linux/tree/aspeed-
-master-
-v5.4/drivers/hwmon to support Ampere Computing's systems. Verify with
-AST2600 EVB, i can see the driver works. However there is a concern like:
-1. The change of hwmon fan pwm/tach in sysfs (as below), this is
-different from the ast2500 as the separated of the fan*_input and pwm1
-in various hwmon directories. At this time, the driver doesn't exist
-in the OpenBMC linux at https://github.com/openbmc/linux. Is OpenBMC
-going to merge and keep this driver ?
-
-Please have a look on this patch.
-https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/49253
-
-Thanks,
-Troy Lee
-
-root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon hwmon0/ hwmon1/
-hwmon2/ hwmon3/ hwmon4/ hwmon5/ hwmon6/ hwmon7/ hwmon8/
-hwmon9/
-root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon0/
-drwxr-xr-x    3 root     root             0 Jan  1  1970 .
-drwxr-xr-x    3 root     root             0 Jan  1  1970 ..
-lrwxrwxrwx    1 root     root             0 Feb  9 08:38 device -
-../../../1e610000.pwm_tach:tach
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan10_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan11_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan12_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan13_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan14_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan15_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan16_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan1_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan2_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan3_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan4_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan5_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan6_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan7_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan8_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 fan9_input
--r--r--r--    1 root     root          4096 Feb  9 08:38 name
-lrwxrwxrwx    1 root     root             0 Feb  9 08:38 of_node -
-../../../../../../../../firmware/devicetree/base/ahb/apb/pwm_tach@1e
-610
-000/tach
-drwxr-xr-x    2 root     root             0 Feb  9 08:38 power
-lrwxrwxrwx    1 root     root             0 Jan  1  1970 subsystem -
-../../../../../../../../class/hwmon
--rw-r--r--    1 root     root          4096 Jan  1  1970 uevent
-root@mtmitchell:~# ls -la /sys/class/hwmon/hwmon*/pwm*
--rw-r--r--    1 root     root          4096 Feb  9 09:13
-/sys/class/hwmon/hwmon1/pwm1
--rw-r--r--    1 root     root          4096 Feb  9 09:20
-/sys/class/hwmon/hwmon2/pwm1
--rw-r--r--    1 root     root          4096 Feb  9 08:38
-/sys/class/hwmon/hwmon3/pwm1
--rw-r--r--    1 root     root          4096 Feb  9 08:38
-/sys/class/hwmon/hwmon4/pwm1
--rw-r--r--    1 root     root          4096 Feb  9 08:38
-/sys/class/hwmon/hwmon5/pwm1
--rw-r--r--    1 root     root          4096 Feb  9 08:38
-/sys/class/hwmon/hwmon6/pwm1
--rw-r--r--    1 root     root          4096 Feb  9 08:38
-/sys/class/hwmon/hwmon7/pwm1
--rw-r--r--    1 root     root          4096 Feb  9 08:38
-/sys/class/hwmon/hwmon8/pwm1
-
-2. With above changes, the dbus-sensor for FAN/PWM shall not work
-because of the compatibility. So if OpenBMC want to keep above
-PWM/TACH driver, does any sides have the plan to support the fan
-sensor, if not, we can join and do it.
-
-Thank you and best regards,
-Tung
-
-
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+SGkgUGF0cmljayw8L2Rpdj48ZGl2Pjxicj48L2Rpdj48
+ZGl2PiZuYnNwOyAxLiZuYnNwOyBBY2NvcmRpbmcgdG8geW91ciAKc3VnZ2VzdGlvbiwgSSBjYW4g
+c2NhbiBteSBGUlUgaW5mb3JtYXRpb24gdmlhIGJ1c2N0bCBjb21tYW5kLCBidXQgCmVudGl0eS1t
+YW5hZ2VyIGRpZCBub3Qgc3RhcnQgYW5kIGNhbiBub3QgYmUgYWNjZXNzZWQuPC9kaXY+PGRpdj5U
+aGUgbG9nIGlzIGFzIGJlbG93Ojxicj48L2Rpdj48ZGl2PiI8L2Rpdj48ZGl2PmJ1c2N0bCB0cmVl
+IC0tbm8tcGFnZXIgeHl6Lm9wZW5ibWNfcHJvamVjdC5GcnVEZXZpY2UgPGJyPmAtL3h5eiA8YnI+
+Jm5ic3A7IGAtL3h5ei9vcGVuYm1jX3Byb2plY3QgPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyBgLS94
+eXovb3BlbmJtY19wcm9qZWN0L0ZydURldmljZSA8YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7IHwtL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzEwXzY0IDxicj4mbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgfC0veHl6L29wZW5ibWNfcHJvamVjdC9GcnVEZXZpY2Uv
+MTBfNjUgPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyB8LS94eXovb3BlbmJtY19w
+cm9qZWN0L0ZydURldmljZS8xMF82NyA8YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+IHwtL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzNfODAgPGJyPiZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyB8LS94eXovb3BlbmJtY19wcm9qZWN0L0ZydURldmljZS82XzcyIDxi
+cj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgfC0veHl6L29wZW5ibWNfcHJvamVjdC9G
+cnVEZXZpY2UvNl83NCA8YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHwtL3h5ei9v
+cGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzZfNzYgPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyB8LS94eXovb3BlbmJtY19wcm9qZWN0L0ZydURldmljZS83XzgxIDxicj4mbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgfC0veHl6L29wZW5ibWNfcHJvamVjdC9GcnVEZXZpY2Uv
+N184OSA8YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGAtL3h5ei9vcGVuYm1jX3By
+b2plY3QvRnJ1RGV2aWNlL3Rlc3Q8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PmJ1c2N0bCBpbnRy
+b3NwZWN0IC0tbm8tcGFnZXIgeHl6Lm9wZW5ibWNfcHJvamVjdC5GcnVEZXZpY2UgXCA8YnI+Jmd0
+OyZuYnNwOyAveHl6L29wZW5ibWNfcHJvamVjdC9GcnVEZXZpY2UvQnJhaG1hX19fX19fX19fX19f
+X18gPGJyPk5BTUUmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgVFlQRSZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyBTSUdOQVRVUkUgUkVTVUxUL1ZBTFVFJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IEZMQUdTIDxicj5v
+cmcuZnJlZWRlc2t0b3AuREJ1cy5JbnRyb3NwZWN0YWJsZSBpbnRlcmZhY2UgLSZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAtJm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7IC0gPGJyPi5JbnRyb3NwZWN0Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+IG1ldGhvZCZuYnNwOyZuYnNwOyZuYnNwOyAtJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7IHMmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgLSA8YnI+b3Jn
+LmZyZWVkZXNrdG9wLkRCdXMuUGVlciZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBpbnRlcmZhY2UgLSZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAtJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+IC0gPGJyPi5HZXRNYWNoaW5lSWQmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgbWV0aG9kJm5ic3A7Jm5ic3A7
+Jm5ic3A7IC0mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsg
+cyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAtIDxicj4uUGluZyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBtZXRob2Qm
+bmJzcDsmbmJzcDsmbmJzcDsgLSZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyAtJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IC0gPGJyPm9yZy5mcmVlZGVz
+a3RvcC5EQnVzLlByb3BlcnRpZXMmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgaW50ZXJmYWNlIC0m
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgLSZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyAtIDxicj4uR2V0Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IG1ldGhvZCZuYnNw
+OyZuYnNwOyZuYnNwOyBzcyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyB2Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IC0gPGJyPi5HZXRBbGwmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgbWV0aG9kJm5ic3A7Jm5i
+c3A7Jm5ic3A7IHMmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsgYXtzdn0mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsgLSA8YnI+LlNldCZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBtZXRob2QmbmJzcDsmbmJzcDsm
+bmJzcDsgc3N2Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IC0mbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsgLSA8YnI+LlByb3BlcnRpZXNDaGFuZ2VkJm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHNpZ25hbCZuYnNwOyZuYnNwOyZuYnNwOyBz
+YXtzdn1hcyZuYnNwOyAtJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IC0gPGJyPnh5ei5vcGVu
+Ym1jX3Byb2plY3QuRnJ1RGV2aWNlJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+IGludGVyZmFjZSAtJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7IC0mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgLSA8YnI+LkFERFJFU1MmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgcHJvcGVydHkmbmJzcDsgdSZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyA4MCZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyBlbWl0cy1jaGFuZ2UgPGJyPi5CT0FSRF9GUlVfVkVSU0lPTl9JRCZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBwcm9wZXJ0eSZuYnNwOyBzJm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ICJVVkQwNTAiJm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGVtaXRzLWNoYW5nZSA8YnI+LkJPQVJEX0lORk9fQU0x
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7IHByb3BlcnR5Jm5ic3A7IHMmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsgIlYxJm5ic3A7ICImbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgZW1pdHMtY2hhbmdlIDxicj4uQk9BUkRfSU5GT19BTTIm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsgcHJvcGVydHkmbmJzcDsgcyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyAiMDEyMzQ1Njc4OUFCQ0RFMDAxVEFHMDAwMDAwMiZuYnNwOyAiIGVtaXRz
+LWNoYW5nZSA8YnI+LkJPQVJEX0lORk9fQU0zJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHByb3BlcnR5Jm5ic3A7IHMmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgIlIxQiAiJm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGVtaXRzLWNoYW5n
+ZSA8YnI+LkJPQVJEX0lORk9fQU00Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHByb3BlcnR5Jm5ic3A7IHMmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgIlhYMSAiJm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGVtaXRzLWNoYW5nZSA8YnI+
+LkJPQVJEX0lORk9fQU01Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHByb3BlcnR5Jm5ic3A7IHMmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgIjBFMTEyMjMzNDRFMCImbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgZW1pdHMt
+Y2hhbmdlIDxicj4uQk9BUkRfSU5GT19BTTYmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgcHJvcGVydHkmbmJzcDsgcyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAiMDIiJm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGVt
+aXRzLWNoYW5nZSA8YnI+LkJPQVJEX0xBTkdVQUdFX0NPREUmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsgcHJvcGVydHkmbmJzcDsgcyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyAiMCImbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgZW1pdHMtY2hhbmdlIDxicj4u
+Qk9BUkRfTUFOVUZBQ1RVUkVSJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+IHByb3BlcnR5Jm5ic3A7IHMmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsgIkh1YXFpbiBUZWxlY29tJm5ic3A7ICImbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsgZW1pdHMtY2hhbmdlIDxicj4uQk9BUkRfTUFOVUZBQ1RVUkVfREFURSZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyBwcm9wZXJ0eSZuYnNwOyBzJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ICIxOTk2LTA3LTA3IC0gMTA6NTc6MDAiJm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGVt
+aXRzLWNoYW5nZSA8YnI+LkJPQVJEX1BBUlRfTlVNQkVSJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHByb3BlcnR5Jm5ic3A7IHMmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgIk5BJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ICImbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgZW1pdHMtY2hhbmdlIDxicj4u
+Qk9BUkRfUFJPRFVDVF9OQU1FJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+IHByb3BlcnR5Jm5ic3A7IHMmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsgInRlc3QgJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ICImbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgZW1pdHMtY2hh
+bmdlIDxicj4uQk9BUkRfU0VSSUFMX05VTUJFUiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyBwcm9wZXJ0eSZuYnNwOyBzJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7ICIzMTIwRTMzOTAwMDExWDAwMTAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgIiBlbWl0cy1jaGFuZ2Ug
+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+cm9vdEBza3k6L2V0Yy9kZWZhdWx0L29ibWMv
+ZWVwcm9tcy9zeXN0ZW0vY2hhc3NpcyMgZWNobyAiMjRjNjQgMHg1MCAmZ3Q7IC9zeXMvYnVzL2ky
+Yy9kZXZpY2VzL2kyYy0zL25ld19kZXZpY2UiIDxicj4yNGM2NCAweDUwICZndDsgL3N5cy9idXMv
+aTJjL2RldmljZXMvaTJjLTMvbmV3X2RldmljZSA8YnI+PGI+cm9vdEBza3k6L2V0Yy9kZWZhdWx0
+L29ibWMvZWVwcm9tcy9zeXN0ZW0vY2hhc3NpcyMgYnVzY3RsIHRyZWUgLS1uby1wYWdlciB4eXou
+b3BlbmJtY19wcm9qZWN0LkVudGl0eU1hbmFnZXIgPC9iPjxicj48Yj5GYWlsZWQgdG8gaW50cm9z
+cGVjdCBvYmplY3QgLyBvZiBzZXJ2aWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuRW50aXR5TWFuYWdl
+cjogVGhlIG5hbWUgaXMgbm90IGFjdGl2YXRhYmxlIDwvYj48YnI+PGI+Tm8gb2JqZWN0cyBkaXNj
+b3ZlcmVkLiA8L2I+PGJyPjwvZGl2PjxkaXY+IjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SQog
+bW9kaWZpZWQgb25lIG9mIHRoZSBjb25maWd1cmF0aW9uIHdoaWNoIGlzIGluIAplbnRpdHktbWFu
+YWdlci9jb25maWd1cmF0aW9uIGZvbGRlciwgaXRzIG5hbWUgaXMgTXRfamFkZS5qc29uLCBUaGUg
+Cm1vZGlmaWNhdGlvbiBpcyBhcyBiZWxvdyBmcm9tIGxpbmUgNzU5OjwvZGl2PjxkaXY+Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ICJOYW1lIjogIiRidXMgdGVzdCIsPGJyPiZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAiUHJvYmUiOiAieHl6Lm9wZW5ibWNfcHJvamVjdC5GcnVE
+ZXZpY2UoeydQUk9EVUNUX1BST0RVQ1RfTkFNRSc6ICd0ZXN0J30pIiw8YnI+Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ICJUeXBlIjogIkNoYXNzaXMiLDwvZGl2Pjxk
+aXY+PGJyPjwvZGl2PjxkaXY+U3RpbGwgb2NjdXJyZWQgdGhlIGFib3ZlIGxvZy48YnI+PC9kaXY+
+PGRpdj48YnI+PC9kaXY+PGRpdj4yLiBBY2NvcmRpbmcgdG8gbWV0YS1xdWFudGEncyBjb21taXQs
+IEkgZGlkIG5vdCBmaW5kIHRoZXkgbW9kaWZ5IGVudGl0eS1tYW5hZ2VyL2NvbmZpZ3VyYXRpb24g
+ZmlsZXMuIEFuZCBJIHRyaWVkIHRoZSBtZXRob2QsIGhvd2V2ZXIgPGI+SSBjYW4gbm90IGRpc3Bs
+YXkgdGhlbSB0byAiaXBtaXRvb2wgZnJ1IiA8L2I+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2Pjxk
+aXY+IjwvZGl2PjxkaXY+Y29tbWl0IDBkZTQ4NTZkMDM3ZmYyNTI1YjNkZDc0Y2UyY2JhZmRkNGRj
+ZmY0NDM8YnI+QXV0aG9yOiBKb3NlcGggRnUgJmx0O2pvc2VwaC5mdUBxdWFudGF0dy5jb20mZ3Q7
+PGJyPkRhdGU6Jm5ic3A7Jm5ic3A7IFdlZCBKYW4gMjYgMTQ6Mzc6NDIgMjAyMiArMDgwMDxicj48
+YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IG1ldGEtcXVhbnRhOiBzNnE6IGFkZCBmcnUgeWFtbCBjb25m
+aWcgZmlsZXM8YnI+Jm5ic3A7Jm5ic3A7ICZuYnNwOzxicj4mbmJzcDsmbmJzcDsmbmJzcDsgQWRk
+IGZydSBzZXR0aW5nIGNvbmZpZyBhbmQgZGV2aWNlIGpzb24gZmlsZS48YnI+PC9kaXY+PGRpdj4i
+IDxicj48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9kaXY+Q291bGQgeW91IHBy
+b3ZpZGUgc29tZSBzdWdnZXN0aW9ucz88cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvcD48cCBz
+dHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvcD48cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvcD48
+cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvcD48ZGl2IHN0eWxlPSJwb3NpdGlvbjpyZWxhdGl2
+ZTt6b29tOjEiPjwvZGl2PjxkaXYgaWQ9ImRpdk5ldGVhc2VNYWlsQ2FyZCI+PC9kaXY+PHAgc3R5
+bGU9Im1hcmdpbjogMDsiPjxicj48L3A+PHByZT48YnI+QXQgMjAyMi0wMi0xNiAwMzozNDozOCwg
+IlBhdHJpY2sgV2lsbGlhbXMiICZsdDtwYXRyaWNrQHN0d2N4Lnh5eiZndDsgd3JvdGU6CiZndDtP
+biBUdWUsIEZlYiAxNSwgMjAyMiBhdCAxMToxMzoyMkFNICswODAwLCBkYW1vbjMwMDAgd3JvdGU6
+CiZndDsmZ3Q7IEhpIEFsbCwKJmd0OyZndDsgCiZndDsmZ3Q7IEkgYW0gbmV3IHRvIG9wZW5ibWMu
+IEkgYW0gc3RhcnRlZCBwb3J0aW5nIG9wZW5ibWMgZmVhdHVyZXMgdG8gbmV3IGhhcmR3YXJlLgom
+Z3Q7Jmd0OyBTbywgSSB3YW50IHRvIGFkZCBzdXBwb3J0IGZvciBGUlVJRCBFRVBST00uIEZSVUlE
+IGNvbnRlbnRzIHNob3VsZCBiZSBhdmFpbGFibGUgYXMgZGJ1cyBvYmplY3RzLiBXaGF0IGNoYW5n
+ZXMgbmVlZHMgdG8gZG9uZSBpbiB0aGUgYXBwbGljYXRpb24gc2lkZS4KJmd0OyZndDsgCiZndDsm
+Z3Q7IFBsZWFzZSBwcm92aWRlIHRoZSBzdGVwcyBvciBzdWdnZXN0aW9ucyB0byBmb2xsb3cuCiZn
+dDsKJmd0O1lvdSBzaG91bGQgcHJvYmFibHkgbG9vayBhdCBodHRwczovL2dpdGh1Yi5jb20vb3Bl
+bmJtYy9lbnRpdHktbWFuYWdlciBhbmQKJmd0O2V4aXN0aW5nIHN5c3RlbXMgdGhhdCBsZXZlcmFn
+ZSBpdC4gIFRoZXJlIGlzIGFscmVhZHkgc3VwcG9ydCBmb3Igc3BlY2lmeWluZyB0aGUKJmd0O2xv
+Y2F0aW9uIG9mIHlvdXIgRUVQUk9NIGFuZCBpbnRlcnByZXRpbmcgaXQgLyBleHBvc2luZyBhcyBk
+YnVzIG9iamVjdHMuCiZndDsKJmd0OydGcnVEZXZpY2UnIGlzIHR5cGljYWxseSBpbnZvbHZlZCBp
+biB0aGUgRUVQUk9NIHBhcnNpbmcgYW5kIHRoZW4gdGhlcmUgaXMKJmd0O2VudGl0eS1tYW5hZ2Vy
+IEpTT04gdGhhdCBleHBvc2VzIHNwZWNpZmljIEVFUFJPTSBmaWVsZHMgYXMgdGhlIEludmVudG9y
+eQomZ3Q7b2JqZWN0KHMpLgomZ3Q7CiZndDstLSAKJmd0O1BhdHJpY2sgV2lsbGlhbXMKPC9wcmU+
+PC9kaXY+PGJyPjxicj48c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+PHA+Jm5ic3A7PC9wPjwv
+c3Bhbj4=
+------=_Part_146127_1597560439.1645096233916--
 
