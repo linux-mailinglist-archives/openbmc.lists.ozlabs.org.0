@@ -2,57 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C5C94BAE41
-	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 01:17:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BB0324BAE56
+	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 01:24:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K0C253whgz3cV4
-	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 11:17:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K0C9d1L3Cz3cSX
+	for <lists+openbmc@lfdr.de>; Fri, 18 Feb 2022 11:24:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=C4y25U5k;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=M9kSLMcp;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
  helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=C4y25U5k; 
+ header.a=rsa-sha256 header.s=thorn header.b=M9kSLMcp; 
  dkim-atps=neutral
 Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [71.19.156.171])
+ [IPv6:2605:2700:0:5::4713:9cab])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K0C1k18S0z3bbW
- for <openbmc@lists.ozlabs.org>; Fri, 18 Feb 2022 11:17:13 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K0C9F6MScz3cGW
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Feb 2022 11:23:45 +1100 (AEDT)
 Received: from hatter.bewilderbeest.net (174-21-187-98.tukw.qwest.net
  [174.21.187.98])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 983A832C;
- Thu, 17 Feb 2022 16:17:11 -0800 (PST)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 319D3FA;
+ Thu, 17 Feb 2022 16:23:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1645143431;
- bh=Z7wZg8Re/Dy73Zm8lE3R37EB8e+695AOYuDc/5NXQ5g=;
+ s=thorn; t=1645143824;
+ bh=b+69uaIlAfYvUutHI5tZxpP8eKuLZSiDYTF3PppxEac=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=C4y25U5k2fYvV8ABQkDiU+HBD3JQkGXZOv6A7+8tkzevNYob5hUZOCW9fIUZcYe3I
- O0A9JqTqKyTbdAgyQ4JJGojEUMeeIRoqvdOtyQ10/yf/3tPSyMMRBmEmElNp1FIzay
- He+e71Js0bs95/9/VLUgn6N8A+EqaY0E+JYdWczk=
-Date: Thu, 17 Feb 2022 16:17:08 -0800
+ b=M9kSLMcpXIb8BgmOmcCk0mpT/vYbtrX5je5KCdkidZJRInS65T8cKISj2rY/LzhAg
+ XEfJxkqHxQV2FQx0n5qE8duGmjxVuQaIs5xrAP8kvVFWBQ8oX1MavlanSDr2yghP+g
+ w24eCmHVJTCJ4KdP5mUpMnyaALzjWNhlBCdbpLpY=
+Date: Thu, 17 Feb 2022 16:23:42 -0800
 From: Zev Weiss <zev@bewilderbeest.net>
-To: Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH 3/4] dt-bindings: Add power-efuse binding
-Message-ID: <Yg7lhD7ILOoiSndp@hatter.bewilderbeest.net>
+To: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 1/4] hwmon: (pmbus) Add get_error_flags support to
+ regulator ops
+Message-ID: <Yg7nDpJuH0XkessL@hatter.bewilderbeest.net>
 References: <20220217104444.7695-1-zev@bewilderbeest.net>
- <20220217104444.7695-4-zev@bewilderbeest.net>
- <Yg7NoLzC7zt2oihV@robh.at.kernel.org>
+ <20220217104444.7695-2-zev@bewilderbeest.net>
+ <b22ca322-c8f2-d17c-75ff-54ee26b0041b@roeck-us.net>
+ <Yg7cQwA+i5oTYqHJ@hatter.bewilderbeest.net>
+ <3bfa7f1f-ef5d-b222-894b-b15a2270996d@roeck-us.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
 Content-Disposition: inline
-In-Reply-To: <Yg7NoLzC7zt2oihV@robh.at.kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3bfa7f1f-ef5d-b222-894b-b15a2270996d@roeck-us.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,89 +68,179 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
+Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
  linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Guenter Roeck <linux@roeck-us.net>
+ Mark Brown <broonie@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Feb 17, 2022 at 02:35:12PM PST, Rob Herring wrote:
->On Thu, Feb 17, 2022 at 02:44:43AM -0800, Zev Weiss wrote:
->> This can be used to describe a power output supplied by a regulator
->> device that the system controls.
+On Thu, Feb 17, 2022 at 04:02:58PM PST, Guenter Roeck wrote:
+>On 2/17/22 15:37, Zev Weiss wrote:
+>>On Thu, Feb 17, 2022 at 10:11:32AM PST, Guenter Roeck wrote:
+>>>On 2/17/22 02:44, Zev Weiss wrote:
+>>>>The various PMBus status bits don't all map perfectly to the more
+>>>>limited set of REGULATOR_ERROR_* flags, but there's a reasonable
+>>>>number where they correspond well enough.
+>>>>
+>>>>Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+>>>>---
+>>>> drivers/hwmon/pmbus/pmbus_core.c | 97 ++++++++++++++++++++++++++++++++
+>>>> 1 file changed, 97 insertions(+)
+>>>>
+>>>>diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+>>>>index 776ee2237be2..a274e8e524a5 100644
+>>>>--- a/drivers/hwmon/pmbus/pmbus_core.c
+>>>>+++ b/drivers/hwmon/pmbus/pmbus_core.c
+>>>>@@ -2417,10 +2417,107 @@ static int pmbus_regulator_disable(struct regulator_dev *rdev)
+>>>>     return _pmbus_regulator_on_off(rdev, 0);
+>>>> }
+>>>>+/* A PMBus status flag and the corresponding REGULATOR_ERROR_* flag */
+>>>>+struct pmbus_regulator_status_assoc {
+>>>>+    int pflag, rflag;
+>>>>+};
+>>>>+
+>>>>+/* PMBus->regulator bit mappings for a PMBus status register */
+>>>>+struct pmbus_regulator_status_category {
+>>>>+    int func;
+>>>>+    int reg;
+>>>>+    const struct pmbus_regulator_status_assoc *bits; /* zero-terminated */
+>>>>+};
+>>>>+
+>>>>+static const struct pmbus_regulator_status_category pmbus_regulator_flag_map[] = {
+>>>>+    {
+>>>>+        .func = PMBUS_HAVE_STATUS_VOUT,
+>>>>+        .reg = PMBUS_STATUS_VOUT,
+>>>>+        .bits = (const struct pmbus_regulator_status_assoc[]) {
+>>>>+            { PB_VOLTAGE_UV_WARNING, REGULATOR_ERROR_UNDER_VOLTAGE_WARN },
+>>>>+            { PB_VOLTAGE_UV_FAULT,   REGULATOR_ERROR_UNDER_VOLTAGE },
+>>>>+            { PB_VOLTAGE_OV_WARNING, REGULATOR_ERROR_OVER_VOLTAGE_WARN },
+>>>>+            { PB_VOLTAGE_OV_FAULT,   REGULATOR_ERROR_REGULATION_OUT },
+>>>>+            { },
+>>>>+        },
+>>>>+    }, {
+>>>>+        .func = PMBUS_HAVE_STATUS_IOUT,
+>>>>+        .reg = PMBUS_STATUS_IOUT,
+>>>>+        .bits = (const struct pmbus_regulator_status_assoc[]) {
+>>>>+            { PB_IOUT_OC_WARNING,    REGULATOR_ERROR_OVER_CURRENT_WARN },
+>>>>+            { PB_IOUT_OC_FAULT,      REGULATOR_ERROR_OVER_CURRENT },
+>>>>+            { PB_IOUT_OC_LV_FAULT,   REGULATOR_ERROR_OVER_CURRENT },
+>>>>+            { },
+>>>>+        },
+>>>>+    }, {
+>>>>+        .func = PMBUS_HAVE_STATUS_TEMP,
+>>>>+        .reg = PMBUS_STATUS_TEMPERATURE,
+>>>>+        .bits = (const struct pmbus_regulator_status_assoc[]) {
+>>>>+            { PB_TEMP_OT_WARNING,    REGULATOR_ERROR_OVER_TEMP_WARN },
+>>>>+            { PB_TEMP_OT_FAULT,      REGULATOR_ERROR_OVER_TEMP },
+>>>>+            { },
+>>>>+        },
+>>>>+    },
+>>>>+};
+>>>>+
+>>>>+static int pmbus_regulator_get_error_flags(struct regulator_dev *rdev, unsigned int *flags)
+>>>>+{
+>>>>+    int i, status, statusreg;
+>>>>+    const struct pmbus_regulator_status_category *cat;
+>>>>+    const struct pmbus_regulator_status_assoc *bit;
+>>>>+    struct device *dev = rdev_get_dev(rdev);
+>>>>+    struct i2c_client *client = to_i2c_client(dev->parent);
+>>>>+    struct pmbus_data *data = i2c_get_clientdata(client);
+>>>>+    u8 page = rdev_get_id(rdev);
+>>>>+    int func = data->info->func[page];
+>>>>+
+>>>>+    *flags = 0;
+>>>>+
+>>>>+    for (i = 0; i < ARRAY_SIZE(pmbus_regulator_flag_map); i++) {
+>>>>+        cat = &pmbus_regulator_flag_map[i];
+>>>>+        if (!(func & cat->func))
+>>>>+            continue;
+>>>>+
+>>>>+        status = pmbus_read_byte_data(client, page, cat->reg);
+>>>>+        if (status < 0)
+>>>>+            return status;
+>>>>+
+>>>>+        for (bit = cat->bits; bit->pflag; bit++) {
+>>>>+            if (status & bit->pflag)
+>>>>+                *flags |= bit->rflag;
+>>>>+        }
+>>>>+    }
+>>>>+
+>>>>+    /*
+>>>>+     * Map what bits of STATUS_{WORD,BYTE} we can to REGULATOR_ERROR_*
+>>>>+     * bits.  Some of the other bits are tempting (especially for cases
+>>>>+     * where we don't have the relevant PMBUS_HAVE_STATUS_*
+>>>>+     * functionality), but there's an unfortunate ambiguity in that
+>>>>+     * they're defined as indicating a fault *or* a warning, so we can't
+>>>>+     * easily determine whether to report REGULATOR_ERROR_<foo> or
+>>>>+     * REGULATOR_ERROR_<foo>_WARN.
+>>>>+     */
+>>>>+    statusreg = data->has_status_word ? PMBUS_STATUS_WORD : PMBUS_STATUS_BYTE;
+>>>>+    status = pmbus_get_status(client, page, statusreg);
+>>>>+
+>>>
+>>>pmbus_get_status() calls data->read_status if PMBUS_STATUS_WORD is provided
+>>>as parameter, and data->read_status is set to pmbus_read_status_byte()
+>>>if reading the word status is not supported. Given that, why not just call
+>>>pmbus_get_status(client, page, PMBUS_STATUS_WORD) ?
 >>
->> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
->> ---
->>  .../devicetree/bindings/misc/power-efuse.yaml | 37 +++++++++++++++++++
->>  1 file changed, 37 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/misc/power-efuse.yaml
+>>Good point, I'll change it to do that instead.  (And send v2 separately from the power-efuse driver patches.)
 >>
->> diff --git a/Documentation/devicetree/bindings/misc/power-efuse.yaml b/Documentation/devicetree/bindings/misc/power-efuse.yaml
->> new file mode 100644
->> index 000000000000..cadce15d2ce7
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/misc/power-efuse.yaml
->> @@ -0,0 +1,37 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/misc/power-efuse.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Generic power efuse device
+>>>
+>>>>+    if (status < 0)
+>>>>+        return status;
+>>>>+
+>>>>+    if (pmbus_regulator_is_enabled(rdev) && (status & PB_STATUS_OFF))
+>>>>+        *flags |= REGULATOR_ERROR_FAIL;
+>>>>+    if (status & PB_STATUS_IOUT_OC)
+>>>>+        *flags |= REGULATOR_ERROR_OVER_CURRENT;
+>>>
+>>>If the current status register is supported, this effectively means that
+>>>an overcurrent warning is always reported as both REGULATOR_ERROR_OVER_CURRENT
+>>>and REGULATOR_ERROR_OVER_CURRENT_WARN. Is that intentional ?
+>>>
+>>
+>>No, but I don't think (by my reading of the spec) that's what would happen?
+>>
+>>I'm looking at table 16 ("STATUS_WORD Message Contents") in section 17.2 ("STATUS_WORD") of Part II of revision 1.3.1 of the PMBus spec, which says that bit 4 of the low byte (PB_STATUS_IOUT_OC) indicates an output overcurrent fault, not a warning (in contrast to most of the other bits, which may indicate either).
+>>
+>>>
+>>>>+    if (status & PB_STATUS_VOUT_OV)
+>>>>+        *flags |= REGULATOR_ERROR_REGULATION_OUT;
+>>>
+>>>Same for voltage.
+>>
+>>Likewise, PB_STATUS_VOUT_OV is specified as indicating a fault, not a warning.
+>>
 >
->No idea what this is, but I doubt any such generic device exists. This
->needs sufficient description to be convincing that it is indeed generic.
+>Ok, that makes sense.
 >
-
-I was struggling a bit to come up with a reasonably concise title; this 
-admittedly isn't great.
-
-Would a description like the following clarify it adequately?
-
-   description: |
-     This binding describes a physical power output supplied by a 
-     regulator providing efuse functionality (manual on/off control, and 
-     auto-shutoff if current, voltage, or thermal limits are exceeded).
-     
-     These may be found on systems such as "smart" network PDUs, and 
-     typically supply power to devices entirely separate from the system 
-     described by the device-tree by way of an external connector such as 
-     an Open19 power cable:
-
-     https://www.open19.org/marketplace/coolpower-cable-assembly-8ru/
-
-
->> +
->> +maintainers:
->> + - Zev Weiss <zev@bewilderbeest.net>
->> +
->> +properties:
->> +  compatible:
->> +    const: power-efuse
->> +
->> +  vout-supply:
->> +    description:
->> +      phandle to the regulator providing power for the efuse
->> +
->> +  error-flags-cache-ttl-ms:
->> +    description:
->> +      The number of milliseconds the vout-supply regulator's error
->> +      flags should be cached before re-fetching them.
+>>>On the other side, temperature limit violations are not
+>>>reported at all unless the temperature status register exists.
+>>>That seems to be a bit inconsistent to me.
+>>>
+>>
+>>Right -- that's because PB_STATUS_TEMPERATURE is one of the "fault or warning" bits (unlike VOUT_OV and IOUT_OC), and hence it's an ambiguous case as described in the comment before the pmbus_get_status() call.
+>>
+>>It's certainly not ideal, but it seemed like the best approach I could see given the semantics of the available flags -- I'm open to other possibilities though if there's something else that would work better.
+>>
 >
->What are 'error flags'? Not something I've heard with respect to
->regulators.
+>My approach would be to report a warning if no temperature warning/fault
+>is set from PMBUS_STATUS_TEMPERATURE but PB_STATUS_TEMPERATURE is set
+>in the status register.
+>
+>Something like
+>
+>	if (!(*flags & (REGULATOR_ERROR_OVER_TEMP | REGULATOR_ERROR_OVER_TEMP_WARN))
+>	    && (status & PB_STATUS_TEMPERATURE))
+>		*flags |= REGULATOR_ERROR_OVER_TEMP_WARN;
+>
+>While not perfect, it would be better than reporting nothing.
 >
 
-That refers to the REGULATOR_ERROR_* flags in 
-include/linux/regulator/consumer.h, in whatever "physical" form those 
-ultimately take -- for example, in the PMBus-based case I'm currently 
-aiming to support, they'd map to the flags returned by PMBus STATUS_* 
-commands.  
+That sounds like a good idea -- I'll add it in v2.
 
 
-Thanks for the review,
+Thanks,
 Zev
 
